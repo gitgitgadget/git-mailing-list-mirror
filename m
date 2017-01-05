@@ -7,53 +7,51 @@ X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 14F2D205C9
-	for <e@80x24.org>; Thu,  5 Jan 2017 13:53:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C6B27205C9
+	for <e@80x24.org>; Thu,  5 Jan 2017 14:02:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1759730AbdAENxd (ORCPT <rfc822;e@80x24.org>);
-        Thu, 5 Jan 2017 08:53:33 -0500
-Received: from mail-qt0-f174.google.com ([209.85.216.174]:35265 "EHLO
-        mail-qt0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751462AbdAENxc (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 5 Jan 2017 08:53:32 -0500
-Received: by mail-qt0-f174.google.com with SMTP id c47so519272131qtc.2
-        for <git@vger.kernel.org>; Thu, 05 Jan 2017 05:53:31 -0800 (PST)
+        id S969275AbdAEOCo (ORCPT <rfc822;e@80x24.org>);
+        Thu, 5 Jan 2017 09:02:44 -0500
+Received: from mail-qt0-f180.google.com ([209.85.216.180]:32874 "EHLO
+        mail-qt0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750763AbdAEOCn (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 5 Jan 2017 09:02:43 -0500
+Received: by mail-qt0-f180.google.com with SMTP id v23so51174142qtb.0
+        for <git@vger.kernel.org>; Thu, 05 Jan 2017 06:02:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=Rf2coeqVwIaaAvMpaw4OvDG9Zy4zSO5WVlai5Fmf06w=;
-        b=p/LQcZwNmoMpSyMfifmXFxITCLb+FvLBkAUxIOL60qhSn13BkDsluzr/OqBcAveUE6
-         XlM87em4/xT3ezqSpZRZlQtBLdo64DPol3RtrX36Ev5jVJsyn88c3ZjNZGv/+XZt/2RB
-         EEG8aXwNb9KTah9kOYfij88Q9lp54vztzgCLBhylSPXWGG4E0I0yRtT8gUnQAXZaDdso
-         KVNSIY6Ne5aWyQSUEC8khXVkrrZjne5S5DSM9dqdxPgsqbRihxKarlH3GkJflNVSOrcG
-         JN/eiUwF9TrsW4xwD0hOJMcjQ35E6kl3z2zGcyB3cwINjs2YuHSD5A3VlxRVWDjfhVdo
-         VVgw==
+        bh=/iyXg/6mmyAjuNL3qehIug1LaX1wzqnM3mc+9qnZhT4=;
+        b=hU4NfvA7fHZTcztspdRan6bPYhs0WcPGpO26yogA6DZTjwya95gVD5nwgnqiS7WdGc
+         IgJT9L/vM1ZFKKIrD2+mj7b1zmcV1PuN6AovtH2dneq5P7aWt1b5JnyVXVyhpxHVX38P
+         qQC0rv0/BI4Bty5baC60xR2MnlEkDhYijKfkxv0f4bPzIrt2OF2sqtPxLfwP49QhXUrM
+         2R019pUmO2frKl7gnv8fXLcU3I3UC91yH0KGtLEIKodeGHZbiNkxyZ5M+8lLNTLXyvEb
+         /nfn+loeLMo9vQQrsBBoMkm7K7SMCt07kBnlHPsKTwi8K81lRk8EgXvEjIOT2QD+AjYC
+         O3YQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=Rf2coeqVwIaaAvMpaw4OvDG9Zy4zSO5WVlai5Fmf06w=;
-        b=Cu47U2kf6keYIKdAilQO+kUM2FUikQ0q8BtIw/6kg20OCykx2n+PHgoZ0PIaH9R80C
-         nXn2cSmiFoQ+3jgnBzEHEQzD9n4rNMRFUrzN9VptDgAB75nbmBS1GuQcbVwpueUzAVtA
-         x4eH8rwXRTEK9cI2i0WUmc7VIlhxnObNDx9Iu3GuPn7dQ6yKwlIcL1MQNPix4+N5GbqJ
-         nJOvhoM0OId7cuwBITM/B/1O+1Z2kR77/7thP+QMNSNlLu6tedfacBEn79lGi41MHyWJ
-         aRLSm449vhg64km9KV8llhsBSoA2By2fLrqT5vr7pIDLxgLZclgWCgqtcE1AX7COBPkO
-         lxTA==
-X-Gm-Message-State: AIkVDXIh8V09khzbdCErSTxTsFsgLjswg5tcfdCIvLxZmCETnsUrg1PPrYSXPjiDHSuXFF68HEnsh+oHKO3vzyja
-X-Received: by 10.200.50.147 with SMTP id z19mr61952585qta.207.1483624411101;
- Thu, 05 Jan 2017 05:53:31 -0800 (PST)
+        bh=/iyXg/6mmyAjuNL3qehIug1LaX1wzqnM3mc+9qnZhT4=;
+        b=mFt5JIuhEECSUqnpxUgX59vvvy+ShL47EE8xLSMV/tEReffTM1oLl3ulTGzRVXnS68
+         IewDFxA1mulZwrIDktRbDHYx8Y4KgSi+B5eLuLptzbwhnesQSG9x2bj2WqRvFC3evXdj
+         /U8FsAz7UwtntfyU3x5iT/1E3HyaXaM5S+pqI0ibrfSO2Mj+IourMlf6LVDcUVTdUmVc
+         A8rPV3D/ZRdJxFqTQcK5HHvJ+wr97c7DQwSXq5qzW3dymIplSCi0njfpJCCnQstOUump
+         yW/pTQj5DiaXa4+xetEoWWbVocWT02SpZVcVnixaNMox4sajuad9nsIbVIo/4j4mg94D
+         s6kw==
+X-Gm-Message-State: AIkVDXL9maP+sIB6KsK+MX4iqUtcmdcKBHKy8Z4tPEE8Gdej6QNo0kwmdTAJUMUo9iGAcqCXpaaxXrDNqVZ9ox08
+X-Received: by 10.200.37.221 with SMTP id f29mr73594701qtf.123.1483624928115;
+ Thu, 05 Jan 2017 06:02:08 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.12.146.7 with HTTP; Thu, 5 Jan 2017 05:53:30 -0800 (PST)
-In-Reply-To: <17f2724d-7001-203e-f0b5-cf586703a41a@boxbox.org>
-References: <17f2724d-7001-203e-f0b5-cf586703a41a@boxbox.org>
+Received: by 10.12.146.7 with HTTP; Thu, 5 Jan 2017 06:02:07 -0800 (PST)
+In-Reply-To: <4D106F0FF3D29E4FA1D91C1A31CE4C3501B8DEF2E6@email.novomind.com>
+References: <4D106F0FF3D29E4FA1D91C1A31CE4C3501B8DEF2E6@email.novomind.com>
 From:   Stefan Beller <sbeller@google.com>
-Date:   Thu, 5 Jan 2017 05:53:30 -0800
-Message-ID: <CAGZ79kb8TTaJBmVCWK3jnr4RvGjmfmsj3-ieT87wzyFLYi5frQ@mail.gmail.com>
-Subject: Re: core.sshCommand and url.*.insteadOf for submodules
-To:     Stefan Schindler <stsch@boxbox.org>,
-        Jacob Keller <jacob.keller@gmail.com>,
-        Jeff King <peff@peff.net>
+Date:   Thu, 5 Jan 2017 06:02:07 -0800
+Message-ID: <CAGZ79kaLpf1nzSAgRJQamMGk-327LO+qQYihYVVcU+86n92ivg@mail.gmail.com>
+Subject: Re: git branch -D doesn't work with deleted worktree
+To:     Roland Illig <rillig@novomind.com>, Duy Nguyen <pclouds@gmail.com>
 Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
@@ -61,45 +59,22 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jan 5, 2017 at 2:09 AM, Stefan Schindler <stsch@boxbox.org> wrote:
-> Hello mailing list,
+On Thu, Jan 5, 2017 at 2:06 AM, Roland Illig <rillig@novomind.com> wrote:
+> Git 2.11.0 gives a wrong error message after the following commands:
 >
-> it seems like that the `core.sshCommand` and `url.*.insteadOf`
-> configuration settings do not apply to `git submodule update --init`
-> (and probably related) calls.
+> $ git init
+> $ echo hello >file
+> $ git add file
+> $ git commit -m "message"
+> $ git worktree add ../worktree
+> $ rm -rf ../worktree
+> $ git br -D worktree
+> error: Cannot delete branch 'worktree' checked out at '../worktree'
 >
-> Is this intentional?
-
-The original design of submodules was to have a submodule to be a
-standalone repository, such that e.g. its options are read from its own
-config file. So the original vision was to decouple the init and clone of the
-submodule to allow the user to change the settings:
-
-    git submodule init
-    # copies the submodule.<name>.URL from .gitmodules to .git/config
-    # user realizes that the URL is not a good idea, such that
-    git  config submodule.<name>.url http://${company-mirror}/submodule
-    # now the url is fixed so
-    git submodule update
-
-I guess it could be a good idea to propagate some settings from the
-superproject to the submodules when they are cloned.
-
+> Since ../worktree has been deleted, there cannot be anything checked out at that location.
 >
-> My scenario is as follows: I use 2 SSH keys for GitHub, for private and
-> work-related repositories. My default key is my private key. So when I
-> clone a work repository and try getting the submodules, `git submodule
-> update --init` fails. This is also the case when setting
-> `core.sshCommand` and `url.*.insteadOf` (useful for substituting
-> "github.com" by some ~/.ssh/config'ured host).
+> In my opinion, deleting the branch should just work. Especially since I used the -D option and the "git worktree" documentation says "When you are done with a linked working tree you can simply delete it."
 >
-
-which is why e.g.
-git config --global url.https://github.com/.insteadOf git://github.com/
-is not your preferred way here.
-
-There was some discussion a couple of weeks ago, which settings
-should be kept when recursing into submodules, Jacob and Jeff cc'd.
-
-> Greetings,
-> Stefan Schindler
+> Regards,
+> Roland
+>
