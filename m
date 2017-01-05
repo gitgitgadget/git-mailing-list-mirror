@@ -2,79 +2,81 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C6B27205C9
-	for <e@80x24.org>; Thu,  5 Jan 2017 14:02:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A16FD205C9
+	for <e@80x24.org>; Thu,  5 Jan 2017 14:25:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S969275AbdAEOCo (ORCPT <rfc822;e@80x24.org>);
-        Thu, 5 Jan 2017 09:02:44 -0500
-Received: from mail-qt0-f180.google.com ([209.85.216.180]:32874 "EHLO
-        mail-qt0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750763AbdAEOCn (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 5 Jan 2017 09:02:43 -0500
-Received: by mail-qt0-f180.google.com with SMTP id v23so51174142qtb.0
-        for <git@vger.kernel.org>; Thu, 05 Jan 2017 06:02:08 -0800 (PST)
+        id S1161577AbdAEOZh (ORCPT <rfc822;e@80x24.org>);
+        Thu, 5 Jan 2017 09:25:37 -0500
+Received: from mail-lf0-f65.google.com ([209.85.215.65]:36778 "EHLO
+        mail-lf0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1161573AbdAEOZg (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 5 Jan 2017 09:25:36 -0500
+Received: by mail-lf0-f65.google.com with SMTP id j75so3748079lfe.3
+        for <git@vger.kernel.org>; Thu, 05 Jan 2017 06:25:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=/iyXg/6mmyAjuNL3qehIug1LaX1wzqnM3mc+9qnZhT4=;
-        b=hU4NfvA7fHZTcztspdRan6bPYhs0WcPGpO26yogA6DZTjwya95gVD5nwgnqiS7WdGc
-         IgJT9L/vM1ZFKKIrD2+mj7b1zmcV1PuN6AovtH2dneq5P7aWt1b5JnyVXVyhpxHVX38P
-         qQC0rv0/BI4Bty5baC60xR2MnlEkDhYijKfkxv0f4bPzIrt2OF2sqtPxLfwP49QhXUrM
-         2R019pUmO2frKl7gnv8fXLcU3I3UC91yH0KGtLEIKodeGHZbiNkxyZ5M+8lLNTLXyvEb
-         /nfn+loeLMo9vQQrsBBoMkm7K7SMCt07kBnlHPsKTwi8K81lRk8EgXvEjIOT2QD+AjYC
-         O3YQ==
+        d=gmail.com; s=20161025;
+        h=date:from:to:subject:message-id:mime-version:content-disposition
+         :user-agent;
+        bh=kZXtp269YbbRIit9PFy37JLJAxUFVTFX7BUZNgL+cOE=;
+        b=If+jg7QleW8ClQfJ7BqhIqav1cXj7nfWijGNi7CEKAJzRBFd7XjgmAccMRFQmwGy5+
+         TKQAzx5vZhBuGDaIAg2T9dOa6lNpYD07PTL/K/VvtHCuM/v/DJaLYRfOf6Sbnr+ls0oZ
+         8HZcormOMmAetFb512TrErttKr+M5zT6mu5OLdu9kzgXyEHgNxIaNZ/AbXZhPe+x8nV3
+         X3xZkdKiRXS6O56JzZwAbXjsnCMSWCIWC4qML5O3hC+e7kPW/+1hqV6MEP/jsk16Lhws
+         18sSxoQ4gsnPOdrF1BOYA70GxIS4WkWS2JVwdhuv4SEowy/Rvxk9J+NGZhGls9fPtDXM
+         TeMg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=/iyXg/6mmyAjuNL3qehIug1LaX1wzqnM3mc+9qnZhT4=;
-        b=mFt5JIuhEECSUqnpxUgX59vvvy+ShL47EE8xLSMV/tEReffTM1oLl3ulTGzRVXnS68
-         IewDFxA1mulZwrIDktRbDHYx8Y4KgSi+B5eLuLptzbwhnesQSG9x2bj2WqRvFC3evXdj
-         /U8FsAz7UwtntfyU3x5iT/1E3HyaXaM5S+pqI0ibrfSO2Mj+IourMlf6LVDcUVTdUmVc
-         A8rPV3D/ZRdJxFqTQcK5HHvJ+wr97c7DQwSXq5qzW3dymIplSCi0njfpJCCnQstOUump
-         yW/pTQj5DiaXa4+xetEoWWbVocWT02SpZVcVnixaNMox4sajuad9nsIbVIo/4j4mg94D
-         s6kw==
-X-Gm-Message-State: AIkVDXL9maP+sIB6KsK+MX4iqUtcmdcKBHKy8Z4tPEE8Gdej6QNo0kwmdTAJUMUo9iGAcqCXpaaxXrDNqVZ9ox08
-X-Received: by 10.200.37.221 with SMTP id f29mr73594701qtf.123.1483624928115;
- Thu, 05 Jan 2017 06:02:08 -0800 (PST)
+        h=x-gm-message-state:date:from:to:subject:message-id:mime-version
+         :content-disposition:user-agent;
+        bh=kZXtp269YbbRIit9PFy37JLJAxUFVTFX7BUZNgL+cOE=;
+        b=FN3v+qZu1wxcWv2zQG2EjFL6kr7OtiWjogfph8YqMR8pSmyBmbo2IzziWvP6qy/1TU
+         WZRUzJ7rnBKGe1+7GqOYsaXJVwn4TmWgA1ShWg0wA2O5M0mDz1Tb0Rn0pbKJwwx21sKH
+         MjbVq+TTHQS9KHK3jOB6v1hbHs683YwDgrs7vK3B1cGMJi7mjWffXgvMgp0V9g034SDx
+         ZjMch1lw0VemA48UEJn6hAo7ZK4/Zdtg0CVbPU4GF6tdnObkqpn4W+wiqByFC+/WDOR1
+         0Pk85MvmCh5HZ+jm4Xcdn6q+BgoYPRNy3udhdLUSvioNG2wCwvsnaZp51+J1gHQAXcT3
+         nxGw==
+X-Gm-Message-State: AIkVDXKlw84RpuKYqqyf+7LWrPHeMJXVxprI+I6KIaCnPZlfL8tKuJ7rt1qtRAraMXQ7Uw==
+X-Received: by 10.25.67.12 with SMTP id q12mr26682289lfa.139.1483626333898;
+        Thu, 05 Jan 2017 06:25:33 -0800 (PST)
+Received: from aaberge.net (kramer.samfundet.no. [2001:67c:29f4::72])
+        by smtp.gmail.com with ESMTPSA id s127sm18193293lja.31.2017.01.05.06.25.32
+        for <git@vger.kernel.org>
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 05 Jan 2017 06:25:33 -0800 (PST)
+Date:   Thu, 5 Jan 2017 15:25:29 +0100
+From:   Trygve Aaberge <trygveaa@gmail.com>
+To:     git@vger.kernel.org
+Subject: Regression: Ctrl-c from the pager in an alias exits it
+Message-ID: <20170105142529.GA15009@aaberge.net>
 MIME-Version: 1.0
-Received: by 10.12.146.7 with HTTP; Thu, 5 Jan 2017 06:02:07 -0800 (PST)
-In-Reply-To: <4D106F0FF3D29E4FA1D91C1A31CE4C3501B8DEF2E6@email.novomind.com>
-References: <4D106F0FF3D29E4FA1D91C1A31CE4C3501B8DEF2E6@email.novomind.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Thu, 5 Jan 2017 06:02:07 -0800
-Message-ID: <CAGZ79kaLpf1nzSAgRJQamMGk-327LO+qQYihYVVcU+86n92ivg@mail.gmail.com>
-Subject: Re: git branch -D doesn't work with deleted worktree
-To:     Roland Illig <rillig@novomind.com>, Duy Nguyen <pclouds@gmail.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+User-Agent: Mutt/1.5.23 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jan 5, 2017 at 2:06 AM, Roland Illig <rillig@novomind.com> wrote:
-> Git 2.11.0 gives a wrong error message after the following commands:
->
-> $ git init
-> $ echo hello >file
-> $ git add file
-> $ git commit -m "message"
-> $ git worktree add ../worktree
-> $ rm -rf ../worktree
-> $ git br -D worktree
-> error: Cannot delete branch 'worktree' checked out at '../worktree'
->
-> Since ../worktree has been deleted, there cannot be anything checked out at that location.
->
-> In my opinion, deleting the branch should just work. Especially since I used the -D option and the "git worktree" documentation says "When you are done with a linked working tree you can simply delete it."
->
-> Regards,
-> Roland
->
+I'm experiencing an issue when using aliases for commands that open the pager.
+When I press Ctrl-c from the pager, it exits. This does not happen when I
+don't use an alias and did not happen before. It causes problems because
+Ctrl-c is also used for other things, such as canceling a search that hasn't
+completed.
+
+To reproduce, create e.g. the alias `l = log` and run `git l`. Then press
+Ctrl-c. The expected behavior is that nothing happens. The actual behavior is
+that the pager exits.
+
+I bisected the repo, and found that the commit 86d26f240 [0] introduced the
+issue.
+
+[0]: 86d26f240 (setup.c: re-fix d95138e (setup: set env $GIT_WORK_TREE
+                when .. - 2015-12-20)
+
+-- 
+Trygve Aaberge
