@@ -2,108 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 32729205C9
-	for <e@80x24.org>; Thu,  5 Jan 2017 13:50:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 14F2D205C9
+	for <e@80x24.org>; Thu,  5 Jan 2017 13:53:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756081AbdAENt7 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 5 Jan 2017 08:49:59 -0500
-Received: from mout.gmx.net ([212.227.17.22]:58636 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1757505AbdAENt6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 5 Jan 2017 08:49:58 -0500
-Received: from virtualbox ([37.24.141.236]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MRB8F-1bv74Y2ged-00UeaS; Thu, 05
- Jan 2017 14:49:37 +0100
-Date:   Thu, 5 Jan 2017 14:49:35 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     Lars Schneider <larsxschneider@gmail.com>
-cc:     Jeff King <peff@peff.net>, git@vger.kernel.org,
-        =?UTF-8?B?66eI64iE7JeY?= <nalla@hamal.uberspace.de>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/2] asciidoctor: fix user-manual to be built by
- `asciidoctor`
-In-Reply-To: <1D7C66EA-E87A-4154-ACAC-8045D28477D2@gmail.com>
-Message-ID: <alpine.DEB.2.20.1701051444390.3469@virtualbox>
-References: <cover.1483373021.git.johannes.schindelin@gmx.de> <3c160f81a88cf8697f2459bb7f2a3e27fb3e469c.1483373021.git.johannes.schindelin@gmx.de> <20170104080852.bmlmtzxhjx4qt74f@sigill.intra.peff.net> <1D7C66EA-E87A-4154-ACAC-8045D28477D2@gmail.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+        id S1759730AbdAENxd (ORCPT <rfc822;e@80x24.org>);
+        Thu, 5 Jan 2017 08:53:33 -0500
+Received: from mail-qt0-f174.google.com ([209.85.216.174]:35265 "EHLO
+        mail-qt0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751462AbdAENxc (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 5 Jan 2017 08:53:32 -0500
+Received: by mail-qt0-f174.google.com with SMTP id c47so519272131qtc.2
+        for <git@vger.kernel.org>; Thu, 05 Jan 2017 05:53:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=Rf2coeqVwIaaAvMpaw4OvDG9Zy4zSO5WVlai5Fmf06w=;
+        b=p/LQcZwNmoMpSyMfifmXFxITCLb+FvLBkAUxIOL60qhSn13BkDsluzr/OqBcAveUE6
+         XlM87em4/xT3ezqSpZRZlQtBLdo64DPol3RtrX36Ev5jVJsyn88c3ZjNZGv/+XZt/2RB
+         EEG8aXwNb9KTah9kOYfij88Q9lp54vztzgCLBhylSPXWGG4E0I0yRtT8gUnQAXZaDdso
+         KVNSIY6Ne5aWyQSUEC8khXVkrrZjne5S5DSM9dqdxPgsqbRihxKarlH3GkJflNVSOrcG
+         JN/eiUwF9TrsW4xwD0hOJMcjQ35E6kl3z2zGcyB3cwINjs2YuHSD5A3VlxRVWDjfhVdo
+         VVgw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=Rf2coeqVwIaaAvMpaw4OvDG9Zy4zSO5WVlai5Fmf06w=;
+        b=Cu47U2kf6keYIKdAilQO+kUM2FUikQ0q8BtIw/6kg20OCykx2n+PHgoZ0PIaH9R80C
+         nXn2cSmiFoQ+3jgnBzEHEQzD9n4rNMRFUrzN9VptDgAB75nbmBS1GuQcbVwpueUzAVtA
+         x4eH8rwXRTEK9cI2i0WUmc7VIlhxnObNDx9Iu3GuPn7dQ6yKwlIcL1MQNPix4+N5GbqJ
+         nJOvhoM0OId7cuwBITM/B/1O+1Z2kR77/7thP+QMNSNlLu6tedfacBEn79lGi41MHyWJ
+         aRLSm449vhg64km9KV8llhsBSoA2By2fLrqT5vr7pIDLxgLZclgWCgqtcE1AX7COBPkO
+         lxTA==
+X-Gm-Message-State: AIkVDXIh8V09khzbdCErSTxTsFsgLjswg5tcfdCIvLxZmCETnsUrg1PPrYSXPjiDHSuXFF68HEnsh+oHKO3vzyja
+X-Received: by 10.200.50.147 with SMTP id z19mr61952585qta.207.1483624411101;
+ Thu, 05 Jan 2017 05:53:31 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:oWPQtoqyVKuyX+PAETYvtCI4h6AnC7hTpqJH3indPppF7EhptLt
- qnwUPhvIho6+Se9Ygw+Fa8+jwYu9LhjtBYVKjHgdhX8ppzGbzopbLsPksl9G8GpBSZRIH0H
- tdIf98C6niSQ0/iHhTa6xa75LircEIRRap8jAQr5GCEj7SgoyNCUY2kBCS8z3fFoyQbBkyW
- A2/7r7th01Qtr+C8WBWxQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:dohJwHPUsA8=:e0DGl7hh358K7fy6MTlKQm
- Iw4CTEFzVwqnJ9x58+CiBJoQe7gKyudhZECtadDpBBRKIlnlebkOdAsQv0GzKONgLCxomG9Bh
- eTRKm+AEJS6PVJzcerRfl5Ce6pyO3wM86QSb4BDv2HLhrYRcRNtu4JEZGY7d4t98QQIrEdcRF
- 97CuN6xpOMsQ32rUjB8qWyJPGZYgLD/19Ajsl/j8OMwMgODfBtqwx2azZ05ze1YH+gvjP+m+x
- Ns9VxOJGTvkPXn1OhrsqniH4hEh7pLjtzQJ63iJ9X867fpVswtJVaL8aVr5eJ0S/cbnOD2ao2
- ID3nrfZlv2Zq/2bQeu3HQ3e8RRr79ZGul6R89cdA+jnfmyZMcelIUZ4hWksw8ThVQNtZE8BVA
- HeSSeFOLTCXd3q4fd+7mS9wLuMczeq4FOdUxrzLZePsFPkeVkkief/uCnwWDLuqwHDpxtg46d
- 5d2cIPfqecVY/AKz+PYU6/Vf9IlLRQxS0fUV5XXJkBbkyBTaN9mlUdoCd+PTDnr91Ysmru+HI
- iXc1A1LoJNUYPYahv8WNDUUNaW+CxXehdSgJRo3lBHUJMKihK5/SnO2+x+inLqrGBES15EuNr
- mThHf/wUubHeC7T/bUil/lEyXc85fnCSoZ2A2071Q4TWTlf0aBhE/Fj6N1xpxewvt+WpBMSNE
- GtEuCcriqlEAsFD6rvz1fdY8Gp2CGg79qKLPWSqL8Lqn8XCBfbJN76SRK/uaWo1dBYIplnKnv
- BuDxILhu1A5zME3kJEd2DdepOcmAzR+DmQ5loga7bAocy+LDf4VqEfSh/E5PhStRKgR5bwopp
- ZZT1iu7wnA+V8GiBfOKaFlQYSRJuE1GFPrryI3A+LvmkPouRaPubnDNjH9TKS4slJ+Ikx02Yn
- ovoX+8XLgXG/i7RpgW1H71xNYMi8ZUoKMn39QdvXUWqTA5De++huawlhlVLUlCOaBkfDdGatW
- ochso/QldJIhDIIKHO2N84ONuRKdsRhGjUE070SaNNRK9qiGzzNhb1AVd41r3RCCSB/tddM3D
- Re+MrwU6oASyqXoNj1zurSI=
+Received: by 10.12.146.7 with HTTP; Thu, 5 Jan 2017 05:53:30 -0800 (PST)
+In-Reply-To: <17f2724d-7001-203e-f0b5-cf586703a41a@boxbox.org>
+References: <17f2724d-7001-203e-f0b5-cf586703a41a@boxbox.org>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Thu, 5 Jan 2017 05:53:30 -0800
+Message-ID: <CAGZ79kb8TTaJBmVCWK3jnr4RvGjmfmsj3-ieT87wzyFLYi5frQ@mail.gmail.com>
+Subject: Re: core.sshCommand and url.*.insteadOf for submodules
+To:     Stefan Schindler <stsch@boxbox.org>,
+        Jacob Keller <jacob.keller@gmail.com>,
+        Jeff King <peff@peff.net>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Lars,
+On Thu, Jan 5, 2017 at 2:09 AM, Stefan Schindler <stsch@boxbox.org> wrote:
+> Hello mailing list,
+>
+> it seems like that the `core.sshCommand` and `url.*.insteadOf`
+> configuration settings do not apply to `git submodule update --init`
+> (and probably related) calls.
+>
+> Is this intentional?
 
-On Thu, 5 Jan 2017, Lars Schneider wrote:
+The original design of submodules was to have a submodule to be a
+standalone repository, such that e.g. its options are read from its own
+config file. So the original vision was to decouple the init and clone of the
+submodule to allow the user to change the settings:
 
-> > On 04 Jan 2017, at 09:08, Jeff King <peff@peff.net> wrote:
-> > 
-> > On Mon, Jan 02, 2017 at 05:03:57PM +0100, Johannes Schindelin wrote:
-> > 
-> >> From: =?UTF-8?q?=EB=A7=88=EB=88=84=EC=97=98?= <nalla@hamal.uberspace.de>
-> >> 
-> >> The `user-manual.txt` is designed as a `book` but the `Makefile`
-> >> wants to build it as an `article`. This seems to be a problem when
-> >> building the documentation with `asciidoctor`. Furthermore the parts
-> >> *Git Glossary* and *Appendix B* had no subsections which is not
-> >> allowed when building with `asciidoctor`. So lets add a *dummy*
-> >> section.
-> > 
-> > The git-scm.com site uses asciidoctor, too, and I think I have seen
-> > some oddness with the rendering though. So in general I am in favor of
-> > making things work under both asciidoc and asciidoctor.
-> 
-> I am not familiar with both tools but it sounds to me as if
-> "asciidoctor" is kind of the "lowest common denominator". Is this true?
-> If yes, would it make sense to switch TravisCI [1] to asciidocter if
-> this change gets merged?
+    git submodule init
+    # copies the submodule.<name>.URL from .gitmodules to .git/config
+    # user realizes that the URL is not a good idea, such that
+    git  config submodule.<name>.url http://${company-mirror}/submodule
+    # now the url is fixed so
+    git submodule update
 
-It is true that asciidoc typically parses whatever asciidoctor parses,
-but not vice versa.
+I guess it could be a good idea to propagate some settings from the
+superproject to the submodules when they are cloned.
 
-In that light, I would love to see our Travis runs to switch to
-asciidoctor.
+>
+> My scenario is as follows: I use 2 SSH keys for GitHub, for private and
+> work-related repositories. My default key is my private key. So when I
+> clone a work repository and try getting the submodules, `git submodule
+> update --init` fails. This is also the case when setting
+> `core.sshCommand` and `url.*.insteadOf` (useful for substituting
+> "github.com" by some ~/.ssh/config'ured host).
+>
 
-For the record, this is my local config.mak in the asciidoctor worktree:
+which is why e.g.
+git config --global url.https://github.com/.insteadOf git://github.com/
+is not your preferred way here.
 
--- snip --
-ASCIIDOC=asciidoctor
-ASCIIDOC_HTML=html5
-ASCIIDOC_DOCBOOK=docbook45
-ASCIIDOC_EXTRA="-alitdd=&\#45;&\#45;"
-ASCIIDOC_CONF=-I"/mingw64/lib/asciidoctor-extensions" -rman-inline-macro
--- snap --
+There was some discussion a couple of weeks ago, which settings
+should be kept when recursing into submodules, Jacob and Jeff cc'd.
 
-Please note that the extensions are required to build correctly (and we
-require this patch, too, unfortunately:
-https://github.com/git-for-windows/MINGW-packages/blob/master/mingw-w64-asciidoctor-extensions/0001-man-inline-macro-enable-linkgit-syntax.patch).
-
-Ciao,
-Dscho
+> Greetings,
+> Stefan Schindler
