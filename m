@@ -2,212 +2,208 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD,URI_HEX shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 23B72205C9
-	for <e@80x24.org>; Thu,  5 Jan 2017 19:33:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CC6A4205C9
+	for <e@80x24.org>; Thu,  5 Jan 2017 19:33:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1763680AbdAETbE (ORCPT <rfc822;e@80x24.org>);
-        Thu, 5 Jan 2017 14:31:04 -0500
-Received: from mail-pf0-f181.google.com ([209.85.192.181]:36104 "EHLO
-        mail-pf0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1763464AbdAET3N (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 5 Jan 2017 14:29:13 -0500
-Received: by mail-pf0-f181.google.com with SMTP id 189so89087795pfz.3
-        for <git@vger.kernel.org>; Thu, 05 Jan 2017 11:29:13 -0800 (PST)
+        id S1763672AbdAETbA (ORCPT <rfc822;e@80x24.org>);
+        Thu, 5 Jan 2017 14:31:00 -0500
+Received: from mail-pg0-f43.google.com ([74.125.83.43]:36252 "EHLO
+        mail-pg0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1762844AbdAET3M (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 5 Jan 2017 14:29:12 -0500
+Received: by mail-pg0-f43.google.com with SMTP id f188so243301167pgc.3
+        for <git@vger.kernel.org>; Thu, 05 Jan 2017 11:29:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=gLgoiNZ6wi8kFQbLsyMcTkJK98phUrO4iVBOJjHE1uc=;
-        b=XL99+GGzztxzEcPua80FF1fW2AwZ0I6OHpc61QbfUD/QjJn2Mpqd4wz0u36p6114p7
-         2KMmS2InXmVGhKZZDOaTL4pXBy4aNHsGV9gxUldy5oaQnU34TnTGw08Ysm8DSqENPw60
-         YXiPun/cBRkUhu3tpGSjOwHQJIhN55oZRYnek7FPQv7WlQyf6tXZ0jFRuSdCr59Zxp+Q
-         J8jNqOuUcP619IMUSo9pURy1j7Hk1zWrRbH2Cobj+QsMXUlwn4fZU8sK9vm6kIAyH+kk
-         DeE2o5rMxYNPWx12vW0zKzuUwX9+qQRoiWU6PMePowHjYcIwGUMojdZn/I107ksdXhSm
-         OX5Q==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=nueYRqvuIu+/5KTVmwAGHu+3sz4ZwlsMycjTNY7Hzz4=;
+        b=nQc73nDhUy186G1/GbhtdhIB1pGdLaLqV8IlwaXL51NlVl9o4hJPUSVvwvt3wfoLCY
+         58zJj3ZIpvH90Ki+yzCeqjieTqyx8208uHwLovhnF3w/AyvYSv6rOx2oiKilBmsSwydP
+         SNpR9HrLYD7B+sHsKl5slgkvzt706YFdagIW4kp7jFWyMHVKX9j5Ax/HFT+Hc9mTOgke
+         sY/2HRDA8ovwl1d2nu+wYNFOMgigku8FVPM6t4zkmtk/IGa3vCPmB9GVRjeJBYvrp3dg
+         fPK8X30wGEzl65P63Ahrxc+OUuk5FgofvPcoxrBgdPrq0kO80zRgAxKbNAroLR8SgDpe
+         cQXA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=gLgoiNZ6wi8kFQbLsyMcTkJK98phUrO4iVBOJjHE1uc=;
-        b=KOxKLfytJceSlq7tElK5C6CNY8fiUYr7ZWsloyqFlxgGF9XZVzhZnuL/6b86IBqdTs
-         PJhYekSp/s9SBgdWkfhlw0kCztgwIhp5g1fXzgwYLgeKKGnsyOYWKRnTg30dA+TVBfIA
-         S7tRI/X8T1dbCd2v6ACV5c4/HORUwJ4k4Bp3CWWVDMfE8jO8beko13AAZhFd+05KmlzJ
-         TrWoc41Nbk8eSyJaG8vrZTgeitH+3voPYqvSGy5kuu3b4RzmnTbpwH8oOU/yXUty3LE+
-         WFABvSt/U1DyRW1hmur9VAyw7IkVwzroiQwlS85ykK8wbA5J+mL/8ZF0pAIN/JmTOadK
-         FYog==
-X-Gm-Message-State: AIkVDXIheOhm531Yz9OMBlE/KbdRNNDZimLCHH4hwlKZNRzkS4b2mSinF3oCHkO0mGd6I3gc
-X-Received: by 10.99.125.65 with SMTP id m1mr136831139pgn.159.1483644552621;
-        Thu, 05 Jan 2017 11:29:12 -0800 (PST)
+         :references;
+        bh=nueYRqvuIu+/5KTVmwAGHu+3sz4ZwlsMycjTNY7Hzz4=;
+        b=M1MONKunKr48fhQ8jbfXIyXN8rM4hetxw0syue8+EYZBRo1404MhEjavPz6Tspz8UJ
+         ZxY7AJyS4ic7wHT2zAtKidx5aIosToQ4YNltuOnRLrvh4LnR2HIi7mbnJi61HJzfOo9W
+         I00Bo3t+GkdMCfpsPIOkIUnf0J7RGi8hSuzhH+TfNx4DeuR3aFESQQmkup4V+34Zr4lV
+         0w9ITd1lcckFsaXkNsv+DyY0LWtsVvF58xc7h7FiYdsaCbmMqY0FRZAKv6QPKz6KuhKH
+         LgIc+u+w2s7Bx4NB5QcUIGz8KfLzqqwtjMGSmyvjl9v1R6B040RdWm8GyCQPYjg7M23V
+         Rm1Q==
+X-Gm-Message-State: AIkVDXJGQ7F5vnZ+1edVTMrYDia8GUiyU4pvPNfzuKAocWGzvs63yL+ScQUGd/qSrAmpDZtZ
+X-Received: by 10.99.117.71 with SMTP id f7mr135057727pgn.126.1483644551520;
+        Thu, 05 Jan 2017 11:29:11 -0800 (PST)
 Received: from localhost ([2620:0:1000:5b10:d8d4:45f:826c:3a9f])
-        by smtp.gmail.com with ESMTPSA id g85sm114776305pfe.38.2017.01.05.11.29.12
+        by smtp.gmail.com with ESMTPSA id c71sm156317298pga.22.2017.01.05.11.29.10
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 05 Jan 2017 11:29:12 -0800 (PST)
+        Thu, 05 Jan 2017 11:29:11 -0800 (PST)
 From:   Stefan Beller <sbeller@google.com>
 To:     bmwill@google.com, peff@peff.net, gitster@pobox.com
 Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>
-Subject: [PATCHv6 2/2] pathspec: give better message for submodule related pathspec error
-Date:   Thu,  5 Jan 2017 11:29:04 -0800
-Message-Id: <20170105192904.1107-3-sbeller@google.com>
+Subject: [PATCHv6 1/2] submodule tests: don't use itself as a submodule
+Date:   Thu,  5 Jan 2017 11:29:03 -0800
+Message-Id: <20170105192904.1107-2-sbeller@google.com>
 X-Mailer: git-send-email 2.11.0.31.g919a8d0.dirty
 In-Reply-To: <20170105192904.1107-1-sbeller@google.com>
 References: <20170105192904.1107-1-sbeller@google.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Every once in a while someone complains to the mailing list to have
-run into this weird assertion[1]. The usual response from the mailing
-list is link to old discussions[2], and acknowledging the problem
-stating it is known.
+In reality nobody would run "git submodule add ./. <submodule-path>"
+to add the repository to itself as a submodule as this comes with some
+nasty surprises, such as infinite recursion when cloning that repository.
+However we do this all the time in the test suite, because most of the
+time this was the most convenient way to test a very specific thing
+for submodule behavior.
 
-This patch accomplishes two things:
+This provides an easier way to have submodules in tests, by just setting
+TEST_CREATE_SUBMODULE to a non empty string, similar to
+TEST_NO_CREATE_REPO.
 
-  1. Switch assert() to die("BUG") to give a more readable message.
+Make use of it in those tests that add a submodule from ./. except for
+the occurrence in create_lib_submodule_repo as there it seems we craft
+a repository deliberately for both inside as well as outside use.
 
-  2. Take one of the cases where we hit a BUG and turn it into a normal
-     "there was something wrong with the input" message.
+The name "pretzel.[non]bare" was chosen deliberate to not introduce
+more strings to the test suite containing "sub[module]" as searching for
+"sub" already yields a lot of hits from different contexts. "pretzel"
+doesn't occur in the test suite yet, so it is a good candidate for
+a potential remote for a submodule.
 
-     This assertion triggered for cases where there wasn't a programming
-     bug, but just bogus input. In particular, if the user asks for a
-     pathspec that is inside a submodule, we shouldn't assert() or
-     die("BUG"); we should tell the user their request is bogus.
-
-     The only reason we did not check for it, is the expensive nature
-     of such a check, so callers avoid setting the flag
-     PATHSPEC_STRIP_SUBMODULE_SLASH_EXPENSIVE. However when we die due
-     to bogus input, the expense of CPU cycles spent outweighs the user
-     wondering what went wrong, so run that check unconditionally before
-     dying with a more generic error message.
-
-Note: There is a case (e.g. "git -C submodule add .") in which we call
-strip_submodule_slash_expensive, as git-add requests it via the flag
-PATHSPEC_STRIP_SUBMODULE_SLASH_EXPENSIVE, but the assert used to
-trigger nevertheless, because the flag PATHSPEC_LITERAL was not set,
-such that we executed
-
-	if (item->nowildcard_len < prefixlen)
-		item->nowildcard_len = prefixlen;
-
-and prefixlen was not adapted (e.g. it was computed from "submodule/")
-So in the die_inside_submodule_path function we also need handle paths,
-that were stripped before, i.e. are the exact submodule path. This
-is why the conditions in die_inside_submodule_path are slightly
-different than in strip_submodule_slash_expensive.
-
-[1] https://www.google.com/search?q=item-%3Enowildcard_len
-[2] http://git.661346.n2.nabble.com/assert-failed-in-submodule-edge-case-td7628687.html
-    https://www.spinics.net/lists/git/msg249473.html
-
-Helped-by: Jeff King <peff@peff.net>
-Helped-by: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- pathspec.c                       | 35 +++++++++++++++++++++++++++++++++--
- t/t6134-pathspec-in-submodule.sh | 33 +++++++++++++++++++++++++++++++++
- 2 files changed, 66 insertions(+), 2 deletions(-)
- create mode 100755 t/t6134-pathspec-in-submodule.sh
+ t/lib-submodule-update.sh |  2 ++
+ t/t7001-mv.sh             |  5 +++--
+ t/t7507-commit-verbose.sh |  4 +++-
+ t/t7800-difftool.sh       |  4 +++-
+ t/test-lib-functions.sh   | 16 ++++++++++++++++
+ 5 files changed, 27 insertions(+), 4 deletions(-)
 
-diff --git a/pathspec.c b/pathspec.c
-index d4efcf6662..42cd83c235 100644
---- a/pathspec.c
-+++ b/pathspec.c
-@@ -296,6 +296,27 @@ static void strip_submodule_slash_expensive(struct pathspec_item *item)
- 	}
- }
+diff --git a/t/lib-submodule-update.sh b/t/lib-submodule-update.sh
+index 79cdd34a54..58d76d9df8 100755
+--- a/t/lib-submodule-update.sh
++++ b/t/lib-submodule-update.sh
+@@ -44,6 +44,8 @@ create_lib_submodule_repo () {
+ 		git branch "no_submodule" &&
  
-+static void die_inside_submodule_path(struct pathspec_item *item)
-+{
-+	int i;
-+
-+	for (i = 0; i < active_nr; i++) {
-+		struct cache_entry *ce = active_cache[i];
-+		int ce_len = ce_namelen(ce);
-+
-+		if (!S_ISGITLINK(ce->ce_mode))
-+			continue;
-+
-+		if (item->len < ce_len ||
-+		    !(item->match[ce_len] == '/' || item->match[ce_len] == '\0') ||
-+		    memcmp(ce->name, item->match, ce_len))
-+			continue;
-+
-+		die(_("Pathspec '%s' is in submodule '%.*s'"),
-+		    item->original, ce_len, ce->name);
-+	}
-+}
-+
- /*
-  * Perform the initialization of a pathspec_item based on a pathspec element.
-  */
-@@ -391,8 +412,18 @@ static void init_pathspec_item(struct pathspec_item *item, unsigned flags,
- 	}
+ 		git checkout -b "add_sub1" &&
++		# Adding the repo itself as a submodule is a hack.
++		# Do not imitate this.
+ 		git submodule add ./. sub1 &&
+ 		git config -f .gitmodules submodule.sub1.ignore all &&
+ 		git config submodule.sub1.ignore all &&
+diff --git a/t/t7001-mv.sh b/t/t7001-mv.sh
+index e365d1ff77..6cb32f3a3a 100755
+--- a/t/t7001-mv.sh
++++ b/t/t7001-mv.sh
+@@ -1,6 +1,7 @@
+ #!/bin/sh
  
- 	/* sanity checks, pathspec matchers assume these are sane */
--	assert(item->nowildcard_len <= item->len &&
--	       item->prefix         <= item->len);
-+	if (item->nowildcard_len > item->len ||
-+	    item->prefix         > item->len) {
-+		/*
-+		 * This case can be triggered by the user pointing us to a
-+		 * pathspec inside a submodule, which is an input error.
-+		 * Detect that here and complain, but fallback in the
-+		 * non-submodule case to a BUG, as we have no idea what
-+		 * would trigger that.
-+		 */
-+		die_inside_submodule_path(item);
-+		die ("BUG: item->nowildcard_len > item->len || item->prefix > item->len)");
-+	}
- }
- 
- static int pathspec_item_cmp(const void *a_, const void *b_)
-diff --git a/t/t6134-pathspec-in-submodule.sh b/t/t6134-pathspec-in-submodule.sh
-new file mode 100755
-index 0000000000..2900d8d06e
---- /dev/null
-+++ b/t/t6134-pathspec-in-submodule.sh
-@@ -0,0 +1,33 @@
-+#!/bin/sh
-+
-+test_description='test case exclude pathspec'
-+
+ test_description='git mv in subdirs'
 +TEST_CREATE_SUBMODULE=yes
-+. ./test-lib.sh
-+
-+test_expect_success 'setup a submodule' '
+ . ./test-lib.sh
+ 
+ test_expect_success \
+@@ -288,12 +289,12 @@ rm -f moved symlink
+ test_expect_success 'setup submodule' '
+ 	git commit -m initial &&
+ 	git reset --hard &&
+-	git submodule add ./. sub &&
 +	git submodule add ./pretzel.bare sub &&
-+	git commit -a -m "add submodule" &&
-+	git submodule deinit --all
-+'
-+
-+cat <<EOF >expect
-+fatal: Pathspec 'sub/a' is in submodule 'sub'
-+EOF
-+
-+test_expect_success 'error message for path inside submodule' '
-+	echo a >sub/a &&
-+	test_must_fail git add sub/a 2>actual &&
-+	test_cmp expect actual
-+'
-+
-+cat <<EOF >expect
-+fatal: Pathspec '.' is in submodule 'sub'
-+EOF
-+
-+test_expect_success 'error message for path inside submodule from within submodule' '
-+	test_must_fail git -C sub add . 2>actual &&
-+	test_cmp expect actual
-+'
-+
-+test_done
+ 	echo content >file &&
+ 	git add file &&
+ 	git commit -m "added sub and file" &&
+ 	mkdir -p deep/directory/hierarchy &&
+-	git submodule add ./. deep/directory/hierarchy/sub &&
++	git submodule add ./pretzel.bare deep/directory/hierarchy/sub &&
+ 	git commit -m "added another submodule" &&
+ 	git branch submodule
+ '
+diff --git a/t/t7507-commit-verbose.sh b/t/t7507-commit-verbose.sh
+index ed2653d46f..d269900afa 100755
+--- a/t/t7507-commit-verbose.sh
++++ b/t/t7507-commit-verbose.sh
+@@ -1,6 +1,7 @@
+ #!/bin/sh
+ 
+ test_description='verbose commit template'
++TEST_CREATE_SUBMODULE=yes
+ . ./test-lib.sh
+ 
+ write_script "check-for-diff" <<\EOF &&
+@@ -74,11 +75,12 @@ test_expect_success 'diff in message is retained with -v' '
+ 
+ test_expect_success 'submodule log is stripped out too with -v' '
+ 	git config diff.submodule log &&
+-	git submodule add ./. sub &&
++	git submodule add ./pretzel.bare sub &&
+ 	git commit -m "sub added" &&
+ 	(
+ 		cd sub &&
+ 		echo "more" >>file &&
++		git add file &&
+ 		git commit -a -m "submodule commit"
+ 	) &&
+ 	(
+diff --git a/t/t7800-difftool.sh b/t/t7800-difftool.sh
+index 70a2de461a..d13a5d0453 100755
+--- a/t/t7800-difftool.sh
++++ b/t/t7800-difftool.sh
+@@ -7,6 +7,7 @@ test_description='git-difftool
+ 
+ Testing basic diff tool invocation
+ '
++TEST_CREATE_SUBMODULE=Yes
+ 
+ . ./test-lib.sh
+ 
+@@ -534,7 +535,8 @@ test_expect_success PERL 'difftool --no-symlinks detects conflict ' '
+ '
+ 
+ test_expect_success PERL 'difftool properly honors gitlink and core.worktree' '
+-	git submodule add ./. submod/ule &&
++	git submodule add ./pretzel.bare submod/ule &&
++	test_commit -C submod/ule second_commit &&
+ 	test_config -C submod/ule diff.tool checktrees &&
+ 	test_config -C submod/ule difftool.checktrees.cmd '\''
+ 		test -d "$LOCAL" && test -d "$REMOTE" && echo good
+diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
+index 579e812506..aa327a7dff 100644
+--- a/t/test-lib-functions.sh
++++ b/t/test-lib-functions.sh
+@@ -800,6 +800,22 @@ test_create_repo () {
+ 		error "cannot run git init -- have you built things yet?"
+ 		mv .git/hooks .git/hooks-disabled
+ 	) || exit
++	if test -n "$TEST_CREATE_SUBMODULE"
++	then
++		(
++			cd "$repo"
++			TEST_CREATE_SUBMODULE=
++			export TEST_CREATE_SUBMODULE
++			test_create_repo "pretzel.nonbare"
++			test_commit -C "pretzel.nonbare" \
++				"create submodule" "submodule-file" \
++				"submodule-content" "submodule-tag" >&3 2>&4 ||
++				error "cannot run test_commit"
++			git clone --bare "pretzel.nonbare" \
++				  "pretzel.bare" >&3 2>&4 ||
++				  error "cannot clone into bare"
++		)
++	fi
+ }
+ 
+ # This function helps on symlink challenged file systems when it is not
 -- 
 2.11.0.31.g919a8d0.dirty
 
