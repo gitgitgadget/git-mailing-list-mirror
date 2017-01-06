@@ -6,113 +6,111 @@ X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 79D351FEB3
-	for <e@80x24.org>; Fri,  6 Jan 2017 15:52:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0D40A1FEB3
+	for <e@80x24.org>; Fri,  6 Jan 2017 16:23:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S936640AbdAFPwX (ORCPT <rfc822;e@80x24.org>);
-        Fri, 6 Jan 2017 10:52:23 -0500
-Received: from alum-mailsec-scanner-1.mit.edu ([18.7.68.12]:46688 "EHLO
-        alum-mailsec-scanner-1.mit.edu" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S933794AbdAFPwV (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 6 Jan 2017 10:52:21 -0500
-X-AuditID: 1207440c-e53ff700000009a1-7e-586fbd326c40
+        id S1758959AbdAFQW4 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 6 Jan 2017 11:22:56 -0500
+Received: from alum-mailsec-scanner-2.mit.edu ([18.7.68.13]:47444 "EHLO
+        alum-mailsec-scanner-2.mit.edu" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1758950AbdAFQWy (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 6 Jan 2017 11:22:54 -0500
+X-AuditID: 1207440d-8cfff700000009ba-bb-586fc45c1427
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-        by alum-mailsec-scanner-1.mit.edu (Symantec Messaging Gateway) with SMTP id 3C.8E.02465.23DBF685; Fri,  6 Jan 2017 10:52:19 -0500 (EST)
-Received: from [192.168.69.190] (p57906F4E.dip0.t-ipconnect.de [87.144.111.78])
+        by alum-mailsec-scanner-2.mit.edu (Symantec Messaging Gateway) with SMTP id 5C.6A.02490.C54CF685; Fri,  6 Jan 2017 11:22:53 -0500 (EST)
+Received: from bagpipes.fritz.box (p57906F4E.dip0.t-ipconnect.de [87.144.111.78])
         (authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v06FqGwL021661
-        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT)
-        for <git@vger.kernel.org>; Fri, 6 Jan 2017 10:52:17 -0500
-To:     git discussion list <git@vger.kernel.org>
+        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v06GMmWo023262
+        (version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
+        Fri, 6 Jan 2017 11:22:50 -0500
 From:   Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [ANNOUNCE] git-test: run automated tests against a range of Git
- commits
-Message-ID: <1341c01a-aca7-699c-c53a-28d048614bfe@alum.mit.edu>
-Date:   Fri, 6 Jan 2017 16:52:16 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Icedove/45.5.1
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrEIsWRmVeSWpSXmKPExsUixO6iqGu8Nz/C4NUnK4uuK91MDowenzfJ
-        BTBGcdmkpOZklqUW6dslcGVs+trNWNAlXLFiYQtLA+N1vi5GTg4JAROJB9vnMnYxcnEICVxm
-        lFjbuRPKecEksfvJDUaQKhEBXYldz66ygdhsQPainmYmEFtYIEiic9IPsDivgL3E+aZv7CA2
-        i4CKxPkX7WA1ogIhEpfnHIWqEZQ4OfMJC4jNLKAu8WfeJWYIW16ieets5gmMPLOQlM1CUjYL
-        SdkCRuZVjHKJOaW5urmJmTnFqcm6xcmJeXmpRbqGermZJXqpKaWbGCFBw7OD8ds6mUOMAhyM
-        Sjy8EV55EUKsiWXFlbmHGCU5mJREecMc8yOE+JLyUyozEosz4otKc1KLDzFKcDArifBe3wGU
-        401JrKxKLcqHSUlzsCiJ86ouUfcTEkhPLEnNTk0tSC2CycpwcChJ8P7cDdQoWJSanlqRlplT
-        gpBm4uAEGc4DNFwApIa3uCAxtzgzHSJ/ilFRSpx3FkhCACSRUZoH1wuL6leM4kCvCPMy7AGq
-        4gEmBLjuV0CDmYAGC3qCDS5JREhJNTAytfC8dV+v/ISnWOFXI0tO77J1aZy/Tkdw7du9bz+7
-        6DK1s1LVsetcbJzfhM+68ytO+W6ewaZbbif//yj4u/j/ppXXRBZ36WZb71+gL8EeqM7BPjG9
-        0KhxyszdAb1PEttTo26/0Jse7lzJn3uI4esLOT1V9n6jzqxzhh9nX/pzjKVNqeVqZaASS3FG
-        oqEWc1FxIgAI0zbLxQIAAA==
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        David Turner <novalis@novalis.org>,
+        Jacob Keller <jacob.keller@gmail.com>,
+        Philip Oakley <philipoakley@iee.org>,
+        Michael Haggerty <mhagger@alum.mit.edu>
+Subject: [PATCH v4 00/23] Delete directories left empty after ref deletion
+Date:   Fri,  6 Jan 2017 17:22:20 +0100
+Message-Id: <cover.1483719289.git.mhagger@alum.mit.edu>
+X-Mailer: git-send-email 2.9.3
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrIIsWRmVeSWpSXmKPExsUixO6iqBt7JD/C4Hq3ikXXlW4mi4beK8wW
+        uxf3M1vcXjGf2WLJw9fMFj9aepgtOqfKOrB7/H3/gclj56y77B7Ll65j9OhqP8Lm8ax3D6PH
+        xUvKHp83yQWwR3HZpKTmZJalFunbJXBlzNt+k7HgiEjFlxu3mBoYewW7GDk5JARMJBrWHWDq
+        YuTiEBK4zCix9tBGdgjnBJPE5X+d7CBVbAK6Eot6mplAbBEBNYmJbYdYQIqYBT4wSvzqnAVW
+        JCzgJfH5/Qw2EJtFQFXi0bOTLCA2r4C5xOZD15gh1slJXNr2hXkCI9cCRoZVjHKJOaW5urmJ
+        mTnFqcm6xcmJeXmpRbpGermZJXqpKaWbGCEhw7uD8f86mUOMAhyMSjy8EV55EUKsiWXFlbmH
+        GCU5mJREecMc8yOE+JLyUyozEosz4otKc1KLDzFKcDArifDaHQLK8aYkVlalFuXDpKQ5WJTE
+        edWWqPsJCaQnlqRmp6YWpBbBZGU4OJQkeP+ANAoWpaanVqRl5pQgpJk4OEGG8wANFzwMMry4
+        IDG3ODMdIn+KUVFKnHcLSLMASCKjNA+uFxbTrxjFgV4R5u0BaecBpgO47ldAg5lABnuCDS5J
+        REhJNTCabLGUr3JLNq4/7Xrh/Hrhda++X3HTTbyxjpkxVP+UfaxVbfvKr3xuc55HKXtHqf27
+        eWoLS96PxUGORczbq8QyGz30JPNVrV8dm9FxeOvOGyfMLd2z8niVX5fqH6t6ltk25aUi66zo
+        BT73LBrdJx3uauI8/9BjWXJDI9Pa9oOrlmfVBZQtblFiKc5INNRiLipOBAAZzNf0xAIAAA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I just released ﻿⁠⁠⁠⁠`git test﻿⁠⁠⁠⁠`, a script for running automated
-tests across a range of Git commits and keeping track of the results in
-git notes:
+This is v4 of this patch series. Thanks to Peff, Junio, Jake, and
+Philip for their feedback about v3. I believe I have addressed all of
+the comments about v1 [1], v2 [2], and v3 [3].
 
-    https://github.com/mhagger/git-test
+Changes since v3:
 
-This is a script that I've been using in one form or another for years
-and I find it really handy [1].
+* Insert a new first patch correcting the docstring of
+  `refname_is_safe()`.
 
-`git-test` is meant for people who want *all* of their commits (not just
-the branch tip) to pass their automated tests.
+* In "raceproof_create_file(): new function", tweak a comment for
+  clarity as suggested by Peff.
 
-Tl;dr: How to use `git test`
+* In "log_ref_setup(): separate code for create vs non-create", add a
+  semicolon to an otherwise empty code block as requested by Junio.
 
-1.  Define the test you want to run. The string can be any shell
-    command:
-
-        git test add "make -j8 && make -j16 test"
-
-2.  Create a separate linked worktree in which to run your tests:
-
-        git worktree add --detach ../test HEAD
-
-3.  Create a terminal window and `cd` to the directory containing
-    the testing worktree, and run the test against all of the commits
-    on your branch:
-
-        cd ../test
-        git test range master..mybranch
-
-    If any of the commits are broken, `git tree` will display the
-    error then stop with that commit checked out.
-
-4.  As you work, whenever you want to test new commits, go to the
-    testing terminal window and run the same command again:
-
-        git test range master..mybranch
-
-    `git test` is smart enough to remember which commits (actually,
-    trees) have already been tested and only run the test against
-    commits that have been changed or added. And since the tests are
-    run in a different worktree, you can continue working in your
-    main working directory while the tests run.
-
-It is also possible to define more than one test suite in a given
-repository, retry tests, etc. Type `git test help` or read the `README`
-file [2] for more information.
-
-`git test` stores the test results in git notes (under
-`refs/notes/test/<name>`), linked to the commit's tree SHA-1. This means
-that test results remain valid even across some kinds of commit
-rewriting, like changes to commit metadata or squashing adjacent
-commits, and a subset of results even remains valid if a commit is split
-or if some commits earlier in a patch series are reordered.
-
-I don't plan to turn this into a gigantic project or anything, but I
-find this script really useful so I wanted to put it out in the world.
-Feedback and/or pull requests welcome!
+* Drop the patch "try_remove_empty_parents(): don't accommodate
+  consecutive slashes", for reasons discussed on the ML [4].
 
 Michael
 
-[1] The name sucks, I know :-/
-[2] https://github.com/mhagger/git-test/blob/master/README.md
+[1] http://public-inbox.org/git/cover.1455626201.git.mhagger@alum.mit.edu/T/#u
+[2] http://public-inbox.org/git/cover.1456405698.git.mhagger@alum.mit.edu/T/#u
+[3] http://public-inbox.org/git/cover.1483153436.git.mhagger@alum.mit.edu/T/#u
+[4] http://public-inbox.org/git/5051c78e-51f9-becd-e1a6-9c0b781d6912@alum.mit.edu/
+and surrounding thread.
+
+Michael Haggerty (23):
+  files_rename_ref(): tidy up whitespace
+  refname_is_safe(): correct docstring
+  t5505: use "for-each-ref" to test for the non-existence of references
+  safe_create_leading_directories_const(): preserve errno
+  safe_create_leading_directories(): set errno on SCLD_EXISTS
+  raceproof_create_file(): new function
+  lock_ref_sha1_basic(): inline constant
+  lock_ref_sha1_basic(): use raceproof_create_file()
+  rename_tmp_log(): use raceproof_create_file()
+  rename_tmp_log(): improve error reporting
+  log_ref_write(): inline function
+  log_ref_setup(): separate code for create vs non-create
+  log_ref_setup(): improve robustness against races
+  log_ref_setup(): pass the open file descriptor back to the caller
+  log_ref_write_1(): don't depend on logfile argument
+  log_ref_setup(): manage the name of the reflog file internally
+  log_ref_write_1(): inline function
+  delete_ref_loose(): derive loose reference path from lock
+  delete_ref_loose(): inline function
+  try_remove_empty_parents(): rename parameter "name" -> "refname"
+  try_remove_empty_parents(): don't trash argument contents
+  try_remove_empty_parents(): teach to remove parents of reflogs, too
+  files_transaction_commit(): clean up empty directories
+
+ cache.h               |  48 ++++++-
+ refs/files-backend.c  | 371 +++++++++++++++++++++++++-------------------------
+ refs/refs-internal.h  |  22 ++-
+ sha1_file.c           |  76 ++++++++++-
+ t/t1400-update-ref.sh |  27 ++++
+ t/t5505-remote.sh     |   2 +-
+ 6 files changed, 351 insertions(+), 195 deletions(-)
+
+-- 
+2.9.3
 
