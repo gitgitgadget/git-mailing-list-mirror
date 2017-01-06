@@ -2,110 +2,116 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.0 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,
+	STOX_REPLY_TYPE shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0E1DB20A99
-	for <e@80x24.org>; Fri,  6 Jan 2017 21:04:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6B0691FEB3
+	for <e@80x24.org>; Fri,  6 Jan 2017 21:29:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752222AbdAFVEK (ORCPT <rfc822;e@80x24.org>);
-        Fri, 6 Jan 2017 16:04:10 -0500
-Received: from mail-pg0-f47.google.com ([74.125.83.47]:34537 "EHLO
-        mail-pg0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751329AbdAFVDf (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 6 Jan 2017 16:03:35 -0500
-Received: by mail-pg0-f47.google.com with SMTP id 14so10476680pgg.1
-        for <git@vger.kernel.org>; Fri, 06 Jan 2017 13:03:35 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=/+q1kosv1PqkYX6U7iuUH/oFlprs6kmGvX7qh9wU4H0=;
-        b=Xv4kZW6L7qqoCnlOxHQDh0HgoPfCYFtPJCsF30Rgzr1CNwDvNBUqdh2CgmAw0O2CJ/
-         r+tBZjw7BjAcm80se1dKuCbKE+D148o5PQTlc+IsstXNxJIc55T7eLIJYZXKT4FovtnG
-         CwhOSsA0pgcENb9griI0kVeL4Grt58/npaLAPcOzfx94xXjDHf+iFA6FSWpVXA7AEh0o
-         SVpadYB9SX8eMQU++2Xpu5UoGaAYARws48Wrr/r4XBA1Q2kpXLaQ+wUh1LMTyUow45zM
-         lQ8gYBJ5hzyYjyxPpGGtru9SQz5WTh41ihnsxqUmHJIz641pjMPug+OP5D4LrIWu6G7t
-         l+kA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=/+q1kosv1PqkYX6U7iuUH/oFlprs6kmGvX7qh9wU4H0=;
-        b=N0Mx10hsdtujgsurrbk1dBjxfLEYvgQ13JgUEA9/I90i11YxBdP5K+LAJ4ZoftUrBI
-         5mgFy19ENw7gaufYuwxPxynC5KSL8kSNh+cpeAMfXVi1I9Y5jTofHDrbX/xTNkGLPv6m
-         90P98D0ynyvhTIeQEwNz6OJXEJaGkkVUiLtkeYQMjjK810nEBf06aqJJuRb5RmD8k9qS
-         itYs6dHxMTbudPteeVdYmp8mKTq30rsOXMUQLYiGOjFtajZzGbZs6YwvGsnyvlRugMrz
-         tIyBdzJAUNXj5X9UojAvnAgvAY6852xp6g/vKWc1LTLih9LDGxLiYLlNqEHd1VFGY5gZ
-         q0yQ==
-X-Gm-Message-State: AIkVDXL7/it8Jwy7oiaDlVPoa1DI7oW5t8YfkFVRDFApMk28p7NrmssO+rNFfB+tAlQ6lRkR
-X-Received: by 10.99.168.69 with SMTP id i5mr146162058pgp.10.1483736615059;
-        Fri, 06 Jan 2017 13:03:35 -0800 (PST)
-Received: from localhost ([2620:0:1000:5b10:b5c6:5d9b:cb8b:89ed])
-        by smtp.gmail.com with ESMTPSA id t67sm161939406pfg.13.2017.01.06.13.03.34
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Fri, 06 Jan 2017 13:03:34 -0800 (PST)
-From:   Stefan Beller <sbeller@google.com>
-To:     gitster@pobox.com, l.s.r@web.de
-Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>
-Subject: [PATCH 2/5] unpack-trees: remove unneeded continue
-Date:   Fri,  6 Jan 2017 13:03:27 -0800
-Message-Id: <20170106210330.31761-3-sbeller@google.com>
-X-Mailer: git-send-email 2.11.0.31.g919a8d0.dirty
-In-Reply-To: <20170106210330.31761-1-sbeller@google.com>
-References: <CAGZ79kaM=Uosm7KAvAP-8w59Tyfc7LZiV3ZOr=PZnBgMCzr2AA@mail.gmail.com>
- <20170106210330.31761-1-sbeller@google.com>
+        id S933212AbdAFV3A (ORCPT <rfc822;e@80x24.org>);
+        Fri, 6 Jan 2017 16:29:00 -0500
+Received: from smtp-out-2.talktalk.net ([62.24.135.66]:27131 "EHLO
+        smtp-out-2.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755039AbdAFV26 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 6 Jan 2017 16:28:58 -0500
+Received: from PhilipOakley ([92.31.218.76])
+        by smtp.talktalk.net with SMTP
+        id Pc4FczNKA46SJPc4FcQJia; Fri, 06 Jan 2017 21:28:56 +0000
+X-Originating-IP: [92.31.218.76]
+X-Spam: 0
+X-OAuthority: v=2.2 cv=CItoZljD c=1 sm=1 tr=0 a=e6L6E7eW+5Nb7SO+DvSdIg==:117
+ a=e6L6E7eW+5Nb7SO+DvSdIg==:17 a=IkcTkHD0fZMA:10 a=pGLkceISAAAA:8
+ a=NEAV23lmAAAA:8 a=yMhMjlubAAAA:8 a=9E8L8uwQF7E_yDgRpB0A:9 a=QEXdDO2ut3YA:10
+ a=6kGIvZw6iX1k4Y-7sg4_:22 a=Bn2pgwyD2vrAyMmN8A2t:22 a=BKKCjISod1eDJeS0ORpz:22
+Message-ID: <49C0981FE7D04AE2AC0BBB011FD74B90@PhilipOakley>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From:   "Philip Oakley" <philipoakley@iee.org>
+To:     "Robert Dailey" <rcdailey.lists@gmail.com>,
+        "Git" <git@vger.kernel.org>
+Cc:     "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+References: <CAHd499BREpaHHyN89a1HchyJiQzPpdo3NSfoLLGVONEmX1m19g@mail.gmail.com>
+Subject: Re: Rebasing a branch with merges
+Date:   Fri, 6 Jan 2017 21:28:59 -0000
+Organization: OPDS
+MIME-Version: 1.0
+Content-Type: text/plain;
+        format=flowed;
+        charset="UTF-8";
+        reply-type=original
+Content-Transfer-Encoding: 7bit
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+X-CMAE-Envelope: MS4wfPIePYOAFt0dOaf8xDWMF/5YkQlLEfQDV5hAB4PUYzkMw1uG9oxTsaga54IMEnhlTU8ihEFeWoZsmVIn++7d2dK0uQ+KBicLzUJNk0fIaap61YAW7Gax
+ YyilgA7zyoMshacCbGdlvN53/6F+iGWel37Q9nLyNPXqsakhzy+UZMoxJNwfFfCVCMB8qO//2kLW4cx0hFm+x5maIrtBjdUHAljOygw9TNFcBmsNAl/vGLbv
+ jNevY9eaoAZw33GABbD5bQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The continue is the last statement in the loop, so not needed.
-This situation arose in 700e66d66 (2010-07-30, unpack-trees: let
-read-tree -u remove index entries outside sparse area) when statements
-after the continue were removed.
+From: "Robert Dailey" <rcdailey.lists@gmail.com>
+> Here's the scenario:
+>
+> I create a topic branch so one other developer and myself can work on
+> a feature that takes 2 weeks to complete. During that 2 week period,
+> changes are occurring on master that I need in my topic branch. Since
+> I have a collaborator on the branch, I opt for merges instead of
+> rebase.
+>
+> Each day I merge from master to the topic branch, which changes code
+> I'm actively working in and requires semantic changes (functions
+> renamed, moved, etc).
+>
+> Once I'm ready to merge the topic branch back into master, I have two
+> options (bearing in mind the goal is to keep history as clean as
+> possible. Furthermore this implies that the constant merging into
+> topic from master has made the topic branch look unwieldy and
+> difficult to audit):
 
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
- unpack-trees.c | 1 -
- 1 file changed, 1 deletion(-)
+a broader question zero;
+0. Is the merge always clean? Do you always do a preparatory fixup! to 
+ensure that the merge will be clean?
 
-diff --git a/unpack-trees.c b/unpack-trees.c
-index 55c75b4d6a..f16ef14294 100644
---- a/unpack-trees.c
-+++ b/unpack-trees.c
-@@ -272,31 +272,30 @@ static int check_updates(struct unpack_trees_options *o)
- 
- 		progress = start_progress_delay(_("Checking out files"),
- 						total, 50, 1);
- 		cnt = 0;
- 	}
- 
- 	if (o->update)
- 		git_attr_set_direction(GIT_ATTR_CHECKOUT, index);
- 	for (i = 0; i < index->cache_nr; i++) {
- 		const struct cache_entry *ce = index->cache[i];
- 
- 		if (ce->ce_flags & CE_WT_REMOVE) {
- 			display_progress(progress, ++cnt);
- 			if (o->update && !o->dry_run)
- 				unlink_entry(ce);
--			continue;
- 		}
- 	}
- 	remove_marked_cache_entries(index);
- 	remove_scheduled_dirs();
- 
- 	for (i = 0; i < index->cache_nr; i++) {
- 		struct cache_entry *ce = index->cache[i];
- 
- 		if (ce->ce_flags & CE_UPDATE) {
- 			if (ce->ce_flags & CE_WT_REMOVE)
- 				die("BUG: both update and delete flags are set on %s",
- 				    ce->name);
- 			display_progress(progress, ++cnt);
- 			ce->ce_flags &= ~CE_UPDATE;
- 			if (o->update && !o->dry_run) {
--- 
-2.11.0.31.g919a8d0.dirty
+Ensuring that the merge will be clean should greatly simplify your decision 
+about process.
+
+>
+> 1. Do a squash merge, which keeps history clean but we lose context
+> for the important bits (the commits representing units of work that
+> contribute to the topic itself).
+>
+> 2. Do a final rebase prior to merging.
+>
+> #2 doesn't seem to be possible due to patch ordering. For example, if
+> I have real commits after merge commits that depend on those changes
+> from master being present as a base at that point in time, the rebase
+> will cause the patch before it to no longer include those changes from
+> master.
+
+How much of the historic fixups to cover changes on master do you want to 
+keep visible? i.e. how many fork-points are truly needed (a. by you, b. by 
+the project - personal knowledge vs corporate knowledge).?
+
+>
+> Is there a mechanism to rebase in this situation to both achieve a
+> clean, linear history for the topic branch and allow fast forward
+> merging if desired, while still not causing superfluous conflicts due
+> to the merges being omitted during the rebase?
+>
+> Thanks in advance for any advice in this scenario.
+>
+
+Have you looked at @dscho's garden-shears scripts that he uses on 
+Git-for-Windows as he has to continuously rebase the Windows specific 
+patches on top of the progressing Git master? Very similar issues ;-)
+
+https://github.com/git-for-windows/build-extra/blob/master/shears.sh 
+https://blogs.msdn.microsoft.com/visualstudioalm/2016/09/03/whats-new-in-git-for-windows-2-10/ 
+(#Fun Facts)
+
+--
+Philip 
 
