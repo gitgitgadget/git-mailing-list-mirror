@@ -6,24 +6,24 @@ X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9CA341FEB3
+	by dcvr.yhbt.net (Postfix) with ESMTP id D77C41FEB3
 	for <e@80x24.org>; Fri,  6 Jan 2017 16:24:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S967530AbdAFQYJ (ORCPT <rfc822;e@80x24.org>);
-        Fri, 6 Jan 2017 11:24:09 -0500
-Received: from alum-mailsec-scanner-2.mit.edu ([18.7.68.13]:47452 "EHLO
-        alum-mailsec-scanner-2.mit.edu" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S967366AbdAFQXY (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 6 Jan 2017 11:23:24 -0500
-X-AuditID: 1207440d-8b7ff700000009ba-ee-586fc4700629
+        id S967549AbdAFQYR (ORCPT <rfc822;e@80x24.org>);
+        Fri, 6 Jan 2017 11:24:17 -0500
+Received: from alum-mailsec-scanner-7.mit.edu ([18.7.68.19]:54540 "EHLO
+        alum-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S967317AbdAFQXT (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 6 Jan 2017 11:23:19 -0500
+X-AuditID: 12074413-465ff70000000a33-b1-586fc4769d45
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-        by alum-mailsec-scanner-2.mit.edu (Symantec Messaging Gateway) with SMTP id 31.7A.02490.074CF685; Fri,  6 Jan 2017 11:23:13 -0500 (EST)
+        by alum-mailsec-scanner-7.mit.edu (Symantec Messaging Gateway) with SMTP id 2B.A8.02611.674CF685; Fri,  6 Jan 2017 11:23:18 -0500 (EST)
 Received: from bagpipes.fritz.box (p57906F4E.dip0.t-ipconnect.de [87.144.111.78])
         (authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v06GMmX2023262
+        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v06GMmX5023262
         (version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-        Fri, 6 Jan 2017 11:23:11 -0500
+        Fri, 6 Jan 2017 11:23:16 -0500
 From:   Michael Haggerty <mhagger@alum.mit.edu>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
@@ -31,131 +31,67 @@ Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
         Jacob Keller <jacob.keller@gmail.com>,
         Philip Oakley <philipoakley@iee.org>,
         Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH v4 12/23] log_ref_setup(): separate code for create vs non-create
-Date:   Fri,  6 Jan 2017 17:22:32 +0100
-Message-Id: <06ef507f76f8f894050d7524892de7cd417d1401.1483719289.git.mhagger@alum.mit.edu>
+Subject: [PATCH v4 15/23] log_ref_write_1(): don't depend on logfile argument
+Date:   Fri,  6 Jan 2017 17:22:35 +0100
+Message-Id: <8c0da0a941845d73988e2c1100f8afb91e272841.1483719289.git.mhagger@alum.mit.edu>
 X-Mailer: git-send-email 2.9.3
 In-Reply-To: <cover.1483719289.git.mhagger@alum.mit.edu>
 References: <cover.1483719289.git.mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrCIsWRmVeSWpSXmKPExsUixO6iqFt4JD/C4EEfh0XXlW4mi4beK8wW
-        uxf3M1vcXjGf2WLJw9fMFj9aepgtOqfKOrB7/H3/gclj56y77B7Ll65j9OhqP8Lm8ax3D6PH
-        xUvKHp83yQWwR3HZpKTmZJalFunbJXBlXDz0hLGgWaJi9rVDzA2MrUJdjJwcEgImElNnv2ft
-        YuTiEBK4zCjRfGIXE4Rzgkli8tKvzCBVbAK6Eot6mplAbBEBNYmJbYdYQIqYBT4wSvzqnMXe
-        xcjBISwQKLFuuRhIDYuAqsTeCW3sIDavQJTEgYttTBDb5CQubfsCNpNTwEKicdc3RhBbSMBc
-        4tPEw8wTGHkWMDKsYpRLzCnN1c1NzMwpTk3WLU5OzMtLLdI10svNLNFLTSndxAgJMN4djP/X
-        yRxiFOBgVOLhjfDKixBiTSwrrsw9xCjJwaQkyhvmmB8hxJeUn1KZkVicEV9UmpNafIhRgoNZ
-        SYTX7hBQjjclsbIqtSgfJiXNwaIkzqu2RN1PSCA9sSQ1OzW1ILUIJivDwaEkwfsHpFGwKDU9
-        tSItM6cEIc3EwQkynAdouOBhkOHFBYm5xZnpEPlTjLocDTfWPWUSYsnLz0uVEufdAjJIAKQo
-        ozQPbg4sMbxiFAd6S5i3B2QUDzCpwE16BbSECWSJJ9iSkkSElFQDYx5Hyfu79fcNXC24tL55
-        lfZZrmOcEcD5tW/idzYehaNtZoaLDL7npEQKxq9okErcc3CC5dfa55ci3ZcnTTYvjpRwncEj
-        vupKGIOWwDt20eDFuwxPvjK9fOqv+rqgK7LTNzXIvEq4Or/rx0e1eT81WkTU/S+YSug25c/m
-        bCrO3dQwR+fV7UQuJZbijERDLeai4kQA6hQXX+cCAAA=
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrBIsWRmVeSWpSXmKPExsUixO6iqFt2JD/CYPsbcYuuK91MFg29V5gt
+        di/uZ7a4vWI+s8WSh6+ZLX609DBbdE6VdWD3+Pv+A5PHzll32T2WL13H6NHVfoTN41nvHkaP
+        i5eUPT5vkgtgj+KySUnNySxLLdK3S+DKONh5kb3gEFdFw9ZLTA2MOzi6GDk4JARMJD7+Veli
+        5OIQErjMKPF4/0UmCOcEk8TTVY+AHE4ONgFdiUU9zWC2iICaxMS2QywgRcwCHxglfnXOYgdJ
+        CAv4Snyde5QNxGYRUJU4cX8+WAOvQJTE8ekNYDUSAnISl7Z9YQaxOQUsJBp3fWMEsYUEzCU+
+        TTzMPIGRZwEjwypGucSc0lzd3MTMnOLUZN3i5MS8vNQiXXO93MwSvdSU0k2MkAAT3sG466Tc
+        IUYBDkYlHt4Ir7wIIdbEsuLK3EOMkhxMSqK8YY75EUJ8SfkplRmJxRnxRaU5qcWHGCU4mJVE
+        eO0OAeV4UxIrq1KL8mFS0hwsSuK8akvU/YQE0hNLUrNTUwtSi2CyMhwcShK8f0AaBYtS01Mr
+        0jJzShDSTBycIMN5gIYLHgYZXlyQmFucmQ6RP8WoKCXOuwWkWQAkkVGaB9cLSwCvGMWBXhHm
+        DQJp5wEmD7juV0CDmUAGe4INLklESEk1MC6wuvqqWsXDcodH6602mW/vtxt6nT273iX9kdJp
+        3jgJl5J6o697hLIjA1ffNzzc1xdke+7weaEZ55b9WfzJPKnunBPLTYHVFv/MpZYXsOYXf4rU
+        XyIvz3bsjFVH4ynTkP7rSicPmV51OJFQJyn4Of3dI41L11r448TvHXeYe+6qM+tmNenPm5RY
+        ijMSDbWYi4oTAbpO99bbAgAA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The behavior of this function (especially how it handles errors) is
-quite different depending on whether we are willing to create the reflog
-vs. whether we are only trying to open an existing reflog. So separate
-the code paths.
-
-This also simplifies the next steps.
+It's unnecessary to pass a strbuf holding the reflog path up and down
+the call stack now that it is hardly needed by the callers. Remove the
+places where log_ref_write_1() uses it, in preparation for making it
+internal to log_ref_setup().
 
 Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
- refs/files-backend.c | 59 ++++++++++++++++++++++++++++++++++------------------
- 1 file changed, 39 insertions(+), 20 deletions(-)
+ refs/files-backend.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
 diff --git a/refs/files-backend.c b/refs/files-backend.c
-index fd8a751..c8f6d82 100644
+index f723834..9c5e804 100644
 --- a/refs/files-backend.c
 +++ b/refs/files-backend.c
-@@ -2718,45 +2718,64 @@ static int commit_ref(struct ref_lock *lock)
-  */
- static int log_ref_setup(const char *refname, struct strbuf *logfile, struct strbuf *err, int force_create)
- {
--	int logfd, oflags = O_APPEND | O_WRONLY;
-+	int logfd;
- 
- 	strbuf_git_path(logfile, "logs/%s", refname);
+@@ -2838,14 +2838,18 @@ static int log_ref_write_1(const char *refname, const unsigned char *old_sha1,
+ 	result = log_ref_write_fd(logfd, old_sha1, new_sha1,
+ 				  git_committer_info(0), msg);
+ 	if (result) {
+-		strbuf_addf(err, "unable to append to '%s': %s", logfile->buf,
+-			    strerror(errno));
++		int save_errno = errno;
 +
- 	if (force_create || should_autocreate_reflog(refname)) {
- 		if (safe_create_leading_directories(logfile->buf) < 0) {
- 			strbuf_addf(err, "unable to create directory for '%s': "
- 				    "%s", logfile->buf, strerror(errno));
- 			return -1;
- 		}
--		oflags |= O_CREAT;
--	}
--
--	logfd = open(logfile->buf, oflags, 0666);
--	if (logfd < 0) {
--		if (!(oflags & O_CREAT) && (errno == ENOENT || errno == EISDIR))
--			return 0;
-+		logfd = open(logfile->buf, O_APPEND | O_WRONLY | O_CREAT, 0666);
-+		if (logfd < 0) {
-+			if (errno == EISDIR) {
-+				/*
-+				 * The directory that is in the way might be
-+				 * empty. Try to remove it.
-+				 */
-+				if (remove_empty_directories(logfile)) {
-+					strbuf_addf(err, "there are still logs under "
-+						    "'%s'", logfile->buf);
-+					return -1;
-+				}
-+				logfd = open(logfile->buf, O_APPEND | O_WRONLY | O_CREAT, 0666);
-+			}
- 
--		if (errno == EISDIR) {
--			if (remove_empty_directories(logfile)) {
--				strbuf_addf(err, "there are still logs under "
--					    "'%s'", logfile->buf);
-+			if (logfd < 0) {
-+				strbuf_addf(err, "unable to append to '%s': %s",
-+					    logfile->buf, strerror(errno));
- 				return -1;
- 			}
--			logfd = open(logfile->buf, oflags, 0666);
- 		}
--
-+	} else {
-+		logfd = open(logfile->buf, O_APPEND | O_WRONLY, 0666);
- 		if (logfd < 0) {
--			strbuf_addf(err, "unable to append to '%s': %s",
--				    logfile->buf, strerror(errno));
--			return -1;
-+			if (errno == ENOENT || errno == EISDIR) {
-+				/*
-+				 * The logfile doesn't already exist,
-+				 * but that is not an error; it only
-+				 * means that we won't write log
-+				 * entries to it.
-+				 */
-+				;
-+			} else {
-+				strbuf_addf(err, "unable to append to '%s': %s",
-+					    logfile->buf, strerror(errno));
-+				return -1;
-+			}
- 		}
++		strbuf_addf(err, "unable to append to '%s': %s",
++			    git_path("logs/%s", refname), strerror(save_errno));
+ 		close(logfd);
+ 		return -1;
  	}
- 
--	adjust_shared_perm(logfile->buf);
--	close(logfd);
-+	if (logfd >= 0) {
-+		adjust_shared_perm(logfile->buf);
-+		close(logfd);
-+	}
+ 	if (close(logfd)) {
+-		strbuf_addf(err, "unable to append to '%s': %s", logfile->buf,
+-			    strerror(errno));
++		int save_errno = errno;
 +
++		strbuf_addf(err, "unable to append to '%s': %s",
++			    git_path("logs/%s", refname), strerror(save_errno));
+ 		return -1;
+ 	}
  	return 0;
- }
- 
--
- static int files_create_reflog(struct ref_store *ref_store,
- 			       const char *refname, int force_create,
- 			       struct strbuf *err)
 -- 
 2.9.3
 
