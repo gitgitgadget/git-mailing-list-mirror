@@ -2,117 +2,123 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MIME_HEADER_CTYPE_ONLY,
 	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD,T_TVD_MIME_NO_HEADERS
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D201E20A93
-	for <e@80x24.org>; Fri,  6 Jan 2017 01:11:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0159520A99
+	for <e@80x24.org>; Fri,  6 Jan 2017 01:11:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S937142AbdAFBKv (ORCPT <rfc822;e@80x24.org>);
-        Thu, 5 Jan 2017 20:10:51 -0500
-Received: from mail-qk0-f179.google.com ([209.85.220.179]:35728 "EHLO
-        mail-qk0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S969798AbdAFBKi (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 5 Jan 2017 20:10:38 -0500
-Received: by mail-qk0-f179.google.com with SMTP id u25so445897751qki.2
-        for <git@vger.kernel.org>; Thu, 05 Jan 2017 17:10:38 -0800 (PST)
+        id S937528AbdAFBKx (ORCPT <rfc822;e@80x24.org>);
+        Thu, 5 Jan 2017 20:10:53 -0500
+Received: from mail-qt0-f178.google.com ([209.85.216.178]:32831 "EHLO
+        mail-qt0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S969794AbdAFBKh (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 5 Jan 2017 20:10:37 -0500
+Received: by mail-qt0-f178.google.com with SMTP id v23so67012786qtb.0
+        for <git@vger.kernel.org>; Thu, 05 Jan 2017 17:10:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=0C7R1/AEceZkqssiMgo/7kQfUa03qKuhabO/bgjF6/E=;
-        b=QkFo1xMVQgDd6UkUH2XumdOCRfMvATy9RUzi6057KEaSHAf9Fei31enxkeP99OpJVB
-         uyzT78JTA0XXu1RyyzGhZe2S6O6ZuqNPP5bLgdRAm0wiggUAZWGaEoSKUi7CX8PfFEkJ
-         3BvOQj6EgLfqpMeEtbIgvIb/qM8Vs4naAgbeR6xurk8SzeQo8LZM7SUM4JQg/qvruky8
-         dojk8F0DvTYHG84ZNlxxmnBBdlargPARP94abxt1GwrVcQdGv72anAs94M9PtYMhT8hx
-         YRn0VFPAG7wUHzzhEn1G5BZEzmLof6yXDc1JFtSsWayiF7F4HVPeYsnZtrX39k/T6rQG
-         Ui6Q==
+        bh=4QHszqzpOA9lq51MN8dAqX2Jzeu4KWuHCeHdNNsG/WI=;
+        b=I/EsN+WnXwu/kZc2Id7+GI00pShrhh85myfh4i6PkYHFmGLm2AZQ3fdfxGY+ojB3ti
+         Wsg78ClWzKQ00nIaUoSrkvlGEHZuQHhJmN6MJ7OxiLiavCKrXzU88X3ITMXYR7CEsZZy
+         yWGndOhlfeiFm2GVCrrBUDlSbEFEI8d2o2SqM0GzlTOnMsUQus/+LRgI9vVj7cUbRo5+
+         uOg181yrE9BFHnb9yI0mSptUHnWx4m+6qgUAZq+ws9Sepa+c/G3HDOBNPyKS9V6wnchm
+         2YvMf1/kZAcgW6x2It130wIx9u5KFlVc9I6auMGPMd4Cqr4h/rbrzQFHalTNyYvSMRsU
+         zgGA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=0C7R1/AEceZkqssiMgo/7kQfUa03qKuhabO/bgjF6/E=;
-        b=L+mbfjg2PuE9Lf74fyhCN8m5z3WJMF537xj5LEbGAWwFepK6n3IpzaMDHdfWQhLKIC
-         MA5NVz2k59p18gykKZZBoc/vO9Lyy4FAxSTyo9JHMIxJaRBkvkOVLWlTY/UnCXPxsvN4
-         ENwfu3rgUmXfGauXXnbyz936HaSbKsc8cSUpv4gOwfh+BbdSHVqhJITWxbR1yW9lfg6l
-         I6XbXRPrDoDG1Fd5ydR1/37C4c9HtWWqhtSEJY0JVX6wOIGNty+m1FjMuOoirAvxDIhf
-         +QCsQOFuxxoGehnxIPLjSocFLdpTr+QBIranRAqFDfBZ5RVSgtxmh+Gn85kAeKxu5UNf
-         fX3Q==
-X-Gm-Message-State: AIkVDXI4x24nxXbfbO4dzm70meVNJWn28cxex8DoLQo2xdv9WBBEAu5IVLUU0C5FN4d9va+S
-X-Received: by 10.55.77.134 with SMTP id a128mr5720068qkb.186.1483665037647;
-        Thu, 05 Jan 2017 17:10:37 -0800 (PST)
+        bh=4QHszqzpOA9lq51MN8dAqX2Jzeu4KWuHCeHdNNsG/WI=;
+        b=U8lRhJX9ouQPoTs04giMKDgC1d4BHFjhGb1LQ5oUNUgBFrgWU5ewxxcvOihlMSpCQ3
+         +TsDsEXS6qpiaV6/6Z42XSTpAXw/s07MzUX91URfjEjracu4NmWPdbqBitutjHIHbkHm
+         TQAqLhY3humSobYS2rY8y7O/64UcOpc+yZo4ChFATp04RO230vaJSEX1C+VZc/ld+cWb
+         aNrqAWDDP1BK3KpdMkye5L4+hjElJwHNxdfrBfaBxGwek8rmy+Hiv0BUCGvzN55gyJnn
+         Qo0DKEQVQZJXzSMZSFZZZL3zbCg6NlBROnc4oIcVVEbNt/Q1a5rcG0cTlEIWsGSTz/6g
+         3t4g==
+X-Gm-Message-State: AIkVDXJkmh7cROEjbUdzFwWzoAaZfr3vgde//G+PVS/7qPXDoYmtercKvMCsAIQyCIkrsxJ9
+X-Received: by 10.200.36.21 with SMTP id c21mr67741370qtc.1.1483665036846;
+        Thu, 05 Jan 2017 17:10:36 -0800 (PST)
 Received: from hansenr.cam.corp.google.com ([172.29.73.70])
         by smtp.gmail.com with ESMTPSA id r24sm1385264qkl.5.2017.01.05.17.10.36
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 05 Jan 2017 17:10:37 -0800 (PST)
+        Thu, 05 Jan 2017 17:10:36 -0800 (PST)
 From:   Richard Hansen <hansenr@google.com>
 To:     git@vger.kernel.org
 Cc:     davvid@gmail.com, j6t@kdbg.org, hansenr@google.com,
         sbeller@google.com, simon@ruderich.org
-Subject: [PATCH v2 4/4] mergetool: fix running in subdir when rerere enabled
-Date:   Thu,  5 Jan 2017 20:09:45 -0500
-Message-Id: <20170106010945.79382-5-hansenr@google.com>
+Subject: [PATCH v2 3/4] t7610: add test case for rerere+mergetool+subdir bug
+Date:   Thu,  5 Jan 2017 20:09:44 -0500
+Message-Id: <20170106010945.79382-4-hansenr@google.com>
 X-Mailer: git-send-email 2.11.0.390.gc69c2f50cf-goog
 In-Reply-To: <20170106010945.79382-1-hansenr@google.com>
 References: <20170104005042.51530-1-hansenr@google.com>
  <20170106010945.79382-1-hansenr@google.com>
 Content-Type: multipart/signed; protocol="application/pkcs7-signature"; micalg=sha-256;
-        boundary="001a114884b28cc41a054562af31"
+        boundary="001a1142abc6812f9a054562af1a"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
---001a114884b28cc41a054562af31
+--001a1142abc6812f9a054562af1a
 
-If rerere is enabled and no pathnames are given, run cd_to_toplevel
-before running 'git diff --name-only' so that 'git diff --name-only'
-sees the pathnames emitted by 'git rerere remaining'.
-
-Also run cd_to_toplevel before running 'git rerere remaining' in case
-'git rerere remaining' is ever changed to print pathnames relative to
-the current directory rather than to $GIT_WORK_TREE.
-
-This fixes a regression introduced in
-57937f70a09c12ef484c290865dac4066d207c9c (v2.11.0).
+If rerere is enabled and mergetool is run from a subdirectory,
+mergetool always prints "No files need merging".  Add an expected
+failure test case for this situation.
 
 Signed-off-by: Richard Hansen <hansenr@google.com>
 ---
- git-mergetool.sh     | 1 +
- t/t7610-mergetool.sh | 2 +-
- 2 files changed, 2 insertions(+), 1 deletion(-)
+ t/t7610-mergetool.sh | 21 ++++++++++++++++++++-
+ 1 file changed, 20 insertions(+), 1 deletion(-)
 
-diff --git a/git-mergetool.sh b/git-mergetool.sh
-index e52b4e4f2..67ea0d6db 100755
---- a/git-mergetool.sh
-+++ b/git-mergetool.sh
-@@ -456,6 +456,7 @@ main () {
- 
- 	if test $# -eq 0 && test -e "$GIT_DIR/MERGE_RR"
- 	then
-+		cd_to_toplevel
- 		set -- $(git rerere remaining)
- 		if test $# -eq 0
- 		then
 diff --git a/t/t7610-mergetool.sh b/t/t7610-mergetool.sh
-index 1cef1ec2e..5d76772cf 100755
+index 2c06cf73f..1cef1ec2e 100755
 --- a/t/t7610-mergetool.sh
 +++ b/t/t7610-mergetool.sh
-@@ -231,7 +231,7 @@ test_expect_success 'mergetool merges all from subdir (rerere disabled)' '
+@@ -213,7 +213,7 @@ test_expect_success 'mergetool skips autoresolved' '
+ 	test "$output" = "No files need merging"
+ '
+ 
+-test_expect_success 'mergetool merges all from subdir' '
++test_expect_success 'mergetool merges all from subdir (rerere disabled)' '
+ 	test_when_finished "git reset --hard" &&
+ 	git checkout -b test$test_count branch1 &&
+ 	test_config rerere.enabled false &&
+@@ -231,6 +231,25 @@ test_expect_success 'mergetool merges all from subdir' '
  	)
  '
  
--test_expect_failure 'mergetool merges all from subdir (rerere enabled)' '
-+test_expect_success 'mergetool merges all from subdir (rerere enabled)' '
++test_expect_failure 'mergetool merges all from subdir (rerere enabled)' '
++	test_when_finished "git reset --hard" &&
++	git checkout -b test$test_count branch1 &&
++	test_config rerere.enabled true &&
++	rm -rf .git/rr-cache &&
++	(
++		cd subdir &&
++		test_must_fail git merge master &&
++		( yes "r" | git mergetool ../submod ) &&
++		( yes "d" "d" | git mergetool --no-prompt ) &&
++		test "$(cat ../file1)" = "master updated" &&
++		test "$(cat ../file2)" = "master new" &&
++		test "$(cat file3)" = "master new sub" &&
++		( cd .. && git submodule update -N ) &&
++		test "$(cat ../submod/bar)" = "master submodule" &&
++		git commit -m "branch2 resolved by mergetool from subdir"
++	)
++'
++
+ test_expect_success 'mergetool skips resolved paths when rerere is active' '
  	test_when_finished "git reset --hard" &&
- 	git checkout -b test$test_count branch1 &&
  	test_config rerere.enabled true &&
 -- 
 2.11.0.390.gc69c2f50cf-goog
 
 
---001a114884b28cc41a054562af31
+--001a1142abc6812f9a054562af1a
 Content-Type: application/pkcs7-signature; name="smime.p7s"
 Content-Transfer-Encoding: base64
 Content-Disposition: attachment; filename="smime.p7s"
@@ -194,13 +200,13 @@ m4YUSo869xADdrGrWJ7KzroFbucLZYh3niIjVICp7fh9wtLgbX7X/akdubehYhy/l+AIMml6Zlyu
 GNGCGIleyQ0bAdjjG+dKrDErUlui8wd/YplvelaTAzSvNpxcrr+2YB8UBWcYkgULkp5GDCC2guKl
 rMF1mTS6N6GMxUi30sZicbMxggJeMIICWgIBATBcMEwxCzAJBgNVBAYTAkJFMRkwFwYDVQQKExBH
 bG9iYWxTaWduIG52LXNhMSIwIAYDVQQDExlHbG9iYWxTaWduIEhWIFMvTUlNRSBDQSAxAgwvfEOc
-7N3JjQI9nAwwDQYJYIZIAWUDBAIBBQCggdQwLwYJKoZIhvcNAQkEMSIEIExwkLet9qZxFxrm8Iy6
-QDduPUPmSUZvwGR28RN5wypfMBgGCSqGSIb3DQEJAzELBgkqhkiG9w0BBwEwHAYJKoZIhvcNAQkF
+7N3JjQI9nAwwDQYJYIZIAWUDBAIBBQCggdQwLwYJKoZIhvcNAQkEMSIEIAbawVsIXzDDN/kGZS3s
+y3QoaKM/qrHRUYCZLIJjE53ZMBgGCSqGSIb3DQEJAzELBgkqhkiG9w0BBwEwHAYJKoZIhvcNAQkF
 MQ8XDTE3MDEwNjAxMTAzN1owaQYJKoZIhvcNAQkPMVwwWjALBglghkgBZQMEASowCwYJYIZIAWUD
 BAEWMAsGCWCGSAFlAwQBAjAKBggqhkiG9w0DBzALBgkqhkiG9w0BAQowCwYJKoZIhvcNAQEHMAsG
-CWCGSAFlAwQCATANBgkqhkiG9w0BAQEFAASCAQCjZU2/97wis4phcR2wyqdBPq/CJQeytekVbjHQ
-AEBWfpUha8dxOBNnjpRaj2xltmTqZVn4AMmfPycg5et9+Bx0SW0T11Kgi0d/Cb2kISNmrJA3Hzxr
-HQk4V/Xvm6qpHhY7TJRiJ7ZxVTcIHUvVIrGznAxkImq593KNbIVQzIwr8v6Fpf+/UGHHtLjTDstm
-5Qpcy2t7pd1XVzceTeXhy4oErweIvYDVgC3+2mpOK2Z7iIgZ7MRE6Hfif6hkteyy16b+Rv21ElFm
-kDgcw9HKNZ6+SNskoDTasrHcZ7IxsEA5tVFkOGhXrrCMHhXgmvnRxR22ZPKKONM9ZAx4rA+zNGop
---001a114884b28cc41a054562af31--
+CWCGSAFlAwQCATANBgkqhkiG9w0BAQEFAASCAQCdlNW0+XqZ7jeltuwJlHJJg/YBo+hN79vNUQBo
+cm+xkw9Y50PBmMybohkseQ0qd683olUru9XxQmp0wx838Q3OYcih/mfaKMkaaThHpwchCLv+4tTj
+E+u86o0JoNG3j60MXgBj+lkJviEpiLfD4yc9m/Uj9tDGJyX1NXb37wgDzl3xdrN0pVwy4T+I2q3X
+qSg1H8DqPw24QhMQl1E7ApHfeMxff3HaBxxQ9PFAOykXpw94urnXxjeICgRmWidP1W7VuVy0hAk0
+9WD+0nd+898Ap6+Nt6H6psJyT+PpRwED8fwvYfZhGf51N00p4rHA5faOjfhPIzfDPl0N11HcSJYr
+--001a1142abc6812f9a054562af1a--
