@@ -2,97 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.9 required=3.0 tests=BAYES_05,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5CA821FEB3
-	for <e@80x24.org>; Fri,  6 Jan 2017 17:25:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D26821FEB3
+	for <e@80x24.org>; Fri,  6 Jan 2017 17:55:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751287AbdAFRZp (ORCPT <rfc822;e@80x24.org>);
-        Fri, 6 Jan 2017 12:25:45 -0500
-Received: from mail-cys01nam02on0088.outbound.protection.outlook.com ([104.47.37.88]:9664
-        "EHLO NAM02-CY1-obe.outbound.protection.outlook.com"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1750896AbdAFRZn (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 6 Jan 2017 12:25:43 -0500
+        id S1750839AbdAFRzH (ORCPT <rfc822;e@80x24.org>);
+        Fri, 6 Jan 2017 12:55:07 -0500
+Received: from mail-qk0-f171.google.com ([209.85.220.171]:35668 "EHLO
+        mail-qk0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S937679AbdAFRzF (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 6 Jan 2017 12:55:05 -0500
+Received: by mail-qk0-f171.google.com with SMTP id u25so466584912qki.2
+        for <git@vger.kernel.org>; Fri, 06 Jan 2017 09:55:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=netorgft759928.onmicrosoft.com; s=selector1-onahill-co;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version;
- bh=SDf+CvZU3nB5Ym50tNg1tAhMqNJ3jPmThQTdDgOkxjM=;
- b=P3twNUY2Lti7G+E1bsEJphzybA8pBUBVVlGtfDiu1Jz91RyIrwH8hqrP12ilxkFlDrMLvoyj1n3hdbn2/NKG9yimkYGT9B0aWIYZJhsw0zW+RrI5umbqWXi4rbPa8vW+btohVRRu6sHVSuRyJYRpwOra9PxOVRzwq6NmqIL7qAc=
-Received: from MWHPR19MB1135.namprd19.prod.outlook.com (10.173.124.23) by
- MWHPR19MB1136.namprd19.prod.outlook.com (10.173.124.151) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P384) id
- 15.1.829.7; Fri, 6 Jan 2017 17:25:40 +0000
-Received: from MWHPR19MB1135.namprd19.prod.outlook.com ([10.173.124.23]) by
- MWHPR19MB1135.namprd19.prod.outlook.com ([10.173.124.23]) with mapi id
- 15.01.0829.007; Fri, 6 Jan 2017 17:25:40 +0000
-From:   Jake Lambert <jake@onahill.co>
-To:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: git branch --editdescription fatal error
-Thread-Topic: git branch --editdescription fatal error
-Thread-Index: AQHSaEEPGvNcnWvWdkWenWzlAb0mzA==
-Date:   Fri, 6 Jan 2017 17:25:39 +0000
-Message-ID: <MWHPR19MB11357994E6C43DBCC0931CD7BC630@MWHPR19MB1135.namprd19.prod.outlook.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: spf=none (sender IP is )
- smtp.mailfrom=jake@onahill.co; 
-x-originating-ip: [25.164.163.132]
-x-ms-office365-filtering-correlation-id: 1ce64861-e5b0-4441-ee84-08d436590987
-x-microsoft-antispam: UriScan:;BCL:0;PCL:0;RULEID:(22001);SRVR:MWHPR19MB1136;
-x-microsoft-exchange-diagnostics: 1;MWHPR19MB1136;7:oOJKGLD7IQrwQ9GuXqA2Yud61VMR8AEZ8GcWldY7lRfLVlmLvupKLbeDnRFueL3tWhFgPCUaxqWQy6tJ9mZXTEQowwWmzlzNm+XH5yjrX8jrvDYszmu3Ssx1gw5/doiL8S7iuJqRqYt1IELs+PLE9NXrSRQgJ17vXs0uaPnHBniSVJJUdhw/iu6uaCTR78PrVBMD289NAOAxwcWYS/fDFpNM2INXxJRGlp4BGdEEpbSu4Lgt5hxcBja89Up1c6djFK4KaPOjmx4rWUdumFpnEJUavFyGWkEZlV1xlaaH8qaYaTJHZ9tFKypT45EA7sVjxBL9zt7yXoAcLktjkabBM1LSFpaRq9TjJdj9pPO/aYu88oVLiINRDGc6iQY12TIddYj/gvIOCSFBTbf95azDhicvmnT0lREEjXi6O86dnhMmz3MAUwL9v6TgnjgkF0Oh/AFZxDd4M7JHzbNOZshsmA==
-x-microsoft-antispam-prvs: <MWHPR19MB1136D0CAF42CF2EBA2E33C0EBC630@MWHPR19MB1136.namprd19.prod.outlook.com>
-x-exchange-antispam-report-test: UriScan:;
-x-exchange-antispam-report-cfa-test: BCL:0;PCL:0;RULEID:(6040375)(601004)(2401047)(5005006)(8121501046)(3002001)(10201501046)(6041248)(20161123562025)(20161123555025)(20161123564025)(20161123560025)(2016111802025)(6072148)(6043046);SRVR:MWHPR19MB1136;BCL:0;PCL:0;RULEID:;SRVR:MWHPR19MB1136;
-x-forefront-prvs: 01792087B6
-x-forefront-antispam-report: SFV:NSPM;SFS:(10009020)(6009001)(7916002)(39450400003)(199003)(189002)(189998001)(107886002)(66066001)(7696004)(6916009)(110136003)(3280700002)(97736004)(9686003)(122556002)(33656002)(305945005)(38730400001)(77096006)(74316002)(25786008)(2900100001)(92566002)(6506006)(5640700003)(7736002)(450100001)(6436002)(50986999)(54356999)(105586002)(106116001)(106356001)(15974865002)(74482002)(101416001)(2351001)(345774005)(81156014)(1730700003)(81166006)(8936002)(2906002)(2501003)(55016002)(8676002)(99286003)(3660700001)(3846002)(102836003)(6116002)(86362001)(68736007)(5660300001)(18886075002);DIR:OUT;SFP:1101;SCL:1;SRVR:MWHPR19MB1136;H:MWHPR19MB1135.namprd19.prod.outlook.com;FPR:;SPF:None;PTR:InfoNoRecords;A:1;MX:1;LANG:en;
-received-spf: None (protection.outlook.com: onahill.co does not designate
- permitted sender hosts)
-spamdiagnosticoutput: 1:99
-spamdiagnosticmetadata: NSPM
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=ZE7hle5DzpFlhj5+c+C++JF8bnU7Gt1KQ3JNp6xVAxc=;
+        b=WPlPcYay6kmvB99rSzV3/cEG3I1NmC83+2d5ENdzkb0nJoYCJOdBjem6qoeQUtv6Vn
+         p+yveKmswGq3G09Wt9p8ogcnsDpoVvkK2zYWiSklBJgJiQuev7knG3WRu6/2BQKrVGn1
+         DXgLPeKG3POAS7r83szkqCQ/h+5F1dvWjVb9Tbol39tys9oxRQ7BKp2CYEvQpgZdYY6d
+         HV0Y49a8YVZiHJFn8v4Dlmj3ZpdsQn0kZ8bM5iymoBHx/jy6AHzqcJsQeWWfyJdsH0jG
+         oVlAL35mFPqRtaW1VfcTqnUaxTCgoRJhx/ZEBGGCtdb4biZ5TMv3KguNtZZ71AqrhMtl
+         je6w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=ZE7hle5DzpFlhj5+c+C++JF8bnU7Gt1KQ3JNp6xVAxc=;
+        b=T2KFL+g1EAOqSD68vKmNLFBy1akLcZ1B500OU9s2pGyRAi+rm19DHAjU1mZGxrO2X+
+         DJp2IpZ1C4N426Hho50W8gtBeDmjCnxgSl9wmejOK9hW41SQZ0U+FPekM3ooq0iFxHSN
+         hmIQH9HmyeeGN4k/d2XTXNlh3dOliWc24cpQMQ7yDqj+pnhIYPJMAIxrWm+YxXnVgoso
+         stasyyAvPV0uVjlYgslU/wr+pOmpY0MqgL72G/3nlb1jxAfauqfUXH/taFjMffM68/3d
+         K4JNRmMgyqsMEJtB89+uaiTgXB0Djs2Fqs8xsr4S7ypp7enOFJ8/LGhwwXknMvRwMyFf
+         qtdg==
+X-Gm-Message-State: AIkVDXLHHIv3KSHpU0HGzzsZmYwRyCm4us7AXmbaD+qBcfx4beWfbtjuvIELTI37jEh6PxcLhEIisS9fvOF+ggvk
+X-Received: by 10.55.105.129 with SMTP id e123mr81088160qkc.173.1483725303856;
+ Fri, 06 Jan 2017 09:55:03 -0800 (PST)
 MIME-Version: 1.0
-X-OriginatorOrg: onahill.co
-X-MS-Exchange-CrossTenant-originalarrivaltime: 06 Jan 2017 17:25:39.4095
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 78ba671c-66a6-472f-a5ba-245b626a33e0
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MWHPR19MB1136
+Received: by 10.12.146.7 with HTTP; Fri, 6 Jan 2017 09:55:03 -0800 (PST)
+In-Reply-To: <MWHPR19MB11357994E6C43DBCC0931CD7BC630@MWHPR19MB1135.namprd19.prod.outlook.com>
+References: <MWHPR19MB11357994E6C43DBCC0931CD7BC630@MWHPR19MB1135.namprd19.prod.outlook.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Fri, 6 Jan 2017 09:55:03 -0800
+Message-ID: <CAGZ79kaz_hS9P7vqV9EhZazM_g0OUdRfMtFPJ7gFu-h-ku=NKw@mail.gmail.com>
+Subject: Re: git branch --editdescription fatal error
+To:     Jake Lambert <jake@onahill.co>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello,
+On Fri, Jan 6, 2017 at 9:25 AM, Jake Lambert <jake@onahill.co> wrote:
+> Hello,
+>
+> When executing "git branch <branch> --edit-description" on a branch with =
+no description set, I get "fatal: could not unset 'branch.<branch>.descript=
+ion". It would seem that the unsetting piece should occur only after checki=
+ng if it was set in the first place.
 
-When executing "git branch <branch> --edit-description" on a branch with no=
- description set, I get "fatal: could not unset 'branch.<branch>.descriptio=
-n". It would seem that the unsetting piece should occur only after checking=
- if it was set in the first place. I am not too familiar with the inner wor=
-kings of git, but if you accept pull requests, I'm happy to give it a shot =
-if you can give me directions as to how to submit one to you.
+That seems strange. Is it possible that your config is not writable?
+(.git/config, ~/gitconfig, you'd need to find out where the <branch>
+is configured already via git config --global/--system/--local --list)
 
-While I have you, I would also like to make a feature request for branch de=
-scriptions to (optionally) be included in the output of git branch <noargs>=
- (or something like git branch --descriptions). This is particularly helpfu=
-l where branch names match JIRA tickets numbers or are simply so old I don'=
-t remember what they are but don't want to delete them just in case.
+> I am not too familiar with the inner workings of git, but if you accept p=
+ull requests, I'm happy to give it a shot if you can give me directions as =
+to how to submit one to you.
 
-Thank you for maintaining this absolutely wonderful program, and have a hap=
-py New Year!
+We rather do email based workflow, see
+https://github.com/git/git/blob/master/Documentation/SubmittingPatches
+(We use github only as a host, you could also obtain it from one of
+https://git-blame.blogspot.com/p/git-public-repositories.html)
 
-Best,
-Jake
-    =20
- Jake Lambert
- Full Stack Developer
-=20
-=20
- The Company On A Hill
- www.onahill.co
-    =
+>
+> While I have you, I would also like to make a feature request for branch =
+descriptions to (optionally) be included in the output of git branch <noarg=
+s> (or something like git branch --descriptions). This is particularly help=
+ful where branch names match JIRA tickets numbers or are simply so old I do=
+n't remember what they are but don't want to delete them just in case.
+
+Apparently the branch descriptions are only used for the request-pull
+subcommand,
+https://github.com/git/git/commit/c0168147831fce00975949213eef3471b7a2b76b
+and the merge message
+https://github.com/git/git/commit/898eacd8ada2d012f977948350ed60845e238037
+
+
+If you want to work on both of these issues, have a look at
+edit_branch_description
+as well as print_ref_list in builtin/branch.c
+
+> Thank you for maintaining this absolutely wonderful program, and have a h=
+appy New Year!
+
+Happy new year!
+Stefan
