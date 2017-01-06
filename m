@@ -7,118 +7,370 @@ X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD,T_TVD_MIME_NO_HEADERS
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0159520A99
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3374B20A99
 	for <e@80x24.org>; Fri,  6 Jan 2017 01:11:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S937528AbdAFBKx (ORCPT <rfc822;e@80x24.org>);
-        Thu, 5 Jan 2017 20:10:53 -0500
-Received: from mail-qt0-f178.google.com ([209.85.216.178]:32831 "EHLO
-        mail-qt0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S969794AbdAFBKh (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1162348AbdAFBK6 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 5 Jan 2017 20:10:58 -0500
+Received: from mail-qk0-f169.google.com ([209.85.220.169]:33413 "EHLO
+        mail-qk0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S935339AbdAFBKh (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 5 Jan 2017 20:10:37 -0500
-Received: by mail-qt0-f178.google.com with SMTP id v23so67012786qtb.0
-        for <git@vger.kernel.org>; Thu, 05 Jan 2017 17:10:37 -0800 (PST)
+Received: by mail-qk0-f169.google.com with SMTP id s140so38332337qke.0
+        for <git@vger.kernel.org>; Thu, 05 Jan 2017 17:10:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=4QHszqzpOA9lq51MN8dAqX2Jzeu4KWuHCeHdNNsG/WI=;
-        b=I/EsN+WnXwu/kZc2Id7+GI00pShrhh85myfh4i6PkYHFmGLm2AZQ3fdfxGY+ojB3ti
-         Wsg78ClWzKQ00nIaUoSrkvlGEHZuQHhJmN6MJ7OxiLiavCKrXzU88X3ITMXYR7CEsZZy
-         yWGndOhlfeiFm2GVCrrBUDlSbEFEI8d2o2SqM0GzlTOnMsUQus/+LRgI9vVj7cUbRo5+
-         uOg181yrE9BFHnb9yI0mSptUHnWx4m+6qgUAZq+ws9Sepa+c/G3HDOBNPyKS9V6wnchm
-         2YvMf1/kZAcgW6x2It130wIx9u5KFlVc9I6auMGPMd4Cqr4h/rbrzQFHalTNyYvSMRsU
-         zgGA==
+        bh=RJ5QVqd6TYfwqxj+u1z2VVV25vEF3HKFDagXMCG6uws=;
+        b=SnhKxnTgDnvCT4b0PrakxzEpjX7EWzeb4c13piLE0C2SwuAJh8+MrnyYUeioUykFlb
+         1Je4BtUthqISxDEyuoifOdOm2R96D9dgPsyjJ9yT9tytOVOWsO5lg8sApZNIWyeTtsXP
+         e39B9aD27v23dXSCbvOmpylvy7rLnp32tYWqiNkO+e0ab6P6vBLhhC6fRN7GUhcBPLip
+         qHQ0a1KomGyS4i8Wl986oEfDB/HhnIXNy6UC8d40iy66bplKcP4AvLW0U+EDxHj8omdE
+         6Serz/QLz3Xbq9oUbfjjqxlQzANn/NVH9YEEJ5ID7RNoGmgt5LG8xPeHEO+CiCtywpag
+         X27w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=4QHszqzpOA9lq51MN8dAqX2Jzeu4KWuHCeHdNNsG/WI=;
-        b=U8lRhJX9ouQPoTs04giMKDgC1d4BHFjhGb1LQ5oUNUgBFrgWU5ewxxcvOihlMSpCQ3
-         +TsDsEXS6qpiaV6/6Z42XSTpAXw/s07MzUX91URfjEjracu4NmWPdbqBitutjHIHbkHm
-         TQAqLhY3humSobYS2rY8y7O/64UcOpc+yZo4ChFATp04RO230vaJSEX1C+VZc/ld+cWb
-         aNrqAWDDP1BK3KpdMkye5L4+hjElJwHNxdfrBfaBxGwek8rmy+Hiv0BUCGvzN55gyJnn
-         Qo0DKEQVQZJXzSMZSFZZZL3zbCg6NlBROnc4oIcVVEbNt/Q1a5rcG0cTlEIWsGSTz/6g
-         3t4g==
-X-Gm-Message-State: AIkVDXJkmh7cROEjbUdzFwWzoAaZfr3vgde//G+PVS/7qPXDoYmtercKvMCsAIQyCIkrsxJ9
-X-Received: by 10.200.36.21 with SMTP id c21mr67741370qtc.1.1483665036846;
-        Thu, 05 Jan 2017 17:10:36 -0800 (PST)
+        bh=RJ5QVqd6TYfwqxj+u1z2VVV25vEF3HKFDagXMCG6uws=;
+        b=h4ZCjG4nkInr3ZgCUUn89r0mXmUev95RP4hFM0yqBNSVbdc7F5KmupsE5l2oprCIIZ
+         8JkFNCKGpe39QiSXbXXi9tgII4y7nblE2cmpM4KJRYz6bGJvZkjvR+zmSkXMU2Fc+aWx
+         W1G/pFaXBjd2v4+BDE802vvoR7E8fiJgeAWpsA22JhxWUoxo8LT0C1A0yzbPYXp3Y/Mn
+         mqDCETxo6FIx/Hky7Jx+Xo65/2dqiUuH1pBJ0J0V+CdMnKkx0R9ihHS0qrfA1a/zCyzR
+         D7Kfl3esSVTyHDheYw7vqM8Q4IvtDZ9TiXavqf8qvXj1+1v028aJjMSoYkuhKB00Yq0h
+         aP+g==
+X-Gm-Message-State: AIkVDXKdf6Mz+qgTgGSSZtYhmAAKP75OiiAZbB4cNBZGt4EBJPm0YaVgK4MUqyaT23hCjxvi
+X-Received: by 10.55.7.14 with SMTP id 14mr1060508qkh.224.1483665035305;
+        Thu, 05 Jan 2017 17:10:35 -0800 (PST)
 Received: from hansenr.cam.corp.google.com ([172.29.73.70])
-        by smtp.gmail.com with ESMTPSA id r24sm1385264qkl.5.2017.01.05.17.10.36
+        by smtp.gmail.com with ESMTPSA id r24sm1385264qkl.5.2017.01.05.17.10.34
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 05 Jan 2017 17:10:36 -0800 (PST)
+        Thu, 05 Jan 2017 17:10:34 -0800 (PST)
 From:   Richard Hansen <hansenr@google.com>
 To:     git@vger.kernel.org
 Cc:     davvid@gmail.com, j6t@kdbg.org, hansenr@google.com,
         sbeller@google.com, simon@ruderich.org
-Subject: [PATCH v2 3/4] t7610: add test case for rerere+mergetool+subdir bug
-Date:   Thu,  5 Jan 2017 20:09:44 -0500
-Message-Id: <20170106010945.79382-4-hansenr@google.com>
+Subject: [PATCH v2 1/4] t7610: update branch names to match test number
+Date:   Thu,  5 Jan 2017 20:09:42 -0500
+Message-Id: <20170106010945.79382-2-hansenr@google.com>
 X-Mailer: git-send-email 2.11.0.390.gc69c2f50cf-goog
 In-Reply-To: <20170106010945.79382-1-hansenr@google.com>
 References: <20170104005042.51530-1-hansenr@google.com>
  <20170106010945.79382-1-hansenr@google.com>
 Content-Type: multipart/signed; protocol="application/pkcs7-signature"; micalg=sha-256;
-        boundary="001a1142abc6812f9a054562af1a"
+        boundary="001a114c843a6ccdeb054562af7d"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
---001a1142abc6812f9a054562af1a
+--001a114c843a6ccdeb054562af7d
 
-If rerere is enabled and mergetool is run from a subdirectory,
-mergetool always prints "No files need merging".  Add an expected
-failure test case for this situation.
+Rename the testNN branches so that NN matches the test number.  This
+should make it easier to troubleshoot test issues.  Use $test_count to
+keep this future-proof.
 
 Signed-off-by: Richard Hansen <hansenr@google.com>
 ---
- t/t7610-mergetool.sh | 21 ++++++++++++++++++++-
- 1 file changed, 20 insertions(+), 1 deletion(-)
+ t/t7610-mergetool.sh | 82 ++++++++++++++++++++++++++--------------------------
+ 1 file changed, 41 insertions(+), 41 deletions(-)
 
 diff --git a/t/t7610-mergetool.sh b/t/t7610-mergetool.sh
-index 2c06cf73f..1cef1ec2e 100755
+index 6d9f21511..14090739f 100755
 --- a/t/t7610-mergetool.sh
 +++ b/t/t7610-mergetool.sh
-@@ -213,7 +213,7 @@ test_expect_success 'mergetool skips autoresolved' '
- 	test "$output" = "No files need merging"
+@@ -94,7 +94,7 @@ test_expect_success 'setup' '
  '
  
--test_expect_success 'mergetool merges all from subdir' '
-+test_expect_success 'mergetool merges all from subdir (rerere disabled)' '
- 	test_when_finished "git reset --hard" &&
- 	git checkout -b test$test_count branch1 &&
- 	test_config rerere.enabled false &&
-@@ -231,6 +231,25 @@ test_expect_success 'mergetool merges all from subdir' '
- 	)
- '
- 
-+test_expect_failure 'mergetool merges all from subdir (rerere enabled)' '
-+	test_when_finished "git reset --hard" &&
+ test_expect_success 'custom mergetool' '
+-	git checkout -b test1 branch1 &&
 +	git checkout -b test$test_count branch1 &&
-+	test_config rerere.enabled true &&
-+	rm -rf .git/rr-cache &&
-+	(
-+		cd subdir &&
-+		test_must_fail git merge master &&
-+		( yes "r" | git mergetool ../submod ) &&
-+		( yes "d" "d" | git mergetool --no-prompt ) &&
-+		test "$(cat ../file1)" = "master updated" &&
-+		test "$(cat ../file2)" = "master new" &&
-+		test "$(cat file3)" = "master new sub" &&
-+		( cd .. && git submodule update -N ) &&
-+		test "$(cat ../submod/bar)" = "master submodule" &&
-+		git commit -m "branch2 resolved by mergetool from subdir"
-+	)
-+'
-+
+ 	git submodule update -N &&
+ 	test_must_fail git merge master >/dev/null 2>&1 &&
+ 	( yes "" | git mergetool both >/dev/null 2>&1 ) &&
+@@ -113,7 +113,7 @@ test_expect_success 'custom mergetool' '
+ 
+ test_expect_success 'mergetool crlf' '
+ 	test_config core.autocrlf true &&
+-	git checkout -b test2 branch1 &&
++	git checkout -b test$test_count branch1 &&
+ 	test_must_fail git merge master >/dev/null 2>&1 &&
+ 	( yes "" | git mergetool file1 >/dev/null 2>&1 ) &&
+ 	( yes "" | git mergetool file2 >/dev/null 2>&1 ) &&
+@@ -134,7 +134,7 @@ test_expect_success 'mergetool crlf' '
+ '
+ 
+ test_expect_success 'mergetool in subdir' '
+-	git checkout -b test3 branch1 &&
++	git checkout -b test$test_count branch1 &&
+ 	git submodule update -N &&
+ 	(
+ 		cd subdir &&
+@@ -161,7 +161,7 @@ test_expect_success 'mergetool on file in parent dir' '
+ '
+ 
+ test_expect_success 'mergetool skips autoresolved' '
+-	git checkout -b test4 branch1 &&
++	git checkout -b test$test_count branch1 &&
+ 	git submodule update -N &&
+ 	test_must_fail git merge master &&
+ 	test -n "$(git ls-files -u)" &&
+@@ -192,7 +192,7 @@ test_expect_success 'mergetool merges all from subdir' '
  test_expect_success 'mergetool skips resolved paths when rerere is active' '
- 	test_when_finished "git reset --hard" &&
  	test_config rerere.enabled true &&
+ 	rm -rf .git/rr-cache &&
+-	git checkout -b test5 branch1 &&
++	git checkout -b test$test_count branch1 &&
+ 	git submodule update -N &&
+ 	test_must_fail git merge master >/dev/null 2>&1 &&
+ 	( yes "l" | git mergetool --no-prompt submod >/dev/null 2>&1 ) &&
+@@ -233,7 +233,7 @@ test_expect_success 'conflicted stash sets up rerere'  '
+ test_expect_success 'mergetool takes partial path' '
+ 	git reset --hard &&
+ 	test_config rerere.enabled false &&
+-	git checkout -b test12 branch1 &&
++	git checkout -b test$test_count branch1 &&
+ 	git submodule update -N &&
+ 	test_must_fail git merge master &&
+ 
+@@ -308,12 +308,12 @@ test_expect_success 'mergetool keeps tempfiles when aborting delete/delete' '
+ '
+ 
+ test_expect_success 'deleted vs modified submodule' '
+-	git checkout -b test6 branch1 &&
++	git checkout -b test$test_count branch1 &&
+ 	git submodule update -N &&
+ 	mv submod submod-movedaside &&
+ 	git rm --cached submod &&
+ 	git commit -m "Submodule deleted from branch" &&
+-	git checkout -b test6.a test6 &&
++	git checkout -b test$test_count.a test$test_count &&
+ 	test_must_fail git merge master &&
+ 	test -n "$(git ls-files -u)" &&
+ 	( yes "" | git mergetool file1 file2 spaced\ name subdir/file3 >/dev/null 2>&1 ) &&
+@@ -329,7 +329,7 @@ test_expect_success 'deleted vs modified submodule' '
+ 	git commit -m "Merge resolved by keeping module" &&
+ 
+ 	mv submod submod-movedaside &&
+-	git checkout -b test6.b test6 &&
++	git checkout -b test$test_count.b test$test_count &&
+ 	git submodule update -N &&
+ 	test_must_fail git merge master &&
+ 	test -n "$(git ls-files -u)" &&
+@@ -343,9 +343,9 @@ test_expect_success 'deleted vs modified submodule' '
+ 	git commit -m "Merge resolved by deleting module" &&
+ 
+ 	mv submod-movedaside submod &&
+-	git checkout -b test6.c master &&
++	git checkout -b test$test_count.c master &&
+ 	git submodule update -N &&
+-	test_must_fail git merge test6 &&
++	test_must_fail git merge test$test_count &&
+ 	test -n "$(git ls-files -u)" &&
+ 	( yes "" | git mergetool file1 file2 spaced\ name subdir/file3 >/dev/null 2>&1 ) &&
+ 	( yes "" | git mergetool both >/dev/null 2>&1 ) &&
+@@ -359,9 +359,9 @@ test_expect_success 'deleted vs modified submodule' '
+ 	git commit -m "Merge resolved by deleting module" &&
+ 	mv submod.orig submod &&
+ 
+-	git checkout -b test6.d master &&
++	git checkout -b test$test_count.d master &&
+ 	git submodule update -N &&
+-	test_must_fail git merge test6 &&
++	test_must_fail git merge test$test_count &&
+ 	test -n "$(git ls-files -u)" &&
+ 	( yes "" | git mergetool file1 file2 spaced\ name subdir/file3 >/dev/null 2>&1 ) &&
+ 	( yes "" | git mergetool both >/dev/null 2>&1 ) &&
+@@ -377,14 +377,14 @@ test_expect_success 'deleted vs modified submodule' '
+ '
+ 
+ test_expect_success 'file vs modified submodule' '
+-	git checkout -b test7 branch1 &&
++	git checkout -b test$test_count branch1 &&
+ 	git submodule update -N &&
+ 	mv submod submod-movedaside &&
+ 	git rm --cached submod &&
+ 	echo not a submodule >submod &&
+ 	git add submod &&
+ 	git commit -m "Submodule path becomes file" &&
+-	git checkout -b test7.a branch1 &&
++	git checkout -b test$test_count.a branch1 &&
+ 	test_must_fail git merge master &&
+ 	test -n "$(git ls-files -u)" &&
+ 	( yes "" | git mergetool file1 file2 spaced\ name subdir/file3 >/dev/null 2>&1 ) &&
+@@ -400,7 +400,7 @@ test_expect_success 'file vs modified submodule' '
+ 	git commit -m "Merge resolved by keeping module" &&
+ 
+ 	mv submod submod-movedaside &&
+-	git checkout -b test7.b test7 &&
++	git checkout -b test$test_count.b test$test_count &&
+ 	test_must_fail git merge master &&
+ 	test -n "$(git ls-files -u)" &&
+ 	( yes "" | git mergetool file1 file2 spaced\ name subdir/file3 >/dev/null 2>&1 ) &&
+@@ -413,11 +413,11 @@ test_expect_success 'file vs modified submodule' '
+ 	test "$output" = "No files need merging" &&
+ 	git commit -m "Merge resolved by keeping file" &&
+ 
+-	git checkout -b test7.c master &&
++	git checkout -b test$test_count.c master &&
+ 	rmdir submod && mv submod-movedaside submod &&
+ 	test ! -e submod.orig &&
+ 	git submodule update -N &&
+-	test_must_fail git merge test7 &&
++	test_must_fail git merge test$test_count &&
+ 	test -n "$(git ls-files -u)" &&
+ 	( yes "" | git mergetool file1 file2 spaced\ name subdir/file3 >/dev/null 2>&1 ) &&
+ 	( yes "" | git mergetool both >/dev/null 2>&1 ) &&
+@@ -430,10 +430,10 @@ test_expect_success 'file vs modified submodule' '
+ 	test "$output" = "No files need merging" &&
+ 	git commit -m "Merge resolved by keeping file" &&
+ 
+-	git checkout -b test7.d master &&
++	git checkout -b test$test_count.d master &&
+ 	rmdir submod && mv submod.orig submod &&
+ 	git submodule update -N &&
+-	test_must_fail git merge test7 &&
++	test_must_fail git merge test$test_count &&
+ 	test -n "$(git ls-files -u)" &&
+ 	( yes "" | git mergetool file1 file2 spaced\ name subdir/file3 >/dev/null 2>&1 ) &&
+ 	( yes "" | git mergetool both>/dev/null 2>&1 ) &&
+@@ -448,7 +448,7 @@ test_expect_success 'file vs modified submodule' '
+ '
+ 
+ test_expect_success 'submodule in subdirectory' '
+-	git checkout -b test10 branch1 &&
++	git checkout -b test$test_count branch1 &&
+ 	git submodule update -N &&
+ 	(
+ 		cd subdir &&
+@@ -464,52 +464,52 @@ test_expect_success 'submodule in subdirectory' '
+ 	git add subdir/subdir_module &&
+ 	git commit -m "add submodule in subdirectory" &&
+ 
+-	git checkout -b test10.a test10 &&
++	git checkout -b test$test_count.a test$test_count &&
+ 	git submodule update -N &&
+ 	(
+ 	cd subdir/subdir_module &&
+ 		git checkout -b super10.a &&
+-		echo test10.a >file15 &&
++		echo test$test_count.a >file15 &&
+ 		git add file15 &&
+ 		git commit -m "on branch 10.a"
+ 	) &&
+ 	git add subdir/subdir_module &&
+-	git commit -m "change submodule in subdirectory on test10.a" &&
++	git commit -m "change submodule in subdirectory on test$test_count.a" &&
+ 
+-	git checkout -b test10.b test10 &&
++	git checkout -b test$test_count.b test$test_count &&
+ 	git submodule update -N &&
+ 	(
+ 		cd subdir/subdir_module &&
+ 		git checkout -b super10.b &&
+-		echo test10.b >file15 &&
++		echo test$test_count.b >file15 &&
+ 		git add file15 &&
+ 		git commit -m "on branch 10.b"
+ 	) &&
+ 	git add subdir/subdir_module &&
+-	git commit -m "change submodule in subdirectory on test10.b" &&
++	git commit -m "change submodule in subdirectory on test$test_count.b" &&
+ 
+-	test_must_fail git merge test10.a >/dev/null 2>&1 &&
++	test_must_fail git merge test$test_count.a >/dev/null 2>&1 &&
+ 	(
+ 		cd subdir &&
+ 		( yes "l" | git mergetool subdir_module )
+ 	) &&
+-	test "$(cat subdir/subdir_module/file15)" = "test10.b" &&
++	test "$(cat subdir/subdir_module/file15)" = "test$test_count.b" &&
+ 	git submodule update -N &&
+-	test "$(cat subdir/subdir_module/file15)" = "test10.b" &&
++	test "$(cat subdir/subdir_module/file15)" = "test$test_count.b" &&
+ 	git reset --hard &&
+ 	git submodule update -N &&
+ 
+-	test_must_fail git merge test10.a >/dev/null 2>&1 &&
++	test_must_fail git merge test$test_count.a >/dev/null 2>&1 &&
+ 	( yes "r" | git mergetool subdir/subdir_module ) &&
+-	test "$(cat subdir/subdir_module/file15)" = "test10.b" &&
++	test "$(cat subdir/subdir_module/file15)" = "test$test_count.b" &&
+ 	git submodule update -N &&
+-	test "$(cat subdir/subdir_module/file15)" = "test10.a" &&
++	test "$(cat subdir/subdir_module/file15)" = "test$test_count.a" &&
+ 	git commit -m "branch1 resolved with mergetool" &&
+ 	rm -rf subdir/subdir_module
+ '
+ 
+ test_expect_success 'directory vs modified submodule' '
+-	git checkout -b test11 branch1 &&
++	git checkout -b test$test_count branch1 &&
+ 	mv submod submod-movedaside &&
+ 	git rm --cached submod &&
+ 	mkdir submod &&
+@@ -537,9 +537,9 @@ test_expect_success 'directory vs modified submodule' '
+ 	test "$(cat submod/bar)" = "master submodule" &&
+ 	git reset --hard >/dev/null 2>&1 && rm -rf submod-movedaside &&
+ 
+-	git checkout -b test11.c master &&
++	git checkout -b test$test_count.c master &&
+ 	git submodule update -N &&
+-	test_must_fail git merge test11 &&
++	test_must_fail git merge test$test_count &&
+ 	test -n "$(git ls-files -u)" &&
+ 	( yes "l" | git mergetool submod ) &&
+ 	git submodule update -N &&
+@@ -547,7 +547,7 @@ test_expect_success 'directory vs modified submodule' '
+ 
+ 	git reset --hard >/dev/null 2>&1 &&
+ 	git submodule update -N &&
+-	test_must_fail git merge test11 &&
++	test_must_fail git merge test$test_count &&
+ 	test -n "$(git ls-files -u)" &&
+ 	test ! -e submod.orig &&
+ 	( yes "r" | git mergetool submod ) &&
+@@ -559,7 +559,7 @@ test_expect_success 'directory vs modified submodule' '
+ '
+ 
+ test_expect_success 'file with no base' '
+-	git checkout -b test13 branch1 &&
++	git checkout -b test$test_count branch1 &&
+ 	test_must_fail git merge master &&
+ 	git mergetool --no-prompt --tool mybase -- both &&
+ 	>expected &&
+@@ -568,7 +568,7 @@ test_expect_success 'file with no base' '
+ '
+ 
+ test_expect_success 'custom commands override built-ins' '
+-	git checkout -b test14 branch1 &&
++	git checkout -b test$test_count branch1 &&
+ 	test_config mergetool.defaults.cmd "cat \"\$REMOTE\" >\"\$MERGED\"" &&
+ 	test_config mergetool.defaults.trustExitCode true &&
+ 	test_must_fail git merge master &&
+@@ -579,7 +579,7 @@ test_expect_success 'custom commands override built-ins' '
+ '
+ 
+ test_expect_success 'filenames seen by tools start with ./' '
+-	git checkout -b test15 branch1 &&
++	git checkout -b test$test_count branch1 &&
+ 	test_config mergetool.writeToTemp false &&
+ 	test_config mergetool.myecho.cmd "echo \"\$LOCAL\"" &&
+ 	test_config mergetool.myecho.trustExitCode true &&
+@@ -595,7 +595,7 @@ test_lazy_prereq MKTEMP '
+ '
+ 
+ test_expect_success MKTEMP 'temporary filenames are used with mergetool.writeToTemp' '
+-	git checkout -b test16 branch1 &&
++	git checkout -b test$test_count branch1 &&
+ 	test_config mergetool.writeToTemp true &&
+ 	test_config mergetool.myecho.cmd "echo \"\$LOCAL\"" &&
+ 	test_config mergetool.myecho.trustExitCode true &&
 -- 
 2.11.0.390.gc69c2f50cf-goog
 
 
---001a1142abc6812f9a054562af1a
+--001a114c843a6ccdeb054562af7d
 Content-Type: application/pkcs7-signature; name="smime.p7s"
 Content-Transfer-Encoding: base64
 Content-Disposition: attachment; filename="smime.p7s"
@@ -200,13 +452,13 @@ m4YUSo869xADdrGrWJ7KzroFbucLZYh3niIjVICp7fh9wtLgbX7X/akdubehYhy/l+AIMml6Zlyu
 GNGCGIleyQ0bAdjjG+dKrDErUlui8wd/YplvelaTAzSvNpxcrr+2YB8UBWcYkgULkp5GDCC2guKl
 rMF1mTS6N6GMxUi30sZicbMxggJeMIICWgIBATBcMEwxCzAJBgNVBAYTAkJFMRkwFwYDVQQKExBH
 bG9iYWxTaWduIG52LXNhMSIwIAYDVQQDExlHbG9iYWxTaWduIEhWIFMvTUlNRSBDQSAxAgwvfEOc
-7N3JjQI9nAwwDQYJYIZIAWUDBAIBBQCggdQwLwYJKoZIhvcNAQkEMSIEIAbawVsIXzDDN/kGZS3s
-y3QoaKM/qrHRUYCZLIJjE53ZMBgGCSqGSIb3DQEJAzELBgkqhkiG9w0BBwEwHAYJKoZIhvcNAQkF
-MQ8XDTE3MDEwNjAxMTAzN1owaQYJKoZIhvcNAQkPMVwwWjALBglghkgBZQMEASowCwYJYIZIAWUD
+7N3JjQI9nAwwDQYJYIZIAWUDBAIBBQCggdQwLwYJKoZIhvcNAQkEMSIEILht90ltRrNS0IDdBYSA
+WVmiknIv0VVK6k3nLUlULhW/MBgGCSqGSIb3DQEJAzELBgkqhkiG9w0BBwEwHAYJKoZIhvcNAQkF
+MQ8XDTE3MDEwNjAxMTAzNVowaQYJKoZIhvcNAQkPMVwwWjALBglghkgBZQMEASowCwYJYIZIAWUD
 BAEWMAsGCWCGSAFlAwQBAjAKBggqhkiG9w0DBzALBgkqhkiG9w0BAQowCwYJKoZIhvcNAQEHMAsG
-CWCGSAFlAwQCATANBgkqhkiG9w0BAQEFAASCAQCdlNW0+XqZ7jeltuwJlHJJg/YBo+hN79vNUQBo
-cm+xkw9Y50PBmMybohkseQ0qd683olUru9XxQmp0wx838Q3OYcih/mfaKMkaaThHpwchCLv+4tTj
-E+u86o0JoNG3j60MXgBj+lkJviEpiLfD4yc9m/Uj9tDGJyX1NXb37wgDzl3xdrN0pVwy4T+I2q3X
-qSg1H8DqPw24QhMQl1E7ApHfeMxff3HaBxxQ9PFAOykXpw94urnXxjeICgRmWidP1W7VuVy0hAk0
-9WD+0nd+898Ap6+Nt6H6psJyT+PpRwED8fwvYfZhGf51N00p4rHA5faOjfhPIzfDPl0N11HcSJYr
---001a1142abc6812f9a054562af1a--
+CWCGSAFlAwQCATANBgkqhkiG9w0BAQEFAASCAQC/+kLj7AhjwA+zTMoVGVeh/3OCnSNYXh8vmAPC
+UI/AKTUGQ6PGPjwKbEf+z6Xdu/NNEOlEhxqlr+Yr5Iyks8BRr6v2gDWLO7cwSJPWvpL31njbL9Wp
+KcdGt0WMuDfAKoFYmT692bFVWnMaV4tbRWZ3XTRmvqiTvsZlO96W/vS3Sc1BaKg1rZyniLJN98PI
+KJ2gDJov3YtcTWg61/DLTgsA5aZP3sBrpmMKnXrIK8xH9U2h5J5+fM8St0X8M5eyoWdqbo7dEvmF
+7mvz0pIWYutP36GJUWoLIWh7GnRsAFMR4rcQCf1ZOZqMjOScdPKEuMm4+RQfxbT3xjaPoZ7Dhq9C
+--001a114c843a6ccdeb054562af7d--
