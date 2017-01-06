@@ -2,88 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9C3B620756
-	for <e@80x24.org>; Fri,  6 Jan 2017 09:46:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 444FF20756
+	for <e@80x24.org>; Fri,  6 Jan 2017 10:08:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1034937AbdAFJpR (ORCPT <rfc822;e@80x24.org>);
-        Fri, 6 Jan 2017 04:45:17 -0500
-Received: from bsmtp2.bon.at ([213.33.87.16]:13484 "EHLO bsmtp5.bon.at"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1753283AbdAFJob (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 6 Jan 2017 04:44:31 -0500
-Received: from bsmtp3.bon.at (unknown [192.168.181.102])
-        by bsmtp5.bon.at (Postfix) with ESMTPS id 3tw0401JC0z5v0d
-        for <git@vger.kernel.org>; Fri,  6 Jan 2017 10:43:44 +0100 (CET)
-Received: from dx.site (unknown [93.83.142.38])
-        by bsmtp3.bon.at (Postfix) with ESMTPSA id 3tw02n4hWkz5tlX;
-        Fri,  6 Jan 2017 10:42:41 +0100 (CET)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-        by dx.site (Postfix) with ESMTP id A036037C;
-        Fri,  6 Jan 2017 10:42:40 +0100 (CET)
-Subject: Re: [PATCH v2 4/4] mergetool: fix running in subdir when rerere
- enabled
-To:     Richard Hansen <hansenr@google.com>
-References: <20170104005042.51530-1-hansenr@google.com>
- <20170106010945.79382-1-hansenr@google.com>
- <20170106010945.79382-5-hansenr@google.com>
-Cc:     git@vger.kernel.org, davvid@gmail.com, sbeller@google.com,
-        simon@ruderich.org
-From:   Johannes Sixt <j6t@kdbg.org>
-Message-ID: <199807ae-844c-57cd-28cf-2c10b3aee7a9@kdbg.org>
-Date:   Fri, 6 Jan 2017 10:42:40 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.6.0
+        id S1761151AbdAFKHO (ORCPT <rfc822;e@80x24.org>);
+        Fri, 6 Jan 2017 05:07:14 -0500
+Received: from mail-io0-f182.google.com ([209.85.223.182]:33364 "EHLO
+        mail-io0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1761190AbdAFKGb (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 6 Jan 2017 05:06:31 -0500
+Received: by mail-io0-f182.google.com with SMTP id v96so29275821ioi.0
+        for <git@vger.kernel.org>; Fri, 06 Jan 2017 02:06:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=nwfiOOO6KDt+5Yel/XhJZYpiAYpr08GIYW/cZknTYaA=;
+        b=DUSc9VLGWfmSKzirz50+1+WG7HcgN6tycy/xYWRsGs5nj0pwo5c7RSesDhUbrJ3UfM
+         pFcLANMBVmEtr0udWt/FeuKAn91MjA6Jq1zA5awzlQzd49V5nYB4K22S5njjjr06bFa6
+         zWl1QvPJPA2btjfLrRLyZjbKvbKf8KxoaJ33SQlfvageG/rOuZK1pwl9XxwAUBVrHxC/
+         pfVqGOaHmKQkSC0NRj6Yo5Zseyp08yjOORuPQ/2rS1eK0cDdFQQe3/LW504ePFFKh0qu
+         xhPc7rHWAPLLivIN2XtuV3JF9jgu8A1ns54M0onEHC6C/tK7ciDqQNTHNLZ5nCzlBgMO
+         OHgQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=nwfiOOO6KDt+5Yel/XhJZYpiAYpr08GIYW/cZknTYaA=;
+        b=rifpQNyt+Q7isI/2SK8OwpxsVaeQpkdF3rDxNwQtonEWTsuuHJ1Tw0cqNa7AIRqHbj
+         kDC77nM5S/dw0DyAQUni6Kcly4epfKbGjEX4g2OqrrR3MuJzu3ms8oHJQDHgVZp/mDxO
+         tkZRb2UyvaMFuHqDJZXPoA+nnV0pHCeyKogiJI85IMM33ezP+Dyv+WT4oJ/XB9jOhg+D
+         kkmXLKwsVrr3DnxqrRWYMSEtpOrbqe3Cv750YEPklDqDCz+BwYF079B24qN+mIUufgeA
+         pBA8BtKwpVxcB3og7bsFqzJI2HsULwcIk21SW7Mvv9ypMwxeakoVNg81t9PBY+wJMij3
+         JVhQ==
+X-Gm-Message-State: AIkVDXLePJ3FUIOwyRHoppQGEoP2cv8XxiKO0Ki9vKeUqIAudTPZXg3aVwDecL5uqRolpPRPob045+WjudNbzA==
+X-Received: by 10.107.44.137 with SMTP id s131mr57289647ios.212.1483697183622;
+ Fri, 06 Jan 2017 02:06:23 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <20170106010945.79382-5-hansenr@google.com>
-Content-Type: text/plain; charset=iso-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
+Received: by 10.64.69.3 with HTTP; Fri, 6 Jan 2017 02:05:53 -0800 (PST)
+In-Reply-To: <CAGZ79kaLpf1nzSAgRJQamMGk-327LO+qQYihYVVcU+86n92ivg@mail.gmail.com>
+References: <4D106F0FF3D29E4FA1D91C1A31CE4C3501B8DEF2E6@email.novomind.com> <CAGZ79kaLpf1nzSAgRJQamMGk-327LO+qQYihYVVcU+86n92ivg@mail.gmail.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Fri, 6 Jan 2017 17:05:53 +0700
+Message-ID: <CACsJy8C6QWeHSwhsYyJnupkue=aoCG+3Tecytb_0p+gB-CuVKg@mail.gmail.com>
+Subject: Re: git branch -D doesn't work with deleted worktree
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Roland Illig <rillig@novomind.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 06.01.2017 um 02:09 schrieb Richard Hansen:
-> If rerere is enabled and no pathnames are given, run cd_to_toplevel
-> before running 'git diff --name-only' so that 'git diff --name-only'
-> sees the pathnames emitted by 'git rerere remaining'.
->
-> Also run cd_to_toplevel before running 'git rerere remaining' in case
-> 'git rerere remaining' is ever changed to print pathnames relative to
-> the current directory rather than to $GIT_WORK_TREE.
->
-> This fixes a regression introduced in
-> 57937f70a09c12ef484c290865dac4066d207c9c (v2.11.0).
->
-> Signed-off-by: Richard Hansen <hansenr@google.com>
-> ---
->  git-mergetool.sh     | 1 +
->  t/t7610-mergetool.sh | 2 +-
->  2 files changed, 2 insertions(+), 1 deletion(-)
->
-> diff --git a/git-mergetool.sh b/git-mergetool.sh
-> index e52b4e4f2..67ea0d6db 100755
-> --- a/git-mergetool.sh
-> +++ b/git-mergetool.sh
-> @@ -456,6 +456,7 @@ main () {
->
->  	if test $# -eq 0 && test -e "$GIT_DIR/MERGE_RR"
->  	then
-> +		cd_to_toplevel
->  		set -- $(git rerere remaining)
->  		if test $# -eq 0
->  		then
+On Thu, Jan 5, 2017 at 9:02 PM, Stefan Beller <sbeller@google.com> wrote:
+> On Thu, Jan 5, 2017 at 2:06 AM, Roland Illig <rillig@novomind.com> wrote:
+>> Git 2.11.0 gives a wrong error message after the following commands:
+>>
+>> $ git init
+>> $ echo hello >file
+>> $ git add file
+>> $ git commit -m "message"
+>> $ git worktree add ../worktree
+>> $ rm -rf ../worktree
+>> $ git br -D worktree
+>> error: Cannot delete branch 'worktree' checked out at '../worktree'
+>>
+>> Since ../worktree has been deleted, there cannot be anything checked out at that location.
+>>
+>> In my opinion, deleting the branch should just work. Especially since I used the -D option and the "git worktree" documentation says "When you are done with a linked working tree you can simply delete it."
 
-This cannot be a complete solution. Why do we have another 
-cd_to_toplevel later, after `git diff --name-only -- "$@"`?
+Since -D means "I know what I'm doing, get out of my way", maybe we
+should continue if any worktree has the branch checked out by
+detaching it?
 
-Maybe it is necessary to revert back to the flow control that we had 
-before 57937f70a09c ("mergetool: honor diff.orderFile", 2016-10-07)? It 
-did not have `test $# -eq 0` and `test -e "$GIT_DIR/MERGE_RR"` in a 
-single condition.
-
--- Hannes
-
+(Yes I'm carefully tip toeing around the deleted worktree issue since
+"git worktree remove" is coming. After that point, running "worktree
+prune" before "branch -D" does not sound so bad)
+-- 
+Duy
