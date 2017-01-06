@@ -2,117 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BCEA61FEB3
-	for <e@80x24.org>; Fri,  6 Jan 2017 19:41:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E5DF81FEB3
+	for <e@80x24.org>; Fri,  6 Jan 2017 19:43:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S936745AbdAFTlT (ORCPT <rfc822;e@80x24.org>);
-        Fri, 6 Jan 2017 14:41:19 -0500
-Received: from cloud.peff.net ([104.130.231.41]:36132 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S932371AbdAFTlS (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 6 Jan 2017 14:41:18 -0500
-Received: (qmail 10810 invoked by uid 109); 6 Jan 2017 19:41:17 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 06 Jan 2017 19:41:17 +0000
-Received: (qmail 19558 invoked by uid 111); 6 Jan 2017 19:42:07 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 06 Jan 2017 14:42:07 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 06 Jan 2017 14:41:15 -0500
-Date:   Fri, 6 Jan 2017 14:41:15 -0500
-From:   Jeff King <peff@peff.net>
-To:     Johannes Sixt <j6t@kdbg.org>
-Cc:     Trygve Aaberge <trygveaa@gmail.com>,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: Regression: Ctrl-c from the pager in an alias exits it
-Message-ID: <20170106194115.k5u5esv7t63mryvk@sigill.intra.peff.net>
-References: <20170105142529.GA15009@aaberge.net>
- <20170106064032.eqxxer5mx5hsh2md@sigill.intra.peff.net>
- <20170106064752.iccrk656c6k2wrfy@sigill.intra.peff.net>
- <20170106072602.wkbzho5z3osz5hee@sigill.intra.peff.net>
- <20170106073224.5hsrib77tx5tgx7d@sigill.intra.peff.net>
- <3d433abf-71a2-4702-f62b-e254520dc32c@kdbg.org>
+        id S937928AbdAFTnz (ORCPT <rfc822;e@80x24.org>);
+        Fri, 6 Jan 2017 14:43:55 -0500
+Received: from mail-qt0-f179.google.com ([209.85.216.179]:36574 "EHLO
+        mail-qt0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S936528AbdAFTnx (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 6 Jan 2017 14:43:53 -0500
+Received: by mail-qt0-f179.google.com with SMTP id k15so317633114qtg.3
+        for <git@vger.kernel.org>; Fri, 06 Jan 2017 11:43:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=OX3IVtxzKN2/DathCd2MUuvQcjiTn0THWwkTsnh3aTk=;
+        b=QtPVV5tpGVoIFoRmmHoBnpUQ45hn6x1w6e/VjcJSFRRgJfXdtlTR58ZpN9KS7mrIgz
+         7FCWdRCh9ELmckdW7bjAgVKW36weStlzJ7ucvD30TXXcgJV45SK03av71YCtK3rTc042
+         PfnhyznN/Yv70LTZBr7HzFbdpUvQJOLvamEYdtdRO5Tm5XbTPOIiM9V3s3dxAkYWwo/+
+         KeRkN8+ngZE2CmifyN5ERzOBe77FjNjeNRhzt8nHNUW2XDvQkMnmH+YQu03t6w7OS93h
+         qdBekSnpka9yyF7eqtufKYp0oLLLGBWiKKMop6cfCbWhf5rAnqkOKk04QAsh1lUiEJMH
+         jSjA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=OX3IVtxzKN2/DathCd2MUuvQcjiTn0THWwkTsnh3aTk=;
+        b=haMfmwSbtuHdWjUEvNIcrwPWS6WybIujL5qlwjdSyUCzJmwr14yzbKsa+GlddQM1LA
+         Drp9HgUsoOD2G16bowaE87x0oS7v1xdTRSbYZXE19v/IBbKYxJwEb5pagjf8hUUyaVSY
+         KQBeTAV4Phcvb6XmcbagLTe+GowqJfWJBLUG/eneegdkVuBTCin8M17NC7OYGkcfmATG
+         53ID8T+t2qcJDvDMyEWYWyfTCLiQVbs8k4mZbKqErgsLEVuEaY8KNT0K0dIOCDlWltDl
+         lcB3XyCQWxk6GYAIRnLyjfAVgjd5ATDLc+d8kjf+SYZ+XE77FHorPlqbBPiCakBOep28
+         0zkQ==
+X-Gm-Message-State: AIkVDXJr1L0CO5yZwlL1cFwd1ixSLZtxTo9bhknrUnhNzhRbYjwFxEcgw6kPdy+V+VIkoTM7xO/M/EymvPgRnDwj
+X-Received: by 10.200.50.147 with SMTP id z19mr67947184qta.207.1483731832632;
+ Fri, 06 Jan 2017 11:43:52 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <3d433abf-71a2-4702-f62b-e254520dc32c@kdbg.org>
+Received: by 10.12.146.7 with HTTP; Fri, 6 Jan 2017 11:43:52 -0800 (PST)
+In-Reply-To: <CAN0XMO+zzYOXF2gwr=0Tu-7T5BH7f_L+FhfD8RUenDeq3xFHjA@mail.gmail.com>
+References: <MWHPR19MB11357994E6C43DBCC0931CD7BC630@MWHPR19MB1135.namprd19.prod.outlook.com>
+ <CAGZ79kaz_hS9P7vqV9EhZazM_g0OUdRfMtFPJ7gFu-h-ku=NKw@mail.gmail.com> <CAN0XMO+zzYOXF2gwr=0Tu-7T5BH7f_L+FhfD8RUenDeq3xFHjA@mail.gmail.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Fri, 6 Jan 2017 11:43:52 -0800
+Message-ID: <CAGZ79kZOfHWP_pQGN1QcmR71Ft6ib0aPwNKX80YMT7KcK0_Stg@mail.gmail.com>
+Subject: Re: git branch --editdescription fatal error
+To:     Ralf Thielow <ralf.thielow@gmail.com>
+Cc:     Jake Lambert <jake@onahill.co>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jan 06, 2017 at 03:39:59PM +0100, Johannes Sixt wrote:
+On Fri, Jan 6, 2017 at 11:31 AM, Ralf Thielow <ralf.thielow@gmail.com> wrot=
+e:
+> 2017-01-06 18:55 GMT+01:00 Stefan Beller <sbeller@google.com>:
+>> On Fri, Jan 6, 2017 at 9:25 AM, Jake Lambert <jake@onahill.co> wrote:
+>>> Hello,
+>>>
+>>> When executing "git branch <branch> --edit-description" on a branch wit=
+h no description set, I get "fatal: could not unset 'branch.<branch>.descri=
+ption". It would seem that the unsetting piece should occur only after chec=
+king if it was set in the first place.
+>>
+>> That seems strange. Is it possible that your config is not writable?
+>> (.git/config, ~/gitconfig, you'd need to find out where the <branch>
+>> is configured already via git config --global/--system/--local --list)
+>>
+>
+> Have you actually tried to reproduce this issue? I'm on current next
+> and can reproduce the problem.
 
-> > diff --git a/run-command.c b/run-command.c
-> > index ca905a9e80..db47c429b7 100644
-> > --- a/run-command.c
-> > +++ b/run-command.c
-> > @@ -29,6 +29,8 @@ static int installed_child_cleanup_handler;
-> > 
-> >  static void cleanup_children(int sig, int in_signal)
-> >  {
-> > +	struct child_to_clean *children_to_wait_for = NULL;
-> > +
-> >  	while (children_to_clean) {
-> >  		struct child_to_clean *p = children_to_clean;
-> >  		children_to_clean = p->next;
-> > @@ -45,6 +47,17 @@ static void cleanup_children(int sig, int in_signal)
-> >  		}
-> > 
-> >  		kill(p->pid, sig);
-> > +		p->next = children_to_wait_for;
-> > +		children_to_wait_for = p;
-> > +	}
-> > +
-> > +	while (children_to_wait_for) {
-> > +		struct child_to_clean *p = children_to_wait_for;
-> > +		children_to_wait_for = p->next;
-> > +
-> > +		while (waitpid(p->pid, NULL, 0) < 0 && errno == EINTR)
-> > +			; /* spin waiting for process exit or error */
-> > +
-> >  		if (!in_signal)
-> >  			free(p);
-> >  	}
-> > 
-> 
-> This looks like the minimal change necessary. I wonder, though, whether the
-> new local variable is really required. Wouldn't it be sufficient to walk the
-> children_to_clean chain twice?
+eh, I was on $random_version that I currently have installed
+(with messed up submodule code, but otherwise close to master).
 
-Yeah, I considered that. The fact that we disassemble the list in the
-first loop has two side effects:
+this gives hope that a bisect between master..next will give us a culprit?
 
-  1. It lets us free the list as we go (for the !in_signal case).
+>
+> I think removing things that don't exist should behave the same like
+> removing things that do exist, with
+> a success.
 
-  2. If we were to get another signal, it makes us sort-of reentrant. We
-     will only kill and wait for each pid once.
+I am not sure. Consider the tool "rm"
 
-Obviously (1) moves down to the lower loop, but I was trying to preserve
-(2). I'm not sure if it is worth bothering, though. The way we pull
-items off of the list is certainly not atomic (it does shorten the race
-to a few instructions, though, versus potentially waiting on waitpid()
-to return).
+    $ rm no_exist
+    rm: cannot remove =E2=80=98no_exist=E2=80=99: No such file or directory
+    $ echo $?
+    1
 
-My bigger concern with the whole thing is whether we could hit some sort
-of deadlock if the child doesn't die when we send it a signal. E.g.,
-imagine we have a pipe open to the child and somebody sends SIGTERM to
-us. We propagate SIGTERM to the child, and then waitpid() for it. The
-child decides to ignore our SIGTERM for some reason and keep reading
-until EOF on the pipe. It won't ever get it, and the two processes will
-hang forever.
+You have to use the --force.
 
-You can argue perhaps that the child is broken in that case. And I doubt
-this could trigger when running a git sub-command. But we may add more
-children in the future. Right now we use it for the new multi-file
-clean/smudge filters. They use the hook feature to close the
-descriptors, but note that that won't run in the in_signal case.
+For this specific use case I agree we should then set the force flag
+to let the the removal of the config option succeed no matter if it
+existed before.
 
-So I dunno. Maybe this waiting should be restricted only to certain
-cases like executing git sub-commands.
-
--Peff
+Stefan
