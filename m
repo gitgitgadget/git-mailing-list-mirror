@@ -6,24 +6,24 @@ X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BBB801FEB3
+	by dcvr.yhbt.net (Postfix) with ESMTP id D717B1FEB3
 	for <e@80x24.org>; Fri,  6 Jan 2017 16:23:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S967438AbdAFQXb (ORCPT <rfc822;e@80x24.org>);
-        Fri, 6 Jan 2017 11:23:31 -0500
-Received: from alum-mailsec-scanner-3.mit.edu ([18.7.68.14]:63379 "EHLO
-        alum-mailsec-scanner-3.mit.edu" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S965034AbdAFQXQ (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 6 Jan 2017 11:23:16 -0500
-X-AuditID: 1207440e-7dfff700000009ec-cf-586fc47292e0
+        id S967482AbdAFQXe (ORCPT <rfc822;e@80x24.org>);
+        Fri, 6 Jan 2017 11:23:34 -0500
+Received: from alum-mailsec-scanner-5.mit.edu ([18.7.68.17]:44603 "EHLO
+        alum-mailsec-scanner-5.mit.edu" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S966898AbdAFQXN (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 6 Jan 2017 11:23:13 -0500
+X-AuditID: 12074411-fbbff700000009b7-02-586fc46a04e1
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-        by alum-mailsec-scanner-3.mit.edu (Symantec Messaging Gateway) with SMTP id E4.D4.02540.274CF685; Fri,  6 Jan 2017 11:23:14 -0500 (EST)
+        by alum-mailsec-scanner-5.mit.edu (Symantec Messaging Gateway) with SMTP id DC.E6.02487.A64CF685; Fri,  6 Jan 2017 11:23:06 -0500 (EST)
 Received: from bagpipes.fritz.box (p57906F4E.dip0.t-ipconnect.de [87.144.111.78])
         (authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v06GMmX3023262
+        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v06GMmWw023262
         (version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-        Fri, 6 Jan 2017 11:23:13 -0500
+        Fri, 6 Jan 2017 11:23:04 -0500
 From:   Michael Haggerty <mhagger@alum.mit.edu>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
@@ -31,108 +31,102 @@ Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
         Jacob Keller <jacob.keller@gmail.com>,
         Philip Oakley <philipoakley@iee.org>,
         Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH v4 13/23] log_ref_setup(): improve robustness against races
-Date:   Fri,  6 Jan 2017 17:22:33 +0100
-Message-Id: <ad86aeda2873070eae142a0de32bd34ec9bcfe99.1483719289.git.mhagger@alum.mit.edu>
+Subject: [PATCH v4 08/23] lock_ref_sha1_basic(): use raceproof_create_file()
+Date:   Fri,  6 Jan 2017 17:22:28 +0100
+Message-Id: <f3048a56ed5e273ac42964fd2345d67db6e7ddbe.1483719289.git.mhagger@alum.mit.edu>
 X-Mailer: git-send-email 2.9.3
 In-Reply-To: <cover.1483719289.git.mhagger@alum.mit.edu>
 References: <cover.1483719289.git.mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrMIsWRmVeSWpSXmKPExsUixO6iqFt0JD/CYOYHa4uuK91MFg29V5gt
-        di/uZ7a4vWI+s8WSh6+ZLX609DBbdE6VdWD3+Pv+A5PHzll32T2WL13H6NHVfoTN41nvHkaP
-        i5eUPT5vkgtgj+KySUnNySxLLdK3S+DK+Lr3J0vBIrGKXet2MTcwrhTsYuTkkBAwkZjdNpkZ
-        xBYSuMwosXm9excjF5B9gkli+77zLCAJNgFdiUU9zUwgtoiAmsTEtkMsIEXMAh8YJX51zmIH
-        SQgLeEu8O9HCBmKzCKhKnLy5jrWLkYODVyBKYvM1FYhlchKXtn0BW8YpYCHRuOsbI8Ric4lP
-        Ew8zT2DkWcDIsIpRLjGnNFc3NzEzpzg1Wbc4OTEvL7VI11gvN7NELzWldBMjJLz4djC2r5c5
-        xCjAwajEw8vgkRchxJpYVlyZe4hRkoNJSZQ3zDE/QogvKT+lMiOxOCO+qDQntfgQowQHs5II
-        r90hoBxvSmJlVWpRPkxKmoNFSZxXbYm6n5BAemJJanZqakFqEUxWhoNDSYL3D0ijYFFqempF
-        WmZOCUKaiYMTZDgP0HDBwyDDiwsSc4sz0yHypxh1ORpurHvKJMSSl5+XKiXOuwVkkABIUUZp
-        HtwcWFp4xSgO9JYwbw/IKB5gSoGb9ApoCRPIEk+wJSWJCCmpBkaVvk75lvuRratjFjntyDht
-        GFv5+9eJ9fyTsro0/yTs2npeySqF68JKW2+xgOCcZLtqq51BXQ6HZtzce6CxIqZhcbBNK9MM
-        /56y5DMPK7bs+md9y/f9C8npJaW2ISZ3Lskf9/qYv9dET2Er64PpU7127bvKpiIxcWfk/ocu
-        27jfLGw9udck6K4SS3FGoqEWc1FxIgC7vz/85gIAAA==
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrBIsWRmVeSWpSXmKPExsUixO6iqJt1JD/CoPeskkXXlW4mi4beK8wW
+        uxf3M1vcXjGf2WLJw9fMFj9aepgtOqfKOrB7/H3/gclj56y77B7Ll65j9OhqP8Lm8ax3D6PH
+        xUvKHp83yQWwR3HZpKTmZJalFunbJXBldO1YxVjwSqji55oLzA2My/i7GDk4JARMJPbPyexi
+        5OIQErjMKLHq3wMWCOcEk8SfV1uYuhg5OdgEdCUW9TSD2SICahIT2w6BFTELfGCU+NU5ix0k
+        ISzgI3Hq4F6wIhYBVYkjEyGaeQWiJB5t/MMKYksIyElc2vaFGcTmFLCQaNz1jRHEFhIwl/g0
+        8TDzBEaeBYwMqxjlEnNKc3VzEzNzilOTdYuTE/PyUot0TfVyM0v0UlNKNzFCAkxwB+OMk3KH
+        GAU4GJV4eCO88iKEWBPLiitzDzFKcjApifKGOeZHCPEl5adUZiQWZ8QXleakFh9ilOBgVhLh
+        tTsElONNSaysSi3Kh0lJc7AoifPyLVH3ExJITyxJzU5NLUgtgsnKcHAoSfD+AWkULEpNT61I
+        y8wpQUgzcXCCDOcBGi54GGR4cUFibnFmOkT+FKOilDjvFpBmAZBERmkeXC8sAbxiFAd6RZhX
+        GKSdB5g84LpfAQ1mAhnsCTa4JBEhJdXAOF+Is2QX076vTd2zztgsOdd3TOjc8scXD73f8fX8
+        jDOdtaU1TB86/hjHiLLMsIg5dIR3geTrS95FhVWsJlHPXIS/Z6UcUGWaI1W+cfE0szb5zl83
+        r5lcyq5r0X3BmVW1/PDD+sfJ4mtDXdurV77x2NRxdmZcyZ2W+ZXrntYLTZw0eYfL48NKUkos
+        xRmJhlrMRcWJADtRUo7bAgAA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Change log_ref_setup() to use raceproof_create_file() to create the new
-logfile. This makes it more robust against a race against another
-process that might be trying to clean up empty directories while we are
-trying to create a new logfile.
-
-This also means that it will only call create_leading_directories() if
-open() fails, which should be a net win. Even in the cases where we are
-willing to create a new logfile, it will usually be the case that the
-logfile already exists, or if not then that the directory containing the
-logfile already exists. In such cases, we will save some work that was
-previously done unconditionally.
+Instead of coding the retry loop inline, use raceproof_create_file() to
+make lock acquisition safe against directory creation/deletion races.
 
 Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
- refs/files-backend.c | 41 ++++++++++++++++++-----------------------
- 1 file changed, 18 insertions(+), 23 deletions(-)
+ refs/files-backend.c | 35 +++++++++--------------------------
+ 1 file changed, 9 insertions(+), 26 deletions(-)
 
 diff --git a/refs/files-backend.c b/refs/files-backend.c
-index c8f6d82..27d4fd3 100644
+index 7d4658a..74de289 100644
 --- a/refs/files-backend.c
 +++ b/refs/files-backend.c
-@@ -2710,6 +2710,14 @@ static int commit_ref(struct ref_lock *lock)
- 	return 0;
+@@ -1985,6 +1985,13 @@ static int remove_empty_directories(struct strbuf *path)
+ 	return remove_dir_recursively(path, REMOVE_DIR_EMPTY_ONLY);
  }
  
-+static int open_or_create_logfile(const char *path, void *cb)
++static int create_reflock(const char *path, void *cb)
 +{
-+	int *fd = cb;
++	struct lock_file *lk = cb;
 +
-+	*fd = open(path, O_APPEND | O_WRONLY | O_CREAT, 0666);
-+	return (*fd < 0) ? -1 : 0;
++	return hold_lock_file_for_update(lk, path, LOCK_NO_DEREF) < 0 ? -1 : 0;
 +}
 +
  /*
-  * Create a reflog for a ref.  If force_create = 0, the reflog will
-  * only be created for certain refs (those for which
-@@ -2723,31 +2731,18 @@ static int log_ref_setup(const char *refname, struct strbuf *logfile, struct str
- 	strbuf_git_path(logfile, "logs/%s", refname);
+  * Locks a ref returning the lock on success and NULL on failure.
+  * On failure errno is set to something meaningful.
+@@ -2002,7 +2009,6 @@ static struct ref_lock *lock_ref_sha1_basic(struct files_ref_store *refs,
+ 	int last_errno = 0;
+ 	int mustexist = (old_sha1 && !is_null_sha1(old_sha1));
+ 	int resolve_flags = RESOLVE_REF_NO_RECURSE;
+-	int attempts_remaining = 3;
+ 	int resolved;
  
- 	if (force_create || should_autocreate_reflog(refname)) {
--		if (safe_create_leading_directories(logfile->buf) < 0) {
--			strbuf_addf(err, "unable to create directory for '%s': "
--				    "%s", logfile->buf, strerror(errno));
--			return -1;
+ 	assert_main_repository(&refs->base, "lock_ref_sha1_basic");
+@@ -2067,35 +2073,12 @@ static struct ref_lock *lock_ref_sha1_basic(struct files_ref_store *refs,
+ 
+ 	lock->ref_name = xstrdup(refname);
+ 
+- retry:
+-	switch (safe_create_leading_directories_const(ref_file.buf)) {
+-	case SCLD_OK:
+-		break; /* success */
+-	case SCLD_VANISHED:
+-		if (--attempts_remaining > 0)
+-			goto retry;
+-		/* fall through */
+-	default:
++	if (raceproof_create_file(ref_file.buf, create_reflock, lock->lk)) {
+ 		last_errno = errno;
+-		strbuf_addf(err, "unable to create directory for '%s'",
+-			    ref_file.buf);
++		unable_to_lock_message(ref_file.buf, errno, err);
+ 		goto error_return;
+ 	}
+ 
+-	if (hold_lock_file_for_update(lock->lk, ref_file.buf, LOCK_NO_DEREF) < 0) {
+-		last_errno = errno;
+-		if (errno == ENOENT && --attempts_remaining > 0)
+-			/*
+-			 * Maybe somebody just deleted one of the
+-			 * directories leading to ref_file.  Try
+-			 * again:
+-			 */
+-			goto retry;
+-		else {
+-			unable_to_lock_message(ref_file.buf, errno, err);
+-			goto error_return;
 -		}
--		logfd = open(logfile->buf, O_APPEND | O_WRONLY | O_CREAT, 0666);
--		if (logfd < 0) {
--			if (errno == EISDIR) {
--				/*
--				 * The directory that is in the way might be
--				 * empty. Try to remove it.
--				 */
--				if (remove_empty_directories(logfile)) {
--					strbuf_addf(err, "there are still logs under "
--						    "'%s'", logfile->buf);
--					return -1;
--				}
--				logfd = open(logfile->buf, O_APPEND | O_WRONLY | O_CREAT, 0666);
--			}
--
--			if (logfd < 0) {
-+		if (raceproof_create_file(logfile->buf, open_or_create_logfile, &logfd)) {
-+			if (errno == ENOENT)
-+				strbuf_addf(err, "unable to create directory for '%s': "
-+					    "%s", logfile->buf, strerror(errno));
-+			else if (errno == EISDIR)
-+				strbuf_addf(err, "there are still logs under '%s'",
-+					    logfile->buf);
-+			else
- 				strbuf_addf(err, "unable to append to '%s': %s",
- 					    logfile->buf, strerror(errno));
--				return -1;
--			}
-+
-+			return -1;
- 		}
- 	} else {
- 		logfd = open(logfile->buf, O_APPEND | O_WRONLY, 0666);
+-	}
+ 	if (verify_lock(lock, old_sha1, mustexist, err)) {
+ 		last_errno = errno;
+ 		goto error_return;
 -- 
 2.9.3
 
