@@ -2,88 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+X-Spam-Status: No, score=-6.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4E41020756
-	for <e@80x24.org>; Sat,  7 Jan 2017 21:38:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CA70420756
+	for <e@80x24.org>; Sat,  7 Jan 2017 21:41:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932732AbdAGVix (ORCPT <rfc822;e@80x24.org>);
-        Sat, 7 Jan 2017 16:38:53 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:61623 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751283AbdAGViw (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 7 Jan 2017 16:38:52 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 7A36F5D59F;
-        Sat,  7 Jan 2017 16:38:50 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=15i2JDHElEOJ6XLufu4F++RbEU4=; b=X3EdBw
-        W091wmbYhz7wWoFDUy/XJOjwn3Rn1UDi49a5Qn6bxfh9TcKvu39LEEiD1zdq4w3r
-        GTCGHIY9+qpmsezKZEOIfxDkbsY4L4/oibARqnKzgTg+0ia1u3XpJf92FUfGk9mM
-        syRMolh+Vyd5XEIckEThtMbW9SnRTYFKd1NjM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=YwT9qZpPDVhZttfKzv33IFB8U0ASYBpT
-        EN3l9RZpwQ+U//9Om/Z1GArtdKLF5Bi/zYqQMLWt0rDniybjZ84Tx7BgF0I7VXhT
-        5kLJEGyBoBKSCeAI6avctdc4+VTkQRc1BCHbKY+1ZB2GvM3rpAHtAu+Ka0Ux0z+K
-        XSV8P6szRZA=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 708085D59D;
-        Sat,  7 Jan 2017 16:38:50 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id D50135D59C;
-        Sat,  7 Jan 2017 16:38:49 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     git <git@vger.kernel.org>,
-        Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH v3 08/21] Documentation/git-update-index: talk about core.splitIndex config var
-References: <20161226102222.17150-1-chriscool@tuxfamily.org>
-        <20161226102222.17150-9-chriscool@tuxfamily.org>
-        <xmqqpokd9ocw.fsf@gitster.mtv.corp.google.com>
-        <CAP8UFD06mxGiZmr4Lwv3M8CedBZaamswzz-Q+mOxuuUFet8KNQ@mail.gmail.com>
-Date:   Sat, 07 Jan 2017 13:38:48 -0800
-In-Reply-To: <CAP8UFD06mxGiZmr4Lwv3M8CedBZaamswzz-Q+mOxuuUFet8KNQ@mail.gmail.com>
-        (Christian Couder's message of "Mon, 2 Jan 2017 10:39:06 +0100")
-Message-ID: <xmqqshou35zr.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.90 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: AD4314F8-D521-11E6-B8E0-FE3F13518317-77302942!pb-smtp1.pobox.com
+        id S932681AbdAGVlt (ORCPT <rfc822;e@80x24.org>);
+        Sat, 7 Jan 2017 16:41:49 -0500
+Received: from mail-oi0-f65.google.com ([209.85.218.65]:32977 "EHLO
+        mail-oi0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753768AbdAGVlr (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 7 Jan 2017 16:41:47 -0500
+Received: by mail-oi0-f65.google.com with SMTP id j15so6631951oih.0
+        for <git@vger.kernel.org>; Sat, 07 Jan 2017 13:41:47 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id;
+        bh=OEYJbBOuicA5G3uzV3Gi2gH3ZjotIMnbjMYb8aszieM=;
+        b=HOedvTjGUFu8YM0tXhp4skTDlVisOURIEab8RFnWKmR4JIorQkXKddqVFjopo6Vv2C
+         Hct6NRCabiT5X1O7PtJuAR/OrSPyfHLKQBGK7txDQBM67WerPM79pwb4Iub3uyuMRZ9V
+         7BpXuddoxKywWHhgzlZdwbDLF+zstTrNdhHlbuEFLkyau6ILsTTjEihxxzYsdcLEuNkS
+         8GTSpfs/EkM2+bi2zzsh7KpCa9BgUwjnM2TNjSJK/FEBCxBPuE/FmzP2JNuMfzvujeca
+         6D8doGvJ3tBisafGDK2V4kN795ZK9DvAffz9DjZ5fgPCCKjw75g0uBVoDDMz5m9GQ5QF
+         /5jA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=OEYJbBOuicA5G3uzV3Gi2gH3ZjotIMnbjMYb8aszieM=;
+        b=tdY85vgv1TauvbrY7q+yIm7vaA6fjZ4rb2AFg/JHZjXvPCDJZy1AKttF7Je7gXunck
+         NPVcxMDHSmCLTix+c01wlGIZiTrkwd2icTmLsxFyvIDMWOaxeFJqigSEKPl6pSsf793S
+         tr53DIq1jUpRIR0WE4xVJB30Ofl3NlWYstEpB3fnuazr6rP6bY+4sbDWaryRguo59Sct
+         uvZLmbRgrCGlG3aPw4Laoxx14a4yS0DeWEaxD45vo22/mzMVZluK0Xw+qR5kY6SSu47I
+         C9x7CsKp9TrJcs36QzsS/fiKFC7gAhLhEuTUmzreeF+y2WqKFn5QjCEBEAechLp26Zy4
+         FGPA==
+X-Gm-Message-State: AIkVDXK5lIlZUZt7A6RgtjHucad4EI7hYv+jbIKtYTYwV7JJUS5XopHsYenC45s80bxOzg==
+X-Received: by 10.202.48.132 with SMTP id w126mr4214897oiw.133.1483825307161;
+        Sat, 07 Jan 2017 13:41:47 -0800 (PST)
+Received: from localhost.localdomain ([2605:6000:9fc0:56:811:343f:f904:d318])
+        by smtp.gmail.com with ESMTPSA id b129sm39384562oia.4.2017.01.07.13.41.46
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 07 Jan 2017 13:41:46 -0800 (PST)
+From:   Steven Penny <svnpenn@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Steven Penny <svnpenn@gmail.com>
+Subject: [PATCH] Makefile: POSIX windres
+Date:   Sat,  7 Jan 2017 15:41:10 -0600
+Message-Id: <20170107214110.3124-1-svnpenn@gmail.com>
+X-Mailer: git-send-email 2.8.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Christian Couder <christian.couder@gmail.com> writes:
+When environment variable POSIXLY_CORRECT is set, the "input -o output" syntax
+is not supported.
 
-> It feels strange that when I do things one way, you suggest another
-> way, and the next time in a similar situation when I do things the way
-> you suggested previously, then you suggest the way I did it initially
-> the first time...
+http://cygwin.com/ml/cygwin/2017-01/msg00036.html
 
-Perhaps because neither is quite satisfactory and I am being forced
-to choose between the two unsatifactory designs?  In any case, I
-mostly am and was pointing out the issues and not saying the other
-one is the most preferred solution in these threads.
+Signed-off-by: Steven Penny <svnpenn@gmail.com>
+---
+ Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-I think there should just be one authoritative source of the truth,
-and I have always thought it should be the bit set in the index file
-when the command line option is used, because that was the way the
-feature was introduced first and I am superstitious about end-user
-inertia.  And from that point of view, no matter how you make this
-new "config" thing interact with it, it would always give a strange
-and unsatifactory end-user experience, at least to me.
+diff --git a/Makefile b/Makefile
+index d861bd9..a2a1212 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1816,7 +1816,7 @@ $(SCRIPT_LIB) : % : %.sh GIT-SCRIPT-DEFINES
+ git.res: git.rc GIT-VERSION-FILE
+ 	$(QUIET_RC)$(RC) \
+ 	  $(join -DMAJOR= -DMINOR=, $(wordlist 1,2,$(subst -, ,$(subst ., ,$(GIT_VERSION))))) \
+-	  -DGIT_VERSION="\\\"$(GIT_VERSION)\\\"" $< -o $@
++	  -DGIT_VERSION="\\\"$(GIT_VERSION)\\\"" -i $< -o $@
+ 
+ # This makes sure we depend on the NO_PERL setting itself.
+ $(SCRIPT_PERL_GEN): GIT-BUILD-OPTIONS
+-- 
+2.8.3
 
-Perhaps we should declare that config will be the one and only way
-in the future and start deprecating the command line option way.
-That will remove the need for two to interact with each other.
-
-I dunno.
