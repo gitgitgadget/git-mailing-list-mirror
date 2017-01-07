@@ -2,126 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.4 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0377C20756
-	for <e@80x24.org>; Sat,  7 Jan 2017 21:47:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8263E20756
+	for <e@80x24.org>; Sat,  7 Jan 2017 21:49:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753257AbdAGVrI (ORCPT <rfc822;e@80x24.org>);
-        Sat, 7 Jan 2017 16:47:08 -0500
-Received: from mail-wj0-f177.google.com ([209.85.210.177]:35791 "EHLO
-        mail-wj0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752150AbdAGVrG (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 7 Jan 2017 16:47:06 -0500
-Received: by mail-wj0-f177.google.com with SMTP id i20so50811972wjn.2
-        for <git@vger.kernel.org>; Sat, 07 Jan 2017 13:47:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=kaarsemaker-net.20150623.gappssmtp.com; s=20150623;
-        h=message-id:subject:from:to:date:in-reply-to:references:mime-version
-         :content-transfer-encoding;
-        bh=PwF7EGg0UMPvvCwQhzDrR/BOyqeJrtARrJdF7JuepAU=;
-        b=THUP6eUbAuApewh2cWHVGxTnPS0B1AmWx/c/z6h1JnTFqTCevfX4+urtYWg9jcU5Fi
-         RNjjwTcdAMH2U4N0jrZ6xjgZYxmiAd++WVkmxENE1WpXhM1Plz2qSTJpbOUZCBIjMzjO
-         CpfibbPw5gdFJIvEAYnurwSIVQYn89oV9lksUfY3uQX5hcTd2yhLWt9uQ/MfpcoJBqW1
-         3Bj+6JVGG23P3M2zwgY2Wsid/hyPYS+utSeUy8Gac+Zvx8nfgMmDjqq0q5m7EOjlEUos
-         cvLsh5KnfLRQfobSUgkGpuOjHRzVaWAyhFWXQtruCIy7m5mmPoQWhWdysZxS5wbqrC1d
-         Mwzw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:subject:from:to:date:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=PwF7EGg0UMPvvCwQhzDrR/BOyqeJrtARrJdF7JuepAU=;
-        b=UdcZda/QIdwmugrZYWmnf79Zqd//ggxjFtJ6ANxs3kW5nLL4zwQG+rLlo4FNKQfBqK
-         ajKYc2LbdzYuTJQ+qDc0MWiLpvyUywxlLHdi/0MfQZHxFzW2Y34Z7lxERa6H69SvDqr9
-         IkluLqg6FZDeGrf/G4I6t0QI2bmSdqvmdz3LgV+efwwErrBff89fHl5PbJCY6cRBqXhb
-         LIRo+VIBHOWsqwjBt79mTo7izuCFuzHAaCz2Mqf/weGO4mK7FYdqqFpaJW31eRjnz6R7
-         u5n92E/PGLBKxULAU0oy6VLn7rFv43kp783FyFQkP4rN/NxnDVlZpWgYR0ROyae0S2eR
-         VNaA==
-X-Gm-Message-State: AIkVDXJNW8SGNN1E0vVA40c7IAfdUpcqk7MfHxpE56nGKlzNvEI2PoyWqw404PuQv9B/Ug==
-X-Received: by 10.194.202.133 with SMTP id ki5mr72314080wjc.191.1483825624995;
-        Sat, 07 Jan 2017 13:47:04 -0800 (PST)
-Received: from [192.168.1.80] ([145.129.9.233])
-        by smtp.gmail.com with ESMTPSA id 138sm10317322wms.20.2017.01.07.13.47.04
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sat, 07 Jan 2017 13:47:04 -0800 (PST)
-Message-ID: <1483825623.31837.9.camel@kaarsemaker.net>
-Subject: Re: "git fsck" not detecting garbage at the end of blob object
- files...
-From:   Dennis Kaarsemaker <dennis@kaarsemaker.net>
-To:     John Szakmeister <john@szakmeister.net>, git@vger.kernel.org
-Date:   Sat, 07 Jan 2017 22:47:03 +0100
-In-Reply-To: <CAEBDL5Uc39JagdmXUxfxh1TPSK3H5wxoTfjK-pfLRYjciBnHpA@mail.gmail.com>
-References: <CAEBDL5Uc39JagdmXUxfxh1TPSK3H5wxoTfjK-pfLRYjciBnHpA@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.22.1-0ubuntu2 
-Mime-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        id S1753361AbdAGVtD (ORCPT <rfc822;e@80x24.org>);
+        Sat, 7 Jan 2017 16:49:03 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:54838 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1750770AbdAGVtB (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 7 Jan 2017 16:49:01 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id AB1F95B023;
+        Sat,  7 Jan 2017 16:49:00 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=tJExD4bn19sjaDC0xFE5/c25fuM=; b=kj1gBF
+        1OaaLg3R01yZ62cqYeeixstqSmWw4f/FKb3Wf0lmbDpjvno5pMyZQI/uLFVTLGV0
+        TxLNKG43jau3SZsT5v6+rgmDbH1v/oxflw+r1PtpYgTRkSnqVhLUkAF4tuGYW9FO
+        UO56YgXzlmQQbgM8nRiNWoC8RuBpPDH2PR5Gg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=fzgH1DMT5DFh9tHYhsN33Y5EhvGEXlQa
+        XjEB3B4XB5RFuMX9nEciFUlKojPwCG03c/uehM9BOekUOxGWQ/Vvl9ctmK+MdAkv
+        KzT0lGPzX2YFVNiZ8xRvYGAINpTTVj3ikbKziaBbC0NOg4aKUgWCoNwgU1RJQB5l
+        H5iMYjCiqwo=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 9F2A25B022;
+        Sat,  7 Jan 2017 16:49:00 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id EA36D5B021;
+        Sat,  7 Jan 2017 16:48:59 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     git@vger.kernel.org, Kevin Daudt <me@ikke.info>,
+        Dennis Kaarsemaker <dennis@kaarsemaker.net>
+Subject: Re: [PATCH v2 05/34] sequencer (rebase -i): learn about the 'verbose' mode
+References: <cover.1472633606.git.johannes.schindelin@gmx.de>
+        <cover.1481642927.git.johannes.schindelin@gmx.de>
+        <1d1f8d8b0696769bb85dd8a2269dc281aa91eede.1481642927.git.johannes.schindelin@gmx.de>
+        <xmqq37hr1orb.fsf@gitster.mtv.corp.google.com>
+        <alpine.DEB.2.20.1701021610590.3469@virtualbox>
+Date:   Sat, 07 Jan 2017 13:48:58 -0800
+In-Reply-To: <alpine.DEB.2.20.1701021610590.3469@virtualbox> (Johannes
+        Schindelin's message of "Mon, 2 Jan 2017 16:11:36 +0100 (CET)")
+Message-ID: <xmqqk2a635it.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.90 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 18E705BA-D523-11E6-B1C4-A7617B1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, 2017-01-07 at 07:50 -0500, John Szakmeister wrote:
-> I was perusing StackOverflow this morning and ran across this
-> question: http://stackoverflow.com/questions/41521143/git-fsck-full-only-checking-directories/
-> 
-> It was a simple question about why "checking objects" was not
-> appearing, but in it was another issue.  The user purposefully
-> corrupted a blob object file to see if `git fsck` would catch it by
-> tacking extra data on at the end.  `git fsck` happily said everything
-> was okay, but when I played with things locally I found out that `git
-> gc` does not like that extra garbage.  I'm not sure what the trade-off
-> needs to be here, but my expectation is that if `git fsck` says
-> everything is okay, then all operations using that object (file)
-> should work too.
-> 
-> Is that unreasonable?  What would be the impact of fixing this issue?
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-If you do this with a commit object or tree object, fsck does complain.
-I think it's sensible to do so for blob objects as well.
+> Hi Junio,
+>
+> On Tue, 13 Dec 2016, Junio C Hamano wrote:
+>
+>> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+>> 
+>> > @@ -1493,9 +1498,26 @@ static int pick_commits(struct todo_list *todo_list, struct replay_opts *opts)
+>> >  	}
+>> >  
+>> >  	if (is_rebase_i(opts)) {
+>> > +		struct strbuf buf = STRBUF_INIT;
+>> > +
+>> >  		/* Stopped in the middle, as planned? */
+>> >  		if (todo_list->current < todo_list->nr)
+>> >  			return 0;
+>> > +
+>> > +		if (opts->verbose) {
+>> > +			const char *argv[] = {
+>> > +				"diff-tree", "--stat", NULL, NULL
+>> > +			};
+>> > +
+>> > +			if (!read_oneliner(&buf, rebase_path_orig_head(), 0))
+>> > +				return error(_("could not read '%s'"),
+>> > +					rebase_path_orig_head());
+>> > +			strbuf_addstr(&buf, "..HEAD");
+>> > +			argv[2] = buf.buf;
+>> > +			run_command_v_opt(argv, RUN_GIT_CMD);
+>> > +			strbuf_reset(&buf);
+>> > +		}
+>> > +		strbuf_release(&buf);
+>> >  	}
+>> 
+>> It's a bit curious that the previous step avoided running a separate
+>> process and instead did "diff-tree -p" all in C, but this one does not.
+>
+> I guess my only defence is that I tried to be a little lazy.
 
-Editing blob object:
-
-hurricane:/tmp/moo (master)$ hexer .git/objects/a1/b3ebb97f10ff8d85a9472bcba50cb575dbd485 
-hurricane:/tmp/moo (master)$ git status
-On branch master
-nothing to commit, working tree clean
-hurricane:/tmp/moo (master)$ git fsck
-Checking object directories: 100% (256/256), done.
-hurricane:/tmp/moo (master)$ git gc
-Counting objects: 3, done.
-error: garbage at end of loose object 'a1b3ebb97f10ff8d85a9472bcba50cb575dbd485'
-fatal: loose object a1b3ebb97f10ff8d85a9472bcba50cb575dbd485 (stored in .git/objects/a1/b3ebb97f10ff8d85a9472bcba50cb575dbd485) is corrupt
-error: failed to run repack
-
-Editing tree object:
-
-hurricane:/tmp/moo (master)$ hexer .git/objects/d4/eda486f02e3e862e23f6eb3739a25a2ca43f20
-hurricane:/tmp/moo (master +)$ git status
-error: garbage at end of loose object 'd4eda486f02e3e862e23f6eb3739a25a2ca43f20'
-fatal: loose object d4eda486f02e3e862e23f6eb3739a25a2ca43f20 (stored in .git/objects/d4/eda486f02e3e862e23f6eb3739a25a2ca43f20) is corrupt
-error: garbage at end of loose object 'd4eda486f02e3e862e23f6eb3739a25a2ca43f20'
-fatal: loose object d4eda486f02e3e862e23f6eb3739a25a2ca43f20 (stored in .git/objects/d4/eda486f02e3e862e23f6eb3739a25a2ca43f20) is corrupt
-hurricane:/tmp/moo (master +)$ git fsck
-error: garbage at end of loose object 'd4eda486f02e3e862e23f6eb3739a25a2ca43f20'
-fatal: loose object d4eda486f02e3e862e23f6eb3739a25a2ca43f20 (stored in .git/objects/d4/eda486f02e3e862e23f6eb3739a25a2ca43f20) is corrupt
-error: garbage at end of loose object 'd4eda486f02e3e862e23f6eb3739a25a2ca43f20'
-fatal: loose object d4eda486f02e3e862e23f6eb3739a25a2ca43f20 (stored in .git/objects/d4/eda486f02e3e862e23f6eb3739a25a2ca43f20) is corrupt
-
-Editing commit object:
-
-hurricane:/tmp/moo (master)$ echo test >> .git/objects/47/59a693f7e8362c724d3365fe6df398083fafa0 
-hurricane:/tmp/moo (master +)$ git status
-error: garbage at end of loose object '4759a693f7e8362c724d3365fe6df398083fafa0'
-fatal: loose object 4759a693f7e8362c724d3365fe6df398083fafa0 (stored in .git/objects/47/59a693f7e8362c724d3365fe6df398083fafa0) is corrupt
-error: garbage at end of loose object '4759a693f7e8362c724d3365fe6df398083fafa0'
-fatal: loose object 4759a693f7e8362c724d3365fe6df398083fafa0 (stored in .git/objects/47/59a693f7e8362c724d3365fe6df398083fafa0) is corrupt
-!(128) hurricane:/tmp/moo (master +)$ git fsck
-error: garbage at end of loose object '4759a693f7e8362c724d3365fe6df398083fafa0'
-fatal: loose object 4759a693f7e8362c724d3365fe6df398083fafa0 (stored in .git/objects/47/59a693f7e8362c724d3365fe6df398083fafa0) is corrupt
-error: garbage at end of loose object '4759a693f7e8362c724d3365fe6df398083fafa0'
-fatal: loose object 4759a693f7e8362c724d3365fe6df398083fafa0 (stored in .git/objects/47/59a693f7e8362c724d3365fe6df398083fafa0) is corrupt
-
-D.
+I actually was alluding to going the other way around, spawning
+"diff-tree -p" in the other codepath like this one does.
