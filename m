@@ -6,98 +6,83 @@ X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 93BA720756
-	for <e@80x24.org>; Sat,  7 Jan 2017 21:04:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6969120756
+	for <e@80x24.org>; Sat,  7 Jan 2017 21:18:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751775AbdAGVER (ORCPT <rfc822;e@80x24.org>);
-        Sat, 7 Jan 2017 16:04:17 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:51954 "EHLO
+        id S1753684AbdAGVSS (ORCPT <rfc822;e@80x24.org>);
+        Sat, 7 Jan 2017 16:18:18 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:52047 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1750707AbdAGVEQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 7 Jan 2017 16:04:16 -0500
+        with ESMTP id S1751795AbdAGVSQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 7 Jan 2017 16:18:16 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 172495C89D;
-        Sat,  7 Jan 2017 16:04:15 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 523015CB01;
+        Sat,  7 Jan 2017 16:18:15 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=gVjpNfnz4sKJ+gKEfiNsKV/dvTU=; b=rSV2MX
-        YzjZMMgyZQ7E8A+6kcP+mWaMl8MeOYuSxsO/TruBcGzfZb/Ze/A6rwrfed1W2rVg
-        xiwvCOxR8c5XCnU5AfeLc15Mms7K0z2cw0qfguNyW74vsmrdBFySiAZVb6bNAO/q
-        5GsLi4PFwOObpkOoGfx9jQmn0qnd5lDlXejw8=
+        :content-type; s=sasl; bh=XQFoXh0r5Dfg0PPYoYkgJAjoVWs=; b=NlRVJL
+        XYIStu2g4/fPSZqHJoYRZtlMIG1sr9QZzpruKXbMTF2CpdohWRegxycjPjIQ7LvD
+        aVSnpo+hfBnT4tgRAQnA39Eu8lys4TPZToqzSfK35XkKmcDZ1aVuGNf4lskg3eCh
+        Uxb6/1IIbUV2Z+ZoGM2/PXw99hln7Qh9hcYa8=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=vqmXRdrHa4fzePu3wWH/xREpm9llBVEg
-        jjE2aQ6fxd2NrwNXSXPNWuT/wCT6K2m8fHwgdcXUBM8X3RcgaR2/Xa/nSq/NMScL
-        71b32xAPZSnCoaQADlmaJUXIgvhkgmWNC6PXDiuz0G8TGaBZfExPlpDxc42ELPUf
-        3pWLhsSYxB4=
+        :content-type; q=dns; s=sasl; b=ZFmSHwIQjuRKaXl/X8PTmT3AifgLRduw
+        4Fd7txTUW3tpzyiFA98VEa5yqCF+Nq1PFaGMs3UaBtx1XutACiwAl5G7nsxTOlJv
+        jift/6NW+pe06oy584Anu9sS7GndIPibSflb17ie06/ojlmr7Cmm4TtHfWSh6Kl3
+        qkNzInsIPG8=
 Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 0E3495C89C;
-        Sat,  7 Jan 2017 16:04:15 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 494535CB00;
+        Sat,  7 Jan 2017 16:18:15 -0500 (EST)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 6DBE65C89B;
-        Sat,  7 Jan 2017 16:04:14 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id A29725CAFE;
+        Sat,  7 Jan 2017 16:18:14 -0500 (EST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     "G. Sylvie Davies" <sylvie@bit-booster.com>
-Cc:     git@vger.kernel.org
-Subject: Re: RFC: --force-with-lease default behaviour
-References: <CAAj3zPz-jMVoxNTRZ0iR1ZPTFh873gEo33QjynBE1vaHsMmg3A@mail.gmail.com>
-        <CAAj3zPx4uMXhV7t86Cnn8SgmpXb2SGththYN7sHetOqL_JosMg@mail.gmail.com>
-Date:   Sat, 07 Jan 2017 13:04:13 -0800
-In-Reply-To: <CAAj3zPx4uMXhV7t86Cnn8SgmpXb2SGththYN7sHetOqL_JosMg@mail.gmail.com>
-        (G. Sylvie Davies's message of "Wed, 4 Jan 2017 22:52:44 -0800")
-Message-ID: <xmqq37gu4m5u.fsf@gitster.mtv.corp.google.com>
+To:     Pranit Bauva <pranit.bauva@gmail.com>
+Cc:     Johannes Sixt <j6t@kdbg.org>, Luke Diamand <luke@diamand.org>,
+        Git Users <git@vger.kernel.org>,
+        Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCH] don't use test_must_fail with grep
+References: <20161231114412.23439-1-pranit.bauva@gmail.com>
+        <CAE5ih7-7e+ZLUbE7iquWV2=qP4ofzAHUC2ZPg3b-ivSpCo4eRw@mail.gmail.com>
+        <285ed013-5c59-0b98-7dc0-8f729587a313@kdbg.org>
+        <CAFZEwPNbtamFfFy7vYXurpEWBDmRMyPB9+Ep-hm4uZVMREbq5Q@mail.gmail.com>
+Date:   Sat, 07 Jan 2017 13:18:13 -0800
+In-Reply-To: <CAFZEwPNbtamFfFy7vYXurpEWBDmRMyPB9+Ep-hm4uZVMREbq5Q@mail.gmail.com>
+        (Pranit Bauva's message of "Mon, 2 Jan 2017 19:10:12 +0530")
+Message-ID: <xmqqy3ym36y2.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.90 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: D836DE6A-D51C-11E6-A514-A7617B1B28F4-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: CD05D6FC-D51E-11E6-8719-A7617B1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"G. Sylvie Davies" <sylvie@bit-booster.com> writes:
+Pranit Bauva <pranit.bauva@gmail.com> writes:
 
-> I wonder if there's anything one could do to help those who type "git
-> fetch" and still want to enjoy "--force-with-lease"...
+> Hey Johannes,
+>
+> On Sun, Jan 1, 2017 at 8:20 PM, Johannes Sixt <j6t@kdbg.org> wrote:
+>> which makes me wonder: Is the message that we do expect not to occur
+>> actually printed on stdout? It sounds much more like an error message, i.e.,
+>> text that is printed on stderr. Wouldn't we need this?
+>>
+>>         git p4 commit >actual 2>&1 &&
+>>         ! grep "git author.*does not match" actual &&
+>>
+>> -- Hannes
+>
+> This seems better! Since I am at it, I can remove the traces of pipes
+> in an another patch.
+>
+> Regards,
+> Pranit Bauva
 
-The entire idea behind "force-with-lease" is that you plan to later
-force update the tip of a branch at the remote to replace the commit
-that used to be at the tip at some point, that you do not want other
-people to have their own work on that branch that will be lost by
-your later force-pushing, yet you cannot "lock" a branch at the
-remote repository remotely because that goes against the distributed
-nature of the development.  Instead of locking others out, forcing
-others to wait and sit idle while you complete the material to be
-force-pushed (which may never happen), you base your work on one
-state of the remote branch, and make sure the remote branch hasn't
-advanced in the meantime (or you redo your work)---the cost of the
-extra work due to your planned force-pushing is beared by you, not
-by others.
-
-There however is no place in Git where you explicitly declare "this
-is where I start working on producing a new commit.  That commit
-will replace this state and will not fast-forward from it." and
-store it locally.  The "--force-with-lease" was designed to take
-that information from the command line, expecting that the script
-that drives it does something like
-
-	#!/bin/sh
-	LEASE=$(git rev-parse --verify @{u})
-	# do whatever that requires non-fast-forward push
-	git commit --amend ...
-	... maybe more ...
-	# finally push it out
-	git push --force-with-lease $LEASE ...
-
-Lazy people decided that as long as they promise to themselves that
-they are not going to do anything to cause @{u} to move, they can
-use it as a lazy-man's approximate.  Perhaps that was a misguided
-attempt to add convenience.
-
-A possible answer to your wordering may be to deprecate the
-defaulting to @{u} and always require the expected commit to be
-specified explicitly.
-
-
+I see v3 that has 2>&1 but according to Luke's comment ("the message
+comes from cat"), it shouldn't be there?  I am behind clearing the
+backlog in my mailbox and I could tweak it out from v3 while
+queuing, or I may forget about it after looking at other topics ;-)
+in which case you may want to send v4 with the fix?
