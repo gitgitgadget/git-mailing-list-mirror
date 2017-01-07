@@ -7,156 +7,145 @@ X-Spam-Status: No, score=-6.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6438D1FEB3
-	for <e@80x24.org>; Sat,  7 Jan 2017 01:53:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D27131FEB3
+	for <e@80x24.org>; Sat,  7 Jan 2017 02:18:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1757890AbdAGBxd (ORCPT <rfc822;e@80x24.org>);
-        Fri, 6 Jan 2017 20:53:33 -0500
-Received: from mail-qt0-f172.google.com ([209.85.216.172]:33762 "EHLO
-        mail-qt0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751193AbdAGBxb (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 6 Jan 2017 20:53:31 -0500
-Received: by mail-qt0-f172.google.com with SMTP id v23so94324139qtb.0
-        for <git@vger.kernel.org>; Fri, 06 Jan 2017 17:53:31 -0800 (PST)
+        id S940919AbdAGCQK (ORCPT <rfc822;e@80x24.org>);
+        Fri, 6 Jan 2017 21:16:10 -0500
+Received: from mail-qk0-f181.google.com ([209.85.220.181]:34599 "EHLO
+        mail-qk0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S940670AbdAGCQC (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 6 Jan 2017 21:16:02 -0500
+Received: by mail-qk0-f181.google.com with SMTP id a20so93291948qkc.1
+        for <git@vger.kernel.org>; Fri, 06 Jan 2017 18:16:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=subject:to:references:cc:from:message-id:date:user-agent
          :mime-version:in-reply-to;
-        bh=wwa9D7fDV6I3HUk2dlvb6XlvaT+Emkvr3e9Xh9hAeVc=;
-        b=IYNJb5lSCeXWJXrgrZpKojxxIeHgPVRd+3ZrVrKupDVG/OEMXzvz+P+AfAw9SeVuUB
-         J+ciZVCnge4pDx7Vcbt2fvg+sKZNjtFpVqN6GZW7SBcs/fjRjzjrgVN+ir5mKmKb80MO
-         D3jWHIZKG+i2YRzmaxV9o6eU0Q4CjHaPfpGCditPjKM28KFJEGNnwLwzy2ianfuOv9Pj
-         Yyc8datIbmrOeipQfIZisT8hIs3osNssxYTUYYz0kW9t3gVvjpaiiJgM8hcFU1GWlbwS
-         lj4tLsrm6dzVJwYq4GGYMhpn99DeT3OBVzMxR2zsH1mt3UPMeso3QVhgpkOmkCrwN2uo
-         c82Q==
+        bh=ne6DSNpsJZByeRFAG9jbcUVAbO8GA9lNSV6QkOc8+mY=;
+        b=d9uoGRhxjCVbuSfiwsn8f0aCJLfIj3cyeSEp5DCrcFh/SO83FrT5TGn5IhcaoLYmes
+         ny/Lf6IlZmAbX57exQPjYxQ/5FCD1wnrfp4obiIVjhB7LovVOL9V1k4r+odNkGg1ktp0
+         lOkRGi4JM3lRI6rrFJL+Egkk+JwgXehdQhq0dXSStWmBOhCEAR4QvurJTBcMWuMO7cxv
+         VPD+TtLPeYPmWSfznsiIMarGwkX02LdB3PLTojSFbK48bsAkP4E2LFZopfVoTLhhv+pw
+         j89ZGcp0tofBR70c/GbmbdmDObSJfRVR5q7l0mOVC3BjMeFFozGCzc8ZmlSnXBa9qXJY
+         oR8A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:references:cc:from:message-id:date
          :user-agent:mime-version:in-reply-to;
-        bh=wwa9D7fDV6I3HUk2dlvb6XlvaT+Emkvr3e9Xh9hAeVc=;
-        b=eM5SFfCKt9N5ep0RZsmDHl1RmMd3IqM9PtCUnGR/YCwGeT+dsEj1IqqXi6mp4L3Qs7
-         jJo707+uqCVMh9M7eCbRosAb+XUI6tuNACJKTwjUQPq56VFep2mLuH8m/IrfhpGcacRK
-         g54ESqh84N97mq9wDrB0RopULiI59RA7U5xneQxx8oWunu04pxx82ekEJ4eJxDST7+dG
-         e8ZSEKNCW4iXZ0Du0le8H2/mbsAcP1+SQh8Y/hF9GlOTXdDbScfm462GUhn5XwwokW3c
-         H0P3RdDwBxakw1arnzCQDwJGHkkckhOqxyvbvnJcKRFa3TawszD/nS2Vq+nH4AZS+RyI
-         8jXw==
-X-Gm-Message-State: AIkVDXJo1oCtXN6gfk8pnJsgnbgfjbsKiS9jaS/MHdMWx/Eb3J1HBYqze2VXC76l2HaUVfjc
-X-Received: by 10.200.39.230 with SMTP id x35mr72806742qtx.259.1483754010602;
-        Fri, 06 Jan 2017 17:53:30 -0800 (PST)
+        bh=ne6DSNpsJZByeRFAG9jbcUVAbO8GA9lNSV6QkOc8+mY=;
+        b=nMyVI4l4KNfvVs1C3PwXdgpT1cpTWe5j8DinBwMbk0AIUxdBLCohaVc8n5dxzVv2eA
+         ZALpk/HDkqpxJZCLqzWwA1y1KMPacwQQ6CQDiGJhr1uQbV/4uIrSrYlSss/Nd11rVVbi
+         U1HMScErdbXICXPSBt4huCDSB7rxw0PS3jHv6/bd1ORYTO2S9XdDd7Wmisk9VLUKMJxy
+         3E51LzgSbRGkVvqZ4/IYHW01A37OIYbQZNxfBOVR0y0EFM/YhmTJ71N3A4TPpzerVzrK
+         dRn9lz141F79/dKLgcXTbh82RFujkau6lfTNliDVxP22n9f7YiUKE3/ZhCUR5Dsgoz1q
+         KQ9A==
+X-Gm-Message-State: AIkVDXJgMnfBOHr26r7a+I9kjN4BmPGejATGUS+OpplCZK49t6WP9h0h39fi9iJbco0udDzE
+X-Received: by 10.55.31.203 with SMTP id n72mr83467437qkh.210.1483755361671;
+        Fri, 06 Jan 2017 18:16:01 -0800 (PST)
 Received: from hansenr.cam.corp.google.com ([2620:0:1004:2:11b6:6b62:9863:9910])
-        by smtp.gmail.com with ESMTPSA id a69sm785809qkj.38.2017.01.06.17.53.29
+        by smtp.gmail.com with ESMTPSA id c76sm837097qke.0.2017.01.06.18.16.01
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 06 Jan 2017 17:53:29 -0800 (PST)
-Subject: Re: [PATCH v2 2/4] t7610: make tests more independent and debuggable
-To:     Stefan Beller <sbeller@google.com>
+        Fri, 06 Jan 2017 18:16:01 -0800 (PST)
+Subject: Re: [PATCH v2 4/4] mergetool: fix running in subdir when rerere
+ enabled
+To:     Johannes Sixt <j6t@kdbg.org>
 References: <20170104005042.51530-1-hansenr@google.com>
  <20170106010945.79382-1-hansenr@google.com>
- <20170106010945.79382-3-hansenr@google.com>
- <CAGZ79kbRee+3MbAHCSFB0QqGMMF5bcZMiEHV-coRh87vFfq0Ag@mail.gmail.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        David Aguilar <davvid@gmail.com>, Johannes Sixt <j6t@kdbg.org>,
-        Simon Ruderich <simon@ruderich.org>
+ <20170106010945.79382-5-hansenr@google.com>
+ <199807ae-844c-57cd-28cf-2c10b3aee7a9@kdbg.org>
+Cc:     git@vger.kernel.org, davvid@gmail.com, sbeller@google.com,
+        simon@ruderich.org
 From:   Richard Hansen <hansenr@google.com>
-Message-ID: <f5739254-c0c9-8791-03f3-1bf4f7eb2acf@google.com>
-Date:   Fri, 6 Jan 2017 20:53:29 -0500
+Message-ID: <7a561587-3afc-58f9-a490-6bcaa7287576@google.com>
+Date:   Fri, 6 Jan 2017 21:16:00 -0500
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
  Thunderbird/45.5.1
 MIME-Version: 1.0
-In-Reply-To: <CAGZ79kbRee+3MbAHCSFB0QqGMMF5bcZMiEHV-coRh87vFfq0Ag@mail.gmail.com>
+In-Reply-To: <199807ae-844c-57cd-28cf-2c10b3aee7a9@kdbg.org>
 Content-Type: multipart/signed; protocol="application/pkcs7-signature"; micalg=sha-256;
-        boundary="001a11402d82c251190545776641"
+        boundary="001a1147a81c4876eb054577b7a3"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
---001a11402d82c251190545776641
-Content-Type: text/plain; charset=utf-8; format=flowed
+--001a1147a81c4876eb054577b7a3
+Content-Type: text/plain; charset=iso-8859-15; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 2017-01-05 20:31, Stefan Beller wrote:
-> On Thu, Jan 5, 2017 at 5:09 PM, Richard Hansen <hansenr@google.com> wrote:
->> Reduce how much a test can interfere other tests:
->
-> A bullet point list as an unordered list often indicates that you're
-> doing multiple
-> things at once, possibly unrelated, so they could go into different patches. ;)
-
-OK, I'll split it up.
-
->
-> While telling you to make even more commits: you may also want to make
-> a patch with an entry to the .mailmap file (assuming you're the same
-> Richard Hansen that contributed from rhansen@bbn.com);
-> Welcome to Google!
-
-Good idea, thanks!
-
->
+On 2017-01-06 04:42, Johannes Sixt wrote:
+> Am 06.01.2017 um 02:09 schrieb Richard Hansen:
+>> If rerere is enabled and no pathnames are given, run cd_to_toplevel
+>> before running 'git diff --name-only' so that 'git diff --name-only'
+>> sees the pathnames emitted by 'git rerere remaining'.
 >>
->>   * Move setup code that multiple tests depend on to the 'setup' test
->>     case.
->>   * Run 'git reset --hard' after every test (pass or fail) to clean up
->>     in case the test fails and leaves the repository in a strange
->>     state.
->>   * If the repository must be in a particular state (beyond what is
->>     already done by the 'setup' test case) before the test can run,
->>     make the necessary repository changes in the test script even if
->>     it means duplicating some lines of code from the previous test
->>     case.
->>   * Never assume that a particular commit is checked out.
->>   * Always work on a test-specific branch when the test might create a
->>     commit.  This is not always necessary for correctness, but it
->>     improves debuggability by ensuring a commit created by test #N
->>     shows up on the testN branch, not the branch for test #N-1.
->
->
->
->
->> @@ -112,6 +146,7 @@ test_expect_success 'custom mergetool' '
->>  '
+>> Also run cd_to_toplevel before running 'git rerere remaining' in case
+>> 'git rerere remaining' is ever changed to print pathnames relative to
+>> the current directory rather than to $GIT_WORK_TREE.
 >>
->>  test_expect_success 'mergetool crlf' '
->> +       test_when_finished "git reset --hard" &&
->>         test_config core.autocrlf true &&
->>         git checkout -b test$test_count branch1 &&
->>         test_must_fail git merge master >/dev/null 2>&1 &&
->> @@ -129,11 +164,11 @@ test_expect_success 'mergetool crlf' '
->>         git submodule update -N &&
->>         test "$(cat submod/bar)" = "master submodule" &&
->>         git commit -m "branch1 resolved with mergetool - autocrlf" &&
+>> This fixes a regression introduced in
+>> 57937f70a09c12ef484c290865dac4066d207c9c (v2.11.0).
+>>
+>> Signed-off-by: Richard Hansen <hansenr@google.com>
+>> ---
+>>  git-mergetool.sh     | 1 +
+>>  t/t7610-mergetool.sh | 2 +-
+>>  2 files changed, 2 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/git-mergetool.sh b/git-mergetool.sh
+>> index e52b4e4f2..67ea0d6db 100755
+>> --- a/git-mergetool.sh
+>> +++ b/git-mergetool.sh
+>> @@ -456,6 +456,7 @@ main () {
+>>
+>>      if test $# -eq 0 && test -e "$GIT_DIR/MERGE_RR"
+>>      then
+>> +        cd_to_toplevel
+>>          set -- $(git rerere remaining)
+>>          if test $# -eq 0
+>>          then
 >
->> -       test_config core.autocrlf false &&
->> -       git reset --hard
->> +       test_config core.autocrlf false
->>  '
->
-> This is the nit that led me to writing this email in the first place:
-> test_config is a function that sets a configuration for a single test only,
-> so it makes no sense as the last statement of a test. (In its implementation
-> it un-configures with test_when_finished)
->
-> So I think we do not want to add it back, but rather remove this
-> test_config statement.
+> This cannot be a complete solution. Why do we have another
+> cd_to_toplevel later, after `git diff --name-only -- "$@"`?
 
-OK, will do.
+The arguments passed to 'git diff' (including the -O argument) are all 
+interpreted as relative to the current working directory, yet 'git diff 
+--name-only' outputs pathnames that are relative to the top-level 
+directory.  Thus:
 
->
-> But to do this we need to actually be careful with the order of the newly
-> added test_when_finished "git reset --hard" and  test_config core.autocrlf true,
-> which uses test_when_finished internally.
+   * cd_to_toplevel MUST NOT be run before that 'git diff' command
+     unless all pathnames relative to $PWD are converted to absolute (or
+     relative to the top-level directory), and
+   * cd_to_toplevel MUST be run after 'git diff' so that $files is
+     interpreted correctly.
 
-Ah, yes.  Tricky.  I'll add a comment.
+And now I realize that my change breaks -O<foo> if <foo> is relative to 
+$PWD.  Grr.  Too bad we don't have tests for running mergetool 
+-O<relative-path> from a subdirectory.
 
 >
-> The order seems correct to me, as the reset would be executed after the
-> "test_config core.autocrlf true" is un-configured.
+> Maybe it is necessary to revert back to the flow control that we had
+> before 57937f70a09c ("mergetool: honor diff.orderFile", 2016-10-07)? It
+> did not have `test $# -eq 0` and `test -e "$GIT_DIR/MERGE_RR"` in a
+> single condition.
 
-Agreed; test_when_finished is LIFO (though the order is not documented).
+Reverting to the previous control flow won't work unless the -O pathname 
+is converted to absolute (or relative to the top-level directory).  But 
+I'll have to do that anyway.  Blech.
 
--Richard
+Do we already have a helper shell function somewhere that converts a 
+pathname to absolute?  Thanks to symlinks it's trickier than one might 
+expect.
 
---001a11402d82c251190545776641
+Thanks,
+Richard
+
+
+>
+> -- Hannes
+
+--001a1147a81c4876eb054577b7a3
 Content-Type: application/pkcs7-signature; name="smime.p7s"
 Content-Transfer-Encoding: base64
 Content-Disposition: attachment; filename="smime.p7s"
@@ -238,13 +227,13 @@ m4YUSo869xADdrGrWJ7KzroFbucLZYh3niIjVICp7fh9wtLgbX7X/akdubehYhy/l+AIMml6Zlyu
 GNGCGIleyQ0bAdjjG+dKrDErUlui8wd/YplvelaTAzSvNpxcrr+2YB8UBWcYkgULkp5GDCC2guKl
 rMF1mTS6N6GMxUi30sZicbMxggJeMIICWgIBATBcMEwxCzAJBgNVBAYTAkJFMRkwFwYDVQQKExBH
 bG9iYWxTaWduIG52LXNhMSIwIAYDVQQDExlHbG9iYWxTaWduIEhWIFMvTUlNRSBDQSAxAgwvfEOc
-7N3JjQI9nAwwDQYJYIZIAWUDBAIBBQCggdQwLwYJKoZIhvcNAQkEMSIEII7yYNltdFFrvWcUhb7T
-IyD9j7NE3bbxyzPmCS9l94+QMBgGCSqGSIb3DQEJAzELBgkqhkiG9w0BBwEwHAYJKoZIhvcNAQkF
-MQ8XDTE3MDEwNzAxNTMzMFowaQYJKoZIhvcNAQkPMVwwWjALBglghkgBZQMEASowCwYJYIZIAWUD
+7N3JjQI9nAwwDQYJYIZIAWUDBAIBBQCggdQwLwYJKoZIhvcNAQkEMSIEIBYy8dU5LbSR1FuJzXjB
+j1u4jQLfn0I3PZHBXpPq0N5RMBgGCSqGSIb3DQEJAzELBgkqhkiG9w0BBwEwHAYJKoZIhvcNAQkF
+MQ8XDTE3MDEwNzAyMTYwMVowaQYJKoZIhvcNAQkPMVwwWjALBglghkgBZQMEASowCwYJYIZIAWUD
 BAEWMAsGCWCGSAFlAwQBAjAKBggqhkiG9w0DBzALBgkqhkiG9w0BAQowCwYJKoZIhvcNAQEHMAsG
-CWCGSAFlAwQCATANBgkqhkiG9w0BAQEFAASCAQADdYUOF4YnpNcxbx84jFcQCy8B7QA5HqGXS/gy
-fOOYp4QgUAcoNAbjesipMwhjlz6TXCNtSvvFUT1K+2H8CxEhXe9pulkjovb1j8r8UPxxPSxFRf+o
-oSX53Ab6A69IS++E5pdH4CogXEW8kpsTq3wl9Fzs2c5MazxKRB31UPBEH2aPkpjQ3TSKoutzgRET
-+owrYlv3SCJDx7F/sewJbrgej+k+t773nyLk8dvUxFWn2OyLM+qYarf963V7KN55qAjQVGV2yxyF
-Ldnt/TSN/qU/+rnRjOMV0naFf4prHXu9Acq5ea62XebPFzaJylqc9Qv9T4LMzSnQU1qRnqPyuOIl
---001a11402d82c251190545776641--
+CWCGSAFlAwQCATANBgkqhkiG9w0BAQEFAASCAQC8tBdPJJoXcxXWwyIcpv3ePTOTAUU8RyJ9ivHp
+CScRvmkrY9eNcYa5lvhuf7tb2EZ9LOevFxiNgfQqvMbpN3/3TJsuZrWl5dsueR34SUUYCxZJhGgz
+vnl5lQNPW0IreDxjd+74u1YGyIHyFI1Z/pYA3Nfgmm+hdCBE4swB3sUfwwuQaDWaSq4IhaflS7Xz
+gA3+dQDC2BuYH+AWJBDMWXjqeaMDIFYs7M88i/2Ra8tkNv+Tc8dUM12HpZruTznATVvIB4RNXOos
+TMflPC8iSwvQidbF1GT95iremzsvyoqPKoyzBDU1DKvU7OkShsGbVsz5qVSMNJSg2Gsh4PYQ+8RV
+--001a1147a81c4876eb054577b7a3--
