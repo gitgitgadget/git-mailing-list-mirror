@@ -2,146 +2,111 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AA82C20756
-	for <e@80x24.org>; Sat,  7 Jan 2017 22:09:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BEE7F20756
+	for <e@80x24.org>; Sat,  7 Jan 2017 23:26:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755558AbdAGWIt (ORCPT <rfc822;e@80x24.org>);
-        Sat, 7 Jan 2017 17:08:49 -0500
-Received: from castro.crustytoothpaste.net ([75.10.60.170]:38626 "EHLO
-        castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1755454AbdAGWIk (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 7 Jan 2017 17:08:40 -0500
-Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 3CA04280AC;
-        Sat,  7 Jan 2017 22:08:38 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
-        s=default; t=1483826918;
-        bh=Ebhx9b+hMIVnVrMydIHewuWs/glniCrBjA8PELpX2DY=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=oIRd32yQkin1K2FZNxSUG5gH6OIBMVwu9/fNouS3kfshUReftWgTETXvFrzO8kEGw
-         7KMUZ67Yf4NkVO1q3sREXjzD2oOsKNWxfxaDta6TPIsdbCDImkh6E3/PxLIXlMM4bd
-         GFrVO1MxN7xv/7c58VaiHfiQVwYfGi6oijav5WGgL6er11I6WyEaGBRDxBOTZUf7qN
-         OkC1A2Dv29aXoXvd4z4Z/AWNY/o+APL128zUjovw3M+W8DUh8rhgSEbhh49XjHmWpS
-         Hip6rvl+dX4Yac2ufJDDZBML6lC7Sr9NA2Rm8nl4KoG8UEExL3x8c83eiM10Wo1v4n
-         U1z96iqzkaxTXsAkMDzh2Z0AH8GlkQ51ACUBlCwLkgSo/eXQQRR+Y1NaERRPwyWVQs
-         VSEE5zZ+oW1mq9+4JxYVoOzTmUDj3XJ6HedN11MonqgTJHcnTvgIcZ1iMQonRPGCM6
-         m/1SQrdtgtxRSsGoVZdewE9uiMQQkSZD5NYr6oWEaRl9Cy9Ir7S
-Date:   Sat, 7 Jan 2017 22:08:34 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Jeff King <peff@peff.net>
-Cc:     Lars Schneider <larsxschneider@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        git@vger.kernel.org,
-        =?utf-8?B?66eI64iE7JeY?= <nalla@hamal.uberspace.de>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/2] asciidoctor: fix user-manual to be built by
- `asciidoctor`
-Message-ID: <20170107220834.uge5ksdr66asw27q@genre.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Jeff King <peff@peff.net>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        git@vger.kernel.org,
-        =?utf-8?B?66eI64iE7JeY?= <nalla@hamal.uberspace.de>,
-        Junio C Hamano <gitster@pobox.com>
-References: <cover.1483373021.git.johannes.schindelin@gmx.de>
- <3c160f81a88cf8697f2459bb7f2a3e27fb3e469c.1483373021.git.johannes.schindelin@gmx.de>
- <20170104080852.bmlmtzxhjx4qt74f@sigill.intra.peff.net>
- <1D7C66EA-E87A-4154-ACAC-8045D28477D2@gmail.com>
- <20170105164556.b3bzeqqzx4pvni4z@sigill.intra.peff.net>
+        id S1755680AbdAGX0b (ORCPT <rfc822;e@80x24.org>);
+        Sat, 7 Jan 2017 18:26:31 -0500
+Received: from mail-lf0-f67.google.com ([209.85.215.67]:35673 "EHLO
+        mail-lf0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755669AbdAGX03 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 7 Jan 2017 18:26:29 -0500
+Received: by mail-lf0-f67.google.com with SMTP id v186so2652557lfa.2
+        for <git@vger.kernel.org>; Sat, 07 Jan 2017 15:26:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=MBq8TJLgmU+Ks9OZ0oiwhp8Yt1EfMGkDn61I4+CGZpg=;
+        b=ZSyLRG/qrL+IcTkdSYmWcs9ToyzwhvJa8aRCCJvINaYnSxvV8vuGu95a/PtGPtamFy
+         n2kvUu3dppcPQhLJ7/w6hLjw0DelP31teScMLe5rt/pOrm+DCjwPZmxyv1nnn2U5/jn5
+         lKAQqATXWTQmKDBdgy2JFfQV52aqmkehINICq6ZhK+PmaO62ZTm3eIgraJdRbogMy+aF
+         ciNy7E2JNu7X5bzXXIRfBdOSSpwIyG1sAO0aIa+l3UCAqE9nj4Z04lLO2QU1QzzBzWol
+         ikDHTswK1cPgTRZV54ej6vgcm6BuIbxylB+jxUMz1TLWhhzNyv/m7zCSYkWjlVaXYDwh
+         0mCA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=MBq8TJLgmU+Ks9OZ0oiwhp8Yt1EfMGkDn61I4+CGZpg=;
+        b=sg1z2wS/S88TbY0jKC5//UE134NrFKcNaA1W4zt18RQEXJtmB8Bht2mXTFXmYNaH8B
+         DlRK9q21zFM6NwEHDnbHWAYCUAY7OgXdbND/4jwXgkPtbAClonRdgEl38rN5PaNcFBZg
+         +y1o8DB3uj2rpVbQCTK2FLPU6dVr0MClpyTn2nTMRqlJggQ0DztapfWbMT0fXmnl1fvJ
+         rLdkvJFECJ1/p0pl2DL0l39RqclmjJLJYmOS65CgmbmVztPQL2QKoOrry5P1kNwUMCyv
+         Qv/8/2kGnF2T328lqkwAsJ6L1SIqtiwU38eDzsj55jvvfLFgtCdYfGzfAutJkSYiLM9N
+         7j1Q==
+X-Gm-Message-State: AIkVDXKAjZ2wtWt2APFV0Pitp4QGDXzKCZ0j0Dq75hFmWul8+8Kgcf1yxxqer7gV0zEC/Mx2LK/mK1wgaSn9pg==
+X-Received: by 10.46.14.9 with SMTP id 9mr28017105ljo.59.1483831587511; Sat,
+ 07 Jan 2017 15:26:27 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="tga4cybpifehw6es"
-Content-Disposition: inline
-In-Reply-To: <20170105164556.b3bzeqqzx4pvni4z@sigill.intra.peff.net>
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.7.0-1-amd64)
-User-Agent: NeoMutt/20161126 (1.7.1)
+Received: by 10.25.145.79 with HTTP; Sat, 7 Jan 2017 15:26:06 -0800 (PST)
+In-Reply-To: <20170107011445.3e4fv6vdtimrwhgv@sigill.intra.peff.net>
+References: <20170105142529.GA15009@aaberge.net> <20170106064032.eqxxer5mx5hsh2md@sigill.intra.peff.net>
+ <20170106064752.iccrk656c6k2wrfy@sigill.intra.peff.net> <20170106072602.wkbzho5z3osz5hee@sigill.intra.peff.net>
+ <20170106073224.5hsrib77tx5tgx7d@sigill.intra.peff.net> <3d433abf-71a2-4702-f62b-e254520dc32c@kdbg.org>
+ <20170106194115.k5u5esv7t63mryvk@sigill.intra.peff.net> <2ed6f78b-7704-c724-c99b-e310c383c4e8@kdbg.org>
+ <20170106232042.ptn6grtll5wpxhc4@sigill.intra.peff.net> <20170107011445.3e4fv6vdtimrwhgv@sigill.intra.peff.net>
+From:   Jacob Keller <jacob.keller@gmail.com>
+Date:   Sat, 7 Jan 2017 15:26:06 -0800
+Message-ID: <CA+P7+xqEqKWmQGgAyrmdzOZgO0CXFOGfcp=0otJ_nQPS13wFWg@mail.gmail.com>
+Subject: Re: [PATCH 0/3] fix ^C killing pager when running alias
+To:     Jeff King <peff@peff.net>
+Cc:     Johannes Sixt <j6t@kdbg.org>, Trygve Aaberge <trygveaa@gmail.com>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>, Git mailing list <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Fri, Jan 6, 2017 at 5:14 PM, Jeff King <peff@peff.net> wrote:
+> On Fri, Jan 06, 2017 at 06:20:42PM -0500, Jeff King wrote:
+>
+>> > In general, I think it is wrong to wait for child processes when a signal
+>> > was received. After all, it is the purpose of a (deadly) signal to have the
+>> > process go away. There may be programs that know it better, like less, but
+>> > git should not attempt to know better in general.
+>> >
+>> > We do apply some special behavior for certain cases like we do for the
+>> > pager. And now the case with aliases is another special situation. The
+>> > parent git process only delegates to the child, and as such it is reasonable
+>> > that it binds its life time to the first child, which executes the expanded
+>> > alias.
+>>
+>> Yeah, I think I agree. That binding is something you want in many cases,
+>> but not necessarily all. The original purpose of clean_on_exit was to
+>> create a binding like that, but of course it can be (and with the
+>> smudge-filter stuff, arguably has been) used for other cases, too.
+>>
+>> I'll work up a patch that makes it a separate option, which should be
+>> pretty easy.
+>
+> Yeah, this did turn out to be really easy. I spent most of the time
+> trying to explain the issue in the commit message in a sane way.
+> Hopefully it didn't end up _too_ long. :)
+>
+> The interesting bit is in the third one. The first is a necessary
+> preparatory step, and the second is a cleanup I noticed in the
+> neighborhood.
+>
+>   [1/3]: execv_dashed_external: use child_process struct
+>   [2/3]: execv_dashed_external: stop exiting with negative code
+>   [3/3]: execv_dashed_external: wait for child on signal death
+>
+>  git.c         | 36 +++++++++++++++---------------------
+>  run-command.c | 19 +++++++++++++++++++
+>  run-command.h |  1 +
+>  3 files changed, 35 insertions(+), 21 deletions(-)
+>
+> -Peff
 
---tga4cybpifehw6es
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+I don't see the rest of the patches on the list..?
 
-On Thu, Jan 05, 2017 at 11:45:57AM -0500, Jeff King wrote:
-> On Thu, Jan 05, 2017 at 11:05:29AM +0100, Lars Schneider wrote:
->=20
-> > > The git-scm.com site uses asciidoctor, too, and I think I have seen s=
-ome
-> > > oddness with the rendering though. So in general I am in favor of mak=
-ing
-> > > things work under both asciidoc and asciidoctor.
-> >=20
-> > I am not familiar with both tools but it sounds to me as if "asciidocto=
-r"
-> > is kind of the "lowest common denominator". Is this true? If yes, would=
- it
-> > make sense to switch TravisCI [1] to asciidocter if this change gets me=
-rged?
->=20
-> I don't think that's quite true.
->=20
-> The two programs produce different output for certain inputs. We tend to
-> see the cases where asciidoc produces the desired output and asciidoctor
-> doesn't, because traditionally the documentation was written _for_
-> asciidoc. So whenever asciidoctor diverges, it looks like a bug.
-
-This is indeed the case.  Asciidoctor is a bit stricter on some inputs
-because it provides significant performance improvements, but it also
-has features that AsciiDoc does not.  It also has some bugs that
-AsciiDoc does not (again, usually due to performance concerns).
-
-For example, Debian's reproducible builds project would probably like it
-if we had better support for Asciidoctor.
-
-> [1] I think we've also traditionally considered asciidoc to be the
->     definitive toolchain, and people using asciidoctor are free to
->     submit patches to make things work correctly in both places. I'm not
->     opposed to changing that attitude, as it seems like asciidoctor is
->     faster and more actively maintained these days. But I suspect our
->     build chain would need some improvements. Last time I tried building
->     with AsciiDoctor it involved a lot manual tweaking of Makefile
->     variables. It sounds like Dscho is doing it regularly, though. It
->     should probably work out of the box (with something like
->     USE_ASCIIDOCTOR=3DYes) if we expect people to actually rely on it.
-
-Yes, that would probably be beneficial.  I'll see if I can come up with
-some patches based on Dscho's work.
---=20
-brian m. carlson / brian with sandals: Houston, Texas, US
-+1 832 623 2791 | https://www.crustytoothpaste.net/~bmc | My opinion only
-OpenPGP: https://keybase.io/bk2204
-
---tga4cybpifehw6es
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.1.17 (GNU/Linux)
-
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlhxZuIACgkQv1NdgR9S
-9ouQuBAAuPdDd4s3/kW16T1Dk+WgnMbaPAsO/J3zItB0Xom6agWR462RDUwBJDnt
-sIsclb0N/gbv1s8Zwf9XQ7/NenRF9rImo6vP7YS09klGVpt9o4HgJgPkAq0O0d1y
-9Uz+A35+VN6wD+CG7htcAIkcQm7YVajnurm9EuALizNl5MY6AElG84xL61uur33a
-s46PPSGCfkfR0WwwbNK0ttRZj3rI7TcWxVcMlPJ0CvYS3SS9l/g/BkhsBsR989/O
-NQvAA8WY/jQV3sPUxdZefPIAGxHkZtBDUpoQ9V7yzIa+tvOQrvr4LVfE/LacAb+l
-RBf9MHDZGOXCxIuixRXoht7ZWUJPMFIp8CMb+s+FhxkzyIrPi7r8NupVlYr4MKwu
-Tq4zRupSQtRklqLIJmewYE6RiSNvx+qE+D7e2WJJpzCgYZMbshlb6IsGwbt+tals
-npzsyPJVJNmeeFrv39tzZiTg9YUGBHoI3QiIskxeus5bOevXcDQeN21mRQonGKVC
-H1gGDchv8f2DQiZBrt0CE46SpuqvKucSPQzU3Lp6TQ3MnBVYpPTtIK8OlkQWN4YC
-4AZmPAZ/ofyBxEwyJis1BaLG0YvPhTYgs73XaGRoyg7fY3LgT0jtOZYqJ66l3ZYj
-Ta6A9grzOVtm7ue8IfN0tDPiUzbZuCcuLHc9ksi6iD09r1fvJcE=
-=4zpH
------END PGP SIGNATURE-----
-
---tga4cybpifehw6es--
+Thanks,
+Jake
