@@ -6,30 +6,30 @@ X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1B6EB1FEB3
-	for <e@80x24.org>; Sat,  7 Jan 2017 01:16:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 256D01FEB3
+	for <e@80x24.org>; Sat,  7 Jan 2017 01:17:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S935862AbdAGBQ1 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 6 Jan 2017 20:16:27 -0500
-Received: from cloud.peff.net ([104.130.231.41]:36294 "EHLO cloud.peff.net"
+        id S1161288AbdAGBRv (ORCPT <rfc822;e@80x24.org>);
+        Fri, 6 Jan 2017 20:17:51 -0500
+Received: from cloud.peff.net ([104.130.231.41]:36303 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S933632AbdAGBQ0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 6 Jan 2017 20:16:26 -0500
-Received: (qmail 29525 invoked by uid 109); 7 Jan 2017 01:16:26 -0000
+        id S933632AbdAGBRu (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 6 Jan 2017 20:17:50 -0500
+Received: (qmail 29597 invoked by uid 109); 7 Jan 2017 01:17:50 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sat, 07 Jan 2017 01:16:26 +0000
-Received: (qmail 21947 invoked by uid 111); 7 Jan 2017 01:17:16 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sat, 07 Jan 2017 01:17:50 +0000
+Received: (qmail 21967 invoked by uid 111); 7 Jan 2017 01:18:40 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 06 Jan 2017 20:17:16 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 06 Jan 2017 20:16:24 -0500
-Date:   Fri, 6 Jan 2017 20:16:24 -0500
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 06 Jan 2017 20:18:40 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 06 Jan 2017 20:17:48 -0500
+Date:   Fri, 6 Jan 2017 20:17:48 -0500
 From:   Jeff King <peff@peff.net>
 To:     Johannes Sixt <j6t@kdbg.org>
 Cc:     Trygve Aaberge <trygveaa@gmail.com>,
         =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
         git@vger.kernel.org
-Subject: [PATCH 1/3] execv_dashed_external: use child_process struct
-Message-ID: <20170107011624.hnvu2m5jaosebadf@sigill.intra.peff.net>
+Subject: [PATCH 2/3] execv_dashed_external: stop exiting with negative code
+Message-ID: <20170107011748.l25a6ofofjiuvpgk@sigill.intra.peff.net>
 References: <20170107011445.3e4fv6vdtimrwhgv@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -40,78 +40,49 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When we run a dashed external, we use the one-liner
-run_command_v_opt() to do so. Let's switch to using a
-child_process struct, which has two advantages:
+When we try to exec a git sub-command, we pass along the
+status code from run_command(). But that may return -1 if we
+ran into an error with pipe() or execve(). This tends to
+work (and end up as 255 due to twos-complement wraparound
+and truncation), but in general it's probably a good idea to
+avoid negative exit codes for portability.
 
-  1. We can drop all of the allocation and cleanup code for
-     building our custom argv array, and just rely on the
-     builtin argv_array (at the minor cost of doing a few
-     extra mallocs).
-
-  2. We have access to the complete range of child_process
-     options, not just the ones that the "_opt()" form can
-     forward.
+We can easily translate to the normal generic "128" code we
+get when syscalls cause us to die.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
+I know that negative exit codes were a problem once upon a time on
+Windows, but I think that is fine since 47e3de0e79 (MinGW: truncate
+exit()'s argument to lowest 8 bits, 2009-07-05). Still, I think it's a
+weird portability thing that we are better off avoiding (and certainly I
+wouldn't be surprised if some callers assume everything >128 is a
+signal).
 
-It's possible people may disagree with reason (2), and we should add a
-new RUN_WAIT_AFTER_CLEAN flag in the final patch. IMHO the whole
-run_command_v_opt() thing is a good sign that you should be switching to
-a child_process struct. :)
-
- git.c | 25 +++++++------------------
- 1 file changed, 7 insertions(+), 18 deletions(-)
+ git.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
 diff --git a/git.c b/git.c
-index dce529fcbf..d0e04d5c97 100644
+index d0e04d5c97..bc2f2a7ec9 100644
 --- a/git.c
 +++ b/git.c
-@@ -575,8 +575,7 @@ static void handle_builtin(int argc, const char **argv)
- 
- static void execv_dashed_external(const char **argv)
- {
--	struct strbuf cmd = STRBUF_INIT;
--	const char *tmp;
-+	struct child_process cmd = CHILD_PROCESS_INIT;
- 	int status;
- 
- 	if (get_super_prefix())
-@@ -586,30 +585,20 @@ static void execv_dashed_external(const char **argv)
- 		use_pager = check_pager_config(argv[0]);
- 	commit_pager_choice();
- 
--	strbuf_addf(&cmd, "git-%s", argv[0]);
-+	argv_array_pushf(&cmd.args, "git-%s", argv[0]);
-+	argv_array_pushv(&cmd.args, argv + 1);
-+	cmd.clean_on_exit = 1;
-+	cmd.silent_exec_failure = 1;
- 
--	/*
--	 * argv[0] must be the git command, but the argv array
--	 * belongs to the caller, and may be reused in
--	 * subsequent loop iterations. Save argv[0] and
--	 * restore it on error.
--	 */
--	tmp = argv[0];
--	argv[0] = cmd.buf;
--
--	trace_argv_printf(argv, "trace: exec:");
-+	trace_argv_printf(cmd.args.argv, "trace: exec:");
+@@ -593,12 +593,16 @@ static void execv_dashed_external(const char **argv)
+ 	trace_argv_printf(cmd.args.argv, "trace: exec:");
  
  	/*
- 	 * if we fail because the command is not found, it is
- 	 * OK to return. Otherwise, we just pass along the status code.
+-	 * if we fail because the command is not found, it is
+-	 * OK to return. Otherwise, we just pass along the status code.
++	 * If we fail because the command is not found, it is
++	 * OK to return. Otherwise, we just pass along the status code,
++	 * or our usual generic code if we were not even able to exec
++	 * the program.
  	 */
--	status = run_command_v_opt(argv, RUN_SILENT_EXEC_FAILURE | RUN_CLEAN_ON_EXIT);
-+	status = run_command(&cmd);
- 	if (status >= 0 || errno != ENOENT)
+ 	status = run_command(&cmd);
+-	if (status >= 0 || errno != ENOENT)
++	if (status >= 0)
  		exit(status);
--
--	argv[0] = tmp;
--
--	strbuf_release(&cmd);
++	else if (errno != ENOENT)
++		exit(128);
  }
  
  static int run_argv(int *argcp, const char ***argv)
