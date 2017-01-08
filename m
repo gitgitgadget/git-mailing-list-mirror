@@ -2,294 +2,288 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-6.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D840B1FEB3
-	for <e@80x24.org>; Sun,  8 Jan 2017 09:42:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DA3F61FEB3
+	for <e@80x24.org>; Sun,  8 Jan 2017 09:56:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934862AbdAHJmA (ORCPT <rfc822;e@80x24.org>);
-        Sun, 8 Jan 2017 04:42:00 -0500
-Received: from mail-pg0-f67.google.com ([74.125.83.67]:36077 "EHLO
-        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S934714AbdAHJku (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 8 Jan 2017 04:40:50 -0500
-Received: by mail-pg0-f67.google.com with SMTP id 75so10423997pgf.3
-        for <git@vger.kernel.org>; Sun, 08 Jan 2017 01:40:49 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=cu9hGIqrBAEyfsF/maKvXbDsMwTuCIl7tYWJQCu6k24=;
-        b=hbJYAVuk451JNFR7e+TxjyvD5gi3+epBPZK2uRKoaU4RNSJfiHN+uxL2O37jBKNbtM
-         2joWKJUcAmg9+QmgSpBg1Nh61SFGL1Jj/em3LO3R4z0+piUQMqF3cKItO1TQKpbVeATr
-         48iuTU4bOiAbM5eEhX7GVMsRs2E3sewBu2WDFalqEBOWPrEmaRRrCM4jZfWmO4j5GLNU
-         zjbkHv1Nu8tnt9ziNT4P4MfdOlI5RLfGtsWlJszEfkkhsfop2F80HSMcPmM3JdptgmvG
-         JkaeEmLYCUR+gp0WNwMcjQFRFr3qxIDKXqT1dRFkrOieGj2PYn2TEOa/m+QnUJe7x/ye
-         0bAQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=cu9hGIqrBAEyfsF/maKvXbDsMwTuCIl7tYWJQCu6k24=;
-        b=qquTWZFqbpKqzYdrUdbG8+pSlh8XpVVfI48BXQRSNVhO8ckAzx0IiUcYoGpG3Se2DG
-         9xo1kOXb0Uxfk7l9TT1BcdO3tmbdNnhv60InmwRIVzng7l4ZOq87+roKgNvvp0whI1/0
-         bt1QCk1Frqjsz6+TLT9qf1n8jffy3gPC7FCABuh8Wlyx2frGUccgVMKmJLTNtwz3uab+
-         xdaDlbUxUCf/+bqypmJVyl++gyEX/tplgszGP7Qoa8Ub5lgV89XuMWyW2pVQHNp05BQj
-         cob5pDh9e3sAo3A6qFEZjkscxA9hOwZ1nqwMAs0BaHcc4pjJYPnnkmL01066+WqstLSS
-         x42w==
-X-Gm-Message-State: AIkVDXKk+udmzdm5j16GTrqG29Sxu1ZUZIPAK6JGFWbxDI1uAd/DQ4yzZEQ+3hEdORv4yg==
-X-Received: by 10.98.34.68 with SMTP id i65mr77984309pfi.135.1483868449173;
-        Sun, 08 Jan 2017 01:40:49 -0800 (PST)
-Received: from ash ([115.72.187.80])
-        by smtp.gmail.com with ESMTPSA id o24sm120309818pfj.78.2017.01.08.01.40.46
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 08 Jan 2017 01:40:48 -0800 (PST)
-Received: by ash (sSMTP sendmail emulation); Sun, 08 Jan 2017 16:40:44 +0700
-From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>
-Subject: [PATCH 6/6] worktree remove: new command
-Date:   Sun,  8 Jan 2017 16:40:03 +0700
-Message-Id: <20170108094003.637-7-pclouds@gmail.com>
-X-Mailer: git-send-email 2.8.2.524.g6ff3d78
-In-Reply-To: <20170108094003.637-1-pclouds@gmail.com>
-References: <20170108094003.637-1-pclouds@gmail.com>
+        id S1754479AbdAHJyf (ORCPT <rfc822;e@80x24.org>);
+        Sun, 8 Jan 2017 04:54:35 -0500
+Received: from alum-mailsec-scanner-2.mit.edu ([18.7.68.13]:63714 "EHLO
+        alum-mailsec-scanner-2.mit.edu" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S935063AbdAHJwb (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 8 Jan 2017 04:52:31 -0500
+X-AuditID: 1207440d-8b7ff700000009ba-8b-58720bdb9fe5
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+        by alum-mailsec-scanner-2.mit.edu (Symantec Messaging Gateway) with SMTP id B9.49.02490.BDB02785; Sun,  8 Jan 2017 04:52:29 -0500 (EST)
+Received: from [192.168.69.190] (p5B105C39.dip0.t-ipconnect.de [91.16.92.57])
+        (authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v089qPCx005156
+        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+        Sun, 8 Jan 2017 04:52:26 -0500
+Subject: Re: [ANNOUNCE] git-test: run automated tests against a range of Git
+ commits
+To:     Jeff King <peff@peff.net>
+References: <1341c01a-aca7-699c-c53a-28d048614bfe@alum.mit.edu>
+ <20170107071832.2rucap3rskzmkgq4@sigill.intra.peff.net>
+Cc:     git discussion list <git@vger.kernel.org>
+From:   Michael Haggerty <mhagger@alum.mit.edu>
+Message-ID: <ce6f98a4-1fb7-aa4b-2efb-78d8f49397a7@alum.mit.edu>
+Date:   Sun, 8 Jan 2017 10:52:25 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Icedove/45.5.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+In-Reply-To: <20170107071832.2rucap3rskzmkgq4@sigill.intra.peff.net>
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrPIsWRmVeSWpSXmKPExsUixO6iqHuXuyjC4OMfNYuuK91MFj9aepgd
+        mDye9e5h9Pi8SS6AKYrLJiU1J7MstUjfLoErY8+tW2wFU3wqXlxbw9TAuNm6i5GTQ0LAROLW
+        gmdsXYxcHEIClxkl9jfsZIRwzjBJNHxdyQ5SJSwQJnFv1jcmEFtEQFbi++GNjCC2kEClxKoj
+        21lBbGYBXYkHHY/BatiA7EU9zWA2r4C9xKmuXrA5LAIqErdntYHViwqESFyec5QNokZQ4uTM
+        JyxdjBwcnAIuEu8/J0OMVJf4M+8SM4QtL9G8dTbzBEb+WUg6ZiEpm4WkbAEj8ypGucSc0lzd
+        3MTMnOLUZN3i5MS8vNQiXSO93MwSvdSU0k2MkHDk3cH4f53MIUYBDkYlHt4JWwojhFgTy4or
+        cw8xSnIwKYnyOkYVRAjxJeWnVGYkFmfEF5XmpBYfYpTgYFYS4b3FUhQhxJuSWFmVWpQPk5Lm
+        YFES51Vbou4nJJCeWJKanZpakFoEk5Xh4FCS4HXlAmoULEpNT61Iy8wpQUgzcXCCDOcBGs4L
+        UsNbXJCYW5yZDpE/xagoJc6bApIQAElklObB9cLSxStGcaBXhHn3gFTxAFMNXPcroMFMQIMF
+        PfNBBpckIqSkGhjtdjhMPm70fbtQ4rk/RY5RtQZ/1+qG6xxvbnvAz8x4Vp1rw79At3gevTeK
+        xWKz3Oy4Hr72/XF1vm25dK3WCjnt/i8Xrj1elRN43YF1geFKzZ0zP6k1bZOxXnL2ZnPmzPXT
+        VAWbTv086/J736RJJyX/tm80vPpgrfnZ+UvZb2no1tkaaVQs1mZRYinOSDTUYi4qTgQAnJ4U
+        IfICAAA=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
----
- Documentation/git-worktree.txt         | 21 +++++----
- builtin/worktree.c                     | 79 ++++++++++++++++++++++++++++++++++
- contrib/completion/git-completion.bash |  5 ++-
- t/t2028-worktree-move.sh               | 26 +++++++++++
- 4 files changed, 121 insertions(+), 10 deletions(-)
+On 01/07/2017 08:18 AM, Jeff King wrote:
+> On Fri, Jan 06, 2017 at 04:52:16PM +0100, Michael Haggerty wrote:
+> 
+>> I just released ﻿⁠⁠⁠⁠`git test﻿⁠⁠⁠⁠`, a script for running automated
+>> tests across a range of Git commits and keeping track of the results in
+>> git notes:
+>>
+>>     https://github.com/mhagger/git-test
+>>
+>> This is a script that I've been using in one form or another for years
+>> and I find it really handy [1].
+> 
+> Neat. I usually "git rebase -x 'make -j8 test' @{u}" after finishing a
+> topic to make sure the intermediate steps are good. But it would be neat
+> to have this running continuously in the background to alert me to
+> problems sooner (and the key thing there is that it remembers
+> already-run tests, so it should be safe to basically for new commits
+> every 10 seconds or so).
+> 
+> I did hit a few interesting cases trying out "git test". So here's a
+> narrative, and you can pick out where there may be room for improvement
+> in the tool, and where I'm just being dumb. :)
+> 
+> I tried it out first on a topic I finished earlier today, which has 3
+> commits. So I did:
+> 
+>   $ git test add 'make -j8 test'
+>   $ git test range @{u}..HEAD
+> 
+> It barfed on the first commit, because the script expects "git co" to
+> work, but I don't have that alias. No big deal (and I already submitted
+> a PR to fix it).
 
-diff --git a/Documentation/git-worktree.txt b/Documentation/git-worktree.txt
-index 1310513..bbde6b8 100644
---- a/Documentation/git-worktree.txt
-+++ b/Documentation/git-worktree.txt
-@@ -14,6 +14,7 @@ SYNOPSIS
- 'git worktree lock' [--reason <string>] <worktree>
- 'git worktree move' <worktree> <new-path>
- 'git worktree prune' [-n] [-v] [--expire <expire>]
-+'git worktree remove' [--force] <worktree>
- 'git worktree unlock' <worktree>
- 
- DESCRIPTION
-@@ -81,6 +82,13 @@ prune::
- 
- Prune working tree information in $GIT_DIR/worktrees.
- 
-+remove::
-+
-+Remove a working tree. Only clean working trees (no untracked files
-+and no modification in tracked files) can be removed. Unclean working
-+trees can be removed with `--force`. The main working tree cannot be
-+removed.
-+
- unlock::
- 
- Unlock a working tree, allowing it to be pruned, moved or deleted.
-@@ -90,9 +98,10 @@ OPTIONS
- 
- -f::
- --force::
--	By default, `add` refuses to create a new working tree when `<branch>`
--	is already checked out by another working tree. This option overrides
--	that safeguard.
-+	By default, `add` refuses to create a new working tree when
-+	`<branch>` is already checked out by another working tree and
-+	`remove` refuses to remove an unclean working tree. This option
-+	overrides that safeguard.
- 
- -b <new-branch>::
- -B <new-branch>::
-@@ -253,12 +262,6 @@ Multiple checkout in general is still experimental, and the support
- for submodules is incomplete. It is NOT recommended to make multiple
- checkouts of a superproject.
- 
--git-worktree could provide more automation for tasks currently
--performed manually, such as:
--
--- `remove` to remove a linked working tree and its administrative files (and
--  warn if the working tree is dirty)
--
- GIT
- ---
- Part of the linkgit:git[1] suite
-diff --git a/builtin/worktree.c b/builtin/worktree.c
-index 64d0264..339c622e 100644
---- a/builtin/worktree.c
-+++ b/builtin/worktree.c
-@@ -17,6 +17,7 @@ static const char * const worktree_usage[] = {
- 	N_("git worktree lock [<options>] <path>"),
- 	N_("git worktree move <worktree> <new-path>"),
- 	N_("git worktree prune [<options>]"),
-+	N_("git worktree remove [<options>] <worktree>"),
- 	N_("git worktree unlock <path>"),
- 	NULL
- };
-@@ -605,6 +606,82 @@ static int move_worktree(int ac, const char **av, const char *prefix)
- 	return update_worktree_location(wt, dst.buf);
- }
- 
-+static int remove_worktree(int ac, const char **av, const char *prefix)
-+{
-+	int force = 0;
-+	struct option options[] = {
-+		OPT_BOOL(0, "force", &force,
-+			 N_("force removing even if the worktree is dirty")),
-+		OPT_END()
-+	};
-+	struct worktree **worktrees, *wt;
-+	struct strbuf sb = STRBUF_INIT;
-+	const char *reason;
-+	int ret = 0;
-+
-+	ac = parse_options(ac, av, prefix, options, worktree_usage, 0);
-+	if (ac != 1)
-+		usage_with_options(worktree_usage, options);
-+
-+	worktrees = get_worktrees(0);
-+	wt = find_worktree(worktrees, prefix, av[0]);
-+	if (!wt)
-+		die(_("'%s' is not a working directory"), av[0]);
-+	if (is_main_worktree(wt))
-+		die(_("'%s' is a main working directory"), av[0]);
-+	reason = is_worktree_locked(wt);
-+	if (reason) {
-+		if (*reason)
-+			die(_("already locked, reason: %s"), reason);
-+		die(_("already locked, no reason"));
-+	}
-+	if (validate_worktree(wt, 0))
-+		return -1;
-+
-+	if (!force) {
-+		struct argv_array child_env = ARGV_ARRAY_INIT;
-+		struct child_process cp;
-+		char buf[1];
-+
-+		argv_array_pushf(&child_env, "%s=%s/.git",
-+				 GIT_DIR_ENVIRONMENT, wt->path);
-+		argv_array_pushf(&child_env, "%s=%s",
-+				 GIT_WORK_TREE_ENVIRONMENT, wt->path);
-+		memset(&cp, 0, sizeof(cp));
-+		argv_array_pushl(&cp.args, "status", "--porcelain", NULL);
-+		cp.env = child_env.argv;
-+		cp.git_cmd = 1;
-+		cp.dir = wt->path;
-+		cp.out = -1;
-+		ret = start_command(&cp);
-+		if (ret)
-+			die_errno(_("failed to run git-status on '%s', code %d"),
-+				  av[0], ret);
-+		ret = xread(cp.out, buf, sizeof(buf));
-+		if (ret)
-+			die(_("'%s' is dirty, use --force to delete it"), av[0]);
-+		close(cp.out);
-+		ret = finish_command(&cp);
-+		if (ret)
-+			die_errno(_("failed to run git-status on '%s', code %d"),
-+				  av[0], ret);
-+	}
-+	strbuf_addstr(&sb, wt->path);
-+	if (remove_dir_recursively(&sb, 0)) {
-+		error_errno(_("failed to delete '%s'"), sb.buf);
-+		ret = -1;
-+	}
-+	strbuf_reset(&sb);
-+	strbuf_addstr(&sb, git_common_path("worktrees/%s", wt->id));
-+	if (remove_dir_recursively(&sb, 0)) {
-+		error_errno(_("failed to delete '%s'"), sb.buf);
-+		ret = -1;
-+	}
-+	strbuf_release(&sb);
-+	free_worktrees(worktrees);
-+	return ret;
-+}
-+
- int cmd_worktree(int ac, const char **av, const char *prefix)
- {
- 	struct option options[] = {
-@@ -629,5 +706,7 @@ int cmd_worktree(int ac, const char **av, const char *prefix)
- 		return unlock_worktree(ac - 1, av + 1, prefix);
- 	if (!strcmp(av[1], "move"))
- 		return move_worktree(ac - 1, av + 1, prefix);
-+	if (!strcmp(av[1], "remove"))
-+		return remove_worktree(ac - 1, av + 1, prefix);
- 	usage_with_options(worktree_usage, options);
- }
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index e80392b..f413431 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -2715,7 +2715,7 @@ _git_whatchanged ()
- 
- _git_worktree ()
- {
--	local subcommands="add list lock move prune unlock"
-+	local subcommands="add list lock move prune remove unlock"
- 	local subcommand="$(__git_find_on_cmdline "$subcommands")"
- 	if [ -z "$subcommand" ]; then
- 		__gitcomp "$subcommands"
-@@ -2733,6 +2733,9 @@ _git_worktree ()
- 		prune,--*)
- 			__gitcomp "--dry-run --expire --verbose"
- 			;;
-+		remove,--*)
-+			__gitcomp "--force"
-+			;;
- 		*)
- 			;;
- 		esac
-diff --git a/t/t2028-worktree-move.sh b/t/t2028-worktree-move.sh
-index 74070bd..084acc6 100755
---- a/t/t2028-worktree-move.sh
-+++ b/t/t2028-worktree-move.sh
-@@ -89,4 +89,30 @@ test_expect_success 'move main worktree' '
- 	test_must_fail git worktree move . def
- '
- 
-+test_expect_success 'remove main worktree' '
-+	test_must_fail git worktree remove .
-+'
-+
-+test_expect_success 'remove locked worktree' '
-+	git worktree lock destination &&
-+	test_must_fail git worktree remove destination &&
-+	git worktree unlock destination
-+'
-+
-+test_expect_success 'remove worktree with dirty tracked file' '
-+	echo dirty >>destination/init.t &&
-+	test_must_fail git worktree remove destination
-+'
-+
-+test_expect_success 'remove worktree with untracked file' '
-+	git -C destination checkout init.t &&
-+	: >destination/untracked &&
-+	test_must_fail git worktree remove destination
-+'
-+
-+test_expect_success 'force remove worktree with untracked file' '
-+	git worktree remove --force destination &&
-+	test_path_is_missing destination
-+'
-+
- test_done
--- 
-2.8.2.524.g6ff3d78
+I make the same mistake in most of my scripts :-/ Thanks for the PR; I
+merged it.
+
+> So then I reinvoked it like:
+> 
+>   $ git test range @{u}..HEAD
+> 
+> and it actually ran some tests. Yay.
+> 
+> And then of course I wanted to prove to myself how cool the notes
+> feature is, so I ran it again. It didn't run any tests this time. Yay
+> again. But there were a few surprises:
+> 
+>   $ git test range @{u}..HEAD
+>   setup_test default
+>   Using test default; command: make -j8 test
+>   Old status: bad
+>   Tree 9fcdbd5c78^{tree} is already known to be bad!
+>   Old status: good
+>   Tree c22f4f6624^{tree} is already known to be good.
+>   Old status: good
+>   Tree 19e2e62e5e^{tree} is already known to be good.
+>   Already on 'jk/wait-for-child-cleanup'
+>   Your branch is ahead of 'origin/master' by 3 commits.
+> 
+>   ALL TESTS SUCCESSFUL
+>
+> My initial run with "git co" had left the first commit marked as "bad".
+> That's not _too_ surprising, since it did indeed fail. I think it's
+> probably a bug to record a failure note, though, if checking out fails.
+> It's not necessarily an immutable property of the tree.
+
+I definitely agree. This was an oversight which I just fixed.
+
+> [...]
+> 
+> The second thing that surprised me was "ALL TESTS SUCCESSFUL", when
+> clearly one of them was known-bad. :)
+
+Replayed results weren't being treated internally as failures. That's
+fixed, too.
+
+> So at this point I knew I needed to re-run the test. Looks like there's
+> a "--force" option. Let's try it. There's no need to re-run the other
+> two, so let's just give it one commit:
+> 
+>   $ git test range -f HEAD~2
+>   ...
+>   Object 95649d6cf9ec68f05d1dc57ec1b989b8d263a7ae^{tree} has no note
+>   Object e1970ce43abfbf625bce68516857e910748e5965^{tree} has no note
+>   Object 368f99d57e8ed17243f2e164431449d48bfca2fb^{tree} has no note
+>   Object ceede59ea90cebad52ba9c8263fef3fb6ef17593^{tree} has no note
+>   Object dfe070511c652f2b8e1bf6540f238c9ca9ba41d3^{tree} has no note
+>   Object 902d960b382a0cd424618ff4e1316da40e4be2f6^{tree} has no note
+>   ...
+> 
+> This started spewing out many lines like the one above, until I hit ^C.
+> Yikes!
+> 
+> [...]
+> I see the symmetry and simplicity in allowing the user to specify a full
+> range. But it also seems like it's easy to make a mistake that's going
+> to want to test a lot of commits. I wonder if it should complain when
+> there's no lower bound to the commit range. Or alternatively, if there's
+> a single positive reference, treat it as a lower bound, with HEAD as the
+> upper bound (which is vaguely rebase-like).
+
+I see how this might be unexpected, and it's definitely inconvenient at
+some times (like when you want to test a single commit). I thought it
+would be nice to allow arbitrary `rev-list` expressions (albeit
+currently only a single word), but I think that you are right that other
+semantics would be more convenient.
+
+I'm thinking of maybe
+
+* If an argument matches `*..*`, pass it to `rev-list` (like now).
+
+* Otherwise, treat each argument as a single commit/tree (i.e., pass it
+to `rev-parse`).
+
+* If no argument is specified, test `@{u}..` (assuming that an
+  upstream is configured). Though actually, this won't be as
+  convenient as it sounds, because (a) `git test` is often run
+  in a separate worktree, and (2) on errors, it currently leaves the
+  repository with a detached `HEAD`.
+
+* Support a `--stdin` option, to read a list of commits/trees to test
+  from standard input. By this mechanism, users could use arbitrary
+  `rev-list` commands to choose what to test.
+
+> A few other observations about the note deletion:
+> 
+>   - The "has no note" message should perhaps be suppressed. We're just
+>     trying to overwrite the value if there is one (alternatively,
+>     instead of removing it, just overwrite it, so the old note stays
+>     until we get a result one way or the other).
+
+Yes. That's a one-time problem that I haven't seen in a long time. The
+script is overly chatty in general.
+
+Aside: It would be nice if `git notes` had a subcommand to initialize a
+note reference with an empty tree. (I know how to do it longhand, but
+it's awkward and it should be possible to do it via the `notes` interface.)
+
+I think ideally `git notes add` would look for pre-existing notes, and:
+
+* If none are found, create an empty notes reference.
+
+* If pre-existing notes are found and there was no existing test with
+  that name, probably just leave the old notes in place.
+
+* If pre-existing notes are found and there was already a test with
+  that name but a different command, perhaps insist that the user
+  decide explicitly whether to forget the old results or continue using
+  them. This might help users avoid the mistake of re-using old results
+  even if they change the manner of testing.
+
+>   - It was sufficiently slow that it looks like we invoke "git notes
+>     remove" once per commit. It would be a lot more efficient to batch
+>     them (not just in terms of process startup, but because you're going
+>     to write a _ton_ of intermediate notes trees).
+> 
+>     Of course none of that matters if you don't do something stupid like
+>     trying to "git test" 45,000 commits. :)
+
+Yeah, I've never experienced that problem myself :-P But I see that
+notes supports `git notes remove --ignore-missing --stdin`, so that will
+be easy to implement.
+
+> [...]
+> It would be even easier if I could just repeat my range and only re-test
+> the "bad" commits. It was then that I decided to actually read the rest
+> of "git test help range" and see that you already wrote such an option,
+> cleverly hidden under the name "--retest".
+
+I think you were being ironic, but if not, would this have been easier
+to find under another name?
+
+> And one final nit. I notice there is also a "--keep-going" option. Which
+> made me surprised that we bothered to test HEAD~1 and HEAD, when we knew
+> that HEAD~2 was bogus. I suspect this is related to the "ALL TESTS
+> SUCCESSFUL" issue.
+
+Yes, that's part of the same bug from above.
+
+> So those were all little cosmetic things. The other big thing I wanted
+> to see was what it's like to fix a bug deep in a topic. So I used "git
+> rebase -i" to inset a compile error into the first commit of my 3-patch
+> series. And then I tested it:
+> 
+>   $ git test add -t compile 'make -j8'
+>   $ git test range -t compile HEAD~3..
+> 
+> As predicted, it stopped at the first commit and told me it was buggy.
+> But I'm dumped onto a detached HEAD, and I'm on my own to actually get
+> the working tree to a state where I can test and fix on my actual
+> branch.
+
+Yeah, this is awkward, not only because many people don't know what to
+make of detached HEAD, but also because it makes it awkward in general
+to use `git test` in your main working directory. I didn't model this
+behavior on `git rebase --interactive`'s `edit` command, because I
+rarely use that. But I can see how they would fit together pretty well
+for people who like that workflow.
+
+I've considered that rather than leave you in a detached HEAD state,
+maybe `git test` should always restore your old branch. But it seems
+like it would more often be useful to be in the directory with the
+broken commit checked out and any test results, coredumps, etc intact.
+
+I would definitely like to implement a `git test reset` command that
+returns you to your initial branch (like `git bisect reset`).
+
+I like your idea of a `git test fix` command:
+
+> [...]
+> I think it should be possible to script the next steps, though.
+> Something like like "git test fix foo", which would:
+> 
+>   - expand the range of foo@{u}..foo to get the list of commits
+> 
+>   - see which ones were marked as broken
+> 
+>   - kick off an interactive rebase, but override GIT_EDITOR to mark any
+>     broken ones as "edit" instead of "pick"
+> 
+> That lets you separate the act of testing from the act of fixing. You
+> can let the tester run continuously in the background, and only stop to
+> fix when you're at an appropriate point in your work.
+
+I think you would usually only want to mark only the *first* broken
+commit as "edit", because often errors cascade to descendant commits.
+
+Thanks for all the great feedback!
+
+Michael
 
