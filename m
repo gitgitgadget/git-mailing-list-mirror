@@ -2,288 +2,213 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DA3F61FEB3
-	for <e@80x24.org>; Sun,  8 Jan 2017 09:56:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B34EF1FEB3
+	for <e@80x24.org>; Sun,  8 Jan 2017 10:16:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754479AbdAHJyf (ORCPT <rfc822;e@80x24.org>);
-        Sun, 8 Jan 2017 04:54:35 -0500
-Received: from alum-mailsec-scanner-2.mit.edu ([18.7.68.13]:63714 "EHLO
-        alum-mailsec-scanner-2.mit.edu" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S935063AbdAHJwb (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 8 Jan 2017 04:52:31 -0500
-X-AuditID: 1207440d-8b7ff700000009ba-8b-58720bdb9fe5
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-        by alum-mailsec-scanner-2.mit.edu (Symantec Messaging Gateway) with SMTP id B9.49.02490.BDB02785; Sun,  8 Jan 2017 04:52:29 -0500 (EST)
-Received: from [192.168.69.190] (p5B105C39.dip0.t-ipconnect.de [91.16.92.57])
-        (authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v089qPCx005156
-        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-        Sun, 8 Jan 2017 04:52:26 -0500
-Subject: Re: [ANNOUNCE] git-test: run automated tests against a range of Git
- commits
-To:     Jeff King <peff@peff.net>
-References: <1341c01a-aca7-699c-c53a-28d048614bfe@alum.mit.edu>
- <20170107071832.2rucap3rskzmkgq4@sigill.intra.peff.net>
-Cc:     git discussion list <git@vger.kernel.org>
-From:   Michael Haggerty <mhagger@alum.mit.edu>
-Message-ID: <ce6f98a4-1fb7-aa4b-2efb-78d8f49397a7@alum.mit.edu>
-Date:   Sun, 8 Jan 2017 10:52:25 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Icedove/45.5.1
+        id S1033213AbdAHKPI (ORCPT <rfc822;e@80x24.org>);
+        Sun, 8 Jan 2017 05:15:08 -0500
+Received: from mail-pg0-f66.google.com ([74.125.83.66]:33502 "EHLO
+        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932068AbdAHKNm (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 8 Jan 2017 05:13:42 -0500
+Received: by mail-pg0-f66.google.com with SMTP id 194so4219161pgd.0
+        for <git@vger.kernel.org>; Sun, 08 Jan 2017 02:13:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=VFUwF5ovaRiF8OmYh9uiS7HalALbtIKSrFOxIzZTy5g=;
+        b=vCvt4mXgejnC/QWfb+l6r6Zf0s+Rvo+Ep0hUs11/BqORTK2QDokut8IiBfxDkSKVUw
+         Q/HcRoPDf7X5HyGQj/gPEwjxY1Pj24MERAOCO3AKDuw/Qk2wj2XmPxN6NGful82swj79
+         Jxyh886grFEZjqby2GhAjbdLGQ8BfxLncrppvk01bGktmlhB/ofL8S/Q3o9ga+Awge3P
+         tdWQ3RcQkKSOg9zQJ1eOHFJBycMvPwJUe3AotmpxORJ0CZUobJA1dBFbKxvBKoVmR1Ah
+         gtNUBwMZeTjskKmM6ydw3goLqs/QO0CFNMVlMIT6DahsZE0T5S1SB5pOQz8Q+A/v576/
+         LX2w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=VFUwF5ovaRiF8OmYh9uiS7HalALbtIKSrFOxIzZTy5g=;
+        b=A4VVr/52BlZH65g3SKlb8ElYmixRWt7hSIEjYU7/daYpm4O5JOOJiur6o5MAYoIsO6
+         udpXk2cAMR5V1FVrEavlnth2evRXIX28C/poh/CoOy9vl++NDvxDT2zud15EX2w0GKxb
+         L+ITwoQrl21Wm1i6g4Td999Saozknr9109ONn5IKABSQmUXzFknQDgMYMQ9k01woH2+p
+         smIVdXgRAniWYMfL2qb357Nc/KStHrj9MMtZv6zTMNjVcO6KDD5K2dn4a8N1fzrK77bQ
+         +X+RvSs0zXqiGCejCAzgBgudJrHmhHr+QLD2EWdxEXaNkezMY+UGF9iACtOIFYKmMFsR
+         hpGA==
+X-Gm-Message-State: AIkVDXLfyKM1/Kt0GH/rwRoaUzvldVlju813nw3WP9cvTp3DYOca7FpUJkfiTOLp0oeytg==
+X-Received: by 10.84.233.193 with SMTP id m1mr17804391pln.126.1483870421337;
+        Sun, 08 Jan 2017 02:13:41 -0800 (PST)
+Received: from ash ([115.72.187.80])
+        by smtp.gmail.com with ESMTPSA id 18sm17454439pgf.28.2017.01.08.02.13.37
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 08 Jan 2017 02:13:39 -0800 (PST)
+Received: by ash (sSMTP sendmail emulation); Sun, 08 Jan 2017 17:13:35 +0700
+From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>
+Subject: [PATCH v3] log --graph: customize the graph lines with config log.graphColors
+Date:   Sun,  8 Jan 2017 17:13:33 +0700
+Message-Id: <20170108101333.26221-1-pclouds@gmail.com>
+X-Mailer: git-send-email 2.8.2.524.g6ff3d78
+In-Reply-To: <xmqqzijjd34j.fsf@gitster.mtv.corp.google.com>
+References: <xmqqzijjd34j.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-In-Reply-To: <20170107071832.2rucap3rskzmkgq4@sigill.intra.peff.net>
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrPIsWRmVeSWpSXmKPExsUixO6iqHuXuyjC4OMfNYuuK91MFj9aepgd
-        mDye9e5h9Pi8SS6AKYrLJiU1J7MstUjfLoErY8+tW2wFU3wqXlxbw9TAuNm6i5GTQ0LAROLW
-        gmdsXYxcHEIClxkl9jfsZIRwzjBJNHxdyQ5SJSwQJnFv1jcmEFtEQFbi++GNjCC2kEClxKoj
-        21lBbGYBXYkHHY/BatiA7EU9zWA2r4C9xKmuXrA5LAIqErdntYHViwqESFyec5QNokZQ4uTM
-        JyxdjBwcnAIuEu8/J0OMVJf4M+8SM4QtL9G8dTbzBEb+WUg6ZiEpm4WkbAEj8ypGucSc0lzd
-        3MTMnOLUZN3i5MS8vNQiXSO93MwSvdSU0k2MkHDk3cH4f53MIUYBDkYlHt4JWwojhFgTy4or
-        cw8xSnIwKYnyOkYVRAjxJeWnVGYkFmfEF5XmpBYfYpTgYFYS4b3FUhQhxJuSWFmVWpQPk5Lm
-        YFES51Vbou4nJJCeWJKanZpakFoEk5Xh4FCS4HXlAmoULEpNT61Iy8wpQUgzcXCCDOcBGs4L
-        UsNbXJCYW5yZDpE/xagoJc6bApIQAElklObB9cLSxStGcaBXhHn3gFTxAFMNXPcroMFMQIMF
-        PfNBBpckIqSkGhjtdjhMPm70fbtQ4rk/RY5RtQZ/1+qG6xxvbnvAz8x4Vp1rw79At3gevTeK
-        xWKz3Oy4Hr72/XF1vm25dK3WCjnt/i8Xrj1elRN43YF1geFKzZ0zP6k1bZOxXnL2ZnPmzPXT
-        VAWbTv086/J736RJJyX/tm80vPpgrfnZ+UvZb2no1tkaaVQs1mZRYinOSDTUYi4qTgQAnJ4U
-        IfICAAA=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 01/07/2017 08:18 AM, Jeff King wrote:
-> On Fri, Jan 06, 2017 at 04:52:16PM +0100, Michael Haggerty wrote:
-> 
->> I just released ﻿⁠⁠⁠⁠`git test﻿⁠⁠⁠⁠`, a script for running automated
->> tests across a range of Git commits and keeping track of the results in
->> git notes:
->>
->>     https://github.com/mhagger/git-test
->>
->> This is a script that I've been using in one form or another for years
->> and I find it really handy [1].
-> 
-> Neat. I usually "git rebase -x 'make -j8 test' @{u}" after finishing a
-> topic to make sure the intermediate steps are good. But it would be neat
-> to have this running continuously in the background to alert me to
-> problems sooner (and the key thing there is that it remembers
-> already-run tests, so it should be safe to basically for new commits
-> every 10 seconds or so).
-> 
-> I did hit a few interesting cases trying out "git test". So here's a
-> narrative, and you can pick out where there may be room for improvement
-> in the tool, and where I'm just being dumb. :)
-> 
-> I tried it out first on a topic I finished earlier today, which has 3
-> commits. So I did:
-> 
->   $ git test add 'make -j8 test'
->   $ git test range @{u}..HEAD
-> 
-> It barfed on the first commit, because the script expects "git co" to
-> work, but I don't have that alias. No big deal (and I already submitted
-> a PR to fix it).
+If you have a 256 colors terminal (or one with true color support), then
+the predefined 12 colors seem limited. On the other hand, you don't want
+to draw graph lines with every single color in this mode because the two
+colors could look extremely similar. This option allows you to hand pick
+the colors you want.
 
-I make the same mistake in most of my scripts :-/ Thanks for the PR; I
-merged it.
+Even with standard terminal, if your background color is neither black
+or white, then the graph line may match your background and become
+hidden. You can exclude your background color (or simply the colors you
+hate) with this.
 
-> So then I reinvoked it like:
-> 
->   $ git test range @{u}..HEAD
-> 
-> and it actually ran some tests. Yay.
-> 
-> And then of course I wanted to prove to myself how cool the notes
-> feature is, so I ran it again. It didn't run any tests this time. Yay
-> again. But there were a few surprises:
-> 
->   $ git test range @{u}..HEAD
->   setup_test default
->   Using test default; command: make -j8 test
->   Old status: bad
->   Tree 9fcdbd5c78^{tree} is already known to be bad!
->   Old status: good
->   Tree c22f4f6624^{tree} is already known to be good.
->   Old status: good
->   Tree 19e2e62e5e^{tree} is already known to be good.
->   Already on 'jk/wait-for-child-cleanup'
->   Your branch is ahead of 'origin/master' by 3 commits.
-> 
->   ALL TESTS SUCCESSFUL
->
-> My initial run with "git co" had left the first commit marked as "bad".
-> That's not _too_ surprising, since it did indeed fail. I think it's
-> probably a bug to record a failure note, though, if checking out fails.
-> It's not necessarily an immutable property of the tree.
+Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+---
+ Compared to v2:
 
-I definitely agree. This was an oversight which I just fixed.
+ * set_column_colors_by_config() is renamed to set_column_colors()
+ * no memory leak if the function is called the second time
+ * proper space trimming since color_parse_mem expects so
+ * fixed the warning message, giving some context
+ * at least one test to exercise the code
+ * I'm not going with the cumulative behavior because I think that's
+   just harder to manage colors, and we would need a way to remove
+   colors from the config too.
 
-> [...]
-> 
-> The second thing that surprised me was "ALL TESTS SUCCESSFUL", when
-> clearly one of them was known-bad. :)
+ Documentation/config.txt |  4 ++++
+ graph.c                  | 46 ++++++++++++++++++++++++++++++++++++++++++++--
+ t/t4202-log.sh           | 22 ++++++++++++++++++++++
+ 3 files changed, 70 insertions(+), 2 deletions(-)
 
-Replayed results weren't being treated internally as failures. That's
-fixed, too.
-
-> So at this point I knew I needed to re-run the test. Looks like there's
-> a "--force" option. Let's try it. There's no need to re-run the other
-> two, so let's just give it one commit:
-> 
->   $ git test range -f HEAD~2
->   ...
->   Object 95649d6cf9ec68f05d1dc57ec1b989b8d263a7ae^{tree} has no note
->   Object e1970ce43abfbf625bce68516857e910748e5965^{tree} has no note
->   Object 368f99d57e8ed17243f2e164431449d48bfca2fb^{tree} has no note
->   Object ceede59ea90cebad52ba9c8263fef3fb6ef17593^{tree} has no note
->   Object dfe070511c652f2b8e1bf6540f238c9ca9ba41d3^{tree} has no note
->   Object 902d960b382a0cd424618ff4e1316da40e4be2f6^{tree} has no note
->   ...
-> 
-> This started spewing out many lines like the one above, until I hit ^C.
-> Yikes!
-> 
-> [...]
-> I see the symmetry and simplicity in allowing the user to specify a full
-> range. But it also seems like it's easy to make a mistake that's going
-> to want to test a lot of commits. I wonder if it should complain when
-> there's no lower bound to the commit range. Or alternatively, if there's
-> a single positive reference, treat it as a lower bound, with HEAD as the
-> upper bound (which is vaguely rebase-like).
-
-I see how this might be unexpected, and it's definitely inconvenient at
-some times (like when you want to test a single commit). I thought it
-would be nice to allow arbitrary `rev-list` expressions (albeit
-currently only a single word), but I think that you are right that other
-semantics would be more convenient.
-
-I'm thinking of maybe
-
-* If an argument matches `*..*`, pass it to `rev-list` (like now).
-
-* Otherwise, treat each argument as a single commit/tree (i.e., pass it
-to `rev-parse`).
-
-* If no argument is specified, test `@{u}..` (assuming that an
-  upstream is configured). Though actually, this won't be as
-  convenient as it sounds, because (a) `git test` is often run
-  in a separate worktree, and (2) on errors, it currently leaves the
-  repository with a detached `HEAD`.
-
-* Support a `--stdin` option, to read a list of commits/trees to test
-  from standard input. By this mechanism, users could use arbitrary
-  `rev-list` commands to choose what to test.
-
-> A few other observations about the note deletion:
-> 
->   - The "has no note" message should perhaps be suppressed. We're just
->     trying to overwrite the value if there is one (alternatively,
->     instead of removing it, just overwrite it, so the old note stays
->     until we get a result one way or the other).
-
-Yes. That's a one-time problem that I haven't seen in a long time. The
-script is overly chatty in general.
-
-Aside: It would be nice if `git notes` had a subcommand to initialize a
-note reference with an empty tree. (I know how to do it longhand, but
-it's awkward and it should be possible to do it via the `notes` interface.)
-
-I think ideally `git notes add` would look for pre-existing notes, and:
-
-* If none are found, create an empty notes reference.
-
-* If pre-existing notes are found and there was no existing test with
-  that name, probably just leave the old notes in place.
-
-* If pre-existing notes are found and there was already a test with
-  that name but a different command, perhaps insist that the user
-  decide explicitly whether to forget the old results or continue using
-  them. This might help users avoid the mistake of re-using old results
-  even if they change the manner of testing.
-
->   - It was sufficiently slow that it looks like we invoke "git notes
->     remove" once per commit. It would be a lot more efficient to batch
->     them (not just in terms of process startup, but because you're going
->     to write a _ton_ of intermediate notes trees).
-> 
->     Of course none of that matters if you don't do something stupid like
->     trying to "git test" 45,000 commits. :)
-
-Yeah, I've never experienced that problem myself :-P But I see that
-notes supports `git notes remove --ignore-missing --stdin`, so that will
-be easy to implement.
-
-> [...]
-> It would be even easier if I could just repeat my range and only re-test
-> the "bad" commits. It was then that I decided to actually read the rest
-> of "git test help range" and see that you already wrote such an option,
-> cleverly hidden under the name "--retest".
-
-I think you were being ironic, but if not, would this have been easier
-to find under another name?
-
-> And one final nit. I notice there is also a "--keep-going" option. Which
-> made me surprised that we bothered to test HEAD~1 and HEAD, when we knew
-> that HEAD~2 was bogus. I suspect this is related to the "ALL TESTS
-> SUCCESSFUL" issue.
-
-Yes, that's part of the same bug from above.
-
-> So those were all little cosmetic things. The other big thing I wanted
-> to see was what it's like to fix a bug deep in a topic. So I used "git
-> rebase -i" to inset a compile error into the first commit of my 3-patch
-> series. And then I tested it:
-> 
->   $ git test add -t compile 'make -j8'
->   $ git test range -t compile HEAD~3..
-> 
-> As predicted, it stopped at the first commit and told me it was buggy.
-> But I'm dumped onto a detached HEAD, and I'm on my own to actually get
-> the working tree to a state where I can test and fix on my actual
-> branch.
-
-Yeah, this is awkward, not only because many people don't know what to
-make of detached HEAD, but also because it makes it awkward in general
-to use `git test` in your main working directory. I didn't model this
-behavior on `git rebase --interactive`'s `edit` command, because I
-rarely use that. But I can see how they would fit together pretty well
-for people who like that workflow.
-
-I've considered that rather than leave you in a detached HEAD state,
-maybe `git test` should always restore your old branch. But it seems
-like it would more often be useful to be in the directory with the
-broken commit checked out and any test results, coredumps, etc intact.
-
-I would definitely like to implement a `git test reset` command that
-returns you to your initial branch (like `git bisect reset`).
-
-I like your idea of a `git test fix` command:
-
-> [...]
-> I think it should be possible to script the next steps, though.
-> Something like like "git test fix foo", which would:
-> 
->   - expand the range of foo@{u}..foo to get the list of commits
-> 
->   - see which ones were marked as broken
-> 
->   - kick off an interactive rebase, but override GIT_EDITOR to mark any
->     broken ones as "edit" instead of "pick"
-> 
-> That lets you separate the act of testing from the act of fixing. You
-> can let the tester run continuously in the background, and only stop to
-> fix when you're at an appropriate point in your work.
-
-I think you would usually only want to mark only the *first* broken
-commit as "edit", because often errors cascade to descendant commits.
-
-Thanks for all the great feedback!
-
-Michael
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 0bcb679..33a007b 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -2003,6 +2003,10 @@ log.follow::
+ 	i.e. it cannot be used to follow multiple files and does not work well
+ 	on non-linear history.
+ 
++log.graphColors::
++	A list of colors, separated by commas, that can be used to draw
++	history lines in `git log --graph`.
++
+ log.showRoot::
+ 	If true, the initial commit will be shown as a big creation event.
+ 	This is equivalent to a diff against an empty tree.
+diff --git a/graph.c b/graph.c
+index dd17201..048f5cb 100644
+--- a/graph.c
++++ b/graph.c
+@@ -62,6 +62,49 @@ enum graph_state {
+ static const char **column_colors;
+ static unsigned short column_colors_max;
+ 
++static void set_column_colors(void)
++{
++	static char **colors;
++	static int colors_max, colors_alloc;
++	char *string = NULL;
++	const char *end, *start;
++	int i;
++
++	for (i = 0; i < colors_max; i++)
++		free(colors[i]);
++	if (colors)
++		free(colors[colors_max]);
++	colors_max = 0;
++
++	if (git_config_get_string("log.graphcolors", &string)) {
++		graph_set_column_colors(column_colors_ansi,
++					column_colors_ansi_max);
++		return;
++	}
++
++	start = string;
++	end = string + strlen(string);
++	while (start < end) {
++		const char *comma = strchrnul(start, ',');
++		char color[COLOR_MAXLEN];
++
++		while (start < comma && isspace(*start))
++			start++;
++
++		if (!color_parse_mem(start, comma - start, color)) {
++			ALLOC_GROW(colors, colors_max + 1, colors_alloc);
++			colors[colors_max++] = xstrdup(color);
++		} else
++			warning(_("ignore invalid color '%.*s' in log.graphColors"),
++				(int)(comma - start), start);
++		start = comma + 1;
++	}
++	free(string);
++	ALLOC_GROW(colors, colors_max + 1, colors_alloc);
++	colors[colors_max] = xstrdup(GIT_COLOR_RESET);
++	graph_set_column_colors((const char **)colors, colors_max);
++}
++
+ void graph_set_column_colors(const char **colors, unsigned short colors_max)
+ {
+ 	column_colors = colors;
+@@ -208,8 +251,7 @@ struct git_graph *graph_init(struct rev_info *opt)
+ 	struct git_graph *graph = xmalloc(sizeof(struct git_graph));
+ 
+ 	if (!column_colors)
+-		graph_set_column_colors(column_colors_ansi,
+-					column_colors_ansi_max);
++		set_column_colors();
+ 
+ 	graph->commit = NULL;
+ 	graph->revs = opt;
+diff --git a/t/t4202-log.sh b/t/t4202-log.sh
+index e2db47c..afe0715 100755
+--- a/t/t4202-log.sh
++++ b/t/t4202-log.sh
+@@ -313,6 +313,28 @@ test_expect_success 'log --graph with merge' '
+ 	test_cmp expect actual
+ '
+ 
++cat > expect.colors <<\EOF
++*   Merge branch 'side'
++<BLUE>|<RESET><CYAN>\<RESET>
++<BLUE>|<RESET> * side-2
++<BLUE>|<RESET> * side-1
++* <CYAN>|<RESET> Second
++* <CYAN>|<RESET> sixth
++* <CYAN>|<RESET> fifth
++* <CYAN>|<RESET> fourth
++<CYAN>|<RESET><CYAN>/<RESET>
++* third
++* second
++* initial
++EOF
++
++test_expect_success 'log --graph with merge with log.graphColors' '
++	test_config log.graphColors " blue , cyan , red " &&
++	git log --color=always --graph --date-order --pretty=tformat:%s |
++		test_decode_color | sed "s/ *\$//" >actual &&
++	test_cmp expect.colors actual
++'
++
+ test_expect_success 'log --raw --graph -m with merge' '
+ 	git log --raw --graph --oneline -m master | head -n 500 >actual &&
+ 	grep "initial" actual
+-- 
+2.8.2.524.g6ff3d78
 
