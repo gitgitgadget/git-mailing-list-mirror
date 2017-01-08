@@ -2,74 +2,74 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.1 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,
-	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 661C3205C9
-	for <e@80x24.org>; Sun,  8 Jan 2017 16:55:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1F607205C9
+	for <e@80x24.org>; Sun,  8 Jan 2017 18:54:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756455AbdAHQzZ (ORCPT <rfc822;e@80x24.org>);
-        Sun, 8 Jan 2017 11:55:25 -0500
-Received: from a7-11.smtp-out.eu-west-1.amazonses.com ([54.240.7.11]:35672
-        "EHLO a7-11.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1754196AbdAHQzW (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 8 Jan 2017 11:55:22 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
-        s=ihchhvubuqgjsxyuhssfvqohv7z3u4hn; d=amazonses.com; t=1483894520;
-        h=From:To:Message-ID:In-Reply-To:References:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
-        bh=x8eyJlSugx10FW6tSHqV5UYXpyY63nfv3lmPUZpfsRc=;
-        b=dNW2C6w4SBbme1G2drPZOGH79CtCNY0wAz/rvAYbWTBqFkpvcFHY/zyQVjxvC7Lv
-        vkHS9N1VlaYTlVdJXr3JzyZGhj5HmWZgSmcOJBJdb94Lwi02UxfFnHqCiyFRuXwEjSW
-        85ViWdE1ezYLRH4QZc7dcwOy5/AbH+Hq12edJ544=
-From:   Pranit Bauva <pranit.bauva@gmail.com>
-To:     git@vger.kernel.org
-Message-ID: <010201597f0179fb-fc4c0240-5ec7-466b-96b9-59f4840954d7-000000@eu-west-1.amazonses.com>
-In-Reply-To: <010201597f017978-356bf9e9-ee78-498b-926b-5c00466b1d9e-000000@eu-west-1.amazonses.com>
-References: <010201597f017978-356bf9e9-ee78-498b-926b-5c00466b1d9e-000000@eu-west-1.amazonses.com>
-Subject: [PATCH v4 2/2] t9813: avoid using pipes
+        id S965289AbdAHSye (ORCPT <rfc822;e@80x24.org>);
+        Sun, 8 Jan 2017 13:54:34 -0500
+Received: from mout.gmx.net ([212.227.17.22]:55920 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S932432AbdAHSyc (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 8 Jan 2017 13:54:32 -0500
+Received: from virtualbox ([37.24.141.236]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0M51eM-1cgBo63rXa-00zGCE; Sun, 08
+ Jan 2017 19:54:25 +0100
+Date:   Sun, 8 Jan 2017 19:54:23 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Steven Penny <svnpenn@gmail.com>
+cc:     git@vger.kernel.org
+Subject: Re: [PATCH] Makefile: put LIBS after LDFLAGS for imap-send
+In-Reply-To: <CAAXzdLVXUdCAcJL6DratNwLFUSN4UAV+TmALSZe-zSSTAJcWWw@mail.gmail.com>
+Message-ID: <alpine.DEB.2.20.1701081953330.3469@virtualbox>
+References: <20170108061238.2604-1-svnpenn@gmail.com> <alpine.DEB.2.20.1701081250580.3469@virtualbox> <CAAXzdLVXUdCAcJL6DratNwLFUSN4UAV+TmALSZe-zSSTAJcWWw@mail.gmail.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Date:   Sun, 8 Jan 2017 16:55:20 +0000
-X-SES-Outgoing: 2017.01.08-54.240.7.11
-Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:lWFEPWe0UNQzqhgeFJbi2Y6LY1yOtwqt2OduCpEMY8d3IHU3wUL
+ NjjUBYZDsWVrhqjojVfl//Zih5dxr12MHHw5+E6v96LqKFrNr+PQNeDC+P+GQF6UO7qRMM1
+ gqnnYCEKKMjYUEhzvqWLEWxsfN/I3qrC0AEtIQb/v8cLVsxZtqO+miN1yVspR7zQsRgi85Z
+ KoH20YWJCItGIWnDUbIGw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:xF+qa5JTv68=:DghxIA2UwKesy3xDmg5ZHX
+ mu0IGA8dMMXNw+Wr1wsMJmi0jEjDJp8K1uvIdUdNDqr+Y0HqH/P5t1eTSh0zUzjj/xLA9cFN7
+ WN1FzZAMrByw9pXzqGzWZ6Q3GRdldbjh6jbQWmSDfYU3Ls94x54ousvkswearlMfLmbcFKmE9
+ 8BGJRELtxh3+ByH4nfSdViZUImYzji2q03UhFYUK2Uq20Lr8RUUDxQViWwpgdakxyMYNBwyvG
+ w2udBOfpASilZra024iRZCCdKg0+cHQBBVrcDN17sIylaXK0C2x5rZT1yZv1IzPXZCY6i09an
+ RnWbNUGdDMdtr2iNzeC5eakn44Qduqw0zkU0eo/l5RTcpPZmm6ehYjnYeNIDrHVDGlm04DNqD
+ QuWUDaM/DsZyWCbXITYPa9gWTOVTtU3RpIh5RBG/C2qdCqjpn8FasFqMoY9mI9q08gt0vWRrH
+ Mhjwu3FV5RIq3kEplGOcTinOHt/tR7bLnZrMoBKNhs3aymZjQnACPi1CbCLjpEUiK/6h1mcD9
+ RJGUbkUYL2G3ILuJOd5PfRT0VNO5kVEhzHf2anirxLqj+deqJxX9afd4irkApE8Rn+W/1fWKb
+ 7dvEiK+CLj5V8Z3FF548w6yzpEtwmZbhh8+61RL1VN1qFeyYxgkJKfg5oTX4SZvzxG7uekaJj
+ Qknubh/o7VLxXv8pN1Ii/FxNseuG00q2dBQpWgj3yUxe4Z7aRorz4smFq2aRIzavCT+uOOvpH
+ MpSoVA/3mghAdOzrK4eWebsotMx7Xb0MUJeOFDCOTALwP7j9qccMImDzdCusm1RhhM0bglkPv
+ SHCn5QcuhtPzzFcfk2FyrBhyZRYFHQqDbpw9dp3lIRBlllgMho+tpNbd8UVD1HpwAjJ7BmpXe
+ uNqvZEvf9FhIjeSN5vt9b81pbpPpbTaQ9DvpjpKGBCFa1MyTB5txkk4KSKza/UccjPdjUtfOt
+ 76sms2A7SLQog9LvQCSVJ2VCKslYBCrQcfSGkbAgWf/BKaSDLQS7P9xiwHwMzL2kAiS/2H3O4
+ PmCBcZJLF32ZGXDdMrBVyKcOIhq3BSGw9qKtCYG9c6FQ0c2nbRs3pZ8yGmwRlsVDvA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The exit code of the upstream in a pipe is ignored thus we should avoid
-using it. By writing out the output of the git command to a file, we can
-test the exit codes of both the commands.
+Hi Steven,
 
-Signed-off-by: Pranit Bauva <pranit.bauva@gmail.com>
----
- t/t9813-git-p4-preserve-users.sh | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+On Sun, 8 Jan 2017, Steven Penny wrote:
 
-diff --git a/t/t9813-git-p4-preserve-users.sh b/t/t9813-git-p4-preserve-users.sh
-index 76004a5..bda222a 100755
---- a/t/t9813-git-p4-preserve-users.sh
-+++ b/t/t9813-git-p4-preserve-users.sh
-@@ -118,12 +118,12 @@ test_expect_success 'not preserving user with mixed authorship' '
- 		make_change_by_user usernamefile3 Derek derek@example.com &&
- 		P4EDITOR=cat P4USER=alice P4PASSWD=secret &&
- 		export P4EDITOR P4USER P4PASSWD &&
--		git p4 commit |\
--		grep "git author derek@example.com does not match" &&
-+		git p4 commit >actual &&
-+		grep "git author derek@example.com does not match" actual &&
- 
- 		make_change_by_user usernamefile3 Charlie charlie@example.com &&
--		git p4 commit |\
--		grep "git author charlie@example.com does not match" &&
-+		git p4 commit >actual &&
-+		grep "git author charlie@example.com does not match" actual &&
- 
- 		make_change_by_user usernamefile3 alice alice@example.com &&
- 		git p4 commit >actual &&
+> On Sun, Jan 8, 2017 at 5:54 AM, Johannes Schindelin wrote:
+> > I am curious: how do you build Git? I ask because I build Git on Windows
+> > many times a day, and I did not encounter any link problems.
+> 
+> My end goal is to build static native Windows Git via Cygwin and the
+> mingw64-x86_64-gcc-core package.
 
---
-https://github.com/git/git/pull/314
+That is certainly a worthy goal, and I would highly recommend to mention
+that particular cross-compiling setup in the commit message. It's not like
+this is the easiest way to build native Git on Windows...
+
+Ciao,
+Johannes
