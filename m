@@ -2,69 +2,68 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 35EC41FEB3
-	for <e@80x24.org>; Sun,  8 Jan 2017 11:55:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C9A08205C9
+	for <e@80x24.org>; Sun,  8 Jan 2017 15:12:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755977AbdAHLyy (ORCPT <rfc822;e@80x24.org>);
-        Sun, 8 Jan 2017 06:54:54 -0500
-Received: from mout.gmx.net ([212.227.15.18]:50624 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752116AbdAHLyV (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 8 Jan 2017 06:54:21 -0500
-Received: from virtualbox ([37.24.141.236]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MePYV-1c7IvO2F95-00QCn3; Sun, 08
- Jan 2017 12:54:17 +0100
-Date:   Sun, 8 Jan 2017 12:54:16 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     Steven Penny <svnpenn@gmail.com>
-cc:     git@vger.kernel.org
-Subject: Re: [PATCH] Makefile: put LIBS after LDFLAGS for imap-send
-In-Reply-To: <20170108061238.2604-1-svnpenn@gmail.com>
-Message-ID: <alpine.DEB.2.20.1701081250580.3469@virtualbox>
-References: <20170108061238.2604-1-svnpenn@gmail.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+        id S1756368AbdAHPMM (ORCPT <rfc822;e@80x24.org>);
+        Sun, 8 Jan 2017 10:12:12 -0500
+Received: from mail-qk0-f194.google.com ([209.85.220.194]:33051 "EHLO
+        mail-qk0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752393AbdAHPML (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 8 Jan 2017 10:12:11 -0500
+Received: by mail-qk0-f194.google.com with SMTP id 11so3170888qkl.0
+        for <git@vger.kernel.org>; Sun, 08 Jan 2017 07:12:10 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=JtBEHL9YqV5CsYhxaudA0rwBS7XsctBEvC8WYuCE/as=;
+        b=k9jtRlvf4BusTD5E319+u9mZjGApREDsJfde/Jj2o7/I24yRptXXKmu2PE3B4L+k+N
+         B4qSvooulZwMB8/y7hU/HfZTBWQFpQ1woiQ4tIZMBCGtb3nDVWynsRhrguxnpoP8ycWv
+         ICvRAi6DrOR0NZB2BB08M/cKw684qhqZ7Hr+KAv51wmEJRWVqAb8IHf8Sq/EkJ5UWPqu
+         WhesPSKRWkXXPjeWUY/RZDkg824ft+ddB4K2/H/YIk75URturqhhMvJO8qCow2n0Rrz8
+         p5fECELfYJCzZWH0ztnFNTMxGTHeMZVu6xqwjnJjUpbGONhYtdqazroanBMRiUmPQ8Eu
+         /wuw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=JtBEHL9YqV5CsYhxaudA0rwBS7XsctBEvC8WYuCE/as=;
+        b=VdWKcPpQblDeTnF7GJdgXQT1HVlIP5cdeMOhSXlJIm6WqiCokVVBFwU9yoWnvcdj7f
+         pxX4mN1r2bLh5nxx7i6UfRqPA7NLLpJ+knpDLmW10g0HGoWlrVKb/7Q63rneu242d1Je
+         HnjWQpPRFanUWciGAhlhFUxwM9i88MiTTDHalRA8eMtvSQTcScmyJTXSrKwyJfEY70On
+         IJIj7N1nOBg6XqdhPmqSLWwaISI/OCOjOGq23POTo8MqaJHl97WRCxUMpCOwjd2KJq6Y
+         XoLgJHOCpDq9Lb739JkwYGk5yQre5zQQ+S1Zo6wjz6xWBfuEW3CDmboeTgDpkFTL4SEN
+         97zA==
+X-Gm-Message-State: AIkVDXIMe78NqEuZNHP+sHzT6WBcrk2eO8u6lOuwK+BpatPAu5cKtgERvBVogcemEbGAtg2RN7Wvct0qAaH9BA==
+X-Received: by 10.55.83.7 with SMTP id h7mr93689831qkb.104.1483888329697; Sun,
+ 08 Jan 2017 07:12:09 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:a5QKeNexDghAbk+i5cQQGnkYH5CDnNiB2VNkGq84bU+8C/D+y/h
- 4bw8c8x47l7/i4Bbq92z+fTmzbbo7o7xlO55quJ1SHZjVpyuT9alqcrog8b3NRYLr6qT76H
- l6KQ6anF5u1zhzmZbZCdNuGQyok7BVgjFf2cvR2LdRBFPFAqQ75ULip4DHGkOwtuD/2Poqe
- EdUHq9Pi8mp70nl2A17eQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:8XpUwsbgXkQ=:LI1i3Y77Mjs3tBvRqq8s4c
- sh1FUFMsPJORI2Fe/LUoQKJ/raKOXPhvWqQO7exn8fsQQNfFGegSACuimofcZrXSS4P/w0vYQ
- 0sXUKp4iCQLNEqXn+OhP0hRIewXDR9Xh0xUQzRt17VYm0L6Qqg6h82VjwHy/Exr6Zta3k6E+r
- w2NMzGNyQ8iRvZa/Mfvcoc7JqMOdatKU3PnYuM1/WASbUgJPSRJh/gh+jMBShinB8I0qm4Swh
- fKv/QqbP/F4qX+CNWKT/uONFjYn9KoOKFgps1U6vPwdl3RszJluoJtDAabIkuIPyQhYS13jdR
- wF4EgzBq4cXpZOSbFo7w1hsgyLSp3dUgkaVFC8eGYEv7pkFzmD8ZkQYQ855Zl4Wb+JazooLoW
- 83ZudXegfHpzefg+xYjOhYrySQi0ION2WTkf3yPw0rWskG7Sm2OSHkbies0CXWpi+HUhN5w3I
- HqCL55rOTglpX6XAT1CwfXjt5+schvU/UNpZqz+ok8Q0MZpqL3Qu+tMdoKyRRjJX68hU7D6ro
- dtL/4xyZAWAOQ7rcAfsLeBqYco776IIW+x/9v/5zOuETaTd7Q6D+jsaKpWJSWlU1PJukylqE/
- nHLjJ/a1e+/3Y3hR+DdevuQZ1fyMZtt/i1UOO2My6tX0y5/eRV3xwF+RblDnEmhkaqlLdWHNv
- gDOeOS5IIlcFStHUaBFum6zl15h+I2rlKE0l7Sejd4gM1ocvipOX1wxXh9W5NZga5tacmDaB8
- jH4tQZ3eshR2GwpGlMerK0ju9n9hs8kb/Pw3yp8Jb5AGSvQWI+bmX8fghLsLq1tueR/XCLl2P
- nF18ZyF
+Received: by 10.12.164.69 with HTTP; Sun, 8 Jan 2017 07:12:09 -0800 (PST)
+In-Reply-To: <alpine.DEB.2.20.1701081250580.3469@virtualbox>
+References: <20170108061238.2604-1-svnpenn@gmail.com> <alpine.DEB.2.20.1701081250580.3469@virtualbox>
+From:   Steven Penny <svnpenn@gmail.com>
+Date:   Sun, 8 Jan 2017 09:12:09 -0600
+Message-ID: <CAAXzdLVXUdCAcJL6DratNwLFUSN4UAV+TmALSZe-zSSTAJcWWw@mail.gmail.com>
+Subject: Re: [PATCH] Makefile: put LIBS after LDFLAGS for imap-send
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Steven,
+On Sun, Jan 8, 2017 at 5:54 AM, Johannes Schindelin wrote:
+> I am curious: how do you build Git? I ask because I build Git on Windows
+> many times a day, and I did not encounter any link problems.
 
-On Sun, 8 Jan 2017, Steven Penny wrote:
-
-> This matches up with the targets git-%, git-http-fetch, git-http-push
-> and git-remote-testsvn. It must be done this way on Windows else lcrypto
-> cannot find lgdi32 and lws2_32
-
-I am curious: how do you build Git? I ask because I build Git on Windows
-many times a day, and I did not encounter any link problems. This hints at
-a difference of build environment (I use the Git for Windows SDK) that
-needs to be mentioned in the commit message.
-
-Ciao,
-Johannes
+My end goal is to build static native Windows Git via Cygwin and the
+mingw64-x86_64-gcc-core package. This is certainly possible but definitely not
+considered in the current Git codebase. I have a patch to config.mak.uname
+coming as well.
