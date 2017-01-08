@@ -2,119 +2,81 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 41D3120756
-	for <e@80x24.org>; Sat,  7 Jan 2017 23:27:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 722A120756
+	for <e@80x24.org>; Sun,  8 Jan 2017 01:58:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932999AbdAGX1i (ORCPT <rfc822;e@80x24.org>);
-        Sat, 7 Jan 2017 18:27:38 -0500
-Received: from mail-lf0-f68.google.com ([209.85.215.68]:33789 "EHLO
-        mail-lf0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755669AbdAGX1h (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 7 Jan 2017 18:27:37 -0500
-Received: by mail-lf0-f68.google.com with SMTP id k62so6069199lfg.0
-        for <git@vger.kernel.org>; Sat, 07 Jan 2017 15:27:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=D2RuStVi3C74YHoBWBB4tCno7lk6QbqN5abxufpiH5A=;
-        b=pOOKvB/1w1Y7nF4qE14sCmnmwt7YTX73hgt8Pimd2TUms88qLrCgHqdh93cWQ0h8Bh
-         q8bOPpPzdSFlz4N0F/BQ2uPAbuxJ/BJs9GztK6jWWjW932vMt91ulQ9wsTmTLyS4lFi/
-         JSyl0tUvTEpW8v85KRsx6BNEE3WH6KaKc7eKkfYBQpAsT771rOVdkMcmsxmd0rOIxWmi
-         hezVHF4a6yIAu3vpeNKkC8Xycx/STtO+LbqIxziSHsLVp3InNdqmjSlfGsjx0zSV2seg
-         pJ/8xTcGQ/EHLj2045Hz2+3f0AEOW++QFV0Jl/EFqiDXtt2j7FM4cPm/Svzni9Xn/N7w
-         D/BQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=D2RuStVi3C74YHoBWBB4tCno7lk6QbqN5abxufpiH5A=;
-        b=L/r/GV7Yq5KdDYdB/lNZewA/ph439XxtrAHR3gP3c0XRqIqqK0tvXVeQfdCyOlAClv
-         gGnLYIgncmFtnoDkyg09kGrM46FImXrn4dHIb33skhg0+Os0ALHe51Op+/LLt1v9znXZ
-         UaM+1L2lqWFkzLawfiN3ZhF6wCzlqpzkzbpLY4Ooj/H4lfTCfJGdrPi2Lf2WCrGhyVya
-         R9Lz3vDFxChg4RUk1h1dEPkm6Nv0meJvJXamiB1bZqBgQwXYVQjBM1izUiuDB8aTV8dV
-         aah514+pBkI5lzf5zBhyVSpdLb1/tp2Gdx+9ulyouZcL5651e17/tsWSdUI3X9WJiSIF
-         1UYg==
-X-Gm-Message-State: AIkVDXKTpLOVGE1MKoanmsH3AbGcWBfpW3gIP329oIZ8UtwU+fWENUGVsSsD/kl1/te0s8b+BZTdKYEWEIrgeQ==
-X-Received: by 10.46.21.2 with SMTP id s2mr28757146ljd.19.1483831655700; Sat,
- 07 Jan 2017 15:27:35 -0800 (PST)
+        id S936787AbdAHB6C (ORCPT <rfc822;e@80x24.org>);
+        Sat, 7 Jan 2017 20:58:02 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:55528 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S933164AbdAHB6A (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 7 Jan 2017 20:58:00 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 0E21A5D523;
+        Sat,  7 Jan 2017 20:57:59 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=5nZSo36J8nn53xaOB6texhft+Sg=; b=SJPYIJ
+        q8IxtbyTf+Jscnnq3+Fl2VQQx5SfRTYoC4ScD0+NDa2q6OjHz92lfSpChtZaInAj
+        hwNzvZ6tu2Kh7F7A24WgyJKQ91Kmz++ty+9aCvOuCIIEURsTZYzdGXwZQurLkONZ
+        zAKTEYzuyfI98J4OUOpxzOb/kEypjGnlyrTKU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=SvXzXi8y2eQU1Kh6e8hWvn58KlCk2ab6
+        X7GOMaGd6XQ+m5xZASGTNWipI8+5erisT6VXsY3RB+aMfSXKMKg5nHl4L6IVXoEO
+        TLY4hID27A+qqWm6yzRAxATP/W/WpdDxKMVWfcm5pVVc+eJ5wkQ4dmdHQbBM+nvy
+        PtnPi8EKNr4=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 051B65D521;
+        Sat,  7 Jan 2017 20:57:59 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 6893A5D520;
+        Sat,  7 Jan 2017 20:57:58 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     git@vger.kernel.org, Kevin Daudt <me@ikke.info>,
+        Dennis Kaarsemaker <dennis@kaarsemaker.net>
+Subject: Re: [PATCH v2 05/34] sequencer (rebase -i): learn about the 'verbose' mode
+References: <cover.1472633606.git.johannes.schindelin@gmx.de>
+        <cover.1481642927.git.johannes.schindelin@gmx.de>
+        <1d1f8d8b0696769bb85dd8a2269dc281aa91eede.1481642927.git.johannes.schindelin@gmx.de>
+        <xmqq37hr1orb.fsf@gitster.mtv.corp.google.com>
+        <alpine.DEB.2.20.1701021610590.3469@virtualbox>
+        <xmqqk2a635it.fsf@gitster.mtv.corp.google.com>
+Date:   Sat, 07 Jan 2017 17:57:57 -0800
+In-Reply-To: <xmqqk2a635it.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
+        message of "Sat, 07 Jan 2017 13:48:58 -0800")
+Message-ID: <xmqq37gu2tzu.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.90 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.25.145.79 with HTTP; Sat, 7 Jan 2017 15:27:15 -0800 (PST)
-In-Reply-To: <CA+P7+xqEqKWmQGgAyrmdzOZgO0CXFOGfcp=0otJ_nQPS13wFWg@mail.gmail.com>
-References: <20170105142529.GA15009@aaberge.net> <20170106064032.eqxxer5mx5hsh2md@sigill.intra.peff.net>
- <20170106064752.iccrk656c6k2wrfy@sigill.intra.peff.net> <20170106072602.wkbzho5z3osz5hee@sigill.intra.peff.net>
- <20170106073224.5hsrib77tx5tgx7d@sigill.intra.peff.net> <3d433abf-71a2-4702-f62b-e254520dc32c@kdbg.org>
- <20170106194115.k5u5esv7t63mryvk@sigill.intra.peff.net> <2ed6f78b-7704-c724-c99b-e310c383c4e8@kdbg.org>
- <20170106232042.ptn6grtll5wpxhc4@sigill.intra.peff.net> <20170107011445.3e4fv6vdtimrwhgv@sigill.intra.peff.net>
- <CA+P7+xqEqKWmQGgAyrmdzOZgO0CXFOGfcp=0otJ_nQPS13wFWg@mail.gmail.com>
-From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Sat, 7 Jan 2017 15:27:15 -0800
-Message-ID: <CA+P7+xqmQ5LSieVuGPP+kOj+ah-McEEHbo_VW9DccYTJLzLNzQ@mail.gmail.com>
-Subject: Re: [PATCH 0/3] fix ^C killing pager when running alias
-To:     Jeff King <peff@peff.net>
-Cc:     Johannes Sixt <j6t@kdbg.org>, Trygve Aaberge <trygveaa@gmail.com>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>, Git mailing list <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
+X-Pobox-Relay-ID: E0EC807C-D545-11E6-A8BB-A7617B1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Jan 7, 2017 at 3:26 PM, Jacob Keller <jacob.keller@gmail.com> wrote:
-> On Fri, Jan 6, 2017 at 5:14 PM, Jeff King <peff@peff.net> wrote:
->> On Fri, Jan 06, 2017 at 06:20:42PM -0500, Jeff King wrote:
->>
->>> > In general, I think it is wrong to wait for child processes when a signal
->>> > was received. After all, it is the purpose of a (deadly) signal to have the
->>> > process go away. There may be programs that know it better, like less, but
->>> > git should not attempt to know better in general.
->>> >
->>> > We do apply some special behavior for certain cases like we do for the
->>> > pager. And now the case with aliases is another special situation. The
->>> > parent git process only delegates to the child, and as such it is reasonable
->>> > that it binds its life time to the first child, which executes the expanded
->>> > alias.
->>>
->>> Yeah, I think I agree. That binding is something you want in many cases,
->>> but not necessarily all. The original purpose of clean_on_exit was to
->>> create a binding like that, but of course it can be (and with the
->>> smudge-filter stuff, arguably has been) used for other cases, too.
->>>
->>> I'll work up a patch that makes it a separate option, which should be
->>> pretty easy.
->>
->> Yeah, this did turn out to be really easy. I spent most of the time
->> trying to explain the issue in the commit message in a sane way.
->> Hopefully it didn't end up _too_ long. :)
->>
->> The interesting bit is in the third one. The first is a necessary
->> preparatory step, and the second is a cleanup I noticed in the
->> neighborhood.
->>
->>   [1/3]: execv_dashed_external: use child_process struct
->>   [2/3]: execv_dashed_external: stop exiting with negative code
->>   [3/3]: execv_dashed_external: wait for child on signal death
->>
->>  git.c         | 36 +++++++++++++++---------------------
->>  run-command.c | 19 +++++++++++++++++++
->>  run-command.h |  1 +
->>  3 files changed, 35 insertions(+), 21 deletions(-)
->>
->> -Peff
->
-> I don't see the rest of the patches on the list..?
->
-> Thanks,
-> Jake
+Junio C Hamano <gitster@pobox.com> writes:
 
-They showed up on public inbox so I assume it must be some spam filter
-on my end..
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+>
+> ...
+>>
+>> I guess my only defence is that I tried to be a little lazy.
+>
+> I actually was alluding to going the other way around, spawning
+> "diff-tree -p" in the other codepath like this one does.
 
-Hmm,
-Jake
+Pre-emptively, because I expect it will take a while for me to clear
+the backlog to get to your reroll already on the mailing list, I do
+not mean to say that you must rewrite the other one to spawn to
+match this one.  I meant that I wouldn't have minded if the series
+were done that way, as this kind of being "little lazy" would reduce
+the chance of regression by reducing the number of exchanged parts
+and it is not necessarily a bad thing.
