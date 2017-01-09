@@ -7,181 +7,329 @@ X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD,T_TVD_MIME_NO_HEADERS
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AD0421FEB3
-	for <e@80x24.org>; Mon,  9 Jan 2017 23:30:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CC5C61FEB3
+	for <e@80x24.org>; Mon,  9 Jan 2017 23:30:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1031396AbdAIXaO (ORCPT <rfc822;e@80x24.org>);
-        Mon, 9 Jan 2017 18:30:14 -0500
-Received: from mail-qk0-f179.google.com ([209.85.220.179]:33058 "EHLO
-        mail-qk0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1031174AbdAIXaJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Jan 2017 18:30:09 -0500
-Received: by mail-qk0-f179.google.com with SMTP id s140so134983269qke.0
-        for <git@vger.kernel.org>; Mon, 09 Jan 2017 15:30:09 -0800 (PST)
+        id S1031435AbdAIXaP (ORCPT <rfc822;e@80x24.org>);
+        Mon, 9 Jan 2017 18:30:15 -0500
+Received: from mail-qt0-f177.google.com ([209.85.216.177]:36171 "EHLO
+        mail-qt0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1031182AbdAIXaK (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Jan 2017 18:30:10 -0500
+Received: by mail-qt0-f177.google.com with SMTP id k15so380624449qtg.3
+        for <git@vger.kernel.org>; Mon, 09 Jan 2017 15:30:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=lGwUvLld2p/IA/pNKi+x7FBTBALSonl84UNBts8YSyM=;
-        b=KLOV0PbA3Ncfa+1Yz/kidzxdKOef4hgcOngy38UUZD/59n/O53QKfWBjlKQwqVYBiz
-         oYO1AbPGekRo79Uj+aMYZWSdPaJtWgeKIR/obEgHOZCdR0Egwrh24O41OQ9sW4xAJe25
-         3HjKtHqAeMdTUgFclQv6nUoBWHeatkd154Ovz4AmIocF0tbL2RLxBQs/um6WbT30M/7L
-         MlyzFgDPiedD7UX7PM7JB9HhZDbuOOK+FQEoHd3E8dG9Db0tM9EZv5OGGma/uYZYhQUI
-         db6ozIBZIvBcgznWZb6KS+bMtL6kzp6EypqNhFU8/HKXHq0aJM5dgpVuab5HQgOdYdKM
-         NqwQ==
+        bh=+Usqvo7Unaz/2YWrCur+WAle/UkKUa8qSlZqHFUt4hA=;
+        b=ejWi7DsmI7HHpelxdHXuZcEDxKBBWmzoTZtJbw9oloiLRdVkd3Tx/yX9Uu9Qmbvo6y
+         Qs5qnevKJiR1xcB+l02FwIP0Gduy+KGVM+bLZIPAGhX6Rb1W95+OjFMSwTdWtfeYhZKJ
+         vpM+8gIot9j8tYT7mnz3torIqwyI+mVN0tI+Dq9s12Xu86VLPdtb9eAU3nfT6XEaMzoI
+         vXd+eb9L7xQbM9ipskRqY8opbhzxKuWx8aLYhWLbPyOQNsULxJGQHndY4afmGy1Xo77V
+         w8VV8vlaYX+Q2VMYb4WJ07og7/KVZ+zO8gILrO9/SBMDmCopflXbqwRT5hYdtF2KNfpS
+         V+xA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=lGwUvLld2p/IA/pNKi+x7FBTBALSonl84UNBts8YSyM=;
-        b=MjmcqJnppk/E7z5ERhWGQZAeuMZ7fXVfzf0KhOdhI90k7QjMB18Q0eluu7cpBVBHcb
-         XVaiJI0Cy9PrE+XnTy0+kH5mEp6A68zernJoDjtoqL5wa/H3WsHGyhxVxYDwQpJCLWj+
-         eKgtpeh30Lpy03kYfouy3vARjglpxwU0ox9/Hrk5sM7ToX1b039/g0bUCmIFdFGMzbl5
-         STbB6wJhGEV55NbAJv/dIpUwnINTlId7ZLRt3T9AnZ/UszAUJZpInxYEqnMqH85NWwz8
-         uMdPGjfneCXgV4udIngMlm+4SlUF2ebxiBdkxqLPZKvec2O3/R6F74oB6fipqYxL8lEl
-         MGUA==
-X-Gm-Message-State: AIkVDXJU/kCKqLEiZWZrbr7mzvnAlvilb6cdrwALt4WeHdOTeJyARSVIryvxzZdrkJnPtE1t
-X-Received: by 10.55.162.194 with SMTP id l185mr241972qke.4.1484004608414;
-        Mon, 09 Jan 2017 15:30:08 -0800 (PST)
+        bh=+Usqvo7Unaz/2YWrCur+WAle/UkKUa8qSlZqHFUt4hA=;
+        b=tL8qz3atQYpiyQ/6Y4v8F+3tyv/o1O7w7lnUdglyG+/pUtAw/N2n89maf0oLjlwTD/
+         XY7KJhlqMm+03CQPMgldfwTRy+8fbKsrqNltkYZwv7I/JWDFlMDVMzNfR46tsb0tkhvo
+         zr5My7yXQLQaOnVy6n1VcN+SV73OaFluwECiYGfjdzfB9JIAXUPCOYoH9vLEZy5CNnfC
+         Toy3IIIlL6kZRvnX9lyxlQo+UIys0FnpoOF+nxACkuK8WmhK63xMgTURC7kr5AA3krP/
+         DnQAtG4DG0sT0NG9IslwFfcdOy7N2ng8R/d9/Aq4H35OIuUQLi3OnZpQ8tHgYvoILUFN
+         4kIg==
+X-Gm-Message-State: AIkVDXLvuxbENHtYPkcd9FRUdDAZ2n+5RLFYpdSmzmHlSZ9ha8uY/9eJGwIoQ6uB0jKD9t6R
+X-Received: by 10.200.52.170 with SMTP id w39mr176609qtb.123.1484004609218;
+        Mon, 09 Jan 2017 15:30:09 -0800 (PST)
 Received: from hansenr.cam.corp.google.com ([172.29.73.70])
-        by smtp.gmail.com with ESMTPSA id c41sm42910qtd.3.2017.01.09.15.30.07
+        by smtp.gmail.com with ESMTPSA id c41sm42910qtd.3.2017.01.09.15.30.08
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
         Mon, 09 Jan 2017 15:30:08 -0800 (PST)
 From:   Richard Hansen <hansenr@google.com>
 To:     git@vger.kernel.org
 Cc:     davvid@gmail.com, j6t@kdbg.org, hansenr@google.com,
         sbeller@google.com, simon@ruderich.org, gitster@pobox.com
-Subject: [PATCH v4 04/14] t7610: Move setup code to the 'setup' test case.
-Date:   Mon,  9 Jan 2017 18:29:31 -0500
-Message-Id: <20170109232941.43637-5-hansenr@google.com>
+Subject: [PATCH v4 05/14] t7610: use test_when_finished for cleanup tasks
+Date:   Mon,  9 Jan 2017 18:29:32 -0500
+Message-Id: <20170109232941.43637-6-hansenr@google.com>
 X-Mailer: git-send-email 2.11.0.390.gc69c2f50cf-goog
 In-Reply-To: <20170109232941.43637-1-hansenr@google.com>
 References: <20170109054238.42599-1-hansenr@google.com>
  <20170109232941.43637-1-hansenr@google.com>
 Content-Type: multipart/signed; protocol="application/pkcs7-signature"; micalg=sha-256;
-        boundary="001a114d838c8d2f530545b1bfc8"
+        boundary="001a1147904a9a019b0545b1bfc7"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
---001a114d838c8d2f530545b1bfc8
+--001a1147904a9a019b0545b1bfc7
 
-Multiple test cases depend on these hunks, so move them to the 'setup'
-test case.  This is a step toward making the tests more independent so
-that if one test fails it doesn't cause subsequent tests to fail.
+This is a step toward making the tests more independent so that if one
+test fails it doesn't cause subsequent tests to fail.
 
 Signed-off-by: Richard Hansen <hansenr@google.com>
 ---
- t/t7610-mergetool.sh | 65 ++++++++++++++++++++++++++++------------------------
- 1 file changed, 35 insertions(+), 30 deletions(-)
+ t/t7610-mergetool.sh | 71 +++++++++++++++++++++++++++-------------------------
+ 1 file changed, 37 insertions(+), 34 deletions(-)
 
 diff --git a/t/t7610-mergetool.sh b/t/t7610-mergetool.sh
-index 14090739f..550838a1c 100755
+index 550838a1c..f62ceffdc 100755
 --- a/t/t7610-mergetool.sh
 +++ b/t/t7610-mergetool.sh
-@@ -55,6 +55,22 @@ test_expect_success 'setup' '
- 	git rm file12 &&
- 	git commit -m "branch1 changes" &&
+@@ -145,6 +145,11 @@ test_expect_success 'custom mergetool' '
+ '
  
-+	git checkout -b delete-base branch1 &&
-+	mkdir -p a/a &&
-+	(echo one; echo two; echo 3; echo 4) >a/a/file.txt &&
-+	git add a/a/file.txt &&
-+	git commit -m"base file" &&
-+	git checkout -b move-to-b delete-base &&
-+	mkdir -p b/b &&
-+	git mv a/a/file.txt b/b/file.txt &&
-+	(echo one; echo two; echo 4) >b/b/file.txt &&
-+	git commit -a -m"move to b" &&
-+	git checkout -b move-to-c delete-base &&
-+	mkdir -p c/c &&
-+	git mv a/a/file.txt c/c/file.txt &&
-+	(echo one; echo two; echo 3) >c/c/file.txt &&
-+	git commit -a -m"move to c" &&
-+
- 	git checkout -b stash1 master &&
- 	echo stash1 change file11 >file11 &&
- 	git add file11 &&
-@@ -86,6 +102,23 @@ test_expect_success 'setup' '
- 	git rm file11 &&
- 	git commit -m "master updates" &&
+ test_expect_success 'mergetool crlf' '
++	test_when_finished "git reset --hard" &&
++	# This test_config line must go after the above reset line so that
++	# core.autocrlf is unconfigured before reset runs.  (The
++	# test_config command uses test_when_finished internally and
++	# test_when_finished is LIFO.)
+ 	test_config core.autocrlf true &&
+ 	git checkout -b test$test_count branch1 &&
+ 	test_must_fail git merge master >/dev/null 2>&1 &&
+@@ -161,9 +166,7 @@ test_expect_success 'mergetool crlf' '
+ 	test "$(printf x | cat subdir/file3 -)" = "$(printf "master new sub\r\nx")" &&
+ 	git submodule update -N &&
+ 	test "$(cat submod/bar)" = "master submodule" &&
+-	git commit -m "branch1 resolved with mergetool - autocrlf" &&
+-	test_config core.autocrlf false &&
+-	git reset --hard
++	git commit -m "branch1 resolved with mergetool - autocrlf"
+ '
  
-+	git clean -fdx &&
-+	git checkout -b order-file-start master &&
-+	echo start >a &&
-+	echo start >b &&
-+	git add a b &&
-+	git commit -m start &&
-+	git checkout -b order-file-side1 order-file-start &&
-+	echo side1 >a &&
-+	echo side1 >b &&
-+	git add a b &&
-+	git commit -m side1 &&
-+	git checkout -b order-file-side2 order-file-start &&
-+	echo side2 >a &&
-+	echo side2 >b &&
-+	git add a b &&
-+	git commit -m side2 &&
-+
- 	git config merge.tool mytool &&
- 	git config mergetool.mytool.cmd "cat \"\$REMOTE\" >\"\$MERGED\"" &&
- 	git config mergetool.mytool.trustExitCode true &&
-@@ -244,21 +277,7 @@ test_expect_success 'mergetool takes partial path' '
+ test_expect_success 'mergetool in subdir' '
+@@ -194,6 +197,7 @@ test_expect_success 'mergetool on file in parent dir' '
+ '
+ 
+ test_expect_success 'mergetool skips autoresolved' '
++	test_when_finished "git reset --hard" &&
+ 	git checkout -b test$test_count branch1 &&
+ 	git submodule update -N &&
+ 	test_must_fail git merge master &&
+@@ -202,8 +206,7 @@ test_expect_success 'mergetool skips autoresolved' '
+ 	( yes "d" | git mergetool file12 >/dev/null 2>&1 ) &&
+ 	( yes "l" | git mergetool submod >/dev/null 2>&1 ) &&
+ 	output="$(git mergetool --no-prompt)" &&
+-	test "$output" = "No files need merging" &&
+-	git reset --hard
++	test "$output" = "No files need merging"
+ '
+ 
+ test_expect_success 'mergetool merges all from subdir' '
+@@ -223,6 +226,7 @@ test_expect_success 'mergetool merges all from subdir' '
+ '
+ 
+ test_expect_success 'mergetool skips resolved paths when rerere is active' '
++	test_when_finished "git reset --hard" &&
+ 	test_config rerere.enabled true &&
+ 	rm -rf .git/rr-cache &&
+ 	git checkout -b test$test_count branch1 &&
+@@ -232,8 +236,7 @@ test_expect_success 'mergetool skips resolved paths when rerere is active' '
+ 	( yes "d" "d" | git mergetool --no-prompt >/dev/null 2>&1 ) &&
+ 	git submodule update -N &&
+ 	output="$(yes "n" | git mergetool --no-prompt)" &&
+-	test "$output" = "No files need merging" &&
+-	git reset --hard
++	test "$output" = "No files need merging"
+ '
+ 
+ test_expect_success 'conflicted stash sets up rerere'  '
+@@ -264,6 +267,7 @@ test_expect_success 'conflicted stash sets up rerere'  '
+ '
+ 
+ test_expect_success 'mergetool takes partial path' '
++	test_when_finished "git reset --hard" &&
+ 	git reset --hard &&
+ 	test_config rerere.enabled false &&
+ 	git checkout -b test$test_count branch1 &&
+@@ -272,11 +276,11 @@ test_expect_success 'mergetool takes partial path' '
+ 
+ 	( yes "" | git mergetool subdir ) &&
+ 
+-	test "$(cat subdir/file3)" = "master new sub" &&
+-	git reset --hard
++	test "$(cat subdir/file3)" = "master new sub"
  '
  
  test_expect_success 'mergetool delete/delete conflict' '
--	git checkout -b delete-base branch1 &&
--	mkdir -p a/a &&
--	(echo one; echo two; echo 3; echo 4) >a/a/file.txt &&
--	git add a/a/file.txt &&
--	git commit -m"base file" &&
--	git checkout -b move-to-b delete-base &&
--	mkdir -p b/b &&
--	git mv a/a/file.txt b/b/file.txt &&
--	(echo one; echo two; echo 4) >b/b/file.txt &&
--	git commit -a -m"move to b" &&
--	git checkout -b move-to-c delete-base &&
--	mkdir -p c/c &&
--	git mv a/a/file.txt c/c/file.txt &&
--	(echo one; echo two; echo 3) >c/c/file.txt &&
--	git commit -a -m"move to c" &&
-+	git checkout move-to-c &&
++	test_when_finished "git reset --hard HEAD" &&
+ 	git checkout move-to-c &&
  	test_must_fail git merge move-to-b &&
  	echo d | git mergetool a/a/file.txt &&
- 	! test -f a/a/file.txt &&
-@@ -607,26 +626,12 @@ test_expect_success MKTEMP 'temporary filenames are used with mergetool.writeToT
+@@ -288,29 +292,30 @@ test_expect_success 'mergetool delete/delete conflict' '
+ 	git reset --hard HEAD &&
+ 	test_must_fail git merge move-to-b &&
+ 	! echo a | git mergetool a/a/file.txt &&
+-	! test -f a/a/file.txt &&
+-	git reset --hard HEAD
++	! test -f a/a/file.txt
+ '
+ 
+ test_expect_success 'mergetool produces no errors when keepBackup is used' '
++	test_when_finished "git reset --hard HEAD" &&
+ 	test_config mergetool.keepBackup true &&
+ 	test_must_fail git merge move-to-b &&
+ 	: >expect &&
+ 	echo d | git mergetool a/a/file.txt 2>actual &&
+ 	test_cmp expect actual &&
+-	! test -d a &&
+-	git reset --hard HEAD
++	! test -d a
+ '
+ 
+ test_expect_success 'mergetool honors tempfile config for deleted files' '
++	test_when_finished "git reset --hard HEAD" &&
+ 	test_config mergetool.keepTemporaries false &&
+ 	test_must_fail git merge move-to-b &&
+ 	echo d | git mergetool a/a/file.txt &&
+-	! test -d a &&
+-	git reset --hard HEAD
++	! test -d a
+ '
+ 
+ test_expect_success 'mergetool keeps tempfiles when aborting delete/delete' '
++	test_when_finished "git reset --hard HEAD" &&
++	test_when_finished "git clean -fdx" &&
+ 	test_config mergetool.keepTemporaries true &&
+ 	test_must_fail git merge move-to-b &&
+ 	! (echo a; echo n) | git mergetool a/a/file.txt &&
+@@ -321,12 +326,11 @@ test_expect_success 'mergetool keeps tempfiles when aborting delete/delete' '
+ 	file_REMOTE_.txt
+ 	EOF
+ 	ls -1 a/a | sed -e "s/[0-9]*//g" >actual &&
+-	test_cmp expect actual &&
+-	git clean -fdx &&
+-	git reset --hard HEAD
++	test_cmp expect actual
+ '
+ 
+ test_expect_success 'deleted vs modified submodule' '
++	test_when_finished "git reset --hard HEAD" &&
+ 	git checkout -b test$test_count branch1 &&
+ 	git submodule update -N &&
+ 	mv submod submod-movedaside &&
+@@ -391,8 +395,7 @@ test_expect_success 'deleted vs modified submodule' '
+ 	test "$(cat submod/bar)" = "master submodule" &&
+ 	output="$(git mergetool --no-prompt)" &&
+ 	test "$output" = "No files need merging" &&
+-	git commit -m "Merge resolved by keeping module" &&
+-	git reset --hard HEAD
++	git commit -m "Merge resolved by keeping module"
+ '
+ 
+ test_expect_success 'file vs modified submodule' '
+@@ -479,6 +482,7 @@ test_expect_success 'submodule in subdirectory' '
+ 		git commit -m "add initial versions"
+ 		)
+ 	) &&
++	test_when_finished "rm -rf subdir/subdir_module" &&
+ 	git submodule add git://example.com/subsubmodule subdir/subdir_module &&
+ 	git add subdir/subdir_module &&
+ 	git commit -m "add submodule in subdirectory" &&
+@@ -523,8 +527,7 @@ test_expect_success 'submodule in subdirectory' '
+ 	test "$(cat subdir/subdir_module/file15)" = "test$test_count.b" &&
+ 	git submodule update -N &&
+ 	test "$(cat subdir/subdir_module/file15)" = "test$test_count.a" &&
+-	git commit -m "branch1 resolved with mergetool" &&
+-	rm -rf subdir/subdir_module
++	git commit -m "branch1 resolved with mergetool"
+ '
+ 
+ test_expect_success 'directory vs modified submodule' '
+@@ -578,34 +581,34 @@ test_expect_success 'directory vs modified submodule' '
+ '
+ 
+ test_expect_success 'file with no base' '
++	test_when_finished "git reset --hard master >/dev/null 2>&1" &&
+ 	git checkout -b test$test_count branch1 &&
+ 	test_must_fail git merge master &&
+ 	git mergetool --no-prompt --tool mybase -- both &&
+ 	>expected &&
+-	test_cmp both expected &&
+-	git reset --hard master >/dev/null 2>&1
++	test_cmp both expected
+ '
+ 
+ test_expect_success 'custom commands override built-ins' '
++	test_when_finished "git reset --hard master >/dev/null 2>&1" &&
+ 	git checkout -b test$test_count branch1 &&
+ 	test_config mergetool.defaults.cmd "cat \"\$REMOTE\" >\"\$MERGED\"" &&
+ 	test_config mergetool.defaults.trustExitCode true &&
+ 	test_must_fail git merge master &&
+ 	git mergetool --no-prompt --tool defaults -- both &&
+ 	echo master both added >expected &&
+-	test_cmp both expected &&
+-	git reset --hard master >/dev/null 2>&1
++	test_cmp both expected
+ '
+ 
+ test_expect_success 'filenames seen by tools start with ./' '
++	test_when_finished "git reset --hard master >/dev/null 2>&1" &&
+ 	git checkout -b test$test_count branch1 &&
+ 	test_config mergetool.writeToTemp false &&
+ 	test_config mergetool.myecho.cmd "echo \"\$LOCAL\"" &&
+ 	test_config mergetool.myecho.trustExitCode true &&
+ 	test_must_fail git merge master &&
+ 	git mergetool --no-prompt --tool myecho -- both >actual &&
+-	grep ^\./both_LOCAL_ actual >/dev/null &&
+-	git reset --hard master >/dev/null 2>&1
++	grep ^\./both_LOCAL_ actual >/dev/null
+ '
+ 
+ test_lazy_prereq MKTEMP '
+@@ -614,6 +617,7 @@ test_lazy_prereq MKTEMP '
+ '
+ 
+ test_expect_success MKTEMP 'temporary filenames are used with mergetool.writeToTemp' '
++	test_when_finished "git reset --hard master >/dev/null 2>&1" &&
+ 	git checkout -b test$test_count branch1 &&
+ 	test_config mergetool.writeToTemp true &&
+ 	test_config mergetool.myecho.cmd "echo \"\$LOCAL\"" &&
+@@ -621,11 +625,11 @@ test_expect_success MKTEMP 'temporary filenames are used with mergetool.writeToT
+ 	test_must_fail git merge master &&
+ 	git mergetool --no-prompt --tool myecho -- both >actual &&
+ 	test_must_fail grep ^\./both_LOCAL_ actual >/dev/null &&
+-	grep /both_LOCAL_ actual >/dev/null &&
+-	git reset --hard master >/dev/null 2>&1
++	grep /both_LOCAL_ actual >/dev/null
  '
  
  test_expect_success 'diff.orderFile configuration is honored' '
-+	git checkout order-file-side2 &&
++	test_when_finished "git reset --hard >/dev/null" &&
+ 	git checkout order-file-side2 &&
+ 	test_config diff.orderFile order-file &&
+ 	test_config mergetool.myecho.cmd "echo \"\$LOCAL\"" &&
+@@ -640,10 +644,10 @@ test_expect_success 'diff.orderFile configuration is honored' '
+ 	EOF
+ 	git mergetool --no-prompt --tool myecho >output &&
+ 	git grep --no-index -h -A2 Merging: output >actual &&
+-	test_cmp expect actual &&
+-	git reset --hard >/dev/null
++	test_cmp expect actual
+ '
+ test_expect_success 'mergetool -Oorder-file is honored' '
++	test_when_finished "git reset --hard >/dev/null 2>&1" &&
  	test_config diff.orderFile order-file &&
  	test_config mergetool.myecho.cmd "echo \"\$LOCAL\"" &&
  	test_config mergetool.myecho.trustExitCode true &&
- 	echo b >order-file &&
- 	echo a >>order-file &&
--	git checkout -b order-file-start master &&
--	echo start >a &&
--	echo start >b &&
--	git add a b &&
--	git commit -m start &&
--	git checkout -b order-file-side1 order-file-start &&
--	echo side1 >a &&
--	echo side1 >b &&
--	git add a b &&
--	git commit -m side1 &&
--	git checkout -b order-file-side2 order-file-start &&
--	echo side2 >a &&
--	echo side2 >b &&
--	git add a b &&
--	git commit -m side2 &&
- 	test_must_fail git merge order-file-side1 &&
- 	cat >expect <<-\EOF &&
- 		Merging:
+@@ -667,8 +671,7 @@ test_expect_success 'mergetool -Oorder-file is honored' '
+ 	EOF
+ 	git mergetool -Oorder-file --no-prompt --tool myecho >output &&
+ 	git grep --no-index -h -A2 Merging: output >actual &&
+-	test_cmp expect actual &&
+-	git reset --hard >/dev/null 2>&1
++	test_cmp expect actual
+ '
+ 
+ test_done
 -- 
 2.11.0.390.gc69c2f50cf-goog
 
 
---001a114d838c8d2f530545b1bfc8
+--001a1147904a9a019b0545b1bfc7
 Content-Type: application/pkcs7-signature; name="smime.p7s"
 Content-Transfer-Encoding: base64
 Content-Disposition: attachment; filename="smime.p7s"
@@ -263,13 +411,13 @@ m4YUSo869xADdrGrWJ7KzroFbucLZYh3niIjVICp7fh9wtLgbX7X/akdubehYhy/l+AIMml6Zlyu
 GNGCGIleyQ0bAdjjG+dKrDErUlui8wd/YplvelaTAzSvNpxcrr+2YB8UBWcYkgULkp5GDCC2guKl
 rMF1mTS6N6GMxUi30sZicbMxggJeMIICWgIBATBcMEwxCzAJBgNVBAYTAkJFMRkwFwYDVQQKExBH
 bG9iYWxTaWduIG52LXNhMSIwIAYDVQQDExlHbG9iYWxTaWduIEhWIFMvTUlNRSBDQSAxAgwvfEOc
-7N3JjQI9nAwwDQYJYIZIAWUDBAIBBQCggdQwLwYJKoZIhvcNAQkEMSIEIHZp7bUsfK+XjQp8hAbR
-lyRYElE/MRG5dFgEmpTKO5VcMBgGCSqGSIb3DQEJAzELBgkqhkiG9w0BBwEwHAYJKoZIhvcNAQkF
-MQ8XDTE3MDEwOTIzMzAwOFowaQYJKoZIhvcNAQkPMVwwWjALBglghkgBZQMEASowCwYJYIZIAWUD
+7N3JjQI9nAwwDQYJYIZIAWUDBAIBBQCggdQwLwYJKoZIhvcNAQkEMSIEIGzw/5QDur0dhlYkBvlA
+ERn5sa2dqmIjyPvNsIjbm6VUMBgGCSqGSIb3DQEJAzELBgkqhkiG9w0BBwEwHAYJKoZIhvcNAQkF
+MQ8XDTE3MDEwOTIzMzAwOVowaQYJKoZIhvcNAQkPMVwwWjALBglghkgBZQMEASowCwYJYIZIAWUD
 BAEWMAsGCWCGSAFlAwQBAjAKBggqhkiG9w0DBzALBgkqhkiG9w0BAQowCwYJKoZIhvcNAQEHMAsG
-CWCGSAFlAwQCATANBgkqhkiG9w0BAQEFAASCAQAelvK/hSmiJx4YXJTNdXPK1Fdwz6ota//YnIeV
-JuNR+tiELIbWEGWHaopCj7RT+fHaVyhC3KTKRjUtkeCsPJTtHiTQ29og0+XYhrbmSEpgh2TSX4uj
-zBMk/nmHAosBv8Q5zvvBe2Be/nC/knMnOsj/+xPx/zNb4LQ/fAGHwctnj66e262bsMlyXCySydAc
-1zZ4hleqqj3853dDAMAZow5jLCQBowwDIQcNV7XoqeH8NuRrVudaFdfczX2kCAvSuJ7waJmuDhkD
-64iO6vk25dHYNri4j5Dvv9H9qJf7GH69g+GO0QQO6wbS8nvIBaSTNetUFHU85dM21m6i4mt1tVz+
---001a114d838c8d2f530545b1bfc8--
+CWCGSAFlAwQCATANBgkqhkiG9w0BAQEFAASCAQATqZq5U8Hsrof1T3NVfnRNIWkPe2EtrutYEmWx
+M5ZvK1aEYf2JsAhBnroBfx2v5ohUpf5JyuTmz92yc9KsheZL7Pz+b2ibDKBvzLJd3ZTgzwXU2YoK
+09T7RtWxiqHaBpWCLQiVboWt19AjfM37B4gwq3SK4RTgBlszdVlp5iQppUV6jyE/OiJqmdALHRT2
+bR2TKUV0VerZ8P5vxGqulsHbDyYZ7MqLeP0PczbHGheSnPDKtKVF/MvWo/EUtxMLPmoRIZiMoo7H
+hJD9niHTsMF7mC0HNUwkKKJoS/Dq3i886ub4jrEIET7uyc7w8B/MV4BK8bHJXXqINSh7VTJ2VfWl
+--001a1147904a9a019b0545b1bfc7--
