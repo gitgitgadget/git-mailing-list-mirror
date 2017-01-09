@@ -2,145 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MIME_HEADER_CTYPE_ONLY,
-	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD,T_TVD_MIME_NO_HEADERS
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_TVD_MIME_NO_HEADERS shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9C462205C9
+	by dcvr.yhbt.net (Postfix) with ESMTP id B820420A93
 	for <e@80x24.org>; Mon,  9 Jan 2017 05:43:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1760337AbdAIFnW (ORCPT <rfc822;e@80x24.org>);
-        Mon, 9 Jan 2017 00:43:22 -0500
-Received: from mail-qk0-f169.google.com ([209.85.220.169]:36474 "EHLO
-        mail-qk0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S939265AbdAIFnB (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Jan 2017 00:43:01 -0500
-Received: by mail-qk0-f169.google.com with SMTP id 11so32199472qkl.3
-        for <git@vger.kernel.org>; Sun, 08 Jan 2017 21:43:00 -0800 (PST)
+        id S1760387AbdAIFnY (ORCPT <rfc822;e@80x24.org>);
+        Mon, 9 Jan 2017 00:43:24 -0500
+Received: from mail-qk0-f176.google.com ([209.85.220.176]:33531 "EHLO
+        mail-qk0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S939269AbdAIFnD (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Jan 2017 00:43:03 -0500
+Received: by mail-qk0-f176.google.com with SMTP id s140so107701556qke.0
+        for <git@vger.kernel.org>; Sun, 08 Jan 2017 21:43:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=XPW7i0G65kfQlWRR7UN8zQxMeyE0Lq+Bqs39SXih5ZE=;
-        b=U/DVdG2mMuluju5hKXP7ldxFDcipd6lDeuWLuOrrDdQ6jqmiFwmahG2QQ41zzMCJCo
-         VYqsuo6jgtDfl7M2VvR7VRJC95WOhDOk8RwlFoLqQGI2eoEVpAweEdzXg0N66iDtE+iW
-         sukAa3z8fSx8JT+gg5UfomSWyQ1spj1YW4im6puWXFtfAwwzDHtqwjV++DYUtegPs1i1
-         rUEORPalgi4d50m7g0Nk2Q5ZskKf3X8vQ3rf2gLGMWtnFVF+fATdveIM+ycNUJgJG7YH
-         y86RZVlWLay53Eq+8dnAxN58T2WbolkWWevLQ4tms/k8y/pKSHIWdagz878ZkU2T/jxY
-         3fCA==
+        bh=DNqyZKOmYoPlMHt7wUn2o06A7hurEwQZVA4KWldrnYU=;
+        b=Pyiu5U/nutJVu4BwlSvogX5Zrus1T9HR4EGxbByQLeBAv1wNk1Wz9vd3nJV8E/WJem
+         YHVIduCjENmzuqNFCpj2UvBmKDKYBM58XGFKSACS5lIuqa8dedp6eHNCZ91BShfhxchp
+         n86dnc5ZWn2LOAUd06PJlVMU7ZjfTJZAaCwuEy3PeEAhpzwtl/ivKcQTBYHYRlil3QKT
+         KNH9d40L7GVA/bsilPcb//4GBJnn6dfMoTDpVxkjkLwM4/T33kwmKMVjdSTzgUDWqaeW
+         zpesMP7ZrGrs8HJOV30GyHM57dpsOsFr+L8/aGGr+YOrz1yTV21HqTCMyeH/mNqBwNj3
+         fJmw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=XPW7i0G65kfQlWRR7UN8zQxMeyE0Lq+Bqs39SXih5ZE=;
-        b=IKzp7i2D231sqyrN7fuFBZI4B5AuG/K5KiyxvAeCeSyAfE3meQZtq3ERLDW4g9JdME
-         xgMTjGGcwUH1uPQ4tAiyCEme1uskfuHhY79Xj1Mejn9eWUr7d2pbIkXviA/QD/qcC6uu
-         a06ye6tvmzs2KNIW3wEWD4/DYJzC4Gk8m02J1Tq0tRgBtdCRIW1b9VFDjNPG+gPSWWR/
-         3R5zwveyYYFC9ZSZKC55CU8yxwA1gdgt0olDn2VC7emV+Tqw4HpcJIjvaP8Cc9zXSv6u
-         ZUosRJ/gTJXS2pCSIr3kzItWsz2dO7sONoDAUR7EwAYZ/pdfofLVvxH6flgBDq33uHB0
-         wzeQ==
-X-Gm-Message-State: AIkVDXK7rQqgSuCMUbOy+8O5XTb24NAs8yc5f0zMKq3Nwxhkz4X713A/2d8kj3HTqunjOR7Z
-X-Received: by 10.55.147.67 with SMTP id v64mr95472598qkd.138.1483940580094;
-        Sun, 08 Jan 2017 21:43:00 -0800 (PST)
+        bh=DNqyZKOmYoPlMHt7wUn2o06A7hurEwQZVA4KWldrnYU=;
+        b=iPmnrc7SZ5UV1z0rX90K11Q0yBkYWwTiRPEyMzdZ9Jh0Nm6g8uPZWedWDQdfNOciSY
+         44zJMQKFUW8PpjtgQdotU6eOFhthzmEqFS98Coab6ZvyoAldrsZMgC4wW3de7By1A5PT
+         KwPcchWCJp6xPU7t8nrIgpXAkBhNB2hTEIN42+QHZcMjWDOU6rEUR76kzPsjZvFhMY4H
+         UF9S586vHlO3el8V1aRyAqRy/rkPZKdmHFBNJZ3WbsmSqbD9t/TXnZlA/gsmZv7QIevu
+         W/6LLCyCTY4Omojz1PSqtN02aShFgL3Ma8kVN1jTfBIVHft4xcSvhgOJWamQ44o1j224
+         DLbQ==
+X-Gm-Message-State: AIkVDXKdt6H8Cb6SC/n3uiLHlD8lLGB8emMdwixQWADM2/zJsto7/u2jAPJh3DQ+xjz5Ilil
+X-Received: by 10.55.185.130 with SMTP id j124mr1368415qkf.173.1483940582007;
+        Sun, 08 Jan 2017 21:43:02 -0800 (PST)
 Received: from hansenr.cam.corp.google.com ([172.29.73.70])
-        by smtp.gmail.com with ESMTPSA id 21sm3452763qkh.13.2017.01.08.21.42.59
+        by smtp.gmail.com with ESMTPSA id 21sm3452763qkh.13.2017.01.08.21.43.01
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sun, 08 Jan 2017 21:42:59 -0800 (PST)
+        Sun, 08 Jan 2017 21:43:01 -0800 (PST)
 From:   Richard Hansen <hansenr@google.com>
 To:     git@vger.kernel.org
 Cc:     davvid@gmail.com, j6t@kdbg.org, hansenr@google.com,
         sbeller@google.com, simon@ruderich.org
-Subject: [PATCH v3 09/13] t7610: don't assume the checked-out commit
-Date:   Mon,  9 Jan 2017 00:42:34 -0500
-Message-Id: <20170109054238.42599-10-hansenr@google.com>
+Subject: [PATCH v3 12/13] mergetool: take the "-O" out of $orderfile
+Date:   Mon,  9 Jan 2017 00:42:37 -0500
+Message-Id: <20170109054238.42599-13-hansenr@google.com>
 X-Mailer: git-send-email 2.11.0.390.gc69c2f50cf-goog
 In-Reply-To: <20170109054238.42599-1-hansenr@google.com>
 References: <20170106010945.79382-1-hansenr@google.com>
  <20170109054238.42599-1-hansenr@google.com>
 Content-Type: multipart/signed; protocol="application/pkcs7-signature"; micalg=sha-256;
-        boundary="94eb2c08bb9629093c0545a2d7ce"
+        boundary="94eb2c04379c4609150545a2d740"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
---94eb2c08bb9629093c0545a2d7ce
+--94eb2c04379c4609150545a2d740
 
-Always check out the required commit at the beginning of the test so
-that a failure in a previous test does not cause the test to work off
-of the wrong commit.
-
-This is a step toward making the tests more independent so that if one
-test fails it doesn't cause subsequent tests to fail.
+This will make it easier for a future commit to convert a relative
+orderfile pathname to either absolute or relative to the top-level
+directory.  It also improves code readability.
 
 Signed-off-by: Richard Hansen <hansenr@google.com>
 ---
- t/t7610-mergetool.sh | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ git-mergetool.sh | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/t/t7610-mergetool.sh b/t/t7610-mergetool.sh
-index efcf5c3f1..54164a320 100755
---- a/t/t7610-mergetool.sh
-+++ b/t/t7610-mergetool.sh
-@@ -184,7 +184,7 @@ test_expect_success 'mergetool in subdir' '
+diff --git a/git-mergetool.sh b/git-mergetool.sh
+index e52b4e4f2..b506896dc 100755
+--- a/git-mergetool.sh
++++ b/git-mergetool.sh
+@@ -421,7 +421,7 @@ main () {
+ 			prompt=true
+ 			;;
+ 		-O*)
+-			orderfile="$1"
++			orderfile="${1#-O}"
+ 			;;
+ 		--)
+ 			shift
+@@ -465,7 +465,7 @@ main () {
  
- test_expect_success 'mergetool on file in parent dir' '
- 	test_when_finished "git reset --hard" &&
--	git checkout -b test$test_count &&
-+	git checkout -b test$test_count branch1 &&
- 	git submodule update -N &&
- 	(
- 		cd subdir &&
-@@ -218,7 +218,7 @@ test_expect_success 'mergetool skips autoresolved' '
+ 	files=$(git -c core.quotePath=false \
+ 		diff --name-only --diff-filter=U \
+-		${orderfile:+"$orderfile"} -- "$@")
++		${orderfile:+"-O$orderfile"} -- "$@")
  
- test_expect_success 'mergetool merges all from subdir' '
- 	test_when_finished "git reset --hard" &&
--	git checkout -b test$test_count &&
-+	git checkout -b test$test_count branch1 &&
- 	test_config rerere.enabled false &&
- 	(
- 		cd subdir &&
-@@ -306,7 +306,7 @@ test_expect_success 'mergetool delete/delete conflict' '
+ 	cd_to_toplevel
  
- test_expect_success 'mergetool produces no errors when keepBackup is used' '
- 	test_when_finished "git reset --hard HEAD" &&
--	git checkout -b test$test_count &&
-+	git checkout -b test$test_count move-to-c &&
- 	test_config mergetool.keepBackup true &&
- 	test_must_fail git merge move-to-b &&
- 	: >expect &&
-@@ -317,7 +317,7 @@ test_expect_success 'mergetool produces no errors when keepBackup is used' '
- 
- test_expect_success 'mergetool honors tempfile config for deleted files' '
- 	test_when_finished "git reset --hard HEAD" &&
--	git checkout -b test$test_count &&
-+	git checkout -b test$test_count move-to-c &&
- 	test_config mergetool.keepTemporaries false &&
- 	test_must_fail git merge move-to-b &&
- 	echo d | git mergetool a/a/file.txt &&
-@@ -327,7 +327,7 @@ test_expect_success 'mergetool honors tempfile config for deleted files' '
- test_expect_success 'mergetool keeps tempfiles when aborting delete/delete' '
- 	test_when_finished "git reset --hard HEAD" &&
- 	test_when_finished "git clean -fdx" &&
--	git checkout -b test$test_count &&
-+	git checkout -b test$test_count move-to-c &&
- 	test_config mergetool.keepTemporaries true &&
- 	test_must_fail git merge move-to-b &&
- 	! (echo a; echo n) | git mergetool a/a/file.txt &&
-@@ -663,7 +663,7 @@ test_expect_success 'diff.orderFile configuration is honored' '
- '
- test_expect_success 'mergetool -Oorder-file is honored' '
- 	test_when_finished "git reset --hard >/dev/null 2>&1" &&
--	git checkout -b test$test_count &&
-+	git checkout -b test$test_count order-file-side2 &&
- 	test_config diff.orderFile order-file &&
- 	test_config mergetool.myecho.cmd "echo \"\$LOCAL\"" &&
- 	test_config mergetool.myecho.trustExitCode true &&
 -- 
 2.11.0.390.gc69c2f50cf-goog
 
 
---94eb2c08bb9629093c0545a2d7ce
+--94eb2c04379c4609150545a2d740
 Content-Type: application/pkcs7-signature; name="smime.p7s"
 Content-Transfer-Encoding: base64
 Content-Disposition: attachment; filename="smime.p7s"
@@ -222,13 +183,13 @@ m4YUSo869xADdrGrWJ7KzroFbucLZYh3niIjVICp7fh9wtLgbX7X/akdubehYhy/l+AIMml6Zlyu
 GNGCGIleyQ0bAdjjG+dKrDErUlui8wd/YplvelaTAzSvNpxcrr+2YB8UBWcYkgULkp5GDCC2guKl
 rMF1mTS6N6GMxUi30sZicbMxggJeMIICWgIBATBcMEwxCzAJBgNVBAYTAkJFMRkwFwYDVQQKExBH
 bG9iYWxTaWduIG52LXNhMSIwIAYDVQQDExlHbG9iYWxTaWduIEhWIFMvTUlNRSBDQSAxAgwvfEOc
-7N3JjQI9nAwwDQYJYIZIAWUDBAIBBQCggdQwLwYJKoZIhvcNAQkEMSIEIOQrBkuO0QRt8YpiW2Rc
-h2bDqV4DdElOXTZ9lE0gy1XKMBgGCSqGSIb3DQEJAzELBgkqhkiG9w0BBwEwHAYJKoZIhvcNAQkF
-MQ8XDTE3MDEwOTA1NDMwMFowaQYJKoZIhvcNAQkPMVwwWjALBglghkgBZQMEASowCwYJYIZIAWUD
+7N3JjQI9nAwwDQYJYIZIAWUDBAIBBQCggdQwLwYJKoZIhvcNAQkEMSIEIAEyjjTY6OYNNOFV6JYg
+HSVEeQ/WhvjEBddf71IE/kGVMBgGCSqGSIb3DQEJAzELBgkqhkiG9w0BBwEwHAYJKoZIhvcNAQkF
+MQ8XDTE3MDEwOTA1NDMwMlowaQYJKoZIhvcNAQkPMVwwWjALBglghkgBZQMEASowCwYJYIZIAWUD
 BAEWMAsGCWCGSAFlAwQBAjAKBggqhkiG9w0DBzALBgkqhkiG9w0BAQowCwYJKoZIhvcNAQEHMAsG
-CWCGSAFlAwQCATANBgkqhkiG9w0BAQEFAASCAQBZHtX25fvomNF4mTZ9wYeExP9F8pQW4QB8q9i/
-BL9Pn3plJZtHe+iBXhkQx0Hdh4l79u4F9QLPzQeXjVNYBWVm0Ukh7qARQA7sF83m9EmmQ6M74G95
-vTmwz2xMP0PQnakpottlaG15Oj7rOHcwgqHCjCNsAM1C0oW/DLnPiDTKkTPvj9Rr8pfs0jE8FmAF
-SN/OSZQnb2AJ4Xg1LPPsIl3rek6hG2lQPr1X+PyqfUoQeVktrW8xx8ci5fDIavGlA7NUxQhsgBZw
-XSshP3dPhgqTI9Ecl8utpd89Q4D0Qxj9uSCNwZwVnMru8ntTk7TCJH5WtjgQtbph3Nr5L8gZGWX0
---94eb2c08bb9629093c0545a2d7ce--
+CWCGSAFlAwQCATANBgkqhkiG9w0BAQEFAASCAQBDE7H+1YSZYw++FgWwOx8n6fm7WtPsLRClVMAk
+K5BnlKoweLPIKLTBrDpw41gsciigYrvp9N0hULYAEoRVyxjM98MpzHkYGO0x2vVD7L0EhGFRaTND
+IfVjU9MT1NDZVEbbAsFKDxtTl1fusqJpohKTDhW8j+qMmF24ZLJOOXHzEHdhesGY7NH18yWE5wyi
+BlkGPZZlbVgi/UiL3bmvrBys2nQG5wP/mxDoox/N/gPGdlLOQTcdcxYfOiLj1wXndZqhfjjgzR6/
+B6lp72m7qOT+2wu+Plv9OaSV5gtZiCwWC72FwWVv6lo5S7uQQwW8ZaOgEZvEoXPgVlTCAHogjMff
+--94eb2c04379c4609150545a2d740--
