@@ -2,99 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 892B820756
-	for <e@80x24.org>; Mon,  9 Jan 2017 08:56:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 70E3720756
+	for <e@80x24.org>; Mon,  9 Jan 2017 09:11:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1757417AbdAII4V (ORCPT <rfc822;e@80x24.org>);
-        Mon, 9 Jan 2017 03:56:21 -0500
-Received: from mail-pf0-f193.google.com ([209.85.192.193]:33437 "EHLO
-        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751133AbdAII4U (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Jan 2017 03:56:20 -0500
-Received: by mail-pf0-f193.google.com with SMTP id 127so24185937pfg.0
-        for <git@vger.kernel.org>; Mon, 09 Jan 2017 00:56:20 -0800 (PST)
+        id S932361AbdAIJLJ (ORCPT <rfc822;e@80x24.org>);
+        Mon, 9 Jan 2017 04:11:09 -0500
+Received: from mail-qk0-f195.google.com ([209.85.220.195]:33583 "EHLO
+        mail-qk0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932310AbdAIJLI (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Jan 2017 04:11:08 -0500
+Received: by mail-qk0-f195.google.com with SMTP id 11so5433946qkl.0
+        for <git@vger.kernel.org>; Mon, 09 Jan 2017 01:11:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:mime-version:content-disposition
-         :user-agent;
-        bh=gFn6/3o/VYGgbZ2+wUUXz17hx3kkFoJbxhyHcN/4G7E=;
-        b=GjA6a5kFyG/Qc217lsdEbYklG6WGY5GplPtZDG4OxFJkXrqERKah9ht2f+A1djiNWa
-         6onBAK+mKxnmrKD3bw1VfXiLdgRK/X4QO68UQSruO8EpOoZZ4SUaORfyl5BOKY0VKSso
-         ko/4c2DDeF8qcQ3h87Zf4B8QP9Dp9Yo772YsXX9Zc2M/qiabqcwpmNWJvZPdEUFiglIi
-         j6XlmTKYeKZOJOmJ/fSALZfvjp4AXbc3tXd7bIJL4S1hT2kf9nVTZ++F1Hlg2U4g/1Qn
-         M8Q17PRTpnjLXuhIdxD23bt/Thvk+sAzwbFsVozEP/vas32yv8HCVcKlHZkJFIrLai0Y
-         E2Bg==
+        d=diamand.org; s=google;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=pFN5ba2KVubyOR6S7XlAMLWuDg9tvucUNIf0BMxRNuY=;
+        b=hP7AFfIdRQ0vzP/2k7rqjpX8SCoeHfcIG9IKACpTUG4XynE5WfCbUUQYZtnD1OsiJk
+         FXfHZfVlXVVqaOZAf0kX+xCNbO/Ln2lhqoIdjUZQC1NA0k3B4nSTA0veWlHN6yRMLsvN
+         u6+kUwbKAdGQZsV5dPFINH6UTDYompzMtANRM=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
-         :content-disposition:user-agent;
-        bh=gFn6/3o/VYGgbZ2+wUUXz17hx3kkFoJbxhyHcN/4G7E=;
-        b=Oqc5qaUj1oxpy9wBideY30FsaZRz8ehymbb+61DEZM6DWmO5cqqpXdz98IIzkn3NBB
-         87n61Oc4jxD/+Y908C4uYSfN6/nYG/g2954tk2A9prTy0jH4bi+AZloattNJJ3kE5TXz
-         p4+9e/w4Nh0cTtjtMLprARSO3SFmUuprxPwWGuZd3eqVWnZUPZ2Ao6CWCrHm4CEhFLXi
-         Q6rITq5EngXm5+gCjaIdfVV7t3PJoXkUPP1RQrrbSiN4s2E5hjuwdTq0l8WF2LxOl9PI
-         tTPzDI0SBABUeahF1sttsurSq9DvqsJXLFFrjHJJYUNg+46rzbL2qZ4nyNcbl6O04p+L
-         T0Gg==
-X-Gm-Message-State: AIkVDXJtjcvdpknGjQ4WHXtVuZsBEuFlkW3jI1cx9ssCrXSM1T/m/JjfXgc3TmuOmwDsmw==
-X-Received: by 10.84.197.1 with SMTP id m1mr193956993pld.157.1483952180055;
-        Mon, 09 Jan 2017 00:56:20 -0800 (PST)
-Received: from arch-attack.localdomain (c-50-152-192-15.hsd1.ca.comcast.net. [50.152.192.15])
-        by smtp.gmail.com with ESMTPSA id n29sm28715172pfg.80.2017.01.09.00.56.19
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 09 Jan 2017 00:56:19 -0800 (PST)
-Date:   Mon, 9 Jan 2017 00:56:17 -0800
-From:   Denton Liu <liu.denton@gmail.com>
-To:     git@vger.kernel.org
-Cc:     spearce@spearce.org
-Subject: [PATCH 2/2] completion: add bash completion for 'filter-branch'
-Message-ID: <20170109085617.GA527@arch-attack.localdomain>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=pFN5ba2KVubyOR6S7XlAMLWuDg9tvucUNIf0BMxRNuY=;
+        b=gYtcH2FIaOdAzuOHWLym+X20+5QhhIcfOtnwdcg2ds3p3zs7cuqt60a4668qkpu8m3
+         6USvnbscEduQW1hHJTV3qock5rLCgCigRdyIFS5JjzEkESfWcTXO2mijIeY94IXwIwJo
+         ++hhkV4WZ8JYNEzgex4076PJVoEECNSTTV4Vsw+UUlV0B1l2tJTX1O0NhJV2eDUHFyb5
+         NeY2PVN+lm6RNrPClTcP5yRg9TA1DlJY/G6Jq7B6SF8DpmJBX/tNOUtTtk5dr0YZdPAn
+         dYzIquGnvTZjJ1gQbOIXb4ufRdJcsA2h7r8NSOneHaFV/P6A7u/ipqt4CFmpIBFtkCRh
+         I3dw==
+X-Gm-Message-State: AIkVDXJ5dYQHY2p7RAUP86XW7MeWVkSp/NgNHfPp80Wa4hBzjuLs5t0T1E9gwXMxHK3XtguIe49ox1N/7/IPKA==
+X-Received: by 10.55.104.83 with SMTP id d80mr15626948qkc.286.1483953067288;
+ Mon, 09 Jan 2017 01:11:07 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-User-Agent: Mutt/1.7.2 (2016-11-26)
+Received: by 10.237.62.179 with HTTP; Mon, 9 Jan 2017 01:11:06 -0800 (PST)
+In-Reply-To: <010201597f0179fb-fc4c0240-5ec7-466b-96b9-59f4840954d7-000000@eu-west-1.amazonses.com>
+References: <010201597f017978-356bf9e9-ee78-498b-926b-5c00466b1d9e-000000@eu-west-1.amazonses.com>
+ <010201597f0179fb-fc4c0240-5ec7-466b-96b9-59f4840954d7-000000@eu-west-1.amazonses.com>
+From:   Luke Diamand <luke@diamand.org>
+Date:   Mon, 9 Jan 2017 09:11:06 +0000
+Message-ID: <CAE5ih7-mAfezTwdbWrAWFOSoCf-z_NJOic+FQdCmHbCyR8ng9w@mail.gmail.com>
+Subject: Re: [PATCH v4 2/2] t9813: avoid using pipes
+To:     Pranit Bauva <pranit.bauva@gmail.com>
+Cc:     Git Users <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Signed-off-by: Denton Liu <liu.denton@gmail.com>
----
- contrib/completion/git-completion.bash | 17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
+On 8 January 2017 at 16:55, Pranit Bauva <pranit.bauva@gmail.com> wrote:
+> The exit code of the upstream in a pipe is ignored thus we should avoid
+> using it. By writing out the output of the git command to a file, we can
+> test the exit codes of both the commands.
 
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 51832108e..b4cbea5c7 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -1297,6 +1297,23 @@ _git_fetch ()
- 	__git_complete_remote_or_refspec
- }
- 
-+__git_filter_branch_options="
-+	--env-filter --tree-filter --index-filter --parent-filter --msg-filter
-+	--commit-filter --tag-name-filter --subdirectory-filter --prune-empty
-+	--original --force
-+"
-+_git_filter_branch ()
-+{
-+	__git_has_doubledash && __git_complete_rev_list_command && return
-+
-+	case "$cur" in
-+	--*)
-+		__gitcomp "$__git_filter_branch_options"
-+		return
-+		;;
-+	esac
-+}
-+
- __git_format_patch_options="
- 	--stdout --attach --no-attach --thread --thread= --no-thread
- 	--numbered --start-number --numbered-files --keep-subject --signoff
--- 
-2.11.0
+Looks good to me, thanks!
 
+Ack.
+
+>
+> Signed-off-by: Pranit Bauva <pranit.bauva@gmail.com>
+> ---
+>  t/t9813-git-p4-preserve-users.sh | 8 ++++----
+>  1 file changed, 4 insertions(+), 4 deletions(-)
+>
+> diff --git a/t/t9813-git-p4-preserve-users.sh b/t/t9813-git-p4-preserve-users.sh
+> index 76004a5..bda222a 100755
+> --- a/t/t9813-git-p4-preserve-users.sh
+> +++ b/t/t9813-git-p4-preserve-users.sh
+> @@ -118,12 +118,12 @@ test_expect_success 'not preserving user with mixed authorship' '
+>                 make_change_by_user usernamefile3 Derek derek@example.com &&
+>                 P4EDITOR=cat P4USER=alice P4PASSWD=secret &&
+>                 export P4EDITOR P4USER P4PASSWD &&
+> -               git p4 commit |\
+> -               grep "git author derek@example.com does not match" &&
+> +               git p4 commit >actual &&
+> +               grep "git author derek@example.com does not match" actual &&
+>
+>                 make_change_by_user usernamefile3 Charlie charlie@example.com &&
+> -               git p4 commit |\
+> -               grep "git author charlie@example.com does not match" &&
+> +               git p4 commit >actual &&
+> +               grep "git author charlie@example.com does not match" actual &&
+>
+>                 make_change_by_user usernamefile3 alice alice@example.com &&
+>                 git p4 commit >actual &&
+>
+> --
+> https://github.com/git/git/pull/314
