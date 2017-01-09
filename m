@@ -7,114 +7,111 @@ X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E070A1FEB3
-	for <e@80x24.org>; Mon,  9 Jan 2017 20:10:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A024D1FEB3
+	for <e@80x24.org>; Mon,  9 Jan 2017 20:44:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754434AbdAIUKv (ORCPT <rfc822;e@80x24.org>);
-        Mon, 9 Jan 2017 15:10:51 -0500
-Received: from mail-it0-f41.google.com ([209.85.214.41]:38347 "EHLO
-        mail-it0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752176AbdAIUKu (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Jan 2017 15:10:50 -0500
-Received: by mail-it0-f41.google.com with SMTP id x2so72031635itf.1
-        for <git@vger.kernel.org>; Mon, 09 Jan 2017 12:10:50 -0800 (PST)
+        id S936902AbdAIUol (ORCPT <rfc822;e@80x24.org>);
+        Mon, 9 Jan 2017 15:44:41 -0500
+Received: from mail-it0-f51.google.com ([209.85.214.51]:32952 "EHLO
+        mail-it0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932069AbdAIUok (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Jan 2017 15:44:40 -0500
+Received: by mail-it0-f51.google.com with SMTP id c20so17957103itb.0
+        for <git@vger.kernel.org>; Mon, 09 Jan 2017 12:44:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=sMkaRHhzmRMDMZPWb1pUkfn01N9XIxMsj6ZGaCJBV30=;
-        b=p1gNwIKcxqxR3v2eRadtIJebGzRpD4ieB4jb3a4TrChQtiRdREecnSlwdR2Z4fvNTF
-         9YzdKsvjlS+TKQaZ8cdQRDgatFRAOuyjdRtAgmWyZlNCoMQRVeVTwfmoopEwZzl4+cG3
-         ibb6TAhgL1SiLvp8I5qt6Bs3jboPUHaZfaTngqgz1Ipxp8cx1Yl2udXdOBqTeHy3iVba
-         o+J7DETS7WWRmJ3vLym+OF+F6fEzSgbWIu6M6QUMblRpEGl/zKt7pnjFxcY2DdSGrxVI
-         TCB/ZHlSk2tzyoDWZWgTLZZ0wp+wp+Nbl0njhYJMXVYQDQyym3pnVPllT915myI26XGJ
-         xr3Q==
+        bh=jWdYcKDXkl39FbaAg+PFkcYkemQLHyJREC0biyf5viE=;
+        b=pe639NRykOTpglj5i04gmnhy7XvPfntBOGrgg4BM4szZkjIF+P45n3t9dbVxui2ild
+         fk7+3piVNBTU5uMS2fuEFjKCKdeMKw5dE7kSE9cDmOsl3KBuU95uhGs9U/FMZNoHiuGI
+         5UCcPa1UuZ1ZKPRYhZkKHQcao50FLVPsWQftvwazfvGbAq+4LMC8bmH0ifqzT4JF7DoR
+         5ws4e9JPB38sk5tjtSgH1Z9x6mQdzcd4g8uoukG9audqg7T1Rpppj8kW+/7phA4XwB63
+         jN4mwhFaQ2mmOQovfGH29cGz5uV9eIBLKX9tmb65etHjGvg7jE6pEd2PkJ/893SzvYPy
+         T5bg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=sMkaRHhzmRMDMZPWb1pUkfn01N9XIxMsj6ZGaCJBV30=;
-        b=Ns2JtulMhSrhUZ+MxV+y+WF5VprPVVkkiNRqIw1qxiVjh7zR3CRsQq5Tggy6ldvTRy
-         V/Xu8mhyTc7sRNja5yiMfjrUv5M1kYsUahkhDeRSNjr1GaVNiUPTdcXgg7HI8Hhkc36X
-         z454N/YxnnPKyjF2vHWOxaw+uUlloqFf3plT4J8EzGWPSQZJYxm7NHGYJs8JP9tCTwyD
-         4OwI2KnBdAFsJXP/94e3yjB+Bv8jz015chG4+5Dr9mJ7huXsmS2O+QXUXSIKa35u5Sh4
-         LBQkU3ZCOol2qPndXqDY/lYFlM5mceL5/0VJqH49+bXflP3p3tWg6967+zkPzxLLhhLr
-         dtdA==
-X-Gm-Message-State: AIkVDXKX9Je62nNfVqr4ZyV1Q+sTF9LLmyu7jilQoXHgtcBHPXmCEKOJg+F+TAG7Eb/k7IKnQXtcegUZv+9rVcgk
-X-Received: by 10.36.65.161 with SMTP id b33mr48513itd.114.1483992649676; Mon,
- 09 Jan 2017 12:10:49 -0800 (PST)
+        bh=jWdYcKDXkl39FbaAg+PFkcYkemQLHyJREC0biyf5viE=;
+        b=X2PmErE0SbbENXh/PQJHh6qU6eRAv5kWaUNDF2y4ZIaWLL+gr8bwtInLfhry4YAvue
+         2epkCAl8ybvS7yoyjebKvPXWBmr1mxOp2Pby6biCyuaLJDgoW5EP/xFbsjCRoZrrAv1f
+         HyDY99y7No9zVDfVLZukKolSkoWBmjSR+CjpSBCgjGjj080w5MbJFITUsbVopDxiyXec
+         hMxyK3LC4dWuJ00HJu7pGPRCE38huSa0rmbqlHtFNkx9ONCSfdLZLsxo1zd6BdnB0HxI
+         c3FR7WIulVUTVkbH048qm0WXApNNmH4894uQiJacizLXnVetqRUoyfHLmBDukO0R3EIt
+         cc2Q==
+X-Gm-Message-State: AIkVDXLpnqoVz9e7r/a+xUbj4Qk5TN5M2NJyfLYNdqQBudUd/DXTjP53TqIF6vLq20+Mgjsqog99Ailk8tOCLXY7
+X-Received: by 10.36.141.2 with SMTP id w2mr11037285itd.114.1483994678934;
+ Mon, 09 Jan 2017 12:44:38 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.79.39.19 with HTTP; Mon, 9 Jan 2017 12:10:49 -0800 (PST)
-In-Reply-To: <xmqqh959ynb4.fsf@gitster.mtv.corp.google.com>
-References: <20170105192904.1107-1-sbeller@google.com> <20170105192904.1107-2-sbeller@google.com>
- <xmqqh959ynb4.fsf@gitster.mtv.corp.google.com>
+Received: by 10.79.39.19 with HTTP; Mon, 9 Jan 2017 12:44:37 -0800 (PST)
+In-Reply-To: <D10F7C47-14E8-465B-8B7A-A09A1B28A39F@gmail.com>
+References: <D10F7C47-14E8-465B-8B7A-A09A1B28A39F@gmail.com>
 From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 9 Jan 2017 12:10:49 -0800
-Message-ID: <CAGZ79kak8qzUG5G1mM8uDqxW8tVBNmuLcvMhopby_U8PvUOjJg@mail.gmail.com>
-Subject: Re: [PATCHv6 1/2] submodule tests: don't use itself as a submodule
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Brandon Williams <bmwill@google.com>, Jeff King <peff@peff.net>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
+Date:   Mon, 9 Jan 2017 12:44:37 -0800
+Message-ID: <CAGZ79kYDPLDU5Dg_CTnpEX+D9bs6BUSSNTHkqpW2nY-b=e9+SQ@mail.gmail.com>
+Subject: Re: RFC: Enable delayed responses to Git clean/smudge filter requests
+To:     Lars Schneider <larsxschneider@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Jan 8, 2017 at 6:33 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Stefan Beller <sbeller@google.com> writes:
+On Mon, Nov 14, 2016 at 1:09 PM, Lars Schneider
+<larsxschneider@gmail.com> wrote:
+> Hi,
 >
->> This provides an easier way to have submodules in tests, by just setting
->> TEST_CREATE_SUBMODULE to a non empty string, similar to
->> TEST_NO_CREATE_REPO.
+> Git always performs a clean/smudge filter on files in sequential order.
+> Sometimes a filter operation can take a noticeable amount of time.
+> This blocks the entire Git process.
 >
-> Yuck.
+> I would like to give a filter process the possibility to answer Git with
+> "I got your request, I am processing it, ask me for the result later!".
 >
-> I find it doubtful that it is a good idea to create two submodule
-> repositories by merely dot-including the test-lib.sh; I find it
-> doubly doubtful that it is a good idea to make test_create_repo
-> pay attention to the special variable to implement that.
+> I see the following way to realize this:
 >
-> I am OK with a solution where callers that set TEST_CREATE_SUBMODULE
-> variable in this patch to instead have an explicit call
->
->         test_create_repo --submodule pretzel
->
-> That would be a lot more obvious.
+> In unpack-trees.c:check_updates() [1] we loop through the cache
+> entries and "ask me later" could be an acceptable return value of the
+> checkout_entry() call. The loop could run until all entries returned
+> success or error.
 
-agreed.
+Late to this thread, but here is an answer nevertheless.
 
->
-> The primary reason why I hate the implementation in this patch is
-> that it is very easy for a test that says TEST_CREATE_SUBMODULE
-> upfront, only to get the initial test repository (which everybody
-> else gets) with two test submodules, to later gain a test that wants
-> to use a separate repository and call "test_create_repo".  It will
-> always get the pretzel submodules, which may or may not match what
-> the test writer who adds a new test needs.
+I am currently working on getting submodules working
+for working tree modifying commands (prominently checkout, but
+also read-tree -u and any other caller that uses the code in
+unpack-trees.)
 
-I agree. At the time of writing the patch series, I was anticipating writing
-way more submodule tests, but now I have these future tests integrated into
-lib-submodule-update.sh.
+Once the submodules are supported and used, I anticipate that
+putting the files in the working tree on disk will become a bottle neck,
+i.e. the checkout taking way too long for an oversized project.
 
->
->> Make use of it in those tests that add a submodule from ./. except for
->> the occurrence in create_lib_submodule_repo as there it seems we craft
->> a repository deliberately for both inside as well as outside use.
->
-> But isn't the point of this change that use of ./. cannot be
-> mimicking any real-world use, hence pointless for the purpose of
-> really testing the components of the system?  If "we craft
-> deliberately for both inside and outside use" indeed _IS_ a good
-> thing, then perhaps use of ./. has practical real-world use---if
-> not, wouldn't we want to fix the scripts that include the
-> lib-submodule-repo helper not to test such an unrealistic layout?
->
+So in the future we have to do something to make checkout fast
+again, which IMHO is threading. My current vision is to have checkout
+automatically choose a number of threads based on expected workload,
+c.f. preload-index.c, line 18-25.
 
-Makes sense; I tried to fix it up to avoid the ./. clone in
-create_lib_submodule_repo, but the issue is there are too many
-implicit assumption of these two repos, such that a faithful conversion
-would just duplicate code for the submodule, (e.g. create the same
-amount of commits, containing the same diffs, etc.), which then
-can be argued to just slow down the test suite as the clone from ./.
-is actually reducing the needed work by a factor of 2.
+> The filter machinery is triggered in various other places in Git and
+> all places that want to support "ask me later" would need to be patched
+> accordingly.
+
+I think this makes sense, even in a threaded git-checkout.
+I assume this idea is implemented before threading hits checkout,
+so a question on the design:
+
+Who determines the workload that is acceptable?
+From reading this email, it seems to be solely the filter that uses
+as many threads/processes as it thinks is ok.
+
+Would it be possible to enhance the protocol further to have
+Git also mingle with the workload, i.e. tell the filter it is
+allowed to use up (N-M) threads, as it itself already uses
+M out of N configured threads?
+
+(I do not want to discuss the details here, but only if such a thing
+is viable with this approach as well)
+
+Thanks,
+Stefan
