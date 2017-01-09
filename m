@@ -2,163 +2,145 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MIME_HEADER_CTYPE_ONLY,
 	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD,T_TVD_MIME_NO_HEADERS
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CDB7B205C9
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9C462205C9
 	for <e@80x24.org>; Mon,  9 Jan 2017 05:43:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1031669AbdAIFn1 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 9 Jan 2017 00:43:27 -0500
-Received: from mail-qk0-f173.google.com ([209.85.220.173]:35370 "EHLO
-        mail-qk0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752093AbdAIFnO (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Jan 2017 00:43:14 -0500
-Received: by mail-qk0-f173.google.com with SMTP id u25so514991898qki.2
-        for <git@vger.kernel.org>; Sun, 08 Jan 2017 21:43:14 -0800 (PST)
+        id S1760337AbdAIFnW (ORCPT <rfc822;e@80x24.org>);
+        Mon, 9 Jan 2017 00:43:22 -0500
+Received: from mail-qk0-f169.google.com ([209.85.220.169]:36474 "EHLO
+        mail-qk0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S939265AbdAIFnB (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Jan 2017 00:43:01 -0500
+Received: by mail-qk0-f169.google.com with SMTP id 11so32199472qkl.3
+        for <git@vger.kernel.org>; Sun, 08 Jan 2017 21:43:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=x7o8ppviXEVyHXKDXjK5jFAMc++qkL5raSctCghH/1M=;
-        b=jL/DpNmror3sj0A6xZuf6t8w7j9t7ocjakDfSg9OlOJuQxQxUljIPNF3QEuIORkqbQ
-         TJXlZSdYfbj9FeoIcLRBBHquvHRnCw/NC3V9HOrcEvubinO6SMvbVqRfmDVKakrG2uIS
-         +vlG8b4rTIkyg28Sn9X5jrjqmVuigycR/juKtGeFr6jNKhn5zsOuiqi5koSo6byMkU3c
-         Ldr6iQrt2S2DUg1x1Fzu9pbalRrbskozEaF3x/6jNil+FYSfjXHyZpD1kPr8zD2sDtXn
-         vvdTnDaPxK3GUb79W6jjqVVvimIC5woOvls57X24yvJ7UwUEtEtJD5QYZBScp9HS/2gP
-         QgAQ==
+        bh=XPW7i0G65kfQlWRR7UN8zQxMeyE0Lq+Bqs39SXih5ZE=;
+        b=U/DVdG2mMuluju5hKXP7ldxFDcipd6lDeuWLuOrrDdQ6jqmiFwmahG2QQ41zzMCJCo
+         VYqsuo6jgtDfl7M2VvR7VRJC95WOhDOk8RwlFoLqQGI2eoEVpAweEdzXg0N66iDtE+iW
+         sukAa3z8fSx8JT+gg5UfomSWyQ1spj1YW4im6puWXFtfAwwzDHtqwjV++DYUtegPs1i1
+         rUEORPalgi4d50m7g0Nk2Q5ZskKf3X8vQ3rf2gLGMWtnFVF+fATdveIM+ycNUJgJG7YH
+         y86RZVlWLay53Eq+8dnAxN58T2WbolkWWevLQ4tms/k8y/pKSHIWdagz878ZkU2T/jxY
+         3fCA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=x7o8ppviXEVyHXKDXjK5jFAMc++qkL5raSctCghH/1M=;
-        b=r3VTnu4s9kd+lj3OTK1qAxCIIP4JsPwIxRlM8x81vtLG6xtIRw6ZUpeA5dmsdA6hPi
-         7+7OqfNqsLdigKaEzx8I4WLUggjgwYhLsJj7BZXeq0jtcGSIaIZ203iOxnct/uYdNC1h
-         fz8MkRNZhNvGM11O2F1UF3wL0DHlV7L0p0XyyjxGgPINNcKYXK3nx+1+FUKA6H54ZmuS
-         hBt7SHtpjQP/IRV7cSd+lRfAzPYrMNrw6V57Ku5JxvX42AyzYQYhGC3+qc91bE4rnXiI
-         nN2gCMpyG6AcSc/owoZyBFm4bVDhQmNgzNgxk2hJs6Prygh26vG9vlYxXolvzdbha2ec
-         PndQ==
-X-Gm-Message-State: AIkVDXJ775Mf954iOkoN02dguFhgTFmlEuVN78oa//Hag1GJCFAReQRNPxZjdighgE2XBCEr
-X-Received: by 10.55.190.6 with SMTP id o6mr69380317qkf.124.1483940582684;
-        Sun, 08 Jan 2017 21:43:02 -0800 (PST)
+        bh=XPW7i0G65kfQlWRR7UN8zQxMeyE0Lq+Bqs39SXih5ZE=;
+        b=IKzp7i2D231sqyrN7fuFBZI4B5AuG/K5KiyxvAeCeSyAfE3meQZtq3ERLDW4g9JdME
+         xgMTjGGcwUH1uPQ4tAiyCEme1uskfuHhY79Xj1Mejn9eWUr7d2pbIkXviA/QD/qcC6uu
+         a06ye6tvmzs2KNIW3wEWD4/DYJzC4Gk8m02J1Tq0tRgBtdCRIW1b9VFDjNPG+gPSWWR/
+         3R5zwveyYYFC9ZSZKC55CU8yxwA1gdgt0olDn2VC7emV+Tqw4HpcJIjvaP8Cc9zXSv6u
+         ZUosRJ/gTJXS2pCSIr3kzItWsz2dO7sONoDAUR7EwAYZ/pdfofLVvxH6flgBDq33uHB0
+         wzeQ==
+X-Gm-Message-State: AIkVDXK7rQqgSuCMUbOy+8O5XTb24NAs8yc5f0zMKq3Nwxhkz4X713A/2d8kj3HTqunjOR7Z
+X-Received: by 10.55.147.67 with SMTP id v64mr95472598qkd.138.1483940580094;
+        Sun, 08 Jan 2017 21:43:00 -0800 (PST)
 Received: from hansenr.cam.corp.google.com ([172.29.73.70])
-        by smtp.gmail.com with ESMTPSA id 21sm3452763qkh.13.2017.01.08.21.43.02
+        by smtp.gmail.com with ESMTPSA id 21sm3452763qkh.13.2017.01.08.21.42.59
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sun, 08 Jan 2017 21:43:02 -0800 (PST)
+        Sun, 08 Jan 2017 21:42:59 -0800 (PST)
 From:   Richard Hansen <hansenr@google.com>
 To:     git@vger.kernel.org
 Cc:     davvid@gmail.com, j6t@kdbg.org, hansenr@google.com,
         sbeller@google.com, simon@ruderich.org
-Subject: [PATCH v3 13/13] mergetool: fix running in subdir when rerere enabled
-Date:   Mon,  9 Jan 2017 00:42:38 -0500
-Message-Id: <20170109054238.42599-14-hansenr@google.com>
+Subject: [PATCH v3 09/13] t7610: don't assume the checked-out commit
+Date:   Mon,  9 Jan 2017 00:42:34 -0500
+Message-Id: <20170109054238.42599-10-hansenr@google.com>
 X-Mailer: git-send-email 2.11.0.390.gc69c2f50cf-goog
 In-Reply-To: <20170109054238.42599-1-hansenr@google.com>
 References: <20170106010945.79382-1-hansenr@google.com>
  <20170109054238.42599-1-hansenr@google.com>
 Content-Type: multipart/signed; protocol="application/pkcs7-signature"; micalg=sha-256;
-        boundary="94eb2c0431c6f650f20545a2d7bf"
+        boundary="94eb2c08bb9629093c0545a2d7ce"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
---94eb2c0431c6f650f20545a2d7bf
+--94eb2c08bb9629093c0545a2d7ce
 
-If rerere is enabled and no pathnames are given, run cd_to_toplevel
-before running 'git diff --name-only' so that 'git diff --name-only'
-sees the files named by 'git rerere remaining', which outputs
-pathnames relative to the top-level directory.
+Always check out the required commit at the beginning of the test so
+that a failure in a previous test does not cause the test to work off
+of the wrong commit.
 
-The cd_to_toplevel command could be run after 'git rerere remaining',
-but it is run before just in case 'git rerere remaining' is ever
-changed to print pathnames relative to the current working directory
-rather than relative to the top-level directory.
-
-An alternative approach would be to unconditionally convert all
-relative pathnames (including the orderfile pathname) to be relative
-to the top-level directory and then run cd_to_toplevel before 'git
-diff --name-only', but unfortunately 'git rev-parse --prefix' requires
-valid pathnames, which would break some valid use cases.
-
-This fixes a regression introduced in
-57937f70a09c12ef484c290865dac4066d207c9c (v2.11.0).
+This is a step toward making the tests more independent so that if one
+test fails it doesn't cause subsequent tests to fail.
 
 Signed-off-by: Richard Hansen <hansenr@google.com>
 ---
- git-mergetool.sh     | 32 ++++++++++++++++++++++++++++++++
- t/t7610-mergetool.sh |  2 +-
- 2 files changed, 33 insertions(+), 1 deletion(-)
+ t/t7610-mergetool.sh | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/git-mergetool.sh b/git-mergetool.sh
-index b506896dc..22f56c25a 100755
---- a/git-mergetool.sh
-+++ b/git-mergetool.sh
-@@ -456,6 +456,28 @@ main () {
- 
- 	if test $# -eq 0 && test -e "$GIT_DIR/MERGE_RR"
- 	then
-+		# The pathnames output by the 'git rerere remaining'
-+		# command below are relative to the top-level
-+		# directory but the 'git diff --name-only' command
-+		# further below expects the pathnames to be relative
-+		# to the current working directory.  Thus, we cd to
-+		# the top-level directory before running 'git diff
-+		# --name-only'.  We change directories even earlier
-+		# (before running 'git rerere remaining') in case 'git
-+		# rerere remaining' is ever changed to output
-+		# pathnames relative to the current working directory.
-+		#
-+		# Changing directories breaks a relative $orderfile
-+		# pathname argument, so fix it up to be relative to
-+		# the top-level directory.
-+
-+		prefix=$(git rev-parse --show-prefix) || exit 1
-+		cd_to_toplevel
-+		if test -n "$orderfile"
-+		then
-+			orderfile=$(git rev-parse --prefix "$prefix" "$orderfile") || exit 1
-+		fi
-+
- 		set -- $(git rerere remaining)
- 		if test $# -eq 0
- 		then
-@@ -463,6 +485,16 @@ main () {
- 		fi
- 	fi
- 
-+	# Note:  The pathnames output by 'git diff --name-only' are
-+	# relative to the top-level directory, but it expects input
-+	# pathnames to be relative to the current working directory.
-+	# Thus:
-+	#   * Either cd_to_toplevel must not be run before this or all
-+	#     relative input pathnames must be converted to be
-+	#     relative to the top-level directory (or absolute).
-+	#   * Either cd_to_toplevel must be run after this or all
-+	#     relative output pathnames must be converted to be
-+	#     relative to the current working directory (or absolute).
- 	files=$(git -c core.quotePath=false \
- 		diff --name-only --diff-filter=U \
- 		${orderfile:+"-O$orderfile"} -- "$@")
 diff --git a/t/t7610-mergetool.sh b/t/t7610-mergetool.sh
-index b36fde1c0..a55bf67e1 100755
+index efcf5c3f1..54164a320 100755
 --- a/t/t7610-mergetool.sh
 +++ b/t/t7610-mergetool.sh
-@@ -234,7 +234,7 @@ test_expect_success 'mergetool merges all from subdir (rerere disabled)' '
- 	)
- '
+@@ -184,7 +184,7 @@ test_expect_success 'mergetool in subdir' '
  
--test_expect_failure 'mergetool merges all from subdir (rerere enabled)' '
-+test_expect_success 'mergetool merges all from subdir (rerere enabled)' '
+ test_expect_success 'mergetool on file in parent dir' '
  	test_when_finished "git reset --hard" &&
- 	git checkout -b test$test_count branch1 &&
- 	test_config rerere.enabled true &&
+-	git checkout -b test$test_count &&
++	git checkout -b test$test_count branch1 &&
+ 	git submodule update -N &&
+ 	(
+ 		cd subdir &&
+@@ -218,7 +218,7 @@ test_expect_success 'mergetool skips autoresolved' '
+ 
+ test_expect_success 'mergetool merges all from subdir' '
+ 	test_when_finished "git reset --hard" &&
+-	git checkout -b test$test_count &&
++	git checkout -b test$test_count branch1 &&
+ 	test_config rerere.enabled false &&
+ 	(
+ 		cd subdir &&
+@@ -306,7 +306,7 @@ test_expect_success 'mergetool delete/delete conflict' '
+ 
+ test_expect_success 'mergetool produces no errors when keepBackup is used' '
+ 	test_when_finished "git reset --hard HEAD" &&
+-	git checkout -b test$test_count &&
++	git checkout -b test$test_count move-to-c &&
+ 	test_config mergetool.keepBackup true &&
+ 	test_must_fail git merge move-to-b &&
+ 	: >expect &&
+@@ -317,7 +317,7 @@ test_expect_success 'mergetool produces no errors when keepBackup is used' '
+ 
+ test_expect_success 'mergetool honors tempfile config for deleted files' '
+ 	test_when_finished "git reset --hard HEAD" &&
+-	git checkout -b test$test_count &&
++	git checkout -b test$test_count move-to-c &&
+ 	test_config mergetool.keepTemporaries false &&
+ 	test_must_fail git merge move-to-b &&
+ 	echo d | git mergetool a/a/file.txt &&
+@@ -327,7 +327,7 @@ test_expect_success 'mergetool honors tempfile config for deleted files' '
+ test_expect_success 'mergetool keeps tempfiles when aborting delete/delete' '
+ 	test_when_finished "git reset --hard HEAD" &&
+ 	test_when_finished "git clean -fdx" &&
+-	git checkout -b test$test_count &&
++	git checkout -b test$test_count move-to-c &&
+ 	test_config mergetool.keepTemporaries true &&
+ 	test_must_fail git merge move-to-b &&
+ 	! (echo a; echo n) | git mergetool a/a/file.txt &&
+@@ -663,7 +663,7 @@ test_expect_success 'diff.orderFile configuration is honored' '
+ '
+ test_expect_success 'mergetool -Oorder-file is honored' '
+ 	test_when_finished "git reset --hard >/dev/null 2>&1" &&
+-	git checkout -b test$test_count &&
++	git checkout -b test$test_count order-file-side2 &&
+ 	test_config diff.orderFile order-file &&
+ 	test_config mergetool.myecho.cmd "echo \"\$LOCAL\"" &&
+ 	test_config mergetool.myecho.trustExitCode true &&
 -- 
 2.11.0.390.gc69c2f50cf-goog
 
 
---94eb2c0431c6f650f20545a2d7bf
+--94eb2c08bb9629093c0545a2d7ce
 Content-Type: application/pkcs7-signature; name="smime.p7s"
 Content-Transfer-Encoding: base64
 Content-Disposition: attachment; filename="smime.p7s"
@@ -240,13 +222,13 @@ m4YUSo869xADdrGrWJ7KzroFbucLZYh3niIjVICp7fh9wtLgbX7X/akdubehYhy/l+AIMml6Zlyu
 GNGCGIleyQ0bAdjjG+dKrDErUlui8wd/YplvelaTAzSvNpxcrr+2YB8UBWcYkgULkp5GDCC2guKl
 rMF1mTS6N6GMxUi30sZicbMxggJeMIICWgIBATBcMEwxCzAJBgNVBAYTAkJFMRkwFwYDVQQKExBH
 bG9iYWxTaWduIG52LXNhMSIwIAYDVQQDExlHbG9iYWxTaWduIEhWIFMvTUlNRSBDQSAxAgwvfEOc
-7N3JjQI9nAwwDQYJYIZIAWUDBAIBBQCggdQwLwYJKoZIhvcNAQkEMSIEIMXwJrGbTI3kWj93jgEw
-k71jHck1NWUBoYpRoIHmMUisMBgGCSqGSIb3DQEJAzELBgkqhkiG9w0BBwEwHAYJKoZIhvcNAQkF
-MQ8XDTE3MDEwOTA1NDMxM1owaQYJKoZIhvcNAQkPMVwwWjALBglghkgBZQMEASowCwYJYIZIAWUD
+7N3JjQI9nAwwDQYJYIZIAWUDBAIBBQCggdQwLwYJKoZIhvcNAQkEMSIEIOQrBkuO0QRt8YpiW2Rc
+h2bDqV4DdElOXTZ9lE0gy1XKMBgGCSqGSIb3DQEJAzELBgkqhkiG9w0BBwEwHAYJKoZIhvcNAQkF
+MQ8XDTE3MDEwOTA1NDMwMFowaQYJKoZIhvcNAQkPMVwwWjALBglghkgBZQMEASowCwYJYIZIAWUD
 BAEWMAsGCWCGSAFlAwQBAjAKBggqhkiG9w0DBzALBgkqhkiG9w0BAQowCwYJKoZIhvcNAQEHMAsG
-CWCGSAFlAwQCATANBgkqhkiG9w0BAQEFAASCAQAnva+PdVqch1W3Cb109UDlE4iV4YuHD3LK/eAk
-n17oiPCQhL+e2YuG7SweyK8uSD5ZegtzEDWCdKnv8YniYQ1ypTGqrk8dZVVg3Lp5rbJUqJkPUIWs
-eUnUYASO2vmVvMpGKWstzLy7ikYwvJRY/cPOrhtQ0aVH6Cmyb2+0inycW8Mal3gZQ5A7kvSHvy/5
-xejeua0OPDGfN1JBLKAOHd+VZnMfVBaVLpyQ7OMJvoRa5atLFBcI6SEVamyzXrWwdNYW8jS3M/2m
-hv7yi7tXTRzD0j2OhF9SE0db0X/IB5pGkRCVEMoDbwPEqgxKgdcz1b+PL1N9GAnB4qYX6aCkB4jo
---94eb2c0431c6f650f20545a2d7bf--
+CWCGSAFlAwQCATANBgkqhkiG9w0BAQEFAASCAQBZHtX25fvomNF4mTZ9wYeExP9F8pQW4QB8q9i/
+BL9Pn3plJZtHe+iBXhkQx0Hdh4l79u4F9QLPzQeXjVNYBWVm0Ukh7qARQA7sF83m9EmmQ6M74G95
+vTmwz2xMP0PQnakpottlaG15Oj7rOHcwgqHCjCNsAM1C0oW/DLnPiDTKkTPvj9Rr8pfs0jE8FmAF
+SN/OSZQnb2AJ4Xg1LPPsIl3rek6hG2lQPr1X+PyqfUoQeVktrW8xx8ci5fDIavGlA7NUxQhsgBZw
+XSshP3dPhgqTI9Ecl8utpd89Q4D0Qxj9uSCNwZwVnMru8ntTk7TCJH5WtjgQtbph3Nr5L8gZGWX0
+--94eb2c08bb9629093c0545a2d7ce--
