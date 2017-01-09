@@ -6,59 +6,53 @@ X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D57AC1FEB3
-	for <e@80x24.org>; Mon,  9 Jan 2017 14:36:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0E3A41FEB3
+	for <e@80x24.org>; Mon,  9 Jan 2017 15:02:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S942457AbdAIOem (ORCPT <rfc822;e@80x24.org>);
-        Mon, 9 Jan 2017 09:34:42 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:61673 "EHLO
+        id S1034367AbdAIPCG (ORCPT <rfc822;e@80x24.org>);
+        Mon, 9 Jan 2017 10:02:06 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:62227 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S940133AbdAIOel (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Jan 2017 09:34:41 -0500
+        with ESMTP id S967851AbdAIPBj (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Jan 2017 10:01:39 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id BE4235D2E8;
-        Mon,  9 Jan 2017 09:34:40 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 9FF765D884;
+        Mon,  9 Jan 2017 10:01:38 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=gtIPHjLFPAcuceiYoMFOdVyeD1o=; b=KUrFd5
-        12zt0CTOXaZ6jsmUbFPnMQ+dWLMPVK3HE9q6BPXcT8BwC0s8g8073LkmbjSC57jh
-        TcDsOD6wHfAZ/GHup7EaGInLYjxmNMSNJFn/Y9Zx5N1SR1lU4aNZO04C1Q3H/ywG
-        0nBwMqshkjPnte6a0fRVbW327WDmiPPpdiutc=
+        :content-type; s=sasl; bh=eYdX+cHUMYKisqsOlv5qybw38ls=; b=UR0usp
+        Ghc1ieJg2cNDVIswXi8uSdPCXVqkWsp0giHt4lPHraDXfcp7CM//ZhlHaPLXYCW1
+        +d5mgbJwOqDAm1xWVR7/WmxbfGuPTHYaYOSLzURsnRgDmotT6X6bh04aeLg5wn9P
+        X8PsYHugVV7bxEICOlT5osySaEdjsEm9yMy74=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=a17wPhFpfDT7dzaepOhN3D3aCBvxEddc
-        lVe0BYiSYR93dHsT2N2CmOztumusksWTkbDIqWNOTXgh2kRxhiunS6gW9y1JZB0V
-        4s38W2UZxeSTSvOxcXoKnId5u2Vup0hxDrTroBJVpiHELkRna8OPKBzbF8B5EyGl
-        lA2h9rCQ0lw=
+        :content-type; q=dns; s=sasl; b=j9jgS7RElvRUxJIeWqd+rB1fnHE4Q+3D
+        V6Sr/5OInBW8tyqJ5juiWYv52BKwJ0GjdlixbtYnCwiFS2yc4PW50fmcgrQFfmqb
+        cEHdojtFiqz82wCIJEs83a71XQD3w79h9w8anYdfmlpg7M+JmTvpqBCbTYgZRrJV
+        xa4ho+uM4bk=
 Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id B69E65D2E5;
-        Mon,  9 Jan 2017 09:34:40 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 962575D883;
+        Mon,  9 Jan 2017 10:01:38 -0500 (EST)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 10E5D5D2E4;
-        Mon,  9 Jan 2017 09:34:39 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 02F255D882;
+        Mon,  9 Jan 2017 10:01:37 -0500 (EST)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Christian Couder <christian.couder@gmail.com>,
-        git <git@vger.kernel.org>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH v3 14/21] read-cache: touch shared index files when used
-References: <20161226102222.17150-1-chriscool@tuxfamily.org>
-        <20161226102222.17150-15-chriscool@tuxfamily.org>
-        <xmqqa8bhb32x.fsf@gitster.mtv.corp.google.com>
-        <CAP8UFD1EgOxcPi=tpiosKkYMcCZe+b6gwW0CKt2sE1NZ7gQv=A@mail.gmail.com>
-        <xmqqo9zi35n6.fsf@gitster.mtv.corp.google.com>
-        <CACsJy8AR6yNr0y+_JZDkW-HO_yHPkUx_6zbLGoviKQBOVcSg5A@mail.gmail.com>
-Date:   Mon, 09 Jan 2017 06:34:38 -0800
-In-Reply-To: <CACsJy8AR6yNr0y+_JZDkW-HO_yHPkUx_6zbLGoviKQBOVcSg5A@mail.gmail.com>
-        (Duy Nguyen's message of "Mon, 9 Jan 2017 17:55:52 +0700")
-Message-ID: <xmqqvatouwsh.fsf@gitster.mtv.corp.google.com>
+Cc:     Quentin Casasnovas <quentin.casasnovas@oracle.com>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: Refreshing index timestamps without reading content
+References: <20170105112359.GN8116@chrystal.oracle.com>
+        <CACsJy8BRfJG6L49VyC+qsrQ9Arz0gCGpMATpK9uLq61Lx6_Jtg@mail.gmail.com>
+Date:   Mon, 09 Jan 2017 07:01:36 -0800
+In-Reply-To: <CACsJy8BRfJG6L49VyC+qsrQ9Arz0gCGpMATpK9uLq61Lx6_Jtg@mail.gmail.com>
+        (Duy Nguyen's message of "Mon, 9 Jan 2017 19:02:45 +0700")
+Message-ID: <xmqqr34cuvjj.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.90 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: C0D3697A-D678-11E6-A502-A7617B1B28F4-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: 853238D4-D67C-11E6-85FD-A7617B1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -66,31 +60,62 @@ X-Mailing-List: git@vger.kernel.org
 
 Duy Nguyen <pclouds@gmail.com> writes:
 
-> On Sun, Jan 8, 2017 at 4:46 AM, Junio C Hamano <gitster@pobox.com> wrote:
->> Christian Couder <christian.couder@gmail.com> writes:
->>
->>> So what should we do if freshen_file() returns 0 which means that the
->>> freshening failed?
->>
->> You tell me ;-)  as you are the one who is proposing this feature.
+> On Thu, Jan 5, 2017 at 6:23 PM, Quentin Casasnovas
+> <quentin.casasnovas@oracle.com> wrote:
+>> Is there any way to tell git, after the git ls-tree command above, to
+>> refresh its stat cache information and trust us that the file content has
+>> not changed, as to avoid any useless file read (though it will obviously
+>> will have to stat all of them, but that's not something we can really
+>> avoid)
 >
-> My answer is, we are not worse than freshening loose objects case
-> (especially since I took the idea from there). 
+> I don't think there's any way to do that, unfortunately.
 
-I do not think so, unfortunately.  Loose object files with stale
-timestamps are not removed as long as objects are still reachable.
-For the base/shared index file, the timestamp is the only thing that
-protects them from pruning, unless it is serving as the base file
-for the currently active $GIT_DIR/index that is split.
+Lose "unfortunately".
 
->> What is the failure mode after such a premature GC happens?  What
->> does the end-user see?  Can you try to (1) split the index (2)
->> modify bunch of entries (3) remove the base/shared index with /bin/rm
->> and then see how various Git commands fail?  Do they fail gracefully?
->>
->> I am trying to gauge the seriousness of ignoring such an error here.
+>> If not, I am willing to implement a --assume-content-unchanged to the git
+>> update-index if you guys don't see something fundamentally wrong with this
+>> approach.
 >
-> If we fail to refresh it and the file is old enough and gc happens,
-> any index file referenced to it are broken. Any commands that read the
-> index will die(). The best you could do is delete $GIT_DIR/index and
-> read-tree HEAD.
+> If you do that, I think you should go with either of the following options
+>
+> - Extend git-update-index --index-info to take stat info as well (or
+> maybe make a new option instead). Then you can feed stat info directly
+> to git without a use-case-specific "assume-content-unchanged".
+>
+> - Add "git update-index --touch" that does what "touch" does. In this
+> case, it blindly updates stat info to latest. But like touch, we can
+> also specify  mtime from command line if we need to. It's a bit less
+> generic than the above option, but easier to use.
+
+Even if we assume that it is a good idea to let people muck with the
+index like this, either of the above would be a usable addition,
+because the cached stat information does not consist solely of
+mtime.
+
+"git update-index --index-info" was invented for the case where a
+user or a script _knows_ the object ID of the blob that _would_
+result if a contents of a file on the filesystem were run through
+hash-object.  So from the interface's point of view, it may make
+sense to teach it to take an extra/optional argument that is the
+path to the file and take the stat info out of the named file when
+the extra/optional argument was given.
+
+But that assumes that it is a good idea to do this in the first
+place.  It was deliberate design decision that setting the cached
+stat info for the entry was protected behind actual content
+comparison, and removing that protection will open the index to
+abuse.
+
+The userbase of Git has grown wide enough that it is harder to say
+"If you lie that a file whose contents does not match the index is
+up to date using this mechanism, you will lose data and all bad
+things happen---you can keep both halves".  Once we release a
+version of Git with such a "feature", the first bug report will be
+"I did not want to run 'update-index --refresh' because it takes
+time, and some index entries apparently did not match what is on the
+filesystem, and I got a corrupt working file after a merge.  Git
+should make sure that the contents match when using the new 'path to
+the file' argument when updating the cached stat info!".  I do not
+have a good answer to such a bug report.
+
+So...
