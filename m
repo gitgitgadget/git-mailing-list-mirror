@@ -2,113 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 64B3E1FEB3
-	for <e@80x24.org>; Mon,  9 Jan 2017 12:43:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9B2BF1FEB3
+	for <e@80x24.org>; Mon,  9 Jan 2017 13:06:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S936529AbdAIMnU (ORCPT <rfc822;e@80x24.org>);
-        Mon, 9 Jan 2017 07:43:20 -0500
-Received: from out1-smtp.messagingengine.com ([66.111.4.25]:59983 "EHLO
-        out1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S932327AbdAIMnS (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 9 Jan 2017 07:43:18 -0500
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-        by mailout.nyi.internal (Postfix) with ESMTP id 4CE8121EBD;
-        Mon,  9 Jan 2017 07:43:17 -0500 (EST)
-Received: from frontend1 ([10.202.2.160])
-  by compute1.internal (MEProxy); Mon, 09 Jan 2017 07:43:17 -0500
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=warpmail.net; h=cc
-        :content-transfer-encoding:content-type:date:from:in-reply-to
-        :message-id:mime-version:references:subject:to:x-me-sender
-        :x-me-sender:x-sasl-enc:x-sasl-enc; s=mesmtp; bh=1XTEN819f4FfqaQ
-        Sfvf/Gc25inY=; b=MVs0bub3puwzBHq3d3mrDdnQuH/XWFCP4gRq2GmNu+sso6j
-        NP74OZ4/TKt6C1a7r0VBH17W8GZ9JkoNrT6onGxcG6IwSyQXQ2iMJpPgiV6RRVEj
-        /eEuLT/Bhbq1S4BhMG6hIiFWL6jYekHKclDuByYnaj33nAKcL41/cPVob57k=
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:content-transfer-encoding:content-type
-        :date:from:in-reply-to:message-id:mime-version:references
-        :subject:to:x-me-sender:x-me-sender:x-sasl-enc:x-sasl-enc; s=
-        smtpout; bh=1XTEN819f4FfqaQSfvf/Gc25inY=; b=sG2rArzLSfdELw7BISlj
-        RZJ9JPKodymBLQNqpdOX3W5S9m6GW1zryVQoHWo11wSaD1zB4ksVvfC7zt4cRcN9
-        /tsWT9EwHuBAjZYeSoxqMG3BqavMSzkhQgbj+WSNyMdj7q2lTmwTGnTC76e5E5nk
-        3c2HA22kHBRFoLldjNJEsrQ=
-X-ME-Sender: <xms:ZYVzWHVhkNE0MWZI5kSxoz9gKPO_HwZP0BWAwhWSsspHwus8WoXOoA>
-X-Sasl-enc: VVISkFUQP3LYmcUvwLRfeIq5kaTwFd06DsGcT1GOv6BD 1483965797
-Received: from skimbleshanks.math.uni-hannover.de (skimbleshanks.math.uni-hannover.de [130.75.46.4])
-        by mail.messagingengine.com (Postfix) with ESMTPA id D4A797E8C4;
-        Mon,  9 Jan 2017 07:43:16 -0500 (EST)
-Subject: Re: [RFC PATCH 0/5] Localise error headers
-To:     Jeff King <peff@peff.net>
-References: <cover.1483354746.git.git@drmicha.warpmail.net>
- <20170104070514.pxdthvilw66ierfz@sigill.intra.peff.net>
-Cc:     git@vger.kernel.org
-From:   Michael J Gruber <git@drmicha.warpmail.net>
-Message-ID: <8d0966d0-1ef1-3d1e-95f5-6e6c1ad50536@drmicha.warpmail.net>
-Date:   Mon, 9 Jan 2017 13:43:15 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.5.1
+        id S939759AbdAINGF (ORCPT <rfc822;e@80x24.org>);
+        Mon, 9 Jan 2017 08:06:05 -0500
+Received: from mail-out.m-online.net ([212.18.0.10]:49570 "EHLO
+        mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S939648AbdAINFs (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Jan 2017 08:05:48 -0500
+Received: from frontend01.mail.m-online.net (unknown [192.168.8.182])
+        by mail-out.m-online.net (Postfix) with ESMTP id 3txwPj6Fhgz3hpdf;
+        Mon,  9 Jan 2017 14:05:45 +0100 (CET)
+Received: from localhost (dynscan1.mnet-online.de [192.168.6.68])
+        by mail.m-online.net (Postfix) with ESMTP id 3txwPj5WbNzvkJg;
+        Mon,  9 Jan 2017 14:05:45 +0100 (CET)
+X-Virus-Scanned: amavisd-new at mnet-online.de
+Received: from mail.mnet-online.de ([192.168.8.182])
+        by localhost (dynscan1.mail.m-online.net [192.168.6.68]) (amavisd-new, port 10024)
+        with ESMTP id q9UQ5cMBK_IZ; Mon,  9 Jan 2017 14:05:44 +0100 (CET)
+X-Auth-Info: Jh27hUvTIiGyw+tIq3GvmpxmETKGzw3Eys8ymTzeS9tIozm2LKkJxABI+MORBtZ7
+Received: from igel.home (ppp-88-217-26-143.dynamic.mnet-online.de [88.217.26.143])
+        (using TLSv1 with cipher DHE-RSA-CAMELLIA256-SHA (256/256 bits))
+        (No client certificate requested)
+        by mail.mnet-online.de (Postfix) with ESMTPSA;
+        Mon,  9 Jan 2017 14:05:44 +0100 (CET)
+Received: by igel.home (Postfix, from userid 1000)
+        id 1D44B2C34A2; Mon,  9 Jan 2017 14:05:44 +0100 (CET)
+From:   Andreas Schwab <schwab@linux-m68k.org>
+To:     "A. Wilcox" <awilfox@adelielinux.org>
+Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org
+Subject: Re: Test failures when Git is built with libpcre and grep is built without it
+References: <58688C9F.4000605@adelielinux.org>
+        <20170102065351.7ymrm77asjbghgdg@sigill.intra.peff.net>
+        <58736B2A.40003@adelielinux.org>
+X-Yow:  Well, I'm on the right planet---everyone looks like me!!!
+Date:   Mon, 09 Jan 2017 14:05:44 +0100
+In-Reply-To: <58736B2A.40003@adelielinux.org> (A. Wilcox's message of "Mon, 9
+        Jan 2017 04:51:22 -0600")
+Message-ID: <871swcjsd3.fsf@linux-m68k.org>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <20170104070514.pxdthvilw66ierfz@sigill.intra.peff.net>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King venit, vidit, dixit 04.01.2017 08:05:
-> On Mon, Jan 02, 2017 at 12:14:49PM +0100, Michael J Gruber wrote:
-> 
->> Currently, the headers "error: ", "warning: " etc. - generated by die(),
->> warning() etc. - are not localized, but we feed many localized error messages
->> into these functions so that we produce error messages with mixed localisation.
->>
->> This series introduces variants of die() etc. that use localised variants of
->> the headers, i.e. _("error: ") etc., and are to be fed localized messages. So,
->> instead of die(_("not workee")), which would produce a mixed localisation (such
->> as "error: geht ned"), one should use die_(_("not workee")) (resulting in
->> "Fehler: geht ned").
-> 
-> I can't say I'm excited about having matching "_" variants for each
-> function. Are we sure that they are necessary? I.e., would it be
-> acceptable to just translate them always?
+On Jan 09 2017, "A. Wilcox" <awilfox@adelielinux.org> wrote:
 
-We would still need to mark the strings, e.g.
+> Interestingly enough, you seem to be right.  The failure is very
+> bizarre and has nothing to do with system /bin/grep:
+>
+> test_must_fail: command succeeded: git grep -G -F -P -E a\x{2b}b\x{2a}c ab
+> not ok 142 - grep -G -F -P -E pattern
+> #
+> #               >empty &&
+> #               test_must_fail git grep -G -F -P -E "a\x{2b}b\x{2a}c"
+> ab >actual &&
+> #               test_cmp empty actual
+> #
+>
+> However:
+>
+> elaine trash directory.t7810-grep # git grep -G -F -P -E
+> a\x{2b}b\x{2a}c ab >actual
 
-die(N_("oopsie"));
+You need to quote the regexp argument, see the line starting with
+"test_must_fail" above.
 
-and would not be able to opt out of translating in the code (only in the
-po file, by not providing a translation).
+Andreas.
 
-
->> 1/5 prepares the error machinery
->> 2/5 provides new variants error_() etc.
->> 3/5 has coccinelli rules error(_(E)) -> error_(_(E)) etc.
->> 4/5 applies the coccinelli patches
->>
->> 5/5 is not to be applied to the main tree, but helps you try out the feature:
->> it has changes to de.po and git.pot so that e.g. "git branch" has fully localised
->> error messages (see the recipe in the commit message).
-> 
-> Your patches 4 and 5 don't seem to have made it to the list. Judging
-> from the diffstat, I'd guess they broke the 100K limit.
-
-Hmmpf, I didn't know about the limit. In any case, they were simple
-results of applying the "make cocci" patches (4/5) resp. providing some
-"de" strings to try this out.
-
-In any case, the question is whether we want to tell the user
-
-A: B
-
-where A is in English and B is localised, or rather localise both A and
-B (for A in "error", "fatal", "warning"...).
-
-For localising A and B, we'd need this series or something similar. For
-keeping the mix, we don't need to do anything ;)
-
-Michael
-
+-- 
+Andreas Schwab, schwab@linux-m68k.org
+GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
+"And now for something completely different."
