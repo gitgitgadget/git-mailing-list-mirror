@@ -2,118 +2,187 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4E64D1FEB3
-	for <e@80x24.org>; Mon,  9 Jan 2017 18:52:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CC1B01FEB3
+	for <e@80x24.org>; Mon,  9 Jan 2017 19:05:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1423140AbdAISw2 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 9 Jan 2017 13:52:28 -0500
-Received: from mail-ua0-f180.google.com ([209.85.217.180]:33685 "EHLO
-        mail-ua0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1423108AbdAISwX (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Jan 2017 13:52:23 -0500
-Received: by mail-ua0-f180.google.com with SMTP id i68so365401768uad.0
-        for <git@vger.kernel.org>; Mon, 09 Jan 2017 10:52:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=ZA+hwGkzHxK5bdaAbjDlZwaYj+OemiJmuRcsEkF4pss=;
-        b=GwWEbyiFUBc64hG7STfBlHtEogvjPV97uGrFgKCPiC6gGF1/J3zQ8+ix2qb8fj23CD
-         stZnoA5ffBcxxiI0Qwj7j8agQbpVSC6u6gBO+1+XF16iHeuao2ePo77TNTUGj5aAsny/
-         +WIMqIkY3E32WjPPn4WonL20wiVaNWhOghtEBuYSsCK8w7hcTopxqpj+CD4lhzGEe5pr
-         FVWs6ngb7iWE3AfrEfjIh/Quq/XMUDg1ndKlFeuV4i2glIlmTSRrmhajTTtA//hF0gkL
-         roxEqrIxER+SR4AyUi6zuLf8ZXBGSFlymd7Meou5MKo/4dqKZXyyUdQngA0KN0FU6k/g
-         ETww==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=ZA+hwGkzHxK5bdaAbjDlZwaYj+OemiJmuRcsEkF4pss=;
-        b=ciD091681iqhJyqmyAy/EiDTOT6Ku3oYIDZlo72rSUc7hMvFeI8Ri2KWS397sJp3p1
-         mqq72ns0BTdcwYTF4lDhNUvdjPUurpe0CzFK/szZopeZYaJNKMBU9dTn0w0K0BBp4vx3
-         jXMEHjq7GKVZDWLEbG4Z7pCKWBaaszrZphY0k8Z3LhXYAQ+GR6HvPgShJovp9zaAjysj
-         7uyVi8dgvAvk2mty9ZkEP87HmDvHdZpJ9rxCj25NYiKItwLvl5vmrPG23eO3oDoPYgqZ
-         i9ahzcBXRBMEIAYhJvoesSSuedCCSvPW8iRC+nQbfPRUSl+tgk+9tlQP/W47WZqtMTlU
-         bItg==
-X-Gm-Message-State: AIkVDXK2Q2I7liFMtMi6raQNKLYB7/qK3b+0Zupk5uN7/Li0KlNLDcYMSXvw0vAoLGsZYJZa6T6BC/0IzeRcoA==
-X-Received: by 10.159.48.131 with SMTP id j3mr48214222uab.43.1483987942227;
- Mon, 09 Jan 2017 10:52:22 -0800 (PST)
+        id S1163295AbdAITFo (ORCPT <rfc822;e@80x24.org>);
+        Mon, 9 Jan 2017 14:05:44 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:56419 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1161689AbdAITFn (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Jan 2017 14:05:43 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 53F975E28E;
+        Mon,  9 Jan 2017 14:05:42 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=+rz2WM4rwR6wzK+olcD3m8GcbLM=; b=nijzPb
+        h7XNuzNJGiEb8Leb29NgAGEorhqR5hTDWxA5wD0IkwQLhnB2nw5Dh6gfYm74Orl+
+        YDy2cGccLJCQvM5g9bvHGj/d8RH6b85aP1v6ZMmZlI+nLMu92lbM1NsuAsDOW22e
+        VPWg1aLoEO2f73RXeCjh3+yGtX1BsZDDoFYwo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=t0Lvswklj9hPluqxORp7uUIjVmvLF17s
+        05fEHC65MDZfNFTkVJW73+tYJXKOtxxtua8sJHkp8HNHq3se2xF4ZJKCd9eXqknR
+        hzn2tVyXL20kLUa6+4Y0/WIMMWUT5PxB/n46DuIdF+3kEl5Ji/UvPmplJ5FDU468
+        M4lORKbeYRg=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 46D935E28D;
+        Mon,  9 Jan 2017 14:05:42 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id A17A25E28C;
+        Mon,  9 Jan 2017 14:05:41 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Richard Hansen <hansenr@google.com>
+Cc:     git@vger.kernel.org, davvid@gmail.com, j6t@kdbg.org,
+        sbeller@google.com, simon@ruderich.org
+Subject: Re: [PATCH v3 13/13] mergetool: fix running in subdir when rerere enabled
+References: <20170106010945.79382-1-hansenr@google.com>
+        <20170109054238.42599-1-hansenr@google.com>
+        <20170109054238.42599-14-hansenr@google.com>
+        <xmqq4m18ump1.fsf@gitster.mtv.corp.google.com>
+Date:   Mon, 09 Jan 2017 11:05:40 -0800
+In-Reply-To: <xmqq4m18ump1.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
+        message of "Mon, 09 Jan 2017 10:12:42 -0800")
+Message-ID: <xmqqvatot5ob.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.90 (gnu/linux)
 MIME-Version: 1.0
-X-Google-Sender-Delegation: rcdailey@gmail.com
-Received: by 10.176.1.37 with HTTP; Mon, 9 Jan 2017 10:52:21 -0800 (PST)
-In-Reply-To: <49C0981FE7D04AE2AC0BBB011FD74B90@PhilipOakley>
-References: <CAHd499BREpaHHyN89a1HchyJiQzPpdo3NSfoLLGVONEmX1m19g@mail.gmail.com>
- <49C0981FE7D04AE2AC0BBB011FD74B90@PhilipOakley>
-From:   Robert Dailey <rcdailey.lists@gmail.com>
-Date:   Mon, 9 Jan 2017 12:52:21 -0600
-X-Google-Sender-Auth: Px7cL6l1iHJX5Gu-jNdICOIFrHM
-Message-ID: <CAHd499CuZBXF0AddP7AfqtzvA8rBArwqtktRmNdD-kwGUCruLg@mail.gmail.com>
-Subject: Re: Rebasing a branch with merges
-To:     Philip Oakley <philipoakley@iee.org>
-Cc:     Git <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
+X-Pobox-Relay-ID: 9D7D4128-D69E-11E6-8A23-A7617B1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jan 6, 2017 at 3:28 PM, Philip Oakley <philipoakley@iee.org> wrote:
-> From: "Robert Dailey" <rcdailey.lists@gmail.com>
->>
->> Here's the scenario:
->>
->> I create a topic branch so one other developer and myself can work on
->> a feature that takes 2 weeks to complete. During that 2 week period,
->> changes are occurring on master that I need in my topic branch. Since
->> I have a collaborator on the branch, I opt for merges instead of
->> rebase.
->>
->> Each day I merge from master to the topic branch, which changes code
->> I'm actively working in and requires semantic changes (functions
->> renamed, moved, etc).
->>
->> Once I'm ready to merge the topic branch back into master, I have two
->> options (bearing in mind the goal is to keep history as clean as
->> possible. Furthermore this implies that the constant merging into
->> topic from master has made the topic branch look unwieldy and
->> difficult to audit):
->
->
-> a broader question zero;
-> 0. Is the merge always clean? Do you always do a preparatory fixup! to
-> ensure that the merge will be clean?
->
-> Ensuring that the merge will be clean should greatly simplify your decision
-> about process.
+Junio C Hamano <gitster@pobox.com> writes:
 
-I don't understand what you're asking. How would I do a fixup with
-merges? Can you explain a bit? Normally the only time I use fixup! or
-squash! is for local changes prior to pushing.
+> I wonder if it makes more sense to always move to toplevel upfront
+> and consistently use path from the toplevel, perhaps like the patch
 
->> 1. Do a squash merge, which keeps history clean but we lose context
->> for the important bits (the commits representing units of work that
->> contribute to the topic itself).
->>
->> 2. Do a final rebase prior to merging.
->>
->> #2 doesn't seem to be possible due to patch ordering. For example, if
->> I have real commits after merge commits that depend on those changes
->> from master being present as a base at that point in time, the rebase
->> will cause the patch before it to no longer include those changes from
->> master.
+s/the patch/the attached patch/ I meant.
+
+> does.  The first hunk is what you wrote but only inside MERGE_RR
+> block, and the second hunk deals with converting end-user supplied
+> paths that are relative to the original relative to the top-level.
 >
->
-> How much of the historic fixups to cover changes on master do you want to
-> keep visible? i.e. how many fork-points are truly needed (a. by you, b. by
-> the project - personal knowledge vs corporate knowledge).?
+> The tweaking of $orderfile you have in the first hunk may have to be
+> tightened mimicking the way how "eval ... --sq ... ; shift" is used
+> in the second hunk to avoid confusion in case orderfile specified by
+> the end user happens to be the same as a valid revname
+> (e.g. "master").
+
+And here is a squash-able patch to illustrate what I mean.
+
+I removed both of the comment blocks as the code always works with
+the worktree-relative pathname after this patch while adjusting
+end-user supplied paths from relative to original cwd.  As that is
+how the core parts of the system (including the parts written in C)
+work, even though an explanation you did in the log message is
+needed to explain why the change was needed and what the change
+intended to do to readers of "git log", it is not necessary to
+explain it to the readers of the latest code, which is what the
+in-code comment is about.
+
+The single-liner addition to the test creates a branch whose name is
+the same as the specified orderfile to deliberately create a
+confusing situation.  I haven't tried, but I am fairly sure that the
+test will demonstrate how broken the orderfile=$(...) in the
+original is, if you apply the test part of the attached patch,
+without the changes to git-mergetool.sh, to your version.
 
 
-Again, I do not understand. Maybe the first question you asked needs
-to be understood before I can answer this one. Sorry for the trouble.
+diff --git a/git-mergetool.sh b/git-mergetool.sh
+index 22f56c25a2..21f82d5b58 100755
+--- a/git-mergetool.sh
++++ b/git-mergetool.sh
+@@ -454,53 +454,34 @@ main () {
+ 	merge_keep_backup="$(git config --bool mergetool.keepBackup || echo true)"
+ 	merge_keep_temporaries="$(git config --bool mergetool.keepTemporaries || echo false)"
+ 
+-	if test $# -eq 0 && test -e "$GIT_DIR/MERGE_RR"
++	prefix=$(git rev-parse --show-prefix) || exit 1
++	cd_to_toplevel
++
++	if test -n "$orderfile"
+ 	then
+-		# The pathnames output by the 'git rerere remaining'
+-		# command below are relative to the top-level
+-		# directory but the 'git diff --name-only' command
+-		# further below expects the pathnames to be relative
+-		# to the current working directory.  Thus, we cd to
+-		# the top-level directory before running 'git diff
+-		# --name-only'.  We change directories even earlier
+-		# (before running 'git rerere remaining') in case 'git
+-		# rerere remaining' is ever changed to output
+-		# pathnames relative to the current working directory.
+-		#
+-		# Changing directories breaks a relative $orderfile
+-		# pathname argument, so fix it up to be relative to
+-		# the top-level directory.
+-
+-		prefix=$(git rev-parse --show-prefix) || exit 1
+-		cd_to_toplevel
+-		if test -n "$orderfile"
+-		then
+-			orderfile=$(git rev-parse --prefix "$prefix" "$orderfile") || exit 1
+-		fi
++		orderfile=$(
++			git rev-parse --prefix "$prefix" -- "$orderfile" |
++			sed -e 1d
++		)
++	fi
+ 
++	if test $# -eq 0 && test -e "$GIT_DIR/MERGE_RR"
++	then
+ 		set -- $(git rerere remaining)
+ 		if test $# -eq 0
+ 		then
+ 			print_noop_and_exit
+ 		fi
++	elif test $# -ge 0
++	then
++		eval "set -- $(git rev-parse --sq --prefix "$prefix" -- "$@")"
++		shift
+ 	fi
+ 
+-	# Note:  The pathnames output by 'git diff --name-only' are
+-	# relative to the top-level directory, but it expects input
+-	# pathnames to be relative to the current working directory.
+-	# Thus:
+-	#   * Either cd_to_toplevel must not be run before this or all
+-	#     relative input pathnames must be converted to be
+-	#     relative to the top-level directory (or absolute).
+-	#   * Either cd_to_toplevel must be run after this or all
+-	#     relative output pathnames must be converted to be
+-	#     relative to the current working directory (or absolute).
+ 	files=$(git -c core.quotePath=false \
+ 		diff --name-only --diff-filter=U \
+ 		${orderfile:+"-O$orderfile"} -- "$@")
+ 
+-	cd_to_toplevel
+-
+ 	if test -z "$files"
+ 	then
+ 		print_noop_and_exit
+diff --git a/t/t7610-mergetool.sh b/t/t7610-mergetool.sh
+index dfd641d34b..180dd7057a 100755
+--- a/t/t7610-mergetool.sh
++++ b/t/t7610-mergetool.sh
+@@ -678,6 +678,11 @@ test_expect_success 'diff.orderFile configuration is honored' '
+ 		b
+ 		a
+ 	EOF
++
++	# make sure "order-file" that is ambiguous between
++	# rev and path is understood correctly.
++	git branch order-file HEAD &&
++
+ 	git mergetool --no-prompt --tool myecho >output &&
+ 	git grep --no-index -h -A2 Merging: output >actual &&
+ 	test_cmp expect actual
