@@ -6,98 +6,115 @@ X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1A18E205C9
-	for <e@80x24.org>; Sun,  8 Jan 2017 23:42:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4BA33205C9
+	for <e@80x24.org>; Mon,  9 Jan 2017 01:08:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756480AbdAHXmf (ORCPT <rfc822;e@80x24.org>);
-        Sun, 8 Jan 2017 18:42:35 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:63501 "EHLO
+        id S967057AbdAIBI2 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 8 Jan 2017 20:08:28 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:54893 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751936AbdAHXmd (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 8 Jan 2017 18:42:33 -0500
+        with ESMTP id S965380AbdAIBI1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 8 Jan 2017 20:08:27 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 667116086F;
-        Sun,  8 Jan 2017 18:42:32 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 2D5505E572;
+        Sun,  8 Jan 2017 20:08:26 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=2fcklzuVlJVsGiEZ8Cc8cY9WOlM=; b=UmJqYc
-        GSOmbWJwr+kLApElu/HL59h9xbKd5Fd9j2uFyqmknxE/EJUjYjqyim5EPqRDQDMP
-        MJke+ELjDIrMy1pvGcHSOz2n5vnXLE+ZS23AZywqfqFl4omA5+1IkZWLDx1G+gZS
-        Ys7JBZqqEGSjBuUl0sv67M8HV4IJi9zGHhJiE=
+        :content-type; s=sasl; bh=qgw0wIZBKb6kJ2dU3rtTvIEOHsU=; b=liiWMx
+        ULdQ2TlZsbMNQJethZgXwz4jQ0CAo4gGB3TG+zpxCzaFyK8NijRQ1nYPs0EuOUrZ
+        k7Cr9lU48bjA7hw87z9Qjt/HSx21xeHSiqPdjcMdcNgjamF4Aurf8Fb5hogyr8m+
+        uETkGD3hQ+eVejWNHMqJ1cUThzCWU9ebscN8w=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=Ky8kGxf0bV0zPNQDxTWSXBfrbFBPVEQx
-        5X5JJGE6U1JUd9KGoJ6HtHsB6uyQMHJU1UPgMOTuuKOZQYi3hUWzfli64sjhxK7R
-        lCy0Gmybbq6/zcT+l2cs93bCp+EdkKnpWLaOCifWib9ZS/5R6YpQhSYYgIlgRbwa
-        ftI80AiIhh0=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 5A73F6086E;
-        Sun,  8 Jan 2017 18:42:32 -0500 (EST)
+        :content-type; q=dns; s=sasl; b=pNXnmebkQ/VuvnkILXcfz5cUsAideB5n
+        tXjwtSFrv9xdMtrRfx5tl8xTtwjSzyVlzIHk91scxglcFraMtvgz5hQKxdYqiQ+t
+        lK84F2fDMXqWhIxKplx2b/rraJsPCg91rWhDP7467oM+7yWB/vB+w8JnDrzNWtaj
+        oD7WlMZ/8Es=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 23BB65E571;
+        Sun,  8 Jan 2017 20:08:26 -0500 (EST)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 976F86086D;
-        Sun,  8 Jan 2017 18:42:31 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 8D22D5E570;
+        Sun,  8 Jan 2017 20:08:25 -0500 (EST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     larsxschneider@gmail.com
-Cc:     git@vger.kernel.org, e@80x24.org, jnareb@gmail.com
-Subject: Re: [PATCH v1] convert: add "status=delayed" to filter process protocol
-References: <20170108191736.47359-1-larsxschneider@gmail.com>
-Date:   Sun, 08 Jan 2017 15:42:30 -0800
-In-Reply-To: <20170108191736.47359-1-larsxschneider@gmail.com>
-        (larsxschneider@gmail.com's message of "Sun, 8 Jan 2017 20:17:36
-        +0100")
-Message-ID: <xmqqa8b115ll.fsf@gitster.mtv.corp.google.com>
+To:     Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc:     git@vger.kernel.org, Segev Finer <segev208@gmail.com>
+Subject: Re: [PATCH] connect: handle putty/plink also in GIT_SSH_COMMAND
+References: <2ff29a4d00e0e13d460122d8008e762361ca90aa.1483358673.git.johannes.schindelin@gmx.de>
+        <xmqqy3ym1dsc.fsf@gitster.mtv.corp.google.com>
+Date:   Sun, 08 Jan 2017 17:08:24 -0800
+In-Reply-To: <xmqqy3ym1dsc.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
+        message of "Sat, 07 Jan 2017 18:33:23 -0800")
+Message-ID: <xmqq4m1911mf.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.90 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 1F6216EE-D5FC-11E6-847C-FE3F13518317-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 1F60F35C-D608-11E6-A96D-A7617B1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-larsxschneider@gmail.com writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> From: Lars Schneider <larsxschneider@gmail.com>
+> I suspect that this will break when GIT_SSH_COMMAND, which is meant
+> to be processed by the shell, hence the user can write anything,
+> begins with a one-shot environment variable assignment, e.g.
 >
-> Some `clean` / `smudge` filters might require a significant amount of
-> time to process a single blob. During this process the Git checkout
-> operation is blocked and Git needs to wait until the filter is done to
-> continue with the checkout.
+> 	[core] sshcommand = VAR1=VAL1 VAR2=VAL2 //path/to/tortoiseplink
 >
-> Teach the filter process protocol (introduced in edcc858) to accept the
-> status "delayed" as response to a filter request. Upon this response Git
-> continues with the checkout operation and asks the filter to process the
-> blob again after all other blobs have been processed.
+> One possible unintended side effect of this patch is when VAL1 ends
+> with /plink (or /tortoiseplink) and the command is not either of
+> these, in which case the "tortoiseplink" and "putty" variables will
+> tweak the command line for an SSH implementation that does not want
+> such a tweak to be made.  There may be other unintended fallouts.
 
-Hmm, I would have expected that the basic flow would become
+Thinking about this further, as the sshcommand (or GIT_SSH_COMMAND)
+interface takes any shell-interpretable commands, the first "token"
+you see is not limited to a one-shot environment assignment.  It
+could even be "cmd1 && cmd2 && ..." or even:
 
-	for each paths to be processed:
-		convert-to-worktree to buf
-		if not delayed:
-			do the caller's thing to use buf
-		else:
-			remember path
+	if test -f ${TPLINK:=//path/to/tortoiseplink}
+	then
+		exec "$TPLINK" "$@"
+	elif test -f ${PLINK:=//path/to/plink}
+		exec "$PLINK" "$@"
+	else
+		echo >&2 no usable ssh on this host
+	fi
 
-	for each delayed paths:
-		ensure filter process finished processing for path
-		fetch the thing to buf from the process
-		do the caller's thing to use buf
+Worse, the above may be in "myssh" script found on user's PATH and
+then core.sshcommand may be set to
 
-and that would make quite a lot of sense.  However, what is actually
-implemented is a bit disappointing from that point of view.  While
-its first part is the same as above, the latter part instead does:
+	TPLINK=//my/path/to/tortoiseplink PLINK=//my/path/to/plink myssh
 
-	for each delayed paths:
-		checkout the path
+in the configuration the user uses on multiple hosts, some have
+tortoiseplink installed and some do not.  The idea the user who set
+it up may be to use whatever available depending on the host.
 
-Presumably, checkout_entry() does the "ensure that the process is
-done converting" (otherwise the result is simply buggy), but what
-disappoints me is that this does not allow callers that call
-"convert-to-working-tree", whose interface is obtain the bytestream 
-in-core in the working tree representation, given an object in the
-object-db representation in an in-core buffer, to _use_ the result
-of the conversion.  The caller does not have a chance to even see
-the result as it is written straight to the filesystem, once it
-calls checkout_delayed_entries().
+The posted patch would be confused that we are using tortoiseplink
+but the "myssh" script would correctly notice that on a particular
+host it is unavailable and choose to use plink instead.
+
+> Sorry, no concrete suggestion to get this to work comes to my mind
+> offhand. 
+>
+> Perhaps give an explicit way to force "tortoiseplink" and "putty"
+> variables without looking at and guessing from the pathname, so that
+> the solution does not have to split and peek the command line?
+
+A user with such an elaborate set-up with multiple hosts with
+different configurations would likely to want to say "Just give me a
+regular SSH command line, and in my 'myssh' script I'll futz with
+-p/-P differences and such, as I'm writing a small script to cope
+with Tortoiseplink and Puttyplink anyway".  With a separate,
+explicit configuration variable to tell Git what variant of SSH you
+have, even such a user can be served (she would just set ssh.variant
+to "vanilla" or whatever that is not "tortoiseplink" or "plink").
+
+
+
+.
+
