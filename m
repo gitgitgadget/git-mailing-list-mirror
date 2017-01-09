@@ -2,116 +2,145 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.0 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,
+	STOX_REPLY_TYPE shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A024D1FEB3
-	for <e@80x24.org>; Mon,  9 Jan 2017 20:44:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 800EE1FEB3
+	for <e@80x24.org>; Mon,  9 Jan 2017 21:03:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S936902AbdAIUol (ORCPT <rfc822;e@80x24.org>);
-        Mon, 9 Jan 2017 15:44:41 -0500
-Received: from mail-it0-f51.google.com ([209.85.214.51]:32952 "EHLO
-        mail-it0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932069AbdAIUok (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Jan 2017 15:44:40 -0500
-Received: by mail-it0-f51.google.com with SMTP id c20so17957103itb.0
-        for <git@vger.kernel.org>; Mon, 09 Jan 2017 12:44:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=jWdYcKDXkl39FbaAg+PFkcYkemQLHyJREC0biyf5viE=;
-        b=pe639NRykOTpglj5i04gmnhy7XvPfntBOGrgg4BM4szZkjIF+P45n3t9dbVxui2ild
-         fk7+3piVNBTU5uMS2fuEFjKCKdeMKw5dE7kSE9cDmOsl3KBuU95uhGs9U/FMZNoHiuGI
-         5UCcPa1UuZ1ZKPRYhZkKHQcao50FLVPsWQftvwazfvGbAq+4LMC8bmH0ifqzT4JF7DoR
-         5ws4e9JPB38sk5tjtSgH1Z9x6mQdzcd4g8uoukG9audqg7T1Rpppj8kW+/7phA4XwB63
-         jN4mwhFaQ2mmOQovfGH29cGz5uV9eIBLKX9tmb65etHjGvg7jE6pEd2PkJ/893SzvYPy
-         T5bg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=jWdYcKDXkl39FbaAg+PFkcYkemQLHyJREC0biyf5viE=;
-        b=X2PmErE0SbbENXh/PQJHh6qU6eRAv5kWaUNDF2y4ZIaWLL+gr8bwtInLfhry4YAvue
-         2epkCAl8ybvS7yoyjebKvPXWBmr1mxOp2Pby6biCyuaLJDgoW5EP/xFbsjCRoZrrAv1f
-         HyDY99y7No9zVDfVLZukKolSkoWBmjSR+CjpSBCgjGjj080w5MbJFITUsbVopDxiyXec
-         hMxyK3LC4dWuJ00HJu7pGPRCE38huSa0rmbqlHtFNkx9ONCSfdLZLsxo1zd6BdnB0HxI
-         c3FR7WIulVUTVkbH048qm0WXApNNmH4894uQiJacizLXnVetqRUoyfHLmBDukO0R3EIt
-         cc2Q==
-X-Gm-Message-State: AIkVDXLpnqoVz9e7r/a+xUbj4Qk5TN5M2NJyfLYNdqQBudUd/DXTjP53TqIF6vLq20+Mgjsqog99Ailk8tOCLXY7
-X-Received: by 10.36.141.2 with SMTP id w2mr11037285itd.114.1483994678934;
- Mon, 09 Jan 2017 12:44:38 -0800 (PST)
+        id S932990AbdAIVDe (ORCPT <rfc822;e@80x24.org>);
+        Mon, 9 Jan 2017 16:03:34 -0500
+Received: from smtp-out-2.talktalk.net ([62.24.135.66]:49157 "EHLO
+        smtp-out-2.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932505AbdAIVDd (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Jan 2017 16:03:33 -0500
+Received: from PhilipOakley ([92.31.218.76])
+        by smtp.talktalk.net with SMTP
+        id Qh6Jc7NU746SJQh6JcUP1M; Mon, 09 Jan 2017 21:03:31 +0000
+X-Originating-IP: [92.31.218.76]
+X-Spam: 0
+X-OAuthority: v=2.2 cv=CItoZljD c=1 sm=1 tr=0 a=e6L6E7eW+5Nb7SO+DvSdIg==:117
+ a=e6L6E7eW+5Nb7SO+DvSdIg==:17 a=IkcTkHD0fZMA:10 a=pGLkceISAAAA:8
+ a=xtxXYLxNAAAA:8 a=b-BDnhoMdUREZg4mrBcA:9 a=QEXdDO2ut3YA:10
+ a=6kGIvZw6iX1k4Y-7sg4_:22 a=xts0dhWdiJbonKbuqhAr:22
+Message-ID: <80DC824CA6974DF7A65A116A5CA83E01@PhilipOakley>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From:   "Philip Oakley" <philipoakley@iee.org>
+To:     "Robert Dailey" <rcdailey.lists@gmail.com>
+Cc:     "Git" <git@vger.kernel.org>,
+        "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+References: <CAHd499BREpaHHyN89a1HchyJiQzPpdo3NSfoLLGVONEmX1m19g@mail.gmail.com> <49C0981FE7D04AE2AC0BBB011FD74B90@PhilipOakley> <CAHd499CuZBXF0AddP7AfqtzvA8rBArwqtktRmNdD-kwGUCruLg@mail.gmail.com>
+Subject: Re: Rebasing a branch with merges
+Date:   Mon, 9 Jan 2017 21:03:32 -0000
+Organization: OPDS
 MIME-Version: 1.0
-Received: by 10.79.39.19 with HTTP; Mon, 9 Jan 2017 12:44:37 -0800 (PST)
-In-Reply-To: <D10F7C47-14E8-465B-8B7A-A09A1B28A39F@gmail.com>
-References: <D10F7C47-14E8-465B-8B7A-A09A1B28A39F@gmail.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 9 Jan 2017 12:44:37 -0800
-Message-ID: <CAGZ79kYDPLDU5Dg_CTnpEX+D9bs6BUSSNTHkqpW2nY-b=e9+SQ@mail.gmail.com>
-Subject: Re: RFC: Enable delayed responses to Git clean/smudge filter requests
-To:     Lars Schneider <larsxschneider@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain;
+        format=flowed;
+        charset="utf-8";
+        reply-type=original
+Content-Transfer-Encoding: 7bit
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+X-CMAE-Envelope: MS4wfApr6nHpnd1puQ3dSk6sJF6to6NsNL2TVV8O7ZNd/wuN08WcSTc7sCEmVlj/PSHT2S5FvGhzkMKLTQGtSQvbEtf3QAr5mL7pOxhX/rWa/IfP98vZW5w0
+ 2Rx91Q5gYq29W37HiFveiC6/7vXuizA17ondzB17TNIwtcjViKEOzBNouzJq92AvU1c4/FCdeuBiJvpYNtUEVXZ8Oh0w9Aw9AamlxzNEySG18TBgiqfP8UNW
+ M2YezA0YlrCrGCr0ZS9zcQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Nov 14, 2016 at 1:09 PM, Lars Schneider
-<larsxschneider@gmail.com> wrote:
-> Hi,
+From: "Robert Dailey" <rcdailey.lists@gmail.com>
+> On Fri, Jan 6, 2017 at 3:28 PM, Philip Oakley <philipoakley@iee.org> 
+> wrote:
+>> From: "Robert Dailey" <rcdailey.lists@gmail.com>
+>>>
+>>> Here's the scenario:
+>>>
+>>> I create a topic branch so one other developer and myself can work on
+>>> a feature that takes 2 weeks to complete. During that 2 week period,
+>>> changes are occurring on master that I need in my topic branch. Since
+>>> I have a collaborator on the branch, I opt for merges instead of
+>>> rebase.
+>>>
+>>> Each day I merge from master to the topic branch, which changes code
+>>> I'm actively working in and requires semantic changes (functions
+>>> renamed, moved, etc).
+>>>
+>>> Once I'm ready to merge the topic branch back into master, I have two
+>>> options (bearing in mind the goal is to keep history as clean as
+>>> possible. Furthermore this implies that the constant merging into
+>>> topic from master has made the topic branch look unwieldy and
+>>> difficult to audit):
+>>
+>>
+>> a broader question zero;
+>> 0. Is the merge always clean? Do you always do a preparatory fixup! to
+>> ensure that the merge will be clean?
+>>
+>> Ensuring that the merge will be clean should greatly simplify your 
+>> decision
+>> about process.
 >
-> Git always performs a clean/smudge filter on files in sequential order.
-> Sometimes a filter operation can take a noticeable amount of time.
-> This blocks the entire Git process.
+> I don't understand what you're asking. How would I do a fixup with
+> merges? Can you explain a bit? Normally the only time I use fixup! or
+> squash! is for local changes prior to pushing.
 >
-> I would like to give a filter process the possibility to answer Git with
-> "I got your request, I am processing it, ask me for the result later!".
+
+I was using 'fixup!' figuratively, rather than literally. If I understand 
+the general setup correctly, what you want is that if one does a trial 
+merge, then it must merge cleanly, compile and pass all tests, or if it 
+doesn't, you would need to add that extra commit to ensure that you get that 
+clean merge.
+
+The alternative is that there is extra work to be done after the 'merge' 
+(which may be a management choice) to then get your nice code ready for 
+wider release - it may even be someone elses job to do 'integration'.
+
+Either way, at least if you rationalise the clean end point it becomes 
+easier to discuss the start point. If both ends are 'dirty' it is an open 
+argument...
+
+>>> 1. Do a squash merge, which keeps history clean but we lose context
+>>> for the important bits (the commits representing units of work that
+>>> contribute to the topic itself).
+>>>
+>>> 2. Do a final rebase prior to merging.
+>>>
+>>> #2 doesn't seem to be possible due to patch ordering. For example, if
+>>> I have real commits after merge commits that depend on those changes
+>>> from master being present as a base at that point in time, the rebase
+>>> will cause the patch before it to no longer include those changes from
+>>> master.
+>>
+>>
+>> How much of the historic fixups to cover changes on master do you want to
+>> keep visible? i.e. how many fork-points are truly needed (a. by you, b. 
+>> by
+>> the project - personal knowledge vs corporate knowledge).?
 >
-> I see the following way to realize this:
 >
-> In unpack-trees.c:check_updates() [1] we loop through the cache
-> entries and "ask me later" could be an acceptable return value of the
-> checkout_entry() call. The loop could run until all entries returned
-> success or error.
+> Again, I do not understand. Maybe the first question you asked needs
+> to be understood before I can answer this one. Sorry for the trouble.
+>
 
-Late to this thread, but here is an answer nevertheless.
+In some scenarios it is important to keep the record of the exact start 
+point (date and place) to formally justify the work performed (time eleapsed 
+etc). Now given the other part of your scenario of a moving api / function 
+naming etc, you now have two reference points - the original start point, 
+and the release point of the new api/names.
 
-I am currently working on getting submodules working
-for working tree modifying commands (prominently checkout, but
-also read-tree -u and any other caller that uses the code in
-unpack-trees.)
+So at that point you probably want to merge in those changes (one way or 
+another), which gives you a choice of a true merge (option 1), or adding a 
+patch to cherry pick the bulk changes on master (option2), or just the api 
+changes (if you can isolate them) (option3). No option is inherently 
+better - it will depend on local needs.
 
-Once the submodules are supported and used, I anticipate that
-putting the files in the working tree on disk will become a bottle neck,
-i.e. the checkout taking way too long for an oversized project.
+From a clean code perspective, it's nicest if you can simply rebase your 
+code, but that isn't alway possible. The hard bit is to be clear about the 
+local issues, and which ones are immutable. These will decide your choice.
 
-So in the future we have to do something to make checkout fast
-again, which IMHO is threading. My current vision is to have checkout
-automatically choose a number of threads based on expected workload,
-c.f. preload-index.c, line 18-25.
+Philip
 
-> The filter machinery is triggered in various other places in Git and
-> all places that want to support "ask me later" would need to be patched
-> accordingly.
-
-I think this makes sense, even in a threaded git-checkout.
-I assume this idea is implemented before threading hits checkout,
-so a question on the design:
-
-Who determines the workload that is acceptable?
-From reading this email, it seems to be solely the filter that uses
-as many threads/processes as it thinks is ok.
-
-Would it be possible to enhance the protocol further to have
-Git also mingle with the workload, i.e. tell the filter it is
-allowed to use up (N-M) threads, as it itself already uses
-M out of N configured threads?
-
-(I do not want to discuss the details here, but only if such a thing
-is viable with this approach as well)
-
-Thanks,
-Stefan
