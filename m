@@ -2,103 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MIME_HEADER_CTYPE_ONLY,
+	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD,T_TVD_MIME_NO_HEADERS
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 845B91FEB3
-	for <e@80x24.org>; Mon,  9 Jan 2017 23:30:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BB1051FEB3
+	for <e@80x24.org>; Mon,  9 Jan 2017 23:30:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1031065AbdAIXaJ (ORCPT <rfc822;e@80x24.org>);
-        Mon, 9 Jan 2017 18:30:09 -0500
-Received: from mail-qk0-f180.google.com ([209.85.220.180]:34101 "EHLO
-        mail-qk0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S942531AbdAIXaH (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1031290AbdAIXaM (ORCPT <rfc822;e@80x24.org>);
+        Mon, 9 Jan 2017 18:30:12 -0500
+Received: from mail-qk0-f169.google.com ([209.85.220.169]:34107 "EHLO
+        mail-qk0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1030373AbdAIXaH (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 9 Jan 2017 18:30:07 -0500
-Received: by mail-qk0-f180.google.com with SMTP id a20so158546798qkc.1
-        for <git@vger.kernel.org>; Mon, 09 Jan 2017 15:30:06 -0800 (PST)
+Received: by mail-qk0-f169.google.com with SMTP id a20so158547093qkc.1
+        for <git@vger.kernel.org>; Mon, 09 Jan 2017 15:30:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version;
-        bh=9NL5Gm8UzuYaPdZvHYOZkhan0zIxff4S8mHIMJRd/eE=;
-        b=FsAtwjE/M6q2JDdyjda8MaMBgYALStcqCxZJ/bXJgQ2d/Nc8fA85yH0noSezSR4d3l
-         0RPV0GGjrKnFLQKE2AdHHHtsQTN1v4pESMxJqNTZQxvHfXgYDsD4CsZtNkv6oiynxNxR
-         xQUmm7RPl/XaywvIvXPXXzpiA8vuj6efgD3E7SV+3BeoqZQ/7w6Sb0Kc0E61Lwp9xrlp
-         C6M2t8CKCx8/Cm4c7o/2w3CKU3ZgPf9qGxwydP+hC7htLuRDr9kRJgM81olsrJ6m/hkX
-         uvPkVRH0WIR2UDpOJaVLnmnRlMGd8NxfpgsDAt2UsuWCrDUdRgq/sJFZQmAtpYpb4Tft
-         xySw==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=nXHsHp6MiY5VyDCl4C0Au4LdWtOxjSTT7iXN3xQsy8E=;
+        b=obAauj0wDpcQhe/oIRk3VjpVx98efcmLVrLqI4Txcmjrrn1nZd/0n+K3jKiYX/BmgL
+         Dcj129A/hAtZgXXDT/K1WpYlsyk9/yG86PU9cLMmWHMxvgCibHf9Fp3bmLJGT9H617x2
+         UdRvHuy1EA0u9/kWD7cnMvIPnpCpdPW4bCIVHDU2FRVfthCcnmw9qtYL0CXyOeorQqXi
+         5PLTVcE6LnE4mGSCtRC1jiFYOQJiXZ4oSoVZrpm7Jc3ajghOqdp7FvVWR+F1RN5RipB/
+         Bb/ScGxqflpKnRKxMxBm9g793N1lEcGGBM4op7jlCYBHktdkfJ6JA8OcpxqXxvmHMFbA
+         os6Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version;
-        bh=9NL5Gm8UzuYaPdZvHYOZkhan0zIxff4S8mHIMJRd/eE=;
-        b=RRZ0drlTGFpPx6rTdHEktdtZqY4yFsZZF8+wAmpRvgZtIaaIW3akzyQ2XYH6ZuZ+2u
-         6zEbZ9U7hOC3j3dUcfeKmIJNcizYt30NGIyftD1GlS9y6J5eTydtx8RUqT+9L2jntB3Q
-         DJy5J3G20fNZUw5K11/pjlrIfViPo/0WYBSBjmfizNr2PpxGSSdQTklOxCXptxWGNgJE
-         IhBveEWyHXrnzjL+rHwXNeG+POt8BHGBDIIc0OH9eLkhPlPbyM5FVzJ/nSFhZJv+had2
-         lBfOsVA5h6E2uWZWTqM12/9WhbEbSiQLFVwa5GL5LzhfYABRF+VqlKo/pxY4tuHnRrnA
-         ybEA==
-X-Gm-Message-State: AIkVDXJITMdORX5bnaMdxC/nCUBt8v9uNir01e/ZN6ZSq06oxQWzy1R8aihB1D+iuSF3aYRq
-X-Received: by 10.55.181.198 with SMTP id e189mr176003qkf.231.1484004606000;
+         :references;
+        bh=nXHsHp6MiY5VyDCl4C0Au4LdWtOxjSTT7iXN3xQsy8E=;
+        b=SKnSz1udsrlau34JVEr2yN4SIbPsUeOiXDejV83aXepKp0dQdata+7onsux0n5TIV7
+         KazSe/oYj8ZNTtlMyVJYEeOx4n16KiHe1do9ci01plRM8QErgjbnFFY0WCxAs47wuzNp
+         s+ewyrYIntt5D0WVyzYVJD3kp+3iyIKYkwI4pexKG3XFZRfiNvbG+CHc09jfVJdK3QhK
+         h+dmNySKkq2IwLZjS/GXtjvQYaDtz6j5b+cItpRs23/Op3PcuZjraP7nBhzpafRaD6an
+         QJLBuB0LwifxYdMou2UrB0sGo6gXhvwiZJJfBEP3mSP9ZCzdmO3v/ty7pGPkjiQyZceF
+         vZUQ==
+X-Gm-Message-State: AIkVDXJQXFLJbQkk98coc83b9+UXdvtaKbEKh5H7G8SZAfwMyYLlqGei+kyS7Lyd446nwMlJ
+X-Received: by 10.55.110.69 with SMTP id j66mr227723qkc.92.1484004606777;
         Mon, 09 Jan 2017 15:30:06 -0800 (PST)
 Received: from hansenr.cam.corp.google.com ([172.29.73.70])
-        by smtp.gmail.com with ESMTPSA id c41sm42910qtd.3.2017.01.09.15.30.05
+        by smtp.gmail.com with ESMTPSA id c41sm42910qtd.3.2017.01.09.15.30.06
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 09 Jan 2017 15:30:05 -0800 (PST)
+        Mon, 09 Jan 2017 15:30:06 -0800 (PST)
 From:   Richard Hansen <hansenr@google.com>
 To:     git@vger.kernel.org
 Cc:     davvid@gmail.com, j6t@kdbg.org, hansenr@google.com,
         sbeller@google.com, simon@ruderich.org, gitster@pobox.com
-Subject: [PATCH v4 01/14] .mailmap: Use my personal email address as my canonical
-Date:   Mon,  9 Jan 2017 18:29:28 -0500
-Message-Id: <20170109232941.43637-2-hansenr@google.com>
+Subject: [PATCH v4 02/14] rev-parse doc: use "--" in the --prefix example
+Date:   Mon,  9 Jan 2017 18:29:29 -0500
+Message-Id: <20170109232941.43637-3-hansenr@google.com>
 X-Mailer: git-send-email 2.11.0.390.gc69c2f50cf-goog
 In-Reply-To: <20170109232941.43637-1-hansenr@google.com>
 References: <20170109054238.42599-1-hansenr@google.com>
  <20170109232941.43637-1-hansenr@google.com>
-MIME-Version: 1.0
 Content-Type: multipart/signed; protocol="application/pkcs7-signature"; micalg=sha-256;
-        boundary="94eb2c06ca5266d6cc0545b1bf37"
+        boundary="94eb2c060f2a72e3f10545b1bfd3"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
---94eb2c06ca5266d6cc0545b1bf37
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+--94eb2c060f2a72e3f10545b1bfd3
 
-When I changed employers my work address changed from rhansen@bbn.com
-to hansenr@google.com.  Rather than map my old work address to my new,
-map them both to my permanent personal email address.  (I will still
-use my work address in commits I submit so that my employer gets some
-credit.)
+The "--" argument avoids "ambiguous argument: unknown revision or
+path not in the working tree" errors when a pathname argument refers
+to a non-existent file.
 
 Signed-off-by: Richard Hansen <hansenr@google.com>
 ---
- .mailmap | 2 ++
- 1 file changed, 2 insertions(+)
+ Documentation/git-rev-parse.txt | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/.mailmap b/.mailmap
-index 9cc33e925..9c87a3840 100644
---- a/.mailmap
-+++ b/.mailmap
-@@ -192,6 +192,8 @@ Philippe Bruhat <book@cpan.org>
- Ralf Thielow <ralf.thielow@gmail.com> <ralf.thielow@googlemail.com>
- Ramsay Jones <ramsay@ramsayjones.plus.com> <ramsay@ramsay1.demon.co.uk>
- René Scharfe <l.s.r@web.de> <rene.scharfe@lsrfire.ath.cx>
-+Richard Hansen <rhansen@rhansen.org> <hansenr@google.com>
-+Richard Hansen <rhansen@rhansen.org> <rhansen@bbn.com>
- Robert Fitzsimons <robfitz@273k.net>
- Robert Shearman <robertshearman@gmail.com> <rob@codeweavers.com>
- Robert Zeh <robert.a.zeh@gmail.com>
+diff --git a/Documentation/git-rev-parse.txt b/Documentation/git-rev-parse.txt
+index b6c6326cd..f1190765f 100644
+--- a/Documentation/git-rev-parse.txt
++++ b/Documentation/git-rev-parse.txt
+@@ -91,7 +91,8 @@ repository.  For example:
+ ----
+ prefix=$(git rev-parse --show-prefix)
+ cd "$(git rev-parse --show-toplevel)"
+-eval "set -- $(git rev-parse --sq --prefix "$prefix" "$@")"
++eval "set -- $(git rev-parse --sq --prefix "$prefix" -- "$@")"
++shift
+ ----
+ 
+ --verify::
 -- 
 2.11.0.390.gc69c2f50cf-goog
 
 
---94eb2c06ca5266d6cc0545b1bf37
+--94eb2c060f2a72e3f10545b1bfd3
 Content-Type: application/pkcs7-signature; name="smime.p7s"
 Content-Transfer-Encoding: base64
 Content-Disposition: attachment; filename="smime.p7s"
@@ -180,13 +175,13 @@ m4YUSo869xADdrGrWJ7KzroFbucLZYh3niIjVICp7fh9wtLgbX7X/akdubehYhy/l+AIMml6Zlyu
 GNGCGIleyQ0bAdjjG+dKrDErUlui8wd/YplvelaTAzSvNpxcrr+2YB8UBWcYkgULkp5GDCC2guKl
 rMF1mTS6N6GMxUi30sZicbMxggJeMIICWgIBATBcMEwxCzAJBgNVBAYTAkJFMRkwFwYDVQQKExBH
 bG9iYWxTaWduIG52LXNhMSIwIAYDVQQDExlHbG9iYWxTaWduIEhWIFMvTUlNRSBDQSAxAgwvfEOc
-7N3JjQI9nAwwDQYJYIZIAWUDBAIBBQCggdQwLwYJKoZIhvcNAQkEMSIEIBhymQzi619RoPgZqmch
-azC1IwFzaFayyxqC8sZ6jsQwMBgGCSqGSIb3DQEJAzELBgkqhkiG9w0BBwEwHAYJKoZIhvcNAQkF
-MQ8XDTE3MDEwOTIzMzAwNlowaQYJKoZIhvcNAQkPMVwwWjALBglghkgBZQMEASowCwYJYIZIAWUD
+7N3JjQI9nAwwDQYJYIZIAWUDBAIBBQCggdQwLwYJKoZIhvcNAQkEMSIEIPJRoLlUK4ujArQLDWxf
+tMxnayV2kV3yy5f1d33+cgqbMBgGCSqGSIb3DQEJAzELBgkqhkiG9w0BBwEwHAYJKoZIhvcNAQkF
+MQ8XDTE3MDEwOTIzMzAwN1owaQYJKoZIhvcNAQkPMVwwWjALBglghkgBZQMEASowCwYJYIZIAWUD
 BAEWMAsGCWCGSAFlAwQBAjAKBggqhkiG9w0DBzALBgkqhkiG9w0BAQowCwYJKoZIhvcNAQEHMAsG
-CWCGSAFlAwQCATANBgkqhkiG9w0BAQEFAASCAQBynBptO1TWB/3CxqT52OSwWv9MQNfD7SfndReD
-7hm1dnj0u1YeN3B9sAMoPC3+EEgjCRxxUIHGA/zkMGvNIwytNWRkFtpmxY7um3sgAQ0zUwKwRyqS
-os10il2veRNdrfxMWoAvnABb9PWXOfiFbKjiGGIAbwbu3ehzyLjwmgBLoQ/vGYe69pjeQYqVVUNU
-GY1Dw8kIlLDtaUKr1KnZn6VRBDjoL/BeZqbkekiwaI8GRasP6O4Gz1eP7NDc1G9EZ7oVrlCUcv/5
-hBlT9d+4jTtihJVzKFve8FK6MrfE4kVtjMd56E4qi3E0NHewyl/lR217cOe5zbmGT9WhQH+oY+y4
---94eb2c06ca5266d6cc0545b1bf37--
+CWCGSAFlAwQCATANBgkqhkiG9w0BAQEFAASCAQDHvvPAdA4C0JsYtg/Jt4V6zHYNZ18N2QaqR4S+
+jC7yk+UtxnUY/V0SZljMYjkyIBqHzGnhGM9Qx6vPvdJVwvYNpQCJsFKhI4N7IDJuOnFTG+4eRRza
+1f1BOUrxBuSeJft+YIO1nENfDTmtPKgF0/1n5CjXlePEMAll63qUVb9M7HMMoIT4BnhIiK7UzqAH
+th/Sc36+LzHAxI2QanvDSnXKSZ9qBMDTkT4ehk5OTm33nDF3u90DfoeRb1a9NMrftMfMOsyIY5pK
+S5ffuk1P2tYONMXXhmcbo7y1XGmUKVZv+2uwB4uk+s4WJKtmJ0JRiqsq9lqaOiJ+Pp467k4ajZwg
+--94eb2c060f2a72e3f10545b1bfd3--
