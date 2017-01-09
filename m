@@ -2,87 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6593D20756
-	for <e@80x24.org>; Mon,  9 Jan 2017 08:10:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 29EC420756
+	for <e@80x24.org>; Mon,  9 Jan 2017 08:56:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932403AbdAIIKK (ORCPT <rfc822;e@80x24.org>);
-        Mon, 9 Jan 2017 03:10:10 -0500
-Received: from mout.gmx.net ([212.227.17.20]:53878 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S932227AbdAIIKJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Jan 2017 03:10:09 -0500
-Received: from virtualbox ([37.24.141.236]) by mail.gmx.com (mrgmx101
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0LzGV3-1cUkAn1HiD-014VyM; Mon, 09
- Jan 2017 09:09:56 +0100
-Date:   Mon, 9 Jan 2017 09:09:54 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Steven Penny <svnpenn@gmail.com>, Johannes Sixt <j6t@kdbg.org>,
-        git@vger.kernel.org
-Subject: Re: [PATCH] Makefile: POSIX windres
-In-Reply-To: <xmqqtw99x70u.fsf@gitster.mtv.corp.google.com>
-Message-ID: <alpine.DEB.2.20.1701090903500.3469@virtualbox>
-References: <20170107214110.3124-1-svnpenn@gmail.com> <xmqqtw99x70u.fsf@gitster.mtv.corp.google.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+        id S1757410AbdAII4H (ORCPT <rfc822;e@80x24.org>);
+        Mon, 9 Jan 2017 03:56:07 -0500
+Received: from mail-pf0-f195.google.com ([209.85.192.195]:33366 "EHLO
+        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751133AbdAII4G (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Jan 2017 03:56:06 -0500
+Received: by mail-pf0-f195.google.com with SMTP id 127so24185482pfg.0
+        for <git@vger.kernel.org>; Mon, 09 Jan 2017 00:56:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:mime-version:content-disposition
+         :user-agent;
+        bh=yL1trimcmoTYUV2+dt9ybujpxZrajmWsBYr5wYgFmoI=;
+        b=mreSqVPZkdbpakTek2WncwGsi/alpO5tWNSv/PgZAeJ/v5Ee/kvnErTR8xxILEbleH
+         B5puar6xRPCiXtET/QZsiosOcQyyu/ifLsqctEqXR4SEpFQeopnNFrdRIZQnsq8AEUGc
+         uLwJLtp5aL5OJ9rUbjIQgqND7lEJzUIxMTzgnaKoyM1RJn+1d4nWpDKwPecIz9Gmuala
+         T80jnGtSeUgpqOIFIdGdmA13lse7PGwiwyZudmgHluV8ukWTptKjTScq03v34yrmjz8y
+         Lk2HnHbCegwhiJc7LGt2YCZ6umv+Mi9aVxFqBsEJOmAyGygs2pIgMBBEblnDNdi1whwd
+         BIuQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
+         :content-disposition:user-agent;
+        bh=yL1trimcmoTYUV2+dt9ybujpxZrajmWsBYr5wYgFmoI=;
+        b=MWvZoM8eVCH7d579Ep2U3xwTOvr73i4RCk6Dga9WRmagrpTYOfV7fMgVysfFJWH8UR
+         sjZVNUN2e/mB1X956/XrI1JPhHctQ5mCXQQJ4ofOPJsl34q/Hi2DMrIWsVZ2U82SIxU8
+         T23HiQvfP/QfsK51MI48kZuC46LODMaTnmvRwfK2hv2Wz+Vb8NBju9g84PY8Q33xaX6H
+         BJaZ/1g5BusD6GzrPExs7MIWn/hd55reJX6rftPlC1YayX6e4NLRnTiCeyhVu3uhQ+8H
+         U2zCQWvZ3EV5mjFsIw4GKJZI1MKfPLzhonVkBIRL/0lkxahK7y9yGBRAlfGBdban8czq
+         uEzw==
+X-Gm-Message-State: AIkVDXIvXOEG/2FIoihPKgzbHs+Q5o2eBRcbDCnEiKSM3hUGu+KOLBzvkENkW0SmFd5ZKQ==
+X-Received: by 10.99.226.83 with SMTP id y19mr160231903pgj.147.1483952165921;
+        Mon, 09 Jan 2017 00:56:05 -0800 (PST)
+Received: from arch-attack.localdomain (c-50-152-192-15.hsd1.ca.comcast.net. [50.152.192.15])
+        by smtp.gmail.com with ESMTPSA id 16sm177157913pfk.54.2017.01.09.00.56.04
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 09 Jan 2017 00:56:05 -0800 (PST)
+Date:   Mon, 9 Jan 2017 00:56:03 -0800
+From:   Denton Liu <liu.denton@gmail.com>
+To:     git@vger.kernel.org
+Cc:     spearce@spearce.org
+Subject: [PATCH 1/2] completion: add bash completion for 'git rev-list'
+Message-ID: <20170109085603.GA496@arch-attack.localdomain>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:2+elFPInqAvhvhQtpmbu9/rmcDqAofzPbYKWs8RyGo+YkzznmI7
- sDltN0WBEes4tmTbAmzI6k2fCCLsO9ydQUjpzEsM8YikiSTWHE+dBAeOrIcYTc40C3hUE7p
- Apzpi3SzbFS0d44CCYE8K1tkExoKoOB6xINvZfnytlbf9mh19C3O2Ixhzj3vrsxG31HH2v7
- 0BT8/1p0+xWxnMlNNMLPQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:6TzhDyiyxZE=:Y8gtpV+7mLYa/GV3QqY5K6
- YT2gjiDIQw1b8e0FoAznXhH+TRXcjlCdIIygGd7ED5x6xCSt+e6VOipBgnhmSocs5F+ahI0Dh
- v/c7gi60hm1ZU4dbuAmHWSkSBp6SpJBZdz1k/FDIB6T6cfP7s0O9m93uCILcF4oSiHO0cvjkb
- awlKGuyMghf0XDWQ5RCERYuesmNdcJQzrbqLreZY/2p8cuzy9Cgg4fBXom0u46zc0kH2BQo7+
- JqKWrSIJk1cbpVXRZtTiSB7svTyWGDrGVAf+aQ+KCkBOMufzqPR1lgB3SwQEowrUZkmMdnQF+
- sa0dy0eXKy+ninLdyHPXrA5bp4gCw+ClD8vXBKHPfNVelqeSOK2fGn/2XSKYG0rxyNcd1UzOe
- JeBDDX4VIV221lDMSIguljO8jmvaVhvqNvyUWXdOuV5fct/mGfiygbQT35AnwlqasPs6twtWh
- 0gy9Oz/VV1PAsNXnz01jcDkNwo4rdCJV52VTc5TX9FPByZX2cGD0pTewTvJ508kZKOoO1aF5O
- +A2AoMvaSaW3w2SqUJRTYjJ34mneLdtllU4s45ZD+G3uR7JoGC94Q6ft10TzscflTUk39ZFDO
- PiFSO9ArqmuAAwkrVnQ7fBIp2y72EWybzt2L0rSe4beuZmb4JHQkcpeiWIBwF3jm9aTuTKL3j
- knZ3JA50fEVckxlosbDtoh4mUwLXPooDGwqG2k1XuZkvV4D3azHpuaXQ92xLMfkrDv3TpWD+E
- 9FWHTndiBImuuEAKACeZJ3QnPj4hAIy4Fs3hwcbHkQQ+RSW99gI4jn3E05zaGz8Jr9HkQqflC
- YRrRsif
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: Mutt/1.7.2 (2016-11-26)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+Signed-off-by: Denton Liu <liu.denton@gmail.com>
+---
+ contrib/completion/git-completion.bash | 30 ++++++++++++++++++++++++++++++
+ 1 file changed, 30 insertions(+)
 
-On Sun, 8 Jan 2017, Junio C Hamano wrote:
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index 21016bf8d..51832108e 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -2430,6 +2430,36 @@ _git_revert ()
+ 	__gitcomp_nl "$(__git_refs)"
+ }
+ 
++__git_rev_list_options="
++ --max-count= --skip= --max-age= --min-age= --sparse --merges --no-merges
++ --min-parents= --no-min-parents --max-parents= --no-max-parents --first-parent
++ --remove-empty --full-history --not --all --branches= --tags= --remotes=
++ --glob= --ignore-missing --stdin --quiet --topo-order --parents --timestamp
++ --left-right --left-only --right-only --cherry-mark --cherry-pick --encoding=
++ --author= --committer= --grep= --regexp-ignore-case --extended-regexp
++ --fixed-strings --date= --objects --objects-edge --objects-edge-aggressive
++ --unpacked --pretty --header --bisect --bisect-vars --bisect-all --merge
++ --reverse --walk-reflogs --no-walk --do-walk --count --use-bitmap-index
++"
++
++__git_complete_rev_list_command ()
++{
++	case "$cur" in
++	--*)
++		__gitcomp "$__git_rev_list_options"
++		return 0
++		;;
++	esac
++	return 1
++}
++
++_git_rev_list ()
++{
++	__git_has_doubledash && return
++
++	__git_complete_rev_list_command || __gitcomp_nl "$(__git_refs)"
++}
++
+ _git_rm ()
+ {
+ 	case "$cur" in
+-- 
+2.11.0
 
-> Steven Penny <svnpenn@gmail.com> writes:
-> 
-> > When environment variable POSIXLY_CORRECT is set, the "input -o
-> > output" syntax is not supported.
-> >
-> > http://cygwin.com/ml/cygwin/2017-01/msg00036.html
-> >
-> > Signed-off-by: Steven Penny <svnpenn@gmail.com>
-> > ---
-> 
-> Who other than cygwin build uses this target?  Git for Windows?
-
-Yes, Git for Windows uses this target, as did msysGit (and I suspect
-Hannes' setup).
-
-The resources are built correctly in Git for Windows SDK with this patch,
-and I just verified that the windres shipped with the last msysGit (AKA
-Git for Windows 1.x' SDK) handles the -i flag correctly, too. That is, at
-least windres.exe included in binutils-2.19.1-mingw32-bin.tar.gz (which
-was current at the time I updated msysGit on Feb 19 2009) can handle it.
-
-So: ACK
-
-Ciao,
-Dscho
-
-P.S.: I applied this patch to Git for Windows' `master`:
-https://github.com/git-for-windows/git/commit/744120c602
