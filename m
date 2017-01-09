@@ -2,86 +2,118 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5BA981FEB3
-	for <e@80x24.org>; Mon,  9 Jan 2017 18:50:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4E64D1FEB3
+	for <e@80x24.org>; Mon,  9 Jan 2017 18:52:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1423111AbdAISum (ORCPT <rfc822;e@80x24.org>);
-        Mon, 9 Jan 2017 13:50:42 -0500
-Received: from mail-pf0-f173.google.com ([209.85.192.173]:36471 "EHLO
-        mail-pf0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1423108AbdAISul (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Jan 2017 13:50:41 -0500
-Received: by mail-pf0-f173.google.com with SMTP id 189so20269016pfu.3
-        for <git@vger.kernel.org>; Mon, 09 Jan 2017 10:50:41 -0800 (PST)
+        id S1423140AbdAISw2 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 9 Jan 2017 13:52:28 -0500
+Received: from mail-ua0-f180.google.com ([209.85.217.180]:33685 "EHLO
+        mail-ua0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1423108AbdAISwX (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Jan 2017 13:52:23 -0500
+Received: by mail-ua0-f180.google.com with SMTP id i68so365401768uad.0
+        for <git@vger.kernel.org>; Mon, 09 Jan 2017 10:52:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=kjJX27PyTdCQUvHccfbiVozuU+jWYx97a4xB1lHsYPc=;
-        b=uUGAs8nqFDl8gDd4I7+Hyb1UYcn0D/3dRxUp7YIcx9yXLjqUpX1rdvrUJppzEVSqD6
-         cPSP8riiNK7WsycedJM+RUIrDWfvknA+w81BkUtQrH4ahgMChjW5aIE6ROZx1KiWbJCk
-         WPWEr0bmqAXYvas/Wnmi0Fsjo1PWGdui340UWzNhQDfL0UnOSSoIQn8iHnX/OsDJRlBa
-         GHlhZ3lNZzZmOMdPrL36AT7EsZXr4Y0X9TaJ6X/thrgjmdNKtpT1iwbjhy90Q117C6tW
-         +PVVeYSAo/hJWEEB3xhDz/ozqg26Ypb99ha2iPnVbnXDiH/uE5I0sd2CCA9/PTW2TYfU
-         eAvA==
+        d=gmail.com; s=20161025;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=ZA+hwGkzHxK5bdaAbjDlZwaYj+OemiJmuRcsEkF4pss=;
+        b=GwWEbyiFUBc64hG7STfBlHtEogvjPV97uGrFgKCPiC6gGF1/J3zQ8+ix2qb8fj23CD
+         stZnoA5ffBcxxiI0Qwj7j8agQbpVSC6u6gBO+1+XF16iHeuao2ePo77TNTUGj5aAsny/
+         +WIMqIkY3E32WjPPn4WonL20wiVaNWhOghtEBuYSsCK8w7hcTopxqpj+CD4lhzGEe5pr
+         FVWs6ngb7iWE3AfrEfjIh/Quq/XMUDg1ndKlFeuV4i2glIlmTSRrmhajTTtA//hF0gkL
+         roxEqrIxER+SR4AyUi6zuLf8ZXBGSFlymd7Meou5MKo/4dqKZXyyUdQngA0KN0FU6k/g
+         ETww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=kjJX27PyTdCQUvHccfbiVozuU+jWYx97a4xB1lHsYPc=;
-        b=Z1VxiOTD9L4Jgxc+MEMGQMs9C8qmYnBQrHT3tr2AzywwMDnsh72ySh1Hnz/QMo3lYl
-         +JN0wsDW/GdteDCHTOg/PTTy7QKuTQQWSnTE5CUBQUippM1uodnUI1jCLsfIAmHnTLgi
-         BdAc9M6RU2E/Y88FavKbjZK8StUtM6XkLNkPVbmMRnQaZSBICbqqN9tzO4da3FKtsCEr
-         lCxZPlD7lXA3dm/pdt+BH+tauIHLV9wjNDK/K4M9+Q0VI1Jbx0qXmFOEIPIdkkCzKP7K
-         2M+tx70IsJp8YdTNpmEmretA8q0kZSxP0xrj9FP2E1ZmecOtj0jYRntvZxu9TAJJjReR
-         Dqwg==
-X-Gm-Message-State: AIkVDXLhjYno10EJbuafQwQvRWslvX01IFJMTg6XwiyKwkQgoymsCiGD1DMX5HdYP1uRuN2p
-X-Received: by 10.98.201.25 with SMTP id k25mr71612967pfg.108.1483987840393;
-        Mon, 09 Jan 2017 10:50:40 -0800 (PST)
-Received: from roshar.mtv.corp.google.com ([100.96.238.26])
-        by smtp.gmail.com with ESMTPSA id k192sm162988408pgc.3.2017.01.09.10.50.39
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 09 Jan 2017 10:50:39 -0800 (PST)
-From:   Brandon Williams <bmwill@google.com>
-To:     git@vger.kernel.org
-Cc:     Brandon Williams <bmwill@google.com>, peff@peff.net,
-        gitster@pobox.com, larsxschneider@gmail.com
-Subject: [PATCH 2/2] real_path: set errno when max number of symlinks is exceeded
-Date:   Mon,  9 Jan 2017 10:50:24 -0800
-Message-Id: <20170109185024.73006-2-bmwill@google.com>
-X-Mailer: git-send-email 2.11.0.390.gc69c2f50cf-goog
-In-Reply-To: <20170109185024.73006-1-bmwill@google.com>
-References: <xmqqzij0t7uh.fsf@gitster.mtv.corp.google.com>
- <20170109185024.73006-1-bmwill@google.com>
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=ZA+hwGkzHxK5bdaAbjDlZwaYj+OemiJmuRcsEkF4pss=;
+        b=ciD091681iqhJyqmyAy/EiDTOT6Ku3oYIDZlo72rSUc7hMvFeI8Ri2KWS397sJp3p1
+         mqq72ns0BTdcwYTF4lDhNUvdjPUurpe0CzFK/szZopeZYaJNKMBU9dTn0w0K0BBp4vx3
+         jXMEHjq7GKVZDWLEbG4Z7pCKWBaaszrZphY0k8Z3LhXYAQ+GR6HvPgShJovp9zaAjysj
+         7uyVi8dgvAvk2mty9ZkEP87HmDvHdZpJ9rxCj25NYiKItwLvl5vmrPG23eO3oDoPYgqZ
+         i9ahzcBXRBMEIAYhJvoesSSuedCCSvPW8iRC+nQbfPRUSl+tgk+9tlQP/W47WZqtMTlU
+         bItg==
+X-Gm-Message-State: AIkVDXK2Q2I7liFMtMi6raQNKLYB7/qK3b+0Zupk5uN7/Li0KlNLDcYMSXvw0vAoLGsZYJZa6T6BC/0IzeRcoA==
+X-Received: by 10.159.48.131 with SMTP id j3mr48214222uab.43.1483987942227;
+ Mon, 09 Jan 2017 10:52:22 -0800 (PST)
+MIME-Version: 1.0
+X-Google-Sender-Delegation: rcdailey@gmail.com
+Received: by 10.176.1.37 with HTTP; Mon, 9 Jan 2017 10:52:21 -0800 (PST)
+In-Reply-To: <49C0981FE7D04AE2AC0BBB011FD74B90@PhilipOakley>
+References: <CAHd499BREpaHHyN89a1HchyJiQzPpdo3NSfoLLGVONEmX1m19g@mail.gmail.com>
+ <49C0981FE7D04AE2AC0BBB011FD74B90@PhilipOakley>
+From:   Robert Dailey <rcdailey.lists@gmail.com>
+Date:   Mon, 9 Jan 2017 12:52:21 -0600
+X-Google-Sender-Auth: Px7cL6l1iHJX5Gu-jNdICOIFrHM
+Message-ID: <CAHd499CuZBXF0AddP7AfqtzvA8rBArwqtktRmNdD-kwGUCruLg@mail.gmail.com>
+Subject: Re: Rebasing a branch with merges
+To:     Philip Oakley <philipoakley@iee.org>
+Cc:     Git <git@vger.kernel.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Set errno to ELOOP when the maximum number of symlinks is exceeded, as
-would be done by other symlink-resolving functions.
+On Fri, Jan 6, 2017 at 3:28 PM, Philip Oakley <philipoakley@iee.org> wrote:
+> From: "Robert Dailey" <rcdailey.lists@gmail.com>
+>>
+>> Here's the scenario:
+>>
+>> I create a topic branch so one other developer and myself can work on
+>> a feature that takes 2 weeks to complete. During that 2 week period,
+>> changes are occurring on master that I need in my topic branch. Since
+>> I have a collaborator on the branch, I opt for merges instead of
+>> rebase.
+>>
+>> Each day I merge from master to the topic branch, which changes code
+>> I'm actively working in and requires semantic changes (functions
+>> renamed, moved, etc).
+>>
+>> Once I'm ready to merge the topic branch back into master, I have two
+>> options (bearing in mind the goal is to keep history as clean as
+>> possible. Furthermore this implies that the constant merging into
+>> topic from master has made the topic branch look unwieldy and
+>> difficult to audit):
+>
+>
+> a broader question zero;
+> 0. Is the merge always clean? Do you always do a preparatory fixup! to
+> ensure that the merge will be clean?
+>
+> Ensuring that the merge will be clean should greatly simplify your decision
+> about process.
 
-Signed-off-by: Brandon Williams <bmwill@google.com>
----
- abspath.c | 2 ++
- 1 file changed, 2 insertions(+)
+I don't understand what you're asking. How would I do a fixup with
+merges? Can you explain a bit? Normally the only time I use fixup! or
+squash! is for local changes prior to pushing.
 
-diff --git a/abspath.c b/abspath.c
-index 0393213e5..fce40fddc 100644
---- a/abspath.c
-+++ b/abspath.c
-@@ -141,6 +141,8 @@ char *strbuf_realpath(struct strbuf *resolved, const char *path,
- 			strbuf_reset(&symlink);
- 
- 			if (num_symlinks++ > MAXSYMLINKS) {
-+				errno = ELOOP;
-+
- 				if (die_on_error)
- 					die("More than %d nested symlinks "
- 					    "on path '%s'", MAXSYMLINKS, path);
--- 
-2.11.0.390.gc69c2f50cf-goog
+>> 1. Do a squash merge, which keeps history clean but we lose context
+>> for the important bits (the commits representing units of work that
+>> contribute to the topic itself).
+>>
+>> 2. Do a final rebase prior to merging.
+>>
+>> #2 doesn't seem to be possible due to patch ordering. For example, if
+>> I have real commits after merge commits that depend on those changes
+>> from master being present as a base at that point in time, the rebase
+>> will cause the patch before it to no longer include those changes from
+>> master.
+>
+>
+> How much of the historic fixups to cover changes on master do you want to
+> keep visible? i.e. how many fork-points are truly needed (a. by you, b. by
+> the project - personal knowledge vs corporate knowledge).?
 
+
+Again, I do not understand. Maybe the first question you asked needs
+to be understood before I can answer this one. Sorry for the trouble.
