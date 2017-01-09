@@ -6,118 +6,159 @@ X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F27531FEB3
-	for <e@80x24.org>; Mon,  9 Jan 2017 19:47:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4759820A93
+	for <e@80x24.org>; Mon,  9 Jan 2017 19:47:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932220AbdAITq7 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 9 Jan 2017 14:46:59 -0500
-Received: from mail-pf0-f179.google.com ([209.85.192.179]:34470 "EHLO
-        mail-pf0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1763996AbdAITqf (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Jan 2017 14:46:35 -0500
-Received: by mail-pf0-f179.google.com with SMTP id 127so33120836pfg.1
-        for <git@vger.kernel.org>; Mon, 09 Jan 2017 11:46:35 -0800 (PST)
+        id S935226AbdAITrC (ORCPT <rfc822;e@80x24.org>);
+        Mon, 9 Jan 2017 14:47:02 -0500
+Received: from mail-pg0-f42.google.com ([74.125.83.42]:35660 "EHLO
+        mail-pg0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1763937AbdAITqe (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Jan 2017 14:46:34 -0500
+Received: by mail-pg0-f42.google.com with SMTP id 194so16691886pgd.2
+        for <git@vger.kernel.org>; Mon, 09 Jan 2017 11:46:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=haDNMlqX+m9qFgSdrb57H+Gj8F890JHHKXi4LrRo5yw=;
-        b=qwFEConOjDXvmYUarg/qcBZMh23LFuuiOFWu/06uGML/hmf2pCXtHE21nSfV3MscJy
-         RtS7LfouOz+0kCASrWTpv3v4UWihkeBy/jsyM90llOs2YYcr95LLqvPgdztH2mi2KUbW
-         b/zXkw3XbhEAwz8HCpSDSWlfjOQRmi+2ILnueuFaxaWFS6+Q4tjw1BxyKJgpfEiq/tB0
-         KahYobmi12kAhm5tlfNDpcmpUP4rlx7EKsj4l8HIcTBf+mDosDy1Xzfe6D52n+s0Hm2f
-         yWyT19jkHj1F5yGLL8eZkPV6IKbArNNG/3ryMVkyf4yNG38JQ3i8V26k/HFBB0CKWIPf
-         mvPQ==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=rVbjsg550JGdIm2nUtEyCzOLGNZEXQxEVHj6tsXp8Ms=;
+        b=SLuDf8S+VsjM7m/mIPWYJP7mbMyDpQgmEH9LPP7HOMCrRRjojGKWey/0cFHQxQSFpC
+         tbl1J4YVgzSaiGBmrWyjH0i7bQoRpqKHBDuQmQo/cCs9aAvcvdC8KFbUaGYgGJwbahon
+         SatYYh/5e9/la/0x8YVdHaU3FRKkzhXOv1JpsGf3Gmdn4XTXnkDJJvK20+kK3uttfNnB
+         kKA3hr80bCaAWLpr9hRScf6Xb/NjT+v5I8DGGgs8ww/aeRI8SjyLOKZa7UUUuUuIAI0m
+         n7E4G0fLvOQva8k5oUbUposCW3N25wFxj7UyAiSvm/q5O7NRXzQI8y8Q6Oowi9JZE641
+         nU+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=haDNMlqX+m9qFgSdrb57H+Gj8F890JHHKXi4LrRo5yw=;
-        b=byyEhhPVEfAgxy9Nl+8JbIGrOeHdzzXaXnYC16/NSYk2/ksmAoldihtJAVYy6Ckk34
-         4Q/1G8xOjSlakiLtJi6Qml77AMGS3xHIt6Xu9GfBfzkIQIVYrFBaD/lqXVHVI4XuhaTK
-         mRZ6HvryqKYcA77CCM0kZLiproxjbZGGrbRXuLuJlqsZK8ODVpJuB8Yh4OhnwwN6mP/g
-         1HiMZHLyIcfePD8MqEG5vwFal0iL49zQejQDPjf6H0VdBvI00ELTQmPFFCCo7K8lY6Wy
-         5PMGLMaAYejnYuejgrzOmTXQQ1hm9cnUEk0Ci4z1RqQ8vWHX2P04/lt7J3WoPkcn8qiX
-         3snw==
-X-Gm-Message-State: AIkVDXJjcq18I4oSdMgJNlVKQ+z0cdIfq1TZ+Nf3qkB+8aR4gOZdt8EVZQE2MrVZAoQrNvU1
-X-Received: by 10.99.247.69 with SMTP id f5mr166228075pgk.81.1483991195075;
-        Mon, 09 Jan 2017 11:46:35 -0800 (PST)
+         :references:mime-version:content-transfer-encoding;
+        bh=rVbjsg550JGdIm2nUtEyCzOLGNZEXQxEVHj6tsXp8Ms=;
+        b=fmCpN/IDlpnzhN2Buyo3LEGfP7Ai3cdk6U7kibvMxYN0c1Bo4ExfOLvjueRTTBtoeJ
+         m/39IZ3aKfOFpwSDhpNsP51BIJK5xICJ60tD2kEA2TxaApU52xHVOU/c1dRBUAg9hnwb
+         Oq+I+QRgLFqitj+M1Wr2VMqbfN6bRSqBz2O2/lz5M6eVL/r+Np3gEpal48ApedDwXZhB
+         WVFslw+OqpegStP9emxCEI9GGmlLbWcXh0O/Ec9wjBeKUY9wcySMi5MoRWWRu0pki1Y2
+         PgaaEy7gF4chQjkCaLKS1Djq/COqfee8Bh6J2oycDdI6RFQvOWMrjH081p/KxFzQxHED
+         cCwA==
+X-Gm-Message-State: AIkVDXIhxHg8FPhyn/uaaCYb/cRrONhjp80VylO6gn38E2d5JqEaChviESNuXS/0jdDB9Ku7
+X-Received: by 10.99.185.1 with SMTP id z1mr163138679pge.179.1483991193024;
+        Mon, 09 Jan 2017 11:46:33 -0800 (PST)
 Received: from localhost ([2620:0:1000:5b10:45b6:2235:29e9:acb7])
-        by smtp.gmail.com with ESMTPSA id c71sm182333165pga.22.2017.01.09.11.46.34
+        by smtp.gmail.com with ESMTPSA id w11sm181302198pfk.75.2017.01.09.11.46.32
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 09 Jan 2017 11:46:34 -0800 (PST)
+        Mon, 09 Jan 2017 11:46:32 -0800 (PST)
 From:   Stefan Beller <sbeller@google.com>
 To:     gitster@pobox.com, peff@peff.net, l.s.r@web.de
 Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>
-Subject: [PATCHv2 3/5] unpack-trees: factor progress setup out of check_updates
-Date:   Mon,  9 Jan 2017 11:46:19 -0800
-Message-Id: <20170109194621.17013-4-sbeller@google.com>
+Subject: [PATCHv2 1/5] unpack-trees: move checkout state into check_updates
+Date:   Mon,  9 Jan 2017 11:46:17 -0800
+Message-Id: <20170109194621.17013-2-sbeller@google.com>
 X-Mailer: git-send-email 2.11.0.rc2.30.g7c4be45.dirty
 In-Reply-To: <20170109194621.17013-1-sbeller@google.com>
 References: <20170109194621.17013-1-sbeller@google.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This makes check_updates shorter and easier to understand.
+The checkout state was introduced via 16da134b1f9
+(read-trees: refactor the unpack_trees() part, 2006-07-30). An attempt to
+refactor the checkout state was done in b56aa5b268e (unpack-trees: pass
+checkout state explicitly to check_updates(), 2016-09-13), but we can
+go even further.
+
+The `struct checkout state` is not used in unpack_trees apart from
+initializing it, so move it into the function that makes use of it,
+which is `check_updates`.
 
 Signed-off-by: Stefan Beller <sbeller@google.com>
+Reviewed-by: René Scharfe <l.s.r@web.de>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- unpack-trees.c | 32 ++++++++++++++++++++------------
- 1 file changed, 20 insertions(+), 12 deletions(-)
+ unpack-trees.c | 26 +++++++++++++-------------
+ 1 file changed, 13 insertions(+), 13 deletions(-)
 
 diff --git a/unpack-trees.c b/unpack-trees.c
-index d443decb23..b564024472 100644
+index ea6bdd20e0..8e6768f283 100644
 --- a/unpack-trees.c
 +++ b/unpack-trees.c
-@@ -218,9 +218,27 @@ static void unlink_entry(const struct cache_entry *ce)
+@@ -218,14 +218,19 @@ static void unlink_entry(const struct cache_entry *ce)
  	schedule_dir_for_removal(ce->name, ce_namelen(ce));
  }
  
--static int check_updates(struct unpack_trees_options *o)
-+static struct progress *get_progress(struct unpack_trees_options *o)
+-static int check_updates(struct unpack_trees_options *o,
+-			 const struct checkout *state)
++static int check_updates(struct unpack_trees_options *o)
  {
  	unsigned cnt = 0, total = 0;
-+	struct index_state *index = &o->result;
++	int i, errs = 0;
 +
-+	if (!o->update || !o->verbose_update)
-+		return NULL;
-+
-+	for (; cnt < index->cache_nr; cnt++) {
-+		const struct cache_entry *ce = index->cache[cnt];
-+		if (ce->ce_flags & (CE_UPDATE | CE_WT_REMOVE))
-+			total++;
-+	}
-+
-+	return start_progress_delay(_("Checking out files"),
-+				    total, 50, 1);
-+}
-+
-+static int check_updates(struct unpack_trees_options *o)
-+{
-+	unsigned cnt = 0;
- 	int i, errs = 0;
- 
  	struct progress *progress = NULL;
-@@ -232,17 +250,7 @@ static int check_updates(struct unpack_trees_options *o)
- 	state.refresh_cache = 1;
- 	state.istate = index;
+ 	struct index_state *index = &o->result;
+-	int i;
+-	int errs = 0;
++	struct checkout state = CHECKOUT_INIT;
++
++	state.force = 1;
++	state.quiet = 1;
++	state.refresh_cache = 1;
++	state.istate = index;
  
--	if (o->update && o->verbose_update) {
--		for (total = cnt = 0; cnt < index->cache_nr; cnt++) {
--			const struct cache_entry *ce = index->cache[cnt];
--			if (ce->ce_flags & (CE_UPDATE | CE_WT_REMOVE))
--				total++;
--		}
--
--		progress = start_progress_delay(_("Checking out files"),
--						total, 50, 1);
--		cnt = 0;
--	}
-+	progress = get_progress(o);
+ 	if (o->update && o->verbose_update) {
+ 		for (total = cnt = 0; cnt < index->cache_nr; cnt++) {
+@@ -240,7 +245,7 @@ static int check_updates(struct unpack_trees_options *o,
+ 	}
  
  	if (o->update)
- 		git_attr_set_direction(GIT_ATTR_CHECKOUT, index);
+-		git_attr_set_direction(GIT_ATTR_CHECKOUT, &o->result);
++		git_attr_set_direction(GIT_ATTR_CHECKOUT, index);
+ 	for (i = 0; i < index->cache_nr; i++) {
+ 		const struct cache_entry *ce = index->cache[i];
+ 
+@@ -251,7 +256,7 @@ static int check_updates(struct unpack_trees_options *o,
+ 			continue;
+ 		}
+ 	}
+-	remove_marked_cache_entries(&o->result);
++	remove_marked_cache_entries(index);
+ 	remove_scheduled_dirs();
+ 
+ 	for (i = 0; i < index->cache_nr; i++) {
+@@ -264,7 +269,7 @@ static int check_updates(struct unpack_trees_options *o,
+ 			display_progress(progress, ++cnt);
+ 			ce->ce_flags &= ~CE_UPDATE;
+ 			if (o->update && !o->dry_run) {
+-				errs |= checkout_entry(ce, state, NULL);
++				errs |= checkout_entry(ce, &state, NULL);
+ 			}
+ 		}
+ 	}
+@@ -1094,14 +1099,9 @@ int unpack_trees(unsigned len, struct tree_desc *t, struct unpack_trees_options
+ 	int i, ret;
+ 	static struct cache_entry *dfc;
+ 	struct exclude_list el;
+-	struct checkout state = CHECKOUT_INIT;
+ 
+ 	if (len > MAX_UNPACK_TREES)
+ 		die("unpack_trees takes at most %d trees", MAX_UNPACK_TREES);
+-	state.force = 1;
+-	state.quiet = 1;
+-	state.refresh_cache = 1;
+-	state.istate = &o->result;
+ 
+ 	memset(&el, 0, sizeof(el));
+ 	if (!core_apply_sparse_checkout || !o->update)
+@@ -1238,7 +1238,7 @@ int unpack_trees(unsigned len, struct tree_desc *t, struct unpack_trees_options
+ 	}
+ 
+ 	o->src_index = NULL;
+-	ret = check_updates(o, &state) ? (-2) : 0;
++	ret = check_updates(o) ? (-2) : 0;
+ 	if (o->dst_index) {
+ 		if (!ret) {
+ 			if (!o->result.cache_tree)
 -- 
 2.11.0.rc2.30.g7c4be45.dirty
 
