@@ -7,93 +7,181 @@ X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD,T_TVD_MIME_NO_HEADERS
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BB1051FEB3
-	for <e@80x24.org>; Mon,  9 Jan 2017 23:30:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AD0421FEB3
+	for <e@80x24.org>; Mon,  9 Jan 2017 23:30:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1031290AbdAIXaM (ORCPT <rfc822;e@80x24.org>);
-        Mon, 9 Jan 2017 18:30:12 -0500
-Received: from mail-qk0-f169.google.com ([209.85.220.169]:34107 "EHLO
-        mail-qk0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1030373AbdAIXaH (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Jan 2017 18:30:07 -0500
-Received: by mail-qk0-f169.google.com with SMTP id a20so158547093qkc.1
-        for <git@vger.kernel.org>; Mon, 09 Jan 2017 15:30:07 -0800 (PST)
+        id S1031396AbdAIXaO (ORCPT <rfc822;e@80x24.org>);
+        Mon, 9 Jan 2017 18:30:14 -0500
+Received: from mail-qk0-f179.google.com ([209.85.220.179]:33058 "EHLO
+        mail-qk0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1031174AbdAIXaJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Jan 2017 18:30:09 -0500
+Received: by mail-qk0-f179.google.com with SMTP id s140so134983269qke.0
+        for <git@vger.kernel.org>; Mon, 09 Jan 2017 15:30:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=nXHsHp6MiY5VyDCl4C0Au4LdWtOxjSTT7iXN3xQsy8E=;
-        b=obAauj0wDpcQhe/oIRk3VjpVx98efcmLVrLqI4Txcmjrrn1nZd/0n+K3jKiYX/BmgL
-         Dcj129A/hAtZgXXDT/K1WpYlsyk9/yG86PU9cLMmWHMxvgCibHf9Fp3bmLJGT9H617x2
-         UdRvHuy1EA0u9/kWD7cnMvIPnpCpdPW4bCIVHDU2FRVfthCcnmw9qtYL0CXyOeorQqXi
-         5PLTVcE6LnE4mGSCtRC1jiFYOQJiXZ4oSoVZrpm7Jc3ajghOqdp7FvVWR+F1RN5RipB/
-         Bb/ScGxqflpKnRKxMxBm9g793N1lEcGGBM4op7jlCYBHktdkfJ6JA8OcpxqXxvmHMFbA
-         os6Q==
+        bh=lGwUvLld2p/IA/pNKi+x7FBTBALSonl84UNBts8YSyM=;
+        b=KLOV0PbA3Ncfa+1Yz/kidzxdKOef4hgcOngy38UUZD/59n/O53QKfWBjlKQwqVYBiz
+         oYO1AbPGekRo79Uj+aMYZWSdPaJtWgeKIR/obEgHOZCdR0Egwrh24O41OQ9sW4xAJe25
+         3HjKtHqAeMdTUgFclQv6nUoBWHeatkd154Ovz4AmIocF0tbL2RLxBQs/um6WbT30M/7L
+         MlyzFgDPiedD7UX7PM7JB9HhZDbuOOK+FQEoHd3E8dG9Db0tM9EZv5OGGma/uYZYhQUI
+         db6ozIBZIvBcgznWZb6KS+bMtL6kzp6EypqNhFU8/HKXHq0aJM5dgpVuab5HQgOdYdKM
+         NqwQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=nXHsHp6MiY5VyDCl4C0Au4LdWtOxjSTT7iXN3xQsy8E=;
-        b=SKnSz1udsrlau34JVEr2yN4SIbPsUeOiXDejV83aXepKp0dQdata+7onsux0n5TIV7
-         KazSe/oYj8ZNTtlMyVJYEeOx4n16KiHe1do9ci01plRM8QErgjbnFFY0WCxAs47wuzNp
-         s+ewyrYIntt5D0WVyzYVJD3kp+3iyIKYkwI4pexKG3XFZRfiNvbG+CHc09jfVJdK3QhK
-         h+dmNySKkq2IwLZjS/GXtjvQYaDtz6j5b+cItpRs23/Op3PcuZjraP7nBhzpafRaD6an
-         QJLBuB0LwifxYdMou2UrB0sGo6gXhvwiZJJfBEP3mSP9ZCzdmO3v/ty7pGPkjiQyZceF
-         vZUQ==
-X-Gm-Message-State: AIkVDXJQXFLJbQkk98coc83b9+UXdvtaKbEKh5H7G8SZAfwMyYLlqGei+kyS7Lyd446nwMlJ
-X-Received: by 10.55.110.69 with SMTP id j66mr227723qkc.92.1484004606777;
-        Mon, 09 Jan 2017 15:30:06 -0800 (PST)
+        bh=lGwUvLld2p/IA/pNKi+x7FBTBALSonl84UNBts8YSyM=;
+        b=MjmcqJnppk/E7z5ERhWGQZAeuMZ7fXVfzf0KhOdhI90k7QjMB18Q0eluu7cpBVBHcb
+         XVaiJI0Cy9PrE+XnTy0+kH5mEp6A68zernJoDjtoqL5wa/H3WsHGyhxVxYDwQpJCLWj+
+         eKgtpeh30Lpy03kYfouy3vARjglpxwU0ox9/Hrk5sM7ToX1b039/g0bUCmIFdFGMzbl5
+         STbB6wJhGEV55NbAJv/dIpUwnINTlId7ZLRt3T9AnZ/UszAUJZpInxYEqnMqH85NWwz8
+         uMdPGjfneCXgV4udIngMlm+4SlUF2ebxiBdkxqLPZKvec2O3/R6F74oB6fipqYxL8lEl
+         MGUA==
+X-Gm-Message-State: AIkVDXJU/kCKqLEiZWZrbr7mzvnAlvilb6cdrwALt4WeHdOTeJyARSVIryvxzZdrkJnPtE1t
+X-Received: by 10.55.162.194 with SMTP id l185mr241972qke.4.1484004608414;
+        Mon, 09 Jan 2017 15:30:08 -0800 (PST)
 Received: from hansenr.cam.corp.google.com ([172.29.73.70])
-        by smtp.gmail.com with ESMTPSA id c41sm42910qtd.3.2017.01.09.15.30.06
+        by smtp.gmail.com with ESMTPSA id c41sm42910qtd.3.2017.01.09.15.30.07
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 09 Jan 2017 15:30:06 -0800 (PST)
+        Mon, 09 Jan 2017 15:30:08 -0800 (PST)
 From:   Richard Hansen <hansenr@google.com>
 To:     git@vger.kernel.org
 Cc:     davvid@gmail.com, j6t@kdbg.org, hansenr@google.com,
         sbeller@google.com, simon@ruderich.org, gitster@pobox.com
-Subject: [PATCH v4 02/14] rev-parse doc: use "--" in the --prefix example
-Date:   Mon,  9 Jan 2017 18:29:29 -0500
-Message-Id: <20170109232941.43637-3-hansenr@google.com>
+Subject: [PATCH v4 04/14] t7610: Move setup code to the 'setup' test case.
+Date:   Mon,  9 Jan 2017 18:29:31 -0500
+Message-Id: <20170109232941.43637-5-hansenr@google.com>
 X-Mailer: git-send-email 2.11.0.390.gc69c2f50cf-goog
 In-Reply-To: <20170109232941.43637-1-hansenr@google.com>
 References: <20170109054238.42599-1-hansenr@google.com>
  <20170109232941.43637-1-hansenr@google.com>
 Content-Type: multipart/signed; protocol="application/pkcs7-signature"; micalg=sha-256;
-        boundary="94eb2c060f2a72e3f10545b1bfd3"
+        boundary="001a114d838c8d2f530545b1bfc8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
---94eb2c060f2a72e3f10545b1bfd3
+--001a114d838c8d2f530545b1bfc8
 
-The "--" argument avoids "ambiguous argument: unknown revision or
-path not in the working tree" errors when a pathname argument refers
-to a non-existent file.
+Multiple test cases depend on these hunks, so move them to the 'setup'
+test case.  This is a step toward making the tests more independent so
+that if one test fails it doesn't cause subsequent tests to fail.
 
 Signed-off-by: Richard Hansen <hansenr@google.com>
 ---
- Documentation/git-rev-parse.txt | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ t/t7610-mergetool.sh | 65 ++++++++++++++++++++++++++++------------------------
+ 1 file changed, 35 insertions(+), 30 deletions(-)
 
-diff --git a/Documentation/git-rev-parse.txt b/Documentation/git-rev-parse.txt
-index b6c6326cd..f1190765f 100644
---- a/Documentation/git-rev-parse.txt
-+++ b/Documentation/git-rev-parse.txt
-@@ -91,7 +91,8 @@ repository.  For example:
- ----
- prefix=$(git rev-parse --show-prefix)
- cd "$(git rev-parse --show-toplevel)"
--eval "set -- $(git rev-parse --sq --prefix "$prefix" "$@")"
-+eval "set -- $(git rev-parse --sq --prefix "$prefix" -- "$@")"
-+shift
- ----
+diff --git a/t/t7610-mergetool.sh b/t/t7610-mergetool.sh
+index 14090739f..550838a1c 100755
+--- a/t/t7610-mergetool.sh
++++ b/t/t7610-mergetool.sh
+@@ -55,6 +55,22 @@ test_expect_success 'setup' '
+ 	git rm file12 &&
+ 	git commit -m "branch1 changes" &&
  
- --verify::
++	git checkout -b delete-base branch1 &&
++	mkdir -p a/a &&
++	(echo one; echo two; echo 3; echo 4) >a/a/file.txt &&
++	git add a/a/file.txt &&
++	git commit -m"base file" &&
++	git checkout -b move-to-b delete-base &&
++	mkdir -p b/b &&
++	git mv a/a/file.txt b/b/file.txt &&
++	(echo one; echo two; echo 4) >b/b/file.txt &&
++	git commit -a -m"move to b" &&
++	git checkout -b move-to-c delete-base &&
++	mkdir -p c/c &&
++	git mv a/a/file.txt c/c/file.txt &&
++	(echo one; echo two; echo 3) >c/c/file.txt &&
++	git commit -a -m"move to c" &&
++
+ 	git checkout -b stash1 master &&
+ 	echo stash1 change file11 >file11 &&
+ 	git add file11 &&
+@@ -86,6 +102,23 @@ test_expect_success 'setup' '
+ 	git rm file11 &&
+ 	git commit -m "master updates" &&
+ 
++	git clean -fdx &&
++	git checkout -b order-file-start master &&
++	echo start >a &&
++	echo start >b &&
++	git add a b &&
++	git commit -m start &&
++	git checkout -b order-file-side1 order-file-start &&
++	echo side1 >a &&
++	echo side1 >b &&
++	git add a b &&
++	git commit -m side1 &&
++	git checkout -b order-file-side2 order-file-start &&
++	echo side2 >a &&
++	echo side2 >b &&
++	git add a b &&
++	git commit -m side2 &&
++
+ 	git config merge.tool mytool &&
+ 	git config mergetool.mytool.cmd "cat \"\$REMOTE\" >\"\$MERGED\"" &&
+ 	git config mergetool.mytool.trustExitCode true &&
+@@ -244,21 +277,7 @@ test_expect_success 'mergetool takes partial path' '
+ '
+ 
+ test_expect_success 'mergetool delete/delete conflict' '
+-	git checkout -b delete-base branch1 &&
+-	mkdir -p a/a &&
+-	(echo one; echo two; echo 3; echo 4) >a/a/file.txt &&
+-	git add a/a/file.txt &&
+-	git commit -m"base file" &&
+-	git checkout -b move-to-b delete-base &&
+-	mkdir -p b/b &&
+-	git mv a/a/file.txt b/b/file.txt &&
+-	(echo one; echo two; echo 4) >b/b/file.txt &&
+-	git commit -a -m"move to b" &&
+-	git checkout -b move-to-c delete-base &&
+-	mkdir -p c/c &&
+-	git mv a/a/file.txt c/c/file.txt &&
+-	(echo one; echo two; echo 3) >c/c/file.txt &&
+-	git commit -a -m"move to c" &&
++	git checkout move-to-c &&
+ 	test_must_fail git merge move-to-b &&
+ 	echo d | git mergetool a/a/file.txt &&
+ 	! test -f a/a/file.txt &&
+@@ -607,26 +626,12 @@ test_expect_success MKTEMP 'temporary filenames are used with mergetool.writeToT
+ '
+ 
+ test_expect_success 'diff.orderFile configuration is honored' '
++	git checkout order-file-side2 &&
+ 	test_config diff.orderFile order-file &&
+ 	test_config mergetool.myecho.cmd "echo \"\$LOCAL\"" &&
+ 	test_config mergetool.myecho.trustExitCode true &&
+ 	echo b >order-file &&
+ 	echo a >>order-file &&
+-	git checkout -b order-file-start master &&
+-	echo start >a &&
+-	echo start >b &&
+-	git add a b &&
+-	git commit -m start &&
+-	git checkout -b order-file-side1 order-file-start &&
+-	echo side1 >a &&
+-	echo side1 >b &&
+-	git add a b &&
+-	git commit -m side1 &&
+-	git checkout -b order-file-side2 order-file-start &&
+-	echo side2 >a &&
+-	echo side2 >b &&
+-	git add a b &&
+-	git commit -m side2 &&
+ 	test_must_fail git merge order-file-side1 &&
+ 	cat >expect <<-\EOF &&
+ 		Merging:
 -- 
 2.11.0.390.gc69c2f50cf-goog
 
 
---94eb2c060f2a72e3f10545b1bfd3
+--001a114d838c8d2f530545b1bfc8
 Content-Type: application/pkcs7-signature; name="smime.p7s"
 Content-Transfer-Encoding: base64
 Content-Disposition: attachment; filename="smime.p7s"
@@ -175,13 +263,13 @@ m4YUSo869xADdrGrWJ7KzroFbucLZYh3niIjVICp7fh9wtLgbX7X/akdubehYhy/l+AIMml6Zlyu
 GNGCGIleyQ0bAdjjG+dKrDErUlui8wd/YplvelaTAzSvNpxcrr+2YB8UBWcYkgULkp5GDCC2guKl
 rMF1mTS6N6GMxUi30sZicbMxggJeMIICWgIBATBcMEwxCzAJBgNVBAYTAkJFMRkwFwYDVQQKExBH
 bG9iYWxTaWduIG52LXNhMSIwIAYDVQQDExlHbG9iYWxTaWduIEhWIFMvTUlNRSBDQSAxAgwvfEOc
-7N3JjQI9nAwwDQYJYIZIAWUDBAIBBQCggdQwLwYJKoZIhvcNAQkEMSIEIPJRoLlUK4ujArQLDWxf
-tMxnayV2kV3yy5f1d33+cgqbMBgGCSqGSIb3DQEJAzELBgkqhkiG9w0BBwEwHAYJKoZIhvcNAQkF
-MQ8XDTE3MDEwOTIzMzAwN1owaQYJKoZIhvcNAQkPMVwwWjALBglghkgBZQMEASowCwYJYIZIAWUD
+7N3JjQI9nAwwDQYJYIZIAWUDBAIBBQCggdQwLwYJKoZIhvcNAQkEMSIEIHZp7bUsfK+XjQp8hAbR
+lyRYElE/MRG5dFgEmpTKO5VcMBgGCSqGSIb3DQEJAzELBgkqhkiG9w0BBwEwHAYJKoZIhvcNAQkF
+MQ8XDTE3MDEwOTIzMzAwOFowaQYJKoZIhvcNAQkPMVwwWjALBglghkgBZQMEASowCwYJYIZIAWUD
 BAEWMAsGCWCGSAFlAwQBAjAKBggqhkiG9w0DBzALBgkqhkiG9w0BAQowCwYJKoZIhvcNAQEHMAsG
-CWCGSAFlAwQCATANBgkqhkiG9w0BAQEFAASCAQDHvvPAdA4C0JsYtg/Jt4V6zHYNZ18N2QaqR4S+
-jC7yk+UtxnUY/V0SZljMYjkyIBqHzGnhGM9Qx6vPvdJVwvYNpQCJsFKhI4N7IDJuOnFTG+4eRRza
-1f1BOUrxBuSeJft+YIO1nENfDTmtPKgF0/1n5CjXlePEMAll63qUVb9M7HMMoIT4BnhIiK7UzqAH
-th/Sc36+LzHAxI2QanvDSnXKSZ9qBMDTkT4ehk5OTm33nDF3u90DfoeRb1a9NMrftMfMOsyIY5pK
-S5ffuk1P2tYONMXXhmcbo7y1XGmUKVZv+2uwB4uk+s4WJKtmJ0JRiqsq9lqaOiJ+Pp467k4ajZwg
---94eb2c060f2a72e3f10545b1bfd3--
+CWCGSAFlAwQCATANBgkqhkiG9w0BAQEFAASCAQAelvK/hSmiJx4YXJTNdXPK1Fdwz6ota//YnIeV
+JuNR+tiELIbWEGWHaopCj7RT+fHaVyhC3KTKRjUtkeCsPJTtHiTQ29og0+XYhrbmSEpgh2TSX4uj
+zBMk/nmHAosBv8Q5zvvBe2Be/nC/knMnOsj/+xPx/zNb4LQ/fAGHwctnj66e262bsMlyXCySydAc
+1zZ4hleqqj3853dDAMAZow5jLCQBowwDIQcNV7XoqeH8NuRrVudaFdfczX2kCAvSuJ7waJmuDhkD
+64iO6vk25dHYNri4j5Dvv9H9qJf7GH69g+GO0QQO6wbS8nvIBaSTNetUFHU85dM21m6i4mt1tVz+
+--001a114d838c8d2f530545b1bfc8--
