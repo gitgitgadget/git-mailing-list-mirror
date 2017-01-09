@@ -7,101 +7,232 @@ X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD,T_TVD_MIME_NO_HEADERS
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 33D561FEB3
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5844D1FEB3
 	for <e@80x24.org>; Mon,  9 Jan 2017 23:30:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1031332AbdAIXaY (ORCPT <rfc822;e@80x24.org>);
-        Mon, 9 Jan 2017 18:30:24 -0500
-Received: from mail-qt0-f180.google.com ([209.85.216.180]:33708 "EHLO
-        mail-qt0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1031436AbdAIXaQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Jan 2017 18:30:16 -0500
-Received: by mail-qt0-f180.google.com with SMTP id v23so150877314qtb.0
-        for <git@vger.kernel.org>; Mon, 09 Jan 2017 15:30:16 -0800 (PST)
+        id S1031495AbdAIXa0 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 9 Jan 2017 18:30:26 -0500
+Received: from mail-qk0-f179.google.com ([209.85.220.179]:34854 "EHLO
+        mail-qk0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1031174AbdAIXaP (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Jan 2017 18:30:15 -0500
+Received: by mail-qk0-f179.google.com with SMTP id u25so541951500qki.2
+        for <git@vger.kernel.org>; Mon, 09 Jan 2017 15:30:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=ollpswhal/qqv9T7ihIwOd1jKZIBG/K9GcSeX4b9BKs=;
-        b=QUIRYnrGeQbJJzHvZS8e9xbTiJKRTh3gbU5eBbvMiwA4QlPT+SaGRElr7vFCudCsZ1
-         K6PXHcGR6kmnTGJZW/LRLV0esquSqqu5pv0yBBkNjJUw4Z6o4WKPPJAJFBTys5yEYVAD
-         9ZSxKbnMvIe4Kj05KPLSqRn3flWraWUkme6IEDBOWfanFtdHa5VBkkBQQl0oOf38rnGm
-         pzxLMo3bsB8GDWfNXAGPmIAmcHXjlwa8vH3qJmYId/Ix8kBPzotruGdXzW/C2EA8rY62
-         +l7OCcgjq9685VqDnk9ONCKrNNCpt1y6OSYwuKI+gbRRXqpzddxjiOlOzX5FUol179UT
-         hYew==
+        bh=k5h6DOoZs2zXyutfVXSnnl0SKHTWsgi2a4MbE4S5VrY=;
+        b=YShkn/dQKP1e9A/d41ZG/ZjwgPWwZxSMy++RV4klkT8DGpLhm2bSCVYKrdoMkds0sA
+         pvf86Ba1nD+7xZVYyaJHRumgyH2gHmz278Wu6E8DR1urzXaWddIT8BVlPuQtrljS52Wg
+         /K/wHeok5IWI+TnITg3NoNm4gByju42gACDIkl+vE3A1tZqOY4mhll+fllCwjOt/m1Fj
+         kwZz8reI8D9s91MVH9THNzOF6MWSd/61Ms847LLP4pNGcacDg175UjJb4PpnjfvAPdB7
+         aK218I2mP/gjA7Jqk8/fnvA+54MRujeGJ1hwOdzGllVwRDImxv+VENxBU/EbQvP7UocV
+         O9Bw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=ollpswhal/qqv9T7ihIwOd1jKZIBG/K9GcSeX4b9BKs=;
-        b=Dgr1OvAnleYfbYerXWs1qCqSJKyXcqTf51L1NJ3ZYA19nF2U/PGBfzorQ3BO9D0LoQ
-         lLTLqu3P5lswrZMj0MDXpcEuDRBlpUxXSejyF9eAw+m6BVfuDgrhoaIVOhfZ2BE653/9
-         4F76K/9KA39pg461zbR0KCS3DUHRGShkpFuLlQ1dpt98vTfyhPOJucaPe4g1wiR2puVX
-         qm7pgsypr42MmLPNzSl8C+dUPIhEvq509VCpF1O5kcSLhKDeABUQAxdm8SEvGla0pyP8
-         wdvIrOwjfVQJRupgCQNbhODfBn9FCK9H6UFOJM1PRtVuEJtMfJpcZUxY5uqyJfp73ZxJ
-         14nA==
-X-Gm-Message-State: AIkVDXIYD0ITlrsxyCdTLkpBDWIh72126dEmlRCVNfWQ8zc4ISheofpxYZos3sCLMvzZ8h0s
-X-Received: by 10.200.39.43 with SMTP id g40mr226893qtg.58.1484004615405;
-        Mon, 09 Jan 2017 15:30:15 -0800 (PST)
+        bh=k5h6DOoZs2zXyutfVXSnnl0SKHTWsgi2a4MbE4S5VrY=;
+        b=somXd8I1MycoEX0CsM09Ypv/sN1KIo1yiat0bwgd1DglkDe+m4k06Kw7/e8qdn4Yca
+         1Dk+bHjFYfllIlxkyQl9RwxdmSP1kNz5i+I4yztJ8qgLMWnfw+VVYC127otmEZbDEjVY
+         MT9W1otSJXdcfB/BTUYErqXGJp2XanSlftfut11i7RT2zWNsji2+EsD3oostM11lqu4B
+         f80PkU3fsOySp9zahVesAqebGlIdUHSTHVfSiklp3l/PFe+Wb+0yz6wyf7rvlU7bSWZ5
+         HQrW5yvrVHiJ+5dmqFX87XWYQ4b4XAguSSenOpAYTwL4J4KPsb8ZKBavDtCZ28unxrtr
+         N+yw==
+X-Gm-Message-State: AIkVDXKWWViLbcvkfLzXS0dYeS9pK8yu60OweYndDNJg2y25KLaQwd1uccKD18AB1K13GsnR
+X-Received: by 10.55.89.197 with SMTP id n188mr175565qkb.217.1484004613891;
+        Mon, 09 Jan 2017 15:30:13 -0800 (PST)
 Received: from hansenr.cam.corp.google.com ([172.29.73.70])
-        by smtp.gmail.com with ESMTPSA id c41sm42910qtd.3.2017.01.09.15.30.14
+        by smtp.gmail.com with ESMTPSA id c41sm42910qtd.3.2017.01.09.15.30.13
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 09 Jan 2017 15:30:15 -0800 (PST)
+        Mon, 09 Jan 2017 15:30:13 -0800 (PST)
 From:   Richard Hansen <hansenr@google.com>
 To:     git@vger.kernel.org
 Cc:     davvid@gmail.com, j6t@kdbg.org, hansenr@google.com,
         sbeller@google.com, simon@ruderich.org, gitster@pobox.com
-Subject: [PATCH v4 13/14] mergetool: take the "-O" out of $orderfile
-Date:   Mon,  9 Jan 2017 18:29:40 -0500
-Message-Id: <20170109232941.43637-14-hansenr@google.com>
+Subject: [PATCH v4 11/14] t7610: spell 'git reset --hard' consistently
+Date:   Mon,  9 Jan 2017 18:29:38 -0500
+Message-Id: <20170109232941.43637-12-hansenr@google.com>
 X-Mailer: git-send-email 2.11.0.390.gc69c2f50cf-goog
 In-Reply-To: <20170109232941.43637-1-hansenr@google.com>
 References: <20170109054238.42599-1-hansenr@google.com>
  <20170109232941.43637-1-hansenr@google.com>
 Content-Type: multipart/signed; protocol="application/pkcs7-signature"; micalg=sha-256;
-        boundary="001a1135b138f6add80545b1bf05"
+        boundary="001a114c983ee1396c0545b1bfbd"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
---001a1135b138f6add80545b1bf05
-
-This will make it easier for a future commit to convert a relative
-orderfile pathname to either absolute or relative to the top-level
-directory.  It also improves code readability.
+--001a114c983ee1396c0545b1bfbd
 
 Signed-off-by: Richard Hansen <hansenr@google.com>
 ---
- git-mergetool.sh | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ t/t7610-mergetool.sh | 37 +++++++++++++++++++------------------
+ 1 file changed, 19 insertions(+), 18 deletions(-)
 
-diff --git a/git-mergetool.sh b/git-mergetool.sh
-index e52b4e4f2..b506896dc 100755
---- a/git-mergetool.sh
-+++ b/git-mergetool.sh
-@@ -421,7 +421,7 @@ main () {
- 			prompt=true
- 			;;
- 		-O*)
--			orderfile="$1"
-+			orderfile="${1#-O}"
- 			;;
- 		--)
- 			shift
-@@ -465,7 +465,7 @@ main () {
+diff --git a/t/t7610-mergetool.sh b/t/t7610-mergetool.sh
+index 54164a320..c031ecd9e 100755
+--- a/t/t7610-mergetool.sh
++++ b/t/t7610-mergetool.sh
+@@ -289,23 +289,23 @@ test_expect_success 'mergetool takes partial path' '
+ '
  
- 	files=$(git -c core.quotePath=false \
- 		diff --name-only --diff-filter=U \
--		${orderfile:+"$orderfile"} -- "$@")
-+		${orderfile:+"-O$orderfile"} -- "$@")
+ test_expect_success 'mergetool delete/delete conflict' '
+-	test_when_finished "git reset --hard HEAD" &&
++	test_when_finished "git reset --hard" &&
+ 	git checkout -b test$test_count move-to-c &&
+ 	test_must_fail git merge move-to-b &&
+ 	echo d | git mergetool a/a/file.txt &&
+ 	! test -f a/a/file.txt &&
+-	git reset --hard HEAD &&
++	git reset --hard &&
+ 	test_must_fail git merge move-to-b &&
+ 	echo m | git mergetool a/a/file.txt &&
+ 	test -f b/b/file.txt &&
+-	git reset --hard HEAD &&
++	git reset --hard &&
+ 	test_must_fail git merge move-to-b &&
+ 	! echo a | git mergetool a/a/file.txt &&
+ 	! test -f a/a/file.txt
+ '
  
- 	cd_to_toplevel
+ test_expect_success 'mergetool produces no errors when keepBackup is used' '
+-	test_when_finished "git reset --hard HEAD" &&
++	test_when_finished "git reset --hard" &&
+ 	git checkout -b test$test_count move-to-c &&
+ 	test_config mergetool.keepBackup true &&
+ 	test_must_fail git merge move-to-b &&
+@@ -316,7 +316,7 @@ test_expect_success 'mergetool produces no errors when keepBackup is used' '
+ '
  
+ test_expect_success 'mergetool honors tempfile config for deleted files' '
+-	test_when_finished "git reset --hard HEAD" &&
++	test_when_finished "git reset --hard" &&
+ 	git checkout -b test$test_count move-to-c &&
+ 	test_config mergetool.keepTemporaries false &&
+ 	test_must_fail git merge move-to-b &&
+@@ -325,7 +325,7 @@ test_expect_success 'mergetool honors tempfile config for deleted files' '
+ '
+ 
+ test_expect_success 'mergetool keeps tempfiles when aborting delete/delete' '
+-	test_when_finished "git reset --hard HEAD" &&
++	test_when_finished "git reset --hard" &&
+ 	test_when_finished "git clean -fdx" &&
+ 	git checkout -b test$test_count move-to-c &&
+ 	test_config mergetool.keepTemporaries true &&
+@@ -342,7 +342,7 @@ test_expect_success 'mergetool keeps tempfiles when aborting delete/delete' '
+ '
+ 
+ test_expect_success 'deleted vs modified submodule' '
+-	test_when_finished "git reset --hard HEAD" &&
++	test_when_finished "git reset --hard" &&
+ 	git checkout -b test$test_count branch1 &&
+ 	git submodule update -N &&
+ 	mv submod submod-movedaside &&
+@@ -560,7 +560,7 @@ test_expect_success 'directory vs modified submodule' '
+ 	test "$(cat submod/file16)" = "not a submodule" &&
+ 	rm -rf submod.orig &&
+ 
+-	git reset --hard >/dev/null 2>&1 &&
++	git reset --hard &&
+ 	test_must_fail git merge master &&
+ 	test -n "$(git ls-files -u)" &&
+ 	test ! -e submod.orig &&
+@@ -572,7 +572,8 @@ test_expect_success 'directory vs modified submodule' '
+ 	( cd submod && git clean -f && git reset --hard ) &&
+ 	git submodule update -N &&
+ 	test "$(cat submod/bar)" = "master submodule" &&
+-	git reset --hard >/dev/null 2>&1 && rm -rf submod-movedaside &&
++	git reset --hard &&
++	rm -rf submod-movedaside &&
+ 
+ 	git checkout -b test$test_count.c master &&
+ 	git submodule update -N &&
+@@ -582,7 +583,7 @@ test_expect_success 'directory vs modified submodule' '
+ 	git submodule update -N &&
+ 	test "$(cat submod/bar)" = "master submodule" &&
+ 
+-	git reset --hard >/dev/null 2>&1 &&
++	git reset --hard &&
+ 	git submodule update -N &&
+ 	test_must_fail git merge test$test_count &&
+ 	test -n "$(git ls-files -u)" &&
+@@ -590,13 +591,13 @@ test_expect_success 'directory vs modified submodule' '
+ 	( yes "r" | git mergetool submod ) &&
+ 	test "$(cat submod/file16)" = "not a submodule" &&
+ 
+-	git reset --hard master >/dev/null 2>&1 &&
++	git reset --hard master &&
+ 	( cd submod && git clean -f && git reset --hard ) &&
+ 	git submodule update -N
+ '
+ 
+ test_expect_success 'file with no base' '
+-	test_when_finished "git reset --hard master >/dev/null 2>&1" &&
++	test_when_finished "git reset --hard" &&
+ 	git checkout -b test$test_count branch1 &&
+ 	test_must_fail git merge master &&
+ 	git mergetool --no-prompt --tool mybase -- both &&
+@@ -605,7 +606,7 @@ test_expect_success 'file with no base' '
+ '
+ 
+ test_expect_success 'custom commands override built-ins' '
+-	test_when_finished "git reset --hard master >/dev/null 2>&1" &&
++	test_when_finished "git reset --hard" &&
+ 	git checkout -b test$test_count branch1 &&
+ 	test_config mergetool.defaults.cmd "cat \"\$REMOTE\" >\"\$MERGED\"" &&
+ 	test_config mergetool.defaults.trustExitCode true &&
+@@ -616,7 +617,7 @@ test_expect_success 'custom commands override built-ins' '
+ '
+ 
+ test_expect_success 'filenames seen by tools start with ./' '
+-	test_when_finished "git reset --hard master >/dev/null 2>&1" &&
++	test_when_finished "git reset --hard" &&
+ 	git checkout -b test$test_count branch1 &&
+ 	test_config mergetool.writeToTemp false &&
+ 	test_config mergetool.myecho.cmd "echo \"\$LOCAL\"" &&
+@@ -632,7 +633,7 @@ test_lazy_prereq MKTEMP '
+ '
+ 
+ test_expect_success MKTEMP 'temporary filenames are used with mergetool.writeToTemp' '
+-	test_when_finished "git reset --hard master >/dev/null 2>&1" &&
++	test_when_finished "git reset --hard" &&
+ 	git checkout -b test$test_count branch1 &&
+ 	test_config mergetool.writeToTemp true &&
+ 	test_config mergetool.myecho.cmd "echo \"\$LOCAL\"" &&
+@@ -644,7 +645,7 @@ test_expect_success MKTEMP 'temporary filenames are used with mergetool.writeToT
+ '
+ 
+ test_expect_success 'diff.orderFile configuration is honored' '
+-	test_when_finished "git reset --hard >/dev/null" &&
++	test_when_finished "git reset --hard" &&
+ 	git checkout -b test$test_count order-file-side2 &&
+ 	test_config diff.orderFile order-file &&
+ 	test_config mergetool.myecho.cmd "echo \"\$LOCAL\"" &&
+@@ -662,7 +663,7 @@ test_expect_success 'diff.orderFile configuration is honored' '
+ 	test_cmp expect actual
+ '
+ test_expect_success 'mergetool -Oorder-file is honored' '
+-	test_when_finished "git reset --hard >/dev/null 2>&1" &&
++	test_when_finished "git reset --hard" &&
+ 	git checkout -b test$test_count order-file-side2 &&
+ 	test_config diff.orderFile order-file &&
+ 	test_config mergetool.myecho.cmd "echo \"\$LOCAL\"" &&
+@@ -678,7 +679,7 @@ test_expect_success 'mergetool -Oorder-file is honored' '
+ 	git mergetool -O/dev/null --no-prompt --tool myecho >output &&
+ 	git grep --no-index -h -A2 Merging: output >actual &&
+ 	test_cmp expect actual &&
+-	git reset --hard >/dev/null 2>&1 &&
++	git reset --hard &&
+ 
+ 	git config --unset diff.orderFile &&
+ 	test_must_fail git merge order-file-side1 &&
 -- 
 2.11.0.390.gc69c2f50cf-goog
 
 
---001a1135b138f6add80545b1bf05
+--001a114c983ee1396c0545b1bfbd
 Content-Type: application/pkcs7-signature; name="smime.p7s"
 Content-Transfer-Encoding: base64
 Content-Disposition: attachment; filename="smime.p7s"
@@ -183,13 +314,13 @@ m4YUSo869xADdrGrWJ7KzroFbucLZYh3niIjVICp7fh9wtLgbX7X/akdubehYhy/l+AIMml6Zlyu
 GNGCGIleyQ0bAdjjG+dKrDErUlui8wd/YplvelaTAzSvNpxcrr+2YB8UBWcYkgULkp5GDCC2guKl
 rMF1mTS6N6GMxUi30sZicbMxggJeMIICWgIBATBcMEwxCzAJBgNVBAYTAkJFMRkwFwYDVQQKExBH
 bG9iYWxTaWduIG52LXNhMSIwIAYDVQQDExlHbG9iYWxTaWduIEhWIFMvTUlNRSBDQSAxAgwvfEOc
-7N3JjQI9nAwwDQYJYIZIAWUDBAIBBQCggdQwLwYJKoZIhvcNAQkEMSIEIAEyjjTY6OYNNOFV6JYg
-HSVEeQ/WhvjEBddf71IE/kGVMBgGCSqGSIb3DQEJAzELBgkqhkiG9w0BBwEwHAYJKoZIhvcNAQkF
-MQ8XDTE3MDEwOTIzMzAxNVowaQYJKoZIhvcNAQkPMVwwWjALBglghkgBZQMEASowCwYJYIZIAWUD
+7N3JjQI9nAwwDQYJYIZIAWUDBAIBBQCggdQwLwYJKoZIhvcNAQkEMSIEIJNdMALu4LNmBrVoXs6/
+7SNDOUr8WoKBnzydKxE73Q0LMBgGCSqGSIb3DQEJAzELBgkqhkiG9w0BBwEwHAYJKoZIhvcNAQkF
+MQ8XDTE3MDEwOTIzMzAxNFowaQYJKoZIhvcNAQkPMVwwWjALBglghkgBZQMEASowCwYJYIZIAWUD
 BAEWMAsGCWCGSAFlAwQBAjAKBggqhkiG9w0DBzALBgkqhkiG9w0BAQowCwYJKoZIhvcNAQEHMAsG
-CWCGSAFlAwQCATANBgkqhkiG9w0BAQEFAASCAQA158ESGjEqDYHpp1i7RQBAyZbV4HkC7rsR28PE
-MrZWFKiPxOTfa1rCDwEUxh5V8rPcoeoQLvroidExXXZUJyomuZ6syPzNazH0J37V1jtBTFkYv995
-UheYR2MXIW7xSTgMsi9ozl92NiszygtO/tdjFeQRea+U2TiQiwS+mVIK3aN0dhANJgzbL7Uz6pQ2
-rpIEGwkbOdkwPUo2plNq29WZwOSdBLDi+rmYM5TQNn0O3cJEGZvS+2Z7XirvhM4KEYiLV3PgV6t/
-wdNSyYtvjdhTm2LV0AaKSTFcCgb7/7PmmjiGlHmmVNiHdXXHTD+dTe0yv6Ih7eWZ3/P71KrLs7ZN
---001a1135b138f6add80545b1bf05--
+CWCGSAFlAwQCATANBgkqhkiG9w0BAQEFAASCAQA0C/ltI6ucpksresmrYfMTeyoeBR9epnsBuS+u
+NuRxmRVRsLyFurT0Uvijl87qqKVZFzCQl5ADIyAHOYR191nioSsU2aLP7+VUHnr2nEnJphXyqcaX
+iJphXb69oQBqlnjWoVlGVRNczBnxUILdru+4fjDFXGj7x0tWzwCamQg8ZwN4YPV9qKqIYJBjLyij
+rt8IMQLSNTWt7QgKJMi2RgYX3cG3ga9ddJP2UqDLFHX3ulGIsik5dACKWKmKdTUC5Tj71dRLFAN3
+KUKu4tWq4jzSNv9xEtjyyPe0tM/polw2W+I7hGSF830UcdR5iH+XMlEfZ4KBEpVilvo9ymPBF6tT
+--001a114c983ee1396c0545b1bfbd--
