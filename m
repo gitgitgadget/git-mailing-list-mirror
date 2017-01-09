@@ -2,122 +2,153 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5C0611FEB3
-	for <e@80x24.org>; Mon,  9 Jan 2017 18:04:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id ABC331FEB3
+	for <e@80x24.org>; Mon,  9 Jan 2017 18:12:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1758269AbdAISEW (ORCPT <rfc822;e@80x24.org>);
-        Mon, 9 Jan 2017 13:04:22 -0500
-Received: from mail-pg0-f44.google.com ([74.125.83.44]:34441 "EHLO
-        mail-pg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755316AbdAISEV (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Jan 2017 13:04:21 -0500
-Received: by mail-pg0-f44.google.com with SMTP id 14so32084599pgg.1
-        for <git@vger.kernel.org>; Mon, 09 Jan 2017 10:04:20 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=sAy4/b3SWZ+tWBdo5NGYgN79LxsR8m4loBqkaqe0gyc=;
-        b=Cy3da89Ye3s7sk6UPZhtm15UAwm8cNirix31wck6h2nZMJKprtiSC0gBvB4npPsZLc
-         SOisKQpNDr0jKnTsz9F8r8AB0zv44Nev2eaeVYAe7qec1E+r4sKp7BpieUZ9mxZoyYWm
-         t+X1Ets/vTvLcVJ0RKw9theL3ZAq/t91nK+tk/5K3UYxqKOF7odZa+l8tYWtSV8bDugN
-         cWbb/vPZhGtjUxFM4ke7+NKMEZyBmfPA6CZ4nl0nUed2d9jfOf+ViLVewx9YUFzga4TJ
-         V2iQhBUfTzvuJ/doHJ24TMmpvX9eTPNcjWTS9flK0xO9uu2SxbwwGZqq8al2F4WYL5oR
-         T1yA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=sAy4/b3SWZ+tWBdo5NGYgN79LxsR8m4loBqkaqe0gyc=;
-        b=kpSJti/JXW6obrQiy4xtGk+oUd9ZBLEndWMD6Y91Lex7knBopJyuqJ0/XZJum1DwmY
-         CxlabyoeVo8Bb2LWq8cbhgwBShWsbgyX+yLjimEkRPR1r3xtVXyvIM2MUV/aE6ZOoSQR
-         Km5eqU7az6UfjR1zkDqLHXzy7ZnVBXEKt6GICJKTdxhMBYSqMTx/mD8QlWy4uVShbGTW
-         Or23x0+o1VfMIcSCks4Ggyl2s2Esc1BP3Qs6+M2CJfos+P2FMN8mnwwy8o3zLomz1F4w
-         yPWvehy5aHKj5T0MwCUSoiKesrBHwW4Q2U07QmQRyyjaQAliz9PkeX17OrchpobJ7fXb
-         rydQ==
-X-Gm-Message-State: AIkVDXK4mxrl5rSrUvk7fYFgoxFWuq1wT55MYN3Ad6mmIf2ucwsHmFIgSStOkFeAgJ+jj4hq
-X-Received: by 10.99.24.92 with SMTP id 28mr46249494pgy.100.1483985060324;
-        Mon, 09 Jan 2017 10:04:20 -0800 (PST)
-Received: from google.com ([2620:0:1000:5b10:cb5:8f45:2d29:8a81])
-        by smtp.gmail.com with ESMTPSA id 64sm181121396pfu.17.2017.01.09.10.04.18
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 09 Jan 2017 10:04:19 -0800 (PST)
-Date:   Mon, 9 Jan 2017 10:04:18 -0800
-From:   Brandon Williams <bmwill@google.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, sbeller@google.com, peff@peff.net,
-        jacob.keller@gmail.com, ramsay@ramsayjones.plus.com, tboegi@web.de,
-        j6t@kdbg.org, pclouds@gmail.com, larsxschneider@gmail.com
-Subject: Re: [PATCH v5 0/5] road to reentrant real_path
-Message-ID: <20170109180418.GB62878@google.com>
-References: <20170103190923.11882-1-bmwill@google.com>
- <20170104220124.145808-1-bmwill@google.com>
- <xmqqpojy1c49.fsf@gitster.mtv.corp.google.com>
+        id S1422829AbdAISMu (ORCPT <rfc822;e@80x24.org>);
+        Mon, 9 Jan 2017 13:12:50 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:57019 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S932317AbdAISMq (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Jan 2017 13:12:46 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id BC2415D1E1;
+        Mon,  9 Jan 2017 13:12:44 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=gsKVesToe/HesdPRuzPAipv5bFo=; b=MJp4Sf
+        lQumgZXnWc43AgS40J7Tw160PnjH5NK5QBT/oggJUUE54rT4okSzuA8RwTbsfukb
+        9Mp0dqKp+/4opNGmyw2o7Qgxv63VBZr8UspRUMCJBWrfSDKdz4PVD3hsqFnJlu6W
+        bQPfmkNSwG3kR1d9nMeUZ81CaNSpYdbF0SAHA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=ZPLZxCRJ1WOUVOaTcQAqzr3249I64pi2
+        qtid+BM33XqToskx2GpxgtVO73ZKbgd4MkRu9xuKemMMp8aXrnwJP5ujLIVNFNU3
+        RvL9qUjJGwyktfmn2uXDu93Pyaryesc8AZmzbKEKBxoP1V71UL25wJIlGEFullwQ
+        92OjGi9xGdE=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id AEF225D1E0;
+        Mon,  9 Jan 2017 13:12:44 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 0D0B75D1DF;
+        Mon,  9 Jan 2017 13:12:44 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Richard Hansen <hansenr@google.com>
+Cc:     git@vger.kernel.org, davvid@gmail.com, j6t@kdbg.org,
+        sbeller@google.com, simon@ruderich.org
+Subject: Re: [PATCH v3 13/13] mergetool: fix running in subdir when rerere enabled
+References: <20170106010945.79382-1-hansenr@google.com>
+        <20170109054238.42599-1-hansenr@google.com>
+        <20170109054238.42599-14-hansenr@google.com>
+Date:   Mon, 09 Jan 2017 10:12:42 -0800
+In-Reply-To: <20170109054238.42599-14-hansenr@google.com> (Richard Hansen's
+        message of "Mon, 9 Jan 2017 00:42:38 -0500")
+Message-ID: <xmqq4m18ump1.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.90 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqpojy1c49.fsf@gitster.mtv.corp.google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+Content-Type: text/plain
+X-Pobox-Relay-ID: 3785D9C2-D697-11E6-A6E7-A7617B1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 01/07, Junio C Hamano wrote:
-> Brandon Williams <bmwill@google.com> writes:
-> 
-> > changes in v5:
-> > * set errno to ELOOP when MAXSYMLINKS is exceded.
-> > * revert to use MAXSYMLINKS instead of MAXDEPTH.
-> > * If the OS hasn't defined MAXSYMLINKS, use a fallback value of 32.
-> >
-> > Brandon Williams (4):
-> >   real_path: resolve symlinks by hand
-> >   real_path: convert real_path_internal to strbuf_realpath
-> >   real_path: create real_pathdup
-> >   real_path: have callers use real_pathdup and strbuf_realpath
-> >
-> > Johannes Sixt (1):
-> >   real_path: canonicalize directory separators in root parts
-> >
-> 
-> How does this relate to the 5-patch real_path: series that has been
-> on 'next' since last year?
+Richard Hansen <hansenr@google.com> writes:
 
-The only difference should be in the first patch of the series which
-handles the #define a bit differently due to the discussion that
-happened last week.
+> If rerere is enabled and no pathnames are given, run cd_to_toplevel
+> before running 'git diff --name-only' so that 'git diff --name-only'
+> sees the files named by 'git rerere remaining', which outputs
+> pathnames relative to the top-level directory.
+>
+> The cd_to_toplevel command could be run after 'git rerere remaining',
+> but it is run before just in case 'git rerere remaining' is ever
+> changed to print pathnames relative to the current working directory
+> rather than relative to the top-level directory.
+>
+> An alternative approach would be to unconditionally convert all
+> relative pathnames (including the orderfile pathname) to be relative
+> to the top-level directory and then run cd_to_toplevel before 'git
+> diff --name-only', but unfortunately 'git rev-parse --prefix' requires
+> valid pathnames, which would break some valid use cases.
+>
+> This fixes a regression introduced in
+> 57937f70a09c12ef484c290865dac4066d207c9c (v2.11.0).
+>
+> Signed-off-by: Richard Hansen <hansenr@google.com>
+> ---
+>  git-mergetool.sh     | 32 ++++++++++++++++++++++++++++++++
+>  t/t7610-mergetool.sh |  2 +-
+>  2 files changed, 33 insertions(+), 1 deletion(-)
+>
+> diff --git a/git-mergetool.sh b/git-mergetool.sh
+> index b506896dc..22f56c25a 100755
+> --- a/git-mergetool.sh
+> +++ b/git-mergetool.sh
+> @@ -456,6 +456,28 @@ main () {
+>  
 
-Here is the interdiff between v5 and 'origin/bw/realpath-wo-chdir':
+While doing the extra cd_to_toplevel added by this patch may not
+break anything that comes after the existing cd_to_toplevel, I find
+the result of applying this patch unnecessarily confusing.  As "if
+the user didn't give any pathnames from the command line, ask rerere
+what paths it thinks are necessary to be handled" is merely a
+laziness fallback, it feels conceptually wrong to use different
+invocations of -O$orderfile when rerere is and is not in effect.
 
-diff --git a/abspath.c b/abspath.c
-index 1d56f5ed9..fce40fddc 100644
---- a/abspath.c
-+++ b/abspath.c
-@@ -62,7 +62,9 @@ static void get_root_part(struct strbuf *resolved, struct strbuf *remaining)
- }
+I wonder if it makes more sense to always move to toplevel upfront
+and consistently use path from the toplevel, perhaps like the patch
+does.  The first hunk is what you wrote but only inside MERGE_RR
+block, and the second hunk deals with converting end-user supplied
+paths that are relative to the original relative to the top-level.
+
+The tweaking of $orderfile you have in the first hunk may have to be
+tightened mimicking the way how "eval ... --sq ... ; shift" is used
+in the second hunk to avoid confusion in case orderfile specified by
+the end user happens to be the same as a valid revname
+(e.g. "master").
+
+
+diff --git a/git-mergetool.sh b/git-mergetool.sh
+index b506896dc1..adbbeceb47 100755
+--- a/git-mergetool.sh
++++ b/git-mergetool.sh
+@@ -454,6 +454,14 @@ main () {
+ 	merge_keep_backup="$(git config --bool mergetool.keepBackup || echo true)"
+ 	merge_keep_temporaries="$(git config --bool mergetool.keepTemporaries || echo false)"
  
- /* We allow "recursive" symbolic links. Only within reason, though. */
--#define MAXSYMLINKS 5
-+#ifndef MAXSYMLINKS
-+#define MAXSYMLINKS 32
-+#endif
- 
- /*
-  * Return the real path (i.e., absolute path, with symlinks resolved
-@@ -139,6 +141,8 @@ char *strbuf_realpath(struct strbuf *resolved, const char *path,
- 			strbuf_reset(&symlink);
- 
- 			if (num_symlinks++ > MAXSYMLINKS) {
-+				errno = ELOOP;
++	prefix=$(git rev-parse --show-prefix) || exit 1
++	cd_to_toplevel
 +
- 				if (die_on_error)
- 					die("More than %d nested symlinks "
- 					    "on path '%s'", MAXSYMLINKS, path);
-
--- 
-Brandon Williams
++	if test -n "$orderfile"
++	then
++		orderfile=$(git rev-parse --prefix "$prefix" "$orderfile") || exit 1
++	fi
++
+ 	if test $# -eq 0 && test -e "$GIT_DIR/MERGE_RR"
+ 	then
+ 		set -- $(git rerere remaining)
+@@ -461,14 +469,16 @@ main () {
+ 		then
+ 			print_noop_and_exit
+ 		fi
++	elif test $# -ge 0
++	then
++		eval "set -- $(git rev-parse --sq --prefix "$prefix" -- "$@")"
++		shift
+ 	fi
+ 
+ 	files=$(git -c core.quotePath=false \
+ 		diff --name-only --diff-filter=U \
+ 		${orderfile:+"-O$orderfile"} -- "$@")
+ 
+-	cd_to_toplevel
+-
+ 	if test -z "$files"
+ 	then
+ 		print_noop_and_exit
