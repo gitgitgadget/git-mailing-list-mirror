@@ -2,94 +2,143 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0181D1FEB3
-	for <e@80x24.org>; Mon,  9 Jan 2017 16:22:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D65D41FEB3
+	for <e@80x24.org>; Mon,  9 Jan 2017 17:29:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1163351AbdAIQW4 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 9 Jan 2017 11:22:56 -0500
-Received: from smtp.codeaurora.org ([198.145.29.96]:40672 "EHLO
-        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1163330AbdAIQWw (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Jan 2017 11:22:52 -0500
-Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id 6FEA961382; Mon,  9 Jan 2017 16:22:51 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1483978971;
-        bh=TfiFh6OgPkTvI8nDfyxD9WMFWbkSLBIvCJ2V2IWn8lQ=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=a10UtKYZcXPkYLyMj/JyciUypkgeNBRnd5+6PhxJGIKTk2liQik6pUtBo/46gmo7Q
-         kwOarMCJYbfGo31CD0JIdxSOxXYiUC+kz3dBe9k3Y6VSdFoTqxsy2NpJsIIMBekNpn
-         UntCiKVCeeTZhaL+Iz/6Rq8uvEi+WVMrpieJpQ84=
-Received: from mfick1-lnx.localnet (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        id S1035172AbdAIR3m (ORCPT <rfc822;e@80x24.org>);
+        Mon, 9 Jan 2017 12:29:42 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:58704 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S932489AbdAIR3l (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Jan 2017 12:29:41 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 7CE595E397;
+        Mon,  9 Jan 2017 12:29:40 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=tVWWhIliXKmp
+        MfGTuDSTQdjHiTE=; b=UU6a6KI84KkBf6PMqgvviGwlh/wuzJSOQqkBhqk9rPgn
+        4lYCGgN7CpwouUK2V+zCalOET/EsFRykRWl4vM5diJ0HK5mLQBbTdKJRdn7KQ03B
+        DiA3HFsIfhjT9B1LjeaPWuK5cs3EwHmd3W8xpgqrXPTJQ5MkXUSaRncOSleUXuI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=pCZKGl
+        UuVGRIwHeu8pWbysYnXmgVD1ppI00E7MLAEqNwctm6RKXd4TP/3DrjajyPK7Jim5
+        52Te74+ZpiUs/VsQQfNrUfxCzxAfsmJT9N4FkjcWak2mb/22CGHC9Krqgjpb2kEn
+        V5p84gSHOcYXBbiQEDHptrCUML4tAVPpi6SPY=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 731875E396;
+        Mon,  9 Jan 2017 12:29:40 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        (Authenticated sender: mfick@smtp.codeaurora.org)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 2109D612F2;
-        Mon,  9 Jan 2017 16:22:51 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1483978971;
-        bh=TfiFh6OgPkTvI8nDfyxD9WMFWbkSLBIvCJ2V2IWn8lQ=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=a10UtKYZcXPkYLyMj/JyciUypkgeNBRnd5+6PhxJGIKTk2liQik6pUtBo/46gmo7Q
-         kwOarMCJYbfGo31CD0JIdxSOxXYiUC+kz3dBe9k3Y6VSdFoTqxsy2NpJsIIMBekNpn
-         UntCiKVCeeTZhaL+Iz/6Rq8uvEi+WVMrpieJpQ84=
-DMARC-Filter: OpenDMARC Filter v1.3.1 smtp.codeaurora.org 2109D612F2
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none header.from=codeaurora.org
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=pass smtp.mailfrom=mfick@codeaurora.org
-From:   Martin Fick <mfick@codeaurora.org>
-To:     Jeff King <peff@peff.net>
-Cc:     Mike Hommey <mh@glandium.org>, git@vger.kernel.org
-Subject: Re: Preserve/Prune Old Pack Files
-Date:   Mon, 09 Jan 2017 09:20:05 -0700
-Message-ID: <3341131.K6hMDMB8iT@mfick1-lnx>
-User-Agent: KMail/4.8.5 (Linux/3.2.0-106-generic; KDE/4.8.5; x86_64; ; )
-In-Reply-To: <20170109105545.gchfklcuzwhlfbtf@sigill.intra.peff.net>
-References: <24abd0ed58c25ce832014f9bd5bb2090@codeaurora.org> <20170109070119.lite2o7k3t2wuvtt@glandium.org> <20170109105545.gchfklcuzwhlfbtf@sigill.intra.peff.net>
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 963785E390;
+        Mon,  9 Jan 2017 12:29:39 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>
+Subject: Re: [PATCH v4] log --graph: customize the graph lines with config log.graphColors
+References: <20170108101333.26221-1-pclouds@gmail.com>
+        <20170109103258.25341-1-pclouds@gmail.com>
+Date:   Mon, 09 Jan 2017 09:29:38 -0800
+In-Reply-To: <20170109103258.25341-1-pclouds@gmail.com> (=?utf-8?B?Ik5n?=
+ =?utf-8?B?dXnhu4VuIFRow6FpIE5n4buNYw==?=
+        Duy"'s message of "Mon, 9 Jan 2017 17:32:58 +0700")
+Message-ID: <xmqqh958uoot.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.90 (gnu/linux)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 330ADD4E-D691-11E6-BB32-A7617B1B28F4-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Monday, January 09, 2017 05:55:45 AM Jeff King wrote:
-> On Mon, Jan 09, 2017 at 04:01:19PM +0900, Mike Hommey 
-wrote:
-> > > That's _way_ more complicated than your problem, and
-> > > as I said, I do not have a finished solution. But it
-> > > seems like they touch on a similar concept (a
-> > > post-delete holding area for objects). So I thought
-> > > I'd mention it in case if spurs any brilliance.
-> > 
-> > Something that is kind-of in the same family of problems
-> > is the "loosening" or objects on repacks, before they
-> > can be pruned.
-...
-> Yes, this can be a problem. The repack is smart enough not
-> to write out objects which would just get pruned
-> immediately, but since the grace period is 2 weeks, that
-> can include a lot of objects (especially with history
-> rewriting as you note). It would be possible to write
-> those loose objects to a "cruft" pack, but there are some
-> management issues around the cruft pack. You do not want
-> to keep repacking them into a new cruft pack at each
-> repack, since then they would never expire. So you need
-> some way of marking the pack as cruft, letting it age
-> out, and then deleting it after the grace period expires.
-> 
-> I don't think it would be _that_ hard, but AFAIK nobody
-> has ever made patches.
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
 
-FYI, jgit does this,
+> +	end =3D string + strlen(string);
+> +	while (start < end) {
+> +		const char *comma =3D strchrnul(start, ',');
+> +		char color[COLOR_MAXLEN];
+> +
+> +		while (start < comma && isspace(*start))
+> +			start++;
+> +		if (start =3D=3D comma) {
+> +			start =3D comma + 1;
+> +			continue;
+> +		}
+> +
+> +		if (!color_parse_mem(start, comma - start, color))
 
--Martin
+So you skip the leading blanks but let color_parse_mem() trim the
+trailing blanks?  It would work once the control reaches the loop,
+but wouldn't that miss
 
--- 
-The Qualcomm Innovation Center, Inc. is a member of Code 
-Aurora Forum, hosted by The Linux Foundation
+	git -c log.graphColors=3D' reset , blue, red' log --graph=20
+
+as "reset" is not understood by parse_color() and is understood by
+color_parse_mem() only when the length is given correctly?
+
+I am undecided, but leaning towards declaring that it is a bug in
+color_parse_mem() not in this caller.
+
+> +			argv_array_push(&colors, color);
+> +		else
+> +			warning(_("ignore invalid color '%.*s' in log.graphColors"),
+> +				(int)(comma - start), start);
+> +		start =3D comma + 1;
+> +	}
+> +	free(string);
+> +	argv_array_push(&colors, GIT_COLOR_RESET);
+> +	/* graph_set_column_colors takes a max-index, not a count */
+> +	graph_set_column_colors(colors.argv, colors.argc - 1);
+> +}
+> +
+>  void graph_set_column_colors(const char **colors, unsigned short color=
+s_max)
+>  {
+>  	column_colors =3D colors;
+> @@ -208,8 +248,7 @@ struct git_graph *graph_init(struct rev_info *opt)
+>  	struct git_graph *graph =3D xmalloc(sizeof(struct git_graph));
+> =20
+>  	if (!column_colors)
+> -		graph_set_column_colors(column_colors_ansi,
+> -					column_colors_ansi_max);
+> +		read_graph_colors_config();
+
+Now that the helper is renamed to be about "reading the
+configuration to figure out the graph colors", the division of labor
+between the caller and the callee we see here is suboptimal for
+readability, I would think.  =20
+
+We would want to see the caller to either be
+
+	if (!column_colors) {
+		if (read_graph_colors_config())
+			; /* ok */
+		else                       =20
+			graph_set_column_colors(ansi, ansi_max);
+	}
+
+or better yet, something like:
+
+	if (!column_colors) {
+		const char **colors =3D column_colors_ansi;
+		int colors_max =3D column_colors_ansi_max;
+
+		read_graph_colors_config(&colors, &colors_max);
+		graph_set_collumn_colors(colors, colors_max);
+	}
+
+The last one would make it clear that by default we use ansi but
+override that default by calling that function whose purpose is to
+read the values that override the default from the configuration.
+
+I haven't thought things thru regarding memory leakages etc., so
+there may be valid reasons why the last one is infeasible.
 
