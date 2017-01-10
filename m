@@ -2,57 +2,56 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7387A20A93
+	by dcvr.yhbt.net (Postfix) with ESMTP id 89F5420A99
 	for <e@80x24.org>; Tue, 10 Jan 2017 20:43:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751476AbdAJUnD (ORCPT <rfc822;e@80x24.org>);
-        Tue, 10 Jan 2017 15:43:03 -0500
-Received: from mail-qk0-f178.google.com ([209.85.220.178]:34892 "EHLO
-        mail-qk0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751458AbdAJUmu (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 Jan 2017 15:42:50 -0500
-Received: by mail-qk0-f178.google.com with SMTP id u25so571714375qki.2
-        for <git@vger.kernel.org>; Tue, 10 Jan 2017 12:42:50 -0800 (PST)
+        id S1751505AbdAJUnM (ORCPT <rfc822;e@80x24.org>);
+        Tue, 10 Jan 2017 15:43:12 -0500
+Received: from mail-qt0-f174.google.com ([209.85.216.174]:34899 "EHLO
+        mail-qt0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751366AbdAJUmp (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 Jan 2017 15:42:45 -0500
+Received: by mail-qt0-f174.google.com with SMTP id x49so111085287qtc.2
+        for <git@vger.kernel.org>; Tue, 10 Jan 2017 12:42:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=jRChVO5c05zzO/HwwuEMBqtCFjT8mqA8TWgpsd1B67U=;
-        b=uF489KwQU+QrN9fl651QkGcieBzeNQFmOhX9iKqvPpUoz98IM6WfTrKE1YFjRi0uEe
-         n6epYHIjQ5GQCYJWu1WSJgXWkLFS/fdhA7nhMOOWIW7PIsg52pxnljKqDVKnxPaUylRu
-         rhB30082VJ9jQX6nmkvUW+j6SjoHTvaOcBx25eG2zy3VyiUuvXfRCvz/hjJbHPhfW8gT
-         /jhSYfWyVKNtgWBffJDr+XXRNHFc13geRRMgv8HX58FRvLheX0D6SH2meE1HGCO2RASL
-         nTA7CEo0pMa91MT2476EcVge0+uGmJJP5Srfd9zb2HjIwl6Gl0PM8l2Y68/wDxN+j45X
-         OnZg==
+        bh=upJqDKOasEci2/UGypvg8gZjU1z23qgUwTL48+D6PU0=;
+        b=coiNtcTgZelYVeMxL0eWGaXJJFXnNFMW+/I87uw9ox4gf/1v/bT2Z3agKHcdM9sKMz
+         xCE7FfXTh0OENejcBIaNnXsrskHj9yMxjlkAa28Vu7kn4dVAyHNTiRGlFgrwiR/LenFR
+         P7RC3gX9kqzOw2UYHeA+H4Dc4NqQRoGKkZIF38pv4HhQgwW/c1IE96xlio1Eob2JtYua
+         diduyGFIBogzA5GYW1uNfvOT1TfYrkch5TTj5LiMRseEH5ZdMEiQ/JcVMA6RgzKXrv5F
+         R5WmrU29ZXA5D5pO5crRw9tX7V8bObs3+0WhCeC6btVu7jy+bKxc+EnHYefx6sTA1/dq
+         PRQA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=jRChVO5c05zzO/HwwuEMBqtCFjT8mqA8TWgpsd1B67U=;
-        b=T+op4cjhRgoehzIRWpeAXn2jxXsQeGvB6LzKl6Yg0VPdvRXffHjR/SJO5ID4AFPlak
-         lqkLdXlrwG7f3Xj+lSdqu+p+W05srEY9wj2Wyd7yeQrM8z14aam0pzZZy2zd5fOtBB6K
-         WK9AiEIzAeKu0DDTNeUzIWrhrSYt9CxnnH623ArJHPlDmGescz6fX0t/6LQn0+1STddR
-         PDNfbrDe4yvLxabgnHWHAdr7IxumX1+ohG6q2ehiZoMLx+otcy9A4R4w4xarypv+RlEF
-         XViIQxRzVceiAwpEnuEEjJSoDOWQUthclkkujoJQIA4c5d3qLotj6yTna22PYtgYwdJA
-         TPJA==
-X-Gm-Message-State: AIkVDXKezSlNTLGtAswRqDRWqYAuQTo916/oQcJPc6YRYCtofQBnYjb+2kDDBH8hidQEcqEz
-X-Received: by 10.55.220.199 with SMTP id v190mr4805200qki.42.1484080969416;
-        Tue, 10 Jan 2017 12:42:49 -0800 (PST)
+        bh=upJqDKOasEci2/UGypvg8gZjU1z23qgUwTL48+D6PU0=;
+        b=WC6S69MAOZCxmkV8ixa/fSfztvuRhfPPQTyVKqSPA6f9M3q9Bej1bV4ntYXOOwIvRp
+         T7dxpZwT1VlNAfGasR2msbmVRulmUiEgp31weMlNlV+yHRrO1+FQKtAkSC4qlumPrHL2
+         Niuda0A7353+LA8lt19hob9j+kjbb2t4T7G+z7gYi11BN6P5irNrdQowLrpXBs6tzG5j
+         6kK9ll1AHQ43WxF+JrfrxrpByzEMhxtTmr8QRNkk2blGCnslqgttSZ6d8ZVzNZVKhS76
+         m5I94aJRBG4X03Ab9LSrq4kYWZml/DJxnMnajZ48azULllx3TiqeuDmtMffM+j9Or05y
+         OVHg==
+X-Gm-Message-State: AIkVDXLvQjNTsTX4g1z7maF3uwKd6iY2AHxeE/U4wM3RvgrxSZ2dDfee10kSZVw8raRg/smH
+X-Received: by 10.200.40.113 with SMTP id 46mr4394977qtr.167.1484080964851;
+        Tue, 10 Jan 2017 12:42:44 -0800 (PST)
 Received: from hansenr.cam.corp.google.com ([172.29.73.70])
-        by smtp.gmail.com with ESMTPSA id z189sm2238137qkb.42.2017.01.10.12.42.48
+        by smtp.gmail.com with ESMTPSA id z189sm2238137qkb.42.2017.01.10.12.42.44
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 10 Jan 2017 12:42:48 -0800 (PST)
+        Tue, 10 Jan 2017 12:42:44 -0800 (PST)
 From:   Richard Hansen <hansenr@google.com>
 To:     git@vger.kernel.org
 Cc:     davvid@gmail.com, j6t@kdbg.org, hansenr@google.com,
         sbeller@google.com, simon@ruderich.org, gitster@pobox.com
-Subject: [PATCH v5 14/14] mergetool: fix running in subdir when rerere enabled
-Date:   Tue, 10 Jan 2017 15:42:02 -0500
-Message-Id: <20170110204202.21779-15-hansenr@google.com>
+Subject: [PATCH v5 08/14] t7610: delete some now-unnecessary 'git reset --hard' lines
+Date:   Tue, 10 Jan 2017 15:41:56 -0500
+Message-Id: <20170110204202.21779-9-hansenr@google.com>
 X-Mailer: git-send-email 2.11.0.390.gc69c2f50cf-goog
 In-Reply-To: <20170110204202.21779-1-hansenr@google.com>
 References: <20170109232941.43637-1-hansenr@google.com>
@@ -62,89 +61,35 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The pathnames output by the 'git rerere remaining' command are
-relative to the top-level directory but the 'git diff --name-only'
-command expects its pathname arguments to be relative to the current
-working directory.  Run cd_to_toplevel before running 'git diff
---name-only' and adjust any relative pathnames so that 'git mergetool'
-does not fail when run from a subdirectory with rerere enabled.
+Tests now always run 'git reset --hard' at the end (even if they
+fail), so it's no longer necessary to run 'git reset --hard' at the
+beginning of a test.
 
-This fixes a regression introduced in
-57937f70a09c12ef484c290865dac4066d207c9c (v2.11.0).
-
-Based-on-patch-by: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: Richard Hansen <hansenr@google.com>
 ---
- git-mergetool.sh     | 17 +++++++++++++++--
- t/t7610-mergetool.sh |  7 ++++++-
- 2 files changed, 21 insertions(+), 3 deletions(-)
+ t/t7610-mergetool.sh | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/git-mergetool.sh b/git-mergetool.sh
-index b506896dc..c062e3de3 100755
---- a/git-mergetool.sh
-+++ b/git-mergetool.sh
-@@ -454,6 +454,17 @@ main () {
- 	merge_keep_backup="$(git config --bool mergetool.keepBackup || echo true)"
- 	merge_keep_temporaries="$(git config --bool mergetool.keepTemporaries || echo false)"
- 
-+	prefix=$(git rev-parse --show-prefix) || exit 1
-+	cd_to_toplevel
-+
-+	if test -n "$orderfile"
-+	then
-+		orderfile=$(
-+			git rev-parse --prefix "$prefix" -- "$orderfile" |
-+			sed -e 1d
-+		)
-+	fi
-+
- 	if test $# -eq 0 && test -e "$GIT_DIR/MERGE_RR"
- 	then
- 		set -- $(git rerere remaining)
-@@ -461,14 +472,16 @@ main () {
- 		then
- 			print_noop_and_exit
- 		fi
-+	elif test $# -ge 0
-+	then
-+		# rev-parse provides the -- needed for 'set'
-+		eval "set $(git rev-parse --sq --prefix "$prefix" -- "$@")"
- 	fi
- 
- 	files=$(git -c core.quotePath=false \
- 		diff --name-only --diff-filter=U \
- 		${orderfile:+"-O$orderfile"} -- "$@")
- 
--	cd_to_toplevel
--
- 	if test -z "$files"
- 	then
- 		print_noop_and_exit
 diff --git a/t/t7610-mergetool.sh b/t/t7610-mergetool.sh
-index b36fde1c0..820fc8597 100755
+index 55587504e..7d5e1df88 100755
 --- a/t/t7610-mergetool.sh
 +++ b/t/t7610-mergetool.sh
-@@ -234,7 +234,7 @@ test_expect_success 'mergetool merges all from subdir (rerere disabled)' '
- 	)
- '
+@@ -184,7 +184,6 @@ test_expect_success 'mergetool in subdir' '
  
--test_expect_failure 'mergetool merges all from subdir (rerere enabled)' '
-+test_expect_success 'mergetool merges all from subdir (rerere enabled)' '
+ test_expect_success 'mergetool on file in parent dir' '
  	test_when_finished "git reset --hard" &&
+-	git reset --hard &&
+ 	git submodule update -N &&
+ 	(
+ 		cd subdir &&
+@@ -277,7 +276,6 @@ test_expect_success 'conflicted stash sets up rerere'  '
+ 
+ test_expect_success 'mergetool takes partial path' '
+ 	test_when_finished "git reset --hard" &&
+-	git reset --hard &&
+ 	test_config rerere.enabled false &&
  	git checkout -b test$test_count branch1 &&
- 	test_config rerere.enabled true &&
-@@ -677,6 +677,11 @@ test_expect_success 'diff.orderFile configuration is honored' '
- 		b
- 		a
- 	EOF
-+
-+	# make sure "order-file" that is ambiguous between
-+	# rev and path is understood correctly.
-+	git branch order-file HEAD &&
-+
- 	git mergetool --no-prompt --tool myecho >output &&
- 	git grep --no-index -h -A2 Merging: output >actual &&
- 	test_cmp expect actual
+ 	git submodule update -N &&
 -- 
 2.11.0.390.gc69c2f50cf-goog
 
