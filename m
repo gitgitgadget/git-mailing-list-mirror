@@ -7,169 +7,130 @@ X-Spam-Status: No, score=-6.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DA66120756
-	for <e@80x24.org>; Tue, 10 Jan 2017 17:09:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 87FFD20756
+	for <e@80x24.org>; Tue, 10 Jan 2017 17:27:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S936939AbdAJRJi (ORCPT <rfc822;e@80x24.org>);
-        Tue, 10 Jan 2017 12:09:38 -0500
-Received: from mail-qt0-f178.google.com ([209.85.216.178]:34541 "EHLO
-        mail-qt0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755547AbdAJRJg (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 Jan 2017 12:09:36 -0500
-Received: by mail-qt0-f178.google.com with SMTP id l7so122487830qtd.1
-        for <git@vger.kernel.org>; Tue, 10 Jan 2017 09:09:36 -0800 (PST)
+        id S1162892AbdAJR1p (ORCPT <rfc822;e@80x24.org>);
+        Tue, 10 Jan 2017 12:27:45 -0500
+Received: from mail-qt0-f180.google.com ([209.85.216.180]:36768 "EHLO
+        mail-qt0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1162859AbdAJR1o (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 Jan 2017 12:27:44 -0500
+Received: by mail-qt0-f180.google.com with SMTP id k15so401674020qtg.3
+        for <git@vger.kernel.org>; Tue, 10 Jan 2017 09:27:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=subject:to:references:cc:from:message-id:date:user-agent
          :mime-version:in-reply-to;
-        bh=KSX7Df/1qsQXNI4Isg/ZsIDnA5VNvI2eU+tIsK8Xuzg=;
-        b=re3CxAgpS0NXSPJwQBj07azfci1AyWutqL9W0lUX74uPE+8YSCqcb2uRVg9K3w9YmA
-         IUbpYduRPYo7LW+f/9QilpEdAURgMKkHiavDvrQeu1c/zG9sVG8LdQanN/kXwM9JXDf8
-         5CgQlpWXqyutIeebwDfX0YyX64jgq5k5UQM5w10gtMzugysJGDzJK9LtnSWblXLFUZ2S
-         y6wRUlD1K12LXmSXleSG61G5biLMghGJYCcyiFFs91EjSDDv7qmZ0MJILl+Oov5XsIHL
-         cOQf1Aaov38gV2F9Vx36MyD8Le4CkEb0o9P/FMV8b8tKUan1OEqiHlD2+o4x5+tzoUsR
-         INgA==
+        bh=otX7MDOW32Exk12GgPji88ln/AOESIWWqx9M/DP+abU=;
+        b=ZJk+24A05rxlIuAEefm2QnH3K77DgOUQuAbgmE7j44deEWPB20LAXRkmbGuqywaOt0
+         Vjq/fi+z6Vfmz7hg7BVsxjvYkhfMwQerYZinXxAM3gAvwZJxus9TkCiOI4d/dTnbg4rc
+         msKQZ4fK+Y9yCGeuglJHL6Ij5eB89ZM4PPkdo6TVTNC6qMj91frhzZxMOzwH9h7IY0or
+         U8KqYnDbWdSubcKkk1Cwm7Z4r0ctOJDz8PmSP76KpCoTIe6e6B+xJVL6x3D88B1nP80/
+         KkGaxAYrvwSJvXWtIZl1HhNzexiqDl+dC9k+Fsf5mb+YcDHn0Wu+vI9As28El0FdyyoQ
+         ZCJQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:references:cc:from:message-id:date
          :user-agent:mime-version:in-reply-to;
-        bh=KSX7Df/1qsQXNI4Isg/ZsIDnA5VNvI2eU+tIsK8Xuzg=;
-        b=RupHkIhF4Kb97YGiGxT+CvACEqSQresNP7p87sWdC+dSB0b6nY4q74g7jvEc2Z5N+g
-         jX5I5CbXVnKs9dSqNZRsf9aQI5Gowdgg1IS+ZqFRumwxRgrQDH+OXdqzgf4zmohmLFxJ
-         tYoNgTcrHKjAynLNz1Vxw+bj739dJ9Nj5brR6SvKmoY8/2xMAQ/OOcUBhyPkboEqyGOu
-         LPhIYvpBCnpNFI8g9Yxu7KA35dFfA5rIbNrSEyhYYJ2M/0XD6vN9qYAvz6o0K/aGKLu8
-         XbntqNjtH6hAru3fmZsdMDazDRZybBxk4+ivqAEIFKgq7HUkx7aUe8L14Ah6H6y90yTH
-         xhHw==
-X-Gm-Message-State: AIkVDXK4NS7ciULivT8ByjGPv/gNbfFkhlCsy6MtnjNyeojy1oiXjCHAXGYEpDD2qALSo17v
-X-Received: by 10.200.37.199 with SMTP id f7mr3020090qtf.186.1484068175422;
-        Tue, 10 Jan 2017 09:09:35 -0800 (PST)
+        bh=otX7MDOW32Exk12GgPji88ln/AOESIWWqx9M/DP+abU=;
+        b=Ev66Q1LNOlm3f5+Z0jEtNHcTVysSw0064qtrDyy8xTwYgy1eAo3nnC2dS9F8F+Xb6m
+         4ZdpxgYYDCVnvCzYdxVJxutJWfVrNhdg28U8UPwwAVeNy1xo19n3IHQoVRsSlKpFZJVG
+         yTeqGqwAaQ0Usg/chIab5rhI6eKZZwJCWroUkL2WqyTsCp99sB8JaIgobWN28izLj1of
+         2chgSVnb736PYDsNfnEAN+kLqyOd6OCyeaTutoRhUTpuh8BWsvLgrTqS664HA69IoC87
+         aPVslqrs9TsaUaTxf9pPV0giQZdYNIQLMdS5vhWxnG0pZ4t2vJb3mlMWFF18HegYgQkY
+         afeA==
+X-Gm-Message-State: AIkVDXJ1Wj3nPrTBgfCOS4SjXTeoWZGr/UWCejChf9pG5IBf/V9HNXO6iEu2gy8VAiTwAkdY
+X-Received: by 10.200.54.84 with SMTP id n20mr4298020qtb.79.1484069262897;
+        Tue, 10 Jan 2017 09:27:42 -0800 (PST)
 Received: from hansenr.cam.corp.google.com ([2620:0:1004:2:c4d:bcd2:8be8:b9f6])
-        by smtp.gmail.com with ESMTPSA id 5sm1822323qts.47.2017.01.10.09.09.34
+        by smtp.gmail.com with ESMTPSA id q145sm1872469qke.37.2017.01.10.09.27.42
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 10 Jan 2017 09:09:34 -0800 (PST)
-Subject: Re: [PATCH v4 14/14] mergetool: fix running in subdir when rerere
- enabled
-To:     Johannes Sixt <j6t@kdbg.org>
-References: <20170109054238.42599-1-hansenr@google.com>
- <20170109232941.43637-1-hansenr@google.com>
- <20170109232941.43637-15-hansenr@google.com>
- <3a09e318-f14b-5f14-a992-3bd045f0a4c6@kdbg.org>
-Cc:     git@vger.kernel.org, davvid@gmail.com, sbeller@google.com,
-        simon@ruderich.org, gitster@pobox.com
+        Tue, 10 Jan 2017 09:27:42 -0800 (PST)
+Subject: Re: [PATCH 1/2] diff: document behavior of relative diff.orderFile
+To:     Jeff King <peff@peff.net>
+References: <20170110004031.57985-1-hansenr@google.com>
+ <20170110004031.57985-2-hansenr@google.com>
+ <20170110065816.pu325sxajbyuqpj6@sigill.intra.peff.net>
+Cc:     git@vger.kernel.org
 From:   Richard Hansen <hansenr@google.com>
-Message-ID: <10bd75ad-15d6-5694-bdf1-6b820d0b3201@google.com>
-Date:   Tue, 10 Jan 2017 12:09:34 -0500
+Message-ID: <e100d30a-5ee8-8485-5012-f9b1c6961ffa@google.com>
+Date:   Tue, 10 Jan 2017 12:27:41 -0500
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
  Thunderbird/45.5.1
 MIME-Version: 1.0
-In-Reply-To: <3a09e318-f14b-5f14-a992-3bd045f0a4c6@kdbg.org>
+In-Reply-To: <20170110065816.pu325sxajbyuqpj6@sigill.intra.peff.net>
 Content-Type: multipart/signed; protocol="application/pkcs7-signature"; micalg=sha-256;
-        boundary="001a1140605270e1440545c08cae"
+        boundary="001a114761da41fb7c0545c0cd00"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
---001a1140605270e1440545c08cae
+--001a114761da41fb7c0545c0cd00
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 2017-01-10 01:17, Johannes Sixt wrote:
-> Am 10.01.2017 um 00:29 schrieb Richard Hansen:
->> The pathnames output by the 'git rerere remaining' command are
->> relative to the top-level directory but the 'git diff --name-only'
->> command expects its pathname arguments to be relative to the current
->> working directory.  Run cd_to_toplevel before running 'git diff
->> --name-only' and adjust any relative pathnames so that 'git mergetool'
->> does not fail when run from a subdirectory with rerere enabled.
+On 2017-01-10 01:58, Jeff King wrote:
+> On Mon, Jan 09, 2017 at 07:40:30PM -0500, Richard Hansen wrote:
+>
+>> Document that a relative pathname for diff.orderFile is interpreted as
+>> relative to the top-level work directory.
 >>
->> This fixes a regression introduced in
->> 57937f70a09c12ef484c290865dac4066d207c9c (v2.11.0).
->>
->> Based-on-patch-by: Junio C Hamano <gitster@pobox.com>
 >> Signed-off-by: Richard Hansen <hansenr@google.com>
 >> ---
->>  git-mergetool.sh     | 16 ++++++++++++++--
->>  t/t7610-mergetool.sh |  7 ++++++-
->>  2 files changed, 20 insertions(+), 3 deletions(-)
+>>  Documentation/diff-config.txt | 2 ++
+>>  1 file changed, 2 insertions(+)
 >>
->> diff --git a/git-mergetool.sh b/git-mergetool.sh
->> index b506896dc..cba6bbd05 100755
->> --- a/git-mergetool.sh
->> +++ b/git-mergetool.sh
->> @@ -454,6 +454,15 @@ main () {
->>      merge_keep_backup="$(git config --bool mergetool.keepBackup || echo true)"
->>      merge_keep_temporaries="$(git config --bool mergetool.keepTemporaries || echo false)"
->>
->> +    prefix=$(git rev-parse --show-prefix) || exit 1
->> +    cd_to_toplevel
->> +
->> +    if test -n "$orderfile"
->> +    then
->> +        orderfile=$(git rev-parse --prefix "$prefix" -- "$orderfile") || exit 1
->> +        orderfile=$(printf %s\\n "$orderfile" | sed -e 1d)
+>> diff --git a/Documentation/diff-config.txt b/Documentation/diff-config.txt
+>> index 58f4bd6af..875212045 100644
+>> --- a/Documentation/diff-config.txt
+>> +++ b/Documentation/diff-config.txt
+>> @@ -101,6 +101,8 @@ diff.noprefix::
+>>  diff.orderFile::
+>>  	File indicating how to order files within a diff, using
+>>  	one shell glob pattern per line.
+>> +	If `diff.orderFile` is a relative pathname, it is treated as
+>> +	relative to the top of the work tree.
+>>  	Can be overridden by the '-O' option to linkgit:git-diff[1].
 >
-> Is the purpose of this complication only to detect errors of the git
-> invocation?
+> What happens in a bare repository?
 
-Yes.  I've been burned so many times by the shell not stopping when 
-there's an error that I always like to do things one step at a time with 
-error checking, even if it is less efficient.
-
-> IMHO, we could dispense with that, but others might
-> disagree. I am arguing because this adds yet another process; but it is
-> only paid when -O is used, so...
->
->> +    fi
->> +
->>      if test $# -eq 0 && test -e "$GIT_DIR/MERGE_RR"
->>      then
->>          set -- $(git rerere remaining)
->> @@ -461,14 +470,17 @@ main () {
->>          then
->>              print_noop_and_exit
->>          fi
->> +    elif test $# -ge 0
->> +    then
->> +        files_quoted=$(git rev-parse --sq --prefix "$prefix" -- "$@") || exit 1
->> +        eval "set -- $files_quoted"
->
-> BTW, the --sq and eval business is not required here. At this point,
-> $IFS = $'\n',
-
-Whoa, really?  That's surprising and feels wrong.
-
-(BTW, I just noticed that guess_merge_tool sets IFS to a space without 
-resetting it afterward.  That function is always run in a subshell so 
-there's no problem at the moment, but it's still a bit risky.)
-
-> so
->
->         set -- $(git rev-parse --sq --prefix "$prefix" -- "$@")
->
-> will do. (Except that it would not detect errors.)
-
-I think I would prefer to leave it as-is in case IFS is ever changed 
-back to the default.
+I didn't know which is why this patch is silent on that topic.  :)
 
 >
->> +        shift
->>      fi
+> I'm guessing it's relative to the top-level of the repository,
+
+I just tried it out and it's relative to $PWD.
+
+> but we should probably spell it out.
+
+Do we want it to be relative to $PWD?  I think relative to $GIT_DIR is 
+more useful.  If we want it to be relative to $GIT_DIR, then I think we 
+should stay silent regarding bare repositories so that the behavior 
+remains unspecified until we update the logic.
+
 >
-> As I don't see anything wrong with what you have written, these comments
-> alone do not warrant another re-roll.
+> The other case is --no-index when we are not in a repository at all, but
+> that should just be relative to the current directory,
 
-I'll reroll if I hear other votes in favor of changing.  Thanks for 
-reviewing!
+It is.
 
--Richard
+> which isn't really worth mentioning.
+
+Agreed.
+
+I'll post a re-roll if people prefer the current behavior over relative 
+to $GIT_DIR.
+
+Thanks for reviewing,
+Richard
 
 >
-> -- Hannes
->
+> -Peff
 
 
---001a1140605270e1440545c08cae
+--001a114761da41fb7c0545c0cd00
 Content-Type: application/pkcs7-signature; name="smime.p7s"
 Content-Transfer-Encoding: base64
 Content-Disposition: attachment; filename="smime.p7s"
@@ -251,13 +212,13 @@ m4YUSo869xADdrGrWJ7KzroFbucLZYh3niIjVICp7fh9wtLgbX7X/akdubehYhy/l+AIMml6Zlyu
 GNGCGIleyQ0bAdjjG+dKrDErUlui8wd/YplvelaTAzSvNpxcrr+2YB8UBWcYkgULkp5GDCC2guKl
 rMF1mTS6N6GMxUi30sZicbMxggJeMIICWgIBATBcMEwxCzAJBgNVBAYTAkJFMRkwFwYDVQQKExBH
 bG9iYWxTaWduIG52LXNhMSIwIAYDVQQDExlHbG9iYWxTaWduIEhWIFMvTUlNRSBDQSAxAgwvfEOc
-7N3JjQI9nAwwDQYJYIZIAWUDBAIBBQCggdQwLwYJKoZIhvcNAQkEMSIEIFDYUCYcvhvJ6uHUc0rC
-rOifKqh6eg9W+8GaoK63GZ+wMBgGCSqGSIb3DQEJAzELBgkqhkiG9w0BBwEwHAYJKoZIhvcNAQkF
-MQ8XDTE3MDExMDE3MDkzNVowaQYJKoZIhvcNAQkPMVwwWjALBglghkgBZQMEASowCwYJYIZIAWUD
+7N3JjQI9nAwwDQYJYIZIAWUDBAIBBQCggdQwLwYJKoZIhvcNAQkEMSIEIO2SLRqQ0qyb7LxYfNdM
+AN8PdI8hpXyXh6yfqmK7roi6MBgGCSqGSIb3DQEJAzELBgkqhkiG9w0BBwEwHAYJKoZIhvcNAQkF
+MQ8XDTE3MDExMDE3Mjc0M1owaQYJKoZIhvcNAQkPMVwwWjALBglghkgBZQMEASowCwYJYIZIAWUD
 BAEWMAsGCWCGSAFlAwQBAjAKBggqhkiG9w0DBzALBgkqhkiG9w0BAQowCwYJKoZIhvcNAQEHMAsG
-CWCGSAFlAwQCATANBgkqhkiG9w0BAQEFAASCAQCFLTpl156UHgsCRylWwwerVcoUnBhJ5ieYCIou
-8PcZ/DncMLERXZwQ91rFgyTPsWuGHpagPBJnMrMy8uaOINOeiyDlioMytXAY5oAMRbXvTKvjVxwD
-3fXjzab9emLA2Mszf3FsS+myIrc/ABV23/Nj+mwOBOrRlH+PoyFzsGhZMBr7n0FWMezlx7YndpyT
-PWrMjhpTDyImAXxsUYtbgCNCvEXLZXcwcaeVlwRziZQmDiiqy84i9se2vJbt863E6hlOO1brZs9o
-RBi2P+snNyaQSYI+3JqcSiZdMVrEmFxQfueWp9gyeJ8CMY93pjjd4uIwOtvOxHQpWtePxQgg7paV
---001a1140605270e1440545c08cae--
+CWCGSAFlAwQCATANBgkqhkiG9w0BAQEFAASCAQAebmicH6fBRDddPC0N8ZX1Jjd5IH/nkK91Kuzw
+S+Sx4gl+Nt9LWZ0CNRK/0hoUi6sKqpOOGHuBN3aPaxDdB3BVHY4r5Yps0TRFFj5k6LJNI/8fnM/s
+IGhGWXj024TqxF3K6w79zWywxKQ2TfV1Vi2S5tHpFpMHw6MzJWrdC/geqzVzvhU+MwRLy6sHC808
+Md3Xt8t5JCiOTSklfqrNIleacXZ8ISXZ8gi9OuGE8e/rHEwr2YrTtyVJGFg/FXNre77MtKpMB2X9
+WKZA9cKsFAaby7HxSMpp4XxCfmWzWwNq1tEv+W242tCCWwdep/645woh4FFZbE2qlq58MPVbVt6V
+--001a114761da41fb7c0545c0cd00--
