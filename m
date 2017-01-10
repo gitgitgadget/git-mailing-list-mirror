@@ -7,53 +7,53 @@ X-Spam-Status: No, score=-6.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6110520A93
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4AE53205C9
 	for <e@80x24.org>; Tue, 10 Jan 2017 08:49:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1760457AbdAJItJ (ORCPT <rfc822;e@80x24.org>);
-        Tue, 10 Jan 2017 03:49:09 -0500
-Received: from mail-pf0-f193.google.com ([209.85.192.193]:35405 "EHLO
+        id S1760419AbdAJItG (ORCPT <rfc822;e@80x24.org>);
+        Tue, 10 Jan 2017 03:49:06 -0500
+Received: from mail-pf0-f193.google.com ([209.85.192.193]:35379 "EHLO
         mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1760375AbdAJItH (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 Jan 2017 03:49:07 -0500
-Received: by mail-pf0-f193.google.com with SMTP id f144so9037641pfa.2
-        for <git@vger.kernel.org>; Tue, 10 Jan 2017 00:49:07 -0800 (PST)
+        with ESMTP id S1760375AbdAJItE (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 Jan 2017 03:49:04 -0500
+Received: by mail-pf0-f193.google.com with SMTP id f144so9037448pfa.2
+        for <git@vger.kernel.org>; Tue, 10 Jan 2017 00:49:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=CqEsiFGTMsu2ZMxZIM7Bv7nE+yLjy5THZRy8o6eKnD0=;
-        b=YAOjgQdvNXaPajYnn/M4gdrn6ExPG1j60XwYIX8Ith2ZQXOzJ05IZ+IPiJHGOIB+/2
-         YIXvi8IbiIczOYqXW+LMpW/URR54Bx7lumcfANdQM/zXn8QoHkaz6qzrQJyc9qlEH0pK
-         YxSyhvgxZqUifAElJx6m23jqYXzLNBv3R3Q1eZA5XCNvPJVK4ws0InsZsypgEJlEtkId
-         9I7XhD5nYiTEatPQrYqet9iJqK1nmwE8PmWHpmB2Z3QQqdT7ZeCm1fmrGHUu2MMFEabi
-         wIPKJsbb2ZGHf/psjcRNdGwt+8rx+svYCmtWu/ebDiHIfCn8F8FZddg3+EcnPb5KfCkg
-         3U6A==
+        bh=D3/FV6M9Is5cbWwMVU88RtozEui6bk/JMtAdvH5lTG8=;
+        b=MOVTr7OayZYfDbmE/wisp77rgQdgUE8yQxJWvTZN45VWLrdupsEnb4DBa2or920otF
+         1FuY1xnLqcCoJ/Z023S/Tey0Z2k/TAXg7RTuFJnteaLU2XAM4TltVmHKlT2t8jmqD7y1
+         Mfqe17765PdN+2jTv4u7JcB3ZK4E7tayzfHcICFNtKccLibkJ8VJqO+3N/yIKRDNceLc
+         OoysAuYqoSYpc1j0aBs1y/kbeEm+pjhRqNfMGfL9ZEJD9yYxM6YkznwG2xQrQ9h6nG0N
+         nnI5A05Zl0s0V5EhIGi8+Ivi5CwmLOJLKHHSZHdr39p8QhsSLsf6npHF43W6+IrXtyvc
+         f9rA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=CqEsiFGTMsu2ZMxZIM7Bv7nE+yLjy5THZRy8o6eKnD0=;
-        b=QPL8c49QLMZI66cGQbNrUd13tnZ+IG1QYK3NKKYAdHnqy2pDEaAhL0wa0FGOxu2vwk
-         A5fL2erTDx/uLnGkR4yUoysGSCCCc/tKMm3gDYJXk+Dw7sKshDh+EE+TFfdPZmj0Bpoy
-         F3vSlD5w5P7XvIzANr2S3lpqnsmElBineVpfZyHDbrImixO8fwcIIA4zdXWqIYLDLmw7
-         ikIOU2LHN7fgn+kCBY8rcxs3jMErraTAgtEBGkiFSkfcuWknOUcMrDk5m57GG23xfWia
-         IAaWzxkeOXWKn+z2aM135sJOQPDHBwXRd+X7XZc4473RqmOsjSGAgmjKGm7ETfY4WT7q
-         rB7A==
-X-Gm-Message-State: AIkVDXJneNAJinAgk+1HCZh8ZrOguEf1/OKEXcZnpwCjsdA5G4h1vDVB+1y+sfiN3OGkVA==
-X-Received: by 10.99.124.66 with SMTP id l2mr2741740pgn.116.1484038146619;
-        Tue, 10 Jan 2017 00:49:06 -0800 (PST)
+        bh=D3/FV6M9Is5cbWwMVU88RtozEui6bk/JMtAdvH5lTG8=;
+        b=tEXqf19sjc9oIXP7CS7MkUSRzp7in+KtZbD8EolLM7NYnvmwnnTKPKevNBazOpDUF7
+         HHCyOcHdEB3r+BggBlqoxOdg7ZqOJttb6oh52z8L5Ereum6NgV8+X8vRjgtlzXz5b6Hw
+         hPcIwNwkSBF+AXiT20RfmedW9pwfEdFfCiq8duT08zA2V7tvZeszXyY1OHtxpqUoK+xx
+         RRft4hfHse6Bs0zaOa9nJcE71dGsHvsZnwuoVOWzxKpjOJXCtbTkz24j9a2nx5iLJcBY
+         lOYOTJLoTFjpD0SDu+W1fuaso5wkt/w1+tOwfwRzJG1wD0akdOJfqiZSgnIApjWIi2+o
+         Hclw==
+X-Gm-Message-State: AIkVDXIXktSvdsm+0HPjPGWfP5xjhyBMmouz7ZqHuOtV/oYoga8bk2D5m6Isjw2dCNpLwQ==
+X-Received: by 10.99.60.76 with SMTP id i12mr2729047pgn.170.1484038143880;
+        Tue, 10 Jan 2017 00:49:03 -0800 (PST)
 Received: from AamlaJuice.corp.endurance.com ([115.110.127.198])
-        by smtp.gmail.com with ESMTPSA id m12sm3411983pfg.92.2017.01.10.00.49.04
+        by smtp.gmail.com with ESMTPSA id m12sm3411983pfg.92.2017.01.10.00.49.01
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 10 Jan 2017 00:49:05 -0800 (PST)
+        Tue, 10 Jan 2017 00:49:03 -0800 (PST)
 From:   Karthik Nayak <karthik.188@gmail.com>
 X-Google-Original-From: Karthik Nayak <Karthik.188@gmail.com>
 To:     git@vger.kernel.org
 Cc:     jacob.keller@gmail.com, gitster@pobox.com,
         Karthik Nayak <karthik.188@gmail.com>
-Subject: [PATCH v10 07/20] ref-filter: make %(upstream:track) prints "[gone]" for invalid upstreams
-Date:   Tue, 10 Jan 2017 14:19:40 +0530
-Message-Id: <20170110084953.15890-8-Karthik.188@gmail.com>
+Subject: [PATCH v10 06/20] ref-filter: introduce format_ref_array_item()
+Date:   Tue, 10 Jan 2017 14:19:39 +0530
+Message-Id: <20170110084953.15890-7-Karthik.188@gmail.com>
 X-Mailer: git-send-email 2.11.0
 In-Reply-To: <20170110084953.15890-1-Karthik.188@gmail.com>
 References: <20170110084953.15890-1-Karthik.188@gmail.com>
@@ -64,68 +64,74 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Karthik Nayak <karthik.188@gmail.com>
 
-Borrowing from branch.c's implementation print "[gone]" whenever an
-unknown upstream ref is encountered instead of just ignoring it.
+To allow column display, we will need to first render the output in a
+string list to allow print_columns() to compute the proper size of
+each column before starting the actual output. Introduce the function
+format_ref_array_item() that does the formatting of a ref_array_item
+to an strbuf.
 
-This makes sure that when branch.c is ported over to using ref-filter
-APIs for printing, this feature is not lost.
-
-Make changes to t/t6300-for-each-ref.sh and
-Documentation/git-for-each-ref.txt to reflect this change.
+show_ref_array_item() is kept as a convenience wrapper around it which
+obtains the strbuf and prints it the standard output.
 
 Mentored-by: Christian Couder <christian.couder@gmail.com>
 Mentored-by: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
-Helped-by : Jacob Keller <jacob.keller@gmail.com>
 Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
 ---
- Documentation/git-for-each-ref.txt | 3 ++-
- ref-filter.c                       | 4 +++-
- t/t6300-for-each-ref.sh            | 2 +-
- 3 files changed, 6 insertions(+), 3 deletions(-)
+ ref-filter.c | 16 ++++++++++++----
+ ref-filter.h |  3 +++
+ 2 files changed, 15 insertions(+), 4 deletions(-)
 
-diff --git a/Documentation/git-for-each-ref.txt b/Documentation/git-for-each-ref.txt
-index d7ab4c961..94c6b88fa 100644
---- a/Documentation/git-for-each-ref.txt
-+++ b/Documentation/git-for-each-ref.txt
-@@ -121,7 +121,8 @@ upstream::
- 	"[ahead N, behind M]" and `:trackshort` to show the terse
- 	version: ">" (ahead), "<" (behind), "<>" (ahead and behind),
- 	or "=" (in sync).  Has no effect if the ref does not have
--	tracking information associated with it.
-+	tracking information associated with it. `:track` also prints
-+	"[gone]" whenever unknown upstream ref is encountered.
- 
- push::
- 	The name of a local ref which represents the `@{push}` location
 diff --git a/ref-filter.c b/ref-filter.c
-index 47b521cca..998991873 100644
+index 5511a200c..47b521cca 100644
 --- a/ref-filter.c
 +++ b/ref-filter.c
-@@ -1073,8 +1073,10 @@ static void fill_remote_ref_details(struct used_atom *atom, const char *refname,
- 		*s = shorten_unambiguous_ref(refname, warn_ambiguous_refs);
- 	else if (atom->u.remote_ref == RR_TRACK) {
- 		if (stat_tracking_info(branch, &num_ours,
--				       &num_theirs, NULL))
-+				       &num_theirs, NULL)) {
-+			*s = "[gone]";
- 			return;
-+		}
+@@ -1833,10 +1833,10 @@ static void append_literal(const char *cp, const char *ep, struct ref_formatting
+ 	}
+ }
  
- 		if (!num_ours && !num_theirs)
- 			*s = "";
-diff --git a/t/t6300-for-each-ref.sh b/t/t6300-for-each-ref.sh
-index e67c694c3..a2e3f5525 100755
---- a/t/t6300-for-each-ref.sh
-+++ b/t/t6300-for-each-ref.sh
-@@ -382,7 +382,7 @@ test_expect_success 'Check that :track[short] cannot be used with other atoms' '
+-void show_ref_array_item(struct ref_array_item *info, const char *format, int quote_style)
++void format_ref_array_item(struct ref_array_item *info, const char *format,
++			   int quote_style, struct strbuf *final_buf)
+ {
+ 	const char *cp, *sp, *ep;
+-	struct strbuf *final_buf;
+ 	struct ref_formatting_state state = REF_FORMATTING_STATE_INIT;
  
- test_expect_success 'Check that :track[short] works when upstream is invalid' '
- 	cat >expected <<-\EOF &&
--
-+	[gone]
+ 	state.quote_style = quote_style;
+@@ -1866,9 +1866,17 @@ void show_ref_array_item(struct ref_array_item *info, const char *format, int qu
+ 	}
+ 	if (state.stack->prev)
+ 		die(_("format: %%(end) atom missing"));
+-	final_buf = &state.stack->output;
+-	fwrite(final_buf->buf, 1, final_buf->len, stdout);
++	strbuf_addbuf(final_buf, &state.stack->output);
+ 	pop_stack_element(&state.stack);
++}
++
++void show_ref_array_item(struct ref_array_item *info, const char *format, int quote_style)
++{
++	struct strbuf final_buf = STRBUF_INIT;
++
++	format_ref_array_item(info, format, quote_style, &final_buf);
++	fwrite(final_buf.buf, 1, final_buf.len, stdout);
++	strbuf_release(&final_buf);
+ 	putchar('\n');
+ }
  
- 	EOF
- 	test_when_finished "git config branch.master.merge refs/heads/master" &&
+diff --git a/ref-filter.h b/ref-filter.h
+index f78323de0..630e7c2b9 100644
+--- a/ref-filter.h
++++ b/ref-filter.h
+@@ -100,6 +100,9 @@ int parse_ref_filter_atom(const char *atom, const char *ep);
+ int verify_ref_format(const char *format);
+ /*  Sort the given ref_array as per the ref_sorting provided */
+ void ref_array_sort(struct ref_sorting *sort, struct ref_array *array);
++/*  Based on the given format and quote_style, fill the strbuf */
++void format_ref_array_item(struct ref_array_item *info, const char *format,
++			   int quote_style, struct strbuf *final_buf);
+ /*  Print the ref using the given format and quote_style */
+ void show_ref_array_item(struct ref_array_item *info, const char *format, int quote_style);
+ /*  Callback function for parsing the sort option */
 -- 
 2.11.0
 
