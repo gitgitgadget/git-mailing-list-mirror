@@ -2,92 +2,160 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-6.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5059F20756
-	for <e@80x24.org>; Tue, 10 Jan 2017 23:05:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D610620756
+	for <e@80x24.org>; Tue, 10 Jan 2017 23:33:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756451AbdAJXFE (ORCPT <rfc822;e@80x24.org>);
-        Tue, 10 Jan 2017 18:05:04 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:50923 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1750872AbdAJXFD (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 Jan 2017 18:05:03 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 28AA65F145;
-        Tue, 10 Jan 2017 18:05:02 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=Wl+Zp23qEKQ6SJYu7W11/asVrCE=; b=Ti2QTG
-        fE7pOXz7ctHWJBOkQTbUf9aCnr8o7on8Bn3DbpjoJjbYCgK9diyRu0SJ0dUEO+wO
-        MP7BoeImjnNASDvOsRIzsILBmsZ/mXk2LwK4xj9AAAiIk7JbUi68JGU01Hlpcnl1
-        TLgGqmZr9Qm6GbY/V2kX6hAPARVHshyJnEgHY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=rf84V35FeWPCPlzBxtGS1tIJ2yw5uNRB
-        n6Bn8/MFoPNlI+sq8YdGoBq5sP3gWER/Ohmm8+MvBObo5DTkEwX96Oz+SLVHD0x+
-        Pjc5GGy9oRU2NPI0vW37VBQmtEUdmv4B9venVL2T3i2+JT8P33vWu7b2AzxMg38i
-        JsdelE56LLY=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id EB5035F142;
-        Tue, 10 Jan 2017 18:05:01 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id AEBDF5F141;
-        Tue, 10 Jan 2017 18:05:00 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
-        git@vger.kernel.org,
-        =?utf-8?B?66eI64iE7JeY?= <nalla@hamal.uberspace.de>
-Subject: Re: [PATCH 1/2] asciidoctor: fix user-manual to be built by `asciidoctor`
-References: <cover.1483373021.git.johannes.schindelin@gmx.de>
-        <3c160f81a88cf8697f2459bb7f2a3e27fb3e469c.1483373021.git.johannes.schindelin@gmx.de>
-        <20170104080852.bmlmtzxhjx4qt74f@sigill.intra.peff.net>
-        <xmqqbmvi34ul.fsf@gitster.mtv.corp.google.com>
-        <20170108032709.k43zmej5lxmcoj4o@sigill.intra.peff.net>
-Date:   Tue, 10 Jan 2017 15:04:59 -0800
-In-Reply-To: <20170108032709.k43zmej5lxmcoj4o@sigill.intra.peff.net> (Jeff
-        King's message of "Sat, 7 Jan 2017 22:27:09 -0500")
-Message-ID: <xmqqinpmpld0.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.90 (gnu/linux)
+        id S1757497AbdAJXdS (ORCPT <rfc822;e@80x24.org>);
+        Tue, 10 Jan 2017 18:33:18 -0500
+Received: from mail-it0-f47.google.com ([209.85.214.47]:34955 "EHLO
+        mail-it0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1757211AbdAJXdP (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 Jan 2017 18:33:15 -0500
+Received: by mail-it0-f47.google.com with SMTP id c20so85874037itb.0
+        for <git@vger.kernel.org>; Tue, 10 Jan 2017 15:33:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=github.com; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=6E5NdWPJm85SuIkn/tmC80scsiF+FQ4Imah9kqohvFQ=;
+        b=A20FxVt48uvRLGUJspzP2ESi0KnBLRv6r4pxdejlSzNnsWaboyCqyT5U2KH5CHM+lN
+         o3oAhojCrR2gOWHxg+D3Mj31ONSSopE/6+kulSAWrGOPfbwY7o119lM0Cv/Sxk/XOvMj
+         NyF7eXPv42B2L3nDkIHdOB5/XD1PvlOryOW10=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=6E5NdWPJm85SuIkn/tmC80scsiF+FQ4Imah9kqohvFQ=;
+        b=iASFeNXkTSUVVN8GIOgUg5Hvv2q3lFJ4HVyT5hfi9s6zX3SEAhbMyHy0ig8ElPFwuX
+         S4YslJSt5KtH+jE0vMQiLBWT7fhXsRlHIKDwwLk6ABpb8i9ntjMMyfUAg7rd/EftrcZQ
+         v2d6Lhf6iy08aplOjTxjyj6VGNpkodIkrJVdnQvkaFEeTqXwMKpd7ZDBsHCVvdEF3wQa
+         pE3b4essQKgyEbwA5jJp22kLpZ8Uj3SgJarkJR7XYFRhnhZ4HoUdfQvyDZulUmEEOTUu
+         XCvwTXTuv1xrn6teagOmjeTNpxNiAuNK3zGRbk0885wnnBrctJ1HS07zOe6IrjSwFAgn
+         BqRg==
+X-Gm-Message-State: AIkVDXK1rk48AnEQKT35An05jnZxtbH7ObBKbe75oAJ7l+5we/b3KvPFl6QrLLsRJDbLDiv/
+X-Received: by 10.36.225.13 with SMTP id n13mr5944625ith.57.1484091194583;
+        Tue, 10 Jan 2017 15:33:14 -0800 (PST)
+Received: from localhost ([206.168.224.82])
+        by smtp.gmail.com with ESMTPSA id y134sm2109872iod.16.2017.01.10.15.33.13
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 10 Jan 2017 15:33:13 -0800 (PST)
+Date:   Tue, 10 Jan 2017 16:33:11 -0700
+From:   Taylor Blau <ttaylorr@github.com>
+To:     Jakub =?utf-8?B?TmFyxJlic2tp?= <jnareb@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Lars Schneider <larsxschneider@gmail.com>, git@vger.kernel.org,
+        Eric Wong <e@80x24.org>
+Subject: Re: [PATCH v1] convert: add "status=delayed" to filter process
+ protocol
+Message-ID: <20170110233311.GA1572@Ida>
+References: <20170108191736.47359-1-larsxschneider@gmail.com>
+ <xmqqa8b115ll.fsf@gitster.mtv.corp.google.com>
+ <ec8078ef-8ff2-d26f-ef73-5ef612737eee@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 36913294-D789-11E6-BC5F-A7617B1B28F4-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <ec8078ef-8ff2-d26f-ef73-5ef612737eee@gmail.com>
+User-Agent: Mutt/1.7.2 (2016-11-26)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
-
-> On Sat, Jan 07, 2017 at 02:03:30PM -0800, Junio C Hamano wrote:
+On Tue, Jan 10, 2017 at 11:11:01PM +0100, Jakub Narębski wrote:
+> W dniu 09.01.2017 o 00:42, Junio C Hamano pisze:
+> > larsxschneider@gmail.com writes:
+> >> From: Lars Schneider <larsxschneider@gmail.com>
+> >>
+> >> Some `clean` / `smudge` filters might require a significant amount of
+> >> time to process a single blob. During this process the Git checkout
+> >> operation is blocked and Git needs to wait until the filter is done to
+> >> continue with the checkout.
 >
->> Is that a longer way to say that the claim "... is designed as a
->> book" is false?
->> 
->> > So I dunno. I really do think "article" is conceptually the most
->> > appropriate style, but I agree that there are some book-like things
->> > (like appendices).
->> 
->> ... Yeah, I should have read forward first before starting to insert
->> my comments.
+> Lars, what is expected use case for this feature; that is when do you
+> think this problem may happen?  Is it something that happened IRL?
 >
-> To be honest, I'm not sure whether "book" versus "article" was really
-> considered in the original writing. I think we can call it whichever
-> produces the output we find most pleasing. I was mostly just pointing at
-> there are some tradeoffs in the end result in flipping the type.
+> >>
+> >> Teach the filter process protocol (introduced in edcc858) to accept the
+> >> status "delayed" as response to a filter request. Upon this response Git
+> >> continues with the checkout operation and asks the filter to process the
+> >> blob again after all other blobs have been processed.
+> >
+> > Hmm, I would have expected that the basic flow would become
+> >
+> > 	for each paths to be processed:
+> > 		convert-to-worktree to buf
+> > 		if not delayed:
+> > 			do the caller's thing to use buf
+> > 		else:
+> > 			remember path
+> >
+> > 	for each delayed paths:
+> > 		ensure filter process finished processing for path
+> > 		fetch the thing to buf from the process
+> > 		do the caller's thing to use buf
+>
+> I would expect here to have a kind of event loop, namely
+>
+>         while there are delayed paths:
+>                 get path that is ready from filter
+>                 fetch the thing to buf (supporting "delayed")
+>                 if path done
+>                         do the caller's thing to use buf
+>                         (e.g. finish checkout path, eof convert, etc.)
+>
+> We can either trust filter process to tell us when it finished sending
+> delayed paths, or keep list of paths that are being delayed in Git.
 
-I understand.  
+This makes a lot of sense to me. The "get path that is ready from filter" should
+block until the filter has data that it is ready to send. This way Git isn't
+wasting time in a busy-loop asking whether the filter has data ready to be sent.
+It also means that if the filter has one large chunk that it's ready to write,
+Git can work on that while the filter continues to process more data,
+theoretically improving the performance of checkouts with many large delayed
+objects.
 
-And I tend to agree that the silliness you observed (like a t-o-c
-for a one-section "chapter") is not quite welcome.
+>
+> >
+> > and that would make quite a lot of sense.  However, what is actually
+> > implemented is a bit disappointing from that point of view.  While
+> > its first part is the same as above, the latter part instead does:
+> >
+> > 	for each delayed paths:
+> > 		checkout the path
+> >
+> > Presumably, checkout_entry() does the "ensure that the process is
+> > done converting" (otherwise the result is simply buggy), but what
+> > disappoints me is that this does not allow callers that call
+> > "convert-to-working-tree", whose interface is obtain the bytestream
+> > in-core in the working tree representation, given an object in the
+> > object-db representation in an in-core buffer, to _use_ the result
+> > of the conversion.  The caller does not have a chance to even see
+> > the result as it is written straight to the filesystem, once it
+> > calls checkout_delayed_entries().
+> >
+>
 
-For now I queued only 2/2 which looked good.  I won't object if
-somebody else rerolls 1/2 to appease AsciiDoctor, but let's take an
-obviously good bit first.
+In addition to the above, I'd also like to investigate adding a "no more items"
+message into the filter protocol. This would be useful for filters that
+batch delayed items into groups. In particular, if the batch size is `N`, and Git
+sends `2N-1` items, the second batch will be under-filled. The filter on the
+other end needs some mechanism to send the second batch, even though it hasn't
+hit max capacity.
 
-Thanks.
+Specifically, this is how Git LFS implements object transfers for data it does
+not have locally, but I'm sure that this sort of functionality would be useful
+for other filter implementations as well.
+
+--
+Thanks,
+Taylor Blau
+
+ttaylorr@github.com
