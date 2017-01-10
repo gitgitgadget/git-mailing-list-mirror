@@ -2,131 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-6.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0CC7E20756
-	for <e@80x24.org>; Tue, 10 Jan 2017 20:05:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A117220756
+	for <e@80x24.org>; Tue, 10 Jan 2017 20:06:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S965852AbdAJUFl (ORCPT <rfc822;e@80x24.org>);
-        Tue, 10 Jan 2017 15:05:41 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:61761 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S965503AbdAJUFk (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 Jan 2017 15:05:40 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 6055F5F864;
-        Tue, 10 Jan 2017 15:05:39 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=D/14RI6abwwYno9MkS5+VzZjNRA=; b=uc+6/4
-        Eg/elXDjMQdmLF89/UDbjYFxj2hnj5F+1ACPcoGQz2CBCrVcKG4CS277hHZCn0mz
-        mq5BV7nmCUYsDTnjwpFLDm3703sHbJbjKBY+QzKmoAgyYWB0Oqba/VoUaK9p1SDA
-        4fCU0JDOobI1Ze/hPLVVosNww4AIKpri5wQlI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=ALSOSDgfVjQNZeSPYpCNmTdwDXPvNpL2
-        prGZZ5VRQllF4x46HgaemkN9ATWcWdkJDKHVQYskI/LVZNe6DQa0CdPFpMCd4YsF
-        /r7atu88rIwN3T/uA8tpJb3OD+TXsC5I5p9pYFftToX/plCwYL7cHTWbAyj6Q4O7
-        22VfvS1OG00=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 58F6B5F863;
-        Tue, 10 Jan 2017 15:05:39 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id BA6C95F862;
-        Tue, 10 Jan 2017 15:05:38 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     peff@peff.net, l.s.r@web.de, git@vger.kernel.org
-Subject: Re: [PATCHv2 4/5] unpack-trees: factor file removal out of check_updates
-References: <20170109194621.17013-1-sbeller@google.com>
-        <20170109194621.17013-5-sbeller@google.com>
-Date:   Tue, 10 Jan 2017 12:05:37 -0800
-In-Reply-To: <20170109194621.17013-5-sbeller@google.com> (Stefan Beller's
-        message of "Mon, 9 Jan 2017 11:46:20 -0800")
-Message-ID: <xmqqd1fusmsu.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.90 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 27F0F454-D770-11E6-A5ED-FE3F13518317-77302942!pb-smtp1.pobox.com
+        id S1162354AbdAJUGd (ORCPT <rfc822;e@80x24.org>);
+        Tue, 10 Jan 2017 15:06:33 -0500
+Received: from mail-pf0-f171.google.com ([209.85.192.171]:34035 "EHLO
+        mail-pf0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1162334AbdAJUGb (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 Jan 2017 15:06:31 -0500
+Received: by mail-pf0-f171.google.com with SMTP id 127so52066149pfg.1
+        for <git@vger.kernel.org>; Tue, 10 Jan 2017 12:06:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=from:to:cc:subject:date:message-id;
+        bh=3U9iE9y44nC/nhCNkHeSC0/Q591nSNG1i6GBUFFBVHA=;
+        b=F4yz4XyKPYtTIZKFaZULsKT7VhENNujVuDi65wa6B7JZr1G1G8SpZ8INqo7FuTyCke
+         nEd6ha4DidPHgwjPjh4bomK+NBGLgd/nde+diHVyMXXb61Q2pXqMpGHyk4Qw0vhIPQJt
+         KtnRu22+C1Tg8dmG12afK9mtYkWd3Y4ifFd2nPnZ4rG47uz7t1RxhIUBQ8zXZHitoGEl
+         gODbD94vPUjnvemiFvVinWE0NYsr+KF37M5hnAZJX46a9ZphIBquoQjM4i7d6y76xhub
+         pKrs+85GBMqR5K7qfs0EGe+02/EUWDewjrBWtJ+RskhCJtQtrA6DdjILBzbEjXxZs63l
+         Pysg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=3U9iE9y44nC/nhCNkHeSC0/Q591nSNG1i6GBUFFBVHA=;
+        b=PzMAg2B39avUgr9la2fGMUcEsrhjYuB3tzlWjpa2QplrEVO606yH85bZFOrEpf3RWT
+         6CoGLVVGd5bXOowgm9nTH+BS+GScQnpDLnlZDmgXJPhVALZdamDH2oqlY+V63pHZZJ+C
+         0c364AF/9anSVXEHNraurSIpPbXu9C5c2nC4zFJUCISF8dYHhgyGWjwGWtvaNw9jLrR/
+         XKhwUYhbYk5YWUOr/oFHd73pLS2H62K1y8ETfRbLGdAwNTLWYgN1+L1RTlSE6Axz8671
+         U+B1xQ+eb8I1vn6KgFLO2iad76EoIRYfV9xLhNLEsUDBJMPlRfdrwsLkjpliqlT84l7R
+         yl/g==
+X-Gm-Message-State: AIkVDXI4LQr0yQIm0ujRSsqLOF+baXoHrC3m40rcZFjCqQRn88/TXw7MFvH8vn/z4EVtkXPR
+X-Received: by 10.98.159.141 with SMTP id v13mr5850077pfk.50.1484078785218;
+        Tue, 10 Jan 2017 12:06:25 -0800 (PST)
+Received: from roshar.mtv.corp.google.com ([100.96.238.26])
+        by smtp.gmail.com with ESMTPSA id o126sm7770081pga.34.2017.01.10.12.06.23
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Tue, 10 Jan 2017 12:06:24 -0800 (PST)
+From:   Brandon Williams <bmwill@google.com>
+To:     git@vger.kernel.org
+Cc:     Brandon Williams <bmwill@google.com>
+Subject: [PATCH] index: improve constness for reading blob data
+Date:   Tue, 10 Jan 2017 12:06:10 -0800
+Message-Id: <20170110200610.146596-1-bmwill@google.com>
+X-Mailer: git-send-email 2.11.0.390.gc69c2f50cf-goog
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
+Improve constness of the index_state parameter to the
+'read_blob_data_from_index' function.
 
-> This makes check_updates shorter and easier to understand.
->
-> Signed-off-by: Stefan Beller <sbeller@google.com>
-> ---
+Signed-off-by: Brandon Williams <bmwill@google.com>
+---
+ cache.h      | 2 +-
+ read-cache.c | 3 ++-
+ 2 files changed, 3 insertions(+), 2 deletions(-)
 
-I agree that 3/5 made it easier to understand by ejecting a block
-that is not essential to the functionality of the function out of
-it, making the remainder of the fuction about "removing gone files
-and then write out the modified files".  
+diff --git a/cache.h b/cache.h
+index a50a61a19..363953c1a 100644
+--- a/cache.h
++++ b/cache.h
+@@ -599,7 +599,7 @@ extern int chmod_index_entry(struct index_state *, struct cache_entry *ce, char
+ extern int ce_same_name(const struct cache_entry *a, const struct cache_entry *b);
+ extern void set_object_name_for_intent_to_add_entry(struct cache_entry *ce);
+ extern int index_name_is_other(const struct index_state *, const char *, int);
+-extern void *read_blob_data_from_index(struct index_state *, const char *, unsigned long *);
++extern void *read_blob_data_from_index(const struct index_state *, const char *, unsigned long *);
+ 
+ /* do stat comparison even if CE_VALID is true */
+ #define CE_MATCH_IGNORE_VALID		01
+diff --git a/read-cache.c b/read-cache.c
+index f92a912dc..6ee044442 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -2292,7 +2292,8 @@ int index_name_is_other(const struct index_state *istate, const char *name,
+ 	return 1;
+ }
+ 
+-void *read_blob_data_from_index(struct index_state *istate, const char *path, unsigned long *size)
++void *read_blob_data_from_index(const struct index_state *istate,
++				const char *path, unsigned long *size)
+ {
+ 	int pos, len;
+ 	unsigned long sz;
+-- 
+2.11.0.390.gc69c2f50cf-goog
 
-The ejecting of the first half of these two operations, both are
-what this function is about, done by this step feels backwards.  If
-anything, the "only do the actual working tree manipulation when not
-doing a dry-run and told to update" logic that must be in both are
-spread in two helper functions after step 5/5, and with the added
-boilerplate for these two helpers, the end result becomes _longer_
-to understand what is really going on when check_updates() is
-called.
-
-Is the original after step 3/5 too long and hard to understand?
-
->  unpack-trees.c | 29 +++++++++++++++++++++--------
->  1 file changed, 21 insertions(+), 8 deletions(-)
->
-> diff --git a/unpack-trees.c b/unpack-trees.c
-> index b564024472..ac59510251 100644
-> --- a/unpack-trees.c
-> +++ b/unpack-trees.c
-> @@ -218,6 +218,26 @@ static void unlink_entry(const struct cache_entry *ce)
->  	schedule_dir_for_removal(ce->name, ce_namelen(ce));
->  }
->  
-> +static unsigned remove_workingtree_files(struct unpack_trees_options *o,
-> +					 struct progress *progress)
-> +{
-> +	int i;
-> +	unsigned cnt = 0;
-> +	struct index_state *index = &o->result;
-> +
-> +	for (i = 0; i < index->cache_nr; i++) {
-> +		const struct cache_entry *ce = index->cache[i];
-> +
-> +		if (ce->ce_flags & CE_WT_REMOVE) {
-> +			display_progress(progress, ++cnt);
-> +			if (o->update && !o->dry_run)
-> +				unlink_entry(ce);
-> +		}
-> +	}
-> +
-> +	return cnt;
-> +}
-> +
->  static struct progress *get_progress(struct unpack_trees_options *o)
->  {
->  	unsigned cnt = 0, total = 0;
-> @@ -254,15 +274,8 @@ static int check_updates(struct unpack_trees_options *o)
->  
->  	if (o->update)
->  		git_attr_set_direction(GIT_ATTR_CHECKOUT, index);
-> -	for (i = 0; i < index->cache_nr; i++) {
-> -		const struct cache_entry *ce = index->cache[i];
->  
-> -		if (ce->ce_flags & CE_WT_REMOVE) {
-> -			display_progress(progress, ++cnt);
-> -			if (o->update && !o->dry_run)
-> -				unlink_entry(ce);
-> -		}
-> -	}
-> +	cnt = remove_workingtree_files(o, progress);
->  	remove_marked_cache_entries(index);
->  	remove_scheduled_dirs();
