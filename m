@@ -2,135 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 916CF20756
-	for <e@80x24.org>; Tue, 10 Jan 2017 20:41:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 86D8120756
+	for <e@80x24.org>; Tue, 10 Jan 2017 20:42:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751360AbdAJUlg (ORCPT <rfc822;e@80x24.org>);
-        Tue, 10 Jan 2017 15:41:36 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:63237 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1750701AbdAJUlf (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 Jan 2017 15:41:35 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id BAE615E3A9;
-        Tue, 10 Jan 2017 15:41:33 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=NfeOvBnhvueTyfv3hvSlxW1tDDo=; b=glO0QM
-        eEErqmOZGxisvWLyD3FNDQrHYFH3jlXa/afQVfW1W8W9fk8v7hj6KBSMgqgCaE/q
-        OGX7IrG0hZNmSG0GP8BdjH2HN0BSIs6YjKBKNmFw3xqdnHt9JhS87X+EahdYbsuu
-        ci0D2cqSfKMGue2ohHUDAE8C/zmNHYQF8+/5s=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=NvwqM25XDlVIoKyIqtacSx2wiJHFJdxC
-        1lcdew2VOT8tAaQt70r6T8YdHl9XWKKG0AzQkcb1pYYgxs+MPmMDkkABXyZ6eXKA
-        5IgwZ1jKuh+wIt+OLlo1IwftG+OUfnKOlsJ9NuM1zUnghLal4apKBh1eK1GEVUwy
-        SYoEo/dRrRI=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id A1A085E3A8;
-        Tue, 10 Jan 2017 15:41:33 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 106325E3A5;
-        Tue, 10 Jan 2017 15:41:32 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     bmwill@google.com, novalis@novalis.org, git@vger.kernel.org
-Subject: Re: [PATCH 1/4] read-tree: use OPT_BOOL instead of OPT_SET_INT
-References: <20170110014542.19352-1-sbeller@google.com>
-        <20170110014542.19352-2-sbeller@google.com>
-Date:   Tue, 10 Jan 2017 12:41:31 -0800
-In-Reply-To: <20170110014542.19352-2-sbeller@google.com> (Stefan Beller's
-        message of "Mon, 9 Jan 2017 17:45:39 -0800")
-Message-ID: <xmqqmveyr6kk.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.90 (gnu/linux)
+        id S1751452AbdAJUmr (ORCPT <rfc822;e@80x24.org>);
+        Tue, 10 Jan 2017 15:42:47 -0500
+Received: from mail-qk0-f177.google.com ([209.85.220.177]:34083 "EHLO
+        mail-qk0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750956AbdAJUmk (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 Jan 2017 15:42:40 -0500
+Received: by mail-qk0-f177.google.com with SMTP id a20so188591765qkc.1
+        for <git@vger.kernel.org>; Tue, 10 Jan 2017 12:42:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=LY9L+yRD2QmWaslz6xv3WzUXkiHIdqBjXYf3CoNnWQw=;
+        b=Ic8k4jcwzElIp+6uxIHaUVlM9zbfC4uRzjpAAdinAijVdMGhBPhNrZXeTR8x7ZdRbp
+         E8Hbdy2KICKOEyR57YaqqRfT355uj7Uv0w0mGu5FMb0MzrMP55Edwq5sU4O9lDi01NCL
+         qZDNkxEPgnYNF2bBUcx4a0eSIHybgcQew9GsAw3WLn3pD6MwaT3rR8hl1a+JNe5r4ziF
+         LsvHqOR12SIg+/iQtcnWAHShQSzczLxl09NkxJQJqaPX2HfFk7v9mBoRlNsRTMWBrOqc
+         01KWTK6v7XSBUT5qeciCnUBmyyeQAIhko9cnsXwj20WATFMxetG07TmxkLFHV7ohkgAB
+         W72Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=LY9L+yRD2QmWaslz6xv3WzUXkiHIdqBjXYf3CoNnWQw=;
+        b=VqN8RopKtEXNTziz/fva9/VFnMvxifRhxvR4y+NHjTiCIcNOQdDhllZMS7GbeAJyHX
+         AjMR5Kuzei2hTAhjqidemGIIZU8PXRRMPFNsSCMveetNpQUEtH4eunVZZnlvyXqYAqf9
+         uFs5BgeAo5wMIBgHaPJoNXtVY68TRQm6BVWGwucxoGX7Z5hmkQ/dIS/h3MkF4TletUEN
+         D2ZRPlVXLYNlEW+a0yiZjDYUpYN2Nb8mwVMN41aoh8ac0gEsEO09rUkCDeKwg44MK2Kd
+         cwthGEGNMvapCFmKcQTQ5W1R6Yg4/kdD/ykzpZbH4RkjTOtBXVMSnSdQzQROMXh3r9h/
+         2p8w==
+X-Gm-Message-State: AIkVDXLnhlWnbIAxNWIuBnIEiydaccRGlr1sm83igvd4L2hNDPllsA7IcuFg6y+dLpod6Y+C
+X-Received: by 10.55.112.65 with SMTP id l62mr5514240qkc.76.1484080959657;
+        Tue, 10 Jan 2017 12:42:39 -0800 (PST)
+Received: from hansenr.cam.corp.google.com ([172.29.73.70])
+        by smtp.gmail.com with ESMTPSA id z189sm2238137qkb.42.2017.01.10.12.42.39
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Tue, 10 Jan 2017 12:42:39 -0800 (PST)
+From:   Richard Hansen <hansenr@google.com>
+To:     git@vger.kernel.org
+Cc:     davvid@gmail.com, j6t@kdbg.org, hansenr@google.com,
+        sbeller@google.com, simon@ruderich.org, gitster@pobox.com
+Subject: [PATCH v5 01/14] .mailmap: Use my personal email address as my canonical
+Date:   Tue, 10 Jan 2017 15:41:49 -0500
+Message-Id: <20170110204202.21779-2-hansenr@google.com>
+X-Mailer: git-send-email 2.11.0.390.gc69c2f50cf-goog
+In-Reply-To: <20170110204202.21779-1-hansenr@google.com>
+References: <20170109232941.43637-1-hansenr@google.com>
+ <20170110204202.21779-1-hansenr@google.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 2C02192E-D775-11E6-A882-FE3F13518317-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
+When I changed employers my work address changed from rhansen@bbn.com
+to hansenr@google.com.  Rather than map my old work address to my new,
+map them both to my permanent personal email address.  (I will still
+use my work address in commits I submit so that my employer gets some
+credit.)
 
-> All occurrences of OPT_SET_INT were setting the value to 1;
-> internally OPT_BOOL is just that.
->
-> Signed-off-by: Stefan Beller <sbeller@google.com>
-> ---
->  builtin/read-tree.c | 36 ++++++++++++++++++------------------
->  1 file changed, 18 insertions(+), 18 deletions(-)
+Signed-off-by: Richard Hansen <hansenr@google.com>
+---
+ .mailmap | 2 ++
+ 1 file changed, 2 insertions(+)
 
-The result is much easier to read, partly because the "1" (true) is
-at the very end of the line when OPT_SET_INT() is used for the
-reader to notice that this is merely a boolean.
+diff --git a/.mailmap b/.mailmap
+index 9cc33e925..9c87a3840 100644
+--- a/.mailmap
++++ b/.mailmap
+@@ -192,6 +192,8 @@ Philippe Bruhat <book@cpan.org>
+ Ralf Thielow <ralf.thielow@gmail.com> <ralf.thielow@googlemail.com>
+ Ramsay Jones <ramsay@ramsayjones.plus.com> <ramsay@ramsay1.demon.co.uk>
+ René Scharfe <l.s.r@web.de> <rene.scharfe@lsrfire.ath.cx>
++Richard Hansen <rhansen@rhansen.org> <hansenr@google.com>
++Richard Hansen <rhansen@rhansen.org> <rhansen@bbn.com>
+ Robert Fitzsimons <robfitz@273k.net>
+ Robert Shearman <robertshearman@gmail.com> <rob@codeweavers.com>
+ Robert Zeh <robert.a.zeh@gmail.com>
+-- 
+2.11.0.390.gc69c2f50cf-goog
 
-More importantly, as OPT_SET_INT() can be used multiple times on the
-same variable (or field) to set it to different values, it is easier
-to read if OPT_BOOL() is used when OPT_SET_INT() to 1 is not used
-for that purpose.
-
-Thanks.
-
->> diff --git a/builtin/read-tree.c b/builtin/read-tree.c
-> index fa6edb35b2..8ba64bc785 100644
-> --- a/builtin/read-tree.c
-> +++ b/builtin/read-tree.c
-> @@ -109,34 +109,34 @@ int cmd_read_tree(int argc, const char **argv, const char *unused_prefix)
->  		{ OPTION_CALLBACK, 0, "index-output", NULL, N_("file"),
->  		  N_("write resulting index to <file>"),
->  		  PARSE_OPT_NONEG, index_output_cb },
-> -		OPT_SET_INT(0, "empty", &read_empty,
-> -			    N_("only empty the index"), 1),
-> +		OPT_BOOL(0, "empty", &read_empty,
-> +			    N_("only empty the index")),
->  		OPT__VERBOSE(&opts.verbose_update, N_("be verbose")),
->  		OPT_GROUP(N_("Merging")),
-> -		OPT_SET_INT('m', NULL, &opts.merge,
-> -			    N_("perform a merge in addition to a read"), 1),
-> -		OPT_SET_INT(0, "trivial", &opts.trivial_merges_only,
-> -			    N_("3-way merge if no file level merging required"), 1),
-> -		OPT_SET_INT(0, "aggressive", &opts.aggressive,
-> -			    N_("3-way merge in presence of adds and removes"), 1),
-> -		OPT_SET_INT(0, "reset", &opts.reset,
-> -			    N_("same as -m, but discard unmerged entries"), 1),
-> +		OPT_BOOL('m', NULL, &opts.merge,
-> +			 N_("perform a merge in addition to a read")),
-> +		OPT_BOOL(0, "trivial", &opts.trivial_merges_only,
-> +			 N_("3-way merge if no file level merging required")),
-> +		OPT_BOOL(0, "aggressive", &opts.aggressive,
-> +			 N_("3-way merge in presence of adds and removes")),
-> +		OPT_BOOL(0, "reset", &opts.reset,
-> +			 N_("same as -m, but discard unmerged entries")),
->  		{ OPTION_STRING, 0, "prefix", &opts.prefix, N_("<subdirectory>/"),
->  		  N_("read the tree into the index under <subdirectory>/"),
->  		  PARSE_OPT_NONEG | PARSE_OPT_LITERAL_ARGHELP },
-> -		OPT_SET_INT('u', NULL, &opts.update,
-> -			    N_("update working tree with merge result"), 1),
-> +		OPT_BOOL('u', NULL, &opts.update,
-> +			 N_("update working tree with merge result")),
->  		{ OPTION_CALLBACK, 0, "exclude-per-directory", &opts,
->  		  N_("gitignore"),
->  		  N_("allow explicitly ignored files to be overwritten"),
->  		  PARSE_OPT_NONEG, exclude_per_directory_cb },
-> -		OPT_SET_INT('i', NULL, &opts.index_only,
-> -			    N_("don't check the working tree after merging"), 1),
-> +		OPT_BOOL('i', NULL, &opts.index_only,
-> +			 N_("don't check the working tree after merging")),
->  		OPT__DRY_RUN(&opts.dry_run, N_("don't update the index or the work tree")),
-> -		OPT_SET_INT(0, "no-sparse-checkout", &opts.skip_sparse_checkout,
-> -			    N_("skip applying sparse checkout filter"), 1),
-> -		OPT_SET_INT(0, "debug-unpack", &opts.debug_unpack,
-> -			    N_("debug unpack-trees"), 1),
-> +		OPT_BOOL(0, "no-sparse-checkout", &opts.skip_sparse_checkout,
-> +			 N_("skip applying sparse checkout filter")),
-> +		OPT_BOOL(0, "debug-unpack", &opts.debug_unpack,
-> +			 N_("debug unpack-trees")),
->  		OPT_END()
->  	};
