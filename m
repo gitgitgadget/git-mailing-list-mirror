@@ -2,79 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MIME_HEADER_CTYPE_ONLY,
-	MIME_NO_TEXT,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD,
-	T_TVD_MIME_NO_HEADERS shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD,T_TVD_MIME_NO_HEADERS
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AA11F1FEB3
-	for <e@80x24.org>; Tue, 10 Jan 2017 00:41:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1C30E1FEB3
+	for <e@80x24.org>; Tue, 10 Jan 2017 00:41:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1030222AbdAJAk6 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 9 Jan 2017 19:40:58 -0500
-Received: from mail-qt0-f174.google.com ([209.85.216.174]:32788 "EHLO
-        mail-qt0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S939690AbdAJAk5 (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1032019AbdAJAk7 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 9 Jan 2017 19:40:59 -0500
+Received: from mail-qk0-f173.google.com ([209.85.220.173]:35056 "EHLO
+        mail-qk0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S941183AbdAJAk5 (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 9 Jan 2017 19:40:57 -0500
-Received: by mail-qt0-f174.google.com with SMTP id v23so152043935qtb.0
-        for <git@vger.kernel.org>; Mon, 09 Jan 2017 16:40:56 -0800 (PST)
+Received: by mail-qk0-f173.google.com with SMTP id u25so543278932qki.2
+        for <git@vger.kernel.org>; Mon, 09 Jan 2017 16:40:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=from:to:cc:subject:date:message-id;
-        bh=OB9G13uC0WgG1T3gLvcjNNwMIJDFSrpCEhvj43rUu6A=;
-        b=WtHOe3MeG8/mtrehswu3md/oGPJ+m6lBtqSzyBsTtH4VD6b/kjN9fTM9NT8xQW4AdC
-         kfwV9W+6F6GnaWU3LWzyLpIoT8gOem+XCZ/Gt/b4uKWgN5mUL8Dt0PJokqoab6dTmntv
-         GihIn1nJaRn2sSyolV4xL7KXQMPtXTWpS3nBXGmEqqHOi7XDw+tLJoq+aTpfiyWk7buV
-         N0QRXWTIPAkxpdSkwGcTVpj3Lz4oc0vyTvCwjS3AqvaHHunS9DNavkcF77EyhuxWnoQg
-         G2FDvWtHRxgnM1sQESFwlLKu7jZgDj1frKsLDjXvfo9p8dEt1+ZkMwzVI7zOzWOj4E93
-         wUQw==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=fhcu0HE5auYGloP7AHnWxOI6cu8qUmtUkkSYNggWNzo=;
+        b=QwUI+svvJNy5qIsoFgEf4FOSNwSWDO2LbLQWTxaHn5IRFZypQzLnVnQCOPzk1hl6Bs
+         DUXgau/oqw4wSwivUJ7uboxQDqCvSveZJW7ZXO1JTjY1GRgwmPckNN0m92Kj+bFzLZet
+         UHehXkhBodiPksDIk68+MkanypUMyTKqsGbKFaUbF5uYV0uLoylT/0HRMWribrnU6Ms1
+         NfVznR48zTKtXZsL018/ODliEDe37ijN2i6xEIq3MqutBshQEUIciAz08EMCTpVVtDX5
+         vjLVmBuYdKc+8EfjBF/lnZBXdeRva0CqTU8Yf7/VA0F+lUs0H+ZY9VpItfe+oYNo+/5G
+         n5nQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=OB9G13uC0WgG1T3gLvcjNNwMIJDFSrpCEhvj43rUu6A=;
-        b=Cfl0JkRo5Ie5fthu345N3e3gDxbZDG5ByqnHyRuM99fbdKMqp/NLcAEyNiIoCbHDki
-         81/Pxc7Ge9S594nbGx/GlerH3Kq6JA/08Xn495WAoOsBWyvpTLbfT9Em9a11z2qAGqJR
-         nSbj8qy02nsB9cYQKGSbBnCX1IM8DVjPOZp2cs1/OSRgMdsVoZRFLHsc8hbi0OsBLqKF
-         HjiW3BUofvyKL7d7w4oZRIjiKJpN0rpkhv10YNqkWQ4pheQ4T3tOF+Y6xkCbe//Xu/cy
-         G8mCFlvh4wk3sroutI++gNpny10JZOPNCFjQBtVJshIOqnKZIlKSbzPXEZwEsJt3v476
-         Q99g==
-X-Gm-Message-State: AIkVDXK1RL3LvY/u98akBqdjX7b7kzyy2HnGPC9f06ZXH4AblNcwCHo281FqRl763dOhdQGs
-X-Received: by 10.237.40.38 with SMTP id r35mr413073qtd.0.1484008855901;
-        Mon, 09 Jan 2017 16:40:55 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=fhcu0HE5auYGloP7AHnWxOI6cu8qUmtUkkSYNggWNzo=;
+        b=DUccsRkNiBxv57iow5XbG8lM3fq5N3xENqW68ai1qoAhEDxVR+zh/v8TaU0v7WuOVs
+         3G2yfqmqWKirNY2xpZ8U39tW+d3wKDf8YncM8S7wE4VCvkbVrgB7207KKQIel7qqEVir
+         PoQStAu3KFaQeMmrkOE0mHg1+eKEIzV7uii54TzLrPJq+pUCcl/L3JX4GPb7p96hpmRF
+         SPLrhQEL2nRDqpZpvpylLQCr9a3dMc0RGXvld/sH5nzj+qdoz7muVfTuPHARGbE4NjWz
+         kd+lQkBdPp3rol8e+Tb5qucZBSE87A//0UbQ/fxFtnEfbyv9J8Uh7PNB2vlgEtZnST3X
+         rTwQ==
+X-Gm-Message-State: AIkVDXL0Cz7a1+jSmqa+1ev6G3RhLy+HlZO2FU35gZEBTvZXKkcXCIQJvdvWIzrKr2EXpet3
+X-Received: by 10.55.99.81 with SMTP id x78mr491200qkb.62.1484008856460;
+        Mon, 09 Jan 2017 16:40:56 -0800 (PST)
 Received: from hansenr.cam.corp.google.com ([172.29.73.70])
         by smtp.gmail.com with ESMTPSA id k71sm128192qke.47.2017.01.09.16.40.55
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 09 Jan 2017 16:40:55 -0800 (PST)
+        Mon, 09 Jan 2017 16:40:56 -0800 (PST)
 From:   Richard Hansen <hansenr@google.com>
 To:     git@vger.kernel.org
 Cc:     Richard Hansen <hansenr@google.com>
-Subject: [PATCH 0/2] minor diff orderfile documentation improvements
-Date:   Mon,  9 Jan 2017 19:40:29 -0500
-Message-Id: <20170110004031.57985-1-hansenr@google.com>
+Subject: [PATCH 1/2] diff: document behavior of relative diff.orderFile
+Date:   Mon,  9 Jan 2017 19:40:30 -0500
+Message-Id: <20170110004031.57985-2-hansenr@google.com>
 X-Mailer: git-send-email 2.11.0.390.gc69c2f50cf-goog
+In-Reply-To: <20170110004031.57985-1-hansenr@google.com>
+References: <20170110004031.57985-1-hansenr@google.com>
 Content-Type: multipart/signed; protocol="application/pkcs7-signature"; micalg=sha-256;
-        boundary="94eb2c0bc864b76ba30545b2bca9"
+        boundary="001a11482eccbfd0a20545b2bc6f"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
---94eb2c0bc864b76ba30545b2bca9
+--001a11482eccbfd0a20545b2bc6f
 
-Richard Hansen (2):
-  diff: document behavior of relative diff.orderFile
-  diff: document the pattern format for diff.orderFile
+Document that a relative pathname for diff.orderFile is interpreted as
+relative to the top-level work directory.
 
- Documentation/diff-config.txt  | 5 ++++-
- Documentation/diff-options.txt | 3 ++-
- 2 files changed, 6 insertions(+), 2 deletions(-)
+Signed-off-by: Richard Hansen <hansenr@google.com>
+---
+ Documentation/diff-config.txt | 2 ++
+ 1 file changed, 2 insertions(+)
 
+diff --git a/Documentation/diff-config.txt b/Documentation/diff-config.txt
+index 58f4bd6af..875212045 100644
+--- a/Documentation/diff-config.txt
++++ b/Documentation/diff-config.txt
+@@ -101,6 +101,8 @@ diff.noprefix::
+ diff.orderFile::
+ 	File indicating how to order files within a diff, using
+ 	one shell glob pattern per line.
++	If `diff.orderFile` is a relative pathname, it is treated as
++	relative to the top of the work tree.
+ 	Can be overridden by the '-O' option to linkgit:git-diff[1].
+ 
+ diff.renameLimit::
 -- 
 2.11.0.390.gc69c2f50cf-goog
 
 
---94eb2c0bc864b76ba30545b2bca9
+--001a11482eccbfd0a20545b2bc6f
 Content-Type: application/pkcs7-signature; name="smime.p7s"
 Content-Transfer-Encoding: base64
 Content-Disposition: attachment; filename="smime.p7s"
@@ -156,13 +171,13 @@ m4YUSo869xADdrGrWJ7KzroFbucLZYh3niIjVICp7fh9wtLgbX7X/akdubehYhy/l+AIMml6Zlyu
 GNGCGIleyQ0bAdjjG+dKrDErUlui8wd/YplvelaTAzSvNpxcrr+2YB8UBWcYkgULkp5GDCC2guKl
 rMF1mTS6N6GMxUi30sZicbMxggJeMIICWgIBATBcMEwxCzAJBgNVBAYTAkJFMRkwFwYDVQQKExBH
 bG9iYWxTaWduIG52LXNhMSIwIAYDVQQDExlHbG9iYWxTaWduIEhWIFMvTUlNRSBDQSAxAgwvfEOc
-7N3JjQI9nAwwDQYJYIZIAWUDBAIBBQCggdQwLwYJKoZIhvcNAQkEMSIEICOEBbkWYfP93fc4UVxo
-jtyjEpI2mAtw7RMn/i6JK7FvMBgGCSqGSIb3DQEJAzELBgkqhkiG9w0BBwEwHAYJKoZIhvcNAQkF
+7N3JjQI9nAwwDQYJYIZIAWUDBAIBBQCggdQwLwYJKoZIhvcNAQkEMSIEIPFZIybaUaRxc+klhv3i
+AqSf7Y8qH89Sg74fOoC7qj3iMBgGCSqGSIb3DQEJAzELBgkqhkiG9w0BBwEwHAYJKoZIhvcNAQkF
 MQ8XDTE3MDExMDAwNDA1NlowaQYJKoZIhvcNAQkPMVwwWjALBglghkgBZQMEASowCwYJYIZIAWUD
 BAEWMAsGCWCGSAFlAwQBAjAKBggqhkiG9w0DBzALBgkqhkiG9w0BAQowCwYJKoZIhvcNAQEHMAsG
-CWCGSAFlAwQCATANBgkqhkiG9w0BAQEFAASCAQARzNP/bqzozTTWRHzUnLWkKsYkosvi1KZW5XiD
-U5xKgi4QQrygdsMiNel2EX29WjDbU0DoqHGGjmbY4pOc9XUoB19dFVvQ3DhgvgHy/4qhcBphRrza
-RXpBUKPbvVgmUCWKBB9VPyeVTJ7ZK+sMs8Twgf0oT10Rd3OyPocvNiPZDsC96JWqvOT2um87EmHR
-as6W6t24W+XZ9cLOr1cZsChm6KXNZoH4XDD+jCJiUgSWn849BzRc6jG6nvAHc5/3vlLa3Uo9DEpu
-dkTlB69771K2eXK4LcHSH/2LqX+VYa3K44vrx1ruzjXdNWzIpKBy0weFNiwnJCGofvCysM2RCSI1
---94eb2c0bc864b76ba30545b2bca9--
+CWCGSAFlAwQCATANBgkqhkiG9w0BAQEFAASCAQC1ZGuwUgol4DKYNDMt7PPF8zD8PqmBfnD1Dmpe
+sxj4b5G9IqClQtC4DqUbfaI7vQ6rmA5pbn4mPXWim0ski53vTHW42AFH/f6kmWQ9I3ke6CFuxb8m
+CXV9LgYPd+gvAitJs735M5vbC2heGMqQb9VnFJNhBiIK+4Hgj05D4s3Cd5k9pmZJX5pk/JefyOLr
+M/pzAp+3VZosJqDTtbVBsPMjXJ8ewx2pkR6pE85ujMsb+fchS3Kl0ZMBVDLMRs0U+UPrqGxkuhP5
+ofi2qcCasaFVLW4FLRCfwzDtdkqiGZa0npwGq+J5CxLKic3lYomVlxrecgth1D3Nf2ifXsUmeTxr
+--001a11482eccbfd0a20545b2bc6f--
