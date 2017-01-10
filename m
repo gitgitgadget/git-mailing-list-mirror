@@ -2,178 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+X-Spam-Status: No, score=-6.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AFF0120A93
-	for <e@80x24.org>; Tue, 10 Jan 2017 01:46:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 55A7B1FEB3
+	for <e@80x24.org>; Tue, 10 Jan 2017 04:36:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1161969AbdAJBqF (ORCPT <rfc822;e@80x24.org>);
-        Mon, 9 Jan 2017 20:46:05 -0500
-Received: from mail-pf0-f170.google.com ([209.85.192.170]:36291 "EHLO
-        mail-pf0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1032480AbdAJBp5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Jan 2017 20:45:57 -0500
-Received: by mail-pf0-f170.google.com with SMTP id 189so24727615pfu.3
-        for <git@vger.kernel.org>; Mon, 09 Jan 2017 17:45:57 -0800 (PST)
+        id S1764777AbdAJEgx (ORCPT <rfc822;e@80x24.org>);
+        Mon, 9 Jan 2017 23:36:53 -0500
+Received: from mail-pf0-f174.google.com ([209.85.192.174]:36414 "EHLO
+        mail-pf0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1764774AbdAJEgv (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Jan 2017 23:36:51 -0500
+Received: by mail-pf0-f174.google.com with SMTP id 189so27374592pfu.3
+        for <git@vger.kernel.org>; Mon, 09 Jan 2017 20:36:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=dQEIldRUmr8julfTnl1lkSYTZ92gPlKzRtc9sicVIQ0=;
-        b=cOcN6jtC/KWOgmyp2lxijiAKZlDjpMEdeQROcR8T6m5UfyG4V4B2dcw9QR0HBLfT0/
-         SrqexKWo5IBRE54BOU5hGM4rWFjR9lxatdnrJMaU8dLrhViwqyQmkPWwFJnUwhZEZ9nW
-         HjeRFNNlvl49XyUO+mFlyQz0Tf828WDWjCdyRwQV+9HP+QmHc4pFDMZmy5fArNDYRgeW
-         lLXSek12LM9nJxY99OBOijkCtJTcRtCoyd5gRv+NgGH9XDida/yf4KEGpoJknBo9o++J
-         +Md+nKrVDUhEqYlrsp5yUx9yG0oZpw7HUPAB6k56KqOAE/wxzafVgyoR2Gki5aAzcNgk
-         ze2g==
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=3AZGMKRF7azFFQTlQD+wvJaM/sVqpV6ClRTzyky3rSA=;
+        b=NENtBtdFcTRxoeUSo/bevAXnmydC29ogGVxhAhaVFZw28IFAhoGMf3xuB2r/XmP4Sk
+         2NAsEL2qI9AdKWrx/CcW5c9sPs+3PKgo6b7fV4pdWi7Ag4lVd1pDjwFTiTuDgFxsUZI3
+         ojNqXNmBei7XDE+RTwJJUtWKIM6M//NVqX4mvXf+t1yqh7CEuqesTmqZQmDmvPgu/enc
+         jUDe7cVkRF71piLqw6cBlnYf49deA15Lk3m2ANrjWAEG0Vtg/wpnnm9TIvDDpDyv4BgO
+         +kHgfNFh6tj0EwDY9lUjHzn9mAVIuJOBU02CU0SFh27czT8Dl5zAr2DKxUsO6SjO5QjY
+         nq3g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=dQEIldRUmr8julfTnl1lkSYTZ92gPlKzRtc9sicVIQ0=;
-        b=V4stFIdUtDHPvW+gjyfGr3i9jCMLYafrtqwMaD+JwxUO8wVaBkfQ0PusJghoyQO9Vq
-         zccPB4Vp5jwuEKLJOfmkI8O2Kfkkx9AH5xCpbxntRvu5ZqJISV4xRH/89WfzlQf1o6fo
-         DsjY604Vzg5JpnUJ1NuGm5GH1CjmDSi55A8KNULt+63O+1WgFE0yk+AKeiteWDaHC26M
-         Oq8EnrYkCfkgAEzyk/H2BZOhqQxaN1WjIfC/XiW5ZgRNfKREoDDg3vkNgkCydrxC2Fy2
-         G1nn9Ou3gM4/Fp2FvgWGrzZg7SWOb/iVkiLFInvPS1LSKLwn0pDvYXPId0BC9Z3S/kXb
-         7/nQ==
-X-Gm-Message-State: AIkVDXLkci+10cu+SO9XIWY47dUwBrQ+NiXsj/ON0j2f+c/fD+rEYeUADHrfbcbJXzFtQlQb
-X-Received: by 10.99.125.65 with SMTP id m1mr870592pgn.159.1484012756716;
-        Mon, 09 Jan 2017 17:45:56 -0800 (PST)
-Received: from localhost ([2620:0:1000:5b10:1e2:be00:4066:92e5])
-        by smtp.gmail.com with ESMTPSA id y23sm373391pfi.66.2017.01.09.17.45.56
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 09 Jan 2017 17:45:56 -0800 (PST)
-From:   Stefan Beller <sbeller@google.com>
-To:     bmwill@google.com, novalis@novalis.org
-Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>
-Subject: [PATCH 4/4] unpack-trees: support super-prefix option
-Date:   Mon,  9 Jan 2017 17:45:42 -0800
-Message-Id: <20170110014542.19352-5-sbeller@google.com>
-X-Mailer: git-send-email 2.11.0.rc2.30.g7c4be45.dirty
-In-Reply-To: <20170110014542.19352-1-sbeller@google.com>
-References: <20170110014542.19352-1-sbeller@google.com>
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=3AZGMKRF7azFFQTlQD+wvJaM/sVqpV6ClRTzyky3rSA=;
+        b=uhSIgcmEyd3xMuycz8h5dbx3rnSEy4jQurGi89siTnbrRZqMzagFBoIapnMyugTtwQ
+         jzSAbCcDD01Byi+1oRmmvyc8KQe9A0qoOuEwMMJmBDPOBhd+ftbH1N9JP7buh15Tl3gn
+         47Sek/mQj6dVsNJFNVy1OBKX4jvtHH8SRN7FyphPuwS3tlsfA6nk0j9ROx+hscaWvCu/
+         hdQKUGZOmwrG4+heI3pGOoZlyPUMOK7RJCW2mMyYOkTH2/oBNYCf58Yf6WcrFrtgVeD5
+         ESSBzYO5j3wWqK9Pmm+mD74KSqYaFBCmenwDks7HPeuEwVe+GLxu7DYxqOopBrUKq6VD
+         Wo5Q==
+X-Gm-Message-State: AIkVDXLHgrwihGb3KnN/5IztOqGSUk0j9DSFadzgGWjL8B+T6LasEbTJLjcwEDEGrMZwGg==
+X-Received: by 10.84.215.200 with SMTP id g8mr1952186plj.161.1484023011153;
+        Mon, 09 Jan 2017 20:36:51 -0800 (PST)
+Received: from gmail.com (cpe-45-48-248-253.socal.res.rr.com. [45.48.248.253])
+        by smtp.gmail.com with ESMTPSA id c71sm1110513pga.22.2017.01.09.20.36.48
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 09 Jan 2017 20:36:49 -0800 (PST)
+Date:   Mon, 9 Jan 2017 20:36:46 -0800
+From:   David Aguilar <davvid@gmail.com>
+To:     Richard Hansen <hansenr@google.com>
+Cc:     git@vger.kernel.org, j6t@kdbg.org
+Subject: Re: [PATCH 0/4] fix mergetool+rerere+subdir regression
+Message-ID: <20170110043646.qfwcn7d7klag7qtf@gmail.com>
+References: <20170104005042.51530-1-hansenr@google.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20170104005042.51530-1-hansenr@google.com>
+User-Agent: NeoMutt/20161126 (1.7.1)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add support for the super-prefix option for commands that unpack trees.
-For testing purposes enable it in read-tree, which has no other path
-related output.
+On Tue, Jan 03, 2017 at 07:50:38PM -0500, Richard Hansen wrote:
+> If rerere is enabled, no pathnames are given, and mergetool is run
+> from a subdirectory, mergetool always prints "No files need merging".
+> Fix the bug.
+> 
+> This regression was introduced in
+> 57937f70a09c12ef484c290865dac4066d207c9c (v2.11.0).
+> 
+> Richard Hansen (4):
+>   t7610: update branch names to match test number
+>   t7610: make tests more independent and debuggable
+>   t7610: add test case for rerere+mergetool+subdir bug
+>   mergetool: fix running in subdir when rerere enabled
+> 
+>  git-mergetool.sh     |   1 +
+>  t/t7610-mergetool.sh | 132 ++++++++++++++++++++++++++++++++++-----------------
+>  2 files changed, 90 insertions(+), 43 deletions(-)
 
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
- git.c                       |  2 +-
- t/t1001-read-tree-m-2way.sh |  9 +++++++++
- unpack-trees.c              | 39 ++++++++++++++++++++++++++++++++++++---
- 3 files changed, 46 insertions(+), 4 deletions(-)
+Thanks for finding these, this reminds me very much of the
+recent fixes that had to be done to difftool.
 
-diff --git a/git.c b/git.c
-index dce529fcbf..acbabd1298 100644
---- a/git.c
-+++ b/git.c
-@@ -471,7 +471,7 @@ static struct cmd_struct commands[] = {
- 	{ "prune-packed", cmd_prune_packed, RUN_SETUP },
- 	{ "pull", cmd_pull, RUN_SETUP | NEED_WORK_TREE },
- 	{ "push", cmd_push, RUN_SETUP },
--	{ "read-tree", cmd_read_tree, RUN_SETUP },
-+	{ "read-tree", cmd_read_tree, RUN_SETUP | SUPPORT_SUPER_PREFIX},
- 	{ "receive-pack", cmd_receive_pack },
- 	{ "reflog", cmd_reflog, RUN_SETUP },
- 	{ "remote", cmd_remote, RUN_SETUP },
-diff --git a/t/t1001-read-tree-m-2way.sh b/t/t1001-read-tree-m-2way.sh
-index 7b70089705..014ba39420 100755
---- a/t/t1001-read-tree-m-2way.sh
-+++ b/t/t1001-read-tree-m-2way.sh
-@@ -363,6 +363,15 @@ test_expect_success 'a/b (untracked) vs a, plus c/d case test.' '
- 	test -f a/b
- '
- 
-+cat <<-EOF >expect &&
-+	error: Updating 'fictional/a' would lose untracked files in it
-+EOF
-+
-+test_expect_success 'read-tree supports the super-prefix' '
-+	test_must_fail git --super-prefix fictional/ read-tree -u -m "$treeH" "$treeM" 2>actual &&
-+	test_cmp expect actual
-+'
-+
- test_expect_success 'a/b vs a, plus c/d case setup.' '
- 	rm -f .git/index &&
- 	rm -fr a &&
-diff --git a/unpack-trees.c b/unpack-trees.c
-index 7a6df99d10..bc56195e27 100644
---- a/unpack-trees.c
-+++ b/unpack-trees.c
-@@ -52,6 +52,37 @@ static const char *unpack_plumbing_errors[NB_UNPACK_TREES_ERROR_TYPES] = {
- 	  ? ((o)->msgs[(type)])      \
- 	  : (unpack_plumbing_errors[(type)]) )
- 
-+static const char *super_prefixed(const char *path)
-+{
-+	/*
-+	 * This is used for the error messages above.
-+	 * We need to have exactly two buffer spaces.
-+	 */
-+	static struct strbuf buf[2] = {STRBUF_INIT, STRBUF_INIT};
-+	static int super_prefix_len = -1;
-+	static unsigned idx = 0;
-+
-+	if (!get_super_prefix())
-+		return path;
-+
-+	if (super_prefix_len < 0) {
-+		int i;
-+
-+		for (i = 0; i < ARRAY_SIZE(buf); i++)
-+			strbuf_addstr(&buf[i], get_super_prefix());
-+
-+		super_prefix_len = strlen(get_super_prefix());
-+	}
-+
-+	if (++idx >= ARRAY_SIZE(buf))
-+		idx = 0;
-+
-+	strbuf_setlen(&buf[idx], super_prefix_len);
-+	strbuf_addstr(&buf[idx], path);
-+
-+	return buf[idx].buf;
-+}
-+
- void setup_unpack_trees_porcelain(struct unpack_trees_options *opts,
- 				  const char *cmd)
- {
-@@ -172,7 +203,7 @@ static int add_rejected_path(struct unpack_trees_options *o,
- 			     const char *path)
- {
- 	if (!o->show_all_errors)
--		return error(ERRORMSG(o, e), path);
-+		return error(ERRORMSG(o, e), super_prefixed(path));
- 
- 	/*
- 	 * Otherwise, insert in a list for future display by
-@@ -196,7 +227,7 @@ static void display_error_msgs(struct unpack_trees_options *o)
- 			something_displayed = 1;
- 			for (i = 0; i < rejects->nr; i++)
- 				strbuf_addf(&path, "\t%s\n", rejects->items[i].string);
--			error(ERRORMSG(o, e), path.buf);
-+			error(ERRORMSG(o, e), super_prefixed(path.buf));
- 			strbuf_release(&path);
- 		}
- 		string_list_clear(rejects, 0);
-@@ -1918,7 +1949,9 @@ int bind_merge(const struct cache_entry * const *src,
- 			     o->merge_size);
- 	if (a && old)
- 		return o->gently ? -1 :
--			error(ERRORMSG(o, ERROR_BIND_OVERLAP), a->name, old->name);
-+			error(ERRORMSG(o, ERROR_BIND_OVERLAP),
-+			      super_prefixed(a->name),
-+			      super_prefixed(old->name));
- 	if (!a)
- 		return keep_entry(old, o);
- 	else
+I tested this so,
+
+Acked-by: David Aguilar <davvid@gmail.com>
 -- 
-2.11.0.rc2.30.g7c4be45.dirty
-
+David
