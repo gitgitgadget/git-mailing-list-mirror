@@ -2,106 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5487F205C9
-	for <e@80x24.org>; Tue, 10 Jan 2017 10:48:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 54E10205C9
+	for <e@80x24.org>; Tue, 10 Jan 2017 11:27:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932866AbdAJKsC (ORCPT <rfc822;e@80x24.org>);
-        Tue, 10 Jan 2017 05:48:02 -0500
-Received: from mail-io0-f179.google.com ([209.85.223.179]:36195 "EHLO
-        mail-io0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932692AbdAJKsA (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 Jan 2017 05:48:00 -0500
-Received: by mail-io0-f179.google.com with SMTP id j13so47066636iod.3
-        for <git@vger.kernel.org>; Tue, 10 Jan 2017 02:48:00 -0800 (PST)
+        id S935479AbdAJL1g (ORCPT <rfc822;e@80x24.org>);
+        Tue, 10 Jan 2017 06:27:36 -0500
+Received: from mail-pf0-f195.google.com ([209.85.192.195]:36249 "EHLO
+        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S935165AbdAJL1f (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 Jan 2017 06:27:35 -0500
+Received: by mail-pf0-f195.google.com with SMTP id b22so12231017pfd.3
+        for <git@vger.kernel.org>; Tue, 10 Jan 2017 03:27:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=esZ4Dkc2sAg8sEiMT2Wx09urXj+/UIogz+uqN8WrYBE=;
-        b=jk9erM9ZrfS3CCUHBWct31QMoWQMGRIEs8+MD+3tpK8y553uyxQo8L/kSJNWBkxnqp
-         RvPYF5NqfafMcANLuv+MZNrnXIMj0cPwB7wYOc3r5hbrh1aHT7JO6TczIcoPvQ+mSTa/
-         Dn+HnXlYhubWhVcGtsIDTDaM+yqz6lj4yFXPHhVXqEyS5gzaHJgNLllwrAqlVk1CYu9M
-         DV3SfN4r/MabMOkr3fsTXfUTU5mCCxN3pQDFPHiow0IGTBYrVSEoWlBaFC7HJrcOqYyL
-         zFPLFhdxrGZY9pvupQCHTViJbD88ajIXOIG13uYNizLEJkpwA7XWMgc2F8psvxGpWuUx
-         NGxg==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=GuAwC56MPmZuze+tP+gg+Eglz2z62PJ13qhdXGJSH7I=;
+        b=bjeRwLxLPk+Z29B92HOQZAYteNwPusyOfSQNWbQQj8yp0DiYhBn703uos9jvda64d4
+         tQcBuaQRXhZbVTBmw3sK2eT+KvOFsjrkNL3gO1k4vNeqIiTMbm8FPYhYut7GQbLBX++R
+         S4hylYpXDVJGdVTu6E0aQY/1o8TRVR2TebmFQto+VKAGDLoPfzDqrnPVP1KW5bGUyLbI
+         h4EsFl7Qr8dtF4uUbcnSYFBGj6tsYM02h7zwV0yhhMmYjK9iFa5pB7fOUcB7flwLJQfO
+         gaq9FWDH27l5nI1kfr8kPpUl93LrCuPmDjTFc0zMPMOYxMsSB5wvZRSkZAiNEZ/F6/UP
+         MNBA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=esZ4Dkc2sAg8sEiMT2Wx09urXj+/UIogz+uqN8WrYBE=;
-        b=CFXCaltctuFU7G31VDHj4A7g+DN+BnkKvm/p8LxSyPrtAeMWazUlYFtXouhCQszwj8
-         guJfBZShjn2aoWXaYjJxtaSo7ZNmEyh9dXtNeNz7m+pkK7jiSh9r4fXxhkuQuyQzgKdl
-         R8zkK4qctpvlbuzRJ46c+yGy9+DGkXNIuKupvjweOvbR+D3bPTQM4VN4D/UCiEzXvJV3
-         lZOGuDcdWuslQZ3MpxKh1hR6QU364G2yDKHHbJDUIaqlBtLaYnxtQJeEi5S+EBqK8G6z
-         3tmw2ExUaSLIT+B6RTBuB2y0jJFJz5JnAYb0e3/ETp0t2szcdAVokz27JBW8G7ZNRW6P
-         IAeQ==
-X-Gm-Message-State: AIkVDXLwbX/WK5F5UnAnF1zppiD1ddTAFemitaPmyQ0vIr3OU9V/cvy8ve3Yy40tE2tM1CuaKfhNINSMSm0LjA==
-X-Received: by 10.107.198.195 with SMTP id w186mr2580999iof.19.1484045280050;
- Tue, 10 Jan 2017 02:48:00 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=GuAwC56MPmZuze+tP+gg+Eglz2z62PJ13qhdXGJSH7I=;
+        b=OJfXTrdx6fabEcxmAzgD8PhYMpiAbsc3AL1L8gq/KkxT+E40q1QMlu/jt7EZ1LkXCk
+         RaQRaethfUE+03V0xhZ54N4+eipxvlYWbSp18KYt61VPhmnAAnsKZgtbknOzKuOR5sui
+         uhK7+Brzj0iTRd1mhoL08VmU8q7xi6kBclQAggmTq56OSdO58CN7Rw/X/+ueN2CuttnU
+         6H90WLmzG7/8q1bRP1zxyRxuwD7ULO2/CAqHfK++24sRFO4l6dS4555jka9592DsN7Jc
+         1TGR/wXsnUF1fMxO6B1LE3QL/zUkihuNGhB5loD+P4NRR0HmWhXkieGNf0ts6ofsoa85
+         lg6w==
+X-Gm-Message-State: AIkVDXIzA4IWq9Nvr8CZ7Opa5VtxwojAhzjDAXk/KggeRmDQnnhau7XUrqBMfhajmyKdGQ==
+X-Received: by 10.84.128.67 with SMTP id 61mr4183523pla.153.1484047654519;
+        Tue, 10 Jan 2017 03:27:34 -0800 (PST)
+Received: from ash ([115.73.174.142])
+        by smtp.gmail.com with ESMTPSA id x16sm4547876pfk.79.2017.01.10.03.27.30
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 10 Jan 2017 03:27:33 -0800 (PST)
+Received: by ash (sSMTP sendmail emulation); Tue, 10 Jan 2017 18:27:28 +0700
+From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, git@drmicha.warpmail.net,
+        Jens.Lehmann@web.de, larsxschneider@gmail.com, sbeller@google.com,
+        mhagger@alum.mit.edu, max@max630.net,
+        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>
+Subject: [PATCH v5 0/4] Per-worktree config file support
+Date:   Tue, 10 Jan 2017 18:25:20 +0700
+Message-Id: <20170110112524.12870-1-pclouds@gmail.com>
+X-Mailer: git-send-email 2.8.2.524.g6ff3d78
 MIME-Version: 1.0
-Received: by 10.64.69.3 with HTTP; Tue, 10 Jan 2017 02:47:29 -0800 (PST)
-In-Reply-To: <CA+P7+xqOrRwJsnskfGQpLYyQFjce=4z24zuhrEBd2P4gBLh0Qw@mail.gmail.com>
-References: <4D106F0FF3D29E4FA1D91C1A31CE4C3501B8DEF2E6@email.novomind.com>
- <CAGZ79kaLpf1nzSAgRJQamMGk-327LO+qQYihYVVcU+86n92ivg@mail.gmail.com>
- <CACsJy8C6QWeHSwhsYyJnupkue=aoCG+3Tecytb_0p+gB-CuVKg@mail.gmail.com>
- <CA+P7+xofFufcUMBJFqEcP=C5r80HCr1-j4210gOm7t=aLYw2zw@mail.gmail.com>
- <CACsJy8AfcZOR966ypfbZa1+7=tr2RVxPUk8+XmQkGeoMBJ7Z0g@mail.gmail.com> <CA+P7+xqOrRwJsnskfGQpLYyQFjce=4z24zuhrEBd2P4gBLh0Qw@mail.gmail.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Tue, 10 Jan 2017 17:47:29 +0700
-Message-ID: <CACsJy8Cd73pJ6+pakC6v79VJ9wp5MrF9eE6a1WM4jAoywgmL0g@mail.gmail.com>
-Subject: Re: git branch -D doesn't work with deleted worktree
-To:     Jacob Keller <jacob.keller@gmail.com>
-Cc:     Stefan Beller <sbeller@google.com>,
-        Roland Illig <rillig@novomind.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
 Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jan 10, 2017 at 12:08 PM, Jacob Keller <jacob.keller@gmail.com> wrote:
-> On Mon, Jan 9, 2017 at 2:07 AM, Duy Nguyen <pclouds@gmail.com> wrote:
->> On Mon, Jan 9, 2017 at 10:44 AM, Jacob Keller <jacob.keller@gmail.com> wrote:
->>> Why not just update the documentation to be "when you are done with a
->>> work tree you can delete it and then run git worktree prune"?
->>
->> The document does say that (a bit verbose though):
->>
->> When you are done with a linked working tree you can simply delete it.
->> The working tree's administrative files in the repository (see
->> "DETAILS" below) will eventually be removed automatically (see
->> `gc.worktreePruneExpire` in linkgit:git-config[1]), or you can run
->> `git worktree prune` in the main or any linked working tree to
->> clean up any stale administrative files.
->> --
->> Duy
->
-> Right, so maybe we can make it more clear since it's not quite as
-> simple as "deleting the work tree" because of stuff like stale
-> branches..
+Let's get this rolling again. To refresh your memory because it's half
+a year since v4 [1], this is about letting each worktree in multi
+worktree setup has their own config settings. The most prominent ones
+are core.worktree, used by submodules, and core.sparseCheckout.
 
-Patches are welcome. I wrote that paragraph and you could clearly see
-its "quality" (from user perspective).
+This time I'm not touching submodules at all. I'm leaving it in the
+good hands of "submodule people". All I'm providing is mechanism. How
+you use it is up to you. So the series benefits sparse checkout users
+only.
 
-> or would it be worth re-scanning worktrees when we do
-> branch deletion? (obviously ignoring the ones that are marked as on
-> removable media)
+Not much has changed from v4, except that the migration to new config
+layout is done automatically _update_ a config variable with "git
+config --worktree".
 
-Probably. We run "git worktree prune" as part of "git gc" and that
-command is automatically called in a couple places. Adding another
-"git gc" here probably does not hurt. However it could trigger a full
-repack and make "git branch" hang for a few seconds...
+I think this one is more or less ready. I have an RFC follow-up patch
+about core.bare, but that could be handled separately.
 
-And no I don't want to single out "git worktree prune" to be called in
-git-branch. We should either go through git-gc or none. We could check
-if a worktree is deleted and suggest the user to run "git gc" though,
-but it's getting too complicated when "git worktree remove" will soon
-be the recommended way of deleting a worktree. So.. I don't know..
+[1] http://public-inbox.org/git/20160720172419.25473-1-pclouds@gmail.com/
+
+Nguyễn Thái Ngọc Duy (4):
+  config: read per-worktree config files
+  config: --worktree for manipulating per-worktree config file
+  config: automatically migrate to new config layout when --worktree is used
+  t2029: add tests for per-worktree config
+
+ Documentation/config.txt               | 11 ++++-
+ Documentation/git-config.txt           | 26 ++++++++---
+ Documentation/git-worktree.txt         | 37 +++++++++++++++
+ Documentation/gitrepository-layout.txt |  8 ++++
+ builtin/config.c                       | 16 ++++++-
+ cache.h                                |  2 +
+ config.c                               |  7 +++
+ environment.c                          |  1 +
+ setup.c                                |  5 ++-
+ t/t2029-worktree-config.sh (new +x)    | 82 ++++++++++++++++++++++++++++++++++
+ worktree.c                             | 40 +++++++++++++++++
+ worktree.h                             |  6 +++
+ 12 files changed, 230 insertions(+), 11 deletions(-)
+ create mode 100755 t/t2029-worktree-config.sh
+
 -- 
-Duy
+2.8.2.524.g6ff3d78
+
