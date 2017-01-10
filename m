@@ -7,53 +7,53 @@ X-Spam-Status: No, score=-6.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 18E5520A93
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3530620A99
 	for <e@80x24.org>; Tue, 10 Jan 2017 08:49:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1760214AbdAJIs7 (ORCPT <rfc822;e@80x24.org>);
+        id S1760341AbdAJItB (ORCPT <rfc822;e@80x24.org>);
+        Tue, 10 Jan 2017 03:49:01 -0500
+Received: from mail-pf0-f193.google.com ([209.85.192.193]:35315 "EHLO
+        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1759217AbdAJIs7 (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 10 Jan 2017 03:48:59 -0500
-Received: from mail-pf0-f194.google.com ([209.85.192.194]:35941 "EHLO
-        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754889AbdAJIs4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 Jan 2017 03:48:56 -0500
-Received: by mail-pf0-f194.google.com with SMTP id b22so11589053pfd.3
-        for <git@vger.kernel.org>; Tue, 10 Jan 2017 00:48:56 -0800 (PST)
+Received: by mail-pf0-f193.google.com with SMTP id f144so9037059pfa.2
+        for <git@vger.kernel.org>; Tue, 10 Jan 2017 00:48:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=mZBkx3cj8IDALMBnWPcGgYH3kG2Jl3snLTPC+rXnSho=;
-        b=lZM6uWzp33tBoGEVOwtZQyVphTET3AesIGGVIgj6vq9pg79XFKMn7bBK6/LkJ7A9HH
-         dGv9jcrCSj2b6lyLXqwvnTpD1NJq9kjQgoK/rUWaOts4oM66LZOP4MbVEtAsgTV2xIHn
-         RuXgXJVXyhEIcPJW3xwPXGqAtxHTxZcIVaA79Ogonsw60KE2Jk3EG0lmfhesNaqBTd+/
-         TyHHUvBzJ9NjnA1Pulx8sIP3y0nAxmToJ7BTzviisRaZGLxXueE6LqPnhvsg5MIjaSvC
-         eDE+OdcPNianMRnnH8c6R+jpndKzcdrG6jdUGvt1Ewp8W6EimuUHWfccxGZzQNWigHn/
-         1loQ==
+        bh=2IkialHoY0meFPUeC+Y1dbeJCy5CnvPdafL8q6mGoNk=;
+        b=qgDMO4LIp9u5MQYMPIKsLdojAnFCuJ7jb6fzEpYEl06y2JPD+PCsrD2lvZs6uTA9ls
+         qdniHoy69XWHGr7PR3ZlYjGp0dpsljTPMpJ3vlpOYod6robk7RAWU2EsWCb81i2pI2l0
+         K+g1KazdzeB3ply7rZ8QNr4h4ePid/Jbis0kOgeh9xUfyo0n249kXOCdjUr5gNbt97r6
+         +aw9xnGuQtT36az6cLJp84FZ9MxqGeV2xvZo/uf0KduEcMpMoZfhFk7Xue7C9MOTy6Sy
+         n9SegWhkmKnWQGL9l8vLZPpe/7yaljp4zEgY2rVYaS006nnZNglxlnaPGyp3KggRJ33E
+         L31A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=mZBkx3cj8IDALMBnWPcGgYH3kG2Jl3snLTPC+rXnSho=;
-        b=ly25BIZL4zQTqAXRfWljV04saPzExM2B/EeEszCyYG1V3q3Im+hNrkZXu7D2JpO/wf
-         w9ArdXFrgEVd+ldGWxuid2n7qVabOBEHhWzmxDhG/NFkOA8VnlSbl4Z0NgfsJm9dEwBP
-         MzpkzPz1OFI8TA6rzZC1NdYZzuloot1Vd3D4nFnSljWyFCZxMj+OYZPkX99rC1+/5YFF
-         rX9ufdCn8s2+ms8kIYBWV4jBnq8GXcxNRkFExiv87pv2kRyWcHE7vfYTEVp5wwyFIVOW
-         Prrdt9k/yJVSjci3pG003XhkmwNXaxjQ1VNq2vAlZKCbuTYZP+YjpW4YEL4SJ8yMMX20
-         IA5Q==
-X-Gm-Message-State: AIkVDXJDynEl1PHBfifYFq/miOeH0p+w7P4UlCsLJyk7imMIo2G+gNwfh1wfGJylCTznIA==
-X-Received: by 10.99.113.85 with SMTP id b21mr2440068pgn.180.1484038135863;
-        Tue, 10 Jan 2017 00:48:55 -0800 (PST)
+        bh=2IkialHoY0meFPUeC+Y1dbeJCy5CnvPdafL8q6mGoNk=;
+        b=OWBzMlOXEhfwsIzIUP4Km2KB6giZQfa8sSUtfQYFUnJTvMEIM7ooAWyWJH+0tM+U6h
+         0PZKAJ1f6pYhCTuxTGc7Z98uXER/kILYi/cKtRMuTeHjsEB0xYDc1mKYCbfnB0AhdIi0
+         FiD8bXIfWB1XsyNF8MRUnlUKfELnfXvg0AfPXUY6n2zJwS2BhpmRPPKhUSYfMDlPA48S
+         hBD14dfhn5CXv77jLSBsaLF1a2PFRDoCE0CJvyvXfQ3N3dWAbR6o198hRqTgT6cb0ojJ
+         IcaUFLha03vMJFLJYg1U6T4snC+zuzcy2vgXX6FLMYDdt4DlZ/8QoQIq1oWhW2+NJw/D
+         YdlA==
+X-Gm-Message-State: AIkVDXJVs9Q1wbAGwf5opgypQiufQjT2qdRTOESIoBkPCNTRsffyvBJag4SbARtxS9r8Yg==
+X-Received: by 10.98.212.23 with SMTP id a23mr2493801pfh.94.1484038138522;
+        Tue, 10 Jan 2017 00:48:58 -0800 (PST)
 Received: from AamlaJuice.corp.endurance.com ([115.110.127.198])
-        by smtp.gmail.com with ESMTPSA id m12sm3411983pfg.92.2017.01.10.00.48.53
+        by smtp.gmail.com with ESMTPSA id m12sm3411983pfg.92.2017.01.10.00.48.56
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 10 Jan 2017 00:48:55 -0800 (PST)
+        Tue, 10 Jan 2017 00:48:57 -0800 (PST)
 From:   Karthik Nayak <karthik.188@gmail.com>
 X-Google-Original-From: Karthik Nayak <Karthik.188@gmail.com>
 To:     git@vger.kernel.org
 Cc:     jacob.keller@gmail.com, gitster@pobox.com,
         Karthik Nayak <karthik.188@gmail.com>
-Subject: [PATCH v10 03/20] ref-filter: implement %(if:equals=<string>) and %(if:notequals=<string>)
-Date:   Tue, 10 Jan 2017 14:19:36 +0530
-Message-Id: <20170110084953.15890-4-Karthik.188@gmail.com>
+Subject: [PATCH v10 04/20] ref-filter: modify "%(objectname:short)" to take length
+Date:   Tue, 10 Jan 2017 14:19:37 +0530
+Message-Id: <20170110084953.15890-5-Karthik.188@gmail.com>
 X-Mailer: git-send-email 2.11.0
 In-Reply-To: <20170110084953.15890-1-Karthik.188@gmail.com>
 References: <20170110084953.15890-1-Karthik.188@gmail.com>
@@ -64,178 +64,128 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Karthik Nayak <karthik.188@gmail.com>
 
-Implement %(if:equals=<string>) wherein the if condition is only
-satisfied if the value obtained between the %(if:...) and %(then) atom
-is the same as the given '<string>'.
-
-Similarly, implement (if:notequals=<string>) wherein the if condition
-is only satisfied if the value obtained between the %(if:...) and
-%(then) atom is different from the given '<string>'.
-
-This is done by introducing 'if_atom_parser()' which parses the given
-%(if) atom and then stores the data in used_atom which is later passed
-on to the used_atom of the %(then) atom, so that it can do the required
-comparisons.
+Add support for %(objectname:short=<length>) which would print the
+abbreviated unique objectname of given length. When no length is
+specified, the length is 'DEFAULT_ABBREV'. The minimum length is
+'MINIMUM_ABBREV'. The length may be exceeded to ensure that the
+provided object name is unique.
 
 Add tests and documentation for the same.
 
 Mentored-by: Christian Couder <christian.couder@gmail.com>
 Mentored-by: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
+Helped-by: Jacob Keller <jacob.keller@gmail.com>
 Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
 ---
  Documentation/git-for-each-ref.txt |  3 +++
- ref-filter.c                       | 46 +++++++++++++++++++++++++++++++++-----
- t/t6302-for-each-ref-filter.sh     | 18 +++++++++++++++
- 3 files changed, 62 insertions(+), 5 deletions(-)
+ ref-filter.c                       | 25 +++++++++++++++++++------
+ t/t6300-for-each-ref.sh            | 10 ++++++++++
+ 3 files changed, 32 insertions(+), 6 deletions(-)
 
 diff --git a/Documentation/git-for-each-ref.txt b/Documentation/git-for-each-ref.txt
-index 6b671ae92..d5be41973 100644
+index d5be41973..d7ab4c961 100644
 --- a/Documentation/git-for-each-ref.txt
 +++ b/Documentation/git-for-each-ref.txt
-@@ -158,6 +158,9 @@ if::
- 	evaluating the string before %(then), this is useful when we
- 	use the %(HEAD) atom which prints either "*" or " " and we
- 	want to apply the 'if' condition only on the 'HEAD' ref.
-+	Append ":equals=<string>" or ":notequals=<string>" to compare
-+	the value between the %(if:...) and %(then) atoms with the
-+	given string.
+@@ -110,6 +110,9 @@ objectsize::
+ objectname::
+ 	The object name (aka SHA-1).
+ 	For a non-ambiguous abbreviation of the object name append `:short`.
++	For an abbreviation of the object name with desired length append
++	`:short=<length>`, where the minimum length is MINIMUM_ABBREV. The
++	length may be exceeded to ensure unique object names.
  
- In addition to the above, for commit and tag objects, the header
- field names (`tree`, `parent`, `object`, `type`, and `tag`) can
+ upstream::
+ 	The name of a local ref which can be considered ``upstream''
 diff --git a/ref-filter.c b/ref-filter.c
-index f31c4b68b..e002629ff 100644
+index e002629ff..385fc04d0 100644
 --- a/ref-filter.c
 +++ b/ref-filter.c
-@@ -16,6 +16,7 @@
- #include "trailer.h"
- 
- typedef enum { FIELD_STR, FIELD_ULONG, FIELD_TIME } cmp_type;
-+typedef enum { COMPARE_EQUAL, COMPARE_UNEQUAL, COMPARE_NONE } cmp_status;
- 
- struct align {
- 	align_type position;
-@@ -23,6 +24,8 @@ struct align {
- };
- 
- struct if_then_else {
-+	cmp_status cmp_status;
-+	const char *str;
- 	unsigned int then_atom_seen : 1,
- 		else_atom_seen : 1,
- 		condition_satisfied : 1;
-@@ -50,6 +53,10 @@ static struct used_atom {
- 			enum { C_BARE, C_BODY, C_BODY_DEP, C_LINES, C_SIG, C_SUB, C_TRAILERS } option;
- 			unsigned int nlines;
- 		} contents;
+@@ -57,7 +57,10 @@ static struct used_atom {
+ 			cmp_status cmp_status;
+ 			const char *str;
+ 		} if_then_else;
+-		enum { O_FULL, O_SHORT } objectname;
 +		struct {
-+			cmp_status cmp_status;
-+			const char *str;
-+		} if_then_else;
- 		enum { O_FULL, O_SHORT } objectname;
++			enum { O_FULL, O_LENGTH, O_SHORT } option;
++			unsigned int length;
++		} objectname;
  	} u;
  } *used_atom;
-@@ -179,6 +186,21 @@ static void align_atom_parser(struct used_atom *atom, const char *arg)
- 	string_list_clear(&params, 0);
+ static int used_atom_cnt, need_tagged, need_symref;
+@@ -129,10 +132,17 @@ static void contents_atom_parser(struct used_atom *atom, const char *arg)
+ static void objectname_atom_parser(struct used_atom *atom, const char *arg)
+ {
+ 	if (!arg)
+-		atom->u.objectname = O_FULL;
++		atom->u.objectname.option = O_FULL;
+ 	else if (!strcmp(arg, "short"))
+-		atom->u.objectname = O_SHORT;
+-	else
++		atom->u.objectname.option = O_SHORT;
++	else if (skip_prefix(arg, "short=", &arg)) {
++		atom->u.objectname.option = O_LENGTH;
++		if (strtoul_ui(arg, 10, &atom->u.objectname.length) ||
++		    atom->u.objectname.length == 0)
++			die(_("positive value expected objectname:short=%s"), arg);
++		if (atom->u.objectname.length < MINIMUM_ABBREV)
++			atom->u.objectname.length = MINIMUM_ABBREV;
++	} else
+ 		die(_("unrecognized %%(objectname) argument: %s"), arg);
  }
  
-+static void if_atom_parser(struct used_atom *atom, const char *arg)
-+{
-+	if (!arg) {
-+		atom->u.if_then_else.cmp_status = COMPARE_NONE;
-+		return;
-+	} else if (skip_prefix(arg, "equals=", &atom->u.if_then_else.str)) {
-+		atom->u.if_then_else.cmp_status = COMPARE_EQUAL;
-+	} else if (skip_prefix(arg, "notequals=", &atom->u.if_then_else.str)) {
-+		atom->u.if_then_else.cmp_status = COMPARE_UNEQUAL;
-+	} else {
-+		die(_("unrecognized %%(if) argument: %s"), arg);
-+	}
-+}
-+
-+
- static struct {
- 	const char *name;
- 	cmp_type cmp_type;
-@@ -220,7 +242,7 @@ static struct {
- 	{ "color", FIELD_STR, color_atom_parser },
- 	{ "align", FIELD_STR, align_atom_parser },
- 	{ "end" },
--	{ "if" },
-+	{ "if", FIELD_STR, if_atom_parser },
- 	{ "then" },
- 	{ "else" },
- };
-@@ -422,6 +444,9 @@ static void if_atom_handler(struct atom_value *atomv, struct ref_formatting_stat
- 	struct ref_formatting_stack *new;
- 	struct if_then_else *if_then_else = xcalloc(sizeof(struct if_then_else), 1);
- 
-+	if_then_else->str = atomv->atom->u.if_then_else.str;
-+	if_then_else->cmp_status = atomv->atom->u.if_then_else.cmp_status;
-+
- 	push_stack_element(&state->stack);
- 	new = state->stack;
- 	new->at_end = if_then_else_handler;
-@@ -453,10 +478,17 @@ static void then_atom_handler(struct atom_value *atomv, struct ref_formatting_st
- 		die(_("format: %%(then) atom used after %%(else)"));
- 	if_then_else->then_atom_seen = 1;
- 	/*
--	 * If there exists non-empty string between the 'if' and
--	 * 'then' atom then the 'if' condition is satisfied.
-+	 * If the 'equals' or 'notequals' attribute is used then
-+	 * perform the required comparison. If not, only non-empty
-+	 * strings satisfy the 'if' condition.
- 	 */
--	if (cur->output.len && !is_empty(cur->output.buf))
-+	if (if_then_else->cmp_status == COMPARE_EQUAL) {
-+		if (!strcmp(if_then_else->str, cur->output.buf))
-+			if_then_else->condition_satisfied = 1;
-+	} else 	if (if_then_else->cmp_status == COMPARE_UNEQUAL) {
-+		if (strcmp(if_then_else->str, cur->output.buf))
-+			if_then_else->condition_satisfied = 1;
-+	} else if (cur->output.len && !is_empty(cur->output.buf))
- 		if_then_else->condition_satisfied = 1;
- 	strbuf_reset(&cur->output);
- }
-@@ -1158,7 +1190,11 @@ static void populate_value(struct ref_array_item *ref)
- 		} else if (!strcmp(name, "end")) {
- 			v->handler = end_atom_handler;
- 			continue;
--		} else if (!strcmp(name, "if")) {
-+		} else if (starts_with(name, "if")) {
-+			const char *s;
-+
-+			if (skip_prefix(name, "if:", &s))
-+				v->s = xstrdup(s);
- 			v->handler = if_atom_handler;
- 			continue;
- 		} else if (!strcmp(name, "then")) {
-diff --git a/t/t6302-for-each-ref-filter.sh b/t/t6302-for-each-ref-filter.sh
-index fed30133d..a09a1a46e 100755
---- a/t/t6302-for-each-ref-filter.sh
-+++ b/t/t6302-for-each-ref-filter.sh
-@@ -403,4 +403,22 @@ test_expect_success 'ignore spaces in %(if) atom usage' '
- 	test_cmp expect actual
+@@ -606,12 +616,15 @@ static int grab_objectname(const char *name, const unsigned char *sha1,
+ 			   struct atom_value *v, struct used_atom *atom)
+ {
+ 	if (starts_with(name, "objectname")) {
+-		if (atom->u.objectname == O_SHORT) {
++		if (atom->u.objectname.option == O_SHORT) {
+ 			v->s = xstrdup(find_unique_abbrev(sha1, DEFAULT_ABBREV));
+ 			return 1;
+-		} else if (atom->u.objectname == O_FULL) {
++		} else if (atom->u.objectname.option == O_FULL) {
+ 			v->s = xstrdup(sha1_to_hex(sha1));
+ 			return 1;
++		} else if (atom->u.objectname.option == O_LENGTH) {
++			v->s = xstrdup(find_unique_abbrev(sha1, atom->u.objectname.length));
++			return 1;
+ 		} else
+ 			die("BUG: unknown %%(objectname) option");
+ 	}
+diff --git a/t/t6300-for-each-ref.sh b/t/t6300-for-each-ref.sh
+index aea1dfc71..e67c694c3 100755
+--- a/t/t6300-for-each-ref.sh
++++ b/t/t6300-for-each-ref.sh
+@@ -60,6 +60,8 @@ test_atom head objecttype commit
+ test_atom head objectsize 171
+ test_atom head objectname $(git rev-parse refs/heads/master)
+ test_atom head objectname:short $(git rev-parse --short refs/heads/master)
++test_atom head objectname:short=1 $(git rev-parse --short=1 refs/heads/master)
++test_atom head objectname:short=10 $(git rev-parse --short=10 refs/heads/master)
+ test_atom head tree $(git rev-parse refs/heads/master^{tree})
+ test_atom head parent ''
+ test_atom head numparent 0
+@@ -99,6 +101,8 @@ test_atom tag objecttype tag
+ test_atom tag objectsize 154
+ test_atom tag objectname $(git rev-parse refs/tags/testtag)
+ test_atom tag objectname:short $(git rev-parse --short refs/tags/testtag)
++test_atom head objectname:short=1 $(git rev-parse --short=1 refs/heads/master)
++test_atom head objectname:short=10 $(git rev-parse --short=10 refs/heads/master)
+ test_atom tag tree ''
+ test_atom tag parent ''
+ test_atom tag numparent ''
+@@ -164,6 +168,12 @@ test_expect_success 'Check invalid format specifiers are errors' '
+ 	test_must_fail git for-each-ref --format="%(authordate:INVALID)" refs/heads
  '
  
-+test_expect_success 'check %(if:equals=<string>)' '
-+	git for-each-ref --format="%(if:equals=master)%(refname:short)%(then)Found master%(else)Not master%(end)" refs/heads/ >actual &&
-+	cat >expect <<-\EOF &&
-+	Found master
-+	Not master
-+	EOF
-+	test_cmp expect actual
++test_expect_success 'arguments to %(objectname:short=) must be positive integers' '
++	test_must_fail git for-each-ref --format="%(objectname:short=0)" &&
++	test_must_fail git for-each-ref --format="%(objectname:short=-1)" &&
++	test_must_fail git for-each-ref --format="%(objectname:short=foo)"
 +'
 +
-+test_expect_success 'check %(if:notequals=<string>)' '
-+	git for-each-ref --format="%(if:notequals=master)%(refname:short)%(then)Not master%(else)Found master%(end)" refs/heads/ >actual &&
-+	cat >expect <<-\EOF &&
-+	Found master
-+	Not master
-+	EOF
-+	test_cmp expect actual
-+'
-+
- test_done
+ test_date () {
+ 	f=$1 &&
+ 	committer_date=$2 &&
 -- 
 2.11.0
 
