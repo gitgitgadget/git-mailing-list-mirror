@@ -2,121 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B110A20756
-	for <e@80x24.org>; Tue, 10 Jan 2017 20:51:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 00FA820756
+	for <e@80x24.org>; Tue, 10 Jan 2017 20:51:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751956AbdAJUvF (ORCPT <rfc822;e@80x24.org>);
-        Tue, 10 Jan 2017 15:51:05 -0500
-Received: from mail-it0-f43.google.com ([209.85.214.43]:36401 "EHLO
-        mail-it0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751155AbdAJUvE (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 Jan 2017 15:51:04 -0500
-Received: by mail-it0-f43.google.com with SMTP id c7so49891731itd.1
-        for <git@vger.kernel.org>; Tue, 10 Jan 2017 12:51:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=P9dgyDbbP/CJW+KQ1vMCsF1+NXnedq5rbSdp9PrmEOI=;
-        b=lvYu7npzVz+dCaMB5uUH8St2w1cz0HO8Dffo/bDmHU90N+/AKWbFQGaOF9K9N6mD8c
-         sRNXm8gB82291AA0JvhM7w9+QwM6lyBf00nsbNJkmB/SG5mFfgJBDMM146lMGQoxp+Pl
-         FI1baBIwa90Hw95PkB6Xq2YJHk1tC3HG+y/lgO0O1AymZvXU9PDnYTECRNjAyHhprFEN
-         8x96+KERpZfBCEmXjHJsgmjclsUWgb8ujyC9dX4XjPVelObkyCJbI+EnSMNCdjKXQ5R8
-         a0JcT9072F3Nk1LhJMWYzTSSsnQFSFn6C2iig4/zicXG8kbUq08mS5Ai7jPS5Tw4DT5w
-         QONw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=P9dgyDbbP/CJW+KQ1vMCsF1+NXnedq5rbSdp9PrmEOI=;
-        b=jb/1zE6+2pNw0zzcq9eiqP3Fsr3qXPV6EPXOdHbezuLdTmcggwWIsGAewXQpgjC5ut
-         KpczbF4XBBkAEyCzWxuhhnoVoMnVrYa8sjx7EeUnLdHpeNha7VFbo5QTIaixSJETV9kF
-         m3PcrpSh/2qaV1tcLJaPTY559pcTwWQj8Bscq0HK5mkFRuvOm9O/mvHKRXzwmOZUduc+
-         aq0G27HD28vO77OXJtkn+8e6BnIZ16JnHznEjltxwSRCmKxTjNITu9GQy1XI+D9lyR/y
-         OXyVy6jPfylfJgefbOKnYpurxKJ7C8ZVBA5gdd0ruFWy86PznB9S2V0j6jC5ZXWKLXpc
-         97Fw==
-X-Gm-Message-State: AIkVDXJEOCH5yp8bfS4kitoKnn3mwr09eRJOnxsROrsX/kOOjndmnbr2UtqmCwo1T0kUe8bcZdwZXsNQzAWdSSbY
-X-Received: by 10.36.65.161 with SMTP id b33mr5191283itd.114.1484081463551;
- Tue, 10 Jan 2017 12:51:03 -0800 (PST)
+        id S1751960AbdAJUvj (ORCPT <rfc822;e@80x24.org>);
+        Tue, 10 Jan 2017 15:51:39 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:64104 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751155AbdAJUvi (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 Jan 2017 15:51:38 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 1AB165E71B;
+        Tue, 10 Jan 2017 15:51:37 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=QFebFOvoIrWnC+SfI1reXiiEao0=; b=MsOm9e
+        zlJ5TzDsGUV0eQrHFXM+spAcHXD2myuhVUsdEvXUsOVXu6W8e3psqVDFdNNQGulW
+        tSmCEUoiiemjW7jrpPPw38VkUMbDIkj/rs0fQ2S3jzvmCdDa9RbfIC1LLNzxgcZ7
+        GngKZx1ql1buPtSGWYnHR5y1ctroqpt9ZglXs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=wkf3do/ZljxjK7EntCHE/liyBG7DuAYO
+        TEau4yZPkDX3naUZiZKfLd4eCNqMAckmFpciSRbTZGteHgsodvtY1mDpnlVMQy3b
+        dQ2j3BJqlPBrhAyExNm4kvSUq0O8bnXHoemIe1ouV7VbH6OQ4ZZILKc/KPw8xHSn
+        DQHpaYvAlLg=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 137DE5E719;
+        Tue, 10 Jan 2017 15:51:37 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 7FEA45E718;
+        Tue, 10 Jan 2017 15:51:36 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Karthik Nayak <karthik.188@gmail.com>
+Cc:     git@vger.kernel.org, jacob.keller@gmail.com
+Subject: Re: [PATCH v10 00/20] port branch.c to use ref-filter's printing options
+References: <20170110084953.15890-1-Karthik.188@gmail.com>
+Date:   Tue, 10 Jan 2017 12:51:35 -0800
+In-Reply-To: <20170110084953.15890-1-Karthik.188@gmail.com> (Karthik Nayak's
+        message of "Tue, 10 Jan 2017 14:19:33 +0530")
+Message-ID: <xmqqbmver63s.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.90 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.79.39.19 with HTTP; Tue, 10 Jan 2017 12:51:03 -0800 (PST)
-In-Reply-To: <xmqqd1fusmsu.fsf@gitster.mtv.corp.google.com>
-References: <20170109194621.17013-1-sbeller@google.com> <20170109194621.17013-5-sbeller@google.com>
- <xmqqd1fusmsu.fsf@gitster.mtv.corp.google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Tue, 10 Jan 2017 12:51:03 -0800
-Message-ID: <CAGZ79kbXVCvZuj6rTckGwOfFtRSFpx9p611oKfFLAayTgB242Q@mail.gmail.com>
-Subject: Re: [PATCHv2 4/5] unpack-trees: factor file removal out of check_updates
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jeff King <peff@peff.net>,
-        =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
+X-Pobox-Relay-ID: 93B1DD42-D776-11E6-9AC1-FE3F13518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jan 10, 2017 at 12:05 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Stefan Beller <sbeller@google.com> writes:
->
->> This makes check_updates shorter and easier to understand.
->>
->> Signed-off-by: Stefan Beller <sbeller@google.com>
->> ---
->
-> I agree that 3/5 made it easier to understand by ejecting a block
-> that is not essential to the functionality of the function out of
-> it, making the remainder of the fuction about "removing gone files
-> and then write out the modified files".
->
-> The ejecting of the first half of these two operations, both are
-> what this function is about, done by this step feels backwards.  If
-> anything, the "only do the actual working tree manipulation when not
-> doing a dry-run and told to update" logic that must be in both are
-> spread in two helper functions after step 5/5, and with the added
-> boilerplate for these two helpers, the end result becomes _longer_
-> to understand what is really going on when check_updates() is
-> called.
->
-> Is the original after step 3/5 too long and hard to understand?
+Karthik Nayak <karthik.188@gmail.com> writes:
 
-It is ok to understand for the current state of the world,
-so please drop 4 and 5 for now.
+> index 81db67d74..08be8462c 100644
+> --- a/Documentation/git-for-each-ref.txt
+> +++ b/Documentation/git-for-each-ref.txt
+> @@ -95,13 +95,17 @@ refname::
+>  	The name of the ref (the part after $GIT_DIR/).
+>  	For a non-ambiguous short name of the ref append `:short`.
+>  	The option core.warnAmbiguousRefs is used to select the strict
+> +	abbreviation mode. If `lstrip=<N>` is appended, strips `<N>`
+> +	slash-separated path components from the front of the refname
+> +	(e.g., `%(refname:lstrip=2)` turns `refs/tags/foo` into `foo` and
+> +	`%(refname:rstrip=2)` turns `refs/tags/foo` into `refs`).
 
-In a future, when
-* working tree operations would learn about threading or
-* working tree operations were aware of submodules
-then steps of 4 and 5 would be longer, such that the check_updates
-function may require further splitting up.
+I hiccupped while reading this, as the (e.g.) example talks about rstrip
+that is not mentioned in the main text that is enhanced by the
+example.
 
-As far as I understand the operations now, a working tree operation
-is done like this:
+	If `lstrip=<N>` (`rstrip=<N>`) is appended, strips `<N>`
+	slash-separated path components from the front (tail) of the
+	refname (e.g. `%(refname:lstrip=2)` ...
 
-* First compute the new index, how the world would look like
-  (don't touch a thing in the working tree, it is like a complete
-  dry run, that just checks for potential loss of data, e.g.
-  untracked files, merge conflicts etc)
-* remove all files to be marked for deletion
-* add and update all files that are new or change content.
+perhaps?
 
-check_updates does the last two things listed here, which in the
-grand scheme of things looked odd to me.
+> +	if `<N>` is a negative number, then only `<N>` path components
+> +	are left behind.
 
-When introducing e.g. threaded checkout, then each of the functions
-introduced in patch 4&5 would be one compartment, i.e. the function
-remove_workingtree_files would need to have all its tasks finished
-before we even queue up tasks for updating files, such that we
-do not run into D/F conflicts racily.
+Begin the sentence with cap?  I'd rephrase it a bit while at it if I
+were doing this:
 
-So yeah, maybe this is too much future-visionary thinking, so please
-drop 4/5; I can revive them if needed. I think I mainly did them
-for my own clarity and understanding.
+	If `<N>` is a negative number, strip as many path components
+	as necessary from the specified end to leave `-<N>` path
+	components.
 
-Thanks,
-Stefan
+Other than the above, looks very good to me.
+
+Thanks.
