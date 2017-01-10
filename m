@@ -2,58 +2,58 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-6.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 61AD120A93
-	for <e@80x24.org>; Tue, 10 Jan 2017 08:49:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 32D39205C9
+	for <e@80x24.org>; Tue, 10 Jan 2017 08:50:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932904AbdAJIti (ORCPT <rfc822;e@80x24.org>);
-        Tue, 10 Jan 2017 03:49:38 -0500
-Received: from mail-pf0-f194.google.com ([209.85.192.194]:34643 "EHLO
-        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932452AbdAJItg (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 Jan 2017 03:49:36 -0500
-Received: by mail-pf0-f194.google.com with SMTP id y143so6873819pfb.1
-        for <git@vger.kernel.org>; Tue, 10 Jan 2017 00:49:35 -0800 (PST)
+        id S1760656AbdAJIth (ORCPT <rfc822;e@80x24.org>);
+        Tue, 10 Jan 2017 03:49:37 -0500
+Received: from mail-pf0-f196.google.com ([209.85.192.196]:33192 "EHLO
+        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932940AbdAJIt0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 Jan 2017 03:49:26 -0500
+Received: by mail-pf0-f196.google.com with SMTP id 127so27983127pfg.0
+        for <git@vger.kernel.org>; Tue, 10 Jan 2017 00:49:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=hDKPDz4iCPto48jv1zmuUao+kXf4A23y6MIG+eWTkp0=;
-        b=kCR+UQA2S9JErwYxyxnYszzhTYFzBT2BYybmXYw492VlYsuln/g9IX6sEET1GhXmA4
-         A33MR01+B5o5FaaAHZiRRuRrqcdxX19knwfubYWpY83HsRMhO6izXeXGxwVnI5IYtshh
-         bsZDvTcw2JoplvptTBaz+gho7yQzKyIHF/2teKoh1bM4Wm9aTgcETan2jRGGoOGpgIZU
-         UbdkjUxOn5hQLdLgKjx0Gr1wUH7rl8wAr3Vw4jDC6y4+HPMLBXpMoH6BOFSNDY7b3bjR
-         sOS1QPufxHdABVhCgmHIdFuGpEaVmqe3Xx3226HzXfMSPPzRDmspVS1RtX4aj/xU7fIQ
-         482A==
+        bh=NdSn2SqhYOId6z75GJhH3ZvF/VmYcBMrj8M3iux3ixY=;
+        b=nQ9F8RXeu2PXwkOC+1nLakUwNW+uwmvbmf2JXN7b91D73AR5HNW1J2YBmUbQ03QFME
+         Yt0yq97uDXsCCNEeTO1J0x+aUzipfapq008Kc02acPvCSxj3rmank0986baqYI+Dbtj6
+         04S7b/auYMwlisyOxoiDXPqSczjDv8RYImAbGga5Qupzjfk2qHjxo5WRikn10NOYw9Zw
+         497zDfxgszM5seG95N7IWCgVaoiz02O5Vhfb2zg2AZWqPiq1ygz/cA2XG6X+3xPoF/fp
+         GKc+0oNWNnZPB5YZJGJJoHlN8Jbt9YFcJNxrf3q15rg06/Um6/THlHMJfuiKVoIVaGyZ
+         DJCQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=hDKPDz4iCPto48jv1zmuUao+kXf4A23y6MIG+eWTkp0=;
-        b=rCKSOJvt7p7X5rot1tReip+iYoQK0dxUXgRH8x8KMz3rY6WvAtk3gXIT4QafpqFyEv
-         fQ8dN9Zs8wQWMTmyTcBTX4Y4GlQTjzQLDZ2UEzDP6XYzmnzXdclguwMlLNkW4eFF492V
-         ZXb4fZJ9YLzIdSA+XDwnFy6+JBVFZnWs4kWj/DQ7mwD7f65gxKCOLlj5S8wx3Gg3y77A
-         DyBetDhh9aJjbknp62O4+UfhiSDdILe1EAfSEd083FuG4QqE3W0MWcyUMH3P8BNqSFM3
-         oS1tI8mHAjMhdH/pimwZPBEdNEy97cvefhqoX7EU0C7cx2DKRSKN0AGojzgEfzJSe0yq
-         NHtA==
-X-Gm-Message-State: AIkVDXJLAPryuDw6M4hzW/WwPK3nVziz02bYzl1QF06Wxojrr6Evw1rKdxG+zf0SW5ffww==
-X-Received: by 10.84.193.131 with SMTP id f3mr3358980pld.26.1484038175372;
-        Tue, 10 Jan 2017 00:49:35 -0800 (PST)
+        bh=NdSn2SqhYOId6z75GJhH3ZvF/VmYcBMrj8M3iux3ixY=;
+        b=VdVQqgwmQQ27UyPLf2RSP7Sb6guYKgWW5Vq73KmOanVz0NIR08xdrcyX8QC+BnHijf
+         /dDf/pPHjYnEaZiXlnfYc/VzhMokIAGadpM681Eqd7+IyJ9+xvRLwnXGPdnuH/tC3zMo
+         dykfd1F9IkB4MdWY9kf/A/6Z2GGacHQCvGWf4A/QVzoSopvI5BGWnrn3ni0KLMnQmkuv
+         FomCzAbl0EMUiov+wIjq5+EgS9SgjDA2ZoTk7m7b/nKkbFs+xDTm55HKaRn4wW4XodKe
+         Fqofh+TGlbaoOYesDgukBkP4ssNSdig4B+KCgs0NRGviRYymGvv7MSjSgjZeGzWDaKP6
+         jjgg==
+X-Gm-Message-State: AIkVDXJzxEhDzhrWf9kq08MBAec7P1n06y/0ZUgQZwCnZjEZGXS99dADE/GXEbgO8jIgsw==
+X-Received: by 10.99.60.76 with SMTP id i12mr2730366pgn.170.1484038165373;
+        Tue, 10 Jan 2017 00:49:25 -0800 (PST)
 Received: from AamlaJuice.corp.endurance.com ([115.110.127.198])
-        by smtp.gmail.com with ESMTPSA id m12sm3411983pfg.92.2017.01.10.00.49.33
+        by smtp.gmail.com with ESMTPSA id m12sm3411983pfg.92.2017.01.10.00.49.23
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 10 Jan 2017 00:49:34 -0800 (PST)
+        Tue, 10 Jan 2017 00:49:24 -0800 (PST)
 From:   Karthik Nayak <karthik.188@gmail.com>
 X-Google-Original-From: Karthik Nayak <Karthik.188@gmail.com>
 To:     git@vger.kernel.org
 Cc:     jacob.keller@gmail.com, gitster@pobox.com,
-        Karthik Nayak <karthik.188@gmail.com>
-Subject: [PATCH v10 18/20] branch, tag: use porcelain output
-Date:   Tue, 10 Jan 2017 14:19:51 +0530
-Message-Id: <20170110084953.15890-19-Karthik.188@gmail.com>
+        Karthik Nayak <Karthik.188@gmail.com>
+Subject: [PATCH v10 14/20] ref-filter: Do not abruptly die when using the 'lstrip=<N>' option
+Date:   Tue, 10 Jan 2017 14:19:47 +0530
+Message-Id: <20170110084953.15890-15-Karthik.188@gmail.com>
 X-Mailer: git-send-email 2.11.0
 In-Reply-To: <20170110084953.15890-1-Karthik.188@gmail.com>
 References: <20170110084953.15890-1-Karthik.188@gmail.com>
@@ -62,49 +62,65 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Karthik Nayak <karthik.188@gmail.com>
+Currently when we use the 'lstrip=<N>' option, if 'N' is greater than
+the number of components available in the refname, we abruptly end
+program execution by calling die().
 
-Call ref-filter's setup_ref_filter_porcelain_msg() to enable
-translated messages for the %(upstream:tack) atom. Although branch.c
-doesn't currently use ref-filter's printing API's, this will ensure
-that when it does in the future patches, we do not need to worry about
-translation.
+This behavior is undesired since a single refname with few components
+could end program execution. To avoid this, return an empty string
+whenever the value 'N' is greater than the number of components
+available, instead of calling die().
 
-Written-by: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
-Mentored-by: Christian Couder <christian.couder@gmail.com>
-Mentored-by: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
-Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+Signed-off-by: Karthik Nayak <Karthik.188@gmail.com>
 ---
- builtin/branch.c | 2 ++
- builtin/tag.c    | 2 ++
- 2 files changed, 4 insertions(+)
+ Documentation/git-for-each-ref.txt | 3 +--
+ ref-filter.c                       | 3 +--
+ t/t6300-for-each-ref.sh            | 4 ----
+ 3 files changed, 2 insertions(+), 8 deletions(-)
 
-diff --git a/builtin/branch.c b/builtin/branch.c
-index 6423ebce5..34cd61cd9 100644
---- a/builtin/branch.c
-+++ b/builtin/branch.c
-@@ -649,6 +649,8 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
- 		OPT_END(),
- 	};
+diff --git a/Documentation/git-for-each-ref.txt b/Documentation/git-for-each-ref.txt
+index b0d94deea..04ffc3552 100644
+--- a/Documentation/git-for-each-ref.txt
++++ b/Documentation/git-for-each-ref.txt
+@@ -98,8 +98,7 @@ refname::
+ 	abbreviation mode. If `lstrip=<N>` is appended, strips `<N>`
+ 	slash-separated path components from the front of the refname
+ 	(e.g., `%(refname:lstrip=2)` turns `refs/tags/foo` into `foo`.
+-	`<N>` must be a positive integer.  If a displayed ref has fewer
+-	components than `<N>`, the command aborts with an error.
++	`<N>` must be a positive integer.
  
-+	setup_ref_filter_porcelain_msg();
-+
- 	memset(&filter, 0, sizeof(filter));
- 	filter.kind = FILTER_REFS_BRANCHES;
- 	filter.abbrev = -1;
-diff --git a/builtin/tag.c b/builtin/tag.c
-index b4789cec4..8a1a476db 100644
---- a/builtin/tag.c
-+++ b/builtin/tag.c
-@@ -375,6 +375,8 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
- 		OPT_END()
- 	};
+ objecttype::
+ 	The type of the object (`blob`, `tree`, `commit`, `tag`).
+diff --git a/ref-filter.c b/ref-filter.c
+index e0015c60f..76553ebc4 100644
+--- a/ref-filter.c
++++ b/ref-filter.c
+@@ -1099,8 +1099,7 @@ static const char *lstrip_ref_components(const char *refname, unsigned int len)
+ 	while (remaining) {
+ 		switch (*start++) {
+ 		case '\0':
+-			die(_("ref '%s' does not have %ud components to :lstrip"),
+-			    refname, len);
++			return "";
+ 		case '/':
+ 			remaining--;
+ 			break;
+diff --git a/t/t6300-for-each-ref.sh b/t/t6300-for-each-ref.sh
+index 5eb013ca2..d3d1a97db 100755
+--- a/t/t6300-for-each-ref.sh
++++ b/t/t6300-for-each-ref.sh
+@@ -147,10 +147,6 @@ test_expect_success 'arguments to :lstrip must be positive integers' '
+ 	test_must_fail git for-each-ref --format="%(refname:lstrip=foo)"
+ '
  
-+	setup_ref_filter_porcelain_msg();
-+
- 	git_config(git_tag_config, sorting_tail);
- 
- 	memset(&opt, 0, sizeof(opt));
+-test_expect_success 'stripping refnames too far gives an error' '
+-	test_must_fail git for-each-ref --format="%(refname:lstrip=3)"
+-'
+-
+ test_expect_success 'Check format specifiers are ignored in naming date atoms' '
+ 	git for-each-ref --format="%(authordate)" refs/heads &&
+ 	git for-each-ref --format="%(authordate:default) %(authordate)" refs/heads &&
 -- 
 2.11.0
 
