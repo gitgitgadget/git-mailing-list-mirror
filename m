@@ -6,104 +6,124 @@ X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 019EB1FEB3
-	for <e@80x24.org>; Tue, 10 Jan 2017 01:45:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DCBBB1FEB3
+	for <e@80x24.org>; Tue, 10 Jan 2017 01:46:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1031967AbdAJBpz (ORCPT <rfc822;e@80x24.org>);
-        Mon, 9 Jan 2017 20:45:55 -0500
-Received: from mail-pf0-f176.google.com ([209.85.192.176]:35596 "EHLO
-        mail-pf0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S934215AbdAJBpy (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1032135AbdAJBp4 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 9 Jan 2017 20:45:56 -0500
+Received: from mail-pf0-f181.google.com ([209.85.192.181]:33638 "EHLO
+        mail-pf0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S936775AbdAJBpy (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 9 Jan 2017 20:45:54 -0500
-Received: by mail-pf0-f176.google.com with SMTP id f144so27562394pfa.2
+Received: by mail-pf0-f181.google.com with SMTP id y143so16258176pfb.0
         for <git@vger.kernel.org>; Mon, 09 Jan 2017 17:45:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=from:to:cc:subject:date:message-id;
-        bh=4QD/fi9/GKtg5eTFUGDZ6P2ij2/WGTiELz5gg8pi/kI=;
-        b=SwNhHevZSeMCUPa5yM5LFlb8BqoRujRPjyrFwmy6OvNSMXEF11DmpIJJWUX2go+Xmf
-         MQSf2liztYoPUsLjPg2ICMYI4xSjnROJQknCh+KmQgMIACNPitWeBdYQFB8xmtzEC0Dl
-         zhGNbGvLILRPxepsgesPwfz47/dZTSTJEjfh6Nffep/YYCyT/O1h+yNopfSvAK/VG+Ws
-         MV6tClbpMJ10OERX//E1e710JDsHbni0Ulb8/e666lIcxs3lN0NHoZs5ZCHL463vk2FA
-         rNv0mG3iKfoBsLW1LVDppT9FoFXVjxCjU30MvWDPvbDlk/A2umw6+/hF9AAGz2hiDSuU
-         zjTw==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=GbEV3uJOsEjCfv1WPTp+Vx+t8oECnj2+TQggeWN3iVI=;
+        b=GugjJkm/fVdgn9ZcloS2cCLpJBaR2XI5FLv6RGDQQf2YeUbehzKGj+64vnd2/t+NBL
+         bbXnlWr6cdY01MI1BG5mQk5NBEDPQWiM/aKvuxB5ODBC9yuIacfCDrah3+YacPMW4C6G
+         Dok+pk5eM+n8c8u5bMcGWkKtT95yDuxD1I3t4XPTCMyayLCIn6DZjRnWmWMPdJdWjs+h
+         dhC3Ah7ZH3k4Bt86nZcricDebY4dWO/9BRP8H+BpCQMqoVBDQ1eKWKBdtJPySDxfveDT
+         jZx9z7R3zlKopBKVT+SAoe5ym0hZ7Moxvbb6eOxaRAHkyJMZ2EAKTmh5y010d56j/O9U
+         X79A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=4QD/fi9/GKtg5eTFUGDZ6P2ij2/WGTiELz5gg8pi/kI=;
-        b=NgaUKCT7wm1aOztUyg3Slxz4Zou9ezdJqbo0stdupjcEiYDI6Crr+Gybkp+JOeS5lc
-         ciB7TjpUotAY0o0peicbKPyL3zRVj+hnPOCinFy7YxFN7DfjfCh0Yho+HHF/hYOIARwz
-         bn7PsYR+jehGu51mnP2Vbwi8oz37us7wSPZwvCoC0bl6SjKN05ooZBs7QaUWyOr48m8F
-         Gxh0IKgcsO7Qwm/flADoE9riFpEGjr5W6d7+Qcnp4NTMlbua83epXXpLJBgP1w3ouzqd
-         KoLVLyA6xVu2MpmUd01cYEo/eRV8Ld1MOpf7QRk+00s+RunqSHbRC/YelySzzWlrSQ86
-         3N7Q==
-X-Gm-Message-State: AIkVDXKKThMh/5SPgBsCVRkozw4zRz3plwc6jnNdzlzT++Nz9Ie5RZVnXF0U4nFyaBdyuZm7
-X-Received: by 10.99.149.66 with SMTP id t2mr906903pgn.156.1484012752456;
-        Mon, 09 Jan 2017 17:45:52 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=GbEV3uJOsEjCfv1WPTp+Vx+t8oECnj2+TQggeWN3iVI=;
+        b=hwyNltMCyWBkw7pZsv32NB1VLxxXNOu6J02bpSyf8HPb5mcxbDoluS68QLWTDXhg+i
+         pEcXkUy/c9qF3IMGUNiQ/o+ibcSZoW//BfYBfLuvy5zBpUA11mpTqJQ2Zd9iMEaJlZgq
+         CFK81vfuPnzylj3MZAxJl5HrJhPv+VZb5TanORQGvIMFPAbwovlX/hsIXCdSexWlWDCC
+         iPRPgc7QDtDfrrcqsMh1oosCevPQear7X9s0BLTo7W90+XBL1MGJHRKuSu/X3ORbY4QJ
+         MyIQBH+6E+s5pqWBCw3XyR3x2oOJhG2IS8ZDGOlGsrm655nPa2pyOcCbQFptoF3lDXzs
+         l0rQ==
+X-Gm-Message-State: AIkVDXLMYsshnnl6OpV+qaoe8HkGOxsA2eT+ZsYdpYLWjqxreynFZ/RyEFfEqcBf5alk4E2l
+X-Received: by 10.99.38.3 with SMTP id m3mr871429pgm.113.1484012753576;
+        Mon, 09 Jan 2017 17:45:53 -0800 (PST)
 Received: from localhost ([2620:0:1000:5b10:1e2:be00:4066:92e5])
-        by smtp.gmail.com with ESMTPSA id b10sm389741pga.21.2017.01.09.17.45.51
+        by smtp.gmail.com with ESMTPSA id d124sm379980pga.30.2017.01.09.17.45.52
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 09 Jan 2017 17:45:51 -0800 (PST)
+        Mon, 09 Jan 2017 17:45:53 -0800 (PST)
 From:   Stefan Beller <sbeller@google.com>
 To:     bmwill@google.com, novalis@novalis.org
 Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>
-Subject: [RFC/PATCH 0/4] working tree operations: support superprefix
-Date:   Mon,  9 Jan 2017 17:45:38 -0800
-Message-Id: <20170110014542.19352-1-sbeller@google.com>
+Subject: [PATCH 1/4] read-tree: use OPT_BOOL instead of OPT_SET_INT
+Date:   Mon,  9 Jan 2017 17:45:39 -0800
+Message-Id: <20170110014542.19352-2-sbeller@google.com>
 X-Mailer: git-send-email 2.11.0.rc2.30.g7c4be45.dirty
+In-Reply-To: <20170110014542.19352-1-sbeller@google.com>
+References: <20170110014542.19352-1-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-As you may know, I am trying to implement "git checkout --recurse-submodules"
-which recurses into submodules and update the submodules to the recorded
-state of the superproject. I realized that such a huge change is a big endeavor,
-and needs to be broken up into many series. 
+All occurrences of OPT_SET_INT were setting the value to 1;
+internally OPT_BOOL is just that.
 
-Currently I plan to send about 4 series:
+Signed-off-by: Stefan Beller <sbeller@google.com>
+---
+ builtin/read-tree.c | 36 ++++++++++++++++++------------------
+ 1 file changed, 18 insertions(+), 18 deletions(-)
 
-* This one; teaching the superprefix to working tree operations.
-
-* structured tests, i.e. enhancing lib-submodule-update.sh to have a function
-  to test for any corner case (File/Submodule conflict,
-  Directory/Submodule conflict; non-existence of submodule commit; and such)
-
-* the actual internal implementation, mostly touching unpack-trees.c,
-  entry.c and helper functions in submodule.c
-  
-* Enabling commands to take advantage of the infrastructure provided.
-  At that point we only need to add a --recurse-submodule flag in the
-  respective command and add a line to its respective test
-  
-  "test_switch_submodule_recursing $cmd --recurse-submodule"
-
---
-This patch series is the first of the four series.
-
-It consists of 4 patches, the first 3 are refactoring to a modern style of Git,
-the last patch is the actual patch that allows read-tree to be used with
-the superprefix option. read-tree is already exposed there to make the
-super-prefix code tested.
-
-The series is based on master.
-
-Thanks,
-Stefan
-
-Stefan Beller (4):
-  read-tree: use OPT_BOOL instead of OPT_SET_INT
-  t1000: modernize style
-  t1001: modernize style
-  unpack-trees: support super-prefix option
-
- builtin/read-tree.c         |  36 +--
- git.c                       |   2 +-
- t/t1000-read-tree-m-3way.sh | 648 +++++++++++++++++++++----------------------
- t/t1001-read-tree-m-2way.sh | 650 ++++++++++++++++++++++----------------------
- unpack-trees.c              |  39 ++-
- 5 files changed, 699 insertions(+), 676 deletions(-)
-
+diff --git a/builtin/read-tree.c b/builtin/read-tree.c
+index fa6edb35b2..8ba64bc785 100644
+--- a/builtin/read-tree.c
++++ b/builtin/read-tree.c
+@@ -109,34 +109,34 @@ int cmd_read_tree(int argc, const char **argv, const char *unused_prefix)
+ 		{ OPTION_CALLBACK, 0, "index-output", NULL, N_("file"),
+ 		  N_("write resulting index to <file>"),
+ 		  PARSE_OPT_NONEG, index_output_cb },
+-		OPT_SET_INT(0, "empty", &read_empty,
+-			    N_("only empty the index"), 1),
++		OPT_BOOL(0, "empty", &read_empty,
++			    N_("only empty the index")),
+ 		OPT__VERBOSE(&opts.verbose_update, N_("be verbose")),
+ 		OPT_GROUP(N_("Merging")),
+-		OPT_SET_INT('m', NULL, &opts.merge,
+-			    N_("perform a merge in addition to a read"), 1),
+-		OPT_SET_INT(0, "trivial", &opts.trivial_merges_only,
+-			    N_("3-way merge if no file level merging required"), 1),
+-		OPT_SET_INT(0, "aggressive", &opts.aggressive,
+-			    N_("3-way merge in presence of adds and removes"), 1),
+-		OPT_SET_INT(0, "reset", &opts.reset,
+-			    N_("same as -m, but discard unmerged entries"), 1),
++		OPT_BOOL('m', NULL, &opts.merge,
++			 N_("perform a merge in addition to a read")),
++		OPT_BOOL(0, "trivial", &opts.trivial_merges_only,
++			 N_("3-way merge if no file level merging required")),
++		OPT_BOOL(0, "aggressive", &opts.aggressive,
++			 N_("3-way merge in presence of adds and removes")),
++		OPT_BOOL(0, "reset", &opts.reset,
++			 N_("same as -m, but discard unmerged entries")),
+ 		{ OPTION_STRING, 0, "prefix", &opts.prefix, N_("<subdirectory>/"),
+ 		  N_("read the tree into the index under <subdirectory>/"),
+ 		  PARSE_OPT_NONEG | PARSE_OPT_LITERAL_ARGHELP },
+-		OPT_SET_INT('u', NULL, &opts.update,
+-			    N_("update working tree with merge result"), 1),
++		OPT_BOOL('u', NULL, &opts.update,
++			 N_("update working tree with merge result")),
+ 		{ OPTION_CALLBACK, 0, "exclude-per-directory", &opts,
+ 		  N_("gitignore"),
+ 		  N_("allow explicitly ignored files to be overwritten"),
+ 		  PARSE_OPT_NONEG, exclude_per_directory_cb },
+-		OPT_SET_INT('i', NULL, &opts.index_only,
+-			    N_("don't check the working tree after merging"), 1),
++		OPT_BOOL('i', NULL, &opts.index_only,
++			 N_("don't check the working tree after merging")),
+ 		OPT__DRY_RUN(&opts.dry_run, N_("don't update the index or the work tree")),
+-		OPT_SET_INT(0, "no-sparse-checkout", &opts.skip_sparse_checkout,
+-			    N_("skip applying sparse checkout filter"), 1),
+-		OPT_SET_INT(0, "debug-unpack", &opts.debug_unpack,
+-			    N_("debug unpack-trees"), 1),
++		OPT_BOOL(0, "no-sparse-checkout", &opts.skip_sparse_checkout,
++			 N_("skip applying sparse checkout filter")),
++		OPT_BOOL(0, "debug-unpack", &opts.debug_unpack,
++			 N_("debug unpack-trees")),
+ 		OPT_END()
+ 	};
+ 
 -- 
 2.11.0.rc2.30.g7c4be45.dirty
 
