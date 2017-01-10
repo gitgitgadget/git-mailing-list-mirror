@@ -6,120 +6,185 @@ X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 12F4B205C9
-	for <e@80x24.org>; Tue, 10 Jan 2017 09:16:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9392420A93
+	for <e@80x24.org>; Tue, 10 Jan 2017 09:35:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1757959AbdAJJPu (ORCPT <rfc822;e@80x24.org>);
-        Tue, 10 Jan 2017 04:15:50 -0500
-Received: from cloud.peff.net ([104.130.231.41]:37439 "EHLO cloud.peff.net"
+        id S1765294AbdAJJfI (ORCPT <rfc822;e@80x24.org>);
+        Tue, 10 Jan 2017 04:35:08 -0500
+Received: from cloud.peff.net ([104.130.231.41]:37448 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1757566AbdAJJOa (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 Jan 2017 04:14:30 -0500
-Received: (qmail 29759 invoked by uid 109); 10 Jan 2017 09:14:29 -0000
+        id S1765271AbdAJJfH (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 Jan 2017 04:35:07 -0500
+Received: (qmail 30858 invoked by uid 109); 10 Jan 2017 09:35:05 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 10 Jan 2017 09:14:29 +0000
-Received: (qmail 12264 invoked by uid 111); 10 Jan 2017 09:15:21 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 10 Jan 2017 09:35:05 +0000
+Received: (qmail 12409 invoked by uid 111); 10 Jan 2017 09:35:57 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 10 Jan 2017 04:15:21 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 10 Jan 2017 04:14:26 -0500
-Date:   Tue, 10 Jan 2017 04:14:26 -0500
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 10 Jan 2017 04:35:57 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 10 Jan 2017 04:35:02 -0500
+Date:   Tue, 10 Jan 2017 04:35:02 -0500
 From:   Jeff King <peff@peff.net>
-To:     Martin Fick <mfick@codeaurora.org>
-Cc:     repo-discuss@googlegroups.com, jmelvin@codeaurora.org,
-        jgit-dev@eclipse.org, git@vger.kernel.org
-Subject: Re: Preserve/Prune Old Pack Files
-Message-ID: <20170110091426.n6qnh6szgdojp6zw@sigill.intra.peff.net>
-References: <24abd0ed58c25ce832014f9bd5bb2090@codeaurora.org>
- <5172470.bsscxDU4yv@mfick1-lnx>
- <20170109062137.zghmurndlbts5x44@sigill.intra.peff.net>
- <1802755.dVE0WDQbpH@mfick1-lnx>
+To:     Michael Haggerty <mhagger@alum.mit.edu>
+Cc:     git discussion list <git@vger.kernel.org>
+Subject: Re: [ANNOUNCE] git-test: run automated tests against a range of Git
+ commits
+Message-ID: <20170110093502.wbfgof55gdo6mtov@sigill.intra.peff.net>
+References: <1341c01a-aca7-699c-c53a-28d048614bfe@alum.mit.edu>
+ <20170107071832.2rucap3rskzmkgq4@sigill.intra.peff.net>
+ <ce6f98a4-1fb7-aa4b-2efb-78d8f49397a7@alum.mit.edu>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <1802755.dVE0WDQbpH@mfick1-lnx>
+In-Reply-To: <ce6f98a4-1fb7-aa4b-2efb-78d8f49397a7@alum.mit.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jan 09, 2017 at 09:17:56AM -0700, Martin Fick wrote:
+On Sun, Jan 08, 2017 at 10:52:25AM +0100, Michael Haggerty wrote:
 
-> > I suspect the name-change will break a few tools that you
-> > might want to use to look at a preserved pack (like
-> > verify-pack).  I know that's not your primary use case,
-> > but it seems plausible that somebody may one day want to
-> > use a preserved pack to try to recover from corruption. I
-> > think "git index-pack --stdin
-> > <objects/packs/preserved/pack-123.old-pack" could always
-> > be a last-resort for re-admitting the objects to the
-> > repository.
+> > I see the symmetry and simplicity in allowing the user to specify a full
+> > range. But it also seems like it's easy to make a mistake that's going
+> > to want to test a lot of commits. I wonder if it should complain when
+> > there's no lower bound to the commit range. Or alternatively, if there's
+> > a single positive reference, treat it as a lower bound, with HEAD as the
+> > upper bound (which is vaguely rebase-like).
 > 
-> or even a simple manual rename/move back to its orginal 
-> place?
-
-Yes, that would work. There's not a tool to do it, but it's a fairly
-straightforward transformation.
-
-> [loose objects]
-> Where would you suggest we store those?  Maybe under 
-> ".git/objects/preserved/<xx>/<sha1>"?  Do they need to be 
-> renamed also somehow to avoid a find?
-
-It would make sense to me to have a single "preserved" root, with
-"<xx>/<sha1>.old" and "packs/pack-<sha1>.old-pack" together under it.
-
-You could also move the objects out of objects/ entirely. Say, to
-".git/preserved-objects" or something. Then you could probably do away
-with the filename munging altogether, and "restoring" an object or pack
-would be a simple "mv" or "cp" (or you could even add preserved-objects
-to $GIT_ALTERNATE_OBJECT_DIRECTORIES if you wanted to do a single
-operation looking at both sets).
-
-That's all outside the scope of your original purpose (which I think was
-just to keep the files _somewhere_ so that the open descriptor stays
-valid on NFS). But maybe it would make other related things more
-convenient. I dunno. I'm just speaking off the top of my head.
-
-> > That's _way_ more complicated than your problem, and as I
-> > said, I do not have a finished solution. But it seems
-> > like they touch on a similar concept (a post-delete
-> > holding area for objects). So I thought I'd mention it in
-> > case if spurs any brilliance.
+> I see how this might be unexpected, and it's definitely inconvenient at
+> some times (like when you want to test a single commit). I thought it
+> would be nice to allow arbitrary `rev-list` expressions (albeit
+> currently only a single word), but I think that you are right that other
+> semantics would be more convenient.
 > 
-> I agree, this is a problem I have wanted to solve also.  I 
-> think having a "preserved" directory does open the door to 
-> such "recovery" solutions, although I think you would 
-> actually want to modify the many read code paths to fall 
-> back to looking at the preserved area and performing 
-> immediate "recovery" of the pack file if it ends up being 
-> needed.
+> I'm thinking of maybe
+> 
+> * If an argument matches `*..*`, pass it to `rev-list` (like now).
+> 
+> * Otherwise, treat each argument as a single commit/tree (i.e., pass it
+> to `rev-parse`).
+> 
+> * If no argument is specified, test `@{u}..` (assuming that an
+>   upstream is configured). Though actually, this won't be as
+>   convenient as it sounds, because (a) `git test` is often run
+>   in a separate worktree, and (2) on errors, it currently leaves the
+>   repository with a detached `HEAD`.
+> 
+> * Support a `--stdin` option, to read a list of commits/trees to test
+>   from standard input. By this mechanism, users could use arbitrary
+>   `rev-list` commands to choose what to test.
 
-In my (admittedly not very concrete) plan, the read code paths
-_wouldn't_ know to look in the preserved area. It would be up to the
-repacking process to rollback in case of a race. That does open a period
-(between the faux delete and the rollback) where readers may be broken.
-But that's much better than the state today, which is that the readers
-are broken, and that breakage persists forever.
+That seems quite reasonable to me. The rebase semantics of "a single
+argument is my upstream" is convenient, but I think it also confuses
+people. Yours seem very simple to explain.
 
-But there may be other better ways of doing it.  What we're really
-talking about is a transactional system where neither side locks (or at
-least not for an appreciable amount of time), and one side is capable of
-falling back and modifying its operation when there's a relevant race.
-There's probably some research in this area and some standard solutions,
-but it's not an area I'm overly familiar with (and building any solution
-on top of POSIX filesystem semantics adds an extra challenge).
+It doesn't allow complex stuff like "git test ^foo ^bar HEAD", but I
+don't think "git rev-list ^foo ^bar HEAD | git test --stdin" is really
+so bad for complicated cases like that (if anybody would even ever want
+such a thing).
 
-> That's a lot of work, but having the packs (and 
-> eventually the loose objects) preserved into a location 
-> where no new references will be built to depend on them is 
-> likely the first step.  Does the name "preserved" do well for 
-> that use case also, or would there be some better name, what 
-> would a transactional system call them?
+> Aside: It would be nice if `git notes` had a subcommand to initialize a
+> note reference with an empty tree. (I know how to do it longhand, but
+> it's awkward and it should be possible to do it via the `notes` interface.)
+> 
+> I think ideally `git notes add` would look for pre-existing notes, and:
+> 
+> * If none are found, create an empty notes reference.
+> 
+> * If pre-existing notes are found and there was no existing test with
+>   that name, probably just leave the old notes in place.
+> 
+> * If pre-existing notes are found and there was already a test with
+>   that name but a different command, perhaps insist that the user
+>   decide explicitly whether to forget the old results or continue using
+>   them. This might help users avoid the mistake of re-using old results
+>   even if they change the manner of testing.
 
-I wasn't going to bikeshed, but since you ask...:)
+I'm not quite sure what you mean here. By "test" and "command", do you
+mean the test name that is used in the notes ref, and the command that
+it is defined as?
 
-"preserved" to me sounds like something we'd be keeping forever. These
-objects are more in a "pending delete" state, or a purgatory. Maybe
-something along those lines would be more appropriate.
+In the notes-cache.c subsystem, the commit message stores a validity
+token which must match in order to use the cache. You could do something
+similar here (store the executed command in the commit message, and
+invalidate the cache the user has changed the command). The notes-cache
+stuff isn't available outside of the C code, though. You could either
+expose it, or just do something similar longhand.
+
+Thinking about it, though, I did notice that the tree sha1 is not the
+only input to the cache. Things like config.mak (not to mention the
+system itself) contribute to the test results. So no system will ever be
+perfect, and it seems like just making an easy way to force a retest (or
+just invalidate the whole cache) would be sufficient.
+
+But maybe I totally missed what you were trying to say here.
+
+> > It would be even easier if I could just repeat my range and only re-test
+> > the "bad" commits. It was then that I decided to actually read the rest
+> > of "git test help range" and see that you already wrote such an option,
+> > cleverly hidden under the name "--retest".
+> 
+> I think you were being ironic, but if not, would this have been easier
+> to find under another name?
+
+Sorry, the knob on my sarcasm module must have accidentally been knocked
+down from "so thick it's obvious even by email".
+
+Yes, I did just mean that I was being blind. You not only had added the
+option already, but gave it the exact name I was about to propose it
+under. :)
+
+> Yeah, this is awkward, not only because many people don't know what to
+> make of detached HEAD, but also because it makes it awkward in general
+> to use `git test` in your main working directory. I didn't model this
+> behavior on `git rebase --interactive`'s `edit` command, because I
+> rarely use that. But I can see how they would fit together pretty well
+> for people who like that workflow.
+
+Yeah, after sleeping on it, I think it's best if "git test" remains
+separate from that. It's primary function is to run the test, possibly
+serving up a cached answer. So it would be perfectly reasonable to do:
+
+  git rebase -x 'git test range HEAD'
+
+to accomplish the interactive testing (though perhaps just "git test"
+would be a nice synonym for that).
+
+And then "jump to a thing that I know is broken" becomes a separate
+action, whether you are using "git test" or not. I wonder if we could
+have:
+
+  git rebase -e HEAD~2
+
+to do an interactive rebase, with "edit" for HEAD~2. I feel like
+somebody even proposed that at one point, but I don't think it got
+merged.
+
+And then "git test fix" basically becomes:
+
+  git rebase -e "$(git test first-broken)"
+
+though I think you'd still want a shorthand for that.
+
+> > I think it should be possible to script the next steps, though.
+> > Something like like "git test fix foo", which would:
+> > 
+> >   - expand the range of foo@{u}..foo to get the list of commits
+> > 
+> >   - see which ones were marked as broken
+> > 
+> >   - kick off an interactive rebase, but override GIT_EDITOR to mark any
+> >     broken ones as "edit" instead of "pick"
+> > 
+> > That lets you separate the act of testing from the act of fixing. You
+> > can let the tester run continuously in the background, and only stop to
+> > fix when you're at an appropriate point in your work.
+> 
+> I think you would usually only want to mark only the *first* broken
+> commit as "edit", because often errors cascade to descendant commits.
+
+Yeah, I had a similar thought. OTOH, if you didn't say "--keep-going",
+you'd only have one breakage either way. I doubt it matters that much in
+practice, and either behavior would probably be fine until somebody
+comes up with a good use for the multi-commit case.
 
 -Peff
