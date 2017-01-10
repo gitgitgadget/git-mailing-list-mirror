@@ -2,144 +2,79 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MIME_HEADER_CTYPE_ONLY,
+	MIME_NO_TEXT,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD,
+	T_TVD_MIME_NO_HEADERS shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A20011FEB3
-	for <e@80x24.org>; Mon,  9 Jan 2017 23:50:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AA11F1FEB3
+	for <e@80x24.org>; Tue, 10 Jan 2017 00:41:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1032327AbdAIXu2 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 9 Jan 2017 18:50:28 -0500
-Received: from mail-qk0-f177.google.com ([209.85.220.177]:33668 "EHLO
-        mail-qk0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752468AbdAIXu0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Jan 2017 18:50:26 -0500
-Received: by mail-qk0-f177.google.com with SMTP id s140so135367374qke.0
-        for <git@vger.kernel.org>; Mon, 09 Jan 2017 15:50:26 -0800 (PST)
+        id S1030222AbdAJAk6 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 9 Jan 2017 19:40:58 -0500
+Received: from mail-qt0-f174.google.com ([209.85.216.174]:32788 "EHLO
+        mail-qt0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S939690AbdAJAk5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Jan 2017 19:40:57 -0500
+Received: by mail-qt0-f174.google.com with SMTP id v23so152043935qtb.0
+        for <git@vger.kernel.org>; Mon, 09 Jan 2017 16:40:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=subject:to:references:cc:from:message-id:date:user-agent
-         :mime-version:in-reply-to;
-        bh=ksmxA9PQANNwylqlg9nbdflI9efJM6/CczzadqglVQ4=;
-        b=d9FEHVJGo4XELGhFOoQS0leWol2tTlVWL0l/1Ak8B+HQ/sT/2YHo4HiYQeEaFXJS+B
-         HPcNwz3KZt7i0bSpxP4wLcS6I2Ba/b2JeILuNi9Kopjwya+Cu9DB2DwstgXuRtboZk/L
-         td3CMKZMzuQbkyCa8mE1ZeHpw8JZoV10a3/+AsTHX45x+U9+f0GFzn503LqK3V2Gfd93
-         SSD9mcdyNR9xA3xvXEgzqsnhb71QAtSJwTptNIyFUTbE8Me0mQMVsoSmy37LEee1Q5mL
-         PI920/DjamcaIYE5BXVMLrZWMNysKsDSlYE7nQWHXLQWtDECUN2LgSqtyZMb2oDR+ebu
-         QXww==
+        h=from:to:cc:subject:date:message-id;
+        bh=OB9G13uC0WgG1T3gLvcjNNwMIJDFSrpCEhvj43rUu6A=;
+        b=WtHOe3MeG8/mtrehswu3md/oGPJ+m6lBtqSzyBsTtH4VD6b/kjN9fTM9NT8xQW4AdC
+         kfwV9W+6F6GnaWU3LWzyLpIoT8gOem+XCZ/Gt/b4uKWgN5mUL8Dt0PJokqoab6dTmntv
+         GihIn1nJaRn2sSyolV4xL7KXQMPtXTWpS3nBXGmEqqHOi7XDw+tLJoq+aTpfiyWk7buV
+         N0QRXWTIPAkxpdSkwGcTVpj3Lz4oc0vyTvCwjS3AqvaHHunS9DNavkcF77EyhuxWnoQg
+         G2FDvWtHRxgnM1sQESFwlLKu7jZgDj1frKsLDjXvfo9p8dEt1+ZkMwzVI7zOzWOj4E93
+         wUQw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
-         :user-agent:mime-version:in-reply-to;
-        bh=ksmxA9PQANNwylqlg9nbdflI9efJM6/CczzadqglVQ4=;
-        b=XaPe/leaaNbCm+E02eXvyqc8Boo7MEL0B1+Chb8bUFZGhRaPi6umt4WJLp/SS8mzXC
-         N4SrtPwO9RwmH0baVsvgVTmYgn605usnI1w9CvVS6Xkv3eZmCP/fdkuB6e4O+R2NndMa
-         TpQdSxRcBs7hXsH7taokM8IX9O6k1W+nL46z6SvuLn9W5ofuNiA1k7IQ/LPA3q1FrvGa
-         WT3Vt5jz04n4ToTFTyQys73SSPpi7Jzfh7R6QNnCLIZHKkWmHpudnwmB7nI6vNN2xq8c
-         sc9HKmuFT7VhylxAaDoeLq3YZ6+rs5j3+1EZpFE7PqHueOgUFZLqGhI+X5oWCtEjcJc0
-         59lA==
-X-Gm-Message-State: AIkVDXJpd8WAADbr6qZSzP6hCw+bRNO4BPDGO+O4I9DW6HFpfI6ziSFJc7GDGEnWBcU6cFW9
-X-Received: by 10.55.122.197 with SMTP id v188mr244522qkc.120.1484005825776;
-        Mon, 09 Jan 2017 15:50:25 -0800 (PST)
-Received: from hansenr.cam.corp.google.com ([2620:0:1004:2:c4d:bcd2:8be8:b9f6])
-        by smtp.gmail.com with ESMTPSA id g32sm59395qtd.28.2017.01.09.15.50.25
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 09 Jan 2017 15:50:25 -0800 (PST)
-Subject: Re: [PATCH v3 13/13] mergetool: fix running in subdir when rerere
- enabled
-To:     Junio C Hamano <gitster@pobox.com>
-References: <20170106010945.79382-1-hansenr@google.com>
- <20170109054238.42599-1-hansenr@google.com>
- <20170109054238.42599-14-hansenr@google.com>
- <xmqq4m18ump1.fsf@gitster.mtv.corp.google.com>
- <xmqqvatot5ob.fsf@gitster.mtv.corp.google.com>
- <xmqq37gru819.fsf@gitster.mtv.corp.google.com>
-Cc:     git@vger.kernel.org, davvid@gmail.com, j6t@kdbg.org,
-        sbeller@google.com, simon@ruderich.org
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=OB9G13uC0WgG1T3gLvcjNNwMIJDFSrpCEhvj43rUu6A=;
+        b=Cfl0JkRo5Ie5fthu345N3e3gDxbZDG5ByqnHyRuM99fbdKMqp/NLcAEyNiIoCbHDki
+         81/Pxc7Ge9S594nbGx/GlerH3Kq6JA/08Xn495WAoOsBWyvpTLbfT9Em9a11z2qAGqJR
+         nSbj8qy02nsB9cYQKGSbBnCX1IM8DVjPOZp2cs1/OSRgMdsVoZRFLHsc8hbi0OsBLqKF
+         HjiW3BUofvyKL7d7w4oZRIjiKJpN0rpkhv10YNqkWQ4pheQ4T3tOF+Y6xkCbe//Xu/cy
+         G8mCFlvh4wk3sroutI++gNpny10JZOPNCFjQBtVJshIOqnKZIlKSbzPXEZwEsJt3v476
+         Q99g==
+X-Gm-Message-State: AIkVDXK1RL3LvY/u98akBqdjX7b7kzyy2HnGPC9f06ZXH4AblNcwCHo281FqRl763dOhdQGs
+X-Received: by 10.237.40.38 with SMTP id r35mr413073qtd.0.1484008855901;
+        Mon, 09 Jan 2017 16:40:55 -0800 (PST)
+Received: from hansenr.cam.corp.google.com ([172.29.73.70])
+        by smtp.gmail.com with ESMTPSA id k71sm128192qke.47.2017.01.09.16.40.55
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Mon, 09 Jan 2017 16:40:55 -0800 (PST)
 From:   Richard Hansen <hansenr@google.com>
-Message-ID: <f0bf49ae-7c3b-4118-bc6a-2aee8f58fc03@google.com>
-Date:   Mon, 9 Jan 2017 18:50:24 -0500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.5.1
-MIME-Version: 1.0
-In-Reply-To: <xmqq37gru819.fsf@gitster.mtv.corp.google.com>
+To:     git@vger.kernel.org
+Cc:     Richard Hansen <hansenr@google.com>
+Subject: [PATCH 0/2] minor diff orderfile documentation improvements
+Date:   Mon,  9 Jan 2017 19:40:29 -0500
+Message-Id: <20170110004031.57985-1-hansenr@google.com>
+X-Mailer: git-send-email 2.11.0.390.gc69c2f50cf-goog
 Content-Type: multipart/signed; protocol="application/pkcs7-signature"; micalg=sha-256;
-        boundary="94eb2c065d9e1bc1c40545b2089d"
+        boundary="94eb2c0bc864b76ba30545b2bca9"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
---94eb2c065d9e1bc1c40545b2089d
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Transfer-Encoding: 7bit
+--94eb2c0bc864b76ba30545b2bca9
 
-On 2017-01-09 18:29, Junio C Hamano wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
->
->> Junio C Hamano <gitster@pobox.com> writes:
->>
->>> I wonder if it makes more sense to always move to toplevel upfront
->>> and consistently use path from the toplevel, perhaps like the patch
->>
->> s/the patch/the attached patch/ I meant.
->>
->>> does.  The first hunk is what you wrote but only inside MERGE_RR
->>> block, and the second hunk deals with converting end-user supplied
->>> paths that are relative to the original relative to the top-level.
->>>
->>> The tweaking of $orderfile you have in the first hunk may have to be
->>> tightened mimicking the way how "eval ... --sq ... ; shift" is used
->>> in the second hunk to avoid confusion in case orderfile specified by
->>> the end user happens to be the same as a valid revname
->>> (e.g. "master").
->>
->> And here is a squash-able patch to illustrate what I mean.
->
-> By the way, I didn't think this through, but how is the orderfile
-> that comes from the configuration file handled when it is not an
-> absolute path?
+Richard Hansen (2):
+  diff: document behavior of relative diff.orderFile
+  diff: document the pattern format for diff.orderFile
 
-Good question; it does whatever 'git diff' does, and that case isn't 
-documented.  It's also unclear if the globs are like the .gitignore 
-patterns.
+ Documentation/diff-config.txt  | 5 ++++-
+ Documentation/diff-options.txt | 3 ++-
+ 2 files changed, 6 insertions(+), 2 deletions(-)
 
-I would expect it to act like $GIT_DIR/info/exclude, but I haven't checked.
+-- 
+2.11.0.390.gc69c2f50cf-goog
 
-> I think it is _wrong_ to take it as relative to
-> where the user started the program.
 
-Agreed.
-
-> The -O<file> parameter from the
-> command line, when <file> is not absolute, should be taken as
-> relative to where the user _thinks_ s/he is,
-
-Agreed.
-
-> but when it comes from
-> the diff.orderfile configuration and it is not absolute, it should
-> be taken as relative to the top of the working tree.
-
-Agreed.
-
-> As we always
-> cd_to_top with the suggested SQUASH, it means that the orderfile
-> that came from the configuration does not have to be touched, while
-> the orderfile given via -O<file> on the command line needs
-> prefixing.
-
-Yes.  By unconditionally running cd_to_top we should get the behavior we 
-want even if 'git diff' uses the current working directory rather than 
-the top-level directory.
-
-I'll poke at 'git diff' to see what it does.
-
--Richard
-
---94eb2c065d9e1bc1c40545b2089d
+--94eb2c0bc864b76ba30545b2bca9
 Content-Type: application/pkcs7-signature; name="smime.p7s"
 Content-Transfer-Encoding: base64
 Content-Disposition: attachment; filename="smime.p7s"
@@ -221,13 +156,13 @@ m4YUSo869xADdrGrWJ7KzroFbucLZYh3niIjVICp7fh9wtLgbX7X/akdubehYhy/l+AIMml6Zlyu
 GNGCGIleyQ0bAdjjG+dKrDErUlui8wd/YplvelaTAzSvNpxcrr+2YB8UBWcYkgULkp5GDCC2guKl
 rMF1mTS6N6GMxUi30sZicbMxggJeMIICWgIBATBcMEwxCzAJBgNVBAYTAkJFMRkwFwYDVQQKExBH
 bG9iYWxTaWduIG52LXNhMSIwIAYDVQQDExlHbG9iYWxTaWduIEhWIFMvTUlNRSBDQSAxAgwvfEOc
-7N3JjQI9nAwwDQYJYIZIAWUDBAIBBQCggdQwLwYJKoZIhvcNAQkEMSIEIHPFWM51Xa703qT1fkAJ
-QqWCNirbAltljRvfBCcAl2sJMBgGCSqGSIb3DQEJAzELBgkqhkiG9w0BBwEwHAYJKoZIhvcNAQkF
-MQ8XDTE3MDEwOTIzNTAyNlowaQYJKoZIhvcNAQkPMVwwWjALBglghkgBZQMEASowCwYJYIZIAWUD
+7N3JjQI9nAwwDQYJYIZIAWUDBAIBBQCggdQwLwYJKoZIhvcNAQkEMSIEICOEBbkWYfP93fc4UVxo
+jtyjEpI2mAtw7RMn/i6JK7FvMBgGCSqGSIb3DQEJAzELBgkqhkiG9w0BBwEwHAYJKoZIhvcNAQkF
+MQ8XDTE3MDExMDAwNDA1NlowaQYJKoZIhvcNAQkPMVwwWjALBglghkgBZQMEASowCwYJYIZIAWUD
 BAEWMAsGCWCGSAFlAwQBAjAKBggqhkiG9w0DBzALBgkqhkiG9w0BAQowCwYJKoZIhvcNAQEHMAsG
-CWCGSAFlAwQCATANBgkqhkiG9w0BAQEFAASCAQAahpETdyyoqfWHkhY43EKF+8+B2SC/So305SpG
-sYXlKXRBA0syAizTcAq8uvB9cjYUTnubiFu7c/M9zd7hkRNbVkAfHePIwVflC+p+V7ANQO+BkSX6
-f7Eiq/T65puKK5DksPyCljfF8R3IINOGQ6wzN45wPHRBHzk33iyCEX6tUCQ0vggfaAwZN3q7ncXm
-F46ZrfZchnKMLXYWV09LCVVNgJ7l+trxb9Ww6L0AyllSK2W10IIdncziNlFahL6Ie7siLue2WbjL
-NzTDJ0VIZXpTd6xFGMTCxUOvwTSBk0BMF5OB7bmiuR441NJVKaRJdjyHBiM9cbfm8M890+4YBiAB
---94eb2c065d9e1bc1c40545b2089d--
+CWCGSAFlAwQCATANBgkqhkiG9w0BAQEFAASCAQARzNP/bqzozTTWRHzUnLWkKsYkosvi1KZW5XiD
+U5xKgi4QQrygdsMiNel2EX29WjDbU0DoqHGGjmbY4pOc9XUoB19dFVvQ3DhgvgHy/4qhcBphRrza
+RXpBUKPbvVgmUCWKBB9VPyeVTJ7ZK+sMs8Twgf0oT10Rd3OyPocvNiPZDsC96JWqvOT2um87EmHR
+as6W6t24W+XZ9cLOr1cZsChm6KXNZoH4XDD+jCJiUgSWn849BzRc6jG6nvAHc5/3vlLa3Uo9DEpu
+dkTlB69771K2eXK4LcHSH/2LqX+VYa3K44vrx1ruzjXdNWzIpKBy0weFNiwnJCGofvCysM2RCSI1
+--94eb2c0bc864b76ba30545b2bca9--
