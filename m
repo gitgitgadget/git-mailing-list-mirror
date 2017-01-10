@@ -2,129 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 70B0820A93
-	for <e@80x24.org>; Tue, 10 Jan 2017 18:32:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9CC6620756
+	for <e@80x24.org>; Tue, 10 Jan 2017 18:54:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751283AbdAJS3s (ORCPT <rfc822;e@80x24.org>);
-        Tue, 10 Jan 2017 13:29:48 -0500
-Received: from mail-io0-f170.google.com ([209.85.223.170]:36833 "EHLO
-        mail-io0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1765950AbdAJS2o (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 Jan 2017 13:28:44 -0500
-Received: by mail-io0-f170.google.com with SMTP id j13so56843773iod.3
-        for <git@vger.kernel.org>; Tue, 10 Jan 2017 10:28:44 -0800 (PST)
+        id S934153AbdAJSye (ORCPT <rfc822;e@80x24.org>);
+        Tue, 10 Jan 2017 13:54:34 -0500
+Received: from mail-pf0-f182.google.com ([209.85.192.182]:36264 "EHLO
+        mail-pf0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S933330AbdAJSyb (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 Jan 2017 13:54:31 -0500
+Received: by mail-pf0-f182.google.com with SMTP id 189so38898350pfu.3
+        for <git@vger.kernel.org>; Tue, 10 Jan 2017 10:54:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=9F8DvHIqf+ixiT7n4VSeqlOfKjgQ/cU3t+id3cFAze8=;
-        b=uYUEr1G7jGmYEj7t1wQosiLXABAPSzp+Rrap3PGrcMmT0qwfw0nhXe+3nQ39pEFeqM
-         gRUDtO0Ud0e/LkAIdL6PwvFS5epDGaPLB3oApVOWmRxBUAEnv5DPD/fdh/pa9hWmxVcf
-         gM4F0o3vYLYApHSU8O2Ap5U/8Jy9EZfczgr5W/5Pk8F+o7Lkc0/74V6QgKGg3P2IgbHJ
-         0fZ7onM4gyj8l05LzwF0ra2aN/2q+UaXmdwXTOEUyHch6J2VptHqeW8sbPPHkyX1nK7S
-         KaLxcJmqXhzWHkc1cFGejyqkiJv3Ho+b9jOLqCspXsK9sBUGrtVFGOhgD4QR3mYWp0fT
-         tfCQ==
+        h=from:to:cc:subject:date:message-id;
+        bh=rxm7dj+rqn8x44dhtbkh/HhUP6LtgVk16l0UUphiEGU=;
+        b=AB+dtmYM5BGjSmClTVTBo0RXm6qYAWH4yr+VqBcifZAXVFroGd0qt30wd0U4lQAB1n
+         fG4k01xm2KL0C6kxuupm7SEbesWiysWsyyM6CwfflSkrgMlMGpI/eRy4yn5mdNv0QEYU
+         PbPUPjsk1G5Hz6K/SsimWItzjkvMxS78D5Mw8IrUzkfw1Qtkt6Qfx1TPS0UHetIbEzSm
+         lP/ihJV+8njInqEJD9SyKnga1B0CgO5SPlnpJtnvJAK1Zqx6QTL8L9EIJIu2rNn3Et3Q
+         rFvi/PXFO2FWGOzJ10rhF42HIo8bOX/f8uJITC5HYKiDuOBc91DvPjpriNXURsYOt0YW
+         yQOw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=9F8DvHIqf+ixiT7n4VSeqlOfKjgQ/cU3t+id3cFAze8=;
-        b=M3jUXeR6Bmg2D3FC6aBSIzPlK1BaNJJUeuaUMrFi+u5M2KdOHHWpUMMgcEV7ZW8iS+
-         k0wj4ViBQbmwvhko6iEEGKkoE9aZ+YOSS3BBIV36pczUIUfalROJA0PXxwFKwrkY0+i5
-         6XOYEkZVDYGyzm8KR0VKktrrm4gWtTSb34kJ3u/Xm1Fi09+UaIPtkK9Eq0g4HMXuSWda
-         ob8BjLwZwEAFsoDPRYGIusi+p/93HsJW4a+Wny8ZuELggYeoKCM933rYRr6M/8irAAoZ
-         AQm/m6MKH6UfreAGipAGLjLtOPm0Cz98CVYWIVIZSvn3oWr/7jsSlCUk8is+BMbBFtnO
-         wcww==
-X-Gm-Message-State: AIkVDXL/dqdLp5TKRU0Yc7Q10Cu/ALW/1giAWSiAXbiRUz1UlZLtzu2qU8pRJnye/y7is2enXHSGvx2cl/+Jo277
-X-Received: by 10.107.37.148 with SMTP id l142mr4111378iol.159.1484072923346;
- Tue, 10 Jan 2017 10:28:43 -0800 (PST)
-MIME-Version: 1.0
-Received: by 10.79.39.19 with HTTP; Tue, 10 Jan 2017 10:28:42 -0800 (PST)
-In-Reply-To: <20170110090418.4egk4oflblshmjon@sigill.intra.peff.net>
-References: <cover.1483354746.git.git@drmicha.warpmail.net>
- <20170104070514.pxdthvilw66ierfz@sigill.intra.peff.net> <8d0966d0-1ef1-3d1e-95f5-6e6c1ad50536@drmicha.warpmail.net>
- <20170110090418.4egk4oflblshmjon@sigill.intra.peff.net>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=rxm7dj+rqn8x44dhtbkh/HhUP6LtgVk16l0UUphiEGU=;
+        b=CDli3jI0vUywMq3BHIxymFYDQdRGbHisSP8vQDH0BIdtkrctVzKX42GQ+KlYhdvTJ8
+         WPqv6W/3W5duIrvdY8kK0tg265FUp+iYMM/ziwT4MDCS81byewXVPUYb0Of8JqPeehEe
+         +a9V0+WWKSQS/ko5nuIU2k1WR1+18GsHaou7LuAgPJTcE3nPji9jM9zW9GlnuHAzJiXJ
+         foEvp2jM8g5AgpIFgIyQnrGIrWCoQdYuAuRLF/gJkPg7mIH+pSRcnj6QkA3gP3lA0+3X
+         zglepfWUJIzKcy/0cCdEnKCoejyxhagR1K9nRMROtpfARuWx5ttpJNm/Fz/0Qa3LvhTV
+         B1Kw==
+X-Gm-Message-State: AIkVDXIqs34oru0FOLCvgmWPw4JwJ3uaPAKtkqRHa3eQGJzCZM7TYUHfUBgvxxSUEUJJp9pY
+X-Received: by 10.99.238.17 with SMTP id e17mr5875854pgi.58.1484074470290;
+        Tue, 10 Jan 2017 10:54:30 -0800 (PST)
+Received: from localhost ([2620:0:1000:5b10:1e2:be00:4066:92e5])
+        by smtp.gmail.com with ESMTPSA id n25sm7548300pfi.33.2017.01.10.10.54.29
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Tue, 10 Jan 2017 10:54:29 -0800 (PST)
 From:   Stefan Beller <sbeller@google.com>
-Date:   Tue, 10 Jan 2017 10:28:42 -0800
-Message-ID: <CAGZ79kYVc0YQ4okrTHGiYQzPqfiVAm_f7orXdkhwgf5kMPXj-w@mail.gmail.com>
-Subject: Re: [RFC PATCH 0/5] Localise error headers
-To:     Jeff King <peff@peff.net>
-Cc:     Michael J Gruber <git@drmicha.warpmail.net>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+To:     git@vger.kernel.org
+Cc:     Stefan Beller <sbeller@google.com>
+Subject: git-mergetool to be used for rebases as well?
+Date:   Tue, 10 Jan 2017 10:54:21 -0800
+Message-Id: <20170110185421.2638-1-sbeller@google.com>
+X-Mailer: git-send-email 2.11.0.rc2.30.g7c4be45.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jan 10, 2017 at 1:04 AM, Jeff King <peff@peff.net> wrote:
-> On Mon, Jan 09, 2017 at 01:43:15PM +0100, Michael J Gruber wrote:
->
->> > I can't say I'm excited about having matching "_" variants for each
->> > function. Are we sure that they are necessary? I.e., would it be
->> > acceptable to just translate them always?
->>
->> We would still need to mark the strings, e.g.
->>
->> die(N_("oopsie"));
->>
->> and would not be able to opt out of translating in the code (only in the
->> po file, by not providing a translation).
->
-> I meant more along the lines of: would it be OK to just always translate
-> the prefix, even if the message itself is not translated? I.e.,
->
-> diff --git a/usage.c b/usage.c
-> index 82ff13163..8e5400f57 100644
-> --- a/usage.c
-> +++ b/usage.c
-> @@ -32,7 +32,7 @@ static NORETURN void usage_builtin(const char *err, va_list params)
->
->  static NORETURN void die_builtin(const char *err, va_list params)
->  {
-> -       vreportf("fatal: ", err, params);
-> +       vreportf(_("fatal: "), err, params);
->         exit(128);
->  }
->
->> In any case, the question is whether we want to tell the user
->>
->> A: B
->>
->> where A is in English and B is localised, or rather localise both A and
->> B (for A in "error", "fatal", "warning"...).
->>
->> For localising A and B, we'd need this series or something similar. For
->> keeping the mix, we don't need to do anything ;)
->
-> What I wrote above would keep the mix, but switch it in the other
-> direction.
->
-> And then presumably that mix would gradually move to 100% consistency as
-> more messages are translated. But the implicit question is: are there
-> die() messages that should never be translated? I'm not sure.
+An internal user report running on origin/next:
 
-I would assume any plumbing command is not localizing?
-Because in plumbing land, (easily scriptable) you may find
-a grep on the output/stderr for a certain condition?
+    $ git pull
+        From .
+         * branch                ... -> FETCH_HEAD
+        First, rewinding head to replay your work on top of it...
+        Applying: ...
+        Applying: ...
+        Using index info to reconstruct a base tree...
+        CONFLICT (content): ....
+        error: Failed to merge in the changes.
+        Patch failed at 0002...
+        The copy of the patch that failed is found in: .git/rebase-apply/patch
 
-To find a good example, "git grep die" giving me some food of though:
+        When you have resolved this problem, run "git rebase --continue".
+        If you prefer to skip this patch, run "git rebase --skip" instead.
+        To check out the original branch and stop rebasing, run "git rebase --abort".
+    $ git status
+        rebase in progress; onto ...
+        You are currently rebasing branch '...' on '...'.
 
-die_errno(..) should always take a string marked up for translation,
-because the errno string is translated?
-(-> we'd have to fix up any occurrence of git grep "die_errno(\"")
+        Changes to be committed:
+                modified:   ...
 
-    apply.c:                die(_("internal error"));
+        Unmerged paths:
+                both modified:   ...
 
-That is funny, too. I think we should substitute that with
-
-    die("BUG: untranslated, but what went wrong instead")
+    $ git mergetool
+        No files need merging
+    $ git diff <file name>
+        diff --cc <file name>
+        index ...
+        --- a/file
+        +++ b/file
+        @@@ ...
+          content
+        ++<<<<<<< HEAD
+         +  content
+        ++=======
+        +   content
+        ++>>>>>>> other commit
+        content
 
 
->
-> -Peff
+The mergetool used to work apparently, but stopped for rebases.
+I noticed in neither t7610-mergetool.sh nor any rebase test the combination of
+rebase and mergetool is tested.
+
+Stefan
+
+
