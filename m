@@ -2,94 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2F59A205C9
-	for <e@80x24.org>; Wed, 11 Jan 2017 18:47:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 88261205C9
+	for <e@80x24.org>; Wed, 11 Jan 2017 18:56:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754099AbdAKSrn (ORCPT <rfc822;e@80x24.org>);
-        Wed, 11 Jan 2017 13:47:43 -0500
-Received: from mail-pf0-f180.google.com ([209.85.192.180]:36774 "EHLO
-        mail-pf0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753918AbdAKSrm (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Jan 2017 13:47:42 -0500
-Received: by mail-pf0-f180.google.com with SMTP id 189so51870228pfu.3
-        for <git@vger.kernel.org>; Wed, 11 Jan 2017 10:47:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=from:to:cc:subject:date:message-id;
-        bh=XVKbIEE5CQWkhOFS50vM9d/qRQK+eqKnWZQNZtC15+c=;
-        b=ndVvFpsMS1wURETV4FtXg6fClGd+NYlx74b8tS14VAK4M+WH8/G+po9shMxbHSE9dQ
-         Z7z2MhVsgvxZnnscaRGdYcQb2EA05221eVPyqL/lS6uZHQpqE7XJ7o0+g7GjKKeP7+ZL
-         71KmBqfWzBbmPCqepUv9a3qLnSc9MJhstlTcBp0kVeddA86KHTmP5ozKLMufg2x+lPXc
-         VkMCgUfWOF31V4LKvgMY8b0quiwtvPEV6/vjLehBrZ20M53KGIlh/wpPAbvB/ZVIN3px
-         9nToto6wByPqFRTzGKX7D6d5FsOAGQeX9Dm79WqOlapnVgqx1mMFDBBYMKzvFfa5ANxY
-         ktSw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=XVKbIEE5CQWkhOFS50vM9d/qRQK+eqKnWZQNZtC15+c=;
-        b=Ew62xudfxHc7di2yQl/wK7TYjWvKe+FM9ck1e9V/ZvcaosSm7eJ4Zgpm2JRE+6S3Fo
-         pviIIJM0aK9RPmIk6bPaM0CN9g0uDwWLgntc5JV1VoFLiwZg1DuZlbk1XPfvwdAMNKcv
-         J9PLDWKkRVsgtztsEUt0LS8n3LML11opZ2JC197tXMCeKN3IbKk/bjOC/zwyOXjBE1FP
-         CEJN4WnTY0qsEajFytMDQISuNwU/2rI+BMFrkDnIJtv05oQsMc7XxYg9fKAiMkUV1fwE
-         Iiu+2yOvCv+HizXvSiIUs7PEbd5w33HASMISRmK40QWVRAL9cVgONDtPdaBKMKstu7/z
-         Y35Q==
-X-Gm-Message-State: AIkVDXIbLuoSNHSDtKbFPBEWzuNceHtb/d3sCLGBRlEKo0SrxO/eHpNYymkYlJeTjk70s+gb
-X-Received: by 10.84.179.194 with SMTP id b60mr15492758plc.147.1484160461312;
-        Wed, 11 Jan 2017 10:47:41 -0800 (PST)
-Received: from localhost ([2620:0:1000:5b10:f4d3:924a:46a9:5f47])
-        by smtp.gmail.com with ESMTPSA id s8sm15580456pfj.30.2017.01.11.10.47.40
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 11 Jan 2017 10:47:40 -0800 (PST)
-From:   Stefan Beller <sbeller@google.com>
-To:     gitster@pobox.com
-Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>
-Subject: [PATCH] lib-submodule-update.sh: drop unneeded shell
-Date:   Wed, 11 Jan 2017 10:47:32 -0800
-Message-Id: <20170111184732.26416-1-sbeller@google.com>
-X-Mailer: git-send-email 2.11.0.259.g7b30ecf4f0
+        id S1751234AbdAKS44 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 11 Jan 2017 13:56:56 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:56999 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1754408AbdAKS4z (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Jan 2017 13:56:55 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 2F1275D34C;
+        Wed, 11 Jan 2017 13:56:54 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=dr0l44AkSN32wrbJSCA04djWIIA=; b=YW8rXD
+        PEqvvC9v/4W06tZPy4YopvVER3Iqxvi8bYuSAQd8SZG6g6m9HsIWyrkWTfMq20iM
+        9HOO2Mi2mUJeDxQAZURys6MvjT5WCnOGyVUD2aWRivWVpmsCnlfw5YO76rKTFDnu
+        zXYPbwLt+0ynlOInitiZhHQD0eL8c9V8sqB5g=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=LMGYbFWzPGF19Xf0OUomyl0yceB1Zn/K
+        /fmdgLVNCQkoEfxXqQodIDRXYcCHlxlXDRVQ+vZuOw2+5sx3FPMGGRgVYRRQSazb
+        yRj6py3fd89tBH/ch22YArU59SaBbIkgWibd+K8cuJjs4dBy6FPknc4w9HFa0QBS
+        nD0AgkaKYQ8=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 269755D34B;
+        Wed, 11 Jan 2017 13:56:54 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 8A23B5D346;
+        Wed, 11 Jan 2017 13:56:53 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     David Turner <novalis@novalis.org>, git@vger.kernel.org
+Subject: Re: git cat-file on a submodule
+References: <1484093500.17967.6.camel@frank>
+        <20170111125330.3skwxdleoooacts6@sigill.intra.peff.net>
+Date:   Wed, 11 Jan 2017 10:56:52 -0800
+In-Reply-To: <20170111125330.3skwxdleoooacts6@sigill.intra.peff.net> (Jeff
+        King's message of "Wed, 11 Jan 2017 07:53:30 -0500")
+Message-ID: <xmqqshopo26j.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.90 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: B78B40E6-D82F-11E6-9068-A7617B1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In modern Git we prefer "git -C <cmd" over "(cd <somewhere && git <cmd>)"
-as it doesn't need an extra shell.
+Jeff King <peff@peff.net> writes:
 
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
+> On Tue, Jan 10, 2017 at 07:11:40PM -0500, David Turner wrote:
+>
+>> Why does git cat-file -t $sha:foo, where foo is a submodule, not work?
+> ...
+> I'm not sure if I'm complaining or not. I can't immediately think of
+> something that would be horribly broken. But it really feels like you
+> are using the wrong tool, and patching the tool to handle this case will
+> probably lead to weird cognitive dissonance down the road.
 
-And because it is in a setup function, we actually save the invocation
-of 22 shells for a single run of the whole test suite.
+"git cat-file [any option] $sha" should fail and complain for any
+$sha that does not name an object that exists in the object database
+of the repository it is working on.  
 
-Noticed while adding a lot more in near vincinity, though not as near
-to cause merge conflicts, so sending it extra.
+So I'd complain if the first example command quoted above from
+David's mail stopped failing when the commit bound at 'foo' in the
+top-level treeish $sha (i.e. a commit in the submodule) does not
+exist in the top-level repository's object database.
 
-Thanks,
-Stefan
+> Maybe it would help to describe your use case more fully. If what you
+> care about is the presumed type based on the surrounding tree, then
+> maybe:
+>
+>   git --literal-pathspecs ls-tree $sha -- foo
+>
+> would be a better match.
 
- t/lib-submodule-update.sh | 5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
-
-diff --git a/t/lib-submodule-update.sh b/t/lib-submodule-update.sh
-index 79cdd34a54..915eb4a7c6 100755
---- a/t/lib-submodule-update.sh
-+++ b/t/lib-submodule-update.sh
-@@ -69,10 +69,7 @@ create_lib_submodule_repo () {
- 
- 		git checkout -b "replace_sub1_with_directory" "add_sub1" &&
- 		git submodule update &&
--		(
--			cd sub1 &&
--			git checkout modifications
--		) &&
-+		git -C sub1 checkout modifications &&
- 		git rm --cached sub1 &&
- 		rm sub1/.git* &&
- 		git config -f .gitmodules --remove-section "submodule.sub1" &&
--- 
-2.11.0.259.g7b30ecf4f0
-
+Yup.
