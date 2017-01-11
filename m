@@ -6,57 +6,59 @@ X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 74648205C9
-	for <e@80x24.org>; Wed, 11 Jan 2017 20:53:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 632CE205C9
+	for <e@80x24.org>; Wed, 11 Jan 2017 20:55:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1757731AbdAKUuH (ORCPT <rfc822;e@80x24.org>);
-        Wed, 11 Jan 2017 15:50:07 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:57105 "EHLO
+        id S1753736AbdAKUz3 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 11 Jan 2017 15:55:29 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:53206 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751531AbdAKUtR (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Jan 2017 15:49:17 -0500
+        with ESMTP id S1752294AbdAKUyE (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Jan 2017 15:54:04 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 6C67E5ECBC;
-        Wed, 11 Jan 2017 15:49:14 -0500 (EST)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id CB0B35F709;
+        Wed, 11 Jan 2017 15:54:02 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=hCFKgUGeR8PeLRlr5HnVeaf6T4A=; b=PZjVTi
-        JbY903Upkcwyula97qJ7r5pm2Vp7eemb/CwhyfOeCxvzQd2rqnwl/yBKVz40ipmq
-        Wdvy4myTkbC55L+bRC2zPexTbC3GKc2FxX4K9fNtseVXOxxsSJN+bb9N5g+RAB+3
-        IXzdQ9dla0Dw+uSXBBC0OSyp9AJ0+v8QUEiGM=
+        :content-type; s=sasl; bh=OvsbodRGrCW/WtKDWEBAcFebHiA=; b=Cd16Cr
+        vun4VZ0hmSgY/PI7MnR8IeZVArxHGCZX9Ebwc1G0bJsQkTg1txpfJDHVlMHYyRXz
+        dYWDHmoRj9QBdU7pM561MAMcgubRcN+OSFwyojLp9MwqwZODXhZifJsT3Cur2xlz
+        2TrEnchaCBZDJl2ODKYuMRnPRaiaP81gXMYcI=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=Gx7kEjZXNyCTF/i4p552c4YCzHVZo0jv
-        CNsk0sBv3QHcxKdFnIDv4hP/lrIRwi5oWXgCbm4VbsW7WZx5jQCjNKGiJ8WYPaOK
-        76i4UGltwVd5zJzibaVtgAlZ9c8o/k7FX24/7/p5FY3C4+ERHZH4qhaQ4neDeJ+a
-        z0VtCsnF9bI=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 5EFF65ECBB;
-        Wed, 11 Jan 2017 15:49:14 -0500 (EST)
+        :content-type; q=dns; s=sasl; b=omm8AL1eD5H4ZklsubLjJfXOXZTZbkk6
+        M64eQr6K1ZMcsRIccUaxIGwg3FtfBNXwhfU3nhjQH1EKQI2/D+S0uIRKYmqpyGHr
+        wtwBtaNQalqhY6A+b79XXoH54MoOm5QHgLyrlf2eACJyixvjahaTVNobUQRiTOdr
+        LzTVY9Ntb6Q=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 80C4E5F707;
+        Wed, 11 Jan 2017 15:54:02 -0500 (EST)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id BB97C5ECB8;
-        Wed, 11 Jan 2017 15:49:13 -0500 (EST)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 6846C5F706;
+        Wed, 11 Jan 2017 15:54:00 -0500 (EST)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org, Andreas Schwab <schwab@linux-m68k.org>,
-        "A. Wilcox" <awilfox@adelielinux.org>
-Subject: Re: [musl] Re: Test failures when Git is built with libpcre and grep is built without it
-References: <58688C9F.4000605@adelielinux.org>
-        <20170102065351.7ymrm77asjbghgdg@sigill.intra.peff.net>
-        <58736B2A.40003@adelielinux.org> <871swcjsd3.fsf@linux-m68k.org>
-        <20170109213303.4rupe5cqwejfp6af@sigill.intra.peff.net>
-        <5874B942.7070402@adelielinux.org> <20170110113959.GL17692@port70.net>
-        <20170111100400.vhd5ytarqpujigbn@sigill.intra.peff.net>
-Date:   Wed, 11 Jan 2017 12:49:12 -0800
-In-Reply-To: <20170111100400.vhd5ytarqpujigbn@sigill.intra.peff.net> (Jeff
-        King's message of "Wed, 11 Jan 2017 05:04:01 -0500")
-Message-ID: <xmqqfukpnwzb.fsf@gitster.mtv.corp.google.com>
+Cc:     Richard Hansen <hansenr@google.com>, git@vger.kernel.org
+Subject: Re: [PATCH 1/2] diff: document behavior of relative diff.orderFile
+References: <20170110004031.57985-1-hansenr@google.com>
+        <20170110004031.57985-2-hansenr@google.com>
+        <20170110065816.pu325sxajbyuqpj6@sigill.intra.peff.net>
+        <e100d30a-5ee8-8485-5012-f9b1c6961ffa@google.com>
+        <xmqq4m16sm5v.fsf@gitster.mtv.corp.google.com>
+        <xmqqziiyr7e9.fsf@gitster.mtv.corp.google.com>
+        <9daa70e4-82b0-a82a-67b9-e893546638a7@google.com>
+        <xmqqtw96pno0.fsf@gitster.mtv.corp.google.com>
+        <20170111144158.ef6kle3vw3ejgmut@sigill.intra.peff.net>
+Date:   Wed, 11 Jan 2017 12:53:59 -0800
+In-Reply-To: <20170111144158.ef6kle3vw3ejgmut@sigill.intra.peff.net> (Jeff
+        King's message of "Wed, 11 Jan 2017 09:41:59 -0500")
+Message-ID: <xmqqbmvdnwrc.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.90 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 6904D094-D83F-11E6-B3AD-A7617B1B28F4-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: 13E206DA-D840-11E6-98D3-FE3F13518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -64,10 +66,29 @@ X-Mailing-List: git@vger.kernel.org
 
 Jeff King <peff@peff.net> writes:
 
-> Another difference I found is that "[\d]" matches a literal "\" or "d"
-> in ERE, but behaves like "[0-9]" in PCRE. I'll work up a patch based on
-> that.
+> On Tue, Jan 10, 2017 at 02:15:11PM -0800, Junio C Hamano wrote:
+>
+>> Richard Hansen <hansenr@google.com> writes:
+>> ...
+>> > I think so.  (For bare repositories anyway; non-bare should be
+>> > relative to GIT_WORK_TREE.)  Perhaps git_config_pathname() itself
+>> > should convert relative paths to absolute so that every pathname
+>> > setting automatically works without changing any calling code.
+>> 
+>> Yes, that was what I was alluding to.  We might have to wait until
+>> major version boundary to do so, but I think that it is the sensible
+>> way forward in the longer term to convert relative to absolute in
+>> git_config_pathname().
+>
+> Yeah, I'd agree.
+>
+> I'm undecided on whether it would need to happen at a major version
+> bump. ...
+>
+> So I dunno. I do hate to break even corner cases, but I'm having trouble
+> imagining the scenario where somebody is actually using the current
+> behavior in a useful way.
 
-Wow, clever.
+Thanks for a detailed analysis (I probably should have spelt them
+out when I said "we might have to" to save you the trouble).
 
-Thanks.
