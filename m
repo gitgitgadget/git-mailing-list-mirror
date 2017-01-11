@@ -2,121 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 68F8A20798
-	for <e@80x24.org>; Wed, 11 Jan 2017 23:28:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E56E820798
+	for <e@80x24.org>; Wed, 11 Jan 2017 23:47:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1757368AbdAKX21 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 11 Jan 2017 18:28:27 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:56699 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1755342AbdAKX20 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Jan 2017 18:28:26 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 424A75F7F2;
-        Wed, 11 Jan 2017 18:28:20 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=YW/Whpa5K92YUcjlyiGL5w0JzYw=; b=NOy0gs
-        QKPrS8iy7smQU47+KMUJxO2pFU9lT3eWfchuBi0F7EXH5m4slYXyizKfkXPbsd1L
-        xkjPbot7sHUECbuOW4jd/qiX6DXPdn3nfrU7qxVjFv5A4dpKMuSkL+qfufK7tnhG
-        aF0pbRGFmEs3JT+Hnp7a4mYzrA2FGEaFhNEQk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=EZOvoPkB+8FLJeKVF7H9CDSPnNqDhAfh
-        hBlP+wnRpklCj8KTw/z1k9vNnoVc3npT7Zt7pKfc3GMcOgCx6xCHN9jDa8bmL3py
-        VsrKgdReaiwbFW6+SsDjJSb7fWmTuf847NQ1EC7EL963+WW2J5IUnycwj72O1c8Z
-        TXN+yMiJxeE=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 3A6575F7EF;
-        Wed, 11 Jan 2017 18:28:20 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A4FC25F7EC;
-        Wed, 11 Jan 2017 18:28:19 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Brandon Williams <bmwill@google.com>,
-        David Turner <novalis@novalis.org>,
-        "git\@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: [PATCH 4/4] unpack-trees: support super-prefix option
-References: <20170110014542.19352-1-sbeller@google.com>
-        <20170110014542.19352-5-sbeller@google.com>
-        <xmqq37gpnuyi.fsf@gitster.mtv.corp.google.com>
-        <CAGZ79kaHDnVLQr8WLoaD5KKs7EqeW=KbkptF=iHpU5t054Xcdw@mail.gmail.com>
-Date:   Wed, 11 Jan 2017 15:28:18 -0800
-In-Reply-To: <CAGZ79kaHDnVLQr8WLoaD5KKs7EqeW=KbkptF=iHpU5t054Xcdw@mail.gmail.com>
-        (Stefan Beller's message of "Wed, 11 Jan 2017 14:12:12 -0800")
-Message-ID: <xmqqh955mb1p.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.90 (gnu/linux)
+        id S1757779AbdAKXrf (ORCPT <rfc822;e@80x24.org>);
+        Wed, 11 Jan 2017 18:47:35 -0500
+Received: from mail-lf0-f67.google.com ([209.85.215.67]:36222 "EHLO
+        mail-lf0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754039AbdAKXre (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Jan 2017 18:47:34 -0500
+Received: by mail-lf0-f67.google.com with SMTP id h65so264611lfi.3
+        for <git@vger.kernel.org>; Wed, 11 Jan 2017 15:47:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=8kiBbxYfqCyjXNdcwXv+4NcCa3fPDJ9jQcjjQXWozMM=;
+        b=OQCfC+RHqEa+1CVBmVtvh/0VhCrNqpope66xJmjbSrYg7xrJmlBjjzuP4L8uWNJcXr
+         wg/dlpNnpsv8/36TqfULGP2OK2avFN2X2E8yKOfMprn7wn5ux7+Y7Q0KGMuD029GbmO7
+         KH6+Bk1sSoT/F1nyTY3eUjVd7oI9a81ZLE7mx4Ai9H4///JbpR++/OTvR9rERg1DXyP2
+         TND4vR+uR1izHVbmT36s2EBmiNognCHaWOGtgdbHl3R12TaLtmm4YetbOdTbF6yKn5aG
+         ikf0SGdVRXlA9Cl0V4yg3MPiRqyOdMTN9MEAafXAhoxRU5u5uGtIi0uWp+4vJG2eJJoD
+         a4Sw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=8kiBbxYfqCyjXNdcwXv+4NcCa3fPDJ9jQcjjQXWozMM=;
+        b=IAKxJtnW9GAK5Rq1LtZIGD3fztEzjFRbFWab7uhDAsN0PW4jj98VnIkWdE3VSsSzgO
+         UyxLom5e6R2ua4tGqk0Urq2CQAi6DeC+CnQxFAw5IMb0S9jLfIbJQpdfDq8C1IxjFlqF
+         C8PrEFxdoRei85q4AN7OEM0Jj5PUOcR8nGFU/ijpL/tQnArIFdtJUDdTdWh7sg5h6k+v
+         NyulaZ6pzawAXbdPUznQ+7HALahWeMgmhxGO0i0siqYoWTwGOfVQ85u589ho06m2GLHW
+         Oa3D08QhFc0JmXHbWuLALbkdaCj2pb65AyTizwIu++05eKrWYXJondX3MLzmUFiDJ3GF
+         9tQg==
+X-Gm-Message-State: AIkVDXJKHFwx9RvoRA9ZbbmY56jhdoyuZYvsesOaOrw0unECtqO3FJ/+AEbUWQbSxjHsruLUyk5i11Ifut5JdA==
+X-Received: by 10.25.27.145 with SMTP id b139mr3698760lfb.114.1484178446744;
+ Wed, 11 Jan 2017 15:47:26 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: A2D27BBC-D855-11E6-A2D8-FE3F13518317-77302942!pb-smtp1.pobox.com
+Received: by 10.25.145.14 with HTTP; Wed, 11 Jan 2017 15:47:06 -0800 (PST)
+In-Reply-To: <20170110084953.15890-20-Karthik.188@gmail.com>
+References: <20170110084953.15890-1-Karthik.188@gmail.com> <20170110084953.15890-20-Karthik.188@gmail.com>
+From:   Jacob Keller <jacob.keller@gmail.com>
+Date:   Wed, 11 Jan 2017 15:47:06 -0800
+Message-ID: <CA+P7+xqV+CJwP-0_27V26UZbkDzBqbdstGw_Rq=8c3SkjAq2bA@mail.gmail.com>
+Subject: Re: [PATCH v10 19/20] branch: use ref-filter printing APIs
+To:     Karthik Nayak <karthik.188@gmail.com>
+Cc:     Git mailing list <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
-
->> Preparing the expected output "expect" outside test_expect_success
->> block is also old-school.  Move it inside the new test?
->
-> I looked into that. What is our current stance on using single/double quotes?
-
-Using dq around executable part, i.e.
-
-	test_expect_success title "
-		echo \"'foo'\"
-	"
-
-is a million-times more grave sin even if the test initially does
-not refer to any variable in its body.  Somebody will eventually
-need to add a line that refers to a variable and either forgets to
-quote \$ in front or properly quotes it.  The former makes the
-variable interpolated while the arguments to the test_expect_success
-is prepared (which is a bug) and the latter makes the result quite
-ugly, like so:
-
-	test_expect_success title "
-		sq=\' var=foo &&
-		echo \"\${sq}\$value\${sq}\"
-	"
-
-Enclosing the body always in sq-pair does mean something ugly like
-this from the beginning once you need to use sq inside:
-
-	test_expect_success title '
-		sq='\'' &&
-		echo "${sq}foo${sq}"
-	'
-
-or
-
-	test_expect_success title '
-		echo "'\''foo'\''"
-	'
-
-but the ugliness is localized to places where single quote is
-absolutely needed, and '\'' is something eyes soon get used to as an
-idiom [*1*].  It does not affect every reference of variables like
-enclosing with dq does.
+On Tue, Jan 10, 2017 at 12:49 AM, Karthik Nayak <karthik.188@gmail.com> wrote:
+> diff --git a/builtin/branch.c b/builtin/branch.c
+> index 34cd61cd9..f293ee5b0 100644
+> --- a/builtin/branch.c
+> +++ b/builtin/branch.c
+> @@ -37,11 +37,11 @@ static unsigned char head_sha1[20];
+>  static int branch_use_color = -1;
+>  static char branch_colors[][COLOR_MAXLEN] = {
+>         GIT_COLOR_RESET,
+> -       GIT_COLOR_NORMAL,       /* PLAIN */
+> -       GIT_COLOR_RED,          /* REMOTE */
+> -       GIT_COLOR_NORMAL,       /* LOCAL */
+> -       GIT_COLOR_GREEN,        /* CURRENT */
+> -       GIT_COLOR_BLUE,         /* UPSTREAM */
+> +       GIT_COLOR_NORMAL,       /* PLAIN */
+> +       GIT_COLOR_RED,          /* REMOTE */
+> +       GIT_COLOR_NORMAL,       /* LOCAL */
+> +       GIT_COLOR_GREEN,        /* CURRENT */
+> +       GIT_COLOR_BLUE,         /* UPSTREAM */
+>  };
 
 
-[Footnote]
+What's... actually changing here? It looks like just white space? Is
+there a strong reason for why this is changing?
 
-*1* That "idiom"-ness is the reason why the last example above is
-    not written like this:
-
-	test_expect_success title '
-		echo "'\'foo\''"
-	'
-
-    even though the sq pair surrounding "foo" is not technically
-    necessary.  It lets us think of the string as almost always is
-    inside sq context, with the single exception that we step
-    outside sq context and append a sq by saying bs-sq (\').
+Thanks,
+Jake
