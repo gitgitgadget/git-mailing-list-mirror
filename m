@@ -2,184 +2,176 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 15B0E1F4F8
-	for <e@80x24.org>; Wed, 11 Jan 2017 22:12:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C26F31F4F8
+	for <e@80x24.org>; Wed, 11 Jan 2017 22:12:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750902AbdAKWL6 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 11 Jan 2017 17:11:58 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:55226 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751866AbdAKWL5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Jan 2017 17:11:57 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id AF8E7606EE;
-        Wed, 11 Jan 2017 17:11:44 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=dCuWNS3vvu5bj9QDDTSZY+EgVZU=; b=DqJoFx
-        7m3rBL83td2J41fHSHK9Y+7zLv0bTkxCojO+CgbEzTtP6tTniy7UYaAaizL3XXCd
-        ta+jI9F0zIBK/SvhTfGyli6hjW03eOsPA9a/EF+MteStEVfncs6DkLP/L115Hheb
-        hiSAa8qeVtkuSbAkVUxFtcTtdZC5ICDreVMl4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=HcfNjt/X2Wk/NkwbNwN9+AayFRWxuNSF
-        xosCLk/RzrnFoGl6IfnW//lkYnUNL/KLN61sy12/EZP07pGTZObHwK1z86ARa5pL
-        CAoEZ9QsisFIPO++B28KaL32uj7drnS1E/TDG6kB5nQ8gVjGdHlfA7MwBC5E/XzO
-        ORPHFE4Oa78=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id A6560606ED;
-        Wed, 11 Jan 2017 17:11:44 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id F394D606EC;
-        Wed, 11 Jan 2017 17:11:43 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org
-Subject: Re: [RFC PATCH 3/2] vreportf: add prefix to each line
-References: <20170111140138.5p647xuqpqrej63b@sigill.intra.peff.net>
-        <20170111140758.yyfsc3r3spqpi6es@sigill.intra.peff.net>
-Date:   Wed, 11 Jan 2017 14:11:42 -0800
-In-Reply-To: <20170111140758.yyfsc3r3spqpi6es@sigill.intra.peff.net> (Jeff
-        King's message of "Wed, 11 Jan 2017 09:07:58 -0500")
-Message-ID: <xmqqpojtmeld.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.90 (gnu/linux)
+        id S1751866AbdAKWMP (ORCPT <rfc822;e@80x24.org>);
+        Wed, 11 Jan 2017 17:12:15 -0500
+Received: from mail-io0-f176.google.com ([209.85.223.176]:34795 "EHLO
+        mail-io0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750901AbdAKWMO (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Jan 2017 17:12:14 -0500
+Received: by mail-io0-f176.google.com with SMTP id l66so4613836ioi.1
+        for <git@vger.kernel.org>; Wed, 11 Jan 2017 14:12:14 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=JPYwGHe/u6OU8306WoDzwSHgCIPbFB6jHxuFWZfndIY=;
+        b=o5MO+a5/7pj5C3LjsDvW55kQNl/VcLiyBG6vraUZ5lTt6fLFZaMkCLC0y783e64HLz
+         n7+SZQnUR1wzdEzvvn8mrfBRDwBrEZNv+8WE9WMnNYqhddrW3qwm4H9rnxFGXOnIC7xK
+         vGUqgAq1b06jOpk5OcrXqaryq1jYsfSPJZbLvSuMvbfCXfhEF5ZZABHnoZXztMkYAK7N
+         F5BwxoRdi5LnF0BnsgszFIJUDjt4APpn/cyW1t0UKtZf2KIZYvUYCmVjShaV6nn+dQZ2
+         Ov0mO+TeDutikXuLNiWMZJDM3OEDVgK9Q4a1V355NB7TfeHCPGHSHicXyr9n4ouTyatM
+         sZ+w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=JPYwGHe/u6OU8306WoDzwSHgCIPbFB6jHxuFWZfndIY=;
+        b=UqhA7kUdLHKkPFJ5pOASeuTmQrh2gRg7sRX5q8wa0uqK/SqISvvZ7aZq5MrO9d2BHP
+         xLfDZ3dZjfxARtYaxoE+NXKlapjW+7Mf+It9LAYR9+0Ohi11cVyFkyDpi1zffUIPo1N/
+         v0TG17eWyx/b2WSajx2tiYPkFUo7wuWNNtMgv6szm6gp4y6RNIKN8MGNR9CbDdq7+vsO
+         ny3u7UiBkdlS7UrfXbhCt2gJDdSeYK0/Dw+aNwhm8tAoc/l9DpUtOdet7ShV/R8+JtcY
+         vB5uSBMRo6XJavO0IaKgyVWltK3PuFMKweL0qpxHbVXvXhbExFn+HKWcuPhwRSF5fy2v
+         EXnQ==
+X-Gm-Message-State: AIkVDXLPH0ud2zmeNZHabg4TpSY4UdD6L+rxAdk0Dq59BRhJBzUMPRzsAciGQMqIfGpVy2lUCtRIVIhPdTsek2WJ
+X-Received: by 10.107.3.160 with SMTP id e32mr10377783ioi.52.1484172733204;
+ Wed, 11 Jan 2017 14:12:13 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: EF9624D6-D84A-11E6-BB36-FE3F13518317-77302942!pb-smtp1.pobox.com
+Received: by 10.79.39.19 with HTTP; Wed, 11 Jan 2017 14:12:12 -0800 (PST)
+In-Reply-To: <xmqq37gpnuyi.fsf@gitster.mtv.corp.google.com>
+References: <20170110014542.19352-1-sbeller@google.com> <20170110014542.19352-5-sbeller@google.com>
+ <xmqq37gpnuyi.fsf@gitster.mtv.corp.google.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Wed, 11 Jan 2017 14:12:12 -0800
+Message-ID: <CAGZ79kaHDnVLQr8WLoaD5KKs7EqeW=KbkptF=iHpU5t054Xcdw@mail.gmail.com>
+Subject: Re: [PATCH 4/4] unpack-trees: support super-prefix option
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Brandon Williams <bmwill@google.com>,
+        David Turner <novalis@novalis.org>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
-
-> On Wed, Jan 11, 2017 at 09:01:38AM -0500, Jeff King wrote:
+On Wed, Jan 11, 2017 at 1:32 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Stefan Beller <sbeller@google.com> writes:
 >
->>   [1/2]: Revert "vreportf: avoid intermediate buffer"
->>   [2/2]: vreport: sanitize ASCII control chars
+>> Add support for the super-prefix option for commands that unpack trees.
+>> For testing purposes enable it in read-tree, which has no other path
+>> related output.
 >
-> We've talked before about repeating the "error:" header for multi-line
-> messages. The reversion in patch 1 makes this easy to play with, so I
-> did. I kind of hate it. But here it is, for your viewing pleasure.
+> "path related output"?  I am not sure I understand this.
 
-Thanks.
+Well, s/path related output/output of paths/.
+
+> When read-tree reads N trees, or unpack_trees() is asked to "merge"
+> N trees, how does --super-prefix supposed to interact with the paths
+> in these trees?  Does the prefix added to paths in all trees?
+
+Internally the super-prefix is ignored. Only the (input and) output
+is using that super prefix for messages.
+
+It was introduced for grepping recursively into submodules, i.e.
+
+invoke as
+
+    git grep --recurse-submodules \
+      -e path/inside/submodule/and/further/down
+    # internally it invokes:
+    git -C .. --super-prefix .. grep ..
+    # which operates "just normal" except for the
+    # input parsing and output
+
+The use case for this patch is working tree related things, i.e.
+    git checkout --recurse-submodules
+    # internally when recursing we call "git read-tree -u", but
+    # reporting could be:
+    Your local changes to the following files would be overwritten by checkout:
+      path/inside/submodule/file.txt
+
 
 >
-> -- >8 --
-> Subject: vreportf: add prefix to each line
+> Did you mean that read-tree (and unpack_trees() in general) is a
+> whole-tree operation and there is no path related input (i.e.
+> pathspec limiting), but if another command that started in the
+> superproject is running us in its submodule, it wants us to prefix
+> the path to the submodule when we report errors?
+
+Yes. I tried to explain it better above, but you got it here.
+
 >
-> Some error and warning messages are multi-line, but we put
-> the prefix only on the first line. This means that either
-> the subsequent lines don't have any indication that they're
-> connected to the original error, or the caller has to make
-> multiple calls to error() or warning(). And that's not even
-> possible for die().
+> If that is what is going on, I think it makes sense, but it may be
+> asking too much from the readers to guess that from "Add support for
+> the super-prefix option".
+
+I need to enhance the commit message by a lot then.
+
 >
-> Instead, let's put the prefix at the start of each line,
-> just as advise() does.
+>> --- a/t/t1001-read-tree-m-2way.sh
+>> +++ b/t/t1001-read-tree-m-2way.sh
+>> @@ -363,6 +363,15 @@ test_expect_success 'a/b (untracked) vs a, plus c/d case test.' '
+>>       test -f a/b
+>>  '
+>>
+>> +cat <<-EOF >expect &&
+>> +     error: Updating 'fictional/a' would lose untracked files in it
+>> +EOF
+>> +
+>> +test_expect_success 'read-tree supports the super-prefix' '
+>> +     test_must_fail git --super-prefix fictional/ read-tree -u -m "$treeH" "$treeM" 2>actual &&
+>> +     test_cmp expect actual
+>> +'
+>> +
 >
-> Note that this patch doesn't update the tests yet, so it
-> causes tons of failures. This is just to see what it might
-> look like.
+> Preparing the expected output "expect" outside test_expect_success
+> block is also old-school.  Move it inside the new test?
+
+I looked into that. What is our current stance on using single/double quotes?
+Most tests use single quotes for the test title as well as the test
+instructions,
+such that double quotes can be used naturally in there. But single quotes
+cannot be used even escaped, such that we need to do a thing like
+
+sq="'"
+
+test_expect_success 'test title' '
+    cat <<-EOF >expect &&
+        error for ${sq}path${sq}
+    EOF
+    test instructions go here
+'
+
+though that is not used as often as I would think as
+grep \${sq} yields t1507 and t3005.
+
 >
-> It's actually kind of ugly.  For instance, a failing test in
-> t3600 now produces:
+> Hmph, as a reader of the code, I do not even want to wonder how
+> expensive get_super_prefix() is.  If the executable part of the
+> above were written like this, it would have been easier to
+> understand:
 >
->    error: the following files have staged content different from both the
->    error: file and the HEAD:
->    error:     bar.txt
->    error:     foo.txt
->    error: (use -f to force removal)
+>         if (super_prefix_len < 0) {
+>                 if (!get_super_prefix())
+>                         super_prefix_len = 0;
+>                 else {
+>                         int i;
+>                         ... prepare buf[] and set super_prefix_len ...;
+>                 }
+>         }
 >
-> which seems a bit aggressive.  
-
-I agree that it is ugly, but one reason I was hoping to do this
-myself (or have somebody else do it by procrastinating) was that I
-thought it may help i18n.  That is, for an original
-
-	error(_("we found an error"))
-
-a .po file may translate the string to a multi-line string that has
-LFs in it and the output would look correct.  The translator already
-can do so by indenting the second and subsequent lines by the same
-column-width as "error: " (or its translation in their language, if
-we are going to i18n these headers), but that (1) is extra work for
-them, and (2) makes it impossible to have the same message appear in
-different contexts (i.e. "error:" vs "warning:" that have different
-column-widths).
-
-> It also screws up messages which indent with tabs (the prefix eats
-> up some of the tabstop, making the indentation smaller).
-
-This is unavoidable and at the same time is a non-issue, isn't it?
-Messages that indent the second and subsequent lines with tabs are
-compensating the lack of the multi-line support of vreportf(), which
-this RFC patch fixes.  They may need to be adjusted to the new world
-order, but that is a good thing.  New multi-line messages no longer
-have to worry about the prefix that is added only to the first line
-when continuing the message to multiple lines.
-
-> And the result is
-> a little harder if you need to cut-and-paste the file lines
-> (if your terminal lets you triple-click to select a whole
-> line, now you have this "error:" cruft on the front).
-
-This might be an issue, but I personally do not care (as I know how
-to drive my "screen", namely, use 'c' while cutting) ;-).
-
-> It may be possible to address some of that by using some
-> other kind of continuation marker (instead of just repeating
-> the prefix), and expanding initial tabs.
-
-Yes indeed.  The "some other kind of continuation marker" could just
-be a run of spaces that fill the same column as the "error: " or
-other prefix given to the first line.
-
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
->  usage.c | 16 ++++++++++++++--
->  1 file changed, 14 insertions(+), 2 deletions(-)
+>         if (!super_prefix_len)
+>                 return path;
 >
-> diff --git a/usage.c b/usage.c
-> index ad6d2910f..8a1f6ff4e 100644
-> --- a/usage.c
-> +++ b/usage.c
-> @@ -8,18 +8,30 @@
->  
->  static FILE *error_handle;
->  
-> +static void show_line(FILE *fh, const char *prefix, const char *line, int len)
-> +{
-> +	fprintf(fh, "%s%.*s\n", prefix, len, line);
-> +}
-> +
->  void vreportf(const char *prefix, const char *err, va_list params)
->  {
->  	char msg[4096];
->  	FILE *fh = error_handle ? error_handle : stderr;
-> +	const char *base;
->  	char *p;
->  
->  	vsnprintf(msg, sizeof(msg), err, params);
-> +
-> +	base = msg;
->  	for (p = msg; *p; p++) {
-> -		if (iscntrl(*p) && *p != '\t' && *p != '\n')
-> +		if (*p == '\n') {
-> +			show_line(fh, prefix, base, p - base);
-> +			base = p + 1;
-> +		} else if (iscntrl(*p) && *p != '\t')
->  			*p = '?';
->  	}
-> -	fprintf(fh, "%s%s\n", prefix, msg);
-> +
-> +	show_line(fh, prefix, base, p - base);
->  }
->  
->  static NORETURN void usage_builtin(const char *err, va_list params)
+>         ... use buf[] to do the prefixing and return it ...
+>
+
+good point. I'll fix that.
