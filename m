@@ -7,58 +7,59 @@ X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8F56D20A93
-	for <e@80x24.org>; Wed, 11 Jan 2017 10:13:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 266901FEB3
+	for <e@80x24.org>; Wed, 11 Jan 2017 10:20:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1759627AbdAKKNF (ORCPT <rfc822;e@80x24.org>);
-        Wed, 11 Jan 2017 05:13:05 -0500
-Received: from mail-wj0-f195.google.com ([209.85.210.195]:33513 "EHLO
-        mail-wj0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1756615AbdAKKNE (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Jan 2017 05:13:04 -0500
-Received: by mail-wj0-f195.google.com with SMTP id kp2so90127045wjc.0
-        for <git@vger.kernel.org>; Wed, 11 Jan 2017 02:13:03 -0800 (PST)
+        id S1762484AbdAKKUv (ORCPT <rfc822;e@80x24.org>);
+        Wed, 11 Jan 2017 05:20:51 -0500
+Received: from mail-wj0-f196.google.com ([209.85.210.196]:35899 "EHLO
+        mail-wj0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1762451AbdAKKUt (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Jan 2017 05:20:49 -0500
+Received: by mail-wj0-f196.google.com with SMTP id dh1so9845387wjb.3
+        for <git@vger.kernel.org>; Wed, 11 Jan 2017 02:20:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:subject:from:in-reply-to:date:cc
          :content-transfer-encoding:message-id:references:to;
-        bh=SqcCgDkQTgZdo9dIDEsouZ0ljsJK02uodvZevgpEZEo=;
-        b=KqguuvniY89dO551czihw90HGoh88Nf9ykaaP0aMN+/lKBcLbgPTOBu7ga8RbbuWFM
-         d/jjrrqiUniHk8bt1HGBMCgT5ND3bOa0iVl9VFgFdiK2hxyS6Uwjub8K+ZjhvZFclZVH
-         1tHHPSIGs+RHxr7osfzufTCQ9tXqswCnrsc+bdkl2NJhVPk/+PHkfiZszFcM2WnK9hV6
-         l4q3TDGcrnin3vcq6AmQj2pQI0IIQQvvLsJT2xOswPHhFVykTlQ2lp6tNBBOYNC2BXrA
-         gg8oNdrtMo0juGNb0OmAtz/XLGJsoLHxsh9gMbkQ/2kLnhsjFfjtWimN4gCsQBZI1D4M
-         zOyg==
+        bh=vuUdoB+7lD+WpUJN09t3cVLU7Ytv/ysKqvD3Wzek62s=;
+        b=h3OTRdMOV+17w9C8Rb+sVnX9ljrN5Oz8UxTeUC23zvtLFEoU864blJpS6CidYUWEMT
+         UFLpKSt2x9aFmBq7AbOwsTzPC+FIDR6LXl4F3GYGEJf0/FqcBs/L9DgE7bIHqf1Wlu3S
+         4/WWA1Bg74Rs6gP5Bk7V9gUpDWkqcwnqbh0n40eIf8HLnbGK/AKjfcxS3U8DbBeCyo7u
+         zBmbA0CRpjo3riZe5JSdR+dMFIDQwAxNoTdPmcJ9kFbSMLsNj5bVvJmsQoHHal0mY6/s
+         Sj3g7tygyQ3FUdTvcisZr4/TA/E8BrTBfEFjGbgJ/nvIIONVAvugZyyWFheGuLhd59pN
+         bNKw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
          :content-transfer-encoding:message-id:references:to;
-        bh=SqcCgDkQTgZdo9dIDEsouZ0ljsJK02uodvZevgpEZEo=;
-        b=Q98sS5u3kCUiNOTl+5Sk62TCwDJrl4pmJ0hwXc4Q1roDpuXCR5XOFzulm7KBvXMsOx
-         S9FAZO2pxK475UhgozjTfxoqgs8D2vMFelXTnzkyOPIwqkKy+Wboq0E8qB5GPO5IkvR7
-         /u1D83TDF/2DQ3Hgsrw4CYhkM8oVGA28QSfw95vJdQ/DGB52wjWO3knaCq8A82PtZXX7
-         T1LT96dzosjzeGtLaAKf/iwYvJbV7AJb5nvxWNPG+GT/3kNjosbBM4tyFxvRbD8LggHJ
-         m6IsbtpgICgw6108qjZNiR8Kh8hExAbYONiFbHCdYFcPxz4+vzz8dRe/BG1vfsGC5dmT
-         e5Kw==
-X-Gm-Message-State: AIkVDXK+aQNpfp4zh8zNEegnz2YXUF+5K69abz4If6Ax29OsE/VPAkZpVjBLtfKQhU3/bw==
-X-Received: by 10.194.202.167 with SMTP id kj7mr5394621wjc.191.1484129582644;
-        Wed, 11 Jan 2017 02:13:02 -0800 (PST)
+        bh=vuUdoB+7lD+WpUJN09t3cVLU7Ytv/ysKqvD3Wzek62s=;
+        b=tQZz7P+aqM2JWllGytYhmckDMnafyxoGf2gl7RcOLmndtrAAQBsP4AAzYA6nRxRrdv
+         qUvCbHgN9kd180fPuITGlRvQc/MKAqQ+rmTtR/l6dD2om74AZuNWfZhquM2V7v3iTA5j
+         34+ENa9K15Vssek4tma+9Q+76qBqWOHp1kyyQoUiPziypAPPIpsjco9tnFQ7Hr8Wp1pv
+         6V9NurR7p+ptsgbTGFdhy6VdCBxL9ORJPSbj083+zlDh+zJ2zlRRhtP8u+lswpWTXUgC
+         cbwno4zEpUn6EE/QvLA73HlBNTKaWF4umTeJumBsAQ6GGIolaJWPQH6HNHe0AKOTbM1q
+         V8Mg==
+X-Gm-Message-State: AIkVDXJaiOHDabo6GJ5CSLQ6U0qyioHA3VsXI7jDo90X6exBHLXsc4wOHnHsJDIyxK6XSw==
+X-Received: by 10.194.66.101 with SMTP id e5mr4413347wjt.172.1484130048492;
+        Wed, 11 Jan 2017 02:20:48 -0800 (PST)
 Received: from slxbook4.fritz.box (p5DDB5866.dip0.t-ipconnect.de. [93.219.88.102])
-        by smtp.gmail.com with ESMTPSA id d199sm3430551wmd.0.2017.01.11.02.13.01
+        by smtp.gmail.com with ESMTPSA id d29sm8251921wmi.19.2017.01.11.02.20.47
         (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 11 Jan 2017 02:13:01 -0800 (PST)
-Content-Type: text/plain; charset=us-ascii
+        Wed, 11 Jan 2017 02:20:47 -0800 (PST)
+Content-Type: text/plain; charset=utf-8
 Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
 Subject: Re: [PATCH v1] convert: add "status=delayed" to filter process protocol
 From:   Lars Schneider <larsxschneider@gmail.com>
-In-Reply-To: <20170109233816.GA70151@Ida>
-Date:   Wed, 11 Jan 2017 11:13:00 +0100
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        e@80x24.org, jnareb@gmail.com
+In-Reply-To: <ec8078ef-8ff2-d26f-ef73-5ef612737eee@gmail.com>
+Date:   Wed, 11 Jan 2017 11:20:47 +0100
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Git mailing list <git@vger.kernel.org>,
+        Eric Wong <e@80x24.org>, Taylor Blau <ttaylorr@github.com>
 Content-Transfer-Encoding: quoted-printable
-Message-Id: <F533857D-9B51-44C1-8889-AA0542AD8250@gmail.com>
-References: <20170108191736.47359-1-larsxschneider@gmail.com> <xmqqa8b115ll.fsf@gitster.mtv.corp.google.com> <20170109233816.GA70151@Ida>
-To:     Taylor Blau <ttaylorr@github.com>
+Message-Id: <9A1064BB-DA72-44DB-A875-39E007708A69@gmail.com>
+References: <20170108191736.47359-1-larsxschneider@gmail.com> <xmqqa8b115ll.fsf@gitster.mtv.corp.google.com> <ec8078ef-8ff2-d26f-ef73-5ef612737eee@gmail.com>
+To:     =?utf-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
 X-Mailer: Apple Mail (2.3124)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
@@ -66,96 +67,74 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-> On 10 Jan 2017, at 00:38, Taylor Blau <ttaylorr@github.com> wrote:
+> On 10 Jan 2017, at 23:11, Jakub Nar=C4=99bski <jnareb@gmail.com> =
+wrote:
 >=20
-> I've been considering some alternative approaches in order to make the
-> communication between Git and any extension that implements this =
-protocol more
-> intuitive.
+> W dniu 09.01.2017 o 00:42, Junio C Hamano pisze:
+>> larsxschneider@gmail.com writes:
+>>> From: Lars Schneider <larsxschneider@gmail.com>
+>>>=20
+>>> Some `clean` / `smudge` filters might require a significant amount =
+of
+>>> time to process a single blob. During this process the Git checkout
+>>> operation is blocked and Git needs to wait until the filter is done =
+to
+>>> continue with the checkout.
 >=20
-> In particular, I'm considering alternatives to:
->=20
+> Lars, what is expected use case for this feature; that is when do you
+> think this problem may happen?  Is it something that happened IRL?
+
+Yes, this problem happens every day with filters that perform network
+requests (e.g. GitLFS). In GitLFS we even implemented Git wrapper
+commands to address the problem: =
+https://github.com/git-lfs/git-lfs/pull/988
+The ultimate goal of this patch is to be able to get rid of the wrapper=20=
+
+commands.
+
+
+>>> Teach the filter process protocol (introduced in edcc858) to accept =
+the
+>>> status "delayed" as response to a filter request. Upon this response =
+Git
+>>> continues with the checkout operation and asks the filter to process =
+the
+>>> blob again after all other blobs have been processed.
+>>=20
+>> Hmm, I would have expected that the basic flow would become
+>>=20
+>> 	for each paths to be processed:
+>> 		convert-to-worktree to buf
+>> 		if not delayed:
+>> 			do the caller's thing to use buf
+>> 		else:
+>> 			remember path
+>>=20
 >> 	for each delayed paths:
 >> 		ensure filter process finished processing for path
 >> 		fetch the thing to buf from the process
 >> 		do the caller's thing to use buf
 >=20
-> As I understand it, the above sequence of steps would force Git to =
-either:
+> I would expect here to have a kind of event loop, namely
 >=20
-> a) loop over all delayed paths and ask the filter if it's done =
-processing,
->   creating a busy-loop between the filter and Git, or...
-> b) loop over all delayed paths sequentially, checking out each path in =
-sequence
+>        while there are delayed paths:
+>                get path that is ready from filter
+>                fetch the thing to buf (supporting "delayed")
+>                if path done
+>                        do the caller's thing to use buf=20
+>                        (e.g. finish checkout path, eof convert, etc.)
 >=20
-> I would like to avoid both of those situations, and instead opt for an
-> asynchronous approach. In (a), the protocol is far too chatty. In (b), =
-the
-> protocol is much less chatty, but forces the checkout to be the very =
-last step,
-> which has negative performance implications on checkouts with many =
-large files.
->=20
-> For instance, checking out several multi-gigabyte files one after the =
-other
-> means that a significant amount of time is lost while the filter has =
-some of the
-> items ready. Instead of checking them out as they become available, =
-Git waits
-> until the very end when they are all available.
->=20
-> I think it would be preferable for the protocol to specify a sort of =
-"done"
-> signal against each path such that Git could check out delayed paths =
-as they
-> become available. If implemented this way, Git could checkout files
-> asynchronously, while the filter continues to do work on the other =
-end.
+> We can either trust filter process to tell us when it finished sending
+> delayed paths, or keep list of paths that are being delayed in Git.
 
-In v1 I implemented a) with the busy-loop problem in mind.=20
+I could implement "get path that is ready from filter" but wouldn't
+that complicate the filter protocol? I think we can use the protocol =
+pretty=20
+much as if with the strategy outlined here:
+=
+http://public-inbox.org/git/F533857D-9B51-44C1-8889-AA0542AD8250@gmail.com=
+/
 
-My thinking was this:
-
-If the filter sees at least one filter request twice then the filter =
-knows that
-Git has already requested all files that require filtering. At that =
-point the
-filter could just block the "delayed" answer to the latest filter =
-request until
-at least one of the previously delayed requests can be fulfilled. Then =
-the filter
-answers "delay" to Git until Git requests the blob that can be =
-fulfilled. This
-process cycles until all requests can be fulfilled. Wouldn't that work?
-
-I think a "done" message by the filter is not easy. Right now the =
-protocol works=20
-in a mode were Git always asks and the filter always answers. I believe =
-changing
-the filter to be able to initiate a "done" message would complicated the =
-protocol.
-
-
-> Additionally, the protocol should specify a sentinel "no more entries" =
-value
-> that could be sent from Git to the filter to signal that there are no =
-more files
-> to checkout. Some filters may implement mechanisms for converting =
-files that
-> require a signal to know when all files have been sent. Specifically, =
-Git LFS
-> (https://git-lfs.github.com) batches files to be transferred together, =
-and needs
-> to know when all files have been announced to truncate and send the =
-last batch,
-> if it is not yet full. I'm sure other filter implementations use a =
-similar
-> mechanism and would benefit from this as well.
-
-I agree. I think the filter already has this info implicitly as =
-explained above
-but an explicit message would be better!
 
 Thanks,
 Lars=
