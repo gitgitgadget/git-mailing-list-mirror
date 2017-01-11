@@ -7,60 +7,57 @@ X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 855811FEB3
-	for <e@80x24.org>; Wed, 11 Jan 2017 09:48:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id ED2011FEB3
+	for <e@80x24.org>; Wed, 11 Jan 2017 09:51:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932290AbdAKJsr (ORCPT <rfc822;e@80x24.org>);
-        Wed, 11 Jan 2017 04:48:47 -0500
-Received: from mail-wj0-f194.google.com ([209.85.210.194]:33127 "EHLO
-        mail-wj0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751808AbdAKJsq (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Jan 2017 04:48:46 -0500
-Received: by mail-wj0-f194.google.com with SMTP id kp2so90040436wjc.0
-        for <git@vger.kernel.org>; Wed, 11 Jan 2017 01:48:45 -0800 (PST)
+        id S1760346AbdAKJvg (ORCPT <rfc822;e@80x24.org>);
+        Wed, 11 Jan 2017 04:51:36 -0500
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:35823 "EHLO
+        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752160AbdAKJvf (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Jan 2017 04:51:35 -0500
+Received: by mail-wm0-f66.google.com with SMTP id l2so35781791wml.2
+        for <git@vger.kernel.org>; Wed, 11 Jan 2017 01:51:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:subject:from:in-reply-to:date:cc
          :content-transfer-encoding:message-id:references:to;
-        bh=cRbL8/2Q6N0rlHgcDe6aXkJQ+9wHFADWE/Yiwr70qUg=;
-        b=ECCAkW+3rvSJoEzspCRX7Elwy1wI5m6LQBdVMUZfN9RPCFcvlEmtTg7M5FHow7Zbl8
-         uLUtCKxFk/X8jJZpMoLl2qov2zbweIcV3P81el3tWShHGZeUFTxLcjerB6JJMIjj37mM
-         86eOezlxqcOdlIExvYVhX6eMPCR11Gbwis5vwp35KaIfAGf4bCKI1K2ieAmvJ48gmrzV
-         LkyG55dm5IZOv7YWFvC6wpRWcFcOgWcxEdyt0rKU7PbXZJ3P1JH4n2r417f+FO3zNQ/G
-         t7Y7CgrT6oHNnOlzrK1wq3uZWYbWempxzi+bVhzcUuJ8XkCeh2jt2NvyzX6Kvb24eWFr
-         8Z2g==
+        bh=UTYtPZZvTdfoNRMWzXFdR8vd+39eMq44zhFP33U1pWI=;
+        b=eVeCYXJ9NHGpJLYV2dXpe0XCnXOZByQS/oljnXwPbHf6HSn7ccSTyHrwkQ0BxnJ9/A
+         ph6WpEqIaQBQIwY2FnNQERzda10Ldsl+IsDljOsWaXCnBHU6R2OFqflqUyk6RL2S7YHt
+         0Z8R21WMoBMm82s8azDZ1S3RzGtk0sDHO71E9V86Fw/V6KsAQrwp/GmovvSk1zVJnsN7
+         6ncOkN0O21GnijlD8OSI8rvvhS/5WJbuANiF65OTWsONuewg+j0tbu6TpFT+q+XsiUul
+         rA+wfpbfkjPH0B9OvPRgZGTcwkypygGwt8p+bx49u3b2b6LrnrX7uAFhiWEl0upHVl8N
+         KRgw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
          :content-transfer-encoding:message-id:references:to;
-        bh=cRbL8/2Q6N0rlHgcDe6aXkJQ+9wHFADWE/Yiwr70qUg=;
-        b=JHwhLhKlbkC0LmZh63tgJ0RBqa2hpKBliQh2NMX9KA+Ismis69QurZMj78dVf0tIuB
-         raY1gpMazh/CJcKerLUqKWTgwVNax6tJFTbd7Us6CJqhsgVj0o0RbkOO3X5xeZC94yyU
-         oxihmuFLjkeKZ3LJO85hAhnn446AYsJReCzUAIy68ygMnGgzP6VFaBSk6L+Y10xLlome
-         FeXZXJgJCZ3LhmJVh8anISZNrSdYlxEZ/S4rmT9f789HZoM7JMmng7LN3FyVuUULWu9R
-         GR8c19MnE3ekWbmRe4WoTQq0lPMElbLPJijZ9DYi2tsyDb6KRQWk4eLxvJDUlvP7hDov
-         rAYg==
-X-Gm-Message-State: AIkVDXI52L/yIfl6RShzUdLi/UOa9WImYNTtRjyBVGKQbJsOpuhAz483IAFCwzphMbGkAg==
-X-Received: by 10.194.108.10 with SMTP id hg10mr5281549wjb.58.1484128124637;
-        Wed, 11 Jan 2017 01:48:44 -0800 (PST)
+        bh=UTYtPZZvTdfoNRMWzXFdR8vd+39eMq44zhFP33U1pWI=;
+        b=B3STS2rPn3MrQarp1hfWSUWCJuE2wJqaiRICEjOSH31ywdsvXVAGiRaEY11s14PCjG
+         atlUmgx2zvMRKnYFip+Vb4zPa4BoI9C9NXo7u65QyZL3VupJir1JtFpixcCxswI+e2Z/
+         /4CwjD272pik4o1pEjbpYFsK7AOCrYWduJOzsCOlJDt48JWsqHKJxXiFk/LvfBBwaOgb
+         LzZQ4c7dyfkKm8BVoT6J/RPXJy7257PU2g7MAml3oH8vpe2vxlIqQpYCuOhIpuPC1/EH
+         kR2032NX9HUDmBG6mIFddBwmzjL8y+47OiGqGZUKiqVF7v7HF1bU2f0/UvwYAs2dCBSw
+         tjcw==
+X-Gm-Message-State: AIkVDXKHPngl5Ust+lQxHr1CEpKnG4VctYmInHZkDlcHx61lMcL6JKpc1Sv+raudj18INw==
+X-Received: by 10.28.203.6 with SMTP id b6mr2368460wmg.2.1484128293561;
+        Wed, 11 Jan 2017 01:51:33 -0800 (PST)
 Received: from slxbook4.fritz.box (p5DDB5866.dip0.t-ipconnect.de. [93.219.88.102])
-        by smtp.gmail.com with ESMTPSA id f76sm8099807wmd.15.2017.01.11.01.48.43
+        by smtp.gmail.com with ESMTPSA id k11sm8067866wmb.18.2017.01.11.01.51.32
         (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 11 Jan 2017 01:48:44 -0800 (PST)
-Content-Type: text/plain; charset=utf-8
+        Wed, 11 Jan 2017 01:51:33 -0800 (PST)
+Content-Type: text/plain; charset=us-ascii
 Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
 Subject: Re: [PATCH v1] convert: add "status=delayed" to filter process protocol
 From:   Lars Schneider <larsxschneider@gmail.com>
-In-Reply-To: <20170108201415.GA3569@tb-raspi>
-Date:   Wed, 11 Jan 2017 10:48:43 +0100
-Cc:     Git mailing list <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>, Eric Wong <e@80x24.org>,
-        =?utf-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>,
-        Taylor Blau <ttaylorr@github.com>
+In-Reply-To: <20170108204517.GA13779@starla>
+Date:   Wed, 11 Jan 2017 10:51:32 +0100
+Cc:     git@vger.kernel.org, gitster@pobox.com, jnareb@gmail.com
 Content-Transfer-Encoding: quoted-printable
-Message-Id: <8267E408-85B2-457E-8B14-5C476343378A@gmail.com>
-References: <20170108191736.47359-1-larsxschneider@gmail.com> <20170108201415.GA3569@tb-raspi>
-To:     =?utf-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
+Message-Id: <AE35779E-5FE3-4F50-A168-C7316A146C09@gmail.com>
+References: <20170108191736.47359-1-larsxschneider@gmail.com> <20170108204517.GA13779@starla>
+To:     Eric Wong <e@80x24.org>
 X-Mailer: Apple Mail (2.3124)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
@@ -68,52 +65,36 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-> On 08 Jan 2017, at 21:14, Torsten B=C3=B6gershausen <tboegi@web.de> =
-wrote:
+> On 08 Jan 2017, at 21:45, Eric Wong <e@80x24.org> wrote:
 >=20
-> On Sun, Jan 08, 2017 at 08:17:36PM +0100, larsxschneider@gmail.com =
-wrote:
->> From: Lars Schneider <larsxschneider@gmail.com>
->>=20
->> Some `clean` / `smudge` filters might require a significant amount of
->> time to process a single blob. During this process the Git checkout
->> operation is blocked and Git needs to wait until the filter is done =
-to
->> continue with the checkout.
->>=20
->> Teach the filter process protocol (introduced in edcc858) to accept =
-the
->> status "delayed" as response to a filter request. Upon this response =
-Git
->> continues with the checkout operation and asks the filter to process =
-the
->> blob again after all other blobs have been processed.
->>=20
->> Git has a multiple code paths that checkout a blob. Support delayed
->> checkouts only in `clone` (in unpack-trees.c) and `checkout` =
-operations.
->>=20
->> Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
->> ---
->>=20
+> larsxschneider@gmail.com wrote:
+>> +++ b/t/t0021/rot13-filter.pl
 >=20
-> Some feeling tells me that it may be better to leave =
-convert_to_working_tree() as it is.
-> And change convert_to_working_tree_internal as suggested:
+>> +$DELAY{'test-delay1.r'} =3D 1;
+>> +$DELAY{'test-delay3.r'} =3D 3;
+>>=20
+>> open my $debug, ">>", "rot13-filter.log" or die "cannot open log =
+file: $!";
+>>=20
+>> @@ -166,6 +176,15 @@ while (1) {
+>> 		packet_txt_write("status=3Dabort");
+>> 		packet_flush();
+>> 	}
+>> +	elsif ( $command eq "smudge" and
+>> +		    exists $DELAY{$pathname} and
+>> +		    $DELAY{$pathname} gt 0 ) {
 >=20
-> int convert_to_working_tree(const char *path, const char *src, size_t =
-len, struct strbuf *dst)
-> {
-> -	return convert_to_working_tree_internal(path, src, len, dst, 0);
-> +	return convert_to_working_tree_internal(path, src, len, dst, =
-NULL, 0);
-> }
+> Use '>' for numeric comparisons.  'gt' is for strings (man perlop)
 
-If I do this then I would have no way to communicate to the caller that =
-the
-processing is delayed. Consequently the caller would not know that an =
-additional
-call is necessary to fetch the result.
+Still learning Perl :-)
 
-Thanks,
-Lars=
+
+> Sidenote, staying <=3D 80 columns for the rest of the changes is
+> strongly preferred, some of us need giant fonts.  I think what
+> Torsten said about introducing a new *_internal function can
+> also help with that.
+
+OK!=20
+
+Thank you,
+Lars
