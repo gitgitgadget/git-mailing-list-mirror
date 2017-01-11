@@ -6,78 +6,103 @@ X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4181B205C9
-	for <e@80x24.org>; Wed, 11 Jan 2017 14:01:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B3624205C9
+	for <e@80x24.org>; Wed, 11 Jan 2017 14:02:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1759715AbdAKOBo (ORCPT <rfc822;e@80x24.org>);
-        Wed, 11 Jan 2017 09:01:44 -0500
-Received: from cloud.peff.net ([104.130.231.41]:37978 "EHLO cloud.peff.net"
+        id S967102AbdAKOCI (ORCPT <rfc822;e@80x24.org>);
+        Wed, 11 Jan 2017 09:02:08 -0500
+Received: from cloud.peff.net ([104.130.231.41]:37982 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752550AbdAKOBn (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Jan 2017 09:01:43 -0500
-Received: (qmail 805 invoked by uid 109); 11 Jan 2017 14:01:42 -0000
+        id S967099AbdAKOCH (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Jan 2017 09:02:07 -0500
+Received: (qmail 811 invoked by uid 109); 11 Jan 2017 14:02:07 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 11 Jan 2017 14:01:42 +0000
-Received: (qmail 22062 invoked by uid 111); 11 Jan 2017 14:02:35 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 11 Jan 2017 14:02:07 +0000
+Received: (qmail 22091 invoked by uid 111); 11 Jan 2017 14:02:59 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 11 Jan 2017 09:02:35 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 11 Jan 2017 09:01:39 -0500
-Date:   Wed, 11 Jan 2017 09:01:39 -0500
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 11 Jan 2017 09:02:59 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 11 Jan 2017 09:02:03 -0500
+Date:   Wed, 11 Jan 2017 09:02:03 -0500
 From:   Jeff King <peff@peff.net>
 To:     git@vger.kernel.org
-Subject: [PATCH 0/2] sanitizing error message contents
-Message-ID: <20170111140138.5p647xuqpqrej63b@sigill.intra.peff.net>
+Subject: [PATCH 1/2] Revert "vreportf: avoid intermediate buffer"
+Message-ID: <20170111140203.obhd2t6yorszex73@sigill.intra.peff.net>
+References: <20170111140138.5p647xuqpqrej63b@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+In-Reply-To: <20170111140138.5p647xuqpqrej63b@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When adding a warning() call in 50d341374 (http: make redirects more
-obvious, 2016-12-06), somebody brought up that evil servers can redirect
-you to something like:
+This reverts commit f4c3edc0b156362a92bf9de4f0ec794e90a757fc.
 
-  https://evil.example.com/some/repo?unused=\rwarning:+rainbows+and_unicorns_ahead
+The purpose of that commit was to let us write errors of
+arbitrary length to stderr by skipping the intermediate
+buffer and sending our varargs straight to fprintf. That
+works, but it comes with a downside: we do not get access to
+the varargs before they are sent to stderr.
 
-(where "\r" is a literal CR), and instead of seeing:
+On balance, it's not a good tradeoff. Error messages larger
+than our 4K buffer are quite uncommon, and we've lost the
+ability to make any modifications to the output (e.g., to
+remove non-printable characters).
 
-  warning: redirecting to https://evil.example.com/...
+The only way to have both would be one of:
 
-you just get:
+  1. Write into a dynamic buffer. But this is a bad idea for
+     a low-level function that may be called when malloc()
+     has failed.
 
-  warning: rainbows and unicorns ahead
+  2. Do our own printf-format varargs parsing. This is too
+     complex to be worth the trouble.
 
-or whatever innocuous looking line they prefer (probably just ANSI
-"clear to beginning of line" would be even more effective).
+Let's just revert that change and go back to a fixed buffer.
 
-Since it's hard to figure out which error messages could potentially
-contain malicious contents, and since spewing control characters to the
-terminal is generally bad anyway, this series sanitizes at the lowest
-level.
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ usage.c | 15 +++------------
+ 1 file changed, 3 insertions(+), 12 deletions(-)
 
-Note that this doesn't cover "remote:" lines coming over the sideband.
-Those are already covered for "\r", as we have to parse it to handle
-printing "remote:" consistently. But you can play tricks like putting:
+diff --git a/usage.c b/usage.c
+index 17f52c1b5..b1cbe6799 100644
+--- a/usage.c
++++ b/usage.c
+@@ -7,21 +7,13 @@
+ #include "cache.h"
+ 
+ static FILE *error_handle;
+-static int tweaked_error_buffering;
+ 
+ void vreportf(const char *prefix, const char *err, va_list params)
+ {
++	char msg[4096];
+ 	FILE *fh = error_handle ? error_handle : stderr;
+-
+-	fflush(fh);
+-	if (!tweaked_error_buffering) {
+-		setvbuf(fh, NULL, _IOLBF, 0);
+-		tweaked_error_buffering = 1;
+-	}
+-
+-	fputs(prefix, fh);
+-	vfprintf(fh, err, params);
+-	fputc('\n', fh);
++	vsnprintf(msg, sizeof(msg), err, params);
++	fprintf(fh, "%s%s\n", prefix, msg);
+ }
+ 
+ static NORETURN void usage_builtin(const char *err, va_list params)
+@@ -93,7 +85,6 @@ void set_die_is_recursing_routine(int (*routine)(void))
+ void set_error_handle(FILE *fh)
+ {
+ 	error_handle = fh;
+-	tweaked_error_buffering = 0;
+ }
+ 
+ void NORETURN usagef(const char *err, ...)
+-- 
+2.11.0.627.gfa6151259
 
-  printf '\0331K\033[0Efatal: this looks local\n'
-
-into a pre-receive hook. I'm not sure if we would want to do more
-sanitizing there. The goal of this series is not so much that a remote
-can't send funny strings that may look local, but that they can't
-prevent local strings from being displayed. OTOH, I suspect clever use
-of ANSI codes (moving the cursor, clearing lines, etc) could get you
-pretty far.
-
-I'd be hesitant to disallow control codes entirely, though, as I suspect
-some servers do send colors over the sideband. So I punted on that here,
-but I think this is at least an incremental improvement.
-
-  [1/2]: Revert "vreportf: avoid intermediate buffer"
-  [2/2]: vreport: sanitize ASCII control chars
-
- usage.c | 17 +++++++----------
- 1 file changed, 7 insertions(+), 10 deletions(-)
-
--Peff
