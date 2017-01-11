@@ -2,176 +2,121 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C26F31F4F8
-	for <e@80x24.org>; Wed, 11 Jan 2017 22:12:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 68F8A20798
+	for <e@80x24.org>; Wed, 11 Jan 2017 23:28:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751866AbdAKWMP (ORCPT <rfc822;e@80x24.org>);
-        Wed, 11 Jan 2017 17:12:15 -0500
-Received: from mail-io0-f176.google.com ([209.85.223.176]:34795 "EHLO
-        mail-io0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750901AbdAKWMO (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Jan 2017 17:12:14 -0500
-Received: by mail-io0-f176.google.com with SMTP id l66so4613836ioi.1
-        for <git@vger.kernel.org>; Wed, 11 Jan 2017 14:12:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=JPYwGHe/u6OU8306WoDzwSHgCIPbFB6jHxuFWZfndIY=;
-        b=o5MO+a5/7pj5C3LjsDvW55kQNl/VcLiyBG6vraUZ5lTt6fLFZaMkCLC0y783e64HLz
-         n7+SZQnUR1wzdEzvvn8mrfBRDwBrEZNv+8WE9WMnNYqhddrW3qwm4H9rnxFGXOnIC7xK
-         vGUqgAq1b06jOpk5OcrXqaryq1jYsfSPJZbLvSuMvbfCXfhEF5ZZABHnoZXztMkYAK7N
-         F5BwxoRdi5LnF0BnsgszFIJUDjt4APpn/cyW1t0UKtZf2KIZYvUYCmVjShaV6nn+dQZ2
-         Ov0mO+TeDutikXuLNiWMZJDM3OEDVgK9Q4a1V355NB7TfeHCPGHSHicXyr9n4ouTyatM
-         sZ+w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=JPYwGHe/u6OU8306WoDzwSHgCIPbFB6jHxuFWZfndIY=;
-        b=UqhA7kUdLHKkPFJ5pOASeuTmQrh2gRg7sRX5q8wa0uqK/SqISvvZ7aZq5MrO9d2BHP
-         xLfDZ3dZjfxARtYaxoE+NXKlapjW+7Mf+It9LAYR9+0Ohi11cVyFkyDpi1zffUIPo1N/
-         v0TG17eWyx/b2WSajx2tiYPkFUo7wuWNNtMgv6szm6gp4y6RNIKN8MGNR9CbDdq7+vsO
-         ny3u7UiBkdlS7UrfXbhCt2gJDdSeYK0/Dw+aNwhm8tAoc/l9DpUtOdet7ShV/R8+JtcY
-         vB5uSBMRo6XJavO0IaKgyVWltK3PuFMKweL0qpxHbVXvXhbExFn+HKWcuPhwRSF5fy2v
-         EXnQ==
-X-Gm-Message-State: AIkVDXLPH0ud2zmeNZHabg4TpSY4UdD6L+rxAdk0Dq59BRhJBzUMPRzsAciGQMqIfGpVy2lUCtRIVIhPdTsek2WJ
-X-Received: by 10.107.3.160 with SMTP id e32mr10377783ioi.52.1484172733204;
- Wed, 11 Jan 2017 14:12:13 -0800 (PST)
-MIME-Version: 1.0
-Received: by 10.79.39.19 with HTTP; Wed, 11 Jan 2017 14:12:12 -0800 (PST)
-In-Reply-To: <xmqq37gpnuyi.fsf@gitster.mtv.corp.google.com>
-References: <20170110014542.19352-1-sbeller@google.com> <20170110014542.19352-5-sbeller@google.com>
- <xmqq37gpnuyi.fsf@gitster.mtv.corp.google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Wed, 11 Jan 2017 14:12:12 -0800
-Message-ID: <CAGZ79kaHDnVLQr8WLoaD5KKs7EqeW=KbkptF=iHpU5t054Xcdw@mail.gmail.com>
-Subject: Re: [PATCH 4/4] unpack-trees: support super-prefix option
-To:     Junio C Hamano <gitster@pobox.com>
+        id S1757368AbdAKX21 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 11 Jan 2017 18:28:27 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:56699 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1755342AbdAKX20 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Jan 2017 18:28:26 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 424A75F7F2;
+        Wed, 11 Jan 2017 18:28:20 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=YW/Whpa5K92YUcjlyiGL5w0JzYw=; b=NOy0gs
+        QKPrS8iy7smQU47+KMUJxO2pFU9lT3eWfchuBi0F7EXH5m4slYXyizKfkXPbsd1L
+        xkjPbot7sHUECbuOW4jd/qiX6DXPdn3nfrU7qxVjFv5A4dpKMuSkL+qfufK7tnhG
+        aF0pbRGFmEs3JT+Hnp7a4mYzrA2FGEaFhNEQk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=EZOvoPkB+8FLJeKVF7H9CDSPnNqDhAfh
+        hBlP+wnRpklCj8KTw/z1k9vNnoVc3npT7Zt7pKfc3GMcOgCx6xCHN9jDa8bmL3py
+        VsrKgdReaiwbFW6+SsDjJSb7fWmTuf847NQ1EC7EL963+WW2J5IUnycwj72O1c8Z
+        TXN+yMiJxeE=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 3A6575F7EF;
+        Wed, 11 Jan 2017 18:28:20 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A4FC25F7EC;
+        Wed, 11 Jan 2017 18:28:19 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Stefan Beller <sbeller@google.com>
 Cc:     Brandon Williams <bmwill@google.com>,
         David Turner <novalis@novalis.org>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+        "git\@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: [PATCH 4/4] unpack-trees: support super-prefix option
+References: <20170110014542.19352-1-sbeller@google.com>
+        <20170110014542.19352-5-sbeller@google.com>
+        <xmqq37gpnuyi.fsf@gitster.mtv.corp.google.com>
+        <CAGZ79kaHDnVLQr8WLoaD5KKs7EqeW=KbkptF=iHpU5t054Xcdw@mail.gmail.com>
+Date:   Wed, 11 Jan 2017 15:28:18 -0800
+In-Reply-To: <CAGZ79kaHDnVLQr8WLoaD5KKs7EqeW=KbkptF=iHpU5t054Xcdw@mail.gmail.com>
+        (Stefan Beller's message of "Wed, 11 Jan 2017 14:12:12 -0800")
+Message-ID: <xmqqh955mb1p.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.90 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: A2D27BBC-D855-11E6-A2D8-FE3F13518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jan 11, 2017 at 1:32 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Stefan Beller <sbeller@google.com> writes:
+Stefan Beller <sbeller@google.com> writes:
+
+>> Preparing the expected output "expect" outside test_expect_success
+>> block is also old-school.  Move it inside the new test?
 >
->> Add support for the super-prefix option for commands that unpack trees.
->> For testing purposes enable it in read-tree, which has no other path
->> related output.
->
-> "path related output"?  I am not sure I understand this.
+> I looked into that. What is our current stance on using single/double quotes?
 
-Well, s/path related output/output of paths/.
+Using dq around executable part, i.e.
 
-> When read-tree reads N trees, or unpack_trees() is asked to "merge"
-> N trees, how does --super-prefix supposed to interact with the paths
-> in these trees?  Does the prefix added to paths in all trees?
+	test_expect_success title "
+		echo \"'foo'\"
+	"
 
-Internally the super-prefix is ignored. Only the (input and) output
-is using that super prefix for messages.
+is a million-times more grave sin even if the test initially does
+not refer to any variable in its body.  Somebody will eventually
+need to add a line that refers to a variable and either forgets to
+quote \$ in front or properly quotes it.  The former makes the
+variable interpolated while the arguments to the test_expect_success
+is prepared (which is a bug) and the latter makes the result quite
+ugly, like so:
 
-It was introduced for grepping recursively into submodules, i.e.
+	test_expect_success title "
+		sq=\' var=foo &&
+		echo \"\${sq}\$value\${sq}\"
+	"
 
-invoke as
+Enclosing the body always in sq-pair does mean something ugly like
+this from the beginning once you need to use sq inside:
 
-    git grep --recurse-submodules \
-      -e path/inside/submodule/and/further/down
-    # internally it invokes:
-    git -C .. --super-prefix .. grep ..
-    # which operates "just normal" except for the
-    # input parsing and output
+	test_expect_success title '
+		sq='\'' &&
+		echo "${sq}foo${sq}"
+	'
 
-The use case for this patch is working tree related things, i.e.
-    git checkout --recurse-submodules
-    # internally when recursing we call "git read-tree -u", but
-    # reporting could be:
-    Your local changes to the following files would be overwritten by checkout:
-      path/inside/submodule/file.txt
+or
+
+	test_expect_success title '
+		echo "'\''foo'\''"
+	'
+
+but the ugliness is localized to places where single quote is
+absolutely needed, and '\'' is something eyes soon get used to as an
+idiom [*1*].  It does not affect every reference of variables like
+enclosing with dq does.
 
 
->
-> Did you mean that read-tree (and unpack_trees() in general) is a
-> whole-tree operation and there is no path related input (i.e.
-> pathspec limiting), but if another command that started in the
-> superproject is running us in its submodule, it wants us to prefix
-> the path to the submodule when we report errors?
+[Footnote]
 
-Yes. I tried to explain it better above, but you got it here.
+*1* That "idiom"-ness is the reason why the last example above is
+    not written like this:
 
->
-> If that is what is going on, I think it makes sense, but it may be
-> asking too much from the readers to guess that from "Add support for
-> the super-prefix option".
+	test_expect_success title '
+		echo "'\'foo\''"
+	'
 
-I need to enhance the commit message by a lot then.
-
->
->> --- a/t/t1001-read-tree-m-2way.sh
->> +++ b/t/t1001-read-tree-m-2way.sh
->> @@ -363,6 +363,15 @@ test_expect_success 'a/b (untracked) vs a, plus c/d case test.' '
->>       test -f a/b
->>  '
->>
->> +cat <<-EOF >expect &&
->> +     error: Updating 'fictional/a' would lose untracked files in it
->> +EOF
->> +
->> +test_expect_success 'read-tree supports the super-prefix' '
->> +     test_must_fail git --super-prefix fictional/ read-tree -u -m "$treeH" "$treeM" 2>actual &&
->> +     test_cmp expect actual
->> +'
->> +
->
-> Preparing the expected output "expect" outside test_expect_success
-> block is also old-school.  Move it inside the new test?
-
-I looked into that. What is our current stance on using single/double quotes?
-Most tests use single quotes for the test title as well as the test
-instructions,
-such that double quotes can be used naturally in there. But single quotes
-cannot be used even escaped, such that we need to do a thing like
-
-sq="'"
-
-test_expect_success 'test title' '
-    cat <<-EOF >expect &&
-        error for ${sq}path${sq}
-    EOF
-    test instructions go here
-'
-
-though that is not used as often as I would think as
-grep \${sq} yields t1507 and t3005.
-
->
-> Hmph, as a reader of the code, I do not even want to wonder how
-> expensive get_super_prefix() is.  If the executable part of the
-> above were written like this, it would have been easier to
-> understand:
->
->         if (super_prefix_len < 0) {
->                 if (!get_super_prefix())
->                         super_prefix_len = 0;
->                 else {
->                         int i;
->                         ... prepare buf[] and set super_prefix_len ...;
->                 }
->         }
->
->         if (!super_prefix_len)
->                 return path;
->
->         ... use buf[] to do the prefixing and return it ...
->
-
-good point. I'll fix that.
+    even though the sq pair surrounding "foo" is not technically
+    necessary.  It lets us think of the string as almost always is
+    inside sq context, with the single exception that we step
+    outside sq context and append a sq by saying bs-sq (\').
