@@ -6,27 +6,27 @@ X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B3624205C9
-	for <e@80x24.org>; Wed, 11 Jan 2017 14:02:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EAA6E205C9
+	for <e@80x24.org>; Wed, 11 Jan 2017 14:02:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S967102AbdAKOCI (ORCPT <rfc822;e@80x24.org>);
-        Wed, 11 Jan 2017 09:02:08 -0500
-Received: from cloud.peff.net ([104.130.231.41]:37982 "EHLO cloud.peff.net"
+        id S967105AbdAKOC2 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 11 Jan 2017 09:02:28 -0500
+Received: from cloud.peff.net ([104.130.231.41]:37985 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S967099AbdAKOCH (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Jan 2017 09:02:07 -0500
-Received: (qmail 811 invoked by uid 109); 11 Jan 2017 14:02:07 -0000
+        id S967099AbdAKOC2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Jan 2017 09:02:28 -0500
+Received: (qmail 863 invoked by uid 109); 11 Jan 2017 14:02:27 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 11 Jan 2017 14:02:07 +0000
-Received: (qmail 22091 invoked by uid 111); 11 Jan 2017 14:02:59 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 11 Jan 2017 14:02:27 +0000
+Received: (qmail 22107 invoked by uid 111); 11 Jan 2017 14:03:19 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 11 Jan 2017 09:02:59 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 11 Jan 2017 09:02:03 -0500
-Date:   Wed, 11 Jan 2017 09:02:03 -0500
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 11 Jan 2017 09:03:19 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 11 Jan 2017 09:02:23 -0500
+Date:   Wed, 11 Jan 2017 09:02:23 -0500
 From:   Jeff King <peff@peff.net>
 To:     git@vger.kernel.org
-Subject: [PATCH 1/2] Revert "vreportf: avoid intermediate buffer"
-Message-ID: <20170111140203.obhd2t6yorszex73@sigill.intra.peff.net>
+Subject: [PATCH 2/2] vreport: sanitize ASCII control chars
+Message-ID: <20170111140223.7irjqrtz77kaa5r7@sigill.intra.peff.net>
 References: <20170111140138.5p647xuqpqrej63b@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -37,72 +37,59 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This reverts commit f4c3edc0b156362a92bf9de4f0ec794e90a757fc.
+Our error() and die() calls may report messages with
+arbitrary data (e.g., filenames or even data from a remote
+server). Let's make it harder to cause confusion with
+mischievous filenames. E.g., try:
 
-The purpose of that commit was to let us write errors of
-arbitrary length to stderr by skipping the intermediate
-buffer and sending our varargs straight to fprintf. That
-works, but it comes with a downside: we do not get access to
-the varargs before they are sent to stderr.
+  git rev-parse "$(printf "\rfatal: this argument is too sneaky")" --
 
-On balance, it's not a good tradeoff. Error messages larger
-than our 4K buffer are quite uncommon, and we've lost the
-ability to make any modifications to the output (e.g., to
-remove non-printable characters).
+or
 
-The only way to have both would be one of:
+  git rev-parse "$(printf "\x1b[5mblinky\x1b[0m")" --
 
-  1. Write into a dynamic buffer. But this is a bad idea for
-     a low-level function that may be called when malloc()
-     has failed.
+Let's block all ASCII control characters, with the exception
+of TAB and LF. We use both in our own messages (and we are
+necessarily sanitizing the complete output of snprintf here,
+as we do not have access to the individual varargs). And TAB
+and LF are unlikely to cause confusion (you could put
+"\nfatal: sneaky\n" in your filename, but it would at least
+not _cover up_ the message leading to it, unlike "\r").
 
-  2. Do our own printf-format varargs parsing. This is too
-     complex to be worth the trouble.
+We'll replace the characters with a "?", which is similar to
+how "ls" behaves. It might be nice to do something less
+lossy, like converting them to "\x" hex codes. But replacing
+with a single character makes it easy to do in-place and
+without worrying about length limitations. This feature
+should kick in rarely enough that the "?" marks are almost
+never seen.
 
-Let's just revert that change and go back to a fixed buffer.
+We'll leave high-bit characters as-is, as they are likely to
+be UTF-8 (though there may be some Unicode mischief you
+could cause, which may require further patches).
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- usage.c | 15 +++------------
- 1 file changed, 3 insertions(+), 12 deletions(-)
+ usage.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
 diff --git a/usage.c b/usage.c
-index 17f52c1b5..b1cbe6799 100644
+index b1cbe6799..ad6d2910f 100644
 --- a/usage.c
 +++ b/usage.c
-@@ -7,21 +7,13 @@
- #include "cache.h"
- 
- static FILE *error_handle;
--static int tweaked_error_buffering;
- 
- void vreportf(const char *prefix, const char *err, va_list params)
+@@ -12,7 +12,13 @@ void vreportf(const char *prefix, const char *err, va_list params)
  {
-+	char msg[4096];
+ 	char msg[4096];
  	FILE *fh = error_handle ? error_handle : stderr;
--
--	fflush(fh);
--	if (!tweaked_error_buffering) {
--		setvbuf(fh, NULL, _IOLBF, 0);
--		tweaked_error_buffering = 1;
--	}
--
--	fputs(prefix, fh);
--	vfprintf(fh, err, params);
--	fputc('\n', fh);
-+	vsnprintf(msg, sizeof(msg), err, params);
-+	fprintf(fh, "%s%s\n", prefix, msg);
++	char *p;
++
+ 	vsnprintf(msg, sizeof(msg), err, params);
++	for (p = msg; *p; p++) {
++		if (iscntrl(*p) && *p != '\t' && *p != '\n')
++			*p = '?';
++	}
+ 	fprintf(fh, "%s%s\n", prefix, msg);
  }
  
- static NORETURN void usage_builtin(const char *err, va_list params)
-@@ -93,7 +85,6 @@ void set_die_is_recursing_routine(int (*routine)(void))
- void set_error_handle(FILE *fh)
- {
- 	error_handle = fh;
--	tweaked_error_buffering = 0;
- }
- 
- void NORETURN usagef(const char *err, ...)
 -- 
 2.11.0.627.gfa6151259
-
