@@ -2,90 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 734CD205C9
-	for <e@80x24.org>; Wed, 11 Jan 2017 18:15:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 23558205C9
+	for <e@80x24.org>; Wed, 11 Jan 2017 18:22:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1031171AbdAKSPj (ORCPT <rfc822;e@80x24.org>);
-        Wed, 11 Jan 2017 13:15:39 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:56614 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S967807AbdAKSPa (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Jan 2017 13:15:30 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id C77145F22F;
-        Wed, 11 Jan 2017 13:15:28 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=dReQabCRfIb3UmuX2eX2iyuWMnU=; b=cAS34Z
-        L0z1yfnGNJ/PMeLbVoDZZrt9VVCdW9Zxpwwwo4oqDDA6R+gsxymaBXKGP6ZFcFAH
-        B3b4ry4UEHAzCjsyI014yEZIvDIhB0S2QVtLd+6YAOBZdcriM9lLVQU0EWHwqMP9
-        f+nr4f8cCDIyaV2ik2NbU/wv09cTwpV5Vm1x4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=K2mzw/Fta5eL1zvE3/nhcO05cyFmZWLD
-        hhe674iZ5zvONHGbNGMz/vXYq0bR2Ynw6DQltK2sof76IwlNwtvnxozNpgmi6RtY
-        IUFW+iVnyyCuq7CnPuu7IeT8yd1Hi4kymkZTv0jo2TefC8M5IHdtIWur50tjJiqg
-        wIaANa1vXA0=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id C07555F22E;
-        Wed, 11 Jan 2017 13:15:28 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        id S939412AbdAKSVq (ORCPT <rfc822;e@80x24.org>);
+        Wed, 11 Jan 2017 13:21:46 -0500
+Received: from sub3.mail.dreamhost.com ([69.163.253.7]:37691 "EHLO
+        homiemail-a101.g.dreamhost.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S938665AbdAKSVp (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 11 Jan 2017 13:21:45 -0500
+Received: from homiemail-a101.g.dreamhost.com (localhost [127.0.0.1])
+        by homiemail-a101.g.dreamhost.com (Postfix) with ESMTP id 4CE35117E07C;
+        Wed, 11 Jan 2017 10:21:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=novalis.org; h=message-id
+        :subject:from:to:cc:date:in-reply-to:references:content-type
+        :mime-version:content-transfer-encoding; s=novalis.org; bh=N52Bq
+        CZ0qOHDNHaygJJ0rjOBedg=; b=caWzAv0hw9k7o/GONO03QTuKQ0V6AqF9ycBaO
+        SFCUkG/m9iUxmMQY5idW1O/FkdsSK/oQxYwP2UUMIymMeGq3pT3XXktJbhUlaPhW
+        Foy9CTWDaIUQQgugyxQF2Ky72u1M846709RyaU9arq94BSZoKgCQQNv79+60tlg4
+        9qZlOY=
+Received: from [172.31.11.72] (gzac10-107-1.nje.twosigma.com [208.77.214.155])
+        (using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 30C425F22D;
-        Wed, 11 Jan 2017 13:15:28 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Richard Hansen <hansenr@google.com>
+        (Authenticated sender: novalis@novalis.org)
+        by homiemail-a101.g.dreamhost.com (Postfix) with ESMTPSA id DE1BB117E078;
+        Wed, 11 Jan 2017 10:21:43 -0800 (PST)
+Message-ID: <1484158902.11251.3.camel@frank>
+Subject: Re: git cat-file on a submodule
+From:   David Turner <novalis@novalis.org>
+To:     Jeff King <peff@peff.net>
 Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 2/2] diff: document the pattern format for diff.orderFile
-References: <20170110004031.57985-1-hansenr@google.com>
-        <20170110004031.57985-3-hansenr@google.com>
-        <xmqq8tqismdx.fsf@gitster.mtv.corp.google.com>
-        <17d48ccd-fd19-3922-8ee8-af6558d22632@google.com>
-        <xmqq60lmpb4j.fsf@gitster.mtv.corp.google.com>
-        <21b416ae-8bf6-4f82-25d3-e51a574e7746@google.com>
-Date:   Wed, 11 Jan 2017 10:15:27 -0800
-In-Reply-To: <21b416ae-8bf6-4f82-25d3-e51a574e7746@google.com> (Richard
-        Hansen's message of "Wed, 11 Jan 2017 12:24:57 -0500")
-Message-ID: <xmqqwpe1o43k.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.90 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: EE26FBE6-D829-11E6-A9DE-FE3F13518317-77302942!pb-smtp1.pobox.com
+Date:   Wed, 11 Jan 2017 13:21:42 -0500
+In-Reply-To: <20170111125330.3skwxdleoooacts6@sigill.intra.peff.net>
+References: <1484093500.17967.6.camel@frank>
+         <20170111125330.3skwxdleoooacts6@sigill.intra.peff.net>
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.10.4-0ubuntu2 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Richard Hansen <hansenr@google.com> writes:
+On Wed, 2017-01-11 at 07:53 -0500, Jeff King wrote:
+> On Tue, Jan 10, 2017 at 07:11:40PM -0500, David Turner wrote:
+> 
+> > Why does git cat-file -t $sha:foo, where foo is a submodule, not work?
+> 
+> Because "cat-file" is about inspecting items in the object database, and
+> typically the submodule commit is not present in the superproject's
+> database. So we cannot know its type. You can infer what it _should_ be
+> from the surrounding tree, but you cannot actually do the object lookup.
+> 
+> Likewise, "git cat-file -t $sha1:Makefile" is not just telling you that
+> we found a 100644 entry in the tree, so we expect a blob. It's resolving
+> to a sha1, and then checking the type of that sha1 in the database. It
+> _should_ be a blob, but if it isn't, then cat-file is the tool that
+> should tell you that it is not.
+> 
+> > git rev-parse $sha:foo works.
+> 
+> Right. Because that command is about resolving a name to a sha1, which
+> we can do even without the object.
+> 
+> > By "why", I mean "would anyone complain if I fixed it?"  FWIW, I think
+> > -p should just return the submodule's sha.
+> 
+> I'm not sure if I'm complaining or not. I can't immediately think of
+> something that would be horribly broken. But it really feels like you
+> are using the wrong tool, and patching the tool to handle this case will
+> probably lead to weird cognitive dissonance down the road.
 
-> On 2017-01-10 21:46, Junio C Hamano wrote:
->> Richard Hansen <hansenr@google.com> writes:
->>
->>> I was looking at the code to see how the two file formats differed and
->>> noticed that match_order() doesn't set the WM_PATHNAME flag when it
->>> calls wildmatch().  That's unintentional (a bug), right?
->>
->> It has been that way from day one IIRC even before we introduced
->> wildmatch()---IOW it may be intentional that the current code that
->> uses wildmatch() does not use WM_PATHNAME.
->
-> You are the original author (af5323e027 2005-05-30).  Do you remember
-> what your intention was?
+OK, this makes sense to me.  I tried cat-file because that is the tool I
+was familiar with, but that doesn't mean that it was the right thing to
+do.
 
-Yes.  
+> Maybe it would help to describe your use case more fully. If what you
+> care about is the presumed type based on the surrounding tree, then
+> maybe:
+> 
+>   git --literal-pathspecs ls-tree $sha -- foo
 
-Back then we didn't even have wildmatch(), and used fnmatch()
-instead, so forcing FNM_PATHNAME would have meant that people
-wouldn't be able to say "foo*bar" to match "foo/other/bar"; with
-wildmatch, "foo**bar" lets you defeat WM_PATHNAME so having
-WM_PATHNAME always in effect is less of an issue, but with
-fnmatch(), having FNM_PATHNAME always in effect has a lot of
-downside.
+That (minus --literal-pathspecs, which does not exist in the version of
+git I happen to be using) is fine for my purposes.  Thanks.
 
-I'd expect that orderfile people have today will be broken and
-require tweaking if you switched WM_PATHNAME on.
