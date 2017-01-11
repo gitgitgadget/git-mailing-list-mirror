@@ -6,77 +6,110 @@ X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2173C205C9
-	for <e@80x24.org>; Wed, 11 Jan 2017 20:42:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3C6A8205C9
+	for <e@80x24.org>; Wed, 11 Jan 2017 20:48:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755272AbdAKUmg (ORCPT <rfc822;e@80x24.org>);
-        Wed, 11 Jan 2017 15:42:36 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:60923 "EHLO
+        id S1758702AbdAKUrJ (ORCPT <rfc822;e@80x24.org>);
+        Wed, 11 Jan 2017 15:47:09 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:60041 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S932755AbdAKUlf (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Jan 2017 15:41:35 -0500
+        with ESMTP id S1754552AbdAKUpf (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Jan 2017 15:45:35 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 6E6BE5EAE9;
-        Wed, 11 Jan 2017 15:41:34 -0500 (EST)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id BD5385F4B0;
+        Wed, 11 Jan 2017 15:45:33 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=g2C3frTldeck
-        AbvlzQ2C547Ospw=; b=vRY0/kcLr/FakFssnmDnMXGlbNDQw1bkChXUx4KfCJNP
-        kMmmq4gnOwa7jTdmnQQzvoY1MuNiFRHyHVIkem91PIe2wSy1pdiGNvkX/fpMNoXZ
-        IZ7WNUHFri+gDviY17DNMpaV2otz82sWLtFKQK7HIqU39XYUULlvCMNYGfMR03g=
+        :content-type; s=sasl; bh=osLPjMyaJxTkmPwTUoNmj/p3oDU=; b=VuLsQ8
+        9G2SjSSpzEwiIetYPvGN3zEMv6qPE+P5mRmhxzL1dPjuP0CmN1F6sDEvdqFg0qYn
+        pB8uVi9xOHQ/uQyf9iYU7jNvToRo/QjYXCOl1CSclpt06lHKOoAZFmRiCGYeoQ0W
+        cc6JD+WKPvd51mizUN73EjyH0a1iVOQzwrPwk=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=oLq97b
-        CSwrJvXYt+MI0AOuCrADkGTgKcpEf4MHsDwTpPbtsXP1f8Q4PX/aPCw/pfxlNtLf
-        7auurvW5Gtgazd1+PIAaSa2R1rGGMkN/46Bxrdois7uE6TFrsTRnXkCAze7+80ad
-        Uhwxe6eyHwk57ZiKCNJH0bURyWpaxFCgz9YJA=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 626595EAE8;
-        Wed, 11 Jan 2017 15:41:34 -0500 (EST)
+        :content-type; q=dns; s=sasl; b=uea4utWcHQL2mTB/IDMFYu1NaDBjaYHQ
+        rLTm3pNXw7fAZ1RFds0A4b7/5SSl3ZpNaL4wbVKlMfcQ4/0jJbltRS/V9DmBNz1t
+        TTBJngBFWrgiNwTH7KCQzQP7ht3yIdblKyX2h43yxN+tLIm6GTrW0XhE1xNjunLf
+        SKPSoiW1DVk=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id ABFBF5F4AC;
+        Wed, 11 Jan 2017 15:45:33 -0500 (EST)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id CFF255EAE7;
-        Wed, 11 Jan 2017 15:41:33 -0500 (EST)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 024C85F4A2;
+        Wed, 11 Jan 2017 15:45:33 -0500 (EST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jakub =?utf-8?Q?Nar=C4=99bski?= <jnareb@gmail.com>
-Cc:     Lars Schneider <larsxschneider@gmail.com>,
-        Git mailing list <git@vger.kernel.org>,
-        Eric Wong <e@80x24.org>, Taylor Blau <ttaylorr@github.com>
+To:     Lars Schneider <larsxschneider@gmail.com>
+Cc:     Git mailing list <git@vger.kernel.org>, Eric Wong <e@80x24.org>,
+        Jakub =?utf-8?Q?Nar=C4=99bski?= <jnareb@gmail.com>,
+        Torsten =?utf-8?Q?B=C3=B6g?= =?utf-8?Q?ershausen?= 
+        <tboegi@web.de>, Taylor Blau <ttaylorr@github.com>
 Subject: Re: [PATCH v1] convert: add "status=delayed" to filter process protocol
 References: <20170108191736.47359-1-larsxschneider@gmail.com>
         <xmqqa8b115ll.fsf@gitster.mtv.corp.google.com>
-        <ec8078ef-8ff2-d26f-ef73-5ef612737eee@gmail.com>
-        <9A1064BB-DA72-44DB-A875-39E007708A69@gmail.com>
-        <17fa31a5-8689-2766-952b-704f433a5b3a@gmail.com>
-Date:   Wed, 11 Jan 2017 12:41:32 -0800
-In-Reply-To: <17fa31a5-8689-2766-952b-704f433a5b3a@gmail.com> ("Jakub
-        =?utf-8?Q?Nar=C4=99bski=22's?= message of "Wed, 11 Jan 2017 15:53:27
- +0100")
-Message-ID: <xmqqo9zdnxc3.fsf@gitster.mtv.corp.google.com>
+        <3165D057-7486-4ACB-8336-E63F49182CBE@gmail.com>
+Date:   Wed, 11 Jan 2017 12:45:31 -0800
+In-Reply-To: <3165D057-7486-4ACB-8336-E63F49182CBE@gmail.com> (Lars
+        Schneider's message of "Wed, 11 Jan 2017 10:43:55 +0100")
+Message-ID: <xmqqk2a1nx5g.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.90 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 56E31C3C-D83E-11E6-9219-A7617B1B28F4-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: E5793FB2-D83E-11E6-9DE2-FE3F13518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jakub Nar=C4=99bski <jnareb@gmail.com> writes:
+Lars Schneider <larsxschneider@gmail.com> writes:
 
->> Yes, this problem happens every day with filters that perform network
->> requests (e.g. GitLFS).=20
+>> Hmm, I would have expected that the basic flow would become
+>> 
+>> 	for each paths to be processed:
+>> 		convert-to-worktree to buf
+>> 		if not delayed:
+>> 			do the caller's thing to use buf
+>> 		else:
+>> 			remember path
+>> 
+>> 	for each delayed paths:
+>> 		ensure filter process finished processing for path
+>> 		fetch the thing to buf from the process
+>> 		do the caller's thing to use buf
+>> 
+>> and that would make quite a lot of sense.  However, what is actually
+>> implemented is a bit disappointing from that point of view.  While
+>> its first part is the same as above, the latter part instead does:
+>> 
+>> 	for each delayed paths:
+>> 		checkout the path
+>> ...
 >
-> Do I understand it correctly that the expected performance improvement
-> thanks to this feature is possible only if there is some amount of
-> parallelism and concurrency in the filter?  That is, filter can be send=
-ing
-> one blob to Git while processing other one, or filter can be fetching b=
-lobs
-> in parallel.
+> I am not sure I can follow you here.
+> ...
+> I implemented the "checkout_delayed_entries" function in v1 because
+> it solved the problem with minimal changes in the existing code. Our previous 
+> discussion made me think that this is the preferred way:
+>
+>      I do not think we want to see such a rewrite all over the
+>      codepaths.  It might be OK to add such a "these entries are known
+>      to be delayed" list in struct checkout so that the above becomes
+>      more like this:
+>
+>        for (i = 0; i < active_nr; i++)
+>           checkout_entry(active_cache[i], state, NULL);
+>      + checkout_entry_finish(state);
+>
+>      That is, addition of a single "some of the checkout_entry() calls
+>      done so far might have been lazy, and I'll give them a chance to
+>      clean up" might be palatable.  Anything more than that on the
+>      caller side is not.
 
-The first-object latency may not be helped, but by allowing
-"delayed", the latency to retrieve the second and subsequent objects
-can be hidden, I would think.
+But that is apples-and-oranges comparision, no?  The old discussion
+assumes there is no "caller's thing to use buf" other than "checkout
+to the working tree", which is why the function its main loop calls
+is "checkout_entry()" and the caller does not see the contents of
+the filtered blob at all.  In that context, checkout_entry_finish()
+that equally does not let the caller see the contents of the
+filtered blob is quite appropriate.
+
