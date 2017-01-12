@@ -2,78 +2,111 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.3 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 18D791FEB3
-	for <e@80x24.org>; Thu, 12 Jan 2017 23:18:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 39CB21FEB3
+	for <e@80x24.org>; Thu, 12 Jan 2017 23:32:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750803AbdALXSX (ORCPT <rfc822;e@80x24.org>);
-        Thu, 12 Jan 2017 18:18:23 -0500
-Received: from avasout06.plus.net ([212.159.14.18]:53694 "EHLO
-        avasout06.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750791AbdALXSW (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 Jan 2017 18:18:22 -0500
-Received: from [10.0.2.15] ([143.159.212.40])
-        by avasout06 with smtp
-        id XbJJ1u0030srQBz01bJLBL; Thu, 12 Jan 2017 23:18:20 +0000
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.2 cv=QoEu5R6d c=1 sm=1 tr=0
- a=8Z0saNXTz8GoXi/9Q5ysMA==:117 a=8Z0saNXTz8GoXi/9Q5ysMA==:17
- a=IkcTkHD0fZMA:10 a=EBOSESyhAAAA:8 a=091NnSid0Q1V57gPdzsA:9 a=QEXdDO2ut3YA:10
- a=yJM6EZoI5SlJf8ks9Ge_:22
-X-AUTH: ramsayjones@:2500
-To:     Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        GIT Mailing-list <git@vger.kernel.org>
-From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: [PATCH] worktree: fix an 'using plain integer as NULL pointer'
- warning
-Message-ID: <7b28631d-77c1-b8a0-c671-307b9bef33ad@ramsayjones.plus.com>
-Date:   Thu, 12 Jan 2017 23:18:18 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.5.1
+        id S1750845AbdALXcu (ORCPT <rfc822;e@80x24.org>);
+        Thu, 12 Jan 2017 18:32:50 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:52821 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1750827AbdALXct (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 Jan 2017 18:32:49 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 9411D5F5FE;
+        Thu, 12 Jan 2017 18:32:48 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=geeiWCO14T4Q
+        aMTuC7AVTEMhTwY=; b=nHk2lgkJOsazdkTVDaTeGIA09fTWrkMvsqv8O/8xUBM2
+        1TshwQjEv3abU0xD7BcauUaTCI8iOXlMQ5eegNef7f4ExVd4wTYicnXWz4c/y0ug
+        qx0TOyajzHGJnRTsGGw7w1uj8tYe1AbGqxGEzb09BnPLzPJZTHXdIvfwroF0Dw0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=IbCp6n
+        dApnDUKpyQQJwWxbZOKGJQulTTkoQzvMXqpLwFybYSolk/BwlYmbAwfHu153QBZO
+        2ZlJPhidPK7hcqF3uN7y3flF9g+xhfS17ZPhWUeO5p3R6pPLiehxzX71Wtfsu2+N
+        3deC6naA/7U9wqUIThLlM76xlBNCAFE/U9Uvw=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 8B9AF5F5FD;
+        Thu, 12 Jan 2017 18:32:48 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id E7DA85F5FB;
+        Thu, 12 Jan 2017 18:32:47 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Manuel Ullmann <ullman.alias@posteo.de>
+Cc:     git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>
+Subject: Re: Bug report: Documentation error in git-bisect man description
+References: <87r347swz1.fsf@sonnengebleicht.fritz.box>
+Date:   Thu, 12 Jan 2017 15:32:46 -0800
+In-Reply-To: <87r347swz1.fsf@sonnengebleicht.fritz.box> (Manuel Ullmann's
+        message of "Fri, 13 Jan 2017 00:02:42 +0100")
+Message-ID: <xmqqd1frj1lt.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.90 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
+X-Pobox-Relay-ID: 6D240330-D91F-11E6-83EF-FE3F13518317-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Manuel Ullmann <ullman.alias@posteo.de> writes:
 
-Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
----
+> Hi,
+>
+> there is a mistake in the git-bisect description.
+> The second paragraph of it says =E2=80=98the terms "old" and "new" can =
+be used
+> in place of "good" and "bad"=E2=80=99. So from a logical point of view =
+the
+> description part stating the usage syntax should be:
+>
+> git bisect (bad|good) [<rev>]
+> git bisect (old|new) [<rev>...]
+>
+> instead of
+>
+> git bisect (bad|new) [<rev>]
+> git bisect (good|old) [<rev>...]
+>
+> Checked man page version of 2.11.0, but it is in my local 2.10.2 git as=
+ well.
 
-Hi Duy,
+Hmmm, I tend to agree, modulo a minor fix.
 
-If you need to re-roll your 'nd/worktree-move' branch, could you
-please squash this into the relevant patch. (commit 62985f75c1
-"worktree move: refuse to move worktrees with submodules", 08-01-2017).
+If the description were in a context inside a paragraph like this:
 
-[BTW, this is a sparse warning, just in case you were wondering!]
+	When you want to tell 'git bisect' that a <rev> belongs to
+	the newer half of the history, you say
 
-Thanks!
+		git bisect (bad|new) [<rev>]
 
-ATB,
-Ramsay Jones
+	On the other hand, when you want to tell 'git bisect' that a
+	<rev> belongs to the older half of the history, you can say
 
- builtin/worktree.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+		git bisect (good|old) [<rev>]
 
-diff --git a/builtin/worktree.c b/builtin/worktree.c
-index 339c622e2..a1c91f154 100644
---- a/builtin/worktree.c
-+++ b/builtin/worktree.c
-@@ -528,7 +528,7 @@ static int unlock_worktree(int ac, const char **av, const char *prefix)
- 
- static void validate_no_submodules(const struct worktree *wt)
- {
--	struct index_state istate = {0};
-+	struct index_state istate = { NULL };
- 	int i, found_submodules = 0;
- 
- 	if (read_index_from(&istate, worktree_git_path(wt, "index")) > 0) {
--- 
-2.11.0
+then the pairing we see in the current text makes quite a lot of
+sense.
+
+But in the early part of the description section, listing the
+information that logically belongs to the synopsis section, I think
+the current one is misleading.  You are painting commits with two
+colors, and if you are from the "older vs newer" school, you say
+either 'old' or 'new' as the names of these two colors, and do not
+use 'bad' or 'good'.  A line with "git bisect (old|new) [<rev>]" in
+the list would make more sense.
+
+Similarly, if you are from the "still good vs already bad" school,
+you would either say 'good' or 'bad' so you would want to see a line
+with "git bisect (good|bad) [<rev>]" in the list (not "bad|good" in
+that order, but opposite).
+
+Christian, am I talking nonsense?
