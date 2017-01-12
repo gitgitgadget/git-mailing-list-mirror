@@ -6,52 +6,52 @@ X-Spam-Status: No, score=-6.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C6BA51FEB3
-	for <e@80x24.org>; Thu, 12 Jan 2017 23:56:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BF3F81FEB3
+	for <e@80x24.org>; Fri, 13 Jan 2017 00:00:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750979AbdALXz7 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 12 Jan 2017 18:55:59 -0500
-Received: from mail-pf0-f178.google.com ([209.85.192.178]:34103 "EHLO
-        mail-pf0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750842AbdALXz0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 Jan 2017 18:55:26 -0500
-Received: by mail-pf0-f178.google.com with SMTP id 127so20410499pfg.1
-        for <git@vger.kernel.org>; Thu, 12 Jan 2017 15:54:45 -0800 (PST)
+        id S1750868AbdAMAA0 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 12 Jan 2017 19:00:26 -0500
+Received: from mail-pf0-f171.google.com ([209.85.192.171]:34362 "EHLO
+        mail-pf0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750782AbdAMAAZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 Jan 2017 19:00:25 -0500
+Received: by mail-pf0-f171.google.com with SMTP id 127so20478567pfg.1
+        for <git@vger.kernel.org>; Thu, 12 Jan 2017 16:00:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=uUCiDL5StgPmNqKHa3lEP79CiBcQCKb74ARCwIl3u2U=;
-        b=uGP9zEStEslS8jKTda/BWplpnIRA4bJ0+Ooo6liBE53mi4HOQR4GJy9np7Lbhjk9jC
-         Y9v1EtFK7VnP55gvqqb6vslEf9bcVhIq1rVkCumWnXk+OlNwZZRkGTxRr1ipurqrC9VV
-         BNny1hwSBCd31TerAByrnx43umrGJ+2M0/6uYDwtiQ8fqoWTranvHqafh5bIk6Ngb+4r
-         EVbUjCJp2b4LR/tV2jfxBSK0NAOHzac+WsgPJTTCK9RQ6StUV9R8O/8EPG6Hg+NOg4EW
-         0YYCoEwLRL2oy0PQhU+kaZ7meWbnTVLdJ65e3fEL4uXn7l3kh+w6OxkpJIDf2IZ3wO/I
-         6oHA==
+        bh=Lg5/Ro4MdXwsfzbxu5uIvBCAfj5FGOQVk1rNdRhtmxs=;
+        b=BVtiVQrm0dADcNFvYVatk03woV9Nb9XoRDB7QluIPxetqyu4nNHg65bzbgxepl60cO
+         NrBriWblgSgVgquDekOgvHbQ+dICS4xoqh72hzqw36vCCPGyf/4D4E//Tl+eaRmFeJcc
+         yDxfjDkO15l2h8VQE0i2H53pj9HSpfk7Ak4PJfYwzZ8PdhanpmgQi2lou8/XabOp12Uo
+         36pYQ7amzsnhzpG+ukcXrbFP2d0VMxz5o4gE9qcHRmT2vZAdepoAvkQUH8WlghvqiQOd
+         9yhQ2uRWdiIjFb14ihdtJuzNVezJ6j2GORhKiciWzCKX5TFun+cfN8QN2EdJxACiQqyM
+         1IiQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=uUCiDL5StgPmNqKHa3lEP79CiBcQCKb74ARCwIl3u2U=;
-        b=b02+W46FMrSXepkKvLgrmpWC9uXg6tVtp6nIEXGwzJw30bOXXkoMgzHDuKPWC1A5Jk
-         i1kJyazcPJQt50FvWKswpP9j77ZiPpI23xXCWYeUMgKhK9HhbZFJAOwGdQwQa27/DxCe
-         cXgbkXW5vlc/rqA+j45jhN3yyjU66LCCE31fQpSDZo8dIq4/kUh+b/wiJacENwYG+qVg
-         1BI/f1qMlMd2H/d16PTWfkfmPi4PlDcYLGz5utyLu+MAN0A4S1mCX8LOq9ZTQxlj7u5z
-         I8h/jglok8NQiWlc5yoqGhQd5e5/bbDeLr830Q5iNkpNhtkPW3YodSrs+fdJA7+Qx6IQ
-         fmHQ==
-X-Gm-Message-State: AIkVDXJjqIaVWxAglSvzFdE5xhuMGqWYt6m5XNojw4BCSnmncwwb+886XoPGUtXZaUFjMNcf
-X-Received: by 10.98.160.140 with SMTP id p12mr19224649pfl.97.1484265284535;
-        Thu, 12 Jan 2017 15:54:44 -0800 (PST)
+        bh=Lg5/Ro4MdXwsfzbxu5uIvBCAfj5FGOQVk1rNdRhtmxs=;
+        b=bDcV5wA5QK//1faOosiMztOiwmC/G3WRUVWemDgp13U3iicCPRqsVMjp4H86d5ICkO
+         qIYubsAe6a8VPoB3E+QRreh/ymtA3ZFMsI4M2gpcF4VAA6ao1Qj/+msJ+B4KUihFw83o
+         MEgZ5h+ilYpW23GHW271EMm0t1wf6hpEGyq9al5w4rxRFgM2MtngsnEYYt0ekbxk9/oY
+         PpH8q6G//GwGT/mBnMXGrM8SSzqGJ3ER7ebwjsijziUWvJe4IBaUxEC90Fc2KqR/Hqy2
+         DUrsm7SwPjOH+hptyDc8nJhxYbN05Xgh+vYO6ZD+SYkoeUxEcSFtWwS3yTvAOkWNw6oo
+         dXLw==
+X-Gm-Message-State: AIkVDXIrtHcPDmFpKBUB80h+8lNRlsvUIMLrfOjdP9MldoyJChGAq7WyfYRMpw1h8NefDfUl
+X-Received: by 10.84.231.203 with SMTP id g11mr23647924pln.165.1484265262523;
+        Thu, 12 Jan 2017 15:54:22 -0800 (PST)
 Received: from roshar.mtv.corp.google.com ([100.96.238.26])
-        by smtp.gmail.com with ESMTPSA id e6sm24312192pgf.4.2017.01.12.15.54.42
+        by smtp.gmail.com with ESMTPSA id e6sm24312192pgf.4.2017.01.12.15.54.20
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 12 Jan 2017 15:54:43 -0800 (PST)
+        Thu, 12 Jan 2017 15:54:21 -0800 (PST)
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org
-Cc:     Brandon Williams <bmwill@google.com>, gitster@pobox.com,
-        pclouds@gmail.com, sbeller@google.com
-Subject: [PATCH 26/27] attr: push the bare repo check into read_attr()
-Date:   Thu, 12 Jan 2017 15:53:53 -0800
-Message-Id: <20170112235354.153403-27-bmwill@google.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, pclouds@gmail.com,
+        sbeller@google.com, Brandon Williams <bmwill@google.com>
+Subject: [PATCH 13/27] attr.c: outline the future plans by heavily commenting
+Date:   Thu, 12 Jan 2017 15:53:40 -0800
+Message-Id: <20170112235354.153403-14-bmwill@google.com>
 X-Mailer: git-send-email 2.11.0.390.gc69c2f50cf-goog
 In-Reply-To: <20170112235354.153403-1-bmwill@google.com>
 References: <20170112235354.153403-1-bmwill@google.com>
@@ -60,78 +60,97 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Push the bare repository check into the 'read_attr()' function.  This
-avoids needing to have extra logic which creates an empty stack frame
-when inside a bare repo as a similar bit of logic already exists in the
-'read_attr()' function.
+From: Junio C Hamano <gitster@pobox.com>
 
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Stefan Beller <sbeller@google.com>
 Signed-off-by: Brandon Williams <bmwill@google.com>
 ---
- attr.c | 40 ++++++++++++++++++++--------------------
- 1 file changed, 20 insertions(+), 20 deletions(-)
+ attr.c | 40 +++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 39 insertions(+), 1 deletion(-)
 
 diff --git a/attr.c b/attr.c
-index 78562592b..cbb07d25d 100644
+index 8026d68bd..50e5ee393 100644
 --- a/attr.c
 +++ b/attr.c
-@@ -591,25 +591,29 @@ static struct attr_stack *read_attr_from_index(const char *path, int macro_ok)
+@@ -30,6 +30,11 @@ static const char git_attr__unknown[] = "(builtin)unknown";
+ #define DEBUG_ATTR 0
+ #endif
  
- static struct attr_stack *read_attr(const char *path, int macro_ok)
- {
--	struct attr_stack *res;
-+	struct attr_stack *res = NULL;
- 
--	if (direction == GIT_ATTR_CHECKOUT) {
-+	if (direction == GIT_ATTR_INDEX) {
- 		res = read_attr_from_index(path, macro_ok);
--		if (!res)
--			res = read_attr_from_file(path, macro_ok);
--	}
--	else if (direction == GIT_ATTR_CHECKIN) {
--		res = read_attr_from_file(path, macro_ok);
--		if (!res)
--			/*
--			 * There is no checked out .gitattributes file there, but
--			 * we might have it in the index.  We allow operation in a
--			 * sparsely checked out work tree, so read from it.
--			 */
-+	} else if (!is_bare_repository()) {
-+		if (direction == GIT_ATTR_CHECKOUT) {
- 			res = read_attr_from_index(path, macro_ok);
-+			if (!res)
-+				res = read_attr_from_file(path, macro_ok);
-+		}
-+		else if (direction == GIT_ATTR_CHECKIN) {
-+			res = read_attr_from_file(path, macro_ok);
-+			if (!res)
-+				/*
-+				 * There is no checked out .gitattributes file
-+				 * there, but we might have it in the index.
-+				 * We allow operation in a sparsely checked out
-+				 * work tree, so read from it.
-+				 */
-+				res = read_attr_from_index(path, macro_ok);
-+		}
- 	}
--	else
--		res = read_attr_from_index(path, macro_ok);
++/*
++ * NEEDSWORK: the global dictionary of the interned attributes
++ * must stay a singleton even after we become thread-ready.
++ * Access to these must be surrounded with mutex when it happens.
++ */
+ struct git_attr {
+ 	struct git_attr *next;
+ 	unsigned h;
+@@ -39,10 +44,19 @@ struct git_attr {
+ 	char name[FLEX_ARRAY];
+ };
+ static int attr_nr;
++static struct git_attr *(git_attr_hash[HASHSIZE]);
 +
- 	if (!res)
- 		res = xcalloc(1, sizeof(*res));
- 	return res;
-@@ -796,11 +800,7 @@ static const struct attr_stack *core_attr_stack(void)
- 		}
++/*
++ * NEEDSWORK: maybe-real, maybe-macro are not property of
++ * an attribute, as it depends on what .gitattributes are
++ * read.  Once we introduce per git_attr_check attr_stack
++ * and check_all_attr, the optimization based on them will
++ * become unnecessary and can go away.  So is this variable.
++ */
+ static int cannot_trust_maybe_real;
  
- 		/* root directory */
--		if (!is_bare_repository() || direction == GIT_ATTR_INDEX) {
--			e = read_attr(GITATTRIBUTES_FILE, 1);
--		} else {
--			e = xcalloc(1, sizeof(struct attr_stack));
--		}
-+		e = read_attr(GITATTRIBUTES_FILE, 1);
- 		key = "";
- 		push_stack(&core, e, key, strlen(key));
- 	}
++/* NEEDSWORK: This will become per git_attr_check */
+ static struct git_attr_check *check_all_attr;
+-static struct git_attr *(git_attr_hash[HASHSIZE]);
+ 
+ const char *git_attr_name(const struct git_attr *attr)
+ {
+@@ -102,6 +116,11 @@ static struct git_attr *git_attr_internal(const char *name, int len)
+ 	a->maybe_real = 0;
+ 	git_attr_hash[pos] = a;
+ 
++	/*
++	 * NEEDSWORK: per git_attr_check check_all_attr
++	 * will be initialized a lot more lazily, not
++	 * like this, and not here.
++	 */
+ 	REALLOC_ARRAY(check_all_attr, attr_nr);
+ 	check_all_attr[a->attr_nr].attr = a;
+ 	check_all_attr[a->attr_nr].value = ATTR__UNKNOWN;
+@@ -318,6 +337,7 @@ static struct match_attr *parse_attr_line(const char *line, const char *src,
+  * .gitignore file and info/excludes file as a fallback.
+  */
+ 
++/* NEEDSWORK: This will become per git_attr_check */
+ static struct attr_stack {
+ 	struct attr_stack *prev;
+ 	char *origin;
+@@ -382,6 +402,24 @@ static struct attr_stack *read_attr_from_array(const char **list)
+ 	return res;
+ }
+ 
++/*
++ * NEEDSWORK: these two are tricky.  The callers assume there is a
++ * single, system-wide global state "where we read attributes from?"
++ * and when the state is flipped by calling git_attr_set_direction(),
++ * attr_stack is discarded so that subsequent attr_check will lazily
++ * read from the right place.  And they do not know or care who called
++ * by them uses the attribute subsystem, hence have no knowledge of
++ * existing git_attr_check instances or future ones that will be
++ * created).
++ *
++ * Probably we need a thread_local that holds these two variables,
++ * and a list of git_attr_check instances (which need to be maintained
++ * by hooking into git_attr_check_alloc(), git_attr_check_initl(), and
++ * git_attr_check_clear().  Then git_attr_set_direction() updates the
++ * fields in that thread_local for these two variables, iterate over
++ * all the active git_attr_check instances and discard the attr_stack
++ * they hold.  Yuck, but it sounds doable.
++ */
+ static enum git_attr_direction direction;
+ static struct index_state *use_index;
+ 
 -- 
 2.11.0.390.gc69c2f50cf-goog
 
