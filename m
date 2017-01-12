@@ -7,47 +7,47 @@ X-Spam-Status: No, score=-6.4 required=3.0 tests=BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4141820756
-	for <e@80x24.org>; Thu, 12 Jan 2017 09:43:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 807D520756
+	for <e@80x24.org>; Thu, 12 Jan 2017 09:54:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751094AbdALJm5 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 12 Jan 2017 04:42:57 -0500
-Received: from mout.gmx.net ([212.227.17.21]:62297 "EHLO mout.gmx.net"
+        id S1751116AbdALJxy (ORCPT <rfc822;e@80x24.org>);
+        Thu, 12 Jan 2017 04:53:54 -0500
+Received: from mout.gmx.net ([212.227.15.19]:65299 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751005AbdALJm4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 Jan 2017 04:42:56 -0500
-Received: from virtualbox ([213.133.108.164]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0ML6XF-1cRKn12zTN-000ITJ; Thu, 12
- Jan 2017 10:42:46 +0100
-Date:   Thu, 12 Jan 2017 10:42:44 +0100 (CET)
+        id S1750727AbdALJxx (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 Jan 2017 04:53:53 -0500
+Received: from virtualbox ([213.133.108.164]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0LjZhg-1d39eA0Ts0-00bZ67; Thu, 12
+ Jan 2017 10:47:10 +0100
+Date:   Thu, 12 Jan 2017 10:47:08 +0100 (CET)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     Jacob Keller <jacob.e.keller@intel.com>
 cc:     git@vger.kernel.org, Jacob Keller <jacob.keller@gmail.com>
-Subject: Re: [PATCH 5/5] describe: teach describe negative pattern matches
-In-Reply-To: <20170112001721.2534-6-jacob.e.keller@intel.com>
-Message-ID: <alpine.DEB.2.20.1701121041450.3469@virtualbox>
-References: <20170112001721.2534-1-jacob.e.keller@intel.com> <20170112001721.2534-6-jacob.e.keller@intel.com>
+Subject: Re: [PATCH 1/5] doc: add documentation for OPT_STRING_LIST
+In-Reply-To: <20170112001721.2534-2-jacob.e.keller@intel.com>
+Message-ID: <alpine.DEB.2.20.1701121044120.3469@virtualbox>
+References: <20170112001721.2534-1-jacob.e.keller@intel.com> <20170112001721.2534-2-jacob.e.keller@intel.com>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:7I+B13h00YesVnTaM4snADvz6Yt5tTpIEmcXseOzJeddJJzfJSZ
- sGqtt62ljh9ueWW799Nz7Py+es0xJ9Vb4Wa1Es6Oae04fHvdU3aS5/cFZtuGyNYzBNQZRok
- XuTeM2WmrAvrwfuiznLP5+1pGhkPH+qgromvrFoNpjhhCXi8Y/xxXk9zVnxyTqYR1X8Wgm/
- BwY1cn4tOXbLDsD73CrWA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:0eKrLMoCA4w=:70FXYXpik1ShVQq3MwrJf7
- lmTiVQtH1Lcvt1km9XTrYR+AZq09BYiZKsWou+pXrnvfI6JEEjGRLuGMD4rUS3tnVEd/RbjHS
- /GwK0XBzLXjAWdahQOGxwe0QLllZmnG5a7okWcTkp6K2L66gx4HpO1RK6XCpnDnwoqM7w1Ha6
- 52Yi6vTs0o//Kx+1sJqdcpQ00I74OkBsZufgbURzWkn0BT4sHRuYDI0h4EtNbd5Q347AhUJnU
- /63bXG0RNPmsX8yV/Ho3A/pnNxWqtBXCOBLgU0toJZy7SeERciFe/w0sdZAsuc4f9GfzZ04VI
- tKX3g/8zKFhq5rVbbS4JwIN+3YL613fN6ExfwytHMMYgLOgH4Pj0jncxP8giYPYk9dxzHln7+
- 6g4xqgpoHNN91BXuxNhcbPQ0KUNcc2ENE+hltkOncBhX3+ENGtVwl2yJ/tcjR/gxUCUhPeDNT
- uCyow5kH+dgEistU3NE+eSqltzN3td+QtiDfuDpYtNqc6VXCMvkhucHrgaPaaaN5E0D7hKCVT
- 2MAv5HngBO1zLH1o0m5/HfijdfI70H6L5wibIHa9JQzqvdv5trjB8YUgXaDWSQypz1/7HFJsi
- qQoSFhQkTkOPD1OakrPcmBKd2nfW0UY5bi0nZ7h2IqUd0/zN2CIgxP9hZHiRYPHPspOf5jCYm
- a+i4dy7S2XoYSdlYhWeCwvWg/F2uDWlRPw1mZpiT7hVjh3mp1p5Mkf1wn7o+dT9Np6bkuvpMk
- zbwBGJpCgQzBof/GNzwBC/kt/Hy21bx7MQ5MnHJXLoLcLHF3ornZy3RngvzA9oFXTzertQ8eq
- GUziGO+rjEzSCWaWwl1CcyINrAepA==
+X-Provags-ID: V03:K0:37O1RNLiriZLmiIB+CVubxSuW7wCW9FkzzsnZW1wlhA/xjYiajV
+ kOWM+O0qFrmZu3IFKHoYQL4capvkMeZk3mACzV9T1z607/HJ7znJTAlZNjcAo+iRupI98v6
+ RxEMKKHenNZ7t69I45f50Wg6LrjV6O87kEN1NxnW13w9DaGMOYcM0HX2HytrPtjx9XBo61P
+ 7rCRL8+yBfOCzGnOpjPfA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:kV1FJiVAUQ0=:UaUScylnQ6oaWnsijnEndp
+ Jkw7byNBVaYTkBAci8Cn7shQGpFxQ32gkXXQA3LFGhfH2rIYqUx7RgG5ZKAQwlVglmZR8bD6n
+ g8g8bEFnjBVHE/RVx2gB1ykthxutZ7SBbO3jpqYNseAGykpvcIOyjVCN9YUUwzQ0W8vtUgQSF
+ rv7ntLAlN7veke8UCXpp4nseimx4wkGgMjM5llLZmWp+3uhSmvlZTZ1avYY/QDkBJ5DlALHGz
+ yGHYZxQZ22ahifBS5QnYm+TKDsI4lNX4sxf3erjcKpAkUxIL/B1ax6yPZWlLGM52Xm+mDbRpQ
+ G2QDhZYLXUP8zSULtaHBea+yntHPez6R+j513HVm6gLHkhH37ESCJ9l+kqmMWh4n8xGBjhJ8f
+ fZurB3Xoz6pmGNwpl4q2m9ERVid4JpgYZeEyilqJv68BDNYXa23SRgSRtwBRPb1We0u+H9u0C
+ cXY3ScCYUcxHTCYRnFfIZe7M9ELs8KVbyPmiRUf2dvEzkdm48luvf+d+ChhSPgYjP9geChWFu
+ ai2sDTCDCmXV15xA+9+AEsd/DX/2Krrj/rp+4Q6dlOW28DqSFMhYgOWFd0a0Z+0GL4YjTkcgc
+ lT9gIgGM58TxORIgkqqT3j/1CiKFGXVoqHJZu8xLS1zJRQp/t6bgyaLNj6/XkkyIV115sxK7U
+ t6GJ5MAKdWdLCKGUzCEeJLlRKoukM4rXoFjbnIjsr5B+LOTsNE5OasM3KIHl8Xmlle/0iYwko
+ 15BcAyeqPhtm9eVI31RTynehk+iezSxgIscTO4Q8/s5j3oxFZ9rc5S8RP48XQPbfzTbZ78FFO
+ r2O90SBGklnPwYdQwJ4NmjWlXK7gQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -57,15 +57,27 @@ Hi Jake,
 
 On Wed, 11 Jan 2017, Jacob Keller wrote:
 
-> From: Jacob Keller <jacob.keller@gmail.com>
-> 
-> Teach git-describe the `--discard` option which will allow specifying
-> a glob pattern of tags to ignore.
+> diff --git a/Documentation/technical/api-parse-options.txt b/Documentation/technical/api-parse-options.txt
+> index 27bd701c0d68..15e876e4c804 100644
+> --- a/Documentation/technical/api-parse-options.txt
+> +++ b/Documentation/technical/api-parse-options.txt
+> @@ -168,6 +168,11 @@ There are some macros to easily define options:
+>  	Introduce an option with string argument.
+>  	The string argument is put into `str_var`.
+>  
+> +`OPT_STRING_LIST(short, long, &list, arg_str, description)`::
+> +	Introduce an option with a string argument. Repeated invocations
+> +	accumulate into a list of strings. Reset and clear the list with
+> +	`--no-option`.
 
-IMHO "discard" is the wrong word, it almost sounds as if the matching tags
-would be *deleted*.
+One suggestions: as the list parameter is not type-safe (apart from
+checking that it can be cast to a `void *`), it would be good to mention
+in the documentation that `list` must be of type `struct string_list`.
 
-Maybe `--exclude` or `--unmatch` instead?
+I was about to suggest that `--no-option` may be misleading, as the
+command-line option is not really called `--option` in almost all cases,
+but I see that the rest of that document uses that convention to refer to
+the negated option already...
 
 Ciao,
 Dscho
