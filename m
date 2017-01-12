@@ -6,52 +6,52 @@ X-Spam-Status: No, score=-6.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A924E1FEB3
-	for <e@80x24.org>; Thu, 12 Jan 2017 23:55:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4C9171FEB3
+	for <e@80x24.org>; Thu, 12 Jan 2017 23:55:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750927AbdALXzh (ORCPT <rfc822;e@80x24.org>);
-        Thu, 12 Jan 2017 18:55:37 -0500
-Received: from mail-pf0-f180.google.com ([209.85.192.180]:34079 "EHLO
-        mail-pf0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750829AbdALXz0 (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1750914AbdALXzf (ORCPT <rfc822;e@80x24.org>);
+        Thu, 12 Jan 2017 18:55:35 -0500
+Received: from mail-pf0-f174.google.com ([209.85.192.174]:35901 "EHLO
+        mail-pf0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750859AbdALXz0 (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 12 Jan 2017 18:55:26 -0500
-Received: by mail-pf0-f180.google.com with SMTP id 127so20409248pfg.1
-        for <git@vger.kernel.org>; Thu, 12 Jan 2017 15:54:38 -0800 (PST)
+Received: by mail-pf0-f174.google.com with SMTP id 189so20633204pfu.3
+        for <git@vger.kernel.org>; Thu, 12 Jan 2017 15:54:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=rmch+5V7IAGHRBf02hGLjqKepDyZOQSa2vYSGnFZTjw=;
-        b=LZUFTCM/956xx7EgGqOWCUTvkpNZh6BH22mVEDB2MvIBp4KuTw0Siyx1DOrkxBs4DI
-         HJte0kZCpmrqkzjMoqyot798rKW2vJq591UVe6+/dd+4dqKN9k7Jutcw/3cwidVJh1lW
-         OIFWA8bn9bLZ9mAPvmHfJl8a23sXXBCW0KF1iq+crP9mugAi1kGtuLivy42UDYJHq4wH
-         4YLjK4/Os20iTAh8sCI1jBsqqglywjB/6OLXKbNP7ZJ1X49ZlUIWJMKq4Qjv/EhSLCgR
-         Hxkrmsk8KtdBA2P8NFQss9K4FQXBcRt4KYEy1YcHM/92G1sCQvz720MR+0diIO2tsDMn
-         VCHw==
+        bh=6VrxKHHJ7VzXC8aYPBoB7vnm5CojA6TXlQB24l78q6g=;
+        b=Ebiu1ZNlhWdUkaNrhzbWRRPo6glURbNHmzLK4ipBaphGaj2OHnySO5jrgwvnUA57h4
+         qRG89eiz6p+O5JxFCxzsHNEhAxOJliGB+Ul4dyHXBQJJLFNEhP1jtB5IWkOq91KQnrgf
+         lVe/+SRHydd3TxfkXXCLcir9E8Sm/Mxz9vnAXzUbr3Faj1C0h3pYv8PQWwTRaWp3UuNO
+         8rzyXMEqVVWpQt/1Q/d0k8I2STDwu+ZoMwCD2hGWAxppLe+IRFlv5AnG7GyAOS9qgRPB
+         NXpb/VtqXoue6wE9QpYNnlXJjVtbt/L6sHWpTAHIym5ryOxTA+bWQTkagWe8AZUJ41BD
+         HTBQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=rmch+5V7IAGHRBf02hGLjqKepDyZOQSa2vYSGnFZTjw=;
-        b=aVkjAliwNXNVyw4d1nbXTv5W6SBLmso8zB7EFuWgOsNvQCg8cLPWpYcmQMct/Z2To8
-         NgRMBRPAZgOIvbVV1EkLQUHZWZHmHl5g1nfxDTt9glA/hQGz3FvMqYqd6KclOGkT4Qyx
-         V1YkTsD99hhmqgH+LYp3ohrtIHP5xljmaUtoY8cBX1QMBzxemM8Dw2V7tF2f/60TcPIM
-         WkQTwP9bcSIl+kJjbUpIlRAnCz9+/2KYc+sTFmOUXXrJIb2N9BygMOBRYI9R2ErH1jy3
-         yIEnvsx8ejtz8wdRIrSfsexsN+cErMoCnL2JcMz8PmLpWXacVQZHibK9Jpwn13TRJcc8
-         lP1w==
-X-Gm-Message-State: AIkVDXIp/DL+uzJ05G3QRsnjR/15mB+37fjCd2KBVT6zrn3GgPJ8aaXposlnCe7X33EFIk2B
-X-Received: by 10.84.209.204 with SMTP id y70mr25414537plh.180.1484265278010;
-        Thu, 12 Jan 2017 15:54:38 -0800 (PST)
+        bh=6VrxKHHJ7VzXC8aYPBoB7vnm5CojA6TXlQB24l78q6g=;
+        b=avrFJXJe4w7N7UxiTrF9LCjmsiJ9U6HUIJErJA45s3OrsazZpW94Qt5Wg9xW3hWlfi
+         5wQvToqC5oTJrvtKehmjL4+wKdOVI3oiqa5dj0L7PQPpmXgNqI63jWC295KPMl9U1wlK
+         g8Dovz8UZmEW0gNujhvUotiQRM9lPP8zjxNBDdg6JZCN7Sa+wSfdrWXBRiur2fFXJ6ST
+         rWwlDgmnNwpjd7tll/1QKqMgcj+wLSg0c0x7sYe4bYKRQPuk4UWt/wF6mel5uilBDhfL
+         hGT5A0Bffy1WBuTQJlXQv7vIv1RpaQWsaa7FxVVO1i08ialZD3LiWCeMbNro3Hmwl2I9
+         GfpA==
+X-Gm-Message-State: AIkVDXIqGeLOa7n/J8py0pL2kiQ0wnJVC2PwF1taCAFmm6ES5zUMQjioSAWEK90XR6DiOhTC
+X-Received: by 10.98.211.220 with SMTP id z89mr19257994pfk.3.1484265281178;
+        Thu, 12 Jan 2017 15:54:41 -0800 (PST)
 Received: from roshar.mtv.corp.google.com ([100.96.238.26])
-        by smtp.gmail.com with ESMTPSA id e6sm24312192pgf.4.2017.01.12.15.54.36
+        by smtp.gmail.com with ESMTPSA id e6sm24312192pgf.4.2017.01.12.15.54.38
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 12 Jan 2017 15:54:36 -0800 (PST)
+        Thu, 12 Jan 2017 15:54:38 -0800 (PST)
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org
 Cc:     Brandon Williams <bmwill@google.com>, gitster@pobox.com,
         pclouds@gmail.com, sbeller@google.com
-Subject: [PATCH 23/27] attr: remove maybe-real, maybe-macro from git_attr
-Date:   Thu, 12 Jan 2017 15:53:50 -0800
-Message-Id: <20170112235354.153403-24-bmwill@google.com>
+Subject: [PATCH 24/27] attr: tighten const correctness with git_attr and match_attr
+Date:   Thu, 12 Jan 2017 15:53:51 -0800
+Message-Id: <20170112235354.153403-25-bmwill@google.com>
 X-Mailer: git-send-email 2.11.0.390.gc69c2f50cf-goog
 In-Reply-To: <20170112235354.153403-1-bmwill@google.com>
 References: <20170112235354.153403-1-bmwill@google.com>
@@ -60,182 +60,106 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Whether or not a git attribute is real or a macro isn't a property of
-the attribute but rather it depends on the attribute stack (which
-.gitattribute files were read).
-
-This patch removes the 'maybe_real' and 'maybe_macro' fields in a
-git_attr and instead adds the 'macro' field to a attr_check_item.  The
-'macro' indicates (if non-NULL) that a particular attribute is a macro
-for the given attribute stack.  It's populated, through a quick scan of
-the attribute stack, with the match_attr that corresponds to the macro's
-definition.  This way the attribute stack only needs to be scanned a
-single time prior to attribute collection instead of each time a macro
-needs to be expanded.
-
 Signed-off-by: Brandon Williams <bmwill@google.com>
 ---
- attr.c | 69 ++++++++++++++++++++++++++++++------------------------------------
- attr.h |  6 ++++++
- 2 files changed, 37 insertions(+), 38 deletions(-)
+ attr.c               | 14 +++++++-------
+ attr.h               |  2 +-
+ builtin/check-attr.c |  3 ++-
+ 3 files changed, 10 insertions(+), 9 deletions(-)
 
 diff --git a/attr.c b/attr.c
-index 38b0d4347..633a12cc3 100644
+index 633a12cc3..90f576044 100644
 --- a/attr.c
 +++ b/attr.c
-@@ -30,20 +30,9 @@ static const char git_attr__unknown[] = "(builtin)unknown";
- 
- struct git_attr {
- 	int attr_nr; /* unique attribute number */
--	int maybe_macro;
--	int maybe_real;
- 	char name[FLEX_ARRAY]; /* attribute name */
- };
- 
--/*
-- * NEEDSWORK: maybe-real, maybe-macro are not property of
-- * an attribute, as it depends on what .gitattributes are
-- * read.  Once we introduce per git_attr_check attr_stack
-- * and check_all_attr, the optimization based on them will
-- * become unnecessary and can go away.  So is this variable.
-- */
--static int cannot_trust_maybe_real;
--
- const char *git_attr_name(const struct git_attr *attr)
+@@ -209,7 +209,7 @@ static void report_invalid_attr(const char *name, size_t len,
+  * dictionary.  If no entry is found, create a new attribute and store it in
+  * the dictionary.
+  */
+-static struct git_attr *git_attr_internal(const char *name, int namelen)
++static const struct git_attr *git_attr_internal(const char *name, int namelen)
  {
- 	return attr->name;
-@@ -182,6 +171,7 @@ static void all_attrs_init(struct attr_hashmap *map, struct attr_check *check)
- 	 */
- 	for (i = 0; i < check->all_attrs_nr; i++) {
- 		check->all_attrs[i].value = ATTR__UNKNOWN;
-+		check->all_attrs[i].macro = NULL;
- 	}
+ 	struct git_attr *a;
+ 
+@@ -233,14 +233,14 @@ static struct git_attr *git_attr_internal(const char *name, int namelen)
+ 	return a;
  }
  
-@@ -233,8 +223,6 @@ static struct git_attr *git_attr_internal(const char *name, int namelen)
- 	if (!a) {
- 		FLEX_ALLOC_MEM(a, name, name, namelen);
- 		a->attr_nr = g_attr_hashmap.map.size;
--		a->maybe_real = 0;
--		a->maybe_macro = 0;
- 
- 		attr_hashmap_add(&g_attr_hashmap, a->name, namelen, a);
- 		assert(a->attr_nr == (g_attr_hashmap.map.size - 1));
-@@ -397,7 +385,6 @@ static struct match_attr *parse_attr_line(const char *line, const char *src,
- 		      (is_macro ? 0 : namelen + 1));
- 	if (is_macro) {
- 		res->u.attr = git_attr_internal(name, namelen);
--		res->u.attr->maybe_macro = 1;
- 	} else {
- 		char *p = (char *)&(res->state[num_attr]);
- 		memcpy(p, name, namelen);
-@@ -418,10 +405,6 @@ static struct match_attr *parse_attr_line(const char *line, const char *src,
- 	/* Second pass to fill the attr_states */
- 	for (cp = states, i = 0; *cp; i++) {
- 		cp = parse_attr(src, lineno, cp, &(res->state[i]));
--		if (!is_macro)
--			res->state[i].attr->maybe_real = 1;
--		if (res->state[i].attr->maybe_macro)
--			cannot_trust_maybe_real = 1;
- 	}
- 
- 	strbuf_release(&pattern);
-@@ -826,7 +809,7 @@ static int path_matches(const char *pathname, int pathlen,
- static int macroexpand_one(struct attr_check_item *all_attrs, int nr, int rem);
- 
- static int fill_one(const char *what, struct attr_check_item *all_attrs,
--		    struct match_attr *a, int rem)
-+		    const struct match_attr *a, int rem)
+-struct git_attr *git_attr(const char *name)
++const struct git_attr *git_attr(const char *name)
  {
+ 	return git_attr_internal(name, strlen(name));
+ }
+ 
+ /* What does a matched pattern decide? */
+ struct attr_state {
+-	struct git_attr *attr;
++	const struct git_attr *attr;
+ 	const char *setto;
+ };
+ 
+@@ -267,7 +267,7 @@ struct pattern {
+ struct match_attr {
+ 	union {
+ 		struct pattern pat;
+-		struct git_attr *attr;
++		const struct git_attr *attr;
+ 	} u;
+ 	char is_macro;
+ 	unsigned num_attr;
+@@ -814,7 +814,7 @@ static int fill_one(const char *what, struct attr_check_item *all_attrs,
  	int i;
  
-@@ -867,24 +850,34 @@ static int fill(const char *path, int pathlen, int basename_offset,
+ 	for (i = a->num_attr - 1; rem > 0 && i >= 0; i--) {
+-		struct git_attr *attr = a->state[i].attr;
++		const struct git_attr *attr = a->state[i].attr;
+ 		const char **n = &(all_attrs[attr->attr_nr].value);
+ 		const char *v = a->state[i].setto;
  
- static int macroexpand_one(struct attr_check_item *all_attrs, int nr, int rem)
- {
--	struct attr_stack *stk;
--	int i;
-+	const struct attr_check_item *item = &all_attrs[nr];
+@@ -838,7 +838,7 @@ static int fill(const char *path, int pathlen, int basename_offset,
+ 	const char *base = stk->origin ? stk->origin : "";
  
--	if (all_attrs[nr].value != ATTR__TRUE ||
--	    !all_attrs[nr].attr->maybe_macro)
-+	if (item->macro && item->value == ATTR__TRUE)
-+		return fill_one("expand", all_attrs, item->macro, rem);
-+	else
- 		return rem;
-+}
- 
--	for (stk = attr_stack; stk; stk = stk->prev) {
--		for (i = stk->num_matches - 1; 0 <= i; i--) {
--			struct match_attr *ma = stk->attrs[i];
--			if (!ma->is_macro)
--				continue;
--			if (ma->u.attr->attr_nr == nr)
--				return fill_one("expand", all_attrs, ma, rem);
-+/*
-+ * Marks the attributes which are macros based on the attribute stack.
-+ * This prevents having to search through the attribute stack each time
-+ * a macro needs to be expanded during the fill stage.
-+ */
-+static void determine_macros(struct attr_check_item *all_attrs,
-+			     const struct attr_stack *stack)
-+{
-+	for (; stack; stack = stack->prev) {
-+		int i;
-+		for (i = stack->num_matches - 1; i >= 0; i--) {
-+			const struct match_attr *ma = stack->attrs[i];
-+			if (ma->is_macro) {
-+				int n = ma->u.attr->attr_nr;
-+				if (!all_attrs[n].macro) {
-+					all_attrs[n].macro = ma;
-+				}
-+			}
- 		}
- 	}
--
--	return rem;
- }
- 
- /*
-@@ -914,15 +907,15 @@ static void collect_some_attrs(const char *path, struct attr_check *check)
- 
- 	prepare_attr_stack(path, dirlen);
- 	all_attrs_init(&g_attr_hashmap, check);
-+	determine_macros(check->all_attrs, attr_stack);
- 
--	if (check->check_nr && !cannot_trust_maybe_real) {
-+	if (check->check_nr) {
- 		rem = 0;
- 		for (i = 0; i < check->check_nr; i++) {
--			const struct git_attr *a = check->check[i].attr;
--			if (!a->maybe_real) {
--				struct attr_check_item *c;
--				c = check->all_attrs + a->attr_nr;
--				c->value = ATTR__UNSET;
-+			int n = check->check[i].attr->attr_nr;
-+			struct attr_check_item *item = &check->all_attrs[n];
-+			if (item->macro) {
-+				item->value = ATTR__UNSET;
- 				rem++;
- 			}
- 		}
+ 	for (i = stk->num_matches - 1; 0 < rem && 0 <= i; i--) {
+-		struct match_attr *a = stk->attrs[i];
++		const struct match_attr *a = stk->attrs[i];
+ 		if (a->is_macro)
+ 			continue;
+ 		if (path_matches(path, pathlen, basename_offset,
+@@ -988,7 +988,7 @@ struct attr_check *attr_check_initl(const char *one, ...)
+ 	check->check[0].attr = git_attr(one);
+ 	va_start(params, one);
+ 	for (cnt = 1; cnt < check->check_nr; cnt++) {
+-		struct git_attr *attr;
++		const struct git_attr *attr;
+ 		param = va_arg(params, const char *);
+ 		if (!param)
+ 			die("BUG: counted %d != ended at %d",
 diff --git a/attr.h b/attr.h
-index 44b21d82c..f40524875 100644
+index f40524875..9b4dc07d8 100644
 --- a/attr.h
 +++ b/attr.h
-@@ -27,6 +27,12 @@ extern const char git_attr__false[];
- struct attr_check_item {
- 	const struct git_attr *attr;
- 	const char *value;
-+	/*
-+	 * If 'macro' is non-NULL, indicates that 'attr' is a macro based on
-+	 * the current attribute stack and contains a pointer to the match_attr
-+	 * definition of the macro
-+	 */
-+	const struct match_attr *macro;
- };
+@@ -8,7 +8,7 @@ struct git_attr;
+  * Given a string, return the gitattribute object that
+  * corresponds to it.
+  */
+-struct git_attr *git_attr(const char *);
++const struct git_attr *git_attr(const char *);
  
- struct attr_check {
+ /* Internal use */
+ extern const char git_attr__true[];
+diff --git a/builtin/check-attr.c b/builtin/check-attr.c
+index 3d4704be5..cc6caf7ac 100644
+--- a/builtin/check-attr.c
++++ b/builtin/check-attr.c
+@@ -166,7 +166,8 @@ int cmd_check_attr(int argc, const char **argv, const char *prefix)
+ 	check = attr_check_alloc();
+ 	if (!all_attrs) {
+ 		for (i = 0; i < cnt; i++) {
+-			struct git_attr *a = git_attr(argv[i]);
++			const struct git_attr *a = git_attr(argv[i]);
++
+ 			if (!a)
+ 				return error("%s: not a valid attribute name",
+ 					     argv[i]);
 -- 
 2.11.0.390.gc69c2f50cf-goog
 
