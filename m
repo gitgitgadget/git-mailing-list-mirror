@@ -2,176 +2,74 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-6.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 750C91FEB3
-	for <e@80x24.org>; Thu, 12 Jan 2017 12:21:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E5DE81FEB3
+	for <e@80x24.org>; Thu, 12 Jan 2017 13:45:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751389AbdALMVm (ORCPT <rfc822;e@80x24.org>);
-        Thu, 12 Jan 2017 07:21:42 -0500
-Received: from userp1040.oracle.com ([156.151.31.81]:50508 "EHLO
-        userp1040.oracle.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751353AbdALMVk (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 Jan 2017 07:21:40 -0500
-Received: from aserv0022.oracle.com (aserv0022.oracle.com [141.146.126.234])
-        by userp1040.oracle.com (Sentrion-MTA-4.3.2/Sentrion-MTA-4.3.2) with ESMTP id v0CCLaYK003533
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-        Thu, 12 Jan 2017 12:21:36 GMT
-Received: from t460.home (dhcp-ukc1-twvpn-2-vpnpool-10-175-196-185.vpn.oracle.com [10.175.196.185])
-        by aserv0022.oracle.com (8.14.4/8.14.4) with ESMTP id v0CCLYVe020392;
-        Thu, 12 Jan 2017 12:21:35 GMT
-From:   Vegard Nossum <vegard.nossum@oracle.com>
-To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Cc:     Vegard Nossum <vegard.nossum@oracle.com>,
-        =?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
-        Pranit Bauva <pranit.bauva@gmail.com>
-Subject: [PATCH v2] diff: add interhunk context config option
-Date:   Thu, 12 Jan 2017 13:21:11 +0100
-Message-Id: <1484223671-5476-1-git-send-email-vegard.nossum@oracle.com>
-X-Mailer: git-send-email 2.7.4
+        id S1750960AbdALNpa (ORCPT <rfc822;e@80x24.org>);
+        Thu, 12 Jan 2017 08:45:30 -0500
+Received: from bsmtp3.bon.at ([213.33.87.17]:55099 "EHLO bsmtp3.bon.at"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1750777AbdALNp3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 Jan 2017 08:45:29 -0500
+Received: from dx.site (unknown [93.83.142.38])
+        by bsmtp3.bon.at (Postfix) with ESMTPSA id 3tzn8750DXz5tlJ;
+        Thu, 12 Jan 2017 14:45:27 +0100 (CET)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+        by dx.site (Postfix) with ESMTP id 98C773A6;
+        Thu, 12 Jan 2017 14:45:26 +0100 (CET)
+Subject: Re: [PATCH 5/5] describe: teach describe negative pattern matches
+To:     Jacob Keller <jacob.e.keller@intel.com>
+References: <20170112001721.2534-1-jacob.e.keller@intel.com>
+ <20170112001721.2534-6-jacob.e.keller@intel.com>
+Cc:     git@vger.kernel.org, Jacob Keller <jacob.keller@gmail.com>
+From:   Johannes Sixt <j6t@kdbg.org>
+Message-ID: <5f723a0d-623f-bf97-00de-29d430484fed@kdbg.org>
+Date:   Thu, 12 Jan 2017 14:45:26 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.6.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Source-IP: aserv0022.oracle.com [141.146.126.234]
+In-Reply-To: <20170112001721.2534-6-jacob.e.keller@intel.com>
+Content-Type: text/plain; charset=iso-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The --inter-hunk-context= option was added in commit 6d0e674a5754
-("diff: add option to show context between close hunks"). This patch
-allows configuring a default for this option.
+Am 12.01.2017 um 01:17 schrieb Jacob Keller:
+> From: Jacob Keller <jacob.keller@gmail.com>
+>
+> Teach git-describe the `--discard` option which will allow specifying
+> a glob pattern of tags to ignore. This can be combined with the
+> `--match` patterns to enable more flexibility in determining which tags
+> to consider.
+>
+> For example, suppose you wish to find the first official release tag
+> that contains a certain commit. If we assume that official release tags
+> are of the form "v*" and pre-release candidates include "*rc*" in their
+> name, we can now find the first tag that introduces commit abcdef via:
+>
+>   git describe --contains --match="v*" --discard="*rc*"
 
-Cc: René Scharfe <l.s.r@web.de>
-Cc: Pranit Bauva <pranit.bauva@gmail.com>
-Signed-off-by: Vegard Nossum <vegard.nossum@oracle.com>
+I have a few dozen topic branches, many of them are work in progress and 
+named wip/something. To see the completed branches, I routinely say
 
----
-v2:
- - Update Documentation/diff-config.txt, suggested by Pranit Bauva.
- - Add tests, suggested by Pranit Bauva.
- - Don't initialize BSS variable to 0, suggested by Junio Hamano.
- - Junio: if git_config_int() fails, you will get something like:
-   "fatal: bad config variable 'diff.interhunkcontext' in file '/home/vegard/.gitconfig' at line 5"
----
- Documentation/diff-config.txt      |  6 ++++++
- Documentation/diff-options.txt     |  2 ++
- diff.c                             |  8 ++++++++
- t/t4032-diff-inter-hunk-context.sh | 27 ++++++++++++++++++++++++++-
- 4 files changed, 42 insertions(+), 1 deletion(-)
+     gitk --exclude=wip/* --branches
 
-diff --git a/Documentation/diff-config.txt b/Documentation/diff-config.txt
-index 58f4bd6..d8cd854 100644
---- a/Documentation/diff-config.txt
-+++ b/Documentation/diff-config.txt
-@@ -60,6 +60,12 @@ diff.context::
- 	Generate diffs with <n> lines of context instead of the default
- 	of 3. This value is overridden by the -U option.
- 
-+diff.interHunkContext::
-+	Show the context between diff hunks, up to <n> lines, thereby
-+	fusing the hunks that are close to each other. The default is 0,
-+	meaning no fusing will occur. This value is overridden by the
-+	--inter-hunk-context option.
-+
- diff.external::
- 	If this config variable is set, diff generation is not
- 	performed using the internal diff machinery, but using the
-diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
-index e6215c3..a219aa2 100644
---- a/Documentation/diff-options.txt
-+++ b/Documentation/diff-options.txt
-@@ -511,6 +511,8 @@ endif::git-format-patch[]
- --inter-hunk-context=<lines>::
- 	Show the context between diff hunks, up to the specified number
- 	of lines, thereby fusing hunks that are close to each other.
-+	Defaults to `diff.interHunkContext` or 0 if the config option
-+	is unset.
- 
- -W::
- --function-context::
-diff --git a/diff.c b/diff.c
-index 84dba60..a92080c 100644
---- a/diff.c
-+++ b/diff.c
-@@ -33,6 +33,7 @@ static int diff_rename_limit_default = 400;
- static int diff_suppress_blank_empty;
- static int diff_use_color_default = -1;
- static int diff_context_default = 3;
-+static int diff_interhunk_context_default;
- static const char *diff_word_regex_cfg;
- static const char *external_diff_cmd_cfg;
- static const char *diff_order_file_cfg;
-@@ -248,6 +249,12 @@ int git_diff_ui_config(const char *var, const char *value, void *cb)
- 			return -1;
- 		return 0;
- 	}
-+	if (!strcmp(var, "diff.interhunkcontext")) {
-+		diff_interhunk_context_default = git_config_int(var, value);
-+		if (diff_interhunk_context_default < 0)
-+			return -1;
-+		return 0;
-+	}
- 	if (!strcmp(var, "diff.renames")) {
- 		diff_detect_rename_default = git_config_rename(var, value);
- 		return 0;
-@@ -3371,6 +3378,7 @@ void diff_setup(struct diff_options *options)
- 	options->rename_limit = -1;
- 	options->dirstat_permille = diff_dirstat_permille_default;
- 	options->context = diff_context_default;
-+	options->interhunkcontext = diff_interhunk_context_default;
- 	options->ws_error_highlight = ws_error_highlight_default;
- 	DIFF_OPT_SET(options, RENAME_EMPTY);
- 
-diff --git a/t/t4032-diff-inter-hunk-context.sh b/t/t4032-diff-inter-hunk-context.sh
-index e4e3e28..d9ac9d1 100755
---- a/t/t4032-diff-inter-hunk-context.sh
-+++ b/t/t4032-diff-inter-hunk-context.sh
-@@ -16,11 +16,15 @@ f() {
- }
- 
- t() {
-+	use_config=""
-+	git config --unset diff.interHunkContext
-+
- 	case $# in
- 	4) hunks=$4; cmd="diff -U$3";;
- 	5) hunks=$5; cmd="diff -U$3 --inter-hunk-context=$4";;
-+	6) hunks=$5; cmd="diff -U$3"; git config diff.interHunkContext $4; use_config="(diff.interHunkContext=$4) ";;
- 	esac
--	label="$cmd, $1 common $2"
-+	label="$use_config$cmd, $1 common $2"
- 	file=f$1
- 	expected=expected.$file.$3.$hunks
- 
-@@ -89,4 +93,25 @@ t 9 lines	3		2
- t 9 lines	3	2	2
- t 9 lines	3	3	1
- 
-+#					use diff.interHunkContext?
-+t 1 line	0	0	2	config
-+t 1 line	0	1	1	config
-+t 1 line	0	2	1	config
-+t 9 lines	3	3	1	config
-+t 2 lines	0	0	2	config
-+t 2 lines	0	1	2	config
-+t 2 lines	0	2	1	config
-+t 3 lines	1	0	2	config
-+t 3 lines	1	1	1	config
-+t 3 lines	1	2	1	config
-+t 9 lines	3	2	2	config
-+t 9 lines	3	3	1	config
-+
-+test_expect_success 'diff.interHunkContext invalid' '
-+	git config diff.interHunkContext asdf &&
-+	test_must_fail git diff &&
-+	git config diff.interHunkContext -1 &&
-+	test_must_fail git diff
-+'
-+
- test_done
--- 
-2.7.4
+these days.
+
+It would be great if you could provide the same user interface here. The 
+example in the commit message would then look like this:
+
+    git describe --contains --exclude="*rc*" --match="v*"
+
+(I'm not saying that you should add --branches, but that you should 
+prefer --exclude over --discard. Also, the order of --exclude and 
+--match would be important.)
+
+-- Hannes
 
