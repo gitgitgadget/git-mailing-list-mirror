@@ -6,52 +6,52 @@ X-Spam-Status: No, score=-6.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 299641FEB3
-	for <e@80x24.org>; Fri, 13 Jan 2017 00:00:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 322DA1FEB3
+	for <e@80x24.org>; Fri, 13 Jan 2017 00:00:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750964AbdAMAAl (ORCPT <rfc822;e@80x24.org>);
-        Thu, 12 Jan 2017 19:00:41 -0500
-Received: from mail-pf0-f180.google.com ([209.85.192.180]:34423 "EHLO
-        mail-pf0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750909AbdAMAAj (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 Jan 2017 19:00:39 -0500
-Received: by mail-pf0-f180.google.com with SMTP id 127so20481959pfg.1
-        for <git@vger.kernel.org>; Thu, 12 Jan 2017 16:00:39 -0800 (PST)
+        id S1750997AbdAMAAq (ORCPT <rfc822;e@80x24.org>);
+        Thu, 12 Jan 2017 19:00:46 -0500
+Received: from mail-pf0-f182.google.com ([209.85.192.182]:34890 "EHLO
+        mail-pf0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750981AbdAMAAo (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 Jan 2017 19:00:44 -0500
+Received: by mail-pf0-f182.google.com with SMTP id f144so20663220pfa.2
+        for <git@vger.kernel.org>; Thu, 12 Jan 2017 16:00:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=cOmFCvcw9bBNVKs+0ahLmYlO1Sq6xTc1uNTz4D7ZTdE=;
-        b=oN0ax1LVwehUglSAOPx/iMm5gkhlqsBHJRo9PUCZ44P79ZFoUriv+aISPNoRbK5Cmv
-         2dKUkts/Rq+lFILpuHX1ZLKAUxcPO+3LVj7PgaQpJztofDgPAiPEdQY45BAVTqmJq5zO
-         KW2w50j85M4ijQuu46Y2oHEV1ocfxrHMKk0wNNZH6zCn+hOrGnwII5UO/5hGdjtRoTqn
-         D+t8lGzlEmgkG8GTK0LGjNpDd1j0SN/4LlcIuOTczsBRBXkmvJETYSK5vCIOHaQdabAM
-         uTYaA5jIYP05JOypZvkFbRrlIwSp/JIXUaddvZ/xwvG3acP+EFYpxgYlLaVsQ7uDz0ul
-         2scQ==
+        bh=CwEF/0dnoaCz+4Q1E99ouU9+vDJ7os33IMsdNdkgcno=;
+        b=WtpjHwdTvLwtFmfez1HikJ9czkuvFQHdt1koiquFuHFMdA/WdN3QS9sfoLlopxtIse
+         rBmCbn0PZHrtS5wIX9HXeRy+yIEaCmjq0Kh/BheV/DA8Tb8wlwgx4Duz62YUjgV7HQ7e
+         fSEOdAoQyrGINChIKdL1CZ8Jy2YGWhYoujXXqwVCCqxhzRpnjhzQcVwMp8C94oJDgcSP
+         x9sU+tbtcmkw37vD3QgpK9OT9lqCZ3QR8KBSvagUQaAwcZM/4Y+aq7+yCH5iaFrsAp2C
+         MLkoH59Gr0ocIfo7HRmufVuTcynUDJMjLlNsJ3SZ7kwwD/qmkg2SL0Vd1Icghctlm9s2
+         EbjQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=cOmFCvcw9bBNVKs+0ahLmYlO1Sq6xTc1uNTz4D7ZTdE=;
-        b=uPTglUgJqsXuEUM41glWpuWiMob/LRL777LZxYi+FHO96h00IO1neYWfDQwSOKLbdy
-         owyWhPIILW3aR01ZVOU1Od8yVWrOV8bI2UaMmoGwA8XsDdfwkePnDzX5Y8aXdi3S/Ja2
-         sMwHAoN8Gl4wPkCbQ0EPLMFzGe5es5jN8qwq4pqy+2odkc/tcTHvCSKFGWX01nByh02R
-         YOOyECywJfOItlm3uJ7L+3r9iw2aY92EIKi7Xggtjf77nkM1YyNu5QM15LcqN0ewESqc
-         +WVAOe59OTJ0bKo8ayYUpYR7KNNirkTSr8lEvQUEOBIqa0bqbW73SbAgkZtZ7JS+WfCI
-         Vm1A==
-X-Gm-Message-State: AIkVDXLLk3uD3qpNRvdOnpkVb7X7twNnMyZBGqhTOfUROgY27fCkGCyiQQZbOGWFEG6TXfO7
-X-Received: by 10.99.232.21 with SMTP id s21mr20779460pgh.19.1484265259451;
-        Thu, 12 Jan 2017 15:54:19 -0800 (PST)
+        bh=CwEF/0dnoaCz+4Q1E99ouU9+vDJ7os33IMsdNdkgcno=;
+        b=KwKNRI2RUB6bpB8p/IcCYGWxaP4wh6sVLwGfIwpZJNfjH8No236BgtEn4o3+1uqIlH
+         aQr4USSMTgfFb4gEfEq+suog5T9wJQ6G2ylfk9vD44xcBUJuDZ+s2Trall+nsFt8+M2T
+         EFhYukQ0gt7ws+BQXbLgpT2fiwvVAsWWb0l7fxUXSiEDSJj3jbtpjAsIS1xE6jrN+0QM
+         Yi7r/WXvWV1Cg+3vImqt0Ju04Rn5zTfcy5piCffCmcyUba5L6xqB0syUnjALP77d9D9K
+         mq9vYzf2EtPv1g75/ZY8t/ImvwjxBVXYz7lTAT6aRN6emS2haMgLcMa0iCBimdQdlMVf
+         mHVg==
+X-Gm-Message-State: AIkVDXKxHLom+LW7f0QsUtMOLMLqajwCMM3pkSO6vgBcbqBo9i0eVsVffeNkTkF//tvyYaCC
+X-Received: by 10.98.103.195 with SMTP id t64mr10577315pfj.106.1484265254216;
+        Thu, 12 Jan 2017 15:54:14 -0800 (PST)
 Received: from roshar.mtv.corp.google.com ([100.96.238.26])
-        by smtp.gmail.com with ESMTPSA id e6sm24312192pgf.4.2017.01.12.15.54.17
+        by smtp.gmail.com with ESMTPSA id e6sm24312192pgf.4.2017.01.12.15.54.12
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 12 Jan 2017 15:54:18 -0800 (PST)
+        Thu, 12 Jan 2017 15:54:12 -0800 (PST)
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>, pclouds@gmail.com,
         sbeller@google.com, Brandon Williams <bmwill@google.com>
-Subject: [PATCH 11/27] attr.c: add push_stack() helper
-Date:   Thu, 12 Jan 2017 15:53:38 -0800
-Message-Id: <20170112235354.153403-12-bmwill@google.com>
+Subject: [PATCH 08/27] attr.c: tighten constness around "git_attr" structure
+Date:   Thu, 12 Jan 2017 15:53:35 -0800
+Message-Id: <20170112235354.153403-9-bmwill@google.com>
 X-Mailer: git-send-email 2.11.0.390.gc69c2f50cf-goog
 In-Reply-To: <20170112235354.153403-1-bmwill@google.com>
 References: <20170112235354.153403-1-bmwill@google.com>
@@ -62,147 +62,52 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Junio C Hamano <gitster@pobox.com>
 
-There are too many repetitious "I have this new attr_stack element;
-push it at the top of the stack" sequence.  The new helper function
-push_stack() gives us a way to express what is going on at these
-places, and as a side effect, halves the number of times we mention
-the attr_stack global variable.
+It holds an interned string, and git_attr_name() is a way to peek
+into it.  Make sure the involved pointer types are pointer-to-const.
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: Stefan Beller <sbeller@google.com>
 Signed-off-by: Brandon Williams <bmwill@google.com>
 ---
- attr.c | 71 +++++++++++++++++++++++++++++++-----------------------------------
- 1 file changed, 33 insertions(+), 38 deletions(-)
+ attr.c | 2 +-
+ attr.h | 4 ++--
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/attr.c b/attr.c
-index e1c630f79..8026d68bd 100644
+index e42f931b3..f7cf7ae30 100644
 --- a/attr.c
 +++ b/attr.c
-@@ -510,6 +510,18 @@ static int git_attr_system(void)
+@@ -43,7 +43,7 @@ static int cannot_trust_maybe_real;
+ static struct git_attr_check *check_all_attr;
+ static struct git_attr *(git_attr_hash[HASHSIZE]);
  
- static GIT_PATH_FUNC(git_path_info_attributes, INFOATTRIBUTES_FILE)
- 
-+static void push_stack(struct attr_stack **attr_stack_p,
-+		       struct attr_stack *elem, char *origin, size_t originlen)
-+{
-+	if (elem) {
-+		elem->origin = origin;
-+		if (origin)
-+			elem->originlen = originlen;
-+		elem->prev = *attr_stack_p;
-+		*attr_stack_p = elem;
-+	}
-+}
-+
- static void bootstrap_attr_stack(void)
+-char *git_attr_name(struct git_attr *attr)
++const char *git_attr_name(const struct git_attr *attr)
  {
- 	struct attr_stack *elem;
-@@ -517,37 +529,23 @@ static void bootstrap_attr_stack(void)
- 	if (attr_stack)
- 		return;
- 
--	elem = read_attr_from_array(builtin_attr);
--	elem->origin = NULL;
--	elem->prev = attr_stack;
--	attr_stack = elem;
--
--	if (git_attr_system()) {
--		elem = read_attr_from_file(git_etc_gitattributes(), 1);
--		if (elem) {
--			elem->origin = NULL;
--			elem->prev = attr_stack;
--			attr_stack = elem;
--		}
--	}
-+	push_stack(&attr_stack, read_attr_from_array(builtin_attr), NULL, 0);
-+
-+	if (git_attr_system())
-+		push_stack(&attr_stack,
-+			   read_attr_from_file(git_etc_gitattributes(), 1),
-+			   NULL, 0);
- 
- 	if (!git_attributes_file)
- 		git_attributes_file = xdg_config_home("attributes");
--	if (git_attributes_file) {
--		elem = read_attr_from_file(git_attributes_file, 1);
--		if (elem) {
--			elem->origin = NULL;
--			elem->prev = attr_stack;
--			attr_stack = elem;
--		}
--	}
-+	if (git_attributes_file)
-+		push_stack(&attr_stack,
-+			   read_attr_from_file(git_attributes_file, 1),
-+			   NULL, 0);
- 
- 	if (!is_bare_repository() || direction == GIT_ATTR_INDEX) {
- 		elem = read_attr(GITATTRIBUTES_FILE, 1);
--		elem->origin = xstrdup("");
--		elem->originlen = 0;
--		elem->prev = attr_stack;
--		attr_stack = elem;
-+		push_stack(&attr_stack, elem, xstrdup(""), 0);
- 		debug_push(elem);
- 	}
- 
-@@ -558,15 +556,12 @@ static void bootstrap_attr_stack(void)
- 
- 	if (!elem)
- 		elem = xcalloc(1, sizeof(*elem));
--	elem->origin = NULL;
--	elem->prev = attr_stack;
--	attr_stack = elem;
-+	push_stack(&attr_stack, elem, NULL, 0);
+ 	return attr->name;
  }
+diff --git a/attr.h b/attr.h
+index 8b08d33af..00d7a662c 100644
+--- a/attr.h
++++ b/attr.h
+@@ -25,7 +25,7 @@ extern const char git_attr__false[];
+  * Unset one is returned as NULL.
+  */
+ struct git_attr_check {
+-	struct git_attr *attr;
++	const struct git_attr *attr;
+ 	const char *value;
+ };
  
- static void prepare_attr_stack(const char *path, int dirlen)
- {
- 	struct attr_stack *elem, *info;
--	int len;
- 	const char *cp;
+@@ -34,7 +34,7 @@ struct git_attr_check {
+  * return value is a pointer to a null-delimited string that is part
+  * of the internal data structure; it should not be modified or freed.
+  */
+-char *git_attr_name(struct git_attr *);
++extern const char *git_attr_name(const struct git_attr *);
  
- 	/*
-@@ -626,20 +621,21 @@ static void prepare_attr_stack(const char *path, int dirlen)
+ int git_check_attr(const char *path, int, struct git_attr_check *);
  
- 		assert(attr_stack->origin);
- 		while (1) {
--			len = strlen(attr_stack->origin);
-+			size_t len = strlen(attr_stack->origin);
-+			char *origin;
-+
- 			if (dirlen <= len)
- 				break;
- 			cp = memchr(path + len + 1, '/', dirlen - len - 1);
- 			if (!cp)
- 				cp = path + dirlen;
--			strbuf_add(&pathbuf, path, cp - path);
--			strbuf_addch(&pathbuf, '/');
--			strbuf_addstr(&pathbuf, GITATTRIBUTES_FILE);
-+			strbuf_addf(&pathbuf,
-+				    "%.*s/%s", (int)(cp - path), path,
-+				    GITATTRIBUTES_FILE);
- 			elem = read_attr(pathbuf.buf, 0);
- 			strbuf_setlen(&pathbuf, cp - path);
--			elem->origin = strbuf_detach(&pathbuf, &elem->originlen);
--			elem->prev = attr_stack;
--			attr_stack = elem;
-+			origin = strbuf_detach(&pathbuf, &len);
-+			push_stack(&attr_stack, elem, origin, len);
- 			debug_push(elem);
- 		}
- 
-@@ -649,8 +645,7 @@ static void prepare_attr_stack(const char *path, int dirlen)
- 	/*
- 	 * Finally push the "info" one at the top of the stack.
- 	 */
--	info->prev = attr_stack;
--	attr_stack = info;
-+	push_stack(&attr_stack, info, NULL, 0);
- }
- 
- static int path_matches(const char *pathname, int pathlen,
 -- 
 2.11.0.390.gc69c2f50cf-goog
 
