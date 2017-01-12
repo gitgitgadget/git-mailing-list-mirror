@@ -2,111 +2,70 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.3 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,URI_HEX
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.4 required=3.0 tests=BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6D2EF20756
-	for <e@80x24.org>; Thu, 12 Jan 2017 08:30:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4141820756
+	for <e@80x24.org>; Thu, 12 Jan 2017 09:43:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750942AbdALIay (ORCPT <rfc822;e@80x24.org>);
-        Thu, 12 Jan 2017 03:30:54 -0500
-Received: from acme.spoerlein.net ([46.20.246.113]:39466 "EHLO
-        acme.spoerlein.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750902AbdALIaw (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 Jan 2017 03:30:52 -0500
-X-Greylist: delayed 544 seconds by postgrey-1.27 at vger.kernel.org; Thu, 12 Jan 2017 03:30:51 EST
-Received: from localhost (acme.spoerlein.net [IPv6:2a02:2528:fa:1000:0:0:0:1])
-        by acme.spoerlein.net (8.15.2/8.15.2) with ESMTPS id v0C8Lc2V050279
-        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Thu, 12 Jan 2017 09:21:39 +0100 (CET)
-        (envelope-from uqs@FreeBSD.org)
-Date:   Thu, 12 Jan 2017 09:21:38 +0100
-From:   Ulrich =?utf-8?B?U3DDtnJsZWlu?= <uqs@FreeBSD.org>
-To:     git@vger.kernel.org
-Cc:     Ed Maste <emaste@freebsd.org>
-Subject: git fast-import crashing on big imports
-Message-ID: <20170112082138.GJ4426@acme.spoerlein.net>
+        id S1751094AbdALJm5 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 12 Jan 2017 04:42:57 -0500
+Received: from mout.gmx.net ([212.227.17.21]:62297 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751005AbdALJm4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 Jan 2017 04:42:56 -0500
+Received: from virtualbox ([213.133.108.164]) by mail.gmx.com (mrgmx103
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0ML6XF-1cRKn12zTN-000ITJ; Thu, 12
+ Jan 2017 10:42:46 +0100
+Date:   Thu, 12 Jan 2017 10:42:44 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Jacob Keller <jacob.e.keller@intel.com>
+cc:     git@vger.kernel.org, Jacob Keller <jacob.keller@gmail.com>
+Subject: Re: [PATCH 5/5] describe: teach describe negative pattern matches
+In-Reply-To: <20170112001721.2534-6-jacob.e.keller@intel.com>
+Message-ID: <alpine.DEB.2.20.1701121041450.3469@virtualbox>
+References: <20170112001721.2534-1-jacob.e.keller@intel.com> <20170112001721.2534-6-jacob.e.keller@intel.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-User-Agent: Mutt/1.7.1 (2016-10-04)
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:7I+B13h00YesVnTaM4snADvz6Yt5tTpIEmcXseOzJeddJJzfJSZ
+ sGqtt62ljh9ueWW799Nz7Py+es0xJ9Vb4Wa1Es6Oae04fHvdU3aS5/cFZtuGyNYzBNQZRok
+ XuTeM2WmrAvrwfuiznLP5+1pGhkPH+qgromvrFoNpjhhCXi8Y/xxXk9zVnxyTqYR1X8Wgm/
+ BwY1cn4tOXbLDsD73CrWA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:0eKrLMoCA4w=:70FXYXpik1ShVQq3MwrJf7
+ lmTiVQtH1Lcvt1km9XTrYR+AZq09BYiZKsWou+pXrnvfI6JEEjGRLuGMD4rUS3tnVEd/RbjHS
+ /GwK0XBzLXjAWdahQOGxwe0QLllZmnG5a7okWcTkp6K2L66gx4HpO1RK6XCpnDnwoqM7w1Ha6
+ 52Yi6vTs0o//Kx+1sJqdcpQ00I74OkBsZufgbURzWkn0BT4sHRuYDI0h4EtNbd5Q347AhUJnU
+ /63bXG0RNPmsX8yV/Ho3A/pnNxWqtBXCOBLgU0toJZy7SeERciFe/w0sdZAsuc4f9GfzZ04VI
+ tKX3g/8zKFhq5rVbbS4JwIN+3YL613fN6ExfwytHMMYgLOgH4Pj0jncxP8giYPYk9dxzHln7+
+ 6g4xqgpoHNN91BXuxNhcbPQ0KUNcc2ENE+hltkOncBhX3+ENGtVwl2yJ/tcjR/gxUCUhPeDNT
+ uCyow5kH+dgEistU3NE+eSqltzN3td+QtiDfuDpYtNqc6VXCMvkhucHrgaPaaaN5E0D7hKCVT
+ 2MAv5HngBO1zLH1o0m5/HfijdfI70H6L5wibIHa9JQzqvdv5trjB8YUgXaDWSQypz1/7HFJsi
+ qQoSFhQkTkOPD1OakrPcmBKd2nfW0UY5bi0nZ7h2IqUd0/zN2CIgxP9hZHiRYPHPspOf5jCYm
+ a+i4dy7S2XoYSdlYhWeCwvWg/F2uDWlRPw1mZpiT7hVjh3mp1p5Mkf1wn7o+dT9Np6bkuvpMk
+ zbwBGJpCgQzBof/GNzwBC/kt/Hy21bx7MQ5MnHJXLoLcLHF3ornZy3RngvzA9oFXTzertQ8eq
+ GUziGO+rjEzSCWaWwl1CcyINrAepA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hey,
+Hi Jake,
 
-the FreeBSD svn2git conversion is crashing somewhat
-non-deterministically during its long conversion process. From memory,
-this was not as bad is it is with more recent versions of git (but I
-can't be sure, really).
+On Wed, 11 Jan 2017, Jacob Keller wrote:
 
-I have a dump file that you can grab at
-http://scan.spoerlein.net/pub/freebsd-base.dump.xz (19G, 55G uncompressed)
-that shows this problem after a couple of minutes of runtime. The caveat is
-that for another member of the team on a different machine the crashes are on
-different revisions.
+> From: Jacob Keller <jacob.keller@gmail.com>
+> 
+> Teach git-describe the `--discard` option which will allow specifying
+> a glob pattern of tags to ignore.
 
-Googling around I found two previous threads that were discussing
-problems just like this (memory corruption, bad caching, etc)
+IMHO "discard" is the wrong word, it almost sounds as if the matching tags
+would be *deleted*.
 
-https://www.spinics.net/lists/git/msg93598.html  from 2009
-and
-http://git.661346.n2.nabble.com/long-fast-import-errors-out-quot-failed-to-apply-delta-quot-td6557884.html
-from 2011
+Maybe `--exclude` or `--unmatch` instead?
 
-% git fast-import --stats < ../freebsd-base.dump
-...
-progress SVN r49318 branch master = :49869
-progress SVN r49319 branch stable/3 = :49870
-progress SVN r49320 branch master = :49871
-error: failed to apply delta
-error: bad offset for revindex
-error: bad offset for revindex
-error: bad offset for revindex
-error: bad offset for revindex
-error: bad offset for revindex
-fatal: Can't load tree b35ae4e9c2a41677e84a3f14bed09f584c3ff25e
-fast-import: dumping crash report to fast_import_crash_29613
-
-
-fast-import crash report:
-    fast-import process: 29613
-    parent process     : 29612
-    at 2017-01-11 19:33:37 +0000
-
-fatal: Can't load tree b35ae4e9c2a41677e84a3f14bed09f584c3ff25e
-
-
-git fsck shows a somewhat incomplete pack file (I guess that's expected if the
-process dies mid-stream?)
-
-% git fsck
-Checking object directories: 100% (256/256), done.
-error: failed to apply delta6/614500)
-error: cannot unpack d1d7ee1f81c6767c5e0f75d14d400d7512a85a0f from ./objects/pack/pack-e28fcea43fc221d2ebe92857b484da58bb888237.pack at offset 122654805
-error: failed to apply delta
-error: failed to read delta base object d1d7ee1f81c6767c5e0f75d14d400d7512a85a0f at offset 122654805 from ./objects/pack/pack-e28fcea43fc221d2ebe92857b484da58bb888237.pack
-error: cannot unpack 8523bde63ef34bef725347994fdaec996d756510 from ./objects/pack/pack-e28fcea43fc221d2ebe92857b484da58bb888237.pack at offset 122671596
-error: failed to apply delta0/614500)
-error: failed to read delta base object d1d7ee1f81c6767c5e0f75d14d400d7512a85a0f at offset 122654805 from ./objects/pack/pack-e28fcea43fc221d2ebe92857b484da58bb888237.pack
-...
-
-
-Any comments on whether the original problems from 2009 and 2011 were ever
-fixed and committed?
-
-Some more facts:
-- git version 2.11.0
-- I don't recall these sorts of crashes with a git from 2-3 years ago
-- adding more checkpoints does help, but not fix the problem, it merely shifts
-  the crashes around to different revisions
-- incremental runs of the conversion *will* complete most of the time, but
-  depending on how often checkpoints are used, I've seen it croak on specific
-  commits and not being able to progress further :(
-
-Thanks for any pointers or things to try!
-Cheers
-Uli
+Ciao,
+Dscho
