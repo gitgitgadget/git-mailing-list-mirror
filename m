@@ -2,96 +2,71 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.3 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1B67C20756
-	for <e@80x24.org>; Thu, 12 Jan 2017 10:22:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5295B20756
+	for <e@80x24.org>; Thu, 12 Jan 2017 10:51:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750859AbdALKWE (ORCPT <rfc822;e@80x24.org>);
-        Thu, 12 Jan 2017 05:22:04 -0500
-Received: from mout.gmx.net ([212.227.17.21]:54139 "EHLO mout.gmx.net"
+        id S1751858AbdALKux (ORCPT <rfc822;e@80x24.org>);
+        Thu, 12 Jan 2017 05:50:53 -0500
+Received: from faith.eroen.eu ([178.79.147.241]:55050 "EHLO faith.eroen.eu"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750819AbdALKWE (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 Jan 2017 05:22:04 -0500
-Received: from virtualbox ([213.133.108.164]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0Ld3t6-1csBp70Wjw-00iBtu; Thu, 12
- Jan 2017 11:21:49 +0100
-Date:   Thu, 12 Jan 2017 11:21:47 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     Pat Pannuto <pat.pannuto@gmail.com>
-cc:     Johannes Sixt <j6t@kdbg.org>, Junio C Hamano <gitster@pobox.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH 2/2] Use 'env' to find perl instead of fixed path
-In-Reply-To: <CAAnLKaGbf9-GAF19+61=7_RfCOBM0=Ounwf8KkL1jS6HX3pOag@mail.gmail.com>
-Message-ID: <alpine.DEB.2.20.1701121118170.3469@virtualbox>
-References: <20170112055140.29877-1-pat.pannuto@gmail.com> <20170112055140.29877-3-pat.pannuto@gmail.com> <6fe462dd-929a-671b-a210-36ee38e99115@kdbg.org> <CAAnLKaGbf9-GAF19+61=7_RfCOBM0=Ounwf8KkL1jS6HX3pOag@mail.gmail.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:ZqOvGTn7xKxONv1bshmkCpN81J8EAVB3Lxhl+EOi02BCy7hGgzn
- HEzWohnPjVxkKKjicf6KGQOPKkuXsbESt3klOzokg8gR0pbGwyj0gEbGFF3LPBeu7rG2Z22
- Xsc6w2joIpT9SqU3xH6XJHKzyefBBX4/NwT7AZsZUl6QNaSCAg2dNRmFsCsKlVSS7DwHAZr
- UfW0b+xsvmtuIKTFt68Ag==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:836Jep2UcA0=:6wnxCEM5lJxsKNyXyFEc/Y
- 6sx3syoEPUFHWYTHABMq0zNqRnP3l3n98dFF+f/jrlak5U4UIfzzCgKKdOVBrG5CDpIAOk85g
- ZGvVnGz2czfF5nWIeAZEKANJBJPKBwbw4HmHF/8uGgH9nQSPW1o1T06FPHkabZvSNBXtKpCTA
- 4B2XYD+I4ufQPpvRtbMd8ZIUm4M5tq7e3y5BPta+Msa5p2AYGZcd32mL63Rr/ud9V5t4NzL0a
- X0kyadwOnLyKBsuEW9W7g6ES/R41VZPe1zsEusAia8jBGUm2ZSDDmiWawkoo6OFCZNqDz3AhO
- /9uFjzutgVGkC5xKkZ8/9+rxLJObCNhm1TlV4cfuEilNBaXreIElo8cCs7RaiboFSxrmMfHIn
- V80PZm3xl6Q6q4e0vpq2ZaYtWuX3VRK+KDILrTeWiy38XzRQHgsubaHcMNfnUcdYvHcNaktn1
- jbuOSOiRCHWjbVLaxUsFrLJIRmz8lVk0Dyo9kU5asHjiAmun4C2bdktKvILzw9qVnN+vxlluW
- bG+mVQF6E7JeJwApNNK6AbVo/w+GQkTrHSwkzutJ4j5BB07gEG/ltVDiH49vdib3JcsMDcSSa
- r2amXJA7NK/9DLA8p6fiQWKWSpnFaatCsLiwtjTDLBdXeTB4JQ3Q8Chnb/tHhlse2bj/e4n4e
- zbEtS8Njzktxf8Fq5AeCkd95Nm7qfVtbHcb9KAvKF2rVnHCtLhj5qYC14l16/qi1kr2MQobdb
- B+E8dMKsUmT6iLfE6Orfuaq5sFjjFVAJ/2MJGYIMkf8ik6LiPMu5X1EccIzQ9UxVH8eqDcGYH
- Uq+KUWiT64BkmAXt/ow5LOXgzL63ihICQME6TW+MTEGzkqdQGDag2/hGEOSN+6d8KVt/jl8Uv
- B3xCUNTYE3eLqxG4CkTh1udrngGDjaP4p+LBYGV4KWLDUbiL5pgpWrm2OzDnBpt6IU6juTp8p
- talXMfQUEpNFP0JV2fsHSQfsHQW+nnrgSy0yfrwMVhITOsUGJb70GHuuEuFj6Y0/fn1wWjyA4
- fDao5po7jOoqh9I7ryvtUxPrBzu6i1AW+/FyBzSkQEHZ
+        id S1751855AbdALKuw (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 Jan 2017 05:50:52 -0500
+X-Greylist: delayed 496 seconds by postgrey-1.27 at vger.kernel.org; Thu, 12 Jan 2017 05:50:51 EST
+Received: from localhost.localdomain (unknown [10.10.0.18])
+        by faith.eroen.eu (Postfix) with ESMTP id 33DDD241B0;
+        Thu, 12 Jan 2017 10:42:28 +0000 (GMT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=occam.eroen.eu;
+        s=faith; t=1484217748;
+        bh=x+qb9OgNZmV+d+rdN41gZywIbUyvqwOI3iYHq9U6xjw=;
+        h=From:To:Cc:Subject:Date;
+        b=Mjw+iIAilP9DHkpx49Gy/aPJHyCE4n6yyygZLiAoj0+6OqksyAZh9WT4l+GQMVPfe
+         eIV13Q1AG31SOIfM1PiLDgDrz9h2HruiWXgdBvppm4l55fAaTPTbAiT2Y2Ghj+BL83
+         miDGCzcwTt333GOo9Wwze9oMXz6PJ42fZeIBzroE=
+From:   eroen <git-scm@occam.eroen.eu>
+To:     git@vger.kernel.org
+Cc:     eroen <git-scm@occam.eroen.eu>
+Subject: [PATCH] imap-send.c: Avoid deprecated openssl 1.1.0 API
+Date:   Thu, 12 Jan 2017 11:42:19 +0100
+Message-Id: <20170112104219.563497-1-git-scm@occam.eroen.eu>
+X-Mailer: git-send-email 2.11.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Pat,
+Library initialization functions are deprecated in openssl 1.1.0 API, as
+initialization is handled by openssl internally.
 
-On Thu, 12 Jan 2017, Pat Pannuto wrote:
+Symbols for deprecated functions are not exported if openssl is built with
+`--api=1.1 disable-deprecated`, so their use will cause a build failure.
 
-> I'm not at all attached to changing all of them, just figured it made
-> sense while I was here.
-> 
-> Would a patch that changes only:
-> 
->  git-add--interactive.perl                     | 2 +-
->  git-archimport.perl                           | 2 +-
->  git-cvsexportcommit.perl                      | 2 +-
->  git-cvsimport.perl                            | 2 +-
->  git-cvsserver.perl                            | 2 +-
->  git-difftool.perl                             | 2 +-
->  git-relink.perl                               | 2 +-
->  git-send-email.perl                           | 2 +-
->  git-svn.perl                                  | 2 +-
-> 
-> be more acceptable?
+Reported-by: Lars Wendler (Polynomial-C)
 
-Unfortunately not. Take git-svn.perl for example, in particular in
-conjunction with Git for Windows. git-svn requires the Subversion bindings
-for Perl, and they are a *major* pain to build correctly (this is
-frequently underestimated by users who complain about git-svn problems).
+X-Gentoo-Bug: 592466
+X-Gentoo-Bug-URL: https://bugs.gentoo.org/show_bug.cgi?id=592466
+---
+ imap-send.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-Allowing users to override the Perl path (even if it were possible, which
-it is not, as Hannes Sixt pointed out in the mail you replied to) would
-open Git for Windows for a metric ton of users complaining that their
-git-svn does not work (when it is their fault, really, by overriding Perl
-with their own preferred version that comes without Subversion bindings,
-but how would they know).
+diff --git a/imap-send.c b/imap-send.c
+index 5c7e27a89..98774360e 100644
+--- a/imap-send.c
++++ b/imap-send.c
+@@ -284,8 +284,10 @@ static int ssl_socket_connect(struct imap_socket *sock, int use_tls_only, int ve
+ 	int ret;
+ 	X509 *cert;
+ 
++#if OPENSSL_VERSION_NUMBER < 0x10100000L
+ 	SSL_library_init();
+ 	SSL_load_error_strings();
++#endif
+ 
+ 	meth = SSLv23_method();
+ 	if (!meth) {
+-- 
+2.11.0
 
-So if this patch would make it into upstream Git, I would *have* to revert
-it in Git for Windows, adding to my already considerable maintenance burden.
-
-Ciao,
-Johannes
