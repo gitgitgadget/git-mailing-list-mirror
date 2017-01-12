@@ -2,72 +2,65 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0DFF020798
-	for <e@80x24.org>; Thu, 12 Jan 2017 06:21:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 04B8020756
+	for <e@80x24.org>; Thu, 12 Jan 2017 06:27:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750719AbdALGVJ (ORCPT <rfc822;e@80x24.org>);
-        Thu, 12 Jan 2017 01:21:09 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:60687 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1750698AbdALGVJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 Jan 2017 01:21:09 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id F104E5C823;
-        Thu, 12 Jan 2017 01:21:07 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=CnjpW7BE4Huw6muYqVxZWfvjd8c=; b=SRsyt9
-        mN09hPnFWF9x4H0A9baUvR55H+yVvjKCvfYNFim+rGHo6CCF3QFFfNng6WP3W2k7
-        FCJzgNvKiiPlS08hKQw0hcAOrQzuZlAxzRYVcDzvkFsh0ilzadnREmTvYlwo1R+p
-        6SSRtxSwZBofRKg0KxlYFMuUE4dmAxCZbgrW4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=d2HDD+xcnl0a53L3B6C+U60fQZFZcl9x
-        Y1crw/WZ/j+YWkZbUmxiIBAwI5YQat4fKTZFKLLYpZg/vopIN2agpimjGNFgOB0w
-        JFtm8VfZvfDnLyx1da8Qt8UWCwJRx137yvwEM7ujLRDvFOY4h7hZE6Xe6plk5L7l
-        ON/ZyJJooVI=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id D98345C822;
-        Thu, 12 Jan 2017 01:21:07 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 41D4B5C81F;
-        Thu, 12 Jan 2017 01:21:07 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
+        id S1750790AbdALG11 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 12 Jan 2017 01:27:27 -0500
+Received: from bsmtp3.bon.at ([213.33.87.17]:9674 "EHLO bsmtp3.bon.at"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1750707AbdALG1Z (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 Jan 2017 01:27:25 -0500
+Received: from dx.site (unknown [93.83.142.38])
+        by bsmtp3.bon.at (Postfix) with ESMTPSA id 3tzbQg3XWSz5tlM;
+        Thu, 12 Jan 2017 07:27:23 +0100 (CET)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+        by dx.site (Postfix) with ESMTP id B81A33B5;
+        Thu, 12 Jan 2017 07:27:22 +0100 (CET)
+Subject: Re: [PATCH 2/2] Use 'env' to find perl instead of fixed path
 To:     Pat Pannuto <pat.pannuto@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 0/2] Use env for all perl invocations
 References: <20170112055140.29877-1-pat.pannuto@gmail.com>
-Date:   Wed, 11 Jan 2017 22:21:05 -0800
-In-Reply-To: <20170112055140.29877-1-pat.pannuto@gmail.com> (Pat Pannuto's
-        message of "Thu, 12 Jan 2017 00:51:38 -0500")
-Message-ID: <xmqqa8awn6i6.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.90 (gnu/linux)
+ <20170112055140.29877-3-pat.pannuto@gmail.com>
+From:   Johannes Sixt <j6t@kdbg.org>
+Cc:     gitster@pobox.com, git@vger.kernel.org
+Message-ID: <6fe462dd-929a-671b-a210-36ee38e99115@kdbg.org>
+Date:   Thu, 12 Jan 2017 07:27:22 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.6.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 4D757EDC-D88F-11E6-8B5B-A7617B1B28F4-77302942!pb-smtp2.pobox.com
+In-Reply-To: <20170112055140.29877-3-pat.pannuto@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Pat Pannuto <pat.pannuto@gmail.com> writes:
+Am 12.01.2017 um 06:51 schrieb Pat Pannuto:
+> diff --git a/git-add--interactive.perl b/git-add--interactive.perl
+> index cf6fc926a..6d7b6c35d 100755
+> --- a/git-add--interactive.perl
+> +++ b/git-add--interactive.perl
+> @@ -1,4 +1,4 @@
+> -#!/usr/bin/perl
+> +#!/usr/bin/env perl
 
-> I spent a little while debugging why git-format-patch refused to believe
-> that SSL support was installed (Can't locate Net/SMTP/SSL.pm in @INC...)
-> Turns out that it was installed for my system's preferred /usr/local/bin/perl,
-> but not for git-format-patch's hard-coded /usr/bin/perl; changing the shebang
-> allowed git format-patch to work as expected.
+This change, and all others that affect installed external git programs, 
+is a no-go. On Windows, our execve emulation is not complete. It would 
+invoke only `env` (looked up in PATH), but not pass 'perl' as argument.
 
-Isn't that an indication that you are not building correctly?
-Perhaps
+Sorry for the bad news.
 
-    $ git grep 'Define PERL_' Makefile
-    $ make PERL_PATH=/usr/local/bin/perl
+I would have suggested to set PERL_PATH in your config.mak, but that 
+does not change the generated perl scripts, I think. Perhaps you should 
+implement that?
 
-would help?
+I'm not thrilled about your changes to the test scripts, but I do not 
+expect that they break on Windows.
+
+-- Hannes
+
