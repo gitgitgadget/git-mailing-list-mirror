@@ -2,105 +2,166 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-6.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 760E61FEB3
-	for <e@80x24.org>; Thu, 12 Jan 2017 23:42:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D5D541FEB3
+	for <e@80x24.org>; Thu, 12 Jan 2017 23:55:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751015AbdALXma (ORCPT <rfc822;e@80x24.org>);
-        Thu, 12 Jan 2017 18:42:30 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:60012 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1750796AbdALXm3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 Jan 2017 18:42:29 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id B16AD60BB9;
-        Thu, 12 Jan 2017 18:42:18 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=iR6l0XbsvUgTK7ByBQqXHq9CwPE=; b=mRXl4b
-        4JII/GQS9g08nZcjihNhxGyopBHrBfx9jv0O/XP6yaIHXjbTWLuy2C6BQmC0idhj
-        G1AJxkH1be17zxboe8pspM66bdBOA8DY6Xi3aef7ew3ZN+MBSt+7huPtnQ97Ij6V
-        oYA3P6TIC+Wt0T4miw5mwxv1PHYkPYn7EAVZ8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=g/GYsj2NC+tsVtJ4Wwk3Dw53xTT8v24C
-        PNTVS+yeFUPnJJVSCm0DB8sDCgq0/vH8s77r8cR5n0p5pTixhbbKJQwwf9hTuvOo
-        0p/AZmPNSTSHLKe8ThC54uAQ8EG4JIqCY2IxG2mQ/iKf24Awo0uUaEZq2cv1cR2t
-        Q20E6pSGDvc=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id A89C560BB7;
-        Thu, 12 Jan 2017 18:42:18 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 132D760BA4;
-        Thu, 12 Jan 2017 18:42:18 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Manuel Ullmann <ullman.alias@posteo.de>
-Cc:     git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>
-Subject: Re: Bug report: Documentation error in git-bisect man description
-References: <87r347swz1.fsf@sonnengebleicht.fritz.box>
-        <xmqqd1frj1lt.fsf@gitster.mtv.corp.google.com>
-Date:   Thu, 12 Jan 2017 15:42:16 -0800
-In-Reply-To: <xmqqd1frj1lt.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-        message of "Thu, 12 Jan 2017 15:32:46 -0800")
-Message-ID: <xmqq8tqfj15z.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.90 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: C0F65CD2-D920-11E6-83D5-A7617B1B28F4-77302942!pb-smtp2.pobox.com
+        id S1750873AbdALXz2 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 12 Jan 2017 18:55:28 -0500
+Received: from mail-pf0-f181.google.com ([209.85.192.181]:33172 "EHLO
+        mail-pf0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750824AbdALXz0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 Jan 2017 18:55:26 -0500
+Received: by mail-pf0-f181.google.com with SMTP id y143so20697214pfb.0
+        for <git@vger.kernel.org>; Thu, 12 Jan 2017 15:54:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=3KPulpR8K6cfckjYFdFC1IMtSCgxS+MSRHoifIYnqeE=;
+        b=ZBK1vVWV2vV63qFRedtZaJUvmTWIwFrnidYF3q5Lh/torM/rt/Y/u/dG5l0WTEn/K/
+         Mxr47nIfqgoW0NF3+sIHliKOSNYJs9Qo4otV5myLdlYErC4tOAJ646q15hKleP1FlXeU
+         qEdDNaDL4kPFN+tz/LFmcfQdQH/FTyDCr5JZVy+/c8F3qX3mX4CiU1c3EDOHfNmoIHDy
+         9f8BTW7QgR6tsiRZZ1sy/yVO7sIk9UiZq4Azms7bBEqlDZ2p0+w70Nlv0lryDEINO5HB
+         OMf93oclxxy/gVp9ONDJC7U2j0QuA+1L3REutCWUpMKLfUtscDqZuoOSRgs74PIIj7K3
+         f5rg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=3KPulpR8K6cfckjYFdFC1IMtSCgxS+MSRHoifIYnqeE=;
+        b=PDB18ohBGH1crFy58sGA8jgsXPCGTn4ksOWXx0eQQ/qoS6UvB8Lb0Q+Y9HuPrN1RZ0
+         r3EqTmw0GBD7C0fpi2eIizSmX7qfQ75tC6IJj6GstHrnr61dpKt8xMg3JH0MRU0v/FYz
+         NKOXbbR2ZAjhUiWOydv4WI18FwOuWPFFUMOU+nNCHC+5zfO/3QjlmlG6O7irOD/nCZL4
+         23zo7gVGyBPFEoRkkEqGK36VX1f20fcDu3LjThDyhy9diaK/8uKwMUQe58TjRSj+UsDL
+         qi5n8MQarmHvAWL+31b2ax39XeMAd8+E9aDq951xjIiBxtGCkKHQNA7zklVs1Sfhb8K7
+         /hUA==
+X-Gm-Message-State: AIkVDXICnohP6AwWPaBIMCWdGwxnbSVjILpuAYWKX70CbH6Jyb4ZTyoqFhfo8tfW7b/ILJ0S
+X-Received: by 10.84.248.70 with SMTP id e6mr25481139pln.179.1484265273539;
+        Thu, 12 Jan 2017 15:54:33 -0800 (PST)
+Received: from roshar.mtv.corp.google.com ([100.96.238.26])
+        by smtp.gmail.com with ESMTPSA id e6sm24312192pgf.4.2017.01.12.15.54.32
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Thu, 12 Jan 2017 15:54:32 -0800 (PST)
+From:   Brandon Williams <bmwill@google.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, pclouds@gmail.com,
+        sbeller@google.com, Brandon Williams <bmwill@google.com>
+Subject: [PATCH 20/27] attr: change validity check for attribute names to use positive logic
+Date:   Thu, 12 Jan 2017 15:53:47 -0800
+Message-Id: <20170112235354.153403-21-bmwill@google.com>
+X-Mailer: git-send-email 2.11.0.390.gc69c2f50cf-goog
+In-Reply-To: <20170112235354.153403-1-bmwill@google.com>
+References: <20170112235354.153403-1-bmwill@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+From: Junio C Hamano <gitster@pobox.com>
 
-> Manuel Ullmann <ullman.alias@posteo.de> writes:
->
-> Hmmm, I tend to agree, modulo a minor fix.
->
-> If the description were in a context inside a paragraph like this:
->
-> 	When you want to tell 'git bisect' that a <rev> belongs to
-> 	the newer half of the history, you say
->
-> 		git bisect (bad|new) [<rev>]
->
-> 	On the other hand, when you want to tell 'git bisect' that a
-> 	<rev> belongs to the older half of the history, you can say
->
-> 		git bisect (good|old) [<rev>]
->
-> then the pairing we see in the current text makes quite a lot of
-> sense.
+Convert 'invalid_attr_name()' to 'attr_name_valid()' and use positive
+logic for the return value.  In addition create a helper function that
+prints out an error message when an invalid attribute name is used.
 
-Actually, the above is _exactly_ what was intended.  I misread the
-current documentation when I made the comment, and I think that the
-current one _IS_ correct.  The latter half of the above is not about
-a single rev.  You can paint multiple commits with the "older half"
-color, i.e.
+We could later update the message to exactly spell out what the
+rules for a good attribute name are, etc.
 
-	On the other hand, when you want to tell 'git bisect' that
-	one or more <rev>s  belong to the older half of the history,
-	you can say
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Stefan Beller <sbeller@google.com>
+Signed-off-by: Brandon Williams <bmwill@google.com>
+---
+ attr.c | 34 ++++++++++++++++++++--------------
+ 1 file changed, 20 insertions(+), 14 deletions(-)
 
-		git bisect (good|old) [<rev>...]
-
-In contrast, you can mark only one <rev> as newer (or "already
-bad").  So pairing (bad|good) and (new|old) like you suggested
-breaks the correctness of the command line description.
-
-If (bad|new) and (good|old) bothers you because they may mislead the
-readers to think bad is an opposite of new (and good is an opposite
-of old), the only solution I can think of to that problem is to
-expand these two lines into four and list them like this:
-
-        git bisect bad [<rev>]
-        git bisect good [<rev>...]
-        git bisect new [<rev>]
-        git bisect old [<rev>...]
+diff --git a/attr.c b/attr.c
+index e58fa340c..5399e1cb3 100644
+--- a/attr.c
++++ b/attr.c
+@@ -74,23 +74,33 @@ static unsigned hash_name(const char *name, int namelen)
+ 	return val;
+ }
+ 
+-static int invalid_attr_name(const char *name, int namelen)
++static int attr_name_valid(const char *name, size_t namelen)
+ {
+ 	/*
+ 	 * Attribute name cannot begin with '-' and must consist of
+ 	 * characters from [-A-Za-z0-9_.].
+ 	 */
+ 	if (namelen <= 0 || *name == '-')
+-		return -1;
++		return 0;
+ 	while (namelen--) {
+ 		char ch = *name++;
+ 		if (! (ch == '-' || ch == '.' || ch == '_' ||
+ 		       ('0' <= ch && ch <= '9') ||
+ 		       ('a' <= ch && ch <= 'z') ||
+ 		       ('A' <= ch && ch <= 'Z')) )
+-			return -1;
++			return 0;
+ 	}
+-	return 0;
++	return 1;
++}
++
++static void report_invalid_attr(const char *name, size_t len,
++				const char *src, int lineno)
++{
++	struct strbuf err = STRBUF_INIT;
++	strbuf_addf(&err, _("%.*s is not a valid attribute name"),
++		    (int) len, name);
++	fprintf(stderr, "%s: %s:%d\n", err.buf, src, lineno);
++	strbuf_release(&err);
+ }
+ 
+ static struct git_attr *git_attr_internal(const char *name, int len)
+@@ -105,7 +115,7 @@ static struct git_attr *git_attr_internal(const char *name, int len)
+ 			return a;
+ 	}
+ 
+-	if (invalid_attr_name(name, len))
++	if (!attr_name_valid(name, len))
+ 		return NULL;
+ 
+ 	FLEX_ALLOC_MEM(a, name, name, len);
+@@ -196,17 +206,15 @@ static const char *parse_attr(const char *src, int lineno, const char *cp,
+ 			cp++;
+ 			len--;
+ 		}
+-		if (invalid_attr_name(cp, len)) {
+-			fprintf(stderr,
+-				"%.*s is not a valid attribute name: %s:%d\n",
+-				len, cp, src, lineno);
++		if (!attr_name_valid(cp, len)) {
++			report_invalid_attr(cp, len, src, lineno);
+ 			return NULL;
+ 		}
+ 	} else {
+ 		/*
+ 		 * As this function is always called twice, once with
+ 		 * e == NULL in the first pass and then e != NULL in
+-		 * the second pass, no need for invalid_attr_name()
++		 * the second pass, no need for attr_name_valid()
+ 		 * check here.
+ 		 */
+ 		if (*cp == '-' || *cp == '!') {
+@@ -258,10 +266,8 @@ static struct match_attr *parse_attr_line(const char *line, const char *src,
+ 		name += strlen(ATTRIBUTE_MACRO_PREFIX);
+ 		name += strspn(name, blank);
+ 		namelen = strcspn(name, blank);
+-		if (invalid_attr_name(name, namelen)) {
+-			fprintf(stderr,
+-				"%.*s is not a valid attribute name: %s:%d\n",
+-				namelen, name, src, lineno);
++		if (!attr_name_valid(name, namelen)) {
++			report_invalid_attr(name, namelen, src, lineno);
+ 			goto fail_return;
+ 		}
+ 	}
+-- 
+2.11.0.390.gc69c2f50cf-goog
 
