@@ -2,102 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2A9121FEB3
-	for <e@80x24.org>; Thu, 12 Jan 2017 19:06:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BD7771FEB3
+	for <e@80x24.org>; Thu, 12 Jan 2017 19:31:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750846AbdALTGb (ORCPT <rfc822;e@80x24.org>);
-        Thu, 12 Jan 2017 14:06:31 -0500
-Received: from mail-sn1nam01on0124.outbound.protection.outlook.com ([104.47.32.124]:34283
-        "EHLO NAM01-SN1-obe.outbound.protection.outlook.com"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1750814AbdALTG3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 Jan 2017 14:06:29 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=selector1; h=From:Date:Subject:Message-ID:Content-Type:MIME-Version;
- bh=JuYHO0f0Fiz663K4kamqWB7eZFI+hzdoWFuVawDIkn4=;
- b=d4Rpx3v8q5JWrqsVkChxa/PDR1NUoKHOjhRTtJakTcI4mayDcRCe+LyS1025C9a25oC47BSeP4G4x/MN2X5OA/pWoPiCQAcbaD3SX8aZBq0u8eoImPPGVlbu1+dbbaqScCzAXl1m75u3ZmPbhCEoivBmnmVO0hv/wl3BGaNQhLs=
-Received: from BY2PR21MB0036.namprd21.prod.outlook.com (10.162.77.23) by
- BY2PR21MB0034.namprd21.prod.outlook.com (10.162.77.21) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P384) id
- 15.1.860.0; Thu, 12 Jan 2017 19:06:27 +0000
-Received: from BY2PR21MB0036.namprd21.prod.outlook.com ([10.162.77.23]) by
- BY2PR21MB0036.namprd21.prod.outlook.com ([10.162.77.23]) with mapi id
- 15.01.0860.000; Thu, 12 Jan 2017 19:06:27 +0000
-From:   Matthew Wilcox <mawilcox@microsoft.com>
-To:     Jonathan Tan <jonathantanmy@google.com>,
-        Matthew Wilcox <mawilcox@linuxonhyperv.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: RE: [PATCH 1/2] mailinfo: Add support for keep_cr
-Thread-Topic: [PATCH 1/2] mailinfo: Add support for keep_cr
-Thread-Index: AQHSbKS/CdRw075KSUWT8HpmVmfjc6E1I2EAgAAPpZA=
-Date:   Thu, 12 Jan 2017 19:06:27 +0000
-Message-ID: <BY2PR21MB0036E89DDFC5EFC8F17CD77DCB790@BY2PR21MB0036.namprd21.prod.outlook.com>
-References: <1484212824-14108-1-git-send-email-mawilcox@linuxonhyperv.com>
- <8f2be1e9-9199-44af-9d57-41763cb4d666@google.com>
-In-Reply-To: <8f2be1e9-9199-44af-9d57-41763cb4d666@google.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: spf=none (sender IP is )
- smtp.mailfrom=mawilcox@microsoft.com; 
-x-originating-ip: [58.84.192.132]
-x-ms-office365-filtering-correlation-id: f7fbb439-f20f-423f-b78d-08d43b1e1c38
-x-microsoft-antispam: UriScan:;BCL:0;PCL:0;RULEID:(22001);SRVR:BY2PR21MB0034;
-x-microsoft-exchange-diagnostics: 1;BY2PR21MB0034;7:PcsxoEi/pSRFellcD9WhAzTYhBBwwzgai5grXinEJKjZ9NLg10exNczVp+V4N1l5uWliGXn7vPu7Twa0LuevJizPDGpsy2VJnj/J8eyWQD5q3+gr3kW4iwUG3mjp/cykSFCH/7awXRC0FTzf0MOFnYJWWi/6jdya3UvUnNXdf74GZycYkJXO72r3pSSXEb9NUw4L7jss1Tg2CwTKLNugF5MzoV9wwc7/bpIdo4Biy62/lCKDBVLO7UjJz/WmFXFt4DmnRQdyRLCSEBFSNBG8YutUTlVfiSPlRWYB3/xfDCjBl2XWxcxBIT9Ai4BxCY61PahtFid3qFEq2pwp00tIJAG6oQYlaU83YWT1rWBdI70hShUMEaZfV0XddFIjkCRNrYfhY8S11v+3Ho1TnmxVxMzqU/3hkdX1kbZolz+gT1SS64jZK14BWOHHGdopx3FQ3k1nHtasuMOoSgnliLoh2e04/SaOnCrboRdE2WIqYok=
-x-microsoft-antispam-prvs: <BY2PR21MB0034ABB43C94DCFF89EF8C91CB790@BY2PR21MB0034.namprd21.prod.outlook.com>
-x-exchange-antispam-report-test: UriScan:(211936372134217);
-x-exchange-antispam-report-cfa-test: BCL:0;PCL:0;RULEID:(61425038)(6040375)(601004)(2401047)(5005006)(8121501046)(10201501046)(3002001)(6055026)(61426038)(61427038)(6041248)(20161123560025)(20161123562025)(20161123555025)(20161123564025)(6072148)(6042181);SRVR:BY2PR21MB0034;BCL:0;PCL:0;RULEID:;SRVR:BY2PR21MB0034;
-x-forefront-prvs: 018577E36E
-x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(6009001)(7916002)(51914003)(199003)(24454002)(189002)(377454003)(2501003)(3280700002)(8936002)(229853002)(86362001)(50986999)(9686003)(25786008)(81156014)(33656002)(2906002)(106356001)(105586002)(74316002)(10090500001)(106116001)(66066001)(122556002)(3660700001)(5660300001)(5005710100001)(8990500004)(86612001)(6116002)(102836003)(38730400001)(54356999)(2900100001)(10290500002)(92566002)(97736004)(7736002)(7696004)(107886002)(189998001)(5001770100001)(6506006)(81166006)(6436002)(2950100002)(8676002)(305945005)(77096006)(68736007)(55016002)(3846002)(99286003)(101416001)(76176999);DIR:OUT;SFP:1102;SCL:1;SRVR:BY2PR21MB0034;H:BY2PR21MB0036.namprd21.prod.outlook.com;FPR:;SPF:None;PTR:InfoNoRecords;A:1;MX:1;LANG:en;
-received-spf: None (protection.outlook.com: microsoft.com does not designate
- permitted sender hosts)
-spamdiagnosticoutput: 1:99
-spamdiagnosticmetadata: NSPM
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+        id S1750827AbdALTbO (ORCPT <rfc822;e@80x24.org>);
+        Thu, 12 Jan 2017 14:31:14 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:60650 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1750750AbdALTbN (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 Jan 2017 14:31:13 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 117945DF26;
+        Thu, 12 Jan 2017 14:30:50 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=cc9dIoabCr1W4TvR5VeB/KquA+M=; b=sowG5r
+        vfBQZNQiWJjgy4OXNOVhgWzGLmnhqnFSRuEwqR8gQ8nL/ZdQmllEFdw94GJq/qgJ
+        uTGhJNA5p7XGPkeLdWgG+vv0qlYcZqVGq94ZQMiYJHqritslzDuTwFkzu6DeNpTq
+        +7p7sSq7meZMKk1RKm8HEMpJKSwvpK8+/s92g=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=CJo+J6Go8rUxWMEeE0R5s5ry/QnWeqEB
+        /xBrpO5QvmGO8PrHq14iUMp9HNaQUimfQVy0DItChVDEOcBd9kxeJe+wof6DWWll
+        BTiOPwn3xoWjcSmc0Xf13++tkV9p9YxlbEi0NNTlmmRP3SEZpataPR8gdYEz4lgz
+        DH9Fg9fNkZ0=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id F22405DF25;
+        Thu, 12 Jan 2017 14:30:49 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 5B0D35DF23;
+        Thu, 12 Jan 2017 14:30:49 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org,
+        =?utf-8?B?66eI64iE?= =?utf-8?B?7JeY?= <nalla@hamal.uberspace.de>
+Subject: Re: [PATCH 1/2] asciidoctor: fix user-manual to be built by `asciidoctor`
+References: <cover.1483373021.git.johannes.schindelin@gmx.de>
+        <3c160f81a88cf8697f2459bb7f2a3e27fb3e469c.1483373021.git.johannes.schindelin@gmx.de>
+        <20170104080852.bmlmtzxhjx4qt74f@sigill.intra.peff.net>
+        <xmqqbmvi34ul.fsf@gitster.mtv.corp.google.com>
+        <20170108032709.k43zmej5lxmcoj4o@sigill.intra.peff.net>
+        <xmqqinpmpld0.fsf@gitster.mtv.corp.google.com>
+        <alpine.DEB.2.20.1701121130190.3469@virtualbox>
+Date:   Thu, 12 Jan 2017 11:30:48 -0800
+In-Reply-To: <alpine.DEB.2.20.1701121130190.3469@virtualbox> (Johannes
+        Schindelin's message of "Thu, 12 Jan 2017 12:15:08 +0100 (CET)")
+Message-ID: <xmqq37gokrdj.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.90 (gnu/linux)
 MIME-Version: 1.0
-X-OriginatorOrg: microsoft.com
-X-MS-Exchange-CrossTenant-originalarrivaltime: 12 Jan 2017 19:06:27.3525
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 72f988bf-86f1-41af-91ab-2d7cd011db47
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BY2PR21MB0034
+Content-Type: text/plain
+X-Pobox-Relay-ID: 9F64C428-D8FD-11E6-8172-FE3F13518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-RnJvbTogSm9uYXRoYW4gVGFuIFttYWlsdG86am9uYXRoYW50YW5teUBnb29nbGUuY29tXQ0KPiBP
-biAwMS8xMi8yMDE3IDAxOjIwIEFNLCBNYXR0aGV3IFdpbGNveCB3cm90ZToNCj4gQSB0ZXN0IGV4
-ZXJjaXNpbmcgdGhlIG5ldyBmdW5jdGlvbmFsaXR5IHdvdWxkIGJlIG5pY2UuDQoNClJvZ2VyLg0K
-DQo+IEFsc28sIG1heWJlIGEgbW9yZSBkZXNjcmlwdGl2ZSB0aXRsZSBsaWtlICJtYWlsaW5mbzog
-YWxzbyByZXNwZWN0DQo+IGtlZXBfY3IgYWZ0ZXIgYmFzZTY0IGRlY29kZSIgKDUwIGNoYXJhY3Rl
-cnMpIGlzIGJldHRlci4NCg0KTm8gcHJvYmxlbS4NCg0KPiA+IEBAIC0xNDMsNiArMTQ0LDcgQEAg
-c3RhdGljIHZvaWQgYW1fc3RhdGVfaW5pdChzdHJ1Y3QgYW1fc3RhdGUgKnN0YXRlLA0KPiBjb25z
-dCBjaGFyICpkaXIpDQo+ID4NCj4gPiAgCW1lbXNldChzdGF0ZSwgMCwgc2l6ZW9mKCpzdGF0ZSkp
-Ow0KPiA+DQo+ID4gKwlzdGF0ZS0+a2VlcF9jciA9IC0xOw0KPiANCj4gTWF5YmUgcXVlcnkgdGhl
-IGdpdCBjb25maWcgaGVyZSAoaW5zdGVhZCBvZiBsYXRlcikgc28gdGhhdCB3ZSBuZXZlciBoYXZl
-DQo+IHRvIHdvcnJ5IGFib3V0IHN0YXRlLT5rZWVwX2NyIGJlaW5nIG5laXRoZXIgMCBub3IgMT8g
-VGhpcyBmdW5jdGlvbg0KPiBhbHJlYWR5IHF1ZXJpZXMgdGhlIGdpdCBjb25maWcgYW55d2F5Lg0K
-DQpJIHdvbmRlcmVkIHdoeSB0aGUgZXhpc3RpbmcgY29kZSBkaWRuJ3QgZG8gdGhhdCwgYnV0IEkg
-d2FudGVkIHRvIG1ha2UgYSBtaW5pbWFsIGNoYW5nZSByYXRoZXIgdGhhbiBjbGVhbiB1cCBhbiBv
-bGRlciBtaXN0YWtlLiAgSSdtIGhhcHB5IHRvIGRvIGl0IHRoYXQgd2F5Lg0KDQo+ID4gZGlmZiAt
-LWdpdCBhL21haWxpbmZvLmggYi9tYWlsaW5mby5oDQo+ID4gaW5kZXggMDRhMjUzNTFkLi45ZmRk
-Y2Y2ODQgMTAwNjQ0DQo+ID4gLS0tIGEvbWFpbGluZm8uaA0KPiA+ICsrKyBiL21haWxpbmZvLmgN
-Cj4gPiBAQCAtMTIsNiArMTIsNyBAQCBzdHJ1Y3QgbWFpbGluZm8gew0KPiA+ICAJc3RydWN0IHN0
-cmJ1ZiBlbWFpbDsNCj4gPiAgCWludCBrZWVwX3N1YmplY3Q7DQo+ID4gIAlpbnQga2VlcF9ub25f
-cGF0Y2hfYnJhY2tldHNfaW5fc3ViamVjdDsNCj4gPiArCWludCBrZWVwX2NyOw0KPiA+ICAJaW50
-IGFkZF9tZXNzYWdlX2lkOw0KPiA+ICAJaW50IHVzZV9zY2lzc29yczsNCj4gPiAgCWludCB1c2Vf
-aW5ib2R5X2hlYWRlcnM7DQo+IA0KPiBJIHBlcnNvbmFsbHkgd291bGQgd3JpdGUgInVuc2lnbmVk
-IGtlZXBfY3IgOiAxIiB0byBmdXJ0aGVyIGVtcGhhc2l6ZQ0KPiB0aGF0IHRoaXMgY2FuIG9ubHkg
-YmUgMCBvciAxLCBidXQgSSBkb24ndCBrbm93IGlmIGl0J3MgYmV0dGVyIHRvIGtlZXANCj4gd2l0
-aCB0aGUgc3R5bGUgZXhpc3RpbmcgaW4gdGhlIGZpbGUgKHRoYXQgaXMsIHVzaW5nIGludCkuDQoN
-ClByb2JhYmx5IGJlc3QgdG8gc3RpY2sgdG8gdGhlIGV4aXN0aW5nIGZpbGUgLi4uIHNvbWVvbmUg
-Y2FuIGFsd2F5cyBkbyBhIGNsZWFudXAgcGF0Y2ggbGF0ZXIsIGFuZCBoYXZpbmcgdGhpcyBtYXRj
-aCB0aGUgb3RoZXJzIHdpbGwgbWFrZSB0aGF0IGVhc2llciwgbm90IGhhcmRlci4NCg0KVGhhbmtz
-IGZvciB0aGUgcmV2aWV3Lg0KDQo=
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+
+>> And I tend to agree that the silliness you observed (like a t-o-c
+>> for a one-section "chapter") is not quite welcome.
+>> 
+>> For now I queued only 2/2 which looked good.  I won't object if
+>> somebody else rerolls 1/2 to appease AsciiDoctor, but let's take an
+>> obviously good bit first.
+>
+> For fun, I just reverted the article->book patch and I was greeted with
+> this:
+> ...
+> It still builds, funnily enough, but the result is definitely worse on the
+> eyes. The page is *really* long, and structuring it into individual parts
+> does help the readability.
+> ...
+> P.S.: I also tried to use [glossary] and [appendix] as appropriate, but it
+> seems that AsciiDoc *insists* on level-2 sections in an appendix, while
+> AsciiDoctor *insists* on level-3 sections.
+
+So in short, what you are saying is that the support for articles in
+AsciiDoctor is borked and totally unusable on an article that needs
+to be taken correctly by AsciiDoc, and your conclusion is that the
+only way to move forward (other than giving up using AsciiDoctor) is
+to avoid writing documents as articles, and existing articles need
+to be adjusted to read as books.
+
+If that is the case, then I agree with the conclusion.  As I already
+said, I won't object to a reroll of 1/2 to make the document format
+well with AsciiDoctor without breaking rendering by AsciiDoc too
+badly, and your "for fun" experiment illustrated that such a reroll
+still needs to avoid using article style.  Perhaps 1/2 posted as-is
+is the best we could do within that constraint.
+
+Let's queue it on 'pu' and see if somebody else comes up with an
+update that is more visually pleasing with both backends.
+
+Thanks.
+
+
+
