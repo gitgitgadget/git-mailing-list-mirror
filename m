@@ -6,52 +6,52 @@ X-Spam-Status: No, score=-6.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0BC392079E
+	by dcvr.yhbt.net (Postfix) with ESMTP id A924E1FEB3
 	for <e@80x24.org>; Thu, 12 Jan 2017 23:55:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750936AbdALXzh (ORCPT <rfc822;e@80x24.org>);
+        id S1750927AbdALXzh (ORCPT <rfc822;e@80x24.org>);
         Thu, 12 Jan 2017 18:55:37 -0500
-Received: from mail-pf0-f173.google.com ([209.85.192.173]:33149 "EHLO
-        mail-pf0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750805AbdALXz0 (ORCPT <rfc822;git@vger.kernel.org>);
+Received: from mail-pf0-f180.google.com ([209.85.192.180]:34079 "EHLO
+        mail-pf0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750829AbdALXz0 (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 12 Jan 2017 18:55:26 -0500
-Received: by mail-pf0-f173.google.com with SMTP id y143so20695931pfb.0
-        for <git@vger.kernel.org>; Thu, 12 Jan 2017 15:54:27 -0800 (PST)
+Received: by mail-pf0-f180.google.com with SMTP id 127so20409248pfg.1
+        for <git@vger.kernel.org>; Thu, 12 Jan 2017 15:54:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=V4YofDxSXOAH4wepKGvpMlaRCCr46I+EaCrgbKmA2d4=;
-        b=bbn50NdgpGklACjNXsjLOqZzr/C981Gu3L0TtOn6C5lpokerFcsO9J7Mrg7x48nXEt
-         BCwD4RGwYRNF30z7XCVPzv/nuMBe9giE5BlIQ2xE7jwNvD3ztIn6ddm616gD1cp04UIX
-         hBaFckqW4PzhFX73cRJLThB0ttf3t3lhYt50/i7rfI5JYH07l8jHFf/yxCRJ/2GKzrj5
-         zq+IP1K8cb5WuTYOSzhmkoZcQo3WUfHQwWbvwgEqObsD3PdrbUK8BV0IxMJB6dYbo1b0
-         fYnqWu2OS4MA4OH+J2CKhmy6+a8wV8E1Dis0D1WhvJ6dzmOLCINF1ep8Ff1/C6BNWb3j
-         LGTw==
+        bh=rmch+5V7IAGHRBf02hGLjqKepDyZOQSa2vYSGnFZTjw=;
+        b=LZUFTCM/956xx7EgGqOWCUTvkpNZh6BH22mVEDB2MvIBp4KuTw0Siyx1DOrkxBs4DI
+         HJte0kZCpmrqkzjMoqyot798rKW2vJq591UVe6+/dd+4dqKN9k7Jutcw/3cwidVJh1lW
+         OIFWA8bn9bLZ9mAPvmHfJl8a23sXXBCW0KF1iq+crP9mugAi1kGtuLivy42UDYJHq4wH
+         4YLjK4/Os20iTAh8sCI1jBsqqglywjB/6OLXKbNP7ZJ1X49ZlUIWJMKq4Qjv/EhSLCgR
+         Hxkrmsk8KtdBA2P8NFQss9K4FQXBcRt4KYEy1YcHM/92G1sCQvz720MR+0diIO2tsDMn
+         VCHw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=V4YofDxSXOAH4wepKGvpMlaRCCr46I+EaCrgbKmA2d4=;
-        b=PzG3DYnULkO2nQpCwZ7KD+kdV9GSiCpbIpd6jj7Km2D2k1e5RGw47BPpVcEUz4xO8X
-         Oi2EBbIY9rN7LnQjxLH1bMotbt1pV15C6DpxCgEfpgpR54dmSfOA5KZgNj8ssLpRXOqd
-         IktdM7Ex1iQiAhfhs8BkXKcyYuonE644FaTiifMnsxKMVwS9+qhFV9hKZ8udS3uc/kj2
-         +eMQ62Mu8MWnZ/sN+KR4tkLHFneK/+7VFAFkWpROGAEZp2RMGkfxyMgCIQ5sgLsVGD9p
-         hxwhSy7/zUQZIOF5LIxZ518wIJ3IluQfAX1WRRsrLhUZbRjEEtROsSLm4cE+k8mCkt/v
-         nt4A==
-X-Gm-Message-State: AIkVDXKHMm1/expbuulpaMEPP8O9hVcsiUetGv/8GOQMK4bijTeeRnFSVJsHjSmvPtzlvZka
-X-Received: by 10.98.75.16 with SMTP id y16mr542814pfa.23.1484265266954;
-        Thu, 12 Jan 2017 15:54:26 -0800 (PST)
+        bh=rmch+5V7IAGHRBf02hGLjqKepDyZOQSa2vYSGnFZTjw=;
+        b=aVkjAliwNXNVyw4d1nbXTv5W6SBLmso8zB7EFuWgOsNvQCg8cLPWpYcmQMct/Z2To8
+         NgRMBRPAZgOIvbVV1EkLQUHZWZHmHl5g1nfxDTt9glA/hQGz3FvMqYqd6KclOGkT4Qyx
+         V1YkTsD99hhmqgH+LYp3ohrtIHP5xljmaUtoY8cBX1QMBzxemM8Dw2V7tF2f/60TcPIM
+         WkQTwP9bcSIl+kJjbUpIlRAnCz9+/2KYc+sTFmOUXXrJIb2N9BygMOBRYI9R2ErH1jy3
+         yIEnvsx8ejtz8wdRIrSfsexsN+cErMoCnL2JcMz8PmLpWXacVQZHibK9Jpwn13TRJcc8
+         lP1w==
+X-Gm-Message-State: AIkVDXIp/DL+uzJ05G3QRsnjR/15mB+37fjCd2KBVT6zrn3GgPJ8aaXposlnCe7X33EFIk2B
+X-Received: by 10.84.209.204 with SMTP id y70mr25414537plh.180.1484265278010;
+        Thu, 12 Jan 2017 15:54:38 -0800 (PST)
 Received: from roshar.mtv.corp.google.com ([100.96.238.26])
-        by smtp.gmail.com with ESMTPSA id e6sm24312192pgf.4.2017.01.12.15.54.25
+        by smtp.gmail.com with ESMTPSA id e6sm24312192pgf.4.2017.01.12.15.54.36
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 12 Jan 2017 15:54:26 -0800 (PST)
+        Thu, 12 Jan 2017 15:54:36 -0800 (PST)
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, pclouds@gmail.com,
-        sbeller@google.com, Brandon Williams <bmwill@google.com>
-Subject: [PATCH 16/27] attr: convert git_all_attrs() to use "struct attr_check"
-Date:   Thu, 12 Jan 2017 15:53:43 -0800
-Message-Id: <20170112235354.153403-17-bmwill@google.com>
+Cc:     Brandon Williams <bmwill@google.com>, gitster@pobox.com,
+        pclouds@gmail.com, sbeller@google.com
+Subject: [PATCH 23/27] attr: remove maybe-real, maybe-macro from git_attr
+Date:   Thu, 12 Jan 2017 15:53:50 -0800
+Message-Id: <20170112235354.153403-24-bmwill@google.com>
 X-Mailer: git-send-email 2.11.0.390.gc69c2f50cf-goog
 In-Reply-To: <20170112235354.153403-1-bmwill@google.com>
 References: <20170112235354.153403-1-bmwill@google.com>
@@ -60,243 +60,182 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Junio C Hamano <gitster@pobox.com>
+Whether or not a git attribute is real or a macro isn't a property of
+the attribute but rather it depends on the attribute stack (which
+.gitattribute files were read).
 
-This updates the other two ways the attribute check is done via an
-array of "struct attr_check_item" elements.  These two niches
-appear only in "git check-attr".
+This patch removes the 'maybe_real' and 'maybe_macro' fields in a
+git_attr and instead adds the 'macro' field to a attr_check_item.  The
+'macro' indicates (if non-NULL) that a particular attribute is a macro
+for the given attribute stack.  It's populated, through a quick scan of
+the attribute stack, with the match_attr that corresponds to the macro's
+definition.  This way the attribute stack only needs to be scanned a
+single time prior to attribute collection instead of each time a macro
+needs to be expanded.
 
- * The caller does not know offhand what attributes it wants to ask
-   about and cannot use attr_check_initl() to prepare the
-   attr_check structure.
-
- * The caller may not know what attributes it wants to ask at all,
-   and instead wants to learn everything that the given path has.
-
-Such a caller can call attr_check_alloc() to allocate an empty
-attr_check, and then call attr_check_append() to add attribute names
-one by one.
-
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
-Signed-off-by: Stefan Beller <sbeller@google.com>
 Signed-off-by: Brandon Williams <bmwill@google.com>
 ---
- attr.c               | 38 ++++++++++++---------------------
- attr.h               |  9 +++-----
- builtin/check-attr.c | 60 ++++++++++++++++++++++++++--------------------------
- 3 files changed, 47 insertions(+), 60 deletions(-)
+ attr.c | 69 ++++++++++++++++++++++++++++++------------------------------------
+ attr.h |  6 ++++++
+ 2 files changed, 37 insertions(+), 38 deletions(-)
 
 diff --git a/attr.c b/attr.c
-index be9e398e9..d2eaa0410 100644
+index 38b0d4347..633a12cc3 100644
 --- a/attr.c
 +++ b/attr.c
-@@ -837,42 +837,32 @@ int git_check_attrs(const char *path, int num, struct attr_check_item *check)
- 	return 0;
- }
+@@ -30,20 +30,9 @@ static const char git_attr__unknown[] = "(builtin)unknown";
  
--int git_all_attrs(const char *path, int *num, struct attr_check_item **check)
-+void git_all_attrs(const char *path, struct attr_check *check)
- {
--	int i, count, j;
-+	int i;
- 
--	collect_some_attrs(path, 0, NULL);
-+	attr_check_reset(check);
-+	collect_some_attrs(path, check->check_nr, check->check);
- 
--	/* Count the number of attributes that are set. */
--	count = 0;
--	for (i = 0; i < attr_nr; i++) {
--		const char *value = check_all_attr[i].value;
--		if (value != ATTR__UNSET && value != ATTR__UNKNOWN)
--			++count;
--	}
--	*num = count;
--	ALLOC_ARRAY(*check, count);
--	j = 0;
- 	for (i = 0; i < attr_nr; i++) {
-+		const char *name = check_all_attr[i].attr->name;
- 		const char *value = check_all_attr[i].value;
--		if (value != ATTR__UNSET && value != ATTR__UNKNOWN) {
--			(*check)[j].attr = check_all_attr[i].attr;
--			(*check)[j].value = value;
--			++j;
--		}
-+		struct attr_check_item *item;
-+		if (value == ATTR__UNSET || value == ATTR__UNKNOWN)
-+			continue;
-+		item = attr_check_append(check, git_attr(name));
-+		item->value = value;
- 	}
--
--	return 0;
- }
- 
--struct attr_check *attr_check_alloc(void)
-+int git_check_attr(const char *path, struct attr_check *check)
- {
--	return xcalloc(1, sizeof(struct attr_check));
-+	return git_check_attrs(path, check->check_nr, check->check);
- }
- 
--int git_check_attr(const char *path, struct attr_check *check)
-+struct attr_check *attr_check_alloc(void)
- {
--	return git_check_attrs(path, check->check_nr, check->check);
-+	return xcalloc(1, sizeof(struct attr_check));
- }
- 
- struct attr_check *attr_check_initl(const char *one, ...)
-diff --git a/attr.h b/attr.h
-index 459347f4b..971bb9a38 100644
---- a/attr.h
-+++ b/attr.h
-@@ -56,13 +56,10 @@ int git_check_attrs(const char *path, int, struct attr_check_item *);
- extern int git_check_attr(const char *path, struct attr_check *check);
- 
- /*
-- * Retrieve all attributes that apply to the specified path.  *num
-- * will be set to the number of attributes on the path; **check will
-- * be set to point at a newly-allocated array of git_attr_check
-- * objects describing the attributes and their values.  *check must be
-- * free()ed by the caller.
-+ * Retrieve all attributes that apply to the specified path.
-+ * check holds the attributes and their values.
-  */
--int git_all_attrs(const char *path, int *num, struct attr_check_item **check);
-+void git_all_attrs(const char *path, struct attr_check *check);
- 
- enum git_attr_direction {
- 	GIT_ATTR_CHECKIN,
-diff --git a/builtin/check-attr.c b/builtin/check-attr.c
-index 889264a5b..3d4704be5 100644
---- a/builtin/check-attr.c
-+++ b/builtin/check-attr.c
-@@ -24,12 +24,13 @@ static const struct option check_attr_options[] = {
- 	OPT_END()
+ struct git_attr {
+ 	int attr_nr; /* unique attribute number */
+-	int maybe_macro;
+-	int maybe_real;
+ 	char name[FLEX_ARRAY]; /* attribute name */
  };
  
--static void output_attr(int cnt, struct attr_check_item *check,
--			const char *file)
-+static void output_attr(struct attr_check *check, const char *file)
- {
- 	int j;
-+	int cnt = check->check_nr;
-+
- 	for (j = 0; j < cnt; j++) {
--		const char *value = check[j].value;
-+		const char *value = check->check[j].value;
- 
- 		if (ATTR_TRUE(value))
- 			value = "set";
-@@ -42,36 +43,38 @@ static void output_attr(int cnt, struct attr_check_item *check,
- 			printf("%s%c" /* path */
- 			       "%s%c" /* attrname */
- 			       "%s%c" /* attrvalue */,
--			       file, 0, git_attr_name(check[j].attr), 0, value, 0);
-+			       file, 0,
-+			       git_attr_name(check->check[j].attr), 0, value, 0);
- 		} else {
- 			quote_c_style(file, NULL, stdout, 0);
--			printf(": %s: %s\n", git_attr_name(check[j].attr), value);
-+			printf(": %s: %s\n",
-+			       git_attr_name(check->check[j].attr), value);
- 		}
+-/*
+- * NEEDSWORK: maybe-real, maybe-macro are not property of
+- * an attribute, as it depends on what .gitattributes are
+- * read.  Once we introduce per git_attr_check attr_stack
+- * and check_all_attr, the optimization based on them will
+- * become unnecessary and can go away.  So is this variable.
+- */
+-static int cannot_trust_maybe_real;
 -
+ const char *git_attr_name(const struct git_attr *attr)
+ {
+ 	return attr->name;
+@@ -182,6 +171,7 @@ static void all_attrs_init(struct attr_hashmap *map, struct attr_check *check)
+ 	 */
+ 	for (i = 0; i < check->all_attrs_nr; i++) {
+ 		check->all_attrs[i].value = ATTR__UNKNOWN;
++		check->all_attrs[i].macro = NULL;
  	}
  }
  
- static void check_attr(const char *prefix,
--		       int cnt, struct attr_check_item *check,
-+		       struct attr_check *check,
-+		       int collect_all,
- 		       const char *file)
- {
- 	char *full_path =
- 		prefix_path(prefix, prefix ? strlen(prefix) : 0, file);
--	if (check != NULL) {
--		if (git_check_attrs(full_path, cnt, check))
--			die("git_check_attrs died");
--		output_attr(cnt, check, file);
-+
-+	if (collect_all) {
-+		git_all_attrs(full_path, check);
+@@ -233,8 +223,6 @@ static struct git_attr *git_attr_internal(const char *name, int namelen)
+ 	if (!a) {
+ 		FLEX_ALLOC_MEM(a, name, name, namelen);
+ 		a->attr_nr = g_attr_hashmap.map.size;
+-		a->maybe_real = 0;
+-		a->maybe_macro = 0;
+ 
+ 		attr_hashmap_add(&g_attr_hashmap, a->name, namelen, a);
+ 		assert(a->attr_nr == (g_attr_hashmap.map.size - 1));
+@@ -397,7 +385,6 @@ static struct match_attr *parse_attr_line(const char *line, const char *src,
+ 		      (is_macro ? 0 : namelen + 1));
+ 	if (is_macro) {
+ 		res->u.attr = git_attr_internal(name, namelen);
+-		res->u.attr->maybe_macro = 1;
  	} else {
--		if (git_all_attrs(full_path, &cnt, &check))
--			die("git_all_attrs died");
--		output_attr(cnt, check, file);
--		free(check);
-+		if (git_check_attr(full_path, check))
-+			die("git_check_attr died");
+ 		char *p = (char *)&(res->state[num_attr]);
+ 		memcpy(p, name, namelen);
+@@ -418,10 +405,6 @@ static struct match_attr *parse_attr_line(const char *line, const char *src,
+ 	/* Second pass to fill the attr_states */
+ 	for (cp = states, i = 0; *cp; i++) {
+ 		cp = parse_attr(src, lineno, cp, &(res->state[i]));
+-		if (!is_macro)
+-			res->state[i].attr->maybe_real = 1;
+-		if (res->state[i].attr->maybe_macro)
+-			cannot_trust_maybe_real = 1;
  	}
-+	output_attr(check, file);
-+
- 	free(full_path);
+ 
+ 	strbuf_release(&pattern);
+@@ -826,7 +809,7 @@ static int path_matches(const char *pathname, int pathlen,
+ static int macroexpand_one(struct attr_check_item *all_attrs, int nr, int rem);
+ 
+ static int fill_one(const char *what, struct attr_check_item *all_attrs,
+-		    struct match_attr *a, int rem)
++		    const struct match_attr *a, int rem)
+ {
+ 	int i;
+ 
+@@ -867,24 +850,34 @@ static int fill(const char *path, int pathlen, int basename_offset,
+ 
+ static int macroexpand_one(struct attr_check_item *all_attrs, int nr, int rem)
+ {
+-	struct attr_stack *stk;
+-	int i;
++	const struct attr_check_item *item = &all_attrs[nr];
+ 
+-	if (all_attrs[nr].value != ATTR__TRUE ||
+-	    !all_attrs[nr].attr->maybe_macro)
++	if (item->macro && item->value == ATTR__TRUE)
++		return fill_one("expand", all_attrs, item->macro, rem);
++	else
+ 		return rem;
++}
+ 
+-	for (stk = attr_stack; stk; stk = stk->prev) {
+-		for (i = stk->num_matches - 1; 0 <= i; i--) {
+-			struct match_attr *ma = stk->attrs[i];
+-			if (!ma->is_macro)
+-				continue;
+-			if (ma->u.attr->attr_nr == nr)
+-				return fill_one("expand", all_attrs, ma, rem);
++/*
++ * Marks the attributes which are macros based on the attribute stack.
++ * This prevents having to search through the attribute stack each time
++ * a macro needs to be expanded during the fill stage.
++ */
++static void determine_macros(struct attr_check_item *all_attrs,
++			     const struct attr_stack *stack)
++{
++	for (; stack; stack = stack->prev) {
++		int i;
++		for (i = stack->num_matches - 1; i >= 0; i--) {
++			const struct match_attr *ma = stack->attrs[i];
++			if (ma->is_macro) {
++				int n = ma->u.attr->attr_nr;
++				if (!all_attrs[n].macro) {
++					all_attrs[n].macro = ma;
++				}
++			}
+ 		}
+ 	}
+-
+-	return rem;
  }
  
- static void check_attr_stdin_paths(const char *prefix,
--				   int cnt, struct attr_check_item *check)
-+				   struct attr_check *check,
-+				   int collect_all)
- {
- 	struct strbuf buf = STRBUF_INIT;
- 	struct strbuf unquoted = STRBUF_INIT;
-@@ -85,7 +88,7 @@ static void check_attr_stdin_paths(const char *prefix,
- 				die("line is badly quoted");
- 			strbuf_swap(&buf, &unquoted);
+ /*
+@@ -914,15 +907,15 @@ static void collect_some_attrs(const char *path, struct attr_check *check)
+ 
+ 	prepare_attr_stack(path, dirlen);
+ 	all_attrs_init(&g_attr_hashmap, check);
++	determine_macros(check->all_attrs, attr_stack);
+ 
+-	if (check->check_nr && !cannot_trust_maybe_real) {
++	if (check->check_nr) {
+ 		rem = 0;
+ 		for (i = 0; i < check->check_nr; i++) {
+-			const struct git_attr *a = check->check[i].attr;
+-			if (!a->maybe_real) {
+-				struct attr_check_item *c;
+-				c = check->all_attrs + a->attr_nr;
+-				c->value = ATTR__UNSET;
++			int n = check->check[i].attr->attr_nr;
++			struct attr_check_item *item = &check->all_attrs[n];
++			if (item->macro) {
++				item->value = ATTR__UNSET;
+ 				rem++;
+ 			}
  		}
--		check_attr(prefix, cnt, check, buf.buf);
-+		check_attr(prefix, check, collect_all, buf.buf);
- 		maybe_flush_or_die(stdout, "attribute to stdout");
- 	}
- 	strbuf_release(&buf);
-@@ -100,7 +103,7 @@ static NORETURN void error_with_usage(const char *msg)
+diff --git a/attr.h b/attr.h
+index 44b21d82c..f40524875 100644
+--- a/attr.h
++++ b/attr.h
+@@ -27,6 +27,12 @@ extern const char git_attr__false[];
+ struct attr_check_item {
+ 	const struct git_attr *attr;
+ 	const char *value;
++	/*
++	 * If 'macro' is non-NULL, indicates that 'attr' is a macro based on
++	 * the current attribute stack and contains a pointer to the match_attr
++	 * definition of the macro
++	 */
++	const struct match_attr *macro;
+ };
  
- int cmd_check_attr(int argc, const char **argv, const char *prefix)
- {
--	struct attr_check_item *check;
-+	struct attr_check *check;
- 	int cnt, i, doubledash, filei;
- 
- 	if (!is_bare_repository())
-@@ -160,28 +163,25 @@ int cmd_check_attr(int argc, const char **argv, const char *prefix)
- 			error_with_usage("No file specified");
- 	}
- 
--	if (all_attrs) {
--		check = NULL;
--	} else {
--		check = xcalloc(cnt, sizeof(*check));
-+	check = attr_check_alloc();
-+	if (!all_attrs) {
- 		for (i = 0; i < cnt; i++) {
--			const char *name;
--			struct git_attr *a;
--			name = argv[i];
--			a = git_attr(name);
-+			struct git_attr *a = git_attr(argv[i]);
- 			if (!a)
- 				return error("%s: not a valid attribute name",
--					name);
--			check[i].attr = a;
-+					     argv[i]);
-+			attr_check_append(check, a);
- 		}
- 	}
- 
- 	if (stdin_paths)
--		check_attr_stdin_paths(prefix, cnt, check);
-+		check_attr_stdin_paths(prefix, check, all_attrs);
- 	else {
- 		for (i = filei; i < argc; i++)
--			check_attr(prefix, cnt, check, argv[i]);
-+			check_attr(prefix, check, all_attrs, argv[i]);
- 		maybe_flush_or_die(stdout, "attribute to stdout");
- 	}
-+
-+	attr_check_free(check);
- 	return 0;
- }
+ struct attr_check {
 -- 
 2.11.0.390.gc69c2f50cf-goog
 
