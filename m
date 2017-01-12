@@ -2,65 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id ADCE11FEB3
-	for <e@80x24.org>; Thu, 12 Jan 2017 22:25:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 42B8B1FEB3
+	for <e@80x24.org>; Thu, 12 Jan 2017 23:08:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751074AbdALWZl (ORCPT <rfc822;e@80x24.org>);
-        Thu, 12 Jan 2017 17:25:41 -0500
-Received: from mail-io0-f170.google.com ([209.85.223.170]:35941 "EHLO
-        mail-io0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751064AbdALWZj (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 Jan 2017 17:25:39 -0500
-Received: by mail-io0-f170.google.com with SMTP id j13so30156263iod.3
-        for <git@vger.kernel.org>; Thu, 12 Jan 2017 14:25:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=ADW4wp20PKhzaKO8zRwyis3bwMhsi8SwvmTgc2KcYcQ=;
-        b=tbYwKf1lQSoagejDVHA2St3X9/ZUErBjPgkDpLxTtJdqao+nOpsJF1IYZiXcapWBQq
-         ZExH2H5mailf0WsTe+3bgl2HfCypAqGtmwGxIVw31wo71QgXfLg0CJ68rQ3JBfLk+EwR
-         3oC2nNr8iMnKBMHWr9LkXmIROQaKGdPWwlUGxw0v8cY20WYV75oDZx6ghHMp3qvY5pBQ
-         ECDPoPy1TUJRCbFcS1LSL9rHEz8WqW8PnjFa4j7uShBPsOnrtmJGa0mHsWczwwkZ/9Wc
-         LUJj2lZA02h2pmBDnSm2MJXsDPZxJvDUaLBm5CcNwC12O84dvRW3AqxSUU3oM1B+6qmi
-         PqRQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=ADW4wp20PKhzaKO8zRwyis3bwMhsi8SwvmTgc2KcYcQ=;
-        b=tJOUP+jT5HUqZxd6451mCJ8Xnp8GsZUQGyMyAEyuuYqCwx1xnB2KY8ribKPxeRQ129
-         JsBgA9AXKMZgdFeefYdY926ZRdDHomn6AQfp5gLnf0zOpYYomfV4QhpMbFQ/uCIRPXQ0
-         YIQyumkWytLfjmAlHgNrCOaKh6Gt8Anr2qUizFsTeXODprrDPtORR+/VouMjX2lXGgrj
-         GDneutAoYSgOeNtOtlSna0q2EhpuWQt7NGZxJWOCSMB8CsGJlomkY/68MunCaqJHCL1W
-         1LvZD+gubGalhm58ze+1q9t17ke+Ze1EoTnar96gqgSejukInYrpFbprsMKACvoaOrTn
-         cN/g==
-X-Gm-Message-State: AIkVDXLY3uSuhDnnjVn4tXmvMSHaKmE2pOoky+7KcWvQubZJsuMnDAV9bhMBnV2Vp92f90m8qZgzXIvU/hDIHYd9
-X-Received: by 10.107.16.14 with SMTP id y14mr14646295ioi.164.1484259938498;
- Thu, 12 Jan 2017 14:25:38 -0800 (PST)
+        id S1750835AbdALXIn (ORCPT <rfc822;e@80x24.org>);
+        Thu, 12 Jan 2017 18:08:43 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:51296 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1750794AbdALXIn (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 Jan 2017 18:08:43 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 1908F5F15C;
+        Thu, 12 Jan 2017 18:08:42 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=G2MCNAz6fSwj
+        D01WMfIMfOKNyyQ=; b=DhzBWYz3senRIcFZkfSQWAGWx4xgS7k3N9Nenu6kNJ/j
+        R0Fnp4rcW81PpD0fp5Y2fSRI9ND+UnhItp+kEz7djKBEmtVKk7/4RZoUtwQfOl9/
+        O6LR8k5w55oL3laRulICYVYvm7nr7iFqmT89/QIDwkr2MQUPbKDvRRTzPOOOdUE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=wVejqd
+        BofuFEd+wYlCJiFVwtZ5WajYfTPcPdGWqkXBrw0Wn1ucev67z/EwjW+Bxya3hdo4
+        oAhcMS1B71NFpy1SjZ/reqWVLu/3r1NLsbJhRbXSn8DG8uMfCqwk37ErQI6Xyp6c
+        24veqgj1zwhZAYwKo/0Umdv8ZQXMqIhYqa5II=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 0EECA5F15B;
+        Thu, 12 Jan 2017 18:08:42 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 501A05F159;
+        Thu, 12 Jan 2017 18:08:41 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH/RFC 5/4] Redefine core.bare in multiple working tree setting
+References: <20170110112524.12870-1-pclouds@gmail.com>
+        <20170110113320.13119-1-pclouds@gmail.com>
+Date:   Thu, 12 Jan 2017 15:08:39 -0800
+In-Reply-To: <20170110113320.13119-1-pclouds@gmail.com> (=?utf-8?B?Ik5n?=
+ =?utf-8?B?dXnhu4VuIFRow6FpIE5n4buNYw==?=
+        Duy"'s message of "Tue, 10 Jan 2017 18:33:20 +0700")
+Message-ID: <xmqqh953j2q0.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.90 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.79.39.19 with HTTP; Thu, 12 Jan 2017 14:25:38 -0800 (PST)
-In-Reply-To: <20170112213240.7972-2-philipoakley@iee.org>
-References: <20170112213240.7972-1-philipoakley@iee.org> <20170112213240.7972-2-philipoakley@iee.org>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Thu, 12 Jan 2017 14:25:38 -0800
-Message-ID: <CAGZ79kZThvdbGgk0qDv38RWDrWEF7-7hSZhX2h5tGhW0+-Nt4Q@mail.gmail.com>
-Subject: Re: [PATCH 1/3] doc: gitk: remove gitview reference
-To:     Philip Oakley <philipoakley@iee.org>
-Cc:     GitList <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Paul Mackerras <paulus@ozlabs.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 0EE32A38-D91C-11E6-8375-FE3F13518317-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jan 12, 2017 at 1:32 PM, Philip Oakley <philipoakley@iee.org> wrote:
-> contrib/gitview has been removed. Remove the reference.
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
 
-Thanks for this cleanup.
+> With per-worktree configuration in place, core.bare is moved to main
+> worktree's private config file. But it does not really make sense
+> because this is about _repository_. Instead we could leave core.bare in
+> the per-repo config and change/extend its definition from:
+>
+>    If true this repository is assumed to be 'bare' and has no working
+>    directory associated with it.
+>
+> to
+>
+>    If true this repository is assumed to be 'bare' and has no _main_
+>    working directory associated with it.
+>
+> In other words, linked worktrees are not covered by core.bare. This
+> definition is the same as before when it comes to single worktree setup=
+.
+
+Up to this point, I think it is not _wrong_ per-se, but it does not
+say anything about secondary worktrees.  Some may have their own
+working tree, others may be bare, and there is no way for programs
+to discover if a particular secondary worktree has or lacks its own
+working tree.
+
+Granted, "git worktree" porcelain may be incapable of creating a
+secondary worktree without a working tree, but I think the
+underlying repository layout still is capable of expressing such a
+secondary worktree.
+
+So there still is something else necessary, I suspect, to make the
+definition complete.  Perhaps core.bare should be set in
+per-worktree configuration for all worktrees including the primary
+one, and made the definition/explanation of core.bare to be
+"definition of this variable, if done, must be done in per-worktree
+config file.  If set to true, the worktree is 'bare' and has no
+working directory associated with it"?  That makes things even more
+equal, as there is truly no "special one" at that point.
+
+I dunno.
