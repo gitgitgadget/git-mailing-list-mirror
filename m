@@ -6,34 +6,34 @@ X-Spam-Status: No, score=-6.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 38ABC1FEB3
-	for <e@80x24.org>; Thu, 12 Jan 2017 16:54:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3E0F91FEB3
+	for <e@80x24.org>; Thu, 12 Jan 2017 16:56:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750842AbdALQyh (ORCPT <rfc822;e@80x24.org>);
-        Thu, 12 Jan 2017 11:54:37 -0500
-Received: from mail.nottheoilrig.com ([52.27.13.164]:60160 "EHLO
+        id S1750917AbdALQ4n (ORCPT <rfc822;e@80x24.org>);
+        Thu, 12 Jan 2017 11:56:43 -0500
+Received: from mail.nottheoilrig.com ([52.27.13.164]:60170 "EHLO
         mail.nottheoilrig.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750730AbdALQx4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 Jan 2017 11:53:56 -0500
+        with ESMTP id S1750835AbdALQzE (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 Jan 2017 11:55:04 -0500
 Received: from mail.nottheoilrig.com (localhost [127.0.0.1])
-        by mail.nottheoilrig.com (Postfix) with ESMTP id 905F020293
-        for <git@vger.kernel.org>; Thu, 12 Jan 2017 16:53:55 +0000 (UTC)
+        by mail.nottheoilrig.com (Postfix) with ESMTP id AF6B920293
+        for <git@vger.kernel.org>; Thu, 12 Jan 2017 16:55:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=nottheoilrig.com;
-        s=3532ada; t=1484240035;
+        s=3532ada; t=1484240103;
         bh=QyZi/Bbo2deIN42Q9NgQyb6lQwVDjtKhfAgJ7IrzC4A=;
         h=Subject:To:References:From:Date:In-Reply-To:From;
-        b=is/T6qCdBWpdQbH7vOljczcdR2v2yCvicdGJUy/gWBup4QTrdFA16jHOg7G3AQ9Q3
-         VAVRfHP3/eB8NRbiaQFg9eQf3VVjfmPnmJtwua0T4MsPoluGlJLyAsTHRb3Ja9GfDo
-         rgzsunRvmKpu2bGXFh1t1dOQZGk/NNLebmo9bYwE=
+        b=QigcNlSWUplhSvjYOyGJVVk7muZckmot9ze8c1VrsMFWjs86Kz499AVuVL3b6K3pj
+         kyKs7HTC8B844uXDNwMnTRXTmXligS2iBjKuFdOtzFBrqAHO2Vut9PozxaSyrSTAfN
+         tZlf3jjpKX4wXGL6lUS1hqgmjT99MXJPFMAQu0uM=
 Received: from [192.168.0.11] (S0106c8fb26402908.ek.shawcable.net [24.66.132.201])
-        by mail.nottheoilrig.com (Postfix) with ESMTPSA
-        for <git@vger.kernel.org>; Thu, 12 Jan 2017 16:53:55 +0000 (UTC)
+        by mail.nottheoilrig.com (Postfix) with ESMTPSA;
+        Thu, 12 Jan 2017 16:55:03 +0000 (UTC)
 Subject: Re: [PATCH] imap-send.c: Avoid deprecated openssl 1.1.0 API
-To:     git@vger.kernel.org
+To:     eroen <git-scm@occam.eroen.eu>, git@vger.kernel.org
 References: <20170112104219.563497-1-git-scm@occam.eroen.eu>
 From:   Jack Bates <bk874k@nottheoilrig.com>
-Message-ID: <27751523-bcc3-4f4b-c833-fc5113af356d@nottheoilrig.com>
-Date:   Thu, 12 Jan 2017 09:53:54 -0700
+Message-ID: <66967e0e-8bd9-f4b6-d2d4-ccce9004f42e@nottheoilrig.com>
+Date:   Thu, 12 Jan 2017 09:55:02 -0700
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
  Icedove/45.4.0
 MIME-Version: 1.0
