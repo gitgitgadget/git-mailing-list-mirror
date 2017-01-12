@@ -7,235 +7,122 @@ X-Spam-Status: No, score=-6.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 89B5520798
-	for <e@80x24.org>; Thu, 12 Jan 2017 06:00:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4E0E420798
+	for <e@80x24.org>; Thu, 12 Jan 2017 06:01:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750769AbdALGAO (ORCPT <rfc822;e@80x24.org>);
-        Thu, 12 Jan 2017 01:00:14 -0500
-Received: from mail-io0-f194.google.com ([209.85.223.194]:35431 "EHLO
-        mail-io0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750701AbdALGAL (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 Jan 2017 01:00:11 -0500
-Received: by mail-io0-f194.google.com with SMTP id m98so1419857iod.2
-        for <git@vger.kernel.org>; Wed, 11 Jan 2017 22:00:11 -0800 (PST)
+        id S1750751AbdALGB1 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 12 Jan 2017 01:01:27 -0500
+Received: from mail-io0-f193.google.com ([209.85.223.193]:35552 "EHLO
+        mail-io0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750774AbdALGBC (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 Jan 2017 01:01:02 -0500
+Received: by mail-io0-f193.google.com with SMTP id m98so1420830iod.2
+        for <git@vger.kernel.org>; Wed, 11 Jan 2017 22:00:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=Vx28AB18Jgsns/+NZaWR8pt66kvxJp7jg2IYDWq88fQ=;
-        b=Tvw+cYARFhV238AdNzgPY/FbSLIQNqxT9QBD4NQAGqspmft62qiQy1u9lxzcm49QZ3
-         3UFo+WQPHB8KA193QF4m/dBVQU+yT0ECNWUXAtFFHgv1BkCSYkg8gO2iV7q3U3fpQSVg
-         zewfDrd/Wzue9gMSgOykmnDxD+1HEYNJQW5sBAtiN36IdGk942bSfeeV1epCYPHfvF98
-         d/BBO441fOI5wv35gWg6QWhNmdh3eh9t6Ukj2S9dNcho29z5G5LkONompKF+t/XadbbS
-         SF/8Ne74QizU0nY+Oxpwe31wS5WQYSBJmC1I+Hc2m0SPItDewXzhDBMggAb4hp6gt5EO
-         0Mgg==
+        h=from:to:cc:subject:date:message-id;
+        bh=rDSvv0nyMGc6t1MUR2SfAAiUTBrPV0/JANpRRJmi7FY=;
+        b=I+47PwBtNZEhUbS+EfrfO4GnCWrLj9YG/Rylma5I9bRCryt4Lr7U8osoPaA63Ds61a
+         3nVNf4di+jwg8NWVbhJ7t6+1GW7p6wOXfW6/LxdRQ78VQ3Qa8iNM5zmlp7pGKVmHeObL
+         0y4ohJ/jVtfHSU1yWcV8S7SloKbh66Vqnz2eoqmvsoDVLjfpzvypPZIiymI0+GXgCRnv
+         DfK3Ni9aX5tUl6wJHHD/4YeHljSC1YeJ9ivttIDgLYRoenEJ7IFunKhuW2/lBcCHnyX7
+         cGc67iI/NWvDXMyMt9DNiIUf3eLxOC+gBNARjzHwMBEgB+RuL0g1PtReXWxqArllvS24
+         oMHw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=Vx28AB18Jgsns/+NZaWR8pt66kvxJp7jg2IYDWq88fQ=;
-        b=srWX2atoBU1ft7KuNYaQqoOwq8HzEctry5zwZ9vtn1mXmIq20nV+V2P4OlrKRzFVjq
-         KF8gggf4QE4WnOFFIGqIfpdDduYu7shWK84qNU05DOui/sg5nROZ6qKuCr2cjgz6QIOr
-         qh8YaDzmjPDiXylnF4MWjsgvMab+eTpqAn61aBdbCMBySTEPEyOjnkg80w3wNv+JqqCf
-         9Vy4DZpSDiDN3OVl66xHxk/NDEhQlFFdo8ASdzgYFDR8cPim9CwJ/s8EHp8NWqx7Jx8I
-         7Qkbd+1CMqsZOi2CsJlTC9ycD1q1MdrWJXa+0gyj1gyUXaLTYNMyS8aTPvD/p3zVEDSv
-         xUwQ==
-X-Gm-Message-State: AIkVDXJqbY3trF17h0jqyazpd8pFWV6pFNwL0R0D4MUrw2Oc8+ZThLsRGtZ+vCcYn31OaA==
-X-Received: by 10.107.84.2 with SMTP id i2mr13059582iob.176.1484200386236;
-        Wed, 11 Jan 2017 21:53:06 -0800 (PST)
-Received: from d-212-11-228.eecs.umich.edu ([141.212.11.228])
-        by smtp.gmail.com with ESMTPSA id r20sm4350888ioi.10.2017.01.11.21.53.05
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=rDSvv0nyMGc6t1MUR2SfAAiUTBrPV0/JANpRRJmi7FY=;
+        b=uj2N+E7NaBwuG+CVOvU49Qx4t5b8YcA2gtiEPpARNHbL8W/27nivp8lUOfe+qnS1Vr
+         YKY9GTbJy7R0QLzr25J+0eC4PAkkUtVXxsFVTGLicmCU2DM93+TlVGD1riMIrvNbYmBo
+         Eus6C4gFhixhZxPv13eVMk6rJfrVV9HEblGUxb2X8GF+N2Qpz+/BOQ0+vyRSB0a8usB2
+         vAXjzKK1sy7dKy//n1xNoh81Ja8Nc17g8VyDoQoWcmV95WS3lmaMm/BdqituImLOCAZS
+         /tQjo+jyA6GyaRcUHhMzTE6F5SvxnJLMQ8gN7umyzFK4mU72ZIg4MiBKgITHa2F4FvwP
+         v3kw==
+X-Gm-Message-State: AIkVDXJvdf+m3x+mR0rkry6ujC0HjUws1NxWpSVP9s5WLWT4HmGFaDitoS59nAbG8gOk8Q==
+X-Received: by 10.107.163.19 with SMTP id m19mr11189274ioe.222.1484200385160;
         Wed, 11 Jan 2017 21:53:05 -0800 (PST)
+Received: from d-212-11-228.eecs.umich.edu ([141.212.11.228])
+        by smtp.gmail.com with ESMTPSA id r20sm4350888ioi.10.2017.01.11.21.53.04
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 11 Jan 2017 21:53:04 -0800 (PST)
 From:   Pat Pannuto <pat.pannuto@gmail.com>
 To:     gitster@pobox.com, git@vger.kernel.org
 Cc:     Pat Pannuto <pat.pannuto@gmail.com>
-Subject: [PATCH 1/2] Convert all 'perl -w' to 'perl' + 'use warnings;'
-Date:   Thu, 12 Jan 2017 00:51:39 -0500
-Message-Id: <20170112055140.29877-2-pat.pannuto@gmail.com>
+Subject: [PATCH 0/2] Use env for all perl invocations
+Date:   Thu, 12 Jan 2017 00:51:38 -0500
+Message-Id: <20170112055140.29877-1-pat.pannuto@gmail.com>
 X-Mailer: git-send-email 2.11.0
-In-Reply-To: <20170112055140.29877-1-pat.pannuto@gmail.com>
-References: <20170112055140.29877-1-pat.pannuto@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This commit is in preparation for converting all shebangs to use 'env'
-instead of a fixed perl path, which will not allow for arguments to 'perl'.
+I spent a little while debugging why git-format-patch refused to believe
+that SSL support was installed (Can't locate Net/SMTP/SSL.pm in @INC...)
+Turns out that it was installed for my system's preferred /usr/local/bin/perl,
+but not for git-format-patch's hard-coded /usr/bin/perl; changing the shebang
+allowed git format-patch to work as expected.
 
-Signed-off-by: Pat Pannuto <pat.pannuto@gmail.com>
----
- Documentation/cat-texi.perl       | 4 +++-
- Documentation/cmd-list.perl       | 4 +++-
- Documentation/fix-texi.perl       | 4 +++-
- compat/vcbuild/scripts/clink.pl   | 3 ++-
- compat/vcbuild/scripts/lib.pl     | 3 ++-
- contrib/buildsystems/engine.pl    | 3 ++-
- contrib/buildsystems/generate     | 3 ++-
- contrib/buildsystems/parse.pl     | 3 ++-
- contrib/examples/git-remote.perl  | 3 ++-
- contrib/mw-to-git/t/test-gitmw.pl | 5 ++++-
- 10 files changed, 25 insertions(+), 10 deletions(-)
+This patch set converts all perl invocations in git to use env so that the
+user-preferred perl interpreter is always used.
 
-diff --git a/Documentation/cat-texi.perl b/Documentation/cat-texi.perl
-index 87437f8a9..1cd28b1b5 100755
---- a/Documentation/cat-texi.perl
-+++ b/Documentation/cat-texi.perl
-@@ -1,4 +1,6 @@
--#!/usr/bin/perl -w
-+#!/usr/bin/perl
-+
-+use warnings;
- 
- my @menu = ();
- my $output = $ARGV[0];
-diff --git a/Documentation/cmd-list.perl b/Documentation/cmd-list.perl
-index 5aa73cfe4..ba640a441 100755
---- a/Documentation/cmd-list.perl
-+++ b/Documentation/cmd-list.perl
-@@ -1,4 +1,6 @@
--#!/usr/bin/perl -w
-+#!/usr/bin/perl
-+
-+use warnings;
- 
- use File::Compare qw(compare);
- 
-diff --git a/Documentation/fix-texi.perl b/Documentation/fix-texi.perl
-index ff7d78f62..c247aece7 100755
---- a/Documentation/fix-texi.perl
-+++ b/Documentation/fix-texi.perl
-@@ -1,4 +1,6 @@
--#!/usr/bin/perl -w
-+#!/usr/bin/perl
-+
-+use warnings;
- 
- while (<>) {
- 	if (/^\@setfilename/) {
-diff --git a/compat/vcbuild/scripts/clink.pl b/compat/vcbuild/scripts/clink.pl
-index a87d0da51..46eb61c5c 100755
---- a/compat/vcbuild/scripts/clink.pl
-+++ b/compat/vcbuild/scripts/clink.pl
-@@ -1,4 +1,4 @@
--#!/usr/bin/perl -w
-+#!/usr/bin/perl
- ######################################################################
- # Compiles or links files
- #
-@@ -10,6 +10,7 @@
- # Copyright (C) 2009 Marius Storm-Olsen <mstormo@gmail.com>
- ######################################################################
- use strict;
-+use warnings;
- my @args = ();
- my @cflags = ();
- my $is_linking = 0;
-diff --git a/compat/vcbuild/scripts/lib.pl b/compat/vcbuild/scripts/lib.pl
-index d8054e469..e571b8470 100755
---- a/compat/vcbuild/scripts/lib.pl
-+++ b/compat/vcbuild/scripts/lib.pl
-@@ -1,4 +1,4 @@
--#!/usr/bin/perl -w
-+#!/usr/bin/perl
- ######################################################################
- # Libifies files on Windows
- #
-@@ -10,6 +10,7 @@
- # Copyright (C) 2009 Marius Storm-Olsen <mstormo@gmail.com>
- ######################################################################
- use strict;
-+use warnings;
- my @args = ();
- while (@ARGV) {
- 	my $arg = shift @ARGV;
-diff --git a/contrib/buildsystems/engine.pl b/contrib/buildsystems/engine.pl
-index 23da787dc..a173669ce 100755
---- a/contrib/buildsystems/engine.pl
-+++ b/contrib/buildsystems/engine.pl
-@@ -1,4 +1,4 @@
--#!/usr/bin/perl -w
-+#!/usr/bin/perl
- ######################################################################
- # Do not call this script directly!
- #
-@@ -8,6 +8,7 @@
- # Copyright (C) 2009 Marius Storm-Olsen <mstormo@gmail.com>
- ######################################################################
- use strict;
-+use warnings;
- use File::Basename;
- use File::Spec;
- use Cwd;
-diff --git a/contrib/buildsystems/generate b/contrib/buildsystems/generate
-index bc10f25ff..9af89454a 100755
---- a/contrib/buildsystems/generate
-+++ b/contrib/buildsystems/generate
-@@ -1,4 +1,4 @@
--#!/usr/bin/perl -w
-+#!/usr/bin/perl
- ######################################################################
- # Generate buildsystem files
- #
-@@ -19,6 +19,7 @@
- # Copyright (C) 2009 Marius Storm-Olsen <mstormo@gmail.com>
- ######################################################################
- use strict;
-+use warnings;
- use File::Basename;
- use Cwd;
- 
-diff --git a/contrib/buildsystems/parse.pl b/contrib/buildsystems/parse.pl
-index c9656ece9..33ca89eb0 100755
---- a/contrib/buildsystems/parse.pl
-+++ b/contrib/buildsystems/parse.pl
-@@ -1,4 +1,4 @@
--#!/usr/bin/perl -w
-+#!/usr/bin/perl
- ######################################################################
- # Do not call this script directly!
- #
-@@ -8,6 +8,7 @@
- # Copyright (C) 2009 Marius Storm-Olsen <mstormo@gmail.com>
- ######################################################################
- use strict;
-+use warnings;
- use File::Basename;
- use Cwd;
- 
-diff --git a/contrib/examples/git-remote.perl b/contrib/examples/git-remote.perl
-index d42df7b41..5bf3ffd4c 100755
---- a/contrib/examples/git-remote.perl
-+++ b/contrib/examples/git-remote.perl
-@@ -1,6 +1,7 @@
--#!/usr/bin/perl -w
-+#!/usr/bin/perl
- 
- use strict;
-+use warnings;
- use Git;
- my $git = Git->repository();
- 
-diff --git a/contrib/mw-to-git/t/test-gitmw.pl b/contrib/mw-to-git/t/test-gitmw.pl
-index 0ff76259f..8d0e7c078 100755
---- a/contrib/mw-to-git/t/test-gitmw.pl
-+++ b/contrib/mw-to-git/t/test-gitmw.pl
-@@ -1,4 +1,4 @@
--#!/usr/bin/perl -w -s
-+#!/usr/bin/perl
- # Copyright (C) 2012
- #     Charles Roussel <charles.roussel@ensimag.imag.fr>
- #     Simon Cathebras <simon.cathebras@ensimag.imag.fr>
-@@ -22,6 +22,9 @@
- #     "edit_page"
- #     "getallpagename"
- 
-+use strict;
-+use warnings;
-+
- use MediaWiki::API;
- use Getopt::Long;
- use encoding 'utf8';
+Pat Pannuto (2):
+  Convert all 'perl -w' to 'perl' + 'use warnings;'
+  Use 'env' to find perl instead of fixed path
+
+ Documentation/build-docdep.perl               | 2 +-
+ Documentation/cat-texi.perl                   | 4 +++-
+ Documentation/cmd-list.perl                   | 4 +++-
+ Documentation/fix-texi.perl                   | 4 +++-
+ Documentation/lint-gitlink.perl               | 2 +-
+ compat/vcbuild/scripts/clink.pl               | 3 ++-
+ compat/vcbuild/scripts/lib.pl                 | 3 ++-
+ contrib/buildsystems/engine.pl                | 3 ++-
+ contrib/buildsystems/generate                 | 3 ++-
+ contrib/buildsystems/parse.pl                 | 3 ++-
+ contrib/contacts/git-contacts                 | 2 +-
+ contrib/credential/netrc/git-credential-netrc | 2 +-
+ contrib/credential/netrc/test.pl              | 2 +-
+ contrib/diff-highlight/diff-highlight         | 2 +-
+ contrib/examples/git-remote.perl              | 3 ++-
+ contrib/examples/git-rerere.perl              | 2 +-
+ contrib/examples/git-svnimport.perl           | 2 +-
+ contrib/fast-import/git-import.perl           | 2 +-
+ contrib/fast-import/import-directories.perl   | 2 +-
+ contrib/fast-import/import-tars.perl          | 2 +-
+ contrib/hooks/setgitperms.perl                | 2 +-
+ contrib/hooks/update-paranoid                 | 2 +-
+ contrib/long-running-filter/example.pl        | 2 +-
+ contrib/mw-to-git/git-mw.perl                 | 2 +-
+ contrib/mw-to-git/git-remote-mediawiki.perl   | 2 +-
+ contrib/mw-to-git/t/test-gitmw.pl             | 5 ++++-
+ contrib/stats/mailmap.pl                      | 2 +-
+ contrib/stats/packinfo.pl                     | 2 +-
+ git-add--interactive.perl                     | 2 +-
+ git-archimport.perl                           | 2 +-
+ git-cvsexportcommit.perl                      | 2 +-
+ git-cvsimport.perl                            | 2 +-
+ git-cvsserver.perl                            | 2 +-
+ git-difftool.perl                             | 2 +-
+ git-relink.perl                               | 2 +-
+ git-send-email.perl                           | 2 +-
+ git-svn.perl                                  | 2 +-
+ gitweb/gitweb.perl                            | 2 +-
+ t/Git-SVN/Utils/can_compress.t                | 2 +-
+ t/Git-SVN/Utils/fatal.t                       | 2 +-
+ t/check-non-portable-shell.pl                 | 2 +-
+ t/gitweb-lib.sh                               | 2 +-
+ t/perf/aggregate.perl                         | 2 +-
+ t/perf/min_time.perl                          | 2 +-
+ t/t0202/test.pl                               | 2 +-
+ t/t4034/perl/post                             | 2 +-
+ t/t4034/perl/pre                              | 2 +-
+ t/t9000/test.pl                               | 2 +-
+ t/t9500-gitweb-standalone-no-errors.sh        | 2 +-
+ t/t9700/test.pl                               | 2 +-
+ t/test-terminal.perl                          | 2 +-
+ 51 files changed, 66 insertions(+), 51 deletions(-)
+
 -- 
 2.11.0
 
