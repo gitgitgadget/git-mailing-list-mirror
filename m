@@ -2,69 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 023C21FEB3
-	for <e@80x24.org>; Thu, 12 Jan 2017 12:12:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 51C601FEB3
+	for <e@80x24.org>; Thu, 12 Jan 2017 12:20:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751318AbdALML7 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 12 Jan 2017 07:11:59 -0500
-Received: from mail-it0-f44.google.com ([209.85.214.44]:38359 "EHLO
-        mail-it0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750981AbdALML6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 Jan 2017 07:11:58 -0500
-Received: by mail-it0-f44.google.com with SMTP id x2so11449312itf.1
-        for <git@vger.kernel.org>; Thu, 12 Jan 2017 04:11:58 -0800 (PST)
+        id S1751095AbdALMUR (ORCPT <rfc822;e@80x24.org>);
+        Thu, 12 Jan 2017 07:20:17 -0500
+Received: from mail-io0-f195.google.com ([209.85.223.195]:34518 "EHLO
+        mail-io0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750903AbdALMUQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 Jan 2017 07:20:16 -0500
+Received: by mail-io0-f195.google.com with SMTP id c80so2194962iod.1
+        for <git@vger.kernel.org>; Thu, 12 Jan 2017 04:20:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=omarqureshi-net.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=bdLZAnIbsRAla6z4cod3iA5/orXu4/0S2TH8yT9z22k=;
-        b=CitOIb8p83iCKqmhS29OUcOVcW904XFsuHtmK07sZr3A1Jckk2LMiLHl//kaR2PmTc
-         bo8+PNrl1kKZ+uY1T3Nb+qQT7XijGSI+Sa+2XaUPTyZ8d+3nb+FDezMJP0f78vO7BqT9
-         x4QPE/lMArkyVBFHAY9UZnZ4uVMTbESHM0H5SWAEi2LJbzpLyCmprYTndxHvzkYq5JDU
-         wWfSG5icnV+8XllnJ7lMEF+MkbY9JMVlEG05jSYx7MOcfasuX2o0gw6Zq8UAfHa/Kx2V
-         k0zMmoRAIrsvNY/Gv05smn5duMnAqBfgrT8TEWPl63y+amm2jAWfZ9ypQ/Z6fDGJbXvB
-         6JAg==
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=/QT/mbM6XFmw+5mqtZ/2egV/mJ9NZ3Byxw0u6u8Wpto=;
+        b=kOlnxvJW0GTdVNXlbSeAEFd3oaGaNHdAM0ZHR4+mNC9efDuGS3iPocR2goLEoVd9L+
+         EOVQfO9jLbovKpRMsUnZuueIYgRSYtnWlmT6IFZ5bybUu3rIyV9SNowBHmMI7n5ayA6h
+         zmSqzH1MQq9MRmvDyqTjd78RvjJ3KTi0BC8d19Wh5prPqPcBf54Z/NLHQYL/UmWjwXDM
+         LyqubG3eBhEYDgvsptAjobj1pShCNGPe/1H+PFin64voAbxppU0mk2Q0ZjCkwEd1Hb+0
+         j9wA9ChhiXSwXlL13+OKdObZy3rZj0OL0NDp4RvSa5AcqltF7XBgfgrb1AsQTordkKmd
+         FGcQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=bdLZAnIbsRAla6z4cod3iA5/orXu4/0S2TH8yT9z22k=;
-        b=PzwvmAdkeaeUnvdxaNWsjUgqxZKPikR4yZXt3djznUaG8In49XVrVKeY5xLuojwGcO
-         iYSTqemtBLPbrgu3br2gvU4IZ8/Ttw+VdhWQSC80vpYFim/tH7L9+8i/ov6QgHMgprPw
-         slhSdKVOaxcGwWtI9AcNUW4XS0x9kwyAdEUAHy1ug7utmOs+eLSvoOEUOR0Igxjjlhkg
-         Kl6i1HRzYDwh4oESoR1OezQg9+zSng9YLuuCvss6DFH1bohGeIsW7Fx4iIBlbtyG2XGH
-         JTs61bvWlbUgr0S3P9Wvc+aD0Bs6PdNYPCVsxLmxPV0ZRoIvEx5VHeldWd1KtFImZ2RP
-         TNdg==
-X-Gm-Message-State: AIkVDXIRqKvTkW0g81rG2fEcM9zjo0HFOAzn54a7pLJh6zWOzxwwVYKOn+KiCMdeHdZpsnL2cO0OvYA+6ee+4A==
-X-Received: by 10.36.50.78 with SMTP id j75mr12575189ita.58.1484223117638;
- Thu, 12 Jan 2017 04:11:57 -0800 (PST)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=/QT/mbM6XFmw+5mqtZ/2egV/mJ9NZ3Byxw0u6u8Wpto=;
+        b=EGyGfW296G63K1PKgLdGYaFXQmY+AzJPGlo+ayFAZ9qp0hpMQ+6+VcakGIQhZ4v0lv
+         LyxSNFqi7sxwjAUDEvf/Av9Yz+h90Kpcglgau5S5eTm3r28GxshwzcHmia852GY3WEsq
+         s9LkTEigm4++VoeW7vF2rQWcbEx4Co6l3y3h/cMNuX2z6gWYKK2BQ4Fde8PPA1c3F2cC
+         lZ3OIBF4/5YAygRy117bN1dJ0/DqbJUS61Dp/DT9iYo1qUL8E0gpNcFNotn5+uavd51F
+         QFzjwZVTuimiA+JYoDWqJMWYit+fy4KpP5q3tUyYxAtQMtp4D3b8MMbd2VdzDBu7PjdP
+         flGQ==
+X-Gm-Message-State: AIkVDXJbOCDy674TG9EY59nNBNRs8zcOYKvvKr5ZtCafcr2Xb1cSsWxE0MEUogQdvjaLxNIBaUvJ/qPXDKhoOA==
+X-Received: by 10.107.44.83 with SMTP id s80mr12375999ios.212.1484223615399;
+ Thu, 12 Jan 2017 04:20:15 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.107.24.130 with HTTP; Thu, 12 Jan 2017 04:11:57 -0800 (PST)
-X-Originating-IP: [2a02:c7f:7a3a:2800:745b:a804:a81b:8752]
-From:   Omar Qureshi <omar@omarqureshi.net>
-Date:   Thu, 12 Jan 2017 12:11:57 +0000
-Message-ID: <CA+-cb7TuPd-n-HZO-60cKAysmtTaVMcviC2W+bhxz7hikbY-RA@mail.gmail.com>
-Subject: git clone failing when used through bundler on Docker for Windows
- with a shared volume
-To:     git@vger.kernel.org
+Received: by 10.64.69.3 with HTTP; Thu, 12 Jan 2017 04:20:14 -0800 (PST)
+In-Reply-To: <xmqqh958uoot.fsf@gitster.mtv.corp.google.com>
+References: <20170108101333.26221-1-pclouds@gmail.com> <20170109103258.25341-1-pclouds@gmail.com>
+ <xmqqh958uoot.fsf@gitster.mtv.corp.google.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Thu, 12 Jan 2017 19:20:14 +0700
+Message-ID: <CACsJy8AbdDxsSUDSx7=kezjPOCQnhpNdwKyMvb-xQ+d7wd99Tw@mail.gmail.com>
+Subject: Re: [PATCH v4] log --graph: customize the graph lines with config log.graphColors
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>
 Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi there, I'm not sure this is the best place for this, but, this
-seems to be an issue with Git when used through Docker on Windows when
-there is a shared volume.
+Just FYI. The broken internet cables in Vietnam seem to hit my ISP
+really hard. It's nearly impossible to make a TCP connection. So I'm
+basically off the grid, hopefully not longer than two weeks.
 
-The issue is documented at
-https://github.com/bundler/bundler/issues/5322 and I've provided a git
-repository that allows you to simulate the issue, for this the
-requirements are Docker for Windows with the Docker client installed
-on WSL as well as docker-compose installed via pip.
-
-Docker for Windows will need to be configured to have a shared drive
-
-Also, it makes no difference if a tag is provided or not
+On 1/10/17, Junio C Hamano <gitster@pobox.com> wrote:
+> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
+>
+>> +	end =3D string + strlen(string);
+>> +	while (start < end) {
+>> +		const char *comma =3D strchrnul(start, ',');
+>> +		char color[COLOR_MAXLEN];
+>> +
+>> +		while (start < comma && isspace(*start))
+>> +			start++;
+>> +		if (start =3D=3D comma) {
+>> +			start =3D comma + 1;
+>> +			continue;
+>> +		}
+>> +
+>> +		if (!color_parse_mem(start, comma - start, color))
+>
+> So you skip the leading blanks but let color_parse_mem() trim the
+> trailing blanks?  It would work once the control reaches the loop,
+> but wouldn't that miss
+>
+> 	git -c log.graphColors=3D' reset , blue, red' log --graph
+>
+> as "reset" is not
