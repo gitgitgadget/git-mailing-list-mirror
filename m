@@ -6,107 +6,101 @@ X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 39CB21FEB3
-	for <e@80x24.org>; Thu, 12 Jan 2017 23:32:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 760E61FEB3
+	for <e@80x24.org>; Thu, 12 Jan 2017 23:42:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750845AbdALXcu (ORCPT <rfc822;e@80x24.org>);
-        Thu, 12 Jan 2017 18:32:50 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:52821 "EHLO
+        id S1751015AbdALXma (ORCPT <rfc822;e@80x24.org>);
+        Thu, 12 Jan 2017 18:42:30 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:60012 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1750827AbdALXct (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 Jan 2017 18:32:49 -0500
+        with ESMTP id S1750796AbdALXm3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 Jan 2017 18:42:29 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 9411D5F5FE;
-        Thu, 12 Jan 2017 18:32:48 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id B16AD60BB9;
+        Thu, 12 Jan 2017 18:42:18 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=geeiWCO14T4Q
-        aMTuC7AVTEMhTwY=; b=nHk2lgkJOsazdkTVDaTeGIA09fTWrkMvsqv8O/8xUBM2
-        1TshwQjEv3abU0xD7BcauUaTCI8iOXlMQ5eegNef7f4ExVd4wTYicnXWz4c/y0ug
-        qx0TOyajzHGJnRTsGGw7w1uj8tYe1AbGqxGEzb09BnPLzPJZTHXdIvfwroF0Dw0=
+        :content-type; s=sasl; bh=iR6l0XbsvUgTK7ByBQqXHq9CwPE=; b=mRXl4b
+        4JII/GQS9g08nZcjihNhxGyopBHrBfx9jv0O/XP6yaIHXjbTWLuy2C6BQmC0idhj
+        G1AJxkH1be17zxboe8pspM66bdBOA8DY6Xi3aef7ew3ZN+MBSt+7huPtnQ97Ij6V
+        oYA3P6TIC+Wt0T4miw5mwxv1PHYkPYn7EAVZ8=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=IbCp6n
-        dApnDUKpyQQJwWxbZOKGJQulTTkoQzvMXqpLwFybYSolk/BwlYmbAwfHu153QBZO
-        2ZlJPhidPK7hcqF3uN7y3flF9g+xhfS17ZPhWUeO5p3R6pPLiehxzX71Wtfsu2+N
-        3deC6naA/7U9wqUIThLlM76xlBNCAFE/U9Uvw=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 8B9AF5F5FD;
-        Thu, 12 Jan 2017 18:32:48 -0500 (EST)
+        :content-type; q=dns; s=sasl; b=g/GYsj2NC+tsVtJ4Wwk3Dw53xTT8v24C
+        PNTVS+yeFUPnJJVSCm0DB8sDCgq0/vH8s77r8cR5n0p5pTixhbbKJQwwf9hTuvOo
+        0p/AZmPNSTSHLKe8ThC54uAQ8EG4JIqCY2IxG2mQ/iKf24Awo0uUaEZq2cv1cR2t
+        Q20E6pSGDvc=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id A89C560BB7;
+        Thu, 12 Jan 2017 18:42:18 -0500 (EST)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id E7DA85F5FB;
-        Thu, 12 Jan 2017 18:32:47 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 132D760BA4;
+        Thu, 12 Jan 2017 18:42:18 -0500 (EST)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Manuel Ullmann <ullman.alias@posteo.de>
 Cc:     git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>
 Subject: Re: Bug report: Documentation error in git-bisect man description
 References: <87r347swz1.fsf@sonnengebleicht.fritz.box>
-Date:   Thu, 12 Jan 2017 15:32:46 -0800
-In-Reply-To: <87r347swz1.fsf@sonnengebleicht.fritz.box> (Manuel Ullmann's
-        message of "Fri, 13 Jan 2017 00:02:42 +0100")
-Message-ID: <xmqqd1frj1lt.fsf@gitster.mtv.corp.google.com>
+        <xmqqd1frj1lt.fsf@gitster.mtv.corp.google.com>
+Date:   Thu, 12 Jan 2017 15:42:16 -0800
+In-Reply-To: <xmqqd1frj1lt.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
+        message of "Thu, 12 Jan 2017 15:32:46 -0800")
+Message-ID: <xmqq8tqfj15z.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.90 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 6D240330-D91F-11E6-83EF-FE3F13518317-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: C0F65CD2-D920-11E6-83D5-A7617B1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Manuel Ullmann <ullman.alias@posteo.de> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> Hi,
+> Manuel Ullmann <ullman.alias@posteo.de> writes:
 >
-> there is a mistake in the git-bisect description.
-> The second paragraph of it says =E2=80=98the terms "old" and "new" can =
-be used
-> in place of "good" and "bad"=E2=80=99. So from a logical point of view =
-the
-> description part stating the usage syntax should be:
+> Hmmm, I tend to agree, modulo a minor fix.
 >
-> git bisect (bad|good) [<rev>]
-> git bisect (old|new) [<rev>...]
+> If the description were in a context inside a paragraph like this:
 >
-> instead of
+> 	When you want to tell 'git bisect' that a <rev> belongs to
+> 	the newer half of the history, you say
 >
-> git bisect (bad|new) [<rev>]
-> git bisect (good|old) [<rev>...]
+> 		git bisect (bad|new) [<rev>]
 >
-> Checked man page version of 2.11.0, but it is in my local 2.10.2 git as=
- well.
+> 	On the other hand, when you want to tell 'git bisect' that a
+> 	<rev> belongs to the older half of the history, you can say
+>
+> 		git bisect (good|old) [<rev>]
+>
+> then the pairing we see in the current text makes quite a lot of
+> sense.
 
-Hmmm, I tend to agree, modulo a minor fix.
+Actually, the above is _exactly_ what was intended.  I misread the
+current documentation when I made the comment, and I think that the
+current one _IS_ correct.  The latter half of the above is not about
+a single rev.  You can paint multiple commits with the "older half"
+color, i.e.
 
-If the description were in a context inside a paragraph like this:
+	On the other hand, when you want to tell 'git bisect' that
+	one or more <rev>s  belong to the older half of the history,
+	you can say
 
-	When you want to tell 'git bisect' that a <rev> belongs to
-	the newer half of the history, you say
+		git bisect (good|old) [<rev>...]
 
-		git bisect (bad|new) [<rev>]
+In contrast, you can mark only one <rev> as newer (or "already
+bad").  So pairing (bad|good) and (new|old) like you suggested
+breaks the correctness of the command line description.
 
-	On the other hand, when you want to tell 'git bisect' that a
-	<rev> belongs to the older half of the history, you can say
+If (bad|new) and (good|old) bothers you because they may mislead the
+readers to think bad is an opposite of new (and good is an opposite
+of old), the only solution I can think of to that problem is to
+expand these two lines into four and list them like this:
 
-		git bisect (good|old) [<rev>]
+        git bisect bad [<rev>]
+        git bisect good [<rev>...]
+        git bisect new [<rev>]
+        git bisect old [<rev>...]
 
-then the pairing we see in the current text makes quite a lot of
-sense.
-
-But in the early part of the description section, listing the
-information that logically belongs to the synopsis section, I think
-the current one is misleading.  You are painting commits with two
-colors, and if you are from the "older vs newer" school, you say
-either 'old' or 'new' as the names of these two colors, and do not
-use 'bad' or 'good'.  A line with "git bisect (old|new) [<rev>]" in
-the list would make more sense.
-
-Similarly, if you are from the "still good vs already bad" school,
-you would either say 'good' or 'bad' so you would want to see a line
-with "git bisect (good|bad) [<rev>]" in the list (not "bad|good" in
-that order, but opposite).
-
-Christian, am I talking nonsense?
