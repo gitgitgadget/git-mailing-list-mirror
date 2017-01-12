@@ -2,105 +2,173 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-6.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BD7771FEB3
-	for <e@80x24.org>; Thu, 12 Jan 2017 19:31:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A885C1FEB3
+	for <e@80x24.org>; Thu, 12 Jan 2017 19:35:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750827AbdALTbO (ORCPT <rfc822;e@80x24.org>);
-        Thu, 12 Jan 2017 14:31:14 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:60650 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1750750AbdALTbN (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 Jan 2017 14:31:13 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 117945DF26;
-        Thu, 12 Jan 2017 14:30:50 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=cc9dIoabCr1W4TvR5VeB/KquA+M=; b=sowG5r
-        vfBQZNQiWJjgy4OXNOVhgWzGLmnhqnFSRuEwqR8gQ8nL/ZdQmllEFdw94GJq/qgJ
-        uTGhJNA5p7XGPkeLdWgG+vv0qlYcZqVGq94ZQMiYJHqritslzDuTwFkzu6DeNpTq
-        +7p7sSq7meZMKk1RKm8HEMpJKSwvpK8+/s92g=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=CJo+J6Go8rUxWMEeE0R5s5ry/QnWeqEB
-        /xBrpO5QvmGO8PrHq14iUMp9HNaQUimfQVy0DItChVDEOcBd9kxeJe+wof6DWWll
-        BTiOPwn3xoWjcSmc0Xf13++tkV9p9YxlbEi0NNTlmmRP3SEZpataPR8gdYEz4lgz
-        DH9Fg9fNkZ0=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id F22405DF25;
-        Thu, 12 Jan 2017 14:30:49 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 5B0D35DF23;
-        Thu, 12 Jan 2017 14:30:49 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org,
-        =?utf-8?B?66eI64iE?= =?utf-8?B?7JeY?= <nalla@hamal.uberspace.de>
-Subject: Re: [PATCH 1/2] asciidoctor: fix user-manual to be built by `asciidoctor`
-References: <cover.1483373021.git.johannes.schindelin@gmx.de>
-        <3c160f81a88cf8697f2459bb7f2a3e27fb3e469c.1483373021.git.johannes.schindelin@gmx.de>
-        <20170104080852.bmlmtzxhjx4qt74f@sigill.intra.peff.net>
-        <xmqqbmvi34ul.fsf@gitster.mtv.corp.google.com>
-        <20170108032709.k43zmej5lxmcoj4o@sigill.intra.peff.net>
-        <xmqqinpmpld0.fsf@gitster.mtv.corp.google.com>
-        <alpine.DEB.2.20.1701121130190.3469@virtualbox>
-Date:   Thu, 12 Jan 2017 11:30:48 -0800
-In-Reply-To: <alpine.DEB.2.20.1701121130190.3469@virtualbox> (Johannes
-        Schindelin's message of "Thu, 12 Jan 2017 12:15:08 +0100 (CET)")
-Message-ID: <xmqq37gokrdj.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.90 (gnu/linux)
+        id S1750768AbdALTfg (ORCPT <rfc822;e@80x24.org>);
+        Thu, 12 Jan 2017 14:35:36 -0500
+Received: from mail-cys01nam02on0115.outbound.protection.outlook.com ([104.47.37.115]:53580
+        "EHLO NAM02-CY1-obe.outbound.protection.outlook.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1750755AbdALTff (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 Jan 2017 14:35:35 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=selector1; h=From:Date:Subject:Message-ID:Content-Type:MIME-Version;
+ bh=iBBKdQI5vm0Nd4xeUK+GDt5UZZhzKieM8sMo8sk3Li4=;
+ b=hcx/7KQ+Tym11bovVIFW++Hh6EZWsyAUrDYZvvHEkyHExbLwYObZgXy0lw7tvwZK6hplE4ynszJL+H8G5fWywQUIASGTlH3jyeLmzkMbttrVstO40RJW0TGhJuIPzH/1+THk3pySFGy1FQ8YnI5ryydQ+JdDxqfpoVHV3EGDEFQ=
+Received: from BY2PR21MB0036.namprd21.prod.outlook.com (10.162.77.23) by
+ BY2PR21MB0036.namprd21.prod.outlook.com (10.162.77.23) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P384) id
+ 15.1.860.0; Thu, 12 Jan 2017 19:35:11 +0000
+Received: from BY2PR21MB0036.namprd21.prod.outlook.com ([10.162.77.23]) by
+ BY2PR21MB0036.namprd21.prod.outlook.com ([10.162.77.23]) with mapi id
+ 15.01.0860.000; Thu, 12 Jan 2017 19:35:10 +0000
+From:   Matthew Wilcox <mawilcox@microsoft.com>
+To:     Jonathan Tan <jonathantanmy@google.com>,
+        Matthew Wilcox <mawilcox@linuxonhyperv.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: RE: [PATCH 2/2] mailinfo: Understand forwarded patches
+Thread-Topic: [PATCH 2/2] mailinfo: Understand forwarded patches
+Thread-Index: AQHSbKTB7XbZu4UiuUWQ20zC7PAtpaE1JxQAgAANugA=
+Date:   Thu, 12 Jan 2017 19:35:10 +0000
+Message-ID: <BY2PR21MB00361F50AA0ABEA01F5630EFCB790@BY2PR21MB0036.namprd21.prod.outlook.com>
+References: <1484212824-14108-1-git-send-email-mawilcox@linuxonhyperv.com>
+ <1484212824-14108-2-git-send-email-mawilcox@linuxonhyperv.com>
+ <866bff14-ea25-c644-b8d2-1529f31e6461@google.com>
+In-Reply-To: <866bff14-ea25-c644-b8d2-1529f31e6461@google.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: spf=none (sender IP is )
+ smtp.mailfrom=mawilcox@microsoft.com; 
+x-originating-ip: [58.84.192.132]
+x-ms-office365-filtering-correlation-id: 67ffa6c5-f6d0-432f-6e6a-08d43b221f80
+x-microsoft-antispam: UriScan:;BCL:0;PCL:0;RULEID:(22001);SRVR:BY2PR21MB0036;
+x-microsoft-exchange-diagnostics: 1;BY2PR21MB0036;7:wK1g+xDyO7Llc848rETApjPMZceYwwpE4P/wIf+0X8caMHVFlDM6LtuEwMAoFDbvKDWRwNujyurdADehR0Ptv/6JhIQ7+vv90PyiT86/QTux6Ont9ul1xD7AGY9wVsR6LxuPNkrcep6f1Xfgo2PVhqNMSmeUiYCUO75xn4MBikgH/c4pZiPcgLR5Us20FxilOHUJCQOzqFYqra4ycqXXNrbIKJLVY4knbTS1rI8JzeIsL9aGhZqlBj9XBfkSLhipSFxDl8h4IbcHPqp1oXoPy1keCOGP7j4j9cd7Ai4UvPs86CW5CjA3o2fvJs99t1oXmucKQEQe8hrZRtpFTjcBzK5m9AoRWuzG0RcQ73KjlScrjxOz7MgJmfO2aw6R3bQI1jHd5Pktfzb5nHjlgRLMx34WmX434iYxrkCmEyLjBtj4uWPxXnx5TtwnvvBUpZ8/Xtj28OyPuKDtu3y+eAB5fMzjizkNZUM4FoxH05hc8sU=
+x-microsoft-antispam-prvs: <BY2PR21MB0036D28954AE764D8BE65BA3CB790@BY2PR21MB0036.namprd21.prod.outlook.com>
+x-exchange-antispam-report-test: UriScan:(211936372134217);
+x-exchange-antispam-report-cfa-test: BCL:0;PCL:0;RULEID:(61425038)(6040375)(601004)(2401047)(5005006)(8121501046)(3002001)(10201501046)(6055026)(61426038)(61427038)(6041248)(20161123562025)(20161123555025)(20161123564025)(20161123560025)(6072148);SRVR:BY2PR21MB0036;BCL:0;PCL:0;RULEID:;SRVR:BY2PR21MB0036;
+x-forefront-prvs: 018577E36E
+x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(6009001)(7916002)(39860400002)(39850400002)(39410400002)(39450400003)(39840400002)(199003)(24454002)(377454003)(189002)(13464003)(38730400001)(77096006)(55016002)(74316002)(99286003)(6506006)(229853002)(25786008)(33656002)(6436002)(5660300001)(92566002)(7736002)(305945005)(2950100002)(2501003)(3846002)(6116002)(102836003)(86362001)(7696004)(10290500002)(9686003)(86612001)(66066001)(8990500004)(50986999)(8676002)(122556002)(81156014)(81166006)(5005710100001)(8936002)(105586002)(54356999)(2906002)(68736007)(189998001)(106356001)(107886002)(106116001)(97736004)(101416001)(2900100001)(5001770100001)(76176999)(10090500001)(3660700001)(3280700002);DIR:OUT;SFP:1102;SCL:1;SRVR:BY2PR21MB0036;H:BY2PR21MB0036.namprd21.prod.outlook.com;FPR:;SPF:None;PTR:InfoNoRecords;A:1;MX:1;LANG:en;
+received-spf: None (protection.outlook.com: microsoft.com does not designate
+ permitted sender hosts)
+spamdiagnosticoutput: 1:99
+spamdiagnosticmetadata: NSPM
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 9F64C428-D8FD-11E6-8172-FE3F13518317-77302942!pb-smtp1.pobox.com
+X-OriginatorOrg: microsoft.com
+X-MS-Exchange-CrossTenant-originalarrivaltime: 12 Jan 2017 19:35:10.7332
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 72f988bf-86f1-41af-91ab-2d7cd011db47
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BY2PR21MB0036
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-
->> And I tend to agree that the silliness you observed (like a t-o-c
->> for a one-section "chapter") is not quite welcome.
->> 
->> For now I queued only 2/2 which looked good.  I won't object if
->> somebody else rerolls 1/2 to appease AsciiDoctor, but let's take an
->> obviously good bit first.
->
-> For fun, I just reverted the article->book patch and I was greeted with
-> this:
-> ...
-> It still builds, funnily enough, but the result is definitely worse on the
-> eyes. The page is *really* long, and structuring it into individual parts
-> does help the readability.
-> ...
-> P.S.: I also tried to use [glossary] and [appendix] as appropriate, but it
-> seems that AsciiDoc *insists* on level-2 sections in an appendix, while
-> AsciiDoctor *insists* on level-3 sections.
-
-So in short, what you are saying is that the support for articles in
-AsciiDoctor is borked and totally unusable on an article that needs
-to be taken correctly by AsciiDoc, and your conclusion is that the
-only way to move forward (other than giving up using AsciiDoctor) is
-to avoid writing documents as articles, and existing articles need
-to be adjusted to read as books.
-
-If that is the case, then I agree with the conclusion.  As I already
-said, I won't object to a reroll of 1/2 to make the document format
-well with AsciiDoctor without breaking rendering by AsciiDoc too
-badly, and your "for fun" experiment illustrated that such a reroll
-still needs to avoid using article style.  Perhaps 1/2 posted as-is
-is the best we could do within that constraint.
-
-Let's queue it on 'pu' and see if somebody else comes up with an
-update that is more visually pleasing with both backends.
-
-Thanks.
-
-
-
+RnJvbTogSm9uYXRoYW4gVGFuIFttYWlsdG86am9uYXRoYW50YW5teUBnb29nbGUuY29tXQ0KPiBP
+biAwMS8xMi8yMDE3IDAxOjIwIEFNLCBNYXR0aGV3IFdpbGNveCB3cm90ZToNCj4gPiBGcm9tOiBN
+YXR0aGV3IFdpbGNveCA8bWF3aWxjb3hAbWljcm9zb2Z0LmNvbT4NCj4gPg0KPiA+IEV4dGVuZCB0
+aGUgLS1zY2lzc29ycyBtZWNoYW5pc20gdG8gc3RyaXAgb2ZmIHRoZSBwcmVhbWJsZSBjcmVhdGVk
+IGJ5DQo+ID4gZm9yd2FyZGluZyBhIHBhdGNoLiAgVGhlcmUgYXJlIGEgY291cGxlIG9mIGV4dHJh
+IGhlYWRlcnMgKCJTZW50IiBhbmQNCj4gPiAiVG8iKSBhZGRlZCBieSBmb3J3YXJkaW5nLCBidXQg
+b3RoZXIgdGhhbiB0aGF0LCB0aGUgLS1zY2lzc29ycyBvcHRpb24NCj4gPiB3aWxsIG5vdyByZW1v
+dmUgcGF0Y2hlcyBmb3J3YXJkZWQgZnJvbSBNaWNyb3NvZnQgT3V0bG9vayB0byBhIExpbnV4DQo+
+ID4gZW1haWwgYWNjb3VudC4NCj4gPg0KPiA+IFNpZ25lZC1vZmYtYnk6IE1hdHRoZXcgV2lsY294
+IDxtYXdpbGNveEBtaWNyb3NvZnQuY29tPg0KPiANCj4gQWxzbyBhZGQgYSB0ZXN0IHNob3dpbmcg
+dGhlIGtpbmQgb2YgbWVzc2FnZSB0aGF0IHRoZSBjdXJyZW50IGNvZGUNCj4gZG9lc24ndCBoYW5k
+bGUsIGFuZCB0aGF0IHRoaXMgY29tbWl0IGFkZHJlc3Nlcy4NCg0KT0suICBGb3IgdGhlIHNha2Ug
+b2YgZGlzY3Vzc2lvbiwgaGVyZSdzIHdoYXQgdGhlIGJhc2U2NC1kZWNvZGVkIG1lc3NhZ2UgbG9v
+a3MgbGlrZToNCg0KLS0tIDg8IC0tLQ0KDQotLS0tLU9yaWdpbmFsIE1lc3NhZ2UtLS0tLQ0KRnJv
+bTogUmVoYXMgU2FjaGRldmEgW21haWx0bzphcXVhbm5pZUBnbWFpbC5jb21dDQpTZW50OiBXZWRu
+ZXNkYXksIEphbnVhcnkgNCwgMjAxNyAxMTo1NSBBTQ0KVG86IE1hdHRoZXcgV2lsY294IDxtYXdp
+bGNveEBtaWNyb3NvZnQuY29tPjsgcmllbEBzdXJyaWVsLmNvbQ0KU3ViamVjdDogW1BBVENIIHYz
+XSByYWRpeCB0cmVlIHRlc3Qgc3VpdGU6IERpYWwgZG93biB2ZXJib3NpdHkgd2l0aCAtdg0KDQpN
+YWtlIHRoZSBvdXRwdXQgb2YgcmFkaXggdHJlZSB0ZXN0IHN1aXRlIGxlc3MgdmVyYm9zZSBieSBk
+ZWZhdWx0IGFuZCBhZGQNCi12IGFuZCAtdnYgY29tbWFuZCBsaW5lIG9wdGlvbnMgZm9yIGluY3Jl
+YXNpbmcgbGV2ZWwgb2YgdmVyYm9zaXR5Lg0KDQotLS0gPjggLS0tDQoNCj4gPiAtLS0NCj4gPiAg
+bWFpbGluZm8uYyB8IDkgKysrKysrKystDQo+ID4gIDEgZmlsZSBjaGFuZ2VkLCA4IGluc2VydGlv
+bnMoKyksIDEgZGVsZXRpb24oLSkNCj4gPg0KPiA+IGRpZmYgLS1naXQgYS9tYWlsaW5mby5jIGIv
+bWFpbGluZm8uYw0KPiA+IGluZGV4IDIwNTk3MDRhOC4uZmMxMjc1NTMyIDEwMDY0NA0KPiA+IC0t
+LSBhL21haWxpbmZvLmMNCj4gPiArKysgYi9tYWlsaW5mby5jDQo+ID4gQEAgLTMzMiw3ICszMzIs
+NyBAQCBzdGF0aWMgdm9pZCBjbGVhbnVwX3N1YmplY3Qoc3RydWN0IG1haWxpbmZvICptaSwNCj4g
+c3RydWN0IHN0cmJ1ZiAqc3ViamVjdCkNCj4gPg0KPiA+ICAjZGVmaW5lIE1BWF9IRFJfUEFSU0VE
+IDEwDQo+ID4gIHN0YXRpYyBjb25zdCBjaGFyICpoZWFkZXJbTUFYX0hEUl9QQVJTRURdID0gew0K
+PiA+IC0JIkZyb20iLCJTdWJqZWN0IiwiRGF0ZSIsDQo+ID4gKwkiRnJvbSIsIlN1YmplY3QiLCJE
+YXRlIiwiU2VudCIsIlRvIiwNCj4gDQo+IEFyZSB0aGVzZSBleHRyYSBoZWFkZXJzIHVzZWQgaW4g
+Ym90aCB0aGUgInJlYWwiIGUtbWFpbCBoZWFkZXJzIGFuZCB0aGUNCj4gaW4tYm9keSBoZWFkZXJz
+LCBvciBvbmx5IG9uZSBvZiB0aGVtPyAoSWYgdGhlIGxhdHRlciwgdGhleSBzaG91bGQNCj4gcHJv
+YmFibHkgYmUgaGFuZGxlZCBvbmx5IGluIHRoZSByZWxldmFudCBmdW5jdGlvbiAtIG15IHByZXZp
+b3VzIHBhdGNoZXMNCj4gdG8gdGhpcyBmaWxlIHdlcmUgaW4gdGhhdCBkaXJlY3Rpb24gdG9vLCBp
+ZiBJIHJlbWVtYmVyIGNvcnJlY3RseS4pIEFsc28sDQo+IEkgc3VzcGVjdCB0aGF0IHRoZXNlIHdp
+bGwgaGF2ZSB0byBiZSBoYW5kbGVkIGRpZmZlcmVudGx5IHRvIHRoZSBvdGhlciAzLA0KPiBidXQg
+dGhhdCB3aWxsIGJlIGNsZWFyZXIgd2hlbiB5b3UgYWRkIHRoZSB0ZXN0IHdpdGggYW4gZXhhbXBs
+ZSBtZXNzYWdlLg0KDQpXaXRob3V0IHRoaXMgcGFydCBvZiB0aGUgcGF0Y2gsIHVzaW5nIC0tc2Np
+c3NvcnMgbWVhbnMgaXQgc3RvcHMgcGFyc2luZyBoZWFkZXJzIHdoZW4gaXQgaGl0cyB0aGUgJ1Nl
+bnQnIGxpbmUuICBTbyBhbGwgSSdtIGxvb2tpbmcgZm9yIGlzIHRvIGhhdmUgJ2lzX2luYm9keV9o
+ZWFkZXIoKScgcmV0dXJuIHRydWUuICBJZiB0aGVyZSdzIGEgYmV0dGVyIHdheSB0byBhY2hpZXZl
+IHRoYXQsIEknbSBhbGwgZm9yIGl0LiAgV2l0aG91dCB0aGlzIGh1bmsgb2YgdGhlIHBhdGNoLCB0
+aGUgY29tbWl0IGxvb2tzIGxpa2UgdGhpczoNCg0KV2l0aG91dCBhbnkgb2YgdGhpcyBwYXRjaCwg
+dGhlIGNvbW1pdCBsb29rcyBsaWtlIHRoaXM6DQoNCkF1dGhvcjogTWF0dGhldyBXaWxjb3ggPG1h
+d2lsY294QG1pY3Jvc29mdC5jb20+DQpEYXRlOiAgIFNhdCBKYW4gNyAxODozMzo0MyAyMDE3ICsw
+MDAwDQoNCiAgICBGVzogW1BBVENIIHYzXSByYWRpeCB0cmVlIHRlc3Qgc3VpdGU6IERpYWwgZG93
+biB2ZXJib3NpdHkgd2l0aCAtdg0KDQogICAgLS0tLS1PcmlnaW5hbCBNZXNzYWdlLS0tLS0NCiAg
+ICBGcm9tOiBSZWhhcyBTYWNoZGV2YSBbbWFpbHRvOmFxdWFubmllQGdtYWlsLmNvbV0NCiAgICBT
+ZW50OiBXZWRuZXNkYXksIEphbnVhcnkgNCwgMjAxNyAxMTo1NSBBTQ0KICAgIFRvOiBNYXR0aGV3
+IFdpbGNveCA8bWF3aWxjb3hAbWljcm9zb2Z0LmNvbT47IHJpZWxAc3VycmllbC5jb20NCiAgICBT
+dWJqZWN0OiBbUEFUQ0ggdjNdIHJhZGl4IHRyZWUgdGVzdCBzdWl0ZTogRGlhbCBkb3duIHZlcmJv
+c2l0eSB3aXRoIC12DQoNCiAgICBNYWtlIHRoZSBvdXRwdXQgb2YgcmFkaXggdHJlZSB0ZXN0IHN1
+aXRlIGxlc3MgdmVyYm9zZSBieSBkZWZhdWx0IGFuZCBhZGQNCiAgICAtdiBhbmQgLXZ2IGNvbW1h
+bmQgbGluZSBvcHRpb25zIGZvciBpbmNyZWFzaW5nIGxldmVsIG9mIHZlcmJvc2l0eS4NCg0KV2l0
+aG91dCB0aGlzIGh1bmsgb2YgdGhlIHBhdGNoLCB0aGUgY29tbWl0IGxvb2tzIGxpa2UgdGhpczoN
+Cg0KQXV0aG9yOiBSZWhhcyBTYWNoZGV2YSA8W21haWx0bzphcXVhbm5pZUBnbWFpbC5jb21dPg0K
+RGF0ZTogICBTYXQgSmFuIDcgMTg6MzM6NDMgMjAxNyArMDAwMA0KDQogICAgRlc6IFtQQVRDSCB2
+M10gcmFkaXggdHJlZSB0ZXN0IHN1aXRlOiBEaWFsIGRvd24gdmVyYm9zaXR5IHdpdGggLXYNCg0K
+ICAgIFNlbnQ6IFdlZG5lc2RheSwgSmFudWFyeSA0LCAyMDE3IDExOjU1IEFNDQogICAgVG86IE1h
+dHRoZXcgV2lsY294IDxtYXdpbGNveEBtaWNyb3NvZnQuY29tPjsgcmllbEBzdXJyaWVsLmNvbQ0K
+ICAgIFN1YmplY3Q6IFtQQVRDSCB2M10gcmFkaXggdHJlZSB0ZXN0IHN1aXRlOiBEaWFsIGRvd24g
+dmVyYm9zaXR5IHdpdGggLXYNCg0KICAgIE1ha2UgdGhlIG91dHB1dCBvZiByYWRpeCB0cmVlIHRl
+c3Qgc3VpdGUgbGVzcyB2ZXJib3NlIGJ5IGRlZmF1bHQgYW5kIGFkZA0KICAgIC12IGFuZCAtdnYg
+Y29tbWFuZCBsaW5lIG9wdGlvbnMgZm9yIGluY3JlYXNpbmcgbGV2ZWwgb2YgdmVyYm9zaXR5Lg0K
+DQpBbmQgd2l0aCB0aGlzIGh1bmssIGl0IHR1cm5zIGludG8gdGhpczoNCg0KQXV0aG9yOiBSZWhh
+cyBTYWNoZGV2YSA8W21haWx0bzphcXVhbm5pZUBnbWFpbC5jb21dPg0KRGF0ZTogICBTYXQgSmFu
+IDcgMTg6MzM6NDMgMjAxNyArMDAwMA0KDQogICAgcmFkaXggdHJlZSB0ZXN0IHN1aXRlOiBEaWFs
+IGRvd24gdmVyYm9zaXR5IHdpdGggLXYNCg0KICAgIE1ha2UgdGhlIG91dHB1dCBvZiByYWRpeCB0
+cmVlIHRlc3Qgc3VpdGUgbGVzcyB2ZXJib3NlIGJ5IGRlZmF1bHQgYW5kIGFkZA0KICAgIC12IGFu
+ZCAtdnYgY29tbWFuZCBsaW5lIG9wdGlvbnMgZm9yIGluY3JlYXNpbmcgbGV2ZWwgb2YgdmVyYm9z
+aXR5Lg0KDQoNClRoZXJlJ3MgbW9yZSB3b3JrIHRvIGRvIGhlcmUsIHR1cm5pbmcgdGhhdCBzaWxs
+eSA8W21haWx0bzpdPiBpbnRvIGEgcHJvcGVyIGVtYWlsIGFkZHJlc3MsIGZvciBleGFtcGxlLCBh
+bmQgcGFyc2luZyBTZW50OiBsaWtlIHdlIHBhcnNlIERhdGU6LCBidXQgSSB0aG91Z2h0IGl0IHdv
+cnRoIHNlbmRpbmcgb3V0IHBhdGNoZXMgMSAmIDIgYmVmb3JlIHdyaXRpbmcgcGF0Y2ggMy4NCg0K
+PiA+IEBAIC02ODUsNiArNjg1LDEzIEBAIHN0YXRpYyBpbnQgaXNfc2Npc3NvcnNfbGluZShjb25z
+dCBjaGFyICpsaW5lKQ0KPiA+ICAJCQljKys7DQo+ID4gIAkJCWNvbnRpbnVlOw0KPiA+ICAJCX0N
+Cj4gPiArCQlpZiAoIW1lbWNtcChjLCAiT3JpZ2luYWwgTWVzc2FnZSIsIDE2KSkgew0KPiANCj4g
+MSkgWW91IGNhbiB1c2Ugc3RhcnRzX3dpdGggb3Igc2tpcF9wcmVmaXguDQoNCkkgd2FzIGZvbGxv
+d2luZyB0aGUgZXhpc3RpbmcgbG9naWMgaW4gdGhpcyBmdW5jdGlvbiB0aGF0IGxvb2tzIGZvciA4
+PCBvciA+OCBvciAuLi4NCg0KPiAyKSBUaGlzIHNlZW1zIHZ1bG5lcmFibGUgdG8gZmFsc2UgcG9z
+aXRpdmVzLiBJZiAiT3JpZ2luYWwgTWVzc2FnZSINCj4gYWx3YXlzIGZvbGxvd3MgYSBjZXJ0YWlu
+IGtpbmQgb2YgbGluZSwgaXQgbWlnaHQgYmUgYmV0dGVyIHRvIGNoZWNrIGZvcg0KPiB0aGF0LiAo
+QWdhaW4sIGl0IHdpbGwgYmUgY2xlYXJlciB3aGVuIHdlIGhhdmUgYW4gZXhhbXBsZSBtZXNzYWdl
+LikNCg0KSSBkb24ndCB0aGluayBpdCdzIHRlcnJpYmx5IHZ1bG5lcmFibGUgdG8gZmFsc2UgcG9z
+aXRpdmVzLiAgVGhlIGxvZ2ljIGF0IHRoZSBlbmQgb2YgdGhlIGZ1bmN0aW9uIHRyaWVzIHRvIG1h
+a2Ugc3VyZSB0aGF0IHRoZSBzY2lzc29yIG1hcmtzIG1ha2UgdXAgYSBzdWJzdGFudGlhbCBjb21w
+b25lbnQgb2YgdGhlIGxpbmUuDQoNCldlIGNvdWxkIGRvIHRoaXMgZGlmZmVyZW50bHk7IEknbSBu
+b3Qgc3VyZSBpZiB0aGVyZSdzIGEgcmVnZXggbGlicmFyeSBidWlsdCBpbnRvIGdpdCwgYnV0IHdl
+IGNvdWxkIGV2ZW4gY3VzdG9tLXdyaXRlIGEgc2VwYXJhdGUgbWF0Y2hlciB0aGF0IGxvb2tzIG9u
+bHkgZm9yIF4tezMsfU9yaWdpbmFsIE1lc3NhZ2UtezMsfSQNCg0KT3Igd2UgY291bGQgdXNlIGEg
+ZGlmZmVyZW50IG9wdGlvbjsgZWcgLS1mb3J3YXJkZWQgdGhhdCB3aWxsIHRyaW0gb2ZmIHRoZSBl
+eHRyYSBndW5rIGFzc29jaWF0ZWQgd2l0aCBmb3J3YXJkaW5nIG1lc3NhZ2VzLCBpbnN0ZWFkIG9m
+IG92ZXJsb2FkaW5nIC0tc2Npc3NvcnMuDQoNCj4gPiArCQkJaW5fcGVyZm9yYXRpb24gPSAxOw0K
+PiA+ICsJCQlwZXJmb3JhdGlvbiArPSAxNjsNCj4gPiArCQkJc2Npc3NvcnMgKz0gMTY7DQo+ID4g
+KwkJCWMgKz0gMTU7DQo+IA0KPiBXaHkgMTU/IEFsc28sIGNhbiBza2lwX3ByZWZpeCBhdm9pZCB0
+aGVzZSBtYWdpYyBudW1iZXJzPw0KDQpBZ2FpbiwgZm9sbG93aW5nIHRoZSByZXN0IG9mIHRoZSBm
+dW5jdGlvbi4gIGMgaGFzIGFscmVhZHkgYmVlbiBhZHZhbmNlZCBieSAxLCBub3cgaXQgbmVlZHMg
+dG8gYmUgYWR2YW5jZWQgdG8gdGhlIGVuZCBvZiB0aGUgMTYgY2hhcmFjdGVyIHN0cmluZyAiT3Jp
+Z2luYWwgTWVzc2FnZSIuDQoNCg==
