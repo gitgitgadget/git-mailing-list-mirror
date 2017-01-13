@@ -2,91 +2,146 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8023720756
-	for <e@80x24.org>; Fri, 13 Jan 2017 19:03:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EEE1D20756
+	for <e@80x24.org>; Fri, 13 Jan 2017 19:14:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751161AbdAMTDY (ORCPT <rfc822;e@80x24.org>);
-        Fri, 13 Jan 2017 14:03:24 -0500
-Received: from mail-pf0-f178.google.com ([209.85.192.178]:36525 "EHLO
-        mail-pf0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751152AbdAMTDX (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 13 Jan 2017 14:03:23 -0500
-Received: by mail-pf0-f178.google.com with SMTP id 189so35240133pfu.3
-        for <git@vger.kernel.org>; Fri, 13 Jan 2017 11:03:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=SyTCFDXXSUqqt2S1LENFZsQegdjtbjoVdE4rISbqLCo=;
-        b=KUMsYIx1eDC2BJU0sQWHwJeOzaio0RAErEdlDY0lK3ZFDYJ8R9+Vag2ur3yV+qef3i
-         HvdPuDxKmmRz3ZK4h8jfgYRKfZnnZkjNRX4UaszmMQMnI1GjXafaS0ehSqHtE9Hn/Gr6
-         UEEaOENSIsgImKeQYQyx2pLuC5O9qrzWGY/KnFxnhVXjQZc2a0HuZenKvOMJ3o6w8IVw
-         vL+xmzCOxQGuxylvCyt1K4+h7Y62519L6EjGeL9GhMxW3I+8upwsC3qxooSp5TwSH+2i
-         ppB+GZgg+k3cmEZCuZACgmGhIcb6VIfmwwIxmeBC6HBfnQ2hw9Rgq4Uhqybsi/h+RL1d
-         da/w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=SyTCFDXXSUqqt2S1LENFZsQegdjtbjoVdE4rISbqLCo=;
-        b=d1oJZgrBnFxi8own8rzMz3LTIyE53cnb835juE8DwEYO31+RBeJtH5YJlj41Z/qwtK
-         C1tcXtj080yTxvS4r/5hj7tAcQI7+Jjso/8JVXcJgC9lkfOARu6HkgFsTQ/IwNO6ODpu
-         Xp4b4Fl5M7FHTKlXGtAKJyFlSCvv7dzLc/1s+/N84fFt0V+TXmpSJlWXT6nYfdKjyF6F
-         V3jhZY+bxqrgl8K2AXG1NVblxAqN1U04KeiNQM70j8XBguN5a9jqpb3k4Ci0kT0O+EeP
-         34ODL9xRCB3GkQwAdldm4akmAZppuURXrrKMWPX2E3EQFjgVY18xsvKf1lvb3lnbgRSA
-         411A==
-X-Gm-Message-State: AIkVDXKMtCMKRq9jSvtq7JpcbY38IohPOesr3hmaUtzzfQf3zyi9JgiGhG+fxafLXaSw9PE1
-X-Received: by 10.98.150.88 with SMTP id c85mr24378883pfe.68.1484334202879;
-        Fri, 13 Jan 2017 11:03:22 -0800 (PST)
-Received: from localhost ([2620:0:1000:5b10:5403:279a:3262:7e9c])
-        by smtp.gmail.com with ESMTPSA id c22sm31171948pgn.12.2017.01.13.11.03.22
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Fri, 13 Jan 2017 11:03:22 -0800 (PST)
-From:   Stefan Beller <sbeller@google.com>
-To:     gitster@pobox.com
-Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>
-Subject: [PATCH] lib-submodule-update.sh: reduce use of subshell by using git -C <dir>
-Date:   Fri, 13 Jan 2017 11:03:18 -0800
-Message-Id: <20170113190318.18412-1-sbeller@google.com>
-X-Mailer: git-send-email 2.11.0.300.g08194d1431
-In-Reply-To: <xmqqtw92hkgc.fsf@gitster.mtv.corp.google.com>
-References: <xmqqtw92hkgc.fsf@gitster.mtv.corp.google.com>
+        id S1751086AbdAMTOu (ORCPT <rfc822;e@80x24.org>);
+        Fri, 13 Jan 2017 14:14:50 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:54591 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1750805AbdAMTOt (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 13 Jan 2017 14:14:49 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 3364D5E574;
+        Fri, 13 Jan 2017 14:14:06 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=/3VeSIWQhBocYbinByuliik6voI=; b=Ru/ANz
+        8frEPPFgncAOa+HD+yXfveLrFrUWQ6o+zTdZafjRECkCek/Zy7YRwrl/BNIh/J0I
+        1JCwQTC/V8wjYsouDGZOTylGhiy9JOKX2+xtMSa7Efm2fRm+xQIX8krzSHxAxjbd
+        ulAAHz0QhO1/rGRtHXGyUl3k5GEJZFeE6he4w=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=wV67hXDxjhkIjLupSfa0OYsJ+rlyKdHO
+        NkE+FBS7f6uz2lx7oX8I6tloCYnncvz8s+j7hVR+TTuBSv2EmF1fhCNXhSm1InDI
+        +uwFQc0+nkwSiZzyhXzl6gFmGpBIGhELlgUG7bn7YimZwUNSjTsVelCvlM5UocAb
+        uQVwO2JbaDE=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 29C7C5E573;
+        Fri, 13 Jan 2017 14:14:06 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 72EE35E572;
+        Fri, 13 Jan 2017 14:14:05 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     git@vger.kernel.org, Manuel Ullmann <ullman.alias@posteo.de>,
+        Matthieu Moy <Matthieu.Moy@imag.fr>,
+        Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH] Documentation/bisect: improve on (bad|new) and (good|bad)
+References: <20170113144405.3963-1-chriscool@tuxfamily.org>
+Date:   Fri, 13 Jan 2017 11:14:04 -0800
+In-Reply-To: <20170113144405.3963-1-chriscool@tuxfamily.org> (Christian
+        Couder's message of "Fri, 13 Jan 2017 15:44:05 +0100")
+Message-ID: <xmqqinpihiwz.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.90 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 736F7422-D9C4-11E6-AC6F-FE3F13518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In modern Git we prefer
-    "git -C <cmd>"
-over
-    "(cd <somewhere && git <cmd>)"
-as it doesn't need an extra shell.
+Christian Couder <christian.couder@gmail.com> writes:
 
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
- t/lib-submodule-update.sh | 5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+> The following part of the description:
+>
+> git bisect (bad|new) [<rev>]
+> git bisect (good|old) [<rev>...]
+>
+> may be a bit confusing, as a reader may wonder if instead it should be:
+>
+> git bisect (bad|good) [<rev>]
+> git bisect (old|new) [<rev>...]
+>
+> Of course the difference between "[<rev>]" and "[<rev>...]" should hint
+> that there is a good reason for the way it is.
+>
+> But we can further clarify and complete the description by adding
+> "<term-new>" and "<term-old>" to the "bad|new" and "good|old"
+> alternatives.
+>
+> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+> ---
+>  Documentation/git-bisect.txt | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/t/lib-submodule-update.sh b/t/lib-submodule-update.sh
-index 79cdd34a54..915eb4a7c6 100755
---- a/t/lib-submodule-update.sh
-+++ b/t/lib-submodule-update.sh
-@@ -69,10 +69,7 @@ create_lib_submodule_repo () {
- 
- 		git checkout -b "replace_sub1_with_directory" "add_sub1" &&
- 		git submodule update &&
--		(
--			cd sub1 &&
--			git checkout modifications
--		) &&
-+		git -C sub1 checkout modifications &&
- 		git rm --cached sub1 &&
- 		rm sub1/.git* &&
- 		git config -f .gitmodules --remove-section "submodule.sub1" &&
--- 
-2.11.0.300.g08194d1431
+Thanks.  The patch looks good.
+
+A related tangent.  
+
+Last night, I was trying to think if there is a fundamental reason
+why "bad/new/term-new" cannot take more than one <rev>s on the newer
+side of the bisection, and couldn't quite think of any before
+falling asleep.
+
+Currently we keep track of a single bisect/bad, while marking all the
+revs given as good previously as bisect/good-<SHA-1>.
+
+Because the next "bad" is typically chosen from the region of the
+commit DAG that is bounded by bad and good commits, i.e. "rev-list
+bisect/bad --not bisect/good-*", the current bisect/bad will always
+be an ancestor of all bad commits that used to be bisect/bad, and
+keeping previous bisect/bad as bisect/bad-<SHA-1> won't change the
+region of the commit DAG yet to be explored.
+
+As a reason why we need to use only a single bisect/bad, the above
+description is understandable.  But as a reason why we cannot have
+more than one, it is tautological.  It merely says "if we start from
+only one and dig history to find older culprit, we need only one
+bad".
+
+I fell asleep last night without thinking further than that.
+
+I think the answer to the question "why do we think we need a single
+bisect/bad?" is "because bisection is about assuming that there is
+only one commit that flips the tree state from 'old' to 'new' and
+finding that single commit".  That would mean that even if we had
+bisect/bad-A and bisect/bad-B, e.g.
+
+                          o---o---o---bad-A
+                         /
+    -----Good---o---o---o
+                         \
+                          o---o---o---bad-B
+
+
+where 'o' are all commits whose goodness is not yet known, because
+bisection is valid only when we are hunting for a single commit that
+flips the state from good to bad, that commit MUST be at or before
+the merge base of bad-A and bad-B.  So even if we allowed
+
+	$ git bisect bad bad-A bad-B
+
+on the command line, we won't have to set bisect/bad-A and
+bisect/bad-B.  We only need a single bisect/bad that points at the
+merge base of these two.
+
+But what if bad-A and bad-B have more than one merge bases?  We
+won't know which side the badness came from.
+
+                          o---o---o---bad-A
+                         /     \ / 
+    -----Good---o---o---o       / 
+                         \     / \
+                          o---o---o---bad-B
+
+Being able to bisect the region of DAG bound by "^Good bad-A bad-B"
+may have value in such a case.  I dunno.
 
