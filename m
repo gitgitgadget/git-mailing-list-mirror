@@ -2,189 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3587220798
-	for <e@80x24.org>; Fri, 13 Jan 2017 10:28:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 90C6520798
+	for <e@80x24.org>; Fri, 13 Jan 2017 11:30:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751449AbdAMK2u (ORCPT <rfc822;e@80x24.org>);
-        Fri, 13 Jan 2017 05:28:50 -0500
-Received: from koekblik.kaarsemaker.net ([141.138.139.206]:53460 "EHLO
-        koekblik.kaarsemaker.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751356AbdAMK23 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 13 Jan 2017 05:28:29 -0500
-Received: from hurricane.booking.pcln.com (unknown [5.57.20.50])
-        by koekblik.kaarsemaker.net (Postfix) with ESMTP id DFC10803D3;
-        Fri, 13 Jan 2017 11:20:29 +0100 (CET)
-From:   Dennis Kaarsemaker <dennis@kaarsemaker.net>
-To:     git@vger.kernel.org
-Cc:     Dennis Kaarsemaker <dennis@kaarsemaker.net>
-Subject: [PATCH v2 1/2] diff --no-index: follow symlinks
-Date:   Fri, 13 Jan 2017 11:20:20 +0100
-Message-Id: <20170113102021.6054-2-dennis@kaarsemaker.net>
-X-Mailer: git-send-email 2.11.0-234-gaf85957
-In-Reply-To: <20170113102021.6054-1-dennis@kaarsemaker.net>
-References: <20170113102021.6054-1-dennis@kaarsemaker.net>
+        id S1751439AbdAML36 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 13 Jan 2017 06:29:58 -0500
+Received: from mail-pf0-f195.google.com ([209.85.192.195]:34800 "EHLO
+        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751406AbdAML35 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 13 Jan 2017 06:29:57 -0500
+Received: by mail-pf0-f195.google.com with SMTP id y143so8120664pfb.1
+        for <git@vger.kernel.org>; Fri, 13 Jan 2017 03:29:57 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=531mjx5qG3jf/rRB75ZQdr8kRbL9WFlKHs/Wm/itHSs=;
+        b=vhTAOxjXl7aw+n+ASD35LSne8YAlQm0zpsuagWcdkHyzGBuCD7JWHpMvzBO2pHBeGr
+         0Hs4JIKh/g5Fw+ZOdceiWNXXOm40sORhFZ3a0DDNPEVVyy0j0NYz+XKavd6YSTqSr4Gi
+         YFVIlYP6Ok5AJYnCyONnR1vJLmRibCg4jaRFdW4nCNf8nvH+f9eZM7Gh94T3we76mdOG
+         a41wVHbnT+zUQH0sLkbLO8CUVuxeHCG63i9VQTLIhCtcAnZmrel78OPpLA0fpyZ0lA7R
+         MQZH7/I9X0ELudiDBgG6ihGudYDkH35LKLmzd+DMahnXPgGyA4cYFzJntdFhTdbLIAc8
+         au5A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=531mjx5qG3jf/rRB75ZQdr8kRbL9WFlKHs/Wm/itHSs=;
+        b=CigIJEQSBXPqjg67XaLJh5UMyIsyVafO+vrV7wUZZyjdiZKZc971L490koH0P4otHM
+         LYAE7ceVnzgCUjicMY8BHuHY7mTet2kv+FAQMASwfgtN+wZvaP/VRAVHTTikqpWL5WSq
+         QQJ6MQv06VU18ZmWOX+A3aGupu7ksBtkvr5rdc5I9dhMuR2Jsdgcm7O6B79v8lVH9eLi
+         lsGNLFh7tOigVkw+NgN9rhw40wbEWCX5TFEi4SYI4a9SYW/lLSXhCR3nON556ukOTsXi
+         VoUv1g498otEczQCQMxN9d0ME9WYrwTKQWtimjsDi45U+A6LnmD1l2chWJ0uRai8Qyme
+         y1LA==
+X-Gm-Message-State: AIkVDXKgVrlhaLhZ4VkI85LVmVksYf6Qn45WfIQcMp7Hzefzq9Fp8v8bpMS2yPm5yLbcow==
+X-Received: by 10.99.53.195 with SMTP id c186mr23659359pga.24.1484306448537;
+        Fri, 13 Jan 2017 03:20:48 -0800 (PST)
+Received: from gmail.com (50-1-201-252.dsl.static.fusionbroadband.com. [50.1.201.252])
+        by smtp.gmail.com with ESMTPSA id l3sm28771305pgc.41.2017.01.13.03.20.45
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 13 Jan 2017 03:20:46 -0800 (PST)
+Date:   Fri, 13 Jan 2017 03:20:43 -0800
+From:   David Aguilar <davvid@gmail.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Andrew Janke <floss@apjanke.net>,
+        Paul Mackerras <paulus@samba.org>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: gitk: "lime" color incompatible with older Tk versions
+Message-ID: <20170113112043.j7nowdilolswyk2k@gmail.com>
+References: <03babaa1-9011-0010-c4b3-6cad8109d3ab@apjanke.net>
+ <CAGZ79kaO9T+Qc=M6s_ZdpAfLZCVQEYNF=zNxDWArDmsA7jjCWg@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAGZ79kaO9T+Qc=M6s_ZdpAfLZCVQEYNF=zNxDWArDmsA7jjCWg@mail.gmail.com>
+User-Agent: NeoMutt/20161126 (1.7.1)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Git's diff machinery does not follow symlinks, which makes sense as git
-itself also does not, but stores the symlink destination.
+On Mon, May 02, 2016 at 09:20:43AM -0700, Stefan Beller wrote:
+> + Paul Mackerras, who maintains gitk
+> 
+> On Sun, May 1, 2016 at 10:03 AM, Andrew Janke <floss@apjanke.net> wrote:
+> > Hi, git folks,
+> >
+> > I'm having trouble running gitk on Mac OS X 10.9.5. The gitk program uses
+> > the color "lime", which is not present in older versions of Tk, apparently
+> > including the Tk 8.5 which ships with 10.9.
 
-In --no-index mode however, it is useful for diff to to follow symlinks,
-matching the behaviour of ordinary diff. A new --no-dereference (name
-copied from diff) option has been added to disable this behaviour.
+Ping.. it would be nice to get this patch applied.
+I can verify that gitk on Mac OS X 10.11 also has this problem.
+gitk is usually pretty good about backwards-compatibility.
 
-Signed-off-by: Dennis Kaarsemaker <dennis@kaarsemaker.net>
----
- Documentation/diff-options.txt |  7 +++++++
- diff-no-index.c                |  7 ++++---
- diff.c                         | 10 ++++++++--
- diff.h                         |  2 +-
- t/t4053-diff-no-index.sh       | 30 ++++++++++++++++++++++++++++++
- 5 files changed, 50 insertions(+), 6 deletions(-)
+> > This compatibility problem was noted before back in 2012, in
+> > http://www.mail-archive.com/git%40vger.kernel.org/msg14496.html.
+> >
+> > Would you consider switching from lime to a hex value color, for
+> > compatibility with users of older versions of Tk? A patch to do so is below;
+> > only the file gitk-git/gitk needs to be changed.
 
-diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
-index 2d77a19626..48bcf3cc5e 100644
---- a/Documentation/diff-options.txt
-+++ b/Documentation/diff-options.txt
-@@ -216,6 +216,13 @@ any of those replacements occurred.
- 	commit range.  Defaults to `diff.submodule` or the 'short' format
- 	if the config option is unset.
- 
-+ifdef::git-diff[]
-+--no-dereference::
-+	Normally, "git diff --no-index" will dereference symlinks and compare
-+	the contents of the linked files, mimicking ordinary diff. This
-+	option disables that behaviour.
-+endif::git-diff[]
-+
- --color[=<when>]::
- 	Show colored diff.
- 	`--color` (i.e. without '=<when>') is the same as `--color=always`.
-diff --git a/diff-no-index.c b/diff-no-index.c
-index f420786039..826fe97ffc 100644
---- a/diff-no-index.c
-+++ b/diff-no-index.c
-@@ -40,7 +40,7 @@ static int read_directory_contents(const char *path, struct string_list *list)
-  */
- static const char file_from_standard_input[] = "-";
- 
--static int get_mode(const char *path, int *mode)
-+static int get_mode(const char *path, int *mode, int no_dereference)
- {
- 	struct stat st;
- 
-@@ -52,7 +52,7 @@ static int get_mode(const char *path, int *mode)
- #endif
- 	else if (path == file_from_standard_input)
- 		*mode = create_ce_mode(0666);
--	else if (lstat(path, &st))
-+	else if (no_dereference ? lstat(path, &st) : stat(path, &st))
- 		return error("Could not access '%s'", path);
- 	else
- 		*mode = st.st_mode;
-@@ -93,7 +93,8 @@ static int queue_diff(struct diff_options *o,
- {
- 	int mode1 = 0, mode2 = 0;
- 
--	if (get_mode(name1, &mode1) || get_mode(name2, &mode2))
-+	if (get_mode(name1, &mode1, DIFF_OPT_TST(o, NO_DEREFERENCE)) ||
-+		get_mode(name2, &mode2, DIFF_OPT_TST(o, NO_DEREFERENCE)))
- 		return -1;
- 
- 	if (mode1 && mode2 && S_ISDIR(mode1) != S_ISDIR(mode2)) {
-diff --git a/diff.c b/diff.c
-index be11e4ef2b..2fc0226338 100644
---- a/diff.c
-+++ b/diff.c
-@@ -2815,7 +2815,7 @@ int diff_populate_filespec(struct diff_filespec *s, unsigned int flags)
- 		s->size = xsize_t(st.st_size);
- 		if (!s->size)
- 			goto empty;
--		if (S_ISLNK(st.st_mode)) {
-+		if (S_ISLNK(s->mode)) {
- 			struct strbuf sb = STRBUF_INIT;
- 
- 			if (strbuf_readlink(&sb, s->path, s->size))
-@@ -2825,6 +2825,10 @@ int diff_populate_filespec(struct diff_filespec *s, unsigned int flags)
- 			s->should_free = 1;
- 			return 0;
- 		}
-+		if (S_ISLNK(st.st_mode)) {
-+			stat(s->path, &st);
-+			s->size = xsize_t(st.st_size);
-+		}
- 		if (size_only)
- 			return 0;
- 		if ((flags & CHECK_BINARY) &&
-@@ -3884,7 +3888,9 @@ int diff_opt_parse(struct diff_options *options,
- 	else if (!strcmp(arg, "--no-follow")) {
- 		DIFF_OPT_CLR(options, FOLLOW_RENAMES);
- 		DIFF_OPT_CLR(options, DEFAULT_FOLLOW_RENAMES);
--	} else if (!strcmp(arg, "--color"))
-+	} else if (!strcmp(arg, "--no-dereference"))
-+		DIFF_OPT_SET(options, NO_DEREFERENCE);
-+	else if (!strcmp(arg, "--color"))
- 		options->use_color = 1;
- 	else if (skip_prefix(arg, "--color=", &arg)) {
- 		int value = git_config_colorbool(NULL, arg);
-diff --git a/diff.h b/diff.h
-index 25ae60d5ff..74883db1eb 100644
---- a/diff.h
-+++ b/diff.h
-@@ -69,7 +69,7 @@ typedef struct strbuf *(*diff_prefix_fn_t)(struct diff_options *opt, void *data)
- #define DIFF_OPT_FIND_COPIES_HARDER  (1 <<  6)
- #define DIFF_OPT_FOLLOW_RENAMES      (1 <<  7)
- #define DIFF_OPT_RENAME_EMPTY        (1 <<  8)
--/* (1 <<  9) unused */
-+#define DIFF_OPT_NO_DEREFERENCE      (1 <<  9)
- #define DIFF_OPT_HAS_CHANGES         (1 << 10)
- #define DIFF_OPT_QUICK               (1 << 11)
- #define DIFF_OPT_NO_INDEX            (1 << 12)
-diff --git a/t/t4053-diff-no-index.sh b/t/t4053-diff-no-index.sh
-index 453e6c35eb..c6046fef19 100755
---- a/t/t4053-diff-no-index.sh
-+++ b/t/t4053-diff-no-index.sh
-@@ -127,4 +127,34 @@ test_expect_success 'diff --no-index from repo subdir respects config (implicit)
- 	test_cmp expect actual.head
- '
- 
-+test_expect_success SYMLINKS 'diff --no-index follows symlinks' '
-+	echo a >1 &&
-+	echo b >2 &&
-+	ln -s 1 3 &&
-+	ln -s 2 4 &&
-+	cat >expect <<\EOF
-+		--- a/3
-+		+++ b/4
-+		@@ -1 +1 @@
-+		-a
-+		+b
-+	EOF
-+	test_expect_code 1 git diff --no-index 3 4 | tail -n +3 >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success SYMLINKS 'diff --no-index --no-dereference does not follow symlinks' '
-+	cat >expect <<\EOF
-+		--- a/3
-+		+++ b/4
-+		@@ -1 +1 @@
-+		-1
-+		\ No newline at end of file
-+		+2
-+		\ No newline at end of file
-+	EOF
-+	test_expect_code 1 git diff --no-index --no-dereference 3 4 | tail -n +3 > actual &&
-+	test_cmp expect actual
-+'
-+
- test_done
+I can recreate and resend this patch if needed; it's simply:
+:%s/lime/"#99FF00"/g
+
+Would a re-roll of this patch be accepted, or is it not worth
+bothering?
+
+Google for "gitk lime" to get a taste for some of the fallout
+caused by this problem.
+
+The fact that multiple pages, with different OS's, have examples
+of users stumbling over this change is a good hint that it's
+worth fixing.
+
+Thoughts?
 -- 
-2.11.0-234-gaf85957
-
+David
