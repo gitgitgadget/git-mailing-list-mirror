@@ -6,109 +6,69 @@ X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3E4C420756
-	for <e@80x24.org>; Fri, 13 Jan 2017 16:15:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C091020756
+	for <e@80x24.org>; Fri, 13 Jan 2017 16:59:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752090AbdAMQPa (ORCPT <rfc822;e@80x24.org>);
-        Fri, 13 Jan 2017 11:15:30 -0500
-Received: from aserp1040.oracle.com ([141.146.126.69]:35279 "EHLO
-        aserp1040.oracle.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752079AbdAMQP2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 13 Jan 2017 11:15:28 -0500
-Received: from aserv0022.oracle.com (aserv0022.oracle.com [141.146.126.234])
-        by aserp1040.oracle.com (Sentrion-MTA-4.3.2/Sentrion-MTA-4.3.2) with ESMTP id v0DGFKYX020815
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-        Fri, 13 Jan 2017 16:15:21 GMT
-Received: from t460.home (dhcp-ukc1-twvpn-3-vpnpool-10-175-225-84.vpn.oracle.com [10.175.225.84])
-        by aserv0022.oracle.com (8.14.4/8.14.4) with ESMTP id v0DGFF6W022180;
-        Fri, 13 Jan 2017 16:15:19 GMT
-From:   Vegard Nossum <vegard.nossum@oracle.com>
-To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Cc:     Vegard Nossum <vegard.nossum@oracle.com>,
-        =?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>
-Subject: [PATCH 3/3] t/t4051-diff-function-context: improve tests for new diff -W behaviour
-Date:   Fri, 13 Jan 2017 17:15:12 +0100
-Message-Id: <1484324112-17773-3-git-send-email-vegard.nossum@oracle.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1484324112-17773-1-git-send-email-vegard.nossum@oracle.com>
-References: <1484324112-17773-1-git-send-email-vegard.nossum@oracle.com>
+        id S1750843AbdAMQ7B (ORCPT <rfc822;e@80x24.org>);
+        Fri, 13 Jan 2017 11:59:01 -0500
+Received: from dcvr.yhbt.net ([64.71.152.64]:45782 "EHLO dcvr.yhbt.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1750760AbdAMQ7A (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 13 Jan 2017 11:59:00 -0500
+Received: from localhost (dcvr.yhbt.net [127.0.0.1])
+        by dcvr.yhbt.net (Postfix) with ESMTP id 0300A20756;
+        Fri, 13 Jan 2017 16:58:19 +0000 (UTC)
+Date:   Fri, 13 Jan 2017 16:58:19 +0000
+From:   Eric Wong <e@80x24.org>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Pat Pannuto <pat.pannuto@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org
+Subject: Re: [PATCH 2/2] Use 'env' to find perl instead of fixed path
+Message-ID: <20170113165819.GA6069@starla>
+References: <20170112055140.29877-1-pat.pannuto@gmail.com>
+ <20170112055140.29877-3-pat.pannuto@gmail.com>
+ <6fe462dd-929a-671b-a210-36ee38e99115@kdbg.org>
+ <CAAnLKaGbf9-GAF19+61=7_RfCOBM0=Ounwf8KkL1jS6HX3pOag@mail.gmail.com>
+ <alpine.DEB.2.20.1701121118170.3469@virtualbox>
+ <xmqqbmvcj9le.fsf@gitster.mtv.corp.google.com>
+ <CAAnLKaGvz4Wzs36gMSdoYCg+tzx6KFCe59FNnk5zNQ-L58ww1g@mail.gmail.com>
+ <20170113024842.GA20572@starla>
+ <alpine.DEB.2.20.1701131626160.3469@virtualbox>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Source-IP: aserv0022.oracle.com [141.146.126.234]
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <alpine.DEB.2.20.1701131626160.3469@virtualbox>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We now include non-empty lines immediately before (and after) a function
-as belonging to the function.
+Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> I guess I do not understand, still, what the difference is between using
+> -w and adding `use warnings` *very early* in the script... Could you give
+> an example where it makes a difference?
 
-We can test this new functionality by moving the "// Begin" markers on
-each function to the previous line.
+"use warnings" won't leak across files/modules.  In the following
+example, only the "useless use of join or string in void context"
+from void.perl gets shown w/o -w.  The VoidExample.pm warning
+can get lost.
 
-This commit is intentionally not part of the previous commits in order
-to show that the tests do not break even when changing the behaviour of
-'diff -W' in the previous commits.
+----- VoidExample.pm ------
+package VoidExample;
+use strict;
+# use warnings; # uncomment to trigger warning on next line:
+join('', qw(a b c));
 
-Cc: René Scharfe <l.s.r@web.de>
-Signed-off-by: Vegard Nossum <vegard.nossum@oracle.com>
----
- t/t4051-diff-function-context.sh | 2 +-
- t/t4051/appended1.c              | 3 ++-
- t/t4051/dummy.c                  | 3 ++-
- t/t4051/hello.c                  | 3 ++-
- 4 files changed, 7 insertions(+), 4 deletions(-)
+1;
+------ void.perl ------
+#!/usr/bin/perl
+use strict;
+use warnings;
+use VoidExample;
 
-diff --git a/t/t4051-diff-function-context.sh b/t/t4051-diff-function-context.sh
-index 6154acb..d1a646f 100755
---- a/t/t4051-diff-function-context.sh
-+++ b/t/t4051-diff-function-context.sh
-@@ -72,7 +72,7 @@ test_expect_success 'setup' '
- 
- 	# overlap function context of 1st change and -u context of 2nd change
- 	grep -v "delete me from hello" <"$dir/hello.c" >file.c &&
--	sed 2p <"$dir/dummy.c" >>file.c &&
-+	sed 3p <"$dir/dummy.c" >>file.c &&
- 	commit_and_tag changed_hello_dummy file.c &&
- 
- 	git checkout initial &&
-diff --git a/t/t4051/appended1.c b/t/t4051/appended1.c
-index a9f56f1..8683983 100644
---- a/t/t4051/appended1.c
-+++ b/t/t4051/appended1.c
-@@ -1,5 +1,6 @@
- 
--int appended(void) // Begin of first part
-+// Begin of first part
-+int appended(void)
- {
- 	int i;
- 	char *s = "a string";
-diff --git a/t/t4051/dummy.c b/t/t4051/dummy.c
-index a43016e..db227a8 100644
---- a/t/t4051/dummy.c
-+++ b/t/t4051/dummy.c
-@@ -1,5 +1,6 @@
- 
--static int dummy(void)	// Begin of dummy
-+// Begin of dummy
-+static int dummy(void)
- {
- 	int rc = 0;
- 
-diff --git a/t/t4051/hello.c b/t/t4051/hello.c
-index 63b1a1e..75eac1d 100644
---- a/t/t4051/hello.c
-+++ b/t/t4051/hello.c
-@@ -1,5 +1,6 @@
- 
--static void hello(void)	// Begin of hello
-+// Begin of hello
-+static void hello(void)
- {
- 	/*
- 	 * Classic.
--- 
-2.7.4
+join('', qw(a b c)); # warns
+----------8<----------
 
+$ perl -I . void.perl    # 1 warning
+$ perl -w -I . void.perl # 2 warnings
