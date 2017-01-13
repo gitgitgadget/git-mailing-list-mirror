@@ -2,126 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C55D720756
-	for <e@80x24.org>; Fri, 13 Jan 2017 23:54:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2C0E020756
+	for <e@80x24.org>; Fri, 13 Jan 2017 23:56:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751655AbdAMXyj (ORCPT <rfc822;e@80x24.org>);
-        Fri, 13 Jan 2017 18:54:39 -0500
-Received: from mail-pf0-f170.google.com ([209.85.192.170]:36520 "EHLO
-        mail-pf0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751640AbdAMXyg (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 13 Jan 2017 18:54:36 -0500
-Received: by mail-pf0-f170.google.com with SMTP id 189so38204369pfu.3
-        for <git@vger.kernel.org>; Fri, 13 Jan 2017 15:54:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=from:to:cc:subject:date:message-id;
-        bh=3z7ibhDuZlFLAIBy/wHz8xRYfbt+be8XthoPKA+gEpQ=;
-        b=F2qZmZxwx6bQOgBzgG8qfgevlPoYwaUdXzH8NnltM+5zPUjOU2W5EPq2qSR2vUjRHW
-         PqVYSfAR9UFmSxpKWX2+BFZh5xXP4L9nPelprJxNvqfBxuPVp3ymB1I3w1slf0cPBONA
-         CH1a/8G0tt8N5uapJKUWOCFIjGe/eUstU2Xa+qF6q7WKoHsSa+iggCDfB/ttfwvblB44
-         nKvLbpv1PVkFDh9lOfQHQu8O+mg3eYnE85KORUHpF11grS8FROZdTSUiUHVLgtdoU36H
-         sdT838MfA7VartwBxdJ/f+eu9XRBX3QHJFWDq8/PPaqSvPJUmW3l02G5SAzt/SQ7ZHTq
-         OaiQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=3z7ibhDuZlFLAIBy/wHz8xRYfbt+be8XthoPKA+gEpQ=;
-        b=mepMa1vjKr6BUMlqJ/W8eHOl08l2SflJ7DvSwXwKbLiBsFsof2V34YrcRxRpyde68s
-         iG8V6DNO1WP/Kf3njVIJ/R5urIysaFbpreiRN82TFtAky7efec/3b7CeThsf9tYzPV9c
-         Ha2s4QWO7n2fqFkZ0J3H25D30FoLtplLDikpP4FS3CK2otjR21iM5EUsMSoqKF8RQLtu
-         JINouIr19PnPQxtung7SBnLQPuXG4Aqwm2NtcKTjYWkwv0rFxprFsHwz67s1hAS23M6W
-         C2fEXP2RkSlwaZtfV4iziyQnGKU6cX9paqlzXysrWtNHs4Z3UdfxCQfqsTGWzH2XkRin
-         XUzA==
-X-Gm-Message-State: AIkVDXIGRo5sjv9GD6DZnAXNBc1bnJQ4S2Pe72sDRgGt815pX9rajOmEJ7p/vW3bmv5rbJfQ
-X-Received: by 10.84.210.107 with SMTP id z98mr33358738plh.171.1484351676226;
-        Fri, 13 Jan 2017 15:54:36 -0800 (PST)
-Received: from localhost ([2620:0:1000:5b10:a042:7b80:d5ae:3f4a])
-        by smtp.gmail.com with ESMTPSA id x81sm31624291pff.69.2017.01.13.15.54.35
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Fri, 13 Jan 2017 15:54:35 -0800 (PST)
-From:   Stefan Beller <sbeller@google.com>
-To:     gitster@pobox.com
-Cc:     git@vger.kernel.org, hvoigt@hvoigt.net, dborowitz@google.com,
-        Stefan Beller <sbeller@google.com>
-Subject: [PATCH] transport submodules: correct error message
-Date:   Fri, 13 Jan 2017 15:54:27 -0800
-Message-Id: <20170113235427.5768-1-sbeller@google.com>
-X-Mailer: git-send-email 2.11.0.297.g298debce27
+        id S1750770AbdAMX4n (ORCPT <rfc822;e@80x24.org>);
+        Fri, 13 Jan 2017 18:56:43 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:51650 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1750718AbdAMX4m (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 13 Jan 2017 18:56:42 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 649C25FE17;
+        Fri, 13 Jan 2017 18:56:24 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=cqmKgEzClt76
+        vNBeMuxIeR7IJok=; b=KDaz0sTfOn5pSUMuBxRhkbOgckxUL+iqIPVErPqVGi1s
+        lXyM5mbw2PAv3HAey2UkhqeMBkeGt/eqd7sWki3m9hxsLNJ0dOMz4mYkVA/+opAG
+        1SnD1LGTa+ggI6crgo+oBeqHx1QgxhgLz8eAw1JYF1PHBHqCvNf+y32tOw4an9U=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=KkLQse
+        GJvDwmHFPTnkuUDL7cVfqzsOd/N+ps0HMJ264bSB0KtJo0aprLXSElfDUSKZS82v
+        ZIqccNqsjEt1kY+U/uv6eTQqcrRCEFewU58hn9+sTdQXn/JdQ1wnGuU+2mrN/Pfm
+        RF4f6IInjGEovAC6CPQI7Dh30CQfUvwh1hSxU=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 5C8535FE16;
+        Fri, 13 Jan 2017 18:56:24 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id ADA555FE13;
+        Fri, 13 Jan 2017 18:56:23 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Vegard Nossum <vegard.nossum@oracle.com>
+Cc:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>, git@vger.kernel.org
+Subject: Re: [PATCH 2/3] xdiff: -W: include immediately preceding non-empty lines in context
+References: <1484324112-17773-1-git-send-email-vegard.nossum@oracle.com>
+        <1484324112-17773-2-git-send-email-vegard.nossum@oracle.com>
+        <e55dc4dd-768b-8c9b-e3b2-e850d5d521f5@web.de>
+        <xmqqeg06hh6z.fsf@gitster.mtv.corp.google.com>
+        <c74c260d-1a4d-39f6-a644-4f90a67d6d82@oracle.com>
+Date:   Fri, 13 Jan 2017 15:56:22 -0800
+In-Reply-To: <c74c260d-1a4d-39f6-a644-4f90a67d6d82@oracle.com> (Vegard
+        Nossum's message of "Fri, 13 Jan 2017 21:20:09 +0100")
+Message-ID: <xmqqbmvaecpl.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.90 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: E369D566-D9EB-11E6-8995-FE3F13518317-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When push.recurseSubmodules is set to "check" or "on-demand", the transport
-layer tries to determine if a submodule needs pushing. This check is done
-by walking all remote refs that are known.
+Vegard Nossum <vegard.nossum@oracle.com> writes:
 
-For remotes we only store the refs/heads/* (and tags), which doesn't
-include all commits. In e.g. Gerrit commits often end up at refs/changes/*
-(that we do not store) when pushing to refs/for/master (which we also do
-not store). So a workflow such as the following still fails:
+> The patch will work as intended and as expected for 95% of the users ou=
+t
+> there (javadoc, Doxygen, kerneldoc, etc. all have the comment
+> immediately preceding the function) and fixes a very real problem for m=
+e
+> (and I expect many others) _today_; for the remaining 5% (who put a
+> blank line between their comment and the start of the function) it will
+> revert back to the current behaviour, so there should be no regression
+> for them.
 
-    $ git -C <submodule> push origin HEAD:refs/for/master
-    $ git push origin HEAD:refs/for/master
-    The following submodule paths contain changes that can
-    not be found on any remote:
-      submodule
+I notice your 95% are all programming languages, but I am more
+worried about the contents written in non programming languages
+(Ren=C3=A9 gave HTML an an example--there may be other types of contents
+that we programmer types do not deal with every day, but Git users
+depend on). =20
 
-    Please try
+I am also more focused on keeping the codebase maintainable in good
+health by making sure that we made an effort to find a solution that
+is general-enough before solving a single specific problem you have
+today.  We may end up deciding that a blank-line heuristics gives us
+good enough tradeoff, but I do not want us to make a decision before
+thinking.
 
-        git push --recurse-submodules=on-demand
+>> The way "diff -W" codepath used it as if it were always the very
+>> first line of a function was bound to invite a patch like this, and
+>> if we want to be extra elaborate, I agree that an extra mechanism to
+>> say "the line the funcline regexp matches is not the beginning of a
+>> function, but the beginning is a line that matches this other regexp
+>> before that line" may help.
+>>
+>> Do we really want to be that elaborate, though?  I dunno.
+>
+> Adding a regex instead of the simple "blank line" test doesn't seem ver=
+y
+> difficult to do, but I am doubtful that it will make any difference in
+> practice. But that can be done incrementally as well by the people who
+> would actually need it (who I strongly suspect do not exist in the firs=
+t
+> place).
 
-    or cd to the path and use
-
-        git push
-
-    to push them to a remote.
-
-Trying to push with --recurse-submodules=on-demand would run into
-the same problem. To fix this issue
-    1) specifically mention that we looked for branches on the remote.
-    2) advertise pushing without recursing into submodules. ("Use this
-       command to make the error message go away")
-
-While at it, remove some empty lines, as they blow up the error message.
-
-Reported-by: Dave Borowitz <dborowitz@google.com>
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
- transport.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
-
-diff --git a/transport.c b/transport.c
-index 3e8799a611..2445bf0dca 100644
---- a/transport.c
-+++ b/transport.c
-@@ -883,14 +883,14 @@ static void die_with_unpushed_submodules(struct string_list *needs_pushing)
- 	int i;
- 
- 	fprintf(stderr, _("The following submodule paths contain changes that can\n"
--			"not be found on any remote:\n"));
-+			"not be found on any remote branch:\n"));
- 	for (i = 0; i < needs_pushing->nr; i++)
- 		fprintf(stderr, "  %s\n", needs_pushing->items[i].string);
--	fprintf(stderr, _("\nPlease try\n\n"
--			  "	git push --recurse-submodules=on-demand\n\n"
--			  "or cd to the path and use\n\n"
--			  "	git push\n\n"
--			  "to push them to a remote.\n\n"));
-+	fprintf(stderr, _("\nSuppress submodule checks via\n"
-+			  "	git push --no-recurse-submodules\n"
-+			  "or cd to the path and use\n"
-+			  "	git push\n"
-+			  "to push them to a remote.\n"));
- 
- 	string_list_clear(needs_pushing, 0);
- 
--- 
-2.11.0.297.g298debce27
-
+At least, the damage can be limited to the cases we know would work
+well if we go that way.
