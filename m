@@ -2,107 +2,115 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C106F20756
-	for <e@80x24.org>; Fri, 13 Jan 2017 18:40:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0406F20756
+	for <e@80x24.org>; Fri, 13 Jan 2017 18:44:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750969AbdAMSk4 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 13 Jan 2017 13:40:56 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:55269 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1750927AbdAMSkz (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 13 Jan 2017 13:40:55 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 0B0785DE18;
-        Fri, 13 Jan 2017 13:40:53 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=BI4v/10J7g70CEbvK3mN5yhi9/M=; b=vpWjJz
-        f3QKPOZyt6aBw/HNaEqCA4/zZcAW/uIZtlDKYy8oaxw9lFL8SruiQtaRQjz5Jj3T
-        s/Nfsspq3zA5eiRqUWyIE2cxoQcnJ7hLaQComGpQ2Qu35kLRPkm3ODXD5I8XlrDT
-        6qAa6sgpCZFkcCP1Mii2nIUNA9eFnueeBwMmE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=Tmv4gVWUL2Kp+9p/CxU8dK8yvB3DbvIj
-        bDDep45ICLlLp0xAp0ANeWtLUxDkdaFy+dB5UVqRWBODfTAHVU+T1Bexq4daugl9
-        GI62Gw/VLIaZyzayEevpIF6nBro6be6L8xGKnbpL3VHs3tpqgqLUH/VO6x4Nd/RR
-        zqdT5RB+cdg=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 033225DE17;
-        Fri, 13 Jan 2017 13:40:53 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 577195DE16;
-        Fri, 13 Jan 2017 13:40:52 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] lib-submodule-update.sh: drop unneeded shell
-References: <20170111184732.26416-1-sbeller@google.com>
-Date:   Fri, 13 Jan 2017 10:40:51 -0800
-In-Reply-To: <20170111184732.26416-1-sbeller@google.com> (Stefan Beller's
-        message of "Wed, 11 Jan 2017 10:47:32 -0800")
-Message-ID: <xmqqtw92hkgc.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.90 (gnu/linux)
+        id S1751069AbdAMSoF (ORCPT <rfc822;e@80x24.org>);
+        Fri, 13 Jan 2017 13:44:05 -0500
+Received: from mail-it0-f45.google.com ([209.85.214.45]:35391 "EHLO
+        mail-it0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750863AbdAMSoE (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 13 Jan 2017 13:44:04 -0500
+Received: by mail-it0-f45.google.com with SMTP id 203so38322319ith.0
+        for <git@vger.kernel.org>; Fri, 13 Jan 2017 10:44:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=2qS11AhqmjISDIcAH5nUIsPK/lCNSQISMqdBFdNQfbY=;
+        b=JLxMHmgItjfiPsYlE1xY0FKmA56fidvt5CGFevyi+Vpc8eLFEy9Ckq09FHwiDOY8/s
+         rM80rq3F5WLrZdCFfz0HZ0YfgRT3UyalkDU+FrFilleKSF94rJ5YMTvXeaOSzGJ5euti
+         hGXmAQmcxWa68+W6wZJjPQE13AQvYAbw23/jdrutTWLlkzVUOeRp73bQ1VodqB/sgJ7M
+         v5VIOnvATy55QW2D/Y4QTKXLFg8Iv18cJg8kOnmsvg8gSRTLFEZYqbucEnQJnv0Q0wfi
+         p1dI59lfXhmBKxO0Fe6d26DMYNKtdhZ1JeAXGDcRtPeumYJM+N9uzvq8b6LB0oZuZktP
+         /7XA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=2qS11AhqmjISDIcAH5nUIsPK/lCNSQISMqdBFdNQfbY=;
+        b=BTxt7+TYMiup3/uUAlZZeLEbqKttQCZHpEVhxxS9NzV0o4N2SJetOH9/2MtLuMsriT
+         m0uMi/S8sovr/aBOHvnyJV5kzsVcsbtOh4SH9qIAm+1wJdXtMwsIFT8ul8mLyn1dUQnn
+         XC7Djhg8xTR9vqdRZX2sIOpTWwfFRIa6TyAenlDGLpGoUNGLe3IAx63DnAV1sTBNDk8m
+         R2KNXgeIZMqUl/cM/Fu6vUpaYratAvCNUD0fTRRIRDVx5cu7+GLdi3TPkpRL2o0mTpaw
+         oWj2HJ6JPjqNWGKb/TgE7yayW8T2booQ2rhBvOfn1lozA2wG9zWMmvLCZ0aWz5Yb0yf4
+         xRkA==
+X-Gm-Message-State: AIkVDXLqN7MJE/MbJd3is+puRo2+woICgYky0rqthRcdKN5ycIqXOcEZf8CmpVn+w1Crz9JzJ4nNKJQMBilDXbRQ
+X-Received: by 10.36.169.12 with SMTP id r12mr4049970ite.69.1484333042964;
+ Fri, 13 Jan 2017 10:44:02 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: CF725140-D9BF-11E6-8159-FE3F13518317-77302942!pb-smtp1.pobox.com
+Received: by 10.79.39.19 with HTTP; Fri, 13 Jan 2017 10:44:02 -0800 (PST)
+In-Reply-To: <e55dc4dd-768b-8c9b-e3b2-e850d5d521f5@web.de>
+References: <1484324112-17773-1-git-send-email-vegard.nossum@oracle.com>
+ <1484324112-17773-2-git-send-email-vegard.nossum@oracle.com> <e55dc4dd-768b-8c9b-e3b2-e850d5d521f5@web.de>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Fri, 13 Jan 2017 10:44:02 -0800
+Message-ID: <CAGZ79kamTgefk9RxUwFk7hgAQK7kEJJKS6RjNMbnv2=Vk=BTSQ@mail.gmail.com>
+Subject: Re: [PATCH 2/3] xdiff: -W: include immediately preceding non-empty
+ lines in context
+To:     =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
+        Michael Haggerty <mhagger@alum.mit.edu>
+Cc:     Vegard Nossum <vegard.nossum@oracle.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
+On Fri, Jan 13, 2017 at 10:19 AM, Ren=C3=A9 Scharfe <l.s.r@web.de> wrote:
+> Am 13.01.2017 um 17:15 schrieb Vegard Nossum:
+>>
+>> When using -W to include the whole function in the diff context, you
+>> are typically doing this to be able to review the change in its entirety
+>> within the context of the function. It is therefore almost always
+>> desirable to include any comments that immediately precede the function.
 
-> In modern Git we prefer "git -C <cmd" over "(cd <somewhere && git <cmd>)"
-> as it doesn't need an extra shell.
+Do we need a small comment in the actual code to hint at why we count
+upwards there?
 
-There is a matching '>' missing.  The description is correct (I am
-not sure if there actually is "preference", though), but I found the
-title a bit misleading.  With 'drop unneeded subshell', I would
-imagine a patch like
+>>
+>> This also the fixes the case for C where the declaration is split across
+>> multiple lines (where the first line of the declaration would not be
+>> included in the output), e.g.:
+>>
+>>         void
+>>         dummy(void)
+>>         {
+>>                 ...
+>>         }
+>>
+>
+> That's true, but I'm not sure "non-empty line before function line" is go=
+od
+> enough a definition for desirable lines.  It wouldn't work for people who
+> don't believe in empty lines.  Or for those that put a blank line between
+> comment and function.  (I have an opinion on such habits, but git diff
+> should probably stay neutral.)  And that's just for C code; I have no ide=
+a
+> how this heuristic would hold up for other file types like HTML.
 
-		(
-	-		( do something )
-	+		do something;
-			do something else;
-		)
-
-It looks more like "reduce use of subshell by using 'git -C <dir>'"
-to me.
-
-> And because it is in a setup function, we actually save the invocation
-> of 22 shells for a single run of the whole test suite.
-
-Nice.
+I think empty lines are "good as a first approach", see e.g.
+433860f3d0beb0c6 the "compaction" heuristic for a similar
+thing (the compaction was introduced at d634d61ed), and then
+we can build a more elaborate thing on top.
 
 >
-> Noticed while adding a lot more in near vincinity, though not as near
-> to cause merge conflicts, so sending it extra.
+> We can identify function lines with arbitrary precision (with a xfuncname
+> regex, if needed), but there is no accurate way to classify lines as
+> comments, or as the end of functions.  Adding optional regexes for single=
+-
+> and multi-line comments would help, at least for C.
+
+That would cover Java and whole lot of other C like languages. So a good
+start as well IMHO.
+
 >
-> Thanks,
-> Stefan
->
->  t/lib-submodule-update.sh | 5 +----
->  1 file changed, 1 insertion(+), 4 deletions(-)
->
-> diff --git a/t/lib-submodule-update.sh b/t/lib-submodule-update.sh
-> index 79cdd34a54..915eb4a7c6 100755
-> --- a/t/lib-submodule-update.sh
-> +++ b/t/lib-submodule-update.sh
-> @@ -69,10 +69,7 @@ create_lib_submodule_repo () {
->  
->  		git checkout -b "replace_sub1_with_directory" "add_sub1" &&
->  		git submodule update &&
-> -		(
-> -			cd sub1 &&
-> -			git checkout modifications
-> -		) &&
-> +		git -C sub1 checkout modifications &&
->  		git rm --cached sub1 &&
->  		rm sub1/.git* &&
->  		git config -f .gitmodules --remove-section "submodule.sub1" &&
+> Ren=C3=A9
