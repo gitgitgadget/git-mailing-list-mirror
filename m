@@ -7,63 +7,75 @@ X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 281782093C
-	for <e@80x24.org>; Fri, 13 Jan 2017 15:22:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DDB1320756
+	for <e@80x24.org>; Fri, 13 Jan 2017 15:23:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752262AbdAMPV6 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 13 Jan 2017 10:21:58 -0500
-Received: from mout.gmx.net ([212.227.15.19]:57764 "EHLO mout.gmx.net"
+        id S1752378AbdAMPXc (ORCPT <rfc822;e@80x24.org>);
+        Fri, 13 Jan 2017 10:23:32 -0500
+Received: from mout.gmx.net ([212.227.17.21]:53868 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752252AbdAMPV4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 13 Jan 2017 10:21:56 -0500
-Received: from virtualbox ([37.24.141.236]) by mail.gmx.com (mrgmx001
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MJSx9-1cQhA72Aax-0032im; Fri, 13
- Jan 2017 16:21:40 +0100
-Date:   Fri, 13 Jan 2017 16:21:39 +0100 (CET)
+        id S1752375AbdAMPX3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 13 Jan 2017 10:23:29 -0500
+Received: from virtualbox ([37.24.141.236]) by mail.gmx.com (mrgmx103
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MbOrg-1cBUkL2ZaG-00Imkn; Fri, 13
+ Jan 2017 16:23:09 +0100
+Date:   Fri, 13 Jan 2017 16:23:08 +0100 (CET)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
-To:     Pat Pannuto <pat.pannuto@gmail.com>
-cc:     Junio C Hamano <gitster@pobox.com>, Johannes Sixt <j6t@kdbg.org>,
-        git@vger.kernel.org
-Subject: Re: [PATCH 2/2] Use 'env' to find perl instead of fixed path
-In-Reply-To: <CAAnLKaGvz4Wzs36gMSdoYCg+tzx6KFCe59FNnk5zNQ-L58ww1g@mail.gmail.com>
-Message-ID: <alpine.DEB.2.20.1701131621170.3469@virtualbox>
-References: <20170112055140.29877-1-pat.pannuto@gmail.com> <20170112055140.29877-3-pat.pannuto@gmail.com> <6fe462dd-929a-671b-a210-36ee38e99115@kdbg.org> <CAAnLKaGbf9-GAF19+61=7_RfCOBM0=Ounwf8KkL1jS6HX3pOag@mail.gmail.com> <alpine.DEB.2.20.1701121118170.3469@virtualbox>
- <xmqqbmvcj9le.fsf@gitster.mtv.corp.google.com> <CAAnLKaGvz4Wzs36gMSdoYCg+tzx6KFCe59FNnk5zNQ-L58ww1g@mail.gmail.com>
+To:     Philip Oakley <philipoakley@iee.org>
+cc:     GitList <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 0/3] updates to gitk & git-gui doc now gitview has gone
+In-Reply-To: <20170112213240.7972-1-philipoakley@iee.org>
+Message-ID: <alpine.DEB.2.20.1701131622510.3469@virtualbox>
+References: <20170112213240.7972-1-philipoakley@iee.org>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:WVN9F14KYb056uIHT99lSoTFtVi9LG19tjm43XgORblFMh7Mmsa
- OqM6ltcKdepNO13+U7V1dVFSfqdEwLWAFbdWAb+IlETjck3jQNIUxf5PGrvkKiXT5FkeBdW
- RuN2gz0S83UaKiwzvnZFbF5r8+TiNbSVI1b00434ZJ4C8sa/aaP06SIwKQWP4jnZRbVjH9m
- Ot+kFTgbXB6HK2RgB301Q==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:wponCLr2RPg=:t3yqfN7QBuNDhvoUgspNsv
- hb6hW9kaJO+8mtCam5x71i/co/sZw7br0v+F9nWPigrCXm2ptcV4hBgpQOnY+a3B7zzxXNkJ9
- JO6gBXhENfMNChS8QeuLeaWg1AGjpcu/iUrU1eQWBinpqLV+yLU8Z+ntLqGH4fT14YttMW7GH
- zZh004FYqEtwue8AvN77lrnIwhnRmlk0vNWXUnKa9VVNz3VztLarSCUFL6Lj6VchRGgVr5RZG
- EpQVroQ0962Fk766yJ46IwG6KcGlvXhQHyCaxBVtcz4VfRB0sKUDSrfMQ3dwGkwVV7KVuR9aV
- vLNp4yjuqxOA9XVnW6ntKq1sjbViQyeIeikMK9ASyUoE4FUZqZqKizLAyEC2EsujngzM/D8pb
- I6sXIV+cRQx+clMwIp18V7M3U+qqTaPsEGRMZb/kgiTksmFIF9JkCGSgpbrmKGfdDEAbMjOT1
- hlWw+9A4Mp7P8fH9K5Jd43lCW1Jp0LpM/NUGwnd1kKwUaaxkstqhmMefyunsMQ6s6rDR5GyAC
- kbdADGd0ZFSDvDd3l7XnL591NGfWF/EQQafI9peyoYUSIopZb+aZJ9e4Z3+K8EQa68BPnyLjH
- Ek5XnOVEXca0EhFvB0+o1J2QnmzWAfVkD6PilLIVhic2PaeLXmSe4OCIrnvbE4+2ZNYVNS19l
- +CDc0Gkc1djc47KE0nsEB3TnktYEXF9Ji9jTS701KOE0ItP3UgWYPF8PM7e+7JzTBNpoBd0fK
- 5aYItpvB2Akt2BKf3Xa5pf55e3KlF2s6IejdJm0B/gLysdlVan7iWMLEfn1PBbrghYbvcVhdr
- kItqUab
+X-Provags-ID: V03:K0:SDHh87L8m2PuMcaSYMmaZsS5FFKPehc1BhdIq9cpX+uGMFdEtCc
+ rsfREA6yeOD6iPVZiGPH6/BiKhfPk9NbNvW+EB722h2QEk6YsrfS4orwAoJiRsmNv3+ZaZ0
+ x9LSNQU3d/XmkrfyMiWuaznKat5AdSABdXGoVX+xB+mXgmOG6RwkHLR/uJKkX/ZantbpN8F
+ 6FZ1c9Nemazdx+KgQJh8w==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:FnQ+6rslU3Y=:jdx/sGNtPPmdN6GEgxUHgn
+ y1ouX5MRLSOtF/0S71ZePKSuvF7CyekV4eK+sZ4HIdnK6QXZIGPQBg6HT23KcdROTYr3faaXK
+ hTOpnVUYLJK7WbaQBMOYD77BLjaa2mDVmtaj5UqJ5/mt+q/B6rz7wYyvBBsZo22F3vN+6lsvq
+ HpY4WvBbIzLdvnR4Yw75o3r3wmacgXdjfhwW0q/BNxTTgI/ceh/I6aMWD8Mne0s6TqamkdyFh
+ ryjsMX4zgIsLFF/ORPV4/UtbWRHwz5bnmT/IuX9ZurYTaN9K73+aQGdPF88iF/d6V0Qm9xVMm
+ QPPa3w79X1azCjlpnfxRr0hsUKfo4qxyBqoVY9zLVSptV6nt3Jfmo/7nvuDU14b7xPW5z1xq3
+ T5LSXt7AISu39atmXWVFeK2wx/Yi34b4pzl9Vjt0aCVGfkiBdrxQ9BraUGL2zKUVeMiTEzhLj
+ BKNjo8LtjBO1ZnIXDh4YCg4eQ0vELpOplqrcCUwYL7sJ8hHgVJAn/+2PVYgJl/c+7BmMe5uiI
+ kOnRjjEmH30uDNNoe7pZpg0clmSGWFXtCTMkjyDPHpKsJ44LQ0pg2tJYWuAOFHerrwMzxCNsj
+ JQ87sZSAB6XHsjn4VqBTX+gQcueeVcaC4AO9RWYUkyv29IVCHOwZ5TkzqQoOtPYvmRvn4/w8p
+ P8DUdRGJhELGXBuNW4V5lWT+XIkU4Sxgxz+WY9/0FIgko3Sa8KKFbEY8W5mbQ8ZonAH203RRu
+ T83L8Q5J5ii0OWwxrA9EeAE1vaoDSZvFVCJDuKqDjSdc+2ICAOT5ELAhFCZNQLIgG1s1l9zIR
+ tLoOh3d825g1OOLja23s6bvIuozyWdi/KrpO02xf5/w/NyYgwYZCch2vtgyLq7UI9k8wWCwyo
+ DOC64lLbLbA8c6+J5jhhoWprfZZPDMBlXE4IrhpJgpiFBL6o8HyGQ78tr2oCfRA4bzn7bZhJQ
+ enNYYTDTlDysjneMXuNxDBwMa0w/AWEoHXWLLg/SN2uwN5d6NRxobn1tgUekVkatvFxYJMpQw
+ d3PFN+q9FLF/sWEugF2Vwz1Kk1jbzmlYtmdfpc08ghiPzy4r+zFrE7YLBBFpzOw7lA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Pat,
+Hi Philip,
 
-On Thu, 12 Jan 2017, Pat Pannuto wrote:
+On Thu, 12 Jan 2017, Philip Oakley wrote:
 
-> You may still want the 1/2 patch in this series, just to make things
-> internally consistent with "-w" vs "use warnings;" inside git's perl
-> scripts.
+> gitview was removed recently.
+> 
+> > Sent: Tuesday, January 10, 2017 11:48 PM
+> > Subject: What's cooking in git.git (Jan 2017, #01; Tue, 10)
+> 
+> > * sb/remove-gitview (2017-01-07) 1 commit
+> >   (merged to 'next' on 2017-01-10 at dcb3abd146)
+> >  + contrib: remove gitview
+> 
+> > Will merge to 'master'.
+> 
+> 
+> Lets remove the reference in the gitk man page, and do some other
+> fixups while in the area.
 
-Yes, I like that patch.
+These changes all look sensible to me.
 
 Ciao,
-Johannes
+Dscho
