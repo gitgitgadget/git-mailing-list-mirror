@@ -2,102 +2,116 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CA96F20756
-	for <e@80x24.org>; Fri, 13 Jan 2017 14:51:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 176DB20756
+	for <e@80x24.org>; Fri, 13 Jan 2017 14:59:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751893AbdAMOv0 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 13 Jan 2017 09:51:26 -0500
-Received: from mail-oi0-f66.google.com ([209.85.218.66]:32874 "EHLO
-        mail-oi0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751867AbdAMOvZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 13 Jan 2017 09:51:25 -0500
-Received: by mail-oi0-f66.google.com with SMTP id j15so7066228oih.0
-        for <git@vger.kernel.org>; Fri, 13 Jan 2017 06:51:20 -0800 (PST)
+        id S1751830AbdAMO7P (ORCPT <rfc822;e@80x24.org>);
+        Fri, 13 Jan 2017 09:59:15 -0500
+Received: from mail-qk0-f194.google.com ([209.85.220.194]:33058 "EHLO
+        mail-qk0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751739AbdAMO7O (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 13 Jan 2017 09:59:14 -0500
+Received: by mail-qk0-f194.google.com with SMTP id 11so7419777qkl.0
+        for <git@vger.kernel.org>; Fri, 13 Jan 2017 06:59:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id;
-        bh=I8m2CC73r7DjDYMAFrylG/9yIARd/aZHvrWpsjUV1R0=;
-        b=e+iYM+jU+r2poKC0ay8Lh1xVDvyerwGRx3C1mL66lJ5GLA52b+TiH+HgZe79+/bAnj
-         0/BkfMDzRP47F/JuO6+rOC2tmiwizVjdfxeEflZi6bD1m5sOmUjAXbrJB/uwMCiUnPiB
-         rOPxnci5qRsdtdFMsomgDpBLbNw6UQ3tQInz5+SIAu8HZxpwZuJY0GRg5/taZ1JUpLTr
-         +B5iE4FkwpcB4alOXd0Fi+r8Mj2qSUUDNV8gv6QydXbmrD59Q07HXZprvFsWT/wcK14B
-         85UY107rviGPy1q9IK+v5WtU9Z8LN0YSiTYfDPHbABmi5n+V1xp2H3DvnlH7z3+jnrEQ
-         V9Kw==
+        h=sender:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=QupDKtxx95lIkx1Ez0w+73ORw9ivN0tTwZX9n+LAcgY=;
+        b=pkCAHoYgDU4E0BlklIiwjp5p9DPNDDhFV+XTR5XDnqWYQtr2cT+eJFsOaGDmyb/eUE
+         uLnirir8ZEOJJ+wO6O+kxiblRVJR1iRN8O4rGB6y3tIZCYx+f+Ry58DPs9MqTbHAZNR8
+         JTtgykOLMrqWFNnFKq3zm1OzQ/gqNLGJK6OoKL4/jeHjLOb9i6nYmYhyTYilzwd35eTN
+         9L72tHigUHGHE8G8tpFE+B9i7NpdbpDUB6kRFf9Z/3DQfQm0XkHDXngGztiF44DyDwlu
+         HcQtrQORmVHO5geAer2Bm0jIaQcitm5cr/oXdg+jGGXVL7JoBMyZ5/Y2OuR7iFxloBr3
+         e5uQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=I8m2CC73r7DjDYMAFrylG/9yIARd/aZHvrWpsjUV1R0=;
-        b=a//l+7WjkqLOXW748JdztqrecBURaLVC9PsvBswyBz4E7IK1n984XEdSI4jqwF88Mh
-         oy2ZHkWrPmJFkGC5nQOgEmjAalCCs5UBqErBxVPV/rj5hR8GUdCTN+bB/3yIuZbDU6tf
-         cupxhXh4ftb0/d3SMSJV3cC5sPsuawEO4O/J6h5EiONzTZxogYJgSfJq/fxaOJtVv+aJ
-         7iyxKxXUmdNMW4+NdQif684Pga3RekHUmhzSmDhgqMsKqeK4LmobDFtjEHmvmfyFdaVp
-         JGQ3AyYrgj43QfxRUfz7vD1kYX/yiSVR+ciyopebNQbSSpaiAAAOHu1AgxIBVY+N6ubu
-         JHyg==
-X-Gm-Message-State: AIkVDXKzXW+ZeVC53bd1D4suCv99/qefauiCmzhFJSsz+iGSEb6+2jRlXFDkfKKeZAVagA==
-X-Received: by 10.202.102.227 with SMTP id m96mr9230814oik.5.1484318668226;
-        Fri, 13 Jan 2017 06:44:28 -0800 (PST)
-Received: from christian-Latitude-E6330.singledigits.sdus (201.166.23.226.cable.dyn.cableonline.com.mx. [201.166.23.226])
-        by smtp.gmail.com with ESMTPSA id z34sm5776288ota.35.2017.01.13.06.44.25
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 13 Jan 2017 06:44:26 -0800 (PST)
-From:   Christian Couder <christian.couder@gmail.com>
-X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Manuel Ullmann <ullman.alias@posteo.de>,
-        Matthieu Moy <Matthieu.Moy@imag.fr>,
-        Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH] Documentation/bisect: improve on (bad|new) and (good|bad)
-Date:   Fri, 13 Jan 2017 15:44:05 +0100
-Message-Id: <20170113144405.3963-1-chriscool@tuxfamily.org>
-X-Mailer: git-send-email 2.11.0.313.g11b7cc88e6.dirty
+        h=x-gm-message-state:sender:mime-version:subject:from:in-reply-to
+         :date:cc:content-transfer-encoding:message-id:references:to;
+        bh=QupDKtxx95lIkx1Ez0w+73ORw9ivN0tTwZX9n+LAcgY=;
+        b=ExZ1E9dzz33c5bVe+O3mb5Wh9WS8s9kyhy3XJKoA3EG/EkaWosufTtI4pfkdGBTD/c
+         wYsI0men/YGM503iB7sJqURe85KmLcvyM1SN9gPhO9Upe2bt5z5Mi6hjtQ58PZTOfl81
+         kGHx6XDY979b+YpBkE3l/iC1uSEBSoJRPaogN4/aqKPQhwgk1v4D4+25HOzfQuDqiM6M
+         ICsyzCKlQ8XzfsOUPWLeh2p5iy1GU3vs0xbez83wZ9L9e2YwuSHNboKQKPCX/1nwDkIp
+         Y8fr/isDSdyuCpsmIvqAF6fucE36jNYs+7mG7FTyP37mqosL7GlVW5LiwMpN04QKSkAT
+         2Abw==
+X-Gm-Message-State: AIkVDXLcdZ26uWnCPZzQ5dDE2AQMCISKXJyXNA6vz0zECtl68ioh9/huB74ISh1ZQESICg==
+X-Received: by 10.55.74.134 with SMTP id x128mr10467462qka.120.1484319553949;
+        Fri, 13 Jan 2017 06:59:13 -0800 (PST)
+Received: from mbp.home (179-125-204-138.desktop.com.br. [179.125.204.138])
+        by smtp.gmail.com with ESMTPSA id r188sm9345460qkb.6.2017.01.13.06.59.11
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 13 Jan 2017 06:59:13 -0800 (PST)
+Content-Type: text/plain; charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 10.2 \(3259\))
+Subject: Re: [PATCH] Remove dependency on deprecated Net::SMTP::SSL
+From:   Renato Botelho <garga@FreeBSD.org>
+In-Reply-To: <20161120215344.jaqt4owlhovig3hz@genre.crustytoothpaste.net>
+Date:   Fri, 13 Jan 2017 12:59:15 -0200
+Cc:     Mike Fisher <mfisher@csh.rit.edu>, git@vger.kernel.org
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <9D9E7BB6-9AAD-4356-A500-A86DA7C958EF@FreeBSD.org>
+References: <451E4A46-BA43-41A5-9E68-DE0D89BE676A@csh.rit.edu>
+ <20161120215344.jaqt4owlhovig3hz@genre.crustytoothpaste.net>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+X-Mailer: Apple Mail (2.3259)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The following part of the description:
+> On 20 Nov 2016, at 19:53, brian m. carlson =
+<sandals@crustytoothpaste.net> wrote:
+>=20
+> On Sun, Nov 20, 2016 at 04:18:16PM -0500, Mike Fisher wrote:
+>> Refactor send_message() to remove dependency on deprecated
+>> Net::SMTP::SSL:
+>>=20
+>> =
+<http://search.cpan.org/~rjbs/Net-SMTP-SSL-1.04/lib/Net/SMTP/SSL.pm#DEPREC=
+ATED>
+>=20
+> As much as I hate to say this, I think this is going to cause
+> compatibility problems.  Net::SMTP is part of core Perl (as of =
+v5.7.3),
+> but the version you want to rely on (which you did not provide an
+> explicit dependency on) is from October 2014.
+>=20
+> That basically means that no Perl on a Red Hat or CentOS system is =
+going
+> to provide that support, since RHEL 7 was released in June 2014.
+> Providing an updated Git on those platforms would require replacing =
+the
+> system Perl or parts of it, which would be undesirable.  This would
+> affect Debian 7 as well.
+>=20
+> We currently support Perl 5.8 [0], so if you want to remove support =
+for
+> Net::SMTP::SSL, I'd recommend a solution that works with that version.
+>=20
+> [0] I personally believe we should drop support for Perl older than
+> 5.10.1 (if not newer), but that's my opinion and it isn't shared by
+> other list regulars.
+> --=20
+> brian m. carlson / brian with sandals: Houston, Texas, US
+> +1 832 623 2791 | https://www.crustytoothpaste.net/~bmc | My opinion =
+only
+> OpenPGP: https://keybase.io/bk2204
 
-git bisect (bad|new) [<rev>]
-git bisect (good|old) [<rev>...]
+Net::SMTP::SSL is marked as DEPRECATED on FreeBSD ports tree and will be =
+removed in 2017-03-31. When it happens users will not be able to run =
+git-send-email anymore. I=E2=80=99m considering to add Mike=E2=80=99s =
+patch to FreeBSD ports tree as an alternative but it would be good to =
+have a official solution for this problem.
 
-may be a bit confusing, as a reader may wonder if instead it should be:
+FreeBSD bug report can be found at =
+https://bugs.freebsd.org/bugzilla/show_bug.cgi?id=3D214335
 
-git bisect (bad|good) [<rev>]
-git bisect (old|new) [<rev>...]
-
-Of course the difference between "[<rev>]" and "[<rev>...]" should hint
-that there is a good reason for the way it is.
-
-But we can further clarify and complete the description by adding
-"<term-new>" and "<term-old>" to the "bad|new" and "good|old"
-alternatives.
-
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
----
- Documentation/git-bisect.txt | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/Documentation/git-bisect.txt b/Documentation/git-bisect.txt
-index 2bb9a577a2..bdd915a66b 100644
---- a/Documentation/git-bisect.txt
-+++ b/Documentation/git-bisect.txt
-@@ -18,8 +18,8 @@ on the subcommand:
- 
-  git bisect start [--term-{old,good}=<term> --term-{new,bad}=<term>]
- 		  [--no-checkout] [<bad> [<good>...]] [--] [<paths>...]
-- git bisect (bad|new) [<rev>]
-- git bisect (good|old) [<rev>...]
-+ git bisect (bad|new|<term-new>) [<rev>]
-+ git bisect (good|old|<term-old>) [<rev>...]
-  git bisect terms [--term-good | --term-bad]
-  git bisect skip [(<rev>|<range>)...]
-  git bisect reset [<commit>]
--- 
-2.11.0.313.g11b7cc88e6.dirty
+--
+Renato Botelho
 
