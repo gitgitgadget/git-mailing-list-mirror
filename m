@@ -2,146 +2,141 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EEE1D20756
-	for <e@80x24.org>; Fri, 13 Jan 2017 19:14:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 32DD620756
+	for <e@80x24.org>; Fri, 13 Jan 2017 19:43:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751086AbdAMTOu (ORCPT <rfc822;e@80x24.org>);
-        Fri, 13 Jan 2017 14:14:50 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:54591 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1750805AbdAMTOt (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 13 Jan 2017 14:14:49 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 3364D5E574;
-        Fri, 13 Jan 2017 14:14:06 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=/3VeSIWQhBocYbinByuliik6voI=; b=Ru/ANz
-        8frEPPFgncAOa+HD+yXfveLrFrUWQ6o+zTdZafjRECkCek/Zy7YRwrl/BNIh/J0I
-        1JCwQTC/V8wjYsouDGZOTylGhiy9JOKX2+xtMSa7Efm2fRm+xQIX8krzSHxAxjbd
-        ulAAHz0QhO1/rGRtHXGyUl3k5GEJZFeE6he4w=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=wV67hXDxjhkIjLupSfa0OYsJ+rlyKdHO
-        NkE+FBS7f6uz2lx7oX8I6tloCYnncvz8s+j7hVR+TTuBSv2EmF1fhCNXhSm1InDI
-        +uwFQc0+nkwSiZzyhXzl6gFmGpBIGhELlgUG7bn7YimZwUNSjTsVelCvlM5UocAb
-        uQVwO2JbaDE=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 29C7C5E573;
-        Fri, 13 Jan 2017 14:14:06 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 72EE35E572;
-        Fri, 13 Jan 2017 14:14:05 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     git@vger.kernel.org, Manuel Ullmann <ullman.alias@posteo.de>,
-        Matthieu Moy <Matthieu.Moy@imag.fr>,
-        Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH] Documentation/bisect: improve on (bad|new) and (good|bad)
-References: <20170113144405.3963-1-chriscool@tuxfamily.org>
-Date:   Fri, 13 Jan 2017 11:14:04 -0800
-In-Reply-To: <20170113144405.3963-1-chriscool@tuxfamily.org> (Christian
-        Couder's message of "Fri, 13 Jan 2017 15:44:05 +0100")
-Message-ID: <xmqqinpihiwz.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.90 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 736F7422-D9C4-11E6-AC6F-FE3F13518317-77302942!pb-smtp1.pobox.com
+        id S1751104AbdAMTnd (ORCPT <rfc822;e@80x24.org>);
+        Fri, 13 Jan 2017 14:43:33 -0500
+Received: from mail-pf0-f169.google.com ([209.85.192.169]:34905 "EHLO
+        mail-pf0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750965AbdAMTnc (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 13 Jan 2017 14:43:32 -0500
+Received: by mail-pf0-f169.google.com with SMTP id f144so35576035pfa.2
+        for <git@vger.kernel.org>; Fri, 13 Jan 2017 11:43:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=from:to:cc:subject:date:message-id;
+        bh=hKM0JAkLDpE3Trp8KD300l54ng+N6mHg+Ty6b+LkxPk=;
+        b=QJ+uvXgHr2yf7ODUAsgCEVbQuQpKlLYffZEGJF0ja5yoDFSv7Ct/xAc35jePvEJt7l
+         hqVCV6U9Nkug2G0f/kYPSJT4jDMUQWgEKqSsGdc4ihMptmudUdx7pGPntvdpevsqz+bW
+         zIuiiR0zkiaBxKF154c9uDw+7KTJzGPigMds7Hrysa4iCyeHwGFjI4ZIrSFPEPxlrHpK
+         llipvG2X+waq5LQ6spt1yu1yLcU+wZBeCvZ2vuvAnNTtee/UEBdAc4kZfodAasM4gkkQ
+         YLMHV9B+Zaki/nzvjkhBCUVPq63pdvck7czAbZnHLdrnIzOEPfJI2DNkSxfAMKXRksiU
+         xtRg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=hKM0JAkLDpE3Trp8KD300l54ng+N6mHg+Ty6b+LkxPk=;
+        b=d70QbW+6eoS6Y+q16kKp5Xxm05Vha2svwgigQLWLXh6Tnk0RbJAWKESymsliZLwUNK
+         +/VjbkvKi2Q03lDSpcD03utQ9+zhELvQMGr06bi+fS0IACzD4os/JPXDxsd6EA5UmUfi
+         9eOPgQVn6sReI1YaUmQ4Msx8itV1V0yRSDvLC6kXLYP7ULYDTH8HKd6Ic3wmRiBsB9po
+         bzqE4U4T8jh7rZVwcc4j0UGj1WItPlPxfzV8jm+e8qRUIwFxyfsIQDFW2JXo+q7q38VO
+         xAwSCfXnLpH8YvSBEzpO+upSfOnKUMD+ju+GKZqffrEMSiWKGzqY6634RLkhDShn6pL/
+         wf/Q==
+X-Gm-Message-State: AIkVDXJMRp7mzyHXFRfU5v/dyaaecoYZwcYLU5RDNQ/BQgiiovEwOk4ps8U/5YagAqKhD55Z
+X-Received: by 10.84.231.193 with SMTP id g1mr32101572pln.12.1484336611365;
+        Fri, 13 Jan 2017 11:43:31 -0800 (PST)
+Received: from localhost ([2620:0:1000:5b10:5403:279a:3262:7e9c])
+        by smtp.gmail.com with ESMTPSA id x2sm31052704pfa.71.2017.01.13.11.43.30
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Fri, 13 Jan 2017 11:43:30 -0800 (PST)
+From:   Stefan Beller <sbeller@google.com>
+To:     bmwill@google.com, gitster@pobox.com, judge.packham@gmail.com,
+        olsonse@umich.edu
+Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>
+Subject: [PATCH] submodule update: run custom update script for initial populating as well
+Date:   Fri, 13 Jan 2017 11:43:26 -0800
+Message-Id: <20170113194326.13950-1-sbeller@google.com>
+X-Mailer: git-send-email 2.11.0.300.g08194d1431.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Christian Couder <christian.couder@gmail.com> writes:
+In 1b4735d9f3 (submodule: no [--merge|--rebase] when newly cloned,
+2011-02-17), all actions were defaulted to checkout for populating
+a submodule initially, because merging or rebasing makes no sense
+in that situation.
 
-> The following part of the description:
->
-> git bisect (bad|new) [<rev>]
-> git bisect (good|old) [<rev>...]
->
-> may be a bit confusing, as a reader may wonder if instead it should be:
->
-> git bisect (bad|good) [<rev>]
-> git bisect (old|new) [<rev>...]
->
-> Of course the difference between "[<rev>]" and "[<rev>...]" should hint
-> that there is a good reason for the way it is.
->
-> But we can further clarify and complete the description by adding
-> "<term-new>" and "<term-old>" to the "bad|new" and "good|old"
-> alternatives.
->
-> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
-> ---
->  Documentation/git-bisect.txt | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
+Other commands however do make sense, such as the custom command
+that was added later (6cb5728c43, submodule update: allow custom
+command to update submodule working tree, 2013-07-03).
 
-Thanks.  The patch looks good.
+I am unsure about the "none" command, as I can see an initial
+checkout there as a useful thing. On the other hand going strictly
+by our own documentation, we should do nothing in case of "none"
+as well, because the user asked for it.
 
-A related tangent.  
+Reported-by: Han-Wen Nienhuys <hanwen@google.com>
+Signed-off-by: Stefan Beller <sbeller@google.com>
+---
+ git-submodule.sh            |  7 ++++++-
+ t/t7406-submodule-update.sh | 15 +++++++++++++++
+ 2 files changed, 21 insertions(+), 1 deletion(-)
 
-Last night, I was trying to think if there is a fundamental reason
-why "bad/new/term-new" cannot take more than one <rev>s on the newer
-side of the bisection, and couldn't quite think of any before
-falling asleep.
-
-Currently we keep track of a single bisect/bad, while marking all the
-revs given as good previously as bisect/good-<SHA-1>.
-
-Because the next "bad" is typically chosen from the region of the
-commit DAG that is bounded by bad and good commits, i.e. "rev-list
-bisect/bad --not bisect/good-*", the current bisect/bad will always
-be an ancestor of all bad commits that used to be bisect/bad, and
-keeping previous bisect/bad as bisect/bad-<SHA-1> won't change the
-region of the commit DAG yet to be explored.
-
-As a reason why we need to use only a single bisect/bad, the above
-description is understandable.  But as a reason why we cannot have
-more than one, it is tautological.  It merely says "if we start from
-only one and dig history to find older culprit, we need only one
-bad".
-
-I fell asleep last night without thinking further than that.
-
-I think the answer to the question "why do we think we need a single
-bisect/bad?" is "because bisection is about assuming that there is
-only one commit that flips the tree state from 'old' to 'new' and
-finding that single commit".  That would mean that even if we had
-bisect/bad-A and bisect/bad-B, e.g.
-
-                          o---o---o---bad-A
-                         /
-    -----Good---o---o---o
-                         \
-                          o---o---o---bad-B
-
-
-where 'o' are all commits whose goodness is not yet known, because
-bisection is valid only when we are hunting for a single commit that
-flips the state from good to bad, that commit MUST be at or before
-the merge base of bad-A and bad-B.  So even if we allowed
-
-	$ git bisect bad bad-A bad-B
-
-on the command line, we won't have to set bisect/bad-A and
-bisect/bad-B.  We only need a single bisect/bad that points at the
-merge base of these two.
-
-But what if bad-A and bad-B have more than one merge bases?  We
-won't know which side the badness came from.
-
-                          o---o---o---bad-A
-                         /     \ / 
-    -----Good---o---o---o       / 
-                         \     / \
-                          o---o---o---bad-B
-
-Being able to bisect the region of DAG bound by "^Good bad-A bad-B"
-may have value in such a case.  I dunno.
+diff --git a/git-submodule.sh b/git-submodule.sh
+index 554bd1c494..aeb721ab7e 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -606,7 +606,12 @@ cmd_update()
+ 		if test $just_cloned -eq 1
+ 		then
+ 			subsha1=
+-			update_module=checkout
++			if test "$update_module" = "merge" ||
++			   test "$update_module" = "rebase" ||
++			   test "$update_module" = "none"
++			then
++				update_module=checkout
++			fi
+ 		else
+ 			subsha1=$(sanitize_submodule_env; cd "$sm_path" &&
+ 				git rev-parse --verify HEAD) ||
+diff --git a/t/t7406-submodule-update.sh b/t/t7406-submodule-update.sh
+index 64f322c4cc..1407fa6098 100755
+--- a/t/t7406-submodule-update.sh
++++ b/t/t7406-submodule-update.sh
+@@ -424,6 +424,19 @@ test_expect_success 'submodule update - command in .git/config catches failure -
+ 	test_i18ncmp actual expect
+ '
+ 
++test_expect_success 'submodule update - command run for initial population of submodule' '
++	cat <<-\ EOF >expect
++	Execution of '\''false $submodulesha1'\'' failed in submodule path '\''submodule'\''
++	EOF
++	(
++		cd super &&
++		rm -rf submodule
++		test_must_fail git submodule update >../actual
++	)
++	test_cmp expect actual
++	git -C super submodule update --checkout
++'
++
+ cat << EOF >expect
+ Execution of 'false $submodulesha1' failed in submodule path '../super/submodule'
+ Failed to recurse into submodule path '../super'
+@@ -476,6 +489,7 @@ test_expect_success 'submodule init picks up merge' '
+ '
+ 
+ test_expect_success 'submodule update --merge  - ignores --merge  for new submodules' '
++	test_config -C super submodule.submodule.update checkout &&
+ 	(cd super &&
+ 	 rm -rf submodule &&
+ 	 git submodule update submodule &&
+@@ -488,6 +502,7 @@ test_expect_success 'submodule update --merge  - ignores --merge  for new submod
+ '
+ 
+ test_expect_success 'submodule update --rebase - ignores --rebase for new submodules' '
++	test_config -C super submodule.submodule.update checkout &&
+ 	(cd super &&
+ 	 rm -rf submodule &&
+ 	 git submodule update submodule &&
+-- 
+2.11.0.300.g08194d1431.dirty
 
