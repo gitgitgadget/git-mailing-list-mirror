@@ -2,94 +2,127 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7E4B62093C
-	for <e@80x24.org>; Fri, 13 Jan 2017 06:58:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CB0A720798
+	for <e@80x24.org>; Fri, 13 Jan 2017 09:15:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751117AbdAMG6N (ORCPT <rfc822;e@80x24.org>);
-        Fri, 13 Jan 2017 01:58:13 -0500
-Received: from mail-lf0-f44.google.com ([209.85.215.44]:35407 "EHLO
-        mail-lf0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751066AbdAMG6M (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 13 Jan 2017 01:58:12 -0500
-Received: by mail-lf0-f44.google.com with SMTP id m78so29561801lfg.2
-        for <git@vger.kernel.org>; Thu, 12 Jan 2017 22:57:50 -0800 (PST)
+        id S1751295AbdAMJPq (ORCPT <rfc822;e@80x24.org>);
+        Fri, 13 Jan 2017 04:15:46 -0500
+Received: from mail-wm0-f49.google.com ([74.125.82.49]:34382 "EHLO
+        mail-wm0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751241AbdAMJPo (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 13 Jan 2017 04:15:44 -0500
+Received: by mail-wm0-f49.google.com with SMTP id f73so10492216wmf.1
+        for <git@vger.kernel.org>; Fri, 13 Jan 2017 01:15:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=5TTnJ98qfIIhlMIKqoPVIB2/1mq/Ro3J2rhfPckS+Tg=;
-        b=it0UEuBNIl4SvoNBwjLapR7u4n0Q1SMyps2zZtUwgvUk94hJuWTqk8VoNkOwhO8gsD
-         Jhp2Ho/+p9yeRgEmZpr5ZG8MY8AF3aId/7WPnDwplDXWQrPp++vF7SCww9wyr5NWznV+
-         fj4mlB31OOv+LYz0UEn8d1T49xGS7dMe9SnobzX4k/TC3A3nnZbKBS7Ku3v6yA0phpvx
-         3OBr9wEe6y/Pu2lp8SQY6txHOs6hNVE2cN1otMjbU0JiPnDt35zMmvrlBx1dFuVEP0YQ
-         uk6oiVx4EAmqS29GkyviSHoyT0CWA2mfcf1wXIHomT31YGCRx7Z6Wk2h+0t/adReiiH2
-         naNQ==
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=2ysKhuQFyo8wfMqe/tfDmbYAiWin6fXEvJMFuH5ta4Q=;
+        b=VHMp/QPrZC02cnEdrIjhELcAdIabHTmqCgZoc4744XtxJgAE0Z/AM563Ie1gb2Y2SR
+         u2FQsdw8QoaCg8rfb+4ZsD/cE+CN/ASJoIA3HgwEvoC+RGE5MnZrfNNM94iAH7/k5ZxD
+         oQet9ZuCrsaVnsHUbnelaWr8lA+Kh5HrOdiQmQiPCwqAOvwFqp4ljO52KwGcYUEZIZV0
+         MG1b+/21Dhxez3DeSxxwQJMQ5HR+pQCB+hh33hxwNOcQm/aJeKwB3GcrsraQ7WP/SDsV
+         bGdz+67kxxzwgve/HgXetL7KJxy2y+/00jGKCYcP8AYax2J0+5Ost2I+tyqnYYEhrJNm
+         +jcA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=5TTnJ98qfIIhlMIKqoPVIB2/1mq/Ro3J2rhfPckS+Tg=;
-        b=IgLWdApSUKlprFWux8ozJVtJ2rm5uAlthkjNeNbFxzzRJbvD+imBxKXZbj1DK238mS
-         vXVKkmQz6OIi+EcO4MsnxEPeOOBhkn6gZrcRxsTDGOJSg3LEh617GqhmobGgvWMCHrkA
-         jWafh7KJC95Ty1Th3PzXRb7o+6ciFF/K0LkySs54BxVtXzOM7nb93Xjf6qHCQEYrrrp5
-         ZRQgTNyiXzcOMPzFw2CUbsPs08QF4I/PlqClNYnQGY1VtppvGY9vXUmUUazICQcrwMCp
-         +K1wpR/hBmxVSx1nhpqsDLF1vz/tFGDhFV1avGoR5TavdegY7yDxRPKjCTGpOxA7WbA1
-         fI4w==
-X-Gm-Message-State: AIkVDXJBAyKhIsFn6TFQhlymRFX5/SZS3LjM2i4zDVWeLwBG2kHqR4UJ8xdSbtc/BtihGxYiaP0+i1uUUv8spg==
-X-Received: by 10.46.14.9 with SMTP id 9mr6399604ljo.59.1484290669156; Thu, 12
- Jan 2017 22:57:49 -0800 (PST)
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=2ysKhuQFyo8wfMqe/tfDmbYAiWin6fXEvJMFuH5ta4Q=;
+        b=nlm6iqYi08nEse3GoxSqyQW05TW+EQ1hQRb4CWeT1fRwvMG46hs2s/X0Yx/opKhKha
+         +Uum5kpzWYnR216aFJYbAAb++qU3D2RMRl86BAOs8nz8xn8yo5jSFYDRkUJysj3qVcsr
+         7XAO0jQBNMmP8uhr0v6EcghhbD+E6YPMeyfpHigl84KF+EEOil8SFUx7g+5ma8GDxFlB
+         jAdQ32lGjIU67JxJ+9qY0PAO8YKcBehLfvS2KGsgIqlTKnCh57r3y9AJTELXN9ZZMLh/
+         2RSNks28NlbIBhC9A8YJQFJt07plrNuGRpsLHOOa7dfjZQG8oGDarJM0v1+V5Tm1Zqxx
+         g0AQ==
+X-Gm-Message-State: AIkVDXL0lZ9oAVtJRgTgNFCp/FSN2I0Ir2MhviM/2xSPi8kDckJdTbqGTcveHIrCoQrea6tsHdB06RVC6vGSBQ==
+X-Received: by 10.223.128.77 with SMTP id 71mr11020843wrk.48.1484298942914;
+ Fri, 13 Jan 2017 01:15:42 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.25.145.14 with HTTP; Thu, 12 Jan 2017 22:57:28 -0800 (PST)
-In-Reply-To: <5c8401ef-9609-f235-9228-be980a13edf1@kdbg.org>
-References: <20170112001721.2534-1-jacob.e.keller@intel.com>
- <20170112001721.2534-6-jacob.e.keller@intel.com> <5f723a0d-623f-bf97-00de-29d430484fed@kdbg.org>
- <CA+P7+xrmAmCPOzuaKcm+WxceXnowkM4gKz05tSpdC=CDwpCEug@mail.gmail.com> <5c8401ef-9609-f235-9228-be980a13edf1@kdbg.org>
-From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Thu, 12 Jan 2017 22:57:28 -0800
-Message-ID: <CA+P7+xq1LMkRG_aSyamrsPUQE+rDv4A9Qd19tDMgx-_a5OHsqQ@mail.gmail.com>
-Subject: Re: [PATCH 5/5] describe: teach describe negative pattern matches
-To:     Johannes Sixt <j6t@kdbg.org>
-Cc:     Jacob Keller <jacob.e.keller@intel.com>,
-        Git mailing list <git@vger.kernel.org>
+Received: by 10.28.94.71 with HTTP; Fri, 13 Jan 2017 01:15:42 -0800 (PST)
+In-Reply-To: <20170108052619.4ucjamsqad4g5add@sigill.intra.peff.net>
+References: <CAEBDL5Uc39JagdmXUxfxh1TPSK3H5wxoTfjK-pfLRYjciBnHpA@mail.gmail.com>
+ <1483825623.31837.9.camel@kaarsemaker.net> <20170108052619.4ucjamsqad4g5add@sigill.intra.peff.net>
+From:   John Szakmeister <john@szakmeister.net>
+Date:   Fri, 13 Jan 2017 04:15:42 -0500
+X-Google-Sender-Auth: MPrHKyIvXduv-6wKnKhNovBZt3M
+Message-ID: <CAEBDL5Vf=rvb4fZF87pNYci4sicmzhS_qPJYHHOGcnPTMBhhWg@mail.gmail.com>
+Subject: Re: "git fsck" not detecting garbage at the end of blob object files...
+To:     Jeff King <peff@peff.net>
+Cc:     Dennis Kaarsemaker <dennis@kaarsemaker.net>, git@vger.kernel.org
 Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jan 12, 2017 at 10:43 PM, Johannes Sixt <j6t@kdbg.org> wrote:
-> Am 13.01.2017 um 01:59 schrieb Jacob Keller:
+On Sun, Jan 8, 2017 at 12:26 AM, Jeff King <peff@peff.net> wrote:
+> On Sat, Jan 07, 2017 at 10:47:03PM +0100, Dennis Kaarsemaker wrote:
+>> On Sat, 2017-01-07 at 07:50 -0500, John Szakmeister wrote:
+>> > I was perusing StackOverflow this morning and ran across this
+>> > question: http://stackoverflow.com/questions/41521143/git-fsck-full-only-checking-directories/
+>> >
+>> > It was a simple question about why "checking objects" was not
+>> > appearing, but in it was another issue.  The user purposefully
+>> > corrupted a blob object file to see if `git fsck` would catch it by
+>> > tacking extra data on at the end.  `git fsck` happily said everything
+>> > was okay, but when I played with things locally I found out that `git
+>> > gc` does not like that extra garbage.  I'm not sure what the trade-off
+>> > needs to be here, but my expectation is that if `git fsck` says
+>> > everything is okay, then all operations using that object (file)
+>> > should work too.
+>> >
+>> > Is that unreasonable?  What would be the impact of fixing this issue?
 >>
->> I think that --exclude makes sense, but the current implementation
->> does not differentiate ordering, since both are merely accumulated
->> into string_lists and then matched together. I'm not sure how order
->> would impact things here? In the current implementation, if something
->> is excluded and matched, it will be excluded. That is, exclusion
->> patterns take precedence over match patterns. I think this makes the
->> most sense semantically.
+>> If you do this with a commit object or tree object, fsck does complain.
+>> I think it's sensible to do so for blob objects as well.
 >
->
-> When you write
->
->   git log --exclude=wip/* --branches --remotes
->
-> --exclude applies only to --branches, not to --remotes.
->
->  When you write
->
->   git log --branches --exclude=origin/* --remotes
->
-> --exclude=origin/* applies only to --remotes, but not to --branches.
->
-> -- Hannes
->
+> The existing extra-garbage check is in unpack_sha1_rest(), which is
+> called as part of read_sha1_file(). And that's what we hit for commits
+> and trees. However, we check the sha1 of blobs using the streaming
+> interface (in case they're large). I think you'd want to put a similar
+> check into read_istream_loose(). But note if you are grepping for it, it
+> is hidden behind a macro; look for read_method_decl(loose).
 
-Well for describe I don't think the order matters.
+That's for the pointer.
 
-Thanks,
-Jake
+> I'm actually not sure if this should be downgrade to a warning. It's
+> true that it's a form of corruption, but it doesn't actually prohibit us
+> from getting the data we need to complete the operation. Arguably fsck
+> should be more picky, but it is just relying on the same parse_object()
+> code path that the rest of git uses.
+>
+> I doubt anybody cares too much either way, though. It's not like this is
+> a common thing.
+
+I kind of wonder about that myself too, and I'm not sure what to
+think about it.  On the one hand, I'd like to know about
+*anything* that has changed in an adverse way--it could indicate
+a failure somewhere else that needs to be handled.  On the other
+hand, scaring the user isn't all that advantageous.  I guess I'm
+in the former camp.
+
+As to whether this is common, yeah, it's probably not.  However,
+I was surprised by the number of results that turned up when I
+search for "garbage at end of loose object".
+
+> I did notice another interesting case when looking at this. Fsck ends up
+> in fsck_loose(), which has the sha1 and path of the loose object. It
+> passes the sha1 to fsck_sha1(), and ignores the path entirely!
+>
+> So if you have a duplicate copy of the object in a pack, we'd actually
+> find and check the duplicate. This can happen, e.g., if you had a loose
+> object and fetched a thin-pack which made a copy of the loose object to
+> complete the pack).
+>
+> Probably fsck_loose() should be more picky about making sure we are
+> reading the data from the loose version we found.
+
+Interesting find!  Thanks for the information Peff!
+
+-John
