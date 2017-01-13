@@ -4,108 +4,113 @@ X-Spam-Level:
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 622C21FEB3
-	for <e@80x24.org>; Fri, 13 Jan 2017 01:00:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 04CB31FEB3
+	for <e@80x24.org>; Fri, 13 Jan 2017 01:13:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750863AbdAMBAJ (ORCPT <rfc822;e@80x24.org>);
-        Thu, 12 Jan 2017 20:00:09 -0500
-Received: from mail-lf0-f44.google.com ([209.85.215.44]:35863 "EHLO
-        mail-lf0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750779AbdAMBAI (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 Jan 2017 20:00:08 -0500
-Received: by mail-lf0-f44.google.com with SMTP id z134so22306679lff.3
-        for <git@vger.kernel.org>; Thu, 12 Jan 2017 17:00:08 -0800 (PST)
+        id S1750869AbdAMBNS (ORCPT <rfc822;e@80x24.org>);
+        Thu, 12 Jan 2017 20:13:18 -0500
+Received: from mail-lf0-f53.google.com ([209.85.215.53]:36602 "EHLO
+        mail-lf0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750796AbdAMBNS (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 Jan 2017 20:13:18 -0500
+Received: by mail-lf0-f53.google.com with SMTP id z134so22457210lff.3
+        for <git@vger.kernel.org>; Thu, 12 Jan 2017 17:13:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=U8BQhynGE40VT04AsIJLrNj3DMljY9/Fczttp6ENX+8=;
-        b=pezR2iEB73zVpgOc2hz6Myumk6MN0ki0ZC7TdIvMGM75+R8fr+ddzEEmzE37HEhoPK
-         g7hZUpr6/+6V1vlgKC2U2feeiXpGs+4gTl4i7r0rMz3JlwYOuCMi/9s2JB5DzYvDki9/
-         M/8rdxQ+IN/T0yqVyfVyuWDGlkw06Lvsky9dyFqrp1vD4GD9jge00plMWp6rjDZZVFRn
-         VU+mEJVPvMoOm47snegZSpy4PywnRaync6YJ7wQCtaW7xSe4USZTyOZ5m5PX2rQJSEBf
-         yehQ1/OxsZ7LRQpDywsgu/Sbxi39N8keeB+WT+HByBB8GP/VsvxKjB0K3n635e67aoXv
-         hWqA==
+        bh=VkQ6qI4v9K+2+mXfh+BsImShWEnwQaU4ZgLKzwkGy68=;
+        b=QE0LDBJNYXRnkOrd/nE6KSKLK0MCeeyTE5qegOij1lmwrN6m3XQLObOUDqN8yTLFj/
+         WmOrpGsPS96aTGedCTj6JFeYe14eXjXdpAJ2iIReXvSWoP0JcKAIH0WpblwKzVIbXCDl
+         YqFc6yBFthIkDqSL56MftfW8sCuCNy3CzJBoLnBMBMVjZgkiXPOpYkZahF2vZoNNLZLE
+         L3I3BzXH9tqYei5XqHePiudONpoYXC0SI/9jvkTbTZ/eZB6pUMlqToaruP/4gMLrsnrM
+         IbnBcTMXxP+wJA7WTytvOvLEVLNt3NopnLzxOu+X700sTqqzQvNc9V2269Ole7DSO8E2
+         1DSw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=U8BQhynGE40VT04AsIJLrNj3DMljY9/Fczttp6ENX+8=;
-        b=iHm3DuPMpZZVCV1hRKGEDKek0z7pZj0st7W8XhQK2JajyAtkj7mPV6evt0H56Z9IFw
-         d/cuQhbVluVFACjWB5oocHOK0rhXphKCZPAe2wn/EXMWIgjFAUZgRL+icgExvA8W14go
-         dXFh81tQMCV32jSWpPImiVZYKu4lw7/0T4wkouzGi8KGVJAt0VGuOni9Yv0wUCbb7nq+
-         Q+BAjImNipMmSlGSLAYZklVicGjReZO22qXjGEYmnydgN1fl4VwYPOhk0YP3J/6pazGY
-         6d0eAKNY8Eg6MQXCEB/n3lZa4Q+QljCSd4it3FyL9qIv9JSN1iPRgt0G40vdt9HR3m9b
-         zeBQ==
-X-Gm-Message-State: AIkVDXK6/0GFc8EwFpDv3xpawgeJfT/40N85G92EdoCokp+fAsiSYZ/2WhjVVLCEbKURyoXKvBHzgbBeYNfksw==
-X-Received: by 10.25.141.147 with SMTP id p141mr6786924lfd.147.1484269207260;
- Thu, 12 Jan 2017 17:00:07 -0800 (PST)
+        bh=VkQ6qI4v9K+2+mXfh+BsImShWEnwQaU4ZgLKzwkGy68=;
+        b=GVlZmzpR29F8vH6ATd3+bp1315m80C3fWK2hT/Lps5pAzMwnqNVvBKXK48/s8vKGLU
+         TnyNspoUHp1tpBm3yPAvzABLCsA36JRzQdBtxn4QXMPXhoPM7gZ++/Bc2cXblUcbnPUA
+         tKZEsnCt91C/yWG5LnGSAXHyw667Gtp8K/HEKCiGROjYbeIM+jijdfkOgk4NHTA79oUB
+         BcdpHKwokMhwH5HjmpZSsVG2d4CD9IFggPml7LutEHKVb2O5vAvNF1npkdF23vsEDoZ5
+         9g5yaCFqkt2BbJAB5NO70PpO7zQzvun1bJtWIwOG1J7tf3ufhnZNvl1NM2Im52L6qwNj
+         +LkA==
+X-Gm-Message-State: AIkVDXKMx/xsa+qaAC5ZicbFlt62HD7Hwp1odfHm3S7Gj18sKl31f5dZ5reP02rD6BNBb09hlsGxzbGqPHC3PQ==
+X-Received: by 10.46.7.1 with SMTP id 1mr6583620ljh.76.1484269996027; Thu, 12
+ Jan 2017 17:13:16 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.25.145.14 with HTTP; Thu, 12 Jan 2017 16:59:46 -0800 (PST)
-In-Reply-To: <5f723a0d-623f-bf97-00de-29d430484fed@kdbg.org>
-References: <20170112001721.2534-1-jacob.e.keller@intel.com>
- <20170112001721.2534-6-jacob.e.keller@intel.com> <5f723a0d-623f-bf97-00de-29d430484fed@kdbg.org>
-From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Thu, 12 Jan 2017 16:59:46 -0800
-Message-ID: <CA+P7+xrmAmCPOzuaKcm+WxceXnowkM4gKz05tSpdC=CDwpCEug@mail.gmail.com>
-Subject: Re: [PATCH 5/5] describe: teach describe negative pattern matches
-To:     Johannes Sixt <j6t@kdbg.org>
-Cc:     Jacob Keller <jacob.e.keller@intel.com>,
-        Git mailing list <git@vger.kernel.org>
+Received: by 10.25.199.13 with HTTP; Thu, 12 Jan 2017 17:13:15 -0800 (PST)
+In-Reply-To: <xmqq8tqfj15z.fsf@gitster.mtv.corp.google.com>
+References: <87r347swz1.fsf@sonnengebleicht.fritz.box> <xmqqd1frj1lt.fsf@gitster.mtv.corp.google.com>
+ <xmqq8tqfj15z.fsf@gitster.mtv.corp.google.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Fri, 13 Jan 2017 02:13:15 +0100
+Message-ID: <CAP8UFD3JDWVVTWsSQcnh+dOHoZDcipVUFwkfQYNOAyV4431C2w@mail.gmail.com>
+Subject: Re: Bug report: Documentation error in git-bisect man description
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Manuel Ullmann <ullman.alias@posteo.de>, git <git@vger.kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jan 12, 2017 at 5:45 AM, Johannes Sixt <j6t@kdbg.org> wrote:
-> Am 12.01.2017 um 01:17 schrieb Jacob Keller:
+On Fri, Jan 13, 2017 at 12:42 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+>> Manuel Ullmann <ullman.alias@posteo.de> writes:
 >>
->> From: Jacob Keller <jacob.keller@gmail.com>
+>> Hmmm, I tend to agree, modulo a minor fix.
 >>
->> Teach git-describe the `--discard` option which will allow specifying
->> a glob pattern of tags to ignore. This can be combined with the
->> `--match` patterns to enable more flexibility in determining which tags
->> to consider.
+>> If the description were in a context inside a paragraph like this:
 >>
->> For example, suppose you wish to find the first official release tag
->> that contains a certain commit. If we assume that official release tags
->> are of the form "v*" and pre-release candidates include "*rc*" in their
->> name, we can now find the first tag that introduces commit abcdef via:
+>>       When you want to tell 'git bisect' that a <rev> belongs to
+>>       the newer half of the history, you say
 >>
->>   git describe --contains --match="v*" --discard="*rc*"
+>>               git bisect (bad|new) [<rev>]
+>>
+>>       On the other hand, when you want to tell 'git bisect' that a
+>>       <rev> belongs to the older half of the history, you can say
+>>
+>>               git bisect (good|old) [<rev>]
+>>
+>> then the pairing we see in the current text makes quite a lot of
+>> sense.
 >
+> Actually, the above is _exactly_ what was intended.  I misread the
+> current documentation when I made the comment, and I think that the
+> current one _IS_ correct.  The latter half of the above is not about
+> a single rev.  You can paint multiple commits with the "older half"
+> color, i.e.
 >
-> I have a few dozen topic branches, many of them are work in progress and
-> named wip/something. To see the completed branches, I routinely say
+>         On the other hand, when you want to tell 'git bisect' that
+>         one or more <rev>s  belong to the older half of the history,
+>         you can say
 >
->     gitk --exclude=wip/* --branches
+>                 git bisect (good|old) [<rev>...]
 >
-> these days.
->
-> It would be great if you could provide the same user interface here. The
-> example in the commit message would then look like this:
->
->    git describe --contains --exclude="*rc*" --match="v*"
->
-> (I'm not saying that you should add --branches, but that you should prefer
-> --exclude over --discard. Also, the order of --exclude and --match would be
-> important.)
+> In contrast, you can mark only one <rev> as newer (or "already
+> bad").  So pairing (bad|good) and (new|old) like you suggested
+> breaks the correctness of the command line description.
 
-I think that --exclude makes sense, but the current implementation
-does not differentiate ordering, since both are merely accumulated
-into string_lists and then matched together. I'm not sure how order
-would impact things here? In the current implementation, if something
-is excluded and matched, it will be excluded. That is, exclusion
-patterns take precedence over match patterns. I think this makes the
-most sense semantically.
+Yeah, I agree.
 
-Thanks,
-Jake
+> If (bad|new) and (good|old) bothers you because they may mislead the
+> readers to think bad is an opposite of new (and good is an opposite
+> of old), the only solution I can think of to that problem is to
+> expand these two lines into four and list them like this:
+>
+>         git bisect bad [<rev>]
+>         git bisect good [<rev>...]
+>         git bisect new [<rev>]
+>         git bisect old [<rev>...]
 
->
-> -- Hannes
->
+Maybe it would be more complete and a bit clearer if it was:
+
+           git bisect (bad|new|<term-new>) [<rev>]
+           git bisect (good|old|<term-old>) [<rev>...]
