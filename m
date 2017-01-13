@@ -6,83 +6,108 @@ X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 58F5820756
-	for <e@80x24.org>; Fri, 13 Jan 2017 23:37:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4DF8B20756
+	for <e@80x24.org>; Fri, 13 Jan 2017 23:42:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751612AbdAMXhk (ORCPT <rfc822;e@80x24.org>);
-        Fri, 13 Jan 2017 18:37:40 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:60670 "EHLO
+        id S1751541AbdAMXmt (ORCPT <rfc822;e@80x24.org>);
+        Fri, 13 Jan 2017 18:42:49 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:52819 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751482AbdAMXhj (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 13 Jan 2017 18:37:39 -0500
+        with ESMTP id S1751347AbdAMXms (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 13 Jan 2017 18:42:48 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 93FBA5ED3E;
-        Fri, 13 Jan 2017 18:37:38 -0500 (EST)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 658E25FBA5;
+        Fri, 13 Jan 2017 18:42:47 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=wkwBKuBXTHYj0QBzBAtJ2R4jQv0=; b=s+uPAZ
-        h6O+7uNV7LWipQkeMT9OYl2b/fWXpjq8T2praZJTlJeUxbvilDhMKNBJgeTUnFL1
-        pbwBaLnhVKbKyHBbono/qMsXbVc+x6X8Ayv6JnRSXRc6wajME28TxGF3IBZFM9F/
-        XY98jBNCfxRuGgs9wVKkhrF8kmdd9KmPflJJg=
+        :content-type; s=sasl; bh=rmicULu2jh77n11d3R3MYiZT7Jg=; b=g0LLdj
+        2ZOZZE9rS6Mwtmezv1gzXttQi0ARNWGybX0n47QRCGM2yQXJ/9cmpIahY/7+lB6p
+        I60ArKVEidQerd8RFYvMYQDFBTj3IZRFK+cP02leaUKJoYb8nIQAfb4b+YR7visR
+        3ezlxXjrtF/KVh9KrbzNkjj0bk5umCAiaMnnE=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=g78M84Xs6o3RR7T6Nzwr0XDhRWmda/8Q
-        1MqlgFffeTnhYtsDnMOyJ5ZwuKYMmfHHHgnJ4aHEzXL0xSbPW13x3ENkg6H9V2nQ
-        /8MeUuXQqG266zSaStX4gzy4KZDVwH7xQYbz7SITbahV2R9EHKp42TLsjch3UKPC
-        7T3WAqGc3yQ=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 8B6015ED3D;
-        Fri, 13 Jan 2017 18:37:38 -0500 (EST)
+        :content-type; q=dns; s=sasl; b=FezAreOshux6l4PR4cqHr0rO9Ja+E732
+        6GbGAy5zd/OJ++jxGebHXLmrOfZnEkxZtFNVw2kfbQkpkuNb5DyAB+DHuRtcjaKh
+        cIUWQBcpUJCK8J+irPzNUF/OYzhi8yTvN0k/qyrZHXKMlRw+UUTYN/wSUrnkKSQT
+        4a1gungMuHU=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 5B1025FBA4;
+        Fri, 13 Jan 2017 18:42:47 -0500 (EST)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id D8BAB5ED3C;
-        Fri, 13 Jan 2017 18:37:37 -0500 (EST)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 823E25FBA3;
+        Fri, 13 Jan 2017 18:42:46 -0500 (EST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Dennis Kaarsemaker <dennis@kaarsemaker.net>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v2 1/2] diff --no-index: follow symlinks
-References: <20170113102021.6054-1-dennis@kaarsemaker.net>
-        <20170113102021.6054-2-dennis@kaarsemaker.net>
-Date:   Fri, 13 Jan 2017 15:37:36 -0800
-In-Reply-To: <20170113102021.6054-2-dennis@kaarsemaker.net> (Dennis
-        Kaarsemaker's message of "Fri, 13 Jan 2017 11:20:20 +0100")
-Message-ID: <xmqqk29yedkv.fsf@gitster.mtv.corp.google.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     bmwill@google.com, judge.packham@gmail.com, olsonse@umich.edu,
+        git@vger.kernel.org
+Subject: Re: [PATCH] submodule update: run custom update script for initial populating as well
+References: <20170113194326.13950-1-sbeller@google.com>
+Date:   Fri, 13 Jan 2017 15:42:45 -0800
+In-Reply-To: <20170113194326.13950-1-sbeller@google.com> (Stefan Beller's
+        message of "Fri, 13 Jan 2017 11:43:26 -0800")
+Message-ID: <xmqqfukmedca.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.90 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 445EA854-D9E9-11E6-A9E0-A7617B1B28F4-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: FC5FEADA-D9E9-11E6-96A5-FE3F13518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Dennis Kaarsemaker <dennis@kaarsemaker.net> writes:
+Stefan Beller <sbeller@google.com> writes:
 
-> Git's diff machinery does not follow symlinks, which makes sense as git
-> itself also does not, but stores the symlink destination.
+> In 1b4735d9f3 (submodule: no [--merge|--rebase] when newly cloned,
+> 2011-02-17), all actions were defaulted to checkout for populating
+> a submodule initially, because merging or rebasing makes no sense
+> in that situation.
 >
-> In --no-index mode however, it is useful for diff to to follow symlinks,
-> matching the behaviour of ordinary diff. A new --no-dereference (name
-> copied from diff) option has been added to disable this behaviour.
+> Other commands however do make sense, such as the custom command
+> that was added later (6cb5728c43, submodule update: allow custom
+> command to update submodule working tree, 2013-07-03).
 
-If you add a --no-dereference option, --dereference option should
-also be there, so that "--no-dereference" earlier on the command
-line (perhaps coming from a configured alias) can be countermanded.
+Makes sense.
 
-While I am not opposed to giving an optional feature to treat a
-symlink as if it is a regular file with the contents of its link
-target, I am not enthused that this patch tries to make that the
-default behaviour.  We are not matching the behaviour of ordinary
-diff anyway [*1*].
+> I am unsure about the "none" command, as I can see an initial
+> checkout there as a useful thing. On the other hand going strictly
+> by our own documentation, we should do nothing in case of "none"
+> as well, because the user asked for it.
 
-It probably makes more sense for our first step to introduce this
-feature that is only enabled when "--dereference" option is given.
-Making it the default for "--no-index" case should be discussed as
-a separate step.
+I think "none" is "I'll decide which revision of the submodule
+should be there---do not decide it for me".  If the user is
+explicitly saying with "git submodule init" to have "some" version,
+and if the user did not have any (because the user didn't show
+interest in any checkout of the submodule before), then I think it
+probably makes more sense to checkout the version bound to the
+superproject, than leaving the directory empty.
 
-[Footnote]
+> Reported-by: Han-Wen Nienhuys <hanwen@google.com>
+> Signed-off-by: Stefan Beller <sbeller@google.com>
+> ---
+>  git-submodule.sh            |  7 ++++++-
+>  t/t7406-submodule-update.sh | 15 +++++++++++++++
+>  2 files changed, 21 insertions(+), 1 deletion(-)
+>
+> diff --git a/git-submodule.sh b/git-submodule.sh
+> index 554bd1c494..aeb721ab7e 100755
+> --- a/git-submodule.sh
+> +++ b/git-submodule.sh
+> @@ -606,7 +606,12 @@ cmd_update()
+>  		if test $just_cloned -eq 1
+>  		then
+>  			subsha1=
+> -			update_module=checkout
+> +			if test "$update_module" = "merge" ||
+> +			   test "$update_module" = "rebase" ||
+> +			   test "$update_module" = "none"
+> +			then
+> +				update_module=checkout
+> +			fi
 
-*1* E.g. "git diff --no-index dirA/ dirB/" does not say "Only in
-dirA: file".  It also recurses into subdirectories of dirA/ and
-dirB/ without the --recursive option.
+... which seems to be what you did.  Do we need a documentation
+update, or does this just make the behaviour of this corner case
+consistent with what is already documented?
+
+Thanks.
