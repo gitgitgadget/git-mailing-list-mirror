@@ -2,89 +2,118 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 32C4520756
-	for <e@80x24.org>; Fri, 13 Jan 2017 21:39:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7658920756
+	for <e@80x24.org>; Fri, 13 Jan 2017 23:24:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751442AbdAMVjC (ORCPT <rfc822;e@80x24.org>);
-        Fri, 13 Jan 2017 16:39:02 -0500
-Received: from dcvr.yhbt.net ([64.71.152.64]:58104 "EHLO dcvr.yhbt.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751166AbdAMVjA (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 13 Jan 2017 16:39:00 -0500
-Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-        by dcvr.yhbt.net (Postfix) with ESMTP id 464DB20756;
-        Fri, 13 Jan 2017 21:39:00 +0000 (UTC)
-Date:   Fri, 13 Jan 2017 21:39:00 +0000
-From:   Eric Wong <e@80x24.org>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Pat Pannuto <pat.pannuto@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org
-Subject: Re: [PATCH 2/2] Use 'env' to find perl instead of fixed path
-Message-ID: <20170113213900.GA25890@starla>
-References: <20170112055140.29877-3-pat.pannuto@gmail.com>
- <6fe462dd-929a-671b-a210-36ee38e99115@kdbg.org>
- <CAAnLKaGbf9-GAF19+61=7_RfCOBM0=Ounwf8KkL1jS6HX3pOag@mail.gmail.com>
- <alpine.DEB.2.20.1701121118170.3469@virtualbox>
- <xmqqbmvcj9le.fsf@gitster.mtv.corp.google.com>
- <CAAnLKaGvz4Wzs36gMSdoYCg+tzx6KFCe59FNnk5zNQ-L58ww1g@mail.gmail.com>
- <20170113024842.GA20572@starla>
- <xmqq4m12izmd.fsf@gitster.mtv.corp.google.com>
- <20170113185246.GA17441@starla>
- <xmqq37gmhgpn.fsf@gitster.mtv.corp.google.com>
+        id S1751494AbdAMXYa (ORCPT <rfc822;e@80x24.org>);
+        Fri, 13 Jan 2017 18:24:30 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:53546 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751350AbdAMXYa (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 13 Jan 2017 18:24:30 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id C5A595F81A;
+        Fri, 13 Jan 2017 18:24:28 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=dsc/V/fED0H7VLEtTf8lRZGXCxs=; b=R4EUlD
+        XI8R51r+ap3le2u6VPNNRwvFNordx02twbJoILdXA5oRPHzG4r2J1u5V980+xjSi
+        WvGTM9gKUuy89b26ZRnzwtJTg2LpxQDzlivFwusJlLRIryZcOW7YrUl/E8C3ccHT
+        PBmtDZLdbhXsReKmbCs5P5eDe5g8Gf/sHCe3s=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=T2rC8GojpPN+i3jDW6aKdDuedU6bDcje
+        JzbBmagQqpxZVn9FdJbMLdjfkOmwMO98tf7dCZzRXdWcmDq07ZBqAj5HKmWajtXn
+        DtQmgEauVxb97a18pNzLTpjuO5F9bEhDKvxWsJziU8eL31lSJkezRhmwEVHqRwTj
+        +ujBxyRPy8E=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id BCCB65F819;
+        Fri, 13 Jan 2017 18:24:28 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 214195F818;
+        Fri, 13 Jan 2017 18:24:28 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Dennis Kaarsemaker <dennis@kaarsemaker.net>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v2 2/2] diff --no-index: support reading from pipes
+References: <20170113102021.6054-1-dennis@kaarsemaker.net>
+        <20170113102021.6054-3-dennis@kaarsemaker.net>
+Date:   Fri, 13 Jan 2017 15:24:26 -0800
+In-Reply-To: <20170113102021.6054-3-dennis@kaarsemaker.net> (Dennis
+        Kaarsemaker's message of "Fri, 13 Jan 2017 11:20:21 +0100")
+Message-ID: <xmqqo9zaee6t.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.90 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqq37gmhgpn.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 6DA4284E-D9E7-11E6-8EC7-FE3F13518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> wrote:
-> Eric Wong <e@80x24.org> writes:
-> > Junio C Hamano <gitster@pobox.com> wrote:
-> >> Eric Wong <e@80x24.org> writes:
-> >> > Pat Pannuto <pat.pannuto@gmail.com> wrote:
-> >> >> You may still want the 1/2 patch in this series, just to make things
-> >> >> internally consistent with "-w" vs "use warnings;" inside git's perl
-> >> >> scripts.
-> >> >
-> >> > No, that is a step back.  "-w" affects the entire process, so it
-> >> > spots more potential problems.  The "warnings" pragma is scoped
-> >> > to the enclosing block, so it won't span across files.
-> >> 
-> >> OK, so with "-w", we do not have to write "use warnings" in each of
-> >> our files to get them checked.  It is handy when we ship our own
-> >> libs (e.g. Git.pm) that are used by our programs.
-> >
-> > Yes.  "use warnings" should be in our own libs in case other
-> > people run without "-w"
-> 
-> Would it mean that we need both anyway?  That is, add missing "use
-> warnings" without removing "-w" from she-bang line?
+Dennis Kaarsemaker <dennis@kaarsemaker.net> writes:
 
-Yes, we keep "use warnings" other people may use, at least.
-No harm in keeping that in top-level scripts, I guess.
+> +	/*
+> +	 * In --no-index mode, we support reading from pipes. canon_mode, called by
+> +	 * fill_filespec, gets confused by this and thinks we now have subprojects.
+> +	 * Detect this and tell the rest of the diff machinery to treat pipes as
+> +	 * normal files.
+> +	 */
+> +	if (S_ISGITLINK(s->mode))
+> +		s->mode = S_IFREG | ce_permissions(mode);
 
-> Speaking of Perl, I recall that somebody complained that we ship
-> with and do use a stale copy of Error.pm that has been deprecated.
-> I am not asking you to do so, but we may want to see somebody look
-> into it (i.e. assessing the current situation, and if it indeed is
-> desirable for us to wean ourselves away from Error.pm, update our
-> codepaths that use it).
+Hmph.  Pipes on your system may satisfy S_ISGITLINK() and confuse
+later code, and this hack may work it around.  But a proper gitlink
+that was thrown at this codepath (probably by mistake) will also be
+caught and pretend as if it were a regular file.  Do we know for
+certain that pipes everywhere will be munged to appear as
+S_ISGITLINK()?  Is it possible to do the "are we looking at an end
+of a pipe?" check _before_ canon_mode() munges and stores the result
+in s->mode in diff-no-index.c somewhere, perhaps inside get_mode()?
 
-Agreed, I'd definitely prefer to move towards the basic eval/die
-construct without relying on a bundled 3rd-party mechanism.
-But we might need a migration path for out-of-tree users of
-Git.pm (if any)...
+> diff --git a/diff.c b/diff.c
+> index 2fc0226338..bb04eab331 100644
+> --- a/diff.c
+> +++ b/diff.c
+> @@ -2839,9 +2839,18 @@ int diff_populate_filespec(struct diff_filespec *s, unsigned int flags)
+>  		fd = open(s->path, O_RDONLY);
+>  		if (fd < 0)
+>  			goto err_empty;
+> -		s->data = xmmap(NULL, s->size, PROT_READ, MAP_PRIVATE, fd, 0);
+> +		if (!S_ISREG(st.st_mode)) {
+> +			struct strbuf sb = STRBUF_INIT;
+> +			strbuf_read(&sb, fd, 0);
+> +			s->size = sb.len;
+> +			s->data = strbuf_detach(&sb, NULL);
+> +			s->should_free = 1;
+> +		}
+> +		else {
+> +			s->data = xmmap(NULL, s->size, PROT_READ, MAP_PRIVATE, fd, 0);
+> +			s->should_munmap = 1;
+> +		}
+>  		close(fd);
+> -		s->should_munmap = 1;
 
-I'm sure I've agreed this was a path we should be taking in the
-past, but did something about it myself.  So yeah, maybe Pat or
-somebody else interested can take care of this :)
+I like the fact that, by extending the !S_ISREG() check this patch
+introduces, we can later use the new "do not mmap but allocate to
+read" codepath for small files, which may be more efficient.  We may
+want to have a small helper
+
+	static int should_mmap_file_contents(struct stat *st)
+	{
+		return S_ISREG(st->st_mode);
+	}
+
+so that we can do such an enhancement later more easily.
+
+So, I am skeptical with the "do we have pipe" check in the earlier
+hunk, but otherwise I think what this patch wanted to solve is a
+reasonable problem to tackle.
 
 Thanks.
