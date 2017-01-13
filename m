@@ -2,141 +2,119 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 32DD620756
-	for <e@80x24.org>; Fri, 13 Jan 2017 19:43:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5DE8720756
+	for <e@80x24.org>; Fri, 13 Jan 2017 19:51:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751104AbdAMTnd (ORCPT <rfc822;e@80x24.org>);
-        Fri, 13 Jan 2017 14:43:33 -0500
-Received: from mail-pf0-f169.google.com ([209.85.192.169]:34905 "EHLO
-        mail-pf0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750965AbdAMTnc (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 13 Jan 2017 14:43:32 -0500
-Received: by mail-pf0-f169.google.com with SMTP id f144so35576035pfa.2
-        for <git@vger.kernel.org>; Fri, 13 Jan 2017 11:43:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=from:to:cc:subject:date:message-id;
-        bh=hKM0JAkLDpE3Trp8KD300l54ng+N6mHg+Ty6b+LkxPk=;
-        b=QJ+uvXgHr2yf7ODUAsgCEVbQuQpKlLYffZEGJF0ja5yoDFSv7Ct/xAc35jePvEJt7l
-         hqVCV6U9Nkug2G0f/kYPSJT4jDMUQWgEKqSsGdc4ihMptmudUdx7pGPntvdpevsqz+bW
-         zIuiiR0zkiaBxKF154c9uDw+7KTJzGPigMds7Hrysa4iCyeHwGFjI4ZIrSFPEPxlrHpK
-         llipvG2X+waq5LQ6spt1yu1yLcU+wZBeCvZ2vuvAnNTtee/UEBdAc4kZfodAasM4gkkQ
-         YLMHV9B+Zaki/nzvjkhBCUVPq63pdvck7czAbZnHLdrnIzOEPfJI2DNkSxfAMKXRksiU
-         xtRg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=hKM0JAkLDpE3Trp8KD300l54ng+N6mHg+Ty6b+LkxPk=;
-        b=d70QbW+6eoS6Y+q16kKp5Xxm05Vha2svwgigQLWLXh6Tnk0RbJAWKESymsliZLwUNK
-         +/VjbkvKi2Q03lDSpcD03utQ9+zhELvQMGr06bi+fS0IACzD4os/JPXDxsd6EA5UmUfi
-         9eOPgQVn6sReI1YaUmQ4Msx8itV1V0yRSDvLC6kXLYP7ULYDTH8HKd6Ic3wmRiBsB9po
-         bzqE4U4T8jh7rZVwcc4j0UGj1WItPlPxfzV8jm+e8qRUIwFxyfsIQDFW2JXo+q7q38VO
-         xAwSCfXnLpH8YvSBEzpO+upSfOnKUMD+ju+GKZqffrEMSiWKGzqY6634RLkhDShn6pL/
-         wf/Q==
-X-Gm-Message-State: AIkVDXJMRp7mzyHXFRfU5v/dyaaecoYZwcYLU5RDNQ/BQgiiovEwOk4ps8U/5YagAqKhD55Z
-X-Received: by 10.84.231.193 with SMTP id g1mr32101572pln.12.1484336611365;
-        Fri, 13 Jan 2017 11:43:31 -0800 (PST)
-Received: from localhost ([2620:0:1000:5b10:5403:279a:3262:7e9c])
-        by smtp.gmail.com with ESMTPSA id x2sm31052704pfa.71.2017.01.13.11.43.30
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Fri, 13 Jan 2017 11:43:30 -0800 (PST)
-From:   Stefan Beller <sbeller@google.com>
-To:     bmwill@google.com, gitster@pobox.com, judge.packham@gmail.com,
-        olsonse@umich.edu
-Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>
-Subject: [PATCH] submodule update: run custom update script for initial populating as well
-Date:   Fri, 13 Jan 2017 11:43:26 -0800
-Message-Id: <20170113194326.13950-1-sbeller@google.com>
-X-Mailer: git-send-email 2.11.0.300.g08194d1431.dirty
+        id S1751133AbdAMTvV (ORCPT <rfc822;e@80x24.org>);
+        Fri, 13 Jan 2017 14:51:21 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:60345 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1750965AbdAMTvU (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 13 Jan 2017 14:51:20 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 939405DEFC;
+        Fri, 13 Jan 2017 14:51:19 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=aLHZHR2ttbO9
+        +VE0hqn8VjXU3ZU=; b=r+5RjCfA0+S2qZ47deRgEcqyhTi+rXgdSJJaGmeKPI+b
+        MjwpZUExp/oND9Yc5KTthjWlKEYv7dPCJOTHhpPCs27ipjnGnlad/yLNUMn0BOwA
+        plevIzAkzzJIgFqvsikX/lF/Jna/m8njoOpv/aTPMtNR8kFmIuO5HV83ZBQKR/k=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=fWzkId
+        qeKqP7vzld7LVJEW0xZfMAng13qjYz13tT4SWzF8EPBvaehbJUZCuIReS2oVQfYc
+        JiJLvAaPO3ROXDxxQ7yGq0UHrok6HwivrSbT+msa1G9uCFptuyL/HmULUbvsy7/V
+        ShanO7dRGIzg1wCCSxY7p4xcqrCwz0nMsmzn8=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 899565DEFB;
+        Fri, 13 Jan 2017 14:51:19 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id B7ED25DEFA;
+        Fri, 13 Jan 2017 14:51:18 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
+Cc:     Vegard Nossum <vegard.nossum@oracle.com>, git@vger.kernel.org
+Subject: Re: [PATCH 2/3] xdiff: -W: include immediately preceding non-empty lines in context
+References: <1484324112-17773-1-git-send-email-vegard.nossum@oracle.com>
+        <1484324112-17773-2-git-send-email-vegard.nossum@oracle.com>
+        <e55dc4dd-768b-8c9b-e3b2-e850d5d521f5@web.de>
+Date:   Fri, 13 Jan 2017 11:51:16 -0800
+In-Reply-To: <e55dc4dd-768b-8c9b-e3b2-e850d5d521f5@web.de> (=?utf-8?Q?=22R?=
+ =?utf-8?Q?en=C3=A9?= Scharfe"'s
+        message of "Fri, 13 Jan 2017 19:19:48 +0100")
+Message-ID: <xmqqeg06hh6z.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.90 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: A693ABB6-D9C9-11E6-8B73-A7617B1B28F4-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In 1b4735d9f3 (submodule: no [--merge|--rebase] when newly cloned,
-2011-02-17), all actions were defaulted to checkout for populating
-a submodule initially, because merging or rebasing makes no sense
-in that situation.
+Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
 
-Other commands however do make sense, such as the custom command
-that was added later (6cb5728c43, submodule update: allow custom
-command to update submodule working tree, 2013-07-03).
+> Am 13.01.2017 um 17:15 schrieb Vegard Nossum:
+>> When using -W to include the whole function in the diff context, you
+>> are typically doing this to be able to review the change in its entire=
+ty
+>> within the context of the function. It is therefore almost always
+>> desirable to include any comments that immediately precede the functio=
+n.
+>>
+>> This also the fixes the case for C where the declaration is split acro=
+ss
+>> multiple lines (where the first line of the declaration would not be
+>> included in the output), e.g.:
+>>
+>> 	void
+>> 	dummy(void)
+>> 	{
+>> 		...
+>> 	}
+>>
+>
+> That's true, but I'm not sure "non-empty line before function line" is
+> good enough a definition for desirable lines.  It wouldn't work for
+> people who don't believe in empty lines.  Or for those that put a
+> blank line between comment and function.  (I have an opinion on such
+> habits, but git diff should probably stay neutral.)  And that's just
+> for C code; I have no idea how this heuristic would hold up for other
+> file types like HTML.
 
-I am unsure about the "none" command, as I can see an initial
-checkout there as a useful thing. On the other hand going strictly
-by our own documentation, we should do nothing in case of "none"
-as well, because the user asked for it.
+As you are, I am fairly negative on the heuristic based on the
+"non-blank" thing.  We tried once with compaction-heuristics already
+and it did not quite perform well.  Let's not hardcode another one.
 
-Reported-by: Han-Wen Nienhuys <hanwen@google.com>
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
- git-submodule.sh            |  7 ++++++-
- t/t7406-submodule-update.sh | 15 +++++++++++++++
- 2 files changed, 21 insertions(+), 1 deletion(-)
+> We can identify function lines with arbitrary precision (with a
+> xfuncname regex, if needed), but there is no accurate way to classify
+> lines as comments, or as the end of functions.  Adding optional
+> regexes for single- and multi-line comments would help, at least for
+> C.
 
-diff --git a/git-submodule.sh b/git-submodule.sh
-index 554bd1c494..aeb721ab7e 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -606,7 +606,12 @@ cmd_update()
- 		if test $just_cloned -eq 1
- 		then
- 			subsha1=
--			update_module=checkout
-+			if test "$update_module" = "merge" ||
-+			   test "$update_module" = "rebase" ||
-+			   test "$update_module" = "none"
-+			then
-+				update_module=checkout
-+			fi
- 		else
- 			subsha1=$(sanitize_submodule_env; cd "$sm_path" &&
- 				git rev-parse --verify HEAD) ||
-diff --git a/t/t7406-submodule-update.sh b/t/t7406-submodule-update.sh
-index 64f322c4cc..1407fa6098 100755
---- a/t/t7406-submodule-update.sh
-+++ b/t/t7406-submodule-update.sh
-@@ -424,6 +424,19 @@ test_expect_success 'submodule update - command in .git/config catches failure -
- 	test_i18ncmp actual expect
- '
- 
-+test_expect_success 'submodule update - command run for initial population of submodule' '
-+	cat <<-\ EOF >expect
-+	Execution of '\''false $submodulesha1'\'' failed in submodule path '\''submodule'\''
-+	EOF
-+	(
-+		cd super &&
-+		rm -rf submodule
-+		test_must_fail git submodule update >../actual
-+	)
-+	test_cmp expect actual
-+	git -C super submodule update --checkout
-+'
-+
- cat << EOF >expect
- Execution of 'false $submodulesha1' failed in submodule path '../super/submodule'
- Failed to recurse into submodule path '../super'
-@@ -476,6 +489,7 @@ test_expect_success 'submodule init picks up merge' '
- '
- 
- test_expect_success 'submodule update --merge  - ignores --merge  for new submodules' '
-+	test_config -C super submodule.submodule.update checkout &&
- 	(cd super &&
- 	 rm -rf submodule &&
- 	 git submodule update submodule &&
-@@ -488,6 +502,7 @@ test_expect_success 'submodule update --merge  - ignores --merge  for new submod
- '
- 
- test_expect_success 'submodule update --rebase - ignores --rebase for new submodules' '
-+	test_config -C super submodule.submodule.update checkout &&
- 	(cd super &&
- 	 rm -rf submodule &&
- 	 git submodule update submodule &&
--- 
-2.11.0.300.g08194d1431.dirty
+The funcline regexp is used for two related but different purposes.
+It identifies a single line to be placed on @@ ... @@ line before a
+diff hunk.  This line however does not have to be at the beginning
+of a function.  It has to be the line that conveys the most
+significant information (e.g. the name of the function).
 
+The way "diff -W" codepath used it as if it were always the very
+first line of a function was bound to invite a patch like this, and
+if we want to be extra elaborate, I agree that an extra mechanism to
+say "the line the funcline regexp matches is not the beginning of a
+function, but the beginning is a line that matches this other regexp
+before that line" may help.
+
+Do we really want to be that elaborate, though?  I dunno.
+
+I wonder if it would be sufficient to make -W take an optional
+number, e.g. "git show -W4", to add extre context lines before the
+funcline.
