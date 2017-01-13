@@ -7,52 +7,52 @@ X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A62111FEB3
-	for <e@80x24.org>; Fri, 13 Jan 2017 00:57:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 622C21FEB3
+	for <e@80x24.org>; Fri, 13 Jan 2017 01:00:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750843AbdAMA5E (ORCPT <rfc822;e@80x24.org>);
-        Thu, 12 Jan 2017 19:57:04 -0500
-Received: from mail-lf0-f47.google.com ([209.85.215.47]:36272 "EHLO
-        mail-lf0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750760AbdAMA5E (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 Jan 2017 19:57:04 -0500
-Received: by mail-lf0-f47.google.com with SMTP id z134so22274048lff.3
-        for <git@vger.kernel.org>; Thu, 12 Jan 2017 16:57:03 -0800 (PST)
+        id S1750863AbdAMBAJ (ORCPT <rfc822;e@80x24.org>);
+        Thu, 12 Jan 2017 20:00:09 -0500
+Received: from mail-lf0-f44.google.com ([209.85.215.44]:35863 "EHLO
+        mail-lf0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750779AbdAMBAI (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 Jan 2017 20:00:08 -0500
+Received: by mail-lf0-f44.google.com with SMTP id z134so22306679lff.3
+        for <git@vger.kernel.org>; Thu, 12 Jan 2017 17:00:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=MKgHCtTvZPk5vS61CAkpuLaJsO09SWORbbBvkh6XT10=;
-        b=WwT9cStdRYPm602rJeH/pfMaptlih9S/RWJZwWSRSGATZJIrkHaTO14BSP/JRWDxwI
-         efP/xq82bO3QoUiMT2QtKpFnw604abSTwGNLLUVdznK9qxd14+q9gEn1zO7bRAOwU8zl
-         NueJOyLacofWnWdvbNExJVot4RhTjwYyjmvw7p+CPzSZaAJw+F+ct73YvBxEGhCNfauW
-         3hQdbfbdfcIL1BSFqgNOGmAPrkH5DlktaXWjv9CEmSK+x3hZdggcx9fALcQv5HtMUz3C
-         Upmp+ppIJqTlIa2W1pnUjxjJ9I4GfHqRXunbPurqsbsy97htUWjGDARSF9+h0bPAP0v/
-         hDfg==
+        bh=U8BQhynGE40VT04AsIJLrNj3DMljY9/Fczttp6ENX+8=;
+        b=pezR2iEB73zVpgOc2hz6Myumk6MN0ki0ZC7TdIvMGM75+R8fr+ddzEEmzE37HEhoPK
+         g7hZUpr6/+6V1vlgKC2U2feeiXpGs+4gTl4i7r0rMz3JlwYOuCMi/9s2JB5DzYvDki9/
+         M/8rdxQ+IN/T0yqVyfVyuWDGlkw06Lvsky9dyFqrp1vD4GD9jge00plMWp6rjDZZVFRn
+         VU+mEJVPvMoOm47snegZSpy4PywnRaync6YJ7wQCtaW7xSe4USZTyOZ5m5PX2rQJSEBf
+         yehQ1/OxsZ7LRQpDywsgu/Sbxi39N8keeB+WT+HByBB8GP/VsvxKjB0K3n635e67aoXv
+         hWqA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=MKgHCtTvZPk5vS61CAkpuLaJsO09SWORbbBvkh6XT10=;
-        b=XniAPtSNOEFH7FQSyNaRABp05AI376ma7sUdBibkxfonRPOxqmbqQUZWLAsJthJxPN
-         aJxv1ctoIPEidrj8j4FOCzafRPo01QQw2c5Zd/5E+rOmbp8jCvTCfnif7Gp0HDU+G0j5
-         Rofp3typaOLHDC1pSiTGIEmAgtXaRno56ebZ3Qf3Y16W07z1hu5QDIndoLJX7NSNNoeo
-         +qU5MYBTwPM4g5mb6Es0+P0mONLZ67VvTFnONAz/KY+zYsga6a+ieGIpa52z4EGNTu78
-         pk8Q+ShbtynIjCOs/yGolzrg06AoxZUPTbF3yA/kX7uOetOOEx1yjuUOaHLBelD1ZC1/
-         //Xg==
-X-Gm-Message-State: AIkVDXKOU7MF38toEuDpQRWfNNaTsYVdbPbf10EpSS0EWXyLktu0T50ofQQsf9gbYX53k1uil8Xw8vnK3rYHZQ==
-X-Received: by 10.25.10.6 with SMTP id 6mr4967087lfk.88.1484269022496; Thu, 12
- Jan 2017 16:57:02 -0800 (PST)
+        bh=U8BQhynGE40VT04AsIJLrNj3DMljY9/Fczttp6ENX+8=;
+        b=iHm3DuPMpZZVCV1hRKGEDKek0z7pZj0st7W8XhQK2JajyAtkj7mPV6evt0H56Z9IFw
+         d/cuQhbVluVFACjWB5oocHOK0rhXphKCZPAe2wn/EXMWIgjFAUZgRL+icgExvA8W14go
+         dXFh81tQMCV32jSWpPImiVZYKu4lw7/0T4wkouzGi8KGVJAt0VGuOni9Yv0wUCbb7nq+
+         Q+BAjImNipMmSlGSLAYZklVicGjReZO22qXjGEYmnydgN1fl4VwYPOhk0YP3J/6pazGY
+         6d0eAKNY8Eg6MQXCEB/n3lZa4Q+QljCSd4it3FyL9qIv9JSN1iPRgt0G40vdt9HR3m9b
+         zeBQ==
+X-Gm-Message-State: AIkVDXK6/0GFc8EwFpDv3xpawgeJfT/40N85G92EdoCokp+fAsiSYZ/2WhjVVLCEbKURyoXKvBHzgbBeYNfksw==
+X-Received: by 10.25.141.147 with SMTP id p141mr6786924lfd.147.1484269207260;
+ Thu, 12 Jan 2017 17:00:07 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.25.145.14 with HTTP; Thu, 12 Jan 2017 16:56:41 -0800 (PST)
-In-Reply-To: <alpine.DEB.2.20.1701121056470.3469@virtualbox>
+Received: by 10.25.145.14 with HTTP; Thu, 12 Jan 2017 16:59:46 -0800 (PST)
+In-Reply-To: <5f723a0d-623f-bf97-00de-29d430484fed@kdbg.org>
 References: <20170112001721.2534-1-jacob.e.keller@intel.com>
- <20170112001721.2534-4-jacob.e.keller@intel.com> <alpine.DEB.2.20.1701121056470.3469@virtualbox>
+ <20170112001721.2534-6-jacob.e.keller@intel.com> <5f723a0d-623f-bf97-00de-29d430484fed@kdbg.org>
 From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Thu, 12 Jan 2017 16:56:41 -0800
-Message-ID: <CA+P7+xp_23dfGUmuT3fTMOrBOaMjvZpu0ax7A3L8RfQDK4hLbg@mail.gmail.com>
-Subject: Re: [PATCH 3/5] name-rev: add support to discard refs by pattern match
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Date:   Thu, 12 Jan 2017 16:59:46 -0800
+Message-ID: <CA+P7+xrmAmCPOzuaKcm+WxceXnowkM4gKz05tSpdC=CDwpCEug@mail.gmail.com>
+Subject: Re: [PATCH 5/5] describe: teach describe negative pattern matches
+To:     Johannes Sixt <j6t@kdbg.org>
 Cc:     Jacob Keller <jacob.e.keller@intel.com>,
         Git mailing list <git@vger.kernel.org>
 Content-Type: text/plain; charset=UTF-8
@@ -61,25 +61,51 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jan 12, 2017 at 1:57 AM, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
-> Hi Jake,
->
-> On Wed, 11 Jan 2017, Jacob Keller wrote:
->
+On Thu, Jan 12, 2017 at 5:45 AM, Johannes Sixt <j6t@kdbg.org> wrote:
+> Am 12.01.2017 um 01:17 schrieb Jacob Keller:
+>>
 >> From: Jacob Keller <jacob.keller@gmail.com>
 >>
->> Extend name-rev further to support matching refs by adding `--discard`
->> patterns.
+>> Teach git-describe the `--discard` option which will allow specifying
+>> a glob pattern of tags to ignore. This can be combined with the
+>> `--match` patterns to enable more flexibility in determining which tags
+>> to consider.
+>>
+>> For example, suppose you wish to find the first official release tag
+>> that contains a certain commit. If we assume that official release tags
+>> are of the form "v*" and pre-release candidates include "*rc*" in their
+>> name, we can now find the first tag that introduces commit abcdef via:
+>>
+>>   git describe --contains --match="v*" --discard="*rc*"
 >
-> Same comment applies as for 5/5: `--exclude-refs` may be a better name
-> than `--discard`.
 >
+> I have a few dozen topic branches, many of them are work in progress and
+> named wip/something. To see the completed branches, I routinely say
+>
+>     gitk --exclude=wip/* --branches
+>
+> these days.
+>
+> It would be great if you could provide the same user interface here. The
+> example in the commit message would then look like this:
+>
+>    git describe --contains --exclude="*rc*" --match="v*"
+>
+> (I'm not saying that you should add --branches, but that you should prefer
+> --exclude over --discard. Also, the order of --exclude and --match would be
+> important.)
 
-I agree, will change.
+I think that --exclude makes sense, but the current implementation
+does not differentiate ordering, since both are merely accumulated
+into string_lists and then matched together. I'm not sure how order
+would impact things here? In the current implementation, if something
+is excluded and matched, it will be excluded. That is, exclusion
+patterns take precedence over match patterns. I think this makes the
+most sense semantically.
 
 Thanks,
 Jake
 
-> Ciao,
-> Dscho
+>
+> -- Hannes
+>
