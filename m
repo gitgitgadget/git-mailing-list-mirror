@@ -2,140 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 223092079E
-	for <e@80x24.org>; Sat, 14 Jan 2017 08:48:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5F15E2079E
+	for <e@80x24.org>; Sat, 14 Jan 2017 10:02:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751487AbdANIsd (ORCPT <rfc822;e@80x24.org>);
-        Sat, 14 Jan 2017 03:48:33 -0500
-Received: from mail-pf0-f193.google.com ([209.85.192.193]:36277 "EHLO
-        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751252AbdANIsb (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 14 Jan 2017 03:48:31 -0500
-Received: by mail-pf0-f193.google.com with SMTP id 19so301629pfo.3
-        for <git@vger.kernel.org>; Sat, 14 Jan 2017 00:48:31 -0800 (PST)
+        id S1751947AbdANKC3 (ORCPT <rfc822;e@80x24.org>);
+        Sat, 14 Jan 2017 05:02:29 -0500
+Received: from mail-yw0-f194.google.com ([209.85.161.194]:34199 "EHLO
+        mail-yw0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751733AbdANKC2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 14 Jan 2017 05:02:28 -0500
+Received: by mail-yw0-f194.google.com with SMTP id a10so5378636ywa.1
+        for <git@vger.kernel.org>; Sat, 14 Jan 2017 02:02:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=dq/WIVyJLAljz+2ycWvQEg9FuO8m71yE6gD1sYKS+wo=;
-        b=uL3gnFEmK2u2EdSab0BUjohtyx5e3gdcHcfrxGKPtX+8U2DZJ6WRjq4pqx9pJeWxmz
-         twsAcJJLLBjppco39KLI8EzWGjsEPzRupTzo5c0vPwZg4k2c3oqKgLfCGnu167rC0bZE
-         oihnuvQYRFL8k0d4JBUuxfsbR1KdL1Hmp3je4O/P0+12vuvMCyQgKgNF5czS7QJTVuOa
-         2CXTs3pa3GD7uqvmTUIhOSID0u54ZBpLlwxzYK3sfUp4wDdYCFmBgfiGFfV+5XVpQLrB
-         pgGt7FhahbRkXpqWAQRRMPfUlG76Rpkb+0wDMKmmr4qZvK/cdNG+AocYBv2ylLNZfVwW
-         o1aw==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=OinjvktF2p2SiA3R/irlj36gYjxMlWg6+K3DlJ93ksE=;
+        b=tCDaaNncQaIld0bg+JsA3LCocwYNZwc2o1U1S8Hd38f8LEQEb8QDGKXvn06ORW3MN7
+         t3zkeCZby2T1t0BCnAS/xaMSSVoP2zBgRo0rxkomu31uENGr3gVjw+B+OHyNRf3REMS7
+         IEwLzgcVpVmypsGzFAoSrb7b6laofTn4EkpRqjIof76/Rn0o1v9aQ4Ov0AQQ2JC53lpE
+         MIa2Z+8y81Q1XOzGVxXWUoyyK+u0uYGeBnW77sNU71ABRmeauy3GsQFI+yCzKl86kJUa
+         KYv/AKBZ1PDWNQ4QqSKB5q2OECDZW5GvYvIHfKs9AnGAxdqdAFQnzfJFGPj0FFsr186N
+         XNyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=dq/WIVyJLAljz+2ycWvQEg9FuO8m71yE6gD1sYKS+wo=;
-        b=K/BRdbKsj1CoTvyUoUitXrZKY/IVS7Xt/O71OnSXzg7+cgKXPcl9OnB5d83rKu4QpC
-         MfwjMHSp/0ahKH3A27mApRQlT3Zo7kpy8pjmMcAe2M5xFgaWFZiTv/9NrccC5/6rz7U/
-         DSJ6MLlo59HgD79JWsPrflY1q9vx+gogTJSRQnTfihXsb9V9byj4KqCI9EB9VIWDCnZR
-         j23M6grYjuY7RxnCCUd1aYCmcbd1c1VmEqQu58zy2KIXS8wGImiwpBuJtkLMgdyP3RCf
-         WHyO2RB/rQMLq3xOoc/CpRkTbMhUdKfrrXqq6KLQ+3Q372GO2GxSzn2HwusKYlRMbMp5
-         ocug==
-X-Gm-Message-State: AIkVDXKKsvN2iNy0wR5fOFkliajvl6o/uijs5mtzKDT/SbI12iCYUqz8Hxgp8+THz6HR7A==
-X-Received: by 10.84.169.169 with SMTP id h38mr35440677plb.48.1484383710991;
-        Sat, 14 Jan 2017 00:48:30 -0800 (PST)
-Received: from gmail.com (50-1-201-252.dsl.static.fusionbroadband.com. [50.1.201.252])
-        by smtp.gmail.com with ESMTPSA id t14sm8070377pfk.85.2017.01.14.00.48.28
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sat, 14 Jan 2017 00:48:29 -0800 (PST)
-Date:   Sat, 14 Jan 2017 00:48:25 -0800
-From:   David Aguilar <davvid@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Stefan Beller <sbeller@google.com>,
-        Andrew Janke <floss@apjanke.net>,
-        Paul Mackerras <paulus@samba.org>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: gitk pull request // was: Re: gitk: "lime" color incompatible with
- older Tk versions
-Message-ID: <20170114084825.lcecrbtxny3ntulf@gmail.com>
-References: <03babaa1-9011-0010-c4b3-6cad8109d3ab@apjanke.net>
- <CAGZ79kaO9T+Qc=M6s_ZdpAfLZCVQEYNF=zNxDWArDmsA7jjCWg@mail.gmail.com>
- <20170113112043.j7nowdilolswyk2k@gmail.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=OinjvktF2p2SiA3R/irlj36gYjxMlWg6+K3DlJ93ksE=;
+        b=sDtx6yVFSSyllXWn2LsdlCRp6IJ9diDgX6cztU4USh6EMsGw9/Eo76Wd4BC+6fWYP8
+         tiZRPl0Y1aXWdgu7mSuy69VX4LmS/qQCRgzYnl4VY2a2HMpmybXAWA0l4m2L07193bLU
+         OU2ojv7l8Qb96gyK1MdGweVD0exCFtEHdAQ2ER1CvBPJAe3QTEuHxoFkkiG8VJTGsW1B
+         gXDwuHbrRxPXVrZsmqXEU2005flmLCbb/NxNsAKxYplVq1Cd3QL3j2zMmNFDB8c1CqfK
+         adhAAC9KhJwLSjfaB3dHRkupLDCAf3bNEzPklgfa0kXP2ztrjeIuBSUrNGGmGjQHUWi6
+         DWIA==
+X-Gm-Message-State: AIkVDXJDQ4slpi2CnA2N1RJz6FUgnYoXoXU3EmXv5g3mmJ07ON+CfyIo2QMDFfK3faFs9IK4rbzsp6YWr0HeJQ==
+X-Received: by 10.129.85.68 with SMTP id j65mr17969185ywb.123.1484388147602;
+ Sat, 14 Jan 2017 02:02:27 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20170113112043.j7nowdilolswyk2k@gmail.com>
-User-Agent: NeoMutt/20161126 (1.7.1)
+Received: by 10.129.19.214 with HTTP; Sat, 14 Jan 2017 02:01:57 -0800 (PST)
+In-Reply-To: <CA+P7+xqV+CJwP-0_27V26UZbkDzBqbdstGw_Rq=8c3SkjAq2bA@mail.gmail.com>
+References: <20170110084953.15890-1-Karthik.188@gmail.com> <20170110084953.15890-20-Karthik.188@gmail.com>
+ <CA+P7+xqV+CJwP-0_27V26UZbkDzBqbdstGw_Rq=8c3SkjAq2bA@mail.gmail.com>
+From:   Karthik Nayak <karthik.188@gmail.com>
+Date:   Sat, 14 Jan 2017 15:31:57 +0530
+Message-ID: <CAOLa=ZQR9ksPtRw_9FneN26Mjq1TVYx7o=YOM4cDNgrDbuQtXg@mail.gmail.com>
+Subject: Re: [PATCH v10 19/20] branch: use ref-filter printing APIs
+To:     Jacob Keller <jacob.keller@gmail.com>
+Cc:     Git mailing list <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jan 13, 2017 at 03:20:43AM -0800, David Aguilar wrote:
-> 
-> Ping.. it would be nice to get this patch applied.
+Hello,
 
-Sorry for the noise, and thank you Paul for the fix.
-This was already fixed by Paul in gitk@22a713c72df.
+On Thu, Jan 12, 2017 at 5:17 AM, Jacob Keller <jacob.keller@gmail.com> wrote:
+> On Tue, Jan 10, 2017 at 12:49 AM, Karthik Nayak <karthik.188@gmail.com> wrote:
+>> diff --git a/builtin/branch.c b/builtin/branch.c
+>> index 34cd61cd9..f293ee5b0 100644
+>> --- a/builtin/branch.c
+>> +++ b/builtin/branch.c
+>> @@ -37,11 +37,11 @@ static unsigned char head_sha1[20];
+>>  static int branch_use_color = -1;
+>>  static char branch_colors[][COLOR_MAXLEN] = {
+>>         GIT_COLOR_RESET,
+>> -       GIT_COLOR_NORMAL,       /* PLAIN */
+>> -       GIT_COLOR_RED,          /* REMOTE */
+>> -       GIT_COLOR_NORMAL,       /* LOCAL */
+>> -       GIT_COLOR_GREEN,        /* CURRENT */
+>> -       GIT_COLOR_BLUE,         /* UPSTREAM */
+>> +       GIT_COLOR_NORMAL,       /* PLAIN */
+>> +       GIT_COLOR_RED,          /* REMOTE */
+>> +       GIT_COLOR_NORMAL,       /* LOCAL */
+>> +       GIT_COLOR_GREEN,        /* CURRENT */
+>> +       GIT_COLOR_BLUE,         /* UPSTREAM */
+>>  };
+>
+>
+> What's... actually changing here? It looks like just white space? Is
+> there a strong reason for why this is changing?
+>
+> Thanks,
+> Jake
 
-I'm sure Junio will merge gitk.git into git.git soon enough so I
-can sit tight until then, but while I'm here I might as well
-send out a pull request:
+None, I'm not sure how this ended up being added too.
 
-The following changes since commit 22a713c72df8b6799c59287c50cee44c4a6db51e:
-
-  gitk: Follow themed bgcolor in help dialogs (2016-03-19 14:12:21 +1100)
-
-are available in the git repository at:
-
-  git://ozlabs.org/~paulus/gitk.git 
-
-for you to fetch changes up to fbf426478e540f4737860dae622603cc0daba3d2:
-
-  gitk: Update copyright notice to 2016 (2016-12-12 20:46:42 +1100)
-
-----------------------------------------------------------------
-Markus Hitter (3):
-      gitk: Turn off undo manager in the text widget
-      gitk: Remove closed file descriptors from $blobdifffd
-      gitk: Clear array 'commitinfo' on reload
-
-Paul Mackerras (2):
-      gitk: Use explicit RGB green instead of "lime"
-      gitk: Update copyright notice to 2016
-
-Rogier Goossens (3):
-      gitk: Add a 'rename' option to the branch context menu
-      gitk: Allow checking out a remote branch
-      gitk: Include commit title in branch dialog
-
-Satoshi Yasushima (1):
-      gitk: Fix Japanese translation for "marked commit"
-
-Stefan Dotterweich (1):
-      gitk: Fix missing commits when using -S or -G
-
-Vasco Almeida (2):
-      gitk: Makefile: create install bin directory
-      gitk: Add Portuguese translation
-
- Makefile    |    1 +
- gitk        |  166 +++++--
- po/bg.po    |    4 +-
- po/ca.po    |    6 +-
- po/de.po    |    4 +-
- po/es.po    |    4 +-
- po/fr.po    |    4 +-
- po/hu.po    |    4 +-
- po/it.po    |    4 +-
- po/ja.po    |   13 +-
- po/pt_br.po |    4 +-
- po/pt_pt.po | 1376 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- po/ru.po    |    4 +-
- po/sv.po    |    8 +-
- po/vi.po    |    4 +-
- 15 files changed, 1549 insertions(+), 57 deletions(-)
- create mode 100644 po/pt_pt.po
-
-Thanks,
 -- 
-David
+Regards,
+Karthik Nayak
