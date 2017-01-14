@@ -2,128 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 92C6120756
-	for <e@80x24.org>; Tue, 17 Jan 2017 16:57:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E23C620756
+	for <e@80x24.org>; Sat, 14 Jan 2017 02:07:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751030AbdAQQ52 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 17 Jan 2017 11:57:28 -0500
-Received: from mail-qt0-f195.google.com ([209.85.216.195]:35211 "EHLO
-        mail-qt0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750924AbdAQQ51 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 17 Jan 2017 11:57:27 -0500
-Received: by mail-qt0-f195.google.com with SMTP id f4so22876320qte.2
-        for <git@vger.kernel.org>; Tue, 17 Jan 2017 08:57:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=nyu-edu.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=K05SZqggVzK6aMu9Eg9urRz8T2lFE9qxpWelrcts2iA=;
-        b=TaZ9y0Q2A6znFHIeK9U3FSdQq53hD4fwiJL6V7DkPCEKzOrR/6pTepIqTxiixrdd5e
-         3iviT2irBeZTSTl1x0vXDAPRi40Cv/Xe+6MgxUJP8Frao5J2KvrfwgmQn76qSa5oN1zE
-         8wpqD+txHSolIZYNrQqtbEvEUMsZ7lRmLh1HtOScX+bryfT03zLDxrFeTarMKtXGM4kr
-         YSfE3VPFF5yCYkrUYPzp+B1eOzMYGjbvG/xLpi5uIsCjgb+2mCiCGSWGxual6xiBUI5n
-         oGvrn0vzM8lgNGK+6o+hkQTQ1zYJOLSMnC2w4139HoMAkpvr2j2QSOS6VUcGolE/uNgi
-         k/Ug==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=K05SZqggVzK6aMu9Eg9urRz8T2lFE9qxpWelrcts2iA=;
-        b=r9B/+JSXBTNI92Nj4Ma5DsZ0CBbN2Ms8HCfayctRZ/u1RJxt5+Bqp1xfNwrtWONBd/
-         EzOj08GKOT+QhlX4JwEXqRx+TicPU5bQWZ2SlaPznEYVsgfGaHEHZKR370wtjwSUzhUN
-         orl1KfNx9xV8l8xOxWn8xiE0tni7uTCwEhFpf7jWoFO/MocEVH8RgfwASKLd1ncBRHnc
-         Ux3+LpgTycMljT0UVZ5KBKqflc3kSSZ4hwPQfkpFJWSoNt4LiiJDCULE35828NyvdvRH
-         Sxbcr+XoL8AykyOyYcvdzqQEaGbml7i/iq4eCg5ATSHwWz1dA6vLZAgStoPrsomgFf14
-         Iwag==
-X-Gm-Message-State: AIkVDXLuSui8bJrfVqtIpZHQ2ad6UO6rmHVcT/oWTT5tHmAHJ1N9HYuQ6zB8u9Mc+e3Dy8zM
-X-Received: by 10.200.47.100 with SMTP id k33mr33406418qta.241.1484672246435;
-        Tue, 17 Jan 2017 08:57:26 -0800 (PST)
-Received: from LykOS.localdomain (NYUFWA-WLESSAUTHCLIENTS-17.NATPOOL.NYU.EDU. [216.165.95.6])
-        by smtp.gmail.com with ESMTPSA id q88sm19341774qkq.21.2017.01.17.08.57.25
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 17 Jan 2017 08:57:25 -0800 (PST)
-Date:   Tue, 17 Jan 2017 11:57:25 -0500
-From:   Santiago Torres <santiago@nyu.edu>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org, gitster@pobox.com, sunshine@sunshineco.com,
-        walters@verbum.org, Lukas Puehringer <luk.puehringer@gmail.com>
-Subject: Re: [PATCH v5 3/7] tag: add format specifier to gpg_verify_tag
-Message-ID: <20170117165724.2hbyfdzrhrmro54b@LykOS.localdomain>
-References: <20170115184705.10376-1-santiago@nyu.edu>
- <20170115184705.10376-4-santiago@nyu.edu>
- <20170117152455.k6zkeclsyawzpl2n@sigill.intra.peff.net>
- <20170117153019.gujiruwghkwfklgv@sigill.intra.peff.net>
+        id S1751133AbdANCH3 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 13 Jan 2017 21:07:29 -0500
+Received: from resqmta-po-08v.sys.comcast.net ([96.114.154.167]:55100 "EHLO
+        resqmta-po-08v.sys.comcast.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1751022AbdANCH2 (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 13 Jan 2017 21:07:28 -0500
+X-Greylist: delayed 345 seconds by postgrey-1.27 at vger.kernel.org; Fri, 13 Jan 2017 21:07:28 EST
+Received: from resomta-po-15v.sys.comcast.net ([96.114.154.239])
+        by resqmta-po-08v.sys.comcast.net with SMTP
+        id SDf0cUfeqwySVSDf5czcqT; Sat, 14 Jan 2017 02:01:43 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=comcast.net;
+        s=q20161114; t=1484359303;
+        bh=PkjwCSWhCBwgFCCwY5OAs6PWKOSumDmv/b7FxkPcsO0=;
+        h=Received:Received:To:From:Subject:Message-ID:Date:MIME-Version:
+         Content-Type;
+        b=DrDmf/lmGOq2tdud469OPNmccsQNutua+kTwHcFmV+IyySuEIcb0C/5g6J594AHKe
+         E1lesRHF70TXZV1ozgieYoQSwu8OVKGqAPzrk9u683kS5DyJq7XsYFZdeJRik/pNZt
+         I1BAnDmzfjSvQ4AJu/WCflbiWHWg3J3AyqxnZr/0Zcq07zzOQxVn+kMFeMFLPa/pQs
+         kOkN7uHVDE0zGDsrK+JWWu0MCMUFTOXSqi7ogj53GYG+u7KPaM489CWoP/j7oeNXmb
+         KAOciI0qDw97ZoCgxVAbyrGLJr8XPu1jQud681eALZp67mGFYYkzrepdtNwa18SAgw
+         g79d55Ia9ZZsw==
+Received: from localhost.localdomain ([73.35.250.55])
+        by resomta-po-15v.sys.comcast.net with SMTP
+        id SDf4ctxMUz1pFSDf5cUePh; Sat, 14 Jan 2017 02:01:43 +0000
+To:     git@vger.kernel.org
+From:   "David J. Bakeman" <nakuru@comcast.net>
+Subject: merge maintaining history
+X-Enigmail-Draft-Status: N1110
+Message-ID: <58798686.5050401@comcast.net>
+Date:   Fri, 13 Jan 2017 18:01:42 -0800
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.7.1
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-        protocol="application/pgp-signature"; boundary="otiegmmlpu5pslfh"
-Content-Disposition: inline
-In-Reply-To: <20170117153019.gujiruwghkwfklgv@sigill.intra.peff.net>
+Content-Type: multipart/mixed;
+ boundary="------------060103060100010003050406"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+This is a multi-part message in MIME format.
+--------------060103060100010003050406
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
 
---otiegmmlpu5pslfh
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+History
 
-> > Hrm. Maybe I am missing something, but what does:
-> >=20
-> >   verify_and_format_tag(sha1, name, fmt, flags);
-> >=20
-> > get you over:
-> >=20
-> >   gpg_verify_tag(sha1, name, flags);
-> >   pretty_print_ref(name, sha1, fmt);
-> >=20
-> > ? The latter seems much more flexible, and I do not see how the
-> > verification step impacts the printing at all (or vice versa).
-> >=20
-> > I could understand it more if there were patches later in the series
-> > that somehow used the format and verification results together. But I
-> > didn't see that.
->=20
-> Having read through the rest of the series, it looks like you'd
-> sometimes have to do:
+git cloned a remote repository and made many changes pushing them all to
+said repository over many months.
 
-IIRC, we did this to make the diff "simpler". It also feeds odd that the
-call chain is the following:
+The powers that be then required me to move project to new repository
+server did so by pushing local version to new remote saving all history!
 
-    verify_and_format_tag()
-    gpg_verify_tag()
-    run_gpg_verification()
+Now have to merge back to original repository(which has undergone many
+changes since I split off) but how do I do that without loosing the
+history of all the commits since the original move?  Note I need to push
+changes to files that are already in existence.  I found on the web a
+bunch of ways to insert a whole new directory structure into an existing
+repository but as I said I need to do it on top of existing files.  Of
+course I can copy all the files from my local working repository to the
+cloned remote repository and commit any changes but I loose all the
+history that way.
 
-I'm afraid that adding yet another wrapper would further convolute the
-call chain. If you think this is not an issue, I could easily do it. Do
-you have any suggested name for the wrapper?
+Thanks.
 
-Thanks!
--Santiago
+--------------060103060100010003050406
+Content-Type: text/x-vcard; charset=utf-8;
+ name="nakuru.vcf"
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment;
+ filename="nakuru.vcf"
 
---otiegmmlpu5pslfh
-Content-Type: application/pgp-signature; name="signature.asc"
+begin:vcard
+fn:David J. Bakeman
+n:Bakeman;David J.
+org:Nakuru Software Inc.
+adr:;;1504 North 57th Street;Seattle;WA;98103;USA
+email;internet:nakuru@comcast.net
+tel;work:(206)545-0609
+tel;fax:(206)600-6957
+x-mozilla-html:TRUE
+version:2.1
+end:vcard
 
------BEGIN PGP SIGNATURE-----
 
-iQIzBAEBCAAdFiEEkDurc2QOttZVM+/zRo8SLOgWIpUFAlh+TPIACgkQRo8SLOgW
-IpUA0g/8CppnQYHYbJgw5BWzcPYLIQpAGvk5J/PKekPFJd4jSaLtPFO7u1yHWjrl
-66euaCciXL1tBX3X1CV92j+GkST1ud2lsliGKpMPQXFG8sMPtIl3o8sGEma0Eqyy
-CMBaS5mbbOhE7+uXl8T1E96zQMvVlmdfaP1cBk0caTyYm3o6J9OOvDi+XPXA+Sxt
-LvTn3Yt3fWU4CwkL2SbQv8LGeeA/tG7+8rJtcYgkTJjR6R2HjMpy1b3XpTEs/Udt
-eIT/Tjmw/NOdQ3/EBtFv5ZLgj+vAA6jE+jjetVT81nnaMLvP5onT7qEixw5buFez
-1Z63o+AmR9kYiXIChU1kU87kDzNZfTyScD6v4RCyyM5Yg22d8Aw/XmjViUzBGfcJ
-3UODvfdOwT9WvKt67AEBlZuB0o3917hEczgAM8KC372T6Hg+fxueOON5OaTFw3AO
-x0KOdJn88aviAF1QJuBt4Pj8gZ8kKYGsn8B+c1kK6sZ7/b8CAimN67SOxEmSNhxJ
-6R4EWMLTGo/Wy5XueQTGG5GXEokt1J15Y2qXa2Lj5GQgKb82AbRgELPNVpF0P+vR
-QfbYy5LTHg6B2+uc4giYjpBTe1FGRERpxaEyaCUbGtJjUxChAp3ag2KtUDuPGnAO
-QGfm8V1e4Ijo/6o+5dsFYtnFhqhLFbTCzxLQIFl4Ct8ZNs3VA2o=
-=ZMfV
------END PGP SIGNATURE-----
-
---otiegmmlpu5pslfh--
+--------------060103060100010003050406--
