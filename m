@@ -2,72 +2,144 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A7BA920798
-	for <e@80x24.org>; Sat, 14 Jan 2017 21:57:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6380A20A17
+	for <e@80x24.org>; Sun, 15 Jan 2017 02:35:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752021AbdANV5x (ORCPT <rfc822;e@80x24.org>);
-        Sat, 14 Jan 2017 16:57:53 -0500
-Received: from castro.crustytoothpaste.net ([75.10.60.170]:53372 "EHLO
-        castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751993AbdANV5v (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 14 Jan 2017 16:57:51 -0500
-Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S1750795AbdAOCfr (ORCPT <rfc822;e@80x24.org>);
+        Sat, 14 Jan 2017 21:35:47 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:52525 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1750780AbdAOCfq (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 14 Jan 2017 21:35:46 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 090B1610BD;
+        Sat, 14 Jan 2017 21:35:45 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=HnQQQ2znp5vcX32Yyi/LRtdEpbE=; b=G/QF4x
+        UgJGK/x9VA18DUUv/V9nHud0W8CqFOb2q1vcrxy5TjIBL7j/O/SottOqJJraQCSZ
+        O77vVjCKaYDewzu3C+kpljbsjVkfF82+G27STlrOCVRTBdIImexQc15S8L3sFyR8
+        LirLa+kN/5rH4fMy/F3IDQ4/IoaKYoSTJ9RkM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=fZFBuYtcZKo4nLldTpu14TY2smGhdkL9
+        FF2OW/kw+tBqsQcz2CiNkMQiEAoKAc58yQNN9NEaONRP+OWEzhvM4EYppV+bvnsW
+        5EDAT6GQJ5kyRFqaF68eBADKzbLP2LoUiz0R+ClmaMdpGFYVMBcIKSjXzrxBsixi
+        u8H5kZEEaFw=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id E61B6610BB;
+        Sat, 14 Jan 2017 21:35:44 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 05967280AC;
-        Sat, 14 Jan 2017 21:57:49 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
-        s=default; t=1484431069;
-        bh=twiV5zWrC4GwXLvlayKGcCV4pD24TFYtNKjq2FcqCbI=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=D5jJgjQPrfGdTuWvN9l2X0dJyzCOY0s9K1GLAAgtCbt6BiiOdSsUyHmXDWZ1Ip7zi
-         ZeADjSS9V+e52HYHfhNv6MJwXIRaqYYrHsRbj6+UOXV2EKWF9v8/9Hhd7D55TkgsSO
-         qErp8OW2ANZ6OAXD61KwWn/8WMujIP9v6VoYi/TuqsIx2BR5MeKVEGaNOY/82LzRUQ
-         1r7TbQRvMVXKMXD76IKA9cj07HrQFJyHTr00ip3WnwAKN0OK1Ym+dA8FgRvQe2J2di
-         7Q5Fht9zyEiPU0wb8ecYFP9TAroLrx+SxuI6xV3lrlVkK1nUcsjkaCxSkqdJaY1adm
-         g2lo6tT7VzDnngQ4eHS+g8jR0cO0PqeNjpWUmMOlsublVdw3CdA7vWHKYAcQE8r0jd
-         l3bwT8wiu/dRO98CgktgXXjxSaBfXfGJPJzhC/gC9+XjXGKIqXJj/4+apypN8EwJVm
-         2+5QNOpp/yVnSYpVp6mt9TbapT/UYVc6lDb11ALYEI8aTEB++Cf
-Date:   Sat, 14 Jan 2017 21:57:43 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Eric Wong <e@80x24.org>
-Cc:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-        Pat Pannuto <pat.pannuto@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org
-Subject: Re: [PATCH 2/2] Use 'env' to find perl instead of fixed path
-Message-ID: <20170114215743.5igbjup6qpsh3jfg@genre.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Eric Wong <e@80x24.org>, Jeff King <peff@peff.net>,
-        Junio C Hamano <gitster@pobox.com>,
-        Pat Pannuto <pat.pannuto@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org
-References: <6fe462dd-929a-671b-a210-36ee38e99115@kdbg.org>
- <CAAnLKaGbf9-GAF19+61=7_RfCOBM0=Ounwf8KkL1jS6HX3pOag@mail.gmail.com>
- <alpine.DEB.2.20.1701121118170.3469@virtualbox>
- <xmqqbmvcj9le.fsf@gitster.mtv.corp.google.com>
- <CAAnLKaGvz4Wzs36gMSdoYCg+tzx6KFCe59FNnk5zNQ-L58ww1g@mail.gmail.com>
- <20170113024842.GA20572@starla>
- <xmqq4m12izmd.fsf@gitster.mtv.corp.google.com>
- <20170113185246.GA17441@starla>
- <20170114075408.hyidkb4rzxzmm2je@sigill.intra.peff.net>
- <20170114103134.GA586@untitled>
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 3F855610BA;
+        Sat, 14 Jan 2017 21:35:44 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     David Aguilar <davvid@gmail.com>
+Cc:     Stefan Beller <sbeller@google.com>,
+        Andrew Janke <floss@apjanke.net>,
+        Paul Mackerras <paulus@samba.org>,
+        "git\@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: gitk pull request // was: Re: gitk: "lime" color incompatible with older Tk versions
+References: <03babaa1-9011-0010-c4b3-6cad8109d3ab@apjanke.net>
+        <CAGZ79kaO9T+Qc=M6s_ZdpAfLZCVQEYNF=zNxDWArDmsA7jjCWg@mail.gmail.com>
+        <20170113112043.j7nowdilolswyk2k@gmail.com>
+        <20170114084825.lcecrbtxny3ntulf@gmail.com>
+Date:   Sat, 14 Jan 2017 18:35:43 -0800
+In-Reply-To: <20170114084825.lcecrbtxny3ntulf@gmail.com> (David Aguilar's
+        message of "Sat, 14 Jan 2017 00:48:25 -0800")
+Message-ID: <xmqq37gldp8g.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.90 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="mcb4s5eo2fr5mzkz"
-Content-Disposition: inline
-In-Reply-To: <20170114103134.GA586@untitled>
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.7.0-1-amd64)
-User-Agent: NeoMutt/20161126 (1.7.1)
+Content-Type: text/plain
+X-Pobox-Relay-ID: 505B5322-DACB-11E6-A62F-FE3F13518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+David Aguilar <davvid@gmail.com> writes:
 
+> On Fri, Jan 13, 2017 at 03:20:43AM -0800, David Aguilar wrote:
+>> 
+>> Ping.. it would be nice to get this patch applied.
+>
+> Sorry for the noise, and thank you Paul for the fix.
+> This was already fixed by Paul in gitk@22a713c72df.
+>
+> I'm sure Junio will merge gitk.git into git.git soon enough so I
+> can sit tight until then, but while I'm here I might as well
+> send out a pull request:
+>
+> The following changes since commit 22a713c72df8b6799c59287c50cee44c4a6db51e:
+>
+>   gitk: Follow themed bgcolor in help dialogs (2016-03-19 14:12:21 +1100)
+>
+> are available in the git repository at:
+>
+>   git://ozlabs.org/~paulus/gitk.git 
+>
+> for you to fetch changes up to fbf426478e540f4737860dae622603cc0daba3d2:
+>
+>   gitk: Update copyright notice to 2016 (2016-12-12 20:46:42 +1100)
+
+Pinging Paul to signal me that his tree is ready to pull from is
+appreciated, and asking Paul if his tree is ready to be pulled and
+then relaying his answer to me is also fine, but I am sensing that
+this message is neither.  So let me double check.
+
+Paul, is it a good time to pull, or do you still have something not
+published yet that should go together with what you have already
+queued?
+
+Thanks.
+
+>
+> ----------------------------------------------------------------
+> Markus Hitter (3):
+>       gitk: Turn off undo manager in the text widget
+>       gitk: Remove closed file descriptors from $blobdifffd
+>       gitk: Clear array 'commitinfo' on reload
+>
+> Paul Mackerras (2):
+>       gitk: Use explicit RGB green instead of "lime"
+>       gitk: Update copyright notice to 2016
+>
+> Rogier Goossens (3):
+>       gitk: Add a 'rename' option to the branch context menu
+>       gitk: Allow checking out a remote branch
+>       gitk: Include commit title in branch dialog
+>
+> Satoshi Yasushima (1):
+>       gitk: Fix Japanese translation for "marked commit"
+>
+> Stefan Dotterweich (1):
+>       gitk: Fix missing commits when using -S or -G
+>
+> Vasco Almeida (2):
+>       gitk: Makefile: create install bin directory
+>       gitk: Add Portuguese translation
+>
+>  Makefile    |    1 +
+>  gitk        |  166 +++++--
+>  po/bg.po    |    4 +-
+>  po/ca.po    |    6 +-
+>  po/de.po    |    4 +-
+>  po/es.po    |    4 +-
+>  po/fr.po    |    4 +-
+>  po/hu.po    |    4 +-
+>  po/it.po    |    4 +-
+>  po/ja.po    |   13 +-
+>  po/pt_br.po |    4 +-
+>  po/pt_pt.po | 1376 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+>  po/ru.po    |    4 +-
+>  po/sv.po    |    8 +-
+>  po/vi.po    |    4 +-
+>  15 files changed, 1549 insertions(+), 57 deletions(-)
+>  create mode 100644 po/pt_pt.po
+>
+> Thanks,
