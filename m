@@ -2,156 +2,124 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A12962079E
-	for <e@80x24.org>; Sun, 15 Jan 2017 14:51:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 16C3920C25
+	for <e@80x24.org>; Sun, 15 Jan 2017 16:57:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751054AbdAOOvO (ORCPT <rfc822;e@80x24.org>);
-        Sun, 15 Jan 2017 09:51:14 -0500
-Received: from mail-lf0-f53.google.com ([209.85.215.53]:34542 "EHLO
-        mail-lf0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751053AbdAOOvN (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 15 Jan 2017 09:51:13 -0500
-Received: by mail-lf0-f53.google.com with SMTP id v186so66363256lfa.1
-        for <git@vger.kernel.org>; Sun, 15 Jan 2017 06:51:12 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=jPJKmTiq2yKNxaKwHzeyFb2FksHOAelDRngeDuvr8Vs=;
-        b=H2aa/z9pM/OBExzgqpP9FZlZMka+9Onq2+eBrQiMNAjUUcWQLEMUVt6dVZpvi22rB3
-         QJFO/tAej7aZjq/DeHvi8sO/IlbzAMt86lR0LQSLGmGT1gayMAp2rlEch6vN8m2pFUl/
-         Ir6tk8tF2uVifW3ji1o2IAuO8UOdIRJaGYP2WkT3DKrWnGbQ95HV0Z6M46cVioN8gJxS
-         hTsbYdpvr3W4sZDPIPUx1na+muISBjrJf3hxvhSnItrmidLEVzjhj0Jay9VJGGMRJ5xe
-         qw6tHTnDz/qiiciVld3NC9AWunKeDy59iLJQ35Jtj9oQTSsliqkcTIMDtaEyMEVemzWK
-         +X/g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=jPJKmTiq2yKNxaKwHzeyFb2FksHOAelDRngeDuvr8Vs=;
-        b=mENoPHcG6kmEGRSeJ7JWoHsr1Sr7WwmhJRZSctZi4RrvVW4VerHewFAqh4V7ofWVrO
-         M0R/jr9K4xdjXPcrvoGl21EkKx49nkTjJLQBYRLDxE0hoQBef7RFyQzAp0F7tQT3uBXb
-         jKsPSYhmXh6/noHXWSOKlyzb5K38TVvewoHPwcSnF7s2MFlPsnDnJU0/35kQ6SOKN2b+
-         CeXe9cQLDW52FNHa5jFkvzTYul2y3GObkUJF9nbiIablZeks9IoeKAeXVAr7SlIdvE20
-         51GZ/7YSOgflQ3fBHg4xqEEFN8uEtozsDKqngT8Tn6zbx2QIV7g9ss1sHIUPc6IF9t4C
-         hYrg==
-X-Gm-Message-State: AIkVDXJsMVImTjKAzVw3DjbC0jOK4BD6AGPhvs3BhYssjpoXvCK/UphjqDG+Z86m/bj2X2dTMLHTesnjx94t2Q==
-X-Received: by 10.25.210.79 with SMTP id j76mr1712250lfg.129.1484491871652;
- Sun, 15 Jan 2017 06:51:11 -0800 (PST)
-MIME-Version: 1.0
-Received: by 10.25.199.13 with HTTP; Sun, 15 Jan 2017 06:51:11 -0800 (PST)
-In-Reply-To: <xmqqinpihiwz.fsf@gitster.mtv.corp.google.com>
-References: <20170113144405.3963-1-chriscool@tuxfamily.org> <xmqqinpihiwz.fsf@gitster.mtv.corp.google.com>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Sun, 15 Jan 2017 15:51:11 +0100
-Message-ID: <CAP8UFD31Hb_4phoHPL51Rq0bfW3_xnL9LMosdH-0h=JX3Uwyvw@mail.gmail.com>
-Subject: Re: [PATCH] Documentation/bisect: improve on (bad|new) and (good|bad)
+        id S1751219AbdAOQ5y (ORCPT <rfc822;e@80x24.org>);
+        Sun, 15 Jan 2017 11:57:54 -0500
+Received: from mout.web.de ([212.227.17.11]:57224 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751098AbdAOQ5x (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 15 Jan 2017 11:57:53 -0500
+Received: from [192.168.178.36] ([79.213.118.247]) by smtp.web.de (mrweb103
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0MZUS9-1c9tpT2he1-00LGL3; Sun, 15
+ Jan 2017 17:57:42 +0100
+Subject: Re: [PATCH 2/3] xdiff: -W: include immediately preceding non-empty
+ lines in context
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git <git@vger.kernel.org>, Manuel Ullmann <ullman.alias@posteo.de>,
-        Matthieu Moy <Matthieu.Moy@imag.fr>,
-        Christian Couder <chriscool@tuxfamily.org>
-Content-Type: text/plain; charset=UTF-8
+References: <1484324112-17773-1-git-send-email-vegard.nossum@oracle.com>
+ <1484324112-17773-2-git-send-email-vegard.nossum@oracle.com>
+ <e55dc4dd-768b-8c9b-e3b2-e850d5d521f5@web.de>
+ <xmqqeg06hh6z.fsf@gitster.mtv.corp.google.com>
+ <c74c260d-1a4d-39f6-a644-4f90a67d6d82@oracle.com>
+ <xmqqbmvaecpl.fsf@gitster.mtv.corp.google.com>
+ <48bdfd94-2fd4-bd55-d78b-2877e195fb82@web.de>
+ <xmqqy3ydcaia.fsf@gitster.mtv.corp.google.com>
+Cc:     Vegard Nossum <vegard.nossum@oracle.com>, git@vger.kernel.org
+Newsgroups: gmane.comp.version-control.git
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <57bba5fa-015d-5629-73c2-5052ffb39d2a@web.de>
+Date:   Sun, 15 Jan 2017 17:57:38 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.6.0
+MIME-Version: 1.0
+In-Reply-To: <xmqqy3ydcaia.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K0:FDsGTw+lcmvoEAJ+5O/4QjeMqUc7s/5sNfgnw8Ly8YKhbYSS8qk
+ XVcutKFvCNkmg1zAHla4EdGax1UUcK+IluoPbRddhDyBc43mC+TK65jRyVrZlgYfc/uxCxS
+ ovU2IaO0mq0JWF61E/ea21zs0ibB0+4l7hfcghpc2SpMKoPuCwFgJw05o6DeKUvH/OolE8H
+ J/vFqYez8QVpYb5d4ZU7Q==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:tKg+70cgAHk=:E/V3PLmXBb/LaEGnIsR6fl
+ gASYcQnRHttTa13pPO/trBA94YqT81uP8CRRcwyeeb9s1P9csLsTTeXfTCuUpx509dowfpN7J
+ gGzWX47S1iksmxudbX20hJbk/qtZAAiQXBholibq4M6/ZiblpQTMQLdj6OOpbJlDHRBUYkM2I
+ 0PAMsXn1y5bLWTZQ9rwyaCJYQd1r/eakS1qR2iLyC82gQ+UX1ZbEf+8MsCmKdtaeT2qZlwE8g
+ yosXuZvC64hS61+lWRt/KrIZUckZY7HtfAgb0K+eVfRNYTirBtyj8Vzga7wgnspSRtc+bPtGE
+ HxOkQBIvNT0u9jCvxWIKKn0PFo3DW2RZfOoWWYHWwOn2QBo2OVcNOCkD+3FM/VMO6HF0VhJ9G
+ 9SV8wmd9jWnwpH1dOPEbD9NLg8KgjWi3vneMf+rzxn1vWYTLrfeaUfBcoAZjbLYzv6bqVIf3G
+ SNWUW1S2ZN/4g9V1VeNgTDiKMgmG9YlCBTSvGIV6Ub/ybs/4isao/SLz2oLiMzCyurZdyobYk
+ DQih/+A3pdOTxZDycIPi58jx10jwbPaI+s2lXa0V9oKaRz5dXdSKvk2MJSz8n70ws/WQss7am
+ h/SgWMwRp0yPKk0GYbzzaa6/XesEUUN+3abr3G6Ve8fr7Ax7UodgCHm1SllKArh+IOjDAUxW6
+ liB8fOm2/TXChWtUFDNJq97EisDAw2CuIzEAmDNId89MkizZ0VTkAf1XFHazipLNSqUJHXzn2
+ pnLPdr5EXk3TsCnL01DrG884jGDnKIA29MVNn7yyW1gu3GeJuh7ItkUzCBdG+Mk3gIEZuq7pY
+ c4RSYxL
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jan 13, 2017 at 8:14 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Christian Couder <christian.couder@gmail.com> writes:
->
->> The following part of the description:
+Am 15.01.2017 um 03:39 schrieb Junio C Hamano:
+> René Scharfe <l.s.r@web.de> writes:
+> 
+>>> I am also more focused on keeping the codebase maintainable in good
+>>> health by making sure that we made an effort to find a solution that
+>>> is general-enough before solving a single specific problem you have
+>>> today.  We may end up deciding that a blank-line heuristics gives us
+>>> good enough tradeoff, but I do not want us to make a decision before
+>>> thinking.
 >>
->> git bisect (bad|new) [<rev>]
->> git bisect (good|old) [<rev>...]
+>> How about extending the context upward only up to and excluding a line
+>> that is either empty *or* a function line?  That would limit the extra
+>> context to a single function in the worst case.
 >>
->> may be a bit confusing, as a reader may wonder if instead it should be:
->>
->> git bisect (bad|good) [<rev>]
->> git bisect (old|new) [<rev>...]
->>
->> Of course the difference between "[<rev>]" and "[<rev>...]" should hint
->> that there is a good reason for the way it is.
->>
->> But we can further clarify and complete the description by adding
->> "<term-new>" and "<term-old>" to the "bad|new" and "good|old"
->> alternatives.
->>
->> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
->> ---
->>  Documentation/git-bisect.txt | 4 ++--
->>  1 file changed, 2 insertions(+), 2 deletions(-)
->
-> Thanks.  The patch looks good.
->
-> A related tangent.
->
-> Last night, I was trying to think if there is a fundamental reason
-> why "bad/new/term-new" cannot take more than one <rev>s on the newer
-> side of the bisection, and couldn't quite think of any before
-> falling asleep.
->
-> Currently we keep track of a single bisect/bad, while marking all the
-> revs given as good previously as bisect/good-<SHA-1>.
->
-> Because the next "bad" is typically chosen from the region of the
-> commit DAG that is bounded by bad and good commits, i.e. "rev-list
-> bisect/bad --not bisect/good-*", the current bisect/bad will always
-> be an ancestor of all bad commits that used to be bisect/bad, and
-> keeping previous bisect/bad as bisect/bad-<SHA-1> won't change the
-> region of the commit DAG yet to be explored.
->
-> As a reason why we need to use only a single bisect/bad, the above
-> description is understandable.  But as a reason why we cannot have
-> more than one, it is tautological.  It merely says "if we start from
-> only one and dig history to find older culprit, we need only one
-> bad".
->
-> I fell asleep last night without thinking further than that.
->
-> I think the answer to the question "why do we think we need a single
-> bisect/bad?" is "because bisection is about assuming that there is
-> only one commit that flips the tree state from 'old' to 'new' and
-> finding that single commit".  That would mean that even if we had
-> bisect/bad-A and bisect/bad-B, e.g.
->
->                           o---o---o---bad-A
->                          /
->     -----Good---o---o---o
->                          \
->                           o---o---o---bad-B
->
->
-> where 'o' are all commits whose goodness is not yet known, because
-> bisection is valid only when we are hunting for a single commit that
-> flips the state from good to bad, that commit MUST be at or before
-> the merge base of bad-A and bad-B.  So even if we allowed
->
->         $ git bisect bad bad-A bad-B
->
-> on the command line, we won't have to set bisect/bad-A and
-> bisect/bad-B.  We only need a single bisect/bad that points at the
-> merge base of these two.
->
-> But what if bad-A and bad-B have more than one merge bases?  We
-> won't know which side the badness came from.
->
->                           o---o---o---bad-A
->                          /     \ /
->     -----Good---o---o---o       /
->                          \     / \
->                           o---o---o---bad-B
->
-> Being able to bisect the region of DAG bound by "^Good bad-A bad-B"
-> may have value in such a case.  I dunno.
+>> Reducing context at the bottom with the aim to remove comments for the
+>> next section is more tricky as it could remove part of the function
+>> that we'd like to show if we get the boundary wrong.  How bad would it
+>> be to keep the southern border unchanged?
+> 
+> I personally do not think there is any robust heuristic other than
+> Vegard's "a blank line may be a signal enough that lines before that
+> are not part of the beginning of the function", and I think your
+> "hence we look for a blank line but if there is a line that matches
+> the function header, stop there as we know we came too far back"
+> will be a good-enough safety measure.
+> 
+> I also agree with you that we probably do not want to futz with the
+> southern border.
 
-I agree that there could be improvements in this area. Though from my
-experience with special cases, like when a good commit is not an
-ancestor of the bad commit (where there are probably bugs still
-lurking), I think it could be tricky to implement correctly in all
-cases, and it could make it even more difficult, than it sometimes
-already is, to explain the resulting behavior to users.
+A replacement patch for 2/3 with these changes would look like this:
+
+diff --git a/xdiff/xemit.c b/xdiff/xemit.c
+index 8c88dbde38..9ed54cd318 100644
+--- a/xdiff/xemit.c
++++ b/xdiff/xemit.c
+@@ -174,11 +174,11 @@ int xdl_emit_diff(xdfenv_t *xe, xdchange_t *xscr, xdemitcb_t *ecb,
+ 		s2 = XDL_MAX(xch->i2 - xecfg->ctxlen, 0);
+ 
+ 		if (xecfg->flags & XDL_EMIT_FUNCCONTEXT) {
++			char dummy[1];
+ 			long fs1, i1 = xch->i1;
+ 
+ 			/* Appended chunk? */
+ 			if (i1 >= xe->xdf1.nrec) {
+-				char dummy[1];
+ 				long i2 = xch->i2;
+ 
+ 				/*
+@@ -200,6 +200,10 @@ int xdl_emit_diff(xdfenv_t *xe, xdchange_t *xscr, xdemitcb_t *ecb,
+ 			}
+ 
+ 			fs1 = get_func_line(xe, xecfg, NULL, i1, -1);
++			while (fs1 > 0 && !is_empty_rec(&xe->xdf1, fs1 - 1) &&
++			       match_func_rec(&xe->xdf1, xecfg, fs1 - 1,
++					      dummy, sizeof(dummy)) < 0)
++				fs1--;
+ 			if (fs1 < 0)
+ 				fs1 = 0;
+ 			if (fs1 < s1) {
+
