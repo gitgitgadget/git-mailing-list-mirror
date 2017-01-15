@@ -2,95 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9BECC20A17
-	for <e@80x24.org>; Sun, 15 Jan 2017 02:50:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BC63F20A17
+	for <e@80x24.org>; Sun, 15 Jan 2017 05:51:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750792AbdAOCuc (ORCPT <rfc822;e@80x24.org>);
-        Sat, 14 Jan 2017 21:50:32 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:55589 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1750780AbdAOCub (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 14 Jan 2017 21:50:31 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 0EF7F61274;
-        Sat, 14 Jan 2017 21:50:30 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=b0Ez8o1gHXC+Nyq8QvjvWu751Ik=; b=BhloAK
-        TbCHO4Q4CXVejeoHwGgyult1oq1VpVzHEArGHKSkaRdcib0NLEkiP/4Mnr3ySkeJ
-        o/y252cZaXan4Q+hC+M6vHFj5ZXhiHRzBFj+HVB6xPsTIMgmISys9hvoxu9njFG3
-        /PhOkhp4il0BvzqHFNAYN3Y8VPvVvBw4iR0eU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=leurn6PgR4b8ISCwN6gha7EcCtaPXx2J
-        qzM7xcQaGKQxNXfg+/eY0rIgHrZnQwBkjOxp2fFclRWOKXC+woDCnEJZhlgz+lKw
-        xjeqDOwnFjNWCIM0iIopAGaaaPOx2LAMyDF5sAGmKP9w8CRMEB5J94eXjLPRhCti
-        uEYXFIY2zLw=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 0382761272;
-        Sat, 14 Jan 2017 21:50:30 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 4DCDD61271;
-        Sat, 14 Jan 2017 21:50:29 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     git@vger.kernel.org, Kevin Daudt <me@ikke.info>,
-        Dennis Kaarsemaker <dennis@kaarsemaker.net>,
-        Stephan Beyer <s-beyer@gmx.net>, Jeff King <peff@peff.net>
-Subject: Re: [PATCH v3 00/38] Teach the sequencer to act as rebase -i's backend
-References: <cover.1481642927.git.johannes.schindelin@gmx.de>
-        <cover.1483370556.git.johannes.schindelin@gmx.de>
-        <xmqqinpnuaxl.fsf@gitster.mtv.corp.google.com>
-        <alpine.DEB.2.20.1701141857270.3469@virtualbox>
-Date:   Sat, 14 Jan 2017 18:50:28 -0800
-In-Reply-To: <alpine.DEB.2.20.1701141857270.3469@virtualbox> (Johannes
-        Schindelin's message of "Sat, 14 Jan 2017 19:04:28 +0100 (CET)")
-Message-ID: <xmqqmvetc9zf.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.90 (gnu/linux)
+        id S1750858AbdAOFvl (ORCPT <rfc822;e@80x24.org>);
+        Sun, 15 Jan 2017 00:51:41 -0500
+Received: from mail-lf0-f67.google.com ([209.85.215.67]:35577 "EHLO
+        mail-lf0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750840AbdAOFvk (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 15 Jan 2017 00:51:40 -0500
+Received: by mail-lf0-f67.google.com with SMTP id v186so9408677lfa.2
+        for <git@vger.kernel.org>; Sat, 14 Jan 2017 21:51:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=Ksb4wFsvcJHfRxsz6X/z7BClncgQz/QydKkoox4FHLc=;
+        b=AVh420chEBjIbnx+fKWu2gva4FmiJapXrJCn+0ItrOqokajMsm/bagrq+EaLY2kBnC
+         4JgS6/MzYGJbQw2FVVBxENqOu9ghQf1s2BZFgKZhsXzv2CmL/IIot+6PxCDc05Skdop2
+         PKafJUAuRfofuGNUt2lSc+AwdDA2wkVf57ZDuY1a9FVg6fyyq0P9EcFbSWrHkpy94kEK
+         +gTEgmIs5UT36Yt8vnM3Hwmq6HEdp/OvBUSWMoY5XSzmi+H1D80GrYP3jRskkakKAfrS
+         6G3kq0HtqGRyy+n3ScS3p2gN077wNuu6tKCdWcULDGIpDmRsO8cDtISCQo05oC1wKnxX
+         kYWQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=Ksb4wFsvcJHfRxsz6X/z7BClncgQz/QydKkoox4FHLc=;
+        b=kqqZcSoMRMvOOJ3Eefjs93nKV0weCuhsIYHPT+iUbQj2ARHhwziu/GUIU08sY5U4pR
+         +RBnYWzjztiu/I3nIcq8dHrqGA/lYM94Okeiebz1Zao7Jip4Tpf5FWiMg/eVNgp1KQi5
+         2UL6RvpSsBvVElRhFJTvCn+eZNLtA7OkgCDGk97/Z5qnjrUkNabgB2gF/1muon2S1CJn
+         qDO5siuWsuVFspKmSNO0QVtWvrHQg3r1g527U9LfMFVKhaKGZLi5k4J7cRA8tte3ecVj
+         k7O56wEXvViXMGLtz5AU2WfNC96lGwx8HMiYCi1bZmQGnw7R98r4Cy5SX5tBt6MNUH4G
+         s4xQ==
+X-Gm-Message-State: AIkVDXJSpo+QT7UrxsVZiaYmZ+bW4PCgAlCnjp170sRicf7WETC/kzREu5cCJAPrsSV0plX3ja1PIXVI7DMj/w==
+X-Received: by 10.25.141.147 with SMTP id p141mr10430495lfd.147.1484459498916;
+ Sat, 14 Jan 2017 21:51:38 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 5FEE6160-DACD-11E6-A380-FE3F13518317-77302942!pb-smtp1.pobox.com
+Received: by 10.25.145.14 with HTTP; Sat, 14 Jan 2017 21:51:18 -0800 (PST)
+In-Reply-To: <CAOLa=ZQR9ksPtRw_9FneN26Mjq1TVYx7o=YOM4cDNgrDbuQtXg@mail.gmail.com>
+References: <20170110084953.15890-1-Karthik.188@gmail.com> <20170110084953.15890-20-Karthik.188@gmail.com>
+ <CA+P7+xqV+CJwP-0_27V26UZbkDzBqbdstGw_Rq=8c3SkjAq2bA@mail.gmail.com> <CAOLa=ZQR9ksPtRw_9FneN26Mjq1TVYx7o=YOM4cDNgrDbuQtXg@mail.gmail.com>
+From:   Jacob Keller <jacob.keller@gmail.com>
+Date:   Sat, 14 Jan 2017 21:51:18 -0800
+Message-ID: <CA+P7+xoN12HqaVnYfESrf3-1ZSWkxAz9K+7rRi2gPpGPNSYmHQ@mail.gmail.com>
+Subject: Re: [PATCH v10 19/20] branch: use ref-filter printing APIs
+To:     Karthik Nayak <karthik.188@gmail.com>
+Cc:     Git mailing list <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-
-> The problem in this instance was that the authorship is no longer retained
-> when continuing after resolving a conflict. Let me stress again that this
-> has not been a problem with v1 of sequencer-i, nor with v2. The regression
-> was caused by changes required by the code review.
+On Sat, Jan 14, 2017 at 2:01 AM, Karthik Nayak <karthik.188@gmail.com> wrote:
+> Hello,
 >
-> In case you wonder: Yes, I am upset by this.
+> On Thu, Jan 12, 2017 at 5:17 AM, Jacob Keller <jacob.keller@gmail.com> wrote:
+>> On Tue, Jan 10, 2017 at 12:49 AM, Karthik Nayak <karthik.188@gmail.com> wrote:
+>>> diff --git a/builtin/branch.c b/builtin/branch.c
+>>> index 34cd61cd9..f293ee5b0 100644
+>>> --- a/builtin/branch.c
+>>> +++ b/builtin/branch.c
+>>> @@ -37,11 +37,11 @@ static unsigned char head_sha1[20];
+>>>  static int branch_use_color = -1;
+>>>  static char branch_colors[][COLOR_MAXLEN] = {
+>>>         GIT_COLOR_RESET,
+>>> -       GIT_COLOR_NORMAL,       /* PLAIN */
+>>> -       GIT_COLOR_RED,          /* REMOTE */
+>>> -       GIT_COLOR_NORMAL,       /* LOCAL */
+>>> -       GIT_COLOR_GREEN,        /* CURRENT */
+>>> -       GIT_COLOR_BLUE,         /* UPSTREAM */
+>>> +       GIT_COLOR_NORMAL,       /* PLAIN */
+>>> +       GIT_COLOR_RED,          /* REMOTE */
+>>> +       GIT_COLOR_NORMAL,       /* LOCAL */
+>>> +       GIT_COLOR_GREEN,        /* CURRENT */
+>>> +       GIT_COLOR_BLUE,         /* UPSTREAM */
+>>>  };
+>>
+>>
+>> What's... actually changing here? It looks like just white space? Is
+>> there a strong reason for why this is changing?
+>>
+>> Thanks,
+>> Jake
 >
-> -- snipsnap --
-> Subject: [PATCH] fixup! sequencer: make reading author-script more elegant
+> None, I'm not sure how this ended up being added too.
+>
+> --
+> Regards,
+> Karthik Nayak
 
-I do not think anybody asked to make the code "more elegant".  Quite
-frankly, I do not expect elegance in your code (or any of the code
-in our codebase, for that matter).  What we want is readable code
-that does not make the overall codebase less maintainable that is
-correct.  Not reinveting a new codepath when there is already code
-that does the thing is one of the things that we may need to do, but
-that was not done between these rerolls.
+It looks like it might just be reformatting of some spaces or stray
+end-spaces or something. Hard to see in an email.
 
-Of course, when trying to share code, the existing code we have that
-the new codepath needs to borrow would have to be refactored and
-extended, and a new bug can sneak in during the process.  If that
-were what happened, I would be a bit more sympathetic, but I suspect
-that this "more elegant" thing that needed fix-up is not that.
-
-You may be upset, but I cannot quite bring myself to feel sympathy
-in this particular case.
-
-
-
-
-
+Thanks,
+Jake
