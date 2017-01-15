@@ -7,21 +7,22 @@ X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 16C3920C25
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5BB3120FFD
 	for <e@80x24.org>; Sun, 15 Jan 2017 16:57:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751219AbdAOQ5y (ORCPT <rfc822;e@80x24.org>);
-        Sun, 15 Jan 2017 11:57:54 -0500
-Received: from mout.web.de ([212.227.17.11]:57224 "EHLO mout.web.de"
+        id S1751224AbdAOQ54 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 15 Jan 2017 11:57:56 -0500
+Received: from mout.web.de ([212.227.17.11]:60722 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751098AbdAOQ5x (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 15 Jan 2017 11:57:53 -0500
-Received: from [192.168.178.36] ([79.213.118.247]) by smtp.web.de (mrweb103
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0MZUS9-1c9tpT2he1-00LGL3; Sun, 15
- Jan 2017 17:57:42 +0100
+        id S1751209AbdAOQ5z (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 15 Jan 2017 11:57:55 -0500
+Received: from [192.168.178.36] ([79.213.118.247]) by smtp.web.de (mrweb101
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0Lp6xk-1cyads12ZQ-00eqGM; Sun, 15
+ Jan 2017 17:57:48 +0100
 Subject: Re: [PATCH 2/3] xdiff: -W: include immediately preceding non-empty
  lines in context
-To:     Junio C Hamano <gitster@pobox.com>
+To:     Vegard Nossum <vegard.nossum@oracle.com>,
+        Junio C Hamano <gitster@pobox.com>
 References: <1484324112-17773-1-git-send-email-vegard.nossum@oracle.com>
  <1484324112-17773-2-git-send-email-vegard.nossum@oracle.com>
  <e55dc4dd-768b-8c9b-e3b2-e850d5d521f5@web.de>
@@ -30,96 +31,98 @@ References: <1484324112-17773-1-git-send-email-vegard.nossum@oracle.com>
  <xmqqbmvaecpl.fsf@gitster.mtv.corp.google.com>
  <48bdfd94-2fd4-bd55-d78b-2877e195fb82@web.de>
  <xmqqy3ydcaia.fsf@gitster.mtv.corp.google.com>
-Cc:     Vegard Nossum <vegard.nossum@oracle.com>, git@vger.kernel.org
-Newsgroups: gmane.comp.version-control.git
+ <0c761135-2696-4b3d-0a4f-3d90edf5da2e@oracle.com>
+Cc:     git@vger.kernel.org
 From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <57bba5fa-015d-5629-73c2-5052ffb39d2a@web.de>
-Date:   Sun, 15 Jan 2017 17:57:38 +0100
+Message-ID: <2668771d-249b-659d-3a2c-a788d7d5ebd6@web.de>
+Date:   Sun, 15 Jan 2017 17:57:45 +0100
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
  Thunderbird/45.6.0
 MIME-Version: 1.0
-In-Reply-To: <xmqqy3ydcaia.fsf@gitster.mtv.corp.google.com>
-Content-Type: text/plain; charset=utf-8
+In-Reply-To: <0c761135-2696-4b3d-0a4f-3d90edf5da2e@oracle.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K0:FDsGTw+lcmvoEAJ+5O/4QjeMqUc7s/5sNfgnw8Ly8YKhbYSS8qk
- XVcutKFvCNkmg1zAHla4EdGax1UUcK+IluoPbRddhDyBc43mC+TK65jRyVrZlgYfc/uxCxS
- ovU2IaO0mq0JWF61E/ea21zs0ibB0+4l7hfcghpc2SpMKoPuCwFgJw05o6DeKUvH/OolE8H
- J/vFqYez8QVpYb5d4ZU7Q==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:tKg+70cgAHk=:E/V3PLmXBb/LaEGnIsR6fl
- gASYcQnRHttTa13pPO/trBA94YqT81uP8CRRcwyeeb9s1P9csLsTTeXfTCuUpx509dowfpN7J
- gGzWX47S1iksmxudbX20hJbk/qtZAAiQXBholibq4M6/ZiblpQTMQLdj6OOpbJlDHRBUYkM2I
- 0PAMsXn1y5bLWTZQ9rwyaCJYQd1r/eakS1qR2iLyC82gQ+UX1ZbEf+8MsCmKdtaeT2qZlwE8g
- yosXuZvC64hS61+lWRt/KrIZUckZY7HtfAgb0K+eVfRNYTirBtyj8Vzga7wgnspSRtc+bPtGE
- HxOkQBIvNT0u9jCvxWIKKn0PFo3DW2RZfOoWWYHWwOn2QBo2OVcNOCkD+3FM/VMO6HF0VhJ9G
- 9SV8wmd9jWnwpH1dOPEbD9NLg8KgjWi3vneMf+rzxn1vWYTLrfeaUfBcoAZjbLYzv6bqVIf3G
- SNWUW1S2ZN/4g9V1VeNgTDiKMgmG9YlCBTSvGIV6Ub/ybs/4isao/SLz2oLiMzCyurZdyobYk
- DQih/+A3pdOTxZDycIPi58jx10jwbPaI+s2lXa0V9oKaRz5dXdSKvk2MJSz8n70ws/WQss7am
- h/SgWMwRp0yPKk0GYbzzaa6/XesEUUN+3abr3G6Ve8fr7Ax7UodgCHm1SllKArh+IOjDAUxW6
- liB8fOm2/TXChWtUFDNJq97EisDAw2CuIzEAmDNId89MkizZ0VTkAf1XFHazipLNSqUJHXzn2
- pnLPdr5EXk3TsCnL01DrG884jGDnKIA29MVNn7yyW1gu3GeJuh7ItkUzCBdG+Mk3gIEZuq7pY
- c4RSYxL
+X-Provags-ID: V03:K0:18NvfQMjb1BnCtWaSt1S6wJVzAie87l4NrpdzBDWIS6vl9Jcjc/
+ iXkMlxHOdvzKOWc1DM6ttHrzIEIfUKYb7SxSd+OkMgLuBfdOUjhcvaiEj3WLRPvaZleKdMd
+ vhQgbKetgm5EzhUSsQcH4ubzFABdKw+MzK8PhJQInSCtQrVlT/+7T2+njK6Qag6bnwmlcYm
+ gRCsHiIf5xLND4Nk7k+yw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:Bx3gr3CNIyo=:PVctdVlCb/zufuhWfSwhuy
+ i9YyWS1deQ6y8TUpIT2xbqKjbgJJfWAbnKec7jAd2/8PGo4wmynidL5CiPpRdQei75y+c48bL
+ IZloDLgpMvI/2tWPSWdnb52MmWNts+u4hWeUTbXyok4VNHEg/tDtnTyhH3TTavE3prlTv1N1l
+ 0fiIJ6/lqUeumoSzJ4fX/Tuk/Fvm13HueGhssXM0LhsllsX95vsT2e5noCsj46KfL4OoXGKkz
+ cGN/cpAr+gV+860ECoSkZiOena0CpLNZuPtmY/S0IQBGa/8lA87/Ux++yUGGh2RA3geMNU3V3
+ T6hAEdWHwoU/tE7kH88U4kdJmSYFz6ByFjx+35BjYJTit0A1qWGXT1jgfNTotkp9Ipq6WU2qS
+ 2DT2nguI+wmcSSV0gfKQsKfgi0MxUi0gDIAfNio5yZChG9cB01X3hkGiyT3I2yPZ/AZdD5e8d
+ k4FkRFy51ajOnx1zt+Q/cIxu+WtIeEnD0Ox08TD4GqrabwRQmy1U3YJY41AYw+MAIavnF+4HY
+ IzhaUY01+p9MOMpQbXbTJ6Huzr3zRckLTCse7BIvmg84ORzU00e/6pA/YwSLjB7ps42tAKe0L
+ g7ZBS6tnIRHwkQhV84siRRFMDbtGsf1BBNeAMOdowf6grFOUuof+aSpncJXj+6scMTX3vI3B8
+ aW7eGre1P1RkgqZYIA2b9MPMeTg74seVZ+80bkMs7S4X22rrZrNu6QXi5VSC3jHZvQlFlbElX
+ oaiv8SOPq9eW+GJnZXAJJzK+dQl9qn8e94YSH+rGnc8MbUcPjkQx2jHk8d6OLk9WqCqkJ6uEQ
+ oN6cQxr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 15.01.2017 um 03:39 schrieb Junio C Hamano:
-> René Scharfe <l.s.r@web.de> writes:
-> 
->>> I am also more focused on keeping the codebase maintainable in good
->>> health by making sure that we made an effort to find a solution that
->>> is general-enough before solving a single specific problem you have
->>> today.  We may end up deciding that a blank-line heuristics gives us
->>> good enough tradeoff, but I do not want us to make a decision before
->>> thinking.
+Am 15.01.2017 um 11:06 schrieb Vegard Nossum:
+> On 15/01/2017 03:39, Junio C Hamano wrote:
+>> René Scharfe <l.s.r@web.de> writes:
+>>> How about extending the context upward only up to and excluding a line
+>>> that is either empty *or* a function line?  That would limit the extra
+>>> context to a single function in the worst case.
+>>>
+>>> Reducing context at the bottom with the aim to remove comments for the
+>>> next section is more tricky as it could remove part of the function
+>>> that we'd like to show if we get the boundary wrong.  How bad would it
+>>> be to keep the southern border unchanged?
 >>
->> How about extending the context upward only up to and excluding a line
->> that is either empty *or* a function line?  That would limit the extra
->> context to a single function in the worst case.
+>> I personally do not think there is any robust heuristic other than
+>> Vegard's "a blank line may be a signal enough that lines before that
+>> are not part of the beginning of the function", and I think your
+>> "hence we look for a blank line but if there is a line that matches
+>> the function header, stop there as we know we came too far back"
+>> will be a good-enough safety measure.
 >>
->> Reducing context at the bottom with the aim to remove comments for the
->> next section is more tricky as it could remove part of the function
->> that we'd like to show if we get the boundary wrong.  How bad would it
->> be to keep the southern border unchanged?
-> 
-> I personally do not think there is any robust heuristic other than
-> Vegard's "a blank line may be a signal enough that lines before that
-> are not part of the beginning of the function", and I think your
-> "hence we look for a blank line but if there is a line that matches
-> the function header, stop there as we know we came too far back"
-> will be a good-enough safety measure.
-> 
-> I also agree with you that we probably do not want to futz with the
-> southern border.
+>> I also agree with you that we probably do not want to futz with the
+>> southern border.
+>
+> You are right, trying to change the southern border in this way is not
+> quite reliable if there are no empty lines whatsoever and can
+> erroneously cause the function context to not include the bottom of the
+> function being changed.
+>
+> I'm splitting the function boundary detection logic into separate
+> functions and trying to solve the above case without breaking the tests
+> (and adding a new test for the above case too).
+>
+> I'll see if I can additionally provide some toggles (flags or config
+> variables) to control the new behaviour, what I had in mind was:
+>
+>   -W[=preamble,=no-preamble]
+>   --function-context[=preamble,=no-preamble]
+>   diff.functionContextPreamble = <bool>
+>
+> (where the new logic is controlled by the new config variable and
+> overridden by the presence of =preamble or =no-preamble).
 
-A replacement patch for 2/3 with these changes would look like this:
+Adding comments before a function is useful, removing comments after a 
+function sounds to me as only nice to have (under the assumption that 
+they belong to the next function[*]).  How bad would it be to only 
+implement the first part (as in the patch I just sent) without adding 
+new config settings or parameters?
 
-diff --git a/xdiff/xemit.c b/xdiff/xemit.c
-index 8c88dbde38..9ed54cd318 100644
---- a/xdiff/xemit.c
-+++ b/xdiff/xemit.c
-@@ -174,11 +174,11 @@ int xdl_emit_diff(xdfenv_t *xe, xdchange_t *xscr, xdemitcb_t *ecb,
- 		s2 = XDL_MAX(xch->i2 - xecfg->ctxlen, 0);
- 
- 		if (xecfg->flags & XDL_EMIT_FUNCCONTEXT) {
-+			char dummy[1];
- 			long fs1, i1 = xch->i1;
- 
- 			/* Appended chunk? */
- 			if (i1 >= xe->xdf1.nrec) {
--				char dummy[1];
- 				long i2 = xch->i2;
- 
- 				/*
-@@ -200,6 +200,10 @@ int xdl_emit_diff(xdfenv_t *xe, xdchange_t *xscr, xdemitcb_t *ecb,
- 			}
- 
- 			fs1 = get_func_line(xe, xecfg, NULL, i1, -1);
-+			while (fs1 > 0 && !is_empty_rec(&xe->xdf1, fs1 - 1) &&
-+			       match_func_rec(&xe->xdf1, xecfg, fs1 - 1,
-+					      dummy, sizeof(dummy)) < 0)
-+				fs1--;
- 			if (fs1 < 0)
- 				fs1 = 0;
- 			if (fs1 < s1) {
+Thanks,
+René
+
+
+[*] Silly counter-example (the #endif line):
+#ifdef SOMETHING
+int f(...) {
+	// implementation for SOMETHING
+}
+#else
+inf f(...) {
+	// implementation without SOMETHING
+}
+#endif /* SOMETHING */
 
