@@ -2,105 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BC63F20A17
-	for <e@80x24.org>; Sun, 15 Jan 2017 05:51:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1BFFF20A17
+	for <e@80x24.org>; Sun, 15 Jan 2017 06:24:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750858AbdAOFvl (ORCPT <rfc822;e@80x24.org>);
-        Sun, 15 Jan 2017 00:51:41 -0500
-Received: from mail-lf0-f67.google.com ([209.85.215.67]:35577 "EHLO
-        mail-lf0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750840AbdAOFvk (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 15 Jan 2017 00:51:40 -0500
-Received: by mail-lf0-f67.google.com with SMTP id v186so9408677lfa.2
-        for <git@vger.kernel.org>; Sat, 14 Jan 2017 21:51:40 -0800 (PST)
+        id S1750775AbdAOGYY (ORCPT <rfc822;e@80x24.org>);
+        Sun, 15 Jan 2017 01:24:24 -0500
+Received: from mail-lf0-f52.google.com ([209.85.215.52]:32998 "EHLO
+        mail-lf0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750718AbdAOGYX (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 15 Jan 2017 01:24:23 -0500
+Received: by mail-lf0-f52.google.com with SMTP id k86so62712004lfi.0
+        for <git@vger.kernel.org>; Sat, 14 Jan 2017 22:24:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=Ksb4wFsvcJHfRxsz6X/z7BClncgQz/QydKkoox4FHLc=;
-        b=AVh420chEBjIbnx+fKWu2gva4FmiJapXrJCn+0ItrOqokajMsm/bagrq+EaLY2kBnC
-         4JgS6/MzYGJbQw2FVVBxENqOu9ghQf1s2BZFgKZhsXzv2CmL/IIot+6PxCDc05Skdop2
-         PKafJUAuRfofuGNUt2lSc+AwdDA2wkVf57ZDuY1a9FVg6fyyq0P9EcFbSWrHkpy94kEK
-         +gTEgmIs5UT36Yt8vnM3Hwmq6HEdp/OvBUSWMoY5XSzmi+H1D80GrYP3jRskkakKAfrS
-         6G3kq0HtqGRyy+n3ScS3p2gN077wNuu6tKCdWcULDGIpDmRsO8cDtISCQo05oC1wKnxX
-         kYWQ==
+        bh=EtyMh8epwdm6JbotF4yl0dSKSpC5IK+yTWzjSM4HNfE=;
+        b=BP3Rfmm7kNCm3z9mgcfUdZD5wlsfeC0HOk6fcd1uewzFBwHlzYbmU4guX9GZIW5LQu
+         O+LvEKtdfsq9IxY8xFhLWidCMRv1+FQ2zAmhzin5pCU50Mi6+AwwHa+Z3fgq0+aXdL70
+         oLDFyKURL4aT7Ve8RyisBGiXAhiJvFnpHuzOJ/wSOi8OPNLcAhWaA0txp3yn0pgYsIQi
+         RIbnBDVAyJViRLCz6NH3WUiSpEefKmAghFJvfwtFmq8N3mnDwH/3JsihEBhKZHFh104k
+         Se1BaXTU6jd0OTr7RJawRsbHrv7mDFfyYrYORkmPKhfn6vaeZprbhHQYDza+iITH/IGj
+         AmkQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=Ksb4wFsvcJHfRxsz6X/z7BClncgQz/QydKkoox4FHLc=;
-        b=kqqZcSoMRMvOOJ3Eefjs93nKV0weCuhsIYHPT+iUbQj2ARHhwziu/GUIU08sY5U4pR
-         +RBnYWzjztiu/I3nIcq8dHrqGA/lYM94Okeiebz1Zao7Jip4Tpf5FWiMg/eVNgp1KQi5
-         2UL6RvpSsBvVElRhFJTvCn+eZNLtA7OkgCDGk97/Z5qnjrUkNabgB2gF/1muon2S1CJn
-         qDO5siuWsuVFspKmSNO0QVtWvrHQg3r1g527U9LfMFVKhaKGZLi5k4J7cRA8tte3ecVj
-         k7O56wEXvViXMGLtz5AU2WfNC96lGwx8HMiYCi1bZmQGnw7R98r4Cy5SX5tBt6MNUH4G
-         s4xQ==
-X-Gm-Message-State: AIkVDXJSpo+QT7UrxsVZiaYmZ+bW4PCgAlCnjp170sRicf7WETC/kzREu5cCJAPrsSV0plX3ja1PIXVI7DMj/w==
-X-Received: by 10.25.141.147 with SMTP id p141mr10430495lfd.147.1484459498916;
- Sat, 14 Jan 2017 21:51:38 -0800 (PST)
+        bh=EtyMh8epwdm6JbotF4yl0dSKSpC5IK+yTWzjSM4HNfE=;
+        b=qkqVw5mOwMzrIqEKhbHDR76K0o0ek7kCaM7AkUSmQq56urUNbTOZlsjyDjupdA892C
+         tliZZUhB8OzaoP+qqnSwMv9OrlCjicG2MCp4r+Lyf/E6vMS6bQOSQo1FS6UtdNzjQPZ3
+         qwdNks46t0GDkeLLc0W73R89AptWKF+DXBH7H5dwHeIGNZi3c+uxu+RU6/U1QgIkby+M
+         7w+YdZAaLdfHM8ArDCZRjk24Wx6yrwL30LC4xxsHnhV+FSGa3LlZsIiT4cUHKt4s6DTx
+         XHC5iN68CYE9b4sKLtLzFWgd7ehyS5AA7uPzL6OauBSVdDXRlEl2aWl/5knBkFHaiZmC
+         XVhQ==
+X-Gm-Message-State: AIkVDXKV71I5eIUXfiKzl2FZegqrwXViT4VhC35dEnn/8vMggFn/S9YzqpRPJSe2Gv2212YOJyXiM6Jbjt3umw==
+X-Received: by 10.46.14.9 with SMTP id 9mr9940655ljo.59.1484461461707; Sat, 14
+ Jan 2017 22:24:21 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.25.145.14 with HTTP; Sat, 14 Jan 2017 21:51:18 -0800 (PST)
-In-Reply-To: <CAOLa=ZQR9ksPtRw_9FneN26Mjq1TVYx7o=YOM4cDNgrDbuQtXg@mail.gmail.com>
-References: <20170110084953.15890-1-Karthik.188@gmail.com> <20170110084953.15890-20-Karthik.188@gmail.com>
- <CA+P7+xqV+CJwP-0_27V26UZbkDzBqbdstGw_Rq=8c3SkjAq2bA@mail.gmail.com> <CAOLa=ZQR9ksPtRw_9FneN26Mjq1TVYx7o=YOM4cDNgrDbuQtXg@mail.gmail.com>
+Received: by 10.25.145.14 with HTTP; Sat, 14 Jan 2017 22:24:00 -0800 (PST)
+In-Reply-To: <58798686.5050401@comcast.net>
+References: <58798686.5050401@comcast.net>
 From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Sat, 14 Jan 2017 21:51:18 -0800
-Message-ID: <CA+P7+xoN12HqaVnYfESrf3-1ZSWkxAz9K+7rRi2gPpGPNSYmHQ@mail.gmail.com>
-Subject: Re: [PATCH v10 19/20] branch: use ref-filter printing APIs
-To:     Karthik Nayak <karthik.188@gmail.com>
-Cc:     Git mailing list <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
+Date:   Sat, 14 Jan 2017 22:24:00 -0800
+Message-ID: <CA+P7+xoF8E55-XDnQT-GN1=hEwwq4pOsz7--P-SCy29C7ST3Hg@mail.gmail.com>
+Subject: Re: merge maintaining history
+To:     "David J. Bakeman" <nakuru@comcast.net>
+Cc:     Git mailing list <git@vger.kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Jan 14, 2017 at 2:01 AM, Karthik Nayak <karthik.188@gmail.com> wrote:
-> Hello,
+On Fri, Jan 13, 2017 at 6:01 PM, David J. Bakeman <nakuru@comcast.net> wrote:
+> History
 >
-> On Thu, Jan 12, 2017 at 5:17 AM, Jacob Keller <jacob.keller@gmail.com> wrote:
->> On Tue, Jan 10, 2017 at 12:49 AM, Karthik Nayak <karthik.188@gmail.com> wrote:
->>> diff --git a/builtin/branch.c b/builtin/branch.c
->>> index 34cd61cd9..f293ee5b0 100644
->>> --- a/builtin/branch.c
->>> +++ b/builtin/branch.c
->>> @@ -37,11 +37,11 @@ static unsigned char head_sha1[20];
->>>  static int branch_use_color = -1;
->>>  static char branch_colors[][COLOR_MAXLEN] = {
->>>         GIT_COLOR_RESET,
->>> -       GIT_COLOR_NORMAL,       /* PLAIN */
->>> -       GIT_COLOR_RED,          /* REMOTE */
->>> -       GIT_COLOR_NORMAL,       /* LOCAL */
->>> -       GIT_COLOR_GREEN,        /* CURRENT */
->>> -       GIT_COLOR_BLUE,         /* UPSTREAM */
->>> +       GIT_COLOR_NORMAL,       /* PLAIN */
->>> +       GIT_COLOR_RED,          /* REMOTE */
->>> +       GIT_COLOR_NORMAL,       /* LOCAL */
->>> +       GIT_COLOR_GREEN,        /* CURRENT */
->>> +       GIT_COLOR_BLUE,         /* UPSTREAM */
->>>  };
->>
->>
->> What's... actually changing here? It looks like just white space? Is
->> there a strong reason for why this is changing?
->>
->> Thanks,
->> Jake
+> git cloned a remote repository and made many changes pushing them all to
+> said repository over many months.
 >
-> None, I'm not sure how this ended up being added too.
+> The powers that be then required me to move project to new repository
+> server did so by pushing local version to new remote saving all history!
 >
-> --
-> Regards,
-> Karthik Nayak
+> Now have to merge back to original repository(which has undergone many
+> changes since I split off) but how do I do that without loosing the
+> history of all the commits since the original move?  Note I need to push
+> changes to files that are already in existence.  I found on the web a
+> bunch of ways to insert a whole new directory structure into an existing
+> repository but as I said I need to do it on top of existing files.  Of
+> course I can copy all the files from my local working repository to the
+> cloned remote repository and commit any changes but I loose all the
+> history that way.
+>
+> Thanks.
 
-It looks like it might just be reformatting of some spaces or stray
-end-spaces or something. Hard to see in an email.
+If I understand it.. you have two remotes now:
+
+The "origin" remote, which was the original remote you started with.
+
+You have now a "new" remote which you created and pushed to.
+
+So you want to merge the "new" history into the original tree now, so
+you checkout the original tree, then "git merge <new-remote>/<branch>"
+and then fix up any conflicts, and then git commit to create a merge
+commit that has the new history. Then you could push that to both
+trees.
+
+I would want a bit more information about your setup before providing
+actual commands.
 
 Thanks,
 Jake
