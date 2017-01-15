@@ -2,136 +2,75 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B13271F89C
-	for <e@80x24.org>; Sun, 15 Jan 2017 22:17:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 444611F89C
+	for <e@80x24.org>; Sun, 15 Jan 2017 23:28:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751281AbdAOWRH (ORCPT <rfc822;e@80x24.org>);
-        Sun, 15 Jan 2017 17:17:07 -0500
-Received: from mail-qk0-f173.google.com ([209.85.220.173]:34083 "EHLO
-        mail-qk0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751068AbdAOWRF (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 15 Jan 2017 17:17:05 -0500
-Received: by mail-qk0-f173.google.com with SMTP id a20so103520932qkc.1
-        for <git@vger.kernel.org>; Sun, 15 Jan 2017 14:17:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=gFA3R/V9F0L4hTEamcyZ2Etfw9JUoC58Nc9qPnvrY9w=;
-        b=szki8g9nFC3wvOD6i9rqil86hBm/mi0ihExHVtarz5YKlPAdeFEzqRzWU++cMwh8Ru
-         8mueyyjWcgZmqj4NgQWofPRXh3C3ORqJkVUINAK3HyyfhqD1Dns7St965E/8h0r+q89E
-         IEISYToR9ifXuyKiBohuH2eGEuNAmvdVE45Fc4wN+K6pG8ZJCTDMgAubi+gdPXG5k16N
-         jik+gW4LHmWwupH+EwOjQw0XHKvK1i6GKcWyyxUV8BleTIvyAr6PF1Da60QhcTHlSLgc
-         Ga4i8Ua6xF9+hiFNvb5TuksKFiKqAU+smuQAzoB/uSd8ba4vKnpIYnCLV0Lysf4zPrt7
-         puLQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=gFA3R/V9F0L4hTEamcyZ2Etfw9JUoC58Nc9qPnvrY9w=;
-        b=L1rO5gOPdTemYDvQrv8HjHsognifTc7q3QSvqnFSZSrmYxVjFXrC/QYx8fLpOXYd58
-         YYBA15YF+KodKYv2Hk1kv9ZRm2LU2T1Z8I3d2uFr7AKwrqG0gO6C1kZh4QzyLgwRPIp1
-         LepTMv+19DsUmAwGM89+FVrDFsDYtDD9SHAMGQdviLkbHMuyY7MorQNiAx8ubqgFpyRo
-         Ye3pULvWQwoA2uPNy7bq1twZOrZCRggi+fMfAZCe9w0XiT31jyqE7ALbb06tpgvC0RJh
-         U2ZStAhHs5vimyaVNB+WIFjYoDctpo1wjKxZpypiKI8UhwNvVYQcqXFWPSPOU5+/M07c
-         Hofw==
-X-Gm-Message-State: AIkVDXLsKwIm2l2+Oq81edcF9+wmMfZwOWovKGa+EeFlPoLp9rYzqWqcJlgOz4FBLd/q8YHU
-X-Received: by 10.233.232.202 with SMTP id a193mr27633587qkg.113.1484518624450;
-        Sun, 15 Jan 2017 14:17:04 -0800 (PST)
-Received: from hansenr.cam.corp.google.com ([172.29.73.70])
-        by smtp.gmail.com with ESMTPSA id o7sm1374511qte.30.2017.01.15.14.17.03
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sun, 15 Jan 2017 14:17:04 -0800 (PST)
-From:   Richard Hansen <hansenr@google.com>
-To:     git@vger.kernel.org
-Cc:     gitster@pobox.com
-Subject: [PATCH v3 2/2] diff: document the format of the -O (diff.orderFile) file
-Date:   Sun, 15 Jan 2017 17:16:31 -0500
-Message-Id: <20170115221631.78838-3-hansenr@google.com>
-X-Mailer: git-send-email 2.11.0.483.g087da7b7c-goog
-In-Reply-To: <20170115221631.78838-1-hansenr@google.com>
-References: <20170111015720.111223-1-hansenr@google.com>
- <20170115221631.78838-1-hansenr@google.com>
+        id S1751259AbdAOX2I (ORCPT <rfc822;e@80x24.org>);
+        Sun, 15 Jan 2017 18:28:08 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:52347 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751087AbdAOX2I (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 15 Jan 2017 18:28:08 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id A12D761675;
+        Sun, 15 Jan 2017 18:28:06 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=HllrbRGKKN/e
+        aTqNPzUhIRzgc0M=; b=hr0nPl/K3YECDrTAFkM1dmqQsMYcdN2B1eDO4tDrTGB1
+        6a2FsNcDNJ5nRQ0PD+ytTihfUIcJ8Gbl9wo4u9/kdhv0iMq4vix8ZGXCkXgl9voH
+        yY6GfanMjLfc/urIo+4Gxz8wadFRlC0nzXrSlgZiI2HPgl+GOVAhu2Sisrd7b3s=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=gZMPk6
+        7EB/U7l1WZQEmGWQcM93YnKaJOi8Q2AMgY3gkHC90PYdZiD+EegwqIxDYwgEViEp
+        SUh+cS4JJknNLTKRe1zu+dUFAb2FHdx+fFPF8hY5UrsZDqW470VUzoQ+upqDKkE/
+        MSh7Rnx+o4D31pDAzjw3dZK91WwTm3ixN0Ct8=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 922C161674;
+        Sun, 15 Jan 2017 18:28:06 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id D93BF61673;
+        Sun, 15 Jan 2017 18:28:05 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
+Cc:     Vegard Nossum <vegard.nossum@oracle.com>, git@vger.kernel.org
+Subject: Re: [PATCH 2/3] xdiff: -W: include immediately preceding non-empty lines in context
+References: <1484324112-17773-1-git-send-email-vegard.nossum@oracle.com>
+        <1484324112-17773-2-git-send-email-vegard.nossum@oracle.com>
+        <e55dc4dd-768b-8c9b-e3b2-e850d5d521f5@web.de>
+        <xmqqeg06hh6z.fsf@gitster.mtv.corp.google.com>
+        <c74c260d-1a4d-39f6-a644-4f90a67d6d82@oracle.com>
+        <xmqqbmvaecpl.fsf@gitster.mtv.corp.google.com>
+        <48bdfd94-2fd4-bd55-d78b-2877e195fb82@web.de>
+        <xmqqy3ydcaia.fsf@gitster.mtv.corp.google.com>
+        <0c761135-2696-4b3d-0a4f-3d90edf5da2e@oracle.com>
+        <2668771d-249b-659d-3a2c-a788d7d5ebd6@web.de>
+Date:   Sun, 15 Jan 2017 15:28:04 -0800
+In-Reply-To: <2668771d-249b-659d-3a2c-a788d7d5ebd6@web.de> (=?utf-8?Q?=22R?=
+ =?utf-8?Q?en=C3=A9?= Scharfe"'s
+        message of "Sun, 15 Jan 2017 17:57:45 +0100")
+Message-ID: <xmqqeg03dhtn.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.90 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 4441C1B6-DB7A-11E6-A748-FE3F13518317-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Signed-off-by: Richard Hansen <hansenr@google.com>
----
- Documentation/diff-config.txt  |  5 ++---
- Documentation/diff-options.txt | 34 ++++++++++++++++++++++++++++++++--
- 2 files changed, 34 insertions(+), 5 deletions(-)
+Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
 
-diff --git a/Documentation/diff-config.txt b/Documentation/diff-config.txt
-index 875212045..9e4111320 100644
---- a/Documentation/diff-config.txt
-+++ b/Documentation/diff-config.txt
-@@ -99,11 +99,10 @@ diff.noprefix::
- 	If set, 'git diff' does not show any source or destination prefix.
- 
- diff.orderFile::
--	File indicating how to order files within a diff, using
--	one shell glob pattern per line.
-+	File indicating how to order files within a diff.
-+	See the '-O' option to linkgit:git-diff[1] for details.
- 	If `diff.orderFile` is a relative pathname, it is treated as
- 	relative to the top of the work tree.
--	Can be overridden by the '-O' option to linkgit:git-diff[1].
- 
- diff.renameLimit::
- 	The number of files to consider when performing the copy/rename
-diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
-index e6215c372..d4fb70704 100644
---- a/Documentation/diff-options.txt
-+++ b/Documentation/diff-options.txt
-@@ -466,11 +466,41 @@ information.
- endif::git-format-patch[]
- 
- -O<orderfile>::
--	Output the patch in the order specified in the
--	<orderfile>, which has one shell glob pattern per line.
-+	Control the order in which files appear in the output.
- 	This overrides the `diff.orderFile` configuration variable
- 	(see linkgit:git-config[1]).  To cancel `diff.orderFile`,
- 	use `-O/dev/null`.
-++
-+The output order is determined by the order of glob patterns in
-+<orderfile>.
-+All files with pathnames that match the first pattern are output
-+first, all files with pathnames that match the second pattern (but not
-+the first) are output next, and so on.
-+All files with pathnames that do not match any pattern are output
-+last, as if there was an implicit match-all pattern at the end of the
-+file.
-+If multiple pathnames have the same rank (they match the same pattern
-+but no earlier patterns), their output order relative to each other is
-+the normal order.
-++
-+<orderfile> is parsed as follows:
-++
-+--
-+ - Blank lines are ignored, so they can be used as separators for
-+   readability.
-+
-+ - Lines starting with a hash ("`#`") are ignored, so they can be used
-+   for comments.  Add a backslash ("`\`") to the beginning of the
-+   pattern if it starts with a hash.
-+
-+ - Each other line contains a single pattern.
-+--
-++
-+Patterns have the same syntax and semantics as patterns used for
-+fnmantch(3) without the FNM_PATHNAME flag, except a pathname also
-+matches a pattern if removing any number of the final pathname
-+components matches the pattern.  For example, the pattern "`foo*bar`"
-+matches "`fooasdfbar`" and "`foo/bar/baz/asdf`" but not "`foobarx`".
- 
- ifndef::git-format-patch[]
- -R::
--- 
-2.11.0.483.g087da7b7c-goog
+> ...  How bad would it be to only
+> implement the first part (as in the patch I just sent) without adding
+> new config settings or parameters?
 
+That probably is a good place to stop ;-)
