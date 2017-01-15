@@ -2,135 +2,113 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.4 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A207E2079E
-	for <e@80x24.org>; Sun, 15 Jan 2017 18:31:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3D0BF2079E
+	for <e@80x24.org>; Sun, 15 Jan 2017 18:47:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751281AbdAOSbA (ORCPT <rfc822;e@80x24.org>);
-        Sun, 15 Jan 2017 13:31:00 -0500
-Received: from sauhun.de ([89.238.76.85]:46516 "EHLO pokefinder.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751174AbdAOSbA (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 15 Jan 2017 13:31:00 -0500
-Received: from localhost (p54B33795.dip0.t-ipconnect.de [84.179.55.149])
-        by pokefinder.org (Postfix) with ESMTPSA id A246231C094;
-        Sun, 15 Jan 2017 19:30:57 +0100 (CET)
-From:   Wolfram Sang <wsa@the-dreams.de>
-To:     git@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc:     Wolfram Sang <wsa@the-dreams.de>
-Subject: [RFC for GIT] pull-request: add praise to people doing QA
-Date:   Sun, 15 Jan 2017 19:30:51 +0100
-Message-Id: <20170115183051.3565-1-wsa@the-dreams.de>
+        id S1751270AbdAOSrZ (ORCPT <rfc822;e@80x24.org>);
+        Sun, 15 Jan 2017 13:47:25 -0500
+Received: from mail-qk0-f195.google.com ([209.85.220.195]:33652 "EHLO
+        mail-qk0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751200AbdAOSrY (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 15 Jan 2017 13:47:24 -0500
+Received: by mail-qk0-f195.google.com with SMTP id 11so13855611qkl.0
+        for <git@vger.kernel.org>; Sun, 15 Jan 2017 10:47:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=nyu-edu.20150623.gappssmtp.com; s=20150623;
+        h=from:to:cc:subject:date:message-id;
+        bh=VIrZfHzf09PMLaIxlyGHQP4N6pTKLt49AesQIvB0R5U=;
+        b=qDc8WRW6DIbdBjpZh3k7bfSL1Yjfy65iiyRgtnvw5a+mSySeE/OlK7iHH2QoWbZAlk
+         ldKwYGSkG4Yauk4ERkVlCHU87cEfLzNx3YkSNJUqAjNLjY6DaevvK/qZYFFU/odR29OL
+         kHBs1fMZrK347roKOyyvsS8oXDnQjSCwu1xMuuhEEHwW/n75Dr/UgfxTzbLEr+tTmXkF
+         KQC2wkNWGe5HuWpxn2XMx/J6QiXkOjp2ixjRDAUuNn4KqX/MzfYwDpSLsQ/IdfPv1unf
+         RMSd6ytZR2bZdTJ52i1dKUlkIZxHr9o6zB8AEoR3Zc0Kfp1M0C/9ymx8FZd+SSJwlMqz
+         5Rcw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=VIrZfHzf09PMLaIxlyGHQP4N6pTKLt49AesQIvB0R5U=;
+        b=MCvDmHX7g3Rz46b8VRsYlloFdUP1NWtHUIraspHii3NCdpxhcjAK8h59OxQV79K6fI
+         3rD0RdqsjUoJMgiRLiOQem4T0V0/2VqUooKWufdyy9W7Uua+cvRF/g9tZq/Y6HsuAU2i
+         kqQoUosFGcMyYbobV3VQv59jXGxYDus7bo8jFzP9U2iw7WqnXEomZQMK6sgHBTM22QGy
+         gxCmStcvCSmE41EbR3uX3Hzhzub0uomrAckm8W98Hjo1qXP7XTak+5hwC3G7TOh8lrJP
+         DJ27GhHFV1TJKzmrfbcDk8reM6MZDR2KDmjhZtvKxo7hZtAU6LpCf3X7IGptZxLGzBKm
+         etoA==
+X-Gm-Message-State: AIkVDXLgHjHTJU+P9DV1qIKyQGO5PfvOSAm0qAPC5M9IaqHd9Zjvj4BfI+Gcyku/xcGMJXrj
+X-Received: by 10.55.43.99 with SMTP id r96mr30494844qkh.143.1484506043602;
+        Sun, 15 Jan 2017 10:47:23 -0800 (PST)
+Received: from localhost.localdomain ([2604:2000:8183:da00::3])
+        by smtp.gmail.com with ESMTPSA id x40sm14362243qtx.12.2017.01.15.10.47.22
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 15 Jan 2017 10:47:23 -0800 (PST)
+From:   santiago@nyu.edu
+To:     git@vger.kernel.org
+Cc:     gitster@pobox.com, peff@peff.net, sunshine@sunshineco.com,
+        walters@verbum.org, Santiago Torres <santiago@nyu.edu>
+Subject: [PATCH v5 0/7] Add --format to tag verification
+Date:   Sun, 15 Jan 2017 13:46:58 -0500
+Message-Id: <20170115184705.10376-1-santiago@nyu.edu>
 X-Mailer: git-send-email 2.11.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Asking for opinions on lkml and git...
+From: Santiago Torres <santiago@nyu.edu>
 
-Getting enough quality assurance is likely one of the bigger upcoming tasks in
-the near future. To improve the situation, praise the people already doing that
-by adding their names to pull requests in the same manner that patch authors
-are credited. Here is an example, I sent out today [1]:
+This is the fifth iteration of [1][2][3][4], and as a result of the
+discussion in [5]. The main goal of this patch series is to bring
+--format to git tag verification so that upper-layer tools can inspect
+the content of a tag and make decisions based on it.
 
-=== old stuff
+In this re-woll we:
 
-The following changes since commit a121103c922847ba5010819a3f250f1f7fc84ab8:
+* Squashed Peff's first patch[6] with the second patch of the series. The commit
+  message may need work.
 
-...
+* Applied the relevant segment's of Peff's second patch[7] on the rest of the
+  series
 
-Vlad Tsyrklevich (1):
-      i2c: fix kernel memory disclosure in dev interface
+* Rebased so these patches apply to the tip of the master branch.
 
-=== new stuff starts here
+Thanks,
+-Santiago
 
-with much appreciated quality assurance from
-----------------------------------------------------------------
-Andy Shevchenko (1):
-      (Rev.) i2c: piix4: Avoid race conditions with IMC
+[1] http://public-inbox.org/git/20161007210721.20437-1-santiago@nyu.edu/
+[2] http://public-inbox.org/git/20160930221806.3398-1-santiago@nyu.edu/
+[3] http://public-inbox.org/git/20160922185317.349-1-santiago@nyu.edu/
+[4] http://public-inbox.org/git/20160926224233.32702-1-santiago@nyu.edu/
+[5] http://public-inbox.org/git/20160607195608.16643-1-santiago@nyu.edu/
+[6] http://public-inbox.org/git/20161019203546.dfqmi2czcxopgj6w@sigill.intra.peff.net/
+[7] http://public-inbox.org/git/20161019203943.epjxnfci7vcqg4xv@sigill.intra.peff.net/
 
-Benjamin Tissoires (1):
-      (Test) i2c: do not enable fall back to Host Notify by default
+Lukas Puehringer (4):
+  gpg-interface, tag: add GPG_VERIFY_QUIET flag
+  ref-filter: add function to print single ref_array_item
+  tag: add format specifier to gpg_verify_tag
+  builtin/tag: add --format argument for tag -v
 
-Vladimir Zapolskiy (1):
-      (Rev.) i2c: print correct device invalid address
+Santiago Torres (3):
+  builtin/verify-tag: add --format to verify-tag
+  t/t7030-verify-tag: Add --format specifier tests
+  t/t7004-tag: Add --format specifier tests
 
-=== diffstat, ...
+ Documentation/git-tag.txt        |  2 +-
+ Documentation/git-verify-tag.txt |  2 +-
+ builtin/tag.c                    | 32 ++++++++++++++++++++++----------
+ builtin/verify-tag.c             | 13 +++++++++++--
+ gpg-interface.h                  |  1 +
+ ref-filter.c                     | 27 +++++++++++++++++++++------
+ ref-filter.h                     |  7 +++++++
+ t/t7004-tag.sh                   | 16 ++++++++++++++++
+ t/t7030-verify-tag.sh            | 16 ++++++++++++++++
+ tag.c                            | 22 +++++++++++++++-------
+ tag.h                            |  4 ++--
+ 11 files changed, 113 insertions(+), 29 deletions(-)
 
-This patch is a very early RFC to collect opinions. I am not very familiar with
-the git codebase, but I guess using a filter needs to be reworked, the
-dependency on GNU awk may be frowned upon (though 'asorti' is really useful
-here), the reg-ex are not super-solid, and it should be a command-line option,
-of course. That all being said, it was a fast way to produce what I would like
-to add to my pull requests for the i2c subsystem and to see if other kernel/git
-maintainers are interested in something like this.
+-- 
+2.11.0
 
-Disclaimer: while this patch applies to the git codebase, I have to admit that
-I simply patched around in /usr/lib/git-core of my Debian machine :)
-
-So much for now, let me know what you think,
-
-   Wolfram
-
-[1] http://lkml.org/lkml/2017/1/15/55
-
-Signed-off-by: Wolfram Sang <wsa@the-dreams.de>
----
- git-praise-qa.awk   |   33 +++++++++++++++++++++++++++++++++
- git-request-pull.sh |    1 +
- 2 files changed, 34 insertions(+)
-
-Index: git-2.11.0/git-request-pull.sh
-===================================================================
---- git-2.11.0.orig/git-request-pull.sh
-+++ git-2.11.0/git-request-pull.sh
-@@ -155,6 +155,7 @@ then
- fi &&
- 
- git shortlog ^$baserev $headrev &&
-+git log --no-merges ^$baserev $headrev | git-praise-qa.awk &&
- git diff -M --stat --summary $patch $merge_base..$headrev || status=1
- 
- exit $status
-Index: git-2.11.0/git-praise-qa.awk
-===================================================================
---- /dev/null
-+++ git-2.11.0/git-praise-qa.awk
-@@ -0,0 +1,33 @@
-+#! /usr/bin/gawk -f
-+
-+# New commit found, empty subject variable
-+/^commit / { subject = "" }
-+
-+# Grab the subject line
-+!subject && /^    / { subject = substr($0, 5); }
-+
-+# Scan for tags and get the type
-+/^    Reviewed-by:/ { type = "Rev." }
-+/^    Tested-by:/ { type = "Test" }
-+
-+type && subject {
-+	# Extract the name
-+	sub(/^.*: /, ""); sub(/ <.*/, ""); name = $0;
-+	# Collect tags given by 'name'
-+	tags[name] = tags[name] "      (" type ") " subject "\n";
-+	count[name]++;
-+	# Done, clear flag
-+	type = "";
-+}
-+
-+END {
-+	print "\nwith much appreciated quality assurance from"
-+	print "----------------------------------------------------------------"
-+	# Sort by names
-+	asorti(tags, sorted_names);
-+	# printout in git style
-+	for (i in sorted_names) {
-+		name = sorted_names[i];
-+		print name " (" count[name] "):" "\n" tags[name];
-+	}
-+}
