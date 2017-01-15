@@ -6,140 +6,90 @@ X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6380A20A17
-	for <e@80x24.org>; Sun, 15 Jan 2017 02:35:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 46AC820A17
+	for <e@80x24.org>; Sun, 15 Jan 2017 02:39:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750795AbdAOCfr (ORCPT <rfc822;e@80x24.org>);
-        Sat, 14 Jan 2017 21:35:47 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:52525 "EHLO
+        id S1750801AbdAOCjN (ORCPT <rfc822;e@80x24.org>);
+        Sat, 14 Jan 2017 21:39:13 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:52227 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1750780AbdAOCfq (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 14 Jan 2017 21:35:46 -0500
+        with ESMTP id S1750780AbdAOCjM (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 14 Jan 2017 21:39:12 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 090B1610BD;
-        Sat, 14 Jan 2017 21:35:45 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 6D89A602BA;
+        Sat, 14 Jan 2017 21:39:11 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=HnQQQ2znp5vcX32Yyi/LRtdEpbE=; b=G/QF4x
-        UgJGK/x9VA18DUUv/V9nHud0W8CqFOb2q1vcrxy5TjIBL7j/O/SottOqJJraQCSZ
-        O77vVjCKaYDewzu3C+kpljbsjVkfF82+G27STlrOCVRTBdIImexQc15S8L3sFyR8
-        LirLa+kN/5rH4fMy/F3IDQ4/IoaKYoSTJ9RkM=
+        :content-type:content-transfer-encoding; s=sasl; bh=8a35JoxK8Y7p
+        tOvN0PeOqGyejgU=; b=n8q948r3gcgR1Cwtht+uRS/1Q7AnxP3U0N4kDMCQzvs6
+        yZ5rAhXebsr0QMIHYJ3j5z3aAEFR0asFt0RzdHXObfdIz8SpF/3WNhEte0wnD+H6
+        P3HGUtu97gj63I5DSoJdA26uu6/vCF0j4AHmcYka3bYzT/C44SD4sJO4Y5PYOGE=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=fZFBuYtcZKo4nLldTpu14TY2smGhdkL9
-        FF2OW/kw+tBqsQcz2CiNkMQiEAoKAc58yQNN9NEaONRP+OWEzhvM4EYppV+bvnsW
-        5EDAT6GQJ5kyRFqaF68eBADKzbLP2LoUiz0R+ClmaMdpGFYVMBcIKSjXzrxBsixi
-        u8H5kZEEaFw=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id E61B6610BB;
-        Sat, 14 Jan 2017 21:35:44 -0500 (EST)
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=ydTK2Y
+        C2RRXR5cfUjxtbyQWfDBjqtbSXhV40W6Uiu5bhc9n+1xTnVX9uetAJnOVHjJygV9
+        yqQlogNwvIEk4CXSeqZMos9KnST8vEe4PXTMXOTjr3Wj0qgxPzvim8hSZGDSM9At
+        yQEk99GKceZn20y/rGEzdiO8mp+3c7H5tlnP4=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 647DB602B9;
+        Sat, 14 Jan 2017 21:39:11 -0500 (EST)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 3F855610BA;
-        Sat, 14 Jan 2017 21:35:44 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id B4C18602B7;
+        Sat, 14 Jan 2017 21:39:10 -0500 (EST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     David Aguilar <davvid@gmail.com>
-Cc:     Stefan Beller <sbeller@google.com>,
-        Andrew Janke <floss@apjanke.net>,
-        Paul Mackerras <paulus@samba.org>,
-        "git\@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: gitk pull request // was: Re: gitk: "lime" color incompatible with older Tk versions
-References: <03babaa1-9011-0010-c4b3-6cad8109d3ab@apjanke.net>
-        <CAGZ79kaO9T+Qc=M6s_ZdpAfLZCVQEYNF=zNxDWArDmsA7jjCWg@mail.gmail.com>
-        <20170113112043.j7nowdilolswyk2k@gmail.com>
-        <20170114084825.lcecrbtxny3ntulf@gmail.com>
-Date:   Sat, 14 Jan 2017 18:35:43 -0800
-In-Reply-To: <20170114084825.lcecrbtxny3ntulf@gmail.com> (David Aguilar's
-        message of "Sat, 14 Jan 2017 00:48:25 -0800")
-Message-ID: <xmqq37gldp8g.fsf@gitster.mtv.corp.google.com>
+To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
+Cc:     Vegard Nossum <vegard.nossum@oracle.com>, git@vger.kernel.org
+Subject: Re: [PATCH 2/3] xdiff: -W: include immediately preceding non-empty lines in context
+References: <1484324112-17773-1-git-send-email-vegard.nossum@oracle.com>
+        <1484324112-17773-2-git-send-email-vegard.nossum@oracle.com>
+        <e55dc4dd-768b-8c9b-e3b2-e850d5d521f5@web.de>
+        <xmqqeg06hh6z.fsf@gitster.mtv.corp.google.com>
+        <c74c260d-1a4d-39f6-a644-4f90a67d6d82@oracle.com>
+        <xmqqbmvaecpl.fsf@gitster.mtv.corp.google.com>
+        <48bdfd94-2fd4-bd55-d78b-2877e195fb82@web.de>
+Date:   Sat, 14 Jan 2017 18:39:09 -0800
+In-Reply-To: <48bdfd94-2fd4-bd55-d78b-2877e195fb82@web.de> (=?utf-8?Q?=22R?=
+ =?utf-8?Q?en=C3=A9?= Scharfe"'s
+        message of "Sat, 14 Jan 2017 15:58:25 +0100")
+Message-ID: <xmqqy3ydcaia.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.90 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 505B5322-DACB-11E6-A62F-FE3F13518317-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: CB6DEDD6-DACB-11E6-9677-A7617B1B28F4-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-David Aguilar <davvid@gmail.com> writes:
+Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
 
-> On Fri, Jan 13, 2017 at 03:20:43AM -0800, David Aguilar wrote:
->> 
->> Ping.. it would be nice to get this patch applied.
+>> I am also more focused on keeping the codebase maintainable in good
+>> health by making sure that we made an effort to find a solution that
+>> is general-enough before solving a single specific problem you have
+>> today.  We may end up deciding that a blank-line heuristics gives us
+>> good enough tradeoff, but I do not want us to make a decision before
+>> thinking.
 >
-> Sorry for the noise, and thank you Paul for the fix.
-> This was already fixed by Paul in gitk@22a713c72df.
+> How about extending the context upward only up to and excluding a line
+> that is either empty *or* a function line?  That would limit the extra
+> context to a single function in the worst case.
 >
-> I'm sure Junio will merge gitk.git into git.git soon enough so I
-> can sit tight until then, but while I'm here I might as well
-> send out a pull request:
->
-> The following changes since commit 22a713c72df8b6799c59287c50cee44c4a6db51e:
->
->   gitk: Follow themed bgcolor in help dialogs (2016-03-19 14:12:21 +1100)
->
-> are available in the git repository at:
->
->   git://ozlabs.org/~paulus/gitk.git 
->
-> for you to fetch changes up to fbf426478e540f4737860dae622603cc0daba3d2:
->
->   gitk: Update copyright notice to 2016 (2016-12-12 20:46:42 +1100)
+> Reducing context at the bottom with the aim to remove comments for the
+> next section is more tricky as it could remove part of the function
+> that we'd like to show if we get the boundary wrong.  How bad would it
+> be to keep the southern border unchanged?
 
-Pinging Paul to signal me that his tree is ready to pull from is
-appreciated, and asking Paul if his tree is ready to be pulled and
-then relaying his answer to me is also fine, but I am sensing that
-this message is neither.  So let me double check.
+I personally do not think there is any robust heuristic other than
+Vegard's "a blank line may be a signal enough that lines before that
+are not part of the beginning of the function", and I think your
+"hence we look for a blank line but if there is a line that matches
+the function header, stop there as we know we came too far back"
+will be a good-enough safety measure.
 
-Paul, is it a good time to pull, or do you still have something not
-published yet that should go together with what you have already
-queued?
+I also agree with you that we probably do not want to futz with the
+southern border.
 
 Thanks.
-
->
-> ----------------------------------------------------------------
-> Markus Hitter (3):
->       gitk: Turn off undo manager in the text widget
->       gitk: Remove closed file descriptors from $blobdifffd
->       gitk: Clear array 'commitinfo' on reload
->
-> Paul Mackerras (2):
->       gitk: Use explicit RGB green instead of "lime"
->       gitk: Update copyright notice to 2016
->
-> Rogier Goossens (3):
->       gitk: Add a 'rename' option to the branch context menu
->       gitk: Allow checking out a remote branch
->       gitk: Include commit title in branch dialog
->
-> Satoshi Yasushima (1):
->       gitk: Fix Japanese translation for "marked commit"
->
-> Stefan Dotterweich (1):
->       gitk: Fix missing commits when using -S or -G
->
-> Vasco Almeida (2):
->       gitk: Makefile: create install bin directory
->       gitk: Add Portuguese translation
->
->  Makefile    |    1 +
->  gitk        |  166 +++++--
->  po/bg.po    |    4 +-
->  po/ca.po    |    6 +-
->  po/de.po    |    4 +-
->  po/es.po    |    4 +-
->  po/fr.po    |    4 +-
->  po/hu.po    |    4 +-
->  po/it.po    |    4 +-
->  po/ja.po    |   13 +-
->  po/pt_br.po |    4 +-
->  po/pt_pt.po | 1376 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
->  po/ru.po    |    4 +-
->  po/sv.po    |    8 +-
->  po/vi.po    |    4 +-
->  15 files changed, 1549 insertions(+), 57 deletions(-)
->  create mode 100644 po/pt_pt.po
->
-> Thanks,
