@@ -2,73 +2,83 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,
-	STOX_REPLY_TYPE,STOX_REPLY_TYPE_WITHOUT_QUOTES shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.4 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0736120A17
-	for <e@80x24.org>; Mon, 16 Jan 2017 22:45:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5E10820A17
+	for <e@80x24.org>; Mon, 16 Jan 2017 23:18:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751568AbdAPWot (ORCPT <rfc822;e@80x24.org>);
-        Mon, 16 Jan 2017 17:44:49 -0500
-Received: from smtp-out-6.talktalk.net ([62.24.135.70]:33559 "EHLO
-        smtp-out-6.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751507AbdAPWor (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 16 Jan 2017 17:44:47 -0500
-Received: from PhilipOakley ([92.31.218.76])
-        by smtp.talktalk.net with SMTP
-        id TG14cVpImgKstTG14ckeYW; Mon, 16 Jan 2017 22:44:43 +0000
-X-Originating-IP: [92.31.218.76]
-X-Spam: 0
-X-OAuthority: v=2.2 cv=GdBVpkfL c=1 sm=1 tr=0 a=e6L6E7eW+5Nb7SO+DvSdIg==:117
- a=e6L6E7eW+5Nb7SO+DvSdIg==:17 a=8nJEP1OIZ-IA:10 a=NEAV23lmAAAA:8
- a=5rxgeBVgAAAA:8 a=xtxXYLxNAAAA:8 a=s-AkO8JaRkloYrdsGIsA:9 a=wPNLvfGTeEIA:10
- a=Bn2pgwyD2vrAyMmN8A2t:22 a=PwKx63F5tFurRwaNxrlG:22 a=xts0dhWdiJbonKbuqhAr:22
-Message-ID: <F9099DB3F0374D898776BD2621BF36FA@PhilipOakley>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
-From:   "Philip Oakley" <philipoakley@iee.org>
-To:     "Git List" <git@vger.kernel.org>
-Cc:     "Pat Thoyts" <patthoyts@users.sourceforge.net>
-Subject: [RFH - Tcl/Tk] use of procedure before declaration?
-Date:   Mon, 16 Jan 2017 22:44:43 -0000
-Organization: OPDS
+        id S1751684AbdAPXRs (ORCPT <rfc822;e@80x24.org>);
+        Mon, 16 Jan 2017 18:17:48 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:50702 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751624AbdAPXRr (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 16 Jan 2017 18:17:47 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 1DEB761C71
+        for <git@vger.kernel.org>; Mon, 16 Jan 2017 18:17:33 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
+        :subject:date:message-id:mime-version:content-type; s=sasl; bh=C
+        mg1UxXp/ZVB+9128nmdSuQU3Do=; b=MWxSIjUL+IRCrA3VFTQnsV1P5ZMa7BSWL
+        HPosfXZAGJtoySpmwchRAvs5TARZr6rPClF+TtS3RLRIs1mQrIX8s5RO/xmDSzOG
+        F4LDXywIopATc4zkloPzjddeUX3Nv+HX71LCthtI/hK/wtuu5cKUMSaeLX9CJYxm
+        IeDSWEIZaE=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 13D4761C70
+        for <git@vger.kernel.org>; Mon, 16 Jan 2017 18:17:33 -0500 (EST)
+Received: from localhost (unknown [24.60.167.92])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 6904661C6F
+        for <git@vger.kernel.org>; Mon, 16 Jan 2017 18:17:32 -0500 (EST)
+From:   Kyle Meyer <kyle@kyleam.com>
+To:     git@vger.kernel.org
+Subject: HEAD's reflog entry for a renamed branch
+X-Attribution: Kyle
+Date:   Mon, 16 Jan 2017 18:17:29 -0500
+Message-ID: <87pojmwq5y.fsf@kyleam.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain;
-        format=flowed;
-        charset="iso-8859-1";
-        reply-type=original
-Content-Transfer-Encoding: 7bit
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
-X-CMAE-Envelope: MS4wfLGBGDqI3nT1x6oFuENSHolDWuBwwjk6XMVxdfgTR9T52mhemvo6clumaYZylAGD9Mg8ZGq/ETL581GtgCzKX6Aobt1/SfNWgVbbzI8cZiADQqkdg2gW
- Tc8+hYsLUpFYt5S96pnEo5thZtLS3miEqtI73AAgbS4Ra6Ak5SrvfC1Mbq//WJIU4QUKHZR3F+EuLnyGEVk8l8xw/w4VRKjZ8bg=
+Content-Type: text/plain
+X-Pobox-Relay-ID: F5195860-DC41-11E6-B7D0-FE3F13518317-24757444!pb-smtp1.pobox.com
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=kyleam.com;
+ h=from:to:subject:date:message-id:mime-version:content-type; s=mesmtp;
+ bh=Cmg1UxXp/ZVB+9128nmdSuQU3Do=;
+ b=rASCEd3VOHeSTUqLhaudyY3nsuq/Y8XhQITodGd8MbEXbCb2N64XG1MoA6+NoKVpZe9nY1w7IEo2q0QzmIfthL+wjfIVn6vDp05HLhnbQunP/tqhmMkRdq/sJ5MAT7EqV4e9b4F2M19SXlmEekOEHeKMu+ujT8EXecBdCplGlkc=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I'm looking into a user git-gui problem
-(https://github.com/git-for-windows/git/issues/1014) that I'd seen in the
-past - I'd started some patches back in Dec 2015
-http://public-inbox.org/git/1450310287-4936-1-git-send-email-philipoakley@iee.org/
+Hello,
 
-I'm trying to make sure I have covered the corner cases correctly, and I'm
-not sure if the current code actually works as advertised.
+I noticed that, after renaming the current branch, the corresponding
+message in .git/logs/HEAD is empty.
 
-In
-https://github.com/git/git/blob/master/git-gui/lib/choose_repository.tcl#L242
-the procedure `_unset_recentrepo` is called, however the procedure isn't
-declared until line 248. My reading of the various Tcl tutorials suggest
-(but not explictly) that this isn't the right way.
+For example, running
 
-Should 3c6a287 ("git-gui: Keep repo_config(gui.recentrepos) and .gitconfig
-in sync", 2010-01-23) have declared `proc _unset_recentrepo {p}` before
-`proc _get_recentrepos {}` ?
+    $ mkdir test-repo
+    $ cd test-repo
+    $ git init
+    $ echo abc >file.txt
+    $ git add file.txt
+    $ git commit -m"Add file.txt"
+    $ git branch -m master new-master
+
+resulted in the following reflogs:
+
+   $ cat .git/logs/refs/heads/new-master
+   00000... 68730... Kyle Meyer <kyle@kyleam.com> 1484607020 -0500	commit (initial): Add file.txt
+   68730... 68730... Kyle Meyer <kyle@kyleam.com> 1484607020 -0500	Branch: renamed refs/heads/master to refs/heads/new-master
+
+   $ cat .git/logs/HEAD
+   00000... 68730... Kyle Meyer <kyle@kyleam.com> 1484607020 -0500	commit (initial): Add file.txt
+   68730... 00000... Kyle Meyer <kyle@kyleam.com> 1484607020 -0500
+
+I expected the second line of .git/logs/HEAD to mirror the second line
+of .git/logs/refs/heads/new-master.  Are the empty message and null sha1
+in HEAD's entry intentional?
 
 --
-
-Philip
-
+Kyle
