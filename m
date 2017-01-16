@@ -2,70 +2,73 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.1 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,
+	STOX_REPLY_TYPE,STOX_REPLY_TYPE_WITHOUT_QUOTES shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0D6E020A17
-	for <e@80x24.org>; Mon, 16 Jan 2017 22:41:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0736120A17
+	for <e@80x24.org>; Mon, 16 Jan 2017 22:45:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751160AbdAPWlx (ORCPT <rfc822;e@80x24.org>);
-        Mon, 16 Jan 2017 17:41:53 -0500
-Received: from p3plsmtpa12-05.prod.phx3.secureserver.net ([68.178.252.234]:33176
-        "EHLO p3plsmtpa12-05.prod.phx3.secureserver.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1750877AbdAPWlw (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 16 Jan 2017 17:41:52 -0500
-Received: from jessie.local ([82.181.81.240])
-        by :SMTPAUTH: with SMTP
-        id TFwqcDCYF7CSITFwwcq1rr; Mon, 16 Jan 2017 15:40:27 -0700
-Date:   Tue, 17 Jan 2017 00:40:22 +0200
-From:   Max Kirillov <max@max630.net>
-To:     Pat Thoyts <patthoyts@users.sourceforge.net>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [BUG/RFC] Git Gui: GIT_DIR leaks to spawned Git Bash
-Message-ID: <20170116224022.GA8539@jessie.local>
+        id S1751568AbdAPWot (ORCPT <rfc822;e@80x24.org>);
+        Mon, 16 Jan 2017 17:44:49 -0500
+Received: from smtp-out-6.talktalk.net ([62.24.135.70]:33559 "EHLO
+        smtp-out-6.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751507AbdAPWor (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 16 Jan 2017 17:44:47 -0500
+Received: from PhilipOakley ([92.31.218.76])
+        by smtp.talktalk.net with SMTP
+        id TG14cVpImgKstTG14ckeYW; Mon, 16 Jan 2017 22:44:43 +0000
+X-Originating-IP: [92.31.218.76]
+X-Spam: 0
+X-OAuthority: v=2.2 cv=GdBVpkfL c=1 sm=1 tr=0 a=e6L6E7eW+5Nb7SO+DvSdIg==:117
+ a=e6L6E7eW+5Nb7SO+DvSdIg==:17 a=8nJEP1OIZ-IA:10 a=NEAV23lmAAAA:8
+ a=5rxgeBVgAAAA:8 a=xtxXYLxNAAAA:8 a=s-AkO8JaRkloYrdsGIsA:9 a=wPNLvfGTeEIA:10
+ a=Bn2pgwyD2vrAyMmN8A2t:22 a=PwKx63F5tFurRwaNxrlG:22 a=xts0dhWdiJbonKbuqhAr:22
+Message-ID: <F9099DB3F0374D898776BD2621BF36FA@PhilipOakley>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From:   "Philip Oakley" <philipoakley@iee.org>
+To:     "Git List" <git@vger.kernel.org>
+Cc:     "Pat Thoyts" <patthoyts@users.sourceforge.net>
+Subject: [RFH - Tcl/Tk] use of procedure before declaration?
+Date:   Mon, 16 Jan 2017 22:44:43 -0000
+Organization: OPDS
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-User-Agent: Mutt/1.5.23 (2014-03-12)
-X-CMAE-Envelope: MS4wfJrItZxeZrAy59XeeBVIy5S6Aot0G5H4nqPpcgpdACac4+p+tzgPosnmNpOY2es4/tqCzilDjvAesPecokV3l44Tyy+8vjxSIXGfOpL49Io/rQ1tOLQk
- aZiM/+Fi80CR+sMMJ+maj8+WcjciFmUUvDxzF5e2hs0fG5unnXksfhMVBuZF1H4Nwo9gLq/cfZnAraOwkCBgZY+nSPo+rXZI8KJlbm8x2H7LF3035z9v7ykV
- bjKHgqFlgi1ElSEmqcVCtQc6SgTcQrmL2aif145NQgw=
+Content-Type: text/plain;
+        format=flowed;
+        charset="iso-8859-1";
+        reply-type=original
+Content-Transfer-Encoding: 7bit
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+X-CMAE-Envelope: MS4wfLGBGDqI3nT1x6oFuENSHolDWuBwwjk6XMVxdfgTR9T52mhemvo6clumaYZylAGD9Mg8ZGq/ETL581GtgCzKX6Aobt1/SfNWgVbbzI8cZiADQqkdg2gW
+ Tc8+hYsLUpFYt5S96pnEo5thZtLS3miEqtI73AAgbS4Ra6Ak5SrvfC1Mbq//WJIU4QUKHZR3F+EuLnyGEVk8l8xw/w4VRKjZ8bg=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello.
+I'm looking into a user git-gui problem
+(https://github.com/git-for-windows/git/issues/1014) that I'd seen in the
+past - I'd started some patches back in Dec 2015
+http://public-inbox.org/git/1450310287-4936-1-git-send-email-philipoakley@iee.org/
 
-Apparently various GIT_* environment variables (most
-interesting is GIT_DIR but AFAIR there were more) leak to
-shell session launched from Git Gui's "Git Bash" menu item.
-Which can cause unexpected results if user navigates in that
-shell to some other repository (in can also include starting
-another terminal window etc. to make user forget original
-context) and tries to do something there.
+I'm trying to make sure I have covered the corner cases correctly, and I'm
+not sure if the current code actually works as advertised.
 
-I think is would be appropriate to clean up the environment
-while starting any program from git gui. It may have
-downside that the environment could be set intentionally,
-and now is's removed, but (1) there seems to be no way to
-distinguish intentionally vs automatically set GIT_DIR, and
-(2) the spawned program may be intended to be used
-independly even if the environment was set intentionally for
-git gui.
+In
+https://github.com/git/git/blob/master/git-gui/lib/choose_repository.tcl#L242
+the procedure `_unset_recentrepo` is called, however the procedure isn't
+declared until line 248. My reading of the various Tcl tutorials suggest
+(but not explictly) that this isn't the right way.
 
-But I would like to note that I find it wrong for the "git"
-dispatcher to set up any enrironment to the spawned
-command-specific executable. Because it mixes the concerns
-of that variables - are they user-settable variables to
-tweak the git's behavior, or internal ones to transport the
-discovered paths and other info to scripts which cannot do
-the standard discovery? Not clear. There has been bugs
-related to that already, for example [1].
+Should 3c6a287 ("git-gui: Keep repo_config(gui.recentrepos) and .gitconfig
+in sync", 2010-01-23) have declared `proc _unset_recentrepo {p}` before
+`proc _get_recentrepos {}` ?
 
-[1] https://public-inbox.org/git/1409784120-2228-1-git-send-email-max@max630.net/
+--
 
--- 
-Max
+Philip
+
