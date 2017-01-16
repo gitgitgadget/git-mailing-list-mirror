@@ -2,86 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.2 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 441E51F89C
-	for <e@80x24.org>; Sun, 15 Jan 2017 23:56:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 67D381F89C
+	for <e@80x24.org>; Mon, 16 Jan 2017 00:21:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751302AbdAOX4F (ORCPT <rfc822;e@80x24.org>);
-        Sun, 15 Jan 2017 18:56:05 -0500
-Received: from mout.gmx.net ([212.227.17.20]:58176 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751173AbdAOX4E (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 15 Jan 2017 18:56:04 -0500
-Received: from [192.168.178.43] ([188.108.244.57]) by mail.gmx.com (mrgmx101
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MfAog-1c5LOF31MQ-00Op56 for
- <git@vger.kernel.org>; Mon, 16 Jan 2017 00:56:01 +0100
-To:     git <git@vger.kernel.org>
-From:   Stephan Beyer <s-beyer@gmx.net>
-Subject: [RFC] stash --continue
-Message-ID: <cd784a4e-ee99-564e-81de-9f7f6cc26c67@gmx.net>
-Date:   Mon, 16 Jan 2017 00:56:00 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Icedove/45.5.0
+        id S1751368AbdAPAVq (ORCPT <rfc822;e@80x24.org>);
+        Sun, 15 Jan 2017 19:21:46 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:54577 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751273AbdAPAVp (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 15 Jan 2017 19:21:45 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 879B960C31;
+        Sun, 15 Jan 2017 19:21:44 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=DAHV152Ovyx6/8U2lKn8AFYxRxw=; b=JdvOnb
+        JbYuF4IOdIJIV7jv7IrJxUH1Nl1lkW8O6spenwa9Bo1MW+48lMCSDHJUEQAEI9G+
+        CCR9zjDWoWUzws2ChmSmut1pTGFk1mBYlHMnkFJQkNqNVUTGcPQmO5erffTZQetQ
+        akc9sDH6ZL/lcAQEc50VqRB/2/g+D1JPtzEj4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=Yy7/LIUg1R7yi95m092M6AIQCFLnM19H
+        rriz5ipfo6vvhJIeUsW4tX5gnI0ZyISekxT3FTe1qGuaNKotK6jqJkOjIpD/ewid
+        e391fdY4Wiw/J+9lHgSdXLoMmIlsHshIAKEiKbP9O2PAUiy3iEvJN8WctDSfnht6
+        AWBIbzzMyLw=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 7FF8860C30;
+        Sun, 15 Jan 2017 19:21:44 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id D427360C29;
+        Sun, 15 Jan 2017 19:21:43 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Thomas Gummerer <t.gummerer@gmail.com>
+Cc:     git@vger.kernel.org, kes-kes@yandex.ru
+Subject: Re: [RFC] stash: support filename argument
+References: <20170115142542.11999-1-t.gummerer@gmail.com>
+Date:   Sun, 15 Jan 2017 16:21:42 -0800
+In-Reply-To: <20170115142542.11999-1-t.gummerer@gmail.com> (Thomas Gummerer's
+        message of "Sun, 15 Jan 2017 14:25:42 +0000")
+Message-ID: <xmqqvatfc0rt.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.90 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K0:OOJBwKhptYBK8RF/TROEJ6pyOG/8Fs1ICRZmI66DtIciDbP06YZ
- 0DlwgXx/LdLvRW+u4gWPHApQJkj2h3PGVIJBwwtydp04ogkAnp+oEVqVqUs+ntohxpDW2ul
- VESQ0bVuAwHD0e3VEfOwDAkmMRf7DesorMyury1531CsCcar7DJ7aC/qqkppwolf9a12Kd3
- OLbjblkcDYa3izoTFntYg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:j4n82mhbCMQ=:FJ8cYlha8dJNHmLQHqnFjl
- smu2d5pvFCSZfGG0cYXrrFtVQRdZKH8138/zNez2ST8sAV+DgbsaEnnHvF4je+m985EPMNxwN
- fxaEz6BjFZKD7GP1EBsR0z/8BeCS5eTmgfgjZ8FE9LT0qqKEL+QBgMP4cpxWxoIW5W140YuD6
- +hbyRQp/dhB8hwefiYo4uTyEP7pWiddXiyzYZ6IeF66xL69CuVLS2Z7QTz7pY5R2q82Q6nq5O
- D2Ddyd2D2P1M4ENjIaUC53zpOWeH7TNaISu41j3XXZlasbPnG25EfWf7IE2ev5L6lXLlYRxW4
- ZuYVzcAOcX0/Rh8FeizXpdIhZ39maVML6Gng4L0vd+HZImH3D32mDaX7+yZu7YLPw/89jgaiA
- uPRe+sfmfc/WSaKT/dddAhyIGRNsvEmoL1cggBI8TgHZ3Ja3bIB2TvpXyW5AGD3VEywFVzzxr
- J13V0vrjm783zlZYWleqEXgm9j7ZTw+gKaM11o2QVIB9FG+lZY4UVw8YkTFcWZSrf9iqfT9Bh
- 6SDQfAruQFYj1qAE3LZwpn0i0wJleBMF0iw3a8L0sSQ5JYofLbwRzuLPGsG0VWh1DGp6ZbbY6
- v2SP/5l36hPUm4af9HFsXYdpYR9lYHwC4g4QmtEAu/jU4I6lff90dyAw+mtAOuh+4ko6lgqTZ
- l26vNtAmhRXnTPF4b4n3dSZlaJJaHn71XvmxLryaZ+i9vogbPGTBiOtWAPKfLNq406+ezxlOx
- irJzTu8DemoJsiRQTHAKUmVjK3fW5K3axBNSQWsJVoLJ+1Ar74M/QMZPKgYrg8of6gCaI0cqp
- za4ap0L
+Content-Type: text/plain
+X-Pobox-Relay-ID: C2534BA4-DB81-11E6-B988-A7617B1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Thomas Gummerer <t.gummerer@gmail.com> writes:
 
-a git-newbie-ish co-worker uses git-stash sometimes. Last time he used
-"git stash pop", he got into a merge conflict. After he resolved the
-conflict, he did not know what to do to get the repository into the
-wanted state. In his case, it was only "git add <resolved files>"
-followed by a "git reset" and a "git stash drop", but there may be more
-involved cases when your index is not clean before "git stash pop" and
-you want to have your index as before.
+> While working on a repository, it's often helpful to stash the changes
+> of a single or multiple files, and leave others alone.  Unfortunately
+> git currently offers no such option.  git stash -p can be used to work
+> around this, but it's often impractical when there are a lot of changes
+> over multiple files.
+>
+> Add a --file option to git stash save, which allows for stashing a
+> single file.  Specifying the --file argument multiple times allows
+> stashing more than one file at a time.
+>
+> Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
+> ---
+>
+> Marked as RFC and without documentation updates to first get a feeling
+> for the user interface, and whether people are interested in this
+> change.
+>
+> Ideally I wanted the the user interface to look like something like:
+> git stash save -- [<filename1,...>], but unfortunately that's already
+> taken up by the stash message.  So to preserve backward compatibility
+> I used the new --file argument.
 
-This led to the idea to have something like "git stash --continue"[1]
-that would expect the user to "git add" the resolved files (as "git
-status" suggests) but then leads to the expected result, i.e. the index
-being the same as before the conflict, the stash being dropped (if "pop"
-was used instead of "apply"), etc.
+I haven't spent enough time to think if it even makes sense to
+"stash" partially, leaving the working tree still dirty.  My initial
+reaction was "then stashing away the dirty WIP state to get a spiffy
+clean working environment becomes impossible", and I still need time
+to recover from that ;-)  So as to the desirablity of this "feature",
+I have no strong opinion for or against yet.
 
-Likewise, some "git stash --abort"[2] might be useful in case you did
-"git stash pop" with the wrong stash in mind.
+But if we were to do this, then we should bite the bullet and
+declare that "stash save <message>" was a mistake.  It should have
+been "stash save -m <message>" and we should transition to that (one
+easy way out would be to find another verb that is not 'save').
 
-What do you think about that?
-
-Although I think this would be a nice-to-have feature, I am not totally
-sure how to achieve backwards-compatibility, i.e., such that using
---continue is still optional... (I think that "git stash apply" would
-surely generate auxiliary data in case of a conflict and --continue or
---abort would remove it...)
-
-Best
-  Stephan
-
-Footnotes
-1. Perhaps with a better name, because it does not really continue.
-Maybe a "git stash conflict [--resolved]" subcommand?
-2. Along the lines of [1], one could use "git stash conflict --abort"?
+Then we can do "git stash save [-m <msg>] [--] [pathspec...]" which
+follows the usual command line convention.
