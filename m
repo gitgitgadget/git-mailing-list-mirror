@@ -2,86 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.4 required=3.0 tests=BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DFFF720441
-	for <e@80x24.org>; Mon, 16 Jan 2017 20:02:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C2FFE20441
+	for <e@80x24.org>; Mon, 16 Jan 2017 20:33:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751502AbdAPUCQ (ORCPT <rfc822;e@80x24.org>);
-        Mon, 16 Jan 2017 15:02:16 -0500
-Received: from mout.gmx.com ([74.208.4.200]:62665 "EHLO mout.gmx.com"
+        id S1750981AbdAPUdM (ORCPT <rfc822;e@80x24.org>);
+        Mon, 16 Jan 2017 15:33:12 -0500
+Received: from bsmtp3.bon.at ([213.33.87.17]:49589 "EHLO bsmtp3.bon.at"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751494AbdAPUCO (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 16 Jan 2017 15:02:14 -0500
-Received: from fli4l.lan.fli4l ([84.191.194.209]) by mail.gmx.com (mrgmxus001
- [74.208.5.15]) with ESMTPSA (Nemesis) id 0M4WdO-1cdLGP2yfE-00yiTx; Mon, 16
- Jan 2017 20:56:58 +0100
-Received: from mahler.lan.fli4l ([192.168.1.1]:53692 helo=kuhls.lan.fli4l)
-        by fli4l.lan.fli4l with esmtp (Exim 4.88)
-        (envelope-from <bernd.kuhls@writeme.com>)
-        id 1cTDOg-0006jn-Pi; Mon, 16 Jan 2017 20:56:55 +0100
-From:   Bernd Kuhls <bernd.kuhls@writeme.com>
-To:     git@vger.kernel.org
-Cc:     Bernd Kuhls <bernd.kuhls@writeme.com>
-Subject: [PATCH 1/2] configure.ac: fix old iconv check
-Date:   Mon, 16 Jan 2017 20:56:37 +0100
-Message-Id: <20170116195638.3713-1-bernd.kuhls@writeme.com>
-X-Mailer: git-send-email 2.11.0
-X-Provags-ID: V03:K0:j7j+nTddAkBmIS5f/aaTQH97EMPQXx3D+HLbpMRopzEQYB6OU6X
- AOPNQggOND6Wb8fE8CG40eZhirebga/d/MOHKKoPO/Nhee5OU3byPvSdk/DPGbAYsdAaJgc
- S2OZc/+52bQk4DBU4wAZx0p7tuo7x2bIX4D13QvcMZHO1Sf3te7GVcxTYQyXqzwu7jgTUVG
- iF4je4D8nxLOIeyhVWULQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:QdeoxF45I4Y=:5IRqXKphHvqiVxWiC9c6IU
- WHsZN4wY7WchKrl2F6IgaTWdmyUcnkyR10bap7rSyLgHI7PzHTUx4IJpoAHM6SF68QetdV8p3
- olWRsH45sKyF+5NbQxyRZlVi1a9G7DCLE2h4OQdm/Hiu9hmIfHVsqi60VtMrHFHRFoeWaE+la
- Ri0VnAv1f92uBmixvi5uKeji5H08ESKMiZN4Jh1RvyW01uOJkOJ1CTVV67jozKaAqkhowP7Ow
- M3vZOi8c1O0URzIg9wIMeFsS9K8ySCWTAZzXkfqVistM+rGTgGTrUSO+RA38H0Uyxkl/YgX18
- PpIsHe0KW+Acf8XJa/Mrey9eBKTaXkZ+LY//0s7yXCVG8DXIQA1PB96+Ya1rgSmOhEirHZG4K
- TApsHQDYFwa/QmOP4ZGLL555B3uzeihKFT8DEMfiLb3t5Wac7WN0vrBAzV69jJbK0E6ecC/R9
- 4CCTwtdCECOmRR0CTi9Ixo/zj9kyeEc6JBES5MMbxtEEzYPZ82XFxwgA2bUOiOTtkic7w4ZfG
- qb2Wgs1xgA7huEwFQMisEJQKIsbakdb77RidNwnnPksFfkheLhGAlP8jocnfPB9atLOBGitV7
- 6D4ePFvv9AdfDeS0G0iei+ehek0r2R6laNSHhGoRsNRKmc/YFa7+dgPfckeeylJKX4pXY8c5O
- YahNarKGpfJk2tJvlLI5OH7hw56qVjNrsH21uTaYPRe3LuKw+E34uA7ZrbKpDcr0aic0v3hyu
- En+/uCbTd73P6k80ocTLCEOtnmte3Y29JFK0DG4zFWTr3HQrlyJW0wqCWyo=
+        id S1750863AbdAPUdM (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 16 Jan 2017 15:33:12 -0500
+Received: from dx.site (unknown [93.83.142.38])
+        by bsmtp3.bon.at (Postfix) with ESMTPSA id 3v2Q0j39mpz5tlF;
+        Mon, 16 Jan 2017 21:33:08 +0100 (CET)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+        by dx.site (Postfix) with ESMTP id 1B911FA1;
+        Mon, 16 Jan 2017 21:33:08 +0100 (CET)
+Subject: Re: What's cooking in git.git (Jan 2017, #02; Sun, 15)
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jeff King <peff@peff.net>
+References: <xmqqh94zbwlu.fsf@gitster.mtv.corp.google.com>
+ <257b4175-9879-7814-5d8d-02050792574d@kdbg.org>
+ <alpine.DEB.2.20.1701161251100.3469@virtualbox>
+ <20170116160456.ltbb7ofe47xos7xo@sigill.intra.peff.net>
+ <alpine.DEB.2.20.1701161746200.3469@virtualbox>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+From:   Johannes Sixt <j6t@kdbg.org>
+Message-ID: <677a335f-889c-2924-b7bd-93c2b6663175@kdbg.org>
+Date:   Mon, 16 Jan 2017 21:33:07 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.6.0
+MIME-Version: 1.0
+In-Reply-To: <alpine.DEB.2.20.1701161746200.3469@virtualbox>
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-According to
-https://www.gnu.org/software/autoconf/manual/autoconf-2.69/html_node/Running-the-Compiler.html
-the parameter syntax of AC_COMPILE_IFELSE is
+Am 16.01.2017 um 18:06 schrieb Johannes Schindelin:
+> On Mon, 16 Jan 2017, Jeff King wrote:
+>> Hmm.  I am not sure to what degree CRLFs are actually a problem here.
+>> Keep in mind these are error messages generated via error(), and so not
+>> processing arbitrary data. I can imagine that CRs might come from:
+>
+> Please note the regression test I added. It uses rev-parse's --abbrev-ref
+> option which quotes the argument when erroring out. This argument then
+> gets munged.
+>
+> So error() (or in this case, die()) *very much* processes arbitrary data.
+>
+> I *know* that rev-parse --abbrev-ref is an artificial example, it is
+> highly unlikely that anybody will use
+>
+> 	git rev-parse --abbrev-ref "$(<call an external program here that
+> 		generates CR/LF line endings>)"
+>
+> However, there are plenty other cases in regular Git usage where arguments
+> are generated by external programs to which we have no business dictating a
+> specific line ending style.
 
-(input, [action-if-true], [action-if-false])
+However, Jeff's patch is intended to catch exactly these cases (not for 
+the cases where this happens accidentally, but when they happen with 
+malicious intent).
 
-Displaying "no" when the test was positive and enabling support for old
-iconv implementations by OLD_ICONV=UnfortunatelyYes when the test fails
-it obviously wrong. This patch switches the actions to fix the problem.
+We are talking about user-provided data that is reproduced by die() or 
+error(). I daresay that we do not have a single case where it is 
+intended that this data is intentionally multi-lined, like a commit 
+message. It can only be an accident or malicious when it spans across lines.
 
-Signed-off-by: Bernd Kuhls <bernd.kuhls@writeme.com>
----
- configure.ac | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+I know we allow CR and LF in file names, but in all cases where such a 
+name appears in an error message, it is *not important* that the data is 
+reproduced exactly. On the contrary, it is usually more helpful to know 
+that something strange is going on. The question marks are a strong 
+indication to the user for this.
 
-diff --git a/configure.ac b/configure.ac
-index 0b15f04b1..63e71a472 100644
---- a/configure.ac
-+++ b/configure.ac
-@@ -759,9 +759,9 @@ GIT_STASH_FLAGS($ICONVDIR)
- 
- AC_MSG_CHECKING([for old iconv()])
- AC_COMPILE_IFELSE([OLDICONVTEST_SRC],
--	[AC_MSG_RESULT([no])],
- 	[AC_MSG_RESULT([yes])
--	OLD_ICONV=UnfortunatelyYes])
-+	OLD_ICONV=UnfortunatelyYes],
-+	[AC_MSG_RESULT([no])])
- 
- GIT_UNSTASH_FLAGS($ICONVDIR)
- 
--- 
-2.11.0
+> If you absolutely insist, I will spend time to find a plausible example
+> and use that in the regression test.
+
+I don't want to see you on an endeavor with dubious results. I'd prefer 
+to wait until the first case of "incorrectly munged data" is reported 
+because, as I said, I have a gut feeling that there is none.
+
+>> I am certainly open to loosening the sanitizing for CR to make things
+>> work seamlessly on Windows. But I am having trouble imagining a case
+>> that is actually negatively impacted.
+
+I came to the same conclusion. I regret having sent out a warning 
+message in, well, such a haste(*), without thinking the case through 
+first. IMHO, Jeff's patch should be fine as is.
+
+(*) literally; I had to catch a train.
+
+-- Hannes
 
