@@ -6,29 +6,29 @@ X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AF34820A17
-	for <e@80x24.org>; Mon, 16 Jan 2017 21:25:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 311AE20A17
+	for <e@80x24.org>; Mon, 16 Jan 2017 21:34:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750964AbdAPVZi (ORCPT <rfc822;e@80x24.org>);
-        Mon, 16 Jan 2017 16:25:38 -0500
-Received: from cloud.peff.net ([104.130.231.41]:39850 "EHLO cloud.peff.net"
+        id S1751832AbdAPVei (ORCPT <rfc822;e@80x24.org>);
+        Mon, 16 Jan 2017 16:34:38 -0500
+Received: from cloud.peff.net ([104.130.231.41]:39864 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750970AbdAPVZi (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 16 Jan 2017 16:25:38 -0500
-Received: (qmail 20260 invoked by uid 109); 16 Jan 2017 21:25:37 -0000
+        id S1751680AbdAPVef (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 16 Jan 2017 16:34:35 -0500
+Received: (qmail 20784 invoked by uid 109); 16 Jan 2017 21:34:23 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 16 Jan 2017 21:25:37 +0000
-Received: (qmail 12344 invoked by uid 111); 16 Jan 2017 21:26:31 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 16 Jan 2017 21:34:23 +0000
+Received: (qmail 12382 invoked by uid 111); 16 Jan 2017 21:35:17 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 16 Jan 2017 16:26:31 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 16 Jan 2017 16:25:35 -0500
-Date:   Mon, 16 Jan 2017 16:25:35 -0500
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 16 Jan 2017 16:35:17 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 16 Jan 2017 16:34:21 -0500
+Date:   Mon, 16 Jan 2017 16:34:21 -0500
 From:   Jeff King <peff@peff.net>
 To:     git@vger.kernel.org
 Cc:     Michael Haggerty <mhagger@alum.mit.edu>,
         Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [PATCH 2/6] fsck: report trees as dangling
-Message-ID: <20170116212535.cohvikwkju5zehr4@sigill.intra.peff.net>
+Subject: [PATCH 5/6] fsck: do not fallback "git fsck <bogus>" to "git fsck"
+Message-ID: <20170116213420.d3e6ziu4gt3app4x@sigill.intra.peff.net>
 References: <20170116212231.ojoqzlajpszifaf3@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -39,73 +39,53 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-After checking connectivity, fsck looks through the list of
-any objects we've seen mentioned, and reports unreachable
-and un-"used" ones as dangling. However, it skips any object
-which is not marked as "parsed", as that is an object that
-we _don't_ have (but that somebody mentioned).
+Since fsck tries to continue as much as it can after seeing
+an error, we still do the reachability check even if some
+heads we were given on the command-line are bogus. But if
+_none_ of the heads is is valid, we fallback to checking all
+refs and the index, which is not what the user asked for at
+all.
 
-Since 6e454b9a3 (clear parsed flag when we free tree
-buffers, 2013-06-05), that flag can't be relied on, and the
-correct method is to check the HAS_OBJ flag. The cleanup in
-that commit missed this callsite, though. As a result, we
-would generally fail to report dangling trees.
-
-We never noticed because there were no tests in this area
-(for trees or otherwise). Let's add some.
+Instead of checking "heads", the number of successful heads
+we got, check "argc" (which we know only has non-options in
+it, because parse_options removed the others).
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
  builtin/fsck.c  |  2 +-
- t/t1450-fsck.sh | 27 +++++++++++++++++++++++++++
- 2 files changed, 28 insertions(+), 1 deletion(-)
+ t/t1450-fsck.sh | 11 +++++++++++
+ 2 files changed, 12 insertions(+), 1 deletion(-)
 
 diff --git a/builtin/fsck.c b/builtin/fsck.c
-index f01b81eeb..3e67203f9 100644
+index c7d0590e5..8ae065b2d 100644
 --- a/builtin/fsck.c
 +++ b/builtin/fsck.c
-@@ -225,7 +225,7 @@ static void check_unreachable_object(struct object *obj)
- 	 * to complain about it being unreachable (since it does
- 	 * not exist).
+@@ -778,7 +778,7 @@ int cmd_fsck(int argc, const char **argv, const char *prefix)
+ 	 * default ones from .git/refs. We also consider the index file
+ 	 * in this case (ie this implies --cache).
  	 */
--	if (!obj->parsed)
-+	if (!(obj->flags & HAS_OBJ))
- 		return;
- 
- 	/*
+-	if (!heads) {
++	if (!argc) {
+ 		get_default_heads();
+ 		keep_cache_objects = 1;
+ 	}
 diff --git a/t/t1450-fsck.sh b/t/t1450-fsck.sh
-index 6eef8b28e..e88ec7747 100755
+index 2f3b05276..96b74dc9a 100755
 --- a/t/t1450-fsck.sh
 +++ b/t/t1450-fsck.sh
-@@ -559,4 +559,31 @@ test_expect_success 'fsck --name-objects' '
- 	)
+@@ -610,4 +610,15 @@ test_expect_success 'fsck $name notices bogus $name' '
+ 	test_must_fail git fsck $_z40
  '
  
-+# for each of type, we have one version which is referenced by another object
-+# (and so while unreachable, not dangling), and another variant which really is
-+# dangling.
-+test_expect_success 'fsck notices dangling objects' '
-+	git init dangling &&
-+	(
-+		cd dangling &&
-+		blob=$(echo not-dangling | git hash-object -w --stdin) &&
-+		dblob=$(echo dangling | git hash-object -w --stdin) &&
-+		tree=$(printf "100644 blob %s\t%s\n" $blob one | git mktree) &&
-+		dtree=$(printf "100644 blob %s\t%s\n" $blob two | git mktree) &&
-+		commit=$(git commit-tree $tree) &&
-+		dcommit=$(git commit-tree -p $commit $tree) &&
-+
-+		cat >expect <<-EOF &&
-+		dangling blob $dblob
-+		dangling commit $dcommit
-+		dangling tree $dtree
-+		EOF
-+
-+		git fsck >actual &&
-+		# the output order is non-deterministic, as it comes from a hash
-+		sort <actual >actual.sorted &&
-+		test_cmp expect actual.sorted
-+	)
++test_expect_success 'bogus head does not fallback to all heads' '
++	# set up a case that will cause a reachability complaint
++	echo to-be-deleted >foo &&
++	git add foo &&
++	blob=$(git rev-parse :foo) &&
++	test_when_finished "git rm --cached foo" &&
++	remove_object $blob &&
++	test_must_fail git fsck $_z40 >out 2>&1 &&
++	! grep $blob out
 +'
 +
  test_done
