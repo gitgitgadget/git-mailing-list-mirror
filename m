@@ -2,76 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 76AD51F89C
-	for <e@80x24.org>; Tue, 17 Jan 2017 08:00:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 397631F89C
+	for <e@80x24.org>; Tue, 17 Jan 2017 10:53:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750866AbdAQH7s (ORCPT <rfc822;e@80x24.org>);
-        Tue, 17 Jan 2017 02:59:48 -0500
-Received: from cloud.peff.net ([104.130.231.41]:40040 "EHLO cloud.peff.net"
+        id S1751133AbdAQKxL (ORCPT <rfc822;e@80x24.org>);
+        Tue, 17 Jan 2017 05:53:11 -0500
+Received: from mout.gmx.net ([212.227.17.22]:51721 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750846AbdAQH7q (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 17 Jan 2017 02:59:46 -0500
-Received: (qmail 4879 invoked by uid 109); 17 Jan 2017 07:52:56 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 17 Jan 2017 07:52:56 +0000
-Received: (qmail 15136 invoked by uid 111); 17 Jan 2017 07:53:50 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 17 Jan 2017 02:53:50 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 17 Jan 2017 02:52:54 -0500
-Date:   Tue, 17 Jan 2017 02:52:54 -0500
-From:   Jeff King <peff@peff.net>
-To:     Jacob Keller <jacob.keller@gmail.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Johannes Sixt <j6t@kdbg.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Git mailing list <git@vger.kernel.org>
-Subject: Re: What's cooking in git.git (Jan 2017, #02; Sun, 15)
-Message-ID: <20170117075254.h4nnnj2alricotcy@sigill.intra.peff.net>
-References: <xmqqh94zbwlu.fsf@gitster.mtv.corp.google.com>
- <257b4175-9879-7814-5d8d-02050792574d@kdbg.org>
- <alpine.DEB.2.20.1701161251100.3469@virtualbox>
- <20170116160456.ltbb7ofe47xos7xo@sigill.intra.peff.net>
- <alpine.DEB.2.20.1701161746200.3469@virtualbox>
- <20170116220014.bwi5xi2br56lyqsw@sigill.intra.peff.net>
- <CA+P7+xqi8cXK8ZEdvy3U9jJ9wZwkGLYNR0j_xvvCJwq12B4G8g@mail.gmail.com>
+        id S1751108AbdAQKxG (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 17 Jan 2017 05:53:06 -0500
+Received: from virtualbox ([37.24.141.236]) by mail.gmx.com (mrgmx101
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0Lwnem-1cVOKN08SG-016Ned; Tue, 17
+ Jan 2017 11:52:31 +0100
+Date:   Tue, 17 Jan 2017 11:52:29 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Max Kirillov <max@max630.net>
+cc:     Pat Thoyts <patthoyts@users.sourceforge.net>, git@vger.kernel.org,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [BUG/RFC] Git Gui: GIT_DIR leaks to spawned Git Bash
+In-Reply-To: <20170116224022.GA8539@jessie.local>
+Message-ID: <alpine.DEB.2.20.1701171145050.3469@virtualbox>
+References: <20170116224022.GA8539@jessie.local>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CA+P7+xqi8cXK8ZEdvy3U9jJ9wZwkGLYNR0j_xvvCJwq12B4G8g@mail.gmail.com>
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:zGP70haMYzxNxsWy0tfmdTMk024Ti12eyDUbkxDjSd37WZou+yN
+ fE1TLS35+3wQoe0dU6uwDtKUgBUCzq8tNSJP76pJznBQAwBDADXovyQ6gYh0TzsdeucyPUd
+ HmVUUYs7Dj5I3qMlH4ctSGeLwh26mzm+8HyF1VBXbOabYCcPBlJQi9wRHc7ZBDjVWM0EiAc
+ +scNHqf9v8KeoU6LX7GPw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:TupnYOegd3U=:aJdy75zQME/xCpJ79y6BVh
+ BNq/ARu5JWAtCOJ3QYhcKjdGzmGMOu7XTcpBpqInvb8/wR/baoo/hwtBeJexmzGr8VzLjWSiS
+ tzIOwF2PGkKcKR1cProLhPZ1Nk652K2nZy7rSMMQLP60fh94DUYO7ov/OrqS7C0TBbiGyj6zw
+ 7Pi/BTWPEeBoxiItYJ6ieJUyCz6/lDzWA4tfB4bYHiII8o4LyFvaK6nLiKEk7saCpPBrZWInM
+ k27DKRDKgv1fw3x7f1P8kFARkyigrx9R3E4n+41ge+cfkJmbKwHK0dfjIqUpWHwGOWY7nOT3E
+ rzrkQmSS5BbbKNiOdPUtOt1BYX0d4UdMZHn6KZESL27m421lwuKSYqlEbun8cd8v81BLetxcp
+ wF7e7EjPMXpZuIyXh+oGZIyQF2N1GzLQ4gmRXG1Vkxn0WhUg2bTJ7Rlxm98rjflpRkqcc/lwA
+ 8dKBsE8Wdcc+9MaJhzz+AYVA81M8YNSziaJxfiG7gcaNrKwaa0B1PjnJDz6bumqZsO/HPMWXj
+ uhOUZR8KEbMap1Eo/LEHMgVqd4m+ipIU56kAz0EWe5Cu6U7e3fx5eGo/7L+P4Mp0CChR9VbnD
+ /0gHKelPBD7osUmvi94cWM94Tu6O9wl3DVqlL1iGYLNY26s79zpxDhX8Hrcfx757X/uKlVCEU
+ cjVe3sWjp0aSxg53s3AlMxNKtSnO3h3+IlNMr+9adedICDOD+gDLlKUYGKXrctEp5mdK9XpFp
+ AClf5rFe1VMpn9vWg5I2kUUbRIdobcEJan8HOonLT/C33KZghDug6ux4NhIcmeaQJ55FC50zF
+ uSsR+j1bJJ6eJ/5hSBDoJGOCVUj0SgN9shnJxYAw7D/oaWOv/voIz1ePQkDV9aZlc2cvjWHGU
+ 5MVnEZKBrgtmYlGqK7cBlfCXh3ugdgOVP8HUWlTPZVFFi1HLgbeUclE5A3UvxqdKcln4wMf/+
+ XPCvJVnXPdMlbtgyIyH1NAb2Oixfxrw6EngeODXvMrcMAzS78SnipEyuotx4y6/MDUnru0Ve+
+ MrQYDi2zZhuJu6RMT8DnZFrfSPy2YNNPcxoNWISmsdygMEsxUApUTuVM6zFXz4cF+Q==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jan 16, 2017 at 05:33:44PM -0800, Jacob Keller wrote:
+Hi Max,
 
-> > I am certainly sympathetic to the idea that the "?" is ugly and
-> > potentially confusing. But I think it's at least a step forward for this
-> > particular example.
-> 
-> Would it be possible to convert the CR to a literal \r printing? Since
-> it's pretty common to show these characters as slash-escaped? (Or is
-> that too much of a Unix world thing?) I know I'd find \r less
-> confusing than '?'
+On Tue, 17 Jan 2017, Max Kirillov wrote:
 
-I discussed this in the original commit message.
+> Apparently various GIT_* environment variables (most
+> interesting is GIT_DIR but AFAIR there were more) leak to
+> shell session launched from Git Gui's "Git Bash" menu item.
 
-Yes, it's possible, but it's a little tricky. We want to fprintf() the
-whole thing as a unit (to increase the chances of it being done in an
-atomic write()). We don't want to use a dynamic buffer, since we might
-be called from a signal handler, or when malloc has failed, etc.
+Given that you call it from Git GUI, i.e. for a *specific* worktree, I do
+not think that this bug is *all* that critical. After all, you won't even
+notice unless you use the very same Git Bash to navigate to a *different*
+worktree.
 
-So I tried to stick to something that could reliably done in place. We
-could probably get by with 2 static buffers and copy from one to the
-other (if stack space is an issue, the current one is 4K, which is
-probably excessively large anyway).
+Having said that, if you have the time and energy to come up with a patch,
+I will definitely try my best to help you get it integrated.
 
-Mostly I just assumed that it was highly unlikely anybody would see this
-escaping in the first place. So I tried to go with the simplest
-solution.
+And having said *that*, I have to admit that I was unable to reproduce:
+GIT_DIR was set neither when starting Git GUI from the Start Menu (and
+then navigating to a previously-opened worktree because I am too lazy to
+navigate manually), nor when starting Git GUI from a Git CMD in a worktree
+via `git gui`. In both cases, the environment contained only the following
+variables whose name starts with "GIT_": $GIT_ASKPASS, $GIT_ASK_YESNO and
+$GIT_EXEC_PATH.
 
--Peff
+I tested with Git for Windows v2.11.0(3), the latest offical version.
+
+Thanks,
+Johannes
