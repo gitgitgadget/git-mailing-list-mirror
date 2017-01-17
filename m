@@ -2,99 +2,125 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,
+	STOX_REPLY_TYPE shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BBB6E20756
-	for <e@80x24.org>; Tue, 17 Jan 2017 23:32:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 785F320756
+	for <e@80x24.org>; Tue, 17 Jan 2017 23:33:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751654AbdAQXcg (ORCPT <rfc822;e@80x24.org>);
-        Tue, 17 Jan 2017 18:32:36 -0500
-Received: from mail-lf0-f50.google.com ([209.85.215.50]:36013 "EHLO
-        mail-lf0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751597AbdAQXbj (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 17 Jan 2017 18:31:39 -0500
-Received: by mail-lf0-f50.google.com with SMTP id z134so117092842lff.3
-        for <git@vger.kernel.org>; Tue, 17 Jan 2017 15:31:38 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=AkXj1SOgCVq2YvNx8uxSsXdNJt6LovnOvB9dyCGxv6o=;
-        b=MNRU9gz0jNnNF8GJrGbWH9WFp/vlEBPGv+oBD3Jr1hltdEin33vuLqgMmOWH6A3e3e
-         rr/kLe+xtOFN3RPjJAGr86OBew/ol2RkWU1MTb5RKDHWKeSv+b7zAQNOjzl4h2M4G4zi
-         Mv8/T2clBjXE2WH6+8YsbpxbSwOjAek3R7Dtb2mHUpdJWr1ZQQyEP7jlPV6nE9GxmpNp
-         RgphuuAiKFCRC5D+B4MdqkP4iI9lFZ7gBobJIV9GbUXEFoEjN5l6aHpqNm2/SGMtHffW
-         /Be/JzfwzqugjYd+GvsadkuL8vHN/Lt8APSejivXB+Lw9RG0ZH8p/fatKpNOokCe/zgY
-         NUuw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=AkXj1SOgCVq2YvNx8uxSsXdNJt6LovnOvB9dyCGxv6o=;
-        b=QKzY9D6LBJjfobwxFFL/2wLdTb7zwVpz6u9jz1SclXJm+wGmQv5NktKZ2jhTBHMf0j
-         D8weCnOhe5xOUMf/07zrpfp4wgN598FZYMd12WpiERGqz/p0oo25555y7J5Um0ILLHPt
-         qdvMTPYtYsSKJoJ2Qi/B+zugNIwBJ+Gm61koJeB25oGbYjJgc07LUfxHq1KbB7r0lzv9
-         jzxjLOTWFemgaL0uhR2K4AiYwxFiRLMlcz0Z8++lekxaIgB1NC6Faes48MLufHpvp4L4
-         0ZslnZGpas/zQgYbmOnULypKEM1JmAsPZvvUGHxlTpzd9XVqHK6o6vdnlf3EjbeuZSDa
-         ApcQ==
-X-Gm-Message-State: AIkVDXIM8AoRzd1vHtKloavir7sPRlJbJPzE5fyOA2DZw/GD6ICL/23EW0TZ3ebIYKZUvEzwYKPv6j5U9xYSXA==
-X-Received: by 10.46.69.215 with SMTP id s206mr85583lja.26.1484695897235; Tue,
- 17 Jan 2017 15:31:37 -0800 (PST)
+        id S1751874AbdAQXdB (ORCPT <rfc822;e@80x24.org>);
+        Tue, 17 Jan 2017 18:33:01 -0500
+Received: from smtp-out-1.talktalk.net ([62.24.135.65]:28502 "EHLO
+        smtp-out-1.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751870AbdAQXdA (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 17 Jan 2017 18:33:00 -0500
+Received: from PhilipOakley ([92.31.218.76])
+        by smtp.talktalk.net with SMTP
+        id TdFEck0ex0KuvTdFFcP78G; Tue, 17 Jan 2017 23:32:53 +0000
+X-Originating-IP: [92.31.218.76]
+X-Spam: 0
+X-OAuthority: v=2.2 cv=RZjSMBlv c=1 sm=1 tr=0 a=e6L6E7eW+5Nb7SO+DvSdIg==:117
+ a=e6L6E7eW+5Nb7SO+DvSdIg==:17 a=8nJEP1OIZ-IA:10 a=NEAV23lmAAAA:8
+ a=-ipq2ZteA2u6wfjHzJUA:9 a=wPNLvfGTeEIA:10 a=Bn2pgwyD2vrAyMmN8A2t:22
+Message-ID: <826895153F394EB29B0D27F3EB9A67C9@PhilipOakley>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From:   "Philip Oakley" <philipoakley@iee.org>
+To:     "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+Cc:     "Git List" <git@vger.kernel.org>,
+        "Pat Thoyts" <patthoyts@users.sourceforge.net>
+References: <F9099DB3F0374D898776BD2621BF36FA@PhilipOakley> <alpine.DEB.2.20.1701171218260.3469@virtualbox>
+Subject: Re: [RFH - Tcl/Tk] use of procedure before declaration?
+Date:   Tue, 17 Jan 2017 23:32:54 -0000
+Organization: OPDS
 MIME-Version: 1.0
-Received: by 10.25.145.14 with HTTP; Tue, 17 Jan 2017 15:31:16 -0800 (PST)
-In-Reply-To: <97d4105c-0fa6-41c5-e456-30cebd93dc36@kdbg.org>
-References: <20170112001721.2534-1-jacob.e.keller@intel.com>
- <20170112001721.2534-6-jacob.e.keller@intel.com> <5f723a0d-623f-bf97-00de-29d430484fed@kdbg.org>
- <CA+P7+xrmAmCPOzuaKcm+WxceXnowkM4gKz05tSpdC=CDwpCEug@mail.gmail.com>
- <5c8401ef-9609-f235-9228-be980a13edf1@kdbg.org> <CA+P7+xq1LMkRG_aSyamrsPUQE+rDv4A9Qd19tDMgx-_a5OHsqQ@mail.gmail.com>
- <97d4105c-0fa6-41c5-e456-30cebd93dc36@kdbg.org>
-From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Tue, 17 Jan 2017 15:31:16 -0800
-Message-ID: <CA+P7+xqFHG52Xo8ncUwa3owDn3OOz+rr3ZaGwfcUDCiXJmh80Q@mail.gmail.com>
-Subject: Re: [PATCH 5/5] describe: teach describe negative pattern matches
-To:     Johannes Sixt <j6t@kdbg.org>
-Cc:     Jacob Keller <jacob.e.keller@intel.com>,
-        Git mailing list <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain;
+        format=flowed;
+        charset="iso-8859-1";
+        reply-type=original
+Content-Transfer-Encoding: 7bit
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+X-CMAE-Envelope: MS4wfIKvGGFlXh5nSXS6yO+hXwQ0F24COJa1eN5795McBrOwBCP+bNP/SPYfkkjXSqyT6qTqqBcfUaB6qw8Z5ykdytvTBJv9pDJxie3PnpOdYJL9RU9ZfOUF
+ E9mLVvPO6uqLcr+PFahqLBG2PL/tpYQUxFy1LIfTu5r56LO46jAhhgrfp1xWLJXRUqhq06HZLeTGlzMzJPFRyOmpuTncskKksBgcEoIZOcashPBJAO1wI2iJ
+ 8LDiwAIRpQqlEseB8dHH1A==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jan 13, 2017 at 1:31 PM, Johannes Sixt <j6t@kdbg.org> wrote:
-> Am 13.01.2017 um 07:57 schrieb Jacob Keller:
->>
->> On Thu, Jan 12, 2017 at 10:43 PM, Johannes Sixt <j6t@kdbg.org> wrote:
->>>
->>>  When you write
->>>
->>>   git log --branches --exclude=origin/* --remotes
->>>
->>> --exclude=origin/* applies only to --remotes, but not to --branches.
->>
->>
->> Well for describe I don't think the order matters.
+From: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+> Hi Philip,
 >
+> On Mon, 16 Jan 2017, Philip Oakley wrote:
 >
-> That is certainly true today. But I would value consistency more. We would
-> lose it if some time in the future 'describe' accepts --branches and
-> --remotes in addition to --tags and --all.
+>> In
+>> https://github.com/git/git/blob/master/git-gui/lib/choose_repository.tcl#L242
+>> the procedure `_unset_recentrepo` is called, however the procedure isn't
+>> declared until line 248. My reading of the various Tcl tutorials suggest
+>> (but not explictly) that this isn't the right way.
 >
-> -- Hannes
+> Indeed, calling a procedure before it is declared sounds incorrect.
 >
+> Since documentation can be treacherous, let's just test it. With a `tclsh`
+> whose `$tcl_version` variable claims that this is version 8.6, this
+> script:
+>
+> ```tcl
+> hello Philip
+>
+> proc hello {arg} {
+>        puts "Hi, $arg"
+> }
+> ```
+>
+> ... yields the error message:
+>
+> invalid command name "hello"
+>     while executing
+> "hello Philip"
+>
+> ... while this script:
+>
+> ```tcl
+> proc hello {arg} {
+>        puts "Hi, $arg"
+> }
+>
+> hello Philip
+> ```
+>
+> ... prints the expected "Hi, Philip".
+>
+> Having said that, in the code to which you linked, the procedure is not
+> actually called before it is declared, as the call is inside another
+> procedure.
+>
+> Indeed, the entire file declares one object-oriented class, so no code
+> gets executed in that file:
+>
+> https://github.com/git/git/blob/d7dffce1c/git-gui/lib/choose_repository.tcl#L4
+>
+> (I guess proper indentation would make it easier to understand that this
+> file is defining a class, not executing anything yet).
+>
+> And it is perfectly legitimate to use not-yet-declared procedures in other
+> procedures, otherwise recursion would not work.
+>
+>> Should 3c6a287 ("git-gui: Keep repo_config(gui.recentrepos) and 
+>> .gitconfig
+>> in sync", 2010-01-23) have declared `proc _unset_recentrepo {p}` before
+>> `proc _get_recentrepos {}` ?
+>
+> Given the findings above, I believe that the patch is actually correct.
+>
+> Ciao,
+> Dscho
+>
+Thanks for the clarification. I'll update the old patch series and see if we 
+can get this fixed.
 
-I am not sure that the interface for git-log and git-describe are
-similar enough to make this distinction work. --match already seems to
-imply that it only works on refs in refs/tags, as it says it considers
-globs matching excluding the "refs/tags" prefix.
+Philip 
 
-In git-describe, we already have "--tags" and "--all" but they are
-mutually exclusive. We don't support using more than one at once, and
-I'm not really convinced that describe will ever support more than one
-at a time. Additionally, match already doesn't respect order.
-
-Thanks,
-Jake
