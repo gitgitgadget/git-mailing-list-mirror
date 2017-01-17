@@ -7,19 +7,19 @@ X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EAC7D20756
-	for <e@80x24.org>; Tue, 17 Jan 2017 16:02:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B68B820756
+	for <e@80x24.org>; Tue, 17 Jan 2017 16:03:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751235AbdAQQC4 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 17 Jan 2017 11:02:56 -0500
-Received: from mout.gmx.net ([212.227.17.21]:49353 "EHLO mout.gmx.net"
+        id S1751268AbdAQQDT (ORCPT <rfc822;e@80x24.org>);
+        Tue, 17 Jan 2017 11:03:19 -0500
+Received: from mout.gmx.net ([212.227.17.21]:58563 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750863AbdAQQCv (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 17 Jan 2017 11:02:51 -0500
+        id S1751152AbdAQQCy (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 17 Jan 2017 11:02:54 -0500
 Received: from virtualbox ([37.24.141.236]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0Mhhr5-1c7IFK2ndj-00MtMn; Tue, 17
- Jan 2017 16:55:01 +0100
-Date:   Tue, 17 Jan 2017 16:55:00 +0100 (CET)
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MDR21-1cDEI72Tef-00Gp4A; Tue, 17
+ Jan 2017 16:54:54 +0100
+Date:   Tue, 17 Jan 2017 16:54:53 +0100 (CET)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     git@vger.kernel.org
@@ -27,774 +27,640 @@ cc:     Junio C Hamano <gitster@pobox.com>,
         David Aguilar <davvid@gmail.com>,
         Dennis Kaarsemaker <dennis@kaarsemaker.net>,
         Paul Sbarra <sbarra.paul@gmail.com>
-Subject: [PATCH v5 2/3] difftool: implement the functionality in the
- builtin
-In-Reply-To: <cover.1484668473.git.johannes.schindelin@gmx.de>
-Message-ID: <a86f9b175f97c0983c86599469243f11ebc32d19.1484668473.git.johannes.schindelin@gmx.de>
-References: <cover.1483373635.git.johannes.schindelin@gmx.de> <cover.1484668473.git.johannes.schindelin@gmx.de>
+Subject: [PATCH v5 0/3] Turn the difftool into a builtin
+In-Reply-To: <cover.1483373635.git.johannes.schindelin@gmx.de>
+Message-ID: <cover.1484668473.git.johannes.schindelin@gmx.de>
+References: <cover.1483373635.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:eaZDGJARFk5FShkiBxLP6T5CF6P4popSApYEihJmK3Gr1OX282I
- In8Mtw+MoGS4StWW9n9IIe2Zche8GkwWaWJwtZnPyKWMjabYXAw4hJR93mVLcwOTUrkHHTF
- r8c7NSNT1WbovOYj2yoZPyk2gTZaWdrNfrCokQlZJerHuPrLiWI+Iz3AMTJtK051oPZkQsU
- rSvNmmWeZbzb5B3U8fgJg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:/VDP+EtuwrU=:a3eT2HLVzK5Bc5jNBzRD0E
- 3z4/hbbVpwjt4NOo2IkScj8kqc3HgL3THSTSiKZ+xsB/ykZOq+e3PpOr23GC+PjF3VKOm8KbY
- 7DRyXR3UcocBkrvP+YgVizyVq4hBLos16JHENzWQoPLe5NzMA/NRRMoxHZzwXFO7bNNkpJKoQ
- r3DAEAHqbeRHkPxEAQSm3ItMrIMCQ/aCfz9Ggixwqj+09g3jnk/+1OukHfxbOeQHQ/ZyDt95g
- uNY082HuLs7RO7eQJQg3DfpCbVvqfZ5eTcvzEJ50CqSoXfCoxfySCxmAmi8ENUmbzQq8mIkxF
- d8lZpurZZApUt9aw7UbdQx2+uJs9MDDYX1yNCN2VTrpTPbLnrjHf8PD+7XjFoEr/J6C5F08+h
- u88PZflg/q2R/2iJgOp8HRrncpn8upQY6N/3/JUM1BzdHfHZdvYuZMjcLX0eVv/3c05n2q1WI
- hZ7xxzsXOGTQizem7bm/uygunuWMBbWXmiFvKnmRbsc1y7NXRu6nefJPb1JGNSRdi98SseoL9
- hav1ZFkuz8bbC+DHzcDxUuLstgwY3ukqPtN6h+EhGD+OLhDTgPPwLz4ZMKY3edQljs7ZHzCys
- K7L1YFWmkZ0ca8Ba6EJx9bJ+QWZblamE8SQJCFKnR0tw14OTqt/qntIgDYQTt84M5xbQJjkiy
- 34t/aO+9YNly4P5L5hMlj0aPqJts0g+7L9Pf0g72bcBVAFK8vl2BKAhnFXrwsaHwjkJnfucz1
- UVpSl93zS3FYc6d9rmOmPcRCRSmosbCQmA4MD8Stadejh1TqjldPRUkDOUzNIiz1djP/oDB53
- vtYO11MUwBCxW/Kid3Oxmqds+vA2tVyQcniO/mgMis53AkKFx5eZkUNV8R/Fy4mg6y8+WEQN4
- ogkJ4D+peVxiWvdfX9NifdnUbtRQ44qTrW6Y1VMM0WUt9Nwa9YmDHJLn9R1ZM+ktiGDXMv6TX
- fwdPgf8ioDmUHDrT2BMPFjOfeS4tvT9k/t/3sU4fRr3UCbk/++WDaccjRp4M5Rr66M4gXqNIH
- 9Anm7lxV6MojnQXOVco8v78=
+X-Provags-ID: V03:K0:XJPJlSMaQSfBtX4d8PDtC7bip/W4lCvKdOSv8yxi1K6z/FV/QQG
+ OFWa3iJrbGrNKmG6HgbirA4mjHmsN1br37yTyUKAE7T5EzWsPIjHAouIAWAk9NzVNv1tHYD
+ F7B5s/9h5zxCTFsfafY7uIzHdOXmbAhdfWq8UgypAMIi0eVCpxpWt4jLDc2/AHpUq3BxGhs
+ zn+0Stzh3oD49xEvLgeHw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:Ls9ubi6s1Rw=:Sk5xK8CzCG+sS89IJMeLI8
+ sbuA3M0cV922n8cx/+naYeVf3yamW5imehff9R2S/iBTxoEHCYWWQ7mqzqJxOoxFOcyoTh1mF
+ AqEwvueCkd2egpUN6n2qW5jqriq3MEHqhxFC9SKoRr4kEKRU/9BAFsK58lgbxhnLPiASk9n93
+ UcBBA4zR9wS4aakI1HfoMPyTPCdApfVg5elj+bzSrpcQGrvkgeCTY8IWZzx8ujEJZLGKJwLpa
+ xioLtd/hN5zjaJ06Iy0zPLxP+bEf93FvVVsEau7EaiC2pMt08I1onxxZlGoFIo2u1UYqEBBWs
+ 2cK/JnI0dG/4EQMO5LYtghPzryrLASn39wb78m6exlOWcT0O6lAljozXSTBLo47zEiADHWaC/
+ GBvscFk/oaDIJqE+TQlmeatyjN4EoGW/z4sctF7SiYhYbGfoK1bOMUy4UWOq7FS7EtSaGEaZd
+ GLtkWP+Ds+kAaQz3dOzo59317A9seiypxp2dodeX9XSCT9eQDqdxM9M/PAzAElhdgEXGdBIV5
+ Tpfjcrp/+8k6pWfaHqFq4C7nBJLhFALw+xBJFmuSFuIJaquE96xbPvjQFK+D9CsNAS5ELE5DY
+ 1lgYhJAWjat2ING71/K1uOsM3HIWIwI17JCwXMnZ1sXwiMC813wqMEWeommK8o8phsqrwRwtQ
+ CIsL5Aafy1oeV6m+Vug7XrFFqJ1w49ZD8aHPqASCdE5i6ZSn2y/ePJRsHJZF2dDz3jyTav15o
+ Dd1QyWyoieBfk4uDk+CGzd80yOce3+VF1KFza2qJhwwND5OM2sECVZYMQy06HauwE1VaMeb3L
+ r6bg4hRNcSsJyI5w/COiiln9K8q6cAONl/5941+cYCrp4PanMaMzqk6xLQ2+B2qs8zhz34/5F
+ EOpeK3C9h4E5QciwmMBzb64PlC62xd1NPhU7cgvR+vqBLXerXnX124ctHmxw/CCatkdkjYdOp
+ RLyKLWvjsl0Mk/EsY1JKiL7TXN3I0aQQy6fLU+Ogu9lPXMPszOgrWnhf42xNcmi1Os+cDqyPh
+ fkjz5acngTa704li38YQUgs=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This patch gives life to the skeleton added in the previous patch.
+This patch series converts the difftool from a Perl script into a
+builtin, for three reasons:
 
-The motivation for converting the difftool is that Perl scripts are not at
-all native on Windows, and that `git difftool` therefore is pretty slow on
-that platform, when there is no good reason for it to be slow.
+1. Perl is really not native on Windows. Not only is there a performance
+   penalty to be paid just for running Perl scripts, we also have to deal
+   with the fact that users may have different Perl installations, with
+   different options, and some other Perl installation may decide to set
+   PERL5LIB globally, wreaking havoc with Git for Windows' Perl (which we
+   have to use because almost all other Perl distributions lack the
+   Subversion bindings we need for `git svn`).
 
-In addition, Perl does not really have access to Git's internals. That
-means that any script will always have to jump through unnecessary
-hoops.
+2. As the Perl script uses Unix-y paths that are not native to Windows,
+   the Perl interpreter has to go through a POSIX emulation layer (the
+   MSYS2 runtime). This means that paths have to be converted from
+   Unix-y paths to Windows-y paths (and vice versa) whenever crossing
+   the POSIX emulation barrier, leading to quite possibly surprising path
+   translation errors.
 
-The current version of the builtin difftool does not, however, make full
-use of the internals but instead chooses to spawn a couple of Git
-processes, still, to make for an easier conversion. There remains a lot
-of room for improvement, left for a later date.
+3. Perl makes for a rather large reason that Git for Windows' installer
+   weighs in with >30MB. While one Perl script less does not relieve us
+   of that burden, it is one step in the right direction.
 
-Note: to play it safe, the original difftool is still called unless the
-config setting difftool.useBuiltin is set to true.
+Changes since v4:
 
-The reason: this new, experimental, builtin difftool will be shipped as
-part of Git for Windows v2.11.0, to allow for easier large-scale
-testing, but of course as an opt-in feature.
+- skipped the unrelated Coverity-appeasing patch.
 
-Sadly, the speedup is more noticable on Linux than on Windows: a quick
-test shows that t7800-difftool.sh runs in (2.183s/0.052s/0.108s)
-(real/user/sys) in a Linux VM, down from  (6.529s/3.112s/0.644s), while
-on Windows, it is (36.064s/2.730s/7.194s), down from
-(47.637s/2.407s/6.863s). The culprit is most likely the overhead
-incurred from *still* having to shell out to mergetool-lib.sh and
-difftool--helper.sh.
+- replaced the cross-validation with the Perl script by a patch that
+  retires the Perl script instead.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- builtin/difftool.c | 672 ++++++++++++++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 671 insertions(+), 1 deletion(-)
 
-diff --git a/builtin/difftool.c b/builtin/difftool.c
-index 53870bbaf7..2115e548a5 100644
---- a/builtin/difftool.c
-+++ b/builtin/difftool.c
-@@ -11,9 +11,610 @@
-  *
-  * Copyright (C) 2016 Johannes Schindelin
-  */
-+#include "cache.h"
- #include "builtin.h"
- #include "run-command.h"
- #include "exec_cmd.h"
-+#include "parse-options.h"
-+#include "argv-array.h"
-+#include "strbuf.h"
-+#include "lockfile.h"
-+#include "dir.h"
-+
-+static char *diff_gui_tool;
-+static int trust_exit_code;
-+
-+static const char *const builtin_difftool_usage[] = {
-+	N_("git difftool [<options>] [<commit> [<commit>]] [--] [<path>...]"),
-+	NULL
-+};
-+
-+static int difftool_config(const char *var, const char *value, void *cb)
-+{
-+	if (!strcmp(var, "diff.guitool")) {
-+		diff_gui_tool = xstrdup(value);
-+		return 0;
-+	}
-+
-+	if (!strcmp(var, "difftool.trustexitcode")) {
-+		trust_exit_code = git_config_bool(var, value);
-+		return 0;
-+	}
-+
-+	return git_default_config(var, value, cb);
-+}
-+
-+static int print_tool_help(void)
-+{
-+	const char *argv[] = { "mergetool", "--tool-help=diff", NULL };
-+	return run_command_v_opt(argv, RUN_GIT_CMD);
-+}
-+
-+static int parse_index_info(char *p, int *mode1, int *mode2,
-+			    struct object_id *oid1, struct object_id *oid2,
-+			    char *status)
-+{
-+	if (*p != ':')
-+		return error("expected ':', got '%c'", *p);
-+	*mode1 = (int)strtol(p + 1, &p, 8);
-+	if (*p != ' ')
-+		return error("expected ' ', got '%c'", *p);
-+	*mode2 = (int)strtol(p + 1, &p, 8);
-+	if (*p != ' ')
-+		return error("expected ' ', got '%c'", *p);
-+	if (get_oid_hex(++p, oid1))
-+		return error("expected object ID, got '%s'", p + 1);
-+	p += GIT_SHA1_HEXSZ;
-+	if (*p != ' ')
-+		return error("expected ' ', got '%c'", *p);
-+	if (get_oid_hex(++p, oid2))
-+		return error("expected object ID, got '%s'", p + 1);
-+	p += GIT_SHA1_HEXSZ;
-+	if (*p != ' ')
-+		return error("expected ' ', got '%c'", *p);
-+	*status = *++p;
-+	if (!*status)
-+		return error("missing status");
-+	if (p[1] && !isdigit(p[1]))
-+		return error("unexpected trailer: '%s'", p + 1);
-+	return 0;
-+}
-+
-+/*
-+ * Remove any trailing slash from $workdir
-+ * before starting to avoid double slashes in symlink targets.
-+ */
-+static void add_path(struct strbuf *buf, size_t base_len, const char *path)
-+{
-+	strbuf_setlen(buf, base_len);
-+	if (buf->len && buf->buf[buf->len - 1] != '/')
-+		strbuf_addch(buf, '/');
-+	strbuf_addstr(buf, path);
-+}
-+
-+/*
-+ * Determine whether we can simply reuse the file in the worktree.
-+ */
-+static int use_wt_file(const char *workdir, const char *name,
-+		       struct object_id *oid)
-+{
-+	struct strbuf buf = STRBUF_INIT;
-+	struct stat st;
-+	int use = 0;
-+
-+	strbuf_addstr(&buf, workdir);
-+	add_path(&buf, buf.len, name);
-+
-+	if (!lstat(buf.buf, &st) && !S_ISLNK(st.st_mode)) {
-+		struct object_id wt_oid;
-+		int fd = open(buf.buf, O_RDONLY);
-+
-+		if (fd >= 0 &&
-+		    !index_fd(wt_oid.hash, fd, &st, OBJ_BLOB, name, 0)) {
-+			if (is_null_oid(oid)) {
-+				oidcpy(oid, &wt_oid);
-+				use = 1;
-+			} else if (!oidcmp(oid, &wt_oid))
-+				use = 1;
-+		}
-+	}
-+
-+	strbuf_release(&buf);
-+
-+	return use;
-+}
-+
-+struct working_tree_entry {
-+	struct hashmap_entry entry;
-+	char path[FLEX_ARRAY];
-+};
-+
-+static int working_tree_entry_cmp(struct working_tree_entry *a,
-+				  struct working_tree_entry *b, void *keydata)
-+{
-+	return strcmp(a->path, b->path);
-+}
-+
-+/*
-+ * The `left` and `right` entries hold paths for the symlinks hashmap,
-+ * and a SHA-1 surrounded by brief text for submodules.
-+ */
-+struct pair_entry {
-+	struct hashmap_entry entry;
-+	char left[PATH_MAX], right[PATH_MAX];
-+	const char path[FLEX_ARRAY];
-+};
-+
-+static int pair_cmp(struct pair_entry *a, struct pair_entry *b, void *keydata)
-+{
-+	return strcmp(a->path, b->path);
-+}
-+
-+static void add_left_or_right(struct hashmap *map, const char *path,
-+			      const char *content, int is_right)
-+{
-+	struct pair_entry *e, *existing;
-+
-+	FLEX_ALLOC_STR(e, path, path);
-+	hashmap_entry_init(e, strhash(path));
-+	existing = hashmap_get(map, e, NULL);
-+	if (existing) {
-+		free(e);
-+		e = existing;
-+	} else {
-+		e->left[0] = e->right[0] = '\0';
-+		hashmap_add(map, e);
-+	}
-+	strlcpy(is_right ? e->right : e->left, content, PATH_MAX);
-+}
-+
-+struct path_entry {
-+	struct hashmap_entry entry;
-+	char path[FLEX_ARRAY];
-+};
-+
-+static int path_entry_cmp(struct path_entry *a, struct path_entry *b, void *key)
-+{
-+	return strcmp(a->path, key ? key : b->path);
-+}
-+
-+static void changed_files(struct hashmap *result, const char *index_path,
-+			  const char *workdir)
-+{
-+	struct child_process update_index = CHILD_PROCESS_INIT;
-+	struct child_process diff_files = CHILD_PROCESS_INIT;
-+	struct strbuf index_env = STRBUF_INIT, buf = STRBUF_INIT;
-+	const char *git_dir = absolute_path(get_git_dir()), *env[] = {
-+		NULL, NULL
-+	};
-+	FILE *fp;
-+
-+	strbuf_addf(&index_env, "GIT_INDEX_FILE=%s", index_path);
-+	env[0] = index_env.buf;
-+
-+	argv_array_pushl(&update_index.args,
-+			 "--git-dir", git_dir, "--work-tree", workdir,
-+			 "update-index", "--really-refresh", "-q",
-+			 "--unmerged", NULL);
-+	update_index.no_stdin = 1;
-+	update_index.no_stdout = 1;
-+	update_index.no_stderr = 1;
-+	update_index.git_cmd = 1;
-+	update_index.use_shell = 0;
-+	update_index.clean_on_exit = 1;
-+	update_index.dir = workdir;
-+	update_index.env = env;
-+	/* Ignore any errors of update-index */
-+	run_command(&update_index);
-+
-+	argv_array_pushl(&diff_files.args,
-+			 "--git-dir", git_dir, "--work-tree", workdir,
-+			 "diff-files", "--name-only", "-z", NULL);
-+	diff_files.no_stdin = 1;
-+	diff_files.git_cmd = 1;
-+	diff_files.use_shell = 0;
-+	diff_files.clean_on_exit = 1;
-+	diff_files.out = -1;
-+	diff_files.dir = workdir;
-+	diff_files.env = env;
-+	if (start_command(&diff_files))
-+		die("could not obtain raw diff");
-+	fp = xfdopen(diff_files.out, "r");
-+	while (!strbuf_getline_nul(&buf, fp)) {
-+		struct path_entry *entry;
-+		FLEX_ALLOC_STR(entry, path, buf.buf);
-+		hashmap_entry_init(entry, strhash(buf.buf));
-+		hashmap_add(result, entry);
-+	}
-+	if (finish_command(&diff_files))
-+		die("diff-files did not exit properly");
-+	strbuf_release(&index_env);
-+	strbuf_release(&buf);
-+}
-+
-+static NORETURN void exit_cleanup(const char *tmpdir, int exit_code)
-+{
-+	struct strbuf buf = STRBUF_INIT;
-+	strbuf_addstr(&buf, tmpdir);
-+	remove_dir_recursively(&buf, 0);
-+	if (exit_code)
-+		warning(_("failed: %d"), exit_code);
-+	exit(exit_code);
-+}
-+
-+static int ensure_leading_directories(char *path)
-+{
-+	switch (safe_create_leading_directories(path)) {
-+		case SCLD_OK:
-+		case SCLD_EXISTS:
-+			return 0;
-+		default:
-+			return error(_("could not create leading directories "
-+				       "of '%s'"), path);
-+	}
-+}
-+
-+static int run_dir_diff(const char *extcmd, int symlinks, const char *prefix,
-+			int argc, const char **argv)
-+{
-+	char tmpdir[PATH_MAX];
-+	struct strbuf info = STRBUF_INIT, lpath = STRBUF_INIT;
-+	struct strbuf rpath = STRBUF_INIT, buf = STRBUF_INIT;
-+	struct strbuf ldir = STRBUF_INIT, rdir = STRBUF_INIT;
-+	struct strbuf wtdir = STRBUF_INIT;
-+	size_t ldir_len, rdir_len, wtdir_len;
-+	struct cache_entry *ce = xcalloc(1, sizeof(ce) + PATH_MAX + 1);
-+	const char *workdir, *tmp;
-+	int ret = 0, i;
-+	FILE *fp;
-+	struct hashmap working_tree_dups, submodules, symlinks2;
-+	struct hashmap_iter iter;
-+	struct pair_entry *entry;
-+	enum object_type type;
-+	unsigned long size;
-+	struct index_state wtindex;
-+	struct checkout lstate, rstate;
-+	int rc, flags = RUN_GIT_CMD, err = 0;
-+	struct child_process child = CHILD_PROCESS_INIT;
-+	const char *helper_argv[] = { "difftool--helper", NULL, NULL, NULL };
-+	struct hashmap wt_modified, tmp_modified;
-+	int indices_loaded = 0;
-+
-+	workdir = get_git_work_tree();
-+
-+	/* Setup temp directories */
-+	tmp = getenv("TMPDIR");
-+	xsnprintf(tmpdir, sizeof(tmpdir), "%s/git-difftool.XXXXXX", tmp ? tmp : "/tmp");
-+	if (!mkdtemp(tmpdir))
-+		return error("could not create '%s'", tmpdir);
-+	strbuf_addf(&ldir, "%s/left/", tmpdir);
-+	strbuf_addf(&rdir, "%s/right/", tmpdir);
-+	strbuf_addstr(&wtdir, workdir);
-+	if (!wtdir.len || !is_dir_sep(wtdir.buf[wtdir.len - 1]))
-+		strbuf_addch(&wtdir, '/');
-+	mkdir(ldir.buf, 0700);
-+	mkdir(rdir.buf, 0700);
-+
-+	memset(&wtindex, 0, sizeof(wtindex));
-+
-+	memset(&lstate, 0, sizeof(lstate));
-+	lstate.base_dir = ldir.buf;
-+	lstate.base_dir_len = ldir.len;
-+	lstate.force = 1;
-+	memset(&rstate, 0, sizeof(rstate));
-+	rstate.base_dir = rdir.buf;
-+	rstate.base_dir_len = rdir.len;
-+	rstate.force = 1;
-+
-+	ldir_len = ldir.len;
-+	rdir_len = rdir.len;
-+	wtdir_len = wtdir.len;
-+
-+	hashmap_init(&working_tree_dups,
-+		     (hashmap_cmp_fn)working_tree_entry_cmp, 0);
-+	hashmap_init(&submodules, (hashmap_cmp_fn)pair_cmp, 0);
-+	hashmap_init(&symlinks2, (hashmap_cmp_fn)pair_cmp, 0);
-+
-+	child.no_stdin = 1;
-+	child.git_cmd = 1;
-+	child.use_shell = 0;
-+	child.clean_on_exit = 1;
-+	child.dir = prefix;
-+	child.out = -1;
-+	argv_array_pushl(&child.args, "diff", "--raw", "--no-abbrev", "-z",
-+			 NULL);
-+	for (i = 0; i < argc; i++)
-+		argv_array_push(&child.args, argv[i]);
-+	if (start_command(&child))
-+		die("could not obtain raw diff");
-+	fp = xfdopen(child.out, "r");
-+
-+	/* Build index info for left and right sides of the diff */
-+	i = 0;
-+	while (!strbuf_getline_nul(&info, fp)) {
-+		int lmode, rmode;
-+		struct object_id loid, roid;
-+		char status;
-+		const char *src_path, *dst_path;
-+		size_t src_path_len, dst_path_len;
-+
-+		if (starts_with(info.buf, "::"))
-+			die(N_("combined diff formats('-c' and '--cc') are "
-+			       "not supported in\n"
-+			       "directory diff mode('-d' and '--dir-diff')."));
-+
-+		if (parse_index_info(info.buf, &lmode, &rmode, &loid, &roid,
-+				     &status))
-+			break;
-+		if (strbuf_getline_nul(&lpath, fp))
-+			break;
-+		src_path = lpath.buf;
-+		src_path_len = lpath.len;
-+
-+		i++;
-+		if (status != 'C' && status != 'R') {
-+			dst_path = src_path;
-+			dst_path_len = src_path_len;
-+		} else {
-+			if (strbuf_getline_nul(&rpath, fp))
-+				break;
-+			dst_path = rpath.buf;
-+			dst_path_len = rpath.len;
-+		}
-+
-+		if (S_ISGITLINK(lmode) || S_ISGITLINK(rmode)) {
-+			strbuf_reset(&buf);
-+			strbuf_addf(&buf, "Subproject commit %s",
-+				    oid_to_hex(&loid));
-+			add_left_or_right(&submodules, src_path, buf.buf, 0);
-+			strbuf_reset(&buf);
-+			strbuf_addf(&buf, "Subproject commit %s",
-+				    oid_to_hex(&roid));
-+			if (!oidcmp(&loid, &roid))
-+				strbuf_addstr(&buf, "-dirty");
-+			add_left_or_right(&submodules, dst_path, buf.buf, 1);
-+			continue;
-+		}
-+
-+		if (S_ISLNK(lmode)) {
-+			char *content = read_sha1_file(loid.hash, &type, &size);
-+			add_left_or_right(&symlinks2, src_path, content, 0);
-+			free(content);
-+		}
-+
-+		if (S_ISLNK(rmode)) {
-+			char *content = read_sha1_file(roid.hash, &type, &size);
-+			add_left_or_right(&symlinks2, dst_path, content, 1);
-+			free(content);
-+		}
-+
-+		if (lmode && status != 'C') {
-+			ce->ce_mode = lmode;
-+			oidcpy(&ce->oid, &loid);
-+			strcpy(ce->name, src_path);
-+			ce->ce_namelen = src_path_len;
-+			if (checkout_entry(ce, &lstate, NULL))
-+				return error("could not write '%s'", src_path);
-+		}
-+
-+		if (rmode) {
-+			struct working_tree_entry *entry;
-+
-+			/* Avoid duplicate working_tree entries */
-+			FLEX_ALLOC_STR(entry, path, dst_path);
-+			hashmap_entry_init(entry, strhash(dst_path));
-+			if (hashmap_get(&working_tree_dups, entry, NULL)) {
-+				free(entry);
-+				continue;
-+			}
-+			hashmap_add(&working_tree_dups, entry);
-+
-+			if (!use_wt_file(workdir, dst_path, &roid)) {
-+				ce->ce_mode = rmode;
-+				oidcpy(&ce->oid, &roid);
-+				strcpy(ce->name, dst_path);
-+				ce->ce_namelen = dst_path_len;
-+				if (checkout_entry(ce, &rstate, NULL))
-+					return error("could not write '%s'",
-+						     dst_path);
-+			} else if (!is_null_oid(&roid)) {
-+				/*
-+				 * Changes in the working tree need special
-+				 * treatment since they are not part of the
-+				 * index.
-+				 */
-+				struct cache_entry *ce2 =
-+					make_cache_entry(rmode, roid.hash,
-+							 dst_path, 0, 0);
-+
-+				add_index_entry(&wtindex, ce2,
-+						ADD_CACHE_JUST_APPEND);
-+
-+				add_path(&rdir, rdir_len, dst_path);
-+				if (ensure_leading_directories(rdir.buf))
-+					return error("could not create "
-+						     "directory for '%s'",
-+						     dst_path);
-+				add_path(&wtdir, wtdir_len, dst_path);
-+				if (symlinks) {
-+					if (symlink(wtdir.buf, rdir.buf)) {
-+						ret = error_errno("could not symlink '%s' to '%s'", wtdir.buf, rdir.buf);
-+						goto finish;
-+					}
-+				} else {
-+					struct stat st;
-+					if (stat(wtdir.buf, &st))
-+						st.st_mode = 0644;
-+					if (copy_file(rdir.buf, wtdir.buf,
-+						      st.st_mode)) {
-+						ret = error("could not copy '%s' to '%s'", wtdir.buf, rdir.buf);
-+						goto finish;
-+					}
-+				}
-+			}
-+		}
-+	}
-+
-+	if (finish_command(&child)) {
-+		ret = error("error occurred running diff --raw");
-+		goto finish;
-+	}
-+
-+	if (!i)
-+		return 0;
-+
-+	/*
-+	 * Changes to submodules require special treatment.This loop writes a
-+	 * temporary file to both the left and right directories to show the
-+	 * change in the recorded SHA1 for the submodule.
-+	 */
-+	hashmap_iter_init(&submodules, &iter);
-+	while ((entry = hashmap_iter_next(&iter))) {
-+		if (*entry->left) {
-+			add_path(&ldir, ldir_len, entry->path);
-+			ensure_leading_directories(ldir.buf);
-+			write_file(ldir.buf, "%s", entry->left);
-+		}
-+		if (*entry->right) {
-+			add_path(&rdir, rdir_len, entry->path);
-+			ensure_leading_directories(rdir.buf);
-+			write_file(rdir.buf, "%s", entry->right);
-+		}
-+	}
-+
-+	/*
-+	 * Symbolic links require special treatment.The standard "git diff"
-+	 * shows only the link itself, not the contents of the link target.
-+	 * This loop replicates that behavior.
-+	 */
-+	hashmap_iter_init(&symlinks2, &iter);
-+	while ((entry = hashmap_iter_next(&iter))) {
-+		if (*entry->left) {
-+			add_path(&ldir, ldir_len, entry->path);
-+			ensure_leading_directories(ldir.buf);
-+			write_file(ldir.buf, "%s", entry->left);
-+		}
-+		if (*entry->right) {
-+			add_path(&rdir, rdir_len, entry->path);
-+			ensure_leading_directories(rdir.buf);
-+			write_file(rdir.buf, "%s", entry->right);
-+		}
-+	}
-+
-+	strbuf_release(&buf);
-+
-+	strbuf_setlen(&ldir, ldir_len);
-+	helper_argv[1] = ldir.buf;
-+	strbuf_setlen(&rdir, rdir_len);
-+	helper_argv[2] = rdir.buf;
-+
-+	if (extcmd) {
-+		helper_argv[0] = extcmd;
-+		flags = 0;
-+	} else
-+		setenv("GIT_DIFFTOOL_DIRDIFF", "true", 1);
-+	rc = run_command_v_opt(helper_argv, flags);
-+
-+	/*
-+	 * If the diff includes working copy files and those
-+	 * files were modified during the diff, then the changes
-+	 * should be copied back to the working tree.
-+	 * Do not copy back files when symlinks are used and the
-+	 * external tool did not replace the original link with a file.
-+	 *
-+	 * These hashes are loaded lazily since they aren't needed
-+	 * in the common case of --symlinks and the difftool updating
-+	 * files through the symlink.
-+	 */
-+	hashmap_init(&wt_modified, (hashmap_cmp_fn)path_entry_cmp,
-+		     wtindex.cache_nr);
-+	hashmap_init(&tmp_modified, (hashmap_cmp_fn)path_entry_cmp,
-+		     wtindex.cache_nr);
-+
-+	for (i = 0; i < wtindex.cache_nr; i++) {
-+		struct hashmap_entry dummy;
-+		const char *name = wtindex.cache[i]->name;
-+		struct stat st;
-+
-+		add_path(&rdir, rdir_len, name);
-+		if (lstat(rdir.buf, &st))
-+			continue;
-+
-+		if ((symlinks && S_ISLNK(st.st_mode)) || !S_ISREG(st.st_mode))
-+			continue;
-+
-+		if (!indices_loaded) {
-+			static struct lock_file lock;
-+			strbuf_reset(&buf);
-+			strbuf_addf(&buf, "%s/wtindex", tmpdir);
-+			if (hold_lock_file_for_update(&lock, buf.buf, 0) < 0 ||
-+			    write_locked_index(&wtindex, &lock, COMMIT_LOCK)) {
-+				ret = error("could not write %s", buf.buf);
-+				rollback_lock_file(&lock);
-+				goto finish;
-+			}
-+			changed_files(&wt_modified, buf.buf, workdir);
-+			strbuf_setlen(&rdir, rdir_len);
-+			changed_files(&tmp_modified, buf.buf, rdir.buf);
-+			add_path(&rdir, rdir_len, name);
-+			indices_loaded = 1;
-+		}
-+
-+		hashmap_entry_init(&dummy, strhash(name));
-+		if (hashmap_get(&tmp_modified, &dummy, name)) {
-+			add_path(&wtdir, wtdir_len, name);
-+			if (hashmap_get(&wt_modified, &dummy, name)) {
-+				warning(_("both files modified: '%s' and '%s'."),
-+					wtdir.buf, rdir.buf);
-+				warning(_("working tree file has been left."));
-+				warning("");
-+				err = 1;
-+			} else if (unlink(wtdir.buf) ||
-+				   copy_file(wtdir.buf, rdir.buf, st.st_mode))
-+				warning_errno(_("could not copy '%s' to '%s'"),
-+					      rdir.buf, wtdir.buf);
-+		}
-+	}
-+
-+	if (err) {
-+		warning(_("temporary files exist in '%s'."), tmpdir);
-+		warning(_("you may want to cleanup or recover these."));
-+		exit(1);
-+	} else
-+		exit_cleanup(tmpdir, rc);
-+
-+finish:
-+	free(ce);
-+	strbuf_release(&ldir);
-+	strbuf_release(&rdir);
-+	strbuf_release(&wtdir);
-+	strbuf_release(&buf);
-+
-+	return ret;
-+}
-+
-+static int run_file_diff(int prompt, const char *prefix,
-+			 int argc, const char **argv)
-+{
-+	struct argv_array args = ARGV_ARRAY_INIT;
-+	const char *env[] = {
-+		"GIT_PAGER=", "GIT_EXTERNAL_DIFF=git-difftool--helper", NULL,
-+		NULL
-+	};
-+	int ret = 0, i;
-+
-+	if (prompt > 0)
-+		env[2] = "GIT_DIFFTOOL_PROMPT=true";
-+	else if (!prompt)
-+		env[2] = "GIT_DIFFTOOL_NO_PROMPT=true";
-+
-+
-+	argv_array_push(&args, "diff");
-+	for (i = 0; i < argc; i++)
-+		argv_array_push(&args, argv[i]);
-+	ret = run_command_v_opt_cd_env(args.argv, RUN_GIT_CMD, prefix, env);
-+	exit(ret);
-+}
- 
- /*
-  * NEEDSWORK: this function can go once the legacy-difftool Perl script is
-@@ -41,6 +642,35 @@ static int use_builtin_difftool(void) {
- 
- int cmd_difftool(int argc, const char **argv, const char *prefix)
- {
-+	int use_gui_tool = 0, dir_diff = 0, prompt = -1, symlinks = 0,
-+	    tool_help = 0;
-+	static char *difftool_cmd = NULL, *extcmd = NULL;
-+	struct option builtin_difftool_options[] = {
-+		OPT_BOOL('g', "gui", &use_gui_tool,
-+			 N_("use `diff.guitool` instead of `diff.tool`")),
-+		OPT_BOOL('d', "dir-diff", &dir_diff,
-+			 N_("perform a full-directory diff")),
-+		{ OPTION_SET_INT, 'y', "no-prompt", &prompt, NULL,
-+			N_("do not prompt before launching a diff tool"),
-+			PARSE_OPT_NOARG | PARSE_OPT_NONEG, NULL, 0},
-+		{ OPTION_SET_INT, 0, "prompt", &prompt, NULL, NULL,
-+			PARSE_OPT_NOARG | PARSE_OPT_NONEG | PARSE_OPT_HIDDEN,
-+			NULL, 1 },
-+		OPT_BOOL(0, "symlinks", &symlinks,
-+			 N_("use symlinks in dir-diff mode")),
-+		OPT_STRING('t', "tool", &difftool_cmd, N_("<tool>"),
-+			   N_("use the specified diff tool")),
-+		OPT_BOOL(0, "tool-help", &tool_help,
-+			 N_("print a list of diff tools that may be used with "
-+			    "`--tool`")),
-+		OPT_BOOL(0, "trust-exit-code", &trust_exit_code,
-+			 N_("make 'git-difftool' exit when an invoked diff "
-+			    "tool returns a non - zero exit code")),
-+		OPT_STRING('x', "extcmd", &extcmd, N_("<command>"),
-+			   N_("specify a custom command for viewing diffs")),
-+		OPT_END()
-+	};
-+
- 	/*
- 	 * NEEDSWORK: Once the builtin difftool has been tested enough
- 	 * and git-legacy-difftool.perl is retired to contrib/, this preamble
-@@ -58,6 +688,46 @@ int cmd_difftool(int argc, const char **argv, const char *prefix)
- 	prefix = setup_git_directory();
- 	trace_repo_setup(prefix);
- 	setup_work_tree();
-+	/* NEEDSWORK: once we no longer spawn anything, remove this */
-+	setenv(GIT_DIR_ENVIRONMENT, absolute_path(get_git_dir()), 1);
-+	setenv(GIT_WORK_TREE_ENVIRONMENT, absolute_path(get_git_work_tree()), 1);
-+
-+	git_config(difftool_config, NULL);
-+	symlinks = has_symlinks;
-+
-+	argc = parse_options(argc, argv, prefix, builtin_difftool_options,
-+			     builtin_difftool_usage, PARSE_OPT_KEEP_UNKNOWN |
-+			     PARSE_OPT_KEEP_DASHDASH);
- 
--	die("TODO");
-+	if (tool_help)
-+		return print_tool_help();
-+
-+	if (use_gui_tool && diff_gui_tool && *diff_gui_tool)
-+		setenv("GIT_DIFF_TOOL", diff_gui_tool, 1);
-+	else if (difftool_cmd) {
-+		if (*difftool_cmd)
-+			setenv("GIT_DIFF_TOOL", difftool_cmd, 1);
-+		else
-+			die(_("no <tool> given for --tool=<tool>"));
-+	}
-+
-+	if (extcmd) {
-+		if (*extcmd)
-+			setenv("GIT_DIFFTOOL_EXTCMD", extcmd, 1);
-+		else
-+			die(_("no <cmd> given for --extcmd=<cmd>"));
-+	}
-+
-+	setenv("GIT_DIFFTOOL_TRUST_EXIT_CODE",
-+	       trust_exit_code ? "true" : "false", 1);
-+
-+	/*
-+	 * In directory diff mode, 'git-difftool--helper' is called once
-+	 * to compare the a / b directories. In file diff mode, 'git diff'
-+	 * will invoke a separate instance of 'git-difftool--helper' for
-+	 * each file that changed.
-+	 */
-+	if (dir_diff)
-+		return run_dir_diff(extcmd, symlinks, prefix, argc, argv);
-+	return run_file_diff(prompt, prefix, argc, argv);
- }
+Johannes Schindelin (3):
+  difftool: add a skeleton for the upcoming builtin
+  difftool: implement the functionality in the builtin
+  Retire the scripted difftool
+
+ Makefile                                           |   2 +-
+ builtin.h                                          |   1 +
+ builtin/difftool.c                                 | 692 +++++++++++++++++++++
+ .../examples/git-difftool.perl                     |   0
+ git.c                                              |   1 +
+ t/t7800-difftool.sh                                |  92 +--
+ 6 files changed, 741 insertions(+), 47 deletions(-)
+ create mode 100644 builtin/difftool.c
+ rename git-difftool.perl => contrib/examples/git-difftool.perl (100%)
+
+
+base-commit: d7dffce1cebde29a0c4b309a79e4345450bf352a
+Published-As: https://github.com/dscho/git/releases/tag/builtin-difftool-v5
+Fetch-It-Via: git fetch https://github.com/dscho/git builtin-difftool-v5
+
+Interdiff vs v4:
+
+ diff --git a/.gitignore b/.gitignore
+ index 5555ae025b..6722f78f9a 100644
+ --- a/.gitignore
+ +++ b/.gitignore
+ @@ -76,7 +76,6 @@
+  /git-init-db
+  /git-interpret-trailers
+  /git-instaweb
+ -/git-legacy-difftool
+  /git-log
+  /git-ls-files
+  /git-ls-remote
+ diff --git a/Makefile b/Makefile
+ index 8cf5bef034..e9aa6ae57c 100644
+ --- a/Makefile
+ +++ b/Makefile
+ @@ -522,7 +522,6 @@ SCRIPT_LIB += git-sh-setup
+  SCRIPT_LIB += git-sh-i18n
+  
+  SCRIPT_PERL += git-add--interactive.perl
+ -SCRIPT_PERL += git-legacy-difftool.perl
+  SCRIPT_PERL += git-archimport.perl
+  SCRIPT_PERL += git-cvsexportcommit.perl
+  SCRIPT_PERL += git-cvsimport.perl
+ diff --git a/builtin/difftool.c b/builtin/difftool.c
+ index 2115e548a5..42ad9e804a 100644
+ --- a/builtin/difftool.c
+ +++ b/builtin/difftool.c
+ @@ -616,30 +616,6 @@ static int run_file_diff(int prompt, const char *prefix,
+  	exit(ret);
+  }
+  
+ -/*
+ - * NEEDSWORK: this function can go once the legacy-difftool Perl script is
+ - * retired.
+ - *
+ - * We intentionally avoid reading the config directly here, to avoid messing up
+ - * the GIT_* environment variables when we need to fall back to exec()ing the
+ - * Perl script.
+ - */
+ -static int use_builtin_difftool(void) {
+ -	struct child_process cp = CHILD_PROCESS_INIT;
+ -	struct strbuf out = STRBUF_INIT;
+ -	int ret;
+ -
+ -	argv_array_pushl(&cp.args,
+ -			 "config", "--bool", "difftool.usebuiltin", NULL);
+ -	cp.git_cmd = 1;
+ -	if (capture_command(&cp, &out, 6))
+ -		return 0;
+ -	strbuf_trim(&out);
+ -	ret = !strcmp("true", out.buf);
+ -	strbuf_release(&out);
+ -	return ret;
+ -}
+ -
+  int cmd_difftool(int argc, const char **argv, const char *prefix)
+  {
+  	int use_gui_tool = 0, dir_diff = 0, prompt = -1, symlinks = 0,
+ @@ -671,23 +647,6 @@ int cmd_difftool(int argc, const char **argv, const char *prefix)
+  		OPT_END()
+  	};
+  
+ -	/*
+ -	 * NEEDSWORK: Once the builtin difftool has been tested enough
+ -	 * and git-legacy-difftool.perl is retired to contrib/, this preamble
+ -	 * can be removed.
+ -	 */
+ -	if (!use_builtin_difftool()) {
+ -		const char *path = mkpath("%s/git-legacy-difftool",
+ -					  git_exec_path());
+ -
+ -		if (sane_execvp(path, (char **)argv) < 0)
+ -			die_errno("could not exec %s", path);
+ -
+ -		return 0;
+ -	}
+ -	prefix = setup_git_directory();
+ -	trace_repo_setup(prefix);
+ -	setup_work_tree();
+  	/* NEEDSWORK: once we no longer spawn anything, remove this */
+  	setenv(GIT_DIR_ENVIRONMENT, absolute_path(get_git_dir()), 1);
+  	setenv(GIT_WORK_TREE_ENVIRONMENT, absolute_path(get_git_work_tree()), 1);
+ diff --git a/git-legacy-difftool.perl b/contrib/examples/git-difftool.perl
+ similarity index 100%
+ rename from git-legacy-difftool.perl
+ rename to contrib/examples/git-difftool.perl
+ diff --git a/exec_cmd.c b/exec_cmd.c
+ index 587bd7eb48..19ac2146d0 100644
+ --- a/exec_cmd.c
+ +++ b/exec_cmd.c
+ @@ -65,7 +65,6 @@ void git_set_argv_exec_path(const char *exec_path)
+  const char *git_exec_path(void)
+  {
+  	const char *env;
+ -	static char *system_exec_path;
+  
+  	if (argv_exec_path)
+  		return argv_exec_path;
+ @@ -75,9 +74,7 @@ const char *git_exec_path(void)
+  		return env;
+  	}
+  
+ -	if (!system_exec_path)
+ -		system_exec_path = system_path(GIT_EXEC_PATH);
+ -	return system_exec_path;
+ +	return system_path(GIT_EXEC_PATH);
+  }
+  
+  static void add_path(struct strbuf *out, const char *path)
+ diff --git a/git.c b/git.c
+ index c58181e5ef..bd4d668a21 100644
+ --- a/git.c
+ +++ b/git.c
+ @@ -424,12 +424,7 @@ static struct cmd_struct commands[] = {
+  	{ "diff-files", cmd_diff_files, RUN_SETUP | NEED_WORK_TREE },
+  	{ "diff-index", cmd_diff_index, RUN_SETUP },
+  	{ "diff-tree", cmd_diff_tree, RUN_SETUP },
+ -	/*
+ -	 * NEEDSWORK: Once the redirection to git-legacy-difftool.perl in
+ -	 * builtin/difftool.c has been removed, this entry should be changed to
+ -	 * RUN_SETUP | NEED_WORK_TREE
+ -	 */
+ -	{ "difftool", cmd_difftool },
+ +	{ "difftool", cmd_difftool, RUN_SETUP | NEED_WORK_TREE },
+  	{ "fast-export", cmd_fast_export, RUN_SETUP },
+  	{ "fetch", cmd_fetch, RUN_SETUP },
+  	{ "fetch-pack", cmd_fetch_pack, RUN_SETUP },
+ diff --git a/t/t7800-difftool.sh b/t/t7800-difftool.sh
+ index 273ab55723..aa0ef02597 100755
+ --- a/t/t7800-difftool.sh
+ +++ b/t/t7800-difftool.sh
+ @@ -23,24 +23,8 @@ prompt_given ()
+  	test "$prompt" = "Launch 'test-tool' [Y/n]? branch"
+  }
+  
+ -for use_builtin_difftool in false true
+ -do
+ -
+ -test_expect_success 'verify we are running the correct difftool' '
+ -	if test true = '$use_builtin_difftool'
+ -	then
+ -		test_must_fail ok=129 git difftool -h >help &&
+ -		grep "g, --gui" help
+ -	else
+ -		git difftool -h >help &&
+ -		grep "g|--gui" help
+ -	fi
+ -'
+ -
+ -# NEEDSWORK: lose all the PERL prereqs once legacy-difftool is retired.
+ -
+  # Create a file on master and change it on branch
+ -test_expect_success PERL 'setup' '
+ +test_expect_success 'setup' '
+  	echo master >file &&
+  	git add file &&
+  	git commit -m "added file" &&
+ @@ -52,7 +36,7 @@ test_expect_success PERL 'setup' '
+  '
+  
+  # Configure a custom difftool.<tool>.cmd and use it
+ -test_expect_success PERL 'custom commands' '
+ +test_expect_success 'custom commands' '
+  	difftool_test_setup &&
+  	test_config difftool.test-tool.cmd "cat \"\$REMOTE\"" &&
+  	echo master >expect &&
+ @@ -65,21 +49,21 @@ test_expect_success PERL 'custom commands' '
+  	test_cmp expect actual
+  '
+  
+ -test_expect_success PERL 'custom tool commands override built-ins' '
+ +test_expect_success 'custom tool commands override built-ins' '
+  	test_config difftool.vimdiff.cmd "cat \"\$REMOTE\"" &&
+  	echo master >expect &&
+  	git difftool --tool vimdiff --no-prompt branch >actual &&
+  	test_cmp expect actual
+  '
+  
+ -test_expect_success PERL 'difftool ignores bad --tool values' '
+ +test_expect_success 'difftool ignores bad --tool values' '
+  	: >expect &&
+  	test_must_fail \
+  		git difftool --no-prompt --tool=bad-tool branch >actual &&
+  	test_cmp expect actual
+  '
+  
+ -test_expect_success PERL 'difftool forwards arguments to diff' '
+ +test_expect_success 'difftool forwards arguments to diff' '
+  	difftool_test_setup &&
+  	>for-diff &&
+  	git add for-diff &&
+ @@ -92,40 +76,40 @@ test_expect_success PERL 'difftool forwards arguments to diff' '
+  	rm for-diff
+  '
+  
+ -test_expect_success PERL 'difftool ignores exit code' '
+ +test_expect_success 'difftool ignores exit code' '
+  	test_config difftool.error.cmd false &&
+  	git difftool -y -t error branch
+  '
+  
+ -test_expect_success PERL 'difftool forwards exit code with --trust-exit-code' '
+ +test_expect_success 'difftool forwards exit code with --trust-exit-code' '
+  	test_config difftool.error.cmd false &&
+  	test_must_fail git difftool -y --trust-exit-code -t error branch
+  '
+  
+ -test_expect_success PERL 'difftool forwards exit code with --trust-exit-code for built-ins' '
+ +test_expect_success 'difftool forwards exit code with --trust-exit-code for built-ins' '
+  	test_config difftool.vimdiff.path false &&
+  	test_must_fail git difftool -y --trust-exit-code -t vimdiff branch
+  '
+  
+ -test_expect_success PERL 'difftool honors difftool.trustExitCode = true' '
+ +test_expect_success 'difftool honors difftool.trustExitCode = true' '
+  	test_config difftool.error.cmd false &&
+  	test_config difftool.trustExitCode true &&
+  	test_must_fail git difftool -y -t error branch
+  '
+  
+ -test_expect_success PERL 'difftool honors difftool.trustExitCode = false' '
+ +test_expect_success 'difftool honors difftool.trustExitCode = false' '
+  	test_config difftool.error.cmd false &&
+  	test_config difftool.trustExitCode false &&
+  	git difftool -y -t error branch
+  '
+  
+ -test_expect_success PERL 'difftool ignores exit code with --no-trust-exit-code' '
+ +test_expect_success 'difftool ignores exit code with --no-trust-exit-code' '
+  	test_config difftool.error.cmd false &&
+  	test_config difftool.trustExitCode true &&
+  	git difftool -y --no-trust-exit-code -t error branch
+  '
+  
+ -test_expect_success PERL 'difftool stops on error with --trust-exit-code' '
+ +test_expect_success 'difftool stops on error with --trust-exit-code' '
+  	test_when_finished "rm -f for-diff .git/fail-right-file" &&
+  	test_when_finished "git reset -- for-diff" &&
+  	write_script .git/fail-right-file <<-\EOF &&
+ @@ -140,13 +124,13 @@ test_expect_success PERL 'difftool stops on error with --trust-exit-code' '
+  	test_cmp expect actual
+  '
+  
+ -test_expect_success PERL 'difftool honors exit status if command not found' '
+ +test_expect_success 'difftool honors exit status if command not found' '
+  	test_config difftool.nonexistent.cmd i-dont-exist &&
+  	test_config difftool.trustExitCode false &&
+  	test_must_fail git difftool -y -t nonexistent branch
+  '
+  
+ -test_expect_success PERL 'difftool honors --gui' '
+ +test_expect_success 'difftool honors --gui' '
+  	difftool_test_setup &&
+  	test_config merge.tool bogus-tool &&
+  	test_config diff.tool bogus-tool &&
+ @@ -157,7 +141,7 @@ test_expect_success PERL 'difftool honors --gui' '
+  	test_cmp expect actual
+  '
+  
+ -test_expect_success PERL 'difftool --gui last setting wins' '
+ +test_expect_success 'difftool --gui last setting wins' '
+  	difftool_test_setup &&
+  	: >expect &&
+  	git difftool --no-prompt --gui --no-gui >actual &&
+ @@ -171,7 +155,7 @@ test_expect_success PERL 'difftool --gui last setting wins' '
+  	test_cmp expect actual
+  '
+  
+ -test_expect_success PERL 'difftool --gui works without configured diff.guitool' '
+ +test_expect_success 'difftool --gui works without configured diff.guitool' '
+  	difftool_test_setup &&
+  	echo branch >expect &&
+  	git difftool --no-prompt --gui branch >actual &&
+ @@ -179,7 +163,7 @@ test_expect_success PERL 'difftool --gui works without configured diff.guitool'
+  '
+  
+  # Specify the diff tool using $GIT_DIFF_TOOL
+ -test_expect_success PERL 'GIT_DIFF_TOOL variable' '
+ +test_expect_success 'GIT_DIFF_TOOL variable' '
+  	difftool_test_setup &&
+  	git config --unset diff.tool &&
+  	echo branch >expect &&
+ @@ -189,7 +173,7 @@ test_expect_success PERL 'GIT_DIFF_TOOL variable' '
+  
+  # Test the $GIT_*_TOOL variables and ensure
+  # that $GIT_DIFF_TOOL always wins unless --tool is specified
+ -test_expect_success PERL 'GIT_DIFF_TOOL overrides' '
+ +test_expect_success 'GIT_DIFF_TOOL overrides' '
+  	difftool_test_setup &&
+  	test_config diff.tool bogus-tool &&
+  	test_config merge.tool bogus-tool &&
+ @@ -207,7 +191,7 @@ test_expect_success PERL 'GIT_DIFF_TOOL overrides' '
+  
+  # Test that we don't have to pass --no-prompt to difftool
+  # when $GIT_DIFFTOOL_NO_PROMPT is true
+ -test_expect_success PERL 'GIT_DIFFTOOL_NO_PROMPT variable' '
+ +test_expect_success 'GIT_DIFFTOOL_NO_PROMPT variable' '
+  	difftool_test_setup &&
+  	echo branch >expect &&
+  	GIT_DIFFTOOL_NO_PROMPT=true git difftool branch >actual &&
+ @@ -216,7 +200,7 @@ test_expect_success PERL 'GIT_DIFFTOOL_NO_PROMPT variable' '
+  
+  # git-difftool supports the difftool.prompt variable.
+  # Test that GIT_DIFFTOOL_PROMPT can override difftool.prompt = false
+ -test_expect_success PERL 'GIT_DIFFTOOL_PROMPT variable' '
+ +test_expect_success 'GIT_DIFFTOOL_PROMPT variable' '
+  	difftool_test_setup &&
+  	test_config difftool.prompt false &&
+  	echo >input &&
+ @@ -226,7 +210,7 @@ test_expect_success PERL 'GIT_DIFFTOOL_PROMPT variable' '
+  '
+  
+  # Test that we don't have to pass --no-prompt when difftool.prompt is false
+ -test_expect_success PERL 'difftool.prompt config variable is false' '
+ +test_expect_success 'difftool.prompt config variable is false' '
+  	difftool_test_setup &&
+  	test_config difftool.prompt false &&
+  	echo branch >expect &&
+ @@ -235,7 +219,7 @@ test_expect_success PERL 'difftool.prompt config variable is false' '
+  '
+  
+  # Test that we don't have to pass --no-prompt when mergetool.prompt is false
+ -test_expect_success PERL 'difftool merge.prompt = false' '
+ +test_expect_success 'difftool merge.prompt = false' '
+  	difftool_test_setup &&
+  	test_might_fail git config --unset difftool.prompt &&
+  	test_config mergetool.prompt false &&
+ @@ -245,7 +229,7 @@ test_expect_success PERL 'difftool merge.prompt = false' '
+  '
+  
+  # Test that the -y flag can override difftool.prompt = true
+ -test_expect_success PERL 'difftool.prompt can overridden with -y' '
+ +test_expect_success 'difftool.prompt can overridden with -y' '
+  	difftool_test_setup &&
+  	test_config difftool.prompt true &&
+  	echo branch >expect &&
+ @@ -254,7 +238,7 @@ test_expect_success PERL 'difftool.prompt can overridden with -y' '
+  '
+  
+  # Test that the --prompt flag can override difftool.prompt = false
+ -test_expect_success PERL 'difftool.prompt can overridden with --prompt' '
+ +test_expect_success 'difftool.prompt can overridden with --prompt' '
+  	difftool_test_setup &&
+  	test_config difftool.prompt false &&
+  	echo >input &&
+ @@ -264,7 +248,7 @@ test_expect_success PERL 'difftool.prompt can overridden with --prompt' '
+  '
+  
+  # Test that the last flag passed on the command-line wins
+ -test_expect_success PERL 'difftool last flag wins' '
+ +test_expect_success 'difftool last flag wins' '
+  	difftool_test_setup &&
+  	echo branch >expect &&
+  	git difftool --prompt --no-prompt branch >actual &&
+ @@ -277,7 +261,7 @@ test_expect_success PERL 'difftool last flag wins' '
+  
+  # git-difftool falls back to git-mergetool config variables
+  # so test that behavior here
+ -test_expect_success PERL 'difftool + mergetool config variables' '
+ +test_expect_success 'difftool + mergetool config variables' '
+  	test_config merge.tool test-tool &&
+  	test_config mergetool.test-tool.cmd "cat \$LOCAL" &&
+  	echo branch >expect &&
+ @@ -291,49 +275,49 @@ test_expect_success PERL 'difftool + mergetool config variables' '
+  	test_cmp expect actual
+  '
+  
+ -test_expect_success PERL 'difftool.<tool>.path' '
+ +test_expect_success 'difftool.<tool>.path' '
+  	test_config difftool.tkdiff.path echo &&
+  	git difftool --tool=tkdiff --no-prompt branch >output &&
+  	lines=$(grep file output | wc -l) &&
+  	test "$lines" -eq 1
+  '
+  
+ -test_expect_success PERL 'difftool --extcmd=cat' '
+ +test_expect_success 'difftool --extcmd=cat' '
+  	echo branch >expect &&
+  	echo master >>expect &&
+  	git difftool --no-prompt --extcmd=cat branch >actual &&
+  	test_cmp expect actual
+  '
+  
+ -test_expect_success PERL 'difftool --extcmd cat' '
+ +test_expect_success 'difftool --extcmd cat' '
+  	echo branch >expect &&
+  	echo master >>expect &&
+  	git difftool --no-prompt --extcmd=cat branch >actual &&
+  	test_cmp expect actual
+  '
+  
+ -test_expect_success PERL 'difftool -x cat' '
+ +test_expect_success 'difftool -x cat' '
+  	echo branch >expect &&
+  	echo master >>expect &&
+  	git difftool --no-prompt -x cat branch >actual &&
+  	test_cmp expect actual
+  '
+  
+ -test_expect_success PERL 'difftool --extcmd echo arg1' '
+ +test_expect_success 'difftool --extcmd echo arg1' '
+  	echo file >expect &&
+  	git difftool --no-prompt \
+  		--extcmd sh\ -c\ \"echo\ \$1\" branch >actual &&
+  	test_cmp expect actual
+  '
+  
+ -test_expect_success PERL 'difftool --extcmd cat arg1' '
+ +test_expect_success 'difftool --extcmd cat arg1' '
+  	echo master >expect &&
+  	git difftool --no-prompt \
+  		--extcmd sh\ -c\ \"cat\ \$1\" branch >actual &&
+  	test_cmp expect actual
+  '
+  
+ -test_expect_success PERL 'difftool --extcmd cat arg2' '
+ +test_expect_success 'difftool --extcmd cat arg2' '
+  	echo branch >expect &&
+  	git difftool --no-prompt \
+  		--extcmd sh\ -c\ \"cat\ \$2\" branch >actual &&
+ @@ -341,7 +325,7 @@ test_expect_success PERL 'difftool --extcmd cat arg2' '
+  '
+  
+  # Create a second file on master and a different version on branch
+ -test_expect_success PERL 'setup with 2 files different' '
+ +test_expect_success 'setup with 2 files different' '
+  	echo m2 >file2 &&
+  	git add file2 &&
+  	git commit -m "added file2" &&
+ @@ -353,7 +337,7 @@ test_expect_success PERL 'setup with 2 files different' '
+  	git checkout master
+  '
+  
+ -test_expect_success PERL 'say no to the first file' '
+ +test_expect_success 'say no to the first file' '
+  	(echo n && echo) >input &&
+  	git difftool -x cat branch <input >output &&
+  	grep m2 output &&
+ @@ -362,7 +346,7 @@ test_expect_success PERL 'say no to the first file' '
+  	! grep branch output
+  '
+  
+ -test_expect_success PERL 'say no to the second file' '
+ +test_expect_success 'say no to the second file' '
+  	(echo && echo n) >input &&
+  	git difftool -x cat branch <input >output &&
+  	grep master output &&
+ @@ -371,7 +355,7 @@ test_expect_success PERL 'say no to the second file' '
+  	! grep br2 output
+  '
+  
+ -test_expect_success PERL 'ending prompt input with EOF' '
+ +test_expect_success 'ending prompt input with EOF' '
+  	git difftool -x cat branch </dev/null >output &&
+  	! grep master output &&
+  	! grep branch output &&
+ @@ -379,12 +363,12 @@ test_expect_success PERL 'ending prompt input with EOF' '
+  	! grep br2 output
+  '
+  
+ -test_expect_success PERL 'difftool --tool-help' '
+ +test_expect_success 'difftool --tool-help' '
+  	git difftool --tool-help >output &&
+  	grep tool output
+  '
+  
+ -test_expect_success PERL 'setup change in subdirectory' '
+ +test_expect_success 'setup change in subdirectory' '
+  	git checkout master &&
+  	mkdir sub &&
+  	echo master >sub/sub &&
+ @@ -398,11 +382,11 @@ test_expect_success PERL 'setup change in subdirectory' '
+  '
+  
+  run_dir_diff_test () {
+ -	test_expect_success PERL "$1 --no-symlinks" "
+ +	test_expect_success "$1 --no-symlinks" "
+  		symlinks=--no-symlinks &&
+  		$2
+  	"
+ -	test_expect_success PERL,SYMLINKS "$1 --symlinks" "
+ +	test_expect_success SYMLINKS "$1 --symlinks" "
+  		symlinks=--symlinks &&
+  		$2
+  	"
+ @@ -524,7 +508,7 @@ do
+  done >actual
+  EOF
+  
+ -test_expect_success PERL,SYMLINKS 'difftool --dir-diff --symlink without unstaged changes' '
+ +test_expect_success SYMLINKS 'difftool --dir-diff --symlink without unstaged changes' '
+  	cat >expect <<-EOF &&
+  	file
+  	$PWD/file
+ @@ -561,7 +545,7 @@ write_script modify-file <<\EOF
+  echo "new content" >file
+  EOF
+  
+ -test_expect_success PERL 'difftool --no-symlinks does not overwrite working tree file ' '
+ +test_expect_success 'difftool --no-symlinks does not overwrite working tree file ' '
+  	echo "orig content" >file &&
+  	git difftool --dir-diff --no-symlinks --extcmd "$PWD/modify-file" branch &&
+  	echo "new content" >expect &&
+ @@ -574,7 +558,7 @@ echo "tmp content" >"$2/file" &&
+  echo "$2" >tmpdir
+  EOF
+  
+ -test_expect_success PERL 'difftool --no-symlinks detects conflict ' '
+ +test_expect_success 'difftool --no-symlinks detects conflict ' '
+  	(
+  		TMPDIR=$TRASH_DIRECTORY &&
+  		export TMPDIR &&
+ @@ -587,7 +571,7 @@ test_expect_success PERL 'difftool --no-symlinks detects conflict ' '
+  	)
+  '
+  
+ -test_expect_success PERL 'difftool properly honors gitlink and core.worktree' '
+ +test_expect_success 'difftool properly honors gitlink and core.worktree' '
+  	git submodule add ./. submod/ule &&
+  	test_config -C submod/ule diff.tool checktrees &&
+  	test_config -C submod/ule difftool.checktrees.cmd '\''
+ @@ -601,7 +585,7 @@ test_expect_success PERL 'difftool properly honors gitlink and core.worktree' '
+  	)
+  '
+  
+ -test_expect_success PERL,SYMLINKS 'difftool --dir-diff symlinked directories' '
+ +test_expect_success SYMLINKS 'difftool --dir-diff symlinked directories' '
+  	git init dirlinks &&
+  	(
+  		cd dirlinks &&
+ @@ -620,17 +604,4 @@ test_expect_success PERL,SYMLINKS 'difftool --dir-diff symlinked directories' '
+  	)
+  '
+  
+ -test true != $use_builtin_difftool || break
+ -
+ -test_expect_success 'tear down for re-run' '
+ -	rm -rf * .[a-z]* &&
+ -	git init
+ -'
+ -
+ -# run as builtin difftool now
+ -GIT_CONFIG_PARAMETERS="'difftool.usebuiltin=true'"
+ -export GIT_CONFIG_PARAMETERS
+ -
+ -done
+ -
+  test_done
+
 -- 
 2.11.0.windows.3
-
 
