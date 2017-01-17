@@ -2,87 +2,76 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.4 required=3.0 tests=BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 360E020A17
-	for <e@80x24.org>; Tue, 17 Jan 2017 05:08:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 76AD51F89C
+	for <e@80x24.org>; Tue, 17 Jan 2017 08:00:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750880AbdAQFIG (ORCPT <rfc822;e@80x24.org>);
-        Tue, 17 Jan 2017 00:08:06 -0500
-Received: from mout.gmx.net ([212.227.15.15]:63184 "EHLO mout.gmx.net"
+        id S1750866AbdAQH7s (ORCPT <rfc822;e@80x24.org>);
+        Tue, 17 Jan 2017 02:59:48 -0500
+Received: from cloud.peff.net ([104.130.231.41]:40040 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750803AbdAQFIE (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 17 Jan 2017 00:08:04 -0500
-Received: from localhost ([81.170.136.231]) by mail.gmx.com (mrgmx001
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0LslCb-1cZaIi3UZF-012Kr6 for
- <git@vger.kernel.org>; Tue, 17 Jan 2017 06:07:53 +0100
-Date:   Tue, 17 Jan 2017 07:04:28 +0100
-From:   Reimar =?iso-8859-1?Q?D=F6ffinger?= <Reimar.Doeffinger@gmx.de>
-To:     git@vger.kernel.org
-Subject: "git fetch -p" incorrectly deletes branches
-Message-ID: <20170117060428.nanqz5lr4hi6dum6@reimardoeffinger.de>
+        id S1750846AbdAQH7q (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 17 Jan 2017 02:59:46 -0500
+Received: (qmail 4879 invoked by uid 109); 17 Jan 2017 07:52:56 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 17 Jan 2017 07:52:56 +0000
+Received: (qmail 15136 invoked by uid 111); 17 Jan 2017 07:53:50 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 17 Jan 2017 02:53:50 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 17 Jan 2017 02:52:54 -0500
+Date:   Tue, 17 Jan 2017 02:52:54 -0500
+From:   Jeff King <peff@peff.net>
+To:     Jacob Keller <jacob.keller@gmail.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Johannes Sixt <j6t@kdbg.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Git mailing list <git@vger.kernel.org>
+Subject: Re: What's cooking in git.git (Jan 2017, #02; Sun, 15)
+Message-ID: <20170117075254.h4nnnj2alricotcy@sigill.intra.peff.net>
+References: <xmqqh94zbwlu.fsf@gitster.mtv.corp.google.com>
+ <257b4175-9879-7814-5d8d-02050792574d@kdbg.org>
+ <alpine.DEB.2.20.1701161251100.3469@virtualbox>
+ <20170116160456.ltbb7ofe47xos7xo@sigill.intra.peff.net>
+ <alpine.DEB.2.20.1701161746200.3469@virtualbox>
+ <20170116220014.bwi5xi2br56lyqsw@sigill.intra.peff.net>
+ <CA+P7+xqi8cXK8ZEdvy3U9jJ9wZwkGLYNR0j_xvvCJwq12B4G8g@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-User-Agent: NeoMutt/20161126 (1.7.1)
-X-Provags-ID: V03:K0:K5HN+lmQLwtNVdPTXembTGNOubzvppzxziDQGUjg4BZCCsM6rVm
- lzNLXdik7jGUUhSKUyJMBilaYPjbf2dspqNV4siiFOeTComrjM/B/ODevjkqgrD/SJftQeC
- +jYliYs5stBbjNKsuuZK7jYeM6j1VHCvvfgeDA0k7enFnCaMsuh9q6tzJr2EN3b+6JNdgav
- lLe+F3MHT4TJg45UDdAmg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:YG6ketCo18s=:l36fyvhoMpT0demrjaQuD1
- Y3YvLrdjO/R9oxL4K/hzyi6qDR3Oev1eiloIxRViRBrywrVmKjqADIHwFJx0b3tT+ZqQY22AI
- dk8jRlsEsaG4P9sada5TzbjhKYKrS6548JsBAXHGkk+s5k37zgyt/bKJHtSkwybQmqvPz9ggK
- 9IgvDnyiDpL9nJqOJgWr29GntrAwoGLuR9MEW8heMoBrzu9dkRSUGOrCUvGTLb8+RNy6NB8p2
- yGaPn/uOTOPYQwngqALz6E/+ztX6XWUgGYl2FwmQDPDXDNbe971GoLVMm3UUDK2zmyzpOlIIJ
- XOqmlQm7O8+ReIEL413YNiu5cowNZVuk4Eidowz1vLGW7w0n27+D2HnyUeMQNRbSAOG6TmebO
- qXAUgs3sWPMiyq0yEVCSStYqPhW52OBNMMQxzmoApcU6ubdrwbkuYAxIsTyuq9LdVbVNafeVP
- JXcZDMlS5lAf6QRMp303JVDBAelZXE0LIdOHi/YuZS5VPnAPvGwTFy1CBZMaCHIBME3HTiOiI
- m22fhCP+1SBQPMLYdDXN0i3inJrPlJZnbshpXqVsmG5KjhOUyzHZF7+I37miz+4NveTHbFhEH
- k92v70lweD5A9305IhmmsaItXSxQZP+ZjUCHGeN3vxut/DaLiSlpjRStNcOBAn/yoKX540OSS
- SE6ljVVzKzZanUFMc+RZuI7u9zzh+dKyN9uMcJ/Y6vBgMd4Zg4BIYFgPirTmUQnPY5yskmw0t
- qNF9jTRiRxxg1cCX6DA9YlDw6k/BRrYbZA4mNmP2/n++/rQ+WnDhVqzOTQg=
+In-Reply-To: <CA+P7+xqi8cXK8ZEdvy3U9jJ9wZwkGLYNR0j_xvvCJwq12B4G8g@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello!
-The command:
-git fetch -p -v origin master:refs/heads/test
+On Mon, Jan 16, 2017 at 05:33:44PM -0800, Jacob Keller wrote:
 
-Deletes refs/heads/test every second time when run repeatedly:
+> > I am certainly sympathetic to the idea that the "?" is ugly and
+> > potentially confusing. But I think it's at least a step forward for this
+> > particular example.
+> 
+> Would it be possible to convert the CR to a literal \r printing? Since
+> it's pretty common to show these characters as slash-escaped? (Or is
+> that too much of a Unix world thing?) I know I'd find \r less
+> confusing than '?'
 
-$ git fetch -p -v origin master:refs/heads/test
-From https://github.com/git/git
- * [new branch]          master     -> test
- = [up to date]          master     -> origin/master
-$ git fetch -p -v origin master:refs/heads/test
-From https://github.com/git/git
- - [deleted]             (none)     -> test
- = [up to date]          master     -> test
- = [up to date]          master     -> origin/master
+I discussed this in the original commit message.
 
-(the command is the result of cutting down the test case,
-so yes it is rather silly, but the issue appears in much
-less obviously silly cases and causes a lot of confusion)
-This is specific to the case of specifying the origin branch
-without "full path" AND the right side with.
-Wild-guess on cause: "master" is auto-expanded into both
-"refs/tags/master" and "refs/heads/master" and instead of
-fetching either/merging the result, both are fetched.
-Combined with a time-of-check/time-of-use style race condition
-on the code that checks if a ref is "up to date" on top of it,
-it would result in this behaviour.
-Also note that this behaviour appears also when fetch.prune=yes
-is set in the config (instead of -p on the command-line),
-which makes it much less obvious and there is no option to turn
-of prune just for that command to work-around this.
-I hope someone has the time to make sure nobody else has to
-debug this ever again ;-)
+Yes, it's possible, but it's a little tricky. We want to fprintf() the
+whole thing as a unit (to increase the chances of it being done in an
+atomic write()). We don't want to use a dynamic buffer, since we might
+be called from a signal handler, or when malloc has failed, etc.
 
-Regards,
-Reimar Döffinger
+So I tried to stick to something that could reliably done in place. We
+could probably get by with 2 static buffers and copy from one to the
+other (if stack space is an issue, the current one is 4K, which is
+probably excessively large anyway).
+
+Mostly I just assumed that it was highly unlikely anybody would see this
+escaping in the first place. So I tried to go with the simplest
+solution.
+
+-Peff
