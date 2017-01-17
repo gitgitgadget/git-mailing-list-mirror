@@ -2,107 +2,127 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BB5C120756
-	for <e@80x24.org>; Wed, 18 Jan 2017 00:21:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BEABB20756
+	for <e@80x24.org>; Wed, 18 Jan 2017 00:31:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752622AbdARAV6 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 17 Jan 2017 19:21:58 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:55594 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751396AbdARAV5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 17 Jan 2017 19:21:57 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 7D75661A8E;
-        Tue, 17 Jan 2017 19:15:11 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=CYgFsDrvOr9pEdjq+Ql+jvDRJe4=; b=whBA5J
-        uqIIE8gjK0WdqWpZ7YgHf7loqu0SpJeIceaNKardU8IVyC48UM2wY0QHuF4ZRokN
-        mAs3vGy7Vx8Gm9+TwNU85NqJj8jBRZ/NpeiGfQ8BbPrxZ3aFL8FXtSAG5efdn6fe
-        427jh5yeoiHJGeeRH/EUFqaH9PGMh7ViQZkNM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=mQJPphc2pQbUFYQQByAjDiLoYpgPsdQT
-        glk8eGta6v6b0EBRUhYEwIDaOKmtvWmmARBXqwS7b2/fHRkjc/e+OCnQroZbwN3y
-        +QWlQwJPLTITjnFFo+wVqPh98dKZ/omaUzCwLQVRW0GP1Xpmw7oChg0VbQ1a37t2
-        nolMnPV88fM=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 6F93261A8C;
-        Tue, 17 Jan 2017 19:15:11 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id B10D561A8B;
-        Tue, 17 Jan 2017 19:15:10 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     "git\@vger.kernel.org" <git@vger.kernel.org>,
-        Heiko Voigt <hvoigt@hvoigt.net>,
-        Dave Borowitz <dborowitz@google.com>
-Subject: Re: [PATCH] transport submodules: correct error message
-References: <20170113235427.5768-1-sbeller@google.com>
-        <xmqq8tq9ckxo.fsf@gitster.mtv.corp.google.com>
-        <CAGZ79kYu1Y2pwk9+kbSrMxwP3S0n8FMW6f4wdEE0mrACqrOPNA@mail.gmail.com>
-Date:   Tue, 17 Jan 2017 16:15:09 -0800
-In-Reply-To: <CAGZ79kYu1Y2pwk9+kbSrMxwP3S0n8FMW6f4wdEE0mrACqrOPNA@mail.gmail.com>
-        (Stefan Beller's message of "Tue, 17 Jan 2017 16:08:50 -0800")
-Message-ID: <xmqqr341b4vm.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.90 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 2CD1772A-DD13-11E6-A949-FE3F13518317-77302942!pb-smtp1.pobox.com
+        id S1751129AbdARAa6 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 17 Jan 2017 19:30:58 -0500
+Received: from mail-pg0-f52.google.com ([74.125.83.52]:36204 "EHLO
+        mail-pg0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751051AbdARAa5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 17 Jan 2017 19:30:57 -0500
+Received: by mail-pg0-f52.google.com with SMTP id t6so23379341pgt.3
+        for <git@vger.kernel.org>; Tue, 17 Jan 2017 16:30:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=J9J0KcKBzjOHfU4HvjU62D0wzvHCmOc65l3vRMUOOd8=;
+        b=ezq3NTn/XVH86thfZsG71hNEaVCv2HXP/2LM1Is7WpgJP4rOAgmCsgztvt13TY6NF7
+         58TKnMlpDrex0Sql6uinJZ0yrUz4YyfpbarEoaJwccAqROElQwf1+gj+YRX9WVqoHxGs
+         5IY3/xxIJzPIDlsfBY5+IuoaX1ebwOplWya4MRMGFif68BWkvlXVUthZPyklvuezOKyP
+         k3mStXBQmCfrVfKHS0ODEgZF9Ef41Dmz9FOvRe/l6KTPxraAd4T5tL4EiTARC9TtnY82
+         /7KI7YWh5RXKB10gPFmuMOQ4/GbpIJhhb7H6/D3bfJ3HWq1Bid3PNZOQgX0RXhM5yA7p
+         157w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=J9J0KcKBzjOHfU4HvjU62D0wzvHCmOc65l3vRMUOOd8=;
+        b=X634PzR/0zEqHddVeEolc1Fmx585OX9lqTWxRacQqnueqszwklQKwcCRc8diO3kh1O
+         aHcdea0mAC4P52gyKzF5UDpM+vzUeFg9lHM4Ep8ztCx3mlhaqPEc8YlJaHoIqM34JE5y
+         oXWcBsvq3ZsNx1xosyoTz+17utX/gsOUmWC+bhtddip544k0mHzc9lAWLj31KPMPs+5o
+         4Qb/Cp5+tTbfYaAJVFiqqNWkfY0cy6BQj2IREiPSlB64W2b/RdPi1op0bpKstc0zT2vK
+         M4iOkAFW7/geTyLiHC+zKj3eEJxSVXbDozYbHqcpzrgohAic7NLb8bMi9aTElS4uBUA+
+         JAPA==
+X-Gm-Message-State: AIkVDXJi0WWEByhPagj4cyq68BY7zfNmJW8yNyM6xF3AIhVEo3SKpAX53uyZc0QUo5hsfnhn
+X-Received: by 10.98.49.198 with SMTP id x189mr308244pfx.20.1484696110526;
+        Tue, 17 Jan 2017 15:35:10 -0800 (PST)
+Received: from localhost ([2620:0:1000:5b10:871:ca27:8566:e7e])
+        by smtp.gmail.com with ESMTPSA id 89sm58215518pfi.70.2017.01.17.15.35.09
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Tue, 17 Jan 2017 15:35:10 -0800 (PST)
+From:   Stefan Beller <sbeller@google.com>
+To:     gitster@pobox.com
+Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>
+Subject: [PATCH 4/4] documentation: retire unfinished documentation
+Date:   Tue, 17 Jan 2017 15:35:03 -0800
+Message-Id: <20170117233503.27137-5-sbeller@google.com>
+X-Mailer: git-send-email 2.11.0.299.g762782ba8a
+In-Reply-To: <20170117233503.27137-1-sbeller@google.com>
+References: <20170117233503.27137-1-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
+When looking for documentation for a specific function, you may be tempted
+to run
 
-> On Tue, Jan 17, 2017 at 3:42 PM, Junio C Hamano <gitster@pobox.com> wrote:
->> Stefan Beller <sbeller@google.com> writes:
->>
->>> Trying to push with --recurse-submodules=on-demand would run into
->>> the same problem. To fix this issue
->>>     1) specifically mention that we looked for branches on the remote.
->>
->> That makes an incorrect statement ("not found on any remote"---we
->> did not inspect all of the said remote, only heads and tags) into an
->> irrelevant statement ("not found on any remote branch"---the end
->> user would say "so what?  I know it exists there, it's just that not
->> all remote refs have corresponding tracking ref locally on our side").
->
-> eh. So to be correct we need to tell the user we did not find any match on
-> a "remote-tracking branch" as the gitglossary puts it.
+  git -C Documentation grep index_name_pos
 
-I think the updated text is already "correct".  I am pointing out
-that it may be correct but not very helpful to the users.
+only to find the file technical/api-in-core-index.txt, which doesn't
+help for understanding the given function. It would be better to not find
+these functions in the documentation, such that people directly dive into
+the code instead.
 
->> where remote tracking information is
->> incomplete if you only look at heads and refs, in the sense that we
->> no longer suggest ineffective workaround.
->
-> s/ineffective/an effective/ ?
+In the previous patches we have documented
+* index_name_pos()
+* remove_index_entry_at()
+* add_[file_]to_index()
+in cache.h
 
-Even though I make many typoes, I meant ineffective in this case.
-"The old message suggested workaround that would not help.  You no
-longer give that workaround that does not work."
+We already have documentation for:
+* add_index_entry()
+* read_index()
 
->> If that is the case, perhaps configuring push.recurseSubmodules to
->> turn this off (especially because you plan to turn the defaul to
->> "check") and not giving the command line option would give a more
->> pleasant end-user experience, I suspect.
->
-> I though about going another way and adding another new value
-> to the enum, such that
->
->     git push --recurse-submodules=sameRefSpecButNoCheck \
->         origin HEAD:refs/for/master
->
-> works for Gerrit users.
+Which leaves us with a TODO for:
+* cache -> the_index macros
+* refresh_index()
+* discard_index()
+* ie_match_stat() and ie_modified(); how they are different and when to
+  use which.
+* write_index() that was renamed to write_locked_index
+* cache_tree_invalidate_path()
+* cache_tree_update()
 
-It is unclear what that enum tells Git to do.  Care to explain?  How
-is it different from "no"?
+Signed-off-by: Stefan Beller <sbeller@google.com>
+---
+ Documentation/technical/api-in-core-index.txt | 21 ---------------------
+ 1 file changed, 21 deletions(-)
+ delete mode 100644 Documentation/technical/api-in-core-index.txt
+
+diff --git a/Documentation/technical/api-in-core-index.txt b/Documentation/technical/api-in-core-index.txt
+deleted file mode 100644
+index adbdbf5d75..0000000000
+--- a/Documentation/technical/api-in-core-index.txt
++++ /dev/null
+@@ -1,21 +0,0 @@
+-in-core index API
+-=================
+-
+-Talk about <read-cache.c> and <cache-tree.c>, things like:
+-
+-* cache -> the_index macros
+-* read_index()
+-* write_index()
+-* ie_match_stat() and ie_modified(); how they are different and when to
+-  use which.
+-* index_name_pos()
+-* remove_index_entry_at()
+-* remove_file_from_index()
+-* add_file_to_index()
+-* add_index_entry()
+-* refresh_index()
+-* discard_index()
+-* cache_tree_invalidate_path()
+-* cache_tree_update()
+-
+-(JC, Linus)
+-- 
+2.11.0.299.g762782ba8a
+
