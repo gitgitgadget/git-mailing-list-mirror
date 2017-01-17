@@ -2,118 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B330A20756
-	for <e@80x24.org>; Tue, 17 Jan 2017 19:58:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2393D20756
+	for <e@80x24.org>; Tue, 17 Jan 2017 20:09:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751127AbdAQT6O (ORCPT <rfc822;e@80x24.org>);
-        Tue, 17 Jan 2017 14:58:14 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:56423 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1750924AbdAQT6N (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 17 Jan 2017 14:58:13 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id CC1C961DD9;
-        Tue, 17 Jan 2017 14:58:12 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=ru92lxod4CW3nlZ2zdW3B4zIeeI=; b=sFOWhZ
-        Tl3akv7/dqeJXoAdFQq2OJlUU3mxf6phpmEbXF/ate+G37yJY69qqgef3uqgEbmI
-        0JkV9prKAo5sxG/9qItEpKoSh/Kh8fgvo8bpNpEWupGDEGChPB2bH5Eapo1ctoxG
-        yj5+ofhzf/g1eBOtVDvRPn0Tozyl6XiDNW7IE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=bjOMt9dzfyh6w6V8DW0AQBn7Q8Yik07d
-        Lqfm/okBQeh1Itng0s/GwhqkVf/wZ4WfczV4chZV5b/2RSFdxz+/WneUO3palFdT
-        mMQ8/pe2jxUzc+E/bhKEmW+rqP69h80+jU54aoe3WXLKSdFD3O0/u2lHnegX8hz7
-        XaWW9v05DfM=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id C1E1761DD8;
-        Tue, 17 Jan 2017 14:58:12 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 1C3B161DD6;
-        Tue, 17 Jan 2017 14:58:12 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Cc:     Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org,
-        Manuel Ullmann <ullman.alias@posteo.de>,
-        Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH] Documentation/bisect: improve on (bad|new) and (good|bad)
-References: <20170113144405.3963-1-chriscool@tuxfamily.org>
-        <xmqqinpihiwz.fsf@gitster.mtv.corp.google.com>
-        <vpqfukjpdnp.fsf@anie.imag.fr>
-Date:   Tue, 17 Jan 2017 11:58:10 -0800
-In-Reply-To: <vpqfukjpdnp.fsf@anie.imag.fr> (Matthieu Moy's message of "Mon,
-        16 Jan 2017 10:17:14 +0100")
-Message-ID: <xmqq37ghfoh9.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.90 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 46A5CE72-DCEF-11E6-A189-A7617B1B28F4-77302942!pb-smtp2.pobox.com
+        id S1751156AbdAQUJk (ORCPT <rfc822;e@80x24.org>);
+        Tue, 17 Jan 2017 15:09:40 -0500
+Received: from mail-pg0-f53.google.com ([74.125.83.53]:36329 "EHLO
+        mail-pg0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750922AbdAQUJX (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 17 Jan 2017 15:09:23 -0500
+Received: by mail-pg0-f53.google.com with SMTP id t6so21876021pgt.3
+        for <git@vger.kernel.org>; Tue, 17 Jan 2017 12:09:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=from:to:cc:subject:date:message-id;
+        bh=XzcNe0qQ48ZSYvEfcDbSbxxewhbgtwNITSEXCj0DNYQ=;
+        b=Dq6zDFahY7aC/r4v0hT/APwVzWP4tvSl20aYTxLxH0ljmNWdl5eizDgDcjLlz1ChTG
+         jqF0lwFQg8MrMsoiT98XoBpKs4QCq/5Ib2LMPbbFQS703XQ7y2vT+1brsRzXYJHoJaWC
+         Fv0Ro3YmwnaIe4Hid9t42EhOjuqFEwbShqK4q67PhBtReEkxDzDuuK8cAeOeSetoulyJ
+         OoKO669fnwJ3GALhuVZ3PcB6V7xDHPOV2vuo3LdcN8HRRsaeL9b+smdjYFAB4ComxWyP
+         By4V9oh9OKcmUguagSXbwtPenbXs3znv11Io+E7NlBki4+z09GTBo+QZtqmILzJSH/0K
+         e1SQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=XzcNe0qQ48ZSYvEfcDbSbxxewhbgtwNITSEXCj0DNYQ=;
+        b=UogsjA+vjabAn6vDQqXYpbOT/i3FqmifQJMFPRjESUejikAT67jUYLNV/s6r4/LA01
+         r27dF+wLVXOppWqBCD+z32qd20VJgCWYyHVMijQTABRGUjMLRDuTQIQjTAYjvjxNc0My
+         6s+t+1/2EUaeHtu1NuaGa1zJuxhOwLasU7Dda/vLUZaQCM5Axc1leGcXtb+rGotVB/vM
+         J3XMgkMSGTRpbtz5zyzLH877doIPhn3R7W47C5MbwErz7OrSJ+Hfr/S8rIdSiMVtEWXZ
+         HNbn45bbIQ8cwNUJvNGr4Ew2lA1PFpslW6yaeu9Nv0dMpDUgn7yAySPKKmQ3Mp28rCAd
+         JMrg==
+X-Gm-Message-State: AIkVDXK0iT8w3HuaZNv9t0jhFdr5PvOTUWYCW9+ED6rgK8c3yXLc2bViousesGfEbjZAvHHl
+X-Received: by 10.84.224.133 with SMTP id s5mr62060044plj.130.1484683315735;
+        Tue, 17 Jan 2017 12:01:55 -0800 (PST)
+Received: from localhost ([2620:0:1000:5b10:871:ca27:8566:e7e])
+        by smtp.gmail.com with ESMTPSA id b69sm48566660pfd.90.2017.01.17.12.01.55
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Tue, 17 Jan 2017 12:01:55 -0800 (PST)
+From:   Stefan Beller <sbeller@google.com>
+To:     gitster@pobox.com
+Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>
+Subject: [PATCH] documentation: remove unfinished documentation
+Date:   Tue, 17 Jan 2017 12:01:47 -0800
+Message-Id: <20170117200147.25425-1-sbeller@google.com>
+X-Mailer: git-send-email 2.11.0.297.g298debce27
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+When looking for documentation for a specific function, you may be tempted
+to run
 
->> But what if bad-A and bad-B have more than one merge bases?  We
->> won't know which side the badness came from.
->>
->>                           o---o---o---bad-A
->>                          /     \ / 
->>     -----Good---o---o---o       / 
->>                          \     / \
->>                           o---o---o---bad-B
->>
->> Being able to bisect the region of DAG bound by "^Good bad-A bad-B"
->> may have value in such a case.  I dunno.
->
-> I could help finding several guilty commits, but anyway you can't
-> guarantee you'll find them all as soon as you use a binary search: if
-> the history looks like
->
-> --- Good --- Bad --- Good --- Good --- Bad --- Good --- Bad
->
-> then without examining all commits, you can't tell how many good->bad
-> switches occured.
->
-> But keeping several bad commits wouldn't help keeping the set of
-> potentially guilty commits small: bad commits appear on the positive
-> side in "^Good bad-A bad-B", so having more bad commits mean having a
-> larger DAG to explore (which is a bit counter-intuitive: without
-> thinking about it I'd have said "more info => less commits to explore").
->
-> So, if finding all guilty commits is not possible, I'm not sure how
-> valuable it is to try to find several of them.
+  git -C Documentation grep index_name_pos
 
-The criss-cross merge example, is not trying to find multiple
-sources of badness.  It still assumes [*1*] that there is only one
-event that introduced the badness observed at bad-A and bad-B, both
-of which inherited the badness from the same such event.  Unlike a
-case with a single/unique merge-base, we cannot say "we can start
-from the merge-base, as their common badness must be coming from the
-same place".  The badness may exist in the first 'o' on the same
-line as bad-A in the above picture, which is an ancestor of one
-merge-base on that line and does not break the other merge base on
-the same line as bad-B, for example.
+only to find the file technical/api-in-core-index.txt, which doesn't
+help for understanding the given function. It would be better to not find
+these functions in the documentation, such that people directly dive into
+the code instead.
 
-> OTOH, keeping several good commits is needed to find a commit for which
-> all parents are good and the commit is bad.
+Signed-off-by: Stefan Beller <sbeller@google.com>
+---
 
-Yes, that is correct.
+I run into this a couple of times now, so I put this out tentatively.
 
+Thanks,
+Stefan
 
-[Footnote]
+ Documentation/technical/api-in-core-index.txt | 21 ---------------------
+ 1 file changed, 21 deletions(-)
+ delete mode 100644 Documentation/technical/api-in-core-index.txt
 
-*1* The assumption is what makes "bisect" workable.  If the
-    assumption does not hold, then "bisect" would not give a useful
-    answer "where did I screw up?".  It gives a fairly useless "I
-    found one bad commit whose parent is good---there is no
-    guarantee if that has anything to do with the badness you are
-    seeing at the tip".
+diff --git a/Documentation/technical/api-in-core-index.txt b/Documentation/technical/api-in-core-index.txt
+deleted file mode 100644
+index adbdbf5d75..0000000000
+--- a/Documentation/technical/api-in-core-index.txt
++++ /dev/null
+@@ -1,21 +0,0 @@
+-in-core index API
+-=================
+-
+-Talk about <read-cache.c> and <cache-tree.c>, things like:
+-
+-* cache -> the_index macros
+-* read_index()
+-* write_index()
+-* ie_match_stat() and ie_modified(); how they are different and when to
+-  use which.
+-* index_name_pos()
+-* remove_index_entry_at()
+-* remove_file_from_index()
+-* add_file_to_index()
+-* add_index_entry()
+-* refresh_index()
+-* discard_index()
+-* cache_tree_invalidate_path()
+-* cache_tree_update()
+-
+-(JC, Linus)
+-- 
+2.11.0.297.g298debce27
+
