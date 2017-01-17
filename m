@@ -3,107 +3,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D83A220756
-	for <e@80x24.org>; Tue, 17 Jan 2017 22:31:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BBB6E20756
+	for <e@80x24.org>; Tue, 17 Jan 2017 23:32:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751205AbdAQWbP (ORCPT <rfc822;e@80x24.org>);
-        Tue, 17 Jan 2017 17:31:15 -0500
-Received: from mail-it0-f52.google.com ([209.85.214.52]:34700 "EHLO
-        mail-it0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750947AbdAQWbM (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 17 Jan 2017 17:31:12 -0500
-Received: by mail-it0-f52.google.com with SMTP id k200so15376037itb.1
-        for <git@vger.kernel.org>; Tue, 17 Jan 2017 14:31:12 -0800 (PST)
+        id S1751654AbdAQXcg (ORCPT <rfc822;e@80x24.org>);
+        Tue, 17 Jan 2017 18:32:36 -0500
+Received: from mail-lf0-f50.google.com ([209.85.215.50]:36013 "EHLO
+        mail-lf0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751597AbdAQXbj (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 17 Jan 2017 18:31:39 -0500
+Received: by mail-lf0-f50.google.com with SMTP id z134so117092842lff.3
+        for <git@vger.kernel.org>; Tue, 17 Jan 2017 15:31:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
+        d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=8LD+tZfJoumfpNfc7w5aF48WdG9G8uqqZ9a1UUr6EDQ=;
-        b=liqUvg7GaQ5eL0KaSCr70nsUU8f2YCYBl2SitS/0mIrgEHV9MWlBsgbPhe1BzhXPDl
-         FprbCDRIM87qCylOUKQtVkpAnMqmG24RoLgCzjFi04BgmhxaP0U9xac7GEc29N82jHrX
-         gOp/tHY2HymfYK2kb463RlEXQrvYqMzgkqbNSkCrisg/GN8WWZWiofufqvl/izjbnr9F
-         d1FLDPztUWCuC0SdY1OLJbbGR87bzw/3EHKcV0tSS/W/rSeMhxbq7bgC98p/fbl34/ZI
-         czUWXZ7pSqpwex7boDoh+tihY588oBSNcAEqeTQNf2kT3VT3evFKhq2Pse7tDJDrrdeq
-         sVrg==
+        bh=AkXj1SOgCVq2YvNx8uxSsXdNJt6LovnOvB9dyCGxv6o=;
+        b=MNRU9gz0jNnNF8GJrGbWH9WFp/vlEBPGv+oBD3Jr1hltdEin33vuLqgMmOWH6A3e3e
+         rr/kLe+xtOFN3RPjJAGr86OBew/ol2RkWU1MTb5RKDHWKeSv+b7zAQNOjzl4h2M4G4zi
+         Mv8/T2clBjXE2WH6+8YsbpxbSwOjAek3R7Dtb2mHUpdJWr1ZQQyEP7jlPV6nE9GxmpNp
+         RgphuuAiKFCRC5D+B4MdqkP4iI9lFZ7gBobJIV9GbUXEFoEjN5l6aHpqNm2/SGMtHffW
+         /Be/JzfwzqugjYd+GvsadkuL8vHN/Lt8APSejivXB+Lw9RG0ZH8p/fatKpNOokCe/zgY
+         NUuw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=8LD+tZfJoumfpNfc7w5aF48WdG9G8uqqZ9a1UUr6EDQ=;
-        b=WRBJFPYHzaDKSWlmYaC4L6bFSYdX9TuUGHI4qE/HwRgvgqZLj8z4piUp6nMTwSCMWB
-         6aW0d2sQP+cC4nN2qjamN1plEyEj35mXMVGmsbiuRnmkYnYgtA+1o3VHZQmY2WJPQP87
-         BP0s+92SsQiKW1/Lk6a+dA6B+suaKUK21hUeW+/yQnF47a1MvXhrWgN4ddSFFNW8Y6v7
-         zw+9H+Z8Ag3Ztrq11U5PSS5JhF/YxAO/2sNOHXF5WtxdoSJmSe9+WfjWZYm68Q2oApoK
-         q0PQV8i9B63ogDElxL9dtPwZ89zg3VPl8X6gJcmHxnRfKykSz91hQg2uSlUekkZa278f
-         J4Fw==
-X-Gm-Message-State: AIkVDXIvyiMXNxg9ceXNBBbypr/Zd6pZGek/KGvS36gNOMl9RrfglRlJPCspRVklFnWh1osm0DigRGWuYVL+k+cr
-X-Received: by 10.36.4.2 with SMTP id 2mr21034199itb.116.1484691815803; Tue,
- 17 Jan 2017 14:23:35 -0800 (PST)
+        bh=AkXj1SOgCVq2YvNx8uxSsXdNJt6LovnOvB9dyCGxv6o=;
+        b=QKzY9D6LBJjfobwxFFL/2wLdTb7zwVpz6u9jz1SclXJm+wGmQv5NktKZ2jhTBHMf0j
+         D8weCnOhe5xOUMf/07zrpfp4wgN598FZYMd12WpiERGqz/p0oo25555y7J5Um0ILLHPt
+         qdvMTPYtYsSKJoJ2Qi/B+zugNIwBJ+Gm61koJeB25oGbYjJgc07LUfxHq1KbB7r0lzv9
+         jzxjLOTWFemgaL0uhR2K4AiYwxFiRLMlcz0Z8++lekxaIgB1NC6Faes48MLufHpvp4L4
+         0ZslnZGpas/zQgYbmOnULypKEM1JmAsPZvvUGHxlTpzd9XVqHK6o6vdnlf3EjbeuZSDa
+         ApcQ==
+X-Gm-Message-State: AIkVDXIM8AoRzd1vHtKloavir7sPRlJbJPzE5fyOA2DZw/GD6ICL/23EW0TZ3ebIYKZUvEzwYKPv6j5U9xYSXA==
+X-Received: by 10.46.69.215 with SMTP id s206mr85583lja.26.1484695897235; Tue,
+ 17 Jan 2017 15:31:37 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.79.39.19 with HTTP; Tue, 17 Jan 2017 14:23:35 -0800 (PST)
-In-Reply-To: <2381666.1DSVtKRIH5@mfick1-lnx>
-References: <20170113155253.1644-1-benpeart@microsoft.com> <CAJo=hJumYXTRN_B3iZdmcpomp7wJ+UPcikxGb6rn9W=uJeYmfw@mail.gmail.com>
- <002501d2710b$af74c4d0$0e5e4e70$@gmail.com> <2381666.1DSVtKRIH5@mfick1-lnx>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Tue, 17 Jan 2017 14:23:35 -0800
-Message-ID: <CAGZ79kbWHHOj5x=SqSvUPdXtyYZUqDBnPG+erfZHsUkA8Cv-NA@mail.gmail.com>
-Subject: Re: [RFC] Add support for downloading blobs on demand
-To:     Martin Fick <mfick@codeaurora.org>
-Cc:     Ben Peart <peartben@gmail.com>, Shawn Pearce <spearce@spearce.org>,
-        git <git@vger.kernel.org>, benpeart@microsoft.com
+Received: by 10.25.145.14 with HTTP; Tue, 17 Jan 2017 15:31:16 -0800 (PST)
+In-Reply-To: <97d4105c-0fa6-41c5-e456-30cebd93dc36@kdbg.org>
+References: <20170112001721.2534-1-jacob.e.keller@intel.com>
+ <20170112001721.2534-6-jacob.e.keller@intel.com> <5f723a0d-623f-bf97-00de-29d430484fed@kdbg.org>
+ <CA+P7+xrmAmCPOzuaKcm+WxceXnowkM4gKz05tSpdC=CDwpCEug@mail.gmail.com>
+ <5c8401ef-9609-f235-9228-be980a13edf1@kdbg.org> <CA+P7+xq1LMkRG_aSyamrsPUQE+rDv4A9Qd19tDMgx-_a5OHsqQ@mail.gmail.com>
+ <97d4105c-0fa6-41c5-e456-30cebd93dc36@kdbg.org>
+From:   Jacob Keller <jacob.keller@gmail.com>
+Date:   Tue, 17 Jan 2017 15:31:16 -0800
+Message-ID: <CA+P7+xqFHG52Xo8ncUwa3owDn3OOz+rr3ZaGwfcUDCiXJmh80Q@mail.gmail.com>
+Subject: Re: [PATCH 5/5] describe: teach describe negative pattern matches
+To:     Johannes Sixt <j6t@kdbg.org>
+Cc:     Jacob Keller <jacob.e.keller@intel.com>,
+        Git mailing list <git@vger.kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jan 17, 2017 at 2:05 PM, Martin Fick <mfick@codeaurora.org> wrote:
-> On Tuesday, January 17, 2017 04:50:13 PM Ben Peart wrote:
->> While large files can be a real problem, our biggest issue
->> today is having a lot (millions!) of source files when
->> any individual developer only needs a small percentage of
->> them.  Git with 3+ million local files just doesn't
->> perform well.
+On Fri, Jan 13, 2017 at 1:31 PM, Johannes Sixt <j6t@kdbg.org> wrote:
+> Am 13.01.2017 um 07:57 schrieb Jacob Keller:
+>>
+>> On Thu, Jan 12, 2017 at 10:43 PM, Johannes Sixt <j6t@kdbg.org> wrote:
+>>>
+>>>  When you write
+>>>
+>>>   git log --branches --exclude=origin/* --remotes
+>>>
+>>> --exclude=origin/* applies only to --remotes, but not to --branches.
+>>
+>>
+>> Well for describe I don't think the order matters.
 >
-> Honestly, this sounds like a problem better dealt with by
-> using git subtree or git submodules, have you considered
-> that?
 >
-> -Martin
+> That is certainly true today. But I would value consistency more. We would
+> lose it if some time in the future 'describe' accepts --branches and
+> --remotes in addition to --tags and --all.
+>
+> -- Hannes
 >
 
-I cannot speak for subtrees as I have very little knowledge on them.
-But there you also have the problem that *someone* has to have a
-whole tree? (e.g. the build bot)
+I am not sure that the interface for git-log and git-describe are
+similar enough to make this distinction work. --match already seems to
+imply that it only works on refs in refs/tags, as it says it considers
+globs matching excluding the "refs/tags" prefix.
 
-submodules however comes with a couple of things attached, both
-positive as well as negative points:
+In git-describe, we already have "--tags" and "--all" but they are
+mutually exclusive. We don't support using more than one at once, and
+I'm not really convinced that describe will ever support more than one
+at a time. Additionally, match already doesn't respect order.
 
-* it offers ACLs along the way. ($user may not be allowed to
-  clone all submodules, but only those related to the work)
-* The conceptual understanding of git just got a lot harder.
-  ("Yo dawg, I heard you like git, so I put git repos inside
-  other git repos"), it is not easy to come up with reasonable
-  defaults for all usecases, so the everyday user still has to
-  have some understanding of submodules.
-* typical cheap in-tree operations may become very expensive:
-  -> moving a file from one location to another (in another
-     submodule) adds overhead, no rename detection.
-* We are actively working on submodules, so there is
-  some momentum going already.
-* our experiments with Android show that e.g. fetching (even
-  if you have all of Android) becomes a lot faster for everyday
-  usage as only a few repositories change each day). This
-  comparision was against the repo tool, that we currently
-  use for Android. I do not know how it would compare against
-  single repo Git, as having such a large repository seemed
-  complicated.
-* the support for submodules in Git is already there, though
-  not polished. The positive side is to have already a good base,
-  the negative side is to have support current use cases.
-
-Stefan
+Thanks,
+Jake
