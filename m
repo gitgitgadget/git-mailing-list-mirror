@@ -2,230 +2,223 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DA19320756
-	for <e@80x24.org>; Tue, 17 Jan 2017 18:49:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E446620756
+	for <e@80x24.org>; Tue, 17 Jan 2017 18:50:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751370AbdAQStn (ORCPT <rfc822;e@80x24.org>);
-        Tue, 17 Jan 2017 13:49:43 -0500
-Received: from cloud.peff.net ([104.130.231.41]:40349 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751103AbdAQStl (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 17 Jan 2017 13:49:41 -0500
-Received: (qmail 17579 invoked by uid 109); 17 Jan 2017 18:43:00 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 17 Jan 2017 18:43:00 +0000
-Received: (qmail 20131 invoked by uid 111); 17 Jan 2017 18:43:55 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 17 Jan 2017 13:43:54 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 17 Jan 2017 13:42:58 -0500
-Date:   Tue, 17 Jan 2017 13:42:58 -0500
-From:   Jeff King <peff@peff.net>
-To:     Ben Peart <peartben@gmail.com>
-Cc:     git@vger.kernel.org, benpeart@microsoft.com
-Subject: Re: [RFC] Add support for downloading blobs on demand
-Message-ID: <20170117184258.sd7h2hkv27w52gzt@sigill.intra.peff.net>
-References: <20170113155253.1644-1-benpeart@microsoft.com>
+        id S1751171AbdAQSuA (ORCPT <rfc822;e@80x24.org>);
+        Tue, 17 Jan 2017 13:50:00 -0500
+Received: from mail-it0-f45.google.com ([209.85.214.45]:35643 "EHLO
+        mail-it0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751090AbdAQSt5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 17 Jan 2017 13:49:57 -0500
+Received: by mail-it0-f45.google.com with SMTP id 203so101563962ith.0
+        for <git@vger.kernel.org>; Tue, 17 Jan 2017 10:49:52 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=ew8NF6Bl0qbqBd2617szfzUIVdV2QTSp9/jfioY3aFg=;
+        b=W9R0RdmTMEX6ChCS2EwD3dTL73/0nGSYBiSU4ApVXEwcxJfgkeOkEMyHOSiVv2472r
+         mkcscUZwk679rFAq6w+0SBfYr6C8bNyUOMtAgO/sjzCCIHALu8RtMvHH9lKzqWOQn1Pn
+         +GLQhE0s8iRYbWSQ22PwSATk4rz92XMgoPU31iQJdK9EKMuqskFNW4haySGFfuUDSycm
+         TUFaqqDsK5nDsTumiOaZvuUpY6AvNjWnBuAr0aMrQFdGnDge+a64Z9+xLP7uZdFy8Wg0
+         yIbXBoqS8oDpKqzFnAAQ312rsPnNU1BJBmMrmARCRUeVXy+Vd0pUSh/d0z5D92SokZEN
+         ZoHg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=ew8NF6Bl0qbqBd2617szfzUIVdV2QTSp9/jfioY3aFg=;
+        b=aAVZbHWdvSyRs8GB1qoPUiIOAIRg8zIXmNjP3iK/At2HVi55rDmJa08DMhcqlKwSK2
+         lLJzJylXl5otz0oMQVV46ygKXitsIM2o6gNNVjs2ycoRGU2lWmVpMBK689dYe9NUn9XH
+         jMljYKW307YefeN36UeWaHBLaGtJBqTgvTqZenevkvnNZRews+luAB5ARog/j3ZUhyt6
+         3uRRaNY6ds4iTxy0DDcyiWtXMSCiTivK8wkDP3Gx9fPNYPvtQ2ZWhtLCURwLgwUcJ1k3
+         kWHRWNW6goF2BJVA1Sg1Lw8e4g022GRkQ9rGUjf3vHPYTMpAVAICslMoSUmoyUF61QyJ
+         rf1Q==
+X-Gm-Message-State: AIkVDXIANVTi0liJzwWu4sUzYTzBRa76Gk434HnGemojHGkCT5yReqqHvxZ8VtIAbbTh8F77DHjxdVIBOktpJ6S6
+X-Received: by 10.36.141.2 with SMTP id w2mr21606709itd.114.1484678597689;
+ Tue, 17 Jan 2017 10:43:17 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20170113155253.1644-1-benpeart@microsoft.com>
+Received: by 10.79.39.19 with HTTP; Tue, 17 Jan 2017 10:43:17 -0800 (PST)
+In-Reply-To: <ebf6c90e-044f-5538-2325-601d002a81fe@gmail.com>
+References: <CAGZ79kZRV7x9B6SHRcHjJweHrjURxWKmN-=Wz_aNw2TPwYh_xw@mail.gmail.com>
+ <ebf6c90e-044f-5538-2325-601d002a81fe@gmail.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Tue, 17 Jan 2017 10:43:17 -0800
+Message-ID: <CAGZ79kaf0BhbnJGhkjT_Ys44y4c4AaxV8U_ydWp4bbFMkGRcsQ@mail.gmail.com>
+Subject: Re: submodule network operations [WAS: Re: [RFC/PATCH 0/4] working
+ tree operations: support superprefix]
+To:     "Brian J. Davis" <bitminer@gmail.com>
+Cc:     Brandon Williams <bmwill@google.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>,
+        David Turner <novalis@novalis.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is an issue I've thought a lot about. So apologies in advance that
-this response turned out a bit long. :)
+On Sun, Jan 15, 2017 at 1:02 PM, Brian J. Davis <bitminer@gmail.com> wrote:
 
-On Fri, Jan 13, 2017 at 10:52:53AM -0500, Ben Peart wrote:
+>>
+>> Technically it is submodule.<name>.url instead of
+>> submodule.<path>.url. The name is usually the path initially, and once
+>> you move the submodule, only the path changes, the name is supposed to
+>> be constant and stay the same.
+>
+> I am not certain what is meant by this.  All I know is I can use my
+> "directory_to_checkout" above to place in tree relative from root the
+> project any where in the tree not already tracked by git.  You state name
+> instead of path, but it allows path correct? Either that or I have gone off
+> reservation with my use of git for years now. Maybe this is a deviation from
+> how it is documented/should work and how it actually works?  It works great
+> how I use it.
 
-> Design
-> ~~~~~~
-> 
-> Clone and fetch will pass a “--lazy-clone” flag (open to a better name 
-> here) similar to “--depth” that instructs the server to only return 
-> commits and trees and to ignore blobs.
-> 
-> Later during git operations like checkout, when a blob cannot be found
-> after checking all the regular places (loose, pack, alternates, etc), 
-> git will download the missing object and place it into the local object 
-> store (currently as a loose object) then resume the operation.
+Yes name can equal the path (and usually does). This is a minor detail
+that is only relevant for renaming submodules, so ... maybe let's not
+focus on it too much. :)
 
-Have you looked at the "external odb" patches I wrote a while ago, and
-which Christian has been trying to resurrect?
+>>>
+>>>
+>>> but if say I want to pull from some server 2 and do a
+>>>
+>>> git submodule update --init --recursive
+>>
+>> That is why the "git submodule init" exists at all.
+>>
+>>      git submodule init
+>>      $EDIT .git/config # change submodule.<name>.url to server2
+>>      git submodule update # that uses the adapted url and
+>>      # creates the submodule repository.
+>>
+>>      # From now on the submodule is on its own.
+>>      cd <submodule> && git config --list
+>>      # prints an "origin" remote and a lot more
+>>
+>> For a better explanation, I started a documentation series, see
+>>
+>> https://github.com/gitster/git/commit/e2b51b9df618ceeff7c4ec044e20f5ce9a87241e
+>>
+>> (It is not finished, but that is supposed to explain this exact pain
+>> point in the
+>> STATES section, feel free to point out missing things or what is hard
+>> to understand)
+>
+> I am not sure I got much out of the STATES section regarding my problem.
 
-  http://public-inbox.org/git/20161130210420.15982-1-chriscool@tuxfamily.org/
+Your original problem as far as I understand is this:
 
-This is a similar approach, though I pushed the policy for "how do you
-get the objects" out into an external script. One advantage there is
-that large objects could easily be fetched from another source entirely
-(e.g., S3 or equivalent) rather than the repo itself.
+  You have a project with submodules.
+  The submodules are described in the .gitmodules file.
+  But the URL is pointing to an undesired location.
+  You want to rewrite the URLs before actually cloning the submodules.
 
-The downside is that it makes things more complicated, because a push or
-a fetch now involves three parties (server, client, and the alternate
-object store). So questions like "do I have all the objects I need" are
-hard to reason about.
+And to solve this problem we need to perform multiple steps:
 
-If you assume that there's going to be _some_ central Git repo which has
-all of the objects, you might as well fetch from there (and do it over
-normal git protocols). And that simplifies things a bit, at the cost of
-being less flexible.
+  # --no is the default, just for clarity here:
+  git clone <project> --no-recurse-submodules
+  # The submodules are now in the *uninitialized* state
 
-> To prevent git from accidentally downloading all missing blobs, some git
-> operations are updated to be aware of the potential for missing blobs.  
-> The most obvious being check_connected which will return success as if 
-> everything in the requested commits is available locally.
+  git submodule init
+  # the submodules are in the initialized state
 
-Actually, Git is pretty good about trying not to access blobs when it
-doesn't need to. The important thing is that you know enough about the
-blobs to fulfill has_sha1_file() and sha1_object_info() requests without
-actually fetching the data.
+  git submodule update
+  # submodules are populated, i.e. cloned from
+  # the configured URLs and put into the working tree at
+  # the appropriate path.
 
-So the client definitely needs to have some list of which objects exist,
-and which it _could_ get if it needed to.
+Between the init and the update step you can modify the URLs.
+These commands are just a repetition from the first email, but the
+git commands can be viewed as moving from one state to another
+for submodules; submodules itself can be seen as a state machine
+according to that proposed documentation. Maybe such a state machine
+makes it easier to understand for some people.
 
-The one place you'd probably want to tweak things is in the diff code,
-as a single "git log -Sfoo" would fault in all of the blobs.
+>>> what I would get is from someserver1 not someserver2 as there is no
+>>> "origin"
+>>> support for submodules.  Is this correct?  If so can origin support be
+>>> added
+>>> to submodules?
+>>
+>> Can you explain more in detail what you mean by origin support?
+>
+> Yes so when we do a:
+>
+> git push origin master
+>
+> origin is of course the Remote (Remotes
+> https://git-scm.com/book/en/v2/Git-Basics-Working-with-Remotes)
+>
+> So I best use terminology "Remotes" support.  Git push supports remotes, but
+> git submodules does not.  The basic idea is this:
+>
+> If Git allowed multiple submodule
+> (https://git-scm.com/book/en/v2/Git-Tools-Submodules) Remotes to be
+> specified say as an example:
+>
+> git submodule add [remote] [url]
+>
+> git submodule add origin https://github.com/chaconinc/DbConnector
+> git submodule add indhouse https://indhouse .corp/chaconinc/DbConnector
+>
+> Where:
+>
+> [submodule "DbConnector"]
+>     path = DbConnector
+>     url = https://github.com/chaconinc/DbConnector
+>
+> Could then change to:
+>
+> [submodule "DbConnector"]
+>     path = DbConnector
+>     remote.origin.url = https://github.com/chaconinc/DbConnector
+>     remote.origin.url = https://indhouse .corp/chaconinc/DbConnector
 
-> To minimize the impact on the server, the existing dumb HTTP protocol 
-> endpoint “objects/<sha>” can be used to retrieve the individual missing
-> blobs when needed.
+here I assume there is a typo and the second remote.origin.url should be
+remote.inhouse.url ?
 
-This is going to behave badly on well-packed repositories, because there
-isn't a good way to fetch a single object. The best case (which is not
-implemented at all in Git) is that you grab the pack .idx, then grab
-"slices" of the pack corresponding to specific objects, including
-hunting down delta bases.
+>
+>
+> Then it should be possible to get:
+>
+> git submodules update --init --recursive
 
-But then next time the server repacks, you have to throw away your .idx
-file. And those can be big. The .idx for linux.git is 135MB. You really
-wouldn't want to do an incremental fetch of 1MB worth of objects and
-have to grab the whole .idx just to figure out which bytes you needed.
+which would setup the submodule with both
 
-You can solve this by replacing the dumb-http server with a smart one
-that actually serves up the individual objects as if they were truly
-sitting on the filesystem. But then you haven't really minimized impact
-on the server, and you might as well teach the smart protocols to do
-blob fetches.
+[remote "origin"]
+  url = https://github.com/..
+[remote "inhouse"]
+  url = https://inhouse.corp/..
 
+But where do we clone it from?
+(Or do we just do a "git init" on that submodule and fetch
+from both remotes? in which order?)
 
-One big hurdle to this approach, no matter the protocol, is how you are
-going to handle deltas. Right now, a git client tells the server "I have
-this commit, but I want this other one". And the server knows which
-objects the client has from the first, and which it needs from the
-second. Moreover, it knows that it can send objects in delta form
-directly from disk if the other side has the delta base.
+>
+> To support
+>
+> git submodules update [remote] --init --recursive
 
-So what happens in this system? We know we don't need to send any blobs
-in a regular fetch, because the whole idea is that we only send blobs on
-demand. So we wait for the client to ask us for blob A. But then what do
-we send? If we send the whole blob without deltas, we're going to waste
-a lot of bandwidth.
+This would just clone/fetch from the specified remote?
+If implementing this, we may run into a collision with the
+specified submodules, what if a submodule is at
+path "origin" ?
 
-The on-disk size of all of the blobs in linux.git is ~500MB. The actual
-data size is ~48GB. Some of that is from zlib, which you get even for
-non-deltas. But the rest of it is from the delta compression. I don't
-think it's feasible to give that up, at least not for "normal" source
-repos like linux.git (more on that in a minute).
+Does "git submodule update origin --init --recursive"
+then mean to update the single "origin" submodule or
+all submodules from their origin remote?
 
-So ideally you do want to send deltas. But how do you know which objects
-the other side already has, which you can use as a delta base? Sending
-the list of "here are the blobs I have" doesn't scale. Just the sha1s
-start to add up, especially when you are doing incremental fetches.
+>
+> And thus allow
+>
+> git submodules update origin --init --recursive
+>
+> git submodules update indhouse --init --recursive
 
-I think this sort of things performs a lot better when you just focus on
-large objects. Because they don't tend to delta well anyway, and the
-savings are much bigger by avoiding ones you don't want. So a directive
-like "don't bother sending blobs larger than 1MB" avoids a lot of these
-issues. In other words, you have some quick shorthand to communicate
-between the client and server: this what I have, and what I don't.
-Normal git relies on commit reachability for that, but there are
-obviously other dimensions. The key thing is that both sides be able to
-express the filters succinctly, and apply them efficiently.
-
-> After cloning, the developer can use sparse-checkout to limit the set of 
-> files to the subset they need (typically only 1-10% in these large 
-> repos).  This allows the initial checkout to only download the set of 
-> files actually needed to complete their task.  At any point, the 
-> sparse-checkout file can be updated to include additional files which 
-> will be fetched transparently on demand.
-
-If most of your benefits are not from avoiding blobs in general, but
-rather just from sparsely populating the tree, then it sounds like
-sparse clone might be an easier path forward. The general idea is to
-restrict not just the checkout, but the actual object transfer and
-reachability (in the tree dimension, the way shallow clone limits it in
-the time dimension, which will require cooperation between the client
-and server).
-
-So that's another dimension of filtering, which should be expressed
-pretty succinctly: "I'm interested in these paths, and not these other
-ones." It's pretty easy to compute on the server side during graph
-traversal (though it interacts badly with reachability bitmaps, so there
-would need to be some hacks there).
-
-It's an idea that's been talked about many times, but I don't recall
-that there were ever working patches. You might dig around in the list
-archive under the name "sparse clone" or possibly "narrow clone".
-
-> Now some numbers
-> ~~~~~~~~~~~~~~~~
-> 
-> One repo has 3+ million files at tip across 500K folders with 5-6K 
-> active developers.  They have done a lot of work to remove large files 
-> from the repo so it is down to < 100GB.
-> 
-> Before changes: clone took hours to transfer the 87GB .pack + 119MB .idx
-> 
-> After changes: clone took 4 minutes to transfer 305MB .pack + 37MB .idx
-> 
-> After hydrating 35K files (the typical number any individual developer 
-> needs to do their work), there was an additional 460 MB of loose files 
-> downloaded.
-
-It sounds like you have a case where the repository has a lot of large
-files that are either historical, or uninteresting the sparse-tree
-dimension.
-
-How big is that 460MB if it were actually packed with deltas?
-
-> Future Work
-> ~~~~~~~~~~~
-> 
-> The current prototype calls a new hook proc in sha1_object_info_extended 
-> and read_object, to download each missing blob.  A better solution would 
-> be to implement this via a long running process that is spawned on the 
-> first download and listens for requests to download additional objects 
-> until it terminates when the parent git operation exits (similar to the 
-> recent long running smudge and clean filter work).
-
-Yeah, see the external-odb discussion. Those prototypes use a process
-per object, but I think we all agree after seeing how the git-lfs
-interface has scaled that this is a non-starter. Recent versions of
-git-lfs do the single-process thing, and I think any sort of
-external-odb hook should be modeled on that protocol.
-
-> Need to investigate an alternate batching scheme where we can make a 
-> single request for a set of "related" blobs and receive single a 
-> packfile (especially during checkout).
-
-I think this sort of batching is going to be the really hard part to
-retrofit onto git. Because you're throwing out the procedural notion
-that you can loop over a set of objects and ask for each individually.
-You have to start deferring computation until answers are ready. Some
-operations can do that reasonably well (e.g., checkout), but something
-like "git log -p" is constantly digging down into history. I suppose you
-could just perform the skeleton of the operation _twice_, once to find
-the list of objects to fault in, and the second time to actually do it.
-
-That will make git feel a lot slower, because a lot of the illusion of
-speed is the way it streams out results. OTOH, if you have to wait to
-fault in objects from the network, it's going to feel pretty slow
-anyway. :)
-
--Peff
+understood. I like the idea of being able to specify
+multiple remotes from the superproject..
