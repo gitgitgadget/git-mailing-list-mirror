@@ -6,75 +6,65 @@ X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5DA7020756
-	for <e@80x24.org>; Tue, 17 Jan 2017 15:34:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BDB4420756
+	for <e@80x24.org>; Tue, 17 Jan 2017 15:35:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750982AbdAQPeI (ORCPT <rfc822;e@80x24.org>);
-        Tue, 17 Jan 2017 10:34:08 -0500
-Received: from cloud.peff.net ([104.130.231.41]:40197 "EHLO cloud.peff.net"
+        id S1750990AbdAQPfK (ORCPT <rfc822;e@80x24.org>);
+        Tue, 17 Jan 2017 10:35:10 -0500
+Received: from cloud.peff.net ([104.130.231.41]:40206 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750849AbdAQPeH (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 17 Jan 2017 10:34:07 -0500
-Received: (qmail 5394 invoked by uid 109); 17 Jan 2017 15:34:07 -0000
+        id S1750888AbdAQPfK (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 17 Jan 2017 10:35:10 -0500
+Received: (qmail 5467 invoked by uid 109); 17 Jan 2017 15:35:09 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 17 Jan 2017 15:34:07 +0000
-Received: (qmail 18165 invoked by uid 111); 17 Jan 2017 15:35:01 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 17 Jan 2017 15:35:09 +0000
+Received: (qmail 18205 invoked by uid 111); 17 Jan 2017 15:36:03 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 17 Jan 2017 10:35:01 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 17 Jan 2017 10:34:04 -0500
-Date:   Tue, 17 Jan 2017 10:34:04 -0500
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 17 Jan 2017 10:36:03 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 17 Jan 2017 10:35:07 -0500
+Date:   Tue, 17 Jan 2017 10:35:07 -0500
 From:   Jeff King <peff@peff.net>
 To:     santiago@nyu.edu
 Cc:     git@vger.kernel.org, gitster@pobox.com, sunshine@sunshineco.com,
-        walters@verbum.org, Lukas Puehringer <luk.puehringer@gmail.com>
-Subject: Re: [PATCH v5 5/7] builtin/tag: add --format argument for tag -v
-Message-ID: <20170117153404.jp3ftdlzeyut6e7a@sigill.intra.peff.net>
+        walters@verbum.org
+Subject: Re: [PATCH v5 7/7] t/t7004-tag: Add --format specifier tests
+Message-ID: <20170117153507.vr3i6k5hl3whjorf@sigill.intra.peff.net>
 References: <20170115184705.10376-1-santiago@nyu.edu>
- <20170115184705.10376-6-santiago@nyu.edu>
+ <20170115184705.10376-8-santiago@nyu.edu>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20170115184705.10376-6-santiago@nyu.edu>
+In-Reply-To: <20170115184705.10376-8-santiago@nyu.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Jan 15, 2017 at 01:47:03PM -0500, santiago@nyu.edu wrote:
+On Sun, Jan 15, 2017 at 01:47:05PM -0500, santiago@nyu.edu wrote:
 
-> -static int for_each_tag_name(const char **argv, each_tag_name_fn fn)
-> +static int for_each_tag_name(const char **argv, each_tag_name_fn fn,
-> +		void *cb_data)
->  {
->  	const char **p;
->  	char ref[PATH_MAX];
->  	int had_error = 0;
->  	unsigned char sha1[20];
+> From: Santiago Torres <santiago@nyu.edu>
+> 
+> tag -v now supports --format specifiers to inspect the contents of a tag
+> upon verification. Add two tests to ensure this behavior is respected in
+> future changes.
+> 
+> Signed-off-by: Santiago Torres <santiago@nyu.edu>
+> ---
+>  t/t7004-tag.sh | 16 ++++++++++++++++
+>  1 file changed, 16 insertions(+)
+> 
+> diff --git a/t/t7004-tag.sh b/t/t7004-tag.sh
+> index 07869b0c0..b2b81f203 100755
+> --- a/t/t7004-tag.sh
+> +++ b/t/t7004-tag.sh
+> @@ -874,6 +874,22 @@ test_expect_success GPG 'verifying a forged tag should fail' '
+>  	test_must_fail git tag -v forged-tag
+>  '
 >  
-> +
->  	for (p = argv; *p; p++) {
->  		if (snprintf(ref, sizeof(ref), "refs/tags/%s", *p)
->  					>= sizeof(ref)) {
+> +test_expect_success 'verifying a proper tag with --format pass and format accordingly' '
+> +	cat >expect <<-\EOF 
 
-Funny extra line?
-
->  {
-> -	return verify_and_format_tag(sha1, name, NULL, GPG_VERIFY_VERBOSE);
-> +	int flags;
-> +	char *fmt_pretty = cb_data;
-> +	flags = GPG_VERIFY_VERBOSE;
-> +
-> +	if (fmt_pretty)
-> +		flags = GPG_VERIFY_QUIET;
-> +
-> +	return verify_and_format_tag(sha1, ref, fmt_pretty, flags);
-
-It seems funny that VERBOSE and QUIET are bit-flags. What happens when
-you ask for GPG_VERIFY_VERBOSE|GPG_VERIFY_QUIET?
-
-I suppose this is actually not a problem in _this_ patch, but in the
-very first one that adds the QUIET flag. I'm not sure if the problem is
-that the options should be more orthogonal, or that they are just badly
-named to appear as opposites when they aren't.
+Trailing whitespace after "EOF" here (and below). Otherwise the tests
+look reasonable to me.
 
 -Peff
