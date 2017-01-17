@@ -2,190 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1969820756
-	for <e@80x24.org>; Tue, 17 Jan 2017 20:13:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E7C2C20756
+	for <e@80x24.org>; Tue, 17 Jan 2017 20:26:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751246AbdAQUNL (ORCPT <rfc822;e@80x24.org>);
-        Tue, 17 Jan 2017 15:13:11 -0500
-Received: from cloud.peff.net ([104.130.231.41]:40420 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751245AbdAQULr (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 17 Jan 2017 15:11:47 -0500
-Received: (qmail 22640 invoked by uid 109); 17 Jan 2017 20:05:06 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 17 Jan 2017 20:05:06 +0000
-Received: (qmail 20870 invoked by uid 111); 17 Jan 2017 20:06:00 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 17 Jan 2017 15:06:00 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 17 Jan 2017 15:05:04 -0500
-Date:   Tue, 17 Jan 2017 15:05:04 -0500
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org
-Subject: Re: [PATCH] CodingGuidelines: clarify multi-line brace style
-Message-ID: <20170117200503.3iwaedrgfq544b4i@sigill.intra.peff.net>
-References: <xmqqh94zbwlu.fsf@gitster.mtv.corp.google.com>
- <257b4175-9879-7814-5d8d-02050792574d@kdbg.org>
- <alpine.DEB.2.20.1701161251100.3469@virtualbox>
- <20170116160456.ltbb7ofe47xos7xo@sigill.intra.peff.net>
- <alpine.DEB.2.20.1701161746200.3469@virtualbox>
- <20170116220014.bwi5xi2br56lyqsw@sigill.intra.peff.net>
- <20170116220821.4tji5mrfcdbdpfuo@sigill.intra.peff.net>
- <xmqqfukhfpcc.fsf@gitster.mtv.corp.google.com>
+        id S1751268AbdAQU0u (ORCPT <rfc822;e@80x24.org>);
+        Tue, 17 Jan 2017 15:26:50 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:51376 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1750941AbdAQU0t (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 17 Jan 2017 15:26:49 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id B07F8612D2;
+        Tue, 17 Jan 2017 15:21:12 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=CfgfdC8ebuanQbzKO/hdOOsNYDg=; b=Nv7aWm
+        WtyW/r7u8LduDToIjD+jE/bWY17gYHo0coTMJ+VoQpHkCYh9iLKsY41uEbCnHK9N
+        UPuWaDJ294Olsdhzoet+qQB+9jRI/8QMBfqmXQfECtne1tN8xIqPYCjzcPV4VqXV
+        P7JioUlw4Jcc8y3VPQv8L6AOzkRiFecudCBok=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=ffMlq9lTlcEfu+8HBgngFPssWcQy35/g
+        4nKQbPe4Q5PRPQOlkI+7BP8EyUkNNjkcacX4iOWhYNSiLN/lOT/6IsDvN2aLFGk/
+        S2eSw+JUGoiyeGax3qbkwe9xmgzxSSn4S2zuk+XnPRE/UlqMXysJnyxeBNlLEqij
+        +FtR51MFgYM=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id A8830612D1;
+        Tue, 17 Jan 2017 15:21:12 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 06AD3612D0;
+        Tue, 17 Jan 2017 15:21:11 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Stephan Beyer <s-beyer@gmx.net>
+Cc:     git <git@vger.kernel.org>
+Subject: Re: [RFC] stash --continue
+References: <cd784a4e-ee99-564e-81de-9f7f6cc26c67@gmx.net>
+Date:   Tue, 17 Jan 2017 12:21:10 -0800
+In-Reply-To: <cd784a4e-ee99-564e-81de-9f7f6cc26c67@gmx.net> (Stephan Beyer's
+        message of "Mon, 16 Jan 2017 00:56:00 +0100")
+Message-ID: <xmqqy3y9e8uh.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.90 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqfukhfpcc.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 7D19CAF0-DCF2-11E6-AC9A-A7617B1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jan 17, 2017 at 11:39:31AM -0800, Junio C Hamano wrote:
+Stephan Beyer <s-beyer@gmx.net> writes:
 
-> Jeff King <peff@peff.net> writes:
-> 
-> >> I think this is pretty clearly the "gray area" mentioned there. Which
-> >> yes, does not say "definitely do it this way", but I hope makes it clear
-> >> that you're supposed to use judgement about readability.
-> >
-> > So here's a patch.
-> >
-> > I know we've usually tried to keep this file to guidelines and not
-> > rules, but clearly it has not been clear-cut enough in this instance.
-> 
-> I have two "Huh?" with this patch.
-> 
->  1. Two exceptions are not treated the same way.  The first one is
->     "... extends over a few lines, it is excempt from the rule,
->     period".  The second one, is ambivalent by saying "it can make
->     sense", implying that "it may not make sense", so I am not sure
->     if this is clarifying that much.
-> 
->     If we want to clarify, perhaps drop "it can make sense to" and
->     say
-> 
-> 	When there are multiple arms to a conditional, and some of
-> 	them require braces, enclose even a single line block in
-> 	braces for consistency.
-> 
->     perhaps?
+> This led to the idea to have something like "git stash --continue"[1]
+> that would expect the user to "git add" the resolved files (as "git
+> status" suggests) but then leads to the expected result, i.e. the index
+> being the same as before the conflict, the stash being dropped (if "pop"
+> was used instead of "apply"), etc.
+>
+> Likewise, some "git stash --abort"[2] might be useful in case you did
+> "git stash pop" with the wrong stash in mind.
+>
+> What do you think about that?
 
-Yeah. I obviously was adapting the original text, and I think I left too
-much of the wishy-washy-ness in. As the point of the patch is to avoid
-that, let's take your suggestion. A re-rolled patch is below.
+"git stash pop --continue" (and "git stash apply --continue") would
+make quite a lot of sense.  I like it very much primarily because it
+will give us an opportunity to correct a major UI glitches around
+applying stashed changes to the working tree.
 
-Now the patch is at least self-consistent. The bigger question remains
-of: do we want to dictate these rules, or did we prefer the vague
-version?
+Don't people find it strange that "stash pop" that applies cleanly
+would not touch the index, leaving (an equivalent of) the changes
+stashed earlier floating in the working tree, but "stash pop" that
+conflicts and needs a three-way merge touches the index and the
+usual way of concluding the manual conflict resolution is "git add"
+the paths, meaning that the changes that were not ready hence
+floating in the working tree back when the stash was made goes into
+the index when the user concludes "stash pop"?
 
-I _thought_ the vague rules were doing fine, but this whole discussion
-has made me think otherwise. And I'd just as soon not ever have to
-repeat it. ;-/
-
-OTOH, I really do not want to review a bunch of patches that do nothing
-but change brace style (and I am sure there is a mix of styles already
-in the code base).
-
->  2. I actually think it is OK to leave some things "gray", but the
->     confusion comes when people do not know what to do to things
->     that are "gray", and they need a rule for that to be spelled
->     out.
-> 
-> 	When the project says it does not have strong preference
-> 	among multiple choices, you are welcome to write your new
-> 	code using any of them, as long as you are consistent with
-> 	surrounding code.  Do not change style of existing code only
-> 	to flip among these styles, though.
-> 
->     That obviously is not limited to the rule/guideline for braces.
-
-The existing document says:
-
-    Make your code readable and sensible, and don't try to be clever.
-    
-    As for more concrete guidelines, just imitate the existing code
-    (this is a good guideline, no matter which project you are
-    contributing to). It is always preferable to match the _local_
-    convention. New code added to Git suite is expected to match
-    the overall style of existing code. Modifications to existing
-    code is expected to match the style the surrounding code already
-    uses (even if it doesn't match the overall style of existing code).
-    
-    But if you must have a list of rules, here they are.
-
-I guess that is the place to expound on how to interpret the rules. I
-dunno. Some of the individual rules that go into "gray areas" already
-spell out the "surrounding code" rule.
-
--Peff
-
--- >8 --
-Subject: [PATCH] CodingGuidelines: clarify multi-line brace style
-
-There are some "gray areas" around when to omit braces from
-a conditional or loop body. Since that seems to have
-resulted in some arguments, let's be a little more clear
-about our preferred style.
-
-Signed-off-by: Jeff King <peff@peff.net>
----
- Documentation/CodingGuidelines | 37 ++++++++++++++++++++++++++++++++-----
- 1 file changed, 32 insertions(+), 5 deletions(-)
-
-diff --git a/Documentation/CodingGuidelines b/Documentation/CodingGuidelines
-index 4cd95da6b..a4191aa38 100644
---- a/Documentation/CodingGuidelines
-+++ b/Documentation/CodingGuidelines
-@@ -206,11 +206,38 @@ For C programs:
- 		x = 1;
- 	}
- 
--   is frowned upon.  A gray area is when the statement extends
--   over a few lines, and/or you have a lengthy comment atop of
--   it.  Also, like in the Linux kernel, if there is a long list
--   of "else if" statements, it can make sense to add braces to
--   single line blocks.
-+   is frowned upon. But there are a few exceptions:
-+
-+	- When the statement extends over a few lines (e.g., a while loop
-+	  with an embedded conditional, or a comment). E.g.:
-+
-+		while (foo) {
-+			if (x)
-+				one();
-+			else
-+				two();
-+		}
-+
-+		if (foo) {
-+			/*
-+			 * This one requires some explanation,
-+			 * so we're better off with braces to make
-+			 * it obvious that the indentation is correct.
-+			 */
-+			doit();
-+		}
-+
-+	- When there are multiple arms to a conditional and some of them
-+	  require braces, enclose even a single line block in braces for
-+	  consistency. E.g.:
-+
-+		if (foo) {
-+			doit();
-+		} else {
-+			one();
-+			two();
-+			three();
-+		}
- 
-  - We try to avoid assignments in the condition of an "if" statement.
- 
--- 
-2.11.0.651.g41f4a5c4e
-
+With an explicit "--continue", we can fix that so that we reset the
+index to the HEAD.  That way, whether the changes have conflict with
+the HEAD's tree or not, the end user after "stash pop" will see the
+changes in the working tree and "git diff" (no HEAD argument or
+"--cached" option) will consistently show what came from the stash.
