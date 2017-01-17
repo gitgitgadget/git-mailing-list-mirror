@@ -6,111 +6,104 @@ X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5793920756
-	for <e@80x24.org>; Tue, 17 Jan 2017 23:39:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 601B620756
+	for <e@80x24.org>; Tue, 17 Jan 2017 23:39:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751646AbdAQXjC (ORCPT <rfc822;e@80x24.org>);
-        Tue, 17 Jan 2017 18:39:02 -0500
-Received: from mail-qk0-f195.google.com ([209.85.220.195]:36735 "EHLO
-        mail-qk0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751378AbdAQXhb (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1751671AbdAQXjD (ORCPT <rfc822;e@80x24.org>);
+        Tue, 17 Jan 2017 18:39:03 -0500
+Received: from mail-qk0-f196.google.com ([209.85.220.196]:34675 "EHLO
+        mail-qk0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750929AbdAQXhb (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 17 Jan 2017 18:37:31 -0500
-Received: by mail-qk0-f195.google.com with SMTP id a20so17393618qkc.3
-        for <git@vger.kernel.org>; Tue, 17 Jan 2017 15:37:31 -0800 (PST)
+Received: by mail-qk0-f196.google.com with SMTP id e1so17318007qkh.1
+        for <git@vger.kernel.org>; Tue, 17 Jan 2017 15:37:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=nyu-edu.20150623.gappssmtp.com; s=20150623;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=L9pTUSxhSFAnaBnu4W6ny9V2hvmph+6SD7wi+DKjw30=;
-        b=mVZFhcowTL8g6GZxWoyFz/Pw/0uTTrm+k2ciN6hKAKUyYxmVAFmheimWST41YAc9Vo
-         2EVi28ptstoKVUqR+uty6swnIRvsJ1kJWNK0MRYt/x3t1uE2TuHwpdWM9Sdgo78sInLu
-         HTAYzafTBOZQoqnOvl7V8mtfBQuZv1sbVDA0PlCTgbx5TAOvWrio9io2REOCwgYW0NoR
-         xDl+WnCZgVQcGr39P6ZByZ+FTyDiL+8yf8PVn1CmyBmSzCBGzOmsYnk18zLokURcljI4
-         dQmMxgUaHsRnu5jBgR70Tjw8zREMM7X41Rc/YlfMYEJcB6TBqohpNFFmz4lagYCsKhqg
-         w6kA==
+        h=from:to:cc:subject:date:message-id;
+        bh=J+pgVhl9SGpfc9XCTo6SFHN6VzONtZwqd8YxH6Tnf/w=;
+        b=FhL8qeRR5TyGkje12B7xNH1ETMDKPqWsvDdT1tf0CnBgrPPRHtCWa9ooz6zJKJQpxi
+         bcaKaphmV2DYDRORFquorH0DfVaS8VbObjikd69brEoUmAcNLpZXB7NLSlyNN+CbMD0v
+         GC+vg9YR8rUo0ZC37sOlPEMgg3IUj5uj21ff+fIm6yplzLyPn79mwwl+EMLHu8otnh11
+         dgEQ894kX7ZIDQttXZKYktPuuWI9awoejgZWgXOTvJkIjKIn68+fxxfaCuTwuDHbjEa4
+         z9iMJeyo9y322QXsGqptIk5Eqvkblk20XyuXKvbqmoMY7aIBUtDJBr9sZfrXk8boiqaf
+         VRnA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=L9pTUSxhSFAnaBnu4W6ny9V2hvmph+6SD7wi+DKjw30=;
-        b=QGNZe3ad/JnSStNlI9VuOmhd/QMpkj8SfH3yqnrRrj3q7V6Ae/XFq/Ov/J0jZ17WLK
-         CEAxHhPYm7BcjX5Re86Y32AepFRFnEbbQ5xsH8HzfedkyBQaYyrTv5PnEEgql5aQGpVr
-         aXOnt7YJBqooZGoDPFVlM0toAbR77BJPEkx0i3J7CMQ6RWV3/+P+9+llgcCr34ynA+y6
-         J0GcSnaerWyBvmyLeGbGxRiaiXkh0LDmvnW5Cv3SlkhR5BFSKAQIzR5zi/a3glACgxUu
-         rsZZnHWpnskYmpQKLcN3QX9OzJpWlJKyI48Zosoknps9yXYIyoaX+xVvY/iQAkTbiJ84
-         pjSQ==
-X-Gm-Message-State: AIkVDXKxhLo4RqvWzOrCKta+ahMZDzYOm5uEvx6WQzDT1eIVOEdQDH7H6r8bb6xbF2AwrB7a
-X-Received: by 10.55.204.197 with SMTP id n66mr216805qkl.205.1484696250954;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=J+pgVhl9SGpfc9XCTo6SFHN6VzONtZwqd8YxH6Tnf/w=;
+        b=bZwY1R1V76FDJGqFU7q0I1cIOXTW8vm3ladttxs6l3LLY+g9CPdvg95XTLg/CPrzrB
+         BSPWg8OC671tYvMpBzReqteI+HpaNtDzZscipzuQMU6NQdWuEZzDJEcoipQUGiiTGK0z
+         dasAnabWhXKgAvvun8e5ILSHlL11C43lcbArk3JMLvwO5oNhxPrOy6jgvBXEfmRcwVPr
+         o1uqSWn0iAgrqbRJSAZF+Aingj9JUxRIsVPLu77SbRKfUns9Ys0dY3cYhtf06TZagJod
+         yfjTcLHOEWCvAGtjQJ4bmIf9xTQEpDN80dvRaTK9xOr9UHEPblJ6T8p2idfuEbcpzXaH
+         PMNw==
+X-Gm-Message-State: AIkVDXIUUd7BxjPWSq1pIXaTn8XZMcATmTB33jjwz3LsYpLbIIZGsEjSONZhqqUx+W/EnM/Q
+X-Received: by 10.55.168.68 with SMTP id r65mr221671qke.189.1484696250321;
         Tue, 17 Jan 2017 15:37:30 -0800 (PST)
 Received: from localhost.localdomain (NYUFWA-WLESSAUTHCLIENTS-17.NATPOOL.NYU.EDU. [216.165.95.6])
-        by smtp.gmail.com with ESMTPSA id c1sm3405814qke.36.2017.01.17.15.37.30
+        by smtp.gmail.com with ESMTPSA id c1sm3405814qke.36.2017.01.17.15.37.29
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 17 Jan 2017 15:37:30 -0800 (PST)
+        Tue, 17 Jan 2017 15:37:29 -0800 (PST)
 From:   santiago@nyu.edu
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, peff@peff.net, sunshine@sunshineco.com,
-        walters@verbum.org, Lukas Puehringer <luk.puehringer@gmail.com>
-Subject: [PATCH v6 1/6] gpg-interface,tag: add GPG_VERIFY_OMIT_STATUS flag
-Date:   Tue, 17 Jan 2017 18:37:18 -0500
-Message-Id: <20170117233723.23897-2-santiago@nyu.edu>
+        walters@verbum.org, Santiago Torres <santiago@nyu.edu>
+Subject: [PATCH v6 0/6] Add --format to tag verification
+Date:   Tue, 17 Jan 2017 18:37:17 -0500
+Message-Id: <20170117233723.23897-1-santiago@nyu.edu>
 X-Mailer: git-send-email 2.11.0
-In-Reply-To: <20170117233723.23897-1-santiago@nyu.edu>
-References: <20170117233723.23897-1-santiago@nyu.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Lukas Puehringer <luk.puehringer@gmail.com>
+From: Santiago Torres <santiago@nyu.edu>
 
-Functions that print git object information may require that the
-gpg-interface functions be silent. Add GPG_VERIFY_OMIT_STATUS flag and
-prevent print_signature_buffer from being called if flag is set.
+This is the sixth iteration of [1][2][3][4][5], and as a result of the
+discussion in [5]. The main goal of this patch series is to bring
+--format to git tag verification so that upper-layer tools can inspect
+the content of a tag and make decisions based on it.
 
-Signed-off-by: Lukas Puehringer <luk.puehringer@gmail.com>
----
- gpg-interface.h | 5 +++--
- tag.c           | 5 ++++-
- 2 files changed, 7 insertions(+), 3 deletions(-)
+In this re-woll we:
 
-diff --git a/gpg-interface.h b/gpg-interface.h
-index ea68885ad..d2d4fd3a6 100644
---- a/gpg-interface.h
-+++ b/gpg-interface.h
-@@ -1,8 +1,9 @@
- #ifndef GPG_INTERFACE_H
- #define GPG_INTERFACE_H
- 
--#define GPG_VERIFY_VERBOSE	1
--#define GPG_VERIFY_RAW		2
-+#define GPG_VERIFY_VERBOSE		1
-+#define GPG_VERIFY_RAW			2
-+#define GPG_VERIFY_OMIT_STATUS	4
- 
- struct signature_check {
- 	char *payload;
-diff --git a/tag.c b/tag.c
-index d1dcd18cd..243d1fdbb 100644
---- a/tag.c
-+++ b/tag.c
-@@ -3,6 +3,7 @@
- #include "commit.h"
- #include "tree.h"
- #include "blob.h"
-+#include "gpg-interface.h"
- 
- const char *tag_type = "tag";
- 
-@@ -24,7 +25,9 @@ static int run_gpg_verify(const char *buf, unsigned long size, unsigned flags)
- 
- 	ret = check_signature(buf, payload_size, buf + payload_size,
- 				size - payload_size, &sigc);
--	print_signature_buffer(&sigc, flags);
-+
-+	if (!(flags & GPG_VERIFY_OMIT_STATUS))
-+		print_signature_buffer(&sigc, flags);
- 
- 	signature_check_clear(&sigc);
- 	return ret;
+* Changed the call interface so printing is done outside of verification. 
+
+* Fixed a couple of whitespace issues and whatnot. 
+
+Thanks,
+-Santiago
+
+[1] http://public-inbox.org/git/20170115184705.10376-1-santiago@nyu.edu/
+[2] http://public-inbox.org/git/20161007210721.20437-1-santiago@nyu.edu/
+[3] http://public-inbox.org/git/20160930221806.3398-1-santiago@nyu.edu/
+[4] http://public-inbox.org/git/20160922185317.349-1-santiago@nyu.edu/
+[5] http://public-inbox.org/git/20160926224233.32702-1-santiago@nyu.edu/
+[6] http://public-inbox.org/git/20160607195608.16643-1-santiago@nyu.edu/
+[7] http://public-inbox.org/git/20161019203546.dfqmi2czcxopgj6w@sigill.intra.peff.net/
+[8] http://public-inbox.org/git/20161019203943.epjxnfci7vcqg4xv@sigill.intra.peff.net/
+
+Lukas Puehringer (3):
+  gpg-interface,tag: add GPG_VERIFY_OMIT_STATUS flag
+  ref-filter: add function to print single ref_array_item
+  builtin/tag: add --format argument for tag -v
+
+Santiago Torres (3):
+  builtin/verify-tag: add --format to verify-tag
+  t/t7030-verify-tag: Add --format specifier tests
+  t/t7004-tag: Add --format specifier tests
+
+ Documentation/git-tag.txt        |  2 +-
+ Documentation/git-verify-tag.txt |  2 +-
+ builtin/tag.c                    | 38 ++++++++++++++++++++++++++++----------
+ builtin/verify-tag.c             | 23 ++++++++++++++++++++---
+ gpg-interface.h                  |  5 +++--
+ ref-filter.c                     | 27 +++++++++++++++++++++------
+ ref-filter.h                     |  7 +++++++
+ t/t7004-tag.sh                   | 16 ++++++++++++++++
+ t/t7030-verify-tag.sh            | 16 ++++++++++++++++
+ tag.c                            |  5 ++++-
+ 10 files changed, 117 insertions(+), 24 deletions(-)
+
 -- 
 2.11.0
 
