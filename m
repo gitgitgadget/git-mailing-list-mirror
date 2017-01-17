@@ -2,73 +2,76 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 730F220756
+	by dcvr.yhbt.net (Postfix) with ESMTP id 89765215FB
 	for <e@80x24.org>; Tue, 17 Jan 2017 21:47:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751292AbdAQVr2 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 17 Jan 2017 16:47:28 -0500
-Received: from cloud.peff.net ([104.130.231.41]:40546 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750947AbdAQVrZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 17 Jan 2017 16:47:25 -0500
-Received: (qmail 29057 invoked by uid 109); 17 Jan 2017 21:47:25 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 17 Jan 2017 21:47:25 +0000
-Received: (qmail 22299 invoked by uid 111); 17 Jan 2017 21:48:19 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 17 Jan 2017 16:48:19 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 17 Jan 2017 16:47:23 -0500
-Date:   Tue, 17 Jan 2017 16:47:23 -0500
-From:   Jeff King <peff@peff.net>
+        id S1751263AbdAQVrY (ORCPT <rfc822;e@80x24.org>);
+        Tue, 17 Jan 2017 16:47:24 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:59806 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751033AbdAQVrV (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 17 Jan 2017 16:47:21 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id D91AB61CEB;
+        Tue, 17 Jan 2017 16:46:52 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=9uXoZyEqMsoR7cK7oUdZAmplo4o=; b=lkVF7J
+        KyoT26GL7Qd+EWm+VvSloY7uoaR5L5a/f8WwwKdLT1zDJwTEBhXlwtoQDo0fINcI
+        W9TESSLBPH1m3Fmxl78uWJz1Yz5o7OyjiPz9XATgJWFiAeLf7P1a0ebD55cakeO0
+        VMXIeuHbTwSzpGyyPflwgvk5FdX6T5WBt+VKU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=qOSpn4lnG1I2XbQkUuOkD03CmdESsup1
+        PvJBaWrbCJcvVZelFRAdQYfFL/JZJ9uoHc4tnmMbZbB2GgRuO3IR3gAkjFG6A7k3
+        Fmh2nltrtRGALicdUj/eiKSQie9fWvM1ZdiS9gKopVmQiUB3wGMqCzlVtyVri458
+        6EaF1ndO2q0=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id D069A61CEA;
+        Tue, 17 Jan 2017 16:46:52 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 3065261CE9;
+        Tue, 17 Jan 2017 16:46:52 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
 To:     Johannes Schindelin <johannes.schindelin@gmx.de>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Thomas Gummerer <t.gummerer@gmail.com>,
-        Andrew Arnott <Andrew.Arnott@microsoft.com>
-Subject: Re: [PATCH 2/2] Be more careful when determining whether a remote
- was configured
-Message-ID: <20170117214723.p5rni6wwggei366j@sigill.intra.peff.net>
-References: <cover.1484687919.git.johannes.schindelin@gmx.de>
- <41c347f22c80e96c54db34baa739b6e37e268b61.1484687919.git.johannes.schindelin@gmx.de>
+Cc:     git@vger.kernel.org, David Aguilar <davvid@gmail.com>,
+        Dennis Kaarsemaker <dennis@kaarsemaker.net>,
+        Paul Sbarra <sbarra.paul@gmail.com>
+Subject: Re: [PATCH v5 3/3] Retire the scripted difftool
+References: <cover.1483373635.git.johannes.schindelin@gmx.de>
+        <cover.1484668473.git.johannes.schindelin@gmx.de>
+        <8238bba389c031b091a37396fed43cac94d944e7.1484668473.git.johannes.schindelin@gmx.de>
+Date:   Tue, 17 Jan 2017 13:46:51 -0800
+In-Reply-To: <8238bba389c031b091a37396fed43cac94d944e7.1484668473.git.johannes.schindelin@gmx.de>
+        (Johannes Schindelin's message of "Tue, 17 Jan 2017 16:55:04 +0100
+        (CET)")
+Message-ID: <xmqqk29tcqb8.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.90 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <41c347f22c80e96c54db34baa739b6e37e268b61.1484687919.git.johannes.schindelin@gmx.de>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 74E1D146-DCFE-11E6-9FD0-FE3F13518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jan 17, 2017 at 10:19:24PM +0100, Johannes Schindelin wrote:
+Johannes Schindelin <johannes.schindelin@gmx.de> writes:
 
-> One of the really nice features of the ~/.gitconfig file is that users
-> can override defaults by their own preferred settings for all of their
-> repositories.
-> 
-> One such default that some users like to override is whether the
-> "origin" remote gets auto-pruned or not. The user would simply call
-> 
-> 	git config --global remote.origin.prune true
-> 
-> and from now on all "origin" remotes would be pruned automatically when
-> fetching into the local repository.
-> 
-> There is just one catch: now Git thinks that the "origin" remote is
-> configured, as it does not discern between having a remote whose
-> fetch (and/or push) URL and refspec is set, and merely having
-> preemptively-configured, global flags for specific remotes.
-> 
-> Let's fix this by telling Git that a remote is not configured unless any
-> fetch/push URL or refspect is configured explicitly.
+> It served its purpose, but now we have a builtin difftool. Time for the
+> Perl script to enjoy Florida.
+>
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
 
-Hmm. Old versions of GitHub for Windows used to set fetch refspecs in
-the system gitconfig, for a similar purpose to what you want to do with
-remote.origin.prune.
+The endgame makes a lot of sense.  Both in the cover letter and in
+the previous patch you talk about having both in the released
+version, so do you want this step to proceed slower than the other
+two?  I.e. merge all three to 'next' but graduate only the first two
+to 'master' and after a while make this last step graduate?
 
-I notice here that setting a refspec _does_ define a remote. Is there a
-reason you drew the line there, and not at, say, whether it has a URL?
-
--Peff
