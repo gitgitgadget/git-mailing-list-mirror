@@ -2,79 +2,83 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6264E20756
-	for <e@80x24.org>; Tue, 17 Jan 2017 21:17:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6718020756
+	for <e@80x24.org>; Tue, 17 Jan 2017 21:19:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751033AbdAQVRn (ORCPT <rfc822;e@80x24.org>);
-        Tue, 17 Jan 2017 16:17:43 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:55468 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751030AbdAQVRm (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 17 Jan 2017 16:17:42 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 2213061F7B;
-        Tue, 17 Jan 2017 16:17:42 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=XZiq3/636722/obGOpGPrL7EOBU=; b=uJu+KY
-        APy8iTwjTSP7vl5dHX2PXJy7d4h/yyWAY7BY0XtivrunVPGxjj0TakYAOmJJXg39
-        mVnWfQ80iIvbKl+H7Hvv4O4bFjEyQk/pI64K50QbWGI/taNz/PTR7OzrG4cDDMej
-        TRa5o6BXiRrNhFwLzl1PVjkCbvszZQhthoUBo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=K2k2jlSvhH9nCRVB4/5aRxS/lzBZif0d
-        hLRftw5y/ks7jr1Osrnz7dDFj3WOLtU0uLkT6wlJ77TiwdhrbCiKOIZFGOZz2+ic
-        0CVz9pTPETo3j0mJulWXXD/fjK5jbXiTuR6h2TSxVDeyOltn1ekmbAgSn2miLFE7
-        Izyq4Eq1zjg=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 1A0AA61F7A;
-        Tue, 17 Jan 2017 16:17:42 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 5A80161F78;
-        Tue, 17 Jan 2017 16:17:41 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH 4/6] fsck: tighten error-checks of "git fsck <head>"
-References: <20170116212231.ojoqzlajpszifaf3@sigill.intra.peff.net>
-        <20170116213329.jk26zvcp7erzfc6l@sigill.intra.peff.net>
-Date:   Tue, 17 Jan 2017 13:17:39 -0800
-In-Reply-To: <20170116213329.jk26zvcp7erzfc6l@sigill.intra.peff.net> (Jeff
-        King's message of "Mon, 16 Jan 2017 16:33:29 -0500")
-Message-ID: <xmqq1sw1e68c.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.90 (gnu/linux)
+        id S1751025AbdAQVTZ (ORCPT <rfc822;e@80x24.org>);
+        Tue, 17 Jan 2017 16:19:25 -0500
+Received: from mout.gmx.net ([212.227.17.20]:52157 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1750924AbdAQVTY (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 17 Jan 2017 16:19:24 -0500
+Received: from virtualbox ([37.24.141.236]) by mail.gmx.com (mrgmx103
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MfmZs-1c6ad52Ac8-00NAZK; Tue, 17
+ Jan 2017 22:18:59 +0100
+Date:   Tue, 17 Jan 2017 22:18:58 +0100 (CET)
+From:   Johannes Schindelin <johannes.schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     git@vger.kernel.org
+cc:     Junio C Hamano <gitster@pobox.com>,
+        Thomas Gummerer <t.gummerer@gmail.com>,
+        Andrew Arnott <Andrew.Arnott@microsoft.com>
+Subject: [PATCH 0/2] Fix remote_is_configured()
+Message-ID: <cover.1484687919.git.johannes.schindelin@gmx.de>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 614FB4F8-DCFA-11E6-9F4D-A7617B1B28F4-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:DYdNyOxPPtEiMGqIqsX/JaNn0W4WW1gQ4PtPDXCBQbWvmRgN0ic
+ UyjQQbg/OTdaeLUsX1UcBqccWY/HjZj2e8P2nvjFJL4y5KcoaV+haE4S3Odqnzjc0Lqwe4D
+ 47emEh6MLCvN4qYhvI38bIo8rL2NHXqbFjxUAl9UhoFZcBSOoGpkdkSw3w0V9r0iZB1zqzJ
+ s0LeNmWHXN2JgD205JDQw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:fQMh/p+Lims=:FWKMr1xp0auNRRV9AeO+Oj
+ Xm/4Ob+6OxEaGgu4oeP/VnN706xxoVZ1JbgKq9E/6UgTxArnWMctb3AQztyk7Y3Arj3AY2USW
+ VkDWhnrQAHXzCYtBekqu86bWEPrtrU64B2HxW9eYjzMVjUuAHEUBBhgdYw9/XbbG/nKtM9Ky7
+ loyIZzw02p+ClIjKXaIQ4em1RndDnPiUhn21zUp+IuwYMgQB1htY0zyOCZlMKwWRGDyABKSEU
+ NnPtJSbpaBrH4o95Qf/lDOZUQKFHGwH8y12PUidBYe5UhPuwdR5g1pVEADpJ0y5lpUN9z9oV5
+ 79XfEFXvv7g6XouKWZh0k6/6fCSMefAFZKQNMR/r1M3jKfJb8cPN0wVnMToymJjhG1izo+AdU
+ ylOWQgtmwX/drpfZLpnDiYCpPtVmgtlE+lR1go7ugubLfXIwpLHJK0xh8HBrFou9AtEXQl+xV
+ 8Ea//bm99WNrOf8YJHZvJ4Qi28CF5txlVZBqAE5ule3pnwZQSdMmMUmBh6sx8JVyJEqJ63Z8C
+ GZu8mvbtTkOH0rjWRam9Oh0WCaSYNUxYAP3UWlEYEbNAewXhDzog0eWA3RmiJSngNNRM4iOkE
+ 51PW3Yttn5EhgfBfPO3K3Ij74rBe7E6Q5LQvISiuPBd+dexia3CA2g4vUasBB44CSde2ZLcnS
+ 4zrtRTVkolKd94Jr+H+bibYrWzwdy6pElgHQ5psxfVni8y4gJKvKSc5GyKJsVMyq1LuduEV9T
+ kHjhAss8/CZ1zgGWqXJCFWk9EecrakeF+yplNktSuj0JTCWhjmMzHkOqby1OemlK8s3SWfrAR
+ XQje0jx
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+A surprising behavior triggered the bug report in
+https://github.com/git-for-windows/git/issues/888: the mere existence of
+the config setting "remote.origin.prune" (in this instance, configured
+via ~/.gitconfig so that it applies to all repositories) fooled `git
+remote rename <source> <target>` into believing that the <target> remote
+is already there.
 
-> Instead of checking reachability from the refs, you can ask
-> fsck to check from a particular set of heads. However, the
-> error checking here is quite lax. In particular:
->
->   1. It claims lookup_object() will report an error, which
->      is not true. It only does a hash lookup, and the user
->      has no clue that their argument was skipped.
->
->   2. When either the name or sha1 cannot be resolved, we
->      continue to exit with a successful error code, even
->      though we didn't check what the user asked us to.
->
-> This patch fixes both of these cases.
->
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
+This patch pair demonstrates the problem, and then fixes it (along with
+potential similar problems, such as setting an HTTP proxy for remotes of
+a given name via ~/.gitconfig).
 
-Makes sense, too.  Thanks.
+
+Johannes Schindelin (2):
+  remote rename: demonstrate a bogus "remote exists" bug
+  Be more careful when determining whether a remote was configured
+
+ remote.c          | 9 ++++++++-
+ remote.h          | 2 +-
+ t/t5505-remote.sh | 9 +++++++++
+ 3 files changed, 18 insertions(+), 2 deletions(-)
+
+
+base-commit: d7dffce1cebde29a0c4b309a79e4345450bf352a
+Published-As: https://github.com/dscho/git/releases/tag/rename-remote-v1
+Fetch-It-Via: git fetch https://github.com/dscho/git rename-remote-v1
+
+-- 
+2.11.0.windows.3
+
