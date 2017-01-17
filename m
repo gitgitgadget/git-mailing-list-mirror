@@ -2,71 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 65CAF20756
-	for <e@80x24.org>; Tue, 17 Jan 2017 17:43:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E835F20756
+	for <e@80x24.org>; Tue, 17 Jan 2017 18:34:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751328AbdAQRnK (ORCPT <rfc822;e@80x24.org>);
-        Tue, 17 Jan 2017 12:43:10 -0500
-Received: from mail-qt0-f193.google.com ([209.85.216.193]:35005 "EHLO
-        mail-qt0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751204AbdAQRnI (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 17 Jan 2017 12:43:08 -0500
-Received: by mail-qt0-f193.google.com with SMTP id f4so23152155qte.2
-        for <git@vger.kernel.org>; Tue, 17 Jan 2017 09:43:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=nyu-edu.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=UQ20SJe1XfHS7+Sf3h45DGqKeLu63vngLb5wJ2GcayY=;
-        b=XmzU6c+8C7Zu5HeOMl0NQR7zoOvT8OJvZNzDxUQF7UQvxrOzy63BtWXaUelJ7DMMsF
-         Rex0AJH4NCdxhffs72HMN6Gt5EonviHXZOhkDcmbpdufHTpDSzeEV6toalSwGw+RRoQA
-         ipWQy41++fWyVSNPbJOV5XDF9+vwK7GBU/17ZOP6fT8gBSOL+XZlN+2kEb7FQJh9ftYw
-         P74JfhrP1RDAU4St+WKvXlGFC+Z9L9oLVFNpHKmVrLZUPFxehTX0gtiHTb86NgCUnO3x
-         2Ky8mGHq3jrkCZzFfT0+to13KDjq626TjOm4Y+gwT8SJPRfaeFL1OiAVGF4zVtms6IgV
-         GA/w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=UQ20SJe1XfHS7+Sf3h45DGqKeLu63vngLb5wJ2GcayY=;
-        b=ZoD6EYh0xDaViRNqZCPanGV8no2mzynzu03EMUkJm1ZbDebKxsIAZMgkcHbapeaL26
-         uH3tKwG2iqGzJDHBU2ZrUgKCu9npjqQ/pAjvrgeHbxLqygKdEex0/ywPh4bD3GXY9zKn
-         ojFnWEjmfRjvveyGVjylMxZdkpr0DnxiCo7C9MKigJ5A1Y9iAD5ICf2/GXKnP87TZ//K
-         leN8LOK1/6uxaR+lr3LeRvlkrk/Vj4MyWot9n6TvhrgxbV5MxyxzO6oCg13l2xZD0XLx
-         8El+BUXnBHPL6TmgVDtNhOKsrO5PsLD8tzfKyejmaxx8IVF01bnuiQuserzEck9U0PTu
-         mAtw==
-X-Gm-Message-State: AIkVDXKorkBogjw40ygvO7nIg+2dCDfdAHYbCx1Pe8iHQAxj/PWlhx+jzECaXUPPYMXkAYnL
-X-Received: by 10.200.53.150 with SMTP id k22mr37666235qtb.19.1484674468385;
-        Tue, 17 Jan 2017 09:34:28 -0800 (PST)
-Received: from LykOS.localdomain (NYUFWA-WLESSAUTHCLIENTS-17.NATPOOL.NYU.EDU. [216.165.95.6])
-        by smtp.gmail.com with ESMTPSA id c41sm19290086qtd.3.2017.01.17.09.34.28
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 17 Jan 2017 09:34:28 -0800 (PST)
-Date:   Tue, 17 Jan 2017 12:34:27 -0500
-From:   Santiago Torres <santiago@nyu.edu>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org, gitster@pobox.com, sunshine@sunshineco.com,
-        walters@verbum.org, Lukas Puehringer <luk.puehringer@gmail.com>
-Subject: Re: [PATCH v5 5/7] builtin/tag: add --format argument for tag -v
-Message-ID: <20170117173427.sq3kpo4jls6setkf@LykOS.localdomain>
-References: <20170115184705.10376-1-santiago@nyu.edu>
- <20170115184705.10376-6-santiago@nyu.edu>
- <20170117153404.jp3ftdlzeyut6e7a@sigill.intra.peff.net>
- <20170117170018.nqk4yy5rrpomxr32@LykOS.localdomain>
- <20170117173239.ir6jxbz46vwwzoht@sigill.intra.peff.net>
+        id S1751274AbdAQSea (ORCPT <rfc822;e@80x24.org>);
+        Tue, 17 Jan 2017 13:34:30 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:54244 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751081AbdAQSe2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 17 Jan 2017 13:34:28 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id D59A55FAA8;
+        Tue, 17 Jan 2017 13:34:26 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:in-reply-to:references:date:message-id:mime-version
+        :content-type; s=sasl; bh=08ztGtYdVnZmXdWSe1JHKqXh7MY=; b=fN9oVd
+        pobIcRIAO+CFcfIbjfUgaU94YZ0Gg4Wp3vUDcWiIgxrudBXVH9cILF6RQQKIVuxH
+        4cYtqQYPFMqEQ30NSRraJuDjJlLIXXybg0PvbVbtC95hK7Mfh/DMvNu4v/tW8NRu
+        GGtdG5tCtQZWVrvOA0JF4USeiaybqgw6EUeQo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:in-reply-to:references:date:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=LgnNRKi/MhABfwZrzUmG7BS+54aUov/Z
+        THI2Xkwbuy/VDTiVKs5OkkKRQpkjW2NYcYF+F5Rz+trrBmElBGwGIA6Jq2/h8vza
+        OHcZ20Bg01NaHWmfhGflFviTws3UYeM/q97pL/R89QLxmlFyyCltMcUccE0UamSk
+        kV76f56+0WI=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id CB20A5FAA7;
+        Tue, 17 Jan 2017 13:34:26 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 219035FAA6;
+        Tue, 17 Jan 2017 13:34:26 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Paul Mackerras <paulus@ozlabs.org>
+Cc:     David Aguilar <davvid@gmail.com>,
+        Stefan Beller <sbeller@google.com>,
+        Andrew Janke <floss@apjanke.net>,
+        "git\@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: gitk pull request // was: Re: gitk: "lime" color incompatible with older Tk versions
+In-Reply-To: <xmqqy3yba1jg.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
+        message of "Sun, 15 Jan 2017 23:48:03 -0800")
+References: <03babaa1-9011-0010-c4b3-6cad8109d3ab@apjanke.net>
+        <CAGZ79kaO9T+Qc=M6s_ZdpAfLZCVQEYNF=zNxDWArDmsA7jjCWg@mail.gmail.com>
+        <20170113112043.j7nowdilolswyk2k@gmail.com>
+        <20170114084825.lcecrbtxny3ntulf@gmail.com>
+        <xmqq37gldp8g.fsf@gitster.mtv.corp.google.com>
+        <20170116031706.GA3322@fergus.ozlabs.ibm.com>
+        <xmqqy3yba1jg.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.90 (gnu/linux)
+Date:   Tue, 17 Jan 2017 10:34:24 -0800
+Message-ID: <xmqq4m0xpmbz.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-        protocol="application/pgp-signature"; boundary="4j2izw3neumihhta"
-Content-Disposition: inline
-In-Reply-To: <20170117173239.ir6jxbz46vwwzoht@sigill.intra.peff.net>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 92EE9036-DCE3-11E6-9A3A-A7617B1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Junio C Hamano <gitster@pobox.com> writes:
 
+> Paul Mackerras <paulus@ozlabs.org> writes:
+>
+>>> Paul, is it a good time to pull, or do you still have something not
+>>> published yet that should go together with what you have already
+>>> queued?
+>>
+>> I recently pushed out one more commit to update the Russian
+>> translation from Dimitriy Ryazantcev.  The head is now 8fef3f36b779.
+>> I have a couple more series that I am currently reviewing, but nothing
+>> immediately ready to publish.  It would be a good time for you to do a
+>> pull, since the "lime" color fix and the memory consumption fixes
+>> should be helpful for a lot of people.
+>
+> Thanks.  I did want to get the memory consumption fix sooner rather
+> than later, and this is very much appreciated.
+>
+> Pulled.
+
+Hmph.  I am getting these:
+
+        SUBDIR gitk-git
+    Generating catalog po/sv.msg
+    msgfmt --statistics --tcl po/sv.po -l sv -d po/
+    po/sv.po:1388: duplicate message definition...
+    po/sv.po:380: ...this is the location of the first definition
+    msgfmt: found 1 fatal error
+    make[1]: *** [po/sv.msg] Error 1
+    make: *** [all] Error 2
+
+Anybody else see this?
