@@ -2,110 +2,190 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2393D20756
-	for <e@80x24.org>; Tue, 17 Jan 2017 20:09:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1969820756
+	for <e@80x24.org>; Tue, 17 Jan 2017 20:13:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751156AbdAQUJk (ORCPT <rfc822;e@80x24.org>);
-        Tue, 17 Jan 2017 15:09:40 -0500
-Received: from mail-pg0-f53.google.com ([74.125.83.53]:36329 "EHLO
-        mail-pg0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750922AbdAQUJX (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 17 Jan 2017 15:09:23 -0500
-Received: by mail-pg0-f53.google.com with SMTP id t6so21876021pgt.3
-        for <git@vger.kernel.org>; Tue, 17 Jan 2017 12:09:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=from:to:cc:subject:date:message-id;
-        bh=XzcNe0qQ48ZSYvEfcDbSbxxewhbgtwNITSEXCj0DNYQ=;
-        b=Dq6zDFahY7aC/r4v0hT/APwVzWP4tvSl20aYTxLxH0ljmNWdl5eizDgDcjLlz1ChTG
-         jqF0lwFQg8MrMsoiT98XoBpKs4QCq/5Ib2LMPbbFQS703XQ7y2vT+1brsRzXYJHoJaWC
-         Fv0Ro3YmwnaIe4Hid9t42EhOjuqFEwbShqK4q67PhBtReEkxDzDuuK8cAeOeSetoulyJ
-         OoKO669fnwJ3GALhuVZ3PcB6V7xDHPOV2vuo3LdcN8HRRsaeL9b+smdjYFAB4ComxWyP
-         By4V9oh9OKcmUguagSXbwtPenbXs3znv11Io+E7NlBki4+z09GTBo+QZtqmILzJSH/0K
-         e1SQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=XzcNe0qQ48ZSYvEfcDbSbxxewhbgtwNITSEXCj0DNYQ=;
-        b=UogsjA+vjabAn6vDQqXYpbOT/i3FqmifQJMFPRjESUejikAT67jUYLNV/s6r4/LA01
-         r27dF+wLVXOppWqBCD+z32qd20VJgCWYyHVMijQTABRGUjMLRDuTQIQjTAYjvjxNc0My
-         6s+t+1/2EUaeHtu1NuaGa1zJuxhOwLasU7Dda/vLUZaQCM5Axc1leGcXtb+rGotVB/vM
-         J3XMgkMSGTRpbtz5zyzLH877doIPhn3R7W47C5MbwErz7OrSJ+Hfr/S8rIdSiMVtEWXZ
-         HNbn45bbIQ8cwNUJvNGr4Ew2lA1PFpslW6yaeu9Nv0dMpDUgn7yAySPKKmQ3Mp28rCAd
-         JMrg==
-X-Gm-Message-State: AIkVDXK0iT8w3HuaZNv9t0jhFdr5PvOTUWYCW9+ED6rgK8c3yXLc2bViousesGfEbjZAvHHl
-X-Received: by 10.84.224.133 with SMTP id s5mr62060044plj.130.1484683315735;
-        Tue, 17 Jan 2017 12:01:55 -0800 (PST)
-Received: from localhost ([2620:0:1000:5b10:871:ca27:8566:e7e])
-        by smtp.gmail.com with ESMTPSA id b69sm48566660pfd.90.2017.01.17.12.01.55
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 17 Jan 2017 12:01:55 -0800 (PST)
-From:   Stefan Beller <sbeller@google.com>
-To:     gitster@pobox.com
-Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>
-Subject: [PATCH] documentation: remove unfinished documentation
-Date:   Tue, 17 Jan 2017 12:01:47 -0800
-Message-Id: <20170117200147.25425-1-sbeller@google.com>
-X-Mailer: git-send-email 2.11.0.297.g298debce27
+        id S1751246AbdAQUNL (ORCPT <rfc822;e@80x24.org>);
+        Tue, 17 Jan 2017 15:13:11 -0500
+Received: from cloud.peff.net ([104.130.231.41]:40420 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751245AbdAQULr (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 17 Jan 2017 15:11:47 -0500
+Received: (qmail 22640 invoked by uid 109); 17 Jan 2017 20:05:06 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 17 Jan 2017 20:05:06 +0000
+Received: (qmail 20870 invoked by uid 111); 17 Jan 2017 20:06:00 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 17 Jan 2017 15:06:00 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 17 Jan 2017 15:05:04 -0500
+Date:   Tue, 17 Jan 2017 15:05:04 -0500
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org
+Subject: Re: [PATCH] CodingGuidelines: clarify multi-line brace style
+Message-ID: <20170117200503.3iwaedrgfq544b4i@sigill.intra.peff.net>
+References: <xmqqh94zbwlu.fsf@gitster.mtv.corp.google.com>
+ <257b4175-9879-7814-5d8d-02050792574d@kdbg.org>
+ <alpine.DEB.2.20.1701161251100.3469@virtualbox>
+ <20170116160456.ltbb7ofe47xos7xo@sigill.intra.peff.net>
+ <alpine.DEB.2.20.1701161746200.3469@virtualbox>
+ <20170116220014.bwi5xi2br56lyqsw@sigill.intra.peff.net>
+ <20170116220821.4tji5mrfcdbdpfuo@sigill.intra.peff.net>
+ <xmqqfukhfpcc.fsf@gitster.mtv.corp.google.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqfukhfpcc.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When looking for documentation for a specific function, you may be tempted
-to run
+On Tue, Jan 17, 2017 at 11:39:31AM -0800, Junio C Hamano wrote:
 
-  git -C Documentation grep index_name_pos
+> Jeff King <peff@peff.net> writes:
+> 
+> >> I think this is pretty clearly the "gray area" mentioned there. Which
+> >> yes, does not say "definitely do it this way", but I hope makes it clear
+> >> that you're supposed to use judgement about readability.
+> >
+> > So here's a patch.
+> >
+> > I know we've usually tried to keep this file to guidelines and not
+> > rules, but clearly it has not been clear-cut enough in this instance.
+> 
+> I have two "Huh?" with this patch.
+> 
+>  1. Two exceptions are not treated the same way.  The first one is
+>     "... extends over a few lines, it is excempt from the rule,
+>     period".  The second one, is ambivalent by saying "it can make
+>     sense", implying that "it may not make sense", so I am not sure
+>     if this is clarifying that much.
+> 
+>     If we want to clarify, perhaps drop "it can make sense to" and
+>     say
+> 
+> 	When there are multiple arms to a conditional, and some of
+> 	them require braces, enclose even a single line block in
+> 	braces for consistency.
+> 
+>     perhaps?
 
-only to find the file technical/api-in-core-index.txt, which doesn't
-help for understanding the given function. It would be better to not find
-these functions in the documentation, such that people directly dive into
-the code instead.
+Yeah. I obviously was adapting the original text, and I think I left too
+much of the wishy-washy-ness in. As the point of the patch is to avoid
+that, let's take your suggestion. A re-rolled patch is below.
 
-Signed-off-by: Stefan Beller <sbeller@google.com>
+Now the patch is at least self-consistent. The bigger question remains
+of: do we want to dictate these rules, or did we prefer the vague
+version?
+
+I _thought_ the vague rules were doing fine, but this whole discussion
+has made me think otherwise. And I'd just as soon not ever have to
+repeat it. ;-/
+
+OTOH, I really do not want to review a bunch of patches that do nothing
+but change brace style (and I am sure there is a mix of styles already
+in the code base).
+
+>  2. I actually think it is OK to leave some things "gray", but the
+>     confusion comes when people do not know what to do to things
+>     that are "gray", and they need a rule for that to be spelled
+>     out.
+> 
+> 	When the project says it does not have strong preference
+> 	among multiple choices, you are welcome to write your new
+> 	code using any of them, as long as you are consistent with
+> 	surrounding code.  Do not change style of existing code only
+> 	to flip among these styles, though.
+> 
+>     That obviously is not limited to the rule/guideline for braces.
+
+The existing document says:
+
+    Make your code readable and sensible, and don't try to be clever.
+    
+    As for more concrete guidelines, just imitate the existing code
+    (this is a good guideline, no matter which project you are
+    contributing to). It is always preferable to match the _local_
+    convention. New code added to Git suite is expected to match
+    the overall style of existing code. Modifications to existing
+    code is expected to match the style the surrounding code already
+    uses (even if it doesn't match the overall style of existing code).
+    
+    But if you must have a list of rules, here they are.
+
+I guess that is the place to expound on how to interpret the rules. I
+dunno. Some of the individual rules that go into "gray areas" already
+spell out the "surrounding code" rule.
+
+-Peff
+
+-- >8 --
+Subject: [PATCH] CodingGuidelines: clarify multi-line brace style
+
+There are some "gray areas" around when to omit braces from
+a conditional or loop body. Since that seems to have
+resulted in some arguments, let's be a little more clear
+about our preferred style.
+
+Signed-off-by: Jeff King <peff@peff.net>
 ---
+ Documentation/CodingGuidelines | 37 ++++++++++++++++++++++++++++++++-----
+ 1 file changed, 32 insertions(+), 5 deletions(-)
 
-I run into this a couple of times now, so I put this out tentatively.
-
-Thanks,
-Stefan
-
- Documentation/technical/api-in-core-index.txt | 21 ---------------------
- 1 file changed, 21 deletions(-)
- delete mode 100644 Documentation/technical/api-in-core-index.txt
-
-diff --git a/Documentation/technical/api-in-core-index.txt b/Documentation/technical/api-in-core-index.txt
-deleted file mode 100644
-index adbdbf5d75..0000000000
---- a/Documentation/technical/api-in-core-index.txt
-+++ /dev/null
-@@ -1,21 +0,0 @@
--in-core index API
--=================
--
--Talk about <read-cache.c> and <cache-tree.c>, things like:
--
--* cache -> the_index macros
--* read_index()
--* write_index()
--* ie_match_stat() and ie_modified(); how they are different and when to
--  use which.
--* index_name_pos()
--* remove_index_entry_at()
--* remove_file_from_index()
--* add_file_to_index()
--* add_index_entry()
--* refresh_index()
--* discard_index()
--* cache_tree_invalidate_path()
--* cache_tree_update()
--
--(JC, Linus)
+diff --git a/Documentation/CodingGuidelines b/Documentation/CodingGuidelines
+index 4cd95da6b..a4191aa38 100644
+--- a/Documentation/CodingGuidelines
++++ b/Documentation/CodingGuidelines
+@@ -206,11 +206,38 @@ For C programs:
+ 		x = 1;
+ 	}
+ 
+-   is frowned upon.  A gray area is when the statement extends
+-   over a few lines, and/or you have a lengthy comment atop of
+-   it.  Also, like in the Linux kernel, if there is a long list
+-   of "else if" statements, it can make sense to add braces to
+-   single line blocks.
++   is frowned upon. But there are a few exceptions:
++
++	- When the statement extends over a few lines (e.g., a while loop
++	  with an embedded conditional, or a comment). E.g.:
++
++		while (foo) {
++			if (x)
++				one();
++			else
++				two();
++		}
++
++		if (foo) {
++			/*
++			 * This one requires some explanation,
++			 * so we're better off with braces to make
++			 * it obvious that the indentation is correct.
++			 */
++			doit();
++		}
++
++	- When there are multiple arms to a conditional and some of them
++	  require braces, enclose even a single line block in braces for
++	  consistency. E.g.:
++
++		if (foo) {
++			doit();
++		} else {
++			one();
++			two();
++			three();
++		}
+ 
+  - We try to avoid assignments in the condition of an "if" statement.
+ 
 -- 
-2.11.0.297.g298debce27
+2.11.0.651.g41f4a5c4e
 
