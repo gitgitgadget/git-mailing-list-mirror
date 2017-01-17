@@ -7,51 +7,51 @@ X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7F8E120756
-	for <e@80x24.org>; Tue, 17 Jan 2017 23:35:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2AD1520756
+	for <e@80x24.org>; Tue, 17 Jan 2017 23:35:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751991AbdAQXfO (ORCPT <rfc822;e@80x24.org>);
-        Tue, 17 Jan 2017 18:35:14 -0500
-Received: from mail-pg0-f45.google.com ([74.125.83.45]:36571 "EHLO
-        mail-pg0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751716AbdAQXfI (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 17 Jan 2017 18:35:08 -0500
-Received: by mail-pg0-f45.google.com with SMTP id t6so23037846pgt.3
-        for <git@vger.kernel.org>; Tue, 17 Jan 2017 15:35:08 -0800 (PST)
+        id S1751996AbdAQXfR (ORCPT <rfc822;e@80x24.org>);
+        Tue, 17 Jan 2017 18:35:17 -0500
+Received: from mail-pf0-f181.google.com ([209.85.192.181]:34050 "EHLO
+        mail-pf0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751586AbdAQXfP (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 17 Jan 2017 18:35:15 -0500
+Received: by mail-pf0-f181.google.com with SMTP id e4so27050697pfg.1
+        for <git@vger.kernel.org>; Tue, 17 Jan 2017 15:35:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=ZH66fe2Smh+sBErnn63PanXsb+NlQOabSK9LXJwDdNE=;
-        b=BL3TOJ3Uo8sWj4QsdTlJC3jsuBIyfI8AsUWJ0UdCitoHvwWl3kJgIMOd6K6DU/Idfu
-         +Oo/71moZ0ORpQvwv01exdvoARvp+XMyGes4sQEyG4jsxokDQmYd/zpiqufOz6xyfv0t
-         cRJDOHT1UJweuA4FKg/HDb26iSQZ0aYoSKOyn2J7fHclKZJ2fTGbqfCqAs0+b5xqq6r8
-         shXerUPTRNt+OiT6YXaescG/Xsx+pPm9PkB4SDYJuLWCoYGAglOvCdIznY1EdlOaB/I8
-         w3Loka1Tc/eh+P9uqEn+x1+sdFRqg7LfzjabhZD3YqbugSDloQLF1O51ggVw+QbykuGk
-         8KVA==
+        bh=tm1lXmGMJLM5SVYDIfMqUE0Q/qSMkWx2zGcDO8YQmbo=;
+        b=vubkYNCZhbvbUDfI8guOt8Nh/72DAlAxcdsgFMWyT4jyvXRh16EkxExJp8pabQDVyK
+         qojKtYDuUgtBlS/FfCm7msU++2y2OQVL3fGDUMLPj58l1dMuh+u7z0J/ULX3b5HfMH9U
+         +ZLvw2lZjbBVFy9Ep5sfOzWOhaqDbX858A4K020OshuVSWmna9UVhOyDNz2PBW8WCsid
+         +vs4BSVdSMazqgoC8HIFSTm3nCzYfSoH/MQs1yWLz0ft7cuREEynCJ/V6QnvqxQitIHJ
+         pmwgjAGxXgwqPwINkin8Nu2+AOo+nqGVmUemk/5mifUSoKKUBq77twcwSYLiTF+uxP65
+         1Pmg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=ZH66fe2Smh+sBErnn63PanXsb+NlQOabSK9LXJwDdNE=;
-        b=lZokQ232Nv1dRsnoLxaQg6XUIVzs9Ji7JpbIkl/08otP9ZmZsiv0bbluEcZJGqNSXu
-         5hURGi3p3hnLV44MRIUul2m70BoxZ/lkJXJKe92/+awYz4udgvP6OP2wpsYNZQH/uJDm
-         r7KjLqWc47SnVuawNZdr7qwKmLXUBzKovMMXXGxOdtbI0uxxJpBPI4HwmZqHqfyMprK6
-         899KnGo9xbpm+ommgTLs+nEMOWjCA2dv9L3qt6U+rqplRcr5z9SHPwCRFbKCNqsMQX/j
-         0UZoqGh0Bx11sfuFhLnhMPKJUQJLnLMHJ8Nd5ZEvoF55g3Ch28whcwvb8mz3Yr8o1jjF
-         Biww==
-X-Gm-Message-State: AIkVDXI8yBQrRs+Tys60KwCljPewvC4kr65faj6xWmcSp4BQAhgRDaOnLKEYAI9YzYfkRMWc
-X-Received: by 10.99.192.69 with SMTP id z5mr239432pgi.169.1484696107360;
-        Tue, 17 Jan 2017 15:35:07 -0800 (PST)
+        bh=tm1lXmGMJLM5SVYDIfMqUE0Q/qSMkWx2zGcDO8YQmbo=;
+        b=Ck2b65+o4XUag4/nKtyMdnpIFdQlw+nQute1thSkTNAmDtw7wW0juvO+UQ9XBeKQBu
+         m/I8o+TrAJgOu0JfvLaJyJ5k9dEveWq7eDAs5LLNtuUF8gwja9SSR+4hKX3aGlVITkt4
+         LgoYgmWC8zlFAVB8mJKA0ucfs4rLdeUCuVy46UL0CZt/DPc3dCQ/s7IP3o2ZYA/7Sg/W
+         bQsy9YDA3wIEPvnTQJ6QzsScTtR1pNgYGmzJl+xN/aFnz+lm62rXrNBCTF3TonDX6WW0
+         JRwfBGpHb+LeCTWnWaGn872IB22HrxPG3PN4J6cWEdgDnSyrxn7cgTfzvpILFnkAIo+h
+         smWw==
+X-Gm-Message-State: AIkVDXKLYqRr2oMwjt9ziexX2d1ZXgZsmEPvb/at7AXSITukylYeFFHs22f1Ph/ooK7agK8z
+X-Received: by 10.84.174.129 with SMTP id r1mr357436plb.19.1484696109491;
+        Tue, 17 Jan 2017 15:35:09 -0800 (PST)
 Received: from localhost ([2620:0:1000:5b10:871:ca27:8566:e7e])
-        by smtp.gmail.com with ESMTPSA id n79sm21027134pfj.31.2017.01.17.15.35.06
+        by smtp.gmail.com with ESMTPSA id x2sm58248672pfa.71.2017.01.17.15.35.08
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 17 Jan 2017 15:35:06 -0800 (PST)
+        Tue, 17 Jan 2017 15:35:09 -0800 (PST)
 From:   Stefan Beller <sbeller@google.com>
 To:     gitster@pobox.com
 Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>
-Subject: [PATCH 1/4] document index_name_pos
-Date:   Tue, 17 Jan 2017 15:35:00 -0800
-Message-Id: <20170117233503.27137-2-sbeller@google.com>
+Subject: [PATCH 3/4] document add_[file_]to_index
+Date:   Tue, 17 Jan 2017 15:35:02 -0800
+Message-Id: <20170117233503.27137-4-sbeller@google.com>
 X-Mailer: git-send-email 2.11.0.299.g762782ba8a
 In-Reply-To: <20170117233503.27137-1-sbeller@google.com>
 References: <20170117233503.27137-1-sbeller@google.com>
@@ -62,36 +62,39 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- cache.h | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ cache.h | 17 ++++++++++++-----
+ 1 file changed, 12 insertions(+), 5 deletions(-)
 
 diff --git a/cache.h b/cache.h
-index 1b67f078dd..270a0d0ea7 100644
+index 26632065a5..acc639d6e0 100644
 --- a/cache.h
 +++ b/cache.h
-@@ -575,7 +575,22 @@ extern int verify_path(const char *path);
- extern int index_dir_exists(struct index_state *istate, const char *name, int namelen);
- extern void adjust_dirname_case(struct index_state *istate, char *name);
- extern struct cache_entry *index_file_exists(struct index_state *istate, const char *name, int namelen, int igncase);
+@@ -605,13 +605,20 @@ extern int remove_index_entry_at(struct index_state *, int pos);
+ 
+ extern void remove_marked_cache_entries(struct index_state *istate);
+ extern int remove_file_from_index(struct index_state *, const char *path);
+-#define ADD_CACHE_VERBOSE 1
+-#define ADD_CACHE_PRETEND 2
+-#define ADD_CACHE_IGNORE_ERRORS	4
+-#define ADD_CACHE_IGNORE_REMOVAL 8
+-#define ADD_CACHE_INTENT 16
 +
++#define ADD_CACHE_VERBOSE 1		/* verbose */
++#define ADD_CACHE_PRETEND 2 		/* dry run */
++#define ADD_CACHE_IGNORE_ERRORS 4	/* ignore errors */
++#define ADD_CACHE_IGNORE_REMOVAL 8	/* do not remove files from index */
++#define ADD_CACHE_INTENT 16		/* intend to add later; stage empty file */
 +/*
-+ * Searches for an entry defined by name and namelen in the given index.
-+ * If the return value is positive (including 0) it is the position of an
-+ * exact match. If the return value is negative, the negated value minus 1 is the
-+ * position where the entry would be inserted.
-+ * Example: In the current index we have the files b,d,e:
-+ * index_name_pos(&index, "a", 1) -> -1
-+ * index_name_pos(&index, "b", 1) ->  0
-+ * index_name_pos(&index, "c", 1) -> -2
-+ * index_name_pos(&index, "d", 1) ->  1
-+ * index_name_pos(&index, "e", 1) ->  2
-+ * index_name_pos(&index, "f", 1) -> -3
++ * Adds the given path the index, respecting the repsitory configuration, e.g.
++ * in case insensitive file systems, the path is normalized.
 + */
- extern int index_name_pos(const struct index_state *, const char *name, int namelen);
+ extern int add_to_index(struct index_state *, const char *path, struct stat *, int flags);
++/* stat the file then call add_to_index */
+ extern int add_file_to_index(struct index_state *, const char *path, int flags);
 +
- #define ADD_CACHE_OK_TO_ADD 1		/* Ok to add */
- #define ADD_CACHE_OK_TO_REPLACE 2	/* Ok to replace file/directory */
- #define ADD_CACHE_SKIP_DFCHECK 4	/* Ok to skip DF conflict checks */
+ extern struct cache_entry *make_cache_entry(unsigned int mode, const unsigned char *sha1, const char *path, int stage, unsigned int refresh_options);
+ extern int chmod_index_entry(struct index_state *, struct cache_entry *ce, char flip);
+ extern int ce_same_name(const struct cache_entry *a, const struct cache_entry *b);
 -- 
 2.11.0.299.g762782ba8a
 
