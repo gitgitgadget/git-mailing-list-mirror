@@ -2,83 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,
 	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.0
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6718020756
-	for <e@80x24.org>; Tue, 17 Jan 2017 21:19:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D4E1720756
+	for <e@80x24.org>; Tue, 17 Jan 2017 21:19:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751025AbdAQVTZ (ORCPT <rfc822;e@80x24.org>);
-        Tue, 17 Jan 2017 16:19:25 -0500
-Received: from mout.gmx.net ([212.227.17.20]:52157 "EHLO mout.gmx.net"
+        id S1751288AbdAQVT2 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 17 Jan 2017 16:19:28 -0500
+Received: from mout.gmx.net ([212.227.15.18]:49926 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750924AbdAQVTY (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 17 Jan 2017 16:19:24 -0500
-Received: from virtualbox ([37.24.141.236]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MfmZs-1c6ad52Ac8-00NAZK; Tue, 17
- Jan 2017 22:18:59 +0100
-Date:   Tue, 17 Jan 2017 22:18:58 +0100 (CET)
+        id S1750929AbdAQVT0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 17 Jan 2017 16:19:26 -0500
+Received: from virtualbox ([37.24.141.236]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MBWTO-1cJBZZ1RJe-00AVFG; Tue, 17
+ Jan 2017 22:19:19 +0100
+Date:   Tue, 17 Jan 2017 22:19:04 +0100 (CET)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     git@vger.kernel.org
 cc:     Junio C Hamano <gitster@pobox.com>,
         Thomas Gummerer <t.gummerer@gmail.com>,
         Andrew Arnott <Andrew.Arnott@microsoft.com>
-Subject: [PATCH 0/2] Fix remote_is_configured()
-Message-ID: <cover.1484687919.git.johannes.schindelin@gmx.de>
+Subject: [PATCH 1/2] remote rename: demonstrate a bogus "remote exists" bug
+In-Reply-To: <cover.1484687919.git.johannes.schindelin@gmx.de>
+Message-ID: <5b981b6f4746c7073091d432871d2abdc74d55d3.1484687919.git.johannes.schindelin@gmx.de>
+References: <cover.1484687919.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:DYdNyOxPPtEiMGqIqsX/JaNn0W4WW1gQ4PtPDXCBQbWvmRgN0ic
- UyjQQbg/OTdaeLUsX1UcBqccWY/HjZj2e8P2nvjFJL4y5KcoaV+haE4S3Odqnzjc0Lqwe4D
- 47emEh6MLCvN4qYhvI38bIo8rL2NHXqbFjxUAl9UhoFZcBSOoGpkdkSw3w0V9r0iZB1zqzJ
- s0LeNmWHXN2JgD205JDQw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:fQMh/p+Lims=:FWKMr1xp0auNRRV9AeO+Oj
- Xm/4Ob+6OxEaGgu4oeP/VnN706xxoVZ1JbgKq9E/6UgTxArnWMctb3AQztyk7Y3Arj3AY2USW
- VkDWhnrQAHXzCYtBekqu86bWEPrtrU64B2HxW9eYjzMVjUuAHEUBBhgdYw9/XbbG/nKtM9Ky7
- loyIZzw02p+ClIjKXaIQ4em1RndDnPiUhn21zUp+IuwYMgQB1htY0zyOCZlMKwWRGDyABKSEU
- NnPtJSbpaBrH4o95Qf/lDOZUQKFHGwH8y12PUidBYe5UhPuwdR5g1pVEADpJ0y5lpUN9z9oV5
- 79XfEFXvv7g6XouKWZh0k6/6fCSMefAFZKQNMR/r1M3jKfJb8cPN0wVnMToymJjhG1izo+AdU
- ylOWQgtmwX/drpfZLpnDiYCpPtVmgtlE+lR1go7ugubLfXIwpLHJK0xh8HBrFou9AtEXQl+xV
- 8Ea//bm99WNrOf8YJHZvJ4Qi28CF5txlVZBqAE5ule3pnwZQSdMmMUmBh6sx8JVyJEqJ63Z8C
- GZu8mvbtTkOH0rjWRam9Oh0WCaSYNUxYAP3UWlEYEbNAewXhDzog0eWA3RmiJSngNNRM4iOkE
- 51PW3Yttn5EhgfBfPO3K3Ij74rBe7E6Q5LQvISiuPBd+dexia3CA2g4vUasBB44CSde2ZLcnS
- 4zrtRTVkolKd94Jr+H+bibYrWzwdy6pElgHQ5psxfVni8y4gJKvKSc5GyKJsVMyq1LuduEV9T
- kHjhAss8/CZ1zgGWqXJCFWk9EecrakeF+yplNktSuj0JTCWhjmMzHkOqby1OemlK8s3SWfrAR
- XQje0jx
+X-Provags-ID: V03:K0:zvQqXRTlb/Ddf4Q3nQTyGTZlcea/8bgbVxOEBgwiScJkg1zdEcK
+ rfv/tgwDMOVBad0eG98ARzMzz1fgZPKy7/4lnYlIdCG3Bg7fUkYKyYZEbUmXzt7O8ftPSjN
+ 7abhSyFZnYxlyCSz1KN2l+Fl8wNQQrmDMjKMIIy4NztLx5JtuzcPXTtVZ5O43yE3e+ccqSg
+ qfFj/BGZ2Sozfl5kPCXlw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:lgFN7QYkD7E=:A03OacNzNxhb89i+e6cqWu
+ 0I/CNKgEroUOkBmi1K1YY20hmOSJ/gcMAdvPpwCLzcKXBBD62MoqEcvPFgk/ZMGNbPAZ3LpWU
+ yz34Ka/w1gCPlBwf92YDrgtaYAStEj1wTE5vPoJnWTURtIcj1fICfppjPlSL2fNfnGL+nopVb
+ lfG2uVkn19jNGu6kd31tuvbEsi8GMCJRfZCntE9fLoLFKPZVUao0MZ2Yx0yb1F6/mRD5ycvp1
+ /IOWU8gV6/w+EoeNKasQP3MaiwzX53b4L9hQTEsiUpYPh0eYNawXQGoF9bL+O5DETGPUAiBHH
+ a2ELt0jfc8WLG7arGI0IMoC3nWsM4v9w1UuVxvgKAuQ8LJx1t9Wv5N8iX3S9+bWWHN1RgDHVZ
+ NlfaAFr/X8LFsmmwGxOAWgpbENDQXVwhFt6jFozZfbFK32okrt2GPbim7QsburUJrx5n0vfus
+ EpN66vStUU1PprswUh6Ru3EqdKFV1T0COFa0BIAmg5TAsFSKLSz0glAA69M/OmKLRTm2e5eUB
+ yNxJZiTbKG/suoRF6eqz378VIXAhZkc0ayV39PyOMXSll5LlE31hpHeBYAN2c3wkWYtcyNtzM
+ R6ikxJ13I0xfJGKhBNXOaII//omhud8isXK/ZATl+ohAkk0uLnWrB6w64X9KXkZTEoCP8ikLf
+ Md8rMdI7Hln5sOxk5QpqI1P5kT25R9p9KB492S4uqTgj7g4l/lfnaM2Fg3/8SlG2loDvA4CZz
+ 7JTLtTFduNrUrjeieM3PltvcAS/xLhuZiIdK0eEz7E8vcZBkmu2d4bIokARTE0Wx+l3F4ky4a
+ h1RVUNi
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-A surprising behavior triggered the bug report in
-https://github.com/git-for-windows/git/issues/888: the mere existence of
-the config setting "remote.origin.prune" (in this instance, configured
-via ~/.gitconfig so that it applies to all repositories) fooled `git
-remote rename <source> <target>` into believing that the <target> remote
-is already there.
+Some users like to set `remote.origin.prune = true` in their ~/.gitconfig
+so that all of their repositories use that default.
 
-This patch pair demonstrates the problem, and then fixes it (along with
-potential similar problems, such as setting an HTTP proxy for remotes of
-a given name via ~/.gitconfig).
+However, our code is ill-prepared for this, mistaking that single entry to
+mean that there is already a remote of the name "origin", even if there is
+not.
 
+This patch adds a test case demonstrating this issue.
 
-Johannes Schindelin (2):
-  remote rename: demonstrate a bogus "remote exists" bug
-  Be more careful when determining whether a remote was configured
+Reported by Andrew Arnott.
 
- remote.c          | 9 ++++++++-
- remote.h          | 2 +-
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
  t/t5505-remote.sh | 9 +++++++++
- 3 files changed, 18 insertions(+), 2 deletions(-)
+ 1 file changed, 9 insertions(+)
 
-
-base-commit: d7dffce1cebde29a0c4b309a79e4345450bf352a
-Published-As: https://github.com/dscho/git/releases/tag/rename-remote-v1
-Fetch-It-Via: git fetch https://github.com/dscho/git rename-remote-v1
-
+diff --git a/t/t5505-remote.sh b/t/t5505-remote.sh
+index 8198d8eb05..d7e41e9230 100755
+--- a/t/t5505-remote.sh
++++ b/t/t5505-remote.sh
+@@ -764,6 +764,15 @@ test_expect_success 'rename a remote with name prefix of other remote' '
+ 	)
+ '
+ 
++test_expect_failure 'rename succeeds with existing remote.<target>.prune' '
++	git clone one four.four &&
++	(
++		cd four.four &&
++		git config remote.upstream.prune true &&
++		git remote rename origin upstream
++	)
++'
++
+ cat >remotes_origin <<EOF
+ URL: $(pwd)/one
+ Push: refs/heads/master:refs/heads/upstream
 -- 
 2.11.0.windows.3
+
 
