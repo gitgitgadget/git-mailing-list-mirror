@@ -2,186 +2,134 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 335C220756
-	for <e@80x24.org>; Tue, 17 Jan 2017 21:19:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D4CB020756
+	for <e@80x24.org>; Tue, 17 Jan 2017 21:25:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751291AbdAQVTm (ORCPT <rfc822;e@80x24.org>);
-        Tue, 17 Jan 2017 16:19:42 -0500
-Received: from mout.gmx.net ([212.227.17.21]:55805 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751108AbdAQVTl (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 17 Jan 2017 16:19:41 -0500
-Received: from virtualbox ([37.24.141.236]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MRocn-1c1N2a17Q9-00T0av; Tue, 17
- Jan 2017 22:19:25 +0100
-Date:   Tue, 17 Jan 2017 22:19:24 +0100 (CET)
-From:   Johannes Schindelin <johannes.schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     git@vger.kernel.org
-cc:     Junio C Hamano <gitster@pobox.com>,
-        Thomas Gummerer <t.gummerer@gmail.com>,
-        Andrew Arnott <Andrew.Arnott@microsoft.com>
-Subject: [PATCH 2/2] Be more careful when determining whether a remote was
- configured
-In-Reply-To: <cover.1484687919.git.johannes.schindelin@gmx.de>
-Message-ID: <41c347f22c80e96c54db34baa739b6e37e268b61.1484687919.git.johannes.schindelin@gmx.de>
-References: <cover.1484687919.git.johannes.schindelin@gmx.de>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+        id S1751169AbdAQVWr (ORCPT <rfc822;e@80x24.org>);
+        Tue, 17 Jan 2017 16:22:47 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:60162 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751031AbdAQVVs (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 17 Jan 2017 16:21:48 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 53C1461F26;
+        Tue, 17 Jan 2017 16:15:59 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=9JTFHPq6XF8Wv0gHtDAI6pE9dNo=; b=XGlDqG
+        IVNFW6CibnJq0+FODJjN2ZyJKxGgDoUHE9+z34uJyEvbtkfARQ0QLuYIuTlyPUWw
+        naSebfkt8t3MFr4lx50aPgKWLUf9BN/qVaArlWkKDNG8F68MDsyL1idIefUr005N
+        WeCByMR0hc9+vkqgcQOLPM81l8tubU7GgkBN4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=rUSzqiKXly9hLYI4YM+vF0LW6VSyME1Q
+        r/XYokiTry0M7ie9mD14gzA4hYdBcEtA1NuZFoBJMIGvdlJMSKoYKTcyvq5w0MMk
+        TIdPsuUwLjGNRXE1Ln+kR6WXk34+MwxgLylnNO11t8Ig0FuCcwoKa6sd69AlzdBU
+        t9LCvqBIO6I=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 4B97B61F25;
+        Tue, 17 Jan 2017 16:15:59 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id A582661F24;
+        Tue, 17 Jan 2017 16:15:58 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH 3/6] fsck: prepare dummy objects for --connectivity-check
+References: <20170116212231.ojoqzlajpszifaf3@sigill.intra.peff.net>
+        <20170116213204.e7ykwowqzafkexqd@sigill.intra.peff.net>
+Date:   Tue, 17 Jan 2017 13:15:57 -0800
+In-Reply-To: <20170116213204.e7ykwowqzafkexqd@sigill.intra.peff.net> (Jeff
+        King's message of "Mon, 16 Jan 2017 16:32:04 -0500")
+Message-ID: <xmqqa8ape6b6.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.90 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:NRG/w7iv8wkFYExoyTMLHLSbIqMjIrYb/dnr/xAYErN/Nt4wBJG
- 9OCX9Zs4bgEDyFy65S41e//5J7VwsQgU/mVn+/Tm80wmlA8eTzTnPPiRn08QIKwrS55Bh8L
- MuB3HgcmrnIpeXM/SHpCXW0pNkxz2ty/fyjhf4wy11StqWpVOJ83HT0Ah0+LrcQBVgGLrjm
- ZPhGJ1OU3cVZCPHcgsPoA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:zFRkAwYhQOk=:1zXQPF+8SjOqWoe0XjgXh0
- Taa7acACApi9DysqbJDUTlzryfGt4zKNnTpIS1KXL/Sw6NAAXmKUR5bEGYlngjrlY1yZPBMnq
- UoQoDJQ6BdKczyQNDsgDDYf8c3m52gModMRePjpPv3ofG+xkCmLx4CbzI0ONam5xQtkAKtqkT
- iRoNVEVQvxrw9ZfUVt6GN/8nIQqxgoYEGOa6ZNC87mV9p5aLKY8QUcVa4QhXp52tNYE2ne3Pr
- 4J968HF75wxrjFLv7KRmWQQhYz5ubcGOniVpM730lAv/k3OsFkUukV6Ht6OYgr6MEXPTKyaur
- 4CZkBD3j/SOGys3aYEMeTOkN9ltE9JLuqZ9cNIquqikpI1sWF+N4WWBmYUY8XJZLUlPm2WJyJ
- lJCPIExvtDU20fG91gnrx6+9daAoAQxgaZOcUdXggxMW4kmNQvm1jrjWHx8zaPapXj8a+Jrzf
- PktXJHLASF4ArgAltTeKSD/WKVuHlZFI2GC4lAIocmRQwp10wCZqnpWYm7aTjBlRSjTEFd7va
- paWSvi7+Fau/l+KSJfb5hlVAq9umA8vIn5k0a5H3sfAJVXXIRHF+FdSB8Cwc7nY5YvqFoRlxc
- 9Xd/yISbAoctWsliESqBNS0mEpknRxti9p6Zbcmk8yRWzIRoiRTGpDRFc/N/5h4nMj/ksgoGa
- yerQaVQFLBhY36TuekjQNmcY9A1LlslSaEsWYLUH9rhCl4i5MMcntfLTWXSEHJxmd3fqXqB4T
- gvtAY2xD94AnVDcOOV5IG2kV11FrOZUFNBHisqC2+QxnEIhpBZJZVR5lFZqezJ8KI3tOEh3LO
- jv3mrOhY9ZgDfhISakmGk6V1KLpEfCOchMzikyyFDqjriHN/5bW8EKtQoDnUUuzbkIX8sQVLZ
- DNoC2n/7hiStkzx41XnHBnVXmunxnu/FbaxtL82s541lnGMv0ZgqrreZTJgdyZ+pKo3aYJIe5
- 53N+5c/O9CQNvec7eMOeQbjXLP77NnxUV//BQUv08+w9Ij1x/94cb0lXMm8V0QkHp5mCXLtNd
- eVz60Jd2nkBIOv2UZrUEH7M=
+Content-Type: text/plain
+X-Pobox-Relay-ID: 24190C24-DCFA-11E6-B040-A7617B1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-One of the really nice features of the ~/.gitconfig file is that users
-can override defaults by their own preferred settings for all of their
-repositories.
+Jeff King <peff@peff.net> writes:
 
-One such default that some users like to override is whether the
-"origin" remote gets auto-pruned or not. The user would simply call
+> +static void mark_object_for_connectivity(const unsigned char *sha1)
+> +{
+> +	struct object *obj = lookup_object(sha1);
+> +
+> +	/*
+> +	 * Setting the object type here isn't strictly necessary here for a
+> +	 * connectivity check.
 
-	git config --global remote.origin.prune true
+Drop one of these "here"s?
 
-and from now on all "origin" remotes would be pruned automatically when
-fetching into the local repository.
 
-There is just one catch: now Git thinks that the "origin" remote is
-configured, as it does not discern between having a remote whose
-fetch (and/or push) URL and refspec is set, and merely having
-preemptively-configured, global flags for specific remotes.
+> The cmd_fsck() part of the diff is pretty nasty without
+> "-b".
 
-Let's fix this by telling Git that a remote is not configured unless any
-fetch/push URL or refspect is configured explicitly.
+True.  I also wonder if swapping the if/else arms make the end
+result and the patch easier to read. i.e.
 
-As a special exception, we deem a remote configured also when *only* the
-"vcs" setting is configured. The commit a31eeae27f (remote: use
-remote_is_configured() for add and rename, 2016-02-16) specifically
-extended our test suite to verify this, so it is safe to assume that there
-has been at least one user with a legitimate use case for this.
++	if (connectivity_only) {
++		mark loose for connectivity;
++		mark packed for connectivity;
++	} else {
+		... existing code comes here reindented ...
+	}                
 
-This fixes https://github.com/git-for-windows/git/issues/888
+But the patch makes sense.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- remote.c          | 9 ++++++++-
- remote.h          | 2 +-
- t/t5505-remote.sh | 2 +-
- 3 files changed, 10 insertions(+), 3 deletions(-)
+> diff --git a/t/t1450-fsck.sh b/t/t1450-fsck.sh
+> index e88ec7747..c1b2dda33 100755
+> --- a/t/t1450-fsck.sh
+> +++ b/t/t1450-fsck.sh
+> @@ -523,9 +523,21 @@ test_expect_success 'fsck --connectivity-only' '
+>  		touch empty &&
+>  		git add empty &&
+>  		test_commit empty &&
+> +
+> +		# Drop the index now; we want to be sure that we
+> +		# recursively notice that we notice the broken objects
+> +		# because they are reachable from refs, not because
+> +		# they are in the index.
+> +		rm -f .git/index &&
+> +
+> +		# corrupt the blob, but in a way that we can still identify
+> +		# its type. That lets us see that --connectivity-only is
+> +		# not actually looking at the contents, but leaves it
+> +		# free to examine the type if it chooses.
+>  		empty=.git/objects/e6/9de29bb2d1d6434b8b29ae775ad8c2e48c5391 &&
+> -		rm -f $empty &&
+> -		echo invalid >$empty &&
+> +		blob=$(echo unrelated | git hash-object -w --stdin) &&
+> +		mv $(sha1_file $blob) $empty &&
+> +
+>  		test_must_fail git fsck --strict &&
+>  		git fsck --strict --connectivity-only &&
+>  		tree=$(git rev-parse HEAD:) &&
+> @@ -537,6 +549,13 @@ test_expect_success 'fsck --connectivity-only' '
+>  	)
+>  '
+>  
+> +test_expect_success 'fsck --connectivity-only with explicit head' '
+> +	(
+> +		cd connectivity-only &&
+> +		test_must_fail git fsck --connectivity-only $tree
+> +	)
+> +'
 
-diff --git a/remote.c b/remote.c
-index ad6c5424ed..298f2f93fa 100644
---- a/remote.c
-+++ b/remote.c
-@@ -255,6 +255,7 @@ static void read_remotes_file(struct remote *remote)
- 
- 	if (!f)
- 		return;
-+	remote->configured = 1;
- 	remote->origin = REMOTE_REMOTES;
- 	while (strbuf_getline(&buf, f) != EOF) {
- 		const char *v;
-@@ -289,6 +290,7 @@ static void read_branches_file(struct remote *remote)
- 		return;
- 	}
- 
-+	remote->configured = 1;
- 	remote->origin = REMOTE_BRANCHES;
- 
- 	/*
-@@ -384,21 +386,25 @@ static int handle_config(const char *key, const char *value, void *cb)
- 		if (git_config_string(&v, key, value))
- 			return -1;
- 		add_url(remote, v);
-+		remote->configured = 1;
- 	} else if (!strcmp(subkey, "pushurl")) {
- 		const char *v;
- 		if (git_config_string(&v, key, value))
- 			return -1;
- 		add_pushurl(remote, v);
-+		remote->configured = 1;
- 	} else if (!strcmp(subkey, "push")) {
- 		const char *v;
- 		if (git_config_string(&v, key, value))
- 			return -1;
- 		add_push_refspec(remote, v);
-+		remote->configured = 1;
- 	} else if (!strcmp(subkey, "fetch")) {
- 		const char *v;
- 		if (git_config_string(&v, key, value))
- 			return -1;
- 		add_fetch_refspec(remote, v);
-+		remote->configured = 1;
- 	} else if (!strcmp(subkey, "receivepack")) {
- 		const char *v;
- 		if (git_config_string(&v, key, value))
-@@ -427,6 +433,7 @@ static int handle_config(const char *key, const char *value, void *cb)
- 		return git_config_string((const char **)&remote->http_proxy_authmethod,
- 					 key, value);
- 	} else if (!strcmp(subkey, "vcs")) {
-+		remote->configured = 1;
- 		return git_config_string(&remote->foreign_vcs, key, value);
- 	}
- 	return 0;
-@@ -716,7 +723,7 @@ struct remote *pushremote_get(const char *name)
- 
- int remote_is_configured(struct remote *remote)
- {
--	return remote && remote->origin;
-+	return remote && remote->configured;
- }
- 
- int for_each_remote(each_remote_fn fn, void *priv)
-diff --git a/remote.h b/remote.h
-index 924881169d..7e6c8067bb 100644
---- a/remote.h
-+++ b/remote.h
-@@ -15,7 +15,7 @@ struct remote {
- 	struct hashmap_entry ent;  /* must be first */
- 
- 	const char *name;
--	int origin;
-+	int origin, configured;
- 
- 	const char *foreign_vcs;
- 
-diff --git a/t/t5505-remote.sh b/t/t5505-remote.sh
-index d7e41e9230..09c9823002 100755
---- a/t/t5505-remote.sh
-+++ b/t/t5505-remote.sh
-@@ -764,7 +764,7 @@ test_expect_success 'rename a remote with name prefix of other remote' '
- 	)
- '
- 
--test_expect_failure 'rename succeeds with existing remote.<target>.prune' '
-+test_expect_success 'rename succeeds with existing remote.<target>.prune' '
- 	git clone one four.four &&
- 	(
- 		cd four.four &&
--- 
-2.11.0.windows.3
+Most of the earlier "tree=..." assignments are done in subshells,
+and it is not clear which tree this refers to.  Is this the one that
+was written in 'rev-list --verify-objects with bad sha1' that has
+been removed in its when-finished handler?
+
+>  remove_loose_object () {
+>  	sha1="$(git rev-parse "$1")" &&
+>  	remainder=${sha1#??} &&
