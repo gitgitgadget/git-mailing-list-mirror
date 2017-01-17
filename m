@@ -6,82 +6,73 @@ X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 284E620756
-	for <e@80x24.org>; Tue, 17 Jan 2017 20:36:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3AF5720756
+	for <e@80x24.org>; Tue, 17 Jan 2017 20:43:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750893AbdAQUeA (ORCPT <rfc822;e@80x24.org>);
-        Tue, 17 Jan 2017 15:34:00 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:51890 "EHLO
+        id S1750992AbdAQUm5 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 17 Jan 2017 15:42:57 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:54333 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751176AbdAQUcw (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 17 Jan 2017 15:32:52 -0500
+        with ESMTP id S1750830AbdAQUls (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 17 Jan 2017 15:41:48 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id CCDFA60D8F;
-        Tue, 17 Jan 2017 15:32:27 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 00D4A616A0;
+        Tue, 17 Jan 2017 15:36:18 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=4ubwKyUNUBPbaM4dg3SapKyIHG8=; b=x1/eCD
-        9acAHf9UcYwXhiizm+dzTMgp2eQBm+SDKxL6dQoh9TxBC9a9lsql9s6NgXOLlHRu
-        uCBH2nYMDKW+gOA32Hb8BIsvNXLogsrWUWkLGY+UOXH+XL1qufRaC4SlAFJhEvzi
-        B13RnFcGlDhYnf6N8dH7Ogzxf5ik3sWD7zNM8=
+        :content-type; s=sasl; bh=4imLzHlwmS4/ufARXPtSN6FtwZ0=; b=b3Xbpz
+        iLspuLrpuGPTgMT6lEBnKc0i93zD47pcsSaTbHuPR765fqElfyXSLZJSKAmwcGLq
+        TaY6dGeEUIM/uz+H3qyeS+al671OKRXtCdYe3SRWxxHbeKK3nt7wcH8JodEtaOMK
+        PJLTcVNJ+H6SuLA2M4ZiteMNiHB3WcuCjiSAY=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=S8WSdskYXBXtIosbCihhx6Py1gBA99SB
-        arGNDFISgyUBc9x26jIL8nPtx98sN2i4cV9pBJXbArMeRt6+gDh/xzFVw1Pk6xB9
-        jPCEMvTs03VSqj8MMuWHiQwk+OqGAJiooUS3wlzcAYV9m3N1lYEPDwkhjD314a+h
-        hH80eMoDba4=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id C463E60D8C;
-        Tue, 17 Jan 2017 15:32:27 -0500 (EST)
+        :content-type; q=dns; s=sasl; b=gEZ+Bp3n42xanYL/t8jTjRZxbWBFYrzQ
+        TYKSdNRAJ+9Iv1PS7jArGDjzJb6kXsdfscOx8nS695rab/LjaxvoatI/O1w3v4hc
+        iNF9vln15Whke4VhapJcvtsbSHGmu33n4n1cRFg7kqDuXKaEw45WD9lpN1wRxLIK
+        jH2eJUGPXeM=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id ED60C6169F;
+        Tue, 17 Jan 2017 15:36:17 -0500 (EST)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 3020A60D8B;
-        Tue, 17 Jan 2017 15:32:27 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 3DE3D6169E;
+        Tue, 17 Jan 2017 15:36:17 -0500 (EST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Jan 2017, #02; Sun, 15)
-References: <xmqqh94zbwlu.fsf@gitster.mtv.corp.google.com>
-        <257b4175-9879-7814-5d8d-02050792574d@kdbg.org>
-        <alpine.DEB.2.20.1701161251100.3469@virtualbox>
-        <20170116160456.ltbb7ofe47xos7xo@sigill.intra.peff.net>
-        <alpine.DEB.2.20.1701161746200.3469@virtualbox>
-        <20170116220014.bwi5xi2br56lyqsw@sigill.intra.peff.net>
-        <xmqqk29tfq79.fsf@gitster.mtv.corp.google.com>
-        <20170117193639.mt3x3md3nbh2qgws@sigill.intra.peff.net>
-Date:   Tue, 17 Jan 2017 12:32:26 -0800
-In-Reply-To: <20170117193639.mt3x3md3nbh2qgws@sigill.intra.peff.net> (Jeff
-        King's message of "Tue, 17 Jan 2017 14:36:39 -0500")
-Message-ID: <xmqqtw8xe8bp.fsf@gitster.mtv.corp.google.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] documentation: remove unfinished documentation
+References: <20170117200147.25425-1-sbeller@google.com>
+Date:   Tue, 17 Jan 2017 12:36:15 -0800
+In-Reply-To: <20170117200147.25425-1-sbeller@google.com> (Stefan Beller's
+        message of "Tue, 17 Jan 2017 12:01:47 -0800")
+Message-ID: <xmqqpojle85c.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.90 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 0F892948-DCF4-11E6-B6BE-FE3F13518317-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 98A840C4-DCF4-11E6-90F8-A7617B1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Stefan Beller <sbeller@google.com> writes:
 
-> That was my general impression, too. But I seem to recall it was you in
-> a nearby thread saying that:
+> When looking for documentation for a specific function, you may be tempted
+> to run
 >
->   if (foo)
-> 	bar();
->   else {
->         one();
-> 	two();
->   }
+>   git -C Documentation grep index_name_pos
 >
-> was wrong. Maybe I misunderstood.
+> only to find the file technical/api-in-core-index.txt, which doesn't
+> help for understanding the given function. It would be better to not find
+> these functions in the documentation, such that people directly dive into
+> the code instead.
+>
+> Signed-off-by: Stefan Beller <sbeller@google.com>
+> ---
+>
+> I run into this a couple of times now, so I put this out tentatively.
 
-If it were a new code written like the above, that would have been
-fine.  If a new code written with both sides inside {}, that would
-have been fine, too.
-
-IIRC, it was that the original had {} on both, and a patch tried to
-turn that into the above, triggering "why are we churning between
-two acceptable forms?"
+These placeholders are meant to encourage those people who dove into
+the code to update it, so from that point of view, I think removing
+it is backwards.
