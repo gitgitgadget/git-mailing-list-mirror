@@ -6,52 +6,52 @@ X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5170A20756
-	for <e@80x24.org>; Tue, 17 Jan 2017 23:39:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BA19220756
+	for <e@80x24.org>; Tue, 17 Jan 2017 23:39:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751610AbdAQXjB (ORCPT <rfc822;e@80x24.org>);
+        id S1751598AbdAQXjB (ORCPT <rfc822;e@80x24.org>);
         Tue, 17 Jan 2017 18:39:01 -0500
-Received: from mail-qk0-f196.google.com ([209.85.220.196]:34683 "EHLO
-        mail-qk0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751418AbdAQXhc (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 17 Jan 2017 18:37:32 -0500
-Received: by mail-qk0-f196.google.com with SMTP id e1so17318103qkh.1
-        for <git@vger.kernel.org>; Tue, 17 Jan 2017 15:37:32 -0800 (PST)
+Received: from mail-qk0-f195.google.com ([209.85.220.195]:36745 "EHLO
+        mail-qk0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751493AbdAQXhd (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 17 Jan 2017 18:37:33 -0500
+Received: by mail-qk0-f195.google.com with SMTP id a20so17393690qkc.3
+        for <git@vger.kernel.org>; Tue, 17 Jan 2017 15:37:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=nyu-edu.20150623.gappssmtp.com; s=20150623;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=esE+CqVAlH1HaPv1rk9rxMUCrHvpy4Cdqz+Va+1SoXA=;
-        b=S3BIBeamBB2L2VL/x+YvH4/zC0kL+0dcUH0SCugp7wuPIcVdGQ0JAzdI0+9QQMd6FI
-         yA3ZasoRen82ca7feXUtqR2cLnDB6GBoHoeiJjiZVDZhgKopKGRBQo++ze+SEn7v847Z
-         b2mVaBDQVT+YstUT/5VNUB3TWeBkP9Lf5pTegxaHtTB2SYpRDMOp7UvdzWZqghBIelAX
-         WFbs87/N9lAJKXF242yn3KqaeQ/bvEJiDSpoZlo4stgTBIsW4bq0SnpLoUajn1i+ElXY
-         aF7KOllUDMDqI8PuelUgU4+zJqywlr2QULmMt9GzP6TJrr9BgiaUo7JNn6Wi3hUCcdhl
-         u9HQ==
+        bh=wID4o5kEetVUweBaiPzQTG0MqZNv7qaAk4r1XlHpfWg=;
+        b=BDdTspCDL8NYK7tZdETBb8+qP/U1x5cF6e7XA9qVl/6olhhhhgXWPQQxdvQh/DFwzk
+         LadN86j8op0FBh8+Mc5hZevbdWSgNaL81dIzAVDHPSwZz082DwjnKKlAk5Dxx/IOfjO6
+         IOCQHVVRyHFjvseLf5PXh8ccdYivAy0QqECHZQZwa4L4lNRKc8j70h4kAHlhrmUVisB3
+         mdbJsjXOHtgbYNI3+kcuJbKsA2Y/hpO4623SfkatLLQi9Q8c8we6XFIGUzFlaKWfGr9h
+         tYMs79uKA7/RE1+M79bsb9O8zNHSb0R9zmaYYDloSeuwJaaqg+0sJKZcyeWcpYC0l1WP
+         hNVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=esE+CqVAlH1HaPv1rk9rxMUCrHvpy4Cdqz+Va+1SoXA=;
-        b=UZ39l3vZN1AqYVFN2rrPWz+FmgHvySOIAtOjqgRginYgHv1+WJ19wLgvwZxq0oPOYo
-         Y8BeFMDliOpQSiurTVODCj0pOoJZj/FI5GOiHyIVq/42rDYsVD8VMYtftkvFlzuGlRFg
-         k1SKVFr7152hwxWqNJ8ZlsRXonuTBrkjsijQA+ddyNYl53KFl2720M4+WSAr49LBCU8U
-         6SlriTy94gXsdfcDxqUH6Z1Y6ronGUB89Gkmt8HoPW+vA3WcgxX0MrTllv/0UvKp50+z
-         UA/8ZZpSiWVcVO3rcro5CFp85hQcFCsjU0bLHWkgqThazAviuYl72lbeD5f1/3iabaEf
-         5NcQ==
-X-Gm-Message-State: AIkVDXI6K5IJ9fyo8bnRJb7jeZqhk47LsZ9A43hp3OZuBeeFH6bcitxJnzYalByyLC6fq3kW
-X-Received: by 10.55.155.88 with SMTP id d85mr249551qke.90.1484696251507;
-        Tue, 17 Jan 2017 15:37:31 -0800 (PST)
+        bh=wID4o5kEetVUweBaiPzQTG0MqZNv7qaAk4r1XlHpfWg=;
+        b=bk9toVc2QHtGSLvH8OUGr8f38I29aI0CyLLZNZ3/z1RDwgLmVTPPdEbQlNbzBy4H/6
+         r0v2FOzJD4WJbVJMgmIY2zpmbt7NieQlkV7oxqVtYWYDdkyDYQKKdLqGmVYjFQzmAikm
+         PDR6YCp9qtGgtoqtUBxWIMFUPM9aR30U4d6crH35RiqldcXf5E+D3YHXQwHb6td0OkcV
+         ggqc70eTZMjTYSudYZqBBuGIbt06vgcjUGlfFLdVhOiCVTgImXIl3zbP5tyCmxnOcdhn
+         FbAhGDE2dDfeHYP5vHiYXO9hwueWp4PoZICSQJw8vMZYH9vJz+53aY5fsazCRFha/ija
+         DsuQ==
+X-Gm-Message-State: AIkVDXJJklxCGFmA4PQuLtYsZzsOSVD/6qOD5/Q0B3+ET5bRMoaDZG2TqeSpCd5UO+SK6YQL
+X-Received: by 10.55.215.129 with SMTP id t1mr217393qkt.274.1484696252707;
+        Tue, 17 Jan 2017 15:37:32 -0800 (PST)
 Received: from localhost.localdomain (NYUFWA-WLESSAUTHCLIENTS-17.NATPOOL.NYU.EDU. [216.165.95.6])
-        by smtp.gmail.com with ESMTPSA id c1sm3405814qke.36.2017.01.17.15.37.30
+        by smtp.gmail.com with ESMTPSA id c1sm3405814qke.36.2017.01.17.15.37.32
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 17 Jan 2017 15:37:31 -0800 (PST)
+        Tue, 17 Jan 2017 15:37:32 -0800 (PST)
 From:   santiago@nyu.edu
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, peff@peff.net, sunshine@sunshineco.com,
         walters@verbum.org, Lukas Puehringer <luk.puehringer@gmail.com>
-Subject: [PATCH v6 2/6] ref-filter: add function to print single ref_array_item
-Date:   Tue, 17 Jan 2017 18:37:19 -0500
-Message-Id: <20170117233723.23897-3-santiago@nyu.edu>
+Subject: [PATCH v6 4/6] builtin/tag: add --format argument for tag -v
+Date:   Tue, 17 Jan 2017 18:37:21 -0500
+Message-Id: <20170117233723.23897-5-santiago@nyu.edu>
 X-Mailer: git-send-email 2.11.0
 In-Reply-To: <20170117233723.23897-1-santiago@nyu.edu>
 References: <20170117233723.23897-1-santiago@nyu.edu>
@@ -62,94 +62,125 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Lukas Puehringer <luk.puehringer@gmail.com>
 
-ref-filter functions are useful for printing git object information
-using a format specifier. However, some other modules may not want to use
-this functionality on a ref-array but only print a single item.
+Adding --format to git tag -v mutes the default output of the GPG
+verification and instead prints the formatted tag object.
+This allows callers to cross-check the tagname from refs/tags with
+the tagname from the tag object header upon GPG verification.
 
-Expose a pretty_print_ref function to create, pretty print and free
-individual ref-items.
+The callback function for for_each_tag_name() didn't allow callers to
+pass custom data to their callback functions. Add a new opaque pointer
+to each_tag_name_fn's parameter to allow this.
 
 Signed-off-by: Lukas Puehringer <luk.puehringer@gmail.com>
 ---
- ref-filter.c | 27 +++++++++++++++++++++------
- ref-filter.h |  7 +++++++
- 2 files changed, 28 insertions(+), 6 deletions(-)
+ Documentation/git-tag.txt |  2 +-
+ builtin/tag.c             | 38 ++++++++++++++++++++++++++++----------
+ 2 files changed, 29 insertions(+), 11 deletions(-)
 
-diff --git a/ref-filter.c b/ref-filter.c
-index 1a978405e..5f4b08792 100644
---- a/ref-filter.c
-+++ b/ref-filter.c
-@@ -1361,7 +1361,7 @@ static struct ref_array_item *new_ref_array_item(const char *refname,
- 	return ref;
+diff --git a/Documentation/git-tag.txt b/Documentation/git-tag.txt
+index 76cfe40d9..586aaa315 100644
+--- a/Documentation/git-tag.txt
++++ b/Documentation/git-tag.txt
+@@ -15,7 +15,7 @@ SYNOPSIS
+ 'git tag' [-n[<num>]] -l [--contains <commit>] [--points-at <object>]
+ 	[--column[=<options>] | --no-column] [--create-reflog] [--sort=<key>]
+ 	[--format=<format>] [--[no-]merged [<commit>]] [<pattern>...]
+-'git tag' -v <tagname>...
++'git tag' -v [--format=<format>] <tagname>...
+ 
+ DESCRIPTION
+ -----------
+diff --git a/builtin/tag.c b/builtin/tag.c
+index 73df72811..b9da72761 100644
+--- a/builtin/tag.c
++++ b/builtin/tag.c
+@@ -24,7 +24,7 @@ static const char * const git_tag_usage[] = {
+ 	N_("git tag -d <tagname>..."),
+ 	N_("git tag -l [-n[<num>]] [--contains <commit>] [--points-at <object>]"
+ 		"\n\t\t[--format=<format>] [--[no-]merged [<commit>]] [<pattern>...]"),
+-	N_("git tag -v <tagname>..."),
++	N_("git tag -v [--format=<format>] <tagname>..."),
+ 	NULL
+ };
+ 
+@@ -66,15 +66,17 @@ static int list_tags(struct ref_filter *filter, struct ref_sorting *sorting, con
  }
  
--static int filter_ref_kind(struct ref_filter *filter, const char *refname)
-+static int ref_kind_from_refname(const char *refname)
+ typedef int (*each_tag_name_fn)(const char *name, const char *ref,
+-				const unsigned char *sha1);
++				const unsigned char *sha1, void *cb_data);
+ 
+-static int for_each_tag_name(const char **argv, each_tag_name_fn fn)
++static int for_each_tag_name(const char **argv, each_tag_name_fn fn,
++		void *cb_data)
  {
- 	unsigned int i;
+ 	const char **p;
+ 	char ref[PATH_MAX];
+ 	int had_error = 0;
+ 	unsigned char sha1[20];
  
-@@ -1374,11 +1374,7 @@ static int filter_ref_kind(struct ref_filter *filter, const char *refname)
- 		{ "refs/tags/", FILTER_REFS_TAGS}
- 	};
- 
--	if (filter->kind == FILTER_REFS_BRANCHES ||
--	    filter->kind == FILTER_REFS_REMOTES ||
--	    filter->kind == FILTER_REFS_TAGS)
--		return filter->kind;
--	else if (!strcmp(refname, "HEAD"))
-+	if (!strcmp(refname, "HEAD"))
- 		return FILTER_REFS_DETACHED_HEAD;
- 
- 	for (i = 0; i < ARRAY_SIZE(ref_kind); i++) {
-@@ -1389,6 +1385,15 @@ static int filter_ref_kind(struct ref_filter *filter, const char *refname)
- 	return FILTER_REFS_OTHERS;
++
+ 	for (p = argv; *p; p++) {
+ 		if (snprintf(ref, sizeof(ref), "refs/tags/%s", *p)
+ 					>= sizeof(ref)) {
+@@ -87,14 +89,14 @@ static int for_each_tag_name(const char **argv, each_tag_name_fn fn)
+ 			had_error = 1;
+ 			continue;
+ 		}
+-		if (fn(*p, ref, sha1))
++		if (fn(*p, ref, sha1, cb_data))
+ 			had_error = 1;
+ 	}
+ 	return had_error;
  }
  
-+static int filter_ref_kind(struct ref_filter *filter, const char *refname)
-+{
-+	if (filter->kind == FILTER_REFS_BRANCHES ||
-+	    filter->kind == FILTER_REFS_REMOTES ||
-+	    filter->kind == FILTER_REFS_TAGS)
-+		return filter->kind;
-+	return ref_kind_from_refname(refname);
-+}
-+
- /*
-  * A call-back given to for_each_ref().  Filter refs and keep them for
-  * later object processing.
-@@ -1671,6 +1676,16 @@ void show_ref_array_item(struct ref_array_item *info, const char *format, int qu
- 	putchar('\n');
- }
- 
-+void pretty_print_ref(const char *name, const unsigned char *sha1,
-+		const char *format)
-+{
-+	struct ref_array_item *ref_item;
-+	ref_item = new_ref_array_item(name, sha1, 0);
-+	ref_item->kind = ref_kind_from_refname(name);
-+	show_ref_array_item(ref_item, format, 0);
-+	free_array_item(ref_item);
-+}
-+
- /*  If no sorting option is given, use refname to sort as default */
- struct ref_sorting *ref_default_sorting(void)
+ static int delete_tag(const char *name, const char *ref,
+-				const unsigned char *sha1)
++				const unsigned char *sha1, void *cb_data)
  {
-diff --git a/ref-filter.h b/ref-filter.h
-index fc55fa357..7b05592ba 100644
---- a/ref-filter.h
-+++ b/ref-filter.h
-@@ -109,4 +109,11 @@ struct ref_sorting *ref_default_sorting(void);
- /*  Function to parse --merged and --no-merged options */
- int parse_opt_merge_filter(const struct option *opt, const char *arg, int unset);
+ 	if (delete_ref(ref, sha1, 0))
+ 		return 1;
+@@ -103,9 +105,22 @@ static int delete_tag(const char *name, const char *ref,
+ }
  
-+/*
-+ * Print a single ref, outside of any ref-filter. Note that the
-+ * name must be a fully qualified refname.
-+ */
-+void pretty_print_ref(const char *name, const unsigned char *sha1,
-+		const char *format);
+ static int verify_tag(const char *name, const char *ref,
+-				const unsigned char *sha1)
++				const unsigned char *sha1, void *cb_data)
+ {
+-	return gpg_verify_tag(sha1, name, GPG_VERIFY_VERBOSE);
++	int flags;
++	char *fmt_pretty = cb_data;
++	flags = GPG_VERIFY_VERBOSE;
 +
- #endif /*  REF_FILTER_H  */
++	if (fmt_pretty)
++		flags = GPG_VERIFY_OMIT_STATUS;
++
++	if (gpg_verify_tag(sha1, name, flags))
++		return -1;
++
++    if (fmt_pretty)
++		pretty_print_ref(name, sha1, fmt_pretty);
++
++	return 0;
+ }
+ 
+ static int do_sign(struct strbuf *buffer)
+@@ -428,9 +443,12 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
+ 	if (filter.merge_commit)
+ 		die(_("--merged and --no-merged option are only allowed with -l"));
+ 	if (cmdmode == 'd')
+-		return for_each_tag_name(argv, delete_tag);
+-	if (cmdmode == 'v')
+-		return for_each_tag_name(argv, verify_tag);
++		return for_each_tag_name(argv, delete_tag, NULL);
++	if (cmdmode == 'v') {
++		if (format)
++			verify_ref_format(format);
++		return for_each_tag_name(argv, verify_tag, format);
++	}
+ 
+ 	if (msg.given || msgfile) {
+ 		if (msg.given && msgfile)
 -- 
 2.11.0
 
