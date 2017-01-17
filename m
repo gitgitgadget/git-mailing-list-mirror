@@ -2,76 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 62E0E20756
-	for <e@80x24.org>; Tue, 17 Jan 2017 22:06:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A0DD120756
+	for <e@80x24.org>; Tue, 17 Jan 2017 22:21:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751071AbdAQWGd (ORCPT <rfc822;e@80x24.org>);
-        Tue, 17 Jan 2017 17:06:33 -0500
-Received: from smtp.codeaurora.org ([198.145.29.96]:41216 "EHLO
-        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750893AbdAQWGb (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 17 Jan 2017 17:06:31 -0500
-Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id 1F51F601D1; Tue, 17 Jan 2017 22:05:34 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1484690734;
-        bh=dRFQjAZgJvRrNLVSk8UTDOYvW2oLeJsCbaufQV7pSLY=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=FXCNJAoRXu4zevyMOxcH/YbKDHHP4vtzOaOzx/jAJwiV80V4nkNGRgmYlBGyoI1Pf
-         4x4aOgJT+JejBZEnGcpvTQhuXxweWXB/ScSR+4UsNX17+Vx8lPAt9ZaUAAj6Ipgsj3
-         XvSbkn7FCK77UdgR280ZVNACcmeOA1rc6rois8fM=
-Received: from mfick1-lnx.localnet (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        id S1751120AbdAQWVt (ORCPT <rfc822;e@80x24.org>);
+        Tue, 17 Jan 2017 17:21:49 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:54448 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751177AbdAQWVs (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 17 Jan 2017 17:21:48 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 58A6761C2A;
+        Tue, 17 Jan 2017 17:19:30 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=RJBWuSx+vNJd3xZsVaCge7fW/xE=; b=KpWTGy
+        YL8MkR9Lr5tXWu3iSmaf/fwrnpFPYvmjDmQWcAq/K/E9HzAZCyllbw4xENRoVhNS
+        ETfl4mgtPPejRP5FFKyOjRtwlNR8sVXtBVnifSAeO0C+CKj0x+dSug03e5lYyh2g
+        WBFkkSfKA0WOjBfn8pxSqpnw/GXpHZ/xEAs8k=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=gMlo+JO/UVgTac3rySyKsxqDZ8nnfUnH
+        r92ZjO0gOdwFvqT6ZHe1yJUIfS+Cx5+4pYz4HXFD+xnBVWHLOuOH5K7A4BUnFK5m
+        LCA+KiYd4qAyovQrQG8kl0tK1ZQWoUPJ9SAt9BwXUoZfvu2rzbpQ6KyD7aCsy1IO
+        VijY258+bhM=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 4ECEE61C28;
+        Tue, 17 Jan 2017 17:19:30 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        (Authenticated sender: mfick@smtp.codeaurora.org)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id A2293601D1;
-        Tue, 17 Jan 2017 22:05:33 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1484690733;
-        bh=dRFQjAZgJvRrNLVSk8UTDOYvW2oLeJsCbaufQV7pSLY=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=iUsKmJAtSLHVqD/961BfTnPtr46QU2TmDc3owtoLa5R+LvuBG54yTdy6C2iEvo//5
-         NqOzQPtxMQRqFKutPLEohyPHLoIErLTFMFeCt86gIR9dsNkHf3lqy2VuAEGBfBFfNY
-         7bzI3uho2C+6J0rcepD5hm/gZqxyNSjcv3EPM4yo=
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org A2293601D1
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=mfick@codeaurora.org
-From:   Martin Fick <mfick@codeaurora.org>
-To:     Ben Peart <peartben@gmail.com>
-Cc:     'Shawn Pearce' <spearce@spearce.org>, 'git' <git@vger.kernel.org>,
-        benpeart@microsoft.com
-Subject: Re: [RFC] Add support for downloading blobs on demand
-Date:   Tue, 17 Jan 2017 15:05:32 -0700
-Message-ID: <2381666.1DSVtKRIH5@mfick1-lnx>
-User-Agent: KMail/4.8.5 (Linux/3.2.0-106-generic; KDE/4.8.5; x86_64; ; )
-In-Reply-To: <002501d2710b$af74c4d0$0e5e4e70$@gmail.com>
-References: <20170113155253.1644-1-benpeart@microsoft.com> <CAJo=hJumYXTRN_B3iZdmcpomp7wJ+UPcikxGb6rn9W=uJeYmfw@mail.gmail.com> <002501d2710b$af74c4d0$0e5e4e70$@gmail.com>
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id B1D3661C27;
+        Tue, 17 Jan 2017 17:19:29 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
+        git@vger.kernel.org, Thomas Gummerer <t.gummerer@gmail.com>,
+        Andrew Arnott <Andrew.Arnott@microsoft.com>
+Subject: Re: [PATCH 2/2] Be more careful when determining whether a remote was configured
+References: <cover.1484687919.git.johannes.schindelin@gmx.de>
+        <41c347f22c80e96c54db34baa739b6e37e268b61.1484687919.git.johannes.schindelin@gmx.de>
+        <20170117214723.p5rni6wwggei366j@sigill.intra.peff.net>
+Date:   Tue, 17 Jan 2017 14:19:28 -0800
+In-Reply-To: <20170117214723.p5rni6wwggei366j@sigill.intra.peff.net> (Jeff
+        King's message of "Tue, 17 Jan 2017 16:47:23 -0500")
+Message-ID: <xmqqd1flcosv.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.90 (gnu/linux)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 03A92628-DD03-11E6-B38A-A7617B1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tuesday, January 17, 2017 04:50:13 PM Ben Peart wrote:
-> While large files can be a real problem, our biggest issue
-> today is having a lot (millions!) of source files when
-> any individual developer only needs a small percentage of
-> them.  Git with 3+ million local files just doesn't
-> perform well.
+Jeff King <peff@peff.net> writes:
 
-Honestly, this sounds like a problem better dealt with by 
-using git subtree or git submodules, have you considered 
-that?
+>> Let's fix this by telling Git that a remote is not configured unless any
+>> fetch/push URL or refspec is configured explicitly.
+>
+> I notice here that setting a refspec _does_ define a remote. Is there a
+> reason you drew the line there, and not at, say, whether it has a URL?
 
--Martin
+"Not configured unless any URL or refspec is configured" means that
+if URL is there, even if there is no refspec, then it is a remote
+definition, right?  
 
--- 
-The Qualcomm Innovation Center, Inc. is a member of Code 
-Aurora Forum, hosted by The Linux Foundation
+But I think "what does it mean to define a remote" is a question
+that you are asking, and that is not necessary to answer within the
+scope of this topic.
 
+I do agree that honoring .prune is nonsense unless refspecs are
+defined, but the question "does it make sense to allow prune?"  is
+different from "is it configured?".  Your "you can set .proxy and
+other useful things, it is just .prune does not make sense" is a
+quite appropriate statement to illustrate the difference.
+
+Perhaps instead of adding "is it configured?" flag that is too
+broadly named and has too narrow meaning, would it make more sense
+to introduce "int can_prune(struct remote *remote)" that looks at
+the remote refspecs?
