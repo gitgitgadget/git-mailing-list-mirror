@@ -2,141 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.4 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2B5AE1F89C
-	for <e@80x24.org>; Wed, 18 Jan 2017 19:14:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CD2DE1F89C
+	for <e@80x24.org>; Wed, 18 Jan 2017 19:16:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752068AbdARTOs (ORCPT <rfc822;e@80x24.org>);
-        Wed, 18 Jan 2017 14:14:48 -0500
-Received: from smtprelay.synopsys.com ([198.182.60.111]:50146 "EHLO
-        smtprelay.synopsys.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751979AbdARTOr (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Jan 2017 14:14:47 -0500
-Received: from mailhost.synopsys.com (mailhost3.synopsys.com [10.12.238.238])
-        by smtprelay.synopsys.com (Postfix) with ESMTP id 65EDD10C00CF;
-        Wed, 18 Jan 2017 11:04:48 -0800 (PST)
-Received: from mailhost.synopsys.com (localhost [127.0.0.1])
-        by mailhost.synopsys.com (Postfix) with ESMTP id 3F7EA196;
-        Wed, 18 Jan 2017 11:04:48 -0800 (PST)
-Received: from US01WEHTC2.internal.synopsys.com (us01wehtc2-vip.internal.synopsys.com [10.12.239.238])
-        by mailhost.synopsys.com (Postfix) with ESMTP id 22B8C18D;
-        Wed, 18 Jan 2017 11:04:48 -0800 (PST)
-Received: from DE02WEHTCB.internal.synopsys.com (10.225.19.94) by
- US01WEHTC2.internal.synopsys.com (10.12.239.237) with Microsoft SMTP Server
- (TLS) id 14.3.266.1; Wed, 18 Jan 2017 11:04:47 -0800
-Received: from DE02WEHTCA.internal.synopsys.com (10.225.19.92) by
- DE02WEHTCB.internal.synopsys.com (10.225.19.94) with Microsoft SMTP Server
- (TLS) id 14.3.266.1; Wed, 18 Jan 2017 20:04:46 +0100
-Received: from [10.107.19.116] (10.107.19.116) by
- DE02WEHTCA.internal.synopsys.com (10.225.19.80) with Microsoft SMTP Server
- (TLS) id 14.3.266.1; Wed, 18 Jan 2017 20:04:45 +0100
-Subject: Re: Git: new feature suggestion
-To:     Stefan Beller <sbeller@google.com>,
-        Joao Pinto <Joao.Pinto@synopsys.com>
-References: <4817eb00-6efc-e3c0-53d7-46f2509350d3@synopsys.com>
- <CAGZ79kYXQcUB+rVkboY9fMqu6R3RoHEJ7BTJn_+-RScFDjEduA@mail.gmail.com>
-CC:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        Linus Torvalds <torvalds@linux-foundation.org>,
-        "CARLOS.PALMINHA@synopsys.com" <CARLOS.PALMINHA@synopsys.com>
-From:   Joao Pinto <Joao.Pinto@synopsys.com>
-Message-ID: <21caed00-d103-5534-156c-0c19f25e0879@synopsys.com>
-Date:   Wed, 18 Jan 2017 19:04:43 +0000
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
- Thunderbird/45.6.0
+        id S1752808AbdARTPv (ORCPT <rfc822;e@80x24.org>);
+        Wed, 18 Jan 2017 14:15:51 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:59988 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1752030AbdARTPt (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Jan 2017 14:15:49 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id E5B655F5DF;
+        Wed, 18 Jan 2017 14:15:06 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=woULxIPMvHTtADMB0xJ7zb0XitY=; b=cRVsKp
+        kY7QVCztFlQ67y/4GppllaOxQHyJCVhpy+mWRuAfZUHjYYpezBr7QNvQikzv75ox
+        whp6U2qwfkqTbF9UGGleTdOmyOnJWzziqtvxQnzGuHUMp2OBTei+B1mqJitGz/7G
+        16qQU2xfeWpreCmfgqpOleR9PYpa9wwVJ5Csw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=dv2q0C5Gc2fUt+gkU1iCw1oeucBLS2A8
+        tZxfgGHOLAk9qr5xBFVxAZLHZIgtTQISGd6TuRklTyPcgnhyByrKznM/eBAeKw4V
+        k2KKU8OugpEki8cVQ7Mj2ErV95sB1PvimAjjYrHT3XIhDrfqspplSm8IL7j4NTME
+        zrXYb98wlfw=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id B34B15F5DD;
+        Wed, 18 Jan 2017 14:15:06 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 6D53D5F5DC;
+        Wed, 18 Jan 2017 14:15:05 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     git@vger.kernel.org, David Aguilar <davvid@gmail.com>,
+        Dennis Kaarsemaker <dennis@kaarsemaker.net>,
+        Paul Sbarra <sbarra.paul@gmail.com>
+Subject: Re: [PATCH v5 3/3] Retire the scripted difftool
+References: <cover.1483373635.git.johannes.schindelin@gmx.de>
+        <cover.1484668473.git.johannes.schindelin@gmx.de>
+        <8238bba389c031b091a37396fed43cac94d944e7.1484668473.git.johannes.schindelin@gmx.de>
+        <xmqqk29tcqb8.fsf@gitster.mtv.corp.google.com>
+        <alpine.DEB.2.20.1701181332230.3469@virtualbox>
+Date:   Wed, 18 Jan 2017 11:15:03 -0800
+In-Reply-To: <alpine.DEB.2.20.1701181332230.3469@virtualbox> (Johannes
+        Schindelin's message of "Wed, 18 Jan 2017 13:33:39 +0100 (CET)")
+Message-ID: <xmqqbmv49o3s.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.90 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <CAGZ79kYXQcUB+rVkboY9fMqu6R3RoHEJ7BTJn_+-RScFDjEduA@mail.gmail.com>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.107.19.116]
+Content-Type: text/plain
+X-Pobox-Relay-ID: 6B407368-DDB2-11E6-82CE-A7617B1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-Hi Stefan,
+> Hi Junio,
+>
+> On Tue, 17 Jan 2017, Junio C Hamano wrote:
+>
+>> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+>> 
+>> > It served its purpose, but now we have a builtin difftool. Time for the
+>> > Perl script to enjoy Florida.
+>> >
+>> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+>> > ---
+>> 
+>> The endgame makes a lot of sense.  Both in the cover letter and in
+>> the previous patch you talk about having both in the released
+>> version, so do you want this step to proceed slower than the other
+>> two?
+>
+> I did proceed that slowly. Already three Git for Windows versions have
+> been released with both.
+>
+> But I submitted this iteration with this patch, so my intent is clearly to
+> retire the Perl script.
 
-Às 6:50 PM de 1/18/2017, Stefan Beller escreveu:
-> On Wed, Jan 18, 2017 at 2:40 AM, Joao Pinto <Joao.Pinto@synopsys.com> wrote:
->> Hello,
->>
->> My name is Joao Pinto, I work at Synopsys and I am a frequent Linux Kernel
->> contributor.
->>
->> Let me start by congratulate you for the fantastic work you have been doing with
->> Git which is an excellent tool.
->>
->> The Linux Kernel as all systems needs to be improved and re-organized to be
->> better prepared for future development and sometimes we need to change
->> folder/files names or even move things around.
->> I have seen a lot of Linux developers avoid this re-organization operations
->> because they would lose the renamed file history, because a new log is created
->> for the new file, even if it is a renamed version of itself.
-> 
-> Well there are a couple of things to help with digging in the logs.
-> 
-> git log:
->        --follow
->            Continue listing the history of a file beyond renames (works only
->            for a single file).
-> 
->         -M[<n>], --find-renames[=<n>]
->            If generating diffs, detect and report renames for each commit. For
->            following files across renames while traversing history, see
->            --follow. If n is specified, it is a threshold on the similarity
->            index (i.e. amount of addition/deletions compared to the file’s
->            size). For example, -M90% means Git should consider a delete/add
->            pair to be a rename if more than 90% of the file hasn’t changed.
->            Without a % sign, the number is to be read as a fraction, with a
->            decimal point before it. I.e., -M5 becomes 0.5, and is thus the
->            same as -M50%. Similarly, -M05 is the same as -M5%. To limit
->            detection to exact renames, use -M100%. The default similarity
->            index is 50%.
-> 
->        -C[<n>], --find-copies[=<n>]
->            Detect copies as well as renames. See also --find-copies-harder. If
->            n is specified, it has the same meaning as for -M<n>.
-> 
-> 
-> 
->> I am sending you this e-mail to suggest the creation of a new feature in Git:
->> when renamed, a file or folder should inherit his parent’s log and a “rename: …”
->> would be automatically created or have some kind of pointer to its “old” form to
->> make history analysis easier.
-> 
-> How do you currently analyse history, which detailed feature is missing?
-> 
-> Mind that in the Git data model we deliberately do not record the rename
-> at commit time, but rather want to identify the renames at log time.
-> This is because
-> in the meantime between commit and log viewing someone could have written
-> a better rename detection, whereas at commit time we'd be stuck with ancient
-> cruft forever. ;)
-> 
->>
->> I volunteer to help in the new feature if you find it useful. I think it would
->> improve log history analysis and would enable developers to better organize old
->> code.
-> 
-> IMHO complete renames (i.e. git mv path/a/file.c path/b/thing.c) are already
-> covered quite well. Partial rename (e.g. moving code from one file into two
-> separate files or vice versa) is still a bit hard.
-> 
-> I started such a new feature, see
-> https://urldefense.proofpoint.com/v2/url?u=https-3A__public-2Dinbox.org_git_20160903033120.20511-2D1-2Dsbeller-40google.com_&d=DwIFaQ&c=DPL6_X_6JkXFx7AXWqB0tg&r=s2fO0hii0OGNOv9qQy_HRXy-xAJUD1NNoEcc3io_kx0&m=BseICq5hy9UHxmX2XP8oPYLbn-HoEUlEuVUzqPHkX58&s=PybtKK0ELH3Nld_CQSYZnLqCQOWvnU4Fjj5iV_7EKqE&e= 
-> latest code is at https://urldefense.proofpoint.com/v2/url?u=https-3A__github.com_stefanbeller_git_commits_colored-5Fdiff12&d=DwIFaQ&c=DPL6_X_6JkXFx7AXWqB0tg&r=s2fO0hii0OGNOv9qQy_HRXy-xAJUD1NNoEcc3io_kx0&m=BseICq5hy9UHxmX2XP8oPYLbn-HoEUlEuVUzqPHkX58&s=pkTehcEmeHVLHdcNbUiU03meyH10cgUbGqLgOqXcL6w&e= ,
-> but the latest two commits are bogus and need rewriting.
-> 
-> I think this feature is not 100% what you are aiming at, but is very close.
-> 
-> Thanks,
-> Stefan
-> 
+Ok, I was mostly reacting to 2/3 while I am reading it:
 
-Great info, helps a lot! I am going to analyse and get back to you ASAP.
+    The reason: this new, experimental, builtin difftool will be shipped as
+    part of Git for Windows v2.11.0, to allow for easier large-scale
+    testing, but of course as an opt-in feature.
 
-Thanks
+as there is no longer an opportunity to participate in this opt-in
+testing, unless 3/3 is special cased and delayed.
+
 
