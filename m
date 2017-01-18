@@ -2,104 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 975DA1F89C
-	for <e@80x24.org>; Wed, 18 Jan 2017 22:41:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BA6861F89C
+	for <e@80x24.org>; Wed, 18 Jan 2017 22:43:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751260AbdARWlJ (ORCPT <rfc822;e@80x24.org>);
-        Wed, 18 Jan 2017 17:41:09 -0500
-Received: from mail-lf0-f68.google.com ([209.85.215.68]:34459 "EHLO
-        mail-lf0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751255AbdARWlI (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Jan 2017 17:41:08 -0500
-Received: by mail-lf0-f68.google.com with SMTP id q89so3497052lfi.1
-        for <git@vger.kernel.org>; Wed, 18 Jan 2017 14:41:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=MufVp/n2l7xXiCyk7Que3+kyAMfmA0gFXPtflU99Ry4=;
-        b=TSxOISn+M4bpIo5re1w8toYTQFCBvECUuekFaNJlwHyfx8755nlyAbed6niMmOCNSK
-         FS7HV5SqYAG9RPgUvfDoiAUw83Fv2xBT6IZSxCVlClIKV9CGupcYZs4o0cDnhnXAI+T0
-         TmH3F8YIw6WExN0dXH/rk/Z8CS+Ik1dxgNiy3LFrnDio8+dchVIFpAOeLFkr98VJ+1in
-         xqhIANEl+p6C4gWi7tmSg55Em9v1DMd9fLunpgg5EBMghHTuEPU+HZz5mARnLYcPoDg0
-         iFZrBC7kN+8i9kz5oX1r9gH44XOYY8FscvSByH+1DO/nGyL50KOViSC2ikhQYSbnuNaP
-         UAsg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=MufVp/n2l7xXiCyk7Que3+kyAMfmA0gFXPtflU99Ry4=;
-        b=DVRo0khJjzZJYh/lWMucnseZ8pJ2JqWF9QShvgeaD1eK0CQQONYBrW8O5x6O66PJvN
-         fmbEoIdS87MlpZ5yGxgiYjizkJ9srCyqvoM6Iz00PYn7Ew24LHYa1kKG7EgNEARv5nET
-         smfOOcx8kiwUWu3gwA6PZdSDiB6dvDQhseTedQdGkS5zVIRtiYmbVP0kF7okcQaVK/KZ
-         o4b+FmRXFxSi5AjknwtiKFbm5i6yquguDFosY1ZGc0BDLVp9gDb66ONnzW1ldGldYp+G
-         X8dendeiIGoIeEy7C/9X6q0ndkrTikF2LX6+LyfyRm9A0vNSNHtHprPbDLs+Ib4pycoQ
-         0x9g==
-X-Gm-Message-State: AIkVDXJUbXJGaLiByd8RmAtgdzK+uezS2QwJtpaWdPurrZ28couYGGnf8o5ahCcew6h3lFsYnlKN1Tt0OhuaqA==
-X-Received: by 10.46.72.1 with SMTP id v1mr2543506lja.12.1484778684495; Wed,
- 18 Jan 2017 14:31:24 -0800 (PST)
-MIME-Version: 1.0
-Received: by 10.25.145.14 with HTTP; Wed, 18 Jan 2017 14:31:03 -0800 (PST)
-In-Reply-To: <xmqqy3y82fs8.fsf@gitster.mtv.corp.google.com>
-References: <20170118000930.5431-1-jacob.e.keller@intel.com>
- <20170118000930.5431-4-jacob.e.keller@intel.com> <xmqqtw8w86xc.fsf@gitster.mtv.corp.google.com>
- <CA+P7+xo4-45je995LLoyh-LbGTTf3EZUVW-UV+Dd=Wg0EGRvVA@mail.gmail.com> <xmqqy3y82fs8.fsf@gitster.mtv.corp.google.com>
-From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Wed, 18 Jan 2017 14:31:03 -0800
-Message-ID: <CA+P7+xo3bS0EfXaVCZbd6NwbBA8vP5HiZNpAh_4v7S_p2jm+Zg@mail.gmail.com>
-Subject: Re: [PATCH v3 3/5] name-rev: add support to exclude refs by pattern match
-To:     Junio C Hamano <gitster@pobox.com>
+        id S1751107AbdARWnN (ORCPT <rfc822;e@80x24.org>);
+        Wed, 18 Jan 2017 17:43:13 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:62343 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1750874AbdARWnL (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Jan 2017 17:43:11 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id AC852602D7;
+        Wed, 18 Jan 2017 17:42:31 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=96vlIAKlV4+j1PaCWL8N4Wd9BQY=; b=dm6rbP
+        UssfdLUQ7QHFAwl01M3/fpueZzSIHDPqTU++Hl6eEO9IE/RfsO03T67zJyBM2Sxp
+        /cFkDn7RveYqKlcJ4ZXe6G6T5budcu3ETv54jHFvfaHQyMjlj0q33e9iD8H/zp7L
+        +4ufqhu9Qdf66PMyUNeWOmcMrv/tyi36zcHYY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=mWQTPxJRZDboRJr1fmxt4KbP+UXpudvL
+        /ZuoypkUvfDxC4h/7fip2Iro/wQ37T1rBV9wg8rqFkO7CjOu6uYuginooVcZXmSw
+        JGs3RKSZriTEIfdqKjeA/m8SwmwAslHZ/Zi6xk/YVbDF5ERO+QUuJbvq7ho66PJK
+        ati4ghdI5uE=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id A2D75602D6;
+        Wed, 18 Jan 2017 17:42:31 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 16AFE602D4;
+        Wed, 18 Jan 2017 17:42:31 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jacob Keller <jacob.keller@gmail.com>
 Cc:     Jacob Keller <jacob.e.keller@intel.com>,
         Git mailing list <git@vger.kernel.org>,
         Johannes Sixt <j6t@kdbg.org>,
         Johannes Schindelin <johannes.schindelin@gmx.de>
-Content-Type: text/plain; charset=UTF-8
+Subject: Re: [PATCH v3 2/5] name-rev: extend --refs to accept multiple patterns
+References: <20170118000930.5431-1-jacob.e.keller@intel.com>
+        <20170118000930.5431-3-jacob.e.keller@intel.com>
+        <xmqqy3y8878k.fsf@gitster.mtv.corp.google.com>
+        <CA+P7+xpMAVq8K41cDZy5FTiRTHoWWd3yOSmLoj4ucAvCPoNa0g@mail.gmail.com>
+Date:   Wed, 18 Jan 2017 14:42:29 -0800
+In-Reply-To: <CA+P7+xpMAVq8K41cDZy5FTiRTHoWWd3yOSmLoj4ucAvCPoNa0g@mail.gmail.com>
+        (Jacob Keller's message of "Wed, 18 Jan 2017 13:12:37 -0800")
+Message-ID: <xmqqpojk2dnu.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 656EF212-DDCF-11E6-9B55-A7617B1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jan 18, 2017 at 1:56 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Jacob Keller <jacob.keller@gmail.com> writes:
->
->> Yes this makes sense. I'm still looking at whether the alternative
->> implementation suggested based on the git-log style would make more
->> sense or not, but if we keep this as is, the added text you gave is
->> important.
->
-> I actually think it is a red-herring that "git log" honors "orders";
-> it does, but that is not a result of carefully considering the
-> desired behaviour.  It instead is a historical wart that came from
-> the fact that "--branches" and friends uses for_each_glob_ref_in()
-> that takes the top-level hierarchy paths like "refs/heads/" and the
-> implementation of "--exclude" piggybacked into the function in a
-> lazy way.
->
-> If exclusion were done independently (e.g. in a way similar to what
-> you did in this series using subpath match), we wouldn't have had
-> the "the user must give exclude patterns first that would affect the
-> next inclusion pattern, at which point the exclude patterns are
-> cleared and the user needs to start over", which is an end-user
-> experience that is clunky.
->
+Jacob Keller <jacob.keller@gmail.com> writes:
 
-However, it is useful that exclude patterns only apply to specific
-match parameters? That is the advantage of the other implementation.
+> On Wed, Jan 18, 2017 at 12:04 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>
+>> I agree that we cannot short-cut on the first match to make sure
+>> that the outcome is stable, but I wondered what should be shown when
+>> we do have multiple matches.  Say I gave
+>>
+>>     --refs="v*" --refs="refs/tags/v1.*"
+>>
+>> and refs/tags/v1.0 matched.  The above code would say we can
+>> abbreviate.
+>>
+>> What is the reason behind this design decision?  Is it because it is
+>> clear that the user shows her willingness to accept more compact
+>> form by having --refs="v*" that would allow shortening?  If that is
+>> the case, I think I agree with the reasoning.  But we probably want
+>> to write it down somewhere, because another reasoning, which may
+>> also be valid, would call for an opposite behaviour (i.e. the more
+>> specific --refs="refs/tags/v1.*" also matched, so let's show that
+>> fact by not shortening).
+>
+> I'm not sure which reasoning makes most sense. Any other opinions?
 
-I think I agree that it's not really worth the complexity, as it
-requires a much more complex explanation of how the parameters
-interact, and in general doesn't provide that much more
-expressiveness, since at least for "git describe" by definition it
-either finds the tag as a match or not. Sure you could say "include
-all tags matching x but only if they don't match y" and include all
-tags matching z even if they match y" using that mechanism, but I
-think that makes the entire thing needlessly more complicated than "we
-use a tag if it matches any match and doesn't match any exclude".
-
-Thanks,
-Jake
+FWIW, I do think that the design decision to declare that it can be
+abbreviated if the ref matches at least one short pattern makes
+sense, and I am guessing (because you didn't answer when asked what
+_your_ reasoning behind the code was) that you are in agreement.  I
+just want it to be spelled out probably as in-code comment, so that
+people who later come to this part of the code know why it was
+designed that way.  And they can disagree and change it if the end
+result is better---I just want to make sure that they can understand
+what they are disagreeing when it happens, as opposed to them
+scratching their head saying "we do not know why it was chosen to be
+done this way, let's make a random change to make it behave
+differently".
