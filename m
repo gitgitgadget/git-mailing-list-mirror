@@ -2,85 +2,116 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 65A011F89C
-	for <e@80x24.org>; Wed, 18 Jan 2017 21:57:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9CCF61F89C
+	for <e@80x24.org>; Wed, 18 Jan 2017 22:02:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752683AbdARV5W (ORCPT <rfc822;e@80x24.org>);
-        Wed, 18 Jan 2017 16:57:22 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:55417 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751634AbdARV5U (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Jan 2017 16:57:20 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 21FBA6186D;
-        Wed, 18 Jan 2017 16:56:41 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=LrxYVLOAMFUmQOhq2cbXc5E2M0A=; b=K5Fj9u
-        uzkftghP7u09UBmqHj92cr5b5e1lxoRLxXFf0QDlLBhXIU3lM5uW+jeN6I067TbB
-        +rNlZFySXLh83XOWHRI1YMMg7RWpZRK1Y1bu/Gkf559qRBBB93Sz/BPNLIcvRnyQ
-        vPfDowp8rAtF4fvFZjcXGNqG4qAEbEDmuJIfk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=NiDN0BshRpFoG1J8wzGKoR3OLvc9xARl
-        P5qNpM9yCfdOghWAfJclSlHG7PsXaKZ0IelTDYT2PGlL8wpfrkiyJGAgYTLakQ9/
-        TXTr9/EuIR5QugfkNJXzyhoBz2mM3jGn4m6Y1FHa+ChTW891gM8TtOw60zV2hmmJ
-        SKgo8nZZIfo=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 1AC0F6186C;
-        Wed, 18 Jan 2017 16:56:41 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 7949A6186B;
-        Wed, 18 Jan 2017 16:56:40 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jacob Keller <jacob.keller@gmail.com>
-Cc:     Jacob Keller <jacob.e.keller@intel.com>,
-        Git mailing list <git@vger.kernel.org>,
-        Johannes Sixt <j6t@kdbg.org>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v3 3/5] name-rev: add support to exclude refs by pattern match
-References: <20170118000930.5431-1-jacob.e.keller@intel.com>
-        <20170118000930.5431-4-jacob.e.keller@intel.com>
-        <xmqqtw8w86xc.fsf@gitster.mtv.corp.google.com>
-        <CA+P7+xo4-45je995LLoyh-LbGTTf3EZUVW-UV+Dd=Wg0EGRvVA@mail.gmail.com>
-Date:   Wed, 18 Jan 2017 13:56:39 -0800
-In-Reply-To: <CA+P7+xo4-45je995LLoyh-LbGTTf3EZUVW-UV+Dd=Wg0EGRvVA@mail.gmail.com>
-        (Jacob Keller's message of "Wed, 18 Jan 2017 13:13:30 -0800")
-Message-ID: <xmqqy3y82fs8.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+        id S1753864AbdARWCX (ORCPT <rfc822;e@80x24.org>);
+        Wed, 18 Jan 2017 17:02:23 -0500
+Received: from mail-io0-f181.google.com ([209.85.223.181]:36352 "EHLO
+        mail-io0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753858AbdARWCW (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Jan 2017 17:02:22 -0500
+Received: by mail-io0-f181.google.com with SMTP id j13so23402643iod.3
+        for <git@vger.kernel.org>; Wed, 18 Jan 2017 14:02:17 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=Gxm4tQC2Nb+O2i+s7+tdJsMB3ED9KmEtWF+B34KbTAs=;
+        b=uOB9YI8DGTSD5obq6VltUAPwU1SFb1wz8ioJFckGRT43V7j0M0HD4H858i4+LAZZM1
+         oFg6DoQ+Hwgqauqi/HUc4skbdC0NWOX9o+T9VuVtiCCEMQJ4v/ZxwkYiqanvt4LcjMh1
+         Gy8HdEwhGRROFBmf2xoeO5PSTA4/TRhqaH1ZMZt/jLnAA6Cl7hs566rTrKyu6d7aGbBO
+         C5t1iqfQN2PchV/teqnN7kL9E3cadhDDyMIkETDA1Pt/LVWkR8C1A/BRXvbFWqiHX73n
+         8beTgYnT7WHS/AlmAfxgoopVoZLDGb0oS67G/q4T1hGvo29s9nooS3JdIY7iruNwNy4z
+         ycWg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=Gxm4tQC2Nb+O2i+s7+tdJsMB3ED9KmEtWF+B34KbTAs=;
+        b=Ws6mBRJBoIU0Y8orYInxnNGFnMnJtv7b0V7Wh1Pu8k7OOztoTLzwn8vrdRaiRhPHLB
+         WQNyS7bTUAiIgwxb4JTfv98TS1VAt0W0Ow3GdT6DHCT1tvc52SSCrYyMQZvDarIHyvt0
+         6eFD/LhFVZrLFTIN57yyaqR3veL0TQ0ZzJsO1HNuYexzkudxkos3ed1ASDyyMrIj8kn2
+         +7pXKV8Ws16RPKmzbV+AhkHrRLxS2FngMDZuzVP3Wg5HGHLjsHsDQPOxMemjUA8WVChv
+         2uBbIPtk65QJ9oTs5qPFxnmMFfj+jlGW89pN0w1SyhwnOsstcshp8eiOLn1Kv7HM0Z1t
+         GwQA==
+X-Gm-Message-State: AIkVDXJgQQFYQkAt7DZeBhFY/CifpkLBNCLHy2vByGBpX9TSkJZ+PC0TcXQjeZcro+x4d/NSIFReA/hMcGBikfxJ
+X-Received: by 10.107.3.160 with SMTP id e32mr5754518ioi.52.1484776936231;
+ Wed, 18 Jan 2017 14:02:16 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: FDF37FBE-DDC8-11E6-90BF-A7617B1B28F4-77302942!pb-smtp2.pobox.com
+Received: by 10.79.39.19 with HTTP; Wed, 18 Jan 2017 14:02:15 -0800 (PST)
+In-Reply-To: <xmqqk29s3wg0.fsf@gitster.mtv.corp.google.com>
+References: <20170117233503.27137-1-sbeller@google.com> <20170117233503.27137-2-sbeller@google.com>
+ <xmqqk29s3wg0.fsf@gitster.mtv.corp.google.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Wed, 18 Jan 2017 14:02:15 -0800
+Message-ID: <CAGZ79kbOEk9o=CsHcF876D+u1J+vYa64aEYWs_NdLSJmy-7TOQ@mail.gmail.com>
+Subject: Re: [PATCH 1/4] document index_name_pos
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jacob Keller <jacob.keller@gmail.com> writes:
+On Wed, Jan 18, 2017 at 1:11 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Stefan Beller <sbeller@google.com> writes:
+>
+>> Signed-off-by: Stefan Beller <sbeller@google.com>
+>> ---
+>>  cache.h | 15 +++++++++++++++
+>>  1 file changed, 15 insertions(+)
+>>
+>> diff --git a/cache.h b/cache.h
+>> index 1b67f078dd..270a0d0ea7 100644
+>> --- a/cache.h
+>> +++ b/cache.h
+>> @@ -575,7 +575,22 @@ extern int verify_path(const char *path);
+>>  extern int index_dir_exists(struct index_state *istate, const char *name, int namelen);
+>>  extern void adjust_dirname_case(struct index_state *istate, char *name);
+>>  extern struct cache_entry *index_file_exists(struct index_state *istate, const char *name, int namelen, int igncase);
+>> +
+>> +/*
+>> + * Searches for an entry defined by name and namelen in the given index.
+>> + * If the return value is positive (including 0) it is the position of an
+>> + * exact match. If the return value is negative, the negated value minus 1 is the
+>> + * position where the entry would be inserted.
+>> + * Example: In the current index we have the files b,d,e:
+>> + * index_name_pos(&index, "a", 1) -> -1
+>> + * index_name_pos(&index, "b", 1) ->  0
+>> + * index_name_pos(&index, "c", 1) -> -2
+>> + * index_name_pos(&index, "d", 1) ->  1
+>> + * index_name_pos(&index, "e", 1) ->  2
+>
+> The above may not be wrong per-se, but it misses one important case.
+> A conflicted entry in the index with the same name is considered to
+> sort after the name this asks.  If there are stage #1 and stage #3
+> entries for path "g" in addition to the above, i.e.
+>
+>         [0] [1] [2] [3] [4]
+>         b#0 d#0 e#0 g#1 g#3
+>
+> then
+>
+>         index_name_pos(&index, "g", 1) -> -3 - 1 = -4
+>         index_name_pos(&index, "h", 1) -> -5 - 1 = -6
+>
+>> + * index_name_pos(&index, "f", 1) -> -3
+>> + */
 
-> Yes this makes sense. I'm still looking at whether the alternative
-> implementation suggested based on the git-log style would make more
-> sense or not, but if we keep this as is, the added text you gave is
-> important.
+Oh, I see. With this property in mind, we know that
+when using index_name_pos for sorting, the stages for a
+given path are ordered correctly (in ascending order,
+0 comes before 1, which comes before 3).
 
-I actually think it is a red-herring that "git log" honors "orders";
-it does, but that is not a result of carefully considering the
-desired behaviour.  It instead is a historical wart that came from
-the fact that "--branches" and friends uses for_each_glob_ref_in()
-that takes the top-level hierarchy paths like "refs/heads/" and the
-implementation of "--exclude" piggybacked into the function in a
-lazy way.  
+>
+> Shouldn't this be -4?  We originally have [0], [1], and [2] in the
+> index, and "f" needs to go to [3], so -3 - 1 = -4, no?
 
-If exclusion were done independently (e.g. in a way similar to what
-you did in this series using subpath match), we wouldn't have had
-the "the user must give exclude patterns first that would affect the
-next inclusion pattern, at which point the exclude patterns are
-cleared and the user needs to start over", which is an end-user
-experience that is clunky.
-
+yes, it should be -4.
