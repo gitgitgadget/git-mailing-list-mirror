@@ -2,76 +2,70 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B91D21F89C
-	for <e@80x24.org>; Wed, 18 Jan 2017 18:37:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C445E20C2E
+	for <e@80x24.org>; Wed, 18 Jan 2017 18:37:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752909AbdARSg6 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 18 Jan 2017 13:36:58 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:54121 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752519AbdARSg4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Jan 2017 13:36:56 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 17DD65F961;
-        Wed, 18 Jan 2017 13:32:46 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=3ygCJ4uVgH1D2wxTf784RXlnKXk=; b=XMEDKy
-        h8J3vllBj/G18rjy42MVE3FVccqMZMG/6F9FavF+CDG05Pze6fA79KpM1kAfuxqX
-        aqCxqlwJ5GXKvjVOl3qPkThp9vN5EfsjwB2M6bpkhZy+oZPwuRRSlWqzQ0idphNo
-        wV5+gfivyKZcC0lO1vffJGaqorQNhx8yQ/T8E=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=VYbEC4tFOFu5o+NHbEdmAxTP+EirneJT
-        9zmHE0gXsQsOKMFPqUnjC3Ptu1NIHCOgeC/j930yeubiajapri8mmm4pGszAT4qO
-        kYBcUVo88rAAqqZJepS8n11xPbK3r/lT6lwjA8T48SOzdu2C7g5xcizLUsbJt7nD
-        uTBibokarLI=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 01C5C5F960;
-        Wed, 18 Jan 2017 13:32:46 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 563AA5F95B;
-        Wed, 18 Jan 2017 13:32:45 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Michael Gooch <goochmi@gmail.com>, git@vger.kernel.org
-Subject: Re: problem with insider build for windows and git
-References: <1bddbd50-86ea-6c38-6ab8-08336de2ba72@gmail.com>
-        <alpine.DEB.2.20.1701131300390.3469@virtualbox>
-        <alpine.DEB.2.20.1701181738490.3469@virtualbox>
-Date:   Wed, 18 Jan 2017 10:32:44 -0800
-In-Reply-To: <alpine.DEB.2.20.1701181738490.3469@virtualbox> (Johannes
-        Schindelin's message of "Wed, 18 Jan 2017 17:41:42 +0100 (CET)")
-Message-ID: <xmqq8tq8b4mr.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.90 (gnu/linux)
+        id S1752997AbdARSha (ORCPT <rfc822;e@80x24.org>);
+        Wed, 18 Jan 2017 13:37:30 -0500
+Received: from mail-qt0-f194.google.com ([209.85.216.194]:34551 "EHLO
+        mail-qt0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752993AbdARSh3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Jan 2017 13:37:29 -0500
+Received: by mail-qt0-f194.google.com with SMTP id a29so3131248qtb.1
+        for <git@vger.kernel.org>; Wed, 18 Jan 2017 10:37:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=nyu-edu.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=XNjkvq4pUV0Tcb0C137xiNSI9Y353LIQWLvwWUjpctQ=;
+        b=TrDiVwQp7Gx6mwzm9/O8xn2Z5KyBloAwoTlOxhivOBVCsZgY75bCXulbdCe88oj88X
+         GMsNHGtKpZ18Et69jwzC8+tBAx6bagNiQG/t81DkF24/oWZVs3xi9QdZADR0H6BavTiO
+         k0HZxjq9UgxrYKbFCP7x7FLsi/n5ouyVxvUuwu9Np6scyqFfAigfxfRPkXYKp+yUWX6Q
+         yZD25T1a5A8EqiDr2xh/Soo20vcSc0SfcnWKEHIp5LLWta269OEkW7c1kdSMygtAX/3L
+         ZWF0ahjJy2bJP4Mbuw2ppUTAF4sTVJEDAxk+BtwRZUrBI6YwT8XNBoBDiVF/7zCAhU6f
+         tJeA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=XNjkvq4pUV0Tcb0C137xiNSI9Y353LIQWLvwWUjpctQ=;
+        b=V9kq/JIoOpC9uzJqgNT4Mbb2tyAClxQ00J+FdBXVM5uQIPjtRsHTlhnGYM/aAjwqIh
+         JgRbVsZNEwS5Gxuft6yIoMgiAE9X22Z04bos2Ne+I1odsOYvx8CAO7dTNmtjnalD0sZn
+         IuP17p3wNVFd3QET+hROBMmn9+0HFXVqlQJWVkojahokVfnHPjPDP+KBsu8MzMoA/qmj
+         gs874VKHb3Eu79KeefeSFzpCkGWY/1KZ+iT+M3c9GJkCaJxq9T3E76HKh+Z4wah6grns
+         tgT9o01wI7/AbfATD08fA9adNo+5NhY2lATmqZwVaxld+3cz1aqNBK1HQSP0CjshXnXT
+         ceJA==
+X-Gm-Message-State: AIkVDXLm2gxfZBsHruXW04FmimCaGIgdikfBKXNLb0GriPs5nL906t4efWb/OJgtxSi1qssP
+X-Received: by 10.237.43.36 with SMTP id p33mr3868624qtd.199.1484764113287;
+        Wed, 18 Jan 2017 10:28:33 -0800 (PST)
+Received: from LykOS.localdomain (NYUFWA-WLESSAUTHCLIENTS-15.NATPOOL.NYU.EDU. [216.165.95.4])
+        by smtp.gmail.com with ESMTPSA id x40sm878757qtx.12.2017.01.18.10.28.32
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 18 Jan 2017 10:28:32 -0800 (PST)
+Date:   Wed, 18 Jan 2017 13:28:32 -0500
+From:   Santiago Torres <santiago@nyu.edu>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, peff@peff.net, sunshine@sunshineco.com,
+        walters@verbum.org, Lukas Puehringer <luk.puehringer@gmail.com>
+Subject: Re: [PATCH v6 4/6] builtin/tag: add --format argument for tag -v
+Message-ID: <20170118182831.pkhqu2np3bh2puei@LykOS.localdomain>
+References: <20170117233723.23897-1-santiago@nyu.edu>
+ <20170117233723.23897-5-santiago@nyu.edu>
+ <xmqqmvepb4oj.fsf@gitster.mtv.corp.google.com>
+ <xmqqh94wb4y0.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 813C2604-DDAC-11E6-8259-FE3F13518317-77302942!pb-smtp1.pobox.com
+Content-Type: multipart/signed; micalg=pgp-sha256;
+        protocol="application/pgp-signature"; boundary="r24xguofrazenjwe"
+Content-Disposition: inline
+In-Reply-To: <xmqqh94wb4y0.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> And just to prove me wrong, today I got the first update to `maint` in six
-> weeks, with a message "Almost ready for 2.11.1" at its tip, featuring a
-> whopping 141 commits (95 of which are not merge commits).
->
-> So it seems that v2.11.1 may happen soon, after all.
-
-Sorry for being late.  I had a short travel around the year boundary,
-got sick and have been slow.
-
-Aside from the "ouch, one topic has merged earlier iteration, that
-was merged to 'master', also now merged to 'maint', and we need to
-follow up on both" you sent out earlier, are there any other topic
-that are already in 'master' that should go to 2.11.x track?
-
-Thanks.
