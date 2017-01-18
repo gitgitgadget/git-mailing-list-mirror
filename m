@@ -7,51 +7,51 @@ X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9CCF61F89C
-	for <e@80x24.org>; Wed, 18 Jan 2017 22:02:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 31C6F1F89C
+	for <e@80x24.org>; Wed, 18 Jan 2017 22:07:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753864AbdARWCX (ORCPT <rfc822;e@80x24.org>);
-        Wed, 18 Jan 2017 17:02:23 -0500
-Received: from mail-io0-f181.google.com ([209.85.223.181]:36352 "EHLO
-        mail-io0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753858AbdARWCW (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Jan 2017 17:02:22 -0500
-Received: by mail-io0-f181.google.com with SMTP id j13so23402643iod.3
-        for <git@vger.kernel.org>; Wed, 18 Jan 2017 14:02:17 -0800 (PST)
+        id S1753341AbdARWHv (ORCPT <rfc822;e@80x24.org>);
+        Wed, 18 Jan 2017 17:07:51 -0500
+Received: from mail-io0-f173.google.com ([209.85.223.173]:34766 "EHLO
+        mail-io0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753064AbdARWHu (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Jan 2017 17:07:50 -0500
+Received: by mail-io0-f173.google.com with SMTP id l66so23570804ioi.1
+        for <git@vger.kernel.org>; Wed, 18 Jan 2017 14:06:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=Gxm4tQC2Nb+O2i+s7+tdJsMB3ED9KmEtWF+B34KbTAs=;
-        b=uOB9YI8DGTSD5obq6VltUAPwU1SFb1wz8ioJFckGRT43V7j0M0HD4H858i4+LAZZM1
-         oFg6DoQ+Hwgqauqi/HUc4skbdC0NWOX9o+T9VuVtiCCEMQJ4v/ZxwkYiqanvt4LcjMh1
-         Gy8HdEwhGRROFBmf2xoeO5PSTA4/TRhqaH1ZMZt/jLnAA6Cl7hs566rTrKyu6d7aGbBO
-         C5t1iqfQN2PchV/teqnN7kL9E3cadhDDyMIkETDA1Pt/LVWkR8C1A/BRXvbFWqiHX73n
-         8beTgYnT7WHS/AlmAfxgoopVoZLDGb0oS67G/q4T1hGvo29s9nooS3JdIY7iruNwNy4z
-         ycWg==
+        bh=HzaFHoHA1IcKv3rGRLLAB349cKg6KzJ3SH4vqbdw1T4=;
+        b=MTL9Lah7z0KLmnQc3b8flaESUzblHxcOA+GVtlfgdgX9XOv4HRQlxFW6fLW3tex7Kn
+         J3w1CvE4E6TdTkMk0jmjQqa501AzbLaJV/fBg3G7w2aC4nuEg6L4db/7YSbdpPk4tnCW
+         zwDHHc9/XLtxzL5+DqhNQSQEQ1bl7oar91GZlIeE1hFgfVfQTjrPgfJyDyROz+rRd3eo
+         3NoVI8CspQ7X7u4E406olZgFJ6cZJESHhA/MwTjkgoS0zPdCZ5aSSxhE/C2bZjXu/n15
+         ksGce239uWWg9KE3GFD5D2XAHy/APbcOw1oKk2tVXQptGD5zBorgrKiH5JANZkVtZ418
+         dQeA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=Gxm4tQC2Nb+O2i+s7+tdJsMB3ED9KmEtWF+B34KbTAs=;
-        b=Ws6mBRJBoIU0Y8orYInxnNGFnMnJtv7b0V7Wh1Pu8k7OOztoTLzwn8vrdRaiRhPHLB
-         WQNyS7bTUAiIgwxb4JTfv98TS1VAt0W0Ow3GdT6DHCT1tvc52SSCrYyMQZvDarIHyvt0
-         6eFD/LhFVZrLFTIN57yyaqR3veL0TQ0ZzJsO1HNuYexzkudxkos3ed1ASDyyMrIj8kn2
-         +7pXKV8Ws16RPKmzbV+AhkHrRLxS2FngMDZuzVP3Wg5HGHLjsHsDQPOxMemjUA8WVChv
-         2uBbIPtk65QJ9oTs5qPFxnmMFfj+jlGW89pN0w1SyhwnOsstcshp8eiOLn1Kv7HM0Z1t
-         GwQA==
-X-Gm-Message-State: AIkVDXJgQQFYQkAt7DZeBhFY/CifpkLBNCLHy2vByGBpX9TSkJZ+PC0TcXQjeZcro+x4d/NSIFReA/hMcGBikfxJ
-X-Received: by 10.107.3.160 with SMTP id e32mr5754518ioi.52.1484776936231;
- Wed, 18 Jan 2017 14:02:16 -0800 (PST)
+        bh=HzaFHoHA1IcKv3rGRLLAB349cKg6KzJ3SH4vqbdw1T4=;
+        b=B318DWBuxhsrBNKfg2/Y5plLEnBVrQSm1Z1a6W+k2NgiZnrHz5XxBYgsw/hMCl+Jgz
+         qIe58i51O/u5IdYMLiDFQOA+bSViErIgqOL5RGPx0zcrwsNGEeywiKQ9YHzGURappZQK
+         zgWAq6uU7V+4UP539Fh72WkQgWL4PQkNtldqCMYhafbSD9JBzwiD3XhaTqJX0YSPIMNf
+         wdgbwfB6owzh+ejeQwVvJK5bDicxg7aKe2dPFN/Uu5EuyiHsYhXQ8UGaaLiIparXhawA
+         chz+NFEenEJ1uApUzeIGzebpwflIZbfa3bi7rx+h3RYcfRW9fqmvSWJ2Dx854oz+4dTx
+         py4A==
+X-Gm-Message-State: AIkVDXIQ5L3CW6wMv2Jm0NvSfhaPgBPE3zLHzK4RIggBmgaMpKvSqvAB0j0dj7Tz4Xc4ap5+sYDIF4mOZ6WS0Sz7
+X-Received: by 10.107.37.148 with SMTP id l142mr5395913iol.159.1484777205111;
+ Wed, 18 Jan 2017 14:06:45 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.79.39.19 with HTTP; Wed, 18 Jan 2017 14:02:15 -0800 (PST)
-In-Reply-To: <xmqqk29s3wg0.fsf@gitster.mtv.corp.google.com>
-References: <20170117233503.27137-1-sbeller@google.com> <20170117233503.27137-2-sbeller@google.com>
- <xmqqk29s3wg0.fsf@gitster.mtv.corp.google.com>
+Received: by 10.79.39.19 with HTTP; Wed, 18 Jan 2017 14:06:44 -0800 (PST)
+In-Reply-To: <xmqqfukg3w7t.fsf@gitster.mtv.corp.google.com>
+References: <20170117233503.27137-1-sbeller@google.com> <20170117233503.27137-3-sbeller@google.com>
+ <xmqqfukg3w7t.fsf@gitster.mtv.corp.google.com>
 From:   Stefan Beller <sbeller@google.com>
-Date:   Wed, 18 Jan 2017 14:02:15 -0800
-Message-ID: <CAGZ79kbOEk9o=CsHcF876D+u1J+vYa64aEYWs_NdLSJmy-7TOQ@mail.gmail.com>
-Subject: Re: [PATCH 1/4] document index_name_pos
+Date:   Wed, 18 Jan 2017 14:06:44 -0800
+Message-ID: <CAGZ79kYoZOWDHewA4f9VjVkEZBXWaG5Uq8nU=M30mE535zVa2Q@mail.gmail.com>
+Subject: Re: [PATCH 2/4] remove_index_entry_at: move documentation to cache.h
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
 Content-Type: text/plain; charset=UTF-8
@@ -60,58 +60,38 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jan 18, 2017 at 1:11 PM, Junio C Hamano <gitster@pobox.com> wrote:
+On Wed, Jan 18, 2017 at 1:16 PM, Junio C Hamano <gitster@pobox.com> wrote:
 > Stefan Beller <sbeller@google.com> writes:
 >
 >> Signed-off-by: Stefan Beller <sbeller@google.com>
 >> ---
->>  cache.h | 15 +++++++++++++++
->>  1 file changed, 15 insertions(+)
+>>  cache.h      | 3 +++
+>>  read-cache.c | 1 -
+>>  2 files changed, 3 insertions(+), 1 deletion(-)
 >>
 >> diff --git a/cache.h b/cache.h
->> index 1b67f078dd..270a0d0ea7 100644
+>> index 270a0d0ea7..26632065a5 100644
 >> --- a/cache.h
 >> +++ b/cache.h
->> @@ -575,7 +575,22 @@ extern int verify_path(const char *path);
->>  extern int index_dir_exists(struct index_state *istate, const char *name, int namelen);
->>  extern void adjust_dirname_case(struct index_state *istate, char *name);
->>  extern struct cache_entry *index_file_exists(struct index_state *istate, const char *name, int namelen, int igncase);
+>> @@ -599,7 +599,10 @@ extern int index_name_pos(const struct index_state *, const char *name, int name
+>>  #define ADD_CACHE_KEEP_CACHE_TREE 32 /* Do not invalidate cache-tree */
+>>  extern int add_index_entry(struct index_state *, struct cache_entry *ce, int option);
+>>  extern void rename_index_entry_at(struct index_state *, int pos, const char *new_name);
 >> +
->> +/*
->> + * Searches for an entry defined by name and namelen in the given index.
->> + * If the return value is positive (including 0) it is the position of an
->> + * exact match. If the return value is negative, the negated value minus 1 is the
->> + * position where the entry would be inserted.
->> + * Example: In the current index we have the files b,d,e:
->> + * index_name_pos(&index, "a", 1) -> -1
->> + * index_name_pos(&index, "b", 1) ->  0
->> + * index_name_pos(&index, "c", 1) -> -2
->> + * index_name_pos(&index, "d", 1) ->  1
->> + * index_name_pos(&index, "e", 1) ->  2
+>> +/* Remove entry, return 1 if there are more entries after pos. */
+>>  extern int remove_index_entry_at(struct index_state *, int pos);
 >
-> The above may not be wrong per-se, but it misses one important case.
-> A conflicted entry in the index with the same name is considered to
-> sort after the name this asks.  If there are stage #1 and stage #3
-> entries for path "g" in addition to the above, i.e.
+> What is the reason why this now promise to return 1, as opposed to
+> the original that were allowed to return anything that is "true"?
+> Is it because you are adding other return values that mean different
+> things?
 >
->         [0] [1] [2] [3] [4]
->         b#0 d#0 e#0 g#1 g#3
+> If that is the case it may be fine (it depends on what these other
+> values mean and what use case it supports), but please do that in a
+> separate patch.
 >
-> then
->
->         index_name_pos(&index, "g", 1) -> -3 - 1 = -4
->         index_name_pos(&index, "h", 1) -> -5 - 1 = -6
->
->> + * index_name_pos(&index, "f", 1) -> -3
->> + */
 
-Oh, I see. With this property in mind, we know that
-when using index_name_pos for sorting, the stages for a
-given path are ordered correctly (in ascending order,
-0 comes before 1, which comes before 3).
+Actually my line of thinking was to improve the correctness by being more
+specific.
 
->
-> Shouldn't this be -4?  We originally have [0], [1], and [2] in the
-> index, and "f" needs to go to [3], so -3 - 1 = -4, no?
-
-yes, it should be -4.
+In a reroll I move the comment verbatim.
