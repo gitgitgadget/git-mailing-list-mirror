@@ -2,79 +2,137 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 383D21F89C
-	for <e@80x24.org>; Wed, 18 Jan 2017 18:53:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 82FB21F89C
+	for <e@80x24.org>; Wed, 18 Jan 2017 18:57:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752311AbdARSxI (ORCPT <rfc822;e@80x24.org>);
-        Wed, 18 Jan 2017 13:53:08 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:52823 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752092AbdARSxG (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Jan 2017 13:53:06 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 72BCC5FF49;
-        Wed, 18 Jan 2017 13:52:44 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=esomUejuSXWmgujMzsSNjOys5OY=; b=ay/suw
-        H5FZZL4MXRRoN6IQFXmSLfV0Y5CkBz7uC/MY4KRBIZNu/jjjAEFGuOc3O+qFMeX8
-        wJz6Pq8/uajPFF63tZ7fvDWLHG2vZn+v8cG0vpdPHSIJ3rrOU+3tm64Ku5//E3v3
-        gTZ9v7uMCtMylHmEK+a8wUL+OeJEAzthnLQo4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=b88e2lqeUhkje+MkuH1FJWk9z9YK/gRy
-        RKA6Cexk8P4h/qiJa7WZ7hJV7vzY2DIctcgeoh0SisoL7jXUh/rNgsqPqe/tZw3c
-        dxX8d29NJ+kVLNuryax1laIOWA4ngZcxbdleQ3DNJDJaqhsK11GRBpKUvfkpvHt7
-        tBdtQ5/xzM4=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 67A545FF48;
-        Wed, 18 Jan 2017 13:52:44 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A40D95FF44;
-        Wed, 18 Jan 2017 13:52:43 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Santiago Torres <santiago@nyu.edu>
-Cc:     git@vger.kernel.org, peff@peff.net, sunshine@sunshineco.com,
-        walters@verbum.org, Lukas Puehringer <luk.puehringer@gmail.com>
-Subject: Re: [PATCH v6 4/6] builtin/tag: add --format argument for tag -v
-References: <20170117233723.23897-1-santiago@nyu.edu>
-        <20170117233723.23897-5-santiago@nyu.edu>
-        <xmqqmvepb4oj.fsf@gitster.mtv.corp.google.com>
-        <xmqqh94wb4y0.fsf@gitster.mtv.corp.google.com>
-        <20170118182831.pkhqu2np3bh2puei@LykOS.localdomain>
-Date:   Wed, 18 Jan 2017 10:52:42 -0800
-In-Reply-To: <20170118182831.pkhqu2np3bh2puei@LykOS.localdomain> (Santiago
-        Torres's message of "Wed, 18 Jan 2017 13:28:32 -0500")
-Message-ID: <xmqqo9z49p51.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.90 (gnu/linux)
+        id S1753584AbdARS5O (ORCPT <rfc822;e@80x24.org>);
+        Wed, 18 Jan 2017 13:57:14 -0500
+Received: from mail-qt0-f196.google.com ([209.85.216.196]:33503 "EHLO
+        mail-qt0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753278AbdARS5N (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Jan 2017 13:57:13 -0500
+Received: by mail-qt0-f196.google.com with SMTP id n13so3269304qtc.0
+        for <git@vger.kernel.org>; Wed, 18 Jan 2017 10:57:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:references:in-reply-to:subject:date:message-id
+         :mime-version:content-transfer-encoding:thread-index
+         :content-language;
+        bh=n6Kz2wRvv8DCP72Uzq1dzrvvvjrwF9WJ+A7YdKE0kE0=;
+        b=hHv2IIn2k/2J8Jf5yPEaOJYrl4ymi2VRovujp7n7D0g/nK7jsJb2LXnR2HiF1xfsdl
+         gMkb4fL6Gj+VkgTHZU3/dC9G3vj/5J8xH1ZrjQ1LijEHJIyCefY/oubUXnw6BHBOYSJT
+         /vs9SQT4OuJc53g/xXT3fqid0PIgqIjxEf2eLoqAnetSAUTkd6OO+sQKNXJ9iJCsWB8P
+         LerotklE6svXmp2ZEnq+A4skq6iLd7dC7aMy5Qs89vad3JNFbId4zkUqlcMs+NjrPDR1
+         q+9XyHrCRypjn1cT2pGx9Oo+RiZhQQWkY/oHYfv6dvBumoIycUx2qkQjvbKyUhLPkSMi
+         bNTw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:references:in-reply-to:subject:date
+         :message-id:mime-version:content-transfer-encoding:thread-index
+         :content-language;
+        bh=n6Kz2wRvv8DCP72Uzq1dzrvvvjrwF9WJ+A7YdKE0kE0=;
+        b=akzDBzXEgragAa5gvHpK/SyVY3EPnEHkEbDzV624u/TYfj1wqqct4PETqvUgYJ2niD
+         d+qT4x4peVf/JM+kkYvnpK3D4EznEBomo4SXHE1+I0QpZWpPSar/vIWleTT4zEaLIRcZ
+         ojO+ST1xrCwfyyNcJ9E629iqHBX7GzV9BmcyfDjWUaVuCFnUrLeJtrygZybrYn4JNV77
+         drLmWuLOLtZcq76EASVnhX4iep6SfztPEWU0iZT7HUA2HWflyM5WugKYm+Ai+8Aoo3KF
+         SHxAcIaaphjnyF45w2G3YKepv6EnRKHoTO60jy1mxiKdPOzGDGd/Coke8hP1K/WNDely
+         ucnw==
+X-Gm-Message-State: AIkVDXJUrasFQqbnH6mAmtXKELDsZ+ZPUXt4X3vwrxHvuoKu8UBu1nSxXQD2/Dp7KbLMSA==
+X-Received: by 10.200.49.249 with SMTP id i54mr4466806qte.3.1484764030348;
+        Wed, 18 Jan 2017 10:27:10 -0800 (PST)
+Received: from BenPeartHP ([65.222.173.206])
+        by smtp.gmail.com with ESMTPSA id w138sm854940qka.27.2017.01.18.10.27.08
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 18 Jan 2017 10:27:09 -0800 (PST)
+From:   "Ben Peart" <peartben@gmail.com>
+To:     "'Stefan Beller'" <sbeller@google.com>,
+        "'Martin Fick'" <mfick@codeaurora.org>
+Cc:     "'Shawn Pearce'" <spearce@spearce.org>,
+        "'git'" <git@vger.kernel.org>, <benpeart@microsoft.com>
+References: <20170113155253.1644-1-benpeart@microsoft.com> <CAJo=hJumYXTRN_B3iZdmcpomp7wJ+UPcikxGb6rn9W=uJeYmfw@mail.gmail.com> <002501d2710b$af74c4d0$0e5e4e70$@gmail.com> <2381666.1DSVtKRIH5@mfick1-lnx> <CAGZ79kbWHHOj5x=SqSvUPdXtyYZUqDBnPG+erfZHsUkA8Cv-NA@mail.gmail.com>
+In-Reply-To: <CAGZ79kbWHHOj5x=SqSvUPdXtyYZUqDBnPG+erfZHsUkA8Cv-NA@mail.gmail.com>
+Subject: RE: [RFC] Add support for downloading blobs on demand
+Date:   Wed, 18 Jan 2017 13:27:09 -0500
+Message-ID: <002801d271b8$7b909600$72b1c200$@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 4B873B22-DDAF-11E6-B9B5-FE3F13518317-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain;
+        charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AQHeqv64Rhj1j9YcMHkE7nrdCUWdigLJzk+jAzYlG9ECeeBIYAF4jBC4oNaGK4A=
+Content-Language: en-us
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Santiago Torres <santiago@nyu.edu> writes:
+We actually pursued trying to make submodules work for some time and 
+even built tooling around trying to work around some of the issues we 
+ran into (not repo.py but along a similar line) before determining that 
+we would be better served by having a single repo and solving the scale 
+issues.  I don't want to rehash the arguments for/against a single repo 
+- suffice it to say, we have opted for a single large repo. :)
 
->> Squashing the following into this commit solves this issue with the
->> former approach.  The lines it touches are all from 4/6 and I view
->> all of it as general improvement, including type correctness and
->> code formatting.
->
-> Thanks!
->
-> Should I re-roll this really quick? Or would you rather apply this on
-> your tree directly? 
+Thanks,
 
-Nah, local squashing should be sufficient in this case.  The squash
-only touches a single patch from the original and it itself is easy
-to review (and was reviewed already from what I can tell in this
-thread).
+Ben
+> -----Original Message-----
+> From: Stefan Beller [mailto:sbeller@google.com]
+> Sent: Tuesday, January 17, 2017 5:24 PM
+> To: Martin Fick <mfick@codeaurora.org>
+> Cc: Ben Peart <peartben@gmail.com>; Shawn Pearce
+> <spearce@spearce.org>; git <git@vger.kernel.org>;
+> benpeart@microsoft.com
+> Subject: Re: [RFC] Add support for downloading blobs on demand
+> 
+> On Tue, Jan 17, 2017 at 2:05 PM, Martin Fick <mfick@codeaurora.org>
+> wrote:
+> > On Tuesday, January 17, 2017 04:50:13 PM Ben Peart wrote:
+> >> While large files can be a real problem, our biggest issue today is
+> >> having a lot (millions!) of source files when any individual
+> >> developer only needs a small percentage of them.  Git with 3+ million
+> >> local files just doesn't perform well.
+> >
+> > Honestly, this sounds like a problem better dealt with by using git
+> > subtree or git submodules, have you considered that?
+> >
+> > -Martin
+> >
+> 
+> I cannot speak for subtrees as I have very little knowledge on them.
+> But there you also have the problem that *someone* has to have a whole
+> tree? (e.g. the build bot)
+> 
+> submodules however comes with a couple of things attached, both positive
+> as well as negative points:
+> 
+> * it offers ACLs along the way. ($user may not be allowed to
+>   clone all submodules, but only those related to the work)
+> * The conceptual understanding of git just got a lot harder.
+>   ("Yo dawg, I heard you like git, so I put git repos inside
+>   other git repos"), it is not easy to come up with reasonable
+>   defaults for all usecases, so the everyday user still has to
+>   have some understanding of submodules.
+> * typical cheap in-tree operations may become very expensive:
+>   -> moving a file from one location to another (in another
+>      submodule) adds overhead, no rename detection.
+> * We are actively working on submodules, so there is
+>   some momentum going already.
+> * our experiments with Android show that e.g. fetching (even
+>   if you have all of Android) becomes a lot faster for everyday
+>   usage as only a few repositories change each day). This
+>   comparision was against the repo tool, that we currently
+>   use for Android. I do not know how it would compare against
+>   single repo Git, as having such a large repository seemed
+>   complicated.
+> * the support for submodules in Git is already there, though
+>   not polished. The positive side is to have already a good base,
+>   the negative side is to have support current use cases.
+> 
+> Stefan
 
