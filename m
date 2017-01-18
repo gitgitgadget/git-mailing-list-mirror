@@ -7,82 +7,99 @@ X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 82BF51F89C
-	for <e@80x24.org>; Wed, 18 Jan 2017 23:30:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5D8041F89C
+	for <e@80x24.org>; Wed, 18 Jan 2017 23:30:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751736AbdARXai (ORCPT <rfc822;e@80x24.org>);
-        Wed, 18 Jan 2017 18:30:38 -0500
-Received: from mail-pf0-f176.google.com ([209.85.192.176]:33640 "EHLO
-        mail-pf0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751629AbdARXag (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Jan 2017 18:30:36 -0500
-Received: by mail-pf0-f176.google.com with SMTP id y143so7896899pfb.0
-        for <git@vger.kernel.org>; Wed, 18 Jan 2017 15:30:35 -0800 (PST)
+        id S1751407AbdARXaH (ORCPT <rfc822;e@80x24.org>);
+        Wed, 18 Jan 2017 18:30:07 -0500
+Received: from mail-pf0-f180.google.com ([209.85.192.180]:35522 "EHLO
+        mail-pf0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751213AbdARXaE (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Jan 2017 18:30:04 -0500
+Received: by mail-pf0-f180.google.com with SMTP id f144so7840281pfa.2
+        for <git@vger.kernel.org>; Wed, 18 Jan 2017 15:29:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=K04Q96WU2YialEgzjz2DW2RhXriJnVa0Ma/JKKcYNzk=;
-        b=aqPmjqpW/gxkrgl3kEJwfSPo14zTak+7ESz3bb5LpyQ+Yfilzhybfc/RjMufGqKBbW
-         lpbk6eM2ve6ioZUWRMXeeCyob7L3bFP/CyftRkWyQ0ZEfkzm3jsK8044ZkCe84wpLl4J
-         UeFE8ZG+/65m6kfh8ikUwI30r9r21FtKgzjHcB4fizsVPWYy+KxZ3EzrSgDtet7/uqCy
-         uswalYM4T2KtXty5uVqqIZ25AcVzlBLaCbIBn4CRWO+HquPUsqcyIktj2D8l6t+01RAR
-         iF4PUOXpZIv9L1sdVNLHecMrtqD3vdE4XaKhydZoP6uD7Tp54iPmUlZ+GW5LuvGWjSfM
-         sgaQ==
+        bh=HYqWOvENgmnxQLy6t9M/iOgt8Bdv9sWJ6m3TQ7vtW5c=;
+        b=rUffkC7XaVdaggNA1P0qYtGQ/Askrv1R/aBY9GkpY6UTy+8LeEEQ2Fu138STf2X9xD
+         lAjmbX2RtW5RKWIf2GW1eR5RTF4hFhFzaSDpMdPAYZfEtR0L49uOERONVro6UE08Tg1l
+         sb5gKC7YgMdwxXmOHxiGtWwhW6IdvW8bK3E5jKzKbZ1NCS8/+pupX6bqk23xqWpS5uud
+         fvyIHMjcazT2z7xfjPSUGRL/PS+yO3vDYz1/CRt8lEf1Y21jDAyesYaq0il5KB+YzCSB
+         84KcRCt6Ce7/3hbDoL5HU+GZZNVoBKB1EDxF+j3cMXu5GtUglmZN1JeHkGs69Ye7RQ88
+         HR1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=K04Q96WU2YialEgzjz2DW2RhXriJnVa0Ma/JKKcYNzk=;
-        b=cL731gLnoFsbRVdafeg+er8ejsFzV/CON7Oe/etvqkqv100bn8KeYwmp9Qk76LqDwq
-         3FzsbCjP5PM550t8VcD8gep0xHVt925mCitKKg7yXLyhr5lFw/b5ljRx0zU8yU63eduZ
-         ygcFANXErP4cbdb14jJ4HdSU16YgXwLMA53JXPlGNi4cmXQaeetgquN8WTHI3KKZHpFF
-         r1LOek/mrJGc1IuSwU6gASFrJwxZvTPiHsr3S13IaKlS5cyzM4NHemTRhsLKRkW+qA9s
-         sWiiPpwd6POHfA9o+l1f7hvVgjUUWcSyy6CtRgQ11bqjF/AL2PDYJ08zMZTlo1eB5+rj
-         7wLQ==
-X-Gm-Message-State: AIkVDXJ/onY2MSCc0yMJiD03InJJXavLlGSK+6K9sLqLC9ARsNuAcAxqql+oBMHvTbTFl66k
-X-Received: by 10.99.47.199 with SMTP id v190mr6903936pgv.26.1484781720858;
-        Wed, 18 Jan 2017 15:22:00 -0800 (PST)
+        bh=HYqWOvENgmnxQLy6t9M/iOgt8Bdv9sWJ6m3TQ7vtW5c=;
+        b=GJ19WZPmvuX+ex2C7Wt3P/xLWKaBXadAKHdoht7YKwe5ZFUAnoqIOxlAZoV5QmS+wv
+         EV0fw1NXCuxh3h3nkO4+AQkUEufZ35FkkPQp0gfB4kckNHGltTfSmU4PicUuaSMXDd9+
+         p/tw69IhIKToKvOqVO6ECCKkui1uI7gGHy/+KaoSPiLod12eO6b/qQHoHMvzcM36vS0j
+         q+d5Ld4KDgy6C9eF/wezDbP6r4psQ8xWxKKhB2m5+e1Kx1ciXggv62HdFiHu7uU5Mz+K
+         L1zYYzDlQ2pV0Ectz6B8Q9cV7w3t2t/cHSzLcIOHQNqBaVtvdqippFVlxMFya9tETjfq
+         Shng==
+X-Gm-Message-State: AIkVDXL3O7Vxy72pR75U4qUaBtb/dglDNkbZQyIVeVE92ykT5ObfcuWTZb49we+81dI+zhyN
+X-Received: by 10.99.156.2 with SMTP id f2mr6938309pge.20.1484781724033;
+        Wed, 18 Jan 2017 15:22:04 -0800 (PST)
 Received: from localhost ([2620:0:1000:5b10:40e0:b9ca:546a:a0ec])
-        by smtp.gmail.com with ESMTPSA id x4sm3259117pgc.14.2017.01.18.15.22.00
+        by smtp.gmail.com with ESMTPSA id r16sm3128901pfg.76.2017.01.18.15.22.03
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 18 Jan 2017 15:22:00 -0800 (PST)
+        Wed, 18 Jan 2017 15:22:03 -0800 (PST)
 From:   Stefan Beller <sbeller@google.com>
 To:     gitster@pobox.com
 Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>
-Subject: [PATCHv2 0/4] start documenting core functions
-Date:   Wed, 18 Jan 2017 15:21:41 -0800
-Message-Id: <20170118232145.31606-1-sbeller@google.com>
+Subject: [PATCHv2 3/4] cache.h: document add_[file_]to_index
+Date:   Wed, 18 Jan 2017 15:21:44 -0800
+Message-Id: <20170118232145.31606-4-sbeller@google.com>
 X-Mailer: git-send-email 2.11.0.299.g762782ba8a
-In-Reply-To: <20170117233503.27137-1-sbeller@google.com>
+In-Reply-To: <20170118232145.31606-1-sbeller@google.com>
 References: <20170117233503.27137-1-sbeller@google.com>
+ <20170118232145.31606-1-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-v2:
-included all suggestions from Junio
+Signed-off-by: Stefan Beller <sbeller@google.com>
+---
+ cache.h | 21 ++++++++++++++++-----
+ 1 file changed, 16 insertions(+), 5 deletions(-)
 
-v1:
-The two single patches[1] are turned into a series here.
-
-[1] https://public-inbox.org/git/20170117200147.25425-1-sbeller@google.com/
-
-Thanks,
-Stefan
-
-Stefan Beller (4):
-  cache.h: document index_name_pos
-  cache.h: document remove_index_entry_at
-  cache.h: document add_[file_]to_index
-  documentation: retire unfinished documentation
-
- Documentation/technical/api-in-core-index.txt | 21 -------------
- cache.h                                       | 43 +++++++++++++++++++++++----
- read-cache.c                                  |  1 -
- 3 files changed, 38 insertions(+), 27 deletions(-)
- delete mode 100644 Documentation/technical/api-in-core-index.txt
-
+diff --git a/cache.h b/cache.h
+index 87eccdb211..03c46b9b99 100644
+--- a/cache.h
++++ b/cache.h
+@@ -609,13 +609,24 @@ extern int remove_index_entry_at(struct index_state *, int pos);
+ 
+ extern void remove_marked_cache_entries(struct index_state *istate);
+ extern int remove_file_from_index(struct index_state *, const char *path);
+-#define ADD_CACHE_VERBOSE 1
+-#define ADD_CACHE_PRETEND 2
+-#define ADD_CACHE_IGNORE_ERRORS	4
+-#define ADD_CACHE_IGNORE_REMOVAL 8
+-#define ADD_CACHE_INTENT 16
++
++#define ADD_CACHE_VERBOSE 1		/* verbose */
++#define ADD_CACHE_PRETEND 2 		/* dry run */
++#define ADD_CACHE_IGNORE_ERRORS 4	/* ignore errors */
++#define ADD_CACHE_IGNORE_REMOVAL 8	/* do not remove files from index */
++#define ADD_CACHE_INTENT 16		/* intend to add later; stage empty file */
++/*
++ * These two are used to add the contents of the file at path
++ * to the index, marking the working tree up-to-date by storing
++ * the cached stat info in the resulting cache entry.  A caller
++ * that has already run lstat(2) on the path can call
++ * add_to_index(), and all others can call add_file_to_index();
++ * the latter will do necessary lstat(2) internally before
++ * calling the former.
++ */
+ extern int add_to_index(struct index_state *, const char *path, struct stat *, int flags);
+ extern int add_file_to_index(struct index_state *, const char *path, int flags);
++
+ extern struct cache_entry *make_cache_entry(unsigned int mode, const unsigned char *sha1, const char *path, int stage, unsigned int refresh_options);
+ extern int chmod_index_entry(struct index_state *, struct cache_entry *ce, char flip);
+ extern int ce_same_name(const struct cache_entry *a, const struct cache_entry *b);
 -- 
 2.11.0.299.g762782ba8a
 
