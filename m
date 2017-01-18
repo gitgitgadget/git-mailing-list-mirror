@@ -7,51 +7,51 @@ X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 31C6F1F89C
-	for <e@80x24.org>; Wed, 18 Jan 2017 22:07:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A26011F89C
+	for <e@80x24.org>; Wed, 18 Jan 2017 22:09:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753341AbdARWHv (ORCPT <rfc822;e@80x24.org>);
-        Wed, 18 Jan 2017 17:07:51 -0500
-Received: from mail-io0-f173.google.com ([209.85.223.173]:34766 "EHLO
-        mail-io0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753064AbdARWHu (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Jan 2017 17:07:50 -0500
-Received: by mail-io0-f173.google.com with SMTP id l66so23570804ioi.1
-        for <git@vger.kernel.org>; Wed, 18 Jan 2017 14:06:45 -0800 (PST)
+        id S1753057AbdARWJ3 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 18 Jan 2017 17:09:29 -0500
+Received: from mail-it0-f49.google.com ([209.85.214.49]:38070 "EHLO
+        mail-it0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753179AbdARWJ0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Jan 2017 17:09:26 -0500
+Received: by mail-it0-f49.google.com with SMTP id c7so21242080itd.1
+        for <git@vger.kernel.org>; Wed, 18 Jan 2017 14:09:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=HzaFHoHA1IcKv3rGRLLAB349cKg6KzJ3SH4vqbdw1T4=;
-        b=MTL9Lah7z0KLmnQc3b8flaESUzblHxcOA+GVtlfgdgX9XOv4HRQlxFW6fLW3tex7Kn
-         J3w1CvE4E6TdTkMk0jmjQqa501AzbLaJV/fBg3G7w2aC4nuEg6L4db/7YSbdpPk4tnCW
-         zwDHHc9/XLtxzL5+DqhNQSQEQ1bl7oar91GZlIeE1hFgfVfQTjrPgfJyDyROz+rRd3eo
-         3NoVI8CspQ7X7u4E406olZgFJ6cZJESHhA/MwTjkgoS0zPdCZ5aSSxhE/C2bZjXu/n15
-         ksGce239uWWg9KE3GFD5D2XAHy/APbcOw1oKk2tVXQptGD5zBorgrKiH5JANZkVtZ418
-         dQeA==
+        bh=MP8m2tBALYnHpG3MEDIUmUARoc4OlTG2MCxR0qd/Pz0=;
+        b=QKfe6Z5JOpYc/Ob/VDwGoF+KtLYJZNkvPe9HSSHWc+tMWYzc9QMyukIGEJBxEA8QH9
+         xYGKwGYN6Xy6D2ClYuLKCu0xc/i3B2YP3c9WmUqxk8bVmvM0h4xD4sR6P/ru1MtBeVDm
+         xsOUn099VNy/wGVNAn+7azbIiGp57p+3bfWRUpYrNOAxpYI1IAlR6fTiweyn4/M5H4K9
+         uL2q4oviVVKggTNuFYQzZV1sffhtkT02BAyyYjejlUCgayqqpw7XchOrfdLFUIiwSoc7
+         iYSZ54CgmDDI+m3cmY9QjqtahnbUB2i6BNkWjTiALf/AtknjUQ/wVLOvOSdrVCyWHVct
+         0MQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=HzaFHoHA1IcKv3rGRLLAB349cKg6KzJ3SH4vqbdw1T4=;
-        b=B318DWBuxhsrBNKfg2/Y5plLEnBVrQSm1Z1a6W+k2NgiZnrHz5XxBYgsw/hMCl+Jgz
-         qIe58i51O/u5IdYMLiDFQOA+bSViErIgqOL5RGPx0zcrwsNGEeywiKQ9YHzGURappZQK
-         zgWAq6uU7V+4UP539Fh72WkQgWL4PQkNtldqCMYhafbSD9JBzwiD3XhaTqJX0YSPIMNf
-         wdgbwfB6owzh+ejeQwVvJK5bDicxg7aKe2dPFN/Uu5EuyiHsYhXQ8UGaaLiIparXhawA
-         chz+NFEenEJ1uApUzeIGzebpwflIZbfa3bi7rx+h3RYcfRW9fqmvSWJ2Dx854oz+4dTx
-         py4A==
-X-Gm-Message-State: AIkVDXIQ5L3CW6wMv2Jm0NvSfhaPgBPE3zLHzK4RIggBmgaMpKvSqvAB0j0dj7Tz4Xc4ap5+sYDIF4mOZ6WS0Sz7
-X-Received: by 10.107.37.148 with SMTP id l142mr5395913iol.159.1484777205111;
- Wed, 18 Jan 2017 14:06:45 -0800 (PST)
+        bh=MP8m2tBALYnHpG3MEDIUmUARoc4OlTG2MCxR0qd/Pz0=;
+        b=gZhKvhvMgw9Oq7kE2dIdFQFpnWh6MUC3Q9GMYfFquqq9pQDid1bnIOmuC5CSnLjRja
+         GMJ+BLX45QNjPKSdNlSsA21R3DLdVBie8jVfOLKFjWxwm8tC9VIfuZgvSb0WyigWQctz
+         u5+qpaEdGhokAL30BWcL/nSKESiQIFPO1rn22kh4u1dBgjkSuvgat/4euIkqfHSSlfoG
+         Dt8DqFi7GjHAg1DCbILu8ZWkdbOWxyG7Mep34OC8cimiKIFBEuLHW+nysYTZ+ZY8Gj0P
+         T7R3AGNsL/rrkBZpJIQbleNCj9GEb0xwFOs1c9OytVEqTzDAahsyt38JjEB3wYw+ifwK
+         /O+g==
+X-Gm-Message-State: AIkVDXJvZxX5Ur76Ie4BI9tEYn1MNZ+iHZvstk0f9BR+eWZHyenC2MwszRTRBHH+wDExCektROM2VB/5fMky9xBZ
+X-Received: by 10.36.141.2 with SMTP id w2mr27640031itd.114.1484777354485;
+ Wed, 18 Jan 2017 14:09:14 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.79.39.19 with HTTP; Wed, 18 Jan 2017 14:06:44 -0800 (PST)
-In-Reply-To: <xmqqfukg3w7t.fsf@gitster.mtv.corp.google.com>
-References: <20170117233503.27137-1-sbeller@google.com> <20170117233503.27137-3-sbeller@google.com>
- <xmqqfukg3w7t.fsf@gitster.mtv.corp.google.com>
+Received: by 10.79.39.19 with HTTP; Wed, 18 Jan 2017 14:09:13 -0800 (PST)
+In-Reply-To: <xmqqbmv43vx9.fsf@gitster.mtv.corp.google.com>
+References: <20170117233503.27137-1-sbeller@google.com> <20170117233503.27137-4-sbeller@google.com>
+ <xmqqbmv43vx9.fsf@gitster.mtv.corp.google.com>
 From:   Stefan Beller <sbeller@google.com>
-Date:   Wed, 18 Jan 2017 14:06:44 -0800
-Message-ID: <CAGZ79kYoZOWDHewA4f9VjVkEZBXWaG5Uq8nU=M30mE535zVa2Q@mail.gmail.com>
-Subject: Re: [PATCH 2/4] remove_index_entry_at: move documentation to cache.h
+Date:   Wed, 18 Jan 2017 14:09:13 -0800
+Message-ID: <CAGZ79kZ_j8YbLTtAH=3u8vZ5y+uJQ=cYJ_VbdT8_Mvhk=FMLoQ@mail.gmail.com>
+Subject: Re: [PATCH 3/4] document add_[file_]to_index
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
 Content-Type: text/plain; charset=UTF-8
@@ -60,38 +60,79 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jan 18, 2017 at 1:16 PM, Junio C Hamano <gitster@pobox.com> wrote:
+On Wed, Jan 18, 2017 at 1:22 PM, Junio C Hamano <gitster@pobox.com> wrote:
 > Stefan Beller <sbeller@google.com> writes:
 >
 >> Signed-off-by: Stefan Beller <sbeller@google.com>
 >> ---
->>  cache.h      | 3 +++
->>  read-cache.c | 1 -
->>  2 files changed, 3 insertions(+), 1 deletion(-)
+>>  cache.h | 17 ++++++++++++-----
+>>  1 file changed, 12 insertions(+), 5 deletions(-)
 >>
 >> diff --git a/cache.h b/cache.h
->> index 270a0d0ea7..26632065a5 100644
+>> index 26632065a5..acc639d6e0 100644
 >> --- a/cache.h
 >> +++ b/cache.h
->> @@ -599,7 +599,10 @@ extern int index_name_pos(const struct index_state *, const char *name, int name
->>  #define ADD_CACHE_KEEP_CACHE_TREE 32 /* Do not invalidate cache-tree */
->>  extern int add_index_entry(struct index_state *, struct cache_entry *ce, int option);
->>  extern void rename_index_entry_at(struct index_state *, int pos, const char *new_name);
+>> @@ -605,13 +605,20 @@ extern int remove_index_entry_at(struct index_state *, int pos);
+>>
+>>  extern void remove_marked_cache_entries(struct index_state *istate);
+>>  extern int remove_file_from_index(struct index_state *, const char *path);
+>> -#define ADD_CACHE_VERBOSE 1
+>> -#define ADD_CACHE_PRETEND 2
+>> -#define ADD_CACHE_IGNORE_ERRORS      4
+>> -#define ADD_CACHE_IGNORE_REMOVAL 8
+>> -#define ADD_CACHE_INTENT 16
 >> +
->> +/* Remove entry, return 1 if there are more entries after pos. */
->>  extern int remove_index_entry_at(struct index_state *, int pos);
+>> +#define ADD_CACHE_VERBOSE 1          /* verbose */
+>> +#define ADD_CACHE_PRETEND 2          /* dry run */
+>> +#define ADD_CACHE_IGNORE_ERRORS 4    /* ignore errors */
+>> +#define ADD_CACHE_IGNORE_REMOVAL 8   /* do not remove files from index */
+>> +#define ADD_CACHE_INTENT 16          /* intend to add later; stage empty file */
 >
-> What is the reason why this now promise to return 1, as opposed to
-> the original that were allowed to return anything that is "true"?
-> Is it because you are adding other return values that mean different
-> things?
->
-> If that is the case it may be fine (it depends on what these other
-> values mean and what use case it supports), but please do that in a
-> separate patch.
->
+> These repeat pretty much the same thing, which is an indication that
+> the macro names are chosen well not to require extraneous comments
+> like these, no?
 
-Actually my line of thinking was to improve the correctness by being more
-specific.
+Well I got confused for pretend and intent, so I researched them;
+I did not want to comment only half the constants.
 
-In a reroll I move the comment verbatim.
+
+>
+>> +/*
+>> + * Adds the given path the index, respecting the repsitory configuration, e.g.
+>> + * in case insensitive file systems, the path is normalized.
+>> + */
+>>  extern int add_to_index(struct index_state *, const char *path, struct stat *, int flags);
+>
+> s/repsitory/repository/;
+>
+>> +/* stat the file then call add_to_index */
+>>  extern int add_file_to_index(struct index_state *, const char *path, int flags);
+>> +
+>
+> As you do not say "use the provided stat info to mark the cache
+> entry up-to-date" in the add_to_index(), I am not sure if mentioning
+> "stat the file then" has much value.  Besides, you are supposed to
+> lstat(2) the file, not "stat", no?
+>
+> I'd cover these two under the same heading and comment if I were
+> doing this.
+>
+>         These two are used to add the contents of the file at path
+>         to the index, marking the working tree up-to-date by storing
+>         the cached stat info in the resulting cache entry.  A caller
+>         that has already run lstat(2) on the path can call
+>         add_to_index(), and all others can call add_file_to_index();
+>         the latter will do necessary lstat(2) internally before
+>         calling the former.
+>
+> or something along that line.
+
+That sounds better than what I had.
+
+Thanks,
+Stefan
+
+>
+>>  extern struct cache_entry *make_cache_entry(unsigned int mode, const unsigned char *sha1, const char *path, int stage, unsigned int refresh_options);
+>>  extern int chmod_index_entry(struct index_state *, struct cache_entry *ce, char flip);
+>>  extern int ce_same_name(const struct cache_entry *a, const struct cache_entry *b);
