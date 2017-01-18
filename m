@@ -2,110 +2,120 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 08B511F89C
-	for <e@80x24.org>; Wed, 18 Jan 2017 21:11:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 943061F89C
+	for <e@80x24.org>; Wed, 18 Jan 2017 21:11:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752290AbdARVLa (ORCPT <rfc822;e@80x24.org>);
+        id S1752381AbdARVLd (ORCPT <rfc822;e@80x24.org>);
+        Wed, 18 Jan 2017 16:11:33 -0500
+Received: from mail-lf0-f52.google.com ([209.85.215.52]:35538 "EHLO
+        mail-lf0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752159AbdARVLa (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 18 Jan 2017 16:11:30 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:63634 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752078AbdARVL3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Jan 2017 16:11:29 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id C702162B0E;
-        Wed, 18 Jan 2017 16:11:28 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=HlKdga7GZoOW7iDlyPojLYBGpro=; b=o4O66b
-        wWczu0Eyx09MiG/MEK0gfp8ZImkS0aQ47f8ffSt/+gE2D5MXyPPFSzIC26rUlBDc
-        sHAxx4w1GLfjFtTcUCEGqg0FQSlU+8T+ZPBh/Gl32NFzkJKEhJ/G3kCIBCsacUc1
-        mRWqojAWmgWi7pv+EJkJnUozFm+dgCvgAhK3c=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=EKmH+oRhaJ1ML89eP/Gc0X5tOP+OJ1Wm
-        XNpC1N8DFJQrshm9co8YXNscvg1S9t9KRFdZV5LZY4bNVt5ON4shFinvQxfO6RCV
-        FtxGzck44obDIWhjXIIgEGYgUgNgD7saDk6H9qhufXf/1yVte3UKtA7bLuYsxg6N
-        M6lJgCDreT0=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id BDA8162B0D;
-        Wed, 18 Jan 2017 16:11:28 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 2ACBF62B0C;
-        Wed, 18 Jan 2017 16:11:28 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 1/4] document index_name_pos
-References: <20170117233503.27137-1-sbeller@google.com>
-        <20170117233503.27137-2-sbeller@google.com>
-Date:   Wed, 18 Jan 2017 13:11:27 -0800
-In-Reply-To: <20170117233503.27137-2-sbeller@google.com> (Stefan Beller's
-        message of "Tue, 17 Jan 2017 15:35:00 -0800")
-Message-ID: <xmqqk29s3wg0.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+Received: by mail-lf0-f52.google.com with SMTP id n124so22137702lfd.2
+        for <git@vger.kernel.org>; Wed, 18 Jan 2017 13:11:29 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=N6ZZVcmBbhstbtJBQOSIoZvnzD0hDfeECqNEEJbAkXI=;
+        b=bIY0xkuBmqKCPLJ4PaItZFroMTu6tTXw+24DqxryEwzaz/xwQqtLbdVIZgout/ceRT
+         /ePjCaBPkzltEvLPPIKXqBLvEYW8ZyRTKW9+WGB+30ewhIiVWL13leqciSRWCP9N1NgG
+         eQsMGHr4SWA3KB67Rc/V+DQw6g1Th+s4MoTbjAanstixLYGvW7xBGjtBNfT0ZkNBH2ps
+         U0o/luJUkYe7ZeNcUzuzLFIm7KQ0ajBMhnSQgKNjH5c3BMqlWJICnzPsbf2SCzS/8v/U
+         1pS4XDWMMa+/GeXBDK4KS1rklWNXtY8in4NP3JOIRNloWnQbnLC4lEFBHD2xnKRk7LuU
+         OzNg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=N6ZZVcmBbhstbtJBQOSIoZvnzD0hDfeECqNEEJbAkXI=;
+        b=iixDB32cfylc8A0IyvWTaeR6XlKdEZEqTOYzty8I06zj4DY9V7cNSAbuw2LfyzdJOV
+         yC7KZtUj8ww81+QxF/5Qe5yvMPXgRvlYVH/RvTTfdPwFrNcqaciALDhmKLSdnZhLqDI5
+         ggsroPIN9P+KTejLqbUurMShKamHwRYf7pe6Hc5lksI70uK18ohSl4+/E6HDsSt7gt36
+         uDkC6mDKzUIF/0e7zAthnfR+/vryNofT/kYKNZjjPj6VF3KNVoWLTuB4rl8eln3kRmPu
+         3E8YXLwtTwmbWZEPSLXPA/U5TDza95gIVvQhu67cHRjkZMNewuymR7SdGjngwZE6uOCB
+         NwgQ==
+X-Gm-Message-State: AIkVDXICD0XGik+wnS06FWm40mWCoDk5dm4b9kIaAFZPqYkAts6N/1Qn/8jTRGKTug0W8g1dANNv8U/y4BLAeg==
+X-Received: by 10.46.69.215 with SMTP id s206mr2581617lja.26.1484773512187;
+ Wed, 18 Jan 2017 13:05:12 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: AD47466E-DDC2-11E6-8413-FE3F13518317-77302942!pb-smtp1.pobox.com
+Received: by 10.25.145.14 with HTTP; Wed, 18 Jan 2017 13:04:51 -0800 (PST)
+In-Reply-To: <alpine.DEB.2.20.1701181340530.3469@virtualbox>
+References: <20170112001721.2534-1-jacob.e.keller@intel.com>
+ <20170112001721.2534-6-jacob.e.keller@intel.com> <5f723a0d-623f-bf97-00de-29d430484fed@kdbg.org>
+ <CA+P7+xrmAmCPOzuaKcm+WxceXnowkM4gKz05tSpdC=CDwpCEug@mail.gmail.com>
+ <5c8401ef-9609-f235-9228-be980a13edf1@kdbg.org> <CA+P7+xq1LMkRG_aSyamrsPUQE+rDv4A9Qd19tDMgx-_a5OHsqQ@mail.gmail.com>
+ <97d4105c-0fa6-41c5-e456-30cebd93dc36@kdbg.org> <CA+P7+xqFHG52Xo8ncUwa3owDn3OOz+rr3ZaGwfcUDCiXJmh80Q@mail.gmail.com>
+ <alpine.DEB.2.20.1701181340530.3469@virtualbox>
+From:   Jacob Keller <jacob.keller@gmail.com>
+Date:   Wed, 18 Jan 2017 13:04:51 -0800
+Message-ID: <CA+P7+xp6c_3gTWiSrZHuXrpeZxYPguYBaBOT+uwKwATx4+1npw@mail.gmail.com>
+Subject: Re: [PATCH 5/5] describe: teach describe negative pattern matches
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Johannes Sixt <j6t@kdbg.org>,
+        Jacob Keller <jacob.e.keller@intel.com>,
+        Git mailing list <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
-
-> Signed-off-by: Stefan Beller <sbeller@google.com>
-> ---
->  cache.h | 15 +++++++++++++++
->  1 file changed, 15 insertions(+)
+On Wed, Jan 18, 2017 at 4:44 AM, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+> Hi Jake,
 >
-> diff --git a/cache.h b/cache.h
-> index 1b67f078dd..270a0d0ea7 100644
-> --- a/cache.h
-> +++ b/cache.h
-> @@ -575,7 +575,22 @@ extern int verify_path(const char *path);
->  extern int index_dir_exists(struct index_state *istate, const char *name, int namelen);
->  extern void adjust_dirname_case(struct index_state *istate, char *name);
->  extern struct cache_entry *index_file_exists(struct index_state *istate, const char *name, int namelen, int igncase);
-> +
-> +/*
-> + * Searches for an entry defined by name and namelen in the given index.
-> + * If the return value is positive (including 0) it is the position of an
-> + * exact match. If the return value is negative, the negated value minus 1 is the
-> + * position where the entry would be inserted.
-> + * Example: In the current index we have the files b,d,e:
-> + * index_name_pos(&index, "a", 1) -> -1
-> + * index_name_pos(&index, "b", 1) ->  0
-> + * index_name_pos(&index, "c", 1) -> -2
-> + * index_name_pos(&index, "d", 1) ->  1
-> + * index_name_pos(&index, "e", 1) ->  2
+> On Tue, 17 Jan 2017, Jacob Keller wrote:
+>
+>> On Fri, Jan 13, 2017 at 1:31 PM, Johannes Sixt <j6t@kdbg.org> wrote:
+>> > Am 13.01.2017 um 07:57 schrieb Jacob Keller:
+>> >>
+>> >> On Thu, Jan 12, 2017 at 10:43 PM, Johannes Sixt <j6t@kdbg.org> wrote:
+>> >>>
+>> >>>  When you write
+>> >>>
+>> >>>   git log --branches --exclude=origin/* --remotes
+>> >>>
+>> >>> --exclude=origin/* applies only to --remotes, but not to --branches.
+>> >>
+>> >>
+>> >> Well for describe I don't think the order matters.
+>> >
+>> >
+>> > That is certainly true today. But I would value consistency more. We would
+>> > lose it if some time in the future 'describe' accepts --branches and
+>> > --remotes in addition to --tags and --all.
+>> >
+>> > -- Hannes
+>> >
+>>
+>> I am not sure that the interface for git-log and git-describe are
+>> similar enough to make this distinction work. --match already seems to
+>> imply that it only works on refs in refs/tags, as it says it considers
+>> globs matching excluding the "refs/tags" prefix.
+>>
+>> In git-describe, we already have "--tags" and "--all" but they are
+>> mutually exclusive. We don't support using more than one at once, and
+>> I'm not really convinced that describe will ever support more than one
+>> at a time. Additionally, match already doesn't respect order.
+>
+> I agree that it would keep the code much simpler if you kept the order
+> "exclude before include".
+>
+> However, should you decide to look into making the logic dependent on the
+> order in which the flags were specified in the command-line, we do have a
+> data structure for such a beast: we use it in gitignore and in
+> sparse-checkout, it is called struct exclude_list.
+>
+> Just some food for thought,
+> Johannes
 
-The above may not be wrong per-se, but it misses one important case.
-A conflicted entry in the index with the same name is considered to
-sort after the name this asks.  If there are stage #1 and stage #3
-entries for path "g" in addition to the above, i.e.
+That might help make it easier to go this route. I'll take a look.
 
-	[0] [1] [2] [3] [4]
-	b#0 d#0 e#0 g#1 g#3
-
-then 
-
-	index_name_pos(&index, "g", 1) -> -3 - 1 = -4
-        index_name_pos(&index, "h", 1) -> -5 - 1 = -6
-
-> + * index_name_pos(&index, "f", 1) -> -3
-> + */
-
-Shouldn't this be -4?  We originally have [0], [1], and [2] in the
-index, and "f" needs to go to [3], so -3 - 1 = -4, no?
-
->  extern int index_name_pos(const struct index_state *, const char *name, int namelen);
-> +
->  #define ADD_CACHE_OK_TO_ADD 1		/* Ok to add */
->  #define ADD_CACHE_OK_TO_REPLACE 2	/* Ok to replace file/directory */
->  #define ADD_CACHE_SKIP_DFCHECK 4	/* Ok to skip DF conflict checks */
+Thanks,
+Jake
