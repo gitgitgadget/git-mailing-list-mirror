@@ -2,194 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8B2FE1F89C
-	for <e@80x24.org>; Wed, 18 Jan 2017 19:43:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B17F41F89C
+	for <e@80x24.org>; Wed, 18 Jan 2017 19:46:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751812AbdARTni (ORCPT <rfc822;e@80x24.org>);
-        Wed, 18 Jan 2017 14:43:38 -0500
-Received: from mail-vk0-f67.google.com ([209.85.213.67]:32969 "EHLO
-        mail-vk0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751085AbdARTnh (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Jan 2017 14:43:37 -0500
-Received: by mail-vk0-f67.google.com with SMTP id t8so1819737vke.0
-        for <git@vger.kernel.org>; Wed, 18 Jan 2017 11:43:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=HNY3QqqkXUaUXkHCkL87+doCVqjy/r/jr9ohYaSNciI=;
-        b=BCmOM10/HdODLgv0wyYpSsEp6ApGz6VaZ2E3cIOyhRk4+i4B/GIuE21rYD+ANeYcPZ
-         hWU9DR1BvYy0DwD3mF3PYXX95HV4AA/NWO7aBTiP2IWPXqFfi7DdAJClkXQQfjXK9cjY
-         NUasyWdswnuO2DuH2SI7gMWyLcfu2oihtTHaqkV49XJL47YuKzOjvz4kq3hHHLfL8A5h
-         fkKU3dz9t2YeDm3E814U523CVnF07RLaU8i5Y8y3Q6FXp/58uhN5Og4ZQgflI1QgwCM5
-         /0jtJ6HfZqJQldnuVljsCxdQJvy9vrVvZXPlHR8AqK4GLyBA0GqLb++1ApCV6vLmF9DK
-         gJ4g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=HNY3QqqkXUaUXkHCkL87+doCVqjy/r/jr9ohYaSNciI=;
-        b=GJ0Bj5Ep5bnpvDVroj8yt+nWxqmNZkzSs6RJ7HAaIyh1HikYx8OTyF1iMIVZXH3mXS
-         0oRH+lCeYYy4pWTpNRMlbat+J+5xzUO/FGf0BtNx8RObLpxjRY3Ygs0pPEaD0zlNVApH
-         7YNsF8NBHvauccAKD2/x+Y+jxgeQF9UINVt4GfWDbC5Sf+wzXj4Y7eUV40sW48Zj2x0K
-         saSm1HJ6f/dNtdBm5JS5O11IumAoj8d3fl6SVm807mPoeAnaq0Jc0n5Tr3Bhx06XKqzF
-         Nuh5cS0Khb7XqzymvWjwxe57WzGUqLQTOPWIGE5MODI2IOHdAwvXwcK5mA/zBKQpAPre
-         HEHQ==
-X-Gm-Message-State: AIkVDXIK7gmdG4ChDxiR3O9IBpnElsOA1eTu7FrRS9635w8TSu22Znlfz9Jvbu5g9j6iS4MGxfTeVt/TJMxAXw==
-X-Received: by 10.31.115.142 with SMTP id o136mr2422059vkc.139.1484768157210;
- Wed, 18 Jan 2017 11:35:57 -0800 (PST)
+        id S1753503AbdARTqA (ORCPT <rfc822;e@80x24.org>);
+        Wed, 18 Jan 2017 14:46:00 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:51036 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1753325AbdARTp6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Jan 2017 14:45:58 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 6009C5FD3E;
+        Wed, 18 Jan 2017 14:45:57 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=Z4kGM3zkYjWx6doh0VVAvlLJPfU=; b=JP2uSc
+        lvHHknlm8JxCmxCzWJZ9P8uoriP1SCKPwsQ11jLhipRtvhlTtdSEOD5fODweq/DH
+        X8xiWjcIJM5Nb26TaDF+9ZQVgOZIhCVadqNtQjtK9Dn1eo9ZTIXs5BXuLoVjKm0E
+        nyRWQLj0EzqxiOoXQB+qmku1lqdRUvzz2JSrc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=lEVlIrdCk4zlFeu3ZaPuZkbGO81uP68H
+        uRIFNjJSJfasAOFLel3Ih5SKVtV6jlHJFYIPXO+HEHE8pPsawa/Nu22lfyKSO90t
+        bbLHsh3TLm64/qY0eLF800WRB5mkoa8ZRyHRHmER4tkPUc1gCi0TaX8oAUieJwtu
+        WlNxELu8E9w=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 58C2E5FD3D;
+        Wed, 18 Jan 2017 14:45:57 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id BA68D5FD3C;
+        Wed, 18 Jan 2017 14:45:56 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jacob Keller <jacob.e.keller@intel.com>
+Cc:     git@vger.kernel.org, Johannes Sixt <j6t@kdbg.org>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Jacob Keller <jacob.keller@gmail.com>
+Subject: Re: [PATCH v3 1/5] doc: add documentation for OPT_STRING_LIST
+References: <20170118000930.5431-1-jacob.e.keller@intel.com>
+        <20170118000930.5431-2-jacob.e.keller@intel.com>
+Date:   Wed, 18 Jan 2017 11:45:55 -0800
+In-Reply-To: <20170118000930.5431-2-jacob.e.keller@intel.com> (Jacob Keller's
+        message of "Tue, 17 Jan 2017 16:09:26 -0800")
+Message-ID: <xmqq37gg9moc.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.90 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.159.34.48 with HTTP; Wed, 18 Jan 2017 11:35:16 -0800 (PST)
-In-Reply-To: <38d592b8-975c-1fd9-4c42-877e34a4ab70@xiplink.com>
-References: <cd784a4e-ee99-564e-81de-9f7f6cc26c67@gmx.net> <alpine.DEB.2.20.1701161153340.3469@virtualbox>
- <d5456165-bdf2-e9e7-117f-aeab0ff4b417@xiplink.com> <alpine.DEB.2.20.1701181725130.3469@virtualbox>
- <38d592b8-975c-1fd9-4c42-877e34a4ab70@xiplink.com>
-From:   Samuel Lijin <sxlijin@gmail.com>
-Date:   Wed, 18 Jan 2017 13:35:16 -0600
-Message-ID: <CAJZjrdXwNFaZFP-asVB9kXUFp1TfRr5w1O+opVRFzxV-qQmpRg@mail.gmail.com>
-Subject: Re: [RFC] stash --continue
-To:     Marc Branchaud <marcnarc@xiplink.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Stephan Beyer <s-beyer@gmx.net>, git <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
+X-Pobox-Relay-ID: BAB82FE0-DDB6-11E6-8ECF-A7617B1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
->> At least `git stash pop --continue` would be consistent with all other
->> `--continue` options in Git that I can think of...
+Jacob Keller <jacob.e.keller@intel.com> writes:
 
-> Alas, I disagree!
+> From: Jacob Keller <jacob.keller@gmail.com>
+>
+> Commit c8ba16391655 ("parse-options: add OPT_STRING_LIST helper",
+> 2011-06-09) added the OPT_STRING_LIST as a way to accumulate a repeated
+> list of strings. However, this was not documented in the
+> api-parse-options documentation. Add documentation now so that future
+> developers may learn of its existence.
+>
+> Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
+> ---
+>  Documentation/technical/api-parse-options.txt | 5 +++++
+>  1 file changed, 5 insertions(+)
+>
+> diff --git a/Documentation/technical/api-parse-options.txt b/Documentation/technical/api-parse-options.txt
+> index 27bd701c0d68..6914f54f5f44 100644
+> --- a/Documentation/technical/api-parse-options.txt
+> +++ b/Documentation/technical/api-parse-options.txt
+> @@ -168,6 +168,11 @@ There are some macros to easily define options:
+>  	Introduce an option with string argument.
+>  	The string argument is put into `str_var`.
+>  
+> +`OPT_STRING_LIST(short, long, &list, arg_str, description)`::
+> +	Introduce an option with string argument.
+> +	The string argument is stored as an element in `&list` which must be a
+> +	struct string_list. Reset the list using `--no-option`.
+> +
 
-I'm with Johannes here. "git stash" sans subcommand is pretty
-explicitly defined as "git stash save", so by similar logic, "git
-stash --continue", if anything, would be "git stash save --continue".
+I do not know if it is clear enough that 'option' in the last
+sentence is a placeholder.  I then wondered if spelling it as
+`--no-<long>` would make it a bit clearer, but that is ugly.
 
-I do agree that there's a slight problem with hunting down consistency
-in implementations of --continue since there aren't other usages that
-involve subcommands (rebase, cp, merge) but I can't think of "git
-stash" as a completely specified command, whereas I do see "git stash
-pop" and "git stash apply" as completely specified.
+The "Reset the list" is an instruction to the end-users who interact
+with a program written by readers of this document using
+OPT_STRING_LIST(), and it feels a bit out of place.  Perhaps
 
-On Wed, Jan 18, 2017 at 12:44 PM, Marc Branchaud <marcnarc@xiplink.com> wrote:
-> On 2017-01-18 11:34 AM, Johannes Schindelin wrote:
->>
->> Hi Marc,
->>
->> On Wed, 18 Jan 2017, Marc Branchaud wrote:
->>
->>> On 2017-01-16 05:54 AM, Johannes Schindelin wrote:
->>>
->>>> On Mon, 16 Jan 2017, Stephan Beyer wrote:
->>>>
->>>>> a git-newbie-ish co-worker uses git-stash sometimes. Last time he
->>>>> used "git stash pop", he got into a merge conflict. After he
->>>>> resolved the conflict, he did not know what to do to get the
->>>>> repository into the wanted state. In his case, it was only "git add
->>>>> <resolved files>" followed by a "git reset" and a "git stash drop",
->>>>> but there may be more involved cases when your index is not clean
->>>>> before "git stash pop" and you want to have your index as before.
->>>>>
->>>>> This led to the idea to have something like "git stash
->>>>> --continue"[1]
->>>>
->>>>
->>>> More like "git stash pop --continue". Without the "pop" command, it
->>>> does not make too much sense.
->>>
->>>
->>> Why not?  git should be able to remember what stash command created the
->>> conflict.  Why should I have to?  Maybe the fire alarm goes off right
->>> when I
->>> run the stash command, and by the time I get back to it I can't remember
->>> which operation I did.  It would be nice to be able to tell git to "just
->>> finish off (or abort) the stash operation, whatever it was".
->>
->>
->> That reeks of a big potential for confusion.
->>
->> Imagine for example a total Git noob who calls `git stash list`, scrolls
->> two pages down, then hits `q` by mistake. How would you explain to that
->> user that `git stash --continue` does not continue showing the list at the
->> third page?
->
->
-> Sorry, but I have trouble taking that example seriously.  It assumes such a
-> level of "noobness" that the user doesn't even understand how standard
-> command output paging works, not just with git but with any shell command.
->
->> Even worse: `git stash` (without arguments) defaults to the `save`
->> operation, so any user who does not read the documentation (and who does?)
->> would assume that `git stash --continue` *also* implies `save`.
->
->
-> Like the first example, your user is trying to "continue" a command that is
-> already complete.  It's like try to do "git rebase --continue" when there's
-> no rebase operation underway.
->
-> Now, maybe there is some way for "git stash save" (implied or explicit) to
-> stop partway through the operation.  I can't imagine such a situation (out
-> of disk space, maybe?), particularly where the user would expect "git stash
-> save" to leave things in a half-finished state.  To me "git stash save"
-> should be essentially all-or-nothing.
->
-> However, if there were such a partial-failure scenario, then I think it
-> would be perfectly reasonable for "git stash --continue" to finish the save
-> operation, assuming that the failure condition has been resolved.
->
->> If that was not enough, there would still be the overall design of Git's
->> user interface. You can call it confusing, inconsistent, with a lot of
->> room for improvement, and you would be correct. But none of Git's commands
->> has a `--continue` option that remembers the latest subcommand and
->> continues that. To introduce that behavior in `git stash` would disimprove
->> the situation.
->
->
-> I think it's more the case that none of the current continuable commands
-> have subcommands (though I can't think of all the continuable or abortable
-> operations offhand, so maybe I'm wrong).  I think we're discussing new UI
-> ground here.
->
-> And since the pattern is already "git foo --continue", it seems more
-> consistent to me for it to be "git stash --continue" as well. Especially
-> since there can be only one partially-complete stash sub-operation at one
-> time (per workdir, at least).  So there's no reason to change the pattern
-> just for the stash command.
->
-> Think of it this way:  All the currently continuable/abortable commands put
-> the repository in a shaky state, where performing certain other operations
-> would be ill advised.  Attempting to start a rebase while a merge conflict
-> is unresolved, for example.  IIRC, git actually tries to stop users from
-> shooting their feet in this way.
->
-> And so it should be for the stash operation:  If applying a stash yields a
-> conflict, it has to be resolved or aborted before something like a rebase or
-> merge is attempted.  It doesn't matter which stash subcommand created the
-> shaky situation.
->
-> In the long run, I think there's even the possibility of generic "git
-> continue" and "git abort" commands, that simply continue or abort the
-> current partially-complete operation, whatever it is.  (Isn't that the
-> ultimate goal of all the "sequencer" work?  I admit I have not been
-> following that effort.)
->
->> With every new feature, it is not enough to consider its benefits. You
->> always have to take the potential fallout into account, too.
->
->
-> Agreed.
->
->> At least `git stash pop --continue` would be consistent with all other
->> `--continue` options in Git that I can think of...
->
->
-> Alas, I disagree!
->
->                 M.
->
+	End users can reset the list by negating the option,
+	i.e. passing "--no-<long>", on the command line.
+
+I dunno.
+
+Anyway, thanks for adding a missing doc here.
+
+>  `OPT_INTEGER(short, long, &int_var, description)`::
+>  	Introduce an option with integer argument.
+>  	The integer is put into `int_var`.
