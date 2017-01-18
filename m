@@ -2,77 +2,183 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E37AD20756
-	for <e@80x24.org>; Wed, 18 Jan 2017 00:05:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9F4E920756
+	for <e@80x24.org>; Wed, 18 Jan 2017 00:07:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752285AbdARAFO (ORCPT <rfc822;e@80x24.org>);
-        Tue, 17 Jan 2017 19:05:14 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:60612 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752280AbdARAFM (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 17 Jan 2017 19:05:12 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id B378761F0B;
-        Tue, 17 Jan 2017 19:05:06 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=ZYWiDqcljQ9Cl53aGDXU36cbcWc=; b=HF8p0b
-        jpQ66bQw0xnam3Z4F51HTgqcTrbyrJ7slIbGC28pkj9mgKFLHTjSqQREDfTCEjPl
-        13o87gshfbXCXLLDaosypVNWxzFelJBBNP/PnsQnGVYV6mdDqHVlT/LdttmdWP9m
-        +ESbQ5Bo3JPAQMO89ubhyDabx9xsPMermwf8Q=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=S2MslhXwgUOqh5ci0QeIuSDdAOSrnije
-        cUBSY1U5/PrkZ8HrPI5oTmHEYS3I+m+33TSjny1GEURtq3D052lzezFxGJ+J7QdA
-        d+HysIgULEeDodpEUejkMmgOtrhkcasUzIr3A1fDLFivRoANynQMJpNLIjrfjKO9
-        0vBS9jTRNiw=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 747DB61F07;
-        Tue, 17 Jan 2017 19:05:06 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 0F9B261F00;
-        Tue, 17 Jan 2017 19:05:02 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     santiago@nyu.edu
-Cc:     git@vger.kernel.org, peff@peff.net, sunshine@sunshineco.com,
-        walters@verbum.org, Lukas Puehringer <luk.puehringer@gmail.com>
-Subject: Re: [PATCH v6 4/6] builtin/tag: add --format argument for tag -v
-References: <20170117233723.23897-1-santiago@nyu.edu>
-        <20170117233723.23897-5-santiago@nyu.edu>
-Date:   Tue, 17 Jan 2017 16:05:00 -0800
-In-Reply-To: <20170117233723.23897-5-santiago@nyu.edu> (santiago@nyu.edu's
-        message of "Tue, 17 Jan 2017 18:37:21 -0500")
-Message-ID: <xmqqziipb5cj.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.90 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: C2A0EC1A-DD11-11E6-A22A-A7617B1B28F4-77302942!pb-smtp2.pobox.com
+        id S1751721AbdARAHM (ORCPT <rfc822;e@80x24.org>);
+        Tue, 17 Jan 2017 19:07:12 -0500
+Received: from mga06.intel.com ([134.134.136.31]:48576 "EHLO mga06.intel.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752098AbdARAEZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 17 Jan 2017 19:04:25 -0500
+Received: from fmsmga006.fm.intel.com ([10.253.24.20])
+  by orsmga104.jf.intel.com with ESMTP; 17 Jan 2017 16:03:56 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.33,247,1477983600"; 
+   d="scan'208";a="55122135"
+Received: from jekeller-desk.amr.corp.intel.com ([10.166.35.174])
+  by fmsmga006.fm.intel.com with ESMTP; 17 Jan 2017 16:03:56 -0800
+From:   Jacob Keller <jacob.e.keller@intel.com>
+To:     git@vger.kernel.org
+Cc:     Johannes Sixt <j6t@kdbg.org>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jacob Keller <jacob.keller@gmail.com>
+Subject: [PATCH v2 4/5] describe: teach --match to accept multiple patterns
+Date:   Tue, 17 Jan 2017 16:03:44 -0800
+Message-Id: <20170118000345.31196-5-jacob.e.keller@intel.com>
+X-Mailer: git-send-email 2.11.0.403.g196674b8396b
+In-Reply-To: <20170118000345.31196-1-jacob.e.keller@intel.com>
+References: <20170118000345.31196-1-jacob.e.keller@intel.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-santiago@nyu.edu writes:
+From: Jacob Keller <jacob.keller@gmail.com>
 
-> -static int for_each_tag_name(const char **argv, each_tag_name_fn fn)
-> +static int for_each_tag_name(const char **argv, each_tag_name_fn fn,
-> +		void *cb_data)
->  {
->  	const char **p;
->  	char ref[PATH_MAX];
->  	int had_error = 0;
->  	unsigned char sha1[20];
->  
-> +
+Teach `--match` to be accepted multiple times, accumulating a list of
+patterns to match into a string list. Each pattern is inclusive, such
+that a tag need only match one of the provided patterns to be
+considered for matching.
 
-Why?  I'll remove this while queuing.
+This extension is useful as it enables more flexibility in what tags
+match, and may avoid the need to run the describe command multiple
+times to get the same result.
 
->  	for (p = argv; *p; p++) {
->  		if (snprintf(ref, sizeof(ref), "refs/tags/%s", *p)
->  					>= sizeof(ref)) {
+Add tests and update the documentation for this change.
+
+Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
+---
+ Documentation/git-describe.txt |  5 ++++-
+ builtin/describe.c             | 30 +++++++++++++++++++++++-------
+ t/t6120-describe.sh            | 19 +++++++++++++++++++
+ 3 files changed, 46 insertions(+), 8 deletions(-)
+
+diff --git a/Documentation/git-describe.txt b/Documentation/git-describe.txt
+index e4ac448ff565..7ad41e2f6ade 100644
+--- a/Documentation/git-describe.txt
++++ b/Documentation/git-describe.txt
+@@ -83,7 +83,10 @@ OPTIONS
+ --match <pattern>::
+ 	Only consider tags matching the given `glob(7)` pattern,
+ 	excluding the "refs/tags/" prefix.  This can be used to avoid
+-	leaking private tags from the repository.
++	leaking private tags from the repository. If given multiple times, a
++	list of patterns will be accumulated, and tags matching any of the
++	patterns will be considered. Use `--no-match` to clear and reset the
++	list of patterns.
+ 
+ --always::
+ 	Show uniquely abbreviated commit object as fallback.
+diff --git a/builtin/describe.c b/builtin/describe.c
+index 01490a157efc..5cc9e9abe798 100644
+--- a/builtin/describe.c
++++ b/builtin/describe.c
+@@ -28,7 +28,7 @@ static int abbrev = -1; /* unspecified */
+ static int max_candidates = 10;
+ static struct hashmap names;
+ static int have_util;
+-static const char *pattern;
++static struct string_list patterns = STRING_LIST_INIT_NODUP;
+ static int always;
+ static const char *dirty;
+ 
+@@ -129,9 +129,24 @@ static int get_name(const char *path, const struct object_id *oid, int flag, voi
+ 	if (!all && !is_tag)
+ 		return 0;
+ 
+-	/* Accept only tags that match the pattern, if given */
+-	if (pattern && (!is_tag || wildmatch(pattern, path + 10, 0, NULL)))
+-		return 0;
++	/*
++	 * If we're given patterns, accept only tags which match at least one
++	 * pattern.
++	 */
++	if (patterns.nr) {
++		struct string_list_item *item;
++
++		if (!is_tag)
++			return 0;
++
++		for_each_string_list_item(item, &patterns) {
++			if (!wildmatch(item->string, path + 10, 0, NULL))
++				break;
++
++			/* If we get here, no pattern matched. */
++			return 0;
++		}
++	}
+ 
+ 	/* Is it annotated? */
+ 	if (!peel_ref(path, peeled.hash)) {
+@@ -404,7 +419,7 @@ int cmd_describe(int argc, const char **argv, const char *prefix)
+ 			    N_("only output exact matches"), 0),
+ 		OPT_INTEGER(0, "candidates", &max_candidates,
+ 			    N_("consider <n> most recent tags (default: 10)")),
+-		OPT_STRING(0, "match",       &pattern, N_("pattern"),
++		OPT_STRING_LIST(0, "match", &patterns, N_("pattern"),
+ 			   N_("only consider tags matching <pattern>")),
+ 		OPT_BOOL(0, "always",        &always,
+ 			N_("show abbreviated commit object as fallback")),
+@@ -430,6 +445,7 @@ int cmd_describe(int argc, const char **argv, const char *prefix)
+ 		die(_("--long is incompatible with --abbrev=0"));
+ 
+ 	if (contains) {
++		struct string_list_item *item;
+ 		struct argv_array args;
+ 
+ 		argv_array_init(&args);
+@@ -440,8 +456,8 @@ int cmd_describe(int argc, const char **argv, const char *prefix)
+ 			argv_array_push(&args, "--always");
+ 		if (!all) {
+ 			argv_array_push(&args, "--tags");
+-			if (pattern)
+-				argv_array_pushf(&args, "--refs=refs/tags/%s", pattern);
++			for_each_string_list_item(item, &patterns)
++				argv_array_pushf(&args, "--refs=refs/tags/%s", item->string);
+ 		}
+ 		if (argc)
+ 			argv_array_pushv(&args, argv);
+diff --git a/t/t6120-describe.sh b/t/t6120-describe.sh
+index 85f269411cb3..9e5db9b87a1f 100755
+--- a/t/t6120-describe.sh
++++ b/t/t6120-describe.sh
+@@ -182,6 +182,10 @@ check_describe "test2-lightweight-*" --tags --match="test2-*"
+ 
+ check_describe "test2-lightweight-*" --long --tags --match="test2-*" HEAD^
+ 
++check_describe "test1-lightweight-*" --long --tags --match="test1-*" --match="test2-*" HEAD^
++
++check_describe "test2-lightweight-*" --long --tags --match="test1-*" --no-match --match="test2-*" HEAD^
++
+ test_expect_success 'name-rev with exact tags' '
+ 	echo A >expect &&
+ 	tag_object=$(git rev-parse refs/tags/A) &&
+@@ -206,4 +210,19 @@ test_expect_success 'describe --contains with the exact tags' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success 'describe --contains and --match' '
++	echo "A^0" >expect &&
++	tagged_commit=$(git rev-parse "refs/tags/A^0") &&
++	test_must_fail git describe --contains --match="B" $tagged_commit &&
++	git describe --contains --match="B" --match="A" $tagged_commit >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'describe --contains and --no-match' '
++	echo "A^0" >expect &&
++	tagged_commit=$(git rev-parse "refs/tags/A^0") &&
++	git describe --contains --match="B" --no-match $tagged_commit >actual &&
++	test_cmp expect actual
++'
++
+ test_done
+-- 
+2.11.0.403.g196674b8396b
+
