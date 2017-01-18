@@ -2,140 +2,122 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B42051F89C
-	for <e@80x24.org>; Wed, 18 Jan 2017 21:22:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5F8171F89C
+	for <e@80x24.org>; Wed, 18 Jan 2017 21:23:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751968AbdARVWd (ORCPT <rfc822;e@80x24.org>);
-        Wed, 18 Jan 2017 16:22:33 -0500
-Received: from mail-lf0-f54.google.com ([209.85.215.54]:33850 "EHLO
-        mail-lf0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751076AbdARVWd (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Jan 2017 16:22:33 -0500
-Received: by mail-lf0-f54.google.com with SMTP id v186so22410818lfa.1
-        for <git@vger.kernel.org>; Wed, 18 Jan 2017 13:21:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=D5Oh4D82Rd/FjxJmROnTcVyQKklnPKexbOdoCJjWLgQ=;
-        b=gbLFJ1A/yZts8sLjmJwtJ6xAYIKturCTUKT5cW7OHMkdvmeX5mB4p4zmF3lgXCBEnS
-         7KEJQuLke0j7xb83krSfbwN4DlYSn84t2pBoLzPGmTiFMV3fhRE9NOB0zArHAQm2MSCP
-         8yCCOuT4XDuStDrr0xfHAlZ04Vyzmgy9jpnQdG8CgYzjdh2jkLHpLAeRz28qADeB6NeM
-         beTfAXpva6I4+rJRPdFWZujQ+XyaxwPzd+rfVm3rfPitowH46duI241LQEyDyVc0Vki9
-         i/bf4vN218+Ipg/zYQ4mLAAreRog2wuR8SybkkU+x4drmwCx436O1FKW4U6EndZ6Me2K
-         vqoQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=D5Oh4D82Rd/FjxJmROnTcVyQKklnPKexbOdoCJjWLgQ=;
-        b=jAxMJDsfDPgWECwJbhUyc4qlm7gN6lRaWkx4MvlWyBxayvxWxHdWfQjxpBa6QCK2Oe
-         nWECvBPYpW4uMCC/JXVTRDGkPY2iE3BLWb/YFa//pFDK4+Xc5qRj5pQS1RWq/sjcMF4m
-         H3e4YPyzj1IYnIlWWJd6XESvsF7dI5S4CPllAdX7Vgj2W9Y/vpXqTFWtI5ZuOL4Z4qiz
-         MzYdJ8DYHtX4S8hzP2DT2vASuJNOadA+OKP5h8aqDgOnrOjMT+t1MwUq2C1P3iLHG0TU
-         eUZXcIoMAEYlwqoY41EwzMTUhL9FAyi8kD8RCe2PrZVOrFvvsJkQ8YkHDa71r9fAiT/i
-         FVTA==
-X-Gm-Message-State: AIkVDXKPUi+Jc2XsjFwPlfHHmrlrBGrkKYyC96vQ7AI0hzJpXN/dEObzKAC7bVUp7z77F2D03LgshC92JjHx5Q==
-X-Received: by 10.25.74.72 with SMTP id x69mr1974367lfa.66.1484773977630; Wed,
- 18 Jan 2017 13:12:57 -0800 (PST)
+        id S1752338AbdARVXU (ORCPT <rfc822;e@80x24.org>);
+        Wed, 18 Jan 2017 16:23:20 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:56775 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751076AbdARVXT (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Jan 2017 16:23:19 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id E1A1362DAB;
+        Wed, 18 Jan 2017 16:22:44 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=8JZXae22G+/X4GkV+splbuIGrxc=; b=GtSZE5
+        zsn/E1cMi/G5XcrffPO800CqgEAKJIj2NMB+BYLW86X7kyOafVsxXv4CvPv6qCam
+        ji6QkTxIjjhor5uCoUoMJRNAxLeP6FN0m5FXTkPT0cj9XKLeLK+mVTyVXnC8QXtt
+        MJ9X8z8iTaHi6TUCAczptoNluOCDKf/xqCrrg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=mqSPGVaMJT+1+u4Dv2jDph7x11+2q4k9
+        eniINA5f4y/SGShS4DjVZk/f/HyoC4lxECx86FPH0Vuk0aGxpUattjbPWD+yjDlG
+        9n0onLJQoqlMY1JTcpMfpwESLHW1entsU090CA13EWBt4X/IHB2l/uftJnxa++3+
+        iD9eyKa7cGQ=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id D917D62DAA;
+        Wed, 18 Jan 2017 16:22:44 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 2D8F062DA9;
+        Wed, 18 Jan 2017 16:22:44 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 3/4] document add_[file_]to_index
+References: <20170117233503.27137-1-sbeller@google.com>
+        <20170117233503.27137-4-sbeller@google.com>
+Date:   Wed, 18 Jan 2017 13:22:42 -0800
+In-Reply-To: <20170117233503.27137-4-sbeller@google.com> (Stefan Beller's
+        message of "Tue, 17 Jan 2017 15:35:02 -0800")
+Message-ID: <xmqqbmv43vx9.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.25.145.14 with HTTP; Wed, 18 Jan 2017 13:12:37 -0800 (PST)
-In-Reply-To: <xmqqy3y8878k.fsf@gitster.mtv.corp.google.com>
-References: <20170118000930.5431-1-jacob.e.keller@intel.com>
- <20170118000930.5431-3-jacob.e.keller@intel.com> <xmqqy3y8878k.fsf@gitster.mtv.corp.google.com>
-From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Wed, 18 Jan 2017 13:12:37 -0800
-Message-ID: <CA+P7+xpMAVq8K41cDZy5FTiRTHoWWd3yOSmLoj4ucAvCPoNa0g@mail.gmail.com>
-Subject: Re: [PATCH v3 2/5] name-rev: extend --refs to accept multiple patterns
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jacob Keller <jacob.e.keller@intel.com>,
-        Git mailing list <git@vger.kernel.org>,
-        Johannes Sixt <j6t@kdbg.org>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
+X-Pobox-Relay-ID: 403771AA-DDC4-11E6-9D3C-FE3F13518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jan 18, 2017 at 12:04 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Jacob Keller <jacob.e.keller@intel.com> writes:
->
->> From: Jacob Keller <jacob.keller@gmail.com>
->>
->> Teach git name-rev to take a string list of patterns from --refs instead
->> of only a single pattern. The list of patterns will be matched
->> inclusively, such that a ref only needs to match one pattern to be
->> included. If a ref will only be excluded if it does not match any of the
->> patterns.
->
-> I think "If a" in the last sentence should be "A".
+Stefan Beller <sbeller@google.com> writes:
 
-You are correct, that is a typo.
+> Signed-off-by: Stefan Beller <sbeller@google.com>
+> ---
+>  cache.h | 17 ++++++++++++-----
+>  1 file changed, 12 insertions(+), 5 deletions(-)
+>
+> diff --git a/cache.h b/cache.h
+> index 26632065a5..acc639d6e0 100644
+> --- a/cache.h
+> +++ b/cache.h
+> @@ -605,13 +605,20 @@ extern int remove_index_entry_at(struct index_state *, int pos);
+>  
+>  extern void remove_marked_cache_entries(struct index_state *istate);
+>  extern int remove_file_from_index(struct index_state *, const char *path);
+> -#define ADD_CACHE_VERBOSE 1
+> -#define ADD_CACHE_PRETEND 2
+> -#define ADD_CACHE_IGNORE_ERRORS	4
+> -#define ADD_CACHE_IGNORE_REMOVAL 8
+> -#define ADD_CACHE_INTENT 16
+> +
+> +#define ADD_CACHE_VERBOSE 1		/* verbose */
+> +#define ADD_CACHE_PRETEND 2 		/* dry run */
+> +#define ADD_CACHE_IGNORE_ERRORS 4	/* ignore errors */
+> +#define ADD_CACHE_IGNORE_REMOVAL 8	/* do not remove files from index */
+> +#define ADD_CACHE_INTENT 16		/* intend to add later; stage empty file */
 
->
->>  --refs=<pattern>::
->>       Only use refs whose names match a given shell pattern.  The pattern
->> -     can be one of branch name, tag name or fully qualified ref name.
->> +     can be one of branch name, tag name or fully qualified ref name. If
->> +     given multiple times, use refs whose names match any of the given shell
->> +     patterns. Use `--no-refs` to clear any previous ref patterns given.
->
-> Unlike 1/5, this is facing the end-users, and the last sentence is
-> very appropriate.
+These repeat pretty much the same thing, which is an indication that
+the macro names are chosen well not to require extraneous comments
+like these, no?
 
-Yes.
+> +/*
+> + * Adds the given path the index, respecting the repsitory configuration, e.g.
+> + * in case insensitive file systems, the path is normalized.
+> + */
+>  extern int add_to_index(struct index_state *, const char *path, struct stat *, int flags);
 
->
->> +     if (data->ref_filters.nr) {
->> +             struct string_list_item *item;
->> +             int matched = 0;
->> +
->> +             /* See if any of the patterns match. */
->> +             for_each_string_list_item(item, &data->ref_filters) {
->> +                     /*
->> +                      * We want to check every pattern even if we already
->> +                      * found a match, just in case one of the later
->> +                      * patterns could abbreviate the output.
->> +                      */
->> +                     switch (subpath_matches(path, item->string)) {
->> +                     case -1: /* did not match */
->> +                             break;
->> +                     case 0: /* matched fully */
->> +                             matched = 1;
->> +                             break;
->> +                     default: /* matched subpath */
->> +                             matched = 1;
->> +                             can_abbreviate_output = 1;
->> +                             break;
->> +                     }
->>               }
->
-> I agree that we cannot short-cut on the first match to make sure
-> that the outcome is stable, but I wondered what should be shown when
-> we do have multiple matches.  Say I gave
->
->     --refs="v*" --refs="refs/tags/v1.*"
->
-> and refs/tags/v1.0 matched.  The above code would say we can
-> abbreviate.
->
-> What is the reason behind this design decision?  Is it because it is
-> clear that the user shows her willingness to accept more compact
-> form by having --refs="v*" that would allow shortening?  If that is
-> the case, I think I agree with the reasoning.  But we probably want
-> to write it down somewhere, because another reasoning, which may
-> also be valid, would call for an opposite behaviour (i.e. the more
-> specific --refs="refs/tags/v1.*" also matched, so let's show that
-> fact by not shortening).
->
+s/repsitory/repository/;
 
-I'm not sure which reasoning makes most sense. Any other opinions?
+> +/* stat the file then call add_to_index */
+>  extern int add_file_to_index(struct index_state *, const char *path, int flags);
+> +
 
-Thanks,
-Jake
+As you do not say "use the provided stat info to mark the cache
+entry up-to-date" in the add_to_index(), I am not sure if mentioning
+"stat the file then" has much value.  Besides, you are supposed to
+lstat(2) the file, not "stat", no?
+
+I'd cover these two under the same heading and comment if I were
+doing this.
+
+	These two are used to add the contents of the file at path
+	to the index, marking the working tree up-to-date by storing
+	the cached stat info in the resulting cache entry.  A caller
+	that has already run lstat(2) on the path can call
+	add_to_index(), and all others can call add_file_to_index();
+	the latter will do necessary lstat(2) internally before
+	calling the former.
+
+or something along that line.
+
+>  extern struct cache_entry *make_cache_entry(unsigned int mode, const unsigned char *sha1, const char *path, int stage, unsigned int refresh_options);
+>  extern int chmod_index_entry(struct index_state *, struct cache_entry *ce, char flip);
+>  extern int ce_same_name(const struct cache_entry *a, const struct cache_entry *b);
