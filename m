@@ -6,20 +6,20 @@ X-Spam-Status: No, score=-6.4 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8C9341F89C
-	for <e@80x24.org>; Wed, 18 Jan 2017 23:07:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C7E4B1F89C
+	for <e@80x24.org>; Wed, 18 Jan 2017 23:07:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751466AbdARXGc (ORCPT <rfc822;e@80x24.org>);
-        Wed, 18 Jan 2017 18:06:32 -0500
+        id S1751536AbdARXHW (ORCPT <rfc822;e@80x24.org>);
+        Wed, 18 Jan 2017 18:07:22 -0500
 Received: from mga14.intel.com ([192.55.52.115]:32786 "EHLO mga14.intel.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751449AbdARXG3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Jan 2017 18:06:29 -0500
+        id S1751457AbdARXGc (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Jan 2017 18:06:32 -0500
 Received: from fmsmga005.fm.intel.com ([10.253.24.32])
   by fmsmga103.fm.intel.com with ESMTP; 18 Jan 2017 15:06:11 -0800
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="5.33,250,1477983600"; 
-   d="scan'208";a="54909588"
+   d="scan'208";a="54909593"
 Received: from jekeller-desk.amr.corp.intel.com ([10.166.35.174])
   by fmsmga005.fm.intel.com with ESMTP; 18 Jan 2017 15:06:11 -0800
 From:   Jacob Keller <jacob.e.keller@intel.com>
@@ -28,10 +28,12 @@ Cc:     Johannes Sixt <j6t@kdbg.org>,
         Johannes Schindelin <johannes.schindelin@gmx.de>,
         Junio C Hamano <gitster@pobox.com>,
         Jacob Keller <jacob.keller@gmail.com>
-Subject: [PATCH v4 0/5] extend git-describe pattern matching
-Date:   Wed, 18 Jan 2017 15:06:03 -0800
-Message-Id: <20170118230608.28030-1-jacob.e.keller@intel.com>
+Subject: [PATCH v4 3/5] name-rev: add support to exclude refs by pattern match
+Date:   Wed, 18 Jan 2017 15:06:06 -0800
+Message-Id: <20170118230608.28030-4-jacob.e.keller@intel.com>
 X-Mailer: git-send-email 2.11.0.488.g1cece4bcb7a5
+In-Reply-To: <20170118230608.28030-1-jacob.e.keller@intel.com>
+References: <20170118230608.28030-1-jacob.e.keller@intel.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -39,144 +41,115 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jacob Keller <jacob.keller@gmail.com>
 
-Teach git describe and git name-rev the ability to match multiple
-patterns inclusively. Additionally, teach these commands to also accept
-negative patterns to exclude any refs which match.
+Extend git-name-rev to support excluding refs which match shell patterns
+using --exclude. These patterns can be used to limit the scope of refs
+by excluding any ref that matches one of the --exclude patterns. A ref
+will only be used for naming when it matches at least one --ref pattern
+but does not match any of the --exclude patterns. Thus, --exlude
+patterns are given precedence over --ref patterns.
 
-The pattern lists for positive and negative patterns are inclusive. This
-means that for the positive patterns, a reference will be considered as
-long as it matches at least one of the match patterns. It need not match
-all given patterns. Additionally for negative patterns, we will not
-consider any ref which matches any negative pattern, even if it matches
-one of the positive patterns.
+For example, suppose you wish to name a series of commits based on an
+official release tag of the form "v*" but excluding any pre-release tags
+which match "*rc*". You can use the following to do so:
 
-Together this allows the ability to express far more sets of tags than a
-single match pattern alone. It does not provide quite the same depth as
-would teaching full regexp but it is simpler and easy enough to
-understand.
+  git name-rev --refs="v*" --exclude="*rc*" --all
 
-- v2
-* use --exclude instead of --discard
-* use modern style in tests
+Add tests and update Documentation for this change.
 
-- v3
-* fix broken test (sorry for the thrash!)
+Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
+---
+ Documentation/git-name-rev.txt       |  9 +++++++++
+ builtin/name-rev.c                   | 14 +++++++++++++-
+ t/t6007-rev-list-cherry-pick-file.sh | 12 ++++++++++++
+ 3 files changed, 34 insertions(+), 1 deletion(-)
 
-- v4
-* update documentation and commit messages at Junio's suggestion
-* add completion
-
-After even more thought, I do not like the way that git-log works with
---exclude, and do not believe it gives enough extra expressive power to
-bother with the complexity. The current implementation of --match and
---exclude is relatively easy to explain and makes some sense. Since we
-did not have a historical reasoning in the same way that git-log does, I
-do not think using something like an exclude_list or similar is worth
-the added complexity.
-
--- interdiff since v3 --
-diff --git c/Documentation/git-describe.txt w/Documentation/git-describe.txt
-index 21a43b78924a..8755f3af7bcd 100644
---- c/Documentation/git-describe.txt
-+++ w/Documentation/git-describe.txt
-@@ -93,7 +93,9 @@ OPTIONS
- 	the "refs/tags/" prefix. This can be used to narrow the tag space and
- 	find only tags matching some meaningful criteria. If given multiple
- 	times, a list of patterns will be accumulated and tags matching any
--	of the patterns will be excluded. Use `--no-exclude` to clear and
-+	of the patterns will be excluded. When combined with --match a tag will
-+	be considered when it matches at least one --match pattern and does not
-+	match any of the --exclude patterns. Use `--no-exclude` to clear and
- 	reset the list of patterns.
+diff --git a/Documentation/git-name-rev.txt b/Documentation/git-name-rev.txt
+index 7433627db12d..da83f280ed88 100644
+--- a/Documentation/git-name-rev.txt
++++ b/Documentation/git-name-rev.txt
+@@ -30,6 +30,15 @@ OPTIONS
+ 	given multiple times, use refs whose names match any of the given shell
+ 	patterns. Use `--no-refs` to clear any previous ref patterns given.
  
- --always::
-diff --git c/Documentation/git-name-rev.txt w/Documentation/git-name-rev.txt
-index 301b4a8d55e6..da83f280ed88 100644
---- c/Documentation/git-name-rev.txt
-+++ w/Documentation/git-name-rev.txt
-@@ -33,9 +33,11 @@ OPTIONS
- --exclude=<pattern>::
- 	Do not use any ref whose name matches a given shell pattern. The
- 	pattern can be one of branch name, tag name or fully qualified ref
--	name. If given multiple times, exclude refs that match any of the given
--	shell patterns. Use `--no-exclude` to clear the list of exclude
--	patterns.
++--exclude=<pattern>::
++	Do not use any ref whose name matches a given shell pattern. The
++	pattern can be one of branch name, tag name or fully qualified ref
 +	name. If given multiple times, a ref will be excluded when it matches
 +	any of the given patterns. When used together with --refs, a ref will
 +	be used as a match only when it matches at least one --ref pattern and
 +	does not match any --exclude patterns. Use `--no-exclude` to clear the
 +	list of exclude patterns.
- 
++
  --all::
  	List all commits reachable from all refs
-diff --git c/Documentation/technical/api-parse-options.txt w/Documentation/technical/api-parse-options.txt
-index 6914f54f5f44..36768b479e16 100644
---- c/Documentation/technical/api-parse-options.txt
-+++ w/Documentation/technical/api-parse-options.txt
-@@ -168,10 +168,10 @@ There are some macros to easily define options:
- 	Introduce an option with string argument.
- 	The string argument is put into `str_var`.
  
--`OPT_STRING_LIST(short, long, &list, arg_str, description)`::
-+`OPT_STRING_LIST(short, long, &struct string_list, arg_str, description)`::
- 	Introduce an option with string argument.
--	The string argument is stored as an element in `&list` which must be a
--	struct string_list. Reset the list using `--no-option`.
-+	The string argument is stored as an element in `string_list`.
-+	Use of `--no-option` will clear the list of preceding values.
+diff --git a/builtin/name-rev.c b/builtin/name-rev.c
+index 85897ea1f714..ea8ef48102f8 100644
+--- a/builtin/name-rev.c
++++ b/builtin/name-rev.c
+@@ -109,6 +109,7 @@ struct name_ref_data {
+ 	int tags_only;
+ 	int name_only;
+ 	struct string_list ref_filters;
++	struct string_list exclude_filters;
+ };
  
- `OPT_INTEGER(short, long, &int_var, description)`::
- 	Introduce an option with integer argument.
-diff --git c/builtin/name-rev.c w/builtin/name-rev.c
-index da4a0d7c0fdf..ea8ef48102f8 100644
---- c/builtin/name-rev.c
-+++ w/builtin/name-rev.c
-@@ -166,10 +166,11 @@ static int name_ref(const char *path, const struct object_id *oid, int flags, vo
+ static struct tip_table {
+@@ -150,6 +151,15 @@ static int name_ref(const char *path, const struct object_id *oid, int flags, vo
+ 	if (data->tags_only && !starts_with(path, "refs/tags/"))
+ 		return 0;
  
- 		/* See if any of the patterns match. */
- 		for_each_string_list_item(item, &data->ref_filters) {
--			/*
--			 * We want to check every pattern even if we already
--			 * found a match, just in case one of the later
--			 * patterns could abbreviate the output.
-+			/* Check every pattern even after we found a match so
-+			 * that we can determine when we should abbreviate the
-+			 * output. We will abbreviate the output when any of
-+			 * the patterns match a subpath, even if one of the
-+			 * patterns matches fully.
- 			 */
- 			switch (subpath_matches(path, item->string)) {
- 			case -1: /* did not match */
-diff --git c/contrib/completion/git-completion.bash w/contrib/completion/git-completion.bash
-index 6721ff80fb13..835d7fcfd4f2 100644
---- c/contrib/completion/git-completion.bash
-+++ w/contrib/completion/git-completion.bash
-@@ -1198,6 +1198,7 @@ _git_describe ()
- 		__gitcomp "
- 			--all --tags --contains --abbrev= --candidates=
- 			--exact-match --debug --long --match --always
-+			--exclude
- 			"
- 		return
- 	esac
-
-Jacob Keller (5):
-  doc: add documentation for OPT_STRING_LIST
-  name-rev: extend --refs to accept multiple patterns
-  name-rev: add support to exclude refs by pattern match
-  describe: teach --match to accept multiple patterns
-  describe: teach describe negative pattern matches
-
- Documentation/git-describe.txt                | 15 +++++++-
- Documentation/git-name-rev.txt                | 13 ++++++-
- Documentation/technical/api-parse-options.txt |  5 +++
- builtin/describe.c                            | 51 +++++++++++++++++++++----
- builtin/name-rev.c                            | 54 +++++++++++++++++++++------
- contrib/completion/git-completion.bash        |  1 +
- t/t6007-rev-list-cherry-pick-file.sh          | 38 +++++++++++++++++++
- t/t6120-describe.sh                           | 27 ++++++++++++++
- 8 files changed, 183 insertions(+), 21 deletions(-)
-
++	if (data->exclude_filters.nr) {
++		struct string_list_item *item;
++
++		for_each_string_list_item(item, &data->exclude_filters) {
++			if (subpath_matches(path, item->string) >= 0)
++				return 0;
++		}
++	}
++
+ 	if (data->ref_filters.nr) {
+ 		struct string_list_item *item;
+ 		int matched = 0;
+@@ -324,12 +334,14 @@ int cmd_name_rev(int argc, const char **argv, const char *prefix)
+ {
+ 	struct object_array revs = OBJECT_ARRAY_INIT;
+ 	int all = 0, transform_stdin = 0, allow_undefined = 1, always = 0, peel_tag = 0;
+-	struct name_ref_data data = { 0, 0, STRING_LIST_INIT_NODUP };
++	struct name_ref_data data = { 0, 0, STRING_LIST_INIT_NODUP, STRING_LIST_INIT_NODUP };
+ 	struct option opts[] = {
+ 		OPT_BOOL(0, "name-only", &data.name_only, N_("print only names (no SHA-1)")),
+ 		OPT_BOOL(0, "tags", &data.tags_only, N_("only use tags to name the commits")),
+ 		OPT_STRING_LIST(0, "refs", &data.ref_filters, N_("pattern"),
+ 				   N_("only use refs matching <pattern>")),
++		OPT_STRING_LIST(0, "exclude", &data.exclude_filters, N_("pattern"),
++				   N_("ignore refs matching <pattern>")),
+ 		OPT_GROUP(""),
+ 		OPT_BOOL(0, "all", &all, N_("list all commits reachable from all refs")),
+ 		OPT_BOOL(0, "stdin", &transform_stdin, N_("read from stdin")),
+diff --git a/t/t6007-rev-list-cherry-pick-file.sh b/t/t6007-rev-list-cherry-pick-file.sh
+index d9827a6389a3..29597451967d 100755
+--- a/t/t6007-rev-list-cherry-pick-file.sh
++++ b/t/t6007-rev-list-cherry-pick-file.sh
+@@ -118,6 +118,18 @@ test_expect_success 'name-rev --refs excludes non-matched patterns' '
+ 	test_cmp actual.named expect
+ '
+ 
++cat >expect <<EOF
++<tags/F
++EOF
++
++test_expect_success 'name-rev --exclude excludes matched patterns' '
++	git rev-list --left-right --right-only --cherry-pick F...E -- bar >>expect &&
++	git rev-list --left-right --cherry-pick F...E -- bar >actual &&
++	git name-rev --stdin --name-only --refs="*tags/*" --exclude="*E" \
++		<actual >actual.named &&
++	test_cmp actual.named expect
++'
++
+ test_expect_success 'name-rev --no-refs clears the refs list' '
+ 	git rev-list --left-right --cherry-pick F...E -- bar >expect &&
+ 	git name-rev --stdin --name-only --refs="*tags/F" --refs="*tags/E" --no-refs --refs="*tags/G" \
 -- 
 2.11.0.488.g1cece4bcb7a5
 
