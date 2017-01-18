@@ -2,79 +2,145 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.4 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EB90E20A17
-	for <e@80x24.org>; Wed, 18 Jan 2017 10:48:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AADFF20A17
+	for <e@80x24.org>; Wed, 18 Jan 2017 11:19:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751918AbdARKr5 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 18 Jan 2017 05:47:57 -0500
-Received: from smtprelay.synopsys.com ([198.182.47.9]:49482 "EHLO
-        smtprelay.synopsys.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751692AbdARKr4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Jan 2017 05:47:56 -0500
-Received: from mailhost.synopsys.com (mailhost1.synopsys.com [10.12.238.239])
-        by smtprelay.synopsys.com (Postfix) with ESMTP id DF95724E0173;
-        Wed, 18 Jan 2017 02:40:54 -0800 (PST)
-Received: from mailhost.synopsys.com (localhost [127.0.0.1])
-        by mailhost.synopsys.com (Postfix) with ESMTP id C8C50811;
-        Wed, 18 Jan 2017 02:40:54 -0800 (PST)
-Received: from US01WEHTC3.internal.synopsys.com (us01wehtc3.internal.synopsys.com [10.15.84.232])
-        by mailhost.synopsys.com (Postfix) with ESMTP id BE57E80A;
-        Wed, 18 Jan 2017 02:40:54 -0800 (PST)
-Received: from DE02WEHTCB.internal.synopsys.com (10.225.19.94) by
- US01WEHTC3.internal.synopsys.com (10.15.84.232) with Microsoft SMTP Server
- (TLS) id 14.3.266.1; Wed, 18 Jan 2017 02:40:54 -0800
-Received: from DE02WEHTCA.internal.synopsys.com (10.225.19.92) by
- DE02WEHTCB.internal.synopsys.com (10.225.19.94) with Microsoft SMTP Server
- (TLS) id 14.3.266.1; Wed, 18 Jan 2017 11:40:53 +0100
-Received: from [10.107.19.116] (10.107.19.116) by
- DE02WEHTCA.internal.synopsys.com (10.225.19.80) with Microsoft SMTP Server
- (TLS) id 14.3.266.1; Wed, 18 Jan 2017 11:40:53 +0100
-To:     <git@vger.kernel.org>
-CC:     Linus Torvalds <torvalds@linux-foundation.org>,
-        "CARLOS.PALMINHA@synopsys.com" <CARLOS.PALMINHA@synopsys.com>
-From:   Joao Pinto <Joao.Pinto@synopsys.com>
-Subject: Git: new feature suggestion
-Message-ID: <4817eb00-6efc-e3c0-53d7-46f2509350d3@synopsys.com>
-Date:   Wed, 18 Jan 2017 10:40:52 +0000
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
- Thunderbird/45.6.0
+        id S1755218AbdARLTE (ORCPT <rfc822;e@80x24.org>);
+        Wed, 18 Jan 2017 06:19:04 -0500
+Received: from cloud.peff.net ([104.130.231.41]:40802 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1755006AbdARLTB (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Jan 2017 06:19:01 -0500
+Received: (qmail 14397 invoked by uid 109); 18 Jan 2017 11:17:07 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 18 Jan 2017 11:17:07 +0000
+Received: (qmail 26305 invoked by uid 111); 18 Jan 2017 11:18:02 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 18 Jan 2017 06:18:02 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 18 Jan 2017 06:17:05 -0500
+Date:   Wed, 18 Jan 2017 06:17:05 -0500
+From:   Jeff King <peff@peff.net>
+To:     Matt McCutchen <matt@mattmccutchen.net>
+Cc:     git@vger.kernel.org
+Subject: Re: "git diff --ignore-space-change --stat" lists files with only
+ whitespace differences as "changed"
+Message-ID: <20170118111705.6bqzkklluikda3r5@sigill.intra.peff.net>
+References: <1484704915.2096.16.camel@mattmccutchen.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.107.19.116]
+In-Reply-To: <1484704915.2096.16.camel@mattmccutchen.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello,
+On Tue, Jan 17, 2017 at 09:01:55PM -0500, Matt McCutchen wrote:
 
-My name is Joao Pinto, I work at Synopsys and I am a frequent Linux Kernel
-contributor.
+> A bug report: I noticed that "git diff --ignore-space-change --stat"
+> lists files with only whitespace differences as having changed with 0
+> differing lines.  This is inconsistent with the behavior without --
+> stat, which doesn't list such files at all.  (Same behavior with all
+> the --ignore*space* flags.)  I can reproduce this with the current
+> "next", af746e4.  Quick test case:
 
-Let me start by congratulate you for the fantastic work you have been doing with
-Git which is an excellent tool.
+Hmm. This is pretty easy to do naively, but the special-casing for
+addition/deletion (which I think we _do_ need, and which certainly we
+fail t4205 without) makes me feel dirty. I'd worry there are other
+cases, too (perhaps renames?). And I also notice that the
+binary-diffstat code path just above my changes explicitly creates 0/0
+diffstats, but I'm not even sure how one would trigger that.
 
-The Linux Kernel as all systems needs to be improved and re-organized to be
-better prepared for future development and sometimes we need to change
-folder/files names or even move things around.
-I have seen a lot of Linux developers avoid this re-organization operations
-because they would lose the renamed file history, because a new log is created
-for the new file, even if it is a renamed version of itself.
-I am sending you this e-mail to suggest the creation of a new feature in Git:
-when renamed, a file or folder should inherit his parent’s log and a “rename: …”
-would be automatically created or have some kind of pointer to its “old” form to
-make history analysis easier.
+So I dunno. A sensible rule to me is "iff -p would show a diff header,
+then --stat should mention it". I think we'd want to somehow extract the
+logic from builtin_diff() and reuse it.
 
-I volunteer to help in the new feature if you find it useful. I think it would
-improve log history analysis and would enable developers to better organize old
-code.
-
-Thank you for your attention.
-
-Best Regards,
-Joao Pinto
+---
+diff --git a/diff.c b/diff.c
+index e2eb6d66a..57ff5c1dc 100644
+--- a/diff.c
++++ b/diff.c
+@@ -2105,17 +2105,20 @@ static void show_dirstat_by_line(struct diffstat_t *data, struct diff_options *o
+ 	gather_dirstat(options, &dir, changed, "", 0);
+ }
+ 
++static void free_diffstat_file(struct diffstat_file *f)
++{
++	if (f->name != f->print_name)
++		free(f->print_name);
++	free(f->name);
++	free(f->from_name);
++	free(f);
++}
++
+ static void free_diffstat_info(struct diffstat_t *diffstat)
+ {
+ 	int i;
+-	for (i = 0; i < diffstat->nr; i++) {
+-		struct diffstat_file *f = diffstat->files[i];
+-		if (f->name != f->print_name)
+-			free(f->print_name);
+-		free(f->name);
+-		free(f->from_name);
+-		free(f);
+-	}
++	for (i = 0; i < diffstat->nr; i++)
++		free_diffstat_file(diffstat->files[i]);
+ 	free(diffstat->files);
+ }
+ 
+@@ -2603,6 +2606,23 @@ static void builtin_diffstat(const char *name_a, const char *name_b,
+ 		if (xdi_diff_outf(&mf1, &mf2, diffstat_consume, diffstat,
+ 				  &xpp, &xecfg))
+ 			die("unable to generate diffstat for %s", one->path);
++
++		/*
++		 * Omit diffstats where nothing changed. Even if
++		 * !same_contents, this might be the case due to ignoring
++		 * whitespace changes, etc.
++		 *
++		 * But note that we special-case additions and deletions,
++		 * as adding an empty file, for example, is still of interest.
++		 */
++		if (DIFF_FILE_VALID(one) && DIFF_FILE_VALID(two)) {
++			struct diffstat_file *file =
++				diffstat->files[diffstat->nr - 1];
++			if (!file->added && !file->deleted) {
++				free_diffstat_file(file);
++				diffstat->nr--;
++			}
++		}
+ 	}
+ 
+ 	diff_free_filespec_data(one);
+diff --git a/t/t4015-diff-whitespace.sh b/t/t4015-diff-whitespace.sh
+index 289806d0c..2805db411 100755
+--- a/t/t4015-diff-whitespace.sh
++++ b/t/t4015-diff-whitespace.sh
+@@ -736,7 +736,7 @@ test_expect_success 'checkdiff allows new blank lines' '
+ 
+ cat <<EOF >expect
+ EOF
+-test_expect_success 'whitespace-only changes not reported' '
++test_expect_success 'whitespace-only changes not reported (diff)' '
+ 	git reset --hard &&
+ 	echo >x "hello world" &&
+ 	git add x &&
+@@ -746,6 +746,12 @@ test_expect_success 'whitespace-only changes not reported' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success 'whitespace-only changes not reported (diffstat)' '
++	# reuse state from previous test
++	git diff --stat -b >actual &&
++	test_cmp expect actual
++'
++
+ cat <<EOF >expect
+ diff --git a/x b/z
+ similarity index NUM%
