@@ -2,80 +2,76 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1F4F61F89C
-	for <e@80x24.org>; Wed, 18 Jan 2017 18:30:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B91D21F89C
+	for <e@80x24.org>; Wed, 18 Jan 2017 18:37:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751757AbdARSah (ORCPT <rfc822;e@80x24.org>);
-        Wed, 18 Jan 2017 13:30:37 -0500
-Received: from cloud.peff.net ([104.130.231.41]:40961 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751467AbdARSag (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Jan 2017 13:30:36 -0500
-Received: (qmail 9920 invoked by uid 109); 18 Jan 2017 18:28:46 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 18 Jan 2017 18:28:46 +0000
-Received: (qmail 29830 invoked by uid 111); 18 Jan 2017 18:29:40 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 18 Jan 2017 13:29:40 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 18 Jan 2017 13:28:44 -0500
-Date:   Wed, 18 Jan 2017 13:28:44 -0500
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     santiago@nyu.edu, git@vger.kernel.org, sunshine@sunshineco.com,
-        walters@verbum.org, Lukas Puehringer <luk.puehringer@gmail.com>
-Subject: Re: [PATCH v6 4/6] builtin/tag: add --format argument for tag -v
-Message-ID: <20170118182843.iyico5jpii6a3z7i@sigill.intra.peff.net>
-References: <20170117233723.23897-1-santiago@nyu.edu>
- <20170117233723.23897-5-santiago@nyu.edu>
- <xmqqmvepb4oj.fsf@gitster.mtv.corp.google.com>
- <xmqqh94wb4y0.fsf@gitster.mtv.corp.google.com>
+        id S1752909AbdARSg6 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 18 Jan 2017 13:36:58 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:54121 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1752519AbdARSg4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Jan 2017 13:36:56 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 17DD65F961;
+        Wed, 18 Jan 2017 13:32:46 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=3ygCJ4uVgH1D2wxTf784RXlnKXk=; b=XMEDKy
+        h8J3vllBj/G18rjy42MVE3FVccqMZMG/6F9FavF+CDG05Pze6fA79KpM1kAfuxqX
+        aqCxqlwJ5GXKvjVOl3qPkThp9vN5EfsjwB2M6bpkhZy+oZPwuRRSlWqzQ0idphNo
+        wV5+gfivyKZcC0lO1vffJGaqorQNhx8yQ/T8E=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=VYbEC4tFOFu5o+NHbEdmAxTP+EirneJT
+        9zmHE0gXsQsOKMFPqUnjC3Ptu1NIHCOgeC/j930yeubiajapri8mmm4pGszAT4qO
+        kYBcUVo88rAAqqZJepS8n11xPbK3r/lT6lwjA8T48SOzdu2C7g5xcizLUsbJt7nD
+        uTBibokarLI=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 01C5C5F960;
+        Wed, 18 Jan 2017 13:32:46 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 563AA5F95B;
+        Wed, 18 Jan 2017 13:32:45 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Michael Gooch <goochmi@gmail.com>, git@vger.kernel.org
+Subject: Re: problem with insider build for windows and git
+References: <1bddbd50-86ea-6c38-6ab8-08336de2ba72@gmail.com>
+        <alpine.DEB.2.20.1701131300390.3469@virtualbox>
+        <alpine.DEB.2.20.1701181738490.3469@virtualbox>
+Date:   Wed, 18 Jan 2017 10:32:44 -0800
+In-Reply-To: <alpine.DEB.2.20.1701181738490.3469@virtualbox> (Johannes
+        Schindelin's message of "Wed, 18 Jan 2017 17:41:42 +0100 (CET)")
+Message-ID: <xmqq8tq8b4mr.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.90 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqh94wb4y0.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 813C2604-DDAC-11E6-8259-FE3F13518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jan 18, 2017 at 10:25:59AM -0800, Junio C Hamano wrote:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> > This triggers:
-> >
-> >     builtin/tag.c: In function 'cmd_tag':
-> >     builtin/tag.c:451:3: error: passing argument 3 of
-> >     'for_each_tag_name' discards 'const' qualifier from pointer target type [-Werror]
-> >        return for_each_tag_name(argv, verify_tag, format);
-> >
-> > Either for-each-tag-name's new parameter needs to be typed
-> > correctly, or the type of the "format" variable needs to be updated.
-> 
-> Squashing the following into this commit solves this issue with the
-> former approach.  The lines it touches are all from 4/6 and I view
-> all of it as general improvement, including type correctness and
-> code formatting.
-> 
-> diff --git a/builtin/tag.c b/builtin/tag.c
-> index f81273a85a..fbb85ba3dc 100644
-> --- a/builtin/tag.c
-> +++ b/builtin/tag.c
-> @@ -66,10 +66,10 @@ static int list_tags(struct ref_filter *filter, struct ref_sorting *sorting, con
->  }
->  
->  typedef int (*each_tag_name_fn)(const char *name, const char *ref,
-> -				const unsigned char *sha1, void *cb_data);
-> +				const unsigned char *sha1, const void *cb_data);
+> And just to prove me wrong, today I got the first update to `maint` in six
+> weeks, with a message "Almost ready for 2.11.1" at its tip, featuring a
+> whopping 141 commits (95 of which are not merge commits).
+>
+> So it seems that v2.11.1 may happen soon, after all.
 
-This would bite us later if one of the iterators really does need to
-pass something mutable. But as this iteration interface is confined to
-builtin/tag.c, I think it's a nice simple fix.
+Sorry for being late.  I had a short travel around the year boundary,
+got sick and have been slow.
 
-A more general fix would be to pass a non-const pointer to const pointer
-(preferably inside a struct for readability). But I don't see any need
-for that complexity here.
+Aside from the "ouch, one topic has merged earlier iteration, that
+was merged to 'master', also now merged to 'maint', and we need to
+follow up on both" you sent out earlier, are there any other topic
+that are already in 'master' that should go to 2.11.x track?
 
--Peff
+Thanks.
