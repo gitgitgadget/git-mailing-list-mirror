@@ -2,120 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 943061F89C
-	for <e@80x24.org>; Wed, 18 Jan 2017 21:11:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1ED8A1F89C
+	for <e@80x24.org>; Wed, 18 Jan 2017 21:16:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752381AbdARVLd (ORCPT <rfc822;e@80x24.org>);
-        Wed, 18 Jan 2017 16:11:33 -0500
-Received: from mail-lf0-f52.google.com ([209.85.215.52]:35538 "EHLO
-        mail-lf0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752159AbdARVLa (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Jan 2017 16:11:30 -0500
-Received: by mail-lf0-f52.google.com with SMTP id n124so22137702lfd.2
-        for <git@vger.kernel.org>; Wed, 18 Jan 2017 13:11:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=N6ZZVcmBbhstbtJBQOSIoZvnzD0hDfeECqNEEJbAkXI=;
-        b=bIY0xkuBmqKCPLJ4PaItZFroMTu6tTXw+24DqxryEwzaz/xwQqtLbdVIZgout/ceRT
-         /ePjCaBPkzltEvLPPIKXqBLvEYW8ZyRTKW9+WGB+30ewhIiVWL13leqciSRWCP9N1NgG
-         eQsMGHr4SWA3KB67Rc/V+DQw6g1Th+s4MoTbjAanstixLYGvW7xBGjtBNfT0ZkNBH2ps
-         U0o/luJUkYe7ZeNcUzuzLFIm7KQ0ajBMhnSQgKNjH5c3BMqlWJICnzPsbf2SCzS/8v/U
-         1pS4XDWMMa+/GeXBDK4KS1rklWNXtY8in4NP3JOIRNloWnQbnLC4lEFBHD2xnKRk7LuU
-         OzNg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=N6ZZVcmBbhstbtJBQOSIoZvnzD0hDfeECqNEEJbAkXI=;
-        b=iixDB32cfylc8A0IyvWTaeR6XlKdEZEqTOYzty8I06zj4DY9V7cNSAbuw2LfyzdJOV
-         yC7KZtUj8ww81+QxF/5Qe5yvMPXgRvlYVH/RvTTfdPwFrNcqaciALDhmKLSdnZhLqDI5
-         ggsroPIN9P+KTejLqbUurMShKamHwRYf7pe6Hc5lksI70uK18ohSl4+/E6HDsSt7gt36
-         uDkC6mDKzUIF/0e7zAthnfR+/vryNofT/kYKNZjjPj6VF3KNVoWLTuB4rl8eln3kRmPu
-         3E8YXLwtTwmbWZEPSLXPA/U5TDza95gIVvQhu67cHRjkZMNewuymR7SdGjngwZE6uOCB
-         NwgQ==
-X-Gm-Message-State: AIkVDXICD0XGik+wnS06FWm40mWCoDk5dm4b9kIaAFZPqYkAts6N/1Qn/8jTRGKTug0W8g1dANNv8U/y4BLAeg==
-X-Received: by 10.46.69.215 with SMTP id s206mr2581617lja.26.1484773512187;
- Wed, 18 Jan 2017 13:05:12 -0800 (PST)
+        id S1752030AbdARVQj (ORCPT <rfc822;e@80x24.org>);
+        Wed, 18 Jan 2017 16:16:39 -0500
+Received: from bsmtp3.bon.at ([213.33.87.17]:5083 "EHLO bsmtp3.bon.at"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751981AbdARVQh (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Jan 2017 16:16:37 -0500
+Received: from dx.site (unknown [93.83.142.38])
+        by bsmtp3.bon.at (Postfix) with ESMTPSA id 3v3fsq594cz5tlg;
+        Wed, 18 Jan 2017 22:16:31 +0100 (CET)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+        by dx.site (Postfix) with ESMTP id CEF871CFC;
+        Wed, 18 Jan 2017 22:16:28 +0100 (CET)
+Subject: Re: [PATCH] mingw: follow-up to "replace isatty() hack"
+To:     Junio C Hamano <gitster@pobox.com>
+References: <867bafbe582df549b10729a5d688458bb6a98d51.1484741665.git.johannes.schindelin@gmx.de>
+ <xmqq7f5s9nvt.fsf@gitster.mtv.corp.google.com>
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
+        git@vger.kernel.org, Pranit Bauva <pranit.bauva@gmail.com>,
+        Beat Bolli <dev+git@drbeat.li>
+From:   Johannes Sixt <j6t@kdbg.org>
+Message-ID: <c329c981-2b92-13b5-0561-d1d2e3fa2803@kdbg.org>
+Date:   Wed, 18 Jan 2017 22:16:28 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.6.0
 MIME-Version: 1.0
-Received: by 10.25.145.14 with HTTP; Wed, 18 Jan 2017 13:04:51 -0800 (PST)
-In-Reply-To: <alpine.DEB.2.20.1701181340530.3469@virtualbox>
-References: <20170112001721.2534-1-jacob.e.keller@intel.com>
- <20170112001721.2534-6-jacob.e.keller@intel.com> <5f723a0d-623f-bf97-00de-29d430484fed@kdbg.org>
- <CA+P7+xrmAmCPOzuaKcm+WxceXnowkM4gKz05tSpdC=CDwpCEug@mail.gmail.com>
- <5c8401ef-9609-f235-9228-be980a13edf1@kdbg.org> <CA+P7+xq1LMkRG_aSyamrsPUQE+rDv4A9Qd19tDMgx-_a5OHsqQ@mail.gmail.com>
- <97d4105c-0fa6-41c5-e456-30cebd93dc36@kdbg.org> <CA+P7+xqFHG52Xo8ncUwa3owDn3OOz+rr3ZaGwfcUDCiXJmh80Q@mail.gmail.com>
- <alpine.DEB.2.20.1701181340530.3469@virtualbox>
-From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Wed, 18 Jan 2017 13:04:51 -0800
-Message-ID: <CA+P7+xp6c_3gTWiSrZHuXrpeZxYPguYBaBOT+uwKwATx4+1npw@mail.gmail.com>
-Subject: Re: [PATCH 5/5] describe: teach describe negative pattern matches
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Johannes Sixt <j6t@kdbg.org>,
-        Jacob Keller <jacob.e.keller@intel.com>,
-        Git mailing list <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+In-Reply-To: <xmqq7f5s9nvt.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset=iso-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jan 18, 2017 at 4:44 AM, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
-> Hi Jake,
->
-> On Tue, 17 Jan 2017, Jacob Keller wrote:
->
->> On Fri, Jan 13, 2017 at 1:31 PM, Johannes Sixt <j6t@kdbg.org> wrote:
->> > Am 13.01.2017 um 07:57 schrieb Jacob Keller:
->> >>
->> >> On Thu, Jan 12, 2017 at 10:43 PM, Johannes Sixt <j6t@kdbg.org> wrote:
->> >>>
->> >>>  When you write
->> >>>
->> >>>   git log --branches --exclude=origin/* --remotes
->> >>>
->> >>> --exclude=origin/* applies only to --remotes, but not to --branches.
->> >>
->> >>
->> >> Well for describe I don't think the order matters.
->> >
->> >
->> > That is certainly true today. But I would value consistency more. We would
->> > lose it if some time in the future 'describe' accepts --branches and
->> > --remotes in addition to --tags and --all.
->> >
->> > -- Hannes
->> >
+Am 18.01.2017 um 20:19 schrieb Junio C Hamano:
+> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+>>  compat/winansi.c | 11 ++++-------
+>>  1 file changed, 4 insertions(+), 7 deletions(-)
 >>
->> I am not sure that the interface for git-log and git-describe are
->> similar enough to make this distinction work. --match already seems to
->> imply that it only works on refs in refs/tags, as it says it considers
->> globs matching excluding the "refs/tags" prefix.
+>> diff --git a/compat/winansi.c b/compat/winansi.c
+>> index 3c9ed3cfe0..82b89ab137 100644
+>> --- a/compat/winansi.c
+>> +++ b/compat/winansi.c
+>> @@ -494,19 +494,16 @@ static HANDLE swap_osfhnd(int fd, HANDLE new_handle)
+>>  	 * It is because of this implicit close() that we created the
+>>  	 * copy of the original.
+>>  	 *
+>> -	 * Note that the OS can recycle HANDLE (numbers) just like it
+>> -	 * recycles fd (numbers), so we must update the cached value
+>> -	 * of "console".  You can use GetFileType() to see that
+>> -	 * handle and _get_osfhandle(fd) may have the same number
+>> -	 * value, but they refer to different actual files now.
+>> +	 * Note that we need to update the cached console handle to the
+>> +	 * duplicated one because the dup2() call will implicitly close
+>> +	 * the original one.
+>>  	 *
+>>  	 * Note that dup2() when given target := {0,1,2} will also
+>>  	 * call SetStdHandle(), so we don't need to worry about that.
+>>  	 */
+>> -	dup2(new_fd, fd);
+>>  	if (console == handle)
+>>  		console = duplicate;
+>> -	handle = INVALID_HANDLE_VALUE;
+>> +	dup2(new_fd, fd);
 >>
->> In git-describe, we already have "--tags" and "--all" but they are
->> mutually exclusive. We don't support using more than one at once, and
->> I'm not really convinced that describe will ever support more than one
->> at a time. Additionally, match already doesn't respect order.
->
-> I agree that it would keep the code much simpler if you kept the order
-> "exclude before include".
->
-> However, should you decide to look into making the logic dependent on the
-> order in which the flags were specified in the command-line, we do have a
-> data structure for such a beast: we use it in gitignore and in
-> sparse-checkout, it is called struct exclude_list.
->
-> Just some food for thought,
-> Johannes
+>>  	/* Close the temp fd.  This explicitly closes "new_handle"
+>>  	 * (because it has been associated with it).
+>>
 
-That might help make it easier to go this route. I'll take a look.
+Looks good and obviously correct (FLW). I can offer a
 
-Thanks,
-Jake
+Reviewed-by: Johannes Sixt <j6t@kdbg.org>
+
+but it will take a day or two until I can test the patch.
+
+-- Hannes
+
