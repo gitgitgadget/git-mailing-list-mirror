@@ -6,20 +6,20 @@ X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E599D20756
-	for <e@80x24.org>; Wed, 18 Jan 2017 00:09:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 09A9420756
+	for <e@80x24.org>; Wed, 18 Jan 2017 00:09:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752681AbdARAJg (ORCPT <rfc822;e@80x24.org>);
-        Tue, 17 Jan 2017 19:09:36 -0500
+        id S1752677AbdARAJe (ORCPT <rfc822;e@80x24.org>);
+        Tue, 17 Jan 2017 19:09:34 -0500
 Received: from mga09.intel.com ([134.134.136.24]:58848 "EHLO mga09.intel.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751750AbdARAJf (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 17 Jan 2017 19:09:35 -0500
+        id S1751750AbdARAJd (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 17 Jan 2017 19:09:33 -0500
 Received: from orsmga002.jf.intel.com ([10.7.209.21])
   by orsmga102.jf.intel.com with ESMTP; 17 Jan 2017 16:09:32 -0800
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="5.33,247,1477983600"; 
-   d="scan'208";a="31891935"
+   d="scan'208";a="31891930"
 Received: from jekeller-desk.amr.corp.intel.com ([10.166.35.174])
   by orsmga002.jf.intel.com with ESMTP; 17 Jan 2017 16:09:32 -0800
 From:   Jacob Keller <jacob.e.keller@intel.com>
@@ -28,12 +28,10 @@ Cc:     Johannes Sixt <j6t@kdbg.org>,
         Johannes Schindelin <johannes.schindelin@gmx.de>,
         Junio C Hamano <gitster@pobox.com>,
         Jacob Keller <jacob.keller@gmail.com>
-Subject: [PATCH v3 5/5] describe: teach describe negative pattern matches
-Date:   Tue, 17 Jan 2017 16:09:30 -0800
-Message-Id: <20170118000930.5431-6-jacob.e.keller@intel.com>
+Subject: [PATCH v3 0/5] extend git-describe pattern matching
+Date:   Tue, 17 Jan 2017 16:09:25 -0800
+Message-Id: <20170118000930.5431-1-jacob.e.keller@intel.com>
 X-Mailer: git-send-email 2.11.0.403.g196674b8396b
-In-Reply-To: <20170118000930.5431-1-jacob.e.keller@intel.com>
-References: <20170118000930.5431-1-jacob.e.keller@intel.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -41,118 +39,285 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jacob Keller <jacob.keller@gmail.com>
 
-Teach git-describe the `--exclude` option which will allow specifying
-a glob pattern of tags to ignore. This can be combined with the
-`--match` patterns to enable more flexibility in determining which tags
-to consider.
+** v3 fixes a minor typo in one of the test cases, so please ignore v2
+   I left the interdiff as between v1 and v3 instead of v2 **
 
-For example, suppose you wish to find the first official release tag
-that contains a certain commit. If we assume that official release tags
-are of the form "v*" and pre-release candidates include "*rc*" in their
-name, we can now find the first tag that introduces commit abcdef via:
+Teach git describe and git name-rev the ability to match multiple
+patterns inclusively. Additionally, teach these commands to also accept
+negative patterns to exclude any refs which match.
 
-  git describe --contains --match="v*" --exclude="*rc*"
+The pattern lists for positive and negative patterns are inclusive. This
+means that for the positive patterns, a reference will be considered as
+long as it matches at least one of the match patterns. It need not match
+all given patterns. Additionally for negative patterns, we will not
+consider any ref which matches any negative pattern, even if it matches
+one of the positive patterns.
 
-Add documentation and tests for this change.
+Together this allows the ability to express far more sets of tags than a
+single match pattern alone. It does not provide quite the same depth as
+would teaching full regexp but it is simpler and easy enough to
+understand.
 
-Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
----
- Documentation/git-describe.txt |  8 ++++++++
- builtin/describe.c             | 21 +++++++++++++++++++++
- t/t6120-describe.sh            |  8 ++++++++
- 3 files changed, 37 insertions(+)
+- v2
+* use --exclude instead of --discard
+* use modern style in tests
 
-diff --git a/Documentation/git-describe.txt b/Documentation/git-describe.txt
-index 7ad41e2f6ade..21a43b78924a 100644
---- a/Documentation/git-describe.txt
-+++ b/Documentation/git-describe.txt
-@@ -88,6 +88,14 @@ OPTIONS
- 	patterns will be considered. Use `--no-match` to clear and reset the
- 	list of patterns.
+- v3
+* fix broken test (sorry for the thrash!)
+
+I chose *not* to implement the suggestion of ordered values for exclude
+and match, since this is not how the current implementation of
+git-describe worked, and it didn't really make sense to me what was
+being requested. I looked at the interface for git-log, and it appears
+that the command accepts multiple invocations of --branches, --remotes,
+and similar. I do not believe these need to be identical interfaces. I
+welcome feedback on this decision, but I am not convinced yet that the
+ordered arguments are worth the trouble.
+
+diff --git c/Documentation/git-describe.txt w/Documentation/git-describe.txt
+index a89bbde207b2..21a43b78924a 100644
+--- c/Documentation/git-describe.txt
++++ w/Documentation/git-describe.txt
+@@ -88,12 +88,12 @@ OPTIONS
+	patterns will be considered. Use `--no-match` to clear and reset the
+	list of patterns.
  
+---discard <pattern>::
 +--exclude <pattern>::
-+	Do not consider tags matching the given `glob(7)` pattern, excluding
-+	the "refs/tags/" prefix. This can be used to narrow the tag space and
-+	find only tags matching some meaningful criteria. If given multiple
-+	times, a list of patterns will be accumulated and tags matching any
+	Do not consider tags matching the given `glob(7)` pattern, excluding
+	the "refs/tags/" prefix. This can be used to narrow the tag space and
+	find only tags matching some meaningful criteria. If given multiple
+	times, a list of patterns will be accumulated and tags matching any
+-	of the patterns will be discarded. Use `--no-discard` to clear and
 +	of the patterns will be excluded. Use `--no-exclude` to clear and
-+	reset the list of patterns.
-+
- --always::
- 	Show uniquely abbreviated commit object as fallback.
+	reset the list of patterns.
  
-diff --git a/builtin/describe.c b/builtin/describe.c
-index 5cc9e9abe798..6769446e1f57 100644
---- a/builtin/describe.c
-+++ b/builtin/describe.c
-@@ -29,6 +29,7 @@ static int max_candidates = 10;
+ --always::
+diff --git c/Documentation/git-name-rev.txt w/Documentation/git-name-rev.txt
+index 9b46e5ea9aae..301b4a8d55e6 100644
+--- c/Documentation/git-name-rev.txt
++++ w/Documentation/git-name-rev.txt
+@@ -30,11 +30,11 @@ OPTIONS
+	given multiple times, use refs whose names match any of the given shell
+	patterns. Use `--no-refs` to clear any previous ref patterns given.
+ 
+---discard=<pattern>::
++--exclude=<pattern>::
+	Do not use any ref whose name matches a given shell pattern. The
+	pattern can be one of branch name, tag name or fully qualified ref
+-	name. If given multiple times, discard refs that match any of the given
+-	shell patterns. Use `--no-discards` to clear the list of discard
++	name. If given multiple times, exclude refs that match any of the given
++	shell patterns. Use `--no-exclude` to clear the list of exclude
+	patterns.
+ 
+ --all::
+diff --git c/Documentation/technical/api-parse-options.txt w/Documentation/technical/api-parse-options.txt
+index 15e876e4c804..6914f54f5f44 100644
+--- c/Documentation/technical/api-parse-options.txt
++++ w/Documentation/technical/api-parse-options.txt
+@@ -169,9 +169,9 @@ There are some macros to easily define options:
+	The string argument is put into `str_var`.
+ 
+ `OPT_STRING_LIST(short, long, &list, arg_str, description)`::
+-	Introduce an option with a string argument. Repeated invocations
+-	accumulate into a list of strings. Reset and clear the list with
+-	`--no-option`.
++	Introduce an option with string argument.
++	The string argument is stored as an element in `&list` which must be a
++	struct string_list. Reset the list using `--no-option`.
+ 
+ `OPT_INTEGER(short, long, &int_var, description)`::
+	Introduce an option with integer argument.
+diff --git c/builtin/describe.c w/builtin/describe.c
+index c09288ee6321..6769446e1f57 100644
+--- c/builtin/describe.c
++++ w/builtin/describe.c
+@@ -29,7 +29,7 @@ static int max_candidates = 10;
  static struct hashmap names;
  static int have_util;
  static struct string_list patterns = STRING_LIST_INIT_NODUP;
+-static struct string_list discard_patterns = STRING_LIST_INIT_NODUP;
 +static struct string_list exclude_patterns = STRING_LIST_INIT_NODUP;
  static int always;
  static const char *dirty;
  
-@@ -130,6 +131,22 @@ static int get_name(const char *path, const struct object_id *oid, int flag, voi
- 		return 0;
+@@ -131,16 +131,16 @@ static int get_name(const char *path, const struct object_id *oid, int flag, voi
+		return 0;
  
- 	/*
+	/*
+-	 * If we're given discard patterns, first discard any tag which match
+-	 * any of the discard pattern.
 +	 * If we're given exclude patterns, first exclude any tag which match
 +	 * any of the exclude pattern.
-+	 */
+	 */
+-	if (discard_patterns.nr) {
 +	if (exclude_patterns.nr) {
-+		struct string_list_item *item;
-+
-+		if (!is_tag)
-+			return 0;
-+
+		struct string_list_item *item;
+ 
+		if (!is_tag)
+			return 0;
+ 
+-		for_each_string_list_item(item, &discard_patterns) {
 +		for_each_string_list_item(item, &exclude_patterns) {
-+			if (!wildmatch(item->string, path + 10, 0, NULL))
-+				return 0;
-+		}
-+	}
-+
-+	/*
- 	 * If we're given patterns, accept only tags which match at least one
- 	 * pattern.
- 	 */
-@@ -421,6 +438,8 @@ int cmd_describe(int argc, const char **argv, const char *prefix)
- 			    N_("consider <n> most recent tags (default: 10)")),
- 		OPT_STRING_LIST(0, "match", &patterns, N_("pattern"),
- 			   N_("only consider tags matching <pattern>")),
+			if (!wildmatch(item->string, path + 10, 0, NULL))
+				return 0;
+		}
+@@ -438,7 +438,7 @@ int cmd_describe(int argc, const char **argv, const char *prefix)
+			    N_("consider <n> most recent tags (default: 10)")),
+		OPT_STRING_LIST(0, "match", &patterns, N_("pattern"),
+			   N_("only consider tags matching <pattern>")),
+-		OPT_STRING_LIST(0, "discard", &discard_patterns, N_("pattern"),
 +		OPT_STRING_LIST(0, "exclude", &exclude_patterns, N_("pattern"),
-+			   N_("do not consider tags matching <pattern>")),
- 		OPT_BOOL(0, "always",        &always,
- 			N_("show abbreviated commit object as fallback")),
- 		{OPTION_STRING, 0, "dirty",  &dirty, N_("mark"),
-@@ -458,6 +477,8 @@ int cmd_describe(int argc, const char **argv, const char *prefix)
- 			argv_array_push(&args, "--tags");
- 			for_each_string_list_item(item, &patterns)
- 				argv_array_pushf(&args, "--refs=refs/tags/%s", item->string);
+			   N_("do not consider tags matching <pattern>")),
+		OPT_BOOL(0, "always",        &always,
+			N_("show abbreviated commit object as fallback")),
+@@ -477,8 +477,8 @@ int cmd_describe(int argc, const char **argv, const char *prefix)
+			argv_array_push(&args, "--tags");
+			for_each_string_list_item(item, &patterns)
+				argv_array_pushf(&args, "--refs=refs/tags/%s", item->string);
+-			for_each_string_list_item(item, &discard_patterns)
+-				argv_array_pushf(&args, "--discard=refs/tags/%s", item->string);
 +			for_each_string_list_item(item, &exclude_patterns)
 +				argv_array_pushf(&args, "--exclude=refs/tags/%s", item->string);
- 		}
- 		if (argc)
- 			argv_array_pushv(&args, argv);
-diff --git a/t/t6120-describe.sh b/t/t6120-describe.sh
-index 9e5db9b87a1f..167491fd5b0d 100755
---- a/t/t6120-describe.sh
-+++ b/t/t6120-describe.sh
-@@ -218,6 +218,14 @@ test_expect_success 'describe --contains and --match' '
- 	test_cmp expect actual
+		}
+		if (argc)
+			argv_array_pushv(&args, argv);
+diff --git c/builtin/name-rev.c w/builtin/name-rev.c
+index 86479c17a7c9..da4a0d7c0fdf 100644
+--- c/builtin/name-rev.c
++++ w/builtin/name-rev.c
+@@ -109,7 +109,7 @@ struct name_ref_data {
+	int tags_only;
+	int name_only;
+	struct string_list ref_filters;
+-	struct string_list discard_filters;
++	struct string_list exclude_filters;
+ };
+ 
+ static struct tip_table {
+@@ -151,10 +151,10 @@ static int name_ref(const char *path, const struct object_id *oid, int flags, vo
+	if (data->tags_only && !starts_with(path, "refs/tags/"))
+		return 0;
+ 
+-	if (data->discard_filters.nr) {
++	if (data->exclude_filters.nr) {
+		struct string_list_item *item;
+ 
+-		for_each_string_list_item(item, &data->discard_filters) {
++		for_each_string_list_item(item, &data->exclude_filters) {
+			if (subpath_matches(path, item->string) >= 0)
+				return 0;
+		}
+@@ -339,7 +339,7 @@ int cmd_name_rev(int argc, const char **argv, const char *prefix)
+		OPT_BOOL(0, "tags", &data.tags_only, N_("only use tags to name the commits")),
+		OPT_STRING_LIST(0, "refs", &data.ref_filters, N_("pattern"),
+				   N_("only use refs matching <pattern>")),
+-		OPT_STRING_LIST(0, "discard", &data.discard_filters, N_("pattern"),
++		OPT_STRING_LIST(0, "exclude", &data.exclude_filters, N_("pattern"),
+				   N_("ignore refs matching <pattern>")),
+		OPT_GROUP(""),
+		OPT_BOOL(0, "all", &all, N_("list all commits reachable from all refs")),
+diff --git c/t/t6007-rev-list-cherry-pick-file.sh w/t/t6007-rev-list-cherry-pick-file.sh
+index 8a4c35f6ffee..83838d0da208 100755
+--- c/t/t6007-rev-list-cherry-pick-file.sh
++++ w/t/t6007-rev-list-cherry-pick-file.sh
+@@ -100,42 +100,43 @@ test_expect_success '--cherry-pick bar does not come up empty (II)' '
  '
  
-+test_expect_success 'describe --exclude' '
-+	echo "c~1" >expect &&
-+	tagged_commit=$(git rev-parse "refs/tags/A^0") &&
-+	test_must_fail git describe --contains --match="B" $tagged_commit &&
-+	git describe --contains --match="?" --exclude="A" $tagged_commit >actual &&
-+	test_cmp expect actual
+ test_expect_success 'name-rev multiple --refs combine inclusive' '
+-	git rev-list --left-right --cherry-pick F...E -- bar > actual &&
++	git rev-list --left-right --cherry-pick F...E -- bar >actual &&
+	git name-rev --stdin --name-only --refs="*tags/F" --refs="*tags/E" \
+-		< actual > actual.named &&
++		<actual >actual.named &&
+	test_cmp actual.named expect
+ '
+ 
+ cat >expect <<EOF
+ <tags/F
+-$(git rev-list --left-right --right-only --cherry-pick F...E -- bar)
+ EOF
+ 
+ test_expect_success 'name-rev --refs excludes non-matched patterns' '
+-	git rev-list --left-right --cherry-pick F...E -- bar > actual &&
++	git rev-list --left-right --right-only --cherry-pick F...E -- bar >>expect &&
++	git rev-list --left-right --cherry-pick F...E -- bar >actual &&
+	git name-rev --stdin --name-only --refs="*tags/F" \
+-		< actual > actual.named &&
+-	test_cmp actual.named expect
+-'
+-
+-test_expect_success 'name-rev --discard excludes matched patterns' '
+-	git rev-list --left-right --cherry-pick F...E -- bar > actual &&
+-	git name-rev --stdin --name-only --refs="*tags/*" --discard="*E" \
+-		< actual > actual.named &&
++		<actual >actual.named &&
+	test_cmp actual.named expect
+ '
+ 
+ cat >expect <<EOF
+-$(git rev-list --left-right --cherry-pick F...E -- bar)
++<tags/F
+ EOF
+ 
+-test_expect_success 'name-rev --no-refs clears the refs list' '
+-	git rev-list --left-right --cherry-pick F...E -- bar > actual &&
+-	git name-rev --stdin --name-only --refs="*tags/F" --refs="*tags/E" --no-refs --refs="*tags/G" \
+-		< actual > actual.named &&
++test_expect_success 'name-rev --exclude excludes matched patterns' '
++	git rev-list --left-right --right-only --cherry-pick F...E -- bar >>expect &&
++	git rev-list --left-right --cherry-pick F...E -- bar >actual &&
++	git name-rev --stdin --name-only --refs="*tags/*" --exclude="*E" \
++		<actual >actual.named &&
+	test_cmp actual.named expect
+ '
+ 
++test_expect_success 'name-rev --no-refs clears the refs list' '
++	git rev-list --left-right --cherry-pick F...E -- bar >expect &&
++	git name-rev --stdin --name-only --refs="*tags/F" --refs="*tags/E" --no-refs --refs="*tags/G" \
++		<expect >actual &&
++	test_cmp actual expect
 +'
 +
- test_expect_success 'describe --contains and --no-match' '
- 	echo "A^0" >expect &&
- 	tagged_commit=$(git rev-parse "refs/tags/A^0") &&
+ cat >expect <<EOF
+ +tags/F
+ =tags/D
+diff --git c/t/t6120-describe.sh w/t/t6120-describe.sh
+index 4e4a9f2e5305..167491fd5b0d 100755
+--- c/t/t6120-describe.sh
++++ w/t/t6120-describe.sh
+@@ -218,11 +218,11 @@ test_expect_success 'describe --contains and --match' '
+	test_cmp expect actual
+ '
+ 
+-test_expect_success 'describe --discard' '
++test_expect_success 'describe --exclude' '
+	echo "c~1" >expect &&
+	tagged_commit=$(git rev-parse "refs/tags/A^0") &&
+	test_must_fail git describe --contains --match="B" $tagged_commit &&
+-	git describe --contains --match="?" --discard="A" $tagged_commit >actual &&
++	git describe --contains --match="?" --exclude="A" $tagged_commit >actual &&
+	test_cmp expect actual
+ '
+ 
+
+Jacob Keller (5):
+  doc: add documentation for OPT_STRING_LIST
+  name-rev: extend --refs to accept multiple patterns
+  name-rev: add support to exclude refs by pattern match
+  describe: teach --match to accept multiple patterns
+  describe: teach describe negative pattern matches
+
+ Documentation/git-describe.txt                | 13 ++++++-
+ Documentation/git-name-rev.txt                | 11 +++++-
+ Documentation/technical/api-parse-options.txt |  5 +++
+ builtin/describe.c                            | 51 ++++++++++++++++++++++----
+ builtin/name-rev.c                            | 53 +++++++++++++++++++++------
+ t/t6007-rev-list-cherry-pick-file.sh          | 38 +++++++++++++++++++
+ t/t6120-describe.sh                           | 27 ++++++++++++++
+ 7 files changed, 177 insertions(+), 21 deletions(-)
+
 -- 
 2.11.0.403.g196674b8396b
 
