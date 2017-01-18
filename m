@@ -2,85 +2,141 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.4 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7BD091F89C
-	for <e@80x24.org>; Wed, 18 Jan 2017 19:12:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2B5AE1F89C
+	for <e@80x24.org>; Wed, 18 Jan 2017 19:14:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753268AbdARTMl (ORCPT <rfc822;e@80x24.org>);
-        Wed, 18 Jan 2017 14:12:41 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:52331 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751863AbdARTMl (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Jan 2017 14:12:41 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 009DA61495;
-        Wed, 18 Jan 2017 14:12:40 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=oXuPMqICT7dVQnZt51ikXR4/SuI=; b=mIEi+I
-        fGTNBVc6Bn9iLF23tl+cN761U4U4IKQyzrvgZw2WlQIY8pj+8bCBBz6uECC/a8Rr
-        oCDCMYsJnF9mrcff3L3KWjr6hJGo9DeFUyIYPy8IRS6iOaGMRCVtPsSf1jzzjhGx
-        diaoUPjGk0T2RsyRZGisQA0qdWJpn2ArWXxIg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=ZG0vwwlt73r/15phoxER/DuF445ImBuu
-        5aw5498mZLJvVYTP9wmM28V0pNCvAScyXerFmE/+P7E25ef8CyUZJyfNFuJ7+W0M
-        9hq4MMYZGVwGe3XPaQX+wihpcyGuYh9Jb8IXybA9P88tEgOS1TIuP0h1CSiqnEcW
-        SPvYPClP/04=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id E816061493;
-        Wed, 18 Jan 2017 14:12:39 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 05A496148E;
-        Wed, 18 Jan 2017 14:12:38 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Sixt <j6t@kdbg.org>
-Cc:     Jeff King <peff@peff.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Jan 2017, #02; Sun, 15)
-References: <xmqqh94zbwlu.fsf@gitster.mtv.corp.google.com>
-        <257b4175-9879-7814-5d8d-02050792574d@kdbg.org>
-        <alpine.DEB.2.20.1701161251100.3469@virtualbox>
-        <20170116160456.ltbb7ofe47xos7xo@sigill.intra.peff.net>
-        <alpine.DEB.2.20.1701161746200.3469@virtualbox>
-        <677a335f-889c-2924-b7bd-93c2b6663175@kdbg.org>
-        <20170116214411.a6wnp66vxydmpmgw@sigill.intra.peff.net>
-        <xmqqo9z5fqdj.fsf@gitster.mtv.corp.google.com>
-        <1aa4a8b0-4bda-edbc-7be8-1ffd9f74eef7@kdbg.org>
-Date:   Wed, 18 Jan 2017 11:12:37 -0800
-In-Reply-To: <1aa4a8b0-4bda-edbc-7be8-1ffd9f74eef7@kdbg.org> (Johannes Sixt's
-        message of "Wed, 18 Jan 2017 07:50:17 +0100")
-Message-ID: <xmqqfukg9o7u.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.90 (gnu/linux)
+        id S1752068AbdARTOs (ORCPT <rfc822;e@80x24.org>);
+        Wed, 18 Jan 2017 14:14:48 -0500
+Received: from smtprelay.synopsys.com ([198.182.60.111]:50146 "EHLO
+        smtprelay.synopsys.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751979AbdARTOr (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Jan 2017 14:14:47 -0500
+Received: from mailhost.synopsys.com (mailhost3.synopsys.com [10.12.238.238])
+        by smtprelay.synopsys.com (Postfix) with ESMTP id 65EDD10C00CF;
+        Wed, 18 Jan 2017 11:04:48 -0800 (PST)
+Received: from mailhost.synopsys.com (localhost [127.0.0.1])
+        by mailhost.synopsys.com (Postfix) with ESMTP id 3F7EA196;
+        Wed, 18 Jan 2017 11:04:48 -0800 (PST)
+Received: from US01WEHTC2.internal.synopsys.com (us01wehtc2-vip.internal.synopsys.com [10.12.239.238])
+        by mailhost.synopsys.com (Postfix) with ESMTP id 22B8C18D;
+        Wed, 18 Jan 2017 11:04:48 -0800 (PST)
+Received: from DE02WEHTCB.internal.synopsys.com (10.225.19.94) by
+ US01WEHTC2.internal.synopsys.com (10.12.239.237) with Microsoft SMTP Server
+ (TLS) id 14.3.266.1; Wed, 18 Jan 2017 11:04:47 -0800
+Received: from DE02WEHTCA.internal.synopsys.com (10.225.19.92) by
+ DE02WEHTCB.internal.synopsys.com (10.225.19.94) with Microsoft SMTP Server
+ (TLS) id 14.3.266.1; Wed, 18 Jan 2017 20:04:46 +0100
+Received: from [10.107.19.116] (10.107.19.116) by
+ DE02WEHTCA.internal.synopsys.com (10.225.19.80) with Microsoft SMTP Server
+ (TLS) id 14.3.266.1; Wed, 18 Jan 2017 20:04:45 +0100
+Subject: Re: Git: new feature suggestion
+To:     Stefan Beller <sbeller@google.com>,
+        Joao Pinto <Joao.Pinto@synopsys.com>
+References: <4817eb00-6efc-e3c0-53d7-46f2509350d3@synopsys.com>
+ <CAGZ79kYXQcUB+rVkboY9fMqu6R3RoHEJ7BTJn_+-RScFDjEduA@mail.gmail.com>
+CC:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        Linus Torvalds <torvalds@linux-foundation.org>,
+        "CARLOS.PALMINHA@synopsys.com" <CARLOS.PALMINHA@synopsys.com>
+From:   Joao Pinto <Joao.Pinto@synopsys.com>
+Message-ID: <21caed00-d103-5534-156c-0c19f25e0879@synopsys.com>
+Date:   Wed, 18 Jan 2017 19:04:43 +0000
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.6.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 13F9A976-DDB2-11E6-87C1-FE3F13518317-77302942!pb-smtp1.pobox.com
+In-Reply-To: <CAGZ79kYXQcUB+rVkboY9fMqu6R3RoHEJ7BTJn_+-RScFDjEduA@mail.gmail.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.107.19.116]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Sixt <j6t@kdbg.org> writes:
 
-> Am 17.01.2017 um 20:17 schrieb Junio C Hamano:
->> So... can we move this forward?
->
-> I have no objects anymore.
->
-> -- Hannes
+Hi Stefan,
 
-Alright, thanks.  
+Às 6:50 PM de 1/18/2017, Stefan Beller escreveu:
+> On Wed, Jan 18, 2017 at 2:40 AM, Joao Pinto <Joao.Pinto@synopsys.com> wrote:
+>> Hello,
+>>
+>> My name is Joao Pinto, I work at Synopsys and I am a frequent Linux Kernel
+>> contributor.
+>>
+>> Let me start by congratulate you for the fantastic work you have been doing with
+>> Git which is an excellent tool.
+>>
+>> The Linux Kernel as all systems needs to be improved and re-organized to be
+>> better prepared for future development and sometimes we need to change
+>> folder/files names or even move things around.
+>> I have seen a lot of Linux developers avoid this re-organization operations
+>> because they would lose the renamed file history, because a new log is created
+>> for the new file, even if it is a renamed version of itself.
+> 
+> Well there are a couple of things to help with digging in the logs.
+> 
+> git log:
+>        --follow
+>            Continue listing the history of a file beyond renames (works only
+>            for a single file).
+> 
+>         -M[<n>], --find-renames[=<n>]
+>            If generating diffs, detect and report renames for each commit. For
+>            following files across renames while traversing history, see
+>            --follow. If n is specified, it is a threshold on the similarity
+>            index (i.e. amount of addition/deletions compared to the file’s
+>            size). For example, -M90% means Git should consider a delete/add
+>            pair to be a rename if more than 90% of the file hasn’t changed.
+>            Without a % sign, the number is to be read as a fraction, with a
+>            decimal point before it. I.e., -M5 becomes 0.5, and is thus the
+>            same as -M50%. Similarly, -M05 is the same as -M5%. To limit
+>            detection to exact renames, use -M100%. The default similarity
+>            index is 50%.
+> 
+>        -C[<n>], --find-copies[=<n>]
+>            Detect copies as well as renames. See also --find-copies-harder. If
+>            n is specified, it has the same meaning as for -M<n>.
+> 
+> 
+> 
+>> I am sending you this e-mail to suggest the creation of a new feature in Git:
+>> when renamed, a file or folder should inherit his parent’s log and a “rename: …”
+>> would be automatically created or have some kind of pointer to its “old” form to
+>> make history analysis easier.
+> 
+> How do you currently analyse history, which detailed feature is missing?
+> 
+> Mind that in the Git data model we deliberately do not record the rename
+> at commit time, but rather want to identify the renames at log time.
+> This is because
+> in the meantime between commit and log viewing someone could have written
+> a better rename detection, whereas at commit time we'd be stuck with ancient
+> cruft forever. ;)
+> 
+>>
+>> I volunteer to help in the new feature if you find it useful. I think it would
+>> improve log history analysis and would enable developers to better organize old
+>> code.
+> 
+> IMHO complete renames (i.e. git mv path/a/file.c path/b/thing.c) are already
+> covered quite well. Partial rename (e.g. moving code from one file into two
+> separate files or vice versa) is still a bit hard.
+> 
+> I started such a new feature, see
+> https://urldefense.proofpoint.com/v2/url?u=https-3A__public-2Dinbox.org_git_20160903033120.20511-2D1-2Dsbeller-40google.com_&d=DwIFaQ&c=DPL6_X_6JkXFx7AXWqB0tg&r=s2fO0hii0OGNOv9qQy_HRXy-xAJUD1NNoEcc3io_kx0&m=BseICq5hy9UHxmX2XP8oPYLbn-HoEUlEuVUzqPHkX58&s=PybtKK0ELH3Nld_CQSYZnLqCQOWvnU4Fjj5iV_7EKqE&e= 
+> latest code is at https://urldefense.proofpoint.com/v2/url?u=https-3A__github.com_stefanbeller_git_commits_colored-5Fdiff12&d=DwIFaQ&c=DPL6_X_6JkXFx7AXWqB0tg&r=s2fO0hii0OGNOv9qQy_HRXy-xAJUD1NNoEcc3io_kx0&m=BseICq5hy9UHxmX2XP8oPYLbn-HoEUlEuVUzqPHkX58&s=pkTehcEmeHVLHdcNbUiU03meyH10cgUbGqLgOqXcL6w&e= ,
+> but the latest two commits are bogus and need rewriting.
+> 
+> I think this feature is not 100% what you are aiming at, but is very close.
+> 
+> Thanks,
+> Stefan
+> 
 
-Dscho what's your assessment?  My "I do not think" before the quoted
-"can we move" above was more about giving a statement for people to
-argue against, by saying "no your understanding is wrong", in the
-hope that it would highlight why we need more work in this area if
-needed and in what way.
+Great info, helps a lot! I am going to analyse and get back to you ASAP.
 
-Thanks.
+Thanks
+
