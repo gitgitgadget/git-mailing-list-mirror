@@ -2,51 +2,73 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 299981F89C
-	for <e@80x24.org>; Wed, 18 Jan 2017 14:38:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3D8D31F89C
+	for <e@80x24.org>; Wed, 18 Jan 2017 15:51:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754296AbdAROiS (ORCPT <rfc822;e@80x24.org>);
-        Wed, 18 Jan 2017 09:38:18 -0500
-Received: from cloud.peff.net ([104.130.231.41]:40862 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1754283AbdAROiR (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Jan 2017 09:38:17 -0500
-Received: (qmail 28095 invoked by uid 109); 18 Jan 2017 14:38:16 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 18 Jan 2017 14:38:16 +0000
-Received: (qmail 27701 invoked by uid 111); 18 Jan 2017 14:39:11 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 18 Jan 2017 09:39:11 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 18 Jan 2017 09:38:14 -0500
-Date:   Wed, 18 Jan 2017 09:38:14 -0500
-From:   Jeff King <peff@peff.net>
-To:     Ulrich Spoerlein <uqs@FreeBSD.org>
-Cc:     git@vger.kernel.org, Ed Maste <emaste@freebsd.org>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: git fast-import crashing on big imports
-Message-ID: <20170118143814.or34vxxwjwnzg5jz@sigill.intra.peff.net>
-References: <20170112082138.GJ4426@acme.spoerlein.net>
- <20170118140117.GK4426@acme.spoerlein.net>
+        id S1752692AbdARPvj (ORCPT <rfc822;e@80x24.org>);
+        Wed, 18 Jan 2017 10:51:39 -0500
+Received: from smtp98.iad3a.emailsrvr.com ([173.203.187.98]:50981 "EHLO
+        smtp98.iad3a.emailsrvr.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1752617AbdARPvj (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 18 Jan 2017 10:51:39 -0500
+Received: from smtp29.relay.iad3a.emailsrvr.com (localhost [127.0.0.1])
+        by smtp29.relay.iad3a.emailsrvr.com (SMTP Server) with ESMTP id 469CE25030;
+        Wed, 18 Jan 2017 10:41:01 -0500 (EST)
+X-Auth-ID: mbranchaud@xiplink.com
+Received: by smtp29.relay.iad3a.emailsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id 1EE3724DC7;
+        Wed, 18 Jan 2017 10:41:01 -0500 (EST)
+X-Sender-Id: mbranchaud@xiplink.com
+Received: from [10.10.1.32] ([UNAVAILABLE]. [192.252.130.194])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA)
+        by 0.0.0.0:465 (trex/5.7.12);
+        Wed, 18 Jan 2017 10:41:01 -0500
+Subject: Re: [RFC] stash --continue
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Stephan Beyer <s-beyer@gmx.net>
+References: <cd784a4e-ee99-564e-81de-9f7f6cc26c67@gmx.net>
+ <alpine.DEB.2.20.1701161153340.3469@virtualbox>
+Cc:     git <git@vger.kernel.org>
+From:   Marc Branchaud <marcnarc@xiplink.com>
+Message-ID: <d5456165-bdf2-e9e7-117f-aeab0ff4b417@xiplink.com>
+Date:   Wed, 18 Jan 2017 10:41:00 -0500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.5.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20170118140117.GK4426@acme.spoerlein.net>
+In-Reply-To: <alpine.DEB.2.20.1701161153340.3469@virtualbox>
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jan 18, 2017 at 03:01:17PM +0100, Ulrich Spoerlein wrote:
+On 2017-01-16 05:54 AM, Johannes Schindelin wrote:
+> Hi Stephan,
+>
+> On Mon, 16 Jan 2017, Stephan Beyer wrote:
+>
+>> a git-newbie-ish co-worker uses git-stash sometimes. Last time he used
+>> "git stash pop", he got into a merge conflict. After he resolved the
+>> conflict, he did not know what to do to get the repository into the
+>> wanted state. In his case, it was only "git add <resolved files>"
+>> followed by a "git reset" and a "git stash drop", but there may be more
+>> involved cases when your index is not clean before "git stash pop" and
+>> you want to have your index as before.
+>>
+>> This led to the idea to have something like "git stash --continue"[1]
+>
+> More like "git stash pop --continue". Without the "pop" command, it does
+> not make too much sense.
 
-> Yo Jeff, your commit 8261e1f139db3f8aa6f9fd7d98c876cbeb0f927c from Aug
-> 22nd, that changes delta_base_cache to use hashmap.h is the culprit for
-> git fast-import crashing on large imports.
+Why not?  git should be able to remember what stash command created the 
+conflict.  Why should I have to?  Maybe the fire alarm goes off right 
+when I run the stash command, and by the time I get back to it I can't 
+remember which operation I did.  It would be nice to be able to tell git 
+to "just finish off (or abort) the stash operation, whatever it was".
 
-I actually saw your bug report the other day and tried to download the
-dump file, but got a 404. Can you double check that it is available?
+		M.
 
--Peff
