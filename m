@@ -2,86 +2,137 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.3 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D382D1F89C
-	for <e@80x24.org>; Wed, 18 Jan 2017 22:34:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 97F091F89C
+	for <e@80x24.org>; Wed, 18 Jan 2017 22:39:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751204AbdARWd4 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 18 Jan 2017 17:33:56 -0500
-Received: from avasout05.plus.net ([84.93.230.250]:44228 "EHLO
-        avasout05.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750717AbdARWd3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Jan 2017 17:33:29 -0500
-Received: from [10.0.2.15] ([143.159.212.40])
-        by avasout05 with smtp
-        id ZyTx1u0040srQBz01yTyAR; Wed, 18 Jan 2017 22:27:59 +0000
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.2 cv=Hr8GIwbS c=1 sm=1 tr=0
- a=8Z0saNXTz8GoXi/9Q5ysMA==:117 a=8Z0saNXTz8GoXi/9Q5ysMA==:17
- a=IkcTkHD0fZMA:10 a=EBOSESyhAAAA:8 a=C4-tQ9VixIzhjvGp-UAA:9 a=QEXdDO2ut3YA:10
- a=yJM6EZoI5SlJf8ks9Ge_:22
-X-AUTH: ramsayjones@:2500
-From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: [PATCH] attr: mark a file-local symbol as static
-To:     Brandon Williams <bmwill@google.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        GIT Mailing-list <git@vger.kernel.org>
-Message-ID: <89290015-7c5f-1a5d-e683-59077ae55bf5@ramsayjones.plus.com>
-Date:   Wed, 18 Jan 2017 22:27:57 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.5.1
+        id S1751180AbdARWjU (ORCPT <rfc822;e@80x24.org>);
+        Wed, 18 Jan 2017 17:39:20 -0500
+Received: from mail-pg0-f42.google.com ([74.125.83.42]:34214 "EHLO
+        mail-pg0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751037AbdARWjR (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Jan 2017 17:39:17 -0500
+Received: by mail-pg0-f42.google.com with SMTP id 14so7953703pgg.1
+        for <git@vger.kernel.org>; Wed, 18 Jan 2017 14:38:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=fCdUk4N9fFGE6dQ8v0UkyGnPTxsA/Ix1c+r+wNmtXRM=;
+        b=WWdwOKxvPbsERzLTpPP94UZOsXbKU7hPkgRcPtPYfU87ljqArQdVjSTM1Mc9tClIPd
+         Koh+zKXnPhXdFP1ptorVl7LbEmrtKl1XyKSOWM3o0LXXK4tPx2gk7MPgJLQm6rRN+zC7
+         +WQ+qyaKh37ArHYE9PmWYqrfPIhscdjh240JyM8/srbxUrrLbSsEOmqN0J1/8btM13M5
+         XeLMlocv2LbMJdT3rgNyoBsdCXS8mKP9TMrYgACu7g49rfq6zJwJ1nBH2QM1Z4jJwnrO
+         vYCzfxHSV1IcGWYCwXR4dvuR8dyJIzKRqaGUqwk1ykGDUz171V5AKx8cDf0+hZs0s2JC
+         WkCw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=fCdUk4N9fFGE6dQ8v0UkyGnPTxsA/Ix1c+r+wNmtXRM=;
+        b=hwDJZDvSMA0iMtrEy96OZz3tyU4j6CQs3ovPqCLkt0noWddYDJpKJlHTg+Muiaqsts
+         VHpEovRJBAQkT2poHpObiO8IWvnRp67lHwSdlXgeh0EiSiM4MP+gdA79Rib9TAK5k/nC
+         5Gnj3ABNGb6tR/GfuKHBsPDQY0A7GwHM30tpba/42TBXNHaueqwT+7AE9uvQ2wby2w9n
+         Vyb+IiGLLn1O3TuA9eFExaMNdjJhZIxc93nsPqrmFZZ6TbCF0FhcX0sZEUcyRjgCi0Y0
+         /jANwi2pJ2FMDJD3H3DFiebGX/jEZ3S1xIgjNXaKmRSUnZSiIUgZu4T9gdvhCnyYolCu
+         6N+g==
+X-Gm-Message-State: AIkVDXINfdnlJZPL/wvFf1iD0TRw7N2EJrn/DqPvZRJFrXoTtTMtZJKkv020TwnzpkInRNB8
+X-Received: by 10.84.206.37 with SMTP id f34mr8490434ple.127.1484779099732;
+        Wed, 18 Jan 2017 14:38:19 -0800 (PST)
+Received: from google.com ([2620:0:1000:5b10:1d68:bc5d:3a1b:2ccb])
+        by smtp.gmail.com with ESMTPSA id y6sm3132967pge.16.2017.01.18.14.38.18
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Wed, 18 Jan 2017 14:38:18 -0800 (PST)
+Date:   Wed, 18 Jan 2017 14:38:17 -0800
+From:   Brandon Williams <bmwill@google.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Stefan Beller <sbeller@google.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>,
+        David Aguilar <davvid@gmail.com>,
+        Dennis Kaarsemaker <dennis@kaarsemaker.net>
+Subject: Re: [PATCH v3 1/2] difftool: add a skeleton for the upcoming builtin
+Message-ID: <20170118223817.GD10641@google.com>
+References: <alpine.DEB.2.20.1611301325210.117539@virtualbox>
+ <xmqqlgvz6x87.fsf@gitster.mtv.corp.google.com>
+ <alpine.DEB.2.20.1612051126320.117539@virtualbox>
+ <xmqqy3zu43yk.fsf@gitster.mtv.corp.google.com>
+ <alpine.DEB.2.20.1612061411000.117539@virtualbox>
+ <20161206133650.t7gkg4f6wzw3zxki@sigill.intra.peff.net>
+ <alpine.DEB.2.20.1612061512190.117539@virtualbox>
+ <20161206150955.mvq4ocamaei52bap@sigill.intra.peff.net>
+ <CAGZ79kZoy2zSgSEc7kfAZ9tg9_uJxa+_FNFVO8UEDLVK6YDxVg@mail.gmail.com>
+ <20161206183527.t6rjkkff7fxv5i5c@sigill.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20161206183527.t6rjkkff7fxv5i5c@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On 12/06, Jeff King wrote:
+> On Tue, Dec 06, 2016 at 10:22:21AM -0800, Stefan Beller wrote:
+> 
+> > >> Maybe even go a step further and say that the config code needs a context
+> > >> "object".
+> > >
+> > > If I were writing git from scratch, I'd consider making a "struct
+> > > repository" object. I'm not sure how painful it would be to retro-fit it
+> > > at this point.
+> > 
+> > Would it be possible to introduce "the repo" struct similar to "the index"
+> > in cache.h?
+> > 
+> > From a submodule perspective I would very much welcome this
+> > object oriented approach to repositories.
+> 
+> I think it may be more complicated, because there's some implicit global
+> state in "the repo", like where files are relative to our cwd. All of
+> those low-level functions would have to start caring about which repo
+> we're talking about so they can prefix the appropriate working tree
+> path, etc.
+> 
+> For some operations that would be fine, but there are things that would
+> subtly fail for submodules. I'm thinking we'd end up with some code
+> state like:
+> 
+>   /* finding a repo does not modify global state; good */
+>   struct repository *repo = repo_discover(".");
+> 
+>   /* obvious repo-level operations like looking up refs can be done with
+>    * a repository object; good */
+>   repo_for_each_ref(repo, callback, NULL);
+> 
+>   /*
+>    * "enter" the repo so that we are at the top-level of the working
+>    * tree, etc. After this you can actually look at the index without
+>    * things breaking.
+>    */
+>   repo_enter(repo);
+> 
+> That would be enough to implement a lot of submodule-level stuff, but it
+> would break pretty subtly as soon as you asked the submodule about its
+> working tree. The solution is to make everything that accesses the
+> working tree aware of the idea of a working tree root besides the cwd.
+> But that's a pretty invasive change.
+> 
+> -Peff
 
-Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
----
+Some other challenges would be how to address people setting environment
+variables like GIT_DIR that indicate the location of a repositories git
+directory, which wouldn't work if you have multiple repos open.
 
-Hi Brandon,
+I do agree that having a repo object of some sort would aid in
+simplifying submodule operations but may require too many invasive
+changes to basic low-level functions.
 
-If you need to re-roll your 'bw/attr' branch, could you please
-squash this into the relevant patch (commit 8908457159,
-"attr: use hashmap for attribute dictionary", 12-01-2017).
-
-Also, I note that, although they are declared as part of the
-public attr api, attr_check_clear() and attr_check_reset() are
-also not called outside of attr.c. Are these functions part of
-the public api?
-
-Also, a minor point, but attr_check_reset() is called (line 1050)
-before it's definition (line 1114). This is not a problem, given
-the declaration in attr.h, but I prefer definitions to come before
-use, where possible.
-
-Thanks!
-
-ATB,
-Ramsay Jones
-
-
- attr.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/attr.c b/attr.c
-index f5cc68b67..e68c4688f 100644
---- a/attr.c
-+++ b/attr.c
-@@ -83,7 +83,7 @@ static int attr_hash_entry_cmp(const struct attr_hash_entry *a,
- }
- 
- /* Initialize an 'attr_hashmap' object */
--void attr_hashmap_init(struct attr_hashmap *map)
-+static void attr_hashmap_init(struct attr_hashmap *map)
- {
- 	hashmap_init(&map->map, (hashmap_cmp_fn) attr_hash_entry_cmp, 0);
- }
 -- 
-2.11.0
+Brandon Williams
