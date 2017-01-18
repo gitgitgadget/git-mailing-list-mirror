@@ -2,99 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-6.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BA6861F89C
-	for <e@80x24.org>; Wed, 18 Jan 2017 22:43:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 17FDE1F89C
+	for <e@80x24.org>; Wed, 18 Jan 2017 23:06:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751107AbdARWnN (ORCPT <rfc822;e@80x24.org>);
-        Wed, 18 Jan 2017 17:43:13 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:62343 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1750874AbdARWnL (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Jan 2017 17:43:11 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id AC852602D7;
-        Wed, 18 Jan 2017 17:42:31 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=96vlIAKlV4+j1PaCWL8N4Wd9BQY=; b=dm6rbP
-        UssfdLUQ7QHFAwl01M3/fpueZzSIHDPqTU++Hl6eEO9IE/RfsO03T67zJyBM2Sxp
-        /cFkDn7RveYqKlcJ4ZXe6G6T5budcu3ETv54jHFvfaHQyMjlj0q33e9iD8H/zp7L
-        +4ufqhu9Qdf66PMyUNeWOmcMrv/tyi36zcHYY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=mWQTPxJRZDboRJr1fmxt4KbP+UXpudvL
-        /ZuoypkUvfDxC4h/7fip2Iro/wQ37T1rBV9wg8rqFkO7CjOu6uYuginooVcZXmSw
-        JGs3RKSZriTEIfdqKjeA/m8SwmwAslHZ/Zi6xk/YVbDF5ERO+QUuJbvq7ho66PJK
-        ati4ghdI5uE=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id A2D75602D6;
-        Wed, 18 Jan 2017 17:42:31 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 16AFE602D4;
-        Wed, 18 Jan 2017 17:42:31 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jacob Keller <jacob.keller@gmail.com>
-Cc:     Jacob Keller <jacob.e.keller@intel.com>,
-        Git mailing list <git@vger.kernel.org>,
-        Johannes Sixt <j6t@kdbg.org>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v3 2/5] name-rev: extend --refs to accept multiple patterns
-References: <20170118000930.5431-1-jacob.e.keller@intel.com>
-        <20170118000930.5431-3-jacob.e.keller@intel.com>
-        <xmqqy3y8878k.fsf@gitster.mtv.corp.google.com>
-        <CA+P7+xpMAVq8K41cDZy5FTiRTHoWWd3yOSmLoj4ucAvCPoNa0g@mail.gmail.com>
-Date:   Wed, 18 Jan 2017 14:42:29 -0800
-In-Reply-To: <CA+P7+xpMAVq8K41cDZy5FTiRTHoWWd3yOSmLoj4ucAvCPoNa0g@mail.gmail.com>
-        (Jacob Keller's message of "Wed, 18 Jan 2017 13:12:37 -0800")
-Message-ID: <xmqqpojk2dnu.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+        id S1751489AbdARXGe (ORCPT <rfc822;e@80x24.org>);
+        Wed, 18 Jan 2017 18:06:34 -0500
+Received: from mail-pg0-f49.google.com ([74.125.83.49]:36296 "EHLO
+        mail-pg0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751443AbdARXG3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Jan 2017 18:06:29 -0500
+Received: by mail-pg0-f49.google.com with SMTP id t6so8098436pgt.3
+        for <git@vger.kernel.org>; Wed, 18 Jan 2017 15:05:43 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=Mew+vV2wiSNCJSzn/dewKfO1WfiivEBeLRmCj4l0hNs=;
+        b=goVayr1udQa+HwGoxXu7eaM5bIsQ85wmt+yyxfMTyY1Fpr1fa5b7Ye8DYlRojP//st
+         GzDHRWNMEnHgf90JTNZImnbxUG4faVqWYLQxrOgD7CRoEFHC7ZdMVTbrHxpl9Sa5QJig
+         dPWic5QmOb89+WBRKRzSTWHIDcPbG+2tMsoJUysPvNrf9KNwuLhFnzCZ7tf+YJyvxfXl
+         L+AcOL7gNl28tiZglAbLyLv2+/8jbAIIIuVX0qsdLqrxhfpaZRZ/GCzWDCMMZwve26vv
+         UjVBWPUC2lOWc4girC1bBvVXE9diflGa0+p0shYmx6i6U1nVviG/bSZxomxmlqh0SD+1
+         DMeg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=Mew+vV2wiSNCJSzn/dewKfO1WfiivEBeLRmCj4l0hNs=;
+        b=TL7/2Mpv4jX1bxHDT2lJksycuCVtWhGb/gwZ3xm99NsdpiVeqjkAL2r4Otum+5jXy4
+         PeGIBEVmyybhxVxZ/EC4gm51N3KOUlTGhE7dVwQ+tK39P2djYdv40l7M629/OiTdAuPu
+         LPypaVUbo2zRZ1SUAugifK2njJ3P6lAaLuK7am61rKSYKsQM2Kel5jjVQCdkCJpSSEY7
+         g+yZqcnjRuXZOA5alCQesy21h0nuaomRb7hse5R7Ys/ujg1bUtEpTx/AadPYdNKIohZR
+         fIsCIPL4mWxMaREV33JMO2IfN7v59qer0/I2PmnRei3omHeSId0qu7rM2xuf+iNYFSRq
+         bVbg==
+X-Gm-Message-State: AIkVDXJ4BZfkthiDPyv8I3tZsOws1/VjqEwc0HHKmDjY/Cbfdu3EypRZZ359AdqR9NDePk+c
+X-Received: by 10.98.133.202 with SMTP id m71mr6669058pfk.102.1484780743357;
+        Wed, 18 Jan 2017 15:05:43 -0800 (PST)
+Received: from google.com ([2620:0:1000:5b10:1d68:bc5d:3a1b:2ccb])
+        by smtp.gmail.com with ESMTPSA id u124sm3235049pgb.6.2017.01.18.15.05.41
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Wed, 18 Jan 2017 15:05:42 -0800 (PST)
+Date:   Wed, 18 Jan 2017 15:05:41 -0800
+From:   Brandon Williams <bmwill@google.com>
+To:     Ramsay Jones <ramsay@ramsayjones.plus.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        GIT Mailing-list <git@vger.kernel.org>
+Subject: Re: [PATCH] attr: mark a file-local symbol as static
+Message-ID: <20170118230541.GE10641@google.com>
+References: <89290015-7c5f-1a5d-e683-59077ae55bf5@ramsayjones.plus.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 656EF212-DDCF-11E6-9B55-A7617B1B28F4-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <89290015-7c5f-1a5d-e683-59077ae55bf5@ramsayjones.plus.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jacob Keller <jacob.keller@gmail.com> writes:
+On 01/18, Ramsay Jones wrote:
+> 
+> Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
+> ---
+> 
+> Hi Brandon,
+> 
+> If you need to re-roll your 'bw/attr' branch, could you please
+> squash this into the relevant patch (commit 8908457159,
+> "attr: use hashmap for attribute dictionary", 12-01-2017).
+> 
+> Also, I note that, although they are declared as part of the
+> public attr api, attr_check_clear() and attr_check_reset() are
+> also not called outside of attr.c. Are these functions part of
+> the public api?
+> 
+> Also, a minor point, but attr_check_reset() is called (line 1050)
+> before it's definition (line 1114). This is not a problem, given
+> the declaration in attr.h, but I prefer definitions to come before
+> use, where possible.
+> 
+> Thanks!
+> 
+> ATB,
+> Ramsay Jones
 
-> On Wed, Jan 18, 2017 at 12:04 PM, Junio C Hamano <gitster@pobox.com> wrote:
->
->> I agree that we cannot short-cut on the first match to make sure
->> that the outcome is stable, but I wondered what should be shown when
->> we do have multiple matches.  Say I gave
->>
->>     --refs="v*" --refs="refs/tags/v1.*"
->>
->> and refs/tags/v1.0 matched.  The above code would say we can
->> abbreviate.
->>
->> What is the reason behind this design decision?  Is it because it is
->> clear that the user shows her willingness to accept more compact
->> form by having --refs="v*" that would allow shortening?  If that is
->> the case, I think I agree with the reasoning.  But we probably want
->> to write it down somewhere, because another reasoning, which may
->> also be valid, would call for an opposite behaviour (i.e. the more
->> specific --refs="refs/tags/v1.*" also matched, so let's show that
->> fact by not shortening).
->
-> I'm not sure which reasoning makes most sense. Any other opinions?
+Yes of course, I believe Stefan also pointed that out earlier today so I
+have it fixed locally.
 
-FWIW, I do think that the design decision to declare that it can be
-abbreviated if the ref matches at least one short pattern makes
-sense, and I am guessing (because you didn't answer when asked what
-_your_ reasoning behind the code was) that you are in agreement.  I
-just want it to be spelled out probably as in-code comment, so that
-people who later come to this part of the code know why it was
-designed that way.  And they can disagree and change it if the end
-result is better---I just want to make sure that they can understand
-what they are disagreeing when it happens, as opposed to them
-scratching their head saying "we do not know why it was chosen to be
-done this way, let's make a random change to make it behave
-differently".
+For attr_check_clear() and attr_check_reset() the intent is that they
+are the accepted way to either clear or reset the attr_check structure.
+Currently most users of the attribute system don't have a need to clear
+or reset the structure but there could be future callers who need that
+functionality.  If you feel like they shouldn't be part of the api right
+now then I'm open to changing that for this series.
+
+Thanks!
+
+-- 
+Brandon Williams
