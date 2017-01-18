@@ -2,113 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6A6701F89C
-	for <e@80x24.org>; Wed, 18 Jan 2017 20:50:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DCDD320C2E
+	for <e@80x24.org>; Wed, 18 Jan 2017 21:06:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752832AbdARUua (ORCPT <rfc822;e@80x24.org>);
-        Wed, 18 Jan 2017 15:50:30 -0500
-Received: from mail-pg0-f49.google.com ([74.125.83.49]:36112 "EHLO
-        mail-pg0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752726AbdARUu3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Jan 2017 15:50:29 -0500
-Received: by mail-pg0-f49.google.com with SMTP id t6so7289534pgt.3
-        for <git@vger.kernel.org>; Wed, 18 Jan 2017 12:50:29 -0800 (PST)
+        id S1752689AbdARVGs (ORCPT <rfc822;e@80x24.org>);
+        Wed, 18 Jan 2017 16:06:48 -0500
+Received: from mail-lf0-f66.google.com ([209.85.215.66]:34709 "EHLO
+        mail-lf0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752172AbdARVGr (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Jan 2017 16:06:47 -0500
+Received: by mail-lf0-f66.google.com with SMTP id q89so3321069lfi.1
+        for <git@vger.kernel.org>; Wed, 18 Jan 2017 13:06:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=Bs5Jz7yKPncBwxuf3dS2+l8UF4Cn5BWjHC96V3fHbgw=;
-        b=KN0U68+m8nfTmy0LDF2Ihp9n98Jmy6PvbxTfGHP3LRqyTvof+Dy+pGSWesl5asi7VW
-         nLSMy1WBwaSCq2M6e4fbbRXAFGpkxi1LJU6Vk52VIl+9ocfYncHPUCORgqEbp9Iqo05K
-         s8h+8HrK6ZUzWZaDq4Chj/8nW5aITIF7CEd0nc+HcpSRStCB825kjxPxL7nlFSAgffAS
-         1abCVn0/3EXuINZvaM/IPk0VqU+aapO9HiEbRs3wo9x0bzKMV4o422xSoCPALgT26hZp
-         /60/iToO/gEySG1M4LAdhuOyypwmYSJ2NB0Z+wcWP4d524uMHdFvhBhDNYesgCrjsPSY
-         t7Kw==
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=T2VXDBDkB0Vuhr0+wkz8vxmGDCon2y5Cme2gyr8XHo8=;
+        b=OSZNj/L9ZBW0vU7QUFv+PO53tJSoaJ4dBmesDQX7sgoP6bjVs3O2RU0NXpHHDbMN6q
+         mKTMwiXPbOmkgH/SLS7v8JKFw4aibZxd64vgW8z/RhzSpvJnw5g2lXvclVuseM4qJVZ/
+         CZvgS0Tt+qX5lWhFeACf+zM/4h6TqD+KXOevFUbQ5AF4dWk+HRi46REirH3qu1NZyHSz
+         GhPBC19cwYt74bXlh4pucpUabwIf7lL3AhdxWvXOQ/UWG5Rm4oNDA+dN7ixlWAl9oFSm
+         H/+LhnjO+Ig82vACLr1a7gr/jmmq94z6MWnUr0TqM9jfNzOhH+qvKqxxolzhI6lVK55f
+         G6nQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=Bs5Jz7yKPncBwxuf3dS2+l8UF4Cn5BWjHC96V3fHbgw=;
-        b=eyww20nNk/8PcZagw/+qW/DoBGDWKhr19yYvl7RCP0Nm+6Nc9twGn6LE1CbBjY6Uct
-         /cFSuC8Q27wW1qYS4uVFD0KqG1vZnj30F43bUBbpiS6NvK9RE96Up4AUdhnIk9oj+Bps
-         EhCjOnKrrCdw0VM37gnCG4R+231Hp2DAUTwp+NTfD8ZpPFW2/z2aBEG3hLRTRxUz2Esd
-         FF2JWgawF9a6nurHeM6G4BAcvlt9gV5136r8zbPuxhLP75hbysCFPMntgv/JvIpHsSV5
-         Ip2tDlnpRDluwfozxy0XaTVDx1sUN2fFBRz6c55Uei5ha7TtTOC+x5a4/fIv6kCkzKQm
-         U43g==
-X-Gm-Message-State: AIkVDXIjmV8yHAR4jvgDJtoftVo87u5RBr3ppwStuedzVs2k2VuQHdu6bCLQBRT2kIn8xLP3
-X-Received: by 10.98.67.72 with SMTP id q69mr5893629pfa.14.1484772628662;
-        Wed, 18 Jan 2017 12:50:28 -0800 (PST)
-Received: from google.com ([2620:0:1000:5b10:1d68:bc5d:3a1b:2ccb])
-        by smtp.gmail.com with ESMTPSA id 89sm2830736pfo.40.2017.01.18.12.50.27
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 18 Jan 2017 12:50:27 -0800 (PST)
-Date:   Wed, 18 Jan 2017 12:50:26 -0800
-From:   Brandon Williams <bmwill@google.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH 25/27] attr: store attribute stacks in hashmap
-Message-ID: <20170118205026.GC10641@google.com>
-References: <20170112235354.153403-1-bmwill@google.com>
- <20170112235354.153403-26-bmwill@google.com>
- <CAGZ79kZv2=dNt=TeJXbac4S20WcdOZo=iVa-b+4zkOoGVM1OFA@mail.gmail.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=T2VXDBDkB0Vuhr0+wkz8vxmGDCon2y5Cme2gyr8XHo8=;
+        b=QYZLyl097Ab0U+itKtMOp6seenQFCZ6FoH+KrUUNDuqkLYl3ypuWaBJkSjqvU21q5w
+         jE1kenj5/wIX/VL+0lk8DIgndQAkTObwiTomlUy6fum9BB0KZsGjwvaVXQj+QeXKeKPq
+         PtsRGcw5CUHMVIdV7JH+n2Cly4YIGZbuvwlwwQmsQLZtg5LTQHiPiD5t+wF7e5dFeSxG
+         ESyIZ7yqeTvNzpzFpgDqgOICTwhux4+nel8udTtfwln1wxzTpuco9BkgRmotIj2s5kB6
+         hco0sWMhL1IZgOw1zf2PhaouhwWJXIg2bXBn3Xa68aXDvdKN8I62KRRfqaN93LfxWB3g
+         TJYQ==
+X-Gm-Message-State: AIkVDXIA+3DYGCuv3HSIw20nXCMpLskpW9h5GjDqPDhL32vQsk9cLsza6XNzIvMzujQGin5liK0G2jcwEYVnhg==
+X-Received: by 10.25.33.21 with SMTP id h21mr1807884lfh.114.1484773590477;
+ Wed, 18 Jan 2017 13:06:30 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAGZ79kZv2=dNt=TeJXbac4S20WcdOZo=iVa-b+4zkOoGVM1OFA@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+Received: by 10.25.145.14 with HTTP; Wed, 18 Jan 2017 13:06:09 -0800 (PST)
+In-Reply-To: <xmqqlgu886lf.fsf@gitster.mtv.corp.google.com>
+References: <20170118000930.5431-1-jacob.e.keller@intel.com> <xmqqlgu886lf.fsf@gitster.mtv.corp.google.com>
+From:   Jacob Keller <jacob.keller@gmail.com>
+Date:   Wed, 18 Jan 2017 13:06:09 -0800
+Message-ID: <CA+P7+xqM58tQ3=jkX3q4YkB_Jz=u6bf2FC1-f738-xCCGP3brg@mail.gmail.com>
+Subject: Re: [PATCH v3 0/5] extend git-describe pattern matching
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jacob Keller <jacob.e.keller@intel.com>,
+        Git mailing list <git@vger.kernel.org>,
+        Johannes Sixt <j6t@kdbg.org>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 01/18, Stefan Beller wrote:
-> On Thu, Jan 12, 2017 at 3:53 PM, Brandon Williams <bmwill@google.com> wrote:
-> > -static void prepare_attr_stack(const char *path, int dirlen)
-> > +/*
-> > + * This funciton should only be called from 'get_attr_stack()', which already
-> 
-> "function"
-> 
-> > +               /* system-wide frame */
-> > +               if (git_attr_system()) {
-> > +                       e = read_attr_from_file(git_etc_gitattributes(), 1);
-> 
-> read_attr_from_file may return NULL, so we'd have to treat this similar
-> to below "root directory", i.e. xcalloc for an empty frame?
+On Wed, Jan 18, 2017 at 12:18 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Jacob Keller <jacob.e.keller@intel.com> writes:
+>
+>> From: Jacob Keller <jacob.keller@gmail.com>
+>>
+>> ** v3 fixes a minor typo in one of the test cases, so please ignore v2
+>>    I left the interdiff as between v1 and v3 instead of v2 **
+>
+> Very much appreciated.
+>
+> I just finished reading this round through and didn't have any major
+> issues.  I sent comments on the way the feature is explained to the
+> end users and history readers, though.
+>
+> Thanks.
 
-The push_stack function doesn't do anything if 'e' is NULL, so we should
-be fine here.
+Ok. I am currently taking a look at the exclude_list that was
+mentioned, and I will see if it makes sense to go that route. If we
+do, it would open up a way to make the git-describe logic similar to
+git-log (which is probably good), and if we want to do this, it's best
+to do it now before we add any additional arguments (ie: before we
+create a conflicting user interface).
 
-> 
-> > +
-> > +               /* root directory */
-> > +               if (!is_bare_repository() || direction == GIT_ATTR_INDEX) {
-> > +                       e = read_attr(GITATTRIBUTES_FILE, 1);
-> > +               } else {
-> > +                       e = xcalloc(1, sizeof(struct attr_stack));
-> > +               }
-> > +               key = "";
-> > +               push_stack(&core, e, key, strlen(key));
-> 
-> If this is a bare repo, could we just omit this frame instead of pushing
-> an empty xcalloc'd frame? (Same for the stack frames of system wide
-> and home dir) ?
-
-The reasoning behind having the object created even if its a bare repo
-is so that later we can easily see that a frame has been read and
-included and doesn't need to attempt to reread the frame from disk
-later.  It also made things simpler when storing the object in a hashmap
-since storing a NULL ptr was awkward.
-
-Though looking at Junio's discussion we may want to rethink how the
-stacks are handled.  I still need to think about it some more.
-
--- 
-Brandon Williams
+Thanks,
+Jake
