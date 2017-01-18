@@ -2,107 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E5E741F89C
-	for <e@80x24.org>; Wed, 18 Jan 2017 21:40:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 96D601F89C
+	for <e@80x24.org>; Wed, 18 Jan 2017 21:51:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752338AbdARVkp (ORCPT <rfc822;e@80x24.org>);
-        Wed, 18 Jan 2017 16:40:45 -0500
-Received: from mail-lf0-f46.google.com ([209.85.215.46]:34297 "EHLO
-        mail-lf0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752856AbdARVjw (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Jan 2017 16:39:52 -0500
-Received: by mail-lf0-f46.google.com with SMTP id v186so22688474lfa.1
-        for <git@vger.kernel.org>; Wed, 18 Jan 2017 13:38:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=weuRFRwl9ncAqE6jpIz/9Wqb9YaU3bhEFmpDrDm4Lq8=;
-        b=R0reMGHkn4NQcELJ6l6txpaOiKbhybucibomuXjw0gxUGpwDddpTsqjPNK0hCCgFoR
-         6e9wk+c1kPf/9GEe1jCRB8pDnCdNgZte5djNe+54wK4SBhtNypEKAjEXdXBggxmMC9oI
-         y+V+cCbdyDsZLC8DT6S2J1xgfrVHBSs9hZlRipV8AaxdJmqLvClSmg36IzDMhDtiI5ue
-         AIJh6t1qgSmP5AUqa+pEkIwfYm/W6N6LlfoPRZaA/pCqubx6JLwoNRRjGrnYYvg43TJZ
-         Pg+Ucw7oK4Q8oG/Gb926vC246k5zdTn+FSvzTYj7c3itL2JPg/kYyXKR0UMEgjiyQ7ze
-         gpVw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=weuRFRwl9ncAqE6jpIz/9Wqb9YaU3bhEFmpDrDm4Lq8=;
-        b=buTTxiG0ZRE4Nxu/qHe9SFZ+/uX5ySs88h4poy8Eb4ZIFftY43uJiJEVLkj3KfUiYu
-         cWzBYjSo7O60Y7HD/ck6mUZ71zQGneG6ZRTS3srnpZgkz7gRfRtFIgp4r11WNfr755qN
-         v2Xg2GGj5I5tLDddan5ra5u3o6nQt7cZl9FYOt5ZeyXh4XfAYQDtpj9cj/ZrAjfhdevL
-         kuAZ/VY3Hzicn/xu0XkGtGwYjvm0o/mT0G+Mrhi4qPnoIEWfFNzKbzCSYQEApVCQauBa
-         hDprHl7o7gTcjV/etz/3IS6Qq0jTeCzcTteG+yYIw0xw4NRmwYn+ympsFmSpksu0LgGL
-         QmCQ==
-X-Gm-Message-State: AIkVDXKFHzUX9NecWuGdbQC2DJYEq88lg62fDs+JBVDtxhiTcPV2PlYZLrFz3cfRBdsWj7ReriQfCSHhnVYYHw==
-X-Received: by 10.25.141.147 with SMTP id p141mr2054370lfd.147.1484774031503;
- Wed, 18 Jan 2017 13:13:51 -0800 (PST)
+        id S1753482AbdARVv3 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 18 Jan 2017 16:51:29 -0500
+Received: from cloud.peff.net ([104.130.231.41]:41161 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752685AbdARVv2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Jan 2017 16:51:28 -0500
+Received: (qmail 22609 invoked by uid 109); 18 Jan 2017 21:51:23 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 18 Jan 2017 21:51:23 +0000
+Received: (qmail 32413 invoked by uid 111); 18 Jan 2017 21:52:17 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 18 Jan 2017 16:52:17 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 18 Jan 2017 16:51:20 -0500
+Date:   Wed, 18 Jan 2017 16:51:20 -0500
+From:   Jeff King <peff@peff.net>
+To:     Ulrich =?utf-8?B?U3DDtnJsZWlu?= <uqs@freebsd.org>
+Cc:     Ed Maste <emaste@freebsd.org>, git@vger.kernel.org,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: git fast-import crashing on big imports
+Message-ID: <20170118215120.6hle2uxgkcvvtlox@sigill.intra.peff.net>
+References: <20170112082138.GJ4426@acme.spoerlein.net>
+ <20170118140117.GK4426@acme.spoerlein.net>
+ <20170118143814.or34vxxwjwnzg5jz@sigill.intra.peff.net>
+ <20170118200646.6larm2qu32xm73on@sigill.intra.peff.net>
+ <CAJ9axoSzZJXD4RKvVx+D60dw4sakMJWgNmOP-cREWA53Ae3C3w@mail.gmail.com>
+ <20170118202704.w6pjxfvnge7utk34@sigill.intra.peff.net>
 MIME-Version: 1.0
-Received: by 10.25.145.14 with HTTP; Wed, 18 Jan 2017 13:13:30 -0800 (PST)
-In-Reply-To: <xmqqtw8w86xc.fsf@gitster.mtv.corp.google.com>
-References: <20170118000930.5431-1-jacob.e.keller@intel.com>
- <20170118000930.5431-4-jacob.e.keller@intel.com> <xmqqtw8w86xc.fsf@gitster.mtv.corp.google.com>
-From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Wed, 18 Jan 2017 13:13:30 -0800
-Message-ID: <CA+P7+xo4-45je995LLoyh-LbGTTf3EZUVW-UV+Dd=Wg0EGRvVA@mail.gmail.com>
-Subject: Re: [PATCH v3 3/5] name-rev: add support to exclude refs by pattern match
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jacob Keller <jacob.e.keller@intel.com>,
-        Git mailing list <git@vger.kernel.org>,
-        Johannes Sixt <j6t@kdbg.org>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20170118202704.w6pjxfvnge7utk34@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jan 18, 2017 at 12:11 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Jacob Keller <jacob.e.keller@intel.com> writes:
->
->> From: Jacob Keller <jacob.keller@gmail.com>
->>
->> Extend name-rev further to support matching refs by adding `--exclude`
->> patterns. These patterns will limit the scope of refs by excluding any
->> ref that matches at least one exclude pattern. Checking the exclude refs
->> shall happen first, before checking the include --refs patterns.
->
-> I do not think we should have this "exclude first and then include"
-> written down here, as it is an irrelevant implementation detail.
-> The desired end result is that only refs that match at least one
-> include and none of the exclude survive.  You could implement it by
-> first checking with include and then further narrowing that set by
-> filtering those that match exclude (I am not saying that "include
-> first then exclude" is better---I am saying that it is far less
-> important than "at least one include and none of the exclude" to
-> mention the order of application).
->
->> +--exclude=<pattern>::
->> +     Do not use any ref whose name matches a given shell pattern. The
->> +     pattern can be one of branch name, tag name or fully qualified ref
->> +     name. If given multiple times, exclude refs that match any of the given
->> +     shell patterns. Use `--no-exclude` to clear the list of exclude
->> +     patterns.
->
-> Perhaps insert
->
->     When used together with --refs, only those that match at least
->     one of the --refs patterns and none of the --exclude patterns
->     are used.
->
-> before "Use `--no-exclude` to clear"?
->
+On Wed, Jan 18, 2017 at 03:27:04PM -0500, Jeff King wrote:
 
-Yes this makes sense. I'm still looking at whether the alternative
-implementation suggested based on the git-log style would make more
-sense or not, but if we keep this as is, the added text you gave is
-important.
+> On Wed, Jan 18, 2017 at 09:20:07PM +0100, Ulrich Spörlein wrote:
+> 
+> > I found your commit via bisect in case you were wondering. Thanks for
+> > picking this up.
+> 
+> Still downloading. However, just looking at the code, the obvious
+> culprit would be clear_delta_base_cache(), which is called from
+> literally nowhere except fast-import, and then only when checkpointing.
 
-Thanks,
-Jake
+Hmm. I haven't reproduced your exact issue, but I was able to produce
+some hijinks in that function.
+
+The problem is that the hashmap_iter interface is unreliable if entries
+are added or removed from the map during the iteration.
+
+I suspect the patch below may fix things for you. It works around it by
+walking over the lru list (either is fine, as they both contain all
+entries, and since we're clearing everything, we don't care about the
+order).
+
+---
+ sha1_file.c | 9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
+
+diff --git a/sha1_file.c b/sha1_file.c
+index 1eb47f611..d20714d6b 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -2342,11 +2342,10 @@ static inline void release_delta_base_cache(struct delta_base_cache_entry *ent)
+ 
+ void clear_delta_base_cache(void)
+ {
+-	struct hashmap_iter iter;
+-	struct delta_base_cache_entry *entry;
+-	for (entry = hashmap_iter_first(&delta_base_cache, &iter);
+-	     entry;
+-	     entry = hashmap_iter_next(&iter)) {
++	struct list_head *lru, *tmp;
++	list_for_each_safe(lru, tmp, &delta_base_cache_lru) {
++		struct delta_base_cache_entry *entry =
++			list_entry(lru, struct delta_base_cache_entry, lru);
+ 		release_delta_base_cache(entry);
+ 	}
+ }
+-- 
+2.11.0.698.gd6b48ab4c
+
+
+
+
+> 
+> -Peff
