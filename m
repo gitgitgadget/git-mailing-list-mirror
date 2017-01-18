@@ -2,124 +2,117 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,
+	STOX_REPLY_TYPE shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CDD5F1F89C
-	for <e@80x24.org>; Wed, 18 Jan 2017 20:04:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6134F20C2E
+	for <e@80x24.org>; Wed, 18 Jan 2017 20:16:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753146AbdARUEr (ORCPT <rfc822;e@80x24.org>);
-        Wed, 18 Jan 2017 15:04:47 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:58152 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751756AbdARUEq (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Jan 2017 15:04:46 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 8FBFA62032;
-        Wed, 18 Jan 2017 15:04:45 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=wYKI0rHu8gFY2HSBF7ih+BZfE20=; b=oDHx5c
-        Ca9WLN4gEY5XWIIkPUXUPqeZk9QyWPMjGY67UafjV5+UB0m5rFNYSBiryVmJ2Ah0
-        6uZ/HUmIDV1u8JdQaKKH/bicNHVfRpiLbQG+JyRUpA/+q9nfZaY7XQroI2zyKHPR
-        J8nEOjP6E1OkIxrNVRmz/6qoONpRMxcKc+3+8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=vCxiB+WtHm1wNvs2Avyp8y7j/0fExL9X
-        Eh8jsdoXnyrHrEDg7dmMvWC8DeXKWhmqZLnCgIdzZSaOfJwVoddyFKV5d8tq8pMQ
-        PdUuUglhfEYRsauE3MAjfMkKhZc9NsKzDdAUF2aswCRTVTo95ta08SH7uhu/aU8n
-        UMppbXTLrsw=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 861FE62031;
-        Wed, 18 Jan 2017 15:04:45 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id B561462030;
-        Wed, 18 Jan 2017 15:04:44 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jacob Keller <jacob.e.keller@intel.com>
-Cc:     git@vger.kernel.org, Johannes Sixt <j6t@kdbg.org>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Jacob Keller <jacob.keller@gmail.com>
-Subject: Re: [PATCH v3 2/5] name-rev: extend --refs to accept multiple patterns
-References: <20170118000930.5431-1-jacob.e.keller@intel.com>
-        <20170118000930.5431-3-jacob.e.keller@intel.com>
-Date:   Wed, 18 Jan 2017 12:04:43 -0800
-In-Reply-To: <20170118000930.5431-3-jacob.e.keller@intel.com> (Jacob Keller's
-        message of "Tue, 17 Jan 2017 16:09:27 -0800")
-Message-ID: <xmqqy3y8878k.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.90 (gnu/linux)
+        id S1751363AbdARUQm (ORCPT <rfc822;e@80x24.org>);
+        Wed, 18 Jan 2017 15:16:42 -0500
+Received: from smtp-out-1.talktalk.net ([62.24.135.65]:33527 "EHLO
+        smtp-out-1.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750890AbdARUQl (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Jan 2017 15:16:41 -0500
+Received: from PhilipOakley ([92.31.218.76])
+        by smtp.talktalk.net with SMTP
+        id TwWecmf1u0KuvTwWecPiE1; Wed, 18 Jan 2017 20:08:09 +0000
+X-Originating-IP: [92.31.218.76]
+X-Spam: 0
+X-OAuthority: v=2.2 cv=RZjSMBlv c=1 sm=1 tr=0 a=e6L6E7eW+5Nb7SO+DvSdIg==:117
+ a=e6L6E7eW+5Nb7SO+DvSdIg==:17 a=8nJEP1OIZ-IA:10 a=ybZZDoGAAAAA:8
+ a=QyXUC8HyAAAA:8 a=pGLkceISAAAA:8 a=olItXKtLRfRg-Hn26N8A:9 a=wPNLvfGTeEIA:10
+ a=0RhZnL1DYvcuLYC8JZ5M:22 a=avl4LiGQNoF5OB0DmCJ7:22 a=6kGIvZw6iX1k4Y-7sg4_:22
+Message-ID: <254445096AD0412287CBB994E8BCA043@PhilipOakley>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From:   "Philip Oakley" <philipoakley@iee.org>
+To:     "Junio C Hamano" <gitster@pobox.com>,
+        "Jacob Keller" <jacob.e.keller@intel.com>
+Cc:     <git@vger.kernel.org>, "Johannes Sixt" <j6t@kdbg.org>,
+        "Johannes Schindelin" <johannes.schindelin@gmx.de>,
+        "Jacob Keller" <jacob.keller@gmail.com>
+References: <20170118000930.5431-1-jacob.e.keller@intel.com>        <20170118000930.5431-2-jacob.e.keller@intel.com> <xmqq37gg9moc.fsf@gitster.mtv.corp.google.com>
+Subject: Re: [PATCH v3 1/5] doc: add documentation for OPT_STRING_LIST
+Date:   Wed, 18 Jan 2017 20:08:09 -0000
+Organization: OPDS
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 5B162558-DDB9-11E6-BE3D-FE3F13518317-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain;
+        format=flowed;
+        charset="iso-8859-1";
+        reply-type=original
+Content-Transfer-Encoding: 7bit
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+X-CMAE-Envelope: MS4wfJ54MoDSLNbpX39Zreul4vyXF4TF/qTBHazx11o9bmDiJqG4PvYnw/yLsXtSc2i+PjWh5KD2y7fYcU+bUhwIh0O2Nd7tdio4zIDilmusUYFhCPegVBld
+ IejBcy8tAhxG3eqgNToMyjDS1mSOtprT1FuaypGCFtfnHoxfhnUPIw+x69AI/z6tFYB3OcpIhXO9zQS+oDJO3ysYk9mu+JSfFKzYrv+DnDH9J+IXihLMbjVm
+ 0jIIpDaoVrVH6LGNVxML+xi7p2lKaj9oxGwiHNdfkNd3yurr2Nq8exbCb8/KA/y75gPAdHs2V217kpPktGNWDBC5hMjkLGU+8fqBBcjPj9Q=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jacob Keller <jacob.e.keller@intel.com> writes:
+From: "Junio C Hamano" <gitster@pobox.com>
+v3 1/5] doc: add documentation for OPT_STRING_LIST
 
-> From: Jacob Keller <jacob.keller@gmail.com>
+
+> Jacob Keller <jacob.e.keller@intel.com> writes:
 >
-> Teach git name-rev to take a string list of patterns from --refs instead
-> of only a single pattern. The list of patterns will be matched
-> inclusively, such that a ref only needs to match one pattern to be
-> included. If a ref will only be excluded if it does not match any of the
-> patterns.
+>> From: Jacob Keller <jacob.keller@gmail.com>
+>>
+>> Commit c8ba16391655 ("parse-options: add OPT_STRING_LIST helper",
+>> 2011-06-09) added the OPT_STRING_LIST as a way to accumulate a repeated
+>> list of strings. However, this was not documented in the
+>> api-parse-options documentation. Add documentation now so that future
+>> developers may learn of its existence.
+>>
+>> Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
+>> ---
+>>  Documentation/technical/api-parse-options.txt | 5 +++++
+>>  1 file changed, 5 insertions(+)
+>>
+>> diff --git a/Documentation/technical/api-parse-options.txt 
+>> b/Documentation/technical/api-parse-options.txt
+>> index 27bd701c0d68..6914f54f5f44 100644
+>> --- a/Documentation/technical/api-parse-options.txt
+>> +++ b/Documentation/technical/api-parse-options.txt
+>> @@ -168,6 +168,11 @@ There are some macros to easily define options:
+>>  Introduce an option with string argument.
+>>  The string argument is put into `str_var`.
+>>
+>> +`OPT_STRING_LIST(short, long, &list, arg_str, description)`::
+>> + Introduce an option with string argument.
+>> + The string argument is stored as an element in `&list` which must be a
+>> + struct string_list. Reset the list using `--no-option`.
+>> +
+>
+> I do not know if it is clear enough that 'option' in the last
+> sentence is a placeholder.  I then wondered if spelling it as
+> `--no-<long>` would make it a bit clearer, but that is ugly.
 
-I think "If a" in the last sentence should be "A".
+Bikeshedding:: `--no-<option>` maybe, i.e. just surround the option word 
+with the angle brackets to indicate it is to be replaced by the real 
+option's name.
 
->  --refs=<pattern>::
->  	Only use refs whose names match a given shell pattern.  The pattern
-> -	can be one of branch name, tag name or fully qualified ref name.
-> +	can be one of branch name, tag name or fully qualified ref name. If
-> +	given multiple times, use refs whose names match any of the given shell
-> +	patterns. Use `--no-refs` to clear any previous ref patterns given.
+>
+> The "Reset the list" is an instruction to the end-users who interact
+> with a program written by readers of this document using
+> OPT_STRING_LIST(), and it feels a bit out of place.  Perhaps
+>
+> End users can reset the list by negating the option,
+> i.e. passing "--no-<long>", on the command line.
+>
+> I dunno.
+>
+> Anyway, thanks for adding a missing doc here.
+>
+>>  `OPT_INTEGER(short, long, &int_var, description)`::
+>>  Introduce an option with integer argument.
+>>  The integer is put into `int_var`.
+>
+--
 
-Unlike 1/5, this is facing the end-users, and the last sentence is
-very appropriate.
-
-> +	if (data->ref_filters.nr) {
-> +		struct string_list_item *item;
-> +		int matched = 0;
-> +
-> +		/* See if any of the patterns match. */
-> +		for_each_string_list_item(item, &data->ref_filters) {
-> +			/*
-> +			 * We want to check every pattern even if we already
-> +			 * found a match, just in case one of the later
-> +			 * patterns could abbreviate the output.
-> +			 */
-> +			switch (subpath_matches(path, item->string)) {
-> +			case -1: /* did not match */
-> +				break;
-> +			case 0: /* matched fully */
-> +				matched = 1;
-> +				break;
-> +			default: /* matched subpath */
-> +				matched = 1;
-> +				can_abbreviate_output = 1;
-> +				break;
-> +			}
->  		}
-
-I agree that we cannot short-cut on the first match to make sure
-that the outcome is stable, but I wondered what should be shown when
-we do have multiple matches.  Say I gave
-
-    --refs="v*" --refs="refs/tags/v1.*"
-
-and refs/tags/v1.0 matched.  The above code would say we can
-abbreviate.
-
-What is the reason behind this design decision?  Is it because it is
-clear that the user shows her willingness to accept more compact
-form by having --refs="v*" that would allow shortening?  If that is
-the case, I think I agree with the reasoning.  But we probably want
-to write it down somewhere, because another reasoning, which may
-also be valid, would call for an opposite behaviour (i.e. the more
-specific --refs="refs/tags/v1.*" also matched, so let's show that
-fact by not shortening).
+Philip 
 
