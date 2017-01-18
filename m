@@ -2,73 +2,68 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BB1B91F89C
-	for <e@80x24.org>; Wed, 18 Jan 2017 20:18:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 184731F89C
+	for <e@80x24.org>; Wed, 18 Jan 2017 20:20:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753226AbdARUSs (ORCPT <rfc822;e@80x24.org>);
-        Wed, 18 Jan 2017 15:18:48 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:54969 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1753134AbdARUSk (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Jan 2017 15:18:40 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id C8BE76052E;
-        Wed, 18 Jan 2017 15:18:38 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=wwI95l+nxB8dc22JqEXlV3lv0yE=; b=cQ8oXK
-        Z3HowVrBiEHcQkvh8CO2tLPnSHoIJirDLVuBuDIR0JlB1Pf/n38baZOBEkZbVQfo
-        YIAre+d+u+0BAdAEIjoeGOxXH8RpXWvCx2WGaYBFG5yeCatfmUbCuVoiDSbMLgr5
-        WWo0WOKX6YDip2ajTa3ju52Qqt3Dk3RH9LY18=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=mB9Vxuu1jdcnNQKrPUeqlCbN+NYcBqzh
-        nNzyT+/BzD2tC8pLsYobBk1SKAKFRVQ7hvEIja/rJ/BcEzYcViaD1S6BVwBeefBl
-        /8r+jOgBdJLdd1E8Obo09OwSo6XbYlMEHLNc5qt+K2h9c9O+RjF2u8jSYWCS3woP
-        kosu6sFvRtE=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id C05666052D;
-        Wed, 18 Jan 2017 15:18:38 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 1F47360529;
-        Wed, 18 Jan 2017 15:18:38 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jacob Keller <jacob.e.keller@intel.com>
-Cc:     git@vger.kernel.org, Johannes Sixt <j6t@kdbg.org>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Jacob Keller <jacob.keller@gmail.com>
-Subject: Re: [PATCH v3 0/5] extend git-describe pattern matching
-References: <20170118000930.5431-1-jacob.e.keller@intel.com>
-Date:   Wed, 18 Jan 2017 12:18:36 -0800
-In-Reply-To: <20170118000930.5431-1-jacob.e.keller@intel.com> (Jacob Keller's
-        message of "Tue, 17 Jan 2017 16:09:25 -0800")
-Message-ID: <xmqqlgu886lf.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.90 (gnu/linux)
+        id S1753281AbdARUUR (ORCPT <rfc822;e@80x24.org>);
+        Wed, 18 Jan 2017 15:20:17 -0500
+Received: from mail-io0-f178.google.com ([209.85.223.178]:33394 "EHLO
+        mail-io0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752017AbdARUUQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Jan 2017 15:20:16 -0500
+Received: by mail-io0-f178.google.com with SMTP id v96so21370244ioi.0
+        for <git@vger.kernel.org>; Wed, 18 Jan 2017 12:20:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=OEJcJeEyAzAR00Gpg2BA8Aw2y/yCKv2KC4PswZKCzBc=;
+        b=hREThA+QRRiCUhkPIi74ZkOQXtww6I5RnQuKhEljy03+mVxRI4bJxboiPr7jnsPgWG
+         rnHIEnGMzKQ6mVVTauzuOkYPkNR+lyHRuPny6SnaHywVausclASb3w0Gg4f5wNvhZzHl
+         gyOZ0htCJBDkotxhMKXk2mILsqgJWChf2HO+SiAdASw480u8g+vgkuEM0Joi+Gxtr7OT
+         w5OOsix3DAkB1mtl1erPWQILLtNZLflZh0sHtkvw0kj/cf0Ixo1kBGRGbvc1/DI1gD3o
+         1gO4CSZjA0oK7f12uLNk8shK5uKqX9omHRNHojtItTweKMoMQpXc8jbNT/ve9ETV78ng
+         E27w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=OEJcJeEyAzAR00Gpg2BA8Aw2y/yCKv2KC4PswZKCzBc=;
+        b=aNuZpcSCztghwGwQSHywSmw7Do/MGl4GwixW8yEF2r86hOLkBawN33PaWhfL80j/LD
+         z3dAbheSf8xcY0uFX/gd0ZhqgDVX8av+8iv4j9uLJxBLk+BsFNmt6maKrLj2vLJvR1g2
+         4SDjsG4/axN6qgO3d+9YwxkcxBrNAajUAg1I7xgrUBrtfzhR/7QpTMAfy2gi596Fi/bE
+         JpSQGG6TkVZ60itVJFF8+PWP7Ff/LocrOh7KV0gotmeyp61gsHgrNEJUFqFMbW5ecYz8
+         8268yMDzFGWr5Mb6l6mciH0FRadz/usVEVQossBAxg2YV+CB6vAe9lG3XdfVfYNMZvPu
+         I4Eg==
+X-Gm-Message-State: AIkVDXKBuUFH2m/X664F7Mafs8KJp9kZm24Qmq3BzlXa4Jw+35hw8xxdMyTxza4WuAgzpwUE8nlVMhL2oXctu4p0
+X-Received: by 10.107.3.160 with SMTP id e32mr5399833ioi.52.1484770815836;
+ Wed, 18 Jan 2017 12:20:15 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 4BC9A79E-DDBB-11E6-A031-A7617B1B28F4-77302942!pb-smtp2.pobox.com
+Received: by 10.79.39.19 with HTTP; Wed, 18 Jan 2017 12:20:15 -0800 (PST)
+In-Reply-To: <20170112235354.153403-22-bmwill@google.com>
+References: <20170112235354.153403-1-bmwill@google.com> <20170112235354.153403-22-bmwill@google.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Wed, 18 Jan 2017 12:20:15 -0800
+Message-ID: <CAGZ79kYdcVNK9KJgM0Na0MJ4QuGM+8OJxFb1oQ+VoDL--Ay48Q@mail.gmail.com>
+Subject: Re: [PATCH 21/27] attr: use hashmap for attribute dictionary
+To:     Brandon Williams <bmwill@google.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Duy Nguyen <pclouds@gmail.com>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jacob Keller <jacob.e.keller@intel.com> writes:
+On Thu, Jan 12, 2017 at 3:53 PM, Brandon Williams <bmwill@google.com> wrote:
 
-> From: Jacob Keller <jacob.keller@gmail.com>
->
-> ** v3 fixes a minor typo in one of the test cases, so please ignore v2
->    I left the interdiff as between v1 and v3 instead of v2 **
+> +/* Initialize an 'attr_hashmap' object */
+> +void attr_hashmap_init(struct attr_hashmap *map)
 
-Very much appreciated.
-
-I just finished reading this round through and didn't have any major
-issues.  I sent comments on the way the feature is explained to the
-end users and history readers, though.
-
-Thanks.
+In case a reroll is needed, mark this static please.
