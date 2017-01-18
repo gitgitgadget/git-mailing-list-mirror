@@ -2,154 +2,156 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 08A0A1F89C
-	for <e@80x24.org>; Wed, 18 Jan 2017 18:51:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 91ED21F89C
+	for <e@80x24.org>; Wed, 18 Jan 2017 18:51:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752761AbdARSvo (ORCPT <rfc822;e@80x24.org>);
-        Wed, 18 Jan 2017 13:51:44 -0500
-Received: from smtp130.dfw.emailsrvr.com ([67.192.241.130]:54662 "EHLO
-        smtp130.dfw.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751281AbdARSvl (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Jan 2017 13:51:41 -0500
-Received: from smtp29.relay.dfw1a.emailsrvr.com (localhost [127.0.0.1])
-        by smtp29.relay.dfw1a.emailsrvr.com (SMTP Server) with ESMTP id 30792404BA;
-        Wed, 18 Jan 2017 13:44:09 -0500 (EST)
-X-Auth-ID: mbranchaud@xiplink.com
-Received: by smtp29.relay.dfw1a.emailsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id D2B284016C;
-        Wed, 18 Jan 2017 13:44:08 -0500 (EST)
-X-Sender-Id: mbranchaud@xiplink.com
-Received: from [10.10.1.32] ([UNAVAILABLE]. [192.252.130.194])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA)
-        by 0.0.0.0:465 (trex/5.7.12);
-        Wed, 18 Jan 2017 13:44:09 -0500
-Subject: Re: [RFC] stash --continue
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-References: <cd784a4e-ee99-564e-81de-9f7f6cc26c67@gmx.net>
- <alpine.DEB.2.20.1701161153340.3469@virtualbox>
- <d5456165-bdf2-e9e7-117f-aeab0ff4b417@xiplink.com>
- <alpine.DEB.2.20.1701181725130.3469@virtualbox>
-Cc:     Stephan Beyer <s-beyer@gmx.net>, git <git@vger.kernel.org>
-From:   Marc Branchaud <marcnarc@xiplink.com>
-Message-ID: <38d592b8-975c-1fd9-4c42-877e34a4ab70@xiplink.com>
-Date:   Wed, 18 Jan 2017 13:44:08 -0500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.5.1
+        id S1753414AbdARSvv (ORCPT <rfc822;e@80x24.org>);
+        Wed, 18 Jan 2017 13:51:51 -0500
+Received: from mail-it0-f47.google.com ([209.85.214.47]:36270 "EHLO
+        mail-it0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753332AbdARSvD (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Jan 2017 13:51:03 -0500
+Received: by mail-it0-f47.google.com with SMTP id c7so124184797itd.1
+        for <git@vger.kernel.org>; Wed, 18 Jan 2017 10:50:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=HaFh9+WlS88GH6lYp6tmkM/DGRCg0xTGm7IpYEMLdZ8=;
+        b=XJSW9UO4dBvI47Ir39hOZ2Sgmz0xC2LNOWQ3fyk3Yv3ADxMO6//T/+xj+7svSoMFh1
+         7qpk105UJBj3bJy4hoXgzOUNfBupfOxfZTJ1Lxddx/L3sMiVGMP+uM2+X3wK35/Gxu4g
+         AOMWfyfBaWcSG6Q4f4gfshV8+qJe9AKI/NuzJyCGEPIrLv5SxbQU0pHoUBTdnwn0eTlc
+         3+mBEpXfNEyvrezSMFrehAitG7qkPznYwQVTBM8FZsQZVLKM9DghOLFreniOMhgzfXLM
+         hV5gp7S3ZnL5Cb9M/URQxv68CUCJEEvmF2bwsmwAiDfADh4JHACkQH7Vn/uC5HXpE+RG
+         TB3w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=HaFh9+WlS88GH6lYp6tmkM/DGRCg0xTGm7IpYEMLdZ8=;
+        b=saVofypC8uKOV/EAudkZijqU3fxHgnB63LzuKlFKqhIpaunDRJ4xo1b3zrPwd3zIEa
+         6ydnV8FVjuG3tCfyN6A5amBnMcv4uL3+TBoZRi62kFhhu+hF95XSGA3aLb9e8dotipEn
+         fFjXFdhcSwiBvLphXFbXMEPU8HO8MIfyjBkIiY8LBpPu9N7RAso3tdg+eROlxKwJQXhk
+         kPlSU+p6iMo3iNlEAE5TImII2AB/25M9ulIRZZQC7wLqrJVgkiKqGwNx5lPpXAfr7tI5
+         2eFv6eYVovlFcFA3e89MPbnSP3LgKH5P3rzQ2GcbHCWS78AmE6ruzpJWeG+NbczyvlYd
+         IXqQ==
+X-Gm-Message-State: AIkVDXL2MA0NaYAbV+TFxz9+Z73DLx+U3IOl/1MPbMHDaxCiSJOTOAFvmbkWocmyIrmN6la5hIfDskoxdYUEyfWi
+X-Received: by 10.36.208.134 with SMTP id m128mr4507420itg.44.1484765440784;
+ Wed, 18 Jan 2017 10:50:40 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <alpine.DEB.2.20.1701181725130.3469@virtualbox>
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Transfer-Encoding: 7bit
+Received: by 10.79.38.131 with HTTP; Wed, 18 Jan 2017 10:50:40 -0800 (PST)
+In-Reply-To: <4817eb00-6efc-e3c0-53d7-46f2509350d3@synopsys.com>
+References: <4817eb00-6efc-e3c0-53d7-46f2509350d3@synopsys.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Wed, 18 Jan 2017 10:50:40 -0800
+Message-ID: <CAGZ79kYXQcUB+rVkboY9fMqu6R3RoHEJ7BTJn_+-RScFDjEduA@mail.gmail.com>
+Subject: Re: Git: new feature suggestion
+To:     Joao Pinto <Joao.Pinto@synopsys.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        Linus Torvalds <torvalds@linux-foundation.org>,
+        "CARLOS.PALMINHA@synopsys.com" <CARLOS.PALMINHA@synopsys.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2017-01-18 11:34 AM, Johannes Schindelin wrote:
-> Hi Marc,
+On Wed, Jan 18, 2017 at 2:40 AM, Joao Pinto <Joao.Pinto@synopsys.com> wrote=
+:
+> Hello,
 >
-> On Wed, 18 Jan 2017, Marc Branchaud wrote:
+> My name is Joao Pinto, I work at Synopsys and I am a frequent Linux Kerne=
+l
+> contributor.
 >
->> On 2017-01-16 05:54 AM, Johannes Schindelin wrote:
->>
->>> On Mon, 16 Jan 2017, Stephan Beyer wrote:
->>>
->>>> a git-newbie-ish co-worker uses git-stash sometimes. Last time he
->>>> used "git stash pop", he got into a merge conflict. After he
->>>> resolved the conflict, he did not know what to do to get the
->>>> repository into the wanted state. In his case, it was only "git add
->>>> <resolved files>" followed by a "git reset" and a "git stash drop",
->>>> but there may be more involved cases when your index is not clean
->>>> before "git stash pop" and you want to have your index as before.
->>>>
->>>> This led to the idea to have something like "git stash
->>>> --continue"[1]
->>>
->>> More like "git stash pop --continue". Without the "pop" command, it
->>> does not make too much sense.
->>
->> Why not?  git should be able to remember what stash command created the
->> conflict.  Why should I have to?  Maybe the fire alarm goes off right when I
->> run the stash command, and by the time I get back to it I can't remember
->> which operation I did.  It would be nice to be able to tell git to "just
->> finish off (or abort) the stash operation, whatever it was".
+> Let me start by congratulate you for the fantastic work you have been doi=
+ng with
+> Git which is an excellent tool.
 >
-> That reeks of a big potential for confusion.
+> The Linux Kernel as all systems needs to be improved and re-organized to =
+be
+> better prepared for future development and sometimes we need to change
+> folder/files names or even move things around.
+> I have seen a lot of Linux developers avoid this re-organization operatio=
+ns
+> because they would lose the renamed file history, because a new log is cr=
+eated
+> for the new file, even if it is a renamed version of itself.
+
+Well there are a couple of things to help with digging in the logs.
+
+git log:
+       --follow
+           Continue listing the history of a file beyond renames (works onl=
+y
+           for a single file).
+
+        -M[<n>], --find-renames[=3D<n>]
+           If generating diffs, detect and report renames for each commit. =
+For
+           following files across renames while traversing history, see
+           --follow. If n is specified, it is a threshold on the similarity
+           index (i.e. amount of addition/deletions compared to the file=E2=
+=80=99s
+           size). For example, -M90% means Git should consider a delete/add
+           pair to be a rename if more than 90% of the file hasn=E2=80=99t =
+changed.
+           Without a % sign, the number is to be read as a fraction, with a
+           decimal point before it. I.e., -M5 becomes 0.5, and is thus the
+           same as -M50%. Similarly, -M05 is the same as -M5%. To limit
+           detection to exact renames, use -M100%. The default similarity
+           index is 50%.
+
+       -C[<n>], --find-copies[=3D<n>]
+           Detect copies as well as renames. See also --find-copies-harder.=
+ If
+           n is specified, it has the same meaning as for -M<n>.
+
+
+
+> I am sending you this e-mail to suggest the creation of a new feature in =
+Git:
+> when renamed, a file or folder should inherit his parent=E2=80=99s log an=
+d a =E2=80=9Crename: =E2=80=A6=E2=80=9D
+> would be automatically created or have some kind of pointer to its =E2=80=
+=9Cold=E2=80=9D form to
+> make history analysis easier.
+
+How do you currently analyse history, which detailed feature is missing?
+
+Mind that in the Git data model we deliberately do not record the rename
+at commit time, but rather want to identify the renames at log time.
+This is because
+in the meantime between commit and log viewing someone could have written
+a better rename detection, whereas at commit time we'd be stuck with ancien=
+t
+cruft forever. ;)
+
 >
-> Imagine for example a total Git noob who calls `git stash list`, scrolls
-> two pages down, then hits `q` by mistake. How would you explain to that
-> user that `git stash --continue` does not continue showing the list at the
-> third page?
+> I volunteer to help in the new feature if you find it useful. I think it =
+would
+> improve log history analysis and would enable developers to better organi=
+ze old
+> code.
 
-Sorry, but I have trouble taking that example seriously.  It assumes 
-such a level of "noobness" that the user doesn't even understand how 
-standard command output paging works, not just with git but with any 
-shell command.
+IMHO complete renames (i.e. git mv path/a/file.c path/b/thing.c) are alread=
+y
+covered quite well. Partial rename (e.g. moving code from one file into two
+separate files or vice versa) is still a bit hard.
 
-> Even worse: `git stash` (without arguments) defaults to the `save`
-> operation, so any user who does not read the documentation (and who does?)
-> would assume that `git stash --continue` *also* implies `save`.
+I started such a new feature, see
+https://public-inbox.org/git/20160903033120.20511-1-sbeller@google.com/
+latest code is at https://github.com/stefanbeller/git/commits/colored_diff1=
+2,
+but the latest two commits are bogus and need rewriting.
 
-Like the first example, your user is trying to "continue" a command that 
-is already complete.  It's like try to do "git rebase --continue" when 
-there's no rebase operation underway.
+I think this feature is not 100% what you are aiming at, but is very close.
 
-Now, maybe there is some way for "git stash save" (implied or explicit) 
-to stop partway through the operation.  I can't imagine such a situation 
-(out of disk space, maybe?), particularly where the user would expect 
-"git stash save" to leave things in a half-finished state.  To me "git 
-stash save" should be essentially all-or-nothing.
-
-However, if there were such a partial-failure scenario, then I think it 
-would be perfectly reasonable for "git stash --continue" to finish the 
-save operation, assuming that the failure condition has been resolved.
-
-> If that was not enough, there would still be the overall design of Git's
-> user interface. You can call it confusing, inconsistent, with a lot of
-> room for improvement, and you would be correct. But none of Git's commands
-> has a `--continue` option that remembers the latest subcommand and
-> continues that. To introduce that behavior in `git stash` would disimprove
-> the situation.
-
-I think it's more the case that none of the current continuable commands 
-have subcommands (though I can't think of all the continuable or 
-abortable operations offhand, so maybe I'm wrong).  I think we're 
-discussing new UI ground here.
-
-And since the pattern is already "git foo --continue", it seems more 
-consistent to me for it to be "git stash --continue" as well. 
-Especially since there can be only one partially-complete stash 
-sub-operation at one time (per workdir, at least).  So there's no reason 
-to change the pattern just for the stash command.
-
-Think of it this way:  All the currently continuable/abortable commands 
-put the repository in a shaky state, where performing certain other 
-operations would be ill advised.  Attempting to start a rebase while a 
-merge conflict is unresolved, for example.  IIRC, git actually tries to 
-stop users from shooting their feet in this way.
-
-And so it should be for the stash operation:  If applying a stash yields 
-a conflict, it has to be resolved or aborted before something like a 
-rebase or merge is attempted.  It doesn't matter which stash subcommand 
-created the shaky situation.
-
-In the long run, I think there's even the possibility of generic "git 
-continue" and "git abort" commands, that simply continue or abort the 
-current partially-complete operation, whatever it is.  (Isn't that the 
-ultimate goal of all the "sequencer" work?  I admit I have not been 
-following that effort.)
-
-> With every new feature, it is not enough to consider its benefits. You
-> always have to take the potential fallout into account, too.
-
-Agreed.
-
-> At least `git stash pop --continue` would be consistent with all other
-> `--continue` options in Git that I can think of...
-
-Alas, I disagree!
-
-		M.
-
+Thanks,
+Stefan
