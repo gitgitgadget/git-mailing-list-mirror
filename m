@@ -7,51 +7,51 @@ X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 63EA11F89C
-	for <e@80x24.org>; Wed, 18 Jan 2017 23:31:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E79411F89C
+	for <e@80x24.org>; Wed, 18 Jan 2017 23:31:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751507AbdARXbT (ORCPT <rfc822;e@80x24.org>);
-        Wed, 18 Jan 2017 18:31:19 -0500
-Received: from mail-pf0-f172.google.com ([209.85.192.172]:33713 "EHLO
-        mail-pf0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751275AbdARXbS (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Jan 2017 18:31:18 -0500
-Received: by mail-pf0-f172.google.com with SMTP id y143so7900699pfb.0
-        for <git@vger.kernel.org>; Wed, 18 Jan 2017 15:31:10 -0800 (PST)
+        id S1751705AbdARXb3 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 18 Jan 2017 18:31:29 -0500
+Received: from mail-pf0-f174.google.com ([209.85.192.174]:34622 "EHLO
+        mail-pf0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751679AbdARXb1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Jan 2017 18:31:27 -0500
+Received: by mail-pf0-f174.google.com with SMTP id e4so7858289pfg.1
+        for <git@vger.kernel.org>; Wed, 18 Jan 2017 15:31:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=WZRHKO+RJf06FJGESmiDzcof54lSTs1UzHAGgQmQ+CE=;
-        b=eJ4HVx/4kC1Q/qmwualadAhg3pLdUs7bEANfCrJBGzKr4lVh1ZUTA7zLr/WfEJNKUD
-         ih4rFQ6BP8kRE3/MxciNybFLDyAmcZVIw++zTUX0gWbPfN4kHEu2dSfA9pBKicJigPBW
-         /6tE2sU19aLcF8g7VF7DJL6ytV+m8E3PrJWDOX+c4jVwHZcltA5dFHxtzb8aMMrXbksB
-         3aEMCRpz9chYNrppmN/XlfTZUG5UxYzOnd5+DwO4MkZKctpZAD1rhsNiZ12vHYJWSIR9
-         7VCcfCTwFD6njzh4jDdk/YZ+3ncSaaJC2Mx8aMKG8CbIz1TboZaulsv6Ne71MkW3TpOM
-         dMDg==
+        bh=J9J0KcKBzjOHfU4HvjU62D0wzvHCmOc65l3vRMUOOd8=;
+        b=c4ZL3M4sHp20AnwE+KnI5gGOmt9rT+2imfYZdpkjVTFBADpzvm5J1/0cILTACXV7QR
+         txWcsIZbYhW/2/owwXTEyzd7KOctUR5l0a5VQEzuyqonpaFH4LnzMwAqGSm0+Kn5xQS4
+         KCruko7SMkPG5L0/eDBkz2YxkZipXu5xVmmB/vTcsMHJmhF9XG1sY2mSjx4Fv4h4HrMc
+         Xp8if2tIYmIm/08bdb43rf9PPpc9a2ZjMvXszpta3Yvl69/ncpu/IpUK08UWP2YLx45v
+         kfK8/fyEnMj86Du6fyDqZ8VkfOXYPOz3d5la3tWdYMwPUSQw7smzhsaiFMH2sDkJqSVn
+         Wb5g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=WZRHKO+RJf06FJGESmiDzcof54lSTs1UzHAGgQmQ+CE=;
-        b=S3FN2G6jCCDDM2TNTBJi47R1e6EX5S1PnzaoAwMYezMcAPrf4ybJQBtdE24Xz4Klpq
-         rPUXJO8UlW3QbGhYXmUNwA4P4Gm8RfmgEDqOtqb7rNNzIrr4mLJaQw/M5DDggZN/5uGh
-         DEwieO2V5ZJ4SCieo3gaUWwyUfPVAZwfge7d/CPNRg+Fh6Jg91WfEJNJM27c4D+sBtvW
-         O9CNcDcKu3X8osx+7e30Lo+oZw/SKCjQr3V2z+Uub9NzI0eJzl1CpPEshEGsfLTNiLpk
-         bJCs0rgrlx/d/grMpXyURLhTREQbbx3ak6rqCK2WkLHYuojqyu3SMoklsrwgJqk/gmCW
-         dkJQ==
-X-Gm-Message-State: AIkVDXLVIHAb6//Qc165tnglkMi1xoE+pVvUhiber9BL9lrYmYmaX7Ts8UdQoZIthten7hoM
-X-Received: by 10.99.62.73 with SMTP id l70mr6569074pga.97.1484781722002;
-        Wed, 18 Jan 2017 15:22:02 -0800 (PST)
+        bh=J9J0KcKBzjOHfU4HvjU62D0wzvHCmOc65l3vRMUOOd8=;
+        b=A2dcC5LAxGqhhnjOKvMIiuTtLCvjw6FJJJP5D4cyz4PY6BX2m/P5xjzbw6hEM+8dXM
+         +4bUDSEHV6wL6RR2YtmiegTuU81PB4EV3fD+IkckiImYgey6e154AiDcST+7D3oG/eO1
+         CKBEUu+ATDnY2E+ywjJyw9Bml4TpIGgrMzVNxfqqsRsZB35qWTKB3l07s2ysX8ZX53hB
+         xUoQO2g/H7Wfq3sDNA5Wd28UYbNrhyV7WySQ9ApCGIoNJjJ+kKG9Fad/H8uBvdR8yTQA
+         jnL7dHsZ9Rkj0Dgd5PKJK9yHIfeF2UWSTaPsrAjeINsSnQMrr9Z28UuwwotVSsqLoEDS
+         o36Q==
+X-Gm-Message-State: AIkVDXL8EEuwWMwmM8yC5dnyjg/itrG344sTwtya/FqKCj5JirkD/5HslOP41vyhoTOhM7mR
+X-Received: by 10.99.47.199 with SMTP id v190mr6904244pgv.26.1484781725194;
+        Wed, 18 Jan 2017 15:22:05 -0800 (PST)
 Received: from localhost ([2620:0:1000:5b10:40e0:b9ca:546a:a0ec])
-        by smtp.gmail.com with ESMTPSA id n70sm3212273pfg.34.2017.01.18.15.22.01
+        by smtp.gmail.com with ESMTPSA id z77sm3191072pfk.47.2017.01.18.15.22.04
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 18 Jan 2017 15:22:01 -0800 (PST)
+        Wed, 18 Jan 2017 15:22:04 -0800 (PST)
 From:   Stefan Beller <sbeller@google.com>
 To:     gitster@pobox.com
 Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>
-Subject: [PATCHv2 1/4] cache.h: document index_name_pos
-Date:   Wed, 18 Jan 2017 15:21:42 -0800
-Message-Id: <20170118232145.31606-2-sbeller@google.com>
+Subject: [PATCHv2 4/4] documentation: retire unfinished documentation
+Date:   Wed, 18 Jan 2017 15:21:45 -0800
+Message-Id: <20170118232145.31606-5-sbeller@google.com>
 X-Mailer: git-send-email 2.11.0.299.g762782ba8a
 In-Reply-To: <20170118232145.31606-1-sbeller@google.com>
 References: <20170117233503.27137-1-sbeller@google.com>
@@ -61,42 +61,69 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+When looking for documentation for a specific function, you may be tempted
+to run
+
+  git -C Documentation grep index_name_pos
+
+only to find the file technical/api-in-core-index.txt, which doesn't
+help for understanding the given function. It would be better to not find
+these functions in the documentation, such that people directly dive into
+the code instead.
+
+In the previous patches we have documented
+* index_name_pos()
+* remove_index_entry_at()
+* add_[file_]to_index()
+in cache.h
+
+We already have documentation for:
+* add_index_entry()
+* read_index()
+
+Which leaves us with a TODO for:
+* cache -> the_index macros
+* refresh_index()
+* discard_index()
+* ie_match_stat() and ie_modified(); how they are different and when to
+  use which.
+* write_index() that was renamed to write_locked_index
+* cache_tree_invalidate_path()
+* cache_tree_update()
+
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- cache.h | 19 +++++++++++++++++++
- 1 file changed, 19 insertions(+)
+ Documentation/technical/api-in-core-index.txt | 21 ---------------------
+ 1 file changed, 21 deletions(-)
+ delete mode 100644 Documentation/technical/api-in-core-index.txt
 
-diff --git a/cache.h b/cache.h
-index 1b67f078dd..3dbba69aec 100644
---- a/cache.h
-+++ b/cache.h
-@@ -575,7 +575,26 @@ extern int verify_path(const char *path);
- extern int index_dir_exists(struct index_state *istate, const char *name, int namelen);
- extern void adjust_dirname_case(struct index_state *istate, char *name);
- extern struct cache_entry *index_file_exists(struct index_state *istate, const char *name, int namelen, int igncase);
-+
-+/*
-+ * Searches for an entry defined by name and namelen in the given index.
-+ * If the return value is positive (including 0) it is the position of an
-+ * exact match. If the return value is negative, the negated value minus 1
-+ * is the position where the entry would be inserted.
-+ * Example: The current index consists of these files and its stages:
-+ *
-+ *   b#0, d#0, f#1, f#3
-+ *
-+ * index_name_pos(&index, "a", 1) -> -1
-+ * index_name_pos(&index, "b", 1) ->  0
-+ * index_name_pos(&index, "c", 1) -> -2
-+ * index_name_pos(&index, "d", 1) ->  1
-+ * index_name_pos(&index, "e", 1) -> -3
-+ * index_name_pos(&index, "f", 1) ->  2
-+ * index_name_pos(&index, "g", 1) -> -5
-+ */
- extern int index_name_pos(const struct index_state *, const char *name, int namelen);
-+
- #define ADD_CACHE_OK_TO_ADD 1		/* Ok to add */
- #define ADD_CACHE_OK_TO_REPLACE 2	/* Ok to replace file/directory */
- #define ADD_CACHE_SKIP_DFCHECK 4	/* Ok to skip DF conflict checks */
+diff --git a/Documentation/technical/api-in-core-index.txt b/Documentation/technical/api-in-core-index.txt
+deleted file mode 100644
+index adbdbf5d75..0000000000
+--- a/Documentation/technical/api-in-core-index.txt
++++ /dev/null
+@@ -1,21 +0,0 @@
+-in-core index API
+-=================
+-
+-Talk about <read-cache.c> and <cache-tree.c>, things like:
+-
+-* cache -> the_index macros
+-* read_index()
+-* write_index()
+-* ie_match_stat() and ie_modified(); how they are different and when to
+-  use which.
+-* index_name_pos()
+-* remove_index_entry_at()
+-* remove_file_from_index()
+-* add_file_to_index()
+-* add_index_entry()
+-* refresh_index()
+-* discard_index()
+-* cache_tree_invalidate_path()
+-* cache_tree_update()
+-
+-(JC, Linus)
 -- 
 2.11.0.299.g762782ba8a
 
