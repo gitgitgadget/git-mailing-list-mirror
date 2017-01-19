@@ -2,99 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2B65620A17
-	for <e@80x24.org>; Thu, 19 Jan 2017 21:27:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8E4D020A17
+	for <e@80x24.org>; Thu, 19 Jan 2017 21:27:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751945AbdASV1Q (ORCPT <rfc822;e@80x24.org>);
-        Thu, 19 Jan 2017 16:27:16 -0500
-Received: from mout.gmx.net ([212.227.17.21]:50458 "EHLO mout.gmx.net"
+        id S1752028AbdASV1b (ORCPT <rfc822;e@80x24.org>);
+        Thu, 19 Jan 2017 16:27:31 -0500
+Received: from cloud.peff.net ([104.130.231.41]:41788 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751894AbdASV1P (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 Jan 2017 16:27:15 -0500
-Received: from virtualbox ([37.24.141.236]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0LjLwB-1bypGJ08Yp-00dWot; Thu, 19
- Jan 2017 22:20:00 +0100
-Date:   Thu, 19 Jan 2017 22:19:58 +0100 (CET)
-From:   Johannes Schindelin <johannes.schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     git@vger.kernel.org
-cc:     Junio C Hamano <gitster@pobox.com>,
-        Thomas Gummerer <t.gummerer@gmail.com>,
-        Andrew Arnott <Andrew.Arnott@microsoft.com>,
-        Jeff King <peff@peff.net>
-Subject: [PATCH v2 1/2] remote rename: demonstrate a bogus "remote exists"
- bug
-In-Reply-To: <cover.1484860744.git.johannes.schindelin@gmx.de>
-Message-ID: <4e3c94cb58052af1c0021b7e4c96ab4029afb7bb.1484860744.git.johannes.schindelin@gmx.de>
-References: <cover.1484687919.git.johannes.schindelin@gmx.de> <cover.1484860744.git.johannes.schindelin@gmx.de>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+        id S1751956AbdASV13 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 Jan 2017 16:27:29 -0500
+Received: (qmail 14826 invoked by uid 109); 19 Jan 2017 21:20:42 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 19 Jan 2017 21:20:42 +0000
+Received: (qmail 9273 invoked by uid 111); 19 Jan 2017 21:21:37 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 19 Jan 2017 16:21:37 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 19 Jan 2017 16:20:40 -0500
+Date:   Thu, 19 Jan 2017 16:20:40 -0500
+From:   Jeff King <peff@peff.net>
+To:     Wolfram Sang <wsa@the-dreams.de>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [RFC for GIT] pull-request: add praise to people doing QA
+Message-ID: <20170119212039.3gixsrk7qco45wjo@sigill.intra.peff.net>
+References: <20170115183051.3565-1-wsa@the-dreams.de>
+ <xmqqlgubc04z.fsf@gitster.mtv.corp.google.com>
+ <20170119204343.xtotmjddhbum2mvr@ninjato>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:6KRftw2Nf2MXuWkxJRPsNbavtyFJTWu5zk8bnybHQqE+C70JD4V
- LWg9iM15UDQN1i8AnTxBBMf9OGuC6KCn3w4DitDG3t3OMraCZCCTk6GDpKz4PTMTFUNDNcW
- V/fxw1FwTtsifqC8P15iIeX6nS3KLUlV7d8HGnISceDVpDpChUbZ+13gF6eGP6x4nQ7AUy5
- C1yZ6oipPB/zV0NqO8D+g==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:xW0CAU4zARM=:FkjHdwfcwlmivcTNlVx6au
- InfQ309PKYCW3vkry/Z+wHPpz+PKxfoGItIhtrNaGU2pVgZQi7bYYnoTswkGFET/gAgkeJId6
- A9R0U3ThsVds69aaRjaoAL0psDwOHmhPlfFB/VIAYE3TzMT+15ydKnbTuvcAQZdLxDtCZrLWN
- SyA6aTaJHYSDTzMH8H9klO+vuLrM5lULios7sH9z1dz8g+lAJTNLeLOYj6kPrc/kEckEKEFBB
- CdIreRj4136SrL4bJBNWl0qf3ZyRm8TVmXB7UNjhOHLIRKRsxIdpfiVwFjwsgbc3soR0h9wh6
- 6Kg71POXgTsG/1gthev3o2zNtdCTPibjJ8OMcdbmB+xZMOMwz6+LieBeKzalhxyB2avxAfe5f
- DLnb24hp/fbqKSTW+dOimx9k0PExr5dE08ygd8ulX6JLU/lCZ/ktZ0Q6qrQ/P8zrmYs8nS8np
- ggbNrgaM8mrp5GyDhA/pLpayedHYF91CuvV4n6C/5G8jSPPmcgc9NGnT6kCusAd/vdC+N4ph+
- 6hdGE2pzF8zATVeDiY3O6hMAcZvPrtgKCDGgQNFnNbnAj/SnW3bgxPb0kMue1T83sEzF/fkDA
- lPzxmj76ZYJCBxxEQjY894bG6WwxxGcMKPyTRdxZxFwFgHzV+8uOLd3Y8L09VWqGZSuVceV/2
- QTg+O6bqKpItZnrjUUkPNu8nU6JY0Gsp1aMNetITFr0mvnXtWfVTKjAdPCvsIVFjlzgQ5FS0W
- x0tYGz3RPPncElJuePcpgAlyshsschtVSrPtBEJAnUVTN7vScvQ1Le+QjMa/MkdlT1OdLHr7h
- eOm7fCX0ZU1WmzBIqCoxOM/flOpxX1vQ3ucwUJxapqTENh1PkTiQ2rXc5dMTvs6QlGx8aVTew
- 1dz7DhhqDe6fVQDh+QD8BL0ouhBcaOgf1q7Ijld7GCUXIHQQIfongutgQjsa8odkmCnWDkYBH
- I0qDJv9l36wigJ8ULRKlGqP8Ym5OuHgJYmX9FH4bsQsWT39qV1xKWtT27z17rx6MpibIKh3XP
- 7SrIimbXiIUYt3O4hh4Dms2cStHi1G1Dypaqaf0sQ23fqoxkKGh9JlBoCd3G/SSSNA==
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20170119204343.xtotmjddhbum2mvr@ninjato>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Some users like to set `remote.origin.prune = true` in their ~/.gitconfig
-so that all of their repositories use that default.
+On Thu, Jan 19, 2017 at 09:43:45PM +0100, Wolfram Sang wrote:
 
-However, our code is ill-prepared for this, mistaking that single entry to
-mean that there is already a remote of the name "origin", even if there is
-not.
+> > As to the implementation, I am wondering if we can make this somehow
+> > work well with the "trailers" code we already have, instead of
+> > inventing yet another parser of trailers.  
+> > 
+> > In its current shape, "interpret-trailers" focuses on "editing" an
+> > existing commit log message to tweak the trailer lines.  That mode
+> > of operation would help amending and rebasing, and to do that it
+> > needs to parse the commit log message, identify trailer blocks,
+> > parse out each trailer lines, etc.  
+> > 
+> > There is no fundamental reason why its output must be an edited
+> > original commit log message---it should be usable as a filter that
+> > picks trailer lines of the selected trailer type, like "Tested-By",
+> > etc.
+> 
+> I didn't know about trailers before. As I undestand it, I could use
+> "Tested-by" as the key, and the commit subject as the value. This list
+> then could be parsed and brought into proper output shape. It would
+> simplify the subject parsing, but most things my AWK script currently
+> does would still need to stay or to be reimplemented (extracting names
+> from tags, creating arrays of tags given by $name). Am I correct?
+> 
+> All under the assumption that trailers work on a range of commits. I
+> have to admit that adding this to git is beyond my scope.
 
-This patch adds a test case demonstrating this issue.
+This sounds a lot like the shortlog-trailers work I did about a year
+ago:
 
-Reported by Andrew Arnott.
+  http://public-inbox.org/git/20151229073832.GN8842@sigill.intra.peff.net/
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- t/t5505-remote.sh | 7 +++++++
- 1 file changed, 7 insertions(+)
+  http://public-inbox.org/git/20151229075013.GA9191@sigill.intra.peff.net/
 
-diff --git a/t/t5505-remote.sh b/t/t5505-remote.sh
-index 8198d8eb05..2c03f44c85 100755
---- a/t/t5505-remote.sh
-+++ b/t/t5505-remote.sh
-@@ -764,6 +764,13 @@ test_expect_success 'rename a remote with name prefix of other remote' '
- 	)
- '
- 
-+test_expect_failure 'rename succeeds with existing remote.<target>.prune' '
-+	git clone one four.four &&
-+	test_when_finished git config --global --unset remote.upstream.prune &&
-+	git config --global remote.upstream.prune true &&
-+	git -C four.four remote rename origin upstream
-+'
-+
- cat >remotes_origin <<EOF
- URL: $(pwd)/one
- Push: refs/heads/master:refs/heads/upstream
--- 
-2.11.0.windows.3
+Nobody seemed to really find it useful, so I didn't pursue it.
 
+Some of the preparatory patches in that series bit-rotted in the
+meantime, but you can play with a version based on v2.7.0 by fetching
+the "shortlog-trailers-historical" branch from
+https://github.com/peff/git.git.
 
+And then things like:
+
+  git shortlog --ident=tested-by --format='...tested a patch by %an'
+
+work (and you can put whatever commit items you want into the --format,
+including just dumping the hash if you want to do more analysis).
+
+-Peff
