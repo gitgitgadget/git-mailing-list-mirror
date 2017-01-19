@@ -2,93 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_40,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BC5B620A17
-	for <e@80x24.org>; Thu, 19 Jan 2017 23:46:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BFBFD20A17
+	for <e@80x24.org>; Thu, 19 Jan 2017 23:58:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753283AbdASXqC (ORCPT <rfc822;e@80x24.org>);
-        Thu, 19 Jan 2017 18:46:02 -0500
-Received: from mail-lf0-f67.google.com ([209.85.215.67]:35213 "EHLO
-        mail-lf0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753217AbdASXqC (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 Jan 2017 18:46:02 -0500
-Received: by mail-lf0-f67.google.com with SMTP id v186so6921480lfa.2
-        for <git@vger.kernel.org>; Thu, 19 Jan 2017 15:46:01 -0800 (PST)
+        id S1753234AbdASXy5 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 19 Jan 2017 18:54:57 -0500
+Received: from mail-db5eur01on0136.outbound.protection.outlook.com ([104.47.2.136]:64077
+        "EHLO EUR01-DB5-obe.outbound.protection.outlook.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1752734AbdASXy5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 Jan 2017 18:54:57 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=KXDgIdNMHK99DZ9XYlr9eJrrVvIcU5m93WsxZXXRb5Y=;
-        b=XVkcnQpPP1HTkakplq36fjB50263FAS5wY13/PZxvWTDDPMCFxn2eFip+G8w8S7EN+
-         2m6TO508nv8zkDlJM24wR0tEc3dlYnZL3VC8cFFBsOxKLkp78bEFJNEWriACr5Bio/1g
-         iHtnBWWHTPVnOeFpuiHhC08j9WXIkX1f3HuIAgjP1DsoD+6cNplO5Yh7291DX0jh3Ja0
-         CQD9+FxPn/6itlbw4AbnoT0ai61RiKhIABishWZgGXdG8CUSaGteqYEQ+3FR7LNGr49j
-         4Co93f/hlmCN8nWMPpljjCgHp2HQW2fK17ybtKosIQNjOiP6z5rFmtvVA5x/FbY1knIQ
-         M/8Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=KXDgIdNMHK99DZ9XYlr9eJrrVvIcU5m93WsxZXXRb5Y=;
-        b=t3BBbWiJkL3zWprDdA9fqOfgEJdwLj23IaEN2kqpLnxWTt1FDqhYsYNecxGyIEXsgw
-         /ugAOCsrbHIBUU1uEmDiK7BmQZQo74hDjVIZKKQMMN6ynoxm1JP1tCO8Wf0dpiVs13ru
-         daGfqnPsvsxybKz8kWOmShWXya4bhtd8SnlbBMErZJDnlGdr/oT9YQlKte8YuE3yk4MX
-         3Q8UJcQjaRlpJ8nvZUpetvMnCu1djhyf0nTWsrxmHNB1vV8UF5DU9WJdTU3S/5gl7FRk
-         TwkYSzevEwnDZRrPU4GK8jl2pCH0PzVcDjwIa296GhehJoYCPvBiwZwlqwCiHbucLQSA
-         WqXg==
-X-Gm-Message-State: AIkVDXIuDF7i8ZJSID5Mn2NrauWQTfrvGV/4GPXmb9ByFHF2OTG44qE+oKJcticwzrf4r2DEIUgU8wC6gee/Zw==
-X-Received: by 10.46.77.17 with SMTP id a17mr5597697ljb.2.1484869560229; Thu,
- 19 Jan 2017 15:46:00 -0800 (PST)
+ d=mmtdigital.onmicrosoft.com; s=selector1-mmtdigital-co-uk;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version;
+ bh=ZBrJP51KDBZ8FaIwPTJByzuqXbANXVJXy3T+PTohSE4=;
+ b=cKcPxggOzB+JwH/uE/u5bKeb9k83cNOjIJdyFRrcjaWOCZr5A7yIYzr4UuUN+OSCOT1Zq8hrHfp5/UJf/xbp0LhPeUf9GrQWTMoLWImtlZ3yHIbWEZTQH9ox8+bGQEvt/Q+Aci+KE/6dU68GvQL88JZY+y62cNjUU28/kcP0fZw=
+Received: from AM4PR03MB1715.eurprd03.prod.outlook.com (10.167.88.17) by
+ AM4PR03MB1714.eurprd03.prod.outlook.com (10.167.88.16) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P384) id
+ 15.1.845.12; Thu, 19 Jan 2017 23:54:38 +0000
+Received: from AM4PR03MB1715.eurprd03.prod.outlook.com ([10.167.88.17]) by
+ AM4PR03MB1715.eurprd03.prod.outlook.com ([10.167.88.17]) with mapi id
+ 15.01.0845.021; Thu, 19 Jan 2017 23:54:37 +0000
+From:   Ilesh Mistry <ilesh.m@mmtdigital.co.uk>
+To:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Post-merge hook
+Thread-Topic: Post-merge hook
+Thread-Index: AQHScq9kSAvlDE82Rku26qHjr3XHHg==
+Date:   Thu, 19 Jan 2017 23:54:37 +0000
+Message-ID: <A6C196AD-41F5-4FA3-A2A9-6CBDA473AB6B@mmtdigital.co.uk>
+Accept-Language: en-GB, en-US
+Content-Language: en-GB
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: spf=none (sender IP is )
+ smtp.mailfrom=ilesh.m@mmtdigital.co.uk; 
+x-ms-exchange-messagesentrepresentingtype: 1
+x-originating-ip: [2a02:c7d:5bb3:a200:69ad:e0ed:f650:77f1]
+x-ms-office365-filtering-correlation-id: 008acd24-783b-492e-ef00-08d440c6870f
+x-microsoft-antispam: UriScan:;BCL:0;PCL:0;RULEID:(22001);SRVR:AM4PR03MB1714;
+x-microsoft-exchange-diagnostics: 1;AM4PR03MB1714;7:cqvOuMz7lrMiIrXfqXNPKBMxAV8WlXBbfjiOt8Zu2l7g7Y6k6kQqsKU8+lQpF4xuNqVSNrw4pq8BNXACuDU5Du6UCNFPbTGMpS7uJqDeJNDNLwJ//cHAQ0exNmPQ7fNMbKFGojhunwojLYvZ2ZVJi/SuXFu7Orq4ML6G62NoDdFNEORFDaVKHRIf68+fbnNipe/vXXlr/8uO/wdnz7e8AR4UFkIkU5XmZoAeXsfJiJNLSqwz3mclqPdLg7tS04ovNBVV6pvxwWHVHZIx8fPlY0CVtprnOWJ4VZG0kk6TloK+E6M8DcwB3XCgd136vcGahSWJCvYZxsTLAOSj0/euKxcl3rWDrkiJZ3DN5J/P1W1OcwtYwPrPwlA3oLQVyxV//hddTlzL3sijVh3a+u+/WzCGDvu36Im2G/qaiimF90WtV2vkc1Yx3btDGJl65kNSLRfkrIj0uA04nCl8votBVA==
+x-microsoft-antispam-prvs: <AM4PR03MB171497A8BF0E40207290AFA8DE7E0@AM4PR03MB1714.eurprd03.prod.outlook.com>
+x-exchange-antispam-report-test: UriScan:;
+x-exchange-antispam-report-cfa-test: BCL:0;PCL:0;RULEID:(6040375)(601004)(2401047)(5005006)(8121501046)(10201501046)(3002001)(6041248)(2016111802025)(20161123555025)(20161123562025)(20161123560025)(20161123564025)(6072148)(6043046);SRVR:AM4PR03MB1714;BCL:0;PCL:0;RULEID:;SRVR:AM4PR03MB1714;
+x-forefront-prvs: 0192E812EC
+x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(6009001)(7916002)(39410400002)(39840400002)(39450400003)(189002)(199003)(55885003)(122556002)(3280700002)(2900100001)(6512007)(5660300001)(305945005)(38730400001)(189998001)(107886002)(450100001)(68736007)(99286003)(6306002)(7736002)(6486002)(77096006)(6506006)(25786008)(92566002)(5640700003)(6436002)(86362001)(33656002)(3660700001)(74482002)(81166006)(8936002)(97736004)(3480700004)(5003630100001)(81156014)(1730700003)(8676002)(110136003)(83716003)(54356999)(36756003)(15974865002)(106356001)(2501003)(106116001)(50986999)(105586002)(6916009)(42882006)(53936002)(102836003)(82746002)(2906002)(101416001)(6116002)(2351001)(104396002);DIR:OUT;SFP:1102;SCL:1;SRVR:AM4PR03MB1714;H:AM4PR03MB1715.eurprd03.prod.outlook.com;FPR:;SPF:None;PTR:InfoNoRecords;MX:1;A:1;LANG:en;
+received-spf: None (protection.outlook.com: mmtdigital.co.uk does not
+ designate permitted sender hosts)
+spamdiagnosticoutput: 1:99
+spamdiagnosticmetadata: NSPM
+Content-Type: text/plain; charset="us-ascii"
+Content-ID: <143B1C437C541C41A908FA2F0CA0FAA5@mmtdigital.co.uk>
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-Received: by 10.25.145.14 with HTTP; Thu, 19 Jan 2017 15:45:39 -0800 (PST)
-In-Reply-To: <xmqqfukezrmh.fsf@gitster.mtv.corp.google.com>
-References: <20170118230608.28030-1-jacob.e.keller@intel.com>
- <20170118230608.28030-3-jacob.e.keller@intel.com> <xmqqfukezrmh.fsf@gitster.mtv.corp.google.com>
-From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Thu, 19 Jan 2017 15:45:39 -0800
-Message-ID: <CA+P7+xp20UPrwZBU9hC45yKLOjp0Jm0r4exAvzL=tuXCV8KwUA@mail.gmail.com>
-Subject: Re: [PATCH v4 2/5] name-rev: extend --refs to accept multiple patterns
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jacob Keller <jacob.e.keller@intel.com>,
-        Git mailing list <git@vger.kernel.org>,
-        Johannes Sixt <j6t@kdbg.org>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Content-Type: text/plain; charset=UTF-8
+X-OriginatorOrg: mmtdigital.co.uk
+X-MS-Exchange-CrossTenant-originalarrivaltime: 19 Jan 2017 23:54:37.8262
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 18d7863a-b360-4417-b5ca-28b1e5e62258
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: AM4PR03MB1714
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jan 19, 2017 at 1:06 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Jacob Keller <jacob.e.keller@intel.com> writes:
->
->> From: Jacob Keller <jacob.keller@gmail.com>
->>
->> Teach git name-rev to take multiple --refs stored as a string list of
->> patterns. The list of patterns will be matched inclusively, and each ref
->> only needs to match one pattern to be included. A ref will only be
->> excluded if it does not match any of the given patterns. Additionally,
->> if any of the patterns would allow abbreviation, then we will abbreviate
->> the ref, even if another pattern is more strict and would not have
->> allowed abbreviation on its own.
->>
->> Add tests and documentation for this change. The tests expected output
->> is dynamically generated, but this is in order to avoid hard-coding
->> a commit object id in the test results (as the expected output is to
->> simply leave the commit object unnamed).
->
-> Makes sense.
->
-> I do not see anything that requires "... generated, but" there,
-> though, as if it is a bad thing to do to prepare expected output
-> dynamically.  I'd just reword "generated.  This is..." to make it
-> neutral.
+Hello
 
-To clarify my earlier comment, I think the SQUASH?? you queued looks great.
+I have been looking around for this, but I can't seem to find any examples =
+of how to use the git post-merge hook. Can you help me please?
 
-Thanks,
-Jake
+I want to do something really simple in the sense of pulling locally and on=
+ce pulled and merged any conflicts (if any) then run a command line code. B=
+ut run this code after any merge conflicts are resolved.
+
+Can you help me by pointing me into the right direction on how I can resolv=
+e this please?
+
+Thanks
+Ilesh
+
+Sent from my iPhone
+
+Ilesh Mistry
+Kentico Technical Architect
+T 01572 822 278
+
+www.mmtdigital.co.uk <http://www.mmtdigital.co.uk>
+
+RAR Digital Awards Winner 2016: Best Web Development Agency in the UK
+RAR Digital Awards Winner 2016: Best Software Development Agency in the UK
+RAR Digital Awards Winner 2016: Best Analytics Agency in the UK
+RAR Digital Awards Winner 2015: Best Web Design Agency in the UK
+Econsultancy 2016 Top 100 Agency
+The Drum Digital Census 2015: Elite Agency Top 10
+
+
+Participation in this email correspondence denotes acceptance of
+terms and conditions available on request or from our website,
+unless a separate contract has been agreed.
+
+Registered Office: 1A Uppingham Gate, Ayston Road, Uppingham, Rutland, LE15=
+ 9NY
+Company Number: 3681297
+VAT Registration: 638 5654 05
