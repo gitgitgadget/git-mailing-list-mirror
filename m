@@ -2,94 +2,76 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EC7FC20A17
-	for <e@80x24.org>; Thu, 19 Jan 2017 20:36:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C59EE20A17
+	for <e@80x24.org>; Thu, 19 Jan 2017 20:40:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754573AbdASUg6 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 19 Jan 2017 15:36:58 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:57687 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752433AbdASUg5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 Jan 2017 15:36:57 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id A704B60E7B;
-        Thu, 19 Jan 2017 15:32:40 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=BI9pTWLgHcwoNYMsd20f3pYFgNY=; b=OvdY4I
-        773NNliwIiVK2MHl748DYhTGNkdS2K6083VJH3lBQUiCwvMMyeYHMuduCAGWUA6J
-        0B+Vjp+SyfllYkqzuJyNt3cfQMPWd5cfFkbvzIJXAmpYmV0lFzrvzmH+NpsUeate
-        i36A0LLwMacDGadwNUuScDablw6A64Ea1kwds=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=kHU2KhdtJKS76/rCRVB8dIqsPC2d65JU
-        9EXmMKgzhayo+Qvkd2lr9PiTjqWg2zlzDVz/9mTJUjoRcWINH6NGGmc7bFpTCwgX
-        WDVzjDfYfwLv2mOP6Fw9NsjSY9cKsJvt+VZ5uC0yLk101ULjM4gFDWjbG5L3Yk8G
-        1FLZ+Yiw40o=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 9CF0D60E7A;
-        Thu, 19 Jan 2017 15:32:40 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id E4E7160E79;
-        Thu, 19 Jan 2017 15:32:39 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Michael Gooch <goochmi@gmail.com>, git@vger.kernel.org
-Subject: Re: problem with insider build for windows and git
-References: <1bddbd50-86ea-6c38-6ab8-08336de2ba72@gmail.com>
-        <alpine.DEB.2.20.1701131300390.3469@virtualbox>
-        <alpine.DEB.2.20.1701181738490.3469@virtualbox>
-        <xmqq8tq8b4mr.fsf@gitster.mtv.corp.google.com>
-        <alpine.DEB.2.20.1701192032330.3469@virtualbox>
-Date:   Thu, 19 Jan 2017 12:32:38 -0800
-In-Reply-To: <alpine.DEB.2.20.1701192032330.3469@virtualbox> (Johannes
-        Schindelin's message of "Thu, 19 Jan 2017 20:54:02 +0100 (CET)")
-Message-ID: <xmqqshoezt7d.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+        id S1754652AbdASUkZ (ORCPT <rfc822;e@80x24.org>);
+        Thu, 19 Jan 2017 15:40:25 -0500
+Received: from mout.gmx.net ([212.227.17.22]:57111 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751012AbdASUis (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 Jan 2017 15:38:48 -0500
+Received: from virtualbox ([37.24.141.236]) by mail.gmx.com (mrgmx101
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0LsgvV-1cNcR30cHp-012L2J; Thu, 19
+ Jan 2017 21:32:04 +0100
+Date:   Thu, 19 Jan 2017 21:32:03 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     git@vger.kernel.org, David Aguilar <davvid@gmail.com>,
+        Dennis Kaarsemaker <dennis@kaarsemaker.net>,
+        Paul Sbarra <sbarra.paul@gmail.com>
+Subject: Re: [PATCH v5 3/3] Retire the scripted difftool
+In-Reply-To: <xmqqlgu72asr.fsf@gitster.mtv.corp.google.com>
+Message-ID: <alpine.DEB.2.20.1701192131300.3469@virtualbox>
+References: <cover.1483373635.git.johannes.schindelin@gmx.de>        <cover.1484668473.git.johannes.schindelin@gmx.de>        <8238bba389c031b091a37396fed43cac94d944e7.1484668473.git.johannes.schindelin@gmx.de>        <xmqqk29tcqb8.fsf@gitster.mtv.corp.google.com>
+        <alpine.DEB.2.20.1701181332230.3469@virtualbox>        <xmqqbmv49o3s.fsf@gitster.mtv.corp.google.com>        <alpine.DEB.2.20.1701191730040.3469@virtualbox> <xmqqlgu72asr.fsf@gitster.mtv.corp.google.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 6BF4E706-DE86-11E6-B701-FE3F13518317-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:OcOLdv0noBdtzWN+H1GqRxSkNDqb7cwwGPIuMdWEYbYfj/9ZXxR
+ KqQP6dnB1X4ToNq/MltKI2iBWHDvXFksW1SmJZYj9bmPqkmR87pBe274U57zCH4RUwy4zHq
+ B7wJMv4k6B+gdI0IsGSZtsYC12I68hRzUhvW3+wWyIGcgmwBTsYPFjD+bx5/kjOp5NMkIWT
+ MzOgmSdgIDDNOoW67zKnA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:EJ8NL1BB7J4=:159znpL7MYIhdDY4pcm+VP
+ hqwhcWArmFHfQCPuVcujXZPwff9ddO6y3D5MNMbOv4FMSggqkK2XcZP2ciXCu4EuWux1zZLdH
+ LHtMuKJJNS6NvfWiReVg1uBxw0VFSAYa6agAH0aBlaHy8SWECeexBJ8atdBqy0RvfsHxoFpCT
+ 0ltbGF7efyTMUFNSt7q/3HcfY4KG39qQwaiqGroyWenAe4glT3A+zCuqRATBd/tBJL2OXshLS
+ 0S54B6puOAv4HlA72MknZ3A8GzQ9coWGHRo9PAhsBYu8S0Kvk2SGG2FzrrHZ3sVwKw8BiQ39o
+ xu+NMZWE23rGIFOccb4uWhDJXP6PfGaJ8GFKsIbOapWM0/iSVcgL8dLAcZ76jGc4uyQ/CJUkI
+ IkqaAGd0MWbBFFLrZJmvdYlOUSDwqoXDNd4MnL/YUd87vnUCFJcOkzEi94/x48tgo+KURhy+n
+ 6JNeFqJsGTLgED7ycW9WZdBtPOGqT33f7LdXWcw5UrWpyFIsn4zS2FE1tRFzKEJU9kpT4/QeA
+ AfmFpDSaY8CzSG6oLC3yq4fT+9ixiv+z38JpNcIdIQGleLtPchQ+CYVh7Nx/zFqLj6cC1twH+
+ h4QTX35jhtLbHbr4iNPWoNXVuOcZz2naEZhbPMVWCCp63rX1ieIqRCVY+PZUgzngAvYNMr14U
+ LglfPtsPMfz1v9Hd8IyqHFAgIGaSUBOOUt/RYr4exOR+0QxAXXusRF2sOO9B4gUNhRH2cv7LH
+ fXojOU5y0pE7ZAB/Ab4WygVvl4//eqbX86iN6+DUp1UWjaQuzj7fCtivSMh7jA41DOA2PTEkF
+ vC5xc9h5tUlq96Ea5hl2Lr/qHQDSeNnQIb0i8Yokm1U59zWRrwfhz98Pg8DE7URZ8IoT0zIxq
+ GG+9P+kQkmESimN3lMHUdWeMzE7alUL8nRLSZDayoE/ppxqKLVu2LwflZbwrhMH2daMBp9HWC
+ Cbq0DS0oGg76jPN7+qg6yp6Yg5Vb0fIZ3NJcd7z21Zno+zKYmwJ4iatWFx6i0+xjAso9ldrvl
+ Wym6NHBjjBvwt978Ouf8QJdOMtQW8xKjL5MvXVmn8NPCdjcFSrYR2ivVtnpoAOryaw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Hi Junio,
 
->> are there any other topic that are already in 'master' that should go to
->> 2.11.x track?
->
-> Personally, I would have merged 'nd/config-misc-fixes' into `maint`, I
-> guess, and 'jc/abbrev-autoscale-config', and probably also 'jc/latin-1'.
+On Thu, 19 Jan 2017, Junio C Hamano wrote:
 
-The "almost ready" pushout were merging the ones that have been in
-'master' for weeks (including that mingw-isatty topic).  These three
-are still on radar, but they were too young and that was the only
-reason why they were not included in the batch.
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> > Yep, as Git for Windows v2.11.0 is yesteryear's news, it was probably
+> > obvious to you that I simply failed to spot and fix that oversight.
+> 
+> OK, if you want to tweak log message of either 2/3 or 3/3 to correct,
+> there is still time, as they are still outside 'next'.  
 
-> The 'rj/git-version-gen-do-not-force-abbrev' topic would be another
-> candidate for inclusion. The 'ah/grammos' strikes me as obvious `maint`
-> material, as well as 'ew/svn-fixes'. 
+Sent out v6 with the commit message reworded.
 
-I am holding back rj/git-version-gen-do-not-force-abbrev from 2.11.x
-before 2.12 is released because I am a bit reluctant to tweak the
-release infractructure in 'maint', before the same tweak hits
-'master' and produces a release.
-
-The second one will involve translators and that is why it is not
-marked for back-merging in the draft release notes.
-
-I agree that the svn thing should have been merged to 'maint' in
-that batch, but I missed it.
-
-> Having said that, these are the topics that *I* would merge into `maint`
-> if I maintained Git. I don't, so this is just my opinion, man [*1*].
-
-Yes, your opinion was exactly what was requested, and you gave one
-;-)
+Ciao,
+Johannes
