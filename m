@@ -2,136 +2,185 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9671820A17
-	for <e@80x24.org>; Thu, 19 Jan 2017 13:14:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 70D1020A17
+	for <e@80x24.org>; Thu, 19 Jan 2017 13:31:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752622AbdASNOG (ORCPT <rfc822;e@80x24.org>);
-        Thu, 19 Jan 2017 08:14:06 -0500
-Received: from resqmta-po-02v.sys.comcast.net ([96.114.154.161]:56481 "EHLO
-        resqmta-po-02v.sys.comcast.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1752612AbdASNOF (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 19 Jan 2017 08:14:05 -0500
-Received: from resomta-po-10v.sys.comcast.net ([96.114.154.234])
-        by resqmta-po-02v.sys.comcast.net with SMTP
-        id UCVPcHKmjoFDdUCVXcwfad; Thu, 19 Jan 2017 13:12:03 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=comcast.net;
-        s=q20161114; t=1484831523;
-        bh=d7yc+7SxbeG8yrOZoiUx2G2HFUj1FtvKzOxu6GALPro=;
-        h=Received:Received:Subject:To:From:Message-ID:Date:MIME-Version:
-         Content-Type;
-        b=J72HSA4FIu4P2eiiLCkXMtAX/mJKqc/G8BgnWDoFQUZSS4gmBNQyqfi+6tdT3yUZS
-         0IOchlXLshQ27F8OjQi+nk/Fwhkyci1emazXw7PiMNX3+5XmRaDoRgAnfBP7peBxAW
-         7k88i5KAD9ERmyEU8tnaKVao7KTY4Uv0W8sz5I+9++SxL9RFuMVrltGytuUQ6MFfYL
-         5VjhvKYQPvAfPituqdaSdLVx4FwNWyCBnktw+Mz8XjAN8hRVJZ+hHiNoSgFD4bJSs+
-         1VfRYYmjUsIFvBXhnGka1n6/BNmx4XCa/h22RUqilfMj4WfK91O/uy2S8KFgFZQiin
-         48hOd4oKCydpQ==
-Received: from localhost.localdomain ([73.35.250.55])
-        by resomta-po-10v.sys.comcast.net with SMTP
-        id UCVXcYMzYbEEOUCVXcwZny; Thu, 19 Jan 2017 13:12:03 +0000
-Subject: Re: merge maintaining history
-To:     Jacob Keller <jacob.keller@gmail.com>
-References: <58798686.5050401@comcast.net>
- <CA+P7+xoF8E55-XDnQT-GN1=hEwwq4pOsz7--P-SCy29C7ST3Hg@mail.gmail.com>
-Cc:     Git mailing list <git@vger.kernel.org>
-From:   "David J. Bakeman" <nakuru@comcast.net>
-X-Enigmail-Draft-Status: N1110
-Message-ID: <5880BB23.8030702@comcast.net>
-Date:   Thu, 19 Jan 2017 05:12:03 -0800
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.7.1
+        id S1752674AbdASNbK (ORCPT <rfc822;e@80x24.org>);
+        Thu, 19 Jan 2017 08:31:10 -0500
+Received: from alum-mailsec-scanner-6.mit.edu ([18.7.68.18]:43642 "EHLO
+        alum-mailsec-scanner-6.mit.edu" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1752624AbdASNbI (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 19 Jan 2017 08:31:08 -0500
+X-AuditID: 12074412-5ddff700000009b5-fd-5880bf6f0691
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+        by alum-mailsec-scanner-6.mit.edu (Symantec Messaging Gateway) with SMTP id A9.30.02485.F6FB0885; Thu, 19 Jan 2017 08:30:23 -0500 (EST)
+Received: from [192.168.69.190] (p57906036.dip0.t-ipconnect.de [87.144.96.54])
+        (authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v0JDULTG029133
+        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+        Thu, 19 Jan 2017 08:30:22 -0500
+Subject: Re: The design of refs backends, linked worktrees and submodules
+To:     Duy Nguyen <pclouds@gmail.com>
+References: <CACsJy8CHoroX2k9GqOFmXkvvPCPN4SBeCg+6aC2WSWNSKVmWQw@mail.gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+From:   Michael Haggerty <mhagger@alum.mit.edu>
+Message-ID: <341999fc-4496-b974-c117-c18a2fca1358@alum.mit.edu>
+Date:   Thu, 19 Jan 2017 14:30:20 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Icedove/45.6.0
 MIME-Version: 1.0
-In-Reply-To: <CA+P7+xoF8E55-XDnQT-GN1=hEwwq4pOsz7--P-SCy29C7ST3Hg@mail.gmail.com>
-Content-Type: multipart/mixed;
- boundary="------------070302090007050506060301"
-X-CMAE-Envelope: MS4wfEQH5EC1lHWjqfDBkSYPHC9HgbaYIwtgyQXvXY5qlg02t5dIaOuUQolQx4GCQWicy7NDheBvTD7NBApdq+mp6kJFZ5nx2aRMdzcnKIWtMar+KC4hSw2H
- WiFVRGpduSvmoXlojet/yg9SO42R2xvEhANFzLYXgjPS6lm+32f7c2G3rR9TiC5GzytlLekyJHs1fEO0nHZgYdr9c55dJT9RgeY=
+In-Reply-To: <CACsJy8CHoroX2k9GqOFmXkvvPCPN4SBeCg+6aC2WSWNSKVmWQw@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrAIsWRmVeSWpSXmKPExsUixO6iqJu/vyHCYMJceYuuK91MFt1T3jI6
+        MHnsnHWX3ePzJrkApigum5TUnMyy1CJ9uwSujAmzHrIWzDauOLDzB3MD4y/NLkZODgkBE4lj
+        36cxdzFycQgJXGaUuD5xJROEc45JYtOOD+wgVcICnhJ/NneC2SICShJvOrYxg9hCAgESDVfO
+        sIHYzAJaEpt/fgOrYRPQlVjU08wEYvMK2Euc7GsEq2ERUJU4faWFEcQWFQiRmLPwASNEjaDE
+        yZlPWEBsToFAiQsrr7JCzFSX+DPvEjOELS+x/e0c5gmM/LOQtMxCUjYLSdkCRuZVjHKJOaW5
+        urmJmTnFqcm6xcmJeXmpRbpmermZJXqpKaWbGCEBKbSDcf1JuUOMAhyMSjy8HUX1EUKsiWXF
+        lbmHGCU5mJREee0tGyKE+JLyUyozEosz4otKc1KLDzFKcDArifDa7AXK8aYkVlalFuXDpKQ5
+        WJTEeX8uVvcTEkhPLEnNTk0tSC2CycpwcChJ8PLtA2oULEpNT61Iy8wpQUgzcXCCDOcBGl4F
+        UsNbXJCYW5yZDpE/xagoJc6bAbJVACSRUZoH1wtLGK8YxYFeEeadA9LOA0w2cN2vgAYzAQ22
+        Uq4HGVySiJCSamCU+i76Z8Pja9+Tsjs+PNy+Jvit5nv25RO4K+etLv31R9HrTMRHyUXbV/o2
+        ifyx0Uo5FRqwfOJlPY4nGyVEdwWG5Hx6IbB79YdHvmv0XVqXO3Rm7flj9fvZuhUtIYZMPFX/
+        brAnb2lbImSoVHGpLpLpMbtemg+zQ856Rz0jzUNrLbbJpEser85QYinOSDTUYi4qTgQAlwjH
+        WfMCAAA=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is a multi-part message in MIME format.
---------------070302090007050506060301
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
+On 01/19/2017 12:55 PM, Duy Nguyen wrote:
+> I've started working on fixing the "git gc" issue with multiple
+> worktrees, which brings me back to this. Just some thoughts. Comments
+> are really appreciated.
+> 
+> In the current code, files backend has special cases for both
+> submodules (explicitly) and linked worktrees (hidden behind git_path).
 
-On 01/14/2017 10:24 PM, Jacob Keller wrote:
-> On Fri, Jan 13, 2017 at 6:01 PM, David J. Bakeman <nakuru@comcast.net> wrote:
->> History
->>
->> git cloned a remote repository and made many changes pushing them all to
->> said repository over many months.
->>
->> The powers that be then required me to move project to new repository
->> server did so by pushing local version to new remote saving all history!
->>
->> Now have to merge back to original repository(which has undergone many
->> changes since I split off) but how do I do that without loosing the
->> history of all the commits since the original move?  Note I need to push
->> changes to files that are already in existence.  I found on the web a
->> bunch of ways to insert a whole new directory structure into an existing
->> repository but as I said I need to do it on top of existing files.  Of
->> course I can copy all the files from my local working repository to the
->> cloned remote repository and commit any changes but I loose all the
->> history that way.
->>
->> Thanks.
-> If I understand it.. you have two remotes now:
->
-> The "origin" remote, which was the original remote you started with.
->
-> You have now a "new" remote which you created and pushed to.
->
-> So you want to merge the "new" history into the original tree now, so
-> you checkout the original tree, then "git merge <new-remote>/<branch>"
-> and then fix up any conflicts, and then git commit to create a merge
-> commit that has the new history. Then you could push that to both
-> trees.
->
-> I would want a bit more information about your setup before providing
-> actual commands.
-Thanks I think that's close but it's a little more complicated I think
-:<(  I don't know if this diagram will work but lets try.
+There is another terrible hack also needed to implement linked
+worktrees, namely that the `refs/bisect/` hierarchy is manually inserted
+into the `ref_cache`, because otherwise it wouldn't be noticed when
+iterating over loose references via `readdir()`.
 
-original A->B->C->D->E->F
-             \
-first branch  b->c->d->e
+Other similar hacks would be required if other reference subtrees are
+declared to be per-worktree.
 
-new repo e->f->g->h
+> But if a backend has to handle this stuff, all future backends have to
+> too. Which does not sound great. Imagine we have "something" in
+> addition to worktrees and submodules in future, then all backends have
+> to learn about it.
 
-Now I need to merge h to F without loosing b through h hopefully.  Yes e
-was never merged back to the original repo and it's essentially gone now
-so I can't just merge to F or can I?
- 
->
-> Thanks,
-> Jake
->
+Agreed, the status quo is not pretty.
 
+I kindof think that it would have been a better design to store the
+references for all linked worktrees in the main repository's ref-store.
+For example, the "bisect" refs for a worktree named "<name>" could have
+been stored under "refs/worktrees/<name>/bisect/*". Then either:
 
---------------070302090007050506060301
-Content-Type: text/x-vcard; charset=utf-8;
- name="nakuru.vcf"
-Content-Transfer-Encoding: 7bit
-Content-Disposition: attachment;
- filename="nakuru.vcf"
+* teach the associated tools to read/write references there directly
+(probably with DWIM rules to make command-line use easier), or
+* treat these references as if they were actually at a standard place
+like `refs/worktree/bisect/*`; i.e., users would need to know that they
+were per-worktree references, but wouldn't need to worry about the true
+locations, or
+* treat these references as if they were actually in their traditional
+locations (though it is not obvious how this scheme could be expanded to
+cover new per-worktree references).
 
-begin:vcard
-fn:David J. Bakeman
-n:Bakeman;David J.
-org:Nakuru Software Inc.
-adr:;;1504 North 57th Street;Seattle;WA;98103;USA
-email;internet:nakuru@comcast.net
-tel;work:(206)545-0609
-tel;fax:(206)600-6957
-x-mozilla-html:TRUE
-version:2.1
-end:vcard
+> So how about we move worktree and submodule support back to front-end?
+> 
+> The backend deals with refs, period. The file-based backend will be
+> given a directory where refs live in and it work on that. Backends do
+> not use git_path(). Backends do not care about $GIT_DIR. Access to odb
+> (e.g. sha-1 validation) if needed is abstracted out via a set of
+> callbacks. This allows submodules to give access to submodule's
+> separate odb. And it's getting close to the "struct repository"
+> mentioned somewhere in refs "TODO" comments, even though we are
+> nowhere close to introducing that struct.
 
+This is a topic that I have thought a lot about. I definitely like this
+direction. In fact I've dabbled around with some first steps; see branch
+`submodule-hash` in my fork on GitHub [1]. That branch associates a
+`ref_store` more closely with the directory where the references are
+stored, as opposed to having a 1:1 relationship between `ref_store`s and
+submodules.
 
---------------070302090007050506060301--
+I would like to see the separation of a concept "iterate over all
+reachability roots" that is independent of other ref iteration. Then it
+wouldn't have to include reference names, except basically for use in
+error messages. So for linked worktrees, in place of the reference name
+it might emit a string like "<worktree>:<refname>". (Of course it would
+get its information by iterating over all of the linked reference stores
+using their reference iteration APIs.)
+
+> For that to work, I'll probably need to add a "composite" ref_store
+> that combines two file-based backends (for per-repo and per-worktree
+> refs) to represent a unified ref store. I think your work on ref
+> iterator makes way for that. A bit worried about transactions though,
+> because I think per-repo and per-worktree updates will be separated in
+> two transactions. But that's probably ok because future backends, like
+> lmdb, will have to go through the same route anyway.
+
+Yes, that was the main motivation for the ref-iterator work.
+
+Regarding transactions, the commit pointed at by branch
+`split-transaction` in my fork shows how I think the
+`transaction_commit()` method could be split into two parts,
+`transaction_prepare()` and `transaction_finish()`. The idea would be
+that the driver function, `ref_transaction_commit()`, calls
+`transaction_prepare()` for each `ref_store` involved in the
+transaction, passing each one the reference updates for references that
+live in that reference store. Those methods would verify that the part
+of the transaction that lives in that ref-store "should" go through,
+without actually committing anything. Then `transaction_finish()` would
+be called on each ref store, and that method would commit the updates.
+You probably couldn't get a bulletproof kind of compound transaction out
+of this (e.g., if the computer's power goes out, one `ref_store`'s
+updates might be committed but another one's not). But it would probably
+be good enough to cover everyday reasons for transaction failures, like
+pre-checksums not matching up.
+
+Let me braindump some more information about this topic. A files backend
+for a repository (ignoring submodules for the moment) currently consists
+of five interacting parts, each of which looks a lot like a ref-store
+itself:
+
+* A loose reference ref-store for the main repo
+* A loose reference ref-store for the per-subtree references
+* A ref_cache in front of the two loose reference stores
+* A packed ref-store
+* A second ref_cache in front of the packed ref-store
+
+But these ref-stores are currently coupled very tightly and have
+peculiarities:
+
+* The caching code is tightly coupled to the ref-store behind it.
+* It is hard to imagine a packed refs-store that doesn't have some kind
+of caching in front of it.
+* There are tricky ordering constraints between writes to packed and
+loose references to avoid races.
+* The packed ref-store can't store symbolic refs, nor can it store
+reflogs. It currently relies on the loose ref-store for those things.
+* There is no packed-refs ref-store associated with per-worktree refs.
+* Packed references are currently locked via `*.lock` files located near
+the corresponding loose references.
+* There are constraints that span refstores. For example, you aren't
+allowed to create a packed ref that D/F conflicts with a loose ref or
+vice versa.
+* Symrefs, which are loose, can point at packed references.
+
+I've taken some stabs at picking these apart into separate ref stores,
+but haven't had time to make very satisfying progress. By the time of
+GitMerge I might have a better feeling for whether I can devote some
+time to this project.
+
+Michael
+
+[1] https://github.com/mhagger/git
+
