@@ -2,190 +2,270 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,
 	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 67D8D20A17
-	for <e@80x24.org>; Thu, 19 Jan 2017 21:31:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BDE4520A17
+	for <e@80x24.org>; Thu, 19 Jan 2017 21:35:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751422AbdASVay (ORCPT <rfc822;e@80x24.org>);
-        Thu, 19 Jan 2017 16:30:54 -0500
-Received: from mout.gmx.net ([212.227.17.22]:60009 "EHLO mout.gmx.net"
+        id S1752488AbdASVf3 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 19 Jan 2017 16:35:29 -0500
+Received: from mout.gmx.net ([212.227.15.18]:60767 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751308AbdASVax (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 Jan 2017 16:30:53 -0500
-Received: from virtualbox ([37.24.141.236]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MJFBe-1cX5Rv1wk6-002p52; Thu, 19
- Jan 2017 22:30:45 +0100
-Date:   Thu, 19 Jan 2017 22:30:44 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+        id S1751866AbdASVf1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 Jan 2017 16:35:27 -0500
+Received: from virtualbox ([37.24.141.236]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MWC9x-1d15Za0TCT-00XM1g; Thu, 19
+ Jan 2017 22:20:03 +0100
+Date:   Thu, 19 Jan 2017 22:20:02 +0100 (CET)
+From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
-To:     Marc Branchaud <marcnarc@xiplink.com>
-cc:     Stephan Beyer <s-beyer@gmx.net>, git <git@vger.kernel.org>
-Subject: Re: [RFC] stash --continue
-In-Reply-To: <aa8104ad-45f4-7bef-f199-6e6021cf0c06@xiplink.com>
-Message-ID: <alpine.DEB.2.20.1701192220320.3469@virtualbox>
-References: <cd784a4e-ee99-564e-81de-9f7f6cc26c67@gmx.net> <alpine.DEB.2.20.1701161153340.3469@virtualbox> <d5456165-bdf2-e9e7-117f-aeab0ff4b417@xiplink.com> <alpine.DEB.2.20.1701181725130.3469@virtualbox> <38d592b8-975c-1fd9-4c42-877e34a4ab70@xiplink.com>
- <alpine.DEB.2.20.1701191341530.3469@virtualbox> <aa8104ad-45f4-7bef-f199-6e6021cf0c06@xiplink.com>
+To:     git@vger.kernel.org
+cc:     Junio C Hamano <gitster@pobox.com>,
+        Thomas Gummerer <t.gummerer@gmail.com>,
+        Andrew Arnott <Andrew.Arnott@microsoft.com>,
+        Jeff King <peff@peff.net>
+Subject: [PATCH v2 2/2] Be more careful when determining whether a remote
+ was configured
+In-Reply-To: <cover.1484860744.git.johannes.schindelin@gmx.de>
+Message-ID: <1605031b76025f4bd0e485705c34a25557bb75a1.1484860744.git.johannes.schindelin@gmx.de>
+References: <cover.1484687919.git.johannes.schindelin@gmx.de> <cover.1484860744.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:VefKfxOajk0oirgL/N0MXhueLP2vQMUcZ+qvb5YhH63IC/0t12+
- cD3r2XTh9oM/6W43uogiEMf4ayzSVehP8Xs9dDYHOSfroUG4eQCiVVHPTT3HGlbw/fGvSZ5
- U+anh7IWGMj5FlQEkUBPp81PkRaaPVP+FzKjWL+CqtGO9GA+8MgcK0DoVNLPth/kTzfvgAY
- 6N7ikYcWmo517GX9ilKJA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:HUvnSSRDTZA=:3nh29gQyAAYy3lJPfpvOKD
- k4x/gsufuZiODzgcKCotwzMLUuzfIvrOrXviJKxZFS20KTI0tt9VylK1VQKgG9wN7gQlXS8U8
- xw/5drD2GK2sNyOdDOfXEn7z45Ow/Ylq8BqMTROfr2X/YWjAzW8zm83PTz4PUu+RqUbqlDX8/
- 9Zch3/eeK6xIdCP0d2izllBh4m5L3B1GYvITpPMz7HCHN5x+vippMxjpzZ12Kv/yBbWBcNWjF
- cB0mivOfIkTE9O9gLswGEzRNspWSXGvronDgY+AJpz3ZR30NN+VUKgsmQZ8yi6yiYhXcBbWck
- Z91NZ3Rt5TuyJyOOQQaIom4YljAlDNe9YCXO5ptZRRaOYOiDX+VrMSOS9wzIsk4cpjpXyGJPJ
- XjHA52sf+2PeHjNfESI/A4EDe+64ljTMo8JsmJk9aMKfUdxI/PismaKAw1jmrfDIOdsFbOhVj
- kM9KiWv+CGuqcZrtiAIvIrwZNMGfBSiaogQbJ89cQ+T78LpR/yGRve5aL/2k87BQLtvuCaMjj
- ssvw27aU1HVGlamaTrOG5Ja48ZZ8BR+Y1EMI9E80K9cefBFhdhpbRrMIUuCViGLArz2r32s7f
- Ldec/OH6aJ1DzkUpAlESov4ZsOqjcUIWxcXpX9MwnBvijmJUSbwtHHJ/tAd3WEcD7etcN+eaO
- Wrcm+kvF40spIk6htKFEZzc5e/AP9kqQ1CxhFOjerZ3gXu1/3d5+UpAFyevfFUQkCgU6jp/I4
- i7J1e8OmQbqWWFUe4uw1C/vkwUsaGVB6zy/jRl/F9lz6tWwUYhwJqDdjSz4S9h0dZ6abr9Djh
- AA8P4/pEiez46+AkkOXe8JGe+lWj/IHzAYTu59yiLWo9/GFDY6wdyDCS8qcGB2g4LnBSdmchu
- ylc8sjZXpx09gY4LHoOAU3RfnZmZpZotYSZfbxi8onU79wxS1xedVar9DEQ3x8Uci1FXBX44B
- jW9+/zCYaCmbp+B+bKUv0KjjeFoADR6D7r14XFtnXiu5kIzppbOnlc0NY8x6zGiCmXY3b6X6e
- CA5KDGr/AOhWwKCGJPzG0736QGZwYdgXJ4dCAbdm90qWHajOY+oE6BVMrI6f2U9/FA==
+X-Provags-ID: V03:K0:DaljzWkWp1anY6/+NN611xa2kpluGuOdWSBC5DdrbZjgQtjtcXv
+ KsRz2JPb+IgheInflE6FD2Pr/OOb3dOwcXHynm3xa4MrNx/KyvsCYf9q81Z2W6ygdtKM1pF
+ m33EpRh8i4KPBY/fbiIcvzqg0YS5XnmuPkBkPWR7HNIeBhVLgJ+3lG2EoFyv4RwwNHYOKoD
+ LXVtiTIv+itZWp66vJARw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:7r22s0zIwYo=:XEFNpF74k9cLdSd8qsZP7Q
+ 20BCy/EkjMIqNe41SwpY1E6CqMQsj/r0nabik6FQVGD11fpHnYnjZ0gJCSYH0C0EoyB1zYqyM
+ 4jYIgsm+olsB4cZUHwirl5HKLkbKCLPxAfUKLH7Xw0UVftyc9g+tpBiNqTQ8oh4MVn7kckJYm
+ ieMt6BoV/PD+qJkheMiilkmZKuIZD0Wk2BALz7XbRzrBwBfqGL6tgcvGrZFh/sN+StU9atF3T
+ 6NZ1xyfhGE4lBqd+pFwLex7rChMLj4y0GHcn5MMToEmMVkanOTlFHaunrntsfwbbZ44KCictS
+ 3DpEqKSL4OAic6Yl6xEjyp1g9KI56rt2CU/t1mFkFHpfyZ2+/8fykTPKBeC/fsEkoBvll/weB
+ GlMSPvCBwKZtLcKGuz87cafrP5/brcDh9vkpfGtBQzBINdAOvFiOSvCV3PqjZxAdfhD9y7EHX
+ iMOhrr89Bw7hMmGgoyLfrtNjLscuZ6xTTW5E6W4xVFzrSHNVpUSgZcDi3UDFXsU9tKYO00pL1
+ J9uKY4vxrTnoLcKTlah2bERrxabjmFV2RrT2FTU+3ZilVJBNqhwNZptI1suJdMFefd9668Fa0
+ m4/SuuBkh/W+qODDlxg3Bd3HyDdT5hB8WcplKGHdPzNRjuDZsymL/DVSguhnENNnNSkPAdr2+
+ 7ew4u/ri7ep38s8NRhCWZh5zpkVbtEjalLPzjMrnY6EH9VrjoHDATTp3GHo2XMh3QYNk2qLwo
+ dbATwuAL3wg8IgOaijQ6RPOkk6BDLP0U1CO4rA+hrqs0PyfbuhlAth0G8qkJyykW/CjETiyzX
+ Kb0NIWP
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Marc,
+One of the really nice features of the ~/.gitconfig file is that users
+can override defaults by their own preferred settings for all of their
+repositories.
 
-On Thu, 19 Jan 2017, Marc Branchaud wrote:
+One such default that some users like to override is whether the
+"origin" remote gets auto-pruned or not. The user would simply call
 
-> On 2017-01-19 10:49 AM, Johannes Schindelin wrote:
-> >
-> > On Wed, 18 Jan 2017, Marc Branchaud wrote:
-> >
-> > > On 2017-01-18 11:34 AM, Johannes Schindelin wrote:
-> > > >
-> > > > On Wed, 18 Jan 2017, Marc Branchaud wrote:
-> > > >
-> > > > > On 2017-01-16 05:54 AM, Johannes Schindelin wrote:
-> > > > >
-> > > > > > On Mon, 16 Jan 2017, Stephan Beyer wrote:
-> > > > > >
-> > > > > > > a git-newbie-ish co-worker uses git-stash sometimes. Last
-> > > > > > > time he used "git stash pop", he got into a merge conflict.
-> > > > > > > After he resolved the conflict, he did not know what to do
-> > > > > > > to get the repository into the wanted state. In his case, it
-> > > > > > > was only "git add <resolved files>" followed by a "git
-> > > > > > > reset" and a "git stash drop", but there may be more
-> > > > > > > involved cases when your index is not clean before "git
-> > > > > > > stash pop" and you want to have your index as before.
-> > > > > > >
-> > > > > > > This led to the idea to have something like "git stash
-> > > > > > > --continue"[1]
-> > > > > >
-> > > > > > More like "git stash pop --continue". Without the "pop"
-> > > > > > command, it does not make too much sense.
-> > > > >
-> > > > > Why not?  git should be able to remember what stash command
-> > > > > created the conflict.  Why should I have to?  Maybe the fire
-> > > > > alarm goes off right when I run the stash command, and by the
-> > > > > time I get back to it I can't remember which operation I did.
-> > > > > It would be nice to be able to tell git to "just finish off (or
-> > > > > abort) the stash operation, whatever it was".
-> > > >
-> > > > That reeks of a big potential for confusion.
-> > > >
-> > > > Imagine for example a total Git noob who calls `git stash list`,
-> > > > scrolls two pages down, then hits `q` by mistake. How would you
-> > > > explain to that user that `git stash --continue` does not continue
-> > > > showing the list at the third page?
-> > >
-> > > Sorry, but I have trouble taking that example seriously.  It assumes
-> > > such a level of "noobness" that the user doesn't even understand how
-> > > standard command output paging works, not just with git but with any
-> > > shell command.
-> >
-> > Yeah, well, I thought you understood what I meant.
-> >
-> > The example was the best I could come up with quickly, and it only
-> > tried to show that there are *other* stash operations that one might
-> > perceive to happen at the same time as the "pop" operation, so your
-> > flimsical comment "why not continue the latest operation" may very
-> > well be ambiguous.
-> >
-> > And if it is not ambiguous in "stash", it certainly will be in other
-> > Git operations. And therefore, having a DWIM in "stash" to allow
-> > "--continue" without any specific subcommand, but not having it in
-> > other Git commands, is just a very poor user interface design. It is
-> > prone to confuse users, which is always a hallmark of a bad user
-> > interface.
-> 
-> Please don't underestimate the power of syntactic consistency in helping
-> users achieve their goals.  Having some commands use "git foo
-> --continue" while others use "git foo bar --continue" *will* confuse
-> people, regardless of how logical the reasons for those differences.
+	git config --global remote.origin.prune true
 
-But that ship has already sailed!
+and from now on all "origin" remotes would be pruned automatically when
+fetching into the local repository.
 
-By your reasoning, it was a mistake to introduce subcommands such as `git
-stash pop` in the first place.
+There is just one catch: now Git thinks that the "origin" remote is
+configured, even if the repository config has no [remote "origin"]
+section at all, as it does not realize that the "prune" setting was
+configured globally and that there really is no "origin" remote
+configured in this repository.
 
-> But in the case of stash, I still don't see the utility in having
-> operation-specific continuation.
+That is a problem e.g. when renaming a remote to a new name, when Git
+may be fooled into thinking that there is already a remote of that new
+name.
 
-Stephan already gave one good example where you want it: if `git stash
-pop` fails, you may want to continue by *not* dropping the stash via `git
-stash apply --continue`.
+Let's fix this by paying more attention to *where* the remote settings
+came from: if they are configured in the local repository config, we
+must not overwrite them. If they were configured elsewhere, we cannot
+overwrite them to begin with, as we only write the repository config.
 
-> Consider the following sequence (as you say, this doesn't work yet, but
-> making it work seems reasonable):
-> 
-> 	git stash pop  # creates some conflicts
-> 	git stash apply stash@{4} # creates some other conflicts
-> 	# (User resolves the conflicts created by the pop.)
-> 	git stash pop --continue
+There is only one caller of remote_is_configured() (in `git fetch`) that
+may want to take remotes into account even if they were configured
+outside the repository config; all other callers essentially try to
+prevent the Git command from overwriting settings in the repository
+config.
 
-Yes, that would make sense: the `pop` would actually drop the stash entry.
+To accommodate that fact, the remote_is_configured() function now
+requires a parameter that states whether the caller is interested in all
+remotes, or only in those that were configured in the repository config.
 
-> Given the description of the original proposal (do "git reset; git stash
-> drop"), what's the state of the index and the working tree?
-> 
-> In particular, what has the user gained by continuing just that pop?
+Many thanks to Jeff King whose tireless review helped with settling for
+nothing less than the current strategy.
 
-That it was completed.
+This fixes https://github.com/git-for-windows/git/issues/888
 
-> Another thing to ask is, how common is such a scenario likely to be?
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ builtin/fetch.c   |  2 +-
+ builtin/remote.c  | 14 +++++++-------
+ remote.c          | 12 ++++++++++--
+ remote.h          |  4 ++--
+ t/t5505-remote.sh |  2 +-
+ 5 files changed, 21 insertions(+), 13 deletions(-)
 
-We have millions of users. Even a 0.001% chance of anything happening will
-bite users, who will then come back to bite us.
-
-Let's just not go into the "how likely is this" game.
-
-> I suggest that it will be far more common for users to resolve all the
-> conflicts and then want to continue all their interrupted stash
-> operations.  If so, fussily forcing them to explicitly continue the pop
-> and the apply is just a waste.
-
-No, it is not a waste, as we require the user nothing else than to be
-precise. Do you want to continue the "stash pop"? Okay, then, call "git
-stash pop --continue".
-
-> [... a lot of stuff skipped, as it is basically ignoring my point...]
->
-> > But foo *is the operation*! By that reasoning, you should agree that
-> > "git stash --continue" is *wrong*!
-> 
-> No, in the user's mind *stash* is the operation!
-
-How can that be true? In the user's mind, the *stash* operation is
-equivalent to the *stash save* operation! Because that is what happens
-when you call "git stash" without any further command-line parameters.
-
-At this point I will stop commenting on this issue, as I have said all
-that I wanted to say about it, at least once. If I failed to get my points
-across so far, I simply won't be understood.
-
-Ciao,
-Johannes
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index f1570e3464..b5ad09d046 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -1177,7 +1177,7 @@ static int add_remote_or_group(const char *name, struct string_list *list)
+ 	git_config(get_remote_group, &g);
+ 	if (list->nr == prev_nr) {
+ 		struct remote *remote = remote_get(name);
+-		if (!remote_is_configured(remote))
++		if (!remote_is_configured(remote, 0))
+ 			return 0;
+ 		string_list_append(list, remote->name);
+ 	}
+diff --git a/builtin/remote.c b/builtin/remote.c
+index e52cf3925b..5339ed6ad1 100644
+--- a/builtin/remote.c
++++ b/builtin/remote.c
+@@ -186,7 +186,7 @@ static int add(int argc, const char **argv)
+ 	url = argv[1];
+ 
+ 	remote = remote_get(name);
+-	if (remote_is_configured(remote))
++	if (remote_is_configured(remote, 1))
+ 		die(_("remote %s already exists."), name);
+ 
+ 	strbuf_addf(&buf2, "refs/heads/test:refs/remotes/%s/test", name);
+@@ -618,14 +618,14 @@ static int mv(int argc, const char **argv)
+ 	rename.remote_branches = &remote_branches;
+ 
+ 	oldremote = remote_get(rename.old);
+-	if (!remote_is_configured(oldremote))
++	if (!remote_is_configured(oldremote, 1))
+ 		die(_("No such remote: %s"), rename.old);
+ 
+ 	if (!strcmp(rename.old, rename.new) && oldremote->origin != REMOTE_CONFIG)
+ 		return migrate_file(oldremote);
+ 
+ 	newremote = remote_get(rename.new);
+-	if (remote_is_configured(newremote))
++	if (remote_is_configured(newremote, 1))
+ 		die(_("remote %s already exists."), rename.new);
+ 
+ 	strbuf_addf(&buf, "refs/heads/test:refs/remotes/%s/test", rename.new);
+@@ -753,7 +753,7 @@ static int rm(int argc, const char **argv)
+ 		usage_with_options(builtin_remote_rm_usage, options);
+ 
+ 	remote = remote_get(argv[1]);
+-	if (!remote_is_configured(remote))
++	if (!remote_is_configured(remote, 1))
+ 		die(_("No such remote: %s"), argv[1]);
+ 
+ 	known_remotes.to_delete = remote;
+@@ -1415,7 +1415,7 @@ static int set_remote_branches(const char *remotename, const char **branches,
+ 	strbuf_addf(&key, "remote.%s.fetch", remotename);
+ 
+ 	remote = remote_get(remotename);
+-	if (!remote_is_configured(remote))
++	if (!remote_is_configured(remote, 1))
+ 		die(_("No such remote '%s'"), remotename);
+ 
+ 	if (!add_mode && remove_all_fetch_refspecs(remotename, key.buf)) {
+@@ -1469,7 +1469,7 @@ static int get_url(int argc, const char **argv)
+ 	remotename = argv[0];
+ 
+ 	remote = remote_get(remotename);
+-	if (!remote_is_configured(remote))
++	if (!remote_is_configured(remote, 1))
+ 		die(_("No such remote '%s'"), remotename);
+ 
+ 	url_nr = 0;
+@@ -1537,7 +1537,7 @@ static int set_url(int argc, const char **argv)
+ 		oldurl = newurl;
+ 
+ 	remote = remote_get(remotename);
+-	if (!remote_is_configured(remote))
++	if (!remote_is_configured(remote, 1))
+ 		die(_("No such remote '%s'"), remotename);
+ 
+ 	if (push_mode) {
+diff --git a/remote.c b/remote.c
+index ad6c5424ed..8524135de4 100644
+--- a/remote.c
++++ b/remote.c
+@@ -255,6 +255,7 @@ static void read_remotes_file(struct remote *remote)
+ 
+ 	if (!f)
+ 		return;
++	remote->configured_in_repo = 1;
+ 	remote->origin = REMOTE_REMOTES;
+ 	while (strbuf_getline(&buf, f) != EOF) {
+ 		const char *v;
+@@ -289,6 +290,7 @@ static void read_branches_file(struct remote *remote)
+ 		return;
+ 	}
+ 
++	remote->configured_in_repo = 1;
+ 	remote->origin = REMOTE_BRANCHES;
+ 
+ 	/*
+@@ -371,6 +373,8 @@ static int handle_config(const char *key, const char *value, void *cb)
+ 	}
+ 	remote = make_remote(name, namelen);
+ 	remote->origin = REMOTE_CONFIG;
++	if (current_config_scope() == CONFIG_SCOPE_REPO)
++		remote->configured_in_repo = 1;
+ 	if (!strcmp(subkey, "mirror"))
+ 		remote->mirror = git_config_bool(key, value);
+ 	else if (!strcmp(subkey, "skipdefaultupdate"))
+@@ -714,9 +718,13 @@ struct remote *pushremote_get(const char *name)
+ 	return remote_get_1(name, pushremote_for_branch);
+ }
+ 
+-int remote_is_configured(struct remote *remote)
++int remote_is_configured(struct remote *remote, int in_repo)
+ {
+-	return remote && remote->origin;
++	if (!remote)
++		return 0;
++	if (in_repo)
++		return remote->configured_in_repo;
++	return !!remote->origin;
+ }
+ 
+ int for_each_remote(each_remote_fn fn, void *priv)
+diff --git a/remote.h b/remote.h
+index 924881169d..a5bbbe0ef9 100644
+--- a/remote.h
++++ b/remote.h
+@@ -15,7 +15,7 @@ struct remote {
+ 	struct hashmap_entry ent;  /* must be first */
+ 
+ 	const char *name;
+-	int origin;
++	int origin, configured_in_repo;
+ 
+ 	const char *foreign_vcs;
+ 
+@@ -60,7 +60,7 @@ struct remote {
+ 
+ struct remote *remote_get(const char *name);
+ struct remote *pushremote_get(const char *name);
+-int remote_is_configured(struct remote *remote);
++int remote_is_configured(struct remote *remote, int in_repo);
+ 
+ typedef int each_remote_fn(struct remote *remote, void *priv);
+ int for_each_remote(each_remote_fn fn, void *priv);
+diff --git a/t/t5505-remote.sh b/t/t5505-remote.sh
+index 2c03f44c85..ba46e86de0 100755
+--- a/t/t5505-remote.sh
++++ b/t/t5505-remote.sh
+@@ -764,7 +764,7 @@ test_expect_success 'rename a remote with name prefix of other remote' '
+ 	)
+ '
+ 
+-test_expect_failure 'rename succeeds with existing remote.<target>.prune' '
++test_expect_success 'rename succeeds with existing remote.<target>.prune' '
+ 	git clone one four.four &&
+ 	test_when_finished git config --global --unset remote.upstream.prune &&
+ 	git config --global remote.upstream.prune true &&
+-- 
+2.11.0.windows.3
