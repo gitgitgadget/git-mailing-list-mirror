@@ -2,202 +2,120 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7733A20A17
-	for <e@80x24.org>; Thu, 19 Jan 2017 19:30:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D613520A17
+	for <e@80x24.org>; Thu, 19 Jan 2017 19:36:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754419AbdASTa3 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 19 Jan 2017 14:30:29 -0500
-Received: from mail-pf0-f169.google.com ([209.85.192.169]:35689 "EHLO
-        mail-pf0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754320AbdASTa2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 Jan 2017 14:30:28 -0500
-Received: by mail-pf0-f169.google.com with SMTP id f144so15725317pfa.2
-        for <git@vger.kernel.org>; Thu, 19 Jan 2017 11:30:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=from:to:cc:subject:date:message-id;
-        bh=jjRnWYFsmy1BJTNwwNcJDkIEf+0CLx//wB3HX0kPRtU=;
-        b=hsw4chctT2rfAcJknO2Ij65PQxJnIB+6S608O1C3FqCCaLuWA6hOhYszjkK2K+WWuP
-         3qqDJ7NAPBoB6UZp1Zl3p1DB8YqHhiqDKqlhwfsX2B9Z0BdaqEPLk6ZzPUILZ/UGHmEu
-         04PnNxWL+wuwvwOmoUrISgPHGey27SvypChzj56xsU1G6viAOvb3IS0M+hPDqwF71I27
-         Db4lk8GIsLc1d3/Ae5M3QmXJlt95SCpRb6vPonJgd8U9gKaLXOvftUgCCZVaGk/7dhj4
-         eBc0e7gwCwoXHj199Y+bWSGfzPswh9mH0BllIYcdyvIq8w+ZGofWlCJWjCuolnIHp6Kw
-         aAMw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=jjRnWYFsmy1BJTNwwNcJDkIEf+0CLx//wB3HX0kPRtU=;
-        b=rxOc+R0Ljx+i1TrTyBziUP7wsjRcmG1ynqomc+UB1DSR6TvkgIVXxqz+pDVKgVJ9+D
-         vaHIQcDhaM/OBlHR4qbx6gvXxvO8sGXOUhsSHf/CdWGN5Vb4G0n+Rg/TbwNKxSOXyl6k
-         f/Y9Qexbi4/44WQX+PrXxm37chHN8GteoGtgPPso96AAVyfjM6IB1bR8yzJ8sBb5pyGK
-         0sQt3FWheuw/ipOd1UuOh1X4RjHx1BfO4jqUMutRJh2zljd7NwVp4tOxxoMtDg2kvV29
-         jd3/5orHSYLtqb9xSfKBvOsINPRTNv3yKkIPBZce67EhsOHIrSMQatioD5UzKo3yat38
-         iCww==
-X-Gm-Message-State: AIkVDXLZK2vUMjvHYf8EDbGCNuyRmjgiO/MNoYOBZ94L2Hpzy5opw91DOaWfr/oHPWeIeE5a
-X-Received: by 10.84.179.194 with SMTP id b60mr15729812plc.147.1484854227159;
-        Thu, 19 Jan 2017 11:30:27 -0800 (PST)
-Received: from localhost ([2620:0:1000:5b10:40e0:b9ca:546a:a0ec])
-        by smtp.gmail.com with ESMTPSA id e189sm10696780pfg.64.2017.01.19.11.30.26
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 19 Jan 2017 11:30:26 -0800 (PST)
-From:   Stefan Beller <sbeller@google.com>
-To:     git@vger.kernel.org
-Cc:     Stefan Beller <sbeller@google.com>
-Subject: [RFC/PATCH] Disallow commands from within unpopulated submodules.
-Date:   Thu, 19 Jan 2017 11:30:23 -0800
-Message-Id: <20170119193023.26837-1-sbeller@google.com>
-X-Mailer: git-send-email 2.11.0.299.g762782ba8a
+        id S1754525AbdASTfr (ORCPT <rfc822;e@80x24.org>);
+        Thu, 19 Jan 2017 14:35:47 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:52177 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1754458AbdASTfq (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 Jan 2017 14:35:46 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id B24886025C;
+        Thu, 19 Jan 2017 14:34:40 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=PR6ENO2CSmBYb+pJocHjR93KrWs=; b=pzcWv8
+        O/nXF+PMhAHhkWlJOH3rNg5w6HPijou6fUZSQ8U5PsNEywjf6tlgF/F8DIAiphco
+        Oe4CsmwaCN3SokjHqv50Otm2SyvW7BO1ZIFnh2RgBRkvLMtiVVVbmb3H50cNwu2E
+        Wa6GBlijBe3nAafHeZuJRdLhihy/qxRaGtIqc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=US1C1EzieGjB5gaY+D3PF4zwWVtpoeOt
+        zEyMAOkjcbhu7WS0JKuaPY1WCwg7/uNtKr2McWskZnJ/LC18JGgbyV/51yTu7T1d
+        X/0b3oq/CsMuohwrUJCkXZVRZdnBjlVJrR19g0N2ifuF2SRE/DZUR+ddXZvoWGRM
+        hDGiYV0vIU0=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id A81436025B;
+        Thu, 19 Jan 2017 14:34:40 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 071A060259;
+        Thu, 19 Jan 2017 14:34:39 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH v5 3/3] log --graph: customize the graph lines with config log.graphColors
+References: <20170109103258.25341-1-pclouds@gmail.com>
+        <20170119114123.23784-1-pclouds@gmail.com>
+        <20170119114123.23784-4-pclouds@gmail.com>
+        <20170119165127.6cxw64fjz7aevkq2@sigill.intra.peff.net>
+        <xmqq1svy3nxi.fsf@gitster.mtv.corp.google.com>
+Date:   Thu, 19 Jan 2017 11:34:38 -0800
+In-Reply-To: <xmqq1svy3nxi.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
+        message of "Thu, 19 Jan 2017 10:27:37 -0800")
+Message-ID: <xmqqd1fi269d.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 51C42B1A-DE7E-11E6-8BDF-A7617B1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Consider you have a submodule at path "sub". What should happen in case
-you run a command such as "git -C sub add ." ?
+Junio C Hamano <gitster@pobox.com> writes:
 
-Here is what currently happens:
-1) The submodule is populated, i.e. there is a .git (file/dir) inside
-   "sub". This is equivalent of running "git add ." in the submodule and
-   it behaves as you would expect, adding all files to the index.
-2) The submodule is not populated or even not initialized.
-   For quite some time we got
-   $ git -C sub add .
-   git: pathspec.c:317: prefix_pathspec: Assertion `item->nowildcard_len <= item->len && item->prefix <= item->len' failed.
-   Aborted (core dumped)
-   (This is fixed by another patch in flight to not assert,
-    but rather die with a better message instead; but that patch is
-    merely a fix of a corner case in the pathspec code.)
+>> Since there's only one line that cares about the result of "colors",
+>> maybe it would be less confusing to do:
+>>
+>>   if (!git_config_get-string("log.graphcolors", &string)) {
+>> 	... parse, etc ...
+>> 	graph_set_column_colors(colors.argv, colors.argc - 1);
+>>   } else {
+>> 	graph_set_column_colors(column_colors_ansi,
+>> 	                        column_colors_ansi_max);
+>>   }
+>
+> Yes, that would be much much less confusing.  By doing so, the cover
+> letter can lose "pushing the limits of abuse", too ;-).
 
-While 1) is rather uncontroversial, there are multiple things the user
-may have intended with this command in 2):
- * add the submodule to the superproject
- * add all files inside the sub/ directory to the submodule or
-   superproject.
-It is unclear what the user intended, so rather error out instead.
+Will queue with a squashable change.
 
-Now let's ask the same question for "git -C sub status ." (which is a
-command that is only reading and not writing to the repository)
+Thanks.
 
-1) If the submodule is populated, the user clearly intended to know
-   more about the submodules status
-2) It is unclear if the user wanted to learn about the submodules state
-   (So ideally: "The submodule 'sub' is not initialized. To init ...")
-   or the status check should be applied to the superproject instead.
+ graph.c | 18 ++++++++----------
+ 1 file changed, 8 insertions(+), 10 deletions(-)
 
-Avoid the confusion in 2) as well and just error out for now. Later on
-we may want to add another flag to git.c to allow commands to be run
-inside unpopulated submodules and each command reacts appropriately.
-
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
-
-This is the next logical step after sb/pathspec-errors (pathspec:
-give better message for submodule related pathspec error). If you are in
-a path that is clearly a submodules, I would expect that most users would
-expect the git operation to apply to the submodule.  In case of unpopulated
-submodules, this is not the case though, but we apply the operation to the
-superproject, which may be wrong or confusing.  Hence just error out for now.
-Later we may want to add a flag that allows specific commands to run in such
-a setup (e.g. git status could give a fancier message than a die(..)).
-
-I marked this as RFC
-* to request for comments if this is a good idea from a UI-perspective
-* because I did not adapt any test for this patch. (A lot of submodule tests
-  seem to break with this; From a cursory read of those tests, I'd rather
-  blame the tests for being sloppy than this patch damaging user expectations)
-
-Thanks,
-Stefan
-
- git.c       |  3 +++
- submodule.c | 36 ++++++++++++++++++++++++++++++++++++
- submodule.h |  1 +
- 3 files changed, 40 insertions(+)
-
-diff --git a/git.c b/git.c
-index bbaa949e9c..ca53b61474 100644
---- a/git.c
-+++ b/git.c
-@@ -2,6 +2,7 @@
- #include "exec_cmd.h"
- #include "help.h"
- #include "run-command.h"
-+#include "submodule.h"
+diff --git a/graph.c b/graph.c
+index 822d40ae20..00aeee36d8 100644
+--- a/graph.c
++++ b/graph.c
+@@ -229,22 +229,20 @@ struct git_graph *graph_init(struct rev_info *opt)
+ 	struct git_graph *graph = xmalloc(sizeof(struct git_graph));
  
- const char git_usage_string[] =
- 	"git [--version] [--help] [-C <path>] [-c name=value]\n"
-@@ -364,6 +365,8 @@ static int run_builtin(struct cmd_struct *p, int argc, const char **argv)
- 		if (prefix)
- 			die("can't use --super-prefix from a subdirectory");
+ 	if (!column_colors) {
+-		struct argv_array ansi_colors = {
+-			column_colors_ansi,
+-			column_colors_ansi_max + 1
+-		};
+-		struct argv_array *colors = &ansi_colors;
+ 		char *string;
+-
+-		if (!git_config_get_string("log.graphcolors", &string)) {
++		if (git_config_get_string("log.graphcolors", &string)) {
++			/* not configured -- use default */
++			graph_set_column_colors(column_colors_ansi,
++						column_colors_ansi_max);
++		} else {
+ 			static struct argv_array custom_colors = ARGV_ARRAY_INIT;
+ 			argv_array_clear(&custom_colors);
+ 			parse_graph_colors_config(&custom_colors, string);
+ 			free(string);
+-			colors = &custom_colors;
++			/* graph_set_column_colors takes a max-index, not a count */
++			graph_set_column_colors(custom_colors.argv,
++						custom_colors.argc - 1);
+ 		}
+-		/* graph_set_column_colors takes a max-index, not a count */
+-		graph_set_column_colors(colors->argv, colors->argc - 1);
  	}
-+	if (prefix)
-+		check_prefix_inside_submodule(prefix);
  
- 	if (!help && p->option & NEED_WORK_TREE)
- 		setup_work_tree();
-diff --git a/submodule.c b/submodule.c
-index 73521cdbb2..357a22b804 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -495,6 +495,42 @@ void set_config_fetch_recurse_submodules(int value)
- 	config_fetch_recurse_submodules = value;
- }
- 
-+/* check if the given prefix is inside an uninitialized submodule */
-+void check_prefix_inside_submodule(const char *prefix)
-+{
-+	const char *work_tree = get_git_work_tree();
-+	if (work_tree) {
-+		int pos;
-+		const struct cache_entry *in_submodule = NULL;
-+
-+		if (read_cache() < 0)
-+			die("index file corrupt");
-+		pos = cache_name_pos(prefix, strlen(prefix));
-+		/*
-+		 * gitlinks are recored with no ending '/' in the index,
-+		 * but the prefix has an ending '/', so we will never find
-+		 * an exact match, but always the position where we'd
-+		 * insert the prefix.
-+		 */
-+		if (pos < 0) {
-+			const struct cache_entry *ce;
-+			int len = strlen(prefix);
-+			/* Check the previous position */
-+			pos = (-1 - pos) - 1;
-+			ce = active_cache[pos];
-+			if (ce->ce_namelen < len)
-+				len = ce->ce_namelen;
-+			if (!memcmp(ce->name, prefix, len))
-+				in_submodule = ce;
-+		} else
-+			/* This case cannot happen because */
-+			die("BUG: prefixes end with '/', but we do not record ending slashes in the index");
-+
-+		if (in_submodule)
-+			die(_("command from inside unpopulated submodule '%s' not supported."), in_submodule->name);
-+	}
-+}
-+
- static int has_remote(const char *refname, const struct object_id *oid,
- 		      int flags, void *cb_data)
- {
-diff --git a/submodule.h b/submodule.h
-index b7576d6f43..6b30542822 100644
---- a/submodule.h
-+++ b/submodule.h
-@@ -30,6 +30,7 @@ struct submodule_update_strategy {
- };
- #define SUBMODULE_UPDATE_STRATEGY_INIT {SM_UPDATE_UNSPECIFIED, NULL}
- 
-+extern void check_prefix_inside_submodule(const char *prefix);
- int is_staging_gitmodules_ok(void);
- int update_path_in_gitmodules(const char *oldpath, const char *newpath);
- int remove_path_from_gitmodules(const char *path);
--- 
-2.11.0.299.g762782ba8a
-
+ 	graph->commit = NULL;
