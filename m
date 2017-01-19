@@ -2,457 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D5E4720A17
-	for <e@80x24.org>; Thu, 19 Jan 2017 20:32:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 33C7220A17
+	for <e@80x24.org>; Thu, 19 Jan 2017 20:32:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754131AbdASUaX (ORCPT <rfc822;e@80x24.org>);
-        Thu, 19 Jan 2017 15:30:23 -0500
-Received: from mail-pf0-f170.google.com ([209.85.192.170]:35770 "EHLO
-        mail-pf0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753966AbdASUaW (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 Jan 2017 15:30:22 -0500
-Received: by mail-pf0-f170.google.com with SMTP id f144so16051192pfa.2
-        for <git@vger.kernel.org>; Thu, 19 Jan 2017 12:29:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=t4hlxzUxHNmV7Lz69RxFcpZGVuSRmj/9tQRM84x3xrM=;
-        b=SAmvb0JhURtTX2zEM9vel1TYgwFLHRHfbpaUllC6/ZOEn1OiA9+ZMLj8zNxa+zJWac
-         Oh6h6c6SfrItAGo6mZIQ6Uji9vyP5XJ7Y/Ao5FdXRNfuVAEDd6XGTwzCCYv4bkVFWXa4
-         7tm/9TKcFCNTghchv5WeaTzi9BVzABMvqK/Yphup+ywDCiFhKypzhcTtsKSSFfZXtx83
-         1cY6IF4DZwy8lhCVuiOFDXvg5R10Lp66LKSS04BvBzgBHjIELa9rXGWPmOtmPKiTfaZ7
-         LSbsAIUqnqfT73HwOKXfWONe4u6AhNwAekvgdFV6+lYlyjRWjMwmAP0u16jRKge9Khia
-         W/oQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=t4hlxzUxHNmV7Lz69RxFcpZGVuSRmj/9tQRM84x3xrM=;
-        b=eVITT/wmZQwz8W/cJZkrI06CQl0qcA2uGq4BDBUaWFgQy41FAM0eZ+C0yrErum2A50
-         ZoAkGxPeZydomSiMF9xIe1TYfD4wBnnRpyjPOSj24EysvcCka5w2XwWrbBirKoE6r0K/
-         HqmHaQyeN04GDNAVTbPuuzezVi9y80WXlBE+XiaHnW+jPn7CgTDnRuEwtRVZoOdodbS7
-         rbmAnd6MkP0x//gExcx8tW0DSo6krO+ppfzLoBwA8pMAnNf9AatoYJzvglltJqtYRX5u
-         sgkKjmpjm0TV0gJetkfephOxZn6fNc6Yefd/oeGBFRwjLpX/g+ovgJ0jIZ8yen/VbaWs
-         rC8w==
-X-Gm-Message-State: AIkVDXL7Z65lCyjKNLx14YttCt9Am0ydLX6NKI5SgW+LQOuXM1WZQr8mTbEX6xN4tdgOAAci
-X-Received: by 10.84.173.67 with SMTP id o61mr14166852plb.156.1484857785414;
-        Thu, 19 Jan 2017 12:29:45 -0800 (PST)
-Received: from localhost ([2620:0:1000:5b10:ec23:69c2:4e83:e70a])
-        by smtp.gmail.com with ESMTPSA id u29sm10958119pfl.17.2017.01.19.12.29.44
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 19 Jan 2017 12:29:44 -0800 (PST)
-From:   Stefan Beller <sbeller@google.com>
-To:     gitster@pobox.com
-Cc:     git@vger.kernel.org, torvalds@linux-foundation.org,
-        Stefan Beller <sbeller@google.com>
-Subject: [RESEND PATCHv2] contrib: remove git-convert-objects
-Date:   Thu, 19 Jan 2017 12:29:41 -0800
-Message-Id: <20170119202941.6575-1-sbeller@google.com>
-X-Mailer: git-send-email 2.11.0.299.g762782ba8a
-In-Reply-To: <20161228180205.29213-1-sbeller@google.com>
-References: <20161228180205.29213-1-sbeller@google.com>
+        id S932107AbdASUcG (ORCPT <rfc822;e@80x24.org>);
+        Thu, 19 Jan 2017 15:32:06 -0500
+Received: from mout.gmx.net ([212.227.17.22]:53927 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1754308AbdASUai (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 Jan 2017 15:30:38 -0500
+Received: from virtualbox ([37.24.141.236]) by mail.gmx.com (mrgmx103
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0M6B6s-1cK5y20fPe-00y7f5; Thu, 19
+ Jan 2017 21:30:28 +0100
+Date:   Thu, 19 Jan 2017 21:30:27 +0100 (CET)
+From:   Johannes Schindelin <johannes.schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     git@vger.kernel.org
+cc:     Junio C Hamano <gitster@pobox.com>,
+        David Aguilar <davvid@gmail.com>,
+        Dennis Kaarsemaker <dennis@kaarsemaker.net>,
+        Paul Sbarra <sbarra.paul@gmail.com>
+Subject: [PATCH v6 0/3] Turn the difftool into a builtin
+In-Reply-To: <cover.1484668473.git.johannes.schindelin@gmx.de>
+Message-ID: <cover.1484857756.git.johannes.schindelin@gmx.de>
+References: <cover.1484668473.git.johannes.schindelin@gmx.de>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:23A++rJAkCFXYQ5hB2/s+6LjqIA3sEinflzQrOe6SuQgkOSI6wb
+ 6e6jHFV/N2SgFEoUplPuchwoWB97yXIt++mL6cuLsFcWcdDR4YSL1H53eghUvnKBpNcHWIl
+ h3mvDewBjNKoBCvETPqlwmzET6T29p8YlY43Y7jm9BILG2ftoz4etcapnQHCJiqpUKhHZje
+ xqWrbXv1egZ/ZVaTPxEGg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:Qnh7kz7dCQE=:l18AN5RIlCL4A1m3Db4EVt
+ fQ8CiIHfGv6JiXUvpMrWKoXh5ThkfINpsMFV8XX2Cs6xP2gQt0xLdwrXtVnoWX3Lvofe4fup1
+ CiVpzduOY9qzdR0cbqCISCY5bRWnioZUtWjtNBy4T43/xT7cse66ePLq4cDnUC5uC8vKFPEJh
+ WBcVPUBUCu3HZxyrDwmkkBy7LGeJc+AMgfi+zz3ReFr2X1NtRJmeMYNyJby87BTLnCqaWlEC3
+ E9OoklJQxrpiqqvSSUmTLdeWkj8p0TGkd9xLXgd2gF3uQgSXk3hZWWWgF26cjz3KdOTW2Yy9C
+ sYGJpQbY7aEUPOzWUSoeYBqGqlRHHHBFPV++gRNKohOvez+34YfBGb16cc5gWxyw+qExFjnH7
+ oWMjG0cEllJRDH3Kt+eJsiyJ6cJX9BAYnkiTRX2cWp6KeNKWtN3nhoCNThEgwBOL3Ylm77JIf
+ CSYahYYr18Rby0Gk6du1KLXv/H7Yirf4T+8oGlWqA0JUY76q6UlUEOOfJZcEoOXhzmiQKSo+T
+ 09NdyOE3CldfCpRtJGpnEfLswoJsfH7KnnHvP3saqyRKbJViIEVSAqBZWzNWOmK4ydvUzVaxJ
+ g5lsVzVxVYpJ5b2uhPMwVI9Izpyxt9Jl8CdtXbofRgX4eLFzhCubnlNR0ur96oi0W+BNjZCTB
+ YtU0ETHhbL/Pr/nQUkMRoZBD5pKKT/scEQlhAWV2f5BqJFK/TC31JvB+64YbnX6cqiAxQCJoz
+ gEJ6eFNs+CdLrEGb7GS/cnvSCtqdO3sH3rPSSDBO7hPrcu7dZbw6eXQW1X7tnRTGpuNSHBSiB
+ iVJujFXyZ3JG6GYLNKgT7eVfWN6svRlXun7sF+tnXftBvDraOC5fe4J2dCiNZEPSPhQ8pXx50
+ vkS3tKrjptTFFnkLTvzT9rj1r2JIWkPeYiD/k9i3FhKRDISn550gJ4vmbYF0jjsoligTFIFwP
+ 48r/kJLULcGztuK64q5EhEd7nJI/F8qhNkmWFBXt4RXwRnSMloaqzXZWUS2c0pMA2lvPsYNz4
+ 3JsP/Lpcn83QwxCWZJllYJU=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-git-convert-objects, originally named git-convert-cache was used in
-early 2005 to convert to a new repository format, e.g. adding an author
-date.
+This patch series converts the difftool from a Perl script into a
+builtin, for three reasons:
 
-By now the need for conversion of the very early repositories is less
-relevant, we no longer need to keep it in contrib; remove it.
+1. Perl is really not native on Windows. Not only is there a performance
+   penalty to be paid just for running Perl scripts, we also have to deal
+   with the fact that users may have different Perl installations, with
+   different options, and some other Perl installation may decide to set
+   PERL5LIB globally, wreaking havoc with Git for Windows' Perl (which we
+   have to use because almost all other Perl distributions lack the
+   Subversion bindings we need for `git svn`).
 
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
+2. As the Perl script uses Unix-y paths that are not native to Windows,
+   the Perl interpreter has to go through a POSIX emulation layer (the
+   MSYS2 runtime). This means that paths have to be converted from
+   Unix-y paths to Windows-y paths (and vice versa) whenever crossing
+   the POSIX emulation barrier, leading to quite possibly surprising path
+   translation errors.
 
-v2:
-  no changes since v1, but as there were no replies nor do I find this
-  patch cooking, I decided to resend.
-  
-Thanks,
-Stefan
+3. Perl makes for a rather large reason that Git for Windows' installer
+   weighs in with >30MB. While one Perl script less does not relieve us
+   of that burden, it is one step in the right direction.
 
- contrib/convert-objects/convert-objects.c       | 329 ------------------------
- contrib/convert-objects/git-convert-objects.txt |  29 ---
- 2 files changed, 358 deletions(-)
- delete mode 100644 contrib/convert-objects/convert-objects.c
- delete mode 100644 contrib/convert-objects/git-convert-objects.txt
+Changes since v5:
 
-diff --git a/contrib/convert-objects/convert-objects.c b/contrib/convert-objects/convert-objects.c
-deleted file mode 100644
-index f3b57bf1d2..0000000000
---- a/contrib/convert-objects/convert-objects.c
-+++ /dev/null
-@@ -1,329 +0,0 @@
--#include "cache.h"
--#include "blob.h"
--#include "commit.h"
--#include "tree.h"
--
--struct entry {
--	unsigned char old_sha1[20];
--	unsigned char new_sha1[20];
--	int converted;
--};
--
--#define MAXOBJECTS (1000000)
--
--static struct entry *convert[MAXOBJECTS];
--static int nr_convert;
--
--static struct entry * convert_entry(unsigned char *sha1);
--
--static struct entry *insert_new(unsigned char *sha1, int pos)
--{
--	struct entry *new = xcalloc(1, sizeof(struct entry));
--	hashcpy(new->old_sha1, sha1);
--	memmove(convert + pos + 1, convert + pos, (nr_convert - pos) * sizeof(struct entry *));
--	convert[pos] = new;
--	nr_convert++;
--	if (nr_convert == MAXOBJECTS)
--		die("you're kidding me - hit maximum object limit");
--	return new;
--}
--
--static struct entry *lookup_entry(unsigned char *sha1)
--{
--	int low = 0, high = nr_convert;
--
--	while (low < high) {
--		int next = (low + high) / 2;
--		struct entry *n = convert[next];
--		int cmp = hashcmp(sha1, n->old_sha1);
--		if (!cmp)
--			return n;
--		if (cmp < 0) {
--			high = next;
--			continue;
--		}
--		low = next+1;
--	}
--	return insert_new(sha1, low);
--}
--
--static void convert_binary_sha1(void *buffer)
--{
--	struct entry *entry = convert_entry(buffer);
--	hashcpy(buffer, entry->new_sha1);
--}
--
--static void convert_ascii_sha1(void *buffer)
--{
--	unsigned char sha1[20];
--	struct entry *entry;
--
--	if (get_sha1_hex(buffer, sha1))
--		die("expected sha1, got '%s'", (char *) buffer);
--	entry = convert_entry(sha1);
--	memcpy(buffer, sha1_to_hex(entry->new_sha1), 40);
--}
--
--static unsigned int convert_mode(unsigned int mode)
--{
--	unsigned int newmode;
--
--	newmode = mode & S_IFMT;
--	if (S_ISREG(mode))
--		newmode |= (mode & 0100) ? 0755 : 0644;
--	return newmode;
--}
--
--static int write_subdirectory(void *buffer, unsigned long size, const char *base, int baselen, unsigned char *result_sha1)
--{
--	char *new = xmalloc(size);
--	unsigned long newlen = 0;
--	unsigned long used;
--
--	used = 0;
--	while (size) {
--		int len = 21 + strlen(buffer);
--		char *path = strchr(buffer, ' ');
--		unsigned char *sha1;
--		unsigned int mode;
--		char *slash, *origpath;
--
--		if (!path || strtoul_ui(buffer, 8, &mode))
--			die("bad tree conversion");
--		mode = convert_mode(mode);
--		path++;
--		if (memcmp(path, base, baselen))
--			break;
--		origpath = path;
--		path += baselen;
--		slash = strchr(path, '/');
--		if (!slash) {
--			newlen += sprintf(new + newlen, "%o %s", mode, path);
--			new[newlen++] = '\0';
--			hashcpy((unsigned char *)new + newlen, (unsigned char *) buffer + len - 20);
--			newlen += 20;
--
--			used += len;
--			size -= len;
--			buffer = (char *) buffer + len;
--			continue;
--		}
--
--		newlen += sprintf(new + newlen, "%o %.*s", S_IFDIR, (int)(slash - path), path);
--		new[newlen++] = 0;
--		sha1 = (unsigned char *)(new + newlen);
--		newlen += 20;
--
--		len = write_subdirectory(buffer, size, origpath, slash-origpath+1, sha1);
--
--		used += len;
--		size -= len;
--		buffer = (char *) buffer + len;
--	}
--
--	write_sha1_file(new, newlen, tree_type, result_sha1);
--	free(new);
--	return used;
--}
--
--static void convert_tree(void *buffer, unsigned long size, unsigned char *result_sha1)
--{
--	void *orig_buffer = buffer;
--	unsigned long orig_size = size;
--
--	while (size) {
--		size_t len = 1+strlen(buffer);
--
--		convert_binary_sha1((char *) buffer + len);
--
--		len += 20;
--		if (len > size)
--			die("corrupt tree object");
--		size -= len;
--		buffer = (char *) buffer + len;
--	}
--
--	write_subdirectory(orig_buffer, orig_size, "", 0, result_sha1);
--}
--
--static unsigned long parse_oldstyle_date(const char *buf)
--{
--	char c, *p;
--	char buffer[100];
--	struct tm tm;
--	const char *formats[] = {
--		"%c",
--		"%a %b %d %T",
--		"%Z",
--		"%Y",
--		" %Y",
--		NULL
--	};
--	/* We only ever did two timezones in the bad old format .. */
--	const char *timezones[] = {
--		"PDT", "PST", "CEST", NULL
--	};
--	const char **fmt = formats;
--
--	p = buffer;
--	while (isspace(c = *buf))
--		buf++;
--	while ((c = *buf++) != '\n')
--		*p++ = c;
--	*p++ = 0;
--	buf = buffer;
--	memset(&tm, 0, sizeof(tm));
--	do {
--		const char *next = strptime(buf, *fmt, &tm);
--		if (next) {
--			if (!*next)
--				return mktime(&tm);
--			buf = next;
--		} else {
--			const char **p = timezones;
--			while (isspace(*buf))
--				buf++;
--			while (*p) {
--				if (!memcmp(buf, *p, strlen(*p))) {
--					buf += strlen(*p);
--					break;
--				}
--				p++;
--			}
--		}
--		fmt++;
--	} while (*buf && *fmt);
--	printf("left: %s\n", buf);
--	return mktime(&tm);
--}
--
--static int convert_date_line(char *dst, void **buf, unsigned long *sp)
--{
--	unsigned long size = *sp;
--	char *line = *buf;
--	char *next = strchr(line, '\n');
--	char *date = strchr(line, '>');
--	int len;
--
--	if (!next || !date)
--		die("missing or bad author/committer line %s", line);
--	next++; date += 2;
--
--	*buf = next;
--	*sp = size - (next - line);
--
--	len = date - line;
--	memcpy(dst, line, len);
--	dst += len;
--
--	/* Is it already in new format? */
--	if (isdigit(*date)) {
--		int datelen = next - date;
--		memcpy(dst, date, datelen);
--		return len + datelen;
--	}
--
--	/*
--	 * Hacky hacky: one of the sparse old-style commits does not have
--	 * any date at all, but we can fake it by using the committer date.
--	 */
--	if (*date == '\n' && strchr(next, '>'))
--		date = strchr(next, '>')+2;
--
--	return len + sprintf(dst, "%lu -0700\n", parse_oldstyle_date(date));
--}
--
--static void convert_date(void *buffer, unsigned long size, unsigned char *result_sha1)
--{
--	char *new = xmalloc(size + 100);
--	unsigned long newlen = 0;
--
--	/* "tree <sha1>\n" */
--	memcpy(new + newlen, buffer, 46);
--	newlen += 46;
--	buffer = (char *) buffer + 46;
--	size -= 46;
--
--	/* "parent <sha1>\n" */
--	while (!memcmp(buffer, "parent ", 7)) {
--		memcpy(new + newlen, buffer, 48);
--		newlen += 48;
--		buffer = (char *) buffer + 48;
--		size -= 48;
--	}
--
--	/* "author xyz <xyz> date" */
--	newlen += convert_date_line(new + newlen, &buffer, &size);
--	/* "committer xyz <xyz> date" */
--	newlen += convert_date_line(new + newlen, &buffer, &size);
--
--	/* Rest */
--	memcpy(new + newlen, buffer, size);
--	newlen += size;
--
--	write_sha1_file(new, newlen, commit_type, result_sha1);
--	free(new);
--}
--
--static void convert_commit(void *buffer, unsigned long size, unsigned char *result_sha1)
--{
--	void *orig_buffer = buffer;
--	unsigned long orig_size = size;
--
--	if (memcmp(buffer, "tree ", 5))
--		die("Bad commit '%s'", (char *) buffer);
--	convert_ascii_sha1((char *) buffer + 5);
--	buffer = (char *) buffer + 46;    /* "tree " + "hex sha1" + "\n" */
--	while (!memcmp(buffer, "parent ", 7)) {
--		convert_ascii_sha1((char *) buffer + 7);
--		buffer = (char *) buffer + 48;
--	}
--	convert_date(orig_buffer, orig_size, result_sha1);
--}
--
--static struct entry * convert_entry(unsigned char *sha1)
--{
--	struct entry *entry = lookup_entry(sha1);
--	enum object_type type;
--	void *buffer, *data;
--	unsigned long size;
--
--	if (entry->converted)
--		return entry;
--	data = read_sha1_file(sha1, &type, &size);
--	if (!data)
--		die("unable to read object %s", sha1_to_hex(sha1));
--
--	buffer = xmalloc(size);
--	memcpy(buffer, data, size);
--
--	if (type == OBJ_BLOB) {
--		write_sha1_file(buffer, size, blob_type, entry->new_sha1);
--	} else if (type == OBJ_TREE)
--		convert_tree(buffer, size, entry->new_sha1);
--	else if (type == OBJ_COMMIT)
--		convert_commit(buffer, size, entry->new_sha1);
--	else
--		die("unknown object type %d in %s", type, sha1_to_hex(sha1));
--	entry->converted = 1;
--	free(buffer);
--	free(data);
--	return entry;
--}
--
--int main(int argc, char **argv)
--{
--	unsigned char sha1[20];
--	struct entry *entry;
--
--	setup_git_directory();
--
--	if (argc != 2)
--		usage("git-convert-objects <sha1>");
--	if (get_sha1(argv[1], sha1))
--		die("Not a valid object name %s", argv[1]);
--
--	entry = convert_entry(sha1);
--	printf("new sha1: %s\n", sha1_to_hex(entry->new_sha1));
--	return 0;
--}
-diff --git a/contrib/convert-objects/git-convert-objects.txt b/contrib/convert-objects/git-convert-objects.txt
-deleted file mode 100644
-index f871880cfb..0000000000
---- a/contrib/convert-objects/git-convert-objects.txt
-+++ /dev/null
-@@ -1,29 +0,0 @@
--git-convert-objects(1)
--======================
--
--NAME
------
--git-convert-objects - Converts old-style git repository
--
--
--SYNOPSIS
----------
--[verse]
--'git-convert-objects'
--
--DESCRIPTION
-------------
--Converts old-style git repository to the latest format
--
--
--Author
--------
--Written by Linus Torvalds <torvalds@osdl.org>
--
--Documentation
----------------
--Documentation by David Greaves, Junio C Hamano and the git-list <git@vger.kernel.org>.
--
--GIT
-----
--Part of the linkgit:git[7] suite
+- reworded the commit message of 2/3 to account for the change in v4
+  where we no longer keep both scripted and builtin difftool working
+  (with the switch difftool.useBuiltin deciding which one is used).
+
+
+Johannes Schindelin (3):
+  difftool: add a skeleton for the upcoming builtin
+  difftool: implement the functionality in the builtin
+  Retire the scripted difftool
+
+ Makefile                                           |   2 +-
+ builtin.h                                          |   1 +
+ builtin/difftool.c                                 | 692 +++++++++++++++++++++
+ .../examples/git-difftool.perl                     |   0
+ git.c                                              |   1 +
+ t/t7800-difftool.sh                                |  92 +--
+ 6 files changed, 741 insertions(+), 47 deletions(-)
+ create mode 100644 builtin/difftool.c
+ rename git-difftool.perl => contrib/examples/git-difftool.perl (100%)
+
+
+base-commit: ffac48d093d4b518a0cc0e8bf1b7cb53e0c3d7a2
+Published-As: https://github.com/dscho/git/releases/tag/builtin-difftool-v6
+Fetch-It-Via: git fetch https://github.com/dscho/git builtin-difftool-v6
+
 -- 
-2.11.0.299.g762782ba8a
+2.11.0.windows.3
 
