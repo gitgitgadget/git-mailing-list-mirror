@@ -2,94 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A90C420A17
-	for <e@80x24.org>; Thu, 19 Jan 2017 18:26:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 701EF20A17
+	for <e@80x24.org>; Thu, 19 Jan 2017 18:26:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754070AbdASS0h (ORCPT <rfc822;e@80x24.org>);
-        Thu, 19 Jan 2017 13:26:37 -0500
-Received: from mail-pg0-f48.google.com ([74.125.83.48]:34127 "EHLO
-        mail-pg0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753966AbdASS0g (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 Jan 2017 13:26:36 -0500
-Received: by mail-pg0-f48.google.com with SMTP id 14so16114549pgg.1
-        for <git@vger.kernel.org>; Thu, 19 Jan 2017 10:26:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=ZLUBc7EGU7o4BW0N/KcQnu8KlVm43ncM6i5vSvUVOCA=;
-        b=AV+/H5cYzesb9seStdDepybjtxrv2UliHkLXU682QMMYR8zuCfuc/Jyc+Tss6razNC
-         VwoAlMZ1J5kOBHiRLRbokgt47ofSEmaChtMTtFjueXS7Tn1imnkYcyUgrR/Q5JjrWjrz
-         fPZ5/5OD55fSj29y4uV1BQ3O7bbf/AdrFpxB+3HtJcdtTbLdU4gTbVvt4y8ETmr5M7wD
-         zXJMNzP35rBU0QVOI4LwZr1rajC1fXAGaUKDv6k0oJAYyl9EAKyOguCp5744Fd3JLce+
-         2im8Jny8Y6DHkbraLBi+osagm5ZUIskSmxTB0iI94Vknede6jiVy+4R5PBlIshblKMWd
-         IDFA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=ZLUBc7EGU7o4BW0N/KcQnu8KlVm43ncM6i5vSvUVOCA=;
-        b=gFsu2kkFLtOXDYp7YVwqKAutvVELyaP+o7rKP+jj7aX6d3rvLTmcLws3Q55gCOHO10
-         57Pyjnn5S3mgOTr88ekemvnnkWFEdh7F7YBU5jKbPW9S1hsL1r/aGPIg/LkMxbQz+V3x
-         Jo8MImCibg6RnN2/1CopxdwJcBkWfCL+fVxkeFv4YNa+U5MwEMzVwYKfHSMWeGUNsHlY
-         6BMuJrvczr+1HfNiImJ9AlpDUQOF+cBFbVgxmdlznPnIUJqGQChCV0aZQNrYzOVzLvG6
-         hRXgs/GFXpcF3dRCwkdYlkQ9IhIJK9uAx79VG3W/FdsG3pjJcI06Y7fU8c2IPXTgw2tA
-         OzBg==
-X-Gm-Message-State: AIkVDXKbWAzbeDnR08+Po4fWAOjRRmP1Eb+Cug+ER0wjZna3kPj9Rp5STD4PgemLpCUYMrd6
-X-Received: by 10.99.167.74 with SMTP id w10mr12106220pgo.2.1484850395550;
-        Thu, 19 Jan 2017 10:26:35 -0800 (PST)
-Received: from google.com ([2620:0:1000:5b10:1d68:bc5d:3a1b:2ccb])
-        by smtp.gmail.com with ESMTPSA id q145sm10577154pfq.22.2017.01.19.10.26.33
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 19 Jan 2017 10:26:34 -0800 (PST)
-Date:   Thu, 19 Jan 2017 10:26:33 -0800
-From:   Brandon Williams <bmwill@google.com>
+        id S1754169AbdASS05 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 19 Jan 2017 13:26:57 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:64162 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1753966AbdASS05 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 Jan 2017 13:26:57 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id D3C9D5EE2C;
+        Thu, 19 Jan 2017 13:22:55 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=6G1BBQMq9hyf
+        sgy+7d0PJq6MTfU=; b=EiqaicmjIMJTjHDcOjwVe1o8bM25sQ7rsBsRoIzOKOQT
+        0kcFlEMAOeSD4CmC6AuxrMgRo81+Cbcu/LQh3eV29vepAsvryZdixA9+2lbF/dcI
+        GUYSZeP9cKpAF4GmoBhMqaHjO3m8ecwCwpqWaiQNMfvVLULNzKp8eSJU8IqEvgc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=swisTT
+        9u8KLVTHDprEjCHDq7bUlMrCKX9gLNuVnCYapCnY20TUAeqBJTXH1gAsUXEIas3V
+        jJsm9bNHCwI10G161mCu6EiksCtvInmHxdKRYWwUdvScCVLaT83aKzdHz5zzIhsw
+        yhGT5hs0VuY0d7IosjrXbz29jbA+OxDwJslNM=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id CC5385EE2B;
+        Thu, 19 Jan 2017 13:22:55 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 31FFC5EE2A;
+        Thu, 19 Jan 2017 13:22:55 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
 To:     Jeff King <peff@peff.net>
-Cc:     Stefan Hajnoczi <stefanha@redhat.com>, git@vger.kernel.org,
-        gitster@pobox.com
-Subject: Re: [RFC 0/2] grep: make output consistent with revision syntax
-Message-ID: <20170119182633.GG10641@google.com>
-References: <20170119150347.3484-1-stefanha@redhat.com>
- <20170119165958.xtotlvdta7udqllb@sigill.intra.peff.net>
+Cc:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH v5 2/3] color.c: trim leading spaces in color_parse_mem()
+References: <20170109103258.25341-1-pclouds@gmail.com>
+        <20170119114123.23784-1-pclouds@gmail.com>
+        <20170119114123.23784-3-pclouds@gmail.com>
+        <20170119164157.mvoadhxxwwynedoz@sigill.intra.peff.net>
+Date:   Thu, 19 Jan 2017 10:22:53 -0800
+In-Reply-To: <20170119164157.mvoadhxxwwynedoz@sigill.intra.peff.net> (Jeff
+        King's message of "Thu, 19 Jan 2017 11:41:57 -0500")
+Message-ID: <xmqq60la3o5e.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20170119165958.xtotlvdta7udqllb@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 4BE50E3A-DE74-11E6-B4E3-FE3F13518317-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 01/19, Jeff King wrote:
-> On Thu, Jan 19, 2017 at 03:03:45PM +0000, Stefan Hajnoczi wrote:
-> 
-> > git-grep(1)'s output is not consistent with git-rev-parse(1) revision syntax.
-> > 
-> > This means you cannot take "rev:path/to/file.c: foo();" output from git-grep(1)
-> > and expect "git show rev:path/to/file.c" to work.  See the individual patches
-> > for examples of command-lines that produce invalid output.
-> 
-> I think this is a good goal.
+Jeff King <peff@peff.net> writes:
 
-I agree.
+> On Thu, Jan 19, 2017 at 06:41:22PM +0700, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=
+=BB=8Dc Duy wrote:
+>
+>> Normally color_parse_mem() is called from config parser which trims th=
+e
+>> leading spaces already. The new caller in the next patch won't. Let's =
+be
+>> tidy and trim leading spaces too (we already trim trailing spaces befo=
+re
+>> comma).
+>
+> What comma? I don't think that exists until the next patch. :)
+>
+> I think just trimming from the front is OK, though, because
+> color_parse_mem() trims trailing whitespace after a word. So either you
+> have a word and we will trim after it, or you do not (in which case
+> this will trim everything and hit the !len case you added).
+>
+> So maybe a better commit message is just:
+>
+>   Normally color_parse_mem() is called from config parser which trims
+>   the leading spaces already. The new caller in the next patch won't.
+>   Let's be tidy and trim leading spaces too (we already trim trailing
+>   spaces after a word).
+>
+> -Peff
 
-> I couldn't immediately think of any cases where your patches would
-> misbehave, but my initial thought was that the "/" versus ":"
-> distinction is about whether the initial object is a tree or a commit.
-
-I think this is also the case, I couldn't think of another case where
-this decision wasn't based on if the object is a tree or a commit.
-Interestingly enough I don't think we have any tests that exist that
-test the formatting of grep's output when given a tree object since the
-test suite still passes with these changes in. Which means this fix
-should probably include a couple tests to ensure there's no regression
-in the future.
-
--- 
-Brandon Williams
+Yeah, my reading stuttered at the same place in the original, and
+your rewrite looks a lot more sensible.
