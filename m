@@ -2,91 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.4 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9D92D20A17
-	for <e@80x24.org>; Thu, 19 Jan 2017 22:03:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 981DF20A17
+	for <e@80x24.org>; Thu, 19 Jan 2017 22:04:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752135AbdASWDD (ORCPT <rfc822;e@80x24.org>);
-        Thu, 19 Jan 2017 17:03:03 -0500
-Received: from www.zeus03.de ([194.117.254.33]:38444 "EHLO mail.zeus03.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751497AbdASWDC (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 Jan 2017 17:03:02 -0500
-Received: (qmail 21215 invoked from network); 19 Jan 2017 23:02:58 +0100
-Received: from p54b33be7.dip0.t-ipconnect.de (HELO localhost) (l3s3148p1@84.179.59.231)
-  by mail.zeus03.de with ESMTPSA (ECDHE-RSA-AES256-GCM-SHA384 encrypted, authenticated); 19 Jan 2017 23:02:58 +0100
-Date:   Thu, 19 Jan 2017 23:02:58 +0100
-From:   Wolfram Sang <wsa@the-dreams.de>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [RFC for GIT] pull-request: add praise to people doing QA
-Message-ID: <20170119220257.GB1747@katana>
-References: <20170115183051.3565-1-wsa@the-dreams.de>
- <xmqqlgubc04z.fsf@gitster.mtv.corp.google.com>
- <20170119204343.xtotmjddhbum2mvr@ninjato>
- <xmqq7f5qzqx3.fsf@gitster.mtv.corp.google.com>
+        id S1751947AbdASWEe (ORCPT <rfc822;e@80x24.org>);
+        Thu, 19 Jan 2017 17:04:34 -0500
+Received: from mail-it0-f54.google.com ([209.85.214.54]:36603 "EHLO
+        mail-it0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751498AbdASWEd (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 Jan 2017 17:04:33 -0500
+Received: by mail-it0-f54.google.com with SMTP id c7so7111872itd.1
+        for <git@vger.kernel.org>; Thu, 19 Jan 2017 14:04:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=bqv+lLiPgjExFOFM1HWQbzMipKgYGRLaYhfHMY1WE24=;
+        b=vWmBDoYzRv34fyf71BlVzeSvwzeFbBTePm+ZUernRsR4S/jBEPwLMoi3kWKmx7e6Pu
+         cmJ3dK4s9gH4CE9l64aouD6JN7IdgvscapSJSbSidN5bLlRLxPUm7bo80iZcmnpItE6W
+         4dTFDx93l6+12NDRq+Q0k96iYTignm6tliktCUIR31d8JUMvlIgEjZs8Ck8VUemM+0Zc
+         uB6lVe+NNqpDdiMMiXcCm1Io1xOGYjoCCHzgGN05J12JWverWFB3SEn2CTKu7RRdyWrc
+         /Qd7tV47wZG51OoQ7foUztvDUXkpIbjQQ1xE/J6MQx3fLay0zOXGxCbV1PItFnBI69dk
+         sz4Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=bqv+lLiPgjExFOFM1HWQbzMipKgYGRLaYhfHMY1WE24=;
+        b=gSPvMQgvjJtmyzDB+i7vHa2fybtxJJZ5mGxkEfx7E7jfrKDYej14ahKdfFWKOkYyIE
+         jeTfmCXQ+26r3rvNcgt2SLT44LfFrfnhs0QSLzrqLph5prfyQKRcZzK/fp12E0K89TsV
+         OSlv3g2BcKaTr/lot550CccG9INfax3Uuy+NpVP8t5kTgLe5PLIb6YYzl+tcZjSs0mMK
+         BkD/HZKxX9yr64HXcHYcvatPgvtiZ3d+cl/h5IFrhUyJlUQWrR+wE7K0Z6RvcyEfdKPM
+         X5JQBf/9tMhK96ROqGdURgB0jE4vOH86briIYwCmltsoy20w9a+I5AswcTYFKzOngsFI
+         g2LA==
+X-Gm-Message-State: AIkVDXJlGH2BK9CCeZ6fW/oArg9/gTfHjfOGH+utgrAizCBq00951vWc2Ir10ttOExo3UMZoGN2Gus+0wKxcJWlJ
+X-Received: by 10.36.169.12 with SMTP id r12mr769964ite.69.1484862951602; Thu,
+ 19 Jan 2017 13:55:51 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-        protocol="application/pgp-signature"; boundary="98e8jtXdkpgskNou"
-Content-Disposition: inline
-In-Reply-To: <xmqq7f5qzqx3.fsf@gitster.mtv.corp.google.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+Received: by 10.79.39.19 with HTTP; Thu, 19 Jan 2017 13:55:51 -0800 (PST)
+In-Reply-To: <xmqqo9z2zs2o.fsf@gitster.mtv.corp.google.com>
+References: <20161228180205.29213-1-sbeller@google.com> <20170119202941.6575-1-sbeller@google.com>
+ <xmqqo9z2zs2o.fsf@gitster.mtv.corp.google.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Thu, 19 Jan 2017 13:55:51 -0800
+Message-ID: <CAGZ79kam9ACf+xa3nvHT2KYqPR6qPM4ohKt7gtEv21-rmBdEuw@mail.gmail.com>
+Subject: Re: [RESEND PATCHv2] contrib: remove git-convert-objects
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        Linus Torvalds <torvalds@linux-foundation.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Thu, Jan 19, 2017 at 12:57 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Stefan Beller <sbeller@google.com> writes:
+>
+>> git-convert-objects, originally named git-convert-cache was used in
+>> early 2005 to convert to a new repository format, e.g. adding an author
+>> date.
+>
+> I think this description is not wrong per-se but misses the much
+> more important point.  In the very early days of Git, the objects
+> were named after SHA-1 of deflated loose object representation,
+> which meant that tweak in zlib or change of compression level would
+> give the same object different names X-<.  This program was to
+> convert an ancient history with these objects and rewrite them to
+> match the new object naming scheme where the name comes from a hash
+> of the inflated representation.
 
---98e8jtXdkpgskNou
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+ok, in case I reroll again, I'll fixup the message.
 
+>
+>> By now the need for conversion of the very early repositories is less
+>> relevant, we no longer need to keep it in contrib; remove it.
+>
+> I am not sure if removal of it matters, and I suspect that we saw no
+> reaction from anybody because nobody thought it deserves the
+> brain-cycle to decide whether to remove it.  I dunno.
 
-> > I didn't know about trailers before. As I undestand it, I could use
-> > "Tested-by" as the key, and the commit subject as the value. This list
-> > then could be parsed and brought into proper output shape. It would
-> > simplify the subject parsing, but most things my AWK script currently
-> > does would still need to stay or to be reimplemented (extracting names
-> > from tags, creating arrays of tags given by $name). Am I correct?
->=20
-> That is not exactly what I had in mind.  I was wondering if we can
-> do without any external script, implementing the logic you added
-> inside shortlog with an extra option that triggers the whole thing,
-> which may call into the same trailers API as used by the
-> interpret-trailers command to do the parsing and picking out parts.
+I do think removing this would improve contrib/, not just because
+it would better align with contribs mission statement in its README, but
+also for other reasons. Why would a user look into contrib/ at all?
+* to find interesting contemporary bits and pieces
+* if they want to find old stuff for educational purposes, they ought to
+  be looking into contrib/examples instead.
 
-Sorry for being unclear. That's what I meant with "or to be
-reimplemented". I should have added "in C".
+So maybe instead of this patch, just move it to the examples section?
+(That way we archive the same goal: a cleaner, fresher contrib/
+that doesn't look as stale)
 
-I am afraid this also requires more time than I am willing to
-spend on this issue. Seems my hack is going to stay for a while here.
-
-However, thank you for your time and assisting me with pointers!
-
-
---98e8jtXdkpgskNou
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBAgAGBQJYgTeRAAoJEBQN5MwUoCm2SoAP/0Y5hUa9Vmeeq+F2Xw2rWO2R
-+Fk2YmZW6bmqMyBRyKstpdIlrLlGgDf95VIMMkuwi2RuTn+NPlahSwUym/4xqipR
-WqFz3HNmFGm/dDkPQ3K6OMXPLkNuwJmwkV0NmrX6qlor2Idzq2ouYFIHPKIWvOBI
-AAAiyBI23gV9JC8P9pmgsg8vF68P49mnV60RFXQ7LVAFLM311/8bEcNnKBbBmTGf
-XZOtwduj+cj/Oiuly+WCOsS+oPAXeI/L2wJD0msIJKPEA4KOjBlENBFKTJ1h2/Bq
-VLybFm6Z7QvbAotdfke1bvB5NKy3aHGOP6fVuSvnOqynRfmpAOmFvYgNuCRcqR6R
-plcWHry8ce6Gq/6L5jfvAMbPHOyh8taMSmJVVab1RVUOk+glMgVXgBfiYq2OsBr2
-ywdd/YBnYigGSkaIkoLGcJ2EAflP217o7QyfiD5Fptu2S1jBNcOoyYTpanAeLePw
-R+F9qc6mT17BvX0r4Q9NJ0XE9iEtzgZQFmfF99BepKiPCbAKEYEN9kMIKQO3CFM0
-UAdxTFnAichfKJvLeKHGitSIy7c6n2Bpx5hReJ0vuIdLUUOMVfiQOiqiyAVhUWaE
-GYs7GQ07g6xIBsxt/fGhs2AaAHGHZdJ0mM1H8+MRWzPrkQV4st0GvhZaN5q4lC6t
-EL/UMPSmZ0JW9fURKHDE
-=I07U
------END PGP SIGNATURE-----
-
---98e8jtXdkpgskNou--
+Thanks,
+Stefan
