@@ -2,113 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B011E20756
-	for <e@80x24.org>; Thu, 19 Jan 2017 08:43:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 32F0D20756
+	for <e@80x24.org>; Thu, 19 Jan 2017 11:19:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751246AbdASInm (ORCPT <rfc822;e@80x24.org>);
-        Thu, 19 Jan 2017 03:43:42 -0500
-Received: from mail-qt0-f171.google.com ([209.85.216.171]:35854 "EHLO
-        mail-qt0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750888AbdASInl (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 Jan 2017 03:43:41 -0500
-Received: by mail-qt0-f171.google.com with SMTP id k15so56504828qtg.3
-        for <git@vger.kernel.org>; Thu, 19 Jan 2017 00:42:52 -0800 (PST)
+        id S1752334AbdASLTK (ORCPT <rfc822;e@80x24.org>);
+        Thu, 19 Jan 2017 06:19:10 -0500
+Received: from mail-wm0-f44.google.com ([74.125.82.44]:35313 "EHLO
+        mail-wm0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752220AbdASLS2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 Jan 2017 06:18:28 -0500
+Received: by mail-wm0-f44.google.com with SMTP id r126so285033922wmr.0
+        for <git@vger.kernel.org>; Thu, 19 Jan 2017 03:18:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to;
-        bh=0ipkqdojNlUGJDsajC8mzzUFfMdDMVrxE/aTt9KQgKw=;
-        b=c52DydQnmmUoxnc5oHjUFYChKWlAUBKtNi8LEmOZXxJ/2pPO7MxS5VtcGS0JU7zf0z
-         rXYXxtGZS3SSb4/JocunAx4pghrmQJicOFoxYfKhDU/hkFWJOiXn/gAfEv6R/1L6ShIf
-         unez4DZOE2Uu83x2LdQp6ikl4ZSOo6WxU7lcwVrX9W23RET5+oKfNMgQTk5kGxZIF0r5
-         Rd84Pq9oOhdIz2TktGYrTI6d74ODX0yEbrMFz4+HrFvAwL/7aGbRkml6hNKOJs8klLTK
-         EyLUuz3X+WKbO+JDPSrsqc7UD4ygL2SE2hiY3PBzjg+wAwIkw3Fp2ZaqoOKTAg8Ytkqn
-         lyTw==
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=EXwxjHhf7yrxlTv0SYlN1VAPqRyNoRkyXqUtUQRkmjY=;
+        b=NFk0idfD9R4EvHds4uk25ZulHjYR0fn4Xm6o8E2LGHxgI/8jJZA+jJdxJlMf9T0ETs
+         x+9DoqusJn9AzWQ7ajuBIyQCwAyfc6vcAGsCSMj15ZO9O3ymbjyxlTPIhu7SsijFmU+3
+         1MJBm6X2pWmCDk1sk+FWJU9YME8AuuGaaPh1hy97Vq60hzJ58DLwSEM/qcI9EHVsHm97
+         clLGrMJzxSQ1bdSaebI8Z0moxURcEhBiikUJwUA6LkMHlAbOU/s3MbVujIKffygrOTCW
+         Qe1HcyRqm82EAo14CXjwtUtBvcPxdTImqCkd7dbj8ektuHvIIK84a6Ka8MLrn+XivphK
+         QWhg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to;
-        bh=0ipkqdojNlUGJDsajC8mzzUFfMdDMVrxE/aTt9KQgKw=;
-        b=plryeXJBl2oPaBFCDJ6SIgYuILyU77rhXvFJdjy22nhOib9IuP1LPWm5848N83cGl0
-         nEXj6QbGqZsTgnVQ6N/uQp9jxkBBEsixwS5laZJ+STaTQ+rLcbgOiSCqUZTeG8fkDcS7
-         mBwswYev7bC1iDlJSKQcvnCPBklk95+0UtMLgzMJYJTTPCE6o35/+49dbcs8T4GNliQy
-         BSzOrSdha3D+Fo5jVMBuW2limi2R7yeOkCmiKpS7DQRAA+TDfx+NVr3gnX8RYSgSGGB3
-         btL+XtcyiVIjMpqRxJ/DLFJprT1ggt9/Llbq5s+Z7L7wxadECnDtC7NuCRkDIAb2UnH8
-         k39Q==
-X-Gm-Message-State: AIkVDXLkpC0PWdIp028h6e4M1Z1R7pUcxjWSapv/IJYBfk/qidwM33+BK72U/y+U79Wg0EnBLVPHOtWr7hJ14g==
-X-Received: by 10.200.1.11 with SMTP id e11mr6344204qtg.85.1484815371841; Thu,
- 19 Jan 2017 00:42:51 -0800 (PST)
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=EXwxjHhf7yrxlTv0SYlN1VAPqRyNoRkyXqUtUQRkmjY=;
+        b=TLBOi1ZDAywB9FnnydqwztIkjwNUNW1OP71zBvg+Ei0JryFPdrbXlfrsV/8/TrZ81u
+         KyIjyZQjBZ9w8GxONv+HcnB+8Sojo/2WHx8czLXtQmwnfmIIsGdzr69RE+FJ+2Ae5sGH
+         ycy3I8CfWGg/mMkdd0DNp3xEXL/bGV+EVYWusyzgqOKiRcOj6XayyFFi9AvC4TDKgk8V
+         vUjYHDxEmi5X5ykSvkE/BVcav8QCRaujW8tW/G6pNpr/Z8zqm+poWt08G54OQLMD2c6B
+         5lVLQrWzflth+viNtUPzFV0AhybuTu5uk7l8XNMaehy2svqHRFIH2fb4tuYJzsRvXrzl
+         Q5TA==
+X-Gm-Message-State: AIkVDXKWd0udk+A+vlUU1nEGfUAo0XSEAX6Fr1mFEdUgViH6sr30qrX2aOBb/AwMBdcb6sH0slPqFQfG0R+Rsg==
+X-Received: by 10.223.163.154 with SMTP id l26mr8361619wrb.35.1484824689843;
+ Thu, 19 Jan 2017 03:18:09 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.12.142.66 with HTTP; Thu, 19 Jan 2017 00:42:31 -0800 (PST)
-In-Reply-To: <CAKcFC3ZN+=o_2t4AawCE0c4Tw+t_XJKTHtEq9d7bv-ht5euPbw@mail.gmail.com>
-References: <CAKcFC3aqjLNUNKPDZ08rO_SBkY84uvHBerCxnSchAe8rH0dnMg@mail.gmail.com>
- <CAKcFC3ZN+=o_2t4AawCE0c4Tw+t_XJKTHtEq9d7bv-ht5euPbw@mail.gmail.com>
-From:   jean-christophe manciot <actionmystique@gmail.com>
-Date:   Thu, 19 Jan 2017 09:42:31 +0100
-Message-ID: <CAKcFC3aHZP5-MJaNj4vv_qBwY3xNRodYnfw0P-G-Q+XfaRf=Cw@mail.gmail.com>
-Subject: Re: fatal: bad revision 'git rm -r --ignore-unmatch -- folder'
-To:     git@vger.kernel.org
+Received: by 10.28.74.209 with HTTP; Thu, 19 Jan 2017 03:18:09 -0800 (PST)
+In-Reply-To: <20170113175258.e66taigy4wpokohk@sigill.intra.peff.net>
+References: <CAEBDL5Uc39JagdmXUxfxh1TPSK3H5wxoTfjK-pfLRYjciBnHpA@mail.gmail.com>
+ <1483825623.31837.9.camel@kaarsemaker.net> <20170108052619.4ucjamsqad4g5add@sigill.intra.peff.net>
+ <CAEBDL5Vf=rvb4fZF87pNYci4sicmzhS_qPJYHHOGcnPTMBhhWg@mail.gmail.com> <20170113175258.e66taigy4wpokohk@sigill.intra.peff.net>
+From:   John Szakmeister <john@szakmeister.net>
+Date:   Thu, 19 Jan 2017 06:18:09 -0500
+X-Google-Sender-Auth: qjn55LLaQtmcbcolwxCaUDEhN3I
+Message-ID: <CAEBDL5XfZDipTNf73q1bNN+xatEvLD29uicSim-a7bqUV1Z=NQ@mail.gmail.com>
+Subject: Re: [PATCH 0/6] loose-object fsck fixes/tightening
+To:     Jeff King <peff@peff.net>
+Cc:     Dennis Kaarsemaker <dennis@kaarsemaker.net>, git@vger.kernel.org
 Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Also some context information:
-Ubuntu 16.10 4.8
-git 2.11.0
+On Fri, Jan 13, 2017 at 12:52 PM, Jeff King <peff@peff.net> wrote:
+> On Fri, Jan 13, 2017 at 04:15:42AM -0500, John Szakmeister wrote:
+>
+>> > I did notice another interesting case when looking at this. Fsck ends up
+>> > in fsck_loose(), which has the sha1 and path of the loose object. It
+>> > passes the sha1 to fsck_sha1(), and ignores the path entirely!
+>> >
+>> > So if you have a duplicate copy of the object in a pack, we'd actually
+>> > find and check the duplicate. This can happen, e.g., if you had a loose
+>> > object and fetched a thin-pack which made a copy of the loose object to
+>> > complete the pack).
+>> >
+>> > Probably fsck_loose() should be more picky about making sure we are
+>> > reading the data from the loose version we found.
+>>
+>> Interesting find!  Thanks for the information Peff!
+>
+> So I figured I would knock this out as a fun morning exercise. But
+> sheesh, it turned out to be a slog, because most of the functions rely
+> on map_sha1_file() to convert the sha1 to an object path at the lowest
+> level.
 
-On Thu, Jan 19, 2017 at 9:32 AM, jean-christophe manciot
-<actionmystique@gmail.com> wrote:
-> In case you were wondering whether these files were tracked or not:
->
-> git-Games# git ls-files Ubuntu/16.04
-> Ubuntu/16.04/residualvm_0.3.0~git-1_amd64.deb
-> Ubuntu/16.04/scummvm-data_1.8.0_all.deb
-> Ubuntu/16.04/scummvm-data_1.9.0_all.deb
-> Ubuntu/16.04/scummvm-dbgsym_1.8.2~git20160821.bad86050_amd64.deb
-> Ubuntu/16.04/scummvm-dbgsym_1.9.0_amd64.deb
-> Ubuntu/16.04/scummvm_1.8.0_amd64.deb
-> Ubuntu/16.04/scummvm_1.9.0_amd64.deb
->
-> On Tue, Jan 17, 2017 at 4:30 PM, jean-christophe manciot
-> <actionmystique@gmail.com> wrote:
->> Hi there,
->>
->> I'm trying to purge a complete folder and its files from the
->> repository history with:
->>
->> git-Games# git filter-branch 'git rm -r --ignore-unmatch --
->> Ubuntu/16.04/' --tag-name-filter cat -- --all HEAD
->> fatal: bad revision 'git rm -r --ignore-unmatch -- Ubuntu/16.04/'
->>
->> git does not find the folder although it's there:
->>
->> git-Games# ll Ubuntu/16.04/
->> total 150316
->> drwxr-x--- 2 actionmystique actionmystique     4096 Nov 19 13:40 ./
->> drwxr-x--- 4 actionmystique actionmystique     4096 Oct 30 14:02 ../
->> -rwxr-x--- 1 actionmystique actionmystique  2190394 May  9  2016
->> residualvm_0.3.0~git-1_amd64.deb*
->> ...
->> -rw-r--r-- 1 actionmystique actionmystique 67382492 Oct 13 09:15
->> scummvm-dbgsym_1.9.0_amd64.deb
->>
->> What is going on?
->>
->> --
->> Jean-Christophe
->
->
->
-> --
-> Jean-Christophe
+Yeah, I discovered the same thing when I took a look at it a week or so ago. :-(
 
+> But I finally got something working, so here it is. I found another bug
+> on the way, along with a few cleanups. And then I did the trailing
+> garbage detection at the end, because by that point I knew right where
+> it needed to go. :)
 
+I don't know if my opinion counts for much, but the changes look good to me.
 
--- 
-Jean-Christophe
+-John
