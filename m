@@ -2,101 +2,114 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.4 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1029820A17
-	for <e@80x24.org>; Thu, 19 Jan 2017 18:38:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D652D20A17
+	for <e@80x24.org>; Thu, 19 Jan 2017 18:40:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754178AbdASSix (ORCPT <rfc822;e@80x24.org>);
-        Thu, 19 Jan 2017 13:38:53 -0500
-Received: from smtprelay.synopsys.com ([198.182.47.9]:46813 "EHLO
-        smtprelay.synopsys.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754052AbdASSiv (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 Jan 2017 13:38:51 -0500
-Received: from mailhost.synopsys.com (mailhost2.synopsys.com [10.13.184.66])
-        by smtprelay.synopsys.com (Postfix) with ESMTP id 113B424E16AE;
-        Thu, 19 Jan 2017 09:55:36 -0800 (PST)
-Received: from mailhost.synopsys.com (localhost [127.0.0.1])
-        by mailhost.synopsys.com (Postfix) with ESMTP id 986D54D3;
-        Thu, 19 Jan 2017 09:55:36 -0800 (PST)
-Received: from US01WXQAHTC1.internal.synopsys.com (us01wxqahtc1.internal.synopsys.com [10.12.238.230])
-        by mailhost.synopsys.com (Postfix) with ESMTP id 55FF44CB;
-        Thu, 19 Jan 2017 09:55:35 -0800 (PST)
-Received: from DE02WEHTCB.internal.synopsys.com (10.225.19.94) by
- US01WXQAHTC1.internal.synopsys.com (10.12.238.230) with Microsoft SMTP Server
- (TLS) id 14.3.266.1; Thu, 19 Jan 2017 09:55:35 -0800
-Received: from DE02WEHTCA.internal.synopsys.com (10.225.19.92) by
- DE02WEHTCB.internal.synopsys.com (10.225.19.94) with Microsoft SMTP Server
- (TLS) id 14.3.266.1; Thu, 19 Jan 2017 18:55:35 +0100
-Received: from [10.107.19.116] (10.107.19.116) by
- DE02WEHTCA.internal.synopsys.com (10.225.19.80) with Microsoft SMTP Server
- (TLS) id 14.3.266.1; Thu, 19 Jan 2017 18:55:34 +0100
-Subject: Re: Git: new feature suggestion
-To:     Konstantin Khomoutov <kostix+git@007spb.ru>,
-        Joao Pinto <Joao.Pinto@synopsys.com>
-References: <4817eb00-6efc-e3c0-53d7-46f2509350d3@synopsys.com>
- <20170119093313.ea57832dfd1bc7e0b0f1e630@domain007.com>
-CC:     <git@vger.kernel.org>,
-        Linus Torvalds <torvalds@linux-foundation.org>,
-        "CARLOS.PALMINHA@synopsys.com" <CARLOS.PALMINHA@synopsys.com>
-From:   Joao Pinto <Joao.Pinto@synopsys.com>
-Message-ID: <d43abe2b-cd6a-9b08-272f-9dddbb8eccea@synopsys.com>
-Date:   Thu, 19 Jan 2017 17:55:33 +0000
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
- Thunderbird/45.6.0
+        id S1754202AbdASSkZ (ORCPT <rfc822;e@80x24.org>);
+        Thu, 19 Jan 2017 13:40:25 -0500
+Received: from mail-ot0-f195.google.com ([74.125.82.195]:34938 "EHLO
+        mail-ot0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754149AbdASSkX (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 Jan 2017 13:40:23 -0500
+Received: by mail-ot0-f195.google.com with SMTP id 65so5158226otq.2
+        for <git@vger.kernel.org>; Thu, 19 Jan 2017 10:39:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=hvIglghObk6ZOjr2o3VcAM4kpFcUCrzj76mKh22N3Ws=;
+        b=U3DuKZol/wQN0vzEVj65LK0V+sk+XNIoljoZ6izipJTsCT4lPxjC3RlHGa4AJPyGjn
+         AUdIJLTOqiRPP39ibTtn2EZWbJu3O/2/eLdKRaV9IgtwcFN7DejvrhiV7RKJsRQ9kh2G
+         NHNgPlhiw9qM45iPX+1S/w1qMKzdE0jhkjSsEo4j9dJhOLiN87oLrrBKTBscLXaMQUSy
+         MxxmnO5dzsoOjEbY+JehTmI1U6SNKXUT1n/wRWjqxYQXiwpmjJOdfvMlln/cAaH6pgRg
+         76XxSHSif+ce1nYSVdUE3cFfBtYUJo0Lb+SzzkQu5jK1ABvLcH/1IUQOtP7oVcH5Sga3
+         hr6w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=hvIglghObk6ZOjr2o3VcAM4kpFcUCrzj76mKh22N3Ws=;
+        b=Ud1irUgwNXal+RNjlmTCzwil8NKKtauw/hPr1OesHjBmomdG1ESa3uWYgRK2joFE1V
+         EezmLmJlV9Uafa/ob2KeNHuxxCD3gcB1PvV0WU758qmQzss95pudcCUYvJipZNW6DjQb
+         5qpaV1Ji+AzF3flToRlzUh1bdX3U0xLs3HuJQmIKI/fsvnqMWKC/bZOl7sbIC1vmSWFU
+         8+Ecj8z+E+SBeHEZNt5dFkPuWQNIGLUXH/vXg+JSFGcAvKUDvYMCkilEcaFOGA8qCxES
+         hvD/Xq89K7tootrRusu9gSfXBXBkS1XcJ68xmVJNk7+4Yo/b0HGkTatobWQQew3jvLMu
+         FyKA==
+X-Gm-Message-State: AIkVDXLbMdPNS8Zx8nIHS58s3kcrnc+eoUGmWLGcJpYms1j6Rg5lCOArld/mmhswa/xpgdWPVRKVgLqyDdGUzg==
+X-Received: by 10.157.14.166 with SMTP id 35mr4913423otj.136.1484851178759;
+ Thu, 19 Jan 2017 10:39:38 -0800 (PST)
 MIME-Version: 1.0
+Received: by 10.182.63.13 with HTTP; Thu, 19 Jan 2017 10:39:38 -0800 (PST)
 In-Reply-To: <20170119093313.ea57832dfd1bc7e0b0f1e630@domain007.com>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.107.19.116]
+References: <4817eb00-6efc-e3c0-53d7-46f2509350d3@synopsys.com> <20170119093313.ea57832dfd1bc7e0b0f1e630@domain007.com>
+From:   Linus Torvalds <torvalds@linux-foundation.org>
+Date:   Thu, 19 Jan 2017 10:39:38 -0800
+X-Google-Sender-Auth: J7bgTeGvDEBdrMLgxY4nfJDXfmk
+Message-ID: <CA+55aFxAe8bH2xXkx1p5gYN+nc-D-vjNnfUeA_64Q3ttpbHq+w@mail.gmail.com>
+Subject: Re: Git: new feature suggestion
+To:     Konstantin Khomoutov <kostix+git@007spb.ru>
+Cc:     Joao Pinto <Joao.Pinto@synopsys.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        "CARLOS.PALMINHA@synopsys.com" <CARLOS.PALMINHA@synopsys.com>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-Hi,
-
-Às 6:33 AM de 1/19/2017, Konstantin Khomoutov escreveu:
-> On Wed, 18 Jan 2017 10:40:52 +0000
-> Joao Pinto <Joao.Pinto@synopsys.com> wrote:
-> 
-> [...]
->> I have seen a lot of Linux developers avoid this re-organization
->> operations because they would lose the renamed file history, because
->> a new log is created for the new file, even if it is a renamed
->> version of itself. I am sending you this e-mail to suggest the
->> creation of a new feature in Git: when renamed, a file or folder
->> should inherit his parent’s log and a “rename: …” would be
->> automatically created or have some kind of pointer to its “old” form
->> to make history analysis easier.
-> 
-> Git does not record renames because of its stance that what matters is
-> code _of the whole project_ as opposed to its location in a particular
-> file.
-> 
-> Hence with regard to renames Git "works backwards" by detecting them
-> dynamically while traversing the history (such as with `git log`
-> etc).  This detection uses certain heuristics which can be controlled
-> with knobs pointed to by Stefan Beller.
-> 
+On Wed, Jan 18, 2017 at 10:33 PM, Konstantin Khomoutov
+<kostix+git@007spb.ru> wrote:
+>
 > Still, I welcome you to read the sort-of "reference" post by Linus
 > Torvalds [1] in which he explains the reasoning behind this approach
-> implemented in Git.  IMO, understanding the reasoning behind the idea
-> is much better than just mechanically learning how to use it.
-> 
-> The whole thread (esp. Torvalds' replies) is worth reading, but that
-> particular mail summarizes the whole thing very well.
-> 
-> (The reference link to it used to be [2], but Gmane is not fully
-> recovered to be able to display it.)
-> 
-> 1. https://urldefense.proofpoint.com/v2/url?u=http-3A__public-2Dinbox.org_git_Pine.LNX.4.58.0504150753440.7211-40ppc970.osdl.org_&d=DwIDaQ&c=DPL6_X_6JkXFx7AXWqB0tg&r=s2fO0hii0OGNOv9qQy_HRXy-xAJUD1NNoEcc3io_kx0&m=X0bQCOGTuZF-uq6smPwJDw4Q47qHgjWaewgTHCbhMnM&s=97U97toe9A6XOAJxbhxvWeYpzl-wPw9QvlhQfAEUTdI&e= 
-> 2. https://urldefense.proofpoint.com/v2/url?u=http-3A__thread.gmane.org_gmane.comp.version-2Dcontrol.git_27_focus-3D217&d=DwIDaQ&c=DPL6_X_6JkXFx7AXWqB0tg&r=s2fO0hii0OGNOv9qQy_HRXy-xAJUD1NNoEcc3io_kx0&m=X0bQCOGTuZF-uq6smPwJDw4Q47qHgjWaewgTHCbhMnM&s=agYFOBCbLeaKAB6frWWzcwHkZyrMZLW4ExgDxzQyVlI&e= 
-> 
+> implemented in Git.
 
-Thank you very much for the info!
+It's worth noting that that discussion was from some _very_ early days
+in git (one week into the whole thing), when none of those
+visualization tools were actually implemented.
 
-Joao
+Even now, ten years after the fact, plain git doesn't actually do what
+I outlined. Yes, "git blame -Cw" works fairly well, and is in general
+better than the traditional per-file "annotate". And yes, "git log
+--follow" does another (small) part of the outlined thing, but is
+really not very powerful.
+
+Some tools on top of git do more, but I think in general this is an
+area that could easily be improved upon. For example, the whole
+iterative and interactive drilling down in history of a particular
+file is very inconvenient to do with "git blame" (you find a commit
+that change the area in some way that you don't find interesting, so
+then you have to restart git blame with the parent of that
+unintersting commit).
+
+You can do it in tig, but I suspect a more graphical tool might be better.
+
+.. and we still end up having a lot of things where we simply just
+work with pathnames. For example, when doing merges, it' absolutely
+_wonderful_ doing
+
+   gitk --merge <filename>
+
+to see what happened to that filename that has a conflict during the
+merge. But it's all based on the whole-file changes, and sometimes
+you'd like to see just the commits that generate one particular
+conflict (in the kernel, things like the MAINTAINERS file can have
+quite a lot of changes, but they are all pretty idnependent, and what
+you want to see is just "changes to this area").
+
+We do have the "-L" flag to git log, but it doesn't actually work for
+this particular case because of limitations.
+
+So what I'm trying to say is that the argument from 10+ years ago that
+"you can do better with intelligent tools after-the-fact" is very much
+true, but it's also true that we don't actually have all those
+intelligent tools, and this is an area that could still be improved
+upon. Some of them are actually available as add-ons in various
+graphical IDE's that use git.
+
+                 Linus
