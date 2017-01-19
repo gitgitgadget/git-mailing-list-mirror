@@ -7,85 +7,106 @@ X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B68AB20756
-	for <e@80x24.org>; Thu, 19 Jan 2017 11:56:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 92F6D20A17
+	for <e@80x24.org>; Thu, 19 Jan 2017 12:02:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752243AbdASL4I (ORCPT <rfc822;e@80x24.org>);
-        Thu, 19 Jan 2017 06:56:08 -0500
-Received: from mail-it0-f48.google.com ([209.85.214.48]:33749 "EHLO
-        mail-it0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752216AbdASL4H (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 Jan 2017 06:56:07 -0500
-Received: by mail-it0-f48.google.com with SMTP id d9so4074401itc.0
-        for <git@vger.kernel.org>; Thu, 19 Jan 2017 03:56:01 -0800 (PST)
+        id S1752205AbdASMCw (ORCPT <rfc822;e@80x24.org>);
+        Thu, 19 Jan 2017 07:02:52 -0500
+Received: from mail-io0-f195.google.com ([209.85.223.195]:33579 "EHLO
+        mail-io0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751479AbdASMCv (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 Jan 2017 07:02:51 -0500
+Received: by mail-io0-f195.google.com with SMTP id 101so4752983iom.0
+        for <git@vger.kernel.org>; Thu, 19 Jan 2017 04:02:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to:cc;
-        bh=lmcpSMILm+0TpsU7fIejfXxnCg2cFZ79MktkE6R+Auk=;
-        b=lpio1fPFp+CdTn5mw5HjhWBJROkdwhWSeaezWtDzviPkpLuUagH7J9RBJJ0bEW9ZBy
-         Oak+Cpc8T9ZAWdkWzT8+05Vgoi8m9tQDxZWE1VwTdtOcihdS2yIZa6RJaH8S0lQUsZO1
-         Bqp37weIEvT5uKtoER5pn1UM3tDYNM3T6RDV5D4PBP4+L9ETp6/UiEpqBRUckwN1Ah74
-         4y1F2KOT0bxfDZwop7+MYlYHtIgJLEdaHNfjDlW1o9tN+uXeMD9XXLJJMzm4golY7YLc
-         ApvqWcYxPgUH1SbZq+9EoD6DO9axNzr7DPCk4gZyk9m0A/k3Met1x6OfzD1LZbBNovLU
-         ADFg==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=mSZIyS/kSQz+/x3dXhR2h8PDI70X5YD4NahmZbN/gmo=;
+        b=KRXqwy/+ymQYRhHlJSpWsElQJsbZbSjxk7Yk3pmh4B48DVqCYRIhMKS6Zi25JN+HV1
+         /qpdvPTwZ9jdnOZkF+RBrvOIK3y/bB63Im7IDtkcadkAvteqsmmMcbDKmkEQoNCit4dg
+         Ur3tkPMIR6BWr8jeoOlfcWm4B0+qJIu8aX0L+wHXyZx4iVOQclwa5ZJrPMNfL9Ujf1Mj
+         JC/cCVmLC3O3Z4gDNK7d4EJrXpS5ZRcX9y1zG07I7fRPabYFXmUUOuCezxSES1y/+ts9
+         Totdq45tbK4Dh/itLCCT2eGIUsoWOghSYiGUsVC2Nh5C0hDaQkY8pe4j7SaLDOPMQaH4
+         6bvQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=lmcpSMILm+0TpsU7fIejfXxnCg2cFZ79MktkE6R+Auk=;
-        b=RQ1alTqac7jOUMuFM9KZpl8kV9NknndeAMIiUxRi4ucryCQd4fk/dM7uPcXG1qYpYw
-         ohdKbqwtYgqszBN4u57DVE+lYPx3em/PVGbNeforHwPz4NNrrhggnmvIZMPz4xFSUswy
-         2XcteymAIb3bJeaAgAs3JyHE7nMTA6MA9/7IzoWLw9+Gpne9tTVtWDCdBBWEqTOYzJ+g
-         ofPQBtP/eZXt/fkRley7h7p7u1hmn4i3jAuifeKcxOl4fNYIJzI2/WBc+6nPdMLzcQLf
-         2lqpsIvWxXYEcq0RpFRM81yrT7vKZvrU1fg8Pkf6UrlFxe7gcN1BHRXxa9GjpNkiEsgg
-         uupA==
-X-Gm-Message-State: AIkVDXIdsstdvqZ0O02k3hyromvK/ojCoXHKTzwapJyZOJJ/GK2Kt9nyFbS6ugP+DCgeH4q51TtK4Pw8NFyMJw==
-X-Received: by 10.36.122.131 with SMTP id a125mr14483966itc.3.1484826961067;
- Thu, 19 Jan 2017 03:56:01 -0800 (PST)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=mSZIyS/kSQz+/x3dXhR2h8PDI70X5YD4NahmZbN/gmo=;
+        b=GDpGuOOKoVFiyIs/UTW56yXFXqlcuZziSX2nreG+5v1j//yCfFrIrXdYQjRIBEJf80
+         WWYpueVgeC4AHNVjnLCuEJEgZrMGpowzaaiSZ6IZOk5CDZ/eBlsPHabBYx7VOsUER+Eo
+         cGFZ3Nwdg0WLnnd5zjwRWb5QgBwFUTtozjxz7JKrBxUTarprM63JhFU6pnTP+yOMtFpS
+         1myc5hVOrxoBSm6SdjrOEClB7Dp/G/bkcVXf15ehoM8/2AApg1204gVR5iBGz1ZOO9p3
+         NUcnUrimMM7RhLuBufXMvKid8XBiXdrlc7nFiWFC9FhBEk1ksgFvoPgrqm/eu+V+kfHa
+         LApw==
+X-Gm-Message-State: AIkVDXI3n4HD8ws+BW6B41ZMW92hZv7ilnZ5hHGF7VOEHwD1PtNrG7CNJIQl4l7hmQJFJVcu4JmADbszEDCnlQ==
+X-Received: by 10.107.198.195 with SMTP id w186mr8010770iof.19.1484827370616;
+ Thu, 19 Jan 2017 04:02:50 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.64.69.3 with HTTP; Thu, 19 Jan 2017 03:55:30 -0800 (PST)
+Received: by 10.64.69.3 with HTTP; Thu, 19 Jan 2017 04:02:19 -0800 (PST)
+In-Reply-To: <xmqqh953j2q0.fsf@gitster.mtv.corp.google.com>
+References: <20170110112524.12870-1-pclouds@gmail.com> <20170110113320.13119-1-pclouds@gmail.com>
+ <xmqqh953j2q0.fsf@gitster.mtv.corp.google.com>
 From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Thu, 19 Jan 2017 18:55:30 +0700
-Message-ID: <CACsJy8CHoroX2k9GqOFmXkvvPCPN4SBeCg+6aC2WSWNSKVmWQw@mail.gmail.com>
-Subject: The design of refs backends, linked worktrees and submodules
-To:     Michael Haggerty <mhagger@alum.mit.edu>
+Date:   Thu, 19 Jan 2017 19:02:19 +0700
+Message-ID: <CACsJy8B3TQ5va_wvbiKgkVggYJG=x+RVyabtAkzbqQqWFO2F-A@mail.gmail.com>
+Subject: Re: [PATCH/RFC 5/4] Redefine core.bare in multiple working tree setting
+To:     Junio C Hamano <gitster@pobox.com>
 Cc:     Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I've started working on fixing the "git gc" issue with multiple
-worktrees, which brings me back to this. Just some thoughts. Comments
-are really appreciated.
+Thanks. I'll shelve this for now, maybe sleep on it for a while. The
+series is complete without this patch by the way, if you want to pick
+it up.
 
-In the current code, files backend has special cases for both
-submodules (explicitly) and linked worktrees (hidden behind git_path).
-But if a backend has to handle this stuff, all future backends have to
-too. Which does not sound great. Imagine we have "something" in
-addition to worktrees and submodules in future, then all backends have
-to learn about it.
+On Fri, Jan 13, 2017 at 6:08 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
+>
+>> With per-worktree configuration in place, core.bare is moved to main
+>> worktree's private config file. But it does not really make sense
+>> because this is about _repository_. Instead we could leave core.bare in
+>> the per-repo config and change/extend its definition from:
+>>
+>>    If true this repository is assumed to be 'bare' and has no working
+>>    directory associated with it.
+>>
+>> to
+>>
+>>    If true this repository is assumed to be 'bare' and has no _main_
+>>    working directory associated with it.
+>>
+>> In other words, linked worktrees are not covered by core.bare. This
+>> definition is the same as before when it comes to single worktree setup.
+>
+> Up to this point, I think it is not _wrong_ per-se, but it does not
+> say anything about secondary worktrees.  Some may have their own
+> working tree, others may be bare, and there is no way for programs
+> to discover if a particular secondary worktree has or lacks its own
+> working tree.
+>
+> Granted, "git worktree" porcelain may be incapable of creating a
+> secondary worktree without a working tree, but I think the
+> underlying repository layout still is capable of expressing such a
+> secondary worktree.
+>
+> So there still is something else necessary, I suspect, to make the
+> definition complete.  Perhaps core.bare should be set in
+> per-worktree configuration for all worktrees including the primary
+> one, and made the definition/explanation of core.bare to be
+> "definition of this variable, if done, must be done in per-worktree
+> config file.  If set to true, the worktree is 'bare' and has no
+> working directory associated with it"?  That makes things even more
+> equal, as there is truly no "special one" at that point.
+>
+> I dunno.
 
-So how about we move worktree and submodule support back to front-end?
 
-The backend deals with refs, period. The file-based backend will be
-given a directory where refs live in and it work on that. Backends do
-not use git_path(). Backends do not care about $GIT_DIR. Access to odb
-(e.g. sha-1 validation) if needed is abstracted out via a set of
-callbacks. This allows submodules to give access to submodule's
-separate odb. And it's getting close to the "struct repository"
-mentioned somewhere in refs "TODO" comments, even though we are
-nowhere close to introducing that struct.
 
-How does that sound? In particular, is there anything wrong, or
-unrealistic, with that?
-
-For that to work, I'll probably need to add a "composite" ref_store
-that combines two file-based backends (for per-repo and per-worktree
-refs) to represent a unified ref store. I think your work on ref
-iterator makes way for that. A bit worried about transactions though,
-because I think per-repo and per-worktree updates will be separated in
-two transactions. But that's probably ok because future backends, like
-lmdb, will have to go through the same route anyway.
--- 
+--=20
 Duy
