@@ -2,112 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8FCAC20A17
-	for <e@80x24.org>; Thu, 19 Jan 2017 16:51:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2FBCD20A17
+	for <e@80x24.org>; Thu, 19 Jan 2017 16:56:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753795AbdASQva (ORCPT <rfc822;e@80x24.org>);
-        Thu, 19 Jan 2017 11:51:30 -0500
-Received: from cloud.peff.net ([104.130.231.41]:41571 "EHLO cloud.peff.net"
+        id S1754079AbdASQ4C (ORCPT <rfc822;e@80x24.org>);
+        Thu, 19 Jan 2017 11:56:02 -0500
+Received: from mout.gmx.net ([212.227.17.21]:65280 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753374AbdASQv3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 Jan 2017 11:51:29 -0500
-Received: (qmail 30443 invoked by uid 109); 19 Jan 2017 16:51:29 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 19 Jan 2017 16:51:29 +0000
-Received: (qmail 6631 invoked by uid 111); 19 Jan 2017 16:52:24 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 19 Jan 2017 11:52:24 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 19 Jan 2017 11:51:27 -0500
-Date:   Thu, 19 Jan 2017 11:51:27 -0500
-From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v5 3/3] log --graph: customize the graph lines with
- config log.graphColors
-Message-ID: <20170119165127.6cxw64fjz7aevkq2@sigill.intra.peff.net>
-References: <20170109103258.25341-1-pclouds@gmail.com>
- <20170119114123.23784-1-pclouds@gmail.com>
- <20170119114123.23784-4-pclouds@gmail.com>
+        id S1753697AbdASQz7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 Jan 2017 11:55:59 -0500
+Received: from virtualbox ([37.24.141.236]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MHrk1-1cXolE1Fmv-003duy; Thu, 19
+ Jan 2017 17:55:25 +0100
+Date:   Thu, 19 Jan 2017 17:55:22 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Philip Oakley <philipoakley@iee.org>,
+        Jacob Keller <jacob.e.keller@intel.com>, git@vger.kernel.org,
+        Johannes Sixt <j6t@kdbg.org>,
+        Jacob Keller <jacob.keller@gmail.com>
+Subject: Re: [PATCH v3 1/5] doc: add documentation for OPT_STRING_LIST
+In-Reply-To: <xmqqr3403x1r.fsf@gitster.mtv.corp.google.com>
+Message-ID: <alpine.DEB.2.20.1701191749340.3469@virtualbox>
+References: <20170118000930.5431-1-jacob.e.keller@intel.com> <20170118000930.5431-2-jacob.e.keller@intel.com> <xmqq37gg9moc.fsf@gitster.mtv.corp.google.com> <254445096AD0412287CBB994E8BCA043@PhilipOakley> <xmqqr3403x1r.fsf@gitster.mtv.corp.google.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20170119114123.23784-4-pclouds@gmail.com>
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:4MgCOCRpj5528NiFFd+1vRpSjxbm7o1FhaF7ahXpxrC+l8gLuQy
+ GiQB+G4iZg61kI4dOzB6+oyzmfLZeM9teqUX1NM9i22IZj/Ff80WglLCaFT2k7nPSTteElN
+ XF9HNEiM+y4v6w+ydcaaYcAnVfwUv8x5qAp5S9Tu1i0Ef38PfKJdWwdQQI6V84whVuooz74
+ AwGPocOZHB6b34hGvY9Vw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:cmUxkclwDsc=:GDbJ6tAzz7P4bKd5SEtd3i
+ 3VlyjhCV1cvhtK+15wuEBFs+ihMOsYF3/OkujSVujJFthXaRYZ65v5ETC3ZnYuPL0eF3Drsn+
+ XEyNr5QRc8yCR68kWAtu+WTXlZoY0vgZCvlIE0t9hGPMcVUdeIxN6PhZMSjL//fciMxjZfpIL
+ ifzk/FqOdUO4BPkXbSamxwkGYpuoziODJOyAjwwCmgoXSk0oMs06z2nsYh8bM+qmzCAGf8ZU0
+ EQlLKWy6Di8BttFOg+r6BGTV9OV1FmvPdpjkOQakXmpxWIfuBpnuYBPTrOheQ6/Z3vU4R8EBB
+ +sVbysLERlDt+hzWt3QRea2ow+VqpqGt5oQSV9kitnp1YsjxriKcbd5R056lfz0eYSiph4Iy4
+ Jm9vohxie2oW54IPUv/38jRUgpu42v7YoY3JPsPppL9MdiGS/bOpRau3EhWJd+McNHAv4tyU9
+ 32T5vQi4Fxbe+215ItWWfPt8gzxnbwpaog4x99OR+I997+jUw2u9Evp/mlkkpTu0BXiUf1d49
+ 4spMAEvwN+8Quh53zCUDqNS3L4TXK5MVJDXj8Yk9K1vOZi94qTgh+PVx5UFMipA3DGIgyHfJ3
+ 5KN+SZEPZ8TQaIAuJn7m36jglnYGrbT1VEmX5ije8bvEY5dqoFS6pMG59OKCcCq6LfyuUr3+R
+ nLNJEMc/CzUAgcPFeFFJkZd15LkbmqcjTPjuc3eqX+t17qPFQaMfETjPiibY/xdBxuspRmY48
+ C9wZTZqSXVlqc29eNT6rM7Te0N3G8lOLhLcZQ1lL3JyV3YUZKFW3/J6VA9Hb12jAEOd4EAtYM
+ IogIqf3ZaB3gIzfFcyhb7G8niSGEo4j+qnD7jzCu+My4k0/DxKTG9/9Fnsjxm/xdKmvDK7Gci
+ rvhspvivZEE2rjMaUnABa9z4UP/icwLztQu4tDoj3g2xdeLsiKR9FCdeumV92k+ZuJ658TaPT
+ JdzBCdekAdtqThSQlnhG905+txbhtr8zTqCkiYCEOCFuZYyw+RC5ZBqWqDxo3xtz0pMBaD+8P
+ 8ABwz2Yo9Jh8GHBVD7s5AYk=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jan 19, 2017 at 06:41:23PM +0700, Nguyễn Thái Ngọc Duy wrote:
+Hi Junio,
 
-> +static void parse_graph_colors_config(struct argv_array *colors, const char *string)
-> +{
-> +	const char *end, *start;
-> +
-> +	start = string;
-> +	end = string + strlen(string);
-> +	while (start < end) {
-> +		const char *comma = strchrnul(start, ',');
-> +		char color[COLOR_MAXLEN];
-> +
-> +		if (!color_parse_mem(start, comma - start, color))
-> +			argv_array_push(colors, color);
-> +		else
-> +			warning(_("ignore invalid color '%.*s' in log.graphColors"),
-> +				(int)(comma - start), start);
-> +		start = comma + 1;
-> +	}
-> +	argv_array_push(colors, GIT_COLOR_RESET);
-> +}
+On Wed, 18 Jan 2017, Junio C Hamano wrote:
 
-This looks good.
+> "Philip Oakley" <philipoakley@iee.org> writes:
+> 
+> >>> +`OPT_STRING_LIST(short, long, &list, arg_str, description)`::
+> >>> + Introduce an option with string argument.
+> >>> + The string argument is stored as an element in `&list` which must be a
+> >>> + struct string_list. Reset the list using `--no-option`.
+> >>> +
+> >>
+> >> I do not know if it is clear enough that 'option' in the last
+> >> sentence is a placeholder.  I then wondered if spelling it as
+> >> `--no-<long>` would make it a bit clearer, but that is ugly.
+> >
+> > Bikeshedding:: `--no-<option>` maybe, i.e. just surround the option
+> > word with the angle brackets to indicate it is to be replaced by the
+> > real option's name.
+> 
+> Yeah, I bikeshedded that myself, and rejected it because there is no
+> <option> mentioned anywhere in the enumeration header.
 
-> @@ -207,9 +228,24 @@ struct git_graph *graph_init(struct rev_info *opt)
->  {
->  	struct git_graph *graph = xmalloc(sizeof(struct git_graph));
->  
-> -	if (!column_colors)
-> -		graph_set_column_colors(column_colors_ansi,
-> -					column_colors_ansi_max);
-> +	if (!column_colors) {
-> +		struct argv_array ansi_colors = {
-> +			column_colors_ansi,
-> +			column_colors_ansi_max + 1
-> +		};
+As I pointed out in a previous review round: the surrounding test uses
+--no-option (I agree that it is tedious to go back to the original code
+for review, rather than a mere patch review that lacks context, but I
+suspected that Jake did not come up with that `--no-option` himself), so
+by our own recommendation (imitate the surrounding, existing code/text)
+Jake did exactly the right thing:
 
-Hrm. At first I thought this would cause memory corrution, because your
-argv_array_clear() would try to free() the non-heap array you've stuffed
-inside. But you only clear the custom_colors array which actually is
-dynamically allocated. This outer one is just here to give uniform
-access:
+$ git grep -e --no-option upstream/master -- Documentation/technical/api-parse-options.txt
+upstream/master:Documentation/technical/api-parse-options.txt:	`--option` and set to zero with `--no-option`.
+upstream/master:Documentation/technical/api-parse-options.txt:	(even if initially negative), and `--no-option` resets it to
+upstream/master:Documentation/technical/api-parse-options.txt:	zero. To determine if `--option` or `--no-option` was encountered at
+upstream/master:Documentation/technical/api-parse-options.txt:	`--no-option` was seen.
+upstream/master:Documentation/technical/api-parse-options.txt:	reset to zero with `--no-option`.
 
-> +		struct argv_array *colors = &ansi_colors;
-> +		char *string;
-> +
-> +		if (!git_config_get_string("log.graphcolors", &string)) {
-> +			static struct argv_array custom_colors = ARGV_ARRAY_INIT;
-> +			argv_array_clear(&custom_colors);
-> +			parse_graph_colors_config(&custom_colors, string);
-> +			free(string);
-> +			colors = &custom_colors;
-> +		}
-> +		/* graph_set_column_colors takes a max-index, not a count */
-> +		graph_set_column_colors(colors->argv, colors->argc - 1);
-> +	}
+Ciao,
+Johannes
 
-Since there's only one line that cares about the result of "colors",
-maybe it would be less confusing to do:
-
-  if (!git_config_get-string("log.graphcolors", &string)) {
-	... parse, etc ...
-	graph_set_column_colors(colors.argv, colors.argc - 1);
-  } else {
-	graph_set_column_colors(column_colors_ansi,
-	                        column_colors_ansi_max);
-  }
-
--Peff
