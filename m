@@ -2,270 +2,119 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BDE4520A17
-	for <e@80x24.org>; Thu, 19 Jan 2017 21:35:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7E1F120A17
+	for <e@80x24.org>; Thu, 19 Jan 2017 21:42:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752488AbdASVf3 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 19 Jan 2017 16:35:29 -0500
-Received: from mout.gmx.net ([212.227.15.18]:60767 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751866AbdASVf1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 Jan 2017 16:35:27 -0500
-Received: from virtualbox ([37.24.141.236]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MWC9x-1d15Za0TCT-00XM1g; Thu, 19
- Jan 2017 22:20:03 +0100
-Date:   Thu, 19 Jan 2017 22:20:02 +0100 (CET)
-From:   Johannes Schindelin <johannes.schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     git@vger.kernel.org
-cc:     Junio C Hamano <gitster@pobox.com>,
-        Thomas Gummerer <t.gummerer@gmail.com>,
-        Andrew Arnott <Andrew.Arnott@microsoft.com>,
-        Jeff King <peff@peff.net>
-Subject: [PATCH v2 2/2] Be more careful when determining whether a remote
- was configured
-In-Reply-To: <cover.1484860744.git.johannes.schindelin@gmx.de>
-Message-ID: <1605031b76025f4bd0e485705c34a25557bb75a1.1484860744.git.johannes.schindelin@gmx.de>
-References: <cover.1484687919.git.johannes.schindelin@gmx.de> <cover.1484860744.git.johannes.schindelin@gmx.de>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+        id S1751510AbdASVml (ORCPT <rfc822;e@80x24.org>);
+        Thu, 19 Jan 2017 16:42:41 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:65456 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751316AbdASVmk (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 Jan 2017 16:42:40 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 57A496022C;
+        Thu, 19 Jan 2017 16:42:21 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=Omd1FhOZVNy2HzB44+ifOzkCGH4=; b=x31SJw
+        We4/MQQHjGDC4MqU0xa2eMrIbU4WQkMF/uoykH1f2t9Rx+Qb0sSMW+ym/zwNEIOr
+        bsC7lT48ev1o7prFt1XmqFNh8YJ6bVmLna4RAsRHOayYPnDXwJhNyVUS01JKTgn5
+        9Os+HnxvWHX76ECv3zp5hcEYqMhF0Tvi+03ws=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=UEUhiUsE+jRrgR3L39mJC55ZfSltQyu6
+        UwsNG7urBpgJgcYhELRonxl+6e+u6NC6VKHIVwer4ktXQJwTrHFLqQ/OvQUeSh5D
+        oFPjYfw+aCfvG00cnpcpy/FNl8abrQe+agcDbSZN2biG6e+vkgSa1WpE1MbPevVU
+        2yi7OGKnCBI=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 4E52060229;
+        Thu, 19 Jan 2017 16:42:21 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id AD77C60228;
+        Thu, 19 Jan 2017 16:42:20 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "David J. Bakeman" <nakuru@comcast.net>
+Cc:     Jacob Keller <jacob.keller@gmail.com>,
+        Git mailing list <git@vger.kernel.org>
+Subject: Re: merge maintaining history
+References: <58798686.5050401@comcast.net>
+        <CA+P7+xoF8E55-XDnQT-GN1=hEwwq4pOsz7--P-SCy29C7ST3Hg@mail.gmail.com>
+        <5880BB23.8030702@comcast.net>
+Date:   Thu, 19 Jan 2017 13:42:19 -0800
+In-Reply-To: <5880BB23.8030702@comcast.net> (David J. Bakeman's message of
+        "Thu, 19 Jan 2017 05:12:03 -0800")
+Message-ID: <xmqq37gezpz8.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:DaljzWkWp1anY6/+NN611xa2kpluGuOdWSBC5DdrbZjgQtjtcXv
- KsRz2JPb+IgheInflE6FD2Pr/OOb3dOwcXHynm3xa4MrNx/KyvsCYf9q81Z2W6ygdtKM1pF
- m33EpRh8i4KPBY/fbiIcvzqg0YS5XnmuPkBkPWR7HNIeBhVLgJ+3lG2EoFyv4RwwNHYOKoD
- LXVtiTIv+itZWp66vJARw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:7r22s0zIwYo=:XEFNpF74k9cLdSd8qsZP7Q
- 20BCy/EkjMIqNe41SwpY1E6CqMQsj/r0nabik6FQVGD11fpHnYnjZ0gJCSYH0C0EoyB1zYqyM
- 4jYIgsm+olsB4cZUHwirl5HKLkbKCLPxAfUKLH7Xw0UVftyc9g+tpBiNqTQ8oh4MVn7kckJYm
- ieMt6BoV/PD+qJkheMiilkmZKuIZD0Wk2BALz7XbRzrBwBfqGL6tgcvGrZFh/sN+StU9atF3T
- 6NZ1xyfhGE4lBqd+pFwLex7rChMLj4y0GHcn5MMToEmMVkanOTlFHaunrntsfwbbZ44KCictS
- 3DpEqKSL4OAic6Yl6xEjyp1g9KI56rt2CU/t1mFkFHpfyZ2+/8fykTPKBeC/fsEkoBvll/weB
- GlMSPvCBwKZtLcKGuz87cafrP5/brcDh9vkpfGtBQzBINdAOvFiOSvCV3PqjZxAdfhD9y7EHX
- iMOhrr89Bw7hMmGgoyLfrtNjLscuZ6xTTW5E6W4xVFzrSHNVpUSgZcDi3UDFXsU9tKYO00pL1
- J9uKY4vxrTnoLcKTlah2bERrxabjmFV2RrT2FTU+3ZilVJBNqhwNZptI1suJdMFefd9668Fa0
- m4/SuuBkh/W+qODDlxg3Bd3HyDdT5hB8WcplKGHdPzNRjuDZsymL/DVSguhnENNnNSkPAdr2+
- 7ew4u/ri7ep38s8NRhCWZh5zpkVbtEjalLPzjMrnY6EH9VrjoHDATTp3GHo2XMh3QYNk2qLwo
- dbATwuAL3wg8IgOaijQ6RPOkk6BDLP0U1CO4rA+hrqs0PyfbuhlAth0G8qkJyykW/CjETiyzX
- Kb0NIWP
+Content-Type: text/plain
+X-Pobox-Relay-ID: 27E3CC30-DE90-11E6-BC06-A7617B1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-One of the really nice features of the ~/.gitconfig file is that users
-can override defaults by their own preferred settings for all of their
-repositories.
+"David J. Bakeman" <nakuru@comcast.net> writes:
 
-One such default that some users like to override is whether the
-"origin" remote gets auto-pruned or not. The user would simply call
+>> So you want to merge the "new" history into the original tree now, so
+>> you checkout the original tree, then "git merge <new-remote>/<branch>"
+>> and then fix up any conflicts, and then git commit to create a merge
+>> commit that has the new history. Then you could push that to both
+>> trees.
+>>
+>> I would want a bit more information about your setup before providing
+>> actual commands.
+>
+> Thanks I think that's close but it's a little more complicated I think
+> :<(  I don't know if this diagram will work but lets try.
+>
+> original A->B->C->D->E->F
+>              \
+> first branch  b->c->d->e
+>
+> new repo e->f->g->h
+>
+> Now I need to merge h to F without loosing b through h hopefully.  Yes e
+> was never merged back to the original repo and it's essentially gone now
+> so I can't just merge to F or can I?
 
-	git config --global remote.origin.prune true
+With the picture, I think you mean 'b' is forked from 'B' and the
+first branch built 3 more commits on top, leading to 'e'.
 
-and from now on all "origin" remotes would be pruned automatically when
-fetching into the local repository.
+You say "new repo" has 'e' thru 'h', and I take it to mean you
+started developing on top of the history that leads to 'e' you built
+in the first branch, and "new repo" has the resulting history that
+leads to 'h'.
 
-There is just one catch: now Git thinks that the "origin" remote is
-configured, even if the repository config has no [remote "origin"]
-section at all, as it does not realize that the "prune" setting was
-configured globally and that there really is no "origin" remote
-configured in this repository.
+Unless you did something exotic and non-standard, commit 'e' in "new
+repo" would be exactly the same as 'e' sitting on the tip of the
+"first branch", so the picture would be more like:
 
-That is a problem e.g. when renaming a remote to a new name, when Git
-may be fooled into thinking that there is already a remote of that new
-name.
+> original A->B->C->D->E->F
+>              \
+> first branch  b->c->d->e
+>                         \
+> new repo                 f->g->h
 
-Let's fix this by paying more attention to *where* the remote settings
-came from: if they are configured in the local repository config, we
-must not overwrite them. If they were configured elsewhere, we cannot
-overwrite them to begin with, as we only write the repository config.
+no?  Then merging 'h' into 'F' will pull everything you did since
+you diverged from the history that leads to 'F', resulting in a
+history of this shape:
 
-There is only one caller of remote_is_configured() (in `git fetch`) that
-may want to take remotes into account even if they were configured
-outside the repository config; all other callers essentially try to
-prevent the Git command from overwriting settings in the repository
-config.
+> original A->B->C->D->E->F----------M
+>              \                    /
+> first branch  b->c->d->e         /
+>                         \       /
+> new repo                 f->g->h
 
-To accommodate that fact, the remote_is_configured() function now
-requires a parameter that states whether the caller is interested in all
-remotes, or only in those that were configured in the repository config.
-
-Many thanks to Jeff King whose tireless review helped with settling for
-nothing less than the current strategy.
-
-This fixes https://github.com/git-for-windows/git/issues/888
-
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- builtin/fetch.c   |  2 +-
- builtin/remote.c  | 14 +++++++-------
- remote.c          | 12 ++++++++++--
- remote.h          |  4 ++--
- t/t5505-remote.sh |  2 +-
- 5 files changed, 21 insertions(+), 13 deletions(-)
-
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index f1570e3464..b5ad09d046 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -1177,7 +1177,7 @@ static int add_remote_or_group(const char *name, struct string_list *list)
- 	git_config(get_remote_group, &g);
- 	if (list->nr == prev_nr) {
- 		struct remote *remote = remote_get(name);
--		if (!remote_is_configured(remote))
-+		if (!remote_is_configured(remote, 0))
- 			return 0;
- 		string_list_append(list, remote->name);
- 	}
-diff --git a/builtin/remote.c b/builtin/remote.c
-index e52cf3925b..5339ed6ad1 100644
---- a/builtin/remote.c
-+++ b/builtin/remote.c
-@@ -186,7 +186,7 @@ static int add(int argc, const char **argv)
- 	url = argv[1];
- 
- 	remote = remote_get(name);
--	if (remote_is_configured(remote))
-+	if (remote_is_configured(remote, 1))
- 		die(_("remote %s already exists."), name);
- 
- 	strbuf_addf(&buf2, "refs/heads/test:refs/remotes/%s/test", name);
-@@ -618,14 +618,14 @@ static int mv(int argc, const char **argv)
- 	rename.remote_branches = &remote_branches;
- 
- 	oldremote = remote_get(rename.old);
--	if (!remote_is_configured(oldremote))
-+	if (!remote_is_configured(oldremote, 1))
- 		die(_("No such remote: %s"), rename.old);
- 
- 	if (!strcmp(rename.old, rename.new) && oldremote->origin != REMOTE_CONFIG)
- 		return migrate_file(oldremote);
- 
- 	newremote = remote_get(rename.new);
--	if (remote_is_configured(newremote))
-+	if (remote_is_configured(newremote, 1))
- 		die(_("remote %s already exists."), rename.new);
- 
- 	strbuf_addf(&buf, "refs/heads/test:refs/remotes/%s/test", rename.new);
-@@ -753,7 +753,7 @@ static int rm(int argc, const char **argv)
- 		usage_with_options(builtin_remote_rm_usage, options);
- 
- 	remote = remote_get(argv[1]);
--	if (!remote_is_configured(remote))
-+	if (!remote_is_configured(remote, 1))
- 		die(_("No such remote: %s"), argv[1]);
- 
- 	known_remotes.to_delete = remote;
-@@ -1415,7 +1415,7 @@ static int set_remote_branches(const char *remotename, const char **branches,
- 	strbuf_addf(&key, "remote.%s.fetch", remotename);
- 
- 	remote = remote_get(remotename);
--	if (!remote_is_configured(remote))
-+	if (!remote_is_configured(remote, 1))
- 		die(_("No such remote '%s'"), remotename);
- 
- 	if (!add_mode && remove_all_fetch_refspecs(remotename, key.buf)) {
-@@ -1469,7 +1469,7 @@ static int get_url(int argc, const char **argv)
- 	remotename = argv[0];
- 
- 	remote = remote_get(remotename);
--	if (!remote_is_configured(remote))
-+	if (!remote_is_configured(remote, 1))
- 		die(_("No such remote '%s'"), remotename);
- 
- 	url_nr = 0;
-@@ -1537,7 +1537,7 @@ static int set_url(int argc, const char **argv)
- 		oldurl = newurl;
- 
- 	remote = remote_get(remotename);
--	if (!remote_is_configured(remote))
-+	if (!remote_is_configured(remote, 1))
- 		die(_("No such remote '%s'"), remotename);
- 
- 	if (push_mode) {
-diff --git a/remote.c b/remote.c
-index ad6c5424ed..8524135de4 100644
---- a/remote.c
-+++ b/remote.c
-@@ -255,6 +255,7 @@ static void read_remotes_file(struct remote *remote)
- 
- 	if (!f)
- 		return;
-+	remote->configured_in_repo = 1;
- 	remote->origin = REMOTE_REMOTES;
- 	while (strbuf_getline(&buf, f) != EOF) {
- 		const char *v;
-@@ -289,6 +290,7 @@ static void read_branches_file(struct remote *remote)
- 		return;
- 	}
- 
-+	remote->configured_in_repo = 1;
- 	remote->origin = REMOTE_BRANCHES;
- 
- 	/*
-@@ -371,6 +373,8 @@ static int handle_config(const char *key, const char *value, void *cb)
- 	}
- 	remote = make_remote(name, namelen);
- 	remote->origin = REMOTE_CONFIG;
-+	if (current_config_scope() == CONFIG_SCOPE_REPO)
-+		remote->configured_in_repo = 1;
- 	if (!strcmp(subkey, "mirror"))
- 		remote->mirror = git_config_bool(key, value);
- 	else if (!strcmp(subkey, "skipdefaultupdate"))
-@@ -714,9 +718,13 @@ struct remote *pushremote_get(const char *name)
- 	return remote_get_1(name, pushremote_for_branch);
- }
- 
--int remote_is_configured(struct remote *remote)
-+int remote_is_configured(struct remote *remote, int in_repo)
- {
--	return remote && remote->origin;
-+	if (!remote)
-+		return 0;
-+	if (in_repo)
-+		return remote->configured_in_repo;
-+	return !!remote->origin;
- }
- 
- int for_each_remote(each_remote_fn fn, void *priv)
-diff --git a/remote.h b/remote.h
-index 924881169d..a5bbbe0ef9 100644
---- a/remote.h
-+++ b/remote.h
-@@ -15,7 +15,7 @@ struct remote {
- 	struct hashmap_entry ent;  /* must be first */
- 
- 	const char *name;
--	int origin;
-+	int origin, configured_in_repo;
- 
- 	const char *foreign_vcs;
- 
-@@ -60,7 +60,7 @@ struct remote {
- 
- struct remote *remote_get(const char *name);
- struct remote *pushremote_get(const char *name);
--int remote_is_configured(struct remote *remote);
-+int remote_is_configured(struct remote *remote, int in_repo);
- 
- typedef int each_remote_fn(struct remote *remote, void *priv);
- int for_each_remote(each_remote_fn fn, void *priv);
-diff --git a/t/t5505-remote.sh b/t/t5505-remote.sh
-index 2c03f44c85..ba46e86de0 100755
---- a/t/t5505-remote.sh
-+++ b/t/t5505-remote.sh
-@@ -764,7 +764,7 @@ test_expect_success 'rename a remote with name prefix of other remote' '
- 	)
- '
- 
--test_expect_failure 'rename succeeds with existing remote.<target>.prune' '
-+test_expect_success 'rename succeeds with existing remote.<target>.prune' '
- 	git clone one four.four &&
- 	test_when_finished git config --global --unset remote.upstream.prune &&
- 	git config --global remote.upstream.prune true &&
--- 
-2.11.0.windows.3
+If on the other hand you did something non-standard and exotic to
+rewrite 'e' at the end of "first branch" and make a different commit
+that does not even have any parent in "new repo", and the history of
+"new repo" originates in such a commit that is not 'e', things will
+become messy.  But I didn't think I read you did anything unusual so
+a simple "git checkout F && git merge h" should give you what you
+want.
