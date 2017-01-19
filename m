@@ -2,119 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7E1F120A17
-	for <e@80x24.org>; Thu, 19 Jan 2017 21:42:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DEFDF20A17
+	for <e@80x24.org>; Thu, 19 Jan 2017 21:44:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751510AbdASVml (ORCPT <rfc822;e@80x24.org>);
-        Thu, 19 Jan 2017 16:42:41 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:65456 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751316AbdASVmk (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 Jan 2017 16:42:40 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 57A496022C;
-        Thu, 19 Jan 2017 16:42:21 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=Omd1FhOZVNy2HzB44+ifOzkCGH4=; b=x31SJw
-        We4/MQQHjGDC4MqU0xa2eMrIbU4WQkMF/uoykH1f2t9Rx+Qb0sSMW+ym/zwNEIOr
-        bsC7lT48ev1o7prFt1XmqFNh8YJ6bVmLna4RAsRHOayYPnDXwJhNyVUS01JKTgn5
-        9Os+HnxvWHX76ECv3zp5hcEYqMhF0Tvi+03ws=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=UEUhiUsE+jRrgR3L39mJC55ZfSltQyu6
-        UwsNG7urBpgJgcYhELRonxl+6e+u6NC6VKHIVwer4ktXQJwTrHFLqQ/OvQUeSh5D
-        oFPjYfw+aCfvG00cnpcpy/FNl8abrQe+agcDbSZN2biG6e+vkgSa1WpE1MbPevVU
-        2yi7OGKnCBI=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 4E52060229;
-        Thu, 19 Jan 2017 16:42:21 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id AD77C60228;
-        Thu, 19 Jan 2017 16:42:20 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "David J. Bakeman" <nakuru@comcast.net>
-Cc:     Jacob Keller <jacob.keller@gmail.com>,
-        Git mailing list <git@vger.kernel.org>
-Subject: Re: merge maintaining history
-References: <58798686.5050401@comcast.net>
-        <CA+P7+xoF8E55-XDnQT-GN1=hEwwq4pOsz7--P-SCy29C7ST3Hg@mail.gmail.com>
-        <5880BB23.8030702@comcast.net>
-Date:   Thu, 19 Jan 2017 13:42:19 -0800
-In-Reply-To: <5880BB23.8030702@comcast.net> (David J. Bakeman's message of
-        "Thu, 19 Jan 2017 05:12:03 -0800")
-Message-ID: <xmqq37gezpz8.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+        id S1752494AbdASVo2 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 19 Jan 2017 16:44:28 -0500
+Received: from mout.gmx.net ([212.227.15.18]:57252 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752446AbdASVo0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 Jan 2017 16:44:26 -0500
+Received: from virtualbox ([37.24.141.236]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MRWzQ-1cwyG71qEy-00Sj46; Thu, 19
+ Jan 2017 22:44:15 +0100
+Date:   Thu, 19 Jan 2017 22:44:13 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Jeff King <peff@peff.net>
+cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Thomas Gummerer <t.gummerer@gmail.com>,
+        Andrew Arnott <Andrew.Arnott@microsoft.com>
+Subject: Re: [PATCH v2 2/2] Be more careful when determining whether a remote
+ was configured
+In-Reply-To: <20170119213100.g72ml7r2khu7bvey@sigill.intra.peff.net>
+Message-ID: <alpine.DEB.2.20.1701192241430.3469@virtualbox>
+References: <cover.1484687919.git.johannes.schindelin@gmx.de> <cover.1484860744.git.johannes.schindelin@gmx.de> <1605031b76025f4bd0e485705c34a25557bb75a1.1484860744.git.johannes.schindelin@gmx.de> <20170119213100.g72ml7r2khu7bvey@sigill.intra.peff.net>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 27E3CC30-DE90-11E6-BC06-A7617B1B28F4-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:4NkC4F2eNcguUTLxdY4oot4BHzw0a3mii7svTg3Qa4pcDg9M8c2
+ mfBDv0pB3i43q9EDH4wcrSshLMbrDWr4owdDun/0st1QVjgavV6Vq3Gc0GgDdxCFrlE00TC
+ 20kEXh3XdX9tBog1r4WDBmbRpS7Oywe4LiRNfKr8l/WfaPwtWP3z+IRAIOPxTwfpJoQKwjF
+ a6lIlbtZ9DIdHftgSwsVQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:xyCc+e+Gfpw=:7PiL/CZZyxBU9VdjjZlZ5W
+ vWh8RPQHcdI9QTsaIXFCWpy34okpVrotwl+sn5L4pZKLa5GRm15j5PGKYd2nITk81w8EPAGDq
+ IwofvzUxX6DLDDwM6qiYyKyQ0lR8xHJL1UkXt5jwQBTZqf2O93ZvxiHBwwPevTlZSXyHLoESx
+ FOBF+Pk8VA/Z53GW8Pf0mdZPY+8YJZgORo4Yj7w1d/M1KUWjd1Ax2pegPRM3WgLTXPPjzEcld
+ FPoKGP9JfuEDOAkrrkeFF5XmP2qXTB6LkNBkHGbeagRLtZt1aeMqoHDZqEA610+FPIOdFm7Eq
+ Rb3yyOcuUhD5n2hAl7JtRGvLnABe2X3x92z6VqpySUrN03+afshD85iY/hlYt+GbuMDfpjYFf
+ pn4+zHjiqYo2rKbSktGJuSCcEy2qjrl4PE05F+D/3+CxwXeRbVCWPmjCTbV1aVqnDhzE4znis
+ OeVZnU5mblCeDKBpHwXTBE/mrOohgqc39e/Ua6m/tauH6CVygLDxd4yfPcZtMWYWeoD3pzaNX
+ 9jInExSMVZ4MRzke6PKwLJO/bwKN8f464XWRsYXVaGUwcGTFznUqzdPmF/KnriNJMutMHMkjH
+ /NCOu4QXyp/fjHW2o4uXATIWA7UwT5/aUlX0+VFzy+W+VUXMSnL00HkjXj33It+oR9L+aU7Gx
+ 7tefdVjdFaAcyAoIPq3FdRXLYP4HG/itSLjnaVk6taUWTG6frysHYqvl+XbBoHPNWz5lNb5eq
+ TOyr/Bt7VcvjvlmH41vT1ea16StALqzXMkeQSHhSvPEhRFDst3EqrwRSObZv6GkglS+Co26tc
+ OF+RH/+
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"David J. Bakeman" <nakuru@comcast.net> writes:
+Hi Peff,
 
->> So you want to merge the "new" history into the original tree now, so
->> you checkout the original tree, then "git merge <new-remote>/<branch>"
->> and then fix up any conflicts, and then git commit to create a merge
->> commit that has the new history. Then you could push that to both
->> trees.
->>
->> I would want a bit more information about your setup before providing
->> actual commands.
->
-> Thanks I think that's close but it's a little more complicated I think
-> :<(  I don't know if this diagram will work but lets try.
->
-> original A->B->C->D->E->F
->              \
-> first branch  b->c->d->e
->
-> new repo e->f->g->h
->
-> Now I need to merge h to F without loosing b through h hopefully.  Yes e
-> was never merged back to the original repo and it's essentially gone now
-> so I can't just merge to F or can I?
+On Thu, 19 Jan 2017, Jeff King wrote:
 
-With the picture, I think you mean 'b' is forked from 'B' and the
-first branch built 3 more commits on top, leading to 'e'.
+> diff --git a/builtin/fetch.c b/builtin/fetch.c
+> index c85f3471d..9024cfffa 100644
+> --- a/builtin/fetch.c
+> +++ b/builtin/fetch.c
+> @@ -1014,9 +1014,9 @@ static int add_remote_or_group(const char *name, struct string_list *list)
+>  	git_config(get_remote_group, &g);
+>  	if (list->nr == prev_nr) {
+>  		struct remote *remote;
+> -		if (!remote_is_configured(name))
+> -			return 0;
+>  		remote = remote_get(name);
+> +		if (!remote->fetch_refspec_nr)
+> +			return 0;
 
-You say "new repo" has 'e' thru 'h', and I take it to mean you
-started developing on top of the history that leads to 'e' you built
-in the first branch, and "new repo" has the resulting history that
-leads to 'h'.
+Please note that it is legitimate to fetch from foreign vcs, in which case
+the fetch refspecs may not be required (or even make sense).
 
-Unless you did something exotic and non-standard, commit 'e' in "new
-repo" would be exactly the same as 'e' sitting on the tip of the
-"first branch", so the picture would be more like:
+> It's outside the scope of your patches, so I think we are OK to just
+> ignore it. But if you want to pursue it, it avoids having to add the
+> extra parameter to remote_is_configured().
 
-> original A->B->C->D->E->F
->              \
-> first branch  b->c->d->e
->                         \
-> new repo                 f->g->h
+Sure, it would avoid that. But that parameter makes semantic sense: some
+callers may want to have all remotes, even those configured via the
+command-line, and others really are only interested in knowing whether the
+current repository config already has settings for a remote of the given
+name.
 
-no?  Then merging 'h' into 'F' will pull everything you did since
-you diverged from the history that leads to 'F', resulting in a
-history of this shape:
+> > Many thanks to Jeff King whose tireless review helped with settling for
+> > nothing less than the current strategy.
+> 
+> Just how I wanted to be immortalized in git's commit history. ;)
 
-> original A->B->C->D->E->F----------M
->              \                    /
-> first branch  b->c->d->e         /
->                         \       /
-> new repo                 f->g->h
+You are welcome ;-)
 
-If on the other hand you did something non-standard and exotic to
-rewrite 'e' at the end of "first branch" and make a different commit
-that does not even have any parent in "new repo", and the history of
-"new repo" originates in such a commit that is not 'e', things will
-become messy.  But I didn't think I read you did anything unusual so
-a simple "git checkout F && git merge h" should give you what you
-want.
+Ciao,
+Johannes
