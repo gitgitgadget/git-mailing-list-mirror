@@ -2,94 +2,73 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5520E1F89C
-	for <e@80x24.org>; Thu, 19 Jan 2017 03:19:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9E67320756
+	for <e@80x24.org>; Thu, 19 Jan 2017 06:33:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752038AbdASDTI (ORCPT <rfc822;e@80x24.org>);
-        Wed, 18 Jan 2017 22:19:08 -0500
-Received: from mail-pg0-f51.google.com ([74.125.83.51]:33689 "EHLO
-        mail-pg0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752016AbdASDTE (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Jan 2017 22:19:04 -0500
-Received: by mail-pg0-f51.google.com with SMTP id 204so9947523pge.0
-        for <git@vger.kernel.org>; Wed, 18 Jan 2017 19:19:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=GeF0Vdb6h/jxGcdgSUDB17d/ff2D7q+4md2lfbNGjlM=;
-        b=l4K2zyZ/NI6Hv3veEf4/3EQeExOzqJGEwpZfsj0OMLETRjzGBy/MVqMv0ToV6rH7mp
-         IUMslsUvSY/4VjPkJ6/0q2Ncqp+s0Yiia526IgSKmddCJBOVAIevfWETeX8MUcASsCaK
-         kPkxs/dJjfypilD9eGvdB6LQB8MtH6xWicJ1bWE/Ya4zX5OWgbUigximSIR2woCbCBZ1
-         DWpFtR0jXlRDRsa4pWHnlFL5CXs9HTQvyC6J4w9KRy19pEebWvXHaM69K6Bxat3kByMe
-         I6Yndn5UMDpsAuMwdUbo+AbxSWAevPKaJ/PVvS8zY6YZHOXnG98xaIxX8zS5yMZU350s
-         X+6A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=GeF0Vdb6h/jxGcdgSUDB17d/ff2D7q+4md2lfbNGjlM=;
-        b=iONr6Ru5XOiqM53faLEmOwcNHsUCDu3p9YExNhBvaniCDcMQ/gjxQKd4fUQejq25LD
-         fobXqI4aRqarTX0b3B7UZdmNdeaLwtPtaxYcD2A1Lq1R3PxOcBodTvTHmk5X4Lcu947X
-         PLnAAd2wvXe8/pDppSv/F1TbPSaqJCdzfrrBVA17Z67OIkjXAoLbGQ3Wb813LaPJzlaD
-         ntJava+hRUlqtiZV+4he4u4xkAMprFYYpGEqTyOkYz9K7vTJaL/Ndnq2QiBnrbKircYE
-         k6KfSMHfqILaWIr2o8hNrpJIlVoMHIeNcOVqBuej9DzVWMjAJTG6Rj6pVxz32xudueOK
-         p2aQ==
-X-Gm-Message-State: AIkVDXLPcK21B2ZCksb0BdS9yuOjsa4pu9bNSotyRnF/eL6F0m+USeYlvO0a7avfkutoTkwq
-X-Received: by 10.98.34.130 with SMTP id p2mr7408465pfj.11.1484795943309;
-        Wed, 18 Jan 2017 19:19:03 -0800 (PST)
-Received: from localhost ([2620:0:1000:5b10:40e0:b9ca:546a:a0ec])
-        by smtp.gmail.com with ESMTPSA id b66sm3895448pgc.20.2017.01.18.19.19.02
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 18 Jan 2017 19:19:02 -0800 (PST)
-From:   Stefan Beller <sbeller@google.com>
-To:     gitster@pobox.com
-Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>
-Subject: [PATCHv3 3/4] cache.h: document add_[file_]to_index
-Date:   Wed, 18 Jan 2017 19:18:53 -0800
-Message-Id: <20170119031854.4570-4-sbeller@google.com>
-X-Mailer: git-send-email 2.11.0.299.g762782ba8a
-In-Reply-To: <20170119031854.4570-1-sbeller@google.com>
-References: <20170118232145.31606-2-sbeller@google.com>
- <20170119031854.4570-1-sbeller@google.com>
+        id S1751227AbdASGdX (ORCPT <rfc822;e@80x24.org>);
+        Thu, 19 Jan 2017 01:33:23 -0500
+Received: from mailhub.007spb.ru ([84.204.203.130]:32950 "EHLO
+        mailhub.007spb.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750977AbdASGdW (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 Jan 2017 01:33:22 -0500
+Received: from tigra.domain007.com (tigra.domain007.com [192.168.2.102])
+        by mailhub.007spb.ru (8.14.4/8.14.4/Debian-4+deb7u1) with SMTP id v0J6XDcA008143;
+        Thu, 19 Jan 2017 09:33:15 +0300
+Date:   Thu, 19 Jan 2017 09:33:13 +0300
+From:   Konstantin Khomoutov <kostix+git@007spb.ru>
+To:     Joao Pinto <Joao.Pinto@synopsys.com>
+Cc:     <git@vger.kernel.org>,
+        Linus Torvalds <torvalds@linux-foundation.org>,
+        "CARLOS.PALMINHA@synopsys.com" <CARLOS.PALMINHA@synopsys.com>
+Subject: Re: Git: new feature suggestion
+Message-Id: <20170119093313.ea57832dfd1bc7e0b0f1e630@domain007.com>
+In-Reply-To: <4817eb00-6efc-e3c0-53d7-46f2509350d3@synopsys.com>
+References: <4817eb00-6efc-e3c0-53d7-46f2509350d3@synopsys.com>
+X-Mailer: Sylpheed 3.5.0beta1 (GTK+ 2.24.25; x86_64-pc-linux-gnu)
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Helped-by: Junio C Hamano <gitster@pobox.com>
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
- cache.h | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+On Wed, 18 Jan 2017 10:40:52 +0000
+Joao Pinto <Joao.Pinto@synopsys.com> wrote:
 
-diff --git a/cache.h b/cache.h
-index 929474d7a9..12394eb541 100644
---- a/cache.h
-+++ b/cache.h
-@@ -614,8 +614,18 @@ extern int remove_file_from_index(struct index_state *, const char *path);
- #define ADD_CACHE_IGNORE_ERRORS	4
- #define ADD_CACHE_IGNORE_REMOVAL 8
- #define ADD_CACHE_INTENT 16
-+/*
-+ * These two are used to add the contents of the file at path
-+ * to the index, marking the working tree up-to-date by storing
-+ * the cached stat info in the resulting cache entry.  A caller
-+ * that has already run lstat(2) on the path can call
-+ * add_to_index(), and all others can call add_file_to_index();
-+ * the latter will do necessary lstat(2) internally before
-+ * calling the former.
-+ */
- extern int add_to_index(struct index_state *, const char *path, struct stat *, int flags);
- extern int add_file_to_index(struct index_state *, const char *path, int flags);
-+
- extern struct cache_entry *make_cache_entry(unsigned int mode, const unsigned char *sha1, const char *path, int stage, unsigned int refresh_options);
- extern int chmod_index_entry(struct index_state *, struct cache_entry *ce, char flip);
- extern int ce_same_name(const struct cache_entry *a, const struct cache_entry *b);
--- 
-2.11.0.299.g762782ba8a
+[...]
+> I have seen a lot of Linux developers avoid this re-organization
+> operations because they would lose the renamed file history, because
+> a new log is created for the new file, even if it is a renamed
+> version of itself. I am sending you this e-mail to suggest the
+> creation of a new feature in Git: when renamed, a file or folder
+> should inherit his parent’s log and a “rename: …” would be
+> automatically created or have some kind of pointer to its “old” form
+> to make history analysis easier.
 
+Git does not record renames because of its stance that what matters is
+code _of the whole project_ as opposed to its location in a particular
+file.
+
+Hence with regard to renames Git "works backwards" by detecting them
+dynamically while traversing the history (such as with `git log`
+etc).  This detection uses certain heuristics which can be controlled
+with knobs pointed to by Stefan Beller.
+
+Still, I welcome you to read the sort-of "reference" post by Linus
+Torvalds [1] in which he explains the reasoning behind this approach
+implemented in Git.  IMO, understanding the reasoning behind the idea
+is much better than just mechanically learning how to use it.
+
+The whole thread (esp. Torvalds' replies) is worth reading, but that
+particular mail summarizes the whole thing very well.
+
+(The reference link to it used to be [2], but Gmane is not fully
+recovered to be able to display it.)
+
+1. http://public-inbox.org/git/Pine.LNX.4.58.0504150753440.7211@ppc970.osdl.org/
+2. http://thread.gmane.org/gmane.comp.version-control.git/27/focus=217
