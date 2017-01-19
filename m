@@ -2,74 +2,113 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1E48D20A17
-	for <e@80x24.org>; Thu, 19 Jan 2017 21:45:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 98EF920A17
+	for <e@80x24.org>; Thu, 19 Jan 2017 21:48:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752139AbdASVpe (ORCPT <rfc822;e@80x24.org>);
-        Thu, 19 Jan 2017 16:45:34 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:58872 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751478AbdASVpd (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 Jan 2017 16:45:33 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id AF0405FE0C;
-        Thu, 19 Jan 2017 16:45:31 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=5fHM32AvbAHbcz5HTFP2d0VIW+Q=; b=LC//u7
-        meO7/eOLiOGv32+RGeK9zCt2ZNXiHDVejhRPn22hWEwwPmx5NkZ9C/67t4ELo/ZS
-        sEh8uBGWIxzO1clf6aAiBM5ppgsztCk5X3S49oKTwSN04OfVtmhfxrCBGoWabLof
-        EbuK3MS/GBD/Fsi4RmX4AFHFBLvqTOsRG4BsY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=ufurK7GGwYZHdFzUohDwsp/pw3MVFOxT
-        /+8nE4zdMDWVbU/OllcP5yQ5oRyE9U+yB0+Zi7E0uOlO0vk2guRHTH3dHpFEykiF
-        qctgXsna5gPlX8YdWtHWsKWa6ivBmUfKuowkKB7o0F5I2Oz/kRqvHDvwqj/Rdmbk
-        MBrs6GhZ9m4=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id A6C7A5FE0B;
-        Thu, 19 Jan 2017 16:45:31 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 0CEB35FE0A;
-        Thu, 19 Jan 2017 16:45:30 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
-        git@vger.kernel.org, Thomas Gummerer <t.gummerer@gmail.com>,
-        Andrew Arnott <Andrew.Arnott@microsoft.com>
-Subject: Re: [PATCH v2 2/2] Be more careful when determining whether a remote was configured
-References: <cover.1484687919.git.johannes.schindelin@gmx.de>
-        <cover.1484860744.git.johannes.schindelin@gmx.de>
-        <1605031b76025f4bd0e485705c34a25557bb75a1.1484860744.git.johannes.schindelin@gmx.de>
-        <20170119213100.g72ml7r2khu7bvey@sigill.intra.peff.net>
-Date:   Thu, 19 Jan 2017 13:45:29 -0800
-In-Reply-To: <20170119213100.g72ml7r2khu7bvey@sigill.intra.peff.net> (Jeff
-        King's message of "Thu, 19 Jan 2017 16:31:01 -0500")
-Message-ID: <xmqqy3y6yb9i.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+        id S1751867AbdASVsX (ORCPT <rfc822;e@80x24.org>);
+        Thu, 19 Jan 2017 16:48:23 -0500
+Received: from mail-lf0-f65.google.com ([209.85.215.65]:35750 "EHLO
+        mail-lf0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751864AbdASVsW (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 Jan 2017 16:48:22 -0500
+Received: by mail-lf0-f65.google.com with SMTP id v186so6752233lfa.2
+        for <git@vger.kernel.org>; Thu, 19 Jan 2017 13:48:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:references:cc:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding;
+        bh=lMqurlYVVc2oonez0keICMQJklE1kmX281wnJ2IOiAs=;
+        b=pcAsbAtZMNNF5JEyTmJ6nzaOKzGDvlQORJM2kYUZOIebNHVyXteShtZEekqcNFoRQu
+         Fy/EE+jDMjrCxK7Yp8kgwqwosC4TppMNsKDgXZ5y5NS1uYwgWSAmWCmQa0JV8pu8RBM6
+         g+ahjt631vo5F6OgvsDvThi7f99wBz1ZMHTluncRbvJwR5RW5IOyHaQ3HKd87KjjWi8T
+         2QtWPR8sdf7sT3f5uw8jG1nZnRKvf6Z+9IMY2ec4tnRkfM3iUbXzEtj+2OlATzolF9TU
+         zmXAsit++WSlUC3yQTYH3g6Dtl8+FgSdXbp1t1raa/yBrY4lhFSxS6MyXYtBIKmRJG6R
+         wUkw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
+        bh=lMqurlYVVc2oonez0keICMQJklE1kmX281wnJ2IOiAs=;
+        b=Km6UOwrORWTtA8bh4pYeKGkkiqs86RH26Ne31f08yi23dLl41s9WfGR4MQ8tWWIdZI
+         De4vipyCeNCsFeSlOW9D++8snKCNl+sf6LTrzIkY9267hhkTGxwvcpbK7FsKsq+DMEbD
+         W8iVDUTYNvebvRIdYZEVAfz3JwwEF+HOxwYbNvJL4Yoje4sqvJtPudslZuVn/sUkG8KV
+         S71vuboDtbcvzOLEOhPl5jmEujXsxd9vilnRrF9TJBxR3pJDjuwaKVKH9VZTB+mpxl/m
+         Nx/yXQ0e6Bg04tSY/0aYjgSbOro0djdRvQqtXvW5EqfGfbPSz7TEfKZ7G3V1DsSXxJdJ
+         aTQQ==
+X-Gm-Message-State: AIkVDXI9cjcXcXoBp4W6Tl0iyZ4Mv/aTKM8ibvdFkn9LRh6i9AgcQL73hXCAKr7+BrdRwQ==
+X-Received: by 10.46.78.2 with SMTP id c2mr5283743ljb.77.1484862501100;
+        Thu, 19 Jan 2017 13:48:21 -0800 (PST)
+Received: from [192.168.1.26] (afu230.neoplus.adsl.tpnet.pl. [83.25.150.230])
+        by smtp.googlemail.com with ESMTPSA id a78sm2422651ljb.47.2017.01.19.13.48.19
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 19 Jan 2017 13:48:20 -0800 (PST)
+Subject: Re: Git: new feature suggestion
+To:     Linus Torvalds <torvalds@linux-foundation.org>,
+        Konstantin Khomoutov <kostix+git@007spb.ru>
+References: <4817eb00-6efc-e3c0-53d7-46f2509350d3@synopsys.com>
+ <20170119093313.ea57832dfd1bc7e0b0f1e630@domain007.com>
+ <CA+55aFxAe8bH2xXkx1p5gYN+nc-D-vjNnfUeA_64Q3ttpbHq+w@mail.gmail.com>
+Cc:     Joao Pinto <Joao.Pinto@synopsys.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        "CARLOS.PALMINHA@synopsys.com" <CARLOS.PALMINHA@synopsys.com>
+From:   =?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
+Message-ID: <b96b71b9-f8a2-d039-6e8a-c64e7aac02a0@gmail.com>
+Date:   Thu, 19 Jan 2017 22:48:08 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.6.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 9957F44A-DE90-11E6-90FB-FE3F13518317-77302942!pb-smtp1.pobox.com
+In-Reply-To: <CA+55aFxAe8bH2xXkx1p5gYN+nc-D-vjNnfUeA_64Q3ttpbHq+w@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+W dniu 19.01.2017 o 19:39, Linus Torvalds pisze:
+> On Wed, Jan 18, 2017 at 10:33 PM, Konstantin Khomoutov
+> <kostix+git@007spb.ru> wrote:
+>>
+>> Still, I welcome you to read the sort-of "reference" post by Linus
+>> Torvalds [1] in which he explains the reasoning behind this approach
+>> implemented in Git.
+> 
+> It's worth noting that that discussion was from some _very_ early days
+> in git (one week into the whole thing), when none of those
+> visualization tools were actually implemented.
+> 
+> Even now, ten years after the fact, plain git doesn't actually do what
+> I outlined. Yes, "git blame -Cw" works fairly well, and is in general
+> better than the traditional per-file "annotate". And yes, "git log
+> --follow" does another (small) part of the outlined thing, but is
+> really not very powerful.
 
-> I'm trying to figure out why "fetch --multiple" wouldn't just take a url
-> in the first place. I guess it is because multiple fetch is useless
-> without refspecs (since otherwise you're just writing to FETCH_HEAD,
-> which gets immediately overwritten).
+It is really a pity that "git log --follow" is so limited; it's
+development stopped at early 'good enough' implementation.
 
-This is probably a tangent, if FETCH_HEAD is overwritten, wouldn't
-that be a bug in the implementation of --multiple?  I somehow
-thought we had an option to tell second and subsequent "fetch" to
-append to FETCH_HEAD instead of overwriting it.
+For example "git log --follow gitweb/gitweb.perl" would not show
+the whole history of a file (which was once independent project),
+and "git log --follow" doesn't work for directories or multiple
+files.
 
+> 
+> Some tools on top of git do more, but I think in general this is an
+> area that could easily be improved upon. For example, the whole
+> iterative and interactive drilling down in history of a particular
+> file is very inconvenient to do with "git blame" (you find a commit
+> that change the area in some way that you don't find interesting, so
+> then you have to restart git blame with the parent of that
+> unintersting commit).
+> 
+> You can do it in tig, but I suspect a more graphical tool might be better.
+
+Well, we do have "git gui blame".
+
+[...]
+-- 
+Jakub Narębski
