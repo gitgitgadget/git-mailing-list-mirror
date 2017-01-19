@@ -2,122 +2,164 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E9E5820A17
-	for <e@80x24.org>; Thu, 19 Jan 2017 19:03:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0E42A20A17
+	for <e@80x24.org>; Thu, 19 Jan 2017 19:16:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754413AbdASTDT (ORCPT <rfc822;e@80x24.org>);
-        Thu, 19 Jan 2017 14:03:19 -0500
-Received: from mail-pg0-f54.google.com ([74.125.83.54]:35584 "EHLO
-        mail-pg0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754242AbdASTDQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 Jan 2017 14:03:16 -0500
-Received: by mail-pg0-f54.google.com with SMTP id 194so16312207pgd.2
-        for <git@vger.kernel.org>; Thu, 19 Jan 2017 11:03:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=VAnPNXQ0MGc03vjAt8CG6m3VZeBVJGuZMYbYGMWJy+s=;
-        b=baO5wm+c3AT+k123XRkV0R0hdjNWo064FQEcbcKh/4kx1yZLyOtgF2LZwkQ5nuYDs7
-         a+84+DR8NAv+vNthnZ9PXFX6D5Ta0/F/Paocbq+m5Jx+Qy/M75KWJoyT5FYHbta8w0xM
-         oxspAhRF42qacwRJJipnI6bPI6g3Nrj7Ozrzr6AHw7XGv16PFa2/4lyrdUSgTjtnFjRO
-         P3q0o0wcdygj+n7jn60QXUgJimoLNv7ewUoLTJUj+AsxaUc74uwR7ZR1pNdH5tp91qjq
-         f47gngiF5rTbqOSgYecdzOEf2djPZZP5lASL44R8lWQ0KjaBJ8gRccxj8atft+9+kT4k
-         0CqQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=VAnPNXQ0MGc03vjAt8CG6m3VZeBVJGuZMYbYGMWJy+s=;
-        b=PYcafp3NO/68VA3iIqTUpZ3YKlw5+yCdXgbpd9qwmTddcRRgxZXo2NKn8iYKKISPAM
-         FTVkIvdNeUR1pMWX//tkD+PypIYK97c9khe2XrPu88Rja6e9UzPfesGJyx+o7B0mKu2W
-         84+QtwF/VlRQUEJAuCNZdu/rtCarvaIEx9m9Oiy11Rl+9sTIrVM7/cOHXf1VpFhhmtO0
-         8uel0m8/NaK3UzZijwOX3J2J4ePBCkbH9FCD5siWIIKyzMsbErwgehIRx9NEsOtKipix
-         iv8dOyJOTP0BEwjAeQYL7mfJC/kBlYNSTRXSG7c/wap/oOGQHbJJwGUyxJt1NdSv7YIi
-         e0mQ==
-X-Gm-Message-State: AIkVDXK8MzpUK0+HLJ/fW8hrgFYVsOWeEOGylejcIz+bxd0Gm3UIcdNe51UQNe0FbYfwz/Zx
-X-Received: by 10.84.130.5 with SMTP id 5mr15052521plc.69.1484850576860;
-        Thu, 19 Jan 2017 10:29:36 -0800 (PST)
-Received: from google.com ([2620:0:1000:5b10:1d68:bc5d:3a1b:2ccb])
-        by smtp.gmail.com with ESMTPSA id 89sm10564740pfo.40.2017.01.19.10.29.35
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 19 Jan 2017 10:29:35 -0800 (PST)
-Date:   Thu, 19 Jan 2017 10:29:34 -0800
-From:   Brandon Williams <bmwill@google.com>
-To:     Stefan Hajnoczi <stefanha@redhat.com>
-Cc:     git@vger.kernel.org, gitster@pobox.com
-Subject: Re: [RFC 2/2] grep: use '/' delimiter for paths
-Message-ID: <20170119182934.GH10641@google.com>
-References: <20170119150347.3484-1-stefanha@redhat.com>
- <20170119150347.3484-3-stefanha@redhat.com>
+        id S1754481AbdASTQq (ORCPT <rfc822;e@80x24.org>);
+        Thu, 19 Jan 2017 14:16:46 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:50514 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1754368AbdASTQp (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 Jan 2017 14:16:45 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id F1B155FAF5;
+        Thu, 19 Jan 2017 14:16:43 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=15QQn2zgaz3l
+        HZ7TyNSjNUSk/C4=; b=DOI45LB4u3tySyMWDH3wHPHYfAFn/O5z9/0i29BzOU2f
+        t6uxEMj9K7nrJrJW2QV157OvcWFKoAFqEwaqh07slldq36s80UlZOpRmWH4Zm9kD
+        0YGex6Uxd2EyeBi4gDzS7kFLQgO8uDGtdb4icBXMS6FReOp3MYWldipUQ2HXIw8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=C2cWjn
+        sPqDZKpSHnF1h3XqgIk6fKQ3Xo4AERAsmwCrVORrFTouxEBnkTQMc3u9DRoH/rFd
+        Tm9lGcqxCr9Z0RdwdpSy9/RpMz9EPsYm1B0A+8Tjqx9hS8jXw8JNB38oh3vPvvDz
+        6+jBAhw8+cAceXaw46NhJJehpCdgnWVBN02H4=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id E97B45FAF4;
+        Thu, 19 Jan 2017 14:16:43 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 514385FAF3;
+        Thu, 19 Jan 2017 14:16:43 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Ulrich =?utf-8?Q?Sp=C3=B6rlein?= <uqs@freebsd.org>,
+        Ed Maste <emaste@freebsd.org>, git@vger.kernel.org
+Subject: Re: [PATCH] clear_delta_base_cache(): don't modify hashmap while iterating
+References: <20170112082138.GJ4426@acme.spoerlein.net>
+        <20170118140117.GK4426@acme.spoerlein.net>
+        <20170118143814.or34vxxwjwnzg5jz@sigill.intra.peff.net>
+        <20170118200646.6larm2qu32xm73on@sigill.intra.peff.net>
+        <CAJ9axoSzZJXD4RKvVx+D60dw4sakMJWgNmOP-cREWA53Ae3C3w@mail.gmail.com>
+        <20170118202704.w6pjxfvnge7utk34@sigill.intra.peff.net>
+        <20170118215120.6hle2uxgkcvvtlox@sigill.intra.peff.net>
+        <CAJ9axoT1pUQc_jTKxO+RMw7emhA4ss1NCAU+hpnyG5LMwGD89w@mail.gmail.com>
+        <20170119163350.zsfb33lmigkyljjh@sigill.intra.peff.net>
+Date:   Thu, 19 Jan 2017 11:16:42 -0800
+In-Reply-To: <20170119163350.zsfb33lmigkyljjh@sigill.intra.peff.net> (Jeff
+        King's message of "Thu, 19 Jan 2017 11:33:50 -0500")
+Message-ID: <xmqqh94u2739.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20170119150347.3484-3-stefanha@redhat.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: D001E3C6-DE7B-11E6-AE88-FE3F13518317-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 01/19, Stefan Hajnoczi wrote:
-> If the tree contains a sub-directory then git-grep(1) output contains a
-> colon character instead of a path separator:
-> 
->   $ git grep malloc v2.9.3:t
->   v2.9.3:t:test-lib.sh:	setup_malloc_check () {
->   $ git show v2.9.3:t:test-lib.sh
->   fatal: Path 't:test-lib.sh' does not exist in 'v2.9.3'
-> 
-> This patch attempts to use the correct delimiter:
-> 
->   $ git grep malloc v2.9.3:t
->   v2.9.3:t/test-lib.sh:	setup_malloc_check () {
->   $ git show v2.9.3:t/test-lib.sh
->   (success)
-> 
-> This patch does not cope with @{1979-02-26 18:30:00} syntax and treats
-> it as a path because it contains colons.
-> 
-> Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
+Jeff King <peff@peff.net> writes:
+
+> Thanks. Here it is rolled up with a commit message.
+>
+> -- >8 --
+> Subject: clear_delta_base_cache(): don't modify hashmap while iterating
+>
+> Removing entries while iterating causes fast-import to
+> access an already-freed `struct packed_git`, leading to
+> various confusing errors.
+>
+> What happens is that clear_delta_base_cache() drops the
+> whole contents of the cache by iterating over the hashmap,
+> calling release_delta_base_cache() on each entry. That
+> function removes the item from the hashmap. The hashmap code
+> may then shrink the table, but the hashmap_iter struct
+> retains an offset from the old table.
+>
+> As a result, the next call to hashmap_iter_next() may claim
+> that the iteration is done, even though some items haven't
+> been visited.
+>
+> The only caller of clear_delta_base_cache() is fast-import,
+> which wants to clear the cache because it is discarding the
+> packed_git struct for its temporary pack. So by failing to
+> remove all of the entries, we still have references to the
+> freed packed_git.
+>
+> To make things even more confusing, this doesn't seem to
+> trigger with the test suite, because it depends on
+> complexities like the size of the hash table, which entries
+> got cleared, whether we try to access them before they're
+> evicted from the cache, etc.
+>
+> So I've been able to identify the problem with large
+> imports like freebsd's svn import, or a fast-export of
+> linux.git. But nothing that would be reasonable to run as
+> part of the normal test suite.
+>
+> We can fix this easily by iterating over the lru linked list
+> instead of the hashmap. They both contain the same entries,
+> and we can use the "safe" variant of the list iterator,
+> which exists for exactly this case.
+>
+> Let's also add a warning to the hashmap API documentation to
+> reduce the chances of getting bit by this again.
+>
+> Reported-by: Ulrich Sp=C3=B6rlein <uqs@freebsd.org>
+> Signed-off-by: Jeff King <peff@peff.net>
 > ---
->  builtin/grep.c | 3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
-> 
-> diff --git a/builtin/grep.c b/builtin/grep.c
-> index 3643d8a..06f8b47 100644
-> --- a/builtin/grep.c
-> +++ b/builtin/grep.c
-> @@ -493,7 +493,8 @@ static int grep_object(struct grep_opt *opt, const struct pathspec *pathspec,
->  
->  			/* Add a delimiter if there isn't one already */
->  			if (name[len - 1] != '/' && name[len - 1] != ':') {
-> -				strbuf_addch(&base, ':');
-> +				/* rev: or rev:path/ */
-> +				strbuf_addch(&base, strchr(name, ':') ? '/' : ':');
 
-As Jeff mentioned it may be better to base which character gets appended
-by checking the obj->type field like this maybe:
+Makes sense.  Thanks, both, for reporting, finding and fixing.
 
-diff --git a/builtin/grep.c b/builtin/grep.c
-index 69dab5dc5..9dfe11dc7 100644
---- a/builtin/grep.c
-+++ b/builtin/grep.c
-@@ -495,7 +495,8 @@ static int grep_object(struct grep_opt *opt, const struct pathspec *pathspec,
- 			/* Add a delimiter if there isn't one already */
- 			if (name[len - 1] != '/' && name[len - 1] != ':') {
- 				/* rev: or rev:path/ */
--				strbuf_addch(&base, strchr(name, ':') ? '/' : ':');
-+				char del = obj->type == OBJ_COMMIT ? ':' : '/';
-+				strbuf_addch(&base, del);
- 			}
- 		}
- 		init_tree_desc(&tree, data, size);
+Will apply.
 
--- 
-Brandon Williams
+>  Documentation/technical/api-hashmap.txt | 4 +++-
+>  sha1_file.c                             | 9 ++++-----
+>  2 files changed, 7 insertions(+), 6 deletions(-)
+>
+> diff --git a/Documentation/technical/api-hashmap.txt b/Documentation/te=
+chnical/api-hashmap.txt
+> index 28f5a8b71..a3f020cd9 100644
+> --- a/Documentation/technical/api-hashmap.txt
+> +++ b/Documentation/technical/api-hashmap.txt
+> @@ -188,7 +188,9 @@ Returns the removed entry, or NULL if not found.
+>  `void *hashmap_iter_next(struct hashmap_iter *iter)`::
+>  `void *hashmap_iter_first(struct hashmap *map, struct hashmap_iter *it=
+er)`::
+> =20
+> -	Used to iterate over all entries of a hashmap.
+> +	Used to iterate over all entries of a hashmap. Note that it is
+> +	not safe to add or remove entries to the hashmap while
+> +	iterating.
+>  +
+>  `hashmap_iter_init` initializes a `hashmap_iter` structure.
+>  +
+> diff --git a/sha1_file.c b/sha1_file.c
+> index 1eb47f611..d20714d6b 100644
+> --- a/sha1_file.c
+> +++ b/sha1_file.c
+> @@ -2342,11 +2342,10 @@ static inline void release_delta_base_cache(str=
+uct delta_base_cache_entry *ent)
+> =20
+>  void clear_delta_base_cache(void)
+>  {
+> -	struct hashmap_iter iter;
+> -	struct delta_base_cache_entry *entry;
+> -	for (entry =3D hashmap_iter_first(&delta_base_cache, &iter);
+> -	     entry;
+> -	     entry =3D hashmap_iter_next(&iter)) {
+> +	struct list_head *lru, *tmp;
+> +	list_for_each_safe(lru, tmp, &delta_base_cache_lru) {
+> +		struct delta_base_cache_entry *entry =3D
+> +			list_entry(lru, struct delta_base_cache_entry, lru);
+>  		release_delta_base_cache(entry);
+>  	}
+>  }
