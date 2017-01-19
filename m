@@ -2,162 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D11E920A17
-	for <e@80x24.org>; Thu, 19 Jan 2017 20:03:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 67DB720A17
+	for <e@80x24.org>; Thu, 19 Jan 2017 20:04:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932068AbdASUDU (ORCPT <rfc822;e@80x24.org>);
-        Thu, 19 Jan 2017 15:03:20 -0500
-Received: from mail-io0-f173.google.com ([209.85.223.173]:35275 "EHLO
-        mail-io0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932081AbdASUDS (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 Jan 2017 15:03:18 -0500
-Received: by mail-io0-f173.google.com with SMTP id j18so46633416ioe.2
-        for <git@vger.kernel.org>; Thu, 19 Jan 2017 12:03:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=Cti5IkxrABJx//RSrf0Ms+5LJccCS2oY4E3/EWR1Bqc=;
-        b=AJqB3eZ5srFuGhCI5G1PkplFJ6FFvdVUO32K/ACv+Ix1JDFSiergiSwbKcfMcXclKd
-         IG+hEeFkxkaAQfaS9D1syg4F1xtxlu+qjmFKvGD0Z3BPTA+ypcHoXjUzAZc97esJ9ayh
-         GZxDvA4ZnRDeavsNt3ZBNkAaGvXAs7783MD6+RA/tS0Y1AiaR9ZVxfINPlaz+gsObJON
-         9r6jJGLZ16GkEEln9j2Q4Iuo3sb+E56l79Ze0aCVv/MLFGed3Iw0gD+m7YEjwaBb9yro
-         WNrGZFsoRFgrXpLOP81OudqT6MRGXjudYHARGQvsnv8n+iOMEi1EiacSRM96X4hG8hJP
-         4pFQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=Cti5IkxrABJx//RSrf0Ms+5LJccCS2oY4E3/EWR1Bqc=;
-        b=FyOd1wJB7akevKGQfZ9itmIAVFN8n/Pe64VzA86vj97DcB5WoN4rOTJzNk4JXOvRL2
-         AqdE17toPIVJjM/gBp/AKO8jmuxzI46aB/ZrtjbXq+6sinnGHkSn865cOHrUcfghOxlJ
-         QPVxX9vJs2QzfYZ59dr+XA3kMnooBOxGYtKtAR1ImimfKnm55eRmnDleUVuBwWYKO7Me
-         gLqKA5fZtuldzQDb4VyWB1VuzFC0TWe4qiTnTuNjSOk9ZOU7miS7G+KSjy936nj0Eidm
-         fFba74vG350XeyL8Avi0sy+KGgO8WPOMhfyeKCFonZlUk95FAjMzN4Zs+YEfaRRhyL2I
-         RClg==
-X-Gm-Message-State: AIkVDXIcCO7cAzNRxQ2OOGr5EYQh2GoidlcsR7aqxspq8yrpE30G/OlMJy+Xg/wcaKG4HPsoW+ioUhufSOxLbj9B
-X-Received: by 10.107.37.148 with SMTP id l142mr9470325iol.159.1484856193208;
- Thu, 19 Jan 2017 12:03:13 -0800 (PST)
+        id S1754030AbdASUEc (ORCPT <rfc822;e@80x24.org>);
+        Thu, 19 Jan 2017 15:04:32 -0500
+Received: from mout.gmx.net ([212.227.15.18]:56006 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751898AbdASUEb (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 Jan 2017 15:04:31 -0500
+Received: from virtualbox ([37.24.141.236]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0Lp3sy-1c0jML2yVo-00es5Z; Thu, 19
+ Jan 2017 21:04:25 +0100
+Date:   Thu, 19 Jan 2017 21:04:24 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Michael Haggerty <mhagger@alum.mit.edu>
+cc:     Duy Nguyen <pclouds@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: The design of refs backends, linked worktrees and submodules
+In-Reply-To: <341999fc-4496-b974-c117-c18a2fca1358@alum.mit.edu>
+Message-ID: <alpine.DEB.2.20.1701192057530.3469@virtualbox>
+References: <CACsJy8CHoroX2k9GqOFmXkvvPCPN4SBeCg+6aC2WSWNSKVmWQw@mail.gmail.com> <341999fc-4496-b974-c117-c18a2fca1358@alum.mit.edu>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Received: by 10.79.39.19 with HTTP; Thu, 19 Jan 2017 12:03:12 -0800 (PST)
-In-Reply-To: <CACsJy8BHgc8o+SydeiVnqaZRCbkJEWVzqDZM4sgey04ZLtG3tQ@mail.gmail.com>
-References: <20170110112524.12870-1-pclouds@gmail.com> <CAGZ79ka+zkr83tSkg_kJWoN1u3fgu1O3u1-7USEoSM1tj-53vA@mail.gmail.com>
- <CACsJy8BHgc8o+SydeiVnqaZRCbkJEWVzqDZM4sgey04ZLtG3tQ@mail.gmail.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Thu, 19 Jan 2017 12:03:12 -0800
-Message-ID: <CAGZ79kYy2q9ZMt8r7MdysuNOu84bY7uSUTGJXVxA1nnP-ZJW0Q@mail.gmail.com>
-Subject: Re: [PATCH v5 0/4] Per-worktree config file support
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Michael J Gruber <git@drmicha.warpmail.net>,
-        Jens Lehmann <Jens.Lehmann@web.de>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        Michael Haggerty <mhagger@alum.mit.edu>,
-        Max Kirillov <max@max630.net>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:Bt5eNvkXIzpJh+d9gXg6B0r7J2pLhgVpHaiv7kiJSFxqRamzEuk
+ zw+zghhRFX1FBzCmZSNu0RdMVV/OuLKWXZrmroLcKGg8fFF+ggCtl1PShurET7KgrgvpIpN
+ M7iPe+srYlse2HMCCJ2p8lA6kbvSSSdPjWHXxm8kymz+C9ihaL0GvZw+3jXa+ofi0T5NNQA
+ kVA2R78Hdcf8XMh+vffQA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:m0Q/zZ8YVus=:TNS6qg8IpSlonJy9LyJY7a
+ TXsXqO+8Nbid+kWgR+QXOEr54vgvmf73TI6hehutIybEknzRCQz1UdyfL9Sw3iPCEaeoO1sQd
+ TVQGRGJuN4K1/SotDq+e9XIZ2wEn6kRii0LuVCbNumBsLC/dsJ2x6t4bdPTPTZw9sFILts091
+ B/VGw6ObMWHSOK29FYXIZAiWjwz+cn+B2HxWtO0JaIuHmmAhIMSvxLsvZLbjacNABvRKM0TZh
+ Uvw/HcpqAn1cClvoEfPGPtcPPMK/d+qvPggSXDLU22ygRsUtKH2SZmb6l5hJV6qtFVDTA9kdz
+ 9WhfkDAsjuIhwjvBR9360giIwvYnUS2TYpMbALcL5Top8wBgAa2NuWArBd7gio9JSz13NFeYe
+ mpTbqCF7XR9PIRirwimbyx78m/dvSoGDkDUwr5LtMc3xF7sp+1ZeZ7qbjILNCIwNf8tPW6NI0
+ nBe+Hj3Etj+MumnDEorgNusxMHZIlaglLsdt2jNhD7mzFKcfrkunmONgLClDECz1VtpWaF8cD
+ rQYWFmU9oCYqbKyeDeuM4IiBQFGAUJbYfewSEgVj34o2PCmNbLBYG2VjAnzeBM4S8Gvi2f4mq
+ nvKaT6UrHTCyJ8+sl93rPi1O27RAgxkvxIpEp7+Y6myQKLpIXjQFBvVbcWDwdPG+ta1TE12U7
+ +Uj0uAPZbVACCBKwo46LPKh3YYYCqkcasIa5K97an9Wog0CvX3nFiaHoaBz+Yt3CcRL5wBmhC
+ x0nTGOqeu5QaAipRDyHwRBEdaa76M72vjlcjYSBncm0pPczIRYqXJNlgNylODMm3T8Cw3hYrr
+ 8BlARiS
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jan 19, 2017 at 4:09 AM, Duy Nguyen <pclouds@gmail.com> wrote:
-> On Wed, Jan 11, 2017 at 12:01 AM, Stefan Beller <sbeller@google.com> wrot=
-e:
->> On Tue, Jan 10, 2017 at 3:25 AM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc D=
-uy <pclouds@gmail.com> wrote:
->>> Let's get this rolling again. To refresh your memory because it's half
->>> a year since v4 [1], this is about letting each worktree in multi
->>> worktree setup has their own config settings. The most prominent ones
->>> are core.worktree, used by submodules, and core.sparseCheckout.
->>
->> Thanks for getting this rolling again.
->>
->>>
->>> This time I'm not touching submodules at all. I'm leaving it in the
->>> good hands of "submodule people". All I'm providing is mechanism. How
->>> you use it is up to you. So the series benefits sparse checkout users
->>> only.
->>
->> As one of the "submodule people", I have no complaints here.
->>
->>>
->>> Not much has changed from v4, except that the migration to new config
->>> layout is done automatically _update_ a config variable with "git
->>> config --worktree".
->>>
->>> I think this one is more or less ready. I have an RFC follow-up patch
->>> about core.bare, but that could be handled separately.
->>
->> I have read through the series and think the design is sound for worktre=
-es
->> (though I have little knowledge about them).
->
-> Submodules and multi worktrees start to look very similar, the more I
-> think about it. Well, except that multi worktree does not separate odb
-> and config files, maybe.
+Hi,
 
-Similar to worktrees submodules can appear and disappear without
-affecting the project/main tree. (though the mechanism is different,
-for submodules, you'd checkout a version that doesn't have the submodule,
-whereas for worktrees the user explicitely says: "I don't want to see this
-worktree any more")
+On Thu, 19 Jan 2017, Michael Haggerty wrote:
 
-> And we have already seen both have a need to
-> share code (like the moving .git dir operation). I suspect I'll learn
-> more about submodules along the way, and you worktrees ;-)
+> On 01/19/2017 12:55 PM, Duy Nguyen wrote:
+> > I've started working on fixing the "git gc" issue with multiple
+> > worktrees, which brings me back to this. Just some thoughts. Comments
+> > are really appreciated.
+> > 
+> > In the current code, files backend has special cases for both
+> > submodules (explicitly) and linked worktrees (hidden behind git_path).
+> 
+> There is another terrible hack also needed to implement linked
+> worktrees, namely that the `refs/bisect/` hierarchy is manually inserted
+> into the `ref_cache`, because otherwise it wouldn't be noticed when
+> iterating over loose references via `readdir()`.
+> 
+> Other similar hacks would be required if other reference subtrees are
+> declared to be per-worktree.
+> 
+> > But if a backend has to handle this stuff, all future backends have to
+> > too. Which does not sound great. Imagine we have "something" in
+> > addition to worktrees and submodules in future, then all backends have
+> > to learn about it.
+> 
+> Agreed, the status quo is not pretty.
+> 
+> I kindof think that it would have been a better design to store the
+> references for all linked worktrees in the main repository's ref-store.
+> For example, the "bisect" refs for a worktree named "<name>" could have
+> been stored under "refs/worktrees/<name>/bisect/*".
 
-I sure hope so.
+That strikes me as a good design, indeed. It addresses very explicitly the
+root cause of the worktree problems: Git's source code was developed for
+years with the assumption that there is a 1:1 mapping between ref names
+and SHA-1s in each repository, and the way worktrees were implemented
+broke that assumption.
 
->
->> Now even further:
->>
->> So to build on top of this series, I'd like to make submodules usable
->> with worktrees (i.e. shared object store, only clone/fetch once and
->> all worktrees
->> benefit from it), the big question is how to get the underlying data
->> model right.
->>
->> Would a submodule go into the superprojects
->>
->>     .git/worktrees/<worktree-name>/modules/<submodule-name>/
->>
->> or rather
->>
->>     .git/modules<submodule-name>/worktrees/<worktree-name>
->>
->> Or both (one of them being a gitlink file pointing at the other?)
->>
->> I have not made up my mind, as I haven't laid out all cases that are
->> relevant here.
->
-> I would go with a conservative step first, keep submodules
-> per-worktree. After it's sorted out. You can change the layout (e.g.
-> as a config extension). The latter probably has some complication (but
-> yeah sharing would be a big plus).
+So introducing a new refs/ namespace -- that is visible to all other
+worktrees -- would have addressed that problem.
 
-The sharing is what we are asked for as it would "make
-submodules usable" (compared to the repo tool, which
-doesn't have object sharing AFAIK). ;)
+This, BTW, is related to my concerns about introducing a "shadow" config
+layer for worktrees: I still think it would be a bad idea, and very likely
+to cause regressions in surprising ways, to allow such config "overlays"
+per-worktree, as Git's current code's assumption is that there is only one
+config per repository, and that it can, say, set one config setting to
+match another (which in the per-worktree case would possibly hold true in
+only one worktree only). Instead, introducing a new "namespace" in the
+(single) config similar to refs/worktrees/<name> could address that
+problem preemptively.
 
-Currently I am leaning to put the worktree directory first and the
-submodules within, i.e.
-
-.git/worktrees/<worktree-name>/modules/<submodule-name>/
-
-but in that directory, we'd only have the per-worktree
-specific stuff, the object store would live with the superprojects
-main worktree, i.e. at .git/modules/<submodule-name> we'd have
-the main git dir for the submodule.
-
-Thanks,
-Stefan
-
-> --
-> Duy
+Ciao,
+Johannes
