@@ -2,108 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 67DB720A17
-	for <e@80x24.org>; Thu, 19 Jan 2017 20:04:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D756E20A17
+	for <e@80x24.org>; Thu, 19 Jan 2017 20:22:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754030AbdASUEc (ORCPT <rfc822;e@80x24.org>);
-        Thu, 19 Jan 2017 15:04:32 -0500
-Received: from mout.gmx.net ([212.227.15.18]:56006 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751898AbdASUEb (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 Jan 2017 15:04:31 -0500
-Received: from virtualbox ([37.24.141.236]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0Lp3sy-1c0jML2yVo-00es5Z; Thu, 19
- Jan 2017 21:04:25 +0100
-Date:   Thu, 19 Jan 2017 21:04:24 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     Michael Haggerty <mhagger@alum.mit.edu>
-cc:     Duy Nguyen <pclouds@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: The design of refs backends, linked worktrees and submodules
-In-Reply-To: <341999fc-4496-b974-c117-c18a2fca1358@alum.mit.edu>
-Message-ID: <alpine.DEB.2.20.1701192057530.3469@virtualbox>
-References: <CACsJy8CHoroX2k9GqOFmXkvvPCPN4SBeCg+6aC2WSWNSKVmWQw@mail.gmail.com> <341999fc-4496-b974-c117-c18a2fca1358@alum.mit.edu>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+        id S1754531AbdASUV7 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 19 Jan 2017 15:21:59 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:53393 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1754507AbdASUV6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 Jan 2017 15:21:58 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id B58F2609AA;
+        Thu, 19 Jan 2017 15:17:53 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=C1y7yYBFFsMxPgqYZWL9uniOgnc=; b=BLxznR
+        NGnxGnBkPobol6ADOyi0Dpt7Ba4joBztMoaPBXrYLsI3levmdKoCFkPLqorIVylZ
+        hhFBJVoiJsc+rvIOfVoT9zdlhQFk+nMsxtGVxyS8OL+RqcNxqLhCI9i0S75MtT23
+        TwmFYGenes5o102RRGC12Zv4hOnqCwUngi53c=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=YoyfnUDjoAg/GHBriqi/07q2cMSHEWRi
+        UhSlwpmlCLSsfP0uL8FJ1unJdN+PvaPs3rwH9FVXnIMi9ePcnk0lrUrO/fZc8uCV
+        tHkfS6mmr8FtUci3QArN2bpqR73PKqFEHN+1CAU6NMqbRT+KzYZCpaBW9YcVS5JO
+        tbEuLZ4/YYI=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id AA95B609A9;
+        Thu, 19 Jan 2017 15:17:53 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 17167609A8;
+        Thu, 19 Jan 2017 15:17:53 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCHv3 1/4] cache.h: document index_name_pos
+References: <20170118232145.31606-2-sbeller@google.com>
+        <20170119031854.4570-1-sbeller@google.com>
+        <20170119031854.4570-2-sbeller@google.com>
+Date:   Thu, 19 Jan 2017 12:17:51 -0800
+In-Reply-To: <20170119031854.4570-2-sbeller@google.com> (Stefan Beller's
+        message of "Wed, 18 Jan 2017 19:18:51 -0800")
+Message-ID: <xmqqziimztw0.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:Bt5eNvkXIzpJh+d9gXg6B0r7J2pLhgVpHaiv7kiJSFxqRamzEuk
- zw+zghhRFX1FBzCmZSNu0RdMVV/OuLKWXZrmroLcKGg8fFF+ggCtl1PShurET7KgrgvpIpN
- M7iPe+srYlse2HMCCJ2p8lA6kbvSSSdPjWHXxm8kymz+C9ihaL0GvZw+3jXa+ofi0T5NNQA
- kVA2R78Hdcf8XMh+vffQA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:m0Q/zZ8YVus=:TNS6qg8IpSlonJy9LyJY7a
- TXsXqO+8Nbid+kWgR+QXOEr54vgvmf73TI6hehutIybEknzRCQz1UdyfL9Sw3iPCEaeoO1sQd
- TVQGRGJuN4K1/SotDq+e9XIZ2wEn6kRii0LuVCbNumBsLC/dsJ2x6t4bdPTPTZw9sFILts091
- B/VGw6ObMWHSOK29FYXIZAiWjwz+cn+B2HxWtO0JaIuHmmAhIMSvxLsvZLbjacNABvRKM0TZh
- Uvw/HcpqAn1cClvoEfPGPtcPPMK/d+qvPggSXDLU22ygRsUtKH2SZmb6l5hJV6qtFVDTA9kdz
- 9WhfkDAsjuIhwjvBR9360giIwvYnUS2TYpMbALcL5Top8wBgAa2NuWArBd7gio9JSz13NFeYe
- mpTbqCF7XR9PIRirwimbyx78m/dvSoGDkDUwr5LtMc3xF7sp+1ZeZ7qbjILNCIwNf8tPW6NI0
- nBe+Hj3Etj+MumnDEorgNusxMHZIlaglLsdt2jNhD7mzFKcfrkunmONgLClDECz1VtpWaF8cD
- rQYWFmU9oCYqbKyeDeuM4IiBQFGAUJbYfewSEgVj34o2PCmNbLBYG2VjAnzeBM4S8Gvi2f4mq
- nvKaT6UrHTCyJ8+sl93rPi1O27RAgxkvxIpEp7+Y6myQKLpIXjQFBvVbcWDwdPG+ta1TE12U7
- +Uj0uAPZbVACCBKwo46LPKh3YYYCqkcasIa5K97an9Wog0CvX3nFiaHoaBz+Yt3CcRL5wBmhC
- x0nTGOqeu5QaAipRDyHwRBEdaa76M72vjlcjYSBncm0pPczIRYqXJNlgNylODMm3T8Cw3hYrr
- 8BlARiS
+Content-Type: text/plain
+X-Pobox-Relay-ID: 5B5AD0C4-DE84-11E6-9F4D-FE3F13518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Stefan Beller <sbeller@google.com> writes:
 
-On Thu, 19 Jan 2017, Michael Haggerty wrote:
+> Signed-off-by: Stefan Beller <sbeller@google.com>
+> ---
+>  cache.h | 19 +++++++++++++++++++
+>  1 file changed, 19 insertions(+)
+>
+> diff --git a/cache.h b/cache.h
+> index 1b67f078dd..1469ddeafe 100644
+> --- a/cache.h
+> +++ b/cache.h
+> @@ -575,7 +575,26 @@ extern int verify_path(const char *path);
+>  extern int index_dir_exists(struct index_state *istate, const char *name, int namelen);
+>  extern void adjust_dirname_case(struct index_state *istate, char *name);
+>  extern struct cache_entry *index_file_exists(struct index_state *istate, const char *name, int namelen, int igncase);
+> +
+> +/*
+> + * Searches for an entry defined by name and namelen in the given index.
+> + * If the return value is positive (including 0) it is the position of an
+> + * exact match. If the return value is negative, the negated value minus 1
+> + * is the position where the entry would be inserted.
 
-> On 01/19/2017 12:55 PM, Duy Nguyen wrote:
-> > I've started working on fixing the "git gc" issue with multiple
-> > worktrees, which brings me back to this. Just some thoughts. Comments
-> > are really appreciated.
-> > 
-> > In the current code, files backend has special cases for both
-> > submodules (explicitly) and linked worktrees (hidden behind git_path).
-> 
-> There is another terrible hack also needed to implement linked
-> worktrees, namely that the `refs/bisect/` hierarchy is manually inserted
-> into the `ref_cache`, because otherwise it wouldn't be noticed when
-> iterating over loose references via `readdir()`.
-> 
-> Other similar hacks would be required if other reference subtrees are
-> declared to be per-worktree.
-> 
-> > But if a backend has to handle this stuff, all future backends have to
-> > too. Which does not sound great. Imagine we have "something" in
-> > addition to worktrees and submodules in future, then all backends have
-> > to learn about it.
-> 
-> Agreed, the status quo is not pretty.
-> 
-> I kindof think that it would have been a better design to store the
-> references for all linked worktrees in the main repository's ref-store.
-> For example, the "bisect" refs for a worktree named "<name>" could have
-> been stored under "refs/worktrees/<name>/bisect/*".
+So if the return value is -3, you negate it to get 3 and then
+subtract 1 to get 2.  The function is telling you that "e" will
+sit at active_cache[2] in the following example.
 
-That strikes me as a good design, indeed. It addresses very explicitly the
-root cause of the worktree problems: Git's source code was developed for
-years with the assumption that there is a 1:1 mapping between ref names
-and SHA-1s in each repository, and the way worktrees were implemented
-broke that assumption.
+Which is correct.
 
-So introducing a new refs/ namespace -- that is visible to all other
-worktrees -- would have addressed that problem.
+> + * Example: The current index consists of these files and its stages:
+> + *
+> + *   b#0, d#0, f#1, f#3
+> + *
+> + * index_name_pos(&index, "a", 1) -> -1
+> + * index_name_pos(&index, "b", 1) ->  0
+> + * index_name_pos(&index, "c", 1) -> -2
+> + * index_name_pos(&index, "d", 1) ->  1
+> + * index_name_pos(&index, "e", 1) -> -3
+> + * index_name_pos(&index, "f", 1) -> -3
+> + * index_name_pos(&index, "g", 1) -> -5
+> + */
 
-This, BTW, is related to my concerns about introducing a "shadow" config
-layer for worktrees: I still think it would be a bad idea, and very likely
-to cause regressions in surprising ways, to allow such config "overlays"
-per-worktree, as Git's current code's assumption is that there is only one
-config per repository, and that it can, say, set one config setting to
-match another (which in the per-worktree case would possibly hold true in
-only one worktree only). Instead, introducing a new "namespace" in the
-(single) config similar to refs/worktrees/<name> could address that
-problem preemptively.
+This time the counting seems correct.
 
-Ciao,
-Johannes
+Thanks.
