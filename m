@@ -7,87 +7,96 @@ X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1397B1F89C
-	for <e@80x24.org>; Thu, 19 Jan 2017 03:19:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B7C2C1F89C
+	for <e@80x24.org>; Thu, 19 Jan 2017 03:19:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752015AbdASDTB (ORCPT <rfc822;e@80x24.org>);
+        id S1752024AbdASDTD (ORCPT <rfc822;e@80x24.org>);
+        Wed, 18 Jan 2017 22:19:03 -0500
+Received: from mail-pf0-f175.google.com ([209.85.192.175]:33764 "EHLO
+        mail-pf0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752016AbdASDTB (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 18 Jan 2017 22:19:01 -0500
-Received: from mail-pg0-f50.google.com ([74.125.83.50]:34807 "EHLO
-        mail-pg0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751913AbdASDTA (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Jan 2017 22:19:00 -0500
-Received: by mail-pg0-f50.google.com with SMTP id 14so9918806pgg.1
-        for <git@vger.kernel.org>; Wed, 18 Jan 2017 19:19:00 -0800 (PST)
+Received: by mail-pf0-f175.google.com with SMTP id y143so9457637pfb.0
+        for <git@vger.kernel.org>; Wed, 18 Jan 2017 19:19:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=cPwHAQHuh/ke+/HJf3I2ZcjrkSbdZgvf0O0/HQ60PO0=;
-        b=aZqiuDgkbU1YF7xQQiynfiuM242vHb2O7in5oN76iokMra18I233KgKojkN4zLDfx5
-         O94pnI7Pxeq+y7+H1dz0K4v9oy/+oAaWilLTYTAsBA9Z/F4ZhhPBIcTkSjP7OrNLiUAS
-         8VlNKF6wO0l3m2uVsgbvZQ0YomUU37dKkk/w8fBAZDxvxYcPGPUTcgh50yof6XgJ58O5
-         zTvwDFfBImyL3iPMqnkDGmFdKNFzmrVpfkzvjuByvS0jWQGg4ilsMb+XY4k/ArlSMbP1
-         zrlVPhL3y1/XfLFmVx7GpBT4KiGvwwbM03RwqquaddbZPartQ1I5oJmifvTgBT1Z/faA
-         ztyA==
+        bh=KeL/LTirrhifah/ZeQWH47rmxycYi+rD2jj0D6hW+vE=;
+        b=BfK2gWaWIMcqv+T3q7Fe4x2yKqlgEV0ujV8VUb1bGzB1+cOpTSdp+Dm4H5fWPBDiyf
+         Kz4yr7EcNzWf88WG45s2+X4yjYP157lUbekfBGxKpYjRm7YZXnDvG/J0NLSmWKyyWQY5
+         IxekFAoU/z5bhoSkJFE60kPekn1MQ7xAbYDypRen1OmzYyFrbM2gHyXnvfXPU3+comd7
+         KdgLzIsSEWXYPXtfbXWlJ/hiH8ZrN9sc2XRs1FdvGB6tr1fAXUl3aTpAq36Fn6RIZ0w+
+         wZKSvtipkuAEdIm6S7a2TlupwviOUKQz+yVJ3UKcqG/5l/osyIR2VvrYvXOToBT6JLCa
+         5dcw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=cPwHAQHuh/ke+/HJf3I2ZcjrkSbdZgvf0O0/HQ60PO0=;
-        b=nF0vCuBXHatP4nd+EgXTrqOpHIaGZ5yjre+/8KN9qWc4+wIeYbKEJum5lpQFWabR05
-         KjrFGYD9ZF/PRVJRu8IZAca5H5d0nm5FQL7Zh/Xgk/FwI0dOuwCLVolNFaBqrIBRLT3H
-         wkOU+IqIP5YQ35NfmDdgWNmKC82LU4KcIUrzlADwmhA8n9deO2au1g04reSm1icIgWd6
-         z8MTZezD0ExA56kAuubx8cZaySmu4SXxt6CWg1FZ8hu2KU+kLN7i32O/RQhhkP2JYPN/
-         ytrFZeOgzVDzm/TFOSVIjX0pa8kPGnwqL2rt1vhfFuHs9Ke5QG9WCZoBTMiVl+ye1O1L
-         R4ZQ==
-X-Gm-Message-State: AIkVDXIgWtuXR4YOwtHIhCfHIUQrxAO9uUSFb24cTYxnDpHw4y5r7lltnHEGMguGyuzHqWZz
-X-Received: by 10.84.173.195 with SMTP id p61mr1979009plb.63.1484795940078;
-        Wed, 18 Jan 2017 19:19:00 -0800 (PST)
+        bh=KeL/LTirrhifah/ZeQWH47rmxycYi+rD2jj0D6hW+vE=;
+        b=dDB4fOr+FI1dEt+A2lyYJwT2wFPKgbIh01EImX5LUdin2jLq0SIw5DVeW6DVmEtCdb
+         3GaPnQs4wGSVBW30GQoEt5Jvcmar4oPnVD4SWyPBBTpxSrp1TNITinHsZxTUIIJLuMjw
+         H/upBynYHZcfy/JvoHFWDZkHse75c5PU1J/HgVGmIbY2o+VC5lhxw0ZbsnsCDYIKu2In
+         4lj037kdjTk8Ks0DgfCAL+bTzLkLFQg3MUhClA7tl+SM2xox4ihWdviJf79JcKvKsieo
+         4UD5Gg6micqOmpcc+bxweJaNm+yW9I1XUORKzOe8oYCDBKb6Rdsm0JhUjOlVnfXdnw1p
+         Gnaw==
+X-Gm-Message-State: AIkVDXJ6t50qR5fkoH1vRJeurp+es+73H5v7qFlWTxroPlXLFzz+nf1mre1Ei4vn6H4fxcxF
+X-Received: by 10.99.95.151 with SMTP id t145mr7729180pgb.75.1484795941108;
+        Wed, 18 Jan 2017 19:19:01 -0800 (PST)
 Received: from localhost ([2620:0:1000:5b10:40e0:b9ca:546a:a0ec])
-        by smtp.gmail.com with ESMTPSA id w16sm3914555pgc.15.2017.01.18.19.18.59
+        by smtp.gmail.com with ESMTPSA id j78sm3872270pfk.39.2017.01.18.19.19.00
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 18 Jan 2017 19:18:59 -0800 (PST)
+        Wed, 18 Jan 2017 19:19:00 -0800 (PST)
 From:   Stefan Beller <sbeller@google.com>
 To:     gitster@pobox.com
 Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>
-Subject: [PATCHv3 0/4] start documenting core functions
-Date:   Wed, 18 Jan 2017 19:18:50 -0800
-Message-Id: <20170119031854.4570-1-sbeller@google.com>
+Subject: [PATCHv3 1/4] cache.h: document index_name_pos
+Date:   Wed, 18 Jan 2017 19:18:51 -0800
+Message-Id: <20170119031854.4570-2-sbeller@google.com>
 X-Mailer: git-send-email 2.11.0.299.g762782ba8a
-In-Reply-To: <20170118232145.31606-2-sbeller@google.com>
+In-Reply-To: <20170119031854.4570-1-sbeller@google.com>
 References: <20170118232145.31606-2-sbeller@google.com>
+ <20170119031854.4570-1-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-v3:
-* dropped commets on constants as they were not helpful
-* fixed one result in the example for  index_name_pos(&index, "f", 1) (which
-  is -3 now)
+Signed-off-by: Stefan Beller <sbeller@google.com>
+---
+ cache.h | 19 +++++++++++++++++++
+ 1 file changed, 19 insertions(+)
 
-v2:
-included all suggestions from Junio
-
-v1:
-The two single patches[1] are turned into a series here.
-
-[1] https://public-inbox.org/git/20170117200147.25425-1-sbeller@google.com/
-
-Thanks,
-Stefan
-
-Stefan Beller (4):
-  cache.h: document index_name_pos
-  cache.h: document remove_index_entry_at
-  cache.h: document add_[file_]to_index
-  documentation: retire unfinished documentation
-
- Documentation/technical/api-in-core-index.txt | 21 -------------
- cache.h                                       | 43 +++++++++++++++++++++++----
- read-cache.c                                  |  1 -
- 3 files changed, 38 insertions(+), 27 deletions(-)
- delete mode 100644 Documentation/technical/api-in-core-index.txt
-
+diff --git a/cache.h b/cache.h
+index 1b67f078dd..1469ddeafe 100644
+--- a/cache.h
++++ b/cache.h
+@@ -575,7 +575,26 @@ extern int verify_path(const char *path);
+ extern int index_dir_exists(struct index_state *istate, const char *name, int namelen);
+ extern void adjust_dirname_case(struct index_state *istate, char *name);
+ extern struct cache_entry *index_file_exists(struct index_state *istate, const char *name, int namelen, int igncase);
++
++/*
++ * Searches for an entry defined by name and namelen in the given index.
++ * If the return value is positive (including 0) it is the position of an
++ * exact match. If the return value is negative, the negated value minus 1
++ * is the position where the entry would be inserted.
++ * Example: The current index consists of these files and its stages:
++ *
++ *   b#0, d#0, f#1, f#3
++ *
++ * index_name_pos(&index, "a", 1) -> -1
++ * index_name_pos(&index, "b", 1) ->  0
++ * index_name_pos(&index, "c", 1) -> -2
++ * index_name_pos(&index, "d", 1) ->  1
++ * index_name_pos(&index, "e", 1) -> -3
++ * index_name_pos(&index, "f", 1) -> -3
++ * index_name_pos(&index, "g", 1) -> -5
++ */
+ extern int index_name_pos(const struct index_state *, const char *name, int namelen);
++
+ #define ADD_CACHE_OK_TO_ADD 1		/* Ok to add */
+ #define ADD_CACHE_OK_TO_REPLACE 2	/* Ok to replace file/directory */
+ #define ADD_CACHE_SKIP_DFCHECK 4	/* Ok to skip DF conflict checks */
 -- 
 2.11.0.299.g762782ba8a
 
