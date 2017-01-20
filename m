@@ -7,58 +7,59 @@ X-Spam-Status: No, score=-6.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2C50320756
-	for <e@80x24.org>; Fri, 20 Jan 2017 20:27:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 447AB20756
+	for <e@80x24.org>; Fri, 20 Jan 2017 20:52:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753384AbdATU1b (ORCPT <rfc822;e@80x24.org>);
-        Fri, 20 Jan 2017 15:27:31 -0500
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:35060 "EHLO
-        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752780AbdATU0s (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 Jan 2017 15:26:48 -0500
-Received: by mail-wm0-f66.google.com with SMTP id d140so9396001wmd.2
-        for <git@vger.kernel.org>; Fri, 20 Jan 2017 12:26:47 -0800 (PST)
+        id S1753849AbdATUvk (ORCPT <rfc822;e@80x24.org>);
+        Fri, 20 Jan 2017 15:51:40 -0500
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:33724 "EHLO
+        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753418AbdATUvG (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Jan 2017 15:51:06 -0500
+Received: by mail-wm0-f65.google.com with SMTP id r144so9532161wme.0
+        for <git@vger.kernel.org>; Fri, 20 Jan 2017 12:51:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=subject:to:references:cc:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-transfer-encoding;
-        bh=tW4KGAZUqu1ZENpIz4j0myzhs3hV5J0A/m9KrQVlLBE=;
-        b=W5Kz58LrDU4Y3FHfvpCpSvQUagc/eitsdjsMe7zbq0fr+AxntVgvdnbHXY2kNRCwq+
-         wIMcX2tBWy487G3lqeLbpoelWOIGT2/7/fF541gMkOlTFykiZOmu02gEAoG1lwxeUuIX
-         mDLGANOVD00BlpsvuPwHjg4bHE5xDiYqNOS7Zy/B0GdM1O+61xdE/7lbxLonPqW1OEy3
-         HbbzEkvFskjROn8ZfXq2Ha/QA/k2ne5gE8Du6SI62lT5HRs1Y2RYP8Uq2PWzPn+njjQm
-         F0cV9jvWcxwyTf5OAN4cMraO23zLcFGFZTAh+ovid+rf/e+K6EMbt2amMxrd703tYtNL
-         eSVg==
+        bh=e93lHOzBnne6DMiRAGWoIhHARYibwI19jbFzPNMvGCk=;
+        b=qdTWkmdhFHAN/13YdNxmZLXUNvq+B85UsexynBnAT1tveD68sh0R0pO3OQyDRpi0cI
+         j17rKCeQRxquVl/Lo2sHTTDREmqnLTw9RCky6m7Fw9feDB24KtNRAFFjt6H9kpUrK1o3
+         q32wHnoJMCAs6V7VDlIza5H7BVpuktpV9WZI1rJphUA0KNUQyqF/nIsJLjSqo/Hp1Irc
+         Gfu+1NCTieHOl7d5lNu+v+CRBPh0WLxz/7DqPKzwyHBQx1mjP1NFCBFqoRs0GrHQOVB5
+         RLQMQSuQRH8J4jmjcAXpuebbbWCqA6a9RrpCyxum51mfx2DA8nc5ztNSAg0wvxHq0+1/
+         QGqA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:references:cc:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-transfer-encoding;
-        bh=tW4KGAZUqu1ZENpIz4j0myzhs3hV5J0A/m9KrQVlLBE=;
-        b=HDb2w3CTKp00QjxHosbibDpKy30eV9dYPEUm1bGvVQmJmxhOwKUBkIvUzYYW7XqH46
-         YZ636O1gz2FLmcFK0COcGMMdw+sWH5i/MaknfZqLlhpPRjCVRkvZMhtwvFJxv1DtIyeI
-         H1kl1582EOLKmKWFwd8TmeCEN2+Sf2QqXZ6nKkUyCcS52ZlK8W1O/ROTmyUfJkufvSav
-         8SQbCVbVLGGVG8jHvRYdvBDJaXj0XtoetRc7+cL0lo0wh89ti1tce5BArrotFYz7I17e
-         bus+gWD5L/3Tp8sFTcVptAPJTRAIbk9Vqs5YgYcNOvJPahEvYI5VryzFi7RVigdW8Bu9
-         gpfw==
-X-Gm-Message-State: AIkVDXKJwgIYrElxSRalr7vorKOAEl67syQhVXgMO+gLX1rOjj2qZGzBm4GiineIA1HnKQ==
-X-Received: by 10.223.177.134 with SMTP id q6mr13245955wra.83.1484944006665;
-        Fri, 20 Jan 2017 12:26:46 -0800 (PST)
+        bh=e93lHOzBnne6DMiRAGWoIhHARYibwI19jbFzPNMvGCk=;
+        b=n7kdyPJdRK7qtgDe7GdGJvGZVNRXiH1ojTIII6B3eGUmjulSkoGM9arhqab1JPfZQa
+         lyZ42FDLSEAW+PJ76skLglB4DGRaNvg+UGlK4aulJHRizRYdg+Xn+oF6mvs9aTj3Uznr
+         RHjuMwqwN6q+R20jHQbri7kw4QNtS+d25YKk9m7xj85NrwJ4TZd2ClCxwtRDDGdLsNfD
+         aH190WSnpigcBC0Z2UwikJL7UJWh4ZG3DCjYXkLUIRx1yDq3RVpNY8EtldjpQaNWDu1S
+         cR7Jpkn8f32ADnCQs4tLFIvVjsE9PLgluvFnxkJJYjsjohaerSHqc+3VPnbhvkQ/sXCD
+         ZgxA==
+X-Gm-Message-State: AIkVDXLM6HEZj+OTudCcLdToBx9O9GKNB+cV73fwLSEpgcOMlG/UXxxIDkYU8UHB8TjP1A==
+X-Received: by 10.28.181.145 with SMTP id e139mr4552774wmf.127.1484945464604;
+        Fri, 20 Jan 2017 12:51:04 -0800 (PST)
 Received: from home.thecybershadow.net ([89.28.117.31])
-        by smtp.gmail.com with ESMTPSA id h3sm1314274wrb.31.2017.01.20.12.26.45
+        by smtp.gmail.com with ESMTPSA id c9sm7812558wmi.16.2017.01.20.12.51.03
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 20 Jan 2017 12:26:46 -0800 (PST)
+        Fri, 20 Jan 2017 12:51:04 -0800 (PST)
 Subject: Re: [PATCH] show-ref: Allow --head to work with --verify
 To:     Junio C Hamano <gitster@pobox.com>
 References: <20170120155015.4360-1-git@thecybershadow.net>
  <xmqqa8aly2o4.fsf@gitster.mtv.corp.google.com>
+ <1bf9a446-0b00-f27a-4625-0bc8c25356fe@gmail.com>
 Cc:     git@vger.kernel.org
 From:   Vladimir Panteleev <thecybershadow@gmail.com>
-Message-ID: <1bf9a446-0b00-f27a-4625-0bc8c25356fe@gmail.com>
-Date:   Fri, 20 Jan 2017 20:26:44 +0000
+Message-ID: <cf40c3e4-406d-f39f-ab72-812a88115100@gmail.com>
+Date:   Fri, 20 Jan 2017 20:51:03 +0000
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
  Thunderbird/45.6.0
 MIME-Version: 1.0
-In-Reply-To: <xmqqa8aly2o4.fsf@gitster.mtv.corp.google.com>
+In-Reply-To: <1bf9a446-0b00-f27a-4625-0bc8c25356fe@gmail.com>
 Content-Type: text/plain; charset=windows-1252; format=flowed
 Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
@@ -66,44 +67,22 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+And to clarify:
 
-On 2017-01-20 19:03, Junio C Hamano wrote:
-> Having said all that, using --verify on HEAD does not make much
-> sense, because if HEAD is missing in .git/, I do not think Git
-> considers that directory as a Git repository to begin with.  So from
-> that point of view, I am not sure what value this change adds to the
-> system, even though the change is almost correct (modulo the "quiet"
-> thing).
+On 2017-01-20 20:26, Vladimir Panteleev wrote:
+> On 2017-01-20 19:03, Junio C Hamano wrote:
+>> Having said all that, using --verify on HEAD does not make much
+>> sense, because if HEAD is missing in .git/, I do not think Git
+>> considers that directory as a Git repository to begin with.
 
-My use case was the following series of steps:
-
-Q1: How do I resolve a full ref name to a commit SHA1?
-A1: Use show-ref <full-ref-name>.
-
-Q2: How to make git show-ref also work when HEAD is specified as the 
-reference?
-A2: Add --head.
-
-Q3: How do I make git show-ref only look for the exact full ref name 
-specified, instead of doing a pattern/substring search, and thus output 
-at most one result?
-A3: Add --verify.
-
-However, A2 and A3 are incompatible. Thus, there doesn't seem to be a 
-way to e.g. make a simple alias which looks up a ref only by its full 
-ref name, where said ref might or might not be HEAD. The obvious 
-workaround is to check if the ref is HEAD in the rev-parse caller, 
-however it seemed more logical to fix it in git instead.
-
-The documentation for show-ref also makes no mention that --head is 
-ignored if --verify is specified, and the combination was not covered by 
-any tests, therefore this seemed to me as a simple omission in 
---verify's logic.
-
-There is also rev-parse, which also has a --verify switch, however it 
-does something else, and I don't see a way to ask rev-parse to only 
-consider full refs.
+The behavior of --verify I am interested in is not to check that the ref 
+exists, but to get its SHA1 while avoiding the pattern search. This 
+avoids accidentally matching refs via substring (e.g. "git show-ref 
+--head HEAD" will print HEAD, but also e.g. refs/remotes/origin/HEAD), 
+and for performance reasons (looking up a ref by exact name can be MUCH 
+faster than matching all refs by pattern search, e.g. in one of my 
+projects where I use git as an object store, --verify makes a difference 
+of 21 milliseconds vs. over 5 minutes).
 
 -- 
 Best regards,
