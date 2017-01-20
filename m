@@ -2,103 +2,73 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.1 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,
+	STOX_REPLY_TYPE,STOX_REPLY_TYPE_WITHOUT_QUOTES shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 32EA220756
-	for <e@80x24.org>; Fri, 20 Jan 2017 22:22:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 55EB020756
+	for <e@80x24.org>; Fri, 20 Jan 2017 22:28:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753002AbdATWWY (ORCPT <rfc822;e@80x24.org>);
-        Fri, 20 Jan 2017 17:22:24 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:57638 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752981AbdATWWW (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 Jan 2017 17:22:22 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 257B763149;
-        Fri, 20 Jan 2017 17:22:16 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=H+MqLhgrCND16JiUABn7hYjsSMM=; b=dE56W9
-        uzLAYztSArEx3sjnCeZGiLZhehJZ7zwXP+NnJmTV1lVNEetXyUIGikdZ9TMhhKjJ
-        HSTtD982UP9NppHV57RCqwf1zN3Cu/o7Y2rdB3gODHVUpwEAGmzzwtnkMPrn9/61
-        5wvLS2QvNZXSp7y3SDZECO1s6YqRct0Cbh96k=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=pwwWgI/IaqFDrDCEtCOF3UMfkbsk7lAK
-        4qKKe5nmmf4St1g1FkxQCambBuq2hc2VMIA0ieM0SgIrxowz4CVBoSZeUr8cXXzq
-        +1zOUKlx86SBRkcjZa93/+0z4qIM2KXZaRqW/HjciKWNLFnomzPg33pr5qbhKuCV
-        c/Esp5KZi5E=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 1C31D63148;
-        Fri, 20 Jan 2017 17:22:16 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 7A68563147;
-        Fri, 20 Jan 2017 17:22:15 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Vladimir Panteleev <thecybershadow@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] show-ref: Allow --head to work with --verify
-References: <20170120155015.4360-1-git@thecybershadow.net>
-        <xmqqa8aly2o4.fsf@gitster.mtv.corp.google.com>
-        <1bf9a446-0b00-f27a-4625-0bc8c25356fe@gmail.com>
-Date:   Fri, 20 Jan 2017 14:22:14 -0800
-In-Reply-To: <1bf9a446-0b00-f27a-4625-0bc8c25356fe@gmail.com> (Vladimir
-        Panteleev's message of "Fri, 20 Jan 2017 20:26:44 +0000")
-Message-ID: <xmqqefzxwew9.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+        id S1752330AbdATW2M (ORCPT <rfc822;e@80x24.org>);
+        Fri, 20 Jan 2017 17:28:12 -0500
+Received: from smtp-out-1.talktalk.net ([62.24.135.65]:65307 "EHLO
+        smtp-out-1.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751146AbdATW2L (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Jan 2017 17:28:11 -0500
+Received: from PhilipOakley ([92.31.218.76])
+        by smtp.talktalk.net with SMTP
+        id UhfFcslr40KuvUhfFcRLvY; Fri, 20 Jan 2017 22:28:09 +0000
+X-Originating-IP: [92.31.218.76]
+X-Spam: 0
+X-OAuthority: v=2.2 cv=RZjSMBlv c=1 sm=1 tr=0 a=e6L6E7eW+5Nb7SO+DvSdIg==:117
+ a=e6L6E7eW+5Nb7SO+DvSdIg==:17 a=8nJEP1OIZ-IA:10 a=uPZiAMpXAAAA:8
+ a=7HR_eeyp91lrCSi93QcA:9 a=wPNLvfGTeEIA:10 a=svzibyHiZmA4t4YY0eFS:22
+Message-ID: <8AED6D90D2B64AE3A63C6195CA983FE8@PhilipOakley>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From:   "Philip Oakley" <philipoakley@iee.org>
+To:     "Git List" <git@vger.kernel.org>
+Cc:     "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+Subject: Idea: Add a filter option to 'git rebase'
+Date:   Fri, 20 Jan 2017 22:28:11 -0000
+Organization: OPDS
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: E5B53E46-DF5E-11E6-AE01-FE3F13518317-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain;
+        format=flowed;
+        charset="iso-8859-1";
+        reply-type=original
+Content-Transfer-Encoding: 7bit
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+X-CMAE-Envelope: MS4wfKnHuXk/2JucgNWZdD3+F3RoqhRzr5YEE/0u/9G/x/z0HQA6Xm5N5zqgbOYr8sqsXM/4kkwGjnucEryKhNiz9SkmKHea+r4FG0v/S2BtCeN6ePeYsrIR
+ oI3zE+Wqjp77hwrMeG2nFX0/DWq3A3gp/L4/fZwRX/2bes2PrwigweLB+FU/TCP88alwEs3mNeHXV2YfY4kZFwxOE15dgW+yLp8=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Vladimir Panteleev <thecybershadow@gmail.com> writes:
+A recent question on stackoverflow 
+http://stackoverflow.com/questions/41753252/drop-commits-by-commit-message-in-git-rebase 
+sought to remove automatically commits that could be identified by relevant 
+words in the commit message.
 
-> Hi Junio,
->
-> On 2017-01-20 19:03, Junio C Hamano wrote:
->> Having said all that, using --verify on HEAD does not make much
->> sense, because if HEAD is missing in .git/, I do not think Git
->> considers that directory as a Git repository to begin with.  So from
->> that point of view, I am not sure what value this change adds to the
->> system, even though the change is almost correct (modulo the "quiet"
->> thing).
->
-> My use case was the following series of steps:
->
-> Q1: How do I resolve a full ref name to a commit SHA1?
-> A1: Use show-ref <full-ref-name>.
->
-> Q2: How to make git show-ref also work when HEAD is specified as the
-> reference?
-> A2: Add --head.
->
-> Q3: How do I make git show-ref only look for the exact full ref name
-> specified, instead of doing a pattern/substring search, and thus
-> output at most one result?
-> A3: Add --verify.
->
-> However, A2 and A3 are incompatible. Thus, there doesn't seem to be a
-> way to e.g. make a simple alias which looks up a ref only by its full
-> ref name, where said ref might or might not be HEAD. The obvious
-> workaround is to check if the ref is HEAD in the rev-parse caller,
-> however it seemed more logical to fix it in git instead.
->
-> The documentation for show-ref also makes no mention that --head is
-> ignored if --verify is specified, and the combination was not covered
-> by any tests, therefore this seemed to me as a simple omission in
-> --verify's logic.
->
-> There is also rev-parse, which also has a --verify switch, however it
-> does something else, and I don't see a way to ask rev-parse to only
-> consider full refs.
+I had thought that the ubiquitous `git filter-branch` should be able to do 
+this sort of thing. I was wrong. (It was pointed out to me that...) The man 
+page notes that removing a commit via filter-branch does not remove the 
+changes from following commits and directs readers to using `git rebase(1)`.
 
-Your log message for the patch needs to be updated by summarizing
-the above better.  I couldn't read the motivation behind the change
-fully from the original (even though I guessed it correctly).
+However the rebase command does not have any filter option to allow the 
+automatic population of its TODO list with the appropriate 
+pick/edit/drop/etc. values.
+
+It does feel as if a --filter style option would be a useful addition to 
+rebase to complement the filter-branch options once the current conversion 
+from script to code is complete.
+
+Is this something that should be put in the 'worth considering' pile?
+
+--
+Philip 
+
