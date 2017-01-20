@@ -6,114 +6,121 @@ X-Spam-Status: No, score=-6.4 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8A52120756
-	for <e@80x24.org>; Fri, 20 Jan 2017 14:12:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2B7CE20756
+	for <e@80x24.org>; Fri, 20 Jan 2017 14:17:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752339AbdATOMU (ORCPT <rfc822;e@80x24.org>);
-        Fri, 20 Jan 2017 09:12:20 -0500
-Received: from mx1.redhat.com ([209.132.183.28]:44606 "EHLO mx1.redhat.com"
+        id S1752009AbdATORb (ORCPT <rfc822;e@80x24.org>);
+        Fri, 20 Jan 2017 09:17:31 -0500
+Received: from mx1.redhat.com ([209.132.183.28]:45380 "EHLO mx1.redhat.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752332AbdATOMT (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 Jan 2017 09:12:19 -0500
+        id S1752114AbdATOR3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Jan 2017 09:17:29 -0500
 Received: from int-mx11.intmail.prod.int.phx2.redhat.com (int-mx11.intmail.prod.int.phx2.redhat.com [10.5.11.24])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by mx1.redhat.com (Postfix) with ESMTPS id 22B833D97B;
-        Fri, 20 Jan 2017 14:12:15 +0000 (UTC)
+        by mx1.redhat.com (Postfix) with ESMTPS id DE38B7FEAD;
+        Fri, 20 Jan 2017 14:17:12 +0000 (UTC)
 Received: from localhost (ovpn-117-185.ams2.redhat.com [10.36.117.185])
-        by int-mx11.intmail.prod.int.phx2.redhat.com (8.14.4/8.14.4) with ESMTP id v0KECDmP008723;
-        Fri, 20 Jan 2017 09:12:14 -0500
-Date:   Fri, 20 Jan 2017 14:12:12 +0000
+        by int-mx11.intmail.prod.int.phx2.redhat.com (8.14.4/8.14.4) with ESMTP id v0KEHBnw012420;
+        Fri, 20 Jan 2017 09:17:12 -0500
+Date:   Fri, 20 Jan 2017 14:17:10 +0000
 From:   Stefan Hajnoczi <stefanha@redhat.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
+To:     Brandon Williams <bmwill@google.com>
+Cc:     git@vger.kernel.org, gitster@pobox.com
 Subject: Re: [RFC 2/2] grep: use '/' delimiter for paths
-Message-ID: <20170120141212.GC17499@stefanha-x1.localdomain>
+Message-ID: <20170120141710.GD17499@stefanha-x1.localdomain>
 References: <20170119150347.3484-1-stefanha@redhat.com>
  <20170119150347.3484-3-stefanha@redhat.com>
- <xmqqpoji2851.fsf@gitster.mtv.corp.google.com>
+ <20170119182934.GH10641@google.com>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha1;
-        protocol="application/pgp-signature"; boundary="bKyqfOwhbdpXa4YI"
+        protocol="application/pgp-signature"; boundary="at6+YcpfzWZg/htY"
 Content-Disposition: inline
-In-Reply-To: <xmqqpoji2851.fsf@gitster.mtv.corp.google.com>
+In-Reply-To: <20170119182934.GH10641@google.com>
 User-Agent: Mutt/1.7.1 (2016-10-04)
 X-Scanned-By: MIMEDefang 2.68 on 10.5.11.24
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.30]); Fri, 20 Jan 2017 14:12:15 +0000 (UTC)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.27]); Fri, 20 Jan 2017 14:17:12 +0000 (UTC)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---bKyqfOwhbdpXa4YI
+--at6+YcpfzWZg/htY
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Thu, Jan 19, 2017 at 10:54:02AM -0800, Junio C Hamano wrote:
-> Stefan Hajnoczi <stefanha@redhat.com> writes:
->=20
+On Thu, Jan 19, 2017 at 10:29:34AM -0800, Brandon Williams wrote:
+> On 01/19, Stefan Hajnoczi wrote:
 > > If the tree contains a sub-directory then git-grep(1) output contains a
 > > colon character instead of a path separator:
-> >
+> >=20
 > >   $ git grep malloc v2.9.3:t
 > >   v2.9.3:t:test-lib.sh:	setup_malloc_check () {
 > >   $ git show v2.9.3:t:test-lib.sh
 > >   fatal: Path 't:test-lib.sh' does not exist in 'v2.9.3'
+> >=20
+> > This patch attempts to use the correct delimiter:
+> >=20
+> >   $ git grep malloc v2.9.3:t
+> >   v2.9.3:t/test-lib.sh:	setup_malloc_check () {
+> >   $ git show v2.9.3:t/test-lib.sh
+> >   (success)
+> >=20
+> > This patch does not cope with @{1979-02-26 18:30:00} syntax and treats
+> > it as a path because it contains colons.
+> >=20
+> > Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
+> > ---
+> >  builtin/grep.c | 3 ++-
+> >  1 file changed, 2 insertions(+), 1 deletion(-)
+> >=20
+> > diff --git a/builtin/grep.c b/builtin/grep.c
+> > index 3643d8a..06f8b47 100644
+> > --- a/builtin/grep.c
+> > +++ b/builtin/grep.c
+> > @@ -493,7 +493,8 @@ static int grep_object(struct grep_opt *opt, const =
+struct pathspec *pathspec,
+> > =20
+> >  			/* Add a delimiter if there isn't one already */
+> >  			if (name[len - 1] !=3D '/' && name[len - 1] !=3D ':') {
+> > -				strbuf_addch(&base, ':');
+> > +				/* rev: or rev:path/ */
+> > +				strbuf_addch(&base, strchr(name, ':') ? '/' : ':');
 >=20
-> I am slightly less negative on this compared to 1/2, but not by a
-> big margin.  The user wanted to feed a subtree to the command,
-> instead of doing the more natural
+> As Jeff mentioned it may be better to base which character gets appended
+> by checking the obj->type field like this maybe:
 >=20
->     $ git grep -e malloc v2.9.3 -- t
+> diff --git a/builtin/grep.c b/builtin/grep.c
+> index 69dab5dc5..9dfe11dc7 100644
+> --- a/builtin/grep.c
+> +++ b/builtin/grep.c
+> @@ -495,7 +495,8 @@ static int grep_object(struct grep_opt *opt, const st=
+ruct pathspec *pathspec,
+>  			/* Add a delimiter if there isn't one already */
+>  			if (name[len - 1] !=3D '/' && name[len - 1] !=3D ':') {
+>  				/* rev: or rev:path/ */
+> -				strbuf_addch(&base, strchr(name, ':') ? '/' : ':');
+> +				char del =3D obj->type =3D=3D OBJ_COMMIT ? ':' : '/';
+> +				strbuf_addch(&base, del);
 
-I find <rev>:<path> vs <rev> -- <path> confusing:
+Nice, that also solves the false positive with @{1979-02-26 18:30:00}.
 
-            | <rev>:<path>         | <rev> -- <path>
-  ----------+----------------------+---------------------
-  git grep  | OK                   | OK
-  ----------+----------------------+---------------------
-  git show  | OK                   | <path> ignored
-  ----------+----------------------+---------------------
-  git log   | no output            | OK
-  ----------+----------------------+---------------------
+Stefan
 
-Neither syntax always does what I expect.  If git show <rev> -- <path>
-honored <path> then I could use that syntax consistently.
-
-Sorry for going on a tangent.  Does it seem reasonable to handle <path>
-in git-show(1) as a UI convenience?
-
-> So again, "contains a colon character" is not coming from what Git
-> does, but the user gave Git "a colon character" when she didn't have
-> to.
->=20
-> Having said that, if we wanted to start ignoring what the end-user
-> said in the initial input like 1/2 and 2/2 does (i.e. "this specific
-> tree object" as an input), I think the approach to solve for 1/2 and
-> 2/2 should be the same.  I think we should decide to do a slash
-> instead of a colon, not because v2.9.3: has colon at the end and
-> v2.9.3:t has colon in it, but because both of these are both bare
-> tree objects.  The patches presented does not seem to base their
-> decision on the actual object type but on the textual input, which
-> seems wrong.
-
-Yes, reparsing the name is ugly and I hoped to get feedback with this
-RFC.  Thanks for the quick review!
-
---bKyqfOwhbdpXa4YI
+--at6+YcpfzWZg/htY
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQEcBAEBAgAGBQJYghq8AAoJEJykq7OBq3PIVIwH/3M8Zs/wN0T6fI/iX7BzAkC2
-PW8AHTN/2rIGT36TF69oX/b1ltQ/XQ5lmJvUECR1Mx3Y6Z0P+0v5/yChTQOYQjXM
-35LzgdobZ2GK6DyDRBMJpcMo89BNNFPiic4eEihRRMQxyuJWegGMy+tvmI37jKV9
-lgv/RT3NZNncbA5rbeFA1RNtTIdKGSbzuYGHR9+w+MwTbxM75mvVbdSEWYfPhX3K
-Hd9TPL6eZixTAZZMyhFijlzAyGgWnnHMQZR+lRETVYF04A+LjfIDEq4cvyGx2pB4
-UQY0JNC210JaadBG2U54Y8O61lVCfJVZIXkCDvabr1fXicKsDyGQFxLLv7ytI+s=
-=6feo
+iQEcBAEBAgAGBQJYghvmAAoJEJykq7OBq3PIpRUH/1kRMQZhO4HdCKU+VByOEwiz
++IUudkDFlCV+0b8dY59aqxQAQToO2xpFqTxAdz9xOiDu3S2sgVUmYxhj0+leCJ80
+1JnwJb7Kb4MJkE6jGGMjKGjZQ3UqtcONIRLydC48MO7N5EAbG1FRm8le2TxRMnFe
+cQuoy5NeUN7bg2Mhlb/koU+DdVXTr6xKZvX9rqtlFH/TzG7poKUxWj3TFlVM42SB
+NVO//sl8s9zPgr8FPtNKkgZ1P0jHxldHW2cGOy24DMKBHFIofBk0xMhUhttJAQdq
+CyfnC8hhglwvncnoNOIGmZzU4B5ASX1TXNvVJQnaCWezoCAVmh1HlsmvUnPr0WY=
+=2hLL
 -----END PGP SIGNATURE-----
 
---bKyqfOwhbdpXa4YI--
+--at6+YcpfzWZg/htY--
