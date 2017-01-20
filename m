@@ -2,98 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8586320756
-	for <e@80x24.org>; Fri, 20 Jan 2017 20:07:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2C50320756
+	for <e@80x24.org>; Fri, 20 Jan 2017 20:27:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753040AbdATUHh (ORCPT <rfc822;e@80x24.org>);
-        Fri, 20 Jan 2017 15:07:37 -0500
-Received: from mail-io0-f179.google.com ([209.85.223.179]:35281 "EHLO
-        mail-io0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753012AbdATUHf (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 Jan 2017 15:07:35 -0500
-Received: by mail-io0-f179.google.com with SMTP id j18so69775543ioe.2
-        for <git@vger.kernel.org>; Fri, 20 Jan 2017 12:07:29 -0800 (PST)
+        id S1753384AbdATU1b (ORCPT <rfc822;e@80x24.org>);
+        Fri, 20 Jan 2017 15:27:31 -0500
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:35060 "EHLO
+        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752780AbdATU0s (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Jan 2017 15:26:48 -0500
+Received: by mail-wm0-f66.google.com with SMTP id d140so9396001wmd.2
+        for <git@vger.kernel.org>; Fri, 20 Jan 2017 12:26:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=wIW7rnMiJiqJoXSbqeu80gPAgB4pZkzETOEqIHjJtiQ=;
-        b=UiDdoMo1bQ17rXvrBZ/rbwUdXhVnVSXtx0dOsQuKxBPNXDl6XMjXkFGRdckkyAyNZC
-         n2BcV8J3HXKWCu92tvIx7sGMSKBKaa8g05Vlw4p4zpvnAo4qUu+9PPfMnjfhdp0VeAh1
-         GjoVwDcx2JKXZ98FUg13KMs21oA34W2F9UjRzFj7gjjbjdjTnaigShnqAPyVMWZBCTSJ
-         nqu4FHiWWGIjlcymiJMY6JKM9jo0dD3NTfnYmJ+NPwTo1rpmx058So6d7eKTOjwGHy0V
-         21yYDFCitdaK3a510KjmUafSnimhSyZkKofxgGEIIyJJ7cRAub+qUtBInlAhxG5QvsuO
-         kWgw==
+        d=gmail.com; s=20161025;
+        h=subject:to:references:cc:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding;
+        bh=tW4KGAZUqu1ZENpIz4j0myzhs3hV5J0A/m9KrQVlLBE=;
+        b=W5Kz58LrDU4Y3FHfvpCpSvQUagc/eitsdjsMe7zbq0fr+AxntVgvdnbHXY2kNRCwq+
+         wIMcX2tBWy487G3lqeLbpoelWOIGT2/7/fF541gMkOlTFykiZOmu02gEAoG1lwxeUuIX
+         mDLGANOVD00BlpsvuPwHjg4bHE5xDiYqNOS7Zy/B0GdM1O+61xdE/7lbxLonPqW1OEy3
+         HbbzEkvFskjROn8ZfXq2Ha/QA/k2ne5gE8Du6SI62lT5HRs1Y2RYP8Uq2PWzPn+njjQm
+         F0cV9jvWcxwyTf5OAN4cMraO23zLcFGFZTAh+ovid+rf/e+K6EMbt2amMxrd703tYtNL
+         eSVg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=wIW7rnMiJiqJoXSbqeu80gPAgB4pZkzETOEqIHjJtiQ=;
-        b=f0I0RqMb0iyVoo1Bx1BmpGs7bQwplsZZq1HXFIRN+kWGmzX85Lmx0nPw0xX8IjLrCX
-         ZAlEmV+YxtSOLEoB7opbbneGgAaJpkUuSQf/Ajn84LJeqSDM+FLQ/4J80pR6kctyNX8I
-         vmOzlXp6qwmVT+lfJcSlwxjc25L1CMD5IMS/FfZjl0zUZtLcqYbLLAXPYTqweMj5t5ZU
-         iVcip4esofRHHZAyq8j3xvv3DYue8YMnybIwiqXIrpDMUQOXDpZvtnq7DvGnq3hVe+Cu
-         ueooy+R3/vb3nzYSfux/Sg9xxCGqptrtDM/MHwAAhjqvMBlnJXr2Sicc9CvK4ptVe4RQ
-         ss5w==
-X-Gm-Message-State: AIkVDXJONPUQPdQ5qThjlcJNyB0bRFEfKZeMrvC/sNuWwy6hbMk2j3SmqQgQYSWc6EnbUakaryzBy4p/gorUGcTr
-X-Received: by 10.107.37.148 with SMTP id l142mr14044821iol.159.1484942849060;
- Fri, 20 Jan 2017 12:07:29 -0800 (PST)
+        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
+        bh=tW4KGAZUqu1ZENpIz4j0myzhs3hV5J0A/m9KrQVlLBE=;
+        b=HDb2w3CTKp00QjxHosbibDpKy30eV9dYPEUm1bGvVQmJmxhOwKUBkIvUzYYW7XqH46
+         YZ636O1gz2FLmcFK0COcGMMdw+sWH5i/MaknfZqLlhpPRjCVRkvZMhtwvFJxv1DtIyeI
+         H1kl1582EOLKmKWFwd8TmeCEN2+Sf2QqXZ6nKkUyCcS52ZlK8W1O/ROTmyUfJkufvSav
+         8SQbCVbVLGGVG8jHvRYdvBDJaXj0XtoetRc7+cL0lo0wh89ti1tce5BArrotFYz7I17e
+         bus+gWD5L/3Tp8sFTcVptAPJTRAIbk9Vqs5YgYcNOvJPahEvYI5VryzFi7RVigdW8Bu9
+         gpfw==
+X-Gm-Message-State: AIkVDXKJwgIYrElxSRalr7vorKOAEl67syQhVXgMO+gLX1rOjj2qZGzBm4GiineIA1HnKQ==
+X-Received: by 10.223.177.134 with SMTP id q6mr13245955wra.83.1484944006665;
+        Fri, 20 Jan 2017 12:26:46 -0800 (PST)
+Received: from home.thecybershadow.net ([89.28.117.31])
+        by smtp.gmail.com with ESMTPSA id h3sm1314274wrb.31.2017.01.20.12.26.45
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 20 Jan 2017 12:26:46 -0800 (PST)
+Subject: Re: [PATCH] show-ref: Allow --head to work with --verify
+To:     Junio C Hamano <gitster@pobox.com>
+References: <20170120155015.4360-1-git@thecybershadow.net>
+ <xmqqa8aly2o4.fsf@gitster.mtv.corp.google.com>
+Cc:     git@vger.kernel.org
+From:   Vladimir Panteleev <thecybershadow@gmail.com>
+Message-ID: <1bf9a446-0b00-f27a-4625-0bc8c25356fe@gmail.com>
+Date:   Fri, 20 Jan 2017 20:26:44 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.6.0
 MIME-Version: 1.0
-Received: by 10.79.39.19 with HTTP; Fri, 20 Jan 2017 12:07:28 -0800 (PST)
-In-Reply-To: <20170120200041.hefg44stddqe344z@sigill.intra.peff.net>
-References: <20170119193023.26837-1-sbeller@google.com> <20170120191728.l3ne5tt5pwbmafjh@sigill.intra.peff.net>
- <CAGZ79kaJQefSDkV-LKxRCTtSepsNsX7U+AZqy3Z_YCd1xsmTxQ@mail.gmail.com>
- <20170120194224.vikzovupwqx53x2c@sigill.intra.peff.net> <CAGZ79kYKY=hDVjUx7AkeWZ=3V8Fy2hqQMFPZcoxT4NvXTFgG=Q@mail.gmail.com>
- <20170120200041.hefg44stddqe344z@sigill.intra.peff.net>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Fri, 20 Jan 2017 12:07:28 -0800
-Message-ID: <CAGZ79kYSW7i9kyT5Nd2QuiRF+=oWz+6U6VGpAQhfspUHMjWnpw@mail.gmail.com>
-Subject: Re: [RFC/PATCH] Disallow commands from within unpopulated submodules.
-To:     Jeff King <peff@peff.net>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+In-Reply-To: <xmqqa8aly2o4.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jan 20, 2017 at 12:00 PM, Jeff King <peff@peff.net> wrote:
-> On Fri, Jan 20, 2017 at 11:53:01AM -0800, Stefan Beller wrote:
->
->> > One alternative would be to make the check cheaper. Could we reliably
->> > tell from the submodule.foo.* block in the config that path "foo" is a
->> > submodule? I think that would work after "submodule init" but not right
->> > after "git clone". So the index really is the source of truth there.
->>
->> Well we can check if there is a .gitmodules file that has a
->> submodule.*.path equal to the last part of $CWD, no need to look
->> at the git config.
->>
->> And that would also work right after git clone (in an
->> unpopulated/uninitialized submodule as I call it).
->>
->> And in my current understanding of submodules the check in
->> .gitmodules ought to be enough, too.
->
-> Yeah, that probably makes sense. You can have a gitlink without a
-> .gitmodules file, but I don't quite know what that would mean in terms
-> of submodules (I guess it's not a submodule but "something else").
+Hi Junio,
 
-yeah, I agree it could be git series[1] at work, or as you said
-"something else", and we have no idea what to do.
+On 2017-01-20 19:03, Junio C Hamano wrote:
+> Having said all that, using --verify on HEAD does not make much
+> sense, because if HEAD is missing in .git/, I do not think Git
+> considers that directory as a Git repository to begin with.  So from
+> that point of view, I am not sure what value this change adds to the
+> system, even though the change is almost correct (modulo the "quiet"
+> thing).
 
-I think this could actually be implemented top-down, because the
-check is cheap as we're beginning with lstat(.gitmodules), and no further
-pursue checking this corner case in case the .gitmodules is not found.
+My use case was the following series of steps:
 
-I'll see if I can make a patch that passes the test suite.
+Q1: How do I resolve a full ref name to a commit SHA1?
+A1: Use show-ref <full-ref-name>.
 
-[1] https://github.com/git-series/git-series/blob/master/INTERNALS.md
+Q2: How to make git show-ref also work when HEAD is specified as the 
+reference?
+A2: Add --head.
 
->
-> -Peff
+Q3: How do I make git show-ref only look for the exact full ref name 
+specified, instead of doing a pattern/substring search, and thus output 
+at most one result?
+A3: Add --verify.
+
+However, A2 and A3 are incompatible. Thus, there doesn't seem to be a 
+way to e.g. make a simple alias which looks up a ref only by its full 
+ref name, where said ref might or might not be HEAD. The obvious 
+workaround is to check if the ref is HEAD in the rev-parse caller, 
+however it seemed more logical to fix it in git instead.
+
+The documentation for show-ref also makes no mention that --head is 
+ignored if --verify is specified, and the combination was not covered by 
+any tests, therefore this seemed to me as a simple omission in 
+--verify's logic.
+
+There is also rev-parse, which also has a --verify switch, however it 
+does something else, and I don't see a way to ask rev-parse to only 
+consider full refs.
+
+-- 
+Best regards,
+  Vladimir
