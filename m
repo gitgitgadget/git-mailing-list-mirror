@@ -2,110 +2,113 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_40,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+X-Spam-Status: No, score=-6.3 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BFBFD20A17
-	for <e@80x24.org>; Thu, 19 Jan 2017 23:58:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1E8A720A17
+	for <e@80x24.org>; Fri, 20 Jan 2017 00:08:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753234AbdASXy5 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 19 Jan 2017 18:54:57 -0500
-Received: from mail-db5eur01on0136.outbound.protection.outlook.com ([104.47.2.136]:64077
-        "EHLO EUR01-DB5-obe.outbound.protection.outlook.com"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1752734AbdASXy5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 Jan 2017 18:54:57 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=mmtdigital.onmicrosoft.com; s=selector1-mmtdigital-co-uk;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version;
- bh=ZBrJP51KDBZ8FaIwPTJByzuqXbANXVJXy3T+PTohSE4=;
- b=cKcPxggOzB+JwH/uE/u5bKeb9k83cNOjIJdyFRrcjaWOCZr5A7yIYzr4UuUN+OSCOT1Zq8hrHfp5/UJf/xbp0LhPeUf9GrQWTMoLWImtlZ3yHIbWEZTQH9ox8+bGQEvt/Q+Aci+KE/6dU68GvQL88JZY+y62cNjUU28/kcP0fZw=
-Received: from AM4PR03MB1715.eurprd03.prod.outlook.com (10.167.88.17) by
- AM4PR03MB1714.eurprd03.prod.outlook.com (10.167.88.16) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P384) id
- 15.1.845.12; Thu, 19 Jan 2017 23:54:38 +0000
-Received: from AM4PR03MB1715.eurprd03.prod.outlook.com ([10.167.88.17]) by
- AM4PR03MB1715.eurprd03.prod.outlook.com ([10.167.88.17]) with mapi id
- 15.01.0845.021; Thu, 19 Jan 2017 23:54:37 +0000
-From:   Ilesh Mistry <ilesh.m@mmtdigital.co.uk>
-To:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Post-merge hook
-Thread-Topic: Post-merge hook
-Thread-Index: AQHScq9kSAvlDE82Rku26qHjr3XHHg==
-Date:   Thu, 19 Jan 2017 23:54:37 +0000
-Message-ID: <A6C196AD-41F5-4FA3-A2A9-6CBDA473AB6B@mmtdigital.co.uk>
-Accept-Language: en-GB, en-US
-Content-Language: en-GB
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: spf=none (sender IP is )
- smtp.mailfrom=ilesh.m@mmtdigital.co.uk; 
-x-ms-exchange-messagesentrepresentingtype: 1
-x-originating-ip: [2a02:c7d:5bb3:a200:69ad:e0ed:f650:77f1]
-x-ms-office365-filtering-correlation-id: 008acd24-783b-492e-ef00-08d440c6870f
-x-microsoft-antispam: UriScan:;BCL:0;PCL:0;RULEID:(22001);SRVR:AM4PR03MB1714;
-x-microsoft-exchange-diagnostics: 1;AM4PR03MB1714;7:cqvOuMz7lrMiIrXfqXNPKBMxAV8WlXBbfjiOt8Zu2l7g7Y6k6kQqsKU8+lQpF4xuNqVSNrw4pq8BNXACuDU5Du6UCNFPbTGMpS7uJqDeJNDNLwJ//cHAQ0exNmPQ7fNMbKFGojhunwojLYvZ2ZVJi/SuXFu7Orq4ML6G62NoDdFNEORFDaVKHRIf68+fbnNipe/vXXlr/8uO/wdnz7e8AR4UFkIkU5XmZoAeXsfJiJNLSqwz3mclqPdLg7tS04ovNBVV6pvxwWHVHZIx8fPlY0CVtprnOWJ4VZG0kk6TloK+E6M8DcwB3XCgd136vcGahSWJCvYZxsTLAOSj0/euKxcl3rWDrkiJZ3DN5J/P1W1OcwtYwPrPwlA3oLQVyxV//hddTlzL3sijVh3a+u+/WzCGDvu36Im2G/qaiimF90WtV2vkc1Yx3btDGJl65kNSLRfkrIj0uA04nCl8votBVA==
-x-microsoft-antispam-prvs: <AM4PR03MB171497A8BF0E40207290AFA8DE7E0@AM4PR03MB1714.eurprd03.prod.outlook.com>
-x-exchange-antispam-report-test: UriScan:;
-x-exchange-antispam-report-cfa-test: BCL:0;PCL:0;RULEID:(6040375)(601004)(2401047)(5005006)(8121501046)(10201501046)(3002001)(6041248)(2016111802025)(20161123555025)(20161123562025)(20161123560025)(20161123564025)(6072148)(6043046);SRVR:AM4PR03MB1714;BCL:0;PCL:0;RULEID:;SRVR:AM4PR03MB1714;
-x-forefront-prvs: 0192E812EC
-x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(6009001)(7916002)(39410400002)(39840400002)(39450400003)(189002)(199003)(55885003)(122556002)(3280700002)(2900100001)(6512007)(5660300001)(305945005)(38730400001)(189998001)(107886002)(450100001)(68736007)(99286003)(6306002)(7736002)(6486002)(77096006)(6506006)(25786008)(92566002)(5640700003)(6436002)(86362001)(33656002)(3660700001)(74482002)(81166006)(8936002)(97736004)(3480700004)(5003630100001)(81156014)(1730700003)(8676002)(110136003)(83716003)(54356999)(36756003)(15974865002)(106356001)(2501003)(106116001)(50986999)(105586002)(6916009)(42882006)(53936002)(102836003)(82746002)(2906002)(101416001)(6116002)(2351001)(104396002);DIR:OUT;SFP:1102;SCL:1;SRVR:AM4PR03MB1714;H:AM4PR03MB1715.eurprd03.prod.outlook.com;FPR:;SPF:None;PTR:InfoNoRecords;MX:1;A:1;LANG:en;
-received-spf: None (protection.outlook.com: mmtdigital.co.uk does not
- designate permitted sender hosts)
-spamdiagnosticoutput: 1:99
-spamdiagnosticmetadata: NSPM
-Content-Type: text/plain; charset="us-ascii"
-Content-ID: <143B1C437C541C41A908FA2F0CA0FAA5@mmtdigital.co.uk>
-Content-Transfer-Encoding: quoted-printable
-MIME-Version: 1.0
-X-OriginatorOrg: mmtdigital.co.uk
-X-MS-Exchange-CrossTenant-originalarrivaltime: 19 Jan 2017 23:54:37.8262
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 18d7863a-b360-4417-b5ca-28b1e5e62258
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: AM4PR03MB1714
+        id S1753576AbdATAH1 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 19 Jan 2017 19:07:27 -0500
+Received: from smtprelay0238.hostedemail.com ([216.40.44.238]:33980 "EHLO
+        smtprelay.hostedemail.com" rhost-flags-OK-OK-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1753522AbdATAHY (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 19 Jan 2017 19:07:24 -0500
+Received: from smtprelay.hostedemail.com (10.5.19.251.rfc1918.com [10.5.19.251])
+        by smtpgrave03.hostedemail.com (Postfix) with ESMTP id 43C4E290075;
+        Fri, 20 Jan 2017 00:07:21 +0000 (UTC)
+Received: from filter.hostedemail.com (clb03-v110.bra.tucows.net [216.40.38.60])
+        by smtprelay03.hostedemail.com (Postfix) with ESMTP id 32C766B36D;
+        Fri, 20 Jan 2017 00:06:20 +0000 (UTC)
+X-Session-Marker: 6A6F6540706572636865732E636F6D
+X-HE-Tag: part65_715a1da5e2b11
+X-Filterd-Recvd-Size: 3868
+Received: from XPS-9350 (unknown [47.151.132.55])
+        (Authenticated sender: joe@perches.com)
+        by omf04.hostedemail.com (Postfix) with ESMTPA;
+        Fri, 20 Jan 2017 00:06:18 +0000 (UTC)
+Message-ID: <1484870777.2707.2.camel@perches.com>
+Subject: Re: [RFC for GIT] pull-request: add praise to people doing QA
+From:   Joe Perches <joe@perches.com>
+To:     Jacob Keller <jacob.keller@gmail.com>, Jeff King <peff@peff.net>
+Cc:     Wolfram Sang <wsa@the-dreams.de>,
+        Junio C Hamano <gitster@pobox.com>,
+        Git mailing list <git@vger.kernel.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
+Date:   Thu, 19 Jan 2017 16:06:17 -0800
+In-Reply-To: <CA+P7+xo5N66a8-PeNRLBgwRN3rJZRbQuDnx8wCnW7L-0tz10Fg@mail.gmail.com>
+References: <20170115183051.3565-1-wsa@the-dreams.de>
+         <xmqqlgubc04z.fsf@gitster.mtv.corp.google.com>
+         <20170119204343.xtotmjddhbum2mvr@ninjato>
+         <20170119212039.3gixsrk7qco45wjo@sigill.intra.peff.net>
+         <CA+P7+xo5N66a8-PeNRLBgwRN3rJZRbQuDnx8wCnW7L-0tz10Fg@mail.gmail.com>
+Content-Type: text/plain; charset="ISO-8859-1"
+X-Mailer: Evolution 3.22.3-0ubuntu0.1 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello
+On Thu, 2017-01-19 at 15:42 -0800, Jacob Keller wrote:
+> On Thu, Jan 19, 2017 at 1:20 PM, Jeff King <peff@peff.net> wrote:
+> > On Thu, Jan 19, 2017 at 09:43:45PM +0100, Wolfram Sang wrote:
+> > 
+> > > > As to the implementation, I am wondering if we can make this somehow
+> > > > work well with the "trailers" code we already have, instead of
+> > > > inventing yet another parser of trailers.
+> > > > 
+> > > > In its current shape, "interpret-trailers" focuses on "editing" an
+> > > > existing commit log message to tweak the trailer lines.  That mode
+> > > > of operation would help amending and rebasing, and to do that it
+> > > > needs to parse the commit log message, identify trailer blocks,
+> > > > parse out each trailer lines, etc.
+> > > > 
+> > > > There is no fundamental reason why its output must be an edited
+> > > > original commit log message---it should be usable as a filter that
+> > > > picks trailer lines of the selected trailer type, like "Tested-By",
+> > > > etc.
+> > > 
+> > > I didn't know about trailers before. As I undestand it, I could use
+> > > "Tested-by" as the key, and the commit subject as the value. This list
+> > > then could be parsed and brought into proper output shape. It would
+> > > simplify the subject parsing, but most things my AWK script currently
+> > > does would still need to stay or to be reimplemented (extracting names
+> > > from tags, creating arrays of tags given by $name). Am I correct?
+> > > 
+> > > All under the assumption that trailers work on a range of commits. I
+> > > have to admit that adding this to git is beyond my scope.
+> > 
+> > This sounds a lot like the shortlog-trailers work I did about a year
+> > ago:
+> > 
+> >   http://public-inbox.org/git/20151229073832.GN8842@sigill.intra.peff.net/
+> > 
+> >   http://public-inbox.org/git/20151229075013.GA9191@sigill.intra.peff.net/
+> > 
+> > Nobody seemed to really find it useful, so I didn't pursue it.
+> > 
+> > Some of the preparatory patches in that series bit-rotted in the
+> > meantime, but you can play with a version based on v2.7.0 by fetching
+> > the "shortlog-trailers-historical" branch from
+> > https://github.com/peff/git.git.
+> > 
+> > And then things like:
+> > 
+> >   git shortlog --ident=tested-by --format='...tested a patch by %an'
+> > 
+> > work (and you can put whatever commit items you want into the --format,
+> > including just dumping the hash if you want to do more analysis).
+> > 
+> > -Peff
+> 
+> This sounds interesting to me! When I have some more time to take a
+> look at this i might see if I can revive it.
 
-I have been looking around for this, but I can't seem to find any examples =
-of how to use the git post-merge hook. Can you help me please?
+Can the terminology please be standardized to what
+was once called bylines?
 
-I want to do something really simple in the sense of pulling locally and on=
-ce pulled and merged any conflicts (if any) then run a command line code. B=
-ut run this code after any merge conflicts are resolved.
+https://patchwork.kernel.org/patch/9307703/
 
-Can you help me by pointing me into the right direction on how I can resolv=
-e this please?
-
-Thanks
-Ilesh
-
-Sent from my iPhone
-
-Ilesh Mistry
-Kentico Technical Architect
-T 01572 822 278
-
-www.mmtdigital.co.uk <http://www.mmtdigital.co.uk>
-
-RAR Digital Awards Winner 2016: Best Web Development Agency in the UK
-RAR Digital Awards Winner 2016: Best Software Development Agency in the UK
-RAR Digital Awards Winner 2016: Best Analytics Agency in the UK
-RAR Digital Awards Winner 2015: Best Web Design Agency in the UK
-Econsultancy 2016 Top 100 Agency
-The Drum Digital Census 2015: Elite Agency Top 10
-
-
-Participation in this email correspondence denotes acceptance of
-terms and conditions available on request or from our website,
-unless a separate contract has been agreed.
-
-Registered Office: 1A Uppingham Gate, Ayston Road, Uppingham, Rutland, LE15=
- 9NY
-Company Number: 3681297
-VAT Registration: 638 5654 05
