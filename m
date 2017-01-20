@@ -7,125 +7,101 @@ X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AEECF20A17
-	for <e@80x24.org>; Fri, 20 Jan 2017 00:38:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 008F020A17
+	for <e@80x24.org>; Fri, 20 Jan 2017 01:22:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753645AbdATAiE (ORCPT <rfc822;e@80x24.org>);
-        Thu, 19 Jan 2017 19:38:04 -0500
-Received: from mail-it0-f44.google.com ([209.85.214.44]:37007 "EHLO
-        mail-it0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753340AbdATAiD (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 Jan 2017 19:38:03 -0500
-Received: by mail-it0-f44.google.com with SMTP id r185so9469600ita.0
-        for <git@vger.kernel.org>; Thu, 19 Jan 2017 16:37:59 -0800 (PST)
+        id S1753965AbdATBW3 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 19 Jan 2017 20:22:29 -0500
+Received: from mail-io0-f172.google.com ([209.85.223.172]:33457 "EHLO
+        mail-io0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753752AbdATBW3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 Jan 2017 20:22:29 -0500
+Received: by mail-io0-f172.google.com with SMTP id v96so52110770ioi.0
+        for <git@vger.kernel.org>; Thu, 19 Jan 2017 17:22:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=YVs0YcA+OplSfbTMiuzbXv+a0GtgKI5sfRtZM6NTT6I=;
-        b=qSL3yACk19oE61YNYXaZhXi/dzsNIvCWntY0TzO3eMTzUfSBb8x/riIko0xSIIeY1F
-         k4bFjRQXrM2De5omWdq0e66JHxq7S0H9yzP6vFbnLvEZrsO/Z6BAJgkHiIaGVgomh6i7
-         Ci8JCWS05JQ0ohy6/OjqV+wHa8cBWI/x0jigd6fr5ZscslTSNgNnxf2kqOVgW7ujzPQH
-         9A+Mf3BQodyMDI9FUuwqd7+AS0URwDeR4Xy/LzBsyftfqZdAP4tqnBbKbBfFDhVRjxGR
-         UKzCX3Pr0ZvcIne+EBBnOrOxnInRcC/0ACrmCwk5sM6OaJXdsEwspqbrV4us6iLtpC29
-         Nttw==
+        bh=h4MhdELcd726NmfsAlhyCu2qdQyWsXeRBTfQk4lMkPk=;
+        b=jczbAm0haKLtCqhigD15BiEladCcQ6hnnmXMuD/Mc+XNn/8Bp1KH/HE4B5apeG4suv
+         Sb7MehduXunDax4kVL5RKnubUnrIjYBLjsdHRYPk38G5S1b44AW2zoSSHgpwUeoSwzbS
+         tQ+6M0/Oq3KJOqqsU2785dy7CXw7go7o3OXZYycXjj8vYYSDUqTh0MOdLI9AjF5G5pGB
+         tghaft715sf8BBvYhmqYpij/OcYquZte4j6N+4mi7GNOY0qNGCSMGnrCfu2Pzwobe0Yl
+         JbggahPE1qaGTIdt0dUn7R/oFR3pzaAZlgvGBTtGA3rg3IfOBGpMl6PJuTMyyxF+F1K4
+         p7Jw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=YVs0YcA+OplSfbTMiuzbXv+a0GtgKI5sfRtZM6NTT6I=;
-        b=C+z3MWGMMTZ0N/O8VwoP2p09ai5Yo/VltKqpy067zVpSmynfpvYP9q65vDERQ5HKI6
-         +fw/2p3NIdR6S/8p6brXhj/00UVIVUbNtNfHh2v5s+WW3t+DgXPCtGylHj3CrkoHEX1g
-         WMVJ8CaTk26P0UlLBIAM+j6DdipfF9JmRtQgGC9Er1Bw9hqGHxX1UYi/9a6hKmNw8xae
-         Jes+npAhP6CBvDeZBpMmbaU5b9CaaCF+ryyBOLm0yVrptdEFLy9ctRDrVmVC8CdLvNt6
-         xqgecpIzZN9s78M1gdceroe5x8SLhkGYT4rx+DH2a7ytJOfuxZF/+nKLpkM49GQWqRs7
-         gbAw==
-X-Gm-Message-State: AIkVDXKcjT3TCrkny3DSDAmtpLVxwF8WzYJrXUt2B0i8TcPc9pfA3hNjtrUhAiKU1Kdoddm9FL7oB8L/wVOniu8G
-X-Received: by 10.36.4.2 with SMTP id 2mr1223089itb.116.1484872087961; Thu, 19
- Jan 2017 16:28:07 -0800 (PST)
+        bh=h4MhdELcd726NmfsAlhyCu2qdQyWsXeRBTfQk4lMkPk=;
+        b=awMlB9077f9ifVM6d9HLaZAGOwt2R4Ih+rlV1eeTpgZzVd29gDXL9iDu5b0PrpETNU
+         meLc4yBOiVw+hSzqCS/rIG+AaAnVtqfTphMUP/v4SyrJAzoUKZhdjVopiTKvXeUDnatU
+         eaukywLyU/UAjHCP/r4ztkLO6zMxKz6gtd0RB+XphD6Ayk5/tgTNnGwnh3/rJMw5BO1n
+         P4g6ajazh5JJooPvKrWkh1hF/A3A5Pxh36hqzAtuJVVQEIkL1az8epepJtV/bQfVX11z
+         7d7qzsZmSbIZXP15wsciAi6VFIb22nCogYbpRmJvAvRb+VbHogQVROs0K6OX18OQnVKW
+         myBg==
+X-Gm-Message-State: AIkVDXJr+TskVFE94uyjcigKjEcb58s9dxhfE/BUICvdmcmWBCcID/yIyISSpuFCogWAtazzcc+yZCL9NAJMJnlP
+X-Received: by 10.107.3.160 with SMTP id e32mr11199380ioi.52.1484875333230;
+ Thu, 19 Jan 2017 17:22:13 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.79.39.19 with HTTP; Thu, 19 Jan 2017 16:28:07 -0800 (PST)
-In-Reply-To: <1484870858-6336-1-git-send-email-email@benjaminfuchs.de>
-References: <1484870858-6336-1-git-send-email-email@benjaminfuchs.de>
+Received: by 10.79.39.19 with HTTP; Thu, 19 Jan 2017 17:22:12 -0800 (PST)
+In-Reply-To: <e6c5567a-2032-c598-97c8-08518f86b611@gmail.com>
+References: <CAGZ79kZRV7x9B6SHRcHjJweHrjURxWKmN-=Wz_aNw2TPwYh_xw@mail.gmail.com>
+ <ebf6c90e-044f-5538-2325-601d002a81fe@gmail.com> <CAGZ79kaf0BhbnJGhkjT_Ys44y4c4AaxV8U_ydWp4bbFMkGRcsQ@mail.gmail.com>
+ <e6c5567a-2032-c598-97c8-08518f86b611@gmail.com>
 From:   Stefan Beller <sbeller@google.com>
-Date:   Thu, 19 Jan 2017 16:28:07 -0800
-Message-ID: <CAGZ79kZNq=O=z-OSr-vDL4SUNViAUZ7AWz01TkGrmG88ZNqxgg@mail.gmail.com>
-Subject: Re: [PATCH] git-prompt.sh: add submodule indicator
-To:     Benjamin Fuchs <email@benjaminfuchs.de>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>, szeder.dev@gmail.com,
-        felipe.contreras@gmail.com, ville.skytta@iki.fi
+Date:   Thu, 19 Jan 2017 17:22:12 -0800
+Message-ID: <CAGZ79kaS7zt3DKrRuqzzODc1HHEP-xd-8HBC0JA-HvmqAJOZfw@mail.gmail.com>
+Subject: Re: submodule network operations [WAS: Re: [RFC/PATCH 0/4] working
+ tree operations: support superprefix]
+To:     "Brian J. Davis" <bitminer@gmail.com>
+Cc:     Brandon Williams <bmwill@google.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>,
+        David Turner <novalis@novalis.org>
 Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jan 19, 2017 at 4:07 PM, Benjamin Fuchs <email@benjaminfuchs.de> wrote:
-> I expirienced that working with submodules can be confusing. This indicator
-> will make you notice very easy when you switch into a submodule.
-> The new prompt will look like this: (sub:master)
-> Adding a new optional env variable for the new feature.
+>> Between the init and the update step you can modify the URLs.
+>> These commands are just a repetition from the first email, but the
+>> git commands can be viewed as moving from one state to another
+>> for submodules; submodules itself can be seen as a state machine
+>> according to that proposed documentation. Maybe such a state machine
+>> makes it easier to understand for some people.
 >
-> Signed-off-by: Benjamin Fuchs <email@benjaminfuchs.de>
-
-Thanks for making submodules better :)
-Relevant tangent, just posted today:
-https://public-inbox.org/git/20170119193023.26837-1-sbeller@google.com/T/#u
-
-> ---
->  contrib/completion/git-prompt.sh | 37 ++++++++++++++++++++++++++++++++++++-
->  1 file changed, 36 insertions(+), 1 deletion(-)
 >
-> diff --git a/contrib/completion/git-prompt.sh b/contrib/completion/git-prompt.sh
-> index 97eacd7..4c82e7f 100644
-> --- a/contrib/completion/git-prompt.sh
-> +++ b/contrib/completion/git-prompt.sh
-> @@ -93,6 +93,10 @@
->  # directory is set up to be ignored by git, then set
->  # GIT_PS1_HIDE_IF_PWD_IGNORED to a nonempty value. Override this on the
->  # repository level by setting bash.hideIfPwdIgnored to "false".
-> +#
-> +# If you would like __git_ps1 to indicate that you are in a submodule,
-> +# set GIT_PS1_SHOWSUBMODULE. In this case a "sub:" will be added before
-> +# the branch name.
+> "Between the init and the update step you can modify the URLs."  Yes I can
+> and have to... wish it was not this way.
+
+So how would yo u rather want to do it?
+look at the .gitmodules file beforehand and then run a "submodule update" ?
+Or a thing like
+
+    git -c url.https://internal.insteadOf git://github.com/ \
+        -c submodule.record-rewritten-urls submodule update
+
+(no need for init there as theoretically there is not
+need for such an intermediate step)
+
+
+>> [remote "origin"]
+>>    url = https://github.com/..
+>> [remote "inhouse"]
+>>    url = https://inhouse.corp/..
+>>
+>> But where do we clone it from?
+>> (Or do we just do a "git init" on that submodule and fetch
+>> from both remotes? in which order?)
 >
->  # check whether printf supports -v
->  __git_printf_supports_v=
-> @@ -284,6 +288,32 @@ __git_eread ()
->         test -r "$f" && read "$@" <"$f"
->  }
->
-> +# __git_is_submodule
-> +# Based on:
-> +# http://stackoverflow.com/questions/7359204/git-command-line-know-if-in-submodule
-> +__git_is_submodule ()
-> +{
-> +       local git_dir parent_git module_name path
-> +       # Find the root of this git repo, then check if its parent dir is also a repo
-> +       git_dir="$(git rev-parse --show-toplevel)"
-> +       module_name="$(basename "$git_dir")"
-> +       parent_git="$(cd "$git_dir/.." && git rev-parse --show-toplevel 2> /dev/null)"
+> origin by default and inhouse if specified. There is already a implied
+> default (origin). The idea was not to do both but rather what is specified.
+> Origin and inhouse are just names for remotes. If one wanted a
+> "--all-remotes" could pull from everywhere in the Ether if feature was to be
+> implemented.
 
-I wonder if we want to have better plumbing commands for submodules
-here as well:
-Here we only check if we have an embedded git repository, which may not be a
-submodule. It could be a standalone repo that just happens to be inside another.
-It could be a fake submodule [1], though I think the last time I
-brought these up,
-the upstream Git community considered these fake submodules are bug not worth
-fixing.
-
-And this doesn't cover the case that I addressed in the RFC-ish patch above:
-  $ git submodule deinit --all
-  $ cd <submodule> && git status
-  # in an ideal world this tells you:
-  #  "You are in an un-populated submodule. To change the submodule state..."
-
-So I guess this is a good first approximation that actually gets most
-of the cases right,
-thereby helping a lot of people. But I wonder about these cornercases as well?
-
-[1] debuggable.com/posts/git-fake-submodules:4b563ee4-f3cc-4061-967e-0e48cbdd56cb
-
-Thanks,
-Stefan
+How is origin implied to be the default?
+Should there be an order (e.g. if you cannot find it at inhouse get it
+from github,
+if they are down, get it from kernel.org)
