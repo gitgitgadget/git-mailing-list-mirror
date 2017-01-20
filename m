@@ -2,102 +2,119 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D423F1F89C
-	for <e@80x24.org>; Fri, 20 Jan 2017 11:19:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 574741F89C
+	for <e@80x24.org>; Fri, 20 Jan 2017 11:23:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751740AbdATLTU (ORCPT <rfc822;e@80x24.org>);
-        Fri, 20 Jan 2017 06:19:20 -0500
-Received: from mail-lf0-f68.google.com ([209.85.215.68]:32796 "EHLO
-        mail-lf0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751840AbdATLTH (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 Jan 2017 06:19:07 -0500
-Received: by mail-lf0-f68.google.com with SMTP id x1so8277516lff.0
-        for <git@vger.kernel.org>; Fri, 20 Jan 2017 03:18:37 -0800 (PST)
+        id S1752184AbdATLXa (ORCPT <rfc822;e@80x24.org>);
+        Fri, 20 Jan 2017 06:23:30 -0500
+Received: from mail-it0-f43.google.com ([209.85.214.43]:38382 "EHLO
+        mail-it0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751961AbdATLX2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Jan 2017 06:23:28 -0500
+Received: by mail-it0-f43.google.com with SMTP id c7so17445128itd.1
+        for <git@vger.kernel.org>; Fri, 20 Jan 2017 03:23:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:references:cc:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding;
-        bh=zzyvDvNsOJdR2pkxxV1K9Wqx6Mvm8LTHMafo9pvqpZg=;
-        b=D5UtNLCKQj1Ou+DQ+XV4Hfm8CC96MC0qOIzUlg/Pv2SXREZirBF63QGez/2jhM6J7O
-         rbnz0nU+3O2t1ZOovFLZ7OLZilEo5HPhcqXpeFYQzIr/vUV1B8wCzqoHaHF5lYZayke8
-         /6DvcFpAH+sbnOPD+7llb99HiQ1XHVfsY2NIyPB8yRA0qkRYzZ8knFWAodm7SUztQMNx
-         d2Qctz1rk5vesYehLyPKCQxdqy4UtVaozEg1bVX0336zHOc7LT5wFT733TV1HnNTFO5U
-         p+6uEY85hd4CSkUZowq+69NolnZk6jBTKwavsJqygm4VIliQRosUKesCOdmCU7CRyjyr
-         8OzA==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=Kypo8OA12SmWIUZMUnWTv/x5nL/YTswWxCQSQea2Jkc=;
+        b=skr4bpLeMuuAzzrf3kxhvyznhv2P4KTFEvRWMZSZGMk/apN8DqHnd6GNSysAtBmOgO
+         Ybw3H9LVbVqoCUN8CL+PWO87Nnb1hka3cm5NyA71+EJ3lO2FuB7A0p0gG2vFSN8ePR7y
+         MBYaBN/A7IDBmhp7Fo4WvX/NleEvYTxaq5Vg4EP1Eeqa7W24Iebu/UHocOhVG+GQfKDO
+         cZ93Pi8evXX9ekT0tS/JI2jxt8AY7dEuHB13OxTv2OcQkb65iwrDYG8DceC1yHJ5AH8K
+         Gd+2aaomKkKxAuPP4aTQ0BotjFBM60Devl4pqxU06poN982IqIioHxt1Tpn0IMkH8plW
+         QmHw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
-        bh=zzyvDvNsOJdR2pkxxV1K9Wqx6Mvm8LTHMafo9pvqpZg=;
-        b=pqrwDLqgyJ5oh2sBGVm4QhOkxEeVVBscd5+qJ7lGP5i6JD6Cl3PRo6H72jIF4exZwI
-         CciWVwRt2VRcGrVUUaWMH8c4GSAA6pBBsB2QMet7BlO4pq4AWQcTnteLKuQkYxWhfZPX
-         gFqUqKVwjuan6s/rvHsmk3a9stZbXhEni+FXnB22A981QqQEHdkQ/WIROGupq2wtrFZJ
-         9hTAFEwfdIJ9Kzkhb1UQxl3hzHfs4OiCexz6EWUxZ8GKhTDDnB5p9+HXr+3Ki1whboG7
-         aO/trtxkFFibmJvIY4ipt8EoUbKgg/JhUFmBB6qRAuIKjLyy/9B6x/bi7BHWvV0BuER6
-         Z+ZQ==
-X-Gm-Message-State: AIkVDXLiq2mf25kVaFiI6W4GADxB7Zh/xfQxtcXQaqqO7fQV/AY75lrAny/73rFY5cCiNQ==
-X-Received: by 10.25.132.6 with SMTP id g6mr5052577lfd.144.1484911116167;
-        Fri, 20 Jan 2017 03:18:36 -0800 (PST)
-Received: from [192.168.1.26] (enm186.neoplus.adsl.tpnet.pl. [83.20.2.186])
-        by smtp.googlemail.com with ESMTPSA id d16sm540632lfj.28.2017.01.20.03.18.34
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 20 Jan 2017 03:18:35 -0800 (PST)
-Subject: Re: Git: new feature suggestion
-To:     Linus Torvalds <torvalds@linux-foundation.org>
-References: <4817eb00-6efc-e3c0-53d7-46f2509350d3@synopsys.com>
- <20170119093313.ea57832dfd1bc7e0b0f1e630@domain007.com>
- <CA+55aFxAe8bH2xXkx1p5gYN+nc-D-vjNnfUeA_64Q3ttpbHq+w@mail.gmail.com>
- <b96b71b9-f8a2-d039-6e8a-c64e7aac02a0@gmail.com>
- <CA+55aFz5Rnt8U3bpvgoHQSfjPrnxnMfWUGBbHW2XKiagKXga5w@mail.gmail.com>
-Cc:     Konstantin Khomoutov <kostix+git@007spb.ru>,
-        Joao Pinto <Joao.Pinto@synopsys.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        "CARLOS.PALMINHA@synopsys.com" <CARLOS.PALMINHA@synopsys.com>
-From:   =?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
-Message-ID: <e9e988b6-290f-3160-222f-2762865fe508@gmail.com>
-Date:   Fri, 20 Jan 2017 12:18:32 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
- Thunderbird/45.6.0
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=Kypo8OA12SmWIUZMUnWTv/x5nL/YTswWxCQSQea2Jkc=;
+        b=e7hfRGBdSRxtRbQC863ZapjFczOXjJimDbspdvavx2Ubb1g0S1imU1TSdMjcE8G9/K
+         n+QABe6UxYivzc15e4OCb1OB4gNkqvzI8lbljNl3083VLeYzJ0FAov3dGhUpmiL+/Pet
+         HPtdfylijuaAKtFkrbzNv5PmuvTcZKZWEa97verFFWZMKvcEhOk/q0P1ij4ZU+HA7sl5
+         GH+mVHyCdn+RWbcy7V0VTE9gCDe4tQBgbHhw7kuOSXtdZwKwn2KYgGvBY4ge/PblhDlu
+         989jMVk8rkKUO+Xni0Ladxul5GH0CgJ70Mwwv34EveYBBoj2XpcocA058OIwAFIBh9jK
+         +H+w==
+X-Gm-Message-State: AIkVDXLRCA0wrk/uQvANt2e40BNBr/AgGqHNMV2KrGKF5+Sxajo0dHKFzeKygvqYuPtMmAnZhGLOof9qbniiog==
+X-Received: by 10.36.118.133 with SMTP id z127mr3079380itb.74.1484911407982;
+ Fri, 20 Jan 2017 03:23:27 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <CA+55aFz5Rnt8U3bpvgoHQSfjPrnxnMfWUGBbHW2XKiagKXga5w@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Received: by 10.64.69.3 with HTTP; Fri, 20 Jan 2017 03:22:57 -0800 (PST)
+In-Reply-To: <341999fc-4496-b974-c117-c18a2fca1358@alum.mit.edu>
+References: <CACsJy8CHoroX2k9GqOFmXkvvPCPN4SBeCg+6aC2WSWNSKVmWQw@mail.gmail.com>
+ <341999fc-4496-b974-c117-c18a2fca1358@alum.mit.edu>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Fri, 20 Jan 2017 18:22:57 +0700
+Message-ID: <CACsJy8AkLMG6SSgu0KP6C4GSt1hUu0bjqavpVSsS-qQ90wbKcA@mail.gmail.com>
+Subject: Re: The design of refs backends, linked worktrees and submodules
+To:     Michael Haggerty <mhagger@alum.mit.edu>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-W dniu 20.01.2017 o 01:26, Linus Torvalds pisze:
-> On Thu, Jan 19, 2017 at 1:48 PM, Jakub Narębski <jnareb@gmail.com> wrote:
->> W dniu 19.01.2017 o 19:39, Linus Torvalds pisze:
->>>
->>> You can do it in tig, but I suspect a more graphical tool might be better.
->>
->> Well, we do have "git gui blame".
-> 
-> Does that actually work for people? Because it really doesn't for me.
-> 
-> And I'm not just talking about the aesthetics of the thing, but the
-> whole experience, and the whole "dig into parent" which just gives me
-> an error message.
+On Thu, Jan 19, 2017 at 8:30 PM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
+> I kindof think that it would have been a better design to store the
+> references for all linked worktrees in the main repository's ref-store.
+> For example, the "bisect" refs for a worktree named "<name>" could have
+> been stored under "refs/worktrees/<name>/bisect/*". Then either:
+>
+> * teach the associated tools to read/write references there directly
+> (probably with DWIM rules to make command-line use easier), or
+> * treat these references as if they were actually at a standard place
+> like `refs/worktree/bisect/*`; i.e., users would need to know that they
+> were per-worktree references, but wouldn't need to worry about the true
+> locations, or
+> * treat these references as if they were actually in their traditional
+> locations (though it is not obvious how this scheme could be expanded to
+> cover new per-worktree references).
 
-Strange. I had been using "git gui blame" _because_ of its "dig to parent"
-functionality, and it worked for me just fine.
+Well. In one direction, we store everything at one place and construct
+different slices of view of the unified store. On the other far end,
+we have plenty of one-purpose stores, then combine them as we need.
+It's probably personal taste, but I prefer the latter.
 
-The other thing that I like about "git gui blame" is that it shows both
-the commit that moved the fragment of code (via "git blame"), and the
-commit that created the fragment of code (via "git blame -C -C -w", I think).
+Making a single big store could bring us closer to the "big number"
+problem. Yeah we will have to handle million of refs anyway, someday.
+That does not mean we're free to increase the number of refs a few
+more times. Then there are separate stores by nature like submodules
+(caveat: I haven't checked out your submodule-hash branch), or the
+problem with multiple repos sharing objects/info/alternates.
 
+> This is a topic that I have thought a lot about. I definitely like this
+> direction. In fact I've dabbled around with some first steps; see branch
+> `submodule-hash` in my fork on GitHub [1]. That branch associates a
+> `ref_store` more closely with the directory where the references are
+> stored, as opposed to having a 1:1 relationship between `ref_store`s and
+> submodules.
 
-Anyway, all of this (sub)discussion is about archeology, but what might
-be more important is automatic rename handling when integrating changes,
-be it git-am, git-merge, or something else...
+Thanks. Will check it out.
 
+> Let me braindump some more information about this topic.
+> ...
+
+Juicy stuff :D It's hard to know these without staring really long and
+hard at refs code. Thank you.
+
+> I've taken some stabs at picking these apart into separate ref stores,
+> but haven't had time to make very satisfying progress. By the time of
+> GitMerge I might have a better feeling for whether I can devote some
+> time to this project.
+
+I think sending WIP patches to the list from time to time is also
+helpful, even if it's not perfect. For one thing I would know you were
+doing (or thinking at least, which also counts) and not stepping on
+each other. On my part I'm not attempting to make any more changes (*)
+until after I've read your branches.
+
+(*) I took git_path() out of refs code and was surprised that multi
+worktree broke. Silly me. Wrong first step.
 -- 
-Jakub Narębski
-
+Duy
