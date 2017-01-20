@@ -2,83 +2,130 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7ADCC20A17
-	for <e@80x24.org>; Fri, 20 Jan 2017 00:36:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AEECF20A17
+	for <e@80x24.org>; Fri, 20 Jan 2017 00:38:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753952AbdATAgS (ORCPT <rfc822;e@80x24.org>);
-        Thu, 19 Jan 2017 19:36:18 -0500
-Received: from mail-ot0-f196.google.com ([74.125.82.196]:33131 "EHLO
-        mail-ot0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753933AbdATAgR (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 Jan 2017 19:36:17 -0500
-Received: by mail-ot0-f196.google.com with SMTP id f9so6048533otd.0
-        for <git@vger.kernel.org>; Thu, 19 Jan 2017 16:36:17 -0800 (PST)
+        id S1753645AbdATAiE (ORCPT <rfc822;e@80x24.org>);
+        Thu, 19 Jan 2017 19:38:04 -0500
+Received: from mail-it0-f44.google.com ([209.85.214.44]:37007 "EHLO
+        mail-it0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753340AbdATAiD (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 Jan 2017 19:38:03 -0500
+Received: by mail-it0-f44.google.com with SMTP id r185so9469600ita.0
+        for <git@vger.kernel.org>; Thu, 19 Jan 2017 16:37:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-transfer-encoding;
-        bh=RYXd3Nls5A3/v+bC6GwUN/+V7e5sjMMb4CRFsp3DEGg=;
-        b=q2+eVyrJQqRUybvn6oT7njGBtEENryFQ2G0MBmtGmsbaS/IARoU5xuDn3vIqaJzefg
-         +XTtaBDoKGN2mgS7wUsk00IC8IgndazaX4va2Ubi7Ax6M6ztDQXDZNwgGhcydP1tRe4Q
-         E3Rjw25gKE21vOvWFORx04ahNKtUTiZVUTe4Va7Knq3mfGrn5gKVTe7AOLBeBGkzxn6C
-         D8LtlwqL5BWbsdqDJPXqDNYKZ1FJD0evV4O/l4ZfoNYoxFIZAkb/BgL9X2xm+5au0AdB
-         uTL3QDJSqeiN9NZgdVPKt2F3NBcPSY/sSZOm7yQJjINlSWcXAPMcQ4vqVQ/RAwj8dVd2
-         1xEA==
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=YVs0YcA+OplSfbTMiuzbXv+a0GtgKI5sfRtZM6NTT6I=;
+        b=qSL3yACk19oE61YNYXaZhXi/dzsNIvCWntY0TzO3eMTzUfSBb8x/riIko0xSIIeY1F
+         k4bFjRQXrM2De5omWdq0e66JHxq7S0H9yzP6vFbnLvEZrsO/Z6BAJgkHiIaGVgomh6i7
+         Ci8JCWS05JQ0ohy6/OjqV+wHa8cBWI/x0jigd6fr5ZscslTSNgNnxf2kqOVgW7ujzPQH
+         9A+Mf3BQodyMDI9FUuwqd7+AS0URwDeR4Xy/LzBsyftfqZdAP4tqnBbKbBfFDhVRjxGR
+         UKzCX3Pr0ZvcIne+EBBnOrOxnInRcC/0ACrmCwk5sM6OaJXdsEwspqbrV4us6iLtpC29
+         Nttw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc:content-transfer-encoding;
-        bh=RYXd3Nls5A3/v+bC6GwUN/+V7e5sjMMb4CRFsp3DEGg=;
-        b=GzV0jhqY99Zepk/8rXOYhsM0umSwYj5iZRvIq1OTDF6rYmqv1csW+DB2fLTld9Rac8
-         0nY7lobd9Q6iY+7hoX+VXXsPReRVydan0KYnsCv3OQswc0d/gp/8JZNKR7AcEfO5IVlB
-         HGHf26yJyFYy858msgAjyCnsIMiPJE12VdgYAUM9NpVXifeTpnNdIjmP/dx7JBXhECLF
-         Ny1bkwCXxELurhOWfkaTFUnvp55XDURYMveZeHf4BNY38qqRExUlBArOIwvqS27UQnLq
-         ZjSmFVIMIlZofengZVsGDLmnLvNSKKU8QG3NtNyHBTH8ka59wDDCGPr6xnhEKgDp62uL
-         hGxA==
-X-Gm-Message-State: AIkVDXJsSbxjPQkjPfZ8SU68Z67JFNV35XG8xF7WmyOfHN2BChriMCCFYBVu2DYJKae03AVpXUSLxnxO77Gq4A==
-X-Received: by 10.157.46.24 with SMTP id q24mr6486491otb.269.1484872002441;
- Thu, 19 Jan 2017 16:26:42 -0800 (PST)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=YVs0YcA+OplSfbTMiuzbXv+a0GtgKI5sfRtZM6NTT6I=;
+        b=C+z3MWGMMTZ0N/O8VwoP2p09ai5Yo/VltKqpy067zVpSmynfpvYP9q65vDERQ5HKI6
+         +fw/2p3NIdR6S/8p6brXhj/00UVIVUbNtNfHh2v5s+WW3t+DgXPCtGylHj3CrkoHEX1g
+         WMVJ8CaTk26P0UlLBIAM+j6DdipfF9JmRtQgGC9Er1Bw9hqGHxX1UYi/9a6hKmNw8xae
+         Jes+npAhP6CBvDeZBpMmbaU5b9CaaCF+ryyBOLm0yVrptdEFLy9ctRDrVmVC8CdLvNt6
+         xqgecpIzZN9s78M1gdceroe5x8SLhkGYT4rx+DH2a7ytJOfuxZF/+nKLpkM49GQWqRs7
+         gbAw==
+X-Gm-Message-State: AIkVDXKcjT3TCrkny3DSDAmtpLVxwF8WzYJrXUt2B0i8TcPc9pfA3hNjtrUhAiKU1Kdoddm9FL7oB8L/wVOniu8G
+X-Received: by 10.36.4.2 with SMTP id 2mr1223089itb.116.1484872087961; Thu, 19
+ Jan 2017 16:28:07 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.182.63.13 with HTTP; Thu, 19 Jan 2017 16:26:41 -0800 (PST)
-In-Reply-To: <b96b71b9-f8a2-d039-6e8a-c64e7aac02a0@gmail.com>
-References: <4817eb00-6efc-e3c0-53d7-46f2509350d3@synopsys.com>
- <20170119093313.ea57832dfd1bc7e0b0f1e630@domain007.com> <CA+55aFxAe8bH2xXkx1p5gYN+nc-D-vjNnfUeA_64Q3ttpbHq+w@mail.gmail.com>
- <b96b71b9-f8a2-d039-6e8a-c64e7aac02a0@gmail.com>
-From:   Linus Torvalds <torvalds@linux-foundation.org>
-Date:   Thu, 19 Jan 2017 16:26:41 -0800
-X-Google-Sender-Auth: XSfzEvkVK1MTLHXtL2hrW31ruYE
-Message-ID: <CA+55aFz5Rnt8U3bpvgoHQSfjPrnxnMfWUGBbHW2XKiagKXga5w@mail.gmail.com>
-Subject: Re: Git: new feature suggestion
-To:     =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
-Cc:     Konstantin Khomoutov <kostix+git@007spb.ru>,
-        Joao Pinto <Joao.Pinto@synopsys.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        "CARLOS.PALMINHA@synopsys.com" <CARLOS.PALMINHA@synopsys.com>
+Received: by 10.79.39.19 with HTTP; Thu, 19 Jan 2017 16:28:07 -0800 (PST)
+In-Reply-To: <1484870858-6336-1-git-send-email-email@benjaminfuchs.de>
+References: <1484870858-6336-1-git-send-email-email@benjaminfuchs.de>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Thu, 19 Jan 2017 16:28:07 -0800
+Message-ID: <CAGZ79kZNq=O=z-OSr-vDL4SUNViAUZ7AWz01TkGrmG88ZNqxgg@mail.gmail.com>
+Subject: Re: [PATCH] git-prompt.sh: add submodule indicator
+To:     Benjamin Fuchs <email@benjaminfuchs.de>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>, szeder.dev@gmail.com,
+        felipe.contreras@gmail.com, ville.skytta@iki.fi
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jan 19, 2017 at 1:48 PM, Jakub Nar=C4=99bski <jnareb@gmail.com> wro=
-te:
-> W dniu 19.01.2017 o 19:39, Linus Torvalds pisze:
->>
->> You can do it in tig, but I suspect a more graphical tool might be bette=
-r.
+On Thu, Jan 19, 2017 at 4:07 PM, Benjamin Fuchs <email@benjaminfuchs.de> wrote:
+> I expirienced that working with submodules can be confusing. This indicator
+> will make you notice very easy when you switch into a submodule.
+> The new prompt will look like this: (sub:master)
+> Adding a new optional env variable for the new feature.
 >
-> Well, we do have "git gui blame".
+> Signed-off-by: Benjamin Fuchs <email@benjaminfuchs.de>
 
-Does that actually work for people? Because it really doesn't for me.
+Thanks for making submodules better :)
+Relevant tangent, just posted today:
+https://public-inbox.org/git/20170119193023.26837-1-sbeller@google.com/T/#u
 
-And I'm not just talking about the aesthetics of the thing, but the
-whole experience, and the whole "dig into parent" which just gives me
-an error message.
+> ---
+>  contrib/completion/git-prompt.sh | 37 ++++++++++++++++++++++++++++++++++++-
+>  1 file changed, 36 insertions(+), 1 deletion(-)
+>
+> diff --git a/contrib/completion/git-prompt.sh b/contrib/completion/git-prompt.sh
+> index 97eacd7..4c82e7f 100644
+> --- a/contrib/completion/git-prompt.sh
+> +++ b/contrib/completion/git-prompt.sh
+> @@ -93,6 +93,10 @@
+>  # directory is set up to be ignored by git, then set
+>  # GIT_PS1_HIDE_IF_PWD_IGNORED to a nonempty value. Override this on the
+>  # repository level by setting bash.hideIfPwdIgnored to "false".
+> +#
+> +# If you would like __git_ps1 to indicate that you are in a submodule,
+> +# set GIT_PS1_SHOWSUBMODULE. In this case a "sub:" will be added before
+> +# the branch name.
+>
+>  # check whether printf supports -v
+>  __git_printf_supports_v=
+> @@ -284,6 +288,32 @@ __git_eread ()
+>         test -r "$f" && read "$@" <"$f"
+>  }
+>
+> +# __git_is_submodule
+> +# Based on:
+> +# http://stackoverflow.com/questions/7359204/git-command-line-know-if-in-submodule
+> +__git_is_submodule ()
+> +{
+> +       local git_dir parent_git module_name path
+> +       # Find the root of this git repo, then check if its parent dir is also a repo
+> +       git_dir="$(git rev-parse --show-toplevel)"
+> +       module_name="$(basename "$git_dir")"
+> +       parent_git="$(cd "$git_dir/.." && git rev-parse --show-toplevel 2> /dev/null)"
 
-            Linus
+I wonder if we want to have better plumbing commands for submodules
+here as well:
+Here we only check if we have an embedded git repository, which may not be a
+submodule. It could be a standalone repo that just happens to be inside another.
+It could be a fake submodule [1], though I think the last time I
+brought these up,
+the upstream Git community considered these fake submodules are bug not worth
+fixing.
+
+And this doesn't cover the case that I addressed in the RFC-ish patch above:
+  $ git submodule deinit --all
+  $ cd <submodule> && git status
+  # in an ideal world this tells you:
+  #  "You are in an un-populated submodule. To change the submodule state..."
+
+So I guess this is a good first approximation that actually gets most
+of the cases right,
+thereby helping a lot of people. But I wonder about these cornercases as well?
+
+[1] debuggable.com/posts/git-fake-submodules:4b563ee4-f3cc-4061-967e-0e48cbdd56cb
+
+Thanks,
+Stefan
