@@ -2,81 +2,139 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8A83220756
-	for <e@80x24.org>; Fri, 20 Jan 2017 15:33:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D2BDD20756
+	for <e@80x24.org>; Fri, 20 Jan 2017 15:34:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752809AbdATPdr (ORCPT <rfc822;e@80x24.org>);
-        Fri, 20 Jan 2017 10:33:47 -0500
-Received: from mout.gmx.net ([212.227.17.22]:61616 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752796AbdATPdq (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 Jan 2017 10:33:46 -0500
-Received: from virtualbox ([37.24.141.236]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0Lcjdr-1c57uU02Ex-00k9ij; Fri, 20
- Jan 2017 16:27:01 +0100
-Date:   Fri, 20 Jan 2017 16:27:00 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     Marc Branchaud <marcnarc@xiplink.com>
-cc:     Stephan Beyer <s-beyer@gmx.net>, git <git@vger.kernel.org>
-Subject: Re: [RFC] stash --continue
-In-Reply-To: <1fba12e3-78f0-6b2f-31ca-8d888744b9aa@xiplink.com>
-Message-ID: <alpine.DEB.2.20.1701201625440.3469@virtualbox>
-References: <cd784a4e-ee99-564e-81de-9f7f6cc26c67@gmx.net> <alpine.DEB.2.20.1701161153340.3469@virtualbox> <d5456165-bdf2-e9e7-117f-aeab0ff4b417@xiplink.com> <alpine.DEB.2.20.1701181725130.3469@virtualbox> <38d592b8-975c-1fd9-4c42-877e34a4ab70@xiplink.com>
- <alpine.DEB.2.20.1701191341530.3469@virtualbox> <aa8104ad-45f4-7bef-f199-6e6021cf0c06@xiplink.com> <alpine.DEB.2.20.1701192220320.3469@virtualbox> <1fba12e3-78f0-6b2f-31ca-8d888744b9aa@xiplink.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+        id S1752816AbdATPd7 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 20 Jan 2017 10:33:59 -0500
+Received: from mail-yw0-f182.google.com ([209.85.161.182]:34318 "EHLO
+        mail-yw0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752683AbdATPd6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Jan 2017 10:33:58 -0500
+Received: by mail-yw0-f182.google.com with SMTP id w75so91099057ywg.1
+        for <git@vger.kernel.org>; Fri, 20 Jan 2017 07:33:57 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to;
+        bh=pYEgqnO9GDL86F5bCcpPP1raKEWGyHPVawJvDyAg69Q=;
+        b=Rl5UcvU+RUClG4AR7KbRr4UzQxuss0q9/wNfZofrGhZHWuMu2YbTKdArGD+1K85hZM
+         DKU+8ip6MZWeo+0Frev9oUh613EaDB0Vnzet4eYZYxShHHdVQGEaV1iNzHCK1YxdTbSJ
+         RFDkxruW38TjjOCuhCiqc9d7zoDKvR3AQ1KWOV0SGE8LHBGB4h1mnjT4wOtn/KVQYZEW
+         TzEiwS8hzEH1PevNfqXo95dP1eZiNlnOfsnVbS0awkRqvzaiw+RcRswvVexUao4ja3t+
+         oGESYAKlFtsuNEPdMZyfwPcNZS2hEPy5LndgaPjj6GYkHQGLPORY5zGvKQI6VOUOhu9l
+         5P0g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to;
+        bh=pYEgqnO9GDL86F5bCcpPP1raKEWGyHPVawJvDyAg69Q=;
+        b=amKXFAIgvCJL5YlAaalUNW4MJW9WAY2ePMuRFA93C82dBxOrf+VVPTPZRkdpLo+AwO
+         fn3JQYuct81bL0XWE5yqP70xA44cJZ474xJhlUsibBrn/HLEh9deJGbWggilSGINkr6+
+         UQZU9maAdWlfciFT+1YeP8wOSBbgvxL25tzDVtNzraprkY7CmElwxIhChwBMmq3KLtzB
+         dYExrc/2+RvrPuyjLyQcucNnWCIB4aw78jov+17x8xzTQrkfR8bN4J3+HKdgzXriXcS1
+         zCVSOyJ874ecODDGW/XeZ/PdCkP4i2wQ/vIajgsgsL98tTID69FpBaw1z7/pCfNP6bql
+         enKA==
+X-Gm-Message-State: AIkVDXIAcP/4PoeCJcIHn+Jio4K8z+gO3VwpZqlCxRZcl0niproylrlojgnFaeeiMN9w9c7xOSB0oSbzqURjZg==
+X-Received: by 10.55.214.152 with SMTP id p24mr12674497qkl.223.1484925900009;
+ Fri, 20 Jan 2017 07:25:00 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:2Lia18Qa19TnLEJ3B5Yo3AlpbBJKizKmut+oFszmWr7MKcGtb3L
- 4VnxzseigFy1ycXldMJNiQ5MkTumQtoJPupK6CSMncFBkVsV4LlDdo6rYyNkONmJ8Gbs1Eh
- c68T3y5oALLoJRqxuszuB+gDWXJcTe7A9VFD1boykLiBUZa3cKEYZzviDR/VASTsYAwwCdi
- 6I7MwwV/qOwQAaPQgVN0A==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:80/lt3ckmVM=:Kt1/ZE7fRfOKepP01EDwDJ
- WOoMyW1Qgg5U4ME+mQ+FAnnT6rUBr1qH0T87UAl8Qd2VTkiRVPJ+yJozYpimHxCn8k87FhlMe
- WVcVXHnRFp82Jtfg+1w5ItXHTltJDSRCEegTd1YmBrt+Tc/hIStCuHLd4d5EijPKq1HI6wix7
- GfEuw4Dtm2u7oKG+QexIjaLv3+TyZi07IQ6OuqnUOXv9L3hWQWDqw+vDmq05vrqdhP/87TG9m
- lTueRJEZj1BK/l3cQWhVlhpgydEaqYMP833Z6woGj9h3+UoZmhp4RDzXxPze0LlJUWZGzB/6r
- ozO5oW1l+PD/G6Bhnc2Nqjc+8x8nroczDGPo47rToJKRMVMEmCtC6GZa41gq/nSolAzR/befE
- EiZASfSfRLayVHMgjLZxH3qFRD/rSHzUo38h4PmigRjo74o8fzNfJIgnqtORAI+YVKbH6ueEn
- Mq2HvJ16iV5yPllIXF4fIIso8Df0vRaC7gyw2rgAhATZqRb7cAEIvsNtbbvbNlCrvOB6mCqVj
- tsWfr1LkbrG2mVL0KG9f5tia7WqXaJTOw1DdQ1kBfUlACiWXGJRVzkedCN/e/UxBAe7FfRQgi
- tksybY4GW5vmbzyZui3jgRmaxy3ptA1MwFh3Hv9Oncw+hz4o1GIFUWWsjQ55T/Df6nh6+cWh5
- R1yjDLQU73pa/TVhs8T7uDAWg+KAHvXkHiGIbB/GJiLi0lWudtatDb8Ax2MccDmOhPFBc9m87
- DFY3l3WzowlcqAvQsgFFqpzaRDGJi9eYjd5W7Z/c7mdl4vkDm0YyVl/1KwUWrNdKkuu4WK3x1
- 50sSQ1GzaFspWNR0WWDM7AAWzQ0aw==
+Received: by 10.12.142.66 with HTTP; Fri, 20 Jan 2017 07:24:39 -0800 (PST)
+In-Reply-To: <CAKcFC3ZYwrVfEZ2Xua1kpQVeOMKY-wM=oce9JQhz4Tnookf8Dg@mail.gmail.com>
+References: <CAKcFC3aqjLNUNKPDZ08rO_SBkY84uvHBerCxnSchAe8rH0dnMg@mail.gmail.com>
+ <CAKcFC3ZN+=o_2t4AawCE0c4Tw+t_XJKTHtEq9d7bv-ht5euPbw@mail.gmail.com>
+ <CAKcFC3aHZP5-MJaNj4vv_qBwY3xNRodYnfw0P-G-Q+XfaRf=Cw@mail.gmail.com> <CAKcFC3ZYwrVfEZ2Xua1kpQVeOMKY-wM=oce9JQhz4Tnookf8Dg@mail.gmail.com>
+From:   jean-christophe manciot <actionmystique@gmail.com>
+Date:   Fri, 20 Jan 2017 16:24:39 +0100
+Message-ID: <CAKcFC3YZMA7AP+9d5nuUfeAjyu67cRT=djVh5Znh=Gj-Gr6UWg@mail.gmail.com>
+Subject: Re: fatal: bad revision 'git rm -r --ignore-unmatch -- folder'
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Marc,
+I've finally found the correct command after some significant research:
+git filter-branch --tag-name-filter cat --index-filter "git rm -r
+--cached --ignore-unmatch ${file_path}/${file_name}" --prune-empty
+--force -- --all
 
-On Fri, 20 Jan 2017, Marc Branchaud wrote:
+On Fri, Jan 20, 2017 at 4:23 PM, jean-christophe manciot
+<actionmystique@gmail.com> wrote:
+> I've finally found the correct command after some significant research:
+> git filter-branch --tag-name-filter cat --index-filter "git rm -r --cached
+> --ignore-unmatch ${file_path}/${file_name}" --prune-empty --force -- --all
+>
+> On Thu, Jan 19, 2017 at 9:42 AM, jean-christophe manciot
+> <actionmystique@gmail.com> wrote:
+>>
+>> Also some context information:
+>> Ubuntu 16.10 4.8
+>> git 2.11.0
+>>
+>> On Thu, Jan 19, 2017 at 9:32 AM, jean-christophe manciot
+>> <actionmystique@gmail.com> wrote:
+>> > In case you were wondering whether these files were tracked or not:
+>> >
+>> > git-Games# git ls-files Ubuntu/16.04
+>> > Ubuntu/16.04/residualvm_0.3.0~git-1_amd64.deb
+>> > Ubuntu/16.04/scummvm-data_1.8.0_all.deb
+>> > Ubuntu/16.04/scummvm-data_1.9.0_all.deb
+>> > Ubuntu/16.04/scummvm-dbgsym_1.8.2~git20160821.bad86050_amd64.deb
+>> > Ubuntu/16.04/scummvm-dbgsym_1.9.0_amd64.deb
+>> > Ubuntu/16.04/scummvm_1.8.0_amd64.deb
+>> > Ubuntu/16.04/scummvm_1.9.0_amd64.deb
+>> >
+>> > On Tue, Jan 17, 2017 at 4:30 PM, jean-christophe manciot
+>> > <actionmystique@gmail.com> wrote:
+>> >> Hi there,
+>> >>
+>> >> I'm trying to purge a complete folder and its files from the
+>> >> repository history with:
+>> >>
+>> >> git-Games# git filter-branch 'git rm -r --ignore-unmatch --
+>> >> Ubuntu/16.04/' --tag-name-filter cat -- --all HEAD
+>> >> fatal: bad revision 'git rm -r --ignore-unmatch -- Ubuntu/16.04/'
+>> >>
+>> >> git does not find the folder although it's there:
+>> >>
+>> >> git-Games# ll Ubuntu/16.04/
+>> >> total 150316
+>> >> drwxr-x--- 2 actionmystique actionmystique     4096 Nov 19 13:40 ./
+>> >> drwxr-x--- 4 actionmystique actionmystique     4096 Oct 30 14:02 ../
+>> >> -rwxr-x--- 1 actionmystique actionmystique  2190394 May  9  2016
+>> >> residualvm_0.3.0~git-1_amd64.deb*
+>> >> ...
+>> >> -rw-r--r-- 1 actionmystique actionmystique 67382492 Oct 13 09:15
+>> >> scummvm-dbgsym_1.9.0_amd64.deb
+>> >>
+>> >> What is going on?
+>> >>
+>> >> --
+>> >> Jean-Christophe
+>> >
+>> >
+>> >
+>> > --
+>> > Jean-Christophe
+>>
+>>
+>>
+>> --
+>> Jean-Christophe
+>
+>
+>
+>
+> --
+> Jean-Christophe
 
-> On 2017-01-19 04:30 PM, Johannes Schindelin wrote:
-> >
-> > At this point I will stop commenting on this issue, as I have said all
-> > that I wanted to say about it, at least once. If I failed to get my
-> > points across so far, I simply won't be understood.
-> 
-> Yes, we're obviously looking at this from completely different
-> perspectives.
 
-Yes, but you claim to argue from the users' perspective, while I actually
-work with enough users to be really certain that I described their mental
-model of what an operation is very accurately.
 
-> Stephan (or whoever) if you decide to do this work, I will be content
-> with whichever way you choose to go.
-
-So you only wanted to argue and not actually do anything? Tsk, tsk...
-
-:-)
-
-Ciao,
-Johannes
+-- 
+Jean-Christophe
