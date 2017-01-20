@@ -7,51 +7,51 @@ X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 109661F89C
-	for <e@80x24.org>; Fri, 20 Jan 2017 10:56:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 000E81F89C
+	for <e@80x24.org>; Fri, 20 Jan 2017 11:02:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751981AbdATKz7 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 20 Jan 2017 05:55:59 -0500
-Received: from mail-it0-f51.google.com ([209.85.214.51]:37068 "EHLO
-        mail-it0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751746AbdATKz5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 Jan 2017 05:55:57 -0500
-Received: by mail-it0-f51.google.com with SMTP id r185so17119516ita.0
-        for <git@vger.kernel.org>; Fri, 20 Jan 2017 02:55:57 -0800 (PST)
+        id S1751681AbdATLCa (ORCPT <rfc822;e@80x24.org>);
+        Fri, 20 Jan 2017 06:02:30 -0500
+Received: from mail-io0-f174.google.com ([209.85.223.174]:34160 "EHLO
+        mail-io0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751763AbdATLC3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Jan 2017 06:02:29 -0500
+Received: by mail-io0-f174.google.com with SMTP id l66so59956494ioi.1
+        for <git@vger.kernel.org>; Fri, 20 Jan 2017 03:02:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=wkkPG0vTshz1fuN6Iys3/lOR2pniFl2Uc078z3oft7Q=;
-        b=RHs8sRIIKaJTedf3D+BI/yxfalEeUu8YBQQCf998q/UJBAf1NlQVDN4RAdTq0PPtkv
-         LiR2A3RnmhBzCk9oMHz/SuGwKY+dhqtK/DeCb5ppAQZE6lWGkOTTq4uXI88aOavoUJZh
-         2Se9Cvbo5aiVOnZQ5Mii2KVhrIFjb9dgN9DumeF5Nbl63dngVBis809PYL5PIvQmdtw5
-         dfS0GoiBdGuG2/w4U7QANYUHdv6+qscSt7Mxldl668AKakLNeKlKhY6mgViuh6/b7pro
-         8p5LAXhh1EXLB6MjGEpHRBHQV8roTYUEsa5Ss3mpYoJCDj8NJ9xgNtI97S5RCexgguk+
-         vCxQ==
+        bh=Zju4B5pmPd/D5Z7DqD2nMyS/MRIuuetfeFUNjO5ZxJs=;
+        b=H/N3PE0WcatfRuZq5A5smUF8CYvl4Ltk1pxuF34swlxxmOxLm+PELMoF7BO3e5yyGY
+         jihSU/a5lSseOOiLmPlIeWvsrSDz7A3+LEXw+rSUx/aau0nevaBv1K1m1iNpzbv2QtWe
+         0xrClBwzaVuJarYCXsi4I7pegAYj+cG3Pd2RETiGaXJcr5vct5fEBIgHhpBLyY0wlsZ8
+         0v5gwY7B4HvsObw9O7KqEQ2/whGM8g1Zg342hO48As2cmUHlMaFJ4A3WpqfQ6z8Jk2mm
+         kTYyph4nqz5OC+Qx4FeZ6M1/PE6jyKcn4dsdS665LAKONiRP1SpmKZ05FC4T5lSvecJd
+         5ldQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=wkkPG0vTshz1fuN6Iys3/lOR2pniFl2Uc078z3oft7Q=;
-        b=XXQBbfjcDUXeSlBWYAsu6oUrrsBsep85EGIgx/Dh70n69MDA7bpTH/wjJCXrCmeHyj
-         46RX6lqhn8zT1PCCqYPbfTjTQNK3UKNGP/7vMtlMkxPSp2hIiuQ6qXq7vC2Aek4I820Q
-         GWQOFy+IoUpsnIoQTmyrw8NvyGJT2ishcR9AZTsYWOKjAJ0+JKdzEtGtUZikNDQtiWov
-         k8aSEZ+YuY7MjRzaCxYTVCvKElzUwi8h5xymi4l0wzNIaeTVRGN87BJr0j2VtoQCjabM
-         wsbQEVL2+kN6+2DHU7bSzb9Li3ZS8qTwWWpCLUfgCLq0kLbLrR+so59IUpPXjTJDDSbv
-         NncQ==
-X-Gm-Message-State: AIkVDXLOGymjKtTHXPsndvWMdFiM4zcbTjnvVU0KFy342gKB3YvqC3pm5wuMM7cdiHRqQkfjLtn5reexsnpusA==
-X-Received: by 10.36.122.131 with SMTP id a125mr2785333itc.3.1484909751949;
- Fri, 20 Jan 2017 02:55:51 -0800 (PST)
+        bh=Zju4B5pmPd/D5Z7DqD2nMyS/MRIuuetfeFUNjO5ZxJs=;
+        b=BIgDYG13wnyAd3DRgLPu0ntX56ZzQ1KmK6FUw4zYs8Z5wuhjoV+Np8ZEqCHo9V9SbS
+         h5w3Ufa6Jo7xn2L5jJkc/FuS89AW5MikK3ywelawhCs+8CVLGrslERBLCXgU+0mC0sT5
+         Z7zK7DbVe/rf+gWZVDTLzF86TAoCt7tKKv6SO1ljYlumwKY7CWyI1FcNpUVckyYsw/Ei
+         XYafxmK1C2nSI9X2EkKfaJwZiwNrf+8xaQKF7q77HXdLjEYhlI0xKcFL0z1trkgePqcI
+         mNQG3ufdL9tU1PeTnQuk1p3lXgLPuk9n9YDeckS9e2HHy84cO62hZYk8LSjuQ/E61nJy
+         Jgnw==
+X-Gm-Message-State: AIkVDXI2ZjOKzmT/VKUWLA3OgS0s/XWlxUecehHw8GBFBIrA3Z4K1XcD4qKQPa6+U94tWfgvAXM6qO3XcuOxgw==
+X-Received: by 10.107.44.83 with SMTP id s80mr12070008ios.212.1484910134475;
+ Fri, 20 Jan 2017 03:02:14 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.64.69.3 with HTTP; Fri, 20 Jan 2017 02:55:21 -0800 (PST)
-In-Reply-To: <20170119172310.6meuj6ksxloeee2t@sigill.intra.peff.net>
-References: <20170119122630.27645-1-pclouds@gmail.com> <20170119172310.6meuj6ksxloeee2t@sigill.intra.peff.net>
+Received: by 10.64.69.3 with HTTP; Fri, 20 Jan 2017 03:01:43 -0800 (PST)
+In-Reply-To: <alpine.DEB.2.20.1701201138520.3469@virtualbox>
+References: <20170120102249.15572-1-pclouds@gmail.com> <alpine.DEB.2.20.1701201138520.3469@virtualbox>
 From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Fri, 20 Jan 2017 17:55:21 +0700
-Message-ID: <CACsJy8A_LkRMZYfoJuYEUok4r7Tw0VuMwVkG_Kr1o1hFcAUWNw@mail.gmail.com>
-Subject: Re: [PATCH] log: new option decorate reflog of remote refs
-To:     Jeff King <peff@peff.net>
+Date:   Fri, 20 Jan 2017 18:01:43 +0700
+Message-ID: <CACsJy8C0SFsTNTB=R8zLLvnqkPofP0VQWPUR9pguT-n2Y+Tp1w@mail.gmail.com>
+Subject: Re: [PATCH/TOY] Shortcuts to quickly refer to a commit name with keyboard
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Cc:     Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
@@ -59,45 +59,36 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jan 20, 2017 at 12:23 AM, Jeff King <peff@peff.net> wrote:
-> I think it's a neat idea, but the actual option:
+On Fri, Jan 20, 2017 at 5:46 PM, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+> Why not introduce a flag to "git log" that shows a keyboard-friendly name
+> similar to what `git name-rev` would have said, except that the name would
+> be generated using the name(s) specified on the command-line?
 >
->> +--decorate-remote-reflog[=<n>]::
->> +     Decorate `<n>` most recent reflog entries on remote refs, up
->> +     to the specified number of entries. By default, only the most
->> +     recent reflog entry is decorated.
+> Example:
 >
-> seems weirdly limited and non-orthogonal. What happens when somebody
-> wants to decorate other reflogs besides refs/remotes?
+>         git log 8923d2d0 upstream/pu
 >
-> We already have very flexible ref-selectors like --remotes, --branches,
-> etc. The generalization of this would perhaps be something like:
+>         commit 8923d2d00192ceb1107078484cccf537cb51c1b5 (8923d2d0)
+>         ...
+>         commit 9f500d6cf5eaa49391d6deca85fc864e5bd23415 (8923d2d0^)
+>         ...
+>         commit f79c24a291a58845b08cfec7573e22cc153693e1 (8923d2d0~2)
+>         ...
+>         commit c921c5bb63baaa16dc760de9549da55c8c89dc9c (upstream/pu)
+>         ...
+>         commit 16793ba6b6333ba0cdee1adb53d979c3fbdb17bc (upstream/pu^)
+>         ...
 >
->   git log --decorate-reflog --remotes --branches
->
-> where "--decorate-reflog" applies to the next ref selector and then is
-> reset, the same way --exclude is. And it includes those refs _only_ for
-> decoration, not for traversal. So you could do:
->
->   git log --decorate-reflog --remotes --remotes
->
-> if you wanted to see use those as traversal roots, too (if this is
-> common, it might even merit another option for "decorate and show").
->
-> That's just off the top of my head, so maybe there are issues. I was
-> just surprised to see the "-remote" part in your option name.
+> Granted, this is still a little more cumbersome to type than @h1, but
+> then, you can skip those round-robin games as well as the possibly
+> backwards-incompatible extension of the rev syntax.
 
-Imposing order between options could cause confusion, I think, if you
-remove --decorate-reflog leaving --remotes on by accident, now you get
---remotes with a new meaning. We could go with something like
---decodate-reflog=remote, but that clashes with the number of reflog
-entries and we may need a separator, like --decorate-reflog=remote,3.
-Or we could add something to --decorate= in addition to
-short|full|auto|no. Something like --decorate=full,reflog or
---decorate=full,reflog=remote,entries=3 if I want 3 reflog entries.
-
-My hesitant to go that far is because I suspect decorating reflog
-won't be helpful for non-remotes. But I'm willing to make more changes
-if it opens door to master.
+I mentioned name-rev a few paragraphs down. No, I want the sweet and
+short @h1 (or something like that). name-rev does not qualify. I don't
+feel comfortable typing 8923d2d0 without looking at the keyboard, and
+that's a lot of movement on the keyboard.  upstream/pu is a bit
+better, but still very long (at least for me). Yes TAB-ing does help,
+but not enough. Then you'll get the dreadful "^2~1^3" dance.
 -- 
 Duy
