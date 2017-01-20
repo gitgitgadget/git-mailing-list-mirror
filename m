@@ -2,113 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.3 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1E8A720A17
-	for <e@80x24.org>; Fri, 20 Jan 2017 00:08:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 984E420A17
+	for <e@80x24.org>; Fri, 20 Jan 2017 00:14:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753576AbdATAH1 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 19 Jan 2017 19:07:27 -0500
-Received: from smtprelay0238.hostedemail.com ([216.40.44.238]:33980 "EHLO
-        smtprelay.hostedemail.com" rhost-flags-OK-OK-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1753522AbdATAHY (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 19 Jan 2017 19:07:24 -0500
-Received: from smtprelay.hostedemail.com (10.5.19.251.rfc1918.com [10.5.19.251])
-        by smtpgrave03.hostedemail.com (Postfix) with ESMTP id 43C4E290075;
-        Fri, 20 Jan 2017 00:07:21 +0000 (UTC)
-Received: from filter.hostedemail.com (clb03-v110.bra.tucows.net [216.40.38.60])
-        by smtprelay03.hostedemail.com (Postfix) with ESMTP id 32C766B36D;
-        Fri, 20 Jan 2017 00:06:20 +0000 (UTC)
-X-Session-Marker: 6A6F6540706572636865732E636F6D
-X-HE-Tag: part65_715a1da5e2b11
-X-Filterd-Recvd-Size: 3868
-Received: from XPS-9350 (unknown [47.151.132.55])
-        (Authenticated sender: joe@perches.com)
-        by omf04.hostedemail.com (Postfix) with ESMTPA;
-        Fri, 20 Jan 2017 00:06:18 +0000 (UTC)
-Message-ID: <1484870777.2707.2.camel@perches.com>
+        id S1753853AbdATAOV (ORCPT <rfc822;e@80x24.org>);
+        Thu, 19 Jan 2017 19:14:21 -0500
+Received: from mail-lf0-f65.google.com ([209.85.215.65]:34486 "EHLO
+        mail-lf0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753542AbdATAOS (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 Jan 2017 19:14:18 -0500
+Received: by mail-lf0-f65.google.com with SMTP id q89so6971286lfi.1;
+        Thu, 19 Jan 2017 16:13:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=nWrugYGIZ3ZoUaESUvwZTxghaCpRToFboljwcsL0Foo=;
+        b=RgsxFclNtY7LQaPnIXui3DMXTgyonyWiSNhp5OYuzWutsEjl+mWFARxCFkMmJEK0p+
+         2FvrYjknHywN/ASDFZsWFO9HPC44G3BpHQ3b+jVFg63BlEXb2RE7NshwC8FGh7GNTtgd
+         YuQifeODM4EjKiBepH4S5HUl6vGZubw3DLWA1Rms8DbTWSmtWwURKZp4adt6W3Zw3nTR
+         DpUr8iLjdrJ9pS4PX1PMERr63k/Y2i0fiTJjswf3UzbQ45WNbWWTOpxP5cARTiI4co7u
+         9dUtAaGnjccIVZa6IWpaAgnurgb72r/br6GBo2XAcqFLMJQ1x1OWY55EJ706oPFnl3yv
+         1sTw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=nWrugYGIZ3ZoUaESUvwZTxghaCpRToFboljwcsL0Foo=;
+        b=O6/cxD7Cu7lvGvtPPQajDpZqgIGeAirKtj4fBZRjFvCbRGLJZ8e6T+7X+7lBC/aS2D
+         6GB7J8m66F/5wNM9pyPIvcG1nv/ib48Cjy8g/ANenqZBY4YbnbZp9vbJ+I/70f/xZ5u6
+         jUfSuGOaTeL6mhe3iFqehoHmqRUmEJdEtUoLjoihQ6MOraAeTvo5m/0Mq83kSbsVsfUw
+         ZwwnT78Rm4SVNmXBm0c8E0UMft4oXoIuRb4CvkP9+hl27TeC8iCxusfygK3KOMaIl8Gp
+         IBQY4MifRkK7O3bpkS0uIAhkP1NmNClFHScoG65+sa9j/cJL0fUlwJOqJS3g7wFf2Ugv
+         VFcw==
+X-Gm-Message-State: AIkVDXIR0jlpd8piQ6okd+8H4Acye1VJSWvWdZSYpFf9ytAt300UyUeAFs6xMxt7fij7SpV8Rno394sGPDxJ7A==
+X-Received: by 10.46.69.215 with SMTP id s206mr5692010lja.26.1484871216331;
+ Thu, 19 Jan 2017 16:13:36 -0800 (PST)
+MIME-Version: 1.0
+Received: by 10.25.145.14 with HTTP; Thu, 19 Jan 2017 16:13:15 -0800 (PST)
+In-Reply-To: <1484870777.2707.2.camel@perches.com>
+References: <20170115183051.3565-1-wsa@the-dreams.de> <xmqqlgubc04z.fsf@gitster.mtv.corp.google.com>
+ <20170119204343.xtotmjddhbum2mvr@ninjato> <20170119212039.3gixsrk7qco45wjo@sigill.intra.peff.net>
+ <CA+P7+xo5N66a8-PeNRLBgwRN3rJZRbQuDnx8wCnW7L-0tz10Fg@mail.gmail.com> <1484870777.2707.2.camel@perches.com>
+From:   Jacob Keller <jacob.keller@gmail.com>
+Date:   Thu, 19 Jan 2017 16:13:15 -0800
+Message-ID: <CA+P7+xo8rZT_C=guKZYg1smRa+poh5v6a91xDjn=BUukgf-bXQ@mail.gmail.com>
 Subject: Re: [RFC for GIT] pull-request: add praise to people doing QA
-From:   Joe Perches <joe@perches.com>
-To:     Jacob Keller <jacob.keller@gmail.com>, Jeff King <peff@peff.net>
-Cc:     Wolfram Sang <wsa@the-dreams.de>,
+To:     Joe Perches <joe@perches.com>
+Cc:     Jeff King <peff@peff.net>, Wolfram Sang <wsa@the-dreams.de>,
         Junio C Hamano <gitster@pobox.com>,
         Git mailing list <git@vger.kernel.org>,
         "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
-Date:   Thu, 19 Jan 2017 16:06:17 -0800
-In-Reply-To: <CA+P7+xo5N66a8-PeNRLBgwRN3rJZRbQuDnx8wCnW7L-0tz10Fg@mail.gmail.com>
-References: <20170115183051.3565-1-wsa@the-dreams.de>
-         <xmqqlgubc04z.fsf@gitster.mtv.corp.google.com>
-         <20170119204343.xtotmjddhbum2mvr@ninjato>
-         <20170119212039.3gixsrk7qco45wjo@sigill.intra.peff.net>
-         <CA+P7+xo5N66a8-PeNRLBgwRN3rJZRbQuDnx8wCnW7L-0tz10Fg@mail.gmail.com>
-Content-Type: text/plain; charset="ISO-8859-1"
-X-Mailer: Evolution 3.22.3-0ubuntu0.1 
-Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, 2017-01-19 at 15:42 -0800, Jacob Keller wrote:
-> On Thu, Jan 19, 2017 at 1:20 PM, Jeff King <peff@peff.net> wrote:
-> > On Thu, Jan 19, 2017 at 09:43:45PM +0100, Wolfram Sang wrote:
-> > 
-> > > > As to the implementation, I am wondering if we can make this somehow
-> > > > work well with the "trailers" code we already have, instead of
-> > > > inventing yet another parser of trailers.
-> > > > 
-> > > > In its current shape, "interpret-trailers" focuses on "editing" an
-> > > > existing commit log message to tweak the trailer lines.  That mode
-> > > > of operation would help amending and rebasing, and to do that it
-> > > > needs to parse the commit log message, identify trailer blocks,
-> > > > parse out each trailer lines, etc.
-> > > > 
-> > > > There is no fundamental reason why its output must be an edited
-> > > > original commit log message---it should be usable as a filter that
-> > > > picks trailer lines of the selected trailer type, like "Tested-By",
-> > > > etc.
-> > > 
-> > > I didn't know about trailers before. As I undestand it, I could use
-> > > "Tested-by" as the key, and the commit subject as the value. This list
-> > > then could be parsed and brought into proper output shape. It would
-> > > simplify the subject parsing, but most things my AWK script currently
-> > > does would still need to stay or to be reimplemented (extracting names
-> > > from tags, creating arrays of tags given by $name). Am I correct?
-> > > 
-> > > All under the assumption that trailers work on a range of commits. I
-> > > have to admit that adding this to git is beyond my scope.
-> > 
-> > This sounds a lot like the shortlog-trailers work I did about a year
-> > ago:
-> > 
-> >   http://public-inbox.org/git/20151229073832.GN8842@sigill.intra.peff.net/
-> > 
-> >   http://public-inbox.org/git/20151229075013.GA9191@sigill.intra.peff.net/
-> > 
-> > Nobody seemed to really find it useful, so I didn't pursue it.
-> > 
-> > Some of the preparatory patches in that series bit-rotted in the
-> > meantime, but you can play with a version based on v2.7.0 by fetching
-> > the "shortlog-trailers-historical" branch from
-> > https://github.com/peff/git.git.
-> > 
-> > And then things like:
-> > 
-> >   git shortlog --ident=tested-by --format='...tested a patch by %an'
-> > 
-> > work (and you can put whatever commit items you want into the --format,
-> > including just dumping the hash if you want to do more analysis).
-> > 
-> > -Peff
-> 
-> This sounds interesting to me! When I have some more time to take a
-> look at this i might see if I can revive it.
+On Thu, Jan 19, 2017 at 4:06 PM, Joe Perches <joe@perches.com>
+wrote:>> This sounds interesting to me! When I have some more time to
+take a
+>> look at this i might see if I can revive it.
+>
+> Can the terminology please be standardized to what
+> was once called bylines?
+>
+> https://patchwork.kernel.org/patch/9307703/
+>
 
-Can the terminology please be standardized to what
-was once called bylines?
+I am fairly certain we've settled on "trailers" at this point. I don't
+have an objection to either name, but most of the code today uses
+trailers.
 
-https://patchwork.kernel.org/patch/9307703/
-
+Thanks,
+Jake
