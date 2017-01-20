@@ -2,80 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.4 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-6.4 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1A54D20756
-	for <e@80x24.org>; Fri, 20 Jan 2017 16:12:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 56FA920756
+	for <e@80x24.org>; Fri, 20 Jan 2017 17:11:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752384AbdATQMt (ORCPT <rfc822;e@80x24.org>);
-        Fri, 20 Jan 2017 11:12:49 -0500
-Received: from 89-28-117-31.starnet.md ([89.28.117.31]:37516 "EHLO
-        home.thecybershadow.net" rhost-flags-OK-FAIL-OK-OK) by vger.kernel.org
-        with ESMTP id S1752193AbdATQMs (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 Jan 2017 11:12:48 -0500
-X-Greylist: delayed 523 seconds by postgrey-1.27 at vger.kernel.org; Fri, 20 Jan 2017 11:12:48 EST
-Received: by home.thecybershadow.net (Postfix, from userid 1000)
-        id B96C655B51A; Fri, 20 Jan 2017 16:04:04 +0000 (UTC)
-From:   Vladimir Panteleev <git@thecybershadow.net>
+        id S1751838AbdATRLn (ORCPT <rfc822;e@80x24.org>);
+        Fri, 20 Jan 2017 12:11:43 -0500
+Received: from mx1.redhat.com ([209.132.183.28]:56974 "EHLO mx1.redhat.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751436AbdATRLl (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Jan 2017 12:11:41 -0500
+Received: from int-mx13.intmail.prod.int.phx2.redhat.com (int-mx13.intmail.prod.int.phx2.redhat.com [10.5.11.26])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mx1.redhat.com (Postfix) with ESMTPS id DE74C7FE84;
+        Fri, 20 Jan 2017 17:11:31 +0000 (UTC)
+Received: from localhost (ovpn-117-185.ams2.redhat.com [10.36.117.185])
+        by int-mx13.intmail.prod.int.phx2.redhat.com (8.14.4/8.14.4) with ESMTP id v0KHBUO8009178;
+        Fri, 20 Jan 2017 12:11:31 -0500
+From:   Stefan Hajnoczi <stefanha@redhat.com>
 To:     git@vger.kernel.org
-Cc:     Vladimir Panteleev <git@thecybershadow.net>
-Subject: [PATCH] show-ref: Allow --head to work with --verify
-Date:   Fri, 20 Jan 2017 15:50:15 +0000
-Message-Id: <20170120155015.4360-1-git@thecybershadow.net>
-X-Mailer: git-send-email 2.11.0
+Cc:     Jeff King <peff@peff.net>, gitster@pobox.com,
+        Brandon Williams <bmwill@google.com>,
+        Stefan Hajnoczi <stefanha@redhat.com>
+Subject: [PATCH v2 1/2] grep: only add delimiter if there isn't one already
+Date:   Fri, 20 Jan 2017 17:11:25 +0000
+Message-Id: <20170120171126.16269-2-stefanha@redhat.com>
+In-Reply-To: <20170120171126.16269-1-stefanha@redhat.com>
+References: <20170120171126.16269-1-stefanha@redhat.com>
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.26
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.27]); Fri, 20 Jan 2017 17:11:31 +0000 (UTC)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Previously, when --verify was specified, --head was being ignored, and
-"show-ref --verify --head HEAD" would always print "fatal: 'HEAD' -
-not a valid ref". As such, when using show-ref to look up any
-ref (including HEAD) precisely by name, one would have to special-case
-looking up the HEAD ref.
+git-grep(1) output does not follow git's own syntax:
 
-This patch adds --head support to show-ref's --verify logic, by
-explicitly checking if the "HEAD" ref is specified when --head is
-present.
+  $ git grep malloc v2.9.3:t/
+  v2.9.3:t/:test-lib.sh:  setup_malloc_check () {
+  $ git show v2.9.3:t/:test-lib.sh
+  fatal: Path 't/:test-lib.sh' does not exist in 'v2.9.3'
 
-Signed-off-by: Vladimir Panteleev <git@thecybershadow.net>
+This patch avoids emitting the unnecessary ':' delimiter if the name
+already ends with ':' or '/':
+
+  $ git grep malloc v2.9.3:
+  v2.9.3:t/test-lib.sh:   setup_malloc_check () {
+  $ git show v2.9.3:t/test-lib.sh
+  (succeeds)
+
+Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
 ---
- builtin/show-ref.c  | 2 ++
- t/t1403-show-ref.sh | 8 ++++++++
- 2 files changed, 10 insertions(+)
+ builtin/grep.c  |  6 +++++-
+ t/t7810-grep.sh | 21 +++++++++++++++++++++
+ 2 files changed, 26 insertions(+), 1 deletion(-)
 
-diff --git a/builtin/show-ref.c b/builtin/show-ref.c
-index 6d4e66900..ee5078604 100644
---- a/builtin/show-ref.c
-+++ b/builtin/show-ref.c
-@@ -207,6 +207,8 @@ int cmd_show_ref(int argc, const char **argv, const char *prefix)
- 				if (!quiet)
- 					show_one(*pattern, &oid);
- 			}
-+			else if (show_head && !strcmp(*pattern, "HEAD"))
-+				head_ref(show_ref, NULL);
- 			else if (!quiet)
- 				die("'%s' - not a valid ref", *pattern);
- 			else
-diff --git a/t/t1403-show-ref.sh b/t/t1403-show-ref.sh
-index 7e10bcfe3..de64ebfb7 100755
---- a/t/t1403-show-ref.sh
-+++ b/t/t1403-show-ref.sh
-@@ -164,4 +164,12 @@ test_expect_success 'show-ref --heads, --tags, --head, pattern' '
- 	test_cmp expect actual
+diff --git a/builtin/grep.c b/builtin/grep.c
+index 8887b6a..90a4f3d 100644
+--- a/builtin/grep.c
++++ b/builtin/grep.c
+@@ -491,7 +491,11 @@ static int grep_object(struct grep_opt *opt, const struct pathspec *pathspec,
+ 		strbuf_init(&base, PATH_MAX + len + 1);
+ 		if (len) {
+ 			strbuf_add(&base, name, len);
+-			strbuf_addch(&base, ':');
++
++			/* Add a delimiter if there isn't one already */
++			if (name[len - 1] != '/' && name[len - 1] != ':') {
++				strbuf_addch(&base, ':');
++			}
+ 		}
+ 		init_tree_desc(&tree, data, size);
+ 		hit = grep_tree(opt, pathspec, &tree, &base, base.len,
+diff --git a/t/t7810-grep.sh b/t/t7810-grep.sh
+index de2405c..e804a3f 100755
+--- a/t/t7810-grep.sh
++++ b/t/t7810-grep.sh
+@@ -1435,4 +1435,25 @@ test_expect_success 'grep does not report i-t-a and assume unchanged with -L' '
+ 	test_cmp expected actual
  '
  
-+test_expect_success 'show-ref --verify --head' '
-+	{
-+		echo $(git rev-parse HEAD) HEAD
-+	} >expect &&
-+	git show-ref --verify --head HEAD >actual &&
-+	test_cmp expect actual
++cat >expected <<EOF
++HEAD:t/a/v:vvv
++HEAD:t/v:vvv
++EOF
++
++test_expect_success 'grep outputs valid <rev>:<path> for HEAD:t/' '
++	git grep vvv HEAD:t/ >actual &&
++	test_cmp expected actual
++'
++
++cat >expected <<EOF
++HEAD:t/a/v:vvv
++HEAD:t/v:vvv
++HEAD:v:vvv
++EOF
++
++test_expect_success 'grep outputs valid <rev>:<path> for HEAD:' '
++	git grep vvv HEAD: >actual &&
++	test_cmp expected actual
 +'
 +
  test_done
 -- 
-2.11.0
+2.9.3
 
