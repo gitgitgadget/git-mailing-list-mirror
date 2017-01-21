@@ -6,39 +6,39 @@ X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F101B1F89C
-	for <e@80x24.org>; Sat, 21 Jan 2017 21:59:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D8A2A1F89C
+	for <e@80x24.org>; Sat, 21 Jan 2017 21:59:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751484AbdAUV7x (ORCPT <rfc822;e@80x24.org>);
-        Sat, 21 Jan 2017 16:59:53 -0500
-Received: from castro.crustytoothpaste.net ([75.10.60.170]:38742 "EHLO
+        id S1751483AbdAUV7w (ORCPT <rfc822;e@80x24.org>);
+        Sat, 21 Jan 2017 16:59:52 -0500
+Received: from castro.crustytoothpaste.net ([75.10.60.170]:38738 "EHLO
         castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751439AbdAUV7k (ORCPT
+        by vger.kernel.org with ESMTP id S1751404AbdAUV7k (ORCPT
         <rfc822;git@vger.kernel.org>); Sat, 21 Jan 2017 16:59:40 -0500
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 9C4EF280B3;
+        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 5F1A9280B1;
         Sat, 21 Jan 2017 21:59:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
         s=default; t=1485035966;
-        bh=0ZXhm7nqKerUqQ3iTVJrFJj6yrleViSo9ljxdQuX1Zg=;
+        bh=EsrSQmtbPhyio8QoF5MFlxL7MU/lcw4OpIoak/9VpQM=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=agOpbu1RlievhmebosHOZaTmGxu0i6WRSBdxHiWUP/Ytt9E4sn1PPo5RoSjfh9QZt
-         4miby8l0DfRZCkmJpgVGuhskWeKTTsc2cUZz21vO0pgF83gd/2xuMvSzzKHHMyWLAg
-         xFGocxYiCmD2fvzDQhdm7z/QLrZfQ8IBUJnvo+xhRBv3FeSVyCgPqEH3V+fbZR7ViE
-         Qhu/cs9GxdoXXrWsJPBVWij48fODqs2OcK5OFXAk95QpbAzwscHr6ENRIy4mr6yOa4
-         pvq5Ym5Wx7PCSMNjwg8WNTxYEBzIkdNrTD4IBmHGGDxRZhYJTS2/XJpO9ymE5u0U7S
-         cPyUJ+4jRnQ2nu2irda12IAm7emFVu+f9eoV2tBrvNRCf0J4wpeH+dcEwKVsNB9fCB
-         k9CxgfyUCvUN0QOxC0s0iVF8BIr5CcFHYY+2A+779umwyk5CiAd0eT87QBoeBvwcvH
-         w9FetbpkKcI8iDgtOTSFZYRqulTm9yBBCoDkDxODZI5RT/nboUo
+        b=KvSrW+LnXJ8hOeryVYhbNjmJoM4cC6i+39A5zywC6zdAF999kdWrWqE76ZVqS96Mu
+         xRTJU+zWt1og5YzS56d5cBLgcAXkLqid5zjicOqyiwK8J7jKofurbRvSEue1i+WoO9
+         wS/clt8DwWFWQAesWJ19o7YKXXjc1X1AVh+fOx/c1sedcyruuqpH3Q5VMwT1tqOJ9V
+         StHqXb3worhbHbsEWkKNb26kklc9iJ992oOnL7veNhdZ8Hxkc6qbkW+4/7rUJ927gh
+         u3x21bFIZjoNKgKfrzf3kw9QdrwaXk1/E1kO80I715rAN4CidMRZlDjOrJ+EzsVDIj
+         YiwilNnnNUMGNb2LqSKb0FpO/Mkz5UErM6+NsR1B0PZI8RmS5HcLpEiB9LEZcWbbK1
+         BoUcdMoRVjeL/pUnmqfrwobeLKhu0hDqJ8byGyFzWvhF+JzTBoq5cL4ppyGFcgQ4Yc
+         DuVp9w5akAYQkp1m+4s58Ov6G+qtgTpSF6Py1zN1HBqOxnEZ8nv
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Jeff King <peff@peff.net>
-Subject: [PATCH 7/7] Makefile: add a knob to enable the use of Asciidoctor
-Date:   Sat, 21 Jan 2017 21:59:12 +0000
-Message-Id: <20170121215912.246691-8-sandals@crustytoothpaste.net>
+Subject: [PATCH 5/7] Documentation: add XSLT to fix DocBook for Texinfo
+Date:   Sat, 21 Jan 2017 21:59:10 +0000
+Message-Id: <20170121215912.246691-6-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.11.0
 In-Reply-To: <20170121215912.246691-1-sandals@crustytoothpaste.net>
 References: <20170121215912.246691-1-sandals@crustytoothpaste.net>
@@ -47,60 +47,83 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-While Git has traditionally built its documentation using AsciiDoc, some
-people wish to use Asciidoctor for speed or other reasons.  Add a
-Makefile knob, USE_ASCIIDOCTOR, that sets various options in order to
-produce acceptable output.  For HTML output, XHTML5 was chosen, since
-the AsciiDoc options also produce XHTML, albeit XHTML 1.1.
+There are two ways to create a section in a reference document (i.e.,
+manpage) in DocBook 4: refsection elements and refsect, refsect2, and
+refsect3 elements.  Either form is acceptable as of DocBook 4.2, but
+they cannot be mixed.  Prior to DocBook 4.2, only the numbered forms
+were acceptable.
 
-Asciidoctor does not have built-in support for the linkgit macro, but it
-is available using the Asciidoctor Extensions Lab.  Add a macro to
-enable the use of this extension if it is available.  Without it, the
-linkgit macros are emitted into the output.
+docbook2texi only accepts the numbered forms, and this has not generally
+been a problem, since AsciiDoc produces the numbered forms.
+Asciidoctor, on the other hand, uses a shared backend for DocBook 4 and
+5, and uses the unnumbered refsection elements instead.
+
+If we don't convert the unnumbered form to the numbered form,
+docbook2texi omits section headings, which is undesirable.  Add an XSLT
+stylesheet to transform the unnumbered forms to the numbered forms
+automatically, and preprocess the DocBook XML as part of the
+transformation to Texinfo format.
+
+Note that this transformation is only necessary for Texinfo, since
+docbook2texi provides its own stylesheets.  The DocBook stylesheets,
+which we use for other formats, provide the full range of DocBook 4 and
+5 compatibility, and don't have this issue.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- Documentation/Makefile | 12 ++++++++++++
- Makefile               |  6 ++++++
- 2 files changed, 18 insertions(+)
+ Documentation/Makefile |  7 ++++---
+ Documentation/texi.xsl | 26 ++++++++++++++++++++++++++
+ 2 files changed, 30 insertions(+), 3 deletions(-)
+ create mode 100644 Documentation/texi.xsl
 
 diff --git a/Documentation/Makefile b/Documentation/Makefile
-index 0f4db48eb..5cbecfa99 100644
+index 6e6c82409..76be7017c 100644
 --- a/Documentation/Makefile
 +++ b/Documentation/Makefile
-@@ -174,6 +174,18 @@ ifdef GNU_ROFF
- XMLTO_EXTRA += -m manpage-quote-apos.xsl
- endif
+@@ -371,10 +371,11 @@ user-manual.pdf: user-manual.xml
+ 	$(DBLATEX) -o $@+ -p $(ASCIIDOC_DBLATEX_DIR)/asciidoc-dblatex.xsl -s $(ASCIIDOC_DBLATEX_DIR)/asciidoc-dblatex.sty $< && \
+ 	mv $@+ $@
  
-+ifdef USE_ASCIIDOCTOR
-+ASCIIDOC = asciidoctor
-+ASCIIDOC_CONF =
-+ASCIIDOC_HTML = xhtml5
-+ASCIIDOC_DOCBOOK = docbook45
-+ifdef ASCIIDOCTOR_EXTENSIONS_LAB
-+ASCIIDOC_EXTRA = -I$(ASCIIDOCTOR_EXTENSIONS_LAB) -rasciidoctor/extensions -rman-inline-macro
-+endif
-+ASCIIDOC_EXTRA += -alitdd='&\#x2d;&\#x2d;'
-+DBLATEX_COMMON =
-+endif
+-gitman.texi: $(MAN_XML) cat-texi.perl
++gitman.texi: $(MAN_XML) cat-texi.perl texi.xsl
+ 	$(QUIET_DB2TEXI)$(RM) $@+ $@ && \
+-	($(foreach xml,$(sort $(MAN_XML)),$(DOCBOOK2X_TEXI) --encoding=UTF-8 \
+-		--to-stdout $(xml) &&) true) > $@++ && \
++	($(foreach xml,$(sort $(MAN_XML)),xsltproc -o $(xml)+ texi.xsl $(xml) && \
++		$(DOCBOOK2X_TEXI) --encoding=UTF-8 --to-stdout $(xml)+ && \
++		rm $(xml)+ &&) true) > $@++ && \
+ 	$(PERL_PATH) cat-texi.perl $@ <$@++ >$@+ && \
+ 	rm $@++ && \
+ 	mv $@+ $@
+diff --git a/Documentation/texi.xsl b/Documentation/texi.xsl
+new file mode 100644
+index 000000000..0f8ff07ec
+--- /dev/null
++++ b/Documentation/texi.xsl
+@@ -0,0 +1,26 @@
++<!-- texi.xsl:
++     convert refsection elements into refsect elements that docbook2texi can
++     understand -->
++<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
++		version="1.0">
 +
- SHELL_PATH ?= $(SHELL)
- # Shell quote;
- SHELL_PATH_SQ = $(subst ','\'',$(SHELL_PATH))
-diff --git a/Makefile b/Makefile
-index 27afd0f37..7ed9d4d4b 100644
---- a/Makefile
-+++ b/Makefile
-@@ -250,6 +250,12 @@ all::
- # apostrophes to be ASCII so that cut&pasting examples to the shell
- # will work.
- #
-+# Define USE_ASCIIDOCTOR to use Asciidoctor instead of AsciiDoc to build the
-+# documentation.
-+#
-+# Define ASCIIDOCTOR_EXTENSIONS_LAB to point to the location of the Asciidoctor
-+# Extensions Lab if you have it available.
-+#
- # Define PERL_PATH to the path of your Perl binary (usually /usr/bin/perl).
- #
- # Define NO_PERL_MAKEMAKER if you cannot use Makefiles generated by perl's
++<xsl:output method="xml"
++	    encoding="UTF-8"
++	    doctype-public="-//OASIS//DTD DocBook XML V4.5//EN"
++	    doctype-system="http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" />
++
++<xsl:template match="//refsection">
++	<xsl:variable name="element">refsect<xsl:value-of select="count(ancestor-or-self::refsection)" /></xsl:variable>
++	<xsl:element name="{$element}">
++		<xsl:apply-templates select="@*|node()" />
++	</xsl:element>
++</xsl:template>
++
++<!-- Copy all other nodes through. -->
++<xsl:template match="node()|@*">
++	<xsl:copy>
++		<xsl:apply-templates select="@*|node()" />
++	</xsl:copy>
++</xsl:template>
++
++</xsl:stylesheet>
