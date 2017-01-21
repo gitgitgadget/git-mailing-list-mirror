@@ -2,50 +2,50 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7900D1F89C
-	for <e@80x24.org>; Sat, 21 Jan 2017 20:08:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 76DD21F89C
+	for <e@80x24.org>; Sat, 21 Jan 2017 20:08:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751030AbdAUUIA (ORCPT <rfc822;e@80x24.org>);
-        Sat, 21 Jan 2017 15:08:00 -0500
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:34176 "EHLO
-        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750889AbdAUUH5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 21 Jan 2017 15:07:57 -0500
-Received: by mail-wm0-f67.google.com with SMTP id c85so15525843wmi.1
-        for <git@vger.kernel.org>; Sat, 21 Jan 2017 12:07:57 -0800 (PST)
+        id S1750894AbdAUUIE (ORCPT <rfc822;e@80x24.org>);
+        Sat, 21 Jan 2017 15:08:04 -0500
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:35081 "EHLO
+        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750917AbdAUUH7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 21 Jan 2017 15:07:59 -0500
+Received: by mail-wm0-f68.google.com with SMTP id d140so15602420wmd.2
+        for <git@vger.kernel.org>; Sat, 21 Jan 2017 12:07:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=xKE7DyvXbMrtxgVV2kcj3HVgNnH5BjpJ+DZNrXkS+ig=;
-        b=LnTSmKhTSMDotcrr6s6gAx0Eq5QzDXVxBeE8Y0BgoEe+s9iGDDWP+kaSL5V4ssE8U6
-         dYGKto6jRCUvxQGs3dcSmgWzV3o+ZNpyhDGZlA77486KMMJDN83lddEQ82H+KUnJu+Qi
-         VfGchK1oZ8JFCRrjwLeuhmgCjRdLjsFek1CtIkQIWmEECM6jXed0JqtWuuIQhP4kCA1B
-         +fqRo+TYg1d+SVd/JZXk1P2aZC0Ui9+8vaEkVbmAafdeO0hEohjihwmB1tx7CrzjzXyb
-         itNHG5JM82PtFcwFLi0OSgEGkjw9pQp4Jv7HBGEhsEogw3q89hdt6Ed2szcBTs07c0w2
-         crTQ==
+        bh=uCDotQ/VrpkABgKgCAP4nlU5U56WuMp9aJKCIIk3vbY=;
+        b=kNT8xU4aQt8/DSpYY1VWtS5fGWmONLSurZSbvu9NLRtwDCk+ed9631f0plkOWa1GWz
+         wW8uW3ox62uTRzllKpB5tGr4cOU0M9bX9zzuKZ7+3l3mgT61VPS6wqrZt2keobLE+nmC
+         fAmgiTghbLy6jaM6XXjFNr5iSoyoJ/WxFMMcA0pQ05csKbD2s90Ce6lJEokgCnUWgGzD
+         lHJb2PCRyhvWbsSLTVg1eT4mI8tynK5b+l5g1teutiotbJQ3+ZoqbsjTlgPA20VwPORh
+         gnAqrPMhNgodo8mGEyYpeFC9iUbgZIISkMx53d1dEbZYjrBhHcunCCTGN8Yy/Fgotl7o
+         fA+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=xKE7DyvXbMrtxgVV2kcj3HVgNnH5BjpJ+DZNrXkS+ig=;
-        b=Qtin9RVcuG4dL5lV7lINkHiSOe3uv7DkqbsBcUVSWIB3Kx6ecXzSLvBbDAHNym6LjK
-         cE7SFnRr2tXbS5MVBgyhS4p2L9UtL4Lelilnk6/CXIqz8Nk5uj2p3ruB5Ic9v4PLGypY
-         +mcCIVj7tv7ORhVv2itJd7LwOdqy/NmwDKNO9jXnXwVSnCLLIjBmYpubMiVIRqz7ZRDe
-         hJBZ39amzdQ2fYUoK2XwD5pH7wVaJUQkeDwRVz/Iewvjv7TVybgZNupksoOPenqtPZnz
-         8m5IzJSMfuPo40zd3eVEHbaxq6w/vwS5AcMS3z6hTAqg6BgnyMIFtCQ3V6sM8UW5Sh+S
-         KOJw==
-X-Gm-Message-State: AIkVDXJk3jGMg34UkJlxPYWgx9YinVfLb+ymUE7T1bRo53WqPTBlxGlTeSxB28eE6KB8cQ==
-X-Received: by 10.223.151.205 with SMTP id t13mr17028790wrb.9.1485029276470;
-        Sat, 21 Jan 2017 12:07:56 -0800 (PST)
+        bh=uCDotQ/VrpkABgKgCAP4nlU5U56WuMp9aJKCIIk3vbY=;
+        b=ag5BzP0rnYtlz1Jaf040+Kp8XQbcuQlDXTt/whWTFNRmury3ub4FRf/z5LPYp9jbM7
+         9EvZQYM2Y5tE+p4PpuI5tbY7uGKIZFuXcoBH7+emI/zmdziBQt+no0m4OyJkqPUKOrak
+         IzPtqdVta9W5R5IB4w5vHppWU/Gfjhw7ntg/ArB0DY+X6L0UA/PILHLjULLGh25iY/Ss
+         oTVGTDMbVnXnwrtG4ifugkFE9NEzrYUiLzGcyejmmhKi6ToKMeRuHklfNr1s9i0ux6dw
+         OuN6RSlLemhKxNUfYX6kzuQX7Dv7Vf5HQ92q/phnbinHJblwP9UXDeILGpl4ejORK/tv
+         92FQ==
+X-Gm-Message-State: AIkVDXI82rVGF3lXygASjyiBJI6542kF6GaUiG3wXjkrRhNYrFEzSWlfvRjSV3MWFI4Dng==
+X-Received: by 10.223.139.152 with SMTP id o24mr16892256wra.122.1485029277807;
+        Sat, 21 Jan 2017 12:07:57 -0800 (PST)
 Received: from localhost ([2a02:c7f:c42b:f900:5e51:4fff:fee9:57af])
-        by smtp.gmail.com with ESMTPSA id e14sm12412975wmd.14.2017.01.21.12.07.55
+        by smtp.gmail.com with ESMTPSA id y65sm12405003wmb.5.2017.01.21.12.07.57
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sat, 21 Jan 2017 12:07:55 -0800 (PST)
+        Sat, 21 Jan 2017 12:07:57 -0800 (PST)
 From:   Thomas Gummerer <t.gummerer@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Stephan Beyer <s-beyer@gmx.net>,
@@ -54,9 +54,9 @@ Cc:     Stephan Beyer <s-beyer@gmx.net>,
         Jeff King <peff@peff.net>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Thomas Gummerer <t.gummerer@gmail.com>
-Subject: [PATCH 1/3] Documentation/stash: remove mention of git reset --hard
-Date:   Sat, 21 Jan 2017 20:08:02 +0000
-Message-Id: <20170121200804.19009-2-t.gummerer@gmail.com>
+Subject: [PATCH 2/3] stash: introduce push verb
+Date:   Sat, 21 Jan 2017 20:08:03 +0000
+Message-Id: <20170121200804.19009-3-t.gummerer@gmail.com>
 X-Mailer: git-send-email 2.11.0.483.g087da7b7c
 In-Reply-To: <20170121200804.19009-1-t.gummerer@gmail.com>
 References: <20170121200804.19009-1-t.gummerer@gmail.com>
@@ -65,31 +65,162 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Don't mention git reset --hard in the documentation for git stash save.
-It's an implementation detail that doesn't matter to the end user and
-thus shouldn't be exposed to them.
+Introduce a new git stash push verb in addition to git stash save.  The
+push verb is used to transition from the current command line arguments
+to a more conventional way, in which the message is specified after a -m
+parameter instead of being a positional argument.
+
+This allows introducing a new filename argument to stash single files.
+Using that as a positional argument is much more consistent with the
+rest of git, than using the positional argument for the message.
 
 Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
 ---
- Documentation/git-stash.txt | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ git-stash.sh     | 81 +++++++++++++++++++++++++++++++++++++++++++++++++++++---
+ t/t3903-stash.sh |  9 +++++++
+ 2 files changed, 87 insertions(+), 3 deletions(-)
 
-diff --git a/Documentation/git-stash.txt b/Documentation/git-stash.txt
-index 2e9cef06e6..0ad5335a3e 100644
---- a/Documentation/git-stash.txt
-+++ b/Documentation/git-stash.txt
-@@ -47,8 +47,9 @@ OPTIONS
+diff --git a/git-stash.sh b/git-stash.sh
+index 10c284d1aa..d6b4ae3290 100755
+--- a/git-stash.sh
++++ b/git-stash.sh
+@@ -189,10 +189,11 @@ store_stash () {
+ 	return $ret
+ }
  
- save [-p|--patch] [-k|--[no-]keep-index] [-u|--include-untracked] [-a|--all] [-q|--quiet] [<message>]::
+-save_stash () {
++push_stash () {
+ 	keep_index=
+ 	patch_mode=
+ 	untracked=
++	stash_msg=
+ 	while test $# != 0
+ 	do
+ 		case "$1" in
+@@ -216,6 +217,10 @@ save_stash () {
+ 		-a|--all)
+ 			untracked=all
+ 			;;
++		-m|--message)
++			shift
++			stash_msg=$1
++			;;
+ 		--help)
+ 			show_help
+ 			;;
+@@ -251,8 +256,6 @@ save_stash () {
+ 		die "$(gettext "Can't use --patch and --include-untracked or --all at the same time")"
+ 	fi
  
--	Save your local modifications to a new 'stash', and run `git reset
--	--hard` to revert them.  The <message> part is optional and gives
-+	Save your local modifications to a new 'stash', and revert the
-+	the changes in the working tree to match the index.
-+	The <message> part is optional and gives
- 	the description along with the stashed state.  For quickly making
- 	a snapshot, you can omit _both_ "save" and <message>, but giving
- 	only <message> does not trigger this action to prevent a misspelled
+-	stash_msg="$*"
+-
+ 	git update-index -q --refresh
+ 	if no_changes
+ 	then
+@@ -291,6 +294,74 @@ save_stash () {
+ 	fi
+ }
+ 
++save_stash () {
++	push_options=
++	while test $# != 0
++	do
++		case "$1" in
++		-k|--keep-index)
++			push_options="-k $push_options"
++			;;
++		--no-keep-index)
++			push_options="--no-keep-index $push_options"
++			;;
++		-p|--patch)
++			push_options="-p $push_options"
++			;;
++		-q|--quiet)
++			push_options="-q $push_options"
++			;;
++		-u|--include-untracked)
++			push_options="-u $push_options"
++			;;
++		-a|--all)
++			push_options="-a $push_options"
++			;;
++		--help)
++			show_help
++			;;
++		--)
++			shift
++			break
++			;;
++		-*)
++			option="$1"
++			# TRANSLATORS: $option is an invalid option, like
++			# `--blah-blah'. The 7 spaces at the beginning of the
++			# second line correspond to "error: ". So you should line
++			# up the second line with however many characters the
++			# translation of "error: " takes in your language. E.g. in
++			# English this is:
++			#
++			#    $ git stash save --blah-blah 2>&1 | head -n 2
++			#    error: unknown option for 'stash save': --blah-blah
++			#           To provide a message, use git stash save -- '--blah-blah'
++			eval_gettextln "error: unknown option for 'stash save': \$option
++       To provide a message, use git stash save -- '\$option'"
++			usage
++			;;
++		*)
++			break
++			;;
++		esac
++		shift
++	done
++
++	# if test -n "$patch_mode" && test -n "$untracked"
++	# then
++	# 	die "$(gettext "Can't use --patch and --include-untracked or --all at the same time")"
++	# fi
++
++	stash_msg="$*"
++
++	if test -z stash_msg
++	then
++		push_stash $push_options
++	else
++		push_stash $push_options -m "$stash_msg"
++	fi
++}
++
+ have_stash () {
+ 	git rev-parse --verify --quiet $ref_stash >/dev/null
+ }
+@@ -617,6 +688,10 @@ save)
+ 	shift
+ 	save_stash "$@"
+ 	;;
++push)
++	shift
++	push_stash "$@"
++	;;
+ apply)
+ 	shift
+ 	apply_stash "$@"
+diff --git a/t/t3903-stash.sh b/t/t3903-stash.sh
+index 2de3e18ce6..0171b824c9 100755
+--- a/t/t3903-stash.sh
++++ b/t/t3903-stash.sh
+@@ -775,4 +775,13 @@ test_expect_success 'stash is not confused by partial renames' '
+ 	test_path_is_missing file
+ '
+ 
++test_expect_success 'push -m shows right message' '
++	>foo &&
++	git add foo &&
++	git stash push -m "test message" &&
++	echo "stash@{0}: On master: test message" >expect &&
++	git stash list | head -n 1 >actual &&
++	test_cmp expect actual
++'
++
+ test_done
 -- 
 2.11.0.483.g087da7b7c
 
