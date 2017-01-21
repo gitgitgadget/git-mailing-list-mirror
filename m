@@ -2,75 +2,125 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 563FB1F89C
-	for <e@80x24.org>; Sat, 21 Jan 2017 14:25:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 78ECA1F89C
+	for <e@80x24.org>; Sat, 21 Jan 2017 14:44:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750943AbdAUOZA (ORCPT <rfc822;e@80x24.org>);
-        Sat, 21 Jan 2017 09:25:00 -0500
-Received: from cloud.peff.net ([104.130.231.41]:42613 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750886AbdAUOY6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 21 Jan 2017 09:24:58 -0500
-Received: (qmail 2746 invoked by uid 109); 21 Jan 2017 14:24:58 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sat, 21 Jan 2017 14:24:58 +0000
-Received: (qmail 11159 invoked by uid 111); 21 Jan 2017 14:25:53 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Sat, 21 Jan 2017 09:25:53 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 21 Jan 2017 09:24:56 -0500
-Date:   Sat, 21 Jan 2017 09:24:56 -0500
-From:   Jeff King <peff@peff.net>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Michael J Gruber <git@drmicha.warpmail.net>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: [RFC PATCH 0/5] Localise error headers
-Message-ID: <20170121142455.qoyqagaw4atic5n6@sigill.intra.peff.net>
-References: <cover.1483354746.git.git@drmicha.warpmail.net>
- <20170104070514.pxdthvilw66ierfz@sigill.intra.peff.net>
- <8d0966d0-1ef1-3d1e-95f5-6e6c1ad50536@drmicha.warpmail.net>
- <20170110090418.4egk4oflblshmjon@sigill.intra.peff.net>
- <CAGZ79kYVc0YQ4okrTHGiYQzPqfiVAm_f7orXdkhwgf5kMPXj-w@mail.gmail.com>
- <20170111113725.avl3wetwrfezdni2@sigill.intra.peff.net>
- <CAGZ79kYVFbaMy1_-6qqe9zYQyktE2-7xu1Zz_qyeLWK=scgFKQ@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAGZ79kYVFbaMy1_-6qqe9zYQyktE2-7xu1Zz_qyeLWK=scgFKQ@mail.gmail.com>
+        id S1751030AbdAUOnj (ORCPT <rfc822;e@80x24.org>);
+        Sat, 21 Jan 2017 09:43:39 -0500
+Received: from mail-wm0-f48.google.com ([74.125.82.48]:35218 "EHLO
+        mail-wm0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751025AbdAUOni (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 21 Jan 2017 09:43:38 -0500
+Received: by mail-wm0-f48.google.com with SMTP id r126so74717631wmr.0
+        for <git@vger.kernel.org>; Sat, 21 Jan 2017 06:42:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id;
+        bh=76+sYfjn9PmEkLYKrgFKVdbh7GvmgGi8OoAXXkqhDvo=;
+        b=UAxBGK3WU0ewvHGLZAxtmC0d/il6IPq0bsvey891G2tNk2o2oHx7WcGW3jk96cC1Rb
+         +05FPBrw6ZxPW2kt+mmuuZgxGOZJoM34mD9a0PXtiS6rOZViSJ5IQtbLRXeFAXjKZSOU
+         pUKY4r1ELAW09Vi1RNBdNBUkH/NJe6Jy2k2vlWWxsqL52ybawSphmqDi4pEPa5ZW0++1
+         4wsoYNMTPGIrO6KtZfsjfpTI3FStLD16kIEm/7Nd11vvU6Rd86ZbROqtjOSLKYFD70oW
+         FBXQJa0Q3iU2fz7/NivQozU4TkeHbGoHV6IosKiwVinVUB22H4NshhR8om76eQDQJwtL
+         +sCQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=76+sYfjn9PmEkLYKrgFKVdbh7GvmgGi8OoAXXkqhDvo=;
+        b=jauoC+G1dGnpFaeKZks0R6XQ2K0+muTSDtpJYlZU4AtvlC0IB6Vdmmp84D4DOyn3lJ
+         7HNH6nFrowkMugXhqUdW3FedNoFbJbXbuP/voEXUz41PCJOYqChWqdp38cMW19aFYmOG
+         SwI7clb6oDPaHZSl3MNvrtRJfpIQmHmthv19IXwanxe+5ZnM3kGLJiVlezY9YmSjVvd2
+         sbIVLL2BKie3xUOE5PTNIFOf27lN8kPJKgP1mM+AKjBN9ZlVHrv+Hl3a1OHm/MW6aRHM
+         +vBzdVwjItQ8ATJteosy7qGoGG1pF3AcwWfe2B4K9l0gfYeT2qeroUzV/XpZBNGU4nLa
+         JlXg==
+X-Gm-Message-State: AIkVDXKPLyW5muYf7dUJlqgVPgmfpfcKkLVLx0ed/Tib73BBHxRr+QsXjoB4LhfHR2G1QQ==
+X-Received: by 10.223.154.109 with SMTP id z100mr16190185wrb.145.1485009772687;
+        Sat, 21 Jan 2017 06:42:52 -0800 (PST)
+Received: from localhost.localdomain (adsknateur.autodesk.com. [132.188.32.100])
+        by smtp.gmail.com with ESMTPSA id 53sm4761067wrt.20.2017.01.21.06.42.51
+        (version=TLS1 cipher=AES128-SHA bits=128/128);
+        Sat, 21 Jan 2017 06:42:52 -0800 (PST)
+From:   larsxschneider@gmail.com
+To:     git@vger.kernel.org
+Cc:     gitster@pobox.com, Lars Schneider <larsxschneider@gmail.com>
+Subject: [PATCH v1] travis-ci: fix Perforce install on macOS
+Date:   Sat, 21 Jan 2017 15:42:45 +0100
+Message-Id: <20170121144245.31702-1-larsxschneider@gmail.com>
+X-Mailer: git-send-email 2.11.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jan 11, 2017 at 09:15:22AM -0800, Stefan Beller wrote:
+From: Lars Schneider <larsxschneider@gmail.com>
 
-> > That's the assumption I'm challenging. Certainly the behavior and
-> > certain aspects of the output of a plumbing command should remain the
-> > same over time. But error messages to stderr?
-> 
-> In an ideal world that assumption would hold true and any machine
-> readable information from the plumbing commands are on stdout and
-> nobody in their sane mind would ever try to parse stderr.
-> 
-> There is no easy way to check though except auditing all the code.
-> Having pointed out some string handling mistakes in the prior email,
-> my confidence is not high that plumbing commands are that strict about
-> separating useful machine output and errors for human consumption.
+The `perforce` and `perforce-server` package were moved from brew [1][2]
+to cask [3]. Teach TravisCI the new location.
 
-I think it's impossible to audit all the code, because "all the code"
-includes things not in git itself. It would really take a willingness to
-declare "if you are parsing stderr you're doing it wrong".
+Perforce updates their binaries without version bumps. That made the
+brew install (legitimately!) fail due to checksum mismatches. The
+workaround is not necessary anymore as Cask [4] allows to disable the
+checksum test for individual formulas.
 
-I suppose the unpack-trees example speaks against that. I'm not sure
-that is sane overall, but it is something we tried to account for in the
-past.
+[1] https://github.com/Homebrew/homebrew-binary/commit/1394e42de04d07445f82f9512627e864ff4ca4c6
+[2] https://github.com/Homebrew/homebrew-binary/commit/f8da22d6b8dbcfcfdb2dfa9ac1a5e5d8e05aac2b
+[3] https://github.com/caskroom/homebrew-cask/pull/29180
+[4] https://caskroom.github.io/
 
-If we are just talking about translation, though, it seems like the
-right action for a script that really wants to parse stderr is to run
-the sub-command with LC_MESSAGES=C. I know that's a breaking change, but
-I wonder if it's a reasonable path forward.
+Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
+---
 
--Peff
+Hi Junio,
+
+this patch should fix the TravisCI builds:
+https://travis-ci.org/git/git/builds
+
+Could you fast track the patch to `maint` if it works without trouble on
+`next` (as it should!)?
+
+Thanks,
+Lars
+
+Notes:
+    Base Commit: 787f75f056 (master)
+    Diff on Web: https://github.com/larsxschneider/git/commit/ec7106339d
+    Checkout:    git fetch https://github.com/larsxschneider/git travisci/brew-perforce-fix-v1 && git checkout ec7106339d
+
+ .travis.yml | 11 ++---------
+ 1 file changed, 2 insertions(+), 9 deletions(-)
+
+diff --git a/.travis.yml b/.travis.yml
+index 3843967a69..c6ba8c8ec5 100644
+--- a/.travis.yml
++++ b/.travis.yml
+@@ -75,20 +75,13 @@ before_install:
+       popd
+       ;;
+     osx)
+-      brew_force_set_latest_binary_hash () {
+-        FORMULA=$1
+-        SHA=$(brew fetch --force $FORMULA 2>&1 | grep ^SHA256: | cut -d ' ' -f 2)
+-        sed -E -i.bak "s/sha256 \"[0-9a-f]{64}\"/sha256 \"$SHA\"/g" \
+-          "$(brew --repository homebrew/homebrew-binary)/$FORMULA.rb"
+-      }
+       brew update --quiet
+       brew tap homebrew/binary --quiet
+-      brew_force_set_latest_binary_hash perforce
+-      brew_force_set_latest_binary_hash perforce-server
+       # Uncomment this if you want to run perf tests:
+       # brew install gnu-time
+-      brew install git-lfs perforce-server perforce gettext
++      brew install git-lfs gettext
+       brew link --force gettext
++      brew install Caskroom/cask/perforce
+       ;;
+     esac;
+     echo "$(tput setaf 6)Perforce Server Version$(tput sgr0)";
+--
+2.11.0
+
