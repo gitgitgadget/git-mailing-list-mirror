@@ -6,39 +6,39 @@ X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8B0291F89C
-	for <e@80x24.org>; Sat, 21 Jan 2017 21:59:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F101B1F89C
+	for <e@80x24.org>; Sat, 21 Jan 2017 21:59:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751480AbdAUV7t (ORCPT <rfc822;e@80x24.org>);
-        Sat, 21 Jan 2017 16:59:49 -0500
-Received: from castro.crustytoothpaste.net ([75.10.60.170]:38714 "EHLO
+        id S1751484AbdAUV7x (ORCPT <rfc822;e@80x24.org>);
+        Sat, 21 Jan 2017 16:59:53 -0500
+Received: from castro.crustytoothpaste.net ([75.10.60.170]:38742 "EHLO
         castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751424AbdAUV7j (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 21 Jan 2017 16:59:39 -0500
+        by vger.kernel.org with ESMTP id S1751439AbdAUV7k (ORCPT
+        <rfc822;git@vger.kernel.org>); Sat, 21 Jan 2017 16:59:40 -0500
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 3FF46280B0;
+        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 9C4EF280B3;
         Sat, 21 Jan 2017 21:59:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
         s=default; t=1485035966;
-        bh=Np78hdsRSfuH6iEcl0hzFrQq4STQxTWsvBbU73baXI8=;
+        bh=0ZXhm7nqKerUqQ3iTVJrFJj6yrleViSo9ljxdQuX1Zg=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=jK6piSq7wFelzDmAsCABiNjxEcEbrlWjvVn2Kcopn+NylBgrgDRGmdWsVjY1yxjh+
-         mnsFMH8LfdymAvCvSUD7VGkOMUAwqTsBJRaBDazbyLefPJVErGX/MUp4c1B5IA67kR
-         remAQz+iG3ZpL4AcFbTf4tq00FL4ru7vgYZ+pvgSCjPcrm8EoiKjaWiB0sMBWsXfsQ
-         K261J+1eYaT3oXRM9rIKD9U2Drd5FDHOGfBHwc3rbFl1NITNBudWnItRSglnzTtR0m
-         PRzpkqZS6tOIqOSMgBRcvxv+X1N0gEUk160aNIh3r5uX0rEix+zKnd5UMiDhHXXUF2
-         XGV6JiajDA1YKdk3lMm5Xspzi5s3035Rxt1fF6w5otbsBOmM/bOukq6tUQvQkgGoSW
-         GK3C4GyFrNjbxnflvgSqxszbRc7al7YqqsSkM87sxBRmcs/R9Hhm9dGe9suvvfs2mQ
-         PvQvlIut7TyVCQrTRiOxmF0J6l9n8PMDdIgj1QH3hmkIz3eb6Pz
+        b=agOpbu1RlievhmebosHOZaTmGxu0i6WRSBdxHiWUP/Ytt9E4sn1PPo5RoSjfh9QZt
+         4miby8l0DfRZCkmJpgVGuhskWeKTTsc2cUZz21vO0pgF83gd/2xuMvSzzKHHMyWLAg
+         xFGocxYiCmD2fvzDQhdm7z/QLrZfQ8IBUJnvo+xhRBv3FeSVyCgPqEH3V+fbZR7ViE
+         Qhu/cs9GxdoXXrWsJPBVWij48fODqs2OcK5OFXAk95QpbAzwscHr6ENRIy4mr6yOa4
+         pvq5Ym5Wx7PCSMNjwg8WNTxYEBzIkdNrTD4IBmHGGDxRZhYJTS2/XJpO9ymE5u0U7S
+         cPyUJ+4jRnQ2nu2irda12IAm7emFVu+f9eoV2tBrvNRCf0J4wpeH+dcEwKVsNB9fCB
+         k9CxgfyUCvUN0QOxC0s0iVF8BIr5CcFHYY+2A+779umwyk5CiAd0eT87QBoeBvwcvH
+         w9FetbpkKcI8iDgtOTSFZYRqulTm9yBBCoDkDxODZI5RT/nboUo
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Jeff King <peff@peff.net>
-Subject: [PATCH 4/7] Documentation: sort sources for gitman.texi
-Date:   Sat, 21 Jan 2017 21:59:09 +0000
-Message-Id: <20170121215912.246691-5-sandals@crustytoothpaste.net>
+Subject: [PATCH 7/7] Makefile: add a knob to enable the use of Asciidoctor
+Date:   Sat, 21 Jan 2017 21:59:12 +0000
+Message-Id: <20170121215912.246691-8-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.11.0
 In-Reply-To: <20170121215912.246691-1-sandals@crustytoothpaste.net>
 References: <20170121215912.246691-1-sandals@crustytoothpaste.net>
@@ -47,26 +47,60 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Sorting the sources makes it easier to compare the output using diff.
-In addition, it aids groups creating reproducible builds, as the order
-of the files is no longer dependent on the file system or other
-irrelevant factors.
+While Git has traditionally built its documentation using AsciiDoc, some
+people wish to use Asciidoctor for speed or other reasons.  Add a
+Makefile knob, USE_ASCIIDOCTOR, that sets various options in order to
+produce acceptable output.  For HTML output, XHTML5 was chosen, since
+the AsciiDoc options also produce XHTML, albeit XHTML 1.1.
+
+Asciidoctor does not have built-in support for the linkgit macro, but it
+is available using the Asciidoctor Extensions Lab.  Add a macro to
+enable the use of this extension if it is available.  Without it, the
+linkgit macros are emitted into the output.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- Documentation/Makefile | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ Documentation/Makefile | 12 ++++++++++++
+ Makefile               |  6 ++++++
+ 2 files changed, 18 insertions(+)
 
 diff --git a/Documentation/Makefile b/Documentation/Makefile
-index a9fb497b8..6e6c82409 100644
+index 0f4db48eb..5cbecfa99 100644
 --- a/Documentation/Makefile
 +++ b/Documentation/Makefile
-@@ -373,7 +373,7 @@ user-manual.pdf: user-manual.xml
+@@ -174,6 +174,18 @@ ifdef GNU_ROFF
+ XMLTO_EXTRA += -m manpage-quote-apos.xsl
+ endif
  
- gitman.texi: $(MAN_XML) cat-texi.perl
- 	$(QUIET_DB2TEXI)$(RM) $@+ $@ && \
--	($(foreach xml,$(MAN_XML),$(DOCBOOK2X_TEXI) --encoding=UTF-8 \
-+	($(foreach xml,$(sort $(MAN_XML)),$(DOCBOOK2X_TEXI) --encoding=UTF-8 \
- 		--to-stdout $(xml) &&) true) > $@++ && \
- 	$(PERL_PATH) cat-texi.perl $@ <$@++ >$@+ && \
- 	rm $@++ && \
++ifdef USE_ASCIIDOCTOR
++ASCIIDOC = asciidoctor
++ASCIIDOC_CONF =
++ASCIIDOC_HTML = xhtml5
++ASCIIDOC_DOCBOOK = docbook45
++ifdef ASCIIDOCTOR_EXTENSIONS_LAB
++ASCIIDOC_EXTRA = -I$(ASCIIDOCTOR_EXTENSIONS_LAB) -rasciidoctor/extensions -rman-inline-macro
++endif
++ASCIIDOC_EXTRA += -alitdd='&\#x2d;&\#x2d;'
++DBLATEX_COMMON =
++endif
++
+ SHELL_PATH ?= $(SHELL)
+ # Shell quote;
+ SHELL_PATH_SQ = $(subst ','\'',$(SHELL_PATH))
+diff --git a/Makefile b/Makefile
+index 27afd0f37..7ed9d4d4b 100644
+--- a/Makefile
++++ b/Makefile
+@@ -250,6 +250,12 @@ all::
+ # apostrophes to be ASCII so that cut&pasting examples to the shell
+ # will work.
+ #
++# Define USE_ASCIIDOCTOR to use Asciidoctor instead of AsciiDoc to build the
++# documentation.
++#
++# Define ASCIIDOCTOR_EXTENSIONS_LAB to point to the location of the Asciidoctor
++# Extensions Lab if you have it available.
++#
+ # Define PERL_PATH to the path of your Perl binary (usually /usr/bin/perl).
+ #
+ # Define NO_PERL_MAKEMAKER if you cannot use Makefiles generated by perl's
