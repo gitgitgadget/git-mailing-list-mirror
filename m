@@ -2,64 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.4 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A375A20756
-	for <e@80x24.org>; Fri, 20 Jan 2017 23:56:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D754A20756
+	for <e@80x24.org>; Sat, 21 Jan 2017 00:25:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752426AbdATX45 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 20 Jan 2017 18:56:57 -0500
-Received: from wp156.webpack.hosteurope.de ([80.237.132.163]:44584 "EHLO
-        wp156.webpack.hosteurope.de" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1752294AbdATX44 (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 20 Jan 2017 18:56:56 -0500
-X-Greylist: delayed 1282 seconds by postgrey-1.27 at vger.kernel.org; Fri, 20 Jan 2017 18:56:56 EST
-Received: from p5099125b.dip0.t-ipconnect.de ([80.153.18.91] helo=[192.168.100.43]); authenticated
-        by wp156.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
-        id 1cUiiI-0008UF-6k; Sat, 21 Jan 2017 00:35:22 +0100
-Subject: Re: Idea: Add a filter option to 'git rebase'
-To:     Philip Oakley <philipoakley@iee.org>,
-        Git List <git@vger.kernel.org>
-References: <8AED6D90D2B64AE3A63C6195CA983FE8@PhilipOakley>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-From:   Thomas Braun <thomas.braun@virtuell-zuhause.de>
-Message-ID: <0bd00cda-65d0-eeba-d8b9-a839e76d8e88@virtuell-zuhause.de>
-Date:   Sat, 21 Jan 2017 00:35:22 +0100
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:45.0) Gecko/20100101
+        id S1752516AbdAUAZk (ORCPT <rfc822;e@80x24.org>);
+        Fri, 20 Jan 2017 19:25:40 -0500
+Received: from mail-wm0-f43.google.com ([74.125.82.43]:37285 "EHLO
+        mail-wm0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752330AbdAUAZj (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Jan 2017 19:25:39 -0500
+Received: by mail-wm0-f43.google.com with SMTP id c206so68826837wme.0
+        for <git@vger.kernel.org>; Fri, 20 Jan 2017 16:25:38 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:references:cc:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding;
+        bh=rBxjnLpEKaaedkj+JDFEz5Ebe/rtxTRR0KVz1GX9fhI=;
+        b=eBHAR0Oib8a7IiPNEuvaWd3JOPXJ1kYHpgo2qVxv0EqDIcmDh9kFewRQJ+vWMrwfB6
+         lNSWr/uBAZD26bzhCluFT7nN9RGy54UzcHg2cMkHNZgTGStcocB+B530kQy8dRVPA0FS
+         czJ25Lthae3lE5F/wBi0Xld3HHQUxnH3qX5ba61Sn2SVyueCu/2TDxPlCma7xRvvgRtc
+         OHB8x7XzNJfNzWCwYjgpaaFSCGbNf1OjCfd9iI+cNa/ArwNt0J7GZW/aVbYp+AN3TCpq
+         lNULy4dsbBMtDnq4OK9IESNj2ZW5Sd/oLdWmU3125q59w0fptXgjDcqPYIgTeWwiktrM
+         4eFg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
+        bh=rBxjnLpEKaaedkj+JDFEz5Ebe/rtxTRR0KVz1GX9fhI=;
+        b=SZc73YwR8ua/+FV3x/SWgzlcgGVutvOvWrBFiUnv8SEPDg+xIJSKDXM/OSNZMl4Ndy
+         KOmU/cUSV5uFLeFmN87PGG+AlRq8FoTBARPAKFgRwQ7FIHLuAaSp/+wBBzS0AtCm8dsF
+         OXUmdtUjjjRQDLsWDZPMTfepU8VcbI/oySTAI6rybD8hblaxS0JU8JUmS4RV6jK9dT2b
+         XbcTAVpcZhnbrFQi6lPeFK2tcGfiEPMYVW9wohRwgwIgldWTkadq9Pyfwaa3a8xak0qb
+         z7H6YDYfO1vgvhepPQVKcRzLGEZ08yxf9hZ9PcEUevveeWdY4pJXkZt2T7aRqr4s+gNz
+         AYnA==
+X-Gm-Message-State: AIkVDXId39nCEiDZuY1XnRtJL/p4MTe3pSt0+hHOr2Lh5wZV4U6YL+jCsHVNdl+W4ZAS/g==
+X-Received: by 10.223.143.45 with SMTP id p42mr13534216wrb.120.1484958338081;
+        Fri, 20 Jan 2017 16:25:38 -0800 (PST)
+Received: from home.thecybershadow.net ([89.28.117.31])
+        by smtp.gmail.com with ESMTPSA id z67sm1991612wrb.49.2017.01.20.16.25.37
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 20 Jan 2017 16:25:37 -0800 (PST)
+Subject: Re: [PATCH] show-ref: Allow --head to work with --verify
+To:     Junio C Hamano <gitster@pobox.com>
+References: <20170120155015.4360-1-git@thecybershadow.net>
+ <xmqqa8aly2o4.fsf@gitster.mtv.corp.google.com>
+ <3b1d2717-dd7f-2add-b935-3ace6063b258@gmail.com>
+ <xmqqshoduxnj.fsf@gitster.mtv.corp.google.com>
+ <xmqqo9z1ux7r.fsf@gitster.mtv.corp.google.com>
+Cc:     git@vger.kernel.org
+From:   Vladimir Panteleev <thecybershadow@gmail.com>
+Message-ID: <daef1407-6f08-147d-e23b-bb69bb8fd1ed@gmail.com>
+Date:   Sat, 21 Jan 2017 00:25:36 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
  Thunderbird/45.6.0
 MIME-Version: 1.0
-In-Reply-To: <8AED6D90D2B64AE3A63C6195CA983FE8@PhilipOakley>
-Content-Type: text/plain; charset=utf-8
+In-Reply-To: <xmqqo9z1ux7r.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset=windows-1252; format=flowed
 Content-Transfer-Encoding: 7bit
-X-bounce-key: webpack.hosteurope.de;thomas.braun@virtuell-zuhause.de;1484956616;a3aa4b1b;
-X-HE-SMSGID: 1cUiiI-0008UF-6k
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 20.01.2017 um 23:28 schrieb Philip Oakley:
-> A recent question on stackoverflow
-> http://stackoverflow.com/questions/41753252/drop-commits-by-commit-message-in-git-rebase
-> sought to remove automatically commits that could be identified by
-> relevant words in the commit message.
-> 
-> I had thought that the ubiquitous `git filter-branch` should be able to
-> do this sort of thing. I was wrong. (It was pointed out to me that...)
-> The man page notes that removing a commit via filter-branch does not
-> remove the changes from following commits and directs readers to using
-> `git rebase(1)`.
-> 
-> However the rebase command does not have any filter option to allow the
-> automatic population of its TODO list with the appropriate
-> pick/edit/drop/etc. values.
+On 2017-01-20 23:29, Junio C Hamano wrote:
+> By the way, I have no strong preference between "read-ref, check
+> quiet and show-one" and "show-ref", so if you make --verify to
+> consistently call "show_ref()" for both refs/heads/master and HEAD,
+> that is also perfectly fine.
 
-Well you can use an arbitrary shell command as editor, so something like
+This sounds like a good idea, as it will also allow -d and some other 
+options to work with --verify (whatever use case there might be for 
+that). Will resubmit with that.
 
-$ GIT_SEQUENCE_EDITOR="sed -i -re 's/^pick /edit /'" git rebase -i master
+> I just do not want to see the same feature/codepath to call two
+> different implementations that happens to do the same thing today.
 
-will change pick to edit of all commits.
+Understood and agreed.
 
-Maybe that can be mentioned in the man page of rebase?
+-- 
+Best regards,
+  Vladimir
