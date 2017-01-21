@@ -6,23 +6,23 @@ X-Spam-Status: No, score=-6.4 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 69BB920ABE
-	for <e@80x24.org>; Sat, 21 Jan 2017 01:08:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 76DFD20ABE
+	for <e@80x24.org>; Sat, 21 Jan 2017 01:08:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752615AbdAUBIj (ORCPT <rfc822;e@80x24.org>);
-        Fri, 20 Jan 2017 20:08:39 -0500
-Received: from 89-28-117-31.starnet.md ([89.28.117.31]:54130 "EHLO
+        id S1752590AbdAUBIi (ORCPT <rfc822;e@80x24.org>);
+        Fri, 20 Jan 2017 20:08:38 -0500
+Received: from 89-28-117-31.starnet.md ([89.28.117.31]:54132 "EHLO
         home.thecybershadow.net" rhost-flags-OK-FAIL-OK-OK) by vger.kernel.org
-        with ESMTP id S1751028AbdAUBIh (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S1752537AbdAUBIh (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 20 Jan 2017 20:08:37 -0500
 Received: by home.thecybershadow.net (Postfix, from userid 1000)
-        id DEFCF55BDF2; Sat, 21 Jan 2017 01:08:32 +0000 (UTC)
+        id D228555BDEE; Sat, 21 Jan 2017 01:08:32 +0000 (UTC)
 From:   Vladimir Panteleev <git@thecybershadow.net>
 To:     git@vger.kernel.org
 Cc:     Vladimir Panteleev <git@thecybershadow.net>
-Subject: [PATCH v2 3/4] show-ref: Optimize show_ref a bit
-Date:   Sat, 21 Jan 2017 01:08:20 +0000
-Message-Id: <20170121010821.25046-4-git@thecybershadow.net>
+Subject: [PATCH v2 1/4] show-ref: Allow --head to work with --verify
+Date:   Sat, 21 Jan 2017 01:08:18 +0000
+Message-Id: <20170121010821.25046-2-git@thecybershadow.net>
 X-Mailer: git-send-email 2.11.0
 In-Reply-To: <20170121010821.25046-1-git@thecybershadow.net>
 References: <20170121010821.25046-1-git@thecybershadow.net>
@@ -31,42 +31,61 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The inner `if (verify)' check was not being used before the preceding
-commit, as show_ref was never being called from a code path where
-verify was non-zero.
+Previously, when --verify was specified, show-ref would use a separate
+code path which ignored --head. Thus, "git show-ref HEAD" used with
+"--verify" (because the user is not interested in seeing
+refs/remotes/origin/HEAD), and used with "--head" (because the user
+does not want HEAD to be filtered out), i.e. "git show-ref --head
+--verify HEAD", did not work as expected.
 
-Adding a `!verify' check to the outer if skips an unnecessary string
-comparison when verify is non-zero, and show_ref is already called
-with a reference exactly matching pattern.
+Instead of insisting that the input begins with "refs/", allow "HEAD"
+when "--head" is given in the codepath that handles "--verify", so
+that all valid full refnames including HEAD are passed to the same
+output machinery.
 
 Signed-off-by: Vladimir Panteleev <git@thecybershadow.net>
 ---
- builtin/show-ref.c | 5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ builtin/show-ref.c  |  3 ++-
+ t/t1403-show-ref.sh | 14 ++++++++++++++
+ 2 files changed, 16 insertions(+), 1 deletion(-)
 
 diff --git a/builtin/show-ref.c b/builtin/show-ref.c
-index bcdc1a95e..3cf344d47 100644
+index 6d4e66900..945a483e3 100644
 --- a/builtin/show-ref.c
 +++ b/builtin/show-ref.c
-@@ -43,7 +43,7 @@ static int show_ref(const char *refname, const struct object_id *oid,
- 		if (!match)
- 			return 0;
- 	}
--	if (pattern) {
-+	if (pattern && !verify) {
- 		int reflen = strlen(refname);
- 		const char **p = pattern, *m;
- 		while ((m = *p++) != NULL) {
-@@ -54,9 +54,6 @@ static int show_ref(const char *refname, const struct object_id *oid,
- 				continue;
- 			if (len == reflen)
- 				goto match;
--			/* "--verify" requires an exact match */
--			if (verify)
--				continue;
- 			if (refname[reflen - len - 1] == '/')
- 				goto match;
- 		}
+@@ -202,7 +202,8 @@ int cmd_show_ref(int argc, const char **argv, const char *prefix)
+ 		while (*pattern) {
+ 			struct object_id oid;
+ 
+-			if (starts_with(*pattern, "refs/") &&
++			if ((starts_with(*pattern, "refs/") ||
++			     (show_head && !strcmp(*pattern, "HEAD"))) &&
+ 			    !read_ref(*pattern, oid.hash)) {
+ 				if (!quiet)
+ 					show_one(*pattern, &oid);
+diff --git a/t/t1403-show-ref.sh b/t/t1403-show-ref.sh
+index 7e10bcfe3..2fb5dc879 100755
+--- a/t/t1403-show-ref.sh
++++ b/t/t1403-show-ref.sh
+@@ -164,4 +164,18 @@ test_expect_success 'show-ref --heads, --tags, --head, pattern' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success 'show-ref --verify --head' '
++	echo $(git rev-parse HEAD) HEAD >expect &&
++	git show-ref --verify --head HEAD >actual &&
++	test_cmp expect actual &&
++
++	>expect &&
++
++	git show-ref --verify --head -q HEAD >actual &&
++	test_cmp expect actual &&
++
++	test_must_fail git show-ref --verify --head -q A >actual &&
++	test_cmp expect actual
++'
++
+ test_done
 -- 
 2.11.0
 
