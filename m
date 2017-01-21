@@ -2,79 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,
+	STOX_REPLY_TYPE shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1AEDB1F89C
-	for <e@80x24.org>; Sat, 21 Jan 2017 21:59:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DD66A1F89C
+	for <e@80x24.org>; Sat, 21 Jan 2017 23:18:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751487AbdAUV75 (ORCPT <rfc822;e@80x24.org>);
-        Sat, 21 Jan 2017 16:59:57 -0500
-Received: from castro.crustytoothpaste.net ([75.10.60.170]:38740 "EHLO
-        castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751446AbdAUV7k (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 21 Jan 2017 16:59:40 -0500
-Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 79B1D280B2;
-        Sat, 21 Jan 2017 21:59:26 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
-        s=default; t=1485035966;
-        bh=LNeRLQ7F5roJ8STQf1nr97hyKZOGNATbN+dS38B4biQ=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=0WcWrMlIN80Y4xz+DmuOBzmFcB4xrfK0zaDveCSG6qt9pSELRlD/ugkB1ToN29nW3
-         s/hWzxJnNW2+KvSdRYrn1neKGykdfCepzR5Oz6U69TxbaPWR9u/h1MkwTbshUj+bTb
-         JWVked+QFi5Azz/P94PwY0gpLCRuy2O09v/o1BjlejIFxEL45aIuJanRCFnSR2UUog
-         Jnw3FvpHxvQG2bApV+HB3zvKRoW0GmRiUczecxVLvjIkDLZsYqALs1Uv0Pj11aIZkb
-         be9DOBUqls/Xsxa0QASCLPY4f5aO07X3HHznCQFWDpY5X+uWRtXdyJTX4BrcjsFIP2
-         KvTICc4nhnYeFgpHG5pmmlkxXOu/1/qf9KriGAaOrnqlgwROD5itkIaYidSS08FCeR
-         yVS4YZ9FnfDewE43Je4iQqXit2tY+BKA4khKoTXMsjssYOfdNb5ZsRWdxfurIuvG3y
-         ZwlhujnlpBpWdEGEanLcPk3uor/Mo5HNhhKQnphFpLpTYrnvDLT
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     git@vger.kernel.org
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jeff King <peff@peff.net>
-Subject: [PATCH 6/7] Documentation: move dblatex arguments into variable
-Date:   Sat, 21 Jan 2017 21:59:11 +0000
-Message-Id: <20170121215912.246691-7-sandals@crustytoothpaste.net>
-X-Mailer: git-send-email 2.11.0
-In-Reply-To: <20170121215912.246691-1-sandals@crustytoothpaste.net>
-References: <20170121215912.246691-1-sandals@crustytoothpaste.net>
+        id S1750938AbdAUXSN (ORCPT <rfc822;e@80x24.org>);
+        Sat, 21 Jan 2017 18:18:13 -0500
+Received: from smtp-out-2.talktalk.net ([62.24.135.66]:17333 "EHLO
+        smtp-out-2.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750889AbdAUXSM (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 21 Jan 2017 18:18:12 -0500
+Received: from PhilipOakley ([92.31.218.76])
+        by smtp.talktalk.net with SMTP
+        id V4vBceLfg46SJV4vCcflJY; Sat, 21 Jan 2017 23:18:11 +0000
+X-Originating-IP: [92.31.218.76]
+X-Spam: 0
+X-OAuthority: v=2.2 cv=CItoZljD c=1 sm=1 tr=0 a=e6L6E7eW+5Nb7SO+DvSdIg==:117
+ a=e6L6E7eW+5Nb7SO+DvSdIg==:17 a=IkcTkHD0fZMA:10 a=uPZiAMpXAAAA:8
+ a=CI7Vg7dG7XQm4T3drfEA:9 a=QEXdDO2ut3YA:10 a=svzibyHiZmA4t4YY0eFS:22
+Message-ID: <7EEBBEA4046743C9AE04AE50EE30D72A@PhilipOakley>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From:   "Philip Oakley" <philipoakley@iee.org>
+To:     "Git List" <git@vger.kernel.org>,
+        "Thomas Braun" <thomas.braun@virtuell-zuhause.de>
+Cc:     "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+References: <8AED6D90D2B64AE3A63C6195CA983FE8@PhilipOakley> <0bd00cda-65d0-eeba-d8b9-a839e76d8e88@virtuell-zuhause.de>
+Subject: Re: Idea: Add a filter option to 'git rebase'
+Date:   Sat, 21 Jan 2017 23:18:11 -0000
+Organization: OPDS
+MIME-Version: 1.0
+Content-Type: text/plain;
+        format=flowed;
+        charset="UTF-8";
+        reply-type=original
+Content-Transfer-Encoding: 7bit
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+X-CMAE-Envelope: MS4wfLKqmYBvb+UQxawLiUMD3NrO6dYkqx+UaFsXfhQXTLoP/OZhXngYpiS7O006UFM50M1DcCUi6gz+zuCJj2zjklhxYFD66otS2ATdm5W3ZLjaiQTgUC4n
+ HyAPKUWoRitiCgSknXCbtOG8EjjgadYLpW13M3dWgrteHR1BVcogyhqJR0kMNxl8YOr+ifnbiS5rykc0JYQ4Q6sDJKl/STRG7DbHAfVe4uUh+FStwHRhk8WM
+ qujIoykGLHufdsWQog7GaA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Our dblatex invocation uses several style components from the AsciiDoc
-distribution, but those components are not available when building with
-Asciidoctor.  Move the command line arguments into a variable so it can
-be overridden by the user or makefile configuration options.
+From: "Thomas Braun"  Friday, January 20, 2017 11:35 PM
+> Am 20.01.2017 um 23:28 schrieb Philip Oakley:
+>> A recent question on stackoverflow
+>> http://stackoverflow.com/questions/41753252/drop-commits-by-commit-message-in-git-rebase
+>> sought to remove automatically commits that could be identified by
+>> relevant words in the commit message.
+>>
+>> I had thought that the ubiquitous `git filter-branch` should be able to
+>> do this sort of thing. I was wrong. (It was pointed out to me that...)
+>> The man page notes that removing a commit via filter-branch does not
+>> remove the changes from following commits and directs readers to using
+>> `git rebase(1)`.
+>>
+>> However the rebase command does not have any filter option to allow the
+>> automatic population of its TODO list with the appropriate
+>> pick/edit/drop/etc. values.
+>
+> Well you can use an arbitrary shell command as editor, so something like
+>
+> $ GIT_SEQUENCE_EDITOR="sed -i -re 's/^pick /edit /'" git rebase -i master
+>
+> will change pick to edit of all commits.
+>
+> Maybe that can be mentioned in the man page of rebase?
+>
 
-Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
----
- Documentation/Makefile | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+I had been more thinking of a process that passed single sha1's to the 
+filter on each pass through the rebase list, so that the coding was simpler, 
+plus the --interactive could be used, if required, for final refinement 
+(gitk being handy for that).
 
-diff --git a/Documentation/Makefile b/Documentation/Makefile
-index 76be7017c..0f4db48eb 100644
---- a/Documentation/Makefile
-+++ b/Documentation/Makefile
-@@ -120,6 +120,7 @@ INSTALL_INFO = install-info
- DOCBOOK2X_TEXI = docbook2x-texi
- DBLATEX = dblatex
- ASCIIDOC_DBLATEX_DIR = /etc/asciidoc/dblatex
-+DBLATEX_COMMON = -p $(ASCIIDOC_DBLATEX_DIR)/asciidoc-dblatex.xsl -s $(ASCIIDOC_DBLATEX_DIR)/asciidoc-dblatex.sty
- ifndef PERL_PATH
- 	PERL_PATH = /usr/bin/perl
- endif
-@@ -368,7 +369,7 @@ user-manual.texi: user-manual.xml
- 
- user-manual.pdf: user-manual.xml
- 	$(QUIET_DBLATEX)$(RM) $@+ $@ && \
--	$(DBLATEX) -o $@+ -p $(ASCIIDOC_DBLATEX_DIR)/asciidoc-dblatex.xsl -s $(ASCIIDOC_DBLATEX_DIR)/asciidoc-dblatex.sty $< && \
-+	$(DBLATEX) $-o $@+ (DBLATEX_COMMON) $< && \
- 	mv $@+ $@
- 
- gitman.texi: $(MAN_XML) cat-texi.perl texi.xsl
+However, a mention in the man pages would be zero code cost, and could help.
+
+--
+
+Philip 
+
