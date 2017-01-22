@@ -2,70 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+X-Spam-Status: No, score=-6.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2E3EA2092F
-	for <e@80x24.org>; Sun, 22 Jan 2017 23:04:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6F2D82092F
+	for <e@80x24.org>; Sun, 22 Jan 2017 23:11:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750750AbdAVXEs (ORCPT <rfc822;e@80x24.org>);
-        Sun, 22 Jan 2017 18:04:48 -0500
-Received: from mail-qt0-f176.google.com ([209.85.216.176]:35783 "EHLO
-        mail-qt0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750724AbdAVXEr (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 22 Jan 2017 18:04:47 -0500
-Received: by mail-qt0-f176.google.com with SMTP id x49so95219366qtc.2
-        for <git@vger.kernel.org>; Sun, 22 Jan 2017 15:04:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=wlz+WLvY4NSIbblAQhQQ7dk2XC3nwKROSb5JWo86C84=;
-        b=VnzPpApqjLkwpw/PI7x3ZCMWBHgTEoz7M+4FogoAnAau8KsqKgKama2odzLwIvkXMO
-         XXBNRGCaMJ8OD4dKvJXVC4hjVGhwdidLkLUomqSHUI3yjnOBOXuMLWetJXDpnpGr3Xux
-         K8dQoRGJ6UcMwm0A7Kmf1WBY27/5KI5eIfpVjHeS+gJhEqbu8+q43R/tiG93DC4qQR8w
-         8a13pcj73PbnMfsnxJDKTLYkRndffHV66/wC07efCEt1GodsU86pX28faPB4SLQuHTXq
-         yxZUSi0G4u5MnPOVU2X3gXRxHCHKaC2QyjsfPV9btlsHGJ7Zs6vnBzaTXXTv0x0W988n
-         0SpA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=wlz+WLvY4NSIbblAQhQQ7dk2XC3nwKROSb5JWo86C84=;
-        b=T2ndhJ2u4jCAwDlrZaGlIqMSBOfQC9tsEvsceFrtnxQzUekQG59C/k+X39kMA7jP/g
-         g6XSH6Lo0RkwlCik5M3yOZzuKAO1Z/nTD2D2SaNqFosh+WGhTJV93k220wazCpLi23Qm
-         fZoxJFOBK43DRnabTUDtbfrQN63s46LXd+ty5q9ACd/auJwhEY0REYfgEN5nJQS2K9lL
-         z2oTmDgrBuwT/c4ympomB+Jx2oq89stMT/WQ9lxvtkucxoUA3IslTrA08UpR1dJPouS8
-         BhnWPlR0Y2F+8GguyHvxa7C5VKY9ZuKyV6zv8BcAxVAgrGNI3G/M03hdmFqA7NlwNnTD
-         BpSw==
-X-Gm-Message-State: AIkVDXLMezHvi/PsuhER3vc9BfOhB/a9uCaTN7UdxO6UiM4Efa9SZApRjJMvW+nxUv8KCaihT4skCK3OMClH7w==
-X-Received: by 10.200.34.28 with SMTP id o28mr22671481qto.269.1485126286747;
- Sun, 22 Jan 2017 15:04:46 -0800 (PST)
-MIME-Version: 1.0
-Received: by 10.237.45.132 with HTTP; Sun, 22 Jan 2017 15:04:46 -0800 (PST)
-In-Reply-To: <xmqq1svuvh0y.fsf@gitster.mtv.corp.google.com>
-References: <20170122212855.25924-1-eantoranz@gmail.com> <CAOc6etaQ-fDWn38YzXkGOC0fSan1vrxjVDUXS924nBXWTTrhNQ@mail.gmail.com>
- <xmqq1svuvh0y.fsf@gitster.mtv.corp.google.com>
-From:   Edmundo Carmona Antoranz <eantoranz@gmail.com>
-Date:   Sun, 22 Jan 2017 17:04:46 -0600
-Message-ID: <CAOc6etY5odte=TKyWX3Wf1BVaNTfDeA-xsGOKiyuH88HZgqFDQ@mail.gmail.com>
-Subject: Re: [PATCH] blame: add option to print tips (--tips)
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+        id S1750737AbdAVXLi (ORCPT <rfc822;e@80x24.org>);
+        Sun, 22 Jan 2017 18:11:38 -0500
+Received: from mo4-p00-ob.smtp.rzone.de ([81.169.146.161]:24787 "EHLO
+        mo4-p00-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750704AbdAVXLh (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 22 Jan 2017 18:11:37 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1485126695;
+        l=1698; s=domk; d=benjaminfuchs.de;
+        h=Date:Subject:Cc:To:From;
+        bh=AQBSIQKznp0+OGqUYPfGnsxA4ylf9u8xdo6hElamA4M=;
+        b=M59EGURUy3Ium6Z9CGFR2oVse0jZWRTdZJyg2UpyghFiz15R9maeNko1bIW/NnHrrJ
+        KO/wT3joItyqgONvTpbtafcUY7BfoWiO9o6OnNFN6/RDngO3qIkoF1jA7NG1Y+S4ztSm
+        ayYvR3wG56sDYjMRSB/30wJSRl5IxYvgjGnlk=
+X-RZG-AUTH: :KWEFfEyIefqISxrQo86CUgBQlWGSsNRH+R9D//SwlcQsxFnnwAcCeXqAJxZfrWfVMhxHI84=
+X-RZG-CLASS-ID: mo00
+Received: from fuchs-ThinkPad-T431s.poststrasse57.local (p4FF7640E.dip0.t-ipconnect.de [79.247.100.14])
+        by smtp.strato.de (RZmta 39.11 DYNA|AUTH)
+        with ESMTPSA id 0069c1t0MNBVXum
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA (curve secp521r1 with 521 ECDH bits, eq. 15360 bits RSA))
+        (Client did not present a certificate);
+        Mon, 23 Jan 2017 00:11:31 +0100 (CET)
+From:   Benjamin Fuchs <email@benjaminfuchs.de>
+To:     git@vger.kernel.org
+Cc:     szeder.dev@gmail.com, sbeller@google.com, email@benjaminfuchs.de
+Subject: [PATCH 4/4] git-prompt.sh: add tests for submodule indicator
+Date:   Mon, 23 Jan 2017 00:11:19 +0100
+Message-Id: <1485126679-7629-1-git-send-email-email@benjaminfuchs.de>
+X-Mailer: git-send-email 2.7.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Jan 22, 2017 at 4:58 PM, Junio C Hamano <gitster@pobox.com> wrote:
->
-> What is the target audience?  If you are trying to write a script
-> that reads output by "git blame", you are strongly discouraged
-> unless you are reading from "git blame --porcelain" which is more
-> compact and has this information already IIRC.
+---
+ t/t9903-bash-prompt.sh | 43 +++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 43 insertions(+)
 
-I wrote this for human consumption, actually. Maybe I overestimated the
-need for this feature (I definitely find it handy, but it might be just me).
+diff --git a/t/t9903-bash-prompt.sh b/t/t9903-bash-prompt.sh
+index 97c9b32..4dce366 100755
+--- a/t/t9903-bash-prompt.sh
++++ b/t/t9903-bash-prompt.sh
+@@ -37,6 +37,11 @@ test_expect_success 'setup for prompt tests' '
+ 	git commit -m "yet another b2" file &&
+ 	mkdir ignored_dir &&
+ 	echo "ignored_dir/" >>.gitignore &&
++	git checkout -b submodule &&
++	git submodule add ./. sub &&
++	git -C sub checkout master &&
++	git add sub &&
++	git commit -m submodule &&
+ 	git checkout master
+ '
+ 
+@@ -755,4 +760,42 @@ test_expect_success 'prompt - hide if pwd ignored - inside gitdir (stderr)' '
+ 	test_cmp expected "$actual"
+ '
+ 
++test_expect_success 'prompt - submodule indicator' '
++	printf " (sub:master)" >expected &&
++	git checkout submodule &&
++	test_when_finished "git checkout master" &&
++	(
++		cd sub &&
++		GIT_PS1_SHOWSUBMODULE=1 &&
++		__git_ps1 >"$actual"
++	) &&
++	test_cmp expected "$actual"
++'
++
++test_expect_success 'prompt - submodule indicator - verify false' '
++	printf " (master)" >expected &&
++	git checkout submodule &&
++	test_when_finished "git checkout master" &&
++	(
++		cd sub &&
++		GIT_PS1_SHOWSUBMODULE= &&
++		__git_ps1 >"$actual"
++	) &&
++	test_cmp expected "$actual"
++'
++
++test_expect_success 'prompt - submodule indicator - dirty status indicator' '
++	printf " (+sub:b1)" >expected &&
++	git checkout submodule &&
++	git -C sub checkout b1 &&
++	test_when_finished "git checkout master" &&
++	(
++		cd sub &&
++		GIT_PS1_SHOWSUBMODULE=1 &&
++		__git_ps1 >"$actual"
++	) &&
++	test_cmp expected "$actual"
++'
++
++
+ test_done
+-- 
+2.7.4
+
