@@ -2,90 +2,145 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+X-Spam-Status: No, score=-4.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 84D142092F
-	for <e@80x24.org>; Sun, 22 Jan 2017 22:55:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 48D322092F
+	for <e@80x24.org>; Sun, 22 Jan 2017 22:56:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750720AbdAVWzW (ORCPT <rfc822;e@80x24.org>);
-        Sun, 22 Jan 2017 17:55:22 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:55082 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1750704AbdAVWzV (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 22 Jan 2017 17:55:21 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 4F7EC62510;
-        Sun, 22 Jan 2017 17:55:20 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=6a/eIILGynACzjsAlNs2nsSOM7A=; b=vhaZZ2
-        +B52AGb54wP0GcSiz5XJRWuKThooT14BpSTKhTyEoxANbVYS8Sc4uxawZui9pFrk
-        VlKejsYT/x2pIiI9eXRnXvFiPjpJ+NsPy6n3r371kfzfy48Oc1Rg3BhbGnHDxqFs
-        MdGTBuK/n6tVE5djlFoBfrKKyMzT94Q9NtXhQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=uCe7qtQ/SPpxjosHMedPdz+Otp5F09Es
-        h7bHHcH70nPuIwyQYEuY+ywnCz7wCmriqb5nekEt4Ra7utqZMAmitpHOA0TVdf/G
-        tnNw3vXvdtpW39Er0BFQk0xh1LptV7+9c/KOvPT1FlVxuVinci1SNgxic6rbmnB7
-        iH29QYpA3g4=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 4808E6250E;
-        Sun, 22 Jan 2017 17:55:20 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id ABB566250D;
-        Sun, 22 Jan 2017 17:55:19 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Vladimir Panteleev <git@thecybershadow.net>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v2 3/4] show-ref: Optimize show_ref a bit
-References: <20170121010821.25046-1-git@thecybershadow.net>
-        <20170121010821.25046-4-git@thecybershadow.net>
-        <xmqqa8aivhik.fsf@gitster.mtv.corp.google.com>
-Date:   Sun, 22 Jan 2017 14:55:18 -0800
-In-Reply-To: <xmqqa8aivhik.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-        message of "Sun, 22 Jan 2017 14:47:47 -0800")
-Message-ID: <xmqq60l6vh61.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: D9362AD4-E0F5-11E6-BFE7-A7617B1B28F4-77302942!pb-smtp2.pobox.com
+        id S1750714AbdAVW4A (ORCPT <rfc822;e@80x24.org>);
+        Sun, 22 Jan 2017 17:56:00 -0500
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:35354 "EHLO
+        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750704AbdAVWz7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 22 Jan 2017 17:55:59 -0500
+Received: by mail-wm0-f68.google.com with SMTP id d140so22149551wmd.2
+        for <git@vger.kernel.org>; Sun, 22 Jan 2017 14:55:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id;
+        bh=SP9N+/5W2JWTWe9UxLnd1B0+9HJCKXacKl1FGkxKmDQ=;
+        b=YVBHkjldQEPf91O9mBA8CUofi9z63Nuxp4Cvxt6fIk/dbcmKhoTvLRr3doyNkCv/9T
+         j3pcEfAjFXdjxpV4SB5rIsTezGGbmpecvJP+al9VHJmQ0HOCxqCKpFFx2i7/BwZrSUGg
+         dVgG0lqED9f9hhDNynfPmt7jA64uALv1trGSnsubBO0YaEDraQCD6zx7jE6X02b59xke
+         F0+xViSvWxrHmirYMhFX8mapleixnwgFQSULivRtHhu1t8gqfQ+OELmoEG6wZ4lDPJ5x
+         3hPyfKfbdjIlsQQcbEhvubFj+MNGb+QvLdRHNkJYfhNoz6S0CtN/mTHqiOi5isBC1vdu
+         2llA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=SP9N+/5W2JWTWe9UxLnd1B0+9HJCKXacKl1FGkxKmDQ=;
+        b=UfAwBIdbbcTtH7xscLbmuE+Ist7zYVaOm5VT7NQsZpKuEYwV3mskF7C+LwEdHGzd+m
+         tm5pShPxmLaAWIm3O83g9+DJ55W27f76/L5Yy2ZxAFpgqVsmh79UfEuiqtZyHTSMN38P
+         ZcK7I+rwnB+Z6PkGXPnjdVWbzvtDHBHDalaHIhqFGZWGPNzQaGCU9xDAGLrMzWXtxDGn
+         QDGOZePEI1Zelbcs8+A1aiV/ROYvG3DpjKKwTyP35GU7wsPjD+DPY+qMY5JIaLA14B2q
+         8lDgXgxq/lJMzq31PyYu4q203ruRyxj9/7rKKIxEKXGcM+RGxB1DoTzeFW9llXshGIac
+         DY4w==
+X-Gm-Message-State: AIkVDXJG9Rj2C3EjwckdjBo+3SXLa8mFDoaahC2qb4YsgvWduAPApekWOePb/Y39m33X4w==
+X-Received: by 10.28.139.141 with SMTP id n135mr10762979wmd.50.1485125758071;
+        Sun, 22 Jan 2017 14:55:58 -0800 (PST)
+Received: from localhost.localdomain (adsknateur.autodesk.com. [132.188.32.100])
+        by smtp.gmail.com with ESMTPSA id l140sm18034294wmg.12.2017.01.22.14.55.56
+        (version=TLS1 cipher=AES128-SHA bits=128/128);
+        Sun, 22 Jan 2017 14:55:57 -0800 (PST)
+From:   Lars Schneider <larsxschneider@gmail.com>
+To:     git@vger.kernel.org
+Cc:     gitster@pobox.com
+Subject: [PATCH v2] travis-ci: fix Perforce install on macOS
+Date:   Sun, 22 Jan 2017 23:55:50 +0100
+Message-Id: <20170122225550.28422-1-larsxschneider@gmail.com>
+X-Mailer: git-send-email 2.11.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+The `perforce` and `perforce-server` package were moved from brew [1][2]
+to cask [3]. Teach TravisCI the new location.
 
-> Having to do this change probably is an indication that the division
-> of labour between show_ref() and show_one() up to this step needs to
-> be rethought.
->
-> Conceptually, "git show-ref" works in two ways:
->
->  * When in --verify mode, the end user gives which refnames to
->    consider showing.
->
->  * Otherwise the end user gives pattern and the command infers which
->    refnames to consider showing using the pattern.
->
-> And for the refnames that are considered for showing, we may do
-> various things, like -d to deref and --quiet to be silent.  We want
-> this actual "output" step to be the same between two modes of
-> operation.
+Perforce updates their binaries without version bumps. That made the
+brew install (legitimately!) fail due to checksum mismatches. The
+workaround is not necessary anymore as Cask [4] allows to disable the
+checksum test for individual formulas.
 
-... also "error out if the named object did not exist" can be part
-of this, which means ...
+[1] https://github.com/Homebrew/homebrew-binary/commit/1394e42de04d07445f82f9512627e864ff4ca4c6
+[2] https://github.com/Homebrew/homebrew-binary/commit/f8da22d6b8dbcfcfdb2dfa9ac1a5e5d8e05aac2b
+[3] https://github.com/caskroom/homebrew-cask/pull/29180
+[4] https://caskroom.github.io/
 
-> So a better division of labour would be:
->
->  * Make show_ref() about "using pattern, enumerate what refs to
->    show" and call show_one().
->
->  * Update show_one() and teach _it_ to handle quiet and deref_tags.
+Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
+---
 
-... "if (!has_sha1_file(oid->hash)) die()" in show_ref() would
-probably want to be part of this update.
+Hi,
+
+this small update removes one more unnecessary line and makes the
+formula name lower case (no functional reason - just looks better ;-).
+
+@Junio: Do you prefer such a v2 as "--in-reply-to" to v1 or as separate
+        thread? What eases your workflow?
+
+Thanks,
+Lars
+
+
+Notes:
+    Base Commit: 787f75f056 (787f75f0567aa8c7347544c65e9d3bc6640a27d4)
+    Diff on Web: https://github.com/larsxschneider/git/commit/a8ec423355
+    Checkout:    git fetch https://github.com/larsxschneider/git travisci/brew-perforce-fix-v2 && git checkout a8ec423355
+
+    Interdiff (v1..v2):
+
+    diff --git a/.travis.yml b/.travis.yml
+    index c6ba8c8ec5..9c63c8c3f6 100644
+    --- a/.travis.yml
+    +++ b/.travis.yml
+    @@ -76,12 +76,11 @@ before_install:
+           ;;
+         osx)
+           brew update --quiet
+    -      brew tap homebrew/binary --quiet
+           # Uncomment this if you want to run perf tests:
+           # brew install gnu-time
+           brew install git-lfs gettext
+           brew link --force gettext
+    -      brew install Caskroom/cask/perforce
+    +      brew install caskroom/cask/perforce
+           ;;
+         esac;
+         echo "$(tput setaf 6)Perforce Server Version$(tput sgr0)";
+
+ .travis.yml | 12 ++----------
+ 1 file changed, 2 insertions(+), 10 deletions(-)
+
+diff --git a/.travis.yml b/.travis.yml
+index 3843967a69..9c63c8c3f6 100644
+--- a/.travis.yml
++++ b/.travis.yml
+@@ -75,20 +75,12 @@ before_install:
+       popd
+       ;;
+     osx)
+-      brew_force_set_latest_binary_hash () {
+-        FORMULA=$1
+-        SHA=$(brew fetch --force $FORMULA 2>&1 | grep ^SHA256: | cut -d ' ' -f 2)
+-        sed -E -i.bak "s/sha256 \"[0-9a-f]{64}\"/sha256 \"$SHA\"/g" \
+-          "$(brew --repository homebrew/homebrew-binary)/$FORMULA.rb"
+-      }
+       brew update --quiet
+-      brew tap homebrew/binary --quiet
+-      brew_force_set_latest_binary_hash perforce
+-      brew_force_set_latest_binary_hash perforce-server
+       # Uncomment this if you want to run perf tests:
+       # brew install gnu-time
+-      brew install git-lfs perforce-server perforce gettext
++      brew install git-lfs gettext
+       brew link --force gettext
++      brew install caskroom/cask/perforce
+       ;;
+     esac;
+     echo "$(tput setaf 6)Perforce Server Version$(tput sgr0)";
+--
+2.11.0
+
