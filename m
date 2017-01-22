@@ -7,192 +7,133 @@ X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9A44120A17
-	for <e@80x24.org>; Sun, 22 Jan 2017 17:53:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7FEC520A17
+	for <e@80x24.org>; Sun, 22 Jan 2017 17:54:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750967AbdAVRxE (ORCPT <rfc822;e@80x24.org>);
-        Sun, 22 Jan 2017 12:53:04 -0500
-Received: from mout.web.de ([212.227.15.14]:51845 "EHLO mout.web.de"
+        id S1751204AbdAVRyk (ORCPT <rfc822;e@80x24.org>);
+        Sun, 22 Jan 2017 12:54:40 -0500
+Received: from mout.web.de ([212.227.15.14]:63587 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751047AbdAVRxD (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 22 Jan 2017 12:53:03 -0500
+        id S1751047AbdAVRyj (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 22 Jan 2017 12:54:39 -0500
 Received: from [192.168.178.36] ([79.237.55.102]) by smtp.web.de (mrweb003
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0MMVpO-1cbPEj3fN0-008KvA; Sun, 22
- Jan 2017 18:51:15 +0100
-Subject: [PATCH v2 1/5] compat: add qsort_s()
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0MLgTT-1cWBYI3xD9-000uFn; Sun, 22
+ Jan 2017 18:54:02 +0100
+Subject: [PATCH v2 3/5] perf: add basic sort performance test
 To:     Git List <git@vger.kernel.org>
 References: <67ac53cd-3fc0-8bd0-30f4-129281c3090f@web.de>
 Cc:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
         Johannes Schindelin <johannes.schindelin@gmx.de>
 From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <1caa38ac-0214-441f-8e8a-1ade0839337e@web.de>
-Date:   Sun, 22 Jan 2017 18:51:11 +0100
+Message-ID: <74edb08e-4470-e166-cc78-243fa7cb36b3@web.de>
+Date:   Sun, 22 Jan 2017 18:53:57 +0100
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
  Thunderbird/45.6.0
 MIME-Version: 1.0
 In-Reply-To: <67ac53cd-3fc0-8bd0-30f4-129281c3090f@web.de>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K0:c/kmF+Qjgw4POY3i2BGOwlG3Ol8XeyKDnU+savvEu93WBqLnxfi
- CdmnqCrP3QRHFOPpzZE+gwCiVWw0vXNQ9xUbDlDVxEhtVcUf4dauu4GC4Xib/V3aTJ0xLXm
- GdF7AzoL3PcKTtVYCOnfPgoQ8+c1NdE7ULtIlx32dZhlYtOfaWdg8Qsrq7UXMaPzPx0YSVm
- FVguDVty742epKCNjWuPA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:+DF0T+qbWrs=:RIEG66blrCUEpcxl6RFYyQ
- yOx20JSoTl7pG7ZihN8kFfeZnmtIUcpPBVGB1xvFkU1RF9FalsXW/Qft6hBT07EeHGgHLo9ZV
- YQsLL7373KBYgjCxCPD+oOVqOYN1CtYOCd/rN0W+pPliym3b1zGWKPFim1T/UrnHE8wzjoiKU
- LfKnlF9lzCF3i9DYkLhNtcLMNZN683L/19FkoKywu9s0Bybdkvni7UGjEfzHEUwQ52nHxAGCR
- bsTLTcPSH81ytrO/H7+xY0gI/DgzBtwUvcs+wdohyZIIR4RUcu+cPz8Sb2keTfibkiaWEg3+J
- D4sTzIc8yiqds2e/znKriY0czZa93dZ413FFFRdE8ampYklXG+uVA7gogLiJj1e7Kbivp3i/u
- JSoucy2BpWNnnL2cRUNWtZTvLVSL8oYWHoyLmsQW5naIpsMMDjhhXyXwo5TMJFGjR+NPcIXZ7
- 9HC/mzEaV5qdYLAm6P4Vm6N3xJDZ9AY4o6u+mAKk9nAidgSF/WKvHcg1JjqzmGq6s9Al8XFNc
- BAuAzdxTRBG1XExWv9pF0muRikv3zMecdWhdoX/eWqgrY6L0q9GmbBJav0eFm0koELYzSgM1+
- /TLgcPp56EohBDuwhX6WiRK8V0VQZb8gLJeBrfxFyyIgYoLiFXjct9t/LbzQhwx+YG1nWdhcu
- kwA+BiCj96L5/28EhONXZ25sygqIdPhc+uysjPT/IBePYFVM07iLOxfMUGTiNmDq1Z0bf/hYe
- VBaBaAK8ENZ1lBneuqEltLsubtaQPB0ef9sTflRBLlhES6wK22ktI2/UlETm6bTVblTEz5AsT
- sVxUFpa
+X-Provags-ID: V03:K0:yYtYZKYIFa/8TlNqVZ+u5Usk04pQX6FSBXTBldgFzTSbqU+ZD0m
+ ygiZTFPh92sgPyOzxZlXpraEtPrhoygFtLkRuHICDMN7fJdUvA78pAtTkHmxiXiIFKCA8H1
+ iA+RjaTW2sEbWzcxhmDch7rMEDPu+KxcNokA4QBnOCX/0LiX3ly1UnrbFFkEn679UpggIdb
+ 6R6IUglbaPA2edp2tDVhg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:5lAsvNPJqj0=:F5VQU5UlAsao5H1jrBF2Zr
+ ohFXu8r4uZflr9SFpyi9WsDwT22CQ3m4rjJ0PixnKQOlbptgoV7Zvh0cZ2v5H+00a6zDqEmuA
+ 5fRF49zP0YEhEQQRc/gm1gLx7+ujn6guXJ4zpNEUyKKLZRxqWp4eyefq05u4UT5AxtuThVNTa
+ lMCAyqan4xfuEHEiQYclqxEX/gp1kbQ5uvyqhEVYqMShtdYAxpftVssIanhWBCxNZ/EmuizrK
+ 0Dbcs5I0S6T7FnmgZL/VS5x/jiCVBRaHePvkfrH2/6rXyuVGujYP4CUbItvB6Q5kIvsnGPhuE
+ xiOF6ISHsjK8vtqMCWDCS48PpJKt5JKbqTuCjyQI6ku//GIMtJvrS+1g/9DPzz+CM5fux/Hq9
+ kmfval85OLVnq2GxQlFtiqFQqlyGsZdT0oC5RUguz9mFs4MB2RP6xCLeDMrOwhBrlPgTd5qoY
+ LTaLe+tTprdP8jBYoHx/1KwPi1NK13UA9n/XN6THuXhCsF0Zq5M9iDQYmWY5oDiA3p/7ijVp4
+ JHoHIu1s+U27Nh+NL4BMsYioDlum7HIbq3KrXYns8XlropOylTPwwNOcvHV5EdXilxIcItLNy
+ hzcNV9UCSRCvf1aECVldsjystswkn/qJwf6PI+Pyhaoj96NeRNdpr/maQ72UTWdLHT0FxPysB
+ PpTbSP5PCpwJ8g9oJV8p0agK4to+WzeQTg0pRh2vR5fcAmyjpcnRl7IbB3H71xtEZpad6voFH
+ XnpHjhmsdWkjB8umDKvx/OVNoI2R3v7aSxkMrsJxLZ7D8qKKwsU5ZYMr947VKehjesv79xw72
+ Uwpb513
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The function qsort_s() was introduced with C11 Annex K; it provides the
-ability to pass a context pointer to the comparison function, supports
-the convention of using a NULL pointer for an empty array and performs a
-few safety checks.
-
-Add an implementation based on compat/qsort.c for platforms that lack a
-native standards-compliant qsort_s() (i.e. basically everyone).  It
-doesn't perform the full range of possible checks: It uses size_t
-instead of rsize_t and doesn't check nmemb and size against RSIZE_MAX
-because we probably don't have the restricted size type defined.  For
-the same reason it returns int instead of errno_t.
+Add a sort command to test-string-list that reads lines from stdin,
+stores them in a string_list and then sorts it.  Use it in a simple
+perf test script to measure the performance of string_list_sort().
 
 Signed-off-by: Rene Scharfe <l.s.r@web.de>
 ---
- Makefile          |  8 +++++++
- compat/qsort_s.c  | 69 +++++++++++++++++++++++++++++++++++++++++++++++++++++++
- git-compat-util.h |  6 +++++
- 3 files changed, 83 insertions(+)
- create mode 100644 compat/qsort_s.c
+ t/helper/test-string-list.c | 25 +++++++++++++++++++++++++
+ t/perf/p0071-sort.sh        | 26 ++++++++++++++++++++++++++
+ 2 files changed, 51 insertions(+)
+ create mode 100755 t/perf/p0071-sort.sh
 
-diff --git a/Makefile b/Makefile
-index 27afd0f378..53ecc84e28 100644
---- a/Makefile
-+++ b/Makefile
-@@ -279,6 +279,9 @@ all::
- # is a simplified version of the merge sort used in glibc. This is
- # recommended if Git triggers O(n^2) behavior in your platform's qsort().
- #
-+# Define HAVE_ISO_QSORT_S if your platform provides a qsort_s() that's
-+# compatible with the one described in C11 Annex K.
-+#
- # Define UNRELIABLE_FSTAT if your system's fstat does not return the same
- # information on a not yet closed file that lstat would return for the same
- # file after it was closed.
-@@ -1418,6 +1421,11 @@ ifdef INTERNAL_QSORT
- 	COMPAT_CFLAGS += -DINTERNAL_QSORT
- 	COMPAT_OBJS += compat/qsort.o
- endif
-+ifdef HAVE_ISO_QSORT_S
-+	COMPAT_CFLAGS += -DHAVE_ISO_QSORT_S
-+else
-+	COMPAT_OBJS += compat/qsort_s.o
-+endif
- ifdef RUNTIME_PREFIX
- 	COMPAT_CFLAGS += -DRUNTIME_PREFIX
- endif
-diff --git a/compat/qsort_s.c b/compat/qsort_s.c
-new file mode 100644
-index 0000000000..52d1f0a73d
---- /dev/null
-+++ b/compat/qsort_s.c
-@@ -0,0 +1,69 @@
-+#include "../git-compat-util.h"
-+
-+/*
-+ * A merge sort implementation, simplified from the qsort implementation
-+ * by Mike Haertel, which is a part of the GNU C Library.
-+ * Added context pointer, safety checks and return value.
-+ */
-+
-+static void msort_with_tmp(void *b, size_t n, size_t s,
-+			   int (*cmp)(const void *, const void *, void *),
-+			   char *t, void *ctx)
-+{
-+	char *tmp;
-+	char *b1, *b2;
-+	size_t n1, n2;
-+
-+	if (n <= 1)
-+		return;
-+
-+	n1 = n / 2;
-+	n2 = n - n1;
-+	b1 = b;
-+	b2 = (char *)b + (n1 * s);
-+
-+	msort_with_tmp(b1, n1, s, cmp, t, ctx);
-+	msort_with_tmp(b2, n2, s, cmp, t, ctx);
-+
-+	tmp = t;
-+
-+	while (n1 > 0 && n2 > 0) {
-+		if (cmp(b1, b2, ctx) <= 0) {
-+			memcpy(tmp, b1, s);
-+			tmp += s;
-+			b1 += s;
-+			--n1;
-+		} else {
-+			memcpy(tmp, b2, s);
-+			tmp += s;
-+			b2 += s;
-+			--n2;
-+		}
-+	}
-+	if (n1 > 0)
-+		memcpy(tmp, b1, n1 * s);
-+	memcpy(b, t, (n - n2) * s);
-+}
-+
-+int git_qsort_s(void *b, size_t n, size_t s,
-+		int (*cmp)(const void *, const void *, void *), void *ctx)
-+{
-+	const size_t size = st_mult(n, s);
-+	char buf[1024];
-+
-+	if (!n)
-+		return 0;
-+	if (!b || !cmp)
-+		return -1;
-+
-+	if (size < sizeof(buf)) {
-+		/* The temporary array fits on the small on-stack buffer. */
-+		msort_with_tmp(b, n, s, cmp, buf, ctx);
-+	} else {
-+		/* It's somewhat large, so malloc it.  */
-+		char *tmp = xmalloc(size);
-+		msort_with_tmp(b, n, s, cmp, tmp, ctx);
-+		free(tmp);
-+	}
-+	return 0;
-+}
-diff --git a/git-compat-util.h b/git-compat-util.h
-index 87237b092b..f706744e6a 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -988,6 +988,12 @@ static inline void sane_qsort(void *base, size_t nmemb, size_t size,
- 		qsort(base, nmemb, size, compar);
- }
+diff --git a/t/helper/test-string-list.c b/t/helper/test-string-list.c
+index 4a68967bd1..c502fa16d3 100644
+--- a/t/helper/test-string-list.c
++++ b/t/helper/test-string-list.c
+@@ -97,6 +97,31 @@ int cmd_main(int argc, const char **argv)
+ 		return 0;
+ 	}
  
-+#ifndef HAVE_ISO_QSORT_S
-+int git_qsort_s(void *base, size_t nmemb, size_t size,
-+		int (*compar)(const void *, const void *, void *), void *ctx);
-+#define qsort_s git_qsort_s
-+#endif
++	if (argc == 2 && !strcmp(argv[1], "sort")) {
++		struct string_list list = STRING_LIST_INIT_NODUP;
++		struct strbuf sb = STRBUF_INIT;
++		struct string_list_item *item;
 +
- #ifndef REG_STARTEND
- #error "Git requires REG_STARTEND support. Compile with NO_REGEX=NeedsStartEnd"
- #endif
++		strbuf_read(&sb, 0, 0);
++
++		/*
++		 * Split by newline, but don't create a string_list item
++		 * for the empty string after the last separator.
++		 */
++		if (sb.buf[sb.len - 1] == '\n')
++			strbuf_setlen(&sb, sb.len - 1);
++		string_list_split_in_place(&list, sb.buf, '\n', -1);
++
++		string_list_sort(&list);
++
++		for_each_string_list_item(item, &list)
++			puts(item->string);
++
++		string_list_clear(&list, 0);
++		strbuf_release(&sb);
++		return 0;
++	}
++
+ 	fprintf(stderr, "%s: unknown function name: %s\n", argv[0],
+ 		argv[1] ? argv[1] : "(there was none)");
+ 	return 1;
+diff --git a/t/perf/p0071-sort.sh b/t/perf/p0071-sort.sh
+new file mode 100755
+index 0000000000..7c9a35a646
+--- /dev/null
++++ b/t/perf/p0071-sort.sh
+@@ -0,0 +1,26 @@
++#!/bin/sh
++
++test_description='Basic sort performance tests'
++. ./perf-lib.sh
++
++test_perf_default_repo
++
++test_expect_success 'setup' '
++	git ls-files --stage "*.[ch]" "*.sh" |
++	cut -f2 -d" " |
++	git cat-file --batch >unsorted
++'
++
++test_perf 'sort(1)' '
++	sort <unsorted >expect
++'
++
++test_perf 'string_list_sort()' '
++	test-string-list sort <unsorted >actual
++'
++
++test_expect_success 'string_list_sort() sorts like sort(1)' '
++	test_cmp_bin expect actual
++'
++
++test_done
 -- 
 2.11.0
 
