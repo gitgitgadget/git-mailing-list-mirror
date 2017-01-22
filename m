@@ -2,76 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.1 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6129C20A17
-	for <e@80x24.org>; Sun, 22 Jan 2017 19:30:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CB3EB20A17
+	for <e@80x24.org>; Sun, 22 Jan 2017 19:53:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751337AbdAVTaf (ORCPT <rfc822;e@80x24.org>);
-        Sun, 22 Jan 2017 14:30:35 -0500
-Received: from mo4-p00-ob.smtp.rzone.de ([81.169.146.219]:33821 "EHLO
-        mo4-p00-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751047AbdAVTae (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 22 Jan 2017 14:30:34 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1485113432;
-        l=1136; s=domk; d=benjaminfuchs.de;
-        h=Date:Subject:Cc:To:From;
-        bh=ycpZnARi2ReZbwTkKh7HpS+cnomlLUKGXvxm5YK8Hmw=;
-        b=W1972RIYhGD4855n5GUXtYVxmj4rZJmnElXMBiVTsYJo+u9viMDD7S4Y1tlnefoE04
-        JyaXvrDSYf1LnYDAeDvQmjDW926gFUBW6pP0+NJHtKZ2MjxauKst187gxkslDa3xPBDr
-        7rxQ7HD8K9fKo9csaawcuWSwSwLfpbQmNycEg=
-X-RZG-AUTH: :KWEFfEyIefqISxrQo86CUgBQlWGSsNRH+R9D//SwlcQsxFnnwAcCeXqAJxZfrWfVMhxHI84=
-X-RZG-CLASS-ID: mo00
-Received: from fuchs-ThinkPad-T431s.poststrasse57.local (p4FF7640E.dip0.t-ipconnect.de [79.247.100.14])
-        by smtp.strato.de (RZmta 39.11 DYNA|AUTH)
-        with ESMTPSA id V096c3t0MJUTHRT
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA (curve secp521r1 with 521 ECDH bits, eq. 15360 bits RSA))
-        (Client did not present a certificate);
-        Sun, 22 Jan 2017 20:30:29 +0100 (CET)
-From:   Benjamin Fuchs <email@benjaminfuchs.de>
-To:     git@vger.kernel.org
-Cc:     szeder.dev@gmail.com, sbeller@google.com, email@benjaminfuchs.de
-Subject: [PATCH 3/3] git-prompt.sh: fix for submodule 'dirty' indicator
-Date:   Sun, 22 Jan 2017 20:30:21 +0100
-Message-Id: <1485113421-22264-1-git-send-email-email@benjaminfuchs.de>
-X-Mailer: git-send-email 2.7.4
+        id S1751458AbdAVTxK (ORCPT <rfc822;e@80x24.org>);
+        Sun, 22 Jan 2017 14:53:10 -0500
+Received: from smtp-out-5.talktalk.net ([62.24.135.69]:10627 "EHLO
+        smtp-out-5.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751047AbdAVTxK (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 22 Jan 2017 14:53:10 -0500
+Received: from localhost.localdomain ([92.31.218.76])
+        by smtp.talktalk.net with SMTP
+        id VOCIcRFMZHGLwVOCIca3TB; Sun, 22 Jan 2017 19:53:08 +0000
+X-Originating-IP: [92.31.218.76]
+X-Spam: 0
+X-OAuthority: v=2.2 cv=dsCZMBo4 c=1 sm=1 tr=0 a=e6L6E7eW+5Nb7SO+DvSdIg==:117
+ a=e6L6E7eW+5Nb7SO+DvSdIg==:17 a=5rxgeBVgAAAA:8 a=NEAV23lmAAAA:8
+ a=ybZZDoGAAAAA:8 a=FP58Ms26AAAA:8 a=BCjA09oAAAAA:8 a=pGLkceISAAAA:8
+ a=2hce0ESXTirCVrHDDTAA:9 a=ezPG0ZpnnpEA:10 a=PwKx63F5tFurRwaNxrlG:22
+ a=Bn2pgwyD2vrAyMmN8A2t:22 a=0RhZnL1DYvcuLYC8JZ5M:22 a=6LVbBl2NLSWPyIBDCKCu:22
+ a=jYKBPJSq9nmHKCndOPe9:22 a=6kGIvZw6iX1k4Y-7sg4_:22
+From:   Philip Oakley <philipoakley@iee.org>
+To:     GitList <git@vger.kernel.org>
+Cc:     Self <philipoakley@iee.org>, Junio C Hamano <gitster@pobox.com>,
+        Pat Thoyts <patthoyts@users.sourceforge.net>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Alexey Astakhov <asstv7@gmail.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: [PATCH v3 0/4] git gui: allow for a long recentrepo list
+Date:   Sun, 22 Jan 2017 19:52:57 +0000
+Message-Id: <20170122195301.1784-1-philipoakley@iee.org>
+X-Mailer: git-send-email 2.9.0.windows.1.323.g0305acf
+X-CMAE-Envelope: MS4wfHcCY32gOz322x4H+mlPFThsn+7IqxU03m1vvwZSOvhgzwQ5t40fP+R3Beh9JRSggt0ZmRB1qGP+XXfl8ZQHMZcsZFp9mNCeMXmA7fg7vFuwxmrZ2HrI
+ AGbAZzZ80M5RsXSnVOlnsEu2lcVrdfEGC6Wz7dxvbkrxy/FPti9voggtQnP0qFDs3uFQJEsrhiTnbfTDNS1lossa9lE+uJcdzsGi6+RfSWQlF+IYGEiWrueT
+ rfxcsX8J6Dbox4LGNMAcjhH6epHaCkIemdLF+KKa1tCGpaAq9WD0My5rpErB48djSjAkEsnARcrjpIfuAOTYEYmW1WqMntljYdyn8bj1S/xGJzRxaGGEBaBF
+ ITcbK4YwloF4T+wIshfkXEEu3A/MwiNczoN08RcBeeWDcSptlQU=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Fixing wrong git diff line.
----
- contrib/completion/git-prompt.sh | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+Way back in December 2015 I made a couple of attempts to patch up
+the git-gui's recentrepo list in the face of duplicate entries in
+the .gitconfig
 
-diff --git a/contrib/completion/git-prompt.sh b/contrib/completion/git-prompt.sh
-index c44b9a2..43b28e9 100644
---- a/contrib/completion/git-prompt.sh
-+++ b/contrib/completion/git-prompt.sh
-@@ -306,9 +306,9 @@ __git_ps1_submodule ()
- 	local submodule_name="$(basename "$git_dir")"
- 	if [ "$submodule_name" != ".git" ] && [ "$submodule_name" != "." ]; then
- 		local parent_top="${git_dir%.git*}"
--		local submodule_top="${git_dir#*modules}"
-+		local submodule_top="${git_dir#*modules/}"
- 		local status=""
--		git diff -C "$parent_top" --no-ext-diff --ignore-submodules=dirty --quiet -- "$submodule_top" 2>/dev/null || status="+"
-+		git -C "$parent_top" diff --no-ext-diff --ignore-submodules=dirty --quiet -- "$submodule_top" 2>/dev/null || status="+"
- 		printf "$status$submodule_name:"
- 	fi
- }
-@@ -544,7 +544,7 @@ __git_ps1 ()
- 
- 	local sub=""
- 	if [ -n "${GIT_PS1_SHOWSUBMODULE}" ]; then
--		sub="$(__git_ps1_submodule $g)"
-+		sub="$(__git_ps1_submodule "$g")"
- 	fi
- 
- 	local f="$w$i$s$u"
+The series end at http://public-inbox.org/git/9731888BD4C348F5BFC82FA96D978034@PhilipOakley/
+
+A similar problem was reported recently on the Git for Windows list
+https://github.com/git-for-windows/git/issues/1014 were a full
+recentrepo list also stopped the gui working.
+
+This series applies to Pat Thoyt's upstream Github repo as a merge
+ready Pull Request https://github.com/patthoyts/git-gui/pull/10.
+Hence if applied here it should be into the sub-tree git/git-gui.
+
+I believe I've covered the points raised by Junio in the last review
+and allowed for cases where the recentrepo list is now longer than the
+maximum (which can be configured, both up and down).
+
+I've cc'd just the cover letter to those involved previously, rather
+than the series to avoid spamming.
+
+There are various other low hanging fruit that the eager could look at
+which are detailed at the end of the GfW/issues/104 referenced above.
+
+Philip Oakley (4):
+  git-gui: remove duplicate entries from .gitconfig's gui.recentrepo
+  git gui: cope with duplicates in _get_recentrepo
+  git gui: de-dup selected repo from recentrepo history
+  git gui: allow for a long recentrepo list
+
+ lib/choose_repository.tcl | 17 ++++++++++-------
+ 1 file changed, 10 insertions(+), 7 deletions(-)
+
 -- 
-2.7.4
+2.9.0.windows.1.323.g0305acf
+---
+cc: Junio C Hamano <gitster@pobox.com>
+cc: Pat Thoyts <patthoyts@users.sourceforge.net>,
+cc: Eric Sunshine <sunshine@sunshineco.com>,
+cc: Alexey Astakhov <asstv7@gmail.com>
+cc: Johannes Schindelin <johannes.schindelin@gmx.de>
 
