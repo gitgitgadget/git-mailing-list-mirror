@@ -7,83 +7,142 @@ X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8769D20A17
-	for <e@80x24.org>; Sun, 22 Jan 2017 17:59:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0826420A17
+	for <e@80x24.org>; Sun, 22 Jan 2017 18:02:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751261AbdAVR7P (ORCPT <rfc822;e@80x24.org>);
-        Sun, 22 Jan 2017 12:59:15 -0500
-Received: from mout.web.de ([212.227.15.14]:53245 "EHLO mout.web.de"
+        id S1751328AbdAVSCp (ORCPT <rfc822;e@80x24.org>);
+        Sun, 22 Jan 2017 13:02:45 -0500
+Received: from mout.web.de ([217.72.192.78]:51918 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750925AbdAVR7O (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 22 Jan 2017 12:59:14 -0500
-Received: from [192.168.178.36] ([79.237.55.102]) by smtp.web.de (mrweb004
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0MUir6-1d19Jd2iBo-00YDq6; Sun, 22
- Jan 2017 18:52:17 +0100
-Subject: [PATCH v2 2/5] add QSORT_S
+        id S1750925AbdAVSCo (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 22 Jan 2017 13:02:44 -0500
+Received: from [192.168.178.36] ([79.237.55.102]) by smtp.web.de (mrweb103
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0Le4Tw-1cAHms26e4-00puhN; Sun, 22
+ Jan 2017 19:02:30 +0100
+Subject: [DEMO][PATCH v2 6/5] compat: add a qsort_s() implementation based on
+ GNU's qsort_r(1)
 To:     Git List <git@vger.kernel.org>
 References: <67ac53cd-3fc0-8bd0-30f4-129281c3090f@web.de>
 Cc:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
         Johannes Schindelin <johannes.schindelin@gmx.de>
 From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <57d9277e-9ed1-40bf-43a7-ff23377cdf77@web.de>
-Date:   Sun, 22 Jan 2017 18:52:13 +0100
+Message-ID: <9f8b564d-ec9f-abc9-77f6-aa84c6e78b7a@web.de>
+Date:   Sun, 22 Jan 2017 19:02:25 +0100
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
  Thunderbird/45.6.0
 MIME-Version: 1.0
 In-Reply-To: <67ac53cd-3fc0-8bd0-30f4-129281c3090f@web.de>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K0:obwvApyPS1atRzn2CzRrnK55rXLHicy0hXXpz5xiNKfR+LDPnwP
- nM5aCtPGg46uYTY1daNj/bXlw/RBEuoZpaV8TF9XFHIB110aqhTzY12C8RjzMDmlgjX/3pZ
- VLJtvWmcZVrfL+8c8wS1Wrm0ALZKofX5mry7d2XOvhaCrpgsL72MZXwqG364LaUbw3MyNQa
- heq7hmchrz2u0M84tOZKQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:Y2eWqMx0+i8=:wMjH7eqh2xhW9b6MpR4BE/
- lzh7nsGjfQ77XkaDQW2vmrJRhoMIKCsI18FZPBv8RjLZtJ9vNKTg6NNdFURcezgsmzGycaXib
- BHQWjBerJK9C2LOyzF7y7q8wk7aBojrINaeRusYSg4hmkMxTyxMvcBUTpluZFhKXnmRfGz6n5
- KCQ6KVTSvp9hZGceW7oDRFa7dC+TEP/hLHRW8/48uiVEk32j0HLrw1utW1g953BQEuBCi+50H
- AtW019Gux6e9r5WoSwkXrL1z0ijnPDCMrxC4J9QYBqli3o/4Jc205sWMRFJDdqpUQLxL3QsoK
- 7cUrOkTPep1LlRM7uBJbI0zuucELrIEyFGZXrDWZqc7f86xAHznTe1PrSBV9FNZcJi7VqUSJV
- iou5wvbJ1Ky78oZVNwDV3etabzuXLvSyxNBaLeZvVSgKuSOSfPyR+Mrih8E3NL3IYRGbF34sl
- iZlhtx2pSwEPTkXhMVW53HaqZJVTyHpAKu3sKRd7jO+QNyJXeZvMVOV9TfWvUptq3BUA8nTwk
- CoUkya0kg72saPcCeGadBVzdCprMK7t/C+aVw/vfyaTXADOfViesviHhM3/ijCkF8bptzVeS3
- LypWNqvP57hqwncAMyUMZpvoQBSH2noPcD1RQQT8pj+uyyW+6jw8UtOk8qAQty4GS9AEMgdGT
- DVDIXAsiNHbBNmpgSo+I3ubU/9rxjXJBhtR5cETydB1m/BAqzXL67169kLYj4ygue+FJyqVvU
- 7HI7Mc/y900tDXauqODPrM5smkWY4qou9ITzNaJ1DqfOvaUpjJHw81LKNqR+Va+mBsVa4Ia4w
- 0NyQ10N
+X-Provags-ID: V03:K0:DRk+Pw5jEn6R1h0o9e8pVcbRdnyl4gmuNqPVBs1nzhhGEDIEE2S
+ ksEbEz1LZNj1Vdq6ISTnUyl8US/DJRW0Ab5ks6kbujgUlBZMCXiY0TSTivHpCrUfyPGN9oN
+ d3h/fHTcik7UluW1gm/3QSw0tZLIGrdHeNtLR7hd71C9tSYwTFAeTGq3kvTmObETxwoQLBf
+ g0uOjy0hzncMeRrqGki/w==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:/GPsX33rjGA=:uTyQFbEN5g3AzAYiw3P3g4
+ t8aCi4OwKRMjhRSe2GCvlClfgAkm7dc5nJsEAMSeDTNWZAnc1/DKSGNMOClTNLQCzUHQcudno
+ cXvoNOTnY1AQ8Xd1+HW82iEpRJcsXnPYa0IXwg0rPJdrHbiq+s5sjb1Zr6RriCrnuqmWdWawp
+ oerw6FwAKlIey9OI0lUrhxRc+yw0JAwTR97sbrDM8ArbtntoqiOLOAA52QWQZIKqinArlvZd9
+ 00NBptkZvbCwfi3Dhr3y1oZ4lfvfuRLMqaMmP4LywZEDjfGFi8HJKqS6s+9ZawFPmozyMIbn1
+ BUPuoCNVGd17o/sb23mdb8vvu9B2rcMlkkV8GGkNauZbrr83LtU665ruM3spI6M7FlaxlZMGg
+ 8ChAhf9ppX8fYwPVPdRXLjVaG7nwnS95/gPB/2YLNf1am9TRYloqF5IgdImZjqADW3f8gz2Q7
+ UP7mBxsFWmDZv7ULomAdGIuAs4j9Nrst5o1CsggGvvgAtxevuv78ODzIsmPbb8ITZ2OMIpGsu
+ SWwCxogCrkbb9k+FTjoRJ+l7Kul6hD1z6AJJpjdQkrOjxnFjhE3zYwcFkw19oi+yTxlsaIb41
+ LctCG2OgjS6Yv/a8XIbKZXGtXTgXv6TiHqv42jHev2KJJQMyOSUtk2zLcR74+Ujcsgbjc5zog
+ 1sPv/2FkS/qCwBHYv8NpsN5uNgQibudJIgNi6r+G4OUow19XJ/FFEWfffdBipnR7FxWaXHbK7
+ IXZ/xvbEL/rsDgv6C8RenwtqnT7eTNzjpzH3vn3O/EIby5pB1N2j1V2pCD37tNdW/JUN+O4dl
+ 0nBTfml
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add the macro QSORT_S, a convenient wrapper for qsort_s() that infers
-the size of the array elements and dies on error.
+Implement qsort_s() as a wrapper to the GNU version of qsort_r(1) and
+use it on Linux.  Performance increases slightly:
 
-Basically all possible errors are programming mistakes (passing NULL as
-base of a non-empty array, passing NULL as comparison function,
-out-of-bounds accesses), so terminating the program should be acceptable
-for most callers.
+Test                         HEAD^             HEAD
+--------------------------------------------------------------------
+0071.2: sort(1)              0.10(0.20+0.02)   0.10(0.21+0.01) +0.0%
+0071.3: string_list_sort()   0.17(0.15+0.01)   0.16(0.15+0.01) -5.9%
 
-Signed-off-by: Rene Scharfe <l.s.r@web.de>
+Additionally the unstripped size of compat/qsort_s.o falls from 24576
+to 16544 bytes in my build.
+
+IMHO these savings aren't worth the increased complexity of having to
+support two implementations.
 ---
- git-compat-util.h | 5 +++++
- 1 file changed, 5 insertions(+)
+ Makefile         |  6 ++++++
+ compat/qsort_s.c | 18 ++++++++++++++++++
+ config.mak.uname |  1 +
+ 3 files changed, 25 insertions(+)
 
-diff --git a/git-compat-util.h b/git-compat-util.h
-index f706744e6a..f46d40e4a4 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -994,6 +994,11 @@ int git_qsort_s(void *base, size_t nmemb, size_t size,
- #define qsort_s git_qsort_s
- #endif
+diff --git a/Makefile b/Makefile
+index 53ecc84e28..46db1c773f 100644
+--- a/Makefile
++++ b/Makefile
+@@ -282,6 +282,9 @@ all::
+ # Define HAVE_ISO_QSORT_S if your platform provides a qsort_s() that's
+ # compatible with the one described in C11 Annex K.
+ #
++# Define HAVE_GNU_QSORT_R if your platform provides a qsort_r() that's
++# compatible with the one introduced with glibc 2.8.
++#
+ # Define UNRELIABLE_FSTAT if your system's fstat does not return the same
+ # information on a not yet closed file that lstat would return for the same
+ # file after it was closed.
+@@ -1426,6 +1429,9 @@ ifdef HAVE_ISO_QSORT_S
+ else
+ 	COMPAT_OBJS += compat/qsort_s.o
+ endif
++ifdef HAVE_GNU_QSORT_R
++	COMPAT_CFLAGS += -DHAVE_GNU_QSORT_R
++endif
+ ifdef RUNTIME_PREFIX
+ 	COMPAT_CFLAGS += -DRUNTIME_PREFIX
+ endif
+diff --git a/compat/qsort_s.c b/compat/qsort_s.c
+index 52d1f0a73d..763ee1faae 100644
+--- a/compat/qsort_s.c
++++ b/compat/qsort_s.c
+@@ -1,5 +1,21 @@
+ #include "../git-compat-util.h"
  
-+#define QSORT_S(base, n, compar, ctx) do {			\
-+	if (qsort_s((base), (n), sizeof(*(base)), compar, ctx))	\
-+		die("BUG: qsort_s() failed");			\
-+} while (0)
++#if defined HAVE_GNU_QSORT_R
 +
- #ifndef REG_STARTEND
- #error "Git requires REG_STARTEND support. Compile with NO_REGEX=NeedsStartEnd"
- #endif
++int git_qsort_s(void *b, size_t n, size_t s,
++		int (*cmp)(const void *, const void *, void *), void *ctx)
++{
++	if (!n)
++		return 0;
++	if (!b || !cmp)
++		return -1;
++
++	qsort_r(b, n, s, cmp, ctx);
++	return 0;
++}
++
++#else
++
+ /*
+  * A merge sort implementation, simplified from the qsort implementation
+  * by Mike Haertel, which is a part of the GNU C Library.
+@@ -67,3 +83,5 @@ int git_qsort_s(void *b, size_t n, size_t s,
+ 	}
+ 	return 0;
+ }
++
++#endif
+diff --git a/config.mak.uname b/config.mak.uname
+index 447f36ac2e..a1858f54ff 100644
+--- a/config.mak.uname
++++ b/config.mak.uname
+@@ -37,6 +37,7 @@ ifeq ($(uname_S),Linux)
+ 	NEEDS_LIBRT = YesPlease
+ 	HAVE_GETDELIM = YesPlease
+ 	SANE_TEXT_GREP=-a
++	HAVE_GNU_QSORT_R = YesPlease
+ endif
+ ifeq ($(uname_S),GNU/kFreeBSD)
+ 	HAVE_ALLOCA_H = YesPlease
 -- 
 2.11.0
 
