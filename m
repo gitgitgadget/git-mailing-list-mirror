@@ -6,39 +6,39 @@ X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 589971F89C
-	for <e@80x24.org>; Sun, 22 Jan 2017 02:42:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1215A1F89C
+	for <e@80x24.org>; Sun, 22 Jan 2017 02:42:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751042AbdAVCmR (ORCPT <rfc822;e@80x24.org>);
-        Sat, 21 Jan 2017 21:42:17 -0500
-Received: from castro.crustytoothpaste.net ([75.10.60.170]:39226 "EHLO
+        id S1750889AbdAVCmV (ORCPT <rfc822;e@80x24.org>);
+        Sat, 21 Jan 2017 21:42:21 -0500
+Received: from castro.crustytoothpaste.net ([75.10.60.170]:39238 "EHLO
         castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1750884AbdAVCmI (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 21 Jan 2017 21:42:08 -0500
+        by vger.kernel.org with ESMTP id S1750917AbdAVCmK (ORCPT
+        <rfc822;git@vger.kernel.org>); Sat, 21 Jan 2017 21:42:10 -0500
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 03E00280AE;
+        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 91DBF280B2;
         Sun, 22 Jan 2017 02:42:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
         s=default; t=1485052926;
-        bh=TZ12WEjEZgtEpuS5mFGueQUFhYCsnNdv4jSKrSQnaa8=;
+        bh=pMcPeZasLJQm3MW0JG3SThwWdBwwowNxcHBIo8kRxho=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=lujgnlSBdk/3wjElWmqDOv0Eg9EgYqOUVdVS5eJGq2bNI0ZY/3onOf0k7mKlxi4Wc
-         Ai6jcbOxPg2K630WSUnExXW/uqQErW05N9afHjnHUNFJ1SOH7iAZHo36oID6dcStHq
-         9xknvbrSCHdL9NwoqcIERatX224e/yLggmt4wGsfgL+VoYVDQuG9PUakpytrD06eB6
-         ZMOR0hftfoCySw9CTsfeFgHY0nvkwGbFH4wZLTn+X2qI4Q4zpRelONEg1sKqaYlFjA
-         nHMe2ps/opLorchXyoHrc+Y0n0Vpk2qMRUDyBRcKl2DXvvNnucAJwYPp6A+k4g8LPG
-         SDiVZKxblNCZ2dSJswVnEzpZZ7Dj2XemCqdoWC6L0dPKVM+VQEJbz+X/b1WPNGlujB
-         POalkLyETB+Qj4OHnawjuY+lncud2Xtr8syJj8DjgSCVWMMdL2mROKgY9TiThb7ZXY
-         1BBlSX30QpqWlzPViVFRdplzxoMeVELC3s7MYxbikpDMvd4xZAN
+        b=vIl2Gan0WZcIuUrHQ76ctKQ/rKBGAURBLZrlK++6LsW9nm5zTJ5kDVzQ74xE+6Bo5
+         uwRu1W9H+7GfZ/9LwnEqpyIXpeTJ80HdUWwQGsObK2Gf4H/c6/HUr1snx59fn9yD+k
+         Gj0U8w1+0nXkLa1ll3fLAdVnXbwFgUm0rwqMdXRDfpUvrqf49nug0HYhdR2Tc1nSma
+         0sFiq4JriDccu+OuVI5clzaHHUNCPFOVMQuzDCFDgs3VepLbtD6LJtZzjmbWaRKKBK
+         bp2SZX66Ov8GITITmUGp5sniu7hTKo8bD9TNfoZfA2EeluqYXwMvLnce4ThizK5DGu
+         Kw8K3DiPjwsRGIwTqGewbtRMmc18ZrHrcRliWTcSc1zrtTcWA1dxzNQAJQaedWkT0c
+         ZzFiQ9KocGNuis0MM2gyOHaNBnSKp5U7Qm9KnrdfL1v2kuGpYzLsX/wQUw63DJMynL
+         1Wnwtcih8XoLbeNDK3bqPozuDzRJO89o0nUaPc3QodSFPeFRGv0
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Jeff King <peff@peff.net>
-Subject: [PATCH v2 2/7] Documentation: modernize cat-texi.perl
-Date:   Sun, 22 Jan 2017 02:41:51 +0000
-Message-Id: <20170122024156.284180-3-sandals@crustytoothpaste.net>
+Subject: [PATCH v2 6/7] Documentation: move dblatex arguments into variable
+Date:   Sun, 22 Jan 2017 02:41:55 +0000
+Message-Id: <20170122024156.284180-7-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.11.0
 In-Reply-To: <20170122024156.284180-1-sandals@crustytoothpaste.net>
 References: <20170122024156.284180-1-sandals@crustytoothpaste.net>
@@ -47,60 +47,34 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Good style for Perl includes using the strict and warnings pragmas, and
-preferring lexical file handles over bareword file handles.  Using
-lexical file handles necessitates being explicit when $_ is printed, so
-that Perl does not get confused and instead print the glob ref.
-
-The benefit of this modernization is that a formerly obscured bug is now
-visible, which will be fixed in a followup patch.
+Our dblatex invocation uses several style components from the AsciiDoc
+distribution, but those components are not available when building with
+Asciidoctor.  Move the command line arguments into a variable so it can
+be overridden by the user or makefile configuration options.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- Documentation/cat-texi.perl | 15 +++++++++------
- 1 file changed, 9 insertions(+), 6 deletions(-)
+ Documentation/Makefile | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/Documentation/cat-texi.perl b/Documentation/cat-texi.perl
-index b1fe52e8b..1bc84d3c7 100755
---- a/Documentation/cat-texi.perl
-+++ b/Documentation/cat-texi.perl
-@@ -1,9 +1,12 @@
- #!/usr/bin/perl -w
+diff --git a/Documentation/Makefile b/Documentation/Makefile
+index 76be7017c..d95002e62 100644
+--- a/Documentation/Makefile
++++ b/Documentation/Makefile
+@@ -120,6 +120,7 @@ INSTALL_INFO = install-info
+ DOCBOOK2X_TEXI = docbook2x-texi
+ DBLATEX = dblatex
+ ASCIIDOC_DBLATEX_DIR = /etc/asciidoc/dblatex
++DBLATEX_COMMON = -p $(ASCIIDOC_DBLATEX_DIR)/asciidoc-dblatex.xsl -s $(ASCIIDOC_DBLATEX_DIR)/asciidoc-dblatex.sty
+ ifndef PERL_PATH
+ 	PERL_PATH = /usr/bin/perl
+ endif
+@@ -368,7 +369,7 @@ user-manual.texi: user-manual.xml
  
-+use strict;
-+use warnings;
-+
- my @menu = ();
- my $output = $ARGV[0];
+ user-manual.pdf: user-manual.xml
+ 	$(QUIET_DBLATEX)$(RM) $@+ $@ && \
+-	$(DBLATEX) -o $@+ -p $(ASCIIDOC_DBLATEX_DIR)/asciidoc-dblatex.xsl -s $(ASCIIDOC_DBLATEX_DIR)/asciidoc-dblatex.sty $< && \
++	$(DBLATEX) -o $@+ $(DBLATEX_COMMON) $< && \
+ 	mv $@+ $@
  
--open TMP, '>', "$output.tmp";
-+open my $tmp, '>', "$output.tmp";
- 
- while (<STDIN>) {
- 	next if (/^\\input texinfo/../\@node Top/);
-@@ -13,9 +16,9 @@ while (<STDIN>) {
- 	}
- 	s/\(\@pxref\{\[(URLS|REMOTES)\]}\)//;
- 	s/\@anchor\{[^{}]*\}//g;
--	print TMP;
-+	print $tmp $_;
- }
--close TMP;
-+close $tmp;
- 
- printf '\input texinfo
- @setfilename gitman.info
-@@ -34,10 +37,10 @@ for (@menu) {
- 	print "* ${_}::\n";
- }
- print "\@end menu\n";
--open TMP, '<', "$output.tmp";
--while (<TMP>) {
-+open $tmp, '<', "$output.tmp";
-+while (<$tmp>) {
- 	print;
- }
--close TMP;
-+close $tmp;
- print "\@bye\n";
- unlink "$output.tmp";
+ gitman.texi: $(MAN_XML) cat-texi.perl texi.xsl
