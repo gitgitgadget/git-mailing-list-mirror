@@ -6,80 +6,77 @@ X-Spam-Status: No, score=-6.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6826A20A17
-	for <e@80x24.org>; Sun, 22 Jan 2017 19:53:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2BD9A20A17
+	for <e@80x24.org>; Sun, 22 Jan 2017 19:53:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751561AbdAVTxR (ORCPT <rfc822;e@80x24.org>);
-        Sun, 22 Jan 2017 14:53:17 -0500
-Received: from smtp-out-5.talktalk.net ([62.24.135.69]:36119 "EHLO
+        id S1751581AbdAVTxS (ORCPT <rfc822;e@80x24.org>);
+        Sun, 22 Jan 2017 14:53:18 -0500
+Received: from smtp-out-5.talktalk.net ([62.24.135.69]:25022 "EHLO
         smtp-out-5.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751311AbdAVTxK (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S1751346AbdAVTxK (ORCPT <rfc822;git@vger.kernel.org>);
         Sun, 22 Jan 2017 14:53:10 -0500
 Received: from localhost.localdomain ([92.31.218.76])
         by smtp.talktalk.net with SMTP
-        id VOCIcRFMZHGLwVOCKca3TM; Sun, 22 Jan 2017 19:53:08 +0000
+        id VOCIcRFMZHGLwVOCLca3TW; Sun, 22 Jan 2017 19:53:09 +0000
 X-Originating-IP: [92.31.218.76]
 X-Spam: 0
 X-OAuthority: v=2.2 cv=dsCZMBo4 c=1 sm=1 tr=0 a=e6L6E7eW+5Nb7SO+DvSdIg==:117
- a=e6L6E7eW+5Nb7SO+DvSdIg==:17 a=1XWaLZrsAAAA:8 a=NEAV23lmAAAA:8
- a=pGLkceISAAAA:8 a=xtxXYLxNAAAA:8 a=4tzHqaojkdpRKMzpEN4A:9
- a=nJcEw6yWrPvoIXZ49MH8:22 a=Bn2pgwyD2vrAyMmN8A2t:22 a=6kGIvZw6iX1k4Y-7sg4_:22
+ a=e6L6E7eW+5Nb7SO+DvSdIg==:17 a=xtxXYLxNAAAA:8 a=i_KNsj1ChjcTQNpJ6ZwA:9
  a=xts0dhWdiJbonKbuqhAr:22
 From:   Philip Oakley <philipoakley@iee.org>
 To:     GitList <git@vger.kernel.org>
 Cc:     Self <philipoakley@iee.org>
-Subject: [PATCH v3 1/4] git-gui: remove duplicate entries from .gitconfig's gui.recentrepo
-Date:   Sun, 22 Jan 2017 19:52:58 +0000
-Message-Id: <20170122195301.1784-2-philipoakley@iee.org>
+Subject: [PATCH v3 4/4] git gui: allow for a long recentrepo list
+Date:   Sun, 22 Jan 2017 19:53:01 +0000
+Message-Id: <20170122195301.1784-5-philipoakley@iee.org>
 X-Mailer: git-send-email 2.9.0.windows.1.323.g0305acf
 In-Reply-To: <20170122195301.1784-1-philipoakley@iee.org>
 References: <20170122195301.1784-1-philipoakley@iee.org>
-X-CMAE-Envelope: MS4wfHcCY32gOz322x4H+mlPFThsn+7IqxU03m1vvwZSOvhgzwQ5t40fP+R3Beh9JRSggt0ZmRB1qGP+XXfl8ZQHMZcsZFp9mNCeMXmA7fg7vFuwxmrZ2HrI
- AGbAZzZ80M5RsWOvjVwLmMDbuqq9f0P7sxBnq45UsU+zeiE4StsRemh9e0G8vGsygUrV6KrfmI3B6KZwEINmHhpf9e4S3YBtTjg=
+X-CMAE-Envelope: MS4wfIyb42WxosabUrMQ8QqD3viNe5kuTWnxpLIfT6/7mzi4Z1oUfYImx9gwaepjWkI4nsHvIr02a3NxbgWHWpkiKT4fN8UHPW6cgYMk6mG3ia3lbUxLL6xE
+ RMvmICa0lLZfPGu7qziNLQOHX38hwB3vhKVH3IvkfQclKdWouJc2wMz25iL7neKbT5t1tZmYViqcYvQqtGMnFod39kUnEKwcAmI=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The git gui's recent repo list may become contaminated with duplicate
-entries. The git gui would barf when attempting to remove one entry.
-Remove them all - there is no option within 'git config' to selectively
-remove one of the entries.
+The gui.recentrepo list may be longer than the maxrecent setting.
+Allow extra space to show any extra entries.
 
-This issue was reported on the 'Git User' list
-(https://groups.google.com/forum/#!topic/git-users/msev4KsQGFc,
-Warning: gui.recentrepo has multiply values while executing).
+In an ideal world, the git gui would limit the number of entries
+to the maxrecent setting, however the recentrepo config list may
+have been extended outwith the gui, or the maxrecent setting changed
+to a reduced value. Further, when testing the gui's recentrepo
+logic it is useful to show these extra, but valid, entries.
 
-And also by zosrothko as a Git-for-Windows issue
-https://github.com/git-for-windows/git/issues/1014.
-
-On startup the gui checks that entries in the recentrepo list are still
-valid repos and deletes thoses that are not. If duplicate entries are
-present the 'git config --unset' will barf and this prevents the gui
-from starting.
-
-Subsequent patches fix other parts of recentrepo logic used for syncing
-internal lists with the external .gitconfig.
-
-Reported-by: Alexey Astakhov <asstv7@gmail.com>
 Signed-off-by: Philip Oakley <philipoakley@iee.org>
 ---
- lib/choose_repository.tcl | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ lib/choose_repository.tcl | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
 diff --git a/lib/choose_repository.tcl b/lib/choose_repository.tcl
-index 75d1da8..133ca0a 100644
+index f39636f..80f5a59 100644
 --- a/lib/choose_repository.tcl
 +++ b/lib/choose_repository.tcl
-@@ -247,7 +247,7 @@ proc _get_recentrepos {} {
+@@ -142,6 +142,10 @@ constructor pick {} {
+ 				-label [mc "Recent Repositories"]
+ 		}
  
- proc _unset_recentrepo {p} {
- 	regsub -all -- {([()\[\]{}\.^$+*?\\])} $p {\\\1} p
--	git config --global --unset gui.recentrepo "^$p\$"
-+	git config --global --unset-all gui.recentrepo "^$p\$"
- 	load_config 1
- }
- 
++	if {[set lenrecent [llength $sorted_recent]] < $maxrecent} {
++		set lenrecent $maxrecent
++	}
++
+ 		${NS}::label $w_body.space
+ 		${NS}::label $w_body.recentlabel \
+ 			-anchor w \
+@@ -153,7 +157,7 @@ constructor pick {} {
+ 			-background [get_bg_color $w_body.recentlabel] \
+ 			-wrap none \
+ 			-width 50 \
+-			-height $maxrecent
++			-height $lenrecent
+ 		$w_recentlist tag conf link \
+ 			-foreground blue \
+ 			-underline 1
 -- 
 2.9.0.windows.1.323.g0305acf
 
