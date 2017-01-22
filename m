@@ -2,82 +2,197 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,
 	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6087620A17
-	for <e@80x24.org>; Sun, 22 Jan 2017 17:47:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9A44120A17
+	for <e@80x24.org>; Sun, 22 Jan 2017 17:53:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751125AbdAVRrk (ORCPT <rfc822;e@80x24.org>);
-        Sun, 22 Jan 2017 12:47:40 -0500
-Received: from mout.web.de ([212.227.15.4]:54846 "EHLO mout.web.de"
+        id S1750967AbdAVRxE (ORCPT <rfc822;e@80x24.org>);
+        Sun, 22 Jan 2017 12:53:04 -0500
+Received: from mout.web.de ([212.227.15.14]:51845 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750907AbdAVRrk (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 22 Jan 2017 12:47:40 -0500
-Received: from [192.168.178.36] ([79.237.55.102]) by smtp.web.de (mrweb001
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0M9Xfb-1cg4053Kf9-00Cz7w; Sun, 22
- Jan 2017 18:47:22 +0100
+        id S1751047AbdAVRxD (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 22 Jan 2017 12:53:03 -0500
+Received: from [192.168.178.36] ([79.237.55.102]) by smtp.web.de (mrweb003
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0MMVpO-1cbPEj3fN0-008KvA; Sun, 22
+ Jan 2017 18:51:15 +0100
+Subject: [PATCH v2 1/5] compat: add qsort_s()
 To:     Git List <git@vger.kernel.org>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Subject: [PATCH v2 0/5] string-list: make string_list_sort() reentrant
+References: <67ac53cd-3fc0-8bd0-30f4-129281c3090f@web.de>
 Cc:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
         Johannes Schindelin <johannes.schindelin@gmx.de>
-Message-ID: <67ac53cd-3fc0-8bd0-30f4-129281c3090f@web.de>
-Date:   Sun, 22 Jan 2017 18:47:18 +0100
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <1caa38ac-0214-441f-8e8a-1ade0839337e@web.de>
+Date:   Sun, 22 Jan 2017 18:51:11 +0100
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
  Thunderbird/45.6.0
 MIME-Version: 1.0
+In-Reply-To: <67ac53cd-3fc0-8bd0-30f4-129281c3090f@web.de>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K0:nuqubi+XoG1jel9NDGezR8Pb8/Ewc9PDnRxeprhD+jjNkWBQWTL
- 5us3joT80d2I5BTT9FDefKH/xX8MuZnx4/mnqvzq7oU5h7lADl2ohcKxmKssC657MDta1mZ
- iZvjcxEPVc7xEJBH2ruiLzAZPRJL67VATPlARH8GwKjSYo9fd3nvNW7WqZ8nGa6LnCuBjJI
- Qg33zMvOQPEu6LodRmxig==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:6AVqXribMNA=:ggaK1KcgYXTWd6MlhPEjVM
- 7biJOzR0lQh/r/BupSu24IPao/NL/p8K1sYCttrqABO17N2FuUtiP7FbPOgcDcZOgBwNOI6Ex
- COzOE7dFw6pt3K6BgU2SZrECdyuOfmgi2V0o/S1uHkKUUcH/blgy15/WrcQRf1kovauUdcuJ0
- ihU5mj9XgNoRk6mQ0B5aIssJxYYrT1VZ9ip2SfSRJulD8sTqEE7YM77uB+QpDsbV2dQVvqr+k
- KgPR88XA6ZXCj4vUulo8ga6f78nrBs1r1xf199lpKYLJ6kQTnHEjGXCievGam5Uuw7+JS2hEv
- Q1izrN8mDIo/JIlmAhg5Xrd1pe/cDPqp1czGmKXlCeclJ43h2emlFdaX+R4Gdp9HIP30A+8RA
- 6r3y7E61mGiV8v4MhjaFKp3KK2CfEUuFio5cn2zWQuDA5WJQIFAWFnaq4NP8CILtxEJyHvOtq
- WsEBivYnOph1SwHNI2c1TTTZJTnY5ELM4IB91zKw4YsMDzKrU3Cs+tAnqGggO1Aplk1sBrXdx
- ZQ3UOmryUMbJCxbq965uYr/jKwPeNL7Bqo2FcAUICiGN+7GwvvnKM9jeI/CMaWzvvHBxXTqiM
- OM6sPGgm7Cr7jBQ1Xa/0Kxb7mkMSy64Rk1M/HDi+eqStZEerkcp6/S009mWN3INX032PA5tC6
- FiL5UhLuyA6wQ7huCSay3rb5LAlKorCVcEJYbc01bXKl/1RBEFT4s2ZToT5v81gRIV95Vy/8m
- +GwePjvfL1xMcLc5ZEUzjfV3TicFdaR7XgWb9U2BMOddJ/x6UGPUY/k/bXhKzBlB0w6NiaDQp
- wg7iOK/
+X-Provags-ID: V03:K0:c/kmF+Qjgw4POY3i2BGOwlG3Ol8XeyKDnU+savvEu93WBqLnxfi
+ CdmnqCrP3QRHFOPpzZE+gwCiVWw0vXNQ9xUbDlDVxEhtVcUf4dauu4GC4Xib/V3aTJ0xLXm
+ GdF7AzoL3PcKTtVYCOnfPgoQ8+c1NdE7ULtIlx32dZhlYtOfaWdg8Qsrq7UXMaPzPx0YSVm
+ FVguDVty742epKCNjWuPA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:+DF0T+qbWrs=:RIEG66blrCUEpcxl6RFYyQ
+ yOx20JSoTl7pG7ZihN8kFfeZnmtIUcpPBVGB1xvFkU1RF9FalsXW/Qft6hBT07EeHGgHLo9ZV
+ YQsLL7373KBYgjCxCPD+oOVqOYN1CtYOCd/rN0W+pPliym3b1zGWKPFim1T/UrnHE8wzjoiKU
+ LfKnlF9lzCF3i9DYkLhNtcLMNZN683L/19FkoKywu9s0Bybdkvni7UGjEfzHEUwQ52nHxAGCR
+ bsTLTcPSH81ytrO/H7+xY0gI/DgzBtwUvcs+wdohyZIIR4RUcu+cPz8Sb2keTfibkiaWEg3+J
+ D4sTzIc8yiqds2e/znKriY0czZa93dZ413FFFRdE8ampYklXG+uVA7gogLiJj1e7Kbivp3i/u
+ JSoucy2BpWNnnL2cRUNWtZTvLVSL8oYWHoyLmsQW5naIpsMMDjhhXyXwo5TMJFGjR+NPcIXZ7
+ 9HC/mzEaV5qdYLAm6P4Vm6N3xJDZ9AY4o6u+mAKk9nAidgSF/WKvHcg1JjqzmGq6s9Al8XFNc
+ BAuAzdxTRBG1XExWv9pF0muRikv3zMecdWhdoX/eWqgrY6L0q9GmbBJav0eFm0koELYzSgM1+
+ /TLgcPp56EohBDuwhX6WiRK8V0VQZb8gLJeBrfxFyyIgYoLiFXjct9t/LbzQhwx+YG1nWdhcu
+ kwA+BiCj96L5/28EhONXZ25sygqIdPhc+uysjPT/IBePYFVM07iLOxfMUGTiNmDq1Z0bf/hYe
+ VBaBaAK8ENZ1lBneuqEltLsubtaQPB0ef9sTflRBLlhES6wK22ktI2/UlETm6bTVblTEz5AsT
+ sVxUFpa
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Use qsort_s() from C11 Annex K to make string_list_sort() safer, in
-particular when called from parallel threads.
+The function qsort_s() was introduced with C11 Annex K; it provides the
+ability to pass a context pointer to the comparison function, supports
+the convention of using a NULL pointer for an empty array and performs a
+few safety checks.
 
-Changes from v1:
-* Renamed HAVE_QSORT_S to HAVE_ISO_QSORT_S in Makefile to disambiguate.
-* Added basic perf test (patch 3).
-* Converted a second caller to QSORT_S, in ref-filter.c (patch 5).
+Add an implementation based on compat/qsort.c for platforms that lack a
+native standards-compliant qsort_s() (i.e. basically everyone).  It
+doesn't perform the full range of possible checks: It uses size_t
+instead of rsize_t and doesn't check nmemb and size against RSIZE_MAX
+because we probably don't have the restricted size type defined.  For
+the same reason it returns int instead of errno_t.
 
-  compat: add qsort_s()
-  add QSORT_S
-  perf: add basic sort performance test
-  string-list: use QSORT_S in string_list_sort()
-  ref-filter: use QSORT_S in ref_array_sort()
-
- Makefile                    |  8 ++++++
- compat/qsort_s.c            | 69 +++++++++++++++++++++++++++++++++++++++++++++
- git-compat-util.h           | 11 ++++++++
- ref-filter.c                |  6 ++--
- string-list.c               | 13 ++++-----
- t/helper/test-string-list.c | 25 ++++++++++++++++
- t/perf/p0071-sort.sh        | 26 +++++++++++++++++
- 7 files changed, 146 insertions(+), 12 deletions(-)
+Signed-off-by: Rene Scharfe <l.s.r@web.de>
+---
+ Makefile          |  8 +++++++
+ compat/qsort_s.c  | 69 +++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ git-compat-util.h |  6 +++++
+ 3 files changed, 83 insertions(+)
  create mode 100644 compat/qsort_s.c
- create mode 100755 t/perf/p0071-sort.sh
 
+diff --git a/Makefile b/Makefile
+index 27afd0f378..53ecc84e28 100644
+--- a/Makefile
++++ b/Makefile
+@@ -279,6 +279,9 @@ all::
+ # is a simplified version of the merge sort used in glibc. This is
+ # recommended if Git triggers O(n^2) behavior in your platform's qsort().
+ #
++# Define HAVE_ISO_QSORT_S if your platform provides a qsort_s() that's
++# compatible with the one described in C11 Annex K.
++#
+ # Define UNRELIABLE_FSTAT if your system's fstat does not return the same
+ # information on a not yet closed file that lstat would return for the same
+ # file after it was closed.
+@@ -1418,6 +1421,11 @@ ifdef INTERNAL_QSORT
+ 	COMPAT_CFLAGS += -DINTERNAL_QSORT
+ 	COMPAT_OBJS += compat/qsort.o
+ endif
++ifdef HAVE_ISO_QSORT_S
++	COMPAT_CFLAGS += -DHAVE_ISO_QSORT_S
++else
++	COMPAT_OBJS += compat/qsort_s.o
++endif
+ ifdef RUNTIME_PREFIX
+ 	COMPAT_CFLAGS += -DRUNTIME_PREFIX
+ endif
+diff --git a/compat/qsort_s.c b/compat/qsort_s.c
+new file mode 100644
+index 0000000000..52d1f0a73d
+--- /dev/null
++++ b/compat/qsort_s.c
+@@ -0,0 +1,69 @@
++#include "../git-compat-util.h"
++
++/*
++ * A merge sort implementation, simplified from the qsort implementation
++ * by Mike Haertel, which is a part of the GNU C Library.
++ * Added context pointer, safety checks and return value.
++ */
++
++static void msort_with_tmp(void *b, size_t n, size_t s,
++			   int (*cmp)(const void *, const void *, void *),
++			   char *t, void *ctx)
++{
++	char *tmp;
++	char *b1, *b2;
++	size_t n1, n2;
++
++	if (n <= 1)
++		return;
++
++	n1 = n / 2;
++	n2 = n - n1;
++	b1 = b;
++	b2 = (char *)b + (n1 * s);
++
++	msort_with_tmp(b1, n1, s, cmp, t, ctx);
++	msort_with_tmp(b2, n2, s, cmp, t, ctx);
++
++	tmp = t;
++
++	while (n1 > 0 && n2 > 0) {
++		if (cmp(b1, b2, ctx) <= 0) {
++			memcpy(tmp, b1, s);
++			tmp += s;
++			b1 += s;
++			--n1;
++		} else {
++			memcpy(tmp, b2, s);
++			tmp += s;
++			b2 += s;
++			--n2;
++		}
++	}
++	if (n1 > 0)
++		memcpy(tmp, b1, n1 * s);
++	memcpy(b, t, (n - n2) * s);
++}
++
++int git_qsort_s(void *b, size_t n, size_t s,
++		int (*cmp)(const void *, const void *, void *), void *ctx)
++{
++	const size_t size = st_mult(n, s);
++	char buf[1024];
++
++	if (!n)
++		return 0;
++	if (!b || !cmp)
++		return -1;
++
++	if (size < sizeof(buf)) {
++		/* The temporary array fits on the small on-stack buffer. */
++		msort_with_tmp(b, n, s, cmp, buf, ctx);
++	} else {
++		/* It's somewhat large, so malloc it.  */
++		char *tmp = xmalloc(size);
++		msort_with_tmp(b, n, s, cmp, tmp, ctx);
++		free(tmp);
++	}
++	return 0;
++}
+diff --git a/git-compat-util.h b/git-compat-util.h
+index 87237b092b..f706744e6a 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -988,6 +988,12 @@ static inline void sane_qsort(void *base, size_t nmemb, size_t size,
+ 		qsort(base, nmemb, size, compar);
+ }
+ 
++#ifndef HAVE_ISO_QSORT_S
++int git_qsort_s(void *base, size_t nmemb, size_t size,
++		int (*compar)(const void *, const void *, void *), void *ctx);
++#define qsort_s git_qsort_s
++#endif
++
+ #ifndef REG_STARTEND
+ #error "Git requires REG_STARTEND support. Compile with NO_REGEX=NeedsStartEnd"
+ #endif
 -- 
 2.11.0
 
