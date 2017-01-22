@@ -7,115 +7,89 @@ X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AAE1D20A17
-	for <e@80x24.org>; Sun, 22 Jan 2017 17:57:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 080B420A17
+	for <e@80x24.org>; Sun, 22 Jan 2017 17:58:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751099AbdAVR5W (ORCPT <rfc822;e@80x24.org>);
-        Sun, 22 Jan 2017 12:57:22 -0500
-Received: from mout.web.de ([212.227.15.14]:61345 "EHLO mout.web.de"
+        id S1751254AbdAVR6h (ORCPT <rfc822;e@80x24.org>);
+        Sun, 22 Jan 2017 12:58:37 -0500
+Received: from mout.web.de ([212.227.15.4]:61196 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750884AbdAVR5V (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 22 Jan 2017 12:57:21 -0500
-Received: from [192.168.178.36] ([79.237.55.102]) by smtp.web.de (mrweb002
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0LrKIO-1cNQuL3kgW-0135GN; Sun, 22
- Jan 2017 18:57:14 +0100
-Subject: [PATCH v2 4/5] string-list: use QSORT_S in string_list_sort()
+        id S1751160AbdAVR6g (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 22 Jan 2017 12:58:36 -0500
+Received: from [192.168.178.36] ([79.237.55.102]) by smtp.web.de (mrweb004
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0LxaUl-1cTjc82j9f-017I5A; Sun, 22
+ Jan 2017 18:58:11 +0100
+Subject: [PATCH v2 5/5] ref-filter: use QSORT_S in ref_array_sort()
 To:     Git List <git@vger.kernel.org>
 References: <67ac53cd-3fc0-8bd0-30f4-129281c3090f@web.de>
 Cc:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
         Johannes Schindelin <johannes.schindelin@gmx.de>
 From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <06ff91ec-21c5-f57b-a0ed-3c4b9c8696ff@web.de>
-Date:   Sun, 22 Jan 2017 18:57:09 +0100
+Message-ID: <991872fc-dca6-566b-4e9f-d5b92e9ed8bf@web.de>
+Date:   Sun, 22 Jan 2017 18:58:07 +0100
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
  Thunderbird/45.6.0
 MIME-Version: 1.0
 In-Reply-To: <67ac53cd-3fc0-8bd0-30f4-129281c3090f@web.de>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K0:vbrQbDXj3mVwW12QyGyBTr4XewBSNfCERi6Vk1xUzF9ccVYyURx
- fCSYhDH7RZKRQQbwq+p6lzwoOlbh2QREui3JNkwuepv6w3sc4Yyq01Fx5DUypFHqmVThWMx
- SGnKsNM+DrDEdD6GKElXkr7wMgq0BY/Oc729r35rncoWMgQorYWxewT4v1euB9TXAWIxJfO
- g1ncvIm7dpLCShsqqW1pA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:Ikk2GbTTSQw=:fYC4huFljMyt51/FfyiGMH
- WITJR27xH66dP8JU5oKRY1Vb+qjDa4t7HFqWW2Pn9qKAskb9BdBtFmcZkD1rU2oiEhBq1RLER
- D2Sw0x/EIxV98ZagpAnJTwOkrqu+ChASlWiZpgHse0a+fKrKE1xRHvkerrChr2MtPHAcp1CmS
- hZkLq4kiTUD27yn1aVG/xVT0DTbDlTqYbolJNqGPX2f6nty3dqI47hx34RLItpOJFanYDzbnD
- /0yKOUqZpoezeIipEExTHU4WTLQDd6SlA088Pd0HSZPnNSFIDTqKCyKUfEhMOO/BYPjVwnW7h
- cdX8vFpEK5/LFskcBtad6sN1zFDtqWxfrcDYXKWiJ/+MSxyp+NCVylAeIrN+kphrwsxp8f/4f
- RFuW/ICH5Pe5kz1mS8wV5ZWaFGSNOZbIDWe6zy70UlnTmLxqdOyOetDAg7/FCw/UYG/Byjzt7
- nXFJbzuSPsxgkyOiAE9jJWh01rIBtsc6gwyqg/GAXJ0PVaHQ+oHER0UdbhNQHzfn05vWyYEA1
- BZ90CDN3dYytgtZzBidihtsda50rd3LIwFAe3jasOR5/AqlxENzI3Vci35zW1+w9k5ustk9zA
- HEUG9XUCL+hGnFRgLwILAM9NoFta35RwT7ro4kJk8v0B3WcGMMBhhgDZl+/H8g7b60Ko+5BeW
- uPya0Itb4gp/KtM2dlpqP8LVbiMPWvrphIxSE9mlxF3fOrcyY7zzyocQl1Tudxum/Bpg0Syn2
- EsasbefLEfxj1Zv2w853W6BLNiKwmXQa6sENohtKiGfLiU7EK+qNec+BmFXU7B811XGYkj1X7
- +EzZX2Z
+X-Provags-ID: V03:K0:dhQnjR3SGLYFJW/aHvQKfGab6r4K+GoiTR9IzKs/Wl+klIMA1aj
+ vm2O4DXi5r1iEYtabDgrtevCrCywn4US3DJgr9+3HvvjGdULtz+k87k37iSqnkdi4gQuzHY
+ S1JDx5AJLC3A3+LAOVB0iL8tIKpm0yfOS2zYjHMGusnHgyNA8B3NtZnYL3jwKEV+E8/W1L+
+ OaKnJE2CDgvkuOO6aFp3g==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:tFMiXxew9t4=:2F5UlBYQrjS/UO3Cr9G8d/
+ HVoDtYTFocxToBZMKRZE3gP7+Brh8ynuqC2H5JVSAEF/txhpuzVQ0M0LAJEXyGncz0EXIeEKL
+ TQY72R1PKyeYHKGCcy3fvFhDWSJrP6FUBoEdWdJsWKxroL4TB8VML4TRUAKEc1Oc25l3NVzGG
+ ZBu0crxknZmHN2uD7Rcc0pANFQAYc4MR91JhdDph94rt+nAJ7j3zctWo3vAwHCUaM0oTxHXrC
+ jgNwGrtYPah0anMDeEQ0ApoHevn2bleCwKe4L1FXlgVyYQVOWm2guwa097dbr5RVbNXIDIQ89
+ RYm7hTa1LldFIICJtYN5v+v3dsBYuNv9V2EQT/2zHy1iLn4HJxJb/T0tYe2u4+O9ZBZSBu6ID
+ s9CoEq84zrVu3vO6FNiMsPfhJj8uNM9JCuf/tC24f1KSRWQb2++xd1ApIYki9ftHhc9JiHEDR
+ EgqNBbyQnhP0X7FX6Z/J3rn6wmWojU04YwUAtMLnZHum86dPMCvub6mCqCvRPqNzfCBxgRfEY
+ 1Zr5Wcjky8rI4uxPC7IqoM2krGFhkSq5X5rsXB1mEGCWYjDfkUXYOGr2aOsJ8wKi3+Mm+Zt9U
+ 0Sy07aQEBqi3LqL7AG1e8A29tvfAsXqX2xuXxV8HYbfSMdTZGbTGZ5solgJOMsuqwa2GKBdAL
+ /6ZkHaOKbymLBrBSJ8wRBMC6f7COGeiaKvpS3WuoS7twLT8BTjmgMC6kSKQiad8kQhD5FEA3B
+ MJteeV0WIuQumTfteZwXc1V8mPmnmRSBckGtbrE8MbQX+A721zZEDr2JWzK4ruJEGHJEttArF
+ nRUSnPN
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Pass the comparison function to cmp_items() via the context parameter of
-qsort_s() instead of using a global variable.  That allows calling
-string_list_sort() from multiple parallel threads.
-
-Our qsort_s() in compat/ is slightly slower than qsort(1) from glibc
-2.24 for sorting lots of lines:
-
-Test                         HEAD^             HEAD
----------------------------------------------------------------------
-0071.2: sort(1)              0.10(0.22+0.01)   0.09(0.21+0.00) -10.0%
-0071.3: string_list_sort()   0.16(0.15+0.01)   0.17(0.15+0.00) +6.3%
-
-GNU sort(1) version 8.26 is significantly faster because it uses
-multiple parallel threads; with the unportable option --parallel=1 it
-becomes slower:
-
-Test                         HEAD^             HEAD
---------------------------------------------------------------------
-0071.2: sort(1)              0.21(0.18+0.01)   0.20(0.18+0.01) -4.8%
-0071.3: string_list_sort()   0.16(0.13+0.02)   0.17(0.15+0.01) +6.3%
-
-There is some instability -- the numbers for the sort(1) check shouldn't
-be affected by this patch.  Anyway, the performance of our qsort_s()
-implementation is apparently good enough, at least for this test.
+Pass the array of sort keys to compare_refs() via the context parameter
+of qsort_s() instead of using a global variable; that's cleaner and
+simpler.  If ref_array_sort() is to be called from multiple parallel
+threads then care still needs to be taken that the global variable
+used_atom is not modified concurrently.
 
 Signed-off-by: Rene Scharfe <l.s.r@web.de>
 ---
- string-list.c | 13 +++++--------
- 1 file changed, 5 insertions(+), 8 deletions(-)
+ ref-filter.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/string-list.c b/string-list.c
-index 8c83cac189..45016ad86d 100644
---- a/string-list.c
-+++ b/string-list.c
-@@ -211,21 +211,18 @@ struct string_list_item *string_list_append(struct string_list *list,
- 			list->strdup_strings ? xstrdup(string) : (char *)string);
+diff --git a/ref-filter.c b/ref-filter.c
+index 1a978405e6..3975022c88 100644
+--- a/ref-filter.c
++++ b/ref-filter.c
+@@ -1589,8 +1589,7 @@ static int cmp_ref_sorting(struct ref_sorting *s, struct ref_array_item *a, stru
+ 	return (s->reverse) ? -cmp : cmp;
  }
  
--/* Yuck */
--static compare_strings_fn compare_for_qsort;
--
--/* Only call this from inside string_list_sort! */
--static int cmp_items(const void *a, const void *b)
-+static int cmp_items(const void *a, const void *b, void *ctx)
+-static struct ref_sorting *ref_sorting;
+-static int compare_refs(const void *a_, const void *b_)
++static int compare_refs(const void *a_, const void *b_, void *ref_sorting)
  {
-+	compare_strings_fn cmp = ctx;
- 	const struct string_list_item *one = a;
- 	const struct string_list_item *two = b;
--	return compare_for_qsort(one->string, two->string);
-+	return cmp(one->string, two->string);
- }
+ 	struct ref_array_item *a = *((struct ref_array_item **)a_);
+ 	struct ref_array_item *b = *((struct ref_array_item **)b_);
+@@ -1606,8 +1605,7 @@ static int compare_refs(const void *a_, const void *b_)
  
- void string_list_sort(struct string_list *list)
+ void ref_array_sort(struct ref_sorting *sorting, struct ref_array *array)
  {
--	compare_for_qsort = list->cmp ? list->cmp : strcmp;
--	QSORT(list->items, list->nr, cmp_items);
-+	QSORT_S(list->items, list->nr, cmp_items,
-+		list->cmp ? list->cmp : strcmp);
+-	ref_sorting = sorting;
+-	QSORT(array->items, array->nr, compare_refs);
++	QSORT_S(array->items, array->nr, compare_refs, sorting);
  }
  
- struct string_list_item *unsorted_string_list_lookup(struct string_list *list,
+ static void append_literal(const char *cp, const char *ep, struct ref_formatting_state *state)
 -- 
 2.11.0
 
