@@ -2,230 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D71E320A17
-	for <e@80x24.org>; Sun, 22 Jan 2017 14:15:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6087620A17
+	for <e@80x24.org>; Sun, 22 Jan 2017 17:47:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751026AbdAVOPi (ORCPT <rfc822;e@80x24.org>);
-        Sun, 22 Jan 2017 09:15:38 -0500
-Received: from mail-wm0-f47.google.com ([74.125.82.47]:38429 "EHLO
-        mail-wm0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750735AbdAVOPg (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 22 Jan 2017 09:15:36 -0500
-Received: by mail-wm0-f47.google.com with SMTP id r144so115459968wme.1
-        for <git@vger.kernel.org>; Sun, 22 Jan 2017 06:15:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=vanburgh.me; s=google;
-        h=from:to:cc:references:in-reply-to:subject:date:message-id
-         :mime-version:content-transfer-encoding:thread-index
-         :content-language;
-        bh=3fqsjwfTsvjs5quEtdo6DYYzFNoJWgtXJXO9tmRijGA=;
-        b=ccRq+Kx1KXhHqOzge80qjv2Fn+wUHAduwnRlgTKRh6k5ERLl/AVM5pYOCj+IVwGCHh
-         jdBdgj3wHMES6D6tAzZMG/rsg/Wq1PwyG9wKRtDhBcNEzwLND5pMAHAzliHbWWj45YtM
-         6kcFNEPAlnJNcywdXoD1GOfds6gVvyhr7G8RI=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:references:in-reply-to:subject:date
-         :message-id:mime-version:content-transfer-encoding:thread-index
-         :content-language;
-        bh=3fqsjwfTsvjs5quEtdo6DYYzFNoJWgtXJXO9tmRijGA=;
-        b=G/Qbord1IYxHAFiAwL7h8J8Knlax956kIYQSYjYA6tnu+2dXltH3c4Iib6lDUjWmvS
-         yO6LzejJFcxR9e8hrB+WvE+ufxp9PKN/ES455DD3PfmSaBbUWE/lsoi3fqEFnLQuZKxw
-         UP67+I9zlh5LH35s/VIzrgVaqy20xnHN24YP29emK6jkLStPn7vOfJ5mr+KckT4ZFtJ3
-         M922k5f8cC3tjwOHaZB+qOPAzcgQbVOEv/Jx49YbgtWj688psNc0uHUviuKAuDYoOqrz
-         Um8FhQORQZXkx5l0Brf9EkvfuHA/4myos+mtqoKm5BKUbERANCkE/to4vunrM8eSnxuf
-         yRdQ==
-X-Gm-Message-State: AIkVDXKiXT0cReKIQIIf9XH7KdlR1FlFrm9h9uk0hBwPfQJeIglNzWLq4hDlrPWtyKchBg==
-X-Received: by 10.28.206.136 with SMTP id e130mr10052867wmg.121.1485094500595;
-        Sun, 22 Jan 2017 06:15:00 -0800 (PST)
-Received: from TEMPEST ([149.18.92.226])
-        by smtp.gmail.com with ESMTPSA id k195sm16134372wmd.7.2017.01.22.06.14.59
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 22 Jan 2017 06:14:59 -0800 (PST)
-From:   "George Vanburgh" <george@vanburgh.me>
-To:     "'Luke Diamand'" <luke@diamand.org>
-Cc:     "'Lars Schneider'" <larsxschneider@gmail.com>,
-        "'Git mailing list'" <git@vger.kernel.org>
-References: <01020159c0e82598-e373cf0d-2bad-41bb-b455-6896ad183e22-000000@eu-west-1.amazonses.com> <A7425283-9C32-4AE8-A442-11B7CFEAB4E8@gmail.com> <000f01d273fa$05358ee0$0fa0aca0$@vanburgh.me> <CAE5ih7_+Vc9oqKdjo8h2vgZPup4pto9wd=sBb=W6hCs4tuW2Jg@mail.gmail.com>
-In-Reply-To: <CAE5ih7_+Vc9oqKdjo8h2vgZPup4pto9wd=sBb=W6hCs4tuW2Jg@mail.gmail.com>
-Subject: RE: [PATCH] git-p4: Fix git-p4.mapUser on Windows
-Date:   Sun, 22 Jan 2017 14:14:59 -0000
-Message-ID: <001901d274b9$eaad3f80$c007be80$@vanburgh.me>
+        id S1751125AbdAVRrk (ORCPT <rfc822;e@80x24.org>);
+        Sun, 22 Jan 2017 12:47:40 -0500
+Received: from mout.web.de ([212.227.15.4]:54846 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1750907AbdAVRrk (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 22 Jan 2017 12:47:40 -0500
+Received: from [192.168.178.36] ([79.237.55.102]) by smtp.web.de (mrweb001
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0M9Xfb-1cg4053Kf9-00Cz7w; Sun, 22
+ Jan 2017 18:47:22 +0100
+To:     Git List <git@vger.kernel.org>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Subject: [PATCH v2 0/5] string-list: make string_list_sort() reentrant
+Cc:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Message-ID: <67ac53cd-3fc0-8bd0-30f4-129281c3090f@web.de>
+Date:   Sun, 22 Jan 2017 18:47:18 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.6.0
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQIUK6tOJOf2iHp2Y3A2khLXGqjAtAILtpD4AtMcqZ8CKjEqhqCIz5Cg
-Content-Language: en-gb
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+X-Provags-ID: V03:K0:nuqubi+XoG1jel9NDGezR8Pb8/Ewc9PDnRxeprhD+jjNkWBQWTL
+ 5us3joT80d2I5BTT9FDefKH/xX8MuZnx4/mnqvzq7oU5h7lADl2ohcKxmKssC657MDta1mZ
+ iZvjcxEPVc7xEJBH2ruiLzAZPRJL67VATPlARH8GwKjSYo9fd3nvNW7WqZ8nGa6LnCuBjJI
+ Qg33zMvOQPEu6LodRmxig==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:6AVqXribMNA=:ggaK1KcgYXTWd6MlhPEjVM
+ 7biJOzR0lQh/r/BupSu24IPao/NL/p8K1sYCttrqABO17N2FuUtiP7FbPOgcDcZOgBwNOI6Ex
+ COzOE7dFw6pt3K6BgU2SZrECdyuOfmgi2V0o/S1uHkKUUcH/blgy15/WrcQRf1kovauUdcuJ0
+ ihU5mj9XgNoRk6mQ0B5aIssJxYYrT1VZ9ip2SfSRJulD8sTqEE7YM77uB+QpDsbV2dQVvqr+k
+ KgPR88XA6ZXCj4vUulo8ga6f78nrBs1r1xf199lpKYLJ6kQTnHEjGXCievGam5Uuw7+JS2hEv
+ Q1izrN8mDIo/JIlmAhg5Xrd1pe/cDPqp1czGmKXlCeclJ43h2emlFdaX+R4Gdp9HIP30A+8RA
+ 6r3y7E61mGiV8v4MhjaFKp3KK2CfEUuFio5cn2zWQuDA5WJQIFAWFnaq4NP8CILtxEJyHvOtq
+ WsEBivYnOph1SwHNI2c1TTTZJTnY5ELM4IB91zKw4YsMDzKrU3Cs+tAnqGggO1Aplk1sBrXdx
+ ZQ3UOmryUMbJCxbq965uYr/jKwPeNL7Bqo2FcAUICiGN+7GwvvnKM9jeI/CMaWzvvHBxXTqiM
+ OM6sPGgm7Cr7jBQ1Xa/0Kxb7mkMSy64Rk1M/HDi+eqStZEerkcp6/S009mWN3INX032PA5tC6
+ FiL5UhLuyA6wQ7huCSay3rb5LAlKorCVcEJYbc01bXKl/1RBEFT4s2ZToT5v81gRIV95Vy/8m
+ +GwePjvfL1xMcLc5ZEUzjfV3TicFdaR7XgWb9U2BMOddJ/x6UGPUY/k/bXhKzBlB0w6NiaDQp
+ wg7iOK/
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> On 22 Jan 2017, at 13:05, Luke Diamand <luke@diamand.org>
->=20
-> I'm confused....see below.
+Use qsort_s() from C11 Annex K to make string_list_sort() safer, in
+particular when called from parallel threads.
 
-That now makes two of us!=20
-I think I've figured out where I messed up, see below.
+Changes from v1:
+* Renamed HAVE_QSORT_S to HAVE_ISO_QSORT_S in Makefile to disambiguate.
+* Added basic perf test (patch 3).
+* Converted a second caller to QSORT_S, in ref-filter.c (patch 5).
 
->=20
-> On 21 January 2017 at 15:21, George Vanburgh <george@vanburgh.me>
-> wrote:
-> >> On 21 Jan 2017, at 13:33, Lars Schneider <larsxschneider@gmail.com>
-> >> > On 21 Jan 2017, at 13:02, George Vanburgh <george@vanburgh.me>
-> >> wrote:
-> >> >
-> >> > From: George Vanburgh <gvanburgh@bloomberg.net>
-> >> >
-> >> > When running git-p4 on Windows, with multiple git-p4.mapUser
-> >> > entries in git config - no user mappings are applied to the
-> >> > generated
-> > repository.
-> >> >
-> >> > Reproduction Steps:
-> >> >
-> >> > 1. Add multiple git-p4.mapUser entries to git config on a Windows
-> >> >   machine
-> >> > 2. Attempt to clone a p4 repository
-> >> >
-> >> > None of the user mappings will be applied.
-> >> >
-> >> > This issue is caused by the fact that gitConfigList, uses
-> >> > split(os.linesep) to convert the output of git config --get-all
-> >> > into a list.
-> >> >
-> >> > On Windows, os.linesep is equal to '\r\n' - however git.exe =
-returns
-> >> > configuration with a line seperator of '\n'. This leads to the =
-list
-> >> > returned by gitConfigList containing only one element - which
-> >> > contains the full output of git config --get-all in string form.
-> >> > This causes problems for the code introduced to
-> >> > getUserMapFromPerforceServer in 10d08a1.
-> >> >
-> >> > This issue should be caught by the test introduced in 10d08a1, =
-and
-> >> > would require running on Windows to reproduce. When running =
-inside
-> >> > MinGW/Cygwin, however, os.linesep correctly returns '\n', and
-> >> > everything works as expected.
-> >>
-> >> This surprises me. I would expect `\r\n` in a MinGW env...
-> >> Nevertheless, I wouldn't have caught that as I don't run the git-p4
-> >> tests
-> > on
-> >> Windows...
-> >
-> > It appears I was mistaken - the successful tests I ran were actually
-> > under the Ubuntu subsystem for Windows, which (obviously) passed.
-> >
-> > Just did a quick experiment:
-> >
-> > Git Bash (MinGW):
-> > georg@TEMPEST MINGW64 ~
-> > $ python -c "import os
-> > print(repr(os.linesep))"
-> > '\r\n'
-> >
-> > Powershell:
-> > PS C:\Users\georg> python -c "import os
-> >>> print(repr(os.linesep))"
-> > '\r\n'
-> >
-> > Ubuntu subsystem for Windows:
-> > george@TEMPEST:~$ python -c "import os print(repr(os.linesep))"
-> > '\n'
-> >
-> > So this issue applies to git-p4 running under both PowerShell and =
-MinGW.
-> >
-> >>
-> >>
-> >> > The simplest fix for this issue would be to convert the line =
-split
-> >> > logic inside gitConfigList to use splitlines(), which splits on =
-any
-> >> > standard line delimiter. However, this function was only =
-introduced
-> >> > in Python 2.7, and would mean a bump in the minimum required
-> >> > version of Python required to run git-p4. The alternative fix,
-> >> > implemented here, is to use '\n' as a delimiter, which git.exe
-> >> > appears to output consistently on Windows anyway.
->=20
-> Have you tried a 2.6 Python with splitlines? I just tried this code =
-and it seems
-> fine.
->=20
-> > val =3D s.strip().splitlines()
-> > print("splitlines:", val)
->=20
-> Tried with 2.7 and 2.6, and bot print out an array of strings returned =
-from
-> read_pipe().
->=20
-> And 'grep -r splitlines' on the Python2.6 source has lots of hits.
+  compat: add qsort_s()
+  add QSORT_S
+  perf: add basic sort performance test
+  string-list: use QSORT_S in string_list_sort()
+  ref-filter: use QSORT_S in ref_array_sort()
 
-Ah - it appears I was looking in the wrong part of the Python=20
-documentation - which is what lead me to think this.=20
-From the Python 2.4 documentation:
+ Makefile                    |  8 ++++++
+ compat/qsort_s.c            | 69 +++++++++++++++++++++++++++++++++++++++++++++
+ git-compat-util.h           | 11 ++++++++
+ ref-filter.c                |  6 ++--
+ string-list.c               | 13 ++++-----
+ t/helper/test-string-list.c | 25 ++++++++++++++++
+ t/perf/p0071-sort.sh        | 26 +++++++++++++++++
+ 7 files changed, 146 insertions(+), 12 deletions(-)
+ create mode 100644 compat/qsort_s.c
+ create mode 100755 t/perf/p0071-sort.sh
 
-https://docs.python.org/release/2.4/lib/string-methods.html
-
-Splitlines is a built-in method, not part of the string class.
-
-> george@TEMPEST:~# /home/george/.pyenv/versions/2.4.1/bin/python -c =
-'import string
-> print("test1\ntest2\r\ntest3".splitlines())'
-> ['test1', 'test2', 'test3']
-
->=20
-> >>
-> >> Well, that also means if we ever use splitlines() then your fix =
-below
-> > would
-> >> brake the code, right?
-> >>
-> >> Python 2.7 was released 7 years ago in 2010.
-> >
-> > Now I feel old...
->=20
-> :-)
->=20
-> >
-> >> Therefore, I would vote to
-> >> bump the minimum version. But that's just my opinion :-)
-> >
-> > I feel like splitlines is the better/safer fix - but figured bumping
-> > the minimum Python version was probably part of a wider discussion. =
-If
-> > it's something people are comfortable with - I'd be happy to rework
-> > the fix to use splitlines.
-> > Luke - do you have any thoughts on this?
->=20
-> I agree that we have to stop supporting 2.6 at some point (and start
-> supporting 3.x, but that's another world of hurt). But does 2.6 really =
-not have
-> splitlines?
-
-The minimum supported version is currently Python 2.4, no?
-
->=20
-> If you send a patch with splitlines I can try it out (although I guess =
-it could be
-> broken under Windows).
-
-Given that there doesn't _actually_ seem to be an issue with using =
-splitlines in
-2.4 (sorry for the confusion!) - I'll test out a patch using splitlines =
-on=20
-Windows, and resubmit =3D]
-
->=20
-> Luke
+-- 
+2.11.0
 
