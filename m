@@ -2,108 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7176620AC5
-	for <e@80x24.org>; Mon, 23 Jan 2017 22:52:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BA61720A17
+	for <e@80x24.org>; Mon, 23 Jan 2017 23:27:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751845AbdAWWwn (ORCPT <rfc822;e@80x24.org>);
-        Mon, 23 Jan 2017 17:52:43 -0500
-Received: from mail-wj0-f195.google.com ([209.85.210.195]:36504 "EHLO
-        mail-wj0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751810AbdAWWwl (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Jan 2017 17:52:41 -0500
-Received: by mail-wj0-f195.google.com with SMTP id kq3so2872536wjc.3
-        for <git@vger.kernel.org>; Mon, 23 Jan 2017 14:52:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=EDIdjho4zcpsk2up51iUZf7aOkQiuWRi8ekaaIeMiYM=;
-        b=rEr0NHiDW3aXVYcsp3m4OjYkR9MUb1zkwVC/TMG4CN+BMOmCbPGULZB7OmlhubK9ef
-         7ShrKN4TGAk2K3DoRwotxKRmP/msSjOEBv4bjgn4Z4sxRPXyqW2m6L4FdtkhKAG01o6l
-         ZT3S0etmuNOY1kymGgpFWFZKSsyVBuOnN5wKVE/9PGDM8yRI8Hs1UmfgMaOnYZ37IF8Q
-         IWpt5S40VdrcZolPGVpjTwiwOgYuvLKIyOPbEtUwn9sAwWbrCvSoC/9KaiNMZVo//nhG
-         AIdAGhv5GGhQDuhQZobx7uXhhtSLeg4GaTEl/Uj1E9j2SUrCi4xyf+sDEugiNaDVRqCI
-         frXg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=EDIdjho4zcpsk2up51iUZf7aOkQiuWRi8ekaaIeMiYM=;
-        b=bblJ+2vWNVEyONRPO+127pXwjQoWqdNa3Ft7yZq4yNF9AODIqlUM2zvR8sl0yXKBM3
-         GVN6RRmpA20YE2bhKR1/PNSmR4OAWwCH6uZLv+InO/4HQlEtbzwVRn6st17/0p2G8DO5
-         8Da51QGIEyzMHptBPsmvuOUQQPobbABpUHeXAuGbrBSuoXMg9j0O566vLtpIFEagJz8l
-         ooG5NOcTI+xVUNJRfBTwKYh4IBsSdk/WCSZPPBhd/57i6PUX14NeWWDYsRFbtO6dCUai
-         e/D7QxJ8+z+HmfGy8tgcNwmqPc84xQFrvwPZbYikTNmNUbHuAbRyw56P/Qe8WMkoIETW
-         J0BA==
-X-Gm-Message-State: AIkVDXL68UM+NKdKMNG00tKfwHBItvlk2x1gjCKcvU8mw7jIU4JC5afmG/pB6ALd0R7MxA==
-X-Received: by 10.223.168.111 with SMTP id l102mr25053995wrc.150.1485211959743;
-        Mon, 23 Jan 2017 14:52:39 -0800 (PST)
-Received: from localhost ([151.74.133.189])
-        by smtp.gmail.com with ESMTPSA id k43sm16868306wrc.46.2017.01.23.14.52.38
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 23 Jan 2017 14:52:38 -0800 (PST)
-From:   Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-To:     <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-Subject: [PATCH 2/5] sequencer: save/load all options
-Date:   Mon, 23 Jan 2017 23:52:18 +0100
-Message-Id: <20170123225221.3659-3-giuseppe.bilotta@gmail.com>
-X-Mailer: git-send-email 2.11.0.616.gd72966cf44.dirty
-In-Reply-To: <20170123225221.3659-1-giuseppe.bilotta@gmail.com>
-References: <20170123225221.3659-1-giuseppe.bilotta@gmail.com>
+        id S1751850AbdAWX1X (ORCPT <rfc822;e@80x24.org>);
+        Mon, 23 Jan 2017 18:27:23 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:54868 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751445AbdAWX1W (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Jan 2017 18:27:22 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 6701F63B32;
+        Mon, 23 Jan 2017 18:27:21 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=rJbHTnocjyuZSXD3VPr+uZv45Tg=; b=E5jTBe
+        /b6stImOcMsQUMfFNP934S5rWrb/35quQ/R9mWHUII9B4gM8KfR1u6GjZt0yjPFA
+        SN7ADa21skxK7rySZaBezLB+9KSPkLMp5eiuufYCMwEMj0allJHwYGEW+boFkNZD
+        ejgG5QMvZ7e+0jSS7ppYBuCmh0ASDewqdVdZc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=pM7ALUO/3zoD89D2nXswwmOM7R2+8Yjh
+        DaqSz5+D9sjz+nIeAk3dpzXuQLGXej9iSUXSaX6Ob+D+sgAo1g4OEE+VLaQFHXJ0
+        x3+jlAcAiSNAM5kD4giI+5J0msVCSXuhnNp423b4NhUYRgeCgmObXnD+eIuFFF61
+        MnY/tkfXox4=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 5FAD363B31;
+        Mon, 23 Jan 2017 18:27:21 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id C1B9563B30;
+        Mon, 23 Jan 2017 18:27:20 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+Cc:     Git List <git@vger.kernel.org>
+Subject: Re: [PATCH] rebase: pass --signoff option to git am
+References: <20170121104904.15132-1-giuseppe.bilotta@gmail.com>
+        <xmqqh94ptzke.fsf@gitster.mtv.corp.google.com>
+        <CAOxFTcyuLkvgPOxQuzaDUVuDRu_KJg=JrYtU84pQyjLstChbLg@mail.gmail.com>
+        <xmqqbmuxr0pd.fsf@gitster.mtv.corp.google.com>
+        <CAOxFTczrLmWZg3720HMUA-13q9ADi_rK5k0x+TEYyKR=xR5b_w@mail.gmail.com>
+Date:   Mon, 23 Jan 2017 15:27:19 -0800
+In-Reply-To: <CAOxFTczrLmWZg3720HMUA-13q9ADi_rK5k0x+TEYyKR=xR5b_w@mail.gmail.com>
+        (Giuseppe Bilotta's message of "Mon, 23 Jan 2017 23:35:38 +0100")
+Message-ID: <xmqqsho9pdbc.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 7CAEC37E-E1C3-11E6-9444-A7617B1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add the missing replay_opts to save_opts and populate_opts, so that an
-interrupted cherry-pick will continue with the same setup it had before
-the interruption.
+Giuseppe Bilotta <giuseppe.bilotta@gmail.com> writes:
 
-Signed-off-by: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
----
- sequencer.c | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+> On Mon, Jan 23, 2017 at 9:16 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>> Giuseppe Bilotta <giuseppe.bilotta@gmail.com> writes:
+>>
+>>> On Mon, Jan 23, 2017 at 7:13 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>>>>
+>>>> Should we plan to extend this to the interactive backend that is
+>>>> shared between rebase -i and rebase -m, too?  Or is this patch
+>>>> already sufficient to cover them?
+>>>
+>>> AFAIK this is sufficient for both, in the sense that I've used it with
+>>> git rebase -i and it works.
+>>
+>> That is a good news and at the same time a bit awkard one ;-)
+>>
+>> The mention of "passed to 'git am'" twice in the documentation and
+>> help text would lead people to think "rebase -i" would not be
+>> affected and (1) would need more work to do so, or (2) the user does
+>> not want "rebase -i" to be unaffected for whatever reason, and gets
+>> surprised to see that it actually does get affected.
+>
+> I'm not sure I follow. If the user doesn't want to signoff during a
+> rebase, they can simply not pass --signoff. If they do, they can not
+> pass it. Am I missing something?
 
-diff --git a/sequencer.c b/sequencer.c
-index 672c81b559..3d2f61c979 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -985,6 +985,14 @@ static int populate_opts_cb(const char *key, const char *value, void *data)
- 		opts->signoff = git_config_bool_or_int(key, value, &error_flag);
- 	else if (!strcmp(key, "options.allow-ff"))
- 		opts->allow_ff = git_config_bool_or_int(key, value, &error_flag);
-+	else if (!strcmp(key, "options.rerere-autoupdate"))
-+		opts->allow_rerere_auto = git_config_bool_or_int(key, value, &error_flag);
-+	else if (!strcmp(key, "options.allow-empty"))
-+		opts->allow_empty = git_config_bool_or_int(key, value, &error_flag);
-+	else if (!strcmp(key, "options.allow-empty-message"))
-+		opts->allow_empty_message = git_config_bool_or_int(key, value, &error_flag);
-+	else if (!strcmp(key, "options.keep-redundant-commits"))
-+		opts->keep_redundant_commits = git_config_bool_or_int(key, value, &error_flag);
- 	else if (!strcmp(key, "options.mainline"))
- 		opts->mainline = git_config_int(key, value);
- 	else if (!strcmp(key, "options.gpg-sign"))
-@@ -1233,6 +1241,14 @@ static int save_opts(struct replay_opts *opts)
- 		res |= git_config_set_in_file_gently(opts_file, "options.signoff", "true");
- 	if (opts->allow_ff)
- 		res |= git_config_set_in_file_gently(opts_file, "options.allow-ff", "true");
-+	if (opts->allow_rerere_auto)
-+		res |= git_config_set_in_file_gently(opts_file, "options.rerere-autoupdate", "true");
-+	if (opts->allow_empty)
-+		res |= git_config_set_in_file_gently(opts_file, "options.allow-empty", "true");
-+	if (opts->allow_empty_message)
-+		res |= git_config_set_in_file_gently(opts_file, "options.allow-empty-message", "true");
-+	if (opts->keep_redundant_commits)
-+		res |= git_config_set_in_file_gently(opts_file, "options.keep-redundant-commits", "true");
- 	if (opts->mainline) {
- 		struct strbuf buf = STRBUF_INIT;
- 		strbuf_addf(&buf, "%d", opts->mainline);
--- 
-2.11.0.616.gd72966cf44.dirty
+alias.
 
+Which also means that there needs to be --no-signoff option that can
+be given to countermand an earlier --signoff, if a user did
+
+	[alias] rb = rebase --signoff
+
+and wants to disable it one time only with
+
+	$ git rb --no-signoff
+
+>
+>> In any case, will queue as-is so that we won't lose the patch while
+>> waiting for people to raise their opinions.
+>
+> Thanks.
+
+Thanks.  The final version would also need tests, so it may be a
+good time to start thinking about what aspect of this feature wants
+to be protected against future breakages.
