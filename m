@@ -2,72 +2,126 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7212D1F89C
-	for <e@80x24.org>; Mon, 23 Jan 2017 11:47:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 713CE1F89C
+	for <e@80x24.org>; Mon, 23 Jan 2017 11:57:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751178AbdAWLqi (ORCPT <rfc822;e@80x24.org>);
-        Mon, 23 Jan 2017 06:46:38 -0500
-Received: from mail-qt0-f175.google.com ([209.85.216.175]:34263 "EHLO
-        mail-qt0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751041AbdAWLqh (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Jan 2017 06:46:37 -0500
-Received: by mail-qt0-f175.google.com with SMTP id l7so119657623qtd.1
-        for <git@vger.kernel.org>; Mon, 23 Jan 2017 03:46:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=+++926Hbk4j2O55VIQ8W6Q3pWhkxb9JepVargB0v0vA=;
-        b=Dmxpd48kcX8BA8KmGUOTHFHqYKVDm0YDkIX66aFP/DJCJ0owVKUzxVgfl8Y45K7YDV
-         +2VvurUjFL9/VUvvjiomGq3L+q/wjRLG8HtDSBTHCVYCFdQ3T4952r2tVj+25N524U+S
-         ToO+2kTGKz20a38rJxMB/fZS/CSuNAXuNl5dumzuYwo3tMnIbiKLeCPnurIu/4BHJqGS
-         BjAk0OVp/I+wce78pk219tbUmIyhE3At5ml5ug5rvcs+tKc7eQVdv/s1nxTuJa9mChH0
-         tw9S7/DR6t7ugpl6ihCWroDerdM0TqRoW8GINBnNW3VWZjpPXlp13IyNfNxRx+AwO+dG
-         Wr5Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=+++926Hbk4j2O55VIQ8W6Q3pWhkxb9JepVargB0v0vA=;
-        b=h+QY3r/Hd51ldsoFTUjCok/ESfN3/95qSJtUejrt+VEKAKd0y5eeUe+7NX63favZ2w
-         AycK43yQKHwdXBXNa79k+8vLZeS8nRH6yuK98YgzyaD9aicbY5JOsJEE6n4R7we+4FBK
-         0yxx1mDvmkM4Tyxf50XW1gDBeMfkmG0loeqNF9yGbdlfuM4aUtlc7szP+R59zleh3Pav
-         6nJ0ZtvLpExN6O4wkrM6URlaN4n7CFUvg/Ca1K1V8GUqEPDcTQTP4AazxLI7XJAGKsWZ
-         WtimW3N3xYzqf2TscqCtG3TIWJ9PRnpgpxzP1aqRg8DfX4tzHUBoLhFBOidjSuot3Hp8
-         IZ6g==
-X-Gm-Message-State: AIkVDXIDQWAeSOlIKvD0raBXbRPxEFAn2yy1KCIYjfDrYle4Pj3UiFc8uyZvrZ6yxl0PTNAv0dmSEp3hFemfGQ==
-X-Received: by 10.200.45.111 with SMTP id o44mr24686848qta.138.1485171996481;
- Mon, 23 Jan 2017 03:46:36 -0800 (PST)
+        id S1750872AbdAWL5e (ORCPT <rfc822;e@80x24.org>);
+        Mon, 23 Jan 2017 06:57:34 -0500
+Received: from mout.gmx.net ([212.227.17.21]:54709 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1750703AbdAWL5d (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Jan 2017 06:57:33 -0500
+Received: from virtualbox ([37.24.141.236]) by mail.gmx.com (mrgmx101
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0LzGV3-1cQjU60ABV-014VkH; Mon, 23
+ Jan 2017 12:57:19 +0100
+Date:   Mon, 23 Jan 2017 12:57:18 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Philip Oakley <philipoakley@iee.org>
+cc:     Git List <git@vger.kernel.org>,
+        Thomas Braun <thomas.braun@virtuell-zuhause.de>
+Subject: Re: Idea: Add a filter option to 'git rebase'
+In-Reply-To: <7EEBBEA4046743C9AE04AE50EE30D72A@PhilipOakley>
+Message-ID: <alpine.DEB.2.20.1701231214190.3469@virtualbox>
+References: <8AED6D90D2B64AE3A63C6195CA983FE8@PhilipOakley> <0bd00cda-65d0-eeba-d8b9-a839e76d8e88@virtuell-zuhause.de> <7EEBBEA4046743C9AE04AE50EE30D72A@PhilipOakley>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Received: by 10.140.93.1 with HTTP; Mon, 23 Jan 2017 03:45:56 -0800 (PST)
-From:   Tushar Kapila <tushar.kapila@gmail.com>
-Date:   Mon, 23 Jan 2017 17:15:56 +0530
-Message-ID: <CALNyQkyy_prP60kp_DpMzG9+affqPW0-z6F81R4OSgHg0QFc+g@mail.gmail.com>
-Subject: sparse checkout : ignore paths
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:l+9syHYMckkUUGouW4mvtGi4m5dS0KIFo4ndgCBw6Cv3nHsdy/g
+ vtM2f4GBCBzKo6KUVT5yRa8yjmKu4pMI5fUi09YRd7d3bbzuCU73ekK80Vth1Yk6TJE1yeU
+ ebnygipB+2b/ntX56t3N6TfmleTkuwIW3mgsY2Ls95cm/JWk9gfvLaSGKTkuE+Gisw0uITJ
+ gZWGA38QZ/oRow2WGY/yg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:Q9Y4gICzCTA=:MZ4MkHIPaJPl8a1oS9QXwf
+ 2HD1C7PnUt4McYb1nVaEZ46qwH9kH6g5qYNdEeu7nDYqEy2EQcTF6EECECp+LvPLBKEsrr+YL
+ gU5YOp7qPMFvT6vJmih1V6T/tPfk9eyExEPgdECeiKCY0dyFLyyatCAIaR/D1UiFL1RUDWVO/
+ soxoxDYeF2qQEEOFiqa6lGcYmEbUu3U1i/bM6FwkybYM8PMJWtikrrAWvtlCdbCeqoI26RVrl
+ gYYu6/U5TX7ZmRGQzCYvvCyhkSRmNMOUS/knTDYWi04wTeJsmZ3cl2PTyU1gG4uoIocLLv1zx
+ vE7tJfnhfALCqSiu5Sz1RQqBS+CS11RRaHQOQ7Nqif96B27p9jKQft8HjYlRIWLrZLUuTj9LV
+ 2sb4wT22+DfTAt9pgXejUR3yYdFhunBPcvFau/ofMQADFEP/kR8qP0ysKn3+cK/i+Hk/Wkjk8
+ owFVIHx3Xt4ZIj8VIgJfY/TOaMy0Zrw5evKyBaOidX5h2vNQoMkx5UkVwFwIUbRz71JZN8eYG
+ 6Lu/qBYt2nbO9ao3+dC6tx7lDcRjqqJrczojjG9EnbJOFwguFhfsGT7wbKglIFSLhpeRaDmZs
+ VjDlyeowdkevBToMb+QxfBeIpDJTV+24HUPd16smgwlQWL643NZ6Xjw0c0EcwdvneELSlkWqT
+ +jYHVB0mTpZCehKMFt/IVK7drWMvpqqMnnylqCML0Uj9+Yep0ZFxkB19fxFjl9lTzGPUQGnvQ
+ tywphGS85AOd+WJR3Cw3D+A2OR1GS4tHJzui0Dsfg4jCnu4HRdU4YrAbWgG79DEjuegtSrCNJ
+ CjlsLQ2rRYPN/QTLANtZUGxGToiVxQSg7z3X3wbQHWA2J3fRRqLJQYXBvFiiIMk7/xKDjddYt
+ coX42TUz8yjjUVxW/+9ArDOPbx/Lfki26usYLYbkuqwnS7Momr8R0wFkBrHFQRNB3q3Y5mgT9
+ oaaq5cTHRgZ/A4i7x0w19PlMJ06P4/BzdMkPNWV/xRxAqmdmomcaHDjAUehpw4PuLuuwRlFuc
+ sRccVMPjT7+fCZYAD4yOR7C7XUvvqWKgvrumE/0WfO8EseUwNhGFwVDEBKjp2ZzYFQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When we clone/ pull with : config core.sparsecheckout true
+Hi,
 
-We can specify paths to include. Would be good to explicitly specify
-paths to exclude too. So I can include want/
-but exclude want/bin/
+On Sat, 21 Jan 2017, Philip Oakley wrote:
 
-Similar to .git/info/sparse-checkout can we have a
-.git/info/sparse-ignore-checkout optional file?
+> From: "Thomas Braun"  Friday, January 20, 2017 11:35 PM
+> > Am 20.01.2017 um 23:28 schrieb Philip Oakley:
+> > > A recent question on stackoverflow
+> > > http://stackoverflow.com/questions/41753252/drop-commits-by-commit-message-in-git-rebase
+> > > sought to remove automatically commits that could be identified by
+> > > relevant words in the commit message.
 
-Logic would be to see if a path matches that is in
-.git/info/sparse-checkout then see if its flagged in
-.git/info/sparse-ignore-checkout , do not download if blocked in
-.git/info/sparse-ignore-checkout. If the file does not exist, then
-nothing ignored.
+Interesting. As long as those magic words appear in the oneline, I would
+simply call the command ":%s/^pick.*<magic-word>/#&/".
 
-Regards,
-Tushar Kapila
+But that is neither scripted nor does it work with magic words elsewhere
+in the commit message (let alone more sophisticated filtering based on,
+say, authorship or magic words in the diff's "+" lines).
+
+> > > I had thought that the ubiquitous `git filter-branch` should be able
+> > > to do this sort of thing. I was wrong. (It was pointed out to me
+> > > that...) The man page notes that removing a commit via filter-branch
+> > > does not remove the changes from following commits and directs
+> > > readers to using `git rebase(1)`.
+
+Right, filter-branch never cherry-picks patches, but instead complete
+trees.
+
+> > > However the rebase command does not have any filter option to allow
+> > > the automatic population of its TODO list with the appropriate
+> > > pick/edit/drop/etc. values.
+> >
+> > Well you can use an arbitrary shell command as editor, so something
+> > like
+> >
+> > $ GIT_SEQUENCE_EDITOR="sed -i -re 's/^pick /edit /'" git rebase -i master
+> >
+> > will change pick to edit of all commits.
+> >
+> > Maybe that can be mentioned in the man page of rebase?
+
+Please note that using a script instead of a command, you can do really
+sophisticated things including sophisticated re-writing of the edit script
+as well as calling the GIT_EDITOR in the end to re-establish
+interactivity. I do exactly that in my Git garden shears [*1*].
+
+> I had been more thinking of a process that passed single sha1's to the
+> filter on each pass through the rebase list, so that the coding was
+> simpler, plus the --interactive could be used, if required, for final
+> refinement (gitk being handy for that).
+> 
+> However, a mention in the man pages would be zero code cost, and could
+> help.
+
+In the (frustratingly) long run, we will want to add a command-line option
+that allows overriding the edit script generation, paired with a
+command-line option that generates the current version of the edit script
+(in my rebase--helper work that is still under review, the latter option
+already exists).
+
+That way, you have full flexibility and could even generate the entire
+edit script from scratch, rather than letting rebase -i generate one and
+then filtering it.
+
+Ciao,
+Johannes
+
+Footnote *1*:
+https://github.com/git-for-windows/build-extra/blob/master/shears.sh
