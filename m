@@ -6,23 +6,23 @@ X-Spam-Status: No, score=-6.4 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8AEDC20A17
-	for <e@80x24.org>; Mon, 23 Jan 2017 18:01:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2134D20A17
+	for <e@80x24.org>; Mon, 23 Jan 2017 18:01:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751035AbdAWSBI (ORCPT <rfc822;e@80x24.org>);
-        Mon, 23 Jan 2017 13:01:08 -0500
-Received: from 89-28-117-31.starnet.md ([89.28.117.31]:50620 "EHLO
+        id S1751323AbdAWSBT (ORCPT <rfc822;e@80x24.org>);
+        Mon, 23 Jan 2017 13:01:19 -0500
+Received: from 89-28-117-31.starnet.md ([89.28.117.31]:50638 "EHLO
         home.thecybershadow.net" rhost-flags-OK-FAIL-OK-OK) by vger.kernel.org
-        with ESMTP id S1750732AbdAWSBH (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Jan 2017 13:01:07 -0500
+        with ESMTP id S1750957AbdAWSBI (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Jan 2017 13:01:08 -0500
 Received: by home.thecybershadow.net (Postfix, from userid 1000)
-        id 3264255FC55; Mon, 23 Jan 2017 18:01:05 +0000 (UTC)
+        id 4340755FC59; Mon, 23 Jan 2017 18:01:05 +0000 (UTC)
 From:   Vladimir Panteleev <git@thecybershadow.net>
 To:     git@vger.kernel.org
 Cc:     Vladimir Panteleev <git@thecybershadow.net>
-Subject: [PATCH v3 2/5] show-ref: Allow -d to work with --verify
-Date:   Mon, 23 Jan 2017 18:00:56 +0000
-Message-Id: <20170123180059.4288-3-git@thecybershadow.net>
+Subject: [PATCH v3 4/5] show-ref: Detect dangling refs under --verify as well
+Date:   Mon, 23 Jan 2017 18:00:58 +0000
+Message-Id: <20170123180059.4288-5-git@thecybershadow.net>
 X-Mailer: git-send-email 2.11.0
 In-Reply-To: <20170123180059.4288-1-git@thecybershadow.net>
 References: <20170123180059.4288-1-git@thecybershadow.net>
@@ -31,93 +31,80 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Move handling of -d into show_one, so that it takes effect when
---verify is present as well as when it is absent. This is useful when
-the user wishes to avoid the costly iteration of refs.
+Move detection of dangling refs into show_one, so that they are
+detected when --verify is present as well as when it is absent.
 
 Signed-off-by: Vladimir Panteleev <git@thecybershadow.net>
 ---
- builtin/show-ref.c  | 23 ++++++++++++-----------
- t/t1403-show-ref.sh |  9 +++++++++
- 2 files changed, 21 insertions(+), 11 deletions(-)
+ builtin/show-ref.c  | 16 ++++++++--------
+ t/t1403-show-ref.sh | 22 ++++++++++++++++++++++
+ 2 files changed, 30 insertions(+), 8 deletions(-)
 
 diff --git a/builtin/show-ref.c b/builtin/show-ref.c
-index 0e53e3da4..a72a626b1 100644
+index ab8e0dc41..107d05fe0 100644
 --- a/builtin/show-ref.c
 +++ b/builtin/show-ref.c
-@@ -19,19 +19,27 @@ static const char *exclude_existing_arg;
+@@ -22,6 +22,14 @@ static void show_one(const char *refname, const struct object_id *oid)
+ 	const char *hex;
+ 	struct object_id peeled;
  
- static void show_one(const char *refname, const struct object_id *oid)
- {
--	const char *hex = find_unique_abbrev(oid->hash, abbrev);
-+	const char *hex;
-+	struct object_id peeled;
++	/* This changes the semantics slightly that even under quiet we
++	 * detect and return error if the repository is corrupt and
++	 * ref points at a nonexistent object.
++	 */
++	if (!has_sha1_file(oid->hash))
++		die("git show-ref: bad ref %s (%s)", refname,
++		    oid_to_hex(oid));
 +
-+	hex = find_unique_abbrev(oid->hash, abbrev);
- 	if (hash_only)
- 		printf("%s\n", hex);
- 	else
- 		printf("%s %s\n", hex, refname);
-+
-+	if (!deref_tags)
-+		return;
-+
-+	if (!peel_ref(refname, peeled.hash)) {
-+		hex = find_unique_abbrev(peeled.hash, abbrev);
-+		printf("%s %s^{}\n", hex, refname);
-+	}
- }
+ 	if (quiet)
+ 		return;
  
- static int show_ref(const char *refname, const struct object_id *oid,
- 		    int flag, void *cbdata)
- {
--	const char *hex;
--	struct object_id peeled;
+@@ -77,14 +85,6 @@ static int show_ref(const char *refname, const struct object_id *oid,
+ match:
+ 	found_match++;
+ 
+-	/* This changes the semantics slightly that even under quiet we
+-	 * detect and return error if the repository is corrupt and
+-	 * ref points at a nonexistent object.
+-	 */
+-	if (!has_sha1_file(oid->hash))
+-		die("git show-ref: bad ref %s (%s)", refname,
+-		    oid_to_hex(oid));
 -
- 	if (show_head && !strcmp(refname, "HEAD"))
- 		goto match;
- 
-@@ -79,13 +87,6 @@ static int show_ref(const char *refname, const struct object_id *oid,
- 
  	show_one(refname, oid);
  
--	if (!deref_tags)
--		return 0;
--
--	if (!peel_ref(refname, peeled.hash)) {
--		hex = find_unique_abbrev(peeled.hash, abbrev);
--		printf("%s %s^{}\n", hex, refname);
--	}
  	return 0;
- }
- 
 diff --git a/t/t1403-show-ref.sh b/t/t1403-show-ref.sh
-index 5932beada..c6872bd96 100755
+index c6872bd96..30354fd26 100755
 --- a/t/t1403-show-ref.sh
 +++ b/t/t1403-show-ref.sh
-@@ -97,6 +97,9 @@ test_expect_success 'show-ref -d' '
- 	git show-ref -d refs/tags/A refs/tags/C >actual &&
- 	test_cmp expect actual &&
- 
-+	git show-ref --verify -d refs/tags/A refs/tags/C >actual &&
-+	test_cmp expect actual &&
-+
- 	echo $(git rev-parse refs/heads/master) refs/heads/master >expect &&
- 	git show-ref -d master >actual &&
- 	test_cmp expect actual &&
-@@ -116,6 +119,12 @@ test_expect_success 'show-ref -d' '
- 	test_cmp expect actual &&
- 
- 	test_must_fail git show-ref -d --verify heads/master >actual &&
-+	test_cmp expect actual &&
-+
-+	test_must_fail git show-ref --verify -d A C >actual &&
-+	test_cmp expect actual &&
-+
-+	test_must_fail git show-ref --verify -d tags/A tags/C >actual &&
+@@ -184,4 +184,26 @@ test_expect_success 'show-ref --verify HEAD' '
  	test_cmp expect actual
- 
  '
+ 
++test_expect_success 'show-ref --verify with dangling ref' '
++	sha1_file() {
++		echo "$*" | sed "s#..#.git/objects/&/#"
++	} &&
++
++	remove_object() {
++		file=$(sha1_file "$*") &&
++		test -e "$file" &&
++		rm -f "$file"
++	} &&
++
++	test_when_finished "rm -rf dangling" &&
++	(
++		git init dangling &&
++		cd dangling &&
++		test_commit dangling &&
++		sha=$(git rev-parse refs/tags/dangling) &&
++		remove_object $sha &&
++		test_must_fail git show-ref --verify refs/tags/dangling
++	)
++'
++
+ test_done
 -- 
 2.11.0
 
