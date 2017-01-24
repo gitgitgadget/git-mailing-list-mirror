@@ -2,107 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0701620AC5
-	for <e@80x24.org>; Tue, 24 Jan 2017 10:04:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CC1E52092F
+	for <e@80x24.org>; Tue, 24 Jan 2017 10:57:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750882AbdAXKE0 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 24 Jan 2017 05:04:26 -0500
-Received: from mail-wm0-f50.google.com ([74.125.82.50]:37642 "EHLO
-        mail-wm0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750782AbdAXKEY (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Jan 2017 05:04:24 -0500
-Received: by mail-wm0-f50.google.com with SMTP id c206so200395436wme.0
-        for <git@vger.kernel.org>; Tue, 24 Jan 2017 02:04:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=2bTfj2IzBB5FC63plFfSmO1oGJ6Q7hEwjU0oE0zhNYA=;
-        b=IPuAcXXSy2JqIBoxZ9fWX0dm6DKK26z85J8o7jOC1cfs/gdhlsUXGAMBx8UwGjjZMb
-         72EYMtff+CZthBIX5PMSoKes6ANuE5kXcxGPt6PxEu+2b1CyVMCuw9CInJ3tD64MiAyi
-         FrObh+/e9nON9UqkBZhyjS0UvzVA1Xe2ET7BT/RqU+Xw7+5aLVbV5HfkNWYWkV7nnY4q
-         qbhdBwBiEAz9uSFDfx4qasDgxl6GoFnjtez5XulMhl0lwGTYowcd+6aDZO6Q5euVUVhr
-         gX8/asPbeJKO8ZP0jqi0beiiiHCqyd7iP5forxUZf1rVZpy8O27ijxOdIHBKSlFQlusT
-         wKmA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=2bTfj2IzBB5FC63plFfSmO1oGJ6Q7hEwjU0oE0zhNYA=;
-        b=m+tIsptAiDD/ZwD9qsR8B5rAMKjYfzB9It7e6mS4vFLUnV9I81igIQJrNSUzEhGGIJ
-         o/IlxD1BdttPGZxoNLzGyaOjGPjKPr8xIX+goxHfaz3OKKjMiw04VIGdc83NzvwYRaHC
-         t1xZMDO/JYidSZv/4ZSmO/lj87r3z51TkewTI2+0wdPWrnRsxx4IvoZ7UWV+ZCfFhcJD
-         2aZWcqQtRf2YapuhlwoMY7h85ttHamxLSjJhjFx8A1CKz2iR9RfXnumwAW/FAcFvD+Ue
-         qr2mVeALMY4hL5N0N3qyGTdY+Y1VsPC5Hf7iwq0AJX7Q2i6ngtYET+ikVg/uXXaSpOZi
-         2TAg==
-X-Gm-Message-State: AIkVDXKW7wZmKV2Lg7ePj0Vnu7rIqM0bucjWKdXpeKI0sjiLY/xfjc+fDRFgc/VSjSjYXg==
-X-Received: by 10.28.23.66 with SMTP id 63mr17881821wmx.46.1485252263178;
-        Tue, 24 Jan 2017 02:04:23 -0800 (PST)
-Received: from slxbook4.fritz.box (p5DDB584B.dip0.t-ipconnect.de. [93.219.88.75])
-        by smtp.gmail.com with ESMTPSA id o42sm19082835wrb.18.2017.01.24.02.04.22
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 24 Jan 2017 02:04:22 -0800 (PST)
-Content-Type: text/plain; charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-Subject: Re: What's cooking in git.git (Jan 2017, #04; Mon, 23)
-From:   Lars Schneider <larsxschneider@gmail.com>
-In-Reply-To: <xmqqo9yxpaxk.fsf@gitster.mtv.corp.google.com>
-Date:   Tue, 24 Jan 2017 11:04:21 +0100
-Cc:     git <git@vger.kernel.org>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <0D956B23-E655-4C28-A205-14CCC0A7DEA2@gmail.com>
-References: <xmqqo9yxpaxk.fsf@gitster.mtv.corp.google.com>
-To:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
-X-Mailer: Apple Mail (2.3124)
+        id S1750865AbdAXK5L (ORCPT <rfc822;e@80x24.org>);
+        Tue, 24 Jan 2017 05:57:11 -0500
+Received: from mout.gmx.net ([212.227.15.15]:57903 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1750824AbdAXK5K (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 Jan 2017 05:57:10 -0500
+Received: from virtualbox ([37.24.141.236]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0LuPYt-1cLQfb3lcF-011jS2; Tue, 24
+ Jan 2017 11:56:53 +0100
+Date:   Tue, 24 Jan 2017 11:56:51 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Thomas Gummerer <t.gummerer@gmail.com>
+cc:     git@vger.kernel.org, Stephan Beyer <s-beyer@gmx.net>,
+        Junio C Hamano <gitster@pobox.com>,
+        Marc Strapetz <marc.strapetz@syntevo.com>,
+        Jeff King <peff@peff.net>
+Subject: Re: [PATCH 0/3] stash: support filename argument
+In-Reply-To: <20170121200804.19009-1-t.gummerer@gmail.com>
+Message-ID: <alpine.DEB.2.20.1701241148300.3469@virtualbox>
+References: <20170121200804.19009-1-t.gummerer@gmail.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:r9gjD4tGoTIzBg6mGDabBIiDkfaOSaYYxCEBohcNnj72uwPlo2D
+ xXt74+3m9lCqTBcc3PgY+TR2zY+AgtpjUzZSlFqm5AQksH7bCuFUvtCbLvHJ7jkYfaeKsno
+ mL0lR3HcZ5ZDlUr6QC9cL2KZhZdt+ezN8lW8fP/LItx6dx8zFdz1FXO1dkjqYAFjz11IPFO
+ s018jRGIoMkqU4I3UrFzA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:JAGW2ztcnK8=:QvO9bUexF/OPPRliKiggdC
+ j9Y4HN7YCoWc1UFtapYQKQVLZrM7tOEhiPx6rqWEMAMvQ/GPI4Pt9kU6iCFOdPGgEnvEGBX3Q
+ MpsYf+STIY9FgERtuFNf4tQemNe8VXMeWIerxH9D6s98MFaXICXl47rmxezr87n0qXRIgOYe6
+ wXUwSDqN7YvX/XiX6Op0B+s9wQN3zefoQ/9kg3zv4vfhf9ZL6cD1sDmO9z5XSzYUDeq5Nq4u3
+ hvayCMLc/DTLIGgUaGxfVLomkJg355CldQRC5VmfiLsUEGJ3N8w8nbwUOqe2wJKCWS3u+KREU
+ t7YzNPvPCNE3ckgalCJb5jOn3Vguaqr6X9j5EzndN5p1MQvbzyh5JsOG90mRPTm7xjDup0aUL
+ 3bjlMqW7JJR+jvH5MSJpLT8O+VGBhzYw6/QLL7hvchLWU4I5UT4BnmeHBf5ZElUCx5M3jjHgC
+ IGRxl9NXGwahFK/5IinF08C2DqTwXXwORjZGwTXmuARvuXgbsNrsCxKvbgmnlR+Z1gYtoqNGm
+ ls4zh15GOUJVqZgpjwTm6uK7IFVQfQcp+UqSw+1bCZp+sk67I+0GR8tfgl+FTa7PULK9zPpPZ
+ G1LOluJz7c2Y4JSI4K+aJwLu8lkp3ZuhQ3IxQJMawa82RcTaW81rgEpcmy5uW/jwo0RX7eVe2
+ vxX7FhuwQW+0LVJlO3FV4YYvrN65tt0wGY2Q+yxKBGz34YkhUUwn5dTZxeqydYqa0Uyh3mroz
+ 6rI4hkWbJapxa4qeSyzE8GKiR/LdY79tLWiZL/GMQRGRB6XLhRMLCUiD7tX1Y7j5oyDxn93cV
+ 8GbV01S
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Thomas,
 
-> On 24 Jan 2017, at 01:18, Junio C Hamano <gitster@pobox.com> wrote:
->=20
-> * jk/fsck-connectivity-check-fix (2017-01-17) 6 commits
->  (merged to 'next' on 2017-01-23 at e8e9b76b84)
-> + fsck: check HAS_OBJ more consistently
-> + fsck: do not fallback "git fsck <bogus>" to "git fsck"
-> + fsck: tighten error-checks of "git fsck <head>"
-> + fsck: prepare dummy objects for --connectivity-check
-> + fsck: report trees as dangling
-> + t1450: clean up sub-objects in duplicate-entry test
->=20
-> "git fsck --connectivity-check" was not working at all.
->=20
-> Will merge to 'master'.
+On Sat, 21 Jan 2017, Thomas Gummerer wrote:
 
-"fsck: prepare dummy objects for --connectivity-check" seems to
-make t1450-fsck.sh fail on macOS with TravisCI:
+> This is the first try to implement the RFC I posted a week ago [1].  It
+> introduces a new push verb for git stash.  I couldn't come up with
+> any better name that wasn't already taken.  If anyone has ideas I'd be
+> very happy to hear them.
 
-Initialized empty Git repository in /Users/travis/build/git/git/t/trash =
-directory.t1450-fsck/connectivity-only/.git/
-[master (root-commit) 86520b7] empty
- Author: A U Thor <author@example.com>
- 2 files changed, 1 insertion(+)
- create mode 100644 empty
- create mode 100644 empty.t
-override r--r--r--  travis/staff for =
-.git/objects/e6/9de29bb2d1d6434b8b29ae775ad8c2e48c5391? (y/n [n]) not =
-overwritten
-dangling blob c21c9352f7526e9576892a6631e0e8cf1fccd34d
-test_must_fail: command succeeded: git fsck --strict
-not ok 58 - fsck --connectivity-only
+I would have preferred a series of patches that essentially adds a new and
+improved `save` syntax:
 
-More test output: https://travis-ci.org/git/git/jobs/194663620
+git stash [save] [-p|--patch] [-k|--[no-]keep-index] [-q|--quiet]
+          [-u|--include-untracked] [-a|--all] [-m <message>]]
+          [-- <path>...]
 
-For some reason I am not able to replicate that behavior on my local
-macOS machine. I found the commit using bisect on TravisCI:
-https://api.travis-ci.org/jobs/194746454/log.txt?deansi=3Dtrue
+and keeps the legacy syntax, but deprecates it:
 
-Any idea what might be wrong?
+git stash [save [-p|--patch] [-k|--[no-]keep-index] [-q|--quiet]
+          [-u|--include-untracked] [-a|--all] [<message>]]
 
-- Lars=
+The problem with that is, of course, that 3c2eb80fe3 (stash: simplify
+defaulting to "save" and reject unknown options, 2009-08-18) in its
+infinite wisdom *already* introduced the `--` separator to drop out of
+option parsing.
+
+On a positive note, it is a thorn in Git's CUI that `git stash` implies
+the `save` command, and that `save` is not at all the opposite of `apply`
+or `pop`. Your introduction of the `push` command will fix that flaw, and
+we can *still* deprecate the `save` command.
+
+Ciao,
+Johannes
