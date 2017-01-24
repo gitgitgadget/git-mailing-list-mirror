@@ -2,105 +2,179 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-6.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E02631F437
-	for <e@80x24.org>; Tue, 24 Jan 2017 21:52:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 67A151F437
+	for <e@80x24.org>; Tue, 24 Jan 2017 21:58:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750986AbdAXVwY (ORCPT <rfc822;e@80x24.org>);
-        Tue, 24 Jan 2017 16:52:24 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:57341 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1750877AbdAXVwW (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Jan 2017 16:52:22 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id B01DD62A6A;
-        Tue, 24 Jan 2017 16:52:15 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=JRjz+C1FqQhgv8IF26OSgGmxapU=; b=Wa+792
-        SCIkmnOfJ9eYcgLY/BVMzebYxQAHYnl7QzniCYqMdrndfRZ0ZRxyQ7DGFkOl+rL7
-        id1gXAXHYHqDdDQgHCOAiAHMt0f7pmt78jAkVKTQgpy1oFQvSmk/znkPX476CN14
-        PMKSDteI5gPKZBUxDVcBxGF0R893fNIw5pM7U=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=QFGHppm58qunKsHpN6P161NBgxMWdH1i
-        odDUUzqQG12z3Timr9Pf6Nmkpb5HtmbenBjBwzOC9CLSnQdsXQqeI2Mmjw1lmdO3
-        gqD7r4UUsJ1HUszhpuDH/vcG3LBnPoa+RaSPMLuwpBFRVLc+xnFuk8QCXo6lHMKA
-        L2CNtKfGp/0=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id A4EF962A69;
-        Tue, 24 Jan 2017 16:52:15 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 0E1A162A67;
-        Tue, 24 Jan 2017 16:52:14 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     David Aguilar <davvid@gmail.com>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        GIT Mailing-list <git@vger.kernel.org>
-Subject: Re: [PATCH] difftool.c: mark a file-local symbol with static
-References: <xmqqtwaod7ly.fsf@gitster.mtv.corp.google.com>
-        <20161130212510.ihcmvig7jq44p3nx@sigill.intra.peff.net>
-        <3e6a6685-19ec-4536-4a5f-3a56e30fb530@ramsayjones.plus.com>
-        <20161130231848.v5ge6otytim2t6d2@sigill.intra.peff.net>
-        <xmqqinr4bkf4.fsf@gitster.mtv.corp.google.com>
-        <59da5383-16a0-b327-75a8-b4c4ad7bd479@ramsayjones.plus.com>
-        <20161201040234.3rnuttitneweedn5@sigill.intra.peff.net>
-        <xmqq60n3bjel.fsf@gitster.mtv.corp.google.com>
-        <20161201185056.eso5rhec7izlbywa@sigill.intra.peff.net>
-        <20170122052608.tpr5pihfgafhoynj@gmail.com>
-        <20170124142346.u3d7l6772mtkgpcf@sigill.intra.peff.net>
-Date:   Tue, 24 Jan 2017 13:52:13 -0800
-In-Reply-To: <20170124142346.u3d7l6772mtkgpcf@sigill.intra.peff.net> (Jeff
-        King's message of "Tue, 24 Jan 2017 09:23:46 -0500")
-Message-ID: <xmqqlgu0ceia.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+        id S1750937AbdAXV6z (ORCPT <rfc822;e@80x24.org>);
+        Tue, 24 Jan 2017 16:58:55 -0500
+Received: from mail-pg0-f43.google.com ([74.125.83.43]:35385 "EHLO
+        mail-pg0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750885AbdAXV6y (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 Jan 2017 16:58:54 -0500
+Received: by mail-pg0-f43.google.com with SMTP id 194so58094913pgd.2
+        for <git@vger.kernel.org>; Tue, 24 Jan 2017 13:58:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=1RaA9Cm0CgR7VtFP8JYzq8uPHcrBv5cO5B3z0Ixu4DQ=;
+        b=XhZYUbC6jz3qPM4+cDXYA+XslJioPgUSwWdHKr2sYrXd9TjZK09ZRp3Lantablrtz8
+         Yt+w3ptWpTSkmrkwTknOt3QJ5MefDkfheHh2kGm9T9IJap55Fj+ufk4aLFAnUo6Rp6Iw
+         7Cv+lwRXMVklGI6q18srALXo/WfFffSmC20z7Oz67Ghd1aefgbjwQ+ydK6y6aShgRPWm
+         fxdNpDwvN0oZ9Zu7QQPphwM/6lOJgqaIJOAKgGZozHK8HNNcL2eK0uQPeb8HjR9Iy0LN
+         0MZjSKqX59iPxgNjWplGysKMEoYLIAtk80RErYILhM0p8uvgvxsa1p8Xx+GMrEOFtmoe
+         /A4w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=1RaA9Cm0CgR7VtFP8JYzq8uPHcrBv5cO5B3z0Ixu4DQ=;
+        b=cQF9J8iTspcIXCPLpx8T4ORlaPqQrhpiDgoeMgdZp7q0BqYcuoOQpfNAYzqenSpP3L
+         w99E0hAlHSEkYlnjWFCz9msQFnBZgvfUtEKx33MLpP2zo0arZ9D4knRzZd8wIBqs0ty4
+         5PmbXn7Vt3lv67i3kIaXvNttHzwPoImnwDqoNgbzHEUwZF88VOjbhtrCiExUvgcP7WVA
+         /ankPr3GxRqUJHrt0fq8mXDhZ0beqe6AKATGjM7D/cwwM4OmTSp23oUQmc9CO4pZvfs/
+         thFYuBkeQl9PhEWEVSwFqTsDbpnQBg4yrVlhImQMTDW/BWoAWxANqNVkQO14q/1UmDEy
+         g+IQ==
+X-Gm-Message-State: AIkVDXIcItH5IA2/O5QIMlp+afbSrzjCl0qNTiWdkh679ImfSqr6e0AeFkkzVOWNeRAhx/So
+X-Received: by 10.98.139.22 with SMTP id j22mr41549147pfe.115.1485295133756;
+        Tue, 24 Jan 2017 13:58:53 -0800 (PST)
+Received: from google.com ([2620:0:1000:5b10:85e5:5d8f:4777:ba11])
+        by smtp.gmail.com with ESMTPSA id b75sm21815390pfb.90.2017.01.24.13.58.52
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Tue, 24 Jan 2017 13:58:52 -0800 (PST)
+Date:   Tue, 24 Jan 2017 13:58:51 -0800
+From:   Brandon Williams <bmwill@google.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     gitster@pobox.com, git@vger.kernel.org, peff@peff.net
+Subject: Re: [PATCH] submodule absorbing: fix worktree/gitdir pointers
+ recursively for non-moves
+Message-ID: <20170124215851.GA58021@google.com>
+References: <20170124210346.12060-1-sbeller@google.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 5E368B72-E27F-11E6-8335-FE3F13518317-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20170124210346.12060-1-sbeller@google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+On 01/24, Stefan Beller wrote:
+> +	if (read_gitfile_gently(old_git_dir, &err_code) ||
+> +	    err_code == READ_GITFILE_ERR_NOT_A_REPO) {
+> +		/*
+> +		 * If it is an actual gitfile, it doesn't need migration,
+> +		 * however in case of a recursively nested submodule, the
+> +		 * gitfile content may be stale, as its superproject
+> +		 * (which may be a submodule of another superproject)
+> +		 * may have been moved. So expect a bogus pointer to be read,
+> +		 * which materializes as error READ_GITFILE_ERR_NOT_A_REPO.
+> +		 */
+> +		connect_work_tree_and_git_dir(path, real_new_git_dir);
 
->> > As ugly as warning("%s", "") is, I think it may be the thing that annoys
->> > the smallest number of people.
->> > 
->> > -Peff
->> 
->> How about using warning(" ") instead?
->> 
->> For difftool.c specifically, the following is a fine solution,
->> and doesn't require that we change our warning flags just for
->> this one file.
->
-> I dunno. As ugly as the "%s" thing is in the source, at least it doesn't
-> change the output. Not that an extra space is the end of the world, but
-> it seems like it's letting the problem escape from the source code.
->
-> Do people still care about resolving this? -Wno-format-zero-length is in
-> the DEVELOPER options. It wasn't clear to me if that was sufficient, or
-> if we're going to get a bunch of reports from people that need to be
-> directed to the right compiler options.
+So connect_work_tree_and_git_dir() will update the .gitfile if it is
+stale.
 
-I view both as ugly, but probably "%s", "" is lessor of the two
-evils.
+> +		return;
+> +	}
+> +
+> +	if (submodule_uses_worktrees(path))
+> +		die(_("relocate_gitdir for submodule '%s' with "
+> +		      "more than one worktree not supported"), path);
 
-Perhaps
+No current support for worktrees (yet!).
 
-	#define JUST_SHOW_EMPTY_LINE "%s", ""
+> +
+>  	if (!prefix)
+>  		prefix = get_super_prefix();
+>  
+> @@ -1437,22 +1448,14 @@ void absorb_git_dir_into_superproject(const char *prefix,
+>  				      const char *path,
+>  				      unsigned flags)
+>  {
+> -	const char *sub_git_dir, *v;
+> -	char *real_sub_git_dir = NULL, *real_common_git_dir = NULL;
+>  	struct strbuf gitdir = STRBUF_INIT;
+> -
+>  	strbuf_addf(&gitdir, "%s/.git", path);
+> -	sub_git_dir = resolve_gitdir(gitdir.buf);
+>  
+>  	/* Not populated? */
+> -	if (!sub_git_dir)
+> +	if (!file_exists(gitdir.buf))
+>  		goto out;
 
-		...
-		warning(JUST_SHOW_EMPTY_LINE);
-                ...
+There should be a is_submodule_populated() function now, maybe
+we should start using it when performing population checks?
 
-or something silly like that?
+>  
+> -	/* Is it already absorbed into the superprojects git dir? */
+> -	real_sub_git_dir = real_pathdup(sub_git_dir);
+> -	real_common_git_dir = real_pathdup(get_git_common_dir());
+> -	if (!skip_prefix(real_sub_git_dir, real_common_git_dir, &v))
+> -		relocate_single_git_dir_into_superproject(prefix, path);
+> +	relocate_single_git_dir_into_superproject(prefix, path);
 
+So the check was just pushed into the relocation function.
+
+>  
+>  	if (flags & ABSORB_GITDIR_RECURSE_SUBMODULES) {
+>  		struct child_process cp = CHILD_PROCESS_INIT;
+> @@ -1481,6 +1484,4 @@ void absorb_git_dir_into_superproject(const char *prefix,
+>  
+>  out:
+>  	strbuf_release(&gitdir);
+> -	free(real_sub_git_dir);
+> -	free(real_common_git_dir);
+>  }
+> diff --git a/t/t7412-submodule-absorbgitdirs.sh b/t/t7412-submodule-absorbgitdirs.sh
+> index 1c47780e2b..e2bbb449b6 100755
+> --- a/t/t7412-submodule-absorbgitdirs.sh
+> +++ b/t/t7412-submodule-absorbgitdirs.sh
+> @@ -64,6 +64,33 @@ test_expect_success 'absorb the git dir in a nested submodule' '
+>  	test_cmp expect.2 actual.2
+>  '
+>  
+> +test_expect_success 're-setup nested submodule' '
+> +	# un-absorb the direct submodule, to test if the nested submodule
+> +	# is still correct (needs a rewrite of the gitfile only)
+> +	rm -rf sub1/.git &&
+> +	mv .git/modules/sub1 sub1/.git &&
+> +	GIT_WORK_TREE=. git -C sub1 config --unset core.worktree &&
+> +	# fixup the nested submodule
+> +	echo "gitdir: ../.git/modules/nested" >sub1/nested/.git &&
+> +	GIT_WORK_TREE=../../../nested git -C sub1/.git/modules/nested config \
+> +		core.worktree "../../../nested" &&
+> +	# make sure this re-setup is correct
+> +	git status --ignore-submodules=none
+> +'
+> +
+> +test_expect_success 'absorb the git dir in a nested submodule' '
+> +	git status >expect.1 &&
+> +	git -C sub1/nested rev-parse HEAD >expect.2 &&
+> +	git submodule absorbgitdirs &&
+> +	test -f sub1/.git &&
+> +	test -f sub1/nested/.git &&
+> +	test -d .git/modules/sub1/modules/nested &&
+> +	git status >actual.1 &&
+> +	git -C sub1/nested rev-parse HEAD >actual.2 &&
+> +	test_cmp expect.1 actual.1 &&
+> +	test_cmp expect.2 actual.2
+> +'
+> +
+>  test_expect_success 'setup a gitlink with missing .gitmodules entry' '
+>  	git init sub2 &&
+>  	test_commit -C sub2 first &&
+> -- 
+> 2.11.0.486.g67830dbe1c
+
+
+Aside from my one question the rest of this looks good to me.
+
+-- 
+Brandon Williams
