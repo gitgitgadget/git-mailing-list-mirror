@@ -2,82 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B25932092F
-	for <e@80x24.org>; Tue, 24 Jan 2017 11:44:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E58962092F
+	for <e@80x24.org>; Tue, 24 Jan 2017 11:44:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750812AbdAXLoC (ORCPT <rfc822;e@80x24.org>);
-        Tue, 24 Jan 2017 06:44:02 -0500
-Received: from mail-it0-f52.google.com ([209.85.214.52]:36679 "EHLO
-        mail-it0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750763AbdAXLoB (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Jan 2017 06:44:01 -0500
-Received: by mail-it0-f52.google.com with SMTP id c7so83657343itd.1
-        for <git@vger.kernel.org>; Tue, 24 Jan 2017 03:44:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=0TdcCzWhGpzGn+Fu1mUqVd/tvQXyygCqtgDSx9i+I7s=;
-        b=uZiDzRGVkKwMgpY4eH3Yw/ghW7h3o4kmXdRBrZg9wduBBZu5x65qHIgC1VmMuALur3
-         keNbyADEK0X2MO4AQcYdIcEc+GUhOKWdLtx2cTCoAEWzzHCblWAtk1+MFzkhk2HJTXKR
-         ujCrNw2a6+/YUFE2jvUeymqmc1Ez50gDiZR0goE3EYW8ELn80L0D69fl7nfY1GFDXagl
-         U6ATXJqrKCCO47x6SulEGvVlYbyyz/y+kLq+wq4VE3XDfpAENq5f2mFFl8OiDJSICZz3
-         goYsZazyoZE+qvxQNs/YBF14ETlARrRyc0LqpPryWZwpJXFAOppAhJeY+8rn3PHgGfD2
-         KjCw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=0TdcCzWhGpzGn+Fu1mUqVd/tvQXyygCqtgDSx9i+I7s=;
-        b=hdcuf0icI+PI9peEbJYWOJyuz3LNBNwH9mBVqRMADrMeKpu/O9KveoWX5HmW3aEnJB
-         nOtb5j8koAEi2T3uVqKVSabOWZ/sSd7YQACzXNC9d5QZov+FlwwN6RtxdBSMxTcG8Pw1
-         lIqImeRm1slAErxe1WWsv5n+RbNFCJTh61J/r75hOCrtUBzrV6zwFIOctd8dnYbdLjjN
-         uwJpHTZ/BuZoRe36xcqMSdpkuzt/dq2ZmnUtqL3wj8M+eGUma9Cy0pUTflWHxxcJuxc0
-         +BJormiMZI6wgdg8RPZuwQ205fmRm+ePIAfb223i0SOYAUDgmQ2blSor9y9mRU/Nts/N
-         IyUQ==
-X-Gm-Message-State: AIkVDXKpOL+fjvZLr0ADjvwJonEeYvIWA4+5+zbXZr85WzN4wlsFkzPiUqtKFA9p+BaAzYJR+d21LvOKEQm2Bg==
-X-Received: by 10.36.245.5 with SMTP id k5mr19684376ith.100.1485257819075;
- Tue, 24 Jan 2017 03:36:59 -0800 (PST)
+        id S1750835AbdAXLo3 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 24 Jan 2017 06:44:29 -0500
+Received: from mout.gmx.net ([212.227.15.18]:62666 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1750763AbdAXLo2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 Jan 2017 06:44:28 -0500
+Received: from virtualbox ([37.24.141.236]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MId0S-1cYBNM2pHk-002FAI; Tue, 24
+ Jan 2017 12:44:12 +0100
+Date:   Tue, 24 Jan 2017 12:44:10 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Jeff King <peff@peff.net>
+cc:     =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
+        Git List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 0/5] string-list: make string_list_sort() reentrant
+In-Reply-To: <20170123235445.qsejumltutd2vrhd@sigill.intra.peff.net>
+Message-ID: <alpine.DEB.2.20.1701241233390.3469@virtualbox>
+References: <67ac53cd-3fc0-8bd0-30f4-129281c3090f@web.de> <20170123235445.qsejumltutd2vrhd@sigill.intra.peff.net>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Received: by 10.79.142.147 with HTTP; Tue, 24 Jan 2017 03:36:58 -0800 (PST)
-In-Reply-To: <xmqqr33tsjwx.fsf@gitster.mtv.corp.google.com>
-References: <20170122212855.25924-1-eantoranz@gmail.com> <CAOc6etaQ-fDWn38YzXkGOC0fSan1vrxjVDUXS924nBXWTTrhNQ@mail.gmail.com>
- <xmqq1svuvh0y.fsf@gitster.mtv.corp.google.com> <CAOc6etY5odte=TKyWX3Wf1BVaNTfDeA-xsGOKiyuH88HZgqFDQ@mail.gmail.com>
- <xmqqlgu2u0qx.fsf@gitster.mtv.corp.google.com> <CAFZEwPPx2vDJVf=uk0iUJ2sh9DxWwp2Lp1k-APz9n=7NYMN5uQ@mail.gmail.com>
- <xmqqr33tsjwx.fsf@gitster.mtv.corp.google.com>
-From:   Pranit Bauva <pranit.bauva@gmail.com>
-Date:   Tue, 24 Jan 2017 17:06:58 +0530
-Message-ID: <CAFZEwPNGzFhocgXwKA3UjXQdwBmWTCsvSdy47Y+qFfZ6JJpJ4A@mail.gmail.com>
-Subject: Re: [PATCH] blame: add option to print tips (--tips)
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Edmundo Carmona Antoranz <eantoranz@gmail.com>,
-        Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: multipart/mixed; BOUNDARY="8323329-34491082-1485258161=:3469"
+Content-ID: <alpine.DEB.2.20.1701241243510.3469@virtualbox>
+X-Provags-ID: V03:K0:DkNzQF5m6424NpBDes71QtyLnFLFyVEifYJpcBQBvDgPLALj4y6
+ +FZ+SfskXy/4wWHeqyV3ULgJ2EwUEUW77BiWoc6kgIA1/s+BIyh79MgXUHMqJMeUsqgJeaH
+ estkNf7tbk5KJj86jVtBj8gv5suS8SaXZZrRWxtW8FJbzZoiCvHobqE8FCZ5LvBX8Ge1HIf
+ awIK8Jld552H2Lh8urMsw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:XSVUPm3/DF0=:9Zx6iysb2fajhyAxa2MpqC
+ 5/gjp8woyZS7gogdzxCHDB5imev1Qpt1pVypPS7+nzcPDfNztzoDG8t5WvuP6WQrU0ENgrgxV
+ lswT7PaR/kAaCzUMx5e8GlneZVmTjA8T4CxSAppNEViVr3kM5/vyg4VRTmwy43ZZkr5tzm8wF
+ OP1eiT2vYYlKmZT6WMcjs3DSiPi8f/a12Wxq3IkUI62DYWOPLEq50G6G/9Urtw5I7Udhy8Wxi
+ NsC6fnZuIbEfmHIHW0hvpQaydJNK1950asPd82gUpKgi1QGH+aFTY+YS6QRkYQO13KB0P08O+
+ cGp52ZrChhFV0UpnS9aPqSl5mVT1p+m0Gz5h2bNjPKYIqqAKX+Fg9xAQI+Ufo8T9B55UNR847
+ A65ndNRjTUiXKhGGMBcXMKgTlfbxfv49ORgtFaUI6zcwuNIBHnAC5fzvdvHEjl/wyE2HtK4Mu
+ Gqje29rmCbYnsiVDdROdTPosziPdeN81rn54fNZjWbmuZMABaWQWj9FvmxjhbQXEtDdUDJQLI
+ R3hqbgTUY6u2wUSYzOh15I1UmY8bXb6gWarFQlBQBcw37Y9rn1tPSZPKkxHXLZo/q5m/+vsTw
+ xiYshyCfj2bdpJA/VUMFEjbip97ZZfOs48+EGK2StfV3laWR4vaah6kdVp8X8FdlNgHhLmDjl
+ fqYku2YFIAyxH3rOmRhnAzVodOCAmszyrrcuzXcbdmHo0uGbxaK4o3sndzcskVKCDeXhe6fRa
+ L4daT8cz/IlYnqAWRDcmI11c1AmwyiU51bqN9BImsgW1y7vEV11w0zUWUTDJKo2yrR0+F5WxJ
+ ji5opXF
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hey Junio,
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-On Tue, Jan 24, 2017 at 12:06 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Pranit Bauva <pranit.bauva@gmail.com> writes:
->
->> We can probably make it useful with some extended efforts. I use
->> git-blame and I sometimes find that I don't need things like the name
->> of the author, time, timezone and not even the file name and I have to
->> use a bigger terminal. If we could somehow remove those fields then
->> maybe this would be a useful feature.
->
-> I admit that I didn't recall the option until somebody else told me,
-> but I think "blame -s" or something like that for that purpose ;-)
+--8323329-34491082-1485258161=:3469
+Content-Type: text/plain; CHARSET=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-ID: <alpine.DEB.2.20.1701241243511.3469@virtualbox>
 
-Ah! Thanks a lot!
+Hi Peff,
 
-Regards,
-Pranit Bauva
+On Mon, 23 Jan 2017, Jeff King wrote:
+
+> Is there any interest in people adding the ISO qsort_s() to their libc
+> implementations? It seems like it's been a fair number of years by now.
+
+Visual C supports it *at least* since Visual Studio 2005:
+
+https://msdn.microsoft.com/en-us/library/4xc60xas(v=3Dvs.80).aspx
+
+With Ren=C3=A9's patch, we have an adapter for GNU libc, and if anybody com=
+es
+up with the (equally trivial) adapter for BSD libc's qsort_r(), we have a
+lot of bases covered.
+
+Ciao,
+Johannes
+--8323329-34491082-1485258161=:3469--
