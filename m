@@ -2,438 +2,207 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.2 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6923A1F437
-	for <e@80x24.org>; Tue, 24 Jan 2017 20:50:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DE0C11F437
+	for <e@80x24.org>; Tue, 24 Jan 2017 21:03:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750792AbdAXUuu (ORCPT <rfc822;e@80x24.org>);
-        Tue, 24 Jan 2017 15:50:50 -0500
-Received: from smtp-out-1.talktalk.net ([62.24.135.65]:8561 "EHLO
-        smtp-out-1.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750715AbdAXUus (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Jan 2017 15:50:48 -0500
-Received: from PhilipOakley ([92.31.218.76])
-        by smtp.talktalk.net with SMTP
-        id W81Gc4Vpn0KuvW81GcV52Y; Tue, 24 Jan 2017 20:48:46 +0000
-X-Originating-IP: [92.31.218.76]
-X-Spam: 0
-X-OAuthority: v=2.2 cv=RZjSMBlv c=1 sm=1 tr=0 a=e6L6E7eW+5Nb7SO+DvSdIg==:117
- a=e6L6E7eW+5Nb7SO+DvSdIg==:17 a=r77TgQKjGQsHNAKrUKIA:9 a=pGLkceISAAAA:8
- a=O0A442iYjKsDe7E5kM4A:9 a=QEXdDO2ut3YA:10 a=Nj4tdWK57Ui8eahcUu4A:9
- a=Ld372NDzu18A:10 a=6kGIvZw6iX1k4Y-7sg4_:22
-Message-ID: <7611CDDCF2C34AFDB7995938228298B4@PhilipOakley>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
-From:   "Philip Oakley" <philipoakley@iee.org>
-To:     "Stefan Hajnoczi" <stefanha@redhat.com>,
-        "Junio C Hamano" <gitster@pobox.com>,
-        =?utf-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
-Cc:     <git@vger.kernel.org>
-References: <20170119150347.3484-1-stefanha@redhat.com> <20170119150347.3484-2-stefanha@redhat.com> <xmqqtw8u28u1.fsf@gitster.mtv.corp.google.com> <20170120135612.GB17499@stefanha-x1.localdomain> <xmqqlgu5y4u8.fsf@gitster.mtv.corp.google.com> <20170123131551.GL29186@stefanha-x1.localdomain> <f90eba2a-ebfa-67f0-68c4-abacb05759ba@gmail.com>
-Subject: Re: [RFC 1/2] grep: only add delimiter if there isn't one already
-Date:   Tue, 24 Jan 2017 20:48:47 -0000
-Organization: OPDS
-MIME-Version: 1.0
-Content-Type: multipart/mixed;
-        boundary="----=_NextPart_000_0130_01D27683.427876B0"
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
-X-CMAE-Envelope: MS4wfAfxC4RXWEHwaxlpdVHz5e5OAk+pFhTTRdMZ+nRUmJsd0N8OlmSQWKafJbl7+Jlxb3XNR0FzoZ2gyI0yoR41MsvG5M02rDVhSn7JeiDhYzmlVI0fF9MW
- w1LkS0UatlCyXaaK2A9n71R1q44uv/dYitaN0cma1IjywS0x85dbtesQUBs3QlAfx1E0GtN7YqBs8mENL0zhx1SOZJJfmOfLIg6XwkyXcM/ce6KmzEmXYGto
- igmrBp9qaskZTMm91sb2Cg==
+        id S1750794AbdAXVDv (ORCPT <rfc822;e@80x24.org>);
+        Tue, 24 Jan 2017 16:03:51 -0500
+Received: from mail-pf0-f181.google.com ([209.85.192.181]:34843 "EHLO
+        mail-pf0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750782AbdAXVDu (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 Jan 2017 16:03:50 -0500
+Received: by mail-pf0-f181.google.com with SMTP id f144so52565297pfa.2
+        for <git@vger.kernel.org>; Tue, 24 Jan 2017 13:03:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=from:to:cc:subject:date:message-id;
+        bh=/Y3P7N4/rbVRvGFuE6yVGtO0DFBCZJ0qhRVvXj5L3lk=;
+        b=iz4LZBpyxFLOYIMFsd/xTweM04Oj3f5/B75CXLvodOYi8/9DZhEm6SoPABpqmggk8D
+         GGFCFNe27gKP8ufXZ/EeQCmXzS050zRb6b5NvgRKNoIKCSJASEqMB4gBaV8hdn5r7IUZ
+         wMKA+tkscqTI6jAHASh5/InnS9jFnYjVts1H11bTRoUqEG0/EL56aaIHtBoCR4mvC9LO
+         Uo9SRHSNPX8n0wqDSGTvRtj0hBSWR/C+mU12qHhTOyf7t2xE4RSLut8KX7ZNuNqVVlTv
+         +QZ0Ys2EnMANjWITJoIs+RvpDP4/xMlCFonzbLM/npSqgXlgdWh7LU3L1ZzOk6+MoSvk
+         Qvgw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=/Y3P7N4/rbVRvGFuE6yVGtO0DFBCZJ0qhRVvXj5L3lk=;
+        b=ElIGDbvNpUDx1V0849oIAU42UAxXFj/OUa+bTrmv7nLeEVW9tjkbLXwuNOhqVultB5
+         6O1xataQ6SuYciRL9kr5W97X7+3/89eq9OdcPNTrFGvu3k/JIRmB5Cfb/s1b08CrSBJF
+         oEWwdO0SJbug8FdXwoMCzjAt0m+kV+B176IQwogpnRyplDXDpgYhYkWQFzzrO7Alo/WE
+         UzHM6i6KkjOBuY1x1WsTDu3CDLxpU4JfYSip8VVkbMEbkwDoPRva66Iu2xoiZ7uFr+C4
+         BKberiMMt1Sl4YDbmxuhkMp6OzF9I+pHj00iUdW4EbcUg5THDRVApAzt9iLHSkIBiZ93
+         uNSw==
+X-Gm-Message-State: AIkVDXIL35YyCMCTqfoDCKexuBTu9kbjlbyfkIoUwGy1c6WFYDRx6SjZ8m5QJk4uUINEpGYE
+X-Received: by 10.99.5.15 with SMTP id 15mr42230205pgf.109.1485291829428;
+        Tue, 24 Jan 2017 13:03:49 -0800 (PST)
+Received: from localhost ([2620:0:1000:5b10:6936:a216:cb1:3482])
+        by smtp.gmail.com with ESMTPSA id w125sm7833509pgb.11.2017.01.24.13.03.48
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Tue, 24 Jan 2017 13:03:48 -0800 (PST)
+From:   Stefan Beller <sbeller@google.com>
+To:     gitster@pobox.com
+Cc:     git@vger.kernel.org, bmwill@google.com, peff@peff.net,
+        Stefan Beller <sbeller@google.com>
+Subject: [PATCH] submodule absorbing: fix worktree/gitdir pointers recursively for non-moves
+Date:   Tue, 24 Jan 2017 13:03:46 -0800
+Message-Id: <20170124210346.12060-1-sbeller@google.com>
+X-Mailer: git-send-email 2.11.0.486.g67830dbe1c
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is a multi-part message in MIME format.
+Consider having a submodule 'sub' and a nested submodule at 'sub/nested'.
+When nested is already absorbed into sub, but sub is not absorbed into
+its superproject, then we need to fixup the gitfile and core.worktree
+setting for 'nested' when absorbing 'sub', but we do not need to move
+its git dir around.
 
-------=_NextPart_000_0130_01D27683.427876B0
-Content-Type: text/plain;
-	format=flowed;
-	charset="utf-8";
-	reply-type=original
-Content-Transfer-Encoding: 8bit
+Previously 'nested's gitfile contained "gitdir: ../.git/modules/nested";
+it has to be corrected to "gitdir: ../../.git/modules/sub1/modules/nested".
 
-From: "Jakub Narębski" <jnareb@gmail.com>
->W dniu 23.01.2017 o 14:15, Stefan Hajnoczi pisze:
->> On Fri, Jan 20, 2017 at 10:16:31AM -0800, Junio C Hamano wrote:
->
->>> My only piece of advice to folks who feel that way is to learn Git
->>> more and get comfortable.  You can do neat things like
->>>
->>>    $ git grep -e pattern rev -- t ':!t/helper/'
->>>
->>> that you cannot do with "rev:t", for example ;-)
->>
->> Neat, thanks for showing the path exclusion syntax.  I wasn't aware of
->> it.
->
-> That reminds me of mu TODO item: moving extended pathspec information
-> from gitglossary(7) manpage (sic!) to to-be-created gitpathspec(7).
->
+An alternative I considered to do this work lazily, i.e. when resolving
+"../.git/modules/nested", we would notice the ".git" being a gitfile
+linking to another path.  That seemed to be robuster by design, but harder
+to get the implementation right.  Maybe we have to do that anyway once we
+try to have submodules and worktrees working nicely together, but for now
+just produce 'correct' (i.e. direct) pointers.
 
-Good to see someone else also had it on a ToDo list..
+Signed-off-by: Stefan Beller <sbeller@google.com>
+---
 
-Attached is my collation of all the different path spec info I found from 
-trawling the man & guide pages to satisfy my ignorance...
---
-Philip 
+  cc Jeff and Brandon, who worked on the setup code recently,
+  and the alternative design mentioned was messing around a lot in setup.c.
+  
+  Thanks,
+  Stefan
 
-------=_NextPart_000_0130_01D27683.427876B0
-Content-Type: text/plain;
-	format=flowed;
-	name="gitpathspec.txt";
-	reply-type=original
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: attachment;
-	filename="gitpathspec.txt"
+ submodule.c                        | 41 +++++++++++++++++++-------------------
+ t/t7412-submodule-absorbgitdirs.sh | 27 +++++++++++++++++++++++++
+ 2 files changed, 48 insertions(+), 20 deletions(-)
 
-gitpathspec(7)=0A=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=0A=
-=0A=
-NAME=0A=
-----=0A=
-gitpathspec - How to specify a path or file to git=0A=
-=0A=
-SYNOPSIS=0A=
---------=0A=
-$HOME/.config/git/ignore, $GIT_DIR/info/exclude, .gitignore=0A=
-=0A=
-DESCRIPTION=0A=
------------=0A=
-=0A=
-Pathspecs are used in a range of git functions.=0A=
-.gitignore=0A=
-.gitexclude=0A=
-gitsparse=0A=
-git-add -- pathspec=0A=
-git-checkout -- pathspec (after the double-dash)=0A=
-git grep (active/non-active wild card matching)=0A=
-git log (L#:<> pathspec limiters ?? what does it mean)=0A=
-=0A=
-git rerere (uncontentious)=0A=
-git status (uncontentious)=0A=
-gitk (uncontentious, but see 'log' above)=0A=
-'git' itself --=0A=
---literal-pathspecs=0A=
-Treat pathspecs literally (i.e. no globbing, no pathspec magic). This is =
-equivalent to setting the GIT_LITERAL_PATHSPECS environment variable to =
-1.=0A=
-=0A=
---glob-pathspecs=0A=
-Add "glob" magic to all pathspec. This is equivalent to setting the =
-GIT_GLOB_PATHSPECS environment variable to 1. Disabling globbing on =
-individual pathspecs can be done using pathspec magic ":(literal)"=0A=
-=0A=
---noglob-pathspecs=0A=
-Add "literal" magic to all pathspec. This is equivalent to setting the =
-GIT_NOGLOB_PATHSPECS environment variable to 1. Enabling globbing on =
-individual pathspecs can be done using pathspec magic ":(glob)"=0A=
-=0A=
---icase-pathspecs=0A=
-Add "icase" magic to all pathspec. This is equivalent to setting the =
-GIT_ICASE_PATHSPECS environment variable to 1.=0A=
-=0A=
-see glossary-content=0A=
-pathspec=0A=
-Pattern used to limit paths in Git commands.=0A=
-=0A=
-Pathspecs are used on the command line of "git ls-files", "git ls-tree", =
-"git add", "git grep", "git diff", "git checkout", and many other =
-commands to limit the scope of operations to some subset of the tree or =
-worktree. See the documentation of each command for whether paths are =
-relative to the current directory or toplevel. The pathspec syntax is as =
-follows:=0A=
-=0A=
-any path matches itself=0A=
-=0A=
-the pathspec up to the last slash represents a directory prefix. The =
-scope of that pathspec is limited to that subtree.=0A=
-=0A=
-the rest of the pathspec is a pattern for the remainder of the pathname. =
-Paths relative to the directory prefix will be matched against that =
-pattern using fnmatch(3); in particular, * and ? can match directory =
-separators.=0A=
-=0A=
-For example, Documentation/*.jpg will match all .jpg files in the =
-Documentation subtree, including Documentation/chapter_1/figure_1.jpg.=0A=
-=0A=
-A pathspec that begins with a colon : has special meaning. In the short =
-form, the leading colon : is followed by zero or more "magic signature" =
-letters (which optionally is terminated by another colon :), and the =
-remainder is the pattern to match against the path. The "magic =
-signature" consists of ASCII symbols that are neither alphanumeric, =
-glob, regex special charaters nor colon. The optional colon that =
-terminates the "magic signature" can be omitted if the pattern begins =
-with a character that does not belong to "magic signature" symbol set =
-and is not a colon.=0A=
-=0A=
-In the long form, the leading colon : is followed by a open parenthesis =
-(, a comma-separated list of zero or more "magic words", and a close =
-parentheses ), and the remainder is the pattern to match against the =
-path.=0A=
-=0A=
-A pathspec with only a colon means "there is no pathspec". This form =
-should not be combined with other pathspec.=0A=
-=0A=
-top=0A=
-The magic word top (magic signature: /) makes the pattern match from the =
-root of the working tree, even when you are running the command from =
-inside a subdirectory.=0A=
-=0A=
-literal=0A=
-Wildcards in the pattern such as * or ? are treated as literal =
-characters.=0A=
-=0A=
-icase=0A=
-Case insensitive match.=0A=
-=0A=
-glob=0A=
-Git treats the pattern as a shell glob suitable for consumption by =
-fnmatch(3) with the FNM_PATHNAME flag: wildcards in the pattern will not =
-match a / in the pathname. For example, "Documentation/*.html" matches =
-"Documentation/git.html" but not "Documentation/ppc/ppc.html" or =
-"tools/perf/Documentation/perf.html".=0A=
-=0A=
-Two consecutive asterisks ("**") in patterns matched against full =
-pathname may have special meaning:=0A=
-=0A=
-A leading "**" followed by a slash means match in all directories. For =
-example, "**/foo" matches file or directory "foo" anywhere, the same as =
-pattern "foo". "**/foo/bar" matches file or directory "bar" anywhere =
-that is directly under directory "foo".=0A=
-=0A=
-A trailing "/**" matches everything inside. For example, "abc/**" =
-matches all files inside directory "abc", relative to the location of =
-the .gitignore file, with infinite depth.=0A=
-=0A=
-A slash followed by two consecutive asterisks then a slash matches zero =
-or more directories. For example, "a/**/b" matches "a/b", "a/x/b", =
-"a/x/y/b" and so on.=0A=
-=0A=
-Other consecutive asterisks are considered invalid.=0A=
-=0A=
-Glob magic is incompatible with literal magic.=0A=
-=0A=
-exclude=0A=
-After a path matches any non-exclude pathspec, it will be run through =
-all exclude pathspec (magic signature: !). If it matches, the path is =
-ignored.=0A=
-=0A=
-Which characters to escape(\) *:\/ ??=0A=
-=0A=
-rooting (/*) of a path (a) $GIT_DIR (b) system root.=0A=
-directory (/) terminator (D/F conflict)=0A=
-=0A=
-Compare with <path>; <paths>; and <file> =0A=
-=0A=
-[glob(7) patterns] (see grep)=0A=
-=0A=
-` file specifies intentionally untracked files that=0A=
-Git should ignore.=0A=
-Files already tracked by Git are not affected; see the NOTES=0A=
-below for details.=0A=
-=0A=
-a `pathspec` is specified by a pattern.=0A=
-When deciding whether a path matches a `pathspec` pattern, Git normally =
-checks=0A=
-with the following=0A=
-order of precedence, from highest to lowest (within one level of=0A=
-precedence, the last matching pattern decides the outcome):=0A=
-=0A=
- * Patterns read from the command line for those commands that support=0A=
-   them.=0A=
-=0A=
- * Patterns read from a `.pathspec` file in the same directory=0A=
-   as the path, or in any parent directory, with patterns in the=0A=
-   higher level files (up to the toplevel of the work tree) being =
-overridden=0A=
-   by those in lower level files down to the directory containing the =
-file.=0A=
-   These patterns match relative to the location of the=0A=
-   `.pathspec` file.  A project normally includes such=0A=
-   `.pathspec` files in its repository, containing patterns for=0A=
-   files generated as part of the project build.=0A=
-=0A=
- * Patterns read from `$GIT_DIR/info/exclude`.=0A=
-=0A=
- * Patterns read from the file specified by the configuration=0A=
-   variable 'core.excludesfile'.=0A=
-=0A=
-Which file to place a pattern in depends on how the pattern is meant to=0A=
-be used.=0A=
-=0A=
- * Patterns which should be version-controlled and distributed to=0A=
-   other repositories via clone (i.e., files that all developers will =
-want=0A=
-   to ignore) should go into a `.pathspec` file.=0A=
-=0A=
- * Patterns which are=0A=
-   specific to a particular repository but which do not need to be shared=0A=
-   with other related repositories (e.g., auxiliary files that live =
-inside=0A=
-   the repository but are specific to one user's workflow) should go into=0A=
-   the `$GIT_DIR/info/exclude` file.=0A=
-=0A=
- * Patterns which a user wants Git to=0A=
-   ignore in all situations (e.g., backup or temporary files generated by=0A=
-   the user's editor of choice) generally go into a file specified by=0A=
-   `core.excludesfile` in the user's `~/.gitconfig`. Its default value is=0A=
-   $XDG_CONFIG_HOME/git/ignore. If $XDG_CONFIG_HOME is either not set or=0A=
-   empty, $HOME/.config/git/ignore is used instead.=0A=
-=0A=
-The underlying Git plumbing tools, such as=0A=
-'git ls-files' and 'git read-tree', read=0A=
-`pathspec` patterns specified by command-line options, or from=0A=
-files specified by command-line options.  Higher-level Git=0A=
-tools, such as 'git status' and 'git add',=0A=
-use patterns from the sources specified above.=0A=
-=0A=
-PATTERN FORMAT=0A=
---------------=0A=
-=0A=
- - A blank line matches no files, so it can serve as a separator=0A=
-   for readability.=0A=
-=0A=
- - A line starting with # serves as a comment.=0A=
-   Put a backslash ("`\`") in front of the first hash for patterns=0A=
-   that begin with a hash.=0A=
-=0A=
- - An optional prefix "`!`" which negates the pattern; any=0A=
-   matching file excluded by a previous pattern will become=0A=
-   included again. It is not possible to re-include a file if a parent=0A=
-   directory of that file is excluded. Git doesn't list excluded=0A=
-   directories for performance reasons, so any patterns on contained=0A=
-   files have no effect, no matter where they are defined.=0A=
-   Put a backslash ("`\`") in front of the first "`!`" for patterns=0A=
-   that begin with a literal "`!`", for example, "`\!important!.txt`".=0A=
-=0A=
- - If the pattern ends with a slash, it is removed for the=0A=
-   purpose of the following description, but it would only find=0A=
-   a match with a directory.  In other words, `foo/` will match a=0A=
-   directory `foo` and paths underneath it, but will not match a=0A=
-   regular file or a symbolic link `foo` (this is consistent=0A=
-   with the way how pathspec works in general in Git).=0A=
-=0A=
- - If the pattern does not contain a slash '/', Git treats it as=0A=
-   a shell glob pattern and checks for a match against the=0A=
-   pathname relative to the location of the `.pathspec` file=0A=
-   (relative to the toplevel of the work tree if not from a=0A=
-   `.pathspec` file).=0A=
-=0A=
- - Otherwise, Git treats the pattern as a shell glob suitable=0A=
-   for consumption by fnmatch(3) with the FNM_PATHNAME flag:=0A=
-   wildcards in the pattern will not match a / in the pathname.=0A=
-   For example, "Documentation/{asterisk}.html" matches=0A=
-   "Documentation/git.html" but not "Documentation/ppc/ppc.html"=0A=
-   or "tools/perf/Documentation/perf.html".=0A=
-=0A=
- - A leading slash matches the beginning of the pathname.=0A=
-   For example, "/{asterisk}.c" matches "cat-file.c" but not=0A=
-   "mozilla-sha1/sha1.c".=0A=
-=0A=
-Two consecutive asterisks ("`**`") in patterns matched against=0A=
-full pathname may have special meaning:=0A=
-=0A=
- - A leading "`**`" followed by a slash means match in all=0A=
-   directories. For example, "`**/foo`" matches file or directory=0A=
-   "`foo`" anywhere, the same as pattern "`foo`". "`**/foo/bar`"=0A=
-   matches file or directory "`bar`" anywhere that is directly=0A=
-   under directory "`foo`".=0A=
-=0A=
- - A trailing "`/**`" matches everything inside. For example,=0A=
-   "`abc/**`" matches all files inside directory "`abc`", relative=0A=
-   to the location of the `.pathspec` file, with infinite depth.=0A=
-=0A=
- - A slash followed by two consecutive asterisks then a slash=0A=
-   matches zero or more directories. For example, "`a/**/b`"=0A=
-   matches "`a/b`", "`a/x/b`", "`a/x/y/b`" and so on.=0A=
-=0A=
- - Other consecutive asterisks are considered invalid.=0A=
-=0A=
-NOTES=0A=
------=0A=
-=0A=
-The purpose of pathspec files is to ensure that certain files=0A=
-not tracked by Git remain untracked.=0A=
-=0A=
-To ignore uncommitted changes in a file that is already tracked,=0A=
-use 'git update-index {litdd}assume-unchanged'.=0A=
-=0A=
-To stop tracking a file that is currently tracked, use=0A=
-'git rm --cached'.=0A=
-=0A=
-EXAMPLES=0A=
---------=0A=
-=0A=
---------------------------------------------------------------=0A=
-    $ git status=0A=
-    [...]=0A=
-    # Untracked files:=0A=
-    [...]=0A=
-    #       Documentation/foo.html=0A=
-    #       Documentation/pathspec.html=0A=
-    #       file.o=0A=
-    #       lib.a=0A=
-    #       src/internal.o=0A=
-    [...]=0A=
-    $ cat .git/info/exclude=0A=
-    # ignore objects and archives, anywhere in the tree.=0A=
-    *.[oa]=0A=
-    $ cat Documentation/.pathspec=0A=
-    # ignore generated html files,=0A=
-    *.html=0A=
-    # except foo.html which is maintained by hand=0A=
-    !foo.html=0A=
-    $ git status=0A=
-    [...]=0A=
-    # Untracked files:=0A=
-    [...]=0A=
-    #       Documentation/foo.html=0A=
-    [...]=0A=
---------------------------------------------------------------=0A=
-=0A=
-Another example:=0A=
-=0A=
---------------------------------------------------------------=0A=
-    $ cat .pathspec=0A=
-    vmlinux*=0A=
-    $ ls arch/foo/kernel/vm*=0A=
-    arch/foo/kernel/vmlinux.lds.S=0A=
-    $ echo '!/vmlinux*' >arch/foo/kernel/.pathspec=0A=
---------------------------------------------------------------=0A=
-=0A=
-The second .pathspec prevents Git from ignoring=0A=
-`arch/foo/kernel/vmlinux.lds.S`.=0A=
-=0A=
-Example to exclude everything except a specific directory `foo/bar`=0A=
-(note the `/*` - without the slash, the wildcard would also exclude=0A=
-everything within `foo/bar`):=0A=
-=0A=
---------------------------------------------------------------=0A=
-    $ cat .pathspec=0A=
-    # exclude everything except directory foo/bar=0A=
-    /*=0A=
-    !/foo=0A=
-    /foo/*=0A=
-    !/foo/bar=0A=
---------------------------------------------------------------=0A=
-=0A=
-SEE ALSO=0A=
---------=0A=
-linkgit:git-rm[1],=0A=
-linkgit:git-update-index[1],=0A=
-linkgit:gitrepository-layout[5],=0A=
-linkgit:git-check-ignore[1]=0A=
-=0A=
-GIT=0A=
----=0A=
-Part of the linkgit:git[1] suite=0A=
-
-------=_NextPart_000_0130_01D27683.427876B0--
+diff --git a/submodule.c b/submodule.c
+index 4c4f033e8a..7deb0fca6a 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -1393,16 +1393,9 @@ static void relocate_single_git_dir_into_superproject(const char *prefix,
+ 	char *old_git_dir = NULL, *real_old_git_dir = NULL, *real_new_git_dir = NULL;
+ 	const char *new_git_dir;
+ 	const struct submodule *sub;
+-
+-	if (submodule_uses_worktrees(path))
+-		die(_("relocate_gitdir for submodule '%s' with "
+-		      "more than one worktree not supported"), path);
++	int err_code;
+ 
+ 	old_git_dir = xstrfmt("%s/.git", path);
+-	if (read_gitfile(old_git_dir))
+-		/* If it is an actual gitfile, it doesn't need migration. */
+-		return;
+-
+ 	real_old_git_dir = real_pathdup(old_git_dir);
+ 
+ 	sub = submodule_from_path(null_sha1, path);
+@@ -1414,6 +1407,24 @@ static void relocate_single_git_dir_into_superproject(const char *prefix,
+ 		die(_("could not create directory '%s'"), new_git_dir);
+ 	real_new_git_dir = real_pathdup(new_git_dir);
+ 
++	if (read_gitfile_gently(old_git_dir, &err_code) ||
++	    err_code == READ_GITFILE_ERR_NOT_A_REPO) {
++		/*
++		 * If it is an actual gitfile, it doesn't need migration,
++		 * however in case of a recursively nested submodule, the
++		 * gitfile content may be stale, as its superproject
++		 * (which may be a submodule of another superproject)
++		 * may have been moved. So expect a bogus pointer to be read,
++		 * which materializes as error READ_GITFILE_ERR_NOT_A_REPO.
++		 */
++		connect_work_tree_and_git_dir(path, real_new_git_dir);
++		return;
++	}
++
++	if (submodule_uses_worktrees(path))
++		die(_("relocate_gitdir for submodule '%s' with "
++		      "more than one worktree not supported"), path);
++
+ 	if (!prefix)
+ 		prefix = get_super_prefix();
+ 
+@@ -1437,22 +1448,14 @@ void absorb_git_dir_into_superproject(const char *prefix,
+ 				      const char *path,
+ 				      unsigned flags)
+ {
+-	const char *sub_git_dir, *v;
+-	char *real_sub_git_dir = NULL, *real_common_git_dir = NULL;
+ 	struct strbuf gitdir = STRBUF_INIT;
+-
+ 	strbuf_addf(&gitdir, "%s/.git", path);
+-	sub_git_dir = resolve_gitdir(gitdir.buf);
+ 
+ 	/* Not populated? */
+-	if (!sub_git_dir)
++	if (!file_exists(gitdir.buf))
+ 		goto out;
+ 
+-	/* Is it already absorbed into the superprojects git dir? */
+-	real_sub_git_dir = real_pathdup(sub_git_dir);
+-	real_common_git_dir = real_pathdup(get_git_common_dir());
+-	if (!skip_prefix(real_sub_git_dir, real_common_git_dir, &v))
+-		relocate_single_git_dir_into_superproject(prefix, path);
++	relocate_single_git_dir_into_superproject(prefix, path);
+ 
+ 	if (flags & ABSORB_GITDIR_RECURSE_SUBMODULES) {
+ 		struct child_process cp = CHILD_PROCESS_INIT;
+@@ -1481,6 +1484,4 @@ void absorb_git_dir_into_superproject(const char *prefix,
+ 
+ out:
+ 	strbuf_release(&gitdir);
+-	free(real_sub_git_dir);
+-	free(real_common_git_dir);
+ }
+diff --git a/t/t7412-submodule-absorbgitdirs.sh b/t/t7412-submodule-absorbgitdirs.sh
+index 1c47780e2b..e2bbb449b6 100755
+--- a/t/t7412-submodule-absorbgitdirs.sh
++++ b/t/t7412-submodule-absorbgitdirs.sh
+@@ -64,6 +64,33 @@ test_expect_success 'absorb the git dir in a nested submodule' '
+ 	test_cmp expect.2 actual.2
+ '
+ 
++test_expect_success 're-setup nested submodule' '
++	# un-absorb the direct submodule, to test if the nested submodule
++	# is still correct (needs a rewrite of the gitfile only)
++	rm -rf sub1/.git &&
++	mv .git/modules/sub1 sub1/.git &&
++	GIT_WORK_TREE=. git -C sub1 config --unset core.worktree &&
++	# fixup the nested submodule
++	echo "gitdir: ../.git/modules/nested" >sub1/nested/.git &&
++	GIT_WORK_TREE=../../../nested git -C sub1/.git/modules/nested config \
++		core.worktree "../../../nested" &&
++	# make sure this re-setup is correct
++	git status --ignore-submodules=none
++'
++
++test_expect_success 'absorb the git dir in a nested submodule' '
++	git status >expect.1 &&
++	git -C sub1/nested rev-parse HEAD >expect.2 &&
++	git submodule absorbgitdirs &&
++	test -f sub1/.git &&
++	test -f sub1/nested/.git &&
++	test -d .git/modules/sub1/modules/nested &&
++	git status >actual.1 &&
++	git -C sub1/nested rev-parse HEAD >actual.2 &&
++	test_cmp expect.1 actual.1 &&
++	test_cmp expect.2 actual.2
++'
++
+ test_expect_success 'setup a gitlink with missing .gitmodules entry' '
+ 	git init sub2 &&
+ 	test_commit -C sub2 first &&
+-- 
+2.11.0.486.g67830dbe1c
 
