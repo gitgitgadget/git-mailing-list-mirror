@@ -6,72 +6,79 @@ X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7DBAE1F89C
-	for <e@80x24.org>; Tue, 24 Jan 2017 13:44:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CA9E020AC5
+	for <e@80x24.org>; Tue, 24 Jan 2017 14:30:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750869AbdAXNoe (ORCPT <rfc822;e@80x24.org>);
-        Tue, 24 Jan 2017 08:44:34 -0500
-Received: from cloud.peff.net ([104.130.231.41]:43801 "EHLO cloud.peff.net"
+        id S1751175AbdAXOac (ORCPT <rfc822;e@80x24.org>);
+        Tue, 24 Jan 2017 09:30:32 -0500
+Received: from cloud.peff.net ([104.130.231.41]:43825 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750734AbdAXNod (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Jan 2017 08:44:33 -0500
-Received: (qmail 7331 invoked by uid 109); 24 Jan 2017 13:44:32 -0000
+        id S1751063AbdAXOaa (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 Jan 2017 09:30:30 -0500
+Received: (qmail 10540 invoked by uid 109); 24 Jan 2017 14:23:48 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 24 Jan 2017 13:44:32 +0000
-Received: (qmail 22886 invoked by uid 111); 24 Jan 2017 13:44:31 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 24 Jan 2017 14:23:48 +0000
+Received: (qmail 30293 invoked by uid 111); 24 Jan 2017 14:23:47 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 24 Jan 2017 08:44:31 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 24 Jan 2017 08:44:30 -0500
-Date:   Tue, 24 Jan 2017 08:44:30 -0500
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 24 Jan 2017 09:23:47 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 24 Jan 2017 09:23:46 -0500
+Date:   Tue, 24 Jan 2017 09:23:46 -0500
 From:   Jeff King <peff@peff.net>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
-        Git List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 0/5] string-list: make string_list_sort() reentrant
-Message-ID: <20170124134430.am6yzskkcp2vq6a5@sigill.intra.peff.net>
-References: <67ac53cd-3fc0-8bd0-30f4-129281c3090f@web.de>
- <20170123235445.qsejumltutd2vrhd@sigill.intra.peff.net>
- <alpine.DEB.2.20.1701241233390.3469@virtualbox>
+To:     David Aguilar <davvid@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        GIT Mailing-list <git@vger.kernel.org>
+Subject: Re: [PATCH] difftool.c: mark a file-local symbol with static
+Message-ID: <20170124142346.u3d7l6772mtkgpcf@sigill.intra.peff.net>
+References: <xmqqtwaod7ly.fsf@gitster.mtv.corp.google.com>
+ <20161130212510.ihcmvig7jq44p3nx@sigill.intra.peff.net>
+ <3e6a6685-19ec-4536-4a5f-3a56e30fb530@ramsayjones.plus.com>
+ <20161130231848.v5ge6otytim2t6d2@sigill.intra.peff.net>
+ <xmqqinr4bkf4.fsf@gitster.mtv.corp.google.com>
+ <59da5383-16a0-b327-75a8-b4c4ad7bd479@ramsayjones.plus.com>
+ <20161201040234.3rnuttitneweedn5@sigill.intra.peff.net>
+ <xmqq60n3bjel.fsf@gitster.mtv.corp.google.com>
+ <20161201185056.eso5rhec7izlbywa@sigill.intra.peff.net>
+ <20170122052608.tpr5pihfgafhoynj@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <alpine.DEB.2.20.1701241233390.3469@virtualbox>
+In-Reply-To: <20170122052608.tpr5pihfgafhoynj@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jan 24, 2017 at 12:44:10PM +0100, Johannes Schindelin wrote:
+mn Sat, Jan 21, 2017 at 09:26:08PM -0800, David Aguilar wrote:
 
-> Hi Peff,
+> > > An obvious second
+> > > best option would be to drop -Wall from the "everybody" CFLAGS and
+> > > move it to DEVELOPER_CFLAGS instead.
+> > 
+> > Yeah, though that doesn't help the example above.
+> > 
+> > As ugly as warning("%s", "") is, I think it may be the thing that annoys
+> > the smallest number of people.
+> > 
+> > -Peff
 > 
-> On Mon, 23 Jan 2017, Jeff King wrote:
+> How about using warning(" ") instead?
 > 
-> > Is there any interest in people adding the ISO qsort_s() to their libc
-> > implementations? It seems like it's been a fair number of years by now.
-> 
-> Visual C supports it *at least* since Visual Studio 2005:
-> 
-> https://msdn.microsoft.com/en-us/library/4xc60xas(v=vs.80).aspx
-> 
-> With René's patch, we have an adapter for GNU libc, and if anybody comes
-> up with the (equally trivial) adapter for BSD libc's qsort_r(), we have a
-> lot of bases covered.
+> For difftool.c specifically, the following is a fine solution,
+> and doesn't require that we change our warning flags just for
+> this one file.
 
-Sadly, no. Microsoft's qsort_s() is not compatible with the ISO C one.
-And BSD's qsort_r() has a similar problem acting as a wrapper, because
-the order of arguments in the callback functions is different (so you'd
-have to actually wrap the callback, too, and rearrange the arguments for
-each call, or do some macro trickery).
+I dunno. As ugly as the "%s" thing is in the source, at least it doesn't
+change the output. Not that an extra space is the end of the world, but
+it seems like it's letting the problem escape from the source code.
 
-Gory details are in:
+Do people still care about resolving this? -Wno-format-zero-length is in
+the DEVELOPER options. It wasn't clear to me if that was sufficient, or
+if we're going to get a bunch of reports from people that need to be
+directed to the right compiler options.
 
-  https://stackoverflow.com/questions/39560773/different-declarations-of-qsort-r-on-mac-and-linux/39561369
-
-and the original thread:
-
-  http://public-inbox.org/git/3083fbf7-d67e-77e4-e05f-94a7e7e15eba@web.de/
+The problematic code just hit 'next', so I suppose we'll see soon (OTOH,
+the real test is when it get shipped as part of a release).
 
 -Peff
