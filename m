@@ -6,72 +6,66 @@ X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B00EF1F437
-	for <e@80x24.org>; Tue, 24 Jan 2017 20:39:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 777361F437
+	for <e@80x24.org>; Tue, 24 Jan 2017 20:41:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750759AbdAXUjw (ORCPT <rfc822;e@80x24.org>);
-        Tue, 24 Jan 2017 15:39:52 -0500
-Received: from cloud.peff.net ([104.130.231.41]:44057 "EHLO cloud.peff.net"
+        id S1750830AbdAXUlJ (ORCPT <rfc822;e@80x24.org>);
+        Tue, 24 Jan 2017 15:41:09 -0500
+Received: from cloud.peff.net ([104.130.231.41]:44064 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750713AbdAXUjw (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Jan 2017 15:39:52 -0500
-Received: (qmail 3344 invoked by uid 109); 24 Jan 2017 20:39:51 -0000
+        id S1750713AbdAXUlI (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 Jan 2017 15:41:08 -0500
+Received: (qmail 3483 invoked by uid 109); 24 Jan 2017 20:41:08 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 24 Jan 2017 20:39:51 +0000
-Received: (qmail 5009 invoked by uid 111); 24 Jan 2017 20:39:50 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 24 Jan 2017 20:41:08 +0000
+Received: (qmail 5029 invoked by uid 111); 24 Jan 2017 20:41:07 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 24 Jan 2017 15:39:50 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 24 Jan 2017 15:39:49 -0500
-Date:   Tue, 24 Jan 2017 15:39:49 -0500
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 24 Jan 2017 15:41:07 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 24 Jan 2017 15:41:06 -0500
+Date:   Tue, 24 Jan 2017 15:41:06 -0500
 From:   Jeff King <peff@peff.net>
 To:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
-Cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
         Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [DEMO][PATCH v2 6/5] compat: add a qsort_s() implementation
- based on GNU's qsort_r(1)
-Message-ID: <20170124203949.46lbmiyj26xx4hrk@sigill.intra.peff.net>
+Subject: Re: [PATCH v2 0/5] string-list: make string_list_sort() reentrant
+Message-ID: <20170124204105.2iqmincozuqbmqo2@sigill.intra.peff.net>
 References: <67ac53cd-3fc0-8bd0-30f4-129281c3090f@web.de>
- <9f8b564d-ec9f-abc9-77f6-aa84c6e78b7a@web.de>
- <xmqq60l5sihz.fsf@gitster.mtv.corp.google.com>
- <4e416167-2a33-0943-5738-79b4da5f2c11@web.de>
+ <20170123235445.qsejumltutd2vrhd@sigill.intra.peff.net>
+ <b333ecd4-a147-904d-b1ce-b49179c4ad26@web.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <4e416167-2a33-0943-5738-79b4da5f2c11@web.de>
+In-Reply-To: <b333ecd4-a147-904d-b1ce-b49179c4ad26@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jan 24, 2017 at 07:00:03PM +0100, René Scharfe wrote:
+On Tue, Jan 24, 2017 at 07:00:07PM +0100, René Scharfe wrote:
 
-> > I do worry about having to support more implementations in the
-> > future that have different function signature for the comparison
-> > callbacks, which will make things ugly, but this addition alone
-> > doesn't look too bad to me.
+> Am 24.01.2017 um 00:54 schrieb Jeff King:
+> > The speed looks like a reasonable outcome. I'm torn on the qsort_r()
+> > demo patch. I don't think it looks too bad. OTOH, I don't think I would
+> > want to deal with the opposite-argument-order versions.
 > 
-> It is unfair of me to show a 5% speedup and then recommend to not
-> include it. ;-)  That difference won't be measurable in real use cases
-> and the patch is not necessary.  This patch is simple, but the overall
-> complexity (incl. #ifdefs etc.) will be lower without it.
+> The code itself may look OK, but it's not really necessary and the special
+> implementation for Linux makes increases maintenance costs.  Can we save it
+> for later and first give the common implemention a chance to prove itself?
 
-I care less about squeezing out the last few percent performance and
-more that somebody libc qsort_r() might offer some other improvement.
-For instance, it could sort in-place to lower memory use for some cases,
-or do some clever thing that gives more than a few percent in the real
-world (something like TimSort).
+Sure, I'm OK with leaving it out for now.
 
-I don't know to what degree we should care about that.
+> > Is there any interest in people adding the ISO qsort_s() to their libc
+> > implementations? It seems like it's been a fair number of years by now.
+> 
+> https://sourceware.org/ml/libc-alpha/2014-12/msg00513.html is the last post
+> mentioning qsort_s on the glibc mailing list, but it didn't even make it
+> into https://sourceware.org/glibc/wiki/Development_Todo/Master.
+> Not sure what's planned in BSD land, didn't find anything (but didn't look
+> too hard).
 
-> But here's another one, with even higher performance and with an even
-> bigger recommendation to not include it! :)  It veers off into another
-> direction: Parallel execution.  It requires thread-safe comparison
-> functions, which might surprise callers.  The value 1000 for the minimum
-> number of items before threading kicks in is just a guess, not based on
-> measurements.  So it's quite raw -- and I'm not sure why it's still a
-> bit slower than sort(1).
-
-Fun, but probably insane for our not-very-threadsafe code base. :)
+So it sounds like "no, not really". I think that's OK. I was mostly
+curious if we could expect our custom implementation to age out over
+time.
 
 -Peff
