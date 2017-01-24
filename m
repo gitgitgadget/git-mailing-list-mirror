@@ -6,27 +6,27 @@ X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B643020A17
-	for <e@80x24.org>; Tue, 24 Jan 2017 00:45:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EF18520A17
+	for <e@80x24.org>; Tue, 24 Jan 2017 00:47:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751003AbdAXApD (ORCPT <rfc822;e@80x24.org>);
-        Mon, 23 Jan 2017 19:45:03 -0500
-Received: from cloud.peff.net ([104.130.231.41]:43564 "EHLO cloud.peff.net"
+        id S1751960AbdAXArM (ORCPT <rfc822;e@80x24.org>);
+        Mon, 23 Jan 2017 19:47:12 -0500
+Received: from cloud.peff.net ([104.130.231.41]:43567 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750715AbdAXApD (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Jan 2017 19:45:03 -0500
-Received: (qmail 9867 invoked by uid 109); 24 Jan 2017 00:45:03 -0000
+        id S1751214AbdAXArB (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Jan 2017 19:47:01 -0500
+Received: (qmail 9931 invoked by uid 109); 24 Jan 2017 00:46:01 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 24 Jan 2017 00:45:03 +0000
-Received: (qmail 29656 invoked by uid 111); 24 Jan 2017 00:45:59 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 24 Jan 2017 00:46:01 +0000
+Received: (qmail 2317 invoked by uid 111); 24 Jan 2017 00:46:58 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 23 Jan 2017 19:45:59 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 23 Jan 2017 19:45:01 -0500
-Date:   Mon, 23 Jan 2017 19:45:01 -0500
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 23 Jan 2017 19:46:58 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 23 Jan 2017 19:45:59 -0500
+Date:   Mon, 23 Jan 2017 19:45:59 -0500
 From:   Jeff King <peff@peff.net>
 To:     git@vger.kernel.org
-Subject: [PATCH 06/12] clone: disable save_commit_buffer
-Message-ID: <20170124004500.v7geae55w6zeax7m@sigill.intra.peff.net>
+Subject: [PATCH 07/12] fetch-pack: cache results of for_each_alternate_ref
+Message-ID: <20170124004559.vlsrwwphuzdsfqoq@sigill.intra.peff.net>
 References: <20170124003729.j4ygjcgypdq7hceg@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -37,41 +37,177 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Normally git caches the raw commit object contents in
-"struct commit". This makes it fast to run parse_commit()
-followed by a pretty-print operation.
+We may run for_each_alternate_ref() twice, once in
+find_common() and once in everything_local(). This operation
+can be expensive, because it involves running a sub-process
+which must freshly load all of the alternate's refs from
+disk.
 
-For commands which don't actually pretty-print the commits,
-the caching is wasteful (and may use quite a lot of memory
-if git accesses a large number of commits).
+Let's cache and reuse the results between the two calls. We
+can make some optimizations based on the particular use
+pattern in fetch-pack to keep our memory usage down.
 
-For fetching operations like clone, we already disable
-save_commit_buffer in everything_local(), where we may
-traverse. But clone also parses commits before it even gets
-there; it looks at commits reachable from its refs, and from
-alternate refs.
+The first is that we only care about the sha1s, not the refs
+themselves. So it's OK to store only the sha1s, and to
+suppress duplicates. The natural fit would therefore be a
+sha1_array.
 
-In one real-world case with a large number of tags, this
-cut about 10MB off of clone's heap usage. Not spectacular,
-but there's really no downside.
+However, sha1_array's de-duplication happens only after it
+has read and sorted all entries. It still stores each
+duplicate. For an alternate with a large number of refs
+pointing to the same commits, this is a needless expense.
+
+Instead, we'd prefer to eliminate duplicates before putting
+them in the cache, which implies using a hash. We can
+further note that fetch-pack will call parse_object() on
+each alternate sha1. We can therefore keep our cache as a
+set of pointers to "struct object". That gives us a place to
+put our "already seen" bit with an optimized hash lookup.
+And as a bonus, the object stores the sha1 for us, so
+pointer-to-object is all we need.
+
+There are two extra optimizations I didn't do here:
+
+  - we actually store an array of pointer-to-object.
+    Technically we could just walk the obj_hash table
+    looking for entries with the ALTERNATE flag set (because
+    our use case doesn't care about the order here).
+
+    But that hash table may be mostly composed of
+    non-ALTERNATE entries, so we'd waste time walking over
+    them. So it would be a slight win in memory use, but a
+    loss in CPU.
+
+  - the items we pull out of the cache are actual "struct
+    object"s, but then we feed "obj->sha1" to our
+    sub-functions, which promptly call parse_object().
+
+    This second parse is cheap, because it starts with
+    lookup_object() and will bail immediately when it sees
+    we've already parsed the object. We could save the extra
+    hash lookup, but it would involve refactoring the
+    functions we call. It may or may not be worth the
+    trouble.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- builtin/clone.c | 1 +
- 1 file changed, 1 insertion(+)
+ fetch-pack.c | 52 ++++++++++++++++++++++++++++++++++++++++++----------
+ object.h     |  2 +-
+ 2 files changed, 43 insertions(+), 11 deletions(-)
 
-diff --git a/builtin/clone.c b/builtin/clone.c
-index 5ef81927a..3fca45e7e 100644
---- a/builtin/clone.c
-+++ b/builtin/clone.c
-@@ -858,6 +858,7 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
- 	struct refspec *refspec;
- 	const char *fetch_pattern;
+diff --git a/fetch-pack.c b/fetch-pack.c
+index 54f84c573..e0f5d5ce8 100644
+--- a/fetch-pack.c
++++ b/fetch-pack.c
+@@ -35,6 +35,7 @@ static const char *alternate_shallow_file;
+ #define COMMON_REF	(1U << 2)
+ #define SEEN		(1U << 3)
+ #define POPPED		(1U << 4)
++#define ALTERNATE	(1U << 5)
  
-+	save_commit_buffer = 0;
- 	packet_trace_identity("clone");
- 	argc = parse_options(argc, argv, prefix, builtin_clone_options,
- 			     builtin_clone_usage, 0);
+ static int marked;
+ 
+@@ -67,6 +68,41 @@ static inline void print_verbose(const struct fetch_pack_args *args,
+ 	fputc('\n', stderr);
+ }
+ 
++struct alternate_object_cache {
++	struct object **items;
++	size_t nr, alloc;
++};
++
++static void cache_one_alternate(const char *refname,
++				const struct object_id *oid,
++				void *vcache)
++{
++	struct alternate_object_cache *cache = vcache;
++	struct object *obj = parse_object(oid->hash);
++
++	if (!obj || (obj->flags & ALTERNATE))
++		return;
++
++	obj->flags |= ALTERNATE;
++	ALLOC_GROW(cache->items, cache->nr + 1, cache->alloc);
++	cache->items[cache->nr++] = obj;
++}
++
++static void for_each_cached_alternate(void (*cb)(struct object *))
++{
++	static int initialized;
++	static struct alternate_object_cache cache;
++	size_t i;
++
++	if (!initialized) {
++		for_each_alternate_ref(cache_one_alternate, &cache);
++		initialized = 1;
++	}
++
++	for (i = 0; i < cache.nr; i++)
++		cb(cache.items[i]);
++}
++
+ static void rev_list_push(struct commit *commit, int mark)
+ {
+ 	if (!(commit->object.flags & mark)) {
+@@ -253,11 +289,9 @@ static void send_request(struct fetch_pack_args *args,
+ 		write_or_die(fd, buf->buf, buf->len);
+ }
+ 
+-static void insert_one_alternate_ref(const char *refname,
+-				     const struct object_id *oid,
+-				     void *unused)
++static void insert_one_alternate_object(struct object *obj)
+ {
+-	rev_list_insert_ref(NULL, oid->hash);
++	rev_list_insert_ref(NULL, obj->oid.hash);
+ }
+ 
+ #define INITIAL_FLUSH 16
+@@ -300,7 +334,7 @@ static int find_common(struct fetch_pack_args *args,
+ 	marked = 1;
+ 
+ 	for_each_ref(rev_list_insert_ref_oid, NULL);
+-	for_each_alternate_ref(insert_one_alternate_ref, NULL);
++	for_each_cached_alternate(insert_one_alternate_object);
+ 
+ 	fetching = 0;
+ 	for ( ; refs ; refs = refs->next) {
+@@ -621,11 +655,9 @@ static void filter_refs(struct fetch_pack_args *args,
+ 	*refs = newlist;
+ }
+ 
+-static void mark_alternate_complete(const char *refname,
+-				    const struct object_id *oid,
+-				    void *unused)
++static void mark_alternate_complete(struct object *obj)
+ {
+-	mark_complete(oid->hash);
++	mark_complete(obj->oid.hash);
+ }
+ 
+ static int everything_local(struct fetch_pack_args *args,
+@@ -661,7 +693,7 @@ static int everything_local(struct fetch_pack_args *args,
+ 
+ 	if (!args->deepen) {
+ 		for_each_ref(mark_complete_oid, NULL);
+-		for_each_alternate_ref(mark_alternate_complete, NULL);
++		for_each_cached_alternate(mark_alternate_complete);
+ 		commit_list_sort_by_date(&complete);
+ 		if (cutoff)
+ 			mark_recent_complete_commits(args, cutoff);
+diff --git a/object.h b/object.h
+index 614a00675..f52957dcb 100644
+--- a/object.h
++++ b/object.h
+@@ -29,7 +29,7 @@ struct object_array {
+ /*
+  * object flag allocation:
+  * revision.h:      0---------10                                26
+- * fetch-pack.c:    0---4
++ * fetch-pack.c:    0---5
+  * walker.c:        0-2
+  * upload-pack.c:       4       11----------------19
+  * builtin/blame.c:               12-13
 -- 
 2.11.0.765.g454d2182f
 
