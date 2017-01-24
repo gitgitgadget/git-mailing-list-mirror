@@ -7,85 +7,67 @@ X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CC1E52092F
-	for <e@80x24.org>; Tue, 24 Jan 2017 10:57:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9E98B2092F
+	for <e@80x24.org>; Tue, 24 Jan 2017 11:29:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750865AbdAXK5L (ORCPT <rfc822;e@80x24.org>);
-        Tue, 24 Jan 2017 05:57:11 -0500
-Received: from mout.gmx.net ([212.227.15.15]:57903 "EHLO mout.gmx.net"
+        id S1751038AbdAXL2v (ORCPT <rfc822;e@80x24.org>);
+        Tue, 24 Jan 2017 06:28:51 -0500
+Received: from mout.gmx.net ([212.227.17.21]:53095 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750824AbdAXK5K (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Jan 2017 05:57:10 -0500
-Received: from virtualbox ([37.24.141.236]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0LuPYt-1cLQfb3lcF-011jS2; Tue, 24
- Jan 2017 11:56:53 +0100
-Date:   Tue, 24 Jan 2017 11:56:51 +0100 (CET)
+        id S1750977AbdAXL2u (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 Jan 2017 06:28:50 -0500
+Received: from virtualbox ([37.24.141.236]) by mail.gmx.com (mrgmx103
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0LcSWg-1c42qz3e4c-00jsct; Tue, 24
+ Jan 2017 12:28:28 +0100
+Date:   Tue, 24 Jan 2017 12:28:25 +0100 (CET)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
-To:     Thomas Gummerer <t.gummerer@gmail.com>
-cc:     git@vger.kernel.org, Stephan Beyer <s-beyer@gmx.net>,
-        Junio C Hamano <gitster@pobox.com>,
-        Marc Strapetz <marc.strapetz@syntevo.com>,
-        Jeff King <peff@peff.net>
-Subject: Re: [PATCH 0/3] stash: support filename argument
-In-Reply-To: <20170121200804.19009-1-t.gummerer@gmail.com>
-Message-ID: <alpine.DEB.2.20.1701241148300.3469@virtualbox>
-References: <20170121200804.19009-1-t.gummerer@gmail.com>
+To:     Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+cc:     git <git@vger.kernel.org>, Pranit Bauva <pranit.bauva@gmail.com>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Jeff King <peff@peff.net>,
+        =?UTF-8?Q?Carlos_Mart=C3=ADn_Nieto?= <cmn@dwim.me>,
+        Thomas Gummerer <t.gummerer@gmail.com>
+Subject: Re: GSoC 2017: application open, deadline = February 9, 2017
+In-Reply-To: <vpq1svtstud.fsf@anie.imag.fr>
+Message-ID: <alpine.DEB.2.20.1701241228020.3469@virtualbox>
+References: <vpq1svtstud.fsf@anie.imag.fr>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:r9gjD4tGoTIzBg6mGDabBIiDkfaOSaYYxCEBohcNnj72uwPlo2D
- xXt74+3m9lCqTBcc3PgY+TR2zY+AgtpjUzZSlFqm5AQksH7bCuFUvtCbLvHJ7jkYfaeKsno
- mL0lR3HcZ5ZDlUr6QC9cL2KZhZdt+ezN8lW8fP/LItx6dx8zFdz1FXO1dkjqYAFjz11IPFO
- s018jRGIoMkqU4I3UrFzA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:JAGW2ztcnK8=:QvO9bUexF/OPPRliKiggdC
- j9Y4HN7YCoWc1UFtapYQKQVLZrM7tOEhiPx6rqWEMAMvQ/GPI4Pt9kU6iCFOdPGgEnvEGBX3Q
- MpsYf+STIY9FgERtuFNf4tQemNe8VXMeWIerxH9D6s98MFaXICXl47rmxezr87n0qXRIgOYe6
- wXUwSDqN7YvX/XiX6Op0B+s9wQN3zefoQ/9kg3zv4vfhf9ZL6cD1sDmO9z5XSzYUDeq5Nq4u3
- hvayCMLc/DTLIGgUaGxfVLomkJg355CldQRC5VmfiLsUEGJ3N8w8nbwUOqe2wJKCWS3u+KREU
- t7YzNPvPCNE3ckgalCJb5jOn3Vguaqr6X9j5EzndN5p1MQvbzyh5JsOG90mRPTm7xjDup0aUL
- 3bjlMqW7JJR+jvH5MSJpLT8O+VGBhzYw6/QLL7hvchLWU4I5UT4BnmeHBf5ZElUCx5M3jjHgC
- IGRxl9NXGwahFK/5IinF08C2DqTwXXwORjZGwTXmuARvuXgbsNrsCxKvbgmnlR+Z1gYtoqNGm
- ls4zh15GOUJVqZgpjwTm6uK7IFVQfQcp+UqSw+1bCZp+sk67I+0GR8tfgl+FTa7PULK9zPpPZ
- G1LOluJz7c2Y4JSI4K+aJwLu8lkp3ZuhQ3IxQJMawa82RcTaW81rgEpcmy5uW/jwo0RX7eVe2
- vxX7FhuwQW+0LVJlO3FV4YYvrN65tt0wGY2Q+yxKBGz34YkhUUwn5dTZxeqydYqa0Uyh3mroz
- 6rI4hkWbJapxa4qeSyzE8GKiR/LdY79tLWiZL/GMQRGRB6XLhRMLCUiD7tX1Y7j5oyDxn93cV
- 8GbV01S
+X-Provags-ID: V03:K0:Q+7BGuINubQVWvpPpK56blnDN/oVjjHjO/uS3mMYr9pCnUb7phH
+ bFzJFQnHXzsG5DDo8uJ189nYEECIBVFoqL/EbBoyxS3AG01EXczdcojfzjodqX9KLQtDVpf
+ sHvLjHsgWvjjNxqMekHvS29HMDrejF+2G1v5A6ApM/5I/W6sqXyJ2Cp0HKAbdkQJbXtzAbW
+ KieO/9sULjWIO432JWk9g==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:CZ63L0mJkJo=:ZE21oy3USC5L/bVR4Gau2F
+ 3ZfGYZpCKK8v8XCrDxudW3BsWopxP1QoEPg91jtE4tKB0/F4+F8inapBwKfQpTsoGjPxs7XOk
+ 1stT8jcq9NM0O7WXHd80aS+QtlamdZ1dgFaIOhPsPZajvsUbizD0GApvoHk0pi6k8DQ2eTejF
+ eAHsO6jC0BVtgpUkstsdX6id0cQ3Uj2MZ4w/AxnlVbbeeT6Aax3qFaU9OTC917SPdC3UylAgR
+ kXUnSTXX+VMR+1J1dfiWed4MYILacCvQe2LIurhNZEiPvSWkE9CYbO2WaPr/HUmmhHpWvyGun
+ OfdIIUxQ42l819kKdXBH2EnQn8vN8vecmJl1VAQSOEw5/OmJcsgTgy6pPRNdh2Wxk0/UGhDo+
+ IRnV+VjipmCjOGVbeJTrT/wmbuyvXL7t5yHQYN/Z+LnIUqnbf2Kzqy89QI97byTio+0bWohgJ
+ gPNp+Ay6T28kVyHrEP3IS1FXSXbHiyYIuOs+38v7rGpVcZpJWwsxr8kBp1huti7YLoZhHlYmK
+ VCQcaHcz5i84J1Bt8tCguJOO/TCla9FyhVXgTMxpnh0sDGjo8buaI0vH0KtdTNe1Pd1hGthT0
+ FcPbY6cEZ9hl3NV0Vca4tUk35cpZSt95NVgUPZjDdAFWij24OrYv61OkKeMDAFr+oO6XoLlpt
+ 3jZiYNu4bHxppPaZAIH5h9jfe3XUSaU0H0sXpyGyCh4kTCU+b/pkWsn0x9KNk4LeaslS3VJoq
+ 4/8EH5V9ko2Qv457AcaBFfggp733KwXpfPmhyuPITIDYcyWWlJRK8W8mRCHha+Xz5Zdgz4K0v
+ MFV4R049Wii/dQ8vRWcPIth5O4h0df0iLoL4T+gedZVEl54rcb0TVBNUmjWDM8zph0lK89+id
+ ua+36Smyu0WUmIxY2cnxVp9d9/TSxBBLultZCHde11KUbcB2C/zcUQdhQmXuAy6KnegR0reaK
+ q9KUeI0gA79MBkaoULYAHcyAX+wb4U988OtzSFS76h7I2raZfkkmQD1g5w7TIPfY77EKLE+mK
+ gYb7FFcinUu3qiwkkEmKbz6HAfGNr3E+5i6EA6DB2JmhiEXxdR+T7GKntUjaklN9Bw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Thomas,
+Hi Matthieu,
 
-On Sat, 21 Jan 2017, Thomas Gummerer wrote:
+On Mon, 23 Jan 2017, Matthieu Moy wrote:
 
-> This is the first try to implement the RFC I posted a week ago [1].  It
-> introduces a new push verb for git stash.  I couldn't come up with
-> any better name that wasn't already taken.  If anyone has ideas I'd be
-> very happy to hear them.
+> * Who's willing to mentor?
 
-I would have preferred a series of patches that essentially adds a new and
-improved `save` syntax:
-
-git stash [save] [-p|--patch] [-k|--[no-]keep-index] [-q|--quiet]
-          [-u|--include-untracked] [-a|--all] [-m <message>]]
-          [-- <path>...]
-
-and keeps the legacy syntax, but deprecates it:
-
-git stash [save [-p|--patch] [-k|--[no-]keep-index] [-q|--quiet]
-          [-u|--include-untracked] [-a|--all] [<message>]]
-
-The problem with that is, of course, that 3c2eb80fe3 (stash: simplify
-defaulting to "save" and reject unknown options, 2009-08-18) in its
-infinite wisdom *already* introduced the `--` separator to drop out of
-option parsing.
-
-On a positive note, it is a thorn in Git's CUI that `git stash` implies
-the `save` command, and that `save` is not at all the opposite of `apply`
-or `pop`. Your introduction of the `push` command will fix that flaw, and
-we can *still* deprecate the `save` command.
+As in the years before, I am willing to mentor.
 
 Ciao,
 Johannes
