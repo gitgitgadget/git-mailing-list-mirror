@@ -7,63 +7,63 @@ X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EDFC71F437
-	for <e@80x24.org>; Tue, 24 Jan 2017 19:08:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3040B1F437
+	for <e@80x24.org>; Tue, 24 Jan 2017 19:51:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750885AbdAXTH7 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 24 Jan 2017 14:07:59 -0500
-Received: from mail-lf0-f68.google.com ([209.85.215.68]:34469 "EHLO
-        mail-lf0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750716AbdAXTH6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Jan 2017 14:07:58 -0500
-Received: by mail-lf0-f68.google.com with SMTP id q89so18478537lfi.1
-        for <git@vger.kernel.org>; Tue, 24 Jan 2017 11:07:57 -0800 (PST)
+        id S1750756AbdAXTvY (ORCPT <rfc822;e@80x24.org>);
+        Tue, 24 Jan 2017 14:51:24 -0500
+Received: from mail-lf0-f66.google.com ([209.85.215.66]:35294 "EHLO
+        mail-lf0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750708AbdAXTvX (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 Jan 2017 14:51:23 -0500
+Received: by mail-lf0-f66.google.com with SMTP id v186so18579414lfa.2
+        for <git@vger.kernel.org>; Tue, 24 Jan 2017 11:51:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=subject:to:references:cc:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-transfer-encoding;
-        bh=SFhAQzN6k4KcQc4eUQZjRyrtSLppzAOIOUHlpM6+lUE=;
-        b=F46OZf5IsZvV7uGaIkKtOd2O88U9nxxkiU2fgt+2jY12ECJnCqWQlfztpOakEfyA4s
-         xptN04EknTLUGlEK4hq7wEQC/EonvBoC+vCI+nYNQPDctCS1ygr25LV8sWxxXvzKDIza
-         xqaLIcLOuYzQPtb2CEbSvHjDAMX+08p3DIUlxEvNXppZULAphPOSEAPIKjQWEQxZaPld
-         LThdDn/T7SFi6nm3bUyCH1WriZVpU8W4aTcXl7nuQHsx4/lIo3zNBx82c5rqaQiGOl6k
-         27IHgPJcqNss4a4q4Km0geegXYKOzIoplgPljmZBm8BTpL5/u59ETnuUgk8of3zO6zWB
-         c62A==
+        bh=CdatJYaoS9VJaLy2g5dO1MzWC8VBFgHnkGia45VnhyU=;
+        b=Ak13vPeEXN8KeeBa1qseXxzbfpiq7VGk2VNmj1apohFFizb5U69Ap8UAL5w5AQbjdS
+         lYQKctJdRpFbU5b1E0gfbw1V72yj3Pa3OVSpuXRPGJN0SxYF6XsW5jizDnPJPjWZpI0n
+         FI3x23ZPTtvtoLfJVkw8bgogIcsTAQH+cuDEttbSbcs3JBnHcrnkhBYOwqDEffHQS7I/
+         Uz8b4OTwtNJcdQnBHIc+2PmcTAnUBkeIa2n5J2NY30vBFQTBwY+4HCrxdl8/FwSK/DYU
+         iogyHWv9T6iU35kzf8Kl8pgXBE0Wa9L9nmCVNlmxgePBGWJS6Bl7qQ6NGfzrCd+n/Ela
+         eyWg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:references:cc:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-transfer-encoding;
-        bh=SFhAQzN6k4KcQc4eUQZjRyrtSLppzAOIOUHlpM6+lUE=;
-        b=OKmTGnD3XmINR0M52jkjU8Uxc59SlN2AULCSg6mWLD0UL+TeI0ErlbSUsOyGguXBFG
-         6+l7YenVxFPTm9eyz+Cz3OVEAJnaZr8qmxDFUVSyWstr9di7dGi2xxf1Sy+QvVjf7qUO
-         SULrY3m30yGs6Zl6LI4YadzNcyb9as4xjCW4y6BH8UQTnUKLPx8625HiZJ1U7o7oNdBx
-         eElFhfnG0/1Th9RUOdKUv/RbtsYNI2c3j+3qPRU6LFpG3SU7yLKtRNb1cl1v0fxx3u7G
-         CD976tqFDWhtIKYh168uqEQcwcvaV8SS6fPiM0T59gt+bC+MqezCulZFJ3jR31iQBeFi
-         mT+g==
-X-Gm-Message-State: AIkVDXItACB6DvtzgGiImvh8dgdNGGyUyLnx0LdF+x79+76JI1sT9f5pnbB+iuVCVywLCw==
-X-Received: by 10.25.40.4 with SMTP id o4mr8888045lfo.1.1485284876515;
-        Tue, 24 Jan 2017 11:07:56 -0800 (PST)
+        bh=CdatJYaoS9VJaLy2g5dO1MzWC8VBFgHnkGia45VnhyU=;
+        b=taF+tU0torOTuAw+sig3ZbUb3ab5n+SK39bBLTH2pvaYzNayxVo1gcIXMqd/Bxy1xy
+         0UT6M1abKYhZ8sBrgi33MzQOk6kJ+l8OB4WRGnOCi0UpnKi+W6NlRg7Bq8jB5oJOm9Sd
+         blPQaHlp5v+cY746BNiDyKhKwsxMwWnF5UzcmwszYyRXnCb1CAQ1KIjppbNgVZyysGdQ
+         8tnG7cmj34OwZ0ZmVcmQYcWQm6iVobjXVWTiX0Ho/SKGOAreaiDqPrkuIpTSu5sAnyxf
+         2fCK6nisEiIj3OwignXf4TLtkT2uQ/TL3Zt/hVRsYq2Bdbmoo2AvHoHb/NbG3Vvf+RYv
+         pE0A==
+X-Gm-Message-State: AIkVDXIgZ0lWUHmIgN8JPSX4qpbi66ehnx/PzH+cS2oKXZuQg0aLiypVNAkKeIf2VQUHBA==
+X-Received: by 10.25.32.149 with SMTP id g143mr11696065lfg.7.1485287482165;
+        Tue, 24 Jan 2017 11:51:22 -0800 (PST)
 Received: from [192.168.1.26] (acuz88.neoplus.adsl.tpnet.pl. [83.11.105.88])
-        by smtp.googlemail.com with ESMTPSA id x26sm4103145lja.0.2017.01.24.11.07.55
+        by smtp.googlemail.com with ESMTPSA id 18sm7694593ljh.39.2017.01.24.11.51.18
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 24 Jan 2017 11:07:55 -0800 (PST)
-Subject: Re: [RFC 1/2] grep: only add delimiter if there isn't one already
-To:     Stefan Hajnoczi <stefanha@redhat.com>,
-        Junio C Hamano <gitster@pobox.com>
-References: <20170119150347.3484-1-stefanha@redhat.com>
- <20170119150347.3484-2-stefanha@redhat.com>
- <xmqqtw8u28u1.fsf@gitster.mtv.corp.google.com>
- <20170120135612.GB17499@stefanha-x1.localdomain>
- <xmqqlgu5y4u8.fsf@gitster.mtv.corp.google.com>
- <20170123131551.GL29186@stefanha-x1.localdomain>
-Cc:     git@vger.kernel.org
+        Tue, 24 Jan 2017 11:51:21 -0800 (PST)
+Subject: Re: [PATCH 1/3] Documentation/stash: remove mention of git reset
+ --hard
+To:     Thomas Gummerer <t.gummerer@gmail.com>, git@vger.kernel.org
+References: <20170121200804.19009-1-t.gummerer@gmail.com>
+ <20170121200804.19009-2-t.gummerer@gmail.com>
+Cc:     Stephan Beyer <s-beyer@gmx.net>,
+        Junio C Hamano <gitster@pobox.com>,
+        Marc Strapetz <marc.strapetz@syntevo.com>,
+        Jeff King <peff@peff.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
 From:   =?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
-Message-ID: <f90eba2a-ebfa-67f0-68c4-abacb05759ba@gmail.com>
-Date:   Tue, 24 Jan 2017 20:07:48 +0100
+Message-ID: <c5732a5b-b6a9-2980-3d99-179a93fe6418@gmail.com>
+Date:   Tue, 24 Jan 2017 20:51:09 +0100
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
  Thunderbird/45.6.0
 MIME-Version: 1.0
-In-Reply-To: <20170123131551.GL29186@stefanha-x1.localdomain>
+In-Reply-To: <20170121200804.19009-2-t.gummerer@gmail.com>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
@@ -71,22 +71,44 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-W dniu 23.01.2017 o 14:15, Stefan Hajnoczi pisze:
-> On Fri, Jan 20, 2017 at 10:16:31AM -0800, Junio C Hamano wrote:
-
->> My only piece of advice to folks who feel that way is to learn Git
->> more and get comfortable.  You can do neat things like
->>
->>    $ git grep -e pattern rev -- t ':!t/helper/'
->>
->> that you cannot do with "rev:t", for example ;-)
+W dniu 21.01.2017 o 21:08, Thomas Gummerer pisze:
+> Don't mention git reset --hard in the documentation for git stash save.
+> It's an implementation detail that doesn't matter to the end user and
+> thus shouldn't be exposed to them.
 > 
-> Neat, thanks for showing the path exclusion syntax.  I wasn't aware of
-> it.
+> Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
+> ---
+>  Documentation/git-stash.txt | 5 +++--
+>  1 file changed, 3 insertions(+), 2 deletions(-)
+> 
+> diff --git a/Documentation/git-stash.txt b/Documentation/git-stash.txt
+> index 2e9cef06e6..0ad5335a3e 100644
+> --- a/Documentation/git-stash.txt
+> +++ b/Documentation/git-stash.txt
+> @@ -47,8 +47,9 @@ OPTIONS
+>  
+>  save [-p|--patch] [-k|--[no-]keep-index] [-u|--include-untracked] [-a|--all] [-q|--quiet] [<message>]::
+>  
+> -	Save your local modifications to a new 'stash', and run `git reset
+> -	--hard` to revert them.  The <message> part is optional and gives
+> +	Save your local modifications to a new 'stash', and revert the
+> +	the changes in the working tree to match the index.
 
-That reminds me of mu TODO item: moving extended pathspec information
-from gitglossary(7) manpage (sic!) to to-be-created gitpathspec(7).
+I think the following might be better:
+
+        ..., and set the working tree to match the index.
+
+Or not, as it ignores problem of untracked files.
+
+Anyway, removing internal implementation detail looks like a good idea.
+OTOH the reader should be familiar with what `git reset --hard` does,
+and if not, he knows where to find the information.
+
+> +	The <message> part is optional and gives
+>  	the description along with the stashed state.  For quickly making
+>  	a snapshot, you can omit _both_ "save" and <message>, but giving
+>  	only <message> does not trigger this action to prevent a misspelled
+> 
 
 -- 
 Jakub Narębski
-
