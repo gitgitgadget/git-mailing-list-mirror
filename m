@@ -2,77 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-6.3 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id ECB9C1F437
-	for <e@80x24.org>; Tue, 24 Jan 2017 20:14:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 85AE01F437
+	for <e@80x24.org>; Tue, 24 Jan 2017 20:26:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750797AbdAXUOT (ORCPT <rfc822;e@80x24.org>);
-        Tue, 24 Jan 2017 15:14:19 -0500
-Received: from cloud.peff.net ([104.130.231.41]:44029 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750715AbdAXUOS (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Jan 2017 15:14:18 -0500
-Received: (qmail 1593 invoked by uid 109); 24 Jan 2017 20:14:18 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 24 Jan 2017 20:14:18 +0000
-Received: (qmail 4780 invoked by uid 111); 24 Jan 2017 20:14:17 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 24 Jan 2017 15:14:17 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 24 Jan 2017 15:14:15 -0500
-Date:   Tue, 24 Jan 2017 15:14:15 -0500
-From:   Jeff King <peff@peff.net>
-To:     Thomas Gummerer <t.gummerer@gmail.com>
-Cc:     git@vger.kernel.org, Stephan Beyer <s-beyer@gmx.net>,
-        Junio C Hamano <gitster@pobox.com>,
-        Marc Strapetz <marc.strapetz@syntevo.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 1/3] Documentation/stash: remove mention of git reset
- --hard
-Message-ID: <20170124201415.zzyg4vt35vflwjnb@sigill.intra.peff.net>
-References: <20170121200804.19009-1-t.gummerer@gmail.com>
- <20170121200804.19009-2-t.gummerer@gmail.com>
+        id S1750828AbdAXU0o (ORCPT <rfc822;e@80x24.org>);
+        Tue, 24 Jan 2017 15:26:44 -0500
+Received: from avasout06.plus.net ([212.159.14.18]:40704 "EHLO
+        avasout06.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750787AbdAXU0n (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 Jan 2017 15:26:43 -0500
+Received: from [10.0.2.15] ([143.159.212.40])
+        by avasout06 with smtp
+        id cLSg1u0030srQBz01LShq1; Tue, 24 Jan 2017 20:26:41 +0000
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.2 cv=QoEu5R6d c=1 sm=1 tr=0
+ a=8Z0saNXTz8GoXi/9Q5ysMA==:117 a=8Z0saNXTz8GoXi/9Q5ysMA==:17
+ a=IkcTkHD0fZMA:10 a=PKzvZo6CAAAA:8 a=72HtC5_LVY3Sv9GOsbwA:9 a=QEXdDO2ut3YA:10
+ a=q92HNjYiIAC_jH7JDaYf:22
+X-AUTH: ramsayjones@:2500
+Subject: Re: [PATCH 08/12] add oidset API
+To:     Jeff King <peff@peff.net>, git@vger.kernel.org
+References: <20170124003729.j4ygjcgypdq7hceg@sigill.intra.peff.net>
+ <20170124004647.3o26ionfq3td2irf@sigill.intra.peff.net>
+From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
+Message-ID: <944ea1f8-8f9c-cc17-02a5-a73cb6565b45@ramsayjones.plus.com>
+Date:   Tue, 24 Jan 2017 20:26:40 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.5.1
 MIME-Version: 1.0
+In-Reply-To: <20170124004647.3o26ionfq3td2irf@sigill.intra.peff.net>
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20170121200804.19009-2-t.gummerer@gmail.com>
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Jan 21, 2017 at 08:08:02PM +0000, Thomas Gummerer wrote:
 
-> diff --git a/Documentation/git-stash.txt b/Documentation/git-stash.txt
-> index 2e9cef06e6..0ad5335a3e 100644
-> --- a/Documentation/git-stash.txt
-> +++ b/Documentation/git-stash.txt
-> @@ -47,8 +47,9 @@ OPTIONS
->  
->  save [-p|--patch] [-k|--[no-]keep-index] [-u|--include-untracked] [-a|--all] [-q|--quiet] [<message>]::
->  
-> -	Save your local modifications to a new 'stash', and run `git reset
-> -	--hard` to revert them.  The <message> part is optional and gives
-> +	Save your local modifications to a new 'stash', and revert the
-> +	the changes in the working tree to match the index.
-> +	The <message> part is optional and gives
 
-Hrm. "git reset --hard" doesn't just make the working tree match the
-index. It also resets the index to HEAD.  So either the original or your
-new description is wrong.
+On 24/01/17 00:46, Jeff King wrote:
+> This is similar to many of our uses of sha1-array, but it
+> overcomes one limitation of a sha1-array: when you are
+> de-duplicating a large input with relatively few unique
+> entries, sha1-array uses 20 bytes per non-unique entry.
+> Whereas this set will use memory linear in the number of
+> unique entries (albeit a few more than 20 bytes due to
+> hashmap overhead).
+> 
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+> This may be overkill. You can get roughly the same thing by making
+> actual object structs via lookup_unknown_object(). But see the next
+> patch for some comments on that.
+> 
+>  Makefile |  1 +
+>  oidset.c | 49 +++++++++++++++++++++++++++++++++++++++++++++++++
+>  oidset.h | 45 +++++++++++++++++++++++++++++++++++++++++++++
+>  3 files changed, 95 insertions(+)
+>  create mode 100644 oidset.c
+>  create mode 100644 oidset.h
+> 
+> diff --git a/Makefile b/Makefile
+> index 27afd0f37..e41efc2d8 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -774,6 +774,7 @@ LIB_OBJS += notes-cache.o
+>  LIB_OBJS += notes-merge.o
+>  LIB_OBJS += notes-utils.o
+>  LIB_OBJS += object.o
+> +LIB_OBJS += oidset.o
+>  LIB_OBJS += pack-bitmap.o
+>  LIB_OBJS += pack-bitmap-write.o
+>  LIB_OBJS += pack-check.o
+> diff --git a/oidset.c b/oidset.c
+> new file mode 100644
+> index 000000000..6094cff8c
+> --- /dev/null
+> +++ b/oidset.c
+> @@ -0,0 +1,49 @@
+> +#include "cache.h"
+> +#include "oidset.h"
+> +
+> +struct oidset_entry {
+> +	struct hashmap_entry hash;
+> +	struct object_id oid;
+> +};
+> +
+> +int oidset_hashcmp(const void *va, const void *vb,
 
-I think it's the latter. We really do reset the index unless
---keep-index is specified.
+static int oidset_hashcmp( ...
 
-I also wondered if it was worth avoiding the word "revert", as "git
-revert" has a much different meaning (as opposed to "svn revert", which
-does what you're talking about here). But I see that "git add -i"
-already uses the word revert in this way (and there are probably
-others).
+ATB,
+Ramsay Jones
 
-So it may not be worth worrying about, but "set" or "reset" probably
-serves the same purpose.
-
--Peff
