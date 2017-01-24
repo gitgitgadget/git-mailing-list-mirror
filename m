@@ -6,28 +6,28 @@ X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 066E820A17
-	for <e@80x24.org>; Tue, 24 Jan 2017 00:48:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 246A520A17
+	for <e@80x24.org>; Tue, 24 Jan 2017 00:48:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751943AbdAXAs0 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 23 Jan 2017 19:48:26 -0500
-Received: from cloud.peff.net ([104.130.231.41]:43580 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751778AbdAXAsZ (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1751936AbdAXAsZ (ORCPT <rfc822;e@80x24.org>);
         Mon, 23 Jan 2017 19:48:25 -0500
-Received: (qmail 10093 invoked by uid 109); 24 Jan 2017 00:48:21 -0000
+Received: from cloud.peff.net ([104.130.231.41]:43579 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751293AbdAXAsZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Jan 2017 19:48:25 -0500
+Received: (qmail 10084 invoked by uid 109); 24 Jan 2017 00:48:08 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 24 Jan 2017 00:48:21 +0000
-Received: (qmail 14508 invoked by uid 111); 24 Jan 2017 00:49:17 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 24 Jan 2017 00:48:08 +0000
+Received: (qmail 13362 invoked by uid 111); 24 Jan 2017 00:49:04 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 23 Jan 2017 19:49:17 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 23 Jan 2017 19:48:19 -0500
-Date:   Mon, 23 Jan 2017 19:48:18 -0500
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 23 Jan 2017 19:49:04 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 23 Jan 2017 19:48:05 -0500
+Date:   Mon, 23 Jan 2017 19:48:05 -0500
 From:   Jeff King <peff@peff.net>
 To:     git@vger.kernel.org
-Subject: [PATCH 12/12] receive-pack: avoid duplicates between our refs and
+Subject: [PATCH 11/12] receive-pack: treat namespace .have lines like
  alternates
-Message-ID: <20170124004818.7resjwbe6ldqjfyx@sigill.intra.peff.net>
+Message-ID: <20170124004805.nu3w47isrb4bxgi5@sigill.intra.peff.net>
 References: <20170124003729.j4ygjcgypdq7hceg@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -38,97 +38,52 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We de-duplicate ".have" refs among themselves, but never
-check if they are duplicates of our local refs. It's not
-unreasonable that they would be if we are a "--shared" or
-"--reference" clone of a similar repository; we'd have all
-the same tags.
-
-We can handle this by inserting our local refs into the
-oidset, but obviously not suppressing duplicates (since the
-refnames are important).
-
-Note that this also switches the order in which we advertise
-refs, processing ours first and then any alternates. The
-order shouldn't matter (and arguably showing our refs first
-makes more sense).
+Namely, de-duplicate them. We use the same set as the
+alternates, since we call them both ".have" (i.e., there is
+no value in showing one versus the other).
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- builtin/receive-pack.c |  4 +++-
- t/t5400-send-pack.sh   | 38 ++++++++++++++++++++++++++++++++++++++
- 2 files changed, 41 insertions(+), 1 deletion(-)
+ builtin/receive-pack.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
 diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index c55e2f993..bc7ce0ea2 100644
+index 8f8762e4a..c55e2f993 100644
 --- a/builtin/receive-pack.c
 +++ b/builtin/receive-pack.c
-@@ -268,6 +268,8 @@ static int show_ref_cb(const char *path_full, const struct object_id *oid,
- 		if (oidset_insert(seen, oid))
- 			return 0;
+@@ -251,8 +251,9 @@ static void show_ref(const char *path, const unsigned char *sha1)
+ }
+ 
+ static int show_ref_cb(const char *path_full, const struct object_id *oid,
+-		       int flag, void *unused)
++		       int flag, void *data)
+ {
++	struct oidset *seen = data;
+ 	const char *path = strip_namespace(path_full);
+ 
+ 	if (ref_is_hidden(path, path_full))
+@@ -263,8 +264,11 @@ static int show_ref_cb(const char *path_full, const struct object_id *oid,
+ 	 * refs, so that the client can use them to minimize data
+ 	 * transfer but will otherwise ignore them.
+ 	 */
+-	if (!path)
++	if (!path) {
++		if (oidset_insert(seen, oid))
++			return 0;
  		path = ".have";
-+	} else {
-+		oidset_insert(seen, oid);
- 	}
++	}
  	show_ref(path, oid->hash);
  	return 0;
-@@ -289,9 +291,9 @@ static void write_head_info(void)
- {
- 	static struct oidset seen = OIDSET_INIT;
+ }
+@@ -287,7 +291,7 @@ static void write_head_info(void)
  
-+	for_each_ref(show_ref_cb, &seen);
  	for_each_alternate_ref(show_one_alternate_ref, &seen);
  	oidset_clear(&seen);
--	for_each_ref(show_ref_cb, &seen);
+-	for_each_ref(show_ref_cb, NULL);
++	for_each_ref(show_ref_cb, &seen);
  	if (!sent_capabilities)
  		show_ref("capabilities^{}", null_sha1);
  
-diff --git a/t/t5400-send-pack.sh b/t/t5400-send-pack.sh
-index 305ca7a93..3331e0f53 100755
---- a/t/t5400-send-pack.sh
-+++ b/t/t5400-send-pack.sh
-@@ -255,4 +255,42 @@ test_expect_success 'deny pushing to delete current branch' '
- 	)
- '
- 
-+extract_ref_advertisement () {
-+	perl -lne '
-+		# \\ is there to skip capabilities after \0
-+		/push< ([^\\]+)/ or next;
-+		exit 0 if $1 eq "0000";
-+		print $1;
-+	'
-+}
-+
-+test_expect_success 'receive-pack de-dupes .have lines' '
-+	git init shared &&
-+	git -C shared commit --allow-empty -m both &&
-+	git clone -s shared fork &&
-+	(
-+		cd shared &&
-+		git checkout -b only-shared &&
-+		git commit --allow-empty -m only-shared &&
-+		git update-ref refs/heads/foo HEAD
-+	) &&
-+
-+	# Notable things in this expectation:
-+	#  - local refs are not de-duped
-+	#  - .have does not duplicate locals
-+	#  - .have does not duplicate itself
-+	local=$(git -C fork rev-parse HEAD) &&
-+	shared=$(git -C shared rev-parse only-shared) &&
-+	cat >expect <<-EOF &&
-+	$local refs/heads/master
-+	$local refs/remotes/origin/HEAD
-+	$local refs/remotes/origin/master
-+	$shared .have
-+	EOF
-+
-+	GIT_TRACE_PACKET=$(pwd)/trace git push fork HEAD:foo &&
-+	extract_ref_advertisement <trace >refs &&
-+	test_cmp expect refs
-+'
-+
- test_done
 -- 
 2.11.0.765.g454d2182f
+
