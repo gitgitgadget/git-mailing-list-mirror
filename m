@@ -6,52 +6,52 @@ X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9020B1F437
-	for <e@80x24.org>; Tue, 24 Jan 2017 23:57:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AC9BF1F6DC
+	for <e@80x24.org>; Tue, 24 Jan 2017 23:57:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751045AbdAXX5D (ORCPT <rfc822;e@80x24.org>);
+        id S1751068AbdAXX5F (ORCPT <rfc822;e@80x24.org>);
+        Tue, 24 Jan 2017 18:57:05 -0500
+Received: from mail-pf0-f181.google.com ([209.85.192.181]:34082 "EHLO
+        mail-pf0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751013AbdAXX5D (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 24 Jan 2017 18:57:03 -0500
-Received: from mail-pf0-f174.google.com ([209.85.192.174]:32799 "EHLO
-        mail-pf0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751010AbdAXX5C (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Jan 2017 18:57:02 -0500
-Received: by mail-pf0-f174.google.com with SMTP id y143so53385310pfb.0
-        for <git@vger.kernel.org>; Tue, 24 Jan 2017 15:57:02 -0800 (PST)
+Received: by mail-pf0-f181.google.com with SMTP id e4so53227244pfg.1
+        for <git@vger.kernel.org>; Tue, 24 Jan 2017 15:57:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=2Y6QlESkXbstdE2GUFjsjMMQOALBd8a9Zrnrp/LgmR4=;
-        b=hSxdfwyaeOQnW3c1zjWOEIWFlQXLso4NJqKnqLaf2dvVVtL41d/Uc61NzxE4rEgMju
-         lBar9Jnzquo0OH6VFSXiAkL5wUQ8Nw1Lo81FSxrqeY+9XaRtgBe6kprLDmQXDLc+j3pS
-         cBUWKTso+Q+E4mGxA2qes4jxSyH+bvHA7S6kIYGXaMbE6/qmHvFFd0ypjV7TlIFKd+Hg
-         J3ZAMSB67GT9sByid3s9JdrG1CkyQxkub11V8v+bqE/STbHvx0UccacsfaMiXIJxJMTC
-         XZEa1fhErbTig5LlIsIvOSFthl2m9QiUwrKn1Y2dW81Xb5qQY/SrI7upo6w4z4uULvLS
-         l+Cg==
+        bh=fVHc8kG3yGeW2pA+Jw5LKAs5jIUKlR3kkO2Hh5c96to=;
+        b=TTsxY1OXBithDT/8GntpePQT+DPw0Fo4uqkCZ8O6S1z5C1ixnVd6MmwtAJ8HbldVwf
+         /WYBLhObv++mfOa/qqJGT8O3JdGA7GpyF1177G/AyqNFEqRu1obs4iQ8JQI6yPl8UKE3
+         sjdLZI6vZ+nGYmlidewIoAt/36OSWasF3O3AGlGsID24HSVeXznijIUf4jGK4AbDcTaQ
+         qu+VS48wRiJeoNSKbLIXYkwlr46dJvWGmyZB9wkuJEVLtfGqbE+4rTxanTQBHIm8Eh8H
+         VsXUyOdrR9wIUJoHz0hu1o4Bpi2GYnDDOKs7JWGrPkAaim/5sKwW7o4Y7plxWo8AmmDL
+         17GA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=2Y6QlESkXbstdE2GUFjsjMMQOALBd8a9Zrnrp/LgmR4=;
-        b=Pujcj52mbNmGyD8QYpxkYcYkROH0eemFKyZ4dA88LEZZV3DKje8/+xDH27a0WZoyP+
-         kAiCGE5j5fPgW+6LrN8I+5eOqVxdEoMp7whiGtysURFrfPylsfzYZTR1A9vdh/8yW9fu
-         Eb4FJl4Nb42zsUv4EXTYT8eL635HhBrIrMIT6FmhE/2q17au3AUy74qK65Upt/r7N+Zb
-         soGwbIR3kwcs2avOdSr0w1VoHWaYSeDTyEXeqMQ0USa9cc1ZDXRbSH/F8vRheisHKt/h
-         VchSvcmmgBjKi3UZplwKginhhS5wY3RrENlbJIDItdCqr4opmaOLCB8hKmaH1mFv3H2Y
-         zOFA==
-X-Gm-Message-State: AIkVDXLyrJa/q3WfX2/kV3GpHMQgqOb3thBEX1B6GUPv2kBp3tvJmGwodQIvwtzS1IKhOeHH
-X-Received: by 10.98.90.196 with SMTP id o187mr42630062pfb.30.1485302221555;
-        Tue, 24 Jan 2017 15:57:01 -0800 (PST)
+        bh=fVHc8kG3yGeW2pA+Jw5LKAs5jIUKlR3kkO2Hh5c96to=;
+        b=XiKpXUil5MGdTz4gU5UiojpL+X+Nv1j1wAUzQVZeLqR1KqZAsxk5w/HqqyGftgdyqn
+         sOW0JgQFTzhWc5+WfjMlT9xK2hSJUraeeQ1FXb7CqOh2wpftyNWrP2fAXKph2MFokWim
+         UvB9aW+dp7mrDA1yIhGX7hiQpbUW17F90fnyXTK3Xf2crq1oV1a8058tqNvdTwCkaJGh
+         JiYxCXVzx3xeT6iV+rxRax3RwGok/hgtF2Lg8LbwiNmEjLXXkrTsGCzbdgsZ4ooTr7kK
+         +67UIQCjZaaMkk+g3cc3fcl+TjmBSEyTvjSFZCWokkxgYsSeN1b6yNW7ESgKizTPLjV8
+         J+GQ==
+X-Gm-Message-State: AIkVDXIoycn6q3VPt+qVGvROlAfyTAGkNL12r5YSx79TbRgv7+420KlH/X514CgW4NQz0DzM
+X-Received: by 10.98.192.216 with SMTP id g85mr42399561pfk.117.1485302222759;
+        Tue, 24 Jan 2017 15:57:02 -0800 (PST)
 Received: from localhost ([2620:0:1000:5b10:6936:a216:cb1:3482])
-        by smtp.gmail.com with ESMTPSA id j7sm47180196pfe.84.2017.01.24.15.57.00
+        by smtp.gmail.com with ESMTPSA id o24sm47202691pfj.78.2017.01.24.15.57.01
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 24 Jan 2017 15:57:00 -0800 (PST)
+        Tue, 24 Jan 2017 15:57:02 -0800 (PST)
 From:   Stefan Beller <sbeller@google.com>
 To:     gitster@pobox.com
 Cc:     git@vger.kernel.org, bmwill@google.com, peff@peff.net,
         Stefan Beller <sbeller@google.com>
-Subject: [PATCHv2 1/3] Add gentle version of resolve_git_dir
-Date:   Tue, 24 Jan 2017 15:56:49 -0800
-Message-Id: <20170124235651.18749-2-sbeller@google.com>
+Subject: [PATCHv2 2/3] cache.h: expose the dying procedure for reading gitlinks
+Date:   Tue, 24 Jan 2017 15:56:50 -0800
+Message-Id: <20170124235651.18749-3-sbeller@google.com>
 X-Mailer: git-send-email 2.11.0.495.g04f60290a0.dirty
 In-Reply-To: <20170124235651.18749-1-sbeller@google.com>
 References: <20170124221948.GB58021@google.com>
@@ -61,50 +61,94 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This follows a93bedada (setup: add gentle version of read_gitfile,
-2015-06-09), and assumes the same reasoning. resolve_git_dir is unsuited
-for speculative calls, so we want to use the gentle version to find out
-about potential errors.
+In a later patch we want to react to only a subset of errors, defaulting
+the rest to die as usual. Separate the block that takes care of dying
+into its own function so we have easy access to it.
 
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- cache.h | 4 +++-
- setup.c | 4 ++--
- 2 files changed, 5 insertions(+), 3 deletions(-)
+ cache.h |  1 +
+ setup.c | 48 ++++++++++++++++++++++++++----------------------
+ 2 files changed, 27 insertions(+), 22 deletions(-)
 
 diff --git a/cache.h b/cache.h
-index 00a029af36..cafa3d10ae 100644
+index cafa3d10ae..d55f5dccb1 100644
 --- a/cache.h
 +++ b/cache.h
-@@ -509,7 +509,9 @@ extern int is_nonbare_repository_dir(struct strbuf *path);
+@@ -507,6 +507,7 @@ extern int is_nonbare_repository_dir(struct strbuf *path);
+ #define READ_GITFILE_ERR_NO_PATH 6
+ #define READ_GITFILE_ERR_NOT_A_REPO 7
  #define READ_GITFILE_ERR_TOO_LARGE 8
++extern void read_gitfile_error_die(int error_code, const char *path, const char *dir);
  extern const char *read_gitfile_gently(const char *path, int *return_error_code);
  #define read_gitfile(path) read_gitfile_gently((path), NULL)
--extern const char *resolve_gitdir(const char *suspect);
-+extern const char *resolve_gitdir_gently(const char *suspect, int *return_error_code);
-+#define resolve_gitdir(path) resolve_gitdir_gently((path), NULL)
-+
- extern void set_git_work_tree(const char *tree);
- 
- #define ALTERNATE_DB_ENVIRONMENT "GIT_ALTERNATE_OBJECT_DIRECTORIES"
+ extern const char *resolve_gitdir_gently(const char *suspect, int *return_error_code);
 diff --git a/setup.c b/setup.c
-index 1b534a7508..4605fd3c3c 100644
+index 4605fd3c3c..967f289f1e 100644
 --- a/setup.c
 +++ b/setup.c
-@@ -1017,11 +1017,11 @@ const char *setup_git_directory(void)
- 	return setup_git_directory_gently(NULL);
+@@ -486,6 +486,30 @@ int verify_repository_format(const struct repository_format *format,
+ 	return 0;
  }
  
--const char *resolve_gitdir(const char *suspect)
-+const char *resolve_gitdir_gently(const char *suspect, int *return_error_code)
- {
- 	if (is_git_directory(suspect))
- 		return suspect;
--	return read_gitfile(suspect);
-+	return read_gitfile_gently(suspect, return_error_code);
- }
++void read_gitfile_error_die(int error_code, const char *path, const char *dir)
++{
++	switch (error_code) {
++	case READ_GITFILE_ERR_STAT_FAILED:
++	case READ_GITFILE_ERR_NOT_A_FILE:
++		/* non-fatal; follow return path */
++		break;
++	case READ_GITFILE_ERR_OPEN_FAILED:
++		die_errno("Error opening '%s'", path);
++	case READ_GITFILE_ERR_TOO_LARGE:
++		die("Too large to be a .git file: '%s'", path);
++	case READ_GITFILE_ERR_READ_FAILED:
++		die("Error reading %s", path);
++	case READ_GITFILE_ERR_INVALID_FORMAT:
++		die("Invalid gitfile format: %s", path);
++	case READ_GITFILE_ERR_NO_PATH:
++		die("No path in gitfile: %s", path);
++	case READ_GITFILE_ERR_NOT_A_REPO:
++		die("Not a git repository: %s", dir);
++	default:
++		die("BUG: unknown error code");
++	}
++}
++
+ /*
+  * Try to read the location of the git directory from the .git file,
+  * return path to git directory if found.
+@@ -559,28 +583,8 @@ const char *read_gitfile_gently(const char *path, int *return_error_code)
+ cleanup_return:
+ 	if (return_error_code)
+ 		*return_error_code = error_code;
+-	else if (error_code) {
+-		switch (error_code) {
+-		case READ_GITFILE_ERR_STAT_FAILED:
+-		case READ_GITFILE_ERR_NOT_A_FILE:
+-			/* non-fatal; follow return path */
+-			break;
+-		case READ_GITFILE_ERR_OPEN_FAILED:
+-			die_errno("Error opening '%s'", path);
+-		case READ_GITFILE_ERR_TOO_LARGE:
+-			die("Too large to be a .git file: '%s'", path);
+-		case READ_GITFILE_ERR_READ_FAILED:
+-			die("Error reading %s", path);
+-		case READ_GITFILE_ERR_INVALID_FORMAT:
+-			die("Invalid gitfile format: %s", path);
+-		case READ_GITFILE_ERR_NO_PATH:
+-			die("No path in gitfile: %s", path);
+-		case READ_GITFILE_ERR_NOT_A_REPO:
+-			die("Not a git repository: %s", dir);
+-		default:
+-			assert(0);
+-		}
+-	}
++	else if (error_code)
++		read_gitfile_error_die(error_code, path, dir);
  
- /* if any standard file descriptor is missing open it to /dev/null */
+ 	free(buf);
+ 	return error_code ? NULL : path;
 -- 
 2.11.0.495.g04f60290a0.dirty
 
