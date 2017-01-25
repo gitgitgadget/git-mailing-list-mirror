@@ -2,151 +2,133 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A67841F6DC
-	for <e@80x24.org>; Wed, 25 Jan 2017 21:27:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 439C71F6DC
+	for <e@80x24.org>; Wed, 25 Jan 2017 21:29:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752556AbdAYV1a (ORCPT <rfc822;e@80x24.org>);
-        Wed, 25 Jan 2017 16:27:30 -0500
-Received: from cloud.peff.net ([104.130.231.41]:44809 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752552AbdAYV13 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 Jan 2017 16:27:29 -0500
-Received: (qmail 4205 invoked by uid 109); 25 Jan 2017 21:27:23 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 25 Jan 2017 21:27:23 +0000
-Received: (qmail 16235 invoked by uid 111); 25 Jan 2017 21:27:23 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 25 Jan 2017 16:27:23 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 25 Jan 2017 16:27:21 -0500
-Date:   Wed, 25 Jan 2017 16:27:21 -0500
-From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Cc:     git@vger.kernel.org, jacob.keller@gmail.com
-Subject: Re: [PATCH 4/5] revision.c: refactor ref selection handler after
- --exclude
-Message-ID: <20170125212721.7tbxkqsdtsv2n5mx@sigill.intra.peff.net>
-References: <20170121140806.tjs6wad3x4srdv3q@sigill.intra.peff.net>
- <20170125125054.7422-1-pclouds@gmail.com>
- <20170125125054.7422-5-pclouds@gmail.com>
- <20170125205718.ksqstdnazmgbkehy@sigill.intra.peff.net>
+        id S1752576AbdAYV2u (ORCPT <rfc822;e@80x24.org>);
+        Wed, 25 Jan 2017 16:28:50 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:55141 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1752382AbdAYV2p (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 Jan 2017 16:28:45 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 2438063440;
+        Wed, 25 Jan 2017 16:28:29 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=0tVkNGckcioFVqcJ0Em4r/zsYW4=; b=SuRc7A
+        B5C+dbQkSosrFfVsA42TZjHOQP/84UeQLFuripx9+jXy4ZdsDab7yuGk8N8A2tnd
+        +Mc0YpNlqkRKEcgGGteTer1HdwL4wplbGaN9cCeorlWSMctnPn00gPEUEbDsC1FY
+        WlkiH028dHp1fSUwj49dwyQJMjJe57G3DbTZI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=r3+rlf+Pw0ZKWaObLH4/nb7fMtPtjLOU
+        3qdfuWPxRHLrIkVPOpRLH3BMbVlHvFDvIPjTns0Xs2fdOnlOh+RL5Vtnrp82mMDP
+        nIngLa3mCGtyQJLq76acd5nAgcXB4oc7ZEvtd0tOdHHTq+DgBjduzj9xB2PGdaqi
+        4aS11sqM+RE=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 1C3F36343F;
+        Wed, 25 Jan 2017 16:28:29 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 8324C6343E;
+        Wed, 25 Jan 2017 16:28:28 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        David Aguilar <davvid@gmail.com>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        GIT Mailing-list <git@vger.kernel.org>
+Subject: Re: Fixing the warning about warning(""); was: Re: [PATCH] difftool.c: mark a file-local symbol with static
+References: <xmqqinr4bkf4.fsf@gitster.mtv.corp.google.com>
+        <59da5383-16a0-b327-75a8-b4c4ad7bd479@ramsayjones.plus.com>
+        <20161201040234.3rnuttitneweedn5@sigill.intra.peff.net>
+        <xmqq60n3bjel.fsf@gitster.mtv.corp.google.com>
+        <20161201185056.eso5rhec7izlbywa@sigill.intra.peff.net>
+        <20170122052608.tpr5pihfgafhoynj@gmail.com>
+        <20170124142346.u3d7l6772mtkgpcf@sigill.intra.peff.net>
+        <xmqqlgu0ceia.fsf@gitster.mtv.corp.google.com>
+        <20170124230500.h3fasbvutjkkke5h@sigill.intra.peff.net>
+        <alpine.DEB.2.20.1701251135090.3469@virtualbox>
+        <20170125183542.pe5qolexqqx6jhsi@sigill.intra.peff.net>
+Date:   Wed, 25 Jan 2017 13:28:27 -0800
+In-Reply-To: <20170125183542.pe5qolexqqx6jhsi@sigill.intra.peff.net> (Jeff
+        King's message of "Wed, 25 Jan 2017 13:35:42 -0500")
+Message-ID: <xmqq7f5iakxw.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20170125205718.ksqstdnazmgbkehy@sigill.intra.peff.net>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 365A6C24-E345-11E6-B51D-A7617B1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jan 25, 2017 at 03:57:18PM -0500, Jeff King wrote:
+Jeff King <peff@peff.net> writes:
 
-> IOW, the ref-selector options build up until a group option is given,
-> which acts on the built-up options (over that group) and then resets the
-> built-up options. Doing "--unrelated" as above is orthogonal (though I
-> think in practice nobody would do that, because it's hard to read).
+> The only advantage is that it is self-documenting, so somebody does not
+> come through later and convert ("%s", "") back to (""). We could also
+> write a comment. But I am happy if we simply catch it in review (or
+> preferably the person is clueful enough to read the output of git-blame
+> and see why it is that way in the first place).
 
-So here's what I would have expected your series to look more like (with
-probably one patch adding clear_ref_selection_options, and the other
-adding the decorate stuff):
+And the last sentence unfortunatly does not reflect reality.  
 
-diff --git a/revision.c b/revision.c
-index b37dbec37..2f67707c7 100644
---- a/revision.c
-+++ b/revision.c
-@@ -1156,6 +1156,11 @@ static int handle_one_ref(const char *path, const struct object_id *oid,
- 
- 	if (ref_excluded(cb->all_revs->ref_excludes, path))
- 	    return 0;
-+	if (cb->all_revs->decorate_reflog) {
-+		/* TODO actually do it for real */
-+		warning("would decorate %s", path);
-+		return 0; /* do not add it as a tip */
-+	}
- 
- 	object = get_reference(cb->all_revs, path, oid->hash, cb->all_flags);
- 	add_rev_cmdline(cb->all_revs, object, path, REV_CMD_REF, cb->all_flags);
-@@ -1188,6 +1193,12 @@ void add_ref_exclusion(struct string_list **ref_excludes_p, const char *exclude)
- 	string_list_append(*ref_excludes_p, exclude);
- }
- 
-+static void clear_ref_selection_options(struct rev_info *revs)
-+{
-+	clear_ref_exclusion(&revs->ref_excludes);
-+	revs->decorate_reflog = 0;
-+}
-+
- static void handle_refs(const char *submodule, struct rev_info *revs, unsigned flags,
- 		int (*for_each)(const char *, each_ref_fn, void *))
- {
-@@ -2080,10 +2091,10 @@ static int handle_revision_pseudo_opt(const char *submodule,
- 	if (!strcmp(arg, "--all")) {
- 		handle_refs(submodule, revs, *flags, for_each_ref_submodule);
- 		handle_refs(submodule, revs, *flags, head_ref_submodule);
--		clear_ref_exclusion(&revs->ref_excludes);
-+		clear_ref_selection_options(revs);
- 	} else if (!strcmp(arg, "--branches")) {
- 		handle_refs(submodule, revs, *flags, for_each_branch_ref_submodule);
--		clear_ref_exclusion(&revs->ref_excludes);
-+		clear_ref_selection_options(revs);
- 	} else if (!strcmp(arg, "--bisect")) {
- 		read_bisect_terms(&term_bad, &term_good);
- 		handle_refs(submodule, revs, *flags, for_each_bad_bisect_ref);
-@@ -2091,15 +2102,15 @@ static int handle_revision_pseudo_opt(const char *submodule,
- 		revs->bisect = 1;
- 	} else if (!strcmp(arg, "--tags")) {
- 		handle_refs(submodule, revs, *flags, for_each_tag_ref_submodule);
--		clear_ref_exclusion(&revs->ref_excludes);
-+		clear_ref_selection_options(revs);
- 	} else if (!strcmp(arg, "--remotes")) {
- 		handle_refs(submodule, revs, *flags, for_each_remote_ref_submodule);
--		clear_ref_exclusion(&revs->ref_excludes);
-+		clear_ref_selection_options(revs);
- 	} else if ((argcount = parse_long_opt("glob", argv, &optarg))) {
- 		struct all_refs_cb cb;
- 		init_all_refs_cb(&cb, revs, *flags);
- 		for_each_glob_ref(handle_one_ref, optarg, &cb);
--		clear_ref_exclusion(&revs->ref_excludes);
-+		clear_ref_selection_options(revs);
- 		return argcount;
- 	} else if ((argcount = parse_long_opt("exclude", argv, &optarg))) {
- 		add_ref_exclusion(&revs->ref_excludes, optarg);
-@@ -2108,17 +2119,19 @@ static int handle_revision_pseudo_opt(const char *submodule,
- 		struct all_refs_cb cb;
- 		init_all_refs_cb(&cb, revs, *flags);
- 		for_each_glob_ref_in(handle_one_ref, arg + 11, "refs/heads/", &cb);
--		clear_ref_exclusion(&revs->ref_excludes);
-+		clear_ref_selection_options(revs);
- 	} else if (starts_with(arg, "--tags=")) {
- 		struct all_refs_cb cb;
- 		init_all_refs_cb(&cb, revs, *flags);
- 		for_each_glob_ref_in(handle_one_ref, arg + 7, "refs/tags/", &cb);
--		clear_ref_exclusion(&revs->ref_excludes);
-+		clear_ref_selection_options(revs);
- 	} else if (starts_with(arg, "--remotes=")) {
- 		struct all_refs_cb cb;
- 		init_all_refs_cb(&cb, revs, *flags);
- 		for_each_glob_ref_in(handle_one_ref, arg + 10, "refs/remotes/", &cb);
--		clear_ref_exclusion(&revs->ref_excludes);
-+		clear_ref_selection_options(revs);
-+	} else if (!strcmp(arg, "--decorate-reflog")) {
-+		revs->decorate_reflog = 1;
- 	} else if (!strcmp(arg, "--reflog")) {
- 		add_reflogs_to_pending(revs, *flags);
- 	} else if (!strcmp(arg, "--indexed-objects")) {
-diff --git a/revision.h b/revision.h
-index 9fac1a607..c74879829 100644
---- a/revision.h
-+++ b/revision.h
-@@ -66,6 +66,8 @@ struct rev_info {
- 	/* excluding from --branches, --refs, etc. expansion */
- 	struct string_list *ref_excludes;
- 
-+	int decorate_reflog;
-+
- 	/* Basic information */
- 	const char *prefix;
- 	const char *def;
+I would prefer something self-documenting, like your wrapper with a
+comment.  Then somebody who is looking at the implementation of
+warning_blank_line() will not get tempted to turn "%s", "" into ""
+because of the comment.  And somebody who is looking at the callsite
+of warning_blank_line() will think twice before suggesting to turn
+it into warning("").
+
+That does not make it unnecessary to review; we still need to catch
+those who wants to add new calls to warning("") without even knowing
+the presence of warning_blank_line(), if the original codepath being
+touched does not have any call to it.
+
+> So maybe:
+
+In any case, the patch is a minimum effort band-aid that lets us
+punt on the whole issue for now, so I'll queue it as-is.
+
+Thanks.
+
+
+> -- >8 --
+> Subject: [PATCH] difftool: hack around -Wzero-length-format warning
+>
+> Building with "gcc -Wall" will complain that the format in:
+>
+>   warning("")
+>
+> is empty. Which is true, but the warning is over-eager. We
+> are calling the function for its side effect of printing
+> "warning:", even with an empty string.
+>
+> Our DEVELOPER Makefile knob disables the warning, but not
+> everybody uses it. Let's silence the warning in the code so
+> that nobody reports it or tries to "fix" it.
+>
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+>  builtin/difftool.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/builtin/difftool.c b/builtin/difftool.c
+> index 42ad9e804..b5e85ab07 100644
+> --- a/builtin/difftool.c
+> +++ b/builtin/difftool.c
+> @@ -567,7 +567,7 @@ static int run_dir_diff(const char *extcmd, int symlinks, const char *prefix,
+>  				warning(_("both files modified: '%s' and '%s'."),
+>  					wtdir.buf, rdir.buf);
+>  				warning(_("working tree file has been left."));
+> -				warning("");
+> +				warning("%s", "");
+>  				err = 1;
+>  			} else if (unlink(wtdir.buf) ||
+>  				   copy_file(wtdir.buf, rdir.buf, st.st_mode))
