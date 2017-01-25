@@ -6,160 +6,111 @@ X-Spam-Status: No, score=-6.4 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BDA261F437
-	for <e@80x24.org>; Wed, 25 Jan 2017 00:19:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 967501F437
+	for <e@80x24.org>; Wed, 25 Jan 2017 00:21:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751068AbdAYATj (ORCPT <rfc822;e@80x24.org>);
-        Tue, 24 Jan 2017 19:19:39 -0500
-Received: from zimbra-vnc.tngtech.com ([83.144.240.98]:4716 "EHLO
+        id S1751113AbdAYAVE convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Tue, 24 Jan 2017 19:21:04 -0500
+Received: from zimbra-vnc.tngtech.com ([83.144.240.98]:51998 "EHLO
         proxy.tng.vnc.biz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751043AbdAYATi (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Jan 2017 19:19:38 -0500
+        with ESMTP id S1750955AbdAYAVD (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 Jan 2017 19:21:03 -0500
 Received: from localhost (localhost [127.0.0.1])
-        by proxy.tng.vnc.biz (Postfix) with ESMTP id 581241E186E;
-        Wed, 25 Jan 2017 01:19:35 +0100 (CET)
+        by proxy.tng.vnc.biz (Postfix) with ESMTP id C723F1E186C;
+        Wed, 25 Jan 2017 01:11:51 +0100 (CET)
 Received: from proxy.tng.vnc.biz ([127.0.0.1])
         by localhost (proxy.tng.vnc.biz [127.0.0.1]) (amavisd-new, port 10032)
-        with ESMTP id 1D3KLpRFUCN4; Wed, 25 Jan 2017 01:19:34 +0100 (CET)
+        with ESMTP id 3paCzMwk3rK4; Wed, 25 Jan 2017 01:11:51 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-        by proxy.tng.vnc.biz (Postfix) with ESMTP id B6FCB1E2D08;
-        Wed, 25 Jan 2017 01:19:34 +0100 (CET)
+        by proxy.tng.vnc.biz (Postfix) with ESMTP id 4686F1E2CF2;
+        Wed, 25 Jan 2017 01:11:51 +0100 (CET)
 X-Virus-Scanned: amavisd-new at 
 Received: from proxy.tng.vnc.biz ([127.0.0.1])
         by localhost (proxy.tng.vnc.biz [127.0.0.1]) (amavisd-new, port 10026)
-        with ESMTP id qQdN9d4lH1MB; Wed, 25 Jan 2017 01:19:34 +0100 (CET)
-Received: from localhost.localdomain (aftr-185-17-206-134.dynamic.mnet-online.de [185.17.206.134])
-        by proxy.tng.vnc.biz (Postfix) with ESMTPSA id 464411E186E;
-        Wed, 25 Jan 2017 01:19:34 +0100 (CET)
-From:   cornelius.weig@tngtech.com
-To:     git@vger.kernel.org
-Cc:     peff@peff.net, novalis@novalis.org, pclouds@gmail.com,
-        Cornelius Weig <cornelius.weig@tngtech.com>
-Subject: [PATCH] tag: add tag.createReflog option
-Date:   Wed, 25 Jan 2017 01:19:06 +0100
-Message-Id: <20170125001906.13916-1-cornelius.weig@tngtech.com>
-X-Mailer: git-send-email 2.10.2
+        with ESMTP id zB35psvDIPgm; Wed, 25 Jan 2017 01:11:51 +0100 (CET)
+Received: from [192.168.178.31] (aftr-185-17-206-134.dynamic.mnet-online.de [185.17.206.134])
+        by proxy.tng.vnc.biz (Postfix) with ESMTPSA id BD0671E186C;
+        Wed, 25 Jan 2017 01:11:50 +0100 (CET)
+Subject: Re: [PATCH 7/7] completion: recognize more long-options
+To:     Stefan Beller <sbeller@google.com>
+References: <20170122225724.19360-1-cornelius.weig@tngtech.com>
+ <20170122225724.19360-8-cornelius.weig@tngtech.com>
+ <74ecd09c-55da-3858-5187-52c286a6bf62@kdbg.org>
+ <967937ff-e5ff-2515-2f50-80a96683c068@tngtech.com>
+ <xmqqd1fcca8n.fsf@gitster.mtv.corp.google.com>
+ <a921bc92-4f20-3284-6577-344470a60c6f@tngtech.com>
+ <CAGZ79ka0PSb9L71tkiacZS+FH=YbUBrQr6a5UQu7ochpihRqEQ@mail.gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, Johannes Sixt <j6t@kdbg.org>,
+        bitte.keine.werbung.einwerfen@googlemail.com,
+        "git@vger.kernel.org" <git@vger.kernel.org>,
+        thomas.braun@virtuell-zuhause.de, John Keeping <john@keeping.me.uk>
+From:   Cornelius Weig <cornelius.weig@tngtech.com>
+Message-ID: <923cd4e4-5c9c-4eaf-0fea-6deff6875b88@tngtech.com>
+Date:   Wed, 25 Jan 2017 01:11:51 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.6.0
+MIME-Version: 1.0
+In-Reply-To: <CAGZ79ka0PSb9L71tkiacZS+FH=YbUBrQr6a5UQu7ochpihRqEQ@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8BIT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Cornelius Weig <cornelius.weig@tngtech.com>
 
-Git does not create a history for tags, in contrast to common
-expectation to simply version everything. This can be changed by using
-the `--create-reflog` flag when creating the tag. However, a config
-option to enable this behavior by default is missing.
 
-This commit adds the configuration variable `tag.createReflog` which
-enables reflogs for new tags by default.
+On 01/25/2017 12:43 AM, Stefan Beller wrote:
+> On Tue, Jan 24, 2017 at 3:33 PM, Cornelius Weig
+> <cornelius.weig@tngtech.com> wrote:
+>> On 01/25/2017 12:24 AM, Junio C Hamano wrote:
+>>> Cornelius Weig <cornelius.weig@tngtech.com> writes:
+>>>
+>>>>> Please study item (5) "Sign your work" in
+>>>>> Documentation/SubmittingPatches and sign off your work.
+>>>>
+>>>> I followed the recommendations to submitting work, and in the first
+>>>> round signing is discouraged.
+>>>
+>>> Just this point.  You found a bug in our documentation if that is
+>>> the case; it should not be giving that impression to you.
+>>>
+>>
+>> Well, I am referring to par. (4) of Documentation/SubmittingPatches
+>> (emphasis mine):
+>>
+>> <<<<<<<<<<<<<<
+>> *Do not PGP sign your patch, at least for now*.  Most likely, your
+>> maintainer or other people on the list would not have your PGP
+>> key and would not bother obtaining it anyway.  Your patch is not
+>> judged by who you are; a good patch from an unknown origin has a
+>> far better chance of being accepted than a patch from a known,
+>> respected origin that is done poorly or does incorrect things.
+>> <<<<<<<<<<<<<<
+>>
+>> If first submissions should be signed as well, then I find this quite
+>> misleading.
+>>
+> 
+> Please read on; While this part addresses PGP signing,
+> which is discouraged at any round,
+> later on we talk about another type of signing.
+> (not cryptographic strong signing, but signing the intent;)
+> the DCO in the commit message.
+> 
+> So no PGP signing (in any round of the patch).
+> 
+> But DCO signed (in anything that you deem useful for the
+> project and that you are allowed to contribute)
+> 
 
-Signed-off-by: Cornelius Weig <cornelius.weig@tngtech.com>
----
- Documentation/config.txt  |  5 +++++
- Documentation/git-tag.txt |  8 +++++---
- builtin/tag.c             |  6 +++++-
- t/t7004-tag.sh            | 14 ++++++++++++++
- 4 files changed, 29 insertions(+), 4 deletions(-)
+Right, it's crystal clear now. What confused me was the combination of
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index af2ae4c..9e5f6f6 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -2945,6 +2945,11 @@ submodule.alternateErrorStrategy
- 	as computed via `submodule.alternateLocation`. Possible values are
- 	`ignore`, `info`, `die`. Default is `die`.
- 
-+tag.createReflog::
-+	A boolean to specify whether newly created tags should have a reflog.
-+	If `--[no-]create-reflog` is specified on the command line, it takes
-+	precedence. Defaults to `false`.
-+
- tag.forceSignAnnotated::
- 	A boolean to specify whether annotated tags created should be GPG signed.
- 	If `--annotate` is specified on the command line, it takes
-diff --git a/Documentation/git-tag.txt b/Documentation/git-tag.txt
-index 5055a96..f2ed370 100644
---- a/Documentation/git-tag.txt
-+++ b/Documentation/git-tag.txt
-@@ -13,7 +13,7 @@ SYNOPSIS
- 	<tagname> [<commit> | <object>]
- 'git tag' -d <tagname>...
- 'git tag' [-n[<num>]] -l [--contains <commit>] [--points-at <object>]
--	[--column[=<options>] | --no-column] [--create-reflog] [--sort=<key>]
-+	[--column[=<options>] | --no-column] [--[no-]create-reflog] [--sort=<key>]
- 	[--format=<format>] [--[no-]merged [<commit>]] [<pattern>...]
- 'git tag' -v <tagname>...
- 
-@@ -149,8 +149,10 @@ This option is only applicable when listing tags without annotation lines.
- 	all, 'whitespace' removes just leading/trailing whitespace lines and
- 	'strip' removes both whitespace and commentary.
- 
----create-reflog::
--	Create a reflog for the tag.
-+--[no-]create-reflog::
-+	Force to create a reflog for the tag, or no reflog if `--no-create-reflog`
-+	is used. Unless the `tag.createReflog` config variable is set to true, no
-+	reflog is created by default. See linkgit:git-config[1].
- 
- <tagname>::
- 	The name of the tag to create, delete, or describe.
-diff --git a/builtin/tag.c b/builtin/tag.c
-index 73df728..1f13e4d 100644
---- a/builtin/tag.c
-+++ b/builtin/tag.c
-@@ -30,6 +30,7 @@ static const char * const git_tag_usage[] = {
- 
- static unsigned int colopts;
- static int force_sign_annotate;
-+static int create_reflog;
- 
- static int list_tags(struct ref_filter *filter, struct ref_sorting *sorting, const char *format)
- {
-@@ -165,6 +166,10 @@ static int git_tag_config(const char *var, const char *value, void *cb)
- 		force_sign_annotate = git_config_bool(var, value);
- 		return 0;
- 	}
-+	if (!strcmp(var, "tag.createreflog")) {
-+		create_reflog = git_config_bool(var, value);
-+		return 0;
-+	}
- 
- 	if (starts_with(var, "column."))
- 		return git_column_config(var, value, "tag", &colopts);
-@@ -325,7 +330,6 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
- 	const char *object_ref, *tag;
- 	struct create_tag_options opt;
- 	char *cleanup_arg = NULL;
--	int create_reflog = 0;
- 	int annotate = 0, force = 0;
- 	int cmdmode = 0, create_tag_object = 0;
- 	const char *msgfile = NULL, *keyid = NULL;
-diff --git a/t/t7004-tag.sh b/t/t7004-tag.sh
-index 1cfa8a2..67b39ec 100755
---- a/t/t7004-tag.sh
-+++ b/t/t7004-tag.sh
-@@ -90,6 +90,20 @@ test_expect_success '--create-reflog does not create reflog on failure' '
- 	test_must_fail git reflog exists refs/tags/mytag
- '
- 
-+test_expect_success 'option tag.createreflog creates reflog by default' '
-+	test_when_finished "git tag -d tag_with_reflog" &&
-+	git config tag.createReflog true &&
-+	git tag tag_with_reflog &&
-+	git reflog exists refs/tags/tag_with_reflog
-+'
-+
-+test_expect_success 'option tag.createreflog overridden by command line' '
-+	test_when_finished "git tag -d tag_without_reflog" &&
-+	git config tag.createReflog true &&
-+	git tag --no-create-reflog tag_without_reflog &&
-+	test_must_fail git reflog exists refs/tags/tag_without_reflog
-+'
-+
- test_expect_success 'listing all tags if one exists should succeed' '
- 	git tag -l &&
- 	git tag
--- 
-2.10.2
+> Do not PGP sign your patch, at least *for now*. (...)
 
+and then the section with heading
+
+> (5) *Sign* your work
+
+So I didn't even bother to read (5) because I deemed it irrelevant. I
+think if it had said `(5) *Certify* your work` this would not have happened.
