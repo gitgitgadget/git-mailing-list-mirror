@@ -2,96 +2,76 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 57E481F794
-	for <e@80x24.org>; Wed, 25 Jan 2017 18:38:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AB24B1F6DC
+	for <e@80x24.org>; Wed, 25 Jan 2017 18:39:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752113AbdAYSif (ORCPT <rfc822;e@80x24.org>);
-        Wed, 25 Jan 2017 13:38:35 -0500
-Received: from mail-it0-f41.google.com ([209.85.214.41]:35098 "EHLO
-        mail-it0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751513AbdAYSid (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 Jan 2017 13:38:33 -0500
-Received: by mail-it0-f41.google.com with SMTP id 203so115056074ith.0
-        for <git@vger.kernel.org>; Wed, 25 Jan 2017 10:38:33 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=hR8GpfhATQX+fM6NKGbvkebDdpwRd+dYNsL/Ti6yErg=;
-        b=VJ3qVlZdmJeJxJEx0EtQm0bHZaMiI12Q7P3UxkRb+q3KdZb4s8Ke10I4k3RERmiAJh
-         GqdIcGCrv9EXWNLqXhvc7XufFW3cV8g7s6XL9HbF4fQYoNfL/V0gV8TGHJNngCjLfLtq
-         Lp5+Z9ad5LH8Hne+gD6JYPtMT95qkALo/rkVpzhlpo/T5AgEwZ0AX8QVL/hYcZudHscE
-         9MZorKuCtfjXDl7IrnxHYNq0gDfoL1JU2j9LtaCn1L+GCL2BC+3G0WeGDqiL6xXoY9ir
-         cwJU8yGKW385NAcu8DC3/5G4Vw/g0gpjLxdB8x+rspnQtA0T3UAiWoAjjCScESCbtNAi
-         JQqg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=hR8GpfhATQX+fM6NKGbvkebDdpwRd+dYNsL/Ti6yErg=;
-        b=oK/kBy3u8OiXFelg8BkimOtkvC9tyz35Cssf1q8ICFm2oxtc1ERslfGSHy/VsWEoeQ
-         XzbEhhZlUJ3BplRf5TEWhmhq12UOIsvpyGKzTDeOcobuBUJDBGkFJWilo+uTa4UDIQEJ
-         3D+v5Hm6HaG+BMYBapxll3wL2eiE1GXf0lJGG4qc02irpBPAPg2B/aSoKO6Lg9+ozaOR
-         bU46pFDxVwZAE/KOTW3iG93LwhlJWksjAAgVEctRv58EDAdhUQP/6re7wNtSRLxyb4DJ
-         Um6tO7wYFHIveWhQT4xDI2oD9KRHpuoh4wZqLMSwFc+qyBzm8r4SPploZjj2fNthDfxt
-         Ca2A==
-X-Gm-Message-State: AIkVDXLcrrUYOWjae/7kdfCIJsQ8OV7FmtdXVopu8d+7rGfifySjPtNywZicF4yG1Jg0TbqRvEmqp6/213WYCxLQ
-X-Received: by 10.36.169.12 with SMTP id r12mr25885728ite.69.1485369512971;
- Wed, 25 Jan 2017 10:38:32 -0800 (PST)
-MIME-Version: 1.0
-Received: by 10.79.39.19 with HTTP; Wed, 25 Jan 2017 10:38:32 -0800 (PST)
-In-Reply-To: <xmqqo9yxpaxk.fsf@gitster.mtv.corp.google.com>
-References: <xmqqo9yxpaxk.fsf@gitster.mtv.corp.google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Wed, 25 Jan 2017 10:38:32 -0800
-Message-ID: <CAGZ79kZKDyfP1SPsxAf8oMSU3763QiogLpUzFZHy+OTQQdJP6A@mail.gmail.com>
-Subject: Re: What's cooking in git.git (Jan 2017, #04; Mon, 23)
+        id S1752488AbdAYSjc (ORCPT <rfc822;e@80x24.org>);
+        Wed, 25 Jan 2017 13:39:32 -0500
+Received: from cloud.peff.net ([104.130.231.41]:44613 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752384AbdAYSjb (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 Jan 2017 13:39:31 -0500
+Received: (qmail 25067 invoked by uid 109); 25 Jan 2017 18:39:26 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 25 Jan 2017 18:39:26 +0000
+Received: (qmail 14166 invoked by uid 111); 25 Jan 2017 18:39:26 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 25 Jan 2017 13:39:26 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 25 Jan 2017 13:39:24 -0500
+Date:   Wed, 25 Jan 2017 13:39:24 -0500
+From:   Jeff King <peff@peff.net>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        git <git@vger.kernel.org>
+Subject: Re: What's cooking in git.git (Jan 2017, #04; Mon, 23)
+Message-ID: <20170125183924.6yclcjl4ggcu42yp@sigill.intra.peff.net>
+References: <xmqqo9yxpaxk.fsf@gitster.mtv.corp.google.com>
+ <0D956B23-E655-4C28-A205-14CCC0A7DEA2@gmail.com>
+ <20170124132749.l3ezupyitvxe4t2l@sigill.intra.peff.net>
+ <alpine.DEB.2.20.1701251800120.3469@virtualbox>
+ <20170125173958.pg546a6w33dirp5k@sigill.intra.peff.net>
+ <xmqq4m0nc8dz.fsf@gitster.mtv.corp.google.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqq4m0nc8dz.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jan 23, 2017 at 4:18 PM, Junio C Hamano <gitster@pobox.com> wrote:
->
-> * sb/unpack-trees-super-prefix (2017-01-12) 5 commits
->  - SQUASH
->  - unpack-trees: support super-prefix option
->  - t1001: modernize style
->  - t1000: modernize style
->  - read-tree: use OPT_BOOL instead of OPT_SET_INT
->
->  "git read-tree" and its underlying unpack_trees() machinery learned
->  to report problematic paths prefixed with the --super-prefix option.
->
->  Expecting a reroll.
->  The first three are in good shape.  The last one needs a better
->  explanation and possibly an update to its test.
->  cf. <CAGZ79kaHDnVLQr8WLoaD5KKs7EqeW=KbkptF=iHpU5t054Xcdw@mail.gmail.com>
->
+On Wed, Jan 25, 2017 at 10:16:40AM -0800, Junio C Hamano wrote:
 
-Please see
-https://public-inbox.org/git/20170118010520.8804-1-sbeller@google.com/
+> > But whatever the cause, I think the workaround I posted is
+> > easy enough to do.
+> 
+> Or spelling it explicitly as "/bin/mv" (forgetting systems that does
+> not have it in /bin but as /usr/bin/mv) would also defeat alias if
+> that were the cause.
 
+Yes, but I think it's less tricky and unportable to write "mv -f" than
+"/bin/mv". So even if it _is_ a funny alias thing, I think my patch is
+the right fix.
 
->
-> * sb/submodule-doc (2017-01-12) 3 commits
->  - submodules: add a background story
->  - submodule update documentation: don't repeat ourselves
->  - submodule documentation: add options to the subcommand
->
->  Needs review.
+> One downside of working it around like your patch does, or spelling
+> it out as "/bin/mv", is that we'd need to worry about all the uses
+> of "mv" in our scripts.  If this were _only_ happening in the Travis
+> environment, I'd prefer to see why it happens only there and fix that
+> instead.
 
-The first 2 commit are asking for the standard review, whereas the last patch
-(submodules: add a background story), needs more of a design review/opinion
-if such a patch is a good idea actually.
+I would be curious to know whether it is a funny thing in the Travis
+environment, or if some version of macOS "mv" really is that braindead
+(and it is just the case that Travis has that version and Lars's
+computer doesn't). I just didn't want to waste anybody's time digging
+into it if it won't affect our patch.
 
-Thanks,
-Stefan
+I guess the way to dig would be to add a test that looks at the output
+of "type mv" or something, push it to a Travis-hooked branch, and then
+wait for the output
+
+-Peff
