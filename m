@@ -2,115 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.4 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 967501F437
-	for <e@80x24.org>; Wed, 25 Jan 2017 00:21:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 596A21F437
+	for <e@80x24.org>; Wed, 25 Jan 2017 00:21:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751113AbdAYAVE convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Tue, 24 Jan 2017 19:21:04 -0500
-Received: from zimbra-vnc.tngtech.com ([83.144.240.98]:51998 "EHLO
-        proxy.tng.vnc.biz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750955AbdAYAVD (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Jan 2017 19:21:03 -0500
-Received: from localhost (localhost [127.0.0.1])
-        by proxy.tng.vnc.biz (Postfix) with ESMTP id C723F1E186C;
-        Wed, 25 Jan 2017 01:11:51 +0100 (CET)
-Received: from proxy.tng.vnc.biz ([127.0.0.1])
-        by localhost (proxy.tng.vnc.biz [127.0.0.1]) (amavisd-new, port 10032)
-        with ESMTP id 3paCzMwk3rK4; Wed, 25 Jan 2017 01:11:51 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
-        by proxy.tng.vnc.biz (Postfix) with ESMTP id 4686F1E2CF2;
-        Wed, 25 Jan 2017 01:11:51 +0100 (CET)
-X-Virus-Scanned: amavisd-new at 
-Received: from proxy.tng.vnc.biz ([127.0.0.1])
-        by localhost (proxy.tng.vnc.biz [127.0.0.1]) (amavisd-new, port 10026)
-        with ESMTP id zB35psvDIPgm; Wed, 25 Jan 2017 01:11:51 +0100 (CET)
-Received: from [192.168.178.31] (aftr-185-17-206-134.dynamic.mnet-online.de [185.17.206.134])
-        by proxy.tng.vnc.biz (Postfix) with ESMTPSA id BD0671E186C;
-        Wed, 25 Jan 2017 01:11:50 +0100 (CET)
-Subject: Re: [PATCH 7/7] completion: recognize more long-options
-To:     Stefan Beller <sbeller@google.com>
-References: <20170122225724.19360-1-cornelius.weig@tngtech.com>
- <20170122225724.19360-8-cornelius.weig@tngtech.com>
- <74ecd09c-55da-3858-5187-52c286a6bf62@kdbg.org>
- <967937ff-e5ff-2515-2f50-80a96683c068@tngtech.com>
- <xmqqd1fcca8n.fsf@gitster.mtv.corp.google.com>
- <a921bc92-4f20-3284-6577-344470a60c6f@tngtech.com>
- <CAGZ79ka0PSb9L71tkiacZS+FH=YbUBrQr6a5UQu7ochpihRqEQ@mail.gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, Johannes Sixt <j6t@kdbg.org>,
-        bitte.keine.werbung.einwerfen@googlemail.com,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        thomas.braun@virtuell-zuhause.de, John Keeping <john@keeping.me.uk>
-From:   Cornelius Weig <cornelius.weig@tngtech.com>
-Message-ID: <923cd4e4-5c9c-4eaf-0fea-6deff6875b88@tngtech.com>
-Date:   Wed, 25 Jan 2017 01:11:51 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.6.0
-MIME-Version: 1.0
-In-Reply-To: <CAGZ79ka0PSb9L71tkiacZS+FH=YbUBrQr6a5UQu7ochpihRqEQ@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8BIT
+        id S1751125AbdAYAVU (ORCPT <rfc822;e@80x24.org>);
+        Tue, 24 Jan 2017 19:21:20 -0500
+Received: from mail-pf0-f177.google.com ([209.85.192.177]:34681 "EHLO
+        mail-pf0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751118AbdAYAVT (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 Jan 2017 19:21:19 -0500
+Received: by mail-pf0-f177.google.com with SMTP id e4so53359631pfg.1
+        for <git@vger.kernel.org>; Tue, 24 Jan 2017 16:21:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=07cgEOod3gwuxaF6KXto8wqlNPfORoTi/49JvPVRHPI=;
+        b=OiPg4+SM/1EL0/IcFqVJTjFc9F13Grq6teIcLJ6h35qD0wgh4NpgUlbfE0maL1gJjO
+         +IY/vfm7lSKOXufqa0nx9QX9FB/bgKXoEVxcthIXqgVZ3DgfZht+TNcZd13etZOts8v5
+         z0ZXfx3R5MjDMboRSpUzDvDpfP4u05obVxE3Kkc2qlxTMpEEi8utjwxjXtlQ/FysXB9d
+         nSiVMLWUcwsyEGbLMnP684tUX/YB9ve0xrXzDt+ZC+xaK25qO3LeqAd8S+Xiu+7ne3eQ
+         LcL4ZdcnP4OJ1S0kDaJE0LegYjCOETbJngq9TqqSCC+AZMMhYvkm9Fu5SFVKi0P0ys3D
+         1cLA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=07cgEOod3gwuxaF6KXto8wqlNPfORoTi/49JvPVRHPI=;
+        b=rDv3AuiisUgqoj49i6fL2kr7dHsXRk2RxP8DjAzDFnGIF2LKr3R3pG+kfx2cvMm3q1
+         JvW7RQcLszoKM97kUCb9nHP+dM8nOJy71HSqNlUpC1MWNMVedPPjG/N+D9L2fQo+ksJW
+         bHAiRyyENEwSJTYcyf2Q7+DufAJ4CCi2hH5ZdUn1d1hnOuMwzDlVNaK01ijadjalEQSo
+         HPXexwBsoZxV0yx/maMVh2CdChhQ0rU3PH6vhfrE0d8vb5zXRx6t7U/ls0uLiJIGgllJ
+         JJ9eTFpwfD5jyQwRwvnWNGJU6jZRmyBjJA8OVUbKOt+g3S7U3/btv3B6IpggXGC0GQnB
+         e02Q==
+X-Gm-Message-State: AIkVDXK1r+wXEijQENBqMzdwEwWzqUWSEBVSXKhdORWnpGKzmlpf0i/jFRmMb/brDLPZF890
+X-Received: by 10.98.217.209 with SMTP id b78mr42665892pfl.53.1485303678770;
+        Tue, 24 Jan 2017 16:21:18 -0800 (PST)
+Received: from localhost ([2620:0:1000:5b10:6936:a216:cb1:3482])
+        by smtp.gmail.com with ESMTPSA id a2sm45451297pfc.72.2017.01.24.16.21.17
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Tue, 24 Jan 2017 16:21:17 -0800 (PST)
+From:   Stefan Beller <sbeller@google.com>
+To:     cornelius.weig@tngtech.com
+Cc:     j6t@kdbg.org, bitte.keine.werbung.einwerfen@googlemail.com,
+        git@vger.kernel.org, gitster@pobox.com,
+        thomas.braun@virtuell-zuhause.de, john@keeping.me.uk,
+        Stefan Beller <sbeller@google.com>
+Subject: 
+Date:   Tue, 24 Jan 2017 16:21:16 -0800
+Message-Id: <20170125002116.22111-1-sbeller@google.com>
+X-Mailer: git-send-email 2.11.0.495.g04f60290a0.dirty
+In-Reply-To: <923cd4e4-5c9c-4eaf-0fea-6deff6875b88@tngtech.com>
+References: <923cd4e4-5c9c-4eaf-0fea-6deff6875b88@tngtech.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
+>
+>> Do not PGP sign your patch, at least *for now*. (...)
+>
 
-On 01/25/2017 12:43 AM, Stefan Beller wrote:
-> On Tue, Jan 24, 2017 at 3:33 PM, Cornelius Weig
-> <cornelius.weig@tngtech.com> wrote:
->> On 01/25/2017 12:24 AM, Junio C Hamano wrote:
->>> Cornelius Weig <cornelius.weig@tngtech.com> writes:
->>>
->>>>> Please study item (5) "Sign your work" in
->>>>> Documentation/SubmittingPatches and sign off your work.
->>>>
->>>> I followed the recommendations to submitting work, and in the first
->>>> round signing is discouraged.
->>>
->>> Just this point.  You found a bug in our documentation if that is
->>> the case; it should not be giving that impression to you.
->>>
->>
->> Well, I am referring to par. (4) of Documentation/SubmittingPatches
->> (emphasis mine):
->>
->> <<<<<<<<<<<<<<
->> *Do not PGP sign your patch, at least for now*.  Most likely, your
->> maintainer or other people on the list would not have your PGP
->> key and would not bother obtaining it anyway.  Your patch is not
->> judged by who you are; a good patch from an unknown origin has a
->> far better chance of being accepted than a patch from a known,
->> respected origin that is done poorly or does incorrect things.
->> <<<<<<<<<<<<<<
->>
->> If first submissions should be signed as well, then I find this quite
->> misleading.
->>
-> 
-> Please read on; While this part addresses PGP signing,
-> which is discouraged at any round,
-> later on we talk about another type of signing.
-> (not cryptographic strong signing, but signing the intent;)
-> the DCO in the commit message.
-> 
-> So no PGP signing (in any round of the patch).
-> 
-> But DCO signed (in anything that you deem useful for the
-> project and that you are allowed to contribute)
-> 
+And maybe these 2 small words are the bug in the documentation?
+Shall we drop the "at least for now" part, like so:
 
-Right, it's crystal clear now. What confused me was the combination of
+---8<---
+From 2c4fe0e67451892186ff6257b20c53e088c9ec67 Mon Sep 17 00:00:00 2001
+From: Stefan Beller <sbeller@google.com>
+Date: Tue, 24 Jan 2017 16:19:13 -0800
+Subject: [PATCH] SubmittingPatches: drop temporal reference for PGP signing
 
-> Do not PGP sign your patch, at least *for now*. (...)
+Signed-off-by: Stefan Beller <sbeller@google.com>
+---
+ Documentation/SubmittingPatches | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-and then the section with heading
+diff --git a/Documentation/SubmittingPatches b/Documentation/SubmittingPatches
+index 08352deaae..28da4ad2d4 100644
+--- a/Documentation/SubmittingPatches
++++ b/Documentation/SubmittingPatches
+@@ -216,12 +216,12 @@ that it will be postponed.
+ Exception:  If your mailer is mangling patches then someone may ask
+ you to re-send them using MIME, that is OK.
+ 
+-Do not PGP sign your patch, at least for now.  Most likely, your
+-maintainer or other people on the list would not have your PGP
+-key and would not bother obtaining it anyway.  Your patch is not
+-judged by who you are; a good patch from an unknown origin has a
+-far better chance of being accepted than a patch from a known,
+-respected origin that is done poorly or does incorrect things.
++Do not PGP sign your patch. Most likely, your maintainer or other
++people on the list would not have your PGP key and would not bother
++obtaining it anyway. Your patch is not judged by who you are; a good
++patch from an unknown origin has a far better chance of being accepted
++than a patch from a known, respected origin that is done poorly or
++does incorrect things.
+ 
+ If you really really really really want to do a PGP signed
+ patch, format it as "multipart/signed", not a text/plain message
+-- 
+2.11.0.495.g04f60290a0.dirty
 
-> (5) *Sign* your work
-
-So I didn't even bother to read (5) because I deemed it irrelevant. I
-think if it had said `(5) *Certify* your work` this would not have happened.
