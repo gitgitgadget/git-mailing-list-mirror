@@ -2,56 +2,56 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F02301F6DC
-	for <e@80x24.org>; Wed, 25 Jan 2017 22:03:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E62561F6DC
+	for <e@80x24.org>; Wed, 25 Jan 2017 22:03:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752063AbdAYWDW (ORCPT <rfc822;e@80x24.org>);
-        Wed, 25 Jan 2017 17:03:22 -0500
-Received: from mail-pg0-f49.google.com ([74.125.83.49]:33257 "EHLO
-        mail-pg0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751801AbdAYWDT (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 Jan 2017 17:03:19 -0500
-Received: by mail-pg0-f49.google.com with SMTP id 204so67748565pge.0
-        for <git@vger.kernel.org>; Wed, 25 Jan 2017 14:03:19 -0800 (PST)
+        id S1752270AbdAYWDb (ORCPT <rfc822;e@80x24.org>);
+        Wed, 25 Jan 2017 17:03:31 -0500
+Received: from mail-pf0-f179.google.com ([209.85.192.179]:33895 "EHLO
+        mail-pf0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751999AbdAYWD3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 Jan 2017 17:03:29 -0500
+Received: by mail-pf0-f179.google.com with SMTP id e4so60771997pfg.1
+        for <git@vger.kernel.org>; Wed, 25 Jan 2017 14:03:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :in-reply-to:references;
-        bh=MeBOx2Ke8I6nQyWgA7hMKn4nXbX0FeO+J0rYXNMMJZI=;
-        b=lMlBn4+vFTLIunA6tbe575N1f/eTMug4X2qFF154OEAEl/eEn3Tn47UQbNdxniOF+I
-         n2QL32R8Rnv9EKCre0s5cAarljpg3LisyyDZWCJPV0g03WnIx1c3uzsDg8boQp6/jcOp
-         EcDoDGaCPeqRqDv66sJN4Mrr7o7yKeXdcENYMD3TX8ptqTrYkMThT8j6h782UWGtbupO
-         vM9C8HlJCwZgdsNN2z9rwnj2tpVxe/Xly6szpJnXVea20/f+mUA4q2CfDhI/Mzto9Pch
-         cJ+cbkBnv7fZoAl5mYrr2qr66GCwELy6GuKQBu5Z/BbkWBqmmL2l77O7E9/Q+EMrV5DU
-         lPaA==
+        bh=qGtR/5vMF/V4YRpdSug25WCP3m/oOSzphzWzhQogb8k=;
+        b=Chc8KVz86LP5FfnQA1FnlLOxcA0YIVxeUogE0iHrPDQ7CB7tWfRO/GJeGpA+H6NaMb
+         F91OJqaUUs9nl1J3bYKHt9/TN6hhrFhjBDsYWbdp4zjMat3Cb4qAFK4qlClcHq1Hrnws
+         0OVydeQs76bQRmdnWWr68zBNZt9Kx/wNeZ1B5BkxPnFn6eg9G8l5/l0QPZNXmp2Pe6rg
+         qeRkV3FnwVSkBDLCqBj1/PzOcFcl6RXTGHHCzyoSx+mOmBs/xPSIPP8HaAewZ4b7Ye7S
+         uEtei7JX9NBD3Il5GzPkxL/2hFvb3YM4SyWnzcLonk2JGmRQnCbsGb2e72krpLfpyJ9x
+         1/+A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:in-reply-to:references;
-        bh=MeBOx2Ke8I6nQyWgA7hMKn4nXbX0FeO+J0rYXNMMJZI=;
-        b=K8A7FYn/hiK8+e8IdHq6SfdC+x2Vp94xqBpeooT18invpwuH5mtCqgoIfWMKek/8vV
-         XlsrcosEEtAUrJyrNmvI3/JXWMLoY38WpHfUG4bZwDXTXk0s3OQvxRGmFt1aeFDRoqsn
-         3AsrKOsuKjF/kP2+DpAClIoB3xgG8F6RSltY+2EgpiIaZAe/Ft3cD6H+mn7LNkcz8SUo
-         SfcjswBnBWArl3CNp4WLnfFICu6mGpakH1McKgnD2ETGOJrObTV/+5UTvjrCf3Ujj7pL
-         pKb0tuVcTU+yzwpVUBwVwLxr9TqNIVhiB5O+LyU3k8f5Uw0erowPkSRB9d+W+senvFYl
-         gUqQ==
-X-Gm-Message-State: AIkVDXLMDX3Uvjwlrn0l6+gaFbAU7V1f93bjArfhJLy2Wf23tSa0VLJv6sxyMVFPkwXxUtOW
-X-Received: by 10.98.7.150 with SMTP id 22mr49412049pfh.69.1485381799028;
-        Wed, 25 Jan 2017 14:03:19 -0800 (PST)
+        bh=qGtR/5vMF/V4YRpdSug25WCP3m/oOSzphzWzhQogb8k=;
+        b=tTG5SaN3jAB51N8iDvmWhvVDmSL2hFDkp92lODjp8wD4NI19OZ9N/DKJOlAO8QHG2w
+         hlYU1ZA8tpFD938f+/P7oQwOU/MtcM3NA1Koi0WeOLdll+T8/Wbf6dbfOmL4mXh8DYIm
+         k/apIZMiZy4a7TYbepG1B/ERZTsvxQCM8cVfvfQkaA8qoWICKcleM5VTaJREN4SjCcOl
+         mfRLutdj3vTSLThdvLL4wCA1empekhCePVbYNHHs1tW8qScYG1WHVEmya+KkV6Pu8pFK
+         QwLGIi6/wcQZ7wAOuzzNHiJs2dSgLJAMJbEZplTJE3IQzHtPpkg78FlmZa1BKWNnsU8E
+         FMVA==
+X-Gm-Message-State: AIkVDXJsunMAbZJBM34nu6kPMOh98sMNu1xPEy4Xm56CD+Ekbu8Mf4+bxum141NmuZ/wb8R6
+X-Received: by 10.84.141.164 with SMTP id 33mr6825889plv.86.1485381808922;
+        Wed, 25 Jan 2017 14:03:28 -0800 (PST)
 Received: from twelve2.mtv.corp.google.com ([100.96.238.13])
-        by smtp.gmail.com with ESMTPSA id o24sm3357308pfj.78.2017.01.25.14.03.18
+        by smtp.gmail.com with ESMTPSA id o24sm3357308pfj.78.2017.01.25.14.03.28
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 25 Jan 2017 14:03:18 -0800 (PST)
+        Wed, 25 Jan 2017 14:03:28 -0800 (PST)
 From:   Jonathan Tan <jonathantanmy@google.com>
 To:     git@vger.kernel.org
 Cc:     Jonathan Tan <jonathantanmy@google.com>
-Subject: [RFC 01/14] upload-pack: move parsing of "want" line
-Date:   Wed, 25 Jan 2017 14:02:54 -0800
-Message-Id: <be83ed22dbea03511bf8f8fe830ca0a365128c05.1485381677.git.jonathantanmy@google.com>
+Subject: [RFC 12/14] fetch-pack: do not printf after closing stdout
+Date:   Wed, 25 Jan 2017 14:03:05 -0800
+Message-Id: <db1db5d0e5563464c09d1678234c9c5e8ae5b2f4.1485381677.git.jonathantanmy@google.com>
 X-Mailer: git-send-email 2.11.0.483.g087da7b7c-goog
 In-Reply-To: <cover.1485381677.git.jonathantanmy@google.com>
 References: <cover.1485381677.git.jonathantanmy@google.com>
@@ -62,61 +62,52 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Refactor to parse "want" lines when the prefix is found. This makes it
-easier to add support for another prefix, which will be done in a
-subsequent commit.
+In fetch-pack, during a stateless RPC, printf is invoked after stdout is
+closed. Update the code to not do this, preserving the existing
+behavior.
 
 Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
 ---
- upload-pack.c | 28 ++++++++++++++--------------
- 1 file changed, 14 insertions(+), 14 deletions(-)
+ builtin/fetch-pack.c | 14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
-diff --git a/upload-pack.c b/upload-pack.c
-index 7597ba340..15c60a204 100644
---- a/upload-pack.c
-+++ b/upload-pack.c
-@@ -793,8 +793,20 @@ static void receive_needs(void)
- 			deepen_rev_list = 1;
- 			continue;
- 		}
--		if (!skip_prefix(line, "want ", &arg) ||
--		    get_sha1_hex(arg, sha1_buf))
-+		if (skip_prefix(line, "want ", &arg) &&
-+		    !get_sha1_hex(arg, sha1_buf)) {
-+			o = parse_object(sha1_buf);
-+			if (!o)
-+				die("git upload-pack: not our ref %s",
-+				    sha1_to_hex(sha1_buf));
-+			if (!(o->flags & WANTED)) {
-+				o->flags |= WANTED;
-+				if (!((allow_unadvertised_object_request & ALLOW_ANY_SHA1) == ALLOW_ANY_SHA1
-+				      || is_our_ref(o)))
-+					has_non_tip = 1;
-+				add_object_array(o, NULL, &want_obj);
-+			}
-+		} else
- 			die("git upload-pack: protocol error, "
- 			    "expected to get sha, not '%s'", line);
+diff --git a/builtin/fetch-pack.c b/builtin/fetch-pack.c
+index ae073ab24..24af3b7c5 100644
+--- a/builtin/fetch-pack.c
++++ b/builtin/fetch-pack.c
+@@ -191,10 +191,10 @@ int cmd_fetch_pack(int argc, const char **argv, const char *prefix)
+ 		printf("connectivity-ok\n");
+ 		fflush(stdout);
+ 	}
+-	close(fd[0]);
+-	close(fd[1]);
+-	if (finish_connect(conn))
+-		return 1;
++	if (finish_connect(conn)) {
++		ret = 1;
++		goto cleanup;
++	}
  
-@@ -820,18 +832,6 @@ static void receive_needs(void)
- 			no_progress = 1;
- 		if (parse_feature_request(features, "include-tag"))
- 			use_include_tag = 1;
--
--		o = parse_object(sha1_buf);
--		if (!o)
--			die("git upload-pack: not our ref %s",
--			    sha1_to_hex(sha1_buf));
--		if (!(o->flags & WANTED)) {
--			o->flags |= WANTED;
--			if (!((allow_unadvertised_object_request & ALLOW_ANY_SHA1) == ALLOW_ANY_SHA1
--			      || is_our_ref(o)))
--				has_non_tip = 1;
--			add_object_array(o, NULL, &want_obj);
--		}
+ 	ret = !ref;
+ 
+@@ -218,11 +218,17 @@ int cmd_fetch_pack(int argc, const char **argv, const char *prefix)
+ 		ret = 1;
  	}
  
- 	/*
++	if (args.stateless_rpc)
++		goto cleanup;
++
+ 	while (ref) {
+ 		printf("%s %s\n",
+ 		       oid_to_hex(&ref->old_oid), ref->name);
+ 		ref = ref->next;
+ 	}
+ 
++cleanup:
++	close(fd[0]);
++	close(fd[1]);
+ 	return ret;
+ }
 -- 
 2.11.0.483.g087da7b7c-goog
 
