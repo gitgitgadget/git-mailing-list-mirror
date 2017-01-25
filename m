@@ -2,89 +2,192 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AD0341F6DC
-	for <e@80x24.org>; Wed, 25 Jan 2017 22:34:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 911211F6DC
+	for <e@80x24.org>; Wed, 25 Jan 2017 22:35:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752539AbdAYWeb (ORCPT <rfc822;e@80x24.org>);
-        Wed, 25 Jan 2017 17:34:31 -0500
-Received: from mail-it0-f53.google.com ([209.85.214.53]:38043 "EHLO
-        mail-it0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752325AbdAYWea (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 Jan 2017 17:34:30 -0500
-Received: by mail-it0-f53.google.com with SMTP id c7so23260741itd.1
-        for <git@vger.kernel.org>; Wed, 25 Jan 2017 14:34:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=6JOJs8sts0K/P45z+PTYH5yEvhNi06jvy3fT1fBKyd4=;
-        b=ug/La7l/+vlzHO0vwrVW+l9DVAayWQHQG+QhfbMrl63IaXb5y9MskPHHt/N2BHlJv6
-         lmgpJroEwyvpNCCNjs7mCNjRs9cVYlmBJ7wQpo8+7yfuuIWU5TVKcCrZI0ajwrNAvrLV
-         eGbjH5LDH55gi5hJMdti+yDV0glQQSVj/8hEoh/KsHMz5WgbtD+oryP/Gyi57kXRKrR9
-         dQ6EQ24GEQSl30mKfz5yIJGBbO0zpjG46kkDOggU983i7vCaGIPnKTXIxAcWCCpSJSxd
-         caQkhOsW25o1HUaywwC3Do3RMcakYE4m6dAeIBn/nwFkUlanGMr6U2KNzQbi87kFKvAS
-         l59w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=6JOJs8sts0K/P45z+PTYH5yEvhNi06jvy3fT1fBKyd4=;
-        b=nHSEno1ZyIXuHA/Ms6xlZYPW/BVNkBlt98XXomQPP3npz7N8j4htuihBUYCqziyMQX
-         9v1LBB1aoyV3ln5NocY5DZpl66xRcq0UFTEv6qUKF4zXvhv7BdiDguwDZCz0xEe+NUUg
-         2krTKnjsLzUQurtN2m+x2tBWesjcD9t4iEl/8N+SlOqf2KqfASa2/w6D4Od+MJHNfuvS
-         Oju1lkIGXvHafsMMh2++QHn5dS8ITfUYGAXi7MZei9H/AW7KHF5TqojCystxnceZhJp7
-         chTBB+l/k9Cs1A7VEUtVHErnj5eJCmN3VA2cN0b/3fzyrtHEe9eNBmXWlDhRz4eNY2QD
-         prQA==
-X-Gm-Message-State: AIkVDXKa0O/u22LzUZ40wJAUfleM2xmamtq9YrqRQYX1B9SXE9R1ixpXz9jIl3H5VGNlOsNQHPrJ2HxbHbtkgRJg
-X-Received: by 10.36.65.161 with SMTP id b33mr204363itd.114.1485383669681;
- Wed, 25 Jan 2017 14:34:29 -0800 (PST)
+        id S1752571AbdAYWfl (ORCPT <rfc822;e@80x24.org>);
+        Wed, 25 Jan 2017 17:35:41 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:59389 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1752366AbdAYWfk (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 Jan 2017 17:35:40 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id BA98A6401F;
+        Wed, 25 Jan 2017 17:35:38 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=P4xYqluh+bVJH1z16gcZkwsOER8=; b=WnUO/1
+        KxMG0bjEu4EZQJ89vHEfFEi+CKvYuRGN1AKZCp8YXbfCfiLwQBDBuIwG/DO2G+oc
+        oQihFWA3ep0WnD+u1N4EtSrjQb354zWtHJWA8nTrnk0lEb6dFx3RR2O140BujnZf
+        4rZfbAtZfwGjDLbHF+d6jAki7JzdcECEsgbtc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=FDodawXdlS1ufTxfEmKbi/2ojy3Zl5Dc
+        iar75s4bTxODAmWn2+VR8mDkGzTK4UvzkFkacihnPo0nNaTvqRWxu/wuURJ3nO3N
+        WScYhbZDuQLXy0AKga/+IwUBVHPehSvA1KseYP3uF+ymrT+iZyjn6bOfO3vD/7Ff
+        1HLumSbCrtM=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id B1F486401E;
+        Wed, 25 Jan 2017 17:35:38 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 12E046401D;
+        Wed, 25 Jan 2017 17:35:38 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     git@vger.kernel.org, Segev Finer <segev208@gmail.com>
+Subject: Re: [PATCH] connect: handle putty/plink also in GIT_SSH_COMMAND
+References: <2ff29a4d00e0e13d460122d8008e762361ca90aa.1483358673.git.johannes.schindelin@gmx.de>
+        <xmqqy3ym1dsc.fsf@gitster.mtv.corp.google.com>
+        <xmqq4m1911mf.fsf@gitster.mtv.corp.google.com>
+        <alpine.DEB.2.20.1701090825510.3469@virtualbox>
+        <xmqqh958y44c.fsf@gitster.mtv.corp.google.com>
+        <alpine.DEB.2.20.1701091207480.3469@virtualbox>
+        <xmqqmvf0wc2h.fsf@gitster.mtv.corp.google.com>
+        <alpine.DEB.2.20.1701251327090.3469@virtualbox>
+Date:   Wed, 25 Jan 2017 14:35:36 -0800
+In-Reply-To: <alpine.DEB.2.20.1701251327090.3469@virtualbox> (Johannes
+        Schindelin's message of "Wed, 25 Jan 2017 13:34:21 +0100 (CET)")
+Message-ID: <xmqqinp2939j.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.79.39.19 with HTTP; Wed, 25 Jan 2017 14:34:29 -0800 (PST)
-In-Reply-To: <20170125222627.jlswvwmzli62fnnt@sigill.intra.peff.net>
-References: <20170125215931.26339-1-sbeller@google.com> <20170125220632.whjnpvrnhve2h6f6@sigill.intra.peff.net>
- <CAGZ79kb_g5Wq=Aeo1RH-iA5M-drU5Gm1LAJZuPZU7oe=xdHaOQ@mail.gmail.com> <20170125222627.jlswvwmzli62fnnt@sigill.intra.peff.net>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Wed, 25 Jan 2017 14:34:29 -0800
-Message-ID: <CAGZ79kbC=1MCYXR+p1=6=2A5Uxoyndp8YFiRmaBJFLEW21kgXQ@mail.gmail.com>
-Subject: Re: [PATCH] Add more proposals to SoC 2017 ideas page. (lots of
- submodule stuff)
-To:     Jeff King <peff@peff.net>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
+X-Pobox-Relay-ID: 98259AF6-E34E-11E6-BDF5-FE3F13518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jan 25, 2017 at 2:26 PM, Jeff King <peff@peff.net> wrote:
-> On Wed, Jan 25, 2017 at 02:11:15PM -0800, Stefan Beller wrote:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+
+> Now, with the patch in question (without the follow-up, which I would like
+> to ask you to ignore, just like you did so far), Git would not figure out
+> that your script calls PuTTY eventually. The work-around? Easy:
 >
->> > Thanks. I've applied and pushed, though I'll admit I didn't really read
->> > it carefully for content. A few of the ideas look like they would need
->> > to be aggregated to be big enough for a SoC project, but that can be
->> > fleshed out in future patches (i.e., I don't think we care enough about
->> > history to have people polish and re-roll what are essentially wiki
->> > edits).
->>
->> Yeah, I wasn't sure if the ideas were meant to also contain microprojects
->> so I wrote down everything that came to mind, that I do not intend to work on
->> myself over the next couple month.
->
-> Microprojects go on their own page. But make sure that they really are
-> "micro" sized for an applicant.
+> 	DUMMY=/plink.exe /path/to/junio-is-a-superstar.sh
 
-Yeah micro as in real micro.
-e.g. fix the SubmittingPatches doc, after confusion about "signing",
-start reading here
-https://public-inbox.org/git/923cd4e4-5c9c-4eaf-0fea-6deff6875b88@tngtech.com/
+Think about how you would explain that to an end-user in our
+document?  You'll need to explain how exactly the auto-detection
+works, so that the user can "exploit" the loophole to do that.  And
+what maintenance burden does it add when auto-detection is updated?
 
-(I did not push it, as I'd need to copy over the micro projects page from 2016,
-and then find out where to put links to have the web page not look broken)
+I think I know you well enough that you know well enough that it is
+too ugly to live, and I suspect that the above is a tongue-in-cheek
+"arguing for the sake of argument" and would not need a serious
+response, but just in case...
 
-Thanks,
-Stefan
+> ...
+> Of course, given our discussion I think all of this should be documented
+> in the commit message as well as in the man page.
+
+Yes.  Here is what comes on an obvious clean-up patch (which will be
+sent as a follow-up to this message).
+
+-- >8 --
+Subject: [PATCH] connect: core.sshvariant to correct misidentification
+
+While the logic we have been using to guess which variant of SSH
+implementation is in use by looking at the name of the program has
+been robust enough for GIT_SSH (which does not go through the shell,
+hence it can only spell the name the SSH program and nothing else),
+extending it to GIT_SSH_COMMAND and core.sshcommand opens it for
+larger chance of misidentification, because these can specify
+arbitrary shell command, and a simple "the first word on the line
+must be the command name" heuristic may not even look at the command
+name at all.
+
+As any effort to improve the heuristic will give us only diminishing
+returns, and especially given that most of the users are expected to
+have a command line for which the heuristic would work correctly,
+give an explicit escape hatch to override a misidentification, just
+in case one happens.
+
+It is arguably bad to add this new variable to the core.* set, in
+the sense that you'll never see this variable if you do not interact
+with other repositories over ssh, but core.sshcommand is already
+there for some reason, so let's match it.
+
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ Documentation/config.txt | 13 +++++++++++++
+ connect.c                | 26 ++++++++++++++++++++++++++
+ 2 files changed, 39 insertions(+)
+
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index af2ae4cc02..8ea1db49c6 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -455,6 +455,19 @@ core.sshCommand::
+ 	the `GIT_SSH_COMMAND` environment variable and is overridden
+ 	when the environment variable is set.
+ 
++core.sshVariant::
++	SSH implementations used by Git when running `git fetch`,
++	`git clone`, and `git push` use slightly different command
++	line options (e.g. PuTTY and TortoisePlink use `-P <port>`
++	while OpenSSH uses `-p <port>` to specify the port number.
++	TortoisePlink in addition requires `-batch` option to be
++	passed).  Git guesses which variant is in use correctly from
++	the name of the ssh command used (see `core.sshCommand`
++	configuration variable and also `GIT_SSH_COMMAND`
++	environment variable) most of the time.  You can set this
++	variable to 'putty', 'tortoiseplink', or 'ssh' to correct it
++	when Git makes an incorrect guess.
++
+ core.ignoreStat::
+ 	If true, Git will avoid using lstat() calls to detect if files have
+ 	changed by setting the "assume-unchanged" bit for those tracked files
+diff --git a/connect.c b/connect.c
+index aa51b33bfc..358e9c06f0 100644
+--- a/connect.c
++++ b/connect.c
+@@ -691,6 +691,29 @@ static const char *get_ssh_command(void)
+ 	return NULL;
+ }
+ 
++static void override_ssh_variant(int *port_option, int *needs_batch)
++{
++	const char *variant;
++
++	if (git_config_get_string_const("core.sshvariant", &variant))
++		return;
++	if (!strcmp(variant, "tortoiseplink")) {
++		*port_option = 'P';
++		*needs_batch = 1;
++	} else if (!strcmp(variant, "putty")) {
++		*port_option = 'P';
++		*needs_batch = 0;
++	} else {
++		/* default */
++		if (strcmp(variant, "ssh")) {
++			warning(_("core.sshvariant: unknown value '%s'"), variant);
++			warning(_("using OpenSSH compatible behaviour"));
++		}
++		*port_option = 'p';
++		*needs_batch = 0;
++	}
++}
++
+ /*
+  * This returns a dummy child_process if the transport protocol does not
+  * need fork(2), or a struct child_process object if it does.  Once done,
+@@ -836,6 +859,9 @@ struct child_process *git_connect(int fd[2], const char *url,
+ 				argv_array_push(&conn->args, "-4");
+ 			else if (flags & CONNECT_IPV6)
+ 				argv_array_push(&conn->args, "-6");
++
++			override_ssh_variant(&port_option, &needs_batch);
++
+ 			if (needs_batch)
+ 				argv_array_push(&conn->args, "-batch");
+ 			if (port) {
+-- 
+2.11.0-699-ga1f1475476
+
+
+
