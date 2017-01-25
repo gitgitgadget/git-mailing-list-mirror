@@ -2,108 +2,119 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 05B5F1F6DC
-	for <e@80x24.org>; Wed, 25 Jan 2017 19:47:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AEBC51F6DC
+	for <e@80x24.org>; Wed, 25 Jan 2017 19:51:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751610AbdAYTrq (ORCPT <rfc822;e@80x24.org>);
-        Wed, 25 Jan 2017 14:47:46 -0500
-Received: from cloud.peff.net ([104.130.231.41]:44690 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751056AbdAYTrq (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 Jan 2017 14:47:46 -0500
-Received: (qmail 29810 invoked by uid 109); 25 Jan 2017 19:47:45 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 25 Jan 2017 19:47:45 +0000
-Received: (qmail 15049 invoked by uid 111); 25 Jan 2017 19:47:45 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 25 Jan 2017 14:47:45 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 25 Jan 2017 14:47:43 -0500
-Date:   Wed, 25 Jan 2017 14:47:43 -0500
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
+        id S1752026AbdAYTvW (ORCPT <rfc822;e@80x24.org>);
+        Wed, 25 Jan 2017 14:51:22 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:51421 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751667AbdAYTvV (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 Jan 2017 14:51:21 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id E3A8263DFA;
+        Wed, 25 Jan 2017 14:51:19 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=MwTyUksPP9L5b0QL6by5pFN5PFM=; b=YBKoow
+        NzRYo8ICuv2zNMT0r4ijkOZ3LbqR2ej6BhrjT7Lb3DEAccXH3cJiEO8QQyvfv95u
+        igVOWt0IhXKeb7XMlYIjix5GoudJXJTk6TtyiADLHb5XGQm28yO9P+dAcGMdqEAR
+        HIsrC6LCcuB4juh9XQZztyTyzH9et16VK3hsk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=kVfrSFRMbDP2qqjD+JF4pvmkyl9Ah0dR
+        8EB5vitbwJHU6k/nRe04GBmssrrYPEZmIsNzsVjDYc96WkmGOLnC4UOPhc427kOy
+        WHo+dvlK750n/oeKZcfiy15+m+rjh5x/zWpVUa4pnxFGOrROaf6U/0Nj9xb8TCZ9
+        kthPlcSo4YA=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id D9D6263DF9;
+        Wed, 25 Jan 2017 14:51:19 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id E0CA163DF8;
+        Wed, 25 Jan 2017 14:51:18 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
 Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 07/12] fetch-pack: cache results of for_each_alternate_ref
-Message-ID: <20170125194743.5dl5cypyoeciqcyq@sigill.intra.peff.net>
+Subject: Re: [PATCH 11/12] receive-pack: treat namespace .have lines like alternates
 References: <20170124003729.j4ygjcgypdq7hceg@sigill.intra.peff.net>
- <20170124004559.vlsrwwphuzdsfqoq@sigill.intra.peff.net>
- <xmqqinp3aqu0.fsf@gitster.mtv.corp.google.com>
+        <20170124004805.nu3w47isrb4bxgi5@sigill.intra.peff.net>
+Date:   Wed, 25 Jan 2017 11:51:17 -0800
+In-Reply-To: <20170124004805.nu3w47isrb4bxgi5@sigill.intra.peff.net> (Jeff
+        King's message of "Mon, 23 Jan 2017 19:48:05 -0500")
+Message-ID: <xmqqa8aec40a.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqinp3aqu0.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: A3A4852A-E337-11E6-B76A-FE3F13518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jan 25, 2017 at 11:21:11AM -0800, Junio C Hamano wrote:
+Jeff King <peff@peff.net> writes:
 
-> > diff --git a/object.h b/object.h
-> > index 614a00675..f52957dcb 100644
-> > --- a/object.h
-> > +++ b/object.h
-> > @@ -29,7 +29,7 @@ struct object_array {
-> >  /*
-> >   * object flag allocation:
-> >   * revision.h:      0---------10                                26
-> > - * fetch-pack.c:    0---4
-> > + * fetch-pack.c:    0---5
-> >   * walker.c:        0-2
-> >   * upload-pack.c:       4       11----------------19
-> >   * builtin/blame.c:               12-13
-> 
-> This is a tangent, but I am not sure how much it buys us to keep
-> track of the information here in object.h, as all that picture says
-> is "revision traversal machinery given by revision.[ch] can never be
-> used inside fetch-pack and upload-pack", and that is already said by
-> the current picture that says fetch-pack.c uses 0 thru 4, and
-> updating it to say that we now use 0 thru 5 would not change the
-> conclusion.
+> Namely, de-duplicate them. We use the same set as the
+> alternates, since we call them both ".have" (i.e., there is
+> no value in showing one versus the other).
+>
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+>  builtin/receive-pack.c | 10 +++++++---
+>  1 file changed, 7 insertions(+), 3 deletions(-)
+>
+> diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+> index 8f8762e4a..c55e2f993 100644
+> --- a/builtin/receive-pack.c
+> +++ b/builtin/receive-pack.c
+> @@ -251,8 +251,9 @@ static void show_ref(const char *path, const unsigned char *sha1)
+>  }
+>  
+>  static int show_ref_cb(const char *path_full, const struct object_id *oid,
+> -		       int flag, void *unused)
+> +		       int flag, void *data)
+>  {
+> +	struct oidset *seen = data;
+>  	const char *path = strip_namespace(path_full);
+>  
+>  	if (ref_is_hidden(path, path_full))
+> @@ -263,8 +264,11 @@ static int show_ref_cb(const char *path_full, const struct object_id *oid,
+>  	 * refs, so that the client can use them to minimize data
+>  	 * transfer but will otherwise ignore them.
+>  	 */
+> -	if (!path)
+> +	if (!path) {
+> +		if (oidset_insert(seen, oid))
+> +			return 0;
+>  		path = ".have";
+> +	}
 
-I agree that bumping 4 to 5 does not help at all, given the current
-allocations. But it could eventually, if another allocation wanted to
-pick up 5, and might plausibly be used together with fetch-pack.
+This is very sensible as an optimization that does not change
+semantics.
 
-The main thing is that we should keep this up to date, and that it
-should cause textual conflicts when two topics update the allocation, so
-that a human looks at it. I actually think we fail at the latter,
-because a change to revision.h to use bit 20 would probably get
-auto-resolved against a change to allocate the same bit to blame.c.
+This is an unrelated tangent, but there may want to be a knob to
+make the code return here without even showing, to make the
+advertisement even smaller and also to stop miniscule information
+leakage?  If the namespaced multiple projects are totally unrelated
+(i.e. "My sysadmin gave me a write access only to this single
+directory, so I am using the namespace feature to host these three
+projects that have nothing to do with each other"), showing objects
+of other namespaces will buy us nothing and the user is better off
+without this code showing these refs as ".have".
 
-Probably a better organization is:
-
-  bit 0: revision.h, fetch-pack.c, walker.c
-  bit 1: revision.h, fetch-pack.c, walker.c
-  ...
-  bit 10: revision.h
-  bit 11: upload-pack.c
-
-and so forth. It's more tedious to read and write, but any two changes
-to the same bit would be forced to generate a conflict (assuming a
-line-oriented merge, of course :) ).
-
-> What I am trying to get at is that we may want to (re)consider how
-> we manage these bits.  But that is totally outside the scope of this
-> series, and updating the above is the right thing to do here.
-
-Perhaps you meant something like the above when you said this. But what
-I'd _really_ love is to stop using global bits entirely, and have some
-way to allocate a bitset and efficiently convert "struct object" to an
-index into the bitset. Then cleaning up just becomes throwing out your
-bitset, and by default operations do not see the bits from other
-unrelated operations. That makes it impossible to have bugs like the one
-fixed by 5c08dc48a (checkout: clear commit marks after detached-orphan
-check, 2011-03-20).
-
-I can't think of a way to do that efficiently besides something like the
-commit-slab system, but extended to all objects. The lookups there are
-fairly cheap, though it does have worse cache performance. I don't know
-if that would matter in practice or not.
-
-But yeah, definitely outside the scope of this series. :)
-
--Peff
+>  	show_ref(path, oid->hash);
+>  	return 0;
+>  }
+> @@ -287,7 +291,7 @@ static void write_head_info(void)
+>  
+>  	for_each_alternate_ref(show_one_alternate_ref, &seen);
+>  	oidset_clear(&seen);
+> -	for_each_ref(show_ref_cb, NULL);
+> +	for_each_ref(show_ref_cb, &seen);
+>  	if (!sent_capabilities)
+>  		show_ref("capabilities^{}", null_sha1);
