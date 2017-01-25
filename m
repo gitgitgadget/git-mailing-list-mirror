@@ -2,90 +2,71 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.4 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8643E1F6DC
-	for <e@80x24.org>; Wed, 25 Jan 2017 23:40:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2C5EE1F6DC
+	for <e@80x24.org>; Wed, 25 Jan 2017 23:40:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751930AbdAYXj6 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 25 Jan 2017 18:39:58 -0500
-Received: from mail-pf0-f170.google.com ([209.85.192.170]:35772 "EHLO
-        mail-pf0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751203AbdAYXj5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 Jan 2017 18:39:57 -0500
-Received: by mail-pf0-f170.google.com with SMTP id f144so61451662pfa.2
-        for <git@vger.kernel.org>; Wed, 25 Jan 2017 15:39:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=FW2jRXDq9g1/B3EFh2gFtnTEGxCegoyA7to4tvuWe4w=;
-        b=Flo5ys+clt3Siar/t3meVJU8F0GqEEd/p+dNuzsVAP2EYd1TMLHYReI1IlxRIrMwTz
-         4cc/ZLmsKziBQ7GWy18RDuydI6u5Y/ZBCgtIxu8HmA1WcHFiTT5p+4KS6KuDACgRHG02
-         dysd08aQgUlZTJYkKJN7KRK2oUW5/SVrt0sCoXVp1OSkmVHae9++cxrOjChrkprSB9R5
-         8CW+GfCDqSVhnUC6SvcjS2LlaP8GwUmehEghbPtPQRpT2at9VLivZRFjjBOWUWdOaM3T
-         8+HEXJZuX6x/MXIr8cxkgAdME76dLyBAPynTO/F/dzGHBzb69zDyeX/ihmOeSukl+8YS
-         Et7g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=FW2jRXDq9g1/B3EFh2gFtnTEGxCegoyA7to4tvuWe4w=;
-        b=k2p5uedEJ36mOSe8xfKw9ZwGk2hLMqSgOZQW2YJC/k6nZ5agiqI8CcnT1AwRLEx+Mn
-         WNGR/M+WzRCz600BGpA4BexSBpoXUKicY2VV7XiD0h3YnFzZHw+0fQZ3jk5AHHndT8W9
-         EjeT4KiVllSVQoe9hbid6UhFsD1gMCjKIqDxvGrruJyvlgcJK6iDXp2i0PbtMFmWeSMQ
-         Afsb9d/SckA190tc9SOv0U7WU8NcltKR+3eI195xzkuJLIt+20pA1K3JZ5T87C9WwLeQ
-         RvXBEf7H0/YbH83sokd+499qcCEbVviHTtdbOJev3boJcDpeDBZjh5Gbl/sr6Yfup9UU
-         0aXQ==
-X-Gm-Message-State: AIkVDXI7B9LgIzjl5Z962AaFV/Dud9FpXxVX5qmsn2pK+Y/xQUcDP7dUhXF3ey+eoZfGq0Ah
-X-Received: by 10.99.112.6 with SMTP id l6mr2077320pgc.33.1485387597113;
-        Wed, 25 Jan 2017 15:39:57 -0800 (PST)
-Received: from google.com ([2620:0:1000:5b10:d901:f11e:e93:985])
-        by smtp.gmail.com with ESMTPSA id u124sm3601304pgb.6.2017.01.25.15.39.55
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 25 Jan 2017 15:39:55 -0800 (PST)
-Date:   Wed, 25 Jan 2017 15:39:54 -0800
-From:   Brandon Williams <bmwill@google.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     gitster@pobox.com, git@vger.kernel.org, peff@peff.net
-Subject: Re: [PATCHv3 3/3] submodule absorbing: fix worktree/gitdir pointers
- recursively for non-moves
-Message-ID: <20170125233954.GD83343@google.com>
-References: <xmqq37g692da.fsf@gitster.mtv.corp.google.com>
- <20170125230450.4393-1-sbeller@google.com>
+        id S1751632AbdAYXkt convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Wed, 25 Jan 2017 18:40:49 -0500
+Received: from zimbra-vnc.tngtech.com ([83.144.240.98]:5780 "EHLO
+        proxy.tng.vnc.biz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750823AbdAYXkt (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 Jan 2017 18:40:49 -0500
+Received: from localhost (localhost [127.0.0.1])
+        by proxy.tng.vnc.biz (Postfix) with ESMTP id 1464F1E3830;
+        Thu, 26 Jan 2017 00:40:46 +0100 (CET)
+Received: from proxy.tng.vnc.biz ([127.0.0.1])
+        by localhost (proxy.tng.vnc.biz [127.0.0.1]) (amavisd-new, port 10032)
+        with ESMTP id t6nQ9wt9Q1Ba; Thu, 26 Jan 2017 00:40:45 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+        by proxy.tng.vnc.biz (Postfix) with ESMTP id C91C01E3838;
+        Thu, 26 Jan 2017 00:40:45 +0100 (CET)
+X-Virus-Scanned: amavisd-new at 
+Received: from proxy.tng.vnc.biz ([127.0.0.1])
+        by localhost (proxy.tng.vnc.biz [127.0.0.1]) (amavisd-new, port 10026)
+        with ESMTP id 3PALHTXyjDJ1; Thu, 26 Jan 2017 00:40:45 +0100 (CET)
+Received: from [192.168.178.28] (aftr-185-17-206-216.dynamic.mnet-online.de [185.17.206.216])
+        by proxy.tng.vnc.biz (Postfix) with ESMTPSA id 6A21A1E3830;
+        Thu, 26 Jan 2017 00:40:45 +0100 (CET)
+Subject: Re: [PATCH] tag: add tag.createReflog option
+To:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+References: <20170125001906.13916-1-cornelius.weig@tngtech.com>
+ <20170125180054.7mioop2o6uvqloyt@sigill.intra.peff.net>
+ <00712f81-e0ba-52e6-77bc-095a2ed706c4@tngtech.com>
+ <20170125213328.meehgxvzuajjgvag@sigill.intra.peff.net>
+ <xmqqpoja95o5.fsf@gitster.mtv.corp.google.com>
+ <xmqqy3xy7nq0.fsf@gitster.mtv.corp.google.com>
+Cc:     git@vger.kernel.org, novalis@novalis.org, pclouds@gmail.com
+From:   Cornelius Weig <cornelius.weig@tngtech.com>
+Message-ID: <5553094d-db87-4a04-cf02-5405b92a6224@tngtech.com>
+Date:   Thu, 26 Jan 2017 00:40:45 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.6.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20170125230450.4393-1-sbeller@google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <xmqqy3xy7nq0.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8BIT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 01/25, Stefan Beller wrote:
-> Consider having a submodule 'sub' and a nested submodule at 'sub/nested'.
-> When nested is already absorbed into sub, but sub is not absorbed into
-> its superproject, then we need to fixup the gitfile and core.worktree
-> setting for 'nested' when absorbing 'sub', but we do not need to move
-> its git dir around.
 > 
-> Previously 'nested's gitfile contained "gitdir: ../.git/modules/nested";
-> it has to be corrected to "gitdir: ../../.git/modules/sub1/modules/nested".
+> It may have been obvious, but to be explicit for somebody new,
+> !prefixcmp() corresponds to starts_with().  IOW, we changed the
+> meaning of the return value when moving from cmp-lookalike (where 0
+> means "equal") to "does it start with this string?" bool (where 1
+> means "yes").
 > 
-> An alternative I considered to do this work lazily, i.e. when resolving
-> "../.git/modules/nested", we would notice the ".git" being a gitfile
-> linking to another path.  That seemed to be robuster by design, but harder
-> to get the implementation right.  Maybe we have to do that anyway once we
-> try to have submodules and worktrees working nicely together, but for now
-> just produce 'correct' (i.e. direct) pointers.
-> 
-> Signed-off-by: Stefan Beller <sbeller@google.com>
 
-Looks good to me!
+I see. It reads much better that way!
 
--- 
-Brandon Williams
+I re-did all the changes from Jeff's patch, but some tests are breaking
+now. I will have to mend that tomorrow, because it's already too late in
+my timezone.
+
+Thanks a lot for your support m(_ _)m
+
