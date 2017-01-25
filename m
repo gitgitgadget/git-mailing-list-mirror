@@ -6,72 +6,55 @@ X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AB24B1F6DC
-	for <e@80x24.org>; Wed, 25 Jan 2017 18:39:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 70BA71F6DC
+	for <e@80x24.org>; Wed, 25 Jan 2017 18:40:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752488AbdAYSjc (ORCPT <rfc822;e@80x24.org>);
-        Wed, 25 Jan 2017 13:39:32 -0500
-Received: from cloud.peff.net ([104.130.231.41]:44613 "EHLO cloud.peff.net"
+        id S1752270AbdAYSk3 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 25 Jan 2017 13:40:29 -0500
+Received: from cloud.peff.net ([104.130.231.41]:44618 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752384AbdAYSjb (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 Jan 2017 13:39:31 -0500
-Received: (qmail 25067 invoked by uid 109); 25 Jan 2017 18:39:26 -0000
+        id S1752030AbdAYSk2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 Jan 2017 13:40:28 -0500
+Received: (qmail 25152 invoked by uid 109); 25 Jan 2017 18:40:28 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 25 Jan 2017 18:39:26 +0000
-Received: (qmail 14166 invoked by uid 111); 25 Jan 2017 18:39:26 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 25 Jan 2017 18:40:28 +0000
+Received: (qmail 14186 invoked by uid 111); 25 Jan 2017 18:40:28 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 25 Jan 2017 13:39:26 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 25 Jan 2017 13:39:24 -0500
-Date:   Wed, 25 Jan 2017 13:39:24 -0500
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 25 Jan 2017 13:40:28 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 25 Jan 2017 13:40:26 -0500
+Date:   Wed, 25 Jan 2017 13:40:26 -0500
 From:   Jeff King <peff@peff.net>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        git <git@vger.kernel.org>
-Subject: Re: What's cooking in git.git (Jan 2017, #04; Mon, 23)
-Message-ID: <20170125183924.6yclcjl4ggcu42yp@sigill.intra.peff.net>
-References: <xmqqo9yxpaxk.fsf@gitster.mtv.corp.google.com>
- <0D956B23-E655-4C28-A205-14CCC0A7DEA2@gmail.com>
- <20170124132749.l3ezupyitvxe4t2l@sigill.intra.peff.net>
- <alpine.DEB.2.20.1701251800120.3469@virtualbox>
- <20170125173958.pg546a6w33dirp5k@sigill.intra.peff.net>
- <xmqq4m0nc8dz.fsf@gitster.mtv.corp.google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 03/12] for_each_alternate_ref: use strbuf for path
+ allocation
+Message-ID: <20170125184026.cm324yefycsrhhin@sigill.intra.peff.net>
+References: <20170124003729.j4ygjcgypdq7hceg@sigill.intra.peff.net>
+ <20170124004038.njjevfku4v7kmnh4@sigill.intra.peff.net>
+ <xmqqvat3at8u.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqq4m0nc8dz.fsf@gitster.mtv.corp.google.com>
+In-Reply-To: <xmqqvat3at8u.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jan 25, 2017 at 10:16:40AM -0800, Junio C Hamano wrote:
+On Wed, Jan 25, 2017 at 10:29:05AM -0800, Junio C Hamano wrote:
 
-> > But whatever the cause, I think the workaround I posted is
-> > easy enough to do.
+> Jeff King <peff@peff.net> writes:
 > 
-> Or spelling it explicitly as "/bin/mv" (forgetting systems that does
-> not have it in /bin but as /usr/bin/mv) would also defeat alias if
-> that were the cause.
+> > We have a string with ".../objects" pointing to the
+> > alternate object store, and overwrite bits of it to look at
+> > other paths in the (potential) git repository holding it.
+> > This works because the only path we care about is "refs",
+> > which is shorter than "objects".
+> 
+> Yup, this was probably copied from a lazy original I wrote ;-)
+> Thanks for cleaning up.
 
-Yes, but I think it's less tricky and unportable to write "mv -f" than
-"/bin/mv". So even if it _is_ a funny alias thing, I think my patch is
-the right fix.
-
-> One downside of working it around like your patch does, or spelling
-> it out as "/bin/mv", is that we'd need to worry about all the uses
-> of "mv" in our scripts.  If this were _only_ happening in the Travis
-> environment, I'd prefer to see why it happens only there and fix that
-> instead.
-
-I would be curious to know whether it is a funny thing in the Travis
-environment, or if some version of macOS "mv" really is that braindead
-(and it is just the case that Travis has that version and Lars's
-computer doesn't). I just didn't want to waste anybody's time digging
-into it if it won't affect our patch.
-
-I guess the way to dig would be to add a test that looks at the output
-of "type mv" or something, push it to a Travis-hooked branch, and then
-wait for the output
+To be fair, the original predates all of the helper functions I used
+here. :)
 
 -Peff
