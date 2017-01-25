@@ -2,57 +2,56 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-6.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E56931F6DC
-	for <e@80x24.org>; Wed, 25 Jan 2017 22:03:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 83FB61F6DC
+	for <e@80x24.org>; Wed, 25 Jan 2017 22:04:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752455AbdAYWDz (ORCPT <rfc822;e@80x24.org>);
-        Wed, 25 Jan 2017 17:03:55 -0500
-Received: from mail-pg0-f45.google.com ([74.125.83.45]:33270 "EHLO
-        mail-pg0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752087AbdAYWD0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 Jan 2017 17:03:26 -0500
-Received: by mail-pg0-f45.google.com with SMTP id 204so67749188pge.0
-        for <git@vger.kernel.org>; Wed, 25 Jan 2017 14:03:26 -0800 (PST)
+        id S1752452AbdAYWDw (ORCPT <rfc822;e@80x24.org>);
+        Wed, 25 Jan 2017 17:03:52 -0500
+Received: from mail-pg0-f52.google.com ([74.125.83.52]:36424 "EHLO
+        mail-pg0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750930AbdAYWD2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 Jan 2017 17:03:28 -0500
+Received: by mail-pg0-f52.google.com with SMTP id 3so9017116pgj.3
+        for <git@vger.kernel.org>; Wed, 25 Jan 2017 14:03:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :in-reply-to:references;
-        bh=qgnhQeY29uB5WiBYcNmhuMeRap6I6oPKnN9IrMFrbWQ=;
-        b=p6BXd+3pw1x1CRbC/q08eECM2NOrA9d+kNIg5bKnQY1sAAJMDWa5ImIFlCGJPQkEaR
-         LjQLCPP6s61RYZIfSdTj6PcB3CmZx1Zjp0u3lhpdR8B1YQDiy6j1teEhgRCvxIXwGcVi
-         sm8cOjEMfZHCZzv4TLuISJQVnTlTto3sR7+1axK+cWos97LEixlhCCJAf7ROQO9WjEJd
-         poM39kE9sQGha4PpK5o68uGMpYTOuAW6TaAD3BRplk5YQzsUY0QKoHgUdaE2xjrz07WN
-         oahD0pNJPoJ4gPpyvacB0/1e0bJr2h62sM1I4NLqFSfGUP4aBSfmmUTq7pQMZsoQC93J
-         Ph1A==
+        bh=sGPDxSH/KgXwSQFdmYBAePztFWVbMqHsEljVxyfMWvM=;
+        b=q7n1YAmtmdBNZZbglfElsCr+0TQ8+xh6+a/DnZ3vjKh36NEUCqQmWEYncqWqdu1GUa
+         b/H5FU3OUnE931PR/UtrgMEdSLtOAJpu2BJ9OdfqVGa1/TXRS1L+CWY0bzu7l4aurJLd
+         b+LooDgJS0TlSUdK87bBC6QQQSfTqrg6//r6urHRZJ2sx+RGIahTi+loWVIoVxiImnMR
+         8CcW0GE1vAL6UnGRVOxiSId9nh2zIQsWinR8ZvNyyYYxzTk4rw8orxkvhz5fUa+zOVOR
+         5YcBLZgNpJEc/uR9sZLULefn4nj7jDgoG01Rj4uscBt8VOfhDxikafT6IlxpODImXr6V
+         I39A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:in-reply-to:references;
-        bh=qgnhQeY29uB5WiBYcNmhuMeRap6I6oPKnN9IrMFrbWQ=;
-        b=oX+OjWokyKRNFBIR6KDsLuw1R3YoHREsFuUCx/mPoPqty/AJqfLkWM4iofcqX9zyxM
-         5MXnq3s+l8vXQz74O1ZHLnC0kv3DgxMOmMDfMgEOmHpFYAV1ZVGEFd9ou+LCV61LUStj
-         q0W2nOEq0LfWIqPQmHQhMvnpB4/gDMqbb6y9IzOTIxi2HAm2U1/uYOz2U4U341XJAyZa
-         sm2j6mvHzoPDV/uZm4wsSFniL6PxA8FQ+15Mc8AQAMLlWXNyH1LjGvQet6eco7vScHA3
-         lCKF1sq4z+0U9X2UVsXMPjdLWS6tfOJ8H9wLmg83+dwGC8n2StCMBdPb8PXGriJ4QDo4
-         Z9qg==
-X-Gm-Message-State: AIkVDXI7cUgUnPWXpjRbam4Jgoec+WbCb6f49jjGjDfvhuZUvt7iyZld+wjhQoBHNlgQIzsV
-X-Received: by 10.98.16.201 with SMTP id 70mr49167908pfq.25.1485381805686;
-        Wed, 25 Jan 2017 14:03:25 -0800 (PST)
+        bh=sGPDxSH/KgXwSQFdmYBAePztFWVbMqHsEljVxyfMWvM=;
+        b=BKANe5pxtEDh4p50sI4Z7dHvl0Dq7HFPdjAMU9q8Sbm5EPJM4vd+04n27ScdRW+ogK
+         AKAafUm33JJKwmuKiaxqDdW2RHhEOVhNatngbTdC542KkEMQd5BR1ysbQc/t/lkTO7Df
+         C6PBj6TFzxqUzjr6w4ES15zxO16G0TEiLOeUroYPCelKbRcdPMIlRLUTI70YnQNqOgS7
+         G6nQvaIgnZiC9e5TNvY/INH/OFR3LUu+TIfaiz7NhghmQzoc2Kf2mdTI6tKkA0ua/zTS
+         CiVQZ4lfr4HnI6i2Mtqrm0lWtafsthQ9UxHC1M1vmBhSc8rN0QeCFT9fLGYJz6xOK/2U
+         UMqg==
+X-Gm-Message-State: AIkVDXKYJsfW0+Hbj9htsu862+e6pq/HTVZlwkMz72MDjFTbpUl0u7S8diEkdrjsMPdf/qx+
+X-Received: by 10.99.101.65 with SMTP id z62mr1697917pgb.74.1485381807289;
+        Wed, 25 Jan 2017 14:03:27 -0800 (PST)
 Received: from twelve2.mtv.corp.google.com ([100.96.238.13])
-        by smtp.gmail.com with ESMTPSA id o24sm3357308pfj.78.2017.01.25.14.03.24
+        by smtp.gmail.com with ESMTPSA id o24sm3357308pfj.78.2017.01.25.14.03.26
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 25 Jan 2017 14:03:25 -0800 (PST)
+        Wed, 25 Jan 2017 14:03:26 -0800 (PST)
 From:   Jonathan Tan <jonathantanmy@google.com>
 To:     git@vger.kernel.org
 Cc:     Jonathan Tan <jonathantanmy@google.com>
-Subject: [RFC 08/14] fetch-pack: check returned refs for matches
-Date:   Wed, 25 Jan 2017 14:03:01 -0800
-Message-Id: <b722c0e310305a7eb4013209122db3a0c7b2052c.1485381677.git.jonathantanmy@google.com>
+Subject: [RFC 10/14] fetch-pack: support partial names and globs
+Date:   Wed, 25 Jan 2017 14:03:03 -0800
+Message-Id: <8e8ff3cbd7276233e712b4d0049e709c2372cfd7.1485381677.git.jonathantanmy@google.com>
 X-Mailer: git-send-email 2.11.0.483.g087da7b7c-goog
 In-Reply-To: <cover.1485381677.git.jonathantanmy@google.com>
 References: <cover.1485381677.git.jonathantanmy@google.com>
@@ -63,124 +62,256 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Instead of setting "matched" on matched refs, detect matches by checking
-the sought refs against the returned refs.  Also, since the "matched"
-field in struct ref is now no longer used, remove it.
+Teach fetch-pack to support partial ref names and ref patterns as input.
 
-This is the 2nd of 3 patches to eliminate using input refs to
-communicate information obtained by the fetch mechanism.
-
-(There are possibly ways more efficient than a nested for loop to
-accomplish this. However, since a subsequent patch will compare the
-user-provided refspecs against the fetched refs directly, and thus
-necessitating the nested for loop anyway, I decided to use the nested
-for loop in this patch.)
+This does not use "want-ref" yet - support for that will be added in a
+future patch.
 
 Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
 ---
- builtin/fetch-pack.c | 7 ++++++-
- fetch-pack.c         | 9 ++++++---
- fetch-pack.h         | 2 --
- remote.h             | 3 +--
- 4 files changed, 13 insertions(+), 8 deletions(-)
+ builtin/fetch-pack.c  | 40 ++++++++++++-------------------------
+ remote.c              | 55 +++++++++++++++++++++++++++++++++++++++++++++++++++
+ remote.h              | 16 +++++++++++++++
+ t/t5500-fetch-pack.sh | 38 +++++++++++++++++++++++++++++++++++
+ 4 files changed, 122 insertions(+), 27 deletions(-)
 
 diff --git a/builtin/fetch-pack.c b/builtin/fetch-pack.c
-index cfe9e447c..f31f874a0 100644
+index a18fd0c44..5f14242ae 100644
 --- a/builtin/fetch-pack.c
 +++ b/builtin/fetch-pack.c
-@@ -4,6 +4,7 @@
- #include "remote.h"
- #include "connect.h"
- #include "sha1-array.h"
-+#include "refs.h"
+@@ -11,32 +11,12 @@ static const char fetch_pack_usage[] =
+ "[--include-tag] [--upload-pack=<git-upload-pack>] [--depth=<n>] "
+ "[--no-progress] [--diag-url] [-v] [<host>:]<directory> [<refs>...]";
  
- static const char fetch_pack_usage[] =
- "git fetch-pack [--all] [--stdin] [--quiet | -q] [--keep | -k] [--thin] "
-@@ -220,7 +221,11 @@ int cmd_fetch_pack(int argc, const char **argv, const char *prefix)
- 	 * an error.
- 	 */
- 	for (i = 0; i < nr_sought; i++) {
--		if (!sought[i] || sought[i]->matched)
-+		struct ref *r;
-+		for (r = ref; r; r = r->next)
-+			if (!sought[i] || refname_match(sought[i]->name, r->name))
-+				break;
-+		if (r)
- 			continue;
- 		error("no such remote ref %s", sought[i]->name);
- 		ret = 1;
-diff --git a/fetch-pack.c b/fetch-pack.c
-index 9a87ddd3d..d4642b05c 100644
---- a/fetch-pack.c
-+++ b/fetch-pack.c
-@@ -562,6 +562,7 @@ static void filter_refs(struct fetch_pack_args *args,
- 	struct ref **newtail = &newlist;
- 	struct ref *ref, *next;
- 	int i;
-+	int *matched = xcalloc(nr_sought, sizeof(*matched));
- 
- 	i = 0;
- 	for (ref = *refs; ref; ref = next) {
-@@ -578,7 +579,7 @@ static void filter_refs(struct fetch_pack_args *args,
- 					break; /* definitely do not have it */
- 				else if (cmp == 0) {
- 					keep = 1; /* definitely have it */
--					sought[i]->matched = 1;
-+					matched[i] = 1;
- 				}
- 				i++;
- 			}
-@@ -604,19 +605,21 @@ static void filter_refs(struct fetch_pack_args *args,
- 			unsigned char sha1[20];
- 
- 			ref = sought[i];
--			if (ref->matched)
-+			if (matched[i])
- 				continue;
- 			if (get_sha1_hex(ref->name, sha1) ||
- 			    ref->name[40] != '\0' ||
- 			    hashcmp(sha1, ref->old_oid.hash))
- 				continue;
- 
--			ref->matched = 1;
-+			matched[i] = 1;
- 			*newtail = copy_ref(ref);
- 			newtail = &(*newtail)->next;
- 		}
- 	}
- 	*refs = newlist;
-+
-+	free(matched);
+-static void add_sought_entry(const struct ref ***sought, int *nr, int *alloc,
++static void add_sought_entry(struct refspec **sought, int *nr, int *alloc,
+ 			     const char *name)
+ {
+-	struct ref *ref;
+-	struct object_id oid;
+-
+-	if (!get_oid_hex(name, &oid)) {
+-		if (name[GIT_SHA1_HEXSZ] == ' ') {
+-			/* <sha1> <ref>, find refname */
+-			name += GIT_SHA1_HEXSZ + 1;
+-		} else if (name[GIT_SHA1_HEXSZ] == '\0') {
+-			; /* <sha1>, leave sha1 as name */
+-		} else {
+-			/* <ref>, clear cruft from oid */
+-			oidclr(&oid);
+-		}
+-	} else {
+-		/* <ref>, clear cruft from get_oid_hex */
+-		oidclr(&oid);
+-	}
+-
+-	ref = alloc_ref(name);
+-	oidcpy(&ref->old_oid, &oid);
+ 	(*nr)++;
+ 	ALLOC_GROW(*sought, *nr, *alloc);
+-	(*sought)[*nr - 1] = ref;
++	parse_ref_or_pattern(&(*sought)[*nr - 1], name);
  }
  
- static void mark_alternate_complete(const struct ref *ref, void *unused)
-diff --git a/fetch-pack.h b/fetch-pack.h
-index c912e3d32..76f7c719c 100644
---- a/fetch-pack.h
-+++ b/fetch-pack.h
-@@ -33,8 +33,6 @@ struct fetch_pack_args {
+ int cmd_fetch_pack(int argc, const char **argv, const char *prefix)
+@@ -44,8 +24,10 @@ int cmd_fetch_pack(int argc, const char **argv, const char *prefix)
+ 	int i, ret;
+ 	struct ref *ref = NULL;
+ 	const char *dest = NULL;
+-	const struct ref **sought = NULL;
++	struct refspec *sought = NULL;
+ 	int nr_sought = 0, alloc_sought = 0;
++	const struct ref **sought_refs;
++	int nr_sought_refs;
+ 	int fd[2];
+ 	char *pack_lockfile = NULL;
+ 	char **pack_lockfile_ptr = NULL;
+@@ -195,8 +177,9 @@ int cmd_fetch_pack(int argc, const char **argv, const char *prefix)
+ 			return args.diag_url ? 0 : 1;
+ 	}
+ 	get_remote_heads(fd[0], NULL, 0, &ref, 0, NULL, &shallow);
++	get_ref_array(&sought_refs, &nr_sought_refs, ref, sought, nr_sought);
  
- /*
-  * sought represents remote references that should be updated from.
-- * On return, the names that were found on the remote will have been
-- * marked as such.
-  */
- struct ref *fetch_pack(struct fetch_pack_args *args,
- 		       int fd[], struct child_process *conn,
+-	ref = fetch_pack(&args, fd, conn, ref, dest, sought, nr_sought,
++	ref = fetch_pack(&args, fd, conn, ref, dest, sought_refs, nr_sought_refs,
+ 			 &shallow, pack_lockfile_ptr);
+ 	if (pack_lockfile) {
+ 		printf("lock %s\n", pack_lockfile);
+@@ -222,12 +205,15 @@ int cmd_fetch_pack(int argc, const char **argv, const char *prefix)
+ 	 */
+ 	for (i = 0; i < nr_sought; i++) {
+ 		struct ref *r;
+-		for (r = ref; r; r = r->next)
+-			if (!sought[i] || refname_match(sought[i]->name, r->name))
++		if (sought[i].pattern)
++			continue; /* patterns do not need to match anything */
++		for (r = ref; r; r = r->next) {
++			if (refname_match(sought[i].src, r->name))
+ 				break;
++		}
+ 		if (r)
+ 			continue;
+-		error("no such remote ref %s", sought[i]->name);
++		error("no such remote ref %s", sought[i].src);
+ 		ret = 1;
+ 	}
+ 
+diff --git a/remote.c b/remote.c
+index 725a2d39a..08f3c910e 100644
+--- a/remote.c
++++ b/remote.c
+@@ -612,6 +612,39 @@ static struct refspec *parse_refspec_internal(int nr_refspec, const char **refsp
+ 	die("Invalid refspec '%s'", refspec[i]);
+ }
+ 
++void parse_ref_or_pattern(struct refspec *refspec, const char *str)
++{
++	struct object_id oid;
++	memset(refspec, 0, sizeof(*refspec));
++
++	if (!get_oid_hex(str, &oid)) {
++		if (str[GIT_SHA1_HEXSZ] == ' ') {
++			struct object_id oid2;
++			/* <sha1> <ref>, find refname */
++			refspec->src = xstrdup(str + GIT_SHA1_HEXSZ + 1);
++			if (!get_oid_hex(refspec->src, &oid2)
++			    && !oidcmp(&oid, &oid2))
++				/* The name is actually a SHA-1 */
++				refspec->exact_sha1 = 1;
++		} else if (str[GIT_SHA1_HEXSZ] == '\0') {
++			; /* <sha1>, leave sha1 as name */
++			refspec->src = xstrdup(str);
++			refspec->exact_sha1 = 1;
++		} else {
++			/* <ref> */
++			refspec->src = xstrdup(str);
++		}
++	} else {
++		/* <ref> */
++		refspec->src = xstrdup(str);
++	}
++
++	if (has_glob_specials(refspec->src)) {
++		refspec->pattern = 1;
++		refspec->dst = refspec->src;
++	}
++}
++
+ int valid_fetch_refspec(const char *fetch_refspec_str)
+ {
+ 	struct refspec *refspec;
+@@ -1924,6 +1957,28 @@ int get_fetch_map(const struct ref *remote_refs,
+ 	return 0;
+ }
+ 
++void get_ref_array(const struct ref ***refs, int *nr_ref,
++		   const struct ref *remote_refs,
++		   const struct refspec *refspecs, int nr_refspecs)
++{
++	struct ref *head = NULL, **tail = &head;
++	const struct ref **array = NULL;
++	int nr = 0, alloc = 0;
++
++	struct ref *r;
++	int i;
++
++	for (i = 0; i < nr_refspecs; i++)
++		get_fetch_map(remote_refs, &refspecs[i], &tail, 1);
++	for (r = head; r; r = r->next) {
++		nr++;
++		ALLOC_GROW(array, nr, alloc);
++		array[nr - 1] = r;
++	}
++	*refs = array;
++	*nr_ref = nr;
++}
++
+ int resolve_remote_symref(struct ref *ref, struct ref *list)
+ {
+ 	if (!ref->symref)
 diff --git a/remote.h b/remote.h
-index 57d059431..2f7f23d47 100644
+index 2f7f23d47..daca1c65e 100644
 --- a/remote.h
 +++ b/remote.h
-@@ -89,8 +89,7 @@ struct ref {
- 		force:1,
- 		forced_update:1,
- 		expect_old_sha1:1,
--		deletion:1,
--		matched:1;
-+		deletion:1;
+@@ -162,6 +162,13 @@ int ref_newer(const struct object_id *new_oid, const struct object_id *old_oid);
+  */
+ struct ref *ref_remove_duplicates(struct ref *ref_map);
  
- 	/*
- 	 * Order is important here, as we write to FETCH_HEAD
++/*
++ * Parse the given ref or ref pattern. If a ref, write a refspec with that ref
++ * as src, and with an empty dst. If a ref pattern, write a glob refspec with
++ * that pattern as src and dst.
++ */
++void parse_ref_or_pattern(struct refspec *refspec, const char *str);
++
+ int valid_fetch_refspec(const char *refspec);
+ struct refspec *parse_fetch_refspec(int nr_refspec, const char **refspec);
+ 
+@@ -192,6 +199,15 @@ void set_ref_status_for_push(struct ref *remote_refs, int send_mirror,
+ int get_fetch_map(const struct ref *remote_refs, const struct refspec *refspec,
+ 		  struct ref ***tail, int missing_ok);
+ 
++/*
++ * Convenience function to generate an array of refs corresponding to the given
++ * refspecs. This is equivalent to repeatedly calling get_fetch_map and
++ * rearranging the returned refs as an array.
++ */
++void get_ref_array(const struct ref ***refs, int *nr_ref,
++		   const struct ref *remote_refs,
++		   const struct refspec *refspecs, int nr_refspecs);
++
+ struct ref *get_remote_ref(const struct ref *remote_refs, const char *name);
+ 
+ /*
+diff --git a/t/t5500-fetch-pack.sh b/t/t5500-fetch-pack.sh
+index 505e1b4a7..cb1b7d949 100755
+--- a/t/t5500-fetch-pack.sh
++++ b/t/t5500-fetch-pack.sh
+@@ -547,6 +547,44 @@ test_expect_success 'fetch-pack can fetch a raw sha1' '
+ 	git fetch-pack hidden $(git -C hidden rev-parse refs/hidden/one)
+ '
+ 
++test_expect_success 'fetch-pack can fetch refs using a partial name' '
++	git init server &&
++	(
++		cd server &&
++		test_commit 1 &&
++		test_commit 2 &&
++		git checkout -b one
++	) &&
++	rm -f trace &&
++	GIT_TRACE_PACKET="$(pwd)/trace" git fetch-pack server one >actual &&
++	grep " want " trace &&
++	! grep " want-ref " trace &&
++
++	grep "$(printf "%s refs/heads/one" $(git -C server rev-parse --verify one))" actual
++'
++
++test_expect_success 'fetch-pack can fetch refs using a glob' '
++	rm -rf server &&
++	git init server &&
++	(
++		cd server &&
++		test_commit 1 &&
++		test_commit 2 &&
++		git checkout -b ona &&
++		git checkout -b onb &&
++		test_commit 3 &&
++		git checkout -b onc
++	) &&
++	rm -f trace &&
++	GIT_TRACE_PACKET="$(pwd)/trace" git fetch-pack server "refs/heads/on*" >actual &&
++	grep " want " trace &&
++	! grep " want-ref " trace &&
++
++	grep "$(printf "%s refs/heads/ona" $(git -C server rev-parse --verify ona))" actual &&
++	grep "$(printf "%s refs/heads/onb" $(git -C server rev-parse --verify onb))" actual &&
++	grep "$(printf "%s refs/heads/onc" $(git -C server rev-parse --verify onc))" actual
++'
++
+ check_prot_path () {
+ 	cat >expected <<-EOF &&
+ 	Diag: url=$1
 -- 
 2.11.0.483.g087da7b7c-goog
 
