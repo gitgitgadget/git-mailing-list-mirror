@@ -2,84 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 545F81F6DC
-	for <e@80x24.org>; Wed, 25 Jan 2017 21:07:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 75AD41F6DC
+	for <e@80x24.org>; Wed, 25 Jan 2017 21:11:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751539AbdAYVHg (ORCPT <rfc822;e@80x24.org>);
-        Wed, 25 Jan 2017 16:07:36 -0500
-Received: from cloud.peff.net ([104.130.231.41]:44770 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751104AbdAYVHf (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 Jan 2017 16:07:35 -0500
-Received: (qmail 2842 invoked by uid 109); 25 Jan 2017 21:07:25 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 25 Jan 2017 21:07:25 +0000
-Received: (qmail 15815 invoked by uid 111); 25 Jan 2017 21:07:24 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 25 Jan 2017 16:07:24 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 25 Jan 2017 16:07:22 -0500
-Date:   Wed, 25 Jan 2017 16:07:22 -0500
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 06/12] clone: disable save_commit_buffer
-Message-ID: <20170125210722.4hjff42vtwbgjag2@sigill.intra.peff.net>
-References: <20170124003729.j4ygjcgypdq7hceg@sigill.intra.peff.net>
- <20170124004500.v7geae55w6zeax7m@sigill.intra.peff.net>
- <xmqqmvefaray.fsf@gitster.mtv.corp.google.com>
- <20170125192740.5lqoc2srqfjiyfwr@sigill.intra.peff.net>
- <20170125193541.yxqq4avnjngbigmq@sigill.intra.peff.net>
+        id S1751640AbdAYVLR (ORCPT <rfc822;e@80x24.org>);
+        Wed, 25 Jan 2017 16:11:17 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:58343 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1750998AbdAYVLQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 Jan 2017 16:11:16 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 1B5EE62F90;
+        Wed, 25 Jan 2017 16:11:15 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=VMYmyy/VCP30
+        uNuNJkPXFxrZ4Lg=; b=HFsipkDhpXhXaaXC5iqlBu/9lXls4NB9IaEGnDSVJBcS
+        q/EkDPUTxlLKdxWFzLTNxDKTET2SSI/ZV/W/p/psBwfR18mqozdFMmorbejngkhk
+        6rikz0YQTQoTe74nZxncXa5cd8DlE5qAvoh4A/EddXNqTZmpQtSeitIpHg5uCck=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=Xoaw+W
+        xPtwPaLoQrq66iSXuEXT76eaAY3gC4n1kRkiFtbBXPKyVqKTBdOSXhEf1dDJQqzo
+        H/IkWQqG+F4uHQuyzNq6AF6Tnff8zUGhKCBF9tBHgkr5m/7UByo2VkYJLByvRvmA
+        VzVNZy0xkVhfV9X4Tu8lbGdye1XXwX0YkjVTk=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 11C0B62F8F;
+        Wed, 25 Jan 2017 16:11:15 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 6596262F8E;
+        Wed, 25 Jan 2017 16:11:14 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        jacob.keller@gmail.com
+Subject: Re: [PATCH 2/5] revision.c: group ref selection options together
+References: <20170121140806.tjs6wad3x4srdv3q@sigill.intra.peff.net>
+        <20170125125054.7422-1-pclouds@gmail.com>
+        <20170125125054.7422-3-pclouds@gmail.com>
+Date:   Wed, 25 Jan 2017 13:11:12 -0800
+In-Reply-To: <20170125125054.7422-3-pclouds@gmail.com> (=?utf-8?B?Ik5ndXk=?=
+ =?utf-8?B?4buFbiBUaMOhaSBOZ+G7jWM=?=
+        Duy"'s message of "Wed, 25 Jan 2017 19:50:51 +0700")
+Message-ID: <xmqqo9yualqn.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20170125193541.yxqq4avnjngbigmq@sigill.intra.peff.net>
+X-Pobox-Relay-ID: CDF7E53C-E342-11E6-B2CA-FE3F13518317-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jan 25, 2017 at 02:35:41PM -0500, Jeff King wrote:
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
 
-> On Wed, Jan 25, 2017 at 02:27:40PM -0500, Jeff King wrote:
-> 
-> > > > For fetching operations like clone, we already disable
-> > > 
-> > > s/clone/fetch/ you meant?
-> > 
-> > Well, no, because this patch deals with clone.
-> > 
-> > It's likely that builtin/fetch.c would want the same treatment. It
-> > didn't come up for me because I've disabled the alternates check for
-> > that case (but you can't do that with stock git), and I didn't dig
-> > further.
-> > 
-> > Possibly this should just go into fetch-pack.c, right before we walk
-> > over all of the refs and call parse_object() and deref_tag() on all of
-> > them. It feels a little funny to tweak the global save_commit_buffer
-> > flag there, but it already do so in everything_local(), so I don't think
-> > we're really losing much.
-> 
-> Hrm. So I thought it might be useful to write a patch that just tweaks
-> save_commit_buffer at the start of fetch_pack(). But looking it over,
-> we call everything_local() _before_ we walk over all the refs. So
-> save_commit_buffer should already be turned off for my case.
-> 
-> I wonder if I made a mistake while measuring the peak RSS. Or if clone
-> parses some commits before it calls into fetch_pack() (but which
-> objects? It doesn't have any until it does the fetch).
-> 
-> Perhaps we should just drop this patch (though I think it is logically
-> consistent and wouldn't hurt anything).
+> These options have on thing in common: when specified right after
 
-OK, I just repeated my heap measurements with valgrind's massif tool,
-specifically checking builds of this patch and its parent. I couldn't
-find any improvement. So I must have screwed something up in my earlier
-measurements.
+one thing.
 
-Sorry for the noise. I think we should probably just drop this patch.
+> --exclude, they will de-select refs instead of selecting them by
+> default.
+>
+> This change makes it possible to introduce new options that use these
+> options in the same way as --exclude. Such an option would just
+> implement something like handle_refs_pseudo_opt().
+>
+> parse_ref_selector_option() is taken out of handle_refs_pseudo_opt() so
+> that similar functions like handle_refs_pseudo_opt() are forced to
+> handle all ref selector options, not skipping some by mistake, which ma=
+y
+> revert the option back to default behavior (rev selection).
 
--Peff
+I am not sure about these two refactorings, for at least two reasons.
+
+ * Naming.  The function is all about handling "refs options" and I
+   do not see anything "pseudo" about the options handled by the
+   handle_refs_pseudo_opt() function.  This is minor.
+
+ * I am expecting that the new one yet to be introduced will not
+   share the huge "switch (selector)" part, but does its own things
+   in a separate function with a similar structure.  The only thing
+   common between these two functions would be the structure
+   (i.e. it has a big "switch(selector)" that does different things
+   depending on REF_SELECT_*) and a call to clear_* function.
+
+   If we were to add a new kind of REF_SELECT_* (say
+   REF_SELECT_NOTES just for the sake of being concrete), what
+   changes will be needed to the code if the addition of "use reflog
+   from this class of refs for decoration" feature was done with or
+   without this step?  I have a suspicion that the change will be
+   simpler without this step.
+
+   The above comments will be invalid if the new "use reflog for
+   decoration" feature will be done by extending this pseudo_opt()
+   function by extending each of the switch/case arms.  If that is
+   the case, please disregard the above.  I just didn't get that
+   impression from the above paragraph.
+
