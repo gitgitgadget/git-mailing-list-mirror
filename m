@@ -2,129 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.4 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 658931F70F
-	for <e@80x24.org>; Wed, 25 Jan 2017 09:58:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 19A7C1F70F
+	for <e@80x24.org>; Wed, 25 Jan 2017 10:37:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751847AbdAYJ56 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 25 Jan 2017 04:57:58 -0500
-Received: from mx0.elegosoft.com ([78.47.87.163]:48633 "EHLO mx0.elegosoft.com"
+        id S1751840AbdAYKhO (ORCPT <rfc822;e@80x24.org>);
+        Wed, 25 Jan 2017 05:37:14 -0500
+Received: from mout.gmx.net ([212.227.15.15]:63291 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751798AbdAYJ54 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 Jan 2017 04:57:56 -0500
-Received: from localhost (x4e340422.dyn.telefonica.de [78.52.4.34])
-        by mx0.elegosoft.com (Postfix) with ESMTPSA id DCB9516C790;
-        Wed, 25 Jan 2017 10:57:54 +0100 (CET)
-Date:   Wed, 25 Jan 2017 10:57:54 +0100
-From:   Patrick Steinhardt <patrick.steinhardt@elego.de>
-To:     Philip Oakley <philipoakley@iee.org>
-Cc:     git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 4/4] urlmatch: allow globbing for the URL host part
-Message-ID: <20170125095754.GA4096@pks-pc>
-References: <20170124170031.18069-1-patrick.steinhardt@elego.de>
- <20170124170031.18069-5-patrick.steinhardt@elego.de>
- <5BF60E6DF2C04DF081466BC3BD3F954F@PhilipOakley>
+        id S1751672AbdAYKhN (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 Jan 2017 05:37:13 -0500
+Received: from virtualbox ([37.24.141.236]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MO7im-1cboau27fQ-005YZO; Wed, 25
+ Jan 2017 11:36:52 +0100
+Date:   Wed, 25 Jan 2017 11:36:50 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Jeff King <peff@peff.net>
+cc:     Junio C Hamano <gitster@pobox.com>,
+        David Aguilar <davvid@gmail.com>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        GIT Mailing-list <git@vger.kernel.org>
+Subject: Fixing the warning about warning(""); was: Re: [PATCH] difftool.c:
+ mark a file-local symbol with static
+In-Reply-To: <20170124230500.h3fasbvutjkkke5h@sigill.intra.peff.net>
+Message-ID: <alpine.DEB.2.20.1701251135090.3469@virtualbox>
+References: <3e6a6685-19ec-4536-4a5f-3a56e30fb530@ramsayjones.plus.com> <20161130231848.v5ge6otytim2t6d2@sigill.intra.peff.net> <xmqqinr4bkf4.fsf@gitster.mtv.corp.google.com> <59da5383-16a0-b327-75a8-b4c4ad7bd479@ramsayjones.plus.com>
+ <20161201040234.3rnuttitneweedn5@sigill.intra.peff.net> <xmqq60n3bjel.fsf@gitster.mtv.corp.google.com> <20161201185056.eso5rhec7izlbywa@sigill.intra.peff.net> <20170122052608.tpr5pihfgafhoynj@gmail.com> <20170124142346.u3d7l6772mtkgpcf@sigill.intra.peff.net>
+ <xmqqlgu0ceia.fsf@gitster.mtv.corp.google.com> <20170124230500.h3fasbvutjkkke5h@sigill.intra.peff.net>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-        protocol="application/pgp-signature"; boundary="X1bOJ3K7DJ5YkBrT"
-Content-Disposition: inline
-In-Reply-To: <5BF60E6DF2C04DF081466BC3BD3F954F@PhilipOakley>
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:u483s3q4XIrXfxy7zIPAyoUytdSjznzstpTZS73Xn8Xe47zrbps
+ bcorUCIqYyKsBo/X8Q5UsXIhMjmUoSmnWkXa30yszrkhiX95yU190oNgHStY46Nl5b/yJgR
+ fshDKvpA3KUR8MiPizXVVY5EknEeI0MjSa9Zj9lwsm5boKpBQl5ewnV1BCRjKAXs6ugROlQ
+ qLj6WYwNbjlhiyJ/CWwPg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:v3Sv5QaXgKk=:M2e39RxvzpRtJB74n0k3i3
+ UaM6cxn+0KDAkv8PSJ7ifTUTR+k8B7c2ekp/xWAZ3dnkxj6MyGLE11mPn3D7bACX6O4oG9EaL
+ 9wLc6tuM752be+BII1v2JXHQ5kfTRC0SyZcQlOS5WmsRKljx297NyGWLBfoiYLfv76lkDHVa+
+ 9aKNIQ7vOt0WOrfrMgVNewOCItvA4HPRG1eb3XjwiSIKKYxde9/IkCHK/Y+nJVSnFRZKQAKSR
+ 1R7CAafuMuY+QP305Dr2Fsp1KoNE1KX8iZ4xZgYGwQs2NVpKvCcboftnLBPuTuLwTZ6BUIzld
+ KlzEAD0XfGzPClk4l0WMFUrQDdTbVCT4GIU6zQ/o5totMIccSmp7kwU0cWWbV214QstNvOPQn
+ B+e/LR6sUgM0DyGD0td56TAUYcMSiemvMVfTytjyZOy9SZjNre0pd5gS38nC9zcUwZqUp0pkh
+ QutfcOW68lFamXyHy7afUwuwkT2H3zqyqu/9Cq8QNDbISmjCSgt/9AMJ9zljzNtkSLuqNFXAB
+ IxxLNAZaNz5RgVVmEAt7unvRDWQEqulDRUQD7jUnmCd7uKYlfC3Qd9UqwlS2B5iIKRxn/DY8s
+ XhSXIcefJokC4H9PzQbx54vGcZruf2AqF339v/6F6ULwveu1hWMg+NUwV8+X0LA/Uqq9uEK0f
+ OYxpxnrBIIQm+QHJSUxVW/ON3wR9Zj4cUEsQl8WuDEpVA3Z5I4ulBW8UaAEUQl+Py6q2kj9ac
+ f7kRRKDdjTRTNW17FayWQLp3/XSgpffARr9qgGrjbjLpIJFZMA4qqL3wsRztb8U1X4I7R1b6Z
+ IGFTls1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Peff,
 
---X1bOJ3K7DJ5YkBrT
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On Tue, 24 Jan 2017, Jeff King wrote:
 
-On Tue, Jan 24, 2017 at 05:52:39PM -0000, Philip Oakley wrote:
-> From: "Patrick Steinhardt" <patrick.steinhardt@elego.de>
->=20
-> a quick comment on the documentation part ..
->=20
-> > The URL matching function computes for two URLs whether they match not.
-> > The match is performed by splitting up the URL into different parts and
-> > then doing an exact comparison with the to-be-matched URL.
-> >
-> > The main user of `urlmatch` is the configuration subsystem. It allows to
-> > set certain configurations based on the URL which is being connected to
-> > via keys like `http.<url>.*`. A common use case for this is to set
-> > proxies for only some remotes which match the given URL. Unfortunately,
-> > having exact matches for all parts of the URL can become quite tedious
-> > in some setups. Imagine for example a corporate network where there are
-> > dozens or even hundreds of subdomains, which would have to be configured
-> > individually.
-> >
-> > This commit introduces the ability to use globbing in the host-part of
-> > the URLs. A user can simply specify a `*` as part of the host name to
-> > match all subdomains at this level. For example adding a configuration
-> > key `http.https://*.example.com.proxy` will match all subdomains of
-> > `https://example.com`.
-> >
-> > Signed-off-by: Patrick Steinhardt <patrick.steinhardt@elego.de>
-> > ---
-> > Documentation/config.txt |  5 ++++-
-> > t/t1300-repo-config.sh   | 36 ++++++++++++++++++++++++++++++++++++
-> > urlmatch.c               | 38 ++++++++++++++++++++++++++++++++++----
-> > 3 files changed, 74 insertions(+), 5 deletions(-)
-> >
-> > diff --git a/Documentation/config.txt b/Documentation/config.txt
-> > index 506431267..a78921c2b 100644
-> > --- a/Documentation/config.txt
-> > +++ b/Documentation/config.txt
-> > @@ -1914,7 +1914,10 @@ http.<url>.*::
-> >   must match exactly between the config key and the URL.
-> >
-> > . Host/domain name (e.g., `example.com` in `https://example.com/`).
-> > -  This field must match exactly between the config key and the URL.
-> > +  This field must match between the config key and the URL. It is
-> > +  possible to use globs in the config key to match all subdomains, e.g.
-> > +  `https://*.example.com/` to match all subdomains of `example.com`. N=
-ote
-> > +  that a glob only every matches a single part of the hostname.
->=20
-> [s/every/ever/ ?]
->=20
-> the "match all subdomains" appears to contradict the "a glob only ever=20
-> matches a single part ".
->=20
-> Maybe borrow the example from the 0/4 cover letter
-> "so for example `https://foo.bar.example.com` would not match in the case=
- of=20
-> `http.https://*.example.com` " (If I understood it correctly.
->=20
-> A simple example often clarifies much better than more words.
+> On Tue, Jan 24, 2017 at 01:52:13PM -0800, Junio C Hamano wrote:
+> 
+> > > I dunno. As ugly as the "%s" thing is in the source, at least it
+> > > doesn't change the output. Not that an extra space is the end of the
+> > > world, but it seems like it's letting the problem escape from the
+> > > source code.
+> > >
+> > > Do people still care about resolving this? -Wno-format-zero-length
+> > > is in the DEVELOPER options. It wasn't clear to me if that was
+> > > sufficient, or if we're going to get a bunch of reports from people
+> > > that need to be directed to the right compiler options.
+> > 
+> > I view both as ugly, but probably "%s", "" is lessor of the two evils.
+> > 
+> > Perhaps
+> > 
+> > 	#define JUST_SHOW_EMPTY_LINE "%s", ""
+> > 
+> > 		...
+> > 		warning(JUST_SHOW_EMPTY_LINE);
+> >                 ...
+> > 
+> > or something silly like that?
+> 
+> Gross, but at least it's self documenting. :)
+> 
+> I guess a less horrible version of that is:
+> 
+>   static inline warning_blank_line(void)
+>   {
+> 	warning("%s", "");
+>   }
+> 
+> We'd potentially need a matching one for error(), but at last it avoids
+> macro trickery.
 
-Thanks! (Hopefully) improved this in v3.
+I fail to see how this function, or this definition, makes the code better
+than simply calling `warning("%s", "");` and be done with it.
 
-Regards
-Patrick
-
---X1bOJ3K7DJ5YkBrT
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIcBAABCAAGBQJYiHaiAAoJEBF8Z7aeq/EsXCUQAIjNehfTtssBK2Om/ySkKe86
-kFqt1tDFPodikAjotjRMopyC5nGNe1U1oluwFIqbBXAuTYcivmKKdoXighBXJbVf
-Nl82yjM0j5q6LGnxdWXWIWWDV8mV6OawB8ejzK1LNaidYoDX8vR+2xwnqasXrO1d
-tzlsftoHsU3Ik+zqWfypF+laZv4rVlKPdqm6f4JfAdfGF2vhsbuzVupSnnPs9zSR
-I3Xk86kufytDSVWP7EDdhWHTMFEKQbmLfN6gZBu3PTqweUNDiOFu7eyZNejASOKX
-iybpdW/wCgV21I/oayE5VIOcPALVW9nIqlB8C4PXK4NG5fuFbJnhtYLOepQoeaNZ
-z6OZKnEiQfsynrdPf7AFKVK5VRmGp5QmSLULDxoNcrHI3Ij1UECfq7SCk28R5B+U
-LujxMdXhCVrfy1+ODx5WO5PgHkgygQ63mL8V862nowlbMhCmdzxgrTKHZ2ES7ZVg
-rEnls2FMxN3s8gOmFkc2N3NQmR7ouu62xIqopsKb2Tj92/VkcdLeoeuVbYZkWHBd
-Q4IX/T7V+InMDC/OJeDrkMByik3tDoqvF/4OyP5l3EOddttie4vDvB/MrqqJdAYo
-FRDUb0h9nfJ3UxCQbjkJgllvy6scRVmcx9Hbpri+H+3r1VkyPBHHKOTuvKH6je3i
-wMsh3wSoVM/WxSUDAC10
-=8W8x
------END PGP SIGNATURE-----
-
---X1bOJ3K7DJ5YkBrT--
+Ciao,
+Johannes
