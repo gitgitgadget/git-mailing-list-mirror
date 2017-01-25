@@ -2,188 +2,244 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-6.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 729E21F6DC
-	for <e@80x24.org>; Wed, 25 Jan 2017 05:06:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CFF941F437
+	for <e@80x24.org>; Wed, 25 Jan 2017 05:27:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751230AbdAYFG1 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 25 Jan 2017 00:06:27 -0500
-Received: from mail-it0-f53.google.com ([209.85.214.53]:36728 "EHLO
-        mail-it0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751137AbdAYFG0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 Jan 2017 00:06:26 -0500
-Received: by mail-it0-f53.google.com with SMTP id c7so101226401itd.1
-        for <git@vger.kernel.org>; Tue, 24 Jan 2017 21:06:25 -0800 (PST)
+        id S1751270AbdAYF1s (ORCPT <rfc822;e@80x24.org>);
+        Wed, 25 Jan 2017 00:27:48 -0500
+Received: from mail-ua0-f193.google.com ([209.85.217.193]:33216 "EHLO
+        mail-ua0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751213AbdAYF1r (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 Jan 2017 00:27:47 -0500
+Received: by mail-ua0-f193.google.com with SMTP id d5so18337618uag.0
+        for <git@vger.kernel.org>; Tue, 24 Jan 2017 21:27:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=mcLpPGnnzbUAs/iLwMR4TG2mhs9BK8I8spn3DRLYZ+A=;
-        b=CBdTTHVpXHg5UuqbjxZsTYq6894RzKYNE2xjQvx5jquttm51kNm1wiitiKyDifbWel
-         DDhvNuxoe9Qwd7X7dBx4vn1AB0BpYuJdDYFg8Awc9kPLWj8aB3SqUat/Ye4167QgJN2b
-         CjGQn0mWDmKJEp1zHpUl5P0oZRvLpKn4nTQN6lMPxmwd13d6B/PnXko5DiFypQ1N9unG
-         Rb5lrIkmBpryh3AwuhAgsw8hmCtLp5/yYJgH5Vt4qnMSi4SsZwsyjqCITdGBGqtZdRgD
-         p8uC8vRjZ149Fh0o/dxBSLSbc9ekGRuejye/5mQOkhjf4Chnudyreswc/wNiBl30798Z
-         2IGQ==
+        h=from:to:cc:subject:date:message-id;
+        bh=FcdDyTvGqGYgyeoNddaBE5TdWLRKaJ6jLQ0WpbeMpqg=;
+        b=Gkc+RfmUVlfIIG+zLOFyEFaU7kk10fVx2H/tO864NtW6360D/D8mfqdYa/6GUMHxCd
+         TeYsb7x4DaE4StY9Q+Qx3MIjUzCVuU+sB0qgrQhB1FVJ8Uty1cLDA5u7N2a+kbXOgQXJ
+         7kNlMDbwYwkrKnjXXlzZriLmfLxR+CmEc31XLBNT+GcxaU+G9oBxtEIIyAoCLKMak6on
+         5JoY37uwCg7gwbIr8MwhSl2A3C1XifVj8gMdcuD5jKTMXTM8H6shqs8/RcmUvFBE9WGN
+         pcOCdmixA3xOsrTVfVJOyJHif7ygYmcyM9ZjB9bEoer1cI1QeF9Le6XDUTCY9UCqDmZJ
+         KC4w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=mcLpPGnnzbUAs/iLwMR4TG2mhs9BK8I8spn3DRLYZ+A=;
-        b=liqXfAM0O1rEi9ZAX0YSohbEpmmdyfV3uWKrP/HdV8f4OjLjpuwdU9b1aRjLJTmWg9
-         2TyivV5185N19vEhcGVLJApt5VD4FKBYl4AgUGFjiyUyRiMm/fHQ63m8L0smpd3vtOHT
-         Uv7aSdkd/t56mzfglov+fByFaTxyaUX6CXtdG6E+5CLBvbyN3uwFtYUKMR21MTKEbVh0
-         kD+gCUpwM03g9l/ESdAS6spB65FZOi8MxeZShyFf+wjiHfolJa8acKDaTzqmWIq6oTHg
-         8jvCcNk3Gj6yD7EtTxwc1YPD3YWF6zOXRYfK9k8xlMavIjRikVTFTkKTx6Baj2byT7MX
-         5Hmg==
-X-Gm-Message-State: AIkVDXKei1lF2QIRHqqlt0YZXWV3N7aGihMIF9bxj+MyOieXyWxq9YkMVYPe2OTKdhg1F4qkgiFVYNBionJclA==
-X-Received: by 10.36.181.3 with SMTP id v3mr24142254ite.45.1485320785135; Tue,
- 24 Jan 2017 21:06:25 -0800 (PST)
-MIME-Version: 1.0
-Received: by 10.79.142.147 with HTTP; Tue, 24 Jan 2017 21:06:24 -0800 (PST)
-In-Reply-To: <20170125001906.13916-1-cornelius.weig@tngtech.com>
-References: <20170125001906.13916-1-cornelius.weig@tngtech.com>
-From:   Pranit Bauva <pranit.bauva@gmail.com>
-Date:   Wed, 25 Jan 2017 10:36:24 +0530
-Message-ID: <CAFZEwPM9MWHQAie8KT+4LKdk-tHVJBCLP46HNcLJm5PHM=AWQg@mail.gmail.com>
-Subject: Re: [PATCH] tag: add tag.createReflog option
-To:     cornelius.weig@tngtech.com
-Cc:     Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        novalis@novalis.org, Duy Nguyen <pclouds@gmail.com>
-Content-Type: text/plain; charset=UTF-8
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=FcdDyTvGqGYgyeoNddaBE5TdWLRKaJ6jLQ0WpbeMpqg=;
+        b=WExJhBiY1cXiX8m8jw94HnMOFDfJrYOb32drJhu0DeN8Uzq9tKkHGgsZBVpyGLMqFZ
+         psaDQJY7ULQ1aWoWp2R1g8wQDDoBSO91IpanHEOqpsoCOp+PvVrilafEQqfCTcu9EZl6
+         Y3YHd5NrmokqoQAIamH9nxkYudk4PJ+Vd0rOt+fX4fOTik3D/yvaBItjAemWjv1DJWex
+         LyYC0xNycHTNLhWw02xMAMj1HgrpaP0u7oZ2QACMKFCcBDByH0RUmmB6/vTq5a62vYxZ
+         UKDNBDnK7Ng4IBZZVsU28yITdmdu3kWiL1gF3Z2tqLrtetRiLuRuumrFlrF6l2Go9Gn3
+         3qlQ==
+X-Gm-Message-State: AIkVDXKEUAvGhMLFJBgyzBZiGd+X8d1ixLJwEMuvZIqPwaR3tcMMp40Q2mEPjzQ5Cw+vrg==
+X-Received: by 10.176.83.153 with SMTP id k25mr17699146uaa.141.1485322066657;
+        Tue, 24 Jan 2017 21:27:46 -0800 (PST)
+Received: from linuxerio.cabletica.com (ip203-162-64-186.ct.co.cr. [186.64.162.203])
+        by smtp.gmail.com with ESMTPSA id d9sm8794212uag.4.2017.01.24.21.27.45
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 24 Jan 2017 21:27:46 -0800 (PST)
+From:   Edmundo Carmona Antoranz <eantoranz@gmail.com>
+To:     git@vger.kernel.org
+Cc:     apelisse@gmail.com, kevin@sb.org, gitster@pobox.com, peff@peff.net,
+        Edmundo Carmona Antoranz <eantoranz@gmail.com>
+Subject: [PATCH v1 1/3] blame: add --aggregate option
+Date:   Tue, 24 Jan 2017 23:27:32 -0600
+Message-Id: <20170125052734.17550-1-eantoranz@gmail.com>
+X-Mailer: git-send-email 2.11.0.rc1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hey Cornelius,
+To avoid taking up so much space on normal output printing duplicate
+information on consecutive lines that "belong" to the same revision,
+this option allows to print a single line with the information about
+the revision before the lines of content themselves.
 
-On Wed, Jan 25, 2017 at 5:49 AM,  <cornelius.weig@tngtech.com> wrote:
-> From: Cornelius Weig <cornelius.weig@tngtech.com>
->
-> Git does not create a history for tags, in contrast to common
-> expectation to simply version everything. This can be changed by using
-> the `--create-reflog` flag when creating the tag. However, a config
-> option to enable this behavior by default is missing.
->
-> This commit adds the configuration variable `tag.createReflog` which
-> enables reflogs for new tags by default.
->
-> Signed-off-by: Cornelius Weig <cornelius.weig@tngtech.com>
+Signed-off-by: Edmundo Carmona Antoranz <eantoranz@gmail.com>
+---
+ Documentation/blame-options.txt |  4 ++
+ Documentation/git-blame.txt     |  4 +-
+ builtin/blame.c                 | 85 +++++++++++++++++++++++++++--------------
+ 3 files changed, 63 insertions(+), 30 deletions(-)
 
-You have also added the option --no-create-reflog so would it be worth
-to mention it in the commit message?
-> ---
->  Documentation/config.txt  |  5 +++++
->  Documentation/git-tag.txt |  8 +++++---
->  builtin/tag.c             |  6 +++++-
->  t/t7004-tag.sh            | 14 ++++++++++++++
->  4 files changed, 29 insertions(+), 4 deletions(-)
->
-> diff --git a/Documentation/config.txt b/Documentation/config.txt
-> index af2ae4c..9e5f6f6 100644
-> --- a/Documentation/config.txt
-> +++ b/Documentation/config.txt
-> @@ -2945,6 +2945,11 @@ submodule.alternateErrorStrategy
->         as computed via `submodule.alternateLocation`. Possible values are
->         `ignore`, `info`, `die`. Default is `die`.
->
-> +tag.createReflog::
-> +       A boolean to specify whether newly created tags should have a reflog.
-> +       If `--[no-]create-reflog` is specified on the command line, it takes
-> +       precedence. Defaults to `false`.
+diff --git a/Documentation/blame-options.txt b/Documentation/blame-options.txt
+index 2669b87c9..be2a327ff 100644
+--- a/Documentation/blame-options.txt
++++ b/Documentation/blame-options.txt
+@@ -49,6 +49,10 @@ include::line-range-format.txt[]
+ 	Show the result incrementally in a format designed for
+ 	machine consumption.
+ 
++--aggregate::
++	Aggregate information about revisions. This option makes no
++	difference on incremental or porcelain format.
++
+ --encoding=<encoding>::
+ 	Specifies the encoding used to output author names
+ 	and commit summaries. Setting it to `none` makes blame
+diff --git a/Documentation/git-blame.txt b/Documentation/git-blame.txt
+index fdc3aea30..385eaf7be 100644
+--- a/Documentation/git-blame.txt
++++ b/Documentation/git-blame.txt
+@@ -10,8 +10,8 @@ SYNOPSIS
+ [verse]
+ 'git blame' [-c] [-b] [-l] [--root] [-t] [-f] [-n] [-s] [-e] [-p] [-w] [--incremental]
+ 	    [-L <range>] [-S <revs-file>] [-M] [-C] [-C] [-C] [--since=<date>]
+-	    [--progress] [--abbrev=<n>] [<rev> | --contents <file> | --reverse <rev>..<rev>]
+-	    [--] <file>
++	    [--progress] [--abbrev=<n>] [--aggregate] 
++	    [<rev> | --contents <file> | --reverse <rev>..<rev>] [--] <file>
+ 
+ DESCRIPTION
+ -----------
+diff --git a/builtin/blame.c b/builtin/blame.c
+index 126b8c9e5..09b3b0c8a 100644
+--- a/builtin/blame.c
++++ b/builtin/blame.c
+@@ -1884,6 +1884,7 @@ static const char *format_time(unsigned long time, const char *tz_str,
+ #define OUTPUT_NO_AUTHOR       0200
+ #define OUTPUT_SHOW_EMAIL	0400
+ #define OUTPUT_LINE_PORCELAIN 01000
++#define OUTPUT_AGGREGATE      02000
+ 
+ static void emit_porcelain_details(struct origin *suspect, int repeat)
+ {
+@@ -1931,43 +1932,41 @@ static void emit_porcelain(struct scoreboard *sb, struct blame_entry *ent,
+ 		putchar('\n');
+ }
+ 
+-static void emit_other(struct scoreboard *sb, struct blame_entry *ent, int opt)
+-{
+-	int cnt;
+-	const char *cp;
+-	struct origin *suspect = ent->suspect;
+-	struct commit_info ci;
+-	char hex[GIT_SHA1_HEXSZ + 1];
+-	int show_raw_time = !!(opt & OUTPUT_RAW_TIMESTAMP);
+-
+-	get_commit_info(suspect->commit, &ci, 1);
+-	sha1_to_hex_r(hex, suspect->commit->object.oid.hash);
+-
+-	cp = nth_line(sb, ent->lno);
+-	for (cnt = 0; cnt < ent->num_lines; cnt++) {
+-		char ch;
+-		int length = (opt & OUTPUT_LONG_OBJECT_NAME) ? GIT_SHA1_HEXSZ : abbrev;
+-
+-		if (suspect->commit->object.flags & UNINTERESTING) {
++/**
++ * Print information about the revision.
++ * This information can be used in either aggregated output
++ * or prepending each line of the content of the file being blamed
++ * 
++ * if line_number == 0, it's an aggregate line
++ */
++static void print_revision_info(char* revision_hex, int revision_length, struct blame_entry* ent,
++		struct commit_info ci, int opt, int show_raw_time, int line_number)
++{
++	if (!line_number)
++		printf("\t");
++	int length = revision_length;
++	if (!line_number || !(opt & OUTPUT_AGGREGATE)) {
++		if (ent->suspect->commit->object.flags & UNINTERESTING) {
+ 			if (blank_boundary)
+-				memset(hex, ' ', length);
++				memset(revision_hex, ' ', length);
+ 			else if (!(opt & OUTPUT_ANNOTATE_COMPAT)) {
+ 				length--;
+ 				putchar('^');
+ 			}
+ 		}
+ 
+-		printf("%.*s", length, hex);
++		printf("%.*s", length, revision_hex);
+ 		if (opt & OUTPUT_ANNOTATE_COMPAT) {
+ 			const char *name;
+ 			if (opt & OUTPUT_SHOW_EMAIL)
+ 				name = ci.author_mail.buf;
+ 			else
+ 				name = ci.author.buf;
+-			printf("\t(%10s\t%10s\t%d)", name,
++			printf("\t(%10s\t%10s", name,
+ 			       format_time(ci.author_time, ci.author_tz.buf,
+-					   show_raw_time),
+-			       ent->lno + 1 + cnt);
++					   show_raw_time));
++			if (line_number)
++				printf("\t%d)", line_number);
+ 		} else {
+ 			if (opt & OUTPUT_SHOW_SCORE)
+ 				printf(" %*d %02d",
+@@ -1975,10 +1974,10 @@ static void emit_other(struct scoreboard *sb, struct blame_entry *ent, int opt)
+ 				       ent->suspect->refcnt);
+ 			if (opt & OUTPUT_SHOW_NAME)
+ 				printf(" %-*.*s", longest_file, longest_file,
+-				       suspect->path);
+-			if (opt & OUTPUT_SHOW_NUMBER)
++				       ent->suspect->path);
++			if ((opt & OUTPUT_SHOW_NUMBER) && line_number)
+ 				printf(" %*d", max_orig_digits,
+-				       ent->s_lno + 1 + cnt);
++				       line_number);
+ 
+ 			if (!(opt & OUTPUT_NO_AUTHOR)) {
+ 				const char *name;
+@@ -1994,9 +1993,38 @@ static void emit_other(struct scoreboard *sb, struct blame_entry *ent, int opt)
+ 						   ci.author_tz.buf,
+ 						   show_raw_time));
+ 			}
+-			printf(" %*d) ",
+-			       max_digits, ent->lno + 1 + cnt);
++			if (line_number)
++				printf(" %*d) ",
++					   max_digits, line_number);
+ 		}
++	}
++	if (line_number && (opt & OUTPUT_AGGREGATE))
++		printf(opt & OUTPUT_ANNOTATE_COMPAT ? "%*d)" : " %*d) ",
++			   max_digits, line_number);
++	if (!line_number)
++		printf(")\n");
++}
++
++static void emit_other(struct scoreboard *sb, struct blame_entry *ent, int opt)
++{
++	int cnt;
++	const char *cp;
++	struct origin *suspect = ent->suspect;
++	struct commit_info ci;
++	char hex[GIT_SHA1_HEXSZ + 1];
++	int show_raw_time = !!(opt & OUTPUT_RAW_TIMESTAMP);
++	int revision_length = (opt & OUTPUT_LONG_OBJECT_NAME) ? GIT_SHA1_HEXSZ : abbrev;
++
++	get_commit_info(suspect->commit, &ci, 1);
++	sha1_to_hex_r(hex, suspect->commit->object.oid.hash);
++
++	if (opt & OUTPUT_AGGREGATE)
++		print_revision_info(hex, revision_length, ent, ci, opt, show_raw_time, 0);
++
++	cp = nth_line(sb, ent->lno);
++	char ch;
++	for (cnt = 0; cnt < ent->num_lines; cnt++) {
++		print_revision_info(hex, revision_length, ent, ci, opt, show_raw_time, ent->lno + 1 + cnt);
+ 		do {
+ 			ch = *cp++;
+ 			putchar(ch);
+@@ -2609,6 +2637,7 @@ int cmd_blame(int argc, const char **argv, const char *prefix)
+ 		{ OPTION_CALLBACK, 'C', NULL, &opt, N_("score"), N_("Find line copies within and across files"), PARSE_OPT_OPTARG, blame_copy_callback },
+ 		{ OPTION_CALLBACK, 'M', NULL, &opt, N_("score"), N_("Find line movements within and across files"), PARSE_OPT_OPTARG, blame_move_callback },
+ 		OPT_STRING_LIST('L', NULL, &range_list, N_("n,m"), N_("Process only line range n,m, counting from 1")),
++		OPT_BIT(0, "aggregate", &output_option, N_("Aggregate output"), OUTPUT_AGGREGATE),
+ 		OPT__ABBREV(&abbrev),
+ 		OPT_END()
+ 	};
+-- 
+2.11.0.rc1
 
-This follows the convention, good! :)
-
->  tag.forceSignAnnotated::
->         A boolean to specify whether annotated tags created should be GPG signed.
->         If `--annotate` is specified on the command line, it takes
-> diff --git a/Documentation/git-tag.txt b/Documentation/git-tag.txt
-> index 5055a96..f2ed370 100644
-> --- a/Documentation/git-tag.txt
-> +++ b/Documentation/git-tag.txt
-> @@ -13,7 +13,7 @@ SYNOPSIS
->         <tagname> [<commit> | <object>]
->  'git tag' -d <tagname>...
->  'git tag' [-n[<num>]] -l [--contains <commit>] [--points-at <object>]
-> -       [--column[=<options>] | --no-column] [--create-reflog] [--sort=<key>]
-> +       [--column[=<options>] | --no-column] [--[no-]create-reflog] [--sort=<key>]
->         [--format=<format>] [--[no-]merged [<commit>]] [<pattern>...]
->  'git tag' -v <tagname>...
->
-> @@ -149,8 +149,10 @@ This option is only applicable when listing tags without annotation lines.
->         all, 'whitespace' removes just leading/trailing whitespace lines and
->         'strip' removes both whitespace and commentary.
->
-> ---create-reflog::
-> -       Create a reflog for the tag.
-> +--[no-]create-reflog::
-> +       Force to create a reflog for the tag, or no reflog if `--no-create-reflog`
-> +       is used. Unless the `tag.createReflog` config variable is set to true, no
-> +       reflog is created by default. See linkgit:git-config[1].
->
->  <tagname>::
->         The name of the tag to create, delete, or describe.
-> diff --git a/builtin/tag.c b/builtin/tag.c
-> index 73df728..1f13e4d 100644
-> --- a/builtin/tag.c
-> +++ b/builtin/tag.c
-> @@ -30,6 +30,7 @@ static const char * const git_tag_usage[] = {
->
->  static unsigned int colopts;
->  static int force_sign_annotate;
-> +static int create_reflog;
->
->  static int list_tags(struct ref_filter *filter, struct ref_sorting *sorting, const char *format)
->  {
-> @@ -165,6 +166,10 @@ static int git_tag_config(const char *var, const char *value, void *cb)
->                 force_sign_annotate = git_config_bool(var, value);
->                 return 0;
->         }
-> +       if (!strcmp(var, "tag.createreflog")) {
-> +               create_reflog = git_config_bool(var, value);
-> +               return 0;
-> +       }
->
->         if (starts_with(var, "column."))
->                 return git_column_config(var, value, "tag", &colopts);
-> @@ -325,7 +330,6 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
->         const char *object_ref, *tag;
->         struct create_tag_options opt;
->         char *cleanup_arg = NULL;
-> -       int create_reflog = 0;
->         int annotate = 0, force = 0;
->         int cmdmode = 0, create_tag_object = 0;
->         const char *msgfile = NULL, *keyid = NULL;
-> diff --git a/t/t7004-tag.sh b/t/t7004-tag.sh
-> index 1cfa8a2..67b39ec 100755
-> --- a/t/t7004-tag.sh
-> +++ b/t/t7004-tag.sh
-> @@ -90,6 +90,20 @@ test_expect_success '--create-reflog does not create reflog on failure' '
->         test_must_fail git reflog exists refs/tags/mytag
->  '
->
-> +test_expect_success 'option tag.createreflog creates reflog by default' '
-> +       test_when_finished "git tag -d tag_with_reflog" &&
-> +       git config tag.createReflog true &&
-> +       git tag tag_with_reflog &&
-> +       git reflog exists refs/tags/tag_with_reflog
-> +'
-> +
-> +test_expect_success 'option tag.createreflog overridden by command line' '
-> +       test_when_finished "git tag -d tag_without_reflog" &&
-> +       git config tag.createReflog true &&
-> +       git tag --no-create-reflog tag_without_reflog &&
-> +       test_must_fail git reflog exists refs/tags/tag_without_reflog
-> +'
-> +
->  test_expect_success 'listing all tags if one exists should succeed' '
->         git tag -l &&
->         git tag
-> --
-> 2.10.2
->
