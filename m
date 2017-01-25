@@ -2,145 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0F4571F6DC
-	for <e@80x24.org>; Wed, 25 Jan 2017 23:49:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4BDD81F6DC
+	for <e@80x24.org>; Wed, 25 Jan 2017 23:54:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752645AbdAYXsz (ORCPT <rfc822;e@80x24.org>);
-        Wed, 25 Jan 2017 18:48:55 -0500
-Received: from mail-pf0-f181.google.com ([209.85.192.181]:34145 "EHLO
-        mail-pf0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752498AbdAYXsy (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 Jan 2017 18:48:54 -0500
-Received: by mail-pf0-f181.google.com with SMTP id e4so61308642pfg.1
-        for <git@vger.kernel.org>; Wed, 25 Jan 2017 15:48:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=8VwjGet3Y21N73o6x44ZLrK0s3Lh/Mfu+Yx11983sck=;
-        b=Oxi2838MiCCwwAL9xZWSbFRX77qpp8OCDFHIebsbwY8i882mKar9i+1Bi05nicSX4F
-         uf4g04D+Mpv48iu9d1lA2B5sqE2BN9PYCxKV1YDo+2PT5+hK9AV4J6ajG7sLcLz5sXRt
-         o4GIL8PIW3Y+HcM/rtnAF8RBZ6SoEZ6IPM2G1c5A2IQ2RQ9OEo69wKNBj6kNHu4WkPra
-         Gm+b7pXqH8tuYKS1OdD0rmUOKZA+ChhvaeP097m3ywab1mj/TRpbxeRGj+X3JzU13nyh
-         vJ0uWI8UTGWYgDzulV/d1Lczeg/2ZjgETHfPuMNHRbxp8iO09SeaDl/drZO79UuQiaA1
-         Z7RA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=8VwjGet3Y21N73o6x44ZLrK0s3Lh/Mfu+Yx11983sck=;
-        b=HlQgMiHTrHc+LAqGgyyUvtvihadFuYhG9RUfQwac2X0HMN3mOaDliRPvbNBhjQC7es
-         x+FWr9lA5nyvwQGwcAsNi7NAZ56oCTOgYoaTZn1hvWrbWuRz+YajlVIH/yaBWbcOai1u
-         V/lNc4A8x+I/0MChGkGTsmcCMvgin6LO3R+XPDdrnAamEhww2O3KHiNo6DeHkVbLlN+G
-         JXn2dr9VHcTvfrFEMERQfY+r/j71IzT39k8PFF5/EAzahe9lle3ZjZz9NWLxrOjXR48I
-         pOPSpJwKy+9SKt1uHdCkxs7aH4Qf49tmkQUxI2QzdGS8cyHLbp7klGNTZ/ek6HOkY6jN
-         dcCA==
-X-Gm-Message-State: AIkVDXLnPq8qO414oMcfeIF0lDp2KqNvOUyJ2X7ASWW59WALq+4CHxs7ANbINZHn54TRdGiK
-X-Received: by 10.98.67.153 with SMTP id l25mr24706689pfi.91.1485388133781;
-        Wed, 25 Jan 2017 15:48:53 -0800 (PST)
-Received: from localhost ([2620:0:1000:5b10:3993:32c0:4ba2:a648])
-        by smtp.gmail.com with ESMTPSA id b83sm3583388pfe.12.2017.01.25.15.48.53
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 25 Jan 2017 15:48:53 -0800 (PST)
-From:   Stefan Beller <sbeller@google.com>
-To:     gitster@pobox.com
-Cc:     git@vger.kernel.org, bmwill@google.com, judge.packham@gmail.com,
-        olsonse@umich.edu, Stefan Beller <sbeller@google.com>
-Subject: [PATCHv3] submodule update: run custom update script for initial populating as well
-Date:   Wed, 25 Jan 2017 15:48:51 -0800
-Message-Id: <20170125234851.22644-1-sbeller@google.com>
-X-Mailer: git-send-email 2.11.0.495.g04f60290a0.dirty
-In-Reply-To: <20170125234158.GE83343@google.com>
-References: <20170125234158.GE83343@google.com>
+        id S1751056AbdAYXyQ (ORCPT <rfc822;e@80x24.org>);
+        Wed, 25 Jan 2017 18:54:16 -0500
+Received: from ns332406.ip-37-187-123.eu ([37.187.123.207]:45320 "EHLO
+        glandium.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1750998AbdAYXyP (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 Jan 2017 18:54:15 -0500
+Received: from glandium by mitsuha.glandium.org with local (Exim 4.88)
+        (envelope-from <mh@glandium.org>)
+        id 1cWXOE-0002l4-JV; Thu, 26 Jan 2017 08:54:10 +0900
+Date:   Thu, 26 Jan 2017 08:54:10 +0900
+From:   Mike Hommey <mh@glandium.org>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] gpg-interface: Add some output from gpg when it errors
+ out.
+Message-ID: <20170125235410.byxwmo7o7zdszzot@glandium.org>
+References: <20170125030434.26448-1-mh@glandium.org>
+ <xmqqtw8m7ncp.fsf@gitster.mtv.corp.google.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqtw8m7ncp.fsf@gitster.mtv.corp.google.com>
+X-GPG-Fingerprint: 182E 161D 1130 B9FC CD7D  B167 E42A A04F A6AA 8C72
+User-Agent: NeoMutt/20170113 (1.7.2)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In 1b4735d9f3 (submodule: no [--merge|--rebase] when newly cloned,
-2011-02-17), all actions were defaulted to checkout for populating
-a submodule initially, because merging or rebasing makes no sense
-in that situation.
+On Wed, Jan 25, 2017 at 03:04:38PM -0800, Junio C Hamano wrote:
+> Mike Hommey <mh@glandium.org> writes:
+> 
+> > For instance, after changing my laptop for a new one, I copied my
+> > configs, but had some environment differences that broke gpg.
+> > With this change applied, the output becomes, on this new machine:
+> >   gpg: keyblock resource '/usr/share/keyrings/debian-keyring.gpg': No
+> > such file or directory
+> >   error: gpg failed to sign the data
+> >   error: unable to sign the tag
+> >
+> > which makes it clearer what's wrong.
+> 
+> Overall I think this is a good thing to do.  Instead of eating the
+> status output, showing what we got, especially when we know the
+> command failed, would make the bug-hunting of user's environment
+> easier, like you showed above.
+> 
+> The only thing in the design that makes me wonder is the filtering
+> out based on "[GNUPG:]" prefix.  Why do we need to filter them out?
 
-Other commands however do make sense, such as the custom command
-that was added later (6cb5728c43, submodule update: allow custom
-command to update submodule working tree, 2013-07-03).
+The [GNUPG:] lines are part of the status-fd protocol. They show details
+that don't really seem interesting to the user. In fact, they even
+contain the signed message (yes, in my case, it turns out gpg was
+actually still signing, but returned an error code...).
 
-I am unsure about the "none" command, as I can see an initial
-checkout there as a useful thing. On the other hand going strictly
-by our own documentation, we should do nothing in case of "none"
-as well, because the user asked for it.
+For instance, in that failed run above, the entire output looks like:
 
-Reported-by: Han-Wen Nienhuys <hanwen@google.com>
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
+gpg: keyblock resource '/usr/share/keyrings/debian-keyring.gpg': No
+such file or directory
+[GNUPG:] ERROR add_keyblock_resource ...
+[GNUPG:] KEY_CONSIDERED ...
+[GNUPG:] BEGIN_SIGNING H2
+[GNUPG:] SIG_CREATED ...
 
- Thanks, Brandon, for spotting the unneeded subshell.
- I also fixed the && chaining along the way.
- 
- Thanks,
- Stefan
+All the [GNUPG:] lines are implementation details that don't seem
+particularly useful. A case could be made for the ERROR one, though,
+although it's also implementation detail-y.
 
- git-submodule.sh            |  5 ++++-
- t/t7406-submodule-update.sh | 12 ++++++++++++
- 2 files changed, 16 insertions(+), 1 deletion(-)
+> Implementation-wise, I'd be happier if we do not add any new
+> callsites of strbuf_split(), which is a horrible interface.  But
+> that is a minor detail.
 
-diff --git a/git-submodule.sh b/git-submodule.sh
-index 9788175979..63fc4fe9bc 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -607,7 +607,10 @@ cmd_update()
- 		if test $just_cloned -eq 1
- 		then
- 			subsha1=
--			update_module=checkout
-+			case "$update_module" in
-+			merge | rebase | none)
-+				update_module=checkout ;;
-+			esac
- 		else
- 			subsha1=$(sanitize_submodule_env; cd "$sm_path" &&
- 				git rev-parse --verify HEAD) ||
-diff --git a/t/t7406-submodule-update.sh b/t/t7406-submodule-update.sh
-index 725bbed1f8..347857fa7c 100755
---- a/t/t7406-submodule-update.sh
-+++ b/t/t7406-submodule-update.sh
-@@ -441,6 +441,16 @@ test_expect_success 'submodule update - command in .git/config catches failure -
- 	test_i18ncmp actual expect
- '
- 
-+test_expect_success 'submodule update - command run for initial population of submodule' '
-+	cat <<-\ EOF >expect
-+	Execution of '\''false $submodulesha1'\'' failed in submodule path '\''submodule'\''
-+	EOF &&
-+	rm -rf super/submodule &&
-+	test_must_fail git -C super submodule update >../actual &&
-+	test_cmp expect actual &&
-+	git -C super submodule update --checkout
-+'
-+
- cat << EOF >expect
- Execution of 'false $submodulesha1' failed in submodule path '../super/submodule'
- Failed to recurse into submodule path '../super'
-@@ -493,6 +503,7 @@ test_expect_success 'submodule init picks up merge' '
- '
- 
- test_expect_success 'submodule update --merge  - ignores --merge  for new submodules' '
-+	test_config -C super submodule.submodule.update checkout &&
- 	(cd super &&
- 	 rm -rf submodule &&
- 	 git submodule update submodule &&
-@@ -505,6 +516,7 @@ test_expect_success 'submodule update --merge  - ignores --merge  for new submod
- '
- 
- test_expect_success 'submodule update --rebase - ignores --rebase for new submodules' '
-+	test_config -C super submodule.submodule.update checkout &&
- 	(cd super &&
- 	 rm -rf submodule &&
- 	 git submodule update submodule &&
--- 
-2.11.0.495.g04f60290a0.dirty
+What would you suggest otherwise?
 
+Mike
