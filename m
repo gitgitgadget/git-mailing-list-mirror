@@ -2,87 +2,122 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,
 	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.0
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 65A381F6DC
-	for <e@80x24.org>; Wed, 25 Jan 2017 16:58:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D35DB1F6DC
+	for <e@80x24.org>; Wed, 25 Jan 2017 16:59:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751495AbdAYQ6v (ORCPT <rfc822;e@80x24.org>);
-        Wed, 25 Jan 2017 11:58:51 -0500
-Received: from mout.gmx.net ([212.227.15.18]:60209 "EHLO mout.gmx.net"
+        id S1751899AbdAYQ7G (ORCPT <rfc822;e@80x24.org>);
+        Wed, 25 Jan 2017 11:59:06 -0500
+Received: from mout.gmx.net ([212.227.17.20]:59662 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751029AbdAYQ6v (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 Jan 2017 11:58:51 -0500
-Received: from virtualbox ([37.24.141.236]) by mail.gmx.com (mrgmx001
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0LfkUs-1c8et73mfa-00pNDN; Wed, 25
- Jan 2017 17:58:44 +0100
-Date:   Wed, 25 Jan 2017 17:58:42 +0100 (CET)
+        id S1751787AbdAYQ7E (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 Jan 2017 11:59:04 -0500
+Received: from virtualbox ([37.24.141.236]) by mail.gmx.com (mrgmx103
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0Le69A-1c9D7F40SK-00ptmk; Wed, 25
+ Jan 2017 17:58:58 +0100
+Date:   Wed, 25 Jan 2017 17:58:57 +0100 (CET)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     git@vger.kernel.org
 cc:     Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] mingw: allow hooks to be .exe files
-Message-ID: <dc388b2df3baee83972f007cd77a57410553a411.1485362812.git.johannes.schindelin@gmx.de>
+Subject: [PATCH] Retire the `relink` command
+Message-ID: <10319c47ff3f7222c3a601827ebd9398861d509d.1485363528.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:0nj0qoS8YDyjtwEOZN1gibVu/h6AayX6l8xVZnrYVIgLT8kfVob
- z8FzrWVuAUDPsozXwt8XGEp+vO+i7yx1ZblTkUZwOlJzh9BW27h0G6S4UU5njwBPWNXXYVl
- jcukZalRt2t3JTgQ/HP/3a/hnJFCflBU+UEz30WywUlP02IcjQS59zi95WF7nfTIEj8NP7W
- c+QDNY2pBwMnuLs7m4Njw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:R8en85Kugxw=:N2Tbo05fVGcguXHpF6woqt
- TXHtQ9du7GUPQUO6Tsg01FtKa99Rf4+DlGqgGEwJ2xra/4eftsMEDm7JuVPjUVV+/aYkEKWBT
- o/+30U6BpUvLxI5ZELDEcCt1oC5Vg73MLkrtARbwKk43kt5WAtohdfqmh4OD9wtegmL+AUhAI
- MluXGSRr322OjwZu+osTvsGpisZM5pswMqYMqMTtvuHDPdF/BNUEJpGVl7yN1OeRWBW94OyES
- SA+KORq+omMFtvQRqRP4TXMLJk7eiAjfQ1phavMbB3iUCjhdzjiFk2PVnGkcYipTB8RX8k3Nd
- Ksums/fiFcmtGFGBubOv9U9rj7UlMGCpfkpt+H/Ul0LEPvn2pgE9w8P5bPobxqJkym2L6akdl
- SxRj/YW0veG1eBWIm7vw5G1Owvdk2EAVhqAPmj8mQbbmiXAd0VkQtT0OtA07O+Iym/906VqiI
- uDO4tFf5XUrTAMw+MLA/c//7Nz4RIu4xOL/LoFuuM/DS2n1V1/jzT3WJTyw0Zgi7VbXZ3MgGP
- a+wULpihC+GuVZeoK/d1O2EIYkQeA3xFrjG4ZYporSUP4gct6WxS3ATCfud1qC1h9XqAp/5B/
- RqdmOiU7xHCPA0PWEv8MDEtsboHk87mpMvvFDPchpuGNlY65XO8uI8GEiiM83KxWCwpns15UD
- h/e5p/EJzA1l/gN1yu4WEnSw9j2RqTRkR6fCjFDPz9L3f6Ec/XHBF2Uo13jnbdDvztX+ZE8J8
- pHpEe15MO+hHKmJWopoGPQaystLzPqbUBobS1MmfG7f9Ov1nC6Eevzomj+OpX/fQ9auSQZrLC
- YGNsQ0i
+X-Provags-ID: V03:K0:u+uRtkahJ7MOaBEoXHtoy7+QjszO3D4BZ1GBtuQQ5NsByDv6DKm
+ eepd2ZsDhlI7z0rBPcUm8LylTSH97SvYr1PqrWSXANeDvs8txrI7qnxspvI/bgyXnU4dQJK
+ b+68j1tAuRGgF1qYufAl12T7xSdCExAN2HherM/7I30Y9Jpb4KxRmVnCXH5vrNhpbBoOH6I
+ iLnKfuGQ3xWbEWGQZxjfw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:f6Q2rUarzL0=:r4V2ScrlHZj8hUcw+Tk8e4
+ ddlS5oaTJLW01foqC2K6BplGm6EBq+HlVZujcmYp+oL+BmJffGBIaH6bgrdItxnsToOaK4afA
+ vlwI/+rHxM+xleeaAN3LPK57+D/pGqrx2TSrH5CSNWqgNg1B3+/dovnFFXtUWdxb/UbNf99mv
+ kfjCTZ014PhIwGDzZ2yjnfwfGzgsPWoyBwJX2/gzDY1uExAu658dqyQo4iAqeTAviDT9SsL2D
+ 8Jv7VJbFaSioh5BVG+YxNRtaMK8hdac2MpXsy6RMnu0pqgpu7ITJYy2nNUHsBceQq74XAE3qp
+ FpJyjZj5sSBacIPuAKIWFKJ1nxKm8squ7teCzyo1JOdgQed1rdO38x9BrMtu0/lvpZjmXJCkY
+ TODCv/Hp1rT5U0sXVztRif8ebpY6bhOG28bQlp/t0oIZPVJtGL3Vl1XQWBs80+POjHj9DIkm1
+ lvtPTdWzQwNtrAb2DyTBoulYEnAtzp2tCudR6xLFxsqoF9epDLJGHjMnD9KO+JZ4YBkFCftJH
+ 0i14ugmSLCfFS66z9//hixb0Bj09wlibOdGmUzsqf2wz9V8rJi567L5Gqpvh0HB7LC+Fz4826
+ b7P0V14GgY4ty+VGU0Bn8FnheD3xMkVqu5RjwhmHoYE+9xjqwm8mBE25E+5zv347XHYggciVn
+ htLWGwDc0dttZiIpdqajDlmcgnTvB0f59KZn9AG74fyby9C2Wl8jNrpLhgkndNYS/Ba+N19UQ
+ IvJuyEvoY2BAKjr7+Xm+bj0UX0OzfwqdNlpYw5OJRYvum40KRO1VIS7UGuXBOLoz7Gg7d/wt9
+ wN4/3jn
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This change is necessary to allow the files in .git/hooks/ to optionally
-have the file extension `.exe` on Windows, as the file names are
-hardcoded otherwise.
+Back in the olden days, when all objects were loose and rubber boots were
+made out of wood, it made sense to try to share (immutable) objects
+between repositories.
 
-Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Ever since the arrival of pack files, it is but an anachronism.
+
+Let's move the script to the contrib/examples/ directory and no longer
+offer it.
+
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
-Published-As: https://github.com/dscho/git/releases/tag/exe-as-hook-v1
-Fetch-It-Via: git fetch https://github.com/dscho/git exe-as-hook-v1
+Published-As: https://github.com/dscho/git/releases/tag/retire-relink-v1
+Fetch-It-Via: git fetch https://github.com/dscho/git retire-relink-v1
 
- run-command.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ .gitignore                                          | 1 -
+ Makefile                                            | 1 -
+ command-list.txt                                    | 1 -
+ git-relink.perl => contrib/examples/git-relink.perl | 0
+ {Documentation => contrib/examples}/git-relink.txt  | 0
+ 5 files changed, 3 deletions(-)
+ rename git-relink.perl => contrib/examples/git-relink.perl (100%)
+ rename {Documentation => contrib/examples}/git-relink.txt (100%)
 
-diff --git a/run-command.c b/run-command.c
-index 73bfba7ef9..45229ef052 100644
---- a/run-command.c
-+++ b/run-command.c
-@@ -871,8 +871,14 @@ const char *find_hook(const char *name)
+diff --git a/.gitignore b/.gitignore
+index 6722f78f9a..b1020b875f 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -118,7 +118,6 @@
+ /git-rebase--merge
+ /git-receive-pack
+ /git-reflog
+-/git-relink
+ /git-remote
+ /git-remote-http
+ /git-remote-https
+diff --git a/Makefile b/Makefile
+index 27afd0f378..658ac19247 100644
+--- a/Makefile
++++ b/Makefile
+@@ -527,7 +527,6 @@ SCRIPT_PERL += git-archimport.perl
+ SCRIPT_PERL += git-cvsexportcommit.perl
+ SCRIPT_PERL += git-cvsimport.perl
+ SCRIPT_PERL += git-cvsserver.perl
+-SCRIPT_PERL += git-relink.perl
+ SCRIPT_PERL += git-send-email.perl
+ SCRIPT_PERL += git-svn.perl
  
- 	strbuf_reset(&path);
- 	strbuf_git_path(&path, "hooks/%s", name);
--	if (access(path.buf, X_OK) < 0)
-+	if (access(path.buf, X_OK) < 0) {
-+#ifdef STRIP_EXTENSION
-+		strbuf_addstr(&path, ".exe");
-+		if (access(path.buf, X_OK) >= 0)
-+			return path.buf;
-+#endif
- 		return NULL;
-+	}
- 	return path.buf;
- }
- 
+diff --git a/command-list.txt b/command-list.txt
+index 2a94137bbb..a1fad28fd8 100644
+--- a/command-list.txt
++++ b/command-list.txt
+@@ -107,7 +107,6 @@ git-read-tree                           plumbingmanipulators
+ git-rebase                              mainporcelain           history
+ git-receive-pack                        synchelpers
+ git-reflog                              ancillarymanipulators
+-git-relink                              ancillarymanipulators
+ git-remote                              ancillarymanipulators
+ git-repack                              ancillarymanipulators
+ git-replace                             ancillarymanipulators
+diff --git a/git-relink.perl b/contrib/examples/git-relink.perl
+similarity index 100%
+rename from git-relink.perl
+rename to contrib/examples/git-relink.perl
+diff --git a/Documentation/git-relink.txt b/contrib/examples/git-relink.txt
+similarity index 100%
+rename from Documentation/git-relink.txt
+rename to contrib/examples/git-relink.txt
 
 base-commit: 4e59582ff70d299f5a88449891e78d15b4b3fabe
 -- 
