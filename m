@@ -2,85 +2,79 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E3CD21F6DC
-	for <e@80x24.org>; Wed, 25 Jan 2017 20:35:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9AA5A1F6DC
+	for <e@80x24.org>; Wed, 25 Jan 2017 20:45:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752131AbdAYUfU (ORCPT <rfc822;e@80x24.org>);
-        Wed, 25 Jan 2017 15:35:20 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:60753 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752091AbdAYUfU (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 Jan 2017 15:35:20 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id AAC9263987;
-        Wed, 25 Jan 2017 15:35:18 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=PmNXxP2N6kKEbkEOj3fiNP63p38=; b=ouqKMW
-        TcG3zxfPpamAc8MizoXjIbxUCHEkPKAS6z2gDRYB0VLbBxJjlb9fOejyfEwMF/pv
-        vjI97eTKrrWEExexkba9clR6q6mDl3z9q88ioSmAVukOqGsFxGCMOBnMfCo8xW1L
-        OkMQeG3Hd+f9uLi8+eFf0woNAQfDKDYHwmkgU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=afB4e5+sRw5gSpS6RDIjxtN6S4VO7kqH
-        wjtDuwKpEDvvqTKpL75pJvgq0IL7cl9323bWVx6TE9qEsvUrmWYLAJGsmddVdI2I
-        byp5sjMWkZg0MhKlMcb0yJwmyd+LXO4UHzAICUFr0WUYr6pL/rQpCtv2TH9fQErZ
-        ewzNgZfbA/E=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id A11BE63986;
-        Wed, 25 Jan 2017 15:35:18 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id DD6B363985;
-        Wed, 25 Jan 2017 15:35:17 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     "git\@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: What's cooking in git.git (Jan 2017, #04; Mon, 23)
-References: <xmqqo9yxpaxk.fsf@gitster.mtv.corp.google.com>
-        <CAGZ79kZKDyfP1SPsxAf8oMSU3763QiogLpUzFZHy+OTQQdJP6A@mail.gmail.com>
-Date:   Wed, 25 Jan 2017 12:35:16 -0800
-In-Reply-To: <CAGZ79kZKDyfP1SPsxAf8oMSU3763QiogLpUzFZHy+OTQQdJP6A@mail.gmail.com>
-        (Stefan Beller's message of "Wed, 25 Jan 2017 10:38:32 -0800")
-Message-ID: <xmqqwpdianej.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+        id S1750943AbdAYUpI (ORCPT <rfc822;e@80x24.org>);
+        Wed, 25 Jan 2017 15:45:08 -0500
+Received: from cloud.peff.net ([104.130.231.41]:44740 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1750856AbdAYUpH (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 Jan 2017 15:45:07 -0500
+Received: (qmail 1342 invoked by uid 109); 25 Jan 2017 20:45:07 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 25 Jan 2017 20:45:07 +0000
+Received: (qmail 15630 invoked by uid 111); 25 Jan 2017 20:45:06 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 25 Jan 2017 15:45:06 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 25 Jan 2017 15:45:05 -0500
+Date:   Wed, 25 Jan 2017 15:45:05 -0500
+From:   Jeff King <peff@peff.net>
+To:     Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Cc:     git <git@vger.kernel.org>, Pranit Bauva <pranit.bauva@gmail.com>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <cmn@dwim.me>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Thomas Gummerer <t.gummerer@gmail.com>
+Subject: Re: GSoC 2017: application open, deadline = February 9, 2017
+Message-ID: <20170125204504.ebw2sa4uokfwwfnt@sigill.intra.peff.net>
+References: <vpq1svtstud.fsf@anie.imag.fr>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: C8978CF0-E33D-11E6-B537-A7617B1B28F4-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <vpq1svtstud.fsf@anie.imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
+On Mon, Jan 23, 2017 at 04:02:02PM +0100, Matthieu Moy wrote:
 
-> On Mon, Jan 23, 2017 at 4:18 PM, Junio C Hamano <gitster@pobox.com> wrote:
->>
->> * sb/unpack-trees-super-prefix (2017-01-12) 5 commits
->>  - SQUASH
->>  - unpack-trees: support super-prefix option
->>  - t1001: modernize style
->>  - t1000: modernize style
->>  - read-tree: use OPT_BOOL instead of OPT_SET_INT
->>
->>  "git read-tree" and its underlying unpack_trees() machinery learned
->>  to report problematic paths prefixed with the --super-prefix option.
->>
->>  Expecting a reroll.
->>  The first three are in good shape.  The last one needs a better
->>  explanation and possibly an update to its test.
->>  cf. <CAGZ79kaHDnVLQr8WLoaD5KKs7EqeW=KbkptF=iHpU5t054Xcdw@mail.gmail.com>
->>
->
-> Please see
-> https://public-inbox.org/git/20170118010520.8804-1-sbeller@google.com/
+> If the answer to one of the above question is yes, then:
+> 
+> * Who's willing to mentor? and to admin?
 
-Thanks, applied.  Let's move this forward.
+I did co-admin last year and the year before, but I made Matthieu do all
+the work. :)
 
+I do not mind doing the administrative stuff.  But the real work is in
+polishing up the ideas list and microprojects page. So I think the first
+step, if people are interested in GSoC, is not just to say "yes, let's
+do it", but to actually flesh out these pages:
 
+> * We need to write the application, i.e. essentially polish and update
+>   the text here: https://git.github.io/SoC-2016-Org-Application/ and
+>   update the list of project ideas and microprojects :
+>   https://git.github.io/SoC-2017-Ideas/
+>   https://git.github.io/SoC-2016-Microprojects/
 
+That can be done incrementally by people who care (especially mentors)
+over the next week or so, and doesn't require any real admin
+coordination. If it happens and the result looks good, then the
+application process is pretty straightforward.
+
+If it doesn't, then we probably ought not to participate in GSoC.
+
+-Peff
+
+PS If we do participate, we should consider Outreachy as well, which can
+   expand our base of possible applicants. Though note that ones who are
+   not eligible for GSoC would need to be funded by us. Last year GitHub
+   offered to cover the stipend for an Outreachy intern for Git. If
+   there's interest I can see if that offer can be extended for this
+   year.
