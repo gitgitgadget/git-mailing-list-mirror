@@ -6,70 +6,104 @@ X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 837891F6DC
-	for <e@80x24.org>; Wed, 25 Jan 2017 19:35:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 05B5F1F6DC
+	for <e@80x24.org>; Wed, 25 Jan 2017 19:47:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751742AbdAYTfp (ORCPT <rfc822;e@80x24.org>);
-        Wed, 25 Jan 2017 14:35:45 -0500
-Received: from cloud.peff.net ([104.130.231.41]:44679 "EHLO cloud.peff.net"
+        id S1751610AbdAYTrq (ORCPT <rfc822;e@80x24.org>);
+        Wed, 25 Jan 2017 14:47:46 -0500
+Received: from cloud.peff.net ([104.130.231.41]:44690 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751375AbdAYTfo (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 Jan 2017 14:35:44 -0500
-Received: (qmail 28976 invoked by uid 109); 25 Jan 2017 19:35:44 -0000
+        id S1751056AbdAYTrq (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 Jan 2017 14:47:46 -0500
+Received: (qmail 29810 invoked by uid 109); 25 Jan 2017 19:47:45 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 25 Jan 2017 19:35:44 +0000
-Received: (qmail 14887 invoked by uid 111); 25 Jan 2017 19:35:43 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 25 Jan 2017 19:47:45 +0000
+Received: (qmail 15049 invoked by uid 111); 25 Jan 2017 19:47:45 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 25 Jan 2017 14:35:43 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 25 Jan 2017 14:35:42 -0500
-Date:   Wed, 25 Jan 2017 14:35:42 -0500
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 25 Jan 2017 14:47:45 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 25 Jan 2017 14:47:43 -0500
+Date:   Wed, 25 Jan 2017 14:47:43 -0500
 From:   Jeff King <peff@peff.net>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 06/12] clone: disable save_commit_buffer
-Message-ID: <20170125193541.yxqq4avnjngbigmq@sigill.intra.peff.net>
+Subject: Re: [PATCH 07/12] fetch-pack: cache results of for_each_alternate_ref
+Message-ID: <20170125194743.5dl5cypyoeciqcyq@sigill.intra.peff.net>
 References: <20170124003729.j4ygjcgypdq7hceg@sigill.intra.peff.net>
- <20170124004500.v7geae55w6zeax7m@sigill.intra.peff.net>
- <xmqqmvefaray.fsf@gitster.mtv.corp.google.com>
- <20170125192740.5lqoc2srqfjiyfwr@sigill.intra.peff.net>
+ <20170124004559.vlsrwwphuzdsfqoq@sigill.intra.peff.net>
+ <xmqqinp3aqu0.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20170125192740.5lqoc2srqfjiyfwr@sigill.intra.peff.net>
+In-Reply-To: <xmqqinp3aqu0.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jan 25, 2017 at 02:27:40PM -0500, Jeff King wrote:
+On Wed, Jan 25, 2017 at 11:21:11AM -0800, Junio C Hamano wrote:
 
-> > > For fetching operations like clone, we already disable
-> > 
-> > s/clone/fetch/ you meant?
+> > diff --git a/object.h b/object.h
+> > index 614a00675..f52957dcb 100644
+> > --- a/object.h
+> > +++ b/object.h
+> > @@ -29,7 +29,7 @@ struct object_array {
+> >  /*
+> >   * object flag allocation:
+> >   * revision.h:      0---------10                                26
+> > - * fetch-pack.c:    0---4
+> > + * fetch-pack.c:    0---5
+> >   * walker.c:        0-2
+> >   * upload-pack.c:       4       11----------------19
+> >   * builtin/blame.c:               12-13
 > 
-> Well, no, because this patch deals with clone.
-> 
-> It's likely that builtin/fetch.c would want the same treatment. It
-> didn't come up for me because I've disabled the alternates check for
-> that case (but you can't do that with stock git), and I didn't dig
-> further.
-> 
-> Possibly this should just go into fetch-pack.c, right before we walk
-> over all of the refs and call parse_object() and deref_tag() on all of
-> them. It feels a little funny to tweak the global save_commit_buffer
-> flag there, but it already do so in everything_local(), so I don't think
-> we're really losing much.
+> This is a tangent, but I am not sure how much it buys us to keep
+> track of the information here in object.h, as all that picture says
+> is "revision traversal machinery given by revision.[ch] can never be
+> used inside fetch-pack and upload-pack", and that is already said by
+> the current picture that says fetch-pack.c uses 0 thru 4, and
+> updating it to say that we now use 0 thru 5 would not change the
+> conclusion.
 
-Hrm. So I thought it might be useful to write a patch that just tweaks
-save_commit_buffer at the start of fetch_pack(). But looking it over,
-we call everything_local() _before_ we walk over all the refs. So
-save_commit_buffer should already be turned off for my case.
+I agree that bumping 4 to 5 does not help at all, given the current
+allocations. But it could eventually, if another allocation wanted to
+pick up 5, and might plausibly be used together with fetch-pack.
 
-I wonder if I made a mistake while measuring the peak RSS. Or if clone
-parses some commits before it calls into fetch_pack() (but which
-objects? It doesn't have any until it does the fetch).
+The main thing is that we should keep this up to date, and that it
+should cause textual conflicts when two topics update the allocation, so
+that a human looks at it. I actually think we fail at the latter,
+because a change to revision.h to use bit 20 would probably get
+auto-resolved against a change to allocate the same bit to blame.c.
 
-Perhaps we should just drop this patch (though I think it is logically
-consistent and wouldn't hurt anything).
+Probably a better organization is:
+
+  bit 0: revision.h, fetch-pack.c, walker.c
+  bit 1: revision.h, fetch-pack.c, walker.c
+  ...
+  bit 10: revision.h
+  bit 11: upload-pack.c
+
+and so forth. It's more tedious to read and write, but any two changes
+to the same bit would be forced to generate a conflict (assuming a
+line-oriented merge, of course :) ).
+
+> What I am trying to get at is that we may want to (re)consider how
+> we manage these bits.  But that is totally outside the scope of this
+> series, and updating the above is the right thing to do here.
+
+Perhaps you meant something like the above when you said this. But what
+I'd _really_ love is to stop using global bits entirely, and have some
+way to allocate a bitset and efficiently convert "struct object" to an
+index into the bitset. Then cleaning up just becomes throwing out your
+bitset, and by default operations do not see the bits from other
+unrelated operations. That makes it impossible to have bugs like the one
+fixed by 5c08dc48a (checkout: clear commit marks after detached-orphan
+check, 2011-03-20).
+
+I can't think of a way to do that efficiently besides something like the
+commit-slab system, but extended to all objects. The lookups there are
+fairly cheap, though it does have worse cache performance. I don't know
+if that would matter in practice or not.
+
+But yeah, definitely outside the scope of this series. :)
 
 -Peff
