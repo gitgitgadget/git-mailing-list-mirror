@@ -3,213 +3,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 06ECD1F6DC
-	for <e@80x24.org>; Wed, 25 Jan 2017 23:04:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3AA821F6DC
+	for <e@80x24.org>; Wed, 25 Jan 2017 23:19:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752382AbdAYXEy (ORCPT <rfc822;e@80x24.org>);
-        Wed, 25 Jan 2017 18:04:54 -0500
-Received: from mail-pg0-f54.google.com ([74.125.83.54]:35992 "EHLO
-        mail-pg0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752638AbdAYXEx (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 Jan 2017 18:04:53 -0500
-Received: by mail-pg0-f54.google.com with SMTP id 3so9360469pgj.3
-        for <git@vger.kernel.org>; Wed, 25 Jan 2017 15:04:53 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=Nfn8yIRIFQuZPP44aWmazf5PpUlUF40A6FDOP7RqZck=;
-        b=p9yFoxdz3SBHkOVLmAkus+KqohOHWGYAG8wG4TFvFSz5Gfn5ZDtno/xzwEgEmgnQaI
-         OLYpPoqXwH1zcFUv28V0kgUk5CtFs5v1ztaDrKVxfVnaGqWd6wcvfGMZSkTpcjqoc3Fc
-         IkibGQj4ZmfUaKzzIIm4KlYsKMMjXFPEIBuhtAFeWJ5LATfYlKEAsKpa1QTjKH2vnpBd
-         mfT6MdkChAuo7/DDBW8bZyXsD3c61V9xWIf1WFvj3LA1dKBjddtve96+3tppyAPrMwqj
-         bNl18nEXnphrJhYOXnLEqc8p1jzZS+y1/9dMZoAXtnUQHeM0zKG3C99uMXiZIH+jcIqc
-         nLJw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=Nfn8yIRIFQuZPP44aWmazf5PpUlUF40A6FDOP7RqZck=;
-        b=Nzk+YIFtefWtxm3tk9geCCoOGR3JfvlVTDN541pPl6X0OFkrV7PNYb5kJSCG7L7QqY
-         5UbUNm4N6Alsx5RqxCzT31n3yBkKZ05/mwdZA2KJ++tC3OgPGQTOFJmPNn6y8rcH4H9l
-         Fwe1CAvpptdeAEc6agqdWllWyqdSUng61+IgFLC1CUOth+itxd77KOmps4yu+K3avTv8
-         1qJP/UC9Se1HuRjmq2WKKQnggG2CsSosuNhR6ZG02FvCJ8CsO/Ay4aZAKYOTsGxfPJwy
-         8hqQHSkYPIpQqnHiMmIQnmRuNK7UeJVf5z2CBeKemwlyjALLaXbLeG/E7zHKpKXTg4YL
-         ktDw==
-X-Gm-Message-State: AIkVDXJ9+/fkAKygNXN4X6cgSm8Kiz1OuJf8qiarJXp2aiATClBUluubNFBHJfgWxtiJxtLa
-X-Received: by 10.99.229.17 with SMTP id r17mr1915008pgh.81.1485385492456;
-        Wed, 25 Jan 2017 15:04:52 -0800 (PST)
-Received: from localhost ([2620:0:1000:5b10:3993:32c0:4ba2:a648])
-        by smtp.gmail.com with ESMTPSA id b75sm3466913pfb.90.2017.01.25.15.04.51
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 25 Jan 2017 15:04:51 -0800 (PST)
-From:   Stefan Beller <sbeller@google.com>
-To:     gitster@pobox.com
-Cc:     git@vger.kernel.org, bmwill@google.com, peff@peff.net,
-        Stefan Beller <sbeller@google.com>
-Subject: [PATCHv3 3/3] submodule absorbing: fix worktree/gitdir pointers recursively for non-moves
-Date:   Wed, 25 Jan 2017 15:04:50 -0800
-Message-Id: <20170125230450.4393-1-sbeller@google.com>
-X-Mailer: git-send-email 2.11.0.495.g04f60290a0.dirty
-In-Reply-To: <xmqq37g692da.fsf@gitster.mtv.corp.google.com>
-References: <xmqq37g692da.fsf@gitster.mtv.corp.google.com>
+        id S1752457AbdAYXTd (ORCPT <rfc822;e@80x24.org>);
+        Wed, 25 Jan 2017 18:19:33 -0500
+Received: from castro.crustytoothpaste.net ([75.10.60.170]:37922 "EHLO
+        castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1751255AbdAYXTc (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 25 Jan 2017 18:19:32 -0500
+Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id A06DC280AD;
+        Wed, 25 Jan 2017 23:19:29 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
+        s=default; t=1485386369;
+        bh=J5wNHWDngW/98nfdyd5tBSnQqrYUiA8OGMYyxdx6BIc=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=gZoqDoRyRH/urB/fLSRshKyCd2EaTtE9sOKdnflA8fK9ifzo8dIt7W/sEGw3plUYh
+         KNHt04A7n/3z26JRwBu/r6EyipskWU9eptf+9Zs6SnfUDf/EsNk8YXHo3DybBKZE+J
+         44giyCyvi3fS8CS7Wj6GdsTt4Um4tjfn9b7qgryCH7CF0NoUKZUlNNbUB/WOLjGEpM
+         zVjjppZvRL+Hkroi08ZWjwCxXOXY8H491uOeN8BcQdHf12DIzMPMJF4bGoP8rYD5vr
+         ofrQEvKVX1NzXZw90xYpHMfYevlpvx49ugpyGDLuuIx8ADK5mCt+8i8wDTl+B5wEmJ
+         +0hafFMA0z/kE+n5hWkzP0dCiL8NmoZpjaQsUg5Ud9hvDcQv+g4IWVOQkFDpXp8kuj
+         YYie9GnfKKZz4aZR4/aTWqpYLUnG/JiCOEmj7hxwMfnxGUZJf6/689xXmapSvGgS/H
+         qnbL1xY2tZeQs0txFMDL6g61IKsA1OgHW7jEcLpLSL8gnRjAmWf
+Date:   Wed, 25 Jan 2017 23:19:26 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Jeff King <peff@peff.net>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        git@vger.kernel.org
+Subject: Re: [PATCH v2 0/7] Macros for Asciidoctor support
+Message-ID: <20170125231926.usufhlugjotjw5zw@genre.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Jeff King <peff@peff.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        git@vger.kernel.org
+References: <20170122024156.284180-1-sandals@crustytoothpaste.net>
+ <alpine.DEB.2.20.1701251425080.3469@virtualbox>
+ <20170125213544.eelk4pjhrhshi6zh@sigill.intra.peff.net>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="ncjxcf7vvxmsd4tk"
+Content-Disposition: inline
+In-Reply-To: <20170125213544.eelk4pjhrhshi6zh@sigill.intra.peff.net>
+X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
+ 4.7.0-1-amd64)
+User-Agent: NeoMutt/20170113 (1.7.2)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Consider having a submodule 'sub' and a nested submodule at 'sub/nested'.
-When nested is already absorbed into sub, but sub is not absorbed into
-its superproject, then we need to fixup the gitfile and core.worktree
-setting for 'nested' when absorbing 'sub', but we do not need to move
-its git dir around.
 
-Previously 'nested's gitfile contained "gitdir: ../.git/modules/nested";
-it has to be corrected to "gitdir: ../../.git/modules/sub1/modules/nested".
+--ncjxcf7vvxmsd4tk
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-An alternative I considered to do this work lazily, i.e. when resolving
-"../.git/modules/nested", we would notice the ".git" being a gitfile
-linking to another path.  That seemed to be robuster by design, but harder
-to get the implementation right.  Maybe we have to do that anyway once we
-try to have submodules and worktrees working nicely together, but for now
-just produce 'correct' (i.e. direct) pointers.
+On Wed, Jan 25, 2017 at 04:35:44PM -0500, Jeff King wrote:
+> On Wed, Jan 25, 2017 at 02:28:55PM +0100, Johannes Schindelin wrote:
+>=20
+> > > The need for the extensions could be replaced with a small amount of
+> > > Ruby code, if that's considered desirable.  Previous opinions on doing
+> > > so were negative, however.
+> >=20
+> > Quite frankly, it is annoying to be forced to install the extensions. I
+> > would much rather have the small amount of Ruby code in Git's repositor=
+y.
+>=20
+> Me too. Dependencies can be a big annoyance. I'd reserve judgement until
+> I saw the actual Ruby code, though. :)
 
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
+I've sent the patch before, but I can send it again.  It's relatively
+small and self-contained.  I'm also happy to be responsible for
+maintaining it.
+--=20
+brian m. carlson / brian with sandals: Houston, Texas, US
++1 832 623 2791 | https://www.crustytoothpaste.net/~bmc | My opinion only
+OpenPGP: https://keybase.io/bk2204
 
- This replaces the last patch of the series, containing Brandons SQUASH proposal
- as well as the removal of the goto.
- Thanks,
- Stefan
+--ncjxcf7vvxmsd4tk
+Content-Type: application/pgp-signature; name="signature.asc"
 
- submodule.c                        | 62 ++++++++++++++++++++++++++++----------
- t/t7412-submodule-absorbgitdirs.sh | 27 +++++++++++++++++
- 2 files changed, 73 insertions(+), 16 deletions(-)
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.1.17 (GNU/Linux)
 
-diff --git a/submodule.c b/submodule.c
-index 4c4f033e8a..3b98766a6b 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -1437,22 +1437,57 @@ void absorb_git_dir_into_superproject(const char *prefix,
- 				      const char *path,
- 				      unsigned flags)
- {
--	const char *sub_git_dir, *v;
--	char *real_sub_git_dir = NULL, *real_common_git_dir = NULL;
-+	int err_code;
-+	const char *sub_git_dir;
- 	struct strbuf gitdir = STRBUF_INIT;
--
- 	strbuf_addf(&gitdir, "%s/.git", path);
--	sub_git_dir = resolve_gitdir(gitdir.buf);
-+	sub_git_dir = resolve_gitdir_gently(gitdir.buf, &err_code);
- 
- 	/* Not populated? */
--	if (!sub_git_dir)
--		goto out;
-+	if (!sub_git_dir) {
-+		char *real_new_git_dir;
-+		const char *new_git_dir;
-+		const struct submodule *sub;
-+
-+		if (err_code == READ_GITFILE_ERR_STAT_FAILED) {
-+			/* unpopulated as expected */
-+			strbuf_release(&gitdir);
-+			return;
-+		}
-+
-+		if (err_code != READ_GITFILE_ERR_NOT_A_REPO)
-+			/* We don't know what broke here. */
-+			read_gitfile_error_die(err_code, path, NULL);
-+
-+		/*
-+		* Maybe populated, but no git directory was found?
-+		* This can happen if the superproject is a submodule
-+		* itself and was just absorbed. The absorption of the
-+		* superproject did not rewrite the git file links yet,
-+		* fix it now.
-+		*/
-+		sub = submodule_from_path(null_sha1, path);
-+		if (!sub)
-+			die(_("could not lookup name for submodule '%s'"), path);
-+		new_git_dir = git_path("modules/%s", sub->name);
-+		if (safe_create_leading_directories_const(new_git_dir) < 0)
-+			die(_("could not create directory '%s'"), new_git_dir);
-+		real_new_git_dir = real_pathdup(new_git_dir);
-+		connect_work_tree_and_git_dir(path, real_new_git_dir);
-+
-+		free(real_new_git_dir);
-+	} else {
-+		/* Is it already absorbed into the superprojects git dir? */
-+		char *real_sub_git_dir = real_pathdup(sub_git_dir);
-+		char *real_common_git_dir = real_pathdup(get_git_common_dir());
- 
--	/* Is it already absorbed into the superprojects git dir? */
--	real_sub_git_dir = real_pathdup(sub_git_dir);
--	real_common_git_dir = real_pathdup(get_git_common_dir());
--	if (!skip_prefix(real_sub_git_dir, real_common_git_dir, &v))
--		relocate_single_git_dir_into_superproject(prefix, path);
-+		if (!starts_with(real_sub_git_dir, real_common_git_dir))
-+			relocate_single_git_dir_into_superproject(prefix, path);
-+
-+		free(real_sub_git_dir);
-+		free(real_common_git_dir);
-+	}
-+	strbuf_release(&gitdir);
- 
- 	if (flags & ABSORB_GITDIR_RECURSE_SUBMODULES) {
- 		struct child_process cp = CHILD_PROCESS_INIT;
-@@ -1478,9 +1513,4 @@ void absorb_git_dir_into_superproject(const char *prefix,
- 
- 		strbuf_release(&sb);
- 	}
--
--out:
--	strbuf_release(&gitdir);
--	free(real_sub_git_dir);
--	free(real_common_git_dir);
- }
-diff --git a/t/t7412-submodule-absorbgitdirs.sh b/t/t7412-submodule-absorbgitdirs.sh
-index 1c47780e2b..e2bbb449b6 100755
---- a/t/t7412-submodule-absorbgitdirs.sh
-+++ b/t/t7412-submodule-absorbgitdirs.sh
-@@ -64,6 +64,33 @@ test_expect_success 'absorb the git dir in a nested submodule' '
- 	test_cmp expect.2 actual.2
- '
- 
-+test_expect_success 're-setup nested submodule' '
-+	# un-absorb the direct submodule, to test if the nested submodule
-+	# is still correct (needs a rewrite of the gitfile only)
-+	rm -rf sub1/.git &&
-+	mv .git/modules/sub1 sub1/.git &&
-+	GIT_WORK_TREE=. git -C sub1 config --unset core.worktree &&
-+	# fixup the nested submodule
-+	echo "gitdir: ../.git/modules/nested" >sub1/nested/.git &&
-+	GIT_WORK_TREE=../../../nested git -C sub1/.git/modules/nested config \
-+		core.worktree "../../../nested" &&
-+	# make sure this re-setup is correct
-+	git status --ignore-submodules=none
-+'
-+
-+test_expect_success 'absorb the git dir in a nested submodule' '
-+	git status >expect.1 &&
-+	git -C sub1/nested rev-parse HEAD >expect.2 &&
-+	git submodule absorbgitdirs &&
-+	test -f sub1/.git &&
-+	test -f sub1/nested/.git &&
-+	test -d .git/modules/sub1/modules/nested &&
-+	git status >actual.1 &&
-+	git -C sub1/nested rev-parse HEAD >actual.2 &&
-+	test_cmp expect.1 actual.1 &&
-+	test_cmp expect.2 actual.2
-+'
-+
- test_expect_success 'setup a gitlink with missing .gitmodules entry' '
- 	git init sub2 &&
- 	test_commit -C sub2 first &&
--- 
-2.11.0.495.g04f60290a0.dirty
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAliJMn4ACgkQv1NdgR9S
+9osLZA//YpM2Jl9cvEIL9bkjRzRBFzfFU9OGY/XUE025uhkoFjbNtXq+ResFRUbY
+IwP4Ol9whHsCmejRKCZkTXLEYNbCwv316HyoJM6W1mQtwZErsk6qhhyMZ/AwldnV
+lYymuT7LflwuOgBcPIUKBj+7qsG3TYCZwkZRc924nnu215X4iO0/X8ByLGN9bjAv
+haB5lWr23GWpkvhA2+T9rvveCSVowDTsWqh+W69gEGQzHqGaekz3i/aJqiKG7eG1
+vWmrwNKQ7aGecpnlVHa04aXriWCoBhWhzcUrWrH69yRHQbYXrNGpXlq4n8PYkjYt
+sjxww8iC4RC9OWsGPjdt0IIeVkW6fWRo49B5pEnQtkX2Z4xtXm5i9eMY8MJJgOEh
+3qVrM/cPB/PigtwddTyGpXJ8ik/5Rnl2Vp47W6jPJw4S63631F06IyywSVpMYgLH
+DPnH5UfRfzuyOWPSzF7c7f5AJSgR5pTEmvSNJzv5sZ9nkMzpDTC7imu+050sdlMB
+b2o+peNjH0uLgaNbnCBHOPP9IU0TnnVCNznGXNrR4qK29HSEW6apgEhEGKbyvEhy
+vcSpdQXPAK0NVpEls/5by/OBhopDOc61boPw6KArL0JisaizhVZWwYtZpFWVEKnH
+iHO6tzKNHlV9svyCPJ9S7a4xS52tdYn2CZazIop6eQP6p6rdvCg=
+=XYnQ
+-----END PGP SIGNATURE-----
 
+--ncjxcf7vvxmsd4tk--
