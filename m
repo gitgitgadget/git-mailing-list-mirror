@@ -2,79 +2,60 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 41D921F794
-	for <e@80x24.org>; Wed, 25 Jan 2017 17:20:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4B84D1F6DC
+	for <e@80x24.org>; Wed, 25 Jan 2017 17:40:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751605AbdAYRUc (ORCPT <rfc822;e@80x24.org>);
-        Wed, 25 Jan 2017 12:20:32 -0500
-Received: from mail-lf0-f65.google.com ([209.85.215.65]:36509 "EHLO
-        mail-lf0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750959AbdAYRUc (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 Jan 2017 12:20:32 -0500
-Received: by mail-lf0-f65.google.com with SMTP id h65so21653370lfi.3
-        for <git@vger.kernel.org>; Wed, 25 Jan 2017 09:20:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to:cc;
-        bh=vqqJezXciKZPpgscwPI8p1tGttfFz5bjmxz4Wd6NlRY=;
-        b=jY2oy8ZC+49eNe3ra08RslbAHlnT0b6PV4Fo+Rde7biDNhaX8zcwRA9/L7EZHRAfRu
-         W0g+98RcK3SNyLDgietLNxF/HwxgmGMBqdtYqGQimz+Fhvy6yrXWKBRAT8dOcpRYeHH+
-         nt7rv5BYFuIWzMHQuXGfKczvHKjZh0rvWTQLO9BnRUze1u1G93njLePujmAMjrC7l/PG
-         2GObwk30wnrY65R4uN9m1PkhhC7w4X6+kNTNyf+80vmu1Ha3tz/REfqRjg58F4GS7fjS
-         p6HDQfQmDlVwAX28juWfefQYoz0JAB42mCJtt0yjU9A096k1zvPfs+kM/rJgHNpnuTkJ
-         qspA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=vqqJezXciKZPpgscwPI8p1tGttfFz5bjmxz4Wd6NlRY=;
-        b=hGoYOvzblyXzxEyrQUeBirK50X7ru8JHEK8nHskRxYcXxwY9VF4/ICDzjWkMXXbWgU
-         Tw/UJapqzqwQrAeoCj2aw2+BDMJmInDkWq/bdAIojQKB4N58aW1bViAgb4Fy7w+mipDa
-         ALQTFvbhODjH8GP/0eAvPv9of+CQ20DFV8Q0i5ac0pBo7zfXgsUc8qYW4vc1dqX9xV6P
-         gUfSEnkTnJHyv1pNkWnObpqgXCidIyc5u6lyMB8L8rxikjXPMYKBHPopiwo0lAPwC/rf
-         L15HzfbSUinrkoK8A/JujuASoWD8JbQAAtjFGhLxCh8qErbztGrj+RyJZexPUY9bEzcY
-         yLGw==
-X-Gm-Message-State: AIkVDXJrW1ntvBwEIMFSudXU9ytzlg6DOCYuwmfQ11tNJzIUdiWQmtlVnYqHaC4rlj66Cz6KeQ4QHYe9x/0+NQ==
-X-Received: by 10.46.69.139 with SMTP id s133mr16261029lja.56.1485364830509;
- Wed, 25 Jan 2017 09:20:30 -0800 (PST)
+        id S1751841AbdAYRkC (ORCPT <rfc822;e@80x24.org>);
+        Wed, 25 Jan 2017 12:40:02 -0500
+Received: from cloud.peff.net ([104.130.231.41]:44553 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751629AbdAYRkB (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 Jan 2017 12:40:01 -0500
+Received: (qmail 21017 invoked by uid 109); 25 Jan 2017 17:40:00 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 25 Jan 2017 17:40:00 +0000
+Received: (qmail 13421 invoked by uid 111); 25 Jan 2017 17:40:00 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 25 Jan 2017 12:40:00 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 25 Jan 2017 12:39:58 -0500
+Date:   Wed, 25 Jan 2017 12:39:58 -0500
+From:   Jeff King <peff@peff.net>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Lars Schneider <larsxschneider@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
+Subject: Re: What's cooking in git.git (Jan 2017, #04; Mon, 23)
+Message-ID: <20170125173958.pg546a6w33dirp5k@sigill.intra.peff.net>
+References: <xmqqo9yxpaxk.fsf@gitster.mtv.corp.google.com>
+ <0D956B23-E655-4C28-A205-14CCC0A7DEA2@gmail.com>
+ <20170124132749.l3ezupyitvxe4t2l@sigill.intra.peff.net>
+ <alpine.DEB.2.20.1701251800120.3469@virtualbox>
 MIME-Version: 1.0
-Received: by 10.25.199.13 with HTTP; Wed, 25 Jan 2017 09:20:30 -0800 (PST)
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Wed, 25 Jan 2017 18:20:30 +0100
-Message-ID: <CAP8UFD2egjS5mjOCbC5dMGyb8LVzKjkBgdd5bGT-9Rrbb1uUHg@mail.gmail.com>
-Subject: [ANNOUNCE] Git Rev News edition 23
-To:     git <git@vger.kernel.org>
-Cc:     Thomas Ferris Nicolaisen <tfnico@gmail.com>,
-        Jakub Narebski <jnareb@gmail.com>,
-        Markus Jansen <mja@jansen-preisler.de>,
-        Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jeff King <peff@peff.net>, Stefan Beller <sbeller@google.com>,
-        Jacob Keller <jacob.keller@gmail.com>, Eric Wong <e@80x24.org>,
-        Eduardo Habkost <ehabkost@redhat.com>,
-        Pranit Bauva <pranit.bauva@gmail.com>,
-        Andreas Schwab <schwab@linux-m68k.org>,
-        Javantea <jvoss@altsci.com>,
-        "Aneesh Kumar K.V" <aneesh.kumar@linux.vnet.ibm.com>,
-        Philip Oakley <philipoakley@iee.org>,
-        Lars Schneider <larsxschneider@gmail.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <alpine.DEB.2.20.1701251800120.3469@virtualbox>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi everyone,
+On Wed, Jan 25, 2017 at 06:01:11PM +0100, Johannes Schindelin wrote:
 
-The 23rd edition of Git Rev News is now published:
+> > Looks like "mv" prompts and then fails to move the file (so we get the
+> > dangling blob for the source blob, and fsck doesn't report failure
+> > because we didn't actually corrupt the destination blob).
+> 
+> IIRC I had similar problems years ago, on a machine where the
+> administrator defined mandatory aliases, including mv="mv -i".
 
-https://git.github.io/rev_news/2017/01/25/edition-23/
+Yeah, that was my first thought, too. But this should be a
+non-interactive shell, which would generally avoid loading rc files. I
+think there are some exceptions, though (e.g., setting ENV or BASH_ENV).
+Loading aliases like "mv -i" for non-interactive shells seems somewhat
+insane to me. But whatever the cause, I think the workaround I posted is
+easy enough to do.
 
-Thanks a lot to all the contributors and helpers!
-
-Enjoy,
-Christian, Thomas, Jakub and Markus.
+-Peff
