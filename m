@@ -2,104 +2,119 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EC9761F6DC
-	for <e@80x24.org>; Wed, 25 Jan 2017 22:11:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 761A71F6DC
+	for <e@80x24.org>; Wed, 25 Jan 2017 22:16:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751829AbdAYWLR (ORCPT <rfc822;e@80x24.org>);
-        Wed, 25 Jan 2017 17:11:17 -0500
-Received: from mail-io0-f173.google.com ([209.85.223.173]:35161 "EHLO
-        mail-io0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751519AbdAYWLR (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 Jan 2017 17:11:17 -0500
-Received: by mail-io0-f173.google.com with SMTP id j18so25187316ioe.2
-        for <git@vger.kernel.org>; Wed, 25 Jan 2017 14:11:16 -0800 (PST)
+        id S1752520AbdAYWQm (ORCPT <rfc822;e@80x24.org>);
+        Wed, 25 Jan 2017 17:16:42 -0500
+Received: from mail-lf0-f46.google.com ([209.85.215.46]:35911 "EHLO
+        mail-lf0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751822AbdAYWQl (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 Jan 2017 17:16:41 -0500
+Received: by mail-lf0-f46.google.com with SMTP id z134so136539334lff.3
+        for <git@vger.kernel.org>; Wed, 25 Jan 2017 14:16:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=9/7EeFvnNEWUlRJzPfyhCc3GPrgoIzpZSTF/ut4ZPHg=;
-        b=GD7ZHMGVvA0ugVzq8l9VXoYuwOnMHsv7Wh2c7bns1aBof2qnG13/Yb9BJqVwAzS5Zz
-         u61SYQ0llBqcGLbUmhtsCrmEWYktgFAZusq9KZnAf+vJvCPto55i1K8R4YaBLCs9L+6X
-         6yTBcgYrVD9EImvuHUeAtvhBvAwiNxI6q3L/v10kBTUtw08USHDa9K25NF1tuGYRwwbz
-         6oxZX7JRKZ/Cuyh1td/Rz7APD2jJDDNwpUvaLgB+61CjC+vgAmY6stnK1BxK7ouLiWT8
-         N5K8dE2iYN1q81mT+xKodcxmWCZ+5xjVSKQpfHAjt5rO4WZRGIWr3jQ5ZqTyA/oLz67t
-         YDpA==
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=h7a9/vtvY0F4ab1AxV3VBPNwTvxWnIiTIjGOdUhHOZA=;
+        b=VYfPDqxQ/TSyx4uf94kkfUhFciSOY/0Br61SyTtkmkfSLXkO2wOMgygibi9x4wN9dR
+         SYMJiNWJ1B9Z7neCU5INY0/1Nwxi478Ok92s1ts8Lxjk04m8TlbMb2zaJpal3DsWZYDf
+         gQLQin8RptXYeTYDMNveY7ogpO9254MypPP6QLDs6XIX5vHjSp4+cCHNKpOgX6A+A4Km
+         J5huX3QjfWpYeBDWocGwQKPre7zLmehHpg71vRRgqhdHiS8SyKgurMVwreIl9fgKuZ4c
+         7hENsfUdEM9ufrwPU61Q9w6h6mTY91f9XrE0bWgl6c2QwwVYIzJbYTbdERDWoBC3Y4n5
+         nGkg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=9/7EeFvnNEWUlRJzPfyhCc3GPrgoIzpZSTF/ut4ZPHg=;
-        b=gAQ900jgssgQPJwhXl+yKUIPszAj2NHmLie8meodao6wZPPN1F9VlTmIBb9+5sKuuF
-         8GCTTV0vnIkVBaVoK2I4lLOXlJULAxQ0MVS+aEz99FkcU14EUFWAJem00jyBkepMW78V
-         hYNPMAEULYE9r8zps+A2tjKK3Cf0kpme83m66FoMqoXGbMyOKgnmOucbJd5iOp0PWeSX
-         9j0KL6jDEfTmrnvUtP8DJZlpj1dDMEyu8Yx/Qt/dYcCZmyCMqHEgSO2pPeGDW45u87Ho
-         qtflq7Yk3D1jOF3ntHLqOsFqKLJQPvpN85hF5/ae/ZhlIuehYSwG9Q4u7MThJYDyF8wp
-         zNmQ==
-X-Gm-Message-State: AIkVDXKDNUdDMgaeyYIM0JqsR56vCTfjgNTWdj0/Hc0q3m5a2whWE2ibtzytj7gzT+IVnP2dHy85/BXQ0i85I8KP
-X-Received: by 10.107.3.160 with SMTP id e32mr159216ioi.52.1485382276111; Wed,
- 25 Jan 2017 14:11:16 -0800 (PST)
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=h7a9/vtvY0F4ab1AxV3VBPNwTvxWnIiTIjGOdUhHOZA=;
+        b=i6NqFXpGwhbVTY9r28wjO9jB0xzN2UDR2t0kmxyhTf/HiWs3KKOU1xcqLkeod1GWiX
+         Z1rldlyPMYVRqiRgE/EJ9JumHIYleJVu7/WcW4stiDo1VZ2peSs+2JRpxL7IeIs+M1VN
+         ls1H9g9EhpKXz02+GdFPZMRjUhsMJX3WGpgBmD/ZVshx5qLh52uyt4sZHPJNW0D7ENid
+         8Zok8iGCZRJ2OycPix4AQLu7pU14n8caqSL57O4VkRmkplkOlsBKRa1t09SvHSzFg+uB
+         CE3o2cSKt/AuaZLZ+bgFxM9ppoGpcWWq5vaSJ+0OKUDRqrvwt0H8LQo81CoGNSdQ7i4a
+         R7Qg==
+X-Gm-Message-State: AIkVDXJoAUehZ1fBdbF7iSB5qnCdxv9Xa5Nz6En/83qvkGvPxfg8hcN4E9ju9uVihzw8+pR/wCBsq34di/Bp5Q==
+X-Received: by 10.25.16.158 with SMTP id 30mr13594419lfq.119.1485382585096;
+ Wed, 25 Jan 2017 14:16:25 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.79.39.19 with HTTP; Wed, 25 Jan 2017 14:11:15 -0800 (PST)
-In-Reply-To: <20170125220632.whjnpvrnhve2h6f6@sigill.intra.peff.net>
-References: <20170125215931.26339-1-sbeller@google.com> <20170125220632.whjnpvrnhve2h6f6@sigill.intra.peff.net>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Wed, 25 Jan 2017 14:11:15 -0800
-Message-ID: <CAGZ79kb_g5Wq=Aeo1RH-iA5M-drU5Gm1LAJZuPZU7oe=xdHaOQ@mail.gmail.com>
-Subject: Re: [PATCH] Add more proposals to SoC 2017 ideas page. (lots of
- submodule stuff)
-To:     Jeff King <peff@peff.net>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Received: by 10.25.20.193 with HTTP; Wed, 25 Jan 2017 14:16:04 -0800 (PST)
+From:   Hilco Wijbenga <hilco.wijbenga@gmail.com>
+Date:   Wed, 25 Jan 2017 14:16:04 -0800
+Message-ID: <CAE1pOi2YZayEfKxxh3gsTds1mQ9L1E9AW=wPnmW=Dg=-EMj=tw@mail.gmail.com>
+Subject: Force Confirmation for Dropping Changed Lines
+To:     Git Users <git@vger.kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jan 25, 2017 at 2:06 PM, Jeff King <peff@peff.net> wrote:
-> On Wed, Jan 25, 2017 at 01:59:31PM -0800, Stefan Beller wrote:
->
->>   This applies to the repo at https://github.com/git/git.github.io
->
-> Thanks. I've applied and pushed, though I'll admit I didn't really read
-> it carefully for content. A few of the ideas look like they would need
-> to be aggregated to be big enough for a SoC project, but that can be
-> fleshed out in future patches (i.e., I don't think we care enough about
-> history to have people polish and re-roll what are essentially wiki
-> edits).
+Hi all,
 
-Yeah, I wasn't sure if the ideas were meant to also contain microprojects
-so I wrote down everything that came to mind, that I do not intend to work on
-myself over the next couple month.
+Most of the time, when a later commit changes a line in an identical
+fashion during, say, a rebase, you want Git to silently continue by
+dropping the duplicate change from the later commit. I have a common
+(for me) scenario where I want Git to specifically ask me to resolve
+this "conflict" myself instead of simply assuming that the change has
+already been applied.
 
->
-> If you (or anybody interested in working on this) would prefer direct
-> push access to the git.github.io repo, I'm happy to set that up.
+Let's say I have a file my-code.x that starts with a line indicating
+its version:
 
-Yeah I wouldn't mind direct push access there, then I could fixup
-what I just sent you, e.g. adding myself as a possible mentor or
-re-shuffling these ideas. :)
+===== my-code.x =====
+VERSION=1.2
+line 1
+line 2
+line 3
+=====
 
->
->>   If you're looking for a co-admin/mentors, I can help out.
->
-> I may take you up on the co-admin thing. I think it's good to have a
-> backup, just in case.
->
-> Anything you put on the Ideas page, you should probably be willing to
-> mentor. We definitely _don't_ want Ideas that don't have a mentor.
+In my branch my-branch off of master, I make a change:
 
-agreed.
+===== my-code.x =====
+VERSION=1.3
+line 1
+line 2
+line 2a
+line 3
+=====
 
-> I think in general that each idea should have the possible mentors
-> listed below it.
+Now someone else makes a different change on master and pushes it ([1]):
 
-ok, I can make a patch for that; but pushing seems (slightly) easier than
-mailing a patch.
+===== my-code.x =====
+VERSION=1.3
+line 1
+line 2
+line 3
+line 4
+=====
 
-Thanks,
-Stefan
+When I rebase my-branch onto origin/master, I get no conflicts and
+everything seems fine ([2]):
+
+===== my-code.x =====
+VERSION=1.3
+line 1
+line 2
+line 2a
+line 3
+line 4
+=====
+
+Except that I should have used VERSION=1.4, not VERSION=1.3 because I
+made a change to my-code.x. Obviously, for a single file this is easy
+to remember/check but when it's hidden among lots of files and commits
+it becomes very hard to find these types of errors.
+
+How can I force Git to not assume my change to the first line is "redundant"?
+
+Cheers,
+Hilco
+
+[1] Note that this someone is (correctly) using the same, new version of 1.3.
+[2] If my example is actually incorrect, then please just pretend
+there are no conflicts.
