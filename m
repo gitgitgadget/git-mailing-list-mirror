@@ -6,55 +6,64 @@ X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 70BA71F6DC
-	for <e@80x24.org>; Wed, 25 Jan 2017 18:40:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B79C91F6DC
+	for <e@80x24.org>; Wed, 25 Jan 2017 18:43:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752270AbdAYSk3 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 25 Jan 2017 13:40:29 -0500
-Received: from cloud.peff.net ([104.130.231.41]:44618 "EHLO cloud.peff.net"
+        id S1751858AbdAYSnB (ORCPT <rfc822;e@80x24.org>);
+        Wed, 25 Jan 2017 13:43:01 -0500
+Received: from cloud.peff.net ([104.130.231.41]:44622 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752030AbdAYSk2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 Jan 2017 13:40:28 -0500
-Received: (qmail 25152 invoked by uid 109); 25 Jan 2017 18:40:28 -0000
+        id S1751513AbdAYSnB (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 Jan 2017 13:43:01 -0500
+Received: (qmail 25347 invoked by uid 109); 25 Jan 2017 18:43:00 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 25 Jan 2017 18:40:28 +0000
-Received: (qmail 14186 invoked by uid 111); 25 Jan 2017 18:40:28 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 25 Jan 2017 18:43:00 +0000
+Received: (qmail 14207 invoked by uid 111); 25 Jan 2017 18:43:00 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 25 Jan 2017 13:40:28 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 25 Jan 2017 13:40:26 -0500
-Date:   Wed, 25 Jan 2017 13:40:26 -0500
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 25 Jan 2017 13:43:00 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 25 Jan 2017 13:42:58 -0500
+Date:   Wed, 25 Jan 2017 13:42:58 -0500
 From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 03/12] for_each_alternate_ref: use strbuf for path
- allocation
-Message-ID: <20170125184026.cm324yefycsrhhin@sigill.intra.peff.net>
-References: <20170124003729.j4ygjcgypdq7hceg@sigill.intra.peff.net>
- <20170124004038.njjevfku4v7kmnh4@sigill.intra.peff.net>
- <xmqqvat3at8u.fsf@gitster.mtv.corp.google.com>
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     git <git@vger.kernel.org>
+Subject: Re: [RFC] what content should go in https://git-scm.com/doc/ext
+Message-ID: <20170125184258.v5sy6hwwpdsxz2u6@sigill.intra.peff.net>
+References: <20170121135545.gi6crct66msylhpr@sigill.intra.peff.net>
+ <CAP8UFD3Z9ZrLEZVkgL7ACkL5nOsoo2R6dUC=Bfy1AjF_9+4snQ@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqvat3at8u.fsf@gitster.mtv.corp.google.com>
+In-Reply-To: <CAP8UFD3Z9ZrLEZVkgL7ACkL5nOsoo2R6dUC=Bfy1AjF_9+4snQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jan 25, 2017 at 10:29:05AM -0800, Junio C Hamano wrote:
+On Sun, Jan 22, 2017 at 08:13:53PM +0100, Christian Couder wrote:
 
-> Jeff King <peff@peff.net> writes:
+> > Basically, we maintain a list of links to outside documentation, as well
+> > as to books. Somebody has requested a link to their paid tutorial
+> > course. How should we handle it?
 > 
-> > We have a string with ".../objects" pointing to the
-> > alternate object store, and overwrite bits of it to look at
-> > other paths in the (potential) git repository holding it.
-> > This works because the only path we care about is "refs",
-> > which is shorter than "objects".
-> 
-> Yup, this was probably copied from a lazy original I wrote ;-)
-> Thanks for cleaning up.
+> I think it depends if you are ready and willing to handle more changes.
 
-To be fair, the original predates all of the helper functions I used
-here. :)
+I don't clicking "merge" on more changes if people are willing to do the
+design work.
+
+> > Should we do the same for tutorial content like this?
+> 
+> It could make sense to link to tutorial content, and then it could
+> also make sense to link to trainings (online and maybe offline too),
+> but my fear is that you could then have many people who want to
+> advertise their tutorials and trainings, and that it might be
+> difficult to draw a line while keeping the playing field even.
+> 
+> But maybe it's worth trying anyway.
+
+I think I'm inclined to try it, as long as it's kept in a separate "paid
+training" section, and is open to everybody. If it becomes a burden, we
+can cut it out later. I think the important thing is that it be equally
+open to everybody or nobody, but not just "some". So we'll go with
+everybody for now, and switch to nobody later if need be.
 
 -Peff
