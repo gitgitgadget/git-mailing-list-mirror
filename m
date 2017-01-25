@@ -2,57 +2,57 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD,UNWANTED_LANGUAGE_BODY shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 202341F6DC
-	for <e@80x24.org>; Wed, 25 Jan 2017 22:03:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C3C2D1F6DC
+	for <e@80x24.org>; Wed, 25 Jan 2017 22:03:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752419AbdAYWDi (ORCPT <rfc822;e@80x24.org>);
-        Wed, 25 Jan 2017 17:03:38 -0500
-Received: from mail-pf0-f176.google.com ([209.85.192.176]:33885 "EHLO
-        mail-pf0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752326AbdAYWDd (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 Jan 2017 17:03:33 -0500
-Received: by mail-pf0-f176.google.com with SMTP id e4so60771468pfg.1
-        for <git@vger.kernel.org>; Wed, 25 Jan 2017 14:03:33 -0800 (PST)
+        id S1752180AbdAYWD2 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 25 Jan 2017 17:03:28 -0500
+Received: from mail-pg0-f45.google.com ([74.125.83.45]:34856 "EHLO
+        mail-pg0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750930AbdAYWDY (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 Jan 2017 17:03:24 -0500
+Received: by mail-pg0-f45.google.com with SMTP id 194so67614485pgd.2
+        for <git@vger.kernel.org>; Wed, 25 Jan 2017 14:03:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :in-reply-to:references;
-        bh=duxflppJH1RBZ4EweHJ8MiqEYoPN1WRsrLSeIP4b054=;
-        b=RoeShfWjnsPoH1XLgB0QWTs0hRsNKVBG2ti4rMG+Y4ChhwQAgTamkSzdvZdK/ar8I9
-         aFdjBL8T5IFNfLGIr12FQgvVOigWkhsIVhoE3tz5Zn4Q3BeZZdHHHxaz/QSqnEmtQxRy
-         qhHJyMD6tIV7smGoITgelCUTQ2vy2+SHP+zLHNQo8Hm6oXsMquKP8a4bP4mjbLXHkqST
-         721H/9gvhF51s4UAAeCRnGQrkt0CS0bKhw9EhZ4keM2iYDWtMDfGLiJIGByB1Gl4hsbT
-         CiSYagtCXeJcRQPe6lGsK9bL8Rco94KPj61TNu1u9qu9bgTyPwgvaO2GwHXQCwQLsHvr
-         JEFA==
+        bh=AoyJ1pbYSYnT2VDPJftIAahgKyQRo1wqhKjmyz9LT7A=;
+        b=m+E0StlPLe0q+S+/1k1H4xdjgUTItlldRVeMsZVv42u/KyAonT8AcTrYJ7uGEi0Jqt
+         nom0FzDSzdy7HTcEVIzJfgEE4xsxLCnQsVF+F4ZpZlEQXJS5smN4X7cZO8bWjADZ2442
+         NUtGzEAz9kmC5jU+CDDc018kYiOFFPNXbhyOr94s7MOq6XgT/ELje13MgOeEGBsFsC9v
+         kN8vC5Ek9HiFdKGzm3TZoKv7Cniin1p20g1LXS8KRosfPSJei9rBw3EVqOBd8MTIXTC9
+         TwwDa1H/pX0xahU5E7g2teW6w61Rx6yHXnQPgV2GleMR4gC9h0plYw5vWOqkmOmDbOev
+         2ixw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:in-reply-to:references;
-        bh=duxflppJH1RBZ4EweHJ8MiqEYoPN1WRsrLSeIP4b054=;
-        b=O8+q7JHG6nGSrraYPWyVSsMJEDdyJnRRdZ+cTCSUiiR4FTkNKihuS6Qy2fk7zKJ8pM
-         SPXC2GuhRoFPlKD5k4vA+t6MbrDjGhGgTiCNUt6BoQwW0IRy6jSg6hHMLvrjJ6AMx5zf
-         JwznkgrO011rqtx3lrXptwi6U8DRVuT7yPTSlusLx2jxFNPGD+SX8AxVaeZasO1fzbLs
-         RDl8z5uqAIKKm0AuVbBBG8nef2i+z3aWaANzMlBWwDWl7EBY1mBGYOg4A71LuM6QI/Bp
-         iDFUxC+T7+pM8VJoNBupDVzL+kaohq1bMuPKTpJEOL1tP/Zihau9juFlBnCgvKDnOR3U
-         QSog==
-X-Gm-Message-State: AIkVDXL24t/Iag4TTkp2F7qVw/tQN4fbs+qZ3McBar6ciixOoeWQHOYG69HFLwsNn4aBjqBG
-X-Received: by 10.84.192.107 with SMTP id b98mr6888538pld.160.1485381802332;
-        Wed, 25 Jan 2017 14:03:22 -0800 (PST)
+        bh=AoyJ1pbYSYnT2VDPJftIAahgKyQRo1wqhKjmyz9LT7A=;
+        b=kpWU1q/XoX4c1wICeLv/tdJpXnV+nyxCcV8qNZ79r+g1U/G1AKHSGELVkPC399moBd
+         hWO/P0K2NB/5zg48wpbmXIs5mGX+qw4jdFzFad8e+1exzzfaVKHjZAQdv63Vn5NGZFAY
+         2hxu6BCeW5tbe4PMp9TIzVkM9KIuW5dqLJ4QUgotvfsyNjQFxo+7UpuQaE943jkDh0pV
+         wS8QHb9fOQPZHBl0pJES3RA3oTPVxLFDzAo6SYI+lUPVXaz71DyEBFYrUa6SZrbB4IaR
+         AssiwAiYJf8ytpnv/8aq8v68eVXQ5j9kXF/utDTvySKJ4kY35+C4C+7X4TXQsRAQPdvi
+         yO+A==
+X-Gm-Message-State: AIkVDXKN8uSCL2qVRRl+nWkh7W0/UGBKEmeVbumLh5J+Yhfnm6Hv9bwhjyh0Nff3E8ZxjAOU
+X-Received: by 10.98.163.216 with SMTP id q85mr48847999pfl.123.1485381803135;
+        Wed, 25 Jan 2017 14:03:23 -0800 (PST)
 Received: from twelve2.mtv.corp.google.com ([100.96.238.13])
-        by smtp.gmail.com with ESMTPSA id o24sm3357308pfj.78.2017.01.25.14.03.21
+        by smtp.gmail.com with ESMTPSA id o24sm3357308pfj.78.2017.01.25.14.03.22
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 25 Jan 2017 14:03:21 -0800 (PST)
+        Wed, 25 Jan 2017 14:03:22 -0800 (PST)
 From:   Jonathan Tan <jonathantanmy@google.com>
 To:     git@vger.kernel.org
 Cc:     Jonathan Tan <jonathantanmy@google.com>
-Subject: [RFC 05/14] fetch: refactor fetch_refs into two functions
-Date:   Wed, 25 Jan 2017 14:02:58 -0800
-Message-Id: <17158edf664fc85ae52da66e3de9210a2a645f14.1485381677.git.jonathantanmy@google.com>
+Subject: [RFC 06/14] fetch: refactor to make function args narrower
+Date:   Wed, 25 Jan 2017 14:02:59 -0800
+Message-Id: <4fc5ef88ae2135db475c557498e7a805afb693b9.1485381677.git.jonathantanmy@google.com>
 X-Mailer: git-send-email 2.11.0.483.g087da7b7c-goog
 In-Reply-To: <cover.1485381677.git.jonathantanmy@google.com>
 References: <cover.1485381677.git.jonathantanmy@google.com>
@@ -63,59 +63,113 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Refactor the fetch_refs function into a function that does the fetching
-of refs and another function that stores them. This prepares for a
-future patch where some processing may be done between those tasks.
+Refactor find_non_local_tags and get_ref_map to only take the
+information they need instead of the entire transport struct. Besides
+improving code clarity, this also improves their flexibility, which will
+be needed in a future patch.
 
 Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
 ---
- builtin/fetch.c | 19 +++++++++++++------
- 1 file changed, 13 insertions(+), 6 deletions(-)
+ builtin/fetch.c | 23 ++++++++++++-----------
+ 1 file changed, 12 insertions(+), 11 deletions(-)
 
 diff --git a/builtin/fetch.c b/builtin/fetch.c
-index c71d5eb9b..43e35c494 100644
+index 43e35c494..ae7c6daa1 100644
 --- a/builtin/fetch.c
 +++ b/builtin/fetch.c
-@@ -918,10 +918,16 @@ static int fetch_refs(struct transport *transport, struct ref *ref_map)
- 	int ret = quickfetch(ref_map);
- 	if (ret)
- 		ret = transport_fetch_refs(transport, ref_map);
--	if (!ret)
--		ret |= store_updated_refs(transport->url,
--				transport->remote->name,
--				ref_map);
-+	if (ret)
-+		transport_unlock_pack(transport);
-+	return ret;
-+}
-+
-+static int consume_refs(struct transport *transport, struct ref *ref_map)
-+{
-+	int ret = store_updated_refs(transport->url,
-+				     transport->remote->name,
-+				     ref_map);
- 	transport_unlock_pack(transport);
- 	return ret;
+@@ -220,7 +220,7 @@ static int will_fetch(struct ref **head, const unsigned char *sha1)
+ 	return 0;
  }
-@@ -1062,7 +1068,8 @@ static void backfill_tags(struct transport *transport, struct ref *ref_map)
- 	transport_set_option(transport, TRANS_OPT_FOLLOWTAGS, NULL);
- 	transport_set_option(transport, TRANS_OPT_DEPTH, "0");
- 	transport_set_option(transport, TRANS_OPT_DEEPEN_RELATIVE, NULL);
--	fetch_refs(transport, ref_map);
-+	if (!fetch_refs(transport, ref_map))
-+		consume_refs(transport, ref_map);
  
- 	if (gsecondary) {
- 		transport_disconnect(gsecondary);
-@@ -1115,7 +1122,7 @@ static int do_fetch(struct transport *transport,
- 				   transport->url);
+-static void find_non_local_tags(struct transport *transport,
++static void find_non_local_tags(const struct ref *refs,
+ 			struct ref **head,
+ 			struct ref ***tail)
+ {
+@@ -230,7 +230,7 @@ static void find_non_local_tags(struct transport *transport,
+ 	struct string_list_item *item = NULL;
+ 
+ 	for_each_ref(add_existing, &existing_refs);
+-	for (ref = transport_get_remote_refs(transport); ref; ref = ref->next) {
++	for (ref = refs; ref; ref = ref->next) {
+ 		if (!starts_with(ref->name, "refs/tags/"))
+ 			continue;
+ 
+@@ -302,7 +302,8 @@ static void find_non_local_tags(struct transport *transport,
+ 	string_list_clear(&remote_refs, 0);
+ }
+ 
+-static struct ref *get_ref_map(struct transport *transport,
++static struct ref *get_ref_map(const struct remote *remote,
++			       const struct ref *remote_refs,
+ 			       struct refspec *refspecs, int refspec_count,
+ 			       int tags, int *autotags)
+ {
+@@ -314,8 +315,6 @@ static struct ref *get_ref_map(struct transport *transport,
+ 	/* opportunistically-updated references: */
+ 	struct ref *orefs = NULL, **oref_tail = &orefs;
+ 
+-	const struct ref *remote_refs = transport_get_remote_refs(transport);
+-
+ 	struct string_list existing_refs = STRING_LIST_INIT_DUP;
+ 
+ 	if (refspec_count) {
+@@ -355,8 +354,8 @@ static struct ref *get_ref_map(struct transport *transport,
+ 			fetch_refspec = parse_fetch_refspec(refmap_nr, refmap_array);
+ 			fetch_refspec_nr = refmap_nr;
+ 		} else {
+-			fetch_refspec = transport->remote->fetch;
+-			fetch_refspec_nr = transport->remote->fetch_refspec_nr;
++			fetch_refspec = remote->fetch;
++			fetch_refspec_nr = remote->fetch_refspec_nr;
  		}
+ 
+ 		for (i = 0; i < fetch_refspec_nr; i++)
+@@ -365,7 +364,6 @@ static struct ref *get_ref_map(struct transport *transport,
+ 		die("--refmap option is only meaningful with command-line refspec(s).");
+ 	} else {
+ 		/* Use the defaults */
+-		struct remote *remote = transport->remote;
+ 		struct branch *branch = branch_get(NULL);
+ 		int has_merge = branch_has_merge_config(branch);
+ 		if (remote &&
+@@ -404,7 +402,7 @@ static struct ref *get_ref_map(struct transport *transport,
+ 		/* also fetch all tags */
+ 		get_fetch_map(remote_refs, tag_refspec, &tail, 0);
+ 	else if (tags == TAGS_DEFAULT && *autotags)
+-		find_non_local_tags(transport, &ref_map, &tail);
++		find_non_local_tags(remote_refs, &ref_map, &tail);
+ 
+ 	/* Now append any refs to be updated opportunistically: */
+ 	*tail = orefs;
+@@ -1083,6 +1081,7 @@ static int do_fetch(struct transport *transport,
+ 	struct ref *ref_map;
+ 	int autotags = (transport->remote->fetch_tags == 1);
+ 	int retcode = 0;
++	const struct ref *remote_refs;
+ 
+ 	if (tags == TAGS_DEFAULT) {
+ 		if (transport->remote->fetch_tags == 2)
+@@ -1101,7 +1100,9 @@ static int do_fetch(struct transport *transport,
+ 			goto cleanup;
  	}
--	if (fetch_refs(transport, ref_map)) {
-+	if (fetch_refs(transport, ref_map) || consume_refs(transport, ref_map)) {
+ 
+-	ref_map = get_ref_map(transport, refs, ref_count, tags, &autotags);
++	remote_refs = transport_get_remote_refs(transport);
++	ref_map = get_ref_map(transport->remote, remote_refs, refs, ref_count,
++			      tags, &autotags);
+ 	if (!update_head_ok)
+ 		check_not_current_branch(ref_map);
+ 
+@@ -1134,7 +1135,7 @@ static int do_fetch(struct transport *transport,
+ 	if (tags == TAGS_DEFAULT && autotags) {
+ 		struct ref **tail = &ref_map;
+ 		ref_map = NULL;
+-		find_non_local_tags(transport, &ref_map, &tail);
++		find_non_local_tags(remote_refs, &ref_map, &tail);
+ 		if (ref_map)
+ 			backfill_tags(transport, ref_map);
  		free_refs(ref_map);
- 		retcode = 1;
- 		goto cleanup;
 -- 
 2.11.0.483.g087da7b7c-goog
 
