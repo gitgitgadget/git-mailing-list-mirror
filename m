@@ -2,60 +2,60 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D2BD31F437
-	for <e@80x24.org>; Wed, 25 Jan 2017 00:52:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 891E41F437
+	for <e@80x24.org>; Wed, 25 Jan 2017 00:54:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751170AbdAYAwN (ORCPT <rfc822;e@80x24.org>);
-        Tue, 24 Jan 2017 19:52:13 -0500
-Received: from mail-io0-f176.google.com ([209.85.223.176]:35833 "EHLO
-        mail-io0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751159AbdAYAwN (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Jan 2017 19:52:13 -0500
-Received: by mail-io0-f176.google.com with SMTP id j18so2465307ioe.2
-        for <git@vger.kernel.org>; Tue, 24 Jan 2017 16:52:12 -0800 (PST)
+        id S1751087AbdAYAyC (ORCPT <rfc822;e@80x24.org>);
+        Tue, 24 Jan 2017 19:54:02 -0500
+Received: from mail-ot0-f195.google.com ([74.125.82.195]:33356 "EHLO
+        mail-ot0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751022AbdAYAyB (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 Jan 2017 19:54:01 -0500
+Received: by mail-ot0-f195.google.com with SMTP id f9so21745739otd.0
+        for <git@vger.kernel.org>; Tue, 24 Jan 2017 16:54:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=LtdPKSEq9eC2OwpwzHjVI1eInqBcZq0nBe/qab1vhns=;
-        b=eSvAu6Q26pVJQSd9C4+M6hdQ0WRvtH89iF5LNo2fIaZgsoVarItjh5Y5+QK+F/yK3Y
-         sd3UmnpmGZAyp5brk5HM2X1HBR4Ar7mtAcsg+SxYSvO6u6NuAPjtAvev7CxPSncfzfKi
-         ySY30Ql6TDeKvlDWOGPCC0pHMxWFjfvPyv89bi9zTXUZyGLNrnWOgm4tIWK7L26krhVd
-         M46cU0UwpMm9dAklTOfl0iRk+fyQ1JLN5LqFIcI33CInCisQ9/5v/dBpxIq0KYm35OCY
-         DuiJg1nOudpWd9PlTjqdi75oxiVBeUes0CijIWv9L/BbkLFwroeLudr3PX3sORPaEoz6
-         JzlQ==
+        d=gmail.com; s=20161025;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=UfyFqGglcfPCQ7lNK200azdeo6tR/5PLpO7SMk0825o=;
+        b=C4BqK1VRX4UqOU7Ye1JyFh5Vj4eVsdGSfF8aa867+TbP4GcpCGPWgscdSuO26r797M
+         8i5GP/t3+9fbu6u93zsYfn8Jhfipx//FYr/1g/BjWyMs49sIz402xbRSV5cmFbLNuyQG
+         UCT2p6WNlIKycs9RmUztSpeasYpglV+ZJ+nK4ITeut43XVyuIHn1UR101EcW+nlqY2xs
+         Hc9k9kVgtBtTa+/zsybgHRe9liJL1WgM+qEnbTaNkyoNX9EPUtKWrAFN/eHvkyODdxlX
+         2AJe1kPx3OMLWMW/2LJkLl9uHAP0JCdFhg2apYFAKhgNR0FE9S4i12rqieblwAT+x1SS
+         tgkw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=LtdPKSEq9eC2OwpwzHjVI1eInqBcZq0nBe/qab1vhns=;
-        b=rg5Y0XC/tZvEFQnG/K9bfpeqIRiXa0ckV8LWU5OjZPuEFFBh+AY90Vs6Kdj7c5H/Um
-         srOjQGNrgd7PTMAEoH3XNCNqMnUN5HRvKnrHf9KvsaTpE47WtjWuZ8XvRghEusnyGmyE
-         WkN8mgvbQTyYlc8QzgIEafQctKX7m/uMOIstnno4zObajFBQJg8s7liQM6M1rfLmDLOA
-         /GZZ2MaEtADsRtgP+VsdSZ9LLFT2VoQYTHaB8h0SuQhrFJi8N+ga7mFRnzHvvTYBpJwP
-         HWBBUOy6bLE3CGbQ/NxArj/zFsHh2u6lUwm1lPHnsKXFOgEWGABU9yYcP/Dvivz2LE8L
-         yxQg==
-X-Gm-Message-State: AIkVDXIkzdZWAoVe+8TM+c9sShGPZ6U3WQApgEtKL1mrZBNYX38vwaOfqnxwm+8w5tTIPtILnOjhGqRqitJa6xCw
-X-Received: by 10.107.3.160 with SMTP id e32mr32096481ioi.52.1485305532193;
- Tue, 24 Jan 2017 16:52:12 -0800 (PST)
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=UfyFqGglcfPCQ7lNK200azdeo6tR/5PLpO7SMk0825o=;
+        b=fQB3hVb4NOlRY5NXj2JYc/ZXFQ6wi/3KudCwQ4A6r8aRjUHVaXk9W0t02ZVHNTVekC
+         KGj0Opds7Ij9InxJl6Li3pt9kxpdwWWTZydRoDSpOcL9OZMinwXHLIbb1HZjflLM0hcb
+         HAdZD1P6IvPiBj3ONHrgVAPw5d1jqlFcyh83GGZdseCPE9g2HvpgeWoNMS3nbFGdgs0s
+         BN+jICsDdPyT+y6J7P5xiTeYfZGkEFbO6tHMHVLdjnWtSLWh9KH8q9KE5oSKTv4+5ncm
+         RgPoljcv0PS8+5RdaZKAgY5AhjZwCggfCKUXmFDy7ilqC/4CtqqhIKFgNHQUStAyqqFu
+         vAxg==
+X-Gm-Message-State: AIkVDXK+CCzCS5u50/3jtTI6d5ySj+xvGwEOEEjlobd4eH8RbkxikNf4aSFgtJcR84k6AcqWIYl4hCEmjeqGNA==
+X-Received: by 10.157.4.141 with SMTP id 13mr20237443otm.243.1485305640557;
+ Tue, 24 Jan 2017 16:54:00 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.79.39.19 with HTTP; Tue, 24 Jan 2017 16:52:11 -0800 (PST)
-In-Reply-To: <ec2a198e-edf5-68a1-523c-12a9d1333c58@tngtech.com>
-References: <923cd4e4-5c9c-4eaf-0fea-6deff6875b88@tngtech.com>
- <20170125002116.22111-1-sbeller@google.com> <ec2a198e-edf5-68a1-523c-12a9d1333c58@tngtech.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Tue, 24 Jan 2017 16:52:11 -0800
-Message-ID: <CAGZ79ka2b4BxYXEou6QrvxwbTjTdd7BRqhA1ZEw8e-gjB3cDDQ@mail.gmail.com>
+Received: by 10.182.63.13 with HTTP; Tue, 24 Jan 2017 16:54:00 -0800 (PST)
+In-Reply-To: <20170125002116.22111-1-sbeller@google.com>
+References: <923cd4e4-5c9c-4eaf-0fea-6deff6875b88@tngtech.com> <20170125002116.22111-1-sbeller@google.com>
+From:   Linus Torvalds <torvalds@linux-foundation.org>
+Date:   Tue, 24 Jan 2017 16:54:00 -0800
+X-Google-Sender-Auth: Qhy_s1SmQEeKmKRXTKmAKoRrNgE
+Message-ID: <CA+55aFx_W500Ct6HuG18owG37FviirjsrJ_4zZpRcDD-0tmpFg@mail.gmail.com>
 Subject: Re:
-To:     Cornelius Weig <cornelius.weig@tngtech.com>
-Cc:     Johannes Sixt <j6t@kdbg.org>,
+To:     Stefan Beller <sbeller@google.com>
+Cc:     cornelius.weig@tngtech.com, Johannes Sixt <j6t@kdbg.org>,
         bitte.keine.werbung.einwerfen@googlemail.com,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
+        Git Mailing List <git@vger.kernel.org>,
         Junio C Hamano <gitster@pobox.com>,
         thomas.braun@virtuell-zuhause.de, John Keeping <john@keeping.me.uk>
 Content-Type: text/plain; charset=UTF-8
@@ -64,13 +64,24 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jan 24, 2017 at 4:43 PM, Cornelius Weig
-<cornelius.weig@tngtech.com> wrote:
+On Tue, Jan 24, 2017 at 4:21 PM, Stefan Beller <sbeller@google.com> wrote:
+>
+> +Do not PGP sign your patch. Most likely, your maintainer or other
+> +people on the list would not have your PGP key and would not bother
+> +obtaining it anyway.
 
-> -(5) Sign your work
-> +(5) Certify your work by signing off.
+I think even that could be further simplified - by just removing all
+comments about pgp email
 
-That sounds better than what I proposed.
+Because it's not that the PGP keys would be hard to get, it's that
+PGP-signed email is an abject failure, and nobody sane does it.
 
-Thanks,
-Stefan
+Google for "phil zimmerman doesn't use pgp email".
+
+It's dead. So I'm not sure it's worth mentioning at all.
+
+You might as well talk about how you shouldn't use EBCDIC encoding for
+your patches, or about why git assumes that an email address has an
+'@' sign in it, instead of being an UUCP bang path address.
+
+              Linus
