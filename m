@@ -2,147 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8F6271F6DC
-	for <e@80x24.org>; Wed, 25 Jan 2017 17:58:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2E7FB1F6DC
+	for <e@80x24.org>; Wed, 25 Jan 2017 18:01:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751228AbdAYR6n (ORCPT <rfc822;e@80x24.org>);
-        Wed, 25 Jan 2017 12:58:43 -0500
-Received: from mail-qt0-f174.google.com ([209.85.216.174]:36757 "EHLO
-        mail-qt0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750998AbdAYR6m (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 Jan 2017 12:58:42 -0500
-Received: by mail-qt0-f174.google.com with SMTP id k15so29769803qtg.3
-        for <git@vger.kernel.org>; Wed, 25 Jan 2017 09:58:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=nyu-edu.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=gryk6sjZ1nVUdpbfmPyi8fmUChzXpVF6Q9JJUsCierg=;
-        b=bJuJLlZ0OItrigaYvf9iS0IRYLT+pV6TgJUnPB2ESazH8zy/OuAD6PwgTpdtrTlgXr
-         ekGvOu4xoNQMlf3TTOUPq+0w1bs5dgOuSNwfytAFKzFNomtYuU7mnomcM4AR/pTfpr3S
-         wNNzuAG//BpUkZFJEtOXjqvsZj5+tVij3le/BwhpfhLl2DJJQVAY5+tGMBPxBV+Tvauh
-         tUmnPfqVgIoGHgoXbnmG1GwTLfA2Lcw4Hv3OLDjtw8BgHZg8+hmHp7evP4w3vhKI9ZkR
-         W1LFLawDOoGTCv7//137sQsUYAOwGYYJ49xGJe4OREiLkbCNkcWm+BUMJsdlQo8n7NF2
-         P0Kg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=gryk6sjZ1nVUdpbfmPyi8fmUChzXpVF6Q9JJUsCierg=;
-        b=EREz/rhec1zZHzeEq+dHtYgS/SP1N16zV4TrPGS3x4NH4WwODltGFJIrHsAdZFiHB9
-         MfFASXR9wqNXk+Lg7NgwFbZ1+m4v5BEMc0kacv+IThExUSInvZWftlwaTRB4tYV4KLu0
-         UR1Nn3Ymy1dagHw7K/wtTgqsxcdeyGRTGs5KlmnBLA0gf6M0pQrhuCKN+4CkkzOu0Tyq
-         a4As/GyOwWj7h+j1bUh6AnqIMvv8CQmhAq5eCYu+G2bLXmhoQazFe3rfexc7+q6j3nHy
-         I2dD7q0pgSF9sdydgfXxHHzi4m2QTgBRWwiOKoShjP78SeGrpZQsVqqHzqTfRIqXTF78
-         DQXw==
-X-Gm-Message-State: AIkVDXKNG0GA7uoxwekNFHhgzOeTqwV0ZqSPk41Pe1VoWCiy9NwKvEoLenYZ6rLK8j1vZWlg
-X-Received: by 10.200.46.162 with SMTP id h31mr34141409qta.164.1485367121491;
-        Wed, 25 Jan 2017 09:58:41 -0800 (PST)
-Received: from LykOS.localdomain (NYUFWA-WLESSAUTHCLIENTS-15.NATPOOL.NYU.EDU. [216.165.95.4])
-        by smtp.gmail.com with ESMTPSA id h56sm19315595qte.24.2017.01.25.09.58.41
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 25 Jan 2017 09:58:41 -0800 (PST)
-Date:   Wed, 25 Jan 2017 12:58:40 -0500
-From:   Santiago Torres <santiago@nyu.edu>
-To:     Jordi Durban <jordi.durban@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: git clone problem
-Message-ID: <20170125175840.hy7d2f775dxnafpo@LykOS.localdomain>
-References: <ef188364-ccd2-e7f5-3c06-62afca79f8d3@gmail.com>
+        id S1751429AbdAYSA6 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 25 Jan 2017 13:00:58 -0500
+Received: from cloud.peff.net ([104.130.231.41]:44570 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1750731AbdAYSA5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 Jan 2017 13:00:57 -0500
+Received: (qmail 22459 invoked by uid 109); 25 Jan 2017 18:00:56 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 25 Jan 2017 18:00:56 +0000
+Received: (qmail 13643 invoked by uid 111); 25 Jan 2017 18:00:56 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 25 Jan 2017 13:00:56 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 25 Jan 2017 13:00:54 -0500
+Date:   Wed, 25 Jan 2017 13:00:54 -0500
+From:   Jeff King <peff@peff.net>
+To:     cornelius.weig@tngtech.com
+Cc:     git@vger.kernel.org, novalis@novalis.org, pclouds@gmail.com
+Subject: Re: [PATCH] tag: add tag.createReflog option
+Message-ID: <20170125180054.7mioop2o6uvqloyt@sigill.intra.peff.net>
+References: <20170125001906.13916-1-cornelius.weig@tngtech.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-        protocol="application/pgp-signature"; boundary="voenh2y7sej4j5ui"
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <ef188364-ccd2-e7f5-3c06-62afca79f8d3@gmail.com>
+In-Reply-To: <20170125001906.13916-1-cornelius.weig@tngtech.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Wed, Jan 25, 2017 at 01:19:06AM +0100, cornelius.weig@tngtech.com wrote:
 
---voenh2y7sej4j5ui
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> From: Cornelius Weig <cornelius.weig@tngtech.com>
+> 
+> Git does not create a history for tags, in contrast to common
+> expectation to simply version everything. This can be changed by using
+> the `--create-reflog` flag when creating the tag. However, a config
+> option to enable this behavior by default is missing.
 
-Hello, Jordi.
+Hmm, I didn't even know we had "tag --create-reflog". Looks like it was
+added by 144c76fa39 (update-ref and tag: add --create-reflog arg,
+2015-07-21).
 
-Hmm, it should've cloned in the "whatever" directory.
+IMHO it is a mistake. The "update-ref --create-reflog" variant makes
+sense to me as a plumbing operation. But are there end users who want to
+create a reflog for just _one_ tag?
 
-Can you post your git version/configs and maybe the output verbatim of
-the command when you run it?
+As your patch shows, the more likely variant is "I want reflogs for all
+tags". But that raises two questions with your patch:
 
-If you can reproduce in an empty dictionary that'd be better
+  - yours isn't "reflogs for all tags". It's "reflogs for tags I created
+    with git-tag". What about other operations that create tags, like
+    fetching (or even just a script that uses update-ref under the
+    hood).
 
-$ mkdir test && cd test
+    IOW, instead of tag.createReflog, should this be tweaing
+    core.logallrefupdates to have a mode that includes tags?
 
-$ git clone --recursive https://github.com/...
+  - Is that the end of it, or is the desire really "I want reflogs for
+    _everything_"? That seems like a sane thing to want.
 
-$ ls=20
+    If so, then the update to core.logallrefupdates should turn it into
+    a tri-state:
 
-Thanks,
--Santiago
+      - false; no reflogs
 
-On Wed, Jan 25, 2017 at 05:58:58PM +0100, Jordi Durban wrote:
-> Hi all! Not sure if that will reach the goal, but let's it a try.
->=20
-> I have a problem with the git clone command: when I try to clone a remote
-> repository with the following:
->=20
-> git clone --recursive https://github.com/whatever.git
->=20
-> what I actually obtain is a copy of my own files in the current directory.
->=20
-> I mean:
->=20
-> In the current directory:
->=20
-> $ls
->=20
-> -rwxr-xr-x 1  1,6K oct 24 17:29 get_fasta.pl
-> -rwxr-xr-x 1  1,6K set  5 13:05 script_clus_miRNA_c95.pl
->=20
-> $git clone --recursive https://github.com/whatever.git WHATEVER
->=20
-> $ls
->=20
-> -rwxr-xr-x 1  1,6K oct 24 17:29 get_fasta.pl
-> -rwxr-xr-x 1  1,6K set  5 13:05 script_clus_miRNA_c95.pl
->=20
-> -rwxr-xr-x 1  1,6K set  5 13:05 WHATEVER
->=20
-> $ls WHATEVER
->=20
-> -rwxr-xr-x 1  1,6K oct 24 17:29 get_fasta.pl
-> -rwxr-xr-x 1  1,6K set  5 13:05 script_clus_miRNA_c95.pl
->=20
-> I am really confused with that.
->=20
-> Any help will be appreciated. Thank you
->=20
+      - true; reflogs for branches, remotes, notes, as now
 
---voenh2y7sej4j5ui
-Content-Type: application/pgp-signature; name="signature.asc"
+      - always; reflogs for all refs under "refs/"
 
------BEGIN PGP SIGNATURE-----
+I made a lot of suppositions about your desires there, so maybe you
+really do want just tag.createReflog. But "core.logallrefupdates =
+always" sounds a lot more useful to me.
 
-iQIzBAEBCAAdFiEEkDurc2QOttZVM+/zRo8SLOgWIpUFAliI50kACgkQRo8SLOgW
-IpW01w//XH6oMyhpneNfdZ/iYrqbRY1aF75M2kFto0jQxfVIrDzMdKwWpcgARCrv
-7XiAjHQtCLWhrHhz5rkfB2w5nGCrqY7tizAOj/YXHSicTFufmAClpAhUx9okO6J6
-oQbvT1cIYBIXecCikrBClNvdlK8s9Z4LLkJTj7f7VnDpjlEL1jsVqN2TnmjmdhmT
-QMRPDJ2BO55jwpTOh8jOZzft/EJvqKD1fnEV4X6WpVp37gRFeA45wHSfLd3WTa1P
-5+XqCps5ytIyHqghdXHzWZP2v6dyDfM2TcvfFf+IABUGS5NoS2PvPaytXGlxmIGD
-XIXq4ce5tUeNtFBB5BjBc6viM1cdmPdQ48uWA+4oV1V+MpxWo9pWIact7ob6FLVG
-2kGEc7qCWqF7ELiwkM8O3iqicjAqzhWqQynZ0Zk98a6dDCofbsdYd5BAb6CMaQmi
-Bat0UBLRPkg8/N4LLQ8ny/AlZtFRA8gXesyKjTU21iSx/7hT+CcM92V17YeTARV4
-oOWm61TYg+2NIogbVh7JldtNsav0lSMerc3e1w4wW+kW2fEI6DQgpcgFnRB8+aUH
-W3K10WBTi8RS4Q2nc2T8LF8NWs9N5KKwEJ9PngcVrxhSeGGTMUaGaIvjnhyHVAa9
-BMjjas5C7/CQtD9NJVfutQoPYKjEH/xF9QEXaZRcHCi9w6A+LYU=
-=pVw0
------END PGP SIGNATURE-----
-
---voenh2y7sej4j5ui--
+-Peff
