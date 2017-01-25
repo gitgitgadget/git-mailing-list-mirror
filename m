@@ -2,86 +2,72 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2FE761F794
-	for <e@80x24.org>; Wed, 25 Jan 2017 22:54:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EE0951F6DC
+	for <e@80x24.org>; Wed, 25 Jan 2017 22:55:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752434AbdAYWyb (ORCPT <rfc822;e@80x24.org>);
-        Wed, 25 Jan 2017 17:54:31 -0500
-Received: from mail-lf0-f51.google.com ([209.85.215.51]:35342 "EHLO
-        mail-lf0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751193AbdAYWya (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 Jan 2017 17:54:30 -0500
-Received: by mail-lf0-f51.google.com with SMTP id n124so136661564lfd.2
-        for <git@vger.kernel.org>; Wed, 25 Jan 2017 14:54:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=ONiL/j7KLDyzXMbmf/vIv7r0+2NHq6ee7ZzJ30om2Ro=;
-        b=EV9LvK/PjBjXQcDOHWYU7vj7fCeqrA1amS/1bilA+A/WzbEWcJZ03wmjup8ahV3vx7
-         LAFD14ihwkL80yE3amQ7xBwRB3kFFm7TLhBvnmdDFHK9pLZbGthccxWsua4wTl3PveDE
-         Lvd1e1TZrmsViblaL6MQC3JpZ/8ia2pLD4pV2UtQzPtkYAglpKgIgyGvd1OCWTV8HkSw
-         VdMOQASnEv9GRZanOC/VrkJ7q935q8Akc07cBpnRrnIRb06K3A7C3S6zrV9qYbZrZude
-         5+ChOU8Rc74F4sHBDbBxvQn3DfUcFK0xty8ixpo9XXmBA6y6DYl3Y+93AxWu6s8jBia3
-         oPvw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=ONiL/j7KLDyzXMbmf/vIv7r0+2NHq6ee7ZzJ30om2Ro=;
-        b=df+k9VJ6CNkOxBgfZMNL5FoIw8HivXDrls0prdEuPOfm1sehsbIW/njsBOUhFq6Qjc
-         zrMLFj9XXr5gXb3rfICBw2r0CafF6x4VN6qggz6RP/KFyX3Qe9zRyWEpc2TodUjjZiqh
-         CIi/q/3HvOik5rQG7Fzo2TxjASeNaZrtw3GoY+SsEl+JG6g+ZJXef9qgdqQkOLyMy+he
-         cFWP3BnZPluBQhXPjrt6ZMwc5HyVO36vu5xbKl7z+x5xNhGFCubHLYYTXzMsXJ11Nki6
-         DJMKjZtx2DVZHt83bSdyxZPgFm2K84Eepvu43HsKW0bnnes5fBBPOVQT7XYdA1sW5CsU
-         dZhQ==
-X-Gm-Message-State: AIkVDXL4Qf+GKBmPAO7Pd5zppEir+tLc84voZTLMs/EC2XLJkIzJ+cyASq3ubqTbG+o11v56Ibuyz1aXzyc7/A==
-X-Received: by 10.25.74.72 with SMTP id x69mr13528230lfa.66.1485384868814;
- Wed, 25 Jan 2017 14:54:28 -0800 (PST)
+        id S1752547AbdAYWzB (ORCPT <rfc822;e@80x24.org>);
+        Wed, 25 Jan 2017 17:55:01 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:65316 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1752418AbdAYWzA (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 Jan 2017 17:55:00 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 6C464637DB;
+        Wed, 25 Jan 2017 17:54:59 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=xj1jMJVHIPSG3m0Kh1/O4PCUxdw=; b=laHybM
+        2vqafxqbFNPfOMfFxE5aEgpMeczO3fMGFvVjOaSOlnASBwYtY5JWJnecnDAawsDN
+        d3ffJ+xDCSNQWrvZ8MODA6eeulxnxmFCueBNkYh7dMw71KdpHb+4nBYNOdGyHi5l
+        s8uTOVWb/Ww7bWk44VNsUTNvX7B359jZQAWbE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=ZoIaif3xVF3sidW30rDK5aax5RJa9jYQ
+        VLP1S4lrOnWs9f628a6GWUPxgqu9UjE+m/u53XEGFA9IJqKR9BsjhgvJEji1ATIW
+        U0kkkdA9YtWvnqbFg8bSj+pb+eGShvlMWSw5diM9hqjhzsELNx1n7YRkL1E9W3js
+        ld4PWbkvYfM=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 624B8637DA;
+        Wed, 25 Jan 2017 17:54:59 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id BA9C4637D9;
+        Wed, 25 Jan 2017 17:54:58 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     git@vger.kernel.org, bmwill@google.com, peff@peff.net
+Subject: Re: [PATCHv2 3/3] submodule absorbing: fix worktree/gitdir pointers recursively for non-moves
+References: <20170124221948.GB58021@google.com>
+        <20170124235651.18749-1-sbeller@google.com>
+        <20170124235651.18749-4-sbeller@google.com>
+Date:   Wed, 25 Jan 2017 14:54:57 -0800
+In-Reply-To: <20170124235651.18749-4-sbeller@google.com> (Stefan Beller's
+        message of "Tue, 24 Jan 2017 15:56:51 -0800")
+Message-ID: <xmqq37g692da.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.25.145.14 with HTTP; Wed, 25 Jan 2017 14:54:08 -0800 (PST)
-In-Reply-To: <CAE1pOi3eh7ao3NocV=PRFDby8y5ttjFR=-_VB0FoJv4MpjExaA@mail.gmail.com>
-References: <CAE1pOi2YZayEfKxxh3gsTds1mQ9L1E9AW=wPnmW=Dg=-EMj=tw@mail.gmail.com>
- <CA+P7+xrupLuYAj7tn_1EaUiN6eaCmtgX-_d4mnByDq95cuqiWQ@mail.gmail.com> <CAE1pOi3eh7ao3NocV=PRFDby8y5ttjFR=-_VB0FoJv4MpjExaA@mail.gmail.com>
-From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Wed, 25 Jan 2017 14:54:08 -0800
-Message-ID: <CA+P7+xo9WBwHjAXeUTn4bh=F6hvw1gA-79h-GmwQoeRpeLj2jQ@mail.gmail.com>
-Subject: Re: Force Confirmation for Dropping Changed Lines
-To:     Hilco Wijbenga <hilco.wijbenga@gmail.com>
-Cc:     Git Users <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
+X-Pobox-Relay-ID: 4BF83280-E351-11E6-B5B4-A7617B1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jan 25, 2017 at 2:51 PM, Hilco Wijbenga
-<hilco.wijbenga@gmail.com> wrote:
-> On 25 January 2017 at 14:24, Jacob Keller <jacob.keller@gmail.com> wrote:
->> On Wed, Jan 25, 2017 at 2:16 PM, Hilco Wijbenga
->> <hilco.wijbenga@gmail.com> wrote:
->>> How can I force Git to not assume my change to the first line is "redundant"?
->>>
->>
->> My guess is that you probably want a custom merge driver for your file
->> types. That's where I would look initially.
+Stefan Beller <sbeller@google.com> writes:
+
+> Consider having a submodule 'sub' and a nested submodule at 'sub/nested'.
+> When nested is already absorbed into sub, but sub is not absorbed into
+> its superproject, then we need to fixup the gitfile and core.worktree
+> setting for 'nested' when absorbing 'sub', but we do not need to move
+> its git dir around.
 >
-> Mmm, that sounds complex. The "my-code.x" is made up so I could keep
-> my example as simple as possible. In reality, it's Maven's POM files
-> (pom.xml).
->
-> So there is no setting for any of this? There is no way to switch off
-> auto merging for certain files?
+> Previously 'nested's gitfile contained "gitdir: ../.git/modules/nested";
+> it has to be corrected to "gitdir: ../../.git/modules/sub1/modules/nested".
 
-Not really sure, but a quick google search revealed
-https://github.com/ralfth/pom-merge-driver
+That sounds like a sensible way to make things consistent.
 
-Maybe that will help you?
-
-Thanks,
-Jake
