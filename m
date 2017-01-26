@@ -2,115 +2,182 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+X-Spam-Status: No, score=-6.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A54EA1F6DC
-	for <e@80x24.org>; Thu, 26 Jan 2017 00:13:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 72B981F6DC
+	for <e@80x24.org>; Thu, 26 Jan 2017 00:31:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751649AbdAZANx (ORCPT <rfc822;e@80x24.org>);
-        Wed, 25 Jan 2017 19:13:53 -0500
-Received: from castro.crustytoothpaste.net ([75.10.60.170]:38104 "EHLO
-        castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1750853AbdAZANw (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 25 Jan 2017 19:13:52 -0500
-Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 7C2A6280AD;
-        Thu, 26 Jan 2017 00:13:50 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
-        s=default; t=1485389630;
-        bh=swuGsnNggvyPN1tH8eQ0AIzBvtS8yCGK24oGRZIFMJM=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=CqjI3PnML0HcuZgFB1U53sy7qgasrYGfOcryWX+zO6y2+N+xvRAD2BGDu5pWKNgel
-         xdJQm3eUtWdBwjUGyeMXRm+HUPhuUdYnBDQC0wN08ZHpJi1sgR5hZPPV0w5C4T9R42
-         6l1PSm8CvtQnnIaoh+y4k6oem26DNq6lE9x6SP1wpsq0PloYcFTpaMP7Pe/7UWDCo3
-         1UTJpCVds6QfJGwEe4bA0jvr0qWQS5nA+ClenUddRleVfT+046NH4/0EJLvopAUvqW
-         gnL+yw1mg3kSUcR+xyXPFikAzRavnpZ9bzaxp1La32fbf+fL0SJWDUzr714FpVf6ec
-         BCqgWuFFIAVnmPte8AUxZ2890x/NA1vasxEnePcx+3Rnh6LPGNXHe4hZpKw3bM0OM2
-         HsqnAHUq0/VZYY+8on+5GPeEi0GZQrJVAJ7dxAzG6Puy7H5mSBVgjvG8BOgU/TDZ6f
-         1u1qBLu6wnFUR2pa7d+sm3ERJc+u/lIoQj7MfMlC3SJWbOzYG38
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     git@vger.kernel.org
-Cc:     Jeff King <peff@peff.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        =?UTF-8?q?=C3=98yvind=20A=2E=20Holm?= <sunny@sunbase.org>
-Subject: [PATCH] Documentation: implement linkgit macro for Asciidoctor
-Date:   Thu, 26 Jan 2017 00:13:44 +0000
-Message-Id: <20170126001344.445534-1-sandals@crustytoothpaste.net>
-X-Mailer: git-send-email 2.11.0
-In-Reply-To: <20170125234101.n2pzrp77df4zycv7@genre.crustytoothpaste.net>
-References: <20170125234101.n2pzrp77df4zycv7@genre.crustytoothpaste.net>
+        id S1751815AbdAZAbl (ORCPT <rfc822;e@80x24.org>);
+        Wed, 25 Jan 2017 19:31:41 -0500
+Received: from resqmta-po-03v.sys.comcast.net ([96.114.154.162]:35242 "EHLO
+        resqmta-po-03v.sys.comcast.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1751718AbdAZAbk (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 25 Jan 2017 19:31:40 -0500
+Received: from resomta-po-15v.sys.comcast.net ([96.114.154.239])
+        by resqmta-po-03v.sys.comcast.net with SMTP
+        id WXy7cYIlLIMkuWXyVcGesf; Thu, 26 Jan 2017 00:31:39 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=comcast.net;
+        s=q20161114; t=1485390699;
+        bh=VUTQmH1k8Xhg0qL6sBzLPtrEtw4kqLj446uR8W1HhuE=;
+        h=Received:Received:Subject:To:From:Message-ID:Date:MIME-Version:
+         Content-Type;
+        b=m9V+rRnBPVn4fAYzmx9nmkLxUPn8s0EXneVdhlLSSiaDpOb+zbtTUVYvEdC+hJayj
+         PTYeRd9+LuWyqqtKXWk/e1N02riwz+NuCChv+ZkHQm60TJaAn1nF43PE5MmU11HZLG
+         DzsTQ4Y1d2TzhS4ADKS8JHiOVyuAnF6PuA3SP7RZCzTPQdEq3qnouX4hEKfq4nwh5q
+         8vtiPhPwlZfnXARSrPepvI+WWN1ullqRWLQM/XuFXeyH0mLJ9l7UcMnpi97auYpOba
+         q7e3GfY4FeM9CKdAP0T7iHuLXo2mYHwIzWrqZhfUSswHFgqocO5EEUyxa7Z36pBHSC
+         tAVw+P59W4Kbg==
+Received: from localhost.localdomain ([73.35.250.55])
+        by resomta-po-15v.sys.comcast.net with SMTP
+        id WXyUcnWsNz1pFWXyUctN1Q; Thu, 26 Jan 2017 00:31:39 +0000
+Subject: Re: merge maintaining history
+To:     =?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+References: <58798686.5050401@comcast.net>
+ <CA+P7+xoF8E55-XDnQT-GN1=hEwwq4pOsz7--P-SCy29C7ST3Hg@mail.gmail.com>
+ <5880BB23.8030702@comcast.net> <xmqq37gezpz8.fsf@gitster.mtv.corp.google.com>
+ <38ca43cb-2fc7-0448-352f-7d9413f815c5@gmail.com>
+Cc:     Jacob Keller <jacob.keller@gmail.com>,
+        Git mailing list <git@vger.kernel.org>
+From:   "David J. Bakeman" <nakuru@comcast.net>
+X-Enigmail-Draft-Status: N1110
+Message-ID: <5889436A.8000707@comcast.net>
+Date:   Wed, 25 Jan 2017 16:31:38 -0800
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.7.1
+MIME-Version: 1.0
+In-Reply-To: <38ca43cb-2fc7-0448-352f-7d9413f815c5@gmail.com>
+Content-Type: multipart/mixed;
+ boundary="------------040900090408060008040800"
+X-CMAE-Envelope: MS4wfCwtcvj0TQT3XxweII1T8r1l3f5VMnoEzMlWDscYk2EEaG3mIj75qhdFOTxuT2SGspX6/R6sFxV32op/qey8vRFLIm0avLr5J9ROUGKS78myYy9WZ5y2
+ ifqVIseWu6AeFZz/ic5guVBHVTmfgX+DQDN2jMJnDroiVqly/LHG7OllPE0UUo1bTXovU+ow0q70POPBD7uAnBmngTr1irGnne57wvmkI1cN5BBe9fvD3IJv
+ JzRDFXKd38kJKW8khqsWInRXXBxbSo+4w+HVEMEN4Hc=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-AsciiDoc uses a configuration file to implement macros like linkgit,
-while Asciidoctor uses Ruby extensions.  Implement a Ruby extension that
-implements the linkgit macro for Asciidoctor in the same way that
-asciidoc.conf does for AsciiDoc.  Adjust the Makefile to use it by
-default.
+This is a multi-part message in MIME format.
+--------------040900090408060008040800
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
----
- Documentation/Makefile                  |  5 +----
- Documentation/asciidoctor-extensions.rb | 28 ++++++++++++++++++++++++++++
- 2 files changed, 29 insertions(+), 4 deletions(-)
- create mode 100644 Documentation/asciidoctor-extensions.rb
+On 01/20/2017 03:37 AM, Jakub Narębski wrote:
+> W dniu 19.01.2017 o 22:42, Junio C Hamano pisze:
+>> "David J. Bakeman" <nakuru@comcast.net> writes:
+>  
+> [...]
+>>> Thanks I think that's close but it's a little more complicated I think
+>>> :<(  I don't know if this diagram will work but lets try.
+>>>
+>>> original A->B->C->D->E->F
+>>>              \
+>>> first branch  b->c->d->e
+>>>
+>>> new repo e->f->g->h
+>>>
+>>> Now I need to merge h to F without loosing b through h hopefully.  Yes e
+>>> was never merged back to the original repo and it's essentially gone now
+>>> so I can't just merge to F or can I?
+>> With the picture, I think you mean 'b' is forked from 'B' and the
+>> first branch built 3 more commits on top, leading to 'e'.
+>>
+>> You say "new repo" has 'e' thru 'h', and I take it to mean you
+>> started developing on top of the history that leads to 'e' you built
+>> in the first branch, and "new repo" has the resulting history that
+>> leads to 'h'.
+>>
+>> Unless you did something exotic and non-standard, commit 'e' in "new
+>> repo" would be exactly the same as 'e' sitting on the tip of the
+>> "first branch", so the picture would be more like:
+>>
+>>> original A->B->C->D->E->F
+>>>              \
+>>> first branch  b->c->d->e
+>>>                         \
+>>> new repo                 f->g->h
+>> no?
+> On the other hand Git has you covered even if you did something 
+> non-standard, like starting new repo from the _state_ of 'e', that
+> is you have just copied files and created new repository, having
+> 'e' (or actually 'e*') as an initial commit.
+>
+>    original A<-B<-C<-D<-E<-F
+>                 \
+>    first branch  b<-c<-d<-e
+>
+>    new repo               e*<-f<-g<-h
+>
+> Note that arrows are in reverse direction, as it is newer commit
+> pointing to its parents, not vice versa.
+>
+> Assuming that you have everything in a single repository, by adding
+> both original and new repo as "remotes", you can use 'git replace'
+> command to replace 'e*' with 'e'.
+>
+>    original A<-B<-C<-D<-E<-F
+>                 \
+>    first branch  b<-c<-d<-e
+>                            \
+>    new repo                 \-f<-g<-h
+>    (with refs/replace)
+>
+>>     Then merging 'h' into 'F' will pull everything you did since
+>> you diverged from the history that leads to 'F', resulting in a
+>> history of this shape:
+>>
+>>> original A->B->C->D->E->F----------M
+>>>              \                    /
+>>> first branch  b->c->d->e         /
+>>>                         \       /
+>>> new repo                 f->g->h
+> Then you would have the above history in repositories that fetched
+> refs/replace/*, and the one below if replacement info is absent:
+>
+>    original A<-B<-C<-D<-E<-F<-----------M
+>                 \                      /
+>    first branch  b<-c<-d<-e           /
+>                                      /
+>    new repo               e*<-f->g->h
+>
+> But as Junio said it is highly unlikely that you are in this situation.
+>
+> HTH
+OK so what I've done so far is to clone the original then I added
+another remote connected to new repo.  Then I did git merge newrepo.  It
+did a bunch of stuff that flashed by really fast and then reported a
+conflict.  Now if I do a git st there are a bunch of files that seem to
+be already added to a commit and all the files with conflicts which it's
+says need to be fixed and added.
+I'm still learning git even after using it for several years.  I've
+never really seen this before.  So the already added files are the ones
+that git was able to merge mechanically?  If so can I diff those changes
+some way?  Would I have to un add (reset HEAD) all those files to see
+the diffs?  Would it have assumed that my changes are to be preferred?
 
-diff --git a/Documentation/Makefile b/Documentation/Makefile
-index 19c42eb60..d1b7a6865 100644
---- a/Documentation/Makefile
-+++ b/Documentation/Makefile
-@@ -179,10 +179,7 @@ ASCIIDOC = asciidoctor
- ASCIIDOC_CONF =
- ASCIIDOC_HTML = xhtml5
- ASCIIDOC_DOCBOOK = docbook45
--ifdef ASCIIDOCTOR_EXTENSIONS_LAB
--ASCIIDOC_EXTRA = -I$(ASCIIDOCTOR_EXTENSIONS_LAB) -rasciidoctor/extensions -rman-inline-macro
--endif
--ASCIIDOC_EXTRA += -alitdd='&\#x2d;&\#x2d;'
-+ASCIIDOC_EXTRA += -I. -rasciidoctor-extensions -alitdd='&\#x2d;&\#x2d;'
- DBLATEX_COMMON =
- endif
- 
-diff --git a/Documentation/asciidoctor-extensions.rb b/Documentation/asciidoctor-extensions.rb
-new file mode 100644
-index 000000000..09f7088ee
---- /dev/null
-+++ b/Documentation/asciidoctor-extensions.rb
-@@ -0,0 +1,28 @@
-+require 'asciidoctor'
-+require 'asciidoctor/extensions'
-+
-+module Git
-+  module Documentation
-+    class LinkGitProcessor < Asciidoctor::Extensions::InlineMacroProcessor
-+      use_dsl
-+
-+      named :chrome
-+
-+      def process(parent, target, attrs)
-+        if parent.document.basebackend? 'html'
-+          prefix = parent.document.attr('git-relative-html-prefix')
-+          %(<a href="#{prefix}#{target}.html">#{target}(#{attrs[1]})</a>\n)
-+        elsif parent.document.basebackend? 'docbook'
-+          %(<citerefentry>
-+<refentrytitle>#{target}</refentrytitle><manvolnum>#{attrs[1]}</manvolnum>
-+</citerefentry>
-+)
-+        end
-+      end
-+    end
-+  end
-+end
-+
-+Asciidoctor::Extensions.register do
-+  inline_macro Git::Documentation::LinkGitProcessor, :linkgit
-+end
--- 
-2.11.0
+Thanks again for all the great help!
 
+--------------040900090408060008040800
+Content-Type: text/x-vcard; charset=utf-8;
+ name="nakuru.vcf"
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment;
+ filename="nakuru.vcf"
+
+begin:vcard
+fn:David J. Bakeman
+n:Bakeman;David J.
+org:Nakuru Software Inc.
+adr:;;1504 North 57th Street;Seattle;WA;98103;USA
+email;internet:nakuru@comcast.net
+tel;work:(206)545-0609
+tel;fax:(206)600-6957
+x-mozilla-html:TRUE
+version:2.1
+end:vcard
+
+
+--------------040900090408060008040800--
