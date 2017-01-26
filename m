@@ -2,94 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 178A01F437
-	for <e@80x24.org>; Thu, 26 Jan 2017 09:28:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 888CD1F437
+	for <e@80x24.org>; Thu, 26 Jan 2017 10:49:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753200AbdAZJ2u (ORCPT <rfc822;e@80x24.org>);
-        Thu, 26 Jan 2017 04:28:50 -0500
-Received: from mail-ot0-f176.google.com ([74.125.82.176]:35717 "EHLO
-        mail-ot0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753088AbdAZJ2s (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 Jan 2017 04:28:48 -0500
-Received: by mail-ot0-f176.google.com with SMTP id 65so171062399otq.2
-        for <git@vger.kernel.org>; Thu, 26 Jan 2017 01:28:48 -0800 (PST)
+        id S1753437AbdAZKtK (ORCPT <rfc822;e@80x24.org>);
+        Thu, 26 Jan 2017 05:49:10 -0500
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:32997 "EHLO
+        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753201AbdAZKtI (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 Jan 2017 05:49:08 -0500
+Received: by mail-wm0-f67.google.com with SMTP id r144so49531198wme.0
+        for <git@vger.kernel.org>; Thu, 26 Jan 2017 02:49:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=iDpXrdnLsq1K1cJ6Tq6k1eVBufOzw2yDleDJQT5Bia4=;
-        b=T+/XJ1w6uHliRmD1AlRG1XwR9T/0/ky5Ol8b1vxGAkWM/Hb2VrjtivAC5KCyxxSJ9O
-         ph97gfr7fakpThkEWvmQTMW1nzuHkYXeLO9wvEI8+Lf7y+bns6LkKbU5MNshkRmwSyq4
-         nyxgOnAgrJiu6FM5/DSZGwIxpWeGdMDdvsoXdsoG8eLwu4iL5kDWIFzs3jAldMeNE/W1
-         iauMQEmQSdrdCVeDlS6gybbPyo41QA7rkw+LsvpFfv3GWz0MdNeEXcnaUovP6JpMvjWn
-         Dq3hEkoEzq9jFfeIbVpXgkFWewvtUeLUyzaioWHyXavvd4he26BGIoq70htyTlb6+9F2
-         6PeQ==
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=EoTsM9dNEvr5hKIYwBSl8uS6ZbOeJEUt02zyH2x3Sb0=;
+        b=LySlmUjd/7dc7jXgRBXGB+UwGUBo6U+PWUpeCIGpD/ozKtONTwrmUtqxmgyVkL853Q
+         QS3iMUsp8EwPDYNQrR/eF7Jonfe4ikp/TuhbKynNB/1tFwMdXi7AUdLmYwMyWGEuZUjk
+         BZDSRCtz+I6nMswWOy4zyNpPetdZTuZGaWBMPzPiLjP5/hDZQhUiE1OAfYcGbHkDKehH
+         cf/Vd0THtvJ5PzvlDnSo8HpdJVzkypMsUh8io2vG1sKbLs33xZWEGQXVpiRhJTM1Kn2L
+         jmx1FtslPU/5mt8KYr1BrblNLmKt9UdYQHmGwxuriEbZKm5tCUYwUUhYI7xTjkuJaGzz
+         a0AQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=iDpXrdnLsq1K1cJ6Tq6k1eVBufOzw2yDleDJQT5Bia4=;
-        b=YFz5XRMYzFJPyS3F62JEFm1AK+h5cL0AvUQGb678KCdFoT1mVii4No7W5ITYzvK/uU
-         NXPGaLI/kk1q8qz+c1IW/aO1VwF1elBdfEmEguu5GKqWHdDtfeIUlk4oIiI5nmiL8BnB
-         ccicYlvTiqfcK97VjZ0t0oRsqxELHyoE9qG7ikRRclh33q0UBw86dnvNGA25lQN+8zef
-         uG+kSDL0XhGV0U9/UziO7I8noezj07ckLrStKC5Rvsoc9y/Rsd1KtvR0qrue3eo9oPZU
-         9t75brgZyd9iWAL8rZ+EElvoO6Q+rABkiuPzNoLZ8ByIt/gqlQK4L1DUNca7JCF1zH+2
-         JdzA==
-X-Gm-Message-State: AIkVDXJH4rzjYy8H3ppCD7dpocmXRieUczBc9073Z+IU3gBWcJQLniN7gl4/Z0krwW6ZAnRHGwSwOapsVdTV6A==
-X-Received: by 10.157.37.54 with SMTP id k51mr783320otb.271.1485422927636;
- Thu, 26 Jan 2017 01:28:47 -0800 (PST)
-MIME-Version: 1.0
-Received: by 10.74.158.1 with HTTP; Thu, 26 Jan 2017 01:28:17 -0800 (PST)
-In-Reply-To: <20170125205718.ksqstdnazmgbkehy@sigill.intra.peff.net>
-References: <20170121140806.tjs6wad3x4srdv3q@sigill.intra.peff.net>
- <20170125125054.7422-1-pclouds@gmail.com> <20170125125054.7422-5-pclouds@gmail.com>
- <20170125205718.ksqstdnazmgbkehy@sigill.intra.peff.net>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Thu, 26 Jan 2017 16:28:17 +0700
-Message-ID: <CACsJy8ATM_kc5SPY0dqprUefRy3vtpKW-4QEyJFK54jw0QgeJA@mail.gmail.com>
-Subject: Re: [PATCH 4/5] revision.c: refactor ref selection handler after --exclude
-To:     Jeff King <peff@peff.net>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Jacob Keller <jacob.keller@gmail.com>
-Content-Type: text/plain; charset=UTF-8
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=EoTsM9dNEvr5hKIYwBSl8uS6ZbOeJEUt02zyH2x3Sb0=;
+        b=jLOgwnd0j+ZN3pcotRyuBpIme88dMSJ0/XMZQ3cynJ8//GVOCREBgx/UMeXyUYa42d
+         3mddnK/mxZNg6ct3w7+lA2wcIvx2d5ziCmlWOJcXjxqBB9XuZUpKGzV7e9lj0lgVu0LU
+         sW7glZEa4m62+9Tjp9HI77hFoDVRw2bWoZfg8JhJpJn1ZLLIp8mrs7vTLcEjLPu0/oU9
+         75m/OsQPyrvj2eYWxl3+wb2ju3Yeo7UjNBrFWvzD2p8ynpkMPO8+zqPWnLLs+Z7rp8yC
+         H0EcKvjQwbY2NEvQaYURktTHN69mbZpyeBcSTBmtCwEFiqVA27ZxAJOFr5WFVrYBb7N/
+         Rebw==
+X-Gm-Message-State: AIkVDXL44fKpxVP5JT8s0Yn4TjXmeyQxxJkQDOX5/8mZpf56cbiJvHBlKgXB9h8cta7STw==
+X-Received: by 10.28.163.3 with SMTP id m3mr2236751wme.85.1485427747334;
+        Thu, 26 Jan 2017 02:49:07 -0800 (PST)
+Received: from [10.146.248.54] ([62.159.156.210])
+        by smtp.gmail.com with ESMTPSA id w16sm17045133wmd.4.2017.01.26.02.49.05
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Thu, 26 Jan 2017 02:49:06 -0800 (PST)
+Content-Type: text/plain; charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+Subject: Re: What's cooking in git.git (Jan 2017, #04; Mon, 23)
+From:   Lars Schneider <larsxschneider@gmail.com>
+In-Reply-To: <D9F0976B-9F78-44BE-B9DD-CAB6506FA3A9@gmail.com>
+Date:   Thu, 26 Jan 2017 10:48:30 +0100
+Cc:     Jeff King <peff@peff.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        git <git@vger.kernel.org>
+Content-Transfer-Encoding: 7bit
+Message-Id: <8141FBB4-ACD0-42F5-9B5A-DA8DF1693972@gmail.com>
+References: <xmqqo9yxpaxk.fsf@gitster.mtv.corp.google.com> <0D956B23-E655-4C28-A205-14CCC0A7DEA2@gmail.com> <20170124132749.l3ezupyitvxe4t2l@sigill.intra.peff.net> <alpine.DEB.2.20.1701251800120.3469@virtualbox> <20170125173958.pg546a6w33dirp5k@sigill.intra.peff.net> <xmqq4m0nc8dz.fsf@gitster.mtv.corp.google.com> <20170125183924.6yclcjl4ggcu42yp@sigill.intra.peff.net> <xmqq7f5i92jk.fsf@gitster.mtv.corp.google.com> <D9F0976B-9F78-44BE-B9DD-CAB6506FA3A9@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+X-Mailer: Apple Mail (2.3124)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jan 26, 2017 at 3:57 AM, Jeff King <peff@peff.net> wrote:
-> I don't think it means either. It means to include remotes in the
-> selected revisions, but excluding the entries mentioned by --exclude.
->
-> IOW:
->
->   --exclude=foo --remotes
->         include all remotes except refs/remotes/foo
->
->   --exclude=foo --unrelated --remotes
->         same
->
->   --exclude=foo --decorate-reflog --remotes
->         decorate reflogs of all remotes except "foo". Do _not_ use them
->         as traversal tips.
->
->   --decorate-reflog --exclude=foo --remotes
->         same
->
-> IOW, the ref-selector options build up until a group option is given,
-> which acts on the built-up options (over that group) and then resets the
-> built-up options. Doing "--unrelated" as above is orthogonal (though I
-> think in practice nobody would do that, because it's hard to read).
 
-This is because it makes sense to combine --exclude and
---decorate-reflog. But what about a new --something that conflicts
-with either --exclude or --decorate-reflog? Should we simply catch
-such combinations and error out (which may be a bit more complicated
-than this patch, or maybe not)?
--- 
-Duy
+> On 26 Jan 2017, at 10:14, Lars Schneider <larsxschneider@gmail.com> wrote:
+> 
+> 
+>> On 25 Jan 2017, at 23:51, Junio C Hamano <gitster@pobox.com> wrote:
+>> 
+>> Jeff King <peff@peff.net> writes:
+>> 
+>>> I guess the way to dig would be to add a test that looks at the output
+>>> of "type mv" or something, push it to a Travis-hooked branch, and then
+>>> wait for the output
+>> 
+>> Sounds tempting ;-)
+> 
+> Well, I tried that:
+> 
+> mv is /bin/mv
+> 
+> ... and "/bin/mv" is exactly the version that I have on my machine.
+> 
+> The difference between Travis and my machine is that I changed the 
+> default shell to ZSH with a few plugins [1]. If I run the test with 
+> plain BASH on my Mac then I can reproduce the test failure. Therefore,
+> we might want to adjust the commit message if anyone else can reproduce
+> the problem on a Mac. 
+> 
+> I can even reproduce the failure if I run the test with plain ZSH. 
+> However, I can't find a plugin that defines an alias for "mv". Puzzled...
+> 
+> - Lars
+> 
+> [1] https://github.com/robbyrussell/oh-my-zsh
+
+Oh. I must have made a mistake on my very first test run. I can reproduce
+the failure with ZSH and my plugins... looks like it's a Mac OS problem
+and no TravisCI only problem after all. 
+
+Sorry for the noise/confusion,
+Lars
