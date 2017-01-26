@@ -2,83 +2,77 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C786E1F70F
-	for <e@80x24.org>; Thu, 26 Jan 2017 18:27:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 64D171F794
+	for <e@80x24.org>; Thu, 26 Jan 2017 18:30:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754129AbdAZS06 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 26 Jan 2017 13:26:58 -0500
-Received: from mail-pf0-f179.google.com ([209.85.192.179]:33500 "EHLO
-        mail-pf0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754117AbdAZS05 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 Jan 2017 13:26:57 -0500
-Received: by mail-pf0-f179.google.com with SMTP id y143so67033156pfb.0
-        for <git@vger.kernel.org>; Thu, 26 Jan 2017 10:26:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=subject:to:references:cc:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding;
-        bh=G61q9EWiURJ8YTo6BYBFz7k2edwC41ch7rX3jXCuO0c=;
-        b=hofVHqrPDyduD2TQ7y5CjMvqMErayjMz4mBhZWDWSqfhz9Te5L+dY4hL0SvnOKPRyS
-         baAQAQBlpvvdr971fOAHaLDIUg0JM8dLZNhkcQIT42D1qkzZTpwUpafUe4RBQ8PUAEf1
-         EG59gIkfdECKlnMXkTPyfbwDvAt4+cOsYgOItGi4uhn4C/DrwO9Eu63zgWQNQGgQBu0B
-         txHXhPu/00EfjCN0/8kcE7WuP7juXm9ruDPcYayeC68i7p4oKVwNdgI9uo4B5OVwQZ/O
-         74MLeFByJcH8jJAPq8bGdFsobnWqJg1obKSQFhuiwM58KGlcSfYsbZAfJqHsLz0hntRW
-         DRzA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
-        bh=G61q9EWiURJ8YTo6BYBFz7k2edwC41ch7rX3jXCuO0c=;
-        b=rDwIxrYVQGy2vYlq6YrOhXVgxNAjsmAumCPc6B9LLWInlzl7uS52pLUdgx7k3ZR/Rp
-         EqQOd4MAW+VTTKkbkpf3FDadUNyCy0u6KwBdTYCKb8TXFMoxUSrLbY+re/lHCY8zHXgj
-         Mec/Icy+o49d9071MahFB816kzHz0k2TDQKM+mK2SI0v9t7z1dhn9c6kWDheBQBDd36h
-         8auMJDqWqHRh2HatQ2f+iVpD2xN2arAMreUI6z/QxUOWQHrzJ/8syKPvSNXWbqZc0P7G
-         gyvolp+fNsqfxzIY/98H7Ox7vHg45BAaccqQkgaUDSaG0V+Bjq3bqyXs8maOOFyjEAVu
-         z9fA==
-X-Gm-Message-State: AIkVDXKqLTOr1NmBHjcemiEKjVVblE3UmQjKYVzUblDAal6XpBsfJCdmqQHgmupibibMaFuo
-X-Received: by 10.84.217.68 with SMTP id e4mr5937295plj.99.1485454708469;
-        Thu, 26 Jan 2017 10:18:28 -0800 (PST)
-Received: from twelve2.mtv.corp.google.com ([2620:0:1000:5b10:f0de:f19e:2597:5e36])
-        by smtp.gmail.com with ESMTPSA id u14sm5096478pfg.18.2017.01.26.10.18.27
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 26 Jan 2017 10:18:27 -0800 (PST)
-Subject: Re: [RFC 12/14] fetch-pack: do not printf after closing stdout
-To:     Stefan Beller <sbeller@google.com>
-References: <cover.1485381677.git.jonathantanmy@google.com>
- <db1db5d0e5563464c09d1678234c9c5e8ae5b2f4.1485381677.git.jonathantanmy@google.com>
- <CAGZ79kb+VVQoimCDCxk1JPtVdDcS0vgi3NgVfo_aZ_=feed8Cw@mail.gmail.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
-From:   Jonathan Tan <jonathantanmy@google.com>
-Message-ID: <bcdeacb6-4517-b3de-cafe-27540dd4f7d0@google.com>
-Date:   Thu, 26 Jan 2017 10:18:27 -0800
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.5.1
+        id S1753029AbdAZSaF (ORCPT <rfc822;e@80x24.org>);
+        Thu, 26 Jan 2017 13:30:05 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:57832 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1752695AbdAZSaD (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 Jan 2017 13:30:03 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 7FEA56394B;
+        Thu, 26 Jan 2017 13:29:18 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=9n7pe/58vx0BUZtMqn/2MnUyo8E=; b=PfwVDC
+        /cfQPA65T+Y34hHeMecTH0kzySyw7H8cf1Mf/Kh3z2HdrqykAcsgBqFA7HDb8C+m
+        mCjZ0pYdgsVCO+PrhUh9UdBTRmyjwGK5O6CC9Xrm5Q7MBbXhJZpZMnug0IsnP/nk
+        iFjxdc56g7EJkUbRLFAbR0h26LsRZMTowfq0A=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=DM/nF7TZhdE40ioqguqskscTnqLRK87f
+        huAwk0YrWmxLKw/2KtIYJAq7uNV7vyT6qsQO0ySt06MliUiNrUNviFKJbANCTGIL
+        ycmVA/8YF/XNjbm23wyt7jwZgFOw4qcbX9vKZ8bRb03X1Kd0BRCqY+vZE6s75MmT
+        rquuU2r1gdo=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 770676394A;
+        Thu, 26 Jan 2017 13:29:18 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id D178B63948;
+        Thu, 26 Jan 2017 13:29:17 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Mike Hommey <mh@glandium.org>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] gpg-interface: Add some output from gpg when it errors out.
+References: <20170125030434.26448-1-mh@glandium.org>
+        <xmqqtw8m7ncp.fsf@gitster.mtv.corp.google.com>
+        <20170125235410.byxwmo7o7zdszzot@glandium.org>
+        <xmqq8tpy7dh8.fsf@gitster.mtv.corp.google.com>
+        <20170126025530.r4fesye447do5wdx@glandium.org>
+Date:   Thu, 26 Jan 2017 10:29:16 -0800
+In-Reply-To: <20170126025530.r4fesye447do5wdx@glandium.org> (Mike Hommey's
+        message of "Thu, 26 Jan 2017 11:55:30 +0900")
+Message-ID: <xmqqh94l65fn.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <CAGZ79kb+VVQoimCDCxk1JPtVdDcS0vgi3NgVfo_aZ_=feed8Cw@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: 58DCD9B6-E3F5-11E6-B982-A7617B1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 01/25/2017 04:50 PM, Stefan Beller wrote:
-> On Wed, Jan 25, 2017 at 2:03 PM, Jonathan Tan <jonathantanmy@google.com> wrote:
->> In fetch-pack, during a stateless RPC, printf is invoked after stdout is
->> closed. Update the code to not do this, preserving the existing
->> behavior.
+Mike Hommey <mh@glandium.org> writes:
+
+>> With that information recorded in the log (or in-code comment, or
+>> both), if it turns out that some lines with the prefix are useful
+>> (or some other lines without the prefix are not very useful), they
+>> can tweak the filtering criteria as appropriate, with confidence
+>> that they _know_ for what purpose the initial "filter lines with the
+>> prefix" was trying to serve, and their update is still in the same
+>> spirit as the original, only executed better.
 >
-> This seems to me as if it could go as an independent
-> bugfix(?) or refactoring as this seems to be unclear from the code?
+> Come to think of it, and considering that mutt happily signs emails in
+> the same conditions, maybe it would make sense to just ignore gpg return
+> code as long as there is a SIG_CREATED message...
 
-The subsequent patches in this patch set are dependent on this patch, 
-but it's true that this could be sent out on its own first.
-
-I'm not sure if bugfix is the right word, since the existing behavior is 
-correct (except perhaps that we rely on the fact that printf after 
-closing stdout does effectively nothing).
+I do not think we want to go there.  If GPG reports failure, there
+is something funny going on.
