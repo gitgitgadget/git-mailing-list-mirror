@@ -2,92 +2,164 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 763DF1F70F
-	for <e@80x24.org>; Thu, 26 Jan 2017 19:20:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DD9371F70F
+	for <e@80x24.org>; Thu, 26 Jan 2017 19:28:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753022AbdAZTUQ (ORCPT <rfc822;e@80x24.org>);
-        Thu, 26 Jan 2017 14:20:16 -0500
-Received: from mail-lf0-f44.google.com ([209.85.215.44]:35079 "EHLO
-        mail-lf0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753009AbdAZTUO (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 Jan 2017 14:20:14 -0500
-Received: by mail-lf0-f44.google.com with SMTP id n124so150439520lfd.2
-        for <git@vger.kernel.org>; Thu, 26 Jan 2017 11:20:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=cBeQLwCj4IUC7bnBw/JxXwvqci3/e1XrP+Amuxw6upk=;
-        b=qZAsGfwqaSXOXCXG+skJHhai0ebzOIi6+p8hPOGrFnImDi5fhvLMkxKWFp3RkDeVfA
-         3CH6wFsgOzvvG9V29I/CpVdeZ9cqBupYATG4JKM19RmZbefUwyNEFr6HeTLL9V+zpJBY
-         fvFBH84ltb0zF7Zg2n3HF7nAY8XsmfnOlk4QtdZkVze7YlB2oajCa0Hyh/rF6PWHVqQg
-         9BJtWScz3q5HgLNpzWCfv+1n0BubzoUjLChGdWZ0jP/ovOhUKtXN+tqSJz+oow4saQx7
-         n/p14mlqa/quhBcvZL301sBqlCEr/DDCgBVpKqROGmSRIgB3AsSNlAhiekdlwdZwCEI1
-         XKbg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=cBeQLwCj4IUC7bnBw/JxXwvqci3/e1XrP+Amuxw6upk=;
-        b=EpaXxSiMnL/wuyGgS0rIwZIj3QNYT+/Qdx+To3cDUlWvXpi+OmCSnZhycf/wqvbScM
-         sgB3D+EKmlUR0gFqGbOnipqpl5rV3UZcm1B8+305oB1bINvj/kyzoNIOiuJpYc6PNeT+
-         b3/LQzwPCUhth0qKNqiyTHI9dobCBC7OV3E2Hi0FNHeVR1cxwAB4LQIyphKMFO/t3lgI
-         JSDEmThP4C+UJWOxUfJ21erAFcsA0ASb8gPEd/J9ZqaXkalK9NzKSSRehZcckLfOc84I
-         HomXD+4Hc2xciNf28LQ1JLvi9BRlwoopkwIF4hBbtTv0tJhzy6Bfrx383Rc7Xsi2OEk5
-         GIfQ==
-X-Gm-Message-State: AIkVDXK63/wnJxddcnpsGD/q8sT42nV3+Gbxk6piCdZU8QQEQKoCatBQxu9yHJWlgmBgNpStptJVz473Cd5uOw==
-X-Received: by 10.25.21.96 with SMTP id l93mr1484652lfi.136.1485458412303;
- Thu, 26 Jan 2017 11:20:12 -0800 (PST)
+        id S1752826AbdAZT2d (ORCPT <rfc822;e@80x24.org>);
+        Thu, 26 Jan 2017 14:28:33 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:56960 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1752303AbdAZT2c (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 Jan 2017 14:28:32 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 13B5C6357A;
+        Thu, 26 Jan 2017 14:27:55 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=F6vJvrqVfF+jWOqsU5Me6nPaIu0=; b=PH/NxQ
+        3rAZSZaBasiq9Hy0Jdq0oU28m33h+nXtrDw6dE5yECGFaKuh3WLUPFRp/Zgvbwck
+        sSkrxtr8DW6nwsv85PnVM9qsDcWauFVCBAGCKFe2JfVfalt+ZttThM9Po2eTBhy0
+        hZSKkzm4w0pa+tZfBj970uLfSXtHaeJ0VSkaM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=brLVMJt3E5qiaYq/J48ZQbUijGGHAjDG
+        ejCHAs/Am2uWljsJ4182EzTxV9YyylkT/j5UUY7nMFB1Z3Ta5yN2MUwl599hhwbj
+        qvk7CuFBMxmXIqdyDZU1GXQT5piimpH3JbThnvecoXiK1bqL6I673cvXaYv9jg+A
+        XF8WAlp2HMc=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 0AA8063579;
+        Thu, 26 Jan 2017 14:27:55 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 5381C63578;
+        Thu, 26 Jan 2017 14:27:54 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc:     git@vger.kernel.org, Segev Finer <segev208@gmail.com>,
+        Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2 3/3] connect: Add the envvar GIT_SSH_VARIANT and ssh.variant config
+References: <2ff29a4d00e0e13d460122d8008e762361ca90aa.1483358673.git.johannes.schindelin@gmx.de>
+        <cover.1485442231.git.johannes.schindelin@gmx.de>
+        <3d451f2c357a3fd7f0b0e4b427548553d7d05306.1485442231.git.johannes.schindelin@gmx.de>
+Date:   Thu, 26 Jan 2017 11:27:52 -0800
+In-Reply-To: <3d451f2c357a3fd7f0b0e4b427548553d7d05306.1485442231.git.johannes.schindelin@gmx.de>
+        (Johannes Schindelin's message of "Thu, 26 Jan 2017 15:52:20 +0100
+        (CET)")
+Message-ID: <xmqqo9yt4o5i.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.25.20.193 with HTTP; Thu, 26 Jan 2017 11:19:51 -0800 (PST)
-In-Reply-To: <xmqqd1fa7dqf.fsf@gitster.mtv.corp.google.com>
-References: <CAE1pOi2YZayEfKxxh3gsTds1mQ9L1E9AW=wPnmW=Dg=-EMj=tw@mail.gmail.com>
- <CA+P7+xrupLuYAj7tn_1EaUiN6eaCmtgX-_d4mnByDq95cuqiWQ@mail.gmail.com>
- <CAE1pOi3eh7ao3NocV=PRFDby8y5ttjFR=-_VB0FoJv4MpjExaA@mail.gmail.com>
- <CA+P7+xo9WBwHjAXeUTn4bh=F6hvw1gA-79h-GmwQoeRpeLj2jQ@mail.gmail.com>
- <xmqqh94m7leb.fsf@gitster.mtv.corp.google.com> <CAE1pOi0CgfxQTygg_i3dc_-_Lb8qgOOk_0hg+goJvm7PyLZseg@mail.gmail.com>
- <CA+P7+xocc==-8ad-OVTahMDABA0-spDPEw05JTHopfO7Ovj2RQ@mail.gmail.com> <xmqqd1fa7dqf.fsf@gitster.mtv.corp.google.com>
-From:   Hilco Wijbenga <hilco.wijbenga@gmail.com>
-Date:   Thu, 26 Jan 2017 11:19:51 -0800
-Message-ID: <CAE1pOi0foJpZXSpHrbWqvOuG1+VoNKTCMjuLK5TCVcJuGMSOoQ@mail.gmail.com>
-Subject: Re: Force Confirmation for Dropping Changed Lines
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jacob Keller <jacob.keller@gmail.com>,
-        Git Users <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
+X-Pobox-Relay-ID: 88D9CC70-E3FD-11E6-B32E-FE3F13518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 25 January 2017 at 18:32, Junio C Hamano <gitster@pobox.com> wrote:
-> I think you should be able to do something like
->
->         $ cat >$HOME/bin/fail-3way <<\EOF
->         #!/bin/sh
->         git merge-file "$@"
->         exit 1
->         EOF
->         $ chmod +x $HOME/bin/fail-3way
->         $ cat >>$HOME/.gitconfig <<\EOF
->         [merge "fail"]
->                 name = always fail 3-way merge
->                 driver = $HOME/bin/fail-3way %A %O %B
->                 recursive = text
->         EOF
->         $ echo pom.xml merge=fail >>.gitattributes
->
-> to define a custom merge driver whose name is "fail", that runs the
-> fail-3way program, which runs the bog standard 3-way merge we use
-> (so that it will do the best-effort textual merge) but always return
-> with a non-zero status to signal that the result is conflicting and
-> needs manual resolution.
+Johannes Schindelin <johannes.schindelin@gmx.de> writes:
 
-Thank you, that's an improvement. :-) Unfortunately, it still
-completes the merge. Is there any way to simply get the
->>>>>>>>/<<<<<<<< markers?
+> diff --git a/Documentation/config.txt b/Documentation/config.txt
+> index af2ae4cc02..f2c210f0a0 100644
+> --- a/Documentation/config.txt
+> +++ b/Documentation/config.txt
+> @@ -1949,6 +1949,13 @@ Environment variable settings always override any matches.  The URLs that are
+>  matched against are those given directly to Git commands.  This means any URLs
+>  visited as a result of a redirection do not participate in matching.
+>  
+> +ssh.variant::
+> +	Override the autodetection of plink/tortoiseplink in the SSH
+> +	command that 'git fetch' and 'git push' use. It can be set to
+> +	either `ssh`, `plink`, `putty` or `tortoiseplink`. Any other
+> +	value will be treated as normal ssh. This is useful in case
+> +	that Git gets this wrong.
+> +
+
+I do like the fact that this now sits under ssh.* hierarchy (not core.*).
+
+It should mention core.sshCommand, GIT_SSH_COMMAND, etc., because
+reading this alone would mislead users to set only this one and expect
+that their plink will be used without setting core.sshCommand etc.
+
+It also should say that GIT_SSH_VARIANT environment variable will
+override this variable.
+
+> diff --git a/Documentation/git.txt b/Documentation/git.txt
+> index 4f208fab92..c322558aa7 100644
+> --- a/Documentation/git.txt
+> +++ b/Documentation/git.txt
+> @@ -1020,6 +1020,13 @@ Usually it is easier to configure any desired options through your
+>  personal `.ssh/config` file.  Please consult your ssh documentation
+>  for further details.
+>  
+> +`GIT_SSH_VARIANT`::
+> +	If this environment variable is set, it overrides the autodetection
+> +	of plink/tortoiseplink in the SSH command that 'git fetch' and 'git
+> +	push' use. It can be set to either `ssh`, `plink`, `putty` or
+> +	`tortoiseplink`. Any other value will be treated as normal ssh. This
+> +	is useful in case that Git gets this wrong.
+
+Similarly this should mention GIT_SSH_COMMAND at least.  It is crazy
+to set something that will cause misdetection to core.sshCommand and
+use this environment variable to fix it (instead of using ssh.variant),
+so I think it is OK not to mention core.sshCommand (but it would not
+hurt to do so).
+
+> diff --git a/connect.c b/connect.c
+> index 9f750eacb6..7b4437578b 100644
+> --- a/connect.c
+> +++ b/connect.c
+> @@ -691,6 +691,24 @@ static const char *get_ssh_command(void)
+>  	return NULL;
+>  }
+>  
+> +static int handle_ssh_variant(int *port_option, int *needs_batch)
+> +{
+> +	const char *variant;
+> +
+> +	if (!(variant = getenv("GIT_SSH_VARIANT")) &&
+> +		git_config_get_string_const("ssh.variant", &variant))
+> +		return 0;
+> +
+> +	if (!strcmp(variant, "plink") || !strcmp(variant, "putty"))
+> +		*port_option = 'P';
+> +	else if (!strcmp(variant, "tortoiseplink")) {
+> +		*port_option = 'P';
+> +		*needs_batch = 1;
+> +	}
+> +
+> +	return 1;
+> +}
+
+Between handle and get I do not think there is strong reason to
+favor one over the other.  Unlike the one I sent yesterday, this is
+not overriding but is getting, so we should keep the original name
+Segev gave it, which is shorter, I would think, rather than renaming
+it to "handle".
+
+The string that came from the configuration must be freed, no?  That
+is what I recall in Peff's comment yesterday.
+
+> @@ -817,7 +835,8 @@ struct child_process *git_connect(int fd[2], const char *url,
+>  				ssh_argv0 = xstrdup(ssh);
+>  			}
+>  
+> -			if (ssh_argv0) {
+> +			if (!handle_ssh_variant(&port_option, &needs_batch) &&
+> +			    ssh_argv0) {
+
+I like the placement of this "if the user explicitly told us" much
+better.
+
+My patch yesterday was deliberately being lazy, because the next
+thought that will come to us after comparing the two is "this way,
+we avoid having to do the auto-detection altogether, which is way
+better than wasting the effort to auto-detect, only to override".
+
+And that reasoning will lead to a realization "there is no reason to
+even do the split_cmdline() if the user explicitly told us".  While
+that reasoning is correct and we _should_ further refactor, I didn't
+want to spend braincycles on that myself.
