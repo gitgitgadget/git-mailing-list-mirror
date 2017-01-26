@@ -6,116 +6,105 @@ X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7FF5B1F70F
-	for <e@80x24.org>; Thu, 26 Jan 2017 18:18:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AA74C1F70F
+	for <e@80x24.org>; Thu, 26 Jan 2017 18:26:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753811AbdAZSSF (ORCPT <rfc822;e@80x24.org>);
-        Thu, 26 Jan 2017 13:18:05 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:57592 "EHLO
+        id S1753998AbdAZS0I (ORCPT <rfc822;e@80x24.org>);
+        Thu, 26 Jan 2017 13:26:08 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:60859 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1753213AbdAZSSE (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 Jan 2017 13:18:04 -0500
+        with ESMTP id S1753857AbdAZS0H (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 Jan 2017 13:26:07 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 3219D63FEE;
-        Thu, 26 Jan 2017 13:18:03 -0500 (EST)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 90FD3621C6;
+        Thu, 26 Jan 2017 13:26:05 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=UVrI7eBS3mCrEzWM0IRV30O8bqk=; b=fiIqoh
-        XcZ3j3YiuO+OJl87ADmdc4r+9VjQRmtpvZwmljkKcIj1hzWcdX13GzsvTdLc8Pkz
-        iM61KoZCqZYI7HIXw3lMWjN+nOA1ISodihrt1tBzfoNUZ9s0JXPrUFWqROtk0Dew
-        2VG2Y2ylMbe144ZTuM+xOHR1riHyHcTgMZqts=
+        :content-type; s=sasl; bh=s1bhZqz603+WKLc7R+2vHH7MsZc=; b=eEK12P
+        52hzUVI/0TcFWo5wOKZfHimcVkqCFRSIR/irgu1L3+Y3IxKpZv5sa/bcClpINz5K
+        S8jKjy4azZUCOe1baOQFVBcgSKjFyXDdUET1u8Xt4NZ+gsLCp6PhdiL3WuwAkEgN
+        YartlLI5uXOZPZoOL4lgsPq3gCB0HgBxhT7Xc=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=tFwxrNbHwJ/CKi0nLodUo+bTcRSFiqCI
-        ZqXGkpLD06EW0vcOtNP4S65LGB46dPj4hcW1C6u4L6TuYbcbWmOrOBfiKd51ZuJo
-        L0/HfWCm4kNZkRrQ5JD7N394MUjNX/dqVZfrhWu6FSD1W9RlXnju6DY8jsp56v04
-        vCWV9KWfMdI=
+        :content-type; q=dns; s=sasl; b=s/LvhXHHRF3AJwxQQnD7Jf90lXuckFYQ
+        OnqcWSMIHi3U1BQFS0MayiW7Jgrv5Cfbw7w0/EztM4wkLMkP/XDC59q9ZECb9jLA
+        s3A5u1bU1rLp9lrxv46IEfktqt4FTJi8YlJEnwj2J2vVQRFcR1VEp+4vmFBC09Y+
+        P72K96fFq6M=
 Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 2786363FED;
-        Thu, 26 Jan 2017 13:18:03 -0500 (EST)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 87C91621C5;
+        Thu, 26 Jan 2017 13:26:05 -0500 (EST)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 40FFC63FEB;
-        Thu, 26 Jan 2017 13:18:02 -0500 (EST)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id BB223621C4;
+        Thu, 26 Jan 2017 13:26:04 -0500 (EST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Cornelius Weig <cornelius.weig@tngtech.com>
-Cc:     Stefan Beller <sbeller@google.com>,
-        Philip Oakley <philipoakley@iee.org>,
-        Johannes Sixt <j6t@kdbg.org>,
-        bitte.keine.werbung.einwerfen@googlemail.com,
-        "git\@vger.kernel.org" <git@vger.kernel.org>,
-        thomas.braun@virtuell-zuhause.de, John Keeping <john@keeping.me.uk>
-Subject: Re: SubmittingPatches: drop temporal reference for PGP signing
-References: <923cd4e4-5c9c-4eaf-0fea-6deff6875b88@tngtech.com>
-        <20170125002116.22111-1-sbeller@google.com>
-        <33E354BCDB9A4192B69B9B399381659E@PhilipOakley>
-        <CAGZ79kaRdtKD7DNJRWXsyg07GbTM4OsKUmHHcFczEMJA1YK2KA@mail.gmail.com>
-        <baff65ba-1e98-d5a7-5b5a-a50a7fc723ee@tngtech.com>
-Date:   Thu, 26 Jan 2017 10:18:00 -0800
-In-Reply-To: <baff65ba-1e98-d5a7-5b5a-a50a7fc723ee@tngtech.com> (Cornelius
-        Weig's message of "Thu, 26 Jan 2017 14:30:14 +0100")
-Message-ID: <xmqqpoj965yf.fsf@gitster.mtv.corp.google.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Johannes Sixt <j6t@kdbg.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        David Aguilar <davvid@gmail.com>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        GIT Mailing-list <git@vger.kernel.org>
+Subject: Re: Fixing the warning about warning(""); was: Re: [PATCH] difftool.c: mark a file-local symbol with static
+References: <20161201185056.eso5rhec7izlbywa@sigill.intra.peff.net>
+        <20170122052608.tpr5pihfgafhoynj@gmail.com>
+        <20170124142346.u3d7l6772mtkgpcf@sigill.intra.peff.net>
+        <xmqqlgu0ceia.fsf@gitster.mtv.corp.google.com>
+        <20170124230500.h3fasbvutjkkke5h@sigill.intra.peff.net>
+        <alpine.DEB.2.20.1701251135090.3469@virtualbox>
+        <20170125183542.pe5qolexqqx6jhsi@sigill.intra.peff.net>
+        <xmqq7f5iakxw.fsf@gitster.mtv.corp.google.com>
+        <20170125220101.et67ebkumsqosaku@sigill.intra.peff.net>
+        <546179e0-1d6e-86f7-00cf-e13218b76de1@kdbg.org>
+        <20170126143252.ne533mcv3n2ksbai@sigill.intra.peff.net>
+Date:   Thu, 26 Jan 2017 10:26:03 -0800
+In-Reply-To: <20170126143252.ne533mcv3n2ksbai@sigill.intra.peff.net> (Jeff
+        King's message of "Thu, 26 Jan 2017 09:32:53 -0500")
+Message-ID: <xmqqlgtx65l0.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: C63325EE-E3F3-11E6-B234-FE3F13518317-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: E5D08EF4-E3F4-11E6-9452-FE3F13518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Cornelius Weig <cornelius.weig@tngtech.com> writes:
+Jeff King <peff@peff.net> writes:
 
-> How about something along these lines? Does the forward reference
-> break the main line of thought too severly?
+> On Thu, Jan 26, 2017 at 07:39:55AM +0100, Johannes Sixt wrote:
+>
+>> Am 25.01.2017 um 23:01 schrieb Jeff King:
+>> > +#pragma GCC diagnostic ignored "-Wformat-zero-length"
+>> 
+>> Last time I used #pragma GCC in a cross-platform project, it triggered an
+>> "unknown pragma" warning for MSVC. (It was the C++ compiler, I don't know if
+>> the C compiler would also warn.) It would have to be spelled like this:
+>> 
+>> #pragma warning(disable: 4068)   /* MSVC: unknown pragma */
+>> #pragma GCC diagnostic ignored "-Wformat-zero-length"
+>> 
+>> Dscho mentioned that he's compiling with MSVC. It would do him a favor.
+>
+> Bleh. The point of #pragma is to ignore ones you don't know about.
 
-I find it a bit distracting for those who know PGP signing has
-nothing to do with signing off your patch, but I think that is OK
-because they are not the primary target audience of this part of the
-document.
+Yes.  Let's not go there; somebody else's compiler will complain
+about "#pragma warning(disable: 4068)" that it does not understand.
 
-I however am more worried that it may be misleading to mention these
-two in the same sentence.  Those who skim these paragraphs without
-knowing the difference between the two may get a false impression
-that these two may somehow be related because they are mentioned in
-the same sentence.
+> Anyway. I do not want to make life harder for anyone. I think there are
+> several options floating around now, so I will let Junio decide which
+> one he wants to pick up.
 
-The retitling of section (5) you did, without any other change,
-might be sufficient.  It may also help to be even more explicit in
-the updated title, i.e. s/by signing off/by adding Signed-off-by:/
+Well, I'll keep the "do nothing other than squelching this instance"
+to solve one of the two problems for now.  
+
+The other "can we make it harder to make the same issue and reduce
+the need to discuss this again on the list?" can be an independent
+follow-up patch, and I do have a preference (the "less horrible
+version, that is static inline warning_blank_line(void)" you gave us
+in <20170124230500.h3fasbvutjkkke5h@sigill.intra.peff.net>), but I
+do not think we are in a hurry.
 
 Thanks.
 
-> diff --git a/Documentation/SubmittingPatches b/Documentation/SubmittingPatches
-> index 08352de..c2b0cbe 100644
-> --- a/Documentation/SubmittingPatches
-> +++ b/Documentation/SubmittingPatches
-> @@ -216,12 +216,12 @@ that it will be postponed.
->  Exception:  If your mailer is mangling patches then someone may ask
->  you to re-send them using MIME, that is OK.
->  
-> -Do not PGP sign your patch, at least for now.  Most likely, your
-> -maintainer or other people on the list would not have your PGP
-> -key and would not bother obtaining it anyway.  Your patch is not
-> -judged by who you are; a good patch from an unknown origin has a
-> -far better chance of being accepted than a patch from a known,
-> -respected origin that is done poorly or does incorrect things.
-> +Do not PGP sign your patch, but do sign-off your work as explained in (5).
-> +Most likely, your maintainer or other people on the list would not have your
-> +PGP key and would not bother obtaining it anyway. Your patch is not judged by
-> +who you are; a good patch from an unknown origin has a far better chance of
-> +being accepted than a patch from a known, respected origin that is done poorly
-> +or does incorrect things.
->  
->  If you really really really really want to do a PGP signed
->  patch, format it as "multipart/signed", not a text/plain message
-> @@ -246,7 +246,7 @@ patch.
->       *2* The mailing list: git@vger.kernel.org
->  
->  
-> -(5) Sign your work
-> +(5) Certify your work by signing off
->  
->  To improve tracking of who did what, we've borrowed the
->  "sign-off" procedure from the Linux kernel project on patches
+
