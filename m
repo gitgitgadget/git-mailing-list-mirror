@@ -7,19 +7,19 @@ X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 135BB1F70F
-	for <e@80x24.org>; Thu, 26 Jan 2017 16:16:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id ACE391F70F
+	for <e@80x24.org>; Thu, 26 Jan 2017 16:16:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753160AbdAZQQ3 (ORCPT <rfc822;e@80x24.org>);
+        id S1753034AbdAZQQ3 (ORCPT <rfc822;e@80x24.org>);
         Thu, 26 Jan 2017 11:16:29 -0500
-Received: from mout.gmx.net ([212.227.15.18]:51030 "EHLO mout.gmx.net"
+Received: from mout.gmx.net ([212.227.15.18]:53082 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753324AbdAZQQM (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 Jan 2017 11:16:12 -0500
+        id S1753366AbdAZQQN (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 Jan 2017 11:16:13 -0500
 Received: from virtualbox ([37.24.141.236]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0Lymoh-1cTQPw43Gh-01680n; Thu, 26
- Jan 2017 17:08:32 +0100
-Date:   Thu, 26 Jan 2017 17:08:29 +0100 (CET)
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MKYsh-1cXbHa3CvX-001zYo; Thu, 26
+ Jan 2017 17:08:41 +0100
+Date:   Thu, 26 Jan 2017 17:08:41 +0100 (CET)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     git@vger.kernel.org
@@ -27,128 +27,120 @@ cc:     Junio C Hamano <gitster@pobox.com>,
         Stefan Beller <sbeller@google.com>,
         Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
         Guillaume Pages <guillaume.pages@ensimag.grenoble-inp.fr>
-Subject: [PATCH v2 0/1] Let `git status` handle a not-yet-started `rebase
- -i` gracefully
-In-Reply-To: <99f6de4be107044fdf01ee796f42e124ac147891.1453480067.git.johannes.schindelin@gmx.de>
-Message-ID: <cover.1485446899.git.johannes.schindelin@gmx.de>
-References: <99f6de4be107044fdf01ee796f42e124ac147891.1453480067.git.johannes.schindelin@gmx.de>
+Subject: [PATCH v2 1/1] status: be prepared for not-yet-started interactive
+ rebase
+In-Reply-To: <cover.1485446899.git.johannes.schindelin@gmx.de>
+Message-ID: <alpine.DEB.2.20.1701261708370.3469@virtualbox>
+References: <99f6de4be107044fdf01ee796f42e124ac147891.1453480067.git.johannes.schindelin@gmx.de> <cover.1485446899.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:voXo8Zpb+H6tAcy4uicBstKEc1fg1vhhCZOXz7YNZkTcotftu/t
- t3EPGWP0hie18VeY3pHx+IwR0L+cFPkODkEWgzjlHT7FCeT6s3qoiJ/F9SFYR5rxA8FiLH2
- nICQ833XhKZ7GnvRIvlTYvp2+Ur1+CWN+2qhJsSmbfYpmkcYx3gtnYmpc/I7BJ3SnC6xv2b
- uEbdSzrEdpdA9XP5eZqew==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:Obi9t36Pac0=:tqad6/qvVTsKf8xvgktoGV
- yxqBpNjbI7YjFzHajC97WZGFPIBH2WCgZFLQAM9j9ECy32FlRQFOd/3qVTStllw6MJTwQ3RH8
- 7ohGqa7cHZd49QRJmsnCpNpYDeGAZ4PJySgRH+PhlML4a//ywK2QJZV2QAN0hUceqMo5qojtX
- kMmm973PV1EfwbzA429Id1TNrxk37a6MgeT8ox3JHY7w+yZrjj2DHbpjqEMjFo5LCR7ANfRMv
- D2FAkvmNDyvNMzq5KEelBrcOaQ9JMKo95hPRni4MEpjtQzRaAnvnjRO/NsHqunlJYyMvWEqJ5
- /UzedUNRiJbPzOPu8JG7Ib/szCoCuzYH8SrhZq0NIzj0DTOnsnNZKv2vrYKWoLfJeHk0sHVeO
- UB0aY1G3S7fB8Vc2fbKCiwcYRZrM8JWmvqhWVIEaIw8SmnggrRmzzpJQaeJkgwFhmc2Ch5hDD
- /OvrSyK5k4815mfvpf2NF/RDcKwqLi1DtdF4uQDMVE0YIDrw85dxdF4XRSg7FQ8yG5Hahrik9
- BCmHQ5T29dIc3tSKHJ7gghhGVc7Y6bA3moc14h8rVyncAVkFdpQtc2Q9eYiuHXLQmwZxx5Xi5
- /gaCiOp6Yf/MPPle7PVJrhMsIaMezSF8saZtd+Oq/poYPnG2OBfgpe6c99oA0dq5oGv6vSXhZ
- l/oqQtgRWqZWvHwcEKV0SaHrq143Hh9CDaLYG5nsXwuvP5DKmGKGmwg8HGdcKYDLy5wLgdsYQ
- MmoKvBeRMUiwOlRiPtnJmHJfdusKw+eLFabq6FxhPAGGVzbfdNY+U1gSH+oYHihYKwqtog2n8
- 2iDqApF
+X-Provags-ID: V03:K0:zHOkY+uZp3tk+dYgXfUpLLeZe8F7SnpokxPJxSQ6BmiH9ALGbaZ
+ jUhuLQNCO7mXmV6zkezquQ1b1PXRzQIdmxYXRTj1jp2xegWXoQL6Pl8Ciu9shMhiwccExcr
+ w5B9f2pkOnM/DHuMV45dbqg5v/zrah5g2miAALNsTwgMoRIbELSwJPDigdvr0+ic0QEjiqh
+ w0Ne5cphdVge3+ZQxWj/w==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:NwLb+/Rq/Rk=:6NYyz6odYxr/+2o+ve3OqO
+ N7KqbocjH/HD/KttHubJM8pNjkgyFWFLFTR3YUplnL1r5goIb60lzMj0h0SWJ2A82KHvpUjFc
+ Xvcu+NdqhaNeD+ORSRC7pfa28qmMDmHawJH7IxQVMqUg21mr6ATp3T2BD6wXSiqYJSy1c4ACy
+ h9PLKyYeh9K7RoCFYQ3RuNaQAg36TTWHnzwXj5U03/1eQbzNGosZBbjGiPzibQzQBXzwr+a77
+ A1JWKsE6sA5znx+wy7ZgqipW+HWB2Ze+S48mUHqZe42fEaGndtoi2eXsucubypJM+ZdFXy4qM
+ uijvtLWHAEeSYgWUFh/CJo5JinaycGaS7nVWJhe8Wjao5aVk7EP4rZOMnz/80Y64Q8XfFQvEB
+ loDElrzcgGpGOADHwsOxikEhTJuKgxLX52HZnlrdoyw+3gvcq8YZFtXE+LaAM9eNtHUQPwbEC
+ joaETha7rB0mFw2+8UdSiUVNm+5GXU+XxHXJeFcNkg9FERLWPMEesYs8+inQXpiOsmKPeUorB
+ YyLya71y/ARPCSzSiMkj5BexgIHlL9Qv7498sYznOx/Mo/idScx9bJl3Oc5clOY0SWGkyaLPx
+ O1XbAuecCEWkEsBQhT6s7Kzzx1GHmDkVTuBVAf8yTTB/UGgulXIP90Mf1FsM0OeZHPVCZ96XV
+ QcnATf2jylVXKZx2Ii9BXe7Vh+82dLhAk1N5i7Ecn5EvCNnFgbj6t6wIYnr/GQJNICCE7q+z5
+ wn+kSSDZr1CqwOgzA45IslErtPwsd7XAh3BJlAe7k6yaAiz2JDHhX7hIDEvbEw322syav28bf
+ oTxttKp
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When the `done` file is missing, we die()d. This is not necessary, we
-can do much better than that.
+Some developers might want to call `git status` in a working
+directory where they just started an interactive rebase, but the
+edit script is still opened in the editor.
 
-Changes since v1:
+Let's show a meaningful message in such cases.
 
-- When `done` is missing, we still read `git-rebase-todo` and report the
-  next steps.
-
-- We now report a missing git-rebase-todo.
-
-- Added a test (thanks, Matthieu, for prodding me into working harder
-  ;-)).
-
-- As I changed so much, I took authorship of the patch.
-
-
-Johannes Schindelin (1):
-  status: be prepared for not-yet-started interactive rebase
-
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
  t/t7512-status-help.sh | 19 +++++++++++++++++++
  wt-status.c            | 14 ++++++++++----
  2 files changed, 29 insertions(+), 4 deletions(-)
 
-
-base-commit: 4e59582ff70d299f5a88449891e78d15b4b3fabe
-Published-As: https://github.com/dscho/git/releases/tag/wt-status-v2
-Fetch-It-Via: git fetch https://github.com/dscho/git wt-status-v2
-
-Interdiff vs v1:
-
- diff --git a/t/t7512-status-help.sh b/t/t7512-status-help.sh
- index 5c3db656df..458608cc1e 100755
- --- a/t/t7512-status-help.sh
- +++ b/t/t7512-status-help.sh
- @@ -944,4 +944,23 @@ EOF
-  	test_i18ncmp expected actual
-  '
-  
- +test_expect_success 'status: handle not-yet-started rebase -i gracefully' '
- +	ONTO=$(git rev-parse --short HEAD^) &&
- +	COMMIT=$(git rev-parse --short HEAD) &&
- +	EDITOR="git status --untracked-files=no >actual" git rebase -i HEAD^ &&
- +	cat >expected <<EOF &&
- +On branch several_commits
- +No commands done.
- +Next command to do (1 remaining command):
- +   pick $COMMIT four_commit
- +  (use "git rebase --edit-todo" to view and edit)
- +You are currently editing a commit while rebasing branch '\''several_commits'\'' on '\''$ONTO'\''.
- +  (use "git commit --amend" to amend the current commit)
- +  (use "git rebase --continue" once you are satisfied with your changes)
- +
- +nothing to commit (use -u to show untracked files)
- +EOF
- +	test_i18ncmp expected actual
- +'
- +
-  test_done
- diff --git a/wt-status.c b/wt-status.c
- index 13afe66649..4dff0b3e21 100644
- --- a/wt-status.c
- +++ b/wt-status.c
- @@ -1169,12 +1169,12 @@ static void show_rebase_information(struct wt_status *s,
-  		struct string_list have_done = STRING_LIST_INIT_DUP;
-  		struct string_list yet_to_do = STRING_LIST_INIT_DUP;
-  
- -		if ((read_rebase_todolist("rebase-merge/done", &have_done)) ||
- -		    (read_rebase_todolist("rebase-merge/git-rebase-todo",
- -				  &yet_to_do)))
- +		read_rebase_todolist("rebase-merge/done", &have_done);
- +		if (read_rebase_todolist("rebase-merge/git-rebase-todo",
- +					 &yet_to_do))
-  			status_printf_ln(s, color,
- -				_("rebase-i not started yet."));
- -		else if (have_done.nr == 0)
- +				_("git-rebase-todo is missing."));
- +		if (have_done.nr == 0)
-  			status_printf_ln(s, color, _("No commands done."));
-  		else {
-  			status_printf_ln(s, color,
- @@ -1192,9 +1192,7 @@ static void show_rebase_information(struct wt_status *s,
-  					_("  (see more in file %s)"), git_path("rebase-merge/done"));
-  		}
-  
- -		if (have_done.nr == 0)
- -			; /* do nothing */
- -		else if (yet_to_do.nr == 0)
- +		if (yet_to_do.nr == 0)
-  			status_printf_ln(s, color,
-  					 _("No commands remaining."));
-  		else {
-
+diff --git a/t/t7512-status-help.sh b/t/t7512-status-help.sh
+index 5c3db656df..458608cc1e 100755
+--- a/t/t7512-status-help.sh
++++ b/t/t7512-status-help.sh
+@@ -944,4 +944,23 @@ EOF
+ 	test_i18ncmp expected actual
+ '
+ 
++test_expect_success 'status: handle not-yet-started rebase -i gracefully' '
++	ONTO=$(git rev-parse --short HEAD^) &&
++	COMMIT=$(git rev-parse --short HEAD) &&
++	EDITOR="git status --untracked-files=no >actual" git rebase -i HEAD^ &&
++	cat >expected <<EOF &&
++On branch several_commits
++No commands done.
++Next command to do (1 remaining command):
++   pick $COMMIT four_commit
++  (use "git rebase --edit-todo" to view and edit)
++You are currently editing a commit while rebasing branch '\''several_commits'\'' on '\''$ONTO'\''.
++  (use "git commit --amend" to amend the current commit)
++  (use "git rebase --continue" once you are satisfied with your changes)
++
++nothing to commit (use -u to show untracked files)
++EOF
++	test_i18ncmp expected actual
++'
++
+ test_done
+diff --git a/wt-status.c b/wt-status.c
+index a715e71906..4dff0b3e21 100644
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -1135,14 +1135,17 @@ static void abbrev_sha1_in_line(struct strbuf *line)
+ 	strbuf_list_free(split);
+ }
+ 
+-static void read_rebase_todolist(const char *fname, struct string_list *lines)
++static int read_rebase_todolist(const char *fname, struct string_list *lines)
+ {
+ 	struct strbuf line = STRBUF_INIT;
+ 	FILE *f = fopen(git_path("%s", fname), "r");
+ 
+-	if (!f)
++	if (!f) {
++		if (errno == ENOENT)
++			return -1;
+ 		die_errno("Could not open file %s for reading",
+ 			  git_path("%s", fname));
++	}
+ 	while (!strbuf_getline_lf(&line, f)) {
+ 		if (line.len && line.buf[0] == comment_line_char)
+ 			continue;
+@@ -1152,6 +1155,7 @@ static void read_rebase_todolist(const char *fname, struct string_list *lines)
+ 		abbrev_sha1_in_line(&line);
+ 		string_list_append(lines, line.buf);
+ 	}
++	return 0;
+ }
+ 
+ static void show_rebase_information(struct wt_status *s,
+@@ -1166,8 +1170,10 @@ static void show_rebase_information(struct wt_status *s,
+ 		struct string_list yet_to_do = STRING_LIST_INIT_DUP;
+ 
+ 		read_rebase_todolist("rebase-merge/done", &have_done);
+-		read_rebase_todolist("rebase-merge/git-rebase-todo", &yet_to_do);
+-
++		if (read_rebase_todolist("rebase-merge/git-rebase-todo",
++					 &yet_to_do))
++			status_printf_ln(s, color,
++				_("git-rebase-todo is missing."));
+ 		if (have_done.nr == 0)
+ 			status_printf_ln(s, color, _("No commands done."));
+ 		else {
 -- 
 2.11.1.windows.prerelease.2.9.g3014b57
-
