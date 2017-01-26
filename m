@@ -2,93 +2,113 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 527481F437
-	for <e@80x24.org>; Thu, 26 Jan 2017 11:21:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9AA2C1F437
+	for <e@80x24.org>; Thu, 26 Jan 2017 11:38:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752266AbdAZLVC (ORCPT <rfc822;e@80x24.org>);
-        Thu, 26 Jan 2017 06:21:02 -0500
-Received: from mail-ot0-f180.google.com ([74.125.82.180]:32772 "EHLO
-        mail-ot0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752205AbdAZLVA (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 Jan 2017 06:21:00 -0500
-Received: by mail-ot0-f180.google.com with SMTP id 73so172816862otj.0
-        for <git@vger.kernel.org>; Thu, 26 Jan 2017 03:21:00 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=hammant-org.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=77f6JYkUN1o0Za5+tc0y6SxUPs5pnBf1vqXT4lD+f7Y=;
-        b=u40/NytYHDyi7RpQiNt+vDC4EVCv/7T+29D2B6EocqN856Nb6CHQutN4ld4TCe5MoT
-         +hooHtSCRxvqDFMxjrkd3uKtrJ68OVUpNqfReTlAhpI5UyIObYcqRmIrPXlT5GX5UJyx
-         Q+9KZIzlKvA+SdJgUT8svgLqKcKJzvdfcUiO4K8h2u7ryGvMBQb8o9ce1o9oMeXnquP2
-         HfFU5gqzTrr5QqeVE0AhY46oTABPPuqDnk9QSKIsIJ+PBu/ChbFnmI0HkqxEAeVGlm+M
-         UtWTqinlg56wGZV8rSQtk9NyHNPjCUXCufAQpSUsiIZS4OSECTQB3DkecmNn+xbS6u78
-         voVw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=77f6JYkUN1o0Za5+tc0y6SxUPs5pnBf1vqXT4lD+f7Y=;
-        b=KhWIcZDyGxtuAW9z8q1W90qPNkJjYGU9ridbAnhtOKEqn/EJWORSBEP7UMzyL13ASm
-         UquQ4C5Si8oWUDIh5zQV8g1cl+imD980jQ/wlI6RQxArGPMp1mvJrQTJw20/XNKKfaoe
-         52ZR1U/ePuhc2In0tn/EXYg66UGkWCDxnq+huc6zXunxirU/yap/BfarQJD1/Zvq3Xdu
-         YP0s2elQ6H6/VFgGBcdhDQlQNU7squXLGTgDF9tclJ9ywMAqzAd2K8nd5RIH83M9vlKS
-         7UTDo9cff62tfCrr/7szpwrKJMScQdszZvTUf+rH+vhIj1KIqQrBo4mxQ6r1htef9GYC
-         8dIA==
-X-Gm-Message-State: AIkVDXK6clEyVdwFDvqLre7jusmQ92u9TfM+V5H0jYPz7RjgQbuvm0clHx72rndvVv7qqetUQkfHWEFXGmOrdQ==
-X-Received: by 10.157.50.133 with SMTP id u5mr990032otb.201.1485429659955;
- Thu, 26 Jan 2017 03:20:59 -0800 (PST)
+        id S1751628AbdAZLiV (ORCPT <rfc822;e@80x24.org>);
+        Thu, 26 Jan 2017 06:38:21 -0500
+Received: from mout.gmx.net ([212.227.15.15]:59164 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751112AbdAZLiT (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 Jan 2017 06:38:19 -0500
+Received: from virtualbox ([37.24.141.236]) by mail.gmx.com (mrgmx001
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0Lx8vJ-1cPdp60Ttp-016d6w; Thu, 26
+ Jan 2017 12:37:49 +0100
+Date:   Thu, 26 Jan 2017 12:37:46 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Johannes Sixt <j6t@kdbg.org>
+cc:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+        David Aguilar <davvid@gmail.com>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        GIT Mailing-list <git@vger.kernel.org>
+Subject: Re: Fixing the warning about warning(""); was: Re: [PATCH] difftool.c:
+ mark a file-local symbol with static
+In-Reply-To: <546179e0-1d6e-86f7-00cf-e13218b76de1@kdbg.org>
+Message-ID: <alpine.DEB.2.20.1701261226220.3469@virtualbox>
+References: <20161201040234.3rnuttitneweedn5@sigill.intra.peff.net> <xmqq60n3bjel.fsf@gitster.mtv.corp.google.com> <20161201185056.eso5rhec7izlbywa@sigill.intra.peff.net> <20170122052608.tpr5pihfgafhoynj@gmail.com> <20170124142346.u3d7l6772mtkgpcf@sigill.intra.peff.net>
+ <xmqqlgu0ceia.fsf@gitster.mtv.corp.google.com> <20170124230500.h3fasbvutjkkke5h@sigill.intra.peff.net> <alpine.DEB.2.20.1701251135090.3469@virtualbox> <20170125183542.pe5qolexqqx6jhsi@sigill.intra.peff.net> <xmqq7f5iakxw.fsf@gitster.mtv.corp.google.com>
+ <20170125220101.et67ebkumsqosaku@sigill.intra.peff.net> <546179e0-1d6e-86f7-00cf-e13218b76de1@kdbg.org>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Received: by 10.182.143.1 with HTTP; Thu, 26 Jan 2017 03:20:59 -0800 (PST)
-X-Originating-IP: [65.78.25.171]
-In-Reply-To: <20170126045936.wyleenuwunhrvbn2@sigill.intra.peff.net>
-References: <CA+298Ujx2wH2WnoYiOaWKoneBrF_E5VUXXSMqecGgNLYS0Wemg@mail.gmail.com>
- <20170126045936.wyleenuwunhrvbn2@sigill.intra.peff.net>
-From:   Paul Hammant <paul@hammant.org>
-Date:   Thu, 26 Jan 2017 06:20:59 -0500
-Message-ID: <CA+298UhHyXvHZzuuVAz-KYuPJydKY4JksKyBPe+VjsL+zOn74Q@mail.gmail.com>
-Subject: Re: sparse checkout - weird behavior
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:ecwtHSIlb+NoSh9LPhE1farsoemR0Aq+9hnAnZB//IVAu3JTY+7
+ hH6AJgXRTS5xkrruVAhZQgQKZ/T6FFy7olt67eADWtZk9kYjucd2vAASsAIt5VUW5U2xNQH
+ Q/QB8inBH9ZexH3TdHajnz5EGDTDXKItshWY/4TZ0fNUgGClGlwAZ5G3KCFp8IyQgt5KjZU
+ u5lGD1zVTAsE++BTNxYzg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:sGxF9wmeSx4=:W768mi2mkv6YIpKsXz1G+b
+ lj/VgiKrX2LVhSsMV57Sc3jpx1dODfHORtnaRnHEQ3f4OFE3z26yGZXJmjloJQLlzrdGXyKqP
+ dEHWFD9Esd3wTD803zncOvxy2XIiVw0Kzf0OI+Yy49+flAAhg9S8uz60n9F12I1AkBfLTR8Yo
+ fppo0XDgx/KYP7yoK37HiU6P/9pim1tp59PJzj427oLzRtIbEL2mPWA5dFpH1YYatHl/WW6oV
+ V/SvA9qnIeiMvLpySYcdLPLIWMWFvW8rIiaH7qnMciWo//E3Q95uW92YoNmZaNBY/HADG78xY
+ vUn2k+ScNoxHSLpuKz5RpWcnjpCEhchfFZRpUC25ocZDqrs9U9WiDnWReinSRIyqjoY+2T0Kz
+ 1wJBdRcDoZaX7O9ZvKNrV38smKQ2aLhV9mt5C/ZJEAc+MWXI2jtDsrAcYyABg7OOwiSAlyEsV
+ aVZeyfrroGI0Z8pDsHmDEUf1FhyNBWIgdHkuhcbbeBAPi+Ri3G3JwH/IzHa+iNbysK2Ul99Us
+ 8Zv41JBP7CwYOzP12vKcFDnjcxJozvkq5G9iX+UfMGhw9zOr9WzpP9yhAjjTzJL+ciru84loj
+ 050pf77OQWh206KH4kgtvddSSFUfRxLTa4nAIwb3mOlw2V7UJsq1NrEotRkAiAzRkpaw0hH6s
+ qnEalej0cS3qwhQAxWHaY+4JCHxptXayMPpfeEj9B2LEvI75TRGDoZ59uu90ys3pEWwjRp7TB
+ Jjb48ybyxqiZdhkJ0TaxWaDYaftEQzahXQnQaOlYpnPZ4bBocDKIWpT2XaolL+Jfsh4+ASTUz
+ aWxPlEB
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Well I feel a bit silly. Thanks for responding.
+Hi Hannes,
 
-On Wed, Jan 25, 2017 at 11:59 PM, Jeff King <peff@peff.net> wrote:
-> On Wed, Jan 25, 2017 at 10:21:19PM -0500, Paul Hammant wrote:
->
->> Related bug (maybe the same). Reproduction:
->>
->>   $ git clone git@github.com:jekyll/jekyll.git --no-checkout
->>   Cloning into 'jekyll'...
->>   remote: Counting objects: 41331, done.
->>   remote: Compressing objects: 100% (5/5), done.
->>   remote: Total 41331 (delta 0), reused 0 (delta 0), pack-reused 41326
->>   Receiving objects: 100% (41331/41331), 11.91 MiB | 9.15 MiB/s, done.
->>   Resolving deltas: 100% (26530/26530), done.
->>   $ cd jekyll
->>   $ git config core.sparsecheckout true
->>   $ echo 'CONDUCT.markdown' > .git/info/sparse-checkout
->>   $ echo 'Gemfile' >> .git/info/sparse-checkout
->>   $ echo 'Rakefile' >> .git/info/sparse-checkout
->>   $ echo 'appveyor.yml' >> .git/info/sparse-checkout
->>   $ git checkout --
->>   Your branch is up-to-date with 'origin/master'.
->>   $ ls
->>   CONDUCT.markdown Gemfile Rakefile appveyor.yml lib
->>
->> I was not expecting to see 'lib' in the resulting file list
->
-> Yep, I think this is the same problem. Inside lib, you get only
-> "lib/theme_template/Gemfile", because it matches your unanchored
-> pattern. Using "/Gemfile" in the sparse-checkout file fixes it.
->
-> -Peff
+On Thu, 26 Jan 2017, Johannes Sixt wrote:
+
+> Am 25.01.2017 um 23:01 schrieb Jeff King:
+> > +#pragma GCC diagnostic ignored "-Wformat-zero-length"
+> 
+> Last time I used #pragma GCC in a cross-platform project, it triggered
+> an "unknown pragma" warning for MSVC.
+
+It is starting to become a little funny how many ways we can discuss the
+resolution of the GCC compiler warning.
+
+And it starts to show: we try to solve the thing in so many ways, just to
+avoid the obviously most-trivial patch to change warning(""); to
+warning("%s", "") (the change to warning(" "); would change behavior, but
+I would be fine with that, too).
+
+I am not really interested in any of these complicated workarounds. If you
+gentle people decide they are better in Git's source code, go ahead. I do
+not have to like what you are doing, I just have to work with it.
+
+> (It was the C++ compiler, I don't know if the C compiler would also
+> warn.) It would have to be spelled like this:
+> 
+> #pragma warning(disable: 4068)   /* MSVC: unknown pragma */
+> #pragma GCC diagnostic ignored "-Wformat-zero-length"
+> 
+> Dscho mentioned that he's compiling with MSVC. It would do him a favor.
+
+I am compiling with MSVC, and the idea is to tap into that large number of
+Windows developers who Git traditionally has had a really bad time
+attracting. From that perspective, I would say it would not only do me a
+favor, but anybody who builds Git for Windows using Visual Studio.
+
+But we also have to consider whether it would do anybody a "dis-favor".
+#pragma statements are by definition highly dependent on the compiler. I
+have no idea whether there are developers out there building Git with
+C compilers other than GCC, clang or MSVC (as I did back in the days on
+IRIX and HP/UX), but there is quite the potential for problems here [*1*].
+
+To keep Git's source code truly portable, the #pragma would have to be
+guarded by a GCC-specific #ifdef ... #endif.
+
+Ciao,
+Dscho
+
+Footnote *1*: This is just another instance where a discussion on the Git
+mailing list reminds me of
+http://thedailywtf.com/articles/The_Complicator_0x27_s_Gloves, as it tries
+to avoid an obvious solution by trying to come up with a different
+solution that in turn requires additional solutions to additional problems
+caused by the alternative solution.
