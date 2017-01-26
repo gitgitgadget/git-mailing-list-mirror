@@ -2,100 +2,128 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,
+	STOX_REPLY_TYPE shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6E1F51F70F
-	for <e@80x24.org>; Thu, 26 Jan 2017 20:57:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2493A1F70F
+	for <e@80x24.org>; Thu, 26 Jan 2017 20:59:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753139AbdAZU52 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 26 Jan 2017 15:57:28 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:51099 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751880AbdAZU51 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 Jan 2017 15:57:27 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 4C4CD647CA;
-        Thu, 26 Jan 2017 15:51:34 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=loAQUDyect2OV6q4qdbkySpRqvI=; b=KY3oD1
-        mBPa6kTL3xFu1oQfEey822ijKp0iqL1JQSgLbtWxe/b4ohT73kzXAE4B2fLPaewW
-        LKw3P9XBwF27xyszS5cfEWzSlAe3j9lXtBKHSKhpakWw5mtjg60xgpY+GWaxh4Ms
-        It/25n4jCTDq3kqkkwh0+EMj7A8fOrxL0uTao=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=b6/9vJKigwhB/8rkxBjVYZ266H1EYC92
-        qPt1aZx610GLgPY5BleRfeO1cM0wQHoLBL++2bp1hw9AeuNMb0+7NqVwcorfHP2J
-        9xPLsVPuYKivx68LdjNjdOJCYIGaH4vSScAkwMzZk8Yg+MCOghqbZnSW2PmVNeYE
-        MoDSp/Rrg7A=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 44D60647C9;
-        Thu, 26 Jan 2017 15:51:34 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A7BBB647C8;
-        Thu, 26 Jan 2017 15:51:33 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Hilco Wijbenga <hilco.wijbenga@gmail.com>
-Cc:     Jacob Keller <jacob.keller@gmail.com>,
-        Git Users <git@vger.kernel.org>
-Subject: Re: Force Confirmation for Dropping Changed Lines
-References: <CAE1pOi2YZayEfKxxh3gsTds1mQ9L1E9AW=wPnmW=Dg=-EMj=tw@mail.gmail.com>
-        <CA+P7+xrupLuYAj7tn_1EaUiN6eaCmtgX-_d4mnByDq95cuqiWQ@mail.gmail.com>
-        <CAE1pOi3eh7ao3NocV=PRFDby8y5ttjFR=-_VB0FoJv4MpjExaA@mail.gmail.com>
-        <CA+P7+xo9WBwHjAXeUTn4bh=F6hvw1gA-79h-GmwQoeRpeLj2jQ@mail.gmail.com>
-        <xmqqh94m7leb.fsf@gitster.mtv.corp.google.com>
-        <CAE1pOi0CgfxQTygg_i3dc_-_Lb8qgOOk_0hg+goJvm7PyLZseg@mail.gmail.com>
-        <CA+P7+xocc==-8ad-OVTahMDABA0-spDPEw05JTHopfO7Ovj2RQ@mail.gmail.com>
-        <xmqqd1fa7dqf.fsf@gitster.mtv.corp.google.com>
-        <CAE1pOi0foJpZXSpHrbWqvOuG1+VoNKTCMjuLK5TCVcJuGMSOoQ@mail.gmail.com>
-Date:   Thu, 26 Jan 2017 12:51:32 -0800
-In-Reply-To: <CAE1pOi0foJpZXSpHrbWqvOuG1+VoNKTCMjuLK5TCVcJuGMSOoQ@mail.gmail.com>
-        (Hilco Wijbenga's message of "Thu, 26 Jan 2017 11:19:51 -0800")
-Message-ID: <xmqqy3xx35pn.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+        id S1753508AbdAZU7A (ORCPT <rfc822;e@80x24.org>);
+        Thu, 26 Jan 2017 15:59:00 -0500
+Received: from smtp-out-4.talktalk.net ([62.24.135.68]:57982 "EHLO
+        smtp-out-4.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752583AbdAZU65 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 Jan 2017 15:58:57 -0500
+Received: from PhilipOakley ([92.31.218.76])
+        by smtp.talktalk.net with SMTP
+        id Wr7Ocvq8jcpskWr7Oc5agv; Thu, 26 Jan 2017 20:58:07 +0000
+X-Originating-IP: [92.31.218.76]
+X-Spam: 0
+X-OAuthority: v=2.2 cv=ILRAMUnG c=1 sm=1 tr=0 a=e6L6E7eW+5Nb7SO+DvSdIg==:117
+ a=e6L6E7eW+5Nb7SO+DvSdIg==:17 a=8nJEP1OIZ-IA:10 a=ybZZDoGAAAAA:8
+ a=WYy5dHOzAAAA:8 a=VwQbUJbxAAAA:8 a=Dmbubk7ILZzpxoy0dFQA:9 a=wPNLvfGTeEIA:10
+ a=0RhZnL1DYvcuLYC8JZ5M:22 a=W1gAy31swDSgSs5wg-Y8:22 a=AjGcO6oz07-iQ99wixmX:22
+Message-ID: <4B89512D54614F09817EA9901A8B625D@PhilipOakley>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From:   "Philip Oakley" <philipoakley@iee.org>
+To:     "Junio C Hamano" <gitster@pobox.com>,
+        "Cornelius Weig" <cornelius.weig@tngtech.com>
+Cc:     "Stefan Beller" <sbeller@google.com>,
+        "Johannes Sixt" <j6t@kdbg.org>,
+        <bitte.keine.werbung.einwerfen@googlemail.com>,
+        <git@vger.kernel.org>, <thomas.braun@virtuell-zuhause.de>,
+        "John Keeping" <john@keeping.me.uk>
+References: <923cd4e4-5c9c-4eaf-0fea-6deff6875b88@tngtech.com>        <20170125002116.22111-1-sbeller@google.com>        <33E354BCDB9A4192B69B9B399381659E@PhilipOakley>        <CAGZ79kaRdtKD7DNJRWXsyg07GbTM4OsKUmHHcFczEMJA1YK2KA@mail.gmail.com>        <baff65ba-1e98-d5a7-5b5a-a50a7fc723ee@tngtech.com> <xmqqpoj965yf.fsf@gitster.mtv.corp.google.com>
+Subject: Re: SubmittingPatches: drop temporal reference for PGP signing
+Date:   Thu, 26 Jan 2017 20:58:07 -0000
+Organization: OPDS
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 389D479E-E409-11E6-B10C-FE3F13518317-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain;
+        format=flowed;
+        charset="iso-8859-1";
+        reply-type=original
+Content-Transfer-Encoding: 7bit
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+X-CMAE-Envelope: MS4wfFpfVwJtweEGmDhYWRHkKEtpayN5bSXl4lu1P1xqfeBarwpglVPxliWwJ6dDxCOK/N3gsHnl8QMhsxJ3CZ3nZnjA02+X5a65lSJ2S+2N7kdW464vAN6s
+ B5WqPK/J2nFXjKtJft1zWhLvUVLhv1KPG/4IM9GBjuKxcBI/s9XB78JSyThuunjPlIJjuIVKDdvoyOycgOeuMMNGEkoB+Cx1QTSTQjR0n+aFOL32Mn9ulu5T
+ kG3OW16NO6K9lWryun+iyDJ753FDMqB+u5SVYYp0K3Q8rT3uEOEaqRpqrTJf7dApN1Foa1l/htHz4aAV6g7bP2Jwj6c8lbdoLnnZnNzjLew2ZHcebU8J53HR
+ smkgcobLGllkLsurBmcKf+2Q0f57wqcMFyWTp6QPxW+crlhDmj6996fh5itUPcz8Chmg+14y
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hilco Wijbenga <hilco.wijbenga@gmail.com> writes:
-
-> On 25 January 2017 at 18:32, Junio C Hamano <gitster@pobox.com> wrote:
->> I think you should be able to do something like
->>
->>         $ cat >$HOME/bin/fail-3way <<\EOF
->>         #!/bin/sh
->>         git merge-file "$@"
->>         exit 1
->>         EOF
->>         $ chmod +x $HOME/bin/fail-3way
->>         $ cat >>$HOME/.gitconfig <<\EOF
->>         [merge "fail"]
->>                 name = always fail 3-way merge
->>                 driver = $HOME/bin/fail-3way %A %O %B
->>                 recursive = text
->>         EOF
->>         $ echo pom.xml merge=fail >>.gitattributes
->>
->> to define a custom merge driver whose name is "fail", that runs the
->> fail-3way program, which runs the bog standard 3-way merge we use
->> (so that it will do the best-effort textual merge) but always return
->> with a non-zero status to signal that the result is conflicting and
->> needs manual resolution.
+From: "Junio C Hamano" <gitster@pobox.com>
+> Cornelius Weig <cornelius.weig@tngtech.com> writes:
 >
-> Thank you, that's an improvement. :-) Unfortunately, it still
-> completes the merge. Is there any way to simply get the
->>>>>>>>>/<<<<<<<< markers?
+>> How about something along these lines? Does the forward reference
+>> break the main line of thought too severly?
+>
+> I find it a bit distracting for those who know PGP signing has
+> nothing to do with signing off your patch, but I think that is OK
+> because they are not the primary target audience of this part of the
+> document.
 
-You can, but you need to write one yourself without relying on "git
-merge-file", because the whole point of the 3way merge we implement
-(including in that program) is "do not bother the user when both
-sides made the same change."
+Agreed. I this case the target audience was those weren't aware of that.
+>
+> I however am more worried that it may be misleading to mention these
+> two in the same sentence.  Those who skim these paragraphs without
+> knowing the difference between the two may get a false impression
+> that these two may somehow be related because they are mentioned in
+> the same sentence.
+>
+> The retitling of section (5) you did, without any other change,
+> might be sufficient.  It may also help to be even more explicit in
+> the updated title, i.e. s/by signing off/by adding Signed-off-by:/
+
+Maybe even s/by signing off/by adding your Signed-off-by:/ to be sure that 
+the reader knows that it is _their certification_ that is being sought. Even 
+if it does double up on the 'your'.
+
+>
+> Thanks.
+>
+>> diff --git a/Documentation/SubmittingPatches 
+>> b/Documentation/SubmittingPatches
+>> index 08352de..c2b0cbe 100644
+>> --- a/Documentation/SubmittingPatches
+>> +++ b/Documentation/SubmittingPatches
+>> @@ -216,12 +216,12 @@ that it will be postponed.
+>>  Exception:  If your mailer is mangling patches then someone may ask
+>>  you to re-send them using MIME, that is OK.
+>>
+>> -Do not PGP sign your patch, at least for now.  Most likely, your
+>> -maintainer or other people on the list would not have your PGP
+>> -key and would not bother obtaining it anyway.  Your patch is not
+>> -judged by who you are; a good patch from an unknown origin has a
+>> -far better chance of being accepted than a patch from a known,
+>> -respected origin that is done poorly or does incorrect things.
+>> +Do not PGP sign your patch, but do sign-off your work as explained in 
+>> (5).
+>> +Most likely, your maintainer or other people on the list would not have 
+>> your
+>> +PGP key and would not bother obtaining it anyway. Your patch is not 
+>> judged by
+>> +who you are; a good patch from an unknown origin has a far better chance 
+>> of
+>> +being accepted than a patch from a known, respected origin that is done 
+>> poorly
+>> +or does incorrect things.
+>>
+>>  If you really really really really want to do a PGP signed
+>>  patch, format it as "multipart/signed", not a text/plain message
+>> @@ -246,7 +246,7 @@ patch.
+>>       *2* The mailing list: git@vger.kernel.org
+>>
+>>
+>> -(5) Sign your work
+>> +(5) Certify your work by signing off
+>>
+>>  To improve tracking of who did what, we've borrowed the
+>>  "sign-off" procedure from the Linux kernel project on patches
+> 
 
