@@ -6,99 +6,56 @@ X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9AF631F70F
-	for <e@80x24.org>; Thu, 26 Jan 2017 14:24:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 400CA1F70F
+	for <e@80x24.org>; Thu, 26 Jan 2017 14:26:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752721AbdAZOY1 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 26 Jan 2017 09:24:27 -0500
-Received: from cloud.peff.net ([104.130.231.41]:45309 "EHLO cloud.peff.net"
+        id S1752652AbdAZO0x (ORCPT <rfc822;e@80x24.org>);
+        Thu, 26 Jan 2017 09:26:53 -0500
+Received: from cloud.peff.net ([104.130.231.41]:45312 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752685AbdAZOY0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 Jan 2017 09:24:26 -0500
-Received: (qmail 4284 invoked by uid 109); 26 Jan 2017 14:24:26 -0000
+        id S1752485AbdAZO0w (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 Jan 2017 09:26:52 -0500
+Received: (qmail 4425 invoked by uid 109); 26 Jan 2017 14:26:51 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 26 Jan 2017 14:24:26 +0000
-Received: (qmail 23336 invoked by uid 111); 26 Jan 2017 14:24:26 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 26 Jan 2017 14:26:51 +0000
+Received: (qmail 23358 invoked by uid 111); 26 Jan 2017 14:26:51 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 26 Jan 2017 09:24:26 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 26 Jan 2017 09:24:24 -0500
-Date:   Thu, 26 Jan 2017 09:24:24 -0500
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 26 Jan 2017 09:26:51 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 26 Jan 2017 09:26:49 -0500
+Date:   Thu, 26 Jan 2017 09:26:49 -0500
 From:   Jeff King <peff@peff.net>
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Jacob Keller <jacob.keller@gmail.com>
-Subject: Re: [PATCH 4/5] revision.c: refactor ref selection handler after
- --exclude
-Message-ID: <20170126142423.6rrorahyzfo6z43q@sigill.intra.peff.net>
-References: <20170121140806.tjs6wad3x4srdv3q@sigill.intra.peff.net>
- <20170125125054.7422-1-pclouds@gmail.com>
- <20170125125054.7422-5-pclouds@gmail.com>
- <20170125205718.ksqstdnazmgbkehy@sigill.intra.peff.net>
- <CACsJy8ATM_kc5SPY0dqprUefRy3vtpKW-4QEyJFK54jw0QgeJA@mail.gmail.com>
+To:     Lars Schneider <larsxschneider@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        git <git@vger.kernel.org>
+Subject: Re: What's cooking in git.git (Jan 2017, #04; Mon, 23)
+Message-ID: <20170126142648.7jjewr42okngawdd@sigill.intra.peff.net>
+References: <xmqqo9yxpaxk.fsf@gitster.mtv.corp.google.com>
+ <0D956B23-E655-4C28-A205-14CCC0A7DEA2@gmail.com>
+ <20170124132749.l3ezupyitvxe4t2l@sigill.intra.peff.net>
+ <alpine.DEB.2.20.1701251800120.3469@virtualbox>
+ <20170125173958.pg546a6w33dirp5k@sigill.intra.peff.net>
+ <xmqq4m0nc8dz.fsf@gitster.mtv.corp.google.com>
+ <20170125183924.6yclcjl4ggcu42yp@sigill.intra.peff.net>
+ <xmqq7f5i92jk.fsf@gitster.mtv.corp.google.com>
+ <D9F0976B-9F78-44BE-B9DD-CAB6506FA3A9@gmail.com>
+ <8141FBB4-ACD0-42F5-9B5A-DA8DF1693972@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CACsJy8ATM_kc5SPY0dqprUefRy3vtpKW-4QEyJFK54jw0QgeJA@mail.gmail.com>
+In-Reply-To: <8141FBB4-ACD0-42F5-9B5A-DA8DF1693972@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jan 26, 2017 at 04:28:17PM +0700, Duy Nguyen wrote:
+On Thu, Jan 26, 2017 at 10:48:30AM +0100, Lars Schneider wrote:
 
-> On Thu, Jan 26, 2017 at 3:57 AM, Jeff King <peff@peff.net> wrote:
-> > I don't think it means either. It means to include remotes in the
-> > selected revisions, but excluding the entries mentioned by --exclude.
-> >
-> > IOW:
-> >
-> >   --exclude=foo --remotes
-> >         include all remotes except refs/remotes/foo
-> >
-> >   --exclude=foo --unrelated --remotes
-> >         same
-> >
-> >   --exclude=foo --decorate-reflog --remotes
-> >         decorate reflogs of all remotes except "foo". Do _not_ use them
-> >         as traversal tips.
-> >
-> >   --decorate-reflog --exclude=foo --remotes
-> >         same
-> >
-> > IOW, the ref-selector options build up until a group option is given,
-> > which acts on the built-up options (over that group) and then resets the
-> > built-up options. Doing "--unrelated" as above is orthogonal (though I
-> > think in practice nobody would do that, because it's hard to read).
-> 
-> This is because it makes sense to combine --exclude and
-> --decorate-reflog. But what about a new --something that conflicts
-> with either --exclude or --decorate-reflog? Should we simply catch
-> such combinations and error out (which may be a bit more complicated
-> than this patch, or maybe not)?
+> Oh. I must have made a mistake on my very first test run. I can reproduce
+> the failure with ZSH and my plugins... looks like it's a Mac OS problem
+> and no TravisCI only problem after all.
 
-I'd cross that bridge when we see what the option is. But my gut is that
-rules would be:
-
-  - apply all non-conflicting relevant options. So:
-
-      --exclude=foo/* --decorate-refs --decorate-reflog --remotes
-
-    would presumably decorate both ref tips _and_ reflogs for all
-    remotes (except ones in refs/remotes/foo/*)
-
-  - for ones that are directly related and override each other,
-    use the usual last-one-wins rule. So:
-
-      --decorate-reflog --no-decorate-reflog --remotes
-
-    would countermand the original --decorate-reflog.
-
-  - for ones that really have complex interactions, notice and complain
-    in handle_refs().
-
-That just seems to me like it follows our usual option parsing
-procedure. The only difference here is that process and reset some
-subset of the flags when we hit a special marker option ("--remotes" in
-these examples) instead of doing it at the end.
+Thanks for digging into it. If it's really /bin/mv that causes the
+problem, then I doubly think the "mv -f" patch is the right fix.
 
 -Peff
