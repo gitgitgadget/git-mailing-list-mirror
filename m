@@ -2,110 +2,83 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9ED531F6DC
-	for <e@80x24.org>; Thu, 26 Jan 2017 00:41:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8E4AA1F6DC
+	for <e@80x24.org>; Thu, 26 Jan 2017 00:42:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752136AbdAZAl0 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 25 Jan 2017 19:41:26 -0500
-Received: from mail-lf0-f54.google.com ([209.85.215.54]:33430 "EHLO
-        mail-lf0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751556AbdAZAlZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 Jan 2017 19:41:25 -0500
-Received: by mail-lf0-f54.google.com with SMTP id x1so51254250lff.0
-        for <git@vger.kernel.org>; Wed, 25 Jan 2017 16:41:14 -0800 (PST)
+        id S1752162AbdAZAmA (ORCPT <rfc822;e@80x24.org>);
+        Wed, 25 Jan 2017 19:42:00 -0500
+Received: from mail-lf0-f50.google.com ([209.85.215.50]:35569 "EHLO
+        mail-lf0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751556AbdAZAl7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 Jan 2017 19:41:59 -0500
+Received: by mail-lf0-f50.google.com with SMTP id n124so137637747lfd.2
+        for <git@vger.kernel.org>; Wed, 25 Jan 2017 16:41:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=64nGCQ24ct8Qf9L4asD2ApsYqEiIYnJ/wMs5Lus56Ak=;
-        b=haCYqLqKEcqBXwByy3RW8rg9EnloqFyhSWtkVdv1rIR8KWj/0C57BnwF1DqiqHqf5V
-         RR60F9SLvkMVUp27VdDIxO9cQ1zNn5NlUzpXFXEaQsl8usJdlgsrJzhfuhJOLl5uLvbA
-         Z/1rn4vZ/gdePXNVZV7x62MU7yrDqGEOcpThC9/lD4Q9WKPSrAuIt4ONR3rTdIIGlvZ9
-         G6kIF4jtVg+MhJ883mDTNleFxinG78Ar8elGqUtL8h5+ABQ1TVvwuoY6K8cL/oNrbAQJ
-         VtrCGfCx59RdLirnEkTT/ELCudEODp5wNjkd1Og3cB/Pu1qsMba36dNH6ZJOTGM1KDf6
-         0LZA==
+        bh=Rgk+Jkia/8Bxvu/KTTJwAazfS18WzmdWLY5c7V7hEqk=;
+        b=Nq0yZQNCh+CjwtGnwbxDnrU7B69p/WNpP+a1W8T/ZcRxr0KSqJxpVwdop5kZeL8R45
+         p+JELH31prSjsC3LObsd2R7I77U1euogng5TU98Fiaqf9Ry/0W2lmYs2+s02gm5Buz0k
+         Pp1R0EvtMm4kvGeqNyXCg4pxi4BlSY1jrxq504HerJCTdesGkVWxD0uubM8NOMOHnoaC
+         DB9xu5l3B9xdWL8Bv1r+UDgvfCF6TJXHvcPvnSlQPDHm8uKaA16MRT2C+7S1ribfq9fd
+         /OIr9mCIVV6hrKT/6B8XGfyR3qWD2mAxCA+ZxwiJYqfbAjV2Ne+degpy61v1YT8lYkmR
+         5J+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=64nGCQ24ct8Qf9L4asD2ApsYqEiIYnJ/wMs5Lus56Ak=;
-        b=ASMedLVomJXCX2gKTQ1zzpFi2Vp1/NE2oTCoHAuEWLZ1veuhKL3+3hfj0fpRkLGC2B
-         GAI85Lzl/eGR5+4AjVIWDH15TpsWwgHFvfL4LqYAGrOFvho/YU7vzzPM1UoKnimuBeKO
-         XZgLsiTfLvxRV/wAYvwx52t7cyRYY7mNFtRfSCQkkrMl/C7UeKqwnyZuvlZB1g11JJEQ
-         /7jUPsc1D0b73gnBxjBtmaAkq0wHzUIm0VEalaPs4W5Eh9AOwfbIvLoftMRV1EL4csKd
-         P3s24SgD/MjM42hY70IgPUl5r8qRf1Uqy5JxWC1jKNb286rT6x/UtXfxXOaschSEgpgc
-         h2Zg==
-X-Gm-Message-State: AIkVDXIr5UQNorDAB3vKSHcBeZuMZQrcfaehl1o1b0IPl6FT9coCoqTAxE0rh35YWPYcUtC6yLequBnX76JY4Q==
-X-Received: by 10.25.141.12 with SMTP id p12mr36835lfd.147.1485391258701; Wed,
- 25 Jan 2017 16:40:58 -0800 (PST)
+        bh=Rgk+Jkia/8Bxvu/KTTJwAazfS18WzmdWLY5c7V7hEqk=;
+        b=kfMWwmLo8FPBrXs3h3AVkHkv7B6kKAkCaGSLmt2vFPnXYru1/eqfCzAIWDaIvqEswn
+         +pkAjbS75VocBqkqRbvYGdOM4WlhOdTCP0pO9gvuis3WbhfRIQoUw+YJBlhx31h6p2Wy
+         aCMFiNGhNyUFl6SBFkcOEXu2U68DpAQE++ia4i45/pDE+AKx9tbb02FT6Pqafn3wbukP
+         minJ2Fsacpi7qxm6TSQPXw87QxLM012mUjcY8anHN+s4F8ZtwyjohN5hqGYAe8ETqiQk
+         PDxEa8L65YmytFzM8MoMgi3xiLc/UzgQqxrJblL42dQxOUMerDBDjGzM6yNy/bX8633q
+         hOxQ==
+X-Gm-Message-State: AIkVDXLqn9b/NfMxZi1INGVgkifvcAjv+aGxgicOAgVw+oA8ULXiajpEi9BrlRfWdfKYkzwqVyoDSkd2A5v+Yg==
+X-Received: by 10.25.74.72 with SMTP id x69mr50203lfa.66.1485391317885; Wed,
+ 25 Jan 2017 16:41:57 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.25.145.14 with HTTP; Wed, 25 Jan 2017 16:40:38 -0800 (PST)
-In-Reply-To: <CAE1pOi0CgfxQTygg_i3dc_-_Lb8qgOOk_0hg+goJvm7PyLZseg@mail.gmail.com>
-References: <CAE1pOi2YZayEfKxxh3gsTds1mQ9L1E9AW=wPnmW=Dg=-EMj=tw@mail.gmail.com>
- <CA+P7+xrupLuYAj7tn_1EaUiN6eaCmtgX-_d4mnByDq95cuqiWQ@mail.gmail.com>
- <CAE1pOi3eh7ao3NocV=PRFDby8y5ttjFR=-_VB0FoJv4MpjExaA@mail.gmail.com>
- <CA+P7+xo9WBwHjAXeUTn4bh=F6hvw1gA-79h-GmwQoeRpeLj2jQ@mail.gmail.com>
- <xmqqh94m7leb.fsf@gitster.mtv.corp.google.com> <CAE1pOi0CgfxQTygg_i3dc_-_Lb8qgOOk_0hg+goJvm7PyLZseg@mail.gmail.com>
+Received: by 10.25.145.14 with HTTP; Wed, 25 Jan 2017 16:41:37 -0800 (PST)
+In-Reply-To: <5889436A.8000707@comcast.net>
+References: <58798686.5050401@comcast.net> <CA+P7+xoF8E55-XDnQT-GN1=hEwwq4pOsz7--P-SCy29C7ST3Hg@mail.gmail.com>
+ <5880BB23.8030702@comcast.net> <xmqq37gezpz8.fsf@gitster.mtv.corp.google.com>
+ <38ca43cb-2fc7-0448-352f-7d9413f815c5@gmail.com> <5889436A.8000707@comcast.net>
 From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Wed, 25 Jan 2017 16:40:38 -0800
-Message-ID: <CA+P7+xocc==-8ad-OVTahMDABA0-spDPEw05JTHopfO7Ovj2RQ@mail.gmail.com>
-Subject: Re: Force Confirmation for Dropping Changed Lines
-To:     Hilco Wijbenga <hilco.wijbenga@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, Git Users <git@vger.kernel.org>
+Date:   Wed, 25 Jan 2017 16:41:37 -0800
+Message-ID: <CA+P7+xrU-ZO981fKCogm3s1gkz6X-8+fcTS4TG0B=_gqAEwNxQ@mail.gmail.com>
+Subject: Re: merge maintaining history
+To:     "David J. Bakeman" <nakuru@comcast.net>
+Cc:     =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Git mailing list <git@vger.kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jan 25, 2017 at 3:57 PM, Hilco Wijbenga
-<hilco.wijbenga@gmail.com> wrote:
-> On 25 January 2017 at 15:46, Junio C Hamano <gitster@pobox.com> wrote:
->> Jacob Keller <jacob.keller@gmail.com> writes:
->>
->>>> Mmm, that sounds complex. The "my-code.x" is made up so I could keep
->>>> my example as simple as possible. In reality, it's Maven's POM files
->>>> (pom.xml).
->>>>
->>>> So there is no setting for any of this? There is no way to switch off
->>>> auto merging for certain files?
->>>
->>> Not really sure, but a quick google search revealed
->>> https://github.com/ralfth/pom-merge-driver
->>>
->>> Maybe that will help you?
->>
->> Its readme seems to indicate that it is either solving a different
->> problem, or solving the same problem with the opposite goal in mind,
->> in that its goal seems to be to forcibly resolve what textually does
->> not resolve cleanly by choosing sides with an arbitrary policy, so
->> that humans do not have to get involved when they ordinarily would
->> have to.
->>
->> Hilco's goal sounded to me the opposite---to force conflict even
->> when the two histories did what textually does resolve cleanly and
->> require humans to get involved even when they ordinarily wouldn't
->> have to.
+On Wed, Jan 25, 2017 at 4:31 PM, David J. Bakeman <nakuru@comcast.net> wrote:
+> OK so what I've done so far is to clone the original then I added
+> another remote connected to new repo.  Then I did git merge newrepo.  It
+> did a bunch of stuff that flashed by really fast and then reported a
+> conflict.  Now if I do a git st there are a bunch of files that seem to
+> be already added to a commit and all the files with conflicts which it's
+> says need to be fixed and added.
+> I'm still learning git even after using it for several years.  I've
+> never really seen this before.  So the already added files are the ones
+> that git was able to merge mechanically?  If so can I diff those changes
+> some way?  Would I have to un add (reset HEAD) all those files to see
+> the diffs?  Would it have assumed that my changes are to be preferred?
 >
-> Yes, unfortunately, you are correct. This seems to do the exact
-> opposite of what I want.
->
-> Before I start learning about custom merge drivers, is what I want
-> even possible? If yes, would you happen to know some good examples of
-> (custom) merge drivers? (Python, Ruby, Java are all okay.)
+> Thanks again for all the great help!
 
-Setting the merge driver to "unset" will do what you want, but it
-would leave the current branch as the tentative answer and doesn't
-actually make it easy to resolve properly. That would only require
-putting "pom.xml merge=unset" in the .gitattributes file.
-
-That might be what you want, but it doesn't actually try to update the
-file during the merge so you'd have to hand-fix it yourself.
+Try "git diff --cached" to show all the current differences saved in the index.
 
 Thanks,
 Jake
