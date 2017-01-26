@@ -2,98 +2,260 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,
 	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 68ABE1F70F
-	for <e@80x24.org>; Thu, 26 Jan 2017 14:50:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 677681F70F
+	for <e@80x24.org>; Thu, 26 Jan 2017 14:51:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752638AbdAZOuP (ORCPT <rfc822;e@80x24.org>);
-        Thu, 26 Jan 2017 09:50:15 -0500
-Received: from mout.gmx.net ([212.227.17.21]:62345 "EHLO mout.gmx.net"
+        id S1752419AbdAZOv4 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 26 Jan 2017 09:51:56 -0500
+Received: from mout.gmx.net ([212.227.17.20]:52460 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752183AbdAZOuO (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 Jan 2017 09:50:14 -0500
-Received: from virtualbox ([37.24.141.236]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0LobGI-1bzMYk2VLO-00gYzh; Thu, 26
- Jan 2017 15:49:52 +0100
-Date:   Thu, 26 Jan 2017 15:49:51 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+        id S1752277AbdAZOvz (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 Jan 2017 09:51:55 -0500
+Received: from virtualbox ([37.24.141.236]) by mail.gmx.com (mrgmx101
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MLB89-1cX2Nm1zGr-000I1W; Thu, 26
+ Jan 2017 15:51:47 +0100
+Date:   Thu, 26 Jan 2017 15:51:46 +0100 (CET)
+From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
-To:     Jeff King <peff@peff.net>
-cc:     Junio C Hamano <gitster@pobox.com>,
-        David Aguilar <davvid@gmail.com>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        GIT Mailing-list <git@vger.kernel.org>
-Subject: Re: Fixing the warning about warning(""); was: Re: [PATCH] difftool.c:
- mark a file-local symbol with static
-In-Reply-To: <20170126143906.j6j64v4cyatwvlik@sigill.intra.peff.net>
-Message-ID: <alpine.DEB.2.20.1701261547470.3469@virtualbox>
-References: <20161201040234.3rnuttitneweedn5@sigill.intra.peff.net> <xmqq60n3bjel.fsf@gitster.mtv.corp.google.com> <20161201185056.eso5rhec7izlbywa@sigill.intra.peff.net> <20170122052608.tpr5pihfgafhoynj@gmail.com> <20170124142346.u3d7l6772mtkgpcf@sigill.intra.peff.net>
- <xmqqlgu0ceia.fsf@gitster.mtv.corp.google.com> <20170124230500.h3fasbvutjkkke5h@sigill.intra.peff.net> <alpine.DEB.2.20.1701251135090.3469@virtualbox> <20170125183542.pe5qolexqqx6jhsi@sigill.intra.peff.net> <alpine.DEB.2.20.1701261213060.3469@virtualbox>
- <20170126143906.j6j64v4cyatwvlik@sigill.intra.peff.net>
+To:     git@vger.kernel.org
+cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+Subject: [PATCH v2 0/3] Handle PuTTY (plink/tortoiseplink) even in
+ GIT_SSH_COMMAND
+In-Reply-To: <2ff29a4d00e0e13d460122d8008e762361ca90aa.1483358673.git.johannes.schindelin@gmx.de>
+Message-ID: <alpine.DEB.2.20.1701261550590.3469@virtualbox>
+References: <2ff29a4d00e0e13d460122d8008e762361ca90aa.1483358673.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:unZMQ7f67tUVLCsn9cbfk7EvXcC6mkAJJGLz0tcGfHTBFYojz/P
- 8Dkkhd+2QrJGLjdvJaAlYygMTWyZhJ8p0Xzat9O1qYK2Y8J+uZ+17bNmHjKdgtt4fYEGbPA
- FIJ1dtNY9aa7NqZGars3lC2uM+LjG2WvAKrQu4qsH2Wk3D79Cak4v//xjabdV1Vy/qzNdKW
- 2EipvXKIulwbvBXclstpA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:eFsYXO0eAuI=:AxjxmRi6t5KmqERgQPiBKi
- 93OOwV/MpMMNOFqvYO6ZPgumpZPz6Mn3M5WzKqc2egUQR3r3L0GEeM2QxR0KsxNit+q3epD0z
- oEmMe8l1dphQA7sc/jMa94OWixi2slerQ7E7FK+RSUaw48ERXZW/4TxPZPm1XKrr9lVE3oxuR
- KpouqQsuOP1nmnfdAFpQIpAzxTbShAQIXTQcz+LLD8Wy+5LXHiTexvyU7LEDEm8e8FbZdnKyG
- oKj4FTuSqmMbvoLIAuQo8rsCg9MQ0rJTiTvf8yLaOK3XB5aEnQSKJliJHCZpnq36R3WR2cgjx
- /5WnhG5Qhy/1i+7Wi1f2m8F6mODsRfe0VJdw4UIVdmWk75uUPHYlAcPWiFxt52TEDnJWcgptf
- EGtcMSZ3PANDEUlWTAuyrs3beed0zDSgXX3z1TT37ETdviMiqPDLOlsrIn1nY0Ns7/sG0xvWN
- Aw54/hVp2r6PGNg+pxGtJeDP10q1cfyI0KtePk2gqIrfaLNUAMT0MH/qV9ul3gIrNuwWxMLG6
- ePfpHJp36hbkXELalnmYufmOyyXjiULRK6U7U0erSgfxYmy+CRUU4H0VGQVXG3qEy0alnRvi6
- sqsGuSbV86ivMCtHJf9URSdsI65IzqNl1v673apoGwjQb8VSYfpHrg0mwLZs4mNjgIZ+XZ/vZ
- 3BWETc5wmq1tnRXE0RKGSSGpGlkshU++ge8Hs6e/jfrBp/bq6kXXz/Wp3auFXdVbWXTTM6+Cz
- 7BI5j6VJAlU9ZfNnv4D+mL7+YOOb9w2i5X/WF/HcjRU60rI2tjz47aktmz+ynoiryaRpRWofv
- SNcXBVbFphg8GwbSEDQBIOXFLJdk5CctP1fPiRs3kMkmbON2koJw8PhO6C9Sf+fd9EnKGVlYL
- ULSoxGm0/wS4KeQx52nJV6/a3xNlofHAbs6qW3gUmwVsZy1kP1aTZkePW56aSsvvDSPDiYQva
- aghCZx2KWGlSXNNLywdJNo4oOaDtqENiGneXQLnlbuz9QEN3hXa7RgiJVneNlggHHyTpYIk+l
- RmyEeAW/LGqFFRwdLdBbe5C6DYcJCoFext+nXkTOppvBSFosre+29L5mfihtDsuU+g==
+X-Provags-ID: V03:K0:xOU9WHX56wGNTbePcDq5SMkeyywyTYWcBL35D4yLMHZiuAQI7qt
+ PzTZOqW5utqlc5oMmzmDNfKkgQp+Zj1x6rHap9DEWLRFqnbaHlc1rZNUU9lJUVyL6b02/3t
+ 0rRPqVrx/KqPLuntHXMwu4/r5seWS5Brn7kNh8VCNnKkAAJpC6y6gQTpsydKBm/A1xrW1Pc
+ SBzF8Se5Go5KV9q76xdeQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:CduQdzpNT+M=:y8Mt3eocSkS/vFS3h47EXa
+ eycTEQFYMfHItkE1TAjwHQIL3dQKPmo4d7+LuFf3I5ExjZZCcoFZuuhgMS6/LLRUFohGfRI35
+ EaxoEojHTmh9jPyeas7le8DP9UpLrr8j4k6Ur1TuZ/zV3O3j0+UZS1KpKD1/6V9SkqMgfLeux
+ 1ZsKz88rnoqdF5/IF1C0n74BP88Vr9kZEIJbm+pWZOJUrxQFkYhf8BUFsXRmTt6grG1zk1w75
+ jefIo7O/KaKyN6gFBB7QwsW7dgMtfDuVkIMDYRnuKk78Y9Bk7zCI+9DNKt8L7YaJO96YdzMIx
+ ASY2uBAg1Q98DEqhmKQEZ0XCC/r/Em9c1SFJk1PupTC0xk8BOR4f2JDoQIhQwxgIJpLTegCOJ
+ fHlo9EKMEkQtuK5KdLjVWbdyeKiLw2X0hs5IYZnjiUEh4TxhuMx4zSDSBi+adodZWAY2zDUiV
+ /Q9C8sGaRiOSxIW3cY23/xhVd+C3QxuUclvSe5ws/rW9lc6FniWTX+Jx9BkPNtX4Kq13dMzrz
+ PlEAUS5LLGJMw/Oh65K0zZgvqrZ28mJW+KktGeT3d1L/DVYHbH+ye8lHgxvjaxPMbbmVnK7R0
+ DAA4G7gnyM0jEsvgp+6B0f4Hq8sRNWvtZzEI2YUfgqyRT9TZ51LacqNW3fcB9XjNdUCPfNqcl
+ aWaDLffKKwcTlIFqx/SqGr7bLpHuO/MjtPT9Dbj35XhcjjobviNZRB2g+AgQ3Q+IKsffB5sEM
+ tuxmL/mHyaCD0yW38+LUvaUQjYhP1vdeEtdPdq8oKzlwRqEX6LQItBskOddT8SLWU24Dyt777
+ tWiGCKn
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Peff,
+We already handle PuTTY's plink and TortoiseGit's tortoiseplink in
+GIT_SSH by automatically using the -P option to specify ports, and in
+tortoiseplink's case by passing the --batch option.
 
-On Thu, 26 Jan 2017, Jeff King wrote:
+For users who need to pass additional command-line options to plink,
+this poses a problem: the only way to do that is to use GIT_SSH_COMMAND,
+but Git does not handle that specifically, so those users have to
+manually parse the command-line options passed via GIT_SSH_COMMAND and
+replace -p (if present) by -P, and add --batch in the case of
+tortoiseplink.
 
-> On Thu, Jan 26, 2017 at 12:16:10PM +0100, Johannes Schindelin wrote:
-> 
-> > We could switch the DEVELOPER option on by default, when gcc or clang
-> > is used at least. Otherwise the DEVELOPER option (which I like very
-> > much) would not be able to live up to its full potential.
-> 
-> I'm not sure that is a good idea. The options include -Werror, which is
-> a good thing for developers to respect. But people using older versions
-> of compilers, or on systems with slightly different header files, may
-> see extraneous warnings. It's good to fix those warnings, but it is a
-> big inconvenience to regular users who just want to build and use git.
+This is error-prone and a bad user experience.
 
-Yeah, you cannot have the cake and eat it, too: on the one side, we want
-Git contributors to see problems early (preferably before even submitting
-the patch) and at the same time, we want users who compile their Git
-themselves to have no trouble doing so.
+To fix this, the changes proposed in this patch series introduce
+handling this by splitting the GIT_SSH_COMMAND value and treating the
+first parameter with the same grace as GIT_SSH. To counter any possible
+misdetection, the user can also specify explicitly via GIT_SSH_VARIANT
+or ssh.variant which SSH variant they are using.
 
-> You could split the DEVELOPER options into two groups, though, and only
-> enable when (after verifying that it is indeed gcc/clang in use). But
-> now who is coming up with complicated fixes for the warning("") issue?
-> :)
+This is v2 of the patch, now turned patch series. Relative to v1, it
+integrates Junio's cleanup patch and Segev's follow-up Pull Request that
+introduces the GIT_SSH_VARIANT and ssh.variant settings to override
+Git's autodetection manually.
 
-That is yet another instance of the complicator's glove; I would rather
-avoid that.
 
-To me, the obvious solution is to pay more attention to Continuous
-Integration, in particular on fixing problems right after they are
-reported.
+Junio C Hamano (1):
+  connect: rename tortoiseplink and putty variables
 
-Ciao,
-Johannes
+Segev Finer (2):
+  connect: handle putty/plink also in GIT_SSH_COMMAND
+  connect: Add the envvar GIT_SSH_VARIANT and ssh.variant config
+
+ Documentation/config.txt |  7 +++++
+ Documentation/git.txt    |  7 +++++
+ connect.c                | 66 +++++++++++++++++++++++++++++++++++-------------
+ t/t5601-clone.sh         | 41 ++++++++++++++++++++++++++++++
+ 4 files changed, 104 insertions(+), 17 deletions(-)
+
+
+base-commit: 4e59582ff70d299f5a88449891e78d15b4b3fabe
+Published-As: https://github.com/dscho/git/releases/tag/putty-w-args-v2
+Fetch-It-Via: git fetch https://github.com/dscho/git putty-w-args-v2
+
+Interdiff vs v1:
+
+ diff --git a/Documentation/config.txt b/Documentation/config.txt
+ index af2ae4cc02..f2c210f0a0 100644
+ --- a/Documentation/config.txt
+ +++ b/Documentation/config.txt
+ @@ -1949,6 +1949,13 @@ Environment variable settings always override any matches.  The URLs that are
+  matched against are those given directly to Git commands.  This means any URLs
+  visited as a result of a redirection do not participate in matching.
+  
+ +ssh.variant::
+ +	Override the autodetection of plink/tortoiseplink in the SSH
+ +	command that 'git fetch' and 'git push' use. It can be set to
+ +	either `ssh`, `plink`, `putty` or `tortoiseplink`. Any other
+ +	value will be treated as normal ssh. This is useful in case
+ +	that Git gets this wrong.
+ +
+  i18n.commitEncoding::
+  	Character encoding the commit messages are stored in; Git itself
+  	does not care per se, but this information is necessary e.g. when
+ diff --git a/Documentation/git.txt b/Documentation/git.txt
+ index 4f208fab92..c322558aa7 100644
+ --- a/Documentation/git.txt
+ +++ b/Documentation/git.txt
+ @@ -1020,6 +1020,13 @@ Usually it is easier to configure any desired options through your
+  personal `.ssh/config` file.  Please consult your ssh documentation
+  for further details.
+  
+ +`GIT_SSH_VARIANT`::
+ +	If this environment variable is set, it overrides the autodetection
+ +	of plink/tortoiseplink in the SSH command that 'git fetch' and 'git
+ +	push' use. It can be set to either `ssh`, `plink`, `putty` or
+ +	`tortoiseplink`. Any other value will be treated as normal ssh. This
+ +	is useful in case that Git gets this wrong.
+ +
+  `GIT_ASKPASS`::
+  	If this environment variable is set, then Git commands which need to
+  	acquire passwords or passphrases (e.g. for HTTP or IMAP authentication)
+ diff --git a/connect.c b/connect.c
+ index c81f77001b..7b4437578b 100644
+ --- a/connect.c
+ +++ b/connect.c
+ @@ -691,6 +691,24 @@ static const char *get_ssh_command(void)
+  	return NULL;
+  }
+  
+ +static int handle_ssh_variant(int *port_option, int *needs_batch)
+ +{
+ +	const char *variant;
+ +
+ +	if (!(variant = getenv("GIT_SSH_VARIANT")) &&
+ +		git_config_get_string_const("ssh.variant", &variant))
+ +		return 0;
+ +
+ +	if (!strcmp(variant, "plink") || !strcmp(variant, "putty"))
+ +		*port_option = 'P';
+ +	else if (!strcmp(variant, "tortoiseplink")) {
+ +		*port_option = 'P';
+ +		*needs_batch = 1;
+ +	}
+ +
+ +	return 1;
+ +}
+ +
+  /*
+   * This returns a dummy child_process if the transport protocol does not
+   * need fork(2), or a struct child_process object if it does.  Once done,
+ @@ -769,7 +787,8 @@ struct child_process *git_connect(int fd[2], const char *url,
+  		conn->in = conn->out = -1;
+  		if (protocol == PROTO_SSH) {
+  			const char *ssh;
+ -			int putty = 0, tortoiseplink = 0;
+ +			int needs_batch = 0;
+ +			int port_option = 'p';
+  			char *ssh_host = hostandport;
+  			const char *port = NULL;
+  			char *ssh_argv0 = NULL;
+ @@ -816,28 +835,32 @@ struct child_process *git_connect(int fd[2], const char *url,
+  				ssh_argv0 = xstrdup(ssh);
+  			}
+  
+ -			if (ssh_argv0) {
+ +			if (!handle_ssh_variant(&port_option, &needs_batch) &&
+ +			    ssh_argv0) {
+  				const char *base = basename(ssh_argv0);
+  
+ -				tortoiseplink = !strcasecmp(base, "tortoiseplink") ||
+ -					!strcasecmp(base, "tortoiseplink.exe");
+ -				putty = tortoiseplink ||
+ -					!strcasecmp(base, "plink") ||
+ -					!strcasecmp(base, "plink.exe");
+ -
+ -				free(ssh_argv0);
+ +				if (!strcasecmp(base, "tortoiseplink") ||
+ +				    !strcasecmp(base, "tortoiseplink.exe")) {
+ +					port_option = 'P';
+ +					needs_batch = 1;
+ +				} else if (!strcasecmp(base, "plink") ||
+ +					   !strcasecmp(base, "plink.exe")) {
+ +					port_option = 'P';
+ +				}
+  			}
+  
+ +			free(ssh_argv0);
+ +
+  			argv_array_push(&conn->args, ssh);
+  			if (flags & CONNECT_IPV4)
+  				argv_array_push(&conn->args, "-4");
+  			else if (flags & CONNECT_IPV6)
+  				argv_array_push(&conn->args, "-6");
+ -			if (tortoiseplink)
+ +			if (needs_batch)
+  				argv_array_push(&conn->args, "-batch");
+  			if (port) {
+ -				/* P is for PuTTY, p is for OpenSSH */
+ -				argv_array_push(&conn->args, putty ? "-P" : "-p");
+ +				argv_array_pushf(&conn->args,
+ +						 "-%c", port_option);
+  				argv_array_push(&conn->args, port);
+  			}
+  			argv_array_push(&conn->args, ssh_host);
+ diff --git a/t/t5601-clone.sh b/t/t5601-clone.sh
+ index 9335e10c2a..b52b8acf98 100755
+ --- a/t/t5601-clone.sh
+ +++ b/t/t5601-clone.sh
+ @@ -401,6 +401,32 @@ test_expect_success 'single quoted plink.exe in GIT_SSH_COMMAND' '
+  	expect_ssh "-v -P 123" myhost src
+  '
+  
+ +test_expect_success 'GIT_SSH_VARIANT overrides plink detection' '
+ +	copy_ssh_wrapper_as "$TRASH_DIRECTORY/plink" &&
+ +	GIT_SSH_VARIANT=ssh \
+ +	git clone "[myhost:123]:src" ssh-bracket-clone-variant-1 &&
+ +	expect_ssh "-p 123" myhost src
+ +'
+ +
+ +test_expect_success 'ssh.variant overrides plink detection' '
+ +	copy_ssh_wrapper_as "$TRASH_DIRECTORY/plink" &&
+ +	git -c ssh.variant=ssh \
+ +		clone "[myhost:123]:src" ssh-bracket-clone-variant-2 &&
+ +	expect_ssh "-p 123" myhost src
+ +'
+ +
+ +test_expect_success 'GIT_SSH_VARIANT overrides plink detection to plink' '
+ +	GIT_SSH_VARIANT=plink \
+ +	git clone "[myhost:123]:src" ssh-bracket-clone-variant-3 &&
+ +	expect_ssh "-P 123" myhost src
+ +'
+ +
+ +test_expect_success 'GIT_SSH_VARIANT overrides plink to tortoiseplink' '
+ +	GIT_SSH_VARIANT=tortoiseplink \
+ +	git clone "[myhost:123]:src" ssh-bracket-clone-variant-4 &&
+ +	expect_ssh "-batch -P 123" myhost src
+ +'
+ +
+  # Reset the GIT_SSH environment variable for clone tests.
+  setup_ssh_wrapper
+  
+
+-- 
+2.11.1.windows.prerelease.2.9.g3014b57
+
