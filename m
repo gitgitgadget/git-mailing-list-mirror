@@ -2,97 +2,71 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CBFFD1F70F
-	for <e@80x24.org>; Thu, 26 Jan 2017 18:56:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 447411F70F
+	for <e@80x24.org>; Thu, 26 Jan 2017 19:13:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752689AbdAZSz5 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 26 Jan 2017 13:55:57 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:52097 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752247AbdAZSzy (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 Jan 2017 13:55:54 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id E7CBC621B9;
-        Thu, 26 Jan 2017 13:54:59 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=Pos36eBgLBkR
-        Y37kojNIH+Lf6SA=; b=GTxVRtennJ2ERWbfu4NYwX2m7kAeur5sHNv2N85plQ4W
-        mU0bXUmi4l0Ix0Qjt0LcTtBtBGcUWPNAQ3Hk3tqBiMKI9ROu7A6q06wqZAgL2RAT
-        OYlfis8itkdAfth+X22KvLBynEW4w0C6PcTNOj0h/rRERe7gFEcCrzpJ9N5g+sQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=rKQY4q
-        8KMIU7qjN2Sp6C7Z3jSzX8TGO2sPQ7ejxsLR3CJNZp39UnYbxhqUHevNzP15jvTE
-        UyNz6IyA6nd/I3TGTsYVG64W2//zRaAmBNM4TzQhEmK63c4rDNlLN+xmM4T4Jn8X
-        seKQB8VlShtTX7znFrOZ47YNMb7XX2gpkBcYc=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id DF545621B8;
-        Thu, 26 Jan 2017 13:54:59 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 4A56D621B6;
-        Thu, 26 Jan 2017 13:54:59 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
+        id S1752370AbdAZTM5 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 26 Jan 2017 14:12:57 -0500
+Received: from cloud.peff.net ([104.130.231.41]:45510 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752339AbdAZTMw (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 Jan 2017 14:12:52 -0500
+Received: (qmail 22507 invoked by uid 109); 26 Jan 2017 19:12:07 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 26 Jan 2017 19:12:07 +0000
+Received: (qmail 26910 invoked by uid 111); 26 Jan 2017 19:12:07 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 26 Jan 2017 14:12:07 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 26 Jan 2017 14:12:05 -0500
+Date:   Thu, 26 Jan 2017 14:12:05 -0500
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
 Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 2/2] ref-filter: add function to parse atoms from a nul-terminated string
-References: <20161207160923.7028-1-szeder.dev@gmail.com>
-        <20161207160923.7028-3-szeder.dev@gmail.com>
-        <CAM0VKjntATMwDTdu1fSmjeLbwVe73iTo2NQizNXjZchBzqG44w@mail.gmail.com>
-Date:   Thu, 26 Jan 2017 10:54:57 -0800
-In-Reply-To: <CAM0VKjntATMwDTdu1fSmjeLbwVe73iTo2NQizNXjZchBzqG44w@mail.gmail.com>
-        ("SZEDER =?utf-8?Q?G=C3=A1bor=22's?= message of "Thu, 26 Jan 2017 14:15:38
- +0100")
-Message-ID: <xmqqvat14poe.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+Subject: Re: [PATCH 2/2] fsck: lazily load types under --connectivity-only
+Message-ID: <20170126191205.iu54sxbjisucsv6t@sigill.intra.peff.net>
+References: <20170126041025.hqg3znwew7jxgxxg@sigill.intra.peff.net>
+ <20170126041206.5qfv7r7czbwfqvaa@sigill.intra.peff.net>
+ <xmqqziid4puz.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: EFA2A40E-E3F8-11E6-A9B6-A7617B1B28F4-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+In-Reply-To: <xmqqziid4puz.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-SZEDER G=C3=A1bor <szeder.dev@gmail.com> writes:
+On Thu, Jan 26, 2017 at 10:51:00AM -0800, Junio C Hamano wrote:
 
-> On Wed, Dec 7, 2016 at 5:09 PM, SZEDER G=C3=A1bor <szeder.dev@gmail.com=
-> wrote:
->> ref-filter's parse_ref_filter_atom() function parses an atom between
->> the start and end pointers it gets as arguments.  This is fine for two
->> of its callers, which process '%(atom)' format specifiers and the end
->> pointer comes directly from strchr() looking for the closing ')'.
->> However, it's not quite so straightforward for its other two callers,
->> which process sort specifiers given as plain nul-terminated strings.
->> Especially not for ref_default_sorting(), which has the default
->> hard-coded as a string literal, but can't use it directly, because a
->> pointer to the end of that string literal is needed as well.
->> The next patch will add yet another caller using a string literal.
->>
->> Add a helper function around parse_ref_filter_atom() to parse an atom
->> up to the terminating nul, and call this helper in those two callers.
->>
->> Signed-off-by: SZEDER G=C3=A1bor <szeder.dev@gmail.com>
->> ---
->>  ref-filter.c | 8 ++------
->>  ref-filter.h | 4 ++++
->>  2 files changed, 6 insertions(+), 6 deletions(-)
->
-> Ping?
->
-> It looks like that this little two piece cleanup series fell on the flo=
-or.
+> >   2. It serves as a cross-check that the coercion in (1a) is
+> >      correct (i.e., we'll complain about a parent link that
+> >      points to a blob). But we get most of this for free
+> >      already, because right after coercing, we'll parse any
+> >      non-blob objects. So we'd notice then if we expected a
+> >      commit and got a blob.
+> >
+> >      The one exception is when we expect a blob, in which
+> >      case we never actually read the object contents.
+> >
+> >      So this is a slight weakening, but given that the whole
+> >      point of --connectivity-only is to sacrifice some data
+> >      integrity checks for speed, this seems like an
+> >      acceptable tradeoff.
+> 
+> The only weakening is that a non-blob (or a corrupt blob) object
+> that sits where we expect a blob (because the containing tree or the
+> tag says so) would not be diagnosed as an error, then?  I think that
+> is in line with the spirit of --connectivity-only and is a good
+> trade-off.
 
-I am still waiting for somebody else to comment on the changes, and
-the final reroll after such a review discussion to address your own
-comment in <CAM0VKjk1mnNzQX6LThq1t7keesBz_fjE9x2e0ywsBKSNKP9SCw@mail.gmai=
-l.com>
+Correct. The corrupt-blob case we always knew was a tradeoff (that's the
+whole point of --connectivity-only). We could add back in the "we expect
+a blob, is it really one?" at the moment we traverse to it, but IMHO
+it's not interesting enough to even be worth the sha1_object_info()
+lookup time.
 
-
-
+-Peff
