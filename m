@@ -6,56 +6,73 @@ X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 400CA1F70F
-	for <e@80x24.org>; Thu, 26 Jan 2017 14:26:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CF04A1F70F
+	for <e@80x24.org>; Thu, 26 Jan 2017 14:33:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752652AbdAZO0x (ORCPT <rfc822;e@80x24.org>);
-        Thu, 26 Jan 2017 09:26:53 -0500
-Received: from cloud.peff.net ([104.130.231.41]:45312 "EHLO cloud.peff.net"
+        id S1752791AbdAZOc4 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 26 Jan 2017 09:32:56 -0500
+Received: from cloud.peff.net ([104.130.231.41]:45321 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752485AbdAZO0w (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 Jan 2017 09:26:52 -0500
-Received: (qmail 4425 invoked by uid 109); 26 Jan 2017 14:26:51 -0000
+        id S1752757AbdAZOcz (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 Jan 2017 09:32:55 -0500
+Received: (qmail 4813 invoked by uid 109); 26 Jan 2017 14:32:55 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 26 Jan 2017 14:26:51 +0000
-Received: (qmail 23358 invoked by uid 111); 26 Jan 2017 14:26:51 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 26 Jan 2017 14:32:55 +0000
+Received: (qmail 23402 invoked by uid 111); 26 Jan 2017 14:32:55 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 26 Jan 2017 09:26:51 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 26 Jan 2017 09:26:49 -0500
-Date:   Thu, 26 Jan 2017 09:26:49 -0500
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 26 Jan 2017 09:32:55 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 26 Jan 2017 09:32:53 -0500
+Date:   Thu, 26 Jan 2017 09:32:53 -0500
 From:   Jeff King <peff@peff.net>
-To:     Lars Schneider <larsxschneider@gmail.com>
+To:     Johannes Sixt <j6t@kdbg.org>
 Cc:     Junio C Hamano <gitster@pobox.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        git <git@vger.kernel.org>
-Subject: Re: What's cooking in git.git (Jan 2017, #04; Mon, 23)
-Message-ID: <20170126142648.7jjewr42okngawdd@sigill.intra.peff.net>
-References: <xmqqo9yxpaxk.fsf@gitster.mtv.corp.google.com>
- <0D956B23-E655-4C28-A205-14CCC0A7DEA2@gmail.com>
- <20170124132749.l3ezupyitvxe4t2l@sigill.intra.peff.net>
- <alpine.DEB.2.20.1701251800120.3469@virtualbox>
- <20170125173958.pg546a6w33dirp5k@sigill.intra.peff.net>
- <xmqq4m0nc8dz.fsf@gitster.mtv.corp.google.com>
- <20170125183924.6yclcjl4ggcu42yp@sigill.intra.peff.net>
- <xmqq7f5i92jk.fsf@gitster.mtv.corp.google.com>
- <D9F0976B-9F78-44BE-B9DD-CAB6506FA3A9@gmail.com>
- <8141FBB4-ACD0-42F5-9B5A-DA8DF1693972@gmail.com>
+        David Aguilar <davvid@gmail.com>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        GIT Mailing-list <git@vger.kernel.org>
+Subject: Re: Fixing the warning about warning(""); was: Re: [PATCH]
+ difftool.c: mark a file-local symbol with static
+Message-ID: <20170126143252.ne533mcv3n2ksbai@sigill.intra.peff.net>
+References: <20161201185056.eso5rhec7izlbywa@sigill.intra.peff.net>
+ <20170122052608.tpr5pihfgafhoynj@gmail.com>
+ <20170124142346.u3d7l6772mtkgpcf@sigill.intra.peff.net>
+ <xmqqlgu0ceia.fsf@gitster.mtv.corp.google.com>
+ <20170124230500.h3fasbvutjkkke5h@sigill.intra.peff.net>
+ <alpine.DEB.2.20.1701251135090.3469@virtualbox>
+ <20170125183542.pe5qolexqqx6jhsi@sigill.intra.peff.net>
+ <xmqq7f5iakxw.fsf@gitster.mtv.corp.google.com>
+ <20170125220101.et67ebkumsqosaku@sigill.intra.peff.net>
+ <546179e0-1d6e-86f7-00cf-e13218b76de1@kdbg.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <8141FBB4-ACD0-42F5-9B5A-DA8DF1693972@gmail.com>
+In-Reply-To: <546179e0-1d6e-86f7-00cf-e13218b76de1@kdbg.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jan 26, 2017 at 10:48:30AM +0100, Lars Schneider wrote:
+On Thu, Jan 26, 2017 at 07:39:55AM +0100, Johannes Sixt wrote:
 
-> Oh. I must have made a mistake on my very first test run. I can reproduce
-> the failure with ZSH and my plugins... looks like it's a Mac OS problem
-> and no TravisCI only problem after all.
+> Am 25.01.2017 um 23:01 schrieb Jeff King:
+> > +#pragma GCC diagnostic ignored "-Wformat-zero-length"
+> 
+> Last time I used #pragma GCC in a cross-platform project, it triggered an
+> "unknown pragma" warning for MSVC. (It was the C++ compiler, I don't know if
+> the C compiler would also warn.) It would have to be spelled like this:
+> 
+> #pragma warning(disable: 4068)   /* MSVC: unknown pragma */
+> #pragma GCC diagnostic ignored "-Wformat-zero-length"
+> 
+> Dscho mentioned that he's compiling with MSVC. It would do him a favor.
 
-Thanks for digging into it. If it's really /bin/mv that causes the
-problem, then I doubly think the "mv -f" patch is the right fix.
+Bleh. The point of #pragma is to ignore ones you don't know about.
+
+It would be easy to wrap it in an #ifdef for __GNUC__ (there is already
+a similar pragma with similar wrapping in the code base).
+
+Anyway. I do not want to make life harder for anyone. I think there are
+several options floating around now, so I will let Junio decide which
+one he wants to pick up.
 
 -Peff
