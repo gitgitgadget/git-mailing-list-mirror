@@ -2,182 +2,204 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 72B981F6DC
-	for <e@80x24.org>; Thu, 26 Jan 2017 00:31:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 357111F6DC
+	for <e@80x24.org>; Thu, 26 Jan 2017 00:33:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751815AbdAZAbl (ORCPT <rfc822;e@80x24.org>);
-        Wed, 25 Jan 2017 19:31:41 -0500
-Received: from resqmta-po-03v.sys.comcast.net ([96.114.154.162]:35242 "EHLO
-        resqmta-po-03v.sys.comcast.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751718AbdAZAbk (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 25 Jan 2017 19:31:40 -0500
-Received: from resomta-po-15v.sys.comcast.net ([96.114.154.239])
-        by resqmta-po-03v.sys.comcast.net with SMTP
-        id WXy7cYIlLIMkuWXyVcGesf; Thu, 26 Jan 2017 00:31:39 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=comcast.net;
-        s=q20161114; t=1485390699;
-        bh=VUTQmH1k8Xhg0qL6sBzLPtrEtw4kqLj446uR8W1HhuE=;
-        h=Received:Received:Subject:To:From:Message-ID:Date:MIME-Version:
-         Content-Type;
-        b=m9V+rRnBPVn4fAYzmx9nmkLxUPn8s0EXneVdhlLSSiaDpOb+zbtTUVYvEdC+hJayj
-         PTYeRd9+LuWyqqtKXWk/e1N02riwz+NuCChv+ZkHQm60TJaAn1nF43PE5MmU11HZLG
-         DzsTQ4Y1d2TzhS4ADKS8JHiOVyuAnF6PuA3SP7RZCzTPQdEq3qnouX4hEKfq4nwh5q
-         8vtiPhPwlZfnXARSrPepvI+WWN1ullqRWLQM/XuFXeyH0mLJ9l7UcMnpi97auYpOba
-         q7e3GfY4FeM9CKdAP0T7iHuLXo2mYHwIzWrqZhfUSswHFgqocO5EEUyxa7Z36pBHSC
-         tAVw+P59W4Kbg==
-Received: from localhost.localdomain ([73.35.250.55])
-        by resomta-po-15v.sys.comcast.net with SMTP
-        id WXyUcnWsNz1pFWXyUctN1Q; Thu, 26 Jan 2017 00:31:39 +0000
-Subject: Re: merge maintaining history
-To:     =?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-References: <58798686.5050401@comcast.net>
- <CA+P7+xoF8E55-XDnQT-GN1=hEwwq4pOsz7--P-SCy29C7ST3Hg@mail.gmail.com>
- <5880BB23.8030702@comcast.net> <xmqq37gezpz8.fsf@gitster.mtv.corp.google.com>
- <38ca43cb-2fc7-0448-352f-7d9413f815c5@gmail.com>
-Cc:     Jacob Keller <jacob.keller@gmail.com>,
-        Git mailing list <git@vger.kernel.org>
-From:   "David J. Bakeman" <nakuru@comcast.net>
-X-Enigmail-Draft-Status: N1110
-Message-ID: <5889436A.8000707@comcast.net>
-Date:   Wed, 25 Jan 2017 16:31:38 -0800
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.7.1
-MIME-Version: 1.0
-In-Reply-To: <38ca43cb-2fc7-0448-352f-7d9413f815c5@gmail.com>
-Content-Type: multipart/mixed;
- boundary="------------040900090408060008040800"
-X-CMAE-Envelope: MS4wfCwtcvj0TQT3XxweII1T8r1l3f5VMnoEzMlWDscYk2EEaG3mIj75qhdFOTxuT2SGspX6/R6sFxV32op/qey8vRFLIm0avLr5J9ROUGKS78myYy9WZ5y2
- ifqVIseWu6AeFZz/ic5guVBHVTmfgX+DQDN2jMJnDroiVqly/LHG7OllPE0UUo1bTXovU+ow0q70POPBD7uAnBmngTr1irGnne57wvmkI1cN5BBe9fvD3IJv
- JzRDFXKd38kJKW8khqsWInRXXBxbSo+4w+HVEMEN4Hc=
+        id S1751582AbdAZAdf (ORCPT <rfc822;e@80x24.org>);
+        Wed, 25 Jan 2017 19:33:35 -0500
+Received: from mail-pg0-f44.google.com ([74.125.83.44]:33383 "EHLO
+        mail-pg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750986AbdAZAde (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 Jan 2017 19:33:34 -0500
+Received: by mail-pg0-f44.google.com with SMTP id 204so68607327pge.0
+        for <git@vger.kernel.org>; Wed, 25 Jan 2017 16:33:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=from:to:cc:subject:date:message-id;
+        bh=mqz1W3EBmPzSDQRzu9Ow4y5wmT+BoqtO5w5hTvmCvPQ=;
+        b=VfDkGQDPVmVqStsbmPj4OqU+TZUkLzD0KvPqcGnCk1tCBFRmuTkqhUFqFOjkx6+hE2
+         1cT6RQl9RkP1ACasD8ugfTFS1ebORR8AWUZgqFA+GnGDAfBfryz+jJSEhAt30brmhwAG
+         5oxnxJ3LOWcNZBke2kszPyDkcgAMa7cg3Zt1XQB8Lrt3Hgdqn/tKIaxQqjLI9RhDXCKK
+         w/fUSaIPTgNsxiLtUnuy5VW6MhhFuXUX9Qi4Su831a8IlOVMLtxceGVSYoUT85K6ZcXv
+         G1EcbUhjJsZaIDMa8ZK28NbvMw4LPByCbVzNLsHNWvinj3uD+BbVr8BTJRH92FUySelZ
+         w2LA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=mqz1W3EBmPzSDQRzu9Ow4y5wmT+BoqtO5w5hTvmCvPQ=;
+        b=ZA6nF9KcYsKHzLSZOwl4KtzqZxhQRlj4u9Rgy9ItYntZUOGSbXmMLSAvFiFc97ZfYS
+         Mah08insZOdgcVj+bqWWckJHj4IL+IP2B0pevPW3GdPWw6myKqDLWJHtOVUwenGni7pa
+         MPRmv96CSHzZ/C7VlUDOq+dbyYsQrfBXWiG+xLZsRViDvVIA9vSW7iP4PA6LyWxtrwcL
+         rHxliN6cPTUqT5WWHmK7TUBGCgIEY6BS63AnU7mIz3BdmdhvvP04KY1AX3py1SUGx3+G
+         udYNJ8dDc5szIr3vuzcWlU0nBqvMrulmaZUHXLcplcAm5H88PmNAPnZ9NageAajr8q6W
+         BQ6A==
+X-Gm-Message-State: AIkVDXIr9MPSyE9B+8LkK+Xz/a7dDqCjVuvxxa0QenbLPHRdsqEuqdc15SGfptu3ajSVXfvi
+X-Received: by 10.99.65.1 with SMTP id o1mr40566pga.93.1485390813169;
+        Wed, 25 Jan 2017 16:33:33 -0800 (PST)
+Received: from localhost ([2620:0:1000:5b10:3993:32c0:4ba2:a648])
+        by smtp.gmail.com with ESMTPSA id i10sm37269pgd.37.2017.01.25.16.33.32
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Wed, 25 Jan 2017 16:33:32 -0800 (PST)
+From:   Stefan Beller <sbeller@google.com>
+To:     gitster@pobox.com
+Cc:     git@vger.kernel.org, hvoigt@hvoigt.net, dborowitz@google.com,
+        Stefan Beller <sbeller@google.com>
+Subject: [PATCH] Revert "push: change submodule default to check when submodules exist"
+Date:   Wed, 25 Jan 2017 16:33:29 -0800
+Message-Id: <20170126003329.28841-1-sbeller@google.com>
+X-Mailer: git-send-email 2.11.0.495.g04f60290a0.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is a multi-part message in MIME format.
---------------040900090408060008040800
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+This reverts commit 04a1d8b1ae5eeecb90675cfaca2850bf26269485.
 
-On 01/20/2017 03:37 AM, Jakub Narębski wrote:
-> W dniu 19.01.2017 o 22:42, Junio C Hamano pisze:
->> "David J. Bakeman" <nakuru@comcast.net> writes:
->  
-> [...]
->>> Thanks I think that's close but it's a little more complicated I think
->>> :<(  I don't know if this diagram will work but lets try.
->>>
->>> original A->B->C->D->E->F
->>>              \
->>> first branch  b->c->d->e
->>>
->>> new repo e->f->g->h
->>>
->>> Now I need to merge h to F without loosing b through h hopefully.  Yes e
->>> was never merged back to the original repo and it's essentially gone now
->>> so I can't just merge to F or can I?
->> With the picture, I think you mean 'b' is forked from 'B' and the
->> first branch built 3 more commits on top, leading to 'e'.
->>
->> You say "new repo" has 'e' thru 'h', and I take it to mean you
->> started developing on top of the history that leads to 'e' you built
->> in the first branch, and "new repo" has the resulting history that
->> leads to 'h'.
->>
->> Unless you did something exotic and non-standard, commit 'e' in "new
->> repo" would be exactly the same as 'e' sitting on the tip of the
->> "first branch", so the picture would be more like:
->>
->>> original A->B->C->D->E->F
->>>              \
->>> first branch  b->c->d->e
->>>                         \
->>> new repo                 f->g->h
->> no?
-> On the other hand Git has you covered even if you did something 
-> non-standard, like starting new repo from the _state_ of 'e', that
-> is you have just copied files and created new repository, having
-> 'e' (or actually 'e*') as an initial commit.
->
->    original A<-B<-C<-D<-E<-F
->                 \
->    first branch  b<-c<-d<-e
->
->    new repo               e*<-f<-g<-h
->
-> Note that arrows are in reverse direction, as it is newer commit
-> pointing to its parents, not vice versa.
->
-> Assuming that you have everything in a single repository, by adding
-> both original and new repo as "remotes", you can use 'git replace'
-> command to replace 'e*' with 'e'.
->
->    original A<-B<-C<-D<-E<-F
->                 \
->    first branch  b<-c<-d<-e
->                            \
->    new repo                 \-f<-g<-h
->    (with refs/replace)
->
->>     Then merging 'h' into 'F' will pull everything you did since
->> you diverged from the history that leads to 'F', resulting in a
->> history of this shape:
->>
->>> original A->B->C->D->E->F----------M
->>>              \                    /
->>> first branch  b->c->d->e         /
->>>                         \       /
->>> new repo                 f->g->h
-> Then you would have the above history in repositories that fetched
-> refs/replace/*, and the one below if replacement info is absent:
->
->    original A<-B<-C<-D<-E<-F<-----------M
->                 \                      /
->    first branch  b<-c<-d<-e           /
->                                      /
->    new repo               e*<-f->g->h
->
-> But as Junio said it is highly unlikely that you are in this situation.
->
-> HTH
-OK so what I've done so far is to clone the original then I added
-another remote connected to new repo.  Then I did git merge newrepo.  It
-did a bunch of stuff that flashed by really fast and then reported a
-conflict.  Now if I do a git st there are a bunch of files that seem to
-be already added to a commit and all the files with conflicts which it's
-says need to be fixed and added.
-I'm still learning git even after using it for several years.  I've
-never really seen this before.  So the already added files are the ones
-that git was able to merge mechanically?  If so can I diff those changes
-some way?  Would I have to un add (reset HEAD) all those files to see
-the diffs?  Would it have assumed that my changes are to be preferred?
+In the previous commit we set push.recurseSubmodules to "check"
+by default. This check is done by walking all remote refs that are known.
 
-Thanks again for all the great help!
+For remotes we only store the refs/heads/* (and tags), which doesn't
+include all commits. In e.g. Gerrit commits often end up at refs/changes/*
+(that we do not store) when pushing to refs/for/master (which we also do
+not store). So a workflow such as the following still fails:
 
---------------040900090408060008040800
-Content-Type: text/x-vcard; charset=utf-8;
- name="nakuru.vcf"
-Content-Transfer-Encoding: 7bit
-Content-Disposition: attachment;
- filename="nakuru.vcf"
+    $ git -C <submodule> push origin HEAD:refs/for/master
+    $ git push origin HEAD:refs/for/master
+    The following submodule paths contain changes that can
+    not be found on any remote:
+      submodule
 
-begin:vcard
-fn:David J. Bakeman
-n:Bakeman;David J.
-org:Nakuru Software Inc.
-adr:;;1504 North 57th Street;Seattle;WA;98103;USA
-email;internet:nakuru@comcast.net
-tel;work:(206)545-0609
-tel;fax:(206)600-6957
-x-mozilla-html:TRUE
-version:2.1
-end:vcard
+    Please try
 
+        git push --recurse-submodules=on-demand
 
---------------040900090408060008040800--
+    or cd to the path and use
+
+        git push
+
+    to push them to a remote.
+
+Trying to push with --recurse-submodules={on-demand,check}
+would run into the same problem, yielding the same error message.
+
+So changing the default to check for submodules is clearly not working
+as intended for Gerrit users. We need another option that works for them.
+For now just revert the change of the default.
+
+A future patch to address this problem would be add another option that
+treats the submodules differently:
+
+  1) check if the submodule needs pushing (as currently done in "check")
+  2) for those submodules that need pushing we run a command, e.g.
+     git push with the refspec passed down exactly as is. This would
+     work for the Gerrit case, as HEAD:refs/for/master is correct
+     for both the superproject and the submodule.
+  3) Unlike in "on-demand", we would not check again after performing
+     step 2), as we would not find the newly pushed things at Gerrit.
+
+Once we have such an option, we can default to "check" again, and the
+error message would mention both on-demand as well as this new option.
+I'd imagine "on-demand" is what works in branch driven code review
+systems such as github; for Gerrit which is based on changes the option
+outlined above would work.
+
+Signed-off-by: Stefan Beller <sbeller@google.com>
+---
+
+  After some thought, my opinion on
+  sb/push-make-submodule-check-the-default
+  change. We should not merge it down to master
+  until we found a good solution.
+  
+  This applies on top of sb/push-make-submodule-check-the-default
+  unbreaking existing Gerrit users, explaining why this was a bad idea.
+  
+  Feel free to either apply this patch or just eject said branch from
+  next.
+  
+  Thanks,
+  Stefan  
+
+ builtin/push.c                 | 16 +---------------
+ t/t5531-deep-submodule-push.sh |  6 +-----
+ 2 files changed, 2 insertions(+), 20 deletions(-)
+
+diff --git a/builtin/push.c b/builtin/push.c
+index 9e0b8dba9a..3bb9d6b7e6 100644
+--- a/builtin/push.c
++++ b/builtin/push.c
+@@ -3,7 +3,6 @@
+  */
+ #include "cache.h"
+ #include "refs.h"
+-#include "dir.h"
+ #include "run-command.h"
+ #include "builtin.h"
+ #include "remote.h"
+@@ -23,7 +22,6 @@ static int deleterefs;
+ static const char *receivepack;
+ static int verbosity;
+ static int progress = -1;
+-static int has_submodules_configured;
+ static int recurse_submodules = RECURSE_SUBMODULES_DEFAULT;
+ static enum transport_family family;
+ 
+@@ -33,15 +31,6 @@ static const char **refspec;
+ static int refspec_nr;
+ static int refspec_alloc;
+ 
+-static void preset_submodule_default(void)
+-{
+-	if (has_submodules_configured || file_exists(git_path("modules")) ||
+-	    (!is_bare_repository() && file_exists(".gitmodules")))
+-		recurse_submodules = RECURSE_SUBMODULES_CHECK;
+-	else
+-		recurse_submodules = RECURSE_SUBMODULES_OFF;
+-}
+-
+ static void add_refspec(const char *ref)
+ {
+ 	refspec_nr++;
+@@ -506,9 +495,7 @@ static int git_push_config(const char *k, const char *v, void *cb)
+ 		const char *value;
+ 		if (!git_config_get_value("push.recursesubmodules", &value))
+ 			recurse_submodules = parse_push_recurse_submodules_arg(k, value);
+-	} else if (starts_with(k, "submodule.") && ends_with(k, ".url"))
+-		/* The submodule.<name>.url is used as a bit to indicate existence */
+-		has_submodules_configured = 1;
++	}
+ 
+ 	return git_default_config(k, v, NULL);
+ }
+@@ -565,7 +552,6 @@ int cmd_push(int argc, const char **argv, const char *prefix)
+ 	};
+ 
+ 	packet_trace_identity("push");
+-	preset_submodule_default();
+ 	git_config(git_push_config, &flags);
+ 	argc = parse_options(argc, argv, prefix, options, push_usage, 0);
+ 	set_push_cert_flags(&flags, push_cert);
+diff --git a/t/t5531-deep-submodule-push.sh b/t/t5531-deep-submodule-push.sh
+index e690749e8a..198ce84754 100755
+--- a/t/t5531-deep-submodule-push.sh
++++ b/t/t5531-deep-submodule-push.sh
+@@ -65,11 +65,7 @@ test_expect_success 'push fails if submodule commit not on remote' '
+ 		git add gar/bage &&
+ 		git commit -m "Third commit for gar/bage" &&
+ 		# the push should fail with --recurse-submodules=check
+-		# on the command line. "check" is the default for repos in
+-		# which submodules are detected by existence of config,
+-		# .gitmodules file or an internal .git/modules/<submodule-repo>
+-		git submodule add -f ../submodule.git gar/bage &&
+-		test_must_fail git push ../pub.git master &&
++		# on the command line...
+ 		test_must_fail git push --recurse-submodules=check ../pub.git master &&
+ 
+ 		# ...or if specified in the configuration..
+-- 
+2.11.0.495.g04f60290a0.dirty
+
