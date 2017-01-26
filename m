@@ -2,80 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 302041F70F
-	for <e@80x24.org>; Thu, 26 Jan 2017 18:54:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CBFFD1F70F
+	for <e@80x24.org>; Thu, 26 Jan 2017 18:56:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752658AbdAZSyx (ORCPT <rfc822;e@80x24.org>);
-        Thu, 26 Jan 2017 13:54:53 -0500
-Received: from mail-wm0-f54.google.com ([74.125.82.54]:38070 "EHLO
-        mail-wm0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752594AbdAZSyv (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 Jan 2017 13:54:51 -0500
-Received: by mail-wm0-f54.google.com with SMTP id r144so99993193wme.1
-        for <git@vger.kernel.org>; Thu, 26 Jan 2017 10:53:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=33IVJCf6QP/DQ1A1twUYoik25raapk8TNEUdFuf7kj0=;
-        b=uYY8B8UPooXUWGoXP2axJdIuRdH4QbSq7QAIlf4Fka9xkyyuYDm829TFsawrcqhTYD
-         e8oI2QOWgPGdDnuRBo+NOJPXnTcDoSKyxrtn8/z5+ciilt4m5wtNW/o9FAUey2ZIe99d
-         Pie7T8SzRaZ1ON80Ar1aYYQc1EOe+8s79aOYxefjhWuZnjHu0Tbp7/5tRYIWmQZAvNLZ
-         0jk1sxWbVlgalo2EeOB2JlZHlxS5BspoJ5zsOJ+s/eWDTfTT9b9yD6wnlnZHv7aLOjAG
-         A9UcOms/3c+AbvjVxEbu+RJte6gj9ybZA5NU7xr7sKxHsbYBCf/0F5nTTEiSEK1viiWd
-         uGvQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=33IVJCf6QP/DQ1A1twUYoik25raapk8TNEUdFuf7kj0=;
-        b=AQr+l/18OJj1HMx+XJUBe7MyDVO7HeGd14Vc0gHoQzOU1uE8mgJgum0EShkEUJTuGA
-         p/naFUd/h9dkgxVk7zV/cIjRMlDh5B2TmBLDuymYDDj+e0EwSSE3JYWms0k6MuHadexS
-         IBCqgn3MnGsk9NDwXhy1LurCNcUaKY+Pi9PWaKQrOdXJorhENWHRz8IMMTxsnVQe84qL
-         UH4S5obiMZKWFbTwvOBn4DlxnRcNPFxnDF+iLqm+8alkrfBNS7MN+juTLRkru7MfjeS1
-         0ov5BrtAWy2G+Mr8nAMG2Ob2f3Az6d1OaFO/AEuofeij3AXT9GDkN2HFfL+0TmDEkmMq
-         onEQ==
-X-Gm-Message-State: AIkVDXKTnujc6WvBZbkrsvVNTfFgCcVNwOJ6S+E24NWMcCDjyVO14AwelGoX43zJkXOOef2A6kQoSlmrDz7Etw==
-X-Received: by 10.223.139.29 with SMTP id n29mr3866916wra.67.1485454732622;
- Thu, 26 Jan 2017 10:18:52 -0800 (PST)
+        id S1752689AbdAZSz5 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 26 Jan 2017 13:55:57 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:52097 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1752247AbdAZSzy (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 Jan 2017 13:55:54 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id E7CBC621B9;
+        Thu, 26 Jan 2017 13:54:59 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=Pos36eBgLBkR
+        Y37kojNIH+Lf6SA=; b=GTxVRtennJ2ERWbfu4NYwX2m7kAeur5sHNv2N85plQ4W
+        mU0bXUmi4l0Ix0Qjt0LcTtBtBGcUWPNAQ3Hk3tqBiMKI9ROu7A6q06wqZAgL2RAT
+        OYlfis8itkdAfth+X22KvLBynEW4w0C6PcTNOj0h/rRERe7gFEcCrzpJ9N5g+sQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=rKQY4q
+        8KMIU7qjN2Sp6C7Z3jSzX8TGO2sPQ7ejxsLR3CJNZp39UnYbxhqUHevNzP15jvTE
+        UyNz6IyA6nd/I3TGTsYVG64W2//zRaAmBNM4TzQhEmK63c4rDNlLN+xmM4T4Jn8X
+        seKQB8VlShtTX7znFrOZ47YNMb7XX2gpkBcYc=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id DF545621B8;
+        Thu, 26 Jan 2017 13:54:59 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 4A56D621B6;
+        Thu, 26 Jan 2017 13:54:59 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 2/2] ref-filter: add function to parse atoms from a nul-terminated string
+References: <20161207160923.7028-1-szeder.dev@gmail.com>
+        <20161207160923.7028-3-szeder.dev@gmail.com>
+        <CAM0VKjntATMwDTdu1fSmjeLbwVe73iTo2NQizNXjZchBzqG44w@mail.gmail.com>
+Date:   Thu, 26 Jan 2017 10:54:57 -0800
+In-Reply-To: <CAM0VKjntATMwDTdu1fSmjeLbwVe73iTo2NQizNXjZchBzqG44w@mail.gmail.com>
+        ("SZEDER =?utf-8?Q?G=C3=A1bor=22's?= message of "Thu, 26 Jan 2017 14:15:38
+ +0100")
+Message-ID: <xmqqvat14poe.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.28.145.193 with HTTP; Thu, 26 Jan 2017 10:18:31 -0800 (PST)
-In-Reply-To: <CAOxFTcyuLkvgPOxQuzaDUVuDRu_KJg=JrYtU84pQyjLstChbLg@mail.gmail.com>
-References: <20170121104904.15132-1-giuseppe.bilotta@gmail.com>
- <xmqqh94ptzke.fsf@gitster.mtv.corp.google.com> <CAOxFTcyuLkvgPOxQuzaDUVuDRu_KJg=JrYtU84pQyjLstChbLg@mail.gmail.com>
-From:   Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-Date:   Thu, 26 Jan 2017 19:18:31 +0100
-Message-ID: <CAOxFTcx1NsBfiSqQgomE5USsd0DBKtQZPQEJgnpphTRWrUn=ow@mail.gmail.com>
-Subject: Re: [PATCH] rebase: pass --signoff option to git am
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: EFA2A40E-E3F8-11E6-A9B6-A7617B1B28F4-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jan 23, 2017 at 9:03 PM, Giuseppe Bilotta
-<giuseppe.bilotta@gmail.com> wrote:
-> On Mon, Jan 23, 2017 at 7:13 PM, Junio C Hamano <gitster@pobox.com> wrote:
+SZEDER G=C3=A1bor <szeder.dev@gmail.com> writes:
+
+> On Wed, Dec 7, 2016 at 5:09 PM, SZEDER G=C3=A1bor <szeder.dev@gmail.com=
+> wrote:
+>> ref-filter's parse_ref_filter_atom() function parses an atom between
+>> the start and end pointers it gets as arguments.  This is fine for two
+>> of its callers, which process '%(atom)' format specifiers and the end
+>> pointer comes directly from strchr() looking for the closing ')'.
+>> However, it's not quite so straightforward for its other two callers,
+>> which process sort specifiers given as plain nul-terminated strings.
+>> Especially not for ref_default_sorting(), which has the default
+>> hard-coded as a string literal, but can't use it directly, because a
+>> pointer to the end of that string literal is needed as well.
+>> The next patch will add yet another caller using a string literal.
 >>
->> Should we plan to extend this to the interactive backend that is
->> shared between rebase -i and rebase -m, too?  Or is this patch
->> already sufficient to cover them?
+>> Add a helper function around parse_ref_filter_atom() to parse an atom
+>> up to the terminating nul, and call this helper in those two callers.
+>>
+>> Signed-off-by: SZEDER G=C3=A1bor <szeder.dev@gmail.com>
+>> ---
+>>  ref-filter.c | 8 ++------
+>>  ref-filter.h | 4 ++++
+>>  2 files changed, 6 insertions(+), 6 deletions(-)
 >
-> AFAIK this is sufficient for both, in the sense that I've used it with
-> git rebase -i and it works.
+> Ping?
+>
+> It looks like that this little two piece cleanup series fell on the flo=
+or.
 
-Hm, something very strange is going on, I've just tested the patch on
-top of current next and for some reason the signoff line does not get
-added. The command-line option gets passed to git am, but I get no
-signoff for some reason, so something is failing down the line, I'll
-have to investigate.
+I am still waiting for somebody else to comment on the changes, and
+the final reroll after such a review discussion to address your own
+comment in <CAM0VKjk1mnNzQX6LThq1t7keesBz_fjE9x2e0ywsBKSNKP9SCw@mail.gmai=
+l.com>
 
--- 
-Giuseppe "Oblomov" Bilotta
+
+
