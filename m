@@ -2,89 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 27C701F70F
-	for <e@80x24.org>; Thu, 26 Jan 2017 18:46:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9D12C1F794
+	for <e@80x24.org>; Thu, 26 Jan 2017 18:47:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752602AbdAZSqt (ORCPT <rfc822;e@80x24.org>);
-        Thu, 26 Jan 2017 13:46:49 -0500
-Received: from mail-io0-f178.google.com ([209.85.223.178]:33010 "EHLO
-        mail-io0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752247AbdAZSq3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 Jan 2017 13:46:29 -0500
-Received: by mail-io0-f178.google.com with SMTP id v96so43835072ioi.0
-        for <git@vger.kernel.org>; Thu, 26 Jan 2017 10:46:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=GtYZBXNud+FYWwyGIcMMT5XosDAza2x+l//OpyomfrY=;
-        b=fks9Up0tSNWuuIbc+WN4JwrPRg2I07T3Z1IUfhANnxO11BSvZKVSdKwiuSVuQL6mWp
-         B7x4no2zUYJ4sSQACxqJu7ml6xtKLORvjF7q9vq1tJMAx1JW8jB7OivmszUJYGg9llv8
-         fMjft/DyBtK0twx79EoxZRSPLEgW26/eHKGcrl5fZLaOtS5sCqw07Fs4Z09I8v/xRgwy
-         NyZF/fRjeo/oBjP5C9Kbat4uVl+ycQ7OJdzopNfhXC6OMDM3CJ5U6RrNaKquLKiIYK37
-         cKQtvAiPNodbzG/PtZWqISPo2sEcmzFQkTtEcd1/LF6ZEcSrNzEI66FRZc63TRSzFDyk
-         VOBQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=GtYZBXNud+FYWwyGIcMMT5XosDAza2x+l//OpyomfrY=;
-        b=TjztwT1Sfi8IdP+X9xhPyijAM3bYAlIpEX/it6ks637ciIu80ZtxciGKNfAo09FHyf
-         xR38f5vCpTQhFt2opqoQY3xSQefeLR7c37h5e9BL5Jtj2ziDQShEi9dAAfAGVEs+H9dR
-         fKp43AlvhTBt+4hODXjZR7r2foGCTD9V7ak3sRtDcPybws1XFdkmdJgL8yWkz50U0Cvk
-         wF995sGYeh6NCP+alHxcLCvoyzIUlgqiSxPYffCCc2WSH+sTWa8XPa3IA/3oOW7UjNay
-         5hRhZUddaQYILWrxfB/SCFpo3sH4DKoyh9+YwzQ/l2rQjD2LiDaROy2m+r82NPL4H/0M
-         qEeA==
-X-Gm-Message-State: AIkVDXKjB9SrzLipIX7wbUFAlR+cBfMagZK3L36MLE74CMwBM0qUj9MHAOmaR05BKGJ/o6O5vMNySgRcObYSFTqs
-X-Received: by 10.107.16.14 with SMTP id y14mr4035952ioi.164.1485456364866;
- Thu, 26 Jan 2017 10:46:04 -0800 (PST)
+        id S1752533AbdAZSrH (ORCPT <rfc822;e@80x24.org>);
+        Thu, 26 Jan 2017 13:47:07 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:55955 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1752168AbdAZSrF (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 Jan 2017 13:47:05 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 7992D63DAC;
+        Thu, 26 Jan 2017 13:44:00 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=zfUYae9IIeMhQXLM117g2Z4ZBcY=; b=Y1Vxm4
+        ImxVW418b1YbInY0KHGrGeJGSoCMipKyHITcfcHLtdjwQHc4YY+rchpfVSgn1OC+
+        xBs/sf7D9+/affUJYbHNOjMx0ib4YOWuopIz/RcF+zf0mDpieRS/Zvuu2eqXQrsb
+        hzliJUzyrdGjkaMm1oKpYn1nU2Nav6sh0WQro=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=d+QekjIYwZxMGGmxHVN6NR81iNTlTKVW
+        jQGR1Lwk4mI4Isrrru0SptoavB2DFDFoYjiZPYVDAC8imK38i3yl2hlsVSlRCG2a
+        RZCRSNl3FmAG0iL9Dmjc6M7N7JDgVL56bilczR0le+oZscJWhTxiYYsKkTv9M0p/
+        LT/MPs0TZKY=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 57D6C63DAB;
+        Thu, 26 Jan 2017 13:44:00 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id AC5D863DA9;
+        Thu, 26 Jan 2017 13:43:59 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Jeff King <peff@peff.net>, Git Mailing List <git@vger.kernel.org>,
+        Jacob Keller <jacob.keller@gmail.com>
+Subject: Re: [PATCH 4/5] revision.c: refactor ref selection handler after --exclude
+References: <20170121140806.tjs6wad3x4srdv3q@sigill.intra.peff.net>
+        <20170125125054.7422-1-pclouds@gmail.com>
+        <20170125125054.7422-5-pclouds@gmail.com>
+        <20170125205718.ksqstdnazmgbkehy@sigill.intra.peff.net>
+        <CACsJy8ATM_kc5SPY0dqprUefRy3vtpKW-4QEyJFK54jw0QgeJA@mail.gmail.com>
+Date:   Thu, 26 Jan 2017 10:43:58 -0800
+In-Reply-To: <CACsJy8ATM_kc5SPY0dqprUefRy3vtpKW-4QEyJFK54jw0QgeJA@mail.gmail.com>
+        (Duy Nguyen's message of "Thu, 26 Jan 2017 16:28:17 +0700")
+Message-ID: <xmqq8tpx64r5.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.79.39.19 with HTTP; Thu, 26 Jan 2017 10:46:04 -0800 (PST)
-In-Reply-To: <20170126183030.28632-1-marcandre.lureau@redhat.com>
-References: <20170126183030.28632-1-marcandre.lureau@redhat.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Thu, 26 Jan 2017 10:46:04 -0800
-Message-ID: <CAGZ79kZkxnoKCyk9teQnEPjsnS7iEorZALY4dXE8Fy78ifur7g@mail.gmail.com>
-Subject: Re: [PATCH] git-bisect: allow running in a working tree subdirectory
-To:     marcandre.lureau@redhat.com, Duy Nguyen <pclouds@gmail.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        Christian Couder <chriscool@tuxfamily.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 667C3D1C-E3F7-11E6-A29D-A7617B1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-+ Duy, main author of the worktree feature.
+Duy Nguyen <pclouds@gmail.com> writes:
 
-On Thu, Jan 26, 2017 at 10:30 AM,  <marcandre.lureau@redhat.com> wrote:
-> From: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+> On Thu, Jan 26, 2017 at 3:57 AM, Jeff King <peff@peff.net> wrote:
+>> I don't think it means either. It means to include remotes in the
+>> selected revisions, but excluding the entries mentioned by --exclude.
+>>
+>> IOW:
+>>
+>>   --exclude=foo --remotes
+>>         include all remotes except refs/remotes/foo
+>>
+>>   --exclude=foo --unrelated --remotes
+>>         same
+>>
+>>   --exclude=foo --decorate-reflog --remotes
+>>         decorate reflogs of all remotes except "foo". Do _not_ use them
+>>         as traversal tips.
+>>
+>>   --decorate-reflog --exclude=foo --remotes
+>>         same
+>>
+>> IOW, the ref-selector options build up until a group option is given,
+>> which acts on the built-up options (over that group) and then resets the
+>> built-up options. Doing "--unrelated" as above is orthogonal (though I
+>> think in practice nobody would do that, because it's hard to read).
 >
-> It looks like it can do it.
->
-> Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-> ---
->  git-bisect.sh | 1 +
->  1 file changed, 1 insertion(+)
->
-> diff --git a/git-bisect.sh b/git-bisect.sh
-> index ae3cb013e..b0bd604d4 100755
-> --- a/git-bisect.sh
-> +++ b/git-bisect.sh
-> @@ -1,5 +1,6 @@
->  #!/bin/sh
->
-> +SUBDIRECTORY_OK=3DYes
->  USAGE=3D'[help|start|bad|good|new|old|terms|skip|next|reset|visualize|re=
-play|log|run]'
->  LONG_USAGE=3D'git bisect help
->         print this long help message.
-> --
-> 2.11.0.295.gd7dffce1c.dirty
->
+> This is because it makes sense to combine --exclude and
+> --decorate-reflog. But what about a new --something that conflicts
+> with either --exclude or --decorate-reflog?
+
+I would think that "--exclude=foo --something --remotes" 
+
+ * should be diagnosed as an error if "--something" is not compatible
+   with "--exclude";
+
+ * should take effect at the concluding "--remotes" if "--something"
+   is similar to "--decorate-reflog" whose effect ends at a
+   concluding --remotes/--branches/etc.; and
+
+ * should work independently if "--something" is neither.
+
