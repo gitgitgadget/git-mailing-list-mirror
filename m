@@ -7,91 +7,117 @@ X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8D3991F437
-	for <e@80x24.org>; Thu, 26 Jan 2017 09:14:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 154A51F437
+	for <e@80x24.org>; Thu, 26 Jan 2017 09:18:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753182AbdAZJOH (ORCPT <rfc822;e@80x24.org>);
-        Thu, 26 Jan 2017 04:14:07 -0500
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:33842 "EHLO
-        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753171AbdAZJOF (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 Jan 2017 04:14:05 -0500
-Received: by mail-wm0-f67.google.com with SMTP id c85so48792582wmi.1
-        for <git@vger.kernel.org>; Thu, 26 Jan 2017 01:14:04 -0800 (PST)
+        id S1753157AbdAZJSk (ORCPT <rfc822;e@80x24.org>);
+        Thu, 26 Jan 2017 04:18:40 -0500
+Received: from mail-oi0-f66.google.com ([209.85.218.66]:33245 "EHLO
+        mail-oi0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753130AbdAZJSh (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 Jan 2017 04:18:37 -0500
+Received: by mail-oi0-f66.google.com with SMTP id j15so17591604oih.0
+        for <git@vger.kernel.org>; Thu, 26 Jan 2017 01:18:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=91JPg12SvNlHkfyi+5X2pkiltMGDXuf8wIrgGNEQJ28=;
-        b=Aruet1aDNcQ/lJOJeAoKoQVIxABE0A407UKHrDOOJBiTTux+wDJR67qlWYMBDFqdRg
-         lDmSXpDTFy89sLKbHb/6alexahIcNSlYnjV5Ewm60hf7hABuws/XbGNsikPI/2ITPoJ8
-         HQ0C059BAipTzbO4Cazo9GXbK6KZtviHERFDOKqZHLm14jeQt2W6+5KNy29QvUc1am+U
-         iXhibL8yXI5+Yr5R4B7FG7I8Kabfa2dyRL3CmCC9D2jFUGURNuIeB1bs5m/o2Sv52vKP
-         xy3iCtVeGSHCoSCrO/SCSRDKqTXOTjRa2jKTHj1K0Ags6xx4fUqytrGvnQjx1J8nVHAe
-         vunQ==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=lpqe5lWRMZX3l1BpRKjZTbBOmBa7UDq41PH5joS021M=;
+        b=KRSL1V/OnfyHdT2+8+EIjO7+N5bI0tr9D7wNJSmpOQPRINpcGPzesCTn+ZNYiGyvul
+         mZBJaG4lpHW0dwbN0g/j/vU8ic3X28n85BHa00y/4757R6tx3wVTmBMZ2c8q6JP7580g
+         Ie5fRMUXdxEQ6ldeWS4SZIhgsaxysAqQZCtrgpHZtjqeAVofJJqANug2mQOOgoZoP9gM
+         cV/I2x4JJc9bhiPBQ0PWlvYuixUGR5d8s5iuPnkiFqKXV4AW9IueVMBtx+n9YubzdUSg
+         /Ee8yalGQJVz8LNdwOl7GTF/EEExDGhmhkwSCGnGCZwXBu1CfYksxoEZeuSIgWGpGOLK
+         7w6A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=91JPg12SvNlHkfyi+5X2pkiltMGDXuf8wIrgGNEQJ28=;
-        b=Frl1l0GVR0vNijSek9EiMYM1Td3FaOjB4lNKMIrozzKxtsNmKjmvgy4DnnFHSJGGzE
-         UdS98m3sCxYk91J3JTsIH4FQzb0WGoGEWtJr7mRzGrS5v7LWO8K0Ts8M4MqcdFFtF5+Z
-         o6AkKH2b1d2mCrascGB7wE/QbwOd/kKtfI1fZD312mShpS9WuowGD20YWysh2lkX57Xu
-         4kmlfCpnfZfXEz7zkpHB4T/qdMi5xQ4xTAO3AEj4YpJ1n+Y2/j7x8dlBeudBnQHmKILu
-         GBkNdc3Oj9EZCdkvPvuPsM+hw/zsl9JRapDUAK0CLEax6PZU++o2YZVmM+PVzXlZFQps
-         /fLg==
-X-Gm-Message-State: AIkVDXJDpr57DVjruD+CKvZHsMNgFqiyzIt+8Rv1EFg2icERiK1hyDjH7Acgq6rxcyK3mw==
-X-Received: by 10.28.19.207 with SMTP id 198mr1601105wmt.70.1485422043769;
-        Thu, 26 Jan 2017 01:14:03 -0800 (PST)
-Received: from slxbook4.fritz.box (p5DDB5A5D.dip0.t-ipconnect.de. [93.219.90.93])
-        by smtp.gmail.com with ESMTPSA id o132sm2616259wmo.17.2017.01.26.01.14.02
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 26 Jan 2017 01:14:03 -0800 (PST)
-Content-Type: text/plain; charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-Subject: Re: What's cooking in git.git (Jan 2017, #04; Mon, 23)
-From:   Lars Schneider <larsxschneider@gmail.com>
-In-Reply-To: <xmqq7f5i92jk.fsf@gitster.mtv.corp.google.com>
-Date:   Thu, 26 Jan 2017 10:14:01 +0100
-Cc:     Jeff King <peff@peff.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        git <git@vger.kernel.org>
-Content-Transfer-Encoding: 7bit
-Message-Id: <D9F0976B-9F78-44BE-B9DD-CAB6506FA3A9@gmail.com>
-References: <xmqqo9yxpaxk.fsf@gitster.mtv.corp.google.com> <0D956B23-E655-4C28-A205-14CCC0A7DEA2@gmail.com> <20170124132749.l3ezupyitvxe4t2l@sigill.intra.peff.net> <alpine.DEB.2.20.1701251800120.3469@virtualbox> <20170125173958.pg546a6w33dirp5k@sigill.intra.peff.net> <xmqq4m0nc8dz.fsf@gitster.mtv.corp.google.com> <20170125183924.6yclcjl4ggcu42yp@sigill.intra.peff.net> <xmqq7f5i92jk.fsf@gitster.mtv.corp.google.com>
-To:     Junio C Hamano <gitster@pobox.com>
-X-Mailer: Apple Mail (2.3124)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=lpqe5lWRMZX3l1BpRKjZTbBOmBa7UDq41PH5joS021M=;
+        b=lAMMJ1XMwdEv4uvURt+jAoVTp7lDylkKr60sCd2ukWWcFoWkhipEDmRbENrh296zIl
+         zYib0TkKnOsyIgB08M/YxJfjyjIYQa3bZLC3trCTMofQ1FEFn4WjUMqm+WAvLF9gpm/l
+         q3cK0MUGrFKUM8PKBJUa/46pCXKakCstfVZVpD80Ob0HXYF8CL/BlaWqRbUkwmXTfz3O
+         MmvICrRrOYW4iUlwnCJL8jODBWiz84dHlqWpi7W/PAvGPUfzdQqyYkecwi8NhezCj/W8
+         +mnRRQlMH5IsvQ5VPAXmRO2oSgEgwimzjx8ei0b9d6thN9d7qGzszu92rSplBfxXB1VR
+         MTmA==
+X-Gm-Message-State: AIkVDXIGtCy+bBAJlug5xpOmJD4gNAt4CBAGi5kg05RVITgsNcErxOpXqonE9kiA3pQlxNPDBFczAyLgfwCGnw==
+X-Received: by 10.202.239.132 with SMTP id n126mr892389oih.186.1485422317073;
+ Thu, 26 Jan 2017 01:18:37 -0800 (PST)
+MIME-Version: 1.0
+Received: by 10.74.158.1 with HTTP; Thu, 26 Jan 2017 01:18:06 -0800 (PST)
+In-Reply-To: <20170125205037.cg3aebh5rsx4zb2l@sigill.intra.peff.net>
+References: <20170121140806.tjs6wad3x4srdv3q@sigill.intra.peff.net>
+ <20170125125054.7422-1-pclouds@gmail.com> <20170125125054.7422-3-pclouds@gmail.com>
+ <20170125205037.cg3aebh5rsx4zb2l@sigill.intra.peff.net>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Thu, 26 Jan 2017 16:18:06 +0700
+Message-ID: <CACsJy8CeUWD9ux3Q-VRhwR4-qbSD69CzH2mmztVH_-cx=31h8w@mail.gmail.com>
+Subject: Re: [PATCH 2/5] revision.c: group ref selection options together
+To:     Jeff King <peff@peff.net>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Jacob Keller <jacob.keller@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Thu, Jan 26, 2017 at 3:50 AM, Jeff King <peff@peff.net> wrote:
+> On Wed, Jan 25, 2017 at 07:50:51PM +0700, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=
+=BB=8Dc Duy wrote:
+>
+>> These options have on thing in common: when specified right after
+>> --exclude, they will de-select refs instead of selecting them by
+>> default.
+>>
+>> This change makes it possible to introduce new options that use these
+>> options in the same way as --exclude. Such an option would just
+>> implement something like handle_refs_pseudo_opt().
+>>
+>> parse_ref_selector_option() is taken out of handle_refs_pseudo_opt() so
+>> that similar functions like handle_refs_pseudo_opt() are forced to
+>> handle all ref selector options, not skipping some by mistake, which may
+>> revert the option back to default behavior (rev selection).
+>>
+>> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.=
+com>
+>> ---
+>>  revision.c | 134 +++++++++++++++++++++++++++++++++++++++++++++---------=
+-------
+>>  1 file changed, 100 insertions(+), 34 deletions(-)
+>
+> Hmm. I see what you're trying to do here, and abstract the repeated
+> bits. But I'm not sure the line-count reflects a real simplification.
+> Everything ends up converted to an enum, and then that enum just expands
+> to similar C code.
 
-> On 25 Jan 2017, at 23:51, Junio C Hamano <gitster@pobox.com> wrote:
-> 
-> Jeff King <peff@peff.net> writes:
-> 
->> I guess the way to dig would be to add a test that looks at the output
->> of "type mv" or something, push it to a Travis-hooked branch, and then
->> wait for the output
-> 
-> Sounds tempting ;-)
+It's not simplification, but hopefully for better maintainability. This
 
-Well, I tried that:
+if (strcmp(arg, "--remotes")) {
+   if (preceded_by_exclide())
+      does_something();
+   else if (preceded_by_decorate())
+      does_another()
+} else if (strcmp(arg, "--branches")) {
+   if (preceded_by_exclide())
+      does_something();
+   else if (preceded_by_decorate())
+      does_another()
+}
 
-mv is /bin/mv
+starts to look ugly especially when the third "preceded_by_" comes
+into picture. Putting all "does_something" in one group and
+"does_another" in another, I think, gives us a better view how ref
+selection is handled for a specific operation like --exclude or
+--decorate-ref.
 
-... and "/bin/mv" is exactly the version that I have on my machine.
+> I kind of expected that clear_ref_exclusion() would just become a more
+> abstract clear_ref_selection(). For now it would clear exclusions, and
+> then later learn to clear the decoration flags.
 
-The difference between Travis and my machine is that I changed the 
-default shell to ZSH with a few plugins [1]. If I run the test with 
-plain BASH on my Mac then I can reproduce the test failure. Therefore,
-we might want to adjust the commit message if anyone else can reproduce
-the problem on a Mac. 
-
-I can even reproduce the failure if I run the test with plain ZSH. 
-However, I can't find a plugin that defines an alias for "mv". Puzzled...
-
-- Lars
-
-[1] https://github.com/robbyrussell/oh-my-zsh
+It may go that way, depending on how we handle these options for
+decorate-reflog. The current load_ref_decorations() is not really
+suited for fine-grained ref selection yet.
+--
+Duy
