@@ -2,77 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 17F811F6DC
-	for <e@80x24.org>; Thu, 26 Jan 2017 05:05:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4692C1F6DC
+	for <e@80x24.org>; Thu, 26 Jan 2017 05:21:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752756AbdAZFF0 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 26 Jan 2017 00:05:26 -0500
-Received: from mail-lf0-f53.google.com ([209.85.215.53]:33549 "EHLO
-        mail-lf0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752723AbdAZFFZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 Jan 2017 00:05:25 -0500
-Received: by mail-lf0-f53.google.com with SMTP id x1so53275830lff.0
-        for <git@vger.kernel.org>; Wed, 25 Jan 2017 21:05:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=X2KKhsXTtpYnZreUldn9/niHooq+c/qnusuc0CY4L14=;
-        b=AOECOMBu0VDtZq5jxcbE96wjzK0TaD4amBJbtti4795+F8Qyq9NxAAksLvLS+ls+3q
-         FVsREiV6/+YeAFSNb6BoiQ6Wf8Ypw/Q6g4s73owDfD3DFcNt+yMZvzFf4KT+9GQ/JGmt
-         9SniiRPUx5SMQPA5ZBFyJ0fzuBD+fq7QI2XaEnm6cyODKs6j1JKzf0OJwVLTMzwWkM7Z
-         4mNCuejwRGY2Pb7dSC+xVg5ayj6X82z2rBB7Eb6flBWWrYJPQ1RVIsLB0gBWdGtm2bGF
-         qumo63mhJitn8kw0IDAP0utXptQBSU/tYict3qu5T9IONDXoj0+5n5UcYm5qiVztl0kV
-         8Wyw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=X2KKhsXTtpYnZreUldn9/niHooq+c/qnusuc0CY4L14=;
-        b=raR6wDtv3lbRTcaBqMexODBstP9ORGYuKRKiqv6t4mDHtlge2bJMslseghnpUOLimA
-         JkDIxQNJdfZ2npZiQmqXjYZT89b6ZkcQ/NTU5S6SV96f1XAETIcw5oObri5Yolbgi3B0
-         pu8czEtetF3C/kUGLuj3EaeWpGgKlAgNp6ZPVwUCnlOAz+zvg3AL0lFFnj0hi4b6qHdg
-         FQjLhYk+zOeyFFxx9OcuI1wiQMr3kAJ55PhRAVRrRCuI6Lv+alumFa+dMfUs/5ZXAg7M
-         lPwBxQmIb9TV21NpOWvikgzM5L2soEH6/1Y5uMkBFFVVAK/ciVWFbvE18aBgBKViJ2bz
-         qDQg==
-X-Gm-Message-State: AIkVDXK5tkSNjkMU+T46DaSZj5oz3DWYs4I9AKpGeeTlHTsUU31eCSnA01AcKGrBVlYrtGhB+4wgC7JzEg64wA==
-X-Received: by 10.46.1.153 with SMTP id f25mr231604lji.47.1485407123512; Wed,
- 25 Jan 2017 21:05:23 -0800 (PST)
+        id S1752767AbdAZFVG (ORCPT <rfc822;e@80x24.org>);
+        Thu, 26 Jan 2017 00:21:06 -0500
+Received: from cloud.peff.net ([104.130.231.41]:45120 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752734AbdAZFVG (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 Jan 2017 00:21:06 -0500
+Received: (qmail 3053 invoked by uid 109); 26 Jan 2017 05:21:06 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 26 Jan 2017 05:21:06 +0000
+Received: (qmail 20321 invoked by uid 111); 26 Jan 2017 05:21:05 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 26 Jan 2017 00:21:05 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 26 Jan 2017 00:21:03 -0500
+Date:   Thu, 26 Jan 2017 00:21:03 -0500
+From:   Jeff King <peff@peff.net>
+To:     Mike Hommey <mh@glandium.org>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: [PATCH] gpg-interface: Add some output from gpg when it errors
+ out.
+Message-ID: <20170126052103.mpudt63l7dynf3h6@sigill.intra.peff.net>
+References: <20170125030434.26448-1-mh@glandium.org>
+ <xmqqtw8m7ncp.fsf@gitster.mtv.corp.google.com>
+ <20170125235410.byxwmo7o7zdszzot@glandium.org>
 MIME-Version: 1.0
-Received: by 10.25.145.14 with HTTP; Wed, 25 Jan 2017 21:05:02 -0800 (PST)
-In-Reply-To: <xmqqd1fa7dqf.fsf@gitster.mtv.corp.google.com>
-References: <CAE1pOi2YZayEfKxxh3gsTds1mQ9L1E9AW=wPnmW=Dg=-EMj=tw@mail.gmail.com>
- <CA+P7+xrupLuYAj7tn_1EaUiN6eaCmtgX-_d4mnByDq95cuqiWQ@mail.gmail.com>
- <CAE1pOi3eh7ao3NocV=PRFDby8y5ttjFR=-_VB0FoJv4MpjExaA@mail.gmail.com>
- <CA+P7+xo9WBwHjAXeUTn4bh=F6hvw1gA-79h-GmwQoeRpeLj2jQ@mail.gmail.com>
- <xmqqh94m7leb.fsf@gitster.mtv.corp.google.com> <CAE1pOi0CgfxQTygg_i3dc_-_Lb8qgOOk_0hg+goJvm7PyLZseg@mail.gmail.com>
- <CA+P7+xocc==-8ad-OVTahMDABA0-spDPEw05JTHopfO7Ovj2RQ@mail.gmail.com> <xmqqd1fa7dqf.fsf@gitster.mtv.corp.google.com>
-From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Wed, 25 Jan 2017 21:05:02 -0800
-Message-ID: <CA+P7+xqnaxWY+3Ve77ijFx4g-xLUh57c2+fadyHj5_iEuKtdUg@mail.gmail.com>
-Subject: Re: Force Confirmation for Dropping Changed Lines
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Hilco Wijbenga <hilco.wijbenga@gmail.com>,
-        Git Users <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20170125235410.byxwmo7o7zdszzot@glandium.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jan 25, 2017 at 6:32 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Where did you get that "unset" from?  If that is this paragraph in
-> Documentation/gitattributes.txt:
->
+On Thu, Jan 26, 2017 at 08:54:10AM +0900, Mike Hommey wrote:
 
-Ok so that whole section of documentation is very confusing to me.
-Maybe it could be improved for more readability. I'll see if I can't
-help clear up some of my confusion.
+> > Implementation-wise, I'd be happier if we do not add any new
+> > callsites of strbuf_split(), which is a horrible interface.  But
+> > that is a minor detail.
+> 
+> What would you suggest otherwise?
 
-Thanks,
-Jake
+Try string_list_split() (or its in_place() variant, since it is probably
+OK to hack up the string for your use case). Like this:
+
+diff --git a/gpg-interface.c b/gpg-interface.c
+index 2768bb307..051bb7d3e 100644
+--- a/gpg-interface.c
++++ b/gpg-interface.c
+@@ -158,14 +158,16 @@ static int pipe_gpg_command(struct child_process *cmd,
+ 	/* Print out any line that doesn't start with [GNUPG:] if the gpg
+ 	 * command failed. */
+ 	if (ret) {
+-		struct strbuf **err_lines = strbuf_split(err, '\n');
+-		for (struct strbuf **line = err_lines; *line; line++) {
+-			if (memcmp((*line)->buf, "[GNUPG:]", 8)) {
+-				strbuf_rtrim(*line);
+-				fprintf(stderr, "%s\n", (*line)->buf);
+-			}
++		struct string_list lines = STRING_LIST_INIT_NODUP;
++		int i;
++
++		string_list_split_in_place(&lines, err->buf, '\n', 0);
++		for (i = 0; i < lines.nr; i++) {
++			const char *line = lines.items[i].string;
++			if (!starts_with(line, "[GNUPG:]"))
++				fprintf(stderr, "%s\n", line);
+ 		}
+-		strbuf_list_free(err_lines);
++		string_list_clear(&lines, 0);
+ 	}
+ 	return ret;
+ }
+
+Note that I also replaced the memcmp with starts_with(). That avoids the
+magic number "8". I also suspect your original can read off the end of
+the buffer when the line is shorter than 8 characters (e.g., if memcmp
+does 64-bit loads).
+
+-Peff
