@@ -2,83 +2,156 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.4 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 12C671F70F
-	for <e@80x24.org>; Thu, 26 Jan 2017 13:49:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DAEFA1F70F
+	for <e@80x24.org>; Thu, 26 Jan 2017 14:06:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752171AbdAZNtT (ORCPT <rfc822;e@80x24.org>);
-        Thu, 26 Jan 2017 08:49:19 -0500
-Received: from mout.gmx.net ([212.227.15.19]:49336 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751670AbdAZNtS (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 Jan 2017 08:49:18 -0500
-Received: from virtualbox ([37.24.141.236]) by mail.gmx.com (mrgmx001
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MWkep-1czUUO3ryt-00XqbO; Thu, 26
- Jan 2017 14:49:12 +0100
-Date:   Thu, 26 Jan 2017 14:49:10 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
+        id S1752419AbdAZOGs convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Thu, 26 Jan 2017 09:06:48 -0500
+Received: from zimbra-vnc.tngtech.com ([83.144.240.98]:59977 "EHLO
+        proxy.tng.vnc.biz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752322AbdAZOGq (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 Jan 2017 09:06:46 -0500
+Received: from localhost (localhost [127.0.0.1])
+        by proxy.tng.vnc.biz (Postfix) with ESMTP id 053391E2FA7;
+        Thu, 26 Jan 2017 15:06:42 +0100 (CET)
+Received: from proxy.tng.vnc.biz ([127.0.0.1])
+        by localhost (proxy.tng.vnc.biz [127.0.0.1]) (amavisd-new, port 10032)
+        with ESMTP id i9hW6KtBZNRm; Thu, 26 Jan 2017 15:06:41 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+        by proxy.tng.vnc.biz (Postfix) with ESMTP id 873EF1E2FAF;
+        Thu, 26 Jan 2017 15:06:41 +0100 (CET)
+X-Virus-Scanned: amavisd-new at 
+Received: from proxy.tng.vnc.biz ([127.0.0.1])
+        by localhost (proxy.tng.vnc.biz [127.0.0.1]) (amavisd-new, port 10026)
+        with ESMTP id lbMAf5gQVjor; Thu, 26 Jan 2017 15:06:41 +0100 (CET)
+Received: from [192.168.178.64] (46.128.140.114.dynamic.cablesurf.de [46.128.140.114])
+        by proxy.tng.vnc.biz (Postfix) with ESMTPSA id 2466F1E2FA7;
+        Thu, 26 Jan 2017 15:06:41 +0100 (CET)
+Subject: Re: [PATCH] refs: add option core.logAllRefUpdates = always
 To:     Jeff King <peff@peff.net>
-cc:     =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
-        Junio C Hamano <gitster@pobox.com>,
-        Git List <git@vger.kernel.org>
-Subject: Re: [DEMO][PATCH v2 6/5] compat: add a qsort_s() implementation
- based on GNU's qsort_r(1)
-In-Reply-To: <20170125185153.obqwxiniyz2omxsi@sigill.intra.peff.net>
-Message-ID: <alpine.DEB.2.20.1701261446540.3469@virtualbox>
-References: <67ac53cd-3fc0-8bd0-30f4-129281c3090f@web.de> <9f8b564d-ec9f-abc9-77f6-aa84c6e78b7a@web.de> <xmqq60l5sihz.fsf@gitster.mtv.corp.google.com> <4e416167-2a33-0943-5738-79b4da5f2c11@web.de> <20170124203949.46lbmiyj26xx4hrk@sigill.intra.peff.net>
- <f41e5053-ee24-060f-0fb9-b257b3ba35a0@web.de> <20170125185153.obqwxiniyz2omxsi@sigill.intra.peff.net>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+References: <20170125213328.meehgxvzuajjgvag@sigill.intra.peff.net>
+ <20170126011654.21729-1-cornelius.weig@tngtech.com>
+ <20170126011654.21729-2-cornelius.weig@tngtech.com>
+ <20170126033547.7bszipvkpi2jb4ad@sigill.intra.peff.net>
+Cc:     gitster@pobox.com, git@vger.kernel.org, novalis@novalis.org,
+        pclouds@gmail.com
+From:   Cornelius Weig <cornelius.weig@tngtech.com>
+Message-ID: <4faf836a-40b6-da9a-877a-3b2ce7c863df@tngtech.com>
+Date:   Thu, 26 Jan 2017 15:06:40 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.6.0
 MIME-Version: 1.0
-Content-Type: multipart/mixed; BOUNDARY="8323329-1958089053-1485438551=:3469"
-X-Provags-ID: V03:K0:gaPAl1kdSZGUVZDyBK52anK5nARaVeL8Cirl1ieMN2qxTLaUu+y
- 4W580PV5Zd/niedeFKCA1412iXAdUJj6GoDrG7mvLN+ooV3PJeeOK3Si+AqBLP+x9bbw7WP
- 2GQGtMa60hZSVJKmzcg7GEPvlwurvDEaQCd+MAlSRV6UtsBhTybgJJ1tstArALMmwkn7FWH
- l18O5FX+rUVyeJ52CkHKA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:i57quyCMosE=:17vPfsFy4lQaUjumfatT87
- DGYJ5z+D3gmpXqfSzdOt0sjY6rnK9dTzxqG8ZhAOc23k6y2mHbXmERqeqPEwhagJVSp+WEEuS
- 5WFPkVwM18e8cUlTtczy7svTDDXsebTqADDMK4DnvaygtfAoQ5MleY7A3PonzQou2kjT9mEfI
- XFqiZRTG4Dl1hdU65X+Mvl8XoSnYfD3/r9ZBU+gkjMEDvFCbWe2SpyfaYbBkJxoLiusO+GCYQ
- puWxiOM4PCgSsqyg69yJ3q3cdwb0BerQ8PMagm/t9FA2SzPj/nNkbx+Wd8nRiLwNXdTJoSPYI
- i+md0oEH26C+uWW0ysPyI0UHwVBgc9XVY2KAqtQWDW7cr3Fb0Lql7MPLLNOznsfDAjbx0lytS
- gAJDPD+2RVogJNBLtiCLGrlLPvG8qvQmGCh2yCiVREB2KrPsSbDFnMSBzVIyGVLqVkE3HSIIU
- 0QRORupw5z2Q3oK/L5CuLgUlxUCEAyUqRE8fRYmq/NW//B86WO6xYtFkVPDrIwtDGGvuWRfTw
- GNPaVyA97bucYi38hRhS4y+Q+4lyogcfb3TIW4ySllomjx74etZqZr1wyeWO3JBHr7yUEMWPz
- AH/fLF6FKfgaTGd6h3zmhW6cpLpq+TF2XPpecGH9fOwhESbwZ7UswNbipbDc/lMOB8Hse1PXq
- VxOpWJiH3lCx3EY1o6S1Yev5dan/zrtsq1wqn/IK5CBf20H3aDfkHa7Hz481D+o1mPadumvbR
- GTIasq3NGMtr3u6svL1rsrQvNEyCczaaG2LotDfbynlZVSYtjPKCzWXyQcTMdfb+B3rNopuKr
- xJs5lQQ
+In-Reply-To: <20170126033547.7bszipvkpi2jb4ad@sigill.intra.peff.net>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8BIT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Hi Peff,
 
---8323329-1958089053-1485438551=:3469
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+ thanks for your thoughts.
 
-Hi,
+> I tried to read this patch with fresh eyes. But given the history, you
+> may take my review with a grain of salt. :)
 
-On Wed, 25 Jan 2017, Jeff King wrote:
+Does it mean another reviewer is needed?
 
-> On Wed, Jan 25, 2017 at 07:43:01PM +0100, Ren=C3=A9 Scharfe wrote:
->=20
-> > If we find such cases then we'd better fix them for all platforms, e.g.=
- by
-> > importing timsort, no?
->=20
-> Yes, as long as they are strict improvements.
+> I don't think my original had tests for this, but it might be worth
+> adding a test for this last bit (i.e., that an update of ORIG_HEAD does
+> not write a reflog when logallrefupdates is set to "always").
 
-I think in many cases, we may be better off by replacing the use of a
-string-list for lookups by hashmaps for the same purpose.
+Good point. I blindly copied your commit message without thinking too
+much about it.
 
-Ciao,
-Dscho
---8323329-1958089053-1485438551=:3469--
+> I guess the backtick fixups came from my original. It might be easier to
+> see the change if they were pulled into their own patch, but it's
+> probably not that big a deal.
+
+If it's best practice to break out such changes, I'll revise it.
+
+>> @@ -2835,8 +2835,8 @@ static int log_ref_write_1(const char *refname, const unsigned char *old_sha1,
+>>  {
+>>  	int logfd, result, oflags = O_APPEND | O_WRONLY;
+>>  
+>> -	if (log_all_ref_updates < 0)
+>> -		log_all_ref_updates = !is_bare_repository();
+>> +	if (log_all_ref_updates == LOG_REFS_UNSET)
+>> +		log_all_ref_updates = is_bare_repository() ? LOG_REFS_NONE : LOG_REFS_NORMAL;
+> 
+> This hunk is new, I think. The enum values are set in such a way that
+> the original code would have continued to work, but I think using the
+> symbolic names is an improvement.
+
+Yes it's new.
+
+> I assume you grepped for log_all_ref_updates to find this. I see only
+> one spot that now doesn't use the symbolic names. In builtin/checkout.c,
+> update_refs_for_switch() checks:
+> 
+>   if (opts->new_branch_log && !log_all_ref_updates)
+> 
+> That looks buggy, as it would treat LOG_REFS_NORMAL and LOG_REFS_UNSET
+> the same, and I do not see us resolving the UNSET case to a true/false
+> value. But I don't think the bug is new in your patch; the default value
+> was "-1" already.
+>
+> I doubt it can be triggered in practice, because either:
+> 
+>   - the config value is set in the config file, and we pick up that
+>     value, whether it's "true" or "false"
+> 
+>   - it's unset, in which case our default would be to enable reflogs in
+>     a non-bare repo. And since git-checkout would refuse to run in a
+>     bare repo, we must be non-bare, and thus enabling reflogs does the
+>     right thing.
+
+That far I can follow.
+
+> But it works quite by accident. I wonder if we should this
+> "is_bare_repository" check into a function that can be called instead of
+> accessing log_all_ref_updates() directly.
+
+Are you saying that we should move the `!log_all_ref_updates` check into
+its own function where we should also check `is_bare_repository`? I
+don't see that this would win much, because as you said: checkouts in a
+bare repo are forbidden anyway.
+
+Other than that, I guess it should better read `log_all_ref_update !=
+LOG_REFS_NONE` instead of `!log_all_ref_updates`.
+
+
+>> +test_expect_success 'update-ref does not create reflog with --no-create-reflog if core.logAllRefUpdates=always' '
+> 
+> This test title is _really_ long, and will wrap in the output on
+> reasonable-sized terminals. Maybe '--no-create-reflog overrides
+> core.logAllRefUpdates=always' would be shorter?
+
+Yes, I agree.
+
+>> +test_expect_success 'stdin does not create reflog when core.logAllRefUpdates=true' '
+> 
+> I don't mind these extra stdin tests, but IMHO they are just redundant.
+> The "--stdin --create-reflog" one makes sure the option is propagated
+> down via the --stdin machinery. But we know the config option is handled
+> at a low level anyway.
+> 
+> I guess it depends on how black-box we want the testing to be. It just
+> seems unlikely for a regression to be found here and not in the tests
+> above.
+
+Since these other stdin tests were around, I added this variant. But
+you're right: this test breaks along with the other and doesn't add add
+more safety. I'll remove it.
+
+However, I realized that I have not written tests about ref updates in a
+bare repository. Do you think it's worthwile?
+
+Cheers,
+  Cornelius
+
