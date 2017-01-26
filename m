@@ -2,106 +2,136 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 888CD1F437
-	for <e@80x24.org>; Thu, 26 Jan 2017 10:49:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 03FB01F437
+	for <e@80x24.org>; Thu, 26 Jan 2017 11:16:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753437AbdAZKtK (ORCPT <rfc822;e@80x24.org>);
-        Thu, 26 Jan 2017 05:49:10 -0500
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:32997 "EHLO
-        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753201AbdAZKtI (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 Jan 2017 05:49:08 -0500
-Received: by mail-wm0-f67.google.com with SMTP id r144so49531198wme.0
-        for <git@vger.kernel.org>; Thu, 26 Jan 2017 02:49:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=EoTsM9dNEvr5hKIYwBSl8uS6ZbOeJEUt02zyH2x3Sb0=;
-        b=LySlmUjd/7dc7jXgRBXGB+UwGUBo6U+PWUpeCIGpD/ozKtONTwrmUtqxmgyVkL853Q
-         QS3iMUsp8EwPDYNQrR/eF7Jonfe4ikp/TuhbKynNB/1tFwMdXi7AUdLmYwMyWGEuZUjk
-         BZDSRCtz+I6nMswWOy4zyNpPetdZTuZGaWBMPzPiLjP5/hDZQhUiE1OAfYcGbHkDKehH
-         cf/Vd0THtvJ5PzvlDnSo8HpdJVzkypMsUh8io2vG1sKbLs33xZWEGQXVpiRhJTM1Kn2L
-         jmx1FtslPU/5mt8KYr1BrblNLmKt9UdYQHmGwxuriEbZKm5tCUYwUUhYI7xTjkuJaGzz
-         a0AQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=EoTsM9dNEvr5hKIYwBSl8uS6ZbOeJEUt02zyH2x3Sb0=;
-        b=jLOgwnd0j+ZN3pcotRyuBpIme88dMSJ0/XMZQ3cynJ8//GVOCREBgx/UMeXyUYa42d
-         3mddnK/mxZNg6ct3w7+lA2wcIvx2d5ziCmlWOJcXjxqBB9XuZUpKGzV7e9lj0lgVu0LU
-         sW7glZEa4m62+9Tjp9HI77hFoDVRw2bWoZfg8JhJpJn1ZLLIp8mrs7vTLcEjLPu0/oU9
-         75m/OsQPyrvj2eYWxl3+wb2ju3Yeo7UjNBrFWvzD2p8ynpkMPO8+zqPWnLLs+Z7rp8yC
-         H0EcKvjQwbY2NEvQaYURktTHN69mbZpyeBcSTBmtCwEFiqVA27ZxAJOFr5WFVrYBb7N/
-         Rebw==
-X-Gm-Message-State: AIkVDXL44fKpxVP5JT8s0Yn4TjXmeyQxxJkQDOX5/8mZpf56cbiJvHBlKgXB9h8cta7STw==
-X-Received: by 10.28.163.3 with SMTP id m3mr2236751wme.85.1485427747334;
-        Thu, 26 Jan 2017 02:49:07 -0800 (PST)
-Received: from [10.146.248.54] ([62.159.156.210])
-        by smtp.gmail.com with ESMTPSA id w16sm17045133wmd.4.2017.01.26.02.49.05
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 26 Jan 2017 02:49:06 -0800 (PST)
-Content-Type: text/plain; charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-Subject: Re: What's cooking in git.git (Jan 2017, #04; Mon, 23)
-From:   Lars Schneider <larsxschneider@gmail.com>
-In-Reply-To: <D9F0976B-9F78-44BE-B9DD-CAB6506FA3A9@gmail.com>
-Date:   Thu, 26 Jan 2017 10:48:30 +0100
-Cc:     Jeff King <peff@peff.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        git <git@vger.kernel.org>
-Content-Transfer-Encoding: 7bit
-Message-Id: <8141FBB4-ACD0-42F5-9B5A-DA8DF1693972@gmail.com>
-References: <xmqqo9yxpaxk.fsf@gitster.mtv.corp.google.com> <0D956B23-E655-4C28-A205-14CCC0A7DEA2@gmail.com> <20170124132749.l3ezupyitvxe4t2l@sigill.intra.peff.net> <alpine.DEB.2.20.1701251800120.3469@virtualbox> <20170125173958.pg546a6w33dirp5k@sigill.intra.peff.net> <xmqq4m0nc8dz.fsf@gitster.mtv.corp.google.com> <20170125183924.6yclcjl4ggcu42yp@sigill.intra.peff.net> <xmqq7f5i92jk.fsf@gitster.mtv.corp.google.com> <D9F0976B-9F78-44BE-B9DD-CAB6506FA3A9@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-X-Mailer: Apple Mail (2.3124)
+        id S1752158AbdAZLQe (ORCPT <rfc822;e@80x24.org>);
+        Thu, 26 Jan 2017 06:16:34 -0500
+Received: from mout.gmx.net ([212.227.17.21]:61872 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752099AbdAZLQd (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 Jan 2017 06:16:33 -0500
+Received: from virtualbox ([37.24.141.236]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MZ7bs-1cn8QC2ea4-00KvcL; Thu, 26
+ Jan 2017 12:16:12 +0100
+Date:   Thu, 26 Jan 2017 12:16:10 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Jeff King <peff@peff.net>
+cc:     Junio C Hamano <gitster@pobox.com>,
+        David Aguilar <davvid@gmail.com>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        GIT Mailing-list <git@vger.kernel.org>
+Subject: Re: Fixing the warning about warning(""); was: Re: [PATCH] difftool.c:
+ mark a file-local symbol with static
+In-Reply-To: <20170125183542.pe5qolexqqx6jhsi@sigill.intra.peff.net>
+Message-ID: <alpine.DEB.2.20.1701261213060.3469@virtualbox>
+References: <xmqqinr4bkf4.fsf@gitster.mtv.corp.google.com> <59da5383-16a0-b327-75a8-b4c4ad7bd479@ramsayjones.plus.com> <20161201040234.3rnuttitneweedn5@sigill.intra.peff.net> <xmqq60n3bjel.fsf@gitster.mtv.corp.google.com> <20161201185056.eso5rhec7izlbywa@sigill.intra.peff.net>
+ <20170122052608.tpr5pihfgafhoynj@gmail.com> <20170124142346.u3d7l6772mtkgpcf@sigill.intra.peff.net> <xmqqlgu0ceia.fsf@gitster.mtv.corp.google.com> <20170124230500.h3fasbvutjkkke5h@sigill.intra.peff.net> <alpine.DEB.2.20.1701251135090.3469@virtualbox>
+ <20170125183542.pe5qolexqqx6jhsi@sigill.intra.peff.net>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:lnxU++i2aNFSeorSXlk6owxDo+C2t/n95aYLr9FOQ3s1asTQrrN
+ J9ICHANtEgoQy7IeqWv0ESEI4/kG9d2J0h696zUD5a4OO0lVsUStZPQdz3RN/gtYg6ldnTS
+ y7LNrvPOPFJufcYu/Jr5PcPv6KCGKb37x3tFkA5f7NquiHIJzoZkHkQWjRE0YBiliHdb296
+ H6WsE59aXl1cQ75hIml3g==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:1xzmHIo6W7M=:NEtC5jQ3tymL+Ww13Kob2f
+ 9gsQj1fSK1vKNwLUGY04xjKkxwW6Pov2iDqIUw9jdFsDv7BQHNqqdGIKZ3EKxHW5d1BAyRbho
+ bOzxpbj0y/jkdHV46XiR0077Tw9YvxRcG2+t+womSxUgdNPvqDt+tj31CzhKPk6TdMafMPkfp
+ u0OjgsMmjR5WXAUG9B6UqlP98oVZaUqdCtc09qUpAKfvYzrljxdErFatl+u0jxxwdman7VVED
+ iSm5KlnalDxai9D4V+HSTeqsoKbpsFMqGn2FDswCyLFIetjU14SKnLt/t67+SGfj7UMPzAcx/
+ REtTRuKPw7JauzWPzTzEHJXU/mtHSoj3yAOSUEoFmszs6iL9w8JrByGESEDrIk/sIVnhoLyPD
+ nGhZDeCCrt9Mmys0qhjLI2DZArw8MWdxM+0XAkiz0KxE3KiFV/MgSAhO6NT2zy6eTGquid9ht
+ C1xcAwaIy6JhzDRN/8j/GITyi7vQGvFim4Rm7CTaoYvlm6WNOTBj9217Ho1Z6Q1RKjwDHNVSK
+ iVHz5ToNwk2YaQTHdFtHx28JDxnOcfXKZCCFRIMic40Keujk3hTrAO5cH8BvRr9fGJYCllIe1
+ zewz0H0TDO5BKOsCv4y5UfqOaMqiSDqVBiaQVV41bBnwljNQr8BLrGzZoMO82SJMysoeScjRF
+ +N+7paZ9Eol3FbA1VsMl+nvPEreuZ/O7EnS17pemI7HFQwwqvEfQgFBszjhBRmKJWG1VgD6HG
+ wrXtR398XE3PwWlXC1xEcDhBehxKZU01HzyqJhdMIfzjDrXwSU/gc9OvslRK70/R3fOl+Ye9t
+ eHR9If08zo8OU/1FdOOgcaCx5sKtMxZ51RHCcod9o7r1B2po+5X4d2Ui/iIn62DW7ejrKuZxA
+ MMOyKGSA7emRgqSkcLzXOLW4dkK40OdSIg7KvogAtpCk/XEXjTOze0jTBp3aiwyq5ChQv5CyF
+ 88dTlI3nruCNOAZ5vlLKs2NqRIebntGEdIEvZwnYG38PTl7DXx53PXyGKeC3Br2XqsWiaWNJA
+ zp6GVH4mEH1Ac7b8mifdJFdGo9xmCn4JiD15Wrj9heQ1/RlqULVGUIIMVHIHL9wGlA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Peff,
 
-> On 26 Jan 2017, at 10:14, Lars Schneider <larsxschneider@gmail.com> wrote:
-> 
-> 
->> On 25 Jan 2017, at 23:51, Junio C Hamano <gitster@pobox.com> wrote:
->> 
->> Jeff King <peff@peff.net> writes:
->> 
->>> I guess the way to dig would be to add a test that looks at the output
->>> of "type mv" or something, push it to a Travis-hooked branch, and then
->>> wait for the output
->> 
->> Sounds tempting ;-)
-> 
-> Well, I tried that:
-> 
-> mv is /bin/mv
-> 
-> ... and "/bin/mv" is exactly the version that I have on my machine.
-> 
-> The difference between Travis and my machine is that I changed the 
-> default shell to ZSH with a few plugins [1]. If I run the test with 
-> plain BASH on my Mac then I can reproduce the test failure. Therefore,
-> we might want to adjust the commit message if anyone else can reproduce
-> the problem on a Mac. 
-> 
-> I can even reproduce the failure if I run the test with plain ZSH. 
-> However, I can't find a plugin that defines an alias for "mv". Puzzled...
-> 
-> - Lars
-> 
-> [1] https://github.com/robbyrussell/oh-my-zsh
+On Wed, 25 Jan 2017, Jeff King wrote:
 
-Oh. I must have made a mistake on my very first test run. I can reproduce
-the failure with ZSH and my plugins... looks like it's a Mac OS problem
-and no TravisCI only problem after all. 
+> On Wed, Jan 25, 2017 at 11:36:50AM +0100, Johannes Schindelin wrote:
+> 
+> > > Gross, but at least it's self documenting. :)
+> > > 
+> > > I guess a less horrible version of that is:
+> > > 
+> > >   static inline warning_blank_line(void)
+> > >   {
+> > > 	warning("%s", "");
+> > >   }
+> > > 
+> > > We'd potentially need a matching one for error(), but at last it avoids
+> > > macro trickery.
+> > 
+> > I fail to see how this function, or this definition, makes the code better
+> > than simply calling `warning("%s", "");` and be done with it.
+> 
+> The only advantage is that it is self-documenting, so somebody does not
+> come through later and convert ("%s", "") back to ("").
 
-Sorry for the noise/confusion,
-Lars
+We could switch the DEVELOPER option on by default, when gcc or clang is
+used at least. Otherwise the DEVELOPER option (which I like very much)
+would not be able to live up to its full potential.
+
+Another thing we should consider: paying more attention to Continuous
+Integration. At the moment, it happens quite frequently that `pu` builds
+and passes the test suite fine on Linux, but neither on Windows nor on
+MacOSX and it takes days to get the regressions fixed.
+
+I vote for this patch:
+
+> -- >8 --
+> Subject: [PATCH] difftool: hack around -Wzero-length-format warning
+> 
+> Building with "gcc -Wall" will complain that the format in:
+> 
+>   warning("")
+> 
+> is empty. Which is true, but the warning is over-eager. We
+> are calling the function for its side effect of printing
+> "warning:", even with an empty string.
+> 
+> Our DEVELOPER Makefile knob disables the warning, but not
+> everybody uses it. Let's silence the warning in the code so
+> that nobody reports it or tries to "fix" it.
+> 
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+>  builtin/difftool.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/builtin/difftool.c b/builtin/difftool.c
+> index 42ad9e804..b5e85ab07 100644
+> --- a/builtin/difftool.c
+> +++ b/builtin/difftool.c
+> @@ -567,7 +567,7 @@ static int run_dir_diff(const char *extcmd, int symlinks, const char *prefix,
+>  				warning(_("both files modified: '%s' and '%s'."),
+>  					wtdir.buf, rdir.buf);
+>  				warning(_("working tree file has been left."));
+> -				warning("");
+> +				warning("%s", "");
+>  				err = 1;
+>  			} else if (unlink(wtdir.buf) ||
+>  				   copy_file(wtdir.buf, rdir.buf, st.st_mode))
+> -- 
+> 2.11.0.840.gd37c5973a
+
+Ciao,
+Dscho
