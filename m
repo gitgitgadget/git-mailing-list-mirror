@@ -7,61 +7,73 @@ X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2F23D1F70F
-	for <e@80x24.org>; Thu, 26 Jan 2017 12:08:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B7D3B1F70F
+	for <e@80x24.org>; Thu, 26 Jan 2017 12:18:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753791AbdAZMIQ (ORCPT <rfc822;e@80x24.org>);
-        Thu, 26 Jan 2017 07:08:16 -0500
-Received: from mout.gmx.net ([212.227.17.20]:61388 "EHLO mout.gmx.net"
+        id S1752008AbdAZMSJ (ORCPT <rfc822;e@80x24.org>);
+        Thu, 26 Jan 2017 07:18:09 -0500
+Received: from mout.gmx.net ([212.227.15.15]:54668 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753096AbdAZMIM (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 Jan 2017 07:08:12 -0500
-Received: from virtualbox ([37.24.141.236]) by mail.gmx.com (mrgmx101
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MfiFU-1ctlV726gW-00NCCo; Thu, 26
- Jan 2017 13:07:53 +0100
-Date:   Thu, 26 Jan 2017 13:07:51 +0100 (CET)
+        id S1751815AbdAZMSI (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 Jan 2017 07:18:08 -0500
+Received: from virtualbox ([37.24.141.236]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MVui8-1czECN0eK0-00X6mK; Thu, 26
+ Jan 2017 13:17:59 +0100
+Date:   Thu, 26 Jan 2017 13:17:57 +0100 (CET)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
-To:     Jeff King <peff@peff.net>
-cc:     git@vger.kernel.org
-Subject: Re: [PATCH 2/2] fsck: lazily load types under --connectivity-only
-In-Reply-To: <20170126041206.5qfv7r7czbwfqvaa@sigill.intra.peff.net>
-Message-ID: <alpine.DEB.2.20.1701261307261.3469@virtualbox>
-References: <20170126041025.hqg3znwew7jxgxxg@sigill.intra.peff.net> <20170126041206.5qfv7r7czbwfqvaa@sigill.intra.peff.net>
+To:     Eric Wong <e@80x24.org>
+cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Retire the `relink` command
+In-Reply-To: <20170125232051.GA25810@whir>
+Message-ID: <alpine.DEB.2.20.1701261317250.3469@virtualbox>
+References: <10319c47ff3f7222c3a601827ebd9398861d509d.1485363528.git.johannes.schindelin@gmx.de> <20170125232051.GA25810@whir>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:YvL789VxJEpMtcGBz1v+maCd3A4k2G8sRIQZ6KmLxrQ1DS5nj9k
- gnwV6ai8N5Cpz1E3CPinJRNYOh5grLAUyOuX4pFiN0vF4ppfUggbOlrayRWN2iMRFmGVKRu
- k4Y6M2BKHJKsLLmx52eHDiGxt1KiNMAHZG6IyYyopg08ou5pkosB/3FZLWdovaeeWgvMryu
- F77j9jLI+zXU11NUVgziw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:ekUijC3Sawk=:wbrK39IRBMW2kkn6jo7CE6
- co3HANpx42nHSOscyo9DQrzVIGjgxBkCLxFftm3WgQlolpXtF32FB9JMXuc/WExjBqgD/k9vy
- nV+4qV1PNJwSKVH1D+bC+T6yTR+AeRSGLcLJ4RRqsFlY6pOpLBkEpl5BCWl/kppyolha8Zvfm
- TiQqb7UV8d2emD5GK0RJy1vk5dSDiSOIJI8BtvQhyW55RfpZJwNjZq+PLMANhaDgAOUfJzYh3
- QX/N7tHNYWjk/+/6CxwcujEK7zjlgRBoZFBlNTtNlm/hsqKJffWWVxDAjZWhH0EOfFiKNQqJA
- KMqzxVGTNujOSPZXvG1GQGMkTkUAnt54ARDCMxeMN/Hn8iA+uMop2aIknz62Bpyk6/sxbR+7C
- 44tg/8IQCvmo7n5QTIhww7KL2bYwzI6rd+5L7oW8q4JckbvetNAJEkgSoWC+Vkgke7/EruEgs
- 0CvJaBC6g/EnW4ufNjenm4g5qPqIOcLalJYninYK3I5nSrHW/YZsXEsnZuwhu8aGZnHMU6nTv
- WuxWl2j45bYlfnwEo3hkoOj3KXEwkniiTL4BEyRsVKYDub4RP6y9+6ogxZ82MVJ6/8DQsY9rT
- AblDg+02wvpou1R5imnkcQdDrCCqzQE22JeTKfAp8LPpGoo50n2NSurqfHFY+4/EZf6/CXzoq
- n0Awd1cNPjrxvyjDs518LkT76X+d5SLZa1kRU66PQiF8ZZ3MQrYXuQWAjU5dghEqpDmnC11Vi
- absDYr0IEYDiN7Eiz2324at1D/m4QIHhAOzVIhIs2dXnCZRQQLq+nMGc6aTjcyPTSOfAYPAlw
- S2KC40m
+X-Provags-ID: V03:K0:sUVUYhblf9yQTrkbMxsdzP7g3SQXrKj83RE+8BOP4Wd0HIIbyVa
+ 1ONvSCLyOcekWJAyBQJclhS08bu9u014sdYaVk9E/sJqbydsJo7QWpQ3o3XZ50IHpcKS/7O
+ XJA3V0+NzXVdEp5Uxxc60wpoBipHpaEcA4SOFdsHdWMKoS2mT0pQ//JCBZNP1M/3HDaRc5d
+ wr9k57/D/6EwDl+d/Fdng==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:wtdAUuhmS30=:Nq5hA9mla97ryJMTe4TEGZ
+ WsvVbx5TaUpErNZ9sbcrGQizN7LrUUR+ZeGg7WLjTL2Q0zRP0BKZyDfhLrKpv512l2B+PI1EX
+ HH2d/g8FRy+NyE4DGcgNnv3i87nUh2ZdHEcBu7LrwmRvIahkGGbJ1vYmHrhYsjKYF2XDL67W9
+ DB8tE4ofm0GDYrafKLO7x08vnmWFM1FHM1gD5ZgOMXzQ24Mtx0RylhRAvmSfhMJ6VjlxDbK/e
+ CAL0vlQFXFYTRCty1Du9uwn5sF+6GcGKcMUwpwSG092CuV/5JYnAfCN8UJth6MAbNyL5G9N87
+ YDv1xX6XhVcM3EDxGNQopTOVI+DffoDoboj/MNlxAaVLh54OSsr0gm87ptmrxkRiMvNhoYehv
+ lWIJdzA7hSdtFByTNDPx8ALhBaJp7MFEZ/9RgQUk4/8ax4rZ0xhTV8YQas6Gd3e5RcIXg8Kkq
+ c6Fgi5ggSMC7chfl+YbYEQGWvl+kycG2msgEMEjEAv1sHKB3CSURXrazFCh1hIZjGUR/mfWMk
+ XcjpxLTjGRzlxTuPCZnWptsHe7bjEGCUhJ8YZLb8KxETZBCZRhKk3XDKNAM98HPXOf60wkZJP
+ TXmTLOCpcofQn36RtwJu59C4XEDQXL7gU9hSdlHQd6Jhbdf00Op5PgcTvpldE2Hy9IVQ+GHDO
+ N7FW4j6AxzR7fsrWkV5RoPrrBHaSaaYfbhpCmpRVh9E0+Q0p148YydMjJUB4atOnavL4iHaer
+ kQrVOhfDk2JlL/F60XMt3iaZ4Q7G4iAvqWIZeEqUShmppT5tTFSzOQbXkqletaAipbbb93s+N
+ BqxB1lw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Peff,
+Hi Eric,
 
-On Wed, 25 Jan 2017, Jeff King wrote:
+On Wed, 25 Jan 2017, Eric Wong wrote:
 
->  builtin/fsck.c | 58 +++++++---------------------------------------------------
->  fsck.c         |  4 ++++
->  2 files changed, 11 insertions(+), 51 deletions(-)
+> Johannes Schindelin <johannes.schindelin@gmx.de> wrote:
+> > Back in the olden days, when all objects were loose and rubber boots
+> > were made out of wood, it made sense to try to share (immutable)
+> > objects between repositories.
+> > 
+> > Ever since the arrival of pack files, it is but an anachronism.
+> > 
+> > Let's move the script to the contrib/examples/ directory and no longer
+> > offer it.
+> 
+> On the other hand, we have no idea if there are still people
+> using it for whatever reason...
+> 
+> I suggest we have a deprecation period where:
 
-Patch looks good to my eyes.
+I would be fine with a deprecation phase, but that decision is solely on
+Junio's shoulders.
 
 Ciao,
 Johannes
