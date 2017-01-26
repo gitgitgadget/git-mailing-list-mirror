@@ -6,91 +6,115 @@ X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 759EE1F70F
-	for <e@80x24.org>; Thu, 26 Jan 2017 23:27:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id ADCDD1F794
+	for <e@80x24.org>; Thu, 26 Jan 2017 23:27:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752518AbdAZX05 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 26 Jan 2017 18:26:57 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:61692 "EHLO
+        id S1752695AbdAZX07 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 26 Jan 2017 18:26:59 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:63092 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752226AbdAZX05 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 Jan 2017 18:26:57 -0500
+        with ESMTP id S1752436AbdAZX06 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 Jan 2017 18:26:58 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 94219645E4;
-        Thu, 26 Jan 2017 18:22:52 -0500 (EST)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 0F9FC64C7B;
+        Thu, 26 Jan 2017 17:33:31 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=r3RvqSRXVCn0
-        RINS+wU9yL9UAYc=; b=uR23y4FUM5D2hsVLKi1TRJkha0D8C0SIcd+FVnbm+Vhl
-        Vsfqs9JMhnXF6i5YFelP0uPHEftqgVU4RKW/oT2LmyoErp0bao9c5M9djgvKUe3j
-        ejHF9FahdhJQKzlbVEiEcsGIRCYAyTSYX8fdOSp7mp5lXQtVbEE7gtWLOFRoK1U=
+        :content-type; s=sasl; bh=ZrzoKz6bbWuybLUEUAvpNY3NSKE=; b=CQSYTJ
+        dJGPocvubvpMZnz6ssqf0GxjhzRGPn5W+ogWuVYZ2Y7/c823j7oeqYcQ/rGjrHAt
+        9UHIDX5fhW14e+5UkpWu6wXixj+i4hXz7JZP4RfUFt5awNG26hP1B5BdOB+67x4W
+        a/UTh0B1nVGi7Qbqy/7OxcKYkBk5gIA4T+xg8=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=ISKr7J
-        gZbRv8vnsfeXUueAqya2nUqTrfr25DsK1D0to1v//RbODPyLbtQzcjDah1hgfsli
-        HAMTG92MFqUiDV2Q0uQZv41R5fno1Z8tn1BQLcNus/49aJk92zF1pk8kMi/pKvU/
-        xUT3NMp+JAn/fNUq7L7qyRYTI4h74a1m4dVSU=
+        :content-type; q=dns; s=sasl; b=hXntDdGxFqBxdLc96WBii5Gk4z0tuZDI
+        FjlaBQKpwbRpep5hkUpPlfcf/6YfnlNT0i1yctsfgvO0zhXzcy6KsRn4Ltbr8H75
+        aZhqN7cqDabwEE3lP7VgnEdoT4cYppOFbC8Q+hTluerV+GjVGQQAIAqQFid/lMzM
+        mT5TgvnjDms=
 Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 8A544645E3;
-        Thu, 26 Jan 2017 18:22:52 -0500 (EST)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 0682064C7A;
+        Thu, 26 Jan 2017 17:33:31 -0500 (EST)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id D9D49645E2;
-        Thu, 26 Jan 2017 18:22:51 -0500 (EST)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 6C83E64C79;
+        Thu, 26 Jan 2017 17:33:30 -0500 (EST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Sixt <j6t@kdbg.org>
-Cc:     marcandre.lureau@redhat.com, git@vger.kernel.org,
-        chriscool@tuxfamily.org
-Subject: Re: [PATCH] git-bisect: allow running in a working tree subdirectory
-References: <20170126183030.28632-1-marcandre.lureau@redhat.com>
-        <96afaa1d-31d7-0b7e-d2b3-77a455158638@kdbg.org>
-Date:   Thu, 26 Jan 2017 15:22:50 -0800
-In-Reply-To: <96afaa1d-31d7-0b7e-d2b3-77a455158638@kdbg.org> (Johannes Sixt's
-        message of "Thu, 26 Jan 2017 22:46:44 +0100")
-Message-ID: <xmqqziid1k51.fsf@gitster.mtv.corp.google.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [RFC 03/14] upload-pack: test negotiation with changing repo
+References: <cover.1485381677.git.jonathantanmy@google.com>
+        <cover.1485381677.git.jonathantanmy@google.com>
+        <afe5d7d3f876893fdad318665805df1e056717c6.1485381677.git.jonathantanmy@google.com>
+Date:   Thu, 26 Jan 2017 14:33:29 -0800
+In-Reply-To: <afe5d7d3f876893fdad318665805df1e056717c6.1485381677.git.jonathantanmy@google.com>
+        (Jonathan Tan's message of "Wed, 25 Jan 2017 14:02:56 -0800")
+Message-ID: <xmqq8tpx30zq.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 5BA5819C-E41E-11E6-BC13-FE3F13518317-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 767BA1EC-E417-11E6-959C-FE3F13518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Sixt <j6t@kdbg.org> writes:
+Jonathan Tan <jonathantanmy@google.com> writes:
 
-> Am 26.01.2017 um 19:30 schrieb marcandre.lureau@redhat.com:
->> From: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
->>
->> It looks like it can do it.
->>
->> Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
->> ---
->>  git-bisect.sh | 1 +
->>  1 file changed, 1 insertion(+)
->>
->> diff --git a/git-bisect.sh b/git-bisect.sh
->> index ae3cb013e..b0bd604d4 100755
->> --- a/git-bisect.sh
->> +++ b/git-bisect.sh
->> @@ -1,5 +1,6 @@
->>  #!/bin/sh
->>
->> +SUBDIRECTORY_OK=3DYes
->>  USAGE=3D'[help|start|bad|good|new|old|terms|skip|next|reset|visualize=
-|replay|log|run]'
->>  LONG_USAGE=3D'git bisect help
->>  	print this long help message.
->>
->
-> Does it also work to drive git bisect from a subdirectory and pass a
-> file name (or pathspec) that is relative to that subdirectory rather
-> than relative to the root of the worktree? Can `git bisect good` or
-> `git bisect bad` of later bisection steps be invoked from different
-> subdirectories or the root?
+> diff --git a/t/lib-httpd/one-time-sed.sh b/t/lib-httpd/one-time-sed.sh
+> new file mode 100644
+> index 000000000..060ec0300
+> --- /dev/null
+> +++ b/t/lib-httpd/one-time-sed.sh
+> @@ -0,0 +1,8 @@
+> +#!/bin/sh
+> +
+> +if [ -e one-time-sed ]; then
+> +	"$GIT_EXEC_PATH/git-http-backend" | sed "$(cat one-time-sed)"
+> +	rm one-time-sed
+> +else
+> +	"$GIT_EXEC_PATH/git-http-backend"
+> +fi
 
-I think the answers are no and no.  Entries in BISECT_NAMES and
-BISECT_LOG are not getting any prefix.
+CodingGuidelines?
+
+> +inconsistency() {
+> +	# Simulate that the server initially reports $2 as the ref
+> +	# corresponding to $1, and after that, $1 as the ref corresponding to
+> +	# $1. This corresponds to the real-life situation where the server's
+> +	# repository appears to change during negotiation, for example, when
+> +	# different servers in a load-balancing arrangement serve (stateless)
+> +	# RPCs during a single negotiation.
+> +	printf "s/%s/%s/" \
+> +	       $(git -C "$REPO" rev-parse $1 | tr -d "\n") \
+> +	       $(git -C "$REPO" rev-parse $2 | tr -d "\n") \
+> +	       >"$HTTPD_ROOT_PATH/one-time-sed"
+
+I'd prefer for the printf'd result to have a final LF (i.e. not
+leaving the resulting one-time-sed with a final incomplete line).
+Also, do you really need the pipe to tr-d?  Doesn't the result of 
+$(command substitution) omit the final LF anyway?
+
+    $ printf '1 %s 2 %s 3\n' "$(echo foo)" "$(echo bar)"; echo OK
+    1 foo 2 bar 3
+    OK
+
+> diff --git a/upload-pack.c b/upload-pack.c
+> index b88ed8e26..0678c53d6 100644
+> --- a/upload-pack.c
+> +++ b/upload-pack.c
+> @@ -862,9 +862,13 @@ static void receive_needs(struct string_list *wanted_ns_refs)
+>  		} else if (skip_prefix(line, "want ", &arg) &&
+>  			   !get_sha1_hex(arg, sha1_buf)) {
+>  			o = parse_object(sha1_buf);
+> -			if (!o)
+> +			if (!o) {
+> +				packet_write_fmt(1,
+> +						 "ERR upload-pack: not our ref %s",
+> +						 sha1_to_hex(sha1_buf));
+>  				die("git upload-pack: not our ref %s",
+>  				    sha1_to_hex(sha1_buf));
+> +			}
+
+This somehow looks like a good thing to do even in production.  Am I
+mistaken?
 
