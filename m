@@ -2,133 +2,120 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 281BA1F70F
-	for <e@80x24.org>; Thu, 26 Jan 2017 18:12:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7FF5B1F70F
+	for <e@80x24.org>; Thu, 26 Jan 2017 18:18:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753946AbdAZSMG (ORCPT <rfc822;e@80x24.org>);
-        Thu, 26 Jan 2017 13:12:06 -0500
-Received: from mail-it0-f52.google.com ([209.85.214.52]:33185 "EHLO
-        mail-it0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753570AbdAZSME (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 Jan 2017 13:12:04 -0500
-Received: by mail-it0-f52.google.com with SMTP id d9so4554894itc.0
-        for <git@vger.kernel.org>; Thu, 26 Jan 2017 10:11:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=06/EQytxbBIY4LLyG/uY41jTK42hoCSsEmLSySdCm7U=;
-        b=FT/YNCdqDfFp/0fOzTYj3mOgmp22sizN9kLtuTp3+W81In8xUjS4V/Sg9qALRoWSC0
-         h1QX5KwPop0hbjOd+HV2TzypMFxJrJDm/7k+n3dEEr1AJYkCQDWjh72T/BXti2H8FBkY
-         sN4N83cADcUIXvqmixuztxBe21mHE893Qo+NvGb5lvf6J0d1JWIDrKQ3/aXCr88DW1od
-         t1z2vd0o6FZ91K1+YkATWYTw7Bk6xKwha1yOE/GIIuzny5jIYG0m9d1Ut+7tupn+7pmp
-         3+at8mbJqSetl9cvAZcpRfRDEC3fhIYAIGdORgFdA19RwBeQzzxVh5DgXldx1GCXg8ju
-         HxqA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=06/EQytxbBIY4LLyG/uY41jTK42hoCSsEmLSySdCm7U=;
-        b=RUcT5C2zoHCWqxLe1gW7D+gAkhwnh71Zz/zJgbpzzKYAA2vU8RH45ME9qMkOV5qfDt
-         0psj4dYZ1lvL6pHeCroCf11y6AHCooOcUAVj5754VfVAoJenyHzgh1DI6TLYdbX+xFC7
-         6LBhG5e0Njg/1AKo4bOY+uLmU2bX0fUU0AyQIDD7aKovAxHCrhtwWmzISZi11ZXx7VbI
-         OGGf93Zwn5XqcL8B566QAXDKEkrJZAg5i8J52oUYfLIG/qmrJUiEpLoWCdQrornqkr14
-         tjpFWwsVZ+6DBajsbQcKmh7HqHllg4PR/NBmLsoOADE7IJKCp3f1GBjaKFbxO1IjsSPr
-         pNvg==
-X-Gm-Message-State: AIkVDXJi8lERtIVU6PiiCdL7UP/ika1rvGPNBn0Qtbi6e2E/X6Bl8o/dVXlUnhoRqcCsffLT5aI4+cuMP+VToFJu
-X-Received: by 10.36.169.12 with SMTP id r12mr3967495ite.69.1485453722763;
- Thu, 26 Jan 2017 10:02:02 -0800 (PST)
+        id S1753811AbdAZSSF (ORCPT <rfc822;e@80x24.org>);
+        Thu, 26 Jan 2017 13:18:05 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:57592 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1753213AbdAZSSE (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 Jan 2017 13:18:04 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 3219D63FEE;
+        Thu, 26 Jan 2017 13:18:03 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=UVrI7eBS3mCrEzWM0IRV30O8bqk=; b=fiIqoh
+        XcZ3j3YiuO+OJl87ADmdc4r+9VjQRmtpvZwmljkKcIj1hzWcdX13GzsvTdLc8Pkz
+        iM61KoZCqZYI7HIXw3lMWjN+nOA1ISodihrt1tBzfoNUZ9s0JXPrUFWqROtk0Dew
+        2VG2Y2ylMbe144ZTuM+xOHR1riHyHcTgMZqts=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=tFwxrNbHwJ/CKi0nLodUo+bTcRSFiqCI
+        ZqXGkpLD06EW0vcOtNP4S65LGB46dPj4hcW1C6u4L6TuYbcbWmOrOBfiKd51ZuJo
+        L0/HfWCm4kNZkRrQ5JD7N394MUjNX/dqVZfrhWu6FSD1W9RlXnju6DY8jsp56v04
+        vCWV9KWfMdI=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 2786363FED;
+        Thu, 26 Jan 2017 13:18:03 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 40FFC63FEB;
+        Thu, 26 Jan 2017 13:18:02 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Cornelius Weig <cornelius.weig@tngtech.com>
+Cc:     Stefan Beller <sbeller@google.com>,
+        Philip Oakley <philipoakley@iee.org>,
+        Johannes Sixt <j6t@kdbg.org>,
+        bitte.keine.werbung.einwerfen@googlemail.com,
+        "git\@vger.kernel.org" <git@vger.kernel.org>,
+        thomas.braun@virtuell-zuhause.de, John Keeping <john@keeping.me.uk>
+Subject: Re: SubmittingPatches: drop temporal reference for PGP signing
+References: <923cd4e4-5c9c-4eaf-0fea-6deff6875b88@tngtech.com>
+        <20170125002116.22111-1-sbeller@google.com>
+        <33E354BCDB9A4192B69B9B399381659E@PhilipOakley>
+        <CAGZ79kaRdtKD7DNJRWXsyg07GbTM4OsKUmHHcFczEMJA1YK2KA@mail.gmail.com>
+        <baff65ba-1e98-d5a7-5b5a-a50a7fc723ee@tngtech.com>
+Date:   Thu, 26 Jan 2017 10:18:00 -0800
+In-Reply-To: <baff65ba-1e98-d5a7-5b5a-a50a7fc723ee@tngtech.com> (Cornelius
+        Weig's message of "Thu, 26 Jan 2017 14:30:14 +0100")
+Message-ID: <xmqqpoj965yf.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.79.39.19 with HTTP; Thu, 26 Jan 2017 10:02:02 -0800 (PST)
-In-Reply-To: <alpine.DEB.2.20.1701261708370.3469@virtualbox>
-References: <99f6de4be107044fdf01ee796f42e124ac147891.1453480067.git.johannes.schindelin@gmx.de>
- <cover.1485446899.git.johannes.schindelin@gmx.de> <alpine.DEB.2.20.1701261708370.3469@virtualbox>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Thu, 26 Jan 2017 10:02:02 -0800
-Message-ID: <CAGZ79kYLFJYPQu5KSv3hG+_eavO9BHkxHjpVOEs63Nn6Hu1gTg@mail.gmail.com>
-Subject: Re: [PATCH v2 1/1] status: be prepared for not-yet-started
- interactive rebase
-To:     Johannes Schindelin <johannes.schindelin@gmx.de>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-        Guillaume Pages <guillaume.pages@ensimag.grenoble-inp.fr>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
+X-Pobox-Relay-ID: C63325EE-E3F3-11E6-B234-FE3F13518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jan 26, 2017 at 8:08 AM, Johannes Schindelin
-<johannes.schindelin@gmx.de> wrote:
-> Some developers might want to call `git status` in a working
-> directory where they just started an interactive rebase, but the
-> edit script is still opened in the editor.
->
-> Let's show a meaningful message in such cases.
->
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
->  t/t7512-status-help.sh | 19 +++++++++++++++++++
->  wt-status.c            | 14 ++++++++++----
->  2 files changed, 29 insertions(+), 4 deletions(-)
->
-> diff --git a/t/t7512-status-help.sh b/t/t7512-status-help.sh
-> index 5c3db656df..458608cc1e 100755
-> --- a/t/t7512-status-help.sh
-> +++ b/t/t7512-status-help.sh
-> @@ -944,4 +944,23 @@ EOF
->         test_i18ncmp expected actual
->  '
->
-> +test_expect_success 'status: handle not-yet-started rebase -i gracefully' '
-> +       ONTO=$(git rev-parse --short HEAD^) &&
-> +       COMMIT=$(git rev-parse --short HEAD) &&
-> +       EDITOR="git status --untracked-files=no >actual" git rebase -i HEAD^ &&
-> +       cat >expected <<EOF &&
-> +On branch several_commits
-> +No commands done.
-> +Next command to do (1 remaining command):
-> +   pick $COMMIT four_commit
-> +  (use "git rebase --edit-todo" to view and edit)
-> +You are currently editing a commit while rebasing branch '\''several_commits'\'' on '\''$ONTO'\''.
-> +  (use "git commit --amend" to amend the current commit)
-> +  (use "git rebase --continue" once you are satisfied with your changes)
-> +
-> +nothing to commit (use -u to show untracked files)
-> +EOF
-> +       test_i18ncmp expected actual
-> +'
-> +
->  test_done
-> diff --git a/wt-status.c b/wt-status.c
-> index a715e71906..4dff0b3e21 100644
-> --- a/wt-status.c
-> +++ b/wt-status.c
-> @@ -1135,14 +1135,17 @@ static void abbrev_sha1_in_line(struct strbuf *line)
->         strbuf_list_free(split);
->  }
->
-> -static void read_rebase_todolist(const char *fname, struct string_list *lines)
-> +static int read_rebase_todolist(const char *fname, struct string_list *lines)
->  {
->         struct strbuf line = STRBUF_INIT;
->         FILE *f = fopen(git_path("%s", fname), "r");
->
-> -       if (!f)
-> +       if (!f) {
-> +               if (errno == ENOENT)
-> +                       return -1;
->                 die_errno("Could not open file %s for reading",
->                           git_path("%s", fname));
+Cornelius Weig <cornelius.weig@tngtech.com> writes:
 
-While at it, fix the translation with die_errno(_(..),..) ?
-(The errno message is translated already by the system,
-which make untranslated die_errno things awkward for the users.)
+> How about something along these lines? Does the forward reference
+> break the main line of thought too severly?
 
-Otherwise the patch looks good to me
+I find it a bit distracting for those who know PGP signing has
+nothing to do with signing off your patch, but I think that is OK
+because they are not the primary target audience of this part of the
+document.
+
+I however am more worried that it may be misleading to mention these
+two in the same sentence.  Those who skim these paragraphs without
+knowing the difference between the two may get a false impression
+that these two may somehow be related because they are mentioned in
+the same sentence.
+
+The retitling of section (5) you did, without any other change,
+might be sufficient.  It may also help to be even more explicit in
+the updated title, i.e. s/by signing off/by adding Signed-off-by:/
+
+Thanks.
+
+> diff --git a/Documentation/SubmittingPatches b/Documentation/SubmittingPatches
+> index 08352de..c2b0cbe 100644
+> --- a/Documentation/SubmittingPatches
+> +++ b/Documentation/SubmittingPatches
+> @@ -216,12 +216,12 @@ that it will be postponed.
+>  Exception:  If your mailer is mangling patches then someone may ask
+>  you to re-send them using MIME, that is OK.
+>  
+> -Do not PGP sign your patch, at least for now.  Most likely, your
+> -maintainer or other people on the list would not have your PGP
+> -key and would not bother obtaining it anyway.  Your patch is not
+> -judged by who you are; a good patch from an unknown origin has a
+> -far better chance of being accepted than a patch from a known,
+> -respected origin that is done poorly or does incorrect things.
+> +Do not PGP sign your patch, but do sign-off your work as explained in (5).
+> +Most likely, your maintainer or other people on the list would not have your
+> +PGP key and would not bother obtaining it anyway. Your patch is not judged by
+> +who you are; a good patch from an unknown origin has a far better chance of
+> +being accepted than a patch from a known, respected origin that is done poorly
+> +or does incorrect things.
+>  
+>  If you really really really really want to do a PGP signed
+>  patch, format it as "multipart/signed", not a text/plain message
+> @@ -246,7 +246,7 @@ patch.
+>       *2* The mailing list: git@vger.kernel.org
+>  
+>  
+> -(5) Sign your work
+> +(5) Certify your work by signing off
+>  
+>  To improve tracking of who did what, we've borrowed the
+>  "sign-off" procedure from the Linux kernel project on patches
