@@ -2,75 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+X-Spam-Status: No, score=-6.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4CB101F437
-	for <e@80x24.org>; Fri, 27 Jan 2017 20:45:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9DDAF20D2F
+	for <e@80x24.org>; Fri, 27 Jan 2017 20:47:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751203AbdA0UoK (ORCPT <rfc822;e@80x24.org>);
-        Fri, 27 Jan 2017 15:44:10 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:57976 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751189AbdA0Um7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 27 Jan 2017 15:42:59 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id E97A563014;
-        Fri, 27 Jan 2017 15:42:53 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=w5UHmK4fI9pHQ8OMNIJvZ3L9Wyk=; b=BizLdT
-        S4oWN6NcJksHFI9Xmse8xiqgwBdUVM7wa7CfF0pDp0/mxPi1MW3t3HizTxSfcL5m
-        l2npnmkZj25AjVsJYsIkbmJObUW7BkyJ9zI0Td0HKS/MQzMehSDzLFVkrSnygJoC
-        XQdtayk8ftq8s9MrtMLWNU0vClF7c5pFeaD0M=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=HTjII5cbZKz4JEfSaEUrExLDixRtkWvO
-        JhFs24lfo0fWBQ+EPnhW4bP64PsLo9fu5b5tYnRoHXxnphT6yGtmV5+O0Eg5MGpv
-        c+S8OlL7bc6lVekLwSXsBfxBjTVE0b6GUQVHbkcloc1ZzdXPVIsxzYu5UJ46GhVw
-        nZQJTJP5Ulo=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id E27E363011;
-        Fri, 27 Jan 2017 15:42:53 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 4B1536300D;
-        Fri, 27 Jan 2017 15:42:53 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Lukas Fleischer <lfleischer@lfos.de>, git@vger.kernel.org
-Subject: Re: [PATCH 11/12] receive-pack: treat namespace .have lines like alternates
-References: <20170124003729.j4ygjcgypdq7hceg@sigill.intra.peff.net>
-        <20170124004805.nu3w47isrb4bxgi5@sigill.intra.peff.net>
-        <xmqqa8aec40a.fsf@gitster.mtv.corp.google.com>
-        <148553912610.7898.1319453517642036857@typhoon>
-        <20170127175807.4tjxpenu2gk77dhv@sigill.intra.peff.net>
-Date:   Fri, 27 Jan 2017 12:42:52 -0800
-In-Reply-To: <20170127175807.4tjxpenu2gk77dhv@sigill.intra.peff.net> (Jeff
-        King's message of "Fri, 27 Jan 2017 12:58:07 -0500")
-Message-ID: <xmqqziicxmib.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+        id S1751214AbdA0UrR (ORCPT <rfc822;e@80x24.org>);
+        Fri, 27 Jan 2017 15:47:17 -0500
+Received: from mail-ua0-f173.google.com ([209.85.217.173]:33081 "EHLO
+        mail-ua0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751193AbdA0UrG (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 27 Jan 2017 15:47:06 -0500
+Received: by mail-ua0-f173.google.com with SMTP id i68so213347730uad.0
+        for <git@vger.kernel.org>; Fri, 27 Jan 2017 12:47:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=3VaBuK6myc6aAVXW+t43QSUJwYlPwC5M4VLf5HTeUt8=;
+        b=oABacVgzz/tfa6f0TZpR8JMXme6celJO2x9swHzYJ1iV9rlRpRhWVVZvfDqkT0YeEu
+         tYW2rHlj80QCztZbe+ryJd1kFUtJmwjQQY0IBEhxEvY9lC4tmYWN8/Ov0HXLkrQdgKPj
+         gIoCXcjlF44jexkMuDbAshUD0+Zh9VaGSF4xGcylsShDQ9IPHgZ+Q560UNtlA2cwux8k
+         NDs0p9qjnFVcmiSnqmIH5HlL341ZnXyeWuQsBxF7A19LtZp35+mQEY4bh8GrJItMHYwa
+         9sX1hf/Yc6HgNfcCBqJtbClyPwrVKBuEaoEOFXKV3TmJdMNhj5PfdVviJZnUgeG5E+sA
+         lkMw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=3VaBuK6myc6aAVXW+t43QSUJwYlPwC5M4VLf5HTeUt8=;
+        b=E6u66MYhf430yPGa8PCoRnMRmCh8UfIU3Gw/uWe80R6aWcUqwm23ui3FfZJYVEd5Wy
+         duVV9LTu1Xqm8hMZBzEnlNG4x3/klFkKVzJXSa94RlPbAGVmQf5Zx1mybhEc4tRzhB9G
+         4A/VK02vJsy/bWqcd0cwnFn7+E1Bl/j72xvM4I6uZwrP9tZLVkXFK2KvslXNuOrmtg3H
+         S0K/W5iqJMLv/CHPO2LVDHlVXTfa/UHhXYUx/2jgaK/GTFeDdRwikeyByAxl/GedNVXO
+         25e4ayw+1sidpCdbM3d+yK8euC4g0FSjzRrGflP/VJoAtY+OwGqCGzJO+0EY1UBMNy8/
+         0sFg==
+X-Gm-Message-State: AIkVDXKz0Gd8O50QcPDmgSGFKToItHTd0yodfZJ52VpsslWkGXVBWzskzzoV39UQpT6joBXsYYTkL6Z0UK+g+w==
+X-Received: by 10.176.6.106 with SMTP id f97mr5556221uaf.118.1485550025548;
+ Fri, 27 Jan 2017 12:47:05 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 2CDB40BE-E4D1-11E6-8A78-A7617B1B28F4-77302942!pb-smtp2.pobox.com
+Received: by 10.159.34.48 with HTTP; Fri, 27 Jan 2017 12:46:25 -0800 (PST)
+From:   Samuel Lijin <sxlijin@gmail.com>
+Date:   Fri, 27 Jan 2017 14:46:25 -0600
+Message-ID: <CAJZjrdWdRGZ5DC1XV_YiNt-1sKiNgAtiS-eS9L6H2GJ+_8n08w@mail.gmail.com>
+Subject: octopus merge --no-ff claims to fast-forward even though it doesn't
+To:     "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+I was doing an octopus merge earlier and noticed that it claims to
+fast-forward when you specify --no-ff, even though it does actually
+abide by --no-ff.
 
-> On Fri, Jan 27, 2017 at 06:45:26PM +0100, Lukas Fleischer wrote:
->
->> I think this is already possible using receive.hideRefs (which causes
->> the ref_is_hidden() branch above to return if applicable).
->> ...
->
-> Thanks for the pointers. I think a "turn off namespace .have lines"
-> option would be easier for some cases, but what you've implemented is
-> much more flexible. So if people using namespaces are happy with it, I
-> don't see any need to add another way to do the same thing.
+I can consistently reproduce as follows:
 
-Yeah, I agree.  Thanks, both.
+$ git clone https://github.com/sxlijin/merge-octopus-experiment
+$ cd merge-octopus-experiment
+$ git merge --no-ff origin/A origin/B --no-edit
+Fast-forwarding to: origin/A
+Trying simple merge with origin/B
+Merge made by the 'octopus' strategy.
+ anotherA | 0
+ anotherB | 0
+ otherA   | 0
+ otherB   | 0
+ 4 files changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 anotherA
+ create mode 100644 anotherB
+ create mode 100644 otherA
+ create mode 100644 otherB
+
+$ git log --graph --pretty=oneline --decorate
+
+I've reproduced the issue with 2.11.0 on both a Windows box (MSYS) and
+Linux (Arch).
+
+The issue seems to live in git-merge-octopus.sh, specifically in that
+--no-ff does not affect the initial value of NON_FF_MERGE. I'm happy
+to submit a patch if someone can point me in the right direction.
+
+Sam
