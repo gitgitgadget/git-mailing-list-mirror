@@ -2,141 +2,69 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.2 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,
 	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B2DFA1F437
-	for <e@80x24.org>; Fri, 27 Jan 2017 14:18:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 218CF1F437
+	for <e@80x24.org>; Fri, 27 Jan 2017 15:47:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932698AbdA0OSH (ORCPT <rfc822;e@80x24.org>);
-        Fri, 27 Jan 2017 09:18:07 -0500
-Received: from mout.gmx.net ([212.227.17.21]:64505 "EHLO mout.gmx.net"
+        id S933090AbdA0Pnq (ORCPT <rfc822;e@80x24.org>);
+        Fri, 27 Jan 2017 10:43:46 -0500
+Received: from mout.web.de ([212.227.15.3]:54173 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S932803AbdA0OR4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 27 Jan 2017 09:17:56 -0500
-Received: from virtualbox ([37.201.192.48]) by mail.gmx.com (mrgmx101
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MYKGj-1d1afj0m2r-00VB9W; Fri, 27
- Jan 2017 15:17:38 +0100
-Date:   Fri, 27 Jan 2017 15:17:36 +0100 (CET)
-From:   Johannes Schindelin <johannes.schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     git@vger.kernel.org
-cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        Sverre Rabbelier <srabbelier@gmail.com>,
-        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>, Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: [PATCH v3] t/Makefile: add a rule to re-run previously-failed
- tests
-In-Reply-To: <0dfa96b17edfe84ba19c7e57fe0b017c77943e0c.1472478285.git.johannes.schindelin@gmx.de>
-Message-ID: <85044791cfcba35c1ad3d8138051f3f075cb0646.1485526641.git.johannes.schindelin@gmx.de>
-References: <0dfa96b17edfe84ba19c7e57fe0b017c77943e0c.1472478285.git.johannes.schindelin@gmx.de>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+        id S933072AbdA0Pls (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 27 Jan 2017 10:41:48 -0500
+Received: from [192.168.178.36] ([79.237.55.102]) by smtp.web.de (mrweb001
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0MPY5x-1cbHMa3gdF-004gJj; Fri, 27
+ Jan 2017 16:39:49 +0100
+Subject: Re: [PATCH 2/2] use absolute_pathdup()
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+References: <d94d742d-1247-ac35-c081-7db1f2178d34@web.de>
+ <d15fdbb9-2a21-eeab-1fee-4a1553bd3bcb@web.de>
+ <alpine.DEB.2.20.1701271121120.3469@virtualbox>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <0555c0aa-fcb4-19fb-a533-c451e1e477e3@web.de>
+Date:   Fri, 27 Jan 2017 16:39:39 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.6.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:fA23KqxQEUpz1arqoRWGUMNoY0JhLZYsVGBMNtCeytsc6iHx+sh
- iF6V0cJhplx02vfPDGt60pskaIB2N5quluEnjUYBFcZESygz95VVt+Nn4IEWfWGEpv3U4M4
- mhbhaMLpRQ5Lq8r7Gk/QnphcLqkxDJ+kBn3Fqq0G3ozgIDhcRvNhLMi7vVdHUs9IzesX+7M
- SvMHagmVwzfZ2tPZdBymA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:K8zT4fj80aM=:LfVp6iN0TNuCsFXs2zKnS3
- F9fhX2DL4FVsGkTpSocIJ2yR5ZpvITNOH75Rl2p17yhjl5Dyt6HzEr4tM5DRExCLykG9+MsFB
- r8BFXmd+l8/XDzFOqyhR1mUebJZru765IXR1C6KpCuawKu/k0Ms0IwvEU9C8k2jy4hYPhcDPu
- +44HsdnwkgzS+hHbsnE/A5vT0UmNVPRs/GXB17uTJoMKR5HgfsSfRZ0OqLNazWAM6ShwOgYmO
- vSsB/L3CLx2OI/gars1ePJwOBMXFVEOd9RO5jzV+fhHhIcs7DmskwJGYxB2gpq6ozkjnsgQlK
- 3IfNVTNhJhcyJqGjnIthS4uaRe/B7Tg7Dti3esL4O06km1yiG0buk6Jx2VFpIcXl6gvyntpyf
- DJLuP1BJa5zhb+7pXurxUjIiBF+mMrg/vTfs8zxCcr5V1tePRS4PbhMydzZ3GBD5vtqi7XJG4
- lD+ZVIH30/I3+1g3+GOj5XXvptaR0BfMFFwciVbKjb0kjqc9CD9o1AWTdyBHKVoI7TmyYV4pE
- Qin7KkB9e411xXHKqdzWXviwvIvKEf+RzjkQUntCM9YYynRxVnM5vUhpRZqfzCdbjE1dsXUgu
- 5xHkHoSzHd6mdKekd2pHPux61eP9Tr03JvufWgZvaEvSXYO0n+DHyxpp3RGU7fskYw+5BmbWi
- otg4O7y387nDRqdLNHL6yA6TJ/P63TvYlj1Z1oxaZClLtUyeevnhuL3e4Lxuq/1dxWYzeu4kk
- GCu+U/J+tM7fpv6ejFAszh3MzRQ+hsFT/ZLcmDo28tcD7obweMSMxbsTPITMUL8+A30AIbVQ/
- XgbL21nJESy1Ijhxl1Y8Fs3Dcyu2m54NDhOs6qyzkXMWhktFwx3wKrf9N+DahmJBz7biC9X79
- uVRXHcxXN13LJCgl+0ESaBkOI5UqoW1WcY4j49qeu6h7uC8BpDqiOFkZfxzLJha+okor2YFVJ
- HOfMQEOOHdY//OTu2GHY9Lp19hBWgDznZ3vR5idOKexEpMNJBYUYFQEWce8LYCztLC57tRCPf
- fdVRBuIIn/EFkRuaIB1oltSovr5Vvlr8n/bDIVb0mNySvkDYTTxxtVxDSF4sqVMirQ==
+In-Reply-To: <alpine.DEB.2.20.1701271121120.3469@virtualbox>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K0:VWOGQS3v53utuOSIZCfyXRuxZ2zlgE8hZxb17OKTOindkyaoZxR
+ aEoGNsPijwZJ1h3hkg+r5s/CeViJAjCcWODNIn4Hk+s0r/1rjmeyZTih8Cv7nd6jiKPvIsr
+ D5TZ6ZYNOQxQy1FeDwyaALjQ+bmnj9hqkAXf0K3Tz6B13y2cVx8dsyYJHi+OzjyZCL1hbXs
+ +kIYt/AIIG7kPeNlRxzag==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:e641s9k3/kE=:hv6E1BOoG7RaVIlx2ftCav
+ LZUbyB6DRQwR0GKZxshA7wOhsD9fKHyPmm0VDV3k646xAG+z+RDouhKe1XHj2QzKcfvDF8tes
+ vfmtuNhGsVylMXo3RG3ezVlC//yFj3mZyMgXYWw7JCiR0Uvo+9HVbZO/yv0276h4gY+HmC9QY
+ q2XRTm3V2Tq/uGE3tMQMepyWoydL6Vnfxu8LVzkE1jAs8eHlZn2UoHyyNM8dVAd2HBsIfNicp
+ UspRdY2nTU4V019+jHsbDEN/r30Jm++mn2nRrAkFUEEKZfgta0BY7rqrcupvLDyyvjK/qO40o
+ Igyquf/PB90HPy6oLja6wy7s81v1YfiA1jPWKjSCRGhF58KEEjhcohF3xr5HpZEEXKgdpbF1j
+ OPD6DUej5DTe5dDP6EFVKjQv3Jp5XAc7NPvoGXIELH8x9ZhPETWF3UmC19X2Hd+mHtPNex5ou
+ BkyAKdACBDvXkn9SPvW551Llv76Gl+lomzq2s15M2PeuhZcLkg/FNETG1JlBf/OyRlWJiDB/v
+ vXhJZ7gwc7FRXlgMRM6q5okp9s7wvG+zULeveVt78UR61vS0UmFWX/EvfvVrI8K5SAIrLVCW5
+ Z3/BQ8guwouOi53bOyRXH0gCiGZwIdOk/VBFaQZHZkixJ3rCqBF48YXt7fdBIH2r1Xocl1DqR
+ 1SoqqDBSzeU3W7lS/XjFL6Zeeh2ZD11rKQOeHDlvazt9y55vK5LH3eWEjtXyAz4q8LvOrQaau
+ f38MEVdgZ5CSan7HxqW8GNDJ+TcDEHFttlH5zi8yRFcitKSkNExx6AVoHCAlfnbtqRxop2nDN
+ ghB+iIU
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This patch automates the process of determinig which tests failed
-previously and re-running them.
+Hi Dscho,
 
-While developing patch series, it is a good practice to run the test
-suite from time to time, just to make sure that obvious bugs are caught
-early.  With complex patch series, it is common to run `make -j15 -k
-test`, i.e.  run the tests in parallel and *not* stop at the first
-failing test but continue. This has the advantage of identifying
-possibly multiple problems in one big test run.
+Am 27.01.2017 um 11:21 schrieb Johannes Schindelin:
+> On Thu, 26 Jan 2017, René Scharfe wrote:
+>> Apply the symantic patch for converting callers that duplicate the
+>
+> s/symantic/semantic/
 
-It is particularly important to reduce the turn-around time thusly on
-Windows, where the test suite spends 45 minutes on the computer on which
-this patch was developed.
+thank you!  I wonder where this came from.  And where my spellchecker 
+went without as much as a farewell.  Reinstalled it now..
 
-It is the most convenient way to determine which tests failed after
-running the entire test suite, in parallel, to look for left-over "trash
-directory.t*" subdirectories in the t/ subdirectory. However, those
-directories might live outside t/ when overridden using the
---root=<directory> option, to which the Makefile has no access. The next
-best method is to grep explicitly for failed tests in the test-results/
-directory, which the Makefile *can* access.
-
-Please note that the often-recommended `prove` tool requires Perl, and
-that opens a whole new can of worms on Windows. As no native Windows Perl
-comes with Subversion bindings, we have to use a Perl in Git for Windows
-that uses the POSIX emulation layer named MSYS2 (which is a portable
-version of Cygwin). When using this emulation layer under stress, e.g.
-when running massively-parallel tests, unexplicable crashes occur quite
-frequently, and instead of having a solution to the original problem, the
-developer now has an additional, quite huge problem. For that reason, this
-developer rejected `prove` as a solution and went with this patch instead.
-
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
-Published-As: https://github.com/dscho/git/releases/tag/failing-tests-v3
-Fetch-It-Via: git fetch https://github.com/dscho/git failing-tests-v3
-Interdiff vs v2:
-
- diff --git a/t/Makefile b/t/Makefile
- index 8aa6a72a70..1bb06c36f2 100644
- --- a/t/Makefile
- +++ b/t/Makefile
- @@ -37,9 +37,8 @@ test: pre-clean $(TEST_LINT)
-  
-  failed:
-  	@failed=$$(cd '$(TEST_RESULTS_DIRECTORY_SQ)' && \
- -		grep -l '^failed [1-9]' $$(ls -t *.counts | \
- -			sed 'G;h;/^\(t[^.]*\)-[0-9]*\..*\n\1-[0-9]*\./d;P;d') | \
- -		sed -n 's/-[0-9]*\.counts$$/.sh/p') && \
- +		grep -l '^failed [1-9]' *.counts | \
- +		sed -n 's/\.counts$$/.sh/p') && \
-  	test -z "$$failed" || $(MAKE) $$failed
-  
-  prove: pre-clean $(TEST_LINT)
-
-
- t/Makefile | 6 ++++++
- 1 file changed, 6 insertions(+)
-
-diff --git a/t/Makefile b/t/Makefile
-index d613935f14..1bb06c36f2 100644
---- a/t/Makefile
-+++ b/t/Makefile
-@@ -35,6 +35,12 @@ all: $(DEFAULT_TEST_TARGET)
- test: pre-clean $(TEST_LINT)
- 	$(MAKE) aggregate-results-and-cleanup
- 
-+failed:
-+	@failed=$$(cd '$(TEST_RESULTS_DIRECTORY_SQ)' && \
-+		grep -l '^failed [1-9]' *.counts | \
-+		sed -n 's/\.counts$$/.sh/p') && \
-+	test -z "$$failed" || $(MAKE) $$failed
-+
- prove: pre-clean $(TEST_LINT)
- 	@echo "*** prove ***"; $(PROVE) --exec '$(SHELL_PATH_SQ)' $(GIT_PROVE_OPTS) $(T) :: $(GIT_TEST_OPTS)
- 	$(MAKE) clean-except-prove-cache
-
-base-commit: 4e59582ff70d299f5a88449891e78d15b4b3fabe
--- 
-2.11.1.windows.prerelease.2.9.g3014b57
+René
