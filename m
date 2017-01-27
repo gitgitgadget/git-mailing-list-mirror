@@ -2,168 +2,127 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DECE21F70F
-	for <e@80x24.org>; Fri, 27 Jan 2017 00:35:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CBA201F70F
+	for <e@80x24.org>; Fri, 27 Jan 2017 00:42:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752630AbdA0Afe (ORCPT <rfc822;e@80x24.org>);
-        Thu, 26 Jan 2017 19:35:34 -0500
-Received: from mail-pg0-f50.google.com ([74.125.83.50]:34756 "EHLO
-        mail-pg0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752130AbdA0Afd (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 Jan 2017 19:35:33 -0500
-Received: by mail-pg0-f50.google.com with SMTP id 14so76465819pgg.1
-        for <git@vger.kernel.org>; Thu, 26 Jan 2017 16:35:33 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=subject:to:references:cc:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding;
-        bh=0I0D4Y+UBW9za/7Nvk/Bc5IILsy03TNZDMDrfJ0HKiM=;
-        b=I8zKZLTC4zqc5EOQC6zCzkXnCxnoKZZDgRgODGwaSsO8m2GUt9a1ibbfxfkTRlln9G
-         EBbvKYQ8XEESi8X2YjFkro+7IOHGqW7QyWK2bI8SWVa/1svkEHM5pmN0ri6UL3gdbnWz
-         JCWDDzBjCJRjxbCzXrrQWHZeFXyZgQEWgKPyROa0kVlUkz4bi5mQXzoJeSUNE8qgvBSj
-         cjwx376z4wtFlgRrWNSVQ2p2AHaWTeUZFmuCasXtoQZ0mm4OHUn1HsnMpkFp/xywYYtV
-         FT7oHLZb9vhsKsZjAxVdtB8E3hpYW/cmrNtkIgyiZI0RvSjLz/rFyGgaldP9aIp/QKOF
-         g5zA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
-        bh=0I0D4Y+UBW9za/7Nvk/Bc5IILsy03TNZDMDrfJ0HKiM=;
-        b=UAY4fOPMElhNJPcmMKDRrEXgqBCRtW8KBkysaWQQKSyR3IfH/Msb91aAPMo25BuPq+
-         WY54hmMH2Ck8Uzh9J6FvVT/20Ncse5Fa+36InDaTX7bDF04WERCxxOxji6fCKrIDYSvb
-         6g4yDQtoC/sXd1nrNuLyJfP5cK8cvE/IX9aQp7rTtKFx1+LHdxDJaRnzXhn/965XKvmQ
-         PR9nEqAzhxlnZg2IXg9ZThVHC3Fzc5tBmUxRpRzY7SsPVXwd0qkIS95cN7UUYv7KDEeW
-         2fDYAbm6h03Eg7gzSPXS+vCnJO1Pn41iqtgypBpK9jCRgCMfrsGU7KhYJjZPasPMpEbD
-         bEOA==
-X-Gm-Message-State: AIkVDXKX1gECPWAN0QClbb38AGF2BJzZKAj1Ed2vz2x1XHEQNMDeFWeTFgQa3bSM4uaLFxgY
-X-Received: by 10.98.75.16 with SMTP id y16mr6201740pfa.23.1485477332615;
-        Thu, 26 Jan 2017 16:35:32 -0800 (PST)
-Received: from twelve2.mtv.corp.google.com ([2620:0:1000:5b10:f0de:f19e:2597:5e36])
-        by smtp.gmail.com with ESMTPSA id 199sm5996062pfu.91.2017.01.26.16.35.31
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 26 Jan 2017 16:35:31 -0800 (PST)
-Subject: Re: [RFC 02/14] upload-pack: allow ref name and glob requests
-To:     Junio C Hamano <gitster@pobox.com>
-References: <cover.1485381677.git.jonathantanmy@google.com>
- <cover.1485381677.git.jonathantanmy@google.com>
- <d0d42b3bb4cf755f122591e191354c53848f197d.1485381677.git.jonathantanmy@google.com>
- <xmqqd1f931g7.fsf@gitster.mtv.corp.google.com>
-Cc:     git@vger.kernel.org
-From:   Jonathan Tan <jonathantanmy@google.com>
-Message-ID: <dc09e446-6d29-8b94-f440-6aa094ab9dc9@google.com>
-Date:   Thu, 26 Jan 2017 16:35:31 -0800
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.5.1
+        id S1753001AbdA0AlO (ORCPT <rfc822;e@80x24.org>);
+        Thu, 26 Jan 2017 19:41:14 -0500
+Received: from castro.crustytoothpaste.net ([75.10.60.170]:40368 "EHLO
+        castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1752247AbdA0AlM (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 26 Jan 2017 19:41:12 -0500
+Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id DDECC280AD;
+        Fri, 27 Jan 2017 00:40:56 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
+        s=default; t=1485477656;
+        bh=ygB4c7+WDtUzvx40H+Vhmpcutizhd1Z5pPThxSs4n7o=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=u00lFN7jzps0n4gDG6AtljQall5HRIgkhh693YjyBjp5fOKmY6LsFQ+pNk/FZidbr
+         TMdBpDjGL6ZhuuifKqFdVZ5KshJPFDVh0B4LqfTCoijhcKx/xz2O7AVM2FVZmgZmvQ
+         leRVklnztyHOly6RvQ8abVLmiXkyuLHaYGv87/2E/GikQKoQ1ymcQ306SperC3hsQi
+         NgXpxmHhDJwV4DHumGAjZVmE+hsDQto6lhA9aEtWxoT+ENnBBBT0rm57iAujy/pnwV
+         gI75YDXFrz58ZhlMATjwNbSKBU15l7eZFeBd4U5/zh1dzOXaE2/nDYbhDjD+WYnTP9
+         sYqB+TXlTL3Yh95ETHgFyd3S5jnuBAeEqihMnblhtREY9m/b3WHYIbnNJTSnfZ25Xe
+         1jxywr+vjMjXyKv8I2XRdFLYgn/HZ6tz2BJnGJWds3UL5GlHACWYVYIxOfd+Q3ql3Y
+         pJe/ekP912l6NTHcbqn95lkDdmatQVDiuqKUdtUP6dL4SrvuJPG
+Date:   Fri, 27 Jan 2017 00:40:50 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Eric Wong <e@80x24.org>
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        git@vger.kernel.org,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        =?utf-8?Q?=C3=98yvind_A=2E?= Holm <sunny@sunbase.org>
+Subject: Re: [PATCH] Documentation: implement linkgit macro for Asciidoctor
+Message-ID: <20170127004050.23jrq5iqwfxcwmik@genre.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Eric Wong <e@80x24.org>, Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>, git@vger.kernel.org,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        =?utf-8?Q?=C3=98yvind_A=2E?= Holm <sunny@sunbase.org>
+References: <20170125234101.n2pzrp77df4zycv7@genre.crustytoothpaste.net>
+ <20170126001344.445534-1-sandals@crustytoothpaste.net>
+ <20170126034655.fwzow2mgkjj5dpek@sigill.intra.peff.net>
+ <20170126074304.GA26530@starla>
+ <xmqq1svp7lcs.fsf@gitster.mtv.corp.google.com>
+ <20170126191841.GA6060@dcvr.yhbt.net>
 MIME-Version: 1.0
-In-Reply-To: <xmqqd1f931g7.fsf@gitster.mtv.corp.google.com>
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="zbwbayi5l5n4p2lu"
+Content-Disposition: inline
+In-Reply-To: <20170126191841.GA6060@dcvr.yhbt.net>
+X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
+ 4.7.0-1-amd64)
+User-Agent: NeoMutt/20170113 (1.7.2)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
+--zbwbayi5l5n4p2lu
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-On 01/26/2017 02:23 PM, Junio C Hamano wrote:
-> Jonathan Tan <jonathantanmy@google.com> writes:
->
->> Currently, while performing packfile negotiation [1], upload-pack allows
->> clients to specify their desired objects only as SHA-1s. This causes:
->> (a) vulnerability to failure when an object turns non-existent during
->>     negotiation, which may happen if, for example, upload-pack is
->>     provided by multiple Git servers in a load-balancing arrangement,
->>     and
->> (b) dependence on the server first publishing a list of refs with
->>     associated objects.
->>
->> To eliminate (a) and take a step towards eliminating (b), teach
->> upload-pack to support requests in the form of ref names and globs (in
->> addition to the existing support for SHA-1s) through a new line of the
->> form "want-ref <ref>" where ref is the full name of a ref, a glob
->> pattern, or a SHA-1. At the conclusion of negotiation, the server will
->> write "wanted-ref <SHA-1> <name>" for all requests that have been
->> specified this way.
->
-> I am not sure if this "at the conclusion of" is sensible.  It is OK
-> to assume that what the client side has is fixed, and it is probably
-> OK to desire that what the server side has can change, but at the
-> same time, it feels quite fragile to move the goalpost in between.
+On Thu, Jan 26, 2017 at 07:18:41PM +0000, Eric Wong wrote:
+> > Eric Wong <e@80x24.org> writes:
+> Junio C Hamano <gitster@pobox.com> wrote:
+> > +          "<citerefentry>\n"
+> > +            "<refentrytitle>#{target}</refentrytitle>"
+> > +            "<manvolnum>#{attrs[1]}</manvolnum>\n"
+> > +          "</citerefentry>\n"
+> >          end
+>=20
+> You need the '\' at the end of those strings, it's not like C
+> since Ruby doesn't require semi-colons to terminate lines.
+> In other words, that should be:
+>=20
+>           "<citerefentry>\n" \
+>             "<refentrytitle>#{target}</refentrytitle>" \
+>             "<manvolnum>#{attrs[1]}</manvolnum>\n" \
+>           "</citerefentry>\n"
+>=20
 
-Do you have any specific concerns as to this fragility? Peff mentioned 
-some concerns with the client making some decisions based on the initial 
-SHA-1 vs the SHA-1 reported by "wanted-ref", to which I replied [1].
+This change is fine with me.
 
-> Stepping back a bit, in an environment that involves multiple server
-> instances that have inconsistent set of refs, can the negotiation
-> even be sensibly and safely implemented?  The first server the
-> client contacts may, in response to a "have", say "I do have that
-> commit so you do not have to send its ancestors to me.  We found one
-> cut-off point.  Please do explore other lines of histories."  The
-> next server that concludes the negotiation exchange may not have
-> that commit and will be unable to produce a pack that excludes the
-> objects reachable from that commit---wouldn't that become a problem?
+For the record, I don't have a strong opinion one way or the other.
+Since this code is related to Asciidoctor and Git has no existing Ruby
+style standards, I picked the Asciidoctor house style, which uses
+multi-line %().  We could pick [0] as an option, or just argue it out
+when someone cares, like here.
 
-It's true that this patch set wouldn't solve this problem. This problem 
-only occurs when there is a commit that the client knows but only a few 
-of the servers know (maybe because the client just pushed it to one of 
-them). If, for example, the client does not know a commit and only a few 
-of the servers know it (for example, because another user just pushed 
-it), this patch set does help. The latter scenario seems like it would 
-occur relatively commonly.
+[0] https://github.com/bbatsov/ruby-style-guide
+--=20
+brian m. carlson / brian with sandals: Houston, Texas, US
++1 832 623 2791 | https://www.crustytoothpaste.net/~bmc | My opinion only
+OpenPGP: https://keybase.io/bk2204
 
-> One way to prevent such a problem from hurting clients may be for
-> these multiple server instances to coordinate and make sure they
-> have a shared perception of the common history among them.  Some
-> pushes may have come to one instance but may not have propagated to
-> other instances, and such a commit cannot be accepted as usable
-> "have" if the servers anticipate that the final client request would
-> go to any of the servers.  Otherwise the multiple server arrangement
-> would not work safely, methinks.
->
-> And if the servers are ensuring the safety using such a mechanism,
-> they can use the same mechanism to restrain "faster" instances from
-> sending too fresh state of refs that other instances haven't caught
-> up to, which would mean they can present a consistent set of refs to
-> the client in the first place, no?
->
-> So I am not sure if the mechanism to request history by refname
-> instead of the tip commit would help the multi-server environment as
-> advertised.  It may help solving other problems, though (e.g. like
-> "somebody pushed to update after the initial advertisement was sent
-> out" which can happen even in a single server environment).
+--zbwbayi5l5n4p2lu
+Content-Type: application/pgp-signature; name="signature.asc"
 
-This patch set would solve the problem you describe (whether in a single 
-server environment or the coordination between multiple servers that 
-provides "strong consistency"). (Although it may not be an important 
-problem to solve, since it is probably OK if the client got a "slow" 
-version of the state of the refs.)
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.1.17 (GNU/Linux)
 
->> To be flexible with respect to client needs, the server does not
->> indicate an error if a "want-ref" line corresponds to no refs, but
->> instead relies on the client to ensure that what the user needs has been
->> fetched. For example, a client could reasonably expand an abbreviated
->> name "foo" to "want-ref foo", "want-ref refs/heads/foo", "want-ref
->> refs/tags/foo", among others, and ensure that at least one such ref has
->> been fetched.
->
-> Cute.  This may be one way to implement the DWIM thing within the
-> constraint of eventually wanting to go to "client speaks first, the
-> server does not advertise things the client is not interested in"
-> world.
->
-> But at the same time it may end up bloating the set of refs the
-> client asks instead.  Instead of receiving the advertisement and
-> then sending one request after picking the matching one from it,
-> the client needs to send "refs/{heads,tags,whatever}/foo".
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAliKlxIACgkQv1NdgR9S
+9os7uQ/7BtJnqmnOtuRbVpYdWCxdMskCH/YPN+5IGhEIe9A9Vmi0vH991kYJ4cWQ
+52XOc7lmqm4BJ0o0Sxt/OOgeq+UFa18v6vGin0xhoIulm4cdEIHM30f7MGbP7iWI
+UZGFCStYv80fBVfqCCHz1MyN/SOAhgMzPPQOWKUxz7MQ6JQmRyKfgMnCaBPYinE8
+XCTWxi9uRRig40bldF7VKEKxxmiB7E4g1vaOhWRAAO7CSkJFh82AjEeQtnZ3smnJ
+35G+1mx2bmkLuobjFFeojdggVWQE988aBO4LNbdKNMH6oOXm+An9YdLpwuVAOD+8
+SjsYrK3SxaTAzUw3FCA+D/E7TeNr9jEyDBJQ1JawpIpoLiuADCiGb2ZessTf+Y2Q
+2SAKUsVV3IH2GV8FTSAdBLW38INbTXujDPTCzhsuwzRQHVsneNLu9kUZZCFkyC0+
+ejEUcTw8KTQvhKSbSf16JiO35A3y9k8eWty9gjFrqZbBZOwIW87EkI7DlO622gTX
+ZjOnqXHc8X0HkbuJlIsrulEOQDAhAIYvQ7eoenLnSUaDKiNQoBWoZqutXoKOHjfx
+6AfkmQ/cSeRcQA75TKsybMz14ukaPAuk9JlniwgTgrJ5S66GNyLe81nzdnlCOWM0
+Pkzvk47fkRhWD6s+6MGw1PSVTtga8Db+XbgjTUuoC7GCgJexskI=
+=BuIj
+-----END PGP SIGNATURE-----
 
-That is true, although I think that the client will typically send only 
-a few ref names (with or without globs), so the request packet is still 
-not that large.
-
-[1] <67afbb3b-5d0b-8c0d-3f6e-3f559c68f4bd@google.com>
+--zbwbayi5l5n4p2lu--
