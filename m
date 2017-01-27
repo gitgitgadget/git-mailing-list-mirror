@@ -2,84 +2,238 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.2 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-6.0 required=3.0 tests=AWL,BAYES_00,
 	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7930B1F6DC
-	for <e@80x24.org>; Fri, 27 Jan 2017 11:00:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C58971F437
+	for <e@80x24.org>; Fri, 27 Jan 2017 12:56:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933250AbdA0LAI (ORCPT <rfc822;e@80x24.org>);
-        Fri, 27 Jan 2017 06:00:08 -0500
-Received: from mout.gmx.net ([212.227.17.21]:52043 "EHLO mout.gmx.net"
+        id S932347AbdA0M40 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 27 Jan 2017 07:56:26 -0500
+Received: from mout.gmx.net ([212.227.17.20]:55986 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S933251AbdA0LAF (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 27 Jan 2017 06:00:05 -0500
+        id S1754487AbdA0Mzt (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 27 Jan 2017 07:55:49 -0500
 Received: from virtualbox ([37.201.192.48]) by mail.gmx.com (mrgmx101
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MSq5p-1cyJx10ohp-00RtfW; Fri, 27
- Jan 2017 11:53:06 +0100
-Date:   Fri, 27 Jan 2017 11:53:04 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MJGFi-1cUKeR2xoI-002m7I; Fri, 27
+ Jan 2017 13:38:57 +0100
+Date:   Fri, 27 Jan 2017 13:38:55 +0100 (CET)
+From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     git@vger.kernel.org
 cc:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?Q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc_Duy?= 
-        <pclouds@gmail.com>
-Subject: Re: [PATCH] fixup! worktree move: new command
-In-Reply-To: <4f4ae057cd4d72d5b945a856deacd921fb5e7977.1485349447.git.johannes.schindelin@gmx.de>
-Message-ID: <alpine.DEB.2.20.1701271150200.3469@virtualbox>
-References: <4f4ae057cd4d72d5b945a856deacd921fb5e7977.1485349447.git.johannes.schindelin@gmx.de>
+        =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>,
+        Jeff King <peff@peff.net>
+Subject: [PATCH v2 1/1] reset: support the --stdin option
+In-Reply-To: <cover.1485520718.git.johannes.schindelin@gmx.de>
+Message-ID: <3b0bad26045ed175f40f050e15b65cb6a8f2368c.1485520718.git.johannes.schindelin@gmx.de>
+References: <cover.1476202100.git.johannes.schindelin@gmx.de> <cover.1485520718.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:kes5BL0719/MdrvgPPgWJXe8JqMRmtWZVo9vNFyG1v2d1/SVIc0
- IRAhGewQKYKP+XR5SowJojqAuR67/DPz1p1fQ493KFe5JX7OHXlkyIY4bJGEQGJP94QJpHU
- UI/GZXKizGuIBq8gcXQWM0zDK08XFDbmPe5iV4HQvN1cNGUbCayoJ/hR+ev3hEycYc+lpu+
- nksIVXQnrHNN9V4iFZ0RQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:X+cChFmDoe4=:OJQme9zYv5MNaDqTaE4Sys
- h6Wa2vtIl4bIDwsIlwhjKjZF1nr1kgqw+Tb0welxKZQgg6xU/DlonEmaQy/tWj6kSnK/4BMH3
- azoV+foQewBg5WkkKg8vQUok6gpsFbFQBfwvF3QhOZmeyel7C9HVE11QgbnmfIJ0Q7Ybont45
- RQjrdvQ2VUkRN6ehfXTIfIif+u+SOJdEJHAr022RVj5+B0iinwSnu2nd+a0eFsSjq2bRht6JK
- khdl2uXO6BrU4uA7aQMR+HbYDJ6jkRXu/uNlBzPOSnlInrnZBpqgcugqS1c5ERAyIHJ4fRrMR
- N8FZSqAQaPjoOBtQi0lrVpfMMDpEEeZc8ak+rjT1vGWqyG+DSwxHi7uT06lNi2mB15A1nAMf9
- sCyMdqQ/Y2K7oTnumcB6sejuRvAy8gBkjMFMdVBDbVXW6Ga9GbidDjKYkyiJC9tfccfkNi1FB
- jA/NjniaePaHfbADMMuDwfDzVr10JIJET0Cp5iH0Pg8xUNXRZkqJmweTZ7yW1MQ2Isb1wyhFH
- KXjWyInDNUPKHhTkE+W4KOEo8R7jqwWq3n18fV1hLOgLWz5ZlVxJaMA70wpnSwSfvayBs/Jzq
- rA3SJa4VIey9JxyIINHNu1R0qaJZjC7PGo64GoNLdPUfUmBFzUyePV3A1e7IEBnp//LLHJdJy
- ZTa7+6Tq+9njbOGblQfwLSz247C569/m3CCh7c0YjuYMxm0AgFnu2NcajIjYhTIFUyyAzZY3A
- nxvZLh+tBeIDTgFR6tKL6Ks55aLVrL4atIbFxfl8TIj/LNYWh29L5zLNu/WkhNEpcIaPnHSPs
- dWlNGWaTyvJ/MSO0CREk5xLLMiJdwfp9TrrrOBEU6HO277h/tm8pT7uhrC71bbZ4psWqYE7JF
- pPE72+QV1pSrJT9Z1xxAdbUBlbRVLBjNI+dFJOMZwJ6zwwt8DZzcaTPuuTiBVlzAROLa4r9eQ
- 37bdyHEdgGNyWNG8wnvFHoL7H5HYKYn61btU7p7lUW5yy6CcIQ9DptQ9MR2drtwFMSLzlK2hS
- xTuip/5OVQKJtSMZllFIfL/fBuLgottP/lktm9kdMpRt
+X-Provags-ID: V03:K0:7malg/tOds9ntptf4Dn0f8/RvSglgUOM86JXvR9dORsmtgxekek
+ TyiueG5kD6i3pQVD36lgZ7F/fux21ONrsdYljFN6TlxOahDtpnjcdCaN5tQ5DRhJo932a+T
+ UUgWQEQTCiKyhBrKlOejniFbcgd43FOTy+m5tLE2x+QzqAUmPsQD+HAJMRwiaFS9ik62djn
+ c82dr5mzbetCsCxZRlNkQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:BX183ouufPs=:7V2UZj8IjrLE5uXxjDdeYG
+ jQAmmHq1R2Hm50Y4V45vh1ssqgn3hrces24AleEmoaK9lf8VMqhqG8KkQo+ldF5dAue+Y4Tak
+ m8irzPKULtjUnVN+ZfVBNItphzCsFRSw4yfnTgvnfkzZ5NzTKQP/5wgALHOx0zJ3QX6GA58Lz
+ y/qK0Aw3eGoZFSuKIfTjiCR61ZyAMdiqY+SWLybF60UuUyrhgpFEMCoXaljl0BoDdedUbtFbu
+ 1PI82kr1Ph+5IwHwgDfVR7gx3UVc7paGZecTJI80DR4YNX5RRD6AW/95y4Zr99P1Rt/UMMVbA
+ H+jpSdOI+rNsDd8rqFx1VhdfiV1i3q7v8PmrivJw5WYxsfMUBfFmlhnxYCS4PY3KQTrjTE6w1
+ cmpXk/K645ZMrhU0p5VKo+m+pt2+erh2t/IjRnJBAgP/AP9mqmt6rSvKxAY0FBF3X8arbSRkC
+ Vn8sLzi+tUdMgxGxdmCuodiHCNoZDgbOJol6DFks/MfOYhMKE134dXmgjSapnP9ckMU0QZ1NO
+ ZRNCMkAVw8+F5H/HgZzKZ1+m3oR7DGklAkOPjnMuvdR5fmniHpB3h6annaKUq2osGLQH0hF5W
+ /HOo0/4iXp5BDlQHRYGSdSlcTD1EHVb+1BH8U8Rg/hxf7dHzVJqo0roP+VUV2zvJTBOOipehZ
+ HN7vriJVPHO66g2b0l9RnrsE9H/Yt2m/DbcSftoRaDe6/Uw8ChYebb6blCSuuGYHsDqNmR5qD
+ sfR2i26iInnsDfzN+aVp5E+bsHADZTTRpDQLYI8N8CCGajeLJhoXhAwiLGTLbWMtgqHvm8BE7
+ xD2WL1cv2ZtQ7osx0vk3nzUPSbc8Q==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+Just like with other Git commands, this option makes it read the paths
+from the standard input. It comes in handy when resetting many, many
+paths at once and wildcards are not an option (e.g. when the paths are
+generated by a tool).
 
-On Wed, 25 Jan 2017, Johannes Schindelin wrote:
+Note: we first parse the entire list and perform the actual reset action
+only in a second phase. Not only does this make things simpler, it also
+helps performance, as do_diff_cache() traverses the index and the
+(sorted) pathspecs in simultaneously to avoid unnecessary lookups.
 
-> This is required for the test to pass on Windows, where $TRASH_DIRECTORY
-> is a POSIX path, while Git works with Windows paths instead. Using
-> `$(pwd)` is the common workaround: it reports a Windows path (while `$PWD`
-> would report the POSIX equivalent which, however, would only be understood
-> by shell and Perl scripts).
-> 
-> Duy, if you re-roll the `worktree-move` patch series, would you terribly
-> mind squashing this in?
-> 
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ Documentation/git-reset.txt |  9 ++++++++
+ builtin/reset.c             | 54 ++++++++++++++++++++++++++++++++++++++++++++-
+ t/t7107-reset-stdin.sh      | 33 +++++++++++++++++++++++++++
+ 3 files changed, 95 insertions(+), 1 deletion(-)
+ create mode 100755 t/t7107-reset-stdin.sh
 
-Given that you add all kinds of SQUASH patches in `pu` that have not even
-always been discussed on the mailing list, I would like to kindly ask you
-to please add this patch to the nd/worktree-move branch for the time being
-(i.e. until Duy responds), so that I am not continuously pestered by
-failing Continuous Integration builds about a problem for which I have
-provided a fix already.
-
-Thanks,
-Johannes
+diff --git a/Documentation/git-reset.txt b/Documentation/git-reset.txt
+index 25432d9257..abb71bb805 100644
+--- a/Documentation/git-reset.txt
++++ b/Documentation/git-reset.txt
+@@ -10,6 +10,7 @@ SYNOPSIS
+ [verse]
+ 'git reset' [-q] [<tree-ish>] [--] <paths>...
+ 'git reset' (--patch | -p) [<tree-ish>] [--] [<paths>...]
++'git reset' [-q] [--stdin [-z]] [<tree-ish>]
+ 'git reset' [--soft | --mixed [-N] | --hard | --merge | --keep] [-q] [<commit>]
+ 
+ DESCRIPTION
+@@ -97,6 +98,14 @@ OPTIONS
+ --quiet::
+ 	Be quiet, only report errors.
+ 
++--stdin::
++	Instead of taking list of paths from the command line,
++	read list of paths from the standard input.  Paths are
++	separated by LF (i.e. one path per line) by default.
++
++-z::
++	Only meaningful with `--stdin`; paths are separated with
++	NUL character instead of LF.
+ 
+ EXAMPLES
+ --------
+diff --git a/builtin/reset.c b/builtin/reset.c
+index 8ab915bfcb..1d3075b7ee 100644
+--- a/builtin/reset.c
++++ b/builtin/reset.c
+@@ -21,10 +21,13 @@
+ #include "parse-options.h"
+ #include "unpack-trees.h"
+ #include "cache-tree.h"
++#include "strbuf.h"
++#include "quote.h"
+ 
+ static const char * const git_reset_usage[] = {
+ 	N_("git reset [--mixed | --soft | --hard | --merge | --keep] [-q] [<commit>]"),
+ 	N_("git reset [-q] [<tree-ish>] [--] <paths>..."),
++	N_("git reset [-q] [--stdin [-z]] [<tree-ish>]"),
+ 	N_("git reset --patch [<tree-ish>] [--] [<paths>...]"),
+ 	NULL
+ };
+@@ -267,7 +270,9 @@ static int reset_refs(const char *rev, const struct object_id *oid)
+ int cmd_reset(int argc, const char **argv, const char *prefix)
+ {
+ 	int reset_type = NONE, update_ref_status = 0, quiet = 0;
+-	int patch_mode = 0, unborn;
++	int patch_mode = 0, nul_term_line = 0, read_from_stdin = 0, unborn;
++	char **stdin_paths = NULL;
++	int stdin_nr = 0, stdin_alloc = 0;
+ 	const char *rev;
+ 	struct object_id oid;
+ 	struct pathspec pathspec;
+@@ -286,6 +291,10 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
+ 		OPT_BOOL('p', "patch", &patch_mode, N_("select hunks interactively")),
+ 		OPT_BOOL('N', "intent-to-add", &intent_to_add,
+ 				N_("record only the fact that removed paths will be added later")),
++		OPT_BOOL('z', NULL, &nul_term_line,
++			N_("paths are separated with NUL character")),
++		OPT_BOOL(0, "stdin", &read_from_stdin,
++				N_("read paths from <stdin>")),
+ 		OPT_END()
+ 	};
+ 
+@@ -295,6 +304,43 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
+ 						PARSE_OPT_KEEP_DASHDASH);
+ 	parse_args(&pathspec, argv, prefix, patch_mode, &rev);
+ 
++	if (read_from_stdin) {
++		strbuf_getline_fn getline_fn = nul_term_line ?
++			strbuf_getline_nul : strbuf_getline_lf;
++		int flags = PATHSPEC_PREFER_FULL |
++			PATHSPEC_STRIP_SUBMODULE_SLASH_CHEAP;
++		struct strbuf buf = STRBUF_INIT;
++		struct strbuf unquoted = STRBUF_INIT;
++
++		if (patch_mode)
++			die(_("--stdin is incompatible with --patch"));
++
++		if (pathspec.nr)
++			die(_("--stdin is incompatible with path arguments"));
++
++		while (getline_fn(&buf, stdin) != EOF) {
++			if (!nul_term_line && buf.buf[0] == '"') {
++				strbuf_reset(&unquoted);
++				if (unquote_c_style(&unquoted, buf.buf, NULL))
++					die(_("line is badly quoted"));
++				strbuf_swap(&buf, &unquoted);
++			}
++			ALLOC_GROW(stdin_paths, stdin_nr + 1, stdin_alloc);
++			stdin_paths[stdin_nr++] = xstrdup(buf.buf);
++			strbuf_reset(&buf);
++		}
++		strbuf_release(&unquoted);
++		strbuf_release(&buf);
++
++		ALLOC_GROW(stdin_paths, stdin_nr + 1, stdin_alloc);
++		stdin_paths[stdin_nr++] = NULL;
++		flags |= PATHSPEC_LITERAL_PATH;
++		parse_pathspec(&pathspec, 0, flags, prefix,
++			       (const char **)stdin_paths);
++
++	} else if (nul_term_line)
++		die(_("-z requires --stdin"));
++
+ 	unborn = !strcmp(rev, "HEAD") && get_sha1("HEAD", oid.hash);
+ 	if (unborn) {
+ 		/* reset on unborn branch: treat as reset to empty tree */
+@@ -385,5 +431,11 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
+ 	if (!pathspec.nr)
+ 		remove_branch_state();
+ 
++	if (stdin_paths) {
++		while (stdin_nr)
++			free(stdin_paths[--stdin_nr]);
++		free(stdin_paths);
++	}
++
+ 	return update_ref_status;
+ }
+diff --git a/t/t7107-reset-stdin.sh b/t/t7107-reset-stdin.sh
+new file mode 100755
+index 0000000000..997dc42dd2
+--- /dev/null
++++ b/t/t7107-reset-stdin.sh
+@@ -0,0 +1,33 @@
++#!/bin/sh
++
++test_description='reset --stdin'
++
++. ./test-lib.sh
++
++test_expect_success 'reset --stdin' '
++	test_commit hello &&
++	git rm hello.t &&
++	test -z "$(git ls-files hello.t)" &&
++	echo hello.t | git reset --stdin &&
++	test hello.t = "$(git ls-files hello.t)"
++'
++
++test_expect_success 'reset --stdin -z' '
++	test_commit world &&
++	git rm hello.t world.t &&
++	test -z "$(git ls-files hello.t world.t)" &&
++	printf world.tQworld.tQhello.tQ | q_to_nul | git reset --stdin -z &&
++	printf "hello.t\nworld.t\n" >expect &&
++	git ls-files >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success '--stdin requires --mixed' '
++	echo hello.t >list &&
++	test_must_fail git reset --soft --stdin <list &&
++	test_must_fail git reset --hard --stdin <list &&
++	git reset --mixed --stdin <list
++'
++
++test_done
++
+-- 
+2.11.1.windows.prerelease.2.9.g3014b57
