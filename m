@@ -2,104 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.1 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.4 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1267A1F6DC
-	for <e@80x24.org>; Fri, 27 Jan 2017 10:46:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B20F61F6DC
+	for <e@80x24.org>; Fri, 27 Jan 2017 10:49:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932531AbdA0Kny (ORCPT <rfc822;e@80x24.org>);
-        Fri, 27 Jan 2017 05:43:54 -0500
-Received: from mout.gmx.net ([212.227.17.22]:58829 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S932522AbdA0Kmm (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 27 Jan 2017 05:42:42 -0500
-Received: from virtualbox ([37.201.192.48]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MSHax-1cuTbi14xP-00TSdG; Fri, 27
- Jan 2017 11:35:41 +0100
-Date:   Fri, 27 Jan 2017 11:35:38 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     git@vger.kernel.org, Segev Finer <segev208@gmail.com>,
-        Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2 3/3] connect: Add the envvar GIT_SSH_VARIANT and
- ssh.variant config
-In-Reply-To: <xmqqo9yt4o5i.fsf@gitster.mtv.corp.google.com>
-Message-ID: <alpine.DEB.2.20.1701271132270.3469@virtualbox>
-References: <2ff29a4d00e0e13d460122d8008e762361ca90aa.1483358673.git.johannes.schindelin@gmx.de> <cover.1485442231.git.johannes.schindelin@gmx.de> <3d451f2c357a3fd7f0b0e4b427548553d7d05306.1485442231.git.johannes.schindelin@gmx.de>
- <xmqqo9yt4o5i.fsf@gitster.mtv.corp.google.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+        id S932711AbdA0Ktc convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Fri, 27 Jan 2017 05:49:32 -0500
+Received: from zimbra-vnc.tngtech.com ([83.144.240.98]:14436 "EHLO
+        proxy.tng.vnc.biz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932718AbdA0Kta (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 27 Jan 2017 05:49:30 -0500
+Received: from localhost (localhost [127.0.0.1])
+        by proxy.tng.vnc.biz (Postfix) with ESMTP id 6A85A1E1877;
+        Fri, 27 Jan 2017 11:49:27 +0100 (CET)
+Received: from proxy.tng.vnc.biz ([127.0.0.1])
+        by localhost (proxy.tng.vnc.biz [127.0.0.1]) (amavisd-new, port 10032)
+        with ESMTP id CaVuWQO-SW1T; Fri, 27 Jan 2017 11:49:27 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+        by proxy.tng.vnc.biz (Postfix) with ESMTP id 053541E2E13;
+        Fri, 27 Jan 2017 11:49:27 +0100 (CET)
+X-Virus-Scanned: amavisd-new at 
+Received: from proxy.tng.vnc.biz ([127.0.0.1])
+        by localhost (proxy.tng.vnc.biz [127.0.0.1]) (amavisd-new, port 10026)
+        with ESMTP id ZlFvDTAtYqqz; Fri, 27 Jan 2017 11:49:26 +0100 (CET)
+Received: from [192.168.178.64] (46.128.140.114.dynamic.cablesurf.de [46.128.140.114])
+        by proxy.tng.vnc.biz (Postfix) with ESMTPSA id 924711E1877;
+        Fri, 27 Jan 2017 11:49:26 +0100 (CET)
+Subject: Re: SubmittingPatches: drop temporal reference for PGP signing
+To:     Philip Oakley <philipoakley@iee.org>,
+        Junio C Hamano <gitster@pobox.com>
+References: <923cd4e4-5c9c-4eaf-0fea-6deff6875b88@tngtech.com>
+ <20170125002116.22111-1-sbeller@google.com>
+ <33E354BCDB9A4192B69B9B399381659E@PhilipOakley>
+ <CAGZ79kaRdtKD7DNJRWXsyg07GbTM4OsKUmHHcFczEMJA1YK2KA@mail.gmail.com>
+ <baff65ba-1e98-d5a7-5b5a-a50a7fc723ee@tngtech.com>
+ <xmqqpoj965yf.fsf@gitster.mtv.corp.google.com>
+ <4B89512D54614F09817EA9901A8B625D@PhilipOakley>
+Cc:     Stefan Beller <sbeller@google.com>, Johannes Sixt <j6t@kdbg.org>,
+        bitte.keine.werbung.einwerfen@googlemail.com, git@vger.kernel.org
+From:   Cornelius Weig <cornelius.weig@tngtech.com>
+Message-ID: <60e9abdf-cc37-33d8-e7eb-8a3370ffe1cc@tngtech.com>
+Date:   Fri, 27 Jan 2017 11:49:26 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.6.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:JAKNbrCNQAAV0CMXjfaPuuLAaWinnx7S20RlT5hORbuhAsJdCTW
- 6WkScZTyw2nJpreBNn14U/J/dzu0NGeQkJdjJjS38WPXjrtPsCOe7T06deD9eejOj21SPU9
- EthyziBKSLDouVrkMxzYdgJramgdyBeA3Cww+0FUmawJ24s2iOTmjQv/OhZ+RtstrKtDW6v
- KxLx/H3WusE3Y3sAFws4A==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:BM4mdFPRMJA=:k/19oioB2gHUfqJrB5ZM5X
- Z7Rw+AQ7m85uRPPB3ErGHDnHp7/vvFIsXP9hFswSrcKqg3cUppR0eFeFxBh7kJOTCvVL5RaLg
- sHFanz4rvZVtT64dzL2BISA78L+w/kUuYVHgjUOWw0jhjot+K2dPg+4vjiCrwdvcvqXziZNi0
- YNWQlfcLa01rlAvqdHi/oG82UzB+uHYo2vljxSlGu+jENtogwWD9NQRrLjmyoGTGHXfCX+zD2
- RkGT8lYlFZrwnMNE5S5DbcPc/i9pckDShrlViCql0zUp3MxLi05Ugq8GACGoackjxbXb/AhAC
- kYX1nuHADp7oH+xknwCxO4M3QjV2fCCzUQJPBQRIEc42Qhu9Xz4rzvy6h5RJbWszUkbdZrQLj
- 3j47C6zkQsi0hZWaOVAtbFYYC1zuwGI9T+QMzUljf07F6hYdMAy+w9b0Lkhaw8F6mVMGmQeGw
- uRi1YT1cpZP2TO9sj8nsbrGm1HfWYDWgZoV5x3dzKprlJIuoB3+7j921aC6qNiFqMD+CTuKPJ
- k6+xOMroLJGJOK1c0wmLvHlTNCFsuyFMz7qjr9ujoj181SCO0sup5xzERYjXa2POwvHOi3lsJ
- qzqPIbiapiWTI6uuaY0H8yfit6OpdaghOMccMGa0R2623TpsNetiYXBzl9Ur6xHL9yPtBYk9n
- 0muYmEiSMa5RtUuQVN/WuE9qjT4N9UjcjvfiYI6PiPkXwRFlQcyrq5pw4hFPzSFEH0F3pT5M+
- eSHUtWIEpMpn4j26SDjLSLSGA6P7+9FNhl1rPLmqKb4lXpXnQAU+kec38SBhHUvy8ZHG81M6C
- rqaJ91jLnMhuZi44wrZgNO9qERzKS1suYWWA3KlCq0WHDRYsv1jUA1i+T+UEDNkkHLi0AR59i
- 4M3BZrDV/QN5bHmSpc8ckF85jGxWwWXeSFycZmQkaOmUYIzgjgjH5Kt8283VlY47C0jkepG+c
- W+PWMCWS4WoEKXmG1MmdfgL6hUHwM6HIzjmQzamwtAh+mAwdpQI1HzpBE8anHkYbQgPTMAxeI
- 4vJROTglm/4Gd9vGGWPsFqaM2/+f0pcIyj7Z+lGn+y2JaHV+Z0SJKyQ5yL+bDIcCAA==
+In-Reply-To: <4B89512D54614F09817EA9901A8B625D@PhilipOakley>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8BIT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
 
-On Thu, 26 Jan 2017, Junio C Hamano wrote:
 
-> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+On 01/26/2017 09:58 PM, Philip Oakley wrote:
+> From: "Junio C Hamano" <gitster@pobox.com>
+>> Cornelius Weig <cornelius.weig@tngtech.com> writes:
+>>
+>>> How about something along these lines? Does the forward reference
+>>> break the main line of thought too severly?
+>>
+>> I find it a bit distracting for those who know PGP signing has
+>> nothing to do with signing off your patch, but I think that is OK
+>> because they are not the primary target audience of this part of the
+>> document.
 > 
-> > diff --git a/connect.c b/connect.c
-> > index 9f750eacb6..7b4437578b 100644
-> > --- a/connect.c
-> > +++ b/connect.c
-> > @@ -691,6 +691,24 @@ static const char *get_ssh_command(void)
-> >  	return NULL;
-> >  }
-> >  
-> > +static int handle_ssh_variant(int *port_option, int *needs_batch)
-> > +{
-> > +	const char *variant;
-> > +
-> > +	if (!(variant = getenv("GIT_SSH_VARIANT")) &&
-> > +		git_config_get_string_const("ssh.variant", &variant))
-> > +		return 0;
-> > +
-> > +	if (!strcmp(variant, "plink") || !strcmp(variant, "putty"))
-> > +		*port_option = 'P';
-> > +	else if (!strcmp(variant, "tortoiseplink")) {
-> > +		*port_option = 'P';
-> > +		*needs_batch = 1;
-> > +	}
-> > +
-> > +	return 1;
-> > +}
+> Agreed. I this case the target audience was those weren't aware of that.
+
+Yes, maybe the forward reference does give a wrong hint about a
+connection between sign-off and pgp-signing. However, I would still vote
+for the following change suggested by sbeller@google.com:
+
+-Do not PGP sign your patch, -at least for now-. Most likely, your (...)
++Do not PGP sign your patch. Most likely, your maintainer or other (...)
+
+
 > 
-> Between handle and get I do not think there is strong reason to
-> favor one over the other.
+> Maybe even s/by signing off/by adding your Signed-off-by:/ to be sure
+> that the reader knows that it is _their certification_ that is being
+> sought. Even if it does double up on the 'your'.
+> 
 
-That is correct. "handle" and "get" are two very beautiful words, and none
-of them deserves to take a back seat behind the other.
+I don't think doubling on the 'your' will make the heading clearer. The
+main intention of this change is to avoid mixups with pgp-signing and
+that would IMHO not improve by that.
+Besides, I find the colon in the heading a bit awkward. Is the following
+version as expressive as with the colon?
 
-In this case, "get" is inappropriate, though, as the function does not
-return the ssh variant, nor does it assign the ssh variant to any variable
-to which any of its argument points.
-
-Will try to find the time to address the other issues soon,
-Johannes
+-(5) Sign your work
++(5) Certify your work by adding Signed-off-by
