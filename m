@@ -2,186 +2,168 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 25B261F70F
-	for <e@80x24.org>; Fri, 27 Jan 2017 00:27:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DECE21F70F
+	for <e@80x24.org>; Fri, 27 Jan 2017 00:35:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753333AbdA0A1X (ORCPT <rfc822;e@80x24.org>);
-        Thu, 26 Jan 2017 19:27:23 -0500
-Received: from mail-pf0-f181.google.com ([209.85.192.181]:35779 "EHLO
-        mail-pf0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753210AbdA0A1W (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 Jan 2017 19:27:22 -0500
-Received: by mail-pf0-f181.google.com with SMTP id f144so68912225pfa.2
-        for <git@vger.kernel.org>; Thu, 26 Jan 2017 16:26:49 -0800 (PST)
+        id S1752630AbdA0Afe (ORCPT <rfc822;e@80x24.org>);
+        Thu, 26 Jan 2017 19:35:34 -0500
+Received: from mail-pg0-f50.google.com ([74.125.83.50]:34756 "EHLO
+        mail-pg0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752130AbdA0Afd (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 Jan 2017 19:35:33 -0500
+Received: by mail-pg0-f50.google.com with SMTP id 14so76465819pgg.1
+        for <git@vger.kernel.org>; Thu, 26 Jan 2017 16:35:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=subject:to:references:cc:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-transfer-encoding;
-        bh=/FHBvtmiJApexgpVnfJ7X8e4FPKB8xgiwBUmdQYEX3Y=;
-        b=TnVbI5H2VJns9biOihHzE0M06fveLYH6AZpX20xYY16mqUgCpwuXB6ixVvFacwFq/v
-         h9fyKvKs8D4Y6vK7RWFx/m2MWQKsYQpz/iNtKNkWNQx0k2lSKFllbOJWYW9eNh3aZmeK
-         lWMpRvAl044A4n4FkaPkkfKt7xDtn2JF5umlrX6oOCvXHKqapIV9gO0rhqKmljSbFzGe
-         iAj07IksY9jtNY56dup0mV6auQKhMIN6a8bobKqwVlmW8bcs6Kfj+OiaBPTmXvI7ZzjK
-         BYwPQhPLR34MPwtv0QNUvc8wPViyTNl8f0ln4d/TO0LqcvCdflXWXtxS299mzTnPmP6w
-         Ofpg==
+        bh=0I0D4Y+UBW9za/7Nvk/Bc5IILsy03TNZDMDrfJ0HKiM=;
+        b=I8zKZLTC4zqc5EOQC6zCzkXnCxnoKZZDgRgODGwaSsO8m2GUt9a1ibbfxfkTRlln9G
+         EBbvKYQ8XEESi8X2YjFkro+7IOHGqW7QyWK2bI8SWVa/1svkEHM5pmN0ri6UL3gdbnWz
+         JCWDDzBjCJRjxbCzXrrQWHZeFXyZgQEWgKPyROa0kVlUkz4bi5mQXzoJeSUNE8qgvBSj
+         cjwx376z4wtFlgRrWNSVQ2p2AHaWTeUZFmuCasXtoQZ0mm4OHUn1HsnMpkFp/xywYYtV
+         FT7oHLZb9vhsKsZjAxVdtB8E3hpYW/cmrNtkIgyiZI0RvSjLz/rFyGgaldP9aIp/QKOF
+         g5zA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:references:cc:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-transfer-encoding;
-        bh=/FHBvtmiJApexgpVnfJ7X8e4FPKB8xgiwBUmdQYEX3Y=;
-        b=LISRxMppHEtx7FIcmHAm3kIh0iM7TEFSPvGmd986gVr/wphTYU4fWfmHgHb3Du79ER
-         EsElqxeKqkI/YXSr7s5sBzIkfGeSS/T0IppP+bSFJjddV4/eFXAU09j/8gG1obMQGhls
-         s4nxm+BKIAHOJ1r6j0UvyeWYToHPOaoRDlqUP5rat5YvHaLoBU9g1bot0BTW6L/3Y+sa
-         E/pb0yCWiZ5rQ1IpzfeKB6LwAijbC1gLhbp3EaFV3So3fjkRpXWrxT9apyI+x0QgOPqS
-         0I+tNajqXhubqHvca668U68mrixglFoinJH9R+CoFaNM052mAWIpI0K6y8u0jcL5Saqr
-         YX9w==
-X-Gm-Message-State: AIkVDXKUCsxu69uvYpC8A9NjA1R2ia/QCnutpUj2JWdkccizS3RY+OA2bULWR3rYEF0vi+iH
-X-Received: by 10.98.215.70 with SMTP id v6mr6091642pfl.141.1485476808682;
-        Thu, 26 Jan 2017 16:26:48 -0800 (PST)
+        bh=0I0D4Y+UBW9za/7Nvk/Bc5IILsy03TNZDMDrfJ0HKiM=;
+        b=UAY4fOPMElhNJPcmMKDRrEXgqBCRtW8KBkysaWQQKSyR3IfH/Msb91aAPMo25BuPq+
+         WY54hmMH2Ck8Uzh9J6FvVT/20Ncse5Fa+36InDaTX7bDF04WERCxxOxji6fCKrIDYSvb
+         6g4yDQtoC/sXd1nrNuLyJfP5cK8cvE/IX9aQp7rTtKFx1+LHdxDJaRnzXhn/965XKvmQ
+         PR9nEqAzhxlnZg2IXg9ZThVHC3Fzc5tBmUxRpRzY7SsPVXwd0qkIS95cN7UUYv7KDEeW
+         2fDYAbm6h03Eg7gzSPXS+vCnJO1Pn41iqtgypBpK9jCRgCMfrsGU7KhYJjZPasPMpEbD
+         bEOA==
+X-Gm-Message-State: AIkVDXKX1gECPWAN0QClbb38AGF2BJzZKAj1Ed2vz2x1XHEQNMDeFWeTFgQa3bSM4uaLFxgY
+X-Received: by 10.98.75.16 with SMTP id y16mr6201740pfa.23.1485477332615;
+        Thu, 26 Jan 2017 16:35:32 -0800 (PST)
 Received: from twelve2.mtv.corp.google.com ([2620:0:1000:5b10:f0de:f19e:2597:5e36])
-        by smtp.gmail.com with ESMTPSA id w76sm5984071pfd.74.2017.01.26.16.26.47
+        by smtp.gmail.com with ESMTPSA id 199sm5996062pfu.91.2017.01.26.16.35.31
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 26 Jan 2017 16:26:47 -0800 (PST)
-Subject: Re: [RFC 00/14] Allow fetch-pack to send ref names (globs allowed)
-To:     Jeff King <peff@peff.net>
+        Thu, 26 Jan 2017 16:35:31 -0800 (PST)
+Subject: Re: [RFC 02/14] upload-pack: allow ref name and glob requests
+To:     Junio C Hamano <gitster@pobox.com>
 References: <cover.1485381677.git.jonathantanmy@google.com>
- <20170126230046.aknesybfyzxhx3ia@sigill.intra.peff.net>
+ <cover.1485381677.git.jonathantanmy@google.com>
+ <d0d42b3bb4cf755f122591e191354c53848f197d.1485381677.git.jonathantanmy@google.com>
+ <xmqqd1f931g7.fsf@gitster.mtv.corp.google.com>
 Cc:     git@vger.kernel.org
 From:   Jonathan Tan <jonathantanmy@google.com>
-Message-ID: <67afbb3b-5d0b-8c0d-3f6e-3f559c68f4bd@google.com>
-Date:   Thu, 26 Jan 2017 16:26:47 -0800
+Message-ID: <dc09e446-6d29-8b94-f440-6aa094ab9dc9@google.com>
+Date:   Thu, 26 Jan 2017 16:35:31 -0800
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
  Thunderbird/45.5.1
 MIME-Version: 1.0
-In-Reply-To: <20170126230046.aknesybfyzxhx3ia@sigill.intra.peff.net>
-Content-Type: text/plain; charset=utf-8; format=flowed
+In-Reply-To: <xmqqd1f931g7.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset=windows-1252; format=flowed
 Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thanks for your comments.
 
-On 01/26/2017 03:00 PM, Jeff King wrote:
-> On Wed, Jan 25, 2017 at 02:02:53PM -0800, Jonathan Tan wrote:
->
->> Negotiation currently happens by upload-pack initially sending a list of
->> refs with names and SHA-1 hashes, and then several request/response
->> pairs in which the request from fetch-pack consists of SHA-1 hashes
->> (selected from the initial list). Allowing the request to consist of
->> names instead of SHA-1 hashes increases tolerance to refs changing
->> (due to time, and due to having load-balanced servers without strong
->> consistency),
->
-> Interesting. My big question is: what happens when a ref _does_ change?
-> How does the client handle this?
->
-> The existing uploadpack.allowReachableSHA1InWant is there to work around
-> the problem that an http client may get a ref advertisement in one step,
-> and then come back later to do the want/have negotiation, at which point
-> the server has moved on (or maybe it's even a different server). There
-> the client says "I want sha1 X", and the server needs to say "well, X
-> isn't my tip now, but it's still acceptable for you to fetch".
->
-> But this seems to go in the opposite direction. After the advertisement,
-> the client decides "OK, I want to fetch refs/heads/master which is at
-> SHA1 X". It connects to the server and says "I want refs/heads/master".
-> Let's say the server has moved its version of the ref to SHA1 Y.
->
-> What happens? I think the server will say "wanted-ref master Y". Does
-> the client just decide to use "Y" then?  How does that interact with any
-> decisions the client might have made about X? I guess things like
-> fast-forwards have to be decided after we fetch the objects anyway
-> (since we cannot compute them until we get the pack), so maybe there
-> aren't any such decisions. I haven't checked.
 
-Yes, the server will say "wanted-ref master Y". The relevant code 
-regarding the decisions the client makes regarding X or Y is in do_fetch 
-in builtin/fetch.c.
-
-There, I can see these decisions done using X:
-  - check_not_current_branch (forbidding fetching that modifies the
-    current branch) (I just noticed that this has to be done for Y too,
-    and will do so)
-  - prune refs [*]
-  - automatic tag following [*]
-
-[*] X and Y may differ in that one relevant ref appears in one set but 
-not in the other (because a ref was added or removed in the meantime), 
-causing a different result if these decisions were to be done using Y, 
-but I think that it is OK either way.
-
-Fetch optimizations (for example, everything_local in fetch-pack.c) that 
-check if the client really needs to fetch are also done using X, of 
-course (and if the optimization succeeds, there is no Y).
-
-Fast-forwards (and everything else in store_updated_refs) are decided 
-using Y.
-
->> and is a step towards eliminating the need for the server
->> to send the list of refs first (possibly improving performance).
+On 01/26/2017 02:23 PM, Junio C Hamano wrote:
+> Jonathan Tan <jonathantanmy@google.com> writes:
 >
-> I'm not sure it is all that useful towards that end. You still have to
-> break compatibility so that the client tells the server to suppress the
-> ref advertisement. After that, it is just a question of asking for the
-> refs. And you have two options:
->
->   1. Ask the server to tell you the values of some subset of the refs,
->      pick what you want, and then do the want/have as normal.
->
->   2. Go straight to the want/have, but tell the server the refs you want
->      instead of their sha1s.
->
-> I think your approach here would lead to (2).
->
-> But (1), besides being closer to how the protocol works now, seems like
-> it's more flexible. I can ask about the ref state without necessarily
-> having to retrieve the objects. How would you write git-ls-remote with
-> such a system?
-
-Assuming a new protocol with the appropriate backwards compatibility 
-(which would have to be done for both options), (2) does save a 
-request/response pair (because we can send the ref names directly as 
-"want-ref" in the initial request instead of sending ref names in the 
-initial request and then confirming them using "want <SHA-1>" in the 
-subsequent request). Also, (2) is more tolerant towards refs changing 
-over time. (1) might be closer to the current protocol, but I think that 
-the difference is not so significant (only in "want-ref" vs "want" 
-request and the "wanted-ref" response).
-
-As for git-ls-remote, I currently think that it would have to use the 
-existing protocol.
-
->> [1] There has been some discussion about whether the server should
->> accept partial ref names, e.g. [2]. In this patch set, I have made the
->> server only accept full names, and it is the responsibility of the
->> client to send the multiple patterns which it wants to match. Quoting
->> from the commit message of the second patch:
+>> Currently, while performing packfile negotiation [1], upload-pack allows
+>> clients to specify their desired objects only as SHA-1s. This causes:
+>> (a) vulnerability to failure when an object turns non-existent during
+>>     negotiation, which may happen if, for example, upload-pack is
+>>     provided by multiple Git servers in a load-balancing arrangement,
+>>     and
+>> (b) dependence on the server first publishing a list of refs with
+>>     associated objects.
 >>
->>   For example, a client could reasonably expand an abbreviated
->>   name "foo" to "want-ref foo", "want-ref refs/heads/foo", "want-ref
->>   refs/tags/foo", among others, and ensure that at least one such ref has
->>   been fetched.
+>> To eliminate (a) and take a step towards eliminating (b), teach
+>> upload-pack to support requests in the form of ref names and globs (in
+>> addition to the existing support for SHA-1s) through a new line of the
+>> form "want-ref <ref>" where ref is the full name of a ref, a glob
+>> pattern, or a SHA-1. At the conclusion of negotiation, the server will
+>> write "wanted-ref <SHA-1> <name>" for all requests that have been
+>> specified this way.
 >
-> That has a cost that scales linearly with the number of refs, because
-> you have to ask for each name 6 times.  After the discussion you linked,
-> I think my preference is more like:
->
->   1. Teach servers to accept a list of patterns from the client
->      which will be resolved in order. Unlike your system, the client
->      only needs to specify the list once per session, rather than once
->      per ref.
->
->   2. (Optional) Give a shorthand for the stock patterns that git has had
->      in place for years. That saves some bytes over specifying the
->      patterns completely (though it's really not _that_ many bytes, so
->      perhaps the complication isn't a big deal).
+> I am not sure if this "at the conclusion of" is sensible.  It is OK
+> to assume that what the client side has is fixed, and it is probably
+> OK to desire that what the server side has can change, but at the
+> same time, it feels quite fragile to move the goalpost in between.
 
-I envision that most fetches would be done on a single name (with or 
-without globs), that expands to 5 (so it is not so crucial to factor out 
-the list of patterns). Having said that, I am open to changing this.
+Do you have any specific concerns as to this fragility? Peff mentioned 
+some concerns with the client making some decisions based on the initial 
+SHA-1 vs the SHA-1 reported by "wanted-ref", to which I replied [1].
+
+> Stepping back a bit, in an environment that involves multiple server
+> instances that have inconsistent set of refs, can the negotiation
+> even be sensibly and safely implemented?  The first server the
+> client contacts may, in response to a "have", say "I do have that
+> commit so you do not have to send its ancestors to me.  We found one
+> cut-off point.  Please do explore other lines of histories."  The
+> next server that concludes the negotiation exchange may not have
+> that commit and will be unable to produce a pack that excludes the
+> objects reachable from that commit---wouldn't that become a problem?
+
+It's true that this patch set wouldn't solve this problem. This problem 
+only occurs when there is a commit that the client knows but only a few 
+of the servers know (maybe because the client just pushed it to one of 
+them). If, for example, the client does not know a commit and only a few 
+of the servers know it (for example, because another user just pushed 
+it), this patch set does help. The latter scenario seems like it would 
+occur relatively commonly.
+
+> One way to prevent such a problem from hurting clients may be for
+> these multiple server instances to coordinate and make sure they
+> have a shared perception of the common history among them.  Some
+> pushes may have come to one instance but may not have propagated to
+> other instances, and such a commit cannot be accepted as usable
+> "have" if the servers anticipate that the final client request would
+> go to any of the servers.  Otherwise the multiple server arrangement
+> would not work safely, methinks.
+>
+> And if the servers are ensuring the safety using such a mechanism,
+> they can use the same mechanism to restrain "faster" instances from
+> sending too fresh state of refs that other instances haven't caught
+> up to, which would mean they can present a consistent set of refs to
+> the client in the first place, no?
+>
+> So I am not sure if the mechanism to request history by refname
+> instead of the tip commit would help the multi-server environment as
+> advertised.  It may help solving other problems, though (e.g. like
+> "somebody pushed to update after the initial advertisement was sent
+> out" which can happen even in a single server environment).
+
+This patch set would solve the problem you describe (whether in a single 
+server environment or the coordination between multiple servers that 
+provides "strong consistency"). (Although it may not be an important 
+problem to solve, since it is probably OK if the client got a "slow" 
+version of the state of the refs.)
+
+>> To be flexible with respect to client needs, the server does not
+>> indicate an error if a "want-ref" line corresponds to no refs, but
+>> instead relies on the client to ensure that what the user needs has been
+>> fetched. For example, a client could reasonably expand an abbreviated
+>> name "foo" to "want-ref foo", "want-ref refs/heads/foo", "want-ref
+>> refs/tags/foo", among others, and ensure that at least one such ref has
+>> been fetched.
+>
+> Cute.  This may be one way to implement the DWIM thing within the
+> constraint of eventually wanting to go to "client speaks first, the
+> server does not advertise things the client is not interested in"
+> world.
+>
+> But at the same time it may end up bloating the set of refs the
+> client asks instead.  Instead of receiving the advertisement and
+> then sending one request after picking the matching one from it,
+> the client needs to send "refs/{heads,tags,whatever}/foo".
+
+That is true, although I think that the client will typically send only 
+a few ref names (with or without globs), so the request packet is still 
+not that large.
+
+[1] <67afbb3b-5d0b-8c0d-3f6e-3f559c68f4bd@google.com>
