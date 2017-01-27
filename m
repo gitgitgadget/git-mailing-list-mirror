@@ -2,87 +2,83 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9DDAF20D2F
-	for <e@80x24.org>; Fri, 27 Jan 2017 20:47:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0E4CD1FAAD
+	for <e@80x24.org>; Fri, 27 Jan 2017 20:49:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751214AbdA0UrR (ORCPT <rfc822;e@80x24.org>);
-        Fri, 27 Jan 2017 15:47:17 -0500
-Received: from mail-ua0-f173.google.com ([209.85.217.173]:33081 "EHLO
-        mail-ua0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751193AbdA0UrG (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 27 Jan 2017 15:47:06 -0500
-Received: by mail-ua0-f173.google.com with SMTP id i68so213347730uad.0
-        for <git@vger.kernel.org>; Fri, 27 Jan 2017 12:47:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=3VaBuK6myc6aAVXW+t43QSUJwYlPwC5M4VLf5HTeUt8=;
-        b=oABacVgzz/tfa6f0TZpR8JMXme6celJO2x9swHzYJ1iV9rlRpRhWVVZvfDqkT0YeEu
-         tYW2rHlj80QCztZbe+ryJd1kFUtJmwjQQY0IBEhxEvY9lC4tmYWN8/Ov0HXLkrQdgKPj
-         gIoCXcjlF44jexkMuDbAshUD0+Zh9VaGSF4xGcylsShDQ9IPHgZ+Q560UNtlA2cwux8k
-         NDs0p9qjnFVcmiSnqmIH5HlL341ZnXyeWuQsBxF7A19LtZp35+mQEY4bh8GrJItMHYwa
-         9sX1hf/Yc6HgNfcCBqJtbClyPwrVKBuEaoEOFXKV3TmJdMNhj5PfdVviJZnUgeG5E+sA
-         lkMw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=3VaBuK6myc6aAVXW+t43QSUJwYlPwC5M4VLf5HTeUt8=;
-        b=E6u66MYhf430yPGa8PCoRnMRmCh8UfIU3Gw/uWe80R6aWcUqwm23ui3FfZJYVEd5Wy
-         duVV9LTu1Xqm8hMZBzEnlNG4x3/klFkKVzJXSa94RlPbAGVmQf5Zx1mybhEc4tRzhB9G
-         4A/VK02vJsy/bWqcd0cwnFn7+E1Bl/j72xvM4I6uZwrP9tZLVkXFK2KvslXNuOrmtg3H
-         S0K/W5iqJMLv/CHPO2LVDHlVXTfa/UHhXYUx/2jgaK/GTFeDdRwikeyByAxl/GedNVXO
-         25e4ayw+1sidpCdbM3d+yK8euC4g0FSjzRrGflP/VJoAtY+OwGqCGzJO+0EY1UBMNy8/
-         0sFg==
-X-Gm-Message-State: AIkVDXKz0Gd8O50QcPDmgSGFKToItHTd0yodfZJ52VpsslWkGXVBWzskzzoV39UQpT6joBXsYYTkL6Z0UK+g+w==
-X-Received: by 10.176.6.106 with SMTP id f97mr5556221uaf.118.1485550025548;
- Fri, 27 Jan 2017 12:47:05 -0800 (PST)
+        id S1751225AbdA0UsG (ORCPT <rfc822;e@80x24.org>);
+        Fri, 27 Jan 2017 15:48:06 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:63570 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751212AbdA0Urp (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 27 Jan 2017 15:47:45 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 80F7C63801;
+        Fri, 27 Jan 2017 15:47:39 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=E6lRrYFG8sAjnR6fdWxguCuoy+Q=; b=oDKjel
+        2a0VPppJNfxLJcrnRab+ZAy4HphhsS5LufH1WxYPl71oQIfMbsWb0ZScQDxE5WEU
+        5j1eYe7i0Ll6ji75+VM8PeUDHc4phbvPD+abVoVHMsXjc7QFUxRsuGhir1g6Wpkt
+        v7P2KYXj1BlHWBk1a0dqgyl15z9u5XpbKoIS4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=CLAPoiPDDYctE3XZOSZVnpX3/5yLYg5d
+        uiVG6Y0t1Ym4IUE97e4sPJkGXvFaTVe95+VFydl43m7+H4L5Cf0IClxZowCJ5aWH
+        nMASA4R4RAvabj2rYQPbG+/x+AJK28qzYNIGpqDEeh08z+2wLBqf+dQFNb8Q5Z9E
+        HV7D7FGXhhA=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 78C2163800;
+        Fri, 27 Jan 2017 15:47:39 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id D1ED5637FF;
+        Fri, 27 Jan 2017 15:47:38 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Eric Wong <e@80x24.org>, git@vger.kernel.org
+Subject: Re: [PATCH] test-lib: on FreeBSD, look for unzip(1) in /usr/local/bin/
+References: <31dce0b28ae094c976890c1604c4ebbcaef0e7ef.1469116960.git.johannes.schindelin@gmx.de>
+        <20160721171025.GA30979@plume>
+        <alpine.DEB.2.20.1701271502420.3469@virtualbox>
+        <xmqq8tpwz6jp.fsf@gitster.mtv.corp.google.com>
+Date:   Fri, 27 Jan 2017 12:47:37 -0800
+In-Reply-To: <xmqq8tpwz6jp.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
+        message of "Fri, 27 Jan 2017 10:44:42 -0800")
+Message-ID: <xmqqvat0xmae.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.159.34.48 with HTTP; Fri, 27 Jan 2017 12:46:25 -0800 (PST)
-From:   Samuel Lijin <sxlijin@gmail.com>
-Date:   Fri, 27 Jan 2017 14:46:25 -0600
-Message-ID: <CAJZjrdWdRGZ5DC1XV_YiNt-1sKiNgAtiS-eS9L6H2GJ+_8n08w@mail.gmail.com>
-Subject: octopus merge --no-ff claims to fast-forward even though it doesn't
-To:     "git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
+X-Pobox-Relay-ID: D70F5610-E4D1-11E6-9075-FE3F13518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I was doing an octopus merge earlier and noticed that it claims to
-fast-forward when you specify --no-ff, even though it does actually
-abide by --no-ff.
+Junio C Hamano <gitster@pobox.com> writes:
 
-I can consistently reproduce as follows:
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+>> On Thu, 21 Jul 2016, Eric Wong wrote:
+>>
+>>> Thanks, t5003 now works out-of-the-box.
+>>> Tested with Info-ZIP unzip installed and uninstalled.
+>>> 
+>>> Tested-by: Eric Wong <e@80x24.org>
+>>
+>> Did you forget about this?
+>
+> This fell off the radar.  
+>
+> You could have resent with Eric's Tested-by: added, to make it
+> easier to apply.  I'll see if I can find the original but it won't
+> happen until later this afternoon.
 
-$ git clone https://github.com/sxlijin/merge-octopus-experiment
-$ cd merge-octopus-experiment
-$ git merge --no-ff origin/A origin/B --no-edit
-Fast-forwarding to: origin/A
-Trying simple merge with origin/B
-Merge made by the 'octopus' strategy.
- anotherA | 0
- anotherB | 0
- otherA   | 0
- otherB   | 0
- 4 files changed, 0 insertions(+), 0 deletions(-)
- create mode 100644 anotherA
- create mode 100644 anotherB
- create mode 100644 otherA
- create mode 100644 otherB
+The errand I needed to run earlier in the day turned out to be not
+so time consuming---I found the exchange and the patch is now
+queued, and will be part of today's pushout.
 
-$ git log --graph --pretty=oneline --decorate
-
-I've reproduced the issue with 2.11.0 on both a Windows box (MSYS) and
-Linux (Arch).
-
-The issue seems to live in git-merge-octopus.sh, specifically in that
---no-ff does not affect the initial value of NON_FF_MERGE. I'm happy
-to submit a patch if someone can point me in the right direction.
-
-Sam
+Thanks, both.
