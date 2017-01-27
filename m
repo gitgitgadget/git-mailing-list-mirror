@@ -2,81 +2,75 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-7.2 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9AEBA1F437
-	for <e@80x24.org>; Fri, 27 Jan 2017 17:54:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BE2661F437
+	for <e@80x24.org>; Fri, 27 Jan 2017 17:54:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933991AbdA0RwT (ORCPT <rfc822;e@80x24.org>);
-        Fri, 27 Jan 2017 12:52:19 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:59801 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S934102AbdA0Rvz (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 27 Jan 2017 12:51:55 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id B48EA612B1;
-        Fri, 27 Jan 2017 12:51:54 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=uwObAeD5ysEORRnZ08wB6cZDYao=; b=r+geC3
-        kH+N4HcyfZXDIoiX/DrSYkKQKIg99q0QnpXQYlV/HyVk26+IFi4qfHq8z0BWsgbZ
-        QW5rph45FCUQxAxgDgHqFiQ2EHN5dERKLs+WkqaDHoDikwM6K2h2dj6H/Ej2vS6v
-        lztBBnvGJDMXrp0YZLAhmXPF73m53XcX2x3YM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=ggD3wsbdnIH42mTbTxGrAI2hMmOhfNqp
-        IiTbHHMuME0uxDLk2HRXVQnBGerpsI1LoRTmjSWmTaXHrLfK+Pd1mazQWIjkIUDN
-        LZkpmgIGRj+41WwBO0rVn7MZV1xXKy3XOSOibXIuxODtit3brZL7aXl6AQXyDYql
-        GO4o8WmCqJk=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id AB424612B0;
-        Fri, 27 Jan 2017 12:51:54 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 22AC4612AE;
-        Fri, 27 Jan 2017 12:51:54 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     git@vger.kernel.org,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Subject: Re: [PATCH] fixup! worktree move: new command
-References: <4f4ae057cd4d72d5b945a856deacd921fb5e7977.1485349447.git.johannes.schindelin@gmx.de>
-        <alpine.DEB.2.20.1701271150200.3469@virtualbox>
-Date:   Fri, 27 Jan 2017 09:51:53 -0800
-In-Reply-To: <alpine.DEB.2.20.1701271150200.3469@virtualbox> (Johannes
-        Schindelin's message of "Fri, 27 Jan 2017 11:53:04 +0100 (CET)")
-Message-ID: <xmqqwpdgz8zq.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+        id S933128AbdA0RwS convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Fri, 27 Jan 2017 12:52:18 -0500
+Received: from elnino.lfos.de ([46.165.227.75]:36560 "EHLO elnino.lfos.de"
+        rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
+        id S933807AbdA0RwL (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 27 Jan 2017 12:52:11 -0500
+X-Greylist: delayed 383 seconds by postgrey-1.27 at vger.kernel.org; Fri, 27 Jan 2017 12:52:10 EST
+Received: by elnino.lfos.de (OpenSMTPD) with ESMTPSA id 16e20b37 (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO);
+        Fri, 27 Jan 2017 18:45:29 +0100 (CET)
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 49EA4E1A-E4B9-11E6-925E-FE3F13518317-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: 8BIT
+To:     git@vger.kernel.org
+From:   Lukas Fleischer <lfleischer@lfos.de>
+In-Reply-To: <xmqqa8aec40a.fsf@gitster.mtv.corp.google.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+References: <20170124003729.j4ygjcgypdq7hceg@sigill.intra.peff.net>
+ <20170124004805.nu3w47isrb4bxgi5@sigill.intra.peff.net>
+ <xmqqa8aec40a.fsf@gitster.mtv.corp.google.com>
+Message-ID: <148553912610.7898.1319453517642036857@typhoon>
+User-Agent: alot/0.3.7
+Subject: Re: [PATCH 11/12] receive-pack: treat namespace .have lines like alternates
+Date:   Fri, 27 Jan 2017 18:45:26 +0100
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+On Wed, 25 Jan 2017 at 20:51:17, Junio C Hamano wrote:
+> [...]
+> > diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+> > index 8f8762e4a..c55e2f993 100644
+> > --- a/builtin/receive-pack.c
+> > +++ b/builtin/receive-pack.c
+> > @@ -251,8 +251,9 @@ static void show_ref(const char *path, const unsigned char *sha1)
+> [...]
+> >       if (ref_is_hidden(path, path_full))
+> [...]
+> This is an unrelated tangent, but there may want to be a knob to
+> make the code return here without even showing, to make the
+> advertisement even smaller and also to stop miniscule information
+> leakage?  If the namespaced multiple projects are totally unrelated
+> (i.e. "My sysadmin gave me a write access only to this single
+> directory, so I am using the namespace feature to host these three
+> projects that have nothing to do with each other"), showing objects
+> of other namespaces will buy us nothing and the user is better off
+> without this code showing these refs as ".have".
 
-> always been discussed on the mailing list, I would like to kindly ask you
-> to please add this patch to the nd/worktree-move branch for the time being
-> (i.e. until Duy responds),
+I think this is already possible using receive.hideRefs (which causes
+the ref_is_hidden() branch above to return if applicable).
 
-The tip of 'pu' (or anything beyond the tip of 'jch') is not always
-expected to pass test or even build, and unless I know the OP is
-leaky or usually slow, a "fixup!" that directly addresses the OP
-tends to be left for the OP to pick up [*1*] to avoid "ah, you sent
-a reroll but I already had one squashed locally", which is confusing
-to both myself and OP (and adds burden to me).
+Having support for suppressing .have lines corresponding to different
+namespaces was actually the reason I implemented 78a766ab6 (hideRefs:
+add support for matching full refs, 2015-11-03). We have been using
+namespaces for hosting the package Git repositories of the Arch Linux
+User Repository [1] with a shared object storage for several months now.
+See [2] for *some* technical details on how things are implemented; the
+last section explains how the hideRefs mechanism can be used to limit
+ref advertisement to the "active" namespace.
 
-It seems that OP is slower to respond than his usual, so I'll add it
-to the tip of the topic so that it won't be lost.
+Regards,
+Lukas
 
-
-[Footnote]
-
-*1* It still is used on my end to leave a mental note to myself that
-    the topic is expected/waiting to be rerolled, but that is not
-    something you can read in "git log --first-parent master..pu".
+[1] https://aur.archlinux.org/
+[2] https://git.archlinux.org/aurweb.git/plain/doc/git-interface.txt
