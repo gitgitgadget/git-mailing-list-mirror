@@ -2,75 +2,70 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-7.2 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BE2661F437
-	for <e@80x24.org>; Fri, 27 Jan 2017 17:54:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E4C011F437
+	for <e@80x24.org>; Fri, 27 Jan 2017 17:58:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933128AbdA0RwS convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Fri, 27 Jan 2017 12:52:18 -0500
-Received: from elnino.lfos.de ([46.165.227.75]:36560 "EHLO elnino.lfos.de"
-        rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
-        id S933807AbdA0RwL (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 27 Jan 2017 12:52:11 -0500
-X-Greylist: delayed 383 seconds by postgrey-1.27 at vger.kernel.org; Fri, 27 Jan 2017 12:52:10 EST
-Received: by elnino.lfos.de (OpenSMTPD) with ESMTPSA id 16e20b37 (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO);
-        Fri, 27 Jan 2017 18:45:29 +0100 (CET)
-Content-Type: text/plain; charset="utf-8"
+        id S934070AbdA0R4N (ORCPT <rfc822;e@80x24.org>);
+        Fri, 27 Jan 2017 12:56:13 -0500
+Received: from cloud.peff.net ([104.130.231.41]:45961 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S933883AbdA0Rzw (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 27 Jan 2017 12:55:52 -0500
+Received: (qmail 14187 invoked by uid 109); 27 Jan 2017 17:54:25 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 27 Jan 2017 17:54:25 +0000
+Received: (qmail 10993 invoked by uid 111); 27 Jan 2017 17:54:25 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 27 Jan 2017 12:54:25 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 27 Jan 2017 12:54:23 -0500
+Date:   Fri, 27 Jan 2017 12:54:23 -0500
+From:   Jeff King <peff@peff.net>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Jakub =?utf-8?B?TmFyxJlic2tp?= <jnareb@gmail.com>
+Subject: Re: [PATCH v2 1/1] reset: support the --stdin option
+Message-ID: <20170127175422.b7bds4toeytndo43@sigill.intra.peff.net>
+References: <cover.1476202100.git.johannes.schindelin@gmx.de>
+ <cover.1485520718.git.johannes.schindelin@gmx.de>
+ <3b0bad26045ed175f40f050e15b65cb6a8f2368c.1485520718.git.johannes.schindelin@gmx.de>
+ <20170127170422.lvpghp6jdud37zxx@sigill.intra.peff.net>
+ <alpine.DEB.2.20.1701271832270.3469@virtualbox>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8BIT
-To:     git@vger.kernel.org
-From:   Lukas Fleischer <lfleischer@lfos.de>
-In-Reply-To: <xmqqa8aec40a.fsf@gitster.mtv.corp.google.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
-References: <20170124003729.j4ygjcgypdq7hceg@sigill.intra.peff.net>
- <20170124004805.nu3w47isrb4bxgi5@sigill.intra.peff.net>
- <xmqqa8aec40a.fsf@gitster.mtv.corp.google.com>
-Message-ID: <148553912610.7898.1319453517642036857@typhoon>
-User-Agent: alot/0.3.7
-Subject: Re: [PATCH 11/12] receive-pack: treat namespace .have lines like alternates
-Date:   Fri, 27 Jan 2017 18:45:26 +0100
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <alpine.DEB.2.20.1701271832270.3469@virtualbox>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, 25 Jan 2017 at 20:51:17, Junio C Hamano wrote:
-> [...]
-> > diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-> > index 8f8762e4a..c55e2f993 100644
-> > --- a/builtin/receive-pack.c
-> > +++ b/builtin/receive-pack.c
-> > @@ -251,8 +251,9 @@ static void show_ref(const char *path, const unsigned char *sha1)
-> [...]
-> >       if (ref_is_hidden(path, path_full))
-> [...]
-> This is an unrelated tangent, but there may want to be a knob to
-> make the code return here without even showing, to make the
-> advertisement even smaller and also to stop miniscule information
-> leakage?  If the namespaced multiple projects are totally unrelated
-> (i.e. "My sysadmin gave me a write access only to this single
-> directory, so I am using the namespace feature to host these three
-> projects that have nothing to do with each other"), showing objects
-> of other namespaces will buy us nothing and the user is better off
-> without this code showing these refs as ".have".
+On Fri, Jan 27, 2017 at 06:34:46PM +0100, Johannes Schindelin wrote:
 
-I think this is already possible using receive.hideRefs (which causes
-the ref_is_hidden() branch above to return if applicable).
+> > Is it worth clarifying that these are paths, not pathspecs? The word
+> > "paths" is used to refer to the pathspecs on the command-line elsewhere
+> > in the document.
+> > 
+> > It might also be worth mentioning the quoting rules for the non-z case.
+> 
+> I think this would be overkill. In reality, --stdin without -z does not
+> make much sense, anyway.
 
-Having support for suppressing .have lines corresponding to different
-namespaces was actually the reason I implemented 78a766ab6 (hideRefs:
-add support for matching full refs, 2015-11-03). We have been using
-namespaces for hosting the package Git repositories of the Arch Linux
-User Repository [1] with a shared object storage for several months now.
-See [2] for *some* technical details on how things are implemented; the
-last section explains how the hideRefs mechanism can be used to limit
-ref advertisement to the "active" namespace.
+I think with most Unix tools people tend to use the non-z forms until
+they break, and then switch to the z form. :)
 
-Regards,
-Lukas
+And in that sense, this transparently Just Works because the output will
+often come from another git tool, which will quote as appropriate.
 
-[1] https://aur.archlinux.org/
-[2] https://git.archlinux.org/aurweb.git/plain/doc/git-interface.txt
+> If you feel strongly about it, I encourage you to submit a follow-up
+> patch.
+> 
+> The rest of your suggestions have been implemented in v3.
+
+Thanks. I think the path/pathspec thing was the more important of the
+two suggestions.
+
+-Peff
