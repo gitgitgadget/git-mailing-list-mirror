@@ -3,68 +3,152 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 218CF1F437
-	for <e@80x24.org>; Fri, 27 Jan 2017 15:47:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7A7061F437
+	for <e@80x24.org>; Fri, 27 Jan 2017 17:11:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933090AbdA0Pnq (ORCPT <rfc822;e@80x24.org>);
-        Fri, 27 Jan 2017 10:43:46 -0500
-Received: from mout.web.de ([212.227.15.3]:54173 "EHLO mout.web.de"
+        id S933415AbdA0RL0 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 27 Jan 2017 12:11:26 -0500
+Received: from cloud.peff.net ([104.130.231.41]:45915 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S933072AbdA0Pls (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 27 Jan 2017 10:41:48 -0500
-Received: from [192.168.178.36] ([79.237.55.102]) by smtp.web.de (mrweb001
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0MPY5x-1cbHMa3gdF-004gJj; Fri, 27
- Jan 2017 16:39:49 +0100
-Subject: Re: [PATCH 2/2] use absolute_pathdup()
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-References: <d94d742d-1247-ac35-c081-7db1f2178d34@web.de>
- <d15fdbb9-2a21-eeab-1fee-4a1553bd3bcb@web.de>
- <alpine.DEB.2.20.1701271121120.3469@virtualbox>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <0555c0aa-fcb4-19fb-a533-c451e1e477e3@web.de>
-Date:   Fri, 27 Jan 2017 16:39:39 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
- Thunderbird/45.6.0
+        id S932279AbdA0RLX (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 27 Jan 2017 12:11:23 -0500
+Received: (qmail 10637 invoked by uid 109); 27 Jan 2017 17:04:24 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 27 Jan 2017 17:04:24 +0000
+Received: (qmail 24035 invoked by uid 111); 27 Jan 2017 17:04:24 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 27 Jan 2017 12:04:24 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 27 Jan 2017 12:04:22 -0500
+Date:   Fri, 27 Jan 2017 12:04:22 -0500
+From:   Jeff King <peff@peff.net>
+To:     Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Jakub =?utf-8?B?TmFyxJlic2tp?= <jnareb@gmail.com>
+Subject: Re: [PATCH v2 1/1] reset: support the --stdin option
+Message-ID: <20170127170422.lvpghp6jdud37zxx@sigill.intra.peff.net>
+References: <cover.1476202100.git.johannes.schindelin@gmx.de>
+ <cover.1485520718.git.johannes.schindelin@gmx.de>
+ <3b0bad26045ed175f40f050e15b65cb6a8f2368c.1485520718.git.johannes.schindelin@gmx.de>
 MIME-Version: 1.0
-In-Reply-To: <alpine.DEB.2.20.1701271121120.3469@virtualbox>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K0:VWOGQS3v53utuOSIZCfyXRuxZ2zlgE8hZxb17OKTOindkyaoZxR
- aEoGNsPijwZJ1h3hkg+r5s/CeViJAjCcWODNIn4Hk+s0r/1rjmeyZTih8Cv7nd6jiKPvIsr
- D5TZ6ZYNOQxQy1FeDwyaALjQ+bmnj9hqkAXf0K3Tz6B13y2cVx8dsyYJHi+OzjyZCL1hbXs
- +kIYt/AIIG7kPeNlRxzag==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:e641s9k3/kE=:hv6E1BOoG7RaVIlx2ftCav
- LZUbyB6DRQwR0GKZxshA7wOhsD9fKHyPmm0VDV3k646xAG+z+RDouhKe1XHj2QzKcfvDF8tes
- vfmtuNhGsVylMXo3RG3ezVlC//yFj3mZyMgXYWw7JCiR0Uvo+9HVbZO/yv0276h4gY+HmC9QY
- q2XRTm3V2Tq/uGE3tMQMepyWoydL6Vnfxu8LVzkE1jAs8eHlZn2UoHyyNM8dVAd2HBsIfNicp
- UspRdY2nTU4V019+jHsbDEN/r30Jm++mn2nRrAkFUEEKZfgta0BY7rqrcupvLDyyvjK/qO40o
- Igyquf/PB90HPy6oLja6wy7s81v1YfiA1jPWKjSCRGhF58KEEjhcohF3xr5HpZEEXKgdpbF1j
- OPD6DUej5DTe5dDP6EFVKjQv3Jp5XAc7NPvoGXIELH8x9ZhPETWF3UmC19X2Hd+mHtPNex5ou
- BkyAKdACBDvXkn9SPvW551Llv76Gl+lomzq2s15M2PeuhZcLkg/FNETG1JlBf/OyRlWJiDB/v
- vXhJZ7gwc7FRXlgMRM6q5okp9s7wvG+zULeveVt78UR61vS0UmFWX/EvfvVrI8K5SAIrLVCW5
- Z3/BQ8guwouOi53bOyRXH0gCiGZwIdOk/VBFaQZHZkixJ3rCqBF48YXt7fdBIH2r1Xocl1DqR
- 1SoqqDBSzeU3W7lS/XjFL6Zeeh2ZD11rKQOeHDlvazt9y55vK5LH3eWEjtXyAz4q8LvOrQaau
- f38MEVdgZ5CSan7HxqW8GNDJ+TcDEHFttlH5zi8yRFcitKSkNExx6AVoHCAlfnbtqRxop2nDN
- ghB+iIU
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <3b0bad26045ed175f40f050e15b65cb6a8f2368c.1485520718.git.johannes.schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Dscho,
+On Fri, Jan 27, 2017 at 01:38:55PM +0100, Johannes Schindelin wrote:
 
-Am 27.01.2017 um 11:21 schrieb Johannes Schindelin:
-> On Thu, 26 Jan 2017, René Scharfe wrote:
->> Apply the symantic patch for converting callers that duplicate the
->
-> s/symantic/semantic/
+> Just like with other Git commands, this option makes it read the paths
+> from the standard input. It comes in handy when resetting many, many
+> paths at once and wildcards are not an option (e.g. when the paths are
+> generated by a tool).
+> 
+> Note: we first parse the entire list and perform the actual reset action
+> only in a second phase. Not only does this make things simpler, it also
+> helps performance, as do_diff_cache() traverses the index and the
+> (sorted) pathspecs in simultaneously to avoid unnecessary lookups.
 
-thank you!  I wonder where this came from.  And where my spellchecker 
-went without as much as a farewell.  Reinstalled it now..
+This looks OK to me. At first I wondered if using PATHSPEC_LITERAL_PATH
+was consistent with other "--stdin" tools. I think it mostly is (or at
+least consistent with checkout-index). The exception is "rev-list
+--stdin", but that's probably fine. It is taking rev-list arguments in
+the first place, not a list of paths.
 
-René
+A few minor suggestions:
+
+> +--stdin::
+> +	Instead of taking list of paths from the command line,
+> +	read list of paths from the standard input.  Paths are
+> +	separated by LF (i.e. one path per line) by default.
+> +
+> +-z::
+> +	Only meaningful with `--stdin`; paths are separated with
+> +	NUL character instead of LF.
+
+Is it worth clarifying that these are paths, not pathspecs? The word
+"paths" is used to refer to the pathspecs on the command-line elsewhere
+in the document.
+
+It might also be worth mentioning the quoting rules for the non-z case.
+
+> @@ -267,7 +270,9 @@ static int reset_refs(const char *rev, const struct object_id *oid)
+>  int cmd_reset(int argc, const char **argv, const char *prefix)
+>  {
+>  	int reset_type = NONE, update_ref_status = 0, quiet = 0;
+> -	int patch_mode = 0, unborn;
+> +	int patch_mode = 0, nul_term_line = 0, read_from_stdin = 0, unborn;
+> +	char **stdin_paths = NULL;
+> +	int stdin_nr = 0, stdin_alloc = 0;
+
+This list is a good candidate for an argv_array, I think. So:
+
+  struct argv_array stdin_paths = ARGV_ARRAY_INIT;
+
+> +			ALLOC_GROW(stdin_paths, stdin_nr + 1, stdin_alloc);
+> +			stdin_paths[stdin_nr++] = xstrdup(buf.buf);
+
+  argv_array_push(&stdin_paths, buf.buf);
+
+> +		ALLOC_GROW(stdin_paths, stdin_nr + 1, stdin_alloc);
+> +		stdin_paths[stdin_nr++] = NULL;
+
+  This goes away because argv_array handles it for you.
+
+> +	if (stdin_paths) {
+> +		while (stdin_nr)
+> +			free(stdin_paths[--stdin_nr]);
+> +		free(stdin_paths);
+> +	}
+
+  argv_array_clear(&stdin_paths);
+
+> @@ -295,6 +304,43 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
+>  						PARSE_OPT_KEEP_DASHDASH);
+>  	parse_args(&pathspec, argv, prefix, patch_mode, &rev);
+>  
+> +	if (read_from_stdin) {
+> +		strbuf_getline_fn getline_fn = nul_term_line ?
+> +			strbuf_getline_nul : strbuf_getline_lf;
+> +		int flags = PATHSPEC_PREFER_FULL |
+> +			PATHSPEC_STRIP_SUBMODULE_SLASH_CHEAP;
+
+You set two flags here...
+
+> +		ALLOC_GROW(stdin_paths, stdin_nr + 1, stdin_alloc);
+> +		stdin_paths[stdin_nr++] = NULL;
+> +		flags |= PATHSPEC_LITERAL_PATH;
+> +		parse_pathspec(&pathspec, 0, flags, prefix,
+> +			       (const char **)stdin_paths);
+
+...and then one more here. They all seem to be set unconditionally, and
+we never look at "flags" between the two lines. I think it would be more
+obvious to set them all in the same place.
+
+> +	} else if (nul_term_line)
+> +		die(_("-z requires --stdin"));
+> +
+
+Hmm, there's our brace question coming up again. :)
+
+> diff --git a/t/t7107-reset-stdin.sh b/t/t7107-reset-stdin.sh
+> new file mode 100755
+> index 0000000000..997dc42dd2
+> --- /dev/null
+> +++ b/t/t7107-reset-stdin.sh
+> @@ -0,0 +1,33 @@
+> +#!/bin/sh
+> +
+> +test_description='reset --stdin'
+
+Here are a few things we might want to test that I didn't see covered:
+
+  - feeding path X does not reset path Y
+
+  - de-quoting in the non-z case
+
+-Peff
