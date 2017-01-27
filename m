@@ -2,96 +2,79 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.4 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.0 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B20F61F6DC
-	for <e@80x24.org>; Fri, 27 Jan 2017 10:49:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A687E1F6DC
+	for <e@80x24.org>; Fri, 27 Jan 2017 10:52:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932711AbdA0Ktc convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Fri, 27 Jan 2017 05:49:32 -0500
-Received: from zimbra-vnc.tngtech.com ([83.144.240.98]:14436 "EHLO
-        proxy.tng.vnc.biz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932718AbdA0Kta (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 27 Jan 2017 05:49:30 -0500
-Received: from localhost (localhost [127.0.0.1])
-        by proxy.tng.vnc.biz (Postfix) with ESMTP id 6A85A1E1877;
-        Fri, 27 Jan 2017 11:49:27 +0100 (CET)
-Received: from proxy.tng.vnc.biz ([127.0.0.1])
-        by localhost (proxy.tng.vnc.biz [127.0.0.1]) (amavisd-new, port 10032)
-        with ESMTP id CaVuWQO-SW1T; Fri, 27 Jan 2017 11:49:27 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
-        by proxy.tng.vnc.biz (Postfix) with ESMTP id 053541E2E13;
-        Fri, 27 Jan 2017 11:49:27 +0100 (CET)
-X-Virus-Scanned: amavisd-new at 
-Received: from proxy.tng.vnc.biz ([127.0.0.1])
-        by localhost (proxy.tng.vnc.biz [127.0.0.1]) (amavisd-new, port 10026)
-        with ESMTP id ZlFvDTAtYqqz; Fri, 27 Jan 2017 11:49:26 +0100 (CET)
-Received: from [192.168.178.64] (46.128.140.114.dynamic.cablesurf.de [46.128.140.114])
-        by proxy.tng.vnc.biz (Postfix) with ESMTPSA id 924711E1877;
-        Fri, 27 Jan 2017 11:49:26 +0100 (CET)
-Subject: Re: SubmittingPatches: drop temporal reference for PGP signing
-To:     Philip Oakley <philipoakley@iee.org>,
-        Junio C Hamano <gitster@pobox.com>
-References: <923cd4e4-5c9c-4eaf-0fea-6deff6875b88@tngtech.com>
- <20170125002116.22111-1-sbeller@google.com>
- <33E354BCDB9A4192B69B9B399381659E@PhilipOakley>
- <CAGZ79kaRdtKD7DNJRWXsyg07GbTM4OsKUmHHcFczEMJA1YK2KA@mail.gmail.com>
- <baff65ba-1e98-d5a7-5b5a-a50a7fc723ee@tngtech.com>
- <xmqqpoj965yf.fsf@gitster.mtv.corp.google.com>
- <4B89512D54614F09817EA9901A8B625D@PhilipOakley>
-Cc:     Stefan Beller <sbeller@google.com>, Johannes Sixt <j6t@kdbg.org>,
-        bitte.keine.werbung.einwerfen@googlemail.com, git@vger.kernel.org
-From:   Cornelius Weig <cornelius.weig@tngtech.com>
-Message-ID: <60e9abdf-cc37-33d8-e7eb-8a3370ffe1cc@tngtech.com>
-Date:   Fri, 27 Jan 2017 11:49:26 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.6.0
+        id S932630AbdA0KwP (ORCPT <rfc822;e@80x24.org>);
+        Fri, 27 Jan 2017 05:52:15 -0500
+Received: from mout.gmx.net ([212.227.15.15]:57877 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S932755AbdA0Kuy (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 27 Jan 2017 05:50:54 -0500
+Received: from virtualbox ([37.201.192.48]) by mail.gmx.com (mrgmx001
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MCLQ1-1cfYQg12Cv-0099fy; Fri, 27
+ Jan 2017 11:49:59 +0100
+Date:   Fri, 27 Jan 2017 11:49:57 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Stefan Beller <sbeller@google.com>
+cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+        Guillaume Pages <guillaume.pages@ensimag.grenoble-inp.fr>
+Subject: Re: [PATCH v2 1/1] status: be prepared for not-yet-started interactive
+ rebase
+In-Reply-To: <CAGZ79kYLFJYPQu5KSv3hG+_eavO9BHkxHjpVOEs63Nn6Hu1gTg@mail.gmail.com>
+Message-ID: <alpine.DEB.2.20.1701271145260.3469@virtualbox>
+References: <99f6de4be107044fdf01ee796f42e124ac147891.1453480067.git.johannes.schindelin@gmx.de> <cover.1485446899.git.johannes.schindelin@gmx.de> <alpine.DEB.2.20.1701261708370.3469@virtualbox>
+ <CAGZ79kYLFJYPQu5KSv3hG+_eavO9BHkxHjpVOEs63Nn6Hu1gTg@mail.gmail.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-In-Reply-To: <4B89512D54614F09817EA9901A8B625D@PhilipOakley>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8BIT
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:Dv9zpbpYvQ868nmjBp70o2BAn09OLtGAH3a4HgOTRKBebN2weuB
+ QPKrZhT47lMyg++zAkjdIUHKZg81mMpN3AX+1JBiFXs+io0lqCICq5pJrf6cLO/gmEEYTu9
+ zEFYY+9hdxiWpB/ZGIzu5kqW4lOtT6mz7UALzGZfy6/28HeK0p1g7LbnHIlCYdabv8DapBS
+ FhqqIgJ5YWQFOS048ZQsw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:XLJAG679ChA=:C1F5+XDrH+AK8HErshqA+J
+ N83byMndsQU2ajKqmiD7WCDRymEqx6I4wSBfB+NCOhBmZm78s3SdSk6iLy3Npv3vnXQsg1mZD
+ LIfOY95HtZ0rxm0CyU7P6e+c6s/8+ldtMtfxkuKSvunlAxj1Km6Xom9mzNf3rnrkyNjLd3UA8
+ wOCNayKx/wprzitfm6BH8upiWAciCZfl12d9wtQS/RVhePnEKo0gxedKwo3iD/5Hak7jfi8jb
+ 4oKGInqsXz86ErwTtJJait1jAkMMNwHoDayw+7p+/Gw5HWHr0+N/8yNbDHI3za/vY53URzVp1
+ vyDu+pldoDPE0kH8Eg2GUZUTQnIJqXLnOCPSCJ/xlEOvoVTXsfI2+jizX47k21iXhupNuHqXB
+ Az6I4w4pcE825keAEiG5B3N98AOeVTjAOMHKsBD+tLuRSKSI85VvntDHx+YhhDaSpIBUXTouj
+ uRaDSwJJFAOnNeiQCVt47GXXm4I7KWa2+3YaPcc+2I/P1iX1arkhewQG50XyQ3agetG9yyCj7
+ hFTisDAoBu7aHtSu7ALxZSoQ/xcX+U0Lg3UIk8uq+u890mcWx5AGlKfDdjkHsNJQKHnRI2Ax7
+ X28TzojowArpFqPbvzHaWASk6xqZBj6+vODimMoB8Uja1wU8s2WFHC24VX0FvFAyOhoe4KHeS
+ U3HRl3kMv/GBP6+P1Z0g+dKvfW6u6afxEjvGMDuZ2yAff5HEGP7uKFIjmTJ7oAYGGpregCV6/
+ FXzQTGT64khRVRLPbCRdZv5OyoyL2iNms5089A9rBKuYs680ewrlpi5z2eU5Z6Wfa0ynFgTFk
+ 0P15UOzG/wtEC0+u8KFcOJp+Oew4A==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Stefan,
 
+On Thu, 26 Jan 2017, Stefan Beller wrote:
 
-On 01/26/2017 09:58 PM, Philip Oakley wrote:
-> From: "Junio C Hamano" <gitster@pobox.com>
->> Cornelius Weig <cornelius.weig@tngtech.com> writes:
->>
->>> How about something along these lines? Does the forward reference
->>> break the main line of thought too severly?
->>
->> I find it a bit distracting for those who know PGP signing has
->> nothing to do with signing off your patch, but I think that is OK
->> because they are not the primary target audience of this part of the
->> document.
+> On Thu, Jan 26, 2017 at 8:08 AM, Johannes Schindelin
+> <johannes.schindelin@gmx.de> wrote:
+> > -       if (!f)
+> > +       if (!f) {
+> > +               if (errno == ENOENT)
+> > +                       return -1;
+> >                 die_errno("Could not open file %s for reading",
+> >                           git_path("%s", fname));
 > 
-> Agreed. I this case the target audience was those weren't aware of that.
+> While at it, fix the translation with die_errno(_(..),..) ?
 
-Yes, maybe the forward reference does give a wrong hint about a
-connection between sign-off and pgp-signing. However, I would still vote
-for the following change suggested by sbeller@google.com:
+That is not the purpose of my patch. But feel free to offer a follow-up
+patch!
 
--Do not PGP sign your patch, -at least for now-. Most likely, your (...)
-+Do not PGP sign your patch. Most likely, your maintainer or other (...)
-
-
-> 
-> Maybe even s/by signing off/by adding your Signed-off-by:/ to be sure
-> that the reader knows that it is _their certification_ that is being
-> sought. Even if it does double up on the 'your'.
-> 
-
-I don't think doubling on the 'your' will make the heading clearer. The
-main intention of this change is to avoid mixups with pgp-signing and
-that would IMHO not improve by that.
-Besides, I find the colon in the heading a bit awkward. Is the following
-version as expressive as with the colon?
-
--(5) Sign your work
-+(5) Certify your work by adding Signed-off-by
+Ciao,
+Johannes
