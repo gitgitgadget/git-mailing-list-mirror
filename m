@@ -2,153 +2,69 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,
-	STOX_REPLY_TYPE shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 755301F437
-	for <e@80x24.org>; Fri, 27 Jan 2017 21:44:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 49C721F437
+	for <e@80x24.org>; Fri, 27 Jan 2017 21:47:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751286AbdA0Vn4 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 27 Jan 2017 16:43:56 -0500
-Received: from smtp-out-2.talktalk.net ([62.24.135.66]:4175 "EHLO
-        smtp-out-2.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751143AbdA0Vnx (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 27 Jan 2017 16:43:53 -0500
-Received: from PhilipOakley ([92.31.218.76])
-        by smtp.talktalk.net with SMTP
-        id XEDrcxUJA46SJXEDrclD7p; Fri, 27 Jan 2017 21:38:20 +0000
-X-Originating-IP: [92.31.218.76]
-X-Spam: 0
-X-OAuthority: v=2.2 cv=CItoZljD c=1 sm=1 tr=0 a=e6L6E7eW+5Nb7SO+DvSdIg==:117
- a=e6L6E7eW+5Nb7SO+DvSdIg==:17 a=IkcTkHD0fZMA:10 a=1XWaLZrsAAAA:8
- a=WYy5dHOzAAAA:8 a=ybZZDoGAAAAA:8 a=xtxXYLxNAAAA:8 a=VwQbUJbxAAAA:8
- a=lOwrrXfSciMw4G46FVQA:9 a=QEXdDO2ut3YA:10 a=nJcEw6yWrPvoIXZ49MH8:22
- a=W1gAy31swDSgSs5wg-Y8:22 a=0RhZnL1DYvcuLYC8JZ5M:22 a=xts0dhWdiJbonKbuqhAr:22
- a=AjGcO6oz07-iQ99wixmX:22
-Message-ID: <F290D7175C2C4E728A7A3C767F5B80BF@PhilipOakley>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
-From:   "Philip Oakley" <philipoakley@iee.org>
-To:     "Stefan Beller" <sbeller@google.com>,
-        "Cornelius Weig" <cornelius.weig@tngtech.com>
-Cc:     "Junio C Hamano" <gitster@pobox.com>, <git@vger.kernel.org>
-References: <20170127200136.29949-1-cornelius.weig@tngtech.com> <CAGZ79kb29usw4WyMdy3c5-rGH1nEcQ1gUabzdAtGgOW9zfTCDA@mail.gmail.com>
+        id S1751647AbdA0Vqv (ORCPT <rfc822;e@80x24.org>);
+        Fri, 27 Jan 2017 16:46:51 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:57647 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751294AbdA0Vqt (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 27 Jan 2017 16:46:49 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 933D863BB4;
+        Fri, 27 Jan 2017 16:40:32 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=LGsg5iBn7V+BrLFOpNsFkwjwWZM=; b=fO0GwH
+        phmjNHItFLifNbiHBqOxovKpr89zUQEFRSHQmMMNXmwOPOOC2l319pxpn6eMTkkN
+        hwtYoi0ExfjLEX1GeiwgxCoPM/ti/kdMM9IwIMH+NT/kPPFfHffQhxg4+qsKH+rA
+        zxOw/DRo774Y/BxZ35A7w6svQr7p3RYgP6foY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=TyUFRbPzp29GOG1t2RJ++/Lk34YzxaNf
+        PkXXMN4DaFqkt3lcJ4p6aENU1imvkUnyaxTOFo9cNV67Vm+XsJ43uqz3OMezx9qV
+        76qfg0dsQ3U97e9X0UUhR8IOIBYNHIDKhopZLvjNBmS6N/P6u0i90eTeuk6crU62
+        uaoxTK8/pOE=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 7C1A563BB3;
+        Fri, 27 Jan 2017 16:40:32 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id C764963BB2;
+        Fri, 27 Jan 2017 16:40:31 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Cornelius Weig <cornelius.weig@tngtech.com>
+Cc:     "git\@vger.kernel.org" <git@vger.kernel.org>
 Subject: Re: [PATCH] doc: clarify distinction between sign-off and pgp-signing
-Date:   Fri, 27 Jan 2017 21:38:19 -0000
-Organization: OPDS
+References: <20170127200136.29949-1-cornelius.weig@tngtech.com>
+        <d65bc165-9bd3-c7a6-9a55-1904d1bc095e@tngtech.com>
+Date:   Fri, 27 Jan 2017 13:40:30 -0800
+In-Reply-To: <d65bc165-9bd3-c7a6-9a55-1904d1bc095e@tngtech.com> (Cornelius
+        Weig's message of "Fri, 27 Jan 2017 21:04:21 +0100")
+Message-ID: <xmqqr33oxju9.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain;
-        format=flowed;
-        charset="UTF-8";
-        reply-type=original
-Content-Transfer-Encoding: 7bit
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
-X-CMAE-Envelope: MS4wfOT+zuWOYnHYOMSo1MX0osWu9eNhvRLvTQ69r+GNqsb+yzrNn0Ygq6sq/sqtnZ5Sxq3fPbP92qiReTv9schMCpJtRj8PFOrRhj3wCByCOp8QtIRE332s
- 7c8INXek7hLpM/OOoNC/r0kQT4VJ5lmMsZ2gzz7HpmJBuyKjdepUlQXwKOUT3pcN8R0Dio7/PAMrFSb2aQ57JAV11o9qTUSmi489yesOrKqjvM0Cch37wT+U
- 0ER2shbZNnaXTCGhSvSkvX16ADB42l9kk4MyDtrTeO8=
+Content-Type: text/plain
+X-Pobox-Relay-ID: 3A4A02A0-E4D9-11E6-925B-A7617B1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: "Stefan Beller" <sbeller@google.com>
-> On Fri, Jan 27, 2017 at 12:01 PM,  <cornelius.weig@tngtech.com> wrote:
->> From: Cornelius Weig <cornelius.weig@tngtech.com>
->>
->> The documentation for submission discourages pgp-signing, but demands
->> a proper sign-off by contributors. However, when skimming the headings,
->> the wording of the section for sign-off could mistakenly be understood
->> as concerning pgp-signing. Thus, new contributors could oversee the
->> necessary sign-off.
->>
->> This commit improves the wording such that the section about sign-off
->> cannot be misunderstood as pgp-signing. In addition, the paragraph about
->> pgp-signing is changed such that it avoids the impression that
->> pgp-signing could be relevant at later stages of the submission.
->>
->> Signed-off-by: Cornelius Weig <cornelius.weig@tngtech.com>
->> Signed-off-by: Junio C Hamano <gitster@pobox.com>
->> Signed-off-by: Philip Oakley <philipoakley@iee.org>
->> Signed-off-by: Stefan Beller <sbeller@google.com>
->> ---
->>
->> Notes:
->>     This patch summarizes the suggested changes.
->>
->>     As I don't know what is appropriate, I took the liberty to add 
->> everybody's
->>     sign-off who was involved in the discussion in alphabetic order.
->
-> Heh, my first though was to conclude you haven't read the
-> sign off part, yet apart from the changed header.
-> /me goes back and actually reads the DCO again.
-> And actually these sign offs were there in other patches in this area,
-> so you'd claim (a) that yours was just created partly by you and having
-> other patches that were also signed off (b), whose sign offs you
-> merely copy over to here.
->
-> And then after reading I realized I slightly confused the signing
-> myself as the sign offs are also used to track the flow of a patch.
-> These sign offs suggest that you made the patch initially, then
-> passed it to Junio, then to Philip and then to me.
-> And Junio will sign it again when applying the patch.
->
-> So maybe s/signed-off-by/helped-by/?
+Cornelius Weig <cornelius.weig@tngtech.com> writes:
 
-Helped-by: Philip Oakley <philipoakley@iee.org>
+> Sorry, I forgot to mark this patch as follow-up to message
+> <xmqq60l01jr9.fsf@gitster.mtv.corp.google.com>
 
-is sufficient for me (if that).
->
-> The patch with the aggregation looks good to me.
->
-> Thanks,
-> Stefan
->
->>
->>  Documentation/SubmittingPatches | 13 ++++++-------
->>  1 file changed, 6 insertions(+), 7 deletions(-)
->>
->> diff --git a/Documentation/SubmittingPatches 
->> b/Documentation/SubmittingPatches
->> index 08352de..3faf7eb 100644
->> --- a/Documentation/SubmittingPatches
->> +++ b/Documentation/SubmittingPatches
->> @@ -216,12 +216,11 @@ that it will be postponed.
->>  Exception:  If your mailer is mangling patches then someone may ask
->>  you to re-send them using MIME, that is OK.
->>
->> -Do not PGP sign your patch, at least for now.  Most likely, your
->> -maintainer or other people on the list would not have your PGP
->> -key and would not bother obtaining it anyway.  Your patch is not
->> -judged by who you are; a good patch from an unknown origin has a
->> -far better chance of being accepted than a patch from a known,
->> -respected origin that is done poorly or does incorrect things.
->> +Do not PGP sign your patch. Most likely, your maintainer or other people 
->> on the
->> +list would not have your PGP key and would not bother obtaining it 
->> anyway.
->> +Your patch is not judged by who you are; a good patch from an unknown 
->> origin
->> +has a far better chance of being accepted than a patch from a known, 
->> respected
->> +origin that is done poorly or does incorrect things.
->>
->>  If you really really really really want to do a PGP signed
->>  patch, format it as "multipart/signed", not a text/plain message
->> @@ -246,7 +245,7 @@ patch.
->>       *2* The mailing list: git@vger.kernel.org
->>
->>
->> -(5) Sign your work
->> +(5) Certify your work by adding your "Signed-off-by: " line
->>
->>  To improve tracking of who did what, we've borrowed the
->>  "sign-off" procedure from the Linux kernel project on patches
->> --
->> 2.10.2
->>
-> 
+I appreciate that you are very considerate, but in practice, if you
+do not have too many topics in flight and your response time is less
+than 48 hours, we can tell which new message is about which older
+discussion thread.  Don't worry about it too much.
 
+Thanks.
