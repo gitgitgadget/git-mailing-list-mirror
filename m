@@ -2,72 +2,144 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.9 required=3.0 tests=BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.4 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5DD3E1F6DC
-	for <e@80x24.org>; Fri, 27 Jan 2017 10:22:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3579E1F6DC
+	for <e@80x24.org>; Fri, 27 Jan 2017 10:22:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754808AbdA0KWC (ORCPT <rfc822;e@80x24.org>);
-        Fri, 27 Jan 2017 05:22:02 -0500
-Received: from mout.gmx.net ([212.227.17.20]:60067 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1754795AbdA0KVt (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 27 Jan 2017 05:21:49 -0500
-Received: from virtualbox ([37.201.192.48]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0Mg3h3-1ctvb1355Z-00NPyW; Fri, 27
- Jan 2017 11:21:42 +0100
-Date:   Fri, 27 Jan 2017 11:21:41 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] use absolute_pathdup()
-In-Reply-To: <d15fdbb9-2a21-eeab-1fee-4a1553bd3bcb@web.de>
-Message-ID: <alpine.DEB.2.20.1701271121120.3469@virtualbox>
-References: <d94d742d-1247-ac35-c081-7db1f2178d34@web.de> <d15fdbb9-2a21-eeab-1fee-4a1553bd3bcb@web.de>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-MIME-Version: 1.0
-Content-Type: multipart/mixed; BOUNDARY="8323329-512445254-1485512502=:3469"
-X-Provags-ID: V03:K0:AUp8FRK+Q7w06Jos2ATCvNYHRtCuIrnDarV76/mGIsegOPJhTtX
- TSXIgJY4vsZNnPs4NfMDWDcZwF02lyueeIFNMJ91kzxSFD878uxk9lY/DlWUIs2RFib3dSL
- vu6SC+9UPGKO83qZlrFKvvJ9BGSnVGino5WJ/7Sq3+4CH88Za6oK3I8DsYFJNtKh/Jp/7wU
- yBjhheDh0lJ3otDFcBr9w==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:yRIY8Vig92A=:XoFcIUn3H0bkFk0KSlNZ2c
- CyPQaio7nHkCGGpX8axxhwA1tlgDhsufil8EdRxPfuXOE6fSS7CtSpW61OueYK24bD1E9YOAG
- oArU82RZ+5chYSrsTXGeqaQSKYWRUsU6HuQFN0uVkFMfbcVZRTMHV9BRw2TM/q5maV3UTOExf
- /ZMK8ZrLYzR1qzmfPwbb1OKfMhd/fPD7B2ac1O+l8NnvfB9u1CaKmUj6bJd5f6ZBOAa8ywcwH
- 2zh3HWidwAESwbxJYQrsdcKkZnGGXAol/ZF7Z93bUlLt0L1xDsOXRTmCmfyuNCOmW40AB/MBv
- tC2vyExDLIrN76pI3z+ygGRoFOr4IK1Suyiec+Ni1u3X73YrD+ZCXI6kmlI7eellPUVhSYz5R
- T9mzkZOIPXRIS70NjvKymLUtB9pZJsO2DEB33RBEoWFmgWT/oFvQ0TCmt9ab345hMdajFm3t+
- /n+a+ulo+IRdnHD01gJKBgnQNpow3WIzYUPJxWJOWdXJ99YjsObzbmmzfhJZDEdyZP9RsfuzR
- j/I57wGcaTjClKla40wljdnaIxLsl3GwHvBnmrEuNgDQIeibYfa/ifcgB3Zxp3QR0Jyfdu7iD
- ae+1V6bSAE/zBEtF4Eu9bzPidDHD3cPfUNSDoN23RCgpYwwLQATlZ8vSBdPT0beFbLEQGirFC
- fOSXgTydMYw7k5OgIxrhqRqxPwUIg1V2cjnjW72sTMUephgDMEGfQ8K4s0NmJRNhGnX+8DSay
- 3m+WhwlB5XCwS9olwr0nuQv86lxO8ertW5iB2zdMpYetN5/ByCHWwQ2IAcduQPaKdNqUMwNlL
- yu/qYX6UwLmqkztrE/ZbIsLLAK8ag==
+        id S1754817AbdA0KWD (ORCPT <rfc822;e@80x24.org>);
+        Fri, 27 Jan 2017 05:22:03 -0500
+Received: from zimbra-vnc.tngtech.com ([83.144.240.98]:18462 "EHLO
+        proxy.tng.vnc.biz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754787AbdA0KVi (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 27 Jan 2017 05:21:38 -0500
+Received: from localhost (localhost [127.0.0.1])
+        by proxy.tng.vnc.biz (Postfix) with ESMTP id D79961E2C99;
+        Fri, 27 Jan 2017 11:11:43 +0100 (CET)
+Received: from proxy.tng.vnc.biz ([127.0.0.1])
+        by localhost (proxy.tng.vnc.biz [127.0.0.1]) (amavisd-new, port 10032)
+        with ESMTP id wtjpMoEN7EWT; Fri, 27 Jan 2017 11:11:43 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+        by proxy.tng.vnc.biz (Postfix) with ESMTP id 6E5D21E2D45;
+        Fri, 27 Jan 2017 11:11:43 +0100 (CET)
+X-Virus-Scanned: amavisd-new at 
+Received: from proxy.tng.vnc.biz ([127.0.0.1])
+        by localhost (proxy.tng.vnc.biz [127.0.0.1]) (amavisd-new, port 10026)
+        with ESMTP id UMVOU85S_5SR; Fri, 27 Jan 2017 11:11:43 +0100 (CET)
+Received: from localhost.localdomain (unknown [46.128.140.114])
+        by proxy.tng.vnc.biz (Postfix) with ESMTPSA id 1364B1E2C99;
+        Fri, 27 Jan 2017 11:11:43 +0100 (CET)
+From:   cornelius.weig@tngtech.com
+To:     gitster@pobox.com
+Cc:     peff@peff.net, git@vger.kernel.org,
+        Cornelius Weig <cornelius.weig@tngtech.com>
+Subject: [PATCH v3 3/3] update-ref: add test cases for bare repository
+Date:   Fri, 27 Jan 2017 11:09:48 +0100
+Message-Id: <20170127100948.29408-3-cornelius.weig@tngtech.com>
+X-Mailer: git-send-email 2.10.2
+In-Reply-To: <20170127100948.29408-1-cornelius.weig@tngtech.com>
+References: <xmqqvat11k1i.fsf@gitster.mtv.corp.google.com>
+ <20170127100948.29408-1-cornelius.weig@tngtech.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+From: Cornelius Weig <cornelius.weig@tngtech.com>
 
---8323329-512445254-1485512502=:3469
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+The default behavior of update-ref to create reflogs differs in
+repositories with worktree and bare ones. The existing tests cover only
+the behavior of repositories with worktree.
 
-Hi Ren=C3=A9,
+This commit adds tests that assert the correct behavior in bare
+repositories for update-ref. Two cases are covered:
 
-On Thu, 26 Jan 2017, Ren=C3=A9 Scharfe wrote:
+ - If core.logAllRefUpdates is not set, no reflogs should be created
+ - If core.logAllRefUpdates is true, reflogs should be created
 
-> Apply the symantic patch for converting callers that duplicate the
+Signed-off-by: Cornelius Weig <cornelius.weig@tngtech.com>
+---
 
-s/symantic/semantic/
+Notes:
+    Changes wrt v2:
+    	Remove bashism 'local' from test function
 
-Ciao,
-Dscho
---8323329-512445254-1485512502=:3469--
+ t/t1400-update-ref.sh | 43 ++++++++++++++++++++++++++++++++++++-------
+ 1 file changed, 36 insertions(+), 7 deletions(-)
+
+diff --git a/t/t1400-update-ref.sh b/t/t1400-update-ref.sh
+index b9084ca..b0ffc0b 100755
+--- a/t/t1400-update-ref.sh
++++ b/t/t1400-update-ref.sh
+@@ -8,23 +8,33 @@ test_description='Test git update-ref and basic ref logging'
+ 
+ Z=$_z40
+ 
+-test_expect_success setup '
++m=refs/heads/master
++n_dir=refs/heads/gu
++n=$n_dir/fixes
++outside=refs/foo
++bare=bare-repo
+ 
++create_test_commits ()
++{
++	prfx="$1"
+ 	for name in A B C D E F
+ 	do
+ 		test_tick &&
+ 		T=$(git write-tree) &&
+ 		sha1=$(echo $name | git commit-tree $T) &&
+-		eval $name=$sha1
++		eval $prfx$name=$sha1
+ 	done
++}
+ 
++test_expect_success setup '
++	create_test_commits "" &&
++	mkdir $bare &&
++	cd $bare &&
++	git init --bare &&
++	create_test_commits "bare" &&
++	cd -
+ '
+ 
+-m=refs/heads/master
+-n_dir=refs/heads/gu
+-n=$n_dir/fixes
+-outside=refs/foo
+-
+ test_expect_success \
+ 	"create $m" \
+ 	"git update-ref $m $A &&
+@@ -93,6 +103,25 @@ test_expect_success 'update-ref creates reflogs with --create-reflog' '
+ 	git reflog exists $outside
+ '
+ 
++test_expect_success 'creates no reflog in bare repository' '
++	git -C $bare update-ref $m $bareA &&
++	git -C $bare rev-parse $bareA >expect &&
++	git -C $bare rev-parse $m >actual &&
++	test_cmp expect actual &&
++	test_must_fail git -C $bare reflog exists $m
++'
++
++test_expect_success 'core.logAllRefUpdates=true creates reflog in bare repository' '
++	test_when_finished "git -C $bare config --unset core.logAllRefUpdates && \
++		rm $bare/logs/$m" &&
++	git -C $bare config core.logAllRefUpdates true &&
++	git -C $bare update-ref $m $bareB &&
++	git -C $bare rev-parse $bareB >expect &&
++	git -C $bare rev-parse $m >actual &&
++	test_cmp expect actual &&
++	git -C $bare reflog exists $m
++'
++
+ test_expect_success 'core.logAllRefUpdates=true does not create reflog by default' '
+ 	test_config core.logAllRefUpdates true &&
+ 	test_when_finished "git update-ref -d $outside" &&
+-- 
+2.10.2
+
