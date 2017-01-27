@@ -2,101 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.2 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 750CF1F437
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8BEBF1F437
 	for <e@80x24.org>; Fri, 27 Jan 2017 17:35:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933978AbdA0ReV (ORCPT <rfc822;e@80x24.org>);
-        Fri, 27 Jan 2017 12:34:21 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:60939 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S933854AbdA0Rdf (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 27 Jan 2017 12:33:35 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id EBAC162847;
-        Fri, 27 Jan 2017 12:33:33 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=1agwnx5LoFqdlzDJOqV46FJ3kxQ=; b=mVPajs
-        IwrXQwOwwRu7YuGJSbuSAhiNlpElo9/KmeyRc2VFvtLXjWskho3lP1vh+j3kCzlo
-        963ZHR+V430bCIHWwlBA2ktQPzx63gZHz/ZsgN4NZ+Ss4kY4FPFtJWzKmjChlPfB
-        S3TRrCO+tE+p5MKMwEHGQ6SudmVt8OOkehJUI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=iYVcm1TiEg7CLy7bneUJiaTJAPw7yWts
-        GdDvR1D08iHqoAaJDeRi5pOOPlalGKbG3fYq2lZuvUPC44ePTh6f+KI/P2aPiD/k
-        A1y/q3ku0QJjxUkYs5h1BmQbrhvTPjJbF+6GrgGhKVgDeP7bg8iMNSzi6CEv9B9+
-        /c2rfDnMgh8=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id E25FF62843;
-        Fri, 27 Jan 2017 12:33:33 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 49D3562842;
-        Fri, 27 Jan 2017 12:33:33 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Luke Diamand <luke@diamand.org>,
-        Lars Schneider <larsxschneider@gmail.com>
-Cc:     git@vger.kernel.org, George Vanburgh <george@vanburgh.me>
-Subject: Re: [PATCH v2] git-p4: Fix git-p4.mapUser on Windows
-References: <01020159c0e82598-e373cf0d-2bad-41bb-b455-6896ad183e22-000000@eu-west-1.amazonses.com>
-        <01020159d4ea6861-fce45d61-8be5-49b0-ab4e-d161b9429795-000000@eu-west-1.amazonses.com>
-Date:   Fri, 27 Jan 2017 09:33:31 -0800
-In-Reply-To: <01020159d4ea6861-fce45d61-8be5-49b0-ab4e-d161b9429795-000000@eu-west-1.amazonses.com>
-        (George Vanburgh's message of "Wed, 25 Jan 2017 09:17:29 +0000")
-Message-ID: <xmqqa8ac1k7o.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+        id S933836AbdA0RfV (ORCPT <rfc822;e@80x24.org>);
+        Fri, 27 Jan 2017 12:35:21 -0500
+Received: from mout.gmx.net ([212.227.15.19]:56281 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S933253AbdA0RfP (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 27 Jan 2017 12:35:15 -0500
+Received: from virtualbox ([37.201.192.48]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MFMIO-1clVsq1lxs-00EJt2; Fri, 27
+ Jan 2017 18:34:48 +0100
+Date:   Fri, 27 Jan 2017 18:34:46 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Jeff King <peff@peff.net>
+cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
+Subject: Re: [PATCH v2 1/1] reset: support the --stdin option
+In-Reply-To: <20170127170422.lvpghp6jdud37zxx@sigill.intra.peff.net>
+Message-ID: <alpine.DEB.2.20.1701271832270.3469@virtualbox>
+References: <cover.1476202100.git.johannes.schindelin@gmx.de> <cover.1485520718.git.johannes.schindelin@gmx.de> <3b0bad26045ed175f40f050e15b65cb6a8f2368c.1485520718.git.johannes.schindelin@gmx.de> <20170127170422.lvpghp6jdud37zxx@sigill.intra.peff.net>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: B9C433FC-E4B6-11E6-A8F8-A7617B1B28F4-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:581J01jFKCoqymZmMHrGMCZIkcO8WuuuWQxwKxTVoahG/aVivGc
+ BZTnCwccNYSRkyoDcVUEb/arY0Ko9gSOYL+H2U7NTbWtfwxGCE8T57oWXCah9hpNin3K5Ll
+ aIyl19ILj7Gw01g5FP6WFVIV4oemxvr9pa6LreO3tc6akKLRM+MhP/lyplutfI5ILmEKYD9
+ kxrNlHDockHXIIcO2gw7w==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:8nAcgBiuj0Y=:HdKVDKGyWxKkoJCmk0l/R+
+ mUtOJxu/XkeUeDguyobT0scoPy19Sy9hHkaEFWoizUYTUSSGsMSiFWIQgU3d+waB4Wr6xMe5q
+ OtZCDM6uUkdA4qy9tO6bEBRUOeLFOcaRg3fKHdgT3CRjh3XgCVEMQz7EPx18CWW/5SrbOVNkz
+ dw3Mb1/kiCdWqKSvtd9w30dEaSFJyYuywBI0xD92ifFkCHAvEq38SylMCYDzH1C/WqbG/BTJP
+ h2xrT8sCS1UrUWa+Ol2icpkD9xB/JPntZCK/kLwu2JPP2rYlDn6d/tPyUYrnU6Bz29OeBRGlv
+ 9fqMgU3BwaAVjmD8CcNqHU9/OCsRUpm0xD6ag9ids04k32t1TcJE2sX0ji1c4lZkKudx7tt/W
+ cu9jCbrLkki0+1nzGypy3WjVjWAePRqseuzm/W8zZzfO/2JrPG0Xwj9bYJ5mgRly2bjanDD90
+ Du+XXLZn4Pyhf1jyVWaQrTcvjl4po7Cp6WBcKkG0/Pvm6gsYVP6aWv1c6XbxZuuIS0PXiRvoT
+ gBpoi2qEn6z02DL3Tp67Vj+h6y6ZDI+Crn2rSiLbHH/DVjdaymGOihYmx06Eie2dKgNEQ7x4U
+ odFzgaM9B7i9dUWRGOmz53A5kPdqA2uV0FjapQihKmmSbBmX9qFBE5dTG9wjBCqORBK3/MNei
+ IO+zYHVeU/U5Yip9lELf64qFIuGyjm2ngVa098s+35Kb75rdEc/NNlt3xtqaTReTQX5sWtXqB
+ DfbpBUE1lWyPKNZoezdiEiuBMVMmwbBFHeJVdcFw3gkBsMgq8sBVgAlDc2hAJJn6r/hbtV8v2
+ utEjXbC8zP6hcF1deplwmdw5olNaQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-George Vanburgh <george@vanburgh.me> writes:
+Hi Peff,
 
-> From: George Vanburgh <gvanburgh@bloomberg.net>
->
-> When running git-p4 on Windows, with multiple git-p4.mapUser entries in
-> git config - no user mappings are applied to the generated repository.
-> ...
-> Using splitlines solves this issue, by splitting config on all
-> typical delimiters ('\n', '\r\n' etc.)
+On Fri, 27 Jan 2017, Jeff King wrote:
 
-Luke, Lars, this version seems to be in line with the conclusion of
-your earlier reviews, e.g.
+> On Fri, Jan 27, 2017 at 01:38:55PM +0100, Johannes Schindelin wrote:
+> 
+> A few minor suggestions:
+> 
+> > +--stdin::
+> > +	Instead of taking list of paths from the command line,
+> > +	read list of paths from the standard input.  Paths are
+> > +	separated by LF (i.e. one path per line) by default.
+> > +
+> > +-z::
+> > +	Only meaningful with `--stdin`; paths are separated with
+> > +	NUL character instead of LF.
+> 
+> Is it worth clarifying that these are paths, not pathspecs? The word
+> "paths" is used to refer to the pathspecs on the command-line elsewhere
+> in the document.
+> 
+> It might also be worth mentioning the quoting rules for the non-z case.
 
-<CAE5ih7_+Vc9oqKdjo8h2vgZPup4pto9wd=sBb=W6hCs4tuW2Jg@mail.gmail.com>
+I think this would be overkill. In reality, --stdin without -z does not
+make much sense, anyway.
 
-Even though it looks OK to my eyes, I'll wait for Acks or further
-refinement suggestions from either of you two before acting on this
+If you feel strongly about it, I encourage you to submit a follow-up
 patch.
 
-Thanks.
+The rest of your suggestions have been implemented in v3.
 
-> Signed-off-by: George Vanburgh <gvanburgh@bloomberg.net>
-> ---
->  git-p4.py | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/git-p4.py b/git-p4.py
-> index f427bf6..b66f68b 100755
-> --- a/git-p4.py
-> +++ b/git-p4.py
-> @@ -656,7 +656,7 @@ def gitConfigInt(key):
->  def gitConfigList(key):
->      if not _gitConfig.has_key(key):
->          s = read_pipe(["git", "config", "--get-all", key], ignore_error=True)
-> -        _gitConfig[key] = s.strip().split(os.linesep)
-> +        _gitConfig[key] = s.strip().splitlines()
->          if _gitConfig[key] == ['']:
->              _gitConfig[key] = []
->      return _gitConfig[key]
->
-> --
-> https://github.com/git/git/pull/319
+Ciao,
+Johannes
