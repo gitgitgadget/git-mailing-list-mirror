@@ -7,52 +7,52 @@ X-Spam-Status: No, score=-6.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 690701FAAD
-	for <e@80x24.org>; Sat, 28 Jan 2017 02:02:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 005741FAAD
+	for <e@80x24.org>; Sat, 28 Jan 2017 02:02:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750893AbdA1CCs (ORCPT <rfc822;e@80x24.org>);
-        Fri, 27 Jan 2017 21:02:48 -0500
-Received: from mail-pg0-f42.google.com ([74.125.83.42]:34575 "EHLO
-        mail-pg0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751001AbdA1CCj (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 27 Jan 2017 21:02:39 -0500
-Received: by mail-pg0-f42.google.com with SMTP id 14so85552289pgg.1
-        for <git@vger.kernel.org>; Fri, 27 Jan 2017 18:02:39 -0800 (PST)
+        id S1751199AbdA1CCy (ORCPT <rfc822;e@80x24.org>);
+        Fri, 27 Jan 2017 21:02:54 -0500
+Received: from mail-pg0-f41.google.com ([74.125.83.41]:33202 "EHLO
+        mail-pg0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750865AbdA1CCm (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 27 Jan 2017 21:02:42 -0500
+Received: by mail-pg0-f41.google.com with SMTP id 204so85673812pge.0
+        for <git@vger.kernel.org>; Fri, 27 Jan 2017 18:02:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=D+vEmF75eT9Ais22yscP8QVp1k3bwesgcYspdacfbh4=;
-        b=truMq1d1gIuQO8HeX/Ar+lZDmj6BpsKMf5GP7+u9nlWipGjhXBxpDc1mdv0VZQPVWK
-         KFUuRN2fYLzIjE855J4AKmjzDjojcqFSdZaRC2aXkLUNLjR7JdZ/6meiGkacLpf5PmSI
-         2e+FKzd8ANaRm1U9STltxpRo6s7SuaTBPRUrc23e4MGqEtfi/IZokXwHRtWmHl6fI/SJ
-         WsBkqJGCzhdefeJ4Aa1GxdSL3FsCQRAW2TmNF1aFVHyj0CbLYCtSoGFwMTg61HrkygTU
-         g8tk/smrD6dRF52PgRkgPLzES/BBh2pKBbpGgm5+CNQtNWHzHUhtZpfIQy4p3RaNqPxE
-         +fhg==
+        bh=O+45k8H2jJuWldxUOQadee5jc/jqPN+P6kbHVofHOEY=;
+        b=c0oiVRMEffXuzuS20NjMUyGkcVsRXcNJXOTlC8G64gx0aHcToPf97gqfxwtgxVjOcK
+         A1PfpbUge+pMNnaCxg4JwtZvJIpqefqEtTrhMXXiVDiC479thBAlAfp6NgP3VcgtmNTJ
+         2VzKkya7jnlkeABLqvSJS1iRQaTc2FPOwe1Pc/3FbOCudXYfn/J/ZBQmrFa+3BchzBse
+         sF0MabGUK7d10BdxC70sF8SpfRdk7bUW3bZWVsif00kV0h38DWeVKJ3q62NwTomqNYv4
+         t3UXvmhEQT6kYtcbxfPqXO8mXpEEK3LxmqGVCpy7Nta+nGWgUT9P8k/Z/FZGW9bjw7Dy
+         uY3A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=D+vEmF75eT9Ais22yscP8QVp1k3bwesgcYspdacfbh4=;
-        b=Fd7mqJB8dE50ZCRuJwIfBxuJukyFHAUjClMO8lPempRDQjV9RElrLCm/Bz6tkoBqTs
-         H1HQRsV0uGNq5ilPvbcw8Fbp103+J/tKC54FVw3Iu+I+asf/KyQaT0SH8Hyf5Iwx25oj
-         X87qAsiuhCBOgh/whKOejqtLR+jU1NDx6QQwB3aaVppLGAS/Rxsgx5cNvffn8x7PzcLL
-         KvZEt7rVotMfVgzv8ljUw574MwYvQClyWpLZ2Mxu2prsbBx3ybtlqV5C8DvKRXd+ZQch
-         wvRPC2EKGIcR8HxnbxlciUAcOMSSQec3JosZZGRe97cu+Bn3d50EUjilEYq13rAKgqHe
-         f8dw==
-X-Gm-Message-State: AIkVDXJ+nUvn7vI18eWyd4fAy2FQnRiJC89NBiHNaWqNj/4ry3FPN70LdcsiopmvV39/8SJK
-X-Received: by 10.98.215.70 with SMTP id v6mr12171746pfl.141.1485568953704;
-        Fri, 27 Jan 2017 18:02:33 -0800 (PST)
+        bh=O+45k8H2jJuWldxUOQadee5jc/jqPN+P6kbHVofHOEY=;
+        b=JcMYFiNsg9ypw6wbgD2utFMk6ANunC2Spic2xqjKOxpL6QTh0txZOhWENfjq3XGQ8i
+         q18MWPzcDPGM0n05Yy85FzmSEBAK/YX7Co8lXGv312mCRocQxxdS4A17xqwGC1Rug35E
+         L5i0lHcsAWtYUsK2Ra53imNyUF6pVpvPZX/Js7xqop7KW4JEBmKcA61jzoLayTnt2B2q
+         SrLnvmEiC2/7wSjJNQ9XdW4OMZDm7QF6zkTy38Rmj9KdqwHgnVcR8nzmDGwLb6EBldTQ
+         qk9Psf1JTAzuCqO1XpLrSCwlfxMXvLseJiDGWtjNQeKckA2afr8ABLB04wSd+MTQBenG
+         zA8Q==
+X-Gm-Message-State: AIkVDXJuJWrfK6hnLETUC5mB48mlesgbaa4cUkzGhbexfUQEY1qpoafQDkcOCDciJR+uBsb8
+X-Received: by 10.99.217.85 with SMTP id e21mr12769562pgj.79.1485568961800;
+        Fri, 27 Jan 2017 18:02:41 -0800 (PST)
 Received: from roshar.mtv.corp.google.com ([100.96.238.26])
-        by smtp.gmail.com with ESMTPSA id w76sm14136185pfd.74.2017.01.27.18.02.32
+        by smtp.gmail.com with ESMTPSA id w76sm14136185pfd.74.2017.01.27.18.02.40
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 27 Jan 2017 18:02:32 -0800 (PST)
+        Fri, 27 Jan 2017 18:02:40 -0800 (PST)
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>, sbeller@google.com,
         pclouds@gmail.com, Brandon Williams <bmwill@google.com>
-Subject: [PATCH v3 04/27] attr.c: explain the lack of attr-name syntax check in parse_attr()
-Date:   Fri, 27 Jan 2017 18:01:44 -0800
-Message-Id: <20170128020207.179015-5-bmwill@google.com>
+Subject: [PATCH v3 09/27] attr.c: plug small leak in parse_attr_line()
+Date:   Fri, 27 Jan 2017 18:01:49 -0800
+Message-Id: <20170128020207.179015-10-bmwill@google.com>
 X-Mailer: git-send-email 2.11.0.483.g087da7b7c-goog
 In-Reply-To: <20170128020207.179015-1-bmwill@google.com>
 References: <20170123203525.185058-1-bmwill@google.com>
@@ -64,30 +64,71 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Junio C Hamano <gitster@pobox.com>
 
+If any error is noticed after the match_attr structure is allocated,
+we shouldn't just return NULL from this function.
+
+Add a fail_return label that frees the allocated structure and
+returns NULL, and consistently jump there when we want to return
+NULL after cleaning up.
+
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: Stefan Beller <sbeller@google.com>
 Signed-off-by: Brandon Williams <bmwill@google.com>
 ---
- attr.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ attr.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
 diff --git a/attr.c b/attr.c
-index 007f1a299..6b55a57ef 100644
+index f7cf7ae30..d180c7833 100644
 --- a/attr.c
 +++ b/attr.c
-@@ -183,6 +183,12 @@ static const char *parse_attr(const char *src, int lineno, const char *cp,
- 			return NULL;
+@@ -223,7 +223,7 @@ static struct match_attr *parse_attr_line(const char *line, const char *src,
+ 		if (!macro_ok) {
+ 			fprintf(stderr, "%s not allowed: %s:%d\n",
+ 				name, src, lineno);
+-			return NULL;
++			goto fail_return;
  		}
- 	} else {
-+		/*
-+		 * As this function is always called twice, once with
-+		 * e == NULL in the first pass and then e != NULL in
-+		 * the second pass, no need for invalid_attr_name()
-+		 * check here.
-+		 */
- 		if (*cp == '-' || *cp == '!') {
- 			e->setto = (*cp == '-') ? ATTR__FALSE : ATTR__UNSET;
- 			cp++;
+ 		is_macro = 1;
+ 		name += strlen(ATTRIBUTE_MACRO_PREFIX);
+@@ -233,7 +233,7 @@ static struct match_attr *parse_attr_line(const char *line, const char *src,
+ 			fprintf(stderr,
+ 				"%.*s is not a valid attribute name: %s:%d\n",
+ 				namelen, name, src, lineno);
+-			return NULL;
++			goto fail_return;
+ 		}
+ 	}
+ 	else
+@@ -246,7 +246,7 @@ static struct match_attr *parse_attr_line(const char *line, const char *src,
+ 	for (cp = states, num_attr = 0; *cp; num_attr++) {
+ 		cp = parse_attr(src, lineno, cp, NULL);
+ 		if (!cp)
+-			return NULL;
++			goto fail_return;
+ 	}
+ 
+ 	res = xcalloc(1,
+@@ -267,7 +267,7 @@ static struct match_attr *parse_attr_line(const char *line, const char *src,
+ 		if (res->u.pat.flags & EXC_FLAG_NEGATIVE) {
+ 			warning(_("Negative patterns are ignored in git attributes\n"
+ 				  "Use '\\!' for literal leading exclamation."));
+-			return NULL;
++			goto fail_return;
+ 		}
+ 	}
+ 	res->is_macro = is_macro;
+@@ -283,6 +283,10 @@ static struct match_attr *parse_attr_line(const char *line, const char *src,
+ 	}
+ 
+ 	return res;
++
++fail_return:
++	free(res);
++	return NULL;
+ }
+ 
+ /*
 -- 
 2.11.0.483.g087da7b7c-goog
 
