@@ -2,56 +2,57 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-6.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C91361F437
-	for <e@80x24.org>; Sat, 28 Jan 2017 02:03:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A16AC1F437
+	for <e@80x24.org>; Sat, 28 Jan 2017 02:03:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751281AbdA1CDE (ORCPT <rfc822;e@80x24.org>);
-        Fri, 27 Jan 2017 21:03:04 -0500
-Received: from mail-pg0-f50.google.com ([74.125.83.50]:34593 "EHLO
-        mail-pg0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751030AbdA1CCw (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 27 Jan 2017 21:02:52 -0500
-Received: by mail-pg0-f50.google.com with SMTP id 14so85553702pgg.1
-        for <git@vger.kernel.org>; Fri, 27 Jan 2017 18:02:52 -0800 (PST)
+        id S1751284AbdA1CDH (ORCPT <rfc822;e@80x24.org>);
+        Fri, 27 Jan 2017 21:03:07 -0500
+Received: from mail-pg0-f46.google.com ([74.125.83.46]:36222 "EHLO
+        mail-pg0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750742AbdA1CCt (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 27 Jan 2017 21:02:49 -0500
+Received: by mail-pg0-f46.google.com with SMTP id 3so26925397pgj.3
+        for <git@vger.kernel.org>; Fri, 27 Jan 2017 18:02:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=q/nnb2wbMkVDsw2CX6JwDJYEX5RK2ek2zPdmI9qOW5U=;
-        b=SBuFEc8k2/dQVfPk//uaBOeTTRHfZN1mFvC/tfa0BBND4SSnIhpWff5neDHcOVukTc
-         YhfsV4FyV50u6dph71zsxHnW/js78KX98AxyaeYGxC019IRAcEOByxqWp3heVuCIcmq4
-         WYzoTPHVFlIcpZ5UjRv2jWy3IIF9IHMt8CSM417qZqda8zsFbN4SpMG+nZ1Wus0OW/ju
-         ISPNPGzSgKmjW0vg2OX/ZvAm4wp1qtRY81rbyTeFcdQR33eZ1jbi8q3pfuizpsEj9iMp
-         d7U3Ns3ENuN46B++WSbQ7nlYfpOqdN3WXirwilv22GjtgX2Ro1K/3gf6hF3pze7mGFxg
-         0RcQ==
+        bh=p6hyFTMCPfHZ/bG2tGbmkXQFwDn4O+5i9NwmqQqZT/g=;
+        b=n8TGiT52loaNvqcrL1RorKeSisqcYTMXaG99+B3/gTNblclkrMhuO9UXrGOO38FtU0
+         rD2FpLK5Rwl5wH2h5LZk3v0naEUP88mo93eOQIyFYSnKAhPJEfVmOGzEMmeYWl6tMliH
+         CYgFFpe1h67ANcJEBBbiHLWgIP7DSYgSPeR4GSxEWItxh7+nc1J/735zO4GldGQisNXE
+         kRgZc3S0FaPNe0NG9vMsmF9CMFGllPS/MySADafOufCxJVNGKMNCRhsUpvNBttmfy7Ah
+         eUuv9ndaSX/jm6h68+lAvrGcUBWxxnM8tvo787VfGSa9bO0ThGPnT14tn/cOKb8EVYEy
+         HENg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=q/nnb2wbMkVDsw2CX6JwDJYEX5RK2ek2zPdmI9qOW5U=;
-        b=o+Xx7vKxajY2Cff8iyRc1lKGCag4DhmHl8xJWxe/4zNGuiXP4RxzKqAIujSTQBNik0
-         9Q2Q6FJnKbh/eKCoWUBxb0h3WYwNlNfEzXW0v3Ie3gbj3BsknNRZCuHIIB9iJhd9NjbB
-         iG7vbT9sl+y0fBu4MFOE9ts9NJioFho32RGcQO101HFQF9F6zcXxklz2e/DI/VmkY/Dk
-         QNFSSNr18jOkKAK9f88r7GRBLOlgAzEDk9rTSWp7Ff3hjrne0ajV35vAgWTmH4ukOszi
-         nyZLPnvkpUSvxH0qN0kl15NS24Dtx2OkDIgu+jzijcy9vdhLqcXd0kp9eSv9vXJUPjJe
-         YxLQ==
-X-Gm-Message-State: AIkVDXK1Dj5MlSDe8478SaH75pAnieisQq3yFaPVB4yAovZ73QviBgJ2vvNRJwn3iudcCoLE
-X-Received: by 10.99.173.14 with SMTP id g14mr12703919pgf.176.1485568971471;
-        Fri, 27 Jan 2017 18:02:51 -0800 (PST)
+        bh=p6hyFTMCPfHZ/bG2tGbmkXQFwDn4O+5i9NwmqQqZT/g=;
+        b=bJtE7UlUFpKlGLAKcqVx4tcYNne21rAMhX/9B5QGI1v+mI98M05BTisixLCozYagK/
+         9D7fWncitfPSjLFKWLYQ/lLBfQKFYUXI2Kng3pYPJ0n9kNWM0j9p98AFkZA5sVzN7w++
+         2buk7eqhJ5yUkeRN8wK3IBppRNoIYQmcOCy3iGKV4GgJjDJhNPgQfgtrFdAnuVupXJnY
+         Ji/8d48ndLBdGAkDfPUbdxJxHI4XU5qD8XdYFfyuWsM87mbt8N+Cu/gu1zorhUduwWlm
+         nnENqHJourJpvhFBtydAd6JrTkSa+QCYHjcz4I345HgumXkw6DRKnP44s5H4+Jzjm0QB
+         w9BA==
+X-Gm-Message-State: AIkVDXJZ3Mre+uPpJVt6dMIZBfobcpuBsrBPAncFI3hlbUu3a8o/rWRxEQmlN2PdP8YchfJ7
+X-Received: by 10.84.231.134 with SMTP id g6mr16688931plk.40.1485568968473;
+        Fri, 27 Jan 2017 18:02:48 -0800 (PST)
 Received: from roshar.mtv.corp.google.com ([100.96.238.26])
-        by smtp.gmail.com with ESMTPSA id w76sm14136185pfd.74.2017.01.27.18.02.49
+        by smtp.gmail.com with ESMTPSA id w76sm14136185pfd.74.2017.01.27.18.02.46
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 27 Jan 2017 18:02:50 -0800 (PST)
+        Fri, 27 Jan 2017 18:02:47 -0800 (PST)
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>, sbeller@google.com,
         pclouds@gmail.com, Brandon Williams <bmwill@google.com>
-Subject: [PATCH v3 15/27] attr: (re)introduce git_check_attr() and struct attr_check
-Date:   Fri, 27 Jan 2017 18:01:55 -0800
-Message-Id: <20170128020207.179015-16-bmwill@google.com>
+Subject: [PATCH v3 13/27] attr.c: outline the future plans by heavily commenting
+Date:   Fri, 27 Jan 2017 18:01:53 -0800
+Message-Id: <20170128020207.179015-14-bmwill@google.com>
 X-Mailer: git-send-email 2.11.0.483.g087da7b7c-goog
 In-Reply-To: <20170128020207.179015-1-bmwill@google.com>
 References: <20170123203525.185058-1-bmwill@google.com>
@@ -63,178 +64,95 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Junio C Hamano <gitster@pobox.com>
 
-A common pattern to check N attributes for many paths is to
-
- (1) prepare an array A of N attr_check_item items;
- (2) call git_attr() to intern the N attribute names and fill A;
- (3) repeatedly call git_check_attrs() for path with N and A;
-
-A look-up for these N attributes for a single path P scans the
-entire attr_stack, starting from the .git/info/attributes file and
-then .gitattributes file in the directory the path P is in, going
-upwards to find .gitattributes file found in parent directories.
-
-An earlier commit 06a604e6 (attr: avoid heavy work when we know the
-specified attr is not defined, 2014-12-28) tried to optimize out
-this scanning for one trivial special case: when the attribute being
-sought is known not to exist, we do not have to scan for it.  While
-this may be a cheap and effective heuristic, it would not work well
-when N is (much) more than 1.
-
-What we would want is a more customized way to skip irrelevant
-entries in the attribute stack, and the definition of irrelevance
-is tied to the set of attributes passed to git_check_attrs() call,
-i.e. the set of attributes being sought.  The data necessary for
-this optimization needs to live alongside the set of attributes, but
-a simple array of git_attr_check_elem simply does not have any place
-for that.
-
-Introduce "struct attr_check" that contains N, the number of
-attributes being sought, and A, the array that holds N
-attr_check_item items, and a function git_check_attr() that
-takes a path P and this structure as its parameters.  This structure
-can later be extended to hold extra data necessary for optimization.
-
-Also, to make it easier to write the first two steps in common
-cases, introduce git_attr_check_initl() helper function, which takes
-a NULL-terminated list of attribute names and initialize this
-structure.
-
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: Stefan Beller <sbeller@google.com>
 Signed-off-by: Brandon Williams <bmwill@google.com>
 ---
- attr.c | 74 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- attr.h | 17 +++++++++++++++
- 2 files changed, 91 insertions(+)
+ attr.c | 40 +++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 39 insertions(+), 1 deletion(-)
 
 diff --git a/attr.c b/attr.c
-index 2f180d609..de8bf35a3 100644
+index 8026d68bd..50e5ee393 100644
 --- a/attr.c
 +++ b/attr.c
-@@ -132,6 +132,75 @@ struct git_attr *git_attr(const char *name)
- 	return git_attr_internal(name, strlen(name));
- }
+@@ -30,6 +30,11 @@ static const char git_attr__unknown[] = "(builtin)unknown";
+ #define DEBUG_ATTR 0
+ #endif
  
-+struct attr_check *attr_check_alloc(void)
-+{
-+	return xcalloc(1, sizeof(struct attr_check));
-+}
-+
-+struct attr_check *attr_check_initl(const char *one, ...)
-+{
-+	struct attr_check *check;
-+	int cnt;
-+	va_list params;
-+	const char *param;
-+
-+	va_start(params, one);
-+	for (cnt = 1; (param = va_arg(params, const char *)) != NULL; cnt++)
-+		;
-+	va_end(params);
-+
-+	check = attr_check_alloc();
-+	check->nr = cnt;
-+	check->alloc = cnt;
-+	check->items = xcalloc(cnt, sizeof(struct attr_check_item));
-+
-+	check->items[0].attr = git_attr(one);
-+	va_start(params, one);
-+	for (cnt = 1; cnt < check->nr; cnt++) {
-+		const struct git_attr *attr;
-+		param = va_arg(params, const char *);
-+		if (!param)
-+			die("BUG: counted %d != ended at %d",
-+			    check->nr, cnt);
-+		attr = git_attr(param);
-+		if (!attr)
-+			die("BUG: %s: not a valid attribute name", param);
-+		check->items[cnt].attr = attr;
-+	}
-+	va_end(params);
-+	return check;
-+}
-+
-+struct attr_check_item *attr_check_append(struct attr_check *check,
-+					  const struct git_attr *attr)
-+{
-+	struct attr_check_item *item;
-+
-+	ALLOC_GROW(check->items, check->nr + 1, check->alloc);
-+	item = &check->items[check->nr++];
-+	item->attr = attr;
-+	return item;
-+}
-+
-+void attr_check_reset(struct attr_check *check)
-+{
-+	check->nr = 0;
-+}
-+
-+void attr_check_clear(struct attr_check *check)
-+{
-+	free(check->items);
-+	check->items = NULL;
-+	check->alloc = 0;
-+	check->nr = 0;
-+}
-+
-+void attr_check_free(struct attr_check *check)
-+{
-+	attr_check_clear(check);
-+	free(check);
-+}
-+
- /* What does a matched pattern decide? */
- struct attr_state {
- 	struct git_attr *attr;
-@@ -865,6 +934,11 @@ int git_all_attrs(const char *path, int *num, struct attr_check_item **check)
- 	return 0;
- }
- 
-+int git_check_attr(const char *path, struct attr_check *check)
-+{
-+	return git_check_attrs(path, check->nr, check->items);
-+}
-+
- void git_attr_set_direction(enum git_attr_direction new, struct index_state *istate)
- {
- 	enum git_attr_direction old = direction;
-diff --git a/attr.h b/attr.h
-index efc7bb3b3..e611b139a 100644
---- a/attr.h
-+++ b/attr.h
-@@ -29,6 +29,22 @@ struct attr_check_item {
- 	const char *value;
++/*
++ * NEEDSWORK: the global dictionary of the interned attributes
++ * must stay a singleton even after we become thread-ready.
++ * Access to these must be surrounded with mutex when it happens.
++ */
+ struct git_attr {
+ 	struct git_attr *next;
+ 	unsigned h;
+@@ -39,10 +44,19 @@ struct git_attr {
+ 	char name[FLEX_ARRAY];
  };
+ static int attr_nr;
++static struct git_attr *(git_attr_hash[HASHSIZE]);
++
++/*
++ * NEEDSWORK: maybe-real, maybe-macro are not property of
++ * an attribute, as it depends on what .gitattributes are
++ * read.  Once we introduce per git_attr_check attr_stack
++ * and check_all_attr, the optimization based on them will
++ * become unnecessary and can go away.  So is this variable.
++ */
+ static int cannot_trust_maybe_real;
  
-+struct attr_check {
-+	int nr;
-+	int alloc;
-+	struct attr_check_item *items;
-+};
-+
-+extern struct attr_check *attr_check_alloc(void);
-+extern struct attr_check *attr_check_initl(const char *, ...);
-+
-+extern struct attr_check_item *attr_check_append(struct attr_check *check,
-+						 const struct git_attr *attr);
-+
-+extern void attr_check_reset(struct attr_check *check);
-+extern void attr_check_clear(struct attr_check *check);
-+extern void attr_check_free(struct attr_check *check);
-+
- /*
-  * Return the name of the attribute represented by the argument.  The
-  * return value is a pointer to a null-delimited string that is part
-@@ -37,6 +53,7 @@ struct attr_check_item {
- extern const char *git_attr_name(const struct git_attr *);
++/* NEEDSWORK: This will become per git_attr_check */
+ static struct git_attr_check *check_all_attr;
+-static struct git_attr *(git_attr_hash[HASHSIZE]);
  
- int git_check_attrs(const char *path, int, struct attr_check_item *);
-+extern int git_check_attr(const char *path, struct attr_check *check);
+ const char *git_attr_name(const struct git_attr *attr)
+ {
+@@ -102,6 +116,11 @@ static struct git_attr *git_attr_internal(const char *name, int len)
+ 	a->maybe_real = 0;
+ 	git_attr_hash[pos] = a;
  
- /*
-  * Retrieve all attributes that apply to the specified path.  *num
++	/*
++	 * NEEDSWORK: per git_attr_check check_all_attr
++	 * will be initialized a lot more lazily, not
++	 * like this, and not here.
++	 */
+ 	REALLOC_ARRAY(check_all_attr, attr_nr);
+ 	check_all_attr[a->attr_nr].attr = a;
+ 	check_all_attr[a->attr_nr].value = ATTR__UNKNOWN;
+@@ -318,6 +337,7 @@ static struct match_attr *parse_attr_line(const char *line, const char *src,
+  * .gitignore file and info/excludes file as a fallback.
+  */
+ 
++/* NEEDSWORK: This will become per git_attr_check */
+ static struct attr_stack {
+ 	struct attr_stack *prev;
+ 	char *origin;
+@@ -382,6 +402,24 @@ static struct attr_stack *read_attr_from_array(const char **list)
+ 	return res;
+ }
+ 
++/*
++ * NEEDSWORK: these two are tricky.  The callers assume there is a
++ * single, system-wide global state "where we read attributes from?"
++ * and when the state is flipped by calling git_attr_set_direction(),
++ * attr_stack is discarded so that subsequent attr_check will lazily
++ * read from the right place.  And they do not know or care who called
++ * by them uses the attribute subsystem, hence have no knowledge of
++ * existing git_attr_check instances or future ones that will be
++ * created).
++ *
++ * Probably we need a thread_local that holds these two variables,
++ * and a list of git_attr_check instances (which need to be maintained
++ * by hooking into git_attr_check_alloc(), git_attr_check_initl(), and
++ * git_attr_check_clear().  Then git_attr_set_direction() updates the
++ * fields in that thread_local for these two variables, iterate over
++ * all the active git_attr_check instances and discard the attr_stack
++ * they hold.  Yuck, but it sounds doable.
++ */
+ static enum git_attr_direction direction;
+ static struct index_state *use_index;
+ 
 -- 
 2.11.0.483.g087da7b7c-goog
 
