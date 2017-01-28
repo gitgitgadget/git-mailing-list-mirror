@@ -7,92 +7,97 @@ X-Spam-Status: No, score=-6.0 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 761641F437
-	for <e@80x24.org>; Sat, 28 Jan 2017 21:43:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C5D761F437
+	for <e@80x24.org>; Sat, 28 Jan 2017 22:03:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752247AbdA1VnA (ORCPT <rfc822;e@80x24.org>);
-        Sat, 28 Jan 2017 16:43:00 -0500
-Received: from mout.web.de ([212.227.15.3]:62384 "EHLO mout.web.de"
+        id S1752261AbdA1WDp (ORCPT <rfc822;e@80x24.org>);
+        Sat, 28 Jan 2017 17:03:45 -0500
+Received: from mout.web.de ([212.227.15.14]:63668 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752205AbdA1Vm6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 28 Jan 2017 16:42:58 -0500
-Received: from [192.168.178.36] ([79.237.55.102]) by smtp.web.de (mrweb004
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0M8oFY-1cd8gR2VRs-00C8Zf; Sat, 28
- Jan 2017 22:42:27 +0100
-Subject: [PATCH 5/5] graph: use SWAP macro
+        id S1752114AbdA1WDn (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 28 Jan 2017 17:03:43 -0500
+Received: from [192.168.178.36] ([79.237.55.102]) by smtp.web.de (mrweb003
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0Llncm-1byXO30u6i-00ZPra; Sat, 28
+ Jan 2017 23:03:19 +0100
+X-Mozilla-News-Host: news://news.public-inbox.org:119
 To:     Git List <git@vger.kernel.org>
-References: <8ef4c833-45bd-6831-0683-6d01f30aa518@web.de>
 Cc:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+        "brian m. carlson" <sandals@crustytoothpaste.net>
 From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <af5a7205-7703-f5ad-4ea2-b20ab4c01c80@web.de>
-Date:   Sat, 28 Jan 2017 22:42:15 +0100
+Subject: [PATCH] use oidcpy() for copying hashes between instances of struct
+ object_id
+Message-ID: <27a55499-82e7-df77-99bc-62fe76c31a86@web.de>
+Date:   Sat, 28 Jan 2017 23:03:06 +0100
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
  Thunderbird/45.6.0
 MIME-Version: 1.0
-In-Reply-To: <8ef4c833-45bd-6831-0683-6d01f30aa518@web.de>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K0:dUKtzo0kq7FhPanMgjpcCc5By4aWbHJgPk9x0C/a9xNhA5IjxkC
- xYFW7EOiw3nLKcwMBOZ/QDqgiQIE4q9Ah0VPOwHfNZ+EieqWI5xXoeqaJmN7FgzfGWhnPX4
- hP+WBSWrM4nenQZlz4gMkvAXJlb9iAxRqTPAojR2O4HMzd8ZpKIi+zxu+TdvvA8fQRXFeED
- +rrf6H4fJKRDEUn5kwp9Q==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:15hg880U6mo=:05tPlXCHh/ItmlSuS/GZBO
- X2Kv5RxFUIaglsLW8akqNwJgm/ZMgfm9uHIDQi9i2ETF4GJO5ifmov4P6G0D56k5w3dJqCgmL
- sRbgqbLW9QVvlpE440mn4oWxPv41TjxZ8CVK/eq6G7RxZqc/r95UX+i/s7JmFiLtyHD3OaZoK
- QpZb1K2l3ZULdCjjspYxhZINm48gYZngigkI0sVcv81Lk9yHAxIl7cuWuvAKBvVdgHTzfXXqL
- 8N9E1acgAQj4vaAElZmzmWNGReR4IbeSonCZHS5lYvXezzqi0UE6ysl/idPKtDNOXmVN0BKBS
- XSut3aXphg1/m9JnrpTSPwbj+1KWY2G1XvbuJ4AXeS1dUDwgbA4tkEwiYj+GVEMrfDfnEHbl/
- 2LEVlxVCAEwgnxJyt2VIj4PoCKOsYhVJfxe3x6gvZaml/TUNbrycHUhFRNIAypBqKTLAskZwA
- KC1igGqag73rJs4szXwfFsgQSMCrt5wvKW4mtY6iztu/y+m2c+4TMRL0W8voL6MKDqn5/nujP
- KUN+edKskyfYctlwF+5HzGP/3M0YW3lsL4lElxs+pdrKG/p2EAwa0VjuLegsU0vEEh68gBbOG
- NmZC6Li175NxAp1I+sfkP9DVOEFGWPRguTQI/KC63MpVLMyhpyGa7S6OXzo4t/5minuZU6SQX
- 5LO4RATZbPZsuc7hLdfHR2ymYvm6eem/tkKNLrx9812VjL3iwbecPXXzPvIJRruJ+oTVO5CjG
- NGMDfK9zE92ByiHLgG5GuJdZv5OK6gfjxHzpiQ6viMge2RoE4G0yT+9BDJXa0iMi2uCYIiDfW
- giIlIOK
+X-Provags-ID: V03:K0:bKQgeuHb/JoNV0QpdZoHJd+bHOa2NDDvLLZNbvzTr9BD9V1tKnH
+ XU0H0C1BcTtW7hllEDkF2B6+5/Yn839UThvpaMLcnKJOpAswANugqEXQ58PxJiMo19Z9jTL
+ 4e/PUd28yl/WMgILIzVplxfjGNHt7LyF8q+GuMFeYR15CL/jpW//d1A0ZBqjdYEHyU/1oIv
+ pmrpIMYC3Pr75gFV0L8Ow==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:dvcQYzaYyuE=:66KfmJfGvXG+Gint/c7Pmg
+ g0O6OTrFadP9BbUH7psUDHmOtW2u887lCLzhtLv7IC5GT5hn7Vn4I11MI3p6yl1u1LsRfnZvH
+ TI0wRGBpoHwqwpIbPs6jvYYlffqE6W1ZNooaiKjhVKecnOpG3skxaLNrfbCHLDsgJqEYb/8tv
+ 8FYuKKaYS2A+TFcVb8IrQ3u7Fsgo8kKmNakvl7kxi0q0n/bCAvZTB0FpT4LIPz1ml5ObVfAS8
+ wy9yDbTsGyJr6cg479FriGQlT5V0VdniJpZ4w0W6WKQ9N2el+SF3xywlUaQdAa1fPVPActluv
+ 7Z1YHQYu3Mq1e0dRof9f/W4MgJw+nXRHCsG8sDDdKqFBig/juZp1q4R4HDAZPEjXgTqXbXst/
+ IryBca9bsigpOo6HyrBCfpNHH8pceWWssjrbIoVvMsrPYSET+PjKMC3eps0mveeRzSb6kBAT9
+ J/QYkP8imew1WLDCeG3lvYX5Cm4ef7i5T0nhDH0iEnIZulJvpzdbay0qiJn2Y977UBKzrKROZ
+ +LGxCYDkZST6aSCoH8RtZ0+QOuWk2T/WCQU4spkl5SrGijBvbr5nHE5b0ScnKIx4VOg9P5Cul
+ /XRiAmsX9h4L66RqtK/k892+kyrELqV1cftCl4aSW2Dt+2RAmymU7wJZbTQTyMftn9LdS1nv5
+ Lg8EgdA7c0gkrGJibhtquq940u5Wj80VE0pnvTkJlfD0GKiPOhF0OmnO9e4+K7u2CQft4xAtN
+ Px8XNyFKtLqpZfCMTxHxq2DR4K8SzaIX8WpNbYJHExUAhIPZIrxM4iMT7RBgkHq0KMuJxz7li
+ bQnTMti
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Exchange the values of graph->columns and graph->new_columns using the
-macro SWAP instead of hand-rolled code.  The result is shorter and
-easier to read.
-
-This transformation was not done by the semantic patch swap.cocci
-because there's an unrelated statement between the second and the last
-step of the exchange, so it didn't match the expected pattern.
+Patch generated by Coccinelle and contrib/coccinelle/object_id.cocci.
 
 Signed-off-by: Rene Scharfe <l.s.r@web.de>
 ---
- graph.c | 6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
+ refs/files-backend.c | 2 +-
+ wt-status.c          | 4 ++--
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/graph.c b/graph.c
-index 4c722303d2..29b0f51dc5 100644
---- a/graph.c
-+++ b/graph.c
-@@ -463,7 +463,6 @@ static void graph_update_width(struct git_graph *graph,
- static void graph_update_columns(struct git_graph *graph)
- {
- 	struct commit_list *parent;
--	struct column *tmp_columns;
- 	int max_new_columns;
- 	int mapping_idx;
- 	int i, seen_this, is_commit_in_columns;
-@@ -476,11 +475,8 @@ static void graph_update_columns(struct git_graph *graph)
- 	 * We'll re-use the old columns array as storage to compute the new
- 	 * columns list for the commit after this one.
- 	 */
--	tmp_columns = graph->columns;
--	graph->columns = graph->new_columns;
-+	SWAP(graph->columns, graph->new_columns);
- 	graph->num_columns = graph->num_new_columns;
--
--	graph->new_columns = tmp_columns;
- 	graph->num_new_columns = 0;
+diff --git a/refs/files-backend.c b/refs/files-backend.c
+index f9023939d5..8ee2aba39f 100644
+--- a/refs/files-backend.c
++++ b/refs/files-backend.c
+@@ -697,7 +697,7 @@ static int cache_ref_iterator_peel(struct ref_iterator *ref_iterator,
  
- 	/*
+ 	if (peel_entry(entry, 0))
+ 		return -1;
+-	hashcpy(peeled->hash, entry->u.value.peeled.hash);
++	oidcpy(peeled, &entry->u.value.peeled);
+ 	return 0;
+ }
+ 
+diff --git a/wt-status.c b/wt-status.c
+index a715e71906..a05328dc48 100644
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -628,7 +628,7 @@ static void wt_status_collect_changes_initial(struct wt_status *s)
+ 			d->index_status = DIFF_STATUS_ADDED;
+ 			/* Leave {mode,oid}_head zero for adds. */
+ 			d->mode_index = ce->ce_mode;
+-			hashcpy(d->oid_index.hash, ce->oid.hash);
++			oidcpy(&d->oid_index, &ce->oid);
+ 		}
+ 	}
+ }
+@@ -2096,7 +2096,7 @@ static void wt_porcelain_v2_print_unmerged_entry(
+ 		if (strcmp(ce->name, it->string) || !stage)
+ 			break;
+ 		stages[stage - 1].mode = ce->ce_mode;
+-		hashcpy(stages[stage - 1].oid.hash, ce->oid.hash);
++		oidcpy(&stages[stage - 1].oid, &ce->oid);
+ 		sum |= (1 << (stage - 1));
+ 	}
+ 	if (sum != d->stagemask)
 -- 
 2.11.0
 
