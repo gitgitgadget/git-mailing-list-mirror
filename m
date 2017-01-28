@@ -7,52 +7,52 @@ X-Spam-Status: No, score=-6.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 91A081F437
-	for <e@80x24.org>; Sat, 28 Jan 2017 02:03:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3A6181F437
+	for <e@80x24.org>; Sat, 28 Jan 2017 02:03:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751339AbdA1CD1 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 27 Jan 2017 21:03:27 -0500
-Received: from mail-pg0-f48.google.com ([74.125.83.48]:36236 "EHLO
-        mail-pg0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750812AbdA1CDG (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 27 Jan 2017 21:03:06 -0500
-Received: by mail-pg0-f48.google.com with SMTP id 3so26926352pgj.3
-        for <git@vger.kernel.org>; Fri, 27 Jan 2017 18:03:06 -0800 (PST)
+        id S1751347AbdA1CDb (ORCPT <rfc822;e@80x24.org>);
+        Fri, 27 Jan 2017 21:03:31 -0500
+Received: from mail-pf0-f169.google.com ([209.85.192.169]:35225 "EHLO
+        mail-pf0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751295AbdA1CDK (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 27 Jan 2017 21:03:10 -0500
+Received: by mail-pf0-f169.google.com with SMTP id f144so77056284pfa.2
+        for <git@vger.kernel.org>; Fri, 27 Jan 2017 18:03:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=1Ny7Xyjlo6nhJbdE+AY0ii2PHicvE/qyzjn2cSJ1zr4=;
-        b=KsacxpyAnUKlwD7GGBtz0MAbiJB8ADsju4QAmyZWT7vqraMWUxaSfSuBaIHvjwgpzk
-         xJgDaEfucxoIU+2vkCRFMKDBs23iLR2shum0+/TgYvoDMHmaiIviEr7IlLDxBz4UDD/M
-         pV5yv8OP0C+DkOR9+dSyQXnpO6nW0OT3++mkW+7v53QYPFLh9DtMpVWlG8lPRpH+0Ms3
-         aC18ii0sGTTmiwfH284THzOwcG3k6AQe5gYVj4GRN5WTE87yaKpSaCsY1b3cUx9ypHrV
-         fanoJZzCSy6lbUjXJAHdc2T6tYcJhfblvkmb6J0eO5yTWqFbhnAtNTED5LrEC2b6OLtt
-         HhFA==
+        bh=Ng/qacloRJ3VBlnlmeHxppfw+U5TCJw02T1mBC/JTfE=;
+        b=Gb2QobozPL+0uaBgca9jYhwR8Dtrnd8qFZccdgkDbbfXPdQMu/jRg3KY9wqWJet1h4
+         vZVoCDUgwCeCWL83s+/DFNUnmPeXzKMuKS97MqF/v03g6P07HIEIfrSRgttYH1uQHrAR
+         mjTmfHjhva11xhal/pUI6KQpDVnMS6AnZYAvbOD5GCnrVQnZgoppH9WrLVnXXRlfFNxF
+         DYDHZxjwBM9+HkxEITP6mjhdPi/dHGFvU3uTzwAlj7S288gdQl5m+Yg0teyYI21H/wfs
+         w7th75E3um1cV6DJnyg3WKwuFBsHmWhQYR2qVstZ+G38pl0acvfvbJAxHlfjFpxJm+Z8
+         V+Wg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=1Ny7Xyjlo6nhJbdE+AY0ii2PHicvE/qyzjn2cSJ1zr4=;
-        b=hNYNi9sVZf2LTQuv1+0OMwN3n704AxwGHhaeaX+uZ9BMvrLgPdcrjnt0uRC55w0tPw
-         6WO0lyCXvPQ9nmcFFkcD5T2DChfDz7YIx/OymLtFcy9hxf5uKHCON22J4deOHC1pNNN+
-         KOq1nwLaPM1m3mJBNH/XEjIScJ9BC3q8+68pv50Id9oC4auVKQqJcHC/4aAL5lOBKJNf
-         CMKaCsKKjiDelQUwzcjyaT0B//ozvTNqjoZhXJEZHXi11oeNtAInX29Y389nqP7ESAsi
-         c0eMlvpYPKriBOy0d6LrKPz6FDNO986obOzlpNNtOjz5Wo+OzazhO3GJrdEnBDz6u7FA
-         XhxA==
-X-Gm-Message-State: AIkVDXI+w3xrx+2talaRACzCt8TPpwfPx2GzlNstyah4iufhPKDJdSHkE0x9+iCNyuEuGK4h
-X-Received: by 10.98.212.23 with SMTP id a23mr12409233pfh.18.1485568980599;
-        Fri, 27 Jan 2017 18:03:00 -0800 (PST)
+        bh=Ng/qacloRJ3VBlnlmeHxppfw+U5TCJw02T1mBC/JTfE=;
+        b=K9HJAMm7vDAxOsgoSCtZI7Iu5S95BUkrqyqHJ5ujIyPUj5rXqKz7FpH0Bz81M0UNVO
+         weKXRrazg9llSiCWboOj6mlAi9GlHe9pVWirBtUH55DF4nlsROPpdNwHCJ0ltmDyplt7
+         /ixYsDwu4vkSAFO/smrouKFdx9/4Y7S5RPgd7GDyg2g9WC2Fivm8Vx3TpQT1+/RJSSL/
+         9PQ3U2dMxRZKad6fHXD1LtgOdPsLLOXKI1m/8cy5xV9ynBGCdphfPpTbGLxeVY2JnzQs
+         BqIXdFXzZdY+RAGr8Rpcv7Dezb6Qfuo9m3Qzx5w92dLZIItAU0XM3rKpiUJaR7UWa1ze
+         ArpA==
+X-Gm-Message-State: AIkVDXIBJo0XZy1flQUb6sJ7YjWaui142HgfycY+R9Oocnf8LsXsVaWEf8XirHGkuI7h+kDw
+X-Received: by 10.98.67.72 with SMTP id q69mr12140153pfa.14.1485568989003;
+        Fri, 27 Jan 2017 18:03:09 -0800 (PST)
 Received: from roshar.mtv.corp.google.com ([100.96.238.26])
-        by smtp.gmail.com with ESMTPSA id w76sm14136185pfd.74.2017.01.27.18.02.59
+        by smtp.gmail.com with ESMTPSA id w76sm14136185pfd.74.2017.01.27.18.03.07
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 27 Jan 2017 18:02:59 -0800 (PST)
+        Fri, 27 Jan 2017 18:03:07 -0800 (PST)
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org
 Cc:     Brandon Williams <bmwill@google.com>, sbeller@google.com,
         gitster@pobox.com, pclouds@gmail.com
-Subject: [PATCH v3 21/27] attr: use hashmap for attribute dictionary
-Date:   Fri, 27 Jan 2017 18:02:01 -0800
-Message-Id: <20170128020207.179015-22-bmwill@google.com>
+Subject: [PATCH v3 26/27] attr: push the bare repo check into read_attr()
+Date:   Fri, 27 Jan 2017 18:02:06 -0800
+Message-Id: <20170128020207.179015-27-bmwill@google.com>
 X-Mailer: git-send-email 2.11.0.483.g087da7b7c-goog
 In-Reply-To: <20170128020207.179015-1-bmwill@google.com>
 References: <20170123203525.185058-1-bmwill@google.com>
@@ -62,278 +62,173 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The current implementation of the attribute dictionary uses a custom
-hashtable.  This modernizes the dictionary by converting it to the builtin
-'hashmap' structure.
-
-Also, in order to enable a threaded API in the future add an
-accompanying mutex which must be acquired prior to accessing the
-dictionary of interned attributes.
+Push the bare repository check into the 'read_attr()' function.  This
+avoids needing to have extra logic which creates an empty stack frame
+when inside a bare repo as a similar bit of logic already exists in the
+'read_attr()' function.
 
 Signed-off-by: Brandon Williams <bmwill@google.com>
 ---
- attr.c        | 173 +++++++++++++++++++++++++++++++++++++++++++---------------
- attr.h        |   2 +
- common-main.c |   3 +
- 3 files changed, 133 insertions(+), 45 deletions(-)
+ attr.c | 114 +++++++++++++++++++++++++++++++----------------------------------
+ 1 file changed, 54 insertions(+), 60 deletions(-)
 
 diff --git a/attr.c b/attr.c
-index 9fe848f59..e008f3026 100644
+index bcee0921d..62298ec2f 100644
 --- a/attr.c
 +++ b/attr.c
-@@ -14,6 +14,7 @@
- #include "dir.h"
- #include "utf8.h"
- #include "quote.h"
-+#include "thread-utils.h"
+@@ -747,25 +747,28 @@ static struct attr_stack *read_attr_from_index(const char *path, int macro_ok)
  
- const char git_attr__true[] = "(builtin)true";
- const char git_attr__false[] = "\0(builtin)false";
-@@ -23,28 +24,17 @@ static const char git_attr__unknown[] = "(builtin)unknown";
- #define ATTR__UNSET NULL
- #define ATTR__UNKNOWN git_attr__unknown
- 
--/* This is a randomly chosen prime. */
--#define HASHSIZE 257
--
- #ifndef DEBUG_ATTR
- #define DEBUG_ATTR 0
- #endif
- 
--/*
-- * NEEDSWORK: the global dictionary of the interned attributes
-- * must stay a singleton even after we become thread-ready.
-- * Access to these must be surrounded with mutex when it happens.
-- */
- struct git_attr {
--	struct git_attr *next;
--	unsigned h;
--	int attr_nr;
-+	int attr_nr; /* unique attribute number */
- 	int maybe_macro;
- 	int maybe_real;
--	char name[FLEX_ARRAY];
-+	char name[FLEX_ARRAY]; /* attribute name */
- };
- static int attr_nr;
--static struct git_attr *(git_attr_hash[HASHSIZE]);
- 
- /*
-  * NEEDSWORK: maybe-real, maybe-macro are not property of
-@@ -63,15 +53,94 @@ const char *git_attr_name(const struct git_attr *attr)
- 	return attr->name;
- }
- 
--static unsigned hash_name(const char *name, int namelen)
-+struct attr_hashmap {
-+	struct hashmap map;
-+#ifndef NO_PTHREADS
-+	pthread_mutex_t mutex;
-+#endif
-+};
-+
-+static inline void hashmap_lock(struct attr_hashmap *map)
-+{
-+#ifndef NO_PTHREADS
-+	pthread_mutex_lock(&map->mutex);
-+#endif
-+}
-+
-+static inline void hashmap_unlock(struct attr_hashmap *map)
+ static struct attr_stack *read_attr(const char *path, int macro_ok)
  {
--	unsigned val = 0, c;
-+#ifndef NO_PTHREADS
-+	pthread_mutex_unlock(&map->mutex);
-+#endif
-+}
+-	struct attr_stack *res;
++	struct attr_stack *res = NULL;
  
--	while (namelen--) {
--		c = *name++;
--		val = ((val << 7) | (val >> 22)) ^ c;
+-	if (direction == GIT_ATTR_CHECKOUT) {
++	if (direction == GIT_ATTR_INDEX) {
+ 		res = read_attr_from_index(path, macro_ok);
+-		if (!res)
+-			res = read_attr_from_file(path, macro_ok);
 -	}
--	return val;
-+/*
-+ * The global dictionary of all interned attributes.  This
-+ * is a singleton object which is shared between threads.
-+ * Access to this dictionary must be surrounded with a mutex.
-+ */
-+static struct attr_hashmap g_attr_hashmap;
+-	else if (direction == GIT_ATTR_CHECKIN) {
+-		res = read_attr_from_file(path, macro_ok);
+-		if (!res)
+-			/*
+-			 * There is no checked out .gitattributes file there, but
+-			 * we might have it in the index.  We allow operation in a
+-			 * sparsely checked out work tree, so read from it.
+-			 */
++	} else if (!is_bare_repository()) {
++		if (direction == GIT_ATTR_CHECKOUT) {
+ 			res = read_attr_from_index(path, macro_ok);
++			if (!res)
++				res = read_attr_from_file(path, macro_ok);
++		} else if (direction == GIT_ATTR_CHECKIN) {
++			res = read_attr_from_file(path, macro_ok);
++			if (!res)
++				/*
++				 * There is no checked out .gitattributes file
++				 * there, but we might have it in the index.
++				 * We allow operation in a sparsely checked out
++				 * work tree, so read from it.
++				 */
++				res = read_attr_from_index(path, macro_ok);
++		}
+ 	}
+-	else
+-		res = read_attr_from_index(path, macro_ok);
 +
-+/* The container for objects stored in "struct attr_hashmap" */
-+struct attr_hash_entry {
-+	struct hashmap_entry ent; /* must be the first member! */
-+	const char *key; /* the key; memory should be owned by value */
-+	size_t keylen; /* length of the key */
-+	void *value; /* the stored value */
-+};
-+
-+/* attr_hashmap comparison function */
-+static int attr_hash_entry_cmp(const struct attr_hash_entry *a,
-+			       const struct attr_hash_entry *b,
-+			       void *unused)
-+{
-+	return (a->keylen != b->keylen) || strncmp(a->key, b->key, a->keylen);
-+}
-+
-+/* Initialize an 'attr_hashmap' object */
-+static void attr_hashmap_init(struct attr_hashmap *map)
-+{
-+	hashmap_init(&map->map, (hashmap_cmp_fn) attr_hash_entry_cmp, 0);
-+}
-+
-+/*
-+ * Retrieve the 'value' stored in a hashmap given the provided 'key'.
-+ * If there is no matching entry, return NULL.
-+ */
-+static void *attr_hashmap_get(struct attr_hashmap *map,
-+			      const char *key, size_t keylen)
-+{
-+	struct attr_hash_entry k;
-+	struct attr_hash_entry *e;
-+
-+	if (!map->map.tablesize)
-+		attr_hashmap_init(map);
-+
-+	hashmap_entry_init(&k, memhash(key, keylen));
-+	k.key = key;
-+	k.keylen = keylen;
-+	e = hashmap_get(&map->map, &k, NULL);
-+
-+	return e ? e->value : NULL;
-+}
-+
-+/* Add 'value' to a hashmap based on the provided 'key'. */
-+static void attr_hashmap_add(struct attr_hashmap *map,
-+			     const char *key, size_t keylen,
-+			     void *value)
-+{
-+	struct attr_hash_entry *e;
-+
-+	if (!map->map.tablesize)
-+		attr_hashmap_init(map);
-+
-+	e = xmalloc(sizeof(struct attr_hash_entry));
-+	hashmap_entry_init(e, memhash(key, keylen));
-+	e->key = key;
-+	e->keylen = keylen;
-+	e->value = value;
-+
-+	hashmap_add(&map->map, e);
- }
+ 	if (!res)
+ 		res = xcalloc(1, sizeof(*res));
+ 	return res;
+@@ -857,10 +860,7 @@ static void bootstrap_attr_stack(struct attr_stack **stack)
+ 	}
  
- static int attr_name_valid(const char *name, size_t namelen)
-@@ -103,37 +172,44 @@ static void report_invalid_attr(const char *name, size_t len,
- 	strbuf_release(&err);
- }
+ 	/* root directory */
+-	if (!is_bare_repository() || direction == GIT_ATTR_INDEX)
+-		e = read_attr(GITATTRIBUTES_FILE, 1);
+-	else
+-		e = xcalloc(1, sizeof(struct attr_stack));
++	e = read_attr(GITATTRIBUTES_FILE, 1);
+ 	push_stack(stack, e, xstrdup(""), 0);
  
--static struct git_attr *git_attr_internal(const char *name, int len)
-+/*
-+ * Given a 'name', lookup and return the corresponding attribute in the global
-+ * dictionary.  If no entry is found, create a new attribute and store it in
-+ * the dictionary.
-+ */
-+static struct git_attr *git_attr_internal(const char *name, int namelen)
+ 	/* info frame */
+@@ -877,6 +877,7 @@ static void prepare_attr_stack(const char *path, int dirlen,
+ 			       struct attr_stack **stack)
  {
--	unsigned hval = hash_name(name, len);
--	unsigned pos = hval % HASHSIZE;
- 	struct git_attr *a;
+ 	struct attr_stack *info;
++	struct strbuf pathbuf = STRBUF_INIT;
  
--	for (a = git_attr_hash[pos]; a; a = a->next) {
--		if (a->h == hval &&
--		    !memcmp(a->name, name, len) && !a->name[len])
--			return a;
--	}
+ 	/*
+ 	 * At the bottom of the attribute stack is the built-in
+@@ -923,54 +924,47 @@ static void prepare_attr_stack(const char *path, int dirlen,
+ 	}
+ 
+ 	/*
+-	 * Read from parent directories and push them down
++	 * bootstrap_attr_stack() should have added, and the
++	 * above loop should have stopped before popping, the
++	 * root element whose attr_stack->origin is set to an
++	 * empty string.
+ 	 */
+-	if (!is_bare_repository() || direction == GIT_ATTR_INDEX) {
+-		/*
+-		 * bootstrap_attr_stack() should have added, and the
+-		 * above loop should have stopped before popping, the
+-		 * root element whose attr_stack->origin is set to an
+-		 * empty string.
+-		 */
+-		struct strbuf pathbuf = STRBUF_INIT;
 -
--	if (!attr_name_valid(name, len))
-+	if (!attr_name_valid(name, namelen))
- 		return NULL;
+-		assert((*stack)->origin);
+-		strbuf_addstr(&pathbuf, (*stack)->origin);
+-		/* Build up to the directory 'path' is in */
+-		while (pathbuf.len < dirlen) {
+-			size_t len = pathbuf.len;
+-			struct attr_stack *next;
+-			char *origin;
+-
+-			/* Skip path-separator */
+-			if (len < dirlen && is_dir_sep(path[len]))
+-				len++;
+-			/* Find the end of the next component */
+-			while (len < dirlen && !is_dir_sep(path[len]))
+-				len++;
+-
+-			if (pathbuf.len > 0)
+-				strbuf_addch(&pathbuf, '/');
+-			strbuf_add(&pathbuf, path + pathbuf.len,
+-				   (len - pathbuf.len));
+-			strbuf_addf(&pathbuf, "/%s", GITATTRIBUTES_FILE);
+-
+-			next = read_attr(pathbuf.buf, 0);
+-
+-			/* reset the pathbuf to not include "/.gitattributes" */
+-			strbuf_setlen(&pathbuf, len);
+-
+-			origin = xstrdup(pathbuf.buf);
+-			push_stack(stack, next, origin, len);
+-
+-		}
+-		strbuf_release(&pathbuf);
++	assert((*stack)->origin);
++
++	strbuf_addstr(&pathbuf, (*stack)->origin);
++	/* Build up to the directory 'path' is in */
++	while (pathbuf.len < dirlen) {
++		size_t len = pathbuf.len;
++		struct attr_stack *next;
++		char *origin;
++
++		/* Skip path-separator */
++		if (len < dirlen && is_dir_sep(path[len]))
++			len++;
++		/* Find the end of the next component */
++		while (len < dirlen && !is_dir_sep(path[len]))
++			len++;
++
++		if (pathbuf.len > 0)
++			strbuf_addch(&pathbuf, '/');
++		strbuf_add(&pathbuf, path + pathbuf.len, (len - pathbuf.len));
++		strbuf_addf(&pathbuf, "/%s", GITATTRIBUTES_FILE);
++
++		next = read_attr(pathbuf.buf, 0);
++
++		/* reset the pathbuf to not include "/.gitattributes" */
++		strbuf_setlen(&pathbuf, len);
++
++		origin = xstrdup(pathbuf.buf);
++		push_stack(stack, next, origin, len);
+ 	}
  
--	FLEX_ALLOC_MEM(a, name, name, len);
--	a->h = hval;
--	a->next = git_attr_hash[pos];
--	a->attr_nr = attr_nr++;
--	a->maybe_macro = 0;
--	a->maybe_real = 0;
--	git_attr_hash[pos] = a;
-+	hashmap_lock(&g_attr_hashmap);
+ 	/*
+ 	 * Finally push the "info" one at the top of the stack.
+ 	 */
+ 	push_stack(stack, info, NULL, 0);
 +
-+	a = attr_hashmap_get(&g_attr_hashmap, name, namelen);
-+
-+	if (!a) {
-+		FLEX_ALLOC_MEM(a, name, name, namelen);
-+		a->attr_nr = g_attr_hashmap.map.size;
-+		a->maybe_real = 0;
-+		a->maybe_macro = 0;
-+
-+		attr_hashmap_add(&g_attr_hashmap, a->name, namelen, a);
-+		assert(a->attr_nr == (g_attr_hashmap.map.size - 1));
-+
-+		/*
-+		 * NEEDSWORK: per git_attr_check check_all_attr
-+		 * will be initialized a lot more lazily, not
-+		 * like this, and not here.
-+		 */
-+		REALLOC_ARRAY(check_all_attr, ++attr_nr);
-+		check_all_attr[a->attr_nr].attr = a;
-+		check_all_attr[a->attr_nr].value = ATTR__UNKNOWN;
-+		assert(a->attr_nr == (attr_nr - 1));
-+	}
-+
-+	hashmap_unlock(&g_attr_hashmap);
- 
--	/*
--	 * NEEDSWORK: per git_attr_check check_all_attr
--	 * will be initialized a lot more lazily, not
--	 * like this, and not here.
--	 */
--	REALLOC_ARRAY(check_all_attr, attr_nr);
--	check_all_attr[a->attr_nr].attr = a;
--	check_all_attr[a->attr_nr].value = ATTR__UNKNOWN;
- 	return a;
++	strbuf_release(&pathbuf);
  }
  
-@@ -941,3 +1017,10 @@ void git_attr_set_direction(enum git_attr_direction new, struct index_state *ist
- 		drop_attr_stack();
- 	use_index = istate;
- }
-+
-+void attr_start(void)
-+{
-+#ifndef NO_PTHREADS
-+	pthread_mutex_init(&g_attr_hashmap.mutex, NULL);
-+#endif
-+}
-diff --git a/attr.h b/attr.h
-index b2cfd8550..898e1a8c9 100644
---- a/attr.h
-+++ b/attr.h
-@@ -67,4 +67,6 @@ enum git_attr_direction {
- };
- void git_attr_set_direction(enum git_attr_direction, struct index_state *);
- 
-+extern void attr_start(void);
-+
- #endif /* ATTR_H */
-diff --git a/common-main.c b/common-main.c
-index c654f9555..6a689007e 100644
---- a/common-main.c
-+++ b/common-main.c
-@@ -1,5 +1,6 @@
- #include "cache.h"
- #include "exec_cmd.h"
-+#include "attr.h"
- 
- /*
-  * Many parts of Git have subprograms communicate via pipe, expect the
-@@ -33,6 +34,8 @@ int main(int argc, const char **argv)
- 
- 	git_setup_gettext();
- 
-+	attr_start();
-+
- 	git_extract_argv0_path(argv[0]);
- 
- 	restore_sigpipe_to_default();
+ static int path_matches(const char *pathname, int pathlen,
 -- 
 2.11.0.483.g087da7b7c-goog
 
