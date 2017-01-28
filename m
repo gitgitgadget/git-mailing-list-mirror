@@ -6,84 +6,91 @@ X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DC5711F437
-	for <e@80x24.org>; Sat, 28 Jan 2017 03:54:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1158F1F437
+	for <e@80x24.org>; Sat, 28 Jan 2017 04:07:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750865AbdA1DyA (ORCPT <rfc822;e@80x24.org>);
-        Fri, 27 Jan 2017 22:54:00 -0500
-Received: from cloud.peff.net ([104.130.231.41]:46249 "EHLO cloud.peff.net"
+        id S1750800AbdA1EHO (ORCPT <rfc822;e@80x24.org>);
+        Fri, 27 Jan 2017 23:07:14 -0500
+Received: from cloud.peff.net ([104.130.231.41]:46254 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750789AbdA1Dx6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 27 Jan 2017 22:53:58 -0500
-Received: (qmail 25179 invoked by uid 109); 28 Jan 2017 03:53:24 -0000
+        id S1750731AbdA1EHM (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 27 Jan 2017 23:07:12 -0500
+Received: (qmail 26176 invoked by uid 109); 28 Jan 2017 04:07:12 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sat, 28 Jan 2017 03:53:24 +0000
-Received: (qmail 11717 invoked by uid 111); 28 Jan 2017 03:53:24 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sat, 28 Jan 2017 04:07:12 +0000
+Received: (qmail 4801 invoked by uid 111); 28 Jan 2017 04:07:12 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 27 Jan 2017 22:53:24 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 27 Jan 2017 22:53:21 -0500
-Date:   Fri, 27 Jan 2017 22:53:21 -0500
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 27 Jan 2017 23:07:12 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 27 Jan 2017 23:07:10 -0500
+Date:   Fri, 27 Jan 2017 23:07:10 -0500
 From:   Jeff King <peff@peff.net>
-To:     Edmundo Carmona Antoranz <eantoranz@gmail.com>
-Cc:     Git List <git@vger.kernel.org>
-Subject: Re: difflame
-Message-ID: <20170128035321.yrcqwkg2fiwadxj4@sigill.intra.peff.net>
-References: <CAOc6etaCk=OEyarMNhorM94MBnYRscCkJBM-K08snv1ecmOaPQ@mail.gmail.com>
+To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v5 1/3] color.c: fix color_parse_mem() with value_len == 0
+Message-ID: <20170128040709.tqx4u45ktgpkbfm4@sigill.intra.peff.net>
+References: <20170109103258.25341-1-pclouds@gmail.com>
+ <20170119114123.23784-1-pclouds@gmail.com>
+ <20170119114123.23784-2-pclouds@gmail.com>
+ <20170119163841.zhtpz6rxdieaywuy@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CAOc6etaCk=OEyarMNhorM94MBnYRscCkJBM-K08snv1ecmOaPQ@mail.gmail.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20170119163841.zhtpz6rxdieaywuy@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jan 17, 2017 at 11:24:02PM -0600, Edmundo Carmona Antoranz wrote:
+On Thu, Jan 19, 2017 at 11:38:41AM -0500, Jeff King wrote:
 
-> For a very long time I had wanted to get the output of diff to include
-> blame information as well (to see when something was added/removed).
+> On Thu, Jan 19, 2017 at 06:41:21PM +0700, Nguyễn Thái Ngọc Duy wrote:
+> 
+> > In this code we want to match the word "reset". If len is zero,
+> > strncasecmp() will return zero and we incorrectly assume it's "reset" as
+> > a result.
+> 
+> This is probably a good idea. This _is_ user-visible, so it's possible
+> somebody was using empty config as a synonym for "reset". But since it
+> was never documented, I feel like relying on that is somewhat crazy.
 
-This is something I've wanted, too. The trickiest part, though, is
-blaming deletions, because git-blame only tracks the origin of content,
-not the origin of a change.
+Hrm. This seems to break the add--interactive script if you do not have
+color.diff.plain set:
 
-For example, try this case:
+  $ GIT_TRACE=1 git add -p
+  ...
+  22:58:12.568990 [pid=11401] git.c:387  trace: built-in: git 'config' '--get-color' 'color.diff.plain' ''
+  fatal: unable to parse default color value
+  config --get-color color.diff.plain : command returned error: 128
 
-  git init
-  for i in $(seq 1 10); do
-    echo $i >>file
-    git add file
-    git commit -m "add $i"
-  done
-  sed 4d <file >tmp && mv tmp file
-  git commit -am "drop 4"
+As you can see, the default value the empty string, which is now an
+error.
 
-Running "difflame HEAD~5 HEAD" produces this output:
+The default in the C code for that value is GIT_COLOR_NORMAL, which
+really is the empty string. So I think the old code was buggy to choose
+"reset", but the new one is worse because it fails entirely. :)
 
-  diff --git a/file b/file
-  index b414108..051c298 100644
-  --- a/file
-  +++ b/file
-  @@ -1,6 +1,9 @@
-   ^2b028ff (Jeff King 2017-01-27 22:44:10 -0500 1) 1
-   ed056366 (Jeff King 2017-01-27 22:44:10 -0500 2) 2
-   771030d8 (Jeff King 2017-01-27 22:44:10 -0500 3) 3
-  -89c09c82 (Jeff King 2017-01-27 22:44:10 -0500 4) 4
-   b619039c (Jeff King 2017-01-27 22:44:10 -0500 4) 5
-   6a7aa0e5 (Jeff King 2017-01-27 22:44:10 -0500 5) 6
-  +39bc9dc4 (Jeff King 2017-01-27 22:44:10 -0500 6) 7
-  +f253cc8f (Jeff King 2017-01-27 22:44:10 -0500 7) 8
-  +85c10f46 (Jeff King 2017-01-27 22:44:10 -0500 8) 9
-  +89c09c82 (Jeff King 2017-01-27 22:44:10 -0500 9) 10
+We probably want something like this instead:
 
-The last 4 lines are right; they correspond to the addition commits. But
-the line taking away 4 is wrong. You can see even without looking at its
-patch, because it is blamed to the same commit that added "10", which
-is wrong.
+diff --git a/color.c b/color.c
+index 190b2da96..dee61557e 100644
+--- a/color.c
++++ b/color.c
+@@ -212,8 +212,10 @@ int color_parse_mem(const char *value, int value_len, char *dst)
+ 		len--;
+ 	}
+ 
+-	if (!len)
+-		return -1;
++	if (!len) {
++		dst[0] = '\0';
++		return 0;
++	}
+ 
+ 	if (!strncasecmp(ptr, "reset", len)) {
+ 		xsnprintf(dst, end - dst, GIT_COLOR_RESET);
 
-Sorry I don't have a solution. I think it's an open problem with
-git-blame, though you could probably script something around "git blame
---reverse". See the commit message of 85af7929e (git-blame --reverse,
-2008-04-02) for some discussion.
+The breakage is in 'next' (it looks like it went out a few days ago; I'm
+surprised I didn't notice until now).
 
 -Peff
