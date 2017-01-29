@@ -2,90 +2,79 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.0 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 99F601F6DC
-	for <e@80x24.org>; Sun, 29 Jan 2017 12:45:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 715081F6DC
+	for <e@80x24.org>; Sun, 29 Jan 2017 13:18:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751178AbdA2MpQ (ORCPT <rfc822;e@80x24.org>);
-        Sun, 29 Jan 2017 07:45:16 -0500
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:33127 "EHLO
-        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751036AbdA2MpM (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 29 Jan 2017 07:45:12 -0500
-Received: by mail-wm0-f65.google.com with SMTP id v77so9403672wmv.0
-        for <git@vger.kernel.org>; Sun, 29 Jan 2017 04:45:11 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=ZguTNfZa/6EtI2dgLc4UafdNb/p5XPHHDq9C31ZsDPk=;
-        b=E4X01dHuUZoFemdUDvLhePE3LQSeusD9vpyEiLTcCksGXLuK13acf7wIIW9Tswyrb6
-         SGxr1Y+yE939lqHSE0Iue+AFVGjjhi+HI4FI7yHtta6dGIrXXrYDBCULdshvi4ZYZFPS
-         M9W6nnmQwGtT9j7Vf1V2sOHvqhUwUfrz+xUrsAZmbSxM8QWqzBwYDzeeeQTR0w6PwTUn
-         CQwImeToAtKfoII6iztU6ALuyWDioee80mWpF1kPtqnPjzHUCS8CVezVzizsAn2VCRK+
-         s16VuNNKCP649u3swl6+x3dFAAnv+j3G+2MxsSljZnJmRhxzxvkeZdOOMaVaFGkqvEWY
-         TdbA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=ZguTNfZa/6EtI2dgLc4UafdNb/p5XPHHDq9C31ZsDPk=;
-        b=es6Vi/A/hFTmwl2E13WTzRxDUgGYeMUYv1Pw46t+tGGAFG74RCkO03INpuL9xkifQi
-         os0Oxla2JVQOxF+Qh9SBvVQhAAdEH6FUZvesD73UILzZiavRlQtDoaIINjTTrskxzmMe
-         LdObvGfZ5n/ODGam4PEJetG/PGv3aeoG1qf4V1/Cqv0kvM1jBuMLKhJVndhhn+6+ps68
-         xy3T4xcYM6Y1pMJFlDc1Em6es56AqbwLG42AglEmFfDr33wTdsVXcVZj2ajQlTnYGnFC
-         D//7t7o41UKKwGiNLK16zxzySGhsi5C+AqlbTpnNqRJeHIQ4BkuP85dFsyJOh1r23ceb
-         emKw==
-X-Gm-Message-State: AIkVDXID7F6FmotkH+aUqkr3yfSkPyiioENY2dZAOAIDqxW6tcHWkuJg1l7x6uWJ3P4H/A==
-X-Received: by 10.28.109.27 with SMTP id i27mr9818792wmc.54.1485693531932;
-        Sun, 29 Jan 2017 04:38:51 -0800 (PST)
-Received: from localhost ([2a02:c7f:c42b:f900:5e51:4fff:fee9:57af])
-        by smtp.gmail.com with ESMTPSA id m84sm13520419wmf.10.2017.01.29.04.38.50
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 29 Jan 2017 04:38:50 -0800 (PST)
-Date:   Sun, 29 Jan 2017 12:39:11 +0000
-From:   Thomas Gummerer <t.gummerer@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Stephan Beyer <s-beyer@gmx.net>,
-        Marc Strapetz <marc.strapetz@syntevo.com>,
-        Jeff King <peff@peff.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 2/3] stash: introduce push verb
-Message-ID: <20170129123911.GC31189@hank>
-References: <20170121200804.19009-1-t.gummerer@gmail.com>
- <20170121200804.19009-3-t.gummerer@gmail.com>
- <xmqqziihskbi.fsf@gitster.mtv.corp.google.com>
+        id S1751070AbdA2NSD (ORCPT <rfc822;e@80x24.org>);
+        Sun, 29 Jan 2017 08:18:03 -0500
+Received: from mout.web.de ([212.227.17.11]:54122 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1750802AbdA2NSB (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 29 Jan 2017 08:18:01 -0500
+Received: from [192.168.178.36] ([79.237.55.102]) by smtp.web.de (mrweb103
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0Ls8xf-1cLkzo3ZIV-013t9K; Sun, 29
+ Jan 2017 14:10:00 +0100
+To:     Git List <git@vger.kernel.org>
+Cc:     Stefan Beller <sbeller@google.com>,
+        Junio C Hamano <gitster@pobox.com>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Subject: [PATCH] receive-pack: call string_list_clear() unconditionally
+Message-ID: <3dd27c57-9ba5-fc31-6e7e-414408cd63af@web.de>
+Date:   Sun, 29 Jan 2017 14:09:46 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.7.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqziihskbi.fsf@gitster.mtv.corp.google.com>
-User-Agent: Mutt/1.5.23.1-rc1 (2014-03-12)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+X-Provags-ID: V03:K0:mfSKR5Fw2ax4BPUON6Exb4OK03TD/qJ8PE3/nMYo+ydVcbbO/Yv
+ IKbaVyFCygnXmlk+wP6Xry4XDGLZe8o2PWClaDy4cl8GZuvJS3STdj4RQ1yrU78fwp726cl
+ TkocSuMxe2jbu44/brS9KReIKZkS+wxzjUPHTizLffNwqHTrU7e4PmSUmu/+7ucPt86eXxU
+ v15SM7lVDDTWW9Rt69ErQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:WgS2u++YhPI=:FDH1hUGXbu9qapc/UKiNpn
+ CIir6D70cxj0VaDHC0iKwGeMDxbjl1IBmH75cZdFhas/Dqy0dNopFkewJdXbh5kNRbcJt1BxN
+ zQcAS0cDJ2ihsY0NgwB/uzk5eGs9W+QHKaTnfvJCUyJHS2DgA+eMFPQmroBVa5LQArHkbXbBC
+ RFOx0rWkKC5HFCBj3I4HcCCvjAKvFGwwV76vNol3G3HuU6CsUpR9k00EZ3cXsndkwf5e346/H
+ e53uOOccB3QMLlMe+JbA9mK1hsSaYFurGkHl5i+FGCyNERtNC+P8faYSGPg704I78M1xjR24C
+ /qv4pdpnraULzuyPw3RdMu8GAC1q/4MLbTWGiJ11PhjJ21qwR80UUrVbvTContXdwu5s3YfXr
+ xjVBBSInNu35L/ThWL15fkLejxA8OUihE/1IYyPWQBrIAgc66Bg5y7+xxarTwjgn7XpXgfzp7
+ X8auD5NtLlXEjNF+I0w787754bdUTntK+ro9sSkS5fYrcKooa5egrzKJ+sQlCmwa4t8o0Tb00
+ qqviSiG9cNMVq9I4ZAMFDb/i6acLxzam19V+S/mhZBqJBCSIr+nI6lvhrzPICjPzR2V8+8lzS
+ QFrOzdR2zIN1QYckJA6luvq3p9aOXF+Hv5YLi/lWCwGsmBPE35oKRHUtUTKs1OkpSiJjZX8rg
+ KmYQJkUQh4zFgMTwAP157hZNC7gwqBUHXPINz9R5+mDdLuHkBgdo6YV7E6s8/leB0yMN+JFHy
+ 8bxoLcoTWW+T7jDN5CIAZAW9CnGsI10XFbM2aZeimthLHZKLcFLR4yn0dSkC9l6vfrfhX54nS
+ Pau5B7W
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 01/23, Junio C Hamano wrote:
-> Thomas Gummerer <t.gummerer@gmail.com> writes:
-> 
-> > +	stash_msg="$*"
-> > +
-> > +	if test -z stash_msg
-> 
-> A dollar-sign is missing here, I think.
+string_list_clear() handles empty lists just fine, so remove the
+redundant check.
 
-Yes, thanks.
+Signed-off-by: Rene Scharfe <l.s.r@web.de>
+---
+ builtin/receive-pack.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-> > +	then
-> > +		push_stash $push_options
-> > +	else
-> > +		push_stash $push_options -m "$stash_msg"
-> > +	fi
-> > +}
-
+diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+index 6b97cbdbe..1dbb8a069 100644
+--- a/builtin/receive-pack.c
++++ b/builtin/receive-pack.c
+@@ -1942,8 +1942,7 @@ int cmd_receive_pack(int argc, const char **argv, const char *prefix)
+ 		run_receive_hook(commands, "post-receive", 1,
+ 				 &push_options);
+ 		run_update_post_hook(commands);
+-		if (push_options.nr)
+-			string_list_clear(&push_options, 0);
++		string_list_clear(&push_options, 0);
+ 		if (auto_gc) {
+ 			const char *argv_gc_auto[] = {
+ 				"gc", "--auto", "--quiet", NULL,
 -- 
-Thomas
+2.11.0
+
