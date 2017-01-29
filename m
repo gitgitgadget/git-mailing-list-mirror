@@ -7,46 +7,45 @@ X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3C9411F6DC
-	for <e@80x24.org>; Sun, 29 Jan 2017 20:24:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0D3191FAD5
+	for <e@80x24.org>; Sun, 29 Jan 2017 20:25:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752126AbdA2UYw (ORCPT <rfc822;e@80x24.org>);
-        Sun, 29 Jan 2017 15:24:52 -0500
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:35401 "EHLO
-        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751568AbdA2UYs (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1752157AbdA2UZG (ORCPT <rfc822;e@80x24.org>);
+        Sun, 29 Jan 2017 15:25:06 -0500
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:36539 "EHLO
+        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751636AbdA2UYs (ORCPT <rfc822;git@vger.kernel.org>);
         Sun, 29 Jan 2017 15:24:48 -0500
-Received: by mail-wm0-f66.google.com with SMTP id u63so4342255wmu.2
-        for <git@vger.kernel.org>; Sun, 29 Jan 2017 12:24:10 -0800 (PST)
+Received: by mail-wm0-f65.google.com with SMTP id r18so1321447wmd.3
+        for <git@vger.kernel.org>; Sun, 29 Jan 2017 12:24:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=5MeGU1Of5AHrS5ujnHgFScfYDiYXJogbMkQFk/T9ieI=;
-        b=AjWKyh7mOfDoctd4Ldv/0YicyxyY/72GV+4184cS0LpHTAL1zWpzEhGMI1kYJ9YKiu
-         0MD/oJ9RCvpxxApp2ku+LBxePWaqFROzxz6Y50QLrodNGJKaSVFrnjTvegAjcdhnpHp2
-         r4L5gp0zg/R+R+/I8qXutmBoM3YSbGOilmXRIYcaEs6gAUQCdXXuaIi+ZNgaDvrfAZBH
-         Gf28tpRrx3OEheJS1hRM5SassgaXcBstX28MM/pmYxWmhQX7ISEeUCMiWNZ8RqSLnqC/
-         4m6CBKF9YnF59h2eJmpsBawtmPsVz0ZBTPsTQj+s12QXZjyuyuwX0YjHebgb0ihh/MlO
-         EJGg==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=7o8YahjBJTfW1hthUK5x2JEgwAQOq0Su4sHrMH3LP68=;
+        b=kuHzJ264vM8XKaI1K4CG45lV21nA06y+Hk43vR+1QtJELh0HotZLTi/isuMK+9BtOj
+         ztwh9UOqkgdR/WlrW+wVp6SmhLivLJULF6ayU95RdmdqNrU/POALNoTcR3DAC5v9RaqK
+         yrEwVhG1Gr2dinvhT3beB5n7hE2cYUMc7llS/y2yQTZ2kEcrgQ3BD8d/YqHuD5k8ebuM
+         Vx0weGdlCe/61glb8oqQ98qngZ3zZmO3d9X/LGJ6M4C4sHF3QtuDDBLwoIuBrK5Q4fyT
+         Cc/B8rYmBpo7QkdXg51KmrT9rfdbhmreFWM4DgO3mRmuBo5P85Fq50ZVhlt0PClhcukP
+         /LUw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=5MeGU1Of5AHrS5ujnHgFScfYDiYXJogbMkQFk/T9ieI=;
-        b=Uc/I6El6C7eT2xrGvETrEU4LVD/R0PjrxakTMF/Hgfs8MzMKL8O2jol9k0lkNmjCck
-         ndBJ4MfoQU/1wXaBP6RxAJWc55Vwh2I1hMH5GVLWBhldSKxJB1IfGP7FW8Q7L9iQC61V
-         gEvRLVSF5KyT8ch7mHJNv5kW4vLtx+Yc+2KDggzNJ0uvb9h44jOXxMa/EF1it0jnEJxY
-         q05UFRT8CK6B+5Cbi8y/JmktaoQEtXsqxPm1zpR4xBU4HlPVwfj4GaSfCXsyGKGhWuox
-         zJfLvcLcIYxMdD9a/pH3eX5cMavaqNfr2hUa2kwHRlzZrJ+lWDKs9y3HSKraosqgkrod
-         GCJw==
-X-Gm-Message-State: AIkVDXJX1rORdnbQu9xKDFLPSC0Bc23mgXojdNDm/Rpvulj7el5K2zS3mh7t07Of+oVU/w==
-X-Received: by 10.28.34.194 with SMTP id i185mr10743299wmi.118.1485720949982;
-        Sun, 29 Jan 2017 12:15:49 -0800 (PST)
+         :references;
+        bh=7o8YahjBJTfW1hthUK5x2JEgwAQOq0Su4sHrMH3LP68=;
+        b=Ri/ewrkwoj1UKZP/GA39gOvFfaNKEDVW3MrtUyp0RnKsgM1JIiKdDiTKabkAL6EaO+
+         uqs/xLzAjqVnVzIGBH1mvB5aRsTa1SvAh1w19d8/mqiQSLREKp4oXozk9YqsKvfeQ7ZW
+         y0rLbebIB3rY4245bn/BYrGumUkZuoKURqDaMi930VUliWS53XIl1SyB1DJhxo2nmCy1
+         Ke27RGe7rXgV5nsJgLYoTaI+PYqU33YwIA70Y5jEgZPwHtDiqfGaZPaBoRjhTHMpvdBP
+         vgwCJ041+ypVtzZF3zYCbpWlAn1gqvem7INTGSB3+ciI3e2ASjnZSDHuF1BcMrIlkess
+         SCrQ==
+X-Gm-Message-State: AIkVDXJrWy6hziKkjAN0hLzhCejlBcLiWV88Pci5FcYN1q1dtH7Q+7koEh4gzIPi+I0nRw==
+X-Received: by 10.223.154.132 with SMTP id a4mr15608448wrc.188.1485720952605;
+        Sun, 29 Jan 2017 12:15:52 -0800 (PST)
 Received: from localhost ([2a02:c7f:c42b:f900:5e51:4fff:fee9:57af])
-        by smtp.gmail.com with ESMTPSA id z67sm19329301wrb.49.2017.01.29.12.15.48
+        by smtp.gmail.com with ESMTPSA id t123sm15258978wmt.8.2017.01.29.12.15.51
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 29 Jan 2017 12:15:49 -0800 (PST)
+        Sun, 29 Jan 2017 12:15:52 -0800 (PST)
 From:   Thomas Gummerer <t.gummerer@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Stephan Beyer <s-beyer@gmx.net>,
@@ -57,236 +56,169 @@ Cc:     Stephan Beyer <s-beyer@gmx.net>,
         =?UTF-8?q?=C3=98yvind=20A=20=2E=20Holm?= <sunny@sunbase.org>,
         =?UTF-8?q?Jakub=20Nar=C4=99bski?= <jnareb@gmail.com>,
         Thomas Gummerer <t.gummerer@gmail.com>
-Subject: [PATCH v2 0/4] stash: create filename argument
-Date:   Sun, 29 Jan 2017 20:16:00 +0000
-Message-Id: <20170129201604.30445-1-t.gummerer@gmail.com>
+Subject: [PATCH v2 2/4] stash: introduce push verb
+Date:   Sun, 29 Jan 2017 20:16:02 +0000
+Message-Id: <20170129201604.30445-3-t.gummerer@gmail.com>
 X-Mailer: git-send-email 2.11.0.297.g9a2118ac0b.dirty
-In-Reply-To: <20170121200804.19009-1-t.gummerer@gmail.com>
+In-Reply-To: <20170129201604.30445-1-t.gummerer@gmail.com>
 References: <20170121200804.19009-1-t.gummerer@gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+ <20170129201604.30445-1-t.gummerer@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Previous round is at:
-http://public-inbox.org/git/20170121200804.19009-1-t.gummerer@gmail.com/.
-Thanks Junio, Peff, Øyvind, Jakub and Johannes for your feedback on
-the previous round.
+Introduce a new git stash push verb in addition to git stash save.  The
+push verb is used to transition from the current command line arguments
+to a more conventional way, in which the message is specified after a -m
+parameter instead of being a positional argument.
 
-Changes since the previous round:
+This allows introducing a new filename argument to stash single files.
+Using that as a positional argument is much more consistent with the
+rest of git, than using the positional argument for the message.
 
-- Re-phrased the Documentation update.
-- Added missing $ in 2/3
-- Added an extra patch introducing a new syntax for git stash create,
-  where the message can be specified with the -m flag, instead of as a
-  positional argument
-- Filenames with $IFS in their name are now supported.  Added a test
-  for that as well.
+Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
+---
+ git-stash.sh     | 76 +++++++++++++++++++++++++++++++++++++++++++++++++++++---
+ t/t3903-stash.sh |  9 +++++++
+ 2 files changed, 82 insertions(+), 3 deletions(-)
 
-Interdiff below:
-
-diff --git a/Documentation/git-stash.txt b/Documentation/git-stash.txt
-index 871a3b246c..8306bac397 100644
---- a/Documentation/git-stash.txt
-+++ b/Documentation/git-stash.txt
-@@ -20,6 +20,8 @@ SYNOPSIS
- 	     [--] [<paths>...]
- 'git stash' clear
- 'git stash' create [<message>]
-+'git stash' create [-m <message>] [-u|--include-untracked <untracked|all>]
-+	     [-- <paths>...]
- 'git stash' store [-m|--message <message>] [-q|--quiet] <commit>
- 
- DESCRIPTION
-@@ -51,8 +53,8 @@ OPTIONS
- save [-p|--patch] [-k|--[no-]keep-index] [-u|--include-untracked] [-a|--all] [-q|--quiet] [<message>]::
- push [-p|--patch] [-k|--[no-]keep-index] [-u|--include-untracked] [-a|--all] [-q|--quiet] [-m|--message <message>] [--] [<paths>...]::
- 
--	Save your local modifications to a new 'stash', and revert the
--	the changes in the working tree to match the index.
-+	Save your local modifications to a new 'stash' and roll them
-+	back both in the working tree and in the index.
- 	The <message> part is optional and gives
- 	the description along with the stashed state.  For quickly making
- 	a snapshot, you can omit _both_ "save" and <message>, but giving
 diff --git a/git-stash.sh b/git-stash.sh
-index 7dcce629bd..0072a38b4c 100755
+index 10c284d1aa..8528708f61 100755
 --- a/git-stash.sh
 +++ b/git-stash.sh
-@@ -56,25 +56,57 @@ clear_stash () {
+@@ -189,10 +189,11 @@ store_stash () {
+ 	return $ret
  }
  
- create_stash () {
+-save_stash () {
++push_stash () {
+ 	keep_index=
+ 	patch_mode=
+ 	untracked=
 +	stash_msg=
-+	untracked=
-+	new_style=
- 	files=
  	while test $# != 0
  	do
  		case "$1" in
+@@ -216,6 +217,10 @@ save_stash () {
+ 		-a|--all)
+ 			untracked=all
+ 			;;
 +		-m|--message)
 +			shift
-+			stash_msg="$1"
-+			new_style=t
++			stash_msg=$1
 +			;;
-+		-u|--include-untracked)
-+			shift
-+			untracked="$1"
-+			new_style=t
-+			;;
- 		--)
- 			shift
-+			files="$@"
-+			new_style=t
- 			break
+ 		--help)
+ 			show_help
  			;;
--		--files)
--			;;
- 		*)
--			files="$1 $files"
-+			if test -n "$new_style"
-+			then
-+				echo "invalid argument"
-+				option="$1"
-+				# TRANSLATORS: $option is an invalid option, like
-+				# `--blah-blah'. The 7 spaces at the beginning of the
-+				# second line correspond to "error: ". So you should line
-+				# up the second line with however many characters the
-+				# translation of "error: " takes in your language. E.g. in
-+				# English this is:
-+				#
-+				#    $ git stash save --blah-blah 2>&1 | head -n 2
-+				#    error: unknown option for 'stash save': --blah-blah
-+				#           To provide a message, use git stash save -- '--blah-blah'
-+				eval_gettextln "error: unknown option for 'stash create': \$option"
-+				usage
-+			fi
-+			break
- 			;;
- 		esac
- 		shift
- 	done
+@@ -251,8 +256,6 @@ save_stash () {
+ 		die "$(gettext "Can't use --patch and --include-untracked or --all at the same time")"
+ 	fi
  
--	stash_msg="$1"
--	untracked="$2"
-+	if test -z "$new_style"
-+	then
-+		stash_msg="$*"
-+	fi
- 
+-	stash_msg="$*"
+-
  	git update-index -q --refresh
  	if no_changes
-@@ -284,7 +316,7 @@ push_stash () {
- 	git reflog exists $ref_stash ||
- 		clear_stash || die "$(gettext "Cannot initialize stash")"
- 
--	create_stash --files $files -- "$stash_msg" "$untracked"
-+	create_stash -m "$stash_msg" -u "$untracked" -- $files
- 	store_stash -m "$stash_msg" -q $w_commit ||
- 	die "$(gettext "Cannot save the current status")"
- 	say "$(eval_gettext "Saved working directory and index state \$stash_msg")"
-@@ -293,9 +325,9 @@ push_stash () {
  	then
- 		if test -n "$files"
- 		then
--			git reset -- $files
--			git checkout HEAD -- $(git ls-files --modified -- $files)
--			git clean --force --quiet -- $(git ls-files --others -- $files)
-+			git ls-files -z -- "$@" | xargs -0 git reset --
-+			git ls-files -z --modified -- "$@" | xargs -0 git checkout HEAD --
-+			git ls-files -z --others -- "$@" | xargs -0 git clean --force --
- 		else
- 			git reset --hard ${GIT_QUIET:+-q}
- 		fi
-@@ -373,14 +405,9 @@ save_stash () {
- 		shift
- 	done
+@@ -291,6 +294,69 @@ save_stash () {
+ 	fi
+ }
  
--	# if test -n "$patch_mode" && test -n "$untracked"
--	# then
--	# 	die "$(gettext "Can't use --patch and --include-untracked or --all at the same time")"
--	# fi
--
- 	stash_msg="$*"
- 
--	if test -z stash_msg
++save_stash () {
++	push_options=
++	while test $# != 0
++	do
++		case "$1" in
++		-k|--keep-index)
++			push_options="-k $push_options"
++			;;
++		--no-keep-index)
++			push_options="--no-keep-index $push_options"
++			;;
++		-p|--patch)
++			push_options="-p $push_options"
++			;;
++		-q|--quiet)
++			push_options="-q $push_options"
++			;;
++		-u|--include-untracked)
++			push_options="-u $push_options"
++			;;
++		-a|--all)
++			push_options="-a $push_options"
++			;;
++		--help)
++			show_help
++			;;
++		--)
++			shift
++			break
++			;;
++		-*)
++			option="$1"
++			# TRANSLATORS: $option is an invalid option, like
++			# `--blah-blah'. The 7 spaces at the beginning of the
++			# second line correspond to "error: ". So you should line
++			# up the second line with however many characters the
++			# translation of "error: " takes in your language. E.g. in
++			# English this is:
++			#
++			#    $ git stash save --blah-blah 2>&1 | head -n 2
++			#    error: unknown option for 'stash save': --blah-blah
++			#           To provide a message, use git stash save -- '--blah-blah'
++			eval_gettextln "error: unknown option for 'stash save': \$option
++       To provide a message, use git stash save -- '\$option'"
++			usage
++			;;
++		*)
++			break
++			;;
++		esac
++		shift
++	done
++
++	stash_msg="$*"
++
 +	if test -z "$stash_msg"
- 	then
- 		push_stash $push_options
- 	else
-@@ -728,7 +755,7 @@ clear)
- 	;;
- create)
++	then
++		push_stash $push_options
++	else
++		push_stash $push_options -m "$stash_msg"
++	fi
++}
++
+ have_stash () {
+ 	git rev-parse --verify --quiet $ref_stash >/dev/null
+ }
+@@ -617,6 +683,10 @@ save)
  	shift
--	create_stash -- "$*" && echo "$w_commit"
-+	create_stash "$@" && echo "$w_commit"
+ 	save_stash "$@"
  	;;
- store)
++push)
++	shift
++	push_stash "$@"
++	;;
+ apply)
  	shift
+ 	apply_stash "$@"
 diff --git a/t/t3903-stash.sh b/t/t3903-stash.sh
-index 3e763ff766..ca4c44aa9c 100755
+index 2de3e18ce6..0171b824c9 100755
 --- a/t/t3903-stash.sh
 +++ b/t/t3903-stash.sh
-@@ -784,6 +784,24 @@ test_expect_success 'push -m shows right message' '
- 	test_cmp expect actual
+@@ -775,4 +775,13 @@ test_expect_success 'stash is not confused by partial renames' '
+ 	test_path_is_missing file
  '
  
-+test_expect_success 'deprecated version of stash create stores correct message' '
++test_expect_success 'push -m shows right message' '
 +	>foo &&
 +	git add foo &&
-+	STASH_ID=$(git stash create "create test message") &&
-+	echo "On master: create test message" >expect &&
-+	git show --pretty=%s ${STASH_ID} | head -n1 >actual &&
++	git stash push -m "test message" &&
++	echo "stash@{0}: On master: test message" >expect &&
++	git stash list | head -n 1 >actual &&
 +	test_cmp expect actual
-+'
-+
-+test_expect_success 'new style stash create stores correct message' '
-+	>foo &&
-+	git add foo &&
-+	STASH_ID=$(git stash create -m "create test message new style") &&
-+	echo "On master: create test message new style" >expect &&
-+	git show --pretty=%s ${STASH_ID} | head -n1 >actual &&
-+	test_cmp expect actual
-+'
-+
- test_expect_success 'stash -- <filename> stashes and restores the file' '
- 	>foo &&
- 	>bar &&
-@@ -811,4 +829,19 @@ test_expect_success 'stash with multiple filename arguments' '
- 	test_path_is_file extra
- '
- 
-+test_expect_success 'stash with file including $IFS character' '
-+	>"foo	bar" &&
-+	>foo &&
-+	>untracked &&
-+	git add foo* &&
-+	git stash push -- foo* &&
-+	test_path_is_missing "foo	bar" &&
-+	test_path_is_missing foo &&
-+	test_path_is_file untracked &&
-+	git stash pop &&
-+	test_path_is_file "foo	bar" &&
-+	test_path_is_file foo &&
-+	test_path_is_file untracked
 +'
 +
  test_done
-
-Thomas Gummerer (4):
-  Documentation/stash: remove mention of git reset --hard
-  stash: introduce push verb
-  introduce new format for git stash create
-  stash: support filename argument
-
- Documentation/git-stash.txt |  14 +++-
- git-stash.sh                | 154 ++++++++++++++++++++++++++++++++++++++++----
- t/t3903-stash.sh            |  69 ++++++++++++++++++++
- 3 files changed, 222 insertions(+), 15 deletions(-)
-
 -- 
 2.11.0.297.g9a2118ac0b.dirty
 
