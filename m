@@ -6,110 +6,73 @@ X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B96EE1FF1E
-	for <e@80x24.org>; Mon, 30 Jan 2017 23:26:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5661B20D13
+	for <e@80x24.org>; Mon, 30 Jan 2017 23:37:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752802AbdA3X0F (ORCPT <rfc822;e@80x24.org>);
-        Mon, 30 Jan 2017 18:26:05 -0500
-Received: from cloud.peff.net ([104.130.231.41]:47064 "EHLO cloud.peff.net"
+        id S1754570AbdA3XhI (ORCPT <rfc822;e@80x24.org>);
+        Mon, 30 Jan 2017 18:37:08 -0500
+Received: from cloud.peff.net ([104.130.231.41]:47074 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750910AbdA3X0E (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 Jan 2017 18:26:04 -0500
-Received: (qmail 12341 invoked by uid 109); 30 Jan 2017 23:26:04 -0000
+        id S1754526AbdA3XhH (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 Jan 2017 18:37:07 -0500
+Received: (qmail 12990 invoked by uid 109); 30 Jan 2017 23:37:07 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 30 Jan 2017 23:26:04 +0000
-Received: (qmail 30787 invoked by uid 111); 30 Jan 2017 23:26:05 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 30 Jan 2017 23:37:07 +0000
+Received: (qmail 30890 invoked by uid 111); 30 Jan 2017 23:37:08 -0000
 Received: from Unknown (HELO sigill.intra.peff.net) (10.42.43.3)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 30 Jan 2017 18:26:05 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 31 Jan 2017 00:26:00 +0100
-Date:   Tue, 31 Jan 2017 00:26:00 +0100
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 30 Jan 2017 18:37:08 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 31 Jan 2017 00:37:03 +0100
+Date:   Tue, 31 Jan 2017 00:37:03 +0100
 From:   Jeff King <peff@peff.net>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Edmundo Carmona Antoranz <eantoranz@gmail.com>,
-        Git List <git@vger.kernel.org>
-Subject: Re: difflame
-Message-ID: <20170130232559.krdxkt4dq4lfv4rj@sigill.intra.peff.net>
-References: <CAOc6etaCk=OEyarMNhorM94MBnYRscCkJBM-K08snv1ecmOaPQ@mail.gmail.com>
- <20170128035321.yrcqwkg2fiwadxj4@sigill.intra.peff.net>
- <xmqqd1f4uug6.fsf@gitster.mtv.corp.google.com>
+Cc:     cornelius.weig@tngtech.com, git@vger.kernel.org
+Subject: Re: [PATCH v3 2/3] refs: add option core.logAllRefUpdates = always
+Message-ID: <20170130233702.o6naszpz32juf5gt@sigill.intra.peff.net>
+References: <xmqqvat11k1i.fsf@gitster.mtv.corp.google.com>
+ <20170127100948.29408-1-cornelius.weig@tngtech.com>
+ <20170127100948.29408-2-cornelius.weig@tngtech.com>
+ <xmqq37g0us5p.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqd1f4uug6.fsf@gitster.mtv.corp.google.com>
+In-Reply-To: <xmqq37g0us5p.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jan 30, 2017 at 01:08:41PM -0800, Junio C Hamano wrote:
+On Mon, Jan 30, 2017 at 01:58:10PM -0800, Junio C Hamano wrote:
 
-> Jeff King <peff@peff.net> writes:
+> >     When writing the test for git-tag, I realized that the option
+> >     --no-create-reflog to git-tag does not take precedence over
+> >     logAllRefUpdate=always. IOW the setting cannot be overridden on the command
+> >     line. Do you think this is a defect or would it not be desirable to have this
+> >     feature anyway?
 > 
-> > On Tue, Jan 17, 2017 at 11:24:02PM -0600, Edmundo Carmona Antoranz wrote:
-> >
-> >> For a very long time I had wanted to get the output of diff to include
-> >> blame information as well (to see when something was added/removed).
-> >
-> > This is something I've wanted, too. The trickiest part, though, is
-> > blaming deletions, because git-blame only tracks the origin of content,
-> > not the origin of a change.
+> "--no-create-reflog" should override the configuration set to "true"
+> or "always".  Also "--create-reflog" should override the
+> configuration set to "false".
 > 
-> Hmph, this is a comment without looking at what difflame does
-> internally, so you can ignore me if I am misunderstood what problem
-> you are pointing out, but I am not sure how "tracks the origin of
-> content" could be a problem.
-> 
-> If output from "git show" says this:
-> 
-> 	--- a/file
-> 	+++ b/file
-> 	@@ -1,5 +1,6 @@
-> 	 a
-> 	 b
-> 	-c
-> 	+C
-> 	+D
-> 	 d
-> 	 e
-> 
-> in order to annotate lines 'a', 'b', 'd', and 'e' for their origin,
-> you would run 'blame' on the commit the above output was taken from
-> (or its parent---they are in the context so either would be OK).
-> 
-> You know where 'C' and 'D' came from already.  It's the commit you
-> are feeding "git show".
+> If the problem was inherited from the original code before your
+> change (e.g. you set logAllRefUpdates to true and then did
+> "update-ref --no-create-reflog refs/heads/foo".  Does the code
+> before your change ignore the command lne option and create a reflog
+> for the branch?), then it would be ideal to fix the bug before this
+> series as a preparatory fix.  If the problem was introduced by this
+> patch set, then we would need a fix not to introduce it ;-)
 
-I think the point (or at least as I understand it) is that the diff is
-not "git show" for a particular commit. It could be part of a much
-larger diff that covers many commits.
+I hadn't thought about that. I think "git branch --no-create-reflog" has
+the same problem in the existing code.
 
-As a non-hypothetical instance, I have a fork of git.git that has
-various enhancements. I want to feed those enhancements upstream. I need
-to know which commits should be cherry-picked to get those various
-enhancements.
+I suspect nobody cares much in practice. Even if you say "don't create a
+reflog now", if you have core.logAllRefUpdates turned on, then it's
+likely that some _other_ operation will create the reflog later
+accidentally (e.g., as soon as you "git checkout foo && git commit",
+you'll get a reflog). I think you're fighting an uphill battle to turn
+logAllRefUpdates on and then try to disable some reflogs selectively.
 
-Looking at "log origin..fork" tells me too many commits, because it
-includes ones which aren't useful anymore. Either because they already
-went upstream, or because they were cherry-picked to the fork and their
-upstream counterparts merged (or even equivalent commits made upstream
-that obsoleted the features).
-
-Looking at "git diff origin fork" tells me what the actual differences
-are, but it doesn't show me which commits are responsible for them.
-
-I can "git blame" each individual line of the diff (starting with "fork"
-as the tip), but that doesn't work for lines that no longer exist (i.e.,
-when the interesting change is a deletion).
-
-> In order to run blame to find where 'c' came from, you need to start
-> at the _parent_ of the commit the above output came from, and the
-> hunk header shows which line range to find the final 'c'.
-
-So perhaps that explains my comment more. "blame" is not good for
-finding which commit took away a line. I've tried using "blame
---reverse", but it shows you the parent of the commit you are looking
-for, which is slightly annoying. :)
-
-"git log -S" is probably a better tool for finding that.
+So I agree the current behavior is quietly broken, which is not good.
+But I wonder if "--no-create-reflog" is really sane in the first place,
+and whether we might be better off to simply disallow it.
 
 -Peff
