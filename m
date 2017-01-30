@@ -7,58 +7,58 @@ X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7AD9C1FF1E
-	for <e@80x24.org>; Mon, 30 Jan 2017 22:52:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C775A20D13
+	for <e@80x24.org>; Mon, 30 Jan 2017 22:57:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753050AbdA3WwW (ORCPT <rfc822;e@80x24.org>);
-        Mon, 30 Jan 2017 17:52:22 -0500
-Received: from mail-pf0-f195.google.com ([209.85.192.195]:33390 "EHLO
+        id S1753302AbdA3W5S (ORCPT <rfc822;e@80x24.org>);
+        Mon, 30 Jan 2017 17:57:18 -0500
+Received: from mail-pf0-f195.google.com ([209.85.192.195]:33487 "EHLO
         mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752802AbdA3WwT (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 Jan 2017 17:52:19 -0500
-Received: by mail-pf0-f195.google.com with SMTP id e4so24437317pfg.0
-        for <git@vger.kernel.org>; Mon, 30 Jan 2017 14:52:02 -0800 (PST)
+        with ESMTP id S1752722AbdA3W5R (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 Jan 2017 17:57:17 -0500
+Received: by mail-pf0-f195.google.com with SMTP id e4so24453640pfg.0
+        for <git@vger.kernel.org>; Mon, 30 Jan 2017 14:57:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=zqyFEZQ/wtj1vpGrr99oE036+MhbSzFrPfMVcwCeiuA=;
-        b=pz93OxSGxkA0aB3FT+letCq6yq+5Sstzvwkg/UBII8/1fKqUEgW3J0qinpeZsed8CQ
-         Dv82MeIEFHRoIfiy8jUHWDPHJBod68/j1Azix7q7zH7fNRsVZsbxdrfD7GVX4hLk7EMn
-         ze2T5N6mMpoizH7RRc5l6HVXX+6uzdMzWMVm1KoxAY0isyqTh+CkBme0HlwspRsKf+Eg
-         w0JHUbUB08NxlS5PvkXc5yNQz0ytrWDwFnIUntH4Nx+mMtSlInAca51IIvFQLuqW70CV
-         BLxVJ7brPt/4Q0uVGAj3DCOH/k2M+wg6If/PkoXrrkyfVOpeQhqUXhUCou8DtJZfL2/F
-         ra7w==
+        bh=rCN8cfblAHq5PhghR9FPsfFiGAWKfKtJx2T3X3ncf8E=;
+        b=m6q8g49X5kkuYQJwK+Bic6n599Y97tY11XtN+HsmFLVbqKds6/v7syvLxtyN1r7dID
+         H9jH0vOzsJw1EXnaEUgc2UXTO+/5qgB+HLIaATCvCH4PWq6A4cok2DiALlQI1nlx02hl
+         wkQh7f3m4wMBxxXXp+9nUxel2KyZpZ4T23SvaQarZ5m+QZh2/+l1/ecdrSq8QTsNid0a
+         0TWBcqoA3zk1HJ+ExqYww+fPfi8COYOAR9NGwRz0iatksshhGkiZpKzTQ293cYJTBXiq
+         m8bKdKlBheDiUkBkrAvlo3tnKx20TP2Z8K3QbDFfa0AXqwXKsIskNGFtQTesyawA3QBw
+         jm9w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=zqyFEZQ/wtj1vpGrr99oE036+MhbSzFrPfMVcwCeiuA=;
-        b=tjae3drhp1PYP8gF9fVKEMNp8MJ0aEpsOPFmv+0aVtIc+y4F5p/TJS53vdGcWB43/G
-         HTplsjvqbxTlFavYCVsq4FsnVAmR5wRpVJVEn8Cm7PCa46/LYmrDypE0oSywhghHNSJq
-         mRzI06LYyljMMy4rJrzzyZbrrF9yTcT8q7mHW0HKWym8h2Xk2Ytj7Z19HwQaWKXnJbWG
-         WzP08POzSoes5/2o6K2ZzoEQ3jSurJEXUr+knCe0CxhZmRAT8BN88VbQrMbGCKsfr7mz
-         /bIfmwMYAr++j7xeD3Y9TuE5Lq4DVvtSpJznVeR9AhB2Mj1gc9fb9+5lEZyrq8D9DIyZ
-         FT/A==
-X-Gm-Message-State: AIkVDXI64Z1lUVguJOEgv4wc8YQ5JuniadLG8wV41J5waDvNZ5XTa3XB3bkcr3FMIC8kWA==
-X-Received: by 10.99.37.135 with SMTP id l129mr26659566pgl.206.1485816721648;
-        Mon, 30 Jan 2017 14:52:01 -0800 (PST)
+        bh=rCN8cfblAHq5PhghR9FPsfFiGAWKfKtJx2T3X3ncf8E=;
+        b=dGY3S0UqSdHiF1DwWmGNaR7G0qzrMS1QwKf3M4CdnHwbd31oDT8TtQX/zn9KznbZU5
+         lBZMRdWwFDvprlJeZoy1zfN42wjLPGA+CzARMqvTkFulTwUz3wNGuPTPIdi3HONlcQo+
+         yiW7mjcU7Jdju+bMxzxoCjhWmM/nP7yhUtWNFQs9G/4PoJTZsQeYSJTeyccmLUUnIGeq
+         BITr7oYWj8c4k2PiDcnfGcMPv7OSIz076O/67oCpCdd4lHRfIdnpC2zWCsKVJP7LYa5q
+         OL1qZeQ0N5EvBIXWiFnm6fKSYyb3ZG50JBfgk+eH3L56Hn0slZTrp5h4d+t695Hvy6ts
+         +f3Q==
+X-Gm-Message-State: AIkVDXKkrAFF5bof91O5hN1V+cotnzrnMX262nhI5ngnIrxA84s08AVehPLgsTzLntaN1Q==
+X-Received: by 10.84.232.141 with SMTP id i13mr35001147plk.119.1485817037137;
+        Mon, 30 Jan 2017 14:57:17 -0800 (PST)
 Received: from localhost ([2620:0:1000:8622:a9ce:56f8:45fd:fc63])
-        by smtp.gmail.com with ESMTPSA id a8sm35141343pfa.19.2017.01.30.14.52.00
+        by smtp.gmail.com with ESMTPSA id 191sm35212847pgd.40.2017.01.30.14.57.16
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 30 Jan 2017 14:52:01 -0800 (PST)
+        Mon, 30 Jan 2017 14:57:16 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Patrick Steinhardt <patrick.steinhardt@elego.de>
-Cc:     git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>,
-        Philip Oakley <philipoakley@iee.org>
-Subject: Re: [PATCH v4 0/5] urlmatch: allow wildcard-based matches
-References: <20170123130635.29577-1-patrick.steinhardt@elego.de>
-        <cover.1485512626.git.patrick.steinhardt@elego.de>
-        <xmqqy3xstdh9.fsf@gitster.mtv.corp.google.com>
-Date:   Mon, 30 Jan 2017 14:52:00 -0800
-In-Reply-To: <xmqqy3xstdh9.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-        message of "Mon, 30 Jan 2017 14:00:34 -0800")
-Message-ID: <xmqqfuk0tb3j.fsf@gitster.mtv.corp.google.com>
+To:     cornelius.weig@tngtech.com
+Cc:     peff@peff.net, git@vger.kernel.org
+Subject: Re: [PATCH v3 2/3] refs: add option core.logAllRefUpdates = always
+References: <xmqqvat11k1i.fsf@gitster.mtv.corp.google.com>
+        <20170127100948.29408-1-cornelius.weig@tngtech.com>
+        <20170127100948.29408-2-cornelius.weig@tngtech.com>
+        <xmqq37g0us5p.fsf@gitster.mtv.corp.google.com>
+Date:   Mon, 30 Jan 2017 14:57:15 -0800
+In-Reply-To: <xmqq37g0us5p.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
+        message of "Mon, 30 Jan 2017 13:58:10 -0800")
+Message-ID: <xmqq8tpstaus.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -69,21 +69,55 @@ X-Mailing-List: git@vger.kernel.org
 
 Junio C Hamano <gitster@pobox.com> writes:
 
-> Patrick Steinhardt <patrick.steinhardt@elego.de> writes:
+>> diff --git a/builtin/checkout.c b/builtin/checkout.c
+>> index bfe685c..81ea2ed 100644
+>> --- a/builtin/checkout.c
+>> +++ b/builtin/checkout.c
+>> @@ -612,14 +612,12 @@ static void update_refs_for_switch(const struct checkout_opts *opts,
+>>  	const char *old_desc, *reflog_msg;
+>>  	if (opts->new_branch) {
+>>  		if (opts->new_orphan_branch) {
+>> -			if (opts->new_branch_log && !log_all_ref_updates) {
+>> +			const char *refname = mkpathdup("refs/heads/%s", opts->new_orphan_branch);
+>> ...
+>>  				if (ret) {
+>>  					fprintf(stderr, _("Can not do reflog for '%s': %s\n"),
+>>  						opts->new_orphan_branch, err.buf);
 >
->>  - I realized that with my patches, "ranking" of URLs was broken.
->>    Previously, we've always taken the longest matching URL. As
->>    previously, only the user and path could actually differ, only
->>    these two components were used for the comparison. I've
->>    changed this now to also include the host part so that URLs
->>    with a longer host will take precedence. This resulted in a
->>    the patch 4.
->
-> Good thinking.  I was wondering about this, too.
->
-> Thanks.  Will read it through and replace.
+> Here you need to have another free(), as this block makes an early
+> return and you end up leaking refname.
 
-Ugh.  When applied on top of 4e59582ff7 ("Seventh batch for 2.12",
-2017-01-23), Git fails its self-test in t5551 #31 (I do not run with
-EXPENSIVE so some tests liks #30 are skipped, if it matters).
+I am building with the attached patch squashed on top.  
 
+The extra free(refname) is to plug the leak I pointed out, and the
+type of refname is no longer const, because "const char *" cannot be
+free()d without casting, and in this codepath I do not see a reason
+to mark it as const.
+
+When queued on top of 4e59582ff7 ("Seventh batch for 2.12",
+2017-01-23), however, this fails t2017#9 (orphan with -l makes
+reflog when core.logAllRefUpdates = false).
+
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index 81ea2eda99..e1a60fd8ea 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -612,7 +612,9 @@ static void update_refs_for_switch(const struct checkout_opts *opts,
+ 	const char *old_desc, *reflog_msg;
+ 	if (opts->new_branch) {
+ 		if (opts->new_orphan_branch) {
+-			const char *refname = mkpathdup("refs/heads/%s", opts->new_orphan_branch);
++			char *refname;
++
++			refname = mkpathdup("refs/heads/%s", opts->new_orphan_branch);
+ 			if (opts->new_branch_log && should_autocreate_reflog(refname)) {
+ 				int ret;
+ 				struct strbuf err = STRBUF_INIT;
+@@ -622,6 +624,7 @@ static void update_refs_for_switch(const struct checkout_opts *opts,
+ 					fprintf(stderr, _("Can not do reflog for '%s': %s\n"),
+ 						opts->new_orphan_branch, err.buf);
+ 					strbuf_release(&err);
++					free(refname);
+ 					return;
+ 				}
+ 				strbuf_release(&err);
