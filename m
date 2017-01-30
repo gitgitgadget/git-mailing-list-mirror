@@ -2,86 +2,118 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-6.1 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 571721FF1E
-	for <e@80x24.org>; Mon, 30 Jan 2017 21:43:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 258261FF1E
+	for <e@80x24.org>; Mon, 30 Jan 2017 21:46:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754564AbdA3Vnp (ORCPT <rfc822;e@80x24.org>);
-        Mon, 30 Jan 2017 16:43:45 -0500
-Received: from mail-pf0-f172.google.com ([209.85.192.172]:35436 "EHLO
-        mail-pf0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754541AbdA3Vnn (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 Jan 2017 16:43:43 -0500
-Received: by mail-pf0-f172.google.com with SMTP id f144so93722804pfa.2
-        for <git@vger.kernel.org>; Mon, 30 Jan 2017 13:43:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=gtsL/AFToeO7xy4GDCPzEcKuBY/6ec9ToQXTTfnZ3PY=;
-        b=j9HjYHufF2xGU7c5Xm3ZBclHbVE/cacQsQTYBlzt27aV6b8ey1RNANYE9waroDCPGO
-         hH9yfZ2Rx03mx0ONfuYqG/+Bv8w8un1wv/hpK9p1LntMxfQC++3e5nV4iCMCK+lKkhDH
-         J4U24aCj86oQMIxzYF8uOwT5jBuVITyua1xzTRod0xhZ8DA7Dd0zScGd2isSSOgoHscd
-         uCosDnngfgvES5LYz3BrneEgvvnGDYWSNzoB/jj8aaNvlLrj6EUDHQ9IwJ2AmuIdZMLu
-         gxsPcpTS9NQ6lBsWxLfwRDkDFSgX0TSlSS+dOitmQTF8ix+QfeGYaix8WdKIRwbznpdF
-         ZeNA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=gtsL/AFToeO7xy4GDCPzEcKuBY/6ec9ToQXTTfnZ3PY=;
-        b=OEO8iS6QfhoNS4aB7DvqFKsCtqqRJVgAWNU+S/btxQxWZ4JPmkH6gEcpkc+OSdaXCZ
-         U3XVfX1ushfGKG3HZj/ASLaGg4cJbqkTV61c3i/+I5IS21CDuqJXbmunqKbwJ73uqS1o
-         DtSKHJ8olTxkQghtsC6ait85NMrhhi4bS+XyKqcaQA7v8kPngik8S0PijsVLuNLK47fO
-         +ndumkVMYZAvJqLmKNs+a2Q8szEzZ75ufjdwJCjhY+XVNrktaAi4HCBlNgwtUxAVRyEt
-         A/ujtBWAlrhYkCWQd0MVeglxkxk84Itw5PboHTUgviUg1S0jrEKif7tleVGh5iZklkIr
-         svGQ==
-X-Gm-Message-State: AIkVDXI0VcpAN6AcyQWSm1grlyslTyv8lPpsloNbhCCKYwp21Zv6DwngSlaL7hcNQGM3fGHc
-X-Received: by 10.99.122.94 with SMTP id j30mr10764654pgn.112.1485812594488;
-        Mon, 30 Jan 2017 13:43:14 -0800 (PST)
-Received: from google.com ([2620:0:1000:5b10:64a9:79a2:c65f:35e9])
-        by smtp.gmail.com with ESMTPSA id r78sm34969271pfl.63.2017.01.30.13.43.13
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 30 Jan 2017 13:43:13 -0800 (PST)
-Date:   Mon, 30 Jan 2017 13:43:12 -0800
-From:   Brandon Williams <bmwill@google.com>
-To:     Peter Law <peterjclaw@gmail.com>
-Cc:     git@vger.kernel.org, Jacob Keller <jacob.keller@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>, szeder@ira.uka.de
-Subject: Re: [PATCH] Completion: Add support for --submodule=diff
-Message-ID: <20170130214312.GB35626@google.com>
-References: <20161204144127.28452-1-peterjclaw@gmail.com>
- <CAKoneT+Bn+MdbeNnPJsu23rbLCZ=jxADNVtpNefw9zNYMq26dA@mail.gmail.com>
+        id S1754592AbdA3Vqp (ORCPT <rfc822;e@80x24.org>);
+        Mon, 30 Jan 2017 16:46:45 -0500
+Received: from mout.web.de ([212.227.17.11]:64506 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1754240AbdA3Vqo (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 Jan 2017 16:46:44 -0500
+Received: from [192.168.178.36] ([79.237.55.102]) by smtp.web.de (mrweb101
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0Lz376-1cTnZs0Y5o-0148Sv; Mon, 30
+ Jan 2017 22:46:36 +0100
+Subject: Re: [PATCH 1/5] add SWAP macro
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+References: <8ef4c833-45bd-6831-0683-6d01f30aa518@web.de>
+ <0bdb58a6-3a7f-2218-4b70-c591ae90e95e@web.de>
+ <alpine.DEB.2.20.1701301637570.3469@virtualbox>
+ <9bcae427-d654-a671-4368-030150168102@web.de>
+ <alpine.DEB.2.20.1701301806591.3469@virtualbox>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <6760493c-3684-b8bb-2c01-6621b8417246@web.de>
+Date:   Mon, 30 Jan 2017 22:46:19 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.7.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAKoneT+Bn+MdbeNnPJsu23rbLCZ=jxADNVtpNefw9zNYMq26dA@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <alpine.DEB.2.20.1701301806591.3469@virtualbox>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K0:U0Ea53cAFGOeUctYEQCD8ny4whGUmOUUgPSSDYoYW3bIBbwLIR6
+ bftZiIyvGLNiK5NRiHrqrt6RQ3TYdTyTBjhlQFM175Z3JT0LecO36YXRloG9BDb7rTno6f5
+ c4EMNlJraazyU5B+o2I3mBiwscSuPYpHvjE83ZyFbmtCMHx9ui3yaMAqVdbrGRsGW1ieeG7
+ twnlqmhL3ptXFmOVK+3nQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:kcCJxF7JqqI=:7J0zwfy3slRGWv+upTp/Op
+ X3MUVs33EuW55XVjiSc5sd5zfTVKqDmeHGeOCgTDtr7pgbGOEARu4P5b24q8pA3vEBT0/7Ns3
+ MjcgB0YGi3aSleM2BfKjDMhQkMKHsvPTTAUHjdERzsNigRELDpFr0njXZ4ooZ46K4JCtWgd8Z
+ XA2ZpCS+zlskJJvOSjJ6QjrXW7kiO02LOosfbJxD9PBHMdBPmxJ8S40FeX29+UoIxbo5V7IHa
+ md64GQbYbVx++7F6p3tApVGMjQ95WOdBAcgFVLB1SXDlUE83VPVc1+2bQy2PTca0y9tqiTHEw
+ wVWUfCQLxzls0vh0Ow13VvTWMLKnnaAFYkHLabLaC+ni83bifOwXNO2ZBMlbMgXvqcCzYwBnB
+ N8PuwZkdft1uA80Ih8BApsCYo8cCGz26Zd3v3aTDTsF/VQ4tXpl6X+P1CzV9lVqvOemYzGCXO
+ A8J2ixrmisJ75fp2SvykoQ12i/HPqXkLpB6NYtl/IyLZV155let+0EDgARuN0mWJpW7jn0znq
+ 9pTYIzRNlekwkdadVjK+m7MZVr0ANQl5PvjpbtmaLUqQxG+rjvDVO/FT147veB6BxYtZlDfue
+ JIWmJc/7wixzwUEyBxwhVugnFC+YM0Z7SSDYkIrljH6OontqWZdk3rB7F7hITPVzbhfj61NGi
+ VJKoSon+y/yp0DvI415XbTcqnF5PAfn/zN1/fog8KBKLvuVPBna9RpalC+dDL/N9wWApPJ6hB
+ lpLCE0TxLjoBvaG311M3wZJM4i97dqHaZ8HpWQOSGL/2jdWaS3zc7JB23aSeaW3pxnuhU+SqQ
+ O0JlINH
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 01/30, Peter Law wrote:
-> Hi,
-> 
-> > Teach git-completion.bash about the 'diff' option to 'git diff
-> > --submodule=', which was added in Git 2.11.
-> 
-> I posted this patch back in December, but I've not heard anything. I'm
-> sure as maintainers you're all quite busy, but I was wondering how
-> long it usually takes to get a response to patches? (also whether I'd
-> gotten some part of the submission process wrong?)
-> 
-> Thanks,
-> Peter
+Am 30.01.2017 um 21:48 schrieb Johannes Schindelin:
+> So I tried to verify that Visual C optimizes this well, and oh my deity,
+> this was not easy. In Debug mode, it does not optimize, i.e. the memcpy()
+> will be called, even for simple 32-bit integers. In Release mode, Visual
+> Studio's defaults turn on "whole-program optimization" which means that
+> the only swapping that is going on in the end is that the meaning of two
+> registers is swapped, i.e. the SWAP() macro is expanded to... no assembler
+> code at all.
+>
+> After trying this and that and something else, I finally ended up with the
+> file-scope optimized SWAP() resulting in this assembly code:
+>
+> 00007FF791311000  mov         eax,dword ptr [rcx]
+> 00007FF791311002  mov         r8d,dword ptr [rdx]
+> 00007FF791311005  mov         dword ptr [rcx],r8d
+> 00007FF791311008  mov         dword ptr [rdx],eax
 
-It looks like this must have just fallen through the cracks.  Your patch
-looks good to me and works when I test it locally.
+This looks good.
 
--- 
-Brandon Williams
+> However, recent events (including some discussions on this mailing list
+> which had unfortunate consequences) made me trust my instincts more. And
+> my instincts tell me that it would be unwise to replace code that swaps
+> primitive types in the straight-forward way by code that relies on
+> advanced compiler optimization to generate efficient code, otherwise
+> producing very suboptimal code.
+
+I don't know how difficult it was to arrive at the result above, but I 
+wouldn't call inlining memcpy(3) an advanced optimization (anymore?), 
+since the major compilers seem to be doing that.
+
+The SWAP in prio-queue.c seems to be the one with the biggest 
+performance impact.  Or perhaps it's the one in lookup_object()?  The 
+former is easier to measure, though.
+
+Here's what I get with CFLAGS="-builtin -O2" (best of five):
+
+$ time ./t/helper/test-prio-queue $(seq 100000 -1 1) dump >/dev/null
+
+real    0m0.142s
+user    0m0.120s
+sys     0m0.020s
+
+And this is with CFLAGS="-no-builtin -O2":
+
+$ time ./t/helper/test-prio-queue $(seq 100000 -1 1) dump >/dev/null
+
+real    0m0.170s
+user    0m0.156s
+sys     0m0.012s
+
+Hmm.  Not nice, but also not prohibitively slow.
+
+> The commit you quoted embarrasses me, and I have no excuse for it. I would
+> love to see that myswap() ugliness fixed by replacing it with a construct
+> that is simpler, and generates good code even without any smart compiler.
+
+I don't see a way to do that without adding a type parameter.
+
+René
