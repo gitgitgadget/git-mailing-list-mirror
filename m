@@ -2,71 +2,116 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.0 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D5A631FAAD
-	for <e@80x24.org>; Mon, 30 Jan 2017 16:54:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3AD471FAAD
+	for <e@80x24.org>; Mon, 30 Jan 2017 17:00:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750850AbdA3QxY (ORCPT <rfc822;e@80x24.org>);
-        Mon, 30 Jan 2017 11:53:24 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:56099 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1750772AbdA3Qve (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 Jan 2017 11:51:34 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 8EC2463D76;
-        Mon, 30 Jan 2017 11:51:28 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=r+sg+33evMQDeo546XgD5GocD2U=; b=k4az/k
-        sQRnXidDIVpafy+RQQAvxFFI7YevFAmJVcVAASQD0PqiBRyKHy+N06JZE8vel0XJ
-        GO3cc4JqJ9ZYKa5VBRJjLp6meFwPV1gH1mM314diYuaQkYdasypo4I2o0wbQiQla
-        GLK/6W6W9i+R1r68kof489rrou6naAsDIUcCA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=bWIqmj36rTuMmcXzKDPvUpU/JtkA/NT5
-        l9Dy2ApDdUHdLHgrHDGunrMNdcgAQEzw00WorXblyLUyzuVWuOqm+fX1+Q4Opxsb
-        3Dszf33wwWCUKHTs2jCfXXmaF/A57qNNGnufYdgiOC7a2Zz/7DnqTLsuGSr9sd8N
-        J2CXPHhxIyI=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 85B2363D75;
-        Mon, 30 Jan 2017 11:51:28 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id B016563D70;
-        Mon, 30 Jan 2017 11:51:27 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <johannes.schindelin@gmx.de>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH v3] mingw: allow hooks to be .exe files
-References: <9a27b90e771d4c97dc580d344e161d7cf8d632ce.1485433248.git.johannes.schindelin@gmx.de>
-        <78a73c9d0a8e38fcc61302d0495533dcc4fab076.1485779272.git.johannes.schindelin@gmx.de>
-Date:   Mon, 30 Jan 2017 08:51:26 -0800
-In-Reply-To: <78a73c9d0a8e38fcc61302d0495533dcc4fab076.1485779272.git.johannes.schindelin@gmx.de>
-        (Johannes Schindelin's message of "Mon, 30 Jan 2017 13:28:28 +0100
-        (CET)")
-Message-ID: <xmqqr33kwkxd.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+        id S1752269AbdA3RAr (ORCPT <rfc822;e@80x24.org>);
+        Mon, 30 Jan 2017 12:00:47 -0500
+Received: from mout.web.de ([212.227.15.4]:56253 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752788AbdA3RA0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 Jan 2017 12:00:26 -0500
+Received: from [192.168.178.36] ([79.237.55.102]) by smtp.web.de (mrweb003
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0LvBJK-1cOvxy27aU-010KxW; Mon, 30
+ Jan 2017 17:59:52 +0100
+Subject: Re: [PATCH 1/5] add SWAP macro
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+References: <8ef4c833-45bd-6831-0683-6d01f30aa518@web.de>
+ <0bdb58a6-3a7f-2218-4b70-c591ae90e95e@web.de>
+ <alpine.DEB.2.20.1701301643260.3469@virtualbox>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <11e27272-c1cd-a127-eb44-385d827af63d@web.de>
+Date:   Mon, 30 Jan 2017 17:59:37 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.7.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 57A4217A-E70C-11E6-BC2A-FE3F13518317-77302942!pb-smtp1.pobox.com
+In-Reply-To: <alpine.DEB.2.20.1701301643260.3469@virtualbox>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K0:PJjb2j/MHNEr9DNg4XoeKvRgNiuvnPySfhKY2fZyDn4D3LZc4rK
+ u+dCEzNdeQqU9Ko/XA9ewFWpPpb0/5h4tlTbRFRtWLy98AuWey5fKcjXiKlEMXOst57sxIw
+ +uoYIPgsnPn4zb+SmKahsCeyWbwZd10p7UkgOsaora8FHEmX7XihjZHzFgqveg7nptthIOt
+ zZa5TuWSGZDVzIBoYLvtw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:iTj9/q35/dY=:WIqDzHMBlBGCnBNGnHsV1p
+ F++ekO5vHLbqoYxoOYNLxydBBw2Yq6TWK1eREA/RKuOb9IP40Ih0sqdYjVCmpocBq2KLOC2C1
+ yiHDkPTUR3li0EcPUMbwmZ0ydVVKhgBYY1b74o9LBwrDFu+0qHG1DL5XhIUpXsmK9/tkb02Dg
+ zTmPCVVamj4ep3/8gIAjDJiCYb1DFectnsvJj6tw66aNHnU3fBAVKK6SSI4ntFR0uQCf7Znwg
+ Bm1Eb0advDU8dsQg5q/FuGb+O83tBImfZm5Uk4FZnA0wkit299VB63hKHLkSSoEG6+cyMOyy9
+ czy61N7QzU+RHQhb3vfP16LOISUQajsRai2LI7LaKYIIokl1UhHXM0UZwHPvuD0r2j5fp1dEq
+ nB1SvcS0wzeUevWP+Ftk9kwqUSbgl0GHfe48sC+6xMKqLaHkVJl0HE6YZx1T+rhDEsjBoqchY
+ x8VvGcyKS2hPw7wUE1PwjH17tMSOKqJYNcLGHVUa54CH7fYr7leuwx/vCLFesdcPmc+e0g/49
+ A6NsMXsw/b7ZocD79pY6lPpJX4t176ycH/+K7nUj0RZxt+xEKWk/ebK5XPpkAwM0ROpyomCbg
+ 4v14U8yxf4FvkH1oTxNJLKiPozkxnvgrlGPPfXYiEuuEi7wNbP3GuNYpGKtjLMYQ7VgSlntsO
+ AHl4MSw//nsGh44l1lji3smy1DJMv4G6zS1R/A3VJ4fTe7+IvsgTB43fJx5EWun4wfbBJ2tvc
+ vmqf+WRDvPy3b4DnSwvafjMM2DzpaUA2u6xq0m5KVXbERp2bshMfMU9pgmIKOqXKLVb8p/Mye
+ 477zEa7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+Am 30.01.2017 um 17:01 schrieb Johannes Schindelin:
+> Hi René,
+>
+> On Sat, 28 Jan 2017, René Scharfe wrote:
+>
+>> diff --git a/git-compat-util.h b/git-compat-util.h
+>> index 87237b092b..66cd466eea 100644
+>> --- a/git-compat-util.h
+>> +++ b/git-compat-util.h
+>> @@ -527,6 +527,16 @@ static inline int ends_with(const char *str, const char *suffix)
+>>  	return strip_suffix(str, suffix, &len);
+>>  }
+>>
+>> +#define SWAP(a, b) do {						\
+>> +	void *_swap_a_ptr = &(a);				\
+>> +	void *_swap_b_ptr = &(b);				\
+>> +	unsigned char _swap_buffer[sizeof(a)];			\
+>> +	memcpy(_swap_buffer, _swap_a_ptr, sizeof(a));		\
+>> +	memcpy(_swap_a_ptr, _swap_b_ptr, sizeof(a) +		\
+>> +	       BUILD_ASSERT_OR_ZERO(sizeof(a) == sizeof(b)));	\
+>> +	memcpy(_swap_b_ptr, _swap_buffer, sizeof(a));		\
+>> +} while (0)
+>> +
+>>  #if defined(NO_MMAP) || defined(USE_WIN32_MMAP)
+>
+> It may seem as a matter of taste, or maybe not: I prefer this without the
+> _swap_a_ptr (and I would also prefer not to use identifiers starting with
+> an underscore, as section 7.1.3 Reserved Identifiers of the C99 standard
+> says they are reserved):
+>
+> +#define SWAP(a, b) do {						\
+> +	unsigned char swap_buffer_[sizeof(a)];			\
+> +	memcpy(swap_buffer_, &(a), sizeof(a));			\
+> +	memcpy(&(a), &(b), sizeof(a) +				\
+> +	       BUILD_ASSERT_OR_ZERO(sizeof(a) == sizeof(b)));	\
+> +	memcpy(&(b), swap_buffer_, sizeof(a));			\
+> +} while (0)
 
-> Executable files in Windows need to have the extension '.exe', otherwise
-> they do not work. Extend the hooks to not just look at the hard coded
-> names, but also at the names extended by the custom STRIP_EXTENSION,
-> which is defined as '.exe' in Windows.
+We can move the underscore to the end, but using a and b directly will 
+give surprising results if the parameters have side effects.  E.g. if 
+you want to swap the first two elements of two arrays you might want to 
+do this:
 
-Will replace, and looks good enough for 'next'.  Let's stop
-iterating and go incremental if/as needed.
+	SWAP(*x++, *y++);
+	SWAP(*x++, *y++);
 
-Thanks.
+And that would increment twice as much as one would guess and access 
+unexpected elements.
+
+> One idea to address the concern that not all C compilers people use to
+> build Git may optimize away those memcpy()s: we could also introduce a
+> SWAP_PRIMITIVE_TYPE (or SWAP2 or SIMPLE_SWAP or whatever) that accepts
+> only primitive types. But since __typeof__() is not portable...
+
+I wouldn't worry too much about such a solution before seeing that SWAP 
+(even with memcpy(3) -- this function is probably optimized quite 
+heavily on most platforms) causes an actual performance problem.
+
+René
