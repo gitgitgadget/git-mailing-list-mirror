@@ -2,80 +2,76 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-6.1 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6AB3E1FF1E
-	for <e@80x24.org>; Mon, 30 Jan 2017 22:00:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7862C1FF1E
+	for <e@80x24.org>; Mon, 30 Jan 2017 22:10:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752618AbdA3WAh (ORCPT <rfc822;e@80x24.org>);
-        Mon, 30 Jan 2017 17:00:37 -0500
-Received: from mail-pf0-f193.google.com ([209.85.192.193]:35791 "EHLO
-        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752115AbdA3WAg (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 Jan 2017 17:00:36 -0500
-Received: by mail-pf0-f193.google.com with SMTP id f144so24343189pfa.2
-        for <git@vger.kernel.org>; Mon, 30 Jan 2017 14:00:35 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=H3RE20IsyNz21Sbi0kOHNOLGe4Wv2mfwy6zw6AKZ7hU=;
-        b=XwumCJS3XI9hFzEzSOIoZRl8AW0oowPCiLQ8yWJDBD4zAgi/CT+v5C1Wz502g2bTpY
-         5PGkko17/68Hyc6LEH6ZaJaHA9P0hBjzWdT3fLPDwYU5AoWNjSrBaSCkOAkqQ5h7cwPu
-         zvXsgqqRBMaI9M7L1owFqb8cSihyOh7tg+KupT4k174/PbN3FMccFrF17U6l0s2gmapy
-         /Dc9Zo3agIcsIL0vpmta1gUymfxZfIXB7+8aoEZMwUrBlTKN+LVPuSYAnfdLh/8z0Yw9
-         QgH22x3as7xA6Jra3v2UgmF9Nox5T4+qLRW3SSFrc+uWY3tg+hEuXs3PyryBYl0YbFc9
-         v8cA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=H3RE20IsyNz21Sbi0kOHNOLGe4Wv2mfwy6zw6AKZ7hU=;
-        b=Ic/h/jyFHpTUruhWPcrxBHMuGBnzYamSAFMHaNOPgde2EK3NY6F1ePG7UxoIyzqBIA
-         KnopTRhS6V/V839AfHJe7hYAaFiMilGPSmlqK6rOQrWUnYSTAtuCssNpWZMQuZ4Q0+p4
-         qlfaLmXSUHBVP9qZrEfDv8G/+b/aAXu3dPWFgEY+1UDOb5RWKs4mhKKExAeccs/8C4Cg
-         j3IRQbVk1zZygUaQyuKFpHPaDHn5FY4zaMb8XwjLbNEKUWIPeE3UDKeHN11LX/3DiD47
-         UpkpnrcVBCWOHTmUxca8ggxdPMUnhuqtSTLBXnCABoF7zen+oWg93964QF8+5ZUGSOm0
-         T6Kw==
-X-Gm-Message-State: AIkVDXJCc6yF+ausPjdDjfIUQFsLf7K1fctHUuhKebqsA84TvXGkc3+lX+szrp7mIlH57A==
-X-Received: by 10.84.233.133 with SMTP id l5mr34589156plk.129.1485813635533;
-        Mon, 30 Jan 2017 14:00:35 -0800 (PST)
-Received: from localhost ([2620:0:1000:8622:a9ce:56f8:45fd:fc63])
-        by smtp.gmail.com with ESMTPSA id b75sm34995885pfb.90.2017.01.30.14.00.34
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 30 Jan 2017 14:00:34 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Patrick Steinhardt <patrick.steinhardt@elego.de>
-Cc:     git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>,
-        Philip Oakley <philipoakley@iee.org>
-Subject: Re: [PATCH v4 0/5] urlmatch: allow wildcard-based matches
-References: <20170123130635.29577-1-patrick.steinhardt@elego.de>
-        <cover.1485512626.git.patrick.steinhardt@elego.de>
-Date:   Mon, 30 Jan 2017 14:00:34 -0800
-In-Reply-To: <cover.1485512626.git.patrick.steinhardt@elego.de> (Patrick
-        Steinhardt's message of "Fri, 27 Jan 2017 11:32:13 +0100")
-Message-ID: <xmqqy3xstdh9.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+        id S1752924AbdA3WKW (ORCPT <rfc822;e@80x24.org>);
+        Mon, 30 Jan 2017 17:10:22 -0500
+Received: from mout.web.de ([212.227.17.11]:63436 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1753269AbdA3WKV (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 Jan 2017 17:10:21 -0500
+Received: from [192.168.178.36] ([79.237.55.102]) by smtp.web.de (mrweb102
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0MKa2F-1cWP8H3FrD-001xwp; Mon, 30
+ Jan 2017 23:09:38 +0100
+Subject: Re: [PATCH 1/5] add SWAP macro
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+References: <8ef4c833-45bd-6831-0683-6d01f30aa518@web.de>
+ <0bdb58a6-3a7f-2218-4b70-c591ae90e95e@web.de>
+ <alpine.DEB.2.20.1701301643260.3469@virtualbox>
+ <aa653d57-4a97-ac50-b20c-f94ed43a22fb@kdbg.org>
+ <alpine.DEB.2.20.1701302158110.3469@virtualbox>
+Cc:     Johannes Sixt <j6t@kdbg.org>, Git List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <77098ac8-1084-a5c4-a5e6-fb382e3dc3a0@web.de>
+Date:   Mon, 30 Jan 2017 23:09:23 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.7.0
 MIME-Version: 1.0
-Content-Type: text/plain
+In-Reply-To: <alpine.DEB.2.20.1701302158110.3469@virtualbox>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K0:T7GDAdhTEoK7uu8FkwymI1FB3sPpc2rGkyjWOFcgcXBVrpoANRv
+ bJQJScKO5ncTgv6e+ShRjoNIGcuIL0aSYmUCvYvQjWWlh1tGplzfCUVe96Wqgom+ldQheSl
+ tWiUyoZBww/gLQ9nxc1aH20ZI/wrSpXu1P3wNHP3t5qK0qTIKV/T6W7s82sF6BdeYK8HWSz
+ 0W0J+P7AiSXw+EfgrBLdA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:n6T6rE/gHRk=:VoXS9sNivFfXYVQQPqgzut
+ eL9IAkXk37MvchAqW9mnsVrwlwWRJaUjPUV8mytGgAE/7Is28MxqrBWMSndMe4xGqogd1BTaY
+ Yc9R+esRFMD/hl1XkcjpjlxK5X+OExwoHms3xM64X2iNDK4hggmiLanXzz+gHzjh5rIFeg0j/
+ 2kJBOkhPv9/GmTAEBJDVpOcaaeRcEo/oTs3QG1/ek+6DzMZqZHcOXJoMr6drlXdg6EagoS0wI
+ tYTSMaZs1UNepwwshBtjeq+u+PgFcmBj+7bpng9adsdy6BzfkdcMS/ZgUof22o/OEH0NwPgwd
+ z/tXYoSdjlUI3hQg6VrQ1x+rGJ6/LGDDhS0SMUdawwIpUbAg+UI+4dxDupX/ijBvR78H3K6Ai
+ GmKxLzdqk4qWAHC2CROjnwuxDRDRDIGHE7rRg06XA4iTSnXhnUDEd0zHapQv+QhU3yYsLvurl
+ rwxCmE9ocNXDGxalzM7cqwkXNxBPYzVNTe5EpoYPNXA9gIeDQZ1Md9Liswe516E3OFWubThzn
+ UVhb+kCuoI5Kh3IPYo/+owcsfVYfNrMqkwG1wEM9AMZQN5pCmK8YhIW/UH9InoTBPvDZGNin/
+ 46kqU1jUyK9gVqlsbcoOejlefV8Bb/rzc1s1Mp34jY+g4NH3OncPotRyTBFEcDPAHzDIyxuNP
+ wHhMt0nudEmiz02fKYyfdDjqTDUfw7aXZ7t8B4htj6/0irbmm+Taunv6bq+4Ivi3qByKTDuli
+ Jvz+4/Z/y/UYwIrX9Rq6QWI5L9A57zfg4W6yAdoBF9LYsAt4z9K3cAwCD2rYdlwR0j04JRYQ9
+ F6PaHB5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Patrick Steinhardt <patrick.steinhardt@elego.de> writes:
+Am 30.01.2017 um 22:03 schrieb Johannes Schindelin:
+> It is curious, though, that an
+> expression like "sizeof(a++)" would not be rejected.
 
->  - I realized that with my patches, "ranking" of URLs was broken.
->    Previously, we've always taken the longest matching URL. As
->    previously, only the user and path could actually differ, only
->    these two components were used for the comparison. I've
->    changed this now to also include the host part so that URLs
->    with a longer host will take precedence. This resulted in a
->    the patch 4.
+Clang normally warns about something like this ("warning: expression 
+with side effects has no effect in an unevaluated context 
+[-Wunevaluated-expression]"), but not if the code is part of a macro.  I 
+don't know if that's intended, but it sure is helpful in the case of SWAP.
 
-Good thinking.  I was wondering about this, too.
+> Further, what would SWAP(a++, b) do? Swap a and b, and *then* increment a?
 
-Thanks.  Will read it through and replace.
+That might be a valid expectation, but GCC says "error: lvalue required 
+as unary '&' operand" and clang puts it "error: cannot take the address 
+of an rvalue of type".
+
+René
