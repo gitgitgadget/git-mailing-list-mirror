@@ -2,118 +2,146 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.1 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 258261FF1E
-	for <e@80x24.org>; Mon, 30 Jan 2017 21:46:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CCDB520D12
+	for <e@80x24.org>; Mon, 30 Jan 2017 21:58:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754592AbdA3Vqp (ORCPT <rfc822;e@80x24.org>);
-        Mon, 30 Jan 2017 16:46:45 -0500
-Received: from mout.web.de ([212.227.17.11]:64506 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1754240AbdA3Vqo (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 Jan 2017 16:46:44 -0500
-Received: from [192.168.178.36] ([79.237.55.102]) by smtp.web.de (mrweb101
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0Lz376-1cTnZs0Y5o-0148Sv; Mon, 30
- Jan 2017 22:46:36 +0100
-Subject: Re: [PATCH 1/5] add SWAP macro
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-References: <8ef4c833-45bd-6831-0683-6d01f30aa518@web.de>
- <0bdb58a6-3a7f-2218-4b70-c591ae90e95e@web.de>
- <alpine.DEB.2.20.1701301637570.3469@virtualbox>
- <9bcae427-d654-a671-4368-030150168102@web.de>
- <alpine.DEB.2.20.1701301806591.3469@virtualbox>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <6760493c-3684-b8bb-2c01-6621b8417246@web.de>
-Date:   Mon, 30 Jan 2017 22:46:19 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
- Thunderbird/45.7.0
+        id S1754570AbdA3V6Y (ORCPT <rfc822;e@80x24.org>);
+        Mon, 30 Jan 2017 16:58:24 -0500
+Received: from mail-pf0-f194.google.com ([209.85.192.194]:34571 "EHLO
+        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752744AbdA3V6V (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 Jan 2017 16:58:21 -0500
+Received: by mail-pf0-f194.google.com with SMTP id y143so24335407pfb.1
+        for <git@vger.kernel.org>; Mon, 30 Jan 2017 13:58:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=ja1Sh+Arpu1ui3+nQ7bA6lvPdCz50yNWBbzZshPgqA8=;
+        b=fWgPXAARXQPOdOLlsC2KdAAshONy2ZpbxgIbAtoAqhn2JovYmaWeI9wzy/XsUPY36H
+         VAG5O9CKkdRSnwUteuP8mssa9HIi48OTsbOUzwII3gYZ2ESXLsy8rp+cmGTD2FWLOeQ1
+         kDGHRfIwp3u1aHdvMSOtc7LKCGGBKX7XwzkdYhePWN903vzzK5YAs4KutwtDD2oqg0iB
+         8dZbnbNpS5o5LHYjO2aQ5hSr2+F+A9ZqG14LI8eO61BsTKPCkZvpCvAYsOTRp2TyRhe3
+         ftKo5l8AfU2Q+w/LmK4y9+xR9yULbMka6a23ipr8DMgQRGY5xPcVqF+xMEQG+xKPpQOT
+         RA2g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=ja1Sh+Arpu1ui3+nQ7bA6lvPdCz50yNWBbzZshPgqA8=;
+        b=OOdzxMDda4UbnDJT3T2vTUgyDOB/zUq/jM9nPB0+scJ45P0x/kuwcDsqzWiDKFgsKQ
+         Px/2wdyWdOV/9+UG5A8BXjZ7odcrGA2+iNy3XPL/HUTBk4u4hCmNRXVYf89mneDi1zVM
+         +eHqygCWdoakESotyHQnTiDmqiCxcx2TJeVZaMN+Tz/gtUU6Q0SqU/n5VeYWXves7425
+         tNYKjgSTu3P1D+4hZjnyeEEjr+/vaXglNK+dpOGEtNOdo+3f+C5qxOcoliVB+ZnkJroK
+         SJhWEkIo+5U1Ywx19gJhlkW/w9lxAh/tCj42/NEprk1UpPMJMsGfn9/dlhbbissb+eoo
+         g03Q==
+X-Gm-Message-State: AIkVDXJy6qVSkxfM2k7NL8ibR1IyuSFpaCZ9ns21u/PrK2vmwx7z51K30G9ftNxD+ANbNQ==
+X-Received: by 10.99.112.6 with SMTP id l6mr26110272pgc.33.1485813491585;
+        Mon, 30 Jan 2017 13:58:11 -0800 (PST)
+Received: from localhost ([2620:0:1000:8622:a9ce:56f8:45fd:fc63])
+        by smtp.gmail.com with ESMTPSA id m6sm35024095pfm.22.2017.01.30.13.58.10
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Mon, 30 Jan 2017 13:58:10 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     cornelius.weig@tngtech.com
+Cc:     peff@peff.net, git@vger.kernel.org
+Subject: Re: [PATCH v3 2/3] refs: add option core.logAllRefUpdates = always
+References: <xmqqvat11k1i.fsf@gitster.mtv.corp.google.com>
+        <20170127100948.29408-1-cornelius.weig@tngtech.com>
+        <20170127100948.29408-2-cornelius.weig@tngtech.com>
+Date:   Mon, 30 Jan 2017 13:58:10 -0800
+In-Reply-To: <20170127100948.29408-2-cornelius.weig@tngtech.com> (cornelius
+        weig's message of "Fri, 27 Jan 2017 11:09:47 +0100")
+Message-ID: <xmqq37g0us5p.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <alpine.DEB.2.20.1701301806591.3469@virtualbox>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K0:U0Ea53cAFGOeUctYEQCD8ny4whGUmOUUgPSSDYoYW3bIBbwLIR6
- bftZiIyvGLNiK5NRiHrqrt6RQ3TYdTyTBjhlQFM175Z3JT0LecO36YXRloG9BDb7rTno6f5
- c4EMNlJraazyU5B+o2I3mBiwscSuPYpHvjE83ZyFbmtCMHx9ui3yaMAqVdbrGRsGW1ieeG7
- twnlqmhL3ptXFmOVK+3nQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:kcCJxF7JqqI=:7J0zwfy3slRGWv+upTp/Op
- X3MUVs33EuW55XVjiSc5sd5zfTVKqDmeHGeOCgTDtr7pgbGOEARu4P5b24q8pA3vEBT0/7Ns3
- MjcgB0YGi3aSleM2BfKjDMhQkMKHsvPTTAUHjdERzsNigRELDpFr0njXZ4ooZ46K4JCtWgd8Z
- XA2ZpCS+zlskJJvOSjJ6QjrXW7kiO02LOosfbJxD9PBHMdBPmxJ8S40FeX29+UoIxbo5V7IHa
- md64GQbYbVx++7F6p3tApVGMjQ95WOdBAcgFVLB1SXDlUE83VPVc1+2bQy2PTca0y9tqiTHEw
- wVWUfCQLxzls0vh0Ow13VvTWMLKnnaAFYkHLabLaC+ni83bifOwXNO2ZBMlbMgXvqcCzYwBnB
- N8PuwZkdft1uA80Ih8BApsCYo8cCGz26Zd3v3aTDTsF/VQ4tXpl6X+P1CzV9lVqvOemYzGCXO
- A8J2ixrmisJ75fp2SvykoQ12i/HPqXkLpB6NYtl/IyLZV155let+0EDgARuN0mWJpW7jn0znq
- 9pTYIzRNlekwkdadVjK+m7MZVr0ANQl5PvjpbtmaLUqQxG+rjvDVO/FT147veB6BxYtZlDfue
- JIWmJc/7wixzwUEyBxwhVugnFC+YM0Z7SSDYkIrljH6OontqWZdk3rB7F7hITPVzbhfj61NGi
- VJKoSon+y/yp0DvI415XbTcqnF5PAfn/zN1/fog8KBKLvuVPBna9RpalC+dDL/N9wWApPJ6hB
- lpLCE0TxLjoBvaG311M3wZJM4i97dqHaZ8HpWQOSGL/2jdWaS3zc7JB23aSeaW3pxnuhU+SqQ
- O0JlINH
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 30.01.2017 um 21:48 schrieb Johannes Schindelin:
-> So I tried to verify that Visual C optimizes this well, and oh my deity,
-> this was not easy. In Debug mode, it does not optimize, i.e. the memcpy()
-> will be called, even for simple 32-bit integers. In Release mode, Visual
-> Studio's defaults turn on "whole-program optimization" which means that
-> the only swapping that is going on in the end is that the meaning of two
-> registers is swapped, i.e. the SWAP() macro is expanded to... no assembler
-> code at all.
->
-> After trying this and that and something else, I finally ended up with the
-> file-scope optimized SWAP() resulting in this assembly code:
->
-> 00007FF791311000  mov         eax,dword ptr [rcx]
-> 00007FF791311002  mov         r8d,dword ptr [rdx]
-> 00007FF791311005  mov         dword ptr [rcx],r8d
-> 00007FF791311008  mov         dword ptr [rdx],eax
+cornelius.weig@tngtech.com writes:
 
-This looks good.
+> Notes:
+>     Changes wrt v2:
+>     
+>      - change wording in commit message s/do not typically/are not meant to/;
+>      - in update_refs_for_switch move refname to the enclosing block, so that
+>        should_autocreate_reflog has access. Thanks Junio for spotting this
+>        potential bug early :)
+>      - add test that asserts reflogs are created for tags if
+>        logAllRefUpdates=always. The case with logAllRefUpdates=true is IMHO already
+>        covered by the default case. To make that clearer, I explicitly added
+>        logAllRefUpdates=true.
 
-> However, recent events (including some discussions on this mailing list
-> which had unfortunate consequences) made me trust my instincts more. And
-> my instincts tell me that it would be unwise to replace code that swaps
-> primitive types in the straight-forward way by code that relies on
-> advanced compiler optimization to generate efficient code, otherwise
-> producing very suboptimal code.
+These look all sensible.  Especially thanks for reordering the code
+to feed the real refname for the new branch in the "checkout"
+codepath.
 
-I don't know how difficult it was to arrive at the result above, but I 
-wouldn't call inlining memcpy(3) an advanced optimization (anymore?), 
-since the major compilers seem to be doing that.
+>     When writing the test for git-tag, I realized that the option
+>     --no-create-reflog to git-tag does not take precedence over
+>     logAllRefUpdate=always. IOW the setting cannot be overridden on the command
+>     line. Do you think this is a defect or would it not be desirable to have this
+>     feature anyway?
 
-The SWAP in prio-queue.c seems to be the one with the biggest 
-performance impact.  Or perhaps it's the one in lookup_object()?  The 
-former is easier to measure, though.
+"--no-create-reflog" should override the configuration set to "true"
+or "always".  Also "--create-reflog" should override the
+configuration set to "false".
 
-Here's what I get with CFLAGS="-builtin -O2" (best of five):
+If the problem was inherited from the original code before your
+change (e.g. you set logAllRefUpdates to true and then did
+"update-ref --no-create-reflog refs/heads/foo".  Does the code
+before your change ignore the command lne option and create a reflog
+for the branch?), then it would be ideal to fix the bug before this
+series as a preparatory fix.  If the problem was introduced by this
+patch set, then we would need a fix not to introduce it ;-)
 
-$ time ./t/helper/test-prio-queue $(seq 100000 -1 1) dump >/dev/null
+> diff --git a/builtin/checkout.c b/builtin/checkout.c
+> index bfe685c..81ea2ed 100644
+> --- a/builtin/checkout.c
+> +++ b/builtin/checkout.c
+> @@ -612,14 +612,12 @@ static void update_refs_for_switch(const struct checkout_opts *opts,
+>  	const char *old_desc, *reflog_msg;
+>  	if (opts->new_branch) {
+>  		if (opts->new_orphan_branch) {
+> -			if (opts->new_branch_log && !log_all_ref_updates) {
+> +			const char *refname = mkpathdup("refs/heads/%s", opts->new_orphan_branch);
+> +			if (opts->new_branch_log && should_autocreate_reflog(refname)) {
+>  				int ret;
+> -				char *refname;
+>  				struct strbuf err = STRBUF_INIT;
+>  
+> -				refname = mkpathdup("refs/heads/%s", opts->new_orphan_branch);
+>  				ret = safe_create_reflog(refname, 1, &err);
+> -				free(refname);
+>  				if (ret) {
+>  					fprintf(stderr, _("Can not do reflog for '%s': %s\n"),
+>  						opts->new_orphan_branch, err.buf);
 
-real    0m0.142s
-user    0m0.120s
-sys     0m0.020s
+Here you need to have another free(), as this block makes an early
+return and you end up leaking refname.
 
-And this is with CFLAGS="-no-builtin -O2":
+> diff --git a/t/t7004-tag.sh b/t/t7004-tag.sh
+> index 1cfa8a2..1bf622d 100755
+> --- a/t/t7004-tag.sh
+> +++ b/t/t7004-tag.sh
+> @@ -71,6 +71,7 @@ test_expect_success 'creating a tag for an unknown revision should fail' '
+>  
+>  # commit used in the tests, test_tick is also called here to freeze the date:
+>  test_expect_success 'creating a tag using default HEAD should succeed' '
+> +	test_config core.logAllRefUpdates true &&
+>  	test_tick &&
+>  	echo foo >foo &&
+>  	git add foo &&
 
-$ time ./t/helper/test-prio-queue $(seq 100000 -1 1) dump >/dev/null
+This change is to make sure that 'true' does not affect tags (but
+'always' does as seen in the later new test)?  I am just double
+checking, not objecting.
 
-real    0m0.170s
-user    0m0.156s
-sys     0m0.012s
-
-Hmm.  Not nice, but also not prohibitively slow.
-
-> The commit you quoted embarrasses me, and I have no excuse for it. I would
-> love to see that myswap() ugliness fixed by replacing it with a construct
-> that is simpler, and generates good code even without any smart compiler.
-
-I don't see a way to do that without adding a type parameter.
-
-René
+Thanks.
