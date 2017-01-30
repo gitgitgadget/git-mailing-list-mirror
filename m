@@ -2,125 +2,121 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.3 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5147F20D11
-	for <e@80x24.org>; Mon, 30 Jan 2017 20:49:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9CA4820D11
+	for <e@80x24.org>; Mon, 30 Jan 2017 20:49:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754363AbdA3Ut1 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 30 Jan 2017 15:49:27 -0500
-Received: from mout.gmx.net ([212.227.17.20]:61861 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1754438AbdA3UtV (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1754378AbdA3Ut2 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 30 Jan 2017 15:49:28 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:59239 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1754447AbdA3UtV (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 30 Jan 2017 15:49:21 -0500
-Received: from virtualbox ([37.201.192.48]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MLi1v-1cXTf23qDb-000uCz; Mon, 30
- Jan 2017 21:48:32 +0100
-Date:   Mon, 30 Jan 2017 21:48:29 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/5] add SWAP macro
-In-Reply-To: <9bcae427-d654-a671-4368-030150168102@web.de>
-Message-ID: <alpine.DEB.2.20.1701301806591.3469@virtualbox>
-References: <8ef4c833-45bd-6831-0683-6d01f30aa518@web.de> <0bdb58a6-3a7f-2218-4b70-c591ae90e95e@web.de> <alpine.DEB.2.20.1701301637570.3469@virtualbox> <9bcae427-d654-a671-4368-030150168102@web.de>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id AD1A3653B8;
+        Mon, 30 Jan 2017 15:48:54 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:message-id:mime-version:content-type;
+         s=sasl; bh=PfKPrpq84XuPp+5g/xp7tmR9W3A=; b=SkmW1LOoBmnL7435OxHp
+        5PWnW+AGUsO8Eit0oE/OSrwTtXdIkLthwrWIIyvoOmZc2fT8EvozFg1I/Dt070N7
+        l1XIArAqsq23TpbDwhE28BObYhamZJIyjcbUGCqYeI0r8+3FQRyeMtyHSrpIfdzM
+        Y+gRGuEpx/ZHy6WEUw2h1Z0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:message-id:mime-version:content-type;
+         q=dns; s=sasl; b=G22HQo9V0OX8csL47X990inkNiB6HC6yQYxWBXB6vtiuTk
+        Xr09goAop7HFbR7oQYJdWvmir1+Zkq2NkoRcQBqIYl7AEGkcQWCiCOj24m7W0Eq6
+        T42R/ZlIGcUQO1rH4VoByn5mWhu9NTAuZn5qez1STbVL+Xpd+M3svnNv7rw6w=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id A3C15653B7;
+        Mon, 30 Jan 2017 15:48:54 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id ED91E653B6;
+        Mon, 30 Jan 2017 15:48:53 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     Cornelius Schumacher <schumacher@kde.org>,
+        git <git@vger.kernel.org>, Josh Triplett <josh@joshtriplett.org>
+Subject: Re: [RFC] Proof of concept: Support multiple authors
+References: <1485713194-11782-1-git-send-email-schumacher@kde.org>
+        <CAP8UFD3=vaFupEDay-5vrMBwK_YJezysUUvySxnUUZxuW7m_WQ@mail.gmail.com>
+Date:   Mon, 30 Jan 2017 12:48:52 -0800
+Message-ID: <xmqqinowuvd7.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; BOUNDARY="8323329-1493625541-1485797863=:3469"
-Content-ID: <alpine.DEB.2.20.1701302122560.3469@virtualbox>
-X-Provags-ID: V03:K0:pKA7UcInywItg///F/RoJKchKl5sfD80L3P+Gv8KPCIP9eNG5AA
- pGeiWK6K3FlTjG6ubhgWNct7zNqsDnhqihJrfpJaKfAzt2aoGW7912DoC3pHs4JrY4OJfKv
- MrrJSD+KgopTXZb9/yPgCVk6iJR0j9U2tb7TyMRxZ/C3Eb/SkUOw3sdWeQ1bz4sqo75zXeC
- w27CrxK4wY8iq8R1vn3iw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:Uo1bpKwGMRk=:MnhkbNurAdpjbygqQJ2Cns
- Z+4+a+WhM+jYOujF0CqtND3QyNjalxS7A9jMl3GS2cyGQpgCQOycc+xPLzD7rU3AjbTOiDJt1
- 8ElH0FEtv9lbX2tAqbZGAb2R8jo5jY60a/HKfhjd2RuHrsvjb/m91xHoFdts2W9Q/aUb4OjyP
- +OVZnVLoQGXMJByXFRNethsHArx43LHn/WyOzpVYkFTp+tIe5jI8ANEhfA9HEslqp8hnm54rx
- 004tyC2gFTIrDDnqo8o3vjOueLGC8AdXbcR6QRvnZ5gkocugpuQyc/hgLcMPldUjOW0ZW0r1s
- XUADol2UMm46BBB4BzU7dMgWxqiyBSTMiGSnSeOMoeYHCB6ScfB8FCm4dAm1JrNfdYA4Dr7AD
- sNeyTa/JBaU703zDx8pMRXSqx1VQ/JZkTkSrshA+Hd2uPnE159UtvXBOOufmMesZzHCakLaxe
- ca4t9VGERdyrSm7L3tfLePX6Op2NGEPaLL1Ck93Ni6h4OYY1qbxV0RA5db0U+/AJrl4qeI+Xe
- x/Ov+7qgwv8HgoeTGcyRnzQAN4Z6FyonsAJd9O+CLdL5VbU7YI+Mv7kvxz86h5KknNKKqivYi
- wShcD4k/bQMaxPMBheK1tjAbWDQ5poXA2b/yeJt6zbqYk9IUT/OvdF/4R1Sp4aTbbECNN+KxN
- w6WU4lTMkN3sAIPKzbyHY6PAm/8pccMWP1bnYynORV8xzPkvffjQcKpza574xxUDcwklNNmQn
- rKri9V5jmwvYsT05gPf0AJndDfzT4rPxw6fXnPGCOPMkdD6A8MjAhhdd4A2dlBFHMm6k+X93A
- fMuxURo3KkIsW6WgbV3BGR/N8jAqA==
+Content-Type: text/plain
+X-Pobox-Relay-ID: 83120C3E-E72D-11E6-A6B4-FE3F13518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Christian Couder <christian.couder@gmail.com> writes:
 
---8323329-1493625541-1485797863=:3469
-Content-Type: text/plain; CHARSET=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Content-ID: <alpine.DEB.2.20.1701302122561.3469@virtualbox>
-
-Hi Ren=C3=A9,
-
-On Mon, 30 Jan 2017, Ren=C3=A9 Scharfe wrote:
-
-> Am 30.01.2017 um 16:39 schrieb Johannes Schindelin:
+> I am just wondering if you have read and taken into account the
+> previous threads on this mailing list about the same subject, like for
+> example this one:
 >
-> > On Sat, 28 Jan 2017, Ren=C3=A9 Scharfe wrote:
-> >
-> > > Add a macro for exchanging the values of variables.  It allows users
-> > > to avoid repetition and takes care of the temporary variable for
-> > > them.  It also makes sure that the storage sizes of its two
-> > > parameters are the same.  Its memcpy(1) calls are optimized away by
-> > > current compilers.
-> >
-> > How certain are we that "current compilers" optimize that away? And
-> > about which "current compilers" are we talking? GCC? GCC 6? Clang?
-> > Clang 3?  Clang 3.8.*? Visual C 2005+?
->=20
-> GCC 4.4.7 and clang 3.2 on x86-64 compile the macro to the same object
-> code as a manual swap ; see https://godbolt.org/g/F4b9M9.  Both were
-> released 2012.
+> https://public-inbox.org/git/CAOvwQ4i_HL7XGnxZrVu3oSnsbnTyxbg8Vh6vzi4c1isSrrexYQ@mail.gmail.com/
 
-Good. Thank you.
+Thanks for a starting-point link.
 
-> That website doesn't offer Visual C(++), but since you added the
-> original macro in e5a94313c0 ("Teach git-apply about '-R'", 2006) I
-> guess we have that part covered. ;)
+In that discussion, another discussion in the debian BTS is
+mentioned,
 
-Back then, I was not able to build Git using Visual C *at all*. It
-required a Herculean effort to make that happen, and it did not happen
-before the Git for Windows project was started in 2007.
+  https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=451880
 
-So I tried to verify that Visual C optimizes this well, and oh my deity,
-this was not easy. In Debug mode, it does not optimize, i.e. the memcpy()
-will be called, even for simple 32-bit integers. In Release mode, Visual
-Studio's defaults turn on "whole-program optimization" which means that
-the only swapping that is going on in the end is that the meaning of two
-registers is swapped, i.e. the SWAP() macro is expanded to... no assembler
-code at all.
+which in turn has links to other, even earlier, discussions, but
+they are all gmane links so it would be harder for those who do not
+use its NNTP interface (which still works).  Here are their modern
+counterparts ;-)
 
-After trying this and that and something else, I finally ended up with the
-file-scope optimized SWAP() resulting in this assembly code:
+  https://public-inbox.org/git/?q=gmane:83880
+  https://public-inbox.org/git/?q=gmane:146223
+  https://public-inbox.org/git/?q=gmane:146886
 
-00007FF791311000  mov         eax,dword ptr [rcx] =20
-00007FF791311002  mov         r8d,dword ptr [rdx] =20
-00007FF791311005  mov         dword ptr [rcx],r8d =20
-00007FF791311008  mov         dword ptr [rdx],eax =20
+The older discussions already cited the cost to update both in-tree
+and out-of-tree tools not to barf when they see such a commit object
+and one of the reason why we would not want to do this, and Ted Ts'o
+gave us another excellent reason why not to do multiple author
+header lines in a commit object header, i.e. "How often is that all
+of the authors are completely equal?"
 
-However, recent events (including some discussions on this mailing list
-which had unfortunate consequences) made me trust my instincts more. And
-my instincts tell me that it would be unwise to replace code that swaps
-primitive types in the straight-forward way by code that relies on
-advanced compiler optimization to generate efficient code, otherwise
-producing very suboptimal code.
+Another thing that I didn't see brought up was that it is not enough
+to ensure all existing tools are updated not to barf on a commit
+with multiple "author" line.  You need to define what it means to
+have multiple authors and how they are treated by tools in a
+consistent way.  Think "shortlog", for example.  The tool may be
+able to be tweaked not to barf, and you may be able to add a random
+definition of which of the multiple authors to group a single commit
+under (the "random definition" could be "show that same commit
+multiple times, once for each author" or it could be "concatenate
+the authors to create a single header to list co-authored commits
+under, as if they were a single person", or it could be something
+equally bogus), but I do not think any single solution satisfies
+people's needs, and my gut feeling is that it is not worth to add
+tons of options and explain them to the end-users to support these
+random things that happen when there are multiple authors.
 
-The commit you quoted embarrasses me, and I have no excuse for it. I would
-love to see that myswap() ugliness fixed by replacing it with a construct
-that is simpler, and generates good code even without any smart compiler.
+Incidentally, there recently was a discussion on extending
+request-pull by adding a summary of commits by reviewers and
+testers.
 
-Ciao,
-Dscho
---8323329-1493625541-1485797863=:3469--
+https://public-inbox.org/git/20170115183051.3565-1-wsa@the-dreams.de/
+
+I would imagine, if it is to be implemented, it would boil down to
+teaching shortlog that the "author" line in the commit object header
+is not the only thing that matters, and that it should optionally
+take notice of lines in the trailer block of the log message (e.g.
+perhaps "Co-Authored-by: " trailer suggested by $gmane/146223 above
+would help there).
+
+My advice to those who want to record credit to multiple authors is
+to treat the commit author line as recording the primary contact
+when there is a question on the commit and nothing else.  Anything
+with richer semantics is better done in the trailer by enriching the
+support of trailer lines with interpret-trailers framework.
