@@ -2,101 +2,127 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 881261FF1E
-	for <e@80x24.org>; Mon, 30 Jan 2017 22:22:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 139461FF1E
+	for <e@80x24.org>; Mon, 30 Jan 2017 22:22:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753041AbdA3WWB (ORCPT <rfc822;e@80x24.org>);
-        Mon, 30 Jan 2017 17:22:01 -0500
-Received: from mail-pf0-f173.google.com ([209.85.192.173]:33926 "EHLO
-        mail-pf0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751950AbdA3WWA (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 Jan 2017 17:22:00 -0500
-Received: by mail-pf0-f173.google.com with SMTP id e4so93874603pfg.1
-        for <git@vger.kernel.org>; Mon, 30 Jan 2017 14:22:00 -0800 (PST)
+        id S1753458AbdA3WWO (ORCPT <rfc822;e@80x24.org>);
+        Mon, 30 Jan 2017 17:22:14 -0500
+Received: from mail-pf0-f193.google.com ([209.85.192.193]:34284 "EHLO
+        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753059AbdA3WWM (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 Jan 2017 17:22:12 -0500
+Received: by mail-pf0-f193.google.com with SMTP id y143so24415606pfb.1
+        for <git@vger.kernel.org>; Mon, 30 Jan 2017 14:22:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=ZlQohXFP4BlI4sKZuguLiR/TtlO7ISNJJqTEJaubVrM=;
-        b=eex6vbShxy5+4jpSPxCUcGrAUBKguNpSlHKluh0oFQEiNgG4WnPYY1sp2YdxlMsf62
-         wjsbyUvn/Ps+BXy5ZdVWX0odVld1vvaAGLDZ/7KU3pVJncSKFofzPtGJEL93A2mS2zIW
-         YzEruSNGgXtptjYSfSK+ZGttu0awbcR+K44gzfluczATLI7Yw3LqBnmrTmdJp8g5aSN3
-         sjuFNPu3/4KOs9gWAWjMUL3uiiIhguk4NhaE0nJPQZJOHTebo4FHVM+ZRTa7x7W4o9VH
-         l83/3QeBNsLAr41fKDzDIYcVBtMlnbiO3UYK/3+sSI1yj2Sdpsm5BSmXwRuI+UMY0uKI
-         Kwdg==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=FvRkl9nCg8xbX0cEXL3H5Y9X872AeihA/bSAwe6Bp2Q=;
+        b=k1K3wUlIgKtMdX29LQRvtuIFLzD4sbkb43HW/Rtf+Fg9lQFrpXvlk/9mvlJMeDlYEp
+         c/OUNs2yaNY5JwmKlGR14t/xzxzS7dhYqDYTAV+59+OXGajh9/4NH8EnnZuQZut21iIM
+         Xtgjf2DbH3CU6skIdO9Ld1hzHKI4K8nGY2YKe6z8SlauYTnPE/9A1CJp1qFNmQke7H2L
+         fl/Y8/7bkMtQktIeJUYwHnbeMKspUgRo3NUF6JtTbIlcc956W4cEiqsuW3w1wCpv5F9x
+         XDHoNEpx2YWpoY7OjAf927Oiy8gzifomDq5JnBZ+MyMlwQrNVv6aXt3I6d5u7X2FwLs3
+         q6JQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=ZlQohXFP4BlI4sKZuguLiR/TtlO7ISNJJqTEJaubVrM=;
-        b=WwnJYxnKJDOMFDZ1MScCy4TgJ+4MEWxV76qrRXLwdEOnwcuY8umxmDBTTAxHaIdfOk
-         5GxCepvL+3suHhi9MaEiUXoVvt+7JjKiUdHQLJZv3/O33O1FZHZG7lsdwbzdYw+3tHC9
-         y6XfwJoVPsWBIkHzzhxUAy3Vjzi/LcyrPlqVY+79tRnQgnQJUKPZgDGW0Ogd3AxfLJGT
-         1N7WKhBc5ySd0p3Ejmiob0YsPbj5VvljvbCJzD3suhB60rWSLMDlUwT9E6Lgz0SKKt/z
-         ZFm8845L83R7MtNw3eNPQoK9JxIz8UmcNNsujMij+nuKCm0wUYGcNXqJqZVJOJ6QG+EW
-         nuVg==
-X-Gm-Message-State: AIkVDXIPMaeoNbXnXwNEiVjvahcfIgWUoZxkSI9jC9hTcfZPWASuu4fwvkVBbiibXxw84h95
-X-Received: by 10.99.227.5 with SMTP id f5mr26667673pgh.102.1485814919868;
-        Mon, 30 Jan 2017 14:21:59 -0800 (PST)
-Received: from google.com ([2620:0:1000:5b10:64a9:79a2:c65f:35e9])
-        by smtp.gmail.com with ESMTPSA id v4sm35081617pfb.36.2017.01.30.14.21.58
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=FvRkl9nCg8xbX0cEXL3H5Y9X872AeihA/bSAwe6Bp2Q=;
+        b=M1Q+jmIqumoNHyX6h/shPZ2u6N7pwPLf04yN8HN0ayAX8+Ob8ikdVhPDI+szIaJamV
+         wHUS1QCpMGZFV38VtyK5i+62LvU2iDBfO4+/M57CIC138J9+z8G2QsX7qNQn6zewP4bo
+         H8oimABZ+ID7UZaM5G9umU13sJ553CnkYiHKmvs0H4ljy+5lNbsbDFWWfPaOMa72znK6
+         6AOFSnuCmlmEXjjW6dfsWBXV6+JYYZX3YzLhEY0xejbHsZ2+YDNcQGi3u8pJks5yHgny
+         3eGJS46YQxP++mpciyswi9zOoRFOQmz+ZFMJPld0VYhtrLOECtoQgwHK4rJqYNS5FOHr
+         jgng==
+X-Gm-Message-State: AIkVDXL1GUoRYfyycf2IPmK1l/seYb1+JxcSL6KVTzxvsmIgcS6PpL3/DBZ8O1xaL9n9wA==
+X-Received: by 10.99.155.18 with SMTP id r18mr26056190pgd.193.1485814931578;
+        Mon, 30 Jan 2017 14:22:11 -0800 (PST)
+Received: from localhost ([2620:0:1000:8622:a9ce:56f8:45fd:fc63])
+        by smtp.gmail.com with ESMTPSA id s136sm35158013pgc.38.2017.01.30.14.22.10
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 30 Jan 2017 14:21:58 -0800 (PST)
-Date:   Mon, 30 Jan 2017 14:21:57 -0800
-From:   Brandon Williams <bmwill@google.com>
-To:     =?iso-8859-1?Q?Ren=E9?= Scharfe <l.s.r@web.de>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Johannes Sixt <j6t@kdbg.org>, Git List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/5] add SWAP macro
-Message-ID: <20170130222157.GC35626@google.com>
+        Mon, 30 Jan 2017 14:22:10 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
+Cc:     Git List <git@vger.kernel.org>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH 3/5] use SWAP macro
 References: <8ef4c833-45bd-6831-0683-6d01f30aa518@web.de>
- <0bdb58a6-3a7f-2218-4b70-c591ae90e95e@web.de>
- <alpine.DEB.2.20.1701301643260.3469@virtualbox>
- <aa653d57-4a97-ac50-b20c-f94ed43a22fb@kdbg.org>
- <alpine.DEB.2.20.1701302158110.3469@virtualbox>
- <77098ac8-1084-a5c4-a5e6-fb382e3dc3a0@web.de>
+        <187c2b39-40cf-7e07-b489-d40cdf5f9145@web.de>
+Date:   Mon, 30 Jan 2017 14:22:10 -0800
+In-Reply-To: <187c2b39-40cf-7e07-b489-d40cdf5f9145@web.de> (=?utf-8?Q?=22R?=
+ =?utf-8?Q?en=C3=A9?= Scharfe"'s
+        message of "Sat, 28 Jan 2017 22:40:58 +0100")
+Message-ID: <xmqqr33ktch9.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <77098ac8-1084-a5c4-a5e6-fb382e3dc3a0@web.de>
-User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 01/30, René Scharfe wrote:
-> Am 30.01.2017 um 22:03 schrieb Johannes Schindelin:
-> >It is curious, though, that an
-> >expression like "sizeof(a++)" would not be rejected.
-> 
-> Clang normally warns about something like this ("warning: expression
-> with side effects has no effect in an unevaluated context
-> [-Wunevaluated-expression]"), but not if the code is part of a
-> macro.  I don't know if that's intended, but it sure is helpful in
-> the case of SWAP.
-> 
-> >Further, what would SWAP(a++, b) do? Swap a and b, and *then* increment a?
-> 
-> That might be a valid expectation, but GCC says "error: lvalue
-> required as unary '&' operand" and clang puts it "error: cannot take
-> the address of an rvalue of type".
-> 
-> René
+RenÃ© Scharfe <l.s.r@web.de> writes:
 
-Perhaps we could disallow a side-effect operator in the macro.  By
-disallow I mean place a comment at the definition to the macro and
-hopefully catch something like that in code-review.  We have the same
-issue with the `ALLOC_GROW()` macro.
+>  		if (tree2->flags & UNINTERESTING) {
+> -			struct object *tmp = tree2;
+> -			tree2 = tree1;
+> -			tree1 = tmp;
+> +			SWAP(tree2, tree1);
 
--- 
-Brandon Williams
+A human would have written this SWAP(tree1, tree2).
+
+Not that I think such a manual fix-up should be made in _this_
+patch, which may end up mixing mechanical conversion (which we may
+want to keep reproducible) and hand tweaks.  But this swapped swap
+reads somewhat silly.
+
+> diff --git a/diff-no-index.c b/diff-no-index.c
+> index f420786039..1ae09894d7 100644
+> --- a/diff-no-index.c
+> +++ b/diff-no-index.c
+> @@ -186,9 +186,8 @@ static int queue_diff(struct diff_options *o,
+>  
+>  		if (DIFF_OPT_TST(o, REVERSE_DIFF)) {
+>  			unsigned tmp;
+> -			const char *tmp_c;
+>  			tmp = mode1; mode1 = mode2; mode2 = tmp;
+> -			tmp_c = name1; name1 = name2; name2 = tmp_c;
+> +			SWAP(name1, name2);
+
+Curious that mode swapping is left for a later iteration.
+
+> diff --git a/diff.c b/diff.c
+> index f08cd8e033..9de1ba264f 100644
+> --- a/diff.c
+> +++ b/diff.c
+> @@ -5118,13 +5118,11 @@ void diff_change(struct diff_options *options,
+>  
+>  	if (DIFF_OPT_TST(options, REVERSE_DIFF)) {
+>  		unsigned tmp;
+> -		const unsigned char *tmp_c;
+> -		tmp = old_mode; old_mode = new_mode; new_mode = tmp;
+> -		tmp_c = old_sha1; old_sha1 = new_sha1; new_sha1 = tmp_c;
+> +		SWAP(old_mode, new_mode);
+> +		SWAP(old_sha1, new_sha1);
+>  		tmp = old_sha1_valid; old_sha1_valid = new_sha1_valid;
+>  			new_sha1_valid = tmp;
+
+So is this one.
+
+> diff --git a/merge-recursive.c b/merge-recursive.c
+> ...
+> -			tmp = ren2;
+> -			ren2 = ren1;
+> -			ren1 = tmp;
+> +			SWAP(ren2, ren1);
+
+A human would have written this SWAP(ren1, ren2).
+
