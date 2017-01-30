@@ -7,74 +7,104 @@ X-Spam-Status: No, score=-6.2 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 305901FAD5
-	for <e@80x24.org>; Mon, 30 Jan 2017 13:03:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 59A061FAAD
+	for <e@80x24.org>; Mon, 30 Jan 2017 13:07:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751277AbdA3NCx (ORCPT <rfc822;e@80x24.org>);
-        Mon, 30 Jan 2017 08:02:53 -0500
-Received: from mout.gmx.net ([212.227.17.21]:60108 "EHLO mout.gmx.net"
+        id S1753188AbdA3MvZ (ORCPT <rfc822;e@80x24.org>);
+        Mon, 30 Jan 2017 07:51:25 -0500
+Received: from mout.gmx.net ([212.227.15.18]:64240 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753238AbdA3NBl (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 Jan 2017 08:01:41 -0500
-Received: from virtualbox ([37.201.192.48]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0LejNC-1c8QDM1OYg-00qVIM; Mon, 30
- Jan 2017 14:01:14 +0100
-Date:   Mon, 30 Jan 2017 14:01:12 +0100 (CET)
+        id S1753504AbdA3MvM (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 Jan 2017 07:51:12 -0500
+Received: from virtualbox ([37.201.192.48]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MNZ9u-1cZpCd36jq-007BXb; Mon, 30
+ Jan 2017 13:44:09 +0100
+Date:   Mon, 30 Jan 2017 13:44:08 +0100 (CET)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
-To:     =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH] checkout: convert post_checkout_hook() to struct
- object_id
-In-Reply-To: <b30e5d34-436a-af5f-dbad-b1df464bf303@web.de>
-Message-ID: <alpine.DEB.2.20.1701301359500.3469@virtualbox>
-References: <b30e5d34-436a-af5f-dbad-b1df464bf303@web.de>
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     git@vger.kernel.org, Heiko Voigt <hvoigt@hvoigt.net>
+Subject: Re: [PATCH] help: correct behavior for is_executable on Windows
+In-Reply-To: <xmqqd1f8z6lt.fsf@gitster.mtv.corp.google.com>
+Message-ID: <alpine.DEB.2.20.1701301341020.3469@virtualbox>
+References: <c1c6ccae4e60608259809914e8ff3d3d5e1ead5a.1485524999.git.johannes.schindelin@gmx.de> <xmqqd1f8z6lt.fsf@gitster.mtv.corp.google.com>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; BOUNDARY="8323329-1913706495-1485781228=:3469"
-Content-ID: <alpine.DEB.2.20.1701301401110.3469@virtualbox>
-X-Provags-ID: V03:K0:wk6EX3lPPgtteQzpkKcFQLulhw2UDVFes7kGYgObHD/Eagea1yF
- XpSlWRXnBcCJv6p+KcOIg9uA5GIc8enp+BWs3hIh3Xo77wPjsuT6GsLoFB8HdLV3uUQWpp/
- pboLhkjDnA6Pbhj7jPROt0cCmY+ppbgfshaWya9zVlZlSCjP0xgHCdV/FY4SWw465tjhT3U
- 9mGSxexHCX4ZaXun3LucQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:ZgeUeTs7P7Q=:DFfrhXF5tfYSxM30h3ZCME
- bApkresl+vwljN6OtpD7q2XnwJA/S4TDdgxI/GpNgGmLn9M1AYnAPL3IQBqnZwwsDUAtdzDmU
- sXwWSVekqD5cvP+W8JjMnEM9GtKCKWPJHAe2i4uSkoy9ys1IMtZXPe21op4Y2Ey8SE13yKd6H
- ne9QmOsUZ9yGL0T/s6RDb2kw5OxGx01toQ8a9bKBOgXWreUoBX+szUfEHJREUw59z10z5twmO
- HaQLAb+N3qcIdnpvJkO+9xlLLeRZ5gyUW+CjE7sxgTv9hRP0FK3vL7lwzglFUS8+Qvmyu4650
- Xw/iXonIBFahLyXInpiSMkhjFV+b7x+BmxAset9cEhJtjBd7O9nokVSNcYKB/fI3sDzdfxmgm
- M4x3Oc0eoBKn4hdTgivuEPx/aJNw5tDKQTrEYDmWdGuiAxqGFXwDircib8LxvXh07qsLbEOHU
- IzoF3ABU3BoEzrhbPUcA9zxFm9iskgIXIlU/pLTOYn1PgaufK00HqYc0tl/frI7d4owDi09kU
- hopAWBhXt2q/lSM+G1VhHrdavQFOsxeyZB3EQJQaZAZ4fjuGwu3WgxGCiizpm2ArRQdv/GZND
- ypYm1PMsV0226bM6rcz7tB0nOytMF7PzUMHSUHM24pEbCT2+eo3KxZITLuhPro9Cvae+t6WYn
- qVFSEgHToZ9MPbNG4Jz+hJmybtrcSoe9ykftF9YwscA3jOwlRE2T4oomWTrbg64N8X5aIy5VG
- o4cnpf0H8XP4NaP+ir6+NAGwclT38fJXVPHu1bROMVCmMq3QmSssRlL9mTdS3l92hAncLZt/O
- FfFNYVNzEZn+tNXhBgxGWEaodIOLHqdg7ZeaAUqCDVO57mism1YV9RQ6Ypliib80xbURGR336
- beoQEsjHx2IIo6uuzEB/j0kcqVSmoG2G521CwCgPzLx92/WCN72oSRfx+JQa3qGb2pgxH5pHK
- 7sVVuoy3Me3dAe1/9jB5u3lNsiZhbENXlXTkvIMRJqJpELpqBYG/oc+V0bmLJ7/iyy6rHfbh1
- 5oBtai1UBSHqufaJXiFj6J2yiLD9ocpeU9h8QgJ6JKyhkhAX2V8pvedCUA7kjtmi0g==
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:+/AFqZNQBKvfKg6NLonY+ktc/yAXTmlHB/GKTILvKZdzD0zlEQg
+ irNt0h91kWjnhqMEdBXK2GwuGlWL0iLVuyiIhNgkXYCC0L5r3AjV2n1VzerIUFIu8fcNvst
+ 1HERwbkMZuZTcKesN4/jglfEZ5qVBXdfJ0BKY+QYmEXmU1Gm//Yig7l5tROYk62eoYUoQb/
+ upKfHsGBI0YH7OKIJWtbQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:6XRaIyT7ZVM=:xUL1IziMgxCHFipD20tH0+
+ eRrjo20C3M9r5Ff6pSudV5T82cws6JsxA6SCTV0dRI919qT29OF86N/eod0r4O8YvK4KzPTBw
+ JTMziksfH4B1jgLF0je3cgYDjYOv7QKC4RQAHNWatNY0Wmn36yDOqeym4gJ8LLLi9e77WMOSZ
+ Fg38nrO59gKKuvF1SuOnf910d6HFyAfKWLN9M/2g56xRM62c/J1v63sWkpeojjQEtSxR/ZOWW
+ oGg9PhVjAQr1eTDLL0cZHWcT5TcdSJG0/+SJrZEGzx8EZCzHMFUmOdh6N0ifGMg8rFCqhvKPg
+ qtDcdWdoZZO7qiZTic43wcK1z01iFGGIyP4glWMyq1bZNUqwejQuy113xgTW4+tR6lcVAl9l6
+ aiDQTSogMEpgK56WDNI8GpQ0E6PbPcEfoTDmLL2xHotm+rL15tX7xU6AUSt2dFupXNgQI/sTa
+ 4oVz3er7xEm07LVvFXtjBa0bjQSLUOswv9WnUcToJskBUHC6TMjeCkHUgmhvhN0/pLhdOg7AE
+ 9b9vslZZ2l2FSs+MADJKaAD9Xc0Bw6eG3mxdHudCoTPeLr0qe7xiV1z+cDLJIauNLvmdIXMc/
+ fzmZdjTZdIz9zd8J3AYXSs7qiwOOD3Lb1yqSLGRerbN+pEG7ykF9EFVpIgUVqVndPMuwYtU2g
+ SOqiN2Abqwp2HyI7c0DBjlxpXzB2tdPJrEB/3/mgLmRE9ZW2c7IqNyB8+nEW3ifErYRIfEIuE
+ Noizbuknio+1PtbjqqTO/xTeLNlXA+OZ4ZPjn23ZzsHFnetKqgOs7Lb1PsavTZ1VGNjEvPTir
+ 00j2WbJxjy9u/wkxjNuw1pn6VhvFA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Hi Junio,
 
---8323329-1913706495-1485781228=:3469
-Content-Type: text/plain; CHARSET=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Content-ID: <alpine.DEB.2.20.1701301401111.3469@virtualbox>
+On Fri, 27 Jan 2017, Junio C Hamano wrote:
 
-Hi Ren=C3=A9,
+> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+> 
+> > From: Heiko Voigt <hvoigt@hvoigt.net>
+> >
+> > The previous implementation said that the filesystem information on
+> > Windows is not reliable to determine whether a file is executable. To
+> > gather this information it was peeking into the first two bytes of a
+> > file to see whether it looks executable.
+> >
+> > Apart from the fact that on Windows executables are defined as such by
+> > their extension (and Git has special code to support "executing"
+> > scripts when they have a she-bang line) it leads to serious
+> > performance problems: not only do we have to open many files now, it
+> > gets even slower when a virus scanner is running.
+> 
+> Heiko, around here (before going into the details of how severe the
+> problem is and how wonderful the result applying of this change is) is
+> the best place to summarize the solution.  E.g.
+> 
+> 	Because the definition of "executable" on Windows is based
+> 	on the file extension, update the function to declare that a
+> 	file with ".exe" extension without opening and reading the
+> 	early bytes from it.  This avoids serious performance issues.
+> 
+> I paraphrased the rest only so that the description of the solution
+> (i.e. "instead of opening and peeking, we trust .exe suffix") fits well
+> in the surrounding text; the important part is to say what the change
+> does clearly.
 
-On Sat, 28 Jan 2017, Ren=C3=A9 Scharfe wrote:
+I adjusted the commit message. It was tweaked a little differently from
+what you suggested, as I preferred to condense the information a bit more.
 
-> Signed-off-by: Rene Scharfe <l.s.r@web.de>
+> I agree with the reasoning and the execution of the patch, except
+> that 
+> 
+>  - "correct behaviour" in the title makes it appear that this is a
+>    correctness thing, but this is primarily a performance fix.
 
-These three SHA-1 -> OID patches all appear correct to me.
+Primarily. But not only. The magic `MZ` without the file extension `.exe`
+is pretty useless, as the file could not be executed, still.
+
+To avoid further turnaround, though, I also edited the contentious
+"correct" to read "improve" now.
+
+>  - It is a bit strange that "MZ" is dropped in the same patch
+>    without any mention.
+
+I fixed that in the commit message.
 
 Ciao,
-Dscho
---8323329-1913706495-1485781228=:3469--
+Johannes
