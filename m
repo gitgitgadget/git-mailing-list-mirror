@@ -2,52 +2,59 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.2 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-6.3 required=3.0 tests=AWL,BAYES_00,
 	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 59A061FAAD
-	for <e@80x24.org>; Mon, 30 Jan 2017 13:07:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 02FB91FAAD
+	for <e@80x24.org>; Mon, 30 Jan 2017 15:35:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753188AbdA3MvZ (ORCPT <rfc822;e@80x24.org>);
-        Mon, 30 Jan 2017 07:51:25 -0500
-Received: from mout.gmx.net ([212.227.15.18]:64240 "EHLO mout.gmx.net"
+        id S932452AbdA3Pfi (ORCPT <rfc822;e@80x24.org>);
+        Mon, 30 Jan 2017 10:35:38 -0500
+Received: from mout.gmx.net ([212.227.17.21]:54829 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753504AbdA3MvM (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 Jan 2017 07:51:12 -0500
-Received: from virtualbox ([37.201.192.48]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MNZ9u-1cZpCd36jq-007BXb; Mon, 30
- Jan 2017 13:44:09 +0100
-Date:   Mon, 30 Jan 2017 13:44:08 +0100 (CET)
+        id S932465AbdA3Pf3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 Jan 2017 10:35:29 -0500
+Received: from virtualbox ([37.201.192.48]) by mail.gmx.com (mrgmx101
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MbsV8-1co6RQ3hJO-00JL9r; Mon, 30
+ Jan 2017 16:35:07 +0100
+Date:   Mon, 30 Jan 2017 16:35:05 +0100 (CET)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     Junio C Hamano <gitster@pobox.com>
-cc:     git@vger.kernel.org, Heiko Voigt <hvoigt@hvoigt.net>
-Subject: Re: [PATCH] help: correct behavior for is_executable on Windows
-In-Reply-To: <xmqqd1f8z6lt.fsf@gitster.mtv.corp.google.com>
-Message-ID: <alpine.DEB.2.20.1701301341020.3469@virtualbox>
-References: <c1c6ccae4e60608259809914e8ff3d3d5e1ead5a.1485524999.git.johannes.schindelin@gmx.de> <xmqqd1f8z6lt.fsf@gitster.mtv.corp.google.com>
+cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Sverre Rabbelier <srabbelier@gmail.com>,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>, Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH v4] t/Makefile: add a rule to re-run previously-failed
+ tests
+In-Reply-To: <xmqq4m0kz65d.fsf@gitster.mtv.corp.google.com>
+Message-ID: <alpine.DEB.2.20.1701301627260.3469@virtualbox>
+References: <85044791cfcba35c1ad3d8138051f3f075cb0646.1485526641.git.johannes.schindelin@gmx.de> <0563f07117e828c072ba542c1a57441e2e8efb81.1485537593.git.johannes.schindelin@gmx.de> <xmqq4m0kz65d.fsf@gitster.mtv.corp.google.com>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:+/AFqZNQBKvfKg6NLonY+ktc/yAXTmlHB/GKTILvKZdzD0zlEQg
- irNt0h91kWjnhqMEdBXK2GwuGlWL0iLVuyiIhNgkXYCC0L5r3AjV2n1VzerIUFIu8fcNvst
- 1HERwbkMZuZTcKesN4/jglfEZ5qVBXdfJ0BKY+QYmEXmU1Gm//Yig7l5tROYk62eoYUoQb/
- upKfHsGBI0YH7OKIJWtbQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:6XRaIyT7ZVM=:xUL1IziMgxCHFipD20tH0+
- eRrjo20C3M9r5Ff6pSudV5T82cws6JsxA6SCTV0dRI919qT29OF86N/eod0r4O8YvK4KzPTBw
- JTMziksfH4B1jgLF0je3cgYDjYOv7QKC4RQAHNWatNY0Wmn36yDOqeym4gJ8LLLi9e77WMOSZ
- Fg38nrO59gKKuvF1SuOnf910d6HFyAfKWLN9M/2g56xRM62c/J1v63sWkpeojjQEtSxR/ZOWW
- oGg9PhVjAQr1eTDLL0cZHWcT5TcdSJG0/+SJrZEGzx8EZCzHMFUmOdh6N0ifGMg8rFCqhvKPg
- qtDcdWdoZZO7qiZTic43wcK1z01iFGGIyP4glWMyq1bZNUqwejQuy113xgTW4+tR6lcVAl9l6
- aiDQTSogMEpgK56WDNI8GpQ0E6PbPcEfoTDmLL2xHotm+rL15tX7xU6AUSt2dFupXNgQI/sTa
- 4oVz3er7xEm07LVvFXtjBa0bjQSLUOswv9WnUcToJskBUHC6TMjeCkHUgmhvhN0/pLhdOg7AE
- 9b9vslZZ2l2FSs+MADJKaAD9Xc0Bw6eG3mxdHudCoTPeLr0qe7xiV1z+cDLJIauNLvmdIXMc/
- fzmZdjTZdIz9zd8J3AYXSs7qiwOOD3Lb1yqSLGRerbN+pEG7ykF9EFVpIgUVqVndPMuwYtU2g
- SOqiN2Abqwp2HyI7c0DBjlxpXzB2tdPJrEB/3/mgLmRE9ZW2c7IqNyB8+nEW3ifErYRIfEIuE
- Noizbuknio+1PtbjqqTO/xTeLNlXA+OZ4ZPjn23ZzsHFnetKqgOs7Lb1PsavTZ1VGNjEvPTir
- 00j2WbJxjy9u/wkxjNuw1pn6VhvFA==
+X-Provags-ID: V03:K0:+nuVtHEVyNmx+ANt7W8wRj8MlhzjIkF5JHm8FPt3ccwocKM+qUU
+ Riyn5IT2SbDQZoVgqUzm7gd1R5uUMON/laDcxCL/CARjRnb1ySulEkSehDhIeFM2k0Tpf1o
+ jJBocxCwUHXjt/EPlXH1NbBKD8eLDymnqBPHerFpDgXOOVMimcaJyyEf0v9vBdKqw6G98BI
+ ZD9vBrsghbRckvsAnIpBQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:Y3Hl5fNM8lk=:eJX9L92lTKeR3wb0uvRQ7v
+ WfcCwbJu9L7U38vseNudEpf/DN/YI90vjEKjs10Mp1xQFyCuZsWZVnrYj7sd7VDZZA5SdNMVS
+ 6GtAqa1ZdTfnPAVQNtgAlzii/2pg6oz+QwlgT7CGlyk3aZ94T9qB7+bGlVVVrRbXS8PWFA/+u
+ ZyPK/DYApAD2II2TfcUpLpeBKOvC0vpfcRfJw27zUFd0oBj/B3IYm3N8C80BPRJIFjs6FP8II
+ xSjhi9xCy2Gh3pMFbgaaU2nGuoll/h02VB8cyfSZ4kxyAUfe9z+N22+3hQXE5R+Etpl5jzSYx
+ T62peSiZYcUCy+YMtqKuwkjMITBG5ZFjGNsnK/Cy9S9eh3DB2wFUuxPaXmq+EPwswIAZdk5wf
+ dLIRZkps2ac26c1uycicF2AbHiRxWb8hnF7DAicDwFyflK65Te9OyaEuImatxMK6dQiQCMJ76
+ jC7QupGxGSa5qZk9ZEOUBa+mQztK9LWphVLmRmodIeK6t3cm/0vY/aLYo9B0LIMOBJN1MVW8O
+ q6hHsC3B/ZDhmZVcZkFDIEX5vWEwm1h9072gS6IAsCFKBkmWrDeAMgS7uOnmv1Hoi8T30USrl
+ T0u0Zru5ynDzVNA2U+gY0xTi95r2HIOSRL4Jr+Pm0hx3uO+lhEYHectwo3Qim/e3fe3xe5Mcv
+ RWalCNSvE+Obvq4ZqZBukOqMpW2JLCkGKBjXnZTtYam6ZMMdiQnjrx3/P0k+pGAbImSzIV6L0
+ XVFTUG3nXxufy5ZkYgPHrZiR7b/lQvTT2kzD8wtM5xwj5IH1LWebnljAtGRoHAPgzEBQz50v0
+ C+6xeatbIl3ENcaBi1wY0y8UHL4epwn7l9rZz48KIiaPWrUZOskVQHvm8/J5z8AANQzrh+2fk
+ NKEM3Wwq717Dm3OiBw+JYcyUzUQAtL287iTD8CQyxGWQizPSfPUsAiQHNWXHZSKZHE5B0sZXc
+ +wBni8hHC2BcNctDbLCGhVAO5c/f2gt5SAaBwnXTcJtIzXYrD4EV60/i+oAISumimye96lK0e
+ LAJ/wrnZvd6TqqjfJfI5oe/CBWlsI+Z1jCQjK2UrEQg1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -59,52 +66,39 @@ On Fri, 27 Jan 2017, Junio C Hamano wrote:
 
 > Johannes Schindelin <johannes.schindelin@gmx.de> writes:
 > 
-> > From: Heiko Voigt <hvoigt@hvoigt.net>
+> > This patch automates the process of determining which tests failed
+> > previously and re-running them.
+> > ...
 > >
-> > The previous implementation said that the filesystem information on
-> > Windows is not reliable to determine whether a file is executable. To
-> > gather this information it was peeking into the first two bytes of a
-> > file to see whether it looks executable.
-> >
-> > Apart from the fact that on Windows executables are defined as such by
-> > their extension (and Git has special code to support "executing"
-> > scripts when they have a she-bang line) it leads to serious
-> > performance problems: not only do we have to open many files now, it
-> > gets even slower when a virus scanner is running.
+> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 > 
-> Heiko, around here (before going into the details of how severe the
-> problem is and how wonderful the result applying of this change is) is
-> the best place to summarize the solution.  E.g.
-> 
-> 	Because the definition of "executable" on Windows is based
-> 	on the file extension, update the function to declare that a
-> 	file with ".exe" extension without opening and reading the
-> 	early bytes from it.  This avoids serious performance issues.
-> 
-> I paraphrased the rest only so that the description of the solution
-> (i.e. "instead of opening and peeking, we trust .exe suffix") fits well
-> in the surrounding text; the important part is to say what the change
-> does clearly.
+> I stored both versions in files and compared them, and it seems the
+> single word change in the proposed commit log message is the only
+> difference.  I would have written "Automate the process...", though.
 
-I adjusted the commit message. It was tweaked a little differently from
-what you suggested, as I preferred to condense the information a bit more.
+Yes, we have different styles. Thanks for letting my commit keep my commit
+message this time ;-)
 
-> I agree with the reasoning and the execution of the patch, except
-> that 
-> 
->  - "correct behaviour" in the title makes it appear that this is a
->    correctness thing, but this is primarily a performance fix.
+> If you are resending, touching up to cover all points raised by a
+> reviewer and doing nothing else, having "Reviewed-by: Jeff King
+> <peff@peff.net>" would have been nicer.
 
-Primarily. But not only. The magic `MZ` without the file extension `.exe`
-is pretty useless, as the file could not be executed, still.
+TBH I am not at all sure that I know when to add those footers and when
+not. After having been asked to remove such a footer, I decided to *not*
+include them by default.
 
-To avoid further turnaround, though, I also edited the contentious
-"correct" to read "improve" now.
+Having gray zones about the footers strikes me as similar to having gray
+zones in the coding style guidelines: it sure gives the contributors more
+freedom, but it also creates uncertainty and as a consequence takes up a
+lot of reviewing space and time (hence taking away space and time from
+reviewing the code for bugs).
 
->  - It is a bit strange that "MZ" is dropped in the same patch
->    without any mention.
-
-I fixed that in the commit message.
+In other words: while I appreciate the idea of giving contributors such as
+myself a lot of leeway, I would love even more to be able to automate away
+tedious and boring tasks (such as adding Tested-by: or Reviewed-by:
+footers, or for that matter, addressing code style issues before any
+reviewer has to shed bikes so that they can focus on the parts of the
+review that no machine can do for them).
 
 Ciao,
 Johannes
