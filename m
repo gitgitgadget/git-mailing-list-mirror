@@ -7,87 +7,79 @@ X-Spam-Status: No, score=-6.0 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0737A1FAAD
-	for <e@80x24.org>; Mon, 30 Jan 2017 12:29:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 969381FAAD
+	for <e@80x24.org>; Mon, 30 Jan 2017 12:30:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753104AbdA3M3L (ORCPT <rfc822;e@80x24.org>);
-        Mon, 30 Jan 2017 07:29:11 -0500
-Received: from mout.gmx.net ([212.227.15.19]:59070 "EHLO mout.gmx.net"
+        id S1752951AbdA3MaI (ORCPT <rfc822;e@80x24.org>);
+        Mon, 30 Jan 2017 07:30:08 -0500
+Received: from mout.gmx.net ([212.227.15.19]:55599 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752888AbdA3M3D (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 Jan 2017 07:29:03 -0500
-Received: from virtualbox ([37.201.192.48]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0LaFmY-1c432t3ozu-00m0dy; Mon, 30
- Jan 2017 13:28:34 +0100
-Date:   Mon, 30 Jan 2017 13:28:28 +0100 (CET)
-From:   Johannes Schindelin <johannes.schindelin@gmx.de>
+        id S1752814AbdA3MaG (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 Jan 2017 07:30:06 -0500
+Received: from virtualbox ([37.201.192.48]) by mail.gmx.com (mrgmx001
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MLvGW-1cZH1q0u0y-007p28; Mon, 30
+ Jan 2017 13:29:54 +0100
+Date:   Mon, 30 Jan 2017 13:29:51 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
-To:     git@vger.kernel.org
+To:     Stefan Beller <sbeller@google.com>
 cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        Stefan Beller <sbeller@google.com>
-Subject: [PATCH v3] mingw: allow hooks to be .exe files
-In-Reply-To: <9a27b90e771d4c97dc580d344e161d7cf8d632ce.1485433248.git.johannes.schindelin@gmx.de>
-Message-ID: <78a73c9d0a8e38fcc61302d0495533dcc4fab076.1485779272.git.johannes.schindelin@gmx.de>
-References: <9a27b90e771d4c97dc580d344e161d7cf8d632ce.1485433248.git.johannes.schindelin@gmx.de>
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: [PATCH] mingw: allow hooks to be .exe files
+In-Reply-To: <CAGZ79kaa5WJmZkyFROfkfNb3++t37qAuAebKJTon2iD2bh+sWw@mail.gmail.com>
+Message-ID: <alpine.DEB.2.20.1701301328390.3469@virtualbox>
+References: <dc388b2df3baee83972f007cd77a57410553a411.1485362812.git.johannes.schindelin@gmx.de> <20170125211529.jq4halip4ndbff5k@sigill.intra.peff.net> <alpine.DEB.2.20.1701261321010.3469@virtualbox> <xmqq4m0l64pg.fsf@gitster.mtv.corp.google.com>
+ <alpine.DEB.2.20.1701271127520.3469@virtualbox> <CAGZ79kaa5WJmZkyFROfkfNb3++t37qAuAebKJTon2iD2bh+sWw@mail.gmail.com>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:VmBOOtLZxkOAoKWFHMBmcT4rJDd6JR27bu3r+EU6r/Uo6U7K2ae
- 70fzEF61pU7ZyTLJtOhbqYz8MOvv8xKMJCLNAc7I2X0dWEXlsg/EEcxwTEpdPM7lFlCQt1K
- ClXcU5ntmYB277/jDL1FlnRdsqQclkDGi0eug003fgxc9+I67yHeN0ekO75ucWv4DJ+TEc6
- RhBcp8V4N68MI/BziebnA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:W5fTvFqsIsI=:PO91EHxdO2a32IVrYSFBAX
- QQN/1Wiu25C8JEEE18rvm4vQqDYJzldlDuuV8fEgAcrIy7rTLVevdJupNqK9eybsQulwknOxN
- 4pfmI5Sh1aJXxiwq0dc2jroZKIRBWGUMlVL2HHvFxKoIuEyygUEjfoTqHjlgrZCwevXU7pGjt
- gesfVN5y9fl4m44tK81nj+pJpD4oE3wIN69/w8Cwzh8R/QWPsDGe6Wt2UaPcIoZq2RKQAKW9g
- AgH76kYkBMh/W1En5iJjTDIWjfqezFAlZn0CFHrLpJcsoCaBV+ZHJlrbq+PlSU/khUjy414Ll
- PKYJQJnRdhNwaeSHc45V5EWQYJl2PaOHmYHuCsD+0Ty9iMFd9N9UiAaOzxCPQQEw5efYmu3OD
- KK05SF3gF7Gc2RJr0naBUHnzDEQpbaYGeujlYPduJU8pZw5HaAhItWT3ya0dXiEk8IMMxdI5W
- NiygMa6l6rr87aXPDtOhff1CAfh1VWVkSdzwne5JguZmCwKY7Yxl4wuIj6lrIipKVY5+DQiib
- QSRKF6eAHClrdxVP7zXZaMzs+Ul4hbw4oo8XGM9SyVaEnj4B6arBtZJ1NL1aICGvOle1Qoyta
- XHKW4AFaNz+aIBJ7GBKCKONU17PltbomVPzNYEFetKOBNS0jqNiXX1Nv87mrZrCfT2xBFkNW4
- qKYX6RMu+Gw3/6wcvyIFFV5V8TOI985gWE/44fgs8YIIVZppkbZV4PAl8XaR/BGZOMFSL78oY
- GCfUyMlugPAnqqzqXt4p5o1Xs7tDHfbTN7o3Ez5hV+bVeryW0BiC5bsYhPBbRvRAXV5ZzH//Q
- 3keipygaQlRhldSJZNjZyA5HirV9Q==
+X-Provags-ID: V03:K0:N5SqJEDwRJh3jsP0wFo6xRDLFpodlDDMqkDbuzy+/jck0v8UlLT
+ Zj5+4GARTw1BaKjojIK5R5zMUJtsTWYXd4KziGvdEiFOrjeMnxY9Aa5FhPbruweYHlNMDBf
+ xasc6wAbaTTpgv68f3Ih7oItrkvvukXb3eSmFjSMV7tuB7JLk+u9NlFz36cwUB5h1w16BGv
+ E8S91251LeBOSH5gOn5IA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:+NhEGgQ5LuI=:ng6YuuSdJTMVP/BqJnkm9g
+ L7r+tPhnBorwPciXBg4I7PmsqhB+JR64aTLtpR2mWKQlFEucJTzy6YmfC7cNVcbsjk3fhDVYL
+ QihjvlIRvnAaXk9+95kehMT1SxQdPi0zJ7Ybs1+uDsvItqd1MxCatb01Di7/6422012Du01b6
+ Bffly/dU+4fF3m9v/ZILtsaJLVYRR7nxZqehLJzsT2XoNYJcfkn8wciXg21YanPNq4K4weasI
+ l/5u4CWCTw5SFvaqdY9eYyEBSUh9pM5KxAsu+bw8VPUhjz6LlsOG32r0BIQ15vZ9XynVzf9HV
+ vOpY3yRoyB/PmWTAtzibB8SFAt9Pe3Dszv8ccpNciLQ2/uo4bm9sqi0oUYQn55f+AbKOJQ1Io
+ mzGqHnXtxZlElOaZJ26REKIdhlxHw2PBQgM4PCCmyD+/sVSdxq7NhPEy30ldzA8oiLa8Nf+i9
+ 63UzL6ftwvnohldZXBEOU4y2R6yQrfC27RnRnfaz5LID6SZNJkBVuSmNC64gkoQgT9Q4UYpnW
+ 0Pxcz2VbDDrE9r0MowtbH6ri+/j6YyEtD11h27onDTTc+//aLxW1vCCp6texRBOfh7E0UC/RX
+ TtIxO77IxNkk0TAJ3+Fhidwfuz90Me3h2NyU6Obg1c88MozDkvSZ9ui2tc3wFG3/3MAuxEg7j
+ cl7wMl+96K+16it5JEwljBLAhe3IuppK7z9rQgwONIRoWStNUFg9s7U+KYB1d1Z6swCGm0tFR
+ JWQK4mah6cGj10ZOxmSyo3Hmem5QAAFmuixQ2d4cUONWEEqHzNX6KAtq4/h+hedV0UNeXzYJA
+ 9jHN3E6YiHh0k65oqa8ju5CYpTSqg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Executable files in Windows need to have the extension '.exe', otherwise
-they do not work. Extend the hooks to not just look at the hard coded
-names, but also at the names extended by the custom STRIP_EXTENSION,
-which is defined as '.exe' in Windows.
+Hi Stefan,
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
-Published-As: https://github.com/dscho/git/releases/tag/exe-as-hook-v3
-Fetch-It-Via: git fetch https://github.com/dscho/git exe-as-hook-v3
+On Fri, 27 Jan 2017, Stefan Beller wrote:
 
- run-command.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+> On Fri, Jan 27, 2017 at 2:29 AM, Johannes Schindelin
+> <Johannes.Schindelin@gmx.de> wrote:
+> > Hi Junio,
+> >
+> > On Thu, 26 Jan 2017, Junio C Hamano wrote:
+> >
+> >> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> >>
+> >> > On Wed, 25 Jan 2017, Jeff King wrote:
+> >> >
+> >> > v2 coming,
+> 
+> The commit message, while technically correct, seems a bit off. This is
+> because the commit message only talks about .exe extensions, but the
+> change in code doesn't even have the string "exe" mentioned once.
+> 
+> With this discussion here, it is easy for me to connect the dots, but it
+> would be nice to have the full picture in the commit message.
 
-diff --git a/run-command.c b/run-command.c
-index 73bfba7ef9..5227f78aea 100644
---- a/run-command.c
-+++ b/run-command.c
-@@ -871,8 +871,14 @@ const char *find_hook(const char *name)
- 
- 	strbuf_reset(&path);
- 	strbuf_git_path(&path, "hooks/%s", name);
--	if (access(path.buf, X_OK) < 0)
-+	if (access(path.buf, X_OK) < 0) {
-+#ifdef STRIP_EXTENSION
-+		strbuf_addstr(&path, STRIP_EXTENSION);
-+		if (access(path.buf, X_OK) >= 0)
-+			return path.buf;
-+#endif
- 		return NULL;
-+	}
- 	return path.buf;
- }
- 
+I just sent out v3, using a slightly tweaked version of the commit message
+you proposed.
 
-base-commit: 4e59582ff70d299f5a88449891e78d15b4b3fabe
--- 
-2.11.1.windows.prerelease.2.9.g3014b57
+Ciao,
+Dscho
