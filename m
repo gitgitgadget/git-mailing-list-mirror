@@ -7,98 +7,75 @@ X-Spam-Status: No, score=-6.3 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 02FB91FAAD
-	for <e@80x24.org>; Mon, 30 Jan 2017 15:35:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 00A7C1FAAD
+	for <e@80x24.org>; Mon, 30 Jan 2017 15:41:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932452AbdA3Pfi (ORCPT <rfc822;e@80x24.org>);
-        Mon, 30 Jan 2017 10:35:38 -0500
-Received: from mout.gmx.net ([212.227.17.21]:54829 "EHLO mout.gmx.net"
+        id S932375AbdA3Pjz (ORCPT <rfc822;e@80x24.org>);
+        Mon, 30 Jan 2017 10:39:55 -0500
+Received: from mout.gmx.net ([212.227.17.21]:62129 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S932465AbdA3Pf3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 Jan 2017 10:35:29 -0500
-Received: from virtualbox ([37.201.192.48]) by mail.gmx.com (mrgmx101
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MbsV8-1co6RQ3hJO-00JL9r; Mon, 30
- Jan 2017 16:35:07 +0100
-Date:   Mon, 30 Jan 2017 16:35:05 +0100 (CET)
+        id S932342AbdA3Pjw (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 Jan 2017 10:39:52 -0500
+Received: from virtualbox ([37.201.192.48]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0La2Xx-1c4PfV1I1l-00locJ; Mon, 30
+ Jan 2017 16:39:40 +0100
+Date:   Mon, 30 Jan 2017 16:39:38 +0100 (CET)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Sverre Rabbelier <srabbelier@gmail.com>,
-        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>, Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH v4] t/Makefile: add a rule to re-run previously-failed
- tests
-In-Reply-To: <xmqq4m0kz65d.fsf@gitster.mtv.corp.google.com>
-Message-ID: <alpine.DEB.2.20.1701301627260.3469@virtualbox>
-References: <85044791cfcba35c1ad3d8138051f3f075cb0646.1485526641.git.johannes.schindelin@gmx.de> <0563f07117e828c072ba542c1a57441e2e8efb81.1485537593.git.johannes.schindelin@gmx.de> <xmqq4m0kz65d.fsf@gitster.mtv.corp.google.com>
+To:     =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/5] add SWAP macro
+In-Reply-To: <0bdb58a6-3a7f-2218-4b70-c591ae90e95e@web.de>
+Message-ID: <alpine.DEB.2.20.1701301637570.3469@virtualbox>
+References: <8ef4c833-45bd-6831-0683-6d01f30aa518@web.de> <0bdb58a6-3a7f-2218-4b70-c591ae90e95e@web.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:+nuVtHEVyNmx+ANt7W8wRj8MlhzjIkF5JHm8FPt3ccwocKM+qUU
- Riyn5IT2SbDQZoVgqUzm7gd1R5uUMON/laDcxCL/CARjRnb1ySulEkSehDhIeFM2k0Tpf1o
- jJBocxCwUHXjt/EPlXH1NbBKD8eLDymnqBPHerFpDgXOOVMimcaJyyEf0v9vBdKqw6G98BI
- ZD9vBrsghbRckvsAnIpBQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:Y3Hl5fNM8lk=:eJX9L92lTKeR3wb0uvRQ7v
- WfcCwbJu9L7U38vseNudEpf/DN/YI90vjEKjs10Mp1xQFyCuZsWZVnrYj7sd7VDZZA5SdNMVS
- 6GtAqa1ZdTfnPAVQNtgAlzii/2pg6oz+QwlgT7CGlyk3aZ94T9qB7+bGlVVVrRbXS8PWFA/+u
- ZyPK/DYApAD2II2TfcUpLpeBKOvC0vpfcRfJw27zUFd0oBj/B3IYm3N8C80BPRJIFjs6FP8II
- xSjhi9xCy2Gh3pMFbgaaU2nGuoll/h02VB8cyfSZ4kxyAUfe9z+N22+3hQXE5R+Etpl5jzSYx
- T62peSiZYcUCy+YMtqKuwkjMITBG5ZFjGNsnK/Cy9S9eh3DB2wFUuxPaXmq+EPwswIAZdk5wf
- dLIRZkps2ac26c1uycicF2AbHiRxWb8hnF7DAicDwFyflK65Te9OyaEuImatxMK6dQiQCMJ76
- jC7QupGxGSa5qZk9ZEOUBa+mQztK9LWphVLmRmodIeK6t3cm/0vY/aLYo9B0LIMOBJN1MVW8O
- q6hHsC3B/ZDhmZVcZkFDIEX5vWEwm1h9072gS6IAsCFKBkmWrDeAMgS7uOnmv1Hoi8T30USrl
- T0u0Zru5ynDzVNA2U+gY0xTi95r2HIOSRL4Jr+Pm0hx3uO+lhEYHectwo3Qim/e3fe3xe5Mcv
- RWalCNSvE+Obvq4ZqZBukOqMpW2JLCkGKBjXnZTtYam6ZMMdiQnjrx3/P0k+pGAbImSzIV6L0
- XVFTUG3nXxufy5ZkYgPHrZiR7b/lQvTT2kzD8wtM5xwj5IH1LWebnljAtGRoHAPgzEBQz50v0
- C+6xeatbIl3ENcaBi1wY0y8UHL4epwn7l9rZz48KIiaPWrUZOskVQHvm8/J5z8AANQzrh+2fk
- NKEM3Wwq717Dm3OiBw+JYcyUzUQAtL287iTD8CQyxGWQizPSfPUsAiQHNWXHZSKZHE5B0sZXc
- +wBni8hHC2BcNctDbLCGhVAO5c/f2gt5SAaBwnXTcJtIzXYrD4EV60/i+oAISumimye96lK0e
- LAJ/wrnZvd6TqqjfJfI5oe/CBWlsI+Z1jCQjK2UrEQg1
+Content-Type: multipart/mixed; BOUNDARY="8323329-1182186010-1485790780=:3469"
+X-Provags-ID: V03:K0:LbK9DoQciK1AoZ2ge8+oVBv1D2J+lz20pDk4yTGzP74lGawuhGQ
+ /l7dl/WfHdJZgUI2E81RN+D6iWaONPmTqAOrmMQ/kqTU0C6AeD2gpCk2No86kb+IhvQVtwS
+ VOmWsUD6gjZGrduuA9ioZGpi3XnyBU18T+jHVoFmvmpdvPceyclQKQn9jrvNhLmsTawEB/m
+ bZSpttNsphUMueVviSvFQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:ps+MS2wYocw=:7uUxwPK3y8+LLIMb12mHd9
+ rtEAPqnH0T52PY3wx03I+245XYo8zuQUpGOI8cRBJMd3jVtLLClSsXZR5JEiRPc74AIQ2jyY1
+ svMKU5byvu0+eXED97uQ26ggYZLXuWoAatasWFOFXdWTaopTgAlfe9Z98MjFSv5mpXr/XHBiX
+ yTOCkyX0dQGn08yUTJjYrnv2xOre8Rh+hXk+HyNUpAE0ZkMIIIfFsXt4vC0A6qyDY4ubw2dyU
+ ViOVKj1Yq80pKopaiWF5GW8wzqd0XnvTQEOJRcM18U0+wA2ySCeR7ouubZamiBDQJtZZcKLn6
+ 8INGalREYLC0rmUOwy9GlFyk2ZPYrRkqBPhaq7RQLizzaQAEK9vgm716kLoc6vXhQM6kCwJOb
+ qyD1NxBz582u38h9EwYfjDSIRbsZNuR4PXtCKZmqcbsB8cuAOA7adwic0ZKCdTkGZFA/KOksr
+ jaAeH1P82b56cbFmGr1SdQGC0iQ7s2p0eB/BX66xuiNDFvhvS6i0dt48I+V2zzZcJgNsHvJB7
+ V29fyKimdub0bn/YxwFqGKlkuEKG3M/IdbsmZ0HoD61owhiTtFAZm5J9TxyWkrlhbBU8V9RV7
+ TWiaITCMCzEZsh2ShZ067iq477pr/uonZjxaFy4/n0m+8mJ7yUAyiK+rRGZSTECdAYrcWfI1L
+ 6ie8HQvgNLIR3xpjZEPlAu6dQyHu9cTMk12QjQnIOqrxS8gheethz1MTCbI3+TCw27qPsqHvV
+ eeYdfBMfLXbYUtnEB93krCe8GIjE6X1V2vS2HFPtE7F1iN15uEbExN7hSHbzxMEFh+/qw0+P0
+ UDovuS6DTwS4so6z+bIUJmNjMy7cOkAtUYl32Ll3bdpISMoWbXjQqG/6nk79F6s1x/27eyffB
+ 9+HGZjlDrA5pniB/wAaImBIY2VdUKiUdhEeDbysOZnK1yNM6rVcIqdGQo5u3dH30H5QWXN4Af
+ 3XKyHOicL3sqLCLjbyKNThCt2QcuR8GC5Rg6fQJGAVu/sKMEfGFe4xCMFqvDsOV/adKPFi1Fs
+ i4tPEgl9/qJfo/3RsFbKUra8POkymy9rtfZetEqYBamdR9nV8LT8dtkasiIY3h69mw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-On Fri, 27 Jan 2017, Junio C Hamano wrote:
+--8323329-1182186010-1485790780=:3469
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 
-> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
-> 
-> > This patch automates the process of determining which tests failed
-> > previously and re-running them.
-> > ...
-> >
-> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> 
-> I stored both versions in files and compared them, and it seems the
-> single word change in the proposed commit log message is the only
-> difference.  I would have written "Automate the process...", though.
+Hi Ren=C3=A9,
 
-Yes, we have different styles. Thanks for letting my commit keep my commit
-message this time ;-)
+On Sat, 28 Jan 2017, Ren=C3=A9 Scharfe wrote:
 
-> If you are resending, touching up to cover all points raised by a
-> reviewer and doing nothing else, having "Reviewed-by: Jeff King
-> <peff@peff.net>" would have been nicer.
+> Add a macro for exchanging the values of variables.  It allows users to
+> avoid repetition and takes care of the temporary variable for them.  It
+> also makes sure that the storage sizes of its two parameters are the
+> same.  Its memcpy(1) calls are optimized away by current compilers.
 
-TBH I am not at all sure that I know when to add those footers and when
-not. After having been asked to remove such a footer, I decided to *not*
-include them by default.
-
-Having gray zones about the footers strikes me as similar to having gray
-zones in the coding style guidelines: it sure gives the contributors more
-freedom, but it also creates uncertainty and as a consequence takes up a
-lot of reviewing space and time (hence taking away space and time from
-reviewing the code for bugs).
-
-In other words: while I appreciate the idea of giving contributors such as
-myself a lot of leeway, I would love even more to be able to automate away
-tedious and boring tasks (such as adding Tested-by: or Reviewed-by:
-footers, or for that matter, addressing code style issues before any
-reviewer has to shed bikes so that they can focus on the parts of the
-review that no machine can do for them).
+How certain are we that "current compilers" optimize that away? And about
+which "current compilers" are we talking? GCC? GCC 6? Clang? Clang 3?
+Clang 3.8.*? Visual C 2005+?
 
 Ciao,
-Johannes
+Dscho
+--8323329-1182186010-1485790780=:3469--
