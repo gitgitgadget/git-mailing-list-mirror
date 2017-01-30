@@ -7,183 +7,74 @@ X-Spam-Status: No, score=-6.2 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1B7C81FAAD
-	for <e@80x24.org>; Mon, 30 Jan 2017 12:41:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 305901FAD5
+	for <e@80x24.org>; Mon, 30 Jan 2017 13:03:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753237AbdA3Ml1 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 30 Jan 2017 07:41:27 -0500
-Received: from mout.gmx.net ([212.227.17.21]:50483 "EHLO mout.gmx.net"
+        id S1751277AbdA3NCx (ORCPT <rfc822;e@80x24.org>);
+        Mon, 30 Jan 2017 08:02:53 -0500
+Received: from mout.gmx.net ([212.227.17.21]:60108 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753027AbdA3MlJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 Jan 2017 07:41:09 -0500
+        id S1753238AbdA3NBl (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 Jan 2017 08:01:41 -0500
 Received: from virtualbox ([37.201.192.48]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MFR2O-1ckDxX0iMm-00EQgN; Mon, 30
- Jan 2017 13:40:59 +0100
-Date:   Mon, 30 Jan 2017 13:40:58 +0100 (CET)
-From:   Johannes Schindelin <johannes.schindelin@gmx.de>
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0LejNC-1c8QDM1OYg-00qVIM; Mon, 30
+ Jan 2017 14:01:14 +0100
+Date:   Mon, 30 Jan 2017 14:01:12 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
-To:     git@vger.kernel.org
-cc:     Heiko Voigt <hvoigt@hvoigt.net>, Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2] help: improve is_executable() on Windows
-In-Reply-To: <c1c6ccae4e60608259809914e8ff3d3d5e1ead5a.1485524999.git.johannes.schindelin@gmx.de>
-Message-ID: <4b93fe44ff9020ed80e4fd93a24a6ffa647e7678.1485780050.git.johannes.schindelin@gmx.de>
-References: <c1c6ccae4e60608259809914e8ff3d3d5e1ead5a.1485524999.git.johannes.schindelin@gmx.de>
+To:     =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>
+Subject: Re: [PATCH] checkout: convert post_checkout_hook() to struct
+ object_id
+In-Reply-To: <b30e5d34-436a-af5f-dbad-b1df464bf303@web.de>
+Message-ID: <alpine.DEB.2.20.1701301359500.3469@virtualbox>
+References: <b30e5d34-436a-af5f-dbad-b1df464bf303@web.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:pHEhzAFkP3OalnJPXtEtfPwuT7pymwDr/2yXX6D56jn9B7bVoCA
- Mjz/pxIpslm5cutai69DXRuQgKXavyBe7bU3hVnbpS5/iWn07eG/9cr9pFIckqMwcy5vy+q
- x2ATqH3W/OsqptGN9BwTXQRDEstJMrEyYzk2m4KA9k1zeInNXb0igXNf9nSBqYcd3gkjkzR
- Pv3V8gzjYQjaL1UR0Qu2A==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:2Cl0DlDx+QY=:VjnXTDNU170QZQB3FpkxA/
- 6+CntJGj5IdKPIIa82vJdmlPbssPXsSvBuQmfgHZNnQMpzB9/Ye8RXIUrkDUfCEEpXIs+ioT+
- +QD7E1Prt4CYxheqm0ghRqiPRo5LLq6FzZFandxz1Efm/Px4jsSmpcf0QIgT+SXox9m9EIij+
- qSV8ynVTifCX+We6IipHkdndDm5S6p+MqQErtzWwgdjip1f+2PUdZ6VF+7OxkQ5FyrJPohigE
- whlVPL75JDdiEeyPGiYHa0CheboGuDrTYT4IxVy8SkrE6PeMEhPudLHeapdEUCFbdgm+sy9A/
- R7VQ7HRK+xj76KyAG8SdpUjQP63uRKUkt5F9019BeeEQF4Yek3Nz/aLul08fFeiZDiWbV9+Hz
- LRYGATiHCKEtvNmZ7+NlTAHYXbmw07docmGc/nmakDTzF93LT8AhSyYEIBB35qFmGoHz7LK4J
- YbvUXcE0mu7l+4sOJveM+nhNXKYPPxhYg9iuPQNBk1HqjMUSm9ITIkLU31ep3RTpmqPEd0myO
- nKpHa/DuPplONZyyMAwrFYdj9KsiJKAnEOfnqU4qarR9shciHtMMPIXIKvafvup9qnrQBOhev
- J5iaKVGW9pgFkrP5IUYIzIGg6WYAgIHI1myGIuGtStvLRgFmF5T9kUZLg+CQ6sGInnUm6uA5u
- lRX6yX/pJgo8w5AJ6hUO8Miyz7bIe2vZY9WMva6Z2b9vVKwff5rP716wvvkoB3p7tAtFtrouk
- lc7uRocRbGOz2Ud9GnFCOKKafhb+0lSktsyuOHB6i5X+9BOxaBVYI4CDclvBNNyQ8ngrs+m9M
- tC9PY7xZHJmB4UkiAQ/cHmv1PnBXlXIx8ISJal4Poe01Ss957RcLPARed9KEZoyr0Ed44WJo3
- xOwSLHUUTKBxG0y6lErAkLOUR1vus7gSA+hh7PLM9vNH6DzVRyuUh9j+Sl+HAYQpOGRYJhGSN
- pxfsrt/2E9Q4oIuhChKz+KW+46eFwfUWVaov64eLc+NFlGBRHTIuo/oOp8NGwBcAJ+w36lnp7
- fnwvEVU8cuvWit9fmNwa938uK8yNxyVzWtl84PDcfTi6op8CgmujcRF8rE6s6gFYTw==
+Content-Type: multipart/mixed; BOUNDARY="8323329-1913706495-1485781228=:3469"
+Content-ID: <alpine.DEB.2.20.1701301401110.3469@virtualbox>
+X-Provags-ID: V03:K0:wk6EX3lPPgtteQzpkKcFQLulhw2UDVFes7kGYgObHD/Eagea1yF
+ XpSlWRXnBcCJv6p+KcOIg9uA5GIc8enp+BWs3hIh3Xo77wPjsuT6GsLoFB8HdLV3uUQWpp/
+ pboLhkjDnA6Pbhj7jPROt0cCmY+ppbgfshaWya9zVlZlSCjP0xgHCdV/FY4SWw465tjhT3U
+ 9mGSxexHCX4ZaXun3LucQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:ZgeUeTs7P7Q=:DFfrhXF5tfYSxM30h3ZCME
+ bApkresl+vwljN6OtpD7q2XnwJA/S4TDdgxI/GpNgGmLn9M1AYnAPL3IQBqnZwwsDUAtdzDmU
+ sXwWSVekqD5cvP+W8JjMnEM9GtKCKWPJHAe2i4uSkoy9ys1IMtZXPe21op4Y2Ey8SE13yKd6H
+ ne9QmOsUZ9yGL0T/s6RDb2kw5OxGx01toQ8a9bKBOgXWreUoBX+szUfEHJREUw59z10z5twmO
+ HaQLAb+N3qcIdnpvJkO+9xlLLeRZ5gyUW+CjE7sxgTv9hRP0FK3vL7lwzglFUS8+Qvmyu4650
+ Xw/iXonIBFahLyXInpiSMkhjFV+b7x+BmxAset9cEhJtjBd7O9nokVSNcYKB/fI3sDzdfxmgm
+ M4x3Oc0eoBKn4hdTgivuEPx/aJNw5tDKQTrEYDmWdGuiAxqGFXwDircib8LxvXh07qsLbEOHU
+ IzoF3ABU3BoEzrhbPUcA9zxFm9iskgIXIlU/pLTOYn1PgaufK00HqYc0tl/frI7d4owDi09kU
+ hopAWBhXt2q/lSM+G1VhHrdavQFOsxeyZB3EQJQaZAZ4fjuGwu3WgxGCiizpm2ArRQdv/GZND
+ ypYm1PMsV0226bM6rcz7tB0nOytMF7PzUMHSUHM24pEbCT2+eo3KxZITLuhPro9Cvae+t6WYn
+ qVFSEgHToZ9MPbNG4Jz+hJmybtrcSoe9ykftF9YwscA3jOwlRE2T4oomWTrbg64N8X5aIy5VG
+ o4cnpf0H8XP4NaP+ir6+NAGwclT38fJXVPHu1bROMVCmMq3QmSssRlL9mTdS3l92hAncLZt/O
+ FfFNYVNzEZn+tNXhBgxGWEaodIOLHqdg7ZeaAUqCDVO57mism1YV9RQ6Ypliib80xbURGR336
+ beoQEsjHx2IIo6uuzEB/j0kcqVSmoG2G521CwCgPzLx92/WCN72oSRfx+JQa3qGb2pgxH5pHK
+ 7sVVuoy3Me3dAe1/9jB5u3lNsiZhbENXlXTkvIMRJqJpELpqBYG/oc+V0bmLJ7/iyy6rHfbh1
+ 5oBtai1UBSHqufaJXiFj6J2yiLD9ocpeU9h8QgJ6JKyhkhAX2V8pvedCUA7kjtmi0g==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Heiko Voigt <hvoigt@hvoigt.net>
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-On Windows, executables need to have the file extension `.exe`, or they
-are not executables. Hence, to support scripts, Git for Windows also
-looks for a she-bang line by opening the file in question, and executing
-it via the specified script interpreter.
+--8323329-1913706495-1485781228=:3469
+Content-Type: text/plain; CHARSET=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-ID: <alpine.DEB.2.20.1701301401111.3469@virtualbox>
 
-To figure out whether files in the `PATH` are executable, `git help` has
-code that imitates this behavior. With one exception: it *always* opens
-the files and looks for a she-bang line *or* an `MZ` tell-tale
-(nevermind that files with the magic `MZ` but without file extension
-`.exe` would still not be executable).
+Hi Ren=C3=A9,
 
-Opening this many files leads to performance problems that are even more
-serious when a virus scanner is running. Therefore, let's change the
-code to look for the file extension `.exe` early, and avoid opening the
-file altogether if we already know that it is executable.
+On Sat, 28 Jan 2017, Ren=C3=A9 Scharfe wrote:
 
-See the following measurements (in seconds) as an example, where we
-execute a simple program that simply lists the directory contents and
-calls open() on every listed file:
+> Signed-off-by: Rene Scharfe <l.s.r@web.de>
 
-With virus scanner running (coldcache):
+These three SHA-1 -> OID patches all appear correct to me.
 
-$ ./a.exe /libexec/git-core/
-before open (git-add.exe): 0.000000
-after open (git-add.exe): 0.412873
-before open (git-annotate.exe): 0.000175
-after open (git-annotate.exe): 0.397925
-before open (git-apply.exe): 0.000243
-after open (git-apply.exe): 0.399996
-before open (git-archive.exe): 0.000147
-after open (git-archive.exe): 0.397783
-before open (git-bisect--helper.exe): 0.000160
-after open (git-bisect--helper.exe): 0.397700
-before open (git-blame.exe): 0.000160
-after open (git-blame.exe): 0.399136
-...
-
-With virus scanner running (hotcache):
-
-$ ./a.exe /libexec/git-core/
-before open (git-add.exe): 0.000000
-after open (git-add.exe): 0.000325
-before open (git-annotate.exe): 0.000229
-after open (git-annotate.exe): 0.000177
-before open (git-apply.exe): 0.000167
-after open (git-apply.exe): 0.000150
-before open (git-archive.exe): 0.000154
-after open (git-archive.exe): 0.000156
-before open (git-bisect--helper.exe): 0.000132
-after open (git-bisect--helper.exe): 0.000180
-before open (git-blame.exe): 0.000718
-after open (git-blame.exe): 0.000724
-...
-
-With this patch I get:
-
-$ time git help git
-Launching default browser to display HTML ...
-
-real    0m8.723s
-user    0m0.000s
-sys     0m0.000s
-
-and without
-
-$ time git help git
-Launching default browser to display HTML ...
-
-real    1m37.734s
-user    0m0.000s
-sys     0m0.031s
-
-both tests with cold cache and giving the machine some time to settle
-down after restart.
-
-[jes: adjusted the commit message]
-
-Signed-off-by: Heiko Voigt <heiko.voigt@mahr.de>
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
-Published-As: https://github.com/dscho/git/releases/tag/help-is-exe-v2
-Fetch-It-Via: git fetch https://github.com/dscho/git help-is-exe-v2
-
- help.c | 21 ++++++++++++++++++---
- 1 file changed, 18 insertions(+), 3 deletions(-)
-
-diff --git a/help.c b/help.c
-index 53e2a67e00..bc6cd19cf3 100644
---- a/help.c
-+++ b/help.c
-@@ -105,7 +105,22 @@ static int is_executable(const char *name)
- 		return 0;
- 
- #if defined(GIT_WINDOWS_NATIVE)
--{	/* cannot trust the executable bit, peek into the file instead */
-+	/*
-+	 * On Windows there is no executable bit. The file extension
-+	 * indicates whether it can be run as an executable, and Git
-+	 * has special-handling to detect scripts and launch them
-+	 * through the indicated script interpreter. We test for the
-+	 * file extension first because virus scanners may make
-+	 * it quite expensive to open many files.
-+	 */
-+	if (ends_with(name, ".exe"))
-+		return S_IXUSR;
-+
-+{
-+	/*
-+	 * Now that we know it does not have an executable extension,
-+	 * peek into the file instead.
-+	 */
- 	char buf[3] = { 0 };
- 	int n;
- 	int fd = open(name, O_RDONLY);
-@@ -113,8 +128,8 @@ static int is_executable(const char *name)
- 	if (fd >= 0) {
- 		n = read(fd, buf, 2);
- 		if (n == 2)
--			/* DOS executables start with "MZ" */
--			if (!strcmp(buf, "#!") || !strcmp(buf, "MZ"))
-+			/* look for a she-bang */
-+			if (!strcmp(buf, "#!"))
- 				st.st_mode |= S_IXUSR;
- 		close(fd);
- 	}
-
-base-commit: 4e59582ff70d299f5a88449891e78d15b4b3fabe
--- 
-2.11.1.windows.prerelease.2.9.g3014b57
+Ciao,
+Dscho
+--8323329-1913706495-1485781228=:3469--
