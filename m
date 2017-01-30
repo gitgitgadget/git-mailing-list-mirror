@@ -7,84 +7,76 @@ X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B169A20D13
-	for <e@80x24.org>; Mon, 30 Jan 2017 23:04:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1DD321FF1E
+	for <e@80x24.org>; Mon, 30 Jan 2017 23:20:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752877AbdA3XEO (ORCPT <rfc822;e@80x24.org>);
-        Mon, 30 Jan 2017 18:04:14 -0500
-Received: from mail-pf0-f193.google.com ([209.85.192.193]:34888 "EHLO
-        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752739AbdA3XEM (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 Jan 2017 18:04:12 -0500
-Received: by mail-pf0-f193.google.com with SMTP id f144so24549961pfa.2
-        for <git@vger.kernel.org>; Mon, 30 Jan 2017 15:03:25 -0800 (PST)
+        id S1753381AbdA3XUU (ORCPT <rfc822;e@80x24.org>);
+        Mon, 30 Jan 2017 18:20:20 -0500
+Received: from mail-pf0-f194.google.com ([209.85.192.194]:33749 "EHLO
+        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753369AbdA3XUT (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 Jan 2017 18:20:19 -0500
+Received: by mail-pf0-f194.google.com with SMTP id e4so24529417pfg.0
+        for <git@vger.kernel.org>; Mon, 30 Jan 2017 15:20:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=oEx1Fct/E8mO1gTw5q4W7QCxEtoKtIruq67wdTTs1mo=;
-        b=WQfBqkMDpP5hIPIX1nWw047tU3LzNhb9IsfBYJwfN9GrFQCuXrxFsRyAEVuet6TJ0D
-         T16ik7k8bUFPg54UPNaoy+YuRYc5C9ROQ83vf7ZTecbo/PuQYpEDEKwcNrPyxSnFMiYh
-         +E3OzFzPI/+GZBXE9bKLW4LYXM4chmCH3WV/UJWuVVXMfYD/X2UD89QuJFc4omGeyZBl
-         lNNxGQ35TadZMkkEBx0ENR+VJTgnAajRaGyDX6Bf72R3aMuYmBUr6WEVWC7T6Jh88uqG
-         ZAXUz52sLIIwVG6WB8f7KTkKiClHtyyKB4g+nHHYVmEdo3QqFfWZCxk1dX9I8WjcSaE5
-         /Dwg==
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=GQuWqffHud3rEZmo0ArTZ8oaAsAytJiJ/x8m6eJKCxY=;
+        b=Sw8IBvZ1zpx4C739EPqtyqS0sgAH8lNfGbkKVI42KpECTamimnsO0rYx/gqVSXLY7L
+         rI+SFtJld95M9ppvuE61TtQPB/XxQZJxlBX+GWX5glDbgbWlbtlVySVFaucuXBOnCG9u
+         LlwhREg66aF1ZVkri5qQi25HkZJ9vScMYJK9Q0ojL1WyygHYskdALx3bUuy57SPnh2yC
+         GuavSdAslIyC08ZJ+pnCmeGxdtqkAu5HhK7wAnkt25HJhPXY2tjR7vZbcJubBgP+w0+/
+         Dwmgc2Zt87TUvM9rUgCYJdlTAND82l3W2zsI7WZUJbe+XaaB46Q9pOmpJ6qfeedcCSqc
+         JVeg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=oEx1Fct/E8mO1gTw5q4W7QCxEtoKtIruq67wdTTs1mo=;
-        b=mwAGKOMX2wS1jX8hSIbzUcoZmtKquCS1Lo4UiwqrT7b4eEjufhlXRC70O3yUOGoo3B
-         Y/XfoJONdaxzsA31GR+IVc7t/dWT9xYjOwcGqy6sAQs2OFAVq7E8XO6MM4qNwgaHo1qx
-         qxlqKmT6AGbijHSxHHu7b4l6DJ3YMzPKEUj+GAe29yeGT8rtLwLonPJCztMOkqAZcFVL
-         D8iYADIa67PaYM2+NEkx0CKYo05cANmxp+TBJmFLxKwnQdP0m/xMC2C4FoEuEdU94moY
-         1VH6TozX3e9OvwsvEzfCsPaCJqStJX+KdL08ZJt55immgLLPMFU4CIoYD7e/sE2zrgNJ
-         YMzQ==
-X-Gm-Message-State: AIkVDXKZk/gb3kIjW/6lZ//QJOkAJ+wY1dA1CufHbU9CfKTWtX0UmFXGf4NhxYVrhrzLUA==
-X-Received: by 10.84.247.2 with SMTP id n2mr34748109pll.39.1485817404705;
-        Mon, 30 Jan 2017 15:03:24 -0800 (PST)
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=GQuWqffHud3rEZmo0ArTZ8oaAsAytJiJ/x8m6eJKCxY=;
+        b=lR3Qi12WvqjFNUPRjpXjDK7QZTeA7ZBG5U4QEvxwKqdpRdsj9CGQ5nTYS931hj+ekL
+         CZ9m6Ly7OBIShB3n2eYXMFjal6e7TgdrhV4suRspUL5C4u0NPTK+7H5JKCQyOCvneV8v
+         A5SsnzYqkqK1y2ZybzK8twVx06RcRpbfCBt3p7FgR3dlsI68vhVSAFKmDaCqv1e5kA9n
+         8Gj0ubPOGjOAHOWcDWkHLM1EdHaPBdQKKl/z2Ye2ysU9RmuzMOFwrsa8WbSc73jX3rV3
+         aq2V7zVsyZxHcOb4ZaPunoyWnzQ6lqQP+oJT9pFczOcP4yA4miMV/Z7OWpkjS2bC92GU
+         vhBg==
+X-Gm-Message-State: AIkVDXIgwxZobuf8XlqfTTPxrm69TUNxep0sLpNIWF94YLALIqxIAnqI4SnszsdFCxqC8Q==
+X-Received: by 10.99.99.193 with SMTP id x184mr26919602pgb.226.1485818419035;
+        Mon, 30 Jan 2017 15:20:19 -0800 (PST)
 Received: from localhost ([2620:0:1000:8622:a9ce:56f8:45fd:fc63])
-        by smtp.gmail.com with ESMTPSA id m136sm35371322pga.22.2017.01.30.15.03.23
+        by smtp.gmail.com with ESMTPSA id p14sm35202046pfl.75.2017.01.30.15.20.18
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 30 Jan 2017 15:03:23 -0800 (PST)
+        Mon, 30 Jan 2017 15:20:18 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Peter Law <peterjclaw@gmail.com>
-Cc:     git@vger.kernel.org, Jacob Keller <jacob.keller@gmail.com>,
-        szeder@ira.uka.de
-Subject: Re: [PATCH] Completion: Add support for --submodule=diff
-References: <20161204144127.28452-1-peterjclaw@gmail.com>
-        <CAKoneT+Bn+MdbeNnPJsu23rbLCZ=jxADNVtpNefw9zNYMq26dA@mail.gmail.com>
-Date:   Mon, 30 Jan 2017 15:03:23 -0800
-In-Reply-To: <CAKoneT+Bn+MdbeNnPJsu23rbLCZ=jxADNVtpNefw9zNYMq26dA@mail.gmail.com>
-        (Peter Law's message of "Mon, 30 Jan 2017 21:13:37 +0000")
-Message-ID: <xmqq4m0gtakk.fsf@gitster.mtv.corp.google.com>
+To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
+Cc:     Git List <git@vger.kernel.org>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH 0/5] introduce SWAP macro
+References: <8ef4c833-45bd-6831-0683-6d01f30aa518@web.de>
+Date:   Mon, 30 Jan 2017 15:20:17 -0800
+In-Reply-To: <8ef4c833-45bd-6831-0683-6d01f30aa518@web.de> (=?utf-8?Q?=22R?=
+ =?utf-8?Q?en=C3=A9?= Scharfe"'s
+        message of "Sat, 28 Jan 2017 22:13:28 +0100")
+Message-ID: <xmqqzii8rv7y.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Peter Law <peterjclaw@gmail.com> writes:
+René Scharfe <l.s.r@web.de> writes:
 
->> Teach git-completion.bash about the 'diff' option to 'git diff
->> --submodule=', which was added in Git 2.11.
->
-> I posted this patch back in December, but I've not heard anything. I'm
-> sure as maintainers you're all quite busy, but I was wondering how
-> long it usually takes to get a response to patches? (also whether I'd
-> gotten some part of the submission process wrong?)
+> Exchanging the value of two variables requires declaring a temporary
+> variable and repeating their names.  The swap macro in apply.c
+> simplifies this for its callers without changing the compiled binary.
+> Polish this macro and export it, then use it throughout the code to
+> reduce repetition and hide the declaration of temporary variables.
 
-When there is clear "subsystem maintainer(s)" in the area, I try to
-refrain from commenting until they speak up, and completion scripts
-are one of these areas.  I usually ping them after a few days but in
-December with holidays and things people are usually slow, and so
-was I X-<.
+All looked reasonable (modulo "swap tree2 and tree1???" ordering).
+Also the object-id ones looked good.
 
-Will pick it up.  Thanks for a reminder; you absolutely did the
-right thing (i.e. sending it out with people who are likely to know
-about the area CC'ed, waiting for a while and then sending a
-reminder).
-
-
+Thanks.
