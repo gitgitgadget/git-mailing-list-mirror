@@ -2,244 +2,144 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E100C1FAAD
-	for <e@80x24.org>; Mon, 30 Jan 2017 18:14:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EA7F71FAAD
+	for <e@80x24.org>; Mon, 30 Jan 2017 18:33:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753587AbdA3SOu (ORCPT <rfc822;e@80x24.org>);
-        Mon, 30 Jan 2017 13:14:50 -0500
-Received: from mail-pg0-f42.google.com ([74.125.83.42]:34613 "EHLO
-        mail-pg0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752844AbdA3SOo (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 Jan 2017 13:14:44 -0500
-Received: by mail-pg0-f42.google.com with SMTP id 14so102953263pgg.1
-        for <git@vger.kernel.org>; Mon, 30 Jan 2017 10:14:11 -0800 (PST)
+        id S1753612AbdA3Sdn (ORCPT <rfc822;e@80x24.org>);
+        Mon, 30 Jan 2017 13:33:43 -0500
+Received: from mail-lf0-f53.google.com ([209.85.215.53]:33735 "EHLO
+        mail-lf0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752844AbdA3SdG (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 Jan 2017 13:33:06 -0500
+Received: by mail-lf0-f53.google.com with SMTP id x1so112439944lff.0
+        for <git@vger.kernel.org>; Mon, 30 Jan 2017 10:32:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=JZFPVVPhMPcPrMxpRyU36mVwN5vd/k0n6wTRfwumVdw=;
-        b=n/4tnC+DM86oBNYPWkHDggijA3nTxhapaue1gm4cqpkU+b0JSSSpzD5Et+fPnN40vb
-         2JoSR0deDtAVz5/ZjcWd6wr1nqaEJd2D4zWxixApHY7sRwIJbtpC0IR3hmW3VTPT9GYo
-         nPeSUE83JMn7DNiXxGc5Cuoqql1gR37nFISybLsPT21yl4nKce7yDBN+Vw92rdpZSmwF
-         oTxi29p4Wr2zO47d2rOcY1qdcDskMrXXubBAgSQvwxlDIlu9ytyGZpyPP0uxnuUQtJuM
-         L5Fc5ce5xKFlkKwAncnaCy/eN5te78fCX36FhMaS/pHdbHYS66wgsuqJn+T1X/VkUqzr
-         vhVQ==
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=KQfixAxUNENA0R9jIAf3YLGVdIoVpvo0ygKWjqM3USw=;
+        b=RSa7VKfuuxvxKiPFHAhl1uS50gKRXadHz3zRLPXaEk6BTXx7GTlsI4Y0TAMWDA6N0p
+         JK36Q4Uyjq2lvMZeGSp/clwGTWMcNnPBlnyDqwdZM9rKDFfLpPMzvNpiwZ3/WIUsTcka
+         gdsjYTaHXew7QE1iv+sq1KOUOEPiDkupBxAjcj7EajI65abScTi84J4eAF6d8++Ygvbd
+         d2g1fs3fukZ8d2RHXQtSuuTpxKEM+q3ksqdNHo9bxe7MUur5nYG+DwuzLZWzLMhcen0R
+         VKugItf8DqU8gt+oJLBC+5F4GtXMALVUnbrM9PkOC6SiBVQV8hu0X+9ix9H5TN28Z+UZ
+         ZlfQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=JZFPVVPhMPcPrMxpRyU36mVwN5vd/k0n6wTRfwumVdw=;
-        b=aToh//hiTPZ10YOAb2KRJZPFgW2HmpRNk+H3dc7rpwvUjN63eYrIsmvkivzLJg2eL0
-         uqLrLDz6c5+lWxUWpSd3nexn0l2zPi/rS8H3kaLV7OigyKLnG8oUJmIq8bE2WbmZ0jFe
-         KnQbbQtiDA2NEU5ICk1yIfI/WMzJDSzg1r7jNy0NwWOjj/8bFMRfUW2A9GVMD4hqZsT9
-         GusDmi+dAF0YNIiHXNnjXIuggpPvKLer19s+9ptJiUl5w3fohCIKivXhfqJu8t5QH6px
-         2SO5sXT8ObAs2/kszJqMZpuFMhbVdBYbJXUDPqLNhVRe4HWwqPdgvESTBrY0VW7gs234
-         KKyg==
-X-Gm-Message-State: AIkVDXI84xjCKEzXAKq+NOh5YTQ6d+75ccarnF30SVrnQMlzxm+4m0+GLqpGSFhscKBtd8sS
-X-Received: by 10.84.241.207 with SMTP id t15mr33633866plm.136.1485799536212;
-        Mon, 30 Jan 2017 10:05:36 -0800 (PST)
-Received: from roshar.mtv.corp.google.com ([100.96.238.26])
-        by smtp.gmail.com with ESMTPSA id f3sm34511816pga.34.2017.01.30.10.05.34
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 30 Jan 2017 10:05:35 -0800 (PST)
-From:   Brandon Williams <bmwill@google.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Stefan Beller <sbeller@google.com>,
-        Brandon Williams <bmwill@google.com>
-Subject: [PATCH v3 15/27] attr: (re)introduce git_check_attr() and struct attr_check
-Date:   Mon, 30 Jan 2017 10:05:20 -0800
-Message-Id: <20170130180520.46632-1-bmwill@google.com>
-X-Mailer: git-send-email 2.11.0.483.g087da7b7c-goog
-In-Reply-To: <20170128020207.179015-16-bmwill@google.com>
-References: <20170128020207.179015-16-bmwill@google.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=KQfixAxUNENA0R9jIAf3YLGVdIoVpvo0ygKWjqM3USw=;
+        b=Qv+VphR/0XQrsuSLtLnXxCI3D/SVxEw2JbiQIFJReD7oIN06+NVLosy5FmKGRLYOWO
+         hqa+/Kqb0wivUikPkSy6uqYCXFrmhJH+ESsk4J+4iYB7OSCV7g9A9mwrtjr55DkeT9lJ
+         pCKxccKpldCVGil2N6pSqIHM+yeA8kj4itE54RNkNHx01t3F6qlPQx7wKBN4FGv+ZPo0
+         KouDbP8BgQnCs3GrYZtvPcWG3q1z7nXiugXZaC2parlUH4dKoy0KV5NKFqxLubelN5Kw
+         kRTV95Ens37sR7P+Y4a08Ej5ywSUkGL2BSCZ2DN1UECB5i2l1SAbmLnW8UzDPEfjQKeb
+         Vn3Q==
+X-Gm-Message-State: AIkVDXK7RojPZPVTDVemoRCgUksR4tOtjralpDXeJOxw0qsOLPYGXry+B+UXiancNmxgHHXbZgLzMrShx8L9Mw==
+X-Received: by 10.46.20.14 with SMTP id u14mr3314821ljd.30.1485799002482; Mon,
+ 30 Jan 2017 09:56:42 -0800 (PST)
+MIME-Version: 1.0
+Received: by 10.25.199.13 with HTTP; Mon, 30 Jan 2017 09:56:42 -0800 (PST)
+In-Reply-To: <1485713194-11782-1-git-send-email-schumacher@kde.org>
+References: <1485713194-11782-1-git-send-email-schumacher@kde.org>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Mon, 30 Jan 2017 18:56:42 +0100
+Message-ID: <CAP8UFD3=vaFupEDay-5vrMBwK_YJezysUUvySxnUUZxuW7m_WQ@mail.gmail.com>
+Subject: Re: [RFC] Proof of concept: Support multiple authors
+To:     Cornelius Schumacher <schumacher@kde.org>
+Cc:     git <git@vger.kernel.org>, Josh Triplett <josh@joshtriplett.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Junio C Hamano <gitster@pobox.com>
+Hi,
 
-A common pattern to check N attributes for many paths is to
+On Sun, Jan 29, 2017 at 7:06 PM, Cornelius Schumacher
+<schumacher@kde.org> wrote:
+> This patch is a proof of concept implementation of support for
+> multiple authors. It adds an optional `authors` header to commits
+> which is set when there are authors configured in the git config.
 
- (1) prepare an array A of N attr_check_item items;
- (2) call git_attr() to intern the N attribute names and fill A;
- (3) repeatedly call git_check_attrs() for path with N and A;
+I am just wondering if you have read and taken into account the
+previous threads on this mailing list about the same subject, like for
+example this one:
 
-A look-up for these N attributes for a single path P scans the
-entire attr_stack, starting from the .git/info/attributes file and
-then .gitattributes file in the directory the path P is in, going
-upwards to find .gitattributes file found in parent directories.
+https://public-inbox.org/git/CAOvwQ4i_HL7XGnxZrVu3oSnsbnTyxbg8Vh6vzi4c1isSrrexYQ@mail.gmail.com/
 
-An earlier commit 06a604e6 (attr: avoid heavy work when we know the
-specified attr is not defined, 2014-12-28) tried to optimize out
-this scanning for one trivial special case: when the attribute being
-sought is known not to exist, we do not have to scan for it.  While
-this may be a cheap and effective heuristic, it would not work well
-when N is (much) more than 1.
+> A new command `git-authors` is used to manage the authors settings.
+> Authors are identified by initials and their names and emails are
+> set in a `.git_authors_map` file.
+>
+> Signed-off-by: Cornelius Schumacher <schumacher@kde.org>
+> ---
+>
+> When doing pair programming we have to work around the limitation that
+> git can only have a single author in each commit. There are some tools
+> which help with that such as [git-duet] [1], but there are still some
+> limits, because the information about multiple authors is not reflected
+> in the native git data model.
+>
+> Here is a proposal how to change that and implement native support for
+> multiple authors in git. It comes with a patch as a proof of concept.
+> The patch by no means is finished, it doesn't cover all cases and needs
+> more tests and error handling. It's meant as an illustration of the
+> concept.
+>
+> The basic idea is to introduce a new optional `authors` header in
+> commits which contains a list of authors. The header is set in each new
+> commit when there is an entry `authors.current` in the git config listing
+> the current authors. When this config is not there the behavior falls
+> back to the current standard behavior.
+>
+> When the header is there it is treated in the same way as the author
+> header. It's preserved on merges and similar operations, is displayed in
+> git show, and used to create a list of `From` addresses in `format-patch`.
+> Email supports multiple `From` addresses as specified in section 3.6.2 of
+> RFC 5322.
+>
+> When multiple authors are configured, they still write the standard author
+> header to keep backwards compatibility. The first author is used as author
+> and committer. In the future it might be good to implement something like
+> automatic rotation of the order of authors to give credit in a fair way.
+>
+> To make it easier to work with the authors there is a new command
+> `git-authors`. It sets the list of authors using initials as shortcut for
+> the full configuration with name and email. The mapping of initials to
+> names and email addresses is taken from a file `.git_authors_map` in the
+> home directory of the users. This way it's possible to quickly set a list
+> of authors by running a command such as `git authors ab cd`. This is
+> useful when doing pair programming because the people working together
+> usually switch quite frequently and using the command with the intials is
+> quicker and less error-prone than editing the configuration with full
+> names and emails.
+>
+> The command also supports setting a single author, setting more than two
+> authors or clearing the configuration for multiple authors to go back to
+> the standard behavior without the new authors header.
+>
+> The concept of the command and the mappings file is similar to what
+> git-duet does, so that it should be familiar to many people doing pair
+> programming. The behavior of git doesn't change when the new feature is
+> not used and when it's used it should be backwards compatible so that it
+> doesn't break existing functionality. This should make a smooth transition
+> for users who choose to make use of it.
+>
+> Adding support for multiple authors would make the life of developers doing
+> pair programming easier. It would be useful in itself, but it would also
+> need support by other tools around git to use its full potential.
 
-What we would want is a more customized way to skip irrelevant
-entries in the attribute stack, and the definition of irrelevance
-is tied to the set of attributes passed to git_check_attrs() call,
-i.e. the set of attributes being sought.  The data necessary for
-this optimization needs to live alongside the set of attributes, but
-a simple array of git_attr_check_elem simply does not have any place
-for that.
+From what I recall from previous discussions, the most important
+question is: are you sure that it doesn't break any other tool?
 
-Introduce "struct attr_check" that contains N, the number of
-attributes being sought, and A, the array that holds N
-attr_check_item items, and a function git_check_attr() that
-takes a path P and this structure as its parameters.  This structure
-can later be extended to hold extra data necessary for optimization.
-
-Also, to make it easier to write the first two steps in common
-cases, introduce git_attr_check_initl() helper function, which takes
-a NULL-terminated list of attribute names and initialize this
-structure.
-
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
-Signed-off-by: Stefan Beller <sbeller@google.com>
-Signed-off-by: Brandon Williams <bmwill@google.com>
----
-
-This is the correct 15/27 patch that doesn't have the rebase mistake discovered
-by Stefan.
-
- attr.c | 74 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- attr.h | 17 +++++++++++++++
- 2 files changed, 91 insertions(+)
-
-diff --git a/attr.c b/attr.c
-index 2f180d609..e3298516a 100644
---- a/attr.c
-+++ b/attr.c
-@@ -370,6 +370,75 @@ static void free_attr_elem(struct attr_stack *e)
- 	free(e);
- }
- 
-+struct attr_check *attr_check_alloc(void)
-+{
-+	return xcalloc(1, sizeof(struct attr_check));
-+}
-+
-+struct attr_check *attr_check_initl(const char *one, ...)
-+{
-+	struct attr_check *check;
-+	int cnt;
-+	va_list params;
-+	const char *param;
-+
-+	va_start(params, one);
-+	for (cnt = 1; (param = va_arg(params, const char *)) != NULL; cnt++)
-+		;
-+	va_end(params);
-+
-+	check = attr_check_alloc();
-+	check->nr = cnt;
-+	check->alloc = cnt;
-+	check->items = xcalloc(cnt, sizeof(struct attr_check_item));
-+
-+	check->items[0].attr = git_attr(one);
-+	va_start(params, one);
-+	for (cnt = 1; cnt < check->nr; cnt++) {
-+		const struct git_attr *attr;
-+		param = va_arg(params, const char *);
-+		if (!param)
-+			die("BUG: counted %d != ended at %d",
-+			    check->nr, cnt);
-+		attr = git_attr(param);
-+		if (!attr)
-+			die("BUG: %s: not a valid attribute name", param);
-+		check->items[cnt].attr = attr;
-+	}
-+	va_end(params);
-+	return check;
-+}
-+
-+struct attr_check_item *attr_check_append(struct attr_check *check,
-+					  const struct git_attr *attr)
-+{
-+	struct attr_check_item *item;
-+
-+	ALLOC_GROW(check->items, check->nr + 1, check->alloc);
-+	item = &check->items[check->nr++];
-+	item->attr = attr;
-+	return item;
-+}
-+
-+void attr_check_reset(struct attr_check *check)
-+{
-+	check->nr = 0;
-+}
-+
-+void attr_check_clear(struct attr_check *check)
-+{
-+	free(check->items);
-+	check->items = NULL;
-+	check->alloc = 0;
-+	check->nr = 0;
-+}
-+
-+void attr_check_free(struct attr_check *check)
-+{
-+	attr_check_clear(check);
-+	free(check);
-+}
-+
- static const char *builtin_attr[] = {
- 	"[attr]binary -diff -merge -text",
- 	NULL,
-@@ -865,6 +934,11 @@ int git_all_attrs(const char *path, int *num, struct attr_check_item **check)
- 	return 0;
- }
- 
-+int git_check_attr(const char *path, struct attr_check *check)
-+{
-+	return git_check_attrs(path, check->nr, check->items);
-+}
-+
- void git_attr_set_direction(enum git_attr_direction new, struct index_state *istate)
- {
- 	enum git_attr_direction old = direction;
-diff --git a/attr.h b/attr.h
-index efc7bb3b3..e611b139a 100644
---- a/attr.h
-+++ b/attr.h
-@@ -29,6 +29,22 @@ struct attr_check_item {
- 	const char *value;
- };
- 
-+struct attr_check {
-+	int nr;
-+	int alloc;
-+	struct attr_check_item *items;
-+};
-+
-+extern struct attr_check *attr_check_alloc(void);
-+extern struct attr_check *attr_check_initl(const char *, ...);
-+
-+extern struct attr_check_item *attr_check_append(struct attr_check *check,
-+						 const struct git_attr *attr);
-+
-+extern void attr_check_reset(struct attr_check *check);
-+extern void attr_check_clear(struct attr_check *check);
-+extern void attr_check_free(struct attr_check *check);
-+
- /*
-  * Return the name of the attribute represented by the argument.  The
-  * return value is a pointer to a null-delimited string that is part
-@@ -37,6 +53,7 @@ struct attr_check_item {
- extern const char *git_attr_name(const struct git_attr *);
- 
- int git_check_attrs(const char *path, int, struct attr_check_item *);
-+extern int git_check_attr(const char *path, struct attr_check *check);
- 
- /*
-  * Retrieve all attributes that apply to the specified path.  *num
--- 
-2.11.0.483.g087da7b7c-goog
-
+> This
+> might take a while, but I think it's worth the effort.
+>
+> I'm willing to continue to work on this and create a patch which is suitable
+> for inclusion in git.
