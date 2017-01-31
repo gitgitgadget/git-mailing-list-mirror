@@ -7,63 +7,152 @@ X-Spam-Status: No, score=-6.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C17E820D07
-	for <e@80x24.org>; Tue, 31 Jan 2017 02:34:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 55E3D20D07
+	for <e@80x24.org>; Tue, 31 Jan 2017 02:37:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752528AbdAaCe0 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 30 Jan 2017 21:34:26 -0500
-Received: from mail-qk0-f175.google.com ([209.85.220.175]:35110 "EHLO
-        mail-qk0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751909AbdAaCeZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 Jan 2017 21:34:25 -0500
-Received: by mail-qk0-f175.google.com with SMTP id u25so150077007qki.2
-        for <git@vger.kernel.org>; Mon, 30 Jan 2017 18:34:25 -0800 (PST)
+        id S1752824AbdAaChM (ORCPT <rfc822;e@80x24.org>);
+        Mon, 30 Jan 2017 21:37:12 -0500
+Received: from mail-qk0-f179.google.com ([209.85.220.179]:33791 "EHLO
+        mail-qk0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751350AbdAaChL (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 Jan 2017 21:37:11 -0500
+Received: by mail-qk0-f179.google.com with SMTP id s140so150847005qke.0
+        for <git@vger.kernel.org>; Mon, 30 Jan 2017 18:37:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=SSps1yHBUKpwOeKEnHY3DXpR2tDeQ+I2vk8Px3jSPTs=;
-        b=ebtiKXWuzlOXWivxOnQ8QQ1oOe8wWUerfWG8P6F4PXiOxUDI7YLu/RNkcL5yOLn/B5
-         zNMo0pKNsslQkqpETNR93Id3rnt9EcQMyrvJlLIFN27L03SjyaWigOK8P40tyT0gcJvQ
-         MFSZFoAtLY7eRAuei+Xo52t8YTS6DtL8FPHR5Yy8q/Ow/zega+4pkESEJKVhAXH9G5iG
-         GZ5HTKnHcxiZ3NvEE+iSSQ6SPpk3mNPWpZ8ey7DwQzLYhAv9k51yDZvJAakU4xbLtMtA
-         cB9zn0V+d4xfx3PVawRAKqmsKbTma1GErHVmlMqX5zoU4zOQXArhoPf5orxA+dCbuCcO
-         GVmQ==
+        bh=fuyedUfY3ypq+qQ6eW4rD8ytoG6g/mzUJGXELQROyT4=;
+        b=JADZYtNcj+gVl4ZlgYRqb8Yhle4lokrNoGB/Dd5N5zmL0nZkTLBT9z8REjY1bRXAwe
+         C5cnl21yNzfYPKqMpWs46nXWL6dDgbeL25jndUWO8OoXuNBEzE1QFzU678dzPT2PBhPW
+         x6oWlu3Bu5PDjDJEroAEKlYndQOhRNvQgOc08BG80qQHIw407qP9BQte30+v1wvz9Goj
+         30uS29oUWgpVmqXkG8VaNNuBe4eJC86eUBad2Zyss2qgKo5npDLb40OM1MAwmVtWqPgA
+         5btonviAC3J2YSo3i4Gwr/hN2GQUleM36UJ3aBTYOs5/KniJ+HgpmNhXysCjSqaOAzyh
+         qKag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=SSps1yHBUKpwOeKEnHY3DXpR2tDeQ+I2vk8Px3jSPTs=;
-        b=MAqbtLFLhcYSVMRKOaOYJ7+HTK4ZuSo904mpoTjnOw5vrRZfmVPg5bI04tCavqQElu
-         2CyAtQafvr+XO8FH/X7xUcl4ZFTVsWSNEs1wOhdTOLAWxOcVsFDvBQ04/2a1laJfmg0J
-         TmsmNFLo2+SGSoyNLN9DYMNpPx/emlKqd/zv0cKQyCME3KnXxY1Gw3dhr9IdnVa8HybR
-         JWkCpZgMFFOzbOBlgZZuL9978J9/bLPx0+RQ7EGWPt8TuEvR/rHt9LGQi/QISzat2FT7
-         wDUOzdT+dR9qKKsXb/K4tlrt1OKRCjmNhC2S6oCF6gdhFyPl/rToI8PSkxjdLPg1bgSB
-         l+3w==
-X-Gm-Message-State: AIkVDXJZumjJE1hwU/SCJni2ItGwbD4uYAmqq40BPMYoLkMoqjoYjKpyazlw+viHmM6GEuo50SiGjNaW7v9J0w==
-X-Received: by 10.55.118.67 with SMTP id r64mr23991159qkc.285.1485830059833;
- Mon, 30 Jan 2017 18:34:19 -0800 (PST)
+        bh=fuyedUfY3ypq+qQ6eW4rD8ytoG6g/mzUJGXELQROyT4=;
+        b=avqOIy0ux/LI0Ob5FMuk5QSy60ZFi/Bs1ujFLLlOJ3+MReThep4rTypXLkLhNoA8qb
+         67U0emtiEkUkmA11JBQkShrcSeSl7Nyx6g5qWXzq4N2yNJo9/gtjkuKPl54ZDkJ9UKe7
+         NRkQ53SS9y7UiTInGyX86sLi/WxurM2L34DQv0wkz8cYqLpbnxJ2QcLFoXahwDRd68oL
+         4BXCNvyHeh2DRpNzyzhsG7XFdckhQjn9vrDtwQC+QAXUKMswZW6Ba/VFcGHc5cPGXh4N
+         j0TOZ+jD+3WYF4SM7gq+moQvCXHnnIqqZOPlGa5BUjyagHGB7piVBqeBSqyHoznN798A
+         a7hA==
+X-Gm-Message-State: AIkVDXJ1svhzVN+LM+mUONB8szXoKqSjLLDoTFSCUFza4IhEIjDWdActaWF+iR8/SHPV2HRGdgNNKcv/wd6gmg==
+X-Received: by 10.55.102.17 with SMTP id a17mr24395974qkc.277.1485830230487;
+ Mon, 30 Jan 2017 18:37:10 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.237.45.226 with HTTP; Mon, 30 Jan 2017 18:34:19 -0800 (PST)
-In-Reply-To: <20170131022830.8538-1-eantoranz@gmail.com>
-References: <20170131022830.8538-1-eantoranz@gmail.com>
+Received: by 10.237.45.226 with HTTP; Mon, 30 Jan 2017 18:37:10 -0800 (PST)
+In-Reply-To: <CAOc6etZZSgeBRwQA4C4Ag5A48W8tAAArdOaaKxkTOVvVGi+EpQ@mail.gmail.com>
+References: <CAOc6etaCk=OEyarMNhorM94MBnYRscCkJBM-K08snv1ecmOaPQ@mail.gmail.com>
+ <20170128035321.yrcqwkg2fiwadxj4@sigill.intra.peff.net> <xmqqd1f4uug6.fsf@gitster.mtv.corp.google.com>
+ <20170130232559.krdxkt4dq4lfv4rj@sigill.intra.peff.net> <CAOc6etZZSgeBRwQA4C4Ag5A48W8tAAArdOaaKxkTOVvVGi+EpQ@mail.gmail.com>
 From:   Edmundo Carmona Antoranz <eantoranz@gmail.com>
-Date:   Mon, 30 Jan 2017 20:34:19 -0600
-Message-ID: <CAOc6etbZ56V_9GSwOO3eFqg1TCwXT3+hDT67xEgZvui7DO-dRg@mail.gmail.com>
-Subject: Re: [PATCH] blame: draft of line format
-To:     Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        pranit.bauva@gmail.com
-Cc:     Edmundo Carmona Antoranz <eantoranz@gmail.com>
+Date:   Mon, 30 Jan 2017 20:37:10 -0600
+Message-ID: <CAOc6etYzAeD32oSjrvmv-PBJTdAGobsQ30iH8Q+Z9ShWOqiHfQ@mail.gmail.com>
+Subject: Re: difflame
+To:     Jeff King <peff@peff.net>
+Cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I'm basing in on the "pretty API" so that we don't have to reinvent
-the wheel. I have already noticed that many of the formatting options
-available for pretty are not working... I'm sure it would require some
-work setting up the call to pretty api but the basic is laid out
-there.
+Maybe a little work on blame to get the actual revision where some
+lines were "deleted"?
 
-Let me know of your thoughts.
+Something like git blame --blame-deletion that could be based on --reverse?
+
+On Mon, Jan 30, 2017 at 7:35 PM, Edmundo Carmona Antoranz
+<eantoranz@gmail.com> wrote:
+> I'm thinking of something like this:
+>
+> Say I just discovered a problem in a file.... I want to see who worked
+> on it since some revision that I know is working fine (or even
+> something as generic as HEAD~100..). It could be a number of people
+> with different revisions. I would diff to see what changed.... and
+> blame the added lines (blame reverse to try to get as close as
+> possible with a single command in case I want to see what happened
+> with something that was deleted). If I could get blame information of
+> added/deleted lines in a single run, that would help a lot.
+>
+> Lo and behold: difflame.
+>
+>
+>
+> On Mon, Jan 30, 2017 at 5:26 PM, Jeff King <peff@peff.net> wrote:
+>> On Mon, Jan 30, 2017 at 01:08:41PM -0800, Junio C Hamano wrote:
+>>
+>>> Jeff King <peff@peff.net> writes:
+>>>
+>>> > On Tue, Jan 17, 2017 at 11:24:02PM -0600, Edmundo Carmona Antoranz wrote:
+>>> >
+>>> >> For a very long time I had wanted to get the output of diff to include
+>>> >> blame information as well (to see when something was added/removed).
+>>> >
+>>> > This is something I've wanted, too. The trickiest part, though, is
+>>> > blaming deletions, because git-blame only tracks the origin of content,
+>>> > not the origin of a change.
+>>>
+>>> Hmph, this is a comment without looking at what difflame does
+>>> internally, so you can ignore me if I am misunderstood what problem
+>>> you are pointing out, but I am not sure how "tracks the origin of
+>>> content" could be a problem.
+>>>
+>>> If output from "git show" says this:
+>>>
+>>>       --- a/file
+>>>       +++ b/file
+>>>       @@ -1,5 +1,6 @@
+>>>        a
+>>>        b
+>>>       -c
+>>>       +C
+>>>       +D
+>>>        d
+>>>        e
+>>>
+>>> in order to annotate lines 'a', 'b', 'd', and 'e' for their origin,
+>>> you would run 'blame' on the commit the above output was taken from
+>>> (or its parent---they are in the context so either would be OK).
+>>>
+>>> You know where 'C' and 'D' came from already.  It's the commit you
+>>> are feeding "git show".
+>>
+>> I think the point (or at least as I understand it) is that the diff is
+>> not "git show" for a particular commit. It could be part of a much
+>> larger diff that covers many commits.
+>>
+>> As a non-hypothetical instance, I have a fork of git.git that has
+>> various enhancements. I want to feed those enhancements upstream. I need
+>> to know which commits should be cherry-picked to get those various
+>> enhancements.
+>>
+>> Looking at "log origin..fork" tells me too many commits, because it
+>> includes ones which aren't useful anymore. Either because they already
+>> went upstream, or because they were cherry-picked to the fork and their
+>> upstream counterparts merged (or even equivalent commits made upstream
+>> that obsoleted the features).
+>>
+>> Looking at "git diff origin fork" tells me what the actual differences
+>> are, but it doesn't show me which commits are responsible for them.
+>>
+>> I can "git blame" each individual line of the diff (starting with "fork"
+>> as the tip), but that doesn't work for lines that no longer exist (i.e.,
+>> when the interesting change is a deletion).
+>>
+>>> In order to run blame to find where 'c' came from, you need to start
+>>> at the _parent_ of the commit the above output came from, and the
+>>> hunk header shows which line range to find the final 'c'.
+>>
+>> So perhaps that explains my comment more. "blame" is not good for
+>> finding which commit took away a line. I've tried using "blame
+>> --reverse", but it shows you the parent of the commit you are looking
+>> for, which is slightly annoying. :)
+>>
+>> "git log -S" is probably a better tool for finding that.
+>>
+>> -Peff
