@@ -2,113 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 236821F437
-	for <e@80x24.org>; Tue, 31 Jan 2017 12:20:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EAAD51F437
+	for <e@80x24.org>; Tue, 31 Jan 2017 13:18:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752018AbdAaMUk (ORCPT <rfc822;e@80x24.org>);
-        Tue, 31 Jan 2017 07:20:40 -0500
-Received: from mout.gmx.net ([212.227.17.21]:56232 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752029AbdAaMUV (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 31 Jan 2017 07:20:21 -0500
-Received: from virtualbox ([37.201.192.48]) by mail.gmx.com (mrgmx101
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0LjvV7-1c1wRv3p7Z-00bpq1; Tue, 31
- Jan 2017 13:13:31 +0100
-Date:   Tue, 31 Jan 2017 13:13:29 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/5] add SWAP macro
-In-Reply-To: <6760493c-3684-b8bb-2c01-6621b8417246@web.de>
-Message-ID: <alpine.DEB.2.20.1701311305030.3469@virtualbox>
-References: <8ef4c833-45bd-6831-0683-6d01f30aa518@web.de> <0bdb58a6-3a7f-2218-4b70-c591ae90e95e@web.de> <alpine.DEB.2.20.1701301637570.3469@virtualbox> <9bcae427-d654-a671-4368-030150168102@web.de> <alpine.DEB.2.20.1701301806591.3469@virtualbox>
- <6760493c-3684-b8bb-2c01-6621b8417246@web.de>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+        id S1752232AbdAaNSk convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Tue, 31 Jan 2017 08:18:40 -0500
+Received: from zimbra-vnc.tngtech.com ([83.144.240.98]:42697 "EHLO
+        proxy.tng.vnc.biz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752404AbdAaNQa (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 31 Jan 2017 08:16:30 -0500
+Received: from localhost (localhost [127.0.0.1])
+        by proxy.tng.vnc.biz (Postfix) with ESMTP id 03D5C1E306D;
+        Tue, 31 Jan 2017 14:16:26 +0100 (CET)
+Received: from proxy.tng.vnc.biz ([127.0.0.1])
+        by localhost (proxy.tng.vnc.biz [127.0.0.1]) (amavisd-new, port 10032)
+        with ESMTP id Xx_5tK66jN70; Tue, 31 Jan 2017 14:16:25 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+        by proxy.tng.vnc.biz (Postfix) with ESMTP id 9BB2B1E306E;
+        Tue, 31 Jan 2017 14:16:25 +0100 (CET)
+X-Virus-Scanned: amavisd-new at 
+Received: from proxy.tng.vnc.biz ([127.0.0.1])
+        by localhost (proxy.tng.vnc.biz [127.0.0.1]) (amavisd-new, port 10026)
+        with ESMTP id S6lgVJG1nwwH; Tue, 31 Jan 2017 14:16:25 +0100 (CET)
+Received: from [192.168.178.72] (46.128.140.114.dynamic.cablesurf.de [46.128.140.114])
+        by proxy.tng.vnc.biz (Postfix) with ESMTPSA id 562EB1E306D;
+        Tue, 31 Jan 2017 14:16:25 +0100 (CET)
+Subject: Re: [PATCH v3 2/3] refs: add option core.logAllRefUpdates = always
+To:     Junio C Hamano <gitster@pobox.com>
+References: <xmqqvat11k1i.fsf@gitster.mtv.corp.google.com>
+ <20170127100948.29408-1-cornelius.weig@tngtech.com>
+ <20170127100948.29408-2-cornelius.weig@tngtech.com>
+ <xmqq37g0us5p.fsf@gitster.mtv.corp.google.com>
+ <xmqq8tpstaus.fsf@gitster.mtv.corp.google.com>
+Cc:     peff@peff.net, git@vger.kernel.org
+From:   Cornelius Weig <cornelius.weig@tngtech.com>
+Message-ID: <68b6ac92-459d-849d-9589-e1fa500e2572@tngtech.com>
+Date:   Tue, 31 Jan 2017 14:16:25 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.7.0
 MIME-Version: 1.0
-Content-Type: multipart/mixed; BOUNDARY="8323329-2143509909-1485864811=:3469"
-X-Provags-ID: V03:K0:jaD43E1gIPOOcCVsO0pdKuu9mN2XAiwNDQQzcBaS9VNO7rbtOKh
- Wbeny77njdjULrsP0DSCC1petm6y4uryrz4TToP9N0PtsbJMpE3StOIba4hucaavBph0cRH
- iw6kz6HOV20u0lhj//pzPQoKUWSKKQFBHC2lZpfIwhQKainRDJ/6Sf1dOpvbtlzLXC99a4X
- iFIK/typGNg6S9h1Tss9A==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:qlJgMgE6BK0=:X2t6W8UKMi8uY/LaLNQVV9
- TJjXLD49b7tZOmpB71t3kgov7fWCzTdo1CCLn5Bgb/15KD5VtcHIvQfzAOuC1xjpqdkluJ8fs
- 9P0ngoCM3zarxQhxbgAjoj0+xVMmLpwOXcwUM4kKSkR3SoydhdVG6VQ52DxHb/xlVykzR+Uzu
- qkG2ydO3zrzBSklzPSDxeAfVXSplh5yC1RYESUdKW8hdJ6JKpsxgZUUSsM/NFUwfLZW/IdWQu
- av/9I+s5hQ1bjLqMRaaWzJyX/LKTlbukMMIRjjSmZKbBJfB09Ke8hMfVd2NFcA61z/3xcELSs
- HP0osB4/prW00MSEQ58Ll3GgMfVF4/1YlwM3lAsyZTgowtsxzcPh3NnD+/ex+yUkuLKKhOhZJ
- l4/SGUxeMpJK6yvUkW3dOyv0/Ak5aY7+wPDTGuTtcMgtpDFC6WXWD9ecvvMlVFNxwIjbinAQm
- uKmnUocyrAisVIjypuXsnAYDKylsjgbrO+3Z/x8Xe0Op9o+He5ECCKS0XBX3zy4H+fQ12zkfG
- 2fjZneoqE4Z7QLd4qrmoMJ+Z/H52wTSymtm3bKPR61B1aszAM8neFC301JgBMrRRlQ7bLBNUp
- GQ/WyNDOXS+G33WYd4VFIlcTMjIe62ajVOH0qbEZynvM3WVn08Qs49gO1AJiDkRusdlp7xSSA
- bKefbMS9FWs4+Kw93x8L/RAsp8fxZ+C89sBtqaovjXxGHMgLrLSJlfE7R1tdFVml6Hl2aDvPR
- O/k7Hriqurrmy6sm44nkpw+p6lyaNBWqDUSnCA1epiNJt1vaVxYlkXXxQ5n86xpG1VxxUlawJ
- KtCIPivsvHDtgnH0c5R86eyms4f8PvN7sn0a3jY4ryiPjU3a+Rf1O6LeAnCYuXI2WDn9U0CP4
- TpR8u2tEEp2nqBjHsuxTPRUz4J1dY09SNvwrvLLdJK59Wpxfiwm2/wjLfMAfSWQtydBU96G7W
- WrNjxet1vTrjBUW8l8z3dhrvI64pI87jltS7U3Zg8psGzN/P9Cs/zBvEahxdpRAn3zU8cLc5H
- rf1M+wJNE77cihnIS1J4/Tgy0k0cGyBRoTKwe1xzm8qU
+In-Reply-To: <xmqq8tpstaus.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8BIT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Hi,
 
---8323329-2143509909-1485864811=:3469
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+> The extra free(refname) is to plug the leak I pointed out, and the
+> type of refname is no longer const, because "const char *" cannot be
+> free()d without casting, and in this codepath I do not see a reason
+> to mark it as const.
 
-Hi Ren=C3=A9,
+Ooops.. thanks for not yelling at me for that :-/
 
-On Mon, 30 Jan 2017, Ren=C3=A9 Scharfe wrote:
+> When queued on top of 4e59582ff7 ("Seventh batch for 2.12",
+> 2017-01-23), however, this fails t2017#9 (orphan with -l makes
+> reflog when core.logAllRefUpdates = false).
 
-> Am 30.01.2017 um 21:48 schrieb Johannes Schindelin:
->
-> > The commit you quoted embarrasses me, and I have no excuse for it. I
-> > would love to see that myswap() ugliness fixed by replacing it with a
-> > construct that is simpler, and generates good code even without any
-> > smart compiler.
->=20
-> I don't see a way to do that without adding a type parameter.
+And again, thanks for not yelling. I overlooked that the
+"should_autocreate_reflog" return value should have been negated as
+shown below. Should I resend this patch, or is it easier for you
+to do the change yourself?
 
-Exactly. And you know what? I would be very okay with that type parameter.
 
-Coccinelle [*1*] should be able to cope with that, too, mehtinks.
-
-It would be trivially "optimized" out of the box, even when compiling with
-Tiny C or in debug mode.
-
-And it would even allow things like this:
-
-#define SIMPLE_SWAP(T, a, b) do { T tmp_ =3D a; a =3D b; b =3D tmp_; } whil=
-e (0)
-=2E..
-=09uint32_t large;
-=09char nybble;
-
-=09...
-
-=09if (!(large & ~0xf)) {
-=09=09SIMPLE_SWAP(char, nybble, large);
-=09=09...
-=09}
-
-i.e. mixing types, when possible.
-
-And while I do not necessarily expect that we need anything like this
-anytime soon, merely the fact that it allows for this flexibility, while
-being very readable at the same time, would make it a pretty good design
-in my book.
-
-Ciao,
-Dscho
-
-P.S.: I am sure glad they use the French name and do not translate it to
-English.
---8323329-2143509909-1485864811=:3469--
+Interdiff v2..v3:
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index 81ea2ed..1e8631a 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -612,8 +612,10 @@ static void update_refs_for_switch(const struct checkout_opts *opts,
+        const char *old_desc, *reflog_msg;
+        if (opts->new_branch) {
+                if (opts->new_orphan_branch) {
+-                       const char *refname = mkpathdup("refs/heads/%s", opts->new_orphan_branch);
+-                       if (opts->new_branch_log && should_autocreate_reflog(refname)) {
++                       char *refname;
++
++                       refname = mkpathdup("refs/heads/%s", opts->new_orphan_branch);
++                       if (opts->new_branch_log && !should_autocreate_reflog(refname)) {
+                                int ret;
+                                struct strbuf err = STRBUF_INIT;
+ 
+@@ -622,6 +624,7 @@ static void update_refs_for_switch(const struct checkout_opts *opts,
+                                        fprintf(stderr, _("Can not do reflog for '%s': %s\n"),
+                                                opts->new_orphan_branch, err.buf);
+                                        strbuf_release(&err);
++                                       free(refname);
+                                        return;
+                                }
+                                strbuf_release(&err);
