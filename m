@@ -6,96 +6,245 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3D28C1F6DC
-	for <e@80x24.org>; Tue, 31 Jan 2017 08:34:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F34B71F6DC
+	for <e@80x24.org>; Tue, 31 Jan 2017 09:04:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750868AbdAaIeh (ORCPT <rfc822;e@80x24.org>);
-        Tue, 31 Jan 2017 03:34:37 -0500
-Received: from mx0.elegosoft.com ([78.47.87.163]:58888 "EHLO mx0.elegosoft.com"
+        id S1751164AbdAaJE2 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 31 Jan 2017 04:04:28 -0500
+Received: from mx0.elegosoft.com ([78.47.87.163]:59095 "EHLO mx0.elegosoft.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750792AbdAaIeg (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 31 Jan 2017 03:34:36 -0500
-Received: from localhost (i59F7870A.versanet.de [89.247.135.10])
-        by mx0.elegosoft.com (Postfix) with ESMTPSA id 1B32116C848;
-        Tue, 31 Jan 2017 09:26:45 +0100 (CET)
-Date:   Tue, 31 Jan 2017 09:26:44 +0100
-From:   Patrick Steinhardt <patrick.steinhardt@elego.de>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>,
-        Philip Oakley <philipoakley@iee.org>
-Subject: Re: [PATCH v4 0/5] urlmatch: allow wildcard-based matches
-Message-ID: <20170131082644.GA560@pks-xps>
-References: <20170123130635.29577-1-patrick.steinhardt@elego.de>
- <cover.1485512626.git.patrick.steinhardt@elego.de>
- <xmqqy3xstdh9.fsf@gitster.mtv.corp.google.com>
- <xmqqfuk0tb3j.fsf@gitster.mtv.corp.google.com>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-        protocol="application/pgp-signature"; boundary="pf9I7BMVVzbSWLtt"
-Content-Disposition: inline
-In-Reply-To: <xmqqfuk0tb3j.fsf@gitster.mtv.corp.google.com>
+        id S1750726AbdAaJEM (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 31 Jan 2017 04:04:12 -0500
+Received: from localhost (unknown [10.10.10.227])
+        by mx0.elegosoft.com (Postfix) with ESMTPSA id 542D216C889;
+        Tue, 31 Jan 2017 10:01:52 +0100 (CET)
+From:   Patrick Steinhardt <ps@pks.im>
+To:     git@vger.kernel.org
+Cc:     Patrick Steinhardt <patrick.steinhardt@elego.de>,
+        Junio C Hamano <gitster@pobox.com>,
+        Patrick Steinhardt <ps@pks.im>
+Subject: [PATCH v5 5/5] urlmatch: allow globbing for the URL host part
+Date:   Tue, 31 Jan 2017 10:01:47 +0100
+Message-Id: <542b3b76f6c23a2b0e1e1306b6e58ce522977bf3.1485853153.git.ps@pks.im>
+X-Mailer: git-send-email 2.11.0
+In-Reply-To: <cover.1485853153.git.ps@pks.im>
+References: <cover.1485853153.git.ps@pks.im>
+In-Reply-To: <cover.1485853153.git.ps@pks.im>
+References: <20170123130635.29577-1-patrick.steinhardt@elego.de> <cover.1485853153.git.ps@pks.im>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+From: Patrick Steinhardt <patrick.steinhardt@elego.de>
 
---pf9I7BMVVzbSWLtt
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+The URL matching function computes for two URLs whether they match not.
+The match is performed by splitting up the URL into different parts and
+then doing an exact comparison with the to-be-matched URL.
 
-On Mon, Jan 30, 2017 at 02:52:00PM -0800, Junio C Hamano wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
->=20
-> > Patrick Steinhardt <patrick.steinhardt@elego.de> writes:
-> >
-> >>  - I realized that with my patches, "ranking" of URLs was broken.
-> >>    Previously, we've always taken the longest matching URL. As
-> >>    previously, only the user and path could actually differ, only
-> >>    these two components were used for the comparison. I've
-> >>    changed this now to also include the host part so that URLs
-> >>    with a longer host will take precedence. This resulted in a
-> >>    the patch 4.
-> >
-> > Good thinking.  I was wondering about this, too.
-> >
-> > Thanks.  Will read it through and replace.
->=20
-> Ugh.  When applied on top of 4e59582ff7 ("Seventh batch for 2.12",
-> 2017-01-23), Git fails its self-test in t5551 #31 (I do not run with
-> EXPENSIVE so some tests liks #30 are skipped, if it matters).
->=20
+The main user of `urlmatch` is the configuration subsystem. It allows to
+set certain configurations based on the URL which is being connected to
+via keys like `http.<url>.*`. A common use case for this is to set
+proxies for only some remotes which match the given URL. Unfortunately,
+having exact matches for all parts of the URL can become quite tedious
+in some setups. Imagine for example a corporate network where there are
+dozens or even hundreds of subdomains, which would have to be configured
+individually.
 
-Thanks for letting me know. I didn't have any errors on my other
-machine, but was actually able to reproduce test failures on this
-one.
+Allow users to write an asterisk '*' in place of any 'host' or
+'subdomain' label as part of the host name.  For example,
+"http.https://*.example.com.proxy" sets "http.proxy" for all direct
+subdomains of "https://example.com", e.g. "https://foo.example.com", but
+not "https://foo.bar.example.com".
 
-Embarassingly, I forgot to zero-initialize the `struct
-urlmatch_item`, leading to undefined behavior when searching for
-configuration keys without a dot inside. This is the case for
-nearly all keys, except for example the ones with a URL inside.
+Signed-off-by: Patrick Steinhardt <patrick.steinhardt@elego.de>
+Helped-by: Junio C Hamano <gitster@pobox.com>
+---
+ Documentation/config.txt |  5 +++-
+ t/t1300-repo-config.sh   | 72 ++++++++++++++++++++++++++++++++++++++++++++++++
+ urlmatch.c               | 49 +++++++++++++++++++++++++++++---
+ 3 files changed, 121 insertions(+), 5 deletions(-)
 
-Will re-send a fixed version.
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index af2ae4cc0..ee155d8a6 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -1914,7 +1914,10 @@ http.<url>.*::
+   must match exactly between the config key and the URL.
+ 
+ . Host/domain name (e.g., `example.com` in `https://example.com/`).
+-  This field must match exactly between the config key and the URL.
++  This field must match between the config key and the URL. It is
++  possible to specify a `*` as part of the host name to match all subdomains
++  at this level. `https://*.example.com/` for example would match
++  `https://foo.example.com/`, but not `https://foo.bar.example.com/`.
+ 
+ . Port number (e.g., `8080` in `http://example.com:8080/`).
+   This field must match exactly between the config key and the URL.
+diff --git a/t/t1300-repo-config.sh b/t/t1300-repo-config.sh
+index 6c844d519..052f12021 100755
+--- a/t/t1300-repo-config.sh
++++ b/t/t1300-repo-config.sh
+@@ -1187,6 +1187,18 @@ test_expect_success 'urlmatch favors more specific URLs' '
+ 		cookieFile = /tmp/user.txt
+ 	[http "https://averylonguser@example.com/"]
+ 		cookieFile = /tmp/averylonguser.txt
++	[http "https://preceding.example.com"]
++		cookieFile = /tmp/preceding.txt
++	[http "https://*.example.com"]
++		cookieFile = /tmp/wildcard.txt
++	[http "https://*.example.com/wildcardwithsubdomain"]
++		cookieFile = /tmp/wildcardwithsubdomain.txt
++	[http "https://trailing.example.com"]
++		cookieFile = /tmp/trailing.txt
++	[http "https://user@*.example.com/"]
++		cookieFile = /tmp/wildcardwithuser.txt
++	[http "https://sub.example.com/"]
++		cookieFile = /tmp/sub.txt
+ 	EOF
+ 
+ 	echo http.cookiefile /tmp/root.txt >expect &&
+@@ -1207,6 +1219,66 @@ test_expect_success 'urlmatch favors more specific URLs' '
+ 
+ 	echo http.cookiefile /tmp/subdirectory.txt >expect &&
+ 	git config --get-urlmatch HTTP https://averylonguser@example.com/subdirectory >actual &&
++	test_cmp expect actual &&
++
++	echo http.cookiefile /tmp/preceding.txt >expect &&
++	git config --get-urlmatch HTTP https://preceding.example.com >actual &&
++	test_cmp expect actual &&
++
++	echo http.cookiefile /tmp/wildcard.txt >expect &&
++	git config --get-urlmatch HTTP https://wildcard.example.com >actual &&
++	test_cmp expect actual &&
++
++	echo http.cookiefile /tmp/sub.txt >expect &&
++	git config --get-urlmatch HTTP https://sub.example.com/wildcardwithsubdomain >actual &&
++	test_cmp expect actual &&
++
++	echo http.cookiefile /tmp/trailing.txt >expect &&
++	git config --get-urlmatch HTTP https://trailing.example.com >actual &&
++	test_cmp expect actual &&
++
++	echo http.cookiefile /tmp/sub.txt >expect &&
++	git config --get-urlmatch HTTP https://user@sub.example.com >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'urlmatch with wildcard' '
++	cat >.git/config <<-\EOF &&
++	[http]
++		sslVerify
++	[http "https://*.example.com"]
++		sslVerify = false
++		cookieFile = /tmp/cookie.txt
++	EOF
++
++	test_expect_code 1 git config --bool --get-urlmatch doesnt.exist https://good.example.com >actual &&
++	test_must_be_empty actual &&
++
++	echo true >expect &&
++	git config --bool --get-urlmatch http.SSLverify https://example.com >actual &&
++	test_cmp expect actual &&
++
++	echo true >expect &&
++	git config --bool --get-urlmatch http.SSLverify https://good-example.com >actual &&
++	test_cmp expect actual &&
++
++	echo true >expect &&
++	git config --bool --get-urlmatch http.sslverify https://deep.nested.example.com >actual &&
++	test_cmp expect actual &&
++
++	echo false >expect &&
++	git config --bool --get-urlmatch http.sslverify https://good.example.com >actual &&
++	test_cmp expect actual &&
++
++	{
++		echo http.cookiefile /tmp/cookie.txt &&
++		echo http.sslverify false
++	} >expect &&
++	git config --get-urlmatch HTTP https://good.example.com >actual &&
++	test_cmp expect actual &&
++
++	echo http.sslverify >expect &&
++	git config --get-urlmatch HTTP https://more.example.com.au >actual &&
+ 	test_cmp expect actual
+ '
+ 
+diff --git a/urlmatch.c b/urlmatch.c
+index f79887825..6c12f1a48 100644
+--- a/urlmatch.c
++++ b/urlmatch.c
+@@ -63,6 +63,49 @@ static int append_normalized_escapes(struct strbuf *buf,
+ 	return 1;
+ }
+ 
++static const char *end_of_token(const char *s, int c, size_t n)
++{
++	const char *next = memchr(s, c, n);
++	if (!next)
++		next = s + n;
++	return next;
++}
++
++static int match_host(const struct url_info *url_info,
++		      const struct url_info *pattern_info)
++{
++	const char *url = url_info->url + url_info->host_off;
++	const char *pat = pattern_info->url + pattern_info->host_off;
++	int url_len = url_info->host_len;
++	int pat_len = pattern_info->host_len;
++
++	while (url_len && pat_len) {
++		const char *url_next = end_of_token(url, '.', url_len);
++		const char *pat_next = end_of_token(pat, '.', pat_len);
++
++		if (pat_next == pat + 1 && pat[0] == '*')
++			/* wildcard matches anything */
++			;
++		else if ((pat_next - pat) == (url_next - url) &&
++			 !memcmp(url, pat, url_next - url))
++			/* the components are the same */
++			;
++		else
++			return 0; /* found an unmatch */
++
++		if (url_next < url + url_len)
++			url_next++;
++		url_len -= url_next - url;
++		url = url_next;
++		if (pat_next < pat + pat_len)
++			pat_next++;
++		pat_len -= pat_next - pat;
++		pat = pat_next;
++	}
++
++	return (!url_len && !pat_len);
++}
++
+ static char *url_normalize_1(const char *url, struct url_info *out_info, char allow_globs)
+ {
+ 	/*
+@@ -467,9 +510,7 @@ static int match_urls(const struct url_info *url,
+ 	}
+ 
+ 	/* check the host */
+-	if (url_prefix->host_len != url->host_len ||
+-	    strncmp(url->url + url->host_off,
+-		    url_prefix->url + url_prefix->host_off, url->host_len))
++	if (!match_host(url, url_prefix))
+ 		return 0; /* host names do not match */
+ 
+ 	/* check the port */
+@@ -528,7 +569,7 @@ int urlmatch_config_entry(const char *var, const char *value, void *cb)
+ 		struct url_info norm_info;
+ 
+ 		config_url = xmemdupz(key, dot - key);
+-		norm_url = url_normalize(config_url, &norm_info);
++		norm_url = url_normalize_1(config_url, &norm_info, 1);
+ 		free(config_url);
+ 		if (!norm_url)
+ 			return 0;
+-- 
+2.11.0
 
---pf9I7BMVVzbSWLtt
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIcBAABCAAGBQJYkEpEAAoJEBF8Z7aeq/Esbv0P/1/ZcOFnsTAleZuaeJ5Ck6/K
-SETggE8kSztu7sM7Add/I+o3/Kgs7JnKKqV616fbCW/E+td/eimKcTFM90nfctsr
-KCrofjqR5SaBT6znhwz87gQl+3uulqxGAfAkq72hC1iMni2UFprHLssOKT2AiOHS
-DNfZdhoOYXG/ucLTIprm/oL7WQQBEZfxKbuIx6GB3tFM+gce/Pd4uSn/pvGFKHCY
-tedQBOTaISOtAH3RGKbgNGUCfmD6CUXBxaQhxtqA594ma+8Ne2TikS8FmeerZ0wf
-6ABhQ9kQdTNcOpCxtVsSf8hoW3Rg2uBHggXs4SATIk8D7VxDPc/T44bqIW1xlMRt
-Xyi4shFtxNaMrRFC432Oroql8AVIWXBmkjRO8OeLmIcZnmUxQcGEX5fmh+it2ZTP
-egypdCiIgx2qMHhc0kermcKjNulj5gzG+W226gWPdUB+2EtN6fQt7yE821SJmmj3
-AeX8clL7puxW6Aw5kBND48MLUQJ6PfH1hcvX/xAoc4WI5QhcnOaB6iaS53Ro7iRw
-HcVFG/9L9HGzSd95mnFgB7MfMIQhUYgsH8fWQJHqMouzecC5BVZDlFz5zEL5hnY/
-dTwjuq6erSz7UotYsyUgmYF+arGvrlpP7Ng/u9dNTorqKr2U25vPjO5bq7SgtRR3
-MJ07Dwz6FEMVdKG/J/0j
-=Wahw
------END PGP SIGNATURE-----
-
---pf9I7BMVVzbSWLtt--
