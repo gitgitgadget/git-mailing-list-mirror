@@ -2,89 +2,150 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.9 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-6.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5C7A820D16
-	for <e@80x24.org>; Tue, 31 Jan 2017 01:12:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0A3DE20D0D
+	for <e@80x24.org>; Tue, 31 Jan 2017 01:43:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754624AbdAaBMt (ORCPT <rfc822;e@80x24.org>);
-        Mon, 30 Jan 2017 20:12:49 -0500
-Received: from mout.kundenserver.de ([212.227.126.133]:54767 "EHLO
-        mout.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753724AbdAaBMs (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 Jan 2017 20:12:48 -0500
-Received: from linux-7ekr.localnet ([89.15.67.211]) by
- mrelayeu.kundenserver.de (mreue003 [212.227.15.167]) with ESMTPSA (Nemesis)
- id 0Md04s-1cpLbh1dZq-00IGKa; Tue, 31 Jan 2017 01:54:55 +0100
-From:   Cornelius Schumacher <schumacher@kde.org>
-To:     git <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        Josh Triplett <josh@joshtriplett.org>
-Subject: Re: [RFC] Proof of concept: Support multiple authors
-Date:   Tue, 31 Jan 2017 01:54:53 +0100
-Message-ID: <3204990.cGxpkETTLk@linux-7ekr>
-User-Agent: KMail/4.14.10 (Linux/4.1.36-44-default; KDE/4.14.18; x86_64; ; )
-In-Reply-To: <xmqqinowuvd7.fsf@gitster.mtv.corp.google.com>
-References: <1485713194-11782-1-git-send-email-schumacher@kde.org> <CAP8UFD3=vaFupEDay-5vrMBwK_YJezysUUvySxnUUZxuW7m_WQ@mail.gmail.com> <xmqqinowuvd7.fsf@gitster.mtv.corp.google.com>
+        id S1751110AbdAaBnH (ORCPT <rfc822;e@80x24.org>);
+        Mon, 30 Jan 2017 20:43:07 -0500
+Received: from mail-qt0-f180.google.com ([209.85.216.180]:34351 "EHLO
+        mail-qt0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750772AbdAaBnG (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 Jan 2017 20:43:06 -0500
+Received: by mail-qt0-f180.google.com with SMTP id w20so152463834qtb.1
+        for <git@vger.kernel.org>; Mon, 30 Jan 2017 17:43:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=TSnDVyRDltHfrNzdpEkGFmQHaSuNMILdWJn7a+Att88=;
+        b=ra34v7HAxQqgubCSuwUdduTfHW02OBET40p1/XtYIuLXMgRDpYyhejO/6PozfR/cjP
+         C5/BGzlxjTnRzjzX/7ZSA3OTIA55JGwILbkNhfGOnjeVO9nKotilPzkbHzjDceM2L89z
+         rxWo4DlCqz+BVrNml+2i0KrlO/i634TjfmAyD8kUqRUvWS+g4+J+UHxSut5Ujiqg/Etf
+         Wbjbtn0107bExO1NtRR0BNfEwVbcGPdWIVzy5uaL83jDDSbCcN2RB8mAarQNCo85Y3pa
+         5A5d/hrl+sDmpsMjuDyy6hn5vjAaBPilf/oOOK0K4Ak0BHDpS14rrZsCZoJrrSMy9y1d
+         mDpA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=TSnDVyRDltHfrNzdpEkGFmQHaSuNMILdWJn7a+Att88=;
+        b=pW0C9u/LMViWc1Y6hYU4EdnjHw9KKetTGUY8jaT1juk3+HArXkReDhZVUz0TGN0+3l
+         4khq4cN9OOGRF+IbyG+i04b/KVVK8cBkSMh0Bcy+39GhMBE7ExqUMQw1q+6mg+DtZ+0o
+         qSrtgsVXEsYZjDrOJAZHh/SJTjhX+NJ/6/cxCHJzWp3DgjMUe7hHPXtRfKXH/aoGJ/bC
+         TQAHjE5K2tCwxadV5W3DDJjF34CJmjQyznLJXZYYOf4jB64AskL3XU042mmp3/4vmh4S
+         JCcuwYIBhLv1eWvAeYsdNoH+oHGwzlQF8cHdtWjDxnNrl/UZ8XZ4sQ/ImOAZDOP18OKH
+         OtRQ==
+X-Gm-Message-State: AIkVDXLoguSvJNd9GWQrJEAJr48+zame7G+yLwXYphuevPq+GrgEphoQkmCd4++DZ1dEwggzFscGRimBT6UCAA==
+X-Received: by 10.200.56.51 with SMTP id q48mr24921220qtb.189.1485826524394;
+ Mon, 30 Jan 2017 17:35:24 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="us-ascii"
-X-Provags-ID: V03:K0:7xJNZFmtrkjndqOdjsUtTCeOJRimXZQOtDwRMxX3q6qMGb/FJJs
- A+BA9m/2rXLsW9kBYi3Uydq3mR/dNjC9dgjsUUgea2zGMcx97c80NieQbDYgI3yiLkxcUk8
- E5/YugT/WSuYVWdX2e9E/4zlTbsPFC/FwJWXR6tukdf48CW6pRF3p9lv1YvlehsE0lDYGUI
- vQYOzHmvhzA73rl0p2pTQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:nUcJxxsOEdo=:72ZIMffzzQxADcRk3qxCy+
- xI3Dqy8yXF3Z5jhzXVQdRegRUXFKA/i8jySZQN3aa90j3OCtSZeUMPUkkXw2FppsYevmvTijS
- qp1kYZyH4/QkytzJyyy91N32Cb3HLR01qqMtLT8AMDcbKz4uI4It7JKC+a7jVj7sMj2q89cgL
- veiAD3LmRdzvh5pDJUNyQozFmeeKTn0EOBZHNyCeShvODBtLPGM8O0MxKJ+OuIsfdjCOf35vD
- HdqRsnqsY2YkmztmPfpkb/6UJpcHSbxTvpRq6jObQWpXUHmyVGRn8ilx+N2egNNms50gGQZOq
- +MZJtmehIw8/KXfUHyCiZi6QnsgXLSHDSGstu1pDQ4+JtdhnQ86VQd1QVH07jGZuNvhQSguYM
- o1LzRVYC0u10HvVdHhT/q2uEqT/T+1YvfSzwjb/+yZLhcqUF5Z+dHSTtewBLsByITbCkCeut7
- LJnmSGmSQ+fnYmAvC/m22bQ9WxUxaY2ZxWZnuzz2aVp6vsN1Cmvd3V7Mnjl+ALEcRTIrslbki
- xDKZilP7cjPG4MNjm8ZYlJRVqMyKQeifJRi2oiWjw+PztiAS7SWOC55YRe5PdLPLs9ORQfmWf
- BbDA+JYMeV6W7+nk5JH5L3qvFbb4ONCGztifjXPSr3vXdIaU0kyNIaMsE48XINBpR8wjrfvMG
- Zh6YOvfciIhPjkGS0s+8cYIACohLU6bPUun70XlQtIR7s+ozFZsu1A4WteBxES5GIC8D+OkqB
- Nlvx2scez5W97ntX
+Received: by 10.237.45.226 with HTTP; Mon, 30 Jan 2017 17:35:23 -0800 (PST)
+In-Reply-To: <20170130232559.krdxkt4dq4lfv4rj@sigill.intra.peff.net>
+References: <CAOc6etaCk=OEyarMNhorM94MBnYRscCkJBM-K08snv1ecmOaPQ@mail.gmail.com>
+ <20170128035321.yrcqwkg2fiwadxj4@sigill.intra.peff.net> <xmqqd1f4uug6.fsf@gitster.mtv.corp.google.com>
+ <20170130232559.krdxkt4dq4lfv4rj@sigill.intra.peff.net>
+From:   Edmundo Carmona Antoranz <eantoranz@gmail.com>
+Date:   Mon, 30 Jan 2017 19:35:23 -0600
+Message-ID: <CAOc6etZZSgeBRwQA4C4Ag5A48W8tAAArdOaaKxkTOVvVGi+EpQ@mail.gmail.com>
+Subject: Re: difflame
+To:     Jeff King <peff@peff.net>
+Cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Monday 30 January 2017 12:48:52 Junio C Hamano wrote:
-> 
->   https://public-inbox.org/git/?q=gmane:83880
->   https://public-inbox.org/git/?q=gmane:146223
->   https://public-inbox.org/git/?q=gmane:146886
+I'm thinking of something like this:
 
-Thanks for putting the links together. That's very useful as a reference.
+Say I just discovered a problem in a file.... I want to see who worked
+on it since some revision that I know is working fine (or even
+something as generic as HEAD~100..). It could be a number of people
+with different revisions. I would diff to see what changed.... and
+blame the added lines (blame reverse to try to get as close as
+possible with a single command in case I want to see what happened
+with something that was deleted). If I could get blame information of
+added/deleted lines in a single run, that would help a lot.
 
-> The older discussions already cited the cost to update both in-tree
-> and out-of-tree tools not to barf when they see such a commit object
-> and one of the reason why we would not want to do this, and Ted Ts'o
-> gave us another excellent reason why not to do multiple author
-> header lines in a commit object header, i.e. "How often is that all
-> of the authors are completely equal?"
+Lo and behold: difflame.
 
-Just to give a bit of context: In the pair programming environment where I 
-work we usually use non-personalized workstations and switch the keyboard 
-between the two people working together quite frequently, sometimes every few 
-minutes, or even within writing a commit message. There the person pressing 
-the return button on the commit really does not have a special role. In this 
-style of working I think it feels like the fairest and most practical 
-assumption to treat all authors as equal.
 
-> My advice to those who want to record credit to multiple authors is
-> to treat the commit author line as recording the primary contact
-> when there is a question on the commit and nothing else.  Anything
-> with richer semantics is better done in the trailer by enriching the
-> support of trailer lines with interpret-trailers framework.
 
-Thanks for the advice. I think I will explore this direction a little bit 
-further and see how handling a situation of multiple authors could be better 
-done in this framework.
-
--- 
-Cornelius Schumacher <schumacher@kde.org>
+On Mon, Jan 30, 2017 at 5:26 PM, Jeff King <peff@peff.net> wrote:
+> On Mon, Jan 30, 2017 at 01:08:41PM -0800, Junio C Hamano wrote:
+>
+>> Jeff King <peff@peff.net> writes:
+>>
+>> > On Tue, Jan 17, 2017 at 11:24:02PM -0600, Edmundo Carmona Antoranz wrote:
+>> >
+>> >> For a very long time I had wanted to get the output of diff to include
+>> >> blame information as well (to see when something was added/removed).
+>> >
+>> > This is something I've wanted, too. The trickiest part, though, is
+>> > blaming deletions, because git-blame only tracks the origin of content,
+>> > not the origin of a change.
+>>
+>> Hmph, this is a comment without looking at what difflame does
+>> internally, so you can ignore me if I am misunderstood what problem
+>> you are pointing out, but I am not sure how "tracks the origin of
+>> content" could be a problem.
+>>
+>> If output from "git show" says this:
+>>
+>>       --- a/file
+>>       +++ b/file
+>>       @@ -1,5 +1,6 @@
+>>        a
+>>        b
+>>       -c
+>>       +C
+>>       +D
+>>        d
+>>        e
+>>
+>> in order to annotate lines 'a', 'b', 'd', and 'e' for their origin,
+>> you would run 'blame' on the commit the above output was taken from
+>> (or its parent---they are in the context so either would be OK).
+>>
+>> You know where 'C' and 'D' came from already.  It's the commit you
+>> are feeding "git show".
+>
+> I think the point (or at least as I understand it) is that the diff is
+> not "git show" for a particular commit. It could be part of a much
+> larger diff that covers many commits.
+>
+> As a non-hypothetical instance, I have a fork of git.git that has
+> various enhancements. I want to feed those enhancements upstream. I need
+> to know which commits should be cherry-picked to get those various
+> enhancements.
+>
+> Looking at "log origin..fork" tells me too many commits, because it
+> includes ones which aren't useful anymore. Either because they already
+> went upstream, or because they were cherry-picked to the fork and their
+> upstream counterparts merged (or even equivalent commits made upstream
+> that obsoleted the features).
+>
+> Looking at "git diff origin fork" tells me what the actual differences
+> are, but it doesn't show me which commits are responsible for them.
+>
+> I can "git blame" each individual line of the diff (starting with "fork"
+> as the tip), but that doesn't work for lines that no longer exist (i.e.,
+> when the interesting change is a deletion).
+>
+>> In order to run blame to find where 'c' came from, you need to start
+>> at the _parent_ of the commit the above output came from, and the
+>> hunk header shows which line range to find the final 'c'.
+>
+> So perhaps that explains my comment more. "blame" is not good for
+> finding which commit took away a line. I've tried using "blame
+> --reverse", but it shows you the parent of the commit you are looking
+> for, which is slightly annoying. :)
+>
+> "git log -S" is probably a better tool for finding that.
+>
+> -Peff
