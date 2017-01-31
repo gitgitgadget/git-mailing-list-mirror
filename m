@@ -2,246 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DFA521F6BD
-	for <e@80x24.org>; Tue, 31 Jan 2017 22:19:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 48F421F6BD
+	for <e@80x24.org>; Tue, 31 Jan 2017 22:30:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751124AbdAaWSu (ORCPT <rfc822;e@80x24.org>);
-        Tue, 31 Jan 2017 17:18:50 -0500
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:36484 "EHLO
-        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750805AbdAaWSY (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 31 Jan 2017 17:18:24 -0500
-Received: by mail-wm0-f66.google.com with SMTP id r18so1321290wmd.3
-        for <git@vger.kernel.org>; Tue, 31 Jan 2017 14:17:52 -0800 (PST)
+        id S1751053AbdAaW3y (ORCPT <rfc822;e@80x24.org>);
+        Tue, 31 Jan 2017 17:29:54 -0500
+Received: from mail-pf0-f193.google.com ([209.85.192.193]:36106 "EHLO
+        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750805AbdAaW3x (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 31 Jan 2017 17:29:53 -0500
+Received: by mail-pf0-f193.google.com with SMTP id 19so29986677pfo.3
+        for <git@vger.kernel.org>; Tue, 31 Jan 2017 14:29:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=w3D95Wyp12dBggnUF6j2Vzg3joAL8sSjUVjnQRmLyiE=;
-        b=QjiNu7RUXRdBbFTy0E+p89hPRvkfzi48WNpYhfvzwl9dTlEhDIX2eSx2gVn1RNiaTI
-         3e2EUD8lfDoge47yxT0Z5h3CGYIVHFSMe5oArg2fDGqnXJ3ddH1mEipuNkDKkBJJCTl/
-         PJNs4V5Zyc9vNCGt+bp0BJ91hVQZeu0kqoeOdFqo+AdfTAkKQWcgEn4DSTiEJYTJlPmc
-         Tb275gOk+IW2mfqyFP9Kk6EbTURmuXrfZhZXpdw2eWE3z4lFl8iC0yRADUimAZLqdWAj
-         izw9w6RLO6PlepIwDSfffrHdkrD7Th2fUcENY+tMezRdqmxiNQ3stuqPPbX15O3pfiOA
-         op0w==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=nUiXIk2BwsxoWItyitfHLacL6opE0i0zHyhqb7aPgUY=;
+        b=jQpV/aZ4WZtY6kcmdmxS90WHEoyzGSJJQmrmXIU5SKGexgsLiXTryXa41GEXTN2oSp
+         HEuXUstDBdfC95d7/VumGkWzGAymR4wZpmDoSYcqzzGCcM1m1d1m4SJ+Gl0aIIRIQMMn
+         JpYDkNHKQA0wjOs6/Mg891X1VbBJBQVJLtBlcjcdyU9SXV1j039hJ0QQfKfAUI0axpqc
+         0MJAxGkk/eu0crhfMY1p2s1H3TFrjZ9DNnmiq8980XrzFUJSS7imZEI/iyGGoExMuCWA
+         ajDIzJvXVLWOffvLm9HL4VO+YhmPe+p0uU8yyCxUE/V0OKx9qJ0KqU6/0ACtGm/fz3S6
+         MCgg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=w3D95Wyp12dBggnUF6j2Vzg3joAL8sSjUVjnQRmLyiE=;
-        b=YHCJbV2xpqk3mlLaQ+05go+70M4BuFKSn15/tsPCV2G2bL6nAfnAWb6SZE1fsQhjd0
-         xn2aVGskuDgMWWMCnQE6lRvl+RdEFMVt/5MWz68Rjvjl6OQmgVnHCN1z2dkFLEJK4n0X
-         L/hf/f7rHUk5jHvbRIWwRff4MTkAVNZzKGYU+n5Fkj6gNXLwm4XlBhytxWzD0ETnEna2
-         4cYL0xyxDG1PGA5WAQJMDReoiqlnaZLqnUWwjbB9+CiDNYBheo+8ZEz2pRqgkE1K/3Qi
-         fgiPKk3VRRHUPsXO5l3J9Rrfo0umTqB3Tzni96PIowx2lofC5+PioEqOkEpTWRQ+L5Gd
-         Hn1w==
-X-Gm-Message-State: AIkVDXJEdPj08oEch4IyC+K9Bwl3jVZSICsm7iI//LXMzPuadi0wSGbLwRWdUnUPkWG1L1rwHknCvJeU5IMmRQ==
-X-Received: by 10.28.213.142 with SMTP id m136mr102660wmg.90.1485901071292;
- Tue, 31 Jan 2017 14:17:51 -0800 (PST)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=nUiXIk2BwsxoWItyitfHLacL6opE0i0zHyhqb7aPgUY=;
+        b=Fzwcg1yDxmBe8IQYRNxHgsZu176jSb8uFM3ei1PuaC38JShf72xNHV1HCyNrdvNKfX
+         +Y9QHWOlL39daNz/Ah5oDXAztAmnnNVeZpjKVbe0apcdOSvxnKX8eGdY8TbuU6NvDtxH
+         rcDH5O6J/QaCX23dpAcYcZXfov7Pk3Ojn7h87VOME9tLDZM7HQ/yQLZoig6PRc+GpWPm
+         46dniOJBxBSFkw0DBJb82uD53oU1oBxYeW1XDU1Nd4dPe5BoNkK2nQkH5W11lCqMzcG1
+         sRSAhsua3JSRKuy0mdbjHa/5F0M1T1PTUi7CDU4p6nDQRSiY+S+KiEX2FelQ/ibZiVT1
+         ByLA==
+X-Gm-Message-State: AIkVDXKfBAf3ap/a7qibqJ6TckANUdiiYMUuLro4WpDa3p0EwrnI4/rO2TplcwCAFg0WWA==
+X-Received: by 10.98.23.207 with SMTP id 198mr32115226pfx.103.1485901792519;
+        Tue, 31 Jan 2017 14:29:52 -0800 (PST)
+Received: from localhost ([2620:0:1000:8622:a052:8a35:4bb5:b253])
+        by smtp.gmail.com with ESMTPSA id t14sm43619740pfk.85.2017.01.31.14.29.51
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Tue, 31 Jan 2017 14:29:51 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
+        Brandon Williams <bmwill@google.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Johannes Sixt <j6t@kdbg.org>, Git List <git@vger.kernel.org>
+Subject: Re: [PATCH 1/5] add SWAP macro
+References: <8ef4c833-45bd-6831-0683-6d01f30aa518@web.de>
+        <0bdb58a6-3a7f-2218-4b70-c591ae90e95e@web.de>
+        <alpine.DEB.2.20.1701301643260.3469@virtualbox>
+        <aa653d57-4a97-ac50-b20c-f94ed43a22fb@kdbg.org>
+        <alpine.DEB.2.20.1701302158110.3469@virtualbox>
+        <77098ac8-1084-a5c4-a5e6-fb382e3dc3a0@web.de>
+        <20170130222157.GC35626@google.com>
+        <8e94756a-c3a5-9b81-268d-d0f36876f710@web.de>
+        <20170131213507.uiwmkkcg7umvd3f4@sigill.intra.peff.net>
+Date:   Tue, 31 Jan 2017 14:29:51 -0800
+In-Reply-To: <20170131213507.uiwmkkcg7umvd3f4@sigill.intra.peff.net> (Jeff
+        King's message of "Tue, 31 Jan 2017 22:35:08 +0100")
+Message-ID: <xmqqy3xqq2w0.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.194.249.8 with HTTP; Tue, 31 Jan 2017 14:17:50 -0800 (PST)
-In-Reply-To: <20170127211703.24910-2-cornelius.weig@tngtech.com>
-References: <74ecd09c-55da-3858-5187-52c286a6bf62@kdbg.org>
- <20170127211703.24910-1-cornelius.weig@tngtech.com> <20170127211703.24910-2-cornelius.weig@tngtech.com>
-From:   =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-Date:   Tue, 31 Jan 2017 23:17:50 +0100
-Message-ID: <CAM0VKj=Ein4yrKG2aZnN7JU80ctZBQromcR6BEu-TyMLenLFCg@mail.gmail.com>
-Subject: Re: [PATCH v2 7/7] completion: recognize more long-options
-To:     Cornelius Weig <cornelius.weig@tngtech.com>
-Cc:     j6t@kdbg.org, spearce@spearce.org, git@vger.kernel.org
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jan 27, 2017 at 10:17 PM,  <cornelius.weig@tngtech.com> wrote:
-> From: Cornelius Weig <cornelius.weig@tngtech.com>
->
-> Recognize several new long-options for bash completion in the following
-> commands:
+Jeff King <peff@peff.net> writes:
 
-Adding more long options that git commands learn along the way is
-always an improvement.  However, seeing "_several_ new long options"
-(or "some long options" in one of the other patches in the series)
-makes the reader wonder: are these the only new long options missing
-or are there more?  If there are more, why only these are added?  If
-there aren't any more missing long options left, then please say so,
-e.g. "Add all missing long options, except the potentially
-desctructive ones, for the following commands: ...."
+> ... I wonder if it would be more natural for it to take
+> pointers-to-objects, making it look more like a real function (i.e.,
+> SWAP(&a, &b) instead of SWAP(a, b)". And then these funny corner cases
+> become quite obvious in the caller, because the caller is the one who
+> has to type "&".
 
+Hmmmm.  
 
->  - apply: --recount --directory=
->  - archive: --output
->  - branch: --column --no-column --sort= --points-at
->  - clone: --no-single-branch --shallow-submodules
->  - commit: --patch --short --date --allow-empty
->  - describe: --first-parent
->  - fetch, pull: --unshallow --update-shallow
->  - fsck: --name-objects
->  - grep: --break --heading --show-function --function-context
->          --untracked --no-index
->  - mergetool: --prompt --no-prompt
->  - reset: --keep
->  - revert: --strategy= --strategy-option=
->  - rm: --force
+While this looks very attractive in theory by forcing 'a' and 'b' to
+be lvalues, it probably invites mistakes go unnoticed during the
+review when the code wants to swap two pointer variables.  
 
-'--force' is a potentially destructive option, too.
+For example,
 
->  - shortlog: --email
->  - tag: --merged --no-merged --create-reflog
->
-> Signed-off-by: Cornelius Weig <cornelius.weig@tngtech.com>
-> Helped-by: Johannes Sixt <j6t@kdbg.org>
-> ---
->  contrib/completion/git-completion.bash | 31 +++++++++++++++++++++----------
->  1 file changed, 21 insertions(+), 10 deletions(-)
->
-> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-> index 0e09519..933bb6e 100644
-> --- a/contrib/completion/git-completion.bash
-> +++ b/contrib/completion/git-completion.bash
-> @@ -936,6 +936,7 @@ _git_apply ()
->                         --apply --no-add --exclude=
->                         --ignore-whitespace --ignore-space-change
->                         --whitespace= --inaccurate-eof --verbose
-> +                       --recount --directory=
->                         "
->                 return
->         esac
-> @@ -974,7 +975,7 @@ _git_archive ()
->         --*)
->                 __gitcomp "
->                         --format= --list --verbose
-> -                       --prefix= --remote= --exec=
-> +                       --prefix= --remote= --exec= --output
->                         "
->                 return
->                 ;;
-> @@ -1029,6 +1030,7 @@ _git_branch ()
->                         --track --no-track --contains --merged --no-merged
->                         --set-upstream-to= --edit-description --list
->                         --unset-upstream --delete --move --remotes
-> +                       --column --no-column --sort= --points-at
->                         "
->                 ;;
->         *)
-> @@ -1142,6 +1144,8 @@ _git_clone ()
->                         --single-branch
->                         --branch
->                         --recurse-submodules
-> +                       --no-single-branch
-> +                       --shallow-submodules
->                         "
->                 return
->                 ;;
-> @@ -1183,6 +1187,7 @@ _git_commit ()
->                         --reset-author --file= --message= --template=
->                         --cleanup= --untracked-files --untracked-files=
->                         --verbose --quiet --fixup= --squash=
-> +                       --patch --short --date --allow-empty
->                         "
->                 return
->         esac
-> @@ -1201,7 +1206,7 @@ _git_describe ()
->         --*)
->                 __gitcomp "
->                         --all --tags --contains --abbrev= --candidates=
-> -                       --exact-match --debug --long --match --always
-> +                       --exact-match --debug --long --match --always --first-parent
->                         "
->                 return
->         esac
-> @@ -1284,6 +1289,7 @@ __git_fetch_recurse_submodules="yes on-demand no"
->  __git_fetch_options="
->         --quiet --verbose --append --upload-pack --force --keep --depth=
->         --tags --no-tags --all --prune --dry-run --recurse-submodules=
-> +       --unshallow --update-shallow
->  "
->
->  _git_fetch ()
-> @@ -1333,7 +1339,7 @@ _git_fsck ()
->         --*)
->                 __gitcomp "
->                         --tags --root --unreachable --cache --no-reflogs --full
-> -                       --strict --verbose --lost-found
-> +                       --strict --verbose --lost-found --name-objects
->                         "
->                 return
->                 ;;
-> @@ -1377,6 +1383,8 @@ _git_grep ()
->                         --max-depth
->                         --count
->                         --and --or --not --all-match
-> +                       --break --heading --show-function --function-context
-> +                       --untracked --no-index
->                         "
->                 return
->                 ;;
-> @@ -1576,7 +1584,7 @@ _git_mergetool ()
->                 return
->                 ;;
->         --*)
-> -               __gitcomp "--tool="
-> +               __gitcomp "--tool= --prompt --no-prompt"
->                 return
->                 ;;
->         esac
-> @@ -2456,7 +2464,7 @@ _git_reset ()
->
->         case "$cur" in
->         --*)
-> -               __gitcomp "--merge --mixed --hard --soft --patch"
-> +               __gitcomp "--merge --mixed --hard --soft --patch --keep"
->                 return
->                 ;;
->         esac
-> @@ -2472,7 +2480,10 @@ _git_revert ()
->         fi
->         case "$cur" in
->         --*)
-> -               __gitcomp "--edit --mainline --no-edit --no-commit --signoff"
-> +               __gitcomp "
-> +                       --edit --mainline --no-edit --no-commit --signoff
-> +                       --strategy= --strategy-option=
-> +                       "
->                 return
->                 ;;
->         esac
-> @@ -2483,7 +2494,7 @@ _git_rm ()
->  {
->         case "$cur" in
->         --*)
-> -               __gitcomp "--cached --dry-run --ignore-unmatch --quiet"
-> +               __gitcomp "--cached --dry-run --ignore-unmatch --quiet --force"
->                 return
->                 ;;
->         esac
-> @@ -2500,7 +2511,7 @@ _git_shortlog ()
->                 __gitcomp "
->                         $__git_log_common_options
->                         $__git_log_shortlog_options
-> -                       --numbered --summary
-> +                       --numbered --summary --email
->                         "
->                 return
->                 ;;
-> @@ -2778,8 +2789,8 @@ _git_tag ()
->         --*)
->                 __gitcomp "
->                         --list --delete --verify --annotate --message --file
-> -                       --sign --cleanup --local-user --force --column --sort
-> -                       --contains --points-at
-> +                       --sign --cleanup --local-user --force --column --sort=
-> +                       --contains --points-at --merged --no-merged --create-reflog
->                         "
->                 ;;
->         esac
-> --
-> 2.10.2
->
+apply.c:            SWAP(p->new_name, p->old_name);
+
+is now a bug and will swap only the first byte of these names, and
+the correct way to spell it would become:
+
+apply.c:            SWAP(&p->new_name, &p->old_name);
+
+The latter clearly looks like swapping the new and old names, which
+is good, but I do not have any confidence that I will immediately
+spot a bug when presented the former under the new world order.
