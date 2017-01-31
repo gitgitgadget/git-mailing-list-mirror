@@ -2,94 +2,78 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 839331FF1E
-	for <e@80x24.org>; Tue, 31 Jan 2017 00:17:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B86731FF1E
+	for <e@80x24.org>; Tue, 31 Jan 2017 00:48:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754517AbdAaARb (ORCPT <rfc822;e@80x24.org>);
-        Mon, 30 Jan 2017 19:17:31 -0500
-Received: from mail-lf0-f66.google.com ([209.85.215.66]:35699 "EHLO
-        mail-lf0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750996AbdAaAR3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 Jan 2017 19:17:29 -0500
-Received: by mail-lf0-f66.google.com with SMTP id v186so32667539lfa.2
-        for <git@vger.kernel.org>; Mon, 30 Jan 2017 16:16:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=Xz9KAt7iKkRe860VAsJztzd6HIBSENl4m6ocsDtmCa4=;
-        b=gMzLrgPtZv1JUrXodt1hxxhv0nmEqfUmV7KkxPfQ+4PN+6wW2R9/1eEJxhcwegaAbD
-         6E79wXjG4n43NplP0tlgfYHB0b9qQzMO2Lwp2qKKk1iJwfgEhnQgbNGHH/7lVznmY3AS
-         VlDRRF9TV8CmTo8MdHDJ6OVxrPA91l3sJ9JyvdA5XIRCYoqKzvgV34tz7SnM4cA4GBNJ
-         yK1+6pn+Cse1l1R2ZpiT2jQ/u8LNOAje4DdLL/Jq2AWWfPwmG/AZ3iYtfZpo2v+p2VEX
-         k9ZqSS6dyxoJCqY2ap0UvFaNwi/UxCIy28mOWx0SsijrIt7UAJfaIX7qqJ7NcJWn6M+3
-         rFEQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=Xz9KAt7iKkRe860VAsJztzd6HIBSENl4m6ocsDtmCa4=;
-        b=kbfwtjOmXtHA6SPwv6HzI45M+z5HuJm2/Aw6o5zfeF/r5yoyPT3ID2Ffrz7Azg+yL3
-         jQFmDZ9kpdcH5GcctrfWHQRjohVcCliT5ziKcwhOgzjDU0sOtp4a4vLa251UysD1HHiA
-         kHaDq4mRfh2flCWfkLlJoymVCCyt80ru5FK3ij/3YCR6oFy2opzHpZgucnT0D/mgfYgC
-         loAKgKQWxSou0TlQJmxYwHcQyoplH3NqM49iaGyo3nJfO+uRIdMXw0FeTgutXVSoATlK
-         QS1345eQCJL+/SN/9n18p2MbxHecegmKU4zf124oJnZMiCsBKwhTzj8RXd3RgcqEo9Nu
-         gxvQ==
-X-Gm-Message-State: AIkVDXIKuodiqxatHJDHyaq+Z8OkijJXn+VLh4h971IM/HOetFmC3XsIpPR7enCBBbnBkJ0Q7lfOsUUrQsYx2g==
-X-Received: by 10.25.141.12 with SMTP id p12mr8267974lfd.147.1485821424900;
- Mon, 30 Jan 2017 16:10:24 -0800 (PST)
+        id S1754570AbdAaAsK (ORCPT <rfc822;e@80x24.org>);
+        Mon, 30 Jan 2017 19:48:10 -0500
+Received: from cloud.peff.net ([104.130.231.41]:47102 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1753024AbdAaAsJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 Jan 2017 19:48:09 -0500
+Received: (qmail 17148 invoked by uid 109); 31 Jan 2017 00:48:09 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 31 Jan 2017 00:48:09 +0000
+Received: (qmail 31311 invoked by uid 111); 31 Jan 2017 00:48:10 -0000
+Received: from Unknown (HELO sigill.intra.peff.net) (10.42.43.3)
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 30 Jan 2017 19:48:10 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 31 Jan 2017 01:48:05 +0100
+Date:   Tue, 31 Jan 2017 01:48:05 +0100
+From:   Jeff King <peff@peff.net>
+To:     git@vger.kernel.org
+Subject: [ANNOUNCE] Git Merge Contributor Summit topic planning
+Message-ID: <20170131004804.p5sule4rh2xrgtwe@sigill.intra.peff.net>
 MIME-Version: 1.0
-Received: by 10.25.145.14 with HTTP; Mon, 30 Jan 2017 16:10:04 -0800 (PST)
-In-Reply-To: <20161204144127.28452-1-peterjclaw@gmail.com>
-References: <20161204144127.28452-1-peterjclaw@gmail.com>
-From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Mon, 30 Jan 2017 16:10:04 -0800
-Message-ID: <CA+P7+xqYGigV=8k_vS+4Y5fS2ORHUjYOnNRsAGYb1BwCx13xzg@mail.gmail.com>
-Subject: Re: [PATCH] Completion: Add support for --submodule=diff
-To:     peterjclaw@gmail.com
-Cc:     Git mailing list <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder@ira.uka.de>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Dec 4, 2016 at 6:41 AM,  <peterjclaw@gmail.com> wrote:
-> From: Peter Law <PeterJCLaw@gmail.com>
->
-> Teach git-completion.bash about the 'diff' option to 'git diff
-> --submodule=', which was added in Git 2.11.
->
-> Signed-off-by: Peter Law <PeterJCLaw@gmail.com>
-> ---
->  contrib/completion/git-completion.bash | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-> index 21016bf8d..ab11e7371 100644
-> --- a/contrib/completion/git-completion.bash
-> +++ b/contrib/completion/git-completion.bash
-> @@ -1206,7 +1206,7 @@ _git_describe ()
->
->  __git_diff_algorithms="myers minimal patience histogram"
->
-> -__git_diff_submodule_formats="log short"
-> +__git_diff_submodule_formats="diff log short"
->
->  __git_diff_common_options="--stat --numstat --shortstat --summary
->                         --patch-with-stat --name-only --name-status --color
-> --
-> 2.11.0
->
+The Contributor Summit is only a few days away; I'd like to work out a
+few bits of logistics ahead of time.
 
-Yep, this looks good to me.
+We're up to 26 attendees. The room layout will probably be three big
+round-tables, with a central projector. We should be able to have
+everybody pay attention to a single speaker, or break into 3 separate
+conversations.
 
-Thanks,
-Jake
+The list of topics is totally open. If you're coming and have something
+you'd like to present or discuss, then propose it here. If you're _not_
+coming, you may still chime in with input on topics, but please don't
+suggest a topic unless somebody who is there will agree to lead the
+discussion.
+
+We'll write the final list on a whiteboard on Thursday morning, vote on
+what looks good, and then work our way down the list.  Topics don't
+_have_ to be proposed here ahead of time, but I'd encourage people to do
+so as it leaves time for others to consider them and possibly do any
+background thinking or research.
+
+The rough schedule is:
+
+  0830 to 0930 - registration, breakfast, milling about and socializing;
+                 be aware that Git Merge Workshop attendees will be
+		 doing the same things in the same space, so show up
+		 with enough time to navigate a bit of a crowd.
+
+  0930 to 1215 - we retire to our Fortress of Solitude to talk about
+                 Very Important Git Things
+
+  1215 to 1330 - lunch
+
+  1330 to 1500 - Very Important Git Things, part deux. The end time
+		 isn't a hard deadline, so we can go as late as 1600 if
+		 the discussion keeps up.
+
+There's no organized dinner planned. At our size, I think it's probably
+most productive to let people form small groups for dinner if they want
+to. But if somebody is really interested in trying to do a big group
+reservation, they are welcome to try to organize it.
+
+-Peff
