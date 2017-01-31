@@ -2,101 +2,246 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0C64C1F6BD
-	for <e@80x24.org>; Tue, 31 Jan 2017 22:15:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DFA521F6BD
+	for <e@80x24.org>; Tue, 31 Jan 2017 22:19:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750935AbdAaWPD (ORCPT <rfc822;e@80x24.org>);
-        Tue, 31 Jan 2017 17:15:03 -0500
-Received: from mail-pf0-f193.google.com ([209.85.192.193]:33865 "EHLO
-        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750727AbdAaWPC (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 31 Jan 2017 17:15:02 -0500
-Received: by mail-pf0-f193.google.com with SMTP id y143so29993641pfb.1
-        for <git@vger.kernel.org>; Tue, 31 Jan 2017 14:14:56 -0800 (PST)
+        id S1751124AbdAaWSu (ORCPT <rfc822;e@80x24.org>);
+        Tue, 31 Jan 2017 17:18:50 -0500
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:36484 "EHLO
+        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750805AbdAaWSY (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 31 Jan 2017 17:18:24 -0500
+Received: by mail-wm0-f66.google.com with SMTP id r18so1321290wmd.3
+        for <git@vger.kernel.org>; Tue, 31 Jan 2017 14:17:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=oxaKwc+/FEgRr57UVfAjvrd+8LRvgh/DYSYCNQMBqdo=;
-        b=b7WdzVkbewMphMwd9GX9hpFjs45aSByVTwlebwxh1rBceRR33EPwL+kzAw7206719x
-         zkdFC19yFT2gBLU6DkSCaY3zIU70IMZF14qM6pocHZ7nFbMOr/giv+QTps2crzFcxGNE
-         A2ZufNcd7rbkhh2OIqrk65AtR23cm9weWJeJ14twLp3beOtKvTgCZ1NVgjjHkfVh3Sli
-         xkevhWw7HURf40rwwjlgXGXC9VIyMrB85jbRKagJo8shXvYMoblu/C9NgOY4B/EM1YHt
-         /+QSYRQn9NuRBmXZzm5YfX3Z3YC5MHZm0FxmNCJ0wEEU5ec/SNs5VM+vh3RY+lv8G4kT
-         w9pA==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=w3D95Wyp12dBggnUF6j2Vzg3joAL8sSjUVjnQRmLyiE=;
+        b=QjiNu7RUXRdBbFTy0E+p89hPRvkfzi48WNpYhfvzwl9dTlEhDIX2eSx2gVn1RNiaTI
+         3e2EUD8lfDoge47yxT0Z5h3CGYIVHFSMe5oArg2fDGqnXJ3ddH1mEipuNkDKkBJJCTl/
+         PJNs4V5Zyc9vNCGt+bp0BJ91hVQZeu0kqoeOdFqo+AdfTAkKQWcgEn4DSTiEJYTJlPmc
+         Tb275gOk+IW2mfqyFP9Kk6EbTURmuXrfZhZXpdw2eWE3z4lFl8iC0yRADUimAZLqdWAj
+         izw9w6RLO6PlepIwDSfffrHdkrD7Th2fUcENY+tMezRdqmxiNQ3stuqPPbX15O3pfiOA
+         op0w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=oxaKwc+/FEgRr57UVfAjvrd+8LRvgh/DYSYCNQMBqdo=;
-        b=cMvWZ4NeRQauHAijBul9dvDZwcqgCYtluRXznjd7mJYTyseuw+BSvQDI0ZOP6AXBoY
-         n1S45hrMVUU1iWu0gjWRSoEhe1LQGuNSZOQVCz0TeY728mLL32Kmul2zwrypitznvKGj
-         XtVKRaAQ2EkslPtwr53GDlVqSjr3fTeW7dpwOcRQ80qXNsCESAVpCZJXDLuI8I6CrCp5
-         BD/TzMs9J2VoQSTakbwFUbY9AhDUWAcVBdnmO7YJjVw7qNanEXX15nkVKGa2pI0MOU1B
-         H//onjnyFbCpamHP5YZc8sXUWOui1ZuaS9bHqaiveiu6nwbelR7/kG5AI511Ix3r9Lj5
-         hCFQ==
-X-Gm-Message-State: AIkVDXI8JdgGcIDKCfTwiT6Dru3ztQ0l+CzxvzABEfb/ZUrwiLrWKj/vNyIHqSJAIOjdhQ==
-X-Received: by 10.98.73.74 with SMTP id w71mr31812790pfa.52.1485900387191;
-        Tue, 31 Jan 2017 14:06:27 -0800 (PST)
-Received: from localhost ([2620:0:1000:8622:a052:8a35:4bb5:b253])
-        by smtp.gmail.com with ESMTPSA id d78sm43573057pfb.43.2017.01.31.14.06.26
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 31 Jan 2017 14:06:26 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
-Cc:     Benjamin Fuchs <email@benjaminfuchs.de>, git@vger.kernel.org,
-        Stefan Beller <sbeller@google.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        ville.skytta@iki.fi
-Subject: Re: [PATCH 4/4] git-prompt.sh: add tests for submodule indicator
-References: <1485809065-11978-1-git-send-email-email@benjaminfuchs.de>
-        <1485809065-11978-5-git-send-email-email@benjaminfuchs.de>
-        <CAM0VKj=j8Fy8AQvYbbvwPf5kkV1GYYONADNsQO5RDNTUzdYt8w@mail.gmail.com>
-Date:   Tue, 31 Jan 2017 14:06:25 -0800
-In-Reply-To: <CAM0VKj=j8Fy8AQvYbbvwPf5kkV1GYYONADNsQO5RDNTUzdYt8w@mail.gmail.com>
-        ("SZEDER =?utf-8?Q?G=C3=A1bor=22's?= message of "Tue, 31 Jan 2017 19:32:45
- +0100")
-Message-ID: <xmqq37fyriji.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=w3D95Wyp12dBggnUF6j2Vzg3joAL8sSjUVjnQRmLyiE=;
+        b=YHCJbV2xpqk3mlLaQ+05go+70M4BuFKSn15/tsPCV2G2bL6nAfnAWb6SZE1fsQhjd0
+         xn2aVGskuDgMWWMCnQE6lRvl+RdEFMVt/5MWz68Rjvjl6OQmgVnHCN1z2dkFLEJK4n0X
+         L/hf/f7rHUk5jHvbRIWwRff4MTkAVNZzKGYU+n5Fkj6gNXLwm4XlBhytxWzD0ETnEna2
+         4cYL0xyxDG1PGA5WAQJMDReoiqlnaZLqnUWwjbB9+CiDNYBheo+8ZEz2pRqgkE1K/3Qi
+         fgiPKk3VRRHUPsXO5l3J9Rrfo0umTqB3Tzni96PIowx2lofC5+PioEqOkEpTWRQ+L5Gd
+         Hn1w==
+X-Gm-Message-State: AIkVDXJEdPj08oEch4IyC+K9Bwl3jVZSICsm7iI//LXMzPuadi0wSGbLwRWdUnUPkWG1L1rwHknCvJeU5IMmRQ==
+X-Received: by 10.28.213.142 with SMTP id m136mr102660wmg.90.1485901071292;
+ Tue, 31 Jan 2017 14:17:51 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Received: by 10.194.249.8 with HTTP; Tue, 31 Jan 2017 14:17:50 -0800 (PST)
+In-Reply-To: <20170127211703.24910-2-cornelius.weig@tngtech.com>
+References: <74ecd09c-55da-3858-5187-52c286a6bf62@kdbg.org>
+ <20170127211703.24910-1-cornelius.weig@tngtech.com> <20170127211703.24910-2-cornelius.weig@tngtech.com>
+From:   =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+Date:   Tue, 31 Jan 2017 23:17:50 +0100
+Message-ID: <CAM0VKj=Ein4yrKG2aZnN7JU80ctZBQromcR6BEu-TyMLenLFCg@mail.gmail.com>
+Subject: Re: [PATCH v2 7/7] completion: recognize more long-options
+To:     Cornelius Weig <cornelius.weig@tngtech.com>
+Cc:     j6t@kdbg.org, spearce@spearce.org, git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-SZEDER Gábor <szeder.dev@gmail.com> writes:
-
-> On Mon, Jan 30, 2017 at 9:44 PM, Benjamin Fuchs <email@benjaminfuchs.de> wrote:
->> Signed-off-by: Benjamin Fuchs <email@benjaminfuchs.de>
->> ---
->>  t/t9903-bash-prompt.sh | 43 +++++++++++++++++++++++++++++++++++++++++++
->>  1 file changed, 43 insertions(+)
->>
->> diff --git a/t/t9903-bash-prompt.sh b/t/t9903-bash-prompt.sh
->> index 97c9b32..4dce366 100755
->> --- a/t/t9903-bash-prompt.sh
->> +++ b/t/t9903-bash-prompt.sh
->> @@ -37,6 +37,11 @@ test_expect_success 'setup for prompt tests' '
->>         git commit -m "yet another b2" file &&
->>         mkdir ignored_dir &&
->>         echo "ignored_dir/" >>.gitignore &&
->> +       git checkout -b submodule &&
->> +       git submodule add ./. sub &&
+On Fri, Jan 27, 2017 at 10:17 PM,  <cornelius.weig@tngtech.com> wrote:
+> From: Cornelius Weig <cornelius.weig@tngtech.com>
 >
-> ./. ?
+> Recognize several new long-options for bash completion in the following
+> commands:
 
-Good eyes.  This is a pattern we are trying to wean ourselves off
-of.  E.g. cf.
+Adding more long options that git commands learn along the way is
+always an improvement.  However, seeing "_several_ new long options"
+(or "some long options" in one of the other patches in the series)
+makes the reader wonder: are these the only new long options missing
+or are there more?  If there are more, why only these are added?  If
+there aren't any more missing long options left, then please say so,
+e.g. "Add all missing long options, except the potentially
+desctructive ones, for the following commands: ...."
 
-    https://public-inbox.org/git/20170105192904.1107-2-sbeller@google.com/#t
 
-Hopefully this reminds us to resurrect and finish the test fixes in
-that thread?
+>  - apply: --recount --directory=
+>  - archive: --output
+>  - branch: --column --no-column --sort= --points-at
+>  - clone: --no-single-branch --shallow-submodules
+>  - commit: --patch --short --date --allow-empty
+>  - describe: --first-parent
+>  - fetch, pull: --unshallow --update-shallow
+>  - fsck: --name-objects
+>  - grep: --break --heading --show-function --function-context
+>          --untracked --no-index
+>  - mergetool: --prompt --no-prompt
+>  - reset: --keep
+>  - revert: --strategy= --strategy-option=
+>  - rm: --force
+
+'--force' is a potentially destructive option, too.
+
+>  - shortlog: --email
+>  - tag: --merged --no-merged --create-reflog
+>
+> Signed-off-by: Cornelius Weig <cornelius.weig@tngtech.com>
+> Helped-by: Johannes Sixt <j6t@kdbg.org>
+> ---
+>  contrib/completion/git-completion.bash | 31 +++++++++++++++++++++----------
+>  1 file changed, 21 insertions(+), 10 deletions(-)
+>
+> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+> index 0e09519..933bb6e 100644
+> --- a/contrib/completion/git-completion.bash
+> +++ b/contrib/completion/git-completion.bash
+> @@ -936,6 +936,7 @@ _git_apply ()
+>                         --apply --no-add --exclude=
+>                         --ignore-whitespace --ignore-space-change
+>                         --whitespace= --inaccurate-eof --verbose
+> +                       --recount --directory=
+>                         "
+>                 return
+>         esac
+> @@ -974,7 +975,7 @@ _git_archive ()
+>         --*)
+>                 __gitcomp "
+>                         --format= --list --verbose
+> -                       --prefix= --remote= --exec=
+> +                       --prefix= --remote= --exec= --output
+>                         "
+>                 return
+>                 ;;
+> @@ -1029,6 +1030,7 @@ _git_branch ()
+>                         --track --no-track --contains --merged --no-merged
+>                         --set-upstream-to= --edit-description --list
+>                         --unset-upstream --delete --move --remotes
+> +                       --column --no-column --sort= --points-at
+>                         "
+>                 ;;
+>         *)
+> @@ -1142,6 +1144,8 @@ _git_clone ()
+>                         --single-branch
+>                         --branch
+>                         --recurse-submodules
+> +                       --no-single-branch
+> +                       --shallow-submodules
+>                         "
+>                 return
+>                 ;;
+> @@ -1183,6 +1187,7 @@ _git_commit ()
+>                         --reset-author --file= --message= --template=
+>                         --cleanup= --untracked-files --untracked-files=
+>                         --verbose --quiet --fixup= --squash=
+> +                       --patch --short --date --allow-empty
+>                         "
+>                 return
+>         esac
+> @@ -1201,7 +1206,7 @@ _git_describe ()
+>         --*)
+>                 __gitcomp "
+>                         --all --tags --contains --abbrev= --candidates=
+> -                       --exact-match --debug --long --match --always
+> +                       --exact-match --debug --long --match --always --first-parent
+>                         "
+>                 return
+>         esac
+> @@ -1284,6 +1289,7 @@ __git_fetch_recurse_submodules="yes on-demand no"
+>  __git_fetch_options="
+>         --quiet --verbose --append --upload-pack --force --keep --depth=
+>         --tags --no-tags --all --prune --dry-run --recurse-submodules=
+> +       --unshallow --update-shallow
+>  "
+>
+>  _git_fetch ()
+> @@ -1333,7 +1339,7 @@ _git_fsck ()
+>         --*)
+>                 __gitcomp "
+>                         --tags --root --unreachable --cache --no-reflogs --full
+> -                       --strict --verbose --lost-found
+> +                       --strict --verbose --lost-found --name-objects
+>                         "
+>                 return
+>                 ;;
+> @@ -1377,6 +1383,8 @@ _git_grep ()
+>                         --max-depth
+>                         --count
+>                         --and --or --not --all-match
+> +                       --break --heading --show-function --function-context
+> +                       --untracked --no-index
+>                         "
+>                 return
+>                 ;;
+> @@ -1576,7 +1584,7 @@ _git_mergetool ()
+>                 return
+>                 ;;
+>         --*)
+> -               __gitcomp "--tool="
+> +               __gitcomp "--tool= --prompt --no-prompt"
+>                 return
+>                 ;;
+>         esac
+> @@ -2456,7 +2464,7 @@ _git_reset ()
+>
+>         case "$cur" in
+>         --*)
+> -               __gitcomp "--merge --mixed --hard --soft --patch"
+> +               __gitcomp "--merge --mixed --hard --soft --patch --keep"
+>                 return
+>                 ;;
+>         esac
+> @@ -2472,7 +2480,10 @@ _git_revert ()
+>         fi
+>         case "$cur" in
+>         --*)
+> -               __gitcomp "--edit --mainline --no-edit --no-commit --signoff"
+> +               __gitcomp "
+> +                       --edit --mainline --no-edit --no-commit --signoff
+> +                       --strategy= --strategy-option=
+> +                       "
+>                 return
+>                 ;;
+>         esac
+> @@ -2483,7 +2494,7 @@ _git_rm ()
+>  {
+>         case "$cur" in
+>         --*)
+> -               __gitcomp "--cached --dry-run --ignore-unmatch --quiet"
+> +               __gitcomp "--cached --dry-run --ignore-unmatch --quiet --force"
+>                 return
+>                 ;;
+>         esac
+> @@ -2500,7 +2511,7 @@ _git_shortlog ()
+>                 __gitcomp "
+>                         $__git_log_common_options
+>                         $__git_log_shortlog_options
+> -                       --numbered --summary
+> +                       --numbered --summary --email
+>                         "
+>                 return
+>                 ;;
+> @@ -2778,8 +2789,8 @@ _git_tag ()
+>         --*)
+>                 __gitcomp "
+>                         --list --delete --verify --annotate --message --file
+> -                       --sign --cleanup --local-user --force --column --sort
+> -                       --contains --points-at
+> +                       --sign --cleanup --local-user --force --column --sort=
+> +                       --contains --points-at --merged --no-merged --create-reflog
+>                         "
+>                 ;;
+>         esac
+> --
+> 2.10.2
+>
