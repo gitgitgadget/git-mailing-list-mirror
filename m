@@ -7,118 +7,81 @@ X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D556A1F6BD
-	for <e@80x24.org>; Tue, 31 Jan 2017 21:03:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D63861F6BD
+	for <e@80x24.org>; Tue, 31 Jan 2017 21:03:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751081AbdAaVDU (ORCPT <rfc822;e@80x24.org>);
-        Tue, 31 Jan 2017 16:03:20 -0500
-Received: from mout.web.de ([212.227.15.14]:57532 "EHLO mout.web.de"
+        id S1751112AbdAaVD3 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 31 Jan 2017 16:03:29 -0500
+Received: from mout.web.de ([212.227.15.4]:50720 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751050AbdAaVDR (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 31 Jan 2017 16:03:17 -0500
-Received: from [192.168.178.36] ([79.237.55.102]) by smtp.web.de (mrweb002
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0M0hws-1cKhvd2gTm-00unlc; Tue, 31
- Jan 2017 22:03:11 +0100
-Subject: Re: [PATCH 1/5] add SWAP macro
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+        id S1750990AbdAaVDN (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 31 Jan 2017 16:03:13 -0500
+Received: from [192.168.178.36] ([79.237.55.102]) by smtp.web.de (mrweb004
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0Lkm1c-1c0RDw3Ws8-00aRCu; Tue, 31
+ Jan 2017 22:03:04 +0100
+Subject: Re: [PATCH 3/5] use SWAP macro
+To:     Junio C Hamano <gitster@pobox.com>
 References: <8ef4c833-45bd-6831-0683-6d01f30aa518@web.de>
- <0bdb58a6-3a7f-2218-4b70-c591ae90e95e@web.de>
- <alpine.DEB.2.20.1701301637570.3469@virtualbox>
- <9bcae427-d654-a671-4368-030150168102@web.de>
- <alpine.DEB.2.20.1701301806591.3469@virtualbox>
- <6760493c-3684-b8bb-2c01-6621b8417246@web.de>
- <alpine.DEB.2.20.1701311305030.3469@virtualbox>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+ <187c2b39-40cf-7e07-b489-d40cdf5f9145@web.de>
+ <xmqqr33ktch9.fsf@gitster.mtv.corp.google.com>
+Cc:     Git List <git@vger.kernel.org>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
 From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <676ed19c-0c4e-341e-ba30-1f4a23440088@web.de>
-Date:   Tue, 31 Jan 2017 22:02:54 +0100
+Message-ID: <47dca1ce-14db-cba0-bbe0-9873fc0000b5@web.de>
+Date:   Tue, 31 Jan 2017 22:02:47 +0100
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
  Thunderbird/45.7.0
 MIME-Version: 1.0
-In-Reply-To: <alpine.DEB.2.20.1701311305030.3469@virtualbox>
+In-Reply-To: <xmqqr33ktch9.fsf@gitster.mtv.corp.google.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K0:R0uGVyzk0wa1Xw5ktVJJNc2hClol6sOJ0/H/ccm3CddRjjSG3bl
- cg7il5z41s1vPLHYfHNbVPo+oACIGqEDRiSQwuyVqlfdoukTJOzbzUI1pcNkRDI+0lLd8k/
- 0G1TQlrOKh7HoPEAX5FO/sPLn2EYOASGVBG9//V+szdsYIr879gkJ3XKyjF7TqXSSl0Usff
- sdvRYMny5CvHeavKDWA9g==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:b1q3Vt0fdlc=:wi/WsnUyTHlgsSgw3fnP5T
- 7TikHZ3l8+GzWpkPXt95AYQRUv9Oe4J84XEtma2RShVrheP9XSAC6W3reTcFhWrpu29uo2tR/
- ZhmyjfZvZsFlECzNjkpyIEbQ8QeC7aowua+AS1kArkKnYyrCwqffLceO0FhFla2dKhNPB5DIU
- blfAUpGr2xIDubtTSlvMhn6qB7W4yE8VemAXqVcwY7x3gQV/fT6tW0DiLiP/VveVM/0hQhrmL
- w5YjxpJGYPCQC9bPNtIPr5zBRV240NXbiMJQPx84N+vQ4yRLxBBmuZVS5X9piCbPOxN8lciOq
- elcwCmkkiNB/Ot3Q7VdQW4FLHdvAnD0qKmYH7xhny2amE4j5NL1WmqIWiyF3i5lThcF3SQwf8
- qSiWsrBrTEh7/WZVWNq+8mDAQWgU0AoXI5QeIhQDn/YeMkyR61LMrvCIJz+QmCMxsYU+wHJBa
- /OddOAHvXH/KjJ8GJleIIjpXngQTTTPBoertWRjN4jWT2M3an1oIaJjZudUlkGecSFD8iUHu5
- krqws7GxDXv1+sIymxDJTIu1IYmwdygvrNEfoaEmxwRYwd+0hGNA4wJH3AGxot0YNavtD467j
- k42DNJTnQe1kwvYUrnAyn27Lv9lMed047xBtYuoJsLn9HbdtKHJmJe5TCzFdON5FJmL9FV8hq
- FfSXrcjC9jmAc4dvAGIPwCPrUUCqjaTiVxiNP/jCQcHiG7jsNhwoD+YoAeC+tj77MBuPzhEJ+
- LYhiCruHiUE80TzHfMDlwQJUAGlPkt/hJ4sgWRI+63BMymuyEf5LyVoh6LcZfw5vl37FH8Rx8
- x1zAZED
+X-Provags-ID: V03:K0:3NNSdbrUAZclEq93xvHyOoaRmyABTClZc79wlPAQhTa/DSapruM
+ OUyceh6kLjzfmlarQgQvHOModWFk5ANOcHDOoM9ym7hKAQeFmH4YiMS/xz1Gk9aNa5fYw5f
+ /eo88+oB0yUSQzAcHEvLR4JkNWtBalJ0IWmw6g+rYptrd6KrOpc59qYvz1DQGluajqoDBez
+ PKqS5A/ogjpKr6QFvQoMw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:u2BBnAd7h3U=:aaTlX+fA++8psg5GqR165k
+ l8m8D2FooOgCPIoFKSkhT/FhhIyhJQDeKi6eWPeqX6Q+1G3YDQzoA8wBtQmy8q/1uqgwqCJiF
+ IBnMr4ZW+5KvsfU63RY72mHKZzbAU04UHA3sDAdsM9b0uSVUsrrqOsNVyhl9nkzW3MtLeCs01
+ REfBARH3hRQbaavkmGsHpMVhWG/+Y8Os9EBnBLWcb3wnBQpjVKKZGO02shZHTt1LSVSiqGnDM
+ hX5CXRpmcPgP2ZGw1spynrvkebZFw2vZAdN3T+/Fk9MrFVEtk/RWCbk3ZFQ8obHwAzRNROwL+
+ qnIokv4dDfan4oJgT+y4twNY9G/3PhtvdClf6wMi/Qh02I14dnqhzs3cBV7LhkrmANXgeMA4S
+ CEtTOV+kVDsqqP9RtepuBoA6BwQ9PQ7rclId50xmvoeLV0WGfVJNZ8twW9GoX+Hve66DV1sTp
+ QWB8MKtzFNx9EiB2CzN5ODmgSf3WrLYo28JnIYEz/DpCCNz6cCOoNXuNIehtu8bNH8BgmmCQ/
+ otPAzCa1prlWpyObc7DDwRpnfvAUEaQsX5u61N3us3nuUnGr4ZCucMh0+/jYO2UFNqgEvpyp/
+ phR3OaYCo1/O9x8QKKREv/K0zNoNcFzNb8HHkc/XNPd73eFhoOqw0k0HLcjDD3GstBhwy8IF+
+ TiCK5lfhNpgnfm2x0/LE555jMNc6nYW/OFCyKdriSgTj614lPml3iy79ofAKXiKHT+R1WQwao
+ +KWK6KSzspFCkdQAaPlQ3aYG5hz04StOiEBnx4p++BSM0v9cV5/2IcpPE+dqhrYHnWdpEFdTi
+ j9SG0es
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 31.01.2017 um 13:13 schrieb Johannes Schindelin:
-> Hi René,
+Am 30.01.2017 um 23:22 schrieb Junio C Hamano:
+> René Scharfe <l.s.r@web.de> writes:
 >
-> On Mon, 30 Jan 2017, René Scharfe wrote:
+>>  		if (tree2->flags & UNINTERESTING) {
+>> -			struct object *tmp = tree2;
+>> -			tree2 = tree1;
+>> -			tree1 = tmp;
+>> +			SWAP(tree2, tree1);
 >
->> Am 30.01.2017 um 21:48 schrieb Johannes Schindelin:
->>
->>> The commit you quoted embarrasses me, and I have no excuse for it. I
->>> would love to see that myswap() ugliness fixed by replacing it with a
->>> construct that is simpler, and generates good code even without any
->>> smart compiler.
->>
->> I don't see a way to do that without adding a type parameter.
+> A human would have written this SWAP(tree1, tree2).
 >
-> Exactly. And you know what? I would be very okay with that type parameter.
->
-> Coccinelle [*1*] should be able to cope with that, too, mehtinks.
+> Not that I think such a manual fix-up should be made in _this_
+> patch, which may end up mixing mechanical conversion (which we may
+> want to keep reproducible) and hand tweaks.  But this swapped swap
+> reads somewhat silly.
 
-Yes, a semantic patch can turn the type of the temporary variable into a 
-macro parameter.  Programmers would have to type the type, though, 
-making the macro only half as good.
+Well, a human wrote "tmp = tree2" -- sometimes one likes to count down 
+instead of up, I guess.
 
-> It would be trivially "optimized" out of the box, even when compiling with
-> Tiny C or in debug mode.
+We can make Coccinelle order the parameters alphabetically, but I don't 
+know how to do so without duplicating most of the semantic patch.  And 
+thats would result in e.g. SWAP(new_tree, old_tree), which might be odd 
+as well.
 
-Such a compiler is already slowed down by memset(3) calls for 
-initializing objects and lack of other optimizations.  I doubt a few 
-more memcpy(3) calls would make that much of a difference.
-
-NB: git as compiled with TCC fails several tests, alas.  Builds wickedly 
-fast, though.
-
-> And it would even allow things like this:
->
-> #define SIMPLE_SWAP(T, a, b) do { T tmp_ = a; a = b; b = tmp_; } while (0)
-> ...
-> 	uint32_t large;
-> 	char nybble;
->
-> 	...
->
-> 	if (!(large & ~0xf)) {
-> 		SIMPLE_SWAP(char, nybble, large);
-> 		...
-> 	}
->
-> i.e. mixing types, when possible.
->
-> And while I do not necessarily expect that we need anything like this
-> anytime soon, merely the fact that it allows for this flexibility, while
-> being very readable at the same time, would make it a pretty good design
-> in my book.
-
-Such a skinny macro which only hides repetition is kind of attractive 
-due to its simplicity; I can't say the same about the mixed type example 
-above, though.
-
-The fat version isn't that bad either even without inlining, includes a 
-few safety checks and doesn't require us to tell the compiler something 
-it already knows very well.  I'd rather let the machine do the work.
+I'd just leave them in whatever order they were, but that's probably 
+because I'm lazy.
 
 René
