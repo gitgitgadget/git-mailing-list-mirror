@@ -2,230 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 578891F6DC
-	for <e@80x24.org>; Tue, 31 Jan 2017 09:09:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 82CB81F437
+	for <e@80x24.org>; Tue, 31 Jan 2017 12:05:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751189AbdAaJJt (ORCPT <rfc822;e@80x24.org>);
-        Tue, 31 Jan 2017 04:09:49 -0500
-Received: from mx0.elegosoft.com ([78.47.87.163]:59145 "EHLO mx0.elegosoft.com"
+        id S1751882AbdAaMFp (ORCPT <rfc822;e@80x24.org>);
+        Tue, 31 Jan 2017 07:05:45 -0500
+Received: from mout.gmx.net ([212.227.17.22]:50537 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750978AbdAaJJg (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 31 Jan 2017 04:09:36 -0500
-Received: from localhost (unknown [10.10.10.227])
-        by mx0.elegosoft.com (Postfix) with ESMTPSA id C0FA716C888;
-        Tue, 31 Jan 2017 10:01:51 +0100 (CET)
-From:   Patrick Steinhardt <ps@pks.im>
-To:     git@vger.kernel.org
-Cc:     Patrick Steinhardt <patrick.steinhardt@elego.de>,
-        Junio C Hamano <gitster@pobox.com>,
-        Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH v5 4/5] urlmatch: include host in urlmatch ranking
-Date:   Tue, 31 Jan 2017 10:01:46 +0100
-Message-Id: <3280b309860266dd68622f8362e265c7f9834cba.1485853153.git.ps@pks.im>
-X-Mailer: git-send-email 2.11.0
-In-Reply-To: <cover.1485853153.git.ps@pks.im>
-References: <cover.1485853153.git.ps@pks.im>
-In-Reply-To: <cover.1485853153.git.ps@pks.im>
-References: <20170123130635.29577-1-patrick.steinhardt@elego.de> <cover.1485853153.git.ps@pks.im>
+        id S1751042AbdAaMFm (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 31 Jan 2017 07:05:42 -0500
+Received: from virtualbox ([37.201.192.48]) by mail.gmx.com (mrgmx101
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MFgxF-1ceFeW3TBl-00Ec63; Tue, 31
+ Jan 2017 13:04:09 +0100
+Date:   Tue, 31 Jan 2017 13:03:55 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+cc:     Johannes Sixt <j6t@kdbg.org>, Git List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/5] add SWAP macro
+In-Reply-To: <77098ac8-1084-a5c4-a5e6-fb382e3dc3a0@web.de>
+Message-ID: <alpine.DEB.2.20.1701311302310.3469@virtualbox>
+References: <8ef4c833-45bd-6831-0683-6d01f30aa518@web.de> <0bdb58a6-3a7f-2218-4b70-c591ae90e95e@web.de> <alpine.DEB.2.20.1701301643260.3469@virtualbox> <aa653d57-4a97-ac50-b20c-f94ed43a22fb@kdbg.org> <alpine.DEB.2.20.1701302158110.3469@virtualbox>
+ <77098ac8-1084-a5c4-a5e6-fb382e3dc3a0@web.de>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+MIME-Version: 1.0
+Content-Type: multipart/mixed; BOUNDARY="8323329-1335668246-1485864249=:3469"
+X-Provags-ID: V03:K0:d+DdZ/R8TIj2lrhrxDZOvPRkrxmwdfuFXpg7B4R4BW0IECokxqV
+ abTwykmC5ntgoUoIIhYcwxuyYKRGkf4I99Q48B1PrntxReGdOfeEEVnvSShF2JiqhSTa9cR
+ /JsDphF8eoMbAjTugN/9i+UYCi4e+JCwSgfLT3FYIpfmt96Y/D8n4mUFr95MFkxDnt48bYW
+ sT/GmnO+4tHC/PcIULdbw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:SMg3LXO39SY=:5UOhpKm/OWWvSuCX8u5jhU
+ evwQDWYI70wfzt+xLn0Vj4Gr6zZNSMPI6QMFB3lMi/bKJyAhQPvMUT7+SgTcTDAaBg73raA+B
+ HGOuddyX2fYYNXuxREfpzEubolvbjfGCjtSSVwKzEJaLP8toc0LTbRZ823TzT73JTKj93Sy+d
+ d0qu/0JoqEcZyxsFX+puhG3K8yw4xMuagElkr977qWeHAmzwqXIaenaUf32ioHkqccNxIyfvn
+ WPA9KYITL6kfXzH+vzzLiZru3UK5B1oGsIQbiXwhFYCmmO19GbfCedJtgpaWIS3C9WFIsmPks
+ mCDdsjl8LRn+TB3aee8pcvIsvsg7AB9arIn+NIG9DZ4E1YeB7cluPEFhnN9kxjRUSqREul5ke
+ zXORKSpr3DQ6EtNUQt9oadKdVwe0wwGJseQosLfqgcsu1RV2qOSsC7ncXMOt7t8VIUXcg7iBC
+ +AlgrakgnbOPR9xiD7U+40YM88vvyQ2dqQx+LFwdEeRzc3V/CRizl2hcqqg18YcUl2yt94esd
+ 03vEH2xiqxO6O9dK3gxZku1N/TTsbQe3mDiWrGVzeqvmoDgof+hBB//c22JJCjpu44PImAaEw
+ wZluTJcze7V0EP3IwIYjEFILBPl+QCz0gmvZ4RGEl9P0z5Yq9OvDdux46BH1/40RAd0zj3CVw
+ hXfiuO2o1Bjt6fvKWDg3T+rNGHRsjkU+kJj5F6FWedeCNljPffKXV9TWxwjik0lUupXMO5c4G
+ tZzXHtwco+ggRPWyG/ajJeEI3QDV3R974RoySlMT+uEscr62s3RGEHniNqTa/A89SX+jU20i9
+ o1phKsCfz5DY9UIX1RMtrYa629r/Thq1Si2ocZbzvZc/hCSskd/FZXf3r1oZy4xGd+k2kMMCS
+ LMSnJU1+X5rmMzOF7j2ksNRDzx5BG8+Mq2ZlCsMPt+IigE3Iy6IepViNUYa2VlAcwqg1l2VRF
+ 3QKj5v4tSlx+pfY1QA78Bg7cztdNT9cfF+4XL2DGBz1EXZUE/I6SlAAafIX6zlOYYW2CvPvoX
+ aO6xIDLCqGR29TUZI1+fxow2PSVDrnlTYUHQPR5LlOS9
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Patrick Steinhardt <patrick.steinhardt@elego.de>
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-In order to be able to rank positive matches by `urlmatch`, we inspect
-the path length and user part to decide whether a match is better than
-another match. As all other parts are matched exactly between both URLs,
-this is the correct thing to do right now.
+--8323329-1335668246-1485864249=:3469
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 
-In the future, though, we want to introduce wild cards for the domain
-part. When doing this, it does not make sense anymore to only compare
-the path lengths. Instead, we also want to compare the domain lengths to
-determine which of both URLs matches the host part more closely.
+Hi Ren=C3=A9,
 
-Signed-off-by: Patrick Steinhardt <patrick.steinhardt@elego.de>
----
- t/t1300-repo-config.sh | 33 ++++++++++++++++++++++++++++
- urlmatch.c             | 59 +++++++++++++++++++++++++++++---------------------
- urlmatch.h             |  3 ++-
- 3 files changed, 69 insertions(+), 26 deletions(-)
+On Mon, 30 Jan 2017, Ren=C3=A9 Scharfe wrote:
 
-diff --git a/t/t1300-repo-config.sh b/t/t1300-repo-config.sh
-index 923bfc5a2..6c844d519 100755
---- a/t/t1300-repo-config.sh
-+++ b/t/t1300-repo-config.sh
-@@ -1177,6 +1177,39 @@ test_expect_success 'urlmatch' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'urlmatch favors more specific URLs' '
-+	cat >.git/config <<-\EOF &&
-+	[http "https://example.com/"]
-+		cookieFile = /tmp/root.txt
-+	[http "https://example.com/subdirectory"]
-+		cookieFile = /tmp/subdirectory.txt
-+	[http "https://user@example.com/"]
-+		cookieFile = /tmp/user.txt
-+	[http "https://averylonguser@example.com/"]
-+		cookieFile = /tmp/averylonguser.txt
-+	EOF
-+
-+	echo http.cookiefile /tmp/root.txt >expect &&
-+	git config --get-urlmatch HTTP https://example.com >actual &&
-+	test_cmp expect actual &&
-+
-+	echo http.cookiefile /tmp/subdirectory.txt >expect &&
-+	git config --get-urlmatch HTTP https://example.com/subdirectory >actual &&
-+	test_cmp expect actual &&
-+
-+	echo http.cookiefile /tmp/subdirectory.txt >expect &&
-+	git config --get-urlmatch HTTP https://example.com/subdirectory/nested >actual &&
-+	test_cmp expect actual &&
-+
-+	echo http.cookiefile /tmp/user.txt >expect &&
-+	git config --get-urlmatch HTTP https://user@example.com/ >actual &&
-+	test_cmp expect actual &&
-+
-+	echo http.cookiefile /tmp/subdirectory.txt >expect &&
-+	git config --get-urlmatch HTTP https://averylonguser@example.com/subdirectory >actual &&
-+	test_cmp expect actual
-+'
-+
- # good section hygiene
- test_expect_failure 'unsetting the last key in a section removes header' '
- 	cat >.git/config <<-\EOF &&
-diff --git a/urlmatch.c b/urlmatch.c
-index e328905eb..f79887825 100644
---- a/urlmatch.c
-+++ b/urlmatch.c
-@@ -426,7 +426,7 @@ static size_t url_match_prefix(const char *url,
- 
- static int match_urls(const struct url_info *url,
- 		      const struct url_info *url_prefix,
--		      int *exactusermatch)
-+		      struct urlmatch_item *match)
- {
- 	/*
- 	 * url_prefix matches url if the scheme, host and port of url_prefix
-@@ -445,8 +445,8 @@ static int match_urls(const struct url_info *url,
- 	 * contained a user name or false if url_prefix did not have a
- 	 * user name.  If there is no match *exactusermatch is left untouched.
- 	 */
--	int usermatched = 0;
--	int pathmatchlen;
-+	char usermatched = 0;
-+	size_t pathmatchlen;
- 
- 	if (!url || !url_prefix || !url->url || !url_prefix->url)
- 		return 0;
-@@ -483,22 +483,38 @@ static int match_urls(const struct url_info *url,
- 		url->url + url->path_off,
- 		url_prefix->url + url_prefix->path_off,
- 		url_prefix->url_len - url_prefix->path_off);
-+	if (!pathmatchlen)
-+		return 0; /* paths do not match */
- 
--	if (pathmatchlen && exactusermatch)
--		*exactusermatch = usermatched;
--	return pathmatchlen;
-+	if (match) {
-+		match->hostmatch_len = url_prefix->host_len;
-+		match->pathmatch_len = pathmatchlen;
-+		match->user_matched = usermatched;
-+	}
-+
-+	return 1;
-+}
-+
-+static int cmp_matches(const struct urlmatch_item *a,
-+		       const struct urlmatch_item *b)
-+{
-+	if (a->hostmatch_len != b->hostmatch_len)
-+		return a->hostmatch_len < b->hostmatch_len ? -1 : 1;
-+	if (a->pathmatch_len != b->pathmatch_len)
-+		return a->pathmatch_len < b->pathmatch_len ? -1 : 1;
-+	if (a->user_matched != b->user_matched)
-+		return b->user_matched ? -1 : 1;
-+	return 0;
- }
- 
- int urlmatch_config_entry(const char *var, const char *value, void *cb)
- {
- 	struct string_list_item *item;
- 	struct urlmatch_config *collect = cb;
--	struct urlmatch_item *matched;
-+	struct urlmatch_item matched = {0};
- 	struct url_info *url = &collect->url;
- 	const char *key, *dot;
- 	struct strbuf synthkey = STRBUF_INIT;
--	size_t matched_len = 0;
--	int user_matched = 0;
- 	int retval;
- 
- 	if (!skip_prefix(var, collect->section, &key) || *(key++) != '.') {
-@@ -516,9 +532,9 @@ int urlmatch_config_entry(const char *var, const char *value, void *cb)
- 		free(config_url);
- 		if (!norm_url)
- 			return 0;
--		matched_len = match_urls(url, &norm_info, &user_matched);
-+		retval = match_urls(url, &norm_info, &matched);
- 		free(norm_url);
--		if (!matched_len)
-+		if (!retval)
- 			return 0;
- 		key = dot + 1;
- 	}
-@@ -528,24 +544,17 @@ int urlmatch_config_entry(const char *var, const char *value, void *cb)
- 
- 	item = string_list_insert(&collect->vars, key);
- 	if (!item->util) {
--		matched = xcalloc(1, sizeof(*matched));
--		item->util = matched;
-+		item->util = xcalloc(1, sizeof(matched));
- 	} else {
--		matched = item->util;
--		/*
--		 * Is our match shorter?  Is our match the same
--		 * length, and without user while the current
--		 * candidate is with user?  Then we cannot use it.
--		 */
--		if (matched_len < matched->matched_len ||
--		    ((matched_len == matched->matched_len) &&
--		     (!user_matched && matched->user_matched)))
-+		if (cmp_matches(&matched, item->util) <= 0)
-+			 /*
-+			  * Our match is worse than the old one,
-+			  * we cannot use it.
-+			  */
- 			return 0;
--		/* Otherwise, replace it with this one. */
- 	}
- 
--	matched->matched_len = matched_len;
--	matched->user_matched = user_matched;
-+	memcpy(item->util, &matched, sizeof(matched));
- 	strbuf_addstr(&synthkey, collect->section);
- 	strbuf_addch(&synthkey, '.');
- 	strbuf_addstr(&synthkey, key);
-diff --git a/urlmatch.h b/urlmatch.h
-index 0ea812b03..37ee5da85 100644
---- a/urlmatch.h
-+++ b/urlmatch.h
-@@ -34,7 +34,8 @@ struct url_info {
- extern char *url_normalize(const char *, struct url_info *);
- 
- struct urlmatch_item {
--	size_t matched_len;
-+	size_t hostmatch_len;
-+	size_t pathmatch_len;
- 	char user_matched;
- };
- 
--- 
-2.11.0
+> Am 30.01.2017 um 22:03 schrieb Johannes Schindelin:
+> > It is curious, though, that an expression like "sizeof(a++)" would not
+> > be rejected.
+>=20
+> Clang normally warns about something like this ("warning: expression
+> with side effects has no effect in an unevaluated context
+> [-Wunevaluated-expression]"), but not if the code is part of a macro.  I
+> don't know if that's intended, but it sure is helpful in the case of
+> SWAP.
 
+Thank you for clarifying.
+
+> > Further, what would SWAP(a++, b) do? Swap a and b, and *then*
+> > increment a?
+>=20
+> That might be a valid expectation, but GCC says "error: lvalue required
+> as unary '&' operand" and clang puts it "error: cannot take the address
+> of an rvalue of type".
+
+Okay, now we know what the tool says.
+
+I would like to take a step back and state that it does not make much
+sense to support SWAP(a++, b), as it is confusing at best.
+
+Ciao,
+Dscho
+--8323329-1335668246-1485864249=:3469--
