@@ -2,238 +2,156 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D359C1F6DC
-	for <e@80x24.org>; Tue, 31 Jan 2017 07:01:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 383A120D14
+	for <e@80x24.org>; Tue, 31 Jan 2017 07:46:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750974AbdAaHBY (ORCPT <rfc822;e@80x24.org>);
-        Tue, 31 Jan 2017 02:01:24 -0500
-Received: from mail-ot0-f176.google.com ([74.125.82.176]:34571 "EHLO
-        mail-ot0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750955AbdAaHBV (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 31 Jan 2017 02:01:21 -0500
-Received: by mail-ot0-f176.google.com with SMTP id f9so259623721otd.1
-        for <git@vger.kernel.org>; Mon, 30 Jan 2017 23:01:15 -0800 (PST)
+        id S1750868AbdAaHqN (ORCPT <rfc822;e@80x24.org>);
+        Tue, 31 Jan 2017 02:46:13 -0500
+Received: from mail-wm0-f42.google.com ([74.125.82.42]:35850 "EHLO
+        mail-wm0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750726AbdAaHqL (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 31 Jan 2017 02:46:11 -0500
+Received: by mail-wm0-f42.google.com with SMTP id c85so248151361wmi.1
+        for <git@vger.kernel.org>; Mon, 30 Jan 2017 23:46:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=atlassian-com.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=8wPjNn28YBrEJOcHSSDZrsEMQJI0oCI4Yz+YY24eDts=;
-        b=lE7l8bnZe8kacYrnk7XvBIwCtsZA6Wa506K/eUGCKZtMGvNFNlO+WkMBtEkyd7+oI/
-         cJLAECS0cxkqM9xwm6Qn1perb7AUI4YKTV82MUPRArCcc8ZitpqBCSTfIoK6MBF+1HKx
-         EKXHqad9ZU3L/hW/fmpo6ZnrY8hder8WyMTE/FUjlCVdHg7WY+7h07l2jtvSjO3/w8gv
-         W3K7+C234CQKnukANZrQaWrCH8UPdEIKw7p9Tptd/4t+zekBSU/d7m3THpH3dZeBWwsk
-         YJk4Q074b6Py5Wsl7gqqUvn9kPnBf6YiOTQ8bzzVEdkfYVxBVoAscAGYEssc8CCpE7j5
-         DAHQ==
+        d=gmail.com; s=20161025;
+        h=subject:to:references:cc:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding;
+        bh=EhBIA6Bl6yWsk2p3kMgz9yzfX8DiAR6IfVDG41N3qjM=;
+        b=NVAByxvsVt8N/WzAaYQJVepz1dAvCORTeUgyR/qtLYhX7yzEUdKsIsqBM+lEP3THnF
+         1sI7IH5mvrrMXqOxT7Vs2khoVOBWHnq+tOnqmGmqEAW+sJkR7ngfB0IBLUdZmOgItk5S
+         /BnymBiZlgvzPXCaACi4HX12HzJbNpPF8qEQnf48fFiwjfyDVJOw4Uct4+vok0Hq+8jr
+         PMualhm1bGWK1BheOFuiDNBBbeuXryj+twBD6BirIV9QMbxgF7PJKFPWdf38j5VHqbby
+         4p4khTPp5YJ7QIETiqjLtDcfkjcvoe3v97kykaq5FWnxl/9mCLbvYrSPgv9BfwPwhKYe
+         zrfA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=8wPjNn28YBrEJOcHSSDZrsEMQJI0oCI4Yz+YY24eDts=;
-        b=QIsNjOtyiR8FtPEdXtGilxog+yPBL4WlzJJLuMxD0LYBAzLVfUiSiSQU2xCWCfqac9
-         EYOtNEklEoeeraymv/RsC91/PY3ymw79L7quBPYTdVDUvtdczgGel4zcx1TUgoA1VmGP
-         SoBnODsd1P9vp//LobxozGGDKa0849kbk7SnU9PiNplC7RBcuIk8X1fjMKevhVmXSIrG
-         afOQvQnnPf76u/IcseAndTZH5l/q1Z+5QukO/xh0jHueZFYBoeH5dNhkbGtro953IGmW
-         cn9xLLjFml2kqTPWExxB3Rtgr2mTjqWMVqh3rwTkQCjWRqg2u3BExgigyIOo6/Y75ocP
-         Sy5A==
-X-Gm-Message-State: AIkVDXJOH6ZK00L2fcS1k8rfcN9TpHXzYp+1xHjYr79yZkwwnMvHUdIP0xqsxzGJ8wKbXo9dZyHGs7ngFVVgudvx
-X-Received: by 10.157.63.188 with SMTP id r57mr11366344otc.78.1485846074852;
- Mon, 30 Jan 2017 23:01:14 -0800 (PST)
+        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
+        bh=EhBIA6Bl6yWsk2p3kMgz9yzfX8DiAR6IfVDG41N3qjM=;
+        b=o2FGOC2WPTWZLKzm+7moTAiNqkoZWIEVc9CYN3gBvfQaNT+0MgN1x6qUMBWCGVCXv3
+         LAJDBl2iYDjq/t7Xut2A08HPH3krd4JCYcKhovcUV9onBz4aWOzX3lPc4M6FGg3MTX3b
+         wbEfIp25Qsi3tQY5omX7Juxi2O9g+nYKv7Ezly3gIyzYOLeVqb5U+hM+II7FHNxiOfWF
+         +c3QRXUOUVS6s5tUQQJCCACKi5nmEkIdCWGMOPuvoKkVolWh6EeRklZpJdB8aq9yly8W
+         XlLd1Eqcq8wOyhvwLqTINo3zdETXSK+yAZbOB1CcWJ0EHHukQRJh0qEjp0MvzOwImWwq
+         3rDQ==
+X-Gm-Message-State: AIkVDXI5d2JEjRF0Qw5W5uveK/xZ49IXPK7GA2hTNGUc8pXmJb8QrNbZmf/Oy/zWmuMI1Q==
+X-Received: by 10.223.170.70 with SMTP id q6mr22077588wrd.103.1485848770269;
+        Mon, 30 Jan 2017 23:46:10 -0800 (PST)
+Received: from [192.168.141.122] (27.21.202.62.static.wline.lns.sme.cust.swisscom.ch. [62.202.21.27])
+        by smtp.gmail.com with ESMTPSA id 17sm26878507wru.16.2017.01.30.23.46.09
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 30 Jan 2017 23:46:09 -0800 (PST)
+Subject: Re: gitconfig get out of sync with submodule entries on branch switch
+To:     Brandon Williams <bmwill@google.com>
+References: <0f14df64-1aa2-e671-9785-4e5e0a076ae6@gmail.com>
+ <20170130175118.GA35626@google.com>
+Cc:     git@vger.kernel.org, sbeller@google.com
+From:   Benjamin Schindler <beschindler@gmail.com>
+Message-ID: <b614a44a-fbc6-b5fe-ae40-ccf43dd9fcfb@gmail.com>
+Date:   Tue, 31 Jan 2017 08:46:09 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.7.0
 MIME-Version: 1.0
-Received: by 10.74.69.69 with HTTP; Mon, 30 Jan 2017 23:00:34 -0800 (PST)
-From:   Stefan Saasen <ssaasen@atlassian.com>
-Date:   Tue, 31 Jan 2017 18:00:34 +1100
-Message-ID: <CADoxLGPFgF7W4XJzt0X+xFJDoN6RmfFGx_96MO9GPSSOjDK0EQ@mail.gmail.com>
-Subject: Git clonebundles
-To:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20170130175118.GA35626@google.com>
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi all,
+Hi Brandon
 
-Bitbucket recently added support for Mercurial=E2=80=99s clonebundle extens=
-ion
-(http://gregoryszorc.com/blog/2015/10/22/cloning-improvements-in-mercurial-=
-3.6/).
-Mercurial=E2=80=99s clone bundles allow the Mercurial client to seed a repo=
-sitory using
-a bundle file instead of dynamically generating a bundle for the client.
+I did try your suggestion, so basically:
 
+git checkout branch
+git submodule init
+git submodule update
 
-Mercurial clonebundles?
-~~~~~~~~~~~~~~~~~~~~~~~
+Unfortunately, I still have two entries in my git config this way. It 
+seems that git submodule update only considers submodules listed in 
+.gitmodules.
 
-With Mercurial clonebundles the high level clone sequence looks like this:
+The background of my question is this - we have a jenkins farm which 
+needs to switch branches continuously in an automated fashion and this 
+needs to work even in when submodules are around. I did however, just 
+now, find a reliable way to switch a branch, keeping the gitconfig in sync:
+The basic workflow for switching a branch is:
+git submodule deinit .
+git checkout branch
+git submodule init
+git submodule update
 
-1. The command "hg clone URL"  attempts to clone the repository at URL.
-2. If a bundle file exists for the repository, the existence of the file
-`clonebundles.manifest` causes the server to advertise the `clonebundle`
-capability (capabilities lookup is the first command the client issues).
-3. In the above case the client then executes the command "clonebundles".
-4. The manifest file will be returned.
-5. The client then selects a bundle file to download from the list of URLs
-advertised in the manifests file, to seed the repository.
-6. To update the repository the last step involves fetching the latest chan=
-ges.
+Because the .git folder of the submodules are not within the submodule 
+directories, this is, while still quite heavy-handed, reasonably fast 
+and robust. At least it is better than deleting the entire repository 
+every time a branch switch is issued.
 
+Regards
 
-Why is this useful?
-~~~~~~~~~~~~~~~~~~~
+Benjamin Schindler
 
-The fact that clone bundles can be distributed as static files enables us t=
-o
-use static file servers for bundle distribution. Users have also reported
-latency improvements for clone operations of popular Mercurial repositories=
-.
-Additionally this significantly reduces the resource usage of clone operati=
-ons,
-as clone operations are reduced to simpler fetches to resolve the delta bet=
-ween
-the current repository and the downloaded bundle state.
+On 30.01.2017 18:51, Brandon Williams wrote:
+> On 01/30, Benjamin Schindler wrote:
+>> Hi
+>>
+>> Consider the following usecase: I have the master branch where I
+>> have a submodule A. I create a branch where I rename the submodule
+>> to be in the directory B. After doing all of this, everything looks
+>> good.
+>> Now, I switch back to master. The first oddity is, that it fails to
+>> remove the folder B because there are still files in there:
+>>
+>> bschindler@metis ~/Projects/submodule_test (testbranch) $ git
+>> checkout master
+>> warning: unable to rmdir other_submodule: Directory not empty
+>> Switched to branch 'master'
+>>
+>> Git submodule deinit on B fails because the submodule is not known
+>> to git anymore (after all, the folder B exists only in the other
+>> branch). I can easily just remove the folder B from disk and
+>> initialize the submodule A again, so all seems good.
+>>
+>> However, what is not good is that the submodule b is still known in
+>> .git/config. This is in particular a problem for us, because I know
+>> a number of tools which use git config to retrieve the submodule
+>> list. Is it therefore a bug that upon branch switch, the submodule
+>> gets deregistered, but its entry in .git/config remains?
+>>
+>> thanks a lot
+>> Benjamin Schindler
+>>
+>> P.s. I did not subscribe to the mailing list, please add me at least
+>> do CC. Thanks
+> submodules and checkout don't really play nicely with each other at the
+> moment.  Stefan (cc'd) is currently working on a patch series to improve
+> the behavior of checkout with submodules.  Currently, if you want to
+> ensure you have a good working state after a checkout you should run
+> `git submodule update` to update all of the submoules.  As far as your
+> submodule still being listed in the config, that should be expected
+> given the scenario you described.
+>
+> If I'm understanding you correctly, A and B are both the same submodule
+> just renamed on a different branch.  The moment you add a submoule to a
+> repository it is given a name which is fixed.  Typically this is the
+> path from the root of the repository.  The thing is, since you are able
+> to freely move a submodule, its path can change.  To account for this
+> there is the .gitmodules file which allows you to do a lookup from
+> submodule name to the path at which it exists (or vice versa).  The
+> submodules that are stored in .git/config are those which are
+> 'initialize' or rather the submodules in which you are interested in and
+> will be updated by `git submodule update`.  So given your scenario you
+> should only have a single submodule in .git/config and the .gitmodules
+> file should have a single entry with a differing path for each branch.
+>
+> Hopefully this gives you a bit more information to work with.  Since
+> Stefan has been working with this more recently than me he may have some
+> more input.
+>
 
-
-clonebundles for git?
-~~~~~~~~~~~~~~~~~~~~~
-
-We recently looked into how this concept could be translated to git. This i=
-s
-not a new idea and has been discussed before (more on that later) but our
-success with the Mercurial clonebundle rollout prompted us to revisit this
-topic.
-
-We believe that bringing a similar concept to git could have the following
-benefits:
-
-* Improved clone times for users that clone large git repositories, especia=
-lly
-  if bundle file distribution leverages global CDNs.
-* Improved scalability of git for managing large popular repositories.
-  Offloading a significant portion of the clone resource usage to CDNs or s=
-tatic
-  file hosts.
-
-
-Our current proof-of-concept to explore this space, closely follows
-the approach from Mercurial outlined above.
-
-* An `/info/bundle` path returns a bundle manifest (over HTTP)
-* The bundle manifest contains a simple list of URLs with some additional m=
-eta
-  data that allows the client to select a suitable bundle download URL
-* The bundle download URL points to a bundle file generated using `git bund=
-le
-  create` including all the relevant refs as a self contained repository se=
-ed.
-* The client probes the target URL with a `GET` request to $URL/info/bundle=
- and
-  downloads the bundle file if present.
-* The repository will be created based on the downloaded bundle (downloadin=
-g a
-  static file allows resumable downloads or parallel downloads of chunks if=
- the
-  file/web server supports range requests).
-* A `git fetch` and the appropriate checkout then updates the "cloned"
-  repository to match the latest upstream state.
-
-The proof-of-concept was built as an external binary `git-clone2` that
-mimics the behaviour of the `git clone` command, so unfortunately I
-can't provide any patches to git to demonstrate the behaviour.
-
-
-Ultimately our proof-of-concept is built around a few core ideas:
-
-* Re-use the existing bundle format as a single-file, self-contained
-repository representation.
-* Introduce a bundle manifest (accessible at `$URL/info/bundle`) that allow=
-s
-  the client to resolve a suitable bundle download URL.
-* Teach the `git clone` command to accept and prefer seeding a repository u=
-sing
-  a static bundle file that is advertised in a bundle manifest.
-* Re-use as much as possible of the existing commands and in particular the
-  `git bundle` machinery to seed the repository and to create the static bu=
-ndle
-  file.
-* We accept additional storage requirements for the bundle files in additio=
-n to
-  the actual repository content in pack-files or loose objects.
-Hosting providers
-  or system administrators are free to decide how many bundles to advertise=
- and
-  how frequently the bundles are updated.
-* It targets the "seed from a bundle file" use case, with resumable clones =
-just
-  being a potential side-effect.
-
-
-Some of the problems that need to be solved with an approach like this are:
-
-* Bundle advertisement/bundle negotiation: We considered advertising a
-  new capability "clonebundle" as part of the rev advertisement
-capabilities list.
-  This would allow clients that support clonebundles to abort the clone att=
-empt
-  and resolve a suitable bundle URL from a bundle manifest at `$URL/info/bu=
-ndle`
-  instead. For HTTP this would amount to an early termination when
-retrieving the
-  ref-advertisement.
-  Note: We didn't pursue this for our proof-of-concept so we didn't
-explore whether
-  this is feasible.
-* Uniform approach for the supported transports: Our proof-of-concept
-only supports HTTP as
-  a transport. Ideally the clonebundle capability could be supported by all
-  available transports (of which at least ssh would be highly desirable).
-* Bundle manifest and bundle download: It is unclear whose responsibility i=
-t is
-  to generate the bundle manifest with the bundle download URLs. Most likel=
-y the
-  bundle files will be served using a webserver or CDN, so download
-URL generation
-  should not be a core git responsibility. For hosting purpose we envision =
-that
-  the bundle manifest might contain dynamic download URLs with personalised
-  access tokens with expiry.
-* Bundle generation: Similar to the above it is unclear how bundle
-generation is handled.
-  For hosting purposes, the operator would likely want to influence
-when and how bundles are generated.
-
-
-
-Prior art
-~~~~~~~~~
-
-Our proof-of-concept is built on top of ideas that have been
-circulating for a while. We are aware of a number of proposed changes
-in this space:
-
-
-* Jeff King's work on network bundles:
-https://github.com/peff/git/commit/17e2409df37edd0c49ef7d35f47a7695f9608900
-* Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy's work on "[PATCH 0/8] Resumabl=
-e clone
-revisited, proof of concept":
-https://www.spinics.net/lists/git/msg267260.html
-* Resumable clone work by Kevin Wern:
-https://public-inbox.org/git/1473984742-12516-1-git-send-email-kevin.m.wern=
-@gmail.com/
-
-
-Whilst the above mentioned proposals/proposed changes are in a similar
-space, I would be interest to understand whether there is any
-consensus on the general idea of supporting static bundle files as a
-mechanism to seed a repository?
-I would also appreciate any pointers to other discussions in this area.
-
-
-Best regards,
-Stefan Saasen & Erik van Zijst; Atlassian Bitbucket
