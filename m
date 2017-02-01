@@ -2,86 +2,73 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CFBE420A78
-	for <e@80x24.org>; Wed,  1 Feb 2017 23:29:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7340C20A78
+	for <e@80x24.org>; Wed,  1 Feb 2017 23:33:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751735AbdBAX2x (ORCPT <rfc822;e@80x24.org>);
-        Wed, 1 Feb 2017 18:28:53 -0500
-Received: from mail-pg0-f68.google.com ([74.125.83.68]:36431 "EHLO
-        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751072AbdBAX2v (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Feb 2017 18:28:51 -0500
-Received: by mail-pg0-f68.google.com with SMTP id 75so35495975pgf.3
-        for <git@vger.kernel.org>; Wed, 01 Feb 2017 15:28:51 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=Oy5c9qvycGdFo06nT9Kui5OVPosZ+bVrHUh9Twylr+o=;
-        b=SL4TkG6LDVXykWJXja2dhft2oOKofHT3o8Kcy7JdembWbaiVfb4PX76DtOJWyL3DLV
-         5cUrARjL+AluVRmEla2OYRYMyBzX734cetMesuDHRzJfIqA+35w31rDXVG3+z1LM2Om9
-         4TRi62JSWguC5KYJ3DVDcSEy/rT82Gmj+OyuuAiUwPT3ozTivT5Lj4b7ZzDG5jsvfATP
-         j2VnZwYkv/p1S+pqOqL+wGnanebpP4KmSLxtA9FXuu7seVkRW6T5YGy00p8Vxgi2zbOc
-         YQb+RKR4AstNMoc+yjRCfrF41X2oDbXi62N6Of2zQhmBySSBk7+9oBy0T7dFEpZYkEpB
-         aP4A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=Oy5c9qvycGdFo06nT9Kui5OVPosZ+bVrHUh9Twylr+o=;
-        b=DorffAS+4WeK0uxLoRqwqdjGZYQyOlp8Tv+ycR3AEj6x1UQKMfciJ0yjNHG78Z8weq
-         kmHvZM/ZMvigxXDMgT3uq7Etx4ahvUK/myMFseaum+nPcG+3wjgyTVIlqKH27SZwIEBZ
-         ag9ImeGP+/7dTZXu8OWsGLaiqylrh7rHIwVhABHBKYfKi8uHgVMR3oQygWKy5b6WWeU3
-         P0qVtvRuCF95ZrVb32Y/dFf7B70L4UNI1vRjMMwYvPseQFrIGvv77BqBi6Y8ECVZASFN
-         Nlq2sEJ33S3YmjP5zUnYwuB+EVFCftpGyjIoMbkhcOtzOsR1tlg0KriWI1PJn2CyPuhz
-         68uA==
-X-Gm-Message-State: AIkVDXL+TTOmGZs8Cw97A88M9wtg9eYid2PqU9MqzffZk9zIO0/6vctEYtnslXsjzb7dRA==
-X-Received: by 10.84.210.107 with SMTP id z98mr8063833plh.171.1485991730798;
-        Wed, 01 Feb 2017 15:28:50 -0800 (PST)
-Received: from localhost ([2620:0:1000:8622:25a6:b4bd:905a:8303])
-        by smtp.gmail.com with ESMTPSA id w76sm52349866pfd.74.2017.02.01.15.28.50
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 01 Feb 2017 15:28:50 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Matt McCutchen <matt@mattmccutchen.net>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] merge-recursive: make "CONFLICT (rename/delete)" message show both paths
-References: <1485636764.2482.2.camel@mattmccutchen.net>
-        <xmqqvaswrv5q.fsf@gitster.mtv.corp.google.com>
-        <xmqqh94dockc.fsf@gitster.mtv.corp.google.com>
-        <1485991441.28767.2.camel@mattmccutchen.net>
-Date:   Wed, 01 Feb 2017 15:28:49 -0800
-In-Reply-To: <1485991441.28767.2.camel@mattmccutchen.net> (Matt McCutchen's
-        message of "Wed, 01 Feb 2017 18:24:01 -0500")
-Message-ID: <xmqqa8a5mqxa.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+        id S1750837AbdBAXdD (ORCPT <rfc822;e@80x24.org>);
+        Wed, 1 Feb 2017 18:33:03 -0500
+Received: from cloud.peff.net ([104.130.231.41]:48088 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1750726AbdBAXdD (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Feb 2017 18:33:03 -0500
+Received: (qmail 23619 invoked by uid 109); 1 Feb 2017 23:32:07 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 01 Feb 2017 23:32:07 +0000
+Received: (qmail 15217 invoked by uid 111); 1 Feb 2017 23:32:09 -0000
+Received: from Unknown (HELO sigill.intra.peff.net) (10.42.43.3)
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 01 Feb 2017 18:32:09 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 02 Feb 2017 00:32:03 +0100
+Date:   Thu, 2 Feb 2017 00:32:03 +0100
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     cornelius.weig@tngtech.com, git@vger.kernel.org
+Subject: Re: [PATCH] doc: add note about ignoring --no-create-reflog
+Message-ID: <20170201233202.p462dggidiiyx6s6@sigill.intra.peff.net>
+References: <20170201220727.18070-1-cornelius.weig@tngtech.com>
+ <xmqq4m0do86p.fsf@gitster.mtv.corp.google.com>
+ <20170201223520.b4er3av67ev5m3ls@sigill.intra.peff.net>
+ <xmqqmve5mrpe.fsf@gitster.mtv.corp.google.com>
+ <20170201231939.hxhhujpzyb2cqq7a@sigill.intra.peff.net>
+ <xmqqefzhmr02.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqefzhmr02.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Matt McCutchen <matt@mattmccutchen.net> writes:
+On Wed, Feb 01, 2017 at 03:27:09PM -0800, Junio C Hamano wrote:
 
-> On Wed, 2017-02-01 at 12:56 -0800, Junio C Hamano wrote:
->
->> Let me make sure if I understood your changes correctly:
->>  ...
->> So the condition to guard the call to update_file() also looks
->> correct to me.
->
-> All of the above matches my understanding.  Would it have saved you
-> time if I had included some of this explanation in the patch "cover
-> letter"?
+> I had the same trouble wording.  Another thing I noticed was that I
+> deliberately left it vague what "default" this does not override,
+> because it appears to me that those who do not set logallrefupdates
+> will get the compiled-in default and that is also not overriden.
+> 
+> IOW, "does not negate the setting of core.logallrefupdates" will
+> open us to reports "I do not have the configuration set, but I still
+> get reflog even when --no-create-reflog is given".
+> 
+>    The negated form `--no-create-reflog` currently does not negate
+>    the default; it overrides an earlier `--create-reflog`, though.
+> 
+> perhaps?
 
-The fact that I arrived at the same understanding by reading the
-change without peeking at such a cheat-sheet gives me more peace of
-mind ;-)
+True. I thought the default was "off", and that we merely set the config
+when initializing a repo. But looking again, it really is checking
+is_bare_repository() at runtime.
 
-Thanks.
+I still think it is OK to mention, as the description of
+core.logallrefupdates is where we document the behavior and the
+defaults. So even with "I do not have it set", that is still the key to
+find more information.
+
+I do not care that strongly either way, though. This is a minor issue,
+and I suspect just about any note would be helpful.
+
+-Peff
