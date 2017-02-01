@@ -2,67 +2,62 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0DC671F6DC
-	for <e@80x24.org>; Wed,  1 Feb 2017 22:43:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1C46B1F6DC
+	for <e@80x24.org>; Wed,  1 Feb 2017 22:55:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754502AbdBAWnx (ORCPT <rfc822;e@80x24.org>);
-        Wed, 1 Feb 2017 17:43:53 -0500
-Received: from mail-pf0-f196.google.com ([209.85.192.196]:35287 "EHLO
-        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750777AbdBAWnw (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Feb 2017 17:43:52 -0500
-Received: by mail-pf0-f196.google.com with SMTP id f144so32796943pfa.2
-        for <git@vger.kernel.org>; Wed, 01 Feb 2017 14:43:52 -0800 (PST)
+        id S1751064AbdBAWzO (ORCPT <rfc822;e@80x24.org>);
+        Wed, 1 Feb 2017 17:55:14 -0500
+Received: from mail-pf0-f195.google.com ([209.85.192.195]:33296 "EHLO
+        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750885AbdBAWzN (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Feb 2017 17:55:13 -0500
+Received: by mail-pf0-f195.google.com with SMTP id e4so32710070pfg.0
+        for <git@vger.kernel.org>; Wed, 01 Feb 2017 14:55:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=leRY67y9rLeGYtfV06pxmTY1gbaFA1lD0tdAcgg3St8=;
-        b=Uku7Efozw5Ge4TWzdAbcoBkijZxoGQYQwI6nVc6s9bYOi710T5/Hr0jBE8EjzIpI1w
-         eCFipHP1pjPaUlLMrjZlpBOKqqoiCbHhff3LHIYxfFCMLFwKhxBsODAz1Myrcccv3qw9
-         AeXrYHmZ3c4XYgkliLrPGw5L6hmazs2s4Ed9sfFtHISPgMoZLQamA+ZCwwdMcfzAtWR5
-         icmq8nl/JdSX5PK0M3iXUI/3OEdVsiYjW4C7dcnE/6e6hKzNPLq97qRw+eQwnjS/Kwnr
-         D0wiacMSr3knT1Bn4JgnfLg1MT2ShVmKSL6X6dk/+sxbZXG5fn2nisL+0c83aZDOXxID
-         aVPQ==
+        bh=A3Wp05v39OkoXKjhv6J+U+EoBNLZvPHFqByx/lI/Bzw=;
+        b=obJ8rUdVbZJO0T+e/xoaUdqvAuuqG6fe81cDIA0P/dVUAAsAip23+0w1lBLm2LGP0l
+         xLY30CLnscJHJ0jylTTiX8CEXWJJsEoXHnZbG6foek99IizaqAWiGcTHdjgflmmH2n4T
+         1du6/rqBMkoI9Nzn+a02VaslFfvEX/q0u/d0TLH4/obsVKfazSxe+6XH5nJuBZ0eiK92
+         pjN7LV3fjh6JeCOsH6pTCpxPfxflqIzLTaMomUoA5GWM9YL85997UI4E8Yql4mJSgNDI
+         gYbEUOuDrx+vFs3JCI+C7uioOTQNUVECThzvt7U0wfdwiyYYZIbwE9G/WjvXVkOFUsYc
+         BsKA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=leRY67y9rLeGYtfV06pxmTY1gbaFA1lD0tdAcgg3St8=;
-        b=ZVDW9tAGH7IdVO/KPdKJ2c6UL+E821NIT+NQPnqJzVduBocts9SdhvyPSne9gMqtxk
-         ziVIoFMQckfvXPf8G1LprCpRp7lXroMfJ0R6Dzc1BXZoardngpemrok5f8+rfL5Ai6JS
-         tZZ/o8+r32j6QswHg3RNIZRpLgqykZF4VA88W2ykHwXpjHaackKeupXFvA3eX2U0Srt+
-         TnB5+z2KmRK0fKmnUh32sJZEv3n0uqDaypm4fsRLLdpvPnP7ttz9cUlMa4TgwzMdsEKf
-         YE3plDiu8iDl5hDo7BgyoLnG8yEVaQRhOkWoH2ygGc2Pw1i/TMP3UIonwlCg8zUWBz3B
-         c6VA==
-X-Gm-Message-State: AIkVDXIa3ORzPefV+Oy7sJZqPrK0SmHkUpu7OGr/6bFxAjILXq9c7AlrduHLhxvrWD865Q==
-X-Received: by 10.99.98.193 with SMTP id w184mr6727344pgb.223.1485989031799;
-        Wed, 01 Feb 2017 14:43:51 -0800 (PST)
+        bh=A3Wp05v39OkoXKjhv6J+U+EoBNLZvPHFqByx/lI/Bzw=;
+        b=RcBTNbBFVXE7/2zkHU7HXbsxcGGdy/RQwCtina89jAXICyJR3ySiGWlWbi0cgHeTQt
+         nNPyw8PwzfeHbJqx4uQV4m815Mw8oFj8foQHBzUyyndIXDFzM8HiMmHQ5V7iMgSj3PpE
+         fUJcNHyYKrmzFtQEszQHHYU+zH7+zropIUTolfAOrPBi5FWLqyLV25+snu9mfpWxxjT6
+         Yl/HRLA4DqSCnebUijIULF9E0iY6SVq3V7lWullFwDf1l9Ukrpn8kxwH3Ld6IO8oNlR3
+         P1+ELOtZnw0lOVPGO9VGrTmhSzHV1XYnhqrYgULVv/UKrRwKdWbzNlIepgK5keWb88AE
+         zqbQ==
+X-Gm-Message-State: AIkVDXImuqqLJl4qVtlvRURML6ZI2dOBNpHAXn+rp1rqXO/+AFNFZRY7H7leG9gIvEG8KQ==
+X-Received: by 10.84.238.1 with SMTP id u1mr7989304plk.174.1485989713100;
+        Wed, 01 Feb 2017 14:55:13 -0800 (PST)
 Received: from localhost ([2620:0:1000:8622:25a6:b4bd:905a:8303])
-        by smtp.gmail.com with ESMTPSA id 199sm52266504pfu.91.2017.02.01.14.43.51
+        by smtp.gmail.com with ESMTPSA id l22sm52618700pgc.43.2017.02.01.14.55.12
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 01 Feb 2017 14:43:51 -0800 (PST)
+        Wed, 01 Feb 2017 14:55:12 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     git@vger.kernel.org, Segev Finer <segev208@gmail.com>,
-        Jeff King <peff@peff.net>
-Subject: Re: [PATCH v3 4/4] connect: Add the envvar GIT_SSH_VARIANT and ssh.variant config
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>
+Subject: Re: [PATCH v3 0/4] Handle PuTTY (plink/tortoiseplink) even in GIT_SSH_COMMAND
 References: <cover.1485442231.git.johannes.schindelin@gmx.de>
         <cover.1485950225.git.johannes.schindelin@gmx.de>
-        <9780d67c9f11c056202987377c542d0313772ba2.1485950225.git.johannes.schindelin@gmx.de>
-        <xmqq1svhpvm0.fsf@gitster.mtv.corp.google.com>
-        <xmqqwpd9ofry.fsf@gitster.mtv.corp.google.com>
-        <alpine.DEB.2.20.1702012319460.3496@virtualbox>
-        <xmqqzii5mthp.fsf@gitster.mtv.corp.google.com>
-Date:   Wed, 01 Feb 2017 14:43:50 -0800
-In-Reply-To: <xmqqzii5mthp.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-        message of "Wed, 01 Feb 2017 14:33:22 -0800")
-Message-ID: <xmqqvastmt09.fsf@gitster.mtv.corp.google.com>
+        <xmqqr33hoetx.fsf@gitster.mtv.corp.google.com>
+        <alpine.DEB.2.20.1702012311440.3496@virtualbox>
+Date:   Wed, 01 Feb 2017 14:55:11 -0800
+In-Reply-To: <alpine.DEB.2.20.1702012311440.3496@virtualbox> (Johannes
+        Schindelin's message of "Wed, 1 Feb 2017 23:17:54 +0100 (CET)")
+Message-ID: <xmqqr33hmshc.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -71,32 +66,50 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+>> Compared to the correctness issue, these are much harder to spot by
+>> the submitter alone, who focused so intensely to get his code
+>> "correct".  The review process is of greater value to spot these
+>> issues.
 >
->> That leaves the "putty" case in handle_ssh_variant(), does it not? Was it
->> not your specific objection that that is the case?
->
-> Yup, you can remove that while you reroll.
->
->> No worries, I will let this simmer for a while. Your fixup has a lot of
->> duplicated code (so much for maintainability as an important goal... ;-))
->> and I will have to think about it. My immediate thinking is to *not*
->> duplicate code,...
->
-> You need to realize that the namespaces of the configuration and the
-> command names are distinct.  There is no code duplication.
+> We will never agree on this.
 
-To explain this a bit, there is no reason why allowed values for
-SSH_VARIANT must be "putty" and "tortoiseplink".  An alternative
-design could be "port_option=-p,needs_batch=yes" and it may be more
-logical and futureproof if a variant of tortoiseplink decides to use
-"-p" instead of "-P" and still require "-batch".
+That's too bad.
 
-Prematurely attempting to share code, only because the current
-vocabularies for two distinct concepts happen to overlap, is not
-de-duplicating the code for maintainability.  It is adding
-unnecessary work other people need to do in the future when they
-want to extend the system.
+> From my perspective, design, explanation and maintainability are a
+> consequence of making it easy for reviewers to spot where the code is
+> incorrect.
+>
+> And correctness is not covered by "the submitter tested this". Correctness
+> includes all the corner cases, where the "many eyes make bugs shallow"
+> really shines.
+>
+> I'd rather have reviewers find bugs than users.
 
+I'd rather have submitters find bugs than reviewers.
+
+> I will *never* be a fan of a review process that pushes correctness to a
+> back seat (yes, it is much harder than spotting typos or lines longer than
+> 80 columns per row, but the ultimate goal is to deliver value to the end
+> user, not to make life easy for the maintainer).
+
+Did I ever say correctness is pushed to a back seat?
+
+I said that it is easier to spot correctness issues for you as a
+submitter than other kinds of issues without outside help (and
+implied that if you are a diligent contributor, you should aim for,
+and you should be able to achieve, a patch series where correctness
+issues do not need to be pointed out).  But other higher level
+issues are harder for any submitter to spot (regardless of
+experience and competence of the submitter), because one gets so
+married to one's own code, design and worldview.  And that is why
+"review is primarily to spot bugs" can never be a correct viewpoint.
+
+A reviewee needs to be prepared to accept review comments on higher
+level issues, even more readily than comments on correctness issues,
+because it is too easy to be constrained by early decisions one has
+already made while preparing a patch series and become blind to
+bigger picture after staring one's own new code for number of hours.
+Higher level issues can be more easily spotted by reviewers, whose
+eyes are still fresh to the series.
