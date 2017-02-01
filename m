@@ -2,124 +2,64 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0195E1F6DC
-	for <e@80x24.org>; Wed,  1 Feb 2017 21:35:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 263571F6DC
+	for <e@80x24.org>; Wed,  1 Feb 2017 21:45:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752421AbdBAVfN (ORCPT <rfc822;e@80x24.org>);
-        Wed, 1 Feb 2017 16:35:13 -0500
-Received: from mail-pf0-f196.google.com ([209.85.192.196]:36219 "EHLO
-        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751192AbdBAVfN (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Feb 2017 16:35:13 -0500
-Received: by mail-pf0-f196.google.com with SMTP id 19so32625124pfo.3
-        for <git@vger.kernel.org>; Wed, 01 Feb 2017 13:35:12 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=p6dlICUSlb5CW8LZ4i6kg0JYvays2n3AA5mYIgPq5H0=;
-        b=cfFnYQEaMO37ZQAYTO777IE4CASU73AZgH9N6dc4IH5gxQXRAzfiiyzUYQRndLQqry
-         uXK8qdbsF5DcOQjIbUlEhfilifjU1rWeHjtdFK6nLz2T2sa4tKi0fbI3dOMsCAbHQVOW
-         H5KVVSr1PiUgLmSSwWg4EWu7Cl0NwPrnV7rmb3KIG4WN7TtfR+561WVx7uOBI7KraqGy
-         rtnk58O8Ad6GmWkRYxdjWpUwkiiEi9e4qIIkG42hKXpm8+NwYJ7X56q+F/48bm30TeXq
-         klkzTABtGAgyMr4QMxSOCSiR/kvgudLS/6flTIaV8q1HnaivDcT2t1HWzowh/98s1/yJ
-         RsLw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=p6dlICUSlb5CW8LZ4i6kg0JYvays2n3AA5mYIgPq5H0=;
-        b=kX0QVzcpZkdXZbM5RmZXeBf30ax3kBPUruN5NQMHP+eR8BIgjIW9DV4pQKS17jvk1l
-         Mj7z/hOLp83S9nms/sFTEuLmYQdERGBPRhWg/JTbZeyMFv/3or5QDDpiCayIWf2+1gdY
-         c0dAgpihS/FHJ7zg8tkVfiqQNGCU4vbtsRHBkGu7TVCfNtqwEN2+r6oyN1UH9b4uKcTF
-         GynIH2Wm59we/W8Tz0sgYxi3amBbTZsS0clB90J3TH37leago/Iy/A+OKDhj3DaduHid
-         pn7kJDSgOW29WaCHYTM54KQy/5LIMa4a1iicXnjdZrRd2JQbqMxqRiVKCIhl2cBgnhUY
-         itMg==
-X-Gm-Message-State: AIkVDXIJd52ca5NusDNxofRB8pdnJq5ARHG8Al4bbeljXxiiIIWikycj3loNG9sBu0Q2Ew==
-X-Received: by 10.99.153.1 with SMTP id d1mr6460967pge.44.1485984912256;
-        Wed, 01 Feb 2017 13:35:12 -0800 (PST)
-Received: from localhost ([2620:0:1000:8622:25a6:b4bd:905a:8303])
-        by smtp.gmail.com with ESMTPSA id l25sm52070430pfb.24.2017.02.01.13.35.11
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 01 Feb 2017 13:35:11 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Erik van Zijst <erik.van.zijst@gmail.com>, git@vger.kernel.org,
-        ssaasen@atlassian.com, mheemskerk@atlassian.com
-Subject: Re: [ANNOUNCE] Git Merge Contributor Summit topic planning
-References: <20170131004804.p5sule4rh2xrgtwe@sigill.intra.peff.net>
-        <1485941532-47993-1-git-send-email-erik.van.zijst@gmail.com>
-        <20170201145300.4pn3faodhdb72jly@sigill.intra.peff.net>
-        <xmqqh94dpyzs.fsf@gitster.mtv.corp.google.com>
-        <20170201212825.advj7f3ucnfbspbj@sigill.intra.peff.net>
-Date:   Wed, 01 Feb 2017 13:35:10 -0800
-In-Reply-To: <20170201212825.advj7f3ucnfbspbj@sigill.intra.peff.net> (Jeff
-        King's message of "Wed, 1 Feb 2017 22:28:26 +0100")
-Message-ID: <xmqqd1f1oar5.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+        id S1751756AbdBAVp1 convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Wed, 1 Feb 2017 16:45:27 -0500
+Received: from mga01.intel.com ([192.55.52.88]:62721 "EHLO mga01.intel.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751054AbdBAVp0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Feb 2017 16:45:26 -0500
+Received: from fmsmga006.fm.intel.com ([10.253.24.20])
+  by fmsmga101.fm.intel.com with ESMTP; 01 Feb 2017 13:45:26 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.33,321,1477983600"; 
+   d="scan'208";a="60781925"
+Received: from orsmsx101.amr.corp.intel.com ([10.22.225.128])
+  by fmsmga006.fm.intel.com with ESMTP; 01 Feb 2017 13:45:26 -0800
+Received: from orsmsx158.amr.corp.intel.com (10.22.240.20) by
+ ORSMSX101.amr.corp.intel.com (10.22.225.128) with Microsoft SMTP Server (TLS)
+ id 14.3.248.2; Wed, 1 Feb 2017 13:45:26 -0800
+Received: from orsmsx115.amr.corp.intel.com ([169.254.4.108]) by
+ ORSMSX158.amr.corp.intel.com ([169.254.10.135]) with mapi id 14.03.0248.002;
+ Wed, 1 Feb 2017 13:45:25 -0800
+From:   "Gumbel, Matthew K" <matthew.k.gumbel@intel.com>
+To:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: git commit results in many lstat()s
+Thread-Topic: git commit results in many lstat()s
+Thread-Index: AdJ8zldaoJRrSN8YSgqDGiFiJtHa4g==
+Date:   Wed, 1 Feb 2017 21:45:25 +0000
+Message-ID: <DA0A42D68346B1469147552440A645039A9C56D4@ORSMSX115.amr.corp.intel.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-titus-metadata-40: eyJDYXRlZ29yeUxhYmVscyI6IiIsIk1ldGFkYXRhIjp7Im5zIjoiaHR0cDpcL1wvd3d3LnRpdHVzLmNvbVwvbnNcL0ludGVsMyIsImlkIjoiMmM5MTIyZmEtMWRhZS00M2I2LThhYTYtOWU0ZmFjZjVhMDRmIiwicHJvcHMiOlt7Im4iOiJDVFBDbGFzc2lmaWNhdGlvbiIsInZhbHMiOlt7InZhbHVlIjoiQ1RQX0lDIn1dfV19LCJTdWJqZWN0TGFiZWxzIjpbXSwiVE1DVmVyc2lvbiI6IjE1LjkuNi42IiwiVHJ1c3RlZExhYmVsSGFzaCI6IkxXcHFQdUlYQnF4ZEdyMTkwcFRkZjJhbVgyQ09xMDFsN3dFTFM3dDJHZEU9In0=
+x-ctpclassification: CTP_IC
+x-originating-ip: [10.22.254.138]
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
 MIME-Version: 1.0
-Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Hello,
 
-> For instance, if the server knew that XYZ meant
->
->   - send bytes m through n of packfile p, then...
->   
->   - send the object at position i of packfile p, as a delta against the
->     object at position j of packfile q
->
->   - ...and so on
->
-> Then you could store very small "instruction sheets" for each XYZ that
-> rely on the data in the packfiles. If those packfiles go away (e.g., due
-> to a repack) that invalidates all of your current XYZ tags. That's OK as
-> long as this is an optimization, not a correctness requirement.
+My high level problem is to speed up git commit on a large repository stored on NFS filesystem. I see via strace that it is slow because it makes a large number (~50,000) of lstat() calls in serial. Every call is a round-trip to the NFS server.
 
-Yes.  You can play optimization games.
+I do not understand why git commit must call lstat() on every file in the repository, even when I specify the name of the file I want to commit on the command line. Can somebody explain why it must call lstat on every file?
 
->> So in the real life, I think that the exchange needs to be more
->> like this:
->> 
->>     C: I need a packfile with this want/have
->>     ... C/S negotiate what "have"s are common ...
->>     S: Sorry, but our negitiation indicates that you are way too
->>        behind.  I'll send you a packfile that brings you up to a
->>        slightly older set of "want", so pretend that you asked for
->>        these slightly older "want"s instead.  The opaque id of that
->>        packfile is XYZ.  After getting XYZ, come back to me with
->>        your original set of "want"s.  You would give me more recent
->>        "have" in that request.  
->>     ... connection interrupted ...
->>     C: It's me again.  I have up to byte N of pack XYZ
->>     S: OK, resuming (or: I do not have it anymore, start from scratch)
->>     ... after 0 or more iterations C fully receives and digests XYZ ...
->> 
->> and then the above will iterate until the server does not have to
->> say "Sorry but you are way too behind" and returns a packfile
->> without having to tweak the "want".
->
-> Yes, I think that is a reasonable variant. The client knows about
-> seeding, but the XYZ conversation continues to happen inside the git
-> protocol. So it loses flexibility versus a true CDN redirection, but it
-> would "just work" when the server/client both understand the feature,
-> without the server admin having to set up a separate bundle-over-http
-> infrastructure.
+My command-line looks like this: git commit -uno -o -m asdf file-to-commit.txt
 
-You can also do a CDN offline as a natural extension.  When the
-server says "Sorry, you are way too behind.", the above example
-tells "I'll update you to a slightly stale version first" to the
-client.  An natural extension could say "Go update yourself to a
-slightly stale version first by grabbing that bundle over there."
+Secondly, are there any optimizations I can make to avoid this behavior?
 
-But I agree that doing everything in-line may be a logical and
-simpler first step to get there.
+Thanks,
+Matt
+
