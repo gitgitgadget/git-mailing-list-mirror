@@ -7,55 +7,61 @@ X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D08611F6DC
-	for <e@80x24.org>; Wed,  1 Feb 2017 22:30:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 25F061F6DC
+	for <e@80x24.org>; Wed,  1 Feb 2017 22:33:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754238AbdBAWal (ORCPT <rfc822;e@80x24.org>);
-        Wed, 1 Feb 2017 17:30:41 -0500
-Received: from mail-pf0-f194.google.com ([209.85.192.194]:35447 "EHLO
-        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753031AbdBAWal (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Feb 2017 17:30:41 -0500
-Received: by mail-pf0-f194.google.com with SMTP id f144so32775658pfa.2
-        for <git@vger.kernel.org>; Wed, 01 Feb 2017 14:30:40 -0800 (PST)
+        id S1753769AbdBAWdZ (ORCPT <rfc822;e@80x24.org>);
+        Wed, 1 Feb 2017 17:33:25 -0500
+Received: from mail-pf0-f196.google.com ([209.85.192.196]:35897 "EHLO
+        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753485AbdBAWdY (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Feb 2017 17:33:24 -0500
+Received: by mail-pf0-f196.google.com with SMTP id 19so32715960pfo.3
+        for <git@vger.kernel.org>; Wed, 01 Feb 2017 14:33:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=fkHTrAh082gMKs1hF42rgrsx/MuNaW2k5nXm7MWzO4Y=;
-        b=tmlRbjGlhet9C7gxV/55OAazZQd9mlJikmD6R5toK/H7XoQ+0EcPFQoHNnWkuuZn9w
-         CLFjY73pQs2V59xpt4p703+lCFq9aHZenHq/TOKEkPW07ZU1phxzg9Oh5unkckjUeN5o
-         LwDxIxRIlUKI1J16i2dWtPSlxtDkNxesuIA5wmxqlrkkFVAkm16iPSZebvyj+M6doDlS
-         09bblEDJd6aMx+CIZi7SbuWSV5mX9ANF394B7pPKxaa0fuMkl5JWJHZHjopsTfuMc2eT
-         NdnvtzlzlsvX6TG6+Fdh7HYiHTyLylODHHOigKlU7qz6L+AbNyA1yTtO0l4jwKEjddOO
-         CeMA==
+        bh=ycnNVNCe2fj7WzjSpd8ZlNq1F15ny5xC5UPmljA1nlI=;
+        b=Z4XUObOkcqGB1+7uRT6NlHDhasWppZXm/DJ7hJ6s4VKp+BsWDFZRIqQHNgMT5AjANp
+         5jtDqRx0UuI0X2nk7N+q0EnHJFnHFPLAuR7W1VYIFutbIopkxG6ep16bklxgTewcUF49
+         I0Z3tQTqSda2RsAeRBERVYpyopPYRgnbZGt82euTsliugFbwpWXz8nw7MVVZFISDEska
+         Jrsa95D2QztY6XvWczMkIYS0ZvxbIGjV4vAmjNskCJEPqqXcH7mDtso5NRjxTpgOd444
+         DuL0v1dCV0N7RBMzzPmQ1pudv/9WigyeScOFywX3Xf4GanLzcegh3HHbMM+SzyYiL88W
+         0i+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=fkHTrAh082gMKs1hF42rgrsx/MuNaW2k5nXm7MWzO4Y=;
-        b=aYcmiSpjXTyYngFlMn8prn95+/UZ8XOsbtC+FtPL7m3k0Y8NldNpd+D7kxL1nQBKZp
-         qBIHmORGm3ygjDxdMDVjfUz3En1OcKFpqOQDj9abkcQaHNH9CkZ60IXVyBljsd3vtoLU
-         8wQoXx4O0ghyhaqlD1R1ZpOUI7qVoBKfIiNx8Tq1ZOEgNwYysEa4fycfSKvd7PAyg+7R
-         ubZJpm0eaDezq6LXmuWR9YNqg/0cDGPFVcqrpS6V9givAFhj42iY06c6izdsQoXF28Gd
-         STlheCl1lWNqeoVcmeFeTwrTY1U3KbqZH0Pm7mbKwsh5LgjzQg7lQMiWHuUJcg33MuYJ
-         qd4g==
-X-Gm-Message-State: AIkVDXJAGlMy46Ns6Wnj5G5d3ytKAW4Kh5ruLfouMmoe8NfuaJHebhGzHyCq833ThHj89g==
-X-Received: by 10.98.204.216 with SMTP id j85mr6506428pfk.130.1485988240360;
-        Wed, 01 Feb 2017 14:30:40 -0800 (PST)
+        bh=ycnNVNCe2fj7WzjSpd8ZlNq1F15ny5xC5UPmljA1nlI=;
+        b=CXQEDMn7EYTJkKPGLMOw4lpwpfXBRGhBAkc3BdBmzupLK3SiFrhUwgU5F60ys3N4Ln
+         Y74YAnEABA7Fod2mUxyk/ywUTdRYwrOeu1tMfEcJPrxklrxG1fFVQCVWaqMkwUAMtKGO
+         v8VlRLUixGE2G2ErZwSJXmXR9gr2TZ4yquiUYVK41NO7t3QfaxlN8/zn+jvDPQ4BICIB
+         WKFHKfscvpuGx4m6j1856G4hNwClKTJj5dKCQLGeNwUHMpiiaitcMS9fy5jQjc1W8orT
+         Yz3q/LR2lAcycqggM7zbykMJRfGeJGUWITPo1RZYYMt0olt7hy1T2Vv0Zlho+26yGf1d
+         C9DA==
+X-Gm-Message-State: AIkVDXInVJ78vBavp5mriAudq2tY0oNja/9xB4WmJ8wsq5FC/tnGcEvA+WWrMyUIbcksYw==
+X-Received: by 10.84.247.2 with SMTP id n2mr7714232pll.39.1485988403641;
+        Wed, 01 Feb 2017 14:33:23 -0800 (PST)
 Received: from localhost ([2620:0:1000:8622:25a6:b4bd:905a:8303])
-        by smtp.gmail.com with ESMTPSA id f3sm52281356pfd.10.2017.02.01.14.30.39
+        by smtp.gmail.com with ESMTPSA id m136sm52762251pga.22.2017.02.01.14.33.22
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 01 Feb 2017 14:30:39 -0800 (PST)
+        Wed, 01 Feb 2017 14:33:22 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     cornelius.weig@tngtech.com
-Cc:     git@vger.kernel.org, peff@peff.net
-Subject: Re: [PATCH] doc: add note about ignoring --no-create-reflog
-References: <20170201220727.18070-1-cornelius.weig@tngtech.com>
-Date:   Wed, 01 Feb 2017 14:30:38 -0800
-In-Reply-To: <20170201220727.18070-1-cornelius.weig@tngtech.com> (cornelius
-        weig's message of "Wed, 1 Feb 2017 23:07:27 +0100")
-Message-ID: <xmqq4m0do86p.fsf@gitster.mtv.corp.google.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     git@vger.kernel.org, Segev Finer <segev208@gmail.com>,
+        Jeff King <peff@peff.net>
+Subject: Re: [PATCH v3 4/4] connect: Add the envvar GIT_SSH_VARIANT and ssh.variant config
+References: <cover.1485442231.git.johannes.schindelin@gmx.de>
+        <cover.1485950225.git.johannes.schindelin@gmx.de>
+        <9780d67c9f11c056202987377c542d0313772ba2.1485950225.git.johannes.schindelin@gmx.de>
+        <xmqq1svhpvm0.fsf@gitster.mtv.corp.google.com>
+        <xmqqwpd9ofry.fsf@gitster.mtv.corp.google.com>
+        <alpine.DEB.2.20.1702012319460.3496@virtualbox>
+Date:   Wed, 01 Feb 2017 14:33:22 -0800
+In-Reply-To: <alpine.DEB.2.20.1702012319460.3496@virtualbox> (Johannes
+        Schindelin's message of "Wed, 1 Feb 2017 23:24:04 +0100 (CET)")
+Message-ID: <xmqqzii5mthp.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -64,84 +70,17 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-cornelius.weig@tngtech.com writes:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> From: Cornelius Weig <cornelius.weig@tngtech.com>
->
-> The commands git-branch and git-tag accept a `--create-reflog` argument.
+> That leaves the "putty" case in handle_ssh_variant(), does it not? Was it
+> not your specific objection that that is the case?
 
-For the purpose of contrasting the above with "--no-create-reflog",
-I find it a bit too weak to just say "accept".  How about
+Yup, you can remove that while you reroll.
 
-    The commands git-branch and git-tag accept a `--create-reflog`
-    option, and creates reflog even in a repository where
-    core.logallrefupdates configuration is set not to.
+> No worries, I will let this simmer for a while. Your fixup has a lot of
+> duplicated code (so much for maintainability as an important goal... ;-))
+> and I will have to think about it. My immediate thinking is to *not*
+> duplicate code,...
 
-or something?  After all "--no-create-reflog" is accepted.  It just
-does not override the configured (or unconfigured) default.
-
-> On the other hand, the negated form `--no-create-reflog` is accepted as
-> a valid option but has no effect. This silent noop may puzzle users.
-
-True, very true.
-
-> To communicate that this behavior is intentional, add a short note in
-> the manuals for git-branch and git-tag.
-
-Hmph.  The added "short note" merely states the fact; it does not
-hint that it is intentional or it explains what reasoning is behind
-that intention.
-
-> Signed-off-by: Cornelius Weig <cornelius.weig@tngtech.com>
-> ---
->
-> Notes:
->     In a previous discussion (<xmqqbmunrwbf.fsf@gitster.mtv.corp.google.com>) it
->     was found that git-branch and git-tag accept a "--no-create-reflog" argument,
->     but it has no effect, does not produce a warning, and is undocumented.
-
-Reading what Peff said in the thread, I do not think we actively
-wanted this behaviour; we agreed that it is merely acceptable.  
-
-So perhaps s/this behaviour is intentional/this is known/ to weaken
-the log message?  That way, when somebody else who really cares
-comes later and finds this commit that adds explicit notes to these
-manual pages via "git blame", s/he would not be dissuaded from
-making things better.  Such an update may make it warn when
-core.logallrefupdates is not set to false (and continue to ignore
-the command line option), or it may make the command line option
-actually override the configured default.
-
-With such an update to the log message, I think the patch looks
-good.
-
-Thanks.
-
->  Documentation/git-branch.txt | 1 +
->  Documentation/git-tag.txt    | 1 +
->  2 files changed, 2 insertions(+)
->
-> diff --git a/Documentation/git-branch.txt b/Documentation/git-branch.txt
-> index 1fae4ee..fca3754 100644
-> --- a/Documentation/git-branch.txt
-> +++ b/Documentation/git-branch.txt
-> @@ -91,6 +91,7 @@ OPTIONS
->  	based sha1 expressions such as "<branchname>@\{yesterday}".
->  	Note that in non-bare repositories, reflogs are usually
->  	enabled by default by the `core.logallrefupdates` config option.
-> +	The negated form `--no-create-reflog` is silently ignored.
->  
->  -f::
->  --force::
-> diff --git a/Documentation/git-tag.txt b/Documentation/git-tag.txt
-> index 5b2288c..b0b933e 100644
-> --- a/Documentation/git-tag.txt
-> +++ b/Documentation/git-tag.txt
-> @@ -152,6 +152,7 @@ This option is only applicable when listing tags without annotation lines.
->  --create-reflog::
->  	Create a reflog for the tag. To globally enable reflogs for tags, see
->  	`core.logAllRefUpdates` in linkgit:git-config[1].
-> +	The negated form `--no-create-reflog` is silently ignored.
->  
->  <tagname>::
->  	The name of the tag to create, delete, or describe.
+You need to realize that the namespaces of the configuration and the
+command names are distinct.  There is no code duplication.
