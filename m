@@ -2,80 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D38E21F6DC
-	for <e@80x24.org>; Wed,  1 Feb 2017 22:35:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 19D441F6DC
+	for <e@80x24.org>; Wed,  1 Feb 2017 22:42:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753806AbdBAWf0 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 1 Feb 2017 17:35:26 -0500
-Received: from cloud.peff.net ([104.130.231.41]:48024 "EHLO cloud.peff.net"
+        id S1753955AbdBAWmY (ORCPT <rfc822;e@80x24.org>);
+        Wed, 1 Feb 2017 17:42:24 -0500
+Received: from mout.gmx.net ([212.227.15.18]:65500 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753224AbdBAWfZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Feb 2017 17:35:25 -0500
-Received: (qmail 20422 invoked by uid 109); 1 Feb 2017 22:35:25 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 01 Feb 2017 22:35:25 +0000
-Received: (qmail 14360 invoked by uid 111); 1 Feb 2017 22:35:27 -0000
-Received: from Unknown (HELO sigill.intra.peff.net) (10.42.43.3)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 01 Feb 2017 17:35:27 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 01 Feb 2017 23:35:21 +0100
-Date:   Wed, 1 Feb 2017 23:35:21 +0100
-From:   Jeff King <peff@peff.net>
+        id S1753731AbdBAWmX (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Feb 2017 17:42:23 -0500
+Received: from virtualbox ([217.136.241.150]) by mail.gmx.com (mrgmx001
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MV6EP-1cyY9e2df3-00YOGb; Wed, 01
+ Feb 2017 23:42:11 +0100
+Date:   Wed, 1 Feb 2017 23:42:09 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     cornelius.weig@tngtech.com, git@vger.kernel.org
-Subject: Re: [PATCH] doc: add note about ignoring --no-create-reflog
-Message-ID: <20170201223520.b4er3av67ev5m3ls@sigill.intra.peff.net>
-References: <20170201220727.18070-1-cornelius.weig@tngtech.com>
- <xmqq4m0do86p.fsf@gitster.mtv.corp.google.com>
+cc:     git@vger.kernel.org, Segev Finer <segev208@gmail.com>,
+        Jeff King <peff@peff.net>
+Subject: Re: [PATCH v3 4/4] connect: Add the envvar GIT_SSH_VARIANT and
+ ssh.variant config
+In-Reply-To: <xmqqzii5mthp.fsf@gitster.mtv.corp.google.com>
+Message-ID: <alpine.DEB.2.20.1702012339080.3496@virtualbox>
+References: <cover.1485442231.git.johannes.schindelin@gmx.de> <cover.1485950225.git.johannes.schindelin@gmx.de> <9780d67c9f11c056202987377c542d0313772ba2.1485950225.git.johannes.schindelin@gmx.de> <xmqq1svhpvm0.fsf@gitster.mtv.corp.google.com>
+ <xmqqwpd9ofry.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1702012319460.3496@virtualbox> <xmqqzii5mthp.fsf@gitster.mtv.corp.google.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqq4m0do86p.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:cDSviV0wgW1QLD8+YqI2/50+D2hVGiPUiZkA2ABddHUAcMS1qlW
+ Uxo2KIslkAHiMYEa3eZRKLeszDhQ+vmPZJ7n/osdWcLoA0v7K93sWV3JXJzcnRMBA9gIrvG
+ wKg9UhBF6I5Y7CpnUd9PT7bkXqQldURBk5ueL4NcPQ8V2YUA4W/CFHgGpslfPgERocqO0Lw
+ rSAPHu4uijSmxe6/qM6sA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:QFa/RzrqJ2k=:0SRCJCm01l3W2rNstXcK2M
+ HWuRWKZ10F/JTdKT4yDJ3nTZXSKR64iblwF8PkU/io6i4wfika90ojEMhkwhQhwrzsMQBQSlS
+ R6ZyZUSAUXrBDX7ld50FFrzcgGRcxeKnQwdLrF1VQxHT2UZa5XLkzt9ZGMebLBsU7gWbLFJjt
+ spAJCKDYf+6OEfkxWg6Tm/LnRUUerQdWguqlwbXw/CP+yZ2s+pqNtWvLoGkzvJZkDE6LAP1Rf
+ A3Syi1fBTAyWzGEu1TviulxDqsFX9Mi0xjWGfmtqR9IWFH8B+3NtB15OE9qpH5xQIhBQlXRii
+ Wt+ujh04GWOwMVlM8DKUrNCtBOy2dc29EO6ESwt4uZclmoAFdJJzqIj7O6Gadbr0c7uXu/I+6
+ 3JTgBQ/knzMHeW1wFF8eke9/Osm8Hs1u0eCsUYtNgvd5+E6uXwsuP89cUCaTCBJC0dSXs2bv5
+ b72aytjBfgzVUZHmSQSYSOGUP2feGPZ59jCcKcDdzt3qpj16FwG58Q8tG7vtuEA2rySbJcMVZ
+ mk4kJQ86ILYrwtaDqfSXxx7cdyODjvA5WOK6bKyh0buA1UmXxwqmU9hKvPFQ1uv5nU4YsbTuV
+ dv6tSWXfQMuEEU+OGNZszez5vFEUm5J/pSxa7xSovr5IO+/6IFeOtbpOEYRMv+VOl0JxAaGF5
+ XRLQj9bZ0rTZ68VKJJbuz+4y40bOepy+Hli9eLTYJqsxv3MSAYGWdhMQm4XUCWwQ94MGYKfIH
+ j/wV2of45+UjNby1R1tFIy3y4NL4/tPUyPreEmH0ylFSGFecuxaj4Agw1/j4o3AZJwTjo97th
+ DIJNHt7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Feb 01, 2017 at 02:30:38PM -0800, Junio C Hamano wrote:
+Hi Junio,
 
-> > Notes:
-> >     In a previous discussion (<xmqqbmunrwbf.fsf@gitster.mtv.corp.google.com>) it
-> >     was found that git-branch and git-tag accept a "--no-create-reflog" argument,
-> >     but it has no effect, does not produce a warning, and is undocumented.
+On Wed, 1 Feb 2017, Junio C Hamano wrote:
+
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 > 
-> Reading what Peff said in the thread, I do not think we actively
-> wanted this behaviour; we agreed that it is merely acceptable.
+> > That leaves the "putty" case in handle_ssh_variant(), does it not? Was it
+> > not your specific objection that that is the case?
 > 
-> So perhaps s/this behaviour is intentional/this is known/ to weaken
-> the log message?  That way, when somebody else who really cares
-> comes later and finds this commit that adds explicit notes to these
-> manual pages via "git blame", s/he would not be dissuaded from
-> making things better.  Such an update may make it warn when
-> core.logallrefupdates is not set to false (and continue to ignore
-> the command line option), or it may make the command line option
-> actually override the configured default.
+> Yup, you can remove that while you reroll.
+> 
+> > No worries, I will let this simmer for a while. Your fixup has a lot of
+> > duplicated code (so much for maintainability as an important goal... ;-))
+> > and I will have to think about it. My immediate thinking is to *not*
+> > duplicate code,...
+> 
+> You need to realize that the namespaces of the configuration and the
+> command names are distinct.  There is no code duplication.
 
-Yeah, I'd consider it more of a "known bug" or "known limitation" than
-anything.
+Since your 2/4 did away with the "plink" and "tortoiseplink" values in
+favor of "port_option" and "batch_option", there is a duplication of logic
+which I tried to undo in v3 and which you reintroduce in your fixup.
 
-Those can go in a separate section, but they're probably more likely to
-be read when supplied next to the actual option.
+Maybe that refactoring was not so smart to begin with, and we should have
+instead modified the code to use an enum instead and keep the original
+conditionals instead of setting a port_option and a batch_option
+explicitly.
 
-> With such an update to the log message, I think the patch looks
-> good.
-> [...]
-> > @@ -91,6 +91,7 @@ OPTIONS
-> >  	based sha1 expressions such as "<branchname>@\{yesterday}".
-> >  	Note that in non-bare repositories, reflogs are usually
-> >  	enabled by default by the `core.logallrefupdates` config option.
-> > +	The negated form `--no-create-reflog` is silently ignored.
-
-This might be nitpicking, but it's _not_ ignored. It still negates an
-earlier "--create-reflog". It is only that it does not override the
-decision to create a reflog caused by the setting of
-core.logallrefupdates.
-
--Peff
+Ciao,
+Johannes
