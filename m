@@ -2,88 +2,115 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5F86C1F6DC
-	for <e@80x24.org>; Wed,  1 Feb 2017 19:52:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 620491F6DC
+	for <e@80x24.org>; Wed,  1 Feb 2017 20:07:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752752AbdBATwC (ORCPT <rfc822;e@80x24.org>);
-        Wed, 1 Feb 2017 14:52:02 -0500
-Received: from mail-lf0-f51.google.com ([209.85.215.51]:35806 "EHLO
-        mail-lf0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752568AbdBATwB (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Feb 2017 14:52:01 -0500
-Received: by mail-lf0-f51.google.com with SMTP id n124so233860257lfd.2
-        for <git@vger.kernel.org>; Wed, 01 Feb 2017 11:52:00 -0800 (PST)
+        id S1751364AbdBAUHJ (ORCPT <rfc822;e@80x24.org>);
+        Wed, 1 Feb 2017 15:07:09 -0500
+Received: from mail-pf0-f195.google.com ([209.85.192.195]:34909 "EHLO
+        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750896AbdBAUHI (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Feb 2017 15:07:08 -0500
+Received: by mail-pf0-f195.google.com with SMTP id f144so32536760pfa.2
+        for <git@vger.kernel.org>; Wed, 01 Feb 2017 12:07:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=LHaSS6FK7ox4F2ZIJt1JEWOljHiifer6bBK5CoR+LD0=;
-        b=MqLO9S15FareuCCfBQoOp60QMJzI1UfYc79cTEq2GBfegK5vZ2TQKWVE55+ryPw8ET
-         sfqta7WIh69UNq5UPSZnWEaWQj0rMlonevycTTrO/1EGgehIX+N60y0TJ8p1lAbod4+x
-         fxKnaiAYGPMj8tKir0ge2jmyGYcBgREJas3DWdDVGl2AHaM9DuFBhu1FQZQ8KRM6VDkh
-         eJvCH8w1cNY7G4yHybjl09PygV+76nayVG588/DMyAl1jjqAFEXAPs12CcFjX8X2URxd
-         cj3nu+dIrtHwXauuFafewKCYTjRXs8cUTDmblXzgw5xZ1PcvRm+Uv63TG9hdxwHMV7yN
-         Gpqw==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=zqKkeNNj8uzpYnhR4gSrfZVquE52jJxUR+ygAkInMGM=;
+        b=AANdpzyUbIHD7rCWFvFEDcxl9Tmnw1VW4uzg2N+1EpZ9oqC9SdKrMN5jswNiC7QpYx
+         xsOt7f+Xd+znB+pYh/0wnzW1KH4Tix4myuBekw2neti9hYMXtE2Kd9DxWsia2fwaltOX
+         ys/nLPbhEZ6iBbVY0tnXpTIWFnRmj2fUqb7iNlsp9NI4snJ08ltJVW7tgg0HSLwl3pb2
+         LXLg4H5Xzg+FAG/B66mgR7zCKaMloZ2469+iCm+ke3iT7njnYM3wwD6OPmUhyqmiWY3L
+         CJnoIK1g/fOtwuxGjMlLK79K3RGGSJv1KIKR4PM/MwUATSx67IttyGXjSznVVsbbl6Gf
+         tsXA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=LHaSS6FK7ox4F2ZIJt1JEWOljHiifer6bBK5CoR+LD0=;
-        b=lQ1vXvdRdnOIChH2cvvDsgzv7bNXAVen2uGtTmvXIvEoWAdBRHqmTesAPcbRLUhQmh
-         98c4FREGLZVrkOsj8BLaNypG/H9lhtUZYIy1sI2z2QZKklmabr5aC0pgASt0Bsh3LFEp
-         O0l0+SfZZTvzQ7TnvZ2Kq4Fq7GalGLXRHdGVGdy912Vp9z71tbuG2/KAgrOL0FBjr5lU
-         1CYT9oyKKjf1vmneAxLsFoxNIWg2exCFD/bIYe683KEWQzRLVtyYls6mKYYftRs4vhB7
-         163Hni1eSOec1crAmAZFE8WyGYJdcWl3kZSMoqemFVY00G24qi9AZRMnCBwTncrgUi70
-         4QuA==
-X-Gm-Message-State: AIkVDXL5nXOODKCmPhwVB21tNK0k++sC0N2USOgHoNaNdzNYtLO/SDqs2uQcTrNyTJfz9k9uUcxqzcGL829jXA==
-X-Received: by 10.25.16.77 with SMTP id f74mr1519880lfi.81.1485978719934; Wed,
- 01 Feb 2017 11:51:59 -0800 (PST)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=zqKkeNNj8uzpYnhR4gSrfZVquE52jJxUR+ygAkInMGM=;
+        b=spcOnoqbsXUctvsb8AffoB/CpXj8BH/+y6bKPySEirNuNODYLcqlnCJHc8LBHPF9/u
+         UkLUO1qInh3fG9CjO9Hx9xpRoIm/WMfF+D4i1dyGy6sEnvbsEkgquaE9MmWA+jSVg/wL
+         aRhum0NEcFTqlzfJgoqJ1HOxCEWH2IWqLgMKataesJpJLuG+OKjhmRMsK8JVV9TdW046
+         06uK4ksDpluvtMtU5fT7ud3QYvjHapqZuI3IOVuKIqB4NFWdW6C1usOJJhCVE2ZWfg/f
+         lJ3Z7wFt7BcyaRAEyNGz0ochn5GZny0DeJIE2bbZEBYCiOMBEamweUU/q6dp40HQnwKc
+         hw/w==
+X-Gm-Message-State: AIkVDXIVCOui9pfdiOwe5JVA+i+hthlHlgabQW0M40bjhcuKOqzAUdJKpFyiiINxCQ7Y7A==
+X-Received: by 10.99.56.94 with SMTP id h30mr5919379pgn.23.1485979627763;
+        Wed, 01 Feb 2017 12:07:07 -0800 (PST)
+Received: from localhost ([2620:0:1000:8622:25a6:b4bd:905a:8303])
+        by smtp.gmail.com with ESMTPSA id m20sm52203871pgd.17.2017.02.01.12.07.06
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Wed, 01 Feb 2017 12:07:07 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>
+Subject: Re: [PATCH v3 0/4] Handle PuTTY (plink/tortoiseplink) even in GIT_SSH_COMMAND
+References: <cover.1485442231.git.johannes.schindelin@gmx.de>
+        <cover.1485950225.git.johannes.schindelin@gmx.de>
+Date:   Wed, 01 Feb 2017 12:07:06 -0800
+In-Reply-To: <cover.1485950225.git.johannes.schindelin@gmx.de> (Johannes
+        Schindelin's message of "Wed, 1 Feb 2017 12:57:41 +0100 (CET)")
+Message-ID: <xmqqr33hoetx.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.25.199.13 with HTTP; Wed, 1 Feb 2017 11:51:59 -0800 (PST)
-In-Reply-To: <20170131005900.fo5qnbsb67rzgnjt@sigill.intra.peff.net>
-References: <20170131004804.p5sule4rh2xrgtwe@sigill.intra.peff.net> <20170131005900.fo5qnbsb67rzgnjt@sigill.intra.peff.net>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Wed, 1 Feb 2017 20:51:59 +0100
-Message-ID: <CAP8UFD3NE65Uy1kWMCNrpC05Fs_WY=g7K2NmMcab6CGUy4c8LA@mail.gmail.com>
-Subject: Re: [ANNOUNCE] Git Merge Contributor Summit topic planning
-To:     Jeff King <peff@peff.net>
-Cc:     git <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jan 31, 2017 at 1:59 AM, Jeff King <peff@peff.net> wrote:
-> On Tue, Jan 31, 2017 at 01:48:05AM +0100, Jeff King wrote:
->
->> The list of topics is totally open. If you're coming and have something
->> you'd like to present or discuss, then propose it here. If you're _not_
->> coming, you may still chime in with input on topics, but please don't
->> suggest a topic unless somebody who is there will agree to lead the
->> discussion.
->
-> Here are the two topics I plan on bringing:
->
->   - Git / Software Freedom Conservancy yearly report. I'll plan to give
->     a rundown of the past year's activities and financials, along with
->     some open questions that could benefit from community input.
->
->   - The git-scm.com website: who runs that thing, anyway? An overview
->     of the site, how it's managed, and what it needs.
->
-> I plan to send out detailed emails on both topics to the list on
-> Wednesday, and then follow-up with a summary of any useful in-person
-> discussion (since obviously not everybody will be at the summit).
->
-> I'd encourage anybody with a topic to present to consider doing
-> something similar.
+Johannes Schindelin <johannes.schindelin@gmx.de> writes:
 
-GitLab people at the Summit (this includes me) would like to spend a
-few minutes to introduce https://gitlab.com/gitlab-org/gitaly/ and
-answer any questions.
+> It is quite preposterous to call this an "iteration" of the patch
+> series, because the code is so different now. I say this because I want
+> to caution that this code has not been tested as thoroughly, by far, as
+> the first iteration.
+>
+> The primary purpose of code review is correctness, everything else is
+> either a consequence of it, or a means to make reviewing easier.
+
+You are utterly wrong here.
+
+The primary purpose of code review is to spot and correct the
+problems the submitter has missed.  The problems can span from
+stupid bugs that affect correctness to maintainability, to design
+mistakes, to clarity of explanation for both end users and future
+developers.
+
+Among them, correctness problems are, as long as the problem to be
+solved is specified clearly enough, the easiest to spot by the
+submitter before the patch is sent out.  The submitter is focused on
+solving one problem, and if the updated code does not even work as
+the submitter advertises it would, that can be caught by the
+submitter before the patch is even sent out.  
+
+Of course, humans are not perfect, and catching correctness problems
+is important, but that is not the only (let alone primary) thing.
+
+When a submitter has been focusing on solving one problem, it is
+easy to lose the larger picture and to end up adding something that
+may be "correct" (in the sense of "works as advertised by the
+submitter") but does not fit well with the rest of the system, or
+covers some use cases but misses other important and related use
+cases.  If the "does not fit well" surfaces to the end user level,
+that would become a design problem.  If it affects the future
+developers, that would become a maintainability problem.
+
+Compared to the correctness issue, these are much harder to spot by
+the submitter alone, who focused so intensely to get his code
+"correct".  The review process is of greater value to spot these
+issues.
+
+I've already read and commented on the series; as I said, I think
+the rewrite in 3/4 makes the resulting code much easier to read, and
+with the fix-up I just sent out, I think the end result is correct,
+works as advertised, the way it is advertised is clear to end users,
+and is maintainable.  
+
+But I do share your uneasiness about the "new-ness" of the code.
