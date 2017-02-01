@@ -7,280 +7,170 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BC03C1FAAD
-	for <e@80x24.org>; Wed,  1 Feb 2017 11:58:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E5931209F2
+	for <e@80x24.org>; Wed,  1 Feb 2017 12:01:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751931AbdBAL6E (ORCPT <rfc822;e@80x24.org>);
-        Wed, 1 Feb 2017 06:58:04 -0500
-Received: from mout.gmx.net ([212.227.15.15]:61249 "EHLO mout.gmx.net"
+        id S1752069AbdBAMBR (ORCPT <rfc822;e@80x24.org>);
+        Wed, 1 Feb 2017 07:01:17 -0500
+Received: from mout.gmx.net ([212.227.17.21]:59411 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751883AbdBAL6D (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Feb 2017 06:58:03 -0500
-Received: from virtualbox ([37.201.192.48]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0LrNE4-1cTD9X1rXY-0137zx; Wed, 01
- Feb 2017 12:57:43 +0100
-Date:   Wed, 1 Feb 2017 12:57:41 +0100 (CET)
+        id S1751950AbdBAMBQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Feb 2017 07:01:16 -0500
+Received: from virtualbox ([37.201.192.48]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0Mb31L-1cstPw1aRv-00KcwQ; Wed, 01
+ Feb 2017 13:01:03 +0100
+Date:   Wed, 1 Feb 2017 13:01:00 +0100 (CET)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     git@vger.kernel.org
-cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
-Subject: [PATCH v3 0/4] Handle PuTTY (plink/tortoiseplink) even in
- GIT_SSH_COMMAND
-In-Reply-To: <cover.1485442231.git.johannes.schindelin@gmx.de>
-Message-ID: <cover.1485950225.git.johannes.schindelin@gmx.de>
-References: <cover.1485442231.git.johannes.schindelin@gmx.de>
+cc:     Segev Finer <segev208@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+Subject: [PATCH v3 1/4] connect: handle putty/plink also in GIT_SSH_COMMAND
+In-Reply-To: <cover.1485950225.git.johannes.schindelin@gmx.de>
+Message-ID: <fc511a35a8663f98e1da96d4be9991f7814b8874.1485950225.git.johannes.schindelin@gmx.de>
+References: <cover.1485442231.git.johannes.schindelin@gmx.de> <cover.1485950225.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:Xmckw7X17YZ0rK8nZIvl8z9ef4+bqiTvuSAAJakzZLmUE5GT8NP
- RvWJgkqVEth8foci4pqMedjitiqdR/5S5RGbnxyhHCM9vGRzhLxxXW1aYn1QQm5sDjfGt9P
- TJtb9EYzuRYtBXO9Rjs+F84QbQbrPhuq+2oBpbfEYmSEm5PaZ3tKBZQw6vpS4M5acqaA1BQ
- 70jYeJ+jR39D1ATVsnsiQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:pLm1/skhKDc=:rQVvmrOgW28U7c0J+EDHPi
- owHij6nBLdlq6t7qCI8bkLJqCQdcNScadMY30Xf0Gt2yKI2IcmOVMn56q17bHzmDLdBrAMo/v
- /FbstKHQV4eM1AnoBJ2GAkREJ58zT1TrRFdW+Sb7G4N4CZvawPHSXyQbnlWgRZMkRivotgbQc
- beFwLcWj7fcoK7nE2VzAM1AVNef/RUj+6PQHdzV3wRUVnpbKQS4D0/x6Xjs2DW1NpcDGFInzm
- 9Ip2V5IilVV67sZqDkdpOinKi0KCJC9gCIbbQwPTc7MNGaME3tJPIYZNNwwYjteSNYBIHrBxD
- goGz4eXSe5/t7IkWRbNGW9LDfZKBVnP8XadMzLLxAzXb1pzrFtRddy3a8nt01m7a2IQnKxz+V
- RcCRvg2utwP+oXP4GHh6Y8TmGR/QwtrH7eDz3ekLPp6ypTpCTZ8gDDjvbvFYxQ2qmh1KyPuc4
- ulICOeZrM18R4epSZ6WbtICP2TOXaLOojty3yJ+ktnXpuw4TeOsGU/nuvumYBVnnOobtAn6GJ
- 3jazxHtODLyBK8LmpItST4rqwBMsNJfJXCW5+uIrX/1aiIFW0SsqDt/bU/z+X1tVggd1JBIuc
- u97TFXtqcRjVd5QdTkHbw+peJPnxwnSpfg2Zdwr+jJqXKS3nG2u0BOIYH7/HCkog86MgdRpci
- JxW5ZZpe1wifo+hTpHIQlevGwEFURQvTF+a6lXx2lwgrABuSSo/NV7hzQJHe5k4U52E5OPIWX
- ApGAxbh6QGeozSN8hBSfO/yNj1lZCT55dyIWTpxZQSyt/qyxA4/YSQOYAXxCH2PnqQPP2wfz1
- tlUaaa/ElI+GjcQb/vRRnDjXAip6w==
+X-Provags-ID: V03:K0:7ZC9zj6PVaySz7CBADBMVN5x44EBCZGOZiCtmb61A8R6WJ7hx+t
+ vaDGDES6WckPRxetycMIPnlAvqy3bvASWemRsqtbKWz+S409ADxX2WO76+ulBOo/kDiS6rL
+ Yh2pVOzqy1PNWckJ2zuybVf1DMbggYsUDXYyDW1G7egRM1bKSmj1RpTVjVSLnEqhzpaGYS+
+ gQ7EeKVUMtzC13NGVvFUw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:afxbVDEHs3c=:NTVh3x5dsLrMHmaCEVbP0b
+ j013F0Df55WCZpQIfZspGShDoPkMALPEPzP33Qz5pv7tFmUXpnnKAH39M6FBjAjuuNsWp7tTH
+ HjxrfTfxqhjMe7f596QE6D3jvOoYXZ0euiQF8JoECr3/5gHCzVQWflp1VDUim3K0YkBv9H/vL
+ zNsw5pu6YN/JlcApxoQIWPyfnuMKorWThRSbwEBnBtDoOwLUcHIv+o1KScM+xU+60pVwaRkBv
+ XAFzwPgbjIsGon8L/zQvnMQIKRsOBjEnrJs6IYKchjK/bm9dQNEIpZvdiwoSsuN4Dya5DUX+y
+ Q3Dj+doP+EUb2XzsK12HtE4u2pF32iEV9a7Mt4zT2ln4UtK4V6JGPRJ8bf9JxMXibke+CdUpw
+ tjQApXhqGGlOiBPUUVJtZluOaxBuGm4x0uitXZ8QXFwqOhJdFkgc5Qzd/qy8LH/Tow3Q/5/14
+ /d8pjAMvgreAjIwPxl9WouV/MZzrqowa6MqQpWyPtbffZ3I5biXV324aMZzq67PKD4T9LoWNO
+ +E38FZg6acJ3ONetLX/1vFRZeBn2HwHmnGyIWR1WwskiSdgivkBTpDhT/2eBC4Zwc7E5iA/u6
+ X5y7Kqt04xrUFKUQxjPzi4hHYk6Z1f6ZFkHNMfRO6/hcKGIvVSoSsgq1jROlaC+ypEKGhUt6h
+ UMz6vAr3C9epVpR9s+Y4n96P4eQOecvJYt5ELQ6CV0sR3TZ2hlYYPRgH0lAzV8xqvYLedrTKl
+ YYN0p2UQ31lfD1t5QbArrm+ONtMXcXVuWUqyE7Q2FSH2KDA1AM6PQjnoSJm94lDgmF/qbezTF
+ uRlo6wLyjrqmVpSxhkPcfC8mX02uw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We already handle PuTTY's plink and TortoiseGit's tortoiseplink in
-GIT_SSH by automatically using the -P option to specify ports, and in
-tortoiseplink's case by passing the --batch option.
+From: Segev Finer <segev208@gmail.com>
 
-For users who need to pass additional command-line options to plink,
-this poses a problem: the only way to do that is to use GIT_SSH_COMMAND,
-but Git does not handle that specifically, so those users have to
-manually parse the command-line options passed via GIT_SSH_COMMAND and
-replace -p (if present) by -P, and add --batch in the case of
-tortoiseplink.
+Git for Windows has special support for the popular SSH client PuTTY:
+when using PuTTY's non-interactive version ("plink.exe"), we use the -P
+option to specify the port rather than OpenSSH's -p option. TortoiseGit
+ships with its own, forked version of plink.exe, that adds support for
+the -batch option, and for good measure we special-case that, too.
 
-This is error-prone and a bad user experience.
+However, this special-casing of PuTTY only covers the case where the
+user overrides the SSH command via the environment variable GIT_SSH
+(which allows specifying the name of the executable), not
+GIT_SSH_COMMAND (which allows specifying a full command, including
+additional command-line options).
 
-To fix this, the changes proposed in this patch series introduce
-handling this by splitting the GIT_SSH_COMMAND value and treating the
-first parameter with the same grace as GIT_SSH. To counter any possible
-misdetection, the user can also specify explicitly via GIT_SSH_VARIANT
-or ssh.variant which SSH variant they are using.
+When users want to pass any additional arguments to (Tortoise-)Plink,
+such as setting a private key, they are required to either use a shell
+script named plink or tortoiseplink or duplicate the logic that is
+already in Git for passing the correct style of command line arguments,
+which can be difficult, error prone and annoying to get right.
 
-Changes relative to v2:
+This patch simply reuses the existing logic and expands it to cover
+GIT_SSH_COMMAND, too.
 
-- touched up the documentation for ssh.variant to make it even easier to
-  understand
+Note: it may look a little heavy-handed to duplicate the entire
+command-line and then split it, only to extract the name of the
+executable. However, this is not a performance-critical code path, and
+the code is much more readable this way.
 
-- free()d the config variable
+Signed-off-by: Segev Finer <segev208@gmail.com>
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ connect.c        | 23 ++++++++++++++++-------
+ t/t5601-clone.sh | 15 +++++++++++++++
+ 2 files changed, 31 insertions(+), 7 deletions(-)
 
-- completely refactored the code to fulfil Junio's burning desire to
-  avoid split_cmdline() when unnecessary
-
-It is quite preposterous to call this an "iteration" of the patch
-series, because the code is so different now. I say this because I want
-to caution that this code has not been tested as thoroughly, by far, as
-the first iteration.
-
-The primary purpose of code review is correctness, everything else is
-either a consequence of it, or a means to make reviewing easier.
-
-That means that I highly encourage those who pushed for these extensive
-changes that make the patch series a lot less robust to balance things
-out by at least *rudimentary* testing.
-
-
-Johannes Schindelin (1):
-  git_connect(): factor out SSH variant handling
-
-Junio C Hamano (1):
-  connect: rename tortoiseplink and putty variables
-
-Segev Finer (2):
-  connect: handle putty/plink also in GIT_SSH_COMMAND
-  connect: Add the envvar GIT_SSH_VARIANT and ssh.variant config
-
- Documentation/config.txt | 11 +++++++
- Documentation/git.txt    |  6 ++++
- connect.c                | 75 ++++++++++++++++++++++++++++++++++++------------
- t/t5601-clone.sh         | 41 ++++++++++++++++++++++++++
- 4 files changed, 114 insertions(+), 19 deletions(-)
-
-
-base-commit: 8f60064c1f538f06e1c579cbd9840b86b10bcd3d
-Published-As: https://github.com/dscho/git/releases/tag/putty-w-args-v3
-Fetch-It-Via: git fetch https://github.com/dscho/git putty-w-args-v3
-
-Interdiff vs v2:
-
- diff --git a/Documentation/config.txt b/Documentation/config.txt
- index f2c210f0a0..b88df57ab6 100644
- --- a/Documentation/config.txt
- +++ b/Documentation/config.txt
- @@ -1950,11 +1950,15 @@ matched against are those given directly to Git commands.  This means any URLs
-  visited as a result of a redirection do not participate in matching.
-  
-  ssh.variant::
- -	Override the autodetection of plink/tortoiseplink in the SSH
- -	command that 'git fetch' and 'git push' use. It can be set to
- -	either `ssh`, `plink`, `putty` or `tortoiseplink`. Any other
- -	value will be treated as normal ssh. This is useful in case
- -	that Git gets this wrong.
- +	Depending on the value of the environment variables `GIT_SSH` or
- +	`GIT_SSH_COMMAND`, or the config setting `core.sshCommand`, Git
- +	auto-detects whether to adjust its command-line parameters for use
- +	with plink or tortoiseplink, as opposed to the default (OpenSSH).
- ++
- +The config variable `ssh.variant` can be set to override this auto-detection;
- +valid values are `ssh`, `plink`, `putty` or `tortoiseplink`. Any other value
- +will be treated as normal ssh. This setting can be overridden via the
- +environment variable `GIT_SSH_VARIANT`.
-  
-  i18n.commitEncoding::
-  	Character encoding the commit messages are stored in; Git itself
- diff --git a/Documentation/git.txt b/Documentation/git.txt
- index c322558aa7..a0c6728d1a 100644
- --- a/Documentation/git.txt
- +++ b/Documentation/git.txt
- @@ -1021,11 +1021,10 @@ personal `.ssh/config` file.  Please consult your ssh documentation
-  for further details.
-  
-  `GIT_SSH_VARIANT`::
- -	If this environment variable is set, it overrides the autodetection
- -	of plink/tortoiseplink in the SSH command that 'git fetch' and 'git
- -	push' use. It can be set to either `ssh`, `plink`, `putty` or
- -	`tortoiseplink`. Any other value will be treated as normal ssh. This
- -	is useful in case that Git gets this wrong.
- +	If this environment variable is set, it overrides Git's autodetection
- +	whether `GIT_SSH`/`GIT_SSH_COMMAND`/`core.sshCommand` refer to OpenSSH,
- +	plink or tortoiseplink. This variable overrides the config setting
- +	`ssh.variant` that serves the same purpose.
-  
-  `GIT_ASKPASS`::
-  	If this environment variable is set, then Git commands which need to
- diff --git a/connect.c b/connect.c
- index 7b4437578b..7f1f802396 100644
- --- a/connect.c
- +++ b/connect.c
- @@ -691,20 +691,45 @@ static const char *get_ssh_command(void)
-  	return NULL;
-  }
-  
- -static int handle_ssh_variant(int *port_option, int *needs_batch)
- +static int handle_ssh_variant(const char *ssh_command, int is_cmdline,
- +			      int *port_option, int *needs_batch)
-  {
- -	const char *variant;
- +	const char *variant = getenv("GIT_SSH_VARIANT");
- +	char *p = NULL;
- +
- +	if (variant)
- +		; /* okay, fall through */
- +	else if (!git_config_get_string("ssh.variant", &p))
- +		variant = p;
- +	else if (!is_cmdline) {
- +		p = xstrdup(ssh_command);
- +		variant = basename(p);
- +	} else {
- +		const char **ssh_argv;
-  
- -	if (!(variant = getenv("GIT_SSH_VARIANT")) &&
- -		git_config_get_string_const("ssh.variant", &variant))
- -		return 0;
- +		p = xstrdup(ssh_command);
- +		if (split_cmdline(p, &ssh_argv)) {
- +			variant = basename((char *)ssh_argv[0]);
- +			/*
- +			 * At this point, variant points into the buffer
- +			 * referenced by p, hence we do not need ssh_argv
- +			 * any longer.
- +			 */
- +			free(ssh_argv);
- +		} else
- +			return 0;
- +	}
-  
- -	if (!strcmp(variant, "plink") || !strcmp(variant, "putty"))
- +	if (!strcasecmp(variant, "plink") ||
- +	    !strcasecmp(variant, "plink.exe") ||
- +	    !strcasecmp(variant, "putty"))
-  		*port_option = 'P';
- -	else if (!strcmp(variant, "tortoiseplink")) {
- +	else if (!strcasecmp(variant, "tortoiseplink") ||
- +		 !strcasecmp(variant, "tortoiseplink.exe")) {
-  		*port_option = 'P';
-  		*needs_batch = 1;
-  	}
- +	free(p);
-  
-  	return 1;
-  }
- @@ -791,7 +816,6 @@ struct child_process *git_connect(int fd[2], const char *url,
-  			int port_option = 'p';
-  			char *ssh_host = hostandport;
-  			const char *port = NULL;
- -			char *ssh_argv0 = NULL;
-  			transport_check_allowed("ssh");
-  			get_host_and_port(&ssh_host, &port);
-  
- @@ -812,15 +836,10 @@ struct child_process *git_connect(int fd[2], const char *url,
-  			}
-  
-  			ssh = get_ssh_command();
- -			if (ssh) {
- -				char *split_ssh = xstrdup(ssh);
- -				const char **ssh_argv;
- -
- -				if (split_cmdline(split_ssh, &ssh_argv))
- -					ssh_argv0 = xstrdup(ssh_argv[0]);
- -				free(split_ssh);
- -				free((void *)ssh_argv);
- -			} else {
- +			if (ssh)
- +				handle_ssh_variant(ssh, 1, &port_option,
- +						   &needs_batch);
- +			else {
-  				/*
-  				 * GIT_SSH is the no-shell version of
-  				 * GIT_SSH_COMMAND (and must remain so for
- @@ -831,26 +850,12 @@ struct child_process *git_connect(int fd[2], const char *url,
-  				ssh = getenv("GIT_SSH");
-  				if (!ssh)
-  					ssh = "ssh";
- -
- -				ssh_argv0 = xstrdup(ssh);
- +				else
- +					handle_ssh_variant(ssh, 0,
- +							   &port_option,
- +							   &needs_batch);
-  			}
-  
- -			if (!handle_ssh_variant(&port_option, &needs_batch) &&
- -			    ssh_argv0) {
- -				const char *base = basename(ssh_argv0);
- -
- -				if (!strcasecmp(base, "tortoiseplink") ||
- -				    !strcasecmp(base, "tortoiseplink.exe")) {
- -					port_option = 'P';
- -					needs_batch = 1;
- -				} else if (!strcasecmp(base, "plink") ||
- -					   !strcasecmp(base, "plink.exe")) {
- -					port_option = 'P';
- -				}
- -			}
- -
- -			free(ssh_argv0);
- -
-  			argv_array_push(&conn->args, ssh);
-  			if (flags & CONNECT_IPV4)
-  				argv_array_push(&conn->args, "-4");
-
+diff --git a/connect.c b/connect.c
+index 8cb93b0720..c81f77001b 100644
+--- a/connect.c
++++ b/connect.c
+@@ -772,6 +772,7 @@ struct child_process *git_connect(int fd[2], const char *url,
+ 			int putty = 0, tortoiseplink = 0;
+ 			char *ssh_host = hostandport;
+ 			const char *port = NULL;
++			char *ssh_argv0 = NULL;
+ 			transport_check_allowed("ssh");
+ 			get_host_and_port(&ssh_host, &port);
+ 
+@@ -792,10 +793,15 @@ struct child_process *git_connect(int fd[2], const char *url,
+ 			}
+ 
+ 			ssh = get_ssh_command();
+-			if (!ssh) {
+-				const char *base;
+-				char *ssh_dup;
+-
++			if (ssh) {
++				char *split_ssh = xstrdup(ssh);
++				const char **ssh_argv;
++
++				if (split_cmdline(split_ssh, &ssh_argv))
++					ssh_argv0 = xstrdup(ssh_argv[0]);
++				free(split_ssh);
++				free((void *)ssh_argv);
++			} else {
+ 				/*
+ 				 * GIT_SSH is the no-shell version of
+ 				 * GIT_SSH_COMMAND (and must remain so for
+@@ -807,8 +813,11 @@ struct child_process *git_connect(int fd[2], const char *url,
+ 				if (!ssh)
+ 					ssh = "ssh";
+ 
+-				ssh_dup = xstrdup(ssh);
+-				base = basename(ssh_dup);
++				ssh_argv0 = xstrdup(ssh);
++			}
++
++			if (ssh_argv0) {
++				const char *base = basename(ssh_argv0);
+ 
+ 				tortoiseplink = !strcasecmp(base, "tortoiseplink") ||
+ 					!strcasecmp(base, "tortoiseplink.exe");
+@@ -816,7 +825,7 @@ struct child_process *git_connect(int fd[2], const char *url,
+ 					!strcasecmp(base, "plink") ||
+ 					!strcasecmp(base, "plink.exe");
+ 
+-				free(ssh_dup);
++				free(ssh_argv0);
+ 			}
+ 
+ 			argv_array_push(&conn->args, ssh);
+diff --git a/t/t5601-clone.sh b/t/t5601-clone.sh
+index 4241ea5b32..9335e10c2a 100755
+--- a/t/t5601-clone.sh
++++ b/t/t5601-clone.sh
+@@ -386,6 +386,21 @@ test_expect_success 'tortoiseplink is like putty, with extra arguments' '
+ 	expect_ssh "-batch -P 123" myhost src
+ '
+ 
++test_expect_success 'double quoted plink.exe in GIT_SSH_COMMAND' '
++	copy_ssh_wrapper_as "$TRASH_DIRECTORY/plink.exe" &&
++	GIT_SSH_COMMAND="\"$TRASH_DIRECTORY/plink.exe\" -v" \
++		git clone "[myhost:123]:src" ssh-bracket-clone-plink-3 &&
++	expect_ssh "-v -P 123" myhost src
++'
++
++SQ="'"
++test_expect_success 'single quoted plink.exe in GIT_SSH_COMMAND' '
++	copy_ssh_wrapper_as "$TRASH_DIRECTORY/plink.exe" &&
++	GIT_SSH_COMMAND="$SQ$TRASH_DIRECTORY/plink.exe$SQ -v" \
++		git clone "[myhost:123]:src" ssh-bracket-clone-plink-4 &&
++	expect_ssh "-v -P 123" myhost src
++'
++
+ # Reset the GIT_SSH environment variable for clone tests.
+ setup_ssh_wrapper
+ 
 -- 
 2.11.1.windows.prerelease.2.9.g3014b57
+
 
