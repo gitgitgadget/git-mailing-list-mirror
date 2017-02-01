@@ -7,51 +7,48 @@ X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AA6BF1FAAD
-	for <e@80x24.org>; Wed,  1 Feb 2017 11:28:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7C5761FAAD
+	for <e@80x24.org>; Wed,  1 Feb 2017 11:39:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751399AbdBAL2e (ORCPT <rfc822;e@80x24.org>);
-        Wed, 1 Feb 2017 06:28:34 -0500
-Received: from mout.gmx.net ([212.227.17.20]:56950 "EHLO mout.gmx.net"
+        id S1751344AbdBALjY (ORCPT <rfc822;e@80x24.org>);
+        Wed, 1 Feb 2017 06:39:24 -0500
+Received: from mout.gmx.net ([212.227.15.18]:60877 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751266AbdBAL2d (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Feb 2017 06:28:33 -0500
-Received: from virtualbox ([37.201.192.48]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MOTRh-1cVKJJ268T-005s7L; Wed, 01
- Feb 2017 12:28:16 +0100
-Date:   Wed, 1 Feb 2017 12:28:13 +0100 (CET)
+        id S1751311AbdBALjX (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Feb 2017 06:39:23 -0500
+Received: from virtualbox ([37.201.192.48]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0LaWlT-1cBxhD0qr9-00mHnN; Wed, 01
+ Feb 2017 12:39:16 +0100
+Date:   Wed, 1 Feb 2017 12:39:15 +0100 (CET)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
-To:     Jeff King <peff@peff.net>
-cc:     =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
-        Brandon Williams <bmwill@google.com>,
-        Johannes Sixt <j6t@kdbg.org>, Git List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
+To:     =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH 1/5] add SWAP macro
-In-Reply-To: <20170131213507.uiwmkkcg7umvd3f4@sigill.intra.peff.net>
-Message-ID: <alpine.DEB.2.20.1702011225250.3469@virtualbox>
-References: <8ef4c833-45bd-6831-0683-6d01f30aa518@web.de> <0bdb58a6-3a7f-2218-4b70-c591ae90e95e@web.de> <alpine.DEB.2.20.1701301643260.3469@virtualbox> <aa653d57-4a97-ac50-b20c-f94ed43a22fb@kdbg.org> <alpine.DEB.2.20.1701302158110.3469@virtualbox>
- <77098ac8-1084-a5c4-a5e6-fb382e3dc3a0@web.de> <20170130222157.GC35626@google.com> <8e94756a-c3a5-9b81-268d-d0f36876f710@web.de> <20170131213507.uiwmkkcg7umvd3f4@sigill.intra.peff.net>
+In-Reply-To: <676ed19c-0c4e-341e-ba30-1f4a23440088@web.de>
+Message-ID: <alpine.DEB.2.20.1702011228290.3469@virtualbox>
+References: <8ef4c833-45bd-6831-0683-6d01f30aa518@web.de> <0bdb58a6-3a7f-2218-4b70-c591ae90e95e@web.de> <alpine.DEB.2.20.1701301637570.3469@virtualbox> <9bcae427-d654-a671-4368-030150168102@web.de> <alpine.DEB.2.20.1701301806591.3469@virtualbox>
+ <6760493c-3684-b8bb-2c01-6621b8417246@web.de> <alpine.DEB.2.20.1701311305030.3469@virtualbox> <676ed19c-0c4e-341e-ba30-1f4a23440088@web.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; BOUNDARY="8323329-2147181406-1485948496=:3469"
-X-Provags-ID: V03:K0:9odisgLk++Oy2qK+VX6osWKC2s7p4P58Em0U1Ej8QPliP6Eilvd
- 7lgfh0oICbGKeTXMI/WG7OfP4KiW3P3lV5Mu4oZ9IJoQm21tRzsAzPbTL+SRIV9LtmUQ0t6
- whCOVOxhhC8QCi7c639/iHx87YAT70g1p6mBdB+/JYnk7O0/i2k1TlYd4OqiK7e+OVoKvfo
- q7qAC8nUar1xXKOnXN2pw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:/NFnjhrM1qc=:4d3RRmiD4jDiPjqbazlWho
- JyTR04n30yHtUMd9Hui+rK6bAfRriAWE4jo980iNnRcxG/LYP5oFrhSUVM7PWQMYG/cBCCtuO
- 39UEsqK8/PVAReVi0zGy6TOJ7wTLZm4wp3ZCTeUC5b2KhNCduf6S+Tx8xV7JFZxBwXwM9V5wI
- SoSzkVjYgYgfD02xlz57U7/i+11kTV7zDCxluEVEuvuZstFYuQPfxax7qUgS3MPw+H6KrXKDj
- qcFnSFK/2clLK+UfNSc/B7TB1S1Ac9FjFkm1D59GwAytBzQogB+x38jzgAhfAbYsnl1X7eKZz
- XFjhuHetSzTKkbwOAjKPKOIfTBYJ5SUIqtGQcS5aBVgctnx38afFA9r5yBWAyDbr0RhuPfA7z
- 9HQ7LE0c39rSUDnyT30sgc3qGMzRNYMoD9XBkjos33XBVw/G5OoV2yUTor/+jD4Mi8GlNVXlI
- SNo5uAjzokbFGvDIIxVBmFY8s++2wZET//6cEqMKFesYCcY1EM/H1BElnUtQKRiv+Fsa5gO0h
- RoTj8pPDdjET31Nda0gimkWAKk9khfu0R0sHVjhGUaSmb253/ZmAttDIDYw68YbsDJxT9U+37
- PFxq7wT9cbFukPwKQNfmvoBwPfXIHuIEQrMV3hMOu1aQVIXtVur3vD6lZmXcRoHneuqOlgXID
- hO+VtZEK8PvlvdnLFKih47ZBWd7NpAGuRKSHQYPbVIyR8+ZI9gmtl8qyqk7wa0khijGgUiYxc
- qy6q1zbFlap7Zrz5/K+hjXUyDkFSBYbOziN9zVDqKpR7FNmTpbH4ByT1x39h6lv5S3A90i0Gz
- 8QksHodNvF9rWv4xqG81HJAkPimRg==
+Content-Type: multipart/mixed; BOUNDARY="8323329-1841927702-1485949156=:3469"
+X-Provags-ID: V03:K0:Nj+6f+SvKBupg3BRej6HAl6oQ1ftplMVmUyL6ghpihJ+NkqXdJc
+ AhdZyCdcseSjJrndiqnQ6E2qFfg0HNvRRmoKomQNZJ8vKef5qcoVp3D5p2hhTRWFLIOWfDx
+ pdVPVnqvwHi8CAqfVacfhb2Osob9wn1CEE2z5y6MmUh1Jh6a81DMzL/7+eeCuR52nnh+fiV
+ BYBg/InglofDaIxDv8NKg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:w/wDrtgemzM=:4SiUmdK/0G7f0c9qYzvBpr
+ SQIU4a0X19pYl74ogmnQ0qz3LqV/VWpvINfYNjPekXHV10oPxhM9tZH2BovquZbueo7x7nLp8
+ p3jjYZDyIW6ZJG0kYQKlgrrD5q0OpkzmyUEgiMarOzxTvOu40XcEQkLG8AcZgmf55j7JSLvti
+ z/ZvPB3E2rwoJRUuonw7kD2MJVIKeWDJVcOryWzFbmDlprkCOtVmoTqZFjS8REq/Wxc6oFy5P
+ NA4wqo0RYfZPEimhD17+HIOJUuFUjHK/bzaricjL3lUK4EnJEPDUPKo5FnPkEnZs0yNCiDMBH
+ NyTvMjjtH4EZFLHqyaHYT+qsbmwn2SEq7PbjcC6kNTe81VQr+mPswNPKvBFDRUuI7x6aO/yhU
+ u7uiXa53Wf7k0kaGHKyoopGr7kMesf1TPQCGJ915Awv0V1cot5jTg7YPWikgBe8U+7KAKyV3q
+ EdFE6VyNtON5Vg/5Oc+un5B+ctpS2UHTpZLiGZZtfWwOohH6ckqs0WZqXPlCzLOL5NsyFR8u1
+ WwJgaXlqCMGF1sZUqePNH7ySbIQNNOMdtjnLacw8OqFMQ+Uwg5VGAnmjgo2Rqji8TGyv72euc
+ tS573HmdH///nxGWMG/WIC/7i29LwyTxZXqYcttWgfsz0eBoPfD8AAQOc1SGzVjl+hPL5E7kG
+ /+7t89XpkarF27mqQucACablh1gXAmZb9poq6IrKWDPL8hLM4ZmNgLApp5JdIG2legQWkUuue
+ QvkP3FnWfosjcGqNXReLr/vvxa8V1Lhn2rwy04pZOwKcv5IQBfyQtmOyIY7R/cXY2PC5fZ4l6
+ NHHjAoeFdvWCN02cRdQFYOka2/Y8Q==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -60,41 +57,70 @@ X-Mailing-List: git@vger.kernel.org
   This message is in MIME format.  The first part should be readable text,
   while the remaining parts are likely unreadable without MIME-aware tools.
 
---8323329-2147181406-1485948496=:3469
+--8323329-1841927702-1485949156=:3469
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 
-Hi Peff,
+Hi Ren=C3=A9,
 
-On Tue, 31 Jan 2017, Jeff King wrote:
+On Tue, 31 Jan 2017, Ren=C3=A9 Scharfe wrote:
 
-> On Tue, Jan 31, 2017 at 10:03:01PM +0100, Ren=C3=A9 Scharfe wrote:
+> Am 31.01.2017 um 13:13 schrieb Johannes Schindelin:
+>
+> > #define SIMPLE_SWAP(T, a, b) do { T tmp_ =3D a; a =3D b; b =3D tmp_; } =
+while (0)
+> > ...
+> >  uint32_t large;
+> >  char nybble;
+> >
+> >  ...
+> >
+> >  if (!(large & ~0xf)) {
+> >   SIMPLE_SWAP(char, nybble, large);
+> >   ...
+> >  }
+> >
+> > i.e. mixing types, when possible.
+> >
+> > And while I do not necessarily expect that we need anything like this
+> > anytime soon, merely the fact that it allows for this flexibility, whil=
+e
+> > being very readable at the same time, would make it a pretty good desig=
+n
+> > in my book.
 >=20
-> > > Perhaps we could disallow a side-effect operator in the macro.  By
-> > > disallow I mean place a comment at the definition to the macro and
-> > > hopefully catch something like that in code-review.  We have the
-> > > same issue with the `ALLOC_GROW()` macro.
-> >=20
-> > SWAP(a++, ...) is caught by the compiler, SWAP(*a++, ...) works fine.
-> > Technically that should be enough. :)  A comment wouldn't hurt, of
-> > course.
+> Such a skinny macro which only hides repetition is kind of attractive due=
+ to
+> its simplicity; I can't say the same about the mixed type example above,
+> though.
 >=20
-> One funny thing is that your macro takes address-of itself, behind the
-> scenes. I wonder if it would be more natural for it to take
-> pointers-to-objects, making it look more like a real function (i.e.,
-> SWAP(&a, &b) instead of SWAP(a, b)". And then these funny corner cases
-> become quite obvious in the caller, because the caller is the one who
-> has to type "&".
+> The fat version isn't that bad either even without inlining, includes a f=
+ew
+> safety checks and doesn't require us to tell the compiler something it
+> already knows very well.  I'd rather let the machine do the work.
 
-But forcing SWAP(&a, &b) would make it even more cumbersome to use, and it
-would also make it harder to optimize, say, by using registers instead of
-addressable memory (think swapping two 32-bit integers: there is *no* need
-to write them into memory just to swap them).
+I am a big fan of letting the machine do the work. But I am not a big fan
+of *creating* work for the machine.
 
-And I think I should repeat my point that this discussion veers towards
-making simple swaps *more* complicated, rather than less complicated. Bad
-direction.
+So if you asked me what I would think of a script that, given a patch "in
+mbox format", automatically fixes all formatting issues that typically
+take up a sizable chunk of review time, I would say: yeah, let's get this
+done! It would probably take away some fun because then reviewers could
+bike-shed less, but I'd think that is a good thing.
+
+If you asked me what my opinion is about a program you wrote that gathers
+all the threads and sub threads of code^Wpatch reviews on the Git mailing
+list, and cross-references them with public Git branches, and with Junio's
+What's Cooking mail, and with the SHA-1s in `pu`: Great! That would
+relieve me of a ton of really boring and grueling work, if the machine can
+do it, all the better.
+
+And if you ask me about adding a complex macro that adds a bunch of work
+for the C compiler just to produce the same assembler code as a one-liner
+macro would have produced much easier, I will reply that we could maybe
+instead spend that time on letting the machine perform tasks that already
+need to be done... :-)
 
 Ciao,
 Dscho
---8323329-2147181406-1485948496=:3469--
+--8323329-1841927702-1485949156=:3469--
