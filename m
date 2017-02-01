@@ -7,61 +7,58 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B98F71F6DC
-	for <e@80x24.org>; Wed,  1 Feb 2017 16:53:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A20751F6DC
+	for <e@80x24.org>; Wed,  1 Feb 2017 18:06:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752948AbdBAQxf (ORCPT <rfc822;e@80x24.org>);
-        Wed, 1 Feb 2017 11:53:35 -0500
-Received: from mail-pf0-f193.google.com ([209.85.192.193]:32874 "EHLO
-        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752727AbdBAQxe (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Feb 2017 11:53:34 -0500
-Received: by mail-pf0-f193.google.com with SMTP id e4so32093970pfg.0
-        for <git@vger.kernel.org>; Wed, 01 Feb 2017 08:53:34 -0800 (PST)
+        id S1752835AbdBASGT (ORCPT <rfc822;e@80x24.org>);
+        Wed, 1 Feb 2017 13:06:19 -0500
+Received: from mail-pg0-f65.google.com ([74.125.83.65]:35061 "EHLO
+        mail-pg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750936AbdBASGS (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Feb 2017 13:06:18 -0500
+Received: by mail-pg0-f65.google.com with SMTP id 204so34809609pge.2
+        for <git@vger.kernel.org>; Wed, 01 Feb 2017 10:06:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=ipvWn3oqZXzWnBZUCnSNwBYcu4Na52QZDsGTRQ3Sn8M=;
-        b=UQFAbUo+tXSDZ2hnPZYkFuy77c6Mjeso3toWRy64T7m7cqp4AAJb2dO0hNc33IY6jZ
-         AMMMmoL1lbjc8nBPm4AGDTrH8MUyiTbzI/AXb1FyrFNlXEh2ky9tOdNh5SQkstqjjXca
-         QSL57sUwVO5JxdCYXP62aJA8mx0Cnf2dAy+52uOSVGxMmc1X/0GMet8LR9MJVzNMBXMK
-         B+Y5XievjGHDJ1nIq86eDO31ivqLn11qJ4VEImC8HG/DyEnhWU8hSD+LAxrxyQf3KEL2
-         HnI4GX/L/swcmjBWzPXUJ5M1LiqIt1swtNa4U0ef293ffw+u1vnp26YMiGqpH283F5Sl
-         Wwxg==
+        bh=H9VHfTePnu3QAj9yQd2kKXCAYGD48VgENnx6sRKMFOk=;
+        b=F1S5mQ9cOTBmy/0YnPTqgN1M7hsJmJRsf/h/NJQwgscDvcXABrgPV5IEVpNhCnuQEL
+         tV5Azq7NUSTRPOi/aLFOpa36e90g1UzBMbayiPtysCKktssTaBvciYZjp7rZBtGXc4Kg
+         JYP/OI2I6lndIhkP7jdPfZmg4Zi8XvF3s8h6pIbQwz5NWEDasdXAD5R0bxdj/s5+9+ac
+         fWbzCD+qvvW52cxrxkBGCVOXUyEmsUjvSdPv3Lw/+A0b24lU6+a+60wjGhSQKvWXzdtH
+         rHIckY/W/cbGPa7US5XmPdAkI8rOuwe2ye0d12OFQW36KoPqB3jHeoAbOOkEJ1sHbzuL
+         9B8w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=ipvWn3oqZXzWnBZUCnSNwBYcu4Na52QZDsGTRQ3Sn8M=;
-        b=GPYcfg+8SuRQj0CpNgda768uRhPhb8a8NtsFIrHymdBqLB7qfkPah4kzG42YCEJcqk
-         56AEymtSX+cKsXKhDKC4pr6jJRflvgB2+rj4jpqe0p/nEPLdACKCgfhpS1w2prYQ0s5x
-         YGLByuUkAJx+f/ue/znSnYBhgK7IJdkF7SsWVOLo2dFwunOuz7DKKdw1DMN00UpO1qvG
-         zF1tlkkiPherMSL/krsDIolbEIepLQfVQRLtlPcKwvvJoTwO8el+7z7fMz5XhhjTeoNv
-         lCUv+tIWiILFFPAoz5OtOWiqhxnUJDsGjJRq0NP6YZlRhV/gC+0cIDnQCv8fliSBmLuV
-         Nv6A==
-X-Gm-Message-State: AIkVDXKHCymiMOhhh/TYaKk79XXugGfcnaChRDjDfhCS/O5AeKRS08TROf+IXrTyvt+JHA==
-X-Received: by 10.98.95.70 with SMTP id t67mr4714841pfb.37.1485968013821;
-        Wed, 01 Feb 2017 08:53:33 -0800 (PST)
+        bh=H9VHfTePnu3QAj9yQd2kKXCAYGD48VgENnx6sRKMFOk=;
+        b=P/rIMe1LV8WQE2+mc+gg/c8bmHPSYcIzj21EjSw/iul+rnXZO3QAKVqEVFlNkGM0FG
+         fjB0KHGEWz2FNYUTNV+FyRl9Ee+fMnoyS/lwdqoTBX6CcMl4Yen2gfzIojxeLRUPo62P
+         pnUBtUTw3fZg6jyofAR5m+TQK+YWfuHd74fAtDT3H4fdkayNi/RgyPcMHGh33/uIEnYk
+         dlU5Q0Ly0yZcY0CGBjdAtTbXfnkc6Z7anmR+cb+dE/IyYxzgl32baZC0HpXiN/5RjybU
+         FJthzKrULxsnlcaN0UBv8wnxMP8siYC9Od088QL2sM6pv0nGG7+pPvHZRCWbh94rb1cy
+         yhFA==
+X-Gm-Message-State: AIkVDXJI8vl3g1369U3Mey/4JXlqObOzzhIrcZhzXLguBgvrL9eDFzROJrpln4Uss/EImw==
+X-Received: by 10.84.215.15 with SMTP id k15mr6262542pli.58.1485972377562;
+        Wed, 01 Feb 2017 10:06:17 -0800 (PST)
 Received: from localhost ([2620:0:1000:8622:25a6:b4bd:905a:8303])
-        by smtp.gmail.com with ESMTPSA id t6sm51545050pgt.8.2017.02.01.08.53.32
+        by smtp.gmail.com with ESMTPSA id u24sm51368618pfi.25.2017.02.01.10.06.16
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 01 Feb 2017 08:53:33 -0800 (PST)
+        Wed, 01 Feb 2017 10:06:16 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     git@vger.kernel.org, Segev Finer <segev208@gmail.com>,
-        Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2 3/3] connect: Add the envvar GIT_SSH_VARIANT and ssh.variant config
-References: <2ff29a4d00e0e13d460122d8008e762361ca90aa.1483358673.git.johannes.schindelin@gmx.de>
-        <cover.1485442231.git.johannes.schindelin@gmx.de>
-        <3d451f2c357a3fd7f0b0e4b427548553d7d05306.1485442231.git.johannes.schindelin@gmx.de>
-        <xmqqo9yt4o5i.fsf@gitster.mtv.corp.google.com>
-        <xmqqpoj8z7su.fsf@gitster.mtv.corp.google.com>
-        <alpine.DEB.2.20.1702011216130.3469@virtualbox>
-Date:   Wed, 01 Feb 2017 08:53:32 -0800
-In-Reply-To: <alpine.DEB.2.20.1702011216130.3469@virtualbox> (Johannes
-        Schindelin's message of "Wed, 1 Feb 2017 13:01:25 +0100 (CET)")
-Message-ID: <xmqqlgtpq2cz.fsf@gitster.mtv.corp.google.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Erik van Zijst <erik.van.zijst@gmail.com>, git@vger.kernel.org,
+        ssaasen@atlassian.com, mheemskerk@atlassian.com
+Subject: Re: [ANNOUNCE] Git Merge Contributor Summit topic planning
+References: <20170131004804.p5sule4rh2xrgtwe@sigill.intra.peff.net>
+        <1485941532-47993-1-git-send-email-erik.van.zijst@gmail.com>
+        <20170201145300.4pn3faodhdb72jly@sigill.intra.peff.net>
+Date:   Wed, 01 Feb 2017 10:06:15 -0800
+In-Reply-To: <20170201145300.4pn3faodhdb72jly@sigill.intra.peff.net> (Jeff
+        King's message of "Wed, 1 Feb 2017 15:53:00 +0100")
+Message-ID: <xmqqh94dpyzs.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -70,31 +67,58 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Jeff King <peff@peff.net> writes:
 
-> On Fri, 27 Jan 2017, Junio C Hamano wrote:
+> If you _can_ do that latter part, and you take "I only care about
+> resumability" to the simplest extreme, you'd probably end up with a
+> protocol more like:
 >
->> IOW, I think it is acceptable to always split GIT_SSH_COMMAND into
->> tokens before we realize that the user used the escape hatch and the
->> splitting was a wasted effort.  This is exactly because this thing
->> is an escape hatch that is expected to be rarely used.  Of course,
->> if the "wasted effort" can be eliminated without sacrificing the
->> simplicity of the code, that is fine as well.
+>   Client: I need a packfile with this want/have
+>   Server: OK, here it is; its opaque id is XYZ.
+>   ... connection interrupted ...
+>   Client: It's me again. I have up to byte N of pack XYZ
+>   Server: OK, resuming
+>           [or: I don't have XYZ anymore; start from scratch]
 >
-> Simplicity is retained. Battle-readiness was sacrificed on the way: the
-> new code is not tested well enough, and `next` will not help one bit.
+> Then generating XYZ and generating that bundle are basically the same
+> task.
 
-Let me make it clear that there is no burning desire to sacrifice
-battle-readiness in the above.  If we expect that auto-detection
-would be minority, then it makes sense to get the configured value
-first and then spend cycles to split and guess only when detection
-is needed.  
+The above allows a simple and naive implementation of generating a
+packstream and "tee"ing it to a spool file to be kept while sending
+to the first client that asks XYZ.
 
-In this case, because we expect that auto-detection will be used
-most of the time, it is good enough to always split first, get the
-configured value, and spend cycles to guess, or for that matter it
-is perfectly fine to always split and guess first and then override
-with the configured value.
+The story I heard from folks who run git servers at work for Android
+and other projects, however, is that they rarely see two requests
+with want/have that result in an identical XYZ, unless "have" is an
+empty set (aka "clone").  In a busy repository, between two clone
+requests relatively close together, somebody would be pushing, so
+you'd need many XYZs in your spool even if you want to support only
+the "clone" case.
 
-If your attempt to optimize for a wrong case ended up causing new
-unnecessary bugs, don't blame me.
+So in the real life, I think that the exchange needs to be more
+like this:
+
+    C: I need a packfile with this want/have
+    ... C/S negotiate what "have"s are common ...
+    S: Sorry, but our negitiation indicates that you are way too
+       behind.  I'll send you a packfile that brings you up to a
+       slightly older set of "want", so pretend that you asked for
+       these slightly older "want"s instead.  The opaque id of that
+       packfile is XYZ.  After getting XYZ, come back to me with
+       your original set of "want"s.  You would give me more recent
+       "have" in that request.  
+    ... connection interrupted ...
+    C: It's me again.  I have up to byte N of pack XYZ
+    S: OK, resuming (or: I do not have it anymore, start from scratch)
+    ... after 0 or more iterations C fully receives and digests XYZ ...
+
+and then the above will iterate until the server does not have to
+say "Sorry but you are way too behind" and returns a packfile
+without having to tweak the "want".
+
+That way, you can limit the number of XYZ you would need to keep to
+a reasonable number.
+
+The recent proposal by Jonathan Tan also allows the server side to
+tweak the final tips the client receives after the protocol exchange
+started.  I suspect the above two will become related.
