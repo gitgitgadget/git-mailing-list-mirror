@@ -2,115 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 620491F6DC
-	for <e@80x24.org>; Wed,  1 Feb 2017 20:07:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7CC301F6DC
+	for <e@80x24.org>; Wed,  1 Feb 2017 20:37:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751364AbdBAUHJ (ORCPT <rfc822;e@80x24.org>);
-        Wed, 1 Feb 2017 15:07:09 -0500
-Received: from mail-pf0-f195.google.com ([209.85.192.195]:34909 "EHLO
-        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750896AbdBAUHI (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Feb 2017 15:07:08 -0500
-Received: by mail-pf0-f195.google.com with SMTP id f144so32536760pfa.2
-        for <git@vger.kernel.org>; Wed, 01 Feb 2017 12:07:08 -0800 (PST)
+        id S1751082AbdBAUhc (ORCPT <rfc822;e@80x24.org>);
+        Wed, 1 Feb 2017 15:37:32 -0500
+Received: from mail-it0-f45.google.com ([209.85.214.45]:36516 "EHLO
+        mail-it0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750819AbdBAUhb (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Feb 2017 15:37:31 -0500
+Received: by mail-it0-f45.google.com with SMTP id c7so25474766itd.1
+        for <git@vger.kernel.org>; Wed, 01 Feb 2017 12:37:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=zqKkeNNj8uzpYnhR4gSrfZVquE52jJxUR+ygAkInMGM=;
-        b=AANdpzyUbIHD7rCWFvFEDcxl9Tmnw1VW4uzg2N+1EpZ9oqC9SdKrMN5jswNiC7QpYx
-         xsOt7f+Xd+znB+pYh/0wnzW1KH4Tix4myuBekw2neti9hYMXtE2Kd9DxWsia2fwaltOX
-         ys/nLPbhEZ6iBbVY0tnXpTIWFnRmj2fUqb7iNlsp9NI4snJ08ltJVW7tgg0HSLwl3pb2
-         LXLg4H5Xzg+FAG/B66mgR7zCKaMloZ2469+iCm+ke3iT7njnYM3wwD6OPmUhyqmiWY3L
-         CJnoIK1g/fOtwuxGjMlLK79K3RGGSJv1KIKR4PM/MwUATSx67IttyGXjSznVVsbbl6Gf
-         tsXA==
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=esDAmIaNUwKs1U0kYrB33ZnP1CtetvYIDMr+QxpJoLs=;
+        b=YvcXHrs+C+L/cx64cRUlD/EWA33mN3C7KPeXPrG5FWxzaSuR36CsZzwFddKUkrNSQh
+         GfqpKOz/Clu3hd2rdwtoz9vtmiF9i6mRsfgaDFOYOI6UTeJH5arxnd49EGalD+sZ/+Z7
+         ZgyAgndSfS0jolIP9rXkwjFHwmR72XO6hb/QYpjf4upv8c42J6OnCP41oeQDQYbgaSd+
+         IbVyW5IflkzpzvR8aZtrvLCusPLjscPve3Vze8/ay97ndlE5bjcEwowiViJ9FF5XqX9D
+         bLXjb3knh/pg4BvoGcHf5wkOwztIHSMHMlg0ba+jjyTep8EtZWwHjIZbBJbHZn8KtlCQ
+         2ywg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=zqKkeNNj8uzpYnhR4gSrfZVquE52jJxUR+ygAkInMGM=;
-        b=spcOnoqbsXUctvsb8AffoB/CpXj8BH/+y6bKPySEirNuNODYLcqlnCJHc8LBHPF9/u
-         UkLUO1qInh3fG9CjO9Hx9xpRoIm/WMfF+D4i1dyGy6sEnvbsEkgquaE9MmWA+jSVg/wL
-         aRhum0NEcFTqlzfJgoqJ1HOxCEWH2IWqLgMKataesJpJLuG+OKjhmRMsK8JVV9TdW046
-         06uK4ksDpluvtMtU5fT7ud3QYvjHapqZuI3IOVuKIqB4NFWdW6C1usOJJhCVE2ZWfg/f
-         lJ3Z7wFt7BcyaRAEyNGz0ochn5GZny0DeJIE2bbZEBYCiOMBEamweUU/q6dp40HQnwKc
-         hw/w==
-X-Gm-Message-State: AIkVDXIVCOui9pfdiOwe5JVA+i+hthlHlgabQW0M40bjhcuKOqzAUdJKpFyiiINxCQ7Y7A==
-X-Received: by 10.99.56.94 with SMTP id h30mr5919379pgn.23.1485979627763;
-        Wed, 01 Feb 2017 12:07:07 -0800 (PST)
-Received: from localhost ([2620:0:1000:8622:25a6:b4bd:905a:8303])
-        by smtp.gmail.com with ESMTPSA id m20sm52203871pgd.17.2017.02.01.12.07.06
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 01 Feb 2017 12:07:07 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <johannes.schindelin@gmx.de>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>
-Subject: Re: [PATCH v3 0/4] Handle PuTTY (plink/tortoiseplink) even in GIT_SSH_COMMAND
-References: <cover.1485442231.git.johannes.schindelin@gmx.de>
-        <cover.1485950225.git.johannes.schindelin@gmx.de>
-Date:   Wed, 01 Feb 2017 12:07:06 -0800
-In-Reply-To: <cover.1485950225.git.johannes.schindelin@gmx.de> (Johannes
-        Schindelin's message of "Wed, 1 Feb 2017 12:57:41 +0100 (CET)")
-Message-ID: <xmqqr33hoetx.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=esDAmIaNUwKs1U0kYrB33ZnP1CtetvYIDMr+QxpJoLs=;
+        b=BV02IOiEI5smhOaAvD8mZ9VwOkNqxJ5VPdMLPVwHjA4PX2isO/LVnmwsTHdmxghMmm
+         5LNDfgkz7/N7AG7p2b2WU1WW8bnXBrPDBAKdjxW7f5fEoQTKtbGOvTAW+RYQ9VD/m5Ut
+         ZdbI44L0mGU3QTb8a4gl+9Zfuc/val/B0nwZiEeBD+4OSi1G6r5OyFNbghN7nJbQnfca
+         mgKrRhnNM/1geEoSWVrRyL+oINhxmjZTJS4w+lZUtOZ3hschZAxNXJY6EgR2cnx1DVZj
+         ZeLAoGKJUvtjcfS4CJ870rd/4oqnomv11DajTQ4uAACsvCL5RkGsFU5deIaKCPJyVXjp
+         c9Xw==
+X-Gm-Message-State: AIkVDXK2jlVDFnLayRsL/3SzIllnOivcSQA8hhZt9bNseMHgs8c+Vzo4Y23ww/KCc+8w08/0hk4lLRwH0b+Z4CGA
+X-Received: by 10.36.65.4 with SMTP id x4mr25836426ita.69.1485981450391; Wed,
+ 01 Feb 2017 12:37:30 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
+Received: by 10.79.39.19 with HTTP; Wed, 1 Feb 2017 12:37:29 -0800 (PST)
+In-Reply-To: <20170131004804.p5sule4rh2xrgtwe@sigill.intra.peff.net>
+References: <20170131004804.p5sule4rh2xrgtwe@sigill.intra.peff.net>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Wed, 1 Feb 2017 12:37:29 -0800
+Message-ID: <CAGZ79kZyHyhaBSgP+jt+SRNx51t5XVQB7H0=RSS31wqAcQCptQ@mail.gmail.com>
+Subject: Re: [ANNOUNCE] Git Merge Contributor Summit topic planning
+To:     Jeff King <peff@peff.net>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <johannes.schindelin@gmx.de> writes:
-
-> It is quite preposterous to call this an "iteration" of the patch
-> series, because the code is so different now. I say this because I want
-> to caution that this code has not been tested as thoroughly, by far, as
-> the first iteration.
+On Mon, Jan 30, 2017 at 4:48 PM, Jeff King <peff@peff.net> wrote:
+> The Contributor Summit is only a few days away; I'd like to work out a
+> few bits of logistics ahead of time.
 >
-> The primary purpose of code review is correctness, everything else is
-> either a consequence of it, or a means to make reviewing easier.
+> We're up to 26 attendees. The room layout will probably be three big
+> round-tables, with a central projector. We should be able to have
+> everybody pay attention to a single speaker, or break into 3 separate
+> conversations.
+>
+> The list of topics is totally open. If you're coming and have something
+> you'd like to present or discuss, then propose it here. If you're _not_
+> coming, you may still chime in with input on topics, but please don't
+> suggest a topic unless somebody who is there will agree to lead the
+> discussion.
 
-You are utterly wrong here.
+submodules and X (How do submodules and worktrees interact,
+should they?, Which functions need support for submodules, e.g. checkout,
+branch,  grep, etc...? Are we interested in keeping a submodule its own
+logical unit? Do we want to have dedicated plumbing commands for
+submodules?)
 
-The primary purpose of code review is to spot and correct the
-problems the submitter has missed.  The problems can span from
-stupid bugs that affect correctness to maintainability, to design
-mistakes, to clarity of explanation for both end users and future
-developers.
+... would be my line of talk,
 
-Among them, correctness problems are, as long as the problem to be
-solved is specified clearly enough, the easiest to spot by the
-submitter before the patch is sent out.  The submitter is focused on
-solving one problem, and if the updated code does not even work as
-the submitter advertises it would, that can be caught by the
-submitter before the patch is even sent out.  
-
-Of course, humans are not perfect, and catching correctness problems
-is important, but that is not the only (let alone primary) thing.
-
-When a submitter has been focusing on solving one problem, it is
-easy to lose the larger picture and to end up adding something that
-may be "correct" (in the sense of "works as advertised by the
-submitter") but does not fit well with the rest of the system, or
-covers some use cases but misses other important and related use
-cases.  If the "does not fit well" surfaces to the end user level,
-that would become a design problem.  If it affects the future
-developers, that would become a maintainability problem.
-
-Compared to the correctness issue, these are much harder to spot by
-the submitter alone, who focused so intensely to get his code
-"correct".  The review process is of greater value to spot these
-issues.
-
-I've already read and commented on the series; as I said, I think
-the rewrite in 3/4 makes the resulting code much easier to read, and
-with the fix-up I just sent out, I think the end result is correct,
-works as advertised, the way it is advertised is clear to end users,
-and is maintainable.  
-
-But I do share your uneasiness about the "new-ness" of the code.
+Stefan
