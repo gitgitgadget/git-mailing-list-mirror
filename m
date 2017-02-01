@@ -2,108 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EF8FC1F6DC
-	for <e@80x24.org>; Wed,  1 Feb 2017 16:49:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B98F71F6DC
+	for <e@80x24.org>; Wed,  1 Feb 2017 16:53:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752928AbdBAQtv convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Wed, 1 Feb 2017 11:49:51 -0500
-Received: from zimbra-vnc.tngtech.com ([83.144.240.98]:43894 "EHLO
-        proxy.tng.vnc.biz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751132AbdBAQtu (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Feb 2017 11:49:50 -0500
-Received: from localhost (localhost [127.0.0.1])
-        by proxy.tng.vnc.biz (Postfix) with ESMTP id 612011E2DE8;
-        Wed,  1 Feb 2017 17:49:46 +0100 (CET)
-Received: from proxy.tng.vnc.biz ([127.0.0.1])
-        by localhost (proxy.tng.vnc.biz [127.0.0.1]) (amavisd-new, port 10032)
-        with ESMTP id Jp7mxVR-XMZK; Wed,  1 Feb 2017 17:49:46 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
-        by proxy.tng.vnc.biz (Postfix) with ESMTP id 05B2D1E3086;
-        Wed,  1 Feb 2017 17:49:46 +0100 (CET)
-X-Virus-Scanned: amavisd-new at 
-Received: from proxy.tng.vnc.biz ([127.0.0.1])
-        by localhost (proxy.tng.vnc.biz [127.0.0.1]) (amavisd-new, port 10026)
-        with ESMTP id aaTFe85FJKU5; Wed,  1 Feb 2017 17:49:45 +0100 (CET)
-Received: from [192.168.178.29] (aftr-185-17-206-48.dynamic.mnet-online.de [185.17.206.48])
-        by proxy.tng.vnc.biz (Postfix) with ESMTPSA id A2B181E2DE8;
-        Wed,  1 Feb 2017 17:49:45 +0100 (CET)
-Subject: Re: [PATCH v2 7/7] completion: recognize more long-options
-To:     =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>
-References: <74ecd09c-55da-3858-5187-52c286a6bf62@kdbg.org>
- <20170127211703.24910-1-cornelius.weig@tngtech.com>
- <20170127211703.24910-2-cornelius.weig@tngtech.com>
- <CAM0VKj=Ein4yrKG2aZnN7JU80ctZBQromcR6BEu-TyMLenLFCg@mail.gmail.com>
-Cc:     j6t@kdbg.org, spearce@spearce.org, git@vger.kernel.org
-From:   Cornelius Weig <cornelius.weig@tngtech.com>
-Message-ID: <2841d2de-32ad-eae8-6039-9251a40bb00e@tngtech.com>
-Date:   Wed, 1 Feb 2017 17:49:45 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.7.0
+        id S1752948AbdBAQxf (ORCPT <rfc822;e@80x24.org>);
+        Wed, 1 Feb 2017 11:53:35 -0500
+Received: from mail-pf0-f193.google.com ([209.85.192.193]:32874 "EHLO
+        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752727AbdBAQxe (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Feb 2017 11:53:34 -0500
+Received: by mail-pf0-f193.google.com with SMTP id e4so32093970pfg.0
+        for <git@vger.kernel.org>; Wed, 01 Feb 2017 08:53:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=ipvWn3oqZXzWnBZUCnSNwBYcu4Na52QZDsGTRQ3Sn8M=;
+        b=UQFAbUo+tXSDZ2hnPZYkFuy77c6Mjeso3toWRy64T7m7cqp4AAJb2dO0hNc33IY6jZ
+         AMMMmoL1lbjc8nBPm4AGDTrH8MUyiTbzI/AXb1FyrFNlXEh2ky9tOdNh5SQkstqjjXca
+         QSL57sUwVO5JxdCYXP62aJA8mx0Cnf2dAy+52uOSVGxMmc1X/0GMet8LR9MJVzNMBXMK
+         B+Y5XievjGHDJ1nIq86eDO31ivqLn11qJ4VEImC8HG/DyEnhWU8hSD+LAxrxyQf3KEL2
+         HnI4GX/L/swcmjBWzPXUJ5M1LiqIt1swtNa4U0ef293ffw+u1vnp26YMiGqpH283F5Sl
+         Wwxg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=ipvWn3oqZXzWnBZUCnSNwBYcu4Na52QZDsGTRQ3Sn8M=;
+        b=GPYcfg+8SuRQj0CpNgda768uRhPhb8a8NtsFIrHymdBqLB7qfkPah4kzG42YCEJcqk
+         56AEymtSX+cKsXKhDKC4pr6jJRflvgB2+rj4jpqe0p/nEPLdACKCgfhpS1w2prYQ0s5x
+         YGLByuUkAJx+f/ue/znSnYBhgK7IJdkF7SsWVOLo2dFwunOuz7DKKdw1DMN00UpO1qvG
+         zF1tlkkiPherMSL/krsDIolbEIepLQfVQRLtlPcKwvvJoTwO8el+7z7fMz5XhhjTeoNv
+         lCUv+tIWiILFFPAoz5OtOWiqhxnUJDsGjJRq0NP6YZlRhV/gC+0cIDnQCv8fliSBmLuV
+         Nv6A==
+X-Gm-Message-State: AIkVDXKHCymiMOhhh/TYaKk79XXugGfcnaChRDjDfhCS/O5AeKRS08TROf+IXrTyvt+JHA==
+X-Received: by 10.98.95.70 with SMTP id t67mr4714841pfb.37.1485968013821;
+        Wed, 01 Feb 2017 08:53:33 -0800 (PST)
+Received: from localhost ([2620:0:1000:8622:25a6:b4bd:905a:8303])
+        by smtp.gmail.com with ESMTPSA id t6sm51545050pgt.8.2017.02.01.08.53.32
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Wed, 01 Feb 2017 08:53:33 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     git@vger.kernel.org, Segev Finer <segev208@gmail.com>,
+        Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2 3/3] connect: Add the envvar GIT_SSH_VARIANT and ssh.variant config
+References: <2ff29a4d00e0e13d460122d8008e762361ca90aa.1483358673.git.johannes.schindelin@gmx.de>
+        <cover.1485442231.git.johannes.schindelin@gmx.de>
+        <3d451f2c357a3fd7f0b0e4b427548553d7d05306.1485442231.git.johannes.schindelin@gmx.de>
+        <xmqqo9yt4o5i.fsf@gitster.mtv.corp.google.com>
+        <xmqqpoj8z7su.fsf@gitster.mtv.corp.google.com>
+        <alpine.DEB.2.20.1702011216130.3469@virtualbox>
+Date:   Wed, 01 Feb 2017 08:53:32 -0800
+In-Reply-To: <alpine.DEB.2.20.1702011216130.3469@virtualbox> (Johannes
+        Schindelin's message of "Wed, 1 Feb 2017 13:01:25 +0100 (CET)")
+Message-ID: <xmqqlgtpq2cz.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <CAM0VKj=Ein4yrKG2aZnN7JU80ctZBQromcR6BEu-TyMLenLFCg@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8BIT
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Gabor,
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
- thanks for taking a look at these commits.
+> On Fri, 27 Jan 2017, Junio C Hamano wrote:
+>
+>> IOW, I think it is acceptable to always split GIT_SSH_COMMAND into
+>> tokens before we realize that the user used the escape hatch and the
+>> splitting was a wasted effort.  This is exactly because this thing
+>> is an escape hatch that is expected to be rarely used.  Of course,
+>> if the "wasted effort" can be eliminated without sacrificing the
+>> simplicity of the code, that is fine as well.
+>
+> Simplicity is retained. Battle-readiness was sacrificed on the way: the
+> new code is not tested well enough, and `next` will not help one bit.
 
-On 01/31/2017 11:17 PM, SZEDER Gábor wrote:
-> On Fri, Jan 27, 2017 at 10:17 PM,  <cornelius.weig@tngtech.com> wrote:
->> From: Cornelius Weig <cornelius.weig@tngtech.com>
->>
->> Recognize several new long-options for bash completion in the following
->> commands:
-> 
-> Adding more long options that git commands learn along the way is
-> always an improvement.  However, seeing "_several_ new long options"
-> (or "some long options" in one of the other patches in the series)
-> makes the reader wonder: are these the only new long options missing
-> or are there more?  If there are more, why only these are added?  If
-> there aren't any more missing long options left, then please say so,
-> e.g. "Add all missing long options, except the potentially
-> desctructive ones, for the following commands: ...."
+Let me make it clear that there is no burning desire to sacrifice
+battle-readiness in the above.  If we expect that auto-detection
+would be minority, then it makes sense to get the configured value
+first and then spend cycles to split and guess only when detection
+is needed.  
 
-Personally, I agree with you that
-> Adding more long options that git commands learn along the way is
-> always an improvement.
-However, people may start complaining that their terminal becomes too
-cluttered when doing a double-Tab. In my cover letter, I go to length
-about this. My assumption was that all options that are mentioned in the
-introduction of the command man-page should be important enough to have
-them in the completion list. I'll change my commit message accordingly.
+In this case, because we expect that auto-detection will be used
+most of the time, it is good enough to always split first, get the
+configured value, and spend cycles to guess, or for that matter it
+is perfectly fine to always split and guess first and then override
+with the configured value.
 
->>  - rm: --force
-> 
-> '--force' is a potentially destructive option, too.
-
-Thanks for spotting this.
-
-Btw, I haven't found that non-destructive options should not be eligible
-for completion. To avoid confusion about this in the future, I suggest
-to also change the documentation:
-
-index 933bb6e..96f1c7f 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -13,7 +13,7 @@
- #    *) git email aliases for git-send-email
- #    *) tree paths within 'ref:path/to/file' expressions
- #    *) file paths within current working directory and index
--#    *) common --long-options
-+#    *) common non-destructive --long-options
- #
- # To use these routines:
- #
-
-
-I take it you have also looked at the code itself? Then I would gladly
-mention you as reviewer in my sign-off.
+If your attempt to optimize for a wrong case ended up causing new
+unnecessary bugs, don't blame me.
