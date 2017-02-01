@@ -2,123 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A20751F6DC
-	for <e@80x24.org>; Wed,  1 Feb 2017 18:06:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 90BAD1F6DC
+	for <e@80x24.org>; Wed,  1 Feb 2017 18:06:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752835AbdBASGT (ORCPT <rfc822;e@80x24.org>);
-        Wed, 1 Feb 2017 13:06:19 -0500
-Received: from mail-pg0-f65.google.com ([74.125.83.65]:35061 "EHLO
-        mail-pg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750936AbdBASGS (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Feb 2017 13:06:18 -0500
-Received: by mail-pg0-f65.google.com with SMTP id 204so34809609pge.2
-        for <git@vger.kernel.org>; Wed, 01 Feb 2017 10:06:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=H9VHfTePnu3QAj9yQd2kKXCAYGD48VgENnx6sRKMFOk=;
-        b=F1S5mQ9cOTBmy/0YnPTqgN1M7hsJmJRsf/h/NJQwgscDvcXABrgPV5IEVpNhCnuQEL
-         tV5Azq7NUSTRPOi/aLFOpa36e90g1UzBMbayiPtysCKktssTaBvciYZjp7rZBtGXc4Kg
-         JYP/OI2I6lndIhkP7jdPfZmg4Zi8XvF3s8h6pIbQwz5NWEDasdXAD5R0bxdj/s5+9+ac
-         fWbzCD+qvvW52cxrxkBGCVOXUyEmsUjvSdPv3Lw/+A0b24lU6+a+60wjGhSQKvWXzdtH
-         rHIckY/W/cbGPa7US5XmPdAkI8rOuwe2ye0d12OFQW36KoPqB3jHeoAbOOkEJ1sHbzuL
-         9B8w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=H9VHfTePnu3QAj9yQd2kKXCAYGD48VgENnx6sRKMFOk=;
-        b=P/rIMe1LV8WQE2+mc+gg/c8bmHPSYcIzj21EjSw/iul+rnXZO3QAKVqEVFlNkGM0FG
-         fjB0KHGEWz2FNYUTNV+FyRl9Ee+fMnoyS/lwdqoTBX6CcMl4Yen2gfzIojxeLRUPo62P
-         pnUBtUTw3fZg6jyofAR5m+TQK+YWfuHd74fAtDT3H4fdkayNi/RgyPcMHGh33/uIEnYk
-         dlU5Q0Ly0yZcY0CGBjdAtTbXfnkc6Z7anmR+cb+dE/IyYxzgl32baZC0HpXiN/5RjybU
-         FJthzKrULxsnlcaN0UBv8wnxMP8siYC9Od088QL2sM6pv0nGG7+pPvHZRCWbh94rb1cy
-         yhFA==
-X-Gm-Message-State: AIkVDXJI8vl3g1369U3Mey/4JXlqObOzzhIrcZhzXLguBgvrL9eDFzROJrpln4Uss/EImw==
-X-Received: by 10.84.215.15 with SMTP id k15mr6262542pli.58.1485972377562;
-        Wed, 01 Feb 2017 10:06:17 -0800 (PST)
-Received: from localhost ([2620:0:1000:8622:25a6:b4bd:905a:8303])
-        by smtp.gmail.com with ESMTPSA id u24sm51368618pfi.25.2017.02.01.10.06.16
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 01 Feb 2017 10:06:16 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Erik van Zijst <erik.van.zijst@gmail.com>, git@vger.kernel.org,
-        ssaasen@atlassian.com, mheemskerk@atlassian.com
-Subject: Re: [ANNOUNCE] Git Merge Contributor Summit topic planning
-References: <20170131004804.p5sule4rh2xrgtwe@sigill.intra.peff.net>
-        <1485941532-47993-1-git-send-email-erik.van.zijst@gmail.com>
-        <20170201145300.4pn3faodhdb72jly@sigill.intra.peff.net>
-Date:   Wed, 01 Feb 2017 10:06:15 -0800
-In-Reply-To: <20170201145300.4pn3faodhdb72jly@sigill.intra.peff.net> (Jeff
-        King's message of "Wed, 1 Feb 2017 15:53:00 +0100")
-Message-ID: <xmqqh94dpyzs.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+        id S1752878AbdBASGk (ORCPT <rfc822;e@80x24.org>);
+        Wed, 1 Feb 2017 13:06:40 -0500
+Received: from mout.web.de ([217.72.192.78]:60467 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752830AbdBASGj (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Feb 2017 13:06:39 -0500
+Received: from [192.168.178.36] ([79.197.209.108]) by smtp.web.de (mrweb103
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0Lrryk-1cT7Wy3HW2-013bud; Wed, 01
+ Feb 2017 19:06:23 +0100
+Subject: Re: [PATCH 1/5] add SWAP macro
+To:     Jeff King <peff@peff.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+References: <8ef4c833-45bd-6831-0683-6d01f30aa518@web.de>
+ <0bdb58a6-3a7f-2218-4b70-c591ae90e95e@web.de>
+ <alpine.DEB.2.20.1701301643260.3469@virtualbox>
+ <aa653d57-4a97-ac50-b20c-f94ed43a22fb@kdbg.org>
+ <alpine.DEB.2.20.1701302158110.3469@virtualbox>
+ <77098ac8-1084-a5c4-a5e6-fb382e3dc3a0@web.de>
+ <20170130222157.GC35626@google.com>
+ <8e94756a-c3a5-9b81-268d-d0f36876f710@web.de>
+ <20170131213507.uiwmkkcg7umvd3f4@sigill.intra.peff.net>
+ <alpine.DEB.2.20.1702011225250.3469@virtualbox>
+ <20170201114750.r5xdy6emdczmnh4j@sigill.intra.peff.net>
+Cc:     Brandon Williams <bmwill@google.com>, Johannes Sixt <j6t@kdbg.org>,
+        Git List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <bfd0d758-a9c8-9792-6294-9f9ed632cc98@web.de>
+Date:   Wed, 1 Feb 2017 19:06:03 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.7.0
 MIME-Version: 1.0
-Content-Type: text/plain
+In-Reply-To: <20170201114750.r5xdy6emdczmnh4j@sigill.intra.peff.net>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K0:wV+4oc7VK6W8X0qZ6rsnTnSIDJ8OB0oEhuJ0mo5fgPsfzxN9BF8
+ eF4ckHxc4cy302KMrmHrLSSvLX5gylB3hwO+Gtl+HZ7MkHyimN49wl/8KbFDuTee0a6ZBT4
+ ovNN/W9vPz6YX1vmoEphdKizrp/uTsTovjQ+dxA0haNZHCYsrEUCleVyQIzmT3e4oAZXD45
+ YbiKAEg8QgmYwYPv12Mhw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:zOKKoqlgpyA=:0B+mVuuE7SEGZr8ugRiWMh
+ x6sIlFsSRazwuW6lkHJu2Q5qbq4OKeNmkvsi67gxOEVPzcdzDpjY90joIJzxFyHpJVao73mGL
+ xFmSAk0RhLbxdMxVGoW91CP+IoZpY3NHY7+OZ79h2q3BvcI7BZDGy/7/3L5+jVsQiumI6xDNr
+ YqB7j/zliexHojq7MdDbYGaib3g6b9AE+30TPRRNI3jJYgi5f969130s3ySQCyS79UZrCzeGC
+ i/A3/w5p5A69ram4Mk1fC5sNKpHTLzXrlokarm+3FY5L8ZFjIZf184fyULswGOgt/Aq2DbSV9
+ KiOa1s1D0D1ThuDuPBTMJeFGIPki/C12BptQ1bpMJc2AYBLWK9N8tL8jbka/FaOfeqImkS2i+
+ WkuAEXr7VRXf/NJN3duH7/75+UcJ68fC6Px7XhzoDwhiDEknKZpARz1r53iFECmLqBvSuFOyj
+ MNcFdd0vE0lFG7EEHKwpZL21SaVIz7rl/G0uuPukiwer8czQIXxEwjYgeRXUlSCuOHhQkDrKe
+ eKAdgIEVVX3efzKa6cOVMdQBNJoC1kaDenFUabGqeHPJnXI47iCdsdTcsJGwFZRGwaRGz86BS
+ LV68A7/eCNwi3WJuPMHmcN20B3qoSKTlnCqkxBT8eWFxqHXTZNdlMvNOl1Cmm5h+dO+nWlELf
+ sLiX7/BCtArXCPz3DHAbiWBW+TbfulW/GNFffaQmsOTU1DFSKh0TsLZHL6ujOMuvg9FcriMwV
+ HlDRMkCoZNgVC2FRObZdB1oQGp/F7f9HtzuwXlR7ZFBhk5MjtJlq8tWZRcMWZ26vaPipxFnhK
+ 3bZc7Nn
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Am 01.02.2017 um 12:47 schrieb Jeff King:
+> I'm not altogether convinced that SWAP() is an improvement in
+> readability. I really like that it's shorter than the code it replaces,
+> but there is a danger with introducing opaque constructs. It's one more
+> thing for somebody familiar with C but new to the project to learn or
+> get wrong.
 
-> If you _can_ do that latter part, and you take "I only care about
-> resumability" to the simplest extreme, you'd probably end up with a
-> protocol more like:
->
->   Client: I need a packfile with this want/have
->   Server: OK, here it is; its opaque id is XYZ.
->   ... connection interrupted ...
->   Client: It's me again. I have up to byte N of pack XYZ
->   Server: OK, resuming
->           [or: I don't have XYZ anymore; start from scratch]
->
-> Then generating XYZ and generating that bundle are basically the same
-> task.
+I'm biased, of course, but SIMPLE_SWAP and SWAP exchange the values of 
+two variables -- how could someone get that wrong?  Would it help to 
+name the macro SWAP_VALUES?  Or XCHG? ;)
 
-The above allows a simple and naive implementation of generating a
-packstream and "tee"ing it to a spool file to be kept while sending
-to the first client that asks XYZ.
+> IMHO the main maintenance gain from René's patch is that you don't have
+> to specify the type, which means you can never have a memory-overflow
+> bug due to incorrect types. If we lose that, then I don't see all that
+> much value in the whole thing.
 
-The story I heard from folks who run git servers at work for Android
-and other projects, however, is that they rarely see two requests
-with want/have that result in an identical XYZ, unless "have" is an
-empty set (aka "clone").  In a busy repository, between two clone
-requests relatively close together, somebody would be pushing, so
-you'd need many XYZs in your spool even if you want to support only
-the "clone" case.
+Size checks could be added to SIMPLE_SWAP as well.
 
-So in the real life, I think that the exchange needs to be more
-like this:
+The main benefit of a swap macro is reduced repetition IMHO: Users 
+specify the variables to swap once instead of twice in a special order, 
+and with SWAP they don't need to declare their type again.  Squeezing 
+out redundancy makes the code easier to read and modify.
 
-    C: I need a packfile with this want/have
-    ... C/S negotiate what "have"s are common ...
-    S: Sorry, but our negitiation indicates that you are way too
-       behind.  I'll send you a packfile that brings you up to a
-       slightly older set of "want", so pretend that you asked for
-       these slightly older "want"s instead.  The opaque id of that
-       packfile is XYZ.  After getting XYZ, come back to me with
-       your original set of "want"s.  You would give me more recent
-       "have" in that request.  
-    ... connection interrupted ...
-    C: It's me again.  I have up to byte N of pack XYZ
-    S: OK, resuming (or: I do not have it anymore, start from scratch)
-    ... after 0 or more iterations C fully receives and digests XYZ ...
-
-and then the above will iterate until the server does not have to
-say "Sorry but you are way too behind" and returns a packfile
-without having to tweak the "want".
-
-That way, you can limit the number of XYZ you would need to keep to
-a reasonable number.
-
-The recent proposal by Jonathan Tan also allows the server side to
-tweak the final tips the client receives after the protocol exchange
-started.  I suspect the above two will become related.
+René
