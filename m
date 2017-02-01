@@ -2,138 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4C1671FAAD
-	for <e@80x24.org>; Wed,  1 Feb 2017 11:08:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AA6BF1FAAD
+	for <e@80x24.org>; Wed,  1 Feb 2017 11:28:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751478AbdBALIz (ORCPT <rfc822;e@80x24.org>);
-        Wed, 1 Feb 2017 06:08:55 -0500
-Received: from out1-smtp.messagingengine.com ([66.111.4.25]:44314 "EHLO
-        out1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751222AbdBALIy (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 1 Feb 2017 06:08:54 -0500
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-        by mailout.nyi.internal (Postfix) with ESMTP id 24EA320CFB;
-        Wed,  1 Feb 2017 06:08:53 -0500 (EST)
-Received: from frontend2 ([10.202.2.161])
-  by compute1.internal (MEProxy); Wed, 01 Feb 2017 06:08:53 -0500
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:content-type:date:from:in-reply-to
-        :message-id:mime-version:references:subject:to:x-me-sender
-        :x-me-sender:x-sasl-enc:x-sasl-enc; s=smtpout; bh=aImZWLE3fCxbXa
-        f3xcq0br36JIw=; b=UrkHsJNMX+v45kDSQhMygEvwFd5VpRBKtyyuzuoqw7bO/Q
-        6HchzGvyR5PQU+Bo+91dOiedfwuPx8Nrhv/g8eIeBwCNYL1x+jwbp3NwD978+lWs
-        mnAJIFAWXL7aMaoAQk90z2M+661/GuurEzeRsuM4D4zdmJqLDiEuH490TfXdE=
-X-ME-Sender: <xms:xcGRWD8ocJ0fNrxaQ5C_TScs-Mk99ZZw9N2pycrk-o4NyL4SXHHBgA>
-X-Sasl-enc: zCQodEwi2smawapz3igYkqk8z198364Hw2YIv0V63+0M 1485947332
-Received: from localhost (x4e34ad1f.dyn.telefonica.de [78.52.173.31])
-        by mail.messagingengine.com (Postfix) with ESMTPA id B7A01245D4;
-        Wed,  1 Feb 2017 06:08:52 -0500 (EST)
-Date:   Wed, 1 Feb 2017 12:08:51 +0100
-From:   Patrick Steinhardt <ps@pks.im>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, psteinhardt@elego.de
-Subject: Re: What's cooking in git.git (Jan 2017, #06; Tue, 31)
-Message-ID: <20170201110851.GA475@pks-pc>
-References: <xmqqpoj2q25n.fsf@gitster.mtv.corp.google.com>
+        id S1751399AbdBAL2e (ORCPT <rfc822;e@80x24.org>);
+        Wed, 1 Feb 2017 06:28:34 -0500
+Received: from mout.gmx.net ([212.227.17.20]:56950 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751266AbdBAL2d (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Feb 2017 06:28:33 -0500
+Received: from virtualbox ([37.201.192.48]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MOTRh-1cVKJJ268T-005s7L; Wed, 01
+ Feb 2017 12:28:16 +0100
+Date:   Wed, 1 Feb 2017 12:28:13 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Jeff King <peff@peff.net>
+cc:     =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
+        Brandon Williams <bmwill@google.com>,
+        Johannes Sixt <j6t@kdbg.org>, Git List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/5] add SWAP macro
+In-Reply-To: <20170131213507.uiwmkkcg7umvd3f4@sigill.intra.peff.net>
+Message-ID: <alpine.DEB.2.20.1702011225250.3469@virtualbox>
+References: <8ef4c833-45bd-6831-0683-6d01f30aa518@web.de> <0bdb58a6-3a7f-2218-4b70-c591ae90e95e@web.de> <alpine.DEB.2.20.1701301643260.3469@virtualbox> <aa653d57-4a97-ac50-b20c-f94ed43a22fb@kdbg.org> <alpine.DEB.2.20.1701302158110.3469@virtualbox>
+ <77098ac8-1084-a5c4-a5e6-fb382e3dc3a0@web.de> <20170130222157.GC35626@google.com> <8e94756a-c3a5-9b81-268d-d0f36876f710@web.de> <20170131213507.uiwmkkcg7umvd3f4@sigill.intra.peff.net>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-        protocol="application/pgp-signature"; boundary="yrj/dFKFPuw6o+aM"
-Content-Disposition: inline
-In-Reply-To: <xmqqpoj2q25n.fsf@gitster.mtv.corp.google.com>
+Content-Type: multipart/mixed; BOUNDARY="8323329-2147181406-1485948496=:3469"
+X-Provags-ID: V03:K0:9odisgLk++Oy2qK+VX6osWKC2s7p4P58Em0U1Ej8QPliP6Eilvd
+ 7lgfh0oICbGKeTXMI/WG7OfP4KiW3P3lV5Mu4oZ9IJoQm21tRzsAzPbTL+SRIV9LtmUQ0t6
+ whCOVOxhhC8QCi7c639/iHx87YAT70g1p6mBdB+/JYnk7O0/i2k1TlYd4OqiK7e+OVoKvfo
+ q7qAC8nUar1xXKOnXN2pw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:/NFnjhrM1qc=:4d3RRmiD4jDiPjqbazlWho
+ JyTR04n30yHtUMd9Hui+rK6bAfRriAWE4jo980iNnRcxG/LYP5oFrhSUVM7PWQMYG/cBCCtuO
+ 39UEsqK8/PVAReVi0zGy6TOJ7wTLZm4wp3ZCTeUC5b2KhNCduf6S+Tx8xV7JFZxBwXwM9V5wI
+ SoSzkVjYgYgfD02xlz57U7/i+11kTV7zDCxluEVEuvuZstFYuQPfxax7qUgS3MPw+H6KrXKDj
+ qcFnSFK/2clLK+UfNSc/B7TB1S1Ac9FjFkm1D59GwAytBzQogB+x38jzgAhfAbYsnl1X7eKZz
+ XFjhuHetSzTKkbwOAjKPKOIfTBYJ5SUIqtGQcS5aBVgctnx38afFA9r5yBWAyDbr0RhuPfA7z
+ 9HQ7LE0c39rSUDnyT30sgc3qGMzRNYMoD9XBkjos33XBVw/G5OoV2yUTor/+jD4Mi8GlNVXlI
+ SNo5uAjzokbFGvDIIxVBmFY8s++2wZET//6cEqMKFesYCcY1EM/H1BElnUtQKRiv+Fsa5gO0h
+ RoTj8pPDdjET31Nda0gimkWAKk9khfu0R0sHVjhGUaSmb253/ZmAttDIDYw68YbsDJxT9U+37
+ PFxq7wT9cbFukPwKQNfmvoBwPfXIHuIEQrMV3hMOu1aQVIXtVur3vD6lZmXcRoHneuqOlgXID
+ hO+VtZEK8PvlvdnLFKih47ZBWd7NpAGuRKSHQYPbVIyR8+ZI9gmtl8qyqk7wa0khijGgUiYxc
+ qy6q1zbFlap7Zrz5/K+hjXUyDkFSBYbOziN9zVDqKpR7FNmTpbH4ByT1x39h6lv5S3A90i0Gz
+ 8QksHodNvF9rWv4xqG81HJAkPimRg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
---yrj/dFKFPuw6o+aM
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+--8323329-2147181406-1485948496=:3469
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 
-On Tue, Jan 31, 2017 at 02:45:40PM -0800, Junio C Hamano wrote:
-> * ps/urlmatch-wildcard (2017-01-31) 5 commits
->  . urlmatch: allow globbing for the URL host part
->  . urlmatch: include host in urlmatch ranking
->  . urlmatch: split host and port fields in `struct url_info`
->  . urlmatch: enable normalization of URLs with globs
->  . mailmap: add Patrick Steinhardt's work address
+Hi Peff,
+
+On Tue, 31 Jan 2017, Jeff King wrote:
+
+> On Tue, Jan 31, 2017 at 10:03:01PM +0100, Ren=C3=A9 Scharfe wrote:
 >=20
->  The <url> part in "http.<url>.<variable>" configuration variable
->  can now be spelled with '*' that serves as wildcard.
->  E.g. "http.https://*.example.com.proxy" can be used to specify the
->  proxy used for https://a.example.com, https://b.example.com, etc.,
->  i.e. any host in the example.com domain.
+> > > Perhaps we could disallow a side-effect operator in the macro.  By
+> > > disallow I mean place a comment at the definition to the macro and
+> > > hopefully catch something like that in code-review.  We have the
+> > > same issue with the `ALLOC_GROW()` macro.
+> >=20
+> > SWAP(a++, ...) is caught by the compiler, SWAP(*a++, ...) works fine.
+> > Technically that should be enough. :)  A comment wouldn't hurt, of
+> > course.
 >=20
->  With the update it still seems to fail the same t5551#31
->  cf. <cover.1485853153.git.ps@pks.im>
+> One funny thing is that your macro takes address-of itself, behind the
+> scenes. I wonder if it would be more natural for it to take
+> pointers-to-objects, making it look more like a real function (i.e.,
+> SWAP(&a, &b) instead of SWAP(a, b)". And then these funny corner cases
+> become quite obvious in the caller, because the caller is the one who
+> has to type "&".
 
-Yeah, you're right. Sorry about this one.
+But forcing SWAP(&a, &b) would make it even more cumbersome to use, and it
+would also make it harder to optimize, say, by using registers instead of
+addressable memory (think swapping two 32-bit integers: there is *no* need
+to write them into memory just to swap them).
 
-I finally fixed the problem to get t5551 working again, see the
-attached patch below. The problem was that I did not honor the
-case where multiple configuration entries exist with the same
-key. In some cases, this has to lead to the value being
-accumulated multiple times, as for example with http.extraheaders
-used in t5551. So the fixup below fixes this.
+And I think I should repeat my point that this discussion veers towards
+making simple swaps *more* complicated, rather than less complicated. Bad
+direction.
 
-I just tried to write additional tests to exercise this in our
-config-tests by using `git config --get-urlmatch` with multiple
-`http.extraheader`s set. I've been stumped that it still didn't
-work correctly with my patch, only the last value was actually
-ever returned. But in fact, current Git (tested with v2.11.0)
-also fails to do so correctly and only lists the last value.
-
-As such, I'd argue this is a separate issue. If you're not
-opposed, I'd like to fix this in a separate patch series later on
-(probably after Git Merge).
-
---- >8 ---
-Subject: [PATCH] fixup! urlmatch: include host in urlmatch ranking
-
----
- urlmatch.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/urlmatch.c b/urlmatch.c
-index 6c12f1a48..739a1a558 100644
---- a/urlmatch.c
-+++ b/urlmatch.c
-@@ -587,7 +587,7 @@ int urlmatch_config_entry(const char *var, const char *=
-value, void *cb)
- 	if (!item->util) {
- 		item->util =3D xcalloc(1, sizeof(matched));
- 	} else {
--		if (cmp_matches(&matched, item->util) <=3D 0)
-+		if (cmp_matches(&matched, item->util) < 0)
- 			 /*
- 			  * Our match is worse than the old one,
- 			  * we cannot use it.
---=20
-2.11.0
-
---yrj/dFKFPuw6o+aM
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIcBAABCAAGBQJYkcHDAAoJEBF8Z7aeq/Esx4YP/Rr59REQhj79taNQu1B7DARP
-WkZ7Ib7oTuS18dMfMRpqK1VRc1YTNE+GxaSdkvH1y/LlNK0hs35y0UvOqc45Pg0B
-iPjAUDru9kPE7BXYpPi5yToRgiGHW++6h6c+QLXyq4Q2fkI9n+BMb/Hgf1oHsDsy
-IdCFJA4wpG15WgLXp22zOGrbntpUGHJnxbtkpqxbko18sSFiQQVXc1lnIMbDIMU0
-rWVkZs3ordz5beiEYZCJd0fEFx9yvjQ63YU8VZOf07Z9p/tD/aQTGRTTBjoD9sHy
-FWomnGZZQUseAJWduH26IfYLwoE5lvo1iLTHTVUQW8w6pP2U35ixSQnLv4FMc+Wl
-nIeZZvWKb9OT6MVsSBDdTgAs+xZuO3l15S9j4fAIhN6GoX6BbsTCbZyG0tx/dJJI
-PERn+VTQOe+8zKRGhHZWy/XSz5w+q/lkktANQva2/rYkKBvnzDUesm3AcNH0Pjgn
-rD/J0ypaS8To5SY24MxNdLqdfVTxSdlg2+eEVSndDCVUyf4wLzfdQ/a/dUdOG0c0
-JbwuFLVKLryOYjbhcX+lN0WxPYUWRSb4RS6Z+eAPF/NMXo7h63QUR5lNABGBmlL2
-eo9+5j5agIZOPcJ0hphdQXHbjb4GtsTMAnaNUlR+GkuamETT7W87OoSUHrlUwTCS
-2kmCrHXs7mc9oBDbi127
-=fyJD
------END PGP SIGNATURE-----
-
---yrj/dFKFPuw6o+aM--
+Ciao,
+Dscho
+--8323329-2147181406-1485948496=:3469--
