@@ -2,104 +2,77 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CD9D91FAAD
-	for <e@80x24.org>; Thu,  2 Feb 2017 17:05:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 61A581FAAD
+	for <e@80x24.org>; Thu,  2 Feb 2017 17:52:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752069AbdBBRFC (ORCPT <rfc822;e@80x24.org>);
-        Thu, 2 Feb 2017 12:05:02 -0500
-Received: from mail-pg0-f68.google.com ([74.125.83.68]:32771 "EHLO
-        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751147AbdBBRFB (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Feb 2017 12:05:01 -0500
-Received: by mail-pg0-f68.google.com with SMTP id 194so2305447pgd.0
-        for <git@vger.kernel.org>; Thu, 02 Feb 2017 09:05:01 -0800 (PST)
+        id S1751923AbdBBRwC (ORCPT <rfc822;e@80x24.org>);
+        Thu, 2 Feb 2017 12:52:02 -0500
+Received: from mail-lf0-f50.google.com ([209.85.215.50]:35359 "EHLO
+        mail-lf0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751224AbdBBRwB (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Feb 2017 12:52:01 -0500
+Received: by mail-lf0-f50.google.com with SMTP id n124so12659704lfd.2
+        for <git@vger.kernel.org>; Thu, 02 Feb 2017 09:52:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=ce+mpkGLzOlDN4q6TeQHi8Rf8tkZhKjZuzCMQ7+lb6w=;
-        b=tuBQvXK79FTQ2X9j712xqCk2nbJaE09kOTUAUtRSnoh3uwl7id9258aPtjcZg/7PBz
-         uWAFcswQR92XiEYQy5jRVTkQgU420TvFMQhvqTOnq+/glrE/Kf/zSu7T1jsl0GFzSeld
-         povhFVIK4DQJN1zxhzrooKSF1IpSCr1LNL9DTY6ZEO/RwcfSWxjYAN842iqLS5vBxCKt
-         VuHro/9uF14xnHtAhUMJpUai19Crg8Xyo18vtdY9VzNG0HthmdxPPg2fAokzAdrmpcyG
-         pHeL+bT8N0XY+P+E7yWw3AwlxgcPNfTY7utWcs4/rSwz6wKMe9sYnqHdFpamYRtiAkZp
-         Bsjw==
+        h=mime-version:from:date:message-id:subject:to;
+        bh=ARcfkTgsMGBy3OP2sBW3nH3BvE4M7x4uSXqMWmwAbGY=;
+        b=IIKCXW9WHjFFM9Yb0CLy1tUZwpSQ8KGW0OeqQmRLOhEYiIN/vLf/Y6fYH7TrbPhUnp
+         lrABcAc9+FA0RvX3BIxkh5qNCuxbVdD4YMj9B7X2p8JX9nE3By4n7O4TxYg1mWIgh8pc
+         +87XkC9W2ODrOXuXIwReqcqnM0sFQVJ6Xc3IWDHFiWgZm6NDKNRZUrRY3I9Dj0JprZRv
+         5vP1JMvfD+oV71oxukaPfG4udMwstn/F8C2Gevy48Kq97incQmR/iv9Tbckn2lZ8ONkt
+         nBH0ztogsLLhBVTSBwD6NQYEhN6EQu1ng9SezG4JTw4qZ7gmYI7B3Mr51OlKV7wGjNib
+         LNpQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=ce+mpkGLzOlDN4q6TeQHi8Rf8tkZhKjZuzCMQ7+lb6w=;
-        b=b48jUokxicfkedVGXz7KK9Q/IQ8TN8BB2Qete5V6Sr/1Mvl34j+hiW7+Mm5ESs1v8V
-         MMeFmN8dbrX9nKsj2S4PrXhGAz204uZrD/jXYmtb+JbiRPb/oPcAEN4sVTY6uEpj5NFm
-         ixYbtxECGdP0ZwjHN5TuT6YFsDj+VHwg+Ml0A0oIfd72KLUptwYSfe7r+xt57MZSgWRM
-         yWR5PbRpoTki7Seookf/9WFm7/kQXWIbRcEw5WPlCIMa7wBdMpKCudgeJEKEblAq4mPj
-         r/4WrwguUrRjl8x3Kdg769s0c5hY7j9JXrbRQhtoXWv/S90UrLffnA/lDUY2L28jLmKo
-         H/Ew==
-X-Gm-Message-State: AIkVDXLj+JJew9bKKm723edyv+vKD8okRf1C8y2wzRID7kyRlqDE8FBWN0N8MoTs8rV4Ew==
-X-Received: by 10.99.53.195 with SMTP id c186mr11614933pga.24.1486054659086;
-        Thu, 02 Feb 2017 08:57:39 -0800 (PST)
-Received: from localhost ([2620:0:1000:8622:a474:f273:b947:baf6])
-        by smtp.gmail.com with ESMTPSA id r21sm59844535pfd.95.2017.02.02.08.57.37
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 02 Feb 2017 08:57:38 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Cornelius Weig <cornelius.weig@tngtech.com>
-Cc:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        bitte.keine.werbung.einwerfen@googlemail.com,
-        thomas.braun@virtuell-zuhause.de, john@keeping.me.uk,
-        git@vger.kernel.org
-Subject: Re: [PATCH 4/7] completion: teach ls-remote to complete options
-References: <20170202014014.25878-1-szeder.dev@gmail.com>
-        <603697da-c8e9-5644-e0f0-7ee265c069d8@tngtech.com>
-Date:   Thu, 02 Feb 2017 08:57:37 -0800
-In-Reply-To: <603697da-c8e9-5644-e0f0-7ee265c069d8@tngtech.com> (Cornelius
-        Weig's message of "Thu, 2 Feb 2017 10:40:53 +0100")
-Message-ID: <xmqqwpd8leda.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=ARcfkTgsMGBy3OP2sBW3nH3BvE4M7x4uSXqMWmwAbGY=;
+        b=HE/LGK+2RoUlMMkZ8ktlfMcoqeIE/ql4FoAJ1qK41TIecYJ0jTSoiWs9v8cpC1W5Of
+         7SYYS5YFLt2zvlcGbRtuoZqsZcwtLF+1IU8J3K1tjfNusRK3U3Uwp5981yrS0i58u2Dn
+         BAgso0g/aLD5Fpn5lncIXSERx9mH/Lj1sMnMojRrz5O3fOsPTkpq3JrT7/gId2ar59VQ
+         5zhQOiMmYHSYXbOkdrQ4yOcxQ0Rfvtil/bJCuVWPf5E2jalyywPOSvcEXwWpDS/+h2T6
+         tdy80q0mUDk8moAHSA0PPfRteX48FviTquwnqD/t3o85uq+eA7gZq7WC+d15YhxdX5UF
+         jS/A==
+X-Gm-Message-State: AIkVDXIVEveTY5m1fBWYnIdWANfIR9EhSNb+oV8D3wn/ua3cxxLnTUu+kydQEJ2Wp1Ek5YXuTlK1bsV89GV1rw==
+X-Received: by 10.46.72.17 with SMTP id v17mr4174854lja.18.1486057919231; Thu,
+ 02 Feb 2017 09:51:59 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Received: by 10.25.20.193 with HTTP; Thu, 2 Feb 2017 09:51:38 -0800 (PST)
+From:   Hilco Wijbenga <hilco.wijbenga@gmail.com>
+Date:   Thu, 2 Feb 2017 09:51:38 -0800
+Message-ID: <CAE1pOi0-8JnnZbdm9vu1RwTU1mXr7dboLC3ito3LcvK9gkNi_A@mail.gmail.com>
+Subject: How to use git show's "%<(<N>[,trunc|ltrunc|mtrunc])"?
+To:     Git Users <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Cornelius Weig <cornelius.weig@tngtech.com> writes:
+Hi all,
 
-> On 02/02/2017 02:40 AM, SZEDER Gábor wrote:
->> 
->>> ls-remote needs to complete remote names and its own options.
->> 
->> And refnames, too.
->
-> Yes, right. However, do you think it is reasonable to complete remote
-> refnames? I don't think so, because it would mean we would have to run
-> ls-remote during completion -- and waiting for ls-remote could be quite
-> lengthy.
+I'm trying to get the committer date printed in a custom fashion.
+Using "%cI" gets me close:
 
-... and by the time the completion script knew what they are, we
-have all information necessary without actually having the user run
-the command ;-)  That does sound backwards.
+$ git show --format="%cI | %an" master | head -n 1
+2017-01-31T17:02:13-08:00 | Hilco Wijbenga
 
-I am however not sure what Szeder really meant by "refnames".  For
-example, you may want to see that this
+I would like to get rid of the "-08:00" bit at the end of the
+timestamp. According to the "git show" manual I should be able to use
+"%<(<N>[,trunc|ltrunc|mtrunc])" to drop that last part.
 
-	$ git ls-remote origin mast<TAG>
+$ git show --format="%<(19,trunc)cI | %an" master | head -n 1
+cI | Hilco Wijbenga
 
-peek into refs/remotes/origin/* and find those matching, i.e. most
-likely "master", and that can be done without talking to the remote
-side.  It won't catch the case where the remote end added a new
-branch that also match, e.g. "mastiff", and it will actively harm
-the users by giving the impression that Git (collectively, even
-though from technical point of view, what the completion script does
-is not part of Git) told them that there is no such new branch they
-need to worry about.
+Mmm, it seems to be recognized as a valid "something" but it's not
+working as I had expected. :-) I tried several other versions of this
+but no luck. Clearly, I'm misunderstanding the format description. How
+do I get "2017-01-31T17:02:13 | Hilco Wijbenga" to be output?
 
-So probably even with the "peek local" optimization, I have a feeling
-that completion of refnames may not be such a good idea.
+Cheers,
+Hilco
