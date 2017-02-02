@@ -2,109 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 939401FAAD
-	for <e@80x24.org>; Thu,  2 Feb 2017 12:42:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CD9D91FAAD
+	for <e@80x24.org>; Thu,  2 Feb 2017 17:05:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751501AbdBBMmz (ORCPT <rfc822;e@80x24.org>);
-        Thu, 2 Feb 2017 07:42:55 -0500
-Received: from cloud.peff.net ([104.130.231.41]:48334 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751452AbdBBMmy (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Feb 2017 07:42:54 -0500
-Received: (qmail 2572 invoked by uid 109); 2 Feb 2017 12:42:53 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 02 Feb 2017 12:42:53 +0000
-Received: (qmail 19400 invoked by uid 111); 2 Feb 2017 12:42:56 -0000
-Received: from Unknown (HELO sigill.intra.peff.net) (10.42.43.3)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 02 Feb 2017 07:42:56 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 02 Feb 2017 13:42:44 +0100
-Date:   Thu, 2 Feb 2017 13:42:44 +0100
-From:   Jeff King <peff@peff.net>
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: [PATCH] document behavior of empty color name
-Message-ID: <20170202124238.53k74cedpp2rcmzo@sigill.intra.peff.net>
-References: <xmqqpoj2q25n.fsf@gitster.mtv.corp.google.com>
- <20170201002129.xb62hmxwrzwgp6vg@sigill.intra.peff.net>
- <20170202091615.GA22337@ash>
+        id S1752069AbdBBRFC (ORCPT <rfc822;e@80x24.org>);
+        Thu, 2 Feb 2017 12:05:02 -0500
+Received: from mail-pg0-f68.google.com ([74.125.83.68]:32771 "EHLO
+        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751147AbdBBRFB (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Feb 2017 12:05:01 -0500
+Received: by mail-pg0-f68.google.com with SMTP id 194so2305447pgd.0
+        for <git@vger.kernel.org>; Thu, 02 Feb 2017 09:05:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=ce+mpkGLzOlDN4q6TeQHi8Rf8tkZhKjZuzCMQ7+lb6w=;
+        b=tuBQvXK79FTQ2X9j712xqCk2nbJaE09kOTUAUtRSnoh3uwl7id9258aPtjcZg/7PBz
+         uWAFcswQR92XiEYQy5jRVTkQgU420TvFMQhvqTOnq+/glrE/Kf/zSu7T1jsl0GFzSeld
+         povhFVIK4DQJN1zxhzrooKSF1IpSCr1LNL9DTY6ZEO/RwcfSWxjYAN842iqLS5vBxCKt
+         VuHro/9uF14xnHtAhUMJpUai19Crg8Xyo18vtdY9VzNG0HthmdxPPg2fAokzAdrmpcyG
+         pHeL+bT8N0XY+P+E7yWw3AwlxgcPNfTY7utWcs4/rSwz6wKMe9sYnqHdFpamYRtiAkZp
+         Bsjw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=ce+mpkGLzOlDN4q6TeQHi8Rf8tkZhKjZuzCMQ7+lb6w=;
+        b=b48jUokxicfkedVGXz7KK9Q/IQ8TN8BB2Qete5V6Sr/1Mvl34j+hiW7+Mm5ESs1v8V
+         MMeFmN8dbrX9nKsj2S4PrXhGAz204uZrD/jXYmtb+JbiRPb/oPcAEN4sVTY6uEpj5NFm
+         ixYbtxECGdP0ZwjHN5TuT6YFsDj+VHwg+Ml0A0oIfd72KLUptwYSfe7r+xt57MZSgWRM
+         yWR5PbRpoTki7Seookf/9WFm7/kQXWIbRcEw5WPlCIMa7wBdMpKCudgeJEKEblAq4mPj
+         r/4WrwguUrRjl8x3Kdg769s0c5hY7j9JXrbRQhtoXWv/S90UrLffnA/lDUY2L28jLmKo
+         H/Ew==
+X-Gm-Message-State: AIkVDXLj+JJew9bKKm723edyv+vKD8okRf1C8y2wzRID7kyRlqDE8FBWN0N8MoTs8rV4Ew==
+X-Received: by 10.99.53.195 with SMTP id c186mr11614933pga.24.1486054659086;
+        Thu, 02 Feb 2017 08:57:39 -0800 (PST)
+Received: from localhost ([2620:0:1000:8622:a474:f273:b947:baf6])
+        by smtp.gmail.com with ESMTPSA id r21sm59844535pfd.95.2017.02.02.08.57.37
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Thu, 02 Feb 2017 08:57:38 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Cornelius Weig <cornelius.weig@tngtech.com>
+Cc:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        bitte.keine.werbung.einwerfen@googlemail.com,
+        thomas.braun@virtuell-zuhause.de, john@keeping.me.uk,
+        git@vger.kernel.org
+Subject: Re: [PATCH 4/7] completion: teach ls-remote to complete options
+References: <20170202014014.25878-1-szeder.dev@gmail.com>
+        <603697da-c8e9-5644-e0f0-7ee265c069d8@tngtech.com>
+Date:   Thu, 02 Feb 2017 08:57:37 -0800
+In-Reply-To: <603697da-c8e9-5644-e0f0-7ee265c069d8@tngtech.com> (Cornelius
+        Weig's message of "Thu, 2 Feb 2017 10:40:53 +0100")
+Message-ID: <xmqqwpd8leda.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20170202091615.GA22337@ash>
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Feb 02, 2017 at 04:16:15PM +0700, Duy Nguyen wrote:
+Cornelius Weig <cornelius.weig@tngtech.com> writes:
 
-> > I hadn't heard anything back,
-> 
-> Sorry I was accidentally busy during Luna new year holiday.
+> On 02/02/2017 02:40 AM, SZEDER Gábor wrote:
+>> 
+>>> ls-remote needs to complete remote names and its own options.
+>> 
+>> And refnames, too.
+>
+> Yes, right. However, do you think it is reasonable to complete remote
+> refnames? I don't think so, because it would mean we would have to run
+> ls-remote during completion -- and waiting for ls-remote could be quite
+> lengthy.
 
-No problem. That sounds much more fun than working on Git. :)
+... and by the time the completion script knew what they are, we
+have all information necessary without actually having the user run
+the command ;-)  That does sound backwards.
 
-> > -	if (!len)
-> > -		return -1;
-> > +	if (!len) {
-> > +		dst[0] = '\0';
-> > +		return 0;
-> > +	}
-> >  
-> >  	if (!strncasecmp(ptr, "reset", len)) {
-> >  		xsnprintf(dst, end - dst, GIT_COLOR_RESET);
-> 
-> I wonder if it makes more sense to do this in builtin/config.c. The
-> "default value" business is strictly git-config command's. The parsing
-> function does not need to know. Maybe something like this?
+I am however not sure what Szeder really meant by "refnames".  For
+example, you may want to see that this
 
-I don't think so. The default value is a git-config thing, but you would
-want to be able to do the same thing in a config file. For example, to
-disable coloring entirely for part of the diff, you could do:
+	$ git ls-remote origin mast<TAG>
 
-  [color "diff"]
-  meta = ""
+peek into refs/remotes/origin/* and find those matching, i.e. most
+likely "master", and that can be done without talking to the remote
+side.  It won't catch the case where the remote end added a new
+branch that also match, e.g. "mastiff", and it will actively harm
+the users by giving the impression that Git (collectively, even
+though from technical point of view, what the completion script does
+is not part of Git) told them that there is no such new branch they
+need to worry about.
 
-> This is also a good opportunity to document this behavior in
-> git-config.txt, I think.
-
-Yeah. Maybe:
-
--- >8 --
-Subject: [PATCH] document behavior of empty color name
-
-Commit 55cccf4bb (color_parse_mem: allow empty color spec,
-2017-02-01) clearly defined the behavior of an empty color
-config variable. Let's document that, and give a hint about
-why it might be useful.
-
-It's important not to say that it makes the item uncolored,
-because it doesn't. It just sets no attributes, which means
-that any previous attributes continue to take effect.
-
-Signed-off-by: Jeff King <peff@peff.net>
----
- Documentation/config.txt | 3 +++
- 1 file changed, 3 insertions(+)
-
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 33a007b52..49b264566 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -170,6 +170,9 @@ The position of any attributes with respect to the colors
- be turned off by prefixing them with `no` or `no-` (e.g., `noreverse`,
- `no-ul`, etc).
- +
-+An empty color string produces no color effect at all. This can be used
-+to avoid coloring specific elements without disabling color entirely.
-++
- For git's pre-defined color slots, the attributes are meant to be reset
- at the beginning of each item in the colored output. So setting
- `color.decorate.branch` to `black` will paint that branch name in a
--- 
-2.11.0.948.gca97da533
-
+So probably even with the "peek local" optimization, I have a feeling
+that completion of refnames may not be such a good idea.
