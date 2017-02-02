@@ -2,202 +2,163 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 335D81F4E2
-	for <e@80x24.org>; Thu,  2 Feb 2017 19:14:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0CC471F4E2
+	for <e@80x24.org>; Thu,  2 Feb 2017 19:49:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751143AbdBBTOf (ORCPT <rfc822;e@80x24.org>);
-        Thu, 2 Feb 2017 14:14:35 -0500
-Received: from mail-pg0-f68.google.com ([74.125.83.68]:33596 "EHLO
-        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751120AbdBBTOe (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Feb 2017 14:14:34 -0500
-Received: by mail-pg0-f68.google.com with SMTP id 194so2572114pgd.0
-        for <git@vger.kernel.org>; Thu, 02 Feb 2017 11:14:34 -0800 (PST)
+        id S1751657AbdBBTtx (ORCPT <rfc822;e@80x24.org>);
+        Thu, 2 Feb 2017 14:49:53 -0500
+Received: from mail-pg0-f65.google.com ([74.125.83.65]:35476 "EHLO
+        mail-pg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751446AbdBBTtw (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Feb 2017 14:49:52 -0500
+Received: by mail-pg0-f65.google.com with SMTP id 204so2627555pge.2
+        for <git@vger.kernel.org>; Thu, 02 Feb 2017 11:49:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=E0+/b2DVTOFZ7d9WXXxM3z4/hP/0VZ/+cCmifClH6A8=;
-        b=gJgFv9eobWEoY/sznlHebbuqsgsTCJOPB9exoJbq0fh/jIkqTeWqFzybS9CT0StjER
-         1s25thjUxtgil5UDMWMgfBbX3X1PRcCTf5ta+sqrupy7g9Md+FUgZxIL3ID307QCwWxO
-         benEr9xeBFaP0iQqy3CrEFSb9fs2j9qPVnPJPvi+Q/yrqkh/D4wnHsVTcw7pWEggbq/I
-         8YqwcByiMbYDvgjnTzRSzHdMzi46TqjhQqTf1//nhM/Tbfbx6KsG7FfSXyX2j+fHVc56
-         2UmAxGmI3WOIDEqa/EYFS2TnM/a0upqPU5S+ZOi3WvwMSau0/dyK8HxChiyqbR2x5cqV
-         q2Cg==
+        h=sender:date:from:to:cc:subject:message-id:user-agent:mime-version;
+        bh=w+vmOmCwXlyeYnd9cKxPZL1D3H06OKQ+4h19ZNdvUN8=;
+        b=Or3sNqXeeJh3YHpMR75gCfb7eV/ljyOgeZS5n1ydcKBR/25DiNPxzHNLQ+inUpmoXg
+         KiezTcBtXETC7IqPs99cOX4cVSo7RHnS97VIskesqmIlw9QTDTBNAktr3Ux7G38Hd+8X
+         LOVE7PmBe1B5p+Zv+lDVwDIE4a9JV+s5Xr6auyTsidS6zk9qIF6BbdoQKg3jicSXWPRZ
+         xbrM0fLkMbcwWa1N2XqOmKDxu91rJ97QrLkrNmUAUCIsSW4kmi7Bkyz4MeAZUbX80EpQ
+         9yXBpjywDGwXBQKNMjBosZb9pJnvgYF3vJ/uQf8CNLq+2F2fNBYLTzxzbZZML5/s4h4Z
+         6bEg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=E0+/b2DVTOFZ7d9WXXxM3z4/hP/0VZ/+cCmifClH6A8=;
-        b=S3JeRV4zqR3+lE96QFsUgxhcFKplkFNlc7yTQN6zUPvbrzHbvU8hAEDU2zBYQ2X86Q
-         08UcPNnXUlfEllUAJofwHxQqs4sWGkAbbPrWscuVDDoWaO/U1zJ8vpZ6ehuN+ZuLq3z9
-         FxchgS8uucZZT5yLrJ5YBeFxFvTMD/1lCjXdo7ev0kg09T6s4nfosuFVLSGk5YM/L/Nv
-         vUAwDoUsl+gisU+/QdCccZv1pY9w0mXtMNAXa0Y6GdSi0Re9VvqPNpOA2DJDuTHdWMJr
-         UzlgMAqpTA+ZCAmVOJFCo2vez1MM+srNCLtuh/EfUwbyLu2lS3qsrmoPgJYHnv271wMi
-         bXTA==
-X-Gm-Message-State: AIkVDXJQre8DfLn7V71x2Y6cVaPt7FPL7x8YxxzCmZAp/IQi//2zvNi4p1SRE5+aMFTTKA==
-X-Received: by 10.84.197.131 with SMTP id n3mr14664543pld.69.1486062873317;
-        Thu, 02 Feb 2017 11:14:33 -0800 (PST)
-Received: from localhost ([2620:0:1000:8622:358d:de5e:fbec:baab])
-        by smtp.gmail.com with ESMTPSA id 75sm60497575pfp.80.2017.02.02.11.14.30
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 02 Feb 2017 11:14:31 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Brandon Williams <bmwill@google.com>
-Cc:     git@vger.kernel.org, sbeller@google.com, pclouds@gmail.com
-Subject: Re: [PATCH v3 00/27] Revamp the attribute system; another round
-References: <20170123203525.185058-1-bmwill@google.com>
-        <20170128020207.179015-1-bmwill@google.com>
-Date:   Thu, 02 Feb 2017 11:14:30 -0800
-In-Reply-To: <20170128020207.179015-1-bmwill@google.com> (Brandon Williams's
-        message of "Fri, 27 Jan 2017 18:01:40 -0800")
-Message-ID: <xmqqwpd8s8vd.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
+         :user-agent:mime-version;
+        bh=w+vmOmCwXlyeYnd9cKxPZL1D3H06OKQ+4h19ZNdvUN8=;
+        b=kcFi7nlyXhV2BkVIzOJ0USudFtMBRZrxB3431gUDorMTC5msngPJndrb/Tr88snAGi
+         fYsgGo3HsgoT2rH9Pixoqzw3DojxVmEI63bmzprEFW4nQrxYpuoFu2isRzHPwxzs8Hbp
+         v7CDs+l1ixOW7EvuhUWtsYs08y6V17n4xYnoOgYKsLwPFN+0107YcNsYu3atgdkVtd/n
+         9RGRPY2JHglToNgygQatnvGcP53xtLmw5dUnQBYzTv86AaShKViubNpLvvKbUnlph89t
+         Ws1n6c2fHUT1le2QoLQqDPfAGU4hgt9A25jRUsOWC5jFeT522ZzPmyKgGK7ZqoX9XYU+
+         Cdgg==
+X-Gm-Message-State: AIkVDXIbvE9vKj9dlSD2MMk4ADvI1jx4kJSN0u2IzjGI4dF6g86/FjBojtfAG5vdDisZXg==
+X-Received: by 10.98.196.202 with SMTP id h71mr12799084pfk.66.1486064991773;
+        Thu, 02 Feb 2017 11:49:51 -0800 (PST)
+Received: from i7.lan (c-73-11-52-149.hsd1.or.comcast.net. [73.11.52.149])
+        by smtp.gmail.com with ESMTPSA id c18sm60597902pfj.49.2017.02.02.11.49.50
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 02 Feb 2017 11:49:50 -0800 (PST)
+Date:   Thu, 2 Feb 2017 11:49:50 -0800 (PST)
+From:   Linus Torvalds <torvalds@linux-foundation.org>
+X-X-Sender: torvalds@i7.lan
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Git Mailing List <git@vger.kernel.org>
+Subject: [PATCH] ls-remote: add "--diff" option to show only refs that
+ differ
+Message-ID: <alpine.LFD.2.20.1702021143470.21619@i7.lan>
+User-Agent: Alpine 2.20 (LFD 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=US-ASCII
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Brandon Williams <bmwill@google.com> writes:
 
-> Per some of the discussion online and off I locally broke up up the question
-> and answer and I wasn't very thrilled with the outcome for a number of reasons.
->
-> 1. The API is more complex....
-> 2. Performance hit....
-> ...
-> Given the above, v3 is a reroll of the same design as in v2.  This is a good
-> milestone in improving the attribute system as it achieves the goal of making
-> the attribute subsystem thread-safe (ie multiple callers can be executing
-> inside the attribute system at the same time) and will enable a future series
-> to allow pathspec code to call into the attribute system.
->
-> Most of the changes in this revision are cosmetic (variable renames, code
-> movement, etc) but there was a memory leak that was also fixed.
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Date: Thu, 2 Feb 2017 11:37:49 -0800
+Subject: [PATCH] ls-remote: add "--diff" option to show only refs that differ
 
-I am OK with the patches presented in this round, but let me explain
-why I still expect that we would eventually end up spliting the
-question & answer into separate data structure before we can truly
-go multi-threaded.
+My main use of "git ls-remote" tends to be to check what the other end
+has when some pull request goes wrong (they forgot to push, or they used
+the wrong ref name or whatever), and it ends up being hard to see all
+the relevant data from the noise of people just having the same basic
+tags etc from upstream.
 
-A typical application would do
+So this adds a "--diff" option that shows only the refs that are
+different from the local repository.  So when somebody asks me to pull,
+I can now just trivially look at what they have that isn't already my
+basic branches and tags.
 
-	for path taken from some set:
-		do_something(path)
+Note that "--diff" implies "--refs" (ie it also disables showing peeled
+tags).
 
-and "do something with path" would be another helper function, which
-may do
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+---
 
-	do_something(path):
-		ask 'text' attribute for the path
-		switch on the attribute and do different things
+This is not a big deal, but maybe others have the same issues I've had. 
+And maybe nobody else ever uses "git ls-remote". I dunno.
 
-With the original API, the latter would statically allocate an array
-of <question, answer> pairs, with an optimization to populate
-<question> which is immutable (because the codepath is always and
-only interested in 'text' attribute, and you need a hash lookup to
-intern the string "text" which costs cycles) only once, and make a
-call to git_check_attr() function with the "path".  This obviously
-will not work when two threads are calling this helper function, as
-the threads both want their git_check_attr() to return their answers
-to the array, but the <answer> part are shared between the threads.
+Also, I considered adding this feature as a more generic flag to 
+"check_ref_type()" (ie add a REF_NONLOCAL option to complete the existing 
+REF_NORMAL/REF_HEAD/etc flags), but that would have been a more involved 
+patch and I'm not convinced it makes much sense for any other use, so I 
+made it a specific local hack to ls-remote instead.
 
-A naive and inefficient way to split questions and answers is to
-have two arrays, allocating the former statically (protected under a
-mutex, of course) to avoid repeated cost of interning, while
-allocating the latter (and some working area per invocation, like
-the check_all_attr[]) dynamically and place it on stack or heap.
-Because do_something() will be called number of times, the cost for
-allocation and initialization of the <answer> part that is paid per
-invocation will of course become very high.
+Comments?
 
-We could in theory keep the original arrangement of having an
-array of <question, answer> pairs and restructure the code to do:
+ builtin/ls-remote.c | 18 ++++++++++++++++++
+ 1 file changed, 18 insertions(+)
 
-	prepare the <question, answer> array
-	for path taken from some set:
-		do_something(the array, path)
-
-That way, do_something() do not have to keep allocating,
-initializing and destroying the array.
-
-But after looking at the current set of codepaths, before coming to
-the conclusion that we need to split the static part that is
-specific to the callsite for git_check_attr() and the dynamic part
-that is specific to the <callsite, thread> pair, I noticed that
-typically the callers that can prepare the array before going into
-the loop (which will eventually be spread across multiple threads)
-are many levels away in the callchain, and they are not even aware
-of what attributes are going to be requested in the leaf level
-helper functions.  In other words, the approach to hoist "the
-<question, answer> array" up in the callchain would not scale.  A
-caller that loops over paths in the index and check them out does
-not want to know (and we do not want to tell it) what exact
-attributes are involved in the decision convert_to_working_tree()
-makes for each path, for example.
-
-So how would we split questions and answers in a way that is not
-naive and inefficient?  
-
-I envision that we would allow the attribute subsystem to keep track
-of the dynamic part, which will receive the answers, holds working
-area like check_all_attr[], and has the equivalent to the "attr
-stack", indexed by <thread-id, callsite> pair (and the
-identification of "callsite" can be done by using the address of the
-static part, i.e. the array of questions that we initialize just
-once when interning the list of attribute names for the first time).
-
-The API to prepare and ask for attributes may look like:
-
-	static struct attr_static_part Q;
-	struct attr_dynamic_part *D;
-
-	attr_check_init(&Q, "text", ...);
-	D = git_attr_check(&Q, path);
-
-where Q contains an array of interned attributes (i.e. questions)
-and other immutable things that is unique to this callsite, but can
-be shared across multiple threads asking the same question from
-here.  As an internal implementation detail, it probably will have a
-mutex to make sure that init will run only once.
-
-Then the implementation of git_attr_check(&Q, path) would be:
-
-    - see if there is already the "dynaic part" allocated for the
-      current thread asking the question Q.  If there is not,
-      allocate one and remember it, so that it can be reused in
-      later calls by the same thread; if there is, use that existing
-      one.
-
-    - reinitialize the "dynamic part" as needed, e.g. clear the
-      equivalent to check_all_attr[], adjust the equivalent to
-      attr_stack for the current path, etc.  Just like the current
-      code optimizes for the case where the entire program (a single
-      thread) will ask the same question for paths in traversal
-      order (i.e. falling in the same directory), this will optimize
-      for the access pattern where each thread asks the same
-      question for paths in its traversal order.
-
-    - do what the current collect_some_attrs() thing does.
-
-And this hopefully won't be as costly as the naive and inefficient
-one.
-
-The reason why I was pushing hard to split the static part and the
-dynamic part in our redesign of the API is primarily because I
-didn't want to update the API callers twice.  But I'd imagine that
-your v3 (and your earlier "do not discard attr stack, but keep them
-around, holding their tips in a hashmap for quick reuse") would at
-least lay the foundation for the eventual shape of the API, let's
-bite the bullet and accept that we will need to update the callers
-again anyway.
-
-Thanks.
-
+diff --git a/builtin/ls-remote.c b/builtin/ls-remote.c
+index 66cdd45cc..23469c3a6 100644
+--- a/builtin/ls-remote.c
++++ b/builtin/ls-remote.c
+@@ -2,6 +2,7 @@
+ #include "cache.h"
+ #include "transport.h"
+ #include "remote.h"
++#include "refs.h"
+ 
+ static const char * const ls_remote_usage[] = {
+ 	N_("git ls-remote [--heads] [--tags] [--refs] [--upload-pack=<exec>]\n"
+@@ -31,6 +32,16 @@ static int tail_match(const char **pattern, const char *path)
+ 	return 0;
+ }
+ 
++static int has_ref_locally(const struct ref *ref)
++{
++	unsigned char sha1[20];
++
++	if (!resolve_ref_unsafe(ref->name, RESOLVE_REF_READING, sha1, NULL))
++		return 0;
++
++	return !hashcmp(ref->old_oid.hash, sha1);
++}
++
+ int cmd_ls_remote(int argc, const char **argv, const char *prefix)
+ {
+ 	const char *dest = NULL;
+@@ -39,6 +50,7 @@ int cmd_ls_remote(int argc, const char **argv, const char *prefix)
+ 	int quiet = 0;
+ 	int status = 0;
+ 	int show_symref_target = 0;
++	int diff = 0;
+ 	const char *uploadpack = NULL;
+ 	const char **pattern = NULL;
+ 
+@@ -62,6 +74,8 @@ int cmd_ls_remote(int argc, const char **argv, const char *prefix)
+ 			    N_("exit with exit code 2 if no matching refs are found"), 2),
+ 		OPT_BOOL(0, "symref", &show_symref_target,
+ 			 N_("show underlying ref in addition to the object pointed by it")),
++		OPT_BOOL(0, "diff", &diff,
++			 N_("show only refs that differ from local refs")),
+ 		OPT_END()
+ 	};
+ 
+@@ -98,6 +112,8 @@ int cmd_ls_remote(int argc, const char **argv, const char *prefix)
+ 	if (transport_disconnect(transport))
+ 		return 1;
+ 
++	if (diff)
++		flags |= REF_NORMAL;
+ 	if (!dest && !quiet)
+ 		fprintf(stderr, "From %s\n", *remote->url);
+ 	for ( ; ref; ref = ref->next) {
+@@ -105,6 +121,8 @@ int cmd_ls_remote(int argc, const char **argv, const char *prefix)
+ 			continue;
+ 		if (!tail_match(pattern, ref->name))
+ 			continue;
++		if (diff && has_ref_locally(ref))
++			continue;
+ 		if (show_symref_target && ref->symref)
+ 			printf("ref: %s\t%s\n", ref->symref, ref->name);
+ 		printf("%s\t%s\n", oid_to_hex(&ref->old_oid), ref->name);
