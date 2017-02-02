@@ -2,107 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2513D20A78
-	for <e@80x24.org>; Thu,  2 Feb 2017 00:26:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A5BEE20A78
+	for <e@80x24.org>; Thu,  2 Feb 2017 00:58:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751207AbdBBA0F (ORCPT <rfc822;e@80x24.org>);
-        Wed, 1 Feb 2017 19:26:05 -0500
-Received: from castro.crustytoothpaste.net ([75.10.60.170]:51286 "EHLO
-        castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751052AbdBBA0E (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 1 Feb 2017 19:26:04 -0500
-Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 4A523280AD;
-        Thu,  2 Feb 2017 00:26:02 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
-        s=default; t=1485995162;
-        bh=uIkCa0+4Wq6/NOaMnrD36vTwJaB/4p/XoyG5v7hlE+E=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=kNYJkfdAI656F9BwAGhk3ZYjHHlBnHrEx0Nh7GtyvpXnTBsQ5oxVntymWZ3CLdvHu
-         K/rjUEgLht58+oN58zc4BNBSltOC3rZWCxOlhUMdh4pvPK0sFlWEWjG7KCPr1iZp2I
-         8vO5z1dNzS97e/cf85QGHHFcxwH9n8wD0dnsJ/VIeHnzXkSGE6Eh1215XFq5UTybdw
-         8oaYj/XZa6wgAOE42DlReywpkiFmLIFxpeztCJsXhMsDnaLboNePM3SrKBYsTWRi5i
-         3LxshBQTjErwgfz83iXUV0jA6M/sdei869i5sSMEuG+R+MCmDSxe6n+hhtaGsU/1de
-         l56xbYAZs3C3E/du6sUX3f2hnZ+ZBToRAtXVwTI9OSa7UjYIuCB5b1ylCDv+DV70UC
-         fqnUszv7N4WlMQgLNDeggzxc7Bn9vMz6liFEl64HwVKwvl0N+qBH3QijTQTloBAUTB
-         Yk8ZTLMZDLuGY3CdiY5KakXmOUXq3w/PqG43DDcelFrbImtV8F+
-Date:   Thu, 2 Feb 2017 00:25:57 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     "Gumbel, Matthew K" <matthew.k.gumbel@intel.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: git commit results in many lstat()s
-Message-ID: <20170202002556.mn7pfu4442btru5v@genre.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        "Gumbel, Matthew K" <matthew.k.gumbel@intel.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-References: <DA0A42D68346B1469147552440A645039A9C56D4@ORSMSX115.amr.corp.intel.com>
- <xmqq8tppo92x.fsf@gitster.mtv.corp.google.com>
- <DA0A42D68346B1469147552440A645039A9C57D6@ORSMSX115.amr.corp.intel.com>
- <xmqq60ktmpwl.fsf@gitster.mtv.corp.google.com>
- <DA0A42D68346B1469147552440A645039A9C5929@ORSMSX115.amr.corp.intel.com>
+        id S1751300AbdBBA6k (ORCPT <rfc822;e@80x24.org>);
+        Wed, 1 Feb 2017 19:58:40 -0500
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:32866 "EHLO
+        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751287AbdBBA6j (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Feb 2017 19:58:39 -0500
+Received: by mail-wm0-f67.google.com with SMTP id v77so461916wmv.0
+        for <git@vger.kernel.org>; Wed, 01 Feb 2017 16:58:38 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:mime-version
+         :content-transfer-encoding;
+        bh=j01zKNY0DPz0v9Nm5hRLOTrGGBZ3chbrBNIAGrtn1DY=;
+        b=rbsugEIDIskg+M3ObYR894QA8olvA4tUhiJRNN9k5elEJCvcj1omXTxHS4kK5W163/
+         0NZOvzQV6GX7mc0XtOZumUA9Pn/y857w2J4y1kvc2sRHb1cC34r1+o7ma1KRkdZ+8vSS
+         hfrdvwLgh5NZ2q543pfsb59TvX8RG8VJngsPPUPvvhieMWsD5wH7r2OYteGnJvqy64Yf
+         kXB3gJ56ojsgn2NrOGFLcahNPV8zk6mqubuI+AJYqShhaPO6l0neCvtVwnJIa8qp9lEO
+         VRr0MIyYlXoCvwMVkCCnE/9Rlpu6U4NUyL5RtXQ0Z0p/3+wqM7TaNAJGuQbINllHRGVZ
+         iQjQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :mime-version:content-transfer-encoding;
+        bh=j01zKNY0DPz0v9Nm5hRLOTrGGBZ3chbrBNIAGrtn1DY=;
+        b=R1zB83SEgjOPBlY7+PVUJ/l8LMG5gJirT+tDfFnF94pJlFdPmNIA9YpPErmbmtp1LI
+         PevV5KIjd9se9LveWwppNEicIf+FbxKBxmPpaqX36w5XKvhba9RKfAsyAOLxRrUD1psx
+         sp7SRklfMcSeMcnfejbLoj8plgWvAHgDIxbKoX+TKIe2fzk9DvYJlXPR0Znmdli31Erv
+         0nMLksFAZ/n4ql4/c8emPw47J1pIpEFy1m8AuPZNKtP+mVaXOwKGvx7opd6P816j+R6z
+         rPFPKfbV8uAtF2VTQkAg9KcWy9fnU2MDxstdzLTFm4o5BFW5P78cI6F0yCjFP+z5eLQq
+         3n/w==
+X-Gm-Message-State: AIkVDXIToG0AGqOO1qPg09MnpyCr2DSVdNGwcj3pQyhXu2lSSDsV7EVMHjtqKgi0PHwRxw==
+X-Received: by 10.223.134.173 with SMTP id 42mr5886279wrx.95.1485997117827;
+        Wed, 01 Feb 2017 16:58:37 -0800 (PST)
+Received: from localhost.localdomain (x4db0ed96.dyn.telefonica.de. [77.176.237.150])
+        by smtp.gmail.com with ESMTPSA id b87sm170991wmi.0.2017.02.01.16.58.36
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Wed, 01 Feb 2017 16:58:37 -0800 (PST)
+From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
+To:     Cornelius Weig <cornelius.weig@tngtech.com>
+Cc:     =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
+        bitte.keine.werbung.einwerfen@googlemail.com,
+        thomas.braun@virtuell-zuhause.de, john@keeping.me.uk,
+        git@vger.kernel.org
+Subject: Re: [PATCH 2/7] completion: add subcommand completion for rerere
+Date:   Thu,  2 Feb 2017 01:57:24 +0100
+Message-Id: <20170202005724.24754-1-szeder.dev@gmail.com>
+X-Mailer: git-send-email 2.11.0.555.g967c1bcb3
+In-Reply-To: <20170122225724.19360-3-cornelius.weig@tngtech.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="xcvocajjra7dgx4v"
-Content-Disposition: inline
-In-Reply-To: <DA0A42D68346B1469147552440A645039A9C5929@ORSMSX115.amr.corp.intel.com>
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.9.0-1-amd64)
-User-Agent: NeoMutt/20170113 (1.7.2)
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+> Managing recorded resolutions requires command-line usage of git-rerere.
+> Added subcommand completion for rerere and path completion for its
+> subcommand forget.
+> ---
+>  contrib/completion/git-completion.bash | 11 +++++++++++
+>  1 file changed, 11 insertions(+)
+> 
+> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+> index c54a557..8329f09 100644
+> --- a/contrib/completion/git-completion.bash
+> +++ b/contrib/completion/git-completion.bash
+> @@ -2401,6 +2401,17 @@ _git_replace ()
+>  	__gitcomp_nl "$(__git_refs)"
+>  }
+>  
+> +_git_rerere ()
+> +{
+> +	local subcommands="clear forget diff remaining status gc"
+> +	local subcommand="$(__git_find_on_cmdline "$subcommands")"
+> +	if test -z "$subcommand"
+> +	then
+> +		__gitcomp "$subcommands"
+> +		return
+> +	fi
+> +}
+> +
+>  _git_reset ()
+>  {
+>  	__git_has_doubledash && return
+> -- 
+> 2.10.2
 
---xcvocajjra7dgx4v
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+You didn't add 'rerere' to the list of porcelain commands, i.e. it
+won't be listed after 'git <TAB><TAB>'.  I'm not saying it should be
+listed there, because I can't decide whether 'rerere' is considered
+porcelain or plumbing...  Just wanted to make sure that this omission
+was intentional.
 
-On Thu, Feb 02, 2017 at 12:14:30AM +0000, Gumbel, Matthew K wrote:
-> I'm testing such a change locally. Git test suite seems to be running for=
- quite
-> a while. Do you know any way to run it in parallel or otherwise speed it
-> up?
-
-I usually do something like the following:
-
-  make -j3 all && (cd t && GIT_PROVE_OPTS=3D-j3 make prove)
-
-This, of course, requires that you have Perl's prove installed, which
-has been part of core Perl since 5.10.1.
---=20
-brian m. carlson / brian with sandals: Houston, Texas, US
-+1 832 623 2791 | https://www.crustytoothpaste.net/~bmc | My opinion only
-OpenPGP: https://keybase.io/bk2204
-
---xcvocajjra7dgx4v
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.1.18 (GNU/Linux)
-
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAliSfJQACgkQv1NdgR9S
-9ouI+A/7BCgF/rq8L55UHkIe5GmUrKyno0wcE8/J40fb6CXpPeB8O/c/USzC2/8o
-qGtYT/pw4Xj97lIQ/dQXwZIzJ7fm6nwOwZmyKMudFEF55wISFBa5rL/tSQvb/ddi
-Qnu7MwO7sT6Qe46Wq5XaGInXQkqWLTg9tqL6t0J8OE2MSelt5lKzA/nnmuXidP/S
-Ce8uWohlO3hIRNfkNxZ1WQ7NkFCwZ5DHHRYFCJ1rueg6qlJLCJpaeYxJs+kcPhNg
-AY491aeEdr+3kuc/Ngo/Ie2Oh/bzCQEmmWA8dKTzfoImu/IheTZtAhb5CFqid+tB
-+ZOL6vlydG5zHyfzABBjjWt7jrYoDJ7gsMn16MvLz2C2eXQ1v5HmJZx6NFEf+4E6
-111BtXGvyopfk0cLxWRlROuBFWxLCkT+QqSzIN61rmZ5DOh2XRgi84pi+CFdoy9s
-hp++HaPg7tXR97DVNlJ1S6YR34bXqeCp3nKTgE+YgRvs8ZyBx5vaYx6lSumDc0NC
-1UjLNhOLSDnkyi9GVc6/Cuq88a+OdxmPP+balW9S2f4i8IpTPjnWpQY9EK1ir4S9
-sQvFdC5nOL98YkgQlFKAFQabKpPu4ax846qO1MiVz7DA0YwDvrAKyoLKk0mquGF5
-OQ/pHnTHDrzc97ZnG131XsJuRkyjPKwKg7sTjwhDr6QFispK5gw=
-=Q8hE
------END PGP SIGNATURE-----
-
---xcvocajjra7dgx4v--
