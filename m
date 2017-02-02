@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2BBBC1F6BD
+	by dcvr.yhbt.net (Postfix) with ESMTP id 42C3B1F6BD
 	for <e@80x24.org>; Thu,  2 Feb 2017 08:50:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751041AbdBBIuV (ORCPT <rfc822;e@80x24.org>);
-        Thu, 2 Feb 2017 03:50:21 -0500
-Received: from mail-pg0-f66.google.com ([74.125.83.66]:32986 "EHLO
-        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751014AbdBBIuU (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Feb 2017 03:50:20 -0500
-Received: by mail-pg0-f66.google.com with SMTP id 194so1265127pgd.0
-        for <git@vger.kernel.org>; Thu, 02 Feb 2017 00:50:20 -0800 (PST)
+        id S1751094AbdBBIu0 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 2 Feb 2017 03:50:26 -0500
+Received: from mail-pg0-f67.google.com ([74.125.83.67]:35970 "EHLO
+        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751062AbdBBIuZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Feb 2017 03:50:25 -0500
+Received: by mail-pg0-f67.google.com with SMTP id 75so1250487pgf.3
+        for <git@vger.kernel.org>; Thu, 02 Feb 2017 00:50:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=Fai5nD/Yzq9y8T0AgaKdeDkntgYfPwCqm52rEXki/lQ=;
-        b=NEx80uN6iEJed/zSbiE2+G9GMrC6edy0wG7BnNfe82s2AdPYAN4t59NScJLDI0UJlk
-         iwtR+6cmUIFX5pSHmEqY7jprYSP8fTmRAMSYWdcUSjEz0n0PcepcnP9qLawkbyDQqpNL
-         0G0qgKHbok0dVA4MylAIWLx6k5gTKtbsvwC/J+7H/fONyODIMJrsJe5KAjmYVcXmENfV
-         z0ngmFXfCuV+DCdpFRSwf3tQjbUTGGxhCK66/vXHnB3qZaSGLIUN0UZ9EkdUD0fm9aAQ
-         62gAeTZLoO5e8Op75wGA4pBxnoaNh42OdUO7f7yyXl5mf2e3JrL420qBiyFrDcXZhbqZ
-         ICOQ==
+        bh=2TNRjAuw6bpu7RTrbKp3SRIL6H0bKt8OaB/7vV2Gq2w=;
+        b=B9wikLubcHNLwLJJFJ0U+w7Mn4f0XJJd59rkEQkfgScSUCv6yVboZ8uYJ54Rk91LXw
+         QpZAeZqlR5jOTxR5fpEi9YFOy6cA31ONCCxG/3ahqSRT2pZQ96XyIZq0jrFFhZSbyO6l
+         NWYMWgEjWgb//fnCUQ6S+vkOWN5F/yatfRybCwrTg5fKJXe1zpbJHF2QaNEhPUZJxE+O
+         /a2RmI6tIgbydZjZwXo3MYn+tBzdXZrzC2mfnO+mCRR8sb4la8OkppkD9uRGnzTqaMuU
+         y74cwTxkJdwvh3Ck4JEGalsXnIun892beaI8puS3tgBOZK64QKZtHg7IX/xxn+iYMASE
+         uNRg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=Fai5nD/Yzq9y8T0AgaKdeDkntgYfPwCqm52rEXki/lQ=;
-        b=C0abvmNvcgOqNjf34doi5naY+kIOyeZvta/HoGJRpLohyUMK+yLdg/y+m1rIRhii46
-         ZHuqmBU+twtpJ2bCOUJZC9pQBYPub51cj/mS/i8P9AdVWlctc9Me1LbqAdjjxiSXyVKp
-         dW2PWlbCV50CORVfdnhO2z9rpg10p6sZcZvSjy9uy9zALNEs1WQaN4Cs9r7yH8JqM7nQ
-         8qWJju/Mg2wH/qRhBXG9kw1mCW//yYAHm3iUj/McH/qMNEq9EZlnbJoaLMMxoGqbUj4S
-         buB4Ov4A70fymgb3y06okXJKKmHF7fskevx5xuTlcDnT90tt0LYs+prq13NuAh+H0csx
-         LwIg==
-X-Gm-Message-State: AIkVDXLr73qg3F5JX/o9xaO4NpObbL+kKnbx2vDm2wJjHw3qN1i5/SdZETLGzCliCYDc5A==
-X-Received: by 10.84.173.195 with SMTP id p61mr10811246plb.63.1486025419796;
-        Thu, 02 Feb 2017 00:50:19 -0800 (PST)
+        bh=2TNRjAuw6bpu7RTrbKp3SRIL6H0bKt8OaB/7vV2Gq2w=;
+        b=dw6n+O89M+FHf0xdgwKX/rIsBR7d9zTEPhSyoIB3zB2YK0mnd9Zq1KYrVEwBVkGWWd
+         EnkY59wZCq2zVCBzQkA4IcQJBwqoWrqInWwihjA0HtHT5U5WynbmV+5Hs0g5SaYuMnN6
+         Ijx5iRhYBfiYskqEIWvdBVbGTX7cXxU0DF5EnUaaCFqvLGtB0vvNVGxTJDmIWTqgxyUt
+         d3Rz8bb+ZPUW1GAJyiJ7c0V8iqe+OIRRVfld7+jPyv1dtn6tg7+XBwTwusgQC4DX2221
+         fnR1IOYy07CE1SRhpLAdky4A9uMyAjEjYtZhDbZ/EixO5PhmxxNwEj41M4P5W7csxdFb
+         +UrA==
+X-Gm-Message-State: AIkVDXIZnw4xoAcojJQpfKxIaWyYbLruakpNiT9XqjB3D0Jp02xt29ho1ERDSxqY0npGuA==
+X-Received: by 10.98.33.66 with SMTP id h63mr9068877pfh.142.1486025424904;
+        Thu, 02 Feb 2017 00:50:24 -0800 (PST)
 Received: from ash ([115.73.162.84])
-        by smtp.gmail.com with ESMTPSA id z127sm41482975pgz.29.2017.02.02.00.50.17
+        by smtp.gmail.com with ESMTPSA id t15sm56523392pgn.18.2017.02.02.00.50.21
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 02 Feb 2017 00:50:19 -0800 (PST)
-Received: by ash (sSMTP sendmail emulation); Thu, 02 Feb 2017 15:50:14 +0700
+        Thu, 02 Feb 2017 00:50:24 -0800 (PST)
+Received: by ash (sSMTP sendmail emulation); Thu, 02 Feb 2017 15:50:19 +0700
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH 01/11] worktree.c: zero new 'struct worktree' on allocation
-Date:   Thu,  2 Feb 2017 15:49:57 +0700
-Message-Id: <20170202085007.21418-2-pclouds@gmail.com>
+Subject: [PATCH 02/11] worktree: reorder an if statement
+Date:   Thu,  2 Feb 2017 15:49:58 +0700
+Message-Id: <20170202085007.21418-3-pclouds@gmail.com>
 X-Mailer: git-send-email 2.11.0.157.gd943d85
 In-Reply-To: <20170202085007.21418-1-pclouds@gmail.com>
 References: <20170202085007.21418-1-pclouds@gmail.com>
@@ -68,55 +68,32 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This keeps things a bit simpler when we add more fields, knowing that
-default values are always zero.
+This is no-op. But it helps reduce diff noise in the next patch.
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- worktree.c | 14 ++------------
- 1 file changed, 2 insertions(+), 12 deletions(-)
+ builtin/worktree.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/worktree.c b/worktree.c
-index f7869f8d60..f7c1b5e24d 100644
---- a/worktree.c
-+++ b/worktree.c
-@@ -91,16 +91,11 @@ static struct worktree *get_main_worktree(void)
- 	if (parse_ref(path.buf, &head_ref, &is_detached) < 0)
- 		goto done;
+diff --git a/builtin/worktree.c b/builtin/worktree.c
+index 5c4854d3e4..8a654e4ad3 100644
+--- a/builtin/worktree.c
++++ b/builtin/worktree.c
+@@ -406,10 +406,10 @@ static void show_worktree(struct worktree *wt, int path_maxlen, int abbrev_len)
+ 	else {
+ 		strbuf_addf(&sb, "%-*s ", abbrev_len,
+ 				find_unique_abbrev(wt->head_sha1, DEFAULT_ABBREV));
+-		if (!wt->is_detached)
+-			strbuf_addf(&sb, "[%s]", shorten_unambiguous_ref(wt->head_ref, 0));
+-		else
++		if (wt->is_detached)
+ 			strbuf_addstr(&sb, "(detached HEAD)");
++		else
++			strbuf_addf(&sb, "[%s]", shorten_unambiguous_ref(wt->head_ref, 0));
+ 	}
+ 	printf("%s\n", sb.buf);
  
--	worktree = xmalloc(sizeof(struct worktree));
-+	worktree = xcalloc(1, sizeof(*worktree));
- 	worktree->path = strbuf_detach(&worktree_path, NULL);
--	worktree->id = NULL;
- 	worktree->is_bare = is_bare;
--	worktree->head_ref = NULL;
- 	worktree->is_detached = is_detached;
--	worktree->is_current = 0;
- 	add_head_info(&head_ref, worktree);
--	worktree->lock_reason = NULL;
--	worktree->lock_reason_valid = 0;
- 
- done:
- 	strbuf_release(&path);
-@@ -138,16 +133,11 @@ static struct worktree *get_linked_worktree(const char *id)
- 	if (parse_ref(path.buf, &head_ref, &is_detached) < 0)
- 		goto done;
- 
--	worktree = xmalloc(sizeof(struct worktree));
-+	worktree = xcalloc(1, sizeof(*worktree));
- 	worktree->path = strbuf_detach(&worktree_path, NULL);
- 	worktree->id = xstrdup(id);
--	worktree->is_bare = 0;
--	worktree->head_ref = NULL;
- 	worktree->is_detached = is_detached;
--	worktree->is_current = 0;
- 	add_head_info(&head_ref, worktree);
--	worktree->lock_reason = NULL;
--	worktree->lock_reason_valid = 0;
- 
- done:
- 	strbuf_release(&path);
 -- 
 2.11.0.157.gd943d85
 
