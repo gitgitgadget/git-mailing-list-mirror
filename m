@@ -2,94 +2,121 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 48B4A1F6BD
-	for <e@80x24.org>; Thu,  2 Feb 2017 09:32:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 41C391F6BD
+	for <e@80x24.org>; Thu,  2 Feb 2017 09:32:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751074AbdBBJcU (ORCPT <rfc822;e@80x24.org>);
-        Thu, 2 Feb 2017 04:32:20 -0500
-Received: from mail-ot0-f179.google.com ([74.125.82.179]:35053 "EHLO
-        mail-ot0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750947AbdBBJcT (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Feb 2017 04:32:19 -0500
-Received: by mail-ot0-f179.google.com with SMTP id 65so7654627otq.2
-        for <git@vger.kernel.org>; Thu, 02 Feb 2017 01:32:19 -0800 (PST)
+        id S1751100AbdBBJcm (ORCPT <rfc822;e@80x24.org>);
+        Thu, 2 Feb 2017 04:32:42 -0500
+Received: from mail-wm0-f50.google.com ([74.125.82.50]:37258 "EHLO
+        mail-wm0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750903AbdBBJcl (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Feb 2017 04:32:41 -0500
+Received: by mail-wm0-f50.google.com with SMTP id v77so78944352wmv.0
+        for <git@vger.kernel.org>; Thu, 02 Feb 2017 01:32:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=fRDFUFk+0wm1y2wpj5nL2Ar13SJfoh1usRozD/aiOgk=;
-        b=MYD2prwJLDsHbsLn3TFvPmXW1Mt/bkw+g7NLUTCmVHtSRJPFAkvTwEz9tDJzvwEhcs
-         UnSA4m5P/bzZZ/SFbaXB+Vfzqk2TsIvfdu985DoPCQAMJ3rMibAP0YDEbvFE3VKBgA9q
-         4APitbLfCyb4GRUjqCBFeaRXjjz0d75c0FuySY4KkUfrYl1QCRJ4qJzt9RyEc37Gt0j5
-         3K3f9HyasRZ/abRwaISAJ13uehrJ/qx/Ui0ZEuTTCeuoLwleFMNYLGU2dTTtVLEuLXV7
-         BbHZLxuHwN+TL8WBQQRvug5uRLbi2pCO2eWQcCHkwXlj4AqzOfVV7chUlg3/nKkovg5x
-         HJbA==
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to;
+        bh=4YUBMHZKg4gnmV+Sy/uugL25tbezbAth03LhmeLjU5s=;
+        b=l1629nTLaBmkQ2IRE00HQdwZJ4Qe4B2pJRrGWIAqoLk24AWQ6xKUFFG6SChC3Kq8f4
+         mPqIpXAJVbSFVA5lBI2J0F716tRnogeL/5gxUhW4BFJAo5WPGCVsiKB4NCRDvnoz3Q8r
+         fxznbJnVCCEvfYVhpFy62BielKoPJWsttucP1fqn1gpJNJPYU0y4jxXtRkOkALvT3Ot4
+         p+fkiobXs2ESkUAaujIHNpS+lJc3hiwLgCjyuBsEzc8UiWX/9mczmB/jUyBEIo2Woizd
+         Ut6KFXvxVFt1xpnPNzvfEMJy/1Wz6z6t8ovVoh7Mjr6bwBsH8ldjO/OOppJmqjZvCtke
+         dDGw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=fRDFUFk+0wm1y2wpj5nL2Ar13SJfoh1usRozD/aiOgk=;
-        b=eWb/lGWCG9Fn5PqrUTDCfON9oDePAxLPTgPQ273JydKxc5vNr+hAgpqwqpDBTrrGMJ
-         dnZnfonDMVzAJxCJaUfJr+hLAtUg9geYLXj5C+e69ypycBCXKlO60ojKHwdC6rD7fOap
-         zdFIlysAOTbI0zOpADuRNdYpDIGmMcw8rBUGssKRqfASHx0g+kJCJrN8K5HOAxKqyXXp
-         VBU31CJMCU5eyy05ivpmVifQsqODFffMGX2z+fIfm9pwH/izhgbxNbsJd9MwV8tXqHpF
-         xCr1QnHFQhMT8dEOv83d8+0nyeJmJCn9a84BqX5vinQ70z7ltL5yU7KQ5G98drj+j+M/
-         203w==
-X-Gm-Message-State: AIkVDXLOn2OwsUGu54Qex+agcCu4+1YHdazb2tnBm3NoWzVcjw1Mj96CNMB/t/+60IrTc5RsfWl8DlK1sJxZIw==
-X-Received: by 10.157.18.246 with SMTP id g109mr3948277otg.10.1486027938843;
- Thu, 02 Feb 2017 01:32:18 -0800 (PST)
+         :message-id:subject:to;
+        bh=4YUBMHZKg4gnmV+Sy/uugL25tbezbAth03LhmeLjU5s=;
+        b=FN9fRzLGx9cY+48mFGe7oalAleznf5VIC7F4t3c7YFD0ncTKzdocVt8aySOZHt1gMW
+         MRdESmar0QJ1WHJPg3bDS3bOSghxd7plvRGLaCduBZBoOsAMFQ47wy0I+cGZycXeesKs
+         wvWi27qwyfHngRXL+D+J7rgClLaORSB3M8Dr7n6G88nxpWGvsRBQUNeaj5ObWqxwwwy4
+         1zSZyov9BWrm4SIrFIOSxqJ7qe7QV8vr6ZjMBwFDScw05wJxbEkS49kMh9jnwJ0o090N
+         KPmqqDouPoZHvDIgInU+LIuWTSSUqv0/AIGKhd5TINmmmXjpCxoQuzrpHJbo9SH1Yr3K
+         PG+g==
+X-Gm-Message-State: AIkVDXJAYQFXvU/2bz4KmAwwx7H1UkDEzfI4ssT7KFMZE5bL5cPV4hPr2B8YUFszn0BKv8f1jmiX9CEyUpAzzzKg
+X-Received: by 10.28.23.66 with SMTP id 63mr6845497wmx.46.1486027959879; Thu,
+ 02 Feb 2017 01:32:39 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.74.158.1 with HTTP; Thu, 2 Feb 2017 01:31:48 -0800 (PST)
-In-Reply-To: <87h94d8cwi.fsf@kyleam.com>
-References: <87h94d8cwi.fsf@kyleam.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Thu, 2 Feb 2017 16:31:48 +0700
-Message-ID: <CACsJy8AZUBt76ZocS2JEr9FP_8Obv8L911AvZxE_sww3qXB7qw@mail.gmail.com>
-Subject: Re: init --separate-git-dir does not set core.worktree
-To:     Kyle Meyer <kyle@kyleam.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
+Received: by 10.28.49.137 with HTTP; Thu, 2 Feb 2017 01:32:39 -0800 (PST)
+In-Reply-To: <CAKoko1q=6agpGsABxy8rmm6sGFWx9gE_c1j44h4M=yJ3r4JJBQ@mail.gmail.com>
+References: <20170201230753.19462-1-cornelius.weig@tngtech.com>
+ <xmqqinotmrhe.fsf@gitster.mtv.corp.google.com> <CAKoko1q=6agpGsABxy8rmm6sGFWx9gE_c1j44h4M=yJ3r4JJBQ@mail.gmail.com>
+From:   Brandon Williams <bmwill@google.com>
+Date:   Thu, 2 Feb 2017 01:32:39 -0800
+Message-ID: <CAKoko1rvxLWi+WgEnQEnzjhMpSe1-f_jXQcDT=ALWDHcj1RnmQ@mail.gmail.com>
+Subject: Fwd: [PATCH 1/2] doc: add doc for git-push --recurse-submodules=only
+To:     Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Feb 2, 2017 at 10:55 AM, Kyle Meyer <kyle@kyleam.com> wrote:
-> Hello,
->
-> As of 6311cfaf9 (init: do not set unnecessary core.worktree,
-> 2016-09-25), "git init --separate-git-dir" no longer sets core.worktree
-> (test below).  Based on the commit message and the corresponding thread
-> [1], I don't think this change in behavior was intentional, but I wasn't
-> able to understand things well enough to attempt a patch.
+Looks good to me!  Thanks for writing the documentation.  I really
+need to be better about getting documentation done at the same time
+I'm adding features :)
 
-I'm missing some context. Why does --separate-git-dir have to set
-core.worktree? What fails for you exactly?
+-Brandon
 
+On Wed, Feb 1, 2017 at 3:16 PM, Junio C Hamano <gitster@pobox.com> wrote:
 >
-> Thanks.
+> cornelius.weig@tngtech.com writes:
 >
-> [1] https://public-inbox.org/git/CALqjkKZO_y0DNcRJjooyZ7Eso7yBMGhvZ6fE92oO4Su7JeCeng@mail.gmail.com/T/#u
+> > From: Cornelius Weig <cornelius.weig@tngtech.com>
+> >
+> > Add documentation for the `--recurse-submodules=only` option of
+> > git-push. The feature was added in commit 225e8bf (add option to
+> > push only submodules).
+> >
+> > Signed-off-by: Cornelius Weig <cornelius.weig@tngtech.com>
+> > ---
+> >
+> > Notes:
+> >     This feature is already in 'next' but was undocumented. Unless somebody reads
+> >     the release notes, there is no way of knowing about it.
 >
-> diff --git a/t/t0001-init.sh b/t/t0001-init.sh
-> index b8fc588b1..444e75865 100755
-> --- a/t/t0001-init.sh
-> +++ b/t/t0001-init.sh
-> @@ -309,6 +309,7 @@ test_expect_success 'init with separate gitdir' '
->         git init --separate-git-dir realgitdir newdir &&
->         echo "gitdir: $(pwd)/realgitdir" >expected &&
->         test_cmp expected newdir/.git &&
-> +       check_config realgitdir false "$(pwd)/newdir" &&
->         test_path_is_dir realgitdir/refs
->  '
+> Good eyes; the topic bw/push-submodule-only is already in 'master'.
 >
-
-
-
--- 
-Duy
+> Looks good to me; Brandon?
+>
+> >
+> >  Documentation/git-push.txt | 13 +++++++------
+> >  1 file changed, 7 insertions(+), 6 deletions(-)
+> >
+> > diff --git a/Documentation/git-push.txt b/Documentation/git-push.txt
+> > index 8eefabd..1624a35 100644
+> > --- a/Documentation/git-push.txt
+> > +++ b/Documentation/git-push.txt
+> > @@ -272,7 +272,7 @@ origin +master` to force a push to the `master` branch). See the
+> >       standard error stream is not directed to a terminal.
+> >
+> >  --no-recurse-submodules::
+> > ---recurse-submodules=check|on-demand|no::
+> > +--recurse-submodules=check|on-demand|only|no::
+> >       May be used to make sure all submodule commits used by the
+> >       revisions to be pushed are available on a remote-tracking branch.
+> >       If 'check' is used Git will verify that all submodule commits that
+> > @@ -280,11 +280,12 @@ origin +master` to force a push to the `master` branch). See the
+> >       remote of the submodule. If any commits are missing the push will
+> >       be aborted and exit with non-zero status. If 'on-demand' is used
+> >       all submodules that changed in the revisions to be pushed will be
+> > -     pushed. If on-demand was not able to push all necessary revisions
+> > -     it will also be aborted and exit with non-zero status. A value of
+> > -     'no' or using `--no-recurse-submodules` can be used to override the
+> > -     push.recurseSubmodules configuration variable when no submodule
+> > -     recursion is required.
+> > +     pushed. If on-demand was not able to push all necessary revisions it will
+> > +     also be aborted and exit with non-zero status. If 'only' is used all
+> > +     submodules will be recursively pushed while the superproject is left
+> > +     unpushed. A value of 'no' or using `--no-recurse-submodules` can be used
+> > +     to override the push.recurseSubmodules configuration variable when no
+> > +     submodule recursion is required.
+> >
+> >  --[no-]verify::
+> >       Toggle the pre-push hook (see linkgit:githooks[5]).  The
