@@ -3,153 +3,175 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	HEADER_FROM_DIFFERENT_DOMAINS,LOTS_OF_MONEY,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E152A20A78
-	for <e@80x24.org>; Thu,  2 Feb 2017 02:33:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E995B20A78
+	for <e@80x24.org>; Thu,  2 Feb 2017 02:45:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750847AbdBBCdz (ORCPT <rfc822;e@80x24.org>);
-        Wed, 1 Feb 2017 21:33:55 -0500
-Received: from cloud.peff.net ([104.130.231.41]:48140 "EHLO cloud.peff.net"
+        id S1751070AbdBBCpG (ORCPT <rfc822;e@80x24.org>);
+        Wed, 1 Feb 2017 21:45:06 -0500
+Received: from cloud.peff.net ([104.130.231.41]:48143 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750737AbdBBCdz (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Feb 2017 21:33:55 -0500
-Received: (qmail 1057 invoked by uid 109); 2 Feb 2017 02:33:55 -0000
+        id S1750861AbdBBCpG (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Feb 2017 21:45:06 -0500
+Received: (qmail 1732 invoked by uid 109); 2 Feb 2017 02:45:05 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 02 Feb 2017 02:33:55 +0000
-Received: (qmail 16308 invoked by uid 111); 2 Feb 2017 02:33:56 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 02 Feb 2017 02:45:05 +0000
+Received: (qmail 16393 invoked by uid 111); 2 Feb 2017 02:45:07 -0000
 Received: from Unknown (HELO sigill.intra.peff.net) (10.42.43.3)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 01 Feb 2017 21:33:56 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 02 Feb 2017 03:33:51 +0100
-Date:   Thu, 2 Feb 2017 03:33:51 +0100
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 01 Feb 2017 21:45:07 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 02 Feb 2017 03:45:02 +0100
+Date:   Thu, 2 Feb 2017 03:45:02 +0100
 From:   Jeff King <peff@peff.net>
 To:     git@vger.kernel.org
-Subject: git-scm.com status report
-Message-ID: <20170202023349.7fopb3a6pc6dkcmd@sigill.intra.peff.net>
+Subject: Git / Software Freedom Conservancy status report
+Message-ID: <20170202024501.57hrw4657tsqerqq@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We (the Git project) got control of the git-scm.com domain this year. We
-have never really had an "official" website, but I think a lot of people
-consider this to be one.
+Since it's been about a year since the last one, I'd like to give a
+brief overview of the activities of Git as a member project of the
+Software Freedom Conservancy. I plan to have a discussion session at the
+Git Merge Contributor Summit tomorrow; I'll try to relay any interesting
+points from that session to the list.
 
-This is an overview of the current state, as well as some possible
-issues and future work.
+# Background
 
-## What's on the site
+Git is a member project of the Software Freedom Conservancy. We joined
+in 2010 so that Conservancy could help us manage our money and other
+assets, and represent us for legal stuff like trademarks. Conservancy
+doesn't hold any copyright on Git code, and our status as a member
+project is totally disconnected from the development of the code.
 
-We have the domains git-scm.com and git-scm.org (the latter we've had
-for a while). They both point to the same website, which has general
-information about Git, including:
+A "Project Leadership Committee" (PLC) represents Git in Conservancy.
+The PLC consists of me, Shawn Pearce, and Junio Hamano.
 
-  - a general overview of Git
+# Financials
 
-  - links to the latest releases (both source and some binary
-    installers)
+In short, we have about $21K (USD) in our account. Here's the breakdown
+of money in versus out (these are sums of double-entry transactions, so
+negative is good here):
 
-  - HTML-rendered copies of the manpages (both for the current version
-    and historical versions)
+                 $-27,468.01  Income:Git
+                   $6,207.50  Expenses:Git
+        --------------------
+                 $-21,260.51
 
-  - an HTML rendering of the contents of the Pro Git book, along with
-    translations. The book content is licensed cc-by-nc-sa and developed
-    openly.
+You can see we don't actually spend that much. Here's the same report
+just since 2016-01-01:
 
-  - various external links to books, tutorials, GUI tools, etc
+                  $-4,468.64  Income:Git
+                   $2,102.32  Expenses:Git
+        --------------------
+                  $-2,366.32
 
-## How is it developed and hosted
+Those reports come from running "ledger" on the file given to us by
+Conservancy. I can run other reports if there are things people want to
+know.
 
-The site is a Ruby on Rails app. The git repository is
-https://github.com/git/git-scm.com. Modifications are generally done by
-pull requests there. I have admin access on the repository.
+I _think_ there are some outstanding transactions that actually bump
+that closer to $3K (e.g., money invoiced for GSoC that gets collected by
+Conservancy and then eventually dumped into a bank account).
 
-The deployed site is hosted on Heroku. It's part of GitHub's
-meta-account, and they pay the bills. I have access to it, and am the
-only person who deploys updates. Other technical staff at GitHub have
-access, too, because of the account setup, but don't generally
-participate in maintenance.
+Here's the same report over the last three years:
 
-It uses three 1GB Heroku dynos for scaling, which is $150/mo. It also
-uses some Heroku addons which add up to another $80/mo.
+                 $-12,990.84  Income:Git
+                   $2,772.78  Expenses:Git
+        --------------------
+                 $-10,218.06
 
-## Who's the maintainer
+So we seem to average about $3K/year ahead of our expenses.
 
-These days, it's pretty much me, with a lot of help from Jean-Noël Avila
-on issues with the Pro Git import and formatting code.
+## Where does the income come from?
 
-Long ago, the site content and code was done by Scott Chacon, with
-graphic design help from Jason Long.  Scott maintained the site with
-help from Bryan Turner for many years. But over time, they both seemed
-to get less active, and I haven't seen a peep from either on the site's
-GitHub repo in the past year. I've started trying to respond to issues
-and pull requests to keep things healthy.
+We get money from the mentor stipends for GSoC. We get about $1K/year in
+donations (you can donate to Conservancy and earmark for Git, or there's
+a "donate" button on git-scm.com, though it's not particularly
+prominent).
 
-The site is mostly in maintenance mode, but things do need addressing.
-People show up with new additions, fixes for typos, broken links and
-other formatting problems, etc. There are a lot of long-standing
-Asciidoc formatting problems both for the manpages and the imported Pro
-Git content.
+Links from git-scm.com to buy the paper copy of the Pro Git book are
+Amazon affiliate links. If people buy stuff (either the book, or other
+things after clicking around the site), we get some money. This accounts
+for ~$800 this year.
 
-## What next
+Packt Publishing has several technical books related to Git, and they
+send some of the royalties to the project. That was ~$400 this year.
 
-We can probably continue in maintenance mode like this for a while.
-We've fixed a lot of of the long-standing formatting issues over the
-past year, so maintaining seems to have subsided in the past few months
-to mostly just merging or rejecting the occasional PR.
+## Where do expenses go?
 
-Still, if anybody is interested in helping with this work, I'd love to
-have more eyes on it. I can give people access to the GitHub repo.
-Unfortunately, I can't do so for the Heroku deploy, and part of the
-maintenance burden is that the site is finicky and often needs manual
-intervention (e.g., a fix to formatting requires rebuilding the
-manpages, which needs a job run manually on Heroku).
+Most of the money goes to travel. Note that this accounts for some of
+the income, too. if we send a mentor to the GSoC mentor summit, for
+example, we invoice Google for the money, which shows up as income.  And
+then it leaves us to reimburse the mentor, which is an expense.  So it's
+net-zero for the project, but inflates the numbers.
 
-It's possible that the content or visual design of the site could be
-improved in various ways. I don't have any strong desires myself, but
-maybe others do. If people start doing larger work, though, we have a
-real lack of reviewers, and I have very little expertise with Rails or
-with visual design. So anybody who wants to do this should be prepared to
-take maintenance ownership.
+We also spent ~$900 on legal filing fees for the trademark (not this
+year, but that's part of the total income/expenses history I showed
+earlier).
 
-At some point, GitHub may boot us off of the shared Heroku account,
-because my impression is that it's somewhat of an administrative
-headache. I don't think the Git project could afford the $230/mo hosting
-fees; that's basically all the money we make. On the other hand, we
-haven't actively solicited funds to any great degree, and it's possible
-we could get GitHub or some other entity to just sponsor us with site
-fees (I've heard zero complaints from GitHub about the money; it's
-mostly just that the site is an oddball among their other assets).
+# Activity Summary for 2016
 
-With the caveat that I know very little about web hosting, $230/mo
-sounds like an awful lot for what is essentially a static web site.
-The site does see a lot of hits, but most of the content is a few basic
-web pages, and copies of other static content that is updated
-only occasionally (manpage content, lists of downloads, etc).  The biggest
-dynamic component is the site search, I think.
+This is a summary of interesting things related to the project that
+happened in the past year.
 
-I do wonder if there's room for improvement either:
+## Mentoring
 
-  - by measuring and optimizing the Heroku deploy. I have no idea about
-    scaling Rails or Heroku apps. Do we really need three expensive
-    dynos, or a $50/mo database plan? I'm not even sure what to measure,
-    or how. There are some analytics on the site, but I don't have
-    access to them (I could probably dig around for access if there was
-    somebody who actually knew how to do something productive with
-    them).
+We had one GSoC student, Pranit Bauva (who passed). The actual coding
+project has little to do with our Conservancy status, but the Git
+project did get the stipend money, and handled the financial logistics
+for Christian Couder to go to the mentor summit (the money ultimately
+comes from Google for that).
 
-  - by moving to a simpler model. I wonder if we could build the site
-    once and then deploy a more static variant of it to a cheaper
-    hosting platform. I'm not really sure what our options would be, how
-    much work it would take to do the conversion, and if we'd lose any
-    functionality.
+We were a potential Outreachy project last Spring for the first time,
+but we didn't end up picking an intern. As a reminder, the Outreachy
+program is somewhat similar to GSoC, but with a focus on getting
+under-represented groups involved in programming (but not necessarily
+college students). The projects themselves have to cover the stipend for
+the intern (or get funding elsewhere to do so). Last year GitHub offered
+to fund one intern for us, but we didn't end up selecting anyone.
 
-If anybody is interested in tackling a project like this, let me know,
-and I can try to provide access to whatever parts are needed.
+## Travel Money
+
+We paid for travel for one developer to Git Merge last year, and we are
+covering one this year, too.
+
+Each year I ask if financial circumstances are preventing anyone from
+coming, and if the project can help. Each year I have gotten only one
+response. The Git PLC discusses each case, and we decide whether and how
+much money to provide; Conservancy handles the logistics. That tries to
+balance privacy for individuals who need financial support with some
+accountability for the project.
+
+## git-scm.com DNS
+
+We now own the git-scm.com domain, which is held for us in a Conservancy
+account (this is mostly for convenience; they hold a ton of domains, and
+can just auto-renew out of our money). We also have owned git-scm.org
+for a while.
+
+There has never really been an "official" Git website, but git-scm.com
+has been the de facto one for a while. I think us actually controlling
+the domain makes it more so. The actual governance of the site content
+is up in the air. I'll send a separate email about that[1].
+
+## Trademark
+
+We hold a trademark on "Git" and the diamond-shaped logo, and have to
+deal with various questions for that. I'll send out a separate, much
+more detailed mail about that[2].
+
+
+That's about it.  I'd be happy to try to answer any questions about this
+year's activities, how Git's membership in Conservancy works, etc.
 
 -Peff
+
+[1] http://public-inbox.org/git/20170202023349.7fopb3a6pc6dkcmd@sigill.intra.peff.net/
+
+[2] http://public-inbox.org/git/20170202022655.2jwvudhvo4hmueaw@sigill.intra.peff.net/
