@@ -2,61 +2,61 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D2A521F6BD
-	for <e@80x24.org>; Thu,  2 Feb 2017 08:50:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E095B1F6BD
+	for <e@80x24.org>; Thu,  2 Feb 2017 08:50:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751107AbdBBIub (ORCPT <rfc822;e@80x24.org>);
-        Thu, 2 Feb 2017 03:50:31 -0500
-Received: from mail-pg0-f67.google.com ([74.125.83.67]:33028 "EHLO
-        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751062AbdBBIua (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Feb 2017 03:50:30 -0500
-Received: by mail-pg0-f67.google.com with SMTP id 194so1265501pgd.0
-        for <git@vger.kernel.org>; Thu, 02 Feb 2017 00:50:30 -0800 (PST)
+        id S1751114AbdBBIum (ORCPT <rfc822;e@80x24.org>);
+        Thu, 2 Feb 2017 03:50:42 -0500
+Received: from mail-pf0-f195.google.com ([209.85.192.195]:34819 "EHLO
+        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751108AbdBBIuk (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Feb 2017 03:50:40 -0500
+Received: by mail-pf0-f195.google.com with SMTP id f144so1017223pfa.2
+        for <git@vger.kernel.org>; Thu, 02 Feb 2017 00:50:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=En+9RQ2SlKW6Rdj9M74hxkWmb4yuais2kSOYQw6vGdI=;
-        b=FNTRBk8ByNYlz+6S+cv+tcUPjshb/LMiwY/GPXA9dfabK+XOIG3l34uE7T5jtCCLjL
-         Ai+HDnCb7vdyzvHLdARRHC2iZfSHFyTEpP+Z2vRgR+pAae9ZfRjG3nivuJK8gpkKmjrd
-         YKVnt/NVb308ISC29SwwDfqrUsHE7guT324HVvBh+GO0fYnqkgAJ88JBv4TiN1ZgMfWB
-         omBGwAvG47JN5ZQJ8jJNErQITi3OI1DTL5UQoiCfXTnctKDxPlqVcR8+09uubXSXvQLM
-         v8kmBmDsGLmGCtZel6LhI5DzswWfLX7pAh65oVoA7uK/2NDpvMbpRs/8DDjNy5XU0EhL
-         OdFA==
+        bh=J9zdWBUpQSc5MtiYoM/sJTjWh0LLXKp9nWezyxa7PiY=;
+        b=nGX2y7Q8xuU3MqFPuKRLtjj5OIcaw3QCzns2lr4eA5GW7nn8UhxavicCUZu1yh5K06
+         iZXJa2AouiYrD21/+5PigkGxtM8w8PO/1WgK/rbDOGYl1GMCG0M9zmHtMTZtLO4oTqTX
+         8ZFmJvKwtIBlzcHhkQFbliCIOn8SGJ7EtUPF6rwB9WA/Ctd0ZOhi4wInZsVbKPedOMSj
+         MN5KAXX/32x8gkTwwNbGlV7RkgqNw4lER8ipQiCyqm/vSShSJj6QtZrN350FjOwLKU/P
+         4wrIBGTwjHPnrYI4qWDccMrhVxHWk/3R+9qmR1Lr/AES9e43mmqf6ebdSvXTs3Cv8Dih
+         jbIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=En+9RQ2SlKW6Rdj9M74hxkWmb4yuais2kSOYQw6vGdI=;
-        b=l6mb/mC2wPWn7meQjheanDL/cQ6uLXd56NzxoAOeGINT3mM8hbJ5iZSxlssLRR+kh2
-         IvY4komxT1J4/21uPJa0A8RzGS60nojj+QA36eFniAwa1D5zh6qrwWIB4ivd+SBlPNic
-         M4IagzyLvYir5peg3TdRbiG+F3I+vBCNdZLy8Wdy4YWNrjW/QMdapWfcazQNNFkMoiMm
-         zftc9W/V0qxuASJ1C+8iHs5a/+odHsud5cnB43Km3it/C1753GEMlsz5xyhbsVfnwS5A
-         HUQ5slIpjDDDN56jYOjZrgYRsnO1dHIMKH9rz7RJrw2ovYue1SSpGhjFRML2HagGphFD
-         rQRQ==
-X-Gm-Message-State: AIkVDXLKBHQcWc+BNyY2+3iO/olNQ9I494IVd+XtOJWaDqXMb4Fbhf6pVcRzIg/u7zajgQ==
-X-Received: by 10.99.105.8 with SMTP id e8mr9106501pgc.217.1486025429489;
-        Thu, 02 Feb 2017 00:50:29 -0800 (PST)
+        bh=J9zdWBUpQSc5MtiYoM/sJTjWh0LLXKp9nWezyxa7PiY=;
+        b=f8qrKnLyPlIv5DNfQvqFxO1QMmM5m/VZdZksbeuxhHR+8bW4E74tisoNZJx/TMVWQT
+         keM3UMsnkuP4i4oWWt9UZa86199Xq0zCaFuu8M71/F0P6dl68gwY2BhulgNLspP20bO0
+         spILHXkBbNvRGEbv/+DGMLeC4WriMl5zg026HsXD2Kl5zPIVPyHnt96nxdszv3OICtqG
+         0VdiIAp+DT8BlqwsKuGKvdvJczhW8lqiDjGfPadTkZsLNlVZ/Ot40uZwEAp9uMXLahR5
+         a0ENq/zqvFMt3VRqc1D3H8QxIVFcr34a2C8gq0XbiEACToN6NJTrVB+SwCKV8yT7EskQ
+         0O9g==
+X-Gm-Message-State: AIkVDXKBiiIovjjZZbr8/swcB/k3/eeAYt/r4clDPPBP7SHAW/Zx8g69CrQ7GnfBSK7Pqw==
+X-Received: by 10.99.47.199 with SMTP id v190mr9269655pgv.26.1486025440068;
+        Thu, 02 Feb 2017 00:50:40 -0800 (PST)
 Received: from ash ([115.73.162.84])
-        by smtp.gmail.com with ESMTPSA id d29sm56079887pfk.83.2017.02.02.00.50.26
+        by smtp.gmail.com with ESMTPSA id d68sm56060929pfj.92.2017.02.02.00.50.37
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 02 Feb 2017 00:50:28 -0800 (PST)
-Received: by ash (sSMTP sendmail emulation); Thu, 02 Feb 2017 15:50:24 +0700
+        Thu, 02 Feb 2017 00:50:39 -0800 (PST)
+Received: by ash (sSMTP sendmail emulation); Thu, 02 Feb 2017 15:50:34 +0700
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH 03/11] get_worktrees() must return main worktree as first item even on error
-Date:   Thu,  2 Feb 2017 15:49:59 +0700
-Message-Id: <20170202085007.21418-4-pclouds@gmail.com>
+Subject: [PATCH 05/11] worktree list: keep the list sorted
+Date:   Thu,  2 Feb 2017 15:50:01 +0700
+Message-Id: <20170202085007.21418-6-pclouds@gmail.com>
 X-Mailer: git-send-email 2.11.0.157.gd943d85
 In-Reply-To: <20170202085007.21418-1-pclouds@gmail.com>
 References: <20170202085007.21418-1-pclouds@gmail.com>
@@ -68,129 +68,105 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is required by git-worktree.txt, stating that the main worktree is
-the first line (especially in --porcelain mode when we can't just change
-behavior at will).
-
-There's only one case when get_worktrees() may skip main worktree, when
-parse_ref() fails. Update the code so that we keep first item as main
-worktree and return something sensible in this case:
-
- - In user-friendly mode, since we're not constraint by anything,
-   returning "(error)" should do the job (we already show "(detached
-   HEAD)" which is not machine-friendly). Actually errors should be
-   printed on stderr by parse_ref() (*)
-
- - In plumbing mode, we do not show neither 'bare', 'detached' or
-   'branch ...', which is possible by the format description if I read
-   it right.
-
-Careful readers may realize that when the local variable "head_ref" in
-get_main_worktree() is emptied, add_head_info() will do nothing to
-wt->head_sha1. But that's ok because head_sha1 is zero-ized in the
-previous patch.
-
-(*) Well, it does not. But it's supposed to be a stop gap implementation
-    until we can reuse refs code to parse "ref: " stuff in HEAD, from
-    resolve_refs_unsafe(). Now may be the time since refs refactoring is
-    mostly done.
+It makes it easier to write tests for. But it should also be good for
+the user since locating a worktree by eye would be easier once they
+notice this.
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- builtin/worktree.c       |  6 ++++--
- t/t2027-worktree-list.sh | 21 +++++++++++++++++++++
- worktree.c               | 10 +++-------
- 3 files changed, 28 insertions(+), 9 deletions(-)
+ builtin/worktree.c       |  2 +-
+ t/t2027-worktree-list.sh | 19 +++++++++++++++++++
+ worktree.c               | 14 ++++++++++++++
+ worktree.h               |  2 ++
+ 4 files changed, 36 insertions(+), 1 deletion(-)
 
 diff --git a/builtin/worktree.c b/builtin/worktree.c
-index 8a654e4ad3..b835b91f63 100644
+index d7d195cd95..9a97e37a3f 100644
 --- a/builtin/worktree.c
 +++ b/builtin/worktree.c
-@@ -388,7 +388,7 @@ static void show_worktree_porcelain(struct worktree *wt)
- 		printf("HEAD %s\n", sha1_to_hex(wt->head_sha1));
- 		if (wt->is_detached)
- 			printf("detached\n");
--		else
-+		else if (wt->head_ref)
- 			printf("branch %s\n", wt->head_ref);
- 	}
- 	printf("\n");
-@@ -408,8 +408,10 @@ static void show_worktree(struct worktree *wt, int path_maxlen, int abbrev_len)
- 				find_unique_abbrev(wt->head_sha1, DEFAULT_ABBREV));
- 		if (wt->is_detached)
- 			strbuf_addstr(&sb, "(detached HEAD)");
--		else
-+		else if (wt->head_ref)
- 			strbuf_addf(&sb, "[%s]", shorten_unambiguous_ref(wt->head_ref, 0));
-+		else
-+			strbuf_addstr(&sb, "(error)");
- 	}
- 	printf("%s\n", sb.buf);
+@@ -447,7 +447,7 @@ static int list(int ac, const char **av, const char *prefix)
+ 	if (ac)
+ 		usage_with_options(worktree_usage, options);
+ 	else {
+-		struct worktree **worktrees = get_worktrees(0);
++		struct worktree **worktrees = get_worktrees(GWT_SORT_LINKED);
+ 		int path_maxlen = 0, abbrev = DEFAULT_ABBREV, i;
  
+ 		if (!porcelain)
 diff --git a/t/t2027-worktree-list.sh b/t/t2027-worktree-list.sh
-index 1b1b65a6b0..98b5f340e5 100755
+index 98b5f340e5..465eeeacd3 100755
 --- a/t/t2027-worktree-list.sh
 +++ b/t/t2027-worktree-list.sh
-@@ -96,4 +96,25 @@ test_expect_success 'bare repo cleanup' '
- 	rm -rf bare1
+@@ -117,4 +117,23 @@ test_expect_success 'broken main worktree still at the top' '
+ 	)
  '
  
-+test_expect_success 'broken main worktree still at the top' '
-+	git init broken-main &&
++test_expect_success 'linked worktrees are sorted' '
++	mkdir sorted &&
++	git init sorted/main &&
 +	(
-+		cd broken-main &&
++		cd sorted/main &&
++		test_tick &&
 +		test_commit new &&
-+		git worktree add linked &&
-+		cat >expected <<-EOF &&
-+		worktree $(pwd)
-+		HEAD $_z40
-+
-+		EOF
-+		cd linked &&
-+		echo "worktree $(pwd)" >expected &&
-+		echo "ref: .broken" >../.git/HEAD &&
-+		git worktree list --porcelain | head -n 3 >actual &&
-+		test_cmp ../expected actual &&
-+		git worktree list | head -n 1 >actual.2 &&
-+		grep -F "(error)" actual.2
-+	)
++		git worktree add ../first &&
++		git worktree add ../second &&
++		git worktree list --porcelain | grep ^worktree >actual
++	) &&
++	cat >expected <<-EOF &&
++	worktree $(pwd)/sorted/main
++	worktree $(pwd)/sorted/first
++	worktree $(pwd)/sorted/second
++	EOF
++	test_cmp expected sorted/main/actual
 +'
 +
  test_done
 diff --git a/worktree.c b/worktree.c
-index f7c1b5e24d..3145522536 100644
+index ead088e43c..eb6121263b 100644
 --- a/worktree.c
 +++ b/worktree.c
-@@ -88,16 +88,13 @@ static struct worktree *get_main_worktree(void)
+@@ -160,6 +160,13 @@ static void mark_current_worktree(struct worktree **worktrees)
+ 	free(git_dir);
+ }
  
- 	strbuf_addf(&path, "%s/HEAD", get_git_common_dir());
++static int compare_worktree(const void *a_, const void *b_)
++{
++	const struct worktree *const *a = a_;
++	const struct worktree *const *b = b_;
++	return fspathcmp((*a)->path, (*b)->path);
++}
++
+ struct worktree **get_worktrees(unsigned flags)
+ {
+ 	struct worktree **list = NULL;
+@@ -191,6 +198,13 @@ struct worktree **get_worktrees(unsigned flags)
+ 	ALLOC_GROW(list, counter + 1, alloc);
+ 	list[counter] = NULL;
  
--	if (parse_ref(path.buf, &head_ref, &is_detached) < 0)
--		goto done;
--
- 	worktree = xcalloc(1, sizeof(*worktree));
- 	worktree->path = strbuf_detach(&worktree_path, NULL);
- 	worktree->is_bare = is_bare;
- 	worktree->is_detached = is_detached;
--	add_head_info(&head_ref, worktree);
-+	if (!parse_ref(path.buf, &head_ref, &is_detached))
-+		add_head_info(&head_ref, worktree);
++	if (flags & GWT_SORT_LINKED)
++		/*
++		 * don't sort the first item (main worktree), which will
++		 * always be the first
++		 */
++		QSORT(list + 1, counter - 1, compare_worktree);
++
+ 	mark_current_worktree(list);
+ 	return list;
+ }
+diff --git a/worktree.h b/worktree.h
+index 2e68d4ad86..d59ce1fee8 100644
+--- a/worktree.h
++++ b/worktree.h
+@@ -15,6 +15,8 @@ struct worktree {
  
--done:
- 	strbuf_release(&path);
- 	strbuf_release(&worktree_path);
- 	strbuf_release(&head_ref);
-@@ -173,8 +170,7 @@ struct worktree **get_worktrees(void)
+ /* Functions for acting on the information about worktrees. */
  
- 	list = xmalloc(alloc * sizeof(struct worktree *));
- 
--	if ((list[counter] = get_main_worktree()))
--		counter++;
-+	list[counter++] = get_main_worktree();
- 
- 	strbuf_addf(&path, "%s/worktrees", get_git_common_dir());
- 	dir = opendir(path.buf);
++#define GWT_SORT_LINKED (1 << 0) /* keeps linked worktrees sorted */
++
+ /*
+  * Get the worktrees.  The primary worktree will always be the first returned,
+  * and linked worktrees will be pointed to by 'next' in each subsequent
 -- 
 2.11.0.157.gd943d85
 
