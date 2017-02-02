@@ -2,97 +2,116 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E78721F6BD
-	for <e@80x24.org>; Thu,  2 Feb 2017 10:40:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6A2B320A79
+	for <e@80x24.org>; Thu,  2 Feb 2017 11:23:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751128AbdBBKkJ convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Thu, 2 Feb 2017 05:40:09 -0500
-Received: from zimbra-vnc.tngtech.com ([83.144.240.98]:35996 "EHLO
-        proxy.tng.vnc.biz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751002AbdBBKkI (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Feb 2017 05:40:08 -0500
-Received: from localhost (localhost [127.0.0.1])
-        by proxy.tng.vnc.biz (Postfix) with ESMTP id E1D7F1E2EAB;
-        Thu,  2 Feb 2017 11:40:03 +0100 (CET)
-Received: from proxy.tng.vnc.biz ([127.0.0.1])
-        by localhost (proxy.tng.vnc.biz [127.0.0.1]) (amavisd-new, port 10032)
-        with ESMTP id vukLW64mgEFW; Thu,  2 Feb 2017 11:40:02 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
-        by proxy.tng.vnc.biz (Postfix) with ESMTP id 300071E3097;
-        Thu,  2 Feb 2017 11:40:02 +0100 (CET)
-X-Virus-Scanned: amavisd-new at 
-Received: from proxy.tng.vnc.biz ([127.0.0.1])
-        by localhost (proxy.tng.vnc.biz [127.0.0.1]) (amavisd-new, port 10026)
-        with ESMTP id HLHlC8E8FkxE; Thu,  2 Feb 2017 11:40:02 +0100 (CET)
-Received: from [192.168.178.72] (46.128.140.114.dynamic.cablesurf.de [46.128.140.114])
-        by proxy.tng.vnc.biz (Postfix) with ESMTPSA id B10AA1E3091;
-        Thu,  2 Feb 2017 11:40:01 +0100 (CET)
-Subject: Re: [PATCH v2 7/7] completion: recognize more long-options
-To:     =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>
-References: <74ecd09c-55da-3858-5187-52c286a6bf62@kdbg.org>
- <20170127211703.24910-1-cornelius.weig@tngtech.com>
- <20170127211703.24910-2-cornelius.weig@tngtech.com>
- <CAM0VKj=Ein4yrKG2aZnN7JU80ctZBQromcR6BEu-TyMLenLFCg@mail.gmail.com>
- <2841d2de-32ad-eae8-6039-9251a40bb00e@tngtech.com>
- <CAM0VKjkAnsT_LE4OZRkLPuiEZW88P7_OBbOw0XovHhLYfBhbwg@mail.gmail.com>
-Cc:     j6t@kdbg.org, Shawn Pearce <spearce@spearce.org>,
-        git@vger.kernel.org
-From:   Cornelius Weig <cornelius.weig@tngtech.com>
-Message-ID: <415570bf-7201-3b68-4c91-668741d50160@tngtech.com>
-Date:   Thu, 2 Feb 2017 11:40:00 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.7.0
+        id S1751364AbdBBLX2 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 2 Feb 2017 06:23:28 -0500
+Received: from mail-ot0-f169.google.com ([74.125.82.169]:36418 "EHLO
+        mail-ot0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751209AbdBBLX1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Feb 2017 06:23:27 -0500
+Received: by mail-ot0-f169.google.com with SMTP id 32so9371581oth.3
+        for <git@vger.kernel.org>; Thu, 02 Feb 2017 03:23:27 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=TrWyZWYi0F6eCfTdMV6DH9DeSJ3qubsKH3oH/88ilTY=;
+        b=bVDYv6+1IHUzPnn8Ew+OfV5dzIOSHksEBW8MkG7Vs+7OTZZj+OSvxticu7YTAuXL6Z
+         t/nksPxx54O7FzEqrwNzBq7N1CEeI/xy6CNMy27oDUeNReiCcV00oV020cBpKySaQWea
+         ZNi4EGo47ULB8Bp3imcs3L83BavXHgArWhAJ4vDJJQ9dUAsYWvEpxl+DvypEN6HikDHV
+         uHHQabdeXIhZ4c9FEUn1H4zriW39bjs38AAgSrhmWT6tznbgWV3hkN4ZNM44JNMF0Rhx
+         E7og4SARu3HbKJd0wllTc8FU8a5p56ixFCzDBA2+IPYYh0TjIQSMFp07oFtctYZ1UQfp
+         BebQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=TrWyZWYi0F6eCfTdMV6DH9DeSJ3qubsKH3oH/88ilTY=;
+        b=n/qsPwxX9yfksVK7gXNjxr0AvEMVDeGDsNsPOt55Yixix7Ts1NLfYnN7CIex2C/Q0+
+         kWVlt7zrDVL2obI2L4b5QYJBmTzpOq8q7BXPugbFJPKjpGTS/Nvrx01T//JYgLrh0qEE
+         StCGBAoeckcKbEyup4xI9wWYxgVjtEikRo7mhuRsVS92/lMFGw9hyQZrHTS38DlxCFK9
+         1P7pBM9c/x3yrVXGhy+LvQ2xLoR6RYtHPgDOTXwKC9ztp8aBxQtrzF16pJ6M0AsjPPyr
+         qpKdsuGqhJNu2yeoRFZ4RFjdHPkoYjWrabQcMlCk08qVY7miM7t+C3b1GKnprkPdagu+
+         6xTQ==
+X-Gm-Message-State: AMke39kRNampIHI2/OTCKU0EWl3FQ+ix6+d6NgmkJ9dloaMC36M/VQ+oOJa+shVcWOIwbH6B5UFbeF5/ujoqpg==
+X-Received: by 10.157.20.146 with SMTP id d18mr3628297ote.37.1486034601512;
+ Thu, 02 Feb 2017 03:23:21 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <CAM0VKjkAnsT_LE4OZRkLPuiEZW88P7_OBbOw0XovHhLYfBhbwg@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8BIT
+Received: by 10.74.158.1 with HTTP; Thu, 2 Feb 2017 03:22:50 -0800 (PST)
+In-Reply-To: <alpine.DEB.2.20.1702021136210.3496@virtualbox>
+References: <20170202085007.21418-1-pclouds@gmail.com> <alpine.DEB.2.20.1702021015160.3496@virtualbox>
+ <CACsJy8B3bdokeYVt6aEyZVSzO50PiQRn+0sid9mSDTZ9q-mnww@mail.gmail.com>
+ <alpine.DEB.2.20.1702021043110.3496@virtualbox> <CACsJy8A-tuea7W+tj6rNddtM0j_374FODjQqKsT8eHfeZ0qDZg@mail.gmail.com>
+ <alpine.DEB.2.20.1702021136210.3496@virtualbox>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Thu, 2 Feb 2017 18:22:50 +0700
+Message-ID: <CACsJy8CBG_a_nX_syXKrdG2-ren=NO9CNxe6tm94FGnEo1HZLQ@mail.gmail.com>
+Subject: Re: [PATCH 00/11] nd/worktree-move update
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 02/02/2017 03:00 AM, SZEDER Gábor wrote:
->> Personally, I agree with you that
->>> Adding more long options that git commands learn along the way is
->>> always an improvement.
->> However, people may start complaining that their terminal becomes too
->> cluttered when doing a double-Tab. In my cover letter, I go to length
->> about this. My assumption was that all options that are mentioned in the
->> introduction of the command man-page should be important enough to have
->> them in the completion list.
-> 
-> But that doesn't mean that the ones not mentioned in the synopsis
-> section are not worth completing.
-
-Absolutely. What I meant is that at least the options from the synopsis
-should be contained in the set of completable options.
-
->> Btw, I haven't found that non-destructive options should not be eligible
->> for completion. To avoid confusion about this in the future, I suggest
->> to also change the documentation:
+On Thu, Feb 2, 2017 at 5:37 PM, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+> Hi Duy,
+>
+> On Thu, 2 Feb 2017, Duy Nguyen wrote:
+>
+>> On Thu, Feb 2, 2017 at 4:43 PM, Johannes Schindelin
+>> <Johannes.Schindelin@gmx.de> wrote:
+>> >
+>> > On Thu, 2 Feb 2017, Duy Nguyen wrote:
+>> >
+>> >> On Thu, Feb 2, 2017 at 4:16 PM, Johannes Schindelin
+>> >> <Johannes.Schindelin@gmx.de> wrote:
+>> >> >
+>> >> > On Thu, 2 Feb 2017, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote=
+:
+>> >> >
+>> >> >> This squashes two changes from Johannes and Ramsay: [...]
+>> >> >
+>> >> > Sorry, I lost track of the worktree discussions... Could you remind
+>> >> > me which patch is supposed to fix my continuous reflog corruption?
+>> >>
+>> >> The corruption caused by git-gc? It's not fixed. All the changes in
+>> >> this series is shown here.
+>> >
+>> > Oh sorry, I meant to ask "and if it is not in this patch series, would=
+ you
+>> > mind pointing me at the patch series that has that fix?"
 >>
->> index 933bb6e..96f1c7f 100644
->> --- a/contrib/completion/git-completion.bash
->> +++ b/contrib/completion/git-completion.bash
->> @@ -13,7 +13,7 @@
->>  #    *) git email aliases for git-send-email
->>  #    *) tree paths within 'ref:path/to/file' expressions
->>  #    *) file paths within current working directory and index
->> -#    *) common --long-options
->> +#    *) common non-destructive --long-options
-> 
-> I don't mind such a change, but I don't think that list was ever meant
-> to be comprehensive or decisive.  It is definitely not the former, as
-> it's missing several things that the completion script does support.
-> OTOH, it talks about .git/remotes, which has been considered legacy
-> for quite some years (though it's right, because the completion script
-> still supports it).
+>> You meant this one [1]? There is nothing substantial since then.
+>>
+>> [1] https://public-inbox.org/git/%3C20160601104519.16563-1-pclouds@gmail=
+.com%3E/
+>
+> I guess I mean that.
+>
+> Given that this results in real data loss, it is surprising that this has
+> not made it even into `pu` yet!
 
-Then let's not do that change, because for some commands destructive
-long-options have been in the list of completed options for quite a
-while. Given that, the above change of the documentation, might stir up
-more confusion than it settles.
+I  could rebase and clean it up a bit if you need it, but I don't
+think it'll end up in 'pu' or anywhere near since Junio wanted a
+cleaner approach [1]. That means (as far as I can see) a lot more work
+around refs store and backend area before it's ready to handle "get
+refs from this worktree store" (or "get refs from every reachable
+stores").
+
+[1] https://public-inbox.org/git/xmqqshwwzyee.fsf@gitster.mtv.corp.google.c=
+om/
+
+--=20
+Duy
