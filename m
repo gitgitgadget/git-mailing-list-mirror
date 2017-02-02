@@ -2,121 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 41C391F6BD
-	for <e@80x24.org>; Thu,  2 Feb 2017 09:32:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id ED8BA1F6BD
+	for <e@80x24.org>; Thu,  2 Feb 2017 09:41:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751100AbdBBJcm (ORCPT <rfc822;e@80x24.org>);
-        Thu, 2 Feb 2017 04:32:42 -0500
-Received: from mail-wm0-f50.google.com ([74.125.82.50]:37258 "EHLO
-        mail-wm0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750903AbdBBJcl (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Feb 2017 04:32:41 -0500
-Received: by mail-wm0-f50.google.com with SMTP id v77so78944352wmv.0
-        for <git@vger.kernel.org>; Thu, 02 Feb 2017 01:32:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to;
-        bh=4YUBMHZKg4gnmV+Sy/uugL25tbezbAth03LhmeLjU5s=;
-        b=l1629nTLaBmkQ2IRE00HQdwZJ4Qe4B2pJRrGWIAqoLk24AWQ6xKUFFG6SChC3Kq8f4
-         mPqIpXAJVbSFVA5lBI2J0F716tRnogeL/5gxUhW4BFJAo5WPGCVsiKB4NCRDvnoz3Q8r
-         fxznbJnVCCEvfYVhpFy62BielKoPJWsttucP1fqn1gpJNJPYU0y4jxXtRkOkALvT3Ot4
-         p+fkiobXs2ESkUAaujIHNpS+lJc3hiwLgCjyuBsEzc8UiWX/9mczmB/jUyBEIo2Woizd
-         Ut6KFXvxVFt1xpnPNzvfEMJy/1Wz6z6t8ovVoh7Mjr6bwBsH8ldjO/OOppJmqjZvCtke
-         dDGw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to;
-        bh=4YUBMHZKg4gnmV+Sy/uugL25tbezbAth03LhmeLjU5s=;
-        b=FN9fRzLGx9cY+48mFGe7oalAleznf5VIC7F4t3c7YFD0ncTKzdocVt8aySOZHt1gMW
-         MRdESmar0QJ1WHJPg3bDS3bOSghxd7plvRGLaCduBZBoOsAMFQ47wy0I+cGZycXeesKs
-         wvWi27qwyfHngRXL+D+J7rgClLaORSB3M8Dr7n6G88nxpWGvsRBQUNeaj5ObWqxwwwy4
-         1zSZyov9BWrm4SIrFIOSxqJ7qe7QV8vr6ZjMBwFDScw05wJxbEkS49kMh9jnwJ0o090N
-         KPmqqDouPoZHvDIgInU+LIuWTSSUqv0/AIGKhd5TINmmmXjpCxoQuzrpHJbo9SH1Yr3K
-         PG+g==
-X-Gm-Message-State: AIkVDXJAYQFXvU/2bz4KmAwwx7H1UkDEzfI4ssT7KFMZE5bL5cPV4hPr2B8YUFszn0BKv8f1jmiX9CEyUpAzzzKg
-X-Received: by 10.28.23.66 with SMTP id 63mr6845497wmx.46.1486027959879; Thu,
- 02 Feb 2017 01:32:39 -0800 (PST)
+        id S1750947AbdBBJk6 convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Thu, 2 Feb 2017 04:40:58 -0500
+Received: from zimbra-vnc.tngtech.com ([83.144.240.98]:29692 "EHLO
+        proxy.tng.vnc.biz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750881AbdBBJk5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Feb 2017 04:40:57 -0500
+Received: from localhost (localhost [127.0.0.1])
+        by proxy.tng.vnc.biz (Postfix) with ESMTP id 379B41E2FA4;
+        Thu,  2 Feb 2017 10:40:54 +0100 (CET)
+Received: from proxy.tng.vnc.biz ([127.0.0.1])
+        by localhost (proxy.tng.vnc.biz [127.0.0.1]) (amavisd-new, port 10032)
+        with ESMTP id h8M0tn7nRAQR; Thu,  2 Feb 2017 10:40:53 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+        by proxy.tng.vnc.biz (Postfix) with ESMTP id DCA951E2EAB;
+        Thu,  2 Feb 2017 10:40:53 +0100 (CET)
+X-Virus-Scanned: amavisd-new at 
+Received: from proxy.tng.vnc.biz ([127.0.0.1])
+        by localhost (proxy.tng.vnc.biz [127.0.0.1]) (amavisd-new, port 10026)
+        with ESMTP id sQyXfHhDInmZ; Thu,  2 Feb 2017 10:40:53 +0100 (CET)
+Received: from [192.168.178.72] (46.128.140.114.dynamic.cablesurf.de [46.128.140.114])
+        by proxy.tng.vnc.biz (Postfix) with ESMTPSA id 7EE7C1E2FA4;
+        Thu,  2 Feb 2017 10:40:53 +0100 (CET)
+Subject: Re: [PATCH 4/7] completion: teach ls-remote to complete options
+To:     =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>
+References: <20170202014014.25878-1-szeder.dev@gmail.com>
+Cc:     bitte.keine.werbung.einwerfen@googlemail.com,
+        thomas.braun@virtuell-zuhause.de, john@keeping.me.uk,
+        git@vger.kernel.org
+From:   Cornelius Weig <cornelius.weig@tngtech.com>
+Message-ID: <603697da-c8e9-5644-e0f0-7ee265c069d8@tngtech.com>
+Date:   Thu, 2 Feb 2017 10:40:53 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.7.0
 MIME-Version: 1.0
-Received: by 10.28.49.137 with HTTP; Thu, 2 Feb 2017 01:32:39 -0800 (PST)
-In-Reply-To: <CAKoko1q=6agpGsABxy8rmm6sGFWx9gE_c1j44h4M=yJ3r4JJBQ@mail.gmail.com>
-References: <20170201230753.19462-1-cornelius.weig@tngtech.com>
- <xmqqinotmrhe.fsf@gitster.mtv.corp.google.com> <CAKoko1q=6agpGsABxy8rmm6sGFWx9gE_c1j44h4M=yJ3r4JJBQ@mail.gmail.com>
-From:   Brandon Williams <bmwill@google.com>
-Date:   Thu, 2 Feb 2017 01:32:39 -0800
-Message-ID: <CAKoko1rvxLWi+WgEnQEnzjhMpSe1-f_jXQcDT=ALWDHcj1RnmQ@mail.gmail.com>
-Subject: Fwd: [PATCH 1/2] doc: add doc for git-push --recurse-submodules=only
-To:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+In-Reply-To: <20170202014014.25878-1-szeder.dev@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8BIT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Looks good to me!  Thanks for writing the documentation.  I really
-need to be better about getting documentation done at the same time
-I'm adding features :)
 
--Brandon
 
-On Wed, Feb 1, 2017 at 3:16 PM, Junio C Hamano <gitster@pobox.com> wrote:
->
-> cornelius.weig@tngtech.com writes:
->
-> > From: Cornelius Weig <cornelius.weig@tngtech.com>
-> >
-> > Add documentation for the `--recurse-submodules=only` option of
-> > git-push. The feature was added in commit 225e8bf (add option to
-> > push only submodules).
-> >
-> > Signed-off-by: Cornelius Weig <cornelius.weig@tngtech.com>
-> > ---
-> >
-> > Notes:
-> >     This feature is already in 'next' but was undocumented. Unless somebody reads
-> >     the release notes, there is no way of knowing about it.
->
-> Good eyes; the topic bw/push-submodule-only is already in 'master'.
->
-> Looks good to me; Brandon?
->
-> >
-> >  Documentation/git-push.txt | 13 +++++++------
-> >  1 file changed, 7 insertions(+), 6 deletions(-)
-> >
-> > diff --git a/Documentation/git-push.txt b/Documentation/git-push.txt
-> > index 8eefabd..1624a35 100644
-> > --- a/Documentation/git-push.txt
-> > +++ b/Documentation/git-push.txt
-> > @@ -272,7 +272,7 @@ origin +master` to force a push to the `master` branch). See the
-> >       standard error stream is not directed to a terminal.
-> >
-> >  --no-recurse-submodules::
-> > ---recurse-submodules=check|on-demand|no::
-> > +--recurse-submodules=check|on-demand|only|no::
-> >       May be used to make sure all submodule commits used by the
-> >       revisions to be pushed are available on a remote-tracking branch.
-> >       If 'check' is used Git will verify that all submodule commits that
-> > @@ -280,11 +280,12 @@ origin +master` to force a push to the `master` branch). See the
-> >       remote of the submodule. If any commits are missing the push will
-> >       be aborted and exit with non-zero status. If 'on-demand' is used
-> >       all submodules that changed in the revisions to be pushed will be
-> > -     pushed. If on-demand was not able to push all necessary revisions
-> > -     it will also be aborted and exit with non-zero status. A value of
-> > -     'no' or using `--no-recurse-submodules` can be used to override the
-> > -     push.recurseSubmodules configuration variable when no submodule
-> > -     recursion is required.
-> > +     pushed. If on-demand was not able to push all necessary revisions it will
-> > +     also be aborted and exit with non-zero status. If 'only' is used all
-> > +     submodules will be recursively pushed while the superproject is left
-> > +     unpushed. A value of 'no' or using `--no-recurse-submodules` can be used
-> > +     to override the push.recurseSubmodules configuration variable when no
-> > +     submodule recursion is required.
-> >
-> >  --[no-]verify::
-> >       Toggle the pre-push hook (see linkgit:githooks[5]).  The
+On 02/02/2017 02:40 AM, SZEDER Gábor wrote:
+> 
+>> ls-remote needs to complete remote names and its own options.
+> 
+> And refnames, too.
+
+Yes, right. However, do you think it is reasonable to complete remote
+refnames? I don't think so, because it would mean we would have to run
+ls-remote during completion -- and waiting for ls-remote could be quite
+lengthy.
+
+>> In
+>> addition to the existing remote name completions, do also complete
+>> the options --heads, --tags, --refs, and --get-url.
+> 
+> Why only these four options and not the other four?
+> 
+> There are eight options in total here, so there is really no chance
+> for cluttered terminals, and all eight are mentioned in the synopsis.
+
+My line of thought is the following:
+
+--quiet: does not print anything and is therefore only useful for
+scripting. Thus, there is no need to have it on the command line completion.
+
+--exit-code: has no visible effect and is only useful for scripting.
+
+--upload-pack: is really exotic. Nobody will ever use it without digging
+deep in the manuals. Therefore, I think it's unnecessary to have the
+option completable.
+
+
+--symref: Should probably be added, thanks.
+
+However, if you don't find my reasoning for omitting the three options
+above conclusive, I have no problem including them.
