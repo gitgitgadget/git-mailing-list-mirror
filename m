@@ -7,118 +7,92 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C5AA51FAAD
-	for <e@80x24.org>; Thu,  2 Feb 2017 12:03:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 54AF11FAAD
+	for <e@80x24.org>; Thu,  2 Feb 2017 12:33:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751308AbdBBMC7 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 2 Feb 2017 07:02:59 -0500
-Received: from mout.gmx.net ([212.227.15.19]:63346 "EHLO mout.gmx.net"
+        id S1751465AbdBBMdu (ORCPT <rfc822;e@80x24.org>);
+        Thu, 2 Feb 2017 07:33:50 -0500
+Received: from mout.gmx.net ([212.227.17.21]:50735 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750970AbdBBMC7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Feb 2017 07:02:59 -0500
-Received: from virtualbox ([217.64.244.213]) by mail.gmx.com (mrgmx001
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MGj8j-1cdOpG2fyL-00DZPq; Thu, 02
- Feb 2017 13:02:47 +0100
-Date:   Thu, 2 Feb 2017 12:31:09 +0100 (CET)
+        id S1751350AbdBBMdt (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Feb 2017 07:33:49 -0500
+Received: from virtualbox ([217.64.244.213]) by mail.gmx.com (mrgmx103
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0LaGfK-1cBivb22iE-00m4bF; Thu, 02
+ Feb 2017 13:33:41 +0100
+Date:   Thu, 2 Feb 2017 13:33:38 +0100 (CET)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     Duy Nguyen <pclouds@gmail.com>
 cc:     Git Mailing List <git@vger.kernel.org>,
         Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH 00/11] nd/worktree-move update
-In-Reply-To: <CACsJy8CBG_a_nX_syXKrdG2-ren=NO9CNxe6tm94FGnEo1HZLQ@mail.gmail.com>
-Message-ID: <alpine.DEB.2.20.1702021223320.3496@virtualbox>
+In-Reply-To: <alpine.DEB.2.20.1702021223320.3496@virtualbox>
+Message-ID: <alpine.DEB.2.20.1702021330040.3496@virtualbox>
 References: <20170202085007.21418-1-pclouds@gmail.com> <alpine.DEB.2.20.1702021015160.3496@virtualbox> <CACsJy8B3bdokeYVt6aEyZVSzO50PiQRn+0sid9mSDTZ9q-mnww@mail.gmail.com> <alpine.DEB.2.20.1702021043110.3496@virtualbox> <CACsJy8A-tuea7W+tj6rNddtM0j_374FODjQqKsT8eHfeZ0qDZg@mail.gmail.com>
- <alpine.DEB.2.20.1702021136210.3496@virtualbox> <CACsJy8CBG_a_nX_syXKrdG2-ren=NO9CNxe6tm94FGnEo1HZLQ@mail.gmail.com>
+ <alpine.DEB.2.20.1702021136210.3496@virtualbox> <CACsJy8CBG_a_nX_syXKrdG2-ren=NO9CNxe6tm94FGnEo1HZLQ@mail.gmail.com> <alpine.DEB.2.20.1702021223320.3496@virtualbox>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; BOUNDARY="8323329-1655952641-1486035083=:3496"
-X-Provags-ID: V03:K0:Kv3Yq6T3pntW95LJRPS6++aE2DbKrbCYU8H4hsE8O/WYH62qu6J
- xV2V8mxhaHPuDeWE04MXExDyPStghC9l6V7dyz3Kz1KFVlVgDz2CVB/Hb5PJtDJITrXyr8V
- 19/v6EWitBbKtkCR3bNT12y67jzM/wp6KsiJOAbXQocdvExzn+FnusnOe+JQv7Ky47V+xT6
- +virdgIujWiQvVr7J5cBw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:P//IRo/nEjQ=:wvN7CkXsjnoguPFz5dPdC7
- 9ajPgCDZrgt0YroBedvo4CTO9LXcOlzgG17V/o8w/MIE6XThcl/0H48Qh6wIdYyLo63ORd2M1
- YgIcyKgCQWwf+0ZsF8hnRFR5ovjHZYJ4WMwCU2D1hitpGRLmkGFm66VMMCuuEgBNwpR8h83M2
- 6boSLMxxvMTH0dOrCZUz3wxQ3RC01WQD6nbnS2ZMacgLv0epzN+0zdKKzOXZgiiukO38Z1FX0
- PNfLWXUBxlc406RY/3VYF0qhmRKqf9Htz+z0QsvGPqDE7I3JoleRxBh0+w18UmvIjlXjbdcMx
- HTQMeNCuPlRUjq19CmRvc6fr2HS9EXRMlbLE+WdayOkwrSv/ICadCy5vF/Fk7PfEd7jtzja7p
- /Oy8aRhqwbsL7hqApo0PJiZnTSWYNxScC9of3U2SdzNeZyiB2VMmA+yvD7RygIARPBRr/8qy5
- /5mIAurJGrfiokVakiTXP4ukQsZ2VAiUySR1rbdwXnrhruj2VR8t+0MoEM3YiT9O+62zl9voF
- SD1Yol7Os8o670KmEuYzJa9hGQ6P/Vd19Ij97KKJPK0zTzksABppxzAANBSV5g40+vrsQaM+e
- SrRNzg703h88bhZOByghsGyFZmRiVNNSLOydx9I5+lBPY8nr3ibbgcvp7tb2GUPsa/NZ5aPTs
- 6K9t+Ac5TCDLgwDzt/hA7AzYsLnKKGd5jk6+WyBEirrDuBF0k0yxJOVzUZNuLEN/6TrMswJTj
- E9zT1F3GAn1eGfLHZ5CTcc/KkVcyxgU4FPkJqPsw77r0CYcUUalczsw53CmJg3EVqZ3HfzxRe
- HtqyIYI
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:g2fH3GZDkQX00ev3PpClL4obmr32WoAH7VtHRafs5ta6DdkUfvo
+ +WXX62ev4psfNrEag+wiD4kIChAlY7eB418WY59tTK0RSAaoIiNkDLH7tIjG0WAounegTME
+ 3z/AHLaReB3j9c8eJJUB4Cu8Baw0wA7qp85xtfwC4EhcjDEj5MSaHpM2ZTZgqN5PzfX0H8S
+ AAXYcQ2Nbpks+Eznz8fDA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:jgVdMlXdz9w=:CWirDPb6Jgc3mjopglnVtO
+ gz0Hq3bbOBavzmG3sbXgIC3xbj2cjnO94LdyLQLrmrxcgVcl/twdHW4fiqhGnW1esCvjcriNP
+ ExTdPy+Ro++oWbkX860B7nWSK5nY6LAuohWRh8FQYO96+C3PpCeXhfWsnYJbKlKz1apoQ19pD
+ huOjbVUJNDfS5qqWJ7P6ZKNs5pJpSMvFc+iti1RWFT1HWtLuouV1zL9Wfnp8eluf3c5ISrVm1
+ X49biGrO4ME6Nv6PRQNlxcsmOtQ9gbsT//vr1kEgRzZzH/Xhg9B24x5uCqjQMX3k9PZAbaM+N
+ xfTMKSFiJPx/RnZq3him6HxmBMCB9AIzCa4jzzgMidhLi2heMc2CujUV5LnH813MA7qJleV2H
+ b4cr1mpeQzFXTPUqn7O5s+plHe3hXnD1I/eacK02d5kSJU/9KuPFOWY5D1Uvq5xzYcTpmMR02
+ XiQva4SM2nfsuW5nT2bmxPWU5KEkTFLbfc2Udwi36WdbtzEOtTvH4I/0YViqPrei2t3u2m6j+
+ 4jwPeHMUo0WQPeZUOdh/t8fJSp5BI4WZMkOxEOLlOAaT+KcHhx1v09YCDDJshLYgyY6i1VJVR
+ psz0BKm5bLVvhzuNWmn4p1z+8fmS7EY2VG9igRWyUztPD2MrLBtXwUo9CsXB/HRrS5TjxEz+Z
+ C3HSZ6e81vO2R4hePHfvRKGet48kzP5TuuAZpJQMpmgHz8w1xs0X3/kYJ2F+IAfu+2waWFMSP
+ f4lG1hsn7lOp5Tyy3cbehxE/oSsZK1WpCBMXEqqDdHsAhxYH7QfWjar1/Uoc6T4t3lMJjT423
+ EmpIBWDkjqSAbSgYZzydNND3Bx1V7KRUDB3e16XdFSL2Td3HR0Tmmsjs18sNWh7jmw0vXxnDv
+ R+F6VE3pz0hAbA9bKovxFeJOmsEU28EWuD2c/x7UZRnmpzEKkXdmNk3D46BssfxN4yvBzvgIa
+ +EDF+ndbWteQxlFPEQe0QZ6lG3HAAhlvOjYCYBozZgdD6YVDpTZGg9hQf0oXtHsB4Yn9FwfD2
+ 0Q2DBb2t49f02QdQBT/YbJmlOgXZIo+jz2IpF25ASQvqGSvkW/J7iX55V96BS3VICA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
-
---8323329-1655952641-1486035083=:3496
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-
 Hi Duy,
 
-On Thu, 2 Feb 2017, Duy Nguyen wrote:
+On Thu, 2 Feb 2017, Johannes Schindelin wrote:
 
-> On Thu, Feb 2, 2017 at 5:37 PM, Johannes Schindelin
-> <Johannes.Schindelin@gmx.de> wrote:
-> >
-> > On Thu, 2 Feb 2017, Duy Nguyen wrote:
-> >
-> >> On Thu, Feb 2, 2017 at 4:43 PM, Johannes Schindelin
-> >> <Johannes.Schindelin@gmx.de> wrote:
-> >> >
-> >> > On Thu, 2 Feb 2017, Duy Nguyen wrote:
-> >> >
-> >> >> On Thu, Feb 2, 2017 at 4:16 PM, Johannes Schindelin
-> >> >> <Johannes.Schindelin@gmx.de> wrote:
-> >> >> >
-> >> >> > On Thu, 2 Feb 2017, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wro=
-te:
-> >> >> >
-> >> >> >> This squashes two changes from Johannes and Ramsay: [...]
-> >> >> >
-> >> >> > Sorry, I lost track of the worktree discussions... Could you
-> >> >> > remind me which patch is supposed to fix my continuous reflog
-> >> >> > corruption?
-> >> >>
-> >> >> The corruption caused by git-gc? It's not fixed. All the changes
-> >> >> in this series is shown here.
-> >> >
-> >> > Oh sorry, I meant to ask "and if it is not in this patch series,
-> >> > would you mind pointing me at the patch series that has that fix?"
-> >>
-> >> You meant this one [1]? There is nothing substantial since then.
-> >>
-> >> [1] https://public-inbox.org/git/%3C20160601104519.16563-1-pclouds@gma=
-il.com%3E/
-> >
-> > I guess I mean that.
-> >
-> > Given that this results in real data loss, it is surprising that this
-> > has not made it even into `pu` yet!
->=20
-> I  could rebase and clean it up a bit if you need it, but I don't think
-> it'll end up in 'pu' or anywhere near since Junio wanted a cleaner
-> approach [1]. That means (as far as I can see) a lot more work around
-> refs store and backend area before it's ready to handle "get refs from
-> this worktree store" (or "get refs from every reachable stores").
->=20
-> [1] https://public-inbox.org/git/xmqqshwwzyee.fsf@gitster.mtv.corp.google=
-=2Ecom/
+> Hi Duy,
+> 
+> On Thu, 2 Feb 2017, Duy Nguyen wrote:
+> 
+> > On Thu, Feb 2, 2017 at 5:37 PM, Johannes Schindelin
+> > <Johannes.Schindelin@gmx.de> wrote:
+> > >
+> > > On Thu, 2 Feb 2017, Duy Nguyen wrote:
+> > >
+> > >> You meant this one [1]? There is nothing substantial since then.
+> > >>
+> > >> [1] https://public-inbox.org/git/%3C20160601104519.16563-1-pclouds@gmail.com%3E/
+> > 
+> > I  could rebase and clean it up a bit if you need it, but I don't
+> > think it'll end up in 'pu' or anywhere near since Junio wanted a
+> > cleaner approach [1]. That means (as far as I can see) a lot more work
+> > around refs store and backend area before it's ready to handle "get
+> > refs from this worktree store" (or "get refs from every reachable
+> > stores").
+> > 
+> > [1] https://public-inbox.org/git/xmqqshwwzyee.fsf@gitster.mtv.corp.google.com/
 
-That is a big, big bummer.
+Given that
+https://public-inbox.org/git/xmqqy46ntrhk.fsf@gitster.mtv.corp.google.com/
+seems to have expected something to happen within a reasonable time frame,
+and that 8 months is substantially longer than a reasonable time frame, I
+am not sure that that position can still be defended.
 
-We are talking about a data corrupting bug here, yes? It should be
-possible to do that redesign work while having a small workaround in place
-that unbreaks, say, me?
+Also, the more important reply was Peff's reply that suggested that the
+proposed fix was incomplete, as it misses --unpack-unreachable:
+https://public-inbox.org/git/20160601160143.GA9219@sigill.intra.peff.net/
 
 Ciao,
 Johannes
---8323329-1655952641-1486035083=:3496--
