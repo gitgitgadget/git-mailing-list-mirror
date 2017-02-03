@@ -2,58 +2,55 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0788F1F9AF
-	for <e@80x24.org>; Fri,  3 Feb 2017 04:16:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DAA581F9AF
+	for <e@80x24.org>; Fri,  3 Feb 2017 04:19:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752195AbdBCEQA (ORCPT <rfc822;e@80x24.org>);
-        Thu, 2 Feb 2017 23:16:00 -0500
-Received: from mail-lf0-f67.google.com ([209.85.215.67]:33550 "EHLO
-        mail-lf0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751512AbdBCEP7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Feb 2017 23:15:59 -0500
-Received: by mail-lf0-f67.google.com with SMTP id x1so543295lff.0
-        for <git@vger.kernel.org>; Thu, 02 Feb 2017 20:15:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=nrOb3buFonpLlPshUWobFRDqHRIOLzVWld2aDDtOsb4=;
-        b=P+ZUi2QSYpcwsNjYF4XlBnV5rMjqJpJz/eNmPdvzqIlqGOCyHnIUeUf2GklyIo/jSl
-         XhRDQdOTMj8slb/xrQ7OiMYOc+Iy4iy3GtTM4YgT4oF8j+sVe10bulh0nmgZs7Z6evaz
-         hO4hJ2S0IgFE1iGEwcsQI0amtKV9MQ2N2101XTp5LohXhSci4YWCsjjDTOLVipinWL6N
-         j/ZKFI6j5qh1QKKfhwlj8a6ZVrocRDiZWnSYfNkOmG4ccFkc8dyZSADjVfsc3EZZ1FHy
-         vN4kE1bro3Jlr34Hhw3wZEiRHhBlOECkz3Gpj9iVxkyNNTfbpxdN9AeOjCl+TcceixRY
-         W0FQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=nrOb3buFonpLlPshUWobFRDqHRIOLzVWld2aDDtOsb4=;
-        b=gqYhPwPdTnreZERxR1mS0UPFisIH3WuQEv5227oTGdk+rPtQ7o30WxxP9fCAH0NgXl
-         rL0vx8G+fkwSflV/dWwtwUmb40U5ntzkjNGa5YXrhihtomdFGpamavild32pBmtpCELy
-         iv6v4d8Q5e4Nq+HgmmqckGXVZFrLuhZkM4HvOyh3XDDCLRxSisAtCkOniOm6/8giBo2m
-         +w4VXKDRwbmvHAlfO0O1ZqGqPYX/suDHv/WxuO65XBh2WKYG4PoPhJn6UnEGiJM+ImnZ
-         oeXA0E+ajqvuzuSjJ/cj3OTtJHLbn6+YYDtGRM3vpdb8BmLAco6l+T1BUATkkINuVW+z
-         FvBA==
-X-Gm-Message-State: AIkVDXKnXO+LsFgJ11NAtnTUBcznuu1MuYX3cr+O3mdM3LdjzvePGRx+sm8tZqyg3/Ors6v4bPLZ0vPYt5gfAw==
-X-Received: by 10.46.21.66 with SMTP id 2mr4537141ljv.19.1486095357509; Thu,
- 02 Feb 2017 20:15:57 -0800 (PST)
+        id S1752230AbdBCETb (ORCPT <rfc822;e@80x24.org>);
+        Thu, 2 Feb 2017 23:19:31 -0500
+Received: from hapkido.dreamhost.com ([66.33.216.122]:53729 "EHLO
+        hapkido.dreamhost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751512AbdBCETa (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Feb 2017 23:19:30 -0500
+Received: from homiemail-a14.g.dreamhost.com (homie.mail.dreamhost.com [208.97.132.208])
+        by hapkido.dreamhost.com (Postfix) with ESMTP id EB2E4A796F
+        for <git@vger.kernel.org>; Thu,  2 Feb 2017 20:19:29 -0800 (PST)
+Received: from homiemail-a14.g.dreamhost.com (localhost [127.0.0.1])
+        by homiemail-a14.g.dreamhost.com (Postfix) with ESMTP id 1586339207E
+        for <git@vger.kernel.org>; Thu,  2 Feb 2017 20:19:29 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=bit-booster.com; h=
+        mime-version:in-reply-to:references:from:date:message-id:subject
+        :to:cc:content-type:content-transfer-encoding; s=bit-booster.com
+        ; bh=mCY48XxEn0b0f1lzQtVN6crJSzo=; b=IBfQBQGkW2CnlU+qMHaXqAm3lsD
+        EoafGsxk78ZS8uTwVl/A2pgXs0lcJE6KyeB0mpMKFt2OhLk2OhDHQLD6GTvqBWTO
+        An0jrBDpNo3fkVF5NfwU12kAFwOs8bvZLOi0p4n0WfnW2g4qGEAUgbDr7ldliDG7
+        Q7rfocKBAWy9rA1A=
+Received: from mail-yw0-f174.google.com (mail-yw0-f174.google.com [209.85.161.174])
+        (using TLSv1 with cipher AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: sylvie@bit-booster.com)
+        by homiemail-a14.g.dreamhost.com (Postfix) with ESMTPSA id 05DA2392078
+        for <git@vger.kernel.org>; Thu,  2 Feb 2017 20:19:28 -0800 (PST)
+Received: by mail-yw0-f174.google.com with SMTP id l19so4904359ywc.2
+        for <git@vger.kernel.org>; Thu, 02 Feb 2017 20:19:28 -0800 (PST)
+X-Gm-Message-State: AIkVDXJA2xrJCHlP449ntq803Bbdc/mrasu7QVOEomWUAWQpJ0ztKfa119O+th9OQTsvGmtMOl61RzHYi9LcPw==
+X-Received: by 10.13.255.69 with SMTP id p66mr9859452ywf.122.1486095568350;
+ Thu, 02 Feb 2017 20:19:28 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.25.145.14 with HTTP; Thu, 2 Feb 2017 20:15:36 -0800 (PST)
-In-Reply-To: <20170203025405.8242-1-szeder.dev@gmail.com>
-References: <20170203025405.8242-1-szeder.dev@gmail.com>
-From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Thu, 2 Feb 2017 20:15:36 -0800
-Message-ID: <CA+P7+xqhjVQMXtO4gtQ_2VAVd3qrpVLncH6YpFHreVV2mHORxg@mail.gmail.com>
-Subject: Re: [PATCH 00/12] completion: speed up refs completion
-To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Git mailing list <git@vger.kernel.org>
+Received: by 10.37.56.201 with HTTP; Thu, 2 Feb 2017 20:19:28 -0800 (PST)
+In-Reply-To: <CAE1pOi0-8JnnZbdm9vu1RwTU1mXr7dboLC3ito3LcvK9gkNi_A@mail.gmail.com>
+References: <CAE1pOi0-8JnnZbdm9vu1RwTU1mXr7dboLC3ito3LcvK9gkNi_A@mail.gmail.com>
+From:   "G. Sylvie Davies" <sylvie@bit-booster.com>
+Date:   Thu, 2 Feb 2017 20:19:28 -0800
+X-Gmail-Original-Message-ID: <CAAj3zPz8wFc_5dRmM=-jMnqp6a7fGtc4XSyU5meF6mO5me47Dw@mail.gmail.com>
+Message-ID: <CAAj3zPz8wFc_5dRmM=-jMnqp6a7fGtc4XSyU5meF6mO5me47Dw@mail.gmail.com>
+Subject: Re: How to use git show's "%<(<N>[,trunc|ltrunc|mtrunc])"?
+To:     Hilco Wijbenga <hilco.wijbenga@gmail.com>
+Cc:     Git Users <git@vger.kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
@@ -61,40 +58,43 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Feb 2, 2017 at 6:53 PM, SZEDER G=C3=A1bor <szeder.dev@gmail.com> wr=
-ote:
-> This series speeds up refs completion for large number of refs, partly
-> by giving up disambiguating ambiguous refs (patch 6) and partly by
-> eliminating most of the shell processing between 'git for-each-ref'
-> and 'ls-remote' and Bash's completion facility.  The rest is a bit of
-> preparatory reorganization, cleanup and bugfixes.
+On Thu, Feb 2, 2017 at 9:51 AM, Hilco Wijbenga <hilco.wijbenga@gmail.com> w=
+rote:
+> Hi all,
 >
-> The last patch touches the ZSH wrapper, too.  By a lucky educated
-> guess I managed to get it work on the first try, but I don't really
-> know what I've actually done, so...  ZSH users, please have a closer
-> look.
+> I'm trying to get the committer date printed in a custom fashion.
+> Using "%cI" gets me close:
 >
-> At the end of this series refs completion from a local repository is
-> as fast as it can possibly get, at least as far as the completion
-> script is concerned, because it basically does nothing anymore :)  All
-> it does is run 'git for-each-ref' with assorted options to do all the
-> work, and feed its output directly, without any processing into Bash's
-> COMPREPLY array.  There is still room for improvements in the code
-> paths using 'git ls-remote', but for that we would need enhancements
-> to 'ls-remote'.
+> $ git show --format=3D"%cI | %an" master | head -n 1
+> 2017-01-31T17:02:13-08:00 | Hilco Wijbenga
 >
-> It goes on top of the __gitdir() improvements series I just posted at:
+> I would like to get rid of the "-08:00" bit at the end of the
+> timestamp. According to the "git show" manual I should be able to use
+> "%<(<N>[,trunc|ltrunc|mtrunc])" to drop that last part.
 >
->   http://public-inbox.org/git/20170203024829.8071-1-szeder.dev@gmail.com/=
-T/
+> $ git show --format=3D"%<(19,trunc)cI | %an" master | head -n 1
+> cI | Hilco Wijbenga
 >
-> This series is also available at:
->
->   https://github.com/szeder/git completion-refs-speedup
+> Mmm, it seems to be recognized as a valid "something" but it's not
+> working as I had expected. :-) I tried several other versions of this
+> but no luck. Clearly, I'm misunderstanding the format description. How
+> do I get "2017-01-31T17:02:13 | Hilco Wijbenga" to be output?
 >
 
-Nice! This is something i've been bothered by in the past since
-completion would take a rather long time!
+Will this work for you?
 
-Regards,
-Jake
+$ git show -s --pretty=3D'%cd | %an' --date=3Dformat:%FT%R:%S
+2017-02-02T10:01:36 | G. Sylvie Davies
+
+
+I have no idea how portable this might be.  As "git help log" says:
+
+         --date=3Dformat:...  feeds the format ...  to your system
+strftime. Use --date=3Dformat:%c to show the date in your system
+locale=E2=80=99s preferred format. See the strftime manual for a complete l=
+ist
+of format placeholders.
+
+
+
+- Sylvie
