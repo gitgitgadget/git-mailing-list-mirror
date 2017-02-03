@@ -2,116 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3DC2F1F6BD
-	for <e@80x24.org>; Fri,  3 Feb 2017 20:46:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 88DEE1F6BD
+	for <e@80x24.org>; Fri,  3 Feb 2017 20:57:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752291AbdBCUqZ (ORCPT <rfc822;e@80x24.org>);
-        Fri, 3 Feb 2017 15:46:25 -0500
-Received: from mail-pg0-f68.google.com ([74.125.83.68]:35967 "EHLO
-        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752268AbdBCUqY (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 3 Feb 2017 15:46:24 -0500
-Received: by mail-pg0-f68.google.com with SMTP id 75so2834931pgf.3
-        for <git@vger.kernel.org>; Fri, 03 Feb 2017 12:46:24 -0800 (PST)
+        id S1752463AbdBCU5m (ORCPT <rfc822;e@80x24.org>);
+        Fri, 3 Feb 2017 15:57:42 -0500
+Received: from mail-vk0-f48.google.com ([209.85.213.48]:34130 "EHLO
+        mail-vk0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752452AbdBCU5l (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 3 Feb 2017 15:57:41 -0500
+Received: by mail-vk0-f48.google.com with SMTP id r136so21262435vke.1
+        for <git@vger.kernel.org>; Fri, 03 Feb 2017 12:57:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=Mb15fIfFmF0B/5L+EDNuOXskWxUO06mRiax5oaqeQZY=;
-        b=GXS47EDeJgeCIV6dxKeJPhN0wOBjyAYzji6pSNlfCfkeJ3l074gNVxHIR7zPyuKy9B
-         3Y/AZfyXIOsExAneNLdAn45RNIMYPX7EuAreYlTK3X6kydcTZWYwcK/UYSVX+qn6wQgv
-         +QPTXFWDeD6fvkBGC7Ww2EDw0C9dOvCePwqyO1eVN7mb9nwKeavI0rFUohk8sK3ibZLm
-         Q4rbPgWb5h0CVu9sG77Z7K6vmgJv73ghdNbtkqKwrK8QzbzMVTCSTrlqJhABK0vOorX8
-         wKY8NZvPv3jAFJ5+F1Yd8mKY6VxSJ/to62DQDtgZXYpMp+BNT7SitcK5guiQryqvURNZ
-         vNag==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=KO/ZosMLUO7eWkzA2NCMiZeVKRocj/RK8WQMyOCPY2w=;
+        b=qfgto17Gj4P3zqfPeKiAUdv7VmeecV2R62A1eVj69wS8+bKIp1N+H0nJ9ekzS8KQd8
+         v5/8N92CJe8S8LXQYi9rqr5qHbEYbvL08PxNbHJSLDOWea5Oe/Kr1/srnWNukQ6BUDUt
+         I36xSJcUMkxnVmamkBkeTcvI6Di/7GEfpcXejb68kXq+Veb1r/PCdzA/VLJ4nrnEuRc1
+         Jr7BX8NOZjIDqZ+o/UXRKE5DIuKnvbagUcgJHAzALpChoEBzCVnspWN7UpX5Sq+uGc+W
+         0PdSKoFEJ7UuUwLZjr3bhwox4Y5EJEvMaiWtLIkNGu++VEqtiVMKOBGzKRstgESkxYdm
+         3tQw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=Mb15fIfFmF0B/5L+EDNuOXskWxUO06mRiax5oaqeQZY=;
-        b=TLQ1qstVFROiiA6+lA9ddNsOyU/89OSLosgE4u6MFN/5w/61GDDadoFrlVXQETEVN1
-         r7pkAyVUdIXzQOoRGTlbeEJ88g0KV6WmSzT3sKT7Gy5gvgG48m3e4Z8FsD+S48vJN3h6
-         BfyNd9PqrR6LO2QxD32xFb04H5eADk6S6X7NvbZ1oL+q8WDqqLOw/GmyfH2ms7kIJrVo
-         J+MW6zMz4oT+x4mYyVg+sMgIqr36w9UfykTltY8147lUsQSgN+OGoAqRi346jNG5OtDr
-         ZoItKnTByEOinGBBdCqn1/szpB+bXGKPljTuxjs40MkL2Dj1LhfofOwiBGDleXlBdRjG
-         jA5g==
-X-Gm-Message-State: AIkVDXLrex0BERQ5pwoHiYD/O007UdFWeljRalFAPFPgoNY79rN2BqyhWwEXCxJywyyosA==
-X-Received: by 10.99.99.193 with SMTP id x184mr20435138pgb.226.1486154783648;
-        Fri, 03 Feb 2017 12:46:23 -0800 (PST)
-Received: from localhost ([2620:0:1000:8622:dd9f:576d:b8fa:253a])
-        by smtp.gmail.com with ESMTPSA id v186sm69819966pgv.44.2017.02.03.12.46.22
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Fri, 03 Feb 2017 12:46:22 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jacob Keller <jacob.e.keller@intel.com>
-Cc:     git@vger.kernel.org, Jacob Keller <jacob.keller@gmail.com>
-Subject: Re: [PATCH v2] reset: add an example of how to split a commit into two
-References: <20170203202833.17666-1-jacob.e.keller@intel.com>
-Date:   Fri, 03 Feb 2017 12:46:20 -0800
-In-Reply-To: <20170203202833.17666-1-jacob.e.keller@intel.com> (Jacob Keller's
-        message of "Fri, 3 Feb 2017 12:28:33 -0800")
-Message-ID: <xmqqzii3dmub.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=KO/ZosMLUO7eWkzA2NCMiZeVKRocj/RK8WQMyOCPY2w=;
+        b=FNTRWeRMlsMDOLiUhHU8SJ336Raue0847G/4BH16TcnhMbch608dMSmC4+Ya+O3YV7
+         xPvC7ANBs3E9+VwZ25grkq6pP2uph/mLJ2WEijVCnFC5WzdLlNxSl4pZ1sc/AGuv/EIZ
+         lcWkNZzkZB3GrcCbITUA+JWZznSLUTC2wsp5qYUrFs1PvI2WoFqp+2v9PtpE6j5kfp2h
+         2ZsI+aoL/UeE5BD1rm6aKQa6tSHTTDhAxvyU+/rdJ/SK3xwUsJlF72RFi+gHEiv7spbe
+         8/HIUkaHh4iOrtSM8fNPX0/TLgM9F5c0z9mLyLgGK+Z98vhbszeQKcNwcsMkH1had384
+         Jgrg==
+X-Gm-Message-State: AIkVDXJzkdmI/qzSo7v/PWKrlGGJ2n28tp1ARhL19TRng8BpCVWB9FP+2eipk8+xOaTJ3yPtAgvQb/n0QFojcw==
+X-Received: by 10.31.115.142 with SMTP id o136mr7542193vkc.139.1486155460324;
+ Fri, 03 Feb 2017 12:57:40 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
+Received: by 10.159.34.48 with HTTP; Fri, 3 Feb 2017 12:56:59 -0800 (PST)
+In-Reply-To: <20170203115814.vxn33ivuhrnxmkzf@sigill.intra.peff.net>
+References: <20170202023349.7fopb3a6pc6dkcmd@sigill.intra.peff.net>
+ <20170202043610.GA12738@starla> <CAJZjrdUGsp5-HsA0Hxk4Qo+2s6crLbu-LuX=ECuC2QpM6HCWgg@mail.gmail.com>
+ <20170203115814.vxn33ivuhrnxmkzf@sigill.intra.peff.net>
+From:   Samuel Lijin <sxlijin@gmail.com>
+Date:   Fri, 3 Feb 2017 14:56:59 -0600
+Message-ID: <CAJZjrdVOZrCAa9s72zYrQv8wY+DezrENzA0AgT_Bgr-oMgsFTA@mail.gmail.com>
+Subject: Re: git-scm.com status report
+To:     Jeff King <peff@peff.net>
+Cc:     Eric Wong <e@80x24.org>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jacob Keller <jacob.e.keller@intel.com> writes:
+On Fri, Feb 3, 2017 at 5:58 AM, Jeff King <peff@peff.net> wrote:
+> On Thu, Feb 02, 2017 at 12:54:53AM -0600, Samuel Lijin wrote:
+>
+>> In theory, you could also dump the build artifacts to a GH Pages repo
+>> and host it from there, although I don't know if you would run up
+>> against any of the usage limits[0]. The immediate problem I see with
+>> that approach, though, is that I have no idea how any of the dynamic
+>> stuff (e.g. search) would be replaced.
+>
+> I've talked with Pages people and they say it shouldn't be a big deal to
+> host. The main issue is that it's not _just_ a static site. It's a site
+> that's static once built, but a lot of the content is auto-generated
+> from other sources (git manpages, Pro Git and its translations, etc).
+>
+> So there's work involved in moving that generation step to whatever the
+> new process is (it's fine if it's running "make" locally after a Git
+> release and pushing up the result).
 
-> +Split a commit into two::
+Yep, noticed that when I cloned the repo the other day. Still
+wrangling with my own setup so that I can build everything locally. I
+imagine it would also be possible to set up some sort of CI/CD
+pipeline to handle generating build artifacts automatically; so to be
+honest, I don't think any of the static assets would pose a
+significant problem.
 
-Let's say "...into two (or more)" to match what appears in
-"SPLITTING COMMITS" section of "rebase -i" documentation.  Yours is
-written as a sequence of more concrete steps than the existing one
-over there, so it may also make sense to add reference to bring
-readers of "git rebase --help" to this section.
+The bigger issue, in my opinion, is that there seems to be a fair
+amount of non-trivial back-end stuff
+(https://github.com/git/git-scm.com/blob/master/spec/controllers/site_controller_spec.rb,
+https://github.com/git/git-scm.com/blob/master/app/controllers/site_controller.rb)
+including an Elasticsearch layer. (The redirects would be mildly
+inconvenient to handle with Pages, but like the static asset
+generation, should be more than doable.)
 
-> ++
-> +Suppose that you have created a commit, but later decide that you want to break
-> +apart the changes into two logical chunks and commit each separately. You want
+>> A question: there's a DB schema in there. Does the site still use a DB?
+>
+> It does use the database to hold all of the bits that aren't checked
+> into Git. So renderings of the manpages, the latest release git version,
+> etc. AFAIK, it's all things that I would be comfortable committing into
+> a git repository.
+>
+> -Peff
 
-"two (or more)" again.  In <5> you already hint that the user can
-repeat 2-4 number of times.
+In the meantime, I've also pinged a friend at Digital Ocean about
+their hosting options and they've expressed interest. At the very
+least, they seem to offer a lot more than Heroku for 230$/mo[0], and I
+imagine it wouldn't be impossible to reduce the hosting costs by an
+order of magnitude. Think it's worth looking into?
 
-> +to include part of the original commit into the first commit, while including
-> +the remainder in a second commit. You can use git reset to rewind the history
-> +without changing the index, and then use git add -p to interactively select
-> +which hunks to put into the first commit.
-> ++
-> +------------
-> +$ git reset HEAD^                           <1>
-> +$ git add -p                                <2>
-> +$ git diff --cached                         <3>
-> +$ git commit -c HEAD@{1}                    <4>
-> +...
-> +$ git add ...                               <5>
-> +$ git diff --cached                         <6>
-> +$ git commit ...                            <7>
-> +------------
-> ++
-> +<1> First, reset the history back one commit so that we remove the original
-> +    commit, but leave the working tree with all the changes.
-> +<2> Now, interactively select hunks to add to a new commit using git add -p.
-> +    This will ask for each hunk separately and you can use simple commands like
-> +    "yes, include", "no don't include" or even "edit".
-> +<3> Once satisfied with the hunks, you should verify that it is what you
-> +    expected by using git diff --cached to show all changes in the index.
-> +<4> Next, commit the changes stored in the index. "-c" specifies to load the
-> +    editor with a commit message from a previous commit so that you can re-use the
-> +    original commit message. HEAD@{1} is special notation to reference what
-> +    HEAD used to be prior to the reset command. See linkgit:git-reflog[1] for
-> +    more details.
-> +<5> Now you've created the first commit, and can repeat steps 2-4 as often as
-> +    you like to break the work into any number of commits. Here we show a second
-> +    step which simply adds the remaining changes.
-> +<6> Then check again that the changes are what you expected to add.
-> +<7> And finally commit the remaining changes.
-> +
+[0] https://www.digitalocean.com/pricing/#droplet
