@@ -7,53 +7,53 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E62821F9AF
-	for <e@80x24.org>; Fri,  3 Feb 2017 02:54:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 47DEE1F9AF
+	for <e@80x24.org>; Fri,  3 Feb 2017 02:54:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752287AbdBCCyf (ORCPT <rfc822;e@80x24.org>);
-        Thu, 2 Feb 2017 21:54:35 -0500
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:33303 "EHLO
-        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752225AbdBCCyc (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Feb 2017 21:54:32 -0500
-Received: by mail-wm0-f66.google.com with SMTP id v77so1211364wmv.0
-        for <git@vger.kernel.org>; Thu, 02 Feb 2017 18:54:31 -0800 (PST)
+        id S1752306AbdBCCyg (ORCPT <rfc822;e@80x24.org>);
+        Thu, 2 Feb 2017 21:54:36 -0500
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:36281 "EHLO
+        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752169AbdBCCy2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Feb 2017 21:54:28 -0500
+Received: by mail-wm0-f65.google.com with SMTP id r18so1190384wmd.3
+        for <git@vger.kernel.org>; Thu, 02 Feb 2017 18:54:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=rLMa0quNxjcFLezYdL+6nrMXZphj8TPKXu0uWcY+YYM=;
-        b=dU5buGO6f7gC/GOOrjccbHqI/7BweCb8ZwqNqGjIxlHMnStlyqY/QoI2ANBGirqQZN
-         RrxbCvbqOVk1g2X7PhrAlvib+RSVEQkhu4tE+Kzt17ZXkcfiFGGUUdr78vzxhYGK91Wr
-         CMhMJElNQ3Cypd7rDPECxuaTNCxZ1sAR6h4tB7MA9hO/e6sXMNfGmfMilD7OCIaCPQ5r
-         +mqdnBZqvbKxpyaAqR7t87mnuu78ty6MBySMGrf6eRwcdZK2Zt4kD4OZTb6g8wjZt+ay
-         J9OzRyaDd36+GDHqXCPuUWu02AQzteXldiNvCfbMQoWv2NYwqSpr0dMs6XNdqkBf05sF
-         b+pA==
+        bh=rBqLaGWQIAFSWI5MjRk7dihtjWIQwpNUq0JMGI5Uc14=;
+        b=M4NLk/zAnynjUOGLvriAdRc7scKFqqNm9UG1oMEcEGXDWXAkEfczYVyNkwoALGZniS
+         /0gaoq1q04L83sQswfwVfgTtdnEKasCd69jqoKZmhb5YNzMBkgNTh2p4xQZnWtVRHhJd
+         EZWCpjj0RyaxbbqBYOR6sG9ncx2PPPU7G4R0X+VaA53K2U4Uw5dDIvqLQXHX8tujSRNn
+         5BWEO9e/MbgXxYy+6/FJZfCA4HM9UrUMQQDoO7l2H61LlxgB2m8isRw/Cw04ubufmiSU
+         6y1wtuwe4FkLhREiBha6pP80mUxqcZeNkDsaLDqley6xATDDvnCjjGsi2/TBTq6v8DS6
+         YoCg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=rLMa0quNxjcFLezYdL+6nrMXZphj8TPKXu0uWcY+YYM=;
-        b=abCQYJIUMPhIHlC0OHDJiod5gGSNVeX/foWfo08btmlfHz+sjv9jgq88SqJ2+bFqpY
-         OGIcJO4xu6amUGMYTAtVvMQVj5pvbjLjUvt66nbwIbNRWtGzFnbNKIMoYpo2Cm2x0aqL
-         7NQgoUvv/KK1vU4pIrj8i1ZZk1r+E8SOh4PpgvrddEyzrU1U5RWEfrPfHrh09KqohAEA
-         OAkqMhF7/Vrp38hO66XD9D17NJsLEw3vmhemQswlicxrKFpEeT9zoESphDzMndjjY00g
-         RL6oXYD7QoYipDPVtnCMJUinT2KbR6tO+3i7yBqg/iTBG0+pUCw/HEeX9QzyDiICiJ7W
-         5PyA==
-X-Gm-Message-State: AIkVDXI5A6Fm9IxP5wAuncHmFUbEG8iwNm+z3sSizRok/pwkVn2tT8Wk2BEk9VTOwjEiwg==
-X-Received: by 10.223.168.87 with SMTP id l81mr12020684wrc.194.1486090470920;
-        Thu, 02 Feb 2017 18:54:30 -0800 (PST)
+        bh=rBqLaGWQIAFSWI5MjRk7dihtjWIQwpNUq0JMGI5Uc14=;
+        b=U8yO8cJWEsaZ7IecG3Ljfy8YAOTvC+jHnNxWVtXfyn6BJPFtrxTZAv8wuxLimFeA9y
+         ismRYifJl/PDgRbQKry9z7iVBmz5srLas0CXzkkTxD451j1DsbRHYJN0qhXpFs0yXaxH
+         d0XPMiaZ79zHmeCneiiqqp/A8wJoAGzhieeRGalRhJuodpuCB3tPR/DurrrIFHgUDbft
+         xAJh9A57lYwAqpkp8dIWDNB92FLUt0LIBKI00MY/UDRva+UWRZKYIF5u1FdC+G0jxQR5
+         n5EY1VDP/ZwDhNiDEB9roqRuyj44f34YFJUuhjDh9y7Y/nM6nNsJiO0iwzNGc7252icA
+         TADw==
+X-Gm-Message-State: AIkVDXJNZsTLlBpRc7AkJXSKSVqO/FB0ITvGkgTeSXXR0yx+TQqdxbAPMbe9uRWyHFRCgA==
+X-Received: by 10.223.136.16 with SMTP id d16mr10983473wrd.117.1486090467304;
+        Thu, 02 Feb 2017 18:54:27 -0800 (PST)
 Received: from localhost.localdomain (x590d744d.dyn.telefonica.de. [89.13.116.77])
-        by smtp.gmail.com with ESMTPSA id c133sm652291wmd.13.2017.02.02.18.54.30
+        by smtp.gmail.com with ESMTPSA id c133sm652291wmd.13.2017.02.02.18.54.26
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 02 Feb 2017 18:54:30 -0800 (PST)
+        Thu, 02 Feb 2017 18:54:26 -0800 (PST)
 From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     git@vger.kernel.org,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH 07/12] completion: let 'for-each-ref' and 'ls-remote' filter matching refs
-Date:   Fri,  3 Feb 2017 03:54:00 +0100
-Message-Id: <20170203025405.8242-8-szeder.dev@gmail.com>
+Subject: [PATCH 03/12] completion: support completing full refs after '--option=refs/<TAB>'
+Date:   Fri,  3 Feb 2017 03:53:56 +0100
+Message-Id: <20170203025405.8242-4-szeder.dev@gmail.com>
 X-Mailer: git-send-email 2.11.0.555.g967c1bcb3
 In-Reply-To: <20170203025405.8242-1-szeder.dev@gmail.com>
 References: <20170203025405.8242-1-szeder.dev@gmail.com>
@@ -65,220 +65,143 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When completing refs, several __git_refs() code paths list all the
-refs from the refs/{heads,tags,remotes}/ hierarchy and then
-__gitcomp_nl() iterates over those refs in a shell loop to filter out
-refs not matching the current word to be completed.  This comes with a
-considerable performance penalty when a repository contains a lot of
-refs but the current word can be uniquely completed or when only a
-handful of refs match the current word.
+Completing full refs currently only works when the full ref stands on
+in its own on the command line, but doesn't work when the current word
+to be completed contains a prefix before the full ref, e.g.
+'--option=refs/<TAB>' or 'master..refs/bis<TAB>'.
 
-Specify appropriate globbing patterns to 'git for-each-ref' and 'git
-ls-remote' to list only those refs that match the current word to be
-completed.  This reduces the number of iterations in __gitcomp_nl()
-from the number of refs to the number of matching refs.
+The reason is that __git_refs() looks at the current word to be
+completed ($cur) as a whole to decide whether it has to list full (if
+it starts with 'refs/') or short refs (otherwise).  However, $cur also
+holds said '--option=' or 'master..' prefixes, which of course throw
+off this decision.  Luckily, the default action is to list short refs,
+that's why completing short refs happens to work even after a
+'master..<TAB>' prefix and similar cases.
 
-This speeds up refs completion considerably when there are a lot of
-non-matching refs to be filtered out.  Uniquely completing a branch in
-a repository with 100k local branches, all packed, best of five:
+Pass only the ref part of the current word to be completed to
+__git_refs() as a new positional parameter, so it can make the right
+decision even if the whole current word contains some kind of a
+prefix.
 
-  On Linux, before:
-
-    $ time __git_complete_refs --cur=maste
-
-    real    0m0.831s
-    user    0m0.808s
-    sys     0m0.028s
-
-  After:
-
-    real    0m0.119s
-    user    0m0.104s
-    sys     0m0.008s
-
-  On Windows, before:
-
-    real    0m1.480s
-    user    0m1.031s
-    sys     0m0.060s
-
-  After:
-
-    real    0m0.377s
-    user    0m0.015s
-    sys     0m0.030s
-
-Strictly speaking this is a fundamental behavior change in
-__git_refs(), a helper function that is likely used in users' custom
-completion scriptlets.  However, arguably this change should be
-harmless, because:
-
-  - __git_refs() was only ever intended to feed refs to Bash's
-    completion machinery, for which non-matching refs have to be
-    filtered out anyway.
-
-  - There were already code paths that list only matching refs
-    (listing unique remote branches for 'git checkout's tracking
-    DWIMery and listing full remote refs via 'git ls-remote').
+Make this new parameter the 4. positional parameter and leave the 3.
+as an ignored placeholder for now (it will be used later in this patch
+series).
 
 Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
 ---
- contrib/completion/git-completion.bash |  14 +++--
- t/t9902-completion.sh                  | 102 +++++++++++++++++++++++++++++++++
- 2 files changed, 111 insertions(+), 5 deletions(-)
+ contrib/completion/git-completion.bash | 21 ++++++++++++++-------
+ t/t9902-completion.sh                  | 31 +++++++++++++++++++++++++++++++
+ 2 files changed, 45 insertions(+), 7 deletions(-)
 
 diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index d55eadfd1..615292f8b 100644
+index 7f19e2a4f..67a03cfd4 100644
 --- a/contrib/completion/git-completion.bash
 +++ b/contrib/completion/git-completion.bash
-@@ -394,7 +394,7 @@ __git_refs ()
- 		case "$cur_" in
+@@ -354,6 +354,8 @@ __git_tags ()
+ #    Can be the name of a configured remote, a path, or a URL.
+ # 2: In addition to local refs, list unique branches from refs/remotes/ for
+ #    'git checkout's tracking DWIMery (optional; ignored, if set but empty).
++# 3: Currently ignored.
++# 4: The current ref to be completed (optional).
+ #
+ # Use __git_complete_refs() instead.
+ __git_refs ()
+@@ -361,6 +363,7 @@ __git_refs ()
+ 	local i hash dir track="${2-}"
+ 	local list_refs_from=path remote="${1-}"
+ 	local format refs pfx
++	local cur_="${4-$cur}"
+ 
+ 	__git_find_repo_path
+ 	dir="$__git_repo_path"
+@@ -384,14 +387,17 @@ __git_refs ()
+ 	fi
+ 
+ 	if [ "$list_refs_from" = path ]; then
+-		case "$cur" in
++		case "$cur_" in
  		refs|refs/*)
  			format="refname"
--			refs="${cur_%/*}"
-+			refs=("$cur_*" "$cur_*/**")
+-			refs="${cur%/*}"
++			refs="${cur_%/*}"
  			track=""
  			;;
  		*)
-@@ -402,11 +402,13 @@ __git_refs ()
+-			[[ "$cur" == ^* ]] && pfx="^"
++			if [[ "$cur_" == ^* ]]; then
++				pfx="^"
++				cur_=${cur_#^}
++			fi
+ 			for i in HEAD FETCH_HEAD ORIG_HEAD MERGE_HEAD; do
  				if [ -e "$dir/$i" ]; then echo $pfx$i; fi
  			done
- 			format="refname:strip=2"
--			refs="refs/tags refs/heads refs/remotes"
-+			refs=("refs/tags/$cur_*" "refs/tags/$cur_*/**"
-+				"refs/heads/$cur_*" "refs/heads/$cur_*/**"
-+				"refs/remotes/$cur_*" "refs/remotes/$cur_*/**")
- 			;;
- 		esac
- 		__git_dir="$dir" __git for-each-ref --format="$pfx%($format)" \
--			$refs
-+			"${refs[@]}"
- 		if [ -n "$track" ]; then
- 			# employ the heuristic used by git checkout
- 			# Try to find a remote branch that matches the completion word
-@@ -438,10 +440,12 @@ __git_refs ()
- 		if [ "$list_refs_from" = remote ]; then
- 			echo "HEAD"
- 			__git for-each-ref --format="%(refname:strip=2)" \
--				"refs/remotes/$remote/" | sed -e "s#^$remote/##"
-+				"refs/remotes/$remote/$cur_*" \
-+				"refs/remotes/$remote/$cur_*/**" | sed -e "s#^$remote/##"
- 		else
- 			__git ls-remote "$remote" HEAD \
--				"refs/tags/*" "refs/heads/*" "refs/remotes/*" |
-+				"refs/tags/$cur_*" "refs/heads/$cur_*" \
-+				"refs/remotes/$cur_*" |
- 			while read -r hash i; do
- 				case "$i" in
- 				*^{})	;;
+@@ -411,16 +417,16 @@ __git_refs ()
+ 			while read -r entry; do
+ 				eval "$entry"
+ 				ref="${ref#*/}"
+-				if [[ "$ref" == "$cur"* ]]; then
++				if [[ "$ref" == "$cur_"* ]]; then
+ 					echo "$ref"
+ 				fi
+ 			done | sort | uniq -u
+ 		fi
+ 		return
+ 	fi
+-	case "$cur" in
++	case "$cur_" in
+ 	refs|refs/*)
+-		__git ls-remote "$remote" "$cur*" | \
++		__git ls-remote "$remote" "$cur_*" | \
+ 		while read -r hash i; do
+ 			case "$i" in
+ 			*^{}) ;;
+@@ -475,7 +481,8 @@ __git_complete_refs ()
+ 		shift
+ 	done
+ 
+-	__gitcomp_nl "$(__git_refs "$remote" "$track")" "$pfx" "$cur_" "$sfx"
++	__gitcomp_nl "$(__git_refs "$remote" "$track" "" "$cur_")" \
++		"$pfx" "$cur_" "$sfx"
+ }
+ 
+ # __git_refs2 requires 1 argument (to pass to __git_refs)
 diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
-index 7b42a686c..499be5879 100755
+index 50c534072..8fe748839 100755
 --- a/t/t9902-completion.sh
 +++ b/t/t9902-completion.sh
-@@ -837,6 +837,108 @@ test_expect_success '__git refs - exluding full refs' '
+@@ -775,6 +775,37 @@ test_expect_success '__git_refs - unique remote branches for git checkout DWIMer
  	test_cmp expected "$actual"
  '
  
-+test_expect_success 'setup for filtering matching refs' '
-+	git branch matching/branch &&
-+	git tag matching/tag &&
-+	git -C otherrepo branch matching/branch-in-other &&
-+	git fetch --no-tags other &&
-+	rm -f .git/FETCH_HEAD
-+'
-+
-+test_expect_success '__git_refs - only matching refs' '
++test_expect_success '__git_refs - after --opt=' '
 +	cat >expected <<-EOF &&
 +	HEAD
++	master
 +	matching-branch
-+	matching/branch
++	other/branch-in-other
++	other/master-in-other
 +	matching-tag
-+	matching/tag
 +	EOF
 +	(
-+		cur=mat &&
-+		__git_refs >"$actual"
++		cur="--opt=" &&
++		__git_refs "" "" "" "" >"$actual"
 +	) &&
 +	test_cmp expected "$actual"
 +'
 +
-+test_expect_success '__git_refs - only matching refs - full refs' '
++test_expect_success '__git_refs - after --opt= - full refs' '
 +	cat >expected <<-EOF &&
++	refs/heads/master
 +	refs/heads/matching-branch
-+	refs/heads/matching/branch
++	refs/remotes/other/branch-in-other
++	refs/remotes/other/master-in-other
++	refs/tags/matching-tag
 +	EOF
 +	(
-+		cur=refs/heads/mat &&
-+		__git_refs >"$actual"
++		cur="--opt=refs/" &&
++		__git_refs "" "" "" refs/ >"$actual"
 +	) &&
 +	test_cmp expected "$actual"
-+'
-+
-+test_expect_success '__git_refs - only matching refs - remote on local file system' '
-+	cat >expected <<-EOF &&
-+	HEAD
-+	master-in-other
-+	matching/branch-in-other
-+	EOF
-+	(
-+		cur=ma &&
-+		__git_refs otherrepo >"$actual"
-+	) &&
-+	test_cmp expected "$actual"
-+'
-+
-+test_expect_success '__git_refs - only matching refs - configured remote' '
-+	cat >expected <<-EOF &&
-+	HEAD
-+	master-in-other
-+	matching/branch-in-other
-+	EOF
-+	(
-+		cur=ma &&
-+		__git_refs other >"$actual"
-+	) &&
-+	test_cmp expected "$actual"
-+'
-+
-+test_expect_success '__git_refs - only matching refs - remote - full refs' '
-+	cat >expected <<-EOF &&
-+	refs/heads/master-in-other
-+	refs/heads/matching/branch-in-other
-+	EOF
-+	(
-+		cur=refs/heads/ma &&
-+		__git_refs other >"$actual"
-+	) &&
-+	test_cmp expected "$actual"
-+'
-+
-+test_expect_success '__git_refs - only matching refs - checkout DWIMery' '
-+	cat >expected <<-EOF &&
-+	HEAD
-+	matching-branch
-+	matching/branch
-+	matching-tag
-+	matching/tag
-+	matching/branch-in-other
-+	EOF
-+	for remote_ref in refs/remotes/other/ambiguous \
-+		refs/remotes/remote/ambiguous \
-+		refs/remotes/remote/branch-in-remote
-+	do
-+		git update-ref $remote_ref master &&
-+		test_when_finished "git update-ref -d $remote_ref"
-+	done &&
-+	(
-+		cur=mat &&
-+		__git_refs "" 1 >"$actual"
-+	) &&
-+	test_cmp expected "$actual"
-+'
-+
-+test_expect_success 'teardown after filtering matching refs' '
-+	git branch -d matching/branch &&
-+	git tag -d matching/tag &&
-+	git update-ref -d refs/remotes/other/matching/branch-in-other
 +'
 +
  test_expect_success '__git_complete_refs - simple' '
