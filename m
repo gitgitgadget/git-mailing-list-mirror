@@ -2,136 +2,76 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C46661F9AF
-	for <e@80x24.org>; Fri,  3 Feb 2017 02:54:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0337A1F9AF
+	for <e@80x24.org>; Fri,  3 Feb 2017 04:13:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752442AbdBCCy4 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 2 Feb 2017 21:54:56 -0500
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:33932 "EHLO
-        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752268AbdBCCye (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Feb 2017 21:54:34 -0500
-Received: by mail-wm0-f66.google.com with SMTP id c85so1209561wmi.1
-        for <git@vger.kernel.org>; Thu, 02 Feb 2017 18:54:33 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=Q35xieNF8+sMJIZAplV1zCnJXzA2hOpxUzt36l8GJT4=;
-        b=ROw9+DhJDDqmSwL7KKzxp8bN32HlPjvNeILAmLFd3WSdf8WrRbjo7kSpEwyMLUXdfy
-         1jFJJ3fgy8YLBhzQmIS02e4ko7/Bw1GrQbWtre7k1fudMzFgTgTd7gYu9oieC/KFPMuH
-         d3nG+XSpqp/OJVkjEF+9qIJ9X/gKzSQjOLCE0cx7juRvbk4e3Agdqkp12RJlRt022y/o
-         dQEOhZDOw7SMhBI2YHzdrNRQeQ8D6foDGDb+bGRB8NDlauZcyzBaVGoXzL6fXmeopVSl
-         Tf69S+kmOucSIHa0IGM0a/JflbrWMB9pnQuzp63XSUF/l7oVrlN/D1jneGHqZZcSKG+1
-         oIsA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=Q35xieNF8+sMJIZAplV1zCnJXzA2hOpxUzt36l8GJT4=;
-        b=Rmj+Bk3Qzw+SQWW5yUXMT+YTx0ZsRl36plKdPj+Al2EXjBXoGX9S8hJYgFXRyei26M
-         u7lW5crrXwtDlxcpxpBzH/581OQ8/oe8JZef5VM9Ttq8uJ0WPDOv1+XxqKUt6RYAxlTv
-         0clTiQaBNnFSbYgDMl3FJrD42HZxWCd9SveFpp6TlxPuW8YC2kjoZjwp3QGGPezWdek7
-         7UDhOfE1oN59vbaGOWiSBu7fCW3FM5uPvMU/6oPYoNcLhVBxuYDxVv65g9LABrfWqnGU
-         7pxBd3Nm8dBPJ+z/A1Zdr3OcdvMzDKjLj637spQ8/0qM+VXMPD4DQxp/CE9uUYZOSifU
-         2wHQ==
-X-Gm-Message-State: AMke39kTH94fMUp8fKyNu0SQ8UCub+XofS4dOQn1/s5z44BhdeCPIHR0OeSu71jzImSwkg==
-X-Received: by 10.28.179.7 with SMTP id c7mr422870wmf.128.1486090472971;
-        Thu, 02 Feb 2017 18:54:32 -0800 (PST)
-Received: from localhost.localdomain (x590d744d.dyn.telefonica.de. [89.13.116.77])
-        by smtp.gmail.com with ESMTPSA id c133sm652291wmd.13.2017.02.02.18.54.31
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 02 Feb 2017 18:54:32 -0800 (PST)
-From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org,
-        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH 09/12] completion: let 'for-each-ref' filter remote branches for 'checkout' DWIMery
-Date:   Fri,  3 Feb 2017 03:54:02 +0100
-Message-Id: <20170203025405.8242-10-szeder.dev@gmail.com>
-X-Mailer: git-send-email 2.11.0.555.g967c1bcb3
-In-Reply-To: <20170203025405.8242-1-szeder.dev@gmail.com>
-References: <20170203025405.8242-1-szeder.dev@gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        id S1752443AbdBCENS (ORCPT <rfc822;e@80x24.org>);
+        Thu, 2 Feb 2017 23:13:18 -0500
+Received: from gourmet.spamgourmet.com ([216.75.62.102]:57654 "EHLO
+        gourmet8.spamgourmet.com" rhost-flags-OK-OK-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1752238AbdBCENS (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 2 Feb 2017 23:13:18 -0500
+Received: from spamgourmet by gourmet7.spamgourmet.com with local (Exim 4.80)
+        (envelope-from <bs.x.ttp@recursor.net>)
+        id 1cZVFN-00063q-CA
+        for git@vger.kernel.org; Fri, 03 Feb 2017 04:13:17 +0000
+Received: from mout.gmx.net ([212.227.17.22])
+        by gourmet7.spamgourmet.com with esmtps (TLS1.2:DHE_RSA_AES_256_CBC_SHA256:256)
+        (Exim 4.80)
+        (envelope-from <bs.x.ttp@recursor.net>)
+        id 1cZVFM-00063Q-Tt
+        for ; Fri, 03 Feb 2017 04:13:17 +0000
+Received: from OC-7878-34850 ([173.234.39.187]) by mail.gmx.com (mrgmx103
+ [212.227.17.174]) with ESMTPSA (Nemesis) id 0LsTjw-1cT9Y733CC-0122vv for
+ <>; Fri, 03 Feb 2017 05:13:12
+ +0100
+Date:   Fri, 3 Feb 2017 05:13:09 +0100
+From:   bs.x.ttp@recursor.net
+To:     git@vger.kernel.org
+Subject: possible bug:  inconsistent CLI behaviour for empty user.name
+Message-Id: <20170203051309.a737846dd26a6ed8df1e4112@gmx.de>
+X-Mailer: Sylpheed 3.5.0 (GTK+ 2.24.30; x86_64-pc-linux-gnu)
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+X-Provags-ID: V03:K0:idGN+WYcOLLtUsH2J9mtpwV7nJJD8Ypm+bFTuNQ6zoYsgfevh2F
+ KO3upU82KOxDSyGxhp/ckPXpVsUmJbaKsRHeT3p06cKc5L34Gu8q0zphvDWy8w/EyIwTQE0
+ yPj5N6W60yGZNOQ48yiCHWI0UUGfh60SFM4tpxelD5BUftCsnob6fI4WmAOMRIempEnK0zG
+ rd8vx7ThOqbMBbEUTQXJA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:fzqPe2DAZbI=:qFEnP51Roj1H0zOxK/0ZKY
+ KJ10K3P0w3XgnD5atcDXG/1jRXlYneTIA7Bi+H/B/7Q9eTfJ6bi0L2u1bcu6WIDQus9ChNGrQ
+ 5doL1imvDiun7lg/tF1o6/q+TEGn+gvNbDTHnNdTimImR2C/vGmFVSPGUQrBGUgVpsu73UaZY
+ CkEOyo2BAk8vUOWHxo8hHrkdEXrbJaMudK5TsoQWBoOzbG/MWxRtrHrsqJ74B3r1phRyzJoe+
+ oYIZCIvfbg6LnUk3jcU6RgF1/EIkcOJ18ckfOyYIGV6RI5Ommq5Vw6LJtzVtITP4dA02q0z/M
+ rUEfYSVl7Xe6kTaN2jetxaTS3EzbIxM6/vUv02HZML3bMHDno02gCRAJ9A7ucIWZltF5NsAPu
+ OGwn/YcJ0HYYtpseI4MPv8eYoLTT9NbvaguQKDxcTAyHVVPk4p0sNijslimsePqbo6WTLenO5
+ E5oq8tMtmHfV86XyUrAd3c1HdOV+xBUSda8T9T11jgNyhvF97DfUQAKq0PZZJqdyQ6zSXvp74
+ 64+9QxEQ9vr5jairfxw/klBYufavwFuaE94EAPuJ5wPyYSIYqCUIup1ynQ1/3XQDXlJD0G+ct
+ M11MQ0JZeORdV31wFYzcNR6rGYUYCE23omPw15jbBwJmHV7MZWf39YRwslk2DiogzsxDcLryI
+ S3VNQAORGgWNY+PgRzkVPU4IlZlolFavX9Z88ZzjpRF4QgXnaWHB0lsASAIsSsJJwmQmoZBKX
+ 7aij2SmnuPPZ8CmyukhFitEtMIVORS39HXiiNVa8E4Sek1KtMWgQMAJ2M9pdFYstcp/nwlpRk
+ UDDTi81nw/6k/fD8/V/idOG7cCJSgb5hDODvX0QiREtsk6Egew3fbB1DeAY8MaV5mIDCDbALN
+ phefIcifdOToOItXEIFK2UoG6JR40Eq4AExUrakxq8HPh1BClPgvcmlltQqJJSL1F/8zhe2Xg
+ Dq7INjWSEeuLmnDLmEzXOAI5SgRyzsddOPEXNTLdFARwmN8Q9pxOt3ORGkMhvSMYYhCDnLjeW
+ B7VTot2aSYLuD2MRMkjXEuUhCxHSPMnHqMtxXyzq9hB1GziqWZYWGsrfHEDN0sLRCQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The code listing unique remote branches for 'git checkout's tracking
-DWIMery outputs only remote branches that match the current word to be
-completed, but the filtering is done in a shell loop iterating over
-all remote refs.
+The problem is that GIT accepts a user.name of " " for some operations (for example when doing a simple "git commit"), but does require a "non-empty" user.name for others (like git commit --amend and git rebase). In case of the latter commands GIT fails with the message "fatal: empty ident name (for <email@address>) not allowed".
 
-Let 'git for-each-ref' do the filtering, as it can do so much more
-efficiently and we can remove that shell loop entirely.
+As people tend to do simple commits first, before amending or rebasing something, they may have to change their name after some dozen of commits which doesn't look nice.
 
-This speeds up refs completion for 'git checkout' considerably when
-there are a lot of non-matching remote refs to be filtered out.
-Uniquely completing a branch in a repository with 100k remote
-branches, all packed, best of five:
+This is certainly not a big issue, but it turns out to be quite annoying and I've already rewritten the history of a GIT repository once because of it, so that all my commits had the same author.
 
-  On Linux, before:
+Proposed solution: GIT's requirements for user.name should not depend on the operation. Either user.name should be enforced to be non-empty everywhere or an empty user.name should be accepted everywhere. Perhaps filling out one of user.name and user.email could be sufficient.
 
-    $ time __git_complete_refs --cur=maste --track
 
-    real    0m1.993s
-    user    0m1.740s
-    sys     0m0.304s
 
-  After:
 
-    real    0m0.266s
-    user    0m0.248s
-    sys     0m0.012s
-
-  On Windows, before:
-
-    real    0m6.187s
-    user    0m3.358s
-    sys     0m2.121s
-
-  After:
-
-    real    0m0.750s
-    user    0m0.015s
-    sys     0m0.090s
-
-Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
----
- contrib/completion/git-completion.bash | 12 +++---------
- 1 file changed, 3 insertions(+), 9 deletions(-)
-
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 8f1203025..e2c4794f3 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -413,15 +413,9 @@ __git_refs ()
- 			# employ the heuristic used by git checkout
- 			# Try to find a remote branch that matches the completion word
- 			# but only output if the branch name is unique
--			local ref entry
--			__git for-each-ref --shell --format="ref=%(refname:strip=3)" \
--				"refs/remotes/" | \
--			while read -r entry; do
--				eval "$entry"
--				if [[ "$ref" == "$cur_"* ]]; then
--					echo "$ref"
--				fi
--			done | sort | uniq -u
-+			__git for-each-ref --format="%(refname:strip=3)" \
-+				"refs/remotes/*/$cur_*" "refs/remotes/*/$cur_*/**" | \
-+			sort | uniq -u
- 		fi
- 		return
- 	fi
--- 
-2.11.0.555.g967c1bcb3
 
