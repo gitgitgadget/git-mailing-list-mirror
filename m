@@ -2,92 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A42091F6BD
-	for <e@80x24.org>; Fri,  3 Feb 2017 20:16:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B79831F6BD
+	for <e@80x24.org>; Fri,  3 Feb 2017 20:28:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752160AbdBCUQP (ORCPT <rfc822;e@80x24.org>);
-        Fri, 3 Feb 2017 15:16:15 -0500
-Received: from mail-lf0-f66.google.com ([209.85.215.66]:33430 "EHLO
-        mail-lf0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752035AbdBCUQO (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 3 Feb 2017 15:16:14 -0500
-Received: by mail-lf0-f66.google.com with SMTP id x1so2367801lff.0
-        for <git@vger.kernel.org>; Fri, 03 Feb 2017 12:16:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=YWfhJ7162sFqzRxEHTjigPHCRwDDnDob6lmja3wm+6w=;
-        b=CiIGpv8rGdT6wOc3DNAHC7LUw1v+vLRp0ipq9U9tB8ANXS7H+27ef1YWA7Umhzanxy
-         2+ks5rCYMUEoyMj1vpqDP6hYV2GaXpms+kq8XPhTjd+Je2Z7mhHWUaUQo5xXc+kFg/zl
-         iPhrmLqLCY9pQDiTRD/xLfFcAIp8fhARGP4SnfnRNrtg4wGaoZTsd6OEV1vRiz+YfoHc
-         ZT/rUzUS1CoWZ7HaeuaXUsYcOm2D7WjClPfZMysgbj2waTsacO/YEMVYYttvmr9jUed+
-         cc6hQKmeHlVZ2wCu97wuLpg2BS5TYH13GsnEsMDdWkmZj+wTKOGF2UAxU/YYqBPHmHlq
-         GXgg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=YWfhJ7162sFqzRxEHTjigPHCRwDDnDob6lmja3wm+6w=;
-        b=Zk6iQeV/j3jjrGAQbBLJIjFM/66zB/Op0XvtIGOQfdAgLC7JBhQGglGDYKXdx2oMzH
-         zAomrzOBu1H4+BTVgF8bnqNHX0gPvoZm29siy6XX7oUFbkYn3R8F3NoVliOmMUCOgGEY
-         N89QTGnRxGb/qJAtXbY+eo9cBvjar4sn8auOyTv9LZgZLrN/rMLNXvircaDCkV2Dm9Aa
-         2kIHQ9/zGaszmOoW3B27oXptE+NG75J1tCDUnHkZQciZtR0w8UdgHywy+MudkfI1tSrc
-         TtxMl+EtQJI+a2fBQfai8F3UsMmjrUsRoG/TSFe+Kw9P+YEXRtlHs71Hyn+MK+yQpQoi
-         2ggw==
-X-Gm-Message-State: AIkVDXL4rX345sb9dgBHoq6m7JPQew5zHbxGwIVINh+OSU12ZTUn8jLCSAbQ2o9gqFGTjMCJk4Hdn2xsWbDidA==
-X-Received: by 10.25.24.152 with SMTP id 24mr5856524lfy.12.1486152972486; Fri,
- 03 Feb 2017 12:16:12 -0800 (PST)
-MIME-Version: 1.0
-Received: by 10.25.145.14 with HTTP; Fri, 3 Feb 2017 12:15:51 -0800 (PST)
-In-Reply-To: <xmqqlgtnf6ce.fsf@gitster.mtv.corp.google.com>
-References: <20170203003038.22278-1-jacob.e.keller@intel.com>
- <CACsJy8B=OEdUbc3_Svci_whtk=-Bz-4BP4y-Xr_u3CU81dxvCA@mail.gmail.com> <xmqqlgtnf6ce.fsf@gitster.mtv.corp.google.com>
-From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Fri, 3 Feb 2017 12:15:51 -0800
-Message-ID: <CA+P7+xqGnS+aYSQGp4kfnhY6eGdV6Y2=RfzFsxCX+cFzHYpvHQ@mail.gmail.com>
-Subject: Re: [PATCH] reset: add an example of how to split a commit into two
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Duy Nguyen <pclouds@gmail.com>,
-        Jacob Keller <jacob.e.keller@intel.com>,
-        Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+        id S1752271AbdBCU2h (ORCPT <rfc822;e@80x24.org>);
+        Fri, 3 Feb 2017 15:28:37 -0500
+Received: from mga06.intel.com ([134.134.136.31]:3724 "EHLO mga06.intel.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752119AbdBCU2g (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 3 Feb 2017 15:28:36 -0500
+Received: from fmsmga002.fm.intel.com ([10.253.24.26])
+  by orsmga104.jf.intel.com with ESMTP; 03 Feb 2017 12:28:36 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.33,330,1477983600"; 
+   d="scan'208";a="1121806613"
+Received: from jekeller-desk.amr.corp.intel.com (HELO jekeller-desk.jekeller.internal) ([10.166.35.174])
+  by fmsmga002.fm.intel.com with ESMTP; 03 Feb 2017 12:28:35 -0800
+From:   Jacob Keller <jacob.e.keller@intel.com>
+To:     git@vger.kernel.org
+Cc:     Jacob Keller <jacob.keller@gmail.com>
+Subject: [PATCH v2] reset: add an example of how to split a commit into two
+Date:   Fri,  3 Feb 2017 12:28:33 -0800
+Message-Id: <20170203202833.17666-1-jacob.e.keller@intel.com>
+X-Mailer: git-send-email 2.11.0.864.ge7592a54611d
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Feb 3, 2017 at 10:59 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Duy Nguyen <pclouds@gmail.com> writes:
->
->>> +$ git reset -p HEAD^                        <1>
->>
->> For good practice, perhaps put "git diff --cached HEAD^" before "git commit".
->>
->> I tend to avoid "reset -p" and "checkout -p" though because sometimes
->> it does not work. Not sure if it's just me, I think it may have
->> something to do with splitting hunks. So I usually go with "reset
->> HEAD^" then "add -p" and "commit -c HEAD@{1}" instead.
->
-> Perhaps I am superstitious, but I do that, too.
->
-> Doing this that way, the users do not need to learn "reset -p" or
-> "checkout -p" and only need to know "add -p", and not having to
-> learn two extra things is a big plus.  On the other hand, it
-> requires the users to learn the reflog, but that knowledge extends
-> to the use outside of the -c option of "commit" command, so overall
-> I think it is a win.
->
->
+From: Jacob Keller <jacob.keller@gmail.com>
 
-I didn't know about the "-c" option to git commit, that makes the add
--p path a bit more straight forward. I'll re-word the example to use
-this new suggested flow.
+It is often useful to break a commit into multiple parts that are more
+logical separations. This can be tricky to learn how to do without the
+brute-force method if re-writing code or commit messages from scratch.
 
-Thanks,
-Jake
+Add a section to the git-reset documentation which shows an example
+process for how to use git add -p and git commit -c HEAD@{1} to
+interactively break a commit apart and re-use the original commit
+message as a starting point when making the new commit message.
+
+Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
+---
+ Documentation/git-reset.txt | 38 ++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 38 insertions(+)
+
+diff --git a/Documentation/git-reset.txt b/Documentation/git-reset.txt
+index 25432d9257f9..add6220fce77 100644
+--- a/Documentation/git-reset.txt
++++ b/Documentation/git-reset.txt
+@@ -292,6 +292,44 @@ $ git reset --keep start                    <3>
+ <3> But you can use "reset --keep" to remove the unwanted commit after
+     you switched to "branch2".
+ 
++Split a commit into two::
+++
++Suppose that you have created a commit, but later decide that you want to break
++apart the changes into two logical chunks and commit each separately. You want
++to include part of the original commit into the first commit, while including
++the remainder in a second commit. You can use git reset to rewind the history
++without changing the index, and then use git add -p to interactively select
++which hunks to put into the first commit.
+++
++------------
++$ git reset HEAD^                           <1>
++$ git add -p                                <2>
++$ git diff --cached                         <3>
++$ git commit -c HEAD@{1}                    <4>
++...
++$ git add ...                               <5>
++$ git diff --cached                         <6>
++$ git commit ...                            <7>
++------------
+++
++<1> First, reset the history back one commit so that we remove the original
++    commit, but leave the working tree with all the changes.
++<2> Now, interactively select hunks to add to a new commit using git add -p.
++    This will ask for each hunk separately and you can use simple commands like
++    "yes, include", "no don't include" or even "edit".
++<3> Once satisfied with the hunks, you should verify that it is what you
++    expected by using git diff --cached to show all changes in the index.
++<4> Next, commit the changes stored in the index. "-c" specifies to load the
++    editor with a commit message from a previous commit so that you can re-use the
++    original commit message. HEAD@{1} is special notation to reference what
++    HEAD used to be prior to the reset command. See linkgit:git-reflog[1] for
++    more details.
++<5> Now you've created the first commit, and can repeat steps 2-4 as often as
++    you like to break the work into any number of commits. Here we show a second
++    step which simply adds the remaining changes.
++<6> Then check again that the changes are what you expected to add.
++<7> And finally commit the remaining changes.
++
+ 
+ DISCUSSION
+ ----------
+-- 
+2.11.0.864.ge7592a54611d
+
