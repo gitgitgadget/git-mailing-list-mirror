@@ -2,83 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EDBFD1F9AF
-	for <e@80x24.org>; Fri,  3 Feb 2017 08:07:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8A3291F9AF
+	for <e@80x24.org>; Fri,  3 Feb 2017 08:59:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752745AbdBCIHa (ORCPT <rfc822;e@80x24.org>);
-        Fri, 3 Feb 2017 03:07:30 -0500
-Received: from mail-ot0-f175.google.com ([74.125.82.175]:33148 "EHLO
-        mail-ot0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752449AbdBCIHa (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 3 Feb 2017 03:07:30 -0500
-Received: by mail-ot0-f175.google.com with SMTP id 73so9201578otj.0
-        for <git@vger.kernel.org>; Fri, 03 Feb 2017 00:07:29 -0800 (PST)
+        id S1752215AbdBCI75 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 3 Feb 2017 03:59:57 -0500
+Received: from mail-ot0-f182.google.com ([74.125.82.182]:36634 "EHLO
+        mail-ot0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752122AbdBCI74 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 3 Feb 2017 03:59:56 -0500
+Received: by mail-ot0-f182.google.com with SMTP id 32so9838350oth.3
+        for <git@vger.kernel.org>; Fri, 03 Feb 2017 00:59:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=rHsS65kjHO0H0y1SSsC/0cwfT+DW02pjoV2FqcTJCJA=;
-        b=LMYhsd1M7ZBU1ZfLHjuPelpEhOhZXS2gBdaDB9QvhSQvTJaV+JFMgQXb49N0EopIJM
-         AimFYqjw4tRAgq16dzVNh8dFx7ufAwP8O+2SaD3URn2Jjdnq7QhH1SOl1diLZIs80WVF
-         XMrTKjVUAJqdQbcXrCe31n4qaxpdhSGdcI/xlfpvDHoxQT+IfkEsW/NbODE1EfvasWgR
-         sVi1tCwSFIbMGZ90pAr4CVl4ZA+W4qYJy3BmSsNrY7YrzlZm8h6gv8qMx1ne8LA1t5dL
-         FyvPL37ShszDEXqE1cgRjm2g7/g8gsP598OjEAhs/8L1WBt04OVrYKEuXUUVvObxKSTz
-         jkOw==
+        bh=S5QJ14Qsg6u7Xfp95rATVuKTut8/FqrN7lnB9sdOuuk=;
+        b=GRwEmUhok4ex6UK5rwyqE98AhGFMGYK6V79HwYjo3mcBe31y4RRLREQGKbheX8vxro
+         e6aafFODlHfimSh9trP2i062x5jbxWywMVPfvt5C+fDWe+oFbpiK+J7KF45xNQuoM9Yx
+         8hYIjNq82piYI4lFLVrUS/GamWpu6wAdzF1PDf6RMhFqM9qYp+GVmMXIfl4ZHzhv/M23
+         loZKVQ8ENgqy0tBTw6mri9GQIcClbDBd5x5q4h2iHt60ImLnsZJUUlCWt3yyX2JTkXnc
+         a5rMYcn+ixLtgzxvcmcgv7PvTeL3KNzEtlPx09D94AdUvsV1xl+zlTOQGJLPmOjHcF+S
+         pcFg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=rHsS65kjHO0H0y1SSsC/0cwfT+DW02pjoV2FqcTJCJA=;
-        b=DyC7A5ICQ1wBG/xQ52ztlK7RyG/EPxdxOoBJBQfBwEb9DNfT9EqEV4sd+cjSIEbfYz
-         6hIz94EauM7+7qsVxa5W9pKpY7yAEZNHAHx6STufrUe2lTgGHQc5jmD38RB9OV9DOHjz
-         M/HoKwY4Ohe8xz2FvYacJj8efNVsvMyPkjL59uzOYYmMnslZCvBvp03p9zcE9rWjiEzd
-         BXmEpZPVk6T1gB4ax+wSr9ABLLWlsQZwccOEJrriPBIrv26ZWGdcwYLIvkAZsNPKk3N7
-         jKvyMfT7/y3ed1Pjehdb4Czvt0RjB1zHE9MsAA7meaBEf1gf07Fn9G3E/HIFfN7T9a/V
-         I/aQ==
-X-Gm-Message-State: AIkVDXLddhES6XwdoVcosKpuwdZY5Uyv9PmPmic4BhpUD3K42TvLDZAvSEM+LDgcOH9rk6hNHYYs22snWlrmsA==
-X-Received: by 10.157.46.57 with SMTP id q54mr7211161otb.28.1486109249391;
- Fri, 03 Feb 2017 00:07:29 -0800 (PST)
+        bh=S5QJ14Qsg6u7Xfp95rATVuKTut8/FqrN7lnB9sdOuuk=;
+        b=uNOUyW0TzgKBVqy7t+WbQrbiZ+yaEzFE85TI3O2krsHx01vAS66AD3icjLQP7iU3Zq
+         giozpza0HPBVzXXQQgCh0+sqfRNDAV74a1NvBxkQTDRdWazk1fuAbDHZFkwAVnASSZ+f
+         B9EwJDThJhMGD4T2Dflk3S4Ezt/lVDrIFVWtNlTkYFOOk+0PpMEMKkQUVzVJEtSyYcEh
+         oY0ubjVbWDAZOVC3/oT/P4XAvew6DvHAOFItBwtl3lwHCgzTw69xrH3U0IVA8pfF93NG
+         7Qd1bsfWCVqfDILsJAzj09zqooSIW76u/hd2qHvBuddEjJJcJPf3man0M+i9TFqQ4LZc
+         clgw==
+X-Gm-Message-State: AIkVDXL+hm3OjhuxtKJ7oOfo3Sx/FtpsK7/eaMFh+CpG05Qs/kJgvUxa8zNE8n429FmWce8PEq1IST+zBx23aA==
+X-Received: by 10.157.46.226 with SMTP id w89mr6872915ota.225.1486112395828;
+ Fri, 03 Feb 2017 00:59:55 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.74.158.1 with HTTP; Fri, 3 Feb 2017 00:06:58 -0800 (PST)
-In-Reply-To: <CAE1pOi0-8JnnZbdm9vu1RwTU1mXr7dboLC3ito3LcvK9gkNi_A@mail.gmail.com>
-References: <CAE1pOi0-8JnnZbdm9vu1RwTU1mXr7dboLC3ito3LcvK9gkNi_A@mail.gmail.com>
+Received: by 10.74.158.1 with HTTP; Fri, 3 Feb 2017 00:59:25 -0800 (PST)
+In-Reply-To: <xmqqmve4s5r2.fsf@gitster.mtv.corp.google.com>
+References: <20170202085007.21418-1-pclouds@gmail.com> <alpine.DEB.2.20.1702021015160.3496@virtualbox>
+ <CACsJy8B3bdokeYVt6aEyZVSzO50PiQRn+0sid9mSDTZ9q-mnww@mail.gmail.com>
+ <alpine.DEB.2.20.1702021043110.3496@virtualbox> <CACsJy8A-tuea7W+tj6rNddtM0j_374FODjQqKsT8eHfeZ0qDZg@mail.gmail.com>
+ <alpine.DEB.2.20.1702021136210.3496@virtualbox> <CACsJy8CBG_a_nX_syXKrdG2-ren=NO9CNxe6tm94FGnEo1HZLQ@mail.gmail.com>
+ <alpine.DEB.2.20.1702021223320.3496@virtualbox> <alpine.DEB.2.20.1702021330040.3496@virtualbox>
+ <xmqqmve4s5r2.fsf@gitster.mtv.corp.google.com>
 From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Fri, 3 Feb 2017 15:06:58 +0700
-Message-ID: <CACsJy8DjqrEZ=VaZo6bn4i2r=Wr8k4ExYv48N-rDvfPO=hqpLA@mail.gmail.com>
-Subject: Re: How to use git show's "%<(<N>[,trunc|ltrunc|mtrunc])"?
-To:     Hilco Wijbenga <hilco.wijbenga@gmail.com>
-Cc:     Git Users <git@vger.kernel.org>
+Date:   Fri, 3 Feb 2017 15:59:25 +0700
+Message-ID: <CACsJy8Cq8sY1hL75Xs_MMr9r_+jjr7p+58D+0GhT3mgSgiUEtg@mail.gmail.com>
+Subject: Re: [PATCH 00/11] nd/worktree-move update
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Feb 3, 2017 at 12:51 AM, Hilco Wijbenga
-<hilco.wijbenga@gmail.com> wrote:
-> Hi all,
+On Fri, Feb 3, 2017 at 3:21 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 >
-> I'm trying to get the committer date printed in a custom fashion.
-> Using "%cI" gets me close:
+>> Also, the more important reply was Peff's reply that suggested that the
+>> proposed fix was incomplete, as it misses --unpack-unreachable:
+>> https://public-inbox.org/git/20160601160143.GA9219@sigill.intra.peff.net/
 >
-> $ git show --format="%cI | %an" master | head -n 1
-> 2017-01-31T17:02:13-08:00 | Hilco Wijbenga
->
-> I would like to get rid of the "-08:00" bit at the end of the
-> timestamp. According to the "git show" manual I should be able to use
-> "%<(<N>[,trunc|ltrunc|mtrunc])" to drop that last part.
->
-> $ git show --format="%<(19,trunc)cI | %an" master | head -n 1
+> While I think that --unpack-unreachable thing is a symptom of the
+> basic approach of patching things up at the wrong level, if you are
+> hinting that fix to the issue that gc does not pay attention to
+> various anchoring point in other worktrees is more important than
+> adding new commands to "worktree", I fully agree with that.
 
-You're almost there. Just insert another '%' between "trunc)" and "cI".
+Just to make it clear. It's not like I put new worktree commands on
+higher priority. "worktree move/remove" was more or less ready for a
+long time and the gc problem was blocked by ref-iterator series (which
+entered master a few moths ago, but then I was busy with other things
+and couldn't get right back to the gc issue).
 
-> How do I get "2017-01-31T17:02:13 | Hilco Wijbenga" to be output?
+You didn't answer Johannes's rhetoric question though: "It should be
+possible to do that redesign work while having a small workaround in
+place that unbreaks, say, me?"
 
-You'll get an ellipsis at the end though.. (i.e. 02:13... | Hilco)
+I assume "the right way" is still updating refs subsystem so that we
+can have a ref iterator to traverse all refs, or just one worktree,
+etc. Should I keep looking for a middle ground (maybe better than the
+linked series) to "unbreak Johannes"? I ignored all those comments
+(about --unpack-reachable and bisect refs) because I saw no chance of
+an updated series getting in git.git anyway.
 -- 
 Duy
