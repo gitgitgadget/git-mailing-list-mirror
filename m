@@ -2,71 +2,83 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0ADD31F9AF
-	for <e@80x24.org>; Fri,  3 Feb 2017 04:48:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EDBFD1F9AF
+	for <e@80x24.org>; Fri,  3 Feb 2017 08:07:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752483AbdBCEsA (ORCPT <rfc822;e@80x24.org>);
-        Thu, 2 Feb 2017 23:48:00 -0500
-Received: from mail-qt0-f177.google.com ([209.85.216.177]:33946 "EHLO
-        mail-qt0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752272AbdBCEr7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Feb 2017 23:47:59 -0500
-Received: by mail-qt0-f177.google.com with SMTP id w20so16391260qtb.1
-        for <git@vger.kernel.org>; Thu, 02 Feb 2017 20:47:59 -0800 (PST)
+        id S1752745AbdBCIHa (ORCPT <rfc822;e@80x24.org>);
+        Fri, 3 Feb 2017 03:07:30 -0500
+Received: from mail-ot0-f175.google.com ([74.125.82.175]:33148 "EHLO
+        mail-ot0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752449AbdBCIHa (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 3 Feb 2017 03:07:30 -0500
+Received: by mail-ot0-f175.google.com with SMTP id 73so9201578otj.0
+        for <git@vger.kernel.org>; Fri, 03 Feb 2017 00:07:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=JXfzoHN1PxqPnLAd2dxFtnfGCh8bKcbJIGSKqKyKQNM=;
-        b=q1PYc0nYcWTo4KHuoi0wCYn6hFEwn4SEHv1b+QsC5e1hoCLE9/CY/YZU0Hs+uus7Qu
-         TZuU9bi5ww8GZDvs7Jzo18XcD6Vp/8IReSlv53k0lmTqgYNRGnWDaHtY08RpuoTicBZ8
-         9yEk8Bp9AacCLLZv99yQqL7TyLNA8DW3vC2uAV+c2OEALn4loAmxa5fFge5Aj7UVB3nT
-         YOyV62lTbccIgAzbCLbZ2t1AzICtDg89fDc5Y4gdTyFF8kn630FStYJ2Yayf5OAH5PCF
-         IF1YgDxg60AmF41BLoDJ49KnrOfplF9qJn8Y2aS7B9+oJ1QQ8SctECPg9lsa3UpD56oo
-         SWvA==
+        bh=rHsS65kjHO0H0y1SSsC/0cwfT+DW02pjoV2FqcTJCJA=;
+        b=LMYhsd1M7ZBU1ZfLHjuPelpEhOhZXS2gBdaDB9QvhSQvTJaV+JFMgQXb49N0EopIJM
+         AimFYqjw4tRAgq16dzVNh8dFx7ufAwP8O+2SaD3URn2Jjdnq7QhH1SOl1diLZIs80WVF
+         XMrTKjVUAJqdQbcXrCe31n4qaxpdhSGdcI/xlfpvDHoxQT+IfkEsW/NbODE1EfvasWgR
+         sVi1tCwSFIbMGZ90pAr4CVl4ZA+W4qYJy3BmSsNrY7YrzlZm8h6gv8qMx1ne8LA1t5dL
+         FyvPL37ShszDEXqE1cgRjm2g7/g8gsP598OjEAhs/8L1WBt04OVrYKEuXUUVvObxKSTz
+         jkOw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=JXfzoHN1PxqPnLAd2dxFtnfGCh8bKcbJIGSKqKyKQNM=;
-        b=BKL9rGjEce478+4xnbV/olscFLXcRMYdRhL2rGGWSun3LYrtpU2ZsBRWbvZ9Q5pgWE
-         XleITAz0JC8esA+4+H7ojL1nCtMJwtHVtazV8vjf2GZlDsMZSkQgqNe2wNV0YSEW+ETA
-         7Dhsjs65slzLCQ65ObIqfFYjUDlNHA7ebmSqzO17I1yUe97TTGWyz+0z94lak7JuXL2H
-         /uCgsM54mUcso5Rqg8C9ZHfix8JArRYSHojXZN9lJurh+kRx2t91JukjtLlYpBu+AG/F
-         F5s8ayd63jcrbPymjuHM6NUkB32JS7ZOFEsvH8oFbFVlJfbwEgEGvlr8wxND7i5N0W0j
-         YyVg==
-X-Gm-Message-State: AIkVDXJJXK46/pKwXCdgBihLi8D2CyJjrMEbR2rsZOmQwqefz3ArD/sEGvcAwuH9kCDQD2LMinrdzF7oZJ0uTQ==
-X-Received: by 10.55.10.131 with SMTP id 125mr12646440qkk.257.1486097278758;
- Thu, 02 Feb 2017 20:47:58 -0800 (PST)
+        bh=rHsS65kjHO0H0y1SSsC/0cwfT+DW02pjoV2FqcTJCJA=;
+        b=DyC7A5ICQ1wBG/xQ52ztlK7RyG/EPxdxOoBJBQfBwEb9DNfT9EqEV4sd+cjSIEbfYz
+         6hIz94EauM7+7qsVxa5W9pKpY7yAEZNHAHx6STufrUe2lTgGHQc5jmD38RB9OV9DOHjz
+         M/HoKwY4Ohe8xz2FvYacJj8efNVsvMyPkjL59uzOYYmMnslZCvBvp03p9zcE9rWjiEzd
+         BXmEpZPVk6T1gB4ax+wSr9ABLLWlsQZwccOEJrriPBIrv26ZWGdcwYLIvkAZsNPKk3N7
+         jKvyMfT7/y3ed1Pjehdb4Czvt0RjB1zHE9MsAA7meaBEf1gf07Fn9G3E/HIFfN7T9a/V
+         I/aQ==
+X-Gm-Message-State: AIkVDXLddhES6XwdoVcosKpuwdZY5Uyv9PmPmic4BhpUD3K42TvLDZAvSEM+LDgcOH9rk6hNHYYs22snWlrmsA==
+X-Received: by 10.157.46.57 with SMTP id q54mr7211161otb.28.1486109249391;
+ Fri, 03 Feb 2017 00:07:29 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.237.45.226 with HTTP; Thu, 2 Feb 2017 20:47:58 -0800 (PST)
-In-Reply-To: <CAOc6etabV=h6fEVee=N2-3ERUU7_w6eCM006mSMPqiwkRycQBw@mail.gmail.com>
-References: <CAOc6etaCk=OEyarMNhorM94MBnYRscCkJBM-K08snv1ecmOaPQ@mail.gmail.com>
- <20170128035321.yrcqwkg2fiwadxj4@sigill.intra.peff.net> <xmqqd1f4uug6.fsf@gitster.mtv.corp.google.com>
- <20170130232559.krdxkt4dq4lfv4rj@sigill.intra.peff.net> <CAOc6etZZSgeBRwQA4C4Ag5A48W8tAAArdOaaKxkTOVvVGi+EpQ@mail.gmail.com>
- <CAOc6etYzAeD32oSjrvmv-PBJTdAGobsQ30iH8Q+Z9ShWOqiHfQ@mail.gmail.com> <CAOc6etabV=h6fEVee=N2-3ERUU7_w6eCM006mSMPqiwkRycQBw@mail.gmail.com>
-From:   Edmundo Carmona Antoranz <eantoranz@gmail.com>
-Date:   Thu, 2 Feb 2017 22:47:58 -0600
-Message-ID: <CAOc6etZhQUdM9+6xty=G04t9dSXXP1BL3Ffa-a68XFbgCVOgtw@mail.gmail.com>
-Subject: Re: difflame
-To:     Jeff King <peff@peff.net>
-Cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
+Received: by 10.74.158.1 with HTTP; Fri, 3 Feb 2017 00:06:58 -0800 (PST)
+In-Reply-To: <CAE1pOi0-8JnnZbdm9vu1RwTU1mXr7dboLC3ito3LcvK9gkNi_A@mail.gmail.com>
+References: <CAE1pOi0-8JnnZbdm9vu1RwTU1mXr7dboLC3ito3LcvK9gkNi_A@mail.gmail.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Fri, 3 Feb 2017 15:06:58 +0700
+Message-ID: <CACsJy8DjqrEZ=VaZo6bn4i2r=Wr8k4ExYv48N-rDvfPO=hqpLA@mail.gmail.com>
+Subject: Re: How to use git show's "%<(<N>[,trunc|ltrunc|mtrunc])"?
+To:     Hilco Wijbenga <hilco.wijbenga@gmail.com>
+Cc:     Git Users <git@vger.kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Feb 2, 2017 at 10:46 PM, Edmundo Carmona Antoranz
-<eantoranz@gmail.com> wrote:
-> I have been "scripting around git blame --reverse" for some days now.
-> Mind taking a look? I've been working on blame-deletions for this.
+On Fri, Feb 3, 2017 at 12:51 AM, Hilco Wijbenga
+<hilco.wijbenga@gmail.com> wrote:
+> Hi all,
+>
+> I'm trying to get the committer date printed in a custom fashion.
+> Using "%cI" gets me close:
+>
+> $ git show --format="%cI | %an" master | head -n 1
+> 2017-01-31T17:02:13-08:00 | Hilco Wijbenga
+>
+> I would like to get rid of the "-08:00" bit at the end of the
+> timestamp. According to the "git show" manual I should be able to use
+> "%<(<N>[,trunc|ltrunc|mtrunc])" to drop that last part.
+>
+> $ git show --format="%<(19,trunc)cI | %an" master | head -n 1
 
-blame-deletions branch, that is
+You're almost there. Just insert another '%' between "trunc)" and "cI".
 
-Sorry for the previous top-posting.
+> How do I get "2017-01-31T17:02:13 | Hilco Wijbenga" to be output?
+
+You'll get an ellipsis at the end though.. (i.e. 02:13... | Hilco)
+-- 
+Duy
