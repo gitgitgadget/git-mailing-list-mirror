@@ -2,121 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B9BA51F9AF
-	for <e@80x24.org>; Fri,  3 Feb 2017 09:06:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D56E51F9AF
+	for <e@80x24.org>; Fri,  3 Feb 2017 09:19:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752415AbdBCJGZ (ORCPT <rfc822;e@80x24.org>);
-        Fri, 3 Feb 2017 04:06:25 -0500
-Received: from mail-ot0-f193.google.com ([74.125.82.193]:33782 "EHLO
-        mail-ot0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752385AbdBCJGW (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 3 Feb 2017 04:06:22 -0500
-Received: by mail-ot0-f193.google.com with SMTP id f9so1522321otd.0
-        for <git@vger.kernel.org>; Fri, 03 Feb 2017 01:06:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=eSkGHzgJguAHpOw0eO95yCnMoJsIaUT/ZwZl+tgt3gI=;
-        b=ZW69Gbw8ekfJ2wogetvLpZGFYfkxwMQCEQzoez6hyODrtErZ35Sn7gJmz7YuTVkUIv
-         IAFoFpNsf1FENX94ZppW8uHY5k4KPboBCDv2xb2dzz8HtxqN2lG8ATG31ZiKn31+fb5c
-         Jj4olYd/lymW+WjKJY07lqpsplsIxf56jsG6s5Ag3NZy3lUedlIR0C3Segy05gr4uXZV
-         Tl1yEmbkwa1D+ogYFtgdY4qjhu49StldmhZFxOHB7mhw0fzAe1DpJyM9Y7DLq2bTh37h
-         JFgSz/2H3d2FGUukCGFmsY/cGOTyHnPHosIPRt+wTS5IJ9t8RKRlVqbdpt3vufGBzU33
-         uL6g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=eSkGHzgJguAHpOw0eO95yCnMoJsIaUT/ZwZl+tgt3gI=;
-        b=tweMT6EJ29T5/7pLEdAIHjOAiXea5iKkmwAZ0M/dK4gpOq5J32jOUaZ7jB29jvEuIy
-         onw2M7ZlRPQ70s8cZSgGK+R5VS9//IvVF95QgbE0zNH/LpUFMQIuS2hRjcfbtPOKEopx
-         S92WMl46d28gpwIi1SdY6CDrqy2j1lzMVTaICEpBkpMvr33VSbuCV+W16ErWyKq6tFWJ
-         Sm9CmKtU45wgLlXyKT8x4S2yykfM/lKjIaAJK+67l2+UjJgWBX63RDoHLxbbwk1Wnvoz
-         K6MtM9zEp8nC2BEDaDcicJUNsXSAsE6XbdWJQWBLQBwzP+xMB+5Lchk+UvOmsgrHBq2G
-         3/ag==
-X-Gm-Message-State: AIkVDXIgU18G1QbDePHG8VjlNq4rblJGJsyg0hTBC5kFurZbhwiMhW0V8XRjlh7Piil5ImUvUBZgXS1FavZHgA==
-X-Received: by 10.157.37.54 with SMTP id k51mr5742456otb.271.1486112781482;
- Fri, 03 Feb 2017 01:06:21 -0800 (PST)
+        id S1752214AbdBCJTo (ORCPT <rfc822;e@80x24.org>);
+        Fri, 3 Feb 2017 04:19:44 -0500
+Received: from mout.gmx.net ([212.227.15.19]:58261 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752158AbdBCJTm (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 3 Feb 2017 04:19:42 -0500
+Received: from localhost.localdomain ([217.64.244.213]) by mail.gmx.com
+ (mrgmx001 [212.227.17.190]) with ESMTPSA (Nemesis) id
+ 0Lug4m-1cQstl2pCy-00zkMP; Fri, 03 Feb 2017 10:19:37 +0100
+From:   Johannes Schindelin <johannes.schindelin@gmx.de>
+To:     git-for-windows@googlegroups.com, git@vger.kernel.org
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: [ANNOUNCE] Git for Windows 2.11.1
+Date:   Fri,  3 Feb 2017 10:19:21 +0100
+Message-Id: <20170203091921.4520-1-johannes.schindelin@gmx.de>
+X-Mailer: git-send-email 2.11.0.windows.3
 MIME-Version: 1.0
-Received: by 10.74.158.1 with HTTP; Fri, 3 Feb 2017 01:05:48 -0800 (PST)
-In-Reply-To: <20170203003038.22278-1-jacob.e.keller@intel.com>
-References: <20170203003038.22278-1-jacob.e.keller@intel.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Fri, 3 Feb 2017 16:05:48 +0700
-Message-ID: <CACsJy8B=OEdUbc3_Svci_whtk=-Bz-4BP4y-Xr_u3CU81dxvCA@mail.gmail.com>
-Subject: Re: [PATCH] reset: add an example of how to split a commit into two
-To:     Jacob Keller <jacob.e.keller@intel.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Jacob Keller <jacob.keller@gmail.com>
 Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K0:U3p5TRHGS/sANQG1cCfBjp0iyEl4R37f+1vVZihMnKNmWanwPA6
+ EW4x5eXxrgssXetM5q4vbyXFAF/vGj6ovnqOpERd0kfijW1M2J2gA3dLVt51GeCRzZZy/qa
+ dSeXqgpjNBv0ZFArmVRJ3YPEJh+KlSJAa5BEKieV9iIaCf9mwULeWzzeavctOZdkVjY2rlZ
+ fRJIgQcHQq/ufE0C8vrwg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:QbqRJ+Hpsc8=:JJ7xFblLgR1avy4diXcWNu
+ bF/x542/6xQPPwU4fVNFmjvssCP5dx4N2gZraxw0FNTOqFbXt21I+1YaDxKVP9H+WI53XEgl+
+ urkyAAKvRp6m5aoaerguRuzfPpyDgIFVEYAE2fdHUSQwVcvWAV7zuN2aCYbLLquOs1glBaVuF
+ pmU8WfcazCbiDYMN7df43kRbqajV9csCckV7Lk2Fw4PEWXlDaqGweIsI1g9qMQ4HACU84XIky
+ 2x8ySk+3HU6SjmBogaWoriDn9IbQ4VQ0dzGoWtIiKVPqxnjT3HGCNVlUd9cEMPmr7WKx+qFgw
+ qaxD7ST48ONE9mURN+3gziETxsz6UjNBfd0rVFVqHOiQSDWkVR0FP+v05mcWk6nPIFP/M5fpw
+ JPZLWtao8N9ZastIBFLr7F9tjpcCMt0ZcoTEGGrvNTvG1MyVrTaN5bXoxo1wMFj/qsx+rsnvC
+ 75jRBni8jijpFCUeQI0TvYswuAMgk2XSUnMsPD1HkzUV7aD0t04tUhJTFrWHHm9f7ZacaE/rG
+ Ztj5huqI9IiPOZ/VYNZKg6wZRuxI4aLgwkDhhHQ/0+vrlRx1wkXuFdZ4YdqTR6dDF2DkkByE0
+ /qh5Zwkapg3AC9MdJm7n082rYdeDwmEIOr1aZadKYVh7kz3GX9St9LAF7uqE0wdtMeLwAPopm
+ NHnXolr1lawJgIIPtYHsgZeBuKaR4K2HCTbiPJ7/n/iyMNMC5+M8gfIFFRhZlYJLE4RXT6OSL
+ dbHi0yN+8zslPseKel8HDdcghGo2lnfyvCOofWVfYd4GUIrV1b1OkRv1zTyKQQmKnZeMBTA45
+ h6l4kGx
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Feb 3, 2017 at 7:30 AM, Jacob Keller <jacob.e.keller@intel.com> wrote:
-> From: Jacob Keller <jacob.keller@gmail.com>
->
-> It is sometimes useful to break a commit into parts to more logically
-> show how the code changes. There are many possible ways to achieve this
-> result, but one simple and powerful one is to use git reset -p.
->
-> Add an example to the documentation showing how this can be done so that
-> users are more likely to discover this, instead of inventing more
-> painful methods such as re-writing code from scratch, or duplicating git
-> add -p more times than necessary.
->
-> Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
-> ---
->  Documentation/git-reset.txt | 23 +++++++++++++++++++++++
->  1 file changed, 23 insertions(+)
->
-> diff --git a/Documentation/git-reset.txt b/Documentation/git-reset.txt
-> index 25432d9257f9..4adac7a25bf9 100644
-> --- a/Documentation/git-reset.txt
-> +++ b/Documentation/git-reset.txt
-> @@ -292,6 +292,29 @@ $ git reset --keep start                    <3>
->  <3> But you can use "reset --keep" to remove the unwanted commit after
->      you switched to "branch2".
->
-> +Split a commit into two::
-> ++
-> +Suppose that you have created a commit, but later decide that you want to split
-> +the changes into two separate commits, including only part of the old commit
-> +into the first commit, and including the rest as a separate commit on top. You
-> +can use git reset in patch mode to interactively select which hunks to split
-> +out into a separate commit.
-> ++
-> +------------
-> +$ git reset -p HEAD^                        <1>
+MIME-Version: 1.0
 
-For good practice, perhaps put "git diff --cached HEAD^" before "git commit".
+Fcc: Sent
 
-I tend to avoid "reset -p" and "checkout -p" though because sometimes
-it does not work. Not sure if it's just me, I think it may have
-something to do with splitting hunks. So I usually go with "reset
-HEAD^" then "add -p" and "commit -c HEAD@{1}" instead.
+Dear Git users,
 
-> +$ git commit --amend                        <2>
-> +$ git commit ...                            <3>
-> +------------
-> ++
-> +<1> This lets you interactively undo changes between HEAD^ and HEAD, so you can
-> +    select which parts to remove from the initial commit. The changes are
-> +    placed into the index, leaving the working tree untouched.
-> +<2> Now, you ammend the initial commit with the modifications that you just
+It is my pleasure to announce that Git for Windows 2.11.1 is available from:
 
-s/ammend/amend/
+	https://git-for-windows.github.io/
 
-> +    made in the index.
-> +<3> Finally, you can add and then commit the final original unmodified files
-> +    back as the second commit, enabling you to logically separate a commit
-> +    into a sequence of two commits instead.
--- 
-Duy
+Changes since Git for Windows v2.11.0(3) (January 14th 2017)
+
+New Features
+
+  • Comes with Git v2.11.1.
+  • Performance was enhanced when using fscache in a massively sparse
+    checkout.
+  • Git hooks can now be .exe files.
+
+Bug Fixes
+
+  • Git GUI will no longer set GIT_DIR when calling Git Bash after
+    visualizing the commit history.
+  • When the PATH contains UNC entries, Git Bash will no longer error
+    out with a "Bad address" error message.
+Filename | SHA-256
+-------- | -------
+Git-2.11.1-64-bit.exe | 2c6408f98297b8f4ad0df36f3aabab67164b3b3d7bb3d91d49f237aba566f8ac
+Git-2.11.1-32-bit.exe | a556c6f65c13f54dcce64df96bbc94a156bb7c9025a27cf0caa329648adaac06
+PortableGit-2.11.1-64-bit.7z.exe | 47058bbfb815ec3e9247b96aedcaea21df58db59c3a73594ffcbd4171ac2cb11
+PortableGit-2.11.1-32-bit.7z.exe | 2f76bed9b649d990cf6999674e11e6cf5d502d25b89072b34c984f6aa86dafbb
+MinGit-2.11.1-64-bit.zip | 668d16a799dd721ed126cc91bed49eb2c072ba1b25b50048280a4e2c5ed56e59
+MinGit-2.11.1-32-bit.zip | 6ca79af09015625f350ef4ad74a75cfb001b340aec095b6963be9d45becb3bba
+Git-2.11.1-64-bit.tar.bz2 | 06b066c7a3f1934d96f2a838b64cbf1aced8578e5321bf6ff0e7bd65e6c34988
+Git-2.11.1-32-bit.tar.bz2 | f06e3d78ca25ae8def8dac3e584912c74d0d819966772dfb965d78e1e462f0b0
+Ciao,
+Johannes
+
+
+
+
+
+
+
+
+
+
+
+
+
+
