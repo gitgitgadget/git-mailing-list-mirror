@@ -2,103 +2,111 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D56E51F9AF
-	for <e@80x24.org>; Fri,  3 Feb 2017 09:19:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0E5541FAF5
+	for <e@80x24.org>; Fri,  3 Feb 2017 09:24:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752214AbdBCJTo (ORCPT <rfc822;e@80x24.org>);
-        Fri, 3 Feb 2017 04:19:44 -0500
-Received: from mout.gmx.net ([212.227.15.19]:58261 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752158AbdBCJTm (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 3 Feb 2017 04:19:42 -0500
-Received: from localhost.localdomain ([217.64.244.213]) by mail.gmx.com
- (mrgmx001 [212.227.17.190]) with ESMTPSA (Nemesis) id
- 0Lug4m-1cQstl2pCy-00zkMP; Fri, 03 Feb 2017 10:19:37 +0100
-From:   Johannes Schindelin <johannes.schindelin@gmx.de>
-To:     git-for-windows@googlegroups.com, git@vger.kernel.org
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [ANNOUNCE] Git for Windows 2.11.1
-Date:   Fri,  3 Feb 2017 10:19:21 +0100
-Message-Id: <20170203091921.4520-1-johannes.schindelin@gmx.de>
-X-Mailer: git-send-email 2.11.0.windows.3
+        id S1752360AbdBCJYj (ORCPT <rfc822;e@80x24.org>);
+        Fri, 3 Feb 2017 04:24:39 -0500
+Received: from mail-pg0-f65.google.com ([74.125.83.65]:36214 "EHLO
+        mail-pg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752232AbdBCJYh (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 3 Feb 2017 04:24:37 -0500
+Received: by mail-pg0-f65.google.com with SMTP id 75so1536887pgf.3
+        for <git@vger.kernel.org>; Fri, 03 Feb 2017 01:24:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=0WW/L4t/GxNBNqNQeMs/dDhYQ9wMsG8aFLX+/aeTmUs=;
+        b=E9JCLv3gBzr8qidXfb4NxCouL9eaxd9QWjzwmsWiw0vJ25PuTyDRL10GpP+83niLsr
+         Z8X3AkJeW4eo640uMn6ja9awm20iBRlnX2giBYLw+Oq3M5LNXC5U2o3fntQJStRJScLD
+         7YRNb+ixStJGZCtQVOnqSKdKQt3ddeo9jEt4VRD1DJgwyL74QxY0svVM/aAvwvknBrQb
+         SKhWe2GCJrn1P3ma1CRJjAqPy5X/Fzd9gUjmwlxAXkhI7+jIi7irOsnnp5mPgkHPK5ua
+         7EJ18xlP0xuiK264J/Ct7JV9bSqFhv8WdNNZcmybVCQ4asskjmCm6aejRQv0yOMPzo/6
+         ZKiw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=0WW/L4t/GxNBNqNQeMs/dDhYQ9wMsG8aFLX+/aeTmUs=;
+        b=KJmdAq/QAZApM8BC3VhrE1KV+nZBnhhC2dwvepwaKmtlqgqktfcSN/HTMViqEpyj5c
+         c/jCgop+bYVbebVWHyKYeSvP+//ct/y2DPnFgjxSBZy2Ttd13T7JEsid6bZ4EB5CxidM
+         xav+mRto/unYo5ywP4uHlIMgoSnBYPQYp5Wwg+wUjpwDU2P7+tv6V8K3q3OzkvCoh15H
+         S9RJhEt+jm0L+pyFfYBccDRyzIJVNpxjcoVNZM5f6gkPgHV1c2oBomYGrp49MZwUXmWR
+         muR7l8QgBlBJJhTQPFPDqiGnNQGMV3aoSqgRa567eDiYRwu5ungIf9Js34a8dZTMzqCs
+         E4fA==
+X-Gm-Message-State: AIkVDXLRcqfpOT+ZUtqkE8SppEyU+3cu5ADwpNxK+x6Z5FxMiswfEVQ2i7vC1SLSORz9jg==
+X-Received: by 10.99.53.195 with SMTP id c186mr16438248pga.24.1486113876686;
+        Fri, 03 Feb 2017 01:24:36 -0800 (PST)
+Received: from ash ([115.73.162.84])
+        by smtp.gmail.com with ESMTPSA id 21sm65168249pfy.4.2017.02.03.01.24.33
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 03 Feb 2017 01:24:35 -0800 (PST)
+Received: by ash (sSMTP sendmail emulation); Fri, 03 Feb 2017 16:24:30 +0700
+Date:   Fri, 3 Feb 2017 16:24:30 +0700
+From:   Duy Nguyen <pclouds@gmail.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: [PATCH] document behavior of empty color name
+Message-ID: <20170203092430.GA10987@ash>
+References: <xmqqpoj2q25n.fsf@gitster.mtv.corp.google.com>
+ <20170201002129.xb62hmxwrzwgp6vg@sigill.intra.peff.net>
+ <20170202091615.GA22337@ash>
+ <20170202124238.53k74cedpp2rcmzo@sigill.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K0:U3p5TRHGS/sANQG1cCfBjp0iyEl4R37f+1vVZihMnKNmWanwPA6
- EW4x5eXxrgssXetM5q4vbyXFAF/vGj6ovnqOpERd0kfijW1M2J2gA3dLVt51GeCRzZZy/qa
- dSeXqgpjNBv0ZFArmVRJ3YPEJh+KlSJAa5BEKieV9iIaCf9mwULeWzzeavctOZdkVjY2rlZ
- fRJIgQcHQq/ufE0C8vrwg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:QbqRJ+Hpsc8=:JJ7xFblLgR1avy4diXcWNu
- bF/x542/6xQPPwU4fVNFmjvssCP5dx4N2gZraxw0FNTOqFbXt21I+1YaDxKVP9H+WI53XEgl+
- urkyAAKvRp6m5aoaerguRuzfPpyDgIFVEYAE2fdHUSQwVcvWAV7zuN2aCYbLLquOs1glBaVuF
- pmU8WfcazCbiDYMN7df43kRbqajV9csCckV7Lk2Fw4PEWXlDaqGweIsI1g9qMQ4HACU84XIky
- 2x8ySk+3HU6SjmBogaWoriDn9IbQ4VQ0dzGoWtIiKVPqxnjT3HGCNVlUd9cEMPmr7WKx+qFgw
- qaxD7ST48ONE9mURN+3gziETxsz6UjNBfd0rVFVqHOiQSDWkVR0FP+v05mcWk6nPIFP/M5fpw
- JPZLWtao8N9ZastIBFLr7F9tjpcCMt0ZcoTEGGrvNTvG1MyVrTaN5bXoxo1wMFj/qsx+rsnvC
- 75jRBni8jijpFCUeQI0TvYswuAMgk2XSUnMsPD1HkzUV7aD0t04tUhJTFrWHHm9f7ZacaE/rG
- Ztj5huqI9IiPOZ/VYNZKg6wZRuxI4aLgwkDhhHQ/0+vrlRx1wkXuFdZ4YdqTR6dDF2DkkByE0
- /qh5Zwkapg3AC9MdJm7n082rYdeDwmEIOr1aZadKYVh7kz3GX9St9LAF7uqE0wdtMeLwAPopm
- NHnXolr1lawJgIIPtYHsgZeBuKaR4K2HCTbiPJ7/n/iyMNMC5+M8gfIFFRhZlYJLE4RXT6OSL
- dbHi0yN+8zslPseKel8HDdcghGo2lnfyvCOofWVfYd4GUIrV1b1OkRv1zTyKQQmKnZeMBTA45
- h6l4kGx
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20170202124238.53k74cedpp2rcmzo@sigill.intra.peff.net>
+X-Clacks-Overhead: GNU Terry Pratchett
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-MIME-Version: 1.0
+On Thu, Feb 02, 2017 at 01:42:44PM +0100, Jeff King wrote:
+> On Thu, Feb 02, 2017 at 04:16:15PM +0700, Duy Nguyen wrote:
+> 
+> > > I hadn't heard anything back,
+> > 
+> > Sorry I was accidentally busy during Luna new year holiday.
+> 
+> No problem. That sounds much more fun than working on Git. :)
+> 
+> > > -	if (!len)
+> > > -		return -1;
+> > > +	if (!len) {
+> > > +		dst[0] = '\0';
+> > > +		return 0;
+> > > +	}
+> > >  
+> > >  	if (!strncasecmp(ptr, "reset", len)) {
+> > >  		xsnprintf(dst, end - dst, GIT_COLOR_RESET);
+> > 
+> > I wonder if it makes more sense to do this in builtin/config.c. The
+> > "default value" business is strictly git-config command's. The parsing
+> > function does not need to know. Maybe something like this?
+> 
+> I don't think so. The default value is a git-config thing, but you would
+> want to be able to do the same thing in a config file. For example, to
+> disable coloring entirely for part of the diff, you could do:
+> 
+>   [color "diff"]
+>   meta = ""
 
-Fcc: Sent
+OK but it makes log.graphColors add empty colors though. In t4202.39,
+we have " blue,invalid-color, cyan, red , ". With this patch the color
+after red would be no color. Without it, we get a complaint and the
+next color would be cycled back to blue. The test does not catch this
+because the test graph does not have enough fork points to get to red
+and back to blue.
 
-Dear Git users,
-
-It is my pleasure to announce that Git for Windows 2.11.1 is available from:
-
-	https://git-for-windows.github.io/
-
-Changes since Git for Windows v2.11.0(3) (January 14th 2017)
-
-New Features
-
-  • Comes with Git v2.11.1.
-  • Performance was enhanced when using fscache in a massively sparse
-    checkout.
-  • Git hooks can now be .exe files.
-
-Bug Fixes
-
-  • Git GUI will no longer set GIT_DIR when calling Git Bash after
-    visualizing the commit history.
-  • When the PATH contains UNC entries, Git Bash will no longer error
-    out with a "Bad address" error message.
-Filename | SHA-256
--------- | -------
-Git-2.11.1-64-bit.exe | 2c6408f98297b8f4ad0df36f3aabab67164b3b3d7bb3d91d49f237aba566f8ac
-Git-2.11.1-32-bit.exe | a556c6f65c13f54dcce64df96bbc94a156bb7c9025a27cf0caa329648adaac06
-PortableGit-2.11.1-64-bit.7z.exe | 47058bbfb815ec3e9247b96aedcaea21df58db59c3a73594ffcbd4171ac2cb11
-PortableGit-2.11.1-32-bit.7z.exe | 2f76bed9b649d990cf6999674e11e6cf5d502d25b89072b34c984f6aa86dafbb
-MinGit-2.11.1-64-bit.zip | 668d16a799dd721ed126cc91bed49eb2c072ba1b25b50048280a4e2c5ed56e59
-MinGit-2.11.1-32-bit.zip | 6ca79af09015625f350ef4ad74a75cfb001b340aec095b6963be9d45becb3bba
-Git-2.11.1-64-bit.tar.bz2 | 06b066c7a3f1934d96f2a838b64cbf1aced8578e5321bf6ff0e7bd65e6c34988
-Git-2.11.1-32-bit.tar.bz2 | f06e3d78ca25ae8def8dac3e584912c74d0d819966772dfb965d78e1e462f0b0
-Ciao,
-Johannes
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+I suppose this is ok after your documentation patch ("that's by
+design!"). Just wanted to point it out in case I miss something.
+--
+Duy
