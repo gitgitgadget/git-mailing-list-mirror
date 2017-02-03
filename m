@@ -7,53 +7,53 @@ X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0C8581F9AF
-	for <e@80x24.org>; Fri,  3 Feb 2017 02:50:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1EBF31F9AF
+	for <e@80x24.org>; Fri,  3 Feb 2017 02:50:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752368AbdBCCuC (ORCPT <rfc822;e@80x24.org>);
-        Thu, 2 Feb 2017 21:50:02 -0500
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:35131 "EHLO
-        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752222AbdBCCt2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Feb 2017 21:49:28 -0500
-Received: by mail-wm0-f68.google.com with SMTP id u63so1170419wmu.2
-        for <git@vger.kernel.org>; Thu, 02 Feb 2017 18:49:22 -0800 (PST)
+        id S1752385AbdBCCuF (ORCPT <rfc822;e@80x24.org>);
+        Thu, 2 Feb 2017 21:50:05 -0500
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:33936 "EHLO
+        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752198AbdBCCt1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Feb 2017 21:49:27 -0500
+Received: by mail-wm0-f67.google.com with SMTP id c85so1187988wmi.1
+        for <git@vger.kernel.org>; Thu, 02 Feb 2017 18:49:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=BESaxLk/ad1WXiAMLAsZe4hrS8aMuQfBA2tKtgPX+2I=;
-        b=WOUbW9YvKd5dH/AN0oL9fjmDgfZOK9uplXRe/r7CAsQJ4yO9hb3tgpdxsWL8nhj9m1
-         So/5j+LbgxH3zT01E5MmTQYC550M8csIYRdKEWeRgEN6UqnTOW9PvqyxL0vjbS9iD+md
-         y8p0qwIGuaedKV9i3R2qJxBd1HCftxTiYd/h1mncVqaQjMgAxAwVUb92Q33Wj3EKARP3
-         ZNL59FQn0wvRj9ceAgaw2Uf2a9s9oXtbG5THfR68ra2Zub6C+vZx+aQeG8x2xeRujszn
-         lDSqsQuc/N6ley1GLMOdeFZTLHlXW5ksEAaMjooqHb5Vo0s20T1agFbZvP6WTnb2JcZ0
-         P7iQ==
+        bh=kci/geIHhfsXRZQffPhkm9bLEdr9KN1llIqj4Lh1V18=;
+        b=S1aeJOjmPOjyScT0PYY54A/EtJsq3KcFAfStLlMJ4yOnsBpn3rUkMvWz3yckrtsPwj
+         AOEsV1O2O8rnp/L6/9Rsodrnb5o8ZaQ/5CfuXD78KdzzyqAomlcteEJAdKRW804/ntHs
+         WtaJmQZnIpLmU9gUgj0o1OK2WYI+ItYKwx7s1M38k0xWkgx/8FrNNagZnLA/CIZLPF+2
+         ZNKHn+pT9qY1zD6BzuJh0R9vQCfb5p06FSBZ6JzMc6JYB3lvjQaUvL8xOCP/Fi/S3k0a
+         y7QrkfzVP3AaXmqe0JlBLrCDvu5noNncm2f8qBv/H8/k+SDQhxC06Eq/pCAk/tR4Jf9r
+         vOPg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=BESaxLk/ad1WXiAMLAsZe4hrS8aMuQfBA2tKtgPX+2I=;
-        b=YGGNgpIE6VsfJQLrAtxkVce3ZEoIh4baQ4Av82OV2CoXhHsEaQPYhS9yfTu5tLxaY+
-         Ew29eFMvO0P6ToNQ4vlVfLVwlOpgQO1sYIdtXj2XinfQQyARy1yBKNPy/ug4pJbozMlQ
-         WP4UlVzDqY+BjyAN4yfRuMxuwtPXP5ng2LjpM8V8rogOvCzf/DyoMuJ7tyEW8nYpU2kN
-         HMSzjqmhT3UldF6ooEzAZuIlDA+jrzIEBjQUA/82OX8VNZIbPQkCn+VLkdK/vfM9TmJK
-         Gof0xNq4dY036qbyH1KFKDaxEYjyf8W5A9704D/rh355AHFyUr91/qXF/o4txj5vSr8C
-         6jrA==
-X-Gm-Message-State: AIkVDXL62ybkcb8tr2L1Gl4DDqdjB7l7wGFKlO1kENRbqa5bRONmB96YHacqBwPE/QY+Vw==
-X-Received: by 10.223.161.158 with SMTP id u30mr9798278wru.152.1486090161697;
-        Thu, 02 Feb 2017 18:49:21 -0800 (PST)
+        bh=kci/geIHhfsXRZQffPhkm9bLEdr9KN1llIqj4Lh1V18=;
+        b=Zg9N5/XKQYwPpwb1QV5a/zoQCfyDh6sutusYGuZU9G/tgkZeiskRttIaHfvDrR+gOL
+         qAsfM6yhYIIDqPjt2/ovV+0MSf3OYQn79Cjo4Xk5vmZp3XH+DaL0T8bNApHYtPUwqlsb
+         T15J2SZQjYgMTeFUEiOfwerzMa0SGYYpRjjCGG933b54050D4CS4qFgG1KCtOtMPobQF
+         hqd89sGRp54lzAJb6HtTu3Neh1xMSIoP7fsA0rexypi0f1FnnQ3w7Hnp4YIbqrUnr+Z5
+         XIilij2kO2I9RUBaVIlEVzuGBq/XGcz90K7hBslNVzU16evkbBa4w22DQUB0cXhooYwa
+         n/2w==
+X-Gm-Message-State: AIkVDXKx9lf05pD2Z/hF2Gd3mz6J2T2t3P3If1gYlrmHF0sfxLDlW403wuxInD+xE3nVNQ==
+X-Received: by 10.223.163.201 with SMTP id m9mr11147292wrb.66.1486090166174;
+        Thu, 02 Feb 2017 18:49:26 -0800 (PST)
 Received: from localhost.localdomain (x590d744d.dyn.telefonica.de. [89.13.116.77])
-        by smtp.gmail.com with ESMTPSA id k43sm42867464wrc.46.2017.02.02.18.49.20
+        by smtp.gmail.com with ESMTPSA id k43sm42867464wrc.46.2017.02.02.18.49.25
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 02 Feb 2017 18:49:20 -0800 (PST)
+        Thu, 02 Feb 2017 18:49:25 -0800 (PST)
 From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     git@vger.kernel.org,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCHv2 09/21] completion: respect 'git --git-dir=<path>' when listing remote refs
-Date:   Fri,  3 Feb 2017 03:48:17 +0100
-Message-Id: <20170203024829.8071-10-szeder.dev@gmail.com>
+Subject: [PATCHv2 14/21] completion: fix completion after 'git -C <path>'
+Date:   Fri,  3 Feb 2017 03:48:22 +0100
+Message-Id: <20170203024829.8071-15-szeder.dev@gmail.com>
 X-Mailer: git-send-email 2.11.0.555.g967c1bcb3
 In-Reply-To: <20170203024829.8071-1-szeder.dev@gmail.com>
 References: <20170203024829.8071-1-szeder.dev@gmail.com>
@@ -65,105 +65,103 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In __git_refs() the git commands listing refs, both short and full,
-from a given remote repository are run without giving them the path to
-the git repository which might have been specified on the command line
-via 'git --git-dir=<path>'.  This is bad, those git commands should
-access the 'refs/remotes/<remote>/' hierarchy or the remote and
-credentials configuration in that specified repository.
+The main completion function finds the name of the git command by
+iterating through all the words on the command line in search for the
+first non-option-looking word.  As it is not aware of 'git -C's
+mandatory path argument, if the '-C <path>' option is present, 'path'
+will be the first such word and it will be mistaken for a git command.
+This breaks completion in various ways:
 
-Use the __gitdir() helper only to find the path to the .git directory
-and pass the resulting path to the 'git ls-remote' and 'for-each-ref'
-executions that list remote refs.  While modifying that 'for-each-ref'
-line, remove the superfluous disambiguating doubledash.
+ - If 'path' happens to match one of the commands supported by the
+   completion script, then options of that command will be offered.
 
-Don't use __gitdir() to check that the given remote is on the file
-system: basically it performs only a single if statement for us at the
-considerable cost of fork()ing a subshell for a command substitution.
-We are better off to perform all the necessary checks of the remote in
-__git_refs().
+ - If 'path' doesn't match a supported command and doesn't contain any
+   characters not allowed in Bash identifier names, then the
+   completion script does basically nothing and Bash in turn falls
+   back to filename completion for all subsequent words.
 
-Though __git_refs() was the last remaining callsite that passed a
-remote to __gitdir(), don't delete __gitdir()'s remote-handling part
-yet, just in case some users' custom completion scriptlets depend on
-it.
+ - Otherwise, if 'path' does contain such an unallowed character, then
+   it leads to a more or less ugly error message in the middle of the
+   command line.  The standard '/' directory separator is such a
+   character, and it happens to trigger one of the uglier errors:
+
+     $ git -C some/path <TAB>sh.exe": declare: `_git_some/path': not a valid identifier
+     error: invalid key: alias.some/path
+
+Fix this by skipping 'git -C's mandatory path argument while iterating
+over the words on the command line.  Extend the relevant test with
+this case and, while at it, with cases that needed similar treatment
+in the past ('--git-dir', '-c', '--work-tree' and '--namespace').
+
+Additionally, silence the standard error of the 'declare' builtins
+looking for the completion function associated with the git command
+and of the 'git config' query for the aliased command.  So if git ever
+learns a new option with a mandatory argument in the future, then,
+though the completion script will again misbehave, at least the
+command line will not be utterly disrupted by those error messages.
 
 Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
 ---
- contrib/completion/git-completion.bash | 22 +++++++++++++++++-----
- t/t9902-completion.sh                  |  4 ++--
- 2 files changed, 19 insertions(+), 7 deletions(-)
+ contrib/completion/git-completion.bash | 8 ++++----
+ t/t9902-completion.sh                  | 7 ++++++-
+ 2 files changed, 10 insertions(+), 5 deletions(-)
 
 diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 295f6de24..7d7e8b9d9 100644
+index 7d25b33b8..ac5eb9ced 100644
 --- a/contrib/completion/git-completion.bash
 +++ b/contrib/completion/git-completion.bash
-@@ -342,9 +342,21 @@ __git_tags ()
- #    'git checkout's tracking DWIMery (optional; ignored, if set but empty).
- __git_refs ()
+@@ -816,7 +816,7 @@ __git_aliases ()
+ __git_aliased_command ()
  {
--	local i hash dir="$(__gitdir "${1-}")" track="${2-}"
-+	local i hash dir="$(__gitdir)" track="${2-}"
-+	local list_refs_from=path remote="${1-}"
- 	local format refs pfx
--	if [ -d "$dir" ]; then
-+
-+	if [ -n "$remote" ]; then
-+		if [ -d "$remote/.git" ]; then
-+			dir="$remote/.git"
-+		elif [ -d "$remote" ]; then
-+			dir="$remote"
-+		else
-+			list_refs_from=remote
-+		fi
-+	fi
-+
-+	if [ "$list_refs_from" = path ] && [ -d "$dir" ]; then
- 		case "$cur" in
- 		refs|refs/*)
- 			format="refname"
-@@ -381,7 +393,7 @@ __git_refs ()
+ 	local word cmdline=$(git --git-dir="$(__gitdir)" \
+-		config --get "alias.$1")
++		config --get "alias.$1" 2>/dev/null)
+ 	for word in $cmdline; do
+ 		case "$word" in
+ 		\!gitk|gitk)
+@@ -2800,7 +2800,7 @@ __git_main ()
+ 		--git-dir)   ((c++)) ; __git_dir="${words[c]}" ;;
+ 		--bare)      __git_dir="." ;;
+ 		--help) command="help"; break ;;
+-		-c|--work-tree|--namespace) ((c++)) ;;
++		-c|-C|--work-tree|--namespace) ((c++)) ;;
+ 		-*) ;;
+ 		*) command="$i"; break ;;
+ 		esac
+@@ -2844,13 +2844,13 @@ __git_main ()
  	fi
- 	case "$cur" in
- 	refs|refs/*)
--		git ls-remote "$dir" "$cur*" 2>/dev/null | \
-+		git --git-dir="$dir" ls-remote "$remote" "$cur*" 2>/dev/null | \
- 		while read -r hash i; do
- 			case "$i" in
- 			*^{}) ;;
-@@ -391,8 +403,8 @@ __git_refs ()
- 		;;
- 	*)
- 		echo "HEAD"
--		git for-each-ref --format="%(refname:short)" -- \
--			"refs/remotes/$dir/" 2>/dev/null | sed -e "s#^$dir/##"
-+		git --git-dir="$dir" for-each-ref --format="%(refname:short)" \
-+			"refs/remotes/$remote/" 2>/dev/null | sed -e "s#^$remote/##"
- 		;;
- 	esac
+ 
+ 	local completion_func="_git_${command//-/_}"
+-	declare -f $completion_func >/dev/null && $completion_func && return
++	declare -f $completion_func >/dev/null 2>/dev/null && $completion_func && return
+ 
+ 	local expansion=$(__git_aliased_command "$command")
+ 	if [ -n "$expansion" ]; then
+ 		words[1]=$expansion
+ 		completion_func="_git_${expansion//-/_}"
+-		declare -f $completion_func >/dev/null && $completion_func
++		declare -f $completion_func >/dev/null 2>/dev/null && $completion_func
+ 	fi
  }
+ 
 diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
-index 7667baabf..6e64cd6ba 100755
+index 500505dca..be2ed8704 100755
 --- a/t/t9902-completion.sh
 +++ b/t/t9902-completion.sh
-@@ -486,7 +486,7 @@ test_expect_success '__git_refs - configured remote - full refs' '
- 	test_cmp expected "$actual"
+@@ -755,7 +755,12 @@ test_expect_success 'general options plus command' '
+ 	test_completion "git --namespace=foo check" "checkout " &&
+ 	test_completion "git --paginate check" "checkout " &&
+ 	test_completion "git --info-path check" "checkout " &&
+-	test_completion "git --no-replace-objects check" "checkout "
++	test_completion "git --no-replace-objects check" "checkout " &&
++	test_completion "git --git-dir some/path check" "checkout " &&
++	test_completion "git -c conf.var=value check" "checkout " &&
++	test_completion "git -C some/path check" "checkout " &&
++	test_completion "git --work-tree some/path check" "checkout " &&
++	test_completion "git --namespace name/space check" "checkout "
  '
  
--test_expect_failure '__git_refs - configured remote - repo given on the command line' '
-+test_expect_success '__git_refs - configured remote - repo given on the command line' '
- 	cat >expected <<-EOF &&
- 	HEAD
- 	branch-in-other
-@@ -501,7 +501,7 @@ test_expect_failure '__git_refs - configured remote - repo given on the command
- 	test_cmp expected "$actual"
- '
- 
--test_expect_failure '__git_refs - configured remote - full refs - repo given on the command line' '
-+test_expect_success '__git_refs - configured remote - full refs - repo given on the command line' '
- 	cat >expected <<-EOF &&
- 	refs/heads/branch-in-other
- 	refs/heads/master-in-other
+ test_expect_success 'git --help completion' '
 -- 
 2.11.0.555.g967c1bcb3
 
