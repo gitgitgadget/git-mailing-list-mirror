@@ -7,131 +7,82 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4BCF41F9AF
-	for <e@80x24.org>; Sat,  4 Feb 2017 12:18:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 21E001F9AF
+	for <e@80x24.org>; Sat,  4 Feb 2017 12:37:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753276AbdBDMS5 (ORCPT <rfc822;e@80x24.org>);
-        Sat, 4 Feb 2017 07:18:57 -0500
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:36817 "EHLO
-        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753196AbdBDMS4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 4 Feb 2017 07:18:56 -0500
-Received: by mail-wm0-f68.google.com with SMTP id r18so10741510wmd.3
-        for <git@vger.kernel.org>; Sat, 04 Feb 2017 04:18:55 -0800 (PST)
+        id S1750898AbdBDMhV (ORCPT <rfc822;e@80x24.org>);
+        Sat, 4 Feb 2017 07:37:21 -0500
+Received: from mail-oi0-f49.google.com ([209.85.218.49]:34943 "EHLO
+        mail-oi0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750808AbdBDMhU (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 4 Feb 2017 07:37:20 -0500
+Received: by mail-oi0-f49.google.com with SMTP id j15so25582878oih.2
+        for <git@vger.kernel.org>; Sat, 04 Feb 2017 04:37:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=kZ/WroL1uwta8LWYx2s9q1VpxCH8qah2zgEzS06XmKA=;
-        b=BKVInmUxOTjai6XpsbJZebLGkUbu/5oXHrZhCjm+qTYueHUUd37sHDZlIn2e3IXhCu
-         btrfuYf3ZY0mLMUkOoEvjZAHSpratrVNzIRdFJll273TsNe/ipEqSjvqu32RHd8Rw12l
-         wCZdezVoA3pPZeElkfVBiubzyfaoFnop44NkiP5mFDk7fP9ynU3AeTx7BEWfPyRigam6
-         vwKiU0pID+a8lKg/0J9AwuiXOYvNfKWVddOkIDTLt/zzq3cEHK7VH1XVBWfV2NfvDMtR
-         OXamKseER87y5AHSragkVw5Pis76wxY9yxWbCdnJEPC5LA+vgFRFFFOOWBxr+OvtDMhx
-         o9lQ==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=pXU+++Tjlyvbpwbc3TIbGiNHsGm833RBqyCuWGXfjIU=;
+        b=m5W21Yhht4SmSRF1moWD73LkJ8zljkHS0K4eWDkpFQ/B0m+NA7lc/BUL7b/XI+ryl7
+         57R3DeGpZqTO6bRN5FCK0YoQCMTLyb0/IMUbzuXRxLQglJr491sGzPupI4ZsVsSwy1NM
+         UFrL8kuJ1efnOjLdg0pDhO07ufdRIAf+Io2sepKjcQZ1sTUdKV9sROjPPaZVX9UWeFVu
+         XrgiyPwUzoKafxjFKoiZREqS/VOfGFEcTr6LqzA2u3PlJdwAZT06+CMjQDz0w/z9zCin
+         fIP0kghwMMQdthwomHregNt8oWQo1RrNgiJr92iwTGG4FmJaE5OgJL4byqoJHCTQ/TSk
+         i7Ew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=kZ/WroL1uwta8LWYx2s9q1VpxCH8qah2zgEzS06XmKA=;
-        b=VZIHDyUecVbyjAFGGfusoSZo37UnvvPjCaYVcYfSTskkLMViycJf9ims7nW9b5S1gH
-         lzRp0cOJtTDzCK++LUJZ6jJl+l1bLJlknYgSd9lKQaJtsvp3JYxVrO5SW/hWs5F9FiIP
-         iretUjReaqOUvvO9MbKfTpM7jsahemwo3KTVcRlIUB3h0M6dB5pHnScKQmzqDjkz4uYy
-         wGc4W5qBhcY/Gd3uf2s8hVB3kEdHzBLy/9MXEyYFltPiDzeUgPawA6ODQW6RGBtxfr5F
-         WNnRohCMJhDWw8ocHUZApjsUz9kzPUfy24ogVNq24zCwQE0g5kK1p9xnoN46gbUdnS3B
-         7GAg==
-X-Gm-Message-State: AIkVDXLiCQmfZQ3/RL8v+Rk922zVFbp76qFRtD5y//W5BuD9pttFQtbq0G/rxuBe8WtO1g==
-X-Received: by 10.223.160.206 with SMTP id n14mr1782119wrn.31.1486210734604;
-        Sat, 04 Feb 2017 04:18:54 -0800 (PST)
-Received: from localhost ([2a02:c7f:c42b:f900:5e51:4fff:fee9:57af])
-        by smtp.gmail.com with ESMTPSA id o143sm2396655wmd.3.2017.02.04.04.18.53
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sat, 04 Feb 2017 04:18:53 -0800 (PST)
-Date:   Sat, 4 Feb 2017 12:19:20 +0000
-From:   Thomas Gummerer <t.gummerer@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Stephan Beyer <s-beyer@gmx.net>,
-        Marc Strapetz <marc.strapetz@syntevo.com>,
-        Jeff King <peff@peff.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        =?iso-8859-1?Q?=D8yvind_A_=2E?= Holm <sunny@sunbase.org>,
-        Jakub =?utf-8?B?TmFyxJlic2tp?= <jnareb@gmail.com>
-Subject: Re: [PATCH v2 2/4] stash: introduce push verb
-Message-ID: <20170204121920.GE31189@hank>
-References: <20170121200804.19009-1-t.gummerer@gmail.com>
- <20170129201604.30445-1-t.gummerer@gmail.com>
- <20170129201604.30445-3-t.gummerer@gmail.com>
- <xmqqy3xsux4g.fsf@gitster.mtv.corp.google.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=pXU+++Tjlyvbpwbc3TIbGiNHsGm833RBqyCuWGXfjIU=;
+        b=GUz5BF5F3DEelWlSXv/32xWia2tkknUM1ErAaTtF4oB1e/OWCWv7DliU1ybWKcFg7v
+         /7jPFdyQJ98DIPgCny9+m0s91Ptm6gZ6f0BE/RSxX5na5vB9KDR1YMbN/eyvCl9b5d9C
+         NGsHmGUEAKBPCcOfbW+aO20CiPA/JekGEAA0+qkC2BErJsTczLBIdOlSpdmuA1c4U8+l
+         mOFagxzi7FBaHwTbunBnXfQGhZ1en8pTcwunFAy7JXQD0bocjOQAPyxqtbKksdCZVjZt
+         uc2cyPtLQBSBDparVqJx3MkCwZZ4ZZPpgJOjgCmGI7zzJlSSscu8GLZz6E0psJqlV/vN
+         y4Tg==
+X-Gm-Message-State: AMke39kK3I+VZK47DuwTHf940RipTfn2YfZ02ISF5SOFlJnwRwm6rIzru23RF33znIjvvi5C9rKxkY1Irzl+PQ==
+X-Received: by 10.202.60.67 with SMTP id j64mr1002642oia.124.1486211839942;
+ Sat, 04 Feb 2017 04:37:19 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqy3xsux4g.fsf@gitster.mtv.corp.google.com>
-User-Agent: Mutt/1.5.23.1-rc1 (2014-03-12)
+Received: by 10.74.158.1 with HTTP; Sat, 4 Feb 2017 04:36:49 -0800 (PST)
+In-Reply-To: <E363F108ABEF45CB99C2C721A90B5EA2@PhilipOakley>
+References: <20170203202833.17666-1-jacob.e.keller@intel.com>
+ <CACsJy8B2gyw7RQBh6Qfm5HxOyKWted-0ZeDfd2_U3MvWCO1HEA@mail.gmail.com> <E363F108ABEF45CB99C2C721A90B5EA2@PhilipOakley>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Sat, 4 Feb 2017 19:36:49 +0700
+Message-ID: <CACsJy8Bk=pnyYNr2OxhQCYgxQQtOU=GqXUfgseL1HatB6SQPnQ@mail.gmail.com>
+Subject: Re: [PATCH v2] reset: add an example of how to split a commit into two
+To:     Philip Oakley <philipoakley@iee.org>
+Cc:     Jacob Keller <jacob.e.keller@intel.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Jacob Keller <jacob.keller@gmail.com>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 01/30, Junio C Hamano wrote:
-> Thomas Gummerer <t.gummerer@gmail.com> writes:
-> 
-> > Introduce a new git stash push verb in addition to git stash save.  The
-> > push verb is used to transition from the current command line arguments
-> > to a more conventional way, in which the message is specified after a -m
-> > parameter instead of being a positional argument.
-> 
-> I think the canonical way to express that is "... the message is
-> given as an argument to the -m option" (i.e. some options take an
-> argument, some others do not, and the "-m" takes one).
-> 
-> > This allows introducing a new filename argument to stash single files.
-> 
-> I do not want them to be "a filename argument", and I do not think
-> you meant them as such, either.  
-> 
->     This allows us to have pathspecs at the end of the command line
->     arguments like other Git commands do, so that the user can say
->     which subset of paths to stash (and leave others behind).
+On Sat, Feb 4, 2017 at 7:16 PM, Philip Oakley <philipoakley@iee.org> wrote:
+> From: "Duy Nguyen" <pclouds@gmail.com>
+>>
+>> On Sat, Feb 4, 2017 at 3:28 AM, Jacob Keller <jacob.e.keller@intel.com>
+>> wrote:
+>>>
+>>> +------------
+>>> +$ git reset HEAD^                           <1>
+>>
+>>
+>> It may be a good idea to add -N here, so that 'add -p' can pick up the
+>> new files if they are added in HEAD.
+>
+>
+> When looking at the man page for `reset` [1] it implies that `-N` requires
+> `--mixed` also to be given. Is that correct?
 
-Yeah, this is much better, thanks.
+Yes. But since --mixed is the default mode, "reset -N" equals "reset --mixed -N"
 
-> > +save_stash () {
-> > +	push_options=
-> > +	while test $# != 0
-> > +	do
-> > +		case "$1" in
-> > +		-k|--keep-index)
-> > +...
-> > +		esac
-> > +		shift
-> > +	done
-> 
-> It is a bit unfortunate that we need to duplicate the above
-> case/esac here.  I do not know if doing it this way:
-> 
-> 	case "$1" in
-> 	--)
-> 		shift
-> 		break 
-> 		;;
-> 	--help)
-> 		show_help
-> 		;;
-> 	-*)
-> 		# pass all options through to push_stash
-> 		push_options="$push_options $1"
-> 		;;
-> 	*)
-> 		break
->                 ;;
-> 	esac
-> 
-> and letting push_stash complain for an unknown option is easier to
-> maintain.
+> Or could the man page be clearer?
 
-I think this will work out nicely.  Will try to implement it this way.
-
-> You are reversing the order of the options in the loop.  Don't.
-
+If someone makes questions, I guess the answer is yes it should be made clearer.
 -- 
-Thomas
+Duy
