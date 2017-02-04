@@ -2,75 +2,131 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B9EBE1F9AF
-	for <e@80x24.org>; Sat,  4 Feb 2017 21:18:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1C0161F9AF
+	for <e@80x24.org>; Sat,  4 Feb 2017 23:34:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751360AbdBDVSA (ORCPT <rfc822;e@80x24.org>);
-        Sat, 4 Feb 2017 16:18:00 -0500
-Received: from mail-io0-f173.google.com ([209.85.223.173]:33880 "EHLO
-        mail-io0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750952AbdBDVR7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 4 Feb 2017 16:17:59 -0500
-Received: by mail-io0-f173.google.com with SMTP id l66so41998148ioi.1
-        for <git@vger.kernel.org>; Sat, 04 Feb 2017 13:17:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=E5t26ApZLnCWTAD8cQPyaF1eGx7kaqQwNoYcxAlptjc=;
-        b=Kky6BewgfnYZpxmHTsVVqbxNcbbJ2rcQPd7RQjKZmgirj/EK/kDnlicgAwf9uaJyjt
-         Pt996baUWeqCGxWQzJHmBV+56+DFYlb+nD1/koCCDcpKfw76+1pLoaqwlx+yXpHBb6V8
-         Hv23IijbkKlnQkl2EcmCP5BQgq2wVmw7JbZ59HA6PJF+hfenYiaBvGXtf0YD71Z5utgS
-         EBrx4tP2yPyBzxQmHGOyyZvGB6j+obDoPjeP60uNaw4Wq0GjiOMFDTCbM2y4YtnsscdZ
-         +wJWnuulKnnIW2jXYtu2ItVB+peW1kg6iljx7XI0S4/EQt/7gzxrAa75muz66DNDvAC8
-         M6cw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=E5t26ApZLnCWTAD8cQPyaF1eGx7kaqQwNoYcxAlptjc=;
-        b=EfdqsFqMrR+moESni/+mJVOEgFxqNtppHUpsDMnj8DnJ4bBTy1yuA3o7/QnukjcKAy
-         GCX5TGdoa2YAFRTYaqKSkdT40k6YunWbbP0WcANbZJgXWXCpp+P+A6auLt1DJ67Rgrgh
-         DeFie1UefSPkjpg5IVTYRXF+0D3cSkIQ+97BQhPGAAgXhwDqK2hJeelawvdzrI9eeUaj
-         oOWEU7sPuuG1HKfM4wqvihwavIL2DvFePxw2sf0je4MVJihu1SEe6WaJkf3GUZiHyEYD
-         mUe3r2hzcFlkPvzUZuBtNaCzmbTKj+WDmws3SDc0gb0T1azX0mymFAyTxceNnntAp3HL
-         CKHA==
-X-Gm-Message-State: AMke39m0S9bE3utBIT3dR1phkXBOLDih2dcnnlRozTfbnW8wC6RSN/DoPfE5ipn4TCt8qvxMmfz2faJ9PqqHxQ==
-X-Received: by 10.107.63.2 with SMTP id m2mr2349187ioa.74.1486243078648; Sat,
- 04 Feb 2017 13:17:58 -0800 (PST)
+        id S1751455AbdBDXeq (ORCPT <rfc822;e@80x24.org>);
+        Sat, 4 Feb 2017 18:34:46 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:57816 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751239AbdBDXeq (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 4 Feb 2017 18:34:46 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 793AC65696;
+        Sat,  4 Feb 2017 18:34:44 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:in-reply-to:references:date:message-id:mime-version
+        :content-type; s=sasl; bh=ILJxfh7P7ztjAlSvvD4PlbTyCTE=; b=qtXoCv
+        6AtN18SfyyGGAZc3z6XQi2FjhYAtGlX5tsp1tswfryyLZdmDzSLAKTgJZe2gUCal
+        /NPfLKXuPts9DNiwCJi4/IHjCSSlhUe4KhiwmNXWsF1IgboJr6ofpqzOOmhs0vzn
+        GN2ibVIG7Z8d0Lp4PjjB9ICA94HZFXj8Qjoy8=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 70FF865695;
+        Sat,  4 Feb 2017 18:34:44 -0500 (EST)
+Received: from localhost (unknown [24.60.167.92])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id E17AF65694;
+        Sat,  4 Feb 2017 18:34:43 -0500 (EST)
+From:   Kyle Meyer <kyle@kyleam.com>
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Stefan Beller <sbeller@google.com>
+Subject: Re: init --separate-git-dir does not set core.worktree
+In-Reply-To: <CACsJy8C=owNPpND4Ab7bFE24kpWBr5fQdob21DEDCckCXu0Mng@mail.gmail.com>
+References: <87h94d8cwi.fsf@kyleam.com> <CACsJy8AZUBt76ZocS2JEr9FP_8Obv8L911AvZxE_sww3qXB7qw@mail.gmail.com> <87efzg7oq3.fsf@kyleam.com> <CACsJy8C=owNPpND4Ab7bFE24kpWBr5fQdob21DEDCckCXu0Mng@mail.gmail.com>
+Date:   Sat, 04 Feb 2017 18:34:43 -0500
+Message-ID: <877f55r0mk.fsf@kyleam.com>
 MIME-Version: 1.0
-Received: by 10.79.142.147 with HTTP; Sat, 4 Feb 2017 13:17:58 -0800 (PST)
-In-Reply-To: <CAFZEwPOFDT7=1qhg4ygJpVUnfQo3XUjDoNtZ4LJvG5V9+RDNwA@mail.gmail.com>
-References: <CAGSZTjLmYCyKZ1BBRv+JVYq4oX7EQcNzyxAnS_3NBUPjr3g8zQ@mail.gmail.com>
- <CAFZEwPOFDT7=1qhg4ygJpVUnfQo3XUjDoNtZ4LJvG5V9+RDNwA@mail.gmail.com>
-From:   Pranit Bauva <pranit.bauva@gmail.com>
-Date:   Sun, 5 Feb 2017 02:47:58 +0530
-Message-ID: <CAFZEwPPyAxeU2i-OL62O749GaTdL7H19jbbAj8R6fipVnUjt=Q@mail.gmail.com>
-Subject: Re: feature request: add -q to "git branch"
-To:     Kevin Layer <layer@known.net>
-Cc:     Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
+X-Pobox-Relay-ID: 81C41094-EB32-11E6-A3C1-A7617B1B28F4-24757444!pb-smtp2.pobox.com
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=kyleam.com;
+ h=from:to:cc:subject:in-reply-to:references:date:message-id:mime-version:content-type; s=mesmtp; bh=ILJxfh7P7ztjAlSvvD4PlbTyCTE=; b=SGoYyYw+srgRMzwIK575bSt//koqompoGd8U6cQcXpLgZ8xBwQIbH7fieBeOkjhyngtGswnuPM2ACHbt+qe2328+QQJf9l12PJ847/RIi/c7fjMPXQ39Sd4LO1CbPUqGNPk12EZogIt71R0k/RGB+mphzDqZMczj5mauBBlJzrI=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hey Kevin,
+Duy Nguyen <pclouds@gmail.com> writes:
 
-Sorry for the previous message.
+> On Thu, Feb 2, 2017 at 7:37 PM, Kyle Meyer <kyle@kyleam.com> wrote:
 
-On Sun, Feb 5, 2017 at 2:47 AM, Pranit Bauva <pranit.bauva@gmail.com> wrote:
-> Hey Kevin,
+[...]
+
+>>  * COMMIT_EDITMSG in .git/modules/<module>/: set working tree to the
+>>    output of "git rev-parse --show-toplevel"
+>>
+>>  * COMMIT_EDITMSG in .git/worktrees/<wtree>/: set working tree to the
+>>    path in .git/worktrees/<wtree>/gitdir, minus the trailing "/.git"
+>>
+>>  * COMMIT_EDITMSG in .git: set working tree to the parent directory
+>>
+>> This fails for a repo set up with --separate-git-dir [*2*], where the
+>> last step will go out into an unrelated repo.  If core.worktree was set
+>> and "git rev-parse --show-toplevel" returned the working tree like it
+>> did for submodules, things would work.
 >
-> On Fri, Feb 3, 2017 at 11:59 PM, Kevin Layer <layer@known.net> wrote:
->> It should be possible to quietly create a branch.
+> OK. If I read this right, given a path of any text file somewhere
+> within ".git" directory. you are tasked to find out where the
+> associated worktree is?
 
-I think `git branch` is already quiet. Are you seeing something else?
+Right
 
-Regards,
-Pranit Bauva
+> I.e. this is not an emacsclient executed as part of "git commit",
+> correct?
+
+... but it is from a "git commit" call.  I think you're asking because,
+if we know where "git commit" was called from, we know what the working
+tree is.  This is true, but with the current Magit design, the function
+for determining the top-level of the working tree, magit-toplevel,
+doesn't have access to this information.  From Emacs, Magit calls "git
+commit", setting GIT_EDITOR for that process so that git invokes the
+current Emacs instance for editing the commit message.  From
+COMMIT_EDITMSG, we want the magit-toplevel to be able to determine the
+working tree location so that commands can use magit-toplevel to set
+their pwd.
+
+The only Magit command that currently relies on magit-toplevel to
+determine the working tree from ".git/COMMIT_EDITMSG" is a command that
+shows a diff with the staged changes in a separate buffer.  (Even though
+"git diff --cached" would work from within ".git/", some functionality
+in this buffer depends on its pwd being set top-level of the working
+tree.)
+
+So, whatever solution we come up with on the Magit end will likely
+involve recording where "git commit" was called so that the diff command
+can figure out the working tree.
+
+> So you need some sort of back-link to ".git" location. And
+> unfortunately there's no such thing for .git file (unless it points to
+> .git/worktrees/...). I'm hesitant to set core.worktree unless it's
+> absolutely needed since it may have unexpected interaction with
+> $GIT_WORK_TREE and others (not sure if it has any interaction with
+> submodules too). I think adding a new file "gitdir" would be a safer
+> option.
+>
+> I'm not entirely sure if enforcing "one worktree - one repository" is
+> safe though. The first two bullet points are very specific and we can
+> assume that, but ".git" files alone can be used for anything. In
+> theory you can always create a secondary worktree (that's not managed
+> by "git worktree") by setting GIT_WORK_TREE and "git checkout -f"
+> somewhere. But I guess those would be temporary and nobody would want
+> magic to point back to them.
+
+Right, makes sense.
+
+Unfortunately, magit-toplevel was designed thinking that the
+--separate-git-dir / core.worktree behavior in Git 2.8.4 and lower was
+intentional [*].  We'll need to rework this on our end.
+
+Thanks for your input and for confirming that "git init
+--separate-git-dir" does not set core.worktree by design.
+
+[*] https://github.com/magit/magit/issues/460#issuecomment-36035787.
+
+-- 
+Kyle
