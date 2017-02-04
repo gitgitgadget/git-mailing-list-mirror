@@ -2,104 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CADAE1FAFC
-	for <e@80x24.org>; Sat,  4 Feb 2017 05:09:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DAB231FAFC
+	for <e@80x24.org>; Sat,  4 Feb 2017 05:27:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753681AbdBDFJZ (ORCPT <rfc822;e@80x24.org>);
-        Sat, 4 Feb 2017 00:09:25 -0500
-Received: from mail-pf0-f195.google.com ([209.85.192.195]:36114 "EHLO
-        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753637AbdBDFJY (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 4 Feb 2017 00:09:24 -0500
-Received: by mail-pf0-f195.google.com with SMTP id 19so2889154pfo.3
-        for <git@vger.kernel.org>; Fri, 03 Feb 2017 21:09:24 -0800 (PST)
+        id S1753753AbdBDF1E (ORCPT <rfc822;e@80x24.org>);
+        Sat, 4 Feb 2017 00:27:04 -0500
+Received: from mail-qk0-f193.google.com ([209.85.220.193]:34182 "EHLO
+        mail-qk0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753677AbdBDF1D (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 4 Feb 2017 00:27:03 -0500
+Received: by mail-qk0-f193.google.com with SMTP id e1so1517976qkh.1
+        for <git@vger.kernel.org>; Fri, 03 Feb 2017 21:27:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=SJWY+2GwZVAiXizDc9ZaII/gLEtL1jf6vNtL0ht40Fk=;
-        b=ey7EBs4zN/dFksnB5Vpj9B4ceXQZ+9F1obYFaprGngMqBma46RGQSELbpD8+GDU9f3
-         7ldPUemlhbHXQNWVHCwi6zIEUsClgSxLfGZR+sTsVb2fdukqNGcqor26ALAddws3ey4J
-         0agQEnexoqRvWKX09ceoCQa0ihiOY945sOxSfWQYyPJLsvX5EReUexPuIQNDBgLdheNK
-         L2vFXkRJdUNgYnfVzr8HCIth/Mp5ebZR/qL6/tPI4FUygRnq+VMccKQpVwN7WnCXyLPS
-         14Ht+FQDhOBuQ6dPLLi1NlJfsdLP6bgKeY/iRIgByatKnu2CP2oUe59xEwiNYcSbjMYW
-         4YXw==
+        h=mime-version:from:date:message-id:subject:to:cc
+         :content-transfer-encoding;
+        bh=66uGzINQ3ZX/4S+I5RG0TJa4X29YwF56cmGZan2ZROs=;
+        b=QQhh0KeNlsqzYuu9RVSZ0db+lNCgvoteQTAftqLHQreYJtTWSeoKP02JmA2Xi+RJGp
+         WeGB97+dnh5UK1L9BvRhkq/KVEomuJvhhiTvmMoEEAXDINL9jPfADZB7BWAh/FSg7anM
+         WC3wdsxGmvI+4kNEBu8n4LeUgqRhDCe5gWYISAvElV8h5sJS5drz0pzdxSLRbZYxqQXk
+         kqE0cUSw22nmkL/0pMqocG1LOtsPnl7ARZQ9FbnPjtS1RHKetWh9B8tq/JfRb/RYbLzo
+         AS/EnGmJThGFufdq3HZinxui+vyQ2VtEuttrOZ1YFC/HwHT0IUElF6TfJ9HfypdMSWO6
+         tGAA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=SJWY+2GwZVAiXizDc9ZaII/gLEtL1jf6vNtL0ht40Fk=;
-        b=bMr92tHRYbLfvCW86Nz5MbHd0dYg+rz0IZFennv69aO8SQI8bDLu4WmPsxz9y40SSR
-         ynuEcmEOm8OGvEvJn9RJsNrNddJgsYzhJq9ljAspRJQc09CgylQiQU0z7bSD4aj+StS9
-         Xk0f01v4/m+hc0zKJiVWuoyoLzGbgrIX1Mnsd2q4omkKcw0UzaZBfVEn+zLtbEy4fAgc
-         gTi7LCVUKm4LUv7oWfOW2MqtKzCi7qhpmJ+nf9eQdKIRteKCw6jHnSA/gTniX2Yr1Evr
-         YRicMv3SN/S12FTcUJG3MH7MSjiHnkI+rNZEqUiFucmEwbt8uqFqe3zffNNL5/d6/XcE
-         DnvA==
-X-Gm-Message-State: AIkVDXJtPgmZ9plGv4DZSrMFcWe+Zz97MHfOdjjyGUFvR1rWD1dMOLUCThtpiWgn7wFZsw==
-X-Received: by 10.99.149.66 with SMTP id t2mr764492pgn.152.1486184963997;
-        Fri, 03 Feb 2017 21:09:23 -0800 (PST)
-Received: from localhost ([2620:0:1000:8622:dd9f:576d:b8fa:253a])
-        by smtp.gmail.com with ESMTPSA id b67sm70927572pfj.81.2017.02.03.21.09.22
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Fri, 03 Feb 2017 21:09:23 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Pranit Bauva <pranit.bauva@gmail.com>
-Cc:     Siddharth Kannan <kannan.siddharth12@gmail.com>,
-        Git List <git@vger.kernel.org>
-Subject: Re: [PATCH] git-parse-remote.sh: Remove op_prep argument
-References: <1486146489-8877-1-git-send-email-kannan.siddharth12@gmail.com>
-        <CAFZEwPMGTzVuLMSzm8wiNxvia4AV0T79C1ZTfcuO4=Bydz_zQA@mail.gmail.com>
-Date:   Fri, 03 Feb 2017 21:09:22 -0800
-In-Reply-To: <CAFZEwPMGTzVuLMSzm8wiNxvia4AV0T79C1ZTfcuO4=Bydz_zQA@mail.gmail.com>
-        (Pranit Bauva's message of "Sat, 4 Feb 2017 05:34:08 +0530")
-Message-ID: <xmqqd1ey8rul.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc
+         :content-transfer-encoding;
+        bh=66uGzINQ3ZX/4S+I5RG0TJa4X29YwF56cmGZan2ZROs=;
+        b=LYlt/O3OoxPPXWoIPaMor22inPaVayAncan3ttW9AwJxJGyqeVEJrcb2JeUHaU7LCc
+         BrimBfusmXNFi2YlYaiCh5R1825qg0I0D0ty8yY2QQbMAzL5IWCPdtbpYmzF8+hIWZWh
+         DLpgfHrkKzLzQWP2FMgK2vi2AYRd/vt5k8+iXg3QoAYOTJ2y4AlYUF1pLadksPb0IaTr
+         t2sOEnIXJFIFCXSvEAdS4MAXclXo1/vbF9nTvde/xKlQhkzyBNYQy7F3s2G3D3kHDSVG
+         wvEHSN4YXFHSchdphstrykn1UpWsAxyaPpKwaTI+7MAedtzvZNoXX4kA+pMxER8eDyLS
+         UGZA==
+X-Gm-Message-State: AMke39kOxUY+IPhEJwYCKXPJFFembRFko/qBUodRShn1KKjnEcgdkigwYcZe+s045cNofccGkypkvHc3K5vqfQ==
+X-Received: by 10.55.22.97 with SMTP id g94mr475226qkh.287.1486186022899; Fri,
+ 03 Feb 2017 21:27:02 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
+Received: by 10.12.149.120 with HTTP; Fri, 3 Feb 2017 21:27:02 -0800 (PST)
+From:   Jiang Xin <worldhello.net@gmail.com>
+Date:   Sat, 4 Feb 2017 13:27:02 +0800
+Message-ID: <CANYiYbGObPD5dX8mJe914MK_Um-gPLMHdaRFjie5Y1iThjmtEQ@mail.gmail.com>
+Subject: [L10N] Kickoff of translation for Git 2.12.0 round 1
+To:     Alexander Shopov <ash@kambanaria.org>,
+        Jordi Mas <jmas@softcatala.org>,
+        Ralf Thielow <ralf.thielow@gmail.com>,
+        =?UTF-8?Q?Jean=2DNo=C3=ABl_Avila?= <jn.avila@free.fr>,
+        Marco Paolone <marcopaolone@gmail.com>,
+        Changwoo Ryu <cwryu@debian.org>,
+        Vasco Almeida <vascomalmeida@sapo.pt>,
+        Dimitriy Ryazantcev <DJm00n@mail.ru>,
+        Peter Krefting <peter@softwolves.pp.se>,
+        =?UTF-8?B?VHLhuqduIE5n4buNYyBRdcOibg==?= <vnwildman@gmail.com>,
+        Jiang Xin <worldhello.net@gmail.com>,
+        Ray Chen <oldsharp@gmail.com>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Pranit Bauva <pranit.bauva@gmail.com> writes:
+Hi,
 
-> So if you want a better commit message then you could probably use this,
-> "parse-remote: remove reference to unused op_prep
->
-> This argument was introduced in the commit 15a147e618 to help in
-> writing out the error message but then in commit 045fac5845, the
-> reference to op_prep got removed. Thus the argument is no longer
-> useful and is removed.
-> "
+Git v2.12.0-rc0 has been released, and it's time to start new round of git =
+l10n.
+This time there are 200+ updated messages need to be translated since last
+update:
 
-Expand the reference to commits like so:
+    l10n: git.pot: v2.12.0 round 1 (239 new, 15 removed)
 
-    15a147e618 ("rebase: use @{upstream} if no upstream specified",
-    2011-02-09)
+    Generate po/git.pot from v2.12.0-rc0 for git v2.12.0 l10n round 1.
 
-Also pay attention to the subject, in which it is unclear whose
-argument "op_prep" is.  Other than that, your rewrite is more
-readable than the original.
+    Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
 
-    The error_on_missing_default_upstream helper function learned to
-    take op_prep argument with 15a147e618 ("rebase: use @{upstream}
-    if no upstream specified", 2011-02-09), but as of 045fac5845
-    ("i18n: git-parse-remote.sh: mark strings for translation",
-    2016-04-19), the argument no longer is used.  Remove it.
+You can get it from the usual place:
 
->> The contrib/examples/git-pull.sh file also has a variable op_prep which is used
->> in one of the messages shown the user. Should I remove this variable as well?
->
-> Not really. We have kept the file git-pull.sh just as an example of
-> how git-pull was initially implemented. So previously git-pull was a
-> shell script which was then ported to C code. After that conversion,
-> the shell script was just put as it is in contrib/examples/ as a use
-> case of how git-pull should be implemented. 
+    https://github.com/git-l10n/git-po/
 
-Yes, with s/should/could/.  I agree with you that we should leave it
-as-is.
+As how to update your XX.po and help to translate Git, please see
+"Updating a XX.po file" and other sections in =E2=80=9Cpo/README" file.
+
+--
+Jiang Xin
