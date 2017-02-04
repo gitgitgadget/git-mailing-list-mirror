@@ -7,51 +7,51 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9ED631F9AF
-	for <e@80x24.org>; Sat,  4 Feb 2017 21:16:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 38C891F9AF
+	for <e@80x24.org>; Sat,  4 Feb 2017 21:17:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751169AbdBDVP7 (ORCPT <rfc822;e@80x24.org>);
-        Sat, 4 Feb 2017 16:15:59 -0500
-Received: from mail-io0-f173.google.com ([209.85.223.173]:35993 "EHLO
-        mail-io0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750944AbdBDVP7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 4 Feb 2017 16:15:59 -0500
-Received: by mail-io0-f173.google.com with SMTP id j13so41839418iod.3
-        for <git@vger.kernel.org>; Sat, 04 Feb 2017 13:15:47 -0800 (PST)
+        id S1751239AbdBDVRO (ORCPT <rfc822;e@80x24.org>);
+        Sat, 4 Feb 2017 16:17:14 -0500
+Received: from mail-io0-f174.google.com ([209.85.223.174]:36225 "EHLO
+        mail-io0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750952AbdBDVRN (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 4 Feb 2017 16:17:13 -0500
+Received: by mail-io0-f174.google.com with SMTP id j13so41851879iod.3
+        for <git@vger.kernel.org>; Sat, 04 Feb 2017 13:17:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=fy+YEruTxI/Gqwhr6qqZbf9a3Nu7A8DMeTrbkxxNa/M=;
-        b=SF4YPvr6vFLaEiCFGGTBmsxNChre03W0CgKnM9lhnbCrB+60gw65rVVzgZL23ZDOBI
-         SsSd9ozH2gwIBh4be5TdGvbL+/TGFh3HGlxb3snl4sleriO0JAMcenpWlShf4Wd42vss
-         /lnuXY9wonapm7gRExQnq/k9oMsn1VHTIhBrCWu/WQ9XsmC0T4iE7xiEnpatQW55Nz2B
-         OIHWT3XDBdX4mjx82eUsYPRGSXnjX6iaceJ/Oi6OA/ik+mKxgGBR0Ao6OyodwTWs4IfH
-         zfGYP08OC6CgEAou/4iiTpekyX2MP3WGcdyTPV2EWVd4s/HPK+lE/+1DQztPNyuP/LYJ
-         wEzg==
+        bh=o+Te/oVx+g1eXgqs6fgW7goxAi+I8ClMV/8PfPtTOic=;
+        b=T/t90sLCiT3onSzsg2lJED2O0GHCAEwth9Tuf/HbGP5o6VtZImlvVlKBRuAqzdU5W9
+         0VB2l1Di6n73vuvAGHocQMJQAxgLYNSwk7BidkelPif52iES4IibDdydpfmGVOio41pX
+         /htQoh3e57PEHpds4TRPPxrf6nGhZZY60jOiwp73BmiYYhDBHg24FrpC8xoE198HEs6v
+         fJwobq1xODMuGg7wxvBCVE3afifenRkerSHw9N4SG3V++wToHT4Y5rWzbI+XcfCqAq9b
+         ic8XVVMvQVfjia2Y5xqhfmL218oG4BQijRcFuTcKrmtoMS63DmP+N6hEnPHWAqjsdKLC
+         sDFQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=fy+YEruTxI/Gqwhr6qqZbf9a3Nu7A8DMeTrbkxxNa/M=;
-        b=Ln/CBpQWobUQmtfJrAlQaQQGWr3yM6nAe/zztgk7/b4AtAqUUj4xkULyb3n046zPth
-         U4b0TU56uSAJAVbk5aQ1L9ykkgoWr8XF2E8YYbtSjO7SUluGNufC33onWzOF+glybCA2
-         hZytQ2wQboLYlLWbRfAG7BUL/wXdQRZq1rBZykQf3GBNG2tWC33A9KPEScfRXbW86sRh
-         /nROJRn88stvnqywV9TpmObElzHvdaxEYI1SBVPaVcjjQR/3WGrp7dlz8oNxlf1fNdGK
-         qHL7PgpLtjlOINSO9gNVWa2YXighXiVvLatXZ6+7rWTb0yUQdsLCrkH4R1nOtLI04biQ
-         BcyA==
-X-Gm-Message-State: AMke39m3yfC/stSR++OOGFfAJqlJsbDnvfqN7PDqoOjdzl75eTd0uc8UA06aLzz1VjWVO+ZQYIPDy8Zw9VG8Rw==
-X-Received: by 10.107.161.83 with SMTP id k80mr2161052ioe.47.1486242946789;
- Sat, 04 Feb 2017 13:15:46 -0800 (PST)
+        bh=o+Te/oVx+g1eXgqs6fgW7goxAi+I8ClMV/8PfPtTOic=;
+        b=Cb3hLDQff3EK4Cl+C2m0L2apTx1t1b5ztcizcdB8OKDfRlbH0gL7Wg1oZUgzWGH9OR
+         H4/WuVoWYhOF8cI3sW8WDg3OXxk9bXb7irqG407gH4L+B4G4pHYYUHKAhGVtXOSQwiRJ
+         qsb6iNHEozW8ZV1cmk29RO0JM0s/KwZiJN35NO2v3+QgJF2rCVlpjAcLJL7R4yMIIR7l
+         GTV1lCrKj35twKRXCPqPintJHt8Yec3tWqqiFVi+2HbRcWJt0/Z/LB0WzB5ReeZA3tog
+         JxCitTVoBTrfeuqg0lcNFAjWpjA2WAsaJLRI8c+RicJQm1G/IQJGjADil95jmvbSCEBB
+         evhA==
+X-Gm-Message-State: AMke39mSPI44oGJVMEkYepsnMgApa2ExW0vJcAdfeDfyh/D7fVokqYSihyRGV/pGjXLHHTyFP9idehR/thYDdA==
+X-Received: by 10.107.182.214 with SMTP id g205mr2727143iof.120.1486243033119;
+ Sat, 04 Feb 2017 13:17:13 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.79.142.147 with HTTP; Sat, 4 Feb 2017 13:15:46 -0800 (PST)
-In-Reply-To: <1486218663-31820-1-git-send-email-kannan.siddharth12@gmail.com>
-References: <1486218663-31820-1-git-send-email-kannan.siddharth12@gmail.com>
+Received: by 10.79.142.147 with HTTP; Sat, 4 Feb 2017 13:17:12 -0800 (PST)
+In-Reply-To: <CAGSZTjLmYCyKZ1BBRv+JVYq4oX7EQcNzyxAnS_3NBUPjr3g8zQ@mail.gmail.com>
+References: <CAGSZTjLmYCyKZ1BBRv+JVYq4oX7EQcNzyxAnS_3NBUPjr3g8zQ@mail.gmail.com>
 From:   Pranit Bauva <pranit.bauva@gmail.com>
-Date:   Sun, 5 Feb 2017 02:45:46 +0530
-Message-ID: <CAFZEwPOdL4mOAnmTUqs5LmfdG2GQCieVGVQ7T3ZWR0n+d6tCQQ@mail.gmail.com>
-Subject: Re: [PATCH v3] parse-remote: remove reference to unused op_prep
-To:     Siddharth Kannan <kannan.siddharth12@gmail.com>
+Date:   Sun, 5 Feb 2017 02:47:12 +0530
+Message-ID: <CAFZEwPOFDT7=1qhg4ygJpVUnfQo3XUjDoNtZ4LJvG5V9+RDNwA@mail.gmail.com>
+Subject: Re: feature request: add -q to "git branch"
+To:     Kevin Layer <layer@known.net>
 Cc:     Git List <git@vger.kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
@@ -59,19 +59,11 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hey Siddharth,
+Hey Kevin,
 
-On Sat, Feb 4, 2017 at 8:01 PM, Siddharth Kannan
-<kannan.siddharth12@gmail.com> wrote:
-> The error_on_missing_default_upstream helper function learned to
-> take op_prep argument with 15a147e618 ("rebase: use @{upstream}
-> if no upstream specified", 2011-02-09), but as of 045fac5845
-> ("i18n: git-parse-remote.sh: mark strings for translation",
->  2016-04-19), the argument is no longer used.  Remove it.
+On Fri, Feb 3, 2017 at 11:59 PM, Kevin Layer <layer@known.net> wrote:
+> It should be possible to quietly create a branch.
 >
-> Signed-off-by: Siddharth Kannan <kannan.siddharth12@gmail.com>
-
-This looks good to me! Thanks :)
-
-Regards,
-Pranit Bauva
+> Thanks.
+>
+> Kevin
