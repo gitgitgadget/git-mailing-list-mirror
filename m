@@ -2,85 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 22F8A1F9AF
-	for <e@80x24.org>; Sat,  4 Feb 2017 17:15:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 32D7D1F9AF
+	for <e@80x24.org>; Sat,  4 Feb 2017 17:39:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751366AbdBDRO7 (ORCPT <rfc822;e@80x24.org>);
-        Sat, 4 Feb 2017 12:14:59 -0500
-Received: from mail-wm0-f47.google.com ([74.125.82.47]:36255 "EHLO
-        mail-wm0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751047AbdBDRO7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 4 Feb 2017 12:14:59 -0500
-Received: by mail-wm0-f47.google.com with SMTP id c85so74791244wmi.1
-        for <git@vger.kernel.org>; Sat, 04 Feb 2017 09:14:58 -0800 (PST)
+        id S1751070AbdBDRjm (ORCPT <rfc822;e@80x24.org>);
+        Sat, 4 Feb 2017 12:39:42 -0500
+Received: from mail-vk0-f45.google.com ([209.85.213.45]:35345 "EHLO
+        mail-vk0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750876AbdBDRjl (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 4 Feb 2017 12:39:41 -0500
+Received: by mail-vk0-f45.google.com with SMTP id x75so32752090vke.2
+        for <git@vger.kernel.org>; Sat, 04 Feb 2017 09:39:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20161025;
-        h=from:content-transfer-encoding:subject:message-id:date:to
-         :mime-version;
-        bh=4pgMAhCcIuwvsMYyf0QZ+Ma/b5y7Mya1AD3mxmJY36g=;
-        b=ic3DcV9gmV4rMjG/EhrNbxTgxf4gCnsPUmtMiVDccyyvvlmBoZ8hh0SmIGNhK3HHP9
-         lTcdzkAc9/ETKhny+IXVU+qnoSO9rH14/TvpvRPrI7ovCQaRq2tYrwW6e7m8xnrPEc1c
-         HMJDSFmfbftuaxj62LsQoQkUNqA+iXQCcKPWqIUPK9E50YSojY5NMp+FBIrULNi8ii2i
-         c2Io5R23FIfZMRA8p7Ihj8yC62PNdIMwyoCQn1SuD1GIGBl0zNl4hgNolQflbbflIcDK
-         vwdFdUc7w/MGJTa2/7orPg/7HOTKoRSCWD4Htu4W7k/P0bG2X0brI0Lj18Pk9ZYmiuj7
-         JXGA==
+        d=spearce.org; s=google;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=hB77hudqRKYgtJPRO5dTeN5xPAop7baWw2v5OnT1n48=;
+        b=ea6hHpOPh7hcy+pvRyARnj5uvzuqrRbb2n0ZdP7bYlhwyeYXpzgZMKIcSkAjZ1ySiM
+         g+HuPxZYaybU2ON1zA052s3KESua3d8JGfJU8V5hqIUSaLetGpzmqlzFxyhhUvwTGdRZ
+         L0qH3jwUO28K1GSFY0QlLTVcRqfnnlcI+cuYs=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:content-transfer-encoding:subject
-         :message-id:date:to:mime-version;
-        bh=4pgMAhCcIuwvsMYyf0QZ+Ma/b5y7Mya1AD3mxmJY36g=;
-        b=gvj00FYXDJIU61Qdy11FE3jfI0pvPdkETEpb5/bgyu1r0i1XrGA7XqwkV09vkvXd6F
-         kQI9ql6kxUz3U1LgTinnIoOTufRLhk9M1dqzBO+1vp+dcYS0ttoj8olpj4BxYsHSkmtp
-         ol+RWkSOUmO331KTUAxW7ZO5NVwAKb1TqvYMD49tuuSScqUEUh2li66NVLfAVCkdvP5y
-         5ZrqCTcE6vt4mLSMubk4V1MP2qAx10Ht7b5Awr24Dqz5u4mnZiJiPZkzeH9xGU29fAgY
-         D123WFhNAjTd12RbGq7TLMCJKglrJz0C9johIjiqrP55+lzUf1OdnndQoym+IKSAD0gE
-         0pjQ==
-X-Gm-Message-State: AMke39n6olxa0c6BPOefbJrUGDRFlOKkbAtjzbqpRDbcYmoxrm5FzP81J2KYQNV3JrXmEw==
-X-Received: by 10.28.27.69 with SMTP id b66mr2354615wmb.50.1486228497524;
-        Sat, 04 Feb 2017 09:14:57 -0800 (PST)
-Received: from ?IPv6:2a02:810d:1f00:1234:7d0c:6545:3a00:13a3? ([2a02:810d:1f00:1234:7d0c:6545:3a00:13a3])
-        by smtp.googlemail.com with ESMTPSA id y65sm3483971wmb.5.2017.02.04.09.14.56
-        for <git@vger.kernel.org>
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sat, 04 Feb 2017 09:14:56 -0800 (PST)
-From:   "matthias.serfling" <matthias.serfling@googlemail.com>
-Content-Type: text/plain; charset=utf-8
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=hB77hudqRKYgtJPRO5dTeN5xPAop7baWw2v5OnT1n48=;
+        b=r8RTDpfxBNY0pX3kJXoGeCm8eU8LpF9rez3SBH1f/ksNQ4TiwPmdJaUUQBb7b4CN9Y
+         WKeDje3BdkOhh3XpTPJg+koGvhl+jCZ/70fnAhTy9+RKkxIX7l/chkYXcd/kd1neJDJf
+         IxOh0gYzWd0EkXDmYM8wY3HrJv8UcvYAOo+/RZuaT4HZndwUw3MoYDB73uQBcomHvQ6a
+         AwbL++0Q78CvOWYwc+pyv8wVM+Sww2dlzc5J5WPPe1SpCY/7JjGNblOHyLLi1pcFoJt1
+         w9y/UexxyOeNStydEW/0+KCWfn+4jjaOSGHI7zcHrHIKb9OXz16Qpdpv0hO0LBsIX2Yq
+         hJOQ==
+X-Gm-Message-State: AMke39lmMk7DdyAEJINYKqOnuqeg1YgYNMnnIEAyWMPEJDfiU86NfXzRVoqSHHRTKju+RnZulUdlD2oCh8vs4w==
+X-Received: by 10.31.180.1 with SMTP id d1mr1030078vkf.112.1486229980515; Sat,
+ 04 Feb 2017 09:39:40 -0800 (PST)
+MIME-Version: 1.0
+Received: by 10.103.145.76 with HTTP; Sat, 4 Feb 2017 09:39:20 -0800 (PST)
+In-Reply-To: <CADoxLGPFgF7W4XJzt0X+xFJDoN6RmfFGx_96MO9GPSSOjDK0EQ@mail.gmail.com>
+References: <CADoxLGPFgF7W4XJzt0X+xFJDoN6RmfFGx_96MO9GPSSOjDK0EQ@mail.gmail.com>
+From:   Shawn Pearce <spearce@spearce.org>
+Date:   Sat, 4 Feb 2017 09:39:20 -0800
+Message-ID: <CAJo=hJsS6FmL9iNScaXqkWJumALfGr8Od5QkbfZ+ZG3osxkp7Q@mail.gmail.com>
+Subject: Re: Git clonebundles
+To:     Stefan Saasen <ssaasen@atlassian.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
-Subject: git-gui ignores core.hookspath
-Message-Id: <AEECE1EB-FF99-48C2-8072-D89D39EA7B9A@googlemail.com>
-Date:   Sat, 4 Feb 2017 18:14:56 +0100
-To:     git@vger.kernel.org
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-X-Mailer: Apple Mail (2.3124)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello,
-I=E2=80=99m running on=20
+On Mon, Jan 30, 2017 at 11:00 PM, Stefan Saasen <ssaasen@atlassian.com> wro=
+te:
+>
+> Bitbucket recently added support for Mercurial=E2=80=99s clonebundle exte=
+nsion
+> (http://gregoryszorc.com/blog/2015/10/22/cloning-improvements-in-mercuria=
+l-3.6/).
+> Mercurial=E2=80=99s clone bundles allow the Mercurial client to seed a re=
+pository using
+> a bundle file instead of dynamically generating a bundle for the client.
+...
+> Prior art
+> ~~~~~~~~~
+>
+> Our proof-of-concept is built on top of ideas that have been
+> circulating for a while. We are aware of a number of proposed changes
+> in this space:
+>
+>
+> * Jeff King's work on network bundles:
+> https://github.com/peff/git/commit/17e2409df37edd0c49ef7d35f47a7695f96089=
+00
+> * Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy's work on "[PATCH 0/8] Resuma=
+ble clone
+> revisited, proof of concept":
+> https://www.spinics.net/lists/git/msg267260.html
+> * Resumable clone work by Kevin Wern:
+> https://public-inbox.org/git/1473984742-12516-1-git-send-email-kevin.m.we=
+rn@gmail.com/
 
-$ git --version --build-options
-git version 2.11.0.windows.3
-built from commit: e11df2efb3072fe73153442589129d2eb8d9ea02
-sizeof-long: 4
-machine: x86_64
+I think you missed the most common deployment of prior art, which is
+Android using the git-repo tool[1]. The git-repo tool has had
+clone.bundle support since Sep 2011[2] and the Android Git servers
+have been answering /clone.bundle requests[3] since just before that.
+The bundle files are generated with `git bundle create` on a regular
+schedule by cron.
+
+[1] https://gerrit.googlesource.com/git-repo/+/04071c1c72437a930db017bd4c56=
+2ad06087986a/project.py#2091
+[2] https://gerrit.googlesource.com/git-repo/+/f322b9abb4cadc67b991baf6ba1b=
+9f2fbd5d7812
+[3] https://android.googlesource.com/platform/frameworks/base/clone.bundle
 
 
-and trying to use core.hookspath with git-gui in my local repository in =
-windows cmd shell=20
-$ cmd.exe /c ver
-Microsoft Windows [Version 6.1.7601]
-I have defined a pre-commit hook and set the path to it using =
-core.hookspath, but when commiting in git gui it is not considered.=20
+> Whilst the above mentioned proposals/proposed changes are in a similar
+> space, I would be interest to understand whether there is any
+> consensus on the general idea of supporting static bundle files as a
+> mechanism to seed a repository?
 
-
-Commiting directly on the cmd shell using git commit -a -m "ndkfnj" it =
-works perfectly.
-
-Thanks for any advice or bugfix=
+I don't think we have a consensus on how to advertise a bundle file is
+available, which is why there are so many instances of prior art. In
+2011 I just threw together /clone.bundle on HTTP because it was easy
+to make the Python wrapper ask for the file and handle 404 gracefully
+as not found and fall back to `git clone`.
