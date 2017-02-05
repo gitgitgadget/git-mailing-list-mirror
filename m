@@ -7,74 +7,104 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BA1511FAF4
-	for <e@80x24.org>; Sun,  5 Feb 2017 20:11:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 215551FAF4
+	for <e@80x24.org>; Sun,  5 Feb 2017 20:18:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753705AbdBEULM (ORCPT <rfc822;e@80x24.org>);
-        Sun, 5 Feb 2017 15:11:12 -0500
-Received: from mail-it0-f43.google.com ([209.85.214.43]:35095 "EHLO
-        mail-it0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752820AbdBEULK (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 5 Feb 2017 15:11:10 -0500
-Received: by mail-it0-f43.google.com with SMTP id 203so43283100ith.0
-        for <git@vger.kernel.org>; Sun, 05 Feb 2017 12:11:05 -0800 (PST)
+        id S1754037AbdBEUR6 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 5 Feb 2017 15:17:58 -0500
+Received: from mail-pg0-f67.google.com ([74.125.83.67]:33260 "EHLO
+        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753923AbdBEURz (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 5 Feb 2017 15:17:55 -0500
+Received: by mail-pg0-f67.google.com with SMTP id 194so7133380pgd.0
+        for <git@vger.kernel.org>; Sun, 05 Feb 2017 12:17:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=6r9GiJWO0M9bBeesOycC16VjcKNdHLn4qDVSkF0ZGXU=;
-        b=EiI+7AhSzEzWIkuB6sDJ20/b9pZi9Etkpg2g5eOy8JM5Qu2MEFKJERyNtq5y2XxmUB
-         yllbzqVt+Uk9UFtCOTHDEZWXUxEcuHebkuyVpvgBbwIF1+itOBnvEAv2OFk/Y3HkoCu3
-         aIn05UBiGnPtBlHlo59sidoYUrXDTOtTpDenKkbiKMSonjsT3etZdye47ZEZyTm6aRLb
-         c+H0PWNXlr69FvU4kuIA817f8sqLS41zonbLmP3GvnXcpE/CvVOz4rdYHnwacnDdPDKJ
-         j3IhGn1MV+VE5DO6mRIYd/qxWfFSwAuXy0Qcakydns5QTm547LsGk28tqRb7cfec9etb
-         +auQ==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=aTuTCSa985Vryb5/ADbMSBkCS2nFUikbvOalIlskMQI=;
+        b=qJOQBLoPVliJlnYEcWa15d7RG6d4e1LK0jROeiffHQLgFX5+oUPswdWi+yAgNZZRoQ
+         7PhxBjUUWIdgo+oLBlAT0PQY06mfxSX1xfQFbCTZ8AoFYRZlLU11Rj1g7E/veU17+SNs
+         iaDOt0ZC0E8V1HudI1icpKS2zMK36jU0TuS0MKfAr79J7p9bgZI5V4QCOR6sUaYNZWZG
+         hKoNbhim9FOMNfnLjPNY8SWTTfyuWLxTYe4QsEr5f1wq4Arzj7EGy/oUh/ndOslcsVS4
+         1rnTwSAaR0JADOgkiqOKtI3+z1cfcCHEp8NJVUcALK4dE3/ctg5KMkNpkXTQcoajuv6G
+         U2fQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=6r9GiJWO0M9bBeesOycC16VjcKNdHLn4qDVSkF0ZGXU=;
-        b=dzBGQ/fJssgkcw1HKuSFBpV3JfKTXLWz3zYcFiGRqKm/Mde5vAqoskdb9ZaPyEbmKb
-         YbFVRlBIjZ63FIJu2km3vO1Dr4cFzWd7s7T4wRIxG3lGUFJC76rS3MhdkCVAgQF8rI8L
-         0zPXYK83lSS1Ff8KDImm6Ajxg/5IbVL6ufNYFm5C3zuI3HvjpW/kMF5UCVGw2w0d9I+e
-         +LMhUoZ3b8YtZ3lGgEfuIuK9DXeyfxlroopDMSyI6gc//SIuciCWEBBhNtM0w3J3GLoA
-         qd57x/L30Uh4M51BzvD1HEzcgXGZu3oeywFrAJGR2mXeA3Yb6UYdB2hkiu3RtjM81k6P
-         hk3A==
-X-Gm-Message-State: AIkVDXJvi+YItpoikmAO6/dcg/223qKXCXQI6ndB/ZWsselmmNHpItr2rME3s2ay1ZiY6DXWQmno0dJ3L1cCPA==
-X-Received: by 10.36.250.65 with SMTP id v62mr5133699ith.100.1486325465151;
- Sun, 05 Feb 2017 12:11:05 -0800 (PST)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=aTuTCSa985Vryb5/ADbMSBkCS2nFUikbvOalIlskMQI=;
+        b=UlPmxdk2JnYcwPKKWGH4oELls85qaxIX56l5ZMqGr9i5+DtdvQgf41GJOtXVmAO4Qi
+         rAlWZiU96wVPro5hz1NjojukqdLpys8bUW2dP+zpG7+dXhcHy6cBRIVrSYpDhCAwpYNw
+         KTw/3EE0M9uGkq0465MgE5koF3LfXfGqtG+cso8GpQWkvtM9QHOLAZyzh1/mpqIMnBWg
+         IQOCG+5Cp/aq1cKR3Jo9zHCdCeUGPPpGuWOEWZyluF+dzHfqqp5h1LMzdmrjQ7kgCy43
+         ONa5Hct5sCxJfu/qnjsQjg6D2UnzaFccFoe8NSjqVqzKAvsCnNsjyfpb2ICf7SxhRBVt
+         APsA==
+X-Gm-Message-State: AIkVDXJ/y9giTSAkepmH0CkMboPsOwxFMusM//NbFPl4kPTsLivtRG//tWItreS0kz2kwg==
+X-Received: by 10.98.33.131 with SMTP id o3mr9336196pfj.86.1486325875175;
+        Sun, 05 Feb 2017 12:17:55 -0800 (PST)
+Received: from gmail.com (50-1-201-252.dsl.static.fusionbroadband.com. [50.1.201.252])
+        by smtp.gmail.com with ESMTPSA id e129sm82943964pfe.8.2017.02.05.12.17.53
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Sun, 05 Feb 2017 12:17:54 -0800 (PST)
+Date:   Sun, 5 Feb 2017 12:17:51 -0800
+From:   David Aguilar <davvid@gmail.com>
+To:     Denton Liu <liu.denton@gmail.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: [BUG] was: Re: [PATCH] Remove --no-gui option from difftool usage
+ string
+Message-ID: <20170205201751.z4rfmy5xxaqg472l@gmail.com>
+References: <20170204025617.GA9221@arch-attack.localdomain>
 MIME-Version: 1.0
-Received: by 10.79.142.147 with HTTP; Sun, 5 Feb 2017 12:11:04 -0800 (PST)
-In-Reply-To: <20170202023349.7fopb3a6pc6dkcmd@sigill.intra.peff.net>
-References: <20170202023349.7fopb3a6pc6dkcmd@sigill.intra.peff.net>
-From:   Pranit Bauva <pranit.bauva@gmail.com>
-Date:   Mon, 6 Feb 2017 01:41:04 +0530
-Message-ID: <CAFZEwPPX4LngKrOHxgEp4aMGKOs0w4LHUBKumtmeRJSZ2_iV_Q@mail.gmail.com>
-Subject: Re: git-scm.com status report
-To:     Jeff King <peff@peff.net>
-Cc:     Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20170204025617.GA9221@arch-attack.localdomain>
+User-Agent: NeoMutt/20161126 (1.7.1)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hey Peff,
 
-On Thu, Feb 2, 2017 at 8:03 AM, Jeff King <peff@peff.net> wrote:
-> ## What's on the site
->
-> We have the domains git-scm.com and git-scm.org (the latter we've had
-> for a while). They both point to the same website, which has general
-> information about Git, including:
+On Fri, Feb 03, 2017 at 06:56:17PM -0800, Denton Liu wrote:
+> The --no-gui option not documented in the manpage, nor is it actually
+> used in the source code. This change removes it from the usage help
+> that's printed.
+> 
+> Signed-off-by: Denton Liu <liu.denton@gmail.com>
+> ---
+>  git-difftool.perl | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
 
-Since we have an "official" control over the website, shouldn't we be
-using the .org domain more because we are more of an organization?
-What I mean is that in many places, we have referred to git-scm.com,
-which was perfectly fine because it was done by github which is a
-company but now I think it would be more appropriate to use
-git-scm.org domain. We can forward all .com requests to .org and try
-to move all reference we know about, to .org. What do you all think?
+[Dscho, I found a bug, see below]
 
-Regards,
-Pranit Bauva
+I forgot to mention that the scripted difftool has been
+rewritten in C and will be going away soon.
+builtin/difftool.c is already in "next".
+
+New patches against difftool should target the builtin.
+
+Regarding removing it from the usage string, IMO that can be
+considered a good change if the rationale were instead that
+we never expect users to ever type "--no-gui" in practice.
+
+Wasting the short usage string screen space with a useless to
+99.99% users option is bad for usability.  From that perspective
+we shouldn't mention it there, so reframing the commit message
+towards that argument would make for a better motivation.
+
+Removing the mention from the usage string and adding it to the
+manpage would be the a good change from that perspective as well.
+
+
+BTW, in "next", it seems that the builtin difftool crashes when
+doing "git difftool -h", so we should probably add a test
+for that too...
+
+From the tip of next:
+
+$ git difftool -h
+fatal: BUG: setup_git_env called without repository
+-- 
+David
