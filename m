@@ -2,65 +2,78 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 996871FAF4
-	for <e@80x24.org>; Sun,  5 Feb 2017 21:45:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AD6C81FAF4
+	for <e@80x24.org>; Sun,  5 Feb 2017 22:45:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752750AbdBEVpl (ORCPT <rfc822;e@80x24.org>);
-        Sun, 5 Feb 2017 16:45:41 -0500
-Received: from mail-it0-f68.google.com ([209.85.214.68]:33689 "EHLO
-        mail-it0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752437AbdBEVpk (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 5 Feb 2017 16:45:40 -0500
-Received: by mail-it0-f68.google.com with SMTP id e137so6781294itc.0
-        for <git@vger.kernel.org>; Sun, 05 Feb 2017 13:45:40 -0800 (PST)
+        id S1752581AbdBEWp5 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 5 Feb 2017 17:45:57 -0500
+Received: from mail-lf0-f53.google.com ([209.85.215.53]:36577 "EHLO
+        mail-lf0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752166AbdBEWp4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 5 Feb 2017 17:45:56 -0500
+Received: by mail-lf0-f53.google.com with SMTP id z134so35723472lff.3
+        for <git@vger.kernel.org>; Sun, 05 Feb 2017 14:45:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:sender:from:date:message-id:subject:to;
-        bh=spaxNW2hSB7noL88QORECR/RWao7eT/EfPLP1e6SJLc=;
-        b=ArUJagxJqf09ujCiFgnnBR2AuuyomQoaqJnSsEy3Jw7MEONscJAW+rxOWjezb4QkNm
-         BJTNyIiO6uvUb4AseIfRI+EB6uGDKvxNvitpUZa575e9V7M/ByotPehV/Rf8GbxCjlLJ
-         RTrM1vD2x/AhGVj0/LKYA5q7cv62XsqPBl/bZJUQ1g0a+/nMoyB+QiIqGFvLYKK9flbm
-         EuRrKh+YO934hoz4jqWyDWlsCK50CaObqvsMDyD5Nsz17X0nh928WMpuge3BdCVs74by
-         rvKng2yt9DhsGwzqMKO/XxLKs6X87gyYZxpw0A7O+RFmU/87RN8+/a/1+ZTOMr3p6puu
-         tX+Q==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=ybno8L1iH2KHlOUGyWoj4hTljLVCYTXyMDkop5JLGSA=;
+        b=qJR7dd7P+VuRHs4m3uoU4MBqmjc1SmvenLcxE46nldbV3sxRSGtTQgb/uwbWXA63cf
+         3NW78uvsUwRz58T/6KXqw0H+nU2wOdnsSxy/yMrAWcB0pG7Mbt8Ns3pxhvRGB2TORCta
+         I6+PSaAGxQwy+SWuhBftDgv5cpUmXQ7rM3fWIAZSmUHpxnzUTTTaqss+V9WFHzg+aus/
+         Erv8B7RiLik4PZcoxaHiLXihq3/+nQcSAO9iorjxIOQuaQO5HMYS/fLbL4Qg6FKLfrDj
+         u7BQUW0IBHg2a85/J4MQZQUHMWso5K3C6+uH0YMRy1p0gN61f+3yWugH4HtvS0y+npZW
+         bVTA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:from:date:message-id:subject
-         :to;
-        bh=spaxNW2hSB7noL88QORECR/RWao7eT/EfPLP1e6SJLc=;
-        b=TRTyFwJgBZlPUxD3WFri+9Vtct7wKckvBhWnSsaA2Zq+iV44Rez2VpZaNDzyM4f+O8
-         gM0ZbEFMRbQnJ1dclxWN1z3/8Oz0AZKyM4somZJ6Zq/itJgRyuEcIm15BMDZg3+2KCUN
-         EQG+QujTQAOxP0Q5MKN4g/Cb26iH1aZMitNTOw3DfYLVm7bVBoO2hEqATOC6cL1Vmxqw
-         ex0D3Mm//NVXcO90rW9nqOt3SjB4ln+K4+wtwqwkbrr36SMvyY65BsjCQ5yAD3ebrdfz
-         oNIqKT52f8NuM8naNOjrF4C2fU1VN0KD5RMbFDdcGkIBNMulsY7DQXR2vPQcgV5h4CBe
-         drmg==
-X-Gm-Message-State: AIkVDXJ7h0j/pwQ0HEyY9Rwcv5IwyG0LUsnbhz3G9lwUXySR6VF1POXFkLyIYYcvhHmXybVY+q2ZWxpfT7n87A==
-X-Received: by 10.36.116.71 with SMTP id o68mr5542943itc.60.1486331139879;
- Sun, 05 Feb 2017 13:45:39 -0800 (PST)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=ybno8L1iH2KHlOUGyWoj4hTljLVCYTXyMDkop5JLGSA=;
+        b=fFLmZxc5rAy0e7Z2wvFOpP4V7w3MC6b2d4ttr3ZhB2jTsIQTER9T9zdDrmwKEDLc8W
+         AnfETvGdd9l1a6E7u/kkXtkD50t+bRDCjNUcSstBebomBS4dgyOOh0fQh0Ys5MMlS+qX
+         lgcNAslrITe33BnX9wFCFBn8LpDPdu9Xqf/JtSdnipOKMxBujcc/pcyn6y0nAW/BYOSr
+         xEtyuWNCQ7qmN+LtWfdoi/vphoIuNvtgCzviwS3HkA/x3bX2bsyOFqB89Vx8CNhs5i4Z
+         RB/SvWBBdtdO2MwFbha23gv1aPOCqGRwEfC8jv2ylk/8FbM510PCHstIrjKiu1xFJPnT
+         4/fw==
+X-Gm-Message-State: AIkVDXIsZliqxUdNFWKt/Dzal4T3NjwUGZH+cel3mZ4RyNRDcCUK4ehlxt8ev0OJPFThuwvh4e4uIH/BAIhRrw==
+X-Received: by 10.25.79.79 with SMTP id a15mr2575188lfk.58.1486334754252; Sun,
+ 05 Feb 2017 14:45:54 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.79.149.75 with HTTP; Sun, 5 Feb 2017 13:45:39 -0800 (PST)
-From:   Liam Breck <liam@networkimprov.net>
-Date:   Sun, 5 Feb 2017 13:45:39 -0800
-X-Google-Sender-Auth: -eplF5eP0ox1rTW7wmVo5cYI_0Q
-Message-ID: <CAKvHMgQLKccm2LcL4LGhz0afVthaS2gvEcLtoHX2TcDnr1npbw@mail.gmail.com>
-Subject: In-body from headers ignored
-To:     git@vger.kernel.org
+Received: by 10.25.145.14 with HTTP; Sun, 5 Feb 2017 14:45:33 -0800 (PST)
+In-Reply-To: <CACsJy8CTRcDuRiNeutG82iAj8qQFp+z2nadFfdkkHQGk6GKppA@mail.gmail.com>
+References: <20170120102249.15572-1-pclouds@gmail.com> <20170120160942.srqf4y5w5r6feidw@sigill.intra.peff.net>
+ <CA+P7+xoMTX5n_h+5MytZwVqKjqa0wdNKCeDtH29A_+WSfr6gTQ@mail.gmail.com> <CACsJy8CTRcDuRiNeutG82iAj8qQFp+z2nadFfdkkHQGk6GKppA@mail.gmail.com>
+From:   Jacob Keller <jacob.keller@gmail.com>
+Date:   Sun, 5 Feb 2017 14:45:33 -0800
+Message-ID: <CA+P7+xr3e4ER_p-Y8+A+3zE9-cgWEBBi1N9fsHRXKxNz+vd6=w@mail.gmail.com>
+Subject: Re: [PATCH/TOY] Shortcuts to quickly refer to a commit name with keyboard
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Jeff King <peff@peff.net>, Git mailing list <git@vger.kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-git format-patch & send-email generate the in-body From header.
+On Sun, Feb 5, 2017 at 2:39 AM, Duy Nguyen <pclouds@gmail.com> wrote:
+> On Sat, Jan 21, 2017 at 2:16 AM, Jacob Keller <jacob.keller@gmail.com> wrote:
+>> I would be interested in the code for this.. I'm curious if I can
+>> adapt it to my use of tmux.
+>
+> I stumbled upon this which does mention about git SHA-1. Maybe you'll
+> find it useful. Haven't tried it out though.
+>
+> https://github.com/morantron/tmux-fingers
+>
+> --
+> Duy
 
-git am recognizes it.
+This sounds almost exactly like what I want! :)
 
-git commit & format-patch & send-email ignore it. (The latter two will
-add a new header above an extant one.) Is there a rationale for this?
-
-If not, maybe this is a bug?
+Thanks,
+Jake
