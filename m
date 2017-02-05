@@ -2,60 +2,60 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B02711FC47
-	for <e@80x24.org>; Sun,  5 Feb 2017 23:25:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 003801FAF4
+	for <e@80x24.org>; Sun,  5 Feb 2017 23:43:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752067AbdBEXZy (ORCPT <rfc822;e@80x24.org>);
-        Sun, 5 Feb 2017 18:25:54 -0500
-Received: from mail-pg0-f68.google.com ([74.125.83.68]:33743 "EHLO
-        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751931AbdBEXZx (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 5 Feb 2017 18:25:53 -0500
-Received: by mail-pg0-f68.google.com with SMTP id 194so7387853pgd.0
-        for <git@vger.kernel.org>; Sun, 05 Feb 2017 15:25:53 -0800 (PST)
+        id S1751939AbdBEXnH (ORCPT <rfc822;e@80x24.org>);
+        Sun, 5 Feb 2017 18:43:07 -0500
+Received: from mail-pf0-f196.google.com ([209.85.192.196]:35290 "EHLO
+        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751165AbdBEXnH (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 5 Feb 2017 18:43:07 -0500
+Received: by mail-pf0-f196.google.com with SMTP id f144so5526259pfa.2
+        for <git@vger.kernel.org>; Sun, 05 Feb 2017 15:43:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=LFQ5acpP/G4EJDBfyFXmYSKPdyn8Wyoyveuq106rTWc=;
-        b=BsWX2LD1ZoQYf7eX4uSstdo18gclJEaf4OjO/nYLdA8zl0BubUDCndqboJnpYXX05Z
-         MllQvqL/7SOtatNQY7Tw5uLoSXz4iYpH8V4jDTCfUUT5ijBT8UFuE+69Wymc1rxCWZcT
-         wRCSDUjrNWOKaHDEr43q6u96FzQEXhKVP+zfE6bNqgsCExM3Sp7uxSiA1ZDSgWgRZle0
-         OJMMYE1kA6Ll/5vtXXkkTSueEH6GNcI1KynWnu5YFdyKxrj0hjQgUrimEOaf8cCKFyLf
-         aUcOuXg+TXx406BSNcFz2XuUNyWg6wE5X7+XnTT/syYJHTvNXHxqgXuStOUPCgATY9OP
-         iblw==
+        bh=Uos89yKfT8gLcc+vvnumXLe3RmJjnQNJwtEndq4pBw0=;
+        b=P/BZAbrWqwy0owizN/VruL5OjMtUYmhHJx/F2wL8/461rvPoDMXtjAfWfKP2VBSlkp
+         dh6hsz+t9Cf06CBDbcCNa+kwW4IofAEBROgULt7GCLdFnwXRSKWBw35PEUv3LNxkHrw/
+         q4pQtg4M4b8qKE/OOJGL4oZtLkJOeXdrccb8yXPcRfLCZVj6Grloh6pzl5GJNU2GhgH8
+         RuUVP6C9/ZT2WoCPygtZvFsdtyHFQ7UTIbmoO3aP1X5wtthm1YFV2KMeLL/3gMpRYFZT
+         wNO98HNBfEaJE45/pwSW30lRi7Y65htrP4YAXxD4HByRc9dvudrEDFoVBPzlcTPj+6Qt
+         7QpQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=LFQ5acpP/G4EJDBfyFXmYSKPdyn8Wyoyveuq106rTWc=;
-        b=l0v+ffA4/zJ4nTOF/7hOTmAmcRk84Q7zfWeOqxlolV33tUFaPcMujKC2QSRyCkfXk1
-         gQBTSasYZ5UG6m5uNnv2NYRjviTouW4hS6CUHopCP8v1NqkCcG+c4/DO7PJK7ELaJGZh
-         BQEMXmXO7NLjojMU4uyc0anbzDHys3vus6Gk+OSEJYGdYWf7V9AGG6mlIjTwEJt1X2jv
-         0/8tHWLxVnJmaNGamRH7vo65NUzrMJsKexERz0wiJdtruUDRl6UKYrP7R0HFm8HVe6F4
-         3E9Uxcu/Rh3mP6X3iuDjvdDx8GWub4Swigb4iCk4JNlVGlGb6XXkD3vnE0SOjQJ3EYuP
-         yl1A==
-X-Gm-Message-State: AIkVDXICRUnf/AJKw7Casdmkm8cMsJR3aVcvCsa/tUwa8ojAFUOvnnO53PD/CaYO3eGzlg==
-X-Received: by 10.84.233.136 with SMTP id l8mr13313313plk.169.1486337153149;
-        Sun, 05 Feb 2017 15:25:53 -0800 (PST)
+        bh=Uos89yKfT8gLcc+vvnumXLe3RmJjnQNJwtEndq4pBw0=;
+        b=dbM2RcbhhqOcu5FTHsGv8VFuNEv7AF5PopNghZKbYhA+EUmDIjbavyvFiUnq8tL8o2
+         ml4NbykCSER6Ol3Ql9z8TjtqAGa2140x4YveryV3CUb+GOaQjTszLMAZ2h632W6ABbGo
+         KTOQslnoRbpuTbGpHniZwMp2SxQTxfhoERLh8Y2pGdvH0tMS7fQE/WUmQCq34VdVezLE
+         a7YWEsksjZOjfF3PAg0x1Xs/Frcf7rInyiB2Y1iyNJTycWneiOsp4VtzxJ8xWcy6+9OV
+         Cja3eTJ+gZNLn47hUK5RYfXZISSqGJxXgGR3/vBPl9yon63zqG8C5VokcX8tB4iolcmW
+         6Ngg==
+X-Gm-Message-State: AIkVDXKEhViWGm4KZ/8T9kl6dZiAzU0qQ4FGp2D2HugLpd93eihT0NZ3dzqBuJWvDHf0LQ==
+X-Received: by 10.99.108.74 with SMTP id h71mr9957930pgc.99.1486338186264;
+        Sun, 05 Feb 2017 15:43:06 -0800 (PST)
 Received: from localhost ([2620:0:1000:8622:ac74:31b6:1bdf:d117])
-        by smtp.gmail.com with ESMTPSA id a2sm83388468pfc.72.2017.02.05.15.25.52
+        by smtp.gmail.com with ESMTPSA id b10sm84239465pga.21.2017.02.05.15.43.05
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Sun, 05 Feb 2017 15:25:52 -0800 (PST)
+        Sun, 05 Feb 2017 15:43:05 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     cornelius.weig@tngtech.com
-Cc:     git@vger.kernel.org, bitte.keine.werbung.einwerfen@googlemail.com,
-        karthik.188@gmail.com, peff@peff.net
-Subject: Re: [PATCH] tag: generate useful reflog message
-References: <20170205214254.24560-1-cornelius.weig@tngtech.com>
-Date:   Sun, 05 Feb 2017 15:25:51 -0800
-In-Reply-To: <20170205214254.24560-1-cornelius.weig@tngtech.com> (cornelius
-        weig's message of "Sun, 5 Feb 2017 22:42:54 +0100")
-Message-ID: <xmqqo9yg43uo.fsf@gitster.mtv.corp.google.com>
+To:     Liam Breck <liam@networkimprov.net>
+Cc:     git@vger.kernel.org
+Subject: Re: In-body from headers ignored
+References: <CAKvHMgQLKccm2LcL4LGhz0afVthaS2gvEcLtoHX2TcDnr1npbw@mail.gmail.com>
+Date:   Sun, 05 Feb 2017 15:43:04 -0800
+In-Reply-To: <CAKvHMgQLKccm2LcL4LGhz0afVthaS2gvEcLtoHX2TcDnr1npbw@mail.gmail.com>
+        (Liam Breck's message of "Sun, 5 Feb 2017 13:45:39 -0800")
+Message-ID: <xmqqa8a0431z.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -64,54 +64,59 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-cornelius.weig@tngtech.com writes:
+Liam Breck <liam@networkimprov.net> writes:
 
-> Now, a reflog message is generated when creating a tag. The message
-> follows the pattern "commit: <subject>" where the subject is taken from
-> the commit the tag points to. For example:
-> "6e3a7b3 refs/tags/tag_with_reflog@{0}: commit: Git 2.12-rc0"
+> git format-patch & send-email generate the in-body From header.
+>
+> git am recognizes it.
+>
+> git commit & format-patch & send-email ignore it. (The latter two will
+> add a new header above an extant one.) Is there a rationale for this?
 
-Because the reflog records the actions, shouldn't it be saying that
-you "tagged"?  The reflog for HEAD says things like "reset: moving
-to...", "am: $subject", and the reflog for a branch says things like
-"branch: created from master", "am: $subject", "rebase -i (finish)".
+I may be misunderstanding you, but I am guessing that you are
+expecting
 
-For a tag, I would imagine something like "tag: tagged 4e59582ff7
-("Seventh batch for 2.12", 2017-01-23)" would be more appropriate.
+	$ GIT_AUTHOR_NAME="Liam Breck" GIT_AUTHOR_EMAIL='liam@n.net' \
+	git commit -m 'The title of the patch
 
-> Notes:
->     While playing around with tag reflogs I also found a bug that was present
->     before this patch. It manifests itself when the sha1-ref in the reflog does not
->     point to a commit object but something else.
+	From: Somebody Else <somebody@else.xz>
+	Subject: The real title of the patch
 
-The underlying machinery for "log" and "rev-list" is about showing a
-stream of commits, and most of the reflog entries point at commits.
+	This is the (true) first line of the body of the message.'
 
-On the other hand, the "walking reflogs to and show the sequence of
-the tip of refs", and there is no reason to expect the tip of refs
-will always be commits, but an ancient design mistake bolted the
-latter on top of the former (perhaps because in practice the tip of
-refs are almost always commits); "reflog" aka "log -g" and "rev-list
---walk-reflogs" share the same issue coming from that misdesign,
-which needs to be corrected to solve this issue.
+to record a commit object that would give
 
-The exact same design mistake also makes "git reflog" to accept
-options like "--topo-order", even though many of the options that
-make sense for the "commit DAG walking" (which is what "log" and
-"rev-list" are about) do not make any sense when walking a reflog.
-And the command would give nonsense output when given such an
-option, because a reflog is a single strand of pearl of objects (not
-necessarily commits) and the order in which these objects appear in
-the reflog does not have anything to do with the underlying commit
-DAG topology.  Fixing the ancient misdesign would fix this issue,
-too.
+	$ git cat-file commit HEAD
+	tree ....
+	parent ....
+	author Somebody Else <somebody@else.xz> ....
+	committer ...
 
-I think the fix would involve first ripping out the "reflog walking"
-code that was bolted on and stop allowing it to inject the entries
-taken from the reflog into the "walk the commit DAG" machinery.
-Then "reflog walking" code needs to be taught to have its own "now
-we got a single object to show, show it (using the helper functions
-to show a single object that is already used by 'git show')" code,
-instead of piggy-backing on the output codepath used by "log" and
-"rev-list".
+	The real title of the patch
+
+	This is the (true) first line of the body of the message.
+
+and seeing that the real author is still you, the title is "The real
+title of the patch", and the first paragraph of the body consists of
+these two lines that begin with "From: and "Subject:".
+
+This is very much deliberate.  "git commit" does not care if the
+second paragraph in the body of the message resembles e-mail
+headers, because it is a command that can be used by people who do
+not even e-mail patches.
+
+"git format-patch" and "git am" are all about passing the commit
+between people over e-mail, and they know that the second paragraph
+can have "From:", "Subject:" or "Date:" to override what "am"
+obtains from the header lines of the e-mail that carried the
+message, because the e-mail headers can be different (e.g. you may
+be forwarding somebody else's e-mail but you may not be able to
+forge the real "From:" line to your MUA/MTA) from what you really
+want to use.  On the receiving end, "am" tells "mailinfo" program to
+inspect the message body with "--inbody-headers" option.  After
+"mailinfo" inspects the message, "am" invokes the underlying
+machinery to actually make the commit (which corresponds to "git
+commit"), but at that point the invoked "git commit" does not even
+see these in-body header lines.  That is how division of labor
+between these layers of the commands are structured.
 
