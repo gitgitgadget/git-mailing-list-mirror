@@ -2,135 +2,205 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EF3AD1FAF4
-	for <e@80x24.org>; Sun,  5 Feb 2017 21:23:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9DA3A1FAF4
+	for <e@80x24.org>; Sun,  5 Feb 2017 21:43:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752711AbdBEVXn (ORCPT <rfc822;e@80x24.org>);
-        Sun, 5 Feb 2017 16:23:43 -0500
-Received: from mail-pf0-f194.google.com ([209.85.192.194]:34244 "EHLO
-        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752443AbdBEVXm (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 5 Feb 2017 16:23:42 -0500
-Received: by mail-pf0-f194.google.com with SMTP id y143so5405073pfb.1
-        for <git@vger.kernel.org>; Sun, 05 Feb 2017 13:23:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=XhrtVJJlz1TCYhN7c7CF/W4m+60MtaX4UUE6l2TDfPQ=;
-        b=kL28cMKrfxhtg3AeYA/jVjuTt0C31/CUN6SDZtwqOB+j1trQeUD/F9aIv/RBtuhQsk
-         By6P44q0W/Xk2y7CSp87cyQ9OqH5M8sXhWjbrY+AhiZz+qujIw+NvoCet2fRDGkrNmr4
-         rKWJSjZOcJdUrWM+7bS8edrCK7nkQXFe3N7BaYaS3OtAspGK+kVS8ur/yCGOZ51WbiVg
-         NCZxKNqS4/lJN7z9y5UY7vA1Fi1y64p5vFWBq8nPbvdH2RChTf5QKpzodYMit5MCqZap
-         F66zL/mbPi840Gk1v8ATSCX5t+E1ObXyrHY3wpF7MSGsQ9C5Sz0MKNWxIcxiybol5htv
-         xe4A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=XhrtVJJlz1TCYhN7c7CF/W4m+60MtaX4UUE6l2TDfPQ=;
-        b=fmr9mSuqmGP7elMae9glqx1b6j8j6cmhrNZd6TLCCyt5eyaWhX8/0nnQhRk/Zz/vES
-         dqabnJM35QmtQM5ZYWFP7YDtZ8ff6fAAYDJNSeyKVw2gFzqmRLQjVzAJYkeBfIxoY25T
-         k1WszZMR/Hd9dyeMmPH0gJLkl5MPYvs+4mp2cNLEkr+GeF4tSWcs8byO8QXRpM7RwYGF
-         xfltYJvdsGfwgEjQSgVE1uw9ahJOYbABqba4IfHu/80C0qve6LBJLQRBB1Ql/yPUixh3
-         Li8CXk6bA9RYn6L22rBnzTHw4MgKz2W0yR+7k8QNcoK0l67BF28ChLsFJR+UX+fgPWY2
-         GVJQ==
-X-Gm-Message-State: AIkVDXLA6hlORKUIvG8llgex3NVv+weOtMb78fuw1u5EwaboTcDtQfbxRmTru7WirepNAQ==
-X-Received: by 10.84.236.76 with SMTP id h12mr12715758pln.173.1486329821603;
-        Sun, 05 Feb 2017 13:23:41 -0800 (PST)
-Received: from localhost.localdomain (50-1-201-252.dsl.static.fusionbroadband.com. [50.1.201.252])
-        by smtp.gmail.com with ESMTPSA id y6sm83836412pgc.1.2017.02.05.13.23.39
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 05 Feb 2017 13:23:40 -0800 (PST)
-From:   David Aguilar <davvid@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git ML <git@vger.kernel.org>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Denton Liu <liu.denton@gmail.com>
-Subject: [PATCH] difftool: fix bug when printing usage
-Date:   Sun,  5 Feb 2017 13:23:38 -0800
-Message-Id: <20170205212338.17667-1-davvid@gmail.com>
-X-Mailer: git-send-email 2.12.0.rc0.209.g3d1e53e462
-In-Reply-To: <20170205201751.z4rfmy5xxaqg472l@gmail.com>
-References: <20170205201751.z4rfmy5xxaqg472l@gmail.com>
+        id S1752716AbdBEVnZ (ORCPT <rfc822;e@80x24.org>);
+        Sun, 5 Feb 2017 16:43:25 -0500
+Received: from zimbra-vnc.tngtech.com ([83.144.240.98]:61764 "EHLO
+        proxy.tng.vnc.biz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752085AbdBEVnY (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 5 Feb 2017 16:43:24 -0500
+Received: from localhost (localhost [127.0.0.1])
+        by proxy.tng.vnc.biz (Postfix) with ESMTP id 80A921E1872;
+        Sun,  5 Feb 2017 22:43:20 +0100 (CET)
+Received: from proxy.tng.vnc.biz ([127.0.0.1])
+        by localhost (proxy.tng.vnc.biz [127.0.0.1]) (amavisd-new, port 10032)
+        with ESMTP id ZdOtvEMuiZPP; Sun,  5 Feb 2017 22:43:19 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+        by proxy.tng.vnc.biz (Postfix) with ESMTP id 24F7F1E18B5;
+        Sun,  5 Feb 2017 22:43:19 +0100 (CET)
+X-Virus-Scanned: amavisd-new at 
+Received: from proxy.tng.vnc.biz ([127.0.0.1])
+        by localhost (proxy.tng.vnc.biz [127.0.0.1]) (amavisd-new, port 10026)
+        with ESMTP id mzMWFioQFMxn; Sun,  5 Feb 2017 22:43:19 +0100 (CET)
+Received: from localhost.localdomain (aftr-185-17-204-255.dynamic.mnet-online.de [185.17.204.255])
+        by proxy.tng.vnc.biz (Postfix) with ESMTPSA id A32751E1872;
+        Sun,  5 Feb 2017 22:43:18 +0100 (CET)
+From:   cornelius.weig@tngtech.com
+To:     git@vger.kernel.org
+Cc:     bitte.keine.werbung.einwerfen@googlemail.com,
+        Cornelius Weig <cornelius.weig@tngtech.com>,
+        karthik.188@gmail.com, peff@peff.net
+Subject: [PATCH] tag: generate useful reflog message
+Date:   Sun,  5 Feb 2017 22:42:54 +0100
+Message-Id: <20170205214254.24560-1-cornelius.weig@tngtech.com>
+X-Mailer: git-send-email 2.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"git difftool -h" reports an error:
+From: Cornelius Weig <cornelius.weig@tngtech.com>
 
-	fatal: BUG: setup_git_env called without repository
+When tags are created with `--create-reflog` or with the option
+`core.logAllRefUpdates` set to 'always', a reflog is created for them.
+So far, the description of reflog entries for tags was empty, making the
+reflog hard to understand. For example:
+"6e3a7b3 refs/tags/tag_with_reflog@{0}:"
 
-Defer repository setup so that the help option processing happens before
-the repository is initialized.
+Now, a reflog message is generated when creating a tag. The message
+follows the pattern "commit: <subject>" where the subject is taken from
+the commit the tag points to. For example:
+"6e3a7b3 refs/tags/tag_with_reflog@{0}: commit: Git 2.12-rc0"
+If the tag points to a tree/blob/tag object, the following static
+messages are used instead:
 
-Add tests to ensure that the basic usage works inside and outside of a
-repository.
+ - "tree object"
+ - "blob object"
+ - "other tag object"
 
-Signed-off-by: David Aguilar <davvid@gmail.com>
+Signed-off-by: Cornelius Weig <cornelius.weig@tngtech.com>
 ---
-This bug exists in both "master" and "next".
-This patch has been tested on both branches.
 
- builtin/difftool.c  |  8 ++++----
- t/t7800-difftool.sh | 13 +++++++++++++
- 2 files changed, 17 insertions(+), 4 deletions(-)
+Notes:
+    While playing around with tag reflogs I also found a bug that was present
+    before this patch. It manifests itself when the sha1-ref in the reflog does not
+    point to a commit object but something else.
+    
+    For example,
+    
+     - when the referenced sha1 is a tag object:
+    	$ git tag --create-reflog -f -m'annotated tag' tag_with_reflog
+     - when the referenced sha1 is a blob object:
+    	$ git tag --create-reflog -f tag_with_reflog HEAD:<filename>
+     - when the referenced sha1 is a tree object:
+    	$ git tag --create-reflog -f tag_with_reflog HEAD^{tree}
+    
+    In each case, a proper reflog entry is generated, but
+    	$ git reflog tag_with_reflog
+    will sometimes segfault (if it does, it does so consistently), or only show the
+    first few entries. The tree/blob cases are IMHO not so important, but the
+    broken reflog for annotated tags I find quite severe.
+    
+    I guess it's because the reflog is funneled through the log.c code, where every
+    reflog-entry is assumed to be a commit object? If this is the case, a fix would
+    probably be quite involved.
 
-diff --git a/builtin/difftool.c b/builtin/difftool.c
-index b5e85ab079..d13350ce83 100644
---- a/builtin/difftool.c
-+++ b/builtin/difftool.c
-@@ -647,10 +647,6 @@ int cmd_difftool(int argc, const char **argv, const char *prefix)
- 		OPT_END()
- 	};
- 
--	/* NEEDSWORK: once we no longer spawn anything, remove this */
--	setenv(GIT_DIR_ENVIRONMENT, absolute_path(get_git_dir()), 1);
--	setenv(GIT_WORK_TREE_ENVIRONMENT, absolute_path(get_git_work_tree()), 1);
--
- 	git_config(difftool_config, NULL);
- 	symlinks = has_symlinks;
- 
-@@ -661,6 +657,10 @@ int cmd_difftool(int argc, const char **argv, const char *prefix)
- 	if (tool_help)
- 		return print_tool_help();
- 
-+	/* NEEDSWORK: once we no longer spawn anything, remove this */
-+	setenv(GIT_DIR_ENVIRONMENT, absolute_path(get_git_dir()), 1);
-+	setenv(GIT_WORK_TREE_ENVIRONMENT, absolute_path(get_git_work_tree()), 1);
-+
- 	if (use_gui_tool && diff_gui_tool && *diff_gui_tool)
- 		setenv("GIT_DIFF_TOOL", diff_gui_tool, 1);
- 	else if (difftool_cmd) {
-diff --git a/t/t7800-difftool.sh b/t/t7800-difftool.sh
-index aa0ef02597..21e2ac4ad6 100755
---- a/t/t7800-difftool.sh
-+++ b/t/t7800-difftool.sh
-@@ -23,6 +23,19 @@ prompt_given ()
- 	test "$prompt" = "Launch 'test-tool' [Y/n]? branch"
+ builtin/tag.c  | 43 ++++++++++++++++++++++++++++++++++++++++++-
+ t/t7004-tag.sh | 14 +++++++++++++-
+ 2 files changed, 55 insertions(+), 2 deletions(-)
+
+diff --git a/builtin/tag.c b/builtin/tag.c
+index e40c4a9..c0d9478 100644
+--- a/builtin/tag.c
++++ b/builtin/tag.c
+@@ -302,6 +302,43 @@ static void create_tag(const unsigned char *object, const char *tag,
+ 	}
  }
  
-+test_expect_success 'basic usage requires no repo' '
-+	lines=$(git difftool -h | grep ^usage: | wc -l) &&
-+	test "$lines" -eq 1 &&
-+	# create a ceiling directory to prevent Git from finding a repo
-+	mkdir -p not/repo &&
-+	ceiling="$PWD/not" &&
-+	lines=$(cd not/repo &&
-+		GIT_CEILING_DIRECTORIES="$ceiling" git difftool -h |
-+		grep ^usage: | wc -l) &&
-+	test "$lines" -eq 1 &&
-+	rmdir -p not/repo
++static void create_reflog_msg(const unsigned char *object, struct strbuf *sb)
++{
++	enum object_type type;
++	char *buf;
++	unsigned long size;
++	int subject_len = 0;
++	const char *subject_start;
++
++	type = sha1_object_info(object, NULL);
++	switch (type) {
++	default:
++		strbuf_addstr(sb, "internal object");
++		break;
++	case OBJ_COMMIT:
++		strbuf_addstr(sb, "commit: ");
++		buf = read_sha1_file(object, &type, &size);
++		if (buf) {
++			subject_len = find_commit_subject(buf, &subject_start);
++			strbuf_insert(sb, 8, subject_start, subject_len);
++			free(buf);
++		} else {
++			die("commit object %s could not be read",
++				sha1_to_hex(repl));
++		}
++		break;
++	case OBJ_TREE:
++		strbuf_addstr(sb, "tree object");
++		break;
++	case OBJ_BLOB:
++		strbuf_addstr(sb, "blob object");
++		break;
++	case OBJ_TAG:
++		strbuf_addstr(sb, "other tag object");
++		break;
++	}
++}
++
+ struct msg_arg {
+ 	int given;
+ 	struct strbuf buf;
+@@ -335,6 +372,7 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
+ {
+ 	struct strbuf buf = STRBUF_INIT;
+ 	struct strbuf ref = STRBUF_INIT;
++	struct strbuf reflog_msg = STRBUF_INIT;
+ 	unsigned char object[20], prev[20];
+ 	const char *object_ref, *tag;
+ 	struct create_tag_options opt;
+@@ -494,6 +532,8 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
+ 	else
+ 		die(_("Invalid cleanup mode %s"), cleanup_arg);
+ 
++	create_reflog_msg(object, &reflog_msg);
++
+ 	if (create_tag_object) {
+ 		if (force_sign_annotate && !annotate)
+ 			opt.sign = 1;
+@@ -504,7 +544,7 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
+ 	if (!transaction ||
+ 	    ref_transaction_update(transaction, ref.buf, object, prev,
+ 				   create_reflog ? REF_FORCE_CREATE_REFLOG : 0,
+-				   NULL, &err) ||
++				   reflog_msg.buf, &err) ||
+ 	    ref_transaction_commit(transaction, &err))
+ 		die("%s", err.buf);
+ 	ref_transaction_free(transaction);
+@@ -514,5 +554,6 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
+ 	strbuf_release(&err);
+ 	strbuf_release(&buf);
+ 	strbuf_release(&ref);
++	strbuf_release(&reflog_msg);
+ 	return 0;
+ }
+diff --git a/t/t7004-tag.sh b/t/t7004-tag.sh
+index 072e6c6..0a92b2c 100755
+--- a/t/t7004-tag.sh
++++ b/t/t7004-tag.sh
+@@ -83,7 +83,19 @@ test_expect_success 'creating a tag using default HEAD should succeed' '
+ test_expect_success 'creating a tag with --create-reflog should create reflog' '
+ 	test_when_finished "git tag -d tag_with_reflog" &&
+ 	git tag --create-reflog tag_with_reflog &&
+-	git reflog exists refs/tags/tag_with_reflog
++	git reflog exists refs/tags/tag_with_reflog &&
++	git log -1 --format="format:commit: %s%n" > expected &&
++	sed -e "s/^.*\t//" .git/logs/refs/tags/tag_with_reflog > actual &&
++	test_cmp expected actual
 +'
 +
- # Create a file on master and change it on branch
- test_expect_success 'setup' '
- 	echo master >file &&
++test_expect_success 'annotated tag with --create-reflog has correct message' '
++	test_when_finished "git tag -d tag_with_reflog" &&
++	git tag -m "annotated tag" --create-reflog tag_with_reflog &&
++	git reflog exists refs/tags/tag_with_reflog &&
++	git log -1 --format="format:commit: %s%n" > expected &&
++	sed -e "s/^.*\t//" .git/logs/refs/tags/tag_with_reflog > actual &&
++	test_cmp expected actual
+ '
+ 
+ test_expect_success '--create-reflog does not create reflog on failure' '
 -- 
-2.12.0.rc0.209.g3d1e53e462
+2.10.2
 
