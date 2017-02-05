@@ -2,102 +2,155 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 51FE61FC46
-	for <e@80x24.org>; Sun,  5 Feb 2017 04:11:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 91D621FAFC
+	for <e@80x24.org>; Sun,  5 Feb 2017 07:44:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751774AbdBEELF (ORCPT <rfc822;e@80x24.org>);
-        Sat, 4 Feb 2017 23:11:05 -0500
-Received: from mail-pg0-f46.google.com ([74.125.83.46]:35756 "EHLO
-        mail-pg0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751612AbdBEELE (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 4 Feb 2017 23:11:04 -0500
-Received: by mail-pg0-f46.google.com with SMTP id 194so18254429pgd.2
-        for <git@vger.kernel.org>; Sat, 04 Feb 2017 20:11:04 -0800 (PST)
+        id S1751897AbdBEHoZ (ORCPT <rfc822;e@80x24.org>);
+        Sun, 5 Feb 2017 02:44:25 -0500
+Received: from mail-pg0-f68.google.com ([74.125.83.68]:33661 "EHLO
+        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751735AbdBEHoY (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 5 Feb 2017 02:44:24 -0500
+Received: by mail-pg0-f68.google.com with SMTP id 194so6090667pgd.0
+        for <git@vger.kernel.org>; Sat, 04 Feb 2017 23:44:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=9PfWx2iFhMLD9JCeeqnW6gN8o5uffNNLjtPfMB/Ybg8=;
-        b=MMDslXbcMYAJ7Ru6CKgT6Ot/c6o1j+7A3Y1FCKxpwydAOECLZXopSioXanEjv75n2e
-         SIyYLpJ9j5rlKDk/oqRQph/pOlUrAA1ypkUvTWdl+GPSvE1VQrQDw57Qno/L52loDUYk
-         Fca1/kaT0Ko2krd9MXUZNxLLZZo/egIzlJkx/3oMlhOO7naHS2NnpuN79Et4Ft3+oga9
-         t1rbC1OewfBAfsNTOpJspVZuS7qVyNk8JEWd+dtDU6QLqDSXjImBcsAMtvv3mX5W9OXR
-         bH+kIdk2wHBbtgNJc0isK1g0DjUzP/aIIotuTf7p946IwYovNHOqryEBMdcI4jX5fIEh
-         AdmA==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=xjBBLXzDAdUuWyp6X0NUP+nQAkyyH7MjrOhJvmrz7q8=;
+        b=B//7nvBmf9sIlOts/M8kNgWQJn6vRtoxjiVqYlVrutwtk7mAMQoScuHiV2x/EnfZME
+         bbalFs+7Hkm7SynNJazVS7+qGLXTsFxjmrptSpn42yDTy4VGIOcW4wUwGWZq5BUFWNuJ
+         JvFcwnRTnrTqoPk/PNF/U1g9hORIhJniC/WZETumOSI26mq9J59MyhH3XOVxvGOSnVG1
+         W5OCkIl+PQKLllkUfg79yL7v7i2469e8lrF1rBSbNoQpybEUPurFQsSdsKslAz2bkeap
+         TQHCvgSXianGfGIuwUH2S4/VvRpZh7BLkgZztuIl5DAfC1rYbuXOMX6kOhH9/W8d2c9Q
+         eKLg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=9PfWx2iFhMLD9JCeeqnW6gN8o5uffNNLjtPfMB/Ybg8=;
-        b=HeE6osdyHUY7Dzu1D8pnrlK66vpif+m0rChWh83xctwSutekMMO6XAk010nve/vu/L
-         duW+TQnpnUYFk6OKbiiNL10kz90Ct+LQ0SB6Dj2U1KhCLAwFUBJUDNCkm1xItAXnuSP7
-         WgnXS446b8q7uxopzQKBFY/9BkrT6Q4HgAzhoPXnsJT/eJg8Q67MtaCSjoR83WOxeF3J
-         nm9By9tBwX6YSQsWOedT6qtb2TmboB/9pT3sJ3QkdUxjxLYrpv2mG+2vQVs4H3qCo8OZ
-         CvZ6jCDALNYY9iEXl8XtNEVkN01zJClFa47oEkV18lMYFwwYbMutsykSLV0V8zFnne4A
-         24Hw==
-X-Gm-Message-State: AIkVDXIaVrAtRalax68ZXfseGLeb/O1Yz5qTQ3yNuXroC1rvbhwHhvulZjwHId1L0KOKKQ==
-X-Received: by 10.98.34.82 with SMTP id i79mr5933412pfi.120.1486267863989;
-        Sat, 04 Feb 2017 20:11:03 -0800 (PST)
-Received: from gmail.com (50-1-201-252.dsl.static.fusionbroadband.com. [50.1.201.252])
-        by smtp.gmail.com with ESMTPSA id m6sm78355984pfm.22.2017.02.04.20.11.01
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sat, 04 Feb 2017 20:11:02 -0800 (PST)
-Date:   Sat, 4 Feb 2017 20:10:59 -0800
-From:   David Aguilar <davvid@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] tag: add a config option for setting --annotate by
- default
-Message-ID: <20170205041059.k6amkuynvv5o4iyi@gmail.com>
-References: <20170204021402.15927-1-davvid@gmail.com>
- <xmqqlgtm8s5k.fsf@gitster.mtv.corp.google.com>
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=xjBBLXzDAdUuWyp6X0NUP+nQAkyyH7MjrOhJvmrz7q8=;
+        b=o01RSbE3I8UdcdJKEMJqeTbGV8BBR09rRGw9BL73pk3TJfBzPN5gDtVN7xHnzc/19c
+         qkVkkc4UqB2NUzNNFEEUe+TXR9RqX9eUlbG3Ph8qcPHeVlcIJqhL8xsOuK8CY/19cmT7
+         NlaTUj0CDWcqP9LRVj9zU/991DaMehlvhCK32aQPHthgMOxFId4Li6FXJF4epNmzqrAX
+         vyjzsZ2TsLCawe/eEIqNa3P1YIHdhalom3wh+2ph7WpKVgaTPYYQcqvsUM4a7KO3TYUr
+         u7CgQ7gGLVcUCAWz+thaU7PW4SB2YfCjF0Ua3/FOKH9Tdx9JySL37/lODBMQOEaweV7T
+         tTrQ==
+X-Gm-Message-State: AIkVDXL642VXTmH1iBlaSaSpeiuOYquA0UJnBpoS0y8ce7yBPLKYurBUplXxJmELS3JOBg==
+X-Received: by 10.84.176.1 with SMTP id u1mr8584255plb.71.1486280657466;
+        Sat, 04 Feb 2017 23:44:17 -0800 (PST)
+Received: from localhost ([2620:0:1000:8622:7d32:3ca2:6708:4960])
+        by smtp.gmail.com with ESMTPSA id o18sm80250763pgn.36.2017.02.04.23.44.15
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Sat, 04 Feb 2017 23:44:15 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Zenaan Harkness <zen@freedbms.net>
+Cc:     git <git@vger.kernel.org>
+Subject: Re: release notes/ change number discrepancy ? - Documentation/RelNotes/2.10.0.txt "merge b738396..."
+References: <20170205022156.GA19612@x220-a02>
+Date:   Sat, 04 Feb 2017 23:44:14 -0800
+In-Reply-To: <20170205022156.GA19612@x220-a02> (Zenaan Harkness's message of
+        "Sun, 5 Feb 2017 13:21:56 +1100")
+Message-ID: <xmqqvasp3wvl.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqlgtm8s5k.fsf@gitster.mtv.corp.google.com>
-User-Agent: NeoMutt/20161126 (1.7.1)
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Feb 03, 2017 at 09:02:47PM -0800, Junio C Hamano wrote:
-> David Aguilar <davvid@gmail.com> writes:
-> 
-> > Make it easier for users to remember to annotate their tags.
-> > Allow setting the default value for "--annotate" via the "tag.annotate"
-> > configuration variable.
-> >
-> > Signed-off-by: David Aguilar <davvid@gmail.com>
-> > ---
-> 
-> I do not care too strongly about this, but I need to point out that
-> this will have fallout to tools and scripts.  E.g. if you have this
-> configured and try to create a new tag in gitk, wouldn't this part
-> 
-> 	if {$msg != {}} {
-> 	    exec git tag -a -m $msg $tag $id
-> 	} else {
-> 	    exec git tag $tag $id
-> 	}
-> 
-> try to open an editor somehow to get the message even when $msg is
-> an empty string?  I think the same problem already exists for the
-> tag.forceSignAnnotated variable we already have added, though.
+Zenaan Harkness <zen@freedbms.net> writes:
 
-That's true.  I should have put "RFC" in the subject line.
-Let's drop this patch unless there's others that find it useful.
+> Am I missing something in the following:
+>
+> looking at Documentation/RelNotes/2.10.0.txt I see the following release
+> note (~line 35):
+>
+>  * "upload-pack" allows a custom "git pack-objects" replacement when
+>    responding to "fetch/clone" via the uploadpack.packObjectsHook.
+>    (merge b738396 jk/upload-pack-hook later to maint).
+>
+>
+> but when I run git show b738396 , I get the following:
+>
+> commit b738396cfdcc276c0cde0c1a6462c5cc74ba7b76
+> Author: Johannes Schindelin <johannes.schindelin@gmx.de>
+> Date:   Thu Jul 14 15:58:59 2016 +0200
+>
+>     mingw: fix regression in t1308-config-set
+>
+> which seems to be completely unrelated. What am I missing please?
 
-How do you feel about a patch to add "git merge --signoff", for
-consistency with "git commit"?
+I think the commit is an "oops, we found a regression on a different
+platform than the one used when developing the series after its
+development completed, and here is a fix on top" commit that is
+queued as the tip of a series.  You shouldn't be using "git show" on
+it to look ONLY the tip of the series.
 
-The rationale is that there might be situations (evil merges, or
-even regular merges depending on the project) where someone
-might want to signoff on their merges.
--- 
-David
+Let me show a better way to ask Git what you want to know, with the
+excellent "git when-merged" script (google for it).
+
+$ git when-merged b738396 master
+refs/heads/master                      75676c8c8b6cbeec7ccb68d97c17db230d9f2659
+
+We merged that commit to 'master' at 75676c8c8.  What does the merge
+log say?
+
+$ git show 75676c8c
+commit 75676c8c8b6cbeec7ccb68d97c17db230d9f2659
+Merge: 79ed43c28f b738396cfd
+Author: Junio C Hamano <gitster@pobox.com>
+Date:   Thu Jul 14 10:38:57 2016 -0700
+
+    Merge branch 'jk/upload-pack-hook'
+
+    A hot-fix to make a test working in mingw again.
+
+    * jk/upload-pack-hook:
+      mingw: fix regression in t1308-config-set
+
+OK, so it was a hot-fix that consists of a single commit.  What did
+we need to hot-fix?  A hot-fix is typically queued as a direct
+follow-up to what is needed to be fixed.  When did we merge the
+parent of the fix?
+
+$ git when-merged b738396^ master
+refs/heads/master                      1e4bf907890e094f1c1c8c5086387e7d5fdb0655
+
+And that merge commit on 'master' shows us the series that needed to
+be fixed up.
+
+$ git show 1e4bf907890
+commit 1e4bf907890e094f1c1c8c5086387e7d5fdb0655
+Merge: 7a738b40f6 20b20a22f8
+Author: Junio C Hamano <gitster@pobox.com>
+Date:   Wed Jul 6 13:38:11 2016 -0700
+
+    Merge branch 'jk/upload-pack-hook'
+
+    "upload-pack" allows a custom "git pack-objects" replacement when
+    responding to "fetch/clone" via the uploadpack.packObjectsHook.
+
+    * jk/upload-pack-hook:
+      upload-pack: provide a hook for running pack-objects
+      t1308: do not get fooled by symbolic links to the source tree
+      config: add a notion of "scope"
+      config: return configset value for current_config_ functions
+      config: set up config_source for command-line config
+      git_config_parse_parameter: refactor cleanup code
+      git_config_with_options: drop "found" counting
+
+You learned from the above that the jk/upload-pack-hook topic was
+developed as a 7-patch series, reviewed, tested and got merged to
+'master' on Jul 6th.  Unfortunately a test in the series had a
+portability issue that wasn't discovered while it was being reviewed
+and tested, and a hot-fix was queued on top and merged to 'master'
+about a week later.  If we wanted to merge the topic to the
+maintenance track, we cannot just merge the original 7-patch series.
+We need to merge the whole thing, including the 8th one that is the
+hot-fix.
