@@ -2,118 +2,72 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B1A151FAFC
-	for <e@80x24.org>; Sun,  5 Feb 2017 10:22:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5E38A1FAFC
+	for <e@80x24.org>; Sun,  5 Feb 2017 10:39:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751974AbdBEKWv (ORCPT <rfc822;e@80x24.org>);
-        Sun, 5 Feb 2017 05:22:51 -0500
-Received: from mail-pg0-f66.google.com ([74.125.83.66]:36114 "EHLO
-        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751774AbdBEKWu (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 5 Feb 2017 05:22:50 -0500
-Received: by mail-pg0-f66.google.com with SMTP id 75so6299272pgf.3
-        for <git@vger.kernel.org>; Sun, 05 Feb 2017 02:22:50 -0800 (PST)
+        id S1752006AbdBEKjq (ORCPT <rfc822;e@80x24.org>);
+        Sun, 5 Feb 2017 05:39:46 -0500
+Received: from mail-ot0-f172.google.com ([74.125.82.172]:36150 "EHLO
+        mail-ot0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751862AbdBEKjn (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 5 Feb 2017 05:39:43 -0500
+Received: by mail-ot0-f172.google.com with SMTP id 32so44251357oth.3
+        for <git@vger.kernel.org>; Sun, 05 Feb 2017 02:39:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=/kX9W3RXeCDNhYVYq0rcf64P6ePu/0gJCA1wzX5hivQ=;
-        b=HxBQfli3hxiUgNv6sG3dvWEdmwMDQF4L/e/thCK8oPlQqFu4oO5m+O38tF7H2GWFc/
-         htwOyyVrIx6lgGDaws0yOuMrjSh4480ksqis43RE4B8r+pzBUas3941zYaipJ0tDGAPx
-         ZIQhkjydWVwUZQgZ8K5sPiJ66HmJNpdRXfv2stylV36sNfnitPQ1ABsaGKefiGlKAd1L
-         1BtvNqU5aAoGYnpEuPtaiQsnDd67F0YJMQYqaOROML/iyEegnJlfNp7SM9NmHg8/MwZa
-         9Tgi5Mu5lLjlEr+J9DjYIR0Af6cwMZNDAjWT6o5De9DvCV5Y7uTBfehMLYL2r9g7CxVN
-         NNUQ==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=LjApsXwlAu7RvKwildmH1r4FFiCNv7lUOy2nX9ll+g0=;
+        b=bsateoopQdidlnY4LQYcj6htQ9SYGcM2gxTfE4fD2RBhHT4OlkC76g7bej8xwcA/FV
+         PhKzJPuh/npr8hrdbv0vYxLpPeYxkuJS2Qxnhyc0bgmT3iaGjRg56Dfhmb2gpZ4tI5hl
+         uL1ws3fIY7Klu2Zet8Yu1eJ96LY4Cj61TWR0tKBmgV7XtRfx26BT1i/1ghPovmBBnb2r
+         pW9fxqnE9edQgRuMxUrtANBHZAtFRjfj/JSdZ4ZgMERMnRn/16hejThMqaYs5m8qwgua
+         OvQOMYFl+bOkuzHbOqLoSAkEqAsPmd1P6AzOXwDvudvH60MNXpAW4bFroi2JtLmcWeBl
+         ml3Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=/kX9W3RXeCDNhYVYq0rcf64P6ePu/0gJCA1wzX5hivQ=;
-        b=ZXcczpQznSveR621C7c+LBJ6gyP0RkSegFM8cMb7RaITNbWFWzBJtgvs+jiJ8kipi+
-         BdpJTs72t+QXxVMRtt5F82tbhAjfKxr9LX4l2bghPXBddxqz2wxUuRvS3GMAD1LhtBf1
-         IDVjDBvzNfkFDxq+YIpWQ3sUCflVu9LlKovxhK9PEAPpjIl9HdSWFeFgprlFx6uOLNRn
-         sEcM6QHOml0ByJlNukiEp6bdJZewXj9Xfcjmr+M4ko/yOilP6P1zVIXrfxd+VThp0eYM
-         bEnHoIDfpPkQ9FjXbQ6Kmnv77hozrGSidhgtu5+aI8RkiU+IIwVFUSakHE/Q+0F6PxO2
-         VcRg==
-X-Gm-Message-State: AIkVDXIIJlNR4PGBQOZ9Kr7yzVFHhMxhyMVBW/HMWnoEqE9VxsXWzXDS3WTosWoSsrr1vg==
-X-Received: by 10.98.15.143 with SMTP id 15mr7108360pfp.100.1486290169851;
-        Sun, 05 Feb 2017 02:22:49 -0800 (PST)
-Received: from gmail.com (50-1-201-252.dsl.static.fusionbroadband.com. [50.1.201.252])
-        by smtp.gmail.com with ESMTPSA id t6sm81197149pgt.8.2017.02.05.02.22.47
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 05 Feb 2017 02:22:48 -0800 (PST)
-Date:   Sun, 5 Feb 2017 02:22:46 -0800
-From:   David Aguilar <davvid@gmail.com>
-To:     Denton Liu <liu.denton@gmail.com>
-Cc:     Jacob Keller <jacob.keller@gmail.com>,
-        Git mailing list <git@vger.kernel.org>
-Subject: Re: [PATCH] Remove --no-gui option from difftool usage string
-Message-ID: <20170205102246.a3wwipbnmqrxxbio@gmail.com>
-References: <20170204025617.GA9221@arch-attack.localdomain>
- <CA+P7+xoXWP=Cuqw3Pa1sFCChiw6wbNTEpvNm3WDuBHQPc_OjnA@mail.gmail.com>
- <20170204062351.GA11277@arch-attack.localdomain>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=LjApsXwlAu7RvKwildmH1r4FFiCNv7lUOy2nX9ll+g0=;
+        b=Ocxid9ZBii+uJpchouAE/yidWWtJ1BprIFbQ9Jbd8qy8k6fCe7nUXzAWQ8RqIymPsw
+         vRBBF/QobZc157l92DRqlr0lc6RBUvGW/WjnCdYm8Jw/qVaLIHgS/Yd6MKWtFJdwinRG
+         E9S0a/hgJc8QT+CtgyeoeJuhUEtd1I8B8ZmUNvLohNlE7vUWClVst96cXirodNQbxFgk
+         mMKBymvCfI1CdLPCUJQE6fR5CLiItZSrwbo2+5ICf1RWq162q10HBfBIxfjxSbmFDJ1y
+         BMlCtq1q/7vYWKBwapbIvRiAB1jD7zFLANm2YnZW01Op3HAGqgxwfYs0WvWiiGjSSw6G
+         7TvQ==
+X-Gm-Message-State: AMke39kpGFRl/okkAsXQ9io7uEicM4Bm/njM93uvNtdrTLM5fgHzEl4QuBZ0S9FUob0kixffc1sfjpvYRZX5Sw==
+X-Received: by 10.157.9.214 with SMTP id 22mr2609158otz.128.1486291182765;
+ Sun, 05 Feb 2017 02:39:42 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20170204062351.GA11277@arch-attack.localdomain>
-User-Agent: NeoMutt/20161126 (1.7.1)
+Received: by 10.74.158.1 with HTTP; Sun, 5 Feb 2017 02:39:12 -0800 (PST)
+In-Reply-To: <CA+P7+xoMTX5n_h+5MytZwVqKjqa0wdNKCeDtH29A_+WSfr6gTQ@mail.gmail.com>
+References: <20170120102249.15572-1-pclouds@gmail.com> <20170120160942.srqf4y5w5r6feidw@sigill.intra.peff.net>
+ <CA+P7+xoMTX5n_h+5MytZwVqKjqa0wdNKCeDtH29A_+WSfr6gTQ@mail.gmail.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Sun, 5 Feb 2017 17:39:12 +0700
+Message-ID: <CACsJy8CTRcDuRiNeutG82iAj8qQFp+z2nadFfdkkHQGk6GKppA@mail.gmail.com>
+Subject: Re: [PATCH/TOY] Shortcuts to quickly refer to a commit name with keyboard
+To:     Jacob Keller <jacob.keller@gmail.com>
+Cc:     Jeff King <peff@peff.net>, Git mailing list <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Feb 03, 2017 at 10:23:51PM -0800, Denton Liu wrote:
-> On Fri, Feb 03, 2017 at 09:58:09PM -0800, Jacob Keller wrote:
-> > On Fri, Feb 3, 2017 at 6:56 PM, Denton Liu <liu.denton@gmail.com> wrote:
-> > > The --no-gui option not documented in the manpage, nor is it actually
-> > > used in the source code. This change removes it from the usage help
-> > > that's printed.
-> > >
-> > > Signed-off-by: Denton Liu <liu.denton@gmail.com>
-> > > ---
-> > >  git-difftool.perl | 4 ++--
-> > >  1 file changed, 2 insertions(+), 2 deletions(-)
-> > >
-> > > diff --git a/git-difftool.perl b/git-difftool.perl
-> > > index a5790d03a..657d5622d 100755
-> > > --- a/git-difftool.perl
-> > > +++ b/git-difftool.perl
-> > > @@ -29,8 +29,8 @@ sub usage
-> > >         print << 'USAGE';
-> > >  usage: git difftool [-t|--tool=<tool>] [--tool-help]
-> > >                      [-x|--extcmd=<cmd>]
-> > > -                    [-g|--gui] [--no-gui]
-> > > -                    [--prompt] [-y|--no-prompt]
-> > > +                    [-g|--gui] [--prompt]
-> > > +                    [-y|--no-prompt]
-> > >                      [-d|--dir-diff]
-> > >                      ['git diff' options]
-> > >  USAGE
-> > > --
-> > > 2.11.0
-> > >
-> > 
-> > Aren't "--no-foo" options automatically created for booleans when
-> > using our option parsing code?
-> > 
-> > Thanks,
-> > Jake
-> 
-> Sorry, I guess I didn't notice that. Would it make sense to document it
-> in the manpage then?
+On Sat, Jan 21, 2017 at 2:16 AM, Jacob Keller <jacob.keller@gmail.com> wrote:
+> I would be interested in the code for this.. I'm curious if I can
+> adapt it to my use of tmux.
 
-The general "--no-*" convention is mentioned in "git help cli",
-but the manpages and usage strings across all commands are
-inconsistent about mentioning the "--no-*" variants; some do,
-some don't.
+I stumbled upon this which does mention about git SHA-1. Maybe you'll
+find it useful. Haven't tried it out though.
 
-IMO it probably wouldn't hurt to document --no-gui in the manpage.
+https://github.com/morantron/tmux-fingers
 
-cheers,
 -- 
-David
+Duy
