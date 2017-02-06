@@ -6,112 +6,75 @@ X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AEC621FAFC
-	for <e@80x24.org>; Mon,  6 Feb 2017 16:14:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E386D1FAFC
+	for <e@80x24.org>; Mon,  6 Feb 2017 16:24:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754473AbdBFQOg (ORCPT <rfc822;e@80x24.org>);
-        Mon, 6 Feb 2017 11:14:36 -0500
-Received: from cloud.peff.net ([104.130.231.41]:49828 "EHLO cloud.peff.net"
+        id S1753718AbdBFQYj (ORCPT <rfc822;e@80x24.org>);
+        Mon, 6 Feb 2017 11:24:39 -0500
+Received: from cloud.peff.net ([104.130.231.41]:49845 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752553AbdBFQOf (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Feb 2017 11:14:35 -0500
-Received: (qmail 12603 invoked by uid 109); 6 Feb 2017 16:14:35 -0000
+        id S1753532AbdBFQYi (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 Feb 2017 11:24:38 -0500
+Received: (qmail 13280 invoked by uid 109); 6 Feb 2017 16:24:38 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 06 Feb 2017 16:14:35 +0000
-Received: (qmail 14084 invoked by uid 111); 6 Feb 2017 16:14:38 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 06 Feb 2017 16:24:38 +0000
+Received: (qmail 14215 invoked by uid 111); 6 Feb 2017 16:24:42 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 06 Feb 2017 11:14:38 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 06 Feb 2017 17:14:33 +0100
-Date:   Mon, 6 Feb 2017 17:14:33 +0100
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 06 Feb 2017 11:24:42 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 06 Feb 2017 17:24:36 +0100
+Date:   Mon, 6 Feb 2017 17:24:36 +0100
 From:   Jeff King <peff@peff.net>
-To:     Thomas Gummerer <t.gummerer@gmail.com>
-Cc:     git@vger.kernel.org, Stephan Beyer <s-beyer@gmx.net>,
-        Junio C Hamano <gitster@pobox.com>,
-        Marc Strapetz <marc.strapetz@syntevo.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        =?utf-8?B?w5h5dmluZCBBIC4=?= Holm <sunny@sunbase.org>,
-        Jakub =?utf-8?B?TmFyxJlic2tp?= <jnareb@gmail.com>
-Subject: Re: [PATCH v3 0/5] stash: support pathspec argument
-Message-ID: <20170206161432.zvpsqegjspaa2l5l@sigill.intra.peff.net>
-References: <20170129201604.30445-1-t.gummerer@gmail.com>
- <20170205202642.14216-1-t.gummerer@gmail.com>
+To:     Pranit Bauva <pranit.bauva@gmail.com>
+Cc:     Git List <git@vger.kernel.org>
+Subject: Re: git-scm.com status report
+Message-ID: <20170206162436.wiydnq7sv43wqg3d@sigill.intra.peff.net>
+References: <20170202023349.7fopb3a6pc6dkcmd@sigill.intra.peff.net>
+ <CAFZEwPPX4LngKrOHxgEp4aMGKOs0w4LHUBKumtmeRJSZ2_iV_Q@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20170205202642.14216-1-t.gummerer@gmail.com>
+In-Reply-To: <CAFZEwPPX4LngKrOHxgEp4aMGKOs0w4LHUBKumtmeRJSZ2_iV_Q@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Feb 05, 2017 at 08:26:37PM +0000, Thomas Gummerer wrote:
+On Mon, Feb 06, 2017 at 01:41:04AM +0530, Pranit Bauva wrote:
 
-> Thanks Junio for the review in the previous round.
+> On Thu, Feb 2, 2017 at 8:03 AM, Jeff King <peff@peff.net> wrote:
+> > ## What's on the site
+> >
+> > We have the domains git-scm.com and git-scm.org (the latter we've had
+> > for a while). They both point to the same website, which has general
+> > information about Git, including:
 > 
-> Changes since v2:
-> 
-> - $IFS should now be supported by using "$@" everywhere instead of using
->   a $files variable.
-> - Added a new patch showing the old behaviour of git stash create is
->   preserved.
-> - Rephrased the documentation
-> - Simplified the option parsing in save_stash, by leaving the
->   actual parsing to push_stash instead.
+> Since we have an "official" control over the website, shouldn't we be
+> using the .org domain more because we are more of an organization?
+> What I mean is that in many places, we have referred to git-scm.com,
+> which was perfectly fine because it was done by github which is a
+> company but now I think it would be more appropriate to use
+> git-scm.org domain. We can forward all .com requests to .org and try
+> to move all reference we know about, to .org. What do you all think?
 
-Overall, I like the direction this is heading. I raised a few issues,
-the most major of which is whether we want to allow the minor regression
-in "git stash create -m foo".
+I don't have a preference myself. I know a lot of non-commercial groups
+(which I think the Git project is) try to prefer ".org" to signal that.
 
-This also makes "git stash push -p <pathspec...>" work, which is good. I
-don't think "git stash -p <pathspec...>" does, though. I _think_ it
-would be trivial to do on top, since we already consider that case an
-error. That's somewhat outside the scope of your series, so I won't
-complain (too much :) ) if you don't dig into it, but it might just be
-trivial on top.
+Switching it around would require some DNS changes. I think ".org" goes
+to a server the DNS provider (Gandi) runs which issues an HTTP 301 to
+".com". So we'd want to reverse that, or possibly just treat them both
+as equals. That shouldn't be too hard, and will have to be done via
+Conservancy.
 
-A few other random bits I noticed while playing with the new code:
+I don't know what it would mean in terms of search-engine optimization.
+I know Google tries to detect duplicate names for sites and treat one as
+canonical. And that's going to be ".com" now, based on the existing
+redirect and on the fact that most people will have linked to .com.
 
-  $ git init
-  $ echo content >file && git add file && git commit -m file
-  $ echo change >file
-
-  $ git stash push -p not-file
-  No changes.
-  No changes selected
-
-Probably only one of those is necessary. :)
-
-Let's keep trying a few things:
-
-  $ git stash push not-file
-  Saved working directory and index state WIP on master: 5d5f951 file
-  Unstaged changes after reset:
-  M	file
-  M	file
-
-The unstaged change is mentioned twice, which is weird. But weirder
-still is that we created a stash at all, as it's empty. Why didn't we
-hit the "no changes selected" path?
-
-And one more:
-
-  $ echo foo >untracked
-  $ git stash push untracked
-  Saved working directory and index state WIP on master: 5d5f951 file
-  Unstaged changes after reset:
-  M	file
-  M	file
-  Removing untracked
-
-We removed the untracked file, even though it wasn't actually stashed! I
-thought at first this was because it was mentioned as a pathspec, but it
-seems to happen even with a different name:
-
-  $ echo foo >untracked
-  $ git stash push does-not-exist
-  ...
-  Removing untracked
-
-That seems dangerous.
+I'm not sure what disadvantages there are to switching now, or if there
+are things we should be doing to tell search engines (I seem to recall
+Google's Webmaster tools have options to say "this is the canonical
+name"). This is pretty far outside my area of expertise, so it may not
+even be something to care about at all. Just things to consider (and
+hopefully more clueful people than I can comment on it).
 
 -Peff
