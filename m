@@ -2,75 +2,80 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BA1AC1FAFC
-	for <e@80x24.org>; Mon,  6 Feb 2017 16:39:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E35AC1FAFC
+	for <e@80x24.org>; Mon,  6 Feb 2017 16:55:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751813AbdBFQjI (ORCPT <rfc822;e@80x24.org>);
-        Mon, 6 Feb 2017 11:39:08 -0500
-Received: from mail-wm0-f48.google.com ([74.125.82.48]:36175 "EHLO
-        mail-wm0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751438AbdBFQjH (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Feb 2017 11:39:07 -0500
-Received: by mail-wm0-f48.google.com with SMTP id c85so128004456wmi.1
-        for <git@vger.kernel.org>; Mon, 06 Feb 2017 08:39:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=known.net; s=google;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=PcQ1EE/WoMo2GAcBd1QLkuBPjMKK+ONrJEnbPBsaNDQ=;
-        b=QeikFy+zv780AJkaWT9qt7NJ5sqsLzOZeGxrwwgTLMwNGmZazFyAWg5g4kJnvG9sJV
-         pAGY6LvH75y8LPn/lvsFM4ct64QsL0lrl3ENZnREsC8lBYbXn8G44l3ks+QQU9M65+uG
-         Zz5Ss51yyIXxxhFQRwUQuGnYAQNP37pzZLl44=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=PcQ1EE/WoMo2GAcBd1QLkuBPjMKK+ONrJEnbPBsaNDQ=;
-        b=E3kL57WL6QoY1Kjd9mZahjfB2E52Cuijv7V3TCJH9ljE+feULrqpII3edDpzv6OMai
-         LzahDEV7xFfVuQC1OWltL18AUZWy3BikJfHxTpwc4SNhbyoEXxAASrYzeM1gxwwS2LNs
-         8G+Xy8Fpl27DOULkJSkVujXWVs5GDrEyctfJu6NdHgnRTXa6UTQbSm0nl3NvRScGnxJT
-         GDHvOtk2FFhhuWrMg3th5Of2Et8vUd51j8mS3aVpJcXPYvUSHnv3N4AJb2KjoYq1Wc+W
-         MmYfQgUYmPnSL3F6PbUfd4LRByCqiwsVwWildjkkKjYKZ5HaXetnPAiex+xRmvWOFsd9
-         nmyA==
-X-Gm-Message-State: AMke39kgkfGIvZz6zdHjELJ7qMg0lBw5N00U1aQ7f9PJ8rIpegQpUNz4I2anqpeRYtOdR2y5ecYee+bsP/q9G0Ge
-X-Received: by 10.28.92.193 with SMTP id q184mr9991469wmb.139.1486399146126;
- Mon, 06 Feb 2017 08:39:06 -0800 (PST)
+        id S1751663AbdBFQzA convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Mon, 6 Feb 2017 11:55:00 -0500
+Received: from zimbra-vnc.tngtech.com ([83.144.240.98]:36494 "EHLO
+        proxy.tng.vnc.biz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751164AbdBFQy7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 Feb 2017 11:54:59 -0500
+Received: from localhost (localhost [127.0.0.1])
+        by proxy.tng.vnc.biz (Postfix) with ESMTP id 5CD311E2C99;
+        Mon,  6 Feb 2017 17:54:56 +0100 (CET)
+Received: from proxy.tng.vnc.biz ([127.0.0.1])
+        by localhost (proxy.tng.vnc.biz [127.0.0.1]) (amavisd-new, port 10032)
+        with ESMTP id VovDUKSq7mUU; Mon,  6 Feb 2017 17:54:55 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+        by proxy.tng.vnc.biz (Postfix) with ESMTP id D600C1E2F24;
+        Mon,  6 Feb 2017 17:54:55 +0100 (CET)
+X-Virus-Scanned: amavisd-new at 
+Received: from proxy.tng.vnc.biz ([127.0.0.1])
+        by localhost (proxy.tng.vnc.biz [127.0.0.1]) (amavisd-new, port 10026)
+        with ESMTP id JnlP-x3wpccq; Mon,  6 Feb 2017 17:54:55 +0100 (CET)
+Received: from [192.168.178.78] (46.128.140.114.dynamic.cablesurf.de [46.128.140.114])
+        by proxy.tng.vnc.biz (Postfix) with ESMTPSA id 765F81E2C99;
+        Mon,  6 Feb 2017 17:54:55 +0100 (CET)
+Subject: Re: [PATCH] tag: generate useful reflog message
+To:     Junio C Hamano <gitster@pobox.com>
+References: <20170205214254.24560-1-cornelius.weig@tngtech.com>
+ <xmqqo9yg43uo.fsf@gitster.mtv.corp.google.com>
+Cc:     git@vger.kernel.org, bitte.keine.werbung.einwerfen@googlemail.com,
+        karthik.188@gmail.com, peff@peff.net
+From:   Cornelius Weig <cornelius.weig@tngtech.com>
+Message-ID: <dad6002e-a31c-3be6-3141-2e9e678742b1@tngtech.com>
+Date:   Mon, 6 Feb 2017 17:54:55 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.7.0
 MIME-Version: 1.0
-Received: by 10.194.76.1 with HTTP; Mon, 6 Feb 2017 08:39:05 -0800 (PST)
-In-Reply-To: <CAFZEwPPyAxeU2i-OL62O749GaTdL7H19jbbAj8R6fipVnUjt=Q@mail.gmail.com>
-References: <CAGSZTjLmYCyKZ1BBRv+JVYq4oX7EQcNzyxAnS_3NBUPjr3g8zQ@mail.gmail.com>
- <CAFZEwPOFDT7=1qhg4ygJpVUnfQo3XUjDoNtZ4LJvG5V9+RDNwA@mail.gmail.com> <CAFZEwPPyAxeU2i-OL62O749GaTdL7H19jbbAj8R6fipVnUjt=Q@mail.gmail.com>
-From:   Kevin Layer <layer@known.net>
-Date:   Mon, 6 Feb 2017 08:39:05 -0800
-Message-ID: <CAGSZTjLx5ftVYkO31U1NrGAdw-LGHjKU7=gtqaoe3VbQX+Bwrw@mail.gmail.com>
-Subject: Re: feature request: add -q to "git branch"
-To:     Pranit Bauva <pranit.bauva@gmail.com>
-Cc:     Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+In-Reply-To: <xmqqo9yg43uo.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8BIT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I think I got my git versions (old and new) mixed up.  Sorry for the noise.
 
-On Sat, Feb 4, 2017 at 1:17 PM, Pranit Bauva <pranit.bauva@gmail.com> wrote:
-> Hey Kevin,
->
-> Sorry for the previous message.
->
-> On Sun, Feb 5, 2017 at 2:47 AM, Pranit Bauva <pranit.bauva@gmail.com> wrote:
->> Hey Kevin,
->>
->> On Fri, Feb 3, 2017 at 11:59 PM, Kevin Layer <layer@known.net> wrote:
->>> It should be possible to quietly create a branch.
->
-> I think `git branch` is already quiet. Are you seeing something else?
->
-> Regards,
-> Pranit Bauva
+On 02/06/2017 12:25 AM, Junio C Hamano wrote:
+> cornelius.weig@tngtech.com writes
+> For a tag, I would imagine something like "tag: tagged 4e59582ff7
+> ("Seventh batch for 2.12", 2017-01-23)" would be more appropriate.
+
+Yes, I agree that this is much clearer. The revised version v3
+implements this behavior.
+
+>> Notes:
+>>     While playing around with tag reflogs I also found a bug that was present
+>>     before this patch. It manifests itself when the sha1-ref in the reflog does not
+>>     point to a commit object but something else.
+> 
+> I think the fix would involve first ripping out the "reflog walking"
+> code that was bolted on and stop allowing it to inject the entries
+> taken from the reflog into the "walk the commit DAG" machinery.
+> Then "reflog walking" code needs to be taught to have its own "now
+> we got a single object to show, show it (using the helper functions
+> to show a single object that is already used by 'git show')" code,
+> instead of piggy-backing on the output codepath used by "log" and
+> "rev-list".
+
+I'll start investigating how that could be done. My first glance tells
+me that it won't be easy. Especially because I'm not yet familiar with
+the git code.
+
+Thanks for your advice!
