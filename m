@@ -2,92 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DE2981FAFC
-	for <e@80x24.org>; Mon,  6 Feb 2017 18:50:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C77BA1FAFC
+	for <e@80x24.org>; Mon,  6 Feb 2017 18:54:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752169AbdBFSuP (ORCPT <rfc822;e@80x24.org>);
-        Mon, 6 Feb 2017 13:50:15 -0500
-Received: from cloud.peff.net ([104.130.231.41]:49948 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751321AbdBFSty (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Feb 2017 13:49:54 -0500
-Received: (qmail 22943 invoked by uid 109); 6 Feb 2017 18:49:53 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 06 Feb 2017 18:49:53 +0000
-Received: (qmail 16060 invoked by uid 111); 6 Feb 2017 18:49:57 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 06 Feb 2017 13:49:57 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 06 Feb 2017 19:49:51 +0100
-Date:   Mon, 6 Feb 2017 19:49:51 +0100
-From:   Jeff King <peff@peff.net>
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Samuel Lijin <sxlijin@gmail.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: git/git-scm.com GH Issue Tracker
-Message-ID: <20170206184951.vwq6ib2qzxc542i4@sigill.intra.peff.net>
-References: <CAJZjrdX_8tjMhRac9QQOW8m_S2DprFPV=uZp8mFT+g6bASVd-w@mail.gmail.com>
- <CACsJy8BCTY=T9f2ac7HUuHA-_RzjaxPHZNPQs9ecBhmsnDuRVQ@mail.gmail.com>
+        id S1752184AbdBFSx6 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 6 Feb 2017 13:53:58 -0500
+Received: from mail-pg0-f68.google.com ([74.125.83.68]:35108 "EHLO
+        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751989AbdBFSx5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 Feb 2017 13:53:57 -0500
+Received: by mail-pg0-f68.google.com with SMTP id 204so9773538pge.2
+        for <git@vger.kernel.org>; Mon, 06 Feb 2017 10:53:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=BkUWWHx9NQ5C+nuSgdV/8YCSMVvs0qchSl9+sS8zJW4=;
+        b=McSeLs1G7osHr6m0gwcXlHUl+q1tzoAyyNeP6l1zP3PLREuEC2TuMuiigCs7GHO9bb
+         3C707TuIUMV7yTETJ+VS5eb2M/0rQhq1fwi4qLllPBWW7QIQ+1vpiYs6Eo0iZd6v3vlD
+         r364CaTB0c4+F1+R4VWfd9gees3bE4DuWMpVhuOhAoSozNZA1408X5mJ61lUbUyfnRZg
+         rl+/TqYnsh198hbVwgJIfh9Gk3XsnYthtCvMTNga/5p3xbUJJ4xBK1iB2oKrLPxNOY03
+         9r7KHUnFHF2VmJiNbOoEt73BTN3YsOgSPFd67spO4IXSazemqdKppoLXkq9SgQHmj795
+         epyg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=BkUWWHx9NQ5C+nuSgdV/8YCSMVvs0qchSl9+sS8zJW4=;
+        b=MgH7nxSgC9e+8ELc58gOXfioq7ff5A8WyeXR2WwqnZmYxDlteYS6JmJbAc40l7+wXU
+         yMZeeI2dVYpyKS+UvXx6fVj64gZFPsHp1PNc8IJxZwqtbVo3P5NADS8e6uiUJVKIio5k
+         S2aWEY3ko0fgRsuFqkq7cM6+QhNn5qf6lUSt77LYDQNGBi54kBK+kjKrsWeBKnJTI7i7
+         qPvQ8B3vkdB9c/CmQYUcnuoZP1jNrti55xK0LpwpRFLTpq/tvtwLrSvq1J8qbxcytdZk
+         aO6Evc4jp/eX7W1b01CM4aw/7AOQPtqJ6y67/qP0OxYxVb4SdE2DCiclSySi23uiXJHi
+         YSOw==
+X-Gm-Message-State: AIkVDXKEXmhIrOP0DgP5GINtRrOKoHi9h30+UfwIreB/Tk/yU98zl9OghSepu4Mqc39zCQ==
+X-Received: by 10.84.254.15 with SMTP id b15mr19662561plm.114.1486407231496;
+        Mon, 06 Feb 2017 10:53:51 -0800 (PST)
+Received: from localhost ([2620:0:1000:8622:310c:cda4:fdbc:2aa2])
+        by smtp.gmail.com with ESMTPSA id b7sm4500366pfg.53.2017.02.06.10.53.50
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Mon, 06 Feb 2017 10:53:50 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Denton Liu <liu.denton@gmail.com>
+Cc:     git@vger.kernel.org, davvid@gmail.com
+Subject: Re: [PATCH] Document the --no-gui option in difftool
+References: <20170206034118.GA29517@arch-attack.localdomain>
+Date:   Mon, 06 Feb 2017 10:53:50 -0800
+In-Reply-To: <20170206034118.GA29517@arch-attack.localdomain> (Denton Liu's
+        message of "Sun, 5 Feb 2017 19:41:18 -0800")
+Message-ID: <xmqqa89z2ls1.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CACsJy8BCTY=T9f2ac7HUuHA-_RzjaxPHZNPQs9ecBhmsnDuRVQ@mail.gmail.com>
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Feb 06, 2017 at 05:18:03PM +0700, Duy Nguyen wrote:
+Denton Liu <liu.denton@gmail.com> writes:
 
-> On Mon, Feb 6, 2017 at 1:15 PM, Samuel Lijin <sxlijin@gmail.com> wrote:
-> > # Irrelevant but someone should take a look
-> >
-> > 693
-> 
-> To save people some time (and since i looked at it anyway), this is
-> about whether "warning in tree xxx: contains zero-padded file modes:
-> from fsck should be a warning or error. It is a warning now even
-> though "git -c transfer.fsckobjects=true clone" treats it as an error.
-> There are some discussions in the past [1] [2] about this.
+> diff --git a/Documentation/git-difftool.txt b/Documentation/git-difftool.txt
+> index 224fb3090..a2661d9cc 100644
+> --- a/Documentation/git-difftool.txt
+> +++ b/Documentation/git-difftool.txt
+> @@ -87,9 +87,11 @@ instead.  `--no-symlinks` is the default on Windows.
+>  
+>  -g::
+>  --gui::
+> +--no-gui::
+>  	When 'git-difftool' is invoked with the `-g` or `--gui` option
+>  	the default diff tool will be read from the configured
+> -	`diff.guitool` variable instead of `diff.tool`.
+> +	`diff.guitool` variable instead of `diff.tool`. The `--no-gui`
+> +	option can be used to override this setting.
+>  
+>  --[no-]trust-exit-code::
+>  	'git-difftool' invokes a diff tool individually on each file.
 
-The bug that caused the trees is long-fixed. There's a question of
-how severity levels should be handled in transfer.fsckObjects. By
-default it treats everything as a reason to reject the object. Dscho
-added configurable levels a few versions ago. It may be a good idea to
-tweak the defaults to something more permissive[1].
+Reading the whole of this file before applying this patch, I notice
+that we have descriptions of negative forms only for some but not
+all options. "--[no-]symlinks" and "--[no-]trust-exit-code" are
+already there, but not this one.  
 
-> There's also a question "And I failed to find in the documentation if
-> transfer.fsckobjects could be disabled per repository, can you confirm
-> it's not possible for now ?"
+Shouldn't the patch be more like
 
-I don't know why it wouldn't be, though note that it won't override
-the operation-specific {receive,fetch}.fsckObjects.
+    ---gui::
+    +--[no-]gui::
 
--Peff
+to be consistent with its existing friends, though?
 
-[1] If we had a more permissive set of defaults, it would probably make
-    sense to turn on fsckObjects by default. Some of the checks are
-    security-relevant, like disallowing trees with ".GIT",
-    "../../etc/passwd", etc. Those _should_ be handled sanely by the
-    rest of Git, but it serves as a belt-and-suspenders check, and also
-    protects anybody with a buggy Git downstream from you.
-
-    GitHub has had the feature turned on for ages, with a few caveats:
-
-      - we loosened the zero-padded mode warning, because it was causing
-	too many false positives
-
-      - we loosened the timezone checks for the same reason; we've seen
-	time zones that aren't exactly 4 characters before
-
-      - we occasionally get complaints from people trying to push old
-	histories with bogus committer idents. Usually a missing name or
-	similar.
-
-     So those are the ones we'd probably need to loosen off the bat, and
-     they're all pretty harmless. But it would be a potential irritating
-     regression for somebody if they have a history with other minor
-     flaws, and Git suddenly starts refusing to clone it.
