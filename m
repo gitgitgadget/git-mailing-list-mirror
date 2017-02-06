@@ -7,58 +7,55 @@ X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 913B41FAFC
-	for <e@80x24.org>; Mon,  6 Feb 2017 20:49:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0096C1FAFC
+	for <e@80x24.org>; Mon,  6 Feb 2017 21:29:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752335AbdBFUth (ORCPT <rfc822;e@80x24.org>);
-        Mon, 6 Feb 2017 15:49:37 -0500
-Received: from mail-pf0-f195.google.com ([209.85.192.195]:35966 "EHLO
-        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751640AbdBFUtg (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Feb 2017 15:49:36 -0500
-Received: by mail-pf0-f195.google.com with SMTP id 19so7603832pfo.3
-        for <git@vger.kernel.org>; Mon, 06 Feb 2017 12:49:36 -0800 (PST)
+        id S1751886AbdBFV31 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 6 Feb 2017 16:29:27 -0500
+Received: from mail-pf0-f193.google.com ([209.85.192.193]:34250 "EHLO
+        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750980AbdBFV30 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 Feb 2017 16:29:26 -0500
+Received: by mail-pf0-f193.google.com with SMTP id y143so7663368pfb.1
+        for <git@vger.kernel.org>; Mon, 06 Feb 2017 13:29:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=Hd1rvr1e6Hiqg/nsUzpD0EEAq0lRuV19SKB+jz2WfaQ=;
-        b=VPR2BZTWR5nv6PGGF4Pc/S315Q68qz7Kc3bf/nD0jYJbXwkOAV3fRPZ0j3xDi3Igqe
-         8nVC5/O2GPmUbbW9tNSDioOEgSs6winalD7eyszNtrT3GZxNffQ9QMZXZ+pCEvgoxTQi
-         c7y+OlorkB9Lw6UUHnNU33gVyHR9f70TxY6xpNDPxicoDynT/+EXvdEBOXNlJSYqOJNw
-         bPIycs1VnDif/SC8UFkux5V21fMq3dO5HsZfdsNii1Y80jYNSJekFSR8d725ShsKz38f
-         YcCkLHW7SAwWLPgZ8zkBIIEDWNF1v0Yu3vXBF8rywhlBdsQ45z7/yggnnEz9echT6EXf
-         c0aw==
+        bh=zI8XLb24f9/To5237v3T9rAo851H+FH6SdQ7kKY2+Ps=;
+        b=sdfrYf7mXPIG2UDzucsq1YFs3Aos6PfFeBRbmRBUllVLAyT58s6idzDhrS3G8wx+2L
+         ZMf1YvwudI7KJxrs6yPDW7qooWJS/iZ9PrHgxMI2NltX4y1pIXY1VVbCJWZteHGtwyz9
+         ZtSPUun0WWye1zhyG30EFOSlHHhv+cZGBQqqkNo37ehrqTGlYqIKdPWdt8qEZjpwv598
+         gxTf69usC2ZM/gbkrJq+VaShqZl0nM23eOPvvcO5341Q3qyrIyB3FQ1E6UWHh8uPmXKd
+         hAkosKomeZXWiQ/PPqrpfxPwsTDMsaexjlF78DEWMoT/Jk9QVoFtOnpf7fAkMMyTjtKl
+         lskw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=Hd1rvr1e6Hiqg/nsUzpD0EEAq0lRuV19SKB+jz2WfaQ=;
-        b=Hc1M7LmvjQ/kW56wwEQcaAswAOQ1+HydajziE6NqY++xUKMt+ar00NxZu9MEd/hHT4
-         Ls8cQep0FJA4e/5U/UJbedGKgfO8J82ObjINWz7SasOi/Cp/EsQOu1/Iz88QVhLf5NSx
-         n8st2IRj4Fl8g+YlytNK+t7nw2kegrhMrjk8YCNgPDqw6oSweE6J1COyPpd97OW1UXHu
-         p3aXNnhbdGGmJahWM3CDe4Wz0/d1ii8q0G/claxfc23V7dBTXGi7Ss0PV7rql6Of1ee5
-         ntZ11mMbDdLjtEV+CEd/2+gfZdPkcJo+bYbKxtgEnaXyEokgwC4ns8vY3L8wm7l/roxu
-         AbwQ==
-X-Gm-Message-State: AIkVDXK8xqyN9+jX2zEAvU8pQqW4Zq8KugiKjstHZEUpg6FLm9b/29IcIaf3HXMOAlIURA==
-X-Received: by 10.84.179.99 with SMTP id a90mr20262598plc.139.1486414175889;
-        Mon, 06 Feb 2017 12:49:35 -0800 (PST)
+        bh=zI8XLb24f9/To5237v3T9rAo851H+FH6SdQ7kKY2+Ps=;
+        b=jp+6K0Kr+0VwIiRqCxCdljHSOmOgXgEdj62BM61JVB9J+DA0S2KlnEeJmcQXe91mYS
+         P8x4yBpvJ1Kd/TeMvvq5Ncam/lgLUjFSDj98cA62KDhmakwVqNkde30MHdv0859L4jtj
+         Yoyy20iEBSzcysdRoJePhT2crrJqimyaqzVw5OFyh8UH0TtR9SQ7bPpM6aVy73qFmx1Q
+         bGXiqUBHjovKLr04YQsO/JgmgBOVfF/szX3xK7iKhE9kgzI72ti7s1XAX9joeIg6dbGX
+         MIQUl9UOKtF/bdfHgPXy9mZl4LsgjBJ2McimKCieiq7+O/X7+er71tMx6voRiBAHiVub
+         9bew==
+X-Gm-Message-State: AIkVDXJxsFSbJ2ilptNEztU1NH/BWyKWSUB2W8J2clNBXi65teqv9Fxb9o4E/pfRjjaX3Q==
+X-Received: by 10.99.167.10 with SMTP id d10mr15890882pgf.19.1486416565712;
+        Mon, 06 Feb 2017 13:29:25 -0800 (PST)
 Received: from localhost ([2620:0:1000:8622:310c:cda4:fdbc:2aa2])
-        by smtp.gmail.com with ESMTPSA id s8sm4890157pfj.30.2017.02.06.12.49.34
+        by smtp.gmail.com with ESMTPSA id s136sm4914022pgc.38.2017.02.06.13.29.24
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 06 Feb 2017 12:49:35 -0800 (PST)
+        Mon, 06 Feb 2017 13:29:24 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Duy Nguyen <pclouds@gmail.com>, Samuel Lijin <sxlijin@gmail.com>,
-        "git\@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: git/git-scm.com GH Issue Tracker
-References: <CAJZjrdX_8tjMhRac9QQOW8m_S2DprFPV=uZp8mFT+g6bASVd-w@mail.gmail.com>
-        <CACsJy8BCTY=T9f2ac7HUuHA-_RzjaxPHZNPQs9ecBhmsnDuRVQ@mail.gmail.com>
-        <20170206184951.vwq6ib2qzxc542i4@sigill.intra.peff.net>
-Date:   Mon, 06 Feb 2017 12:49:34 -0800
-In-Reply-To: <20170206184951.vwq6ib2qzxc542i4@sigill.intra.peff.net> (Jeff
-        King's message of "Mon, 6 Feb 2017 19:49:51 +0100")
-Message-ID: <xmqqlgtj11up.fsf@gitster.mtv.corp.google.com>
+To:     cornelius.weig@tngtech.com
+Cc:     git@vger.kernel.org, szeder.dev@gmail.com, j6t@kdbg.org
+Subject: Re: [PATCH v2 0/7] completion bash: add more options and commands
+References: <20170203110159.377-1-cornelius.weig@tngtech.com>
+Date:   Mon, 06 Feb 2017 13:29:24 -0800
+In-Reply-To: <20170203110159.377-1-cornelius.weig@tngtech.com> (cornelius
+        weig's message of "Fri, 3 Feb 2017 12:01:52 +0100")
+Message-ID: <xmqqd1ev100b.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -67,54 +64,19 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+cornelius.weig@tngtech.com writes:
 
-> [1] If we had a more permissive set of defaults, it would probably make
->     sense to turn on fsckObjects by default. Some of the checks are
->     security-relevant, like disallowing trees with ".GIT",
->     "../../etc/passwd", etc. Those _should_ be handled sanely by the
->     rest of Git, but it serves as a belt-and-suspenders check, and also
->     protects anybody with a buggy Git downstream from you.
-
-Yeah, we really should encourage people to turn it on.  Turning it
-on by default is one way to do so, of course.
-
-I think the reason why the transfer side is stricter than the local
-checking [*1*] is because the problem in the local history is
-already done and there is not much the user can do to fix it, while
-objects that originate from outside world could be rejected to keep
-the receiving repository clean.
-
-
->     GitHub has had the feature turned on for ages, with a few caveats:
+> From: Cornelius Weig <cornelius.weig@tngtech.com>
 >
->       - we loosened the zero-padded mode warning, because it was causing
-> 	too many false positives
+> This is the re-roll of patch series <20170122225724.19360-1-cornelius.weig@tngtech.com>.
 >
->       - we loosened the timezone checks for the same reason; we've seen
-> 	time zones that aren't exactly 4 characters before
->
->       - we occasionally get complaints from people trying to push old
-> 	histories with bogus committer idents. Usually a missing name or
-> 	similar.
+> This patch series adds all long-options that are mentioned in the synopsis of
+> the man-page for the respective git-command. There are only a few exceptions,
+> as discussed in the above thread. For example, no unsafe options should be
+> completed.
+> Furthermore, the patches add subommand option completion for git-submodule and
+> git-remote.
 
-As long as we are sure that modern Git and its reimplementations no
-longer create objects with this problems, I think loosening these
-checks is perfectly sensible, as the only objects that trigger the
-check will be the ones buried deep in the history made back when Git
-was young.
+Reviewers, do these look good now?
 
-Of course, that will make it easier to let broken objects created by
-newer reimplementations of Git (and bugs in our code that cause us
-to create such broken objects) go unnoticed, so we would want to
-keep them at warn (not ignore) for the end-users.
-
->      So those are the ones we'd probably need to loosen off the bat, and
->      they're all pretty harmless. But it would be a potential irritating
->      regression for somebody if they have a history with other minor
->      flaws, and Git suddenly starts refusing to clone it.
-
-[Footnote]
-
-*1* ... which is what Jonathan Nieder originally wondered at
-    https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=743227
+Thanks all.
