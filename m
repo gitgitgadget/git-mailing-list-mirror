@@ -2,154 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A3CDB1FAFC
-	for <e@80x24.org>; Mon,  6 Feb 2017 19:32:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3DE681FAFC
+	for <e@80x24.org>; Mon,  6 Feb 2017 19:36:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752033AbdBFTcn (ORCPT <rfc822;e@80x24.org>);
-        Mon, 6 Feb 2017 14:32:43 -0500
-Received: from mail-pg0-f66.google.com ([74.125.83.66]:33464 "EHLO
-        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751946AbdBFTcm (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Feb 2017 14:32:42 -0500
-Received: by mail-pg0-f66.google.com with SMTP id 194so9854496pgd.0
-        for <git@vger.kernel.org>; Mon, 06 Feb 2017 11:32:42 -0800 (PST)
+        id S1752156AbdBFTgD (ORCPT <rfc822;e@80x24.org>);
+        Mon, 6 Feb 2017 14:36:03 -0500
+Received: from mail-wr0-f196.google.com ([209.85.128.196]:33101 "EHLO
+        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752037AbdBFTgC (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 Feb 2017 14:36:02 -0500
+Received: by mail-wr0-f196.google.com with SMTP id i10so3647675wrb.0
+        for <git@vger.kernel.org>; Mon, 06 Feb 2017 11:36:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=LNIucPzg5UwIpAIyxTifHvYxJc/QPcAtkmlh2vUYGD4=;
-        b=Ky1UTbxU6XkR10gGbOP4GBy0FZTHdQ4gd/r7yXP7qo5rv9mzq7urBHWhnBbn+UN1Ni
-         l7VtKVIkn7FWnG1xyh1tZexI8U4sjwCY52vAAaOg72AxH2GOB+AEpV9Opbyeh+yIdGFb
-         uiyzy64SdcvTHJwBGizJ2h6X70vN+2zEOLx0tZ/onVOU6tbbWHfQZmv8wWWVDbfjPdnq
-         5V8NhBIDin3ABFRit8qCHFVKpSsVSLYRDKk7VcziwdVyXXD3GWjukCfIGi/omnerNiIS
-         qId/HCkSHGJsIcQqw2QQj48N9p4Ot1wwY1nXrnpj+ZI0BsXigBKMhr0ydJgS6rGCTs05
-         cN8w==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=SH2mrGHzbI7nqffKcPLLjpqRzPZbi1N6mk/jLcK1LDo=;
+        b=e2y4ZQWuhQ5h+m2z9O5hgFQJ6I+/S8yaAK0z7oeEjs8VzPaFQ9EcZdAQOGi9r/s6cS
+         dp/CfmwPzLn1mBg1ezdWrsgR/ZgUGx9Nnq6eowxEU/HJQuXzm/np6ZuYQTcEJcWQrKtz
+         yEBdQW2JaB5n6FhWzVWJdqWs8DxjQkEf14ZBdhIOQq+4WTdTX2vE1EiW2e+8Drp4tDVh
+         ULrmYVqy9OM65pHtXmXWDNVy7MTlRUVPCjRi8LpqBZOa35FSlBxlhAuIIXhqwdkisES0
+         AjyZ3tYJKswprzVdzdwTqWRg59WDBfN381TgZKfuRLpDjVXwI4MDGZznZJ/eKrWGvbk/
+         X7NQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=LNIucPzg5UwIpAIyxTifHvYxJc/QPcAtkmlh2vUYGD4=;
-        b=Sl8R9c+EK52f0iYiovHuKQO7xJzrDVOys/SjQymdS2y4LELp67CENOkmHYZc1xh7yp
-         P2T7Klpj44p9G2DYCRQ3/XYAKYac0ZpmGvJAAcz9YlYqPuLNZr27EicaPQyGNdxUpLIt
-         7tg5pNJwlJEjvVqKTZTn0CgKyVqBOV1WxVGloZBXx8yg7pqDrhGS/Q/2m+BxZvxNpWwe
-         mxsuOee6QGbnekkPb4h1D2YS6hwQZWnORETUuaSTUoUoJ0Pu2VTfo6zvk5j9css1QVqB
-         gaQuhljCuI9Xuo6ToXwjnXv4lHhx2GWOAyDMHiUH3BnaINI2Veo2/XWWqZTRnv5HcvVY
-         K70A==
-X-Gm-Message-State: AIkVDXIzg5Zlk+TSvOdqqQ9non0wjUdthtf+x98zl61M0Zvfd2ezvEifWrE0CNrF0bGQ6g==
-X-Received: by 10.98.57.154 with SMTP id u26mr15017965pfj.136.1486409561872;
-        Mon, 06 Feb 2017 11:32:41 -0800 (PST)
-Received: from localhost ([2620:0:1000:8622:310c:cda4:fdbc:2aa2])
-        by smtp.gmail.com with ESMTPSA id t185sm4612673pgb.32.2017.02.06.11.32.39
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 06 Feb 2017 11:32:40 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     cornelius.weig@tngtech.com
-Cc:     git@vger.kernel.org, karthik.188@gmail.com, peff@peff.net
-Subject: Re: [PATCH v3] tag: generate useful reflog message
-References: <xmqqo9yg43uo.fsf@gitster.mtv.corp.google.com>
-        <20170206135834.19637-1-cornelius.weig@tngtech.com>
-Date:   Mon, 06 Feb 2017 11:32:39 -0800
-In-Reply-To: <20170206135834.19637-1-cornelius.weig@tngtech.com> (cornelius
-        weig's message of "Mon, 6 Feb 2017 14:58:34 +0100")
-Message-ID: <xmqqpoiv15ew.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=SH2mrGHzbI7nqffKcPLLjpqRzPZbi1N6mk/jLcK1LDo=;
+        b=c+tHVjnUVM1cZIrx6GWNuRsd1CyV6QD29c+jt6xA0d5JYOvpV7K0XzDlXu/CoillDz
+         IOC6weyne4BJNUFA4p2G1w0P92UDghM0Ksebt6T7r2wvwg5Z1Nwru6NY1vewS8TZw02g
+         rou+5ImW/SD+p3WJfSMSKDY2MgVTM7GiwSbUBvfcuteQBnWBpFLEPC885CSqH5l3hWyv
+         RUwQovwqRMF3/A8VPLvaCr7vDJXLD8nCK4jlT8FO4RFggKhfoebVNLMwvZpDiFOVEqpg
+         gGi67idJlh/V9U+xntr/vaoZYKWO5a83khe9A5WOLS1b/BzicNfxa49kcLrVZYzT9hKR
+         +Czw==
+X-Gm-Message-State: AIkVDXL67tMR9IC2XUhxKZ4RPC8lrc95JWKjjEQlzwC361wnSpMzKg/nOlyeAvapZcFNEUU2ExPLyBCFjjde8g==
+X-Received: by 10.223.128.3 with SMTP id 3mr10585065wrk.58.1486409760683; Mon,
+ 06 Feb 2017 11:36:00 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
+Received: by 10.194.249.8 with HTTP; Mon, 6 Feb 2017 11:36:00 -0800 (PST)
+In-Reply-To: <CA+P7+xrAVM8C1dnEaY1VnTUwiCzoMzh+rbMqBknyBG27grs-uQ@mail.gmail.com>
+References: <20170203025405.8242-1-szeder.dev@gmail.com> <CA+P7+xqhjVQMXtO4gtQ_2VAVd3qrpVLncH6YpFHreVV2mHORxg@mail.gmail.com>
+ <CA+P7+xpeyebN3pmSX09Avh1EvYVjALpBCQ9r2==q3SWTu3GMSw@mail.gmail.com> <CA+P7+xrAVM8C1dnEaY1VnTUwiCzoMzh+rbMqBknyBG27grs-uQ@mail.gmail.com>
+From:   =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+Date:   Mon, 6 Feb 2017 20:36:00 +0100
+Message-ID: <CAM0VKjm-HQFtDypcWgOdQrLyjAicOVLUsFby5_wE1hvTE1pTRQ@mail.gmail.com>
+Subject: Re: [PATCH 00/12] completion: speed up refs completion
+To:     Jacob Keller <jacob.keller@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Git mailing list <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-cornelius.weig@tngtech.com writes:
+On Mon, Feb 6, 2017 at 7:31 PM, Jacob Keller <jacob.keller@gmail.com> wrote=
+:
+> On Fri, Feb 3, 2017 at 7:15 PM, Jacob Keller <jacob.keller@gmail.com> wro=
+te:
+>> I haven't had a chance to further investigate, but I tried this series
+>> out (from your github) and it appears that this series (or the
+>> previous series for __gitdir work) breaks "git log" ref completion.
+>> I'll have further details when I am able to investigate a it more.
+>>
+>> Thanks,
+>> Jake
+>
+> At first I had the same problem, but I verified by re-installing the
+> completion script and the problem appears to have gone away. I suspect
+> what happened is that the original time, I forgot to actually install
+> the new version of git, and only installed the completion script, so
+> when some of the commands were run with new options they (silently)
+> failed and the result was missing completion values.
+>
+> Once I properly re-installed everything it appears to work as
+> expected. I haven't found any other issues yet.
 
-> +	strbuf_addstr(sb, " (");
-> +	type = sha1_object_info(sha1, NULL);
-> +	switch (type) {
-> +	default:
-> +		strbuf_addstr(sb, _("internal object"));
-> +		break;
+Thanks, that's good to hear.
 
-The code does not even know if this is an "internal" object, does
-it?  What it got was simply an object of an unknown type that it is
-not prepared to handle.  It's not like you are trying to die() in
-this function (I see a die() upon failing to read the referent
-commit), so I wonder if this should be a die("BUG").
+Still, I'm a bit puzzled as to what exactly might have caused your
+problem.  Considering new options:
 
-On the other hand, it's not like failing to describe the tagged
-commit in the reflog is such a grave error.  If we can get away with
-being vague on a tag that points at an object of unknown type like
-the above code does, we could loosen the "oops, we thought we got a
-commit, but it turns out that we cannot read it" case below from
-die() to just stuffing generic _("commit object") in the reflog.
+  - the __gitdir()-related series added the 'git rev-parse
+    --absolute-git-dir' option, but only ever used it if you invoked
+    completion after 'git -C some/where'.
 
-Between the two extremes above, I am leaning towards making it more
-lenient myself, but others may have different opinions.
+ - The refs completion speedup didn't add any new options but started
+   to use two that it previously didn't:
 
-> +	case OBJ_COMMIT:
-> +		c = lookup_commit_reference(sha1);
-> +		buf = read_sha1_file(sha1, &type, &size);
-> +		if (!c || !buf) {
-> +			die(_("commit object %s could not be read"),
-> +				sha1_to_hex(sha1));
-> +		}
-> +		subject_len = find_commit_subject(buf, &subject_start);
-> +		strbuf_insert(sb, sb->len, subject_start, subject_len);
-> +		strbuf_addf(sb, ", %s", show_date(c->date, 0, DATE_MODE(SHORT)));
-> +		free(buf);
-> +		break;
-> +	case OBJ_TREE:
-> +		strbuf_addstr(sb, _("tree object"));
-> +		break;
-> ...
+   - 'git for-each-ref --sort=3D<key>' option, but that's with us since
+     the earliest ever 'for-each-ref' version from more than a decade
+     ago...
 
-> +git log -1 > expected \
-> +	--format="format:tag: tagging %h (%s, %cd)%n" --date=format:%F
->  test_expect_success 'creating a tag with --create-reflog should create reflog' '
->  	test_when_finished "git tag -d tag_with_reflog" &&
->  	git tag --create-reflog tag_with_reflog &&
-> -	git reflog exists refs/tags/tag_with_reflog
-> +	git reflog exists refs/tags/tag_with_reflog &&
-> +	sed -e "s/^.*\t//" .git/logs/refs/tags/tag_with_reflog > actual &&
+   - 'git for-each-ref' format modifier 'strip=3D2', which was
+     introduced in v2.7.1~15^2 (tag: do not show ambiguous tag names
+     as "tags/foo", 2016-01-25), only about a year ago.  Were you
+     using a pre-2.7.1 version when seeing the problems?
 
-I'd spell that "\t" with an actual HT to make it portable [*1*].  
-
-We have one example that uses the form in git-filter-branch
-documentation and a script in the contrib/ area, but otherwise do
-not have anything that relies on \t to be turned into HT by sed.
-
-> +	test_cmp expected actual
-> +'
-> +
-> +git log -1 > expected \
-> +	--format="format:tag: tagging %h (%s, %cd)%n" --date=format:%F
-> +test_expect_success 'annotated tag with --create-reflog has correct message' '
-> +	test_when_finished "git tag -d tag_with_reflog" &&
-> +	git tag -m "annotated tag" --create-reflog tag_with_reflog &&
-> +	git reflog exists refs/tags/tag_with_reflog &&
-> +	sed -e "s/^.*\t//" .git/logs/refs/tags/tag_with_reflog > actual &&
-
-Likewise.
-
-
-[Reference]
-
-*1* http://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap09.html#tag_09_03
-
-    9.3.2 BRE Ordinary Characters
-
-    An ordinary character is a BRE that matches itself: any character in
-    the supported character set, except for the BRE special characters
-    listed in BRE Special Characters.
-
-    The interpretation of an ordinary character preceded by an unescaped
-    <backslash> ( '\\' ) is undefined, except for:
-
-    - The characters ')', '(', '{', and '}'
-
-    - The digits 1 to 9 inclusive (see BREs Matching Multiple Characters)
-
-    - A character inside a bracket expression
+G=C3=A1bor
