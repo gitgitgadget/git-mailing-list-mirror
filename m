@@ -2,93 +2,83 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 24A241FAFC
-	for <e@80x24.org>; Mon,  6 Feb 2017 22:08:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D7F231FAFC
+	for <e@80x24.org>; Mon,  6 Feb 2017 22:16:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751694AbdBFWH6 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 6 Feb 2017 17:07:58 -0500
-Received: from cloud.peff.net ([104.130.231.41]:50163 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751940AbdBFWH5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Feb 2017 17:07:57 -0500
-Received: (qmail 4062 invoked by uid 109); 6 Feb 2017 22:07:57 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 06 Feb 2017 22:07:57 +0000
-Received: (qmail 19360 invoked by uid 111); 6 Feb 2017 22:08:01 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 06 Feb 2017 17:08:01 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 06 Feb 2017 17:07:55 -0500
-Date:   Mon, 6 Feb 2017 17:07:55 -0500
-From:   Jeff King <peff@peff.net>
-To:     Eric Wong <e@80x24.org>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Josh Triplett <josh@joshtriplett.org>, git@vger.kernel.org
-Subject: Re: Cross-referencing the Git mailing list archive with their
- corresponding commits in `pu`
-Message-ID: <20170206220754.5q2oddr5ej7c6qcg@sigill.intra.peff.net>
-References: <alpine.DEB.2.20.1702041206130.3496@virtualbox>
- <20170206204820.GA7128@starla>
+        id S1752033AbdBFWQR (ORCPT <rfc822;e@80x24.org>);
+        Mon, 6 Feb 2017 17:16:17 -0500
+Received: from mail-pg0-f68.google.com ([74.125.83.68]:36124 "EHLO
+        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751414AbdBFWQP (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 Feb 2017 17:16:15 -0500
+Received: by mail-pg0-f68.google.com with SMTP id 75so10147115pgf.3
+        for <git@vger.kernel.org>; Mon, 06 Feb 2017 14:16:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=j2SsfeflnV0p8Pkh5212ekKk6m0OA6zV9g88twaj5Rk=;
+        b=bnRApRt3YwVmKqdB+JGo00FFaAhtgNTB4f/9SmWxmWo69iplWLG1nG+ivju/LqGzQ9
+         LZXys2bH8d3/YJd/Zz1zFzxQZtNWGoCbFoicu1bM5b/uw4A+jmIbSvJjSldeWv7mtRsT
+         kY+8Z2uRrGTzQy2hqJqtoTkkGImEaz7zeY5mB+apnUtH0DMjyZlm+nDYyhLbHrqG3sx6
+         9g0ipwuAUAoz8b5dyFMvoitfWmqu7dPVb6ghNr8Kc/XS+y1JRpXkAL+eHsTHhhSidRrN
+         mviUAFuqfUTW9TdI9BIrwij9hObgRaZ+ddFPMsq6pYhMwPuCwcTrfzhQEDBiVKZg7875
+         MCSA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=j2SsfeflnV0p8Pkh5212ekKk6m0OA6zV9g88twaj5Rk=;
+        b=EXsDNAgdLHpUgOLRghgaCp4vNOBTPnvZAlOM6goDtBx/yQTcZDxigNIvXsTNfPn8WM
+         DRgeJGWvJdE8t+VNtJvaDGGjx81kQ9oJ8k892zjX4NEG/TXnTXelUCbAqKX3bYppcWd9
+         3HeRSlnBbYyyozBEc6hQpOR/d75ZAgh1d8IH4KtJkUWQsFuUWVK+ZH/uvpucUSDCLb5N
+         7xKOytDV0qkXnVCR2Zs3B4PEdYkVbRIf8m43ixRoKHVnIRmNrPnHW7imfYTILjNSx7J2
+         /pdSUX8nTMwgcXhWzvbH3OGnuaMQjlt3mTHiEmuHWLEbY9kI3KyHKSeg/EEkMPCZwyNe
+         LkKg==
+X-Gm-Message-State: AIkVDXKJl6rNMFSHwGPpjOZG3Frer3obsVLXKo/OAZ5I2hkBNynuFztgQ4CuPOmWcw5sHw==
+X-Received: by 10.99.158.68 with SMTP id r4mr16036431pgo.153.1486419375158;
+        Mon, 06 Feb 2017 14:16:15 -0800 (PST)
+Received: from localhost ([2620:0:1000:8622:310c:cda4:fdbc:2aa2])
+        by smtp.gmail.com with ESMTPSA id j78sm5080774pfk.39.2017.02.06.14.16.14
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Mon, 06 Feb 2017 14:16:14 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     Shawn Pearce <spearce@spearce.org>,
+        Stefan Saasen <ssaasen@atlassian.com>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: Git clonebundles
+References: <CADoxLGPFgF7W4XJzt0X+xFJDoN6RmfFGx_96MO9GPSSOjDK0EQ@mail.gmail.com>
+        <CAJo=hJsS6FmL9iNScaXqkWJumALfGr8Od5QkbfZ+ZG3osxkp7Q@mail.gmail.com>
+        <CAP8UFD2ffeHr0-z3xPFFODqRTTgVnrrWcYRbASpUOrp0QGnp6g@mail.gmail.com>
+Date:   Mon, 06 Feb 2017 14:16:13 -0800
+In-Reply-To: <CAP8UFD2ffeHr0-z3xPFFODqRTTgVnrrWcYRbASpUOrp0QGnp6g@mail.gmail.com>
+        (Christian Couder's message of "Sun, 5 Feb 2017 17:37:06 +0100")
+Message-ID: <xmqq4m070xua.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20170206204820.GA7128@starla>
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Feb 06, 2017 at 08:48:20PM +0000, Eric Wong wrote:
+Christian Couder <christian.couder@gmail.com> writes:
 
-> I haven't hit insurmountable performance problems, even on
-> low-end hardware; especially since I started storing blob ids in
-> Xapian itself, avoiding the expensive tree lookup via git.
+> There is also Junio's work on Bundle v3 that was unfortunately
+> recently discarded.
+> Look for "jc/bundle" in:
+>
+> http://public-inbox.org/git/xmqq4m0cry60.fsf@gitster.mtv.corp.google.com/
+>
+> and previous "What's cooking in git.git" emails.
 
-The painful thing is traversing the object graph for clones and fetches.
-Bitmaps help, but you still have to generate them.
-
-> The main problem seems to be tree size.  Deepening (2/2/36 vs
-> 2/38) might be an option (I think Peff brought that up); but it
-> might be easier to switch to YYYYMM refs (working like
-> logrotate) and rely on Xapian to tie the entire thing together.
-
-Yes, the hashing is definitely one issue. Some numbers here:
-
-  http://public-inbox.org/git/20160805092805.w3nwv2l6jkbuwlzf@sigill.intra.peff.net/
-
-If you have C commits on a tree with T entries, you have to do C*T hash
-lookups for a flat tree (for each commit, you have to see "yup, already
-saw that object"). Sharding that across H entries at the top level drops
-the tree cost from T to H + T/H (actually, it's a bit worse because we
-have to read the secondary tree, too). Sharding again (at H') gets you
-H + H' + T/H/H'.
-
-Let's imagine you do one message per commit, so C=T. At 400K messages,
-that's about 160 billion hash lookups flat. At H=256, it's about 700
-million. If you shard again with H'=256, it's 200 million. After that,
-the additive terms start to dominate, and it's not worth going any
-further (and also, we're ignoring the extra-tree cost to each level).
-
-At that point you're better off to start having fewer commits. I know
-that the schema you use does put useful information into the commit
-message, but it's also redundant with what's in the messages themselves.
-And it sounds like you push most of that out to Xapian anyway.
-
-Imagine your repo had one commit with 400K historical messages, and then
-grouped the new messages so that on average we got about 10 messages per
-commit (this doesn't seem unrealistic for something that commits every
-few minutes; the messages tend to be bunched in time; I ran some
-numbers against a 10-minute mark in the earlier message).
-
-Then after another 100K messages, we'd have C=10,001 and T=500K. With
-two levels of hashing at 256 each, that's ~5 million hash lookups to
-walk the graph. And those numbers would be reasonable for a hosting site
-like GitHub.
-
-I don't know what C is for the kernel repo, but I suspect with the right
-tuning it could be made into large-but-reasonable.
-
--Peff
+If people think it might be useful to have it around to experiment,
+I can resurrect and keep that in 'pu' (or rather 'jch'), as long as
+it does not overlap and conflict with other topics in flight.  Let
+me try that in today's integration cycle.
