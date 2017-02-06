@@ -2,88 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 27B6C1FAF4
-	for <e@80x24.org>; Mon,  6 Feb 2017 05:55:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6456A1FAF4
+	for <e@80x24.org>; Mon,  6 Feb 2017 06:16:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751299AbdBFFz1 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 6 Feb 2017 00:55:27 -0500
-Received: from mail-lf0-f67.google.com ([209.85.215.67]:33486 "EHLO
-        mail-lf0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750962AbdBFFz0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Feb 2017 00:55:26 -0500
-Received: by mail-lf0-f67.google.com with SMTP id x1so2984090lff.0
-        for <git@vger.kernel.org>; Sun, 05 Feb 2017 21:55:25 -0800 (PST)
+        id S1751217AbdBFGP4 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 6 Feb 2017 01:15:56 -0500
+Received: from mail-vk0-f47.google.com ([209.85.213.47]:35780 "EHLO
+        mail-vk0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751176AbdBFGPz (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 Feb 2017 01:15:55 -0500
+Received: by mail-vk0-f47.google.com with SMTP id x75so49432247vke.2
+        for <git@vger.kernel.org>; Sun, 05 Feb 2017 22:15:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=XzOhI/dNLBi8geboYCHEK1us9dOcxl9lmRUyfkDg/ds=;
-        b=PPtoSadyIPv8nbS7Up05FtJfsC0VPgyywerYyslvp4H6YMg7EpGQ+d4IBgHtG4GJZf
-         izHdOZ0q5p5+8JMtnXPF1/Cg6zvkZ5GPe8XpUN4ogjC+m5xqBqy2J2kV95bXGwSTO+MT
-         na7SMSZ1yNz7EhCSFNQROHWuuYJb84Z4uQjxOAr5u9U9N3JwVOnKSPzAMN0dHb5uE/Ia
-         6buMi1IEf2a+jy+HIRn0/bDMfN3VFThTjiq5a1jYWjxNjQFwE9sivJnMrMx7dA3vOqdy
-         q43FL4c05UKXOpLFzS5fkoEZbWtAGr0UmfhtER2cGWr0Sviqy5C8GvalqJ69P8vwinJ3
-         Hw5w==
+        h=mime-version:from:date:message-id:subject:to;
+        bh=3NDxaZJ0e99houmgR5MjGtUOZnCX88XaDMs7QMAx2v8=;
+        b=oY8R3hsMhj891slERoOzse1EhQtDZHuCKDWNNwPoQ31OfDtGJJzY0jcFyWhWsUMq2o
+         jTHwj7dUwkWVWmQy8OQE3lMHmaWrM1VfdsTzoq9rDLsUOvHeRUR6XoVXVVZnhgolreOP
+         QIIBdl7VOx1YG/j9Lh2l9hEX3miERNeh1BmZugECPollbGfczhbQponI2MQdZwBIGaWJ
+         6JztRGuKAUQO7O7NaJQ6xQADtzDAo8ELBcvNgiLuf3ORDssYSd9LOHSpb61JDJuC94t7
+         BjdrQ718iJrOnl3cIGsVnqu5KUbsi1Ti6OadLW5WTuYZbfw+gWiWr+1R/9HQexhiqXAg
+         6Irw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=XzOhI/dNLBi8geboYCHEK1us9dOcxl9lmRUyfkDg/ds=;
-        b=HAepfecc48DZc45Xy3J8fDLlrV4XSwWqpF9bYFiTDSu4dqPzpF0+idp7y0p3uCftaN
-         d34RZsmS+LWrS5/5AkgEfUneXkqa7UHRD5fYTlPoRavlqPsnO176Ndad6wGxFEAFBxek
-         ql+eW7/0tQxqLd/e3/Aotea96G5l+rLZo6TM6NlN6uNIoteeZr/QMEg89pmXpDcE4YbV
-         KtRuzM5nDlTeiz1df4pAcRSC6Jc70BeOvQou7JSti4pHp/eMaE24QDJqwj/qZZEWk53C
-         AnyEr5eM5teoDOS6zG07xNd2Cn1r8XD9XgZyQXzsnJMTOAKDTkiJfyY8U/Fnkj1wGf8h
-         FA9g==
-X-Gm-Message-State: AMke39kEtEGmHORP7np0dozxLL+04rSLn0MdA2R0u+jt1u+0X2K3hi/G5n1aY+jzudQUiTYTql6iyD9IixZ8wg==
-X-Received: by 10.25.10.6 with SMTP id 6mr3025419lfk.88.1486360524639; Sun, 05
- Feb 2017 21:55:24 -0800 (PST)
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=3NDxaZJ0e99houmgR5MjGtUOZnCX88XaDMs7QMAx2v8=;
+        b=ZGkHAi73UaxUm7Ed9t+l3tNfER5qYCBT7c2B8sERwHWpRj2ErHBb7sveca0Q9XfZgj
+         l3SJLOSD4WFqrnda0yNP8La2WXolAnWJ07FrQRBH+xLcYTuGFttkZxJojmflSvs3oxil
+         IvRJZB2hVCRBQ9BFpizw2zuymU/it3EC8knFCn8miIfE6TWcBORzEj3FirDYEDO5YRTS
+         RuRtZr6I9ZX+zzHpZf6SAygR7C/KfQzKBIG5YPwSZn3Lxf7K2GsZxoxkHQaIfenJucvt
+         jlbmiSpc1CsDaUKrosriurFjhvpGuYWiwAusulb8IlBvEyXz63Rw/dx7+ZUPLxRe7ERr
+         iDIw==
+X-Gm-Message-State: AMke39nb9vD+Ov3PD5zY/nWFQXEo+30t8Ly8t8MGWXiqzoLrdvf2HycGj6BT019plWGYESJQLnq37q+yaQbitQ==
+X-Received: by 10.31.169.16 with SMTP id s16mr3037299vke.21.1486361749093;
+ Sun, 05 Feb 2017 22:15:49 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.25.145.14 with HTTP; Sun, 5 Feb 2017 21:55:04 -0800 (PST)
-In-Reply-To: <CAGZ79kY_1ELUZ2wZwNbQ+HrDnRBM3ngt9HKHKPmvaJEcoAFTtg@mail.gmail.com>
-References: <1485809065-11978-1-git-send-email-email@benjaminfuchs.de>
- <1485809065-11978-2-git-send-email-email@benjaminfuchs.de>
- <xmqqr33krtww.fsf@gitster.mtv.corp.google.com> <c872072a-4754-051d-81e7-1e2166560733@benjaminfuchs.de>
- <xmqqk29bsz2o.fsf@gitster.mtv.corp.google.com> <CAGZ79kY_1ELUZ2wZwNbQ+HrDnRBM3ngt9HKHKPmvaJEcoAFTtg@mail.gmail.com>
-From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Sun, 5 Feb 2017 21:55:04 -0800
-Message-ID: <CA+P7+xp0QJZkiYzgBhPvYPsG7iqRDhRQUjcdgf_GHU-93bSO-g@mail.gmail.com>
-Subject: Re: [PATCH 1/4] git-prompt.sh: add submodule indicator
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Benjamin Fuchs <email@benjaminfuchs.de>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        ville.skytta@iki.fi
+Received: by 10.159.34.48 with HTTP; Sun, 5 Feb 2017 22:15:08 -0800 (PST)
+From:   Samuel Lijin <sxlijin@gmail.com>
+Date:   Mon, 6 Feb 2017 00:15:08 -0600
+Message-ID: <CAJZjrdX_8tjMhRac9QQOW8m_S2DprFPV=uZp8mFT+g6bASVd-w@mail.gmail.com>
+Subject: git/git-scm.com GH Issue Tracker
+To:     "git@vger.kernel.org" <git@vger.kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Feb 5, 2017 at 8:23 PM, Stefan Beller <sbeller@google.com> wrote:
->
-> (unrelated side note:)
-> At GitMerge facebook presented their improvements on mercurial
-> and one of the things was "hg absorb". It would take the dirty hunks/lines
-> of the working tree and amend them into the "stack of commits", i.e. into
-> your local unpublished history. So instead of making fixup commits
-> and doing the whole interactive rebase thing, it would do it automatically
-> for you. I think that is a neat time saver.
->
-> Thanks,
-> Stefan
+I've went through a bunch of open issues on the git/git-scm.com repo
+(specifically, everything after #600) and I think the bulk of them can
+be closed.
 
-How exactly was it different from doing "git  commit --fixup xyz" and
-"git rebase -i --autosquash"? Like, what was the advantage to the user
-facing workflow? Just curious to see if we could learn something from
-it.
+I've taken the liberty of classifying them as shown below.
 
-Regards,
-Jake
+- Sam
+
+
+# Irrelevant but someone should take a look
+
+693
+
+
+# Irrelevant to git-scm.com and should be closed
+# Each of these had had someone comment on it saying as much
+
+939 912 906 905 901 896 894 886 885 884 883 879 877 871 868 865 861 840
+837 834 828 813 811 807 796 795 790 774 751 748 745 744 729 727 721 719
+711 690 686 686 674 673 671 667 660 653 635 631 621 615 613 612 611 610
+609 608
+
+
+# Resolved, duplicate, or non-issue
+
+936 875 863 858 856 839 786 785 761 760 754 752 736 723 720 704 684 683
+675 663 662 661 657 651 649 640 637 634 633 628 623 616 614 605 602 601
+
+
+# Relevant and should be kept open
+
+929 890 859 855 854 826 812 808 804 787 777 768 747 715 703 701 695 694
+678 668 665 649 646 639 620 617
