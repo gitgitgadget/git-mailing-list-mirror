@@ -2,63 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 91CD91FAFC
-	for <e@80x24.org>; Mon,  6 Feb 2017 20:32:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EBA711FAFC
+	for <e@80x24.org>; Mon,  6 Feb 2017 20:48:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752614AbdBFUcS (ORCPT <rfc822;e@80x24.org>);
-        Mon, 6 Feb 2017 15:32:18 -0500
-Received: from cloud.peff.net ([104.130.231.41]:50082 "EHLO cloud.peff.net"
+        id S1752500AbdBFUsW (ORCPT <rfc822;e@80x24.org>);
+        Mon, 6 Feb 2017 15:48:22 -0500
+Received: from dcvr.yhbt.net ([64.71.152.64]:35818 "EHLO dcvr.yhbt.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752449AbdBFUcR (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Feb 2017 15:32:17 -0500
-Received: (qmail 30030 invoked by uid 109); 6 Feb 2017 20:32:17 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 06 Feb 2017 20:32:17 +0000
-Received: (qmail 18062 invoked by uid 111); 6 Feb 2017 20:32:21 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 06 Feb 2017 15:32:21 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 06 Feb 2017 21:32:15 +0100
-Date:   Mon, 6 Feb 2017 21:32:15 +0100
-From:   Jeff King <peff@peff.net>
-To:     Samuel Lijin <sxlijin@gmail.com>
-Cc:     Duy Nguyen <pclouds@gmail.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: warning in tree xxx: contains zero-padded file modes
-Message-ID: <20170206203214.5y6ynn5co7davtrj@sigill.intra.peff.net>
-References: <CAJZjrdWq+xSEoTypA_hWdQJgioGOHJd3V7djeQ0YxpzvhuoM=g@mail.gmail.com>
+        id S1752477AbdBFUsW (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 Feb 2017 15:48:22 -0500
+Received: from localhost (dcvr.yhbt.net [127.0.0.1])
+        by dcvr.yhbt.net (Postfix) with ESMTP id EFA3E1FAFC;
+        Mon,  6 Feb 2017 20:48:20 +0000 (UTC)
+Date:   Mon, 6 Feb 2017 20:48:20 +0000
+From:   Eric Wong <e@80x24.org>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Josh Triplett <josh@joshtriplett.org>, git@vger.kernel.org
+Subject: Re: Cross-referencing the Git mailing list archive with their
+ corresponding commits in `pu`
+Message-ID: <20170206204820.GA7128@starla>
+References: <alpine.DEB.2.20.1702041206130.3496@virtualbox>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CAJZjrdWq+xSEoTypA_hWdQJgioGOHJd3V7djeQ0YxpzvhuoM=g@mail.gmail.com>
+In-Reply-To: <alpine.DEB.2.20.1702041206130.3496@virtualbox>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Feb 06, 2017 at 02:23:37PM -0600, Samuel Lijin wrote:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> For details, see:
+> http://public-inbox.org/git/11340844841342-git-send-email-mailing-lists.git@rawuncut.elitemail.org/
+> (this is also an example where public-inbox' thread detection went utterly
+> wrong, including way too many mails in the "thread")
 
-> >> There are some discussions in the past [1] [2] about this.
+Thanks, it should be fixed in an hour or two when reindexing
+finishes...
+
+<https://public-inbox.org/meta/20170206200216.GA26676@dcvr/>
+
+but it looks like reindexing is a little buggy in that it reuses
+thread IDs, too... (will fix)
+
+The Tor .onion mirrors should be done, first, since they're on
+better hardware:
+http://hjrcffqmbrq6wope.onion/git/11340844841342-git-send-email-mailing-lists.git@rawuncut.elitemail.org/
+http://czquwvybam4bgbro.onion/git/11340844841342-git-send-email-mailing-lists.git@rawuncut.elitemail.org/
+
+> This last example also demonstrates a very curious test case for a
+> different difficulty in trying to reconstruct lost correspondences: the
+> patch series was applied *twice*, independently of each other. First, on
+> the day v3 was submitted, it was applied on top of v1.8.1-rc0 (as commits
+> ee26a6e2b8..dd465ce66f), although it was not merged until v1.8.1-rc3. 22
+> days later, it was reapplied on top of maint so it could enter v1.8.0.3
+> (back then, Git still had "patchlevel" versions): c2999adcd5..008c208c2c.
 > 
-> I think you forgot to link to [2] :p
+> As you can see, there is a many-to-many relationship here, even if you do
+> leave the *original* branch out of the picture entirely.
 
-I think the [1] [2] there were recursive quotes from Duy's email. Those
-footnotes were:
+Fwiw, I've always seen the search ability of public-inbox as
+analogous to rename detection in git; in that it can never be
+perfect, but can still be tweaked and improved after-the-fact
+and be used more flexibly.
 
-[1] http://public-inbox.org/git/%3CCAEBDL5W3DL0v=TusuB7Vg-4bWdAJh5d2Psc1N0Qe+KK3bZH3=Q@mail.gmail.com%3E/
-[2] http://public-inbox.org/git/%3C20100326215600.GA10910@spearce.org%3E/
+Right now, the thread searching public-inbox is loose in that it
+favors overmatching based on Subject in addition to References.
+But the actual threading algorithm (for display) is strict,
+relying only on References.  But yeah, there can be tweaks to
+improve matching and introducing git (code) repository awareness
+into the mail search...
 
-> The linked issue on bugs.debian.org has seen activity recently, which
-> is the main reason I mentioned it separately as still relevant:
-> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=743227
+> Will keep you posted,
 
-Yeah. I think that's not quite solvable with Git as we have it now.  We
-have fsck.* and receive.fsck.* to tweak severity levels, but no matching
-fetch.fsck.* for handling a push (and presumably a transfer.fsck.* to
-cover both fetching and pushing). So there's a potential patch series
-for anybody interested.
+Likewise :>
 
--Peff
+> P.S.: I used public-inbox.org links instead of commit references to the
+> Git repository containing the mailing list archive, because the format of
+> said Git repository is so unfavorable that it was determined very quickly
+> in a discussion between Patrick Reynolds (GitHub) and myself that it would
+> put totally undue burden on GitHub to mirror it there (compare also Carlos
+> Nieto's talk at GitMerge titled "Top Ten Worst Repositories to host on
+> GitHub").
+
+Any suggestions on how the repository format can be improved?
+
+I haven't hit insurmountable performance problems, even on
+low-end hardware; especially since I started storing blob ids in
+Xapian itself, avoiding the expensive tree lookup via git.
+
+The main problem seems to be tree size.  Deepening (2/2/36 vs
+2/38) might be an option (I think Peff brought that up); but it
+might be easier to switch to YYYYMM refs (working like
+logrotate) and rely on Xapian to tie the entire thing together.
+
+Some change will definitely be needed for all LKML, but most
+projects have less traffic than even git, and should be fine.
+
+
+But, I am working to undermine centralized messaging systems
+(which GitHub and GitLab both are), so they would be wise to
+undermine public-inbox all the same ;>
