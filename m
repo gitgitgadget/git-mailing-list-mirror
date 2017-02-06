@@ -3,65 +3,131 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4E7E01FAFC
-	for <e@80x24.org>; Mon,  6 Feb 2017 15:22:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9287B1FAFC
+	for <e@80x24.org>; Mon,  6 Feb 2017 15:34:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753617AbdBFPWE (ORCPT <rfc822;e@80x24.org>);
-        Mon, 6 Feb 2017 10:22:04 -0500
-Received: from cloud.peff.net ([104.130.231.41]:49772 "EHLO cloud.peff.net"
+        id S1753873AbdBFPef (ORCPT <rfc822;e@80x24.org>);
+        Mon, 6 Feb 2017 10:34:35 -0500
+Received: from mout.gmx.net ([212.227.15.19]:50649 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752755AbdBFPWD (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Feb 2017 10:22:03 -0500
-Received: (qmail 9118 invoked by uid 109); 6 Feb 2017 15:22:03 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 06 Feb 2017 15:22:03 +0000
-Received: (qmail 13798 invoked by uid 111); 6 Feb 2017 15:22:06 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 06 Feb 2017 10:22:06 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 06 Feb 2017 16:22:00 +0100
-Date:   Mon, 6 Feb 2017 16:22:00 +0100
-From:   Jeff King <peff@peff.net>
-To:     Thomas Gummerer <t.gummerer@gmail.com>
-Cc:     git@vger.kernel.org, Stephan Beyer <s-beyer@gmx.net>,
-        Junio C Hamano <gitster@pobox.com>,
-        Marc Strapetz <marc.strapetz@syntevo.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        =?utf-8?B?w5h5dmluZCBBIC4=?= Holm <sunny@sunbase.org>,
-        Jakub =?utf-8?B?TmFyxJlic2tp?= <jnareb@gmail.com>
-Subject: Re: [PATCH v3 1/5] Documentation/stash: remove mention of git reset
- --hard
-Message-ID: <20170206152200.sszklnow332rf6fj@sigill.intra.peff.net>
-References: <20170129201604.30445-1-t.gummerer@gmail.com>
- <20170205202642.14216-1-t.gummerer@gmail.com>
- <20170205202642.14216-2-t.gummerer@gmail.com>
+        id S1751756AbdBFPed (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 Feb 2017 10:34:33 -0500
+Received: from virtualbox ([37.201.192.48]) by mail.gmx.com (mrgmx001
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MMTEM-1cVnVD1U2o-008NIY; Mon, 06
+ Feb 2017 16:34:29 +0100
+Date:   Mon, 6 Feb 2017 16:34:28 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Josh Triplett <josh@joshtriplett.org>
+cc:     git@vger.kernel.org
+Subject: Cross-referencing the Git mailing list archive with their corresponding
+ commits in `pu`
+Message-ID: <alpine.DEB.2.20.1702041206130.3496@virtualbox>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20170205202642.14216-2-t.gummerer@gmail.com>
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:7ihAyWBNQ8dDsaM4TM+iCZCL6lqpmU2dwu1AFCKO5SemnEB2Smy
+ vSBcyjyO9ndmT6Sfw/VanZkGEME1W2h98OSg96Dzyg1RTXUE8OdpnIiQafVujZqMN628q/K
+ S8VaQt3MshsMvQ1iJNisRIROjvDGK0yntP1YC+5PrY6WmHlx6RIx2AHD/+B2QpmlDkX3Oox
+ C0omQrjCyEOFPgq5I4KBQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:LiWEJi3YOEY=:4ZX8JJDf8KfQtfXXgSPDBB
+ CEZZ8DJ7bMV9CbJSKyTwr64p0uIQVi3zvuRS/myJwo2MdK2Y4WicrQZDeN2OVwtglb42KicBI
+ QJ4UZ0EOKbtwlJAmW3uteD8ODPRoB8bzh/gMpj2O1OIxlyriIAceIuGkBDt3A+QmRaEPIxJZr
+ k2D+M8kJpmIDUC36o0Zm+CIYEW5vsjizO6dXGkO37CA+h3GlTn0hWi6ra2u0scHbX2bGgCjkD
+ X2DUdSP602k05tL2BIzcJ2NFpOxSvb1YbxJccSaEEmKPCDKwYaC2AyR/OD25kdVB7D2bMltxB
+ W6aYnkQIvI8Jz1r6Roe01NkMNt4z1zpKS0TXUHf8kyHDeYAs1UyB2lziuZ2ELJpo4wKVfSSpD
+ d1nJRtWOxKhuaMy4ED75qKqdsyvfVOY6Ybpw9YBSm681+YA8HXDZnZj3DEH1FEyUVXqFEkBIs
+ xUppGSS9blnlPqiRrUR5WEM1rGqcoSWPa6eIyRbuKZslExzLWIMoMZGQyI5WNBb5NzQDgCOiy
+ PJAjXBa0x4s8D8abeIBoxi2nj+lkq1YZKedL7zDOWTawEA7bwnCQb5daBHWY7zkIn/jixWHp+
+ rn127ZhdLyY1Jm1QA8vdkfk7HdeLR+BU7yq9TNgkwCVIePsfxkCbjXMACCvCrrXfFgbKmvNdX
+ EaxowOcbUADVuqSN1L7bwlixHMnoqAIlcaTIC13FCXB5eHnhCP0666nWjnHshMkawdC40B7rp
+ 7PtM6TFHfP6y585WB+S2P0IyKWDzx6KOEtUS7f8Kx6dNhqEXKj2ih1aqIMkMrhTQOnlJsaDkf
+ uhlyHMG
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Feb 05, 2017 at 08:26:38PM +0000, Thomas Gummerer wrote:
+Hi Josh,
 
-> diff --git a/Documentation/git-stash.txt b/Documentation/git-stash.txt
-> index 2e9cef06e6..2e9e344cd7 100644
-> --- a/Documentation/git-stash.txt
-> +++ b/Documentation/git-stash.txt
-> @@ -47,8 +47,9 @@ OPTIONS
->  
->  save [-p|--patch] [-k|--[no-]keep-index] [-u|--include-untracked] [-a|--all] [-q|--quiet] [<message>]::
->  
-> -	Save your local modifications to a new 'stash', and run `git reset
-> -	--hard` to revert them.  The <message> part is optional and gives
-> +	Save your local modifications to a new 'stash' and roll them
-> +	back to HEAD (in the working tree and in the index).
-> +	The <message> part is optional and gives
+as discussed at the GitMerge, I am trying to come up with tooling that
+will allow for substantially less tedious navigation between the local
+repository, the mailing list, and what ends up in the `pu` branch.
 
-Nice. I think what you ended up with here is concise and accurate.
+That tooling would *still* not help lowering the barrier of entry for
+contributing to Git by a lot, as it would *still* not address the problem
+that mails sent from the most prevalent desktop mail client, as well as
+mails sent from the most prevalent web mail client, are simply and
+unceremoniously dropped. (This problem was acknowledged by quite a few
+nods even at the Contributors' Summit...) But still, we decided to start
+*somewhere* and this tooling is what we agreed on.
 
--Peff
+It is quite a bit harder going than I would like: as we have figured out,
+the Subject: line is not a good way to link the commits with the original
+mails containing the patches, as commit messages are modified before being
+pushed often enough to make this a fragile matching.
+
+So I thought maybe the From: line (from the body, if available, otherwise
+from the header) in conjunction with the "Date:" header would work. But a
+preliminary study shows that there are 336 From: + Date: combinations in
+the Git mailing list archive that are not unique. 71 of these are shared
+by three or more mails, even, and 9 are shared by more than 10 mails,
+respectively. This is bad!
+
+Unsurprisingly, the top 10 of these cases were obviously caused by the
+builtin `git am` bug where it would not reset the author date properly.
+Surprisingly, though, there were a few cases from 2005, too.
+
+I had a quick look to find out what was the culprit (looking at the
+17-strong patch series "Documentation fixes in response to my previous
+listing" by Nikolai Weibull, but I am at a loss there: the mail claims to
+be sent by git-send-email and the patches appear to be generated by
+git-format-patch as of v0.99.9l, neither of which had a Date:-related bug
+back in that time frame. My best guess is that the patches were mishandled
+by a tool similar to rebase -i (which entered Git only at v1.5.3).
+
+For details, see:
+http://public-inbox.org/git/11340844841342-git-send-email-mailing-lists.git@rawuncut.elitemail.org/
+(this is also an example where public-inbox' thread detection went utterly
+wrong, including way too many mails in the "thread")
+
+There was even a case of duplicated Date: headers in 2012. Now, this case
+is very curious, as there have been 7 mails with identical Date: header,
+but it was not a 6-strong patch series. Instead, it was a 4-strong patch
+series that needed three iterations before it was accepted, and the
+identical Date: header appears only in v2's patches (*not* in its cover
+letter) and it *disappeared* in v3's 4/4, where it was set *back* by a
+week (to the Date: it had in v1).
+
+For details, see
+http://public-inbox.org/git/cover.1354693001.git.Sebastian.Leske@sleske.name/
+and
+http://public-inbox.org/git/cover.1354324110.git.Sebastian.Leske@sleske.name/
+and
+http://public-inbox.org/git/b115a546fa783b4121d118bb8fdb9270443f90fa.1353691892.git.Sebastian.Leske@sleske.name/
+
+This last example also demonstrates a very curious test case for a
+different difficulty in trying to reconstruct lost correspondences: the
+patch series was applied *twice*, independently of each other. First, on
+the day v3 was submitted, it was applied on top of v1.8.1-rc0 (as commits
+ee26a6e2b8..dd465ce66f), although it was not merged until v1.8.1-rc3. 22
+days later, it was reapplied on top of maint so it could enter v1.8.0.3
+(back then, Git still had "patchlevel" versions): c2999adcd5..008c208c2c.
+
+As you can see, there is a many-to-many relationship here, even if you do
+leave the *original* branch out of the picture entirely.
+
+Will keep you posted,
+Dscho
+
+P.S.: I used public-inbox.org links instead of commit references to the
+Git repository containing the mailing list archive, because the format of
+said Git repository is so unfavorable that it was determined very quickly
+in a discussion between Patrick Reynolds (GitHub) and myself that it would
+put totally undue burden on GitHub to mirror it there (compare also Carlos
+Nieto's talk at GitMerge titled "Top Ten Worst Repositories to host on
+GitHub").
