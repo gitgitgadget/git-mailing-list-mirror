@@ -2,121 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 003801FAF4
-	for <e@80x24.org>; Sun,  5 Feb 2017 23:43:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D31461FAF4
+	for <e@80x24.org>; Mon,  6 Feb 2017 00:08:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751939AbdBEXnH (ORCPT <rfc822;e@80x24.org>);
-        Sun, 5 Feb 2017 18:43:07 -0500
-Received: from mail-pf0-f196.google.com ([209.85.192.196]:35290 "EHLO
-        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751165AbdBEXnH (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 5 Feb 2017 18:43:07 -0500
-Received: by mail-pf0-f196.google.com with SMTP id f144so5526259pfa.2
-        for <git@vger.kernel.org>; Sun, 05 Feb 2017 15:43:06 -0800 (PST)
+        id S1751686AbdBFAIH (ORCPT <rfc822;e@80x24.org>);
+        Sun, 5 Feb 2017 19:08:07 -0500
+Received: from mail-io0-f193.google.com ([209.85.223.193]:34075 "EHLO
+        mail-io0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751923AbdBFAIH (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 5 Feb 2017 19:08:07 -0500
+Received: by mail-io0-f193.google.com with SMTP id c80so7743125iod.1
+        for <git@vger.kernel.org>; Sun, 05 Feb 2017 16:08:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=Uos89yKfT8gLcc+vvnumXLe3RmJjnQNJwtEndq4pBw0=;
-        b=P/BZAbrWqwy0owizN/VruL5OjMtUYmhHJx/F2wL8/461rvPoDMXtjAfWfKP2VBSlkp
-         dh6hsz+t9Cf06CBDbcCNa+kwW4IofAEBROgULt7GCLdFnwXRSKWBw35PEUv3LNxkHrw/
-         q4pQtg4M4b8qKE/OOJGL4oZtLkJOeXdrccb8yXPcRfLCZVj6Grloh6pzl5GJNU2GhgH8
-         RuUVP6C9/ZT2WoCPygtZvFsdtyHFQ7UTIbmoO3aP1X5wtthm1YFV2KMeLL/3gMpRYFZT
-         wNO98HNBfEaJE45/pwSW30lRi7Y65htrP4YAXxD4HByRc9dvudrEDFoVBPzlcTPj+6Qt
-         7QpQ==
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=/ITTY3IAQ6+uwNAP64cozaQFMKIQnXVtomL2Dls52lg=;
+        b=Ba4PeosFh900qivwwgAjr+u7vVrkRoHf2yvTSyi3O4s8m6rRPQKC3AaujvKirA2wno
+         qCloEeO1fOeMVyDgITqbzCsQ7W+/2hN17zX68e4hzMnuBRiZJafBQNM/cb9PSR3fzzZR
+         tRoKRhqMgKI9LYIwcUPOKVnqC2196XkmGLgsj43Cqk5j6rCauUFZvS0FWnSRf5lkrQmS
+         TPwc/qFT5A3D77B9OnB06oIQhRUewMRh+E6S/dMDrCj9gBgwOHzIMYkQL1m2QLjmWeHD
+         M85uJ7n8i86CpQWAZZAEb0dpLhqJM5m315l5MKFz2UVWvO8FIQ3ax51o6w6QCh67Hi/S
+         bB1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=Uos89yKfT8gLcc+vvnumXLe3RmJjnQNJwtEndq4pBw0=;
-        b=dbM2RcbhhqOcu5FTHsGv8VFuNEv7AF5PopNghZKbYhA+EUmDIjbavyvFiUnq8tL8o2
-         ml4NbykCSER6Ol3Ql9z8TjtqAGa2140x4YveryV3CUb+GOaQjTszLMAZ2h632W6ABbGo
-         KTOQslnoRbpuTbGpHniZwMp2SxQTxfhoERLh8Y2pGdvH0tMS7fQE/WUmQCq34VdVezLE
-         a7YWEsksjZOjfF3PAg0x1Xs/Frcf7rInyiB2Y1iyNJTycWneiOsp4VtzxJ8xWcy6+9OV
-         Cja3eTJ+gZNLn47hUK5RYfXZISSqGJxXgGR3/vBPl9yon63zqG8C5VokcX8tB4iolcmW
-         6Ngg==
-X-Gm-Message-State: AIkVDXKEhViWGm4KZ/8T9kl6dZiAzU0qQ4FGp2D2HugLpd93eihT0NZ3dzqBuJWvDHf0LQ==
-X-Received: by 10.99.108.74 with SMTP id h71mr9957930pgc.99.1486338186264;
-        Sun, 05 Feb 2017 15:43:06 -0800 (PST)
-Received: from localhost ([2620:0:1000:8622:ac74:31b6:1bdf:d117])
-        by smtp.gmail.com with ESMTPSA id b10sm84239465pga.21.2017.02.05.15.43.05
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Sun, 05 Feb 2017 15:43:05 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Liam Breck <liam@networkimprov.net>
-Cc:     git@vger.kernel.org
-Subject: Re: In-body from headers ignored
-References: <CAKvHMgQLKccm2LcL4LGhz0afVthaS2gvEcLtoHX2TcDnr1npbw@mail.gmail.com>
-Date:   Sun, 05 Feb 2017 15:43:04 -0800
-In-Reply-To: <CAKvHMgQLKccm2LcL4LGhz0afVthaS2gvEcLtoHX2TcDnr1npbw@mail.gmail.com>
-        (Liam Breck's message of "Sun, 5 Feb 2017 13:45:39 -0800")
-Message-ID: <xmqqa8a0431z.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=/ITTY3IAQ6+uwNAP64cozaQFMKIQnXVtomL2Dls52lg=;
+        b=bzLzn/PvELrLIZdUfV8wddZchFCV0pIJI0IhIQUtD2qSpumxZW49JSv8DWmKzY8ZpY
+         TQW9x9weLx29ou9EqziRxgUXlz964ivK0BaNfGK7b2sVGX+V5enmPIKPdjb3fX2dSvSE
+         0SmmCYVopoOxJSGWH6lFZou9mpCvlD+d7nLh58zeSGEg6zhC6xjJ14CNL8BwNb/WHe/8
+         /Xibndmg4opuA8V3WvNal0/9nn7Ok57fpPlxF0R5+fxe0Au/oVAmalES3HhFa9hfoBUn
+         aMtcxldacasmPvegTELGcs61GnxtrdlMEIOvo7EVDRo2SDNVOubpn2bXrrLOn1T+VxHv
+         6vng==
+X-Gm-Message-State: AMke39mfWUc+O/vIegALWsNMRt204HKzBUDptW8KWzB4XNGvcOOQpZKScloZa5APmqzVgLTyyy0o6QlfJhbqfQ==
+X-Received: by 10.107.55.70 with SMTP id e67mr4899735ioa.142.1486339686184;
+ Sun, 05 Feb 2017 16:08:06 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
+Received: by 10.79.149.75 with HTTP; Sun, 5 Feb 2017 16:08:05 -0800 (PST)
+In-Reply-To: <xmqqa8a0431z.fsf@gitster.mtv.corp.google.com>
+References: <CAKvHMgQLKccm2LcL4LGhz0afVthaS2gvEcLtoHX2TcDnr1npbw@mail.gmail.com>
+ <xmqqa8a0431z.fsf@gitster.mtv.corp.google.com>
+From:   Liam Breck <liam@networkimprov.net>
+Date:   Sun, 5 Feb 2017 16:08:05 -0800
+X-Google-Sender-Auth: 6AXf6sE0wiRWQKy5OF44cMPcZQE
+Message-ID: <CAKvHMgTDVU+=uq7_oQzfnSNxhFPd75-Ah4BXOcRnZCgUwytPWA@mail.gmail.com>
+Subject: Re: In-body from headers ignored
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Liam Breck <liam@networkimprov.net> writes:
-
-> git format-patch & send-email generate the in-body From header.
+On Sun, Feb 5, 2017 at 3:43 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Liam Breck <liam@networkimprov.net> writes:
 >
-> git am recognizes it.
+>> git format-patch & send-email generate the in-body From header.
+>>
+>> git am recognizes it.
+>>
+>> git commit & format-patch & send-email ignore it. (The latter two will
+>> add a new header above an extant one.) Is there a rationale for this?
 >
-> git commit & format-patch & send-email ignore it. (The latter two will
-> add a new header above an extant one.) Is there a rationale for this?
+> I may be misunderstanding you, but I am guessing that you are
+> expecting
+>...
+> and seeing that the real author is still you, the title is "The real
+> title of the patch", and the first paragraph of the body consists of
+> these two lines that begin with "From: and "Subject:".
+>
+> This is very much deliberate.  "git commit" does not care if the
+> second paragraph in the body of the message resembles e-mail
+> headers, because it is a command that can be used by people who do
+> not even e-mail patches.
+> ...
 
-I may be misunderstanding you, but I am guessing that you are
-expecting
+Hi, thanks for the detailed reply :-)
 
-	$ GIT_AUTHOR_NAME="Liam Breck" GIT_AUTHOR_EMAIL='liam@n.net' \
-	git commit -m 'The title of the patch
+OK, that resolves my Q about git commit.
 
-	From: Somebody Else <somebody@else.xz>
-	Subject: The real title of the patch
+But should not git format-patch & send-email detect an extant in-body
+From or Subject header?
 
-	This is the (true) first line of the body of the message.'
+Suppose I need to forward a patchset and cannot amend the commits in
+git? Or that a patchset author is not the copyright holder, whom I
+want to be logged as the author upstream?
 
-to record a commit object that would give
-
-	$ git cat-file commit HEAD
-	tree ....
-	parent ....
-	author Somebody Else <somebody@else.xz> ....
-	committer ...
-
-	The real title of the patch
-
-	This is the (true) first line of the body of the message.
-
-and seeing that the real author is still you, the title is "The real
-title of the patch", and the first paragraph of the body consists of
-these two lines that begin with "From: and "Subject:".
-
-This is very much deliberate.  "git commit" does not care if the
-second paragraph in the body of the message resembles e-mail
-headers, because it is a command that can be used by people who do
-not even e-mail patches.
-
-"git format-patch" and "git am" are all about passing the commit
-between people over e-mail, and they know that the second paragraph
-can have "From:", "Subject:" or "Date:" to override what "am"
-obtains from the header lines of the e-mail that carried the
-message, because the e-mail headers can be different (e.g. you may
-be forwarding somebody else's e-mail but you may not be able to
-forge the real "From:" line to your MUA/MTA) from what you really
-want to use.  On the receiving end, "am" tells "mailinfo" program to
-inspect the message body with "--inbody-headers" option.  After
-"mailinfo" inspects the message, "am" invokes the underlying
-machinery to actually make the commit (which corresponds to "git
-commit"), but at that point the invoked "git commit" does not even
-see these in-body header lines.  That is how division of labor
-between these layers of the commands are structured.
-
+There is a workaround: delete the From headers in the patches, but I
+was looking for a command-line option or alternate default behavior
+:-)
