@@ -2,91 +2,134 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 25AF31FAF4
-	for <e@80x24.org>; Mon,  6 Feb 2017 03:41:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 369EB1FAF4
+	for <e@80x24.org>; Mon,  6 Feb 2017 04:23:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753200AbdBFDl2 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 5 Feb 2017 22:41:28 -0500
-Received: from mail-pg0-f67.google.com ([74.125.83.67]:35967 "EHLO
-        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752420AbdBFDl1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 5 Feb 2017 22:41:27 -0500
-Received: by mail-pg0-f67.google.com with SMTP id 75so7847826pgf.3
-        for <git@vger.kernel.org>; Sun, 05 Feb 2017 19:41:27 -0800 (PST)
+        id S1751081AbdBFEXQ (ORCPT <rfc822;e@80x24.org>);
+        Sun, 5 Feb 2017 23:23:16 -0500
+Received: from mail-io0-f172.google.com ([209.85.223.172]:35118 "EHLO
+        mail-io0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750932AbdBFEXP (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 5 Feb 2017 23:23:15 -0500
+Received: by mail-io0-f172.google.com with SMTP id j18so57462509ioe.2
+        for <git@vger.kernel.org>; Sun, 05 Feb 2017 20:23:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:mime-version:content-disposition
-         :user-agent;
-        bh=A1z7vNh2sf/FA33TrHJqdAVf2Hcmbc4yw3c3WzxTiQQ=;
-        b=oAsaqIuuNFxMZ1hdfynrGuUJslqeoBV8Sb7qPogDD/uXXSqdxcUg91wP/Y4i9v84np
-         Vr4Shh4HlwNRa5EIMfTDqoCE3ZmExgWtnkMxmNoNHxzdjoR+9edTQXw5uqIUG7UyQitL
-         jM+UiSN8jJK0aFvH4NcDQLhVl8FHAHbqBt1IsT5X3caTu4owk4AtpUJ9B9t5a8S/HZT/
-         HAlqtAkY+d37H5AORznHr2P1O3qnMsSdCIswHkpkplatg7c51mNlY5DWJR7VkzzWpxt5
-         Imgh1ezEIMwRBISWZ5i7s49I+ARm4c29CW3ucL+XD28aZqSksvFJTPDFoFUdJu2I0MKk
-         Aimg==
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=Fc5seKR+D4yTICmJiODxHsj8i/Xru49EydArGWoxrEI=;
+        b=IJzmAX46lh4GtnzIJl9AsFqjxO7XCxpr9CyYQ8K/AHQ6t8P8jbkgDRaKaMBhC4JL6q
+         TDQwK/2iV7bSVyHVpYdxyBmwv/I6xXmYNP3S4BJqiiHosenmiViDOIu1oWsqACif2Zi/
+         3oDZ4EH8QCoJ/b/u8ZpEte8razjr0yPjCMbTExmugZDELs3xWUeZUjDLAvjhJa9T1UVC
+         LnmVFSvJvKHX7vexGjEdYfXR8iyMxK7NFb3wgo3o6Y1cBIlCBYFY9UlYsqPbimS8pDOR
+         MqWkC5uCzT3SucJ+wiAPoUssWr4UCpGIvOKOJff6UBWgo4mrFa/qTPUVcMSDo71H4YIs
+         nGaA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
-         :content-disposition:user-agent;
-        bh=A1z7vNh2sf/FA33TrHJqdAVf2Hcmbc4yw3c3WzxTiQQ=;
-        b=sDQc9juR2qo+1gtFlWGjEsc+VCF+FKRk9BZHUe4jmycKWK7js96eNNhYTnb1zhDKA7
-         cNQOJg3NHWP18+y+SRTYXHU0o/gFYgcJuHxaOvS+fkia6D5/Pm+MENyzdVBv51BxHJta
-         3RY1hXsQJhbcZMZRAXPgXSZPOn5VW31FV9sH8tGJv8QnC6lPKNGa51w/IOUEdSvgI4Og
-         YV/QkNU7s3x4c7z2bl9r3l1C7xGIvxa2SxZFU5mMdUAZFMHOlJazHufo7oLQ2IFm3pmm
-         SiNuChcOZ+1oOgMC6sWeMXvLlpAJDVPC9WofAGVVs/zSiktXFjl1VDk7/hmgXM3wFQx5
-         SAXg==
-X-Gm-Message-State: AIkVDXJ9JGI33FTxPg7OcaLHl+GialhBMATGXdDdSrxV+WTGtpxAay9FORlWvlRfOR3L8Q==
-X-Received: by 10.98.214.209 with SMTP id a78mr10709662pfl.6.1486352486831;
-        Sun, 05 Feb 2017 19:41:26 -0800 (PST)
-Received: from arch-attack.localdomain (c-50-152-192-15.hsd1.ca.comcast.net. [50.152.192.15])
-        by smtp.gmail.com with ESMTPSA id s136sm84763493pgc.38.2017.02.05.19.41.25
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 05 Feb 2017 19:41:26 -0800 (PST)
-Date:   Sun, 5 Feb 2017 19:41:18 -0800
-From:   Denton Liu <liu.denton@gmail.com>
-To:     git@vger.kernel.org
-Cc:     davvid@gmail.com
-Subject: [PATCH] Document the --no-gui option in difftool
-Message-ID: <20170206034118.GA29517@arch-attack.localdomain>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=Fc5seKR+D4yTICmJiODxHsj8i/Xru49EydArGWoxrEI=;
+        b=cJDUWL4QHMeDxVMqo5LCwiX6xveAv8m1NXIp58FpnvmJjs49IzmQTeWxE1d+rhyCm1
+         NrW6EoOHdr4ZNl4bk/XdjJA3FSVXQQump2y8sr6jECao6dQCXKhYbMy/US0+nV5G/AFD
+         tNRh3Uk9Fvd7dt8sVwtSOExMFVNDgPsLRJAYsGmtP81f40f73roYMXT+J50qk/7PfGzy
+         MOta1OVeavrOx5JEy6u/axpf3CAqUX0T6e/uN781hhmnuJtVnHdQdb27BDqhj1Qqz4Ha
+         CGXNUXNsCr486323+mX2M2DfsDFc2oumh2xGieix85M6CYP2n9gMv05NaI9ju2lhKGQK
+         T/9Q==
+X-Gm-Message-State: AMke39lvEeacRpo0eMjBXm7lNYNad+X/bMajsugkRu9pA5x22MepAnSgDEBcuESnBUxJN6aS9GHakQIaNi9vLzyh
+X-Received: by 10.107.16.14 with SMTP id y14mr5252710ioi.164.1486354994419;
+ Sun, 05 Feb 2017 20:23:14 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-User-Agent: Mutt/1.7.2 (2016-11-26)
+Received: by 10.79.39.19 with HTTP; Sun, 5 Feb 2017 20:23:13 -0800 (PST)
+In-Reply-To: <xmqqk29bsz2o.fsf@gitster.mtv.corp.google.com>
+References: <1485809065-11978-1-git-send-email-email@benjaminfuchs.de>
+ <1485809065-11978-2-git-send-email-email@benjaminfuchs.de>
+ <xmqqr33krtww.fsf@gitster.mtv.corp.google.com> <c872072a-4754-051d-81e7-1e2166560733@benjaminfuchs.de>
+ <xmqqk29bsz2o.fsf@gitster.mtv.corp.google.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Sun, 5 Feb 2017 20:23:13 -0800
+Message-ID: <CAGZ79kY_1ELUZ2wZwNbQ+HrDnRBM3ngt9HKHKPmvaJEcoAFTtg@mail.gmail.com>
+Subject: Re: [PATCH 1/4] git-prompt.sh: add submodule indicator
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Benjamin Fuchs <email@benjaminfuchs.de>,
+        "git@vger.kernel.org" <git@vger.kernel.org>,
+        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        ville.skytta@iki.fi
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Prior to this, the `--no-gui` option was not documented in the manpage.
-This commit introduces this into the manpage
+On Mon, Jan 30, 2017 at 7:11 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Benjamin Fuchs <email@benjaminfuchs.de> writes:
+>
+>> In [2/4] I got rid of the loop by feedback of G=C3=A1bor.
+>> Sorry if my patch wasn't well formed.
+>
+> While it might be the way other development communities work, in the
+> Git development community, we do not work that way when presenting
+> your second and subsequent attempt to the community.
+>
+> Having the initial draft from the original developers that records
+> the bugs and misdesigns in an earlier parts of a series and separate
+> patches that record how the problems were fixed to arrive at the
+> final shape of the codebase might be interesting to the original
+> developers, and they may even find such a history valuable, but in
+> the context of the history that will be recorded in the official
+> tree of the project for eternity, that just adds useless noise.
+>
+> Instead of keeping the original, in which problems were pointed out,
+> and adding later commits to correct them incrementally, a patch is
+> "rerolled".  That is, you are expected to learn from the review
+> comments and pretend as if you did the work from scratch and you
+> already possessed the wisdom lent by the reviewers when you started
+> your work.  In the "rerolled" patches you send, you pretend as if
+> you worked without making mistakes you made in the earlier rounds at
+> all, producing (more) perfect patches from the beginning.
+>
+> In reality, you may locally be using Git tools like rebase,
+> cherry-pick and "add -p" while preparing these "rerolled" rounds of
+> patches, but the name of the game is to hide that effort from the
+> public and pretend to be a perfect human, recording the result of
+> exercising your best ability in the official history ;-).
+>
+> So this is OK:
+>
+>     0/3: I want to improve X, and for that I identified that I need
+>     A, B and C done.  A or B alone is already an improvement, but A
+>     and B together makes it even more useful, and implementation of
+>     C requires patches to do A and B.
+>
+>     1/3: do A
+>     2/3: do B
+>     3/3: do C, building on A and B
+>
+> This is not:
+>
+>     0/3: I want to improve X, and for that I need to do C.
+>     1/3: I couldn't do C, and I did A instead.
+>     2/3: A was totally useless. I fix it to do B.
+>     3/3: B is not very useful, either. I fix it to do C.
+>
 
-Signed-off-by: Denton Liu <liu.denton@gmail.com>
----
- Documentation/git-difftool.txt | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+I agree with Junio here,
+"git rebase --interactive" and then editing/squashing commits
+is your friend.
 
-diff --git a/Documentation/git-difftool.txt b/Documentation/git-difftool.txt
-index 224fb3090..a2661d9cc 100644
---- a/Documentation/git-difftool.txt
-+++ b/Documentation/git-difftool.txt
-@@ -87,9 +87,11 @@ instead.  `--no-symlinks` is the default on Windows.
- 
- -g::
- --gui::
-+--no-gui::
- 	When 'git-difftool' is invoked with the `-g` or `--gui` option
- 	the default diff tool will be read from the configured
--	`diff.guitool` variable instead of `diff.tool`.
-+	`diff.guitool` variable instead of `diff.tool`. The `--no-gui`
-+	option can be used to override this setting.
- 
- --[no-]trust-exit-code::
- 	'git-difftool' invokes a diff tool individually on each file.
--- 
-2.12.0.rc0.208.g81c5d00b2
+(unrelated side note:)
+At GitMerge facebook presented their improvements on mercurial
+and one of the things was "hg absorb". It would take the dirty hunks/lines
+of the working tree and amend them into the "stack of commits", i.e. into
+your local unpublished history. So instead of making fixup commits
+and doing the whole interactive rebase thing, it would do it automatically
+for you. I think that is a neat time saver.
 
+Thanks,
+Stefan
