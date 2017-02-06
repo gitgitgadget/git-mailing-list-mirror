@@ -2,76 +2,75 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 90B601FAFC
-	for <e@80x24.org>; Mon,  6 Feb 2017 16:38:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BA1AC1FAFC
+	for <e@80x24.org>; Mon,  6 Feb 2017 16:39:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751975AbdBFQiU (ORCPT <rfc822;e@80x24.org>);
-        Mon, 6 Feb 2017 11:38:20 -0500
-Received: from mail-wr0-f171.google.com ([209.85.128.171]:35216 "EHLO
-        mail-wr0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751947AbdBFQiT (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Feb 2017 11:38:19 -0500
-Received: by mail-wr0-f171.google.com with SMTP id 89so24508740wrr.2
-        for <git@vger.kernel.org>; Mon, 06 Feb 2017 08:38:19 -0800 (PST)
+        id S1751813AbdBFQjI (ORCPT <rfc822;e@80x24.org>);
+        Mon, 6 Feb 2017 11:39:08 -0500
+Received: from mail-wm0-f48.google.com ([74.125.82.48]:36175 "EHLO
+        mail-wm0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751438AbdBFQjH (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 Feb 2017 11:39:07 -0500
+Received: by mail-wm0-f48.google.com with SMTP id c85so128004456wmi.1
+        for <git@vger.kernel.org>; Mon, 06 Feb 2017 08:39:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=known.net; s=google;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=fkbLZyfednom1ptyIAwjcVWAEgUsqk1UhdvVbMaL5UY=;
-        b=VM5U/ozZpI5rNQe0iH+KlMDibsJmJu+VOkBhvUbVeFRFFyEq662EuVMKzE13JGy8Fw
-         SCqYP81fBCWfsb0IEA2yEE/u7GMToPpYdg3+khPM5SKjYYn7UUDoKaeAjmvNhcgNebxw
-         TsFP/ETh5NPYHz79Fnj8G5Ao9LBhc4hDnO/Kc=
+        bh=PcQ1EE/WoMo2GAcBd1QLkuBPjMKK+ONrJEnbPBsaNDQ=;
+        b=QeikFy+zv780AJkaWT9qt7NJ5sqsLzOZeGxrwwgTLMwNGmZazFyAWg5g4kJnvG9sJV
+         pAGY6LvH75y8LPn/lvsFM4ct64QsL0lrl3ENZnREsC8lBYbXn8G44l3ks+QQU9M65+uG
+         Zz5Ss51yyIXxxhFQRwUQuGnYAQNP37pzZLl44=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=fkbLZyfednom1ptyIAwjcVWAEgUsqk1UhdvVbMaL5UY=;
-        b=DvXWDYGlxCm6AcLybHTJc+6Q0lRLqTy0CDiOSxXYVQU4nsqfVI7JJ9WaHp83YEEZGM
-         kVU7xbwWIHQVA1H26VpdsYoU6CMNWHva4SNFsRgSLD/Ml/X0Y+1z3n5K7XmT/r0sQKYU
-         xWraNRHlTJGolvo7pW7ds5iYXtZ7sDCx/+w6Ttd7NN5SPtmdpUGP28hu+7pzE73981F2
-         stCIUVfoLhOzE4bvOIaKH50re89kxwhh1+qhaG0Zt15BrFLyOnN6gimEjheVUA7Wuwwt
-         c3fz/fCjgxIO/2pyDnVLJFr+WQMKhbZmBTeboMI+0gsffzNUGv6PvWOXdFSWHpL7TtxX
-         kJIA==
-X-Gm-Message-State: AMke39lL5Z1tSDrm3cKaKh/eqJJzqBhU1hLkuYchx8DnFYmeQtPo+l2IGAoyWGTK2goGWigK7b/LPP8rkqiAc0fK
-X-Received: by 10.223.135.8 with SMTP id a8mr12392799wra.162.1486399098054;
- Mon, 06 Feb 2017 08:38:18 -0800 (PST)
+        bh=PcQ1EE/WoMo2GAcBd1QLkuBPjMKK+ONrJEnbPBsaNDQ=;
+        b=E3kL57WL6QoY1Kjd9mZahjfB2E52Cuijv7V3TCJH9ljE+feULrqpII3edDpzv6OMai
+         LzahDEV7xFfVuQC1OWltL18AUZWy3BikJfHxTpwc4SNhbyoEXxAASrYzeM1gxwwS2LNs
+         8G+Xy8Fpl27DOULkJSkVujXWVs5GDrEyctfJu6NdHgnRTXa6UTQbSm0nl3NvRScGnxJT
+         GDHvOtk2FFhhuWrMg3th5Of2Et8vUd51j8mS3aVpJcXPYvUSHnv3N4AJb2KjoYq1Wc+W
+         MmYfQgUYmPnSL3F6PbUfd4LRByCqiwsVwWildjkkKjYKZ5HaXetnPAiex+xRmvWOFsd9
+         nmyA==
+X-Gm-Message-State: AMke39kgkfGIvZz6zdHjELJ7qMg0lBw5N00U1aQ7f9PJ8rIpegQpUNz4I2anqpeRYtOdR2y5ecYee+bsP/q9G0Ge
+X-Received: by 10.28.92.193 with SMTP id q184mr9991469wmb.139.1486399146126;
+ Mon, 06 Feb 2017 08:39:06 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.194.76.1 with HTTP; Mon, 6 Feb 2017 08:38:17 -0800 (PST)
-In-Reply-To: <3bd29833-8fb2-5097-f735-6a3f61e678bf@tngtech.com>
-References: <CAGSZTjKywt28Pq7S+Hidi0XeseDxUAMEorrspZQ6jb50yic3+g@mail.gmail.com>
- <CAGSZTjLrdYJHixsUz0ha6=E263Z-vQuA11Oq=UNSVZfOmHkRuA@mail.gmail.com> <3bd29833-8fb2-5097-f735-6a3f61e678bf@tngtech.com>
+Received: by 10.194.76.1 with HTTP; Mon, 6 Feb 2017 08:39:05 -0800 (PST)
+In-Reply-To: <CAFZEwPPyAxeU2i-OL62O749GaTdL7H19jbbAj8R6fipVnUjt=Q@mail.gmail.com>
+References: <CAGSZTjLmYCyKZ1BBRv+JVYq4oX7EQcNzyxAnS_3NBUPjr3g8zQ@mail.gmail.com>
+ <CAFZEwPOFDT7=1qhg4ygJpVUnfQo3XUjDoNtZ4LJvG5V9+RDNwA@mail.gmail.com> <CAFZEwPPyAxeU2i-OL62O749GaTdL7H19jbbAj8R6fipVnUjt=Q@mail.gmail.com>
 From:   Kevin Layer <layer@known.net>
-Date:   Mon, 6 Feb 2017 08:38:17 -0800
-Message-ID: <CAGSZTjLKtpFRw5d28m88kSzq+_eFH=Sggk408eNJdBw47Fa9=Q@mail.gmail.com>
-Subject: Re: BUG: "git checkout -q -b foo origin/foo" is not quiet
-To:     Cornelius Weig <cornelius.weig@tngtech.com>
-Cc:     git@vger.kernel.org
+Date:   Mon, 6 Feb 2017 08:39:05 -0800
+Message-ID: <CAGSZTjLx5ftVYkO31U1NrGAdw-LGHjKU7=gtqaoe3VbQX+Bwrw@mail.gmail.com>
+Subject: Re: feature request: add -q to "git branch"
+To:     Pranit Bauva <pranit.bauva@gmail.com>
+Cc:     Git List <git@vger.kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Yeah, my bad.  I was confused.  Sorry for the noise.
+I think I got my git versions (old and new) mixed up.  Sorry for the noise.
 
-On Fri, Feb 3, 2017 at 4:55 PM, Cornelius Weig
-<cornelius.weig@tngtech.com> wrote:
-> On 02/03/2017 10:36 PM, Kevin Layer wrote:
->> Note that git version 1.8.3.1 is quiet and does not print the
->> "tracking remote" message.
+On Sat, Feb 4, 2017 at 1:17 PM, Pranit Bauva <pranit.bauva@gmail.com> wrote:
+> Hey Kevin,
 >
-> So what you are saying is, that git v1.8.3.1 *is* quiet, but v1.7.1 is
-> not? Sounds like a fixed bug to me.
+> Sorry for the previous message.
 >
-> I also checked with the latest version and it did not print anything
-> when used with -q.
+> On Sun, Feb 5, 2017 at 2:47 AM, Pranit Bauva <pranit.bauva@gmail.com> wrote:
+>> Hey Kevin,
+>>
+>> On Fri, Feb 3, 2017 at 11:59 PM, Kevin Layer <layer@known.net> wrote:
+>>> It should be possible to quietly create a branch.
 >
+> I think `git branch` is already quiet. Are you seeing something else?
 >
-> You seem to urgently need quiet branch creation. Have you thought about
-> dumping unwanted output in the shell? E.g. in bash
->
-> $ git whatever >&/dev/null
+> Regards,
+> Pranit Bauva
