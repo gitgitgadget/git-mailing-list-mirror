@@ -2,83 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4000A1FAF4
-	for <e@80x24.org>; Tue,  7 Feb 2017 11:11:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 14F8F1FAF4
+	for <e@80x24.org>; Tue,  7 Feb 2017 11:21:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753988AbdBGLLg (ORCPT <rfc822;e@80x24.org>);
-        Tue, 7 Feb 2017 06:11:36 -0500
-Received: from mail-ot0-f171.google.com ([74.125.82.171]:35987 "EHLO
-        mail-ot0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753268AbdBGLLd (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Feb 2017 06:11:33 -0500
-Received: by mail-ot0-f171.google.com with SMTP id 32so83457908oth.3
-        for <git@vger.kernel.org>; Tue, 07 Feb 2017 03:11:33 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=CQMD9WBwx9Uv8e+/CIdKsbK2Fn02cWvgbhCK1S09nOQ=;
-        b=SfCHI5pkiOXUWM610PfF4DXK2DoKcuvYQBwc1HEPMLEXt7ML9G3UcUk5DWU2d2vmHY
-         1uqslBHA2DJ/uIDy6fUI3vAQ8sOiW2/JOXIBQlstfiYWb7moUYzktpMjC6WTk6YozHGo
-         OrE/IvIExCWwR/HQ7vitFnls/ngrBNqfR/SnqAapVyUXav2UtNJ9vp0mWLxV8jGkyete
-         svmm9MzlRkORzLE5NkwTYNztjLl1fziJdc76ZiyLakE3vvLTln5r0Uw8V70xXcH6QhxQ
-         jsrpNDtB+M2krU47x40tG4aszAPi00z/6S2ELEckCG13PRG9PzInEPfQWbpqMhdhDE5Q
-         bm4g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=CQMD9WBwx9Uv8e+/CIdKsbK2Fn02cWvgbhCK1S09nOQ=;
-        b=XFx60EywBGtYeXwfkqEUd30dVgTg0pvgun+eN083v0UNRqgMLpIFJpu9ZQYCu4RQq5
-         tsg771rjdBON8QmRIctm4jGnTTZUREZ33QVGoNx/cgAdYgOUMugm31aBJLzbk4rhfq0r
-         nXSyAneorozl9JrbKD35Y5d17WDbe9mcEbbD4KFAzUoHQFklqQ2BY0Q4Dkmt+d5eH7SD
-         VychMRTaK+mpGfYmZJCG2AD7KMxdllPC5WnsivSn2Ey++CHpQ5wqw3elfyF16cVhaaEZ
-         szA/SUTKbvL+jzpTGwdq/lgdXg07IqJ2tkfK/cWb2xW2KZoRcPOqoDGENUrg7T7D77hS
-         Vn0Q==
-X-Gm-Message-State: AMke39lpUdWmfDMMB7CQSkfEvwoUPsqQ6LfUB5mjBFyErpK8EzIwUbgr3r/ru+KdLPR6qzqJtJeIB4gi/1Y5mw==
-X-Received: by 10.157.9.214 with SMTP id 22mr7299302otz.128.1486465893224;
- Tue, 07 Feb 2017 03:11:33 -0800 (PST)
-MIME-Version: 1.0
-Received: by 10.74.158.1 with HTTP; Tue, 7 Feb 2017 03:11:02 -0800 (PST)
-In-Reply-To: <xmqq60kn2lia.fsf@gitster.mtv.corp.google.com>
-References: <c2af75361b7b357fa905ab072bfdc45ad055ca49.1486386803.git.patrick.steinhardt@elego.de>
- <xmqq60kn2lia.fsf@gitster.mtv.corp.google.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Tue, 7 Feb 2017 18:11:02 +0700
-Message-ID: <CACsJy8ATyxrTrcym9qPY7EX+rukmF7MhZYEOoEtASrq5Gpg7RA@mail.gmail.com>
-Subject: Re: [PATCH] worktree: fix option descriptions for `prune`
+        id S1753921AbdBGLV4 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 7 Feb 2017 06:21:56 -0500
+Received: from mout.gmx.net ([212.227.15.15]:55297 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1753843AbdBGLVz (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Feb 2017 06:21:55 -0500
+Received: from virtualbox ([37.201.192.48]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MQ2zr-1cWxFH47TH-005HBx; Tue, 07
+ Feb 2017 12:21:49 +0100
+Date:   Tue, 7 Feb 2017 12:21:47 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Patrick Steinhardt <patrick.steinhardt@elego.de>,
-        Git Mailing List <git@vger.kernel.org>,
-        Patrick Steinhardt <ps@pks.im>
-Content-Type: text/plain; charset=UTF-8
+cc:     David Aguilar <davvid@gmail.com>, Git ML <git@vger.kernel.org>,
+        Denton Liu <liu.denton@gmail.com>
+Subject: Re: [PATCH] difftool: fix bug when printing usage
+In-Reply-To: <xmqqinon2nnt.fsf@gitster.mtv.corp.google.com>
+Message-ID: <alpine.DEB.2.20.1702071220290.3496@virtualbox>
+References: <20170205201751.z4rfmy5xxaqg472l@gmail.com> <20170205212338.17667-1-davvid@gmail.com> <alpine.DEB.2.20.1702061716120.3496@virtualbox> <xmqqinon2nnt.fsf@gitster.mtv.corp.google.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:TCZYBBC5rwWoob0wQaTYVha4xyiG4iTb0ggCYAKPBA7B2aikw8G
+ ZL/Chj5xeC7QEuKfIaWyisQ2IjT1fVBpAyWPluZojsUcycQVttHQpca8al4iNz81AfLTlRy
+ NOVOz5kirZFwGpXtbJA+njvyRt/7tX/aIYhkCdlEPRv+6BtYhdrdn3MzAtCXPOOZM30xu5D
+ DSWQJotdOL1Hs1J7wQFuA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:ULtZJY+Yt5k=:/VykepbVbl2LHQs2efSeFf
+ HWpkaiAGMpvDi67hRcxF3aqtST8GNzBAoW4D72B7nXhaheqPcKp5GfMif6wbO4aP2h+pf5Y9d
+ ZHz+cJ/ClYdvt9CYi+APvxQtJAeyV0qmVKPeDUUJHl7Q0SLc4nuTlxkKLppeBwEoc77RqiaXs
+ OzlRas66Xph96TkI9BRZKcNGQs8cGWDUAIoiOnbYA9pIl3dtnjJ+By52UPrrX39tPG8Ch9nEY
+ rIrs0yUzrs4Pamlfw70j0fqMPxm6eAZITyv1+IveXfZuL9LMfXsZiQ5xmUDqwHZUvDoXmggcJ
+ XSoX3ZEgv6VJLDcUwWaZYUVVbUSdFk9r503kW82TUaN/qaxCkZ/+ng5uYkDyAiSAkH2TqrqdX
+ NRE0adDGmRLtlkBrmjHvZD54wTrAZIr9Ve4f1OR/7P7y0smQfZ9iRfYb0O+mtaelIGu/rX5Jj
+ Guaf1Z8aSAhs/Nt19BI6EEGB2AZt0NVAiWrpXVfgBrRx975rrJxDdqQ/g5w6hlmsuTkx0HoGy
+ FZVdP83Dtza5TsAdUv53ibqxE4fVu+c9ayIweeuIbsw+ErheUAvKWTA0eDfmM3sQVijva0zO8
+ OS7MVRZZ/MbuzzjAPtqINA1AXX4LXp1ah7lKrMMqfsNZ/fUV/DE6KobWC6LGYd8nUbzRv2uC2
+ 4+u4OuOCKvTKQJBpSZrO0hyAMdFav4WcqNmPlK2+t6Z6aCM/6Yy7VcYOUzpea5S0b5KwpSqmY
+ h/R5+BSqcV3Tb3/eWi8UYcy7aZZFzSlh3nPcqKPeY8mfll0d8IqldIffBcqayS1IXAMm398bM
+ wJMVUSo
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Feb 7, 2017 at 1:59 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Patrick Steinhardt <patrick.steinhardt@elego.de> writes:
->
->>       struct option options[] = {
->>               OPT__DRY_RUN(&show_only, N_("do not remove, show only")),
->> -             OPT__VERBOSE(&verbose, N_("report pruned objects")),
->> +             OPT__VERBOSE(&verbose, N_("report pruned working trees")),
->>               OPT_EXPIRY_DATE(0, "expire", &expire,
->> -                             N_("expire objects older than <time>")),
->> +                             N_("expire working trees older than <time>")),
->
-> Thanks for sharp eyes.
+Hi Junio,
 
-Yep.
+On Mon, 6 Feb 2017, Junio C Hamano wrote:
 
-This message never made it to git@vger right, because I didn't see it?
-Oh no, gmail classified the original mail as spam again...
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> > [... and he quoted someone ...]
+> >
+> >> +	# create a ceiling directory to prevent Git from finding a repo
+> >> +	mkdir -p not/repo &&
+> >> +	ceiling="$PWD/not" &&
+> >> +	lines=$(cd not/repo &&
+> >> +		GIT_CEILING_DIRECTORIES="$ceiling" git difftool -h |
+> >> +		grep ^usage: | wc -l) &&
+> >> +	test "$lines" -eq 1 &&
+> >
+> > Likewise, this would become
+> >
+> > 	GIT_CEILING_DIRECTORIES="$PWD/not" \
+> > 	test_expect_code 129 git -C not/repo difftool -h >output &&
+> > 	grep ^usage: output
+> 
+> I agree with the intent, but the execution here is "Not quite".
+> test_expect_code being a shell function, it does not take the
+> "one-shot environment assignment for this single invocation," like
+> external commands do.
 
--- 
-Duy
+So now that we know what is wrong, can you please enlighten me about what
+is right?
+
+Thanks,
+Johannes
