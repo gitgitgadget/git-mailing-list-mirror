@@ -2,65 +2,62 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E07EF1FC46
-	for <e@80x24.org>; Tue,  7 Feb 2017 22:49:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0D4461FC46
+	for <e@80x24.org>; Tue,  7 Feb 2017 23:12:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932387AbdBGWta (ORCPT <rfc822;e@80x24.org>);
-        Tue, 7 Feb 2017 17:49:30 -0500
-Received: from havoc.proulx.com ([96.88.95.61]:56196 "EHLO havoc.proulx.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S932122AbdBGWt3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Feb 2017 17:49:29 -0500
-Received: from joseki.proulx.com (localhost [127.0.0.1])
-        by havoc.proulx.com (Postfix) with ESMTP id E873074A
-        for <git@vger.kernel.org>; Tue,  7 Feb 2017 15:49:27 -0700 (MST)
-Received: from hysteria.proulx.com (hysteria.proulx.com [192.168.230.119])
-        by joseki.proulx.com (Postfix) with ESMTP id B3D3A21241
-        for <git@vger.kernel.org>; Tue,  7 Feb 2017 15:49:27 -0700 (MST)
-Received: by hysteria.proulx.com (Postfix, from userid 1000)
-        id A1BF22DC5F; Tue,  7 Feb 2017 15:49:27 -0700 (MST)
-Date:   Tue, 7 Feb 2017 15:49:27 -0700
-From:   Bob Proulx <bob@proulx.com>
-To:     Git Mailing List <git@vger.kernel.org>
-Subject: Re: git-daemon shallow checkout fail
-Message-ID: <20170207154512329677197@bob.proulx.com>
-Mail-Followup-To: Git Mailing List <git@vger.kernel.org>
-References: <20170129002932.GA19359@dismay.proulx.com>
- <20170130172730.x5guphyqf5fsfi7m@sigill.intra.peff.net>
- <CACsJy8DED9WRr_T6g43bxHUGQYVnfaTx15hqSGiiajvi0TxtuA@mail.gmail.com>
- <20170206171225215133282@bob.proulx.com>
- <20170206174000357620972@bob.proulx.com>
- <CACsJy8D_X7u+kttu=ZD734u6nhR=wjMh0m99RBvm0_FOW74pWA@mail.gmail.com>
+        id S1755576AbdBGXMT (ORCPT <rfc822;e@80x24.org>);
+        Tue, 7 Feb 2017 18:12:19 -0500
+Received: from mail-qt0-f178.google.com ([209.85.216.178]:35444 "EHLO
+        mail-qt0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753909AbdBGXMR (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Feb 2017 18:12:17 -0500
+Received: by mail-qt0-f178.google.com with SMTP id x49so149736493qtc.2
+        for <git@vger.kernel.org>; Tue, 07 Feb 2017 15:12:17 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ucar-edu.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=r6DEfxj+EywW1HNp0FqFboiNo2KjsVlR+/XqxmhVbig=;
+        b=FQ8pducFx7jm23P+o5IA7nfH6I+ecG/EaztJzr64R0djCUkUSr+xi6yknt/SlgHqh+
+         g9qNfJYmRRdXWRpioBx/WUlO4ypHp6aZuEEkxmgoggFZjQGrzCJL4m6lAGmAq/uEXEvb
+         0+jRV3jmj6vjmRD8md8gHuSmYdxABPUwuB1MlT8lyio43Zfc7sVkV8H//Dd8Or1x5saC
+         yeQStq5jhDFN/NpU0EEQVEXjDvNxbtRXGYI4e2gG8xqlhoRckcUTf5e+v8K/eY/oYR7U
+         CD9XT1rzGZqOEVgdBrrgP1eiOjEt9mE7dyxGIaHVZFACMg37vVdSNpgtXloTXzhBGI6v
+         AaDQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=r6DEfxj+EywW1HNp0FqFboiNo2KjsVlR+/XqxmhVbig=;
+        b=UgyIBQmBZqxmHKU+WsO88IEwjoP3Qw2VMjkno4XTrilB8TnmN4H1k/snfAQ3Kqdk4M
+         v840dneU/7TFmTQ7UL14WmZCUTkP2y+jcFknpPmvAqzbY3PYjeFJ/ZgZjlH9c3MtEwy2
+         1sPHVYm/EP/HfHw23mC85cSFLu07GcfAyxTateE1eOfAWaI5fRzDWFWKXd9msP/m/dlr
+         XchOCAyf4xrHpwnmO60Wr9MG1SwcAeWylZy3byNHrMBXnpd2O7FqxbilXp8RINpZ2AGv
+         kC8RjGpNZEHo6tSBgl4chgR+Bh9l5YYKcv7nHwUtzY+cFeGK5Hi0rU6fKXnhget1iRzs
+         3S+Q==
+X-Gm-Message-State: AMke39lkrXi4gd/So3iPLJZmOpmOMZtl01y4DxUghEFfmP8Y8ViGlZMaVO4ud9BPnwq0/zoplpqhfWH/uHMW45PG
+X-Received: by 10.200.55.112 with SMTP id p45mr18631876qtb.278.1486509136516;
+ Tue, 07 Feb 2017 15:12:16 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CACsJy8D_X7u+kttu=ZD734u6nhR=wjMh0m99RBvm0_FOW74pWA@mail.gmail.com>
-User-Agent: NeoMutt/20170113 (1.7.2)
+Received: by 10.12.156.130 with HTTP; Tue, 7 Feb 2017 15:11:35 -0800 (PST)
+From:   Davide Del Vento <ddvento@ucar.edu>
+Date:   Tue, 7 Feb 2017 16:11:35 -0700
+Message-ID: <CAMh-zaPdSGaDvQSiWx0p7zUmfDAFDWUyHkY4BTs=j85Ue65XnA@mail.gmail.com>
+Subject: The --name-only option for git log does not play nicely with --graph
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Duy Nguyen wrote:
-> I wonder if we should make this "git/1.9.1" information more visible. We could
-> 
-> 1) Always print it when cloning
-> 2) Print it when cloning with -v (printing all capabilities with -v
-> might not be a bad idea)
-> 3) Include it in error messages when clone/fetch fails
+`git log --graph  --name-only` works fine, but the name is not
+properly indented as it is for `git log --graph  --name-status`
 
-I don't think I would want to see it all of the time.  It isn't needed
-all of the time.  But having it printable upon demand is nice.  Being
-able to use GIT_TRACE_PACKET=1 worked very well.  The only thing I
-needed was to know it was available so that I could use it.  I am not
-sure where that is documented.
+I tested this in git v1.9.1 the only one I have access at the moment
 
-Therefore if and only if a change was made I would vote for printing
-only under --verbose or other explicit other information option.  I
-would not add it to the normal operation output.
-
-Bob
+Regards,
+Davide Del Vento,
+NCAR Computational & Information Services Laboratory
