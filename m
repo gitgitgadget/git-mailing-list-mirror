@@ -2,76 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BA34F1FC46
-	for <e@80x24.org>; Tue,  7 Feb 2017 19:34:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5E1C11FC46
+	for <e@80x24.org>; Tue,  7 Feb 2017 19:37:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754544AbdBGTev (ORCPT <rfc822;e@80x24.org>);
-        Tue, 7 Feb 2017 14:34:51 -0500
-Received: from cloud.peff.net ([104.130.231.41]:50680 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1754583AbdBGTeo (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Feb 2017 14:34:44 -0500
-Received: (qmail 21869 invoked by uid 109); 7 Feb 2017 19:28:03 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 07 Feb 2017 19:28:03 +0000
-Received: (qmail 27490 invoked by uid 111); 7 Feb 2017 19:28:08 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 07 Feb 2017 14:28:08 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 07 Feb 2017 14:28:01 -0500
-Date:   Tue, 7 Feb 2017 14:28:01 -0500
-From:   Jeff King <peff@peff.net>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Cornelius Weig <cornelius.weig@tngtech.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: [RFC] mailmap.blob overrides default .mailmap
-Message-ID: <20170207192801.qoncjaqjpn3axpyn@sigill.intra.peff.net>
-References: <77c0182b-8c4f-9727-f56f-d8e2bad8146d@tngtech.com>
- <CAGZ79kZ=ikbYpuK6E=ui1ju=bRavcVcxb3AA_dvb2Jp6cRNmJQ@mail.gmail.com>
+        id S1754142AbdBGThS (ORCPT <rfc822;e@80x24.org>);
+        Tue, 7 Feb 2017 14:37:18 -0500
+Received: from mail-lf0-f51.google.com ([209.85.215.51]:34765 "EHLO
+        mail-lf0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751336AbdBGTfp (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Feb 2017 14:35:45 -0500
+Received: by mail-lf0-f51.google.com with SMTP id v186so69143731lfa.1
+        for <git@vger.kernel.org>; Tue, 07 Feb 2017 11:35:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=gw8Hl3cPWyqyDcyCdyBlAkL0KGoV99c4X4AogB0fogo=;
+        b=nEINYu4qltEaGzrNMKqzGXJA+UZMDxVAOepOxbjPZwuIQDdN+dqRWgKRjpnXXa93J9
+         0eGcgdfmMkeAKRXl8pOFlO3Zu5XLfqDGw9bsa4qKQlyhJfYaVCIkmQL14dbqxRjzaBRN
+         d1wa2O7EXGqJcBbJHUaDmhcEjIFD3L17PBvUPV1uEanwXMZvLZ8p28W/UBWv+S424HiS
+         goLr3lRi94FIqwLI39Cuzqe+FJouLaJkwMQSmix+ZZ6eaIqGLc00f2dAtHYCqHQLDazF
+         OM/wQvbTWxo2wiccebo1SHdNN4J2I936gSU8zyYaLJoUuPrD66Zc0P18eri2gG6onO2d
+         YMLQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=gw8Hl3cPWyqyDcyCdyBlAkL0KGoV99c4X4AogB0fogo=;
+        b=Xi8JQVnWmtSKve51I57LfLOdV8zkntoZgsccMxZErrcjvJRxlHCARBtPphNKXFf6eU
+         jDfz8Nhc2ThoKUaLiDkYJ/Lzygn8XuKEAXlR4s2gmVjHn2ce3mkTyA1RKLMaMvIfMoJq
+         20pYz6iF9lraYlYhurZgMBmtdiblOR6XtcYTIB+c760o+Z6HNP1G1WNJohk8eE8hXGqr
+         Yanr1D2tYQIKvpMqsgAluxoZMxqzmSv7aTR1aKTczKLJOVSI9HiEo8LdURKOxEqYmdhg
+         xNGnS6Fj4NvO52LduInQEJD1jUDQSbHyJJ+KaX+3zOMsIsTLGjmztzRKfjPfE6+1SEky
+         dolg==
+X-Gm-Message-State: AIkVDXJidhsDE5m9W7EJz8ND5E79FlEhKYCRJLIt9bK0zmPEmKnQkXLeTX83wjz2g+NbrFCc8Y7J1T+3UWV2cw==
+X-Received: by 10.25.24.152 with SMTP id 24mr6569788lfy.12.1486496144034; Tue,
+ 07 Feb 2017 11:35:44 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAGZ79kZ=ikbYpuK6E=ui1ju=bRavcVcxb3AA_dvb2Jp6cRNmJQ@mail.gmail.com>
+Received: by 10.25.145.14 with HTTP; Tue, 7 Feb 2017 11:35:23 -0800 (PST)
+In-Reply-To: <fe8595aa-0395-e948-13e9-f952541d106e@tngtech.com>
+References: <CAGP6PO+qD6eRkKbWAxOfiqUQw8o+dOfgwgvt_8OxHQ5ocAopEQ@mail.gmail.com>
+ <fe8595aa-0395-e948-13e9-f952541d106e@tngtech.com>
+From:   Jacob Keller <jacob.keller@gmail.com>
+Date:   Tue, 7 Feb 2017 11:35:23 -0800
+Message-ID: <CA+P7+xpesQVS5qZJZ5wd31eJDLmb5j0Xdq_rwajjoskB07ELfg@mail.gmail.com>
+Subject: Re: ``git clean -xdf'' and ``make clean''
+To:     Cornelius Weig <cornelius.weig@tngtech.com>
+Cc:     Hongyi Zhao <hongyi.zhao@gmail.com>,
+        Git mailing list <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Feb 07, 2017 at 09:27:19AM -0800, Stefan Beller wrote:
+On Tue, Feb 7, 2017 at 7:07 AM, Cornelius Weig
+<cornelius.weig@tngtech.com> wrote:
+> On 02/07/2017 03:17 PM, Hongyi Zhao wrote:
+>> Hi all,
+>>
+>> In order to delete all of the last build stuff, does the following two
+>> methods equivalent or not?
+>>
+>> ``git clean -xdf'' and ``make clean''
+>
+> No, it is not equivalent.
+>
+> * `make clean` removes any build-related files (assuming that the
+> `clean` target is properly written). To see exactly what it would do,
+> run `make clean -n`. Judging from your question, I think this is what
+> you want to do.
+>
+> * `git clean -xdf` would remove any files that git does not track. This
+> also includes build-related files, but also any other files that happen
+> to be in your working directory. For example, any output from `git
+> format-patch` would be removed by this, but not `make clean`.
 
-> > The code shows why (mailmap.c):
-> >         err |= read_mailmap_file(map, ".mailmap", repo_abbrev);
-> >         if (startup_info->have_repository)
-> >                 err |= read_mailmap_blob(map, git_mailmap_blob, repo_abbrev);
-> >         err |= read_mailmap_file(map, git_mailmap_file, repo_abbrev);
-> >
-> >
-> > Apparently this is not an oversight, because there is an explicit
-> > test for this overriding behavior (t4203 'mailmap.blob overrides
-> > .mailmap').
-> 
-> which is blamed to 08610900 (mailmap: support reading mailmap from
-> blobs, 2012-12-12),
-> cc'ing Jeff who may remember what he was doing back then, as the
-> commit message doesn't discuss the implications on ordering.
+Make clean can run arbitrary code, and really depends on the
+implementation. git clean -xdf will result in all non-tracked files
+being removed, which should restore you to a pristine pre-build state.
+However, this can have unfortunate side effect of destroying files
+which you might not expect.
 
-I think it was mostly that I had to define _some_ order. This made sense
-to me as similar to things like attributes or excludes, where we prefer
-clone-specific data over in-history data (so .git/info/attributes takes
-precedence over .gitattributes).
+Properly written, a make clean shouldn't remove anything except what
+could be regenerated by make. But that's just a strong convention.
 
-So any mailmap.* would take precedence over the in-tree .mailmap file.
-And then between mailmap.file and mailmap.blob, the "blob" form is
-more "in-tree" than the "file" form (especially because we turn it on by
-default in bare repos, so it really is identical to the in-tree form
-there).
-
-I think the easiest way to think of it is the same as we do config. We
-read the files in a particular order, least-important to most-important,
-and apply "last one wins" (so more-important entries overwrite
-less-important ones).
-
--Peff
+Regards,
+Jake
