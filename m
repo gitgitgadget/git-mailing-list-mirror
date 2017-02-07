@@ -2,96 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E2EC41FAFC
-	for <e@80x24.org>; Tue,  7 Feb 2017 01:22:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6E1031FAFC
+	for <e@80x24.org>; Tue,  7 Feb 2017 03:11:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751913AbdBGBWL (ORCPT <rfc822;e@80x24.org>);
-        Mon, 6 Feb 2017 20:22:11 -0500
-Received: from ns1.bonedaddy.net ([70.91.141.202]:39464 "EHLO
-        ns1.bonedaddy.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751414AbdBGBWL (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Feb 2017 20:22:11 -0500
-Received: from ns1.bonedaddy.net (localhost [127.0.0.1])
-        by ns1.bonedaddy.net (8.14.9/8.14.4) with ESMTP id v171M83t028758;
-        Mon, 6 Feb 2017 20:22:08 -0500
-Received: (from pabs3@localhost)
-        by ns1.bonedaddy.net (8.14.9/8.14.9/Submit) id v171M8Yp028754;
-        Mon, 6 Feb 2017 20:22:08 -0500
-X-Authentication-Warning: ns1.bonedaddy.net: pabs3 set sender to pabs3@bonedaddy.net using -f
-Message-ID: <1486430520.16949.47.camel@bonedaddy.net>
-Subject: Re: idea: light-weight pull requests
-From:   Paul Wise <pabs3@bonedaddy.net>
-To:     Santiago Torres <santiago@nyu.edu>
+        id S1752689AbdBGDL3 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 6 Feb 2017 22:11:29 -0500
+Received: from dcvr.yhbt.net ([64.71.152.64]:47726 "EHLO dcvr.yhbt.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752650AbdBGDL2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 Feb 2017 22:11:28 -0500
+Received: from localhost (dcvr.yhbt.net [127.0.0.1])
+        by dcvr.yhbt.net (Postfix) with ESMTP id 970AA1FAFC;
+        Tue,  7 Feb 2017 03:11:27 +0000 (UTC)
+Date:   Tue, 7 Feb 2017 03:11:27 +0000
+From:   Eric Wong <e@80x24.org>
+To:     Paul Wise <pabs3@bonedaddy.net>
 Cc:     git@vger.kernel.org
-Date:   Tue, 07 Feb 2017 09:22:00 +0800
-In-Reply-To: <20170207005751.cgrpwuvtljfgnntb@LykOS.localdomain>
+Subject: Re: idea: light-weight pull requests
+Message-ID: <20170207031127.GA29468@dcvr>
 References: <1486427537.16949.42.camel@bonedaddy.net>
-         <20170207005751.cgrpwuvtljfgnntb@LykOS.localdomain>
-Content-Type: multipart/signed; micalg="pgp-sha256";
-        protocol="application/pgp-signature"; boundary="=-71Zq7HSZEgNihvjsqcLN"
-X-Mailer: Evolution 3.22.4-1 
-Mime-Version: 1.0
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1486427537.16949.42.camel@bonedaddy.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Paul Wise <pabs3@bonedaddy.net> wrote:
+> Hi all,
+> 
+> I had an idea that might be interesting to git folks:
+> 
+> light-weight pull requests:
+> 
+> Anonymous and ssh/http-identified users should be able to push just
+> using git, within the refs/pull/ namespace, to any non-existent branch
+> name or to a branch they created when previously identified, without
+> forking off a new repository.
 
---=-71Zq7HSZEgNihvjsqcLN
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+I considered something similar to this a few years ago,
+but decided it wasn't worth the effort (see below).
 
-On Mon, 2017-02-06 at 19:57 -0500, Santiago Torres wrote:
+> Advantages:
+> 
+> Removes the need to look up who to send the pull request notification
+> to since configuring that is up to the project itself.
+> 
+> Removes the annoying scenario of having lots of remotes that have been
+> removed after the corresponding pull request was closed.
+> 
+> Moves popular git hosting services from primarily a model of forests of
+> forks to one of contributions to well maintained ongoing projects.
+> 
+> Allows users to use their preferred git clients to issue pull requests
+> instead of using web interfaces of popular git hosting services.
+> 
+> Creates a new standard for contributing to repositories on all git
+> repository hosting services.
+> 
+> Contributions from people without an account on those services are
+> possible.
+> 
+> Contributions from people without any git repository hosting of their
+> own are possible.
 
-> IMHO, the notion of a PR/MR is more specific to Git repository
-> management tools (e.g., GitHub, GitLab). They all have specific
-> concepts/ways to manage the way how their hosted repositories behave ---
-> and I believe this flexibility is one of the beauties in Git . I could
-> see how this could be implemented by tools like this rather easily
-> (e.g., using symlinks + inotify or something less hacky).
+All of these are great goals which I'd love to see realized, but...
 
-Right, but I would like to see this everywhere (including kernel.org),
-so support in=C2=A0git-daemon and the http/ssh equivalents is needed too.
-git already has support for anonymous push but this idea is more complex.
+> Contributions from people who don't use or dislike MUAs are possible.
 
-> I'm wondering if standardizing this would be more interesting to those
-> communities?
+How would discussion and review happen?  People seem to use
+either mail, or centralized messaging (and the latter often
+involves non-Free systems like GitHub or Slack).
 
-I've pitched this to github.com/contact but couldn't find any feature
-request address for GitLab.
+> Disadvantages:
+> 
+> Pull request spam, could be mitigated with configuration options.
 
-> I would like to see what becomes of this.
+This is a big one.  Maybe CRM114 or another generic/trainable
+option can be made usable; but I think there'll always be cases
+where hardcoded rules need to be written (for SpamAssassin,
+at least) and real-time blacklists need to be checked.
 
-Likewise :)
+At some point, you might end up having to recreate everything we
+have in place to combat email spam.  Or, use blockchain or
+something similarly expensive for reputation, which isn't good
+for poor folks with slow computers.
 
---=20
-bye,
-pabs
-
-http://bonedaddy.net/pabs3/
---=-71Zq7HSZEgNihvjsqcLN
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCAAdFiEEYQsotVz8/kXqG1Y7MRa6Xp/6aaMFAliZITgACgkQMRa6Xp/6
-aaNvyQ//Rel3JDV4HZ/X8RuYmYchnt5gdclb+zeHasNoUrR882nHUtLdf76Ta6B/
-2W997n9YhC905Px+A20eSk1+LS/6Nwq/a5FyxyznhprwD5PsP3OOafYD+C7ouguv
-JtFHhDiKtgV2WXIdZlNvrASMW+X2LE/Me8PnZZA/pKThkfJh/xfRRJjtuLSHZ+VN
-LDdOmfBD0x7B6F40Fmy7HUFv2fE+GyFDJQ54CKSX7qneA5XubuyJ8Kbhs73fhEjh
-q+NeuDWGbe+c/JYHfWtx7Tpt0Xpr8CwgqdQp78mfK+8a5FrvHCtPvPFKj+OABR4D
-1ioqP9xfcFdCSO8gyqfojhaYwumBjhaCQFz+/1QJBpFCSWmoWdP3Q1nCKnZD2HWH
-XzirxzQAxy337toqpPN3mV+kzN9xKA+R6C++gqeXLOMcEisAZBpSkxcfugeGbkQP
-5Pzv9cLc5xkDN5ZO4RKYW68KpwQjBlCvnqE4SL0XL1VSEYaWQoO1K2YHVyyXpKCn
-5o1H2QUsD7S5YjsNLKM9FAJvDO/fFKA4g1OwNYLQXCHT2ClmSf5xfyr+vyjVdEKH
-XK0eKWLKlrd8omp3vSgeaoKBC2MvYUS5paHiHtb8umu15DmJXw1MRwvkl4zNtNwB
-orAlWSDNXtdRMbH8WbssrxUy8H+lFbHOqdkcvhAd391jsfubKio=
-=StW5
------END PGP SIGNATURE-----
-
---=-71Zq7HSZEgNihvjsqcLN--
+Anyways, I ultimately decided it would be better to continue
+supporting and improving email (which is at least entrenched in
+a few communities, like this one), rather than trying to get
+people to adopt something new.
