@@ -2,123 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CF0441FAFC
-	for <e@80x24.org>; Tue,  7 Feb 2017 00:27:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5C9C51FAFC
+	for <e@80x24.org>; Tue,  7 Feb 2017 00:45:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751588AbdBGA1t (ORCPT <rfc822;e@80x24.org>);
-        Mon, 6 Feb 2017 19:27:49 -0500
-Received: from havoc.proulx.com ([96.88.95.61]:42955 "EHLO havoc.proulx.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751164AbdBGA1s (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Feb 2017 19:27:48 -0500
-Received: from joseki.proulx.com (localhost [127.0.0.1])
-        by havoc.proulx.com (Postfix) with ESMTP id 7326B72F
-        for <git@vger.kernel.org>; Mon,  6 Feb 2017 17:27:47 -0700 (MST)
-Received: from hysteria.proulx.com (hysteria.proulx.com [192.168.230.119])
-        by joseki.proulx.com (Postfix) with ESMTP id 3E55D21243
-        for <git@vger.kernel.org>; Mon,  6 Feb 2017 17:27:47 -0700 (MST)
-Received: by hysteria.proulx.com (Postfix, from userid 1000)
-        id 3786D2DC5F; Mon,  6 Feb 2017 17:27:47 -0700 (MST)
-Date:   Mon, 6 Feb 2017 17:27:47 -0700
-From:   Bob Proulx <bob@proulx.com>
-To:     Git Mailing List <git@vger.kernel.org>
-Subject: Re: git-daemon shallow checkout fail
-Message-ID: <20170206171225215133282@bob.proulx.com>
-Mail-Followup-To: Git Mailing List <git@vger.kernel.org>
-References: <20170129002932.GA19359@dismay.proulx.com>
- <20170130172730.x5guphyqf5fsfi7m@sigill.intra.peff.net>
- <CACsJy8DED9WRr_T6g43bxHUGQYVnfaTx15hqSGiiajvi0TxtuA@mail.gmail.com>
+        id S1751805AbdBGApc (ORCPT <rfc822;e@80x24.org>);
+        Mon, 6 Feb 2017 19:45:32 -0500
+Received: from mail-qk0-f173.google.com ([209.85.220.173]:36807 "EHLO
+        mail-qk0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751395AbdBGApb (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 Feb 2017 19:45:31 -0500
+Received: by mail-qk0-f173.google.com with SMTP id 11so73298457qkl.3
+        for <git@vger.kernel.org>; Mon, 06 Feb 2017 16:45:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to;
+        bh=rJ3FFHvS/Xhs2fIGWIJUxhxBC8iX3KhpXHXuKBN+ow4=;
+        b=M2dugvUpcgRVsGhoAF/G11UlGx/cQHXXoO9+BowKAVpiCOzhqNZJZl+iJZxhV1v7qQ
+         j81KIn0YmVh7/y7/zYVrwpA91RNd+XiDk8x0dlMN8AKQFATc3Ls/dXF++4HidnAYnrkf
+         F+DdtnAUOt4iRjtlkY+VyXAvzmyRI5ciF82KAG2axvHZ8vxjHL1HE+/PKjBTfZcc05j1
+         FxJ8vYVYSPK+8UeVfJX34rmtYtBxrnJm2dHX/s5e1W+ztyK0uWzhdLZoT1lZvtIxS7bR
+         zkVlhku7BMk6uKx/HKW4mOMbdqnPWKPjK+MUzgw1llyRdM2JLlDjSn8Ak4yspgKt6aDl
+         lClg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to;
+        bh=rJ3FFHvS/Xhs2fIGWIJUxhxBC8iX3KhpXHXuKBN+ow4=;
+        b=sFFOnnjAVNpmpdLxC2VwADQngE5Zc2waaUEM/M0ee5UX5n/LmC7Fm7sVnsefjdQ82n
+         ic/Vz2TlBxUxiO94bY32VYtM49gt6nCz2qf4CgMrvMR/P7CayGSs68yMtbXS57Bxn47l
+         TU059Jl8DTsM5ul+MvxFOHjQ/7KM+w6wcCRxcWb/n5eTVmnbHUHhtWU3/IwbpKePruE2
+         HsexBKpYHnNafB9YdNEuNQp/rwCjOsKf1xK6aypKndtdRlEEt6DDdqHn+699lu5P1lY7
+         ORCpGra0qMdB3EmGn2FylWdORg/ErN8ZXWz3Qwq080t5IjupBW9LV5J0AgXr7NKuA6gL
+         kFXw==
+X-Gm-Message-State: AMke39ntX0hSL5Wclz/eoOxOuURaAkwjl9AzP0QiOafczqIeAc74WPLnHcRYrSESLe9H1umlG244KnYQoilKMA==
+X-Received: by 10.55.47.4 with SMTP id v4mr11876659qkh.77.1486428330577; Mon,
+ 06 Feb 2017 16:45:30 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CACsJy8DED9WRr_T6g43bxHUGQYVnfaTx15hqSGiiajvi0TxtuA@mail.gmail.com>
-User-Agent: NeoMutt/20170113 (1.7.2)
+Received: by 10.12.162.6 with HTTP; Mon, 6 Feb 2017 16:45:10 -0800 (PST)
+In-Reply-To: <CANOj2JG5VuDtS30PfOrZ=4q8pTv_frY7=p+0g=UW3yV6ev+1KQ@mail.gmail.com>
+References: <CANOj2JG5VuDtS30PfOrZ=4q8pTv_frY7=p+0g=UW3yV6ev+1KQ@mail.gmail.com>
+From:   Phil Hord <phil.hord@gmail.com>
+Date:   Mon, 6 Feb 2017 16:45:10 -0800
+Message-ID: <CABURp0qbKMfngfsC5pQeO+qyRPxa21vi090hMWDtLd+BBH_3Jg@mail.gmail.com>
+Subject: Re: Request re git status
+To:     Ron Pero <rpero@magnadev.com>, Git <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Duy Nguyen wrote:
-> Jeff King wrote:
-> > It depends on the git version on the server. The interesting code is in
-> > upload-pack.c, which is spawned by git-daemon to serve a fetch or clone
-> > request.
-> >
-> > See commit b790e0f67 (upload-pack: send shallow info over stdin to
-> > pack-objects, 2014-03-11), which lays out the history. Since that commit
-> > (in git v2.0.0), there should be no tmpfile needed.
-> 
-> It must be it. There's nowhere else that upload-pack can create
-> shallow_XXXXXX. (receive-pack and fetch-pack can).
+On Mon, Feb 6, 2017 at 3:36 PM Ron Pero <rpero@magnadev.com> wrote:
+> I almost got bit by git: I knew there were changes on the remote
+> server, but git status said I was uptodate with the remote.
+>
 
-I am sure the file creation is there.  Because it isn't being done
-anywhere.  But the problem is before that time period.  By then the
-paths are already set.
+Do you mean you almost pushed some changed history with "--force"
+which would have lost others' changes?  Use of this option is
+discouraged on shared branches for this very reason.  But if you do
+use it, the remote will tell you the hash of the old branch so you can
+undo the damage.
 
-> >Bob Proulx wrote:
-> >>   git --version  # from today's git clone build
-> >>   git version 2.11.0.485.g4e59582
-> >
-> > This shouldn't be happening with git v2.11. Are you sure that the "git
-> > daemon" invocation is running that same version? I notice you set up a
-> > restricted PATH. Is it possible that /usr/local/bin or /usr/bin has an
-> > older version of git?
+But if you did not use --force, then you were not in danger of being
+bit.  Git would have prevented the push in that case.
 
-I have been starting it with PATH set to my directory.  But given this
-question I start it with a full path.
 
-  PATH=~/src/git-stuff/git:$PATH ~/src/git-stuff/git/git-daemon --export-all --base-path=/srv/git --verbose
+> Why ... not design it to [optionally] DO a fetch and THEN declare
+> whether it is up to date?
 
-But then I worry about the package installed binary still getting
-invoked with the fork somehow.  Therefore I disable it.  There should
-be no possibility of it invoking the packaged daemon.  I moved it out
-of the way.
+It's because `git status` does not talk to the remote server, by
+design.  The only Git commands that do talk to the remote are push,
+pull and fetch.  All the rest work off-line and they do so
+consistently.
 
-  mv /usr/lib/git-core/git-daemon /usr/lib/git-core/git-daemon.disabled
+Imagine `git status` did what you requested; that is, it first did a
+fetch and then reported the status.  Suppose someone pushed a commit
+to the remote immediately after your fetch completed.  Now git will
+still report "up to date" but it will be wrong as soon as the remote
+finishes adding the new push.  Yet the "up to date" message will
+remain on your console, lying to you.  If you leave and come back in
+two days, the message will remain there even if it is no longer
+correct.
 
-I can't trivially remove the packaged version because other things
-depend upon it.  I could get more agressive about disabling it in a
-non-destructive and reversible way though.
+So you should accept that `git status` tells you the status with
+respect to your most recent fetch, and that you are responsible for
+the timing of the most recent fetch.  To have git try to do otherwise
+would be misleading.
 
-> One easy way to verify is clone or fetch again with GIT_TRACE_PACKET=1
-> since we send the server's version as a capability since 1.8.0
+> Or change the message to tell what it really
+> did, e.g. "Your branch was up-to-date with 'origin/master' when last
+> checked at {timestamp}"? Or even just say, "Do a fetch to find out
+> whether your branch is up to date"?
 
-And here is the interesting part.  If I read this right the client is
-reporting 1.9.1 from the server!  But how?  
-
-  $ GIT_TRACE_PACKET=1 git clone --depth 1 git://git0.savannah.gnu.org/test-project.git
-  Cloning into 'test-project'...
-  17:20:40.482970 pkt-line.c:46           packet:        clone> git-upload-pack /test-project.git\0host=git0.savannah.gnu.org\0
-  17:20:40.590177 pkt-line.c:46           packet:        clone< 34e7202270c381f4e5734180dc19426ce69f2e1e HEAD\0multi_ack thin-pack side-band side-band-64k ofs-delta shallow no-progress include-tag multi_ack_detailed symref=HEAD:refs/heads/master agent=git/1.9.1
-  17:20:40.662623 pkt-line.c:46           packet:        clone< 34e7202270c381f4e5734180dc19426ce69f2e1e refs/heads/master
-  17:20:40.662653 pkt-line.c:46           packet:        clone< 0000
-  17:20:40.663682 pkt-line.c:46           packet:        clone> want 34e7202270c381f4e5734180dc19426ce69f2e1e multi_ack_detailed side-band-64k thin-pack include-tag ofs-delta agent=git/2.1.4
-  17:20:40.663701 pkt-line.c:46           packet:        clone> want 34e7202270c381f4e5734180dc19426ce69f2e1e
-  17:20:40.663713 pkt-line.c:46           packet:        clone> deepen 1
-  17:20:40.663724 pkt-line.c:46           packet:        clone> 0000
-  17:20:40.739502 pkt-line.c:46           packet:        clone< shallow 34e7202270c381f4e5734180dc19426ce69f2e1e
-  17:20:40.854338 pkt-line.c:46           packet:        clone< 0000
-  17:20:40.854360 pkt-line.c:46           packet:        clone> done
-  17:20:40.929349 pkt-line.c:46           packet:        clone< NAK
-  fatal: The remote end hung up unexpectedly
-  fatal: early EOF
-  fatal: index-pack failed
-
-I am assuming that the "agent=git/1.9.1" is the evidence that it isn't
-running the code that I am trying to make it run?  Of course the
-packaged installed git version is 1.9.1 (from Trisquel 7, an Ubuntu
-14.04 fork) so that matches.  My client is "agent=git/2.1.4" (from
-Debian Jessie) so that matches my client end.
-
-Therefore it looks like it is invoking some other command by a hard
-coded path and avoiding PATH to my development bits.  It must be
-invoking some other binary.  I will get more agressive about disabling
-the packaged version and hopefully find out which one.
-
-Thank you very much for the good hints here.  They are very helpful.
-
-Bob
+These are reasonable suggestions, but i don't think the extra wording
+adds anything for most users.  Adding a timestamp seems generally
+useful, but it could get us into other trouble since we have to depend
+on outside sources for timestamps.  :-\
