@@ -2,87 +2,83 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 14F8F1FAF4
-	for <e@80x24.org>; Tue,  7 Feb 2017 11:21:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 52D271FAF4
+	for <e@80x24.org>; Tue,  7 Feb 2017 11:27:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753921AbdBGLV4 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 7 Feb 2017 06:21:56 -0500
-Received: from mout.gmx.net ([212.227.15.15]:55297 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753843AbdBGLVz (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Feb 2017 06:21:55 -0500
-Received: from virtualbox ([37.201.192.48]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MQ2zr-1cWxFH47TH-005HBx; Tue, 07
- Feb 2017 12:21:49 +0100
-Date:   Tue, 7 Feb 2017 12:21:47 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     David Aguilar <davvid@gmail.com>, Git ML <git@vger.kernel.org>,
-        Denton Liu <liu.denton@gmail.com>
-Subject: Re: [PATCH] difftool: fix bug when printing usage
-In-Reply-To: <xmqqinon2nnt.fsf@gitster.mtv.corp.google.com>
-Message-ID: <alpine.DEB.2.20.1702071220290.3496@virtualbox>
-References: <20170205201751.z4rfmy5xxaqg472l@gmail.com> <20170205212338.17667-1-davvid@gmail.com> <alpine.DEB.2.20.1702061716120.3496@virtualbox> <xmqqinon2nnt.fsf@gitster.mtv.corp.google.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+        id S1753486AbdBGL1j (ORCPT <rfc822;e@80x24.org>);
+        Tue, 7 Feb 2017 06:27:39 -0500
+Received: from mail-wm0-f50.google.com ([74.125.82.50]:37575 "EHLO
+        mail-wm0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753284AbdBGL1i (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Feb 2017 06:27:38 -0500
+Received: by mail-wm0-f50.google.com with SMTP id v77so150192610wmv.0
+        for <git@vger.kernel.org>; Tue, 07 Feb 2017 03:27:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=peakgames.net; s=google;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=jn7DHxocsfK9XKurU8UO43i4AkpaiRm96JiSqHEREko=;
+        b=rIk6C6tkdF6iFVd7O/pJogJhPiqfSFlNpMCkGzwCqxrAEwOWyysimLpTa0lahzumBj
+         IU6GUUwi39+X6fmI+s++bU9Cs/kGknyCu3cGJUDC760gZpNmfpH0JZZfhJH0Jr/7/G34
+         mwDag79B1NOdApMv8gJGead+3oELz4KdF7Fpc=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=jn7DHxocsfK9XKurU8UO43i4AkpaiRm96JiSqHEREko=;
+        b=cCgVKvOyRYUJewp2WhmjpTwmdPzBAi2kiNxlRfmECxDYGDvlkCHYku/nTR9BkYTNZ8
+         XhFvpWwr/KHvnOqqMy09YHCXk8M3YwKCSFD2xUlbQscvNnz85nUeyCmZ+Lta7qrU1hRW
+         khDYxED8xLp0urn8yE1hkfzFNZsBYcHZtFK8xsU9bFcTvBS/qF1VxLhwMi2u9VY/yX/8
+         QX01aVSu9lUnXxqGqn4q2LEURB6MFVy5PEw5QW4S71pZ86yIbq3f7O9uXvdlCPzvppU2
+         wBRA//I22cdJB3hskKJK0DmHzwU5h9pfHAkVJ05iQAFDOifAOBxKu3jApczOj3BJYThR
+         p77w==
+X-Gm-Message-State: AIkVDXL9jH1gMvJWBcjv0p7CZM3k6FvevQtW2gZDfjhELeyOQiKkBIQkUc0kyU7hOeGMHqRnZYJIAKy+B9Oz/2ma
+X-Received: by 10.223.164.207 with SMTP id h15mr13327578wrb.142.1486466856606;
+ Tue, 07 Feb 2017 03:27:36 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:TCZYBBC5rwWoob0wQaTYVha4xyiG4iTb0ggCYAKPBA7B2aikw8G
- ZL/Chj5xeC7QEuKfIaWyisQ2IjT1fVBpAyWPluZojsUcycQVttHQpca8al4iNz81AfLTlRy
- NOVOz5kirZFwGpXtbJA+njvyRt/7tX/aIYhkCdlEPRv+6BtYhdrdn3MzAtCXPOOZM30xu5D
- DSWQJotdOL1Hs1J7wQFuA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:ULtZJY+Yt5k=:/VykepbVbl2LHQs2efSeFf
- HWpkaiAGMpvDi67hRcxF3aqtST8GNzBAoW4D72B7nXhaheqPcKp5GfMif6wbO4aP2h+pf5Y9d
- ZHz+cJ/ClYdvt9CYi+APvxQtJAeyV0qmVKPeDUUJHl7Q0SLc4nuTlxkKLppeBwEoc77RqiaXs
- OzlRas66Xph96TkI9BRZKcNGQs8cGWDUAIoiOnbYA9pIl3dtnjJ+By52UPrrX39tPG8Ch9nEY
- rIrs0yUzrs4Pamlfw70j0fqMPxm6eAZITyv1+IveXfZuL9LMfXsZiQ5xmUDqwHZUvDoXmggcJ
- XSoX3ZEgv6VJLDcUwWaZYUVVbUSdFk9r503kW82TUaN/qaxCkZ/+ng5uYkDyAiSAkH2TqrqdX
- NRE0adDGmRLtlkBrmjHvZD54wTrAZIr9Ve4f1OR/7P7y0smQfZ9iRfYb0O+mtaelIGu/rX5Jj
- Guaf1Z8aSAhs/Nt19BI6EEGB2AZt0NVAiWrpXVfgBrRx975rrJxDdqQ/g5w6hlmsuTkx0HoGy
- FZVdP83Dtza5TsAdUv53ibqxE4fVu+c9ayIweeuIbsw+ErheUAvKWTA0eDfmM3sQVijva0zO8
- OS7MVRZZ/MbuzzjAPtqINA1AXX4LXp1ah7lKrMMqfsNZ/fUV/DE6KobWC6LGYd8nUbzRv2uC2
- 4+u4OuOCKvTKQJBpSZrO0hyAMdFav4WcqNmPlK2+t6Z6aCM/6Yy7VcYOUzpea5S0b5KwpSqmY
- h/R5+BSqcV3Tb3/eWi8UYcy7aZZFzSlh3nPcqKPeY8mfll0d8IqldIffBcqayS1IXAMm398bM
- wJMVUSo
+Received: by 10.194.35.196 with HTTP; Tue, 7 Feb 2017 03:27:36 -0800 (PST)
+From:   Serdar Sahin <serdar@peakgames.net>
+Date:   Tue, 7 Feb 2017 14:27:36 +0300
+Message-ID: <CAL7ZE5xYVM6=C+SJLJ2HMFZ2gvuduw8p0UnS0RnBaXibj0mgDw@mail.gmail.com>
+Subject: Non-zero exit code without error
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+Hi,
 
-On Mon, 6 Feb 2017, Junio C Hamano wrote:
+When we execute the following lines, the exit code is 1, but it is
+unclear what is the reason of this exit code. Do you have any idea?
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> > [... and he quoted someone ...]
-> >
-> >> +	# create a ceiling directory to prevent Git from finding a repo
-> >> +	mkdir -p not/repo &&
-> >> +	ceiling="$PWD/not" &&
-> >> +	lines=$(cd not/repo &&
-> >> +		GIT_CEILING_DIRECTORIES="$ceiling" git difftool -h |
-> >> +		grep ^usage: | wc -l) &&
-> >> +	test "$lines" -eq 1 &&
-> >
-> > Likewise, this would become
-> >
-> > 	GIT_CEILING_DIRECTORIES="$PWD/not" \
-> > 	test_expect_code 129 git -C not/repo difftool -h >output &&
-> > 	grep ^usage: output
-> 
-> I agree with the intent, but the execution here is "Not quite".
-> test_expect_code being a shell function, it does not take the
-> "one-shot environment assignment for this single invocation," like
-> external commands do.
+git clone --mirror --depth 50 --no-single-branch
+git@github.hede.com:Casual/hodo-server.git
+Cloning into bare repository 'hodo-server.git'...
+remote: Counting objects: 3371, done.
+remote: Compressing objects: 100% (1219/1219), done.
+remote: Total 3371 (delta 2344), reused 2971 (delta 2098), pack-reused 0
+Receiving objects: 100% (3371/3371), 56.77 MiB | 2.18 MiB/s, done.
+Resolving deltas: 100% (2344/2344), done.
 
-So now that we know what is wrong, can you please enlighten me about what
-is right?
+echo $?
+0
 
-Thanks,
-Johannes
+cd hodo-server.git/
+
+GIT_CURL_VERBOSE=1 GIT_TRACE=1  git fetch --depth 50 origin
+cc086c96cdffe5c1ac78e6139a7a4b79e7c821ee
+14:12:35.215889 git.c:350               trace: built-in: git 'fetch'
+'--depth' '50' 'origin' 'cc086c96cdffe5c1ac78e6139a7a4b79e7c821ee'
+14:12:35.217273 run-command.c:336       trace: run_command: 'ssh'
+'git@github.hede.com' 'git-upload-pack '\''Casual/hodo-server.git'\'''
+14:12:37.301122 run-command.c:336       trace: run_command: 'gc' '--auto'
+14:12:37.301866 exec_cmd.c:189          trace: exec: 'git' 'gc' '--auto'
+14:12:37.304473 git.c:350               trace: built-in: git 'gc' '--auto'
+
+echo $?
+1
