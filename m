@@ -2,128 +2,153 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 00B411FC46
-	for <e@80x24.org>; Tue,  7 Feb 2017 19:18:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8A4D81FC46
+	for <e@80x24.org>; Tue,  7 Feb 2017 19:22:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755390AbdBGTSp (ORCPT <rfc822;e@80x24.org>);
-        Tue, 7 Feb 2017 14:18:45 -0500
-Received: from mail-lf0-f52.google.com ([209.85.215.52]:35187 "EHLO
-        mail-lf0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755096AbdBGTSn (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Feb 2017 14:18:43 -0500
-Received: by mail-lf0-f52.google.com with SMTP id n124so68745894lfd.2
-        for <git@vger.kernel.org>; Tue, 07 Feb 2017 11:18:42 -0800 (PST)
+        id S1755244AbdBGTWQ (ORCPT <rfc822;e@80x24.org>);
+        Tue, 7 Feb 2017 14:22:16 -0500
+Received: from mail-ot0-f182.google.com ([74.125.82.182]:33083 "EHLO
+        mail-ot0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754585AbdBGTWN (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Feb 2017 14:22:13 -0500
+Received: by mail-ot0-f182.google.com with SMTP id 73so94063409otj.0
+        for <git@vger.kernel.org>; Tue, 07 Feb 2017 11:21:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=NQWMZlVQAhlwfFGVX64P7MO0VhiP7/erZTFwkalOvIg=;
-        b=dwn7OALEQPxM7i7PW+IgAXr1bpeY7AFdMQqPyB3s//dlsZ3l5ApGswMpGqT7P0ZDIh
-         wGJMg8xqpb38/+BZrabDORD1kVorpwvpwNw5UoArrqwSThVFYElNvdDjRqFB/0U/2l4r
-         zZYAezy8+G6k+f34u18XJUvWrQSUFOhOun5yTctCYTLfj25DGA9qDdkU3kRiyTroXjXc
-         JN0x5ojF3CoYJo0rNVYu5+KFvS3VveWGFp9Uuq+7Kj5Dvd5dFnnxm859dLmTFHF4A8Fj
-         gLIlRC8uZmzT6XP9D1tKv0ivgHO0XgYyUCQ66GR/qlYRLapnNuLjZ1M9ii8/KQW+3S2W
-         J0Cw==
+        h=mime-version:from:date:message-id:subject:to;
+        bh=KEEcp7nUEtDjjFbYi+2eNCEXFPVRnmROEvyXVENSpkM=;
+        b=G1Xo2xyis6lamMPzaU2qG+7r/755kBn79O5qFAlhHH0pQffLZwEtIsv/WAmIZUW4ef
+         bhGaopNBSokvU2HmUvtuSM0wgZ5RSkzCYykfXd58qN0M9WsRZk6P8ClJ6iac1C2ml3ao
+         JhuC8cidOVgVy9IjEYpFe+tp4+SPE3gxacOVRy41nG8j4FY17K6NmjEBLt91+AJRzMNU
+         nlWg6du55vj4uijJ/4lGeHUyzJh4WuQ8gepXKW0hEgjuSHmsR1zJkQwg4gzgBuCOjjaA
+         AiTgldg3FYETULabKTql5/bcQMojXKg2IP7nxytTQfNdcCQklyrjKrEC0TThpw4bIT2T
+         rg/w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=NQWMZlVQAhlwfFGVX64P7MO0VhiP7/erZTFwkalOvIg=;
-        b=RqJYu89h0eaqsawsNv8eUkTOkrGcMafrgqsMOHBHBMbyk/mrvxD56dcn4u4u8+vIKi
-         tjvQrLBlKrUYC6zUIiberHTo3ZUB3ZbQxHX+BEUzFAYr41XpeK4IYXef8kTgOUYGXcYb
-         JXkqhkfxqhNNHnaX8grLy6SOn/54OnptaLXn1E0JnyOQyBT/EgrWxHaT12V+FkIIv8U1
-         5J1etB06RRlnmLKHEh8RIG4knaOJZlK1LLF9236gV8XrbT1x7VsTSDojqfmS5rJD7jsG
-         MzHf8lXTMdSERbSF76zkmGa/VCWT3vfGl2bQO8MlAjJKCBi4uNsRvLR3eQZmcx9Ytnxf
-         de/g==
-X-Gm-Message-State: AIkVDXLHL1iseTGHm5xfOLxeO9tSDZ/TYPKS08lmHSCtzfERwKB+L9PG2eSBPJFQXo2TMdFA2aNddFRzS0wJkQ==
-X-Received: by 10.25.141.12 with SMTP id p12mr6508922lfd.147.1486495121857;
- Tue, 07 Feb 2017 11:18:41 -0800 (PST)
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=KEEcp7nUEtDjjFbYi+2eNCEXFPVRnmROEvyXVENSpkM=;
+        b=d8SKljbKEMPUSXk9IN3lTurJajM7BZlGnvlewywtzyadCJgbKOee4I4XjlxgOIEXQs
+         oRf9HQgxIJCLUWyNd82uCmvemI/zhbaqEZWKE8kegm27JZA3OJJFfXhaCUXYURlfeybE
+         lqniCSvPebXHpsygma/KiRWq1+sWK3V/Z4Lz25Rqm4gVvyzXd/Lz4LdpsuyFai2+TQsG
+         ueY8CJ4kqDbKmV04FgpSYwSQ5BGwj34IkDtcaab3xDVN4LX52w/mwd0jNhfjO6C5gObc
+         x3xGMAs8E2jzMbJQYOBz1iClDDwtkofiDTOnjiVDHsTvREu5FbE2fx/4aG323p9aHe6l
+         L1ww==
+X-Gm-Message-State: AMke39n2Z+5+J7Q7DKlyzethzOh1jydDcDJfLogsUsdAWvPdUE8kMEQpjTZosraa5f+WiMf8VgBff+2TEWrOQw==
+X-Received: by 10.157.51.19 with SMTP id f19mr9614992otc.18.1486495273638;
+ Tue, 07 Feb 2017 11:21:13 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.25.145.14 with HTTP; Tue, 7 Feb 2017 11:18:21 -0800 (PST)
-In-Reply-To: <CAJZjrdWbqvBRtyyfhgAt1E9ZdTUaz+Zpk7iGasNoeSuFJbsKog@mail.gmail.com>
-References: <CANOj2JG5VuDtS30PfOrZ=4q8pTv_frY7=p+0g=UW3yV6ev+1KQ@mail.gmail.com>
- <CABURp0qbKMfngfsC5pQeO+qyRPxa21vi090hMWDtLd+BBH_3Jg@mail.gmail.com> <CAJZjrdWbqvBRtyyfhgAt1E9ZdTUaz+Zpk7iGasNoeSuFJbsKog@mail.gmail.com>
-From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Tue, 7 Feb 2017 11:18:21 -0800
-Message-ID: <CA+P7+xoZHOtURfbBbHHTpC3DsGxaGOVToqmW5wTg2EniRpL-Cg@mail.gmail.com>
-Subject: Re: Request re git status
-To:     Samuel Lijin <sxlijin@gmail.com>
-Cc:     Phil Hord <phil.hord@gmail.com>, Ron Pero <rpero@magnadev.com>,
-        Git <git@vger.kernel.org>
+Received: by 10.157.13.38 with HTTP; Tue, 7 Feb 2017 11:21:13 -0800 (PST)
+From:   Jack Adrian Zappa <adrianh.bsc@gmail.com>
+Date:   Tue, 7 Feb 2017 14:21:13 -0500
+Message-ID: <CAKepmajNz7TP_Z6p_Wj17tOpiMOpKkvQOBvVthBkEiKabAppjg@mail.gmail.com>
+Subject: Trying to use xfuncname without success.
+To:     git-mailing-list <git@vger.kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Feb 7, 2017 at 6:54 AM, Samuel Lijin <sxlijin@gmail.com> wrote:
-> On Mon, Feb 6, 2017 at 6:45 PM, Phil Hord <phil.hord@gmail.com> wrote:
->> On Mon, Feb 6, 2017 at 3:36 PM Ron Pero <rpero@magnadev.com> wrote:
->>> I almost got bit by git: I knew there were changes on the remote
->>> server, but git status said I was uptodate with the remote.
->>>
->>
->> Do you mean you almost pushed some changed history with "--force"
->> which would have lost others' changes?  Use of this option is
->> discouraged on shared branches for this very reason.  But if you do
->> use it, the remote will tell you the hash of the old branch so you can
->> undo the damage.
->>
->> But if you did not use --force, then you were not in danger of being
->> bit.  Git would have prevented the push in that case.
->>
->>
->>> Why ... not design it to [optionally] DO a fetch and THEN declare
->>> whether it is up to date?
->>
->> It's because `git status` does not talk to the remote server, by
->> design.  The only Git commands that do talk to the remote are push,
->> pull and fetch.  All the rest work off-line and they do so
->> consistently.
->>
->> Imagine `git status` did what you requested; that is, it first did a
->> fetch and then reported the status.  Suppose someone pushed a commit
->> to the remote immediately after your fetch completed.  Now git will
->> still report "up to date" but it will be wrong as soon as the remote
->> finishes adding the new push.  Yet the "up to date" message will
->> remain on your console, lying to you.  If you leave and come back in
->> two days, the message will remain there even if it is no longer
->> correct.
->>
->> So you should accept that `git status` tells you the status with
->> respect to your most recent fetch, and that you are responsible for
->> the timing of the most recent fetch.  To have git try to do otherwise
->> would be misleading.
->
-> This argument doesn't work for me. Race conditions in *any*
-> asynchronous work flow are inevitable; in commits, particularly to a
-> shared branch, I also can't imagine them being common. It's like
-> saying because there's lag between the remote's response and the
-> output on the local, `git fetch` shouldn't bother saying that the
-> local remote has been updated.
->
-> It wouldn't be hard, though, to define an alias that fetches the
-> remote-tracking branch and then reports the status.
->
-> Nevertheless, this is one of those cases where I think Git suffers
-> from a poor UI/UX - it's letting the underlying model define the
-> behavior, rather than using the underlying model to drive the
-> behavior.
->
+I'm trying to specify a hunk header using xfuncname, and it just
+doesn't want to work.
 
-Personally, I think that the fact that Git forces the user to think
-about it in terms of "oh I have to fetch" instead of that happening
-automatically, it helps teach the model to the user. If it happened in
-the background then the user might not be confronted with the
-distributed nature of the tool.
+The full question is on SO here:
 
-An alias to fetch and then show status is very straight forward, and
-you can do so locally if you want.
+http://stackoverflow.com/questions/42078376/why-isnt-my-xfuncname-working-in-my-gitconfig-file
 
-Thanks,
-Jake
+But the basic gist is that no matter what regex I specify, git will
+not recognise the hunk header.  Am I doing something wrong or is this
+a bug?
+
+For those who don't want to jump to the SO site, I've copied the text below:
+
+-----8<--------8<--------8<--------8<--------8<--------8<--------8<--------8<---
+
+I'm trying to setup a hunk header for .natvis files. For some reason,
+it doesn't seem to be working. I'm following their instructions from
+here, which doesn't say much in terms of restrictions of the regex,
+such as, is the matched item considered the hunk header or do I need a
+group? I have tried both with no success. This is what I have:
+
+[diff "natvis"]
+    xfuncname = "^[\\\t ]*<Type[\\\t ]+Name=\"([^\"])\".*$"
+
+I've also added to my .gitattributes file (even though I'm not
+positive that it is necessary):
+
+*.natvis diff=natvis
+
+I've tried \t instead of \\\t as well as replacing the entire regex
+with just <Type.* with no luck. I'm using git version 2.7.0.windows.1
+on Windows 8.1. EDIT: I upgraded to git version 2.11.1.windows.1 on
+Windows 8.1 and even tried git version 2.8.3 on cygwin64 on Windows
+8.1 with the same results.
+
+As a test file, I have the following test.natvis file:
+
+<?xml version="1.0" encoding="utf-8"?>
+<AutoVisualizer
+xmlns="http://schemas.microsoft.com/vstudio/debugger/natvis/2010">
+
+  <Type Name="test">
+    <Expand>
+      <Item Name="var">var</Item>
+
+
+
+
+
+
+
+
+
+
+
+
+
+      <!-- Non-blank line -->
+      <Item Name="added var">added_var</Item>
+
+
+      <Item Name="var2">var2</Item>
+    </Expand>
+  </Type>
+</AutoVisualizer>
+
+with the <Item Name="added var">added_var</Item> being the new line added.
+
+I'm really not sure why this is so difficult.
+
+EDIT:
+
+Here is a sample output of what I am getting:
+
+$ git diff --word-diff
+diff --git a/test.natvis b/test.natvis
+index 73c06bc..bc0f549 100644
+--- a/test.natvis
++++ b/test.natvis
+@@ -18,6 +18,7 @@
+
+
+      <!-- Non-blank line -->
+      {+<Item Name="added var">added_var</Item>+}
+
+
+      <Item Name="var2">var2</Item>
+warning: LF will be replaced by CRLF in test.natvis.
+The file will have its original line endings in your working directory.
+
+Even using xfuncname = "^.*$" I would have expected that <!--
+Non-blank line --> would have shown up as my hunk header, but I get
+nothing. :(
+
+EDIT:
+
+I've tried the solution proposed by torek, but to no avail. It's like
+it doesn't know what to do with the xfuncname entry. :(
