@@ -2,128 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7B6C51FC46
-	for <e@80x24.org>; Tue,  7 Feb 2017 20:56:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0E6481FC46
+	for <e@80x24.org>; Tue,  7 Feb 2017 21:57:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754963AbdBGU4S (ORCPT <rfc822;e@80x24.org>);
-        Tue, 7 Feb 2017 15:56:18 -0500
-Received: from mail-wm0-f45.google.com ([74.125.82.45]:35204 "EHLO
-        mail-wm0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754509AbdBGU4R (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Feb 2017 15:56:17 -0500
-Received: by mail-wm0-f45.google.com with SMTP id v186so28064702wmd.0
-        for <git@vger.kernel.org>; Tue, 07 Feb 2017 12:56:17 -0800 (PST)
+        id S932492AbdBGV5A (ORCPT <rfc822;e@80x24.org>);
+        Tue, 7 Feb 2017 16:57:00 -0500
+Received: from mail-lf0-f67.google.com ([209.85.215.67]:33385 "EHLO
+        mail-lf0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932479AbdBGV46 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Feb 2017 16:56:58 -0500
+Received: by mail-lf0-f67.google.com with SMTP id x1so7774820lff.0
+        for <git@vger.kernel.org>; Tue, 07 Feb 2017 13:56:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:subject:date:message-id:mime-version
-         :content-transfer-encoding:content-language:thread-index;
-        bh=DChNe1Vt2itx018CMoABCj26Su5X5bhxwcy1AiV6rEQ=;
-        b=kOE/+H4dk+UubK7AxdjKtE3kt++DWV3Ho3ttR9JtMdDcXiF/xLr/uNatbEZ1THTQTz
-         lMCKkaNXh2+C0IT/ZZcnb/pMN2aaBWs17gCbLT08IujDEr7u9ZWTM9zdA5xwfYxdqK6A
-         hYE7E5FQ7GYUwloxdTcCps1a8/tGclxKern3uAUuP9sSHcvUgzOwvY+5LkeoUbOgh5c9
-         UkLg+ry3T12SWyxuaPnSpKIfn1ERj2OtjtoDKGu8+yGocUgmtqML0+RXARTWlJ+2diIX
-         l6EtyidvTMciaG3R5LEcrzSmE3V5moP6nzJYfxtIHRRhHUvtswlV47Ikg2FW6KQAZEk0
-         yGZA==
+        h=subject:to:references:cc:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding;
+        bh=AzCJoLqQA39srZrb/kS/FV6PHfD39KBOW5rz2mpU+Vo=;
+        b=h++4oIYsvqiHu+ZQRPI4jZOIBnyQOm8PVl1dMJntMnYw/IAKiwRvJah+q1UeSnT/Q7
+         NcT5V2d4MkaHKXbvFz0JKK4R5zJgT48mDvoUeZQZ4VqEWDO0KDECSzvZzBIMtrj487o0
+         SqxxbXVkVTkZJIHi81GtQq+MXMQmbTdEu4haXUAbm9L24wteyEF6xkzpPFu+rj8pbIfr
+         pTQWPgSY9ynIvl/zLqsJqCN7WuKcBoItoJtSLkCI7haHmzn3l5xB9pHgLlP6p7/s93am
+         Rtpt6nol9ETufP8OImQ4I7ZNAoZ4YjZD+GWe5MWvcQ2wXO3PzUXznSw3K8eZlvOtfkcn
+         Nz1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:subject:date:message-id:mime-version
-         :content-transfer-encoding:content-language:thread-index;
-        bh=DChNe1Vt2itx018CMoABCj26Su5X5bhxwcy1AiV6rEQ=;
-        b=jHtqncuquHuv5w7az8ZTeQnZmpePsgPT/cXPsSbHxtBCwSDMwcFvfZq5EDGz2K5gCI
-         kJzhyXFyuaISmFKMKVfYMz0PnKgO46kJGeXdXlskCZl4d0/hlKdXTh5ywWPuxZ5yqqaO
-         v58JVgGDXg/V5SFVLzk4DEb1nbx13TQWuCbRf4YcJl5deKKihu45XXQufI56VrlA+35j
-         YoNHsIOSkkwDnGazF4eINWp4yWhZXO37jh3bj1OOm+6JGQhPTpRgBoEgurvm5aq+rcTA
-         tk9rsL1VQiXgyBXKjo5VnFp6vDs17s0+jz5evqLEErPWrWiezgGolCIsbnvip9rZOZpq
-         xCbg==
-X-Gm-Message-State: AMke39mnbx/yGFLiWr823ZxmoiGDg5JXtKgh9N324W2eV+4ggEiujFYK3Njm4FZDXH/qPQ==
-X-Received: by 10.28.131.132 with SMTP id f126mr15916639wmd.61.1486500468230;
-        Tue, 07 Feb 2017 12:47:48 -0800 (PST)
-Received: from aceralessio ([151.31.246.241])
-        by smtp.gmail.com with ESMTPSA id 10sm429086wmi.23.2017.02.07.12.47.47
-        for <git@vger.kernel.org>
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 07 Feb 2017 12:47:47 -0800 (PST)
-From:   "Alessio Rocchi" <alexrocchi@gmail.com>
-To:     <git@vger.kernel.org>
-Subject: git push - 401 unauthorized
-Date:   Tue, 7 Feb 2017 21:47:45 +0100
-Message-ID: <017901d28183$6fb72c60$4f258520$@gmail.com>
+        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
+        bh=AzCJoLqQA39srZrb/kS/FV6PHfD39KBOW5rz2mpU+Vo=;
+        b=CIieFdSPO4d/BIcPLxbPtRM7P06twwaiH1PofMhzH2dfjLYBwV0O9kFJKOVP8mvWmM
+         0r4RBzfr5fu4gqt1OggXASr28+2mnCsModPcQLSM72tixvnxOJyMZ/+GUE4WX2ny3PkX
+         ejLKpxOCUo70Xs2cH5G9P4FSWdfFhcmA2j/KkmL+mNokcgL2oXLvm3oBfvAVke/Z3ChR
+         Wid/QlsIKxRJlrA+pP2fR7z7jxmlsiQQThnPafshCYpwlMpzszFiyxgTdEjZ7wI9P7rj
+         kkXs9aBI9LXpzVmuQOC5i6vJl2gjdxXSTbiPxws+GVVSfz2/i3TahwxbpF0JSN60Pl3A
+         adMA==
+X-Gm-Message-State: AIkVDXL7MGvQFGCr++ylnf025NgfQP8DbxHcO5NTLEZdlU7xfnhK4B5QZwChC3/YLwtU2g==
+X-Received: by 10.25.234.216 with SMTP id y85mr5818033lfi.35.1486504612238;
+        Tue, 07 Feb 2017 13:56:52 -0800 (PST)
+Received: from [192.168.1.26] (ddj179.neoplus.adsl.tpnet.pl. [83.23.87.179])
+        by smtp.googlemail.com with ESMTPSA id m27sm1740337ljb.8.2017.02.07.13.56.50
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 07 Feb 2017 13:56:51 -0800 (PST)
+Subject: Re: [RFC] Add support for downloading blobs on demand
+To:     Ben Peart <peartben@gmail.com>,
+        'Christian Couder' <christian.couder@gmail.com>
+References: <20170113155253.1644-1-benpeart@microsoft.com>
+ <20170117184258.sd7h2hkv27w52gzt@sigill.intra.peff.net>
+ <002601d2710b$c3715890$4a5409b0$@gmail.com>
+ <CAP8UFD3R6nzDPApNvK6rcXR2qdAE6G4J3xbvEam3xsobO7viiA@mail.gmail.com>
+ <002701d2816e$f4682fa0$dd388ee0$@gmail.com>
+Cc:     'Jeff King' <peff@peff.net>, 'git' <git@vger.kernel.org>,
+        'Johannes Schindelin' <Johannes.Schindelin@gmx.de>,
+        Ben Peart <benpeart@microsoft.com>
+From:   =?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
+Message-ID: <04cdd7ae-3349-470f-39c6-7f8723fdcae8@gmail.com>
+Date:   Tue, 7 Feb 2017 22:56:34 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.7.0
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-X-Mailer: Microsoft Outlook 16.0
-Content-language: it
-Thread-Index: AdKBg0sGMLqgXY3zQHeVMvsWxK/NPQ==
+In-Reply-To: <002701d2816e$f4682fa0$dd388ee0$@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I try to push my commit on a private repository (which has been working
-since about five years).
-This is the output of git push:
+I'd like to point to two (or rather one and a half) solutions that I got
+aware of when watching streaming of "Git Merge 2017"[0].  There should
+be here people who were there; and hopefully video of those presentations
+and slides / notes would be soon available.
 
-me@superstar:/var/www/scorte$ git push --verbose
-Pushing to http://isisenscorte:mypassword@mymachine/scorte_git
-Getting pack list
-Fetching remote heads...
-  refs/
-  refs/tags/
-  refs/heads/
-updating 'refs/heads/master'
-  from d9fd2e49cb0c32a6d8fddcff2954f04b4104d176
-  to   23d8edfb7fa70bce44c21a7f93064c08a7288e23
-    sending 6 objects
-MOVE 33fcba80fdec82f43f995e5c693255da075358be failed, aborting (52/0)
-MOVE 60e1a097d50fe62319413ed20129580cf175d1ca failed, aborting (52/0)
-MOVE cfea41ef02f9aef5cecfbf7eac5a9e55975113f4 failed, aborting (52/0)
-MOVE 3d87ab6ff7652f2b30e48612b70c8335d4625699 failed, aborting (52/0)
-MOVE 4adb1b39e0446e0bfc3182258ff1cd7077871f7f failed, aborting (52/0)
-Updating remote server info
-fatal: git-http-push failed
+[0]: http://git-merge.com/
 
-Looking at apache logs, I've got this output
+First tool that I'd like to point to is Git Virtual File System, or
+GVFS in short (which unfortunately shares abbreviation with GNOME Virtual
+File System).
 
-192.168.240.127 - myusername [07/Feb/2017:19:57:01 +0100] "PROPFIND
-/scorte_git/objects/23/ HTTP/1.1" 207 6003 "-" "git/1.7.0.4"
-192.168.240.127 - myusername [07/Feb/2017:19:57:01 +0100] "PROPFIND
-/scorte_git/objects/60/ HTTP/1.1" 207 7651 "-" "git/1.7.0.4"
-192.168.240.127 - myusername [07/Feb/2017:19:57:02 +0100] "PROPFIND
-/scorte_git/objects/4a/ HTTP/1.1" 207 3640 "-" "git/1.7.0.4"
-192.168.240.127 - myusername [07/Feb/2017:19:57:02 +0100] "PROPFIND
-/scorte_git/objects/3d/ HTTP/1.1" 207 13742 "-" "git/1.7.0.4"
-192.168.240.127 - myusername [07/Feb/2017:19:57:02 +0100] "PROPFIND
-/scorte_git/objects/cf/ HTTP/1.1" 207 13799 "-" "git/1.7.0.4"
-192.168.240.127 - myusername [07/Feb/2017:19:57:02 +0100] "PROPFIND
-/scorte_git/objects/33/ HTTP/1.1" 207 13783 "-" "git/1.7.0.4"
-192.168.240.127 - - [07/Feb/2017:19:57:02 +0100] "PUT
-/scorte_git/objects/3d/87ab6ff7652f2b30e48612b70c8335d4625699_8d42f74642dae7
-7465d1fbfafbd720f67a1919f4 HTTP/1.1" 401 810 "-" "git/1.7.0.4"
-192.168.240.127 - - [07/Feb/2017:19:57:02 +0100] "PUT
-/scorte_git/objects/cf/ea41ef02f9aef5cecfbf7eac5a9e55975113f4_8d42f74642dae7
-7465d1fbfafbd720f67a1919f4 HTTP/1.1" 401 810 "-" "git/1.7.0.4"
-192.168.240.127 - myusername [07/Feb/2017:19:57:02 +0100] "PUT
-/scorte_git/objects/33/fcba80fdec82f43f995e5c693255da075358be_8d42f74642dae7
-7465d1fbfafbd720f67a1919f4 HTTP/1.1" 201 809 "-" "git/1.7.0.4"
-192.168.240.127 - - [07/Feb/2017:19:57:02 +0100] "PUT
-/scorte_git/objects/4a/db1b39e0446e0bfc3182258ff1cd7077871f7f_8d42f74642dae7
-7465d1fbfafbd720f67a1919f4 HTTP/1.1" 401 810 "-" "git/1.7.0.4"
-192.168.240.127 - - [07/Feb/2017:19:57:02 +0100] "PUT
-/scorte_git/objects/60/e1a097d50fe62319413ed20129580cf175d1ca_8d42f74642dae7
-7465d1fbfafbd720f67a1919f4 HTTP/1.1" 401 810 "-" "git/1.7.0.4"
+The presentation was "Scaling Git at Microsoft" by Saeed Noursalehi, 
+Microsoft.  You can read about this solution in ArsTechnica article[1],
+and on Microsoft blog[2].  The code (or early version of thereof) is
+also available[3] - I wonder why on GitHub and not Codeplex...
 
-It looks like I'm getting 401 errors on every line where username is
-missing.
+[1]: https://arstechnica.com/information-technology/2017/02/microsoft-hosts-the-windows-source-in-a-monstrous-300gb-git-repository/
+[2]: https://blogs.msdn.microsoft.com/visualstudioalm/2017/02/03/announcing-gvfs-git-virtual-file-system/
+[3]: https://github.com/Microsoft/GVFS
 
-Permissions on the unauthorized object folders are 777 everywhere. My git
-version is 1.7.0.4 on both client and server. Do you have any clue of this
-strange behaviour?
 
-Thank you in advance, Alex
+The second presentation that might be of some interest is "Scaling
+Mercurial at Facebook: Insights from the Other Side" by Durham Goode,
+Facebook.  The code is supposedly available as open-source; though
+I don't know how useful their 'blob storage' solution would be of use
+for your problem.
+
+
+HTH
+-- 
+Jakub Narębski
 
