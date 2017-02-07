@@ -2,181 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4A91E1FC46
-	for <e@80x24.org>; Tue,  7 Feb 2017 20:01:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1CEE31FC46
+	for <e@80x24.org>; Tue,  7 Feb 2017 20:03:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932098AbdBGUBj (ORCPT <rfc822;e@80x24.org>);
-        Tue, 7 Feb 2017 15:01:39 -0500
-Received: from mail-pg0-f53.google.com ([74.125.83.53]:34730 "EHLO
-        mail-pg0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754790AbdBGUBg (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Feb 2017 15:01:36 -0500
-Received: by mail-pg0-f53.google.com with SMTP id 14so41395530pgg.1
-        for <git@vger.kernel.org>; Tue, 07 Feb 2017 12:01:36 -0800 (PST)
+        id S1754758AbdBGUDi (ORCPT <rfc822;e@80x24.org>);
+        Tue, 7 Feb 2017 15:03:38 -0500
+Received: from mail-pf0-f196.google.com ([209.85.192.196]:33636 "EHLO
+        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754715AbdBGUDg (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Feb 2017 15:03:36 -0500
+Received: by mail-pf0-f196.google.com with SMTP id e4so9924048pfg.0
+        for <git@vger.kernel.org>; Tue, 07 Feb 2017 12:03:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=lwwNokx7YpYqiyMv2iT7PvHumSUOnL8gF/Ftn1tc4sE=;
-        b=pu1hvdUor/WUIjFhjx9jwcPUGXxXWsyIJJqvYhsiGy72OszHCD88xTmHQu7RD9nHFN
-         4XwB/BeVfq1FwXqL3/Jgy6SlmZ4Af/cBzI+/DCD7+4vj2Jr5UJKuQ0X/Pq0vaTBDASjI
-         nD0rvW2VuaWR+RQU8i6LNXnhJJXTYs/OS8aN5g88qDdpVieI/g5BNrKOLzETkEmyL5Fk
-         uAYP7tnperJNJ+NgE0qLOcyJJ3Bkrnu3VlJKmJSjSqBuLhTHkOBTyNqjC3n+Az17Yld1
-         fowktUdJKWbl9VbQF4MnxBMG9r1254OcDKmXsn+rXZRzb8xbe5LAfLQdJ+hpINjbzxbx
-         qwYQ==
+         :user-agent:mime-version;
+        bh=HGdPqWK4Ucc8p1Aj2ivpNMG7gprVKWBd5Ck0XN1MypA=;
+        b=Q911axczpWXrcEN9Q16MIsqi2iaz3nKBibrlksBRoQcZX/NJsfrB/Uol2K6TkNhii0
+         FdpoigE5b6lC5e39MGGqvan/YGgWjpmidacg3r4a05isA83pzVgxrZJQp84S3X+6kcq5
+         eeGLrkwvVARsKhRsUn+C7x33RGyCj8QNtKtgbEEg229UdiYIX6xNKq5nyYjPonhOVOK0
+         L0+XObKj2kPdNVfSDdATvul0XR0p2604f1YwHRO3qaE6u3oACwp0aBTwZKzHVaerxUkK
+         SPa8JMoD7/CCymC999G0y8zVFjeWC8M0jDIWr7CX07IMYzR5yZA7lsgNfq66Z1bzCUKm
+         34oQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=lwwNokx7YpYqiyMv2iT7PvHumSUOnL8gF/Ftn1tc4sE=;
-        b=ZBVGkEbeax7J6I0X4ayQibNaJ9x7k5jpF59+/I34Uaq6FP9Q2vnIWWz79cZpxGdczb
-         fjJjYMaKU6/sNI37ngLFY13l3gyyTQF+o/+YlFS/fnuP+7aVE70nZrgDW0cofQTIxnxz
-         bQFXs0j4UCRBjjqq1+t9cis1gVrZEfFQ++1rgwuoxn/mMGM0puAcrrTaq6WOz6MhdX4S
-         uxxlVryKV8UAv8TIfhYxpkwRTjSZbXB59IHj9M0dy9xbNj22BPvR2SBu08BjUhsgJqzk
-         6ohP6/EuJN1dQl52k1PSy2Vmz+pTjKOPrqNzGYvPxBpjETPZG4LyEAI0ogdWO5RQ2Iwn
-         jo7Q==
-X-Gm-Message-State: AIkVDXJ2k0h7AhEqY5xD2Pa8H90VWhE5YJoDPzMkTBh1nLlR6jtCvnJfbIhswM24f6DE/A==
-X-Received: by 10.98.33.66 with SMTP id h63mr21817360pfh.142.1486497695630;
-        Tue, 07 Feb 2017 12:01:35 -0800 (PST)
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=HGdPqWK4Ucc8p1Aj2ivpNMG7gprVKWBd5Ck0XN1MypA=;
+        b=mia4hPrcVGkysaa2iKtHY1dLhMhGo3jC7rn9Bp7j9b+ig3qNDBKwEzV8V1WnQcxI3q
+         2W0tvvD+GF25HFaROnUu7BvGNYoHxZ61xZknfYOjtRsjc7eYc9dTudfhAuGanoWrqBCP
+         6jJmdYGKVqhe3RR8kxZ3TgiljUei82ty2TBahSiGA0SCXz/qguufWMeENU6VUh4gXASw
+         zAwVoP3he0DTuoE+pUJmXM/A86XWY1qqzCidmmTEDeP9FMZOidJIwn3+bgRoHwwnzZZV
+         jxUKe00MnT6sv70piDz0X9BkzF5JMKv/vQlWTm/eln63fN+WsMKH5M9XQWxGgbA8g1kJ
+         CAUQ==
+X-Gm-Message-State: AIkVDXIsTElS7zd0iUD2KwQ+FZd02QGpsGZg8BtVfS1ig+GU0/dW+iVabygoLIlZh1I1mQ==
+X-Received: by 10.84.143.165 with SMTP id 34mr28563658plz.2.1486497801305;
+        Tue, 07 Feb 2017 12:03:21 -0800 (PST)
 Received: from localhost ([2620:0:1000:8622:1564:f4f3:f1b4:c9b2])
-        by smtp.gmail.com with ESMTPSA id t15sm13697526pgn.18.2017.02.07.12.01.34
+        by smtp.gmail.com with ESMTPSA id d69sm13660795pfd.11.2017.02.07.12.03.20
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 07 Feb 2017 12:01:34 -0800 (PST)
+        Tue, 07 Feb 2017 12:03:20 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
-Cc:     Karthik Nayak <Karthik.188@gmail.com>,
-        Git mailing list <git@vger.kernel.org>
-Subject: Re: What's cooking in git.git (Feb 2017, #02; Mon, 6)
-References: <xmqqzihzymn3.fsf@gitster.mtv.corp.google.com>
-        <CAM0VKjmhO9NQLz9TDv5M3OhxSBt-JdjaouVT0pTA-a6mGaF4_A@mail.gmail.com>
-Date:   Tue, 07 Feb 2017 12:01:33 -0800
-In-Reply-To: <CAM0VKjmhO9NQLz9TDv5M3OhxSBt-JdjaouVT0pTA-a6mGaF4_A@mail.gmail.com>
-        ("SZEDER =?utf-8?Q?G=C3=A1bor=22's?= message of "Tue, 7 Feb 2017 01:24:09
- +0100")
-Message-ID: <xmqqlgthzs6a.fsf@gitster.mtv.corp.google.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     David Aguilar <davvid@gmail.com>, Git ML <git@vger.kernel.org>,
+        Denton Liu <liu.denton@gmail.com>
+Subject: Re: [PATCH] difftool: fix bug when printing usage
+References: <20170205201751.z4rfmy5xxaqg472l@gmail.com>
+        <20170205212338.17667-1-davvid@gmail.com>
+        <alpine.DEB.2.20.1702061716120.3496@virtualbox>
+        <xmqqinon2nnt.fsf@gitster.mtv.corp.google.com>
+        <alpine.DEB.2.20.1702071220290.3496@virtualbox>
+Date:   Tue, 07 Feb 2017 12:03:19 -0800
+In-Reply-To: <alpine.DEB.2.20.1702071220290.3496@virtualbox> (Johannes
+        Schindelin's message of "Tue, 7 Feb 2017 12:21:47 +0100 (CET)")
+Message-ID: <xmqqh945zs3c.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-SZEDER Gábor <szeder.dev@gmail.com> writes:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> All failing tests fail with the same error:
+>> > Likewise, this would become
+>> >
+>> > 	GIT_CEILING_DIRECTORIES="$PWD/not" \
+>> > 	test_expect_code 129 git -C not/repo difftool -h >output &&
+>> > 	grep ^usage: output
+>> 
+>> I agree with the intent, but the execution here is "Not quite".
+>> test_expect_code being a shell function, it does not take the
+>> "one-shot environment assignment for this single invocation," like
+>> external commands do.
 >
->   fatal: unrecognized %(refname:strip=2) argument: strip=2
->
-> That's because of this topic:
->
->> * kn/ref-filter-branch-list (2017-01-31) 20 commits
+> So now that we know what is wrong, can you please enlighten me about what
+> is right?
 
-Ahh, of course.
-
-Let's make sure the series won't escape to 'master' before the
-"strip" breakage is fixed.  How about queuing this on top of the
-ref-filter topic?  
-
-It seems to unblock your completion-refs-speedup topic and makes the
-test pass ;-)
-
-Thanks.
-
--- >8 --
-Subject: [PATCH] ref-filter: resurrect "strip" as a synonym to "lstrip"
-
-We forgot that "strip" was introduced at 0571979bd6 ("tag: do not
-show ambiguous tag names as "tags/foo"", 2016-01-25) as part of Git
-2.8 (and 2.7.1), yet in the update to ref-filter, we started calling
-it "lstrip" to make it easier to explain the new "rstrip" operation.
-
-We shouldn't have renamed the existing one; "lstrip" should have
-been a new synonym that means the same thing as "strip".  Scripts
-in the wild are surely using the original form already.
-
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- Documentation/git-for-each-ref.txt |  2 ++
- ref-filter.c                       |  3 ++-
- t/t6300-for-each-ref.sh            | 12 ++++++++++++
- 3 files changed, 16 insertions(+), 1 deletion(-)
-
-diff --git a/Documentation/git-for-each-ref.txt b/Documentation/git-for-each-ref.txt
-index 2008600e7e..111e1be6f5 100644
---- a/Documentation/git-for-each-ref.txt
-+++ b/Documentation/git-for-each-ref.txt
-@@ -107,6 +107,8 @@ refname::
- 	enough components, the result becomes an empty string if
- 	stripping with positive <N>, or it becomes the full refname if
- 	stripping with negative <N>.  Neither is an error.
-++
-+`strip` can be used as a synomym to `lstrip`.
- 
- objecttype::
- 	The type of the object (`blob`, `tree`, `commit`, `tag`).
-diff --git a/ref-filter.c b/ref-filter.c
-index 01b5c18ef0..2a94d6da98 100644
---- a/ref-filter.c
-+++ b/ref-filter.c
-@@ -112,7 +112,8 @@ static void refname_atom_parser_internal(struct refname_atom *atom,
- 		atom->option = R_NORMAL;
- 	else if (!strcmp(arg, "short"))
- 		atom->option = R_SHORT;
--	else if (skip_prefix(arg, "lstrip=", &arg)) {
-+	else if (skip_prefix(arg, "lstrip=", &arg) ||
-+		 skip_prefix(arg, "strip=", &arg)) {
- 		atom->option = R_LSTRIP;
- 		if (strtol_i(arg, 10, &atom->lstrip))
- 			die(_("Integer value expected refname:lstrip=%s"), arg);
-diff --git a/t/t6300-for-each-ref.sh b/t/t6300-for-each-ref.sh
-index 25a9973ce9..c87dc1f8bc 100755
---- a/t/t6300-for-each-ref.sh
-+++ b/t/t6300-for-each-ref.sh
-@@ -59,18 +59,26 @@ test_atom head refname:rstrip=1 refs/heads
- test_atom head refname:rstrip=2 refs
- test_atom head refname:rstrip=-1 refs
- test_atom head refname:rstrip=-2 refs/heads
-+test_atom head refname:strip=1 heads/master
-+test_atom head refname:strip=2 master
-+test_atom head refname:strip=-1 master
-+test_atom head refname:strip=-2 heads/master
- test_atom head upstream refs/remotes/origin/master
- test_atom head upstream:short origin/master
- test_atom head upstream:lstrip=2 origin/master
- test_atom head upstream:lstrip=-2 origin/master
- test_atom head upstream:rstrip=2 refs/remotes
- test_atom head upstream:rstrip=-2 refs/remotes
-+test_atom head upstream:strip=2 origin/master
-+test_atom head upstream:strip=-2 origin/master
- test_atom head push refs/remotes/myfork/master
- test_atom head push:short myfork/master
- test_atom head push:lstrip=1 remotes/myfork/master
- test_atom head push:lstrip=-1 master
- test_atom head push:rstrip=1 refs/remotes/myfork
- test_atom head push:rstrip=-1 refs
-+test_atom head push:strip=1 remotes/myfork/master
-+test_atom head push:strip=-1 master
- test_atom head objecttype commit
- test_atom head objectsize 171
- test_atom head objectname $(git rev-parse refs/heads/master)
-@@ -636,6 +644,10 @@ EOF
- test_expect_success 'Verify usage of %(symref:lstrip) atom' '
- 	git for-each-ref --format="%(symref:lstrip=2)" refs/heads/sym > actual &&
- 	git for-each-ref --format="%(symref:lstrip=-2)" refs/heads/sym >> actual &&
-+	test_cmp expected actual &&
-+
-+	git for-each-ref --format="%(symref:strip=2)" refs/heads/sym > actual &&
-+	git for-each-ref --format="%(symref:strip=-2)" refs/heads/sym >> actual &&
- 	test_cmp expected actual
- '
- 
--- 
-2.12.0-rc0-144-g99fe1a5456
-
+David's original is just fine, isn't it?
