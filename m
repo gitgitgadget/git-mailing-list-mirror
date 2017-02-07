@@ -2,98 +2,75 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EFA091FC46
-	for <e@80x24.org>; Tue,  7 Feb 2017 19:48:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 607D31FC46
+	for <e@80x24.org>; Tue,  7 Feb 2017 19:49:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932292AbdBGTsr (ORCPT <rfc822;e@80x24.org>);
-        Tue, 7 Feb 2017 14:48:47 -0500
-Received: from mail-pf0-f171.google.com ([209.85.192.171]:33500 "EHLO
-        mail-pf0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932176AbdBGTsp (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Feb 2017 14:48:45 -0500
-Received: by mail-pf0-f171.google.com with SMTP id y143so35439481pfb.0
-        for <git@vger.kernel.org>; Tue, 07 Feb 2017 11:48:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=x2hzhO4uJFsHbk4KCV/OKwVUY+p073abmgVqTMkGjTM=;
-        b=TpIpvTFggIbv+IhKlGTgFVP4sYqRNhar8t6pPoAcY+N2AQ7vgcgmOL9IOkLbJIZ+1W
-         5YoI/xuPG5pTv9AgvizZ6TiG1ol8btXtp66i+27pIhv0qvV3rq9E4eto2AALTjMhfQBf
-         Gc8/I3x1dnCiDBfpLJc7py4tmwGbscrB5c3VvUkcxWZ33rSHO2zR8EtwWdhlGzk9+qpG
-         Av1y2zojK0/KXTlM5kCJjgIi0IxdFi4dFEbMhnBBIMmL2M6yXTLA2knKpNduJNRBX/ev
-         xaW3NaaDRsPpmrc7j0D9iyDk3PVLLbeB73Ns/4wmIWCESwJ9npwdvMTMtZuqcA69ywaV
-         4+kA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=x2hzhO4uJFsHbk4KCV/OKwVUY+p073abmgVqTMkGjTM=;
-        b=j8twZSIZFRyeU4GNkTmDA2cF6Q1ua7fTYoEARXdKigmXkSSz1rXovBFuge98bBA7re
-         sIeAPkx8pmGb3FqZ/hFOXgP8Un3mfXeCzNTUhuyXBvyUCtoWJYpfe42UAZhwtBNUwTkS
-         rYIo5tRi7HCaxGRcGzVomAFgTq146XY9VTEgWFMKpa2AGpkjyq5Jzm1hMM6ulzVGuxNu
-         WLnyLQhjpnMkKHLjilPLmH+XVNhS2nHmBPI33lUyTMEKY+ZoSjjiv1/MAcSGXMHo93bJ
-         s/yYeNhGX+J54ChJHk6cWrVwXOGy90xVOgVq53dEtJdgmLmBQJ3BtPxn+LwuX3RzwnVh
-         ncEg==
-X-Gm-Message-State: AIkVDXK4I3UmNqAxKY+XTjmd57fj3c4cjUXTdtTOCQKIZpv0ckgVYRvcydUu9cIZG8qI5Q==
-X-Received: by 10.99.106.199 with SMTP id f190mr21705823pgc.110.1486493080569;
-        Tue, 07 Feb 2017 10:44:40 -0800 (PST)
-Received: from gmail.com (wdas-1.disneyanimation.com. [198.187.190.1])
-        by smtp.gmail.com with ESMTPSA id j7sm13273582pfe.84.2017.02.07.10.44.38
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 07 Feb 2017 10:44:39 -0800 (PST)
-Date:   Tue, 7 Feb 2017 10:44:37 -0800
-From:   David Aguilar <davvid@gmail.com>
-To:     Samuel Lijin <sxlijin@gmail.com>
-Cc:     Stavros Liaskos <st.liaskos@gmail.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: subtree merging fails
-Message-ID: <20170207184437.c6uuuxcmhi434vbc@gmail.com>
-References: <CAEXhnECi3LvSA92dSjL5PZ1Lx9p1PWELS04nmfJW=8K9o4T-0Q@mail.gmail.com>
- <CAJZjrdU3toam4tDwXBu1Q3UAZm-kML3CzMrsMoJ_2jsGJ3vWrQ@mail.gmail.com>
+        id S1755491AbdBGTtZ (ORCPT <rfc822;e@80x24.org>);
+        Tue, 7 Feb 2017 14:49:25 -0500
+Received: from cloud.peff.net ([104.130.231.41]:50717 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1755224AbdBGTtX (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Feb 2017 14:49:23 -0500
+Received: (qmail 22819 invoked by uid 109); 7 Feb 2017 19:42:41 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 07 Feb 2017 19:42:41 +0000
+Received: (qmail 27631 invoked by uid 111); 7 Feb 2017 19:42:45 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 07 Feb 2017 14:42:45 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 07 Feb 2017 14:42:39 -0500
+Date:   Tue, 7 Feb 2017 14:42:39 -0500
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] rev-list-options.txt: update --all about detached HEAD
+Message-ID: <20170207194239.icyqawhja2losjul@sigill.intra.peff.net>
+References: <20170207133850.14056-1-pclouds@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CAJZjrdU3toam4tDwXBu1Q3UAZm-kML3CzMrsMoJ_2jsGJ3vWrQ@mail.gmail.com>
-User-Agent: NeoMutt/20161126 (1.7.1)
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20170207133850.14056-1-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Feb 07, 2017 at 08:59:06AM -0600, Samuel Lijin wrote:
-> Have you tried using (without -s subtree) -X subtree=path/to/add/subtree/at?
-> 
-> From the man page:
-> 
->           subtree[=<path>]
->                This option is a more advanced form of subtree
-> strategy, where the strategy
->                makes a guess on how two trees must be shifted to match
-> with each other when
->                merging. Instead, the specified path is prefixed (or
-> stripped from the
->                beginning) to make the shape of two trees to match.
+On Tue, Feb 07, 2017 at 08:38:49PM +0700, Nguyễn Thái Ngọc Duy wrote:
 
-I'm not 100% certain, but it's highly likely that the subtree=<prefix>
-argument needs to include a trailing slash "/" in the prefix,
-otherwise files will be named e.g. "fooREADME" instead of
-"foo/README" when prefix=foo.
+> This is the document patch for f0298cf1c6 (revision walker: include a
+> detached HEAD in --all - 2009-01-16)
+> [...]
+>  --all::
+> -	Pretend as if all the refs in `refs/` are listed on the
+> -	command line as '<commit>'.
+> +	Pretend as if all the refs in `refs/` (and HEAD if detached)
+> +	are listed on the command line as '<commit>'.
 
-These days I would steer users towards the "git-subtree" command in
-contrib/ so that users don't need to deal with these details.  It
-handles all of this stuff for you.
+I think this is an improvement, but I'm not sure about the "if detached"
+bit. We always read HEAD, no matter what.
 
-https://github.com/git/git/blob/master/contrib/subtree/git-subtree.txt
+If you only care about reachability, then reading HEAD only has an
+impact if it is detached, since otherwise we know that we will grab the
+ref via refs/.
 
-https://github.com/git/git/tree/master/contrib/subtree
+I'm not sure if it would matter for some other cases, though. For
+example, with "--source", do we report HEAD or the matching ref? It
+looks like the latter (because we read the refs first).
 
-Updating the progit book to also mention git-subtree, in addition to the
-low-level methods, would probably be a good user-centric change.
--- 
-David
+I suspect you could also construct a case with excludes like:
+
+  $ git checkout foo
+  $ git rev-list --exclude=refs/heads/foo --all
+
+where it is relevant that we read HEAD separately from refs/heads/foo.
+
+So I think just "and HEAD" is better, like:
+
+  Pretend as if all the refs in `refs/`, along with `HEAD`, are
+  listed...
+
+-Peff
