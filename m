@@ -2,97 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4C5461FCC7
-	for <e@80x24.org>; Tue,  7 Feb 2017 03:29:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 21AF11FAF4
+	for <e@80x24.org>; Tue,  7 Feb 2017 06:32:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751618AbdBGD3O (ORCPT <rfc822;e@80x24.org>);
-        Mon, 6 Feb 2017 22:29:14 -0500
-Received: from ns1.bonedaddy.net ([70.91.141.202]:40244 "EHLO
-        ns1.bonedaddy.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751164AbdBGD3N (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Feb 2017 22:29:13 -0500
-Received: from ns1.bonedaddy.net (localhost [127.0.0.1])
-        by ns1.bonedaddy.net (8.14.9/8.14.4) with ESMTP id v173TAdq032648;
-        Mon, 6 Feb 2017 22:29:10 -0500
-Received: (from pabs3@localhost)
-        by ns1.bonedaddy.net (8.14.9/8.14.9/Submit) id v173T9rB032645;
-        Mon, 6 Feb 2017 22:29:09 -0500
-X-Authentication-Warning: ns1.bonedaddy.net: pabs3 set sender to pabs3@bonedaddy.net using -f
-Message-ID: <1486438136.16949.52.camel@bonedaddy.net>
-Subject: Re: idea: light-weight pull requests
-From:   Paul Wise <pabs3@bonedaddy.net>
-To:     Eric Wong <e@80x24.org>
-Cc:     git@vger.kernel.org
-Date:   Tue, 07 Feb 2017 11:28:56 +0800
-In-Reply-To: <20170207031127.GA29468@dcvr>
-References: <1486427537.16949.42.camel@bonedaddy.net>
-         <20170207031127.GA29468@dcvr>
-Content-Type: multipart/signed; micalg="pgp-sha256";
-        protocol="application/pgp-signature"; boundary="=-LFzAPrMhETZAQdC1fy0k"
-X-Mailer: Evolution 3.22.4-1 
-Mime-Version: 1.0
+        id S1752716AbdBGGcL (ORCPT <rfc822;e@80x24.org>);
+        Tue, 7 Feb 2017 01:32:11 -0500
+Received: from mail-pf0-f195.google.com ([209.85.192.195]:33862 "EHLO
+        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752530AbdBGGcK (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Feb 2017 01:32:10 -0500
+Received: by mail-pf0-f195.google.com with SMTP id y143so8581774pfb.1
+        for <git@vger.kernel.org>; Mon, 06 Feb 2017 22:32:10 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:mime-version:content-disposition
+         :user-agent;
+        bh=aR9RIhkeEaCQKpB/6xEP3mIj8ue67KNZmwEo1xesAQ8=;
+        b=pbeMqhm+elFRw2+OEA+IA3J9+o98F5BXxyiFDMklZuQq8IvCUqlJy/xK3Ge3CbL0/u
+         n/+j39H5v3LTdvJvIzLTVRR6CyLBkWVCMW5FzfsKCPSoJAZKh9wPVA82RA9TmYDlcWva
+         4Ey6lHMO6pZHi2DzwzLqnSQM4VVgKv/GLRoxm8TNQKxCewrFOhnBffBmSLYRhLPydidi
+         puWeu4ggDVI6LM2SbHLgN4fFdjLgC6FYtCLDCyNajVYGPW1/8est7rz+yXDdllLSU+Z+
+         pK5yWWiB/u6KFAlRAhaqHbt8XFBGh5iXqwhzXfFaf8p+joWDEquetNkwlCuJqGBXDZ0x
+         f/ew==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
+         :content-disposition:user-agent;
+        bh=aR9RIhkeEaCQKpB/6xEP3mIj8ue67KNZmwEo1xesAQ8=;
+        b=qlWBbeG7eMT3ZK95Enh93nVr/XFvHD75IhmKRW3oZSHWVslFZ2RlbahzTkJ2FUv5rd
+         mqlwj91Q3zfZcTkkL2r6CxXWD7RMTBFwZno7KJmBI1VLqKtWK3z42lpDim609HfhZzNZ
+         uxkfqqCXotlL07ISMY7WSuKnDlmUJFnq7ViDEFZ4ya6FQpE0xKLJZayvD8Zn/4QXmzsU
+         kSL/Odmun5GBO3D7VgiQNMJ074rUnrtJZd/IROUSLG5euVHIzX2rT1cKUt/q0VZaXVZD
+         tNt62svGNHij6MpdqgL26tseOY7T7C75vCsyhnW6/rJI7F7A+tS59uEpFfrjvOl2XGV/
+         X7EQ==
+X-Gm-Message-State: AIkVDXKlZH3y/9PHDjT36zC0aj2rzYzw8xMyncG53UgClIaIKlZM5TyY71EWM+V+Otu1CQ==
+X-Received: by 10.84.132.1 with SMTP id 1mr23510323ple.44.1486449129580;
+        Mon, 06 Feb 2017 22:32:09 -0800 (PST)
+Received: from arch-attack.localdomain (c-50-152-192-15.hsd1.ca.comcast.net. [50.152.192.15])
+        by smtp.gmail.com with ESMTPSA id g70sm7525668pfb.50.2017.02.06.22.32.08
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 06 Feb 2017 22:32:09 -0800 (PST)
+Date:   Mon, 6 Feb 2017 22:32:07 -0800
+From:   Denton Liu <liu.denton@gmail.com>
+To:     gitster@pobox.com
+Cc:     git@vger.kernel.org, davvid@gmail.com
+Subject: [PATCH v2] Document the --no-gui option in difftool
+Message-ID: <20170207063207.GA12746@arch-attack.localdomain>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: Mutt/1.7.2 (2016-11-26)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Prior to this, the `--no-gui` option was not documented in the manpage.
+This commit introduces this into the manpage
 
---=-LFzAPrMhETZAQdC1fy0k
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Signed-off-by: Denton Liu <liu.denton@gmail.com>
+---
+ Documentation/git-difftool.txt | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-On Tue, 2017-02-07 at 03:11 +0000, Eric Wong wrote:
+diff --git a/Documentation/git-difftool.txt b/Documentation/git-difftool.txt
+index 224fb3090..96c26e6aa 100644
+--- a/Documentation/git-difftool.txt
++++ b/Documentation/git-difftool.txt
+@@ -86,10 +86,11 @@ instead.  `--no-symlinks` is the default on Windows.
+ 	Additionally, `$BASE` is set in the environment.
+ 
+ -g::
+---gui::
++--[no-]gui::
+ 	When 'git-difftool' is invoked with the `-g` or `--gui` option
+ 	the default diff tool will be read from the configured
+-	`diff.guitool` variable instead of `diff.tool`.
++	`diff.guitool` variable instead of `diff.tool`. The `--no-gui`
++	option can be used to override this setting.
+ 
+ --[no-]trust-exit-code::
+ 	'git-difftool' invokes a diff tool individually on each file.
+-- 
+2.11.1
 
-> How would discussion and review happen?=C2=A0=C2=A0People seem to use
-> either mail, or centralized messaging (and the latter often
-> involves non-Free systems like GitHub or Slack).
-
-It would depend on the setup for the particular repo. Information about
-where that happens could be part of the output of the git push.
-
-> This is a big one.=C2=A0=C2=A0Maybe CRM114 or another generic/trainable
-> option can be made usable; but I think there'll always be cases
-> where hardcoded rules need to be written (for SpamAssassin,
-> at least) and real-time blacklists need to be checked.
-
-TBH, I doubt spam would become a problem at all.
-
-> Anyways, I ultimately decided it would be better to continue
-> supporting and improving email (which is at least entrenched in
-> a few communities, like this one), rather than trying to get
-> people to adopt something new.
-
-Email is great for people used to the old ways but it is gradually
-being replaced by APIs and web interfaces :(
-
---=20
-bye,
-pabs
-
-http://bonedaddy.net/pabs3/
---=-LFzAPrMhETZAQdC1fy0k
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCAAdFiEEYQsotVz8/kXqG1Y7MRa6Xp/6aaMFAliZPvgACgkQMRa6Xp/6
-aaNEdA//clSuyRxVdElxXGpfevPsIC7pT965eixt2cPxt62aQ+W/fx5A2agMaTWr
-+m/I/VecjnVH/+gTnUjm8MFW4culrRPfsdYEI8orW5IqoRbEtx8y/aLzdyqVwocH
-fU1ft37+T7GrdAEdOWxdQzXOJVden2guljBQJXJyG999mmyZF4+Zxs83GBNRQdVW
-6N9+qj3brA7DlrrsBHgogzntbGnaZ0+/7NrL9fJZzsW6cEg8POu3rraEV4CkHQcz
-32112vedOA5VV9Vu++ExwIp9frvAy3OZF9GhNt233axZIpIEZ/nhRVpmG7rPLdRA
-JJRyJ/qJGGAhkacI3X7gQdF6Og7gYITfWqIy4SrA2b9BfcfICrYNFBzACP8Xq2Ig
-ctFyvRunU/M4pzqYWyJWaGmwSyUEGNqzT/xQKblCDlhFK/2Szf2dOo+8glbK9gYU
-EviaLZX5WT9TVUGAbA8tY8ShTOo9+ZSZf8xA6j9yj5Tspy2krde/mlgmqohACVg2
-hmjiodzFL3AYY8zaAN7ZBaMODV07pu4E/G7dJmkrdzmPjv1CMxbiPu/f+l5nR2IN
-1r/I/aoPa1uwqcDdOx1a1GwUdkTeY+KdnSdR3qGo2qbYiETQMUaHwIPET3eVvhd8
-+Ki2BzL5UhXg3RTWa8Airof5+hQcT7DKw8VynmNzQdFGTflNlVc=
-=mw8k
------END PGP SIGNATURE-----
-
---=-LFzAPrMhETZAQdC1fy0k--
