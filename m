@@ -2,95 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5E1C11FC46
-	for <e@80x24.org>; Tue,  7 Feb 2017 19:37:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EFA091FC46
+	for <e@80x24.org>; Tue,  7 Feb 2017 19:48:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754142AbdBGThS (ORCPT <rfc822;e@80x24.org>);
-        Tue, 7 Feb 2017 14:37:18 -0500
-Received: from mail-lf0-f51.google.com ([209.85.215.51]:34765 "EHLO
-        mail-lf0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751336AbdBGTfp (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Feb 2017 14:35:45 -0500
-Received: by mail-lf0-f51.google.com with SMTP id v186so69143731lfa.1
-        for <git@vger.kernel.org>; Tue, 07 Feb 2017 11:35:45 -0800 (PST)
+        id S932292AbdBGTsr (ORCPT <rfc822;e@80x24.org>);
+        Tue, 7 Feb 2017 14:48:47 -0500
+Received: from mail-pf0-f171.google.com ([209.85.192.171]:33500 "EHLO
+        mail-pf0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932176AbdBGTsp (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Feb 2017 14:48:45 -0500
+Received: by mail-pf0-f171.google.com with SMTP id y143so35439481pfb.0
+        for <git@vger.kernel.org>; Tue, 07 Feb 2017 11:48:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=gw8Hl3cPWyqyDcyCdyBlAkL0KGoV99c4X4AogB0fogo=;
-        b=nEINYu4qltEaGzrNMKqzGXJA+UZMDxVAOepOxbjPZwuIQDdN+dqRWgKRjpnXXa93J9
-         0eGcgdfmMkeAKRXl8pOFlO3Zu5XLfqDGw9bsa4qKQlyhJfYaVCIkmQL14dbqxRjzaBRN
-         d1wa2O7EXGqJcBbJHUaDmhcEjIFD3L17PBvUPV1uEanwXMZvLZ8p28W/UBWv+S424HiS
-         goLr3lRi94FIqwLI39Cuzqe+FJouLaJkwMQSmix+ZZ6eaIqGLc00f2dAtHYCqHQLDazF
-         OM/wQvbTWxo2wiccebo1SHdNN4J2I936gSU8zyYaLJoUuPrD66Zc0P18eri2gG6onO2d
-         YMLQ==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=x2hzhO4uJFsHbk4KCV/OKwVUY+p073abmgVqTMkGjTM=;
+        b=TpIpvTFggIbv+IhKlGTgFVP4sYqRNhar8t6pPoAcY+N2AQ7vgcgmOL9IOkLbJIZ+1W
+         5YoI/xuPG5pTv9AgvizZ6TiG1ol8btXtp66i+27pIhv0qvV3rq9E4eto2AALTjMhfQBf
+         Gc8/I3x1dnCiDBfpLJc7py4tmwGbscrB5c3VvUkcxWZ33rSHO2zR8EtwWdhlGzk9+qpG
+         Av1y2zojK0/KXTlM5kCJjgIi0IxdFi4dFEbMhnBBIMmL2M6yXTLA2knKpNduJNRBX/ev
+         xaW3NaaDRsPpmrc7j0D9iyDk3PVLLbeB73Ns/4wmIWCESwJ9npwdvMTMtZuqcA69ywaV
+         4+kA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=gw8Hl3cPWyqyDcyCdyBlAkL0KGoV99c4X4AogB0fogo=;
-        b=Xi8JQVnWmtSKve51I57LfLOdV8zkntoZgsccMxZErrcjvJRxlHCARBtPphNKXFf6eU
-         jDfz8Nhc2ThoKUaLiDkYJ/Lzygn8XuKEAXlR4s2gmVjHn2ce3mkTyA1RKLMaMvIfMoJq
-         20pYz6iF9lraYlYhurZgMBmtdiblOR6XtcYTIB+c760o+Z6HNP1G1WNJohk8eE8hXGqr
-         Yanr1D2tYQIKvpMqsgAluxoZMxqzmSv7aTR1aKTczKLJOVSI9HiEo8LdURKOxEqYmdhg
-         xNGnS6Fj4NvO52LduInQEJD1jUDQSbHyJJ+KaX+3zOMsIsTLGjmztzRKfjPfE6+1SEky
-         dolg==
-X-Gm-Message-State: AIkVDXJidhsDE5m9W7EJz8ND5E79FlEhKYCRJLIt9bK0zmPEmKnQkXLeTX83wjz2g+NbrFCc8Y7J1T+3UWV2cw==
-X-Received: by 10.25.24.152 with SMTP id 24mr6569788lfy.12.1486496144034; Tue,
- 07 Feb 2017 11:35:44 -0800 (PST)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=x2hzhO4uJFsHbk4KCV/OKwVUY+p073abmgVqTMkGjTM=;
+        b=j8twZSIZFRyeU4GNkTmDA2cF6Q1ua7fTYoEARXdKigmXkSSz1rXovBFuge98bBA7re
+         sIeAPkx8pmGb3FqZ/hFOXgP8Un3mfXeCzNTUhuyXBvyUCtoWJYpfe42UAZhwtBNUwTkS
+         rYIo5tRi7HCaxGRcGzVomAFgTq146XY9VTEgWFMKpa2AGpkjyq5Jzm1hMM6ulzVGuxNu
+         WLnyLQhjpnMkKHLjilPLmH+XVNhS2nHmBPI33lUyTMEKY+ZoSjjiv1/MAcSGXMHo93bJ
+         s/yYeNhGX+J54ChJHk6cWrVwXOGy90xVOgVq53dEtJdgmLmBQJ3BtPxn+LwuX3RzwnVh
+         ncEg==
+X-Gm-Message-State: AIkVDXK4I3UmNqAxKY+XTjmd57fj3c4cjUXTdtTOCQKIZpv0ckgVYRvcydUu9cIZG8qI5Q==
+X-Received: by 10.99.106.199 with SMTP id f190mr21705823pgc.110.1486493080569;
+        Tue, 07 Feb 2017 10:44:40 -0800 (PST)
+Received: from gmail.com (wdas-1.disneyanimation.com. [198.187.190.1])
+        by smtp.gmail.com with ESMTPSA id j7sm13273582pfe.84.2017.02.07.10.44.38
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 07 Feb 2017 10:44:39 -0800 (PST)
+Date:   Tue, 7 Feb 2017 10:44:37 -0800
+From:   David Aguilar <davvid@gmail.com>
+To:     Samuel Lijin <sxlijin@gmail.com>
+Cc:     Stavros Liaskos <st.liaskos@gmail.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: subtree merging fails
+Message-ID: <20170207184437.c6uuuxcmhi434vbc@gmail.com>
+References: <CAEXhnECi3LvSA92dSjL5PZ1Lx9p1PWELS04nmfJW=8K9o4T-0Q@mail.gmail.com>
+ <CAJZjrdU3toam4tDwXBu1Q3UAZm-kML3CzMrsMoJ_2jsGJ3vWrQ@mail.gmail.com>
 MIME-Version: 1.0
-Received: by 10.25.145.14 with HTTP; Tue, 7 Feb 2017 11:35:23 -0800 (PST)
-In-Reply-To: <fe8595aa-0395-e948-13e9-f952541d106e@tngtech.com>
-References: <CAGP6PO+qD6eRkKbWAxOfiqUQw8o+dOfgwgvt_8OxHQ5ocAopEQ@mail.gmail.com>
- <fe8595aa-0395-e948-13e9-f952541d106e@tngtech.com>
-From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Tue, 7 Feb 2017 11:35:23 -0800
-Message-ID: <CA+P7+xpesQVS5qZJZ5wd31eJDLmb5j0Xdq_rwajjoskB07ELfg@mail.gmail.com>
-Subject: Re: ``git clean -xdf'' and ``make clean''
-To:     Cornelius Weig <cornelius.weig@tngtech.com>
-Cc:     Hongyi Zhao <hongyi.zhao@gmail.com>,
-        Git mailing list <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAJZjrdU3toam4tDwXBu1Q3UAZm-kML3CzMrsMoJ_2jsGJ3vWrQ@mail.gmail.com>
+User-Agent: NeoMutt/20161126 (1.7.1)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Feb 7, 2017 at 7:07 AM, Cornelius Weig
-<cornelius.weig@tngtech.com> wrote:
-> On 02/07/2017 03:17 PM, Hongyi Zhao wrote:
->> Hi all,
->>
->> In order to delete all of the last build stuff, does the following two
->> methods equivalent or not?
->>
->> ``git clean -xdf'' and ``make clean''
->
-> No, it is not equivalent.
->
-> * `make clean` removes any build-related files (assuming that the
-> `clean` target is properly written). To see exactly what it would do,
-> run `make clean -n`. Judging from your question, I think this is what
-> you want to do.
->
-> * `git clean -xdf` would remove any files that git does not track. This
-> also includes build-related files, but also any other files that happen
-> to be in your working directory. For example, any output from `git
-> format-patch` would be removed by this, but not `make clean`.
+On Tue, Feb 07, 2017 at 08:59:06AM -0600, Samuel Lijin wrote:
+> Have you tried using (without -s subtree) -X subtree=path/to/add/subtree/at?
+> 
+> From the man page:
+> 
+>           subtree[=<path>]
+>                This option is a more advanced form of subtree
+> strategy, where the strategy
+>                makes a guess on how two trees must be shifted to match
+> with each other when
+>                merging. Instead, the specified path is prefixed (or
+> stripped from the
+>                beginning) to make the shape of two trees to match.
 
-Make clean can run arbitrary code, and really depends on the
-implementation. git clean -xdf will result in all non-tracked files
-being removed, which should restore you to a pristine pre-build state.
-However, this can have unfortunate side effect of destroying files
-which you might not expect.
+I'm not 100% certain, but it's highly likely that the subtree=<prefix>
+argument needs to include a trailing slash "/" in the prefix,
+otherwise files will be named e.g. "fooREADME" instead of
+"foo/README" when prefix=foo.
 
-Properly written, a make clean shouldn't remove anything except what
-could be regenerated by make. But that's just a strong convention.
+These days I would steer users towards the "git-subtree" command in
+contrib/ so that users don't need to deal with these details.  It
+handles all of this stuff for you.
 
-Regards,
-Jake
+https://github.com/git/git/blob/master/contrib/subtree/git-subtree.txt
+
+https://github.com/git/git/tree/master/contrib/subtree
+
+Updating the progit book to also mention git-subtree, in addition to the
+low-level methods, would probably be a good user-centric change.
+-- 
+David
