@@ -2,133 +2,128 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A49B21FC46
-	for <e@80x24.org>; Tue,  7 Feb 2017 19:14:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 00B411FC46
+	for <e@80x24.org>; Tue,  7 Feb 2017 19:18:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755324AbdBGTO4 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 7 Feb 2017 14:14:56 -0500
-Received: from mail-pg0-f65.google.com ([74.125.83.65]:35112 "EHLO
-        mail-pg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755243AbdBGTOy (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Feb 2017 14:14:54 -0500
-Received: by mail-pg0-f65.google.com with SMTP id 204so12846301pge.2
-        for <git@vger.kernel.org>; Tue, 07 Feb 2017 11:14:54 -0800 (PST)
+        id S1755390AbdBGTSp (ORCPT <rfc822;e@80x24.org>);
+        Tue, 7 Feb 2017 14:18:45 -0500
+Received: from mail-lf0-f52.google.com ([209.85.215.52]:35187 "EHLO
+        mail-lf0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755096AbdBGTSn (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Feb 2017 14:18:43 -0500
+Received: by mail-lf0-f52.google.com with SMTP id n124so68745894lfd.2
+        for <git@vger.kernel.org>; Tue, 07 Feb 2017 11:18:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=Spbmej9u6FssjNJn5X38lLh3jqgrKZ+/ux/1YBhADAY=;
-        b=ESj7twLUDfHOLRUgYD54ONAEeso84yR9JsK9hKolRRaiv7jvl+aeCCpw7voCkMkCRZ
-         qsdwi92O2ZSqSYmhqUc2VI9ukVW5GX91SIH+umo2ZkYauXqQyHnO6dRi07nouQISl+Gp
-         TzgM2uBp1bGqLbMKWLjgo1amktWbtjtz9LJd8xBRBQvwpvmrcXlrxC56yr45IZ5ExABD
-         hcGGfBFVVraAl3Y+1LEnPgb6mD8Q86pL8FzSpDZxu2GYqAq//E545WIdUGO2puzFnG/2
-         DXQLID8jxAGMJrEy3IV4h/0OXmJy4mj57eox5p7RVLhZQy/qY0JtEDRy8dYJorp5wjsj
-         we+Q==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=NQWMZlVQAhlwfFGVX64P7MO0VhiP7/erZTFwkalOvIg=;
+        b=dwn7OALEQPxM7i7PW+IgAXr1bpeY7AFdMQqPyB3s//dlsZ3l5ApGswMpGqT7P0ZDIh
+         wGJMg8xqpb38/+BZrabDORD1kVorpwvpwNw5UoArrqwSThVFYElNvdDjRqFB/0U/2l4r
+         zZYAezy8+G6k+f34u18XJUvWrQSUFOhOun5yTctCYTLfj25DGA9qDdkU3kRiyTroXjXc
+         JN0x5ojF3CoYJo0rNVYu5+KFvS3VveWGFp9Uuq+7Kj5Dvd5dFnnxm859dLmTFHF4A8Fj
+         gLIlRC8uZmzT6XP9D1tKv0ivgHO0XgYyUCQ66GR/qlYRLapnNuLjZ1M9ii8/KQW+3S2W
+         J0Cw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=Spbmej9u6FssjNJn5X38lLh3jqgrKZ+/ux/1YBhADAY=;
-        b=lDV2qjyiGjDIpyxfnHpbuJC0cmAwsnXUD0JgQmExwUcJnkrntY3u/GOsQ/KJX8KD+e
-         l743VufRcomXszagLD58ECzYcDvMoDJVz6MujzSMuxlI9CrHi6ERJumDbJokVQGG6+uL
-         QXZ8RcGxYxh38qDCgm9Nk+YRYS6Z5hQEE6qT6rxISjhx4vLjthVRjOYDOdRrLUQaPhZf
-         h6Bb5pU8nByukaAvBpelmc+ftsPQsZpsG9v0JoNXngDuYma+XKuC4l30NR6israV3btB
-         BheCt8RaiksyGBEPKTAmYqzDFDmRhzsYSRFkc+5KdNHLFRhFAkRawM+bjn/2PwLQRpJZ
-         NxvQ==
-X-Gm-Message-State: AIkVDXKMGQ6HXmkAk8+K3OqyUEZLKQb1OQtohdVHHS9QZqee4HoQudhYLnyiHJULi2qtEQ==
-X-Received: by 10.99.177.79 with SMTP id g15mr22250668pgp.185.1486494893688;
-        Tue, 07 Feb 2017 11:14:53 -0800 (PST)
-Received: from localhost ([139.59.1.28])
-        by smtp.gmail.com with ESMTPSA id z74sm13407166pfd.70.2017.02.07.11.14.52
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 07 Feb 2017 11:14:52 -0800 (PST)
-Date:   Tue, 7 Feb 2017 19:14:50 +0000
-From:   Siddharth Kannan <kannan.siddharth12@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, pranit.bauva@gmail.com, Matthieu.Moy@imag.fr,
-        peff@peff.net, pclouds@gmail.com, sandals@crustytoothpaste.ath.cx
-Subject: Re: [PATCH/RFC] WIP: log: allow "-" as a short-hand for "previous
- branch"
-Message-ID: <20170207191450.GA5569@ubuntu-512mb-blr1-01.localdomain>
-References: <1486299439-2859-1-git-send-email-kannan.siddharth12@gmail.com>
- <xmqqtw882n08.fsf@gitster.mtv.corp.google.com>
- <20170206181026.GA4010@ubuntu-512mb-blr1-01.localdomain>
- <xmqqtw86zzk4.fsf@gitster.mtv.corp.google.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=NQWMZlVQAhlwfFGVX64P7MO0VhiP7/erZTFwkalOvIg=;
+        b=RqJYu89h0eaqsawsNv8eUkTOkrGcMafrgqsMOHBHBMbyk/mrvxD56dcn4u4u8+vIKi
+         tjvQrLBlKrUYC6zUIiberHTo3ZUB3ZbQxHX+BEUzFAYr41XpeK4IYXef8kTgOUYGXcYb
+         JXkqhkfxqhNNHnaX8grLy6SOn/54OnptaLXn1E0JnyOQyBT/EgrWxHaT12V+FkIIv8U1
+         5J1etB06RRlnmLKHEh8RIG4knaOJZlK1LLF9236gV8XrbT1x7VsTSDojqfmS5rJD7jsG
+         MzHf8lXTMdSERbSF76zkmGa/VCWT3vfGl2bQO8MlAjJKCBi4uNsRvLR3eQZmcx9Ytnxf
+         de/g==
+X-Gm-Message-State: AIkVDXLHL1iseTGHm5xfOLxeO9tSDZ/TYPKS08lmHSCtzfERwKB+L9PG2eSBPJFQXo2TMdFA2aNddFRzS0wJkQ==
+X-Received: by 10.25.141.12 with SMTP id p12mr6508922lfd.147.1486495121857;
+ Tue, 07 Feb 2017 11:18:41 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqtw86zzk4.fsf@gitster.mtv.corp.google.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+Received: by 10.25.145.14 with HTTP; Tue, 7 Feb 2017 11:18:21 -0800 (PST)
+In-Reply-To: <CAJZjrdWbqvBRtyyfhgAt1E9ZdTUaz+Zpk7iGasNoeSuFJbsKog@mail.gmail.com>
+References: <CANOj2JG5VuDtS30PfOrZ=4q8pTv_frY7=p+0g=UW3yV6ev+1KQ@mail.gmail.com>
+ <CABURp0qbKMfngfsC5pQeO+qyRPxa21vi090hMWDtLd+BBH_3Jg@mail.gmail.com> <CAJZjrdWbqvBRtyyfhgAt1E9ZdTUaz+Zpk7iGasNoeSuFJbsKog@mail.gmail.com>
+From:   Jacob Keller <jacob.keller@gmail.com>
+Date:   Tue, 7 Feb 2017 11:18:21 -0800
+Message-ID: <CA+P7+xoZHOtURfbBbHHTpC3DsGxaGOVToqmW5wTg2EniRpL-Cg@mail.gmail.com>
+Subject: Re: Request re git status
+To:     Samuel Lijin <sxlijin@gmail.com>
+Cc:     Phil Hord <phil.hord@gmail.com>, Ron Pero <rpero@magnadev.com>,
+        Git <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Feb 06, 2017 at 03:09:47PM -0800, Junio C Hamano wrote:
-> The focus of GSoC being mentoring those who are new to the open
-> source development, and hopefully retain them in the community after
-> GSoC is over, we do expect microprojects to be suitable for those
-> who are new to the codebase.
+On Tue, Feb 7, 2017 at 6:54 AM, Samuel Lijin <sxlijin@gmail.com> wrote:
+> On Mon, Feb 6, 2017 at 6:45 PM, Phil Hord <phil.hord@gmail.com> wrote:
+>> On Mon, Feb 6, 2017 at 3:36 PM Ron Pero <rpero@magnadev.com> wrote:
+>>> I almost got bit by git: I knew there were changes on the remote
+>>> server, but git status said I was uptodate with the remote.
+>>>
+>>
+>> Do you mean you almost pushed some changed history with "--force"
+>> which would have lost others' changes?  Use of this option is
+>> discouraged on shared branches for this very reason.  But if you do
+>> use it, the remote will tell you the hash of the old branch so you can
+>> undo the damage.
+>>
+>> But if you did not use --force, then you were not in danger of being
+>> bit.  Git would have prevented the push in that case.
+>>
+>>
+>>> Why ... not design it to [optionally] DO a fetch and THEN declare
+>>> whether it is up to date?
+>>
+>> It's because `git status` does not talk to the remote server, by
+>> design.  The only Git commands that do talk to the remote are push,
+>> pull and fetch.  All the rest work off-line and they do so
+>> consistently.
+>>
+>> Imagine `git status` did what you requested; that is, it first did a
+>> fetch and then reported the status.  Suppose someone pushed a commit
+>> to the remote immediately after your fetch completed.  Now git will
+>> still report "up to date" but it will be wrong as soon as the remote
+>> finishes adding the new push.  Yet the "up to date" message will
+>> remain on your console, lying to you.  If you leave and come back in
+>> two days, the message will remain there even if it is no longer
+>> correct.
+>>
+>> So you should accept that `git status` tells you the status with
+>> respect to your most recent fetch, and that you are responsible for
+>> the timing of the most recent fetch.  To have git try to do otherwise
+>> would be misleading.
+>
+> This argument doesn't work for me. Race conditions in *any*
+> asynchronous work flow are inevitable; in commits, particularly to a
+> shared branch, I also can't imagine them being common. It's like
+> saying because there's lag between the remote's response and the
+> output on the local, `git fetch` shouldn't bother saying that the
+> local remote has been updated.
+>
+> It wouldn't be hard, though, to define an alias that fetches the
+> remote-tracking branch and then reports the status.
+>
+> Nevertheless, this is one of those cases where I think Git suffers
+> from a poor UI/UX - it's letting the underlying model define the
+> behavior, rather than using the underlying model to drive the
+> behavior.
+>
 
-Okay, understood! Since I have spent time here anyway, I guess I will
-continue on this instead of going over to a new micro project.
+Personally, I think that the fact that Git forces the user to think
+about it in terms of "oh I have to fetch" instead of that happening
+automatically, it helps teach the model to the user. If it happened in
+the background then the user might not be confronted with the
+distributed nature of the tool.
 
-> 
-> > (c) -> Else look for "r1^-"
-> > ...
-> > Case (c) is a bit confusing. This could be something like "-^-", and
-> > something like "^-" could mean "Not commits on previous branch" or it
-> > could mean "All commits on this branch except for the parent of HEAD"
-> 
-> Do you mean:
-> 
->     "git rev-parse ^-" does not mean "git rev-parse HEAD^-", but we
->     probably would want to, and if that is what is going to happen,
->     "^-" should mean "HEAD^-", and cannot be used for "^@{-1}"?
-> 
-> It's friend "^!" does not mean "HEAD^!", and "^@" does not mean
-> "HEAD^@", either (the latter is somewhat borked, though, and "^@"
-> translates to "^HEAD" because confusingly "@" stands for "HEAD"
-> sometimes).  
+An alias to fetch and then show status is very straight forward, and
+you can do so locally if you want.
 
-Yes, I meant that whether we should use ^- as ^@{-1} or HEAD^-.
-
-Oh! So, that's why running `git log ^@` leads to an empty set!
-> 
-> So my gut feeling is that it is probably OK to make "^-" mean
-> "^@{-1}"; it may be prudent to at least initially keep "^-" an error
-> like it currently is already, though.
-
-I agree with your gut feeling, and would like to _not_ exclude only
-this case. This way, across the code and implementation, there
-wouldn't be any particular cases which would have to be excluded.
-
-> > So, this patch reduces to the following 2 tasks:
-> > 
-> > 1. Teach setup_revisions that something starting with "-" can be
-> > an
-> > argument as well
-> > 2. Teach get_sha1_basic that "-" means the tip of the previous
-> > branch
-> > perhaps by replacing it with "@{-1}" just before the reflog
-> > parsing is
-> > done
-
-Making a change in sha1_name.c will touch a lot of commands
-(setup_revisions is called from everywhere in the codebase), so, I am
-still trying to figure out how to do this such that the rest of the
-codepath remains unchanged.
-
-I hope that you do not mind this side-effect, but rather, you intended
-for this to happen, right? More commands will start supporting this
-shorthand, suddenly.  (such as format-patch, whatchanged, diff to name
-a very few).
-
-Best Regards,
-
-Siddharth.
+Thanks,
+Jake
