@@ -2,117 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 39A0B1FAFC
-	for <e@80x24.org>; Tue,  7 Feb 2017 01:17:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E2EC41FAFC
+	for <e@80x24.org>; Tue,  7 Feb 2017 01:22:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751654AbdBGBRd (ORCPT <rfc822;e@80x24.org>);
-        Mon, 6 Feb 2017 20:17:33 -0500
-Received: from mail-lf0-f50.google.com ([209.85.215.50]:32819 "EHLO
-        mail-lf0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751414AbdBGBRc (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Feb 2017 20:17:32 -0500
-Received: by mail-lf0-f50.google.com with SMTP id x1so54484065lff.0
-        for <git@vger.kernel.org>; Mon, 06 Feb 2017 17:17:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=TQ/igThdVSFbCckSrigHLpeQuMIv5tE5W9CdWh4VcLg=;
-        b=Q6sZ1K4UMdyasYjiW4KUn2JS2+A8bi1XihgoTFptyD5VCEuiS4NDEPitbWT2ilWbi+
-         MI+dnLpk0F7HTHjy/XlYUGwdavpuyY75QqhSZF43qnR8H5f/lA1lQQz83vOnoFOaWbCR
-         dWX8ftKN8mpxDXdxJR58tJuZBXAYOu6v173FS+k9Cix7e28t4Ov4RAE3wwpN4IffBA/e
-         VQyU3JvegdqWLnRrC3XaWB9ORmRzm/4g7aih22+O+aShmwhxSvjN5NnzN/M/Yy/kqTjl
-         QDVyeJROGzlm6Qm6h7/FK6w9kejEHvb3V/D7njkvJjssZDvhL6uPhMdPGqssibJzIi4Y
-         J1lA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=TQ/igThdVSFbCckSrigHLpeQuMIv5tE5W9CdWh4VcLg=;
-        b=Ff8aJ6AjOqxEHOG/Ykhn9zbOmDG/LG97leIv9Zm+86Vi/+0uXMAdLXewXDislua0U/
-         drvTWyBfHRfefaFd3pPFmMaRGusF1eUXsbEKHgF8M2qtM8pdIx0I1q0gKqvlALxqRbtx
-         nyh3vcJ5B3QofKnQrW4BWsWpUQjRSEbYujRzF6cQAyHEPelLWZRHbsifZXWu64kTKr5Y
-         XH1VJvEHOsZZcFJCrLvfl5mPuTmiHMeRF3GRZ/X1gfBTW3O7hcM5cV1/LzvHrRBPCnzQ
-         HFCeLu4CO+T2+rwQVrNceoa1IhC5irype9dUtsLonKtf0hnTtND0/cHfTfiIPbLYBcz5
-         QJVg==
-X-Gm-Message-State: AIkVDXK0OVy0cnhxG5racseFQWkNXEb6D/cNiY/n5Ypnw+SbpdtSiBVj15CKZsT4r3Lnpg0xUq28LAwvL7145g==
-X-Received: by 10.25.141.12 with SMTP id p12mr4851307lfd.147.1486430250387;
- Mon, 06 Feb 2017 17:17:30 -0800 (PST)
-MIME-Version: 1.0
-Received: by 10.25.145.14 with HTTP; Mon, 6 Feb 2017 17:17:09 -0800 (PST)
-In-Reply-To: <CAM0VKjmhO9NQLz9TDv5M3OhxSBt-JdjaouVT0pTA-a6mGaF4_A@mail.gmail.com>
-References: <xmqqzihzymn3.fsf@gitster.mtv.corp.google.com> <CAM0VKjmhO9NQLz9TDv5M3OhxSBt-JdjaouVT0pTA-a6mGaF4_A@mail.gmail.com>
-From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Mon, 6 Feb 2017 17:17:09 -0800
-Message-ID: <CA+P7+xpdhYG77LA6QkHrJwP0_3t4_0vB11Y0jyw6=w9_w=mY9Q@mail.gmail.com>
-Subject: Re: What's cooking in git.git (Feb 2017, #02; Mon, 6)
-To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Karthik Nayak <Karthik.188@gmail.com>,
-        Git mailing list <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+        id S1751913AbdBGBWL (ORCPT <rfc822;e@80x24.org>);
+        Mon, 6 Feb 2017 20:22:11 -0500
+Received: from ns1.bonedaddy.net ([70.91.141.202]:39464 "EHLO
+        ns1.bonedaddy.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751414AbdBGBWL (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 Feb 2017 20:22:11 -0500
+Received: from ns1.bonedaddy.net (localhost [127.0.0.1])
+        by ns1.bonedaddy.net (8.14.9/8.14.4) with ESMTP id v171M83t028758;
+        Mon, 6 Feb 2017 20:22:08 -0500
+Received: (from pabs3@localhost)
+        by ns1.bonedaddy.net (8.14.9/8.14.9/Submit) id v171M8Yp028754;
+        Mon, 6 Feb 2017 20:22:08 -0500
+X-Authentication-Warning: ns1.bonedaddy.net: pabs3 set sender to pabs3@bonedaddy.net using -f
+Message-ID: <1486430520.16949.47.camel@bonedaddy.net>
+Subject: Re: idea: light-weight pull requests
+From:   Paul Wise <pabs3@bonedaddy.net>
+To:     Santiago Torres <santiago@nyu.edu>
+Cc:     git@vger.kernel.org
+Date:   Tue, 07 Feb 2017 09:22:00 +0800
+In-Reply-To: <20170207005751.cgrpwuvtljfgnntb@LykOS.localdomain>
+References: <1486427537.16949.42.camel@bonedaddy.net>
+         <20170207005751.cgrpwuvtljfgnntb@LykOS.localdomain>
+Content-Type: multipart/signed; micalg="pgp-sha256";
+        protocol="application/pgp-signature"; boundary="=-71Zq7HSZEgNihvjsqcLN"
+X-Mailer: Evolution 3.22.4-1 
+Mime-Version: 1.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Feb 6, 2017 at 4:24 PM, SZEDER G=C3=A1bor <szeder.dev@gmail.com> wr=
-ote:
->> * sg/completion-refs-speedup (2017-02-06) 13 commits
->>  - squash! completion: fill COMPREPLY directly when completing refs
->>  - completion: fill COMPREPLY directly when completing refs
->>  - completion: list only matching symbolic and pseudorefs when completin=
-g refs
->>  - completion: let 'for-each-ref' sort remote branches for 'checkout' DW=
-IMery
->>  - completion: let 'for-each-ref' filter remote branches for 'checkout' =
-DWIMery
->>  - completion: let 'for-each-ref' strip the remote name from remote bran=
-ches
->>  - completion: let 'for-each-ref' and 'ls-remote' filter matching refs
->>  - completion: don't disambiguate short refs
->>  - completion: don't disambiguate tags and branches
->>  - completion: support excluding full refs
->>  - completion: support completing full refs after '--option=3Drefs/<TAB>=
-'
->>  - completion: wrap __git_refs() for better option parsing
->>  - completion: remove redundant __gitcomp_nl() options from _git_commit(=
-)
->>  (this branch uses sg/completion.)
->>
->>  Will hold.
->>  This seems to break 9902 when merged to 'pu'.
->
-> All failing tests fail with the same error:
->
->   fatal: unrecognized %(refname:strip=3D2) argument: strip=3D2
->
-> That's because of this topic:
->
->> * kn/ref-filter-branch-list (2017-01-31) 20 commits
->>   (merged to 'next' on 2017-01-31 at e7592a5461)
->>  + branch: implement '--format' option
->>  + branch: use ref-filter printing APIs
->>  + branch, tag: use porcelain output
->>  + ref-filter: allow porcelain to translate messages in the output
->>  + ref-filter: add an 'rstrip=3D<N>' option to atoms which deal with ref=
-names
->>  + ref-filter: modify the 'lstrip=3D<N>' option to work with negative '<=
-N>'
->>  + ref-filter: Do not abruptly die when using the 'lstrip=3D<N>' option
->>  + ref-filter: rename the 'strip' option to 'lstrip'
->
-> And in particular this commit, which, well, does what it's subject
-> says it's doing, thus breaking backwards compatibility.
->
 
-What about making strip a deprecated variant of lstrip?
+--=-71Zq7HSZEgNihvjsqcLN
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Thanks,
-Jake
+On Mon, 2017-02-06 at 19:57 -0500, Santiago Torres wrote:
+
+> IMHO, the notion of a PR/MR is more specific to Git repository
+> management tools (e.g., GitHub, GitLab). They all have specific
+> concepts/ways to manage the way how their hosted repositories behave ---
+> and I believe this flexibility is one of the beauties in Git . I could
+> see how this could be implemented by tools like this rather easily
+> (e.g., using symlinks + inotify or something less hacky).
+
+Right, but I would like to see this everywhere (including kernel.org),
+so support in=C2=A0git-daemon and the http/ssh equivalents is needed too.
+git already has support for anonymous push but this idea is more complex.
+
+> I'm wondering if standardizing this would be more interesting to those
+> communities?
+
+I've pitched this to github.com/contact but couldn't find any feature
+request address for GitLab.
+
+> I would like to see what becomes of this.
+
+Likewise :)
+
+--=20
+bye,
+pabs
+
+http://bonedaddy.net/pabs3/
+--=-71Zq7HSZEgNihvjsqcLN
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCAAdFiEEYQsotVz8/kXqG1Y7MRa6Xp/6aaMFAliZITgACgkQMRa6Xp/6
+aaNvyQ//Rel3JDV4HZ/X8RuYmYchnt5gdclb+zeHasNoUrR882nHUtLdf76Ta6B/
+2W997n9YhC905Px+A20eSk1+LS/6Nwq/a5FyxyznhprwD5PsP3OOafYD+C7ouguv
+JtFHhDiKtgV2WXIdZlNvrASMW+X2LE/Me8PnZZA/pKThkfJh/xfRRJjtuLSHZ+VN
+LDdOmfBD0x7B6F40Fmy7HUFv2fE+GyFDJQ54CKSX7qneA5XubuyJ8Kbhs73fhEjh
+q+NeuDWGbe+c/JYHfWtx7Tpt0Xpr8CwgqdQp78mfK+8a5FrvHCtPvPFKj+OABR4D
+1ioqP9xfcFdCSO8gyqfojhaYwumBjhaCQFz+/1QJBpFCSWmoWdP3Q1nCKnZD2HWH
+XzirxzQAxy337toqpPN3mV+kzN9xKA+R6C++gqeXLOMcEisAZBpSkxcfugeGbkQP
+5Pzv9cLc5xkDN5ZO4RKYW68KpwQjBlCvnqE4SL0XL1VSEYaWQoO1K2YHVyyXpKCn
+5o1H2QUsD7S5YjsNLKM9FAJvDO/fFKA4g1OwNYLQXCHT2ClmSf5xfyr+vyjVdEKH
+XK0eKWLKlrd8omp3vSgeaoKBC2MvYUS5paHiHtb8umu15DmJXw1MRwvkl4zNtNwB
+orAlWSDNXtdRMbH8WbssrxUy8H+lFbHOqdkcvhAd391jsfubKio=
+=StW5
+-----END PGP SIGNATURE-----
+
+--=-71Zq7HSZEgNihvjsqcLN--
