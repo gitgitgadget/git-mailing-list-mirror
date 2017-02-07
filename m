@@ -2,92 +2,140 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 21AF11FAF4
-	for <e@80x24.org>; Tue,  7 Feb 2017 06:32:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 39C911FAF4
+	for <e@80x24.org>; Tue,  7 Feb 2017 06:46:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752716AbdBGGcL (ORCPT <rfc822;e@80x24.org>);
-        Tue, 7 Feb 2017 01:32:11 -0500
-Received: from mail-pf0-f195.google.com ([209.85.192.195]:33862 "EHLO
-        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752530AbdBGGcK (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Feb 2017 01:32:10 -0500
-Received: by mail-pf0-f195.google.com with SMTP id y143so8581774pfb.1
-        for <git@vger.kernel.org>; Mon, 06 Feb 2017 22:32:10 -0800 (PST)
+        id S1752630AbdBGGqz (ORCPT <rfc822;e@80x24.org>);
+        Tue, 7 Feb 2017 01:46:55 -0500
+Received: from mail-qk0-f173.google.com ([209.85.220.173]:32777 "EHLO
+        mail-qk0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752068AbdBGGqz (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Feb 2017 01:46:55 -0500
+Received: by mail-qk0-f173.google.com with SMTP id s140so79046254qke.0
+        for <git@vger.kernel.org>; Mon, 06 Feb 2017 22:46:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:mime-version:content-disposition
-         :user-agent;
-        bh=aR9RIhkeEaCQKpB/6xEP3mIj8ue67KNZmwEo1xesAQ8=;
-        b=pbeMqhm+elFRw2+OEA+IA3J9+o98F5BXxyiFDMklZuQq8IvCUqlJy/xK3Ge3CbL0/u
-         n/+j39H5v3LTdvJvIzLTVRR6CyLBkWVCMW5FzfsKCPSoJAZKh9wPVA82RA9TmYDlcWva
-         4Ey6lHMO6pZHi2DzwzLqnSQM4VVgKv/GLRoxm8TNQKxCewrFOhnBffBmSLYRhLPydidi
-         puWeu4ggDVI6LM2SbHLgN4fFdjLgC6FYtCLDCyNajVYGPW1/8est7rz+yXDdllLSU+Z+
-         pK5yWWiB/u6KFAlRAhaqHbt8XFBGh5iXqwhzXfFaf8p+joWDEquetNkwlCuJqGBXDZ0x
-         f/ew==
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=lUbj4j2+/dg3h2cXeHdvD3gd/6tu9gSYiU44R87pZWk=;
+        b=bTnu7tsFM0T8RWEDJRlZ5HyK70BeQDoRxtOPzkc/rrFHUlfdAG0H0mVDifntMggdHp
+         PW7gbsXPMljsNcJ8oNWIHALKJUx89GwH4cU/2c6hI0kR2VNeiGmQK5vm3Rg5YUis9kYd
+         Hixgn9tF7yuKEkdL+bE04kWKSs4dUnvB52n8aSmxBtpYaVgWeWpdFjbpKzFYdowZQbp8
+         QJnHNfxk02S0RX+BNOr2thodFakSA3U/CljPIvPAqgwSsiqK9iqZxF72mFJUyWKCDMmD
+         q4wAk71uvNwAcqbOAZwPrw/zEBDoSzGW7PzYEmK92o3qosJ9EykL8CPYBPVtNMTGcmNl
+         yPQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
-         :content-disposition:user-agent;
-        bh=aR9RIhkeEaCQKpB/6xEP3mIj8ue67KNZmwEo1xesAQ8=;
-        b=qlWBbeG7eMT3ZK95Enh93nVr/XFvHD75IhmKRW3oZSHWVslFZ2RlbahzTkJ2FUv5rd
-         mqlwj91Q3zfZcTkkL2r6CxXWD7RMTBFwZno7KJmBI1VLqKtWK3z42lpDim609HfhZzNZ
-         uxkfqqCXotlL07ISMY7WSuKnDlmUJFnq7ViDEFZ4ya6FQpE0xKLJZayvD8Zn/4QXmzsU
-         kSL/Odmun5GBO3D7VgiQNMJ074rUnrtJZd/IROUSLG5euVHIzX2rT1cKUt/q0VZaXVZD
-         tNt62svGNHij6MpdqgL26tseOY7T7C75vCsyhnW6/rJI7F7A+tS59uEpFfrjvOl2XGV/
-         X7EQ==
-X-Gm-Message-State: AIkVDXKlZH3y/9PHDjT36zC0aj2rzYzw8xMyncG53UgClIaIKlZM5TyY71EWM+V+Otu1CQ==
-X-Received: by 10.84.132.1 with SMTP id 1mr23510323ple.44.1486449129580;
-        Mon, 06 Feb 2017 22:32:09 -0800 (PST)
-Received: from arch-attack.localdomain (c-50-152-192-15.hsd1.ca.comcast.net. [50.152.192.15])
-        by smtp.gmail.com with ESMTPSA id g70sm7525668pfb.50.2017.02.06.22.32.08
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 06 Feb 2017 22:32:09 -0800 (PST)
-Date:   Mon, 6 Feb 2017 22:32:07 -0800
-From:   Denton Liu <liu.denton@gmail.com>
-To:     gitster@pobox.com
-Cc:     git@vger.kernel.org, davvid@gmail.com
-Subject: [PATCH v2] Document the --no-gui option in difftool
-Message-ID: <20170207063207.GA12746@arch-attack.localdomain>
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=lUbj4j2+/dg3h2cXeHdvD3gd/6tu9gSYiU44R87pZWk=;
+        b=DqA10dyLE/TW673OucKHKxwbI4Jp2bAzbkHoPRxky/aPMUiMyW8wRcil9E4V+6CtaI
+         cz/c3RAK4QKu8Ze9Gw5GDyoEIo40QnihziEHntbsxecNHNObMnLkekBIg5SC6BtJP0if
+         I1dFF2L21FlKTAkxg7DYeRnAdNICo28Dfp2whnymdMuITxDXO6N38LmOPDV5f0f45g4W
+         UtNteJ+N0OlN5ddNYjdYs6AODjA4Y3cKjeDFx+4/T8rxam6teggzsezrM65/O3TF3fCW
+         8xo+BhTT83txGz4jUhJQ7fuKHR6lpFHU/pP4/Rusqo7ujNSjLFPvPqvFrws1gduOzlyw
+         c9hw==
+X-Gm-Message-State: AMke39nW+5m9zeiHcFpcmg78HIDlr6k2YNUJmXFAIxIRtJymeAuMxpFZlghLa3R7Kw/3zVPzGN9ZweK5lav4Cw==
+X-Received: by 10.233.220.134 with SMTP id q128mr12558517qkf.220.1486450013958;
+ Mon, 06 Feb 2017 22:46:53 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-User-Agent: Mutt/1.7.2 (2016-11-26)
+Received: by 10.237.47.7 with HTTP; Mon, 6 Feb 2017 22:46:53 -0800 (PST)
+In-Reply-To: <CABURp0qbKMfngfsC5pQeO+qyRPxa21vi090hMWDtLd+BBH_3Jg@mail.gmail.com>
+References: <CANOj2JG5VuDtS30PfOrZ=4q8pTv_frY7=p+0g=UW3yV6ev+1KQ@mail.gmail.com>
+ <CABURp0qbKMfngfsC5pQeO+qyRPxa21vi090hMWDtLd+BBH_3Jg@mail.gmail.com>
+From:   Ron Pero <rpero@magnadev.com>
+Date:   Mon, 6 Feb 2017 22:46:53 -0800
+X-Google-Sender-Auth: sE5J6Zu500jZijDg89KOnEhLfxo
+Message-ID: <CANOj2JGAaLLEHMs6KBf2PmCipqu-eYSGADzGGBzNVKwP0DTCtg@mail.gmail.com>
+Subject: Re: Request re git status
+To:     Phil Hord <phil.hord@gmail.com>
+Cc:     Ron Pero <rpero@magnadev.com>, Git <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Prior to this, the `--no-gui` option was not documented in the manpage.
-This commit introduces this into the manpage
+Hi Phil
 
-Signed-off-by: Denton Liu <liu.denton@gmail.com>
----
- Documentation/git-difftool.txt | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+Thanks very much for your reply.
 
-diff --git a/Documentation/git-difftool.txt b/Documentation/git-difftool.txt
-index 224fb3090..96c26e6aa 100644
---- a/Documentation/git-difftool.txt
-+++ b/Documentation/git-difftool.txt
-@@ -86,10 +86,11 @@ instead.  `--no-symlinks` is the default on Windows.
- 	Additionally, `$BASE` is set in the environment.
- 
- -g::
----gui::
-+--[no-]gui::
- 	When 'git-difftool' is invoked with the `-g` or `--gui` option
- 	the default diff tool will be read from the configured
--	`diff.guitool` variable instead of `diff.tool`.
-+	`diff.guitool` variable instead of `diff.tool`. The `--no-gui`
-+	option can be used to override this setting.
- 
- --[no-]trust-exit-code::
- 	'git-difftool' invokes a diff tool individually on each file.
--- 
-2.11.1
+I do understand why git status should not automatically fetch from the
+server. The solution is that I become aware of that nuance (yes, I am
+fairly new to git) and conduct myself that way.
 
+Still, one way or another, it was easy to feel tripped up by that and
+some kind of verbal cue could help.
+I wonder if this kind of message would help: Latest fetch: {timestamp}
+
+BTW, you might consider posting your answer on
+http://stackoverflow.com/questions/27828404/why-does-git-status-show-branch-is-up-to-date-when-changes-exist-upstream
+
+Why? Because someone suggested emailing this suggestion to git@vger.kernel.org.
+
+From the stackoverflow page:
+"It would certainly be possible to add that extra text (behind a
+config option so that redundant noise isn't shown if you how Git
+works) but asking for it here isn't going to change it, try emailing
+git@vger.kernel.org"
+
+In answer to a couple of your points, I was not using force. And I do
+understand that if I pushed to origin master it would have stopped the
+merge, alerting me to the conflict. Thanks for that.
+
+Thanks again,
+
+Ron
+
+On Mon, Feb 6, 2017 at 4:45 PM, Phil Hord <phil.hord@gmail.com> wrote:
+> On Mon, Feb 6, 2017 at 3:36 PM Ron Pero <rpero@magnadev.com> wrote:
+>> I almost got bit by git: I knew there were changes on the remote
+>> server, but git status said I was uptodate with the remote.
+>>
+>
+> Do you mean you almost pushed some changed history with "--force"
+> which would have lost others' changes?  Use of this option is
+> discouraged on shared branches for this very reason.  But if you do
+> use it, the remote will tell you the hash of the old branch so you can
+> undo the damage.
+>
+> But if you did not use --force, then you were not in danger of being
+> bit.  Git would have prevented the push in that case.
+>
+>
+>> Why ... not design it to [optionally] DO a fetch and THEN declare
+>> whether it is up to date?
+>
+> It's because `git status` does not talk to the remote server, by
+> design.  The only Git commands that do talk to the remote are push,
+> pull and fetch.  All the rest work off-line and they do so
+> consistently.
+>
+> Imagine `git status` did what you requested; that is, it first did a
+> fetch and then reported the status.  Suppose someone pushed a commit
+> to the remote immediately after your fetch completed.  Now git will
+> still report "up to date" but it will be wrong as soon as the remote
+> finishes adding the new push.  Yet the "up to date" message will
+> remain on your console, lying to you.  If you leave and come back in
+> two days, the message will remain there even if it is no longer
+> correct.
+>
+> So you should accept that `git status` tells you the status with
+> respect to your most recent fetch, and that you are responsible for
+> the timing of the most recent fetch.  To have git try to do otherwise
+> would be misleading.
+>
+>> Or change the message to tell what it really
+>> did, e.g. "Your branch was up-to-date with 'origin/master' when last
+>> checked at {timestamp}"? Or even just say, "Do a fetch to find out
+>> whether your branch is up to date"?
+>
+> These are reasonable suggestions, but i don't think the extra wording
+> adds anything for most users.  Adding a timestamp seems generally
+> useful, but it could get us into other trouble since we have to depend
+> on outside sources for timestamps.  :-\
