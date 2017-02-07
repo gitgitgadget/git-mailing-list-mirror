@@ -2,83 +2,76 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 52D271FAF4
-	for <e@80x24.org>; Tue,  7 Feb 2017 11:27:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C9CCA1FAF4
+	for <e@80x24.org>; Tue,  7 Feb 2017 11:51:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753486AbdBGL1j (ORCPT <rfc822;e@80x24.org>);
-        Tue, 7 Feb 2017 06:27:39 -0500
-Received: from mail-wm0-f50.google.com ([74.125.82.50]:37575 "EHLO
-        mail-wm0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753284AbdBGL1i (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Feb 2017 06:27:38 -0500
-Received: by mail-wm0-f50.google.com with SMTP id v77so150192610wmv.0
-        for <git@vger.kernel.org>; Tue, 07 Feb 2017 03:27:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=peakgames.net; s=google;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=jn7DHxocsfK9XKurU8UO43i4AkpaiRm96JiSqHEREko=;
-        b=rIk6C6tkdF6iFVd7O/pJogJhPiqfSFlNpMCkGzwCqxrAEwOWyysimLpTa0lahzumBj
-         IU6GUUwi39+X6fmI+s++bU9Cs/kGknyCu3cGJUDC760gZpNmfpH0JZZfhJH0Jr/7/G34
-         mwDag79B1NOdApMv8gJGead+3oELz4KdF7Fpc=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=jn7DHxocsfK9XKurU8UO43i4AkpaiRm96JiSqHEREko=;
-        b=cCgVKvOyRYUJewp2WhmjpTwmdPzBAi2kiNxlRfmECxDYGDvlkCHYku/nTR9BkYTNZ8
-         XhFvpWwr/KHvnOqqMy09YHCXk8M3YwKCSFD2xUlbQscvNnz85nUeyCmZ+Lta7qrU1hRW
-         khDYxED8xLp0urn8yE1hkfzFNZsBYcHZtFK8xsU9bFcTvBS/qF1VxLhwMi2u9VY/yX/8
-         QX01aVSu9lUnXxqGqn4q2LEURB6MFVy5PEw5QW4S71pZ86yIbq3f7O9uXvdlCPzvppU2
-         wBRA//I22cdJB3hskKJK0DmHzwU5h9pfHAkVJ05iQAFDOifAOBxKu3jApczOj3BJYThR
-         p77w==
-X-Gm-Message-State: AIkVDXL9jH1gMvJWBcjv0p7CZM3k6FvevQtW2gZDfjhELeyOQiKkBIQkUc0kyU7hOeGMHqRnZYJIAKy+B9Oz/2ma
-X-Received: by 10.223.164.207 with SMTP id h15mr13327578wrb.142.1486466856606;
- Tue, 07 Feb 2017 03:27:36 -0800 (PST)
-MIME-Version: 1.0
-Received: by 10.194.35.196 with HTTP; Tue, 7 Feb 2017 03:27:36 -0800 (PST)
-From:   Serdar Sahin <serdar@peakgames.net>
-Date:   Tue, 7 Feb 2017 14:27:36 +0300
-Message-ID: <CAL7ZE5xYVM6=C+SJLJ2HMFZ2gvuduw8p0UnS0RnBaXibj0mgDw@mail.gmail.com>
-Subject: Non-zero exit code without error
+        id S1753813AbdBGLv0 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 7 Feb 2017 06:51:26 -0500
+Received: from mout.gmx.net ([212.227.17.21]:56021 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752595AbdBGLv0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Feb 2017 06:51:26 -0500
+Received: from virtualbox ([37.201.192.48]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0Lxdfb-1cLprK1Ttz-017DQ6; Tue, 07
+ Feb 2017 12:51:17 +0100
+Date:   Tue, 7 Feb 2017 12:51:01 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
 To:     git@vger.kernel.org
-Content-Type: text/plain; charset=UTF-8
+cc:     Tim Pettersen <tim@atlassian.com>
+Subject: Re: Google Doc about the Contributors' Summit
+In-Reply-To: <alpine.DEB.2.20.1702021007460.3496@virtualbox>
+Message-ID: <alpine.DEB.2.20.1702071248430.3496@virtualbox>
+References: <alpine.DEB.2.20.1702021007460.3496@virtualbox>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:TguS5D9u4HjJ6x9mv04qgnmnuEbsozq0R8gY3Mh5uYxhLM2hJby
+ xF9xDgzGW9NR76ITYLrN9E4CbOyqXkseETUuTOdZz6YkoJnatvCrDKBhqcZI/o5cAkhIbb5
+ lxGZwvCqWjM5pjAGLd5zci0DioJXblOrRlOvFJ+xRNeMSBY+UY19mayoRND27B1Zha7bSdL
+ dXAslyJqhqX005tmgyChQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:q4Ww9lQEgWY=:ZMtkCVqFOL/lPUQn65uF81
+ 2EOkPGnVHh/aO2umplKHDu3auzyQRz2ZCfrjDnpdQg74rwMsczXvTvnrE4fGn5xa9rGQLerH2
+ DXnRfZvBo86GP+L50d7QMBbg6Zq6xAIIoubnzmn/pNtQe2UrfFIP7qt7k718NGBf2XpgXrG3P
+ l3BPyowMh9p9Aqe0/LEZ5+E93BMABNPEHMYxJmKaQnJmDH/dcuGNENjQ4UcYjmP68bjzF+PlF
+ tu19YD2Lec/LBGXmbwnCJQrJwxrVJyXEY4XVqReKUH+Klm6hkbG9OWYg2OvddMUtQhTQS4glp
+ eDstpoPErmwGVNgsu3ovE2ZVcFKoE1wpClOTfYkmwnQXTKuKT/mfawTyg7WKArkmB87p6LUqg
+ EuQ/0PvgIe+OQenj3JYeOoEMEcR20z0eMQFO2MAkGt1TOSKHgWWpYfTZ8V3w3LCF89w+P8Q+N
+ 8TL76rh6UHGlfyWwBZl+2pHu77yDGeEDvtmDZuatPnS8qr+tW9WbOgGUjKIXW2rZXefro8nPN
+ GZwUDYx/gqpS6MwfiNd/9V2Km9o8BIO3GWNpJHlIdqbgvX3Szqvgm0KrDYGQdovHedPQt34qK
+ ievPNW4wsTJjGv3bEwapCtBm6RmC+uPrb4tHgYmvv55sc90R5GVYZwm0+lSs03oIXox6fNYq/
+ SqFo11MaFrYaw65uJVIgXRkVk0Sk9bYvc3KWTaL4bx35z6zmB0qAevRgDomA40Dics/6BUnhH
+ wEhlD5JiQCUrjbgeD5J3nUHKULdN+QT7x6qHU9vBA2DqlaLMvZEZ6PM3JcPlcUUP0E49J7GjW
+ apujXOrXPjjT95AJ0W9ibcQZQX6W04oQaVsc4sxeZCOyy67qPhMeAqNeHEV4ssTlUos0xwe7M
+ iLHKtoD21aT71B5DOa1rjxGsdwQuQz9PwBboPYsmr6DjQQDxFbDzmtwtohDSeIL9HXzVxfgb3
+ 9W5JBAbsx3OfjXbYfsRseY64zUStvjf4BdOUwndcYVbESL/Z2RnclBthZWUg/IM6PZmOpIZ3L
+ LT7JJ7KXPFZbGExdnru26fs/bza9P1uCVUh+TPagNEUrO0sj6GU95OOaZOznkDV3jw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Hi team,
 
-When we execute the following lines, the exit code is 1, but it is
-unclear what is the reason of this exit code. Do you have any idea?
+On Thu, 2 Feb 2017, Johannes Schindelin wrote:
 
-git clone --mirror --depth 50 --no-single-branch
-git@github.hede.com:Casual/hodo-server.git
-Cloning into bare repository 'hodo-server.git'...
-remote: Counting objects: 3371, done.
-remote: Compressing objects: 100% (1219/1219), done.
-remote: Total 3371 (delta 2344), reused 2971 (delta 2098), pack-reused 0
-Receiving objects: 100% (3371/3371), 56.77 MiB | 2.18 MiB/s, done.
-Resolving deltas: 100% (2344/2344), done.
+> I just started typing stuff up in a Google Doc, and made it editable to
+> everyone, feel free to help and add things:
+> 
+> https://docs.google.com/document/d/1KDoSn4btbK5VJCVld32he29U0pUeFGhpFxyx9ZJDDB0/edit?usp=sharing
 
-echo $?
-0
+I am terribly sorry... yesterday I simply tried to restrict editing so
+that nobody would just spam the document, but in my haste I even disabled
+viewing.
 
-cd hodo-server.git/
+The link is functional again, sorry for that.
 
-GIT_CURL_VERBOSE=1 GIT_TRACE=1  git fetch --depth 50 origin
-cc086c96cdffe5c1ac78e6139a7a4b79e7c821ee
-14:12:35.215889 git.c:350               trace: built-in: git 'fetch'
-'--depth' '50' 'origin' 'cc086c96cdffe5c1ac78e6139a7a4b79e7c821ee'
-14:12:35.217273 run-command.c:336       trace: run_command: 'ssh'
-'git@github.hede.com' 'git-upload-pack '\''Casual/hodo-server.git'\'''
-14:12:37.301122 run-command.c:336       trace: run_command: 'gc' '--auto'
-14:12:37.301866 exec_cmd.c:189          trace: exec: 'git' 'gc' '--auto'
-14:12:37.304473 git.c:350               trace: built-in: git 'gc' '--auto'
+Thanks, Tim, for reporting the problem!
 
-echo $?
-1
+Ciao,
+Dscho
