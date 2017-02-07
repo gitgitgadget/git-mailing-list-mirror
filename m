@@ -2,76 +2,83 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C9CCA1FAF4
-	for <e@80x24.org>; Tue,  7 Feb 2017 11:51:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1EB7A1FAF4
+	for <e@80x24.org>; Tue,  7 Feb 2017 11:56:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753813AbdBGLv0 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 7 Feb 2017 06:51:26 -0500
-Received: from mout.gmx.net ([212.227.17.21]:56021 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752595AbdBGLv0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Feb 2017 06:51:26 -0500
-Received: from virtualbox ([37.201.192.48]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0Lxdfb-1cLprK1Ttz-017DQ6; Tue, 07
- Feb 2017 12:51:17 +0100
-Date:   Tue, 7 Feb 2017 12:51:01 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     git@vger.kernel.org
-cc:     Tim Pettersen <tim@atlassian.com>
-Subject: Re: Google Doc about the Contributors' Summit
-In-Reply-To: <alpine.DEB.2.20.1702021007460.3496@virtualbox>
-Message-ID: <alpine.DEB.2.20.1702071248430.3496@virtualbox>
-References: <alpine.DEB.2.20.1702021007460.3496@virtualbox>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+        id S1753994AbdBGL4F convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Tue, 7 Feb 2017 06:56:05 -0500
+Received: from zimbra-vnc.tngtech.com ([83.144.240.98]:51573 "EHLO
+        proxy.tng.vnc.biz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753522AbdBGL4E (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Feb 2017 06:56:04 -0500
+Received: from localhost (localhost [127.0.0.1])
+        by proxy.tng.vnc.biz (Postfix) with ESMTP id 338371E2CF8
+        for <git@vger.kernel.org>; Tue,  7 Feb 2017 12:56:01 +0100 (CET)
+Received: from proxy.tng.vnc.biz ([127.0.0.1])
+        by localhost (proxy.tng.vnc.biz [127.0.0.1]) (amavisd-new, port 10032)
+        with ESMTP id 6ZwVnwSK64zP for <git@vger.kernel.org>;
+        Tue,  7 Feb 2017 12:56:00 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+        by proxy.tng.vnc.biz (Postfix) with ESMTP id B5B211E2D92
+        for <git@vger.kernel.org>; Tue,  7 Feb 2017 12:56:00 +0100 (CET)
+X-Virus-Scanned: amavisd-new at 
+Received: from proxy.tng.vnc.biz ([127.0.0.1])
+        by localhost (proxy.tng.vnc.biz [127.0.0.1]) (amavisd-new, port 10026)
+        with ESMTP id ZcDk54bA3Vci for <git@vger.kernel.org>;
+        Tue,  7 Feb 2017 12:56:00 +0100 (CET)
+Received: from [192.168.178.64] (46.128.140.114.dynamic.cablesurf.de [46.128.140.114])
+        by proxy.tng.vnc.biz (Postfix) with ESMTPSA id 89CD01E2C35
+        for <git@vger.kernel.org>; Tue,  7 Feb 2017 12:56:00 +0100 (CET)
+From:   Cornelius Weig <cornelius.weig@tngtech.com>
+Subject: [RFC] mailmap.blob overrides default .mailmap
+To:     "git@vger.kernel.org" <git@vger.kernel.org>
+Message-ID: <77c0182b-8c4f-9727-f56f-d8e2bad8146d@tngtech.com>
+Date:   Tue, 7 Feb 2017 12:56:00 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.7.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:TguS5D9u4HjJ6x9mv04qgnmnuEbsozq0R8gY3Mh5uYxhLM2hJby
- xF9xDgzGW9NR76ITYLrN9E4CbOyqXkseETUuTOdZz6YkoJnatvCrDKBhqcZI/o5cAkhIbb5
- lxGZwvCqWjM5pjAGLd5zci0DioJXblOrRlOvFJ+xRNeMSBY+UY19mayoRND27B1Zha7bSdL
- dXAslyJqhqX005tmgyChQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:q4Ww9lQEgWY=:ZMtkCVqFOL/lPUQn65uF81
- 2EOkPGnVHh/aO2umplKHDu3auzyQRz2ZCfrjDnpdQg74rwMsczXvTvnrE4fGn5xa9rGQLerH2
- DXnRfZvBo86GP+L50d7QMBbg6Zq6xAIIoubnzmn/pNtQe2UrfFIP7qt7k718NGBf2XpgXrG3P
- l3BPyowMh9p9Aqe0/LEZ5+E93BMABNPEHMYxJmKaQnJmDH/dcuGNENjQ4UcYjmP68bjzF+PlF
- tu19YD2Lec/LBGXmbwnCJQrJwxrVJyXEY4XVqReKUH+Klm6hkbG9OWYg2OvddMUtQhTQS4glp
- eDstpoPErmwGVNgsu3ovE2ZVcFKoE1wpClOTfYkmwnQXTKuKT/mfawTyg7WKArkmB87p6LUqg
- EuQ/0PvgIe+OQenj3JYeOoEMEcR20z0eMQFO2MAkGt1TOSKHgWWpYfTZ8V3w3LCF89w+P8Q+N
- 8TL76rh6UHGlfyWwBZl+2pHu77yDGeEDvtmDZuatPnS8qr+tW9WbOgGUjKIXW2rZXefro8nPN
- GZwUDYx/gqpS6MwfiNd/9V2Km9o8BIO3GWNpJHlIdqbgvX3Szqvgm0KrDYGQdovHedPQt34qK
- ievPNW4wsTJjGv3bEwapCtBm6RmC+uPrb4tHgYmvv55sc90R5GVYZwm0+lSs03oIXox6fNYq/
- SqFo11MaFrYaw65uJVIgXRkVk0Sk9bYvc3KWTaL4bx35z6zmB0qAevRgDomA40Dics/6BUnhH
- wEhlD5JiQCUrjbgeD5J3nUHKULdN+QT7x6qHU9vBA2DqlaLMvZEZ6PM3JcPlcUUP0E49J7GjW
- apujXOrXPjjT95AJ0W9ibcQZQX6W04oQaVsc4sxeZCOyy67qPhMeAqNeHEV4ssTlUos0xwe7M
- iLHKtoD21aT71B5DOa1rjxGsdwQuQz9PwBboPYsmr6DjQQDxFbDzmtwtohDSeIL9HXzVxfgb3
- 9W5JBAbsx3OfjXbYfsRseY64zUStvjf4BdOUwndcYVbESL/Z2RnclBthZWUg/IM6PZmOpIZ3L
- LT7JJ7KXPFZbGExdnru26fs/bza9P1uCVUh+TPagNEUrO0sj6GU95OOaZOznkDV3jw==
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8BIT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi team,
+Hi,
 
-On Thu, 2 Feb 2017, Johannes Schindelin wrote:
+ I was reading into the mailmap handling today and I'm a bit puzzled by the overriding behavior.
 
-> I just started typing stuff up in a Google Doc, and made it editable to
-> everyone, feel free to help and add things:
-> 
-> https://docs.google.com/document/d/1KDoSn4btbK5VJCVld32he29U0pUeFGhpFxyx9ZJDDB0/edit?usp=sharing
+This is what the documentation says about precedence (emphasis mine):
+-------------
+mailmap.file
+    The location of an augmenting mailmap file. The default mailmap, located
+    in the root of the repository, is loaded first, then the mailmap file
+    pointed to by this variable. The location of the mailmap file may be in a
+    repository subdirectory, or somewhere outside of the repository itself.
+    See git-shortlog(1) and git-blame(1).
 
-I am terribly sorry... yesterday I simply tried to restrict editing so
-that nobody would just spam the document, but in my haste I even disabled
-viewing.
+mailmap.blob
+    Like mailmap.file, but consider the value as a reference to a blob in the
+    repository. If both mailmap.file and mailmap.blob are given, both are
+!!! parsed, with _entries from mailmap.file taking precedence_. In a bare
+    repository, this defaults to HEAD:.mailmap. In a non-bare repository, it
+    defaults to empty.
+------------
 
-The link is functional again, sorry for that.
+So from the doc I would have expected that files always get precedence over the blob. IOW entries from .mailmap override entries from mailmap.blob. However, this is not the case.
 
-Thanks, Tim, for reporting the problem!
+The code shows why (mailmap.c):
+	err |= read_mailmap_file(map, ".mailmap", repo_abbrev);
+	if (startup_info->have_repository)
+		err |= read_mailmap_blob(map, git_mailmap_blob, repo_abbrev);
+	err |= read_mailmap_file(map, git_mailmap_file, repo_abbrev);
 
-Ciao,
-Dscho
+
+Apparently this is not an oversight, because there is an explicit test for this overriding behavior (t4203 'mailmap.blob overrides .mailmap').
+
+So I wonder: what is the rationale behind this? I find this mixed overriding behavior hard to explain and difficult to understand.
+
