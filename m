@@ -2,77 +2,65 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 029FF1FAF4
-	for <e@80x24.org>; Tue,  7 Feb 2017 08:16:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9558B1FAF4
+	for <e@80x24.org>; Tue,  7 Feb 2017 09:00:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752872AbdBGIQs (ORCPT <rfc822;e@80x24.org>);
-        Tue, 7 Feb 2017 03:16:48 -0500
-Received: from mail-io0-f172.google.com ([209.85.223.172]:33628 "EHLO
-        mail-io0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751927AbdBGIQr (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Feb 2017 03:16:47 -0500
-Received: by mail-io0-f172.google.com with SMTP id v96so84695642ioi.0
-        for <git@vger.kernel.org>; Tue, 07 Feb 2017 00:16:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=cQHC0VoxwM6PA+N3h9oHE21nuBfUZgf8eBCEs/F6p+w=;
-        b=DgjaRa4vC4EQWw5g0lwhOVftJ7RDO1CbmZS6UoQtYgZUh65fITWUQDGqO9UF15n1yL
-         rrbEeXmVuqT3eU4scbtjZj75/SbJ2r7AdASxn82wkU5V7sLDyjGMT7BoVgyXBoPQGOR/
-         RwUau2mr13Tym0dil6NoF3k1PUtDJl9tWinFVH9wG58zOXVyFjYGb+cGbtfy5U8tutfQ
-         nyHS2oKhiHwJLpCWZfDAZdwJFxRupgeUzie0hCDzgG0r5z/F2EKeGMkJg6gI5MgY3vvO
-         ufqidTe7c1AXYHCApNpI2JISnhW2bjqVm7ZV1IRB87wtGau5omG/AToirQHS6x+2+Ed+
-         /tfw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=cQHC0VoxwM6PA+N3h9oHE21nuBfUZgf8eBCEs/F6p+w=;
-        b=N+3/QtBAEUQh56L7ym4NirLWLQDPCYU0lmxuV4VwRRAauMxNvBeVcHgER7UraAbLP7
-         YNcRTQmxA7gloQR+VXFmXUSxw4XXZ/xpM3ELh/q/Jg+qm0F2Z75Ht4Rh95DYmLvL51SL
-         tNawNgmqZADlLoLtUL4GPujoXPMWdGmEcJ32OCecIBCoYE0vSYZtcX0GkP4iXDeH3raM
-         Iyb6ZB1l5UbGSY/+0xmimpqlePIM0rgpoXJO8xolSZ+OzQ16KbHMTEcWluycQBdu98OC
-         y/FJTEa98rfnDTXDZTj15eVCcLl3KG4yM3z3gUmNoocRuQ2jLxWjSPWpaWsqlLleTrlO
-         Gutg==
-X-Gm-Message-State: AMke39m8aq8Oqt+s7VrQkX5PyzyYfG3F6EMyOfxxkrMK/mLL/sb3OWeFSmSEwZkagvTiZIbH1P4sOLtV0ssqmw==
-X-Received: by 10.107.175.199 with SMTP id p68mr12310880ioo.80.1486455406973;
- Tue, 07 Feb 2017 00:16:46 -0800 (PST)
+        id S1751995AbdBGJAJ (ORCPT <rfc822;e@80x24.org>);
+        Tue, 7 Feb 2017 04:00:09 -0500
+Received: from bsmtp2.bon.at ([213.33.87.16]:19206 "EHLO bsmtp5.bon.at"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1751094AbdBGJAI (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Feb 2017 04:00:08 -0500
+Received: from bsmtp4.bon.at (unknown [192.168.181.108])
+        by bsmtp5.bon.at (Postfix) with ESMTPS id 3vHdZt6GpMz5vHd
+        for <git@vger.kernel.org>; Tue,  7 Feb 2017 10:00:06 +0100 (CET)
+Received: from dx.site (unknown [93.83.142.38])
+        by bsmtp4.bon.at (Postfix) with ESMTPSA id 3vHdZr3lWdz5tlq;
+        Tue,  7 Feb 2017 10:00:04 +0100 (CET)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+        by dx.site (Postfix) with ESMTP id 398062824;
+        Tue,  7 Feb 2017 10:00:03 +0100 (CET)
+Subject: Re: [PATCH v2 0/7] completion bash: add more options and commands
+To:     Junio C Hamano <gitster@pobox.com>
+References: <20170203110159.377-1-cornelius.weig@tngtech.com>
+ <xmqqd1ev100b.fsf@gitster.mtv.corp.google.com>
+Cc:     cornelius.weig@tngtech.com, git@vger.kernel.org,
+        szeder.dev@gmail.com
+From:   Johannes Sixt <j6t@kdbg.org>
+Message-ID: <5c8d6f15-e37f-f92f-5eb3-2e6224b2a92f@kdbg.org>
+Date:   Tue, 7 Feb 2017 10:00:03 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.7.0
 MIME-Version: 1.0
-Received: by 10.107.12.223 with HTTP; Tue, 7 Feb 2017 00:16:46 -0800 (PST)
-From:   Stavros Liaskos <st.liaskos@gmail.com>
-Date:   Tue, 7 Feb 2017 09:16:46 +0100
-Message-ID: <CAEXhnECi3LvSA92dSjL5PZ1Lx9p1PWELS04nmfJW=8K9o4T-0Q@mail.gmail.com>
-Subject: subtree merging fails
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset=UTF-8
+In-Reply-To: <xmqqd1ev100b.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset=iso-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Following the instructions here:
-https://git-scm.com/book/en/v1/Git-Tools-Subtree-Merging
-will lead to an error.
+Am 06.02.2017 um 22:29 schrieb Junio C Hamano:
+> cornelius.weig@tngtech.com writes:
+>
+>> From: Cornelius Weig <cornelius.weig@tngtech.com>
+>>
+>> This is the re-roll of patch series <20170122225724.19360-1-cornelius.weig@tngtech.com>.
+>>
+>> This patch series adds all long-options that are mentioned in the synopsis of
+>> the man-page for the respective git-command. There are only a few exceptions,
+>> as discussed in the above thread. For example, no unsafe options should be
+>> completed.
+>> Furthermore, the patches add subommand option completion for git-submodule and
+>> git-remote.
+>
+> Reviewers, do these look good now?
 
-In particular, if the subtree is merged and then updated, this command
-that is supposed to update the local subtree fails with a fatal:
-refusing to merge unrelated histories error.
+My concerns have been addressed. The patches look good from a cursory read.
 
-$ git merge --squash -s subtree --no-commit rack_branch
+-- Hannes
 
-A workaround could be using the --allow-unrelated-histories option
-
-$ git merge --squash --allow-unrelated-histories -s subtree
---no-commit rack_branch
-
-But this completely destroys my project by pushing the subtree
-contents into a completely irrelevant directory in my project (no in
-the subtree).
-
-Any ideas??
-
-https://github.com/git/git-scm.com/issues/896#issuecomment-277587626
