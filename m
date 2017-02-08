@@ -2,73 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 05ED61FCC7
-	for <e@80x24.org>; Wed,  8 Feb 2017 06:40:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 46DD71FCC7
+	for <e@80x24.org>; Wed,  8 Feb 2017 06:40:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753674AbdBHGkJ (ORCPT <rfc822;e@80x24.org>);
-        Wed, 8 Feb 2017 01:40:09 -0500
-Received: from mail-oi0-f43.google.com ([209.85.218.43]:34454 "EHLO
-        mail-oi0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752924AbdBHGkI (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1753682AbdBHGkL (ORCPT <rfc822;e@80x24.org>);
+        Wed, 8 Feb 2017 01:40:11 -0500
+Received: from mail-lf0-f65.google.com ([209.85.215.65]:33100 "EHLO
+        mail-lf0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753599AbdBHGkI (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 8 Feb 2017 01:40:08 -0500
-Received: by mail-oi0-f43.google.com with SMTP id s203so76897890oie.1
-        for <git@vger.kernel.org>; Tue, 07 Feb 2017 22:39:39 -0800 (PST)
+Received: by mail-lf0-f65.google.com with SMTP id x1so8462185lff.0
+        for <git@vger.kernel.org>; Tue, 07 Feb 2017 22:40:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=QvXB+cM7ojH6xF0XZhbHkCZCUa1l8m6TZs21VWUav7o=;
-        b=iZUq6AsdOrzV024a+PyEeQJlychLyMWowRttN0xHKUlUXo1Qn/S/dm6Bngnvzy/O+5
-         BteEpMUAD1IjCbdW4LfcE2uCuZZq6M9WLBzquk0ZU2MO3AYa0lD5TVTItG1y7OboNxGx
-         Fq2FdY/MBje9cHAP8r3kXI7iHwbSAro2kL43ZdflUqrtaFb/ELvx669dIU2xSUgYPFRp
-         TF0FXPqY35jBekioPO/VjyBwQWEKdCnWOIUR3aUIY7mkUzCxol37nVYn/QO2+QdrkAcK
-         FjV6Pmo+KCznLIOVhdUH6GGq3XXZOClCnD2ekr18jRvHWw9n/S/QTARsg4GRY38y12Qq
-         GAuw==
+        bh=5P726X4xNgcTupuehTGacaHGhQG1n0XK1umyS4jDDSE=;
+        b=lnWFZt+/FMjZH33KVflb1LC88wtQkr2OzkBonToCnGb3GkstTsrjJp+o1i+jUmMerE
+         7CgbXzv3kQl6YchSO9KejZzpezqK59AsWJ3Mu6joTPP1MbV9UWWTPJBhoEJ2JORr6FoM
+         odGOC109zYhld2veZn9qYU0SjKPZO507W4lsAwL6qWw/i9qhfXy4x/awRnC4w7vRYz43
+         oP/dKcNZBghRxFBEN0ycInlGJLzC/9VVyEaMlhBeS4He9xFxbxpBIn1IeXESjFHS34Ej
+         KvTlJ7YXlOaZHs93I8rl2Rj6EaNAByntykOM+0F2kJ+CV1f67nIgrcWMvdFmKxwpyZgy
+         W0Nw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=QvXB+cM7ojH6xF0XZhbHkCZCUa1l8m6TZs21VWUav7o=;
-        b=AlDQXXl+M8O3Jm4pgiLr4REwt514KDCgFz7YlTxprfIKuzV+q8OCFj247nxg0jbZ4P
-         Aw48RKpNhdkgM29Eudmv4dCxsNx8qBw0oH58u7vLOJEPDlXhrS5z1SC7wPKwkNuK91fN
-         gS+t3fFlvQwmlP/trcJ2r8Q4JfHN6fkOTTiW5hC6Aj2afgPv8eZtPtzCCDlogeoO3lsa
-         PDEboL0D4lDfuUN7h0DpNYBloAZR9SPkvj90k/FilwWO7Ts4FZpZX5A9oHuZCeDz9CrN
-         0zPp6fz81tRrl4WjKONOSSSzuI1ggtFOabvUOem/6VvpQMQi8fNHdccxeAHpIChWMlwg
-         4v2g==
-X-Gm-Message-State: AMke39nrsrA8B6MOzsnii8LLW6R9zY/1x+kfcPQ3389/oxvxB0bPZIys/m5z2wui4ygovfmuvIJSd0o57JfO4A==
-X-Received: by 10.202.182.7 with SMTP id g7mr9926008oif.175.1486535978699;
- Tue, 07 Feb 2017 22:39:38 -0800 (PST)
+        bh=5P726X4xNgcTupuehTGacaHGhQG1n0XK1umyS4jDDSE=;
+        b=DnLP+6a6QgavaDnlMTXxL4ZLzZWR175W7h38sVBquLkhe2/5Hytr1KitPVnAep2GFf
+         /jXFEVthPf4EgcekrfrXfyGfJr8ApF0rffIevjcTyCGK29nIZNoewpIsWfwkSYcskYsF
+         dMDkAHdKj3pf0wwDrpTo3uRh+1Cx15rwNBLzC3q9TgzjyAf/SO6d6AF86S6vdhxGd+N/
+         Glb3ZuwF+gxhuYC/hDDANjOfD/jwLf9N/USt1CeSZVt9OeXI0SCINETEenCExOmyUFpt
+         rrComS4jLWMUHyG5N3GLH981K3FoE4TwyS/LqQEr+tTEwelrcwsBCh0ZkIjct1FACuKS
+         yxgg==
+X-Gm-Message-State: AIkVDXLhNWDpmnQWgdHuioYKQqSKrlcv16fx7MLjJ+qMQoCWhJL1DJJTTYARaqdmr+uKZK3IwRTNMJUafMkInQ==
+X-Received: by 10.46.69.215 with SMTP id s206mr7725690lja.26.1486535454256;
+ Tue, 07 Feb 2017 22:30:54 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.74.158.1 with HTTP; Tue, 7 Feb 2017 22:39:08 -0800 (PST)
-In-Reply-To: <alpine.LFD.2.20.1702072112160.25002@i7.lan>
-References: <CA+55aFyznf1k=iyiQx6KLj3okpid0-HexZWsVkxt7LqCdz+O5A@mail.gmail.com>
- <CA+55aFzkTZAb1vy3G5M_Nb1BeOhTiCGksUfLa+ZQtiU2x6Q=Fw@mail.gmail.com>
- <alpine.LFD.2.20.1702071739060.17609@i7.lan> <xmqqefz9xv0x.fsf@gitster.mtv.corp.google.com>
- <CA+55aFwPLtuPciN1o_03CwkKqFWgZd_br9Q14qyr7a7N7mxTeA@mail.gmail.com>
- <xmqqa89xxtnd.fsf@gitster.mtv.corp.google.com> <CA+55aFyAEaMKA+2oPJct4ffJ0-_z2vrYxmQ9yrkbxzB3Hk6WfQ@mail.gmail.com>
- <xmqq4m05xph4.fsf@gitster.mtv.corp.google.com> <alpine.LFD.2.20.1702072112160.25002@i7.lan>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Wed, 8 Feb 2017 13:39:08 +0700
-Message-ID: <CACsJy8AQmg+oRYATU8_gR6zY-=sPN3m9PKtk-kytkSKGK+GG1g@mail.gmail.com>
-Subject: Re: Fwd: Possibly nicer pathspec syntax?
-To:     Linus Torvalds <torvalds@linux-foundation.org>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Git Mailing List <git@vger.kernel.org>
+Received: by 10.25.145.14 with HTTP; Tue, 7 Feb 2017 22:30:33 -0800 (PST)
+In-Reply-To: <CACsJy8CWJvwSnmdpMg=atu+M8=4ksrTAYTgZyF5U7JnOCnPAkg@mail.gmail.com>
+References: <CANOj2JG5VuDtS30PfOrZ=4q8pTv_frY7=p+0g=UW3yV6ev+1KQ@mail.gmail.com>
+ <CABURp0qbKMfngfsC5pQeO+qyRPxa21vi090hMWDtLd+BBH_3Jg@mail.gmail.com>
+ <CAJZjrdWbqvBRtyyfhgAt1E9ZdTUaz+Zpk7iGasNoeSuFJbsKog@mail.gmail.com>
+ <CA+P7+xoZHOtURfbBbHHTpC3DsGxaGOVToqmW5wTg2EniRpL-Cg@mail.gmail.com> <CACsJy8CWJvwSnmdpMg=atu+M8=4ksrTAYTgZyF5U7JnOCnPAkg@mail.gmail.com>
+From:   Jacob Keller <jacob.keller@gmail.com>
+Date:   Tue, 7 Feb 2017 22:30:33 -0800
+Message-ID: <CA+P7+xqg9b+49P6bO65E0q4a87BkNL76XGiUjcMg+UmDcU=WPg@mail.gmail.com>
+Subject: Re: Request re git status
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Samuel Lijin <sxlijin@gmail.com>, Phil Hord <phil.hord@gmail.com>,
+        Ron Pero <rpero@magnadev.com>, Git <git@vger.kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Feb 8, 2017 at 12:12 PM, Linus Torvalds
-<torvalds@linux-foundation.org> wrote:
-> Two-patch series to follow.
+On Tue, Feb 7, 2017 at 10:13 PM, Duy Nguyen <pclouds@gmail.com> wrote:
+> On Wed, Feb 8, 2017 at 2:18 AM, Jacob Keller <jacob.keller@gmail.com> wrote:
+>> Personally, I think that the fact that Git forces the user to think
+>> about it in terms of "oh I have to fetch" instead of that happening
+>> automatically, it helps teach the model to the user. If it happened in
+>> the background then the user might not be confronted with the
+>> distributed nature of the tool.
+>
+> I agree. But I think there is some room for improvement. Do we know
+> when the last fetch of the relevant upstream is? If we do, and if it's
+> been "a while" (configurable), then we should make a note suggesting
+> fetching again in git-status.
+>
+> This is not exactly my own idea. Gentoo's portage (i.e. friends with
+> apt-get, yum... if you're not familiar) also has this explicit "fetch"
+> operation, which is called sync. If you haven't sync'd in a while and
+> try to install new package, you get a friendly message (that helps me
+> a couple times).
+> --
+> Duy
 
-glossary-content.txt update for both patches would be nice.
--- 
-Duy
+That seems reasonable.
+
+Thanks,
+Jake
