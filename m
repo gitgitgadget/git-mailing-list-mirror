@@ -2,105 +2,127 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E94F21FC46
-	for <e@80x24.org>; Wed,  8 Feb 2017 00:34:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 42D4E1FC46
+	for <e@80x24.org>; Wed,  8 Feb 2017 00:54:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932739AbdBHAeL (ORCPT <rfc822;e@80x24.org>);
-        Tue, 7 Feb 2017 19:34:11 -0500
-Received: from mail-ua0-f175.google.com ([209.85.217.175]:32957 "EHLO
-        mail-ua0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932077AbdBHAeL (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Feb 2017 19:34:11 -0500
-Received: by mail-ua0-f175.google.com with SMTP id i68so97886260uad.0
-        for <git@vger.kernel.org>; Tue, 07 Feb 2017 16:34:10 -0800 (PST)
+        id S932288AbdBHAy0 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 7 Feb 2017 19:54:26 -0500
+Received: from mail-pf0-f194.google.com ([209.85.192.194]:33508 "EHLO
+        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932077AbdBHAy0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Feb 2017 19:54:26 -0500
+Received: by mail-pf0-f194.google.com with SMTP id e4so10327114pfg.0
+        for <git@vger.kernel.org>; Tue, 07 Feb 2017 16:54:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=YMkfxo1bc3/kpAUXxOi0XpzGaIBhgjJ62v7M55W+slk=;
-        b=I9rGn0SkLxa93QrGwPIEFFi3Q3nXGDd7n+hWj+nogLejtaWQU+EqLM6fLhhOgHQMRI
-         B4X3tm7sGsCUzZCB0zyQvUZJ6pzP0pXF7jMCO0+rK2kzAdEin/VBvJnw9gIVXssBPtuc
-         jMtCXy/f1ivtNRrGMnMhbQskOroTbb5z3DEZDM7P6jhlZtq94tO//fXXV7reJS1Kslpd
-         sylx9mLHU5jcchQxcMvOUerOvO8pzZ94dPyMu3a7ZkEj+7uimH5Am3unB1ntioh3ZaRO
-         NOKDd+jXBq7H3Awh72fhCrtBZfrVPPZWNoIaFwwV6yF4ND2tsyLdOc4PnXGKkp5ztbMR
-         vxKg==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=MkvZAwKGnr2Z+2yxrml2tRLKJHRO+Js9Yc2ZHNKFUOI=;
+        b=HGBII1eY0aEaf35l6juLqqux3SyRYOGWXOGyQtbKj09qHjG3C2LWTvgJ66tvv6CgRP
+         nh1a6qSc3nQmHYHiqSqsTvZkESUpCHG1pwUvwFZDjpQUEUfTlew9lzGUaX4PQ98ibqrq
+         rjEPP63p9YcKN+qQs1veYbk6WXaNYjtOVMO8ZiO6NwwL/sqmgNl6Igsoj18i+wD0WleX
+         5LkuRDnuK9iNlpZ+U3PTVjUxjsCvQbQYpm/tiOg2vB3HxpWR+nESx9tU4Amgn+hSYrOS
+         iT0Mt8Zre3MgUzfe8ti6Qvr9lmhQzOfViwm3nXPXIHAYvQfx0WrIdoYVXbLecSytI+Vi
+         Natg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=YMkfxo1bc3/kpAUXxOi0XpzGaIBhgjJ62v7M55W+slk=;
-        b=hZlaFrfO4HspOTPYVfuuNL7YZ2q6Uyq3RYvraBalXeuBVxiUtzrOgUo6sCGcNCuQiN
-         1yAmurIdAeIGY4ZwwtrUnKqNgGezk6XVBnpmPeaNkgBiDB4dTO3m3zg33fUTd6v/RFWo
-         Akf4mX7CJSUyOLbJgYFlw8AEGPU+udbUq7IaWtqlMMdRixaqNXaOrPcO4sTOMxLpuFXK
-         ouPHN+0cL8lhYEK7D0ehss10LzqpFZU/ik7KH++vc0MmMmnoxdpihE8sCYmRlhGZqx9T
-         dKa1LqS2I83TlxlX15JJJJSlnsRya/xUbkW0AsbV3WYKMc5wnuHOdOKeZfI3jcP9Ht1+
-         xOgg==
-X-Gm-Message-State: AMke39lv8BgaECxtZXegXjw484ZDqjskzKDXnK40g5B9YtcGZP3UaY5x/2eqstNQT/wMm6Jj0Log2pu+PJO/xw==
-X-Received: by 10.176.6.106 with SMTP id f97mr9455013uaf.118.1486514050045;
- Tue, 07 Feb 2017 16:34:10 -0800 (PST)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=MkvZAwKGnr2Z+2yxrml2tRLKJHRO+Js9Yc2ZHNKFUOI=;
+        b=IDnA6Yr0wFAVOr4AesHCSPONmE7YmpufRJ16d3rUllHuAJ5eEbchlxRB4LcdkLZQu8
+         uiXPzteP/mU8DrmSsm+qdWvIx6KR4DQCX9+V16RaRKMK98gOInDlTaOietebTq+uYj1r
+         uh0UIYxCD/I40mHDju347bFDQDWCrM0e7yxVt172WwslXqUTvfQPFaLOSeHI1LtvyGBd
+         w6Jp/fhTHYLZCvPFHfBsjXjefcgr4rb8e4Ao8M8u7qBNTvKCJbY0J3PYNZxJQMFaNaYo
+         2BELjB2CmlH1qYE/hlOsURbJNRNoowvZrEpTnFGg0yRLCCeim1IKpUeZUi8WAFZb2tGb
+         tGXw==
+X-Gm-Message-State: AMke39l8SLT5vKTrYHO93iYgQ9QRyLObG/xaJo0DVraReAj+q39aFN7WZfgLHLhImGXj7Q==
+X-Received: by 10.84.248.11 with SMTP id p11mr611072pll.72.1486515260110;
+        Tue, 07 Feb 2017 16:54:20 -0800 (PST)
+Received: from localhost ([2620:0:1000:8622:1564:f4f3:f1b4:c9b2])
+        by smtp.gmail.com with ESMTPSA id 88sm14420598pfr.41.2017.02.07.16.54.18
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Tue, 07 Feb 2017 16:54:19 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Linus Torvalds <torvalds@linux-foundation.org>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Subject: Re: Fwd: Possibly nicer pathspec syntax?
+References: <CA+55aFyznf1k=iyiQx6KLj3okpid0-HexZWsVkxt7LqCdz+O5A@mail.gmail.com>
+        <CA+55aFzkTZAb1vy3G5M_Nb1BeOhTiCGksUfLa+ZQtiU2x6Q=Fw@mail.gmail.com>
+Date:   Tue, 07 Feb 2017 16:54:18 -0800
+In-Reply-To: <CA+55aFzkTZAb1vy3G5M_Nb1BeOhTiCGksUfLa+ZQtiU2x6Q=Fw@mail.gmail.com>
+        (Linus Torvalds's message of "Tue, 7 Feb 2017 15:12:33 -0800")
+Message-ID: <xmqqinoly01x.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.159.34.48 with HTTP; Tue, 7 Feb 2017 16:33:29 -0800 (PST)
-In-Reply-To: <20170206183429.sd7255b3ovvg746c@sigill.intra.peff.net>
-References: <CAJZjrdX_8tjMhRac9QQOW8m_S2DprFPV=uZp8mFT+g6bASVd-w@mail.gmail.com>
- <20170206183429.sd7255b3ovvg746c@sigill.intra.peff.net>
-From:   Samuel Lijin <sxlijin@gmail.com>
-Date:   Tue, 7 Feb 2017 18:33:29 -0600
-Message-ID: <CAJZjrdU-UsWpNvjQ=eZi1wMUSWxRXLr5YNsgAce=z7Zt3yCTSA@mail.gmail.com>
-Subject: Re: git/git-scm.com GH Issue Tracker
-To:     Jeff King <peff@peff.net>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Finished going through and nailed the rest of the open issues!
+Linus Torvalds <torvalds@linux-foundation.org> writes:
 
+> [ Duh, I sent this just to Junio initially due to a brainfart. Here
+> goes the list also ]
 
-# Irrelevant but it seems like someone should take a look
+And my earlier response goes to the list ;-)
 
-511 466
+Linus Torvalds <torvalds@linux-foundation.org> writes:
 
+> Most of the time when I use pathspecs, I just use the bog-standard
+> normal ones, and everything works wonderfully.
 
-# Irrelevant to git-scm.com and should be closed
+It is, I think, a no-brainer to lift the "you must have at least one
+positive".  If the user says "not this and that", it is reasonable
+to assume that "but include everything else" is implied.
 
-599 596 570 565 563 558 538 537 520 511 509 507 501 494 465
+As to "!" that triggers history substitution without quoting, it may
+be annoying and I think it is probably OK to pick a synonym letter,
+perhaps "^", now that the set of pathspec magics do not seem to be
+growing rapidly and there may not be any other existing magic that
+the natural meaning of "^" would match better than "negate".  The
+primary reason why we used ! is, I think, to match patterns in the
+exclude files.
 
+As to the leading ":", that is shared between the ":(long form)" and
+the short form, I am a bit hesitant to lose it.  It allows the users
+to be trained only once, i.e. "if you want to match a path without
+magic in your working tree, you need to watch out for an unusual
+path that begins with a colon, which may be quite minority to begin
+with.  You just prefix ./ in front to defeat it.  Everything else
+you can type as-is, modulo wildcard metacharacters, but you know
+that already." and their brains need no upgrading.  Once we start
+accepting short forms without the ":", every time we add a short
+form magic, the users need to be retrained.
 
-# Resolved, duplicate, or non-issue
+In short, this
 
-596 593 592 588 587 585 583 576 575 573 572 547 546 543 540 539 529 521
-516 515 504 503 502 496 491 490 476 473 470 467 463 460 456 454 451 413
-377 265 257 95
+> Or even just allowing ^ in addition to ! for negation, and otherwise
+> keeping the current syntax.
 
+in addition to "no positives?  let's pretend you also said '.' as a
+positive", would not be too bad, methinks.  And that allows this
 
+>     git diff -M --dirstat .. -- ':!drivers' ':!arch' .
 
-# Relevant and should be kept open
+to become
 
-597 595 591 586 578 544 532 518 513 512 500 493 466 448 416 410 381 379
-140 13 12 11
+    git diff -M --dirstat .. -- :^{drivers,arch}
 
+which is a bit shorter.  I personally am perfectly fine without ^, i.e.
 
-That's all of them!
+    git diff -M --dirstat .. -- :\!{drivers,arch}
 
-- Sam
+though.
 
-On Mon, Feb 6, 2017 at 12:34 PM, Jeff King <peff@peff.net> wrote:
-> On Mon, Feb 06, 2017 at 12:15:08AM -0600, Samuel Lijin wrote:
->
->> I've went through a bunch of open issues on the git/git-scm.com repo
->> (specifically, everything after #600) and I think the bulk of them can
->> be closed.
->>
->> I've taken the liberty of classifying them as shown below.
->
-> Thanks, this is incredibly helpful. I'll close the appropriate ones you
-> identified.
->
-> -Peff
+By the way, I am wondering why this is private, not cc'ed to the
+mailing list.  As messages addressed to gitster@ without git@vger
+bypass my Inbox and gets thrown into spam box, which I only
+occasionally scan to resurrect messages worth responding, and this
+is one of those cases ;-)
+
