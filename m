@@ -2,129 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-1.2 required=3.0 tests=BAYES_00,DATE_IN_PAST_03_06,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 32ACA1FAF4
-	for <e@80x24.org>; Wed,  8 Feb 2017 22:14:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E1BCB1FAF4
+	for <e@80x24.org>; Wed,  8 Feb 2017 22:14:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751373AbdBHWOC (ORCPT <rfc822;e@80x24.org>);
-        Wed, 8 Feb 2017 17:14:02 -0500
-Received: from sub3.mail.dreamhost.com ([69.163.253.7]:54818 "EHLO
-        homiemail-a12.g.dreamhost.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751011AbdBHWOB (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 8 Feb 2017 17:14:01 -0500
-Received: from homiemail-a12.g.dreamhost.com (localhost [127.0.0.1])
-        by homiemail-a12.g.dreamhost.com (Postfix) with ESMTP id 71D26262065;
-        Wed,  8 Feb 2017 14:14:00 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=novalis.org; h=message-id
-        :subject:from:to:cc:date:in-reply-to:references:content-type
-        :mime-version:content-transfer-encoding; s=novalis.org; bh=edHro
-        8IypmJ0EG1oWm98hRcR1S0=; b=pLNlB+u6Iq3iNSSbppYtOqJMSz8YIGvHkuVHg
-        TPMICioea9famg71HAMe7896Mouo1X1X3QrVowOnDfpHYeqOOlkaFHfZX6/3BqUq
-        pyMf4Ct1PN56Hwjm9NFgyT33bgdUImtx+aZ1eFhS/A0l65x1IPSUOp3OtwJALR1j
-        4LrYEQ=
-Received: from [172.31.11.72] (gzac12-mdf2-1.aoa.twosigma.com [208.77.215.155])
-        (using TLSv1 with cipher AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: novalis@novalis.org)
-        by homiemail-a12.g.dreamhost.com (Postfix) with ESMTPSA id E842A262062;
-        Wed,  8 Feb 2017 14:13:59 -0800 (PST)
-Message-ID: <1486592043.1938.82.camel@novalis.org>
-Subject: Re: "disabling bitmap writing, as some objects are not being
- packed"?
-From:   David Turner <novalis@novalis.org>
-To:     Jeff King <peff@peff.net>
-Cc:     Junio C Hamano <gitster@pobox.com>, Duy Nguyen <pclouds@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Date:   Wed, 08 Feb 2017 17:14:03 -0500
-In-Reply-To: <20170208190858.rjoqehbhyizlwg5q@sigill.intra.peff.net>
-References: <1481922331.28176.11.camel@frank>
-         <xmqqpokrr2cf.fsf@gitster.mtv.corp.google.com>
-         <CACsJy8ACy+Hv1Z3FgG-WFBozwWqmMuN-JnMWF-+rdpF0knFjqg@mail.gmail.com>
-         <1486515795.1938.45.camel@novalis.org>
-         <CACsJy8C81+D=UG4pZ4e+URQqKRCPG=5bLiCHbGCQamvE-2y2MQ@mail.gmail.com>
-         <1486542299.1938.47.camel@novalis.org>
-         <CACsJy8C4DO-GYREUhED3YU_WetoTZaB3MUq1kGfRjA3e-FOLYQ@mail.gmail.com>
-         <xmqqtw84wpag.fsf@gitster.mtv.corp.google.com>
-         <1486580742.1938.52.camel@novalis.org>
-         <20170208190858.rjoqehbhyizlwg5q@sigill.intra.peff.net>
-Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.12.9-1+b1 
-Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+        id S1751444AbdBHWOI (ORCPT <rfc822;e@80x24.org>);
+        Wed, 8 Feb 2017 17:14:08 -0500
+Received: from mail-yw0-f193.google.com ([209.85.161.193]:35656 "EHLO
+        mail-yw0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751011AbdBHWOH (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Feb 2017 17:14:07 -0500
+Received: by mail-yw0-f193.google.com with SMTP id l16so12990630ywb.2
+        for <git@vger.kernel.org>; Wed, 08 Feb 2017 14:14:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=bSOa0UcLJtTnrb34vHnxSMhruTpUSQFfol4lY9pul3g=;
+        b=OL4Zgnpu6zoYFs6S/yX0LK0rYWlH08EsPqJuclptgHxPjLnUPpmib3LsRifQ91EA0h
+         u4RYZ5nJziT8C2INBIn0R/swRoFSqHm3bTJw1tOn6epGRkmW8c1v0mWnDg/bWwt3+UV9
+         vgLRUd74MjT5QwWNSPkTeiNStpKGLgoasOucXKf5EzhbQH5ZMzh154grr5kyGcJs4Dof
+         xnbiMMYTrxsxd8CuDQdG8g2ZCMDuNw42o3Butp/2r1XNEzkhuWY7TucgaVK1KBkzmTJr
+         AOC5kmbawVXbYcof2MethHyBXW39G6uGlDAtEyL6H7RatUfEjABYBtoV0j11WZrSWnpH
+         avXg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=bSOa0UcLJtTnrb34vHnxSMhruTpUSQFfol4lY9pul3g=;
+        b=RHGxelQd/IGf78AtF3xrGW1EilpUrD025CtEJwc80sGcvpARPvi+iAqG/nKeQhijQJ
+         /6YIxmyBCVtxsnR+1lY/V0LBFveK+XhfzXI8OBmwztq+Fk1UUeHySDqmo/uq2TkqGk/0
+         oliRQFFJl+/Ro2KcxdyjYGtOZK7T7qo7JCDwww+X8MtFDeKjFagxnga9hr2xH3WNXpNp
+         i5/Z9l8kl1nBIBkEbV5eXLKmUvoiyi925xtOOvBI4DWjpHllVBWKdBI+XAnBdJ2qJCPl
+         GYh23aXat0uto5hW9hhFtrzgVOnIa2PQLf5hmx7+oM7k73d+r1KLKAOF2OjQELCF3r5L
+         hX0A==
+X-Gm-Message-State: AMke39kNy2Od9A5wFIIGqHM/6nCfac4ilX/mpEchO4xt94ShKliLzhBHydThZJExqKxmI0qWtXhZOkjkK2JEXQ==
+X-Received: by 10.129.94.212 with SMTP id s203mr16482886ywb.181.1486580729039;
+ Wed, 08 Feb 2017 11:05:29 -0800 (PST)
+MIME-Version: 1.0
+Received: by 10.83.88.78 with HTTP; Wed, 8 Feb 2017 11:05:28 -0800 (PST)
+From:   Thangalin <thangalin@gmail.com>
+Date:   Wed, 8 Feb 2017 11:05:28 -0800
+Message-ID: <CAANrE7rmUZcJkw+thMczv3D=7sqcUHBsorzvEZgYg=6AEfrU=w@mail.gmail.com>
+Subject: Automatically Add .gitignore Files
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, 2017-02-08 at 14:08 -0500, Jeff King wrote:
-> On Wed, Feb 08, 2017 at 02:05:42PM -0500, David Turner wrote:
-> 
-> > On Wed, 2017-02-08 at 09:44 -0800, Junio C Hamano wrote:
-> > > Duy Nguyen <pclouds@gmail.com> writes:
-> > > 
-> > > > On second thought, perhaps gc.autoDetach should default to false if
-> > > > there's no tty, since its main point it to stop breaking interactive
-> > > > usage. That would make the server side happy (no tty there).
-> > > 
-> > > Sounds like an idea, but wouldn't that keep the end-user coming over
-> > > the network waiting after accepting a push until the GC completes, I
-> > > wonder.  If an impatient user disconnects, would that end up killing
-> > > an ongoing GC?  etc.
-> > 
-> > Regardless, it's impolite to keep the user waiting. So, I think we
-> > should just not write the "too many unreachable loose objects" message
-> > if auto-gc is on.  Does that sound OK?
-> 
-> I thought the point of that message was to prevent auto-gc from kicking
-> in over and over again due to objects that won't actually get pruned.
-> 
-> I wonder if you'd want to either bump the auto-gc object limit, or
-> possibly reduce the gc.pruneExpire limit to keep this situation from
-> coming up in the first place (or at least mitigating the amount of time
-> it's the case).
+I frequently forget to add .gitignore files when creating new .gitignore files.
 
-Auto-gc might not succeed in pruning objects, but it will at least
-reduce the number of packs, which is super-important for performance.
+I'd like to request a command-line option to always add .gitignore
+files (or, more generally, always add files that match a given file
+specification).
 
-I think the intent of automatic gc is to have a git repository be
-relatively low-maintenance from a server-operator perspective.  (Side
-note: it's fairly trivial for a user with push access to mess with the
-check simply by pushing a bunch of objects whose shas start with 17).
-It seems odd that git gets itself into a state where it refuses to do
-any maintenance just because at some point some piece of the maintenance
-didn't make progress.
+Replicate
 
-Sure, I could change my configuration, but that doesn't help the other
-folks (e.g. https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=813084 )
-who run into this.
+0. git init ...
+1. echo "*.bak" >> .gitignore
+2. touch file.txt
+3. git add file.txt
+4. git commit -a -m "..."
+5. git push origin master
 
-I have three thoughts on this:
+Expected Results
 
-Idea 1: when gc --auto would issue this message, instead it could create
-a file named gc.too-much-garbage (instead of gc.log), with this message.
-If that file exists, and it is less than one day (?) old, then we don't
-attempt to do a full gc; instead we just run git repack -A -d.  (If it's
-more than one day old, we just delete it and continue anyway).
+The .gitignore file is also added to the repository. (This is probably
+the 80% use case.)
 
-Idea 2 : Like idea 1, but instead of repacking, just smash the existing
-packs together into one big pack.  In other words, don't consider
-dangling objects, or recompute deltas.  Twitter has a tool called "git
-combine-pack" that does this:
-https://github.com/dturner-tw/git/blob/dturner/journal/builtin/combine-pack.c
+Actual Results
 
-That's less space-efficient than a true repack, but it's no worse than
-having the packs separate, and it's a win for read performance because
-there's no need to do a linear search over N packs to find an object.
+The .gitignore file is not added to the repository.
 
-Idea 3: As I suggested last time, separate fatal and non-fatal errors.
-If gc fails because of EIO or something, we probably don't want to touch
-the disk anymore. But here, the worst consequence is that we waste some
-processing power. And it's better to occasionally waste processing power
-in a non-interactive setting than it is to do so when a user will be
-blocked on it.  So non-fatal warnings should go to gc.log, and fatal
-errors should go to gc.fatal.  gc.log won't block gc from running. I
-think this is my preferred option.
+Additional Details
 
+At step 4, there should be a prompt, warning, or (preferably) either a
+command-line or configuration option to add the .gitignore file prior
+to commit, automatically. Such as:
+
+git commit --include-all-gitignore-files -a -m "..."
+
+Or:
+
+echo "**/.gitignore" >> .git/config/add-before-commit
