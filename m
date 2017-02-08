@@ -2,125 +2,135 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AB6CB1FD6A
-	for <e@80x24.org>; Wed,  8 Feb 2017 20:59:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D2D121FAF4
+	for <e@80x24.org>; Wed,  8 Feb 2017 20:59:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751393AbdBHU7i (ORCPT <rfc822;e@80x24.org>);
-        Wed, 8 Feb 2017 15:59:38 -0500
-Received: from mail-it0-f46.google.com ([209.85.214.46]:38092 "EHLO
-        mail-it0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751055AbdBHU7h (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Feb 2017 15:59:37 -0500
-Received: by mail-it0-f46.google.com with SMTP id c7so795965itd.1
-        for <git@vger.kernel.org>; Wed, 08 Feb 2017 12:59:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=YOnniDei9rTQa90j1E2hUZXggFdMBch6QDUrVXI+i/4=;
-        b=JpueqM69eUT8zfCQBTFPFI39BHnwnSzvEcZrCmgi3zShj9CpupV7/obo8Jcl3LhY6r
-         n2ieUA50/FFSCLMokm+GWn2fZPNXClkMDf9u6c1zPkDRzFanLr5J+LVN7Fk7GmfXzkHP
-         xXTlxtBd2I8Ka0wI0NM5YCcXcavEv8EHpF9np9m/xu18kY05BciCux1Xs0QPHAuSjGwa
-         +35nOvi0yfSP+jYYxPnX1rJWFaSctNblOB4cwOG+S2LOoI79QOWmZrbxdL5tRtFhIDAn
-         GE34yFEGA4W+7gUWUanbm1aTEZwWamn0KGI9dPORa1utEC/CrPPpO8LkJMoOVjWwPdMM
-         xqZw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=YOnniDei9rTQa90j1E2hUZXggFdMBch6QDUrVXI+i/4=;
-        b=SAKiu6nS6qrEpofjoEDjTqUenDMRjz5xlz/j9MoqUj+pVa2C9PNhU0HHc2tGGN2mcW
-         BM+0DHMIvVhriW+DokcB3TICWRupyi+/li5l3pbR8qnmjrPPuXG76XdJCEN1giv6rJZr
-         KsY+DdwXDoDYxobhl4NC9XIsW8RZRxtSAHS48vo3VH9EhPNqVuEOkm3BzxgCtEdU62p3
-         65W1LqQXQZQlpoaIOof6IMHjoGc43vnMNACdL6VRvp3ytfJC/JT7OZCKh5rstvocns8K
-         xRlHk9NSWm/GjlTbhAJOieRQv6oOex4lnilaj75+Dph/BK4ashQ8GDm+sPLYgXUf3nKx
-         T/Rw==
-X-Gm-Message-State: AIkVDXLce3rDmZvzlzW+JINS7y/Arg93v08nB/ArpdsdKrM7ilb6OF+vVWuIO4Ik7BWEfj03
-X-Received: by 10.99.147.18 with SMTP id b18mr28837916pge.22.1486583679041;
-        Wed, 08 Feb 2017 11:54:39 -0800 (PST)
-Received: from google.com ([2620:0:1000:5b10:2d1c:e524:99eb:f617])
-        by smtp.gmail.com with ESMTPSA id n8sm22619471pgc.16.2017.02.08.11.54.37
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 08 Feb 2017 11:54:38 -0800 (PST)
-Date:   Wed, 8 Feb 2017 11:54:37 -0800
-From:   Brandon Williams <bmwill@google.com>
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     =?iso-8859-1?Q?Ren=E9?= Scharfe <l.s.r@web.de>,
-        Git List <git@vger.kernel.org>
-Subject: Re: [PATCH] dir: avoid allocation in fill_directory()
-Message-ID: <20170208195437.GA108686@google.com>
-References: <73ec9cc7-8a86-8ba9-90fd-a954fa031820@web.de>
- <CACsJy8CE-cyTZHZZhvhdsNau7iSqBci1BdUqDYvxoE5odV2SBA@mail.gmail.com>
+        id S1751430AbdBHU7k (ORCPT <rfc822;e@80x24.org>);
+        Wed, 8 Feb 2017 15:59:40 -0500
+Received: from cloud.peff.net ([104.130.231.41]:51777 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751055AbdBHU7j (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Feb 2017 15:59:39 -0500
+Received: (qmail 28382 invoked by uid 109); 8 Feb 2017 20:52:59 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 08 Feb 2017 20:52:59 +0000
+Received: (qmail 6005 invoked by uid 111); 8 Feb 2017 20:53:04 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 08 Feb 2017 15:53:04 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 08 Feb 2017 15:52:57 -0500
+Date:   Wed, 8 Feb 2017 15:52:57 -0500
+From:   Jeff King <peff@peff.net>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH v2 04/11] for_each_alternate_ref: pass name/oid instead of
+ ref struct
+Message-ID: <20170208205257.5yk4bhwwm6vigpro@sigill.intra.peff.net>
+References: <20170208205219.twgm5rggovqbepte@sigill.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CACsJy8CE-cyTZHZZhvhdsNau7iSqBci1BdUqDYvxoE5odV2SBA@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <20170208205219.twgm5rggovqbepte@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 02/08, Duy Nguyen wrote:
-> On Wed, Feb 8, 2017 at 5:04 AM, René Scharfe <l.s.r@web.de> wrote:
-> > Pass the match member of the first pathspec item directly to
-> > read_directory() instead of using common_prefix() to duplicate it first,
-> > thus avoiding memory duplication, strlen(3) and free(3).
-> 
-> How about killing common_prefix()? There are two other callers in
-> ls-files.c and commit.c and it looks safe to do (but I didn't look
-> very hard).
-> 
-> > diff --git a/dir.c b/dir.c
-> > index 65c3e681b8..4541f9e146 100644
-> > --- a/dir.c
-> > +++ b/dir.c
-> > @@ -174,20 +174,19 @@ char *common_prefix(const struct pathspec *pathspec)
-> >
-> >  int fill_directory(struct dir_struct *dir, const struct pathspec *pathspec)
-> >  {
-> > -       char *prefix;
-> > +       const char *prefix;
-> >         size_t prefix_len;
-> >
-> >         /*
-> >          * Calculate common prefix for the pathspec, and
-> >          * use that to optimize the directory walk
-> >          */
-> > -       prefix = common_prefix(pathspec);
-> > -       prefix_len = prefix ? strlen(prefix) : 0;
-> > +       prefix_len = common_prefix_len(pathspec);
-> > +       prefix = prefix_len ? pathspec->items[0].match : "";
-> 
-> There's a subtle difference. Before the patch, prefix[prefix_len] is
-> NUL. After the patch, it's not always true. If some code (incorrectly)
-> depends on that, this patch exposes it. I had a look inside
-> read_directory() though and it looks like no such code exists. So, all
-> good.
+Breaking down the fields in the interface makes it easier to
+change the backend of for_each_alternate_ref to something
+that doesn't use "struct ref" internally.
 
-Yeah I had the exact same thought when looking at this, but I agree
-everything looks fine.  And if something does indeed depend on prefix
-having a \0 at prefix_len then this will allow us to more easily find
-the bug and fix it.
+The only field that callers actually look at is the oid,
+anyway. The refname is kept in the interface as a plausible
+thing for future code to want.
 
-> 
-> >
-> >         /* Read the directory and prune it */
-> >         read_directory(dir, prefix, prefix_len, pathspec);
-> >
-> > -       free(prefix);
-> >         return prefix_len;
-> >  }
-> -- 
-> Duy
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ builtin/receive-pack.c |  6 ++++--
+ fetch-pack.c           | 12 ++++++++----
+ transport.c            |  2 +-
+ transport.h            |  2 +-
+ 4 files changed, 14 insertions(+), 8 deletions(-)
 
+diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+index 1dbb8a069..d21332d9e 100644
+--- a/builtin/receive-pack.c
++++ b/builtin/receive-pack.c
+@@ -277,10 +277,12 @@ static int show_one_alternate_sha1(const unsigned char sha1[20], void *unused)
+ 	return 0;
+ }
+ 
+-static void collect_one_alternate_ref(const struct ref *ref, void *data)
++static void collect_one_alternate_ref(const char *refname,
++				      const struct object_id *oid,
++				      void *data)
+ {
+ 	struct sha1_array *sa = data;
+-	sha1_array_append(sa, ref->old_oid.hash);
++	sha1_array_append(sa, oid->hash);
+ }
+ 
+ static void write_head_info(void)
+diff --git a/fetch-pack.c b/fetch-pack.c
+index 601f0779a..54f84c573 100644
+--- a/fetch-pack.c
++++ b/fetch-pack.c
+@@ -253,9 +253,11 @@ static void send_request(struct fetch_pack_args *args,
+ 		write_or_die(fd, buf->buf, buf->len);
+ }
+ 
+-static void insert_one_alternate_ref(const struct ref *ref, void *unused)
++static void insert_one_alternate_ref(const char *refname,
++				     const struct object_id *oid,
++				     void *unused)
+ {
+-	rev_list_insert_ref(NULL, ref->old_oid.hash);
++	rev_list_insert_ref(NULL, oid->hash);
+ }
+ 
+ #define INITIAL_FLUSH 16
+@@ -619,9 +621,11 @@ static void filter_refs(struct fetch_pack_args *args,
+ 	*refs = newlist;
+ }
+ 
+-static void mark_alternate_complete(const struct ref *ref, void *unused)
++static void mark_alternate_complete(const char *refname,
++				    const struct object_id *oid,
++				    void *unused)
+ {
+-	mark_complete(ref->old_oid.hash);
++	mark_complete(oid->hash);
+ }
+ 
+ static int everything_local(struct fetch_pack_args *args,
+diff --git a/transport.c b/transport.c
+index 6b7847131..c87147046 100644
+--- a/transport.c
++++ b/transport.c
+@@ -1238,7 +1238,7 @@ static int refs_from_alternate_cb(struct alternate_object_database *e,
+ 	for (extra = transport_get_remote_refs(transport);
+ 	     extra;
+ 	     extra = extra->next)
+-		cb->fn(extra, cb->data);
++		cb->fn(extra->name, &extra->old_oid, cb->data);
+ 	transport_disconnect(transport);
+ out:
+ 	strbuf_release(&path);
+diff --git a/transport.h b/transport.h
+index e597b31b3..bc5571574 100644
+--- a/transport.h
++++ b/transport.h
+@@ -255,6 +255,6 @@ int transport_refs_pushed(struct ref *ref);
+ void transport_print_push_status(const char *dest, struct ref *refs,
+ 		  int verbose, int porcelain, unsigned int *reject_reasons);
+ 
+-typedef void alternate_ref_fn(const struct ref *, void *);
++typedef void alternate_ref_fn(const char *refname, const struct object_id *oid, void *);
+ extern void for_each_alternate_ref(alternate_ref_fn, void *);
+ #endif
 -- 
-Brandon Williams
+2.12.0.rc0.371.ga6cf8653b
+
