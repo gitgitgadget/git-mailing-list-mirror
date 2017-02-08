@@ -2,97 +2,81 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2257D1FAF4
-	for <e@80x24.org>; Wed,  8 Feb 2017 14:31:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BBE651FAF4
+	for <e@80x24.org>; Wed,  8 Feb 2017 14:54:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754323AbdBHOa6 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 8 Feb 2017 09:30:58 -0500
-Received: from mout.gmx.net ([212.227.15.18]:55751 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752515AbdBHOaz (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Feb 2017 09:30:55 -0500
-Received: from virtualbox ([37.201.192.48]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0M1Ee8-1cHs1N1cLY-00tE9r; Wed, 08
- Feb 2017 15:29:01 +0100
-Date:   Wed, 8 Feb 2017 15:28:58 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Christian Couder <christian.couder@gmail.com>,
-        Shawn Pearce <spearce@spearce.org>,
-        Stefan Saasen <ssaasen@atlassian.com>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: Git clonebundles
-In-Reply-To: <xmqqzihxyb66.fsf@gitster.mtv.corp.google.com>
-Message-ID: <alpine.DEB.2.20.1702081521290.3496@virtualbox>
-References: <CADoxLGPFgF7W4XJzt0X+xFJDoN6RmfFGx_96MO9GPSSOjDK0EQ@mail.gmail.com> <CAJo=hJsS6FmL9iNScaXqkWJumALfGr8Od5QkbfZ+ZG3osxkp7Q@mail.gmail.com> <CAP8UFD2ffeHr0-z3xPFFODqRTTgVnrrWcYRbASpUOrp0QGnp6g@mail.gmail.com> <xmqq4m070xua.fsf@gitster.mtv.corp.google.com>
- <alpine.DEB.2.20.1702071303370.3496@virtualbox> <xmqqzihxyb66.fsf@gitster.mtv.corp.google.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+        id S933159AbdBHOye (ORCPT <rfc822;e@80x24.org>);
+        Wed, 8 Feb 2017 09:54:34 -0500
+Received: from zm23-mta-out-2.grenet.fr ([130.190.191.53]:36249 "EHLO
+        zm23-mta-out-2.grenet.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754292AbdBHOyd (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Feb 2017 09:54:33 -0500
+Received: from zm23-mta-out.grenet.fr (zm23-mta-out.grenet.fr [130.190.191.35])
+        by zm23-mta-out-2.grenet.fr (Postfix) with ESMTP id DC01EC69D;
+        Wed,  8 Feb 2017 15:54:25 +0100 (CET)
+Received: from smtps.univ-grenoble-alpes.fr (smtps2.u-ga.fr [195.83.24.202])
+        by zm23-mta-out.grenet.fr (Postfix) with ESMTP id D64CE100C84;
+        Wed,  8 Feb 2017 15:54:25 +0100 (CET)
+Received: from anie (anie.imag.fr [129.88.42.32])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: moym@univ-grenoble-alpes.fr)
+        by smtps.univ-grenoble-alpes.fr (Postfix) with ESMTPSA id DEDF060324;
+        Wed,  8 Feb 2017 15:11:21 +0100 (CET)
+From:   Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+To:     Jeff King <peff@peff.net>
+Cc:     git <git@vger.kernel.org>, Pranit Bauva <pranit.bauva@gmail.com>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Carlos =?iso-8859-1?Q?Mart=EDn?= Nieto <cmn@dwim.me>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Thomas Gummerer <t.gummerer@gmail.com>,
+        "Siddharth Kannan" <kannan.siddharth12@gmail.com>
+Subject: Re: GSoC 2017: application open, deadline = February 9, 2017
+References: <vpq1svtstud.fsf@anie.imag.fr>
+        <20170125204504.ebw2sa4uokfwwfnt@sigill.intra.peff.net>
+Date:   Wed, 08 Feb 2017 15:54:25 +0100
+Message-ID: <vpq37fowx5q.fsf@anie.imag.fr>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:/U8Of0KN+Nzr+3nLcWzV/9IxR+/Eq+ezlKzHf19wIGSZRCG7Xcg
- BJ7cCs26ydl1yQ0gA/K89ZLaP9YJ1GyesuGgtjc0WqAQOBpwWU4zMyx+HTnUo9B8D1AG+Ax
- p+gFmqltnT6vs6qWdP9BTV9e/YuWvsUjtFWw3iTP5g335nnDF8lTJgeQ0Gh+2cBcR7b58hi
- YKgTiQD/T0hruQlHANvLg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:d6/7jq46rU0=:OSrbaOTU+/Ye9lYNaDqMCi
- 9aCuVv5fFsHRn6jc0OWz4+AqWxhYX5GRpfVDSRa0QIJHvqrkduCfJQsIgho1/Xaj7WAkBJq9l
- CfhpibNbU+u/0dpMPShkFR65p72ULir8fRPMgff4M9R9kwFmGGwnOsU3eUdnn53WKoXfukD4O
- gPx8gyoqv6dipEQI5DiK8/qhM0Iya3R2Hl9mWP0XVBQfCdEjbyXyEk33CLpCmGpk4ZJd5uyc2
- 5kHiCAJJ/7IzZCAMTQAaOcdS9OD/JKJthqdG/1rqLwqlaAQ40u/iESEE7njXw5ZbxxVpRKlH0
- 94clrHLJaOs9tMH90GwCiRcgRBOlx4qFOGkZXzojWzFGxjbXL0Xsnz1wUULNO+vMwKdwlHZUV
- Mdk61MZD0G9H5+K4Odj8Djkvh7v8jMHEyEfkytjLYf6euU3A54DhOi2ZeFrP7qMlJu9TR8hEE
- Gir7iSqMGD6m2ioookI8f0QWcY8zeBm9jgoJAJPJ/gNv+JUJwC3t53gJhPchLdFnlSxsdCYqW
- C9jvhTVxQJTHJDiRhcC3347ajbego9PNtxDHv+iYaC1u9ru6f0UjriHbp3WRahE6TZTzL4fK5
- fSHt3I3ikvqCNNlRlD81kVI2tC6xh3GeqxecfGQTgSXnwP5CYh+8rao1hs96RdW5Hubi6dVYS
- nXlfcOa/2/BvRQ09n85OtwLVoqa69eKbAYDdjNnqofnbPJyQ7CJWiLObuw+lPCjI61ZmYuAlG
- DqCL/JF9BeAlUOgJvZrx3SlB4CEqJND74fR4A7fKRlPQGq9/HTAv/m3JBDcTJ8E2B5qw+qdaW
- 8k8O5Yx
+Content-Type: text/plain
+X-Greylist: Whitelist-UJF SMTP Authentifie (moym@univ-grenoble-alpes.fr) via smtps.univ-grenoble-alpes.fr ACL (97)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+Jeff King <peff@peff.net> writes:
 
-On Tue, 7 Feb 2017, Junio C Hamano wrote:
+> On Mon, Jan 23, 2017 at 04:02:02PM +0100, Matthieu Moy wrote:
+>
+>> * We need to write the application, i.e. essentially polish and update
+>>   the text here: https://git.github.io/SoC-2016-Org-Application/ and
+>>   update the list of project ideas and microprojects :
+>>   https://git.github.io/SoC-2017-Ideas/
+>>   https://git.github.io/SoC-2016-Microprojects/
+>
+> That can be done incrementally by people who care (especially mentors)
+> over the next week or so, and doesn't require any real admin
+> coordination. If it happens and the result looks good, then the
+> application process is pretty straightforward.
+>
+> If it doesn't, then we probably ought not to participate in GSoC.
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> >> If people think it might be useful to have it around to experiment, I
-> >> can resurrect and keep that in 'pu' (or rather 'jch'), as long as it
-> >> does not overlap and conflict with other topics in flight.  Let me try
-> >> that in today's integration cycle.
-> >
-> > I would like to remind you of my suggestion to make this more publicly
-> > visible and substantially easier to play with, by adding it as an
-> > experimental feature (possibly guarded via an explicit opt-in config
-> > setting).
-> 
-> I do not understand why you want to give this topic undue prominence
-> ovver any other random topic that cook in 'pu' [...]
+OK, it seems the last message did not raise a lot of enthousiasm (unless
+I missed some off-list discussion at Git-Merge?).
 
-Since you ask so nicely for an explanation: clonebundles got a really
-lively and active discussion at the Contributors' Summit. So it is not
-your run of the mill typo fix, the bundle issue is something that clearly
-receives a lot of interest in particular from developers who are
-unfamiliar with the idiosynchracies of the code Git development.
+The application deadline is tomorrow. I think it's time to admit that we
+won't participate this year, unless someone steps in really soon.
 
-And I got the very distinct impression that Git would benefit a lot from
-these developers, *in particular* since they come with fresh perspectives.
+If we don't participate, I'll add a disclaimer at the top of the
+SoC-related pages on git.github.io to make sure students don't waste
+time preparing an application.
 
-Now, we can make it hard for them (e.g. expecting them to sift through a
-few months' worth of What's Cooking mails, to find out whether there has
-been any related work, and what is the branch name, if any, and where to
-find that branch), and we can alternatively make it easy for them to help
-us make Git better.
-
-I would like us to choose the easier route for them. Because it would
-benefit us.
-
-Ciao,
-Johannes
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
