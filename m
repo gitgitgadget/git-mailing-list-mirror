@@ -2,164 +2,144 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BAD8A1FAF4
-	for <e@80x24.org>; Wed,  8 Feb 2017 20:48:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 10BDD1FAF4
+	for <e@80x24.org>; Wed,  8 Feb 2017 20:51:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751479AbdBHUr5 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 8 Feb 2017 15:47:57 -0500
-Received: from mail-ua0-f193.google.com ([209.85.217.193]:33686 "EHLO
-        mail-ua0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751160AbdBHUry (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Feb 2017 15:47:54 -0500
-Received: by mail-ua0-f193.google.com with SMTP id d5so13836650uag.0
-        for <git@vger.kernel.org>; Wed, 08 Feb 2017 12:47:11 -0800 (PST)
+        id S1751544AbdBHUvN (ORCPT <rfc822;e@80x24.org>);
+        Wed, 8 Feb 2017 15:51:13 -0500
+Received: from mail-io0-f182.google.com ([209.85.223.182]:36807 "EHLO
+        mail-io0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751415AbdBHUvL (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Feb 2017 15:51:11 -0500
+Received: by mail-io0-f182.google.com with SMTP id j13so424057iod.3
+        for <git@vger.kernel.org>; Wed, 08 Feb 2017 12:51:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
+        d=google.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=JHNr8pafqULrYgWbhZ/ivf4ys2mE7tTvEyYpFvYnAA8=;
-        b=ZiYRga4Qbv4RKv5Nltj9AGKni5t8nxAQ8mRo4R68bSmr6Ki9kz9kx5l3nP/FzDIzt2
-         Btw6zBVeaILGzTMC9vqHcEx8+3XlDmOFbSlDXS4aia4SE9Jg0GPSUqlJm2+JdFBETW+l
-         E8T9+ri6+NVLa8xW94DaW/a6CTBLxTb1BvE7yNbi7qOM3lmb3iYO7htZ+o39egwym8PP
-         vmnRntt7ZByA7s9/jaU0roW6M2wKpbGocTXn3iGd9Wd46kN7XrJAbootYr8K8pI9EL9P
-         bKqg0C3QChJgysOMxCkerg7bbj1tGA5Osk2eKIkwtSBePNhKJoQwGoCybubSPI7nxm8I
-         uKZA==
+         :cc;
+        bh=lb67risvXp2Dg6HriVbt9V3UcD+Pucvvcu0io90TP1s=;
+        b=r4lC6rBj5zCS1W5JA/yzrtBA+jtbSruXXQZ6q9y3EAn+Um1wBJ4ITv/N6OFwhcc7UX
+         2lZ5RW6qfl090b2F1gOw6Cd2LSHD9JY7URsj8S6UmV6tmtQlij/Xtc9oL6Tc0fAjbyAh
+         p/6PtfURfDuB17PjIjDOCuyb+SN9AyAoAs3HKz1S0EQxQb20v1nYUelo4ZqcplfrVh3J
+         uqnWS+Lu1TOAw5ml5caP8IhLPz1lzQLR41HWGLEhb0EnMQ2gzZ/Iunyic6RJAfN/7xLL
+         MqXjZyt4FHhAY5VDOZ7+47RTW6wCmyYrLj97H6OVudschJ1eskA8MACP7ngOlgIdyU4w
+         H4Ew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=JHNr8pafqULrYgWbhZ/ivf4ys2mE7tTvEyYpFvYnAA8=;
-        b=JxdlagDJOx9hv6c7FwAJA8SZmjriXgkKh3Ujr6zcTKMkwd45/Tl6zbSVHotH40t27o
-         gc+eeCVHOI0onZC3Tpv9FsBAzZeYPT4ZPP3w5UrlSXBeNlI4NEOcyE33eOw+R4a+vJlF
-         uVzTsXRTEazqG2YycRdvVJJVqjOEhHJXrc/PqXUUW7+sEE5+BdjByPBDDrfFh/0Fhm9Y
-         rB+U0+Q1v4EMaUHMF9RLgoHB1X5//skZxq/FtOT0bedP//F4Vu7yOjSl8jV9yB0WxBJO
-         Fw7JGTfTNCBz+xBRM1jak4p4ZYlgN6zXeGqrEhgCTECZhitl3xRZtu3BRpvyZdu76RZ1
-         B1KQ==
-X-Gm-Message-State: AIkVDXLvgmkv9J7KLXCbyh0Y7qu47IYxIdcxJ+R2XeVvczO6wNf/36SqXx7WEqUEs+c5TC+U2BEqVFLzdyR4fQ==
-X-Received: by 10.159.48.85 with SMTP id i21mr12009774uab.73.1486586830437;
- Wed, 08 Feb 2017 12:47:10 -0800 (PST)
+         :message-id:subject:to:cc;
+        bh=lb67risvXp2Dg6HriVbt9V3UcD+Pucvvcu0io90TP1s=;
+        b=rSVeJtEcfCFAoDiRPZnrFvco3wUrgiAPJwh9iUwzWS/ZLAEtYMaCpNnX9PYAZDTjXN
+         q0IDFQDwPq4i/Cim9vRR/r+As4xii37CpziXIG+ZlBa8HMgOKZT0dYJKgyZGswHXEnnP
+         q6eQ8OP2ro9+Y7oI3li98XVGGMKuT4vPJSgK4Kf5WzBIeoVGHSXci+DCudgOaUK2PBKu
+         qCXjwVqJIgnhr6/RQe6CkArIN83ElUlIGnWTKDBXt72GNQcwZF3j9d2DC35fKE6CSfjG
+         VjvVCCgqeWHa3aAZETsclIkMtETfXiVy2cRdbkjI+qXjlFNISrUAFdnXoW78G8uRl11Q
+         0aRw==
+X-Gm-Message-State: AMke39lspzW6x2wrYq7fC8gDRhTGkMaFlaqOcuMx+O0CLSxEJdhdBIUdsoRRJMlLIVtR6/FSBSvdcgHhd1BpQ8m4
+X-Received: by 10.107.16.14 with SMTP id y14mr67252ioi.164.1486587060613; Wed,
+ 08 Feb 2017 12:51:00 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.159.34.48 with HTTP; Wed, 8 Feb 2017 12:46:30 -0800 (PST)
-In-Reply-To: <CAKepmagwMeky4jPZ-YFgPsZSsyOZZQ-kJSWV8QGg4cUNu-ZS8Q@mail.gmail.com>
-References: <CAKepmajNz7TP_Z6p_Wj17tOpiMOpKkvQOBvVthBkEiKabAppjg@mail.gmail.com>
- <271989d5-c383-0c0d-bfcb-f4118f9fa2aa@web.de> <CAKepmagp2mXNviA2VdT=3EQtZi2LkA_5oG6=AbfkBGKP9Hqiiw@mail.gmail.com>
- <1aa20b4e-782f-a650-eab8-51218b838337@web.de> <CAJZjrdXjnDMi8gMY6f_UDbMZrZJ=AoPM+g01hqPCO2pB9csoOw@mail.gmail.com>
- <CAKepmagwMeky4jPZ-YFgPsZSsyOZZQ-kJSWV8QGg4cUNu-ZS8Q@mail.gmail.com>
-From:   Samuel Lijin <sxlijin@gmail.com>
-Date:   Wed, 8 Feb 2017 14:46:30 -0600
-Message-ID: <CAJZjrdWouNaNKU2sX89Xh=QqSbdB7srwgufuquYL_1B7H324Yw@mail.gmail.com>
-Subject: Re: Trying to use xfuncname without success.
-To:     Jack Adrian Zappa <adrianh.bsc@gmail.com>
-Cc:     =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
-        git-mailing-list <git@vger.kernel.org>
+Received: by 10.79.39.19 with HTTP; Wed, 8 Feb 2017 12:51:00 -0800 (PST)
+In-Reply-To: <xmqqpoiswo0l.fsf@gitster.mtv.corp.google.com>
+References: <20170208010954.19478-1-sbeller@google.com> <xmqqpoiswo0l.fsf@gitster.mtv.corp.google.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Wed, 8 Feb 2017 12:51:00 -0800
+Message-ID: <CAGZ79kaszczpnu+VEV3y+61qgji-0+vRFVLk8Q1+BbSDgiHz1Q@mail.gmail.com>
+Subject: Re: [PATCH] push options: fail properly in the stateless case
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        Jonathan Nieder <jrnieder@gmail.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I just put this togther: https://github.com/sxlijin/xfuncname-test
-
-Try cloning and then for any of config1 thru 3,
-
-$ cp configX .git/config
-$ git diff HEAD^ -- test.natvis
-
-On Wed, Feb 8, 2017 at 2:42 PM, Jack Adrian Zappa <adrianh.bsc@gmail.com> w=
-rote:
-> Thanks Samuel,
+On Wed, Feb 8, 2017 at 10:11 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Stefan Beller <sbeller@google.com> writes:
 >
-> So, the question is, what is causing this problem on my system?
+>> When using non-builtin protocols relying on a transport helper
+>> (such as http), push options are not propagated to the helper.
+>>
+>> Fix this by propagating the push options to the transport helper and
 >
-> Anyone have an idea to help diagnose this problem?
+> The description up to this point is VERY readable and sensible.  But
+> that makes the title sound a bit strange.
+
+Yes, the title was there first and then I massaged the commit message
+until it was readable. Originally I thought the issue is with stateless
+protocols, but that is wrong. The underlying issue is just the transport
+helper communication lacking.
+
+> I read it as if it were
+> saying "stateless case can never support push-options so fail if the
+> caller attempts to use one", but that does not seem to be what is
+> going on.
+
+Indeed the subject is wrong.
+
 >
-> On Wed, Feb 8, 2017 at 3:24 PM, Samuel Lijin <sxlijin@gmail.com> wrote:
->> On Windows 7, it works for me in both CMD and Git Bash:
->>
->> $ git --version
->> git version 2.11.0.windows.3
->>
->> $ git diff HEAD^ --word-diff
->> diff --git a/test.natvis b/test.natvis
->> index 93396ad..1233b8c 100644
->> --- a/test.natvis
->> +++ b/test.natvis
->> @@ -18,6 +18,7 @@ test
->>
->>
->>       <!-- Non-blank line -->
->>       {+<Item Name=3D"added var">added_var</Item>+}
->>
->>
->>       <Item Name=3D"var2">var2</Item>
->>
->> On Wed, Feb 8, 2017 at 12:37 PM, Ren=C3=A9 Scharfe <l.s.r@web.de> wrote:
->>> Am 08.02.2017 um 18:11 schrieb Jack Adrian Zappa:
->>>> Thanks Rene, but you seem to have missed the point.  NOTHING is
->>>> working.  No matter what I put there, it doesn't seem to get matched.
->>>
->>> I'm not so sure about that.  With your example I get this diff without
->>> setting diff.natvis.xfuncname:
->>>
->>> diff --git a/a.natvis b/a.natvis
->>> index 7f9bdf5..bc3c090 100644
->>> --- a/a.natvis
->>> +++ b/a.natvis
->>> @@ -19,7 +19,7 @@ xmlns=3D"http://schemas.microsoft.com/vstudio/debugge=
-r/natvis/2010">
->>>
->>>
->>>        <!-- Non-blank line -->
->>> -      <Item Name=3D"added var">added_var</Item>
->>> +      <Item Name=3D"added var">added_vars</Item>
->>>
->>>
->>>        <Item Name=3D"var2">var2</Item>
->>>
->>> Note the XML namespace in the hunk header.  It's put there by the
->>> default rule because "xmlns" starts at the beginning of the line.  Your
->>> diff has nothing there, which means the default rule is not used, i.e.
->>> your user-defined rule is in effect.
->>>
->>> Come to think of it, this line break in the middle of the AutoVisualize=
-r
->>> tab might have been added by your email client unintentionally, so that
->>> we use different test files, which then of course results in different
->>> diffs.  Is that the case?
->>>
->>> Anyway, if I run the following two commands:
->>>
->>> $ git config diff.natvis.xfuncname "^[\t ]*<Type[\t ]+Name=3D\"([^\"]+)=
-\".*$"
->>> $ echo '*.natvis diff=3Dnatvis' >.gitattributes
->>>
->>> ... then I get this, both on Linux (git version 2.11.1) and on Windows
->>> (git version 2.11.1.windows.1):
->>>
->>> diff --git a/a.natvis b/a.natvis
->>> index 7f9bdf5..bc3c090 100644
->>> --- a/a.natvis
->>> +++ b/a.natvis
->>> @@ -19,7 +19,7 @@ test
->>>
->>>
->>>        <!-- Non-blank line -->
->>> -      <Item Name=3D"added var">added_var</Item>
->>> +      <Item Name=3D"added var">added_vars</Item>
->>>
->>>
->>>        <Item Name=3D"var2">var2</Item>
->>>
->>>> Just to be sure, I tested your regex and again it didn't work.
->>>
->>> At this point I'm out of ideas, sorry. :(  The only way I was able to
->>> break it was due to mistyping the extension as "netvis" several times
->>> for some reason.
->>>
->>> Ren=C3=A9
+>> adding a test that push options using http fail properly.
+>
+> Sounds sensible.  What end-user visible effect does this fix have?
+> IOW, what feature do we use "push-option" for?
+
+The Gerrit world started using push options for having a better git
+experience, not needing to navigate to the web UI, e.g.:
+
+    # push for review and set me as a reviewer:
+    git push --push-option reviewer=sbeller@google.com  ssh://gerrit...
+
+    # same with http, it looks like it worked, but the push option
+    # never made it to the server
+    git push --push-option reviewer=sbeller@google.com  http://gerrit...
+
+    # This patch will make the second command fail, reporting
+    # the http helper not supporting push options.
+
+>
+> Ahh, OK, so you need to describe that there are two issues in order
+> to be understood by the readers:
+>
+>  (1) the helper protocol does not propagate push-option
+>  (2) the http helper is not prepared to handle push-option
+>
+> You fix (1), and you take advantage of the fact (2) to ensure that
+> (1) is fixed in the new test.
+>
+> With such an understanding, the title makes (sort of) sense and you
+> wouldn't have to be asked "what end-user visible effect/benefit does
+> this have?"
+
+Your analysis is correct.
+
+>
+>> +'option push-option <c-string>::
+>> +     Transmit this push option.
+>> +
+>
+> There is no "c-string" in the current documentation used or
+> defined.  The closest thing I found is
+>
+>     ... that field will be quoted in the manner of a C string ...
+>
+> in git-status page, but I do not think you send the value for an
+> push-option after running quote_c_style(), so I am puzzled.
+
+When implementing push options, we discussed that and according to
+Documentation/git-push:
+
+    The given string must not contain a NUL or LF character.
+
+>
+> I'd rather see 'option push-option <string>' as the bullet item, and
+> in its description say how arbitrary values (if you allow them, that
+> is) can be used, e.g. "Transmit <string> encoded in such and such
+> way a the value of the push-option".
+
+okay.
