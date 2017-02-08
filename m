@@ -2,95 +2,123 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3ABCC1FAF4
-	for <e@80x24.org>; Wed,  8 Feb 2017 22:28:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D36421FAF4
+	for <e@80x24.org>; Wed,  8 Feb 2017 22:37:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751806AbdBHW2m convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Wed, 8 Feb 2017 17:28:42 -0500
-Received: from zimbra-vnc.tngtech.com ([83.144.240.98]:23519 "EHLO
-        proxy.tng.vnc.biz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751433AbdBHW2l (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Feb 2017 17:28:41 -0500
-Received: from localhost (localhost [127.0.0.1])
-        by proxy.tng.vnc.biz (Postfix) with ESMTP id CDBD21E1872;
-        Wed,  8 Feb 2017 23:28:37 +0100 (CET)
-Received: from proxy.tng.vnc.biz ([127.0.0.1])
-        by localhost (proxy.tng.vnc.biz [127.0.0.1]) (amavisd-new, port 10032)
-        with ESMTP id jLsgrYRvIH6B; Wed,  8 Feb 2017 23:28:37 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
-        by proxy.tng.vnc.biz (Postfix) with ESMTP id 32C0D1E3038;
-        Wed,  8 Feb 2017 23:28:37 +0100 (CET)
-X-Virus-Scanned: amavisd-new at 
-Received: from proxy.tng.vnc.biz ([127.0.0.1])
-        by localhost (proxy.tng.vnc.biz [127.0.0.1]) (amavisd-new, port 10026)
-        with ESMTP id xIWXejO1XUU2; Wed,  8 Feb 2017 23:28:37 +0100 (CET)
-Received: from [192.168.178.36] (aftr-185-17-206-26.dynamic.mnet-online.de [185.17.206.26])
-        by proxy.tng.vnc.biz (Postfix) with ESMTPSA id BF8351E1872;
-        Wed,  8 Feb 2017 23:28:36 +0100 (CET)
-Subject: Re: [PATCH v4] tag: generate useful reflog message
-To:     Junio C Hamano <gitster@pobox.com>
-References: <20170206222416.28720-1-cornelius.weig@tngtech.com>
- <xmqqpoiv15ew.fsf@gitster.mtv.corp.google.com>
- <20170206222416.28720-2-cornelius.weig@tngtech.com>
- <xmqqshnov0c4.fsf@gitster.mtv.corp.google.com>
-Cc:     git@vger.kernel.org, karthik.188@gmail.com, peff@peff.net,
-        bitte.keine.werbung.einwerfen@googlemail.com
-From:   Cornelius Weig <cornelius.weig@tngtech.com>
-Message-ID: <d0170d3a-3022-3bca-7c80-7ef0b1cf62a0@tngtech.com>
-Date:   Wed, 8 Feb 2017 23:28:37 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.7.0
+        id S1751486AbdBHWhO (ORCPT <rfc822;e@80x24.org>);
+        Wed, 8 Feb 2017 17:37:14 -0500
+Received: from mail-pf0-f182.google.com ([209.85.192.182]:34599 "EHLO
+        mail-pf0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751092AbdBHWhN (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Feb 2017 17:37:13 -0500
+Received: by mail-pf0-f182.google.com with SMTP id e4so44537086pfg.1
+        for <git@vger.kernel.org>; Wed, 08 Feb 2017 14:35:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=AOfjfbiDGmeJYmpsvETCigASYtJkKZRwiP7K4HQQkE8=;
+        b=leT5SW/TDuqUiIcNRJH2PHNgE8E22YP2K9nqXGD+6Hjr3BpfS9xSe5Yw5WFRBi46mb
+         j5KJYlb70xSz0MY7kb2OYgcbnEDvfDOCe1TodtbWzm6beVGuRedPUOzvGgB7ZX7woonK
+         9Jfu7s7X0fSxdh6py/VNmNra/Wl9RdWqQFlWhMR34VNpNMz4wRo089psCt5V8aXHQdpg
+         1dVNq5OxDCInTL5JUj2s3r0y8EmRPHzGm0CjFgxSKICQgWaKnr4upCrMm8iWdH3Eex2M
+         FKTpL3T3ROsNO7B8LoHI2yp2YfET2rcp/1D9cJTbItKTVc8GyTaJguLSJhtOblmkmnX+
+         g8iA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=AOfjfbiDGmeJYmpsvETCigASYtJkKZRwiP7K4HQQkE8=;
+        b=do41ggnEidCh2iMcD53NPKTPSHx+IOD7ALUwY1V7NQDhlIs6UeHP9hwCCs2427Xmnl
+         M2Di8vhoR43jUzQfp1EcMaXNFd/Zl5BPaZGzBa5t8/jNNuZyLHqeCTO6K17dlRA2h0+T
+         P+2O3pGd+ucgtwE+AItXYkSmU9B2F3aNCtwSfeJ18VBcgPMzKlGDt0ejy1MZQUze5YUj
+         RmAXXS5ASCrlhOXlQk9eEiyDTDbasmyBM+8gwm+gInmtAJCQkPMHxdGn1j07Fw9MXsoF
+         jAXtY1HCSODcLjbg2o9qGSBrErZ/sZ+ws8SijZUcbgNd2Nh/wfCErMTmlNA7NsDz/L5b
+         oU1Q==
+X-Gm-Message-State: AIkVDXKrF6r1mGAi00nPwBT36LXYDvGZnyzyQVhUIPSAXQcDhJIi0AWxwzsL9bR2n6tvCUKl
+X-Received: by 10.99.108.74 with SMTP id h71mr28989655pgc.99.1486593334201;
+        Wed, 08 Feb 2017 14:35:34 -0800 (PST)
+Received: from google.com ([2620:0:1000:5b10:2d1c:e524:99eb:f617])
+        by smtp.gmail.com with ESMTPSA id j7sm22801182pfe.84.2017.02.08.14.35.32
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Wed, 08 Feb 2017 14:35:33 -0800 (PST)
+Date:   Wed, 8 Feb 2017 14:35:32 -0800
+From:   Brandon Williams <bmwill@google.com>
+To:     Linus Torvalds <torvalds@linux-foundation.org>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH 1/2] pathspec magic: add '^' as alias for '!'
+Message-ID: <20170208223532.GB108686@google.com>
+References: <alpine.LFD.2.20.1702072113040.25002@i7.lan>
 MIME-Version: 1.0
-In-Reply-To: <xmqqshnov0c4.fsf@gitster.mtv.corp.google.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8BIT
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <alpine.LFD.2.20.1702072113040.25002@i7.lan>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-
-On 02/08/2017 10:28 PM, Junio C Hamano wrote:
-> cornelius.weig@tngtech.com writes:
+On 02/07, Linus Torvalds wrote:
 > 
->> From: Cornelius Weig <cornelius.weig@tngtech.com>
->>
->> When tags are created with `--create-reflog` or with the option
->> `core.logAllRefUpdates` set to 'always', a reflog is created for them.
->> So far, the description of reflog entries for tags was empty, making the
->> reflog hard to understand. For example:
->> 6e3a7b3 refs/tags/test@{0}:
->>
->> Now, a reflog message is generated when creating a tag, following the
->> pattern "tag: tagging <short-sha1> (<description>)". If
->> GIT_REFLOG_ACTION is set, the message becomes "$GIT_REFLOG_ACTION
->> (<description>)" instead. If the tag references a commit object, the
->> description is set to the subject line of the commit, followed by its
->> commit date. For example:
->> 6e3a7b3 refs/tags/test@{0}: tag: tagging 6e3a7b3398 (Git 2.12-rc0, 2017-02-03)
->>
->> If the tag points to a tree/blob/tag objects, the following static
->> strings are taken as description:
->>
->>  - "tree object"
->>  - "blob object"
->>  - "other tag object"
->>
->> Signed-off-by: Cornelius Weig <cornelius.weig@tngtech.com>
->> Reviewed-by: Junio C Hamano <gitster@pobox.com>
+> From: Linus Torvalds <torvalds@linux-foundation.org>
+> Date: Tue, 7 Feb 2017 21:05:28 -0800
+> Subject: [PATCH 1/2] pathspec magic: add '^' as alias for '!'
 > 
-> This last line is inappropriate, as I didn't review _THIS_ version,
-> which is different from the previous one, and I haven't checked if
-> the way the comments on the previous review were addressed in this
-> version is agreeable.
+> The choice of '!' for a negative pathspec ends up not only not matching
+> what we do for revisions, it's also a horrible character for shell
+> expansion since it needs quoting.
+> 
+> So add '^' as an alternative alias for an excluding pathspec entry.
+> 
+> Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+> ---
+>  pathspec.c | 6 ++++++
+>  1 file changed, 6 insertions(+)
+> 
+> diff --git a/pathspec.c b/pathspec.c
+> index 7ababb315..ecad03406 100644
+> --- a/pathspec.c
+> +++ b/pathspec.c
+> @@ -224,6 +224,12 @@ static const char *parse_short_magic(unsigned *magic, const char *elem)
+>  		char ch = *pos;
+>  		int i;
+>  
+> +		/* Special case alias for '!' */
+> +		if (ch == '^') {
+> +			*magic |= PATHSPEC_EXCLUDE;
+> +			continue;
+> +		}
+> +
+>  		if (!is_pathspec_magic(ch))
+>  			break;
 
-Sorry for that confusion. I'm still not used to when adding what
-sign-off is appropriate. I thought that adding you as reviewer is also a
-question of courtesy.
+I like adding '^' to be an alias for excluding patterns.  There have
+been numerous times where I have wanted to use exclude patterns and
+forgotten that I've needed to do some escape magic to get my shell to
+leave '!' alone.
 
-A version with revised tests will follow.
+The only issue I see with doing this is that if a user supplies an
+exclude pattern for a command which doesn't support exclude pathspec
+magic the unsupported_magic() function will have slightly cryptic
+output.
+
+git cmd -- :^dir
+
+would produce some output which says:
+':^dir': pathspec magic not supported by this command: 'exclude' (mnemonic: '!')
+
+And the user may scratch their head for a second since they didn't
+supply the '!' character, but rather '^'.  That being said I think it
+should be fine since the long name of the magic is also printed so the
+user should be able to figure out what's wrong.  I also don't think
+there are any users of pathspecs which disallow exclude magic so this
+may not even be an issue.
+
+-- 
+Brandon Williams
