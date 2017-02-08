@@ -2,167 +2,169 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E5E6B1FAF4
-	for <e@80x24.org>; Wed,  8 Feb 2017 22:56:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 199A01FAF4
+	for <e@80x24.org>; Wed,  8 Feb 2017 23:01:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751815AbdBHW42 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 8 Feb 2017 17:56:28 -0500
-Received: from mail-pf0-f196.google.com ([209.85.192.196]:35503 "EHLO
-        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751235AbdBHW41 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Feb 2017 17:56:27 -0500
-Received: by mail-pf0-f196.google.com with SMTP id f144so12351702pfa.2
-        for <git@vger.kernel.org>; Wed, 08 Feb 2017 14:55:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=OleAhtG7W1BE9MT85e9DesLzVIHcXbZ33k54fRXIM8E=;
-        b=AMtQQ00gjA+N6R1sr97aRJezz8UnAfzUqgKclBHlPNsCKrwmJcx3Da39INGj6Lw4vg
-         qvpqduaSxk9Ct8Rti0tih5RYBxO0W7uPr5AkU+qv/U5smmp+HzAtxrsDr78FNFCRidPy
-         lLuHWhjx3R1s3WwOHtizYuMnaAEZvtm0014IUgsaaazhwyUF5W9i+oKVWQ71ikmqKfml
-         638I9tXOaw4x4siuC97NaQu1UKiDPgcJ/RvN9tKFhXzbepYE989J54i4GuobD2Qd9MZQ
-         6SDYZDUQCm2ij34/9WsB4TqXF3cqdP9ft+/37FTzOyMnYCnh5wjXrr4Xv1+Y3d3heFCS
-         g0jg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=OleAhtG7W1BE9MT85e9DesLzVIHcXbZ33k54fRXIM8E=;
-        b=rA7BoA/qofq2GjSPCyB1Nbz62MMVRqjBYr6L2F9N41ohTV6WULRGvtAX1kMiNmuPAG
-         H/3J7d9OKQ2JfneTpMhgR1iXTNhD1+yW9rcKXVhOKHIFqC9ibhwU3O90wUhu0FL305zf
-         R+e7S4rE7vRE8YUsfpHxndGstxwoCb8r9vFdYTUhXRNCGyNVyBwy745Fo+lYsAwYFu+w
-         rkFJLpQkuyGzZGjP1KKPUmoRXZ7Uts6O4ZOX4RAz30nlMnPwWOwNnXrflrP0sEMoHyMI
-         RjCrEc1bc0IyNucP/EWqa/7S5FwTU/rhAHRXH0N/n6ghhLkTa8Omr3wrLlc/qLh5JirF
-         xMAw==
-X-Gm-Message-State: AIkVDXLwyWltm0oPW+Jag300ctHHcdeBBWh7RCMVH1IjAPPiyO/RDTZaT2sTRG709V2hYA==
-X-Received: by 10.98.133.11 with SMTP id u11mr28745431pfd.132.1486594552228;
-        Wed, 08 Feb 2017 14:55:52 -0800 (PST)
-Received: from localhost ([2620:0:1000:8622:7c20:fa7c:46cb:2209])
-        by smtp.gmail.com with ESMTPSA id q22sm22852029pfj.77.2017.02.08.14.55.47
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 08 Feb 2017 14:55:47 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Ashutosh Bapat <ashutosh.bapat@enterprisedb.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Michael Haggerty <mhagger@alum.mit.edu>,
-        Michael J Gruber <git@drmicha.warpmail.net>,
-        Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: Re: Bug with fixup and autosquash
-References: <CAFjFpRe8zqxs4OLbCrjnuEzF=75sbBJ+HuZqek49B=O=TFHq8A@mail.gmail.com>
-Date:   Wed, 08 Feb 2017 14:55:47 -0800
-In-Reply-To: <CAFjFpRe8zqxs4OLbCrjnuEzF=75sbBJ+HuZqek49B=O=TFHq8A@mail.gmail.com>
-        (Ashutosh Bapat's message of "Wed, 8 Feb 2017 15:40:07 +0530")
-Message-ID: <xmqqbmucuwb0.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+        id S1751449AbdBHXBo (ORCPT <rfc822;e@80x24.org>);
+        Wed, 8 Feb 2017 18:01:44 -0500
+Received: from cloud.peff.net ([104.130.231.41]:51883 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751149AbdBHXBm (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Feb 2017 18:01:42 -0500
+Received: (qmail 4504 invoked by uid 109); 8 Feb 2017 23:00:59 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 08 Feb 2017 23:00:59 +0000
+Received: (qmail 7912 invoked by uid 111); 8 Feb 2017 23:01:04 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 08 Feb 2017 18:01:04 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 08 Feb 2017 18:00:57 -0500
+Date:   Wed, 8 Feb 2017 18:00:57 -0500
+From:   Jeff King <peff@peff.net>
+To:     David Turner <novalis@novalis.org>
+Cc:     Junio C Hamano <gitster@pobox.com>, Duy Nguyen <pclouds@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: "disabling bitmap writing, as some objects are not being packed"?
+Message-ID: <20170208230057.hking37uuynf4cgd@sigill.intra.peff.net>
+References: <xmqqpokrr2cf.fsf@gitster.mtv.corp.google.com>
+ <CACsJy8ACy+Hv1Z3FgG-WFBozwWqmMuN-JnMWF-+rdpF0knFjqg@mail.gmail.com>
+ <1486515795.1938.45.camel@novalis.org>
+ <CACsJy8C81+D=UG4pZ4e+URQqKRCPG=5bLiCHbGCQamvE-2y2MQ@mail.gmail.com>
+ <1486542299.1938.47.camel@novalis.org>
+ <CACsJy8C4DO-GYREUhED3YU_WetoTZaB3MUq1kGfRjA3e-FOLYQ@mail.gmail.com>
+ <xmqqtw84wpag.fsf@gitster.mtv.corp.google.com>
+ <1486580742.1938.52.camel@novalis.org>
+ <20170208190858.rjoqehbhyizlwg5q@sigill.intra.peff.net>
+ <1486592043.1938.82.camel@novalis.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <1486592043.1938.82.camel@novalis.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ashutosh Bapat <ashutosh.bapat@enterprisedb.com> writes:
+On Wed, Feb 08, 2017 at 05:14:03PM -0500, David Turner wrote:
 
-> I have been using git rebase heavily these days and seem to have found a bug.
->
-> If there are two commit messages which have same prefix e.g.
-> yyyyyy This is prefix
-> xxxxxx This is prefix and message
->
-> xxxxxx comitted before yyyyyy
->
-> Now I commit a fixup to yyyyyy using git commit --fixup yyyyyy
-> zzzzzz fixup! This is prefix
->
-> When I run git rebase -i --autosquash, the script it shows me looks like
-> pick xxxxxx This is prefix and message
-> fixup zzzzzz fixup! This is prefix
-> pick yyyyyy This is prefix
->
-> I think the correct order is
-> pick xxxxxx This is prefix and message
-> pick yyyyyy This is prefix
-> fixup zzzzzz fixup! This is prefix
->
-> Is that right?
+> > I wonder if you'd want to either bump the auto-gc object limit, or
+> > possibly reduce the gc.pruneExpire limit to keep this situation from
+> > coming up in the first place (or at least mitigating the amount of time
+> > it's the case).
+> 
+> Auto-gc might not succeed in pruning objects, but it will at least
+> reduce the number of packs, which is super-important for performance.
 
-Because "commit" pretends as if it took the exact commit object name
-to be fixed up (after all, it accepts "yyyyyy" that is a name of the
-commit object), it would be nice if the fixup is applied to that
-exact commit, even if you had many commits that share exactly the
-same title (i.e. not just shared prefix).
+Right, I mean to bump the loose-object limit but keep the
+gc.autoPackLimit at 50. If you couple that with setting
+transfer.unpackLimit, then each push creates a single pack, and you
+repack after 50 pushes.
 
-Unfortunately, "rebase -i --autosquash" reorders the entries by
-identifying the commit by its title, and it goes with prefix match
-so that fix-up commits created without using --fixup option but
-manually records the title's prefix substring can also work.  
+You don't have to care about loose objects, because you know you only
+get them when a "gc" ejects loose objects (so they're not as efficient,
+but nothing actually accesses them; they just hang around until their
+mtime grace period is up).
 
-We could argue that the logic should notice that there is one exact
-match and another non-exact prefix match and favor the former, and
-certainly such a change would make your made-up example (you didn't
-actually have a commit whose title is literally "This is prefix")
-above work better.
+> I think the intent of automatic gc is to have a git repository be
+> relatively low-maintenance from a server-operator perspective.  (Side
+> note: it's fairly trivial for a user with push access to mess with the
+> check simply by pushing a bunch of objects whose shas start with 17).
+> It seems odd that git gets itself into a state where it refuses to do
+> any maintenance just because at some point some piece of the maintenance
+> didn't make progress.
 
-But I am not sure if adding such heuristics would really help in
-general.  It would not help those whose commits are mostly titled
-ultra-vaguely, like "fix", "bugfix", "docfix", etc.
+In my experience, auto-gc has never been a low-maintenance operation on
+the server side (and I do think it was primarily designed with clients
+in mind).
 
-Another possibility is to teach "commit --fixup" to cast exact
-commit object name in stone.  That certainly would solve your
-immediate problem, but it has a grave negative impact when the user
-rebases the same topic many times (which happens often).
+At GitHub we disable it entirely, and do our own gc based on a throttled
+job queue (one reason to throttle is that repacking is memory and I/O
+intensive, so you really don't want to a bunch of repacks kicking off
+all at once). So basically any repo that gets pushed to goes on the
+queue, and then we pick the worst cases from the queue based on how
+badly they need packing[1].
 
-For example, I may have a series of commits A and B, notice that A
-could be done a bit better and have "fixup A" on top, build a new
-commit C on it, and then realize that the next step (i.e. D) would
-need support from a newer codebase than where I started (i.e. A^).
+I wish regular Git were more turn-key in that respect. Maybe it is for
+smaller sites, but we certainly didn't find it so. And I don't know that
+it's feasible to really share the solution. It's entangled with our
+database (to store last-pushed and last-maintenance values for repos)
+and our job scheduler.
 
-At that point, I would have a 4-commit series (A, B, "fixup A", and
-C), and I would rebase them on top of something newer.  I am
-undecided if that "fixup A" is really an improvement or unnecessary,
-when I do this, but I do know that I want to build the series on top
-of a different commit.  So I do rebase without --autosquash (I would
-probably rebase without --interactive for this one).
+[1] The "how bad" thing is a heuristic, and we found it's generally
+    proportional to the number of bytes stored in objects _outside_ of
+    the big "main" pack. So 2 big pushes may need maintenance more
+    than 10 tiny pushes, because they have more objects (and our goal
+    with maintenance isn't just saving disk space or avoiding the linear
+    pack search, but having up-to-date bitmaps and good on-disk deltas
+    to make serving fetches as cheap as possible).
 
-Then I keep working and add a new commit D on top.  After all that,
-I would have a more-or-less completed series and would be ready to
-re-assess the whole series.  I perhaps decide that "fixup A" is
-really an improvement.  And then I would "rebase -i" to squash the
-fix-up into A.
+> Sure, I could change my configuration, but that doesn't help the other
+> folks (e.g. https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=813084 )
+> who run into this.
 
-But notice that at this point, what we are calling A has different
-object name than the original A the fixup was written for, because
-we rebased once on top of a newer codebase.  That commit can still
-be identified by its title, but not with its original commit object
-name.
+Yeah, I'm certainly open to improving Git's defaults. If it's not clear
+from the above, I mostly just gave up for a site the size of GitHub. :)
 
-I think that is why "commit --fixup <commit>" turns the commit
-object name (your "yyyyyy") into a string (your "This is prefix")
-and that is a reasonable design decision [*1*].
+> Idea 1: when gc --auto would issue this message, instead it could create
+> a file named gc.too-much-garbage (instead of gc.log), with this message.
+> If that file exists, and it is less than one day (?) old, then we don't
+> attempt to do a full gc; instead we just run git repack -A -d.  (If it's
+> more than one day old, we just delete it and continue anyway).
 
-So from that point of view, if we were to address your issue, it
-should happen in "rebase -i --autosquash" side, not "commit --fixup"
-side.
+I kind of wonder if this should apply to _any_ error. I.e., just check
+the mtime of gc.log and forcibly remove it when it's older than a day.
+You never want to get into a state that will fail to resolve itself
+eventually. That might still happen (e.g., corrupt repo), but at the
+very least it won't be because Git is too dumb to try again.
 
-Let's hear from some of those (Cc'ed) who were involved in an
-earlier --autosquash thread.
+> Idea 2 : Like idea 1, but instead of repacking, just smash the existing
+> packs together into one big pack.  In other words, don't consider
+> dangling objects, or recompute deltas.  Twitter has a tool called "git
+> combine-pack" that does this:
+> https://github.com/dturner-tw/git/blob/dturner/journal/builtin/combine-pack.c
 
-https://public-inbox.org/git/cover.1259934977.git.mhagger@alum.mit.edu/
+We wrote something similar at GitHub, too, but we never ended up using
+it in production. We found that with a sane scheduler, it's not too big
+a deal to just do maintenance once in a while.
 
+  Also, our original problem was that repos which have gotten out of
+  hand (say, 5000 packs) repacked _very_ slowly with a normal repack. So
+  a "fast pack" followed by a real pack was a viable way out of that. In
+  the end, I just made pack-objects handle this case better, and we
+  don't need the fast-pack.
 
-[Footnote]
+> That's less space-efficient than a true repack, but it's no worse than
+> having the packs separate, and it's a win for read performance because
+> there's no need to do a linear search over N packs to find an object.
 
-*1* "rebase -i --autosquash" does understand "fixup! yyyyyy", so if
-    you are willing to accept the consequence of not being able to
-    rebase twice, you could instead do
+Over the long term you may end up with worse packs, because the true
+repack will drop some delta opportunities between objects in the same
+pack (reasoning that they weren't made into deltas last time, so it's
+not worth trying again). You'd probably need to use "-f" periodically.
 
-	$ git commit -m "fixup! yyyyyy"
+This is all speculation, though. We never did it in production, so I was
+never able to measure the real impact over time.
 
-    I would think.
+> Idea 3: As I suggested last time, separate fatal and non-fatal errors.
+> If gc fails because of EIO or something, we probably don't want to touch
+> the disk anymore. But here, the worst consequence is that we waste some
+> processing power. And it's better to occasionally waste processing power
+> in a non-interactive setting than it is to do so when a user will be
+> blocked on it.  So non-fatal warnings should go to gc.log, and fatal
+> errors should go to gc.fatal.  gc.log won't block gc from running. I
+> think this is my preferred option.
+
+This seems like your (1), except that it handles more than one type of
+non-fatal error. So I like it much better.
+
+I'm still not sure if it's worth making the fatal/non-fatal distinction.
+Doing so is perhaps safer, but it does mean that somebody has to decide
+which errors are important enough to block a retry totally, and which
+are not. In theory, it would be safe to always _try_ and then the gc
+process can decide when something is broken and abort. And all you've
+wasted is some processing power each day.
+
+-Peff
