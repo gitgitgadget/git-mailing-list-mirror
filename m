@@ -7,56 +7,53 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 213391FC46
-	for <e@80x24.org>; Wed,  8 Feb 2017 05:13:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 970C11FC46
+	for <e@80x24.org>; Wed,  8 Feb 2017 05:14:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752848AbdBHFN2 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 8 Feb 2017 00:13:28 -0500
-Received: from mail-pf0-f193.google.com ([209.85.192.193]:33257 "EHLO
-        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752057AbdBHFN1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Feb 2017 00:13:27 -0500
-Received: by mail-pf0-f193.google.com with SMTP id e4so10789441pfg.0
-        for <git@vger.kernel.org>; Tue, 07 Feb 2017 21:12:57 -0800 (PST)
+        id S1753511AbdBHFOo (ORCPT <rfc822;e@80x24.org>);
+        Wed, 8 Feb 2017 00:14:44 -0500
+Received: from mail-pf0-f196.google.com ([209.85.192.196]:33748 "EHLO
+        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751698AbdBHFOn (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Feb 2017 00:14:43 -0500
+Received: by mail-pf0-f196.google.com with SMTP id e4so10792569pfg.0
+        for <git@vger.kernel.org>; Tue, 07 Feb 2017 21:14:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:date:from:to:cc:subject:in-reply-to:message-id:references
-         :user-agent:mime-version;
-        bh=2V+RM4/BcJOODzlRquguE0Zr06LfV/LbaUaiotqbdCA=;
-        b=p2N2jwWirSoWIY5H3HnHflvR0hxyhK4znsLGoizxoXFijK+RDuFN2F+CDK2KbRTRGV
-         mwjo/gvknFrSJvrIzAOlDgjsUU08fFxKhZu44DV1OQw6JmL6jcEjSXpbUGfmvCICHrnS
-         VmCweFtbSmh2kwGWR58ZiWLcpVrI14F+y2L9ASLgkxlkn/GCSUuArVg7HAb2D3RoFYOS
-         hjoKmc9KUBl9LAmoIXGGYYcWGGyLJjzNf8XQlVwqS7SYdu8IlT/d2Ru/ojcDVoejebZe
-         x4Bhj1DpyVpJAjA6mf7rMSBlA+8eK7pMOgRw9dJPi0ZE6w7aaEGEcvu7iqeF8M6/bca4
-         /6uA==
+        h=sender:date:from:to:cc:subject:message-id:user-agent:mime-version;
+        bh=zZ2b3l0wgutX76Fb5FSoCnaeKWizV6d2e4k+6ZXQhVY=;
+        b=fQPf5tg9fWVSSFW7kwk2gM30BsgQ9cAXcGYWPCC5XErjHLk1FxPD5h31sk99NM9DpY
+         ouLckry0mVY0M8bPK9Zbihn+L3vFm9wD6s9cHcONc6MAMMVA/q43d96aCrKZXi+E/8Tg
+         J4EU9IMTuJ0aKIDKwMQJzvuLlCMgw42yu/jE48IlYtfZWLGBtW5RFA0Kwx5U3gruhaII
+         Yxoeo0c56PcK46AYyokDJ73kxpZJEZvJqQN3cvJ6WDAhUR+ey5CnMJOyK8LV/pMI8yiL
+         677YE/clSQZuTXVPvn88g1heIgM5gpN/4UXEQZCiTNv2p51vksxiU66wPDWGDRtc16+q
+         Ej0A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:date:from:to:cc:subject:in-reply-to
-         :message-id:references:user-agent:mime-version;
-        bh=2V+RM4/BcJOODzlRquguE0Zr06LfV/LbaUaiotqbdCA=;
-        b=Jat27pjC+AYkemBZFxawlTNrluFWKCuTsWmgkb3NDQDSx/fBLNKeejNOxdWcPSo6Xc
-         jrqjNo26+cueFvE15cXmI0tyZQngMUAfq36XHbnpnInyXGOcvk1xu+BDbNmiq1HIVM61
-         L4UXCpaWtzK1X0bhpBnMCykZkIZBoWHVrH3W5v71ifFmsGp7HHuGg/Ld+6GG8e/bVm2a
-         jIs+md5FJIgMSiBCPe1q5s6o4ZyCLeTrL+vn23qlFwzGTSPSb88xclZmvYi1hsL26p4Q
-         kWrU9p2ChAIWEZ2vUsp+TEQmQsJhEa9ol168Ss5zAOJdaDTIoTODgNBfC48N78wvklPc
-         pyZg==
-X-Gm-Message-State: AIkVDXJwObWz0XZaI1uINycyBPGtFU4+IgBV/v7+A0SBb9HE05Rtnpct/EzNRYwVpr18xA==
-X-Received: by 10.99.166.17 with SMTP id t17mr25135657pge.196.1486530777071;
-        Tue, 07 Feb 2017 21:12:57 -0800 (PST)
+        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
+         :user-agent:mime-version;
+        bh=zZ2b3l0wgutX76Fb5FSoCnaeKWizV6d2e4k+6ZXQhVY=;
+        b=EKWmzrCuYJugfAEfgS9D+uGruGPyveZaa6tjzZeDSWWbqti0O30jQeWpESTrWNVGpZ
+         UDLyDiSEXjOwsV90KgJvvuyO1ba4kjfIIEP0ua3rfykpm3iht/yv53RPXJ2hWsqUQDyY
+         I337HLYD0kN7Rtcsbydoga+F8q7tpGho+5tq4toW2Vg5GGk2Lf2/nHuPxg2YzTRKtpau
+         1BlRBE4RR5mDDQrSobKzaBlECzBP0yx5UI+lq1+u2973tz6k3JFjLfzpFoGcS77VwNNh
+         zhggkHt7MmVUOGx6ghf8XUXbKen/h+koP8Ky4I25HZ8K+wAyRoWFIwjario7e6YRvVwz
+         y/ew==
+X-Gm-Message-State: AIkVDXIy0X2zthMAzSEdXUfE5pDcCTM+lV8S/IefwQ5HhgGPABUGaJmBu/Mw6r0V2UITpw==
+X-Received: by 10.98.211.220 with SMTP id z89mr23805844pfk.3.1486530882665;
+        Tue, 07 Feb 2017 21:14:42 -0800 (PST)
 Received: from i7.lan (c-73-11-52-149.hsd1.or.comcast.net. [73.11.52.149])
-        by smtp.gmail.com with ESMTPSA id e90sm15712471pfl.32.2017.02.07.21.12.55
+        by smtp.gmail.com with ESMTPSA id n73sm15768137pfa.9.2017.02.07.21.14.41
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 07 Feb 2017 21:12:56 -0800 (PST)
-Date:   Tue, 7 Feb 2017 21:12:55 -0800 (PST)
+        Tue, 07 Feb 2017 21:14:42 -0800 (PST)
+Date:   Tue, 7 Feb 2017 21:14:40 -0800 (PST)
 From:   Linus Torvalds <torvalds@linux-foundation.org>
 X-X-Sender: torvalds@i7.lan
 To:     Junio C Hamano <gitster@pobox.com>
 cc:     Git Mailing List <git@vger.kernel.org>
-Subject: Re: Fwd: Possibly nicer pathspec syntax?
-In-Reply-To: <xmqq4m05xph4.fsf@gitster.mtv.corp.google.com>
-Message-ID: <alpine.LFD.2.20.1702072112160.25002@i7.lan>
-References: <CA+55aFyznf1k=iyiQx6KLj3okpid0-HexZWsVkxt7LqCdz+O5A@mail.gmail.com> <CA+55aFzkTZAb1vy3G5M_Nb1BeOhTiCGksUfLa+ZQtiU2x6Q=Fw@mail.gmail.com> <alpine.LFD.2.20.1702071739060.17609@i7.lan> <xmqqefz9xv0x.fsf@gitster.mtv.corp.google.com>
- <CA+55aFwPLtuPciN1o_03CwkKqFWgZd_br9Q14qyr7a7N7mxTeA@mail.gmail.com> <xmqqa89xxtnd.fsf@gitster.mtv.corp.google.com> <CA+55aFyAEaMKA+2oPJct4ffJ0-_z2vrYxmQ9yrkbxzB3Hk6WfQ@mail.gmail.com> <xmqq4m05xph4.fsf@gitster.mtv.corp.google.com>
+Subject: [PATCH 2/2] pathspec: don't error out on all-exclusionary pathspec
+ patterns
+Message-ID: <alpine.LFD.2.20.1702072113380.25002@i7.lan>
 User-Agent: Alpine 2.20 (LFD 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
@@ -66,24 +63,57 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Date: Tue, 7 Feb 2017 21:08:15 -0800
+Subject: [PATCH 2/2] pathspec: don't error out on all-exclusionary pathspec patterns
 
-On Tue, 7 Feb 2017, Junio C Hamano wrote:
-> > +		// Special case alias for '!'
-> 
-> /* style? */
+Instead of erroring out and telling the user that they should add a 
+positive pattern that covers everything else, just _do_ that.
 
-Will fix.
+For commands where we honor the current cwd by default (ie grep, ls-files 
+etc), we make that default positive pathspec be the current working 
+directory.  And for commands that default to the whole project (ie diff, 
+log, etc), the default positive pathspec is the whole project.
 
-> I somehow do not think this is correct.  I expect
-> 
-> 	cd t && git grep -e foo -- :^perf/
-> 
-> to look into things in 't' except for things in 't/perf', but the
-> above will grab hits from ../Documentation/ etc.  We need to pay
-> attention to PATHSPEC_PREFER_CWD bit in the flags word, I think.
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+---
+ pathspec.c | 16 +++++++++++-----
+ 1 file changed, 11 insertions(+), 5 deletions(-)
 
-Ok, that's easy enough.
+diff --git a/pathspec.c b/pathspec.c
+index ecad03406..d8f78088c 100644
+--- a/pathspec.c
++++ b/pathspec.c
+@@ -522,7 +522,7 @@ void parse_pathspec(struct pathspec *pathspec,
+ 	}
+ 
+ 	pathspec->nr = n;
+-	ALLOC_ARRAY(pathspec->items, n);
++	ALLOC_ARRAY(pathspec->items, n+1);
+ 	item = pathspec->items;
+ 	prefixlen = prefix ? strlen(prefix) : 0;
+ 
+@@ -546,10 +546,16 @@ void parse_pathspec(struct pathspec *pathspec,
+ 		pathspec->magic |= item[i].magic;
+ 	}
+ 
+-	if (nr_exclude == n)
+-		die(_("There is nothing to exclude from by :(exclude) patterns.\n"
+-		      "Perhaps you forgot to add either ':/' or '.' ?"));
+-
++	/*
++	 * If everything is an exclude pattern, add one positive pattern
++	 * that matches everyting. We allocated an extra one for this.
++	 */
++	if (nr_exclude == n) {
++		if (!(flags & PATHSPEC_PREFER_CWD))
++			prefixlen = 0;
++		init_pathspec_item(item + n, 0, prefix, prefixlen, "");
++		pathspec->nr++;
++	}
+ 
+ 	if (pathspec->magic & PATHSPEC_MAXDEPTH) {
+ 		if (flags & PATHSPEC_KEEP_ORDER)
+-- 
+2.12.0.rc0.1.g02555c1b2.dirty
 
-Two-patch series to follow.
-
-              Linus
