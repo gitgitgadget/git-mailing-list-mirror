@@ -2,153 +2,115 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F2E401FAF4
-	for <e@80x24.org>; Wed,  8 Feb 2017 22:05:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1D2B31FAF4
+	for <e@80x24.org>; Wed,  8 Feb 2017 22:08:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751444AbdBHWEe (ORCPT <rfc822;e@80x24.org>);
-        Wed, 8 Feb 2017 17:04:34 -0500
-Received: from mail-it0-f47.google.com ([209.85.214.47]:36896 "EHLO
-        mail-it0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751313AbdBHWEc (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Feb 2017 17:04:32 -0500
-Received: by mail-it0-f47.google.com with SMTP id r185so2617418ita.0
-        for <git@vger.kernel.org>; Wed, 08 Feb 2017 14:04:04 -0800 (PST)
+        id S1751429AbdBHWHo (ORCPT <rfc822;e@80x24.org>);
+        Wed, 8 Feb 2017 17:07:44 -0500
+Received: from mail-io0-f193.google.com ([209.85.223.193]:35593 "EHLO
+        mail-io0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751011AbdBHWHn (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Feb 2017 17:07:43 -0500
+Received: by mail-io0-f193.google.com with SMTP id m98so366414iod.2
+        for <git@vger.kernel.org>; Wed, 08 Feb 2017 14:06:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=X57ifUPO4vp4HiHbU0kM3IGmCPhf9EEmpX1Er6fuDA0=;
-        b=sRHGOQ1zafztXYwdCJWAOGYBV2qRP0UAabuUa3VMQHxwoWXWfCQlmspOsqKXp73fl1
-         2AU21SMCqiKxgVkoim9jukecpP9VTlXAZBwajo82VkQPfu07rrXy7f58KDWntWEs0dbg
-         hROTpvduNKkxPKGjDMlFy1T+TI/VbloCsTNQdBWzmo+vQxrdL/l9wfGrJZZouNzta7Pp
-         2iGBS98zZ7EJJAn7hzgYZd5jv1gz90MC3PTmNrjgYLVRvcVaYMIA2My17pXnWeKPPJSG
-         mmJ0wFKyIuUYuBUz8u5WxN/miQIiOKbM6vN/dQss8iXDpXJLb05/bO77uPyosvYwbeMt
-         4P8Q==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=lvRFDNjdEXILQa6WiTehikof7+vgWvITKq8NCAcjUHM=;
+        b=olyiabZiGimO2XVf2yvFNaY9Uoeke/N8NK2BMfeRCTZTR8Y7IbSBx08zJeLVlNRyAs
+         KlbPR5t9fGUc0m4N3kAeR47KjxX5lTDC02vkHP9upGQ1Tu+sk8NhhY9a0AVbsqaOCbhQ
+         BnL/2W/2yQMuH5PBgYkXt3xy3I+dSOESFYNlgZYtspmZjrL8trh86LfVyjUqUCjjgJ01
+         gTPkdeef55rrFNuFw4yV2COPd6fjTvfBPnqmda6noFmnYqn1+Tw6dBFrXzNFQ9AldARw
+         1QsPPtupP+dYtBXNAHvU3MJ14ZZNdX3N6pB4seCT0qK0SfSurzBwmD+RkyiCTVF1L8FV
+         Z7XA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=X57ifUPO4vp4HiHbU0kM3IGmCPhf9EEmpX1Er6fuDA0=;
-        b=qP16weXZPXKigUvAzDHK/+xHESt2Php6bIxiFZ3c9cpo96RH+Lo90GZKU8NOvVegeS
-         iDfJNtFbGc+eSdUGgRdY2nb9I6Nf1u0OHlFzUX9MsaY04UjJU+ktzp0MqOAmDvm+BC2X
-         2Yl3/XEt7eHayo3XTS2k3J0humw4hivdwTvdF5/lUxwNEZOYyIoj+C6QYo+5D+hpbbny
-         a2k4ZUeBVELRuPblU80uQ81BZ5sW6yJf0PKiygQGA8wwMrOmSNDB5TRR+AakorWP9AWm
-         oMce6mv8QHH2UaWrJqZqL3Fo51RGfIx5/WNAhyU2Kp+mf/wBXm+hDHeW7mYeZ76hC+ua
-         /hFQ==
-X-Gm-Message-State: AIkVDXJPD5exGngTYuO8qHgLzLsds89n6BVaVL+iQXH7kSCR2sr0PzjyEqjInHuCnUsX4YpN
-X-Received: by 10.84.142.101 with SMTP id 92mr36141857plw.66.1486591443447;
-        Wed, 08 Feb 2017 14:04:03 -0800 (PST)
-Received: from localhost ([2620:0:1000:5b10:684e:2fd8:5eea:9943])
-        by smtp.gmail.com with ESMTPSA id t185sm22847773pgb.32.2017.02.08.14.04.02
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=lvRFDNjdEXILQa6WiTehikof7+vgWvITKq8NCAcjUHM=;
+        b=QwhIzgFGinB75OSRxsd1Ap556ZrMYrWL6zJ2+WGgV07h2N2fkunvWdYTI82mAo2YAz
+         E5c5s5chf93wXDm/zdnXEn12dmN0+DedrCxveuMxNWXzGCtt+zmO/m/GYI+6swzoZOX/
+         M3rcrcVXK1E/HP7uQemsBnYkidJKfBj7whbjkq4s0f6H/8berPV0x1D0aQ0VGlpW11N+
+         kZ4Tzgn8oJ8y33D6roGBsT7hVPPc9jkd1SUsVFTQDzdrhOjGCcDnglgKYhI7d1gwgfsO
+         Mwp8jII5NbyRvcn0n/I+NaxU91ATMTxCfTyihNTqf5ZUrIYUpFxDbRE+EMJK3VMNI9hs
+         BQBA==
+X-Gm-Message-State: AIkVDXKMOjdYiRqfn/sK5xaxicPCCCG37tsmsZMUJslKSMv2AR1taRkXM3JZYxoqXHC2iA==
+X-Received: by 10.98.166.131 with SMTP id r3mr28572022pfl.143.1486591585628;
+        Wed, 08 Feb 2017 14:06:25 -0800 (PST)
+Received: from localhost ([2620:0:1000:8622:7c20:fa7c:46cb:2209])
+        by smtp.gmail.com with ESMTPSA id d69sm22824709pfd.11.2017.02.08.14.06.24
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 08 Feb 2017 14:04:03 -0800 (PST)
-From:   Stefan Beller <sbeller@google.com>
-To:     gitster@pobox.com
-Cc:     git@vger.kernel.org, jrnieder@gmail.com,
-        Stefan Beller <sbeller@google.com>
-Subject: [PATCHv2] push options: pass push options to the transport helper
-Date:   Wed,  8 Feb 2017 14:04:00 -0800
-Message-Id: <20170208220400.17069-1-sbeller@google.com>
-X-Mailer: git-send-email 2.12.0.rc0.1.g018cb5e6f4
-In-Reply-To: <xmqqpoiswo0l.fsf@gitster.mtv.corp.google.com>
-References: <xmqqpoiswo0l.fsf@gitster.mtv.corp.google.com>
+        Wed, 08 Feb 2017 14:06:24 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Cc:     git@vger.kernel.org, David Turner <dturner@twosigma.com>
+Subject: Re: [PATCH] refs-internal.c: make files_log_ref_write() static
+References: <20170208094558.23712-1-pclouds@gmail.com>
+Date:   Wed, 08 Feb 2017 14:06:24 -0800
+In-Reply-To: <20170208094558.23712-1-pclouds@gmail.com> (=?utf-8?B?Ik5n?=
+ =?utf-8?B?dXnhu4VuIFRow6FpIE5n4buNYw==?=
+        Duy"'s message of "Wed, 8 Feb 2017 16:45:58 +0700")
+Message-ID: <xmqqfujouylb.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When using non-builtin protocols relying on a transport helper
-(such as http), push options are not propagated to the helper.
+Nguyễn Thái Ngọc Duy  <pclouds@gmail.com> writes:
 
-The user could ask for push options and a push would seemingly succeed,
-but the push options would never be transported to the server,
-misleading the users expectation.
+> Created in 5f3c3a4e6f (files_log_ref_write: new function - 2015-11-10)
+> but probably never used outside refs-internal.c
+>
+> Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+> ---
 
-Fix this by propagating the push options to the transport helper.
+It's been more than a year, so let's declare that when somebody
+needs it it can easily be turned into extern again and take this
+patch.
 
-This is only addressing the first issue of
-   (1) the helper protocol does not propagate push-option
-   (2) the http helper is not prepared to handle push-option
+Thanks.
 
-Once we fix (2), the http transport helper can make use of push options
-as well, but that happens as a follow up. (1) is a bug fix, whereas (2)
-is a feature, which is why we only do (1) here.
-
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
- Documentation/gitremote-helpers.txt |  4 ++++
- t/t5545-push-options.sh             | 15 +++++++++++++++
- transport-helper.c                  |  7 +++++++
- 3 files changed, 26 insertions(+)
-
-diff --git a/Documentation/gitremote-helpers.txt b/Documentation/gitremote-helpers.txt
-index 9e8681f9e1..23474b1eab 100644
---- a/Documentation/gitremote-helpers.txt
-+++ b/Documentation/gitremote-helpers.txt
-@@ -462,6 +462,10 @@ set by Git if the remote helper has the 'option' capability.
- 'option pushcert {'true'|'false'}::
- 	GPG sign pushes.
- 
-+'option push-option <string>::
-+	Transmit <string> as a push option. As the a push option
-+	must not contain LF or NUL characters, the string is not encoded.
-+
- SEE ALSO
- --------
- linkgit:git-remote[1]
-diff --git a/t/t5545-push-options.sh b/t/t5545-push-options.sh
-index ea813b9383..9a57a7d8f2 100755
---- a/t/t5545-push-options.sh
-+++ b/t/t5545-push-options.sh
-@@ -3,6 +3,8 @@
- test_description='pushing to a repository using push options'
- 
- . ./test-lib.sh
-+. "$TEST_DIRECTORY"/lib-httpd.sh
-+start_httpd
- 
- mk_repo_pair () {
- 	rm -rf workbench upstream &&
-@@ -100,4 +102,17 @@ test_expect_success 'two push options work' '
- 	test_cmp expect upstream/.git/hooks/post-receive.push_options
- '
- 
-+test_expect_success 'push option denied properly by http remote helper' '\
-+	mk_repo_pair &&
-+	git -C upstream config receive.advertisePushOptions false &&
-+	git -C upstream config http.receivepack true &&
-+	cp -R upstream/.git "$HTTPD_DOCUMENT_ROOT_PATH"/upstream.git &&
-+	git clone "$HTTPD_URL"/smart/upstream test_http_clone &&
-+	test_commit -C test_http_clone one &&
-+	test_must_fail git -C test_http_clone push --push-option=asdf origin master &&
-+	git -C test_http_clone push origin master
-+'
-+
-+stop_httpd
-+
- test_done
-diff --git a/transport-helper.c b/transport-helper.c
-index 91aed35ebb..1258d6aedd 100644
---- a/transport-helper.c
-+++ b/transport-helper.c
-@@ -826,6 +826,13 @@ static void set_common_push_options(struct transport *transport,
- 		if (set_helper_option(transport, TRANS_OPT_PUSH_CERT, "if-asked") != 0)
- 			die("helper %s does not support --signed=if-asked", name);
- 	}
-+
-+	if (flags & TRANSPORT_PUSH_OPTIONS) {
-+		struct string_list_item *item;
-+		for_each_string_list_item(item, transport->push_options)
-+			if (set_helper_option(transport, "push-option", item->string) != 0)
-+				die("helper %s does not support 'push-option'", name);
-+	}
- }
- 
- static int push_refs_with_push(struct transport *transport,
--- 
-2.12.0.rc0.1.g018cb5e6f4
-
+>  refs/files-backend.c | 3 +++
+>  refs/refs-internal.h | 4 ----
+>  2 files changed, 3 insertions(+), 4 deletions(-)
+>
+> diff --git a/refs/files-backend.c b/refs/files-backend.c
+> index c041d4ba21..6a0bf94bf1 100644
+> --- a/refs/files-backend.c
+> +++ b/refs/files-backend.c
+> @@ -165,6 +165,9 @@ static struct ref_entry *create_dir_entry(struct files_ref_store *ref_store,
+>  					  const char *dirname, size_t len,
+>  					  int incomplete);
+>  static void add_entry_to_dir(struct ref_dir *dir, struct ref_entry *entry);
+> +static int files_log_ref_write(const char *refname, const unsigned char *old_sha1,
+> +			       const unsigned char *new_sha1, const char *msg,
+> +			       int flags, struct strbuf *err);
+>  
+>  static struct ref_dir *get_ref_dir(struct ref_entry *entry)
+>  {
+> diff --git a/refs/refs-internal.h b/refs/refs-internal.h
+> index 25444cf5b0..4c9215d33f 100644
+> --- a/refs/refs-internal.h
+> +++ b/refs/refs-internal.h
+> @@ -220,10 +220,6 @@ struct ref_transaction {
+>  	enum ref_transaction_state state;
+>  };
+>  
+> -int files_log_ref_write(const char *refname, const unsigned char *old_sha1,
+> -			const unsigned char *new_sha1, const char *msg,
+> -			int flags, struct strbuf *err);
+> -
+>  /*
+>   * Check for entries in extras that are within the specified
+>   * directory, where dirname is a reference directory name including
