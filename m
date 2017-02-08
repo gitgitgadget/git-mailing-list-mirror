@@ -2,96 +2,202 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 195FC1FAF4
-	for <e@80x24.org>; Wed,  8 Feb 2017 21:31:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 12CE41FAF4
+	for <e@80x24.org>; Wed,  8 Feb 2017 21:39:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751759AbdBHVbG (ORCPT <rfc822;e@80x24.org>);
-        Wed, 8 Feb 2017 16:31:06 -0500
-Received: from mail-it0-f66.google.com ([209.85.214.66]:36273 "EHLO
-        mail-it0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751040AbdBHVbF (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Feb 2017 16:31:05 -0500
-Received: by mail-it0-f66.google.com with SMTP id f200so305932itf.3
-        for <git@vger.kernel.org>; Wed, 08 Feb 2017 13:30:12 -0800 (PST)
+        id S1752181AbdBHVjL (ORCPT <rfc822;e@80x24.org>);
+        Wed, 8 Feb 2017 16:39:11 -0500
+Received: from mail-ot0-f178.google.com ([74.125.82.178]:33976 "EHLO
+        mail-ot0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751050AbdBHVjK (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Feb 2017 16:39:10 -0500
+Received: by mail-ot0-f178.google.com with SMTP id f9so123442541otd.1
+        for <git@vger.kernel.org>; Wed, 08 Feb 2017 13:39:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=LvTYx4sAZAxy4nhEQrRSsqK0vrBJf87EEKarlkd6Ysg=;
-        b=tRduntZ+Q4ngbHis9AbKC1NNllr7i/6+twq6Q6ddTZJNmWsND6OSx9hbdO4IZg84Pm
-         3xlXpPEedzK/SVIvXOihWJpCZJe1LAKQHjAIaIrhBBXY9byIBIQTDXv28W2C4JviaO2l
-         B6FTqLtGb2WPJ0fb1aBmQvyLx1AbZTTF7X1jgkWFoEliYpRnEFWi9SdZKGPqo08FHEoS
-         /oVfe0+fH6HdH9cXA54Lx77h54QjNNkM+zOGmG9V/54S9m4SwwPr00U/gkVQuCQvNB+t
-         ZVpEKgNDHMMGlOP7Py53DDtL2BLx4hWSUqeRpvJPrtCXrBd7SAr7NXmVqfl3nrDSdPH8
-         DQNg==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=0Gs4i1cDNi20SSMxM40uc4K9gohm+RNdTxIy3O6cvTM=;
+        b=iFbQCMELvh6SYRoUhvCHI03Lq3Ni47ggsvMLigTZc/YidhDUkVbiYa+g0wvxP8wCuQ
+         p2q2cyLLnKsj3AaXa/uC+y+8f1eL4s6WT4rofm70QEGBH/wxGqYsV0g7Jck+U0BdSwcw
+         Jp2ijIdErBSMZKI001j/bCLkiUDP1RTg5aLxdzdKndxKjAuqnTwgIZtoZ3Rwpgbm5U6/
+         ITC7U5p7x4OeG0ljA/lMTrSzucU4a3hgxw8GzO7EXN7RhtkBxyUAYBbCG5m1kOVFnVcU
+         X3hfWQuGolgeMoc2pHJFCMg+Bm/ARBN6D9/9s95kAaKKsvijVUFeV6/bx0YeauvSAIl/
+         Z4lQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=LvTYx4sAZAxy4nhEQrRSsqK0vrBJf87EEKarlkd6Ysg=;
-        b=bOsSzJzouPuySXiyQSmeWTU178GI5sSQ1mj+GodTd7nCRrKgdo2xGUovxS2IkO8a+Y
-         dDJs/49km0MAkwncWMgmRG1Lp7oVL5nFfH2BiZFo2fMy/zb9nHuOvCGHcTpZfA1ibnfa
-         rT67w1/JQ+FADaF9zmJY/wwUB5dI+H8YpqHFU2IgEcubm1zfCg62C1qajiY4Mop8UIFG
-         H1YbjPI4uubPkhMQjgOtoWwZwZw086xE12sGcMFXlD1TfrKS8p4kx24FatAYhtU0xoas
-         nrrtRwDP0o2p7Chv4d3Kbama3CahYFQif38lKntafj+1EbxLiP1rDQVbYTcQO6sIJSvJ
-         sjOg==
-X-Gm-Message-State: AIkVDXLWSm0hrabEawvvSD4uWtrVI5rz4mzBTtHtHG+qfw8i40BnCg8oLlD8DoVZtx3aFQ==
-X-Received: by 10.99.210.81 with SMTP id t17mr28966806pgi.95.1486589406637;
-        Wed, 08 Feb 2017 13:30:06 -0800 (PST)
-Received: from localhost ([2620:0:1000:8622:7c20:fa7c:46cb:2209])
-        by smtp.gmail.com with ESMTPSA id p25sm22806332pfd.0.2017.02.08.13.30.05
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 08 Feb 2017 13:30:06 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Denton Liu <liu.denton@gmail.com>
-Cc:     git@vger.kernel.org, davvid@gmail.com
-Subject: Re: [PATCH v2] Document the --no-gui option in difftool
-References: <20170207063207.GA12746@arch-attack.localdomain>
-Date:   Wed, 08 Feb 2017 13:30:05 -0800
-In-Reply-To: <20170207063207.GA12746@arch-attack.localdomain> (Denton Liu's
-        message of "Mon, 6 Feb 2017 22:32:07 -0800")
-Message-ID: <xmqqo9ycv09u.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=0Gs4i1cDNi20SSMxM40uc4K9gohm+RNdTxIy3O6cvTM=;
+        b=f4d0GFKEi9hjVB9FWBhkYY7Pxz+9r9jKKM2nbAsyesRVzOYbIl6l4WyVB+X7ZkBWfS
+         11FOvHq/stLqCuzRoo2Q9HJXwIdgbgsTkDPJ0eK9kevV95RBhiblmVWo7cH+29/8/P66
+         LR2kF3rCG6G8O/ckX+GLAiFbmUqKkwU5QBLlKzLaNJXxUDWRo4G3Ec/BHRFfg069cT5m
+         uo2vZvlApjntQDdI4II2aSUyNBZK1q1E3l9zwiKLkk024Nt+yogqAHQX4vmaakN3fkii
+         Vu4zX1RWWsanNtv2+n0pM6+EYmHg8Inb99ZzdRrlwhSm2UO7SzrMtzhpGkqKzV6IP4p0
+         GYcg==
+X-Gm-Message-State: AMke39mbab2aIw7yGPLBe7+HD1s7gQEGoOlHi3FS+S++e4G82TAWKobSBEWbUIpNjRLZdS+gy4qI7SjwVQUCbQ==
+X-Received: by 10.157.51.19 with SMTP id f19mr13171327otc.18.1486588370390;
+ Wed, 08 Feb 2017 13:12:50 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
+Received: by 10.157.13.38 with HTTP; Wed, 8 Feb 2017 13:12:49 -0800 (PST)
+In-Reply-To: <CAJZjrdUcxe_K91CQXz_TgGHgXMsKaddwG5+JEWJ53pv5_GO1zw@mail.gmail.com>
+References: <CAKepmajNz7TP_Z6p_Wj17tOpiMOpKkvQOBvVthBkEiKabAppjg@mail.gmail.com>
+ <271989d5-c383-0c0d-bfcb-f4118f9fa2aa@web.de> <CAKepmagp2mXNviA2VdT=3EQtZi2LkA_5oG6=AbfkBGKP9Hqiiw@mail.gmail.com>
+ <1aa20b4e-782f-a650-eab8-51218b838337@web.de> <CAJZjrdXjnDMi8gMY6f_UDbMZrZJ=AoPM+g01hqPCO2pB9csoOw@mail.gmail.com>
+ <CAKepmagwMeky4jPZ-YFgPsZSsyOZZQ-kJSWV8QGg4cUNu-ZS8Q@mail.gmail.com>
+ <CAJZjrdWouNaNKU2sX89Xh=QqSbdB7srwgufuquYL_1B7H324Yw@mail.gmail.com>
+ <CAKepmai3fBZMS2dXaJyvnP36LooLh8yjn1T6vGG=Pi1B1LMaCQ@mail.gmail.com> <CAJZjrdUcxe_K91CQXz_TgGHgXMsKaddwG5+JEWJ53pv5_GO1zw@mail.gmail.com>
+From:   Jack Adrian Zappa <adrianh.bsc@gmail.com>
+Date:   Wed, 8 Feb 2017 16:12:49 -0500
+Message-ID: <CAKepmahcaV1Ro_wObkFxezrZntL6JQ_ft+06_3ZSrxEz-yNjzA@mail.gmail.com>
+Subject: Re: Trying to use xfuncname without success.
+To:     Samuel Lijin <sxlijin@gmail.com>
+Cc:     git-mailing-list <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Denton Liu <liu.denton@gmail.com> writes:
+That was it.  I have a .gitattributes file in my home directory.
+Ahhh, but it's not in my %userprofile% directory, but in my ~
+directory.
 
-> Prior to this, the `--no-gui` option was not documented in the manpage.
-> This commit introduces this into the manpage
+A bit confusing having 2 home directories.  I made a link to my
+.gitconfig, but forgot to make a link to my .gitattributes.
+
+Thanks.
+
+
+A
+
+On Wed, Feb 8, 2017 at 4:05 PM, Samuel Lijin <sxlijin@gmail.com> wrote:
+> Double check .gitattributes?
 >
-> Signed-off-by: Denton Liu <liu.denton@gmail.com>
-> ---
-
-Looks good, thanks.
-
->  Documentation/git-difftool.txt | 5 +++--
->  1 file changed, 3 insertions(+), 2 deletions(-)
+> On Feb 8, 2017 2:58 PM, "Jack Adrian Zappa" <adrianh.bsc@gmail.com> wrote=
+:
+>>
+>> Thanks Samuel,
+>>
+>> That example showed that there must be something wrong in my .git
+>> directory, because with it, I'm getting the correct output.  Moving
+>> the same lines to my .git/config didn't work.
+>>
+>> On Wed, Feb 8, 2017 at 3:46 PM, Samuel Lijin <sxlijin@gmail.com> wrote:
+>> > I just put this togther: https://github.com/sxlijin/xfuncname-test
+>> >
+>> > Try cloning and then for any of config1 thru 3,
+>> >
+>> > $ cp configX .git/config
+>> > $ git diff HEAD^ -- test.natvis
+>> >
+>> > On Wed, Feb 8, 2017 at 2:42 PM, Jack Adrian Zappa
+>> > <adrianh.bsc@gmail.com> wrote:
+>> >> Thanks Samuel,
+>> >>
+>> >> So, the question is, what is causing this problem on my system?
+>> >>
+>> >> Anyone have an idea to help diagnose this problem?
+>> >>
+>> >> On Wed, Feb 8, 2017 at 3:24 PM, Samuel Lijin <sxlijin@gmail.com> wrot=
+e:
+>> >>> On Windows 7, it works for me in both CMD and Git Bash:
+>> >>>
+>> >>> $ git --version
+>> >>> git version 2.11.0.windows.3
+>> >>>
+>> >>> $ git diff HEAD^ --word-diff
+>> >>> diff --git a/test.natvis b/test.natvis
+>> >>> index 93396ad..1233b8c 100644
+>> >>> --- a/test.natvis
+>> >>> +++ b/test.natvis
+>> >>> @@ -18,6 +18,7 @@ test
+>> >>>
+>> >>>
+>> >>>       <!-- Non-blank line -->
+>> >>>       {+<Item Name=3D"added var">added_var</Item>+}
+>> >>>
+>> >>>
+>> >>>       <Item Name=3D"var2">var2</Item>
+>> >>>
+>> >>> On Wed, Feb 8, 2017 at 12:37 PM, Ren=C3=A9 Scharfe <l.s.r@web.de> wr=
+ote:
+>> >>>> Am 08.02.2017 um 18:11 schrieb Jack Adrian Zappa:
+>> >>>>> Thanks Rene, but you seem to have missed the point.  NOTHING is
+>> >>>>> working.  No matter what I put there, it doesn't seem to get
+>> >>>>> matched.
+>> >>>>
+>> >>>> I'm not so sure about that.  With your example I get this diff
+>> >>>> without
+>> >>>> setting diff.natvis.xfuncname:
+>> >>>>
+>> >>>> diff --git a/a.natvis b/a.natvis
+>> >>>> index 7f9bdf5..bc3c090 100644
+>> >>>> --- a/a.natvis
+>> >>>> +++ b/a.natvis
+>> >>>> @@ -19,7 +19,7 @@
+>> >>>> xmlns=3D"http://schemas.microsoft.com/vstudio/debugger/natvis/2010"=
 >
-> diff --git a/Documentation/git-difftool.txt b/Documentation/git-difftool.txt
-> index 224fb3090..96c26e6aa 100644
-> --- a/Documentation/git-difftool.txt
-> +++ b/Documentation/git-difftool.txt
-> @@ -86,10 +86,11 @@ instead.  `--no-symlinks` is the default on Windows.
->  	Additionally, `$BASE` is set in the environment.
->  
->  -g::
-> ---gui::
-> +--[no-]gui::
->  	When 'git-difftool' is invoked with the `-g` or `--gui` option
->  	the default diff tool will be read from the configured
-> -	`diff.guitool` variable instead of `diff.tool`.
-> +	`diff.guitool` variable instead of `diff.tool`. The `--no-gui`
-> +	option can be used to override this setting.
->  
->  --[no-]trust-exit-code::
->  	'git-difftool' invokes a diff tool individually on each file.
+>> >>>>
+>> >>>>
+>> >>>>        <!-- Non-blank line -->
+>> >>>> -      <Item Name=3D"added var">added_var</Item>
+>> >>>> +      <Item Name=3D"added var">added_vars</Item>
+>> >>>>
+>> >>>>
+>> >>>>        <Item Name=3D"var2">var2</Item>
+>> >>>>
+>> >>>> Note the XML namespace in the hunk header.  It's put there by the
+>> >>>> default rule because "xmlns" starts at the beginning of the line.
+>> >>>> Your
+>> >>>> diff has nothing there, which means the default rule is not used,
+>> >>>> i.e.
+>> >>>> your user-defined rule is in effect.
+>> >>>>
+>> >>>> Come to think of it, this line break in the middle of the
+>> >>>> AutoVisualizer
+>> >>>> tab might have been added by your email client unintentionally, so
+>> >>>> that
+>> >>>> we use different test files, which then of course results in
+>> >>>> different
+>> >>>> diffs.  Is that the case?
+>> >>>>
+>> >>>> Anyway, if I run the following two commands:
+>> >>>>
+>> >>>> $ git config diff.natvis.xfuncname "^[\t ]*<Type[\t
+>> >>>> ]+Name=3D\"([^\"]+)\".*$"
+>> >>>> $ echo '*.natvis diff=3Dnatvis' >.gitattributes
+>> >>>>
+>> >>>> ... then I get this, both on Linux (git version 2.11.1) and on
+>> >>>> Windows
+>> >>>> (git version 2.11.1.windows.1):
+>> >>>>
+>> >>>> diff --git a/a.natvis b/a.natvis
+>> >>>> index 7f9bdf5..bc3c090 100644
+>> >>>> --- a/a.natvis
+>> >>>> +++ b/a.natvis
+>> >>>> @@ -19,7 +19,7 @@ test
+>> >>>>
+>> >>>>
+>> >>>>        <!-- Non-blank line -->
+>> >>>> -      <Item Name=3D"added var">added_var</Item>
+>> >>>> +      <Item Name=3D"added var">added_vars</Item>
+>> >>>>
+>> >>>>
+>> >>>>        <Item Name=3D"var2">var2</Item>
+>> >>>>
+>> >>>>> Just to be sure, I tested your regex and again it didn't work.
+>> >>>>
+>> >>>> At this point I'm out of ideas, sorry. :(  The only way I was able =
+to
+>> >>>> break it was due to mistyping the extension as "netvis" several tim=
+es
+>> >>>> for some reason.
+>> >>>>
+>> >>>> Ren=C3=A9
