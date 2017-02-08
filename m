@@ -2,90 +2,75 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.2 required=3.0 tests=BAYES_00,DATE_IN_PAST_03_06,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E1BCB1FAF4
-	for <e@80x24.org>; Wed,  8 Feb 2017 22:14:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A645B1FAF4
+	for <e@80x24.org>; Wed,  8 Feb 2017 22:24:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751444AbdBHWOI (ORCPT <rfc822;e@80x24.org>);
-        Wed, 8 Feb 2017 17:14:08 -0500
-Received: from mail-yw0-f193.google.com ([209.85.161.193]:35656 "EHLO
-        mail-yw0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751011AbdBHWOH (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Feb 2017 17:14:07 -0500
-Received: by mail-yw0-f193.google.com with SMTP id l16so12990630ywb.2
-        for <git@vger.kernel.org>; Wed, 08 Feb 2017 14:14:07 -0800 (PST)
+        id S1751376AbdBHWY0 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 8 Feb 2017 17:24:26 -0500
+Received: from mail-ot0-f181.google.com ([74.125.82.181]:34545 "EHLO
+        mail-ot0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751235AbdBHWYZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Feb 2017 17:24:25 -0500
+Received: by mail-ot0-f181.google.com with SMTP id f9so124288643otd.1
+        for <git@vger.kernel.org>; Wed, 08 Feb 2017 14:23:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=bSOa0UcLJtTnrb34vHnxSMhruTpUSQFfol4lY9pul3g=;
-        b=OL4Zgnpu6zoYFs6S/yX0LK0rYWlH08EsPqJuclptgHxPjLnUPpmib3LsRifQ91EA0h
-         u4RYZ5nJziT8C2INBIn0R/swRoFSqHm3bTJw1tOn6epGRkmW8c1v0mWnDg/bWwt3+UV9
-         vgLRUd74MjT5QwWNSPkTeiNStpKGLgoasOucXKf5EzhbQH5ZMzh154grr5kyGcJs4Dof
-         xnbiMMYTrxsxd8CuDQdG8g2ZCMDuNw42o3Butp/2r1XNEzkhuWY7TucgaVK1KBkzmTJr
-         AOC5kmbawVXbYcof2MethHyBXW39G6uGlDAtEyL6H7RatUfEjABYBtoV0j11WZrSWnpH
-         avXg==
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=pkmt4GF1Wbssl0sueb33I4ZGbLS5O4a4msxVVTJybuc=;
+        b=e7iyp/QmIr8sDAUyQq7JI/6lAHGEtxT0UGxQDX4q9McMVsA93EbVw94VQ6tVuBbG/E
+         EJ05ogg1FoYXYozQ4/B9NpMViveJ5s6aTEjYrDP2lD1K7WHEK9rWe9rfEbogLBcOQhSZ
+         YE0JmCExEj3K6UfTcu08X6fsoGP5/immsjup2uTb6bjTPKUOKNKujADQyWOKOvZ3GNS3
+         /Bx559ld4kAbBq2hML3g1tidzz9aivUX3CCngAP4kkGt+QX+NGAUuu1NN6VZa2+L07zS
+         5x0L8zYlEFCmaPOA3Erf4CCbe14wL+Hm1eHjburKB6xWTE7s6njiR38Dnjw5NnBq9imf
+         VMvQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=bSOa0UcLJtTnrb34vHnxSMhruTpUSQFfol4lY9pul3g=;
-        b=RHGxelQd/IGf78AtF3xrGW1EilpUrD025CtEJwc80sGcvpARPvi+iAqG/nKeQhijQJ
-         /6YIxmyBCVtxsnR+1lY/V0LBFveK+XhfzXI8OBmwztq+Fk1UUeHySDqmo/uq2TkqGk/0
-         oliRQFFJl+/Ro2KcxdyjYGtOZK7T7qo7JCDwww+X8MtFDeKjFagxnga9hr2xH3WNXpNp
-         i5/Z9l8kl1nBIBkEbV5eXLKmUvoiyi925xtOOvBI4DWjpHllVBWKdBI+XAnBdJ2qJCPl
-         GYh23aXat0uto5hW9hhFtrzgVOnIa2PQLf5hmx7+oM7k73d+r1KLKAOF2OjQELCF3r5L
-         hX0A==
-X-Gm-Message-State: AMke39kNy2Od9A5wFIIGqHM/6nCfac4ilX/mpEchO4xt94ShKliLzhBHydThZJExqKxmI0qWtXhZOkjkK2JEXQ==
-X-Received: by 10.129.94.212 with SMTP id s203mr16482886ywb.181.1486580729039;
- Wed, 08 Feb 2017 11:05:29 -0800 (PST)
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=pkmt4GF1Wbssl0sueb33I4ZGbLS5O4a4msxVVTJybuc=;
+        b=eE3nBq2rMCO+eBuYok6It3f6M5eGXv7SbMMoGzlBSQ6IhDR2enBNOXbf2vJxmBBb6H
+         ahdDMJOuzSvWHtv1MPrx/2Z9ebsN4G5pfDojWjMkc6YtOehkEfw8bEABov5LgJbhtBYp
+         uJt6uH5xiNpYjp5pNRdKY7JRR74B/fVRyBZvl3mbH5Olpbx3y974dkpMgeKwTKzL46CQ
+         b2/midLFPrMb3BQ7Ck/x0Xqk95HNCNg5U2WwK3/p4SQ48O/U7hGAiGH1E5dhMXaQ7ACZ
+         V5xRUHt2JbA/umAfGTDu9sPCfdLSSVQ/zq+r9q3gLgtXmA6XUO8gHN5Sc7OsLTzMUSHA
+         RVrQ==
+X-Gm-Message-State: AMke39lqG1KtzbxakHs9D0AwmCZrOSgosBQQvIYM+s9xxq5Vjd8p0rY6GtQn+rY+nH7ewKOEE03MHTZrsNDpDA==
+X-Received: by 10.157.4.141 with SMTP id 13mr13953094otm.243.1486592211167;
+ Wed, 08 Feb 2017 14:16:51 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.83.88.78 with HTTP; Wed, 8 Feb 2017 11:05:28 -0800 (PST)
-From:   Thangalin <thangalin@gmail.com>
-Date:   Wed, 8 Feb 2017 11:05:28 -0800
-Message-ID: <CAANrE7rmUZcJkw+thMczv3D=7sqcUHBsorzvEZgYg=6AEfrU=w@mail.gmail.com>
-Subject: Automatically Add .gitignore Files
-To:     git@vger.kernel.org
+Received: by 10.182.63.13 with HTTP; Wed, 8 Feb 2017 14:16:50 -0800 (PST)
+In-Reply-To: <xmqqk290uywp.fsf@gitster.mtv.corp.google.com>
+References: <alpine.LFD.2.20.1702072113380.25002@i7.lan> <xmqqk290uywp.fsf@gitster.mtv.corp.google.com>
+From:   Linus Torvalds <torvalds@linux-foundation.org>
+Date:   Wed, 8 Feb 2017 14:16:50 -0800
+X-Google-Sender-Auth: kjYujy0MOWEr7jy-cq-D0HrEVvw
+Message-ID: <CA+55aFycVda9LYtLuG-oBci1Q2-7TVx3jv0HRZzSP0gQsWvXjw@mail.gmail.com>
+Subject: Re: [PATCH 2/2] pathspec: don't error out on all-exclusionary
+ pathspec patterns
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I frequently forget to add .gitignore files when creating new .gitignore files.
+On Wed, Feb 8, 2017 at 1:59 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Thanks.  Even though the current code does not refer to the original
+> prefixlen after the added hunk, I'd prefer not to destroy it to
+> avoid future troubles, so I'll queue with a bit of tweak there,
+> perhaps like the attached.
 
-I'd like to request a command-line option to always add .gitignore
-files (or, more generally, always add files that match a given file
-specification).
+Yeah, I considered that. Along with just passing in a NULL prefix
+string too for that case. Not that it matters.
 
-Replicate
+So ack on that change,
 
-0. git init ...
-1. echo "*.bak" >> .gitignore
-2. touch file.txt
-3. git add file.txt
-4. git commit -a -m "..."
-5. git push origin master
-
-Expected Results
-
-The .gitignore file is also added to the repository. (This is probably
-the 80% use case.)
-
-Actual Results
-
-The .gitignore file is not added to the repository.
-
-Additional Details
-
-At step 4, there should be a prompt, warning, or (preferably) either a
-command-line or configuration option to add the .gitignore file prior
-to commit, automatically. Such as:
-
-git commit --include-all-gitignore-files -a -m "..."
-
-Or:
-
-echo "**/.gitignore" >> .git/config/add-before-commit
+             Linus
