@@ -2,74 +2,71 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 285081FAF4
-	for <e@80x24.org>; Wed,  8 Feb 2017 12:35:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 15E411FAF4
+	for <e@80x24.org>; Wed,  8 Feb 2017 14:18:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932242AbdBHMfj (ORCPT <rfc822;e@80x24.org>);
-        Wed, 8 Feb 2017 07:35:39 -0500
-Received: from mail-ot0-f172.google.com ([74.125.82.172]:35611 "EHLO
-        mail-ot0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754286AbdBHMfJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Feb 2017 07:35:09 -0500
-Received: by mail-ot0-f172.google.com with SMTP id 65so111451953otq.2
-        for <git@vger.kernel.org>; Wed, 08 Feb 2017 04:35:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=BbbckVfTnVqKkNSCMlxXG/0a9FQ8KryHjibvvpte93A=;
-        b=QLw1ZN2WBkMPKAEjJWGRpWU3GWx0ghibD/jwL3/WlXSrsUJgVekUM0sqs26u7Gcohk
-         QlwGkHbtr6Om7z0nKs4HIEbnSMF8YLLjmsZhuvNaUswwvTwcc6X2SWjmeQzczPUiRxXP
-         p7o4G2J+uzdEp1ZiJdsJKNKf35fP13Mz2zrQajEfow7fIr9OD5ThgQDJnmhUVdwqMFbs
-         dqnAGHng17CLmbEbYMhhPf1+CdzS9tCoXvsVzxw+C+5+xtAtVdxTPJe3mvak9U5uHaHo
-         aVqpVjwm3PWMG/9KAVuwS292yvQtT1qfTIXRrmNwDUO5cpRvML11uXXEEKP0LAInXuEe
-         EeZw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=BbbckVfTnVqKkNSCMlxXG/0a9FQ8KryHjibvvpte93A=;
-        b=RSv/uxI4uX8iXGQcHGtoDhOIrzQaU6YKQbmRKkO/+LLrwzv9M7cXEwYeQD4WsTFpnt
-         6ICjojxVYZXuuKabQb9Fvmh5Kwnxqep/6ENp+Sif7mTps7FMjrpQ72GYsKReiexXJ+7M
-         Sq7NeaAO2XMuHR0BXoHOwoixY2foWI5EnRQly71T5BRZkZx7e4+G+OfXFhmWzUYH0em5
-         HlNwKoF6Y9+XmbwdLF0nXJ5CtFchph9vBKAgrdEWrJkPvSOVPtRGupks7EZYRR+rml47
-         ymlRTpF/+qcPuSW7e7V3gBCXzjqmBQsagBdlYZ/AtuStQYzhD+UrmNj6a8V08zb3VILv
-         XtRg==
-X-Gm-Message-State: AMke39kmBLOWrZa55bl1+nYiB8g1iGzz9nFv3KNe6FBYT13oP6zX6NkHJsRfd50CUSOeNyljyqri1O59MxcSKA==
-X-Received: by 10.157.46.57 with SMTP id q54mr12503915otb.28.1486556923824;
- Wed, 08 Feb 2017 04:28:43 -0800 (PST)
-MIME-Version: 1.0
-Received: by 10.74.158.1 with HTTP; Wed, 8 Feb 2017 04:28:13 -0800 (PST)
-In-Reply-To: <cover.1486556262.git.johannes.schindelin@gmx.de>
-References: <cover.1486556262.git.johannes.schindelin@gmx.de>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Wed, 8 Feb 2017 19:28:13 +0700
-Message-ID: <CACsJy8AmjkPbwRAykQM+aQosVwSamGwKpHox7FTPr6H7MgZQ7g@mail.gmail.com>
-Subject: Re: [PATCH 0/2] Demonstrate a critical worktree/gc bug
-To:     Johannes Schindelin <johannes.schindelin@gmx.de>
-Cc:     Git Mailing List <git@vger.kernel.org>,
+        id S1754680AbdBHOR5 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 8 Feb 2017 09:17:57 -0500
+Received: from zimbra-vnc.tngtech.com ([83.144.240.98]:28436 "EHLO
+        proxy.tng.vnc.biz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753928AbdBHOQ6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Feb 2017 09:16:58 -0500
+Received: from localhost (localhost [127.0.0.1])
+        by proxy.tng.vnc.biz (Postfix) with ESMTP id 50F261E2E8F;
+        Wed,  8 Feb 2017 14:23:10 +0100 (CET)
+Received: from proxy.tng.vnc.biz ([127.0.0.1])
+        by localhost (proxy.tng.vnc.biz [127.0.0.1]) (amavisd-new, port 10032)
+        with ESMTP id 74EbFzGK0BcL; Wed,  8 Feb 2017 14:23:10 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+        by proxy.tng.vnc.biz (Postfix) with ESMTP id F1E5A1E2E23;
+        Wed,  8 Feb 2017 14:23:09 +0100 (CET)
+X-Virus-Scanned: amavisd-new at 
+Received: from proxy.tng.vnc.biz ([127.0.0.1])
+        by localhost (proxy.tng.vnc.biz [127.0.0.1]) (amavisd-new, port 10026)
+        with ESMTP id GzTm-1ivD0g4; Wed,  8 Feb 2017 14:23:09 +0100 (CET)
+Received: from [192.168.178.77] (46.128.140.114.dynamic.cablesurf.de [46.128.140.114])
+        by proxy.tng.vnc.biz (Postfix) with ESMTPSA id AE7171E1877;
+        Wed,  8 Feb 2017 14:23:09 +0100 (CET)
+Subject: Re: [PATCH 2/2] pathspec: don't error out on all-exclusionary
+ pathspec patterns
+To:     Linus Torvalds <torvalds@linux-foundation.org>,
         Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset=UTF-8
+References: <alpine.LFD.2.20.1702072113380.25002@i7.lan>
+Cc:     Git Mailing List <git@vger.kernel.org>
+From:   Cornelius Weig <cornelius.weig@tngtech.com>
+Message-ID: <35bd1d35-4cb8-cf40-38ee-7442efc0f139@tngtech.com>
+Date:   Wed, 8 Feb 2017 14:23:08 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.7.0
+MIME-Version: 1.0
+In-Reply-To: <alpine.LFD.2.20.1702072113380.25002@i7.lan>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Feb 8, 2017 at 7:17 PM, Johannes Schindelin
-<johannes.schindelin@gmx.de> wrote:
-> ... and a half-working workaround for the auto-gc case.
->
-> This patch series really is just another attempt to prod Duy into fixing
-> this instead of dabbling with shiny new toys ;-)
+Again, as Duy pointed out this should be documented.
 
-FYI work is ongoing [1] [2]. If you want it even faster, go do it yourself.
+How about something like this:
 
-[1] https://github.com/pclouds/git/commits/prune-in-worktrees-2
-[2] https://public-inbox.org/git/20170208113144.8201-1-pclouds@gmail.com/
--- 
-Duy
+diff --git a/Documentation/glossary-content.txt b/Documentation/glossary-content.txt
+index f127fe9..781cde3 100644
+--- a/Documentation/glossary-content.txt
++++ b/Documentation/glossary-content.txt
+@@ -387,7 +387,9 @@ Glob magic is incompatible with literal magic.
+ exclude;;
+        After a path matches any non-exclude pathspec, it will be run
+        through all exclude pathspec (magic signature: `!` or `^`). If it
+-       matches, the path is ignored.
++       matches, the path is ignored. If only exclude pathspec are given,
++       the exclusion is applied to the result set as if invoked without any
++       pathspec.
+ --
+ 
+ [[def_parent]]parent::
