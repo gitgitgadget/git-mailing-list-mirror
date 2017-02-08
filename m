@@ -2,139 +2,121 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.0
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0754D1FAF4
-	for <e@80x24.org>; Wed,  8 Feb 2017 12:18:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5CDC01FAF4
+	for <e@80x24.org>; Wed,  8 Feb 2017 12:18:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753506AbdBHMSS (ORCPT <rfc822;e@80x24.org>);
-        Wed, 8 Feb 2017 07:18:18 -0500
-Received: from mout.gmx.net ([212.227.17.22]:49311 "EHLO mout.gmx.net"
+        id S1753599AbdBHMSX (ORCPT <rfc822;e@80x24.org>);
+        Wed, 8 Feb 2017 07:18:23 -0500
+Received: from mout.gmx.net ([212.227.15.18]:56562 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751714AbdBHMSQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Feb 2017 07:18:16 -0500
-Received: from virtualbox ([37.201.192.48]) by mail.gmx.com (mrgmx101
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MFPyK-1cgz6S1GCK-00EKxp; Wed, 08
- Feb 2017 13:17:04 +0100
-Date:   Wed, 8 Feb 2017 13:17:02 +0100 (CET)
+        id S1753221AbdBHMSR (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Feb 2017 07:18:17 -0500
+Received: from virtualbox ([37.201.192.48]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MLfLH-1cacFQ1yjr-000srW; Wed, 08
+ Feb 2017 13:17:59 +0100
+Date:   Wed, 8 Feb 2017 13:17:58 +0100 (CET)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     git@vger.kernel.org
 cc:     Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?Q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc_Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH] rev-parse --git-path: fix output when running in a
- subdirectory
-Message-ID: <50fe3ea3302c40f4c96eaa5a568837e3334f9dc4.1486555851.git.johannes.schindelin@gmx.de>
+Subject: [PATCH 1/2] worktree: demonstrate data lost to auto-gc
+In-Reply-To: <cover.1486556262.git.johannes.schindelin@gmx.de>
+Message-ID: <674c16ee94c7609d82d14cac498ba62e5df65ab1.1486556262.git.johannes.schindelin@gmx.de>
+References: <cover.1486556262.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:T3LaQtftH4WJeXXOMVv1AqgwiawGSM+M+4VLDzc3YbLHXjNUrxw
- sNYHxj7NVyarApTx7DYvTM75T/7vilWaLYgOtgJHeLo2WGI+W1Asscty+OVP74+QTETN1EC
- QrM7m/aIZf+WxWro5sHJKS/GUULk5q76odIx7aPfzKxDcWMFHiBCl8oT0HZ36WGMMVu2zlm
- 7q3OmyHZCWbd5lo8gKQIw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:blO13rCAUlo=:2KFVSk7RX/9XbzD40bl0t4
- VixMVH24yly8Y4FMmvdlw3CEYWoyNcEPnkNrgyZcQgCh7beiMFzlv0yM0qZHwTimOFgOqVgTS
- SBDNl4YE5skQugkv0euXvn50im+LwH6Kv8RT21xvR/oiDR4UNjDHr2Y4Aq6BfvkgAGmkAD4xM
- Q1qZth3A3Ng0+oDK8KLlKOA7NNV5JXKS73eT7JhQjnbhgHAl1B9O11KrpbUvrp+eYplY4C86U
- qhRVNOGKmgafctLAdqnE+D0VKpkaRo/VvnQu+EPDG1knGtTvXjxIl3EXq8wjAmjHPdSZZPLYw
- QIyyMAWJ+qeQ0/uBcSDdRTsV1Hm328R+yPArzszU1PwrouDe8Qu+qnBAJjetpyqIV4azLE324
- 43S9Uc0a4o/BV/fMyn/18od28M6XlckSZ3CW+J7f8FqpF4Um97W5PSqVe9SlKP4lQSQR4KTcR
- 8BO/LBqoNl0PlIoHWc95wM9YZWGEIhOE85mN5OetjDzqr0KZgFMzCeq4MVpHfOXPUksZ0f+cK
- ZDSqEj67M8E5T6TeGFz6keN9fIZN8nlzZtufcA/A8T8tZP+zN7zt6XUWWyJM+eI8XvtVv2jYs
- 5HytMIBCFYu4pRg+4U0ZNKthogKs5RkL88c5jfrsszbGYnwd64vmZrLGzlAG8voRVFda1MGlO
- aq0qaiBHl6OTgvHq3xvGT7uszSggYpRSZ8WbA7yiDlZTh9T5m2K44MtXSSqlIdNJvna2H7fgz
- 2lLfm1KHE4BPQ/yvh4S25NUCsmuDgoPb7eC4jiPal3nK6c6wvbX4Gsrgd2EdyEhaURB0JTvQx
- zalFiAZTkYs7Hu7TzjmnBnPVEvKbZ5NqVx12AuyKDh/6s3VQOZ2+EoDfWDpoXFZPJ/fD6wpfl
- cAJC/mMQbqm06xmOWRmrmc43nqE9RNf7omzxT08Va/1Dixl8JlpoX8QupN7UqpXJbQIDV30mU
- COsslshT9JvL61/3Wn6S/yf6C2UAexxJktY1Y/yg+FMTw+SmYsY+KMhCtp+CXbgcT/22WshZa
- KftSGL5QJp0pmZ7jrXeHlnEoLPJk8dhTln/tdOkBAbFNR9QhFBv4mcwU++ga2tIegQ==
+X-Provags-ID: V03:K0:xw1pDyrxRAVFlaDGAHGEClhV//CXREpAueeSJMFvbFqfcsHloTh
+ WdiYgexDfCoPS9L7c1oMYOcD6UBvP7jwva+w8ubL1sOC0Wzi/OKiXayHhLRMikDywtWugAp
+ 4pYBrsWsQJ7AXYuP0fVR2U0t1DsrvzlAO/Zfq54Jws6wHkfRKJK9+EPYiCNPbtYj89oJtLS
+ 6t+3p7DD2+HjIFISAqN+Q==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:bvUH8VvXbY8=:2e0qAqa5GLzaF++TDj3y+w
+ egGe6aE3GNPmm/sD3b8jDxEBi2B6NRskStPEwQVQ2697NE58V7jNF9M64MzwDP+3NHaoCRLja
+ xem8LojJiXMIXeFYeNxXwhvizzi8vqE85Pie56kmYwGPQuidghZAaoSBcCs3kRV9GTR7dvXV8
+ GMWIj/C90c+T78WrthvZ9+uCSYLnluLQP+kbf3esClcj0pUiexcrrwCiQUiqYhHsgXGLIzDxm
+ GAgpM1sQQIAwMb3npnoMAJdQIVcc+BYGGihXP/Q8nLsyD+8aeEIlIS43jV54PWlEYRtL7R1xS
+ fxQ2Z/WUnPZLYMgpJHwg8jowXD01sTjPOd022O7P7CP1pxR4HpuvELuoj4olOl/z2/wxQbbJy
+ J0Rrg6tc6MzEY3QRzEWpwKq8l/YFHcU1C087RaFTCD2ewnxQHgtaLH8vOL6Ui/3mtamvYBpcO
+ 0McfSEGyy2CP5aV32qiZy7+Hsk4EZMS/Cr7z6ldG0eh+uL30olhlg+RFjNbtkPp8Tvsfasjud
+ xw1N/jP9gJ+1scotQUlMBRP33Lki7VnE7TR6GErg21Rc3tNYTMcbWxHeZeb9tIVRoXfsaPL47
+ ng3VSE/g+KfpdxYYUfXJbKYOROOKKW3QgWIbt2YCdUsh8xQGHSwMbqNPf6q8qAuehCk7ZLgiz
+ fymVSv9/PAqxaCoCb0phyB+2/pcUsEj4ci8ebg3/z0YirVu6h59eCygKMbyriCSJgkdaHpkMy
+ 2rLLDBlFMaT2yd6en193hIjSszEvu7inQ49XTb7lJDEtIS6IfkEPSu9U+SRQ2g3hiSRHKWRmV
+ ykOKtUv
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In addition to making git_path() aware of certain file names that need
-to be handled differently e.g. when running in worktrees, the commit
-557bd833bb (git_path(): be aware of file relocation in $GIT_DIR,
-2014-11-30) also snuck in a new option for `git rev-parse`:
-`--git-path`.
+When gc --auto is called in the presence of worktrees, it fails to take
+*all* reflogs into account when trying to retain reachable objects, and as
+a consequence data integrity goes pretty much to hell.
 
-On the face of it, there is no obvious bug in that commit's diff: it
-faithfully calls git_path() on the argument and prints it out, i.e. `git
-rev-parse --git-path <filename>` has the same precise behavior as
-calling `git_path("<filename>")` in C.
-
-The problem lies deeper, much deeper. In hindsight (which is always
-unfair), implementing the .git/ directory discovery in
-`setup_git_directory()` by changing the working directory may have
-allowed us to avoid passing around a struct that contains information
-about the current repository, but it bought us many, many problems.
-
-In this case, when being called in a subdirectory, `git rev-parse`
-changes the working directory to the top-level directory before calling
-`git_path()`. In the new working directory, the result is correct. But
-in the working directory of the calling script, it is incorrect.
-
-Example: when calling `git rev-parse --git-path HEAD` in, say, the
-Documentation/ subdirectory of Git's own source code, the string
-`.git/HEAD` is printed.
-
-Side note: that bug is hidden when running in a subdirectory of a
-worktree that was added by the `git worktree` command: in that case, the
-(correct) absolute path of the `HEAD` file is printed.
-
-In the interest of time, this patch does not go the "correct" route to
-introduce a struct with repository information (and removing global
-state in the process), instead this patch chooses to detect when the
-command was called in a subdirectory and forces the result to be an
-absolute path.
+This patch provides a test case in the hopes that this bug gets fixed,
+after an initial attempt has stalled for eight months already.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
-Published-As: https://github.com/dscho/git/releases/tag/git-path-in-subdir-v1
-Fetch-It-Via: git fetch https://github.com/dscho/git git-path-in-subdir-v1
+ t/t6500-gc.sh | 39 +++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 39 insertions(+)
 
- builtin/rev-parse.c   | 6 +++++-
- t/t0060-path-utils.sh | 2 ++
- 2 files changed, 7 insertions(+), 1 deletion(-)
-
-diff --git a/builtin/rev-parse.c b/builtin/rev-parse.c
-index ff13e59e1d..f9d5762bf2 100644
---- a/builtin/rev-parse.c
-+++ b/builtin/rev-parse.c
-@@ -597,9 +597,13 @@ int cmd_rev_parse(int argc, const char **argv, const char *prefix)
- 		}
+diff --git a/t/t6500-gc.sh b/t/t6500-gc.sh
+index 1762dfa6a3..e24a4fb611 100755
+--- a/t/t6500-gc.sh
++++ b/t/t6500-gc.sh
+@@ -67,5 +67,44 @@ test_expect_success 'auto gc with too many loose objects does not attempt to cre
+ 	test_line_count = 2 new # There is one new pack and its .idx
+ '
  
- 		if (!strcmp(arg, "--git-path")) {
-+			const char *path;
- 			if (!argv[i + 1])
- 				die("--git-path requires an argument");
--			puts(git_path("%s", argv[i + 1]));
-+			path = git_path("%s", argv[i + 1]);
-+			if (prefix && !is_absolute_path(path))
-+				path = real_path(path);
-+			puts(path);
- 			i++;
- 			continue;
- 		}
-diff --git a/t/t0060-path-utils.sh b/t/t0060-path-utils.sh
-index 444b5a4df8..790584fcc5 100755
---- a/t/t0060-path-utils.sh
-+++ b/t/t0060-path-utils.sh
-@@ -271,6 +271,8 @@ relative_path "<null>"		"<empty>"	./
- relative_path "<null>"		"<null>"	./
- relative_path "<null>"		/foo/a/b	./
++trigger_auto_gc () {
++	# This is unfortunately very, very ugly
++	gdir="$(git rev-parse --git-common-dir)" &&
++	mkdir -p "$gdir"/objects/17 &&
++	touch "$gdir"/objects/17/17171717171717171717171717171717171717 &&
++	touch "$gdir"/objects/17/17171717171717171717171717171717171718 &&
++	git -c gc.auto=1 -c gc.pruneexpire=now -c gc.autodetach=0 gc --auto
++}
++
++test_expect_failure 'gc respects refs/reflogs in all worktrees' '
++	test_commit something &&
++	git worktree add worktree &&
++	(
++		cd worktree &&
++		git checkout --detach &&
++		# avoid implicit tagging of test_commit
++		echo 1 >something.t &&
++		test_tick &&
++		git commit -m worktree-reflog something.t &&
++		git rev-parse --verify HEAD >../commit-reflog &&
++		echo 2 >something.t &&
++		test_tick &&
++		git commit -m worktree-ref something.t &&
++		git rev-parse --verify HEAD >../commit-ref
++	) &&
++	trigger_auto_gc &&
++	git rev-parse --verify $(cat commit-ref)^{commit} &&
++	git rev-parse --verify $(cat commit-reflog)^{commit} &&
++
++	# Now, add a reflog in the top-level dir and verify that `git gc` in
++	# the worktree does not purge that
++	git checkout --detach &&
++	echo 3 >something.t &&
++	test_tick &&
++	git commit -m commondir-reflog something.t &&
++	git rev-parse --verify HEAD >commondir-reflog &&
++	(cd worktree && trigger_auto_gc) &&
++	git rev-parse --verify $(cat commondir-reflog)^{commit}
++'
  
-+test_git_path "mkdir sub && cd sub && test_when_finished cd .. &&" \
-+	foo "$(pwd)/.git/foo"
- test_git_path A=B                info/grafts .git/info/grafts
- test_git_path GIT_GRAFT_FILE=foo info/grafts foo
- test_git_path GIT_GRAFT_FILE=foo info/////grafts foo
-
-base-commit: 6e3a7b3398559305c7a239a42e447c21a8f39ff8
+ test_done
 -- 
 2.11.1.windows.1
+
+
