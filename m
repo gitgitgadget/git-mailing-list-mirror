@@ -2,75 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A645B1FAF4
-	for <e@80x24.org>; Wed,  8 Feb 2017 22:24:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3ABCC1FAF4
+	for <e@80x24.org>; Wed,  8 Feb 2017 22:28:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751376AbdBHWY0 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 8 Feb 2017 17:24:26 -0500
-Received: from mail-ot0-f181.google.com ([74.125.82.181]:34545 "EHLO
-        mail-ot0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751235AbdBHWYZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Feb 2017 17:24:25 -0500
-Received: by mail-ot0-f181.google.com with SMTP id f9so124288643otd.1
-        for <git@vger.kernel.org>; Wed, 08 Feb 2017 14:23:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=pkmt4GF1Wbssl0sueb33I4ZGbLS5O4a4msxVVTJybuc=;
-        b=e7iyp/QmIr8sDAUyQq7JI/6lAHGEtxT0UGxQDX4q9McMVsA93EbVw94VQ6tVuBbG/E
-         EJ05ogg1FoYXYozQ4/B9NpMViveJ5s6aTEjYrDP2lD1K7WHEK9rWe9rfEbogLBcOQhSZ
-         YE0JmCExEj3K6UfTcu08X6fsoGP5/immsjup2uTb6bjTPKUOKNKujADQyWOKOvZ3GNS3
-         /Bx559ld4kAbBq2hML3g1tidzz9aivUX3CCngAP4kkGt+QX+NGAUuu1NN6VZa2+L07zS
-         5x0L8zYlEFCmaPOA3Erf4CCbe14wL+Hm1eHjburKB6xWTE7s6njiR38Dnjw5NnBq9imf
-         VMvQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=pkmt4GF1Wbssl0sueb33I4ZGbLS5O4a4msxVVTJybuc=;
-        b=eE3nBq2rMCO+eBuYok6It3f6M5eGXv7SbMMoGzlBSQ6IhDR2enBNOXbf2vJxmBBb6H
-         ahdDMJOuzSvWHtv1MPrx/2Z9ebsN4G5pfDojWjMkc6YtOehkEfw8bEABov5LgJbhtBYp
-         uJt6uH5xiNpYjp5pNRdKY7JRR74B/fVRyBZvl3mbH5Olpbx3y974dkpMgeKwTKzL46CQ
-         b2/midLFPrMb3BQ7Ck/x0Xqk95HNCNg5U2WwK3/p4SQ48O/U7hGAiGH1E5dhMXaQ7ACZ
-         V5xRUHt2JbA/umAfGTDu9sPCfdLSSVQ/zq+r9q3gLgtXmA6XUO8gHN5Sc7OsLTzMUSHA
-         RVrQ==
-X-Gm-Message-State: AMke39lqG1KtzbxakHs9D0AwmCZrOSgosBQQvIYM+s9xxq5Vjd8p0rY6GtQn+rY+nH7ewKOEE03MHTZrsNDpDA==
-X-Received: by 10.157.4.141 with SMTP id 13mr13953094otm.243.1486592211167;
- Wed, 08 Feb 2017 14:16:51 -0800 (PST)
-MIME-Version: 1.0
-Received: by 10.182.63.13 with HTTP; Wed, 8 Feb 2017 14:16:50 -0800 (PST)
-In-Reply-To: <xmqqk290uywp.fsf@gitster.mtv.corp.google.com>
-References: <alpine.LFD.2.20.1702072113380.25002@i7.lan> <xmqqk290uywp.fsf@gitster.mtv.corp.google.com>
-From:   Linus Torvalds <torvalds@linux-foundation.org>
-Date:   Wed, 8 Feb 2017 14:16:50 -0800
-X-Google-Sender-Auth: kjYujy0MOWEr7jy-cq-D0HrEVvw
-Message-ID: <CA+55aFycVda9LYtLuG-oBci1Q2-7TVx3jv0HRZzSP0gQsWvXjw@mail.gmail.com>
-Subject: Re: [PATCH 2/2] pathspec: don't error out on all-exclusionary
- pathspec patterns
+        id S1751806AbdBHW2m convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Wed, 8 Feb 2017 17:28:42 -0500
+Received: from zimbra-vnc.tngtech.com ([83.144.240.98]:23519 "EHLO
+        proxy.tng.vnc.biz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751433AbdBHW2l (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Feb 2017 17:28:41 -0500
+Received: from localhost (localhost [127.0.0.1])
+        by proxy.tng.vnc.biz (Postfix) with ESMTP id CDBD21E1872;
+        Wed,  8 Feb 2017 23:28:37 +0100 (CET)
+Received: from proxy.tng.vnc.biz ([127.0.0.1])
+        by localhost (proxy.tng.vnc.biz [127.0.0.1]) (amavisd-new, port 10032)
+        with ESMTP id jLsgrYRvIH6B; Wed,  8 Feb 2017 23:28:37 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+        by proxy.tng.vnc.biz (Postfix) with ESMTP id 32C0D1E3038;
+        Wed,  8 Feb 2017 23:28:37 +0100 (CET)
+X-Virus-Scanned: amavisd-new at 
+Received: from proxy.tng.vnc.biz ([127.0.0.1])
+        by localhost (proxy.tng.vnc.biz [127.0.0.1]) (amavisd-new, port 10026)
+        with ESMTP id xIWXejO1XUU2; Wed,  8 Feb 2017 23:28:37 +0100 (CET)
+Received: from [192.168.178.36] (aftr-185-17-206-26.dynamic.mnet-online.de [185.17.206.26])
+        by proxy.tng.vnc.biz (Postfix) with ESMTPSA id BF8351E1872;
+        Wed,  8 Feb 2017 23:28:36 +0100 (CET)
+Subject: Re: [PATCH v4] tag: generate useful reflog message
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+References: <20170206222416.28720-1-cornelius.weig@tngtech.com>
+ <xmqqpoiv15ew.fsf@gitster.mtv.corp.google.com>
+ <20170206222416.28720-2-cornelius.weig@tngtech.com>
+ <xmqqshnov0c4.fsf@gitster.mtv.corp.google.com>
+Cc:     git@vger.kernel.org, karthik.188@gmail.com, peff@peff.net,
+        bitte.keine.werbung.einwerfen@googlemail.com
+From:   Cornelius Weig <cornelius.weig@tngtech.com>
+Message-ID: <d0170d3a-3022-3bca-7c80-7ef0b1cf62a0@tngtech.com>
+Date:   Wed, 8 Feb 2017 23:28:37 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.7.0
+MIME-Version: 1.0
+In-Reply-To: <xmqqshnov0c4.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8BIT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Feb 8, 2017 at 1:59 PM, Junio C Hamano <gitster@pobox.com> wrote:
->
-> Thanks.  Even though the current code does not refer to the original
-> prefixlen after the added hunk, I'd prefer not to destroy it to
-> avoid future troubles, so I'll queue with a bit of tweak there,
-> perhaps like the attached.
 
-Yeah, I considered that. Along with just passing in a NULL prefix
-string too for that case. Not that it matters.
 
-So ack on that change,
+On 02/08/2017 10:28 PM, Junio C Hamano wrote:
+> cornelius.weig@tngtech.com writes:
+> 
+>> From: Cornelius Weig <cornelius.weig@tngtech.com>
+>>
+>> When tags are created with `--create-reflog` or with the option
+>> `core.logAllRefUpdates` set to 'always', a reflog is created for them.
+>> So far, the description of reflog entries for tags was empty, making the
+>> reflog hard to understand. For example:
+>> 6e3a7b3 refs/tags/test@{0}:
+>>
+>> Now, a reflog message is generated when creating a tag, following the
+>> pattern "tag: tagging <short-sha1> (<description>)". If
+>> GIT_REFLOG_ACTION is set, the message becomes "$GIT_REFLOG_ACTION
+>> (<description>)" instead. If the tag references a commit object, the
+>> description is set to the subject line of the commit, followed by its
+>> commit date. For example:
+>> 6e3a7b3 refs/tags/test@{0}: tag: tagging 6e3a7b3398 (Git 2.12-rc0, 2017-02-03)
+>>
+>> If the tag points to a tree/blob/tag objects, the following static
+>> strings are taken as description:
+>>
+>>  - "tree object"
+>>  - "blob object"
+>>  - "other tag object"
+>>
+>> Signed-off-by: Cornelius Weig <cornelius.weig@tngtech.com>
+>> Reviewed-by: Junio C Hamano <gitster@pobox.com>
+> 
+> This last line is inappropriate, as I didn't review _THIS_ version,
+> which is different from the previous one, and I haven't checked if
+> the way the comments on the previous review were addressed in this
+> version is agreeable.
 
-             Linus
+Sorry for that confusion. I'm still not used to when adding what
+sign-off is appropriate. I thought that adding you as reviewer is also a
+question of courtesy.
+
+A version with revised tests will follow.
