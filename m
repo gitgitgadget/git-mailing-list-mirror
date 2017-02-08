@@ -2,178 +2,141 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 391D71FC46
-	for <e@80x24.org>; Wed,  8 Feb 2017 01:56:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0310A1FC46
+	for <e@80x24.org>; Wed,  8 Feb 2017 02:29:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932929AbdBHB4W (ORCPT <rfc822;e@80x24.org>);
-        Tue, 7 Feb 2017 20:56:22 -0500
-Received: from mail-pg0-f45.google.com ([74.125.83.45]:35804 "EHLO
-        mail-pg0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932926AbdBHB4T (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Feb 2017 20:56:19 -0500
-Received: by mail-pg0-f45.google.com with SMTP id 194so43786911pgd.2
-        for <git@vger.kernel.org>; Tue, 07 Feb 2017 17:56:19 -0800 (PST)
+        id S932076AbdBHC23 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 7 Feb 2017 21:28:29 -0500
+Received: from mail-qt0-f196.google.com ([209.85.216.196]:34476 "EHLO
+        mail-qt0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751865AbdBHC0p (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Feb 2017 21:26:45 -0500
+Received: by mail-qt0-f196.google.com with SMTP id w20so21371449qtb.1
+        for <git@vger.kernel.org>; Tue, 07 Feb 2017 18:26:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:date:from:to:subject:in-reply-to:message-id:references
-         :user-agent:mime-version;
-        bh=m10KWQbKZsHDKTpi3JSeDrK1PqLKggQH7mZTij7B/1I=;
-        b=vHqY1Hvha3Hw2SFCJhsDXzXqvFui4dy+3X4jtJLZTk549q0cF8bjZqm86YyF16n0qu
-         48hIBjzvzqp2J+6ThydYbUJITobtQK+0XrpWZODeIkXjLdt4uVudDR5QOuH9uxefXgrj
-         svCH84E1dzloSQsEko9jKoigeVN0d37NHY3fD7TQoZlSPZ5xC8QHJ9Bc8Rl1S3HNM/kK
-         Y9qH6wsF88Sn20XOVQPdWQoDxZ5fwbMwtJwGbxew1o++z+SJQKtH/ihYZUfyPwpG8Pma
-         IEpz6dMdbrd7fMuin+sKargC2rNIUodLAXeU9FUq6dLvpC139/IO7hV3D7hamBMdCiUu
-         9hPQ==
+        h=from:to:cc:references:in-reply-to:subject:date:message-id
+         :mime-version:content-transfer-encoding:thread-index
+         :content-language;
+        bh=ain/+ZFcFMNgbPrGW7iD11hA/1O37G094z/VlOhsxns=;
+        b=EuhGQ6N6rcDBCcZUepeFvzyfPxwUeGwUbaBuOpUhCWsku3PUpMvWGkyboV9eIJJjhH
+         Yxi9IaqQwAKaLpJMMb+xbzE/cA8n5zHvoTUsAP657FCcDc1LSRLHoOiC+7nM6QAN+lMw
+         oqIqv4frR0RcZ8HYxTJqE742E8y8Lqpw2Gc4h4AU5rsonXjtlcob+iY46r+iWdWQ15Sb
+         sPB+lFAk/a/caBk8/fKy9F9L2TPfoFudA1SKE6MivUFK0NbkhlKYWgnRLBQB8dO/wiki
+         4DxEv9Pfetzjzh/isRO7StKibydNBPYJ/yAS56Z7nA7hcZL+tWl5xm2AoPR1dfIRD/Pj
+         3bCw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:date:from:to:subject:in-reply-to
-         :message-id:references:user-agent:mime-version;
-        bh=m10KWQbKZsHDKTpi3JSeDrK1PqLKggQH7mZTij7B/1I=;
-        b=GZEdgbnv3MMrOBAORbg73s6sV3lbtYtjnJSrz1jRQZcq86VzCoL7/849GXX/o4wXAS
-         oe0uytEegQFyn8+nrdVxkA9dFlXYftKB1v5dFd085IQHWfQbaFLoAwytRKxcVQqW2N9R
-         NzJk2qmLZs1U+Gc1uwfEWXqbSF/j83zsgeO6HAfgUHOtX5I8QPkk3yA2Nmv3MBWcNWae
-         VEwY0x1GRBRu1pSAEUirCMoZ3mJaTz8TdpCYoD9/EH/1T6ZA/DESg/1/LnODT8o1z4bZ
-         ZTsslhylIT2my8dXuGk3ZXPQQ/XQssWktorVMBqQ1A5MPW9lWhvvBljmrTqyfMeAYrF3
-         HyYQ==
-X-Gm-Message-State: AIkVDXK66Ln7cDNvV5cFRieCVRuuYqPcIjsW8apVhMnymHCMFdh3GZEQJOtq+mo15wjEag==
-X-Received: by 10.84.217.202 with SMTP id d10mr30164668plj.53.1486518507780;
-        Tue, 07 Feb 2017 17:48:27 -0800 (PST)
-Received: from i7.lan (c-73-11-52-149.hsd1.or.comcast.net. [73.11.52.149])
-        by smtp.gmail.com with ESMTPSA id e13sm359614pgn.38.2017.02.07.17.48.26
+        h=x-gm-message-state:from:to:cc:references:in-reply-to:subject:date
+         :message-id:mime-version:content-transfer-encoding:thread-index
+         :content-language;
+        bh=ain/+ZFcFMNgbPrGW7iD11hA/1O37G094z/VlOhsxns=;
+        b=Pey8kWYqtFf81/uVKYOrDfQ2razvuA38KtDmlVfVPKc5GLexHygwsAbJJEQCxbKHdh
+         2biGqORbKGTKIMoKWex0cBOTULQZhHlVcZ7HIJUEaaGjcwm65NuNJb88EBQNUh7LRNL8
+         fHnOfijEBzLBivQJ/7mq6QicCoKohOStFR845fzwJ1XqACH/0s+1jsLXFCxoZnMsOY7s
+         iXr3jnqI+wF8bAtrPi2wfES+9yurRYIGxRZYSa0GJsluJKtlya2RaDkODyPR8zZ3D1e6
+         l3Ke/j+fc42h4iOUyM+seSj5GQ9BVgsBPq9phB7um2S77A4zI54bJOxro9dXczaI+qQM
+         WpTg==
+X-Gm-Message-State: AMke39mKLMIEweaf4SlvssHqyjHJ6Fy3zwkTMfe5vOfuQOAaABreuW6Vsyo5wI7NeFmpig==
+X-Received: by 10.200.54.178 with SMTP id a47mr18669966qtc.132.1486520317138;
+        Tue, 07 Feb 2017 18:18:37 -0800 (PST)
+Received: from BenPeartHP ([65.222.173.206])
+        by smtp.gmail.com with ESMTPSA id r10sm5008459qte.1.2017.02.07.18.18.35
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 07 Feb 2017 17:48:27 -0800 (PST)
-Date:   Tue, 7 Feb 2017 17:48:26 -0800 (PST)
-From:   Linus Torvalds <torvalds@linux-foundation.org>
-X-X-Sender: torvalds@i7.lan
-To:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: Fwd: Possibly nicer pathspec syntax?
-In-Reply-To: <CA+55aFzkTZAb1vy3G5M_Nb1BeOhTiCGksUfLa+ZQtiU2x6Q=Fw@mail.gmail.com>
-Message-ID: <alpine.LFD.2.20.1702071739060.17609@i7.lan>
-References: <CA+55aFyznf1k=iyiQx6KLj3okpid0-HexZWsVkxt7LqCdz+O5A@mail.gmail.com> <CA+55aFzkTZAb1vy3G5M_Nb1BeOhTiCGksUfLa+ZQtiU2x6Q=Fw@mail.gmail.com>
-User-Agent: Alpine 2.20 (LFD 67 2015-01-07)
+        Tue, 07 Feb 2017 18:18:35 -0800 (PST)
+From:   "Ben Peart" <peartben@gmail.com>
+To:     =?utf-8?Q?'Jakub_Nar=C4=99bski'?= <jnareb@gmail.com>,
+        "'Christian Couder'" <christian.couder@gmail.com>
+Cc:     "'Jeff King'" <peff@peff.net>, "'git'" <git@vger.kernel.org>,
+        "'Johannes Schindelin'" <Johannes.Schindelin@gmx.de>,
+        "'Ben Peart'" <benpeart@microsoft.com>
+References: <20170113155253.1644-1-benpeart@microsoft.com> <20170117184258.sd7h2hkv27w52gzt@sigill.intra.peff.net> <002601d2710b$c3715890$4a5409b0$@gmail.com> <CAP8UFD3R6nzDPApNvK6rcXR2qdAE6G4J3xbvEam3xsobO7viiA@mail.gmail.com> <002701d2816e$f4682fa0$dd388ee0$@gmail.com> <04cdd7ae-3349-470f-39c6-7f8723fdcae8@gmail.com>
+In-Reply-To: <04cdd7ae-3349-470f-39c6-7f8723fdcae8@gmail.com>
+Subject: RE: [RFC] Add support for downloading blobs on demand
+Date:   Tue, 7 Feb 2017 21:18:34 -0500
+Message-ID: <002901d281b1$a72797b0$f576c710$@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+Content-Type: text/plain;
+        charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AQHeqv64Rhj1j9YcMHkE7nrdCUWdigFWth5RAVxc1xMBPYXSowGWv7m9AQIZfy+hEb+BgA==
+Content-Language: en-us
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Thanks Jakub. =20
+
+Just so you are aware, this isn't a separate effort, it actually is the =
+same effort as the GVFS effort from Microsoft.  For pragmatic reasons, =
+we implemented the lazy clone support and on demand object downloading =
+in our own codebase (GVFS) first and are now are working to move it into =
+git natively so that it will be available everywhere git is available.  =
+This RFC is just one step in that process.
+
+As we mentioned at Git Merge, we looked into Mercurial but settled on =
+Git as our version control solution.  We are, however, in active =
+communication with the team from Facebook to share ideas.
+
+Ben
+
+> -----Original Message-----
+> From: Jakub Nar=C4=99bski [mailto:jnareb@gmail.com]
+> Sent: Tuesday, February 7, 2017 4:57 PM
+> To: Ben Peart <peartben@gmail.com>; 'Christian Couder'
+> <christian.couder@gmail.com>
+> Cc: 'Jeff King' <peff@peff.net>; 'git' <git@vger.kernel.org>; =
+'Johannes
+> Schindelin' <Johannes.Schindelin@gmx.de>; Ben Peart
+> <benpeart@microsoft.com>
+> Subject: Re: [RFC] Add support for downloading blobs on demand
+>=20
+> I'd like to point to two (or rather one and a half) solutions that I =
+got aware of
+> when watching streaming of "Git Merge 2017"[0].  There should be here
+> people who were there; and hopefully video of those presentations and
+> slides / notes would be soon available.
+>=20
+> [0]: http://git-merge.com/
+>=20
+> First tool that I'd like to point to is Git Virtual File System, or =
+GVFS in short
+> (which unfortunately shares abbreviation with GNOME Virtual File =
+System).
+>=20
+> The presentation was "Scaling Git at Microsoft" by Saeed Noursalehi,
+> Microsoft.  You can read about this solution in ArsTechnica =
+article[1], and on
+> Microsoft blog[2].  The code (or early version of thereof) is also =
+available[3] -
+> I wonder why on GitHub and not Codeplex...
+>=20
+> [1]: https://arstechnica.com/information-technology/2017/02/microsoft-
+> hosts-the-windows-source-in-a-monstrous-300gb-git-repository/
+> [2]:
+> =
+https://blogs.msdn.microsoft.com/visualstudioalm/2017/02/03/announcing-
+> gvfs-git-virtual-file-system/
+> [3]: https://github.com/Microsoft/GVFS
+>=20
+>=20
+> The second presentation that might be of some interest is "Scaling =
+Mercurial
+> at Facebook: Insights from the Other Side" by Durham Goode, Facebook.
+> The code is supposedly available as open-source; though I don't know =
+how
+> useful their 'blob storage' solution would be of use for your problem.
+>=20
+>=20
+> HTH
+> --
+> Jakub Nar=C4=99bski
 
 
-On Tue, 7 Feb 2017, Linus Torvalds wrote:
-> 
-> [ Clarification from original message, since Junio asked: I didn't
->   actually want the semantics of '.' at all, since in a subdirectory it
->   limits to the current subdirectory. So I'd suggest that in the absence
->   of any positive pattern, there is simply no filtering at all, so
->   whenever I say '.' as a pattern, I really meant ":(top)." which is
->   even more of a cumbersom syntax that the current model really
->   encourages. Crazy. Since I tend to always work in the top directory,
->   the two are the same for me ]
-
-So here's an RFC patch, and I'm quoting the above part of my thinking 
-because it's what the patch does, but it turns out that it's probably not 
-what we want, and I suspect the "." behavior (as opposed to "no filtering 
-at all") is actually better.
-
-Now _I_ don't much care, since I only work from the top level, but without 
-the "." behavior, you get into an odd situation that the negative match 
-will be relative to the current directory, but then the positive matches 
-will be everywhere else. 
-
-Obviously, a negative match that has "top" set would change that logic. So 
-this patch is purely a request for further discussion.
-
-When I wrote the patch, I actually also removed the now stale entries from 
-the 'po' files, but I'm not including that part here because it just 
-distracts from the meat of it all. So this diff was actually generated 
-with the new syntax:
-
-	git diff -p --stat -- :^po/
-
-and the only thing even remotely subtle here is that it changes our ctype 
-array to make '^' be both a regex and a pathspec magic character.
-
-Everything else should be pretty darn obvious.
-
-The code *could* just track all the 'relative to top or not' bits in the 
-exclusion pattern, and then use whatever top-ness the exclusion patterns 
-have (and maybe fall back to the old warning if it had a mixture of 
-exclusionary patterns). I'll happily change it to act that way if people 
-think that makes sense.
-
-Comments?
-
-                Linus
-
----
- ctype.c    |  3 ++-
- pathspec.c | 15 ++++++++++-----
- 2 files changed, 12 insertions(+), 6 deletions(-)
-
-diff --git a/ctype.c b/ctype.c
-index fc0225ceb..250e2ce15 100644
---- a/ctype.c
-+++ b/ctype.c
-@@ -14,6 +14,7 @@ enum {
- 	P = GIT_PATHSPEC_MAGIC, /* other non-alnum, except for ] and } */
- 	X = GIT_CNTRL,
- 	U = GIT_PUNCT,
-+	Y = GIT_REGEX_SPECIAL | GIT_PATHSPEC_MAGIC,
- 	Z = GIT_CNTRL | GIT_SPACE
- };
- 
-@@ -23,7 +24,7 @@ const unsigned char sane_ctype[256] = {
- 	S, P, P, P, R, P, P, P, R, R, G, R, P, P, R, P,		/*  32.. 47 */
- 	D, D, D, D, D, D, D, D, D, D, P, P, P, P, P, G,		/*  48.. 63 */
- 	P, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A,		/*  64.. 79 */
--	A, A, A, A, A, A, A, A, A, A, A, G, G, U, R, P,		/*  80.. 95 */
-+	A, A, A, A, A, A, A, A, A, A, A, G, G, U, Y, P,		/*  80.. 95 */
- 	P, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A,		/*  96..111 */
- 	A, A, A, A, A, A, A, A, A, A, A, R, R, U, P, X,		/* 112..127 */
- 	/* Nothing in the 128.. range */
-diff --git a/pathspec.c b/pathspec.c
-index 7ababb315..ef59d080d 100644
---- a/pathspec.c
-+++ b/pathspec.c
-@@ -72,6 +72,7 @@ static struct pathspec_magic {
- 	{ PATHSPEC_GLOB,    '\0', "glob" },
- 	{ PATHSPEC_ICASE,   '\0', "icase" },
- 	{ PATHSPEC_EXCLUDE,  '!', "exclude" },
-+	{ PATHSPEC_EXCLUDE,  '^', "exclude" },
- };
- 
- static void prefix_magic(struct strbuf *sb, int prefixlen, unsigned magic)
-@@ -516,7 +517,7 @@ void parse_pathspec(struct pathspec *pathspec,
- 	}
- 
- 	pathspec->nr = n;
--	ALLOC_ARRAY(pathspec->items, n);
-+	ALLOC_ARRAY(pathspec->items, n+1);
- 	item = pathspec->items;
- 	prefixlen = prefix ? strlen(prefix) : 0;
- 
-@@ -540,10 +541,14 @@ void parse_pathspec(struct pathspec *pathspec,
- 		pathspec->magic |= item[i].magic;
- 	}
- 
--	if (nr_exclude == n)
--		die(_("There is nothing to exclude from by :(exclude) patterns.\n"
--		      "Perhaps you forgot to add either ':/' or '.' ?"));
--
-+	/*
-+	 * If everything is an exclude pattern, add one positive pattern
-+	 * that matches everyting. We allocated an extra one for this.
-+	 */
-+	if (nr_exclude == n) {
-+		init_pathspec_item(item + n, 0, "", 0, "");
-+		pathspec->nr++;
-+	}
- 
- 	if (pathspec->magic & PATHSPEC_MAXDEPTH) {
- 		if (flags & PATHSPEC_KEEP_ORDER)
