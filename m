@@ -7,60 +7,58 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1BA651FAF4
-	for <e@80x24.org>; Wed,  8 Feb 2017 23:19:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 20D121FAF4
+	for <e@80x24.org>; Wed,  8 Feb 2017 23:27:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751731AbdBHXTv (ORCPT <rfc822;e@80x24.org>);
-        Wed, 8 Feb 2017 18:19:51 -0500
-Received: from mail-pf0-f196.google.com ([209.85.192.196]:33939 "EHLO
-        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751494AbdBHXTu (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Feb 2017 18:19:50 -0500
-Received: by mail-pf0-f196.google.com with SMTP id y143so12388132pfb.1
-        for <git@vger.kernel.org>; Wed, 08 Feb 2017 15:19:50 -0800 (PST)
+        id S1751550AbdBHX1j (ORCPT <rfc822;e@80x24.org>);
+        Wed, 8 Feb 2017 18:27:39 -0500
+Received: from mail-pg0-f66.google.com ([74.125.83.66]:33509 "EHLO
+        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751047AbdBHX1j (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Feb 2017 18:27:39 -0500
+Received: by mail-pg0-f66.google.com with SMTP id 194so16072713pgd.0
+        for <git@vger.kernel.org>; Wed, 08 Feb 2017 15:26:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version:content-transfer-encoding;
-        bh=A7OFXucWDojfz0F+7e4Wz9rStAOBssw7W1OcSS00iy8=;
-        b=caZXa19bKwX4SwYAgVNo1Eb7cBCe/q2gqlaLJGcwioDqSzVS77ZepTap1gEID2UE6g
-         UdXuxqDohdoQVo9GaU8yTD2XWQFmFIqc83mgvCu3T9V/Gvjq2lNbyRcan9pJJOiInMqp
-         RuzNlXNyrbqDS5rriHa9niy7rwEUGSz8liBN/LKoRmwHJoQCzfpmTZURZ76VBIGILe7J
-         WlHAvp2SL9vTjcN4N5rQ8iLgcGc/9CqdnDzt43chYe3OGQke87pBUrKyk33b+mQoLB6H
-         WRIBNBtpDhlRS2w2Q+CDKp8DQtd4vCfsy0/+7JKeNOu7g8V1hbKUjln8/+o+d+j8GC1r
-         TDPg==
+        bh=aJkMlmAOA8VSHwLylMX7t+5UfWGQUShItlKC4BAtM98=;
+        b=Xc6SqWh2ycp3QEhVVpVn06+ZSEY4a4X6h/wLZLdLW2P5mxbLJE5BziL17JcYXx6oA2
+         nqWnd8NYiBK2CDZSvhG8JiPeOg1Tb2VVjQFBvfk27TYOBaIT3pGPbwlOcIHuQV05jLJ1
+         cIcfY/SBha6B5CxTXWWNoJpeu4Mta8rhWyOle3Omow+xL7dDeusT8186I+CH/qkFY0rx
+         6zfuKrJi5vrgT6j+M3oFk3uwB2dQQ7vqLBFDMiTC6jAEm7ZvwYJwsQ3rwAGVTVgkp5MM
+         9Sycili0Li5szSVqak2b2czYsOpWyVSXLYyvXNluVMOgUiwlOnoVVo7zfkUQjFjMqfL+
+         a40g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version
          :content-transfer-encoding;
-        bh=A7OFXucWDojfz0F+7e4Wz9rStAOBssw7W1OcSS00iy8=;
-        b=S4PMJZEZ47AzMKafidOXB7/aFLpVhS+uIy68TkoeYGZzGmDOuwuWbexq4dkMRpfV+P
-         UWpIjnBza7i+b64usmr1aRDzdOucRict9YLt8JQDwVkp+Y9kDDCxCTU/XKcjYW1O2+Hp
-         92tOpmsProBZnOcsgsvVc8BdlKMBRHK6blSyyYJ0sZaE0ZAg6PfaPoh0SVICnho7gI1V
-         pFKAZN0G1t5tgmT0XAgVH6YDnJcjNJrKoZsHJ7B5+9NQ0oheSkwewpBSQtT6h+gHDQVN
-         EFHscoCCZjOse3jO/uBb60856AmqGFLDCICy5Bm3LIPUaeRjgd4Z77W7s4e1EKJNEr/+
-         0WCw==
-X-Gm-Message-State: AMke39lD/+sN5rC2bPVyMW//6IcJqPXNNh3/7vxQPcEgfjJmaqgNFOVst1gPmF+oJicNeg==
-X-Received: by 10.84.218.5 with SMTP id q5mr112931pli.80.1486595990074;
-        Wed, 08 Feb 2017 15:19:50 -0800 (PST)
+        bh=aJkMlmAOA8VSHwLylMX7t+5UfWGQUShItlKC4BAtM98=;
+        b=R3NrWweSM5Fgp2W74IaSyyIPhrWYJxcCyGAne0GPsL59vzmzwxLdRQCWSEWOeAgOX3
+         yXf1qtio6YseNG9dEIxDcaLUkrPuLjxfkulYurPoz6XWBApeJ9ScsGWxsZkzVhuWEd9C
+         yJsekqlGEKWFQba2bq8kJvWY4L7aZZOBy5zm0B3AFiS7WBIKN/5rjCXxN5neKADLLMwV
+         Bm4lVEnPmoB3pfUhS9h7ERWe8TRDHFXZDlTVv0iVH8eDXxErSfmPXfbjkbbCP3NOOGZl
+         53xUoHqb5MLz2xEZAO7GjgiNyoe2i3y81x/2E4xhbCv66HYzoXBT5Db2YFEaEWd18zIJ
+         kxvA==
+X-Gm-Message-State: AMke39ntCZTJTX3SwxqlAfGJv0JhmeyW3FFuxu4v4CHn2/q/P0CRtI1vusR8s2m/0D6LJw==
+X-Received: by 10.99.54.196 with SMTP id d187mr92717pga.91.1486596360625;
+        Wed, 08 Feb 2017 15:26:00 -0800 (PST)
 Received: from localhost ([2620:0:1000:8622:7c20:fa7c:46cb:2209])
-        by smtp.gmail.com with ESMTPSA id x2sm22936197pfa.71.2017.02.08.15.19.49
+        by smtp.gmail.com with ESMTPSA id s26sm23051686pge.33.2017.02.08.15.25.59
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 08 Feb 2017 15:19:49 -0800 (PST)
+        Wed, 08 Feb 2017 15:25:59 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-        "git\@vger.kernel.org" <git@vger.kernel.org>,
-        Michael Haggerty <mhagger@alum.mit.edu>
+To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Cc:     git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
 Subject: Re: [PATCH 2/2] worktree.c: use submodule interface to access refs from another worktree
 References: <20170208113144.8201-1-pclouds@gmail.com>
         <20170208113144.8201-3-pclouds@gmail.com>
-        <CAGZ79kZk1Chq1R-anz0RC+0GDEubGm5kEQOsy5bz9zwCYEi9nw@mail.gmail.com>
-Date:   Wed, 08 Feb 2017 15:19:48 -0800
-In-Reply-To: <CAGZ79kZk1Chq1R-anz0RC+0GDEubGm5kEQOsy5bz9zwCYEi9nw@mail.gmail.com>
-        (Stefan Beller's message of "Wed, 8 Feb 2017 11:50:40 -0800")
-Message-ID: <xmqqvasktgmj.fsf@gitster.mtv.corp.google.com>
+Date:   Wed, 08 Feb 2017 15:25:59 -0800
+In-Reply-To: <20170208113144.8201-3-pclouds@gmail.com> (=?utf-8?B?Ik5ndXk=?=
+ =?utf-8?B?4buFbiBUaMOhaSBOZ+G7jWM=?=
+        Duy"'s message of "Wed, 8 Feb 2017 18:31:44 +0700")
+Message-ID: <xmqqr338tgc8.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -70,31 +68,15 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
+Nguyễn Thái Ngọc Duy  <pclouds@gmail.com> writes:
 
-> On Wed, Feb 8, 2017 at 3:31 AM, Nguyễn Thái Ngọc Duy <pclouds@gmail.com> wrote:
->> (**) At this point, we may want to rename refs *_submodule API to
->> something more neutral, maybe s/_submodule/_remote/
->
-> I agree on (**), except that I am not sure if /_remote/ is a better name,
-> because there is already a concept of a "remote" as well as
-> "remote-tracking" in Git. (Usually it is not reachable on the same
-> FS, but resides on another machine).
+> As such, we can just linked worktree's path as a submodule. We just need
 
-I agree with you that the concept of remote is quite detached from
-the concept of wt and submodule whose refs need to be peeked at from
-the local repository.  After all, "remote" tracking branches are
-part of local repository's refs.
+Lack of verb made me read this three times.  "We can just treat
+linked worktree's path as if it were a submodule"?
 
-> My gut reaction would be to s/submodule/alternative/ here,
-> but we also have a thing called alternates already.
-
-... and I tend to think that is far closer a concept.  You borrow
-objects from your alternate object store, and that alternate object
-store may have its own set of refs you would need to peek when you
-are computing reachability from refs.
-
-Also don't we already enumerate such refs that pin objects in the
-alternate object store when doing object transfer negotiation in
-order to send ".have" entries for their tips?  What API do we use to
-do that, I wonder.
+I agree with you that the "submodule" in the name is misleading.  We
+would want to be able to walk refs from other local repositories
+(and repository-like entities, like the .git/ thing in a liked
+worktree), like our own submodule, or the repository we borrow
+objects from via the alternate mechanism.
