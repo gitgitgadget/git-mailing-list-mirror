@@ -2,103 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A9C7B1FD6A
-	for <e@80x24.org>; Wed,  8 Feb 2017 10:07:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E7F651FCC7
+	for <e@80x24.org>; Wed,  8 Feb 2017 10:18:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752577AbdBHKHK (ORCPT <rfc822;e@80x24.org>);
-        Wed, 8 Feb 2017 05:07:10 -0500
-Received: from mail-lf0-f43.google.com ([209.85.215.43]:34434 "EHLO
-        mail-lf0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752404AbdBHKHJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Feb 2017 05:07:09 -0500
-Received: by mail-lf0-f43.google.com with SMTP id v186so78959354lfa.1
-        for <git@vger.kernel.org>; Wed, 08 Feb 2017 02:07:06 -0800 (PST)
+        id S1753506AbdBHKRL (ORCPT <rfc822;e@80x24.org>);
+        Wed, 8 Feb 2017 05:17:11 -0500
+Received: from mail-ot0-f169.google.com ([74.125.82.169]:34104 "EHLO
+        mail-ot0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753391AbdBHKQz (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Feb 2017 05:16:55 -0500
+Received: by mail-ot0-f169.google.com with SMTP id f9so109089881otd.1
+        for <git@vger.kernel.org>; Wed, 08 Feb 2017 02:16:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=e2A3RlRrFoEkO6Tl4TBtygmyW7UOTGEXM6FZFNyhEdg=;
-        b=QXcWha3OkG4jO+cyzATqtAb28bfog1DK4WJeHecO9YLGtnmetfW2yM32yvQgKi59JB
-         h3OxgqjKwEtOnJho52Gc8Oyx0gGG2nPjAVf3WqSX2tN1T6ZW7V8zOcY2BB+sQiilAElj
-         M8rlb/vFniJTMBQHZIOtuRDjbtdIuBo/VlGA/w+k2TASq+oa7lwOVySXjDX6Tzfuqc7B
-         y+GEkPzHXMTkboYilBc79dMNBtKfWIYr+nUfvuV90pi94I2ybetc/Fu/+PcXQp/T0EIy
-         xOu7A0F/NBENOSZ3pASv0B7bZO8E3ZZ4LUynHKuMSfWpDTtGJ9xWEoBTt2bjhcwxMVNR
-         nx2Q==
+        d=enterprisedb-com.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=u53LTxCRzLNWyC8HZzHiLCFOtv5WirbRMdqfvbhdoeY=;
+        b=Vx36zt11Pxw43UqTzBzqr4z0Gzv4NinExQCNQzxWXFs1jcEM7wYtw0w8bRStuFC5mZ
+         BQ9MQg0CWEWuuw+/YdyTE/wS89goh/jOqeOrWlYRa/cmy0IeyFBhcIp+JTP6ElWO4hOh
+         JY7QWO1E4oB5Xl//HVQ+FUcZW8wy67uH7N0JTu36JqVIu6PcDx4QbGPxSTz8Ou+gWXfi
+         sviZxd/bHaXQ0Gc1lIk+y0svZYWxeHeMprmjGTsKFTv/7atAIcJ9MDS+t3Uaa7z2WO68
+         tkGTysjNyKau2cKKPBr4k1NvzEZEc2k9am88wgNk4A/HuVJH/T/DrGAA+3Kyzj3ps/nb
+         XGqQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=e2A3RlRrFoEkO6Tl4TBtygmyW7UOTGEXM6FZFNyhEdg=;
-        b=p2sySPn2fiWz5G4VZCW55QoNq9nMdAGMsZupYjWwaQwqv0KTXgyDoBVljhYISS5y1y
-         gh/gzu0g0GkKbqbfOe03btyIwExDr7qfamzZidWtic3AzAZb17vJnI1YOYk4YdvMXkbF
-         omMpZi6/POTqGrEC64JP+8bEohvv8sRtIbqRq0rFdNwLE9VavqNg+Gd1ztwZpd6QjaCO
-         8l21aVCsUpwvKnFQbKvSHdU3LpY1at9HrCsXfBWlrFfj5bdxJXWD68y7XvafH53M32WE
-         FsHmU3YLOtIRy/5Tbh4MI9du67VXPQ+OdNLuIj9SPOJwJqRsF9kWqRRD5+tAq6QwSxE7
-         S2yQ==
-X-Gm-Message-State: AIkVDXJCyX+nonREx4w/GoCLTm2mXgisj9zK4uwGoHfJtQ3es0CTtmHRYZKXVREXjULkUP05G6rlm+S0T5eEcA==
-X-Received: by 10.46.69.7 with SMTP id s7mr7946793lja.44.1486548426053; Wed,
- 08 Feb 2017 02:07:06 -0800 (PST)
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=u53LTxCRzLNWyC8HZzHiLCFOtv5WirbRMdqfvbhdoeY=;
+        b=DdOo2UIs71DDmHP59vp8Gjk8N7GaPtTygWscB6fFlFdVJ3TDxfb4lkbLewpPOkcgnN
+         8uP/DBJ5aa45ZLVfbn87GnyQhnwOrn4vINmxcmpGofGF9uYedWkAMObyoXEprdoxX8+M
+         yI1Hc2S5AXfkHPqLcgQ10+VMsbWQU9jWjJPJE+EJ5EgdBMdZGNOnY1MdiUZewzJo5PpI
+         RMjaxFUxYEN/vHvIR18YNvjAVXiMCwS/VQhatL0YxGQjx3RxoE3G1V3fBJLD2voGK0aD
+         laAWcIvju4TGKpViUG/couz0+9eVSGj/d4PAj0OdC8LdVqOX2GmF2Xx8HSkWl5LcD25I
+         F5WQ==
+X-Gm-Message-State: AMke39k8WBig0p1umPs6usa9Okvvy4F6uQEV5HhCAD70tyHRB7sabogMc73Q67IepF9ZMZGgIZbPSw3ihWY9PZzP
+X-Received: by 10.157.9.214 with SMTP id 22mr10206153otz.128.1486548607865;
+ Wed, 08 Feb 2017 02:10:07 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.25.199.13 with HTTP; Wed, 8 Feb 2017 02:07:05 -0800 (PST)
-In-Reply-To: <CAL7ZE5xYVM6=C+SJLJ2HMFZ2gvuduw8p0UnS0RnBaXibj0mgDw@mail.gmail.com>
-References: <CAL7ZE5xYVM6=C+SJLJ2HMFZ2gvuduw8p0UnS0RnBaXibj0mgDw@mail.gmail.com>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Wed, 8 Feb 2017 11:07:05 +0100
-Message-ID: <CAP8UFD18Sbqo-_ZVyYTJtwNaRc8bFSd0KEYQ1oRH7-G+xnJTJg@mail.gmail.com>
-Subject: Re: Non-zero exit code without error
-To:     Serdar Sahin <serdar@peakgames.net>
-Cc:     git <git@vger.kernel.org>
+Received: by 10.182.226.168 with HTTP; Wed, 8 Feb 2017 02:10:07 -0800 (PST)
+From:   Ashutosh Bapat <ashutosh.bapat@enterprisedb.com>
+Date:   Wed, 8 Feb 2017 15:40:07 +0530
+Message-ID: <CAFjFpRe8zqxs4OLbCrjnuEzF=75sbBJ+HuZqek49B=O=TFHq8A@mail.gmail.com>
+Subject: Bug with fixup and autosquash
+To:     git@vger.kernel.org
 Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Hi Git-developers,
+First of all thanks for developing this wonderful scm tool. It's sooo versatile.
 
-On Tue, Feb 7, 2017 at 12:27 PM, Serdar Sahin <serdar@peakgames.net> wrote:
-> Hi,
->
-> When we execute the following lines, the exit code is 1, but it is
-> unclear what is the reason of this exit code. Do you have any idea?
->
-> git clone --mirror --depth 50 --no-single-branch
-> git@github.hede.com:Casual/hodo-server.git
+I have been using git rebase heavily these days and seem to have found a bug.
 
-First, could you tell us the git version you are using on the client
-and on the server, and if this a new problem with newer versions?
-Also is the repos accessible publicly or is it possible to reproduce
-on another repo?
-And what happens using other protocols like HTTP/S?
+If there are two commit messages which have same prefix e.g.
+yyyyyy This is prefix
+xxxxxx This is prefix and message
 
-> Cloning into bare repository 'hodo-server.git'...
-> remote: Counting objects: 3371, done.
-> remote: Compressing objects: 100% (1219/1219), done.
-> remote: Total 3371 (delta 2344), reused 2971 (delta 2098), pack-reused 0
-> Receiving objects: 100% (3371/3371), 56.77 MiB | 2.18 MiB/s, done.
-> Resolving deltas: 100% (2344/2344), done.
->
-> echo $?
-> 0
->
-> cd hodo-server.git/
->
-> GIT_CURL_VERBOSE=1 GIT_TRACE=1  git fetch --depth 50 origin
-> cc086c96cdffe5c1ac78e6139a7a4b79e7c821ee
-> 14:12:35.215889 git.c:350               trace: built-in: git 'fetch'
-> '--depth' '50' 'origin' 'cc086c96cdffe5c1ac78e6139a7a4b79e7c821ee'
-> 14:12:35.217273 run-command.c:336       trace: run_command: 'ssh'
-> 'git@github.hede.com' 'git-upload-pack '\''Casual/hodo-server.git'\'''
-> 14:12:37.301122 run-command.c:336       trace: run_command: 'gc' '--auto'
-> 14:12:37.301866 exec_cmd.c:189          trace: exec: 'git' 'gc' '--auto'
-> 14:12:37.304473 git.c:350               trace: built-in: git 'gc' '--auto'
->
-> echo $?
-> 1
+xxxxxx comitted before yyyyyy
 
-What happens if you just run 'git gc --auto' after that?
+Now I commit a fixup to yyyyyy using git commit --fixup yyyyyy
+zzzzzz fixup! This is prefix
+
+When I run git rebase -i --autosquash, the script it shows me looks like
+pick xxxxxx This is prefix and message
+fixup zzzzzz fixup! This is prefix
+pick yyyyyy This is prefix
+
+I think the correct order is
+pick xxxxxx This is prefix and message
+pick yyyyyy This is prefix
+fixup zzzzzz fixup! This is prefix
+
+Is that right?
+
+I am using
+[ubuntu]git --version
+git version 1.7.9.5
+
+--
+Best Wishes,
+Ashutosh Bapat
+EnterpriseDB Corporation
+The Postgres Database Company
