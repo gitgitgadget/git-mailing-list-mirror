@@ -2,134 +2,157 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 421011FCC7
-	for <e@80x24.org>; Thu,  9 Feb 2017 13:50:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 49AA81FCC7
+	for <e@80x24.org>; Thu,  9 Feb 2017 14:05:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752243AbdBINu1 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 9 Feb 2017 08:50:27 -0500
-Received: from mail-oi0-f52.google.com ([209.85.218.52]:33894 "EHLO
-        mail-oi0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751894AbdBINuZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Feb 2017 08:50:25 -0500
-Received: by mail-oi0-f52.google.com with SMTP id s203so2288742oie.1
-        for <git@vger.kernel.org>; Thu, 09 Feb 2017 05:49:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=z0PEDQ/FXqkpNuTaV9vmviY3Q72d83YpZBPPRiAA/yo=;
-        b=W5DccjWUz1ZkqiJxLFW43HEEsb2SLL9oQsgvocXSdhxRj3+98M5jlFoZyC8FVGIBKg
-         lF2E5qr7QDplbrslGj0clnPsXrAstF+3va2xMh15hQYIBizDHysQ9UZKmy2G0YJ/QHAQ
-         423vtOgc3o6qURwzbNhdq37E+shaPDRvsvg3fHc2A2SmmvhdUQlLxwvG0Kihh62I94Uk
-         i83Dh/X0XPFyEkQiYIjj3QFV9KkcVcq48aL4kO0J4dc7vG1UtpVTwx7AL4bxZN7zvsp7
-         /XrOSgVXLI60gBEE+t+mTtVNttNgo/WLeyQFRBjP39HtHp44uHSk2gxe6Q5X/cFYpm0i
-         WDvg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=z0PEDQ/FXqkpNuTaV9vmviY3Q72d83YpZBPPRiAA/yo=;
-        b=Z4LHRMYruqkzTNlzIe73wH2snSaxdFayYB6VxF7homjJ4pALvOtIMxkxsV3OmL0lIh
-         y3d/rom2+siVugRlR8VW8LjpOejjuZsFxWh7yUVLfs4ibY6bWZ6uQpMSGlghID6ruQKY
-         FGI+koEa1DctmlkTBlF+BBNinWQye9eJkW+3Z17ddwpsBjhLtRvbepmOklqnCCqJdULs
-         gZEKWarcvWkXs8k7pFO3H3BmoGUGPcPHZcNBjp7iklmQ8cRIjBCPY9DsYGUl6WaFLuRx
-         leexzgBaG0BpQ23snQM+FUXg7sHHpzyEb7Q505rrq6X+MHRrnY3V4NAXWtIIGr95Qtwv
-         wPhw==
-X-Gm-Message-State: AMke39lSHlAwF3WC2fRkE7p1PurcsIPkxARIr4DoEE3xu8uUgfJNlwLrte4/mwitC/Kq1GdP+blI12a6r9nInQ==
-X-Received: by 10.202.79.138 with SMTP id d132mr1406917oib.169.1486648145745;
- Thu, 09 Feb 2017 05:49:05 -0800 (PST)
+        id S1751816AbdBIOFP (ORCPT <rfc822;e@80x24.org>);
+        Thu, 9 Feb 2017 09:05:15 -0500
+Received: from alum-mailsec-scanner-6.mit.edu ([18.7.68.18]:54570 "EHLO
+        alum-mailsec-scanner-6.mit.edu" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1751625AbdBIOFN (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 9 Feb 2017 09:05:13 -0500
+X-AuditID: 12074412-5f5ff700000009b5-23-589c76c9ec63
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+        by alum-mailsec-scanner-6.mit.edu (Symantec Messaging Gateway) with SMTP id E7.AA.02485.9C67C985; Thu,  9 Feb 2017 09:03:53 -0500 (EST)
+Received: from [192.168.69.190] (p4FEDF6A1.dip0.t-ipconnect.de [79.237.246.161])
+        (authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v19E3pcf024760
+        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+        Thu, 9 Feb 2017 09:03:52 -0500
+Subject: Re: [PATCH 2/2] worktree.c: use submodule interface to access refs
+ from another worktree
+To:     Duy Nguyen <pclouds@gmail.com>
+References: <20170208113144.8201-1-pclouds@gmail.com>
+ <20170208113144.8201-3-pclouds@gmail.com>
+ <37fe2024-0378-a974-a28d-18a89d3e2312@alum.mit.edu>
+ <CACsJy8Diy92CNbJ1OBn893VFFrSsxBFWSyQHjt_Dzq9x7jfibQ@mail.gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Stefan Beller <sbeller@google.com>
+From:   Michael Haggerty <mhagger@alum.mit.edu>
+Message-ID: <4bea30e9-9724-0a71-e9da-d79ad8accd28@alum.mit.edu>
+Date:   Thu, 9 Feb 2017 15:03:50 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Icedove/45.6.0
 MIME-Version: 1.0
-Received: by 10.74.158.1 with HTTP; Thu, 9 Feb 2017 05:48:34 -0800 (PST)
-In-Reply-To: <xmqqwpd0v15j.fsf@gitster.mtv.corp.google.com>
-References: <CA+55aFyznf1k=iyiQx6KLj3okpid0-HexZWsVkxt7LqCdz+O5A@mail.gmail.com>
- <CA+55aFzkTZAb1vy3G5M_Nb1BeOhTiCGksUfLa+ZQtiU2x6Q=Fw@mail.gmail.com>
- <alpine.LFD.2.20.1702071739060.17609@i7.lan> <xmqqefz9xv0x.fsf@gitster.mtv.corp.google.com>
- <CA+55aFwPLtuPciN1o_03CwkKqFWgZd_br9Q14qyr7a7N7mxTeA@mail.gmail.com>
- <xmqqa89xxtnd.fsf@gitster.mtv.corp.google.com> <CA+55aFyAEaMKA+2oPJct4ffJ0-_z2vrYxmQ9yrkbxzB3Hk6WfQ@mail.gmail.com>
- <xmqq4m05xph4.fsf@gitster.mtv.corp.google.com> <alpine.LFD.2.20.1702072112160.25002@i7.lan>
- <CACsJy8AQmg+oRYATU8_gR6zY-=sPN3m9PKtk-kytkSKGK+GG1g@mail.gmail.com>
- <xmqqy3xgwpiq.fsf@gitster.mtv.corp.google.com> <xmqqwpd0v15j.fsf@gitster.mtv.corp.google.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Thu, 9 Feb 2017 20:48:34 +0700
-Message-ID: <CACsJy8DuP5jGFGJYNeAx+6DPFkRpCiPSrTipjP9A_PD=1uNX3Q@mail.gmail.com>
-Subject: Re: Fwd: Possibly nicer pathspec syntax?
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Linus Torvalds <torvalds@linux-foundation.org>,
-        Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+In-Reply-To: <CACsJy8Diy92CNbJ1OBn893VFFrSsxBFWSyQHjt_Dzq9x7jfibQ@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrMIsWRmVeSWpSXmKPExsUixO6iqHuybE6EwYz98hZdV7qZLBp6rzBb
+        dE95y2ixeXM7iwOLx85Zd9k9Fmwq9bh4Sdnj8ya5AJYoLpuU1JzMstQifbsEroy2xqUsBc1K
+        FU23/rA0MP6T6mLk5JAQMJF4t3kSYxcjF4eQwGVGicm3DjBDOOeZJGa17WQCqRIWSJZ4t/I6
+        K4gtIqAk8aZjG1TRPUaJxrsn2UAcZoE2Rommlc/BqtgEdCUW9TSDdfMK2EucaHvGBmKzCKhI
+        tJ48zgxiiwqESMxZ+IARokZQ4uTMJyxdjBwcnAKBEnPuW4KEmQXUJf7Mu8QMYctLbH87h3kC
+        I/8sJB2zkJTNQlK2gJF5FaNcYk5prm5uYmZOcWqybnFyYl5eapGumV5uZoleakrpJkZI2Art
+        YFx/Uu4QowAHoxIPb4Xl7Agh1sSy4srcQ4ySHExKoryyBXMihPiS8lMqMxKLM+KLSnNSiw8x
+        SnAwK4nw7s0DyvGmJFZWpRblw6SkOViUxHl/Llb3ExJITyxJzU5NLUgtgsnKcHAoSfA+KwVq
+        FCxKTU+tSMvMKUFIM3FwggznARr+F6SGt7ggMbc4Mx0if4pRUUqcNxwkIQCSyCjNg+uFpZVX
+        jOJArwjzfgGp4gGmJLjuV0CDmYAGXz89C2RwSSJCSqqBUcXCLD7u+7Wl25xuT620krbbFiNm
+        6bE/oWO/Kltf/aMTVRJ9zflfEjdPXH9i7ppF71WU2Se9MjlraFiidzbw39nd4ZHnE7XnrGZt
+        j5ZsltrMOutxKMeqNf3L1B/XTaja7mW80OqCoKb8lsfqv9gKtxRvs7t6RVfxzKfIJbqnuo5U
+        RJv/9fR7pcRSnJFoqMVcVJwIANzPX+8GAwAA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Feb 9, 2017 at 4:11 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> With or without the patch in this thread, parse_pathspec() behaves
-> the same way for either CWD or FULL if you feed a non-empty
-> pathspec with at least one positive element.  IOW, if a caller feeds
-> a non-empty pathspec and there is no "negative" element involved, it
-> does not matter if we feed CWD or FULL.
+On 02/09/2017 12:59 PM, Duy Nguyen wrote:
+> On Thu, Feb 9, 2017 at 1:07 PM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
+>> It is unquestionably a good goal to avoid parsing references outside of
+>> `refs/files-backend.c`. But I'm not a fan of this approach.
+> 
+> Yes. But in this context it was more of a guinea pig. I wanted
+> something simple enough to code up show we can see what the approach
+> looked like. Good thing I did it.
+> 
+>>
+>> There are two meanings of the concept of a "ref store", and I think this
+>> change muddles them:
+>>
+>> 1. The references that happen to be *physically* stored in a particular
+>>    location, for example the `refs/bisect/*` references in a worktree.
+>>
+>> 2. The references that *logically* should be considered part of a
+>>    particular repository. This might require stitching together
+>>    references from multiple sources, for example `HEAD` and
+>>    `refs/bisect` from a worktree's own directory with other
+>>    references from the main repository.
+>>
+>> Either of these concepts can be implemented via the `ref_store` abstraction.
+>>
+>> The `ref_store` for a submodule should represent the references
+>> logically visible from the submodule. The main program shouldn't care
+>> whether the references are stored in a single physical location or
+>> spread across multiple locations (for example, if the submodule were
+>> itself a linked worktree).
+>>
+>> The `ref_store` that you want here for a worktree is not the worktree's
+>> *logical* `ref_store`. You want the worktree's *physical* `ref_store`.
+> 
+> Yep.
+> 
+>> Mixing logical and physical reference stores together is a bad idea
+>> (even if we were willing to ignore the fact that worktrees are not
+>> submodules in the accepted sense of the word).
+>>
+>> ...
+>>
+>> I think the best solution would be to expose the concept of `ref_store`
+>> in the public refs API. Then users of submodules would essentially do
+>>
+>>     struct ref_store *refs = get_submodule_refs(submodule_path);
+>>     ... resolve_ref_recursively(refs, refname, 0, sha1, &flags) ...
+>>     ... for_each_ref(refs, fn, cb_data) ...
+>>
+>> whereas for a worktree you'd have to look up the `ref_store` instance
+>> somewhere else (or maybe keep it as part of some worktree structure, if
+>> there is one) but you would use it via the same API.
+> 
+> Oh I was going to reply to Stefan about his comment to my (**)
+> footnote. Something along the this line
+> 
+> "Ideally we would introduce a new set of api, maybe with refs_ prefix,
+> that takes a refs_store. Then submodule people can get a ref store
+> somewhere and pass to it. Worktree people get maybe some other refs
+> store for it. The "old" api like for_each_ref() is a thin wrapper
+> around it, just like read_cache() vs read_index(&the_index). If the
+> *_submodule does not see much use, we might as well kill it and use
+> the generic refs_*".
+> 
+> If I didn't misunderstood anything else, then I think we're on the same page.
+> 
+> Now I need to see if I can get there in a reasonable time frame (so I
+> can fix my "gc in worktree" problem properly) or I would need
+> something temporary but not so hacky. I'll try to make this new api
+> and see how it works out. If you think I should not do it right away,
+> for whatever reason, stop me now.
 
-Yes. Now that you put it that way, it may make more sense to rename
-the options to PATHSPEC_DEFAULT_* instead of PATHSPEC_PREFER_*.
+Sounds good. A couple of hints and points to remember:
 
->  - builtin/checkout.c::cmd_checkout(), when argc==0, does not call
->    parse_pathspec().  This codepath will get affected by Linus's
->    change ("cd t && git checkout :\!perf" would try to check out
->    everything except t/perf, but what is a reasonable definition of
->    "everything" in the context of this command).  We need to
->    decide, and I am leaning towards preferring CWD for this case.
+* I think `struct ref_store *` should remain opaque outside of the refs
+  code.
 
-So far I have seen arguments with single negative pathspec as
-examples. What about "cd t; git checkout :^perf :^../Documentation"?
-CWD is probably not the best base to be excluded from. Maybe the
-common prefix of all negative pathspecs? But things start to get a bit
-unintuitive on that road. Or do will still bail out on multiple
-negative pathspecs with no positive one?
+* The virtual function interface embodied in `struct ref_storage_be`
+  isn't meant to be an external interface (i.e., don't just expose it
+  and have external callers use it directly).
 
-Also, even with single negative pathspec, what about "cd t; git
-checkout :^../ewah"?
+* One important distinction between the main reference store and
+  submodule reference stores is that we know the object store for
+  the former but not the latter. That implies that some operations
+  are, or should be, impossible for submodules (e.g., anything that
+  involves looking up objects, including peeling refs). However, we
+  *do* know the object store for linked worktrees. So they don't have
+  to be as dumbed-down as submodule ref stores. (This might be
+  irrelevant if you don't need any additional features for your
+  current purposes.)
 
-> So, I am tempted to suggest us doing the following:
->
->  * Leave a NEEDSWORK comment to archive.c::path_exists() that is
->    used for checking the validation of pathspec elements.  To fix it
->    properly, we need to be able to skip a negative pathspec to be
->    passed to this function by the caller, and to do so, we need to
->    expose a helper from the pathspec API that gets a single string
->    and returns what magic it has, but that is of lower priority.
+Also, I just sent my submodule-hash patch series to the mailing list in
+case you want to build on that.
 
-Side note. There's something else I'm not happy with pathspec handling
-in "git archive". Try "cd t; git archive HEAD -- ../Documentation" and
-you'll get a very unfriendly error message. But well, no time for it.
+Michael
 
->  * Retire the PATHSPEC_PREFER_CWD bit and replace its use with the
->    lack of the PATHSPEC_PREFER_FULL bit.
->
->  * Keep most of the above callsites that currently do not pass
->    CWD/FULL as they are, except the ones that should take FULL (see
->    above).
->
-> Comments?
-
-This comes from my experience reading files-backend.c. I didn't
-realize '0' in files_downcast(ref_store, 0, "pack_refs"); meant
-'submodule not allowed' because apparently I was too lazy to read
-prototype. But if was files_downcast(ref_store, NO_SUBMODULE,
-"pack_refs"), it would save people's time.
-
-With that in mind, should we keep _CWD the name, so people can quickly
-see and guess that it prefers _CWD than _FULL? _CWD can be defined as
-zero. It there's mostly as a friendly reminder.
-
-Other than that, yes if killing one flag helps maintenance, I'm for it.
-
-PS. You may notice I favored ^ over ! already. ! was a pain point for
-me too but I was too lazy to bring it up and fight for it. Thanks
-Linus.
--- 
-Duy
