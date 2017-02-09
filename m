@@ -2,118 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5ADEF1FC46
-	for <e@80x24.org>; Thu,  9 Feb 2017 09:44:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7190B1FC46
+	for <e@80x24.org>; Thu,  9 Feb 2017 09:58:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752655AbdBIJnr (ORCPT <rfc822;e@80x24.org>);
-        Thu, 9 Feb 2017 04:43:47 -0500
-Received: from mail-lf0-f66.google.com ([209.85.215.66]:33133 "EHLO
-        mail-lf0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752650AbdBIJnc (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Feb 2017 04:43:32 -0500
-Received: by mail-lf0-f66.google.com with SMTP id x1so11546466lff.0
-        for <git@vger.kernel.org>; Thu, 09 Feb 2017 01:42:31 -0800 (PST)
+        id S1752013AbdBIJ6R (ORCPT <rfc822;e@80x24.org>);
+        Thu, 9 Feb 2017 04:58:17 -0500
+Received: from mail-oi0-f43.google.com ([209.85.218.43]:34774 "EHLO
+        mail-oi0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751997AbdBIJ6P (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Feb 2017 04:58:15 -0500
+Received: by mail-oi0-f43.google.com with SMTP id s203so97877579oie.1
+        for <git@vger.kernel.org>; Thu, 09 Feb 2017 01:58:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=VLnvwhBSlZECaRt0KZLoWN2emnQnZfUucn0RITzc2do=;
-        b=PlArXauFA0uGg2zilbNhK70tItgh9tiSrM9q7ddGuv/UO6MpUPVNRX2vSdZkkwnXxt
-         ghLCMHSCgog11YFzlXfb1ax8EjD93Kh3o1/qi+fzkFcTR2OFHzOqsznLkVP7rgb7OBTS
-         wTywi0O/R6FVgI2QfcwIoRyGiljctQe+OufNOU9m+VkZT7tcKQALKN9ONe2PdSllIWvt
-         JEuqQ49Gspksm9A4HYeRza9UX8IW7DPH8zpUI1MMfr1sWkusgqm7MZG6KocqX2Lvaec6
-         //cTCQOooro5Z73nK54FYsP8gmYaT+Ud+r41oPSkgLxFiqQ8kPhd6YWo44A7gjHjxyhM
-         iRdg==
+        bh=4FUOxjBi7ceWEmYnxaZ6gx0H3P42/q7m5uuCbSgHm30=;
+        b=C2w+edaovsXcKJa1VvkVPUBJuNipc7SRrQOph6ASqEJUTr53XheOar7DCtqRqDZUEF
+         RxzlLqE/aBEqGR4qmuzdcniBTedqlbmCZDvrHVRmhCbEQo5NXfm9xrH3IBBA5Or9oly8
+         hJ4tTU9O8Gl4BYLbkyS/3SGi6HKOiyLTIekzotkuslLbQJ0iJvCI3kS9TvwiHH/H+dX4
+         0+ssIltTsNzUt+O7WP5eEetPbGxMaXU9MgxrnvdmwMp0rDrYiTgpib71hSIrjgevx/UD
+         kF8Pc6E0Rj9f2hhxj78ehM8QTYX34XSflFjVxExXmyXw5ipeQ1bjN0n/2/QE9RnCwFUF
+         g8uw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=VLnvwhBSlZECaRt0KZLoWN2emnQnZfUucn0RITzc2do=;
-        b=SoLNfyJxJ3kN8HBIirdY/rPRLrnfwghy1A7iTQCLmFrmReLE9+L5gch5ZzVdsNF/CW
-         M0bpHtBhIwV17zWikoJ9MDGdX0egqfbWRRdqha/j/xZZQq75rvrjQqXuyh9xUGCceS/5
-         S10LYnK3u6z3/5kOKxE7wRx3NQ7pJSPNRIw2fdDOVquGaZbxNVYsBG3YWXjdYAOWk2S7
-         DIUShH6iKVTdknb8jLSlmEctjbwRK7oLH7DSIOs2lWsj0YAjwuizF7eVE7U08lgPR4Lp
-         5YS76mSIOV3ZFzjNLa89wMfQ3SHDEl26E9X23r+hwDwSx6Icap8wD06VqjxHNDnRcPE5
-         sv7g==
-X-Gm-Message-State: AMke39m4EQzW6Zok8VIz/XSxyzgzI2Tpvc27TJh71vST4jALlVqaQ9gNIeWftypGXSeKycV1pDnBF8x/r9X0Ig==
-X-Received: by 10.25.210.79 with SMTP id j76mr650457lfg.129.1486633335194;
- Thu, 09 Feb 2017 01:42:15 -0800 (PST)
+        bh=4FUOxjBi7ceWEmYnxaZ6gx0H3P42/q7m5uuCbSgHm30=;
+        b=f6mrWqephv0qymuF2hUZmUAkF6KtSKTNS97F9zdJzjJigtw3yYsmpiQVIYkGyryDqz
+         2jk7bu0AhSEMUAAa4WazjuOe5LgnZW8y+/dmENTnqIJldOvkcw4Tc/MsBsC6E7teWADl
+         SagTv+0fowIkeHMLVkVrgKNgQc4M7sM4VcbUDIu89lM2x0KKrrKFvQBL55JQocNLC83N
+         ysOohMa3wj8xtTn81Yy4W0TaXtuqzL6r5jV79Uv5sONWbRpbroMFuZ2tceYXo2nLCWN6
+         ii94Zu0HuTeSiXiJjZnx3hnCsYr4M4OIjGnj2jepkKYyW4FOABqk0+0RNKDY0VguRazK
+         klQg==
+X-Gm-Message-State: AMke39mAdakENSxbjc1CpNHyLdGDz4NY2FXdua9t5ouH5XfsclG8lOfDGSiN4ID/aPxlJ5DbcLpA+4BHP4kIhg==
+X-Received: by 10.202.79.138 with SMTP id d132mr960339oib.169.1486633731290;
+ Thu, 09 Feb 2017 01:48:51 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.25.199.13 with HTTP; Thu, 9 Feb 2017 01:42:14 -0800 (PST)
-In-Reply-To: <vpq37fowx5q.fsf@anie.imag.fr>
-References: <vpq1svtstud.fsf@anie.imag.fr> <20170125204504.ebw2sa4uokfwwfnt@sigill.intra.peff.net>
- <vpq37fowx5q.fsf@anie.imag.fr>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Thu, 9 Feb 2017 10:42:14 +0100
-Message-ID: <CAP8UFD3aygSf5U2abnpCfRzEf-hH5fSNuzFBBtgCjSQC3F8c5A@mail.gmail.com>
-Subject: Re: GSoC 2017: application open, deadline = February 9, 2017
-To:     Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Cc:     Jeff King <peff@peff.net>, git <git@vger.kernel.org>,
-        Pranit Bauva <pranit.bauva@gmail.com>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        =?UTF-8?Q?Carlos_Mart=C3=ADn_Nieto?= <cmn@dwim.me>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Thomas Gummerer <t.gummerer@gmail.com>,
-        Siddharth Kannan <kannan.siddharth12@gmail.com>
+Received: by 10.74.158.1 with HTTP; Thu, 9 Feb 2017 01:48:20 -0800 (PST)
+In-Reply-To: <50fe3ea3302c40f4c96eaa5a568837e3334f9dc4.1486555851.git.johannes.schindelin@gmx.de>
+References: <50fe3ea3302c40f4c96eaa5a568837e3334f9dc4.1486555851.git.johannes.schindelin@gmx.de>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Thu, 9 Feb 2017 16:48:20 +0700
+Message-ID: <CACsJy8CigsWjAq5cmJ=cbBmj=DdJtHdMKxmoifftuz9+9kqJiQ@mail.gmail.com>
+Subject: Re: [PATCH] rev-parse --git-path: fix output when running in a subdirectory
+To:     Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
 Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Feb 8, 2017 at 3:54 PM, Matthieu Moy
-<Matthieu.Moy@grenoble-inp.fr> wrote:
-> Jeff King <peff@peff.net> writes:
+On Wed, Feb 8, 2017 at 7:17 PM, Johannes Schindelin
+<johannes.schindelin@gmx.de> wrote:
+> In addition to making git_path() aware of certain file names that need
+> to be handled differently e.g. when running in worktrees, the commit
+> 557bd833bb (git_path(): be aware of file relocation in $GIT_DIR,
+> 2014-11-30) also snuck in a new option for `git rev-parse`:
+> `--git-path`.
 >
->> On Mon, Jan 23, 2017 at 04:02:02PM +0100, Matthieu Moy wrote:
->>
->>> * We need to write the application, i.e. essentially polish and update
->>>   the text here: https://git.github.io/SoC-2016-Org-Application/ and
->>>   update the list of project ideas and microprojects :
->>>   https://git.github.io/SoC-2017-Ideas/
->>>   https://git.github.io/SoC-2016-Microprojects/
->>
->> That can be done incrementally by people who care (especially mentors)
->> over the next week or so, and doesn't require any real admin
->> coordination. If it happens and the result looks good, then the
->> application process is pretty straightforward.
->>
->> If it doesn't, then we probably ought not to participate in GSoC.
+> On the face of it, there is no obvious bug in that commit's diff: it
+> faithfully calls git_path() on the argument and prints it out, i.e. `git
+> rev-parse --git-path <filename>` has the same precise behavior as
+> calling `git_path("<filename>")` in C.
 >
-> OK, it seems the last message did not raise a lot of enthousiasm (unless
-> I missed some off-list discussion at Git-Merge?).
+> The problem lies deeper, much deeper. In hindsight (which is always
+> unfair), implementing the .git/ directory discovery in
+> `setup_git_directory()` by changing the working directory may have
+> allowed us to avoid passing around a struct that contains information
+> about the current repository, but it bought us many, many problems.
 
-I think having 2 possible mentors or co-mentors still shows some
-enthousiasm even if I agree it's unfortunate there is not more
-enthousiasm.
+Relevant thread in the past [1] which fixes both --git-path and
+--git-common-dir. I think the author dropped it somehow (or forgot
+about it, I know I did). Sorry can't comment on that thread, or this
+patch, yet.
 
-> The application deadline is tomorrow. I think it's time to admit that we
-> won't participate this year, unless someone steps in really soon.
-
-Someone steps in to do what exactly?
-
-I just had a look and the microproject and idea pages for this year are ok.
-They are not great sure, but not much worse than the previous years.
-What should probably be done is to remove project ideas where is no
-"possible mentor" listed.
-But I am reluctant to do that as I don't know what Dscho would be ok to mentor.
-
-Also please note that you sent this email just the day before the deadline.
-I know that you sent a previous email three weeks ago, but people
-easily forget this kind of deadline when they are not often reminded.
-(And there is a school vacation is France right now so I am having a
-vacation in Alps with unfortunately quite bad Internet access.)
-
-> If we don't participate, I'll add a disclaimer at the top of the
-> SoC-related pages on git.github.io to make sure students don't waste
-> time preparing an application.
-
-Please submit our application like this.
-
-Thanks,
-Christian.
+[1] http://public-inbox.org/git/1464261556-89722-1-git-send-email-rappazzo@gmail.com/
+-- 
+Duy
