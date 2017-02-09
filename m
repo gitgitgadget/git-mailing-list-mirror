@@ -2,79 +2,83 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DCE151FCC7
-	for <e@80x24.org>; Thu,  9 Feb 2017 16:58:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8E5111FCC7
+	for <e@80x24.org>; Thu,  9 Feb 2017 16:59:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753995AbdBIQ61 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 9 Feb 2017 11:58:27 -0500
-Received: from mail-pg0-f65.google.com ([74.125.83.65]:34294 "EHLO
-        mail-pg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753388AbdBIQ6X (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Feb 2017 11:58:23 -0500
-Received: by mail-pg0-f65.google.com with SMTP id v184so745706pgv.1
-        for <git@vger.kernel.org>; Thu, 09 Feb 2017 08:57:32 -0800 (PST)
+        id S932345AbdBIQ7K (ORCPT <rfc822;e@80x24.org>);
+        Thu, 9 Feb 2017 11:59:10 -0500
+Received: from mail-it0-f45.google.com ([209.85.214.45]:35773 "EHLO
+        mail-it0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932343AbdBIQ7I (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Feb 2017 11:59:08 -0500
+Received: by mail-it0-f45.google.com with SMTP id 203so129813422ith.0
+        for <git@vger.kernel.org>; Thu, 09 Feb 2017 08:58:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=3l3xSoAQ9uiRvJxQDYG4txIZnNnPScTMQF3gC9T/oyY=;
-        b=bHbRp5he7SpbG6v6e4NsYwq85w/8wspJtPZg/MARFjDsWWo3aapXpx2OPTFQyk4LVY
-         Y0nBOEbhTjkrzatipltmZUnirnfHnDx7p+ovqbLtbV1NQ81n+nj0yPTIb74KgzFzdVP7
-         9+GuJFv+j+F8d0LkJdDDoVKO7RHKz/JNwdaIaanEXlMiUOF9L1CeFpQZF81d6ggj1u6p
-         cC0k9gEvt4JBiMJpbBephTG9ziI+Mw6lvTl7JyPcQ+GBx7PWWIdD30i6xODDgCoGwh0f
-         AzCRQodW0870XNKrZs5MQnU4oXvpjnOYti1WfayYYhcKjA+Kj8Qk3cO1siXMui9A/dvh
-         hh/Q==
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=xhkAA2t0lR/7lwyrR71tcpRskb71zMhzpXVYGFsC4Xk=;
+        b=ZfOT4/bDvpsOv9Xkr5A4YttNiqa5Xo0rp4W0qFnDAADC/72uUD7u9y+L6A1LtjwmdD
+         eBdhM45BADDnV+4MN6vWSmJ4tey81u0sHFwTNuOrFxRL4kKRVxbkPVCl67Et1duSN8aJ
+         rqJ7uA3jfx8soA9trcunODeOLq2P1vIVQxhCwQe8LNZXAl3Dw/HsYSmijFqZj1Sz91oN
+         u2ygbr96sSPLZTT7jIIRY4RFqhx/gQpb2Uq6gq7JRIKSytXJgha41UFSG+ICz5pHEzav
+         GJv+PCKiKGsZVi9Jc/s+iyk5nymnRHIRJZSdX4tfNXmMJf+0GB4hdTsyNeChhvUnJFQg
+         RDhQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=3l3xSoAQ9uiRvJxQDYG4txIZnNnPScTMQF3gC9T/oyY=;
-        b=EkyQOs43ZPo6qadbFR5gmASfZvZQf6ru8cktTj/K9V/Lqvy1CK8NmJN0s8CQDFYZfZ
-         NAMzkVd7ZGsV8OFjSB8qeJhHlAgQ6hj7CWIULCgvI5v5+TRDmVSBrxspKBCOu4hbR7xv
-         V8gq+2ly6EF8NdbSX7Ia+tA7Ws8A6X04DIe9GjYEKRE6WNY4FAOKxY+BrR8XlbAyYnoU
-         JYnhuGsChzULBOhi14JxCjeSRorHUlx1tLIFHhVEkKEg2OjXJftb5N2lVbZkoxXJOoFD
-         WNzCnl6qzAMTOeJNZG/Vx6kcuHnoPkQHGj/bVUALy1KtGMWpKWdEYKCj1rl/0cosWcyb
-         QPtg==
-X-Gm-Message-State: AMke39mTHS+waqnyPoCgcABOXjojOxUEL5lBe9m4uzQ26NhEvmf9Jvbh7FryoPHlQmhqoA==
-X-Received: by 10.99.50.132 with SMTP id y126mr5201549pgy.8.1486659452066;
-        Thu, 09 Feb 2017 08:57:32 -0800 (PST)
-Received: from localhost ([2620:0:1000:8622:704f:61dd:c9f4:9782])
-        by smtp.gmail.com with ESMTPSA id h14sm30547516pgn.41.2017.02.09.08.57.31
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 09 Feb 2017 08:57:31 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Michael Haggerty <mhagger@alum.mit.edu>
-Cc:     git@vger.kernel.org
-Subject: Re: [RFD] should all merge bases be equal?
-References: <xmqqmvi2sj8f.fsf@gitster.mtv.corp.google.com>
-        <8a9b3f20-eed2-c59b-f7ea-3c68b3c30bf5@alum.mit.edu>
-Date:   Thu, 09 Feb 2017 08:57:30 -0800
-In-Reply-To: <8a9b3f20-eed2-c59b-f7ea-3c68b3c30bf5@alum.mit.edu> (Michael
-        Haggerty's message of "Thu, 9 Feb 2017 15:44:09 +0100")
-Message-ID: <xmqqlgtfs3np.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=xhkAA2t0lR/7lwyrR71tcpRskb71zMhzpXVYGFsC4Xk=;
+        b=NMNnckTo70sDwMAyF27ufFp0OPDqFAxa59amJ+t80L/mJW9Zml0wwVj93xnleMyFCF
+         D+KDQRN1fS7Qqmg/jcHac9AnlQHiFpVKqVmZDlDRwjjr3XlVWyA8DH737TkfM+krC1SR
+         6Xlb/vR03HU2iVpZ9E7esmoVbB6bixOpDghDEdyNlJdwojDpzS06IXHQvtvKbxVaG0be
+         2kKaISDI1wN1t6PvP+9UTSSEh575tEtQOPQ+0qswdXQXS1g2/AdA43r2LxmZdYBg9zbI
+         KgvEEUaJbJOgH83CvJRVrjmbuiKEb1gpQN4HZbNCpitnoGTsF9Gw3LzG46KQOKytzJ11
+         R+eQ==
+X-Gm-Message-State: AMke39n3zqZN4FjgDLSLp12N+inKE6JZTsbwYMAHNDJKztXGOPQnibnK3dJnShC7ENE6PjANa8n/AoH2uQqKo2Ll
+X-Received: by 10.36.34.79 with SMTP id o76mr3977652ito.116.1486659524932;
+ Thu, 09 Feb 2017 08:58:44 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
+Received: by 10.79.39.19 with HTTP; Thu, 9 Feb 2017 08:58:44 -0800 (PST)
+In-Reply-To: <a944446c4c374125082f5ad8b79e731704b66196.1486629195.git.mhagger@alum.mit.edu>
+References: <cover.1486629195.git.mhagger@alum.mit.edu> <a944446c4c374125082f5ad8b79e731704b66196.1486629195.git.mhagger@alum.mit.edu>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Thu, 9 Feb 2017 08:58:44 -0800
+Message-ID: <CAGZ79kau2bYs7zegEiacAdbhn1LyOfAH9__rePfbQkX2iLgmMQ@mail.gmail.com>
+Subject: Re: [PATCH 1/5] refs: store submodule ref stores in a hashmap
+To:     Michael Haggerty <mhagger@alum.mit.edu>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        David Turner <novalis@novalis.org>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Michael Haggerty <mhagger@alum.mit.edu> writes:
-
-> Anyway, I mostly wanted to remind you of the earlier discussion of this
-> topic. There's a lot more information there.
+> @@ -1402,17 +1435,17 @@ struct ref_store *ref_store_init(const char *submodule)
 >
-> Michael
->
-> [1] http://public-inbox.org/git/539A25BF.4060501@alum.mit.edu/
+>  struct ref_store *lookup_ref_store(const char *submodule)
+>  {
 
-Your http://public-inbox.org/git/53A3F67A.80501@alum.mit.edu/ in the
-thread appears to me the best place to continue exploring.
+> +       if (!submodule_ref_stores.tablesize)
+> +               hashmap_init(&submodule_ref_stores, submodule_hash_cmp, 20);
 
-Thanks for the link.  
+
+So we can lookup a submodule even before we initialized the subsystem?
+Does that actually happen? (It sounds like a bug to me.)
+
+Instead of initializing, you could return NULL directly here.
+
+Otherwise looks good.
+
+Thanks,
+Stefan
