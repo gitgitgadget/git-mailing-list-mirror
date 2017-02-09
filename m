@@ -2,93 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6C16F1FCC7
-	for <e@80x24.org>; Thu,  9 Feb 2017 21:58:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C36F01FCC7
+	for <e@80x24.org>; Thu,  9 Feb 2017 22:02:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754169AbdBIV55 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 9 Feb 2017 16:57:57 -0500
-Received: from mail-io0-f170.google.com ([209.85.223.170]:32835 "EHLO
-        mail-io0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753759AbdBIV5Q (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Feb 2017 16:57:16 -0500
-Received: by mail-io0-f170.google.com with SMTP id v96so33872540ioi.0
-        for <git@vger.kernel.org>; Thu, 09 Feb 2017 13:56:22 -0800 (PST)
+        id S932164AbdBIWCn (ORCPT <rfc822;e@80x24.org>);
+        Thu, 9 Feb 2017 17:02:43 -0500
+Received: from mail-pf0-f193.google.com ([209.85.192.193]:36252 "EHLO
+        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932089AbdBIWCl (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Feb 2017 17:02:41 -0500
+Received: by mail-pf0-f193.google.com with SMTP id 19so995680pfo.3
+        for <git@vger.kernel.org>; Thu, 09 Feb 2017 14:02:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=4xQVdWY6Jal0VX7eBn/0ZNnUNPVbCDlGSsAFIlbPzoE=;
-        b=DfYiaqYJmXmYh3haHmtuSKiNWtUr3qE4MCXWS6QDJ5mCyxsrWcXjpxQ2ymajtdJjC0
-         DO3CCTb4ZqlN97FStaL83TQCBB4V5rjlshNsat+L7kotfP0gt4izRFHUKCf3WJ43mvS8
-         9D10RQ8g4747QbAGPEsWc2lKHnpXAVRDhvSkdLcJ6Ksg8OEojPT9hAylXVS12Owz+nNX
-         jFXj9BQRWh1Ps0n2NExCKYt60X1adDIKbMtfEnTk2scURTm1caE5MSHgkjrWB+DAB1YZ
-         XJ3EPgbY/338B17tNxezGcscBO7BzZn3A90uqnA5WwAfvZmHnwJE1W0R/I9CAr53+f0I
-         mkvg==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=NU4LoIu89Dk30dOKuEB8lbSHQ0eSTA71Be53VexZMwA=;
+        b=fvJc6pY8NNztPpNEIYipUTfs8Nc7jRLizfB1HqXTm/5BhjUc9PICCNLg8EoBbSn4aL
+         wP1QrEnbs7kW+EkTSjB9+IjYMrDDe29ObSulco01sFTeM8bdS0RGuEwGrdwmXWbPan6d
+         ZyUCU5BBKIF/CWxqTpXp/NOQo6VQZLSoKIPoNpSVjpMpK9Zb2aAaKrUJuiI/sUpyRKlA
+         vNV+/B6asfWlf2VJrHa9v4KT2FvCf4D1pbQbizOVMCoEwKwg+4sYo3g+jLOfF7koUDBK
+         EQgpDSiD/+wHOlHaFJcEClN4Y1ufvWgau2ohelLYXClFl4C3AausVARCk8stLHmwTKBm
+         RiSg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=4xQVdWY6Jal0VX7eBn/0ZNnUNPVbCDlGSsAFIlbPzoE=;
-        b=eJrlNndnXc99zbM74G+wWhkoDvLkmiX9XleYX92lv4Tgzqm5/lb/M0Ncjl0XCSX3i0
-         j/JDDdXZqsZc3MGlqKzbFLtVoq/kdOxvTTejIbwH840pLg4DPt3aHK3TrVaFtNECy4lO
-         SKD8pYpSwf/12P/5xixU0mHQvOIQWosB6FYVPHWCXouiE2/Aqi5jeId/6nvv7yUYhDbZ
-         PhGHn4vqcsJ9hF9exAiTGwuwGtSpG/qEBKeIX0BNSK5VHvq7QN9cfdDKyMje28U79jq+
-         hUi+j0/EFtN1IZG+CkQCzNO/UE2MXQDDJzXtYiZTJeDv+yG3BmbkqljaaQ2L4fZBhkoV
-         HunA==
-X-Gm-Message-State: AIkVDXI4vbRDyqLCnUg61ybYhedkBGzzxsLck4K2DIPpfSBmkq2zU5jRiq3dd6K9LxDqgqj+Ir89Rlm5NaUdHw3Q
-X-Received: by 10.36.65.4 with SMTP id x4mr24654588ita.69.1486676858811; Thu,
- 09 Feb 2017 13:47:38 -0800 (PST)
-MIME-Version: 1.0
-Received: by 10.79.39.19 with HTTP; Thu, 9 Feb 2017 13:47:38 -0800 (PST)
-In-Reply-To: <alpine.DEB.2.20.1702092236500.3496@virtualbox>
-References: <vpq1svtstud.fsf@anie.imag.fr> <20170125204504.ebw2sa4uokfwwfnt@sigill.intra.peff.net>
- <vpq37fowx5q.fsf@anie.imag.fr> <CAP8UFD3aygSf5U2abnpCfRzEf-hH5fSNuzFBBtgCjSQC3F8c5A@mail.gmail.com>
- <alpine.DEB.2.20.1702092236500.3496@virtualbox>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Thu, 9 Feb 2017 13:47:38 -0800
-Message-ID: <CAGZ79kZXq0oaxLRB+KWrmTpq+zKASJgoCY7Ox-D15zhX1RLRoQ@mail.gmail.com>
-Subject: Re: GSoC 2017: application open, deadline = February 9, 2017
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=NU4LoIu89Dk30dOKuEB8lbSHQ0eSTA71Be53VexZMwA=;
+        b=rrzm6LWSVFCxD1yp5il0tWS5Va3Es58PZJ3JnrUv0t9ThL3c6k1pSsjbSRW2Ng0pdH
+         kzrdkJDs7B8TlFDRuQ8c//eKqwPhNqAUjE0RLxKXNJbi9s6ZaUJsNGUBSNJb2fGYVaaa
+         BtxFsoFC+XuScHZao3oMkacHp86T/Z3Bm1diWq1Bi0sOOYMaaoBu8SmHKl2VonOsVsH5
+         /JA1rdVc5YKzDoUFrqv3zRu/Wt5F/WnscMfyiSyzT9NP9SlkCUTGKjmccs4/QshiceJ7
+         7sdj0CxYR7q/KAfQEe9sAMPiSNUF4QDl5u1r/o3jVZb22CEKl+vdfWPPqqWp7R88hb3W
+         gU+g==
+X-Gm-Message-State: AMke39mwVH6k1ppj1qZ0s9r/KWdQ0wiHZL4bk+m+qpWoaGiViKzJZIcc8kHSxm9F1MiYDA==
+X-Received: by 10.99.102.70 with SMTP id a67mr6630809pgc.222.1486677755654;
+        Thu, 09 Feb 2017 14:02:35 -0800 (PST)
+Received: from localhost ([2620:0:1000:8622:704f:61dd:c9f4:9782])
+        by smtp.gmail.com with ESMTPSA id k76sm31308653pfg.42.2017.02.09.14.02.34
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Thu, 09 Feb 2017 14:02:34 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
 To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Christian Couder <christian.couder@gmail.com>,
-        Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-        Jeff King <peff@peff.net>, git <git@vger.kernel.org>,
-        Pranit Bauva <pranit.bauva@gmail.com>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        =?UTF-8?Q?Carlos_Mart=C3=ADn_Nieto?= <cmn@dwim.me>,
-        Thomas Gummerer <t.gummerer@gmail.com>,
-        Siddharth Kannan <kannan.siddharth12@gmail.com>
-Content-Type: text/plain; charset=UTF-8
+Cc:     git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Feb 2017, #02; Mon, 6)
+References: <xmqqzihzymn3.fsf@gitster.mtv.corp.google.com>
+        <alpine.DEB.2.20.1702091319350.3496@virtualbox>
+        <xmqqfujns2li.fsf@gitster.mtv.corp.google.com>
+        <alpine.DEB.2.20.1702092135050.3496@virtualbox>
+Date:   Thu, 09 Feb 2017 14:02:34 -0800
+In-Reply-To: <alpine.DEB.2.20.1702092135050.3496@virtualbox> (Johannes
+        Schindelin's message of "Thu, 9 Feb 2017 21:37:04 +0100 (CET)")
+Message-ID: <xmqqk28znhtx.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Feb 9, 2017 at 1:38 PM, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
-> Hi Christian,
->
-> On Thu, 9 Feb 2017, Christian Couder wrote:
->
->> I just had a look and the microproject and idea pages for this year are
->> ok.  They are not great sure, but not much worse than the previous
->> years.  What should probably be done is to remove project ideas where is
->> no "possible mentor" listed.
->>
->> But I am reluctant to do that as I don't know what Dscho would be ok to
->> mentor.
->
-> I am okay to mentor (except anything that touches submodules).
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-I am okay to mentor anything (preferrably submodules).
-
-Thanks,
-Stefan
-
+>> > (And that would have to be handled at a different point, as I had
+>> > pointed out, so that suggested preparation would most likely not help
+>> > at all.)
+>> 
+>> I did not think "that would have to be handled at a different point"
+>> is correct at all, if by "a point" you meant "a location in the
+>> code" [*1*].
 >
-> Ciao,
-> Johannes
+> Yes, I mean the location in the code.
+>
+> But since you keep insisting that you are right and I am wrong,...
+
+There is no "insisting".  Didn't we just see how wrong you were
+about "different point"?  An extended syntax of override would be
+handled in the new helper to handle override, the same point in the
+code as other overrides are handled.
+
+> ... and even
+> go so far as calling your patch reverting my refactoring a hot-fix, why
+> don't you just go ahead and merge the result over my objections?
+
+At this point, you are simply being silly.
+
+Isn't "Putty is not a command but is also handled as if it is a
+valid implementation of SSH" a bug?  Isn't making the code not to be
+confused like so a fix?
+
+A different approach to fix the issue would be to declare that the
+command names and overrides are not in separate namespaces.
+
+If you prefer to go that route, the documentation can use an update
+to make it not mention "putty" as a valid override (the users have
+to spell "plink"), mention "plink.exe" is also accepted, etc. and
+make it clear that the override environment and configuration
+variables are the way to tell Git: "The ssh implementation I have
+behaves the same way as this well-known implementation, so treat it
+as such without actually looking at the path to the command in the
+ssh.command string".
+
+That may limit the freedom for future enhancement of overrides, but
+is an acceptable short-cut.  After all, the overrides are merely an
+escape hatch and we expect them to be used only rarely.
