@@ -6,24 +6,24 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C746A1FCC7
-	for <e@80x24.org>; Thu,  9 Feb 2017 13:28:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DF9611FCC7
+	for <e@80x24.org>; Thu,  9 Feb 2017 13:28:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751368AbdBIN2Y (ORCPT <rfc822;e@80x24.org>);
-        Thu, 9 Feb 2017 08:28:24 -0500
-Received: from alum-mailsec-scanner-6.mit.edu ([18.7.68.18]:54265 "EHLO
-        alum-mailsec-scanner-6.mit.edu" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1750994AbdBIN2P (ORCPT
+        id S1751519AbdBIN2Z (ORCPT <rfc822;e@80x24.org>);
+        Thu, 9 Feb 2017 08:28:25 -0500
+Received: from alum-mailsec-scanner-5.mit.edu ([18.7.68.17]:60632 "EHLO
+        alum-mailsec-scanner-5.mit.edu" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1750947AbdBIN2P (ORCPT
         <rfc822;git@vger.kernel.org>); Thu, 9 Feb 2017 08:28:15 -0500
-X-AuditID: 12074412-5ddff700000009b5-47-589c6e37ef9c
+X-AuditID: 12074411-fbbff700000009b7-c9-589c6e34392e
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-        by alum-mailsec-scanner-6.mit.edu (Symantec Messaging Gateway) with SMTP id B5.29.02485.73E6C985; Thu,  9 Feb 2017 08:27:20 -0500 (EST)
+        by alum-mailsec-scanner-5.mit.edu (Symantec Messaging Gateway) with SMTP id 98.0A.02487.43E6C985; Thu,  9 Feb 2017 08:27:17 -0500 (EST)
 Received: from bagpipes.fritz.box (p4FEDF6A1.dip0.t-ipconnect.de [79.237.246.161])
         (authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v19DRB5F023019
+        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v19DRB5D023019
         (version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-        Thu, 9 Feb 2017 08:27:18 -0500
+        Thu, 9 Feb 2017 08:27:15 -0500
 From:   Michael Haggerty <mhagger@alum.mit.edu>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
@@ -31,141 +31,163 @@ Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?=
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         David Turner <novalis@novalis.org>, git@vger.kernel.org,
         Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH 3/5] register_ref_store(): new function
-Date:   Thu,  9 Feb 2017 14:27:00 +0100
-Message-Id: <ce326e17822184eff434b957d28f2233795162db.1486629195.git.mhagger@alum.mit.edu>
+Subject: [PATCH 1/5] refs: store submodule ref stores in a hashmap
+Date:   Thu,  9 Feb 2017 14:26:58 +0100
+Message-Id: <a944446c4c374125082f5ad8b79e731704b66196.1486629195.git.mhagger@alum.mit.edu>
 X-Mailer: git-send-email 2.9.3
 In-Reply-To: <cover.1486629195.git.mhagger@alum.mit.edu>
 References: <cover.1486629195.git.mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrOIsWRmVeSWpSXmKPExsUixO6iqGuRNyfC4Oo1MYuuK91MFg29V5gt
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrBIsWRmVeSWpSXmKPExsUixO6iqGuWNyfCYP8eJouuK91MFg29V5gt
         +pd3sVncXjGf2WLJw9fMFt1T3jJabN7czuLA7vH3/Qcmj52z7rJ7fPgY57FgU6lHV/sRNo+L
-        l5Q9Pm+SC2CP4rJJSc3JLEst0rdL4MqYdmodc8E62Yp5DY+YGxg/iXcxcnJICJhItF35y9TF
-        yMUhJHCZUWLR0+vsEM5JJonJa+4xglSxCehKLOppZgKxRQTUJCa2HWIBKWIWWM8kcXreB9Yu
-        Rg4OYQFziZ/bc0BqWARUJeauucsOYvMKREl8ejyfFWKbnMSlbV+YQWxOAQuJ3xOugM0XAmr9
-        e/w70wRGngWMDKsY5RJzSnN1cxMzc4pTk3WLkxPz8lKLdM30cjNL9FJTSjcxQsJLaAfj+pNy
-        hxgFOBiVeHgrLGdHCLEmlhVX5h5ilORgUhLljfgPFOJLyk+pzEgszogvKs1JLT7EKMHBrCTC
-        m5IzJ0KINyWxsiq1KB8mJc3BoiTO+3Oxup+QQHpiSWp2ampBahFMVoaDQ0mC9y9Io2BRanpq
-        RVpmTglCmomDE2Q4D9DwK2DDiwsSc4sz0yHypxgVpcR5s0ESAiCJjNI8uF5Y/L9iFAd6RZjX
-        KheoigeYOuC6XwENZgIafP30LJDBJYkIKakGxphLT0/ev58453ju5uTXd+Ilujb0Xg/bLCfl
-        q2y79VzCDl9RnoYFt2Qbgh1jO+cqMZv++y0o/39FuNGiDa+nXWoO3KRZtCmDZ0Ng2I6i0PgF
-        c88H/ZNPYd3ec3I1y6SzWyY0eh9TtXVpEspitliYnbF4AcvLt4u831UxxT/cIeewIvXwVGEX
-        TyWW4oxEQy3mouJEANZRG8LaAgAA
+        l5Q9Pm+SC2CP4rJJSc3JLEst0rdL4Mr41H6GrWCmfMWm2+eZGxhXSHYxcnJICJhIvH9wkLGL
+        kYtDSOAyo0TjgZnMEM5JJontB+ewglSxCehKLOppZgKxRQTUJCa2HWIBKWIWWM8kcXreB7Ai
+        YQEniS/HL4IVsQioSjR2HWYDsXkFoiRmHb3EArFOTuLSti/MIDangIXE7wlXGEFsIQFzib/H
+        vzNNYORZwMiwilEuMac0Vzc3MTOnODVZtzg5MS8vtUjXVC83s0QvNaV0EyMkwAR3MM44KXeI
+        UYCDUYmH94L17Agh1sSy4srcQ4ySHExKorwR/4FCfEn5KZUZicUZ8UWlOanFhxglOJiVRHhT
+        cuZECPGmJFZWpRblw6SkOViUxHn5lqj7CQmkJ5akZqemFqQWwWRlODiUJHj/gjQKFqWmp1ak
+        ZeaUIKSZODhBhvMADZ8BNry4IDG3ODMdIn+KUVFKnDcbJCEAksgozYPrhSWAV4ziQK8I8x4C
+        qeIBJg+47ldAg5mABl8/PQtkcEkiQkqqgdHkr8nLMzZRX2xSZsVr+/K+ka75t8Hc99+biXtm
+        ulyQE7bsey2yoZB3u8qRD1m/ly+59jHxqcmbu5mbk/d9vZXs4Tj7j/oHBstI/4VXai45Hj8m
+        esws7kxyvVHghWfcby4mPvz+r2TZxKIDUqKLLz5TiizdN8HY7J+h0eNA1b9PXi1i8Wc+f7Fc
+        iaU4I9FQi7moOBEACg0tgdsCAAA=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Move the responsibility for registering the ref_store for a submodule
-from base_ref_store_init() to a new function, register_ref_store(). Call
-the latter from ref_store_init().
-
-This means that base_ref_store_init() can lose its submodule argument,
-further weakening the 1:1 relationship between ref_stores and
-submodules.
+Aside from scaling better, this means that the submodule name needn't be
+stored in the ref_store instance anymore (which will be changed in a
+moment). This, in turn, will help loosen the strict 1:1 relationship
+between ref_stores and submodules.
 
 Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
- refs.c               | 19 +++++++++++++------
- refs/files-backend.c |  2 +-
- refs/refs-internal.h | 15 ++++++++++-----
- 3 files changed, 24 insertions(+), 12 deletions(-)
+ refs.c               | 61 ++++++++++++++++++++++++++++++++++++++++------------
+ refs/refs-internal.h |  6 ------
+ 2 files changed, 47 insertions(+), 20 deletions(-)
 
 diff --git a/refs.c b/refs.c
-index 723b4be..6012f67 100644
+index cd36b64..50d192c 100644
 --- a/refs.c
 +++ b/refs.c
-@@ -1395,11 +1395,8 @@ static struct ref_store *main_ref_store;
- /* A hashmap of ref_stores, stored by submodule name: */
- static struct hashmap submodule_ref_stores;
+@@ -3,6 +3,7 @@
+  */
  
--void base_ref_store_init(struct ref_store *refs,
--			 const struct ref_storage_be *be,
--			 const char *submodule)
-+void register_ref_store(struct ref_store *refs, const char *submodule)
- {
--	refs->be = be;
- 	if (!submodule) {
- 		if (main_ref_store)
+ #include "cache.h"
++#include "hashmap.h"
+ #include "lockfile.h"
+ #include "refs.h"
+ #include "refs/refs-internal.h"
+@@ -1357,11 +1358,42 @@ int resolve_gitlink_ref(const char *submodule, const char *refname,
+ 	return 0;
+ }
+ 
++struct submodule_hash_entry
++{
++	struct hashmap_entry ent; /* must be the first member! */
++
++	struct ref_store *refs;
++
++	/* NUL-terminated name of submodule: */
++	char submodule[FLEX_ARRAY];
++};
++
++static int submodule_hash_cmp(const void *entry, const void *entry_or_key,
++			      const void *keydata)
++{
++	const struct submodule_hash_entry *e1 = entry, *e2 = entry_or_key;
++	const char *submodule = keydata;
++
++	return strcmp(e1->submodule, submodule ? submodule : e2->submodule);
++}
++
++static struct submodule_hash_entry *alloc_submodule_hash_entry(
++		const char *submodule, struct ref_store *refs)
++{
++	size_t len = strlen(submodule);
++	struct submodule_hash_entry *entry = malloc(sizeof(*entry) + len + 1);
++
++	hashmap_entry_init(entry, strhash(submodule));
++	entry->refs = refs;
++	memcpy(entry->submodule, submodule, len + 1);
++	return entry;
++}
++
+ /* A pointer to the ref_store for the main repository: */
+ static struct ref_store *main_ref_store;
+ 
+-/* A linked list of ref_stores for submodules: */
+-static struct ref_store *submodule_ref_stores;
++/* A hashmap of ref_stores, stored by submodule name: */
++static struct hashmap submodule_ref_stores;
+ 
+ void base_ref_store_init(struct ref_store *refs,
+ 			 const struct ref_storage_be *be,
+@@ -1373,16 +1405,17 @@ void base_ref_store_init(struct ref_store *refs,
  			die("BUG: main_ref_store initialized twice");
-@@ -1416,18 +1413,28 @@ void base_ref_store_init(struct ref_store *refs,
+ 
+ 		refs->submodule = "";
+-		refs->next = NULL;
+ 		main_ref_store = refs;
+ 	} else {
+-		if (lookup_ref_store(submodule))
++		refs->submodule = xstrdup(submodule);
++
++		if (!submodule_ref_stores.tablesize)
++			hashmap_init(&submodule_ref_stores, submodule_hash_cmp, 20);
++
++		if (hashmap_put(&submodule_ref_stores,
++				alloc_submodule_hash_entry(submodule, refs)))
+ 			die("BUG: ref_store for submodule '%s' initialized twice",
+ 			    submodule);
+-
+-		refs->submodule = xstrdup(submodule);
+-		refs->next = submodule_ref_stores;
+-		submodule_ref_stores = refs;
  	}
  }
  
-+void base_ref_store_init(struct ref_store *refs,
-+			 const struct ref_storage_be *be)
-+{
-+	refs->be = be;
-+}
-+
- struct ref_store *ref_store_init(const char *submodule)
- {
- 	const char *be_name = "files";
- 	struct ref_storage_be *be = find_ref_storage_backend(be_name);
-+	struct ref_store *refs;
- 
- 	if (!be)
- 		die("BUG: reference backend %s is unknown", be_name);
- 
- 	if (!submodule || !*submodule)
--		return be->init(NULL);
-+		refs = be->init(NULL);
- 	else
--		return be->init(submodule);
-+		refs = be->init(submodule);
-+
-+	register_ref_store(refs, submodule);
-+	return refs;
- }
+@@ -1402,17 +1435,17 @@ struct ref_store *ref_store_init(const char *submodule)
  
  struct ref_store *lookup_ref_store(const char *submodule)
-diff --git a/refs/files-backend.c b/refs/files-backend.c
-index 6ed7e13..794b88c 100644
---- a/refs/files-backend.c
-+++ b/refs/files-backend.c
-@@ -980,7 +980,7 @@ static struct ref_store *files_ref_store_create(const char *submodule)
- 	struct files_ref_store *refs = xcalloc(1, sizeof(*refs));
- 	struct ref_store *ref_store = (struct ref_store *)refs;
+ {
+-	struct ref_store *refs;
++	struct submodule_hash_entry *entry;
  
--	base_ref_store_init(ref_store, &refs_be_files, submodule);
-+	base_ref_store_init(ref_store, &refs_be_files);
+ 	if (!submodule || !*submodule)
+ 		return main_ref_store;
  
- 	refs->submodule = submodule ? xstrdup(submodule) : "";
+-	for (refs = submodule_ref_stores; refs; refs = refs->next) {
+-		if (!strcmp(submodule, refs->submodule))
+-			return refs;
+-	}
++	if (!submodule_ref_stores.tablesize)
++		hashmap_init(&submodule_ref_stores, submodule_hash_cmp, 20);
  
+-	return NULL;
++	entry = hashmap_get_from_hash(&submodule_ref_stores,
++				      strhash(submodule), submodule);
++	return entry ? entry->refs : NULL;
+ }
+ 
+ struct ref_store *get_ref_store(const char *submodule)
 diff --git a/refs/refs-internal.h b/refs/refs-internal.h
-index 97f275b..73281f5 100644
+index 25444cf..4ed5f89 100644
 --- a/refs/refs-internal.h
 +++ b/refs/refs-internal.h
-@@ -481,7 +481,7 @@ struct ref_store;
-  * Initialize the ref_store for the specified submodule, or for the
-  * main repository if submodule == NULL. These functions should call
-  * base_ref_store_init() to initialize the shared part of the
-- * ref_store and to record the ref_store for later lookup.
-+ * ref_store.
-  */
- typedef struct ref_store *ref_store_init_fn(const char *submodule);
- 
-@@ -630,12 +630,17 @@ struct ref_store {
+@@ -634,12 +634,6 @@ struct ref_store {
+ 	 * reference store:
+ 	 */
+ 	const char *submodule;
+-
+-	/*
+-	 * Submodule reference store instances are stored in a linked
+-	 * list using this pointer.
+-	 */
+-	struct ref_store *next;
  };
  
  /*
-- * Fill in the generic part of refs for the specified submodule and
-- * add it to our collection of reference stores.
-+ * Register the specified ref_store to be the one that should be used
-+ * for submodule (or the main repository if submodule is NULL). It is
-+ * a fatal error to call this function twice for the same submodule.
-+ */
-+void register_ref_store(struct ref_store *refs, const char *submodule);
-+
-+/*
-+ * Fill in the generic part of refs.
-  */
- void base_ref_store_init(struct ref_store *refs,
--			 const struct ref_storage_be *be,
--			 const char *submodule);
-+			 const struct ref_storage_be *be);
- 
- /*
-  * Create, record, and return a ref_store instance for the specified
 -- 
 2.9.3
 
