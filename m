@@ -2,111 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 99C621FCC7
-	for <e@80x24.org>; Thu,  9 Feb 2017 21:19:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8062E1FCC7
+	for <e@80x24.org>; Thu,  9 Feb 2017 21:24:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932634AbdBIVTU (ORCPT <rfc822;e@80x24.org>);
-        Thu, 9 Feb 2017 16:19:20 -0500
-Received: from mail-pg0-f66.google.com ([74.125.83.66]:35232 "EHLO
-        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753549AbdBIVTT (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Feb 2017 16:19:19 -0500
-Received: by mail-pg0-f66.google.com with SMTP id 204so1248593pge.2
-        for <git@vger.kernel.org>; Thu, 09 Feb 2017 13:19:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=18sMYG/8DAqFQPE9hfuc/derwDy1T86QtiLDxnBt0S8=;
-        b=efJMm0q+GWgY483h/QRZd2Q1wTM/V99dovMslsqI7CK9kK1dTtefJud6qU/MCnh//L
-         HPRDn0H0nv0htegIZM7JyqvSEF46UEi3jcLCjcsTxj4RhrpTuFy+coJmrf1kBhj4q9MG
-         7m9bF8jCPTAe9RZC/9xl5rdfUq0vjOmwgXsxDthhEmK+yDv27QEoFwrZJbujAnFmxhUu
-         eWj//zVzC+nyNF5Ic9RGRMbuy9bKMNV0LbGrLFrWsvILjsSXC2y6+zNSvPDZz5Wg8s3O
-         doI5Z+HzUPI6I7GDEz6NJA6mzoBIN2RUu0zm76RcWM4cmjnag0kOR0gmwG4AS2ODYWmr
-         73nw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=18sMYG/8DAqFQPE9hfuc/derwDy1T86QtiLDxnBt0S8=;
-        b=F9RqbGgHNYVzHpTb50mUUHjYtxsRtbayYK4rtTFPZfFNI0RaB9V3+zoLeyDmOvj2JJ
-         sEwjwvmTkHUoWDlN+DkVsXQCt30XtMV2DqwdUf48/NFIzIGB16FiM3Rdh4M1Lg79t9qy
-         3C5CqrVICZkxt3wER8uruOKnWcJ4Sbcp2oIzJq2LMnKCbmmAO+6c40c2HbaCfrvzip5m
-         0yeKMNmn3fBA2lceUh4qhn775VxIEyqbdVWjjpNTdRjmbKDxjn9fvsXFsqFH92KZpF4u
-         Ci7Yz+rmpqYcri8lKg47FiYhG2nltIZHisl2iFGnELdnWydDuIEsa4/hkG/qSNmCnT5J
-         avSw==
-X-Gm-Message-State: AMke39lYX34AhGlyZxnnXOELt+Oy4AmEt4RBxDivJ1ir6Y7cPd5r/m9aaqu6qXujCqBGVg==
-X-Received: by 10.99.64.4 with SMTP id n4mr6358198pga.71.1486675159029;
-        Thu, 09 Feb 2017 13:19:19 -0800 (PST)
-Received: from localhost ([2620:0:1000:8622:704f:61dd:c9f4:9782])
-        by smtp.gmail.com with ESMTPSA id i10sm31281941pgd.37.2017.02.09.13.19.17
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 09 Feb 2017 13:19:18 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Michael Haggerty <mhagger@alum.mit.edu>
-Cc:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-        Stefan Beller <sbeller@google.com>,
+        id S1753046AbdBIVYW (ORCPT <rfc822;e@80x24.org>);
+        Thu, 9 Feb 2017 16:24:22 -0500
+Received: from alum-mailsec-scanner-6.mit.edu ([18.7.68.18]:58328 "EHLO
+        alum-mailsec-scanner-6.mit.edu" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1752664AbdBIVYV (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 9 Feb 2017 16:24:21 -0500
+X-AuditID: 12074412-5f5ff700000009b5-2b-589cdddb50ee
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+        by alum-mailsec-scanner-6.mit.edu (Symantec Messaging Gateway) with SMTP id 3E.20.02485.BDDDC985; Thu,  9 Feb 2017 16:23:39 -0500 (EST)
+Received: from [192.168.69.190] (p4FEDF6A1.dip0.t-ipconnect.de [79.237.246.161])
+        (authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v19LNZ4P016876
+        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+        Thu, 9 Feb 2017 16:23:36 -0500
+Subject: Re: [PATCH 0/5] Store submodules in a hash, not a linked list
+To:     Jeff King <peff@peff.net>
+References: <cover.1486629195.git.mhagger@alum.mit.edu>
+ <20170209195812.dbbmko4sas3wtdy5@sigill.intra.peff.net>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>, Stefan Beller <sbeller@google.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         David Turner <novalis@novalis.org>, git@vger.kernel.org
-Subject: Re: [PATCH 4/5] files_ref_store::submodule: use NULL for the main repository
-References: <cover.1486629195.git.mhagger@alum.mit.edu>
-        <111d663c0fd3e9669e7c28537f581833488ca4a6.1486629195.git.mhagger@alum.mit.edu>
-Date:   Thu, 09 Feb 2017 13:19:17 -0800
-In-Reply-To: <111d663c0fd3e9669e7c28537f581833488ca4a6.1486629195.git.mhagger@alum.mit.edu>
-        (Michael Haggerty's message of "Thu, 9 Feb 2017 14:27:01 +0100")
-Message-ID: <xmqq1sv7oyei.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+From:   Michael Haggerty <mhagger@alum.mit.edu>
+Message-ID: <9ba16176-b388-4c70-a479-fda4c9244e67@alum.mit.edu>
+Date:   Thu, 9 Feb 2017 22:23:35 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Icedove/45.6.0
 MIME-Version: 1.0
-Content-Type: text/plain
+In-Reply-To: <20170209195812.dbbmko4sas3wtdy5@sigill.intra.peff.net>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprAKsWRmVeSWpSXmKPExsUixO6iqHv77pwIg1e3JCy6rnQzWTT0XmG2
+        6F/exWax5OFrZovuKW8ZLX609DBbbN7czuLA7rFz1l12jw8f4zwWbCr16Go/wubxrHcPo8fF
+        S8oenzfJBbBHcdmkpOZklqUW6dslcGWsP9DDVNAjUHH40XfmBsYO3i5GTg4JAROJbX+nM3Yx
+        cnEICVxmlJh5Zw47hHOeSWL2pj0sIFXCAm4Sa1YsYwSxRQRkJb4f3ghmCwkUSmxpfcYK0sAs
+        MJ9Jov/BGyaQBJuArsSinmYwm1fAXuLK4bdgg1gEVCSef73ACmKLCoRIzFn4gBGiRlDi5Mwn
+        YDWcAi4SPU3vmEFsZgF1iT/zLkHZ8hLb385hnsDIPwtJyywkZbOQlC1gZF7FKJeYU5qrm5uY
+        mVOcmqxbnJyYl5dapGuml5tZopeaUrqJERLwQjsY15+UO8QowMGoxMP7omZOhBBrYllxZe4h
+        RkkOJiVRXtkCoBBfUn5KZUZicUZ8UWlOavEhRgkOZiUR3gMXgXK8KYmVValF+TApaQ4WJXHe
+        n4vV/YQE0hNLUrNTUwtSi2CyMhwcShK8NsDIFhIsSk1PrUjLzClBSDNxcIIM5wEargFSw1tc
+        kJhbnJkOkT/FqCglzvv6DlBCACSRUZoH1wtLSK8YxYFeEeZdDFLFA0xmcN2vgAYzAQ2+fnoW
+        yOCSRISUVAOj4iqBlMdaieclTFNtSxJmJgnUvCibcikvKFP96LODjxfMkz1vv3X7robZfOZb
+        9VlMw7QP7Ak61HMqZy/n5DlPA5f9CAt4cW63b3SAhofDSYVL3NYcjSoLrX7kHjjYxss0fdfu
+        L8uFztQv+L/n9+U/5o/qTDXMPbzX7HLeHC+j+UdEa879q4cllViKMxINtZiLihMBYFIMoyMD
+        AAA=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Michael Haggerty <mhagger@alum.mit.edu> writes:
+On 02/09/2017 08:58 PM, Jeff King wrote:
+> On Thu, Feb 09, 2017 at 02:26:57PM +0100, Michael Haggerty wrote:
+> [...]
+>> A `files_ref_store` would be perfectly happy to represent, say, the
+>> references *physically* stored in a linked worktree (e.g., `HEAD`,
+>> `refs/bisect/*`, etc) even though that is not the complete collection
+>> of refs that are *logically* visible from that worktree (which
+>> includes references from the main repository, too). But the old code
+>> was confusing the two things by storing "submodule" in every
+>> `ref_store` instance.
+>>
+>> So push the submodule attribute down to the `files_ref_store` class
+>> (but continue to let the `ref_store`s be looked up by submodule).
+> 
+> I'm not sure I understand all of the ramifications here. It _sounds_ like
+> pushing this down into the files-backend code would make it harder to
+> have mixed ref-backends for different submodules. Or is this just
+> pushing down an implementation detail of the files backend, and future
+> code is free to have as many different ref_stores as it likes?
 
-> The old practice of storing the empty string in this member for the main
-> repository was a holdover from before 00eebe3 (refs: create a base class
-> "ref_store" for files_ref_store, 2016-09-04), when the submodule was
-> stored in a flex array at the end of `struct files_ref_store`. Storing
-> NULL for this case is more idiomatic and a tiny bit less code.
+I don't understand how this would make it harder, aside from the fact
+that a new backend class might also need a path member and have to
+maintain its own copy rather than using one that the base class provides.
 
-Yes.  I noticed this bit in 3/5 and wondered about it, knowing this
-step comes next:
+I consider it an implementation detail of the files backend that it
+needs to keep a permanent record of its submodule path in
+files_ref_store. Some hypothetical future backend might instead need,
+say, an IP number and port to connect to a MySQL server. A hypothetical
+pure packed-refs backend might just store the path of the packed-refs file.
 
->  struct ref_store *ref_store_init(const char *submodule)
->  {
->  	const char *be_name = "files";
->  	struct ref_storage_be *be = find_ref_storage_backend(be_name);
-> +	struct ref_store *refs;
->  
->  	if (!be)
->  		die("BUG: reference backend %s is unknown", be_name);
->  
->  	if (!submodule || !*submodule)
-> -		return be->init(NULL);
-> +		refs = be->init(NULL);
->  	else
-> -		return be->init(submodule);
-> +		refs = be->init(submodule);
+A more likely imminent change is that backends need a path, but that the
+path needn't correspond to the git_dir of the repository that contains
+the corresponding objects, for example in the case of a linked worktree.
+You might ask for the ref_store for a worktree-submodule, and end up
+getting a compound object that delegates to one ref_store pointing at
+its git_dir and one at its common_dir.
 
-Can't we also lose this "if !*submodule, turn it to NULL"?
-
-> --- a/refs/files-backend.c
-> +++ b/refs/files-backend.c
-> @@ -980,7 +980,7 @@ static struct ref_store *files_ref_store_create(const char *submodule)
->  	struct files_ref_store *refs = xcalloc(1, sizeof(*refs));
->  	struct ref_store *ref_store = (struct ref_store *)refs;
->  
-> -	base_ref_store_init(ref_store, &refs_be_files, submodule);
-> +	base_ref_store_init(ref_store, &refs_be_files);
->  
->  	refs->submodule = submodule ? xstrdup(submodule) : "";
-
-Also, can't we use xstrdup_or_null(submodule) with this step?
+Michael
 
