@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8362B1FAF4
-	for <e@80x24.org>; Thu,  9 Feb 2017 00:26:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 988C91FAF4
+	for <e@80x24.org>; Thu,  9 Feb 2017 01:01:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752076AbdBIA0l (ORCPT <rfc822;e@80x24.org>);
-        Wed, 8 Feb 2017 19:26:41 -0500
-Received: from mail-pg0-f67.google.com ([74.125.83.67]:33536 "EHLO
-        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752468AbdBIA0g (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Feb 2017 19:26:36 -0500
-Received: by mail-pg0-f67.google.com with SMTP id 194so16189992pgd.0
-        for <git@vger.kernel.org>; Wed, 08 Feb 2017 16:26:36 -0800 (PST)
+        id S1751683AbdBIBBo (ORCPT <rfc822;e@80x24.org>);
+        Wed, 8 Feb 2017 20:01:44 -0500
+Received: from mail-pf0-f196.google.com ([209.85.192.196]:36717 "EHLO
+        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751317AbdBIBBn (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Feb 2017 20:01:43 -0500
+Received: by mail-pf0-f196.google.com with SMTP id 19so12519878pfo.3
+        for <git@vger.kernel.org>; Wed, 08 Feb 2017 17:01:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=KxsWdI2NgmPwK38rOZusNkyULTjKuq6gM5WN5S6/S54=;
-        b=bGvU3e563RhN2I8zDoboG/di4jQK6IAo3lCInB+MS9Nc3gWobTR11DreDdIV5gJMLr
-         fKy0s+Guvy5iFhU0tA1IAlK05Jf8AKqYPx86CeWD16c+sTuoKtlI7zEnQOEiVUON1LUr
-         gaJTETZARXdEFYf85YE6vGfEjNzM/VDXQanrAQ8A2rBySlYBqa+6k3phYOmcfJ0XAfB0
-         5jCrBYh78Yg04d9Ymdt5YjyVVsGIYWvG9WJ6lIEqRVs2z0obKA4h6HeEiUz7vhe3oF7L
-         qMtargZG2aBB8AeShSTi29hJRnUSMx1yzwAVAOqWlTtCORBOX51klYRagnkQUiWUfDsH
-         o3nA==
+        bh=aamtYfbSfmBxtOxbV+V1f0Tq9bgzqVeAm42S2Xvt+9k=;
+        b=lAe0xovnmO6GYXCv0HSyu4HFE4DkOF4Yx6WWT5iWsBcIvDQbVzqa2hMtPs6ipiHRLx
+         mWAQV0BIC8FPVJoQ+x944gzzL4cAY/DiXkmt6It1wl2WcdElEWstCu6dErpjmFBWPYhP
+         ApxuvJPWAAp+9AyFOnyarxqT0l/dAcTxYUorHhy0ag3Y3PpzFZfxdxcg+1zuiOmR3w7X
+         iRRTCCto1OLerUdd4C9cBa1mvnOv3ysyvwuWyieDiumAuXU9hgv9Bd1v8MQ5svx6ipk6
+         cZG222W/CYyl0QFNZ1I8IImpnOO63JeNQ68oA2DjQJKveSyfB4fGuKvJy6ZZ2jTcVDV3
+         gFtw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=KxsWdI2NgmPwK38rOZusNkyULTjKuq6gM5WN5S6/S54=;
-        b=nONiRW2XJQR6aur7HoSv2jw80UhbE5gqowR/VkQZ4PMQsXnbdoQ0qW9myY4hXrYd5M
-         0y0xg12S5VZn5aNAArBfPXZFCewo5uLVLxjlbCzZTff4vg/cJcoeyLRIiyeWQ7FWAYQY
-         s0Mz1l3OINPurUibwRr7D1JPk9rdQPz3ioaV8ZuHBmPj8IOZdjLYvYFsH4E4Aw0JSgiX
-         fXcTQOV/aE8RxPTNKrSYEOBtlLc9USo6uG4+D0/JjXMrCzECW3a/UfrKJbxwk3fsS4xW
-         2kCesbF3frLj96nHzukDumyrHdzFYHR+YjaqI9Ao1ex322yi5wZGdQqx0XlxvTReOcZk
-         WS7Q==
-X-Gm-Message-State: AMke39n0hUl7yaZs0vUgGhqBFDHTMlH+7SlG5Poq5eFtPVSGnDHLRfcWUSW9ojepNrg7Sg==
-X-Received: by 10.98.25.21 with SMTP id 21mr398300pfz.46.1486599995569;
-        Wed, 08 Feb 2017 16:26:35 -0800 (PST)
+        bh=aamtYfbSfmBxtOxbV+V1f0Tq9bgzqVeAm42S2Xvt+9k=;
+        b=CNHKlS1eF78+0xCKURLC7OUxhhT2BdfsDdrGI6faFRuFgq6igUVO8N/fEj5xvxPpM3
+         rvIbfFxoFAV4u4piuoMxmHJIIX6ladSr39r4YtwqnfPtS2rcePWfl/F++K0/WXFYQuWG
+         3bkhrHlzyY9n8FM3WpMCIQ71mijTnbWwfTCVGJeOMD4zlRztoXEFlMGOys8EZYN+jAnk
+         YzTYoowZtP4495zq8B1qpDrTVzek1baSUrdZDS2b3Z7ycAFAuG09/+WHjidaqT45ARr0
+         lLbG65NImgjyAJbVTaLPn6ZZd5viiU9X+WQTQfS74lSydyy4bBTjk7PDHqMhVTZUw9/+
+         Kmbg==
+X-Gm-Message-State: AMke39n8rYgQVcpNjzFVxNLesCCuhF4rh+rENSVmTo4Oob5awS1vZXDvxJCBAojr9G+oUA==
+X-Received: by 10.98.100.69 with SMTP id y66mr516352pfb.174.1486602102588;
+        Wed, 08 Feb 2017 17:01:42 -0800 (PST)
 Received: from localhost ([2620:0:1000:8622:7c20:fa7c:46cb:2209])
-        by smtp.gmail.com with ESMTPSA id e7sm23383290pgp.2.2017.02.08.16.26.34
+        by smtp.gmail.com with ESMTPSA id 199sm23140884pfu.91.2017.02.08.17.01.41
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 08 Feb 2017 16:26:34 -0800 (PST)
+        Wed, 08 Feb 2017 17:01:41 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org, peff@peff.net
-Subject: Re: [RFC 00/14] Allow fetch-pack to send ref names (globs allowed)
-References: <cover.1485381677.git.jonathantanmy@google.com>
-        <20170207235350.10718-1-jonathantanmy@google.com>
-Date:   Wed, 08 Feb 2017 16:26:33 -0800
-In-Reply-To: <20170207235350.10718-1-jonathantanmy@google.com> (Jonathan Tan's
-        message of "Tue, 7 Feb 2017 15:53:50 -0800")
-Message-ID: <xmqq7f50tdja.fsf@gitster.mtv.corp.google.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     "git\@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: What's cooking in git.git (Feb 2017, #02; Mon, 6)
+References: <xmqqzihzymn3.fsf@gitster.mtv.corp.google.com>
+        <CAGZ79kZ6m1NGz9Lhhd5BDxayLW-UC8MqexMyhHBhHKrmg-tB+w@mail.gmail.com>
+Date:   Wed, 08 Feb 2017 17:01:41 -0800
+In-Reply-To: <CAGZ79kZ6m1NGz9Lhhd5BDxayLW-UC8MqexMyhHBhHKrmg-tB+w@mail.gmail.com>
+        (Stefan Beller's message of "Wed, 8 Feb 2017 16:25:20 -0800")
+Message-ID: <xmqq37fotbwq.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -65,29 +65,25 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Tan <jonathantanmy@google.com> writes:
+Stefan Beller <sbeller@google.com> writes:
 
-> Usages of the list of remote refs or the remote-local ref
-> map are updated as follows:
->  - check_not_current_branch (which checks that the current branch is not
->    affected by the fetch) is performed both on the original ref map (to
->    die before the fetch if we can, as an optimization) and on the new
->    ref map (since the new ref map is the one actually applied).
+>> * sb/submodule-doc (2017-01-12) 3 commits
+>>  - submodules: add a background story
+>>  - submodule update documentation: don't repeat ourselves
+>>  - submodule documentation: add options to the subcommand
+>
+> The first two commits are good to go IIRC as you seemed to be
+> positive about them at the time. Though I have a hard time finding
+> evidence of such.
+>
+> I am currently reworking the 3/3 "add a background story" patch as it is
+> RFC-ish, so no need to review that any more.
+>
+> Maybe we can get 1&2 merged and then 3 comes on its own?
 
-OK.
+Yeah, sorry, I keep forgetting this topic, it seems.  Let's advance
+the earlier two.  Tentatively I'd drop the third one as you plan to
+redo it separately.
 
->  - Pruning is done based on the new ref map.
+Thanks for prodding.
 
-OK.  As that is what eventually gets "installed" on the local side,
-it makes sense to become consistent with that set, not the set the
-original server gave you.
-
->  - backfill_tags (for tag following) is performed using the original
->    list of remote refs because the new list of fetched refs is not
->    guaranteed to contain tag information. (Since backfill_tags performs
->    another fetch, it does not need to be fully consistent with the
->    just-returned packfile.)
-
-This smells correct but I need to think about this one a bit more.
-
-Overall I think the strategy is agreeable.
