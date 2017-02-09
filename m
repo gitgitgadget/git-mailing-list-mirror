@@ -7,56 +7,58 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 615F91FCC7
-	for <e@80x24.org>; Thu,  9 Feb 2017 19:30:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 036C41FCC7
+	for <e@80x24.org>; Thu,  9 Feb 2017 19:32:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753162AbdBITaP (ORCPT <rfc822;e@80x24.org>);
-        Thu, 9 Feb 2017 14:30:15 -0500
-Received: from mail-pg0-f68.google.com ([74.125.83.68]:33888 "EHLO
-        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752603AbdBITaO (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Feb 2017 14:30:14 -0500
-Received: by mail-pg0-f68.google.com with SMTP id v184so1048120pgv.1
-        for <git@vger.kernel.org>; Thu, 09 Feb 2017 11:28:26 -0800 (PST)
+        id S1753569AbdBITbw (ORCPT <rfc822;e@80x24.org>);
+        Thu, 9 Feb 2017 14:31:52 -0500
+Received: from mail-pg0-f66.google.com ([74.125.83.66]:34004 "EHLO
+        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753524AbdBITbu (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Feb 2017 14:31:50 -0500
+Received: by mail-pg0-f66.google.com with SMTP id v184so1054627pgv.1
+        for <git@vger.kernel.org>; Thu, 09 Feb 2017 11:31:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=2ct3UEpYrMpO/XtFQSry4BCBGrwS6x6nBB4l2rxi3hw=;
-        b=udn5eWdXcKr+oEs5fhOHKxCZxvY1+7pju8pWrsi+JQB9wtlBK5568BR0IUmKUwfxA3
-         Kop0xMbVWEzpF9ilpfnBtQANXAz7bjlhRFPodJ+XGlXtUxdfS6+2GnurjSz7dWjTPWOz
-         6ctRYxl+SrmgQJ2NcEdxIqpw8RiZA8Kd/n1+oa50unC0YBfMEJUy1wcmT323iyage787
-         RAQk/8orFJi+bl6cqYdnq3HAs28EGmT2u/m6C0UY2KPXfMEM/V877yut8NdngWfhiTS6
-         p16d1nHlJ5jD+PYhQDjyMPxPDpxISoCWfp3XMz40g+Xx4OWCJIms1xeGbCeTosaPFBCH
-         uK9g==
+        bh=WYZprg+62njNI3e8B/9CxIxZho8COxFKVpNjLFLtOcE=;
+        b=LJYR5QpAHHt8IE/guI3AmeOk3j9zkduz3WL293LO8eyPPjvW+fW3djEYoKjBsjImOl
+         X3a+/8pi1KR7PJLeZWS+I/mYPe/M4l9WBldZQR+CjxKuQESvcbMnSBKpIFeyzJiI6IXX
+         sSAyZi6G2Ogu/hX3ff3Z79FuuVVq3fVMQhlvxFKLIj/NHpy+rViz6t1bLSQNjVXKwGPm
+         lUV9lsBQWLbMhaLm5IwvGMBBMgsfrLDOo82lsbuRoQKVmGFNvY1+XXdpAtLU6LFlM+Gy
+         3WqcviULFznnrt5+uIt8AgiMjgh/9DdL323/TEQJ6CBXKOHMCvOIbkE/3ICPPm53nxCt
+         /JNw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=2ct3UEpYrMpO/XtFQSry4BCBGrwS6x6nBB4l2rxi3hw=;
-        b=Ko/muHAI9BU4+6Hh4RTQdBla+ZpgfNGaZ/Oka0PHOGXXD5irTM9EeugriZ02cCXNwD
-         RvdkMzxoFYAKYQtHldopSKgA6JqNRs0gzmkN4WjBrHeWWUh0N0U648mYHv8gTvrYO2g+
-         FdzCcV0DMfrt5YZhqR+D1Fm3IRSlIzpLUx0AFvDjxc4tBR/Spl7TEHTwN7kfX96OENEi
-         s9eVTBOk9EWfWnYMWDlAGaYebwtvPIB2Jq06x+01EZfTouoLEaeiPSi223RWWo+eCuiR
-         WycoCzE3O6yW4llAl3YJXc2f6hw98n0OMkxlDPZbz8eilvZZCcqcrPXkSBUsg11HXVRE
-         J6qA==
-X-Gm-Message-State: AMke39lJOUUsGSPcJkGILgVImke3haRE265bLdlSVz9VcDEUD77lgIUNoRc0bd+bi7xB9A==
-X-Received: by 10.84.241.10 with SMTP id a10mr6125616pll.47.1486667905002;
-        Thu, 09 Feb 2017 11:18:25 -0800 (PST)
+        bh=WYZprg+62njNI3e8B/9CxIxZho8COxFKVpNjLFLtOcE=;
+        b=jIZROkIkxgsixSK1W4KprtWscabIfDaObsiUA5NNf5O0oaeLm2YRPaM46g9v0r0mfQ
+         T0ibQdcL8noAk3wL0pfhFBxhUsg33eT1lGATSV5Lz1UpluLT+YRdonugHXkg3nOZus2h
+         lDy8uds95WCqbaVyhQevQY6l5hCgqyWdLrBSh+Gz66W6BybrRYvYb+xAXR5Jz7I5JM5P
+         HMQSGLmfFc5yfxHw2ZHAWkodqnITRkT9EPLvoDM+zkYuz6CspB/ln2aDv6r+L1zgdEkm
+         hw85eNueLwr/SP/6EINh2iwo2GHGyjLB7HxYS1VxOHaFJ/bAp8pR3xuqODBsDMjAseGg
+         lbdg==
+X-Gm-Message-State: AMke39neWPVTjz7BNTiCQdAly18UITBV035iNjHuXvt8lkUSw/cKlIWB6veMJaxvhlj6Bw==
+X-Received: by 10.98.71.7 with SMTP id u7mr5570981pfa.76.1486668707810;
+        Thu, 09 Feb 2017 11:31:47 -0800 (PST)
 Received: from localhost ([2620:0:1000:8622:704f:61dd:c9f4:9782])
-        by smtp.gmail.com with ESMTPSA id a2sm30820780pfc.72.2017.02.09.11.18.23
+        by smtp.gmail.com with ESMTPSA id z77sm30960486pfk.47.2017.02.09.11.31.46
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 09 Feb 2017 11:18:24 -0800 (PST)
+        Thu, 09 Feb 2017 11:31:46 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Michael Haggerty <mhagger@alum.mit.edu>
-Cc:     git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Feb 2017, #02; Mon, 6)
-References: <xmqqzihzymn3.fsf@gitster.mtv.corp.google.com>
-        <2f67fc21-92f9-a03e-1b09-a237af6dbc46@alum.mit.edu>
-Date:   Thu, 09 Feb 2017 11:18:23 -0800
-In-Reply-To: <2f67fc21-92f9-a03e-1b09-a237af6dbc46@alum.mit.edu> (Michael
-        Haggerty's message of "Thu, 9 Feb 2017 17:08:13 +0100")
-Message-ID: <xmqq37fnqikg.fsf@gitster.mtv.corp.google.com>
+To:     Brandon Williams <bmwill@google.com>
+Cc:     git@vger.kernel.org, sbeller@google.com, pclouds@gmail.com
+Subject: Re: [PATCH v3 00/27] Revamp the attribute system; another round
+References: <20170123203525.185058-1-bmwill@google.com>
+        <20170128020207.179015-1-bmwill@google.com>
+        <xmqqwpd8s8vd.fsf@gitster.mtv.corp.google.com>
+        <20170209171804.GA61274@google.com>
+Date:   Thu, 09 Feb 2017 11:31:46 -0800
+In-Reply-To: <20170209171804.GA61274@google.com> (Brandon Williams's message
+        of "Thu, 9 Feb 2017 09:18:04 -0800")
+Message-ID: <xmqqtw83p3dp.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -65,27 +67,17 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Michael Haggerty <mhagger@alum.mit.edu> writes:
+Brandon Williams <bmwill@google.com> writes:
 
-> On 02/06/2017 11:34 PM, Junio C Hamano wrote:
->> [...]
->> --------------------------------------------------
->> [Stalled]
->> [...]
->> * mh/ref-remove-empty-directory (2017-01-07) 23 commits
->> 
->>  Deletion of a branch "foo/bar" could remove .git/refs/heads/foo
->>  once there no longer is any other branch whose name begins with
->>  "foo/", but we didn't do so so far.  Now we do.
->> 
->>  Expecting a reroll.
->>  cf. <5051c78e-51f9-becd-e1a6-9c0b781d6912@alum.mit.edu>
->
-> I think you missed v4 of this patch series [1], which is the re-roll
-> that you were waiting for. And I missed that you missed it...
->
-> Michael
->
-> [1] http://public-inbox.org/git/cover.1483719289.git.mhagger@alum.mit.edu/
+> At least v3 gets the attribute system to a state where further
+> improvements should be relatively easy to make.  And now as long as each
+> thread has a unique attr_check structure, multiple callers can exist
+> inside the attribute system at the same time.  There is still more work
+> to be done on it though.  Still my biggest complaint is the "direction"
+> aspect of the system.  I would love to also eliminate that as global
+> state at some point though I'm not sure how at this point.
 
-Great.  Thanks.
+We are in agreement 100% ;-) The "direction" was the last thorn I
+was fighting with (without successfully coming up with a usable
+solution) when I stopped working on my original series before Stefan
+took it over.
