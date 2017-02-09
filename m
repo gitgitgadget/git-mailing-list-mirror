@@ -2,101 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8062E1FCC7
-	for <e@80x24.org>; Thu,  9 Feb 2017 21:24:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A674B1FCC7
+	for <e@80x24.org>; Thu,  9 Feb 2017 21:35:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753046AbdBIVYW (ORCPT <rfc822;e@80x24.org>);
-        Thu, 9 Feb 2017 16:24:22 -0500
-Received: from alum-mailsec-scanner-6.mit.edu ([18.7.68.18]:58328 "EHLO
-        alum-mailsec-scanner-6.mit.edu" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1752664AbdBIVYV (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 9 Feb 2017 16:24:21 -0500
-X-AuditID: 12074412-5f5ff700000009b5-2b-589cdddb50ee
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-        by alum-mailsec-scanner-6.mit.edu (Symantec Messaging Gateway) with SMTP id 3E.20.02485.BDDDC985; Thu,  9 Feb 2017 16:23:39 -0500 (EST)
-Received: from [192.168.69.190] (p4FEDF6A1.dip0.t-ipconnect.de [79.237.246.161])
-        (authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v19LNZ4P016876
-        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-        Thu, 9 Feb 2017 16:23:36 -0500
-Subject: Re: [PATCH 0/5] Store submodules in a hash, not a linked list
-To:     Jeff King <peff@peff.net>
-References: <cover.1486629195.git.mhagger@alum.mit.edu>
- <20170209195812.dbbmko4sas3wtdy5@sigill.intra.peff.net>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>, Stefan Beller <sbeller@google.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        David Turner <novalis@novalis.org>, git@vger.kernel.org
-From:   Michael Haggerty <mhagger@alum.mit.edu>
-Message-ID: <9ba16176-b388-4c70-a479-fda4c9244e67@alum.mit.edu>
-Date:   Thu, 9 Feb 2017 22:23:35 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Icedove/45.6.0
+        id S1754560AbdBIVex (ORCPT <rfc822;e@80x24.org>);
+        Thu, 9 Feb 2017 16:34:53 -0500
+Received: from mail-pf0-f194.google.com ([209.85.192.194]:35921 "EHLO
+        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753107AbdBIVew (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Feb 2017 16:34:52 -0500
+Received: by mail-pf0-f194.google.com with SMTP id 19so957387pfo.3
+        for <git@vger.kernel.org>; Thu, 09 Feb 2017 13:33:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=QKzNQcAFS7EQXaqQCdBJ7A/KrxbdG540CBl9J6AGULA=;
+        b=Y4h4Y/bMLEoxvdp9ut0R1DDAVJfq9pT0G6lV8nHyg1UN/KlL2UrQqMBX6Mb3XaFfPV
+         wbhiOq3rxPwniIFAE1anOIXNvsFMucX5IxuTMWB6W/AC/G/spph9GElJz67/e3eOf1cG
+         izGcUSZeIafCiBTPPAlemshDE78ju8ioRGY3enrd4Ykp7tkstWa71t70CHdumH8CBmzx
+         Yz9BRtxlt1rq6Lhihlyxi1xPSQ2iDVZbMcN3LzEJ0mbRKm47JRSjCi3qr2s2OLA8RkvM
+         Am6lKh1RO7K51d+vBAoX3middnIDc2vNHL24yha9V2/R5uJpPlzQDD+9iZMRZFbgySKM
+         Sd9w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=QKzNQcAFS7EQXaqQCdBJ7A/KrxbdG540CBl9J6AGULA=;
+        b=N2HFVzTbj+lJihMWuN0Ugyow3eTjhDibCcvfgV4pI+SpOMJQG4ZmcfzfJhmbplWOnz
+         R/ZRbGEwJTA4zPaegIH1Unqt9CzX5YHX+/FI2Yol2j/vT5sVY8bIq7ZGiOZLy///jsT1
+         Cc4VT41bI4rgegbdrCvsVbwbrK8J8nnAup8NL1FYjKiuYCIOq5M0HhTcDWWFCIEdOyct
+         mv/DARuGVLz6DBIeKuR38shFlvrn4ka8H/rgEhFRPJJ6uxVeDuh5zYQPD+Z4/ePsADih
+         PpxdUZsYExTa5bZgQNFfmTI96RwY4m+vONAlDawjN8UVlgQorhpkvQGolV7XBCnrFMOE
+         VqjA==
+X-Gm-Message-State: AMke39lmAPH/INfhrTSzpF5SliYk4jpUninG83mKxPouWWKbDeHLJ/e4tifurL8iP0XO9A==
+X-Received: by 10.99.175.87 with SMTP id s23mr6459718pgo.184.1486675999013;
+        Thu, 09 Feb 2017 13:33:19 -0800 (PST)
+Received: from localhost ([2620:0:1000:8622:704f:61dd:c9f4:9782])
+        by smtp.gmail.com with ESMTPSA id 21sm3206145pfy.4.2017.02.09.13.33.18
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Thu, 09 Feb 2017 13:33:18 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH] rev-parse --git-path: fix output when running in a subdirectory
+References: <50fe3ea3302c40f4c96eaa5a568837e3334f9dc4.1486555851.git.johannes.schindelin@gmx.de>
+        <CACsJy8CigsWjAq5cmJ=cbBmj=DdJtHdMKxmoifftuz9+9kqJiQ@mail.gmail.com>
+Date:   Thu, 09 Feb 2017 13:33:17 -0800
+In-Reply-To: <CACsJy8CigsWjAq5cmJ=cbBmj=DdJtHdMKxmoifftuz9+9kqJiQ@mail.gmail.com>
+        (Duy Nguyen's message of "Thu, 9 Feb 2017 16:48:20 +0700")
+Message-ID: <xmqqshnnnj6q.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <20170209195812.dbbmko4sas3wtdy5@sigill.intra.peff.net>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprAKsWRmVeSWpSXmKPExsUixO6iqHv77pwIg1e3JCy6rnQzWTT0XmG2
-        6F/exWax5OFrZovuKW8ZLX609DBbbN7czuLA7rFz1l12jw8f4zwWbCr16Go/wubxrHcPo8fF
-        S8oenzfJBbBHcdmkpOZklqUW6dslcGWsP9DDVNAjUHH40XfmBsYO3i5GTg4JAROJbX+nM3Yx
-        cnEICVxmlJh5Zw47hHOeSWL2pj0sIFXCAm4Sa1YsYwSxRQRkJb4f3ghmCwkUSmxpfcYK0sAs
-        MJ9Jov/BGyaQBJuArsSinmYwm1fAXuLK4bdgg1gEVCSef73ACmKLCoRIzFn4gBGiRlDi5Mwn
-        YDWcAi4SPU3vmEFsZgF1iT/zLkHZ8hLb385hnsDIPwtJyywkZbOQlC1gZF7FKJeYU5qrm5uY
-        mVOcmqxbnJyYl5dapGuml5tZopeaUrqJERLwQjsY15+UO8QowMGoxMP7omZOhBBrYllxZe4h
-        RkkOJiVRXtkCoBBfUn5KZUZicUZ8UWlOavEhRgkOZiUR3gMXgXK8KYmVValF+TApaQ4WJXHe
-        n4vV/YQE0hNLUrNTUwtSi2CyMhwcShK8NsDIFhIsSk1PrUjLzClBSDNxcIIM5wEargFSw1tc
-        kJhbnJkOkT/FqCglzvv6DlBCACSRUZoH1wtLSK8YxYFeEeZdDFLFA0xmcN2vgAYzAQ2+fnoW
-        yOCSRISUVAOj4iqBlMdaieclTFNtSxJmJgnUvCibcikvKFP96LODjxfMkz1vv3X7robZfOZb
-        9VlMw7QP7Ak61HMqZy/n5DlPA5f9CAt4cW63b3SAhofDSYVL3NYcjSoLrX7kHjjYxss0fdfu
-        L8uFztQv+L/n9+U/5o/qTDXMPbzX7HLeHC+j+UdEa879q4cllViKMxINtZiLihMBYFIMoyMD
-        AAA=
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 02/09/2017 08:58 PM, Jeff King wrote:
-> On Thu, Feb 09, 2017 at 02:26:57PM +0100, Michael Haggerty wrote:
-> [...]
->> A `files_ref_store` would be perfectly happy to represent, say, the
->> references *physically* stored in a linked worktree (e.g., `HEAD`,
->> `refs/bisect/*`, etc) even though that is not the complete collection
->> of refs that are *logically* visible from that worktree (which
->> includes references from the main repository, too). But the old code
->> was confusing the two things by storing "submodule" in every
->> `ref_store` instance.
->>
->> So push the submodule attribute down to the `files_ref_store` class
->> (but continue to let the `ref_store`s be looked up by submodule).
-> 
-> I'm not sure I understand all of the ramifications here. It _sounds_ like
-> pushing this down into the files-backend code would make it harder to
-> have mixed ref-backends for different submodules. Or is this just
-> pushing down an implementation detail of the files backend, and future
-> code is free to have as many different ref_stores as it likes?
+Duy Nguyen <pclouds@gmail.com> writes:
 
-I don't understand how this would make it harder, aside from the fact
-that a new backend class might also need a path member and have to
-maintain its own copy rather than using one that the base class provides.
+> Relevant thread in the past [1] which fixes both --git-path and
+> --git-common-dir. I think the author dropped it somehow (or forgot
+> about it, I know I did). Sorry can't comment on that thread, or this
+> patch, yet.
+>
+> [1] http://public-inbox.org/git/1464261556-89722-1-git-send-email-rappazzo@gmail.com/
 
-I consider it an implementation detail of the files backend that it
-needs to keep a permanent record of its submodule path in
-files_ref_store. Some hypothetical future backend might instead need,
-say, an IP number and port to connect to a MySQL server. A hypothetical
-pure packed-refs backend might just store the path of the packed-refs file.
+Thanks for a pointer.  I see Mike responded to this message (I
+haven't had a chance to read and think about it yet), so I trust
+that you three can figure out if these are the same issues and what
+the final solution in the longer term should be.  
 
-A more likely imminent change is that backends need a path, but that the
-path needn't correspond to the git_dir of the repository that contains
-the corresponding objects, for example in the case of a linked worktree.
-You might ask for the ref_store for a worktree-submodule, and end up
-getting a compound object that delegates to one ref_store pointing at
-its git_dir and one at its common_dir.
+I have no strong opinion for or against a "longer term" solution
+that makes "rev-parse --git-path" behave differently from how it
+behaves today, but I am not yet convinced that we can reach that
+longer term goal without a transition period, as I suspect there are
+existing users that know and came to expect how it behaves, based on
+its today's behaviour.  Other than that I do not have suggestion on
+this topic at the moment.
 
-Michael
-
+Thanks.
