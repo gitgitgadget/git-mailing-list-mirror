@@ -7,57 +7,62 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 67DE61FAF4
-	for <e@80x24.org>; Thu,  9 Feb 2017 05:09:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9CE061FAF4
+	for <e@80x24.org>; Thu,  9 Feb 2017 05:14:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751350AbdBIFJ0 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 9 Feb 2017 00:09:26 -0500
-Received: from mail-pf0-f193.google.com ([209.85.192.193]:34391 "EHLO
-        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751298AbdBIFJZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Feb 2017 00:09:25 -0500
-Received: by mail-pf0-f193.google.com with SMTP id y143so12972617pfb.1
-        for <git@vger.kernel.org>; Wed, 08 Feb 2017 21:09:25 -0800 (PST)
+        id S1751318AbdBIFOU (ORCPT <rfc822;e@80x24.org>);
+        Thu, 9 Feb 2017 00:14:20 -0500
+Received: from mail-pg0-f67.google.com ([74.125.83.67]:33087 "EHLO
+        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751114AbdBIFOT (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Feb 2017 00:14:19 -0500
+Received: by mail-pg0-f67.google.com with SMTP id 194so16847840pgd.0
+        for <git@vger.kernel.org>; Wed, 08 Feb 2017 21:14:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=XD2d6CwUxMGlG+H40qptnNhaWRrgE4sv41Wr5AiURIM=;
-        b=jS67aIA6SIER+vU5i82yLTMDhni4Wo5Wvu4e9qdu3z26nj6/VIai1tmHLD0wyacjLm
-         Y5Tjv7k08D0+RSvgAXGePqd268NVfaqLlip5/fVfiuJ33MZxk3NkXua4G2pcYhCxkPib
-         23XXoWS7Tsp8ERBuFsnDQpJNwR9zwuc6JA54mo7ZeEJSt0gaXuDUGzLeBwhmCXjMVcKg
-         4npC00uOVlt7A3EKNTRrdHTM3z+BnPoil2JwmbyHgeucPEF/CjujV8XEyM/x+anCpeR2
-         jrBE6ENwhMHbBgkq0SZ2kUEypR0haSphcNs8EqN/Z4fy304ksucWMWCNuEgITszbUqIR
-         rNZg==
+        bh=+LAHBMq4GxclVp9KDVYnryTInqFwc+BFwWbNjl5Nb64=;
+        b=DncYNtiWRu1S10MgzT/vQPrrZK+1vLjdGHl/QVrsTMGBRgslRT1/pBNXU07YeDiIEq
+         XER3p3yXGCqtby8fNoN43mMtrfijMiZYZpRtIl5NlLCluhCdiaOyVo6AKhjq3u32ZOFf
+         46y16+mX5zawzBTrywA0rDKTKQa8wATqkDgUlZR+FsTSwETiPtcne06SbMGEbWVvrJAo
+         0rGFcg9E2zVHw2boYf2ALeMTfI5JTI3WfHE3Ak0vrwr8hbxx4dvBleXLq10gFF5ypBzY
+         k+IyjLgYOm3kjfS0s7LO1jvd/560CV0TZkRrdPqFADOScuh4rT+KscEh2n9TYNmUyGQs
+         dTuA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=XD2d6CwUxMGlG+H40qptnNhaWRrgE4sv41Wr5AiURIM=;
-        b=sKc2N5k5WccIq2A11k7AleXf1by8X3fftfAC9M9hmyu8B6rswhCDkGEEtmYnzQG50a
-         +oo4n1YJHsEV/hHGUIc8+wmSWizbsvMvjQ4QfKQxH1LmAf/RD+9Bm9UMSnD2Ch0bjT6p
-         AxY2/Om6fz8ybQ7/PJxL1ZZSHA0FjNiXMn7nkNQjVXfNzXG1HrRUSWtsn0nd0KuvVERy
-         e+mrlxBhZO1ZfarNSxPndxazXWM7G2TxJWFapnmVJmTeTL7ZBkx9Ja2txthT8hmEAeVe
-         jXYehx5HUZsgK4v5RPLYeUg35TP+So7ClXjQmKKX6s4F164IOpkL6VLzNt5+FE6cN6dq
-         CNSQ==
-X-Gm-Message-State: AMke39na1uQJApbPW1KjT2maX+/COUCtuwzp4RiKfA1jH7e+OYbJB7jvrqZGk+EU6u4WtA==
-X-Received: by 10.98.72.216 with SMTP id q85mr1564034pfi.75.1486616964501;
-        Wed, 08 Feb 2017 21:09:24 -0800 (PST)
+        bh=+LAHBMq4GxclVp9KDVYnryTInqFwc+BFwWbNjl5Nb64=;
+        b=of7x1Wa94+bDVclGK8RT1y9NBPwI194TO3HNZ1bDZvAz77hZEVbrC7rbVP447U6Zu4
+         6jJkMz4MVY6oHqiCTqNxw2Gz9EsIDopUOdiJPc73xNd4EvBSRjXg2JLTn6PFBJ2v4b7T
+         FcRD2I/l0GaMUKRnBuRtFExvyMQ3ocrDHjR3gKe5FrkhMn18aXK+h3AV+MNAcFS2Ms9Z
+         CZjytll+F+9MAZvCJgzQX9055JZsock/bQq9cNXvWmkqUK/gvZEGqRSXpFTsKOz1PvE9
+         rVrGvwtsEh80T2j6NW/ZjGAAhPLs1ftaHCyo23KQV4b53hLoJ0cgFVq348paGjZer933
+         KHeQ==
+X-Gm-Message-State: AMke39mpQSV19RAAKxY/y7jGp9hYEY5ggcgyB8+7w41mbdAOUCyGohQQkVsQeHFmPwbyug==
+X-Received: by 10.99.8.4 with SMTP id 4mr1698393pgi.204.1486617258897;
+        Wed, 08 Feb 2017 21:14:18 -0800 (PST)
 Received: from localhost ([2620:0:1000:8622:7c20:fa7c:46cb:2209])
-        by smtp.gmail.com with ESMTPSA id h4sm24346318pfk.96.2017.02.08.21.09.23
+        by smtp.gmail.com with ESMTPSA id p15sm24482282pfk.58.2017.02.08.21.14.17
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 08 Feb 2017 21:09:23 -0800 (PST)
+        Wed, 08 Feb 2017 21:14:17 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Jeff King <peff@peff.net>
-Cc:     Siddharth Kannan <kannan.siddharth12@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Feb 2017, #02; Mon, 6)
-References: <xmqqzihzymn3.fsf@gitster.mtv.corp.google.com>
-        <20170209034657.qbkzbbzuvjpxl422@sigill.intra.peff.net>
-Date:   Wed, 08 Feb 2017 21:09:22 -0800
-In-Reply-To: <20170209034657.qbkzbbzuvjpxl422@sigill.intra.peff.net> (Jeff
-        King's message of "Wed, 8 Feb 2017 22:46:58 -0500")
-Message-ID: <xmqqy3xgrlvh.fsf@gitster.mtv.corp.google.com>
+Cc:     Stefan Hajnoczi <stefanha@redhat.com>,
+        Brandon Williams <bmwill@google.com>, git@vger.kernel.org
+Subject: Re: [PATCH v2 2/2] grep: use '/' delimiter for paths
+References: <20170120171126.16269-1-stefanha@redhat.com>
+        <20170120171126.16269-3-stefanha@redhat.com>
+        <xmqqpojhwf2r.fsf@gitster.mtv.corp.google.com>
+        <20170120235133.GA146274@google.com>
+        <20170207150414.GD8583@stefanha-x1.localdomain>
+        <xmqq8tphzr41.fsf@gitster.mtv.corp.google.com>
+        <20170209035839.wqsh6ibgnmxyjusi@sigill.intra.peff.net>
+Date:   Wed, 08 Feb 2017 21:14:17 -0800
+In-Reply-To: <20170209035839.wqsh6ibgnmxyjusi@sigill.intra.peff.net> (Jeff
+        King's message of "Wed, 8 Feb 2017 22:58:39 -0500")
+Message-ID: <xmqqtw84rlna.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -68,32 +73,25 @@ X-Mailing-List: git@vger.kernel.org
 
 Jeff King <peff@peff.net> writes:
 
-> On Mon, Feb 06, 2017 at 02:34:08PM -0800, Junio C Hamano wrote:
+>   master:a:a:a:a:a:a:a:a:a:a:a
 >
->> * sk/parse-remote-cleanup (2017-02-06) 1 commit
->>   (merged to 'next' on 2017-02-06 at 6ec89f72d5)
->>  + parse-remote: remove reference to unused op_prep
->> 
->>  Code clean-up.
->> 
->>  Will merge to 'master'.
+> I think there are 2^(n-1) possible paths (each colon can be a real colon
+> or a slash). Though I guess if you walk the trees as you go, you only
+> have to examine at most "n" paths to find the first-level tree, and then
+> at most "n-1" paths at the second level, and so on.
 >
-> Hrm. Are the functions in git-parse-remote.sh part of the public API?
-> That is, do we expect third-party scripts to do:
+> Unless you really do have ambiguous trees, in which case you have to
+> walk down multiple paths.
 >
->   . "$(git rev-parse --exec)/git-parse-remote.sh
->   error_on_missing_default_upstream "$a" "$b" "$c" "$d"
->
-> ? If so, then they may be surprised by the change in function signature.
->
-> I generally think of git-sh-setup as the one that external scripts would
-> use. There _is_ a manpage for git-parse-remote, but it doesn't list any
-> functions. So maybe they're all fair game for changing?
->
-> I just didn't see any discussion of this in the original patch thread,
-> so I wanted to make sure we were making that decision consciously, and
-> not accidentally. :)
+> It certainly would not be the first combinatoric explosion you can
+> convince Git to perform. But it does seem like a lot of complication for
+> something as simple as path lookups.
 
-Ummm, yes, I admit that this was accidental.  I didn't really think
-of parse-remote as an externally visible and supported interface,
-but users have tendency to break our expectations, so, I dunno.
+That is true, and we may want to avoid the implementation complexity
+of the backtracking name resolution.  If you are on the other hand
+worried about the runtime cost, it will be an issue to begin with
+only for those who do "git grep -e pattern HEAD:t/perf", which is an
+unnatural way to do "git grep -e pattern HEAD -- t/perf", and the
+output from the latter won't have such an issue, so...
+
+
