@@ -2,90 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 49AE81FC46
-	for <e@80x24.org>; Thu,  9 Feb 2017 10:04:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 770661FC46
+	for <e@80x24.org>; Thu,  9 Feb 2017 10:17:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752797AbdBIKEV (ORCPT <rfc822;e@80x24.org>);
-        Thu, 9 Feb 2017 05:04:21 -0500
-Received: from mail-ot0-f171.google.com ([74.125.82.171]:34197 "EHLO
-        mail-ot0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752180AbdBIKDf (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Feb 2017 05:03:35 -0500
-Received: by mail-ot0-f171.google.com with SMTP id f9so9392069otd.1
-        for <git@vger.kernel.org>; Thu, 09 Feb 2017 02:03:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=0osGErkHbaO9wAMYbQpbRFJAU8imAZT1JmfqUMTnv9M=;
-        b=TstFfYtmuGqJ1AZ3g85V9S1rDGx3yep2JmCf7ThZjF6mA542lRNiTE7TFmBilkTpH2
-         W148ESFGXheVQl/0Z0czG5RypWCfyw9NrHrUdo4tgh0izZ9oCBxEzYiyocdpFvC9mb+8
-         bdfiL0kWsScqrrp8caJqjUaJHLQV1qiBnLKUGiZQaf/Each3ZNWzrch9HD4Z46+K4GER
-         8MmXPIUlKWSLYCja0l1wSbCjwaoAzkVxYGCCTclOZYxm7WQaauYbW494lh9TXWTUQZ0l
-         5I07iz6vfPsTEcj6a9YLC2fqD8Jedt2o5O7AbHDqGH6Bsdj/8A0FepLzCRO8qKGqxq6Q
-         OTiQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=0osGErkHbaO9wAMYbQpbRFJAU8imAZT1JmfqUMTnv9M=;
-        b=lXZ959+I3L0MW7w8GppQGv4hEnpJsaJLOjv3CSmllVwPTXtDUCL6JoQEybefTwa/17
-         YCJ9a70WKRPw7uAELMDe5mHT3B8M1wq6AWpNohpeb/mHSg9dyiJwY6yJzK8KjNmVgGSB
-         WXLaIQW1UbHjpdKikZpq6o7U8m9Xsf7g/Q4YQ9BE6ZaNmISQDIYCyy2QtJODXWUD229C
-         SFgADbE6z89GfZH5lAx1J9XBJYCoYt3hm9+hZBVoxVw8jRlJqj4PI8NoEYi77NaWZ39a
-         JsDCtjgGHoVMShiuhMVBpNZnBupc1tgjcvrg2kPRNkJ4+FE6kf6PxSZPW1Dx6AxpI80t
-         j5xA==
-X-Gm-Message-State: AMke39mzNTPxyJ+5Qt/vlKi1Mvn4tsTnZqnIYEmArCjExQO0W5bjNhczMc/DKwHyz4HKUUO6gh7hUxrfCXqsng==
-X-Received: by 10.157.39.35 with SMTP id r32mr1061362ota.199.1486634610761;
- Thu, 09 Feb 2017 02:03:30 -0800 (PST)
+        id S1751996AbdBIKRE (ORCPT <rfc822;e@80x24.org>);
+        Thu, 9 Feb 2017 05:17:04 -0500
+Received: from zm23-mta-out-2.grenet.fr ([130.190.191.53]:47420 "EHLO
+        zm23-mta-out-2.grenet.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751840AbdBIKRD (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Feb 2017 05:17:03 -0500
+Received: from zm23-mta-out.grenet.fr (zm23-mta-out.grenet.fr [130.190.191.35])
+        by zm23-mta-out-2.grenet.fr (Postfix) with ESMTP id B9EF3C47D;
+        Thu,  9 Feb 2017 11:15:58 +0100 (CET)
+Received: from smtps.univ-grenoble-alpes.fr (smtps2.u-ga.fr [195.83.24.202])
+        by zm23-mta-out.grenet.fr (Postfix) with ESMTP id B21A3100C09;
+        Thu,  9 Feb 2017 11:15:58 +0100 (CET)
+Received: from anie (anie.imag.fr [129.88.42.32])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: moym@univ-grenoble-alpes.fr)
+        by smtps.univ-grenoble-alpes.fr (Postfix) with ESMTPSA id B736760339;
+        Thu,  9 Feb 2017 10:32:54 +0100 (CET)
+From:   Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     Jeff King <peff@peff.net>, git <git@vger.kernel.org>,
+        Pranit Bauva <pranit.bauva@gmail.com>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        Carlos =?iso-8859-1?Q?Mart=EDn?= Nieto <cmn@dwim.me>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Thomas Gummerer <t.gummerer@gmail.com>,
+        Siddharth Kannan <kannan.siddharth12@gmail.com>
+Subject: Re: GSoC 2017: application open, deadline = February 9, 2017
+References: <vpq1svtstud.fsf@anie.imag.fr>
+        <20170125204504.ebw2sa4uokfwwfnt@sigill.intra.peff.net>
+        <vpq37fowx5q.fsf@anie.imag.fr>
+        <CAP8UFD3aygSf5U2abnpCfRzEf-hH5fSNuzFBBtgCjSQC3F8c5A@mail.gmail.com>
+Date:   Thu, 09 Feb 2017 11:15:58 +0100
+In-Reply-To: <CAP8UFD3aygSf5U2abnpCfRzEf-hH5fSNuzFBBtgCjSQC3F8c5A@mail.gmail.com>
+        (Christian Couder's message of "Thu, 9 Feb 2017 10:42:14 +0100")
+Message-ID: <vpqzihvpt41.fsf@anie.imag.fr>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.74.158.1 with HTTP; Thu, 9 Feb 2017 02:03:00 -0800 (PST)
-In-Reply-To: <CAANrE7rmUZcJkw+thMczv3D=7sqcUHBsorzvEZgYg=6AEfrU=w@mail.gmail.com>
-References: <CAANrE7rmUZcJkw+thMczv3D=7sqcUHBsorzvEZgYg=6AEfrU=w@mail.gmail.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Thu, 9 Feb 2017 17:03:00 +0700
-Message-ID: <CACsJy8DoXCNzryQusEcXtOgeU2ZH1FMGEK32z5b=PGkfvJ0BTg@mail.gmail.com>
-Subject: Re: Automatically Add .gitignore Files
-To:     Thangalin <thangalin@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
+X-Greylist: Whitelist-UJF SMTP Authentifie (moym@univ-grenoble-alpes.fr) via smtps.univ-grenoble-alpes.fr ACL (97)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Feb 9, 2017 at 2:05 AM, Thangalin <thangalin@gmail.com> wrote:
-> I frequently forget to add .gitignore files when creating new .gitignore files.
->
-> I'd like to request a command-line option to always add .gitignore
-> files (or, more generally, always add files that match a given file
-> specification).
->
-> Replicate
->
-> 0. git init ...
-> 1. echo "*.bak" >> .gitignore
-> 2. touch file.txt
-> 3. git add file.txt
-> 4. git commit -a -m "..."
-> 5. git push origin master
->
-> Expected Results
->
-> The .gitignore file is also added to the repository. (This is probably
-> the 80% use case.)
+Christian Couder <christian.couder@gmail.com> writes:
 
-This is a general problem to new files, not .gitignore alone. Can we
-accomplish something with some hook? At the least I think we should be
-able to detect that .gitignore is not detected and abort, prompting
-the user to add it. It's easier to customize too, and we don't have to
-cook ".gitignore" in the code.
+> On Wed, Feb 8, 2017 at 3:54 PM, Matthieu Moy
+> <Matthieu.Moy@grenoble-inp.fr> wrote:
+>> Jeff King <peff@peff.net> writes:
+>>
+>>> On Mon, Jan 23, 2017 at 04:02:02PM +0100, Matthieu Moy wrote:
+>>>
+>>>> * We need to write the application, i.e. essentially polish and update
+>>>>   the text here: https://git.github.io/SoC-2016-Org-Application/ and
+>>>>   update the list of project ideas and microprojects :
+>>>>   https://git.github.io/SoC-2017-Ideas/
+>>>>   https://git.github.io/SoC-2016-Microprojects/
+>>>
+>>> That can be done incrementally by people who care (especially mentors)
+>>> over the next week or so, and doesn't require any real admin
+>>> coordination. If it happens and the result looks good, then the
+>>> application process is pretty straightforward.
+>>>
+>>> If it doesn't, then we probably ought not to participate in GSoC.
+>>
+>> OK, it seems the last message did not raise a lot of enthousiasm (unless
+>> I missed some off-list discussion at Git-Merge?).
+>
+> I think having 2 possible mentors or co-mentors still shows some
+> enthousiasm even if I agree it's unfortunate there is not more
+> enthousiasm.
 
-I'm not sure if we tell the hook "this is with -m option" though..
+A non-quoted but yet important part of my initial email was:
+
+| So, as much as possible, I'd like to avoid being an org admin this
+| year. It's not a lot of work (much, much less than being a mentor!),
+| but if I manage to get some time to work for Git, I'd rather do that
+| on coding and reviewing this year.
+
+and for now, no one stepped in to admin.
+
+Other non-negligible sources of work are reviewing microprojects and
+applications. Having a few more messages in this thread would have been
+a good hint that we had volunteers to do that.
+
+> Someone steps in to do what exactly?
+
+First we need an admin. Then as you said a bit of janitoring work on
+the web pages.
+
 -- 
-Duy
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
