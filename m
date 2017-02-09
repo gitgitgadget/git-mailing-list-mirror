@@ -6,56 +6,56 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0FB0B1FCC7
-	for <e@80x24.org>; Thu,  9 Feb 2017 23:43:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DA56E1FD6A
+	for <e@80x24.org>; Thu,  9 Feb 2017 23:48:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752312AbdBIXnV (ORCPT <rfc822;e@80x24.org>);
-        Thu, 9 Feb 2017 18:43:21 -0500
-Received: from mail-pf0-f193.google.com ([209.85.192.193]:34834 "EHLO
+        id S1751690AbdBIXre (ORCPT <rfc822;e@80x24.org>);
+        Thu, 9 Feb 2017 18:47:34 -0500
+Received: from mail-pf0-f193.google.com ([209.85.192.193]:34409 "EHLO
         mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751714AbdBIXnT (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Feb 2017 18:43:19 -0500
-Received: by mail-pf0-f193.google.com with SMTP id b145so227004pfb.2
-        for <git@vger.kernel.org>; Thu, 09 Feb 2017 15:41:53 -0800 (PST)
+        with ESMTP id S1751026AbdBIXrc (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Feb 2017 18:47:32 -0500
+Received: by mail-pf0-f193.google.com with SMTP id o64so168589pfb.1
+        for <git@vger.kernel.org>; Thu, 09 Feb 2017 15:46:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=wH3vOjsVe68Pm1HxBqa0u9TY+PqrpRoy2S1RnW9rpx4=;
-        b=B7ULgVkG3EmX03nLt8HAkk+zXuW8XhBdApuCfJdv4h4G+2lfhy8coMeEmlINULd5zi
-         uusAL9iwa5qa+vfdd136eF8wbzU/j/ykS3I3m7jBsZN6hQWcG5GkhGHAewVRU8IhpX8q
-         09lSzkoVpLZ1xLdYZV7hOw5fQpoTncL2KRjCTU93Pf0qqTKhkMKz8TXcTkd8FqO1XmpI
-         2xBXQk4PKW89ZeSU/mIx/OxiaqgQJFjWRjYdQd/hcf2N+q+z0VL9ABSYJN+FbsXjUBht
-         2iczrzPteTgEVw57sTO/SSOMIIj2up5usvbtTWdiy/1//L6lgDVeUkHLIV20Pe/WJn11
-         sIuw==
+        bh=VuDppIPVDX5vkrRzp7Tdiulx0gnF6w9BwLYNPWnmKIg=;
+        b=MftpLlYeh5E/CyLjYbHIp0yEnfD33cRBdlD7i9+k4DZ1hOnabeIxg0/2gdjbvcrML9
+         E0q6vOjz0i39GSHrr9jfWVyl4HPx5nh0rSGDa69KG/kdN3fnZC+xJ+WQNkkyBWAD54Dt
+         o8nDydfuDAiIHXWCQYFLdGLmZUUh/nXz8cFG/FukrgGFWh4Dd6/ItnNIbgL67qgSpdg6
+         2oDr2yJ22G8/letRDiN6l12HKFh+iuCVhb4YHSEvo/mgvadqIJhIGAZvnFgT252mEPyj
+         3sOznS2y7ty0ZRZXOCWV4LDPyYrHTRl7vwFKtczOHfbtyzvLl9xz/O2ZiMWGkar+1rhA
+         ZbKQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=wH3vOjsVe68Pm1HxBqa0u9TY+PqrpRoy2S1RnW9rpx4=;
-        b=dJa29qslIbxQJvknEof5r/AAHyfUl9XHnLrp9mznDiZUmKEA3HM48zwMcshO1i7CCL
-         BY6bM1GahtcXuOZAjS+gRrbDdY+nUexvZVaHaXft0EGVhxIpHrVRYotBlXDrcbCURKDK
-         DnOoZHjwsjyl0PZLtRZ17/T+MiZkUK6VbLWHMgeAmSLMUkbBJvReuFWaPwa2QuGZ59hU
-         NtO6s+tB/9Fdlnx6sFUbISVoi4ynHw6+V50CMadoTEjPsMe+0R6rda8rVT3TlktRus9W
-         ekpqJWL77MLMqf1lJihS2Fo5Cns37cqB2wPZg2krOEmbA3OHGm+EzOJ8wI4I2U6bVUTd
-         qGyg==
-X-Gm-Message-State: AMke39lHkdJ3LartX+ehgpibujkmWWiH10j+op+j3z40pz735AqNSEBFIT9sUU5OkY03JQ==
-X-Received: by 10.98.9.206 with SMTP id 75mr6611822pfj.159.1486683712616;
-        Thu, 09 Feb 2017 15:41:52 -0800 (PST)
+        bh=VuDppIPVDX5vkrRzp7Tdiulx0gnF6w9BwLYNPWnmKIg=;
+        b=clWSWuxhQj37MrJ3tVcfUaJvTnFZse2cTW/aRNg8qH5acPITacivwe/pFut0IsE82C
+         QhllwEg6ZCVNp7lZsbMEFh03bUZjijjCejP0bPDBaOiZhHHReGgP64RV1jMXl6eO5m+f
+         1YSj1uKNRLK0IM6lsQyNI/MRIF10aiy27Y+Xj2j4dAYWQi5HOhA9ZOHdsFYzDoGffGXo
+         PlymdRYKqsQVL23/QpB/9JEN5TpAYi3Q2SPG1rvSLu3ftnOdIfobigJq4yvyIhietIVN
+         ZoJGH8HBSYyz0vTNLO/+FnH3K3l71yLBa2SEdEcCpOQSBK4/2uUFXuyXBrRvcVhBKHR2
+         ovXA==
+X-Gm-Message-State: AMke39ni3pjOIWjNQGcoEM29GT/2Jk6dFsoZIwv1iVeR8Swb9DUmOToEtU6D2mn/93UUaQ==
+X-Received: by 10.84.231.142 with SMTP id g14mr7466163plk.13.1486683575305;
+        Thu, 09 Feb 2017 15:39:35 -0800 (PST)
 Received: from localhost ([2620:0:1000:8622:704f:61dd:c9f4:9782])
-        by smtp.gmail.com with ESMTPSA id l71sm31728569pga.13.2017.02.09.15.41.51
+        by smtp.gmail.com with ESMTPSA id z29sm31719456pgc.7.2017.02.09.15.39.34
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 09 Feb 2017 15:41:51 -0800 (PST)
+        Thu, 09 Feb 2017 15:39:34 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <johannes.schindelin@gmx.de>
-Cc:     git@vger.kernel.org, Jeff Hostetler <jeffhost@microsoft.com>
-Subject: Re: [PATCH] mingw: use OpenSSL's SHA-1 routines
-References: <6a29f8c60d315a24292c1fa9f5e84df4dfdbf813.1486679254.git.johannes.schindelin@gmx.de>
-Date:   Thu, 09 Feb 2017 15:41:51 -0800
-In-Reply-To: <6a29f8c60d315a24292c1fa9f5e84df4dfdbf813.1486679254.git.johannes.schindelin@gmx.de>
-        (Johannes Schindelin's message of "Thu, 9 Feb 2017 23:27:49 +0100
-        (CET)")
-Message-ID: <xmqqbmublyo0.fsf@gitster.mtv.corp.google.com>
+To:     Lars Schneider <larsxschneider@gmail.com>
+Cc:     git@vger.kernel.org, luke@diamand.org
+Subject: Re: [PATCH v2] git-p4: fix git-p4.pathEncoding for removed files
+References: <CAE5ih7-=bD_ZoL5pFYfD2Qvy-XE24V_cgge0XoAvuoTK02EDfg@mail.gmail.com>
+        <20170209150656.9070-1-larsxschneider@gmail.com>
+Date:   Thu, 09 Feb 2017 15:39:33 -0800
+In-Reply-To: <20170209150656.9070-1-larsxschneider@gmail.com> (Lars
+        Schneider's message of "Thu, 9 Feb 2017 16:06:56 +0100")
+Message-ID: <xmqqfujnlyru.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -64,20 +64,17 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+Lars Schneider <larsxschneider@gmail.com> writes:
 
-> From: Jeff Hostetler <jeffhost@microsoft.com>
+> unfortunately, I missed to send this v2. I agree with Luke's review and
+> I moved the re-encode of the path name to the `streamOneP4File` and
+> `streamOneP4Deletion` explicitly.
 >
-> Use OpenSSL's SHA-1 routines rather than builtin block-sha1 routines.
-> This improves performance on SHA1 operations on Intel processors.
-> ...
+> Discussion:
+> http://public-inbox.org/git/CAE5ih7-=bD_ZoL5pFYfD2Qvy-XE24V_cgge0XoAvuoTK02EDfg@mail.gmail.com/
 >
-> Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
+> Thanks,
+> Lars
 
-Nice.  Will queue as jh/mingw-openssl-sha1 topic; it is a bit too
-late for today's integration cycle to be merged to 'next', but let's
-have this by the end of the week in 'master'.
-
-Thanks.
+Thanks.  Will replace but will not immediately merge to 'next' yet,
+just in case Luke wants to tell me add his "Reviewed-by:".
