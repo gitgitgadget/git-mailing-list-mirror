@@ -2,247 +2,137 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,
+	STOX_REPLY_TYPE shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 739EA1FCC7
-	for <e@80x24.org>; Thu,  9 Feb 2017 23:33:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0C38F1FCC7
+	for <e@80x24.org>; Thu,  9 Feb 2017 23:34:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751682AbdBIXdm (ORCPT <rfc822;e@80x24.org>);
-        Thu, 9 Feb 2017 18:33:42 -0500
-Received: from mail-pg0-f65.google.com ([74.125.83.65]:34931 "EHLO
-        mail-pg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751225AbdBIXdk (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Feb 2017 18:33:40 -0500
-Received: by mail-pg0-f65.google.com with SMTP id 204so1470752pge.2
-        for <git@vger.kernel.org>; Thu, 09 Feb 2017 15:32:51 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=+u+x78QrLRatT/vNvTof84Cpbo63ys1g6tKQUqeQ19A=;
-        b=mGGaGEmC98yri12EXYxhBLDX2Tw0je5yluRnvTkh+PfouNBZB+Zd8NLYkVPJCTJXJF
-         NrCH968qHOYFa8pLF3tL6s0M7FA1Kz/jDRrHAtvYyhp1TEXTMNuWKLjQxBvAaEfq1YBv
-         v5yVogzcoF7CdbS1mX0miKO3MolewT4IB5yf4DU7CzPx+5ly2Np5vV4S0vo0GNz75AIQ
-         qdK35bKqAYwgf0jlTMfWVfeesGBFLfcMS+CB0lN3v0gqUTmH6B6YJQQ/6cyYtRTG6UnY
-         HTFQ2VrQcHEfKWcISN696fl/MpBNBT9sXPNB2xBJkwfzi0TuiAE3tOtRbSyZpTNGnlrZ
-         IkUQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=+u+x78QrLRatT/vNvTof84Cpbo63ys1g6tKQUqeQ19A=;
-        b=FgSvSIt7OdsXg42vMV94nXmd5eJtlofKcVkvbAx6mojqU+gr19evcUavZ7wzicqRZj
-         R89bG7OXUveW1VJjcSujDb//PrnbJqyngnJi0X5W2Yf0vQAsSEKpJnGBPYm3gdwN85Ju
-         Io0RgCcnicrSqCpB+aNAkJY1EJ1+pH6vojlWhRQTuwyYRpnUTxMzYniUIFVYPOFvEbre
-         KJX0eri9ZKUDI27zCE9AE9G4Z3/s9iNsJ7jcMOpJMxhmAcMGYY7PK28SC/nuuDnU3Srq
-         tzaxqzf8hfwwiah9noGOO1x4knzDlNZetCyS4Zwfm1lnlKPDI64pUVKZnKeEqyggHAP2
-         D4gQ==
-X-Gm-Message-State: AMke39mQ9WK0LGeauW3EtT3hV9QlLyZT8unZfkKpt8JdyATwd/ofT/gVh4mmkQ0qEFmpGw==
-X-Received: by 10.84.130.66 with SMTP id 60mr7415110plc.170.1486683170616;
-        Thu, 09 Feb 2017 15:32:50 -0800 (PST)
-Received: from localhost ([2620:0:1000:8622:704f:61dd:c9f4:9782])
-        by smtp.gmail.com with ESMTPSA id n28sm31783171pgd.5.2017.02.09.15.32.49
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 09 Feb 2017 15:32:49 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     unlisted-recipients:; (no To-header on input) git@vger.kernel.org,
-        bmwill@google.com
-Illegal-Object: Syntax error in Cc: address found on vger.kernel.org:
-        Cc:     unlisted-recipients:; (no To-header on input)git@vger.kernel.org
-                                                                     ^-missing end of address
-Subject: Re: [RFC-PATCHv2] submodules: add a background story
-References: <20170209020855.23486-1-sbeller@google.com>
-Date:   Thu, 09 Feb 2017 15:32:48 -0800
-In-Reply-To: <20170209020855.23486-1-sbeller@google.com> (Stefan Beller's
-        message of "Wed, 8 Feb 2017 18:08:55 -0800")
-Message-ID: <xmqqo9yblz33.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+        id S1751974AbdBIXeA (ORCPT <rfc822;e@80x24.org>);
+        Thu, 9 Feb 2017 18:34:00 -0500
+Received: from smtp-out-4.talktalk.net ([62.24.135.68]:39824 "EHLO
+        smtp-out-4.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751660AbdBIXd6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Feb 2017 18:33:58 -0500
+Received: from PhilipOakley ([92.31.218.76])
+        by smtp.talktalk.net with SMTP
+        id byBwceaf0cpskbyBwcIqH2; Thu, 09 Feb 2017 23:31:57 +0000
+X-Originating-IP: [92.31.218.76]
+X-Spam: 0
+X-OAuthority: v=2.2 cv=ILRAMUnG c=1 sm=1 tr=0 a=e6L6E7eW+5Nb7SO+DvSdIg==:117
+ a=e6L6E7eW+5Nb7SO+DvSdIg==:17 a=8nJEP1OIZ-IA:10 a=oa-xg8NNAAAA:8
+ a=NEAV23lmAAAA:8 a=29pjsaa-ENbRs2naNrIA:9 a=wPNLvfGTeEIA:10
+ a=MQ1BrC-N35uif390zSTS:22 a=Bn2pgwyD2vrAyMmN8A2t:22
+Message-ID: <454E7D934160418EB4C4871ED209CBCA@PhilipOakley>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From:   "Philip Oakley" <philipoakley@iee.org>
+To:     "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+        "Junio C Hamano" <gitster@pobox.com>
+Cc:     "Ashutosh Bapat" <ashutosh.bapat@enterprisedb.com>,
+        <git@vger.kernel.org>, "Michael Haggerty" <mhagger@alum.mit.edu>,
+        "Michael J Gruber" <git@drmicha.warpmail.net>,
+        "Matthieu Moy" <Matthieu.Moy@imag.fr>
+References: <CAFjFpRe8zqxs4OLbCrjnuEzF=75sbBJ+HuZqek49B=O=TFHq8A@mail.gmail.com> <xmqqbmucuwb0.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1702092142020.3496@virtualbox>
+Subject: Re: Bug with fixup and autosquash
+Date:   Thu, 9 Feb 2017 23:31:56 -0000
+Organization: OPDS
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain;
+        format=flowed;
+        charset="iso-8859-1";
+        reply-type=original
+Content-Transfer-Encoding: 7bit
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+X-CMAE-Envelope: MS4wfOj+RZyq2kdocYqwaY2PX6CqIv6LF0MWOJ2getVYxaWAU4mjH3xGrdUebJ7wVYLXkILDY2of2wE8F+e0PMSd7vF85MP3QdKWL05jMcA/kXqTfcgMt5qh
+ qo6vywDo/YWHVpsnLNS9yDRLj4lEjG8RkGmSN2JBXyIMNs9NIJZp5DahwDmW5JwQzg185xRPLpbO7ewRzqZCYIWwtdmmNhxkTCPcmHd8AqX02V4IddJJ+FzS
+ IOCDRt2orKur0PcTLC2adkMFfFH5FDhjqi5Kv0bEsMAe5D+vk9IjxAmYsLSz5KpZtw/KWAEVjQF3vg+G4lguczHXPWS7gCX7V9G9Fm6atfGFN/vbQlh2jShn
+ n/6Ma13tOnMnI8wOYX423bsiNMmRJg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
-
-> Just like gitmodules(5), gitattributes(5), gitcredentials(7),
-> gitnamespaces(7), gittutorial(7), we'd like to provide some background
-> on submodules, which is not specific to the `submodule` command, but
-> elaborates on the background and its intended usage.
+From: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+Sent: Thursday, February 09, 2017 8:55 PM
+> Hi Ashutosh and Junio,
 >
-> Add gitsubmodules(7), that explains the states, structure and usage of
-> submodules.
+> On Wed, 8 Feb 2017, Junio C Hamano wrote:
 >
-> Signed-off-by: Stefan Beller <sbeller@google.com>
-> ---
+>> Ashutosh Bapat <ashutosh.bapat@enterprisedb.com> writes:
+>>
+>> > I have been using git rebase heavily these days and seem to have found
+>> > a bug.
+>> >
+>> > If there are two commit messages which have same prefix e.g.
+>> > yyyyyy This is prefix
+>> > xxxxxx This is prefix and message
+>> >
+>> > xxxxxx comitted before yyyyyy
+>> >
+>> > Now I commit a fixup to yyyyyy using git commit --fixup yyyyyy
+>> > zzzzzz fixup! This is prefix
+>> >
+>> > When I run git rebase -i --autosquash, the script it shows me looks 
+>> > like
+>> > pick xxxxxx This is prefix and message
+>> > fixup zzzzzz fixup! This is prefix
+>> > pick yyyyyy This is prefix
+>> >
+>> > I think the correct order is
+>> > pick xxxxxx This is prefix and message
+>> > pick yyyyyy This is prefix
+>> > fixup zzzzzz fixup! This is prefix
+>> >
+>> > Is that right?
+>>
+>> [...]
+>>
+>> Unfortunately, "rebase -i --autosquash" reorders the entries by
+>> identifying the commit by its title, and it goes with prefix match so
+>> that fix-up commits created without using --fixup option but manually
+>> records the title's prefix substring can also work.
 >
-> This would replace the last patch of  sb/submodule-doc, though it's still
-> RFC. In this revision I took care of the technical details (i.e. proper
-> formatting, spelling), and only slight rewording of the text.
+> This prefix match also happens to introduce a serious performance problem,
+> which is why I "fixed" this issue in the rebase--helper already (which is
+> the case if you are using Git for Windows, whose master branch builds on
+> Linux and MacOSX as well). I quoted "fix" because my motivation was to fix
+> the performance problem, not the "incorrect match" problem.
 >
-> The main issue persists; see bottom of the patch:
+> The rebase--helper code (specifically, the patch moving autosquash logic
+> into it: https://github.com/dscho/git/commit/7d0831637f) tries to match
+> exact onelines first,
+
+While I think this is an improvement, and will strongly support the `git 
+commit --fixup=<commit>` option which will, if the sha1/oid is given, create 
+the exact commit subject line.
+
+However it would also be useful if the actual commit subject line could have 
+a similar format option, so that those who use say the git gui (rather than 
+the cli) for the commit message, could easily create the `!fixup <commit>` 
+message which would allow a broader range of ways of spelling the commit 
+(e.g. giving a sha1(min length) that is within the rebase todo list).
+
+> and falls back to prefix matching only after that.
 >
->   SAMPLE WORKFLOWS (RFC/TODO)
->   ---------------------------
->   
->   Do we need
->   
->   * an opinionated way to check for a specific state of a submodule
->   * (submodule helper to be plumbing?)
->   * expose the design mistake of having the (name->path) mapping inside the
->     working tree, i.e. never remove a name from the submodule config even when
->     the submodule doesn't exist any more.
+> Now that the sequencer-i patch series is in `master`, the next step is to
+> send the patch series introducing the rebase--helper. The patch series
+> including the fix discussed above relies on that one. Meaning that it will
+> take a while to get through the mill.
+>
+> So please do not hold your breath until this feature/fix hits an official
+> Git version. If you need it[*1*] faster, feel free to build Git for
+> Windows' master and run with that for a while.
+>
+> Ciao,
+> Johannes
+>
+> Footnote: By "it" I mean "the feature/fix", not "an official Git version"
+> nor "your breath".
+>
+--
+Philip 
 
-I am not sure about the last item.  
-
-Are you talking about a case where submodule comes and goes (think:
-"git checkout v1.0" that would make submodules added since that
-version disappar)?  .gitmodules that is checked out would not have
-any entry, but .git/config needs to record the end-user preference
-for the module, so that the user can do "git checkout -" to come
-back, no?  IOW .git/config that mentions all the submodule the user
-ever showed interests in is not a design mistake, so you must be
-talking about something else, but I do not know what it is.
-
-> diff --git a/Documentation/git-submodule.txt b/Documentation/git-submodule.txt
-> index 4a4cede144..d38aa2d53a 100644
-> --- a/Documentation/git-submodule.txt
-> +++ b/Documentation/git-submodule.txt
-> @@ -24,37 +24,7 @@ DESCRIPTION
->  -----------
->  Inspects, updates and manages submodules.
->  
-> -A submodule allows you to keep another Git repository in a subdirectory
-> ...
-> -if you choose to go that route.
-> +For more information about submodules, see linkgit:gitsubmodules[5]
-
-OK.
-
-> @@ -420,6 +390,10 @@ This file should be formatted in the same way as `$GIT_DIR/config`. The key
->  to each submodule url is "submodule.$name.url".  See linkgit:gitmodules[5]
->  for details.
->  
-> +SEE ALSO
-> +--------
-> +linkgit:gitsubmodules[1], linkgit:gitmodules[1].
-
-Are they both in section (1)?  I think the former (concepts) belongs
-to section 7 and the latter (file formats) belongs to section 5.
-
-> diff --git a/Documentation/gitsubmodules.txt b/Documentation/gitsubmodules.txt
-> new file mode 100644
-> index 0000000000..3369d55ae9
-> --- /dev/null
-> +++ b/Documentation/gitsubmodules.txt
-> @@ -0,0 +1,194 @@
-> +gitsubmodules(7)
-> +================
-> +
-> +NAME
-> +----
-> +gitsubmodules - information about submodules
-> +
-> +SYNOPSIS
-> +--------
-> +$GIT_DIR/config, .gitmodules
-> +
-> +------------------
-> +git submodule
-> +------------------
-> +
-> +DESCRIPTION
-> +-----------
-> +
-> +A submodule allows you to keep another Git repository in a subdirectory
-> +...
-> +When cloning or pulling a repository containing submodules however,
-> +the submodules will not be checked out by default; You need to instruct
-> +'clone' to recurse into submodules. The 'init' and 'update' subcommands
-
-I think this is not "You need to", but rather "You can, if you want
-to have each and every submodules."
-
-> +of 'git submodule' will maintain submodules checked out and at an
-> +appropriate revision in your working tree.
-> +
-> +WHEN TO USE
-> +-----------
-> +
-> +Submodules, repositories inside other repositories,
-> +can be used for different use cases:
-> +
-> +* To have finer grained access control.
-> +  The design principles of Git do not allow for partial repositories to be
-> +  checked out or transferred. A repository is the smallest unit that a user
-> +  can be given access to. Submodules are separate repositories, such that
-> +  you can restrict access to parts of your project via the use of submodules.
-> +
-> +* To decouple Git histories.
-> +  Decoupling histories has different benefits.
-> +
-> +** When you want to use a (third party) library tied to a specific version.
-> +   Using submodules for a library allows you to have a clean history for
-> +   your own project and only updating the library in the submodule when needed.
-
-I somehow do not see this as decoupling; it is keeping what is
-originally separate separate, isn't it?
-
-> +** In its current form Git scales up poorly for very large repositories that
-> +   change a lot, as the history grows very large. For that you may want to look
-> +   at shallow clone, sparse checkout or git-lfs.
-> +   However you can also use submodules to e.g. hold large binary assets
-> +   and these repositories are then shallowly cloned such that you do not
-> +   have a large history locally.
-
-In other words, a better way to list these may be 
-
- 1. using another project that stands on its own.
-
- 2. artificially split a (logically single) project into multiple
-    repositories and tying them back together.
-
-The access control and performance reasons are subclasses of 2.
-IOW, if Git had per-path ACL and infinite scaling, you wouldn't be
-splitting your project into submodules for 2.  You would still want
-to use somebody else's project by binding it as a subproject, instead
-of merging its history into yours.
-
-> +When working with submodules, you can think of them as in a state machine.
-> +So each submodule can be in a different state, the following indicators are used:
-> +
-> +* the existence of the setting of 'submodule.<name>.url' in the
-> +  superprojects configuration
-> +* the existence of the submodules working tree within the
-> +  working tree of the superproject
-> +* the existence of the submodules git directory within the superprojects
-> +  git directory at $GIT_DIR/modules/<name> or within the submodules working
-> +  tree
-> +
-> +      State      URL config        working tree     git dir
-> +      -----------------------------------------------------
-> +      uninitialized    no               no           no
-> +      initialized     yes               no           no
-> +      populated       yes              yes          yes
-> +      depopulated     yes               no          yes
-> +      deinitialized    no               no          yes
-> +      uninteresting    no              yes          yes
-> +
-> +      invalid          no              yes           no
-> +      invalid         yes              yes           no
-
-I do not have strong opinions on these labels; are submodule folks
-happy with the above vocabulary?
-
-"uninteresting" is not explained in the below?
-
-> ...
-> +SEE ALSO
-> +--------
-> +linkgit:git-submodule[1], linkgit:gitmodules[1].
-
-Ditto.
