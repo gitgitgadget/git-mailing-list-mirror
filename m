@@ -6,63 +6,84 @@ X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9D4FB1FAF4
-	for <e@80x24.org>; Thu,  9 Feb 2017 03:47:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BDB671FAF4
+	for <e@80x24.org>; Thu,  9 Feb 2017 03:59:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751660AbdBIDrB (ORCPT <rfc822;e@80x24.org>);
-        Wed, 8 Feb 2017 22:47:01 -0500
-Received: from cloud.peff.net ([104.130.231.41]:52007 "EHLO cloud.peff.net"
+        id S1751393AbdBID6q (ORCPT <rfc822;e@80x24.org>);
+        Wed, 8 Feb 2017 22:58:46 -0500
+Received: from cloud.peff.net ([104.130.231.41]:52013 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751641AbdBIDrA (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Feb 2017 22:47:00 -0500
-Received: (qmail 23862 invoked by uid 109); 9 Feb 2017 03:47:00 -0000
+        id S1751111AbdBID6p (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Feb 2017 22:58:45 -0500
+Received: (qmail 24661 invoked by uid 109); 9 Feb 2017 03:58:42 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 09 Feb 2017 03:47:00 +0000
-Received: (qmail 24635 invoked by uid 111); 9 Feb 2017 03:47:04 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 09 Feb 2017 03:58:42 +0000
+Received: (qmail 13884 invoked by uid 111); 9 Feb 2017 03:58:46 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 08 Feb 2017 22:47:04 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 08 Feb 2017 22:46:58 -0500
-Date:   Wed, 8 Feb 2017 22:46:58 -0500
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 08 Feb 2017 22:58:46 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 08 Feb 2017 22:58:39 -0500
+Date:   Wed, 8 Feb 2017 22:58:39 -0500
 From:   Jeff King <peff@peff.net>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Siddharth Kannan <kannan.siddharth12@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Feb 2017, #02; Mon, 6)
-Message-ID: <20170209034657.qbkzbbzuvjpxl422@sigill.intra.peff.net>
-References: <xmqqzihzymn3.fsf@gitster.mtv.corp.google.com>
+Cc:     Stefan Hajnoczi <stefanha@redhat.com>,
+        Brandon Williams <bmwill@google.com>, git@vger.kernel.org
+Subject: Re: [PATCH v2 2/2] grep: use '/' delimiter for paths
+Message-ID: <20170209035839.wqsh6ibgnmxyjusi@sigill.intra.peff.net>
+References: <20170120171126.16269-1-stefanha@redhat.com>
+ <20170120171126.16269-3-stefanha@redhat.com>
+ <xmqqpojhwf2r.fsf@gitster.mtv.corp.google.com>
+ <20170120235133.GA146274@google.com>
+ <20170207150414.GD8583@stefanha-x1.localdomain>
+ <xmqq8tphzr41.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqzihzymn3.fsf@gitster.mtv.corp.google.com>
+In-Reply-To: <xmqq8tphzr41.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Feb 06, 2017 at 02:34:08PM -0800, Junio C Hamano wrote:
+On Tue, Feb 07, 2017 at 12:24:30PM -0800, Junio C Hamano wrote:
 
-> * sk/parse-remote-cleanup (2017-02-06) 1 commit
->   (merged to 'next' on 2017-02-06 at 6ec89f72d5)
->  + parse-remote: remove reference to unused op_prep
+> Having said that, I actually think "make it more convenient" without
+> making anything incorrect would be to teach the revision parser to
+> understand
 > 
->  Code clean-up.
+>     <any-expression-to-name-a-tree-ish:<path>
 > 
->  Will merge to 'master'.
+> as an extended SHA-1 expression to name the blob or the tree at that
+> path in the tree-ish, e.g. if we can make the revision parser to
+> take this
+> 
+>     master:Documentation:git.txt
 
-Hrm. Are the functions in git-parse-remote.sh part of the public API?
-That is, do we expect third-party scripts to do:
+So here I was wondering what happens when you have a filename with a
+colon in it, but then...
 
-  . "$(git rev-parse --exec)/git-parse-remote.sh
-  error_on_missing_default_upstream "$a" "$b" "$c" "$d"
+> to be able to show the same thing as well.  You'd need to backtrack
+> the parsing (e.g. attempt to find "Documentation:git.txt" in
+> "master", fail to find any, then fall back to find "git.txt" in
+> "master:Documentation", find one, and be happy, or something like
+> that), and define how to resolve potential ambiguity (e.g. there may
+> indeed be "Documentation:git.txt" and "Documentation/git.txt" in the
+> tree-ish "master"), though.
 
-? If so, then they may be surprised by the change in function signature.
+...you obviously did think of that. Backtracking sounds pretty nasty,
+though. What's the time complexity of parsing:
 
-I generally think of git-sh-setup as the one that external scripts would
-use. There _is_ a manpage for git-parse-remote, but it doesn't list any
-functions. So maybe they're all fair game for changing?
+  master:a:a:a:a:a:a:a:a:a:a:a
 
-I just didn't see any discussion of this in the original patch thread,
-so I wanted to make sure we were making that decision consciously, and
-not accidentally. :)
+I think there are 2^(n-1) possible paths (each colon can be a real colon
+or a slash). Though I guess if you walk the trees as you go, you only
+have to examine at most "n" paths to find the first-level tree, and then
+at most "n-1" paths at the second level, and so on.
+
+Unless you really do have ambiguous trees, in which case you have to
+walk down multiple paths.
+
+It certainly would not be the first combinatoric explosion you can
+convince Git to perform. But it does seem like a lot of complication for
+something as simple as path lookups.
 
 -Peff
