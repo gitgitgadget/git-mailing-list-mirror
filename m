@@ -2,135 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A66CC1FC46
-	for <e@80x24.org>; Thu,  9 Feb 2017 12:00:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E69321FCC7
+	for <e@80x24.org>; Thu,  9 Feb 2017 12:13:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751834AbdBIMAP (ORCPT <rfc822;e@80x24.org>);
-        Thu, 9 Feb 2017 07:00:15 -0500
-Received: from mail-oi0-f68.google.com ([209.85.218.68]:33929 "EHLO
-        mail-oi0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751448AbdBIMAL (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Feb 2017 07:00:11 -0500
-Received: by mail-oi0-f68.google.com with SMTP id w144so104001oiw.1
-        for <git@vger.kernel.org>; Thu, 09 Feb 2017 04:00:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=5F+8Vye38+Ybf6BPXdF3E/ohCPcruiCJy/YuVAR6ZEc=;
-        b=DGAaNHA5yu2dA7AvcZFFxwTs+EIKojRjBUaXQRSmlnRz5oOgsn2/0qr65zgbtlspOO
-         sECcCIIFTVVIf1KjumnelgqwLYzvRlzQPQ+Csl0PCMBYxghGiGBg4h5FSJ0yON7alQx7
-         tHaXauajjnDye9SofpmqabXQsYqYYuq4d+zXnt3yCUtvyH1Mj+5f/j3kYA4YmCMDgi2/
-         iXBKACXJogWBn3ElIENn1XJU7IYUWjtvmEuIf4FtvL2r3/6BU1fa7IEhJdMKL/a3qmIY
-         H7/nVjioN4+Bukh07SJJ47qkEqpWX5JWcLIf/CEvnX26LR/YRNPTuVNIOl21jV5p7FGf
-         KxbQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=5F+8Vye38+Ybf6BPXdF3E/ohCPcruiCJy/YuVAR6ZEc=;
-        b=HEK6IuUYAYLldfKcXecHJs430EXzdHFSIQ8ZpyNdFiBTgbfz4ZARWHpxVyVJW03cPr
-         zzdm1FQPzoLOfy5WeynabmUtplPoSX4GtDNiWLdyDIH8repPDOD9KiBp7MQMsQfZEKdA
-         5XUE6X79ornSkH+deP6RzxsQ7ncCnJFhtVD8qibSolFIx8iSzXSuc0b1awjOJPcK2E9Q
-         IOOQmpXeOpoc8yY3Mx7d6yjGHhN5asWvzZca8xfbwm0A7k1iM4SghWope74gDxrwEYI+
-         GwgwYUW8Dz2wHztUzPzwA65sWhQjFHW5yxZ3EfOGiCHNx6QQFVzrVmbEza734yhXaZbi
-         I00Q==
-X-Gm-Message-State: AMke39n2fXnsaj3dHHnTu5oKojqfWiGI6XRTU+c498BIHyQ8J2W08OGC95phad+ST19fuDryDzn0HFtrmiveBw==
-X-Received: by 10.202.60.67 with SMTP id j64mr1419731oia.124.1486641602696;
- Thu, 09 Feb 2017 04:00:02 -0800 (PST)
+        id S1751157AbdBIMNJ (ORCPT <rfc822;e@80x24.org>);
+        Thu, 9 Feb 2017 07:13:09 -0500
+Received: from zm23-mta-out-2.grenet.fr ([130.190.191.53]:57540 "EHLO
+        zm23-mta-out-2.grenet.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751023AbdBIMMp (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Feb 2017 07:12:45 -0500
+Received: from zm23-mta-out.grenet.fr (zm23-mta-out.grenet.fr [130.190.191.35])
+        by zm23-mta-out-2.grenet.fr (Postfix) with ESMTP id 66353C537;
+        Thu,  9 Feb 2017 13:11:15 +0100 (CET)
+Received: from smtps.univ-grenoble-alpes.fr (smtps2.u-ga.fr [195.83.24.202])
+        by zm23-mta-out.grenet.fr (Postfix) with ESMTP id 5FF96100209;
+        Thu,  9 Feb 2017 13:11:15 +0100 (CET)
+Received: from anie (anie.imag.fr [129.88.42.32])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: moym@univ-grenoble-alpes.fr)
+        by smtps.univ-grenoble-alpes.fr (Postfix) with ESMTPSA id 64BB060388;
+        Thu,  9 Feb 2017 12:28:11 +0100 (CET)
+From:   Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     Jeff King <peff@peff.net>, git <git@vger.kernel.org>,
+        Pranit Bauva <pranit.bauva@gmail.com>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        Carlos =?iso-8859-1?Q?Mart=EDn?= Nieto <cmn@dwim.me>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Thomas Gummerer <t.gummerer@gmail.com>,
+        Siddharth Kannan <kannan.siddharth12@gmail.com>
+Subject: Re: GSoC 2017: application open, deadline = February 9, 2017
+References: <vpq1svtstud.fsf@anie.imag.fr>
+        <20170125204504.ebw2sa4uokfwwfnt@sigill.intra.peff.net>
+        <vpq37fowx5q.fsf@anie.imag.fr>
+        <CAP8UFD3aygSf5U2abnpCfRzEf-hH5fSNuzFBBtgCjSQC3F8c5A@mail.gmail.com>
+        <vpqzihvpt41.fsf@anie.imag.fr>
+        <CAP8UFD1V=WD-EHkBkAVET9ztvsHZr_S5GVBWrQ6F1e0LwJoksQ@mail.gmail.com>
+Date:   Thu, 09 Feb 2017 13:11:15 +0100
+In-Reply-To: <CAP8UFD1V=WD-EHkBkAVET9ztvsHZr_S5GVBWrQ6F1e0LwJoksQ@mail.gmail.com>
+        (Christian Couder's message of "Thu, 9 Feb 2017 11:45:45 +0100")
+Message-ID: <vpqlgtfmun0.fsf@anie.imag.fr>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.74.158.1 with HTTP; Thu, 9 Feb 2017 03:59:31 -0800 (PST)
-In-Reply-To: <37fe2024-0378-a974-a28d-18a89d3e2312@alum.mit.edu>
-References: <20170208113144.8201-1-pclouds@gmail.com> <20170208113144.8201-3-pclouds@gmail.com>
- <37fe2024-0378-a974-a28d-18a89d3e2312@alum.mit.edu>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Thu, 9 Feb 2017 18:59:31 +0700
-Message-ID: <CACsJy8Diy92CNbJ1OBn893VFFrSsxBFWSyQHjt_Dzq9x7jfibQ@mail.gmail.com>
-Subject: Re: [PATCH 2/2] worktree.c: use submodule interface to access refs
- from another worktree
-To:     Michael Haggerty <mhagger@alum.mit.edu>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Stefan Beller <sbeller@google.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
+X-Greylist: Whitelist-UJF SMTP Authentifie (moym@univ-grenoble-alpes.fr) via smtps.univ-grenoble-alpes.fr ACL (97)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Feb 9, 2017 at 1:07 PM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
-> It is unquestionably a good goal to avoid parsing references outside of
-> `refs/files-backend.c`. But I'm not a fan of this approach.
+Christian Couder <christian.couder@gmail.com> writes:
 
-Yes. But in this context it was more of a guinea pig. I wanted
-something simple enough to code up show we can see what the approach
-looked like. Good thing I did it.
+> Well Peff wrote in reply to your email:
+>
+>> I did co-admin last year and the year before, but I made Matthieu do all
+>> the work. :)
+>>
+>> I do not mind doing the administrative stuff. But the real work is in
+>> polishing up the ideas list and microprojects page.
+>
+> So I thought Peff would be ok to be the admin (do "the administrative
+> stuff").
 
->
-> There are two meanings of the concept of a "ref store", and I think this
-> change muddles them:
->
-> 1. The references that happen to be *physically* stored in a particular
->    location, for example the `refs/bisect/*` references in a worktree.
->
-> 2. The references that *logically* should be considered part of a
->    particular repository. This might require stitching together
->    references from multiple sources, for example `HEAD` and
->    `refs/bisect` from a worktree's own directory with other
->    references from the main repository.
->
-> Either of these concepts can be implemented via the `ref_store` abstraction.
->
-> The `ref_store` for a submodule should represent the references
-> logically visible from the submodule. The main program shouldn't care
-> whether the references are stored in a single physical location or
-> spread across multiple locations (for example, if the submodule were
-> itself a linked worktree).
->
-> The `ref_store` that you want here for a worktree is not the worktree's
-> *logical* `ref_store`. You want the worktree's *physical* `ref_store`.
+There are several things the admins need to do:
 
-Yep.
+1) "administrative stuff" about money with Conservancy (aka SFC). As I
+   understand it, really not much to do since Google and Conservancy
+   work directly with each other for most stuff.
 
-> Mixing logical and physical reference stores together is a bad idea
-> (even if we were willing to ignore the fact that worktrees are not
-> submodules in the accepted sense of the word).
->
-> ...
->
-> I think the best solution would be to expose the concept of `ref_store`
-> in the public refs API. Then users of submodules would essentially do
->
->     struct ref_store *refs = get_submodule_refs(submodule_path);
->     ... resolve_ref_recursively(refs, refname, 0, sha1, &flags) ...
->     ... for_each_ref(refs, fn, cb_data) ...
->
-> whereas for a worktree you'd have to look up the `ref_store` instance
-> somewhere else (or maybe keep it as part of some worktree structure, if
-> there is one) but you would use it via the same API.
+2) Filling-in the application, i.e. essentially copy-past from the
+   website.
+ 
+3) Then, make sure things that must happen do happen (reviewing
+   applications, start online or offline discussions when needed, ...).
 
-Oh I was going to reply to Stefan about his comment to my (**)
-footnote. Something along the this line
+Last year Peff did 1) and I did most of 2+3). My understanding of Peff's
+reply was "OK to continue doing 1)".
 
-"Ideally we would introduce a new set of api, maybe with refs_ prefix,
-that takes a refs_store. Then submodule people can get a ref store
-somewhere and pass to it. Worktree people get maybe some other refs
-store for it. The "old" api like for_each_ref() is a thin wrapper
-around it, just like read_cache() vs read_index(&the_index). If the
-*_submodule does not see much use, we might as well kill it and use
-the generic refs_*".
+I think you (Christian) could do 2+3). It's much, much less work than
+being a mentor. Honnestly I felt like I did nothing and then Peff said I
+did all the work :o). I can help, but as I said I'm really short in time
+budget and I'd like to spend it more on coding+reviewing.
 
-If I didn't misunderstood anything else, then I think we're on the same page.
+> I don't think emails in this thread is what really counts.
+> I worked on the Idea page starting some months ago, and as I wrote I
+> reviewed it again and found it not too bad.
 
-Now I need to see if I can get there in a reasonable time frame (so I
-can fix my "gc in worktree" problem properly) or I would need
-something temporary but not so hacky. I'll try to make this new api
-and see how it works out. If you think I should not do it right away,
-for whatever reason, stop me now.
+OK, so giving up now seems unfair to you indeed.
+
+I created a Git organization and invited you + Peff as admins. I'll
+start cut-and-pasting to show my good faith ;-).
+
+> About the janitoring part, as I previously said I am reluctant to do
+> that as I don't know what Dscho would be ok to mentor.
+> And I also think it's not absolutely necessary to do it before
+> applying as an org.
+
+Right.
+
 -- 
-Duy
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
