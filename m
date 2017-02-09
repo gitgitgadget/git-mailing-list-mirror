@@ -2,55 +2,55 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8E5111FCC7
-	for <e@80x24.org>; Thu,  9 Feb 2017 16:59:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B82B31FCC7
+	for <e@80x24.org>; Thu,  9 Feb 2017 17:12:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932345AbdBIQ7K (ORCPT <rfc822;e@80x24.org>);
-        Thu, 9 Feb 2017 11:59:10 -0500
-Received: from mail-it0-f45.google.com ([209.85.214.45]:35773 "EHLO
-        mail-it0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932343AbdBIQ7I (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Feb 2017 11:59:08 -0500
-Received: by mail-it0-f45.google.com with SMTP id 203so129813422ith.0
-        for <git@vger.kernel.org>; Thu, 09 Feb 2017 08:58:45 -0800 (PST)
+        id S1754082AbdBIRMZ (ORCPT <rfc822;e@80x24.org>);
+        Thu, 9 Feb 2017 12:12:25 -0500
+Received: from mail-io0-f174.google.com ([209.85.223.174]:35866 "EHLO
+        mail-io0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753704AbdBIRMX (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Feb 2017 12:12:23 -0500
+Received: by mail-io0-f174.google.com with SMTP id j13so22040233iod.3
+        for <git@vger.kernel.org>; Thu, 09 Feb 2017 09:12:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=xhkAA2t0lR/7lwyrR71tcpRskb71zMhzpXVYGFsC4Xk=;
-        b=ZfOT4/bDvpsOv9Xkr5A4YttNiqa5Xo0rp4W0qFnDAADC/72uUD7u9y+L6A1LtjwmdD
-         eBdhM45BADDnV+4MN6vWSmJ4tey81u0sHFwTNuOrFxRL4kKRVxbkPVCl67Et1duSN8aJ
-         rqJ7uA3jfx8soA9trcunODeOLq2P1vIVQxhCwQe8LNZXAl3Dw/HsYSmijFqZj1Sz91oN
-         u2ygbr96sSPLZTT7jIIRY4RFqhx/gQpb2Uq6gq7JRIKSytXJgha41UFSG+ICz5pHEzav
-         GJv+PCKiKGsZVi9Jc/s+iyk5nymnRHIRJZSdX4tfNXmMJf+0GB4hdTsyNeChhvUnJFQg
-         RDhQ==
+        bh=UYknPmuN8+gI8Hd4Hb9x9m02CxB3ddB7ZN+zRZN4Htk=;
+        b=BHdvpBqRzPbjthxWfZgvFWsZcggkCjSH97QHZ0wt560pYFnTrIDNGSqTyDZyVUlQeq
+         oqFt0a9WAgAjG7SBy3Jo0QvofcOVOv4YXFajnPICiLescj/D5Q47tEv43jT7aMCZBGeu
+         swXBpP82Hp/gc/zkI8cZ4m4eMfnGyz7JJ5JcVZ4Kh2zZhtBLKqIm/NFXjeesR467OR1O
+         aM6X2PsKO/rzBRk5LN5uytYtNzrEippNF7c3BVk6sDEbSbe20EnIH+qeTFaQVxHX2Q9/
+         PBpU1AzMyTVQNTngiXJx5F6I834t5M5AgKXNUMhgWaIyr+lQ+jn/4G/GnIWbcZOnc2z8
+         6giw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=xhkAA2t0lR/7lwyrR71tcpRskb71zMhzpXVYGFsC4Xk=;
-        b=NMNnckTo70sDwMAyF27ufFp0OPDqFAxa59amJ+t80L/mJW9Zml0wwVj93xnleMyFCF
-         D+KDQRN1fS7Qqmg/jcHac9AnlQHiFpVKqVmZDlDRwjjr3XlVWyA8DH737TkfM+krC1SR
-         6Xlb/vR03HU2iVpZ9E7esmoVbB6bixOpDghDEdyNlJdwojDpzS06IXHQvtvKbxVaG0be
-         2kKaISDI1wN1t6PvP+9UTSSEh575tEtQOPQ+0qswdXQXS1g2/AdA43r2LxmZdYBg9zbI
-         KgvEEUaJbJOgH83CvJRVrjmbuiKEb1gpQN4HZbNCpitnoGTsF9Gw3LzG46KQOKytzJ11
-         R+eQ==
-X-Gm-Message-State: AMke39n3zqZN4FjgDLSLp12N+inKE6JZTsbwYMAHNDJKztXGOPQnibnK3dJnShC7ENE6PjANa8n/AoH2uQqKo2Ll
-X-Received: by 10.36.34.79 with SMTP id o76mr3977652ito.116.1486659524932;
- Thu, 09 Feb 2017 08:58:44 -0800 (PST)
+        bh=UYknPmuN8+gI8Hd4Hb9x9m02CxB3ddB7ZN+zRZN4Htk=;
+        b=m4w01bnRCqQKm5ewjsStyB34dx1tTP5hIeoRxIqoojSCvyc2vO8ICiAXxMswZyo0cy
+         9ZjujzqCmqGug7A2RQPt02+H0JI28Yb+EL/RCL6+13KH843RfUELtVIbSAL3h3cdHtZ1
+         I4OTfucTR5wdaUi0SrPp47JpE7I6K8/z0M8d40i06US+ee1EIUaZSIEhlEhSOLHuYCRD
+         it5dD8Y5GYTF8It3Y+vLaSdvQN68MoYozcdeA4+IrOlBE+wtM4zcwIIML63k+Uny1ElR
+         WA4kGHReb4ZPKXHJz94Jva68SXcvVRcb7/Z99BjHTCKdNwc5zo62gOrOZXTvnu2bka7H
+         h82w==
+X-Gm-Message-State: AMke39nWsUaErPTBMIoVtSqLHwpv5MIqW5+l3En6kDrWVrQuYntoZWP0bqODci1Jf3kdMmMdgvhlDAF+x90qqN/w
+X-Received: by 10.107.3.160 with SMTP id e32mr4223404ioi.52.1486659810496;
+ Thu, 09 Feb 2017 09:03:30 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.79.39.19 with HTTP; Thu, 9 Feb 2017 08:58:44 -0800 (PST)
-In-Reply-To: <a944446c4c374125082f5ad8b79e731704b66196.1486629195.git.mhagger@alum.mit.edu>
-References: <cover.1486629195.git.mhagger@alum.mit.edu> <a944446c4c374125082f5ad8b79e731704b66196.1486629195.git.mhagger@alum.mit.edu>
+Received: by 10.79.39.19 with HTTP; Thu, 9 Feb 2017 09:03:30 -0800 (PST)
+In-Reply-To: <8958e7e26cc8bf11a76672eb8ea98bc9ba662fdc.1486629195.git.mhagger@alum.mit.edu>
+References: <cover.1486629195.git.mhagger@alum.mit.edu> <8958e7e26cc8bf11a76672eb8ea98bc9ba662fdc.1486629195.git.mhagger@alum.mit.edu>
 From:   Stefan Beller <sbeller@google.com>
-Date:   Thu, 9 Feb 2017 08:58:44 -0800
-Message-ID: <CAGZ79kau2bYs7zegEiacAdbhn1LyOfAH9__rePfbQkX2iLgmMQ@mail.gmail.com>
-Subject: Re: [PATCH 1/5] refs: store submodule ref stores in a hashmap
+Date:   Thu, 9 Feb 2017 09:03:30 -0800
+Message-ID: <CAGZ79kYiXL5sNcLCjfmCHSL11u9sVi+Uv7hM93AX7yH3iO=7TA@mail.gmail.com>
+Subject: Re: [PATCH 2/5] refs: push the submodule attribute down
 To:     Michael Haggerty <mhagger@alum.mit.edu>
 Cc:     Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
@@ -64,21 +64,12 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> @@ -1402,17 +1435,17 @@ struct ref_store *ref_store_init(const char *submodule)
+On Thu, Feb 9, 2017 at 5:26 AM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
+> Push the submodule attribute down from ref_store to files_ref_store.
+> This is another step towards loosening the 1:1 connection between
+> ref_stores and submodules.
 >
->  struct ref_store *lookup_ref_store(const char *submodule)
->  {
+> Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 
-> +       if (!submodule_ref_stores.tablesize)
-> +               hashmap_init(&submodule_ref_stores, submodule_hash_cmp, 20);
-
-
-So we can lookup a submodule even before we initialized the subsystem?
-Does that actually happen? (It sounds like a bug to me.)
-
-Instead of initializing, you could return NULL directly here.
-
-Otherwise looks good.
-
-Thanks,
+Looks good,
 Stefan
