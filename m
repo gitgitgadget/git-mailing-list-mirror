@@ -7,75 +7,100 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 19C0F1FCC7
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2FC171FCC7
 	for <e@80x24.org>; Thu,  9 Feb 2017 22:12:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932530AbdBIWML (ORCPT <rfc822;e@80x24.org>);
-        Thu, 9 Feb 2017 17:12:11 -0500
-Received: from mout.gmx.net ([212.227.15.18]:52875 "EHLO mout.gmx.net"
+        id S932520AbdBIWMK (ORCPT <rfc822;e@80x24.org>);
+        Thu, 9 Feb 2017 17:12:10 -0500
+Received: from mout.gmx.net ([212.227.17.20]:55465 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1754162AbdBIWLT (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1754163AbdBIWLT (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 9 Feb 2017 17:11:19 -0500
-Received: from virtualbox ([37.201.192.48]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MV5hN-1cuq4e206P-00YS0j; Thu, 09
- Feb 2017 23:02:53 +0100
-Date:   Thu, 9 Feb 2017 23:02:51 +0100 (CET)
+Received: from virtualbox ([37.201.192.48]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MEtba-1cegkP3xMI-00G3uM; Thu, 09
+ Feb 2017 22:53:36 +0100
+Date:   Thu, 9 Feb 2017 22:53:34 +0100 (CET)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Ashutosh Bapat <ashutosh.bapat@enterprisedb.com>,
-        git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>,
-        Michael J Gruber <git@drmicha.warpmail.net>,
-        Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: Re: Bug with fixup and autosquash
-In-Reply-To: <xmqqwpcznjqi.fsf@gitster.mtv.corp.google.com>
-Message-ID: <alpine.DEB.2.20.1702092301070.3496@virtualbox>
-References: <CAFjFpRe8zqxs4OLbCrjnuEzF=75sbBJ+HuZqek49B=O=TFHq8A@mail.gmail.com> <xmqqbmucuwb0.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1702092142020.3496@virtualbox> <xmqqwpcznjqi.fsf@gitster.mtv.corp.google.com>
+To:     Lars Schneider <larsxschneider@gmail.com>
+cc:     Junio C Hamano <gitster@pobox.com>,
+        Josh Triplett <josh@joshtriplett.org>, git@vger.kernel.org
+Subject: Re: Cross-referencing the Git mailing list archive with their
+ corresponding commits in `pu`
+In-Reply-To: <3F7E4C9E-593E-4FC5-B820-E6A0CDEB7476@gmail.com>
+Message-ID: <alpine.DEB.2.20.1702092242120.3496@virtualbox>
+References: <alpine.DEB.2.20.1702041206130.3496@virtualbox> <xmqqwpd316f7.fsf@gitster.mtv.corp.google.com> <3F7E4C9E-593E-4FC5-B820-E6A0CDEB7476@gmail.com>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:VWxHs2K9S2weBbDysubR1+HrnlvAPp43UNE9IYGmr2uYY2np55d
- tYMupwKOZAXSKnvz0ps/1qoxoulk4VxH6APvZGYpwIJ8I3awhw/Z4/Xrk8THwgFyM/U4YqY
- fYT2+5hfIkQMvrjiCPVFyW4p0PUF1rU7wXZNYqK11gQKVF79yMmWIQ6OdisxTwL3bXA12HQ
- aQgsXJmhklBZdvD71Yxzw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:qZ+bsAvgqcM=:fD2izIhobtrCkT1XVy1PJ6
- aI0SIbrPZxOuwsJDD5yX9oiDtKQwoRlEsM+xasPyRjxWqPhfkZ0d6ZTvLMBJTTlADvArSLTv9
- w+TsG8yuAY2PSduYazEyMPery8ND571yuQfVY6Eeq0LA7mFEUjfLdlqautLU1bm3jmGJPYJCB
- u6B0Q+E5msmMXj3X8za4yaR6iFR8RNN+FKKkfXStkR1YfKLabpTnR3ChGIrj8fFSSk1s3+xm0
- KpRriYLbTxMufpMLLPlL4EdPRksg/k0fc7sT1LFS9iDoWSTB9Y/uAL7CZ5AxdgDerWgQ9N5fU
- lKtQ8cH1FWAUlfFNW8es5mENFc+vjMLo5Ugw8SBCf7UgnjxhNAKB2hU6V4EpsLhDmRVkfmEl2
- NZ+f+S3nNJodosPp5bUKN3/4ka5buDJawew84VyDCyj2NZ1S0fFEgYzhhdCSISFTBgG4hzUr6
- wFg0iRBNjZe3njFXUDt9ViTfQPJAHkA9G2hzWHj0q5VNCuTT4n8vpBwBPRA6rHI6NH3lhv8FF
- JIoHg9fpr883SWh7k+8mpPwLJA7+Mm4BZ8PajhSf05HyXXLi2dhSeOuKkAI9sbm6nwDAuFxmk
- FsnZ0X+GFPWp6k6eQlCDXXja3TRhGGihG7fAV+ZiSXyaMr0pPtlZ4hIYEHNmFp+klIj6uG50l
- FYA2DfNRFhlrGbSbUSXYYxbarBC/FAlBM9EXSQUssii9r76JY97soOQ/CN+XtOb7SECFd0Sf1
- /fWQ8GZIyVcSAMBfkAnKGG+iLxG9m0GAUxiPoJ2kC5WnJuHmpXj6aabIdK4YyO3Dvk8yJNoLB
- wdCsYut
+X-Provags-ID: V03:K0:e7/OBNUI6KrmxMx8Z9fSnpyH5XMXKzekO+0PiT+V6thgHURAMrQ
+ 9NdfZSIsIsA5HBFpvljeFilQSGxxXnkAn1fGF1WBfKSIustCprUJ4Pr7FlP1S5/+cTp95XM
+ RkS6R749fgW+H0LP8ossBvGEJf0F9MY1/szzVy1LnQDZzBZZhnuWzNJmbb1TAtZWJSOcKiW
+ Lpl/jgCSJl6sI88afKrcQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:tIJkjpEzi9E=:y5t5BU6t3dLvWgqOM20306
+ wP8Is7zxX5cHheibhyx6azOTwSbce499W6hgROB1J1uTSgIg7+C6CoAcXJ4wKz3AACNCTIqYv
+ UWbliI7lTTplDLX8mz4Jw1PyChhLWR/6gfCcgkzPh+mKK5yYVXP5UtmT0HtEb4ZM9Vlc1YYvY
+ t1WA2wnQWiWYhXreUonzusy/UdjGhaJ4Gol6eEBvhQ8g2Dwf4WQMB8R+CRxOfNyVRlqyu8VcU
+ aknkq6Vb8GLEsiX5wywhOvb8/xxBLF6BlkshhiLpDqeh+l8Fxkf/7C3ZQ0EwRaPg8IZJuMD2/
+ Sp60Z/p0AyY8sj12zpsbGV3rwq8b3dEzyuH9GS15x0cffLhN8Z2F0pucHfnlbkRLajTicpFlN
+ UwdwPKWNXOH9N2OhqYxa/czrleiDZTDxPnD/cRdS3Pd1ToPa63Hqi798TwTobG1VCaVTapBnw
+ B/MgPFNLlcxwTuaDu8B2XgOYMyZChKia+8CJPsm3iVf5UPc+I2E+9UufK3ZH2f226fb1melhd
+ PM2P4cltH9TOo8OzlITVy5g1e4A5mM84+vlsMWOmERDHbDKKoJzZYNeiGYQhLUN1z1c2I24BG
+ 09iDnREcWRR7K74mcIQUMoOsYnNnQCnuqrMGBCF/Rr6SKLBGzB5PO1wy63gDe88GEO/qITM2Z
+ 6MSJ8jlvDeWqMQT10+ohKPVBgmPUEHeQInX+MuXAuTPvzA1jR4FlEOIots8Ceol0bL+3ohGC9
+ 3rQGBMXNv0WIZnEft114+yLZmjaoYr3hH0VLFHhUxbb2ji4nhH2AfX1yYQpc6k0QYbqHMzlc+
+ vw75qEM
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+Hi Lars,
 
-On Thu, 9 Feb 2017, Junio C Hamano wrote:
+On Thu, 9 Feb 2017, Lars Schneider wrote:
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> > On 06 Feb 2017, at 20:10, Junio C Hamano <gitster@pobox.com> wrote:
+> > 
+> > Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> > 
+> >> So I thought maybe the From: line (from the body, if available,
+> >> otherwise from the header) in conjunction with the "Date:" header
+> >> would work.
+> > 
+> > FYI, I use a post-applypatch hook to populate refs/notes/amlog notes
+> > tree when I queue a new patch; I am not sure how well the notes in it
+> > are preserved across rebases, but it could be a good starting point.
+> > The notes tree is mirrored at git://github.com/git/gitster repository.
+> > 
+> > E.g.
+> > 
+> > $ git show --notes=amlog --stat
 > 
-> > This prefix match also happens to introduce a serious performance problem,
-> > which is why I "fixed" this issue in the rebase--helper already (which is
-> > the case if you are using Git for Windows, whose master branch builds on
-> > Linux and MacOSX as well). I quoted "fix" because my motivation was to fix
-> > the performance problem, not the "incorrect match" problem.
-> 
-> In other words, regardless of your motivation, you "fix"ed both,
-> which is very nice ;-)
+> That's super useful! Thanks for the pointer!
+> Wouldn't it make sense to push these notes to github.com/git/git ?
 
-Almost. While I fixed the performance issues as well as the design
-allowed, I happened to "fix" the problem where an incomplete prefix match
-could be favored over an exact match.
+I am not quite sure about that. It is in a different namespace than what
+is usually cloned, and it currently adds 8MB to the download (there are
+"amlog" and "commits", the latter clearly being a sandbox).
 
-I really fixed the performance issues. Not "fixed" them.
+While I am thankful that there is at least some information available for
+patches integrated into `pu` since Nov 1 2016, the format is probably not
+stable (we are talking about free-form notes, after all), and it still
+does not help with catching the case where new patch series iterations (or
+in some case, new patch series, period) are missed.
+
+Make no mistake, it will be a huge undertaking to develop a tool that
+helps with the management of patch series on top of the mailing list
+driven patch review process. And even in the best case, it may be simply
+too hard for an automated tool to figure things out e.g. when Peff or
+Junio paste a tangentially related diff into a thread.
+
+In the end, what I *really* would love to have is a system where you can
+easily query "which reviewer comments on *any* of my patch series are new,
+or still unaddressed?", and "in what way was my patch modified relative to
+the latest version I submitted?". It may actually be impossible to create
+such a tool, as it cannot invent information/cross-references that it does
+not have nor can deduce from available data.
 
 Ciao,
 Johannes
