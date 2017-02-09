@@ -2,61 +2,63 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5B4BA1FCC7
-	for <e@80x24.org>; Thu,  9 Feb 2017 22:40:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 49D121FCC7
+	for <e@80x24.org>; Thu,  9 Feb 2017 23:25:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752983AbdBIWkj (ORCPT <rfc822;e@80x24.org>);
-        Thu, 9 Feb 2017 17:40:39 -0500
-Received: from mail-pf0-f195.google.com ([209.85.192.195]:34741 "EHLO
-        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752761AbdBIWki (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Feb 2017 17:40:38 -0500
-Received: by mail-pf0-f195.google.com with SMTP id o64so75838pfb.1
-        for <git@vger.kernel.org>; Thu, 09 Feb 2017 14:40:38 -0800 (PST)
+        id S1752408AbdBIXXa (ORCPT <rfc822;e@80x24.org>);
+        Thu, 9 Feb 2017 18:23:30 -0500
+Received: from mail-pg0-f67.google.com ([74.125.83.67]:35593 "EHLO
+        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752811AbdBIXX3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Feb 2017 18:23:29 -0500
+Received: by mail-pg0-f67.google.com with SMTP id 204so1454812pge.2
+        for <git@vger.kernel.org>; Thu, 09 Feb 2017 15:23:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=CZXCf2Pr52GWKwKguaUR8w6ILoTemT9yxBi/O7w0xzI=;
-        b=lRVkzj/D/KHOVH/sOrwZHQRJlRlVfLSKdLUyUzq8uWdRegq75QG85Wwu9kmb3/cQnA
-         Pa1Fx70l4iivRCEkn+fyEDDXnvZ44SIN6p3VUN8WFo01mqP210fKWG3BDbkosSPlFMcA
-         aqFctRSc1yGX28DRjO9A6l1Yx+YnA9LnbQEyb6HkvN3I4S64oIjD5+aQ8USV9PNlLX+x
-         ROV+qaYhsJR78NlJ2UzRybOhJpzYQlGiYP4zbcg9kW1k1tGbs8LjArYE3M9SLubcsaP/
-         5264kKoq0b7ORwnmeYPVGiobKIOUk+HdKgBthSBQhCvV8gGFlL2d9CydEWgzPcoHF+ub
-         Vhkw==
+        bh=T09+SkxJptUT7LFPOfTwp4ovn59HVwDZw+hYeSpGPQY=;
+        b=gMzhEy77W0MQdX/C05kdZS09Z8F3WcrpiEg3gkjH9dX7MmT1b6tHp7Cec1C7zk7X/+
+         P3D7xF5VXC/q3cUdeKaZ7rv9u5m3kZOyLf2rKNhCxRLXLzIGuka8/YyABgHun3rg/6Zi
+         q89vM4NqjxFfmdFHWvzGBpPdkRa0ZHagwNB+vSamGKkExtcP66Q1IfsFGZce1WygXurV
+         FW0Y6TQ9rT/duPQWhDMwoVGaMsx0iVkjV2FYjE5amu3HMRE5Ommy1VYn70G183N/Be71
+         PuDXX3uFFP8jsgRB/sR0+mwf/5VGuje56WsxnHv7DMv/l5IULZ5xkAIceUcpa/Ht8cyY
+         lm4w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=CZXCf2Pr52GWKwKguaUR8w6ILoTemT9yxBi/O7w0xzI=;
-        b=C9qOwLZJtKxqxNQOmq+Is+Zeiu1fAV/navlOfRN/AGoEsSXizfxc5pArbw0gd0QdDL
-         mbbJkBsY4Bas+GSaMips/Tbwh3JONGW6/IMipkv4TcroabMjk/qR4TCIWgIpsqU6rKMY
-         +YRVCEKDx1l1EnJSmfxXjGeQ19rHnRbgBDTG2rvr9B5ih02e0E0SEF/Gm38jCFbUnVMJ
-         rKowDLyaPnV82lAvj9m99CCYkxjcuYfo8WCBctv1NFdP6oUvmSrYvdDQLgo/TTEY1Nde
-         BTbSqhj/7JQH3wHCZBIDz1npb11NJ+1LVlsnvqnqUtsBaJXhGOAvv7Bk5U7uXnE9wAxq
-         Mxdw==
-X-Gm-Message-State: AMke39lIVLq1qHOKMc1xbocxzSyKgVUeNOnM1AJ0xeH2st5h5yARI+ebFZVCToNmSwrOAw==
-X-Received: by 10.84.179.99 with SMTP id a90mr7127576plc.139.1486680037853;
-        Thu, 09 Feb 2017 14:40:37 -0800 (PST)
+        bh=T09+SkxJptUT7LFPOfTwp4ovn59HVwDZw+hYeSpGPQY=;
+        b=nOF2Qa8gB3n10MA/12nJO5l/adhJLE5Ponpq087Pjd7JoW7ms7oQHbnPY7jtqxKTHY
+         mA+dr9iNFMGbU+JI/HfdAWPG2SK3sY1ruUresjNcV/7mGdJorSYC2KA9HW8zXYOY2qZo
+         bfxZCFjO06/pNxThtLzR+nf51dMUEV1DtXGyppgEv0Vv57utHOK+XHUOaz21JiH7RJtL
+         S8rQnPz1IcbPl9F6WULZm8lohgI64yRy0vlxWhyv3RxXt/6NzoEaXQuxecjPYs9WQ7GQ
+         6hs8WCVyd/X2rlQaRTZhN+OLH6JEqRPb33Kwoje1zvZ5xJKvCPQWx051H+/o85h4e96h
+         v5Bg==
+X-Gm-Message-State: AMke39mzH/FreFzqkV2LeFmOl22dA/Woyh0HE6RAUKAGs3QoO5BVpRA1ye1AtJn0P3Yztw==
+X-Received: by 10.98.25.21 with SMTP id 21mr6459955pfz.46.1486680850026;
+        Thu, 09 Feb 2017 14:54:10 -0800 (PST)
 Received: from localhost ([2620:0:1000:8622:704f:61dd:c9f4:9782])
-        by smtp.gmail.com with ESMTPSA id z74sm31319062pfd.70.2017.02.09.14.40.37
+        by smtp.gmail.com with ESMTPSA id l71sm31618864pga.13.2017.02.09.14.54.08
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 09 Feb 2017 14:40:37 -0800 (PST)
+        Thu, 09 Feb 2017 14:54:09 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <johannes.schindelin@gmx.de>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v2 0/2] Let the sequencer handle the grunt work of rebase -i
-References: <cover.1472805251.git.johannes.schindelin@gmx.de>
-        <cover.1486678952.git.johannes.schindelin@gmx.de>
-Date:   Thu, 09 Feb 2017 14:40:36 -0800
-In-Reply-To: <cover.1486678952.git.johannes.schindelin@gmx.de> (Johannes
-        Schindelin's message of "Thu, 9 Feb 2017 23:22:59 +0100 (CET)")
-Message-ID: <xmqq1sv7ng2j.fsf@gitster.mtv.corp.google.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Duy Nguyen <pclouds@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH] rev-parse --git-path: fix output when running in a subdirectory
+References: <50fe3ea3302c40f4c96eaa5a568837e3334f9dc4.1486555851.git.johannes.schindelin@gmx.de>
+        <CACsJy8CigsWjAq5cmJ=cbBmj=DdJtHdMKxmoifftuz9+9kqJiQ@mail.gmail.com>
+        <xmqqshnnnj6q.fsf@gitster.mtv.corp.google.com>
+        <alpine.DEB.2.20.1702092304250.3496@virtualbox>
+Date:   Thu, 09 Feb 2017 14:54:08 -0800
+In-Reply-To: <alpine.DEB.2.20.1702092304250.3496@virtualbox> (Johannes
+        Schindelin's message of "Thu, 9 Feb 2017 23:11:14 +0100 (CET)")
+Message-ID: <xmqqwpczm0vj.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -65,53 +67,41 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> After all of these patch series y'all had to review, this is finally the
-> one that switches things over.
->
-> Please note that it does not (yet) handle the `git rebase -i --root`
-> invocation; I tried to focus on the common case, and I rarely use --root
-> myself.
+>> I have no strong opinion for or against a "longer term" solution
+>> that makes "rev-parse --git-path" behave differently from how it
+>> behaves today, but I am not yet convinced that we can reach that
+>> longer term goal without a transition period, as I suspect there are
+>> existing users that know and came to expect how it behaves, based on
+>> its today's behaviour.  Other than that I do not have suggestion on
+>> this topic at the moment.
 
-As long as the longer-term goal is clear enough and the short-term
-approach does not conflict with the goal, solving the most common
-problem that yields the largest payback first is absolutely the
-right thing to do, and omitting "--root" and/or "-p" and getting the
-main use of "-i" right is a great way to start.
+I think I was simply being silly (not merely "overcautious", but
+just "silly") here.
 
->  .gitignore                    |  1 +
->  Makefile                      |  1 +
->  builtin.h                     |  1 +
->  builtin/rebase--helper.c      | 40 ++++++++++++++++++++++++++++++++++++++++
->  git-rebase--interactive.sh    | 13 +++++++++++++
->  git.c                         |  1 +
->  t/t3404-rebase-interactive.sh |  2 +-
->  7 files changed, 58 insertions(+), 1 deletion(-)
->  create mode 100644 builtin/rebase--helper.c
+There is no reason for people to use "--git-path" if they are not
+preparing to work with secondary worktrees, because the whole point
+of the feature is so that cases where "$(rev-parse --git-dir)/path"
+does a wrong thing (e.g. end up referring to the main worktree thing
+when you need to refer to your own, or vice versa).
 
-And it is surprisingly short and sweet ;-)
+> Given that
+> ...
+> it should be safe to assume that a transitional period is more likely to
+> do more harm to our users than bring benefit.
 
-Will queue as js/rebase-helper topic, forked at 6e3a7b3398 ("Git
-2.12-rc0", 2017-02-03).
+In short, "--git-path as currently exposed to the end-users is
+utterly broken and cannot have been used for anything sensible".  If
+that is the case, let's just change that with an entry in the
+release notes that states so (iow, there is no need for even a
+backward compatibility notice, we just have an entry that says "this
+was totally broken in such and such way, and now it is fixed to
+behave this way").
+
+That leaves what the right single-step behaviour change should be.
+As I recall Duy said something about --common-dir and other things
+Mike's earlier change also covered, I'd prefer to leave it to three
+of you to figure out what the final patch should be.
 
 Thanks.
-
-
-PS. in case if anybody is wondering after reading [*1*], at this
-point, I _have_ read the patches not just the cover letter, looked
-at the branch name the original author gave to the topic, chose the
-local topic name I use, and chose where to fork the topic from, but
-have not applied the patches (so I may later end up saying "the
-patch does not apply cleanly", "the compiler complains on this
-line", or "the new code is inconsistent with this existing code that
-is a bit beyond the context of the patch that I did not notice when
-I reviewed the patches alone" in a separate message).  I do not have
-a new entry for this topic in the draft of "What's cooking" report
-yet, or have not decided if the topic would hit 'jch' or 'pu' yet
-either.
-
-
-[Reference]
-
-*1* http://public-inbox.org/git/xmqq7f4zqiyj.fsf@gitster.mtv.corp.google.com
