@@ -2,104 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E3E651FCC7
-	for <e@80x24.org>; Thu,  9 Feb 2017 22:18:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 75EB11FCC7
+	for <e@80x24.org>; Thu,  9 Feb 2017 22:24:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753741AbdBIWSn (ORCPT <rfc822;e@80x24.org>);
-        Thu, 9 Feb 2017 17:18:43 -0500
-Received: from mout.gmx.net ([212.227.15.18]:53516 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753690AbdBIWSl (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Feb 2017 17:18:41 -0500
-Received: from virtualbox ([37.201.192.48]) by mail.gmx.com (mrgmx001
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0Mdren-1cm4EO1m6n-00PclM; Thu, 09
- Feb 2017 23:11:29 +0100
-Date:   Thu, 9 Feb 2017 23:11:14 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Duy Nguyen <pclouds@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH] rev-parse --git-path: fix output when running in a
- subdirectory
-In-Reply-To: <xmqqshnnnj6q.fsf@gitster.mtv.corp.google.com>
-Message-ID: <alpine.DEB.2.20.1702092304250.3496@virtualbox>
-References: <50fe3ea3302c40f4c96eaa5a568837e3334f9dc4.1486555851.git.johannes.schindelin@gmx.de> <CACsJy8CigsWjAq5cmJ=cbBmj=DdJtHdMKxmoifftuz9+9kqJiQ@mail.gmail.com> <xmqqshnnnj6q.fsf@gitster.mtv.corp.google.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+        id S1751675AbdBIWX4 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 9 Feb 2017 17:23:56 -0500
+Received: from mail-pg0-f67.google.com ([74.125.83.67]:36147 "EHLO
+        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751225AbdBIWXx (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Feb 2017 17:23:53 -0500
+Received: by mail-pg0-f67.google.com with SMTP id 75so1349536pgf.3
+        for <git@vger.kernel.org>; Thu, 09 Feb 2017 14:23:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=5sgzfz/K0t7q6KPKWsOxNei5qXinlJ2zAUvV1QGfF6g=;
+        b=M9Nog2WU/iBISkZZemQhINV/5PWPRlUqqtidbq0G9eIHs+DqWz250V1YYpVG9wWjcV
+         pj/ewealqx+dJHQwHVg7kvQxJ9Bfw67hkm0h1jHrRTDc1LLUHNFx0oQ6Py0qf6LGD/32
+         lks3w61VloegPiuw0Eqwm0sngfzHP5b7mm1doWPE9vZJMzZXL92zNBOcHyTezk7aVlaa
+         hmGAwNNq+o/YA3L9JkoISp6P7PQYxwgcPQS71LTi0QVf7Rk0kQ3QaWVysXM0UEsM2hbo
+         +xZv64LhWrHMs9CD23ol2CxTKOVlfih4JiUXNce81bQ52y14r0JUd2b5XhJLn9m7P20A
+         IGWQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=5sgzfz/K0t7q6KPKWsOxNei5qXinlJ2zAUvV1QGfF6g=;
+        b=Ul/jbvzr3Hkb1IyUuj+W0GZGt8f0LTShf4b0i6q8KYvpLH4qAnlnv8svimCKa3yPa9
+         w0EY+O9xhF8ChN6ih92r1MzuerMwKmyaCFrPPTUPM4YFPMdlDmahDeKX0uqijQ84w2oE
+         f4D+YDkm0m4dsHhZG7fxQLYPwkuUJuAuCwd5bhizBLDV/TMZrQX9ybO2fsq8XFplvyja
+         1wijTzZ6dY7noN9yEKODXJ/RV19hDDNzgXCzc2iscUCSmiu2OvLSFPnq7kqW3YFZSQMx
+         hWZsK/r9bzLFZBio5njGr2S2zRq9o0KLnSpW2aWSymVC3WS6/U3nIRO8uj757IlSmb/V
+         EFEQ==
+X-Gm-Message-State: AMke39ncJG4j8PVGrV0ydMSc08g/BgvTT9W1SrvyNN49fZVtIFdiKwdnFvD2go1LI6SRCg==
+X-Received: by 10.99.8.133 with SMTP id 127mr6717919pgi.42.1486678565379;
+        Thu, 09 Feb 2017 14:16:05 -0800 (PST)
+Received: from localhost ([2620:0:1000:8622:704f:61dd:c9f4:9782])
+        by smtp.gmail.com with ESMTPSA id b10sm31524462pga.21.2017.02.09.14.16.04
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Thu, 09 Feb 2017 14:16:04 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Ashutosh Bapat <ashutosh.bapat@enterprisedb.com>,
+        git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>,
+        Michael J Gruber <git@drmicha.warpmail.net>,
+        Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: Re: Bug with fixup and autosquash
+References: <CAFjFpRe8zqxs4OLbCrjnuEzF=75sbBJ+HuZqek49B=O=TFHq8A@mail.gmail.com>
+        <xmqqbmucuwb0.fsf@gitster.mtv.corp.google.com>
+        <alpine.DEB.2.20.1702092142020.3496@virtualbox>
+        <xmqqwpcznjqi.fsf@gitster.mtv.corp.google.com>
+        <alpine.DEB.2.20.1702092301070.3496@virtualbox>
+Date:   Thu, 09 Feb 2017 14:16:03 -0800
+In-Reply-To: <alpine.DEB.2.20.1702092301070.3496@virtualbox> (Johannes
+        Schindelin's message of "Thu, 9 Feb 2017 23:02:51 +0100 (CET)")
+Message-ID: <xmqqd1ernh7g.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:UtEOTF2Tql3mobygbOX/5yHJSGmMFkZBwVGtVxct98Ez/GuFUKR
- xDPxWyuZMiPv0gZ5LNhSIlX/0ABnVNC4oaGZA+S7Kns+LOYh1TR7NemiHfckFabVE+kd4qc
- a4Aeo0JGnHZltkRI3e3A1JfSVBMdhrk6jxS4sR7BlrXKQM+EMdG3/HWhzyPMkZQTj75OaTN
- X3282yQ9seV0pfOiffhrA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:/1X2h0Vth3I=:WgYDg3qoFaHkjuKfV1gl3A
- pGT6nk/h94EMlzEbZ9xS3W7kG5dGk+jGYPropp3caV/P8+j0s1IYSMOWufDWjirsUy/n05sM6
- ZJ4TpAjD3EIEMeVcXjarqgxf5+y/4aLFzCZOQjgTdvzkj5WxKHrbzy5kVCq2IxxWKhIRUzkWq
- eCGDaGbLGEcGwc5LkSi37fWUwRQUpJfrGPva1pUIvnrQ2vrUdG4GK6egR5JRDQ1gzs596oBuo
- PrcbVxYGJNgATTSO2rrBCA1rnWImdDxJDBHovMTrQoArMLzEkS8bL6uzCDlppDgDHl9kfVm/O
- QyC1cLbyEqSZ0YFo99o+Mm6HSIOX6bM6GYzqhIFtb5de5molvC9vkZDvb1aXDcW+9gNbGRkB2
- rfX4HZF6OpGlZkGflA0416cV49fLz8/y5AERyl78WMn7UFyp2un/cYfks0pxAuZs6ILDV0nlL
- DtpLfXfNERzxZ22z5oMIRhiKnLkTiH/Neq5caaBQyhY+cIAz8c76hXYvathgQdnSEg+bKait6
- A+opevD+03FKoUfxHmzS2fEafL0UVEPhf+3GppCZltltfFT/qUCLVrshwxE0OgtEy7pfWdj8i
- TljLQOFfRcA5PRrjjCFiQEZdPTPlnS2htJ7QZjeQJnk0BskfjcmDOTk4tJ9/YT5WyChdYwD6b
- 7Ad4DqJPVy5D5+BtkOy9NyQcT2GYY0tO/zcr5Vfv/98VHyx7DHy7hqmgtK+oRwojkar/1Q5OY
- uXokW+HPaDTcV2S+ExqPncXlWKcEf1cRaw62kTtpY/KWOllCsUjgOhtRFlioA2K+W7nHMTqPd
- EeD+QtQ
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-On Thu, 9 Feb 2017, Junio C Hamano wrote:
+> Almost. While I fixed the performance issues as well as the design
+> allowed, I happened to "fix" the problem where an incomplete prefix match
+> could be favored over an exact match.
 
-> Duy Nguyen <pclouds@gmail.com> writes:
-> 
-> > Relevant thread in the past [1] which fixes both --git-path and
-> > --git-common-dir. I think the author dropped it somehow (or forgot
-> > about it, I know I did). Sorry can't comment on that thread, or this
-> > patch, yet.
-> >
-> > [1] http://public-inbox.org/git/1464261556-89722-1-git-send-email-rappazzo@gmail.com/
-> 
-> Thanks for a pointer.  I see Mike responded to this message (I
-> haven't had a chance to read and think about it yet), so I trust
-> that you three can figure out if these are the same issues and what
-> the final solution in the longer term should be.  
-> 
-> I have no strong opinion for or against a "longer term" solution
-> that makes "rev-parse --git-path" behave differently from how it
-> behaves today, but I am not yet convinced that we can reach that
-> longer term goal without a transition period, as I suspect there are
-> existing users that know and came to expect how it behaves, based on
-> its today's behaviour.  Other than that I do not have suggestion on
-> this topic at the moment.
+Hmph.  Would it require too much further work to do what you said
+the code does:
 
-Given that
+> The rebase--helper code (specifically, the patch moving autosquash logic
+> into it: https://github.com/dscho/git/commit/7d0831637f) tries to match
+> exact onelines first, and falls back to prefix matching only after that.
 
-- the output is incorrect, not some output that could maybe be improved,
-
-- warnings in a script execution are most likely to be missed,
-
-- --git-path gives incorrect output in subdirectories, except inside
-  worktrees, therefore scripts relying on the current behavior are highly
-  likely to misbehave in worktrees anyway,
-
-- leaving this bug unfixed even when we know about it for 3 major releases
-  reflects really badly on Git as a project, and
-
-- the longer we wait to fix this bug, the more developers will simply stay
-  away from --git-path (of course, only *after* they were bitten by the
-  bug, like I was),
-
-it should be safe to assume that a transitional period is more likely to
-do more harm to our users than bring benefit.
-
-Ciao,
-Johannes
+If the code matches exact onlines and then falls back to prefix, I
+do not think incomplete prefix would be mistakenly chosen over an
+exact one, so perhaps your code already does the right thing?
