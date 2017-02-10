@@ -2,77 +2,73 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 20C8F1FC46
-	for <e@80x24.org>; Fri, 10 Feb 2017 16:31:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 863341FC46
+	for <e@80x24.org>; Fri, 10 Feb 2017 16:31:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752389AbdBJQbD (ORCPT <rfc822;e@80x24.org>);
-        Fri, 10 Feb 2017 11:31:03 -0500
-Received: from mout.gmx.net ([212.227.17.20]:55349 "EHLO mout.gmx.net"
+        id S1753374AbdBJQbm (ORCPT <rfc822;e@80x24.org>);
+        Fri, 10 Feb 2017 11:31:42 -0500
+Received: from cloud.peff.net ([104.130.231.41]:53014 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752637AbdBJQa7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Feb 2017 11:30:59 -0500
-Received: from virtualbox ([37.201.192.48]) by mail.gmx.com (mrgmx101
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MQvDO-1czm3t0LL4-00UNp8; Fri, 10
- Feb 2017 16:59:35 +0100
-Date:   Fri, 10 Feb 2017 16:59:33 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     git@vger.kernel.org
-Subject: Re: Google Doc about the Contributors' Summit
-In-Reply-To: <xmqq7f4zqiyj.fsf@gitster.mtv.corp.google.com>
-Message-ID: <alpine.DEB.2.20.1702101658010.3496@virtualbox>
-References: <alpine.DEB.2.20.1702021007460.3496@virtualbox> <xmqq7f4zqiyj.fsf@gitster.mtv.corp.google.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+        id S1753349AbdBJQbl (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Feb 2017 11:31:41 -0500
+Received: (qmail 13872 invoked by uid 109); 10 Feb 2017 16:05:00 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 10 Feb 2017 16:05:00 +0000
+Received: (qmail 5398 invoked by uid 111); 10 Feb 2017 16:04:59 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 10 Feb 2017 11:04:59 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 10 Feb 2017 11:04:58 -0500
+Date:   Fri, 10 Feb 2017 11:04:58 -0500
+From:   Jeff King <peff@peff.net>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     git@vger.kernel.org, Jeff Hostetler <jeffhost@microsoft.com>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] mingw: use OpenSSL's SHA-1 routines
+Message-ID: <20170210160458.pcp7mupdz24m6cms@sigill.intra.peff.net>
+References: <6a29f8c60d315a24292c1fa9f5e84df4dfdbf813.1486679254.git.johannes.schindelin@gmx.de>
+ <20170210050237.gajicliueuvk6s5d@sigill.intra.peff.net>
+ <alpine.DEB.2.20.1702101647340.3496@virtualbox>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:KCVZgPnumcLY51aa8DaBg5SqsUKm7vYP6LRp04Udm3drwL6hVCw
- PTIFDj9GR9CJKNFyC2nDYsJ2WmkY2/QavssvXkQguq07Uu24g8WOk6iGmdskgPJashbeI8m
- q/DmmK3HdRSiED+Aw2Kfve4r8ZosFQQ8PXYaDlCMfJ20ExKTuRZ1DHvK5ZbsxWWvo4KnFcq
- E1fCCl5/pRRyQy+GLrBBg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:JMga5KZPEUA=:/Oo72cg0xrhi3kcOKEjs4f
- 0cv44khILuq/cwAiTi9m5NRRDsTC8xflIPgE2mXnE9NNY7I0GargDjGcKT6d80a5jG12Jw2s3
- OsZK15xyek+ZgRgH3lfpWwlBznSz9zFf6oayga23opJR1dgUQKZ6ciRX0kLbRfgxtCfNX0fnt
- 4YugIqmK4LqP8rwWY+KDMpsfm3Sb+1LpahXMPMdq5MNiUsb4zLpTlUuPWl5syFxVSkLgAAVJn
- Ccvd/vYp76y0MPMQWyfYy1iOJ50Wy4+R82da+TIefDUEemdyKdOni0xd/c8UEKaDBO06kBXhj
- i6tizUzrRO1MB6p6ZTDw757jpGZYpoFFoA8e8FX3xSJjzcVAI5oAoV0IYiVHkL7owxzEqkmje
- sAVS/oIRjX2fTRmJ3p1w50OA8YZqFjkiQ5rsXpik77hv9Tk+XY858CiNF2b0NrhAYInPhEFdM
- rKkOJi4vmiry/arN8JnS46Lr1CFGIJtu204JA53VXsNKWYzVdcgt+m/oKQkFPWqo7Q1WB5hR2
- i3aJPf2h+ABJd5z5qZ6cQ7+YwxVDeZEmsOqkoHVF3PywKnSX0yfiopYtbWUC1Pr3eq5u2xdDK
- ncWQWUWtvtmc6jfzi79DZthqNh02gkYSbzMUCFPpUfPFcYGdNuy4U6AukSfBvKVP+Z0SDdeka
- Kue7Ygg+a8jL4SbnNkIXW2JN1JbiYYlH5jpazNEpfBrWuMkMukS1fMnPeNetgj2g6YlR1osTM
- POQ/Le1CGrZo5KxQd0rakRYXPYA2eAmvcEJCabay8wOvCd8S0LEyNf6vyNTqGHZ73Ceor24ZF
- myuPuI7
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <alpine.DEB.2.20.1702101647340.3496@virtualbox>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+On Fri, Feb 10, 2017 at 04:49:02PM +0100, Johannes Schindelin wrote:
 
-On Thu, 9 Feb 2017, Junio C Hamano wrote:
-
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> > I think this is only half the story. A heavy-sha1 workload is faster,
+> > which is good. But one of the original reasons to prefer blk-sha1 (at
+> > least on Linux) is that resolving libcrypto.so symbols takes a
+> > non-trivial amount of time. I just timed it again, and it seems to be
+> > consistently 1ms slower to run "git rev-parse --git-dir" on my machine
+> > (from the top-level of a repo).
+> > 
+> > 1ms is mostly irrelevant, but it adds up on scripted workloads that
+> > start a lot of git processes.
 > 
-> > I just started typing stuff up in a Google Doc, and made it editable to
-> > everyone, feel free to help and add things:
-> >
-> > https://docs.google.com/document/d/1KDoSn4btbK5VJCVld32he29U0pUeFGhpFxyx9ZJDDB0/edit?usp=sharing
-> 
-> Thanks for a write-up, Dscho.
+> You know my answer to that. If scripting slows things down, we should
+> avoid it in production code. As it is, scripting slows us down. Therefore
+> I work slowly but steadily to get rid of scripting where it hurts most.
 
-Technically, it is not a write-up, and I never meant it to be that. I
-intended this document to help me remember what had been discussed, and I
-doubt it is useful at all to anybody who has not been there.
+Well, yes. My question is more "what does it look like on normal Git
+workloads?". Are you trading off an optimization for your giant 450MB
+index workload (which _also_ could be fixed by trying do the slow
+operation less, rather than micro-optimizing it) in a way that hurts
+people working with more normal sized repos?
 
-I abused the Git mailing list to share that link, what I really should
-have done is to use an URL shortener and jot the result down on the
-whiteboard.
+For instance, "make BLK_SHA1=Yes test" is measurably faster for me than
+"make BLK_SHA1= test".
 
-Very sorry for that,
-Johannes
+I'm open to the argument that it doesn't matter in practice for normal
+git users. But it's not _just_ scripting. It depends on the user's
+pattern of invoking git commands (and how expensive the symbol
+resolution is on their system).
+
+-Peff
