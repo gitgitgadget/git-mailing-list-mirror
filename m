@@ -2,73 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 863341FC46
-	for <e@80x24.org>; Fri, 10 Feb 2017 16:31:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EA0D31FC46
+	for <e@80x24.org>; Fri, 10 Feb 2017 16:46:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753374AbdBJQbm (ORCPT <rfc822;e@80x24.org>);
-        Fri, 10 Feb 2017 11:31:42 -0500
-Received: from cloud.peff.net ([104.130.231.41]:53014 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753349AbdBJQbl (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Feb 2017 11:31:41 -0500
-Received: (qmail 13872 invoked by uid 109); 10 Feb 2017 16:05:00 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 10 Feb 2017 16:05:00 +0000
-Received: (qmail 5398 invoked by uid 111); 10 Feb 2017 16:04:59 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 10 Feb 2017 11:04:59 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 10 Feb 2017 11:04:58 -0500
-Date:   Fri, 10 Feb 2017 11:04:58 -0500
-From:   Jeff King <peff@peff.net>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     git@vger.kernel.org, Jeff Hostetler <jeffhost@microsoft.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] mingw: use OpenSSL's SHA-1 routines
-Message-ID: <20170210160458.pcp7mupdz24m6cms@sigill.intra.peff.net>
-References: <6a29f8c60d315a24292c1fa9f5e84df4dfdbf813.1486679254.git.johannes.schindelin@gmx.de>
- <20170210050237.gajicliueuvk6s5d@sigill.intra.peff.net>
- <alpine.DEB.2.20.1702101647340.3496@virtualbox>
+        id S1752590AbdBJQpy (ORCPT <rfc822;e@80x24.org>);
+        Fri, 10 Feb 2017 11:45:54 -0500
+Received: from mail-it0-f44.google.com ([209.85.214.44]:35811 "EHLO
+        mail-it0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753369AbdBJQpv (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Feb 2017 11:45:51 -0500
+Received: by mail-it0-f44.google.com with SMTP id 203so145550578ith.0
+        for <git@vger.kernel.org>; Fri, 10 Feb 2017 08:44:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=RCbyrPk25FAv0zuZrju31FRLvf7odQy4hvZR2gmUci0=;
+        b=pbMFkge4G81yGz6hUAodtTj10hVe64vq9ufND5Hg+EF3Xt+MpWm3dBFxF6rlCT1X8m
+         iB050H7+wHv+wxcdG9XDaiz1EJB8AXVx54bz8aF498FMKCZDVMk/QOEids+D4JOZdNYv
+         AQggXJxjIWTtR7CV5nRlPT5TnH0umNh1xYmz5BESCcy19uLxEJMM8lACxMqivrW5ViCC
+         D3wT+1krHKq7RyR7VfXGCZI+13/VZfs7hxgl7u5Rq3AgHeN9h4d+6LpwmzrJ+wTURF1U
+         iyZnyr9Q8vkksYyhrTVt6lsxu7jDEbhO5vYVNlx/cwpVO4vO5HrqG8YTnZHn+CF7F4tV
+         vQjg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=RCbyrPk25FAv0zuZrju31FRLvf7odQy4hvZR2gmUci0=;
+        b=ZB+bc9QdX/vMqL5XUYvoxhyH+Hts/nuBT3+e1XTAUvKLC5Mz90ahPhZajyApV5f5Fh
+         mYO5oYGhImY/FaPRWyhvPu9BBxZNf8Iom3O8BC1bTjdwyoo3aFlDQm+BKRtRFUIs+wFO
+         TORqi0BRvoOpPHdj/fnBN0bDkZQXXp9zDaqj4g1u3QfcdTxQljT72FkTcGFJ5F/ZDnMi
+         9VYmEkd5OkqyX+TJ4a96D1QTEoaXP9t/BLoOEIOQ3rvl3yAIq78qx1vItlGN9ylfBOX5
+         yU5PciVd5dDgcieVYqrW66SWjDaBkVZ3UoucVnLenVshJ/8V7ShRrYPxGCFgAbANp7eL
+         t+QQ==
+X-Gm-Message-State: AIkVDXK7jkpQb+ZuKzKOpunS7WGtT0Y0guwVbDExV1pblMRBq/Q0GF0zlkXKj8XBlcRZXtgfstmrpjcV5DY9paaq
+X-Received: by 10.36.4.2 with SMTP id 2mr26493927itb.116.1486745046119; Fri,
+ 10 Feb 2017 08:44:06 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <alpine.DEB.2.20.1702101647340.3496@virtualbox>
+Received: by 10.79.39.19 with HTTP; Fri, 10 Feb 2017 08:44:05 -0800 (PST)
+In-Reply-To: <20170210155651.lecjrzmoux5mcm5d@sigill.intra.peff.net>
+References: <cover.1486724698.git.mhagger@alum.mit.edu> <20170210155651.lecjrzmoux5mcm5d@sigill.intra.peff.net>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Fri, 10 Feb 2017 08:44:05 -0800
+Message-ID: <CAGZ79kak=j7u3N0WvUYwUwA-b+b=DNrMpG_iRHnd6ZLj4T2Q0Q@mail.gmail.com>
+Subject: Re: [PATCH v2 0/9] Store submodules in a hash, not a linked list
+To:     Jeff King <peff@peff.net>
+Cc:     Michael Haggerty <mhagger@alum.mit.edu>,
+        Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        David Turner <novalis@novalis.org>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Feb 10, 2017 at 04:49:02PM +0100, Johannes Schindelin wrote:
+On Fri, Feb 10, 2017 at 7:56 AM, Jeff King <peff@peff.net> wrote:
+> On Fri, Feb 10, 2017 at 12:16:10PM +0100, Michael Haggerty wrote:
+>
+>> This is v2 of the patch series, considerably reorganized but not that
+>> different codewise. Thanks to Stefan, Junio, and Peff for their
+>> feedback about v1 [1]. I think I have addressed all of your comments.
+>>
+>> Changes since v1:
+>
+> I read through these and didn't didn't see any problems.
+>
+> The reordering and new commits made sense to me.
 
-> > I think this is only half the story. A heavy-sha1 workload is faster,
-> > which is good. But one of the original reasons to prefer blk-sha1 (at
-> > least on Linux) is that resolving libcrypto.so symbols takes a
-> > non-trivial amount of time. I just timed it again, and it seems to be
-> > consistently 1ms slower to run "git rev-parse --git-dir" on my machine
-> > (from the top-level of a repo).
-> > 
-> > 1ms is mostly irrelevant, but it adds up on scripted workloads that
-> > start a lot of git processes.
-> 
-> You know my answer to that. If scripting slows things down, we should
-> avoid it in production code. As it is, scripting slows us down. Therefore
-> I work slowly but steadily to get rid of scripting where it hurts most.
+Same here.
 
-Well, yes. My question is more "what does it look like on normal Git
-workloads?". Are you trading off an optimization for your giant 450MB
-index workload (which _also_ could be fixed by trying do the slow
-operation less, rather than micro-optimizing it) in a way that hurts
-people working with more normal sized repos?
+Stefan
 
-For instance, "make BLK_SHA1=Yes test" is measurably faster for me than
-"make BLK_SHA1= test".
-
-I'm open to the argument that it doesn't matter in practice for normal
-git users. But it's not _just_ scripting. It depends on the user's
-pattern of invoking git commands (and how expensive the symbol
-resolution is on their system).
-
--Peff
+>
+> -Peff
