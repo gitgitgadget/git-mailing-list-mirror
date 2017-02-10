@@ -2,82 +2,74 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 879C11FCC7
-	for <e@80x24.org>; Fri, 10 Feb 2017 04:00:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4C7861FCC7
+	for <e@80x24.org>; Fri, 10 Feb 2017 04:41:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751131AbdBJEAT (ORCPT <rfc822;e@80x24.org>);
-        Thu, 9 Feb 2017 23:00:19 -0500
-Received: from mail-io0-f174.google.com ([209.85.223.174]:33419 "EHLO
-        mail-io0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750989AbdBJEAR (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Feb 2017 23:00:17 -0500
-Received: by mail-io0-f174.google.com with SMTP id v96so41788796ioi.0
-        for <git@vger.kernel.org>; Thu, 09 Feb 2017 20:00:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=ziEhJ7lMymenxR9Lz8CJ4YcXcPXtprGGDCQ4auRz0x0=;
-        b=cd0uCQwDMvblMT8XgIetXRaq3sgszZ2o6NnbaeHPzOXtUOwhAWSUiWUeu5wQdqRygW
-         Kn0fS0TzrZmdsnc7QRdCHAbmRB0kM4i3xnfldVPE58/2WI7/K/l44ucg+El2+TJkegEg
-         71olwVSkHkhlEb0AFNFPXTLxwvaGEiLVnr4AxffXbFNSjqz4TvaPlgY7s5//mkR9ASbE
-         qjRN9dgEx/cajljPAQ+zkUcF/jHmFLWQtjRMNDwOimeRIBaNg8WiCivSqV8DPmPOoj64
-         PZ7iEk04q2CfYFxmTFz2l6TvlJn35Kpr9v6nNnECXu1lIeuvU6qta09Q987sHKuJON8i
-         W/PA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=ziEhJ7lMymenxR9Lz8CJ4YcXcPXtprGGDCQ4auRz0x0=;
-        b=EyLBNW9bk/zM+NB1AqlsSkUm/atxhNDQcF2EKmIxzb3tYI1q1+5+/lxA+IWTeaD5CS
-         BeJ/yFGxscPvgMG/8jNKSAY4y4ws0CbzvXj1yoRqxzgpJqLRBDCu7Zh8BYsIumUtxgXq
-         pBm55XggWB1iBCQqrJbz0Ot4ukzorI8HmJW5e694R4hT97PT63jKAGnTYFZy1rxwPqOn
-         Usu4jv8StNkw4H1br12LSTUGacBKX3fLpNebHIpo6N44LMADr3oOrIFzNoyfAycAa+6N
-         Na8QRJO8G/2nEGgghGFA9pbHeXU5bXZrsXm3jwaMUnm5AgPKKQJbad62V4/uO0F+ZWzI
-         Ggqg==
-X-Gm-Message-State: AMke39mmKCVosiS265PhTHzlmxrxvCwcMubP0g61id7RDSIR4h9fR6/Re51EWLnJsZuZap3RepH4vtNN99UFIA==
-X-Received: by 10.107.191.130 with SMTP id p124mr6637848iof.131.1486698776753;
- Thu, 09 Feb 2017 19:52:56 -0800 (PST)
-MIME-Version: 1.0
-Received: by 10.107.164.36 with HTTP; Thu, 9 Feb 2017 19:52:36 -0800 (PST)
-In-Reply-To: <xmqqwpczm0vj.fsf@gitster.mtv.corp.google.com>
-References: <50fe3ea3302c40f4c96eaa5a568837e3334f9dc4.1486555851.git.johannes.schindelin@gmx.de>
- <CACsJy8CigsWjAq5cmJ=cbBmj=DdJtHdMKxmoifftuz9+9kqJiQ@mail.gmail.com>
- <xmqqshnnnj6q.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1702092304250.3496@virtualbox>
- <xmqqwpczm0vj.fsf@gitster.mtv.corp.google.com>
-From:   Mike Rappazzo <rappazzo@gmail.com>
-Date:   Thu, 9 Feb 2017 22:52:36 -0500
-Message-ID: <CANoM8SV7oJ6YmKM-n63620EkODxD562BZnLZB6OvX8O6BmDT1A@mail.gmail.com>
-Subject: Re: [PATCH] rev-parse --git-path: fix output when running in a subdirectory
+        id S1751225AbdBJEl4 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 9 Feb 2017 23:41:56 -0500
+Received: from cloud.peff.net ([104.130.231.41]:52754 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1750989AbdBJEly (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Feb 2017 23:41:54 -0500
+Received: (qmail 31192 invoked by uid 109); 10 Feb 2017 04:41:54 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 10 Feb 2017 04:41:54 +0000
+Received: (qmail 9582 invoked by uid 111); 10 Feb 2017 04:21:37 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 09 Feb 2017 23:21:37 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 09 Feb 2017 23:21:15 -0500
+Date:   Thu, 9 Feb 2017 23:21:15 -0500
+From:   Jeff King <peff@peff.net>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Duy Nguyen <pclouds@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+        git@vger.kernel.org,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Subject: Re: [PATCH] rev-parse --git-path: fix output when running in a
+ subdirectory
+Message-ID: <20170210042115.d4kmdf4obxqwobv4@sigill.intra.peff.net>
+References: <50fe3ea3302c40f4c96eaa5a568837e3334f9dc4.1486555851.git.johannes.schindelin@gmx.de>
+ <xmqqh944wmcs.fsf@gitster.mtv.corp.google.com>
+ <alpine.DEB.2.20.1702092201080.3496@virtualbox>
+ <xmqqo9ybnie0.fsf@gitster.mtv.corp.google.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqo9ybnie0.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Feb 9, 2017 at 5:54 PM, Junio C Hamano <gitster@pobox.com> wrote:
->
-> That leaves what the right single-step behaviour change should be.
-> As I recall Duy said something about --common-dir and other things
-> Mike's earlier change also covered, I'd prefer to leave it to three
-> of you to figure out what the final patch should be.
->
+On Thu, Feb 09, 2017 at 01:50:31PM -0800, Junio C Hamano wrote:
 
-The tests which I covered in my previous patch [1] addressed the
-places where we identified similar problems.  We should try to include
-some form of those tests.  As far as implementation goes in rev-parse,
-the version in this thread is probably better that what I had, but it
-would need to also be applied to --git-common-dir and
---shared-index-path.
+> > There is just no way you can "fix" this otherwise. As an occasional shell
+> > scripter, you may be tempted to use `$(git rev-parse --show-cdup)$(git
+> > rev-parse --git-path filename)`, but of course that breaks in worktrees
+> > and if you do not use worktrees you would not even know that your
+> > workaround introduced another bug.
+> 
+> In case it is not clear, I understand all of the above.  
+> 
+> I was just worried about the people who do *NOT* use worktrees and
+> did the obvious "concatenate --cdup with --git-path" and thought
+> their script were working happily and well.  By prepending the path
+> to the (real) location of the .git in the updated --git-path output
+> ourselves, they will complain, our update broke their script.
 
+That concatenating approach is broken in other ways, too. For example,
+if you have $GIT_DIR set to an absolute path, then --git-path will use
+that.  I don't think we have ever promised that the output of --git-path
+(or --git-dir) would ever be absolute or relative (in fact, the
+--git-dir documentation implies that you may get either).
 
-[1] http://public-inbox.org/git/1464261556-89722-2-git-send-email-rappazzo@gmail.com/
+So yes, there could be somebody who is doing this concatenation
+workaround, but only ever calls their script in a certain way that never
+triggers the absolute-path variant. They're happy now, and may not be
+after Dscho's patch. But I really think they are relying on a bogus
+assumption, and their scripts are already buggy.
+
+-Peff
