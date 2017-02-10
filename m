@@ -2,175 +2,246 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C2F491FC46
-	for <e@80x24.org>; Fri, 10 Feb 2017 19:15:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9510A1FC46
+	for <e@80x24.org>; Fri, 10 Feb 2017 19:20:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932188AbdBJTPC (ORCPT <rfc822;e@80x24.org>);
-        Fri, 10 Feb 2017 14:15:02 -0500
-Received: from mail-pf0-f194.google.com ([209.85.192.194]:36557 "EHLO
-        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753314AbdBJTPA (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Feb 2017 14:15:00 -0500
-Received: by mail-pf0-f194.google.com with SMTP id 19so3042010pfo.3
-        for <git@vger.kernel.org>; Fri, 10 Feb 2017 11:15:00 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=sAL25em94ykjKfoWYiix0qBMEO9kj+khS1U2hw9pyuA=;
-        b=R494v8w0VyQM8l1zErsIGoYxFAYx/qvTwzosyrkq2D6PFvnAaVD33u4Jc/aVE5e6nA
-         KRV63qxRfFF72JZyAPM3NORwNHCVLRDwdt7eMvZO1T+Q2Wi7l29BxUx6tlq1ENesxZ5L
-         DL26EdmNZybMecxST05VdN/FJlbuenUvleJ6o/pIFusglbjXyOCkppEfKuEnEuhWDCWu
-         3b8QMXSDuULG0QdqRS5flX2iMxyoeRAlScScZ5LX0ATDhg9MmNFCbge8Byt26pPvbmej
-         W6l1OHJbi+QaRgENeJfEPCxelJa1oBlHmiDG/erjD4dRtI/Q1s6KNShlIY/jMefeGQcV
-         ndfQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=sAL25em94ykjKfoWYiix0qBMEO9kj+khS1U2hw9pyuA=;
-        b=VcNqf+znQYnUgP3HUIYPPPXIEAotD04pL/i0MI5/wff2cHSozQ7Xit4bmQfxCItIRJ
-         tXtW05fWBPixrmE2icQqaWaiQjkmyH8HetdsRSmHB/zlf72Xp99j26vroqmur+wnElFO
-         lOkggMzptZw5iPWDddLPHGGiELAiXdByVZx4lpxYAhMM6Dsmzw6okSsj+j++JZJTbVml
-         DSuNAG9s8qIuAwoNUtHAmcwwB6oXKanQGO6MIIOfDq24a+PZ4NkWSPw2fyYuloZG2eyq
-         xuikNC9gKEWhN6aXD6iigAzokk2gnKVpgwWaSSNmaOHpOgd1z2NT6YZcaSKQy/AEoxcp
-         R/qA==
-X-Gm-Message-State: AMke39lq7oF1jWdVJIn6+KenVLuXj5xr0epUaFu3nzV3S4WflUTyDfdGWerqRre0QjFriA==
-X-Received: by 10.98.209.16 with SMTP id z16mr12014798pfg.139.1486754095077;
-        Fri, 10 Feb 2017 11:14:55 -0800 (PST)
-Received: from localhost ([2620:0:1000:8622:8499:2e0a:2c80:2b60])
-        by smtp.gmail.com with ESMTPSA id f3sm7144018pfd.10.2017.02.10.11.14.54
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Fri, 10 Feb 2017 11:14:54 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Michael Haggerty <mhagger@alum.mit.edu>
-Cc:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-        Stefan Beller <sbeller@google.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        David Turner <novalis@novalis.org>, Jeff King <peff@peff.net>,
-        git@vger.kernel.org
-Subject: Re: [PATCH v2 1/9] refs: reorder some function definitions
-References: <cover.1486724698.git.mhagger@alum.mit.edu>
-        <661ef87844918501e84b43d254305e1997af9b57.1486724698.git.mhagger@alum.mit.edu>
-Date:   Fri, 10 Feb 2017 11:14:53 -0800
-In-Reply-To: <661ef87844918501e84b43d254305e1997af9b57.1486724698.git.mhagger@alum.mit.edu>
-        (Michael Haggerty's message of "Fri, 10 Feb 2017 12:16:11 +0100")
-Message-ID: <xmqqfujlluxe.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
+        id S1753825AbdBJTUr (ORCPT <rfc822;e@80x24.org>);
+        Fri, 10 Feb 2017 14:20:47 -0500
+Received: from sub3.mail.dreamhost.com ([69.163.253.7]:42297 "EHLO
+        homiemail-a11.g.dreamhost.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1753297AbdBJTUq (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 10 Feb 2017 14:20:46 -0500
+X-Greylist: delayed 86584 seconds by postgrey-1.27 at vger.kernel.org; Fri, 10 Feb 2017 14:20:46 EST
+Received: from homiemail-a11.g.dreamhost.com (localhost [127.0.0.1])
+        by homiemail-a11.g.dreamhost.com (Postfix) with ESMTP id 12AA7314C066;
+        Fri, 10 Feb 2017 11:20:45 -0800 (PST)
+Received: from localhost.localdomain (207-38-252-131.c3-0.43d-ubr2.qens-43d.ny.cable.rcn.com [207.38.252.131])
+        (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: novalis@novalis.org)
+        by homiemail-a11.g.dreamhost.com (Postfix) with ESMTPSA id 7C5DB314C062;
+        Fri, 10 Feb 2017 11:20:44 -0800 (PST)
+From:   David Turner <dturner@twosigma.com>
+To:     git@vger.kernel.org
+Cc:     peff@peff.net, pclouds@gmail.com,
+        David Turner <dturner@twosigma.com>
+Subject: [PATCH v3] gc: ignore old gc.log files
+Date:   Fri, 10 Feb 2017 14:20:19 -0500
+Message-Id: <20170210192019.13927-1-dturner@twosigma.com>
+X-Mailer: git-send-email 2.11.GIT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Michael Haggerty <mhagger@alum.mit.edu> writes:
+Git should never get itself into a state where it refuses to do any
+maintenance, just because at some point some piece of the maintenance
+didn't make progress.
 
-> This avoids the need to add forward declarations in the next step.
->
-> Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
-> ---
->  refs.c | 64 ++++++++++++++++++++++++++++++++--------------------------------
->  1 file changed, 32 insertions(+), 32 deletions(-)
+In this commit, git learns to ignore gc.log files which are older than
+(by default) one day old.  It also learns about a config, gc.logExpiry
+to manage this.  There is also some cleanup: a successful manual gc,
+or a warning-free auto gc with an old log file, will remove any old
+gc.log files.
 
-Makes sense, but the patch itself looks like ... unreadble ;-)
+It might still happen that manual intervention is required
+(e.g. because the repo is corrupt), but at the very least it won't be
+because Git is too dumb to try again.
 
->
-> diff --git a/refs.c b/refs.c
-> index 9bd0bc1..707092f 100644
-> --- a/refs.c
-> +++ b/refs.c
-> @@ -1358,27 +1358,19 @@ static struct ref_store *main_ref_store;
->  /* A linked list of ref_stores for submodules: */
->  static struct ref_store *submodule_ref_stores;
->  
-> -void base_ref_store_init(struct ref_store *refs,
-> -			 const struct ref_storage_be *be,
-> -			 const char *submodule)
-> +struct ref_store *lookup_ref_store(const char *submodule)
->  {
-> -	refs->be = be;
-> -	if (!submodule) {
-> -		if (main_ref_store)
-> -			die("BUG: main_ref_store initialized twice");
-> +	struct ref_store *refs;
->  
-> -		refs->submodule = "";
-> -		refs->next = NULL;
-> -		main_ref_store = refs;
-> -	} else {
-> -		if (lookup_ref_store(submodule))
-> -			die("BUG: ref_store for submodule '%s' initialized twice",
-> -			    submodule);
-> +	if (!submodule || !*submodule)
-> +		return main_ref_store;
->  
-> -		refs->submodule = xstrdup(submodule);
-> -		refs->next = submodule_ref_stores;
-> -		submodule_ref_stores = refs;
-> +	for (refs = submodule_ref_stores; refs; refs = refs->next) {
-> +		if (!strcmp(submodule, refs->submodule))
-> +			return refs;
->  	}
-> +
-> +	return NULL;
->  }
->  
->  struct ref_store *ref_store_init(const char *submodule)
-> @@ -1395,21 +1387,6 @@ struct ref_store *ref_store_init(const char *submodule)
->  		return be->init(submodule);
->  }
->  
-> -struct ref_store *lookup_ref_store(const char *submodule)
-> -{
-> -	struct ref_store *refs;
-> -
-> -	if (!submodule || !*submodule)
-> -		return main_ref_store;
-> -
-> -	for (refs = submodule_ref_stores; refs; refs = refs->next) {
-> -		if (!strcmp(submodule, refs->submodule))
-> -			return refs;
-> -	}
-> -
-> -	return NULL;
-> -}
-> -
->  struct ref_store *get_ref_store(const char *submodule)
->  {
->  	struct ref_store *refs;
-> @@ -1435,6 +1412,29 @@ struct ref_store *get_ref_store(const char *submodule)
->  	return refs;
->  }
->  
-> +void base_ref_store_init(struct ref_store *refs,
-> +			 const struct ref_storage_be *be,
-> +			 const char *submodule)
-> +{
-> +	refs->be = be;
-> +	if (!submodule) {
-> +		if (main_ref_store)
-> +			die("BUG: main_ref_store initialized twice");
-> +
-> +		refs->submodule = "";
-> +		refs->next = NULL;
-> +		main_ref_store = refs;
-> +	} else {
-> +		if (lookup_ref_store(submodule))
-> +			die("BUG: ref_store for submodule '%s' initialized twice",
-> +			    submodule);
-> +
-> +		refs->submodule = xstrdup(submodule);
-> +		refs->next = submodule_ref_stores;
-> +		submodule_ref_stores = refs;
-> +	}
-> +}
-> +
->  void assert_main_repository(struct ref_store *refs, const char *caller)
->  {
->  	if (*refs->submodule)
+Automatic gc was intended to make client repositories be
+self-maintaining.  It would be good if automatic gc were also useful
+to server operators.  A server can end up in a state whre there are
+lots of unreferenced loose objects (say, because many users are doing
+a bunch of rebasing and pushing their rebased branches). Before this
+patch, this state would cause a gc.log file to be created, preventing
+future auto gcs.  Then pack files could pile up.  Since many git
+operations are O(n) in the number of pack files, this would lead to
+poor performance.  Now, the pack files will get cleaned up, if
+necessary, at least once per day.  And operators who find a need for
+more-frequent gcs can adjust gc.logExpiry to meet their needs.
+
+Signed-off-by: David Turner <dturner@twosigma.com>
+Helped-by: Jeff King <peff@peff.net>
+---
+ Documentation/config.txt |  6 ++++
+ builtin/gc.c             | 75 +++++++++++++++++++++++++++++++++++++++++++-----
+ t/t6500-gc.sh            | 13 +++++++++
+ 3 files changed, 87 insertions(+), 7 deletions(-)
+
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index fc5a28a32..a684b7e3e 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -1402,6 +1402,12 @@ gc.autoDetach::
+ 	Make `git gc --auto` return immediately and run in background
+ 	if the system supports it. Default is true.
+ 
++gc.logExpiry::
++	If the file gc.log exists, then `git gc --auto` won't run
++	unless that file is more than 'gc.logExpiry' old.  Default is
++	"1.day".  See `gc.pruneExpire` for more ways to specify its
++	value.
++
+ gc.packRefs::
+ 	Running `git pack-refs` in a repository renders it
+ 	unclonable by Git versions prior to 1.5.1.2 over dumb
+diff --git a/builtin/gc.c b/builtin/gc.c
+index 331f21926..6f297aa91 100644
+--- a/builtin/gc.c
++++ b/builtin/gc.c
+@@ -33,6 +33,7 @@ static int aggressive_window = 250;
+ static int gc_auto_threshold = 6700;
+ static int gc_auto_pack_limit = 50;
+ static int detach_auto = 1;
++static unsigned long gc_log_expire_time;
+ static const char *prune_expire = "2.weeks.ago";
+ static const char *prune_worktrees_expire = "3.months.ago";
+ 
+@@ -76,10 +77,47 @@ static void git_config_date_string(const char *key, const char **output)
+ static void process_log_file(void)
+ {
+ 	struct stat st;
+-	if (!fstat(get_lock_file_fd(&log_lock), &st) && st.st_size)
++	if (fstat(get_lock_file_fd(&log_lock), &st)) {
++		if (errno == ENOENT) {
++			/*
++			 * The user has probably intentionally deleted
++			 * gc.log.lock (perhaps because they're blowing
++			 * away the whole repo), so thre's no need to
++			 * report anything here.  But we also won't
++			 * delete gc.log, because we don't know what
++			 * the user's intentions are.
++			 */
++		} else {
++			FILE *fp;
++			int fd;
++			int saved_errno = errno;
++			/*
++			 * Perhaps there was an i/o error or another
++			 * unlikely situation.  Try to make a note of
++			 * this in gc.log.  If this fails again,
++			 * give up and leave gc.log as it was.
++			 */
++			rollback_lock_file(&log_lock);
++			fd = hold_lock_file_for_update(&log_lock,
++						       git_path("gc.log"),
++						       LOCK_DIE_ON_ERROR);
++
++			fp = fdopen(fd, "w");
++			fprintf(fp, _("Failed to fstat %s: %s"),
++				get_tempfile_path(&log_lock.tempfile),
++				strerror(errno));
++			fclose(fp);
++			commit_lock_file(&log_lock);
++		}
++
++	} else if (st.st_size) {
++		/* There was some error recorded in the lock file */
+ 		commit_lock_file(&log_lock);
+-	else
++	} else {
++		/* No error, clean up any old gc.log */
++		unlink(git_path("gc.log"));
+ 		rollback_lock_file(&log_lock);
++	}
+ }
+ 
+ static void process_log_file_at_exit(void)
+@@ -113,6 +151,9 @@ static void gc_config(void)
+ 	git_config_get_bool("gc.autodetach", &detach_auto);
+ 	git_config_date_string("gc.pruneexpire", &prune_expire);
+ 	git_config_date_string("gc.worktreepruneexpire", &prune_worktrees_expire);
++	if (!git_config_get_value("gc.logexpiry", &value))
++		parse_expiry_date(value, &gc_log_expire_time);
++
+ 	git_config(git_default_config, NULL);
+ }
+ 
+@@ -290,19 +331,34 @@ static const char *lock_repo_for_gc(int force, pid_t* ret_pid)
+ static int report_last_gc_error(void)
+ {
+ 	struct strbuf sb = STRBUF_INIT;
+-	int ret;
++	int ret = 0;
++	struct stat st;
++	char *gc_log_path = git_pathdup("gc.log");
++
++	if (stat(gc_log_path, &st)) {
++		if (errno == ENOENT)
++			goto done;
++
++		ret = error_errno(_("Can't stat %s"), gc_log_path);
++		goto done;
++	}
++
++	if (st.st_mtime < gc_log_expire_time)
++		goto done;
+ 
+-	ret = strbuf_read_file(&sb, git_path("gc.log"), 0);
++	ret = strbuf_read_file(&sb, gc_log_path, 0);
+ 	if (ret > 0)
+-		return error(_("The last gc run reported the following. "
++		ret = error(_("The last gc run reported the following. "
+ 			       "Please correct the root cause\n"
+ 			       "and remove %s.\n"
+ 			       "Automatic cleanup will not be performed "
+ 			       "until the file is removed.\n\n"
+ 			       "%s"),
+-			     git_path("gc.log"), sb.buf);
++			    gc_log_path, sb.buf);
+ 	strbuf_release(&sb);
+-	return 0;
++done:
++	free(gc_log_path);
++	return ret;
+ }
+ 
+ static int gc_before_repack(void)
+@@ -349,6 +405,8 @@ int cmd_gc(int argc, const char **argv, const char *prefix)
+ 	argv_array_pushl(&prune_worktrees, "worktree", "prune", "--expire", NULL);
+ 	argv_array_pushl(&rerere, "rerere", "gc", NULL);
+ 
++	/* default expiry time, overwritten in gc_config */
++	parse_expiry_date("1.day", &gc_log_expire_time);
+ 	gc_config();
+ 
+ 	if (pack_refs < 0)
+@@ -448,5 +506,8 @@ int cmd_gc(int argc, const char **argv, const char *prefix)
+ 		warning(_("There are too many unreachable loose objects; "
+ 			"run 'git prune' to remove them."));
+ 
++	if (!daemonized)
++		unlink(git_path("gc.log"));
++
+ 	return 0;
+ }
+diff --git a/t/t6500-gc.sh b/t/t6500-gc.sh
+index 1762dfa6a..84ad07eb2 100755
+--- a/t/t6500-gc.sh
++++ b/t/t6500-gc.sh
+@@ -67,5 +67,18 @@ test_expect_success 'auto gc with too many loose objects does not attempt to cre
+ 	test_line_count = 2 new # There is one new pack and its .idx
+ '
+ 
++test_expect_success 'background auto gc does not run if gc.log is present and recent but does if it is old' '
++	keep=$(ls .git/objects/pack/*.pack|head -1|sed -e "s/pack$/keep/") &&
++	test_commit foo &&
++	test_commit bar &&
++	git repack &&
++	test_config gc.autopacklimit 1 &&
++	test_config gc.autodetach true &&
++	echo fleem >.git/gc.log &&
++	test_must_fail git gc --auto 2>err &&
++	test_i18ngrep "^error:" err &&
++	test-chmtime =-86401 .git/gc.log &&
++	git gc --auto
++'
+ 
+ test_done
+-- 
+2.11.GIT
+
