@@ -2,123 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A69081FC46
-	for <e@80x24.org>; Fri, 10 Feb 2017 17:31:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 12B131FC46
+	for <e@80x24.org>; Fri, 10 Feb 2017 17:59:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751798AbdBJRb2 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 10 Feb 2017 12:31:28 -0500
-Received: from homie.mail.dreamhost.com ([208.97.132.208]:51001 "EHLO
-        homiemail-a1.g.dreamhost.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751460AbdBJRb1 (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 10 Feb 2017 12:31:27 -0500
-Received: from homiemail-a1.g.dreamhost.com (localhost [127.0.0.1])
-        by homiemail-a1.g.dreamhost.com (Postfix) with ESMTP id 67955348077
-        for <git@vger.kernel.org>; Fri, 10 Feb 2017 09:30:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=mattmccutchen.net; h=from
-        :date:subject:to:content-transfer-encoding:message-id:
-        mime-version; s=mattmccutchen.net; bh=mPLHNlnPC1K7BBHcuEtTEKgvyA
-        4=; b=ESFSIy8Mdjon5rTNOzu4NgWNbJWV0ROOU3pJcq7zHvy9FKz6m0Ac8YdtI9
-        UbDnR1BU8Hcdji8rXzUW20Baw0otn59mn9znIYoqJQ2VNAvJM6fLmdBq9/Tjw5jp
-        F0VAlvS+PZXZdBJYf57VHQG043vqaZ+usOvjSYe+i5oAWE1G0=
-Received: from main (30-86-202.dynamic.csail.mit.edu [128.30.86.202])
-        (using TLSv1 with cipher AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: matt@mattmccutchen.net)
-        by homiemail-a1.g.dreamhost.com (Postfix) with ESMTPSA id 28A7034807B
-        for <git@vger.kernel.org>; Fri, 10 Feb 2017 09:30:30 -0800 (PST)
-From:   Matt McCutchen <matt@mattmccutchen.net>
-Date:   Fri, 10 Feb 2017 12:26:33 -0500
-Subject: [PATCH] fetch: print an error when declining to request an
- unadvertised object
-To:     git@vger.kernel.org
-X-Mailer: Evolution 3.22.4 (3.22.4-2.fc25) 
-Content-Transfer-Encoding: 7bit
-Message-ID: <1486747828.17272.5.camel@mattmccutchen.net>
-Mime-Version: 1.0
+        id S1753508AbdBJR73 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 10 Feb 2017 12:59:29 -0500
+Received: from mout.web.de ([212.227.17.11]:55653 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1753379AbdBJR71 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Feb 2017 12:59:27 -0500
+Received: from [192.168.178.36] ([79.197.218.233]) by smtp.web.de (mrweb103
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0M3k4b-1cK9us2sjJ-00rGIz; Fri, 10
+ Feb 2017 18:24:27 +0100
+Subject: Re: Trying to use xfuncname without success.
+To:     Jack Adrian Zappa <adrianh.bsc@gmail.com>
+References: <CAKepmajNz7TP_Z6p_Wj17tOpiMOpKkvQOBvVthBkEiKabAppjg@mail.gmail.com>
+ <271989d5-c383-0c0d-bfcb-f4118f9fa2aa@web.de>
+ <CAKepmagp2mXNviA2VdT=3EQtZi2LkA_5oG6=AbfkBGKP9Hqiiw@mail.gmail.com>
+ <1aa20b4e-782f-a650-eab8-51218b838337@web.de>
+ <CAJZjrdXjnDMi8gMY6f_UDbMZrZJ=AoPM+g01hqPCO2pB9csoOw@mail.gmail.com>
+ <CAKepmagwMeky4jPZ-YFgPsZSsyOZZQ-kJSWV8QGg4cUNu-ZS8Q@mail.gmail.com>
+ <CAJZjrdWouNaNKU2sX89Xh=QqSbdB7srwgufuquYL_1B7H324Yw@mail.gmail.com>
+ <CAKepmai3fBZMS2dXaJyvnP36LooLh8yjn1T6vGG=Pi1B1LMaCQ@mail.gmail.com>
+ <CAJZjrdUcxe_K91CQXz_TgGHgXMsKaddwG5+JEWJ53pv5_GO1zw@mail.gmail.com>
+ <CAKepmahcaV1Ro_wObkFxezrZntL6JQ_ft+06_3ZSrxEz-yNjzA@mail.gmail.com>
+ <CAKepmaidYd4tMRwSNoTTga8s6ji-pc87fZqtxdeDcDVpFhcPWA@mail.gmail.com>
+ <CAKepmagSysE_31Y3JJwhOKvD_kGfiyEXikep62g=cn9+=v_fZA@mail.gmail.com>
+ <CAKepmai0NbQmZ-8KCm71qh4cBd9HOzVD1M87TAMhGPYaH1HsHA@mail.gmail.com>
+Cc:     git-mailing-list <git@vger.kernel.org>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <4ff5b2ac-d752-b7e4-8b32-8a5dd6c5b3bb@web.de>
+Date:   Fri, 10 Feb 2017 18:24:25 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.7.1
+MIME-Version: 1.0
+In-Reply-To: <CAKepmai0NbQmZ-8KCm71qh4cBd9HOzVD1M87TAMhGPYaH1HsHA@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K0:Q+4p8YBT22XkZTSQhuUsnut/AcQd4lWLVhYEP9y3GAMnGgXmw/M
+ LmHWUb8l9VmIocIWSE5zr35rxaaqT93Ed76jmtNm4cguREske2rnePOPH+1sNaZnyqRC9jV
+ 4Pzf5JhNS1iE7YXTUscplCWzYgX2HOB9vWaXe022eLq5rRngt8stEQ5mY/QlgdOjh6M4Qau
+ AFUFFXhGPc/Q3s4PD+4kw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:7plhHpOGTVo=:VU4gePyCHCVm5C3SK2xlWX
+ pqiEn2wI0iWo3yO+PHNywhbaS2Ruo0Q759q68lLTvHgC8J58X+4wyQVHf0kRO4TTYI81IMhbo
+ tLGLRzm+QVmsWXRiwmq3oXyAaZGVGa+ROGkNH3p2AXtygbYMrf6vmS8y5C/fv1IYvT57/tQbb
+ 5iLFyaWCx+P56Pin202jl4R+4g3o5swDbDT93dPwMkA1B7LgBoqiwr+rt8HpyH01uB1NUv5Mg
+ LZAde+w6xvXxuRr3KJ9QwDXcwKhRnMc93TKEqyEO6MN4QmqwXLWlfKNQueeVokUDAUJ/4uFIW
+ aHh0D9cK2vO7KQsNtdgr/ClQ/161YFhrNxfvhvdILhskVro+b2jIL1iFsIpB7oKiHR//NUS5R
+ 7m1TIQKJghH8PsbxcKeZl3aqwiBHwFzr1uiCsHGLZQ4JmJUzlGJZOAT3/q+oJS29hZ+rQOYx9
+ obJOgo1tFKt4cCMHXiUE1LIZF23kkNIxpmkdr140Tf5f0j2Cw0uY/tnZUQQoAzaLVbQXsKCcR
+ jXFPV5VRjUK/uFiWaVbkQVoHbSZyB16h4bBdl/qDMV5vQXXOF993MEf54VKQEmbN+63G0tSQZ
+ 02FwzI0TuXNASJd3dEKS7PSmASKwKQE+J7xWauNpfebdNAW4mPFE8DQoUU6cpmBHjQohReaw4
+ 9avA4quSCwdhFQvDdNEmF3ubBqB+rB8Tp+yU+kECUDBO1IGsudDIS9Mp5bwcn21RJTSIT3nca
+ EkjY8e5cU77w/PJcCMDbqdCba5hNLNstAtbSJP+7pg6/skMpRqQLwwJiAsKDUBlUyVfq9iYqW
+ SnoQaxM
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Currently "git fetch REMOTE SHA1" silently exits 1 if the server doesn't
-allow requests for unadvertised objects by sha1.  Change it to print a
-meaningful error message.
+Am 09.02.2017 um 01:10 schrieb Jack Adrian Zappa:
+>>  where it has grabbed a line at 126 and is using that for the hunk header.
+>
+> When I say that, I mean that it is using that line for *every* hunk
+> header, for every change, regardless if it has passed a hunk head that
+> it should have matched.
 
-Signed-off-by: Matt McCutchen <matt@mattmccutchen.net>
----
-
-The fetch code looks unbelievably complicated to me and I don't understand all
-the cases that can arise.  Hopefully this patch is an acceptable solution to the
-problem.
-
- fetch-pack.c          | 31 ++++++++++++++++---------------
- t/t5516-fetch-push.sh |  3 ++-
- 2 files changed, 18 insertions(+), 16 deletions(-)
-
-diff --git a/fetch-pack.c b/fetch-pack.c
-index 601f077..117874c 100644
---- a/fetch-pack.c
-+++ b/fetch-pack.c
-@@ -598,23 +598,24 @@ static void filter_refs(struct fetch_pack_args *args,
- 	}
- 
- 	/* Append unmatched requests to the list */
--	if ((allow_unadvertised_object_request &
--	    (ALLOW_TIP_SHA1 | ALLOW_REACHABLE_SHA1))) {
--		for (i = 0; i < nr_sought; i++) {
--			unsigned char sha1[20];
-+	for (i = 0; i < nr_sought; i++) {
-+		unsigned char sha1[20];
- 
--			ref = sought[i];
--			if (ref->matched)
--				continue;
--			if (get_sha1_hex(ref->name, sha1) ||
--			    ref->name[40] != '\0' ||
--			    hashcmp(sha1, ref->old_oid.hash))
--				continue;
-+		ref = sought[i];
-+		if (ref->matched)
-+			continue;
-+		if (get_sha1_hex(ref->name, sha1) ||
-+		    ref->name[40] != '\0' ||
-+		    hashcmp(sha1, ref->old_oid.hash))
-+			continue;
- 
--			ref->matched = 1;
--			*newtail = copy_ref(ref);
--			newtail = &(*newtail)->next;
--		}
-+		if (!(allow_unadvertised_object_request &
-+		    (ALLOW_TIP_SHA1 | ALLOW_REACHABLE_SHA1)))
-+			die(_("Server does not allow request for unadvertised object %s"), ref->name);
-+
-+		ref->matched = 1;
-+		*newtail = copy_ref(ref);
-+		newtail = &(*newtail)->next;
- 	}
- 	*refs = newlist;
- }
-diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
-index 0fc5a7c..177897e 100755
---- a/t/t5516-fetch-push.sh
-+++ b/t/t5516-fetch-push.sh
-@@ -1098,7 +1098,8 @@ test_expect_success 'fetch exact SHA1' '
- 		test_must_fail git cat-file -t $the_commit &&
- 
- 		# fetching the hidden object should fail by default
--		test_must_fail git fetch -v ../testrepo $the_commit:refs/heads/copy &&
-+		test_must_fail git fetch -v ../testrepo $the_commit:refs/heads/copy 2>err &&
-+		test_i18ngrep "Server does not allow request for unadvertised object" err &&
- 		test_must_fail git rev-parse --verify refs/heads/copy &&
- 
- 		# the server side can allow it to succeed
--- 
-2.9.3
+Strange.  That should only happen if no other function lines are 
+recognized before the changes.  You can check if that's the case using 
+git grep and your xfuncline regex, e.g. like this:
 
 
+   $ git grep -En "^[\t ]*<Type[\t ]+Name=\"([^\"]+)\".*$" *.natvis
+
+And you can check *that* result with regular grep -E or egrep if it 
+looks funny.
+
+René
