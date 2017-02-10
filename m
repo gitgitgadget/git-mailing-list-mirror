@@ -2,161 +2,58 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 541871FC46
-	for <e@80x24.org>; Fri, 10 Feb 2017 20:54:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 19CBB1FC46
+	for <e@80x24.org>; Fri, 10 Feb 2017 20:57:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752312AbdBJUyO (ORCPT <rfc822;e@80x24.org>);
-        Fri, 10 Feb 2017 15:54:14 -0500
-Received: from mxo1.nje.dmz.twosigma.com ([208.77.214.160]:42672 "EHLO
-        mxo1.nje.dmz.twosigma.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751238AbdBJUyN (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Feb 2017 15:54:13 -0500
-X-Greylist: delayed 584 seconds by postgrey-1.27 at vger.kernel.org; Fri, 10 Feb 2017 15:54:13 EST
-Received: from localhost (localhost [127.0.0.1])
-        by mxo1.nje.dmz.twosigma.com (Postfix) with ESMTP id 587FD100060;
-        Fri, 10 Feb 2017 20:44:28 +0000 (GMT)
-X-Virus-Scanned: Debian amavisd-new at twosigma.com
-Received: from mxo1.nje.dmz.twosigma.com ([127.0.0.1])
-        by localhost (mxo1.nje.dmz.twosigma.com [127.0.0.1]) (amavisd-new, port 10024)
-        with ESMTP id 1YslCRNL9ArS; Fri, 10 Feb 2017 20:44:28 +0000 (GMT)
-Received: from exmbdft6.ad.twosigma.com (exmbdft6.ad.twosigma.com [172.22.1.5])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mxo1.nje.dmz.twosigma.com (Postfix) with ESMTPS id 469688002E;
-        Fri, 10 Feb 2017 20:44:28 +0000 (GMT)
-Received: from exmbdft7.ad.twosigma.com (172.22.2.43) by
- exmbdft6.ad.twosigma.com (172.22.1.5) with Microsoft SMTP Server (TLS) id
- 15.0.1263.5; Fri, 10 Feb 2017 20:44:27 +0000
-Received: from exmbdft7.ad.twosigma.com ([fe80::552e:5f62:35e9:7955]) by
- exmbdft7.ad.twosigma.com ([fe80::552e:5f62:35e9:7955%23]) with mapi id
- 15.00.1263.000; Fri, 10 Feb 2017 20:44:27 +0000
-From:   David Turner <David.Turner@twosigma.com>
-To:     'Jeff King' <peff@peff.net>
-CC:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        "pclouds@gmail.com" <pclouds@gmail.com>
-Subject: RE: [PATCH v3] gc: ignore old gc.log files
-Thread-Topic: [PATCH v3] gc: ignore old gc.log files
-Thread-Index: AQHSg9l3yrLWITaQc0uquLb/hw0xhaFirKLg
-Date:   Fri, 10 Feb 2017 20:44:27 +0000
-Message-ID: <7852bf6688ed487097d4f997ac72dcba@exmbdft7.ad.twosigma.com>
-References: <20170210192019.13927-1-dturner@twosigma.com>
- <20170210200838.kuwpldsgzvkjlmri@sigill.intra.peff.net>
-In-Reply-To: <20170210200838.kuwpldsgzvkjlmri@sigill.intra.peff.net>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-ms-exchange-transport-fromentityheader: Hosted
-x-originating-ip: [172.20.60.15]
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+        id S1753326AbdBJU5x (ORCPT <rfc822;e@80x24.org>);
+        Fri, 10 Feb 2017 15:57:53 -0500
+Received: from cloud.peff.net ([104.130.231.41]:53168 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752874AbdBJU5w (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Feb 2017 15:57:52 -0500
+Received: (qmail 3018 invoked by uid 109); 10 Feb 2017 20:57:52 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 10 Feb 2017 20:57:52 +0000
+Received: (qmail 12294 invoked by uid 111); 10 Feb 2017 20:57:51 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 10 Feb 2017 15:57:51 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 10 Feb 2017 15:57:50 -0500
+Date:   Fri, 10 Feb 2017 15:57:50 -0500
+From:   Jeff King <peff@peff.net>
+To:     Nick Desaulniers <ndesaulniers@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: fuzzy patch application
+Message-ID: <20170210205749.c72ajnld7zjfjkwj@sigill.intra.peff.net>
+References: <CAKwvOdn9j=_Ob=xq4ucN6Ar1G537zNiU9ox4iF6o1qO7kPY41A@mail.gmail.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAKwvOdn9j=_Ob=xq4ucN6Ar1G537zNiU9ox4iF6o1qO7kPY41A@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-DQoNCj4gLS0tLS1PcmlnaW5hbCBNZXNzYWdlLS0tLS0NCj4gRnJvbTogSmVmZiBLaW5nIFttYWls
-dG86cGVmZkBwZWZmLm5ldF0NCj4gU2VudDogRnJpZGF5LCBGZWJydWFyeSAxMCwgMjAxNyAzOjA5
-IFBNDQo+IFRvOiBEYXZpZCBUdXJuZXIgPERhdmlkLlR1cm5lckB0d29zaWdtYS5jb20+DQo+IENj
-OiBnaXRAdmdlci5rZXJuZWwub3JnOyBwY2xvdWRzQGdtYWlsLmNvbQ0KPiBTdWJqZWN0OiBSZTog
-W1BBVENIIHYzXSBnYzogaWdub3JlIG9sZCBnYy5sb2cgZmlsZXMNCj4gDQo+IE9uIEZyaSwgRmVi
-IDEwLCAyMDE3IGF0IDAyOjIwOjE5UE0gLTA1MDAsIERhdmlkIFR1cm5lciB3cm90ZToNCj4gDQo+
-ID4gQEAgLTc2LDEwICs3Nyw0NyBAQCBzdGF0aWMgdm9pZCBnaXRfY29uZmlnX2RhdGVfc3RyaW5n
-KGNvbnN0IGNoYXINCj4gPiAqa2V5LCBjb25zdCBjaGFyICoqb3V0cHV0KSAgc3RhdGljIHZvaWQg
-cHJvY2Vzc19sb2dfZmlsZSh2b2lkKSAgew0KPiA+ICAJc3RydWN0IHN0YXQgc3Q7DQo+ID4gLQlp
-ZiAoIWZzdGF0KGdldF9sb2NrX2ZpbGVfZmQoJmxvZ19sb2NrKSwgJnN0KSAmJiBzdC5zdF9zaXpl
-KQ0KPiA+ICsJaWYgKGZzdGF0KGdldF9sb2NrX2ZpbGVfZmQoJmxvZ19sb2NrKSwgJnN0KSkgew0K
-PiA+ICsJCWlmIChlcnJubyA9PSBFTk9FTlQpIHsNCj4gPiArCQkJLyoNCj4gPiArCQkJICogVGhl
-IHVzZXIgaGFzIHByb2JhYmx5IGludGVudGlvbmFsbHkgZGVsZXRlZA0KPiA+ICsJCQkgKiBnYy5s
-b2cubG9jayAocGVyaGFwcyBiZWNhdXNlIHRoZXkncmUgYmxvd2luZw0KPiA+ICsJCQkgKiBhd2F5
-IHRoZSB3aG9sZSByZXBvKSwgc28gdGhyZSdzIG5vIG5lZWQgdG8NCj4gPiArCQkJICogcmVwb3J0
-IGFueXRoaW5nIGhlcmUuICBCdXQgd2UgYWxzbyB3b24ndA0KPiA+ICsJCQkgKiBkZWxldGUgZ2Mu
-bG9nLCBiZWNhdXNlIHdlIGRvbid0IGtub3cgd2hhdA0KPiA+ICsJCQkgKiB0aGUgdXNlcidzIGlu
-dGVudGlvbnMgYXJlLg0KPiA+ICsJCQkgKi8NCj4gDQo+IEhybS4gRG9lcyBmc3RhdCBhY3R1YWxs
-eSB0cmlnZ2VyIEVOT0VOVCBpbiB0aGF0IGNhc2U/IFRoZXJlJ3Mgbm8gcGF0aG5hbWUNCj4gbG9v
-a3VwIGhhcHBlbmluZyBhdCBhbGwuIEEgc2ltcGxlIHRlc3Qgb24gTGludXggc2VlbXMgdG8gc2hv
-dyB0aGF0IGl0IGRvZXMgbm90Lg0KPiBCdWlsZDoNCj4gDQo+IAkjaW5jbHVkZSA8dW5pc3RkLmg+
-DQo+IAkjaW5jbHVkZSA8ZmNudGwuaD4NCj4gCSNpbmNsdWRlIDxzeXMvc3RhdC5oPg0KPiANCj4g
-CWludCBtYWluKGludCBhcmdjLCBjaGFyICoqYXJndikNCj4gCXsNCj4gCQlzdHJ1Y3Qgc3RhdCBz
-dDsNCj4gCQlpbnQgZmQgPSBvcGVuKGFyZ3ZbMV0sIE9fV1JPTkxZfE9fQ1JFQVR8T19FWENMLCAw
-NjAwKTsNCj4gCQl1bmxpbmsoYXJndlsxXSk7DQo+IAkJZnN0YXQoZmQsICZzdCk7DQo+IAkJcmV0
-dXJuIDA7DQo+IAl9DQo+IA0KPiBhbmQgcnVuOg0KPiANCj4gICBzdHJhY2UgLi9hLm91dCB0bXAN
-Cj4gDQo+IHdoaWNoIHNob3dzOg0KPiANCj4gICBvcGVuKCJ0bXAiLCBPX1dST05MWXxPX0NSRUFU
-fE9fRVhDTCwgMDU2NjYwKSA9IDMNCj4gICB1bmxpbmsoInRtcCIpICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgPSAwDQo+ICAgZnN0YXQoMywge3N0X21vZGU9U19JRlJFR3xTX0lTVUlEfFNfSVNH
-SUR8MDY0MCwgc3Rfc2l6ZT0wLCAuLi59KSA9IDANCj4gDQo+IEJ1dCBtYXliZSB0aGVyZSBhcmUg
-b3RoZXIgc3lzdGVtcyBlbXVsYXRpbmcgZnN0YXQoKSB3b3VsZCB0cmlnZ2VyIGhlcmUuDQo+IEkg
-ZHVubm8uDQoNClllYWgsIEknbSBhbHNvIG5vdCBzdXJlLiAgT24gdGhlIG90aGVyIGhhbmQsIGlm
-IHdlJ3JlIGdvaW5nIHRvIGNhdGNoIGZzdGF0IA0KZXJyb3JzIGFueXdheSwgd2UgbWlnaHQgYXMg
-d2VsbCBkbyBzb21ldGhpbmcgc2Vuc2libGUgd2l0aCB0aGlzIG9uZS4NCg0KPiA+ICsJCX0gZWxz
-ZSB7DQo+ID4gKwkJCUZJTEUgKmZwOw0KPiA+ICsJCQlpbnQgZmQ7DQo+ID4gKwkJCWludCBzYXZl
-ZF9lcnJubyA9IGVycm5vOw0KPiA+ICsJCQkvKg0KPiA+ICsJCQkgKiBQZXJoYXBzIHRoZXJlIHdh
-cyBhbiBpL28gZXJyb3Igb3IgYW5vdGhlcg0KPiA+ICsJCQkgKiB1bmxpa2VseSBzaXR1YXRpb24u
-ICBUcnkgdG8gbWFrZSBhIG5vdGUgb2YNCj4gPiArCQkJICogdGhpcyBpbiBnYy5sb2cuICBJZiB0
-aGlzIGZhaWxzIGFnYWluLA0KPiA+ICsJCQkgKiBnaXZlIHVwIGFuZCBsZWF2ZSBnYy5sb2cgYXMg
-aXQgd2FzLg0KPiA+ICsJCQkgKi8NCj4gPiArCQkJcm9sbGJhY2tfbG9ja19maWxlKCZsb2dfbG9j
-ayk7DQo+ID4gKwkJCWZkID0gaG9sZF9sb2NrX2ZpbGVfZm9yX3VwZGF0ZSgmbG9nX2xvY2ssDQo+
-ID4gKwkJCQkJCSAgICAgICBnaXRfcGF0aCgiZ2MubG9nIiksDQo+ID4gKwkJCQkJCSAgICAgICBM
-T0NLX0RJRV9PTl9FUlJPUik7DQo+IA0KPiBJZiB0aGVyZSB3YXMgYW4gaS9vIGVycm9yLCB0aGVu
-IGdjLmxvZy5sb2NrIHN0aWxsIGV4aXN0cy4gQW5kIHRoaXMgYXR0ZW1wdCB0byBsb2NrIHdpbGwN
-Cj4gdGhlcmVmb3JlIGZhaWwsIGNhbGxpbmcgZGllKCkuIFdoaWNoIHdvdWxkIHRyaWdnZXIgb3Vy
-IGF0ZXhpdCgpIHRvIGNhbGwgcHJvY2Vzc19sb2coKSwNCj4gd2hpY2ggd291bGQgaGl0IHRoaXMg
-Y29kZSBhZ2FpbiwgYW5kIHNvIGZvcnRoLiBJJ20gbm90IHN1cmUgaWYgd2UnZCBhY3R1YWxseQ0K
-PiByZWN1cnNlIHdoZW4gYW4gYXRleGl0IGhhbmRsZXIgY2FsbHMgZXhpdCgpLiBCdXQgaXQgc2Vl
-bXMgcXVlc3Rpb25hYmxlLg0KDQpObywgYmVjYXVzZSAgd2UgY2FsbCByb2xsYmFja19sb2dfZmls
-ZSBmaXJzdC4NCg0KPiBJJ20gYWxzbyBub3Qgc3VyZSB3aHkgd2UgbmVlZCB0byByZS1vcGVuIHRo
-ZSBmaWxlIGluIHRoZSBmaXJzdCBwbGFjZS4gV2UgaGF2ZSBhbg0KPiBvcGVuIGRlc2NyaXB0b3Ig
-KGFuZCB3ZSBldmVuIHJlZGlyZWN0ZWQgc3RkZXJyIHRvIGl0IGFscmVhZHkpLg0KPiBXaHkgZG9u
-J3Qgd2UganVzdCB3cml0ZSB0byBpdD8NCg0KSWYgZnN0YXQgZmFpbGVkLCB0aGF0IHByb2JhYmx5
-IGluZGljYXRlcyBzb21ldGhpbmcgYmFkIGFib3V0IHRoZSBvbGQgZmQuICBJJ20gbm90IA0KYWN0
-dWFsbHkgc3VyZSB3aHkgZnN0YXQgd291bGQgZXZlciBmYWlsLCBzaW5jZSBpbiBhbGwgbGlrZWxp
-aG9vZCwgdGhlIGtlcm5lbCBrZWVwcyANCmluZm9ybWF0aW9uIGFib3V0IGlub2RlcyBjb3JyZXNw
-b25kaW5nIHRvIG9wZW4gZmRzIGluLW1lbW9yeS4gIE1heWJlIHNvbWVvbmUNCmZvcmNpYmx5IHVu
-bW91bnRlZCB0aGUgZHJpdmU/ICANCg0KPiA+IEBAIC0xMTMsNiArMTUxLDkgQEAgc3RhdGljIHZv
-aWQgZ2NfY29uZmlnKHZvaWQpDQo+ID4gIAlnaXRfY29uZmlnX2dldF9ib29sKCJnYy5hdXRvZGV0
-YWNoIiwgJmRldGFjaF9hdXRvKTsNCj4gPiAgCWdpdF9jb25maWdfZGF0ZV9zdHJpbmcoImdjLnBy
-dW5lZXhwaXJlIiwgJnBydW5lX2V4cGlyZSk7DQo+ID4gIAlnaXRfY29uZmlnX2RhdGVfc3RyaW5n
-KCJnYy53b3JrdHJlZXBydW5lZXhwaXJlIiwNCj4gPiAmcHJ1bmVfd29ya3RyZWVzX2V4cGlyZSk7
-DQo+ID4gKwlpZiAoIWdpdF9jb25maWdfZ2V0X3ZhbHVlKCJnYy5sb2dleHBpcnkiLCAmdmFsdWUp
-KQ0KPiA+ICsJCXBhcnNlX2V4cGlyeV9kYXRlKHZhbHVlLCAmZ2NfbG9nX2V4cGlyZV90aW1lKTsN
-Cj4gPiArDQo+IA0KPiBTaG91bGQgeW91IGJlIHVzaW5nIGdpdF9jb25maWdfZGF0ZV9zdHJpbmco
-KSBoZXJlPyBJdCBsb29rcyBsaWtlIGl0IGRvZXMgc29tZQ0KPiBleHRyYSBzYW5pdHktY2hlY2tp
-bmcuIEl0IGFubm95aW5nbHkganVzdCBnZXRzIHRoZSBzdHJpbmcsIGFuZCBkb2Vzbid0IHBhcnNl
-IGl0Lg0KPiBQZXJoYXBzIGl0IHdvdWxkIGJlIHdvcnRoIGFkZGluZyBhDQo+IGdpdF9jb25maWdf
-ZGF0ZV92YWx1ZSgpIGhlbHBlci4NCg0KVGhhdCBzZWVtcyBsaWtlIGEgZ29vZCBpZGVhLCBidXQg
-SSdtIGdvaW5nIHRvIHNraXAgaXQgZm9yIG5vdyBhbmQgcHJvbWlzZSB0bw0KZG8gaXQgbmV4dCB0
-aW1lIEkgbmVlZCBhIGRhdGUgY29uZmlnLg0KDQo+IE9yIGFsdGVybmF0aXZlbHksIHNhdmUgdGhl
-IGRhdGUgc3RyaW5nIGhlcmUsIGFuZCB0aGVuIHBhcnNlIG9uY2UgbGF0ZXIgb24sIGFmdGVyDQo+
-IGhhdmluZyByZXNvbHZlZCBhbGwgY29uZmlnIChhbmQgb3ZlcndyaXR0ZW4gdGhlIGRlZmF1bHQg
-dmFsdWUpLg0KDQpTdXJlLg0KDQo+ID4gQEAgLTQ0OCw1ICs1MDYsOCBAQCBpbnQgY21kX2djKGlu
-dCBhcmdjLCBjb25zdCBjaGFyICoqYXJndiwgY29uc3QgY2hhcg0KPiAqcHJlZml4KQ0KPiA+ICAJ
-CXdhcm5pbmcoXygiVGhlcmUgYXJlIHRvbyBtYW55IHVucmVhY2hhYmxlIGxvb3NlIG9iamVjdHM7
-ICINCj4gPiAgCQkJInJ1biAnZ2l0IHBydW5lJyB0byByZW1vdmUgdGhlbS4iKSk7DQo+ID4NCj4g
-PiArCWlmICghZGFlbW9uaXplZCkNCj4gPiArCQl1bmxpbmsoZ2l0X3BhdGgoImdjLmxvZyIpKTsN
-Cj4gPiArDQo+IA0KPiBJIHRoaW5rIHRoaXMgaXMgYSBnb29kIHRoaW5nIHRvIGRvLCB0aG91Z2gg
-SSdkIGhhdmUgcHJvYmFibHkgcHV0IGl0IGluIGEgc2VwYXJhdGUNCj4gcGF0Y2guIEkgZ3Vlc3Mg
-dGhhdCdzIGEgbWF0dGVyIG9mIHRhc3RlLg0KDQpJIGNvdWxkIGdvIGVpdGhlciB3YXksIGJ1dCBz
-aW5jZSBJJ3ZlIGFscmVhZHkgZ29uZSB0aGlzIHdheSwgSSdsbCBzdGljayB3aXRoIGl0Lg0KDQo+
-ID4gK3Rlc3RfZXhwZWN0X3N1Y2Nlc3MgJ2JhY2tncm91bmQgYXV0byBnYyBkb2VzIG5vdCBydW4g
-aWYgZ2MubG9nIGlzIHByZXNlbnQNCj4gYW5kIHJlY2VudCBidXQgZG9lcyBpZiBpdCBpcyBvbGQn
-ICcNCj4gPiArCWtlZXA9JChscyAuZ2l0L29iamVjdHMvcGFjay8qLnBhY2t8aGVhZCAtMXxzZWQg
-LWUgInMvcGFjayQva2VlcC8iKSAmJg0KPiA+ICsJdGVzdF9jb21taXQgZm9vICYmDQo+ID4gKwl0
-ZXN0X2NvbW1pdCBiYXIgJiYNCj4gPiArCWdpdCByZXBhY2sgJiYNCj4gPiArCXRlc3RfY29uZmln
-IGdjLmF1dG9wYWNrbGltaXQgMSAmJg0KPiA+ICsJdGVzdF9jb25maWcgZ2MuYXV0b2RldGFjaCB0
-cnVlICYmDQo+ID4gKwllY2hvIGZsZWVtID4uZ2l0L2djLmxvZyAmJg0KPiA+ICsJdGVzdF9tdXN0
-X2ZhaWwgZ2l0IGdjIC0tYXV0byAyPmVyciAmJg0KPiA+ICsJdGVzdF9pMThuZ3JlcCAiXmVycm9y
-OiIgZXJyICYmDQo+ID4gKwl0ZXN0LWNobXRpbWUgPS04NjQwMSAuZ2l0L2djLmxvZyAmJg0KPiA+
-ICsJZ2l0IGdjIC0tYXV0bw0KPiA+ICsnDQo+IA0KPiBUaGlzIGdpdmVzIG9ubHkgMSBzZWNvbmQg
-b2YgbGVld2F5LiBJIHdvbmRlciBpZiB3ZSBjb3VsZCBlbmQgdXAgZ2V0dGluZyBib2d1cw0KPiBm
-YWlsdXJlcyBkdWUgdG8gc3lzdGVtIGNsb2NrIGFkanVzdG1lbnRzLCBvciBldmVuIHNrZXcgYmV0
-d2VlbiB0aGUgZmlsZXN5c3RlbQ0KPiBhbmQgT1MgY2xvY2tzLiBQZXJoYXBzIHdlIHNob3VsZCBz
-ZXQgaXQgZmFydGhlciBiYWNrLCBsaWtlIGEgZmV3IGRheXMuDQo+IA0KPiAoSXQgYWxzbyByZWxp
-ZXMgb24gdGhlIDEtZGF5IGRlZmF1bHQuIFRoYXQncyBwcm9iYWJseSBPSywgdGhvdWdoIHdlIGNv
-dWxkIGFsc28gc2V0DQo+IGFuIGV4cGxpY2l0IGRlZmF1bHQgZm9yIHRoZSB0ZXN0LCB3aGljaCB3
-b3VsZCBleGVyY2lzZSB0aGUgY29uZmlnIGNvZGUgcGF0aCwgdG9vKS4NCg0KU3VyZSwgSSdsbCBy
-ZS1yb2xsIHdpdGggdGhhdCBjaGFuZ2UuDQo=
+On Fri, Feb 10, 2017 at 11:20:59AM -0800, Nick Desaulniers wrote:
+
+> I frequently need to backport patches from the Linux kernel to older
+> kernel versions (Android Security).  My usual workflow for simple
+> patches is:
+> 
+> 1. try `git am patch.txt`.
+
+This is not exactly an answer to your question, but "git am -3" is often
+a better solution than trying to fuzz patches. It assumes the patches
+are Git patches (and record their origin blobs), and that you have that
+blob (which should be true if the patches are based on the normal kernel
+history, and you just fetch that history into your repository).
+
+I've found that this often manages to apply patches that "git apply"
+will not by itself. And I also find the resulting conflicts to be much
+easier to deal with than patch's ".rej" files.
+
+-Peff
