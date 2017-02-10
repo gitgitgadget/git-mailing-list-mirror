@@ -2,93 +2,70 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 12B501FC46
-	for <e@80x24.org>; Fri, 10 Feb 2017 21:45:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5E4E61FC46
+	for <e@80x24.org>; Fri, 10 Feb 2017 21:48:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751026AbdBJVpC (ORCPT <rfc822;e@80x24.org>);
-        Fri, 10 Feb 2017 16:45:02 -0500
-Received: from mail-pg0-f66.google.com ([74.125.83.66]:36529 "EHLO
-        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750874AbdBJVpC (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Feb 2017 16:45:02 -0500
-Received: by mail-pg0-f66.google.com with SMTP id 75so3943118pgf.3
-        for <git@vger.kernel.org>; Fri, 10 Feb 2017 13:45:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=tndhsC6NMewYowTYBtOoUpQtDyYPcCmS+6sroz1gbqY=;
-        b=rlb23bKsbiRDvd5203EqO2ElMGGFKt4n5s7VprtodW7Xa4mNjdKyRMAQG/C9JnvOX9
-         ihQ3uOae1uW6oYAozwFM6r84d32ziOMfFPE1/Tt9NK8/caNw8jv6zRw1HW19QQGqOJ/6
-         Chu65TRvOmVbVFuzVQHEmkY2wI2Il5YIQDccykHAtaxoKkMp3pY9ouDdlYQ3YgGVkHGU
-         l2sLYfXk04nZV+wk8L83JUPTJHTl6jmGJorSLHM2d1LcpeVRCbC94bJGXQZwdiIdfloA
-         OkE6bGtEEAUvDfzhS7vxaA5pBNX+prSLOdRMk6TP/Is3ferVBwLj9K5RnO0snxcARI3e
-         f10Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=tndhsC6NMewYowTYBtOoUpQtDyYPcCmS+6sroz1gbqY=;
-        b=NLl+WdFbXc4UdqP23Y1X3L2C5/f3YOFQOfvUehhtWsG0/A6YNXw+9KKTdFug5OwHeX
-         i2ZPq2aDMRdmxe54kC0oCcJPYJb0xRQc0vsoLHYsGzAdFEPodFQAFWUjXBAeY/hn3R/j
-         nPk/uGRGz2epb3cLWqWcGfW8ZMabQ6RQu+PTTjfAL0migqk1OUCzY9QgmGgwPEpearWP
-         bCu2aWLLzrDSS7RVgHYvyDkXCtWEn64qFEmiN6mon7dX6Zdy8+jVZF9uPkwZs8qabjzo
-         8OHqxRqUuPgJkgvPgHMOcqJ1OtticIQwdFwwSICp9aIDpyesiKLBTrkGHNdw42LAg3/j
-         O4uA==
-X-Gm-Message-State: AMke39nzWsPvHZ+2Zg+w8j2Fyjt4otc49oOqWwOG+HUd28769Bb4DlXezwTFrOpVzXDUxA==
-X-Received: by 10.99.247.83 with SMTP id f19mr13140872pgk.158.1486763101362;
-        Fri, 10 Feb 2017 13:45:01 -0800 (PST)
-Received: from localhost ([2620:0:1000:8622:8499:2e0a:2c80:2b60])
-        by smtp.gmail.com with ESMTPSA id x2sm7376405pfa.71.2017.02.10.13.45.00
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Fri, 10 Feb 2017 13:45:00 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] squash! completion: fill COMPREPLY directly when completing refs
-References: <20170203025405.8242-13-szeder.dev@gmail.com>
-        <20170206181545.12869-1-szeder.dev@gmail.com>
-Date:   Fri, 10 Feb 2017 13:44:59 -0800
-In-Reply-To: <20170206181545.12869-1-szeder.dev@gmail.com> ("SZEDER
- =?utf-8?Q?G=C3=A1bor=22's?=
-        message of "Mon, 6 Feb 2017 19:15:45 +0100")
-Message-ID: <xmqq7f4xk9es.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+        id S1751153AbdBJVsy (ORCPT <rfc822;e@80x24.org>);
+        Fri, 10 Feb 2017 16:48:54 -0500
+Received: from cloud.peff.net ([104.130.231.41]:53277 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1750874AbdBJVsx (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Feb 2017 16:48:53 -0500
+Received: (qmail 6930 invoked by uid 109); 10 Feb 2017 21:48:53 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 10 Feb 2017 21:48:53 +0000
+Received: (qmail 13072 invoked by uid 111); 10 Feb 2017 21:48:52 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 10 Feb 2017 16:48:52 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 10 Feb 2017 16:48:51 -0500
+Date:   Fri, 10 Feb 2017 16:48:51 -0500
+From:   Jeff King <peff@peff.net>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Nick Desaulniers <ndesaulniers@google.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: fuzzy patch application
+Message-ID: <20170210214850.2ok62xdmemgotwnt@sigill.intra.peff.net>
+References: <CAKwvOdn9j=_Ob=xq4ucN6Ar1G537zNiU9ox4iF6o1qO7kPY41A@mail.gmail.com>
+ <20170210205749.c72ajnld7zjfjkwj@sigill.intra.peff.net>
+ <CAGZ79kaG=oqDM=1+rz_zk6Qn-7wAszxPnBtqrkAJS29_qT7SoA@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Disposition: inline
+In-Reply-To: <CAGZ79kaG=oqDM=1+rz_zk6Qn-7wAszxPnBtqrkAJS29_qT7SoA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-SZEDER Gábor <szeder.dev@gmail.com> writes:
+On Fri, Feb 10, 2017 at 01:37:12PM -0800, Stefan Beller wrote:
 
-> Care should be taken, though, because that prefix might contain
-> 'for-each-ref' format specifiers as part of the left hand side of a
-> '..' range or '...' symmetric difference notation or fetch/push/etc.
-> refspec, e.g. 'git log "evil-%(refname)..br<TAB>'.  Doubling every '%'
-> in the prefix will prevent 'git for-each-ref' from interpolating any
-> of those contained format specifiers.
-> ---
->
-> This is really pathological, and I'm sure this has nothing to do
-> with whatever breakage Jacob experienced.  The shell
-> metacharacters '(' and ')' still cause us trouble in various ways,
-> but that's nothing new and has been the case for quite a while
-> (always?).
->
-> It's already incorporated into (the rewritten)
->
->   https://github.com/szeder/git completion-refs-speedup
+> > This is not exactly an answer to your question, but "git am -3" is often
+> > a better solution than trying to fuzz patches. It assumes the patches
+> > are Git patches (and record their origin blobs), and that you have that
+> > blob (which should be true if the patches are based on the normal kernel
+> > history, and you just fetch that history into your repository).
+> >
+> > I've found that this often manages to apply patches that "git apply"
+> > will not by itself. And I also find the resulting conflicts to be much
+> > easier to deal with than patch's ".rej" files.
+> 
+> I have been told this a couple of times before; do we want to make -3
+> the default (in 2.13 then) ?
 
-Should I expect a reroll to come, or is this the only fix-up to the
-series that begins at <20170203025405.8242-1-szeder.dev@gmail.com>?
+I dunno. I always use it, but I'm not sure if there are any downsides,
+aside from a little extra processing time. It does have some
+incompatibilities with other options. And I think it kicks in rename
+detection (but I might be mis-remembering another feature). That could
+be surprising, I guess.
 
-No hurries.
+The original dates all the way back to 47f0b6d5d (Fall back to three-way
+merge when applying a patch., 2005-10-06), but I don't see any rationale
+for not making it the default. Junio probably could give a better
+answer.
+
+-Peff
