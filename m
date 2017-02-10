@@ -7,95 +7,256 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B750C1FC46
-	for <e@80x24.org>; Fri, 10 Feb 2017 15:17:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AAA931FD6A
+	for <e@80x24.org>; Fri, 10 Feb 2017 15:41:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752180AbdBJPRc (ORCPT <rfc822;e@80x24.org>);
-        Fri, 10 Feb 2017 10:17:32 -0500
-Received: from mout.gmx.net ([212.227.17.22]:60150 "EHLO mout.gmx.net"
+        id S1752913AbdBJPlc (ORCPT <rfc822;e@80x24.org>);
+        Fri, 10 Feb 2017 10:41:32 -0500
+Received: from mout.gmx.net ([212.227.15.15]:59996 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751370AbdBJPRa (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Feb 2017 10:17:30 -0500
-Received: from virtualbox ([37.201.192.48]) by mail.gmx.com (mrgmx101
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0Lxt3Q-1cNiFi0DeG-015LA3; Fri, 10
- Feb 2017 16:10:42 +0100
-Date:   Fri, 10 Feb 2017 16:10:39 +0100 (CET)
+        id S1752116AbdBJPla (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Feb 2017 10:41:30 -0500
+Received: from virtualbox ([37.201.192.48]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0M86jp-1cFiLF2zWj-00viXu; Fri, 10
+ Feb 2017 16:33:32 +0100
+Date:   Fri, 10 Feb 2017 16:33:31 +0100 (CET)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     git@vger.kernel.org
-cc:     Jeff Hostetler <jeffhost@microsoft.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] preload-index: avoid lstat for skip-worktree items
-Message-ID: <a1297b9426e7980f41e9e662fc0f30717c576c3e.1486739428.git.johannes.schindelin@gmx.de>
+cc:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?Q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc_Duy?= 
+        <pclouds@gmail.com>, Michael Rappazzo <rappazzo@gmail.com>
+Subject: [PATCH v2 0/2] Fix bugs in rev-parse's output when run in a
+ subdirectory
+In-Reply-To: <50fe3ea3302c40f4c96eaa5a568837e3334f9dc4.1486555851.git.johannes.schindelin@gmx.de>
+Message-ID: <cover.1486740772.git.johannes.schindelin@gmx.de>
+References: <50fe3ea3302c40f4c96eaa5a568837e3334f9dc4.1486555851.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:gTgzMZH54PRtWr0dgt2AbWWPKFIwrSUS3m+n/K4mor2+AjOMRST
- lbIzzRAP6xB6cC5xmi4O9GwuRhxffxebuFXfgozH+hmvGrDsMSLhienKe11GwOgduoIRz6E
- vhmYtQiSUOaWm6O8rURRwGL5ZPABHWIqOHvFh3zPzMmuRu+Ys9xQmyDwRkBfSv0yNl270lo
- ctKgZr6rg1lp4jq2HPyAg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:j+t2bmTj3cA=:AidVBKsjv3GVolIymeOtVa
- b4lVQDRtsLGp5ItYIwEyRUHYqxmoWjpj3VGwIiZE16hvZ/NiGoLPBU99XbtHByJHZ27u6wjUV
- Gaf9H2saga3ET60KVKqHT8rFYgLC/RzNpfFtQtCeS14kBvjpR+JwDLYHk80lMJ47LowFxiVbN
- Ln01Jc6ojyX0jENRp4qwkaufrep5q18ijeKdAOM2rfDxb7iJLY6CZ2GEXiCUfj2uAjjaFoQwt
- zzb89LXTmHcpleQw7GJO7g7zzuxjS6lxFQ34Rg6Kl2Yr9SnV2YDrSbT1mmelUwUHpgQhITnq7
- /YpvyzWSyObE/f+OFc99AFBMgm5Q9il8ChADfA3U7rxKR/AZp4qk2Ar10NgsUgfr76qiwfIfm
- Nt3VnUnK4+4ENIbQ/ZVQSLFTlbn9vb90Foh2KR5zuCZRdQXzNW1DJOG0U3g3Vdpc0oN6mL3nJ
- PkGdZoe1WnAAjlE4UFBHo5hA2wXy8912s8u5cw3tpY5rqerRhcJkfHcShhc4EL+qzpC/o8HQN
- P9sraf7TONLDFlUwQ8nKhfgZc/1fNyw/lXz9LBvdkElCWnC/dhANR4ZlTd0UPPKjhXoZXQopV
- 7eOQXU8s//5MB6/KVbgROPaGTA7DD8sOF8uMnXuISPiTwItJOBetWz0bP2CZFE6pwDn2NlKWH
- F7u2pAetBoz+knGPRnA8mFGWJvA3Xl1MSqO2f4ta44yIZ28i2Ha7/yOZxCEtHFpCXxfZ9znEG
- AFnVPJfJOghQZWHQ2GxvekY4x91U0Lmv5bOMtHuOjnfDXIqBwDGZju9AavOxy227PgjZCY+Az
- cm0O+5AXhLSYV1zzFPL9BqI26gGxF87vxtNM5lDE5r8OaQEt2rruXWnZgnfuLbCrSTjrS1McW
- VZwbk77ZWFjVJCnUwAfDp+1swsrnPiVSrHbIiJwhnMmL95U527FsG0gTu+SGfTOkRaDU2w1Cu
- W7PVcZS6yY/I5fafh3GkWSjxfWKwvW4StmZYmolm/Hs/tvyUOQWgZ3+fGB49dNBacdBb32m7C
- xz12uf7FR8nO5zadIYACPE1XIsVe1lOVzfyiJOCXOFpqYOd/SQdCyFgQWi+Ubq7MLw==
+X-Provags-ID: V03:K0:yOESW4qIXJBdFD6kMS6CR/zOsMQFCta7xucMOxaWXFbgcKlVQkU
+ mWJWZ0IwiL4GibZuVmG1ViXHcn7EXEbWMankLZahOBd/9aHTZFuvwt9DHiOIpUgROZSpmVd
+ CrWvY3RIsRAd4qn5TprGGf6aa1gsAvOLucrwBAgD0m6/JNjk60SU7BrwKB6HruTb18/8HEk
+ wSgcJDd2TDTG/2E/p4FBg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:bw0yZEPe+b0=:iy62z4EoYVVKTjoM6updQK
+ C6TBhUVN7X60pXvTa82tnS5IAjC9/x+k71x2Vk2yRA9bOox/UGrGKgK3fZhmgBAUKJBvUSpYp
+ tAs9yR/x8AHlNr2DLnIuK/AiNlUTxq8XzHK0kYRq6YPDNLV4WPUJU4UArQ69evntwP9XyOgPD
+ Qxs//XsE0VfE0g2Sz5SHKjawSTD6MRMp2bGXwsqVYSSQPe0+XbqK03bINie5voTvCR2R5bJss
+ mQgcuU7p9yQcCzNSnTUiPsEWd+9mthe+nQWSZiH76/8yzRtWNvw6ApkCt6QycjJgS3SSCVUDi
+ 9piRYOOo8ujqX6OrnST60GRaAyW2gxKfRDcNHBxQi3nyi1YpmFu5Z4Q3xOR9lWSug2qIz9p8y
+ L+ZNnEF1/pXSfeTOTZYPt0Y5vwd8JWu5DieUShYDn5lekSmMxB4eUgmqJfXPryKIyWnmZ/Tvq
+ ztNQfSsQS91ouL6wSv3gxHuV+H8F31uhZK84rz62mDUjKJaBK9ZLdXEmJ+Aqj7ui898towO+U
+ ejiC8VuVSGG0X9HmuU5wUURVqjSVs+b1j47oGAN+/WYpZBrXyUHrsx0F6SSDQT5Q5xitJ/PX4
+ V7LFUYSypDjMx7sAPvbiRa8dhcZS9OKXnYqLm1qOz4fd9uXhWllslJrJpMptsa/QWoLXElV7l
+ oqCPv91oWy08WYrEseUZp5w52ORbru1WhWqx8MkTEDb9p+P6AWeY2FijfwfSHLAarucnap9sD
+ psKnrclnECOe3coebfg/6c/CGO628Gd6RQSWQeMcmgOw3pBB9//VJxWmViNdhFpxqCzG/dSow
+ MntOZOH
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Jeff Hostetler <jeffhost@microsoft.com>
+The bug that bit me (hard!) and that triggered not only a long series of
+curses but also my writing a patch and sending it to the list was that
+`git rev-parse --git-path HEAD` would give *incorrect* output when run
+in a subdirectory of a regular checkout, but *correct* output when run
+in a subdirectory of an associated *worktree*.
 
-Teach preload-index to avoid lstat() calls for index-entries
-with skip-worktree bit set.  This is a performance optimization.
+I had tested the script in question quite a bit, but in a worktree. And
+in production, it quietly did exactly the wrong thing.
 
-During a sparse-checkout, the skip-worktree bit is set on items
-that were not populated and therefore are not present in the
-worktree.  The per-thread preload-index loop performs a series
-of tests on each index-entry as it attempts to compare the
-worktree version with the index and mark them up-to-date.
-This patch short-cuts that work.
+Relative to v1 of the then-single patch, this changed:
 
-On a Windows 10 system with a very large repo (450MB index)
-and various levels of sparseness, performance was improved
-in the {preloadindex=true, fscache=false} case by 80% and
-in the {preloadindex=true, fscache=true} case by 20% for various
-commands.
+- the patch now covers also --git-common-dir and --shared-index-path
 
-Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
-Published-As: https://github.com/dscho/git/releases/tag/preload-index-sparse-v1
-Fetch-It-Via: git fetch https://github.com/dscho/git preload-index-sparse-v1
+- the output is now a relative path when git_dir is relative
 
- preload-index.c | 2 ++
- 1 file changed, 2 insertions(+)
+- I plucked the tests from Mike's patch series and dropped my ad-hoc
+  test from t0060.
 
-diff --git a/preload-index.c b/preload-index.c
-index c1fe3a3ef9c..70a4c808783 100644
---- a/preload-index.c
-+++ b/preload-index.c
-@@ -53,6 +53,8 @@ static void *preload_thread(void *_data)
- 			continue;
- 		if (ce_uptodate(ce))
- 			continue;
-+		if (ce_skip_worktree(ce))
-+			continue;
- 		if (!ce_path_match(ce, &p->pathspec, NULL))
- 			continue;
- 		if (threaded_has_symlink_leading_path(&cache, ce->name, ce_namelen(ce)))
+- While at it, I fixed Mike's test that assumed that the objects/
+  directory lives in .git/worktrees/<name>/objects/.
+
+
+Johannes Schindelin (1):
+  rev-parse: fix several options when running in a subdirectory
+
+Michael Rappazzo (1):
+  rev-parse tests: add tests executed from a subdirectory
+
+ builtin/rev-parse.c      | 15 +++++++++++----
+ t/t1500-rev-parse.sh     | 28 ++++++++++++++++++++++++++++
+ t/t1700-split-index.sh   | 17 +++++++++++++++++
+ t/t2027-worktree-list.sh | 10 +++++++++-
+ 4 files changed, 65 insertions(+), 5 deletions(-)
+
 
 base-commit: 6e3a7b3398559305c7a239a42e447c21a8f39ff8
+Published-As: https://github.com/dscho/git/releases/tag/git-path-in-subdir-v2
+Fetch-It-Via: git fetch https://github.com/dscho/git git-path-in-subdir-v2
+
+Interdiff vs v1:
+
+ diff --git a/builtin/rev-parse.c b/builtin/rev-parse.c
+ index f9d5762bf2b..84af2802f6f 100644
+ --- a/builtin/rev-parse.c
+ +++ b/builtin/rev-parse.c
+ @@ -545,6 +545,7 @@ int cmd_rev_parse(int argc, const char **argv, const char *prefix)
+  	unsigned int flags = 0;
+  	const char *name = NULL;
+  	struct object_context unused;
+ +	struct strbuf buf = STRBUF_INIT;
+  
+  	if (argc > 1 && !strcmp("--parseopt", argv[1]))
+  		return cmd_parseopt(argc - 1, argv + 1, prefix);
+ @@ -597,13 +598,11 @@ int cmd_rev_parse(int argc, const char **argv, const char *prefix)
+  		}
+  
+  		if (!strcmp(arg, "--git-path")) {
+ -			const char *path;
+  			if (!argv[i + 1])
+  				die("--git-path requires an argument");
+ -			path = git_path("%s", argv[i + 1]);
+ -			if (prefix && !is_absolute_path(path))
+ -				path = real_path(path);
+ -			puts(path);
+ +			strbuf_reset(&buf);
+ +			puts(relative_path(git_path("%s", argv[i + 1]),
+ +					   prefix, &buf));
+  			i++;
+  			continue;
+  		}
+ @@ -825,8 +824,9 @@ int cmd_rev_parse(int argc, const char **argv, const char *prefix)
+  				continue;
+  			}
+  			if (!strcmp(arg, "--git-common-dir")) {
+ -				const char *pfx = prefix ? prefix : "";
+ -				puts(prefix_filename(pfx, strlen(pfx), get_git_common_dir()));
+ +				strbuf_reset(&buf);
+ +				puts(relative_path(get_git_common_dir(),
+ +						   prefix, &buf));
+  				continue;
+  			}
+  			if (!strcmp(arg, "--is-inside-git-dir")) {
+ @@ -849,7 +849,9 @@ int cmd_rev_parse(int argc, const char **argv, const char *prefix)
+  					die(_("Could not read the index"));
+  				if (the_index.split_index) {
+  					const unsigned char *sha1 = the_index.split_index->base_sha1;
+ -					puts(git_path("sharedindex.%s", sha1_to_hex(sha1)));
+ +					const char *path = git_path("sharedindex.%s", sha1_to_hex(sha1));
+ +					strbuf_reset(&buf);
+ +					puts(relative_path(path, prefix, &buf));
+  				}
+  				continue;
+  			}
+ @@ -910,5 +912,6 @@ int cmd_rev_parse(int argc, const char **argv, const char *prefix)
+  		die_no_single_rev(quiet);
+  	} else
+  		show_default();
+ +	strbuf_release(&buf);
+  	return 0;
+  }
+ diff --git a/t/t0060-path-utils.sh b/t/t0060-path-utils.sh
+ index 790584fcc54..444b5a4df80 100755
+ --- a/t/t0060-path-utils.sh
+ +++ b/t/t0060-path-utils.sh
+ @@ -271,8 +271,6 @@ relative_path "<null>"		"<empty>"	./
+  relative_path "<null>"		"<null>"	./
+  relative_path "<null>"		/foo/a/b	./
+  
+ -test_git_path "mkdir sub && cd sub && test_when_finished cd .. &&" \
+ -	foo "$(pwd)/.git/foo"
+  test_git_path A=B                info/grafts .git/info/grafts
+  test_git_path GIT_GRAFT_FILE=foo info/grafts foo
+  test_git_path GIT_GRAFT_FILE=foo info/////grafts foo
+ diff --git a/t/t1500-rev-parse.sh b/t/t1500-rev-parse.sh
+ index 038e24c4014..d74f09ad93e 100755
+ --- a/t/t1500-rev-parse.sh
+ +++ b/t/t1500-rev-parse.sh
+ @@ -87,4 +87,32 @@ test_rev_parse -C work -g ../repo.git -b t 'GIT_DIR=../repo.git, core.bare = tru
+  
+  test_rev_parse -C work -g ../repo.git -b u 'GIT_DIR=../repo.git, core.bare undefined' false false true ''
+  
+ +test_expect_success 'git-common-dir from worktree root' '
+ +	echo .git >expect &&
+ +	git rev-parse --git-common-dir >actual &&
+ +	test_cmp expect actual
+ +'
+ +
+ +test_expect_success 'git-common-dir inside sub-dir' '
+ +	mkdir -p path/to/child &&
+ +	test_when_finished "rm -rf path" &&
+ +	echo "$(git -C path/to/child rev-parse --show-cdup).git" >expect &&
+ +	git -C path/to/child rev-parse --git-common-dir >actual &&
+ +	test_cmp expect actual
+ +'
+ +
+ +test_expect_success 'git-path from worktree root' '
+ +	echo .git/objects >expect &&
+ +	git rev-parse --git-path objects >actual &&
+ +	test_cmp expect actual
+ +'
+ +
+ +test_expect_success 'git-path inside sub-dir' '
+ +	mkdir -p path/to/child &&
+ +	test_when_finished "rm -rf path" &&
+ +	echo "$(git -C path/to/child rev-parse --show-cdup).git/objects" >expect &&
+ +	git -C path/to/child rev-parse --git-path objects >actual &&
+ +	test_cmp expect actual
+ +'
+ +
+  test_done
+ diff --git a/t/t1700-split-index.sh b/t/t1700-split-index.sh
+ index 292a0720fcc..446ff34f966 100755
+ --- a/t/t1700-split-index.sh
+ +++ b/t/t1700-split-index.sh
+ @@ -200,4 +200,21 @@ EOF
+  	test_cmp expect actual
+  '
+  
+ +test_expect_success 'rev-parse --shared-index-path' '
+ +	rm -rf .git &&
+ +	test_create_repo . &&
+ +	git update-index --split-index &&
+ +	ls -t .git/sharedindex* | tail -n 1 >expect &&
+ +	git rev-parse --shared-index-path >actual &&
+ +	test_cmp expect actual &&
+ +	mkdir work &&
+ +	test_when_finished "rm -rf work" &&
+ +	(
+ +		cd work &&
+ +		ls -t ../.git/sharedindex* | tail -n 1 >expect &&
+ +		git rev-parse --shared-index-path >actual &&
+ +		test_cmp expect actual
+ +	)
+ +'
+ +
+  test_done
+ diff --git a/t/t2027-worktree-list.sh b/t/t2027-worktree-list.sh
+ index 465eeeacd3d..848da5f3684 100755
+ --- a/t/t2027-worktree-list.sh
+ +++ b/t/t2027-worktree-list.sh
+ @@ -14,10 +14,18 @@ test_expect_success 'rev-parse --git-common-dir on main worktree' '
+  	test_cmp expected actual &&
+  	mkdir sub &&
+  	git -C sub rev-parse --git-common-dir >actual2 &&
+ -	echo sub/.git >expected2 &&
+ +	echo ../.git >expected2 &&
+  	test_cmp expected2 actual2
+  '
+  
+ +test_expect_success 'rev-parse --git-path objects linked worktree' '
+ +	echo "$(git rev-parse --show-toplevel)/.git/objects" >expect &&
+ +	test_when_finished "rm -rf linked-tree && git worktree prune" &&
+ +	git worktree add --detach linked-tree master &&
+ +	git -C linked-tree rev-parse --git-path objects >actual &&
+ +	test_cmp expect actual
+ +'
+ +
+  test_expect_success '"list" all worktrees from main' '
+  	echo "$(git rev-parse --show-toplevel) $(git rev-parse --short HEAD) [$(git symbolic-ref --short HEAD)]" >expect &&
+  	test_when_finished "rm -rf here && git worktree prune" &&
+
 -- 
 2.11.1.windows.1
+
