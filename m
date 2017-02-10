@@ -2,63 +2,60 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6717E1FC46
-	for <e@80x24.org>; Fri, 10 Feb 2017 19:32:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 020191FC46
+	for <e@80x24.org>; Fri, 10 Feb 2017 19:38:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932200AbdBJTc0 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 10 Feb 2017 14:32:26 -0500
-Received: from mail-pg0-f68.google.com ([74.125.83.68]:33008 "EHLO
-        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932094AbdBJTcY (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Feb 2017 14:32:24 -0500
-Received: by mail-pg0-f68.google.com with SMTP id 194so3775416pgd.0
-        for <git@vger.kernel.org>; Fri, 10 Feb 2017 11:32:24 -0800 (PST)
+        id S1753359AbdBJTiV (ORCPT <rfc822;e@80x24.org>);
+        Fri, 10 Feb 2017 14:38:21 -0500
+Received: from mail-pf0-f193.google.com ([209.85.192.193]:35815 "EHLO
+        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753269AbdBJTiV (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Feb 2017 14:38:21 -0500
+Received: by mail-pf0-f193.google.com with SMTP id 68so1131614pfx.2
+        for <git@vger.kernel.org>; Fri, 10 Feb 2017 11:38:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=fiqpnCOS9qDnL4phsHJ9SqYGfzlq2ixjaydneOifuIg=;
-        b=XVrYDsJHpSTx1klalyWQqIf3u/oewS4Ne614sJq+mPAehTa4s497HfLQHiIVWMR0rB
-         9fdLZ3Npg/ENPdsdUs+ClfjL77QH1eyUtvcUbLtVcoVD6Btzj/ekdfrl1vL2p668S/p+
-         poNUsCCj4kbv0uyfd20SbqqIQ+uxN8kd8gHRJdmnPfswXm5aiyp6ALDUR1OpPktjK+/B
-         fLVqSazVyp6THNXjHMXKTMfnLPmLz8A0v7UtwYCwNN6IK+1HnUmqzetjX7BOQHE85iQj
-         NH3dhnQBZc7IWnW6jgLG/qyaC6quSI3EjiW3HLjYlujqKxJjL/y4Shmud+RRmVk3jVUP
-         AbMA==
+        bh=TTyKm3hn2g2LdpM3N2x6mOya6ICMP78jjhMoS5hUF+0=;
+        b=gInm+YS+9zeMhLKVr+DYJbQRFFcIjRZfUE0AURdY5WL7vlyeiqEsPeN17EP6yFyUVt
+         Oc8MFFYBvahtMfUvR7+T8u1/LFIUphSE1ZdamMmPywKBPd4P0wbeAOmbNBXRz67n06X/
+         bAI5xZyqNMyrFXdrY2h3f2BGlB4NyeflBJw/F2eujfwlfbCfRHLHwP0KI3eQmg2qtD4f
+         H4gzVDyWLGSfSqhVTexHLtycYsvfYqyqChj/pqrU1eP6Uax9eMQ6+F4AXvjecGWzj+0e
+         NAe7b5SQUEukjmA+w2w6KRqWFxPFDCmTmIhU9e+M7Yha+7RNtvkBwC2uhjHh1b8/4FKa
+         uuWw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=fiqpnCOS9qDnL4phsHJ9SqYGfzlq2ixjaydneOifuIg=;
-        b=dnMRZ21Xt4pGCInxxddvbezHpsNDkGkD0gh8xDJcn8OrHxg8t+NarqrrYE9OtasPwj
-         V+lRsJDxjXjlcDbs75iAImEbrJg1b9t3Jx4xNmMAfMkIvjM28eYRUmSwi+nPj3+5aGtV
-         sorh/vt+TZtzA6Q/uCOmmZP5ys6JAZsCWZPUV+Bj7qQFmKE43nG//OQzNX8VMOOMyj8B
-         mMvZUxfxOXF/fubjAYrqdBr1dtQjGw5SzRs6i1w9Xp4WP0xbj4aod8hSt4Rjl8PujUBG
-         2yl0NfeG3BjepLX96AMYnxuhE9f5PPyVhfIVnU5i5A3tBW7h65JxlbzhBgPF0COwXcmE
-         idYA==
-X-Gm-Message-State: AMke39kzes8jNinef1yp+zX35M0fzuDNiCk/c8BH5soMvO2jL/ygQfclDJ7LIMgknat+PA==
-X-Received: by 10.98.70.194 with SMTP id o63mr12179104pfi.49.1486754623319;
-        Fri, 10 Feb 2017 11:23:43 -0800 (PST)
+        bh=TTyKm3hn2g2LdpM3N2x6mOya6ICMP78jjhMoS5hUF+0=;
+        b=Umxcr+N7IRib00j4UtYBxP+2LXqkmkAKR65QK9CO02v7DyNila0Rw4XqY/rMKFbnhs
+         XEMMGsHa1WCi2JlVNawturppnp3hfgUdWth5ExpmE5bfa5FhQLxbSLEdTE8iR44yqUXg
+         gfA3sKcikQnHv2DmnClswaQLa2H2rR5Wgko76DE6KSIqBorIfBo/HmyNLyUceSMTxvjx
+         6RP5T12NnnI4bmojL4FErN1PFU3+7Z/FcwLQXnSV4/NGiL+PTY8OuOwJ33rLQI8quec4
+         MlBuRYHlBw5bnGYE+Lb1v00N1/d7rptT/GNTsBIoYNxFYqawW2CHyh9u0/8VZVfbM30n
+         2IGg==
+X-Gm-Message-State: AMke39ndPdkqWvTJjpCOltzTzfhlaHAoSmt33IGIYyrPZKIKy/o77ad/JGcA5XnqRBa/wA==
+X-Received: by 10.98.50.66 with SMTP id y63mr12197751pfy.21.1486755500504;
+        Fri, 10 Feb 2017 11:38:20 -0800 (PST)
 Received: from localhost ([2620:0:1000:8622:8499:2e0a:2c80:2b60])
-        by smtp.gmail.com with ESMTPSA id l12sm7151057pfj.37.2017.02.10.11.23.42
+        by smtp.gmail.com with ESMTPSA id e4sm7150004pgc.45.2017.02.10.11.38.19
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Fri, 10 Feb 2017 11:23:42 -0800 (PST)
+        Fri, 10 Feb 2017 11:38:19 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Michael Haggerty <mhagger@alum.mit.edu>
-Cc:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-        Stefan Beller <sbeller@google.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        David Turner <novalis@novalis.org>, Jeff King <peff@peff.net>,
-        git@vger.kernel.org
-Subject: Re: [PATCH v2 0/9] Store submodules in a hash, not a linked list
-References: <cover.1486724698.git.mhagger@alum.mit.edu>
-Date:   Fri, 10 Feb 2017 11:23:41 -0800
-In-Reply-To: <cover.1486724698.git.mhagger@alum.mit.edu> (Michael Haggerty's
-        message of "Fri, 10 Feb 2017 12:16:10 +0100")
-Message-ID: <xmqq7f4xluiq.fsf@gitster.mtv.corp.google.com>
+To:     Nick Desaulniers <ndesaulniers@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: fuzzy patch application
+References: <CAKwvOdn9j=_Ob=xq4ucN6Ar1G537zNiU9ox4iF6o1qO7kPY41A@mail.gmail.com>
+Date:   Fri, 10 Feb 2017 11:38:19 -0800
+In-Reply-To: <CAKwvOdn9j=_Ob=xq4ucN6Ar1G537zNiU9ox4iF6o1qO7kPY41A@mail.gmail.com>
+        (Nick Desaulniers's message of "Fri, 10 Feb 2017 11:20:59 -0800")
+Message-ID: <xmqq37flltuc.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -67,12 +64,15 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Michael Haggerty <mhagger@alum.mit.edu> writes:
+Nick Desaulniers <ndesaulniers@google.com> writes:
 
-> This is v2 of the patch series, considerably reorganized but not that
-> different codewise.
+> I frequently need to backport patches from the Linux kernel to older
+> kernel versions (Android Security)....
+> ...
+> My question is, why does `patch` seem to do a better job at applying
+> patches than `git am`?  It's almost like the `git` tools don't try to fuzz
+> the offsets.
 
-Thanks.  The way the series loses "!*submodule and !submodule are
-the same thing, sometimes" is easier to follow when presented in
-this order, at least to me.
-
+You diagnosed correctly.  We do allow offsets but by default no fuzz
+and that is a deliberate design decision made in very early days.
+You can pass option to reduce context, but that is not the default.
