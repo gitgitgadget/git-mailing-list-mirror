@@ -7,97 +7,96 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6A5411FC46
-	for <e@80x24.org>; Fri, 10 Feb 2017 14:02:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7CD9F1FC46
+	for <e@80x24.org>; Fri, 10 Feb 2017 14:22:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752129AbdBJOCo (ORCPT <rfc822;e@80x24.org>);
-        Fri, 10 Feb 2017 09:02:44 -0500
-Received: from mout.gmx.net ([212.227.17.22]:56238 "EHLO mout.gmx.net"
+        id S1752908AbdBJOWA (ORCPT <rfc822;e@80x24.org>);
+        Fri, 10 Feb 2017 09:22:00 -0500
+Received: from mout.gmx.net ([212.227.17.22]:55173 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752174AbdBJOCn (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Feb 2017 09:02:43 -0500
-Received: from virtualbox ([37.201.192.48]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0LyB6P-1cNSCz458H-015ZH9; Fri, 10
- Feb 2017 15:02:17 +0100
-Date:   Fri, 10 Feb 2017 15:02:15 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+        id S1752105AbdBJOVb (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Feb 2017 09:21:31 -0500
+Received: from virtualbox ([37.201.192.48]) by mail.gmx.com (mrgmx103
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0Ln8gj-1butE11nen-00hL57; Fri, 10
+ Feb 2017 15:20:28 +0100
+Date:   Fri, 10 Feb 2017 15:20:13 +0100 (CET)
+From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
-To:     Philip Oakley <philipoakley@iee.org>
+To:     git@vger.kernel.org
 cc:     Junio C Hamano <gitster@pobox.com>,
-        Ashutosh Bapat <ashutosh.bapat@enterprisedb.com>,
-        git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>,
-        Michael J Gruber <git@drmicha.warpmail.net>,
-        Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: Re: Bug with fixup and autosquash
-In-Reply-To: <454E7D934160418EB4C4871ED209CBCA@PhilipOakley>
-Message-ID: <alpine.DEB.2.20.1702101459200.3496@virtualbox>
-References: <CAFjFpRe8zqxs4OLbCrjnuEzF=75sbBJ+HuZqek49B=O=TFHq8A@mail.gmail.com> <xmqqbmucuwb0.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1702092142020.3496@virtualbox> <454E7D934160418EB4C4871ED209CBCA@PhilipOakley>
+        Pranit Bauva <pranit.bauva@gmail.com>
+Subject: [PATCH] fixup! bisect--helper: `bisect_next_check` & bisect_voc
+ shell function in C
+Message-ID: <a1b9143bb29a8a5979dd733ed20161e6769b2b83.1486736391.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:ZJjglYo8E/rMDovtD8mgh4EcSbzxaUl/rBL0rXgdDsW9nRKD9Jd
- trbYRbTclbfcQh1AxvHNSUDJzqTFsKxwVjsEV61bpJEEX8+6bfOpq7F3FmfEXW9bwTRQVOz
- KaM9B9Sqt9Rnsd0pLlgRl0OH9GO09TX0FHF3b1YmmB2i1iJTh6zko2pIaJe0hjA9bUB2oww
- zWnXyX7Lah8ZdVikhVQ4A==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:udExm3sZdyM=:GHB/bZtYN4j+VXWpCY6Gx+
- nOqYAX2nbryhQIq4E+nXvgYB+xMOdBfDvFcYrOXhFQVVYkGY8hApSf/DYBLvK4iB7k7k/GwVh
- J4kLyCcgcz3Klzob0g653VY5dLhCqYqUbzQBK6D8tmNA8VitadOpMwQM1/sFJk+gV8dVF5ZLF
- dawNip12nHsPRxaAKY8A1cSWY7Jz7L/yDJjFDwDZxdoQVz68XyGBYxZZOKrsWk9KYvM6ZNsAj
- DxORQ/WwrPT8CuiV3+F4l71rd3DRcfVUbr/sVvnyGsyjHOFTeL5KUa44wTHUKPxPPj5goJWvY
- pvxgvwMURC/xOq9JlMKRXZoL9Sa3swDiqki3yiB+tjXEmuR+LW9wVtz9k2O28cKvmKvIXMDqH
- hk7qY46yEJKceijgLoXB7tYVZC0LDA5/xwnkZuw2TFiX0eb7MCqdBFhODlrOe5ea1DTL71Lzh
- BJLLOUs16S3NSIWuR/30Kd42AnYN3WQg8nWn+tGnPPvwE/7bGUqlkq6uhLcL93ETAqqqVA9vV
- Z+TJSe2lniIPwEVrUM9Y+edC2cs4coFu7h3J/umtD4VMmDQ3kXRcQVQDIR6KyUZIijcL7pAlH
- DskA9RgJwwCHnKHMlZczkvbvD6+nKb14Ttds3eQW2mohUzbFdWVAE/iY9l2QNYfksj36Pg2Re
- TYZ7SLZEP96Rue1InKOCLg/my9B1TRLIAFFFdbkyDnikN8VTTNo8+BKbBsCRzJdbD+q9iHguH
- v+HRFmPHXK+Xk7unjXNQO0P6692gsihqulF1hiPj/k72t8VQoj0g0Z+CaWWnawe3j+g5Z85nJ
- nKYlTHN1iL3rXtRZGGEgKqnVv9Fsg84DlyXeAp6xWAKoNYBBspBQt1eKIDIxHtyMHlMrN4Lkw
- 1tpPGGlHQQhYiG8eeTot5W90tHWPAuuoZzeZEvUO9ZNklZKYk4S/TN+Q3DuxpMQ10K2n8GyL4
- uiZlz+s22lYLdy9pfRYVteqr9kEHR5vPNC43KHmSr205SOiFCP7cUH7gb6J/7EKZLMhFpGUnJ
- PQ9jphZ1ZHt6637H/7I2uA4=
+X-Provags-ID: V03:K0:t7Ibjy9YB/kuzAM8SAVaG6wrA+EGh/nLWr3XYrq5NxgOOD9EJeh
+ soiove3BAZ4BkpJDVsyK5NKkES5aEcg0i5ONGl2JC7XZMwX7gyz8635T1NYx66tXDjb9wEO
+ RLv1ARo56oV2hm9UAcBwYHECqgYrisn0t5M6YRBnLy2rxKJuYADLzXw9W5E0GKqibg8HHJj
+ VikWL79DJEiOdyYALEdvQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:GUf2gPvU++w=:rTU/IZC08Puf9bX/ycOCcF
+ 2AAl1eZqmk/ajHLPttiqTK/fMAkf5O2HbCdRkTMBpx3TkXyz/2vsERGVroj1phOYx4FTFbpyh
+ mXL/xNMeKUy4siRwDNToEntwVPGkdq5fAK99lz7kRpSQStqZ+eHaAjRnJU/rEDIe9qB7tMMXx
+ lDX/GVR3azReZA8WPMGzpaQmOGj5iBWujw2v9AJIyc8CcAoDtofcchgMkkCt4/N7q0g+ef4EY
+ 2PnS/HGtfxmNivVPGwo8FjQZtW3euk27aq6sMDZZpmgUSfPLfuxKXXxEid61QtXi+6nLeu3w9
+ 3nYJ5cK7pUfR6/noEnJcBNYUGlf+rPa6IrLu7NvrF1XlZQTWyT9tK1vWhjJ0Gl5u3oQvid9VU
+ 5Z+/5vKQRPQBqBev/AfxcOGuNIQ497/F8/6DJouPvJc4Udiwy8eJneikWELhfcvoDMoBFNdna
+ 9CQiQEI+z7878mT2C/rLS7Vgsa0EsxCKySQ9qT6v5ZtmU/b3kkoXs+/8fPY4B935ozFB5fGMl
+ 87J1cHQyM9l2rD9hxh9QD05evUpEXiNdJqTXJgfDuBAad5ykIq28CJKIRiVsnaQZBaCj/HSW8
+ +xV5iEabIVQTKW1zxrspMsU1oH7U7i+V1KbT8JC1Py/gygCntS2qHKjG7jeeGFOJUQGWMekE+
+ RgJekTGnxHMVkmkxeSBfp+29s6ZaeUiEB+8Dqo+gDH8Fk3VzT4t9K8lXSe0+11sIe7NGE9SQW
+ iJcb4SgChzCrE6Pib2t46wQl6aaFE2mNDKTX2rqp7Gn1DjTDyHfAeaUPiN2wLNY5bfeDe/NKz
+ 5obcAWNCSXX8rGa2DoRUjF+oZMNkIhCJZDNC2NKUttZBFLDhdf2WauIDAmEJymk3fSwgUjkJo
+ +5s+zyhKYhpM8OYK2dNNQh/Morjn4ubun8TI0LQAgoVrJxlnm7G59C5NOtC+aN+8epTGGGv+t
+ a/9KOt7MDEvrD1jg7jXUAbBbXzZVL0xv55/T13oiiughrjd4Gl6JBVf3uWU9dhUV84IzWffRe
+ sQMegsW9SzbQKl8IbzD3cwER1S2YA79sDQCo6/m4oa5X+8Am2NcG7oIL8Qdz9/b1uA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Philip,
+It is curious that only MacOSX builds trigger an error about this, both
+GCC and Clang, but not Linux GCC nor Clang (see
+https://travis-ci.org/git/git/jobs/200182819#L1152 for details):
 
-On Thu, 9 Feb 2017, Philip Oakley wrote:
+builtin/bisect--helper.c:299:6: error: variable 'good_syn' is used
+		uninitialized whenever 'if' condition is true
+		[-Werror,-Wsometimes-uninitialized]
+        if (missing_good && !missing_bad && current_term &&
+            ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+builtin/bisect--helper.c:350:7: note: uninitialized use occurs here
+        if (!good_syn)
+             ^~~~~~~~
 
-> From: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-> Sent: Thursday, February 09, 2017 8:55 PM
->
-> > The rebase--helper code (specifically, the patch moving autosquash
-> > logic into it: https://github.com/dscho/git/commit/7d0831637f) tries
-> > to match exact onelines first,
-> 
-> While I think this is an improvement, and will strongly support the `git
-> commit --fixup=<commit>` option which will, if the sha1/oid is given,
-> create the exact commit subject line.
+If you "re-roll" (or, as pointed out at the Contributors' Summit, better
+put: if you send another iteration of the patch series), please squash
+this fix in.
 
-That is already the case (with the exception that it is not the "exact
-commit subject line" but the oneline, i.e. unwrapped first paragraph).
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+Based-On: pu at https://github.com/dscho/git
+Fetch-Base-Via: git fetch https://github.com/dscho/git pu
+Published-As: https://github.com/dscho/git/releases/tag/bisect--helper-fixup-v1
+Fetch-It-Via: git fetch https://github.com/dscho/git bisect--helper-fixup-v1
 
-> However it would also be useful if the actual commit subject line could
-> have a similar format option, so that those who use say the git gui
-> (rather than the cli) for the commit message, could easily create the
-> `!fixup <commit>` message which would allow a broader range of ways of
-> spelling the commit (e.g. giving a sha1(min length) that is within the
-> rebase todo list).
+ builtin/bisect--helper.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-It is already the case that `fixup! <sha1>` is accepted, see the code
-replaced by above-mentioned commit:
+diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
+index 8cd6527bd1..614a85ffb5 100644
+--- a/builtin/bisect--helper.c
++++ b/builtin/bisect--helper.c
+@@ -280,7 +280,7 @@ static int bisect_next_check(const struct bisect_terms *terms,
+ 	int missing_good = 1, missing_bad = 1, retval = 0;
+ 	char *bad_ref = xstrfmt("refs/bisect/%s", terms->term_bad);
+ 	char *good_glob = xstrfmt("%s-*", terms->term_good);
+-	char *bad_syn, *good_syn;
++	char *bad_syn = NULL, *good_syn = NULL;
+ 
+ 	if (ref_exists(bad_ref))
+ 		missing_bad = 0;
 
-https://github.com/dscho/git/commit/7d0831637f#diff-0f15aff45d5dd346465c35597a5f274eL780
-
-... and its replacement code in C:
-
-https://github.com/dscho/git/commit/7d0831637f#diff-79231f0693f84f3951daeea17065aad9R2800
-
-Note that both preimage and postimage code try to match onelines first,
-with the new code changing behavior ever so slightly: it tries to match
-the exact oneline first, then a commit SHA-1 of an already-seen `pick`
-line, and only then falls back to the (expensive) prefix match.
-
-Ciao,
-Dscho
+base-commit: 6fa4b393c01a84c9adf2e2435fba6de13227eabf
+-- 
+2.11.1.windows.1
