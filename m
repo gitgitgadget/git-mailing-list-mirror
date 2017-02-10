@@ -7,96 +7,95 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7CD9F1FC46
-	for <e@80x24.org>; Fri, 10 Feb 2017 14:22:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B750C1FC46
+	for <e@80x24.org>; Fri, 10 Feb 2017 15:17:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752908AbdBJOWA (ORCPT <rfc822;e@80x24.org>);
-        Fri, 10 Feb 2017 09:22:00 -0500
-Received: from mout.gmx.net ([212.227.17.22]:55173 "EHLO mout.gmx.net"
+        id S1752180AbdBJPRc (ORCPT <rfc822;e@80x24.org>);
+        Fri, 10 Feb 2017 10:17:32 -0500
+Received: from mout.gmx.net ([212.227.17.22]:60150 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752105AbdBJOVb (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Feb 2017 09:21:31 -0500
-Received: from virtualbox ([37.201.192.48]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0Ln8gj-1butE11nen-00hL57; Fri, 10
- Feb 2017 15:20:28 +0100
-Date:   Fri, 10 Feb 2017 15:20:13 +0100 (CET)
+        id S1751370AbdBJPRa (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Feb 2017 10:17:30 -0500
+Received: from virtualbox ([37.201.192.48]) by mail.gmx.com (mrgmx101
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0Lxt3Q-1cNiFi0DeG-015LA3; Fri, 10
+ Feb 2017 16:10:42 +0100
+Date:   Fri, 10 Feb 2017 16:10:39 +0100 (CET)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     git@vger.kernel.org
-cc:     Junio C Hamano <gitster@pobox.com>,
-        Pranit Bauva <pranit.bauva@gmail.com>
-Subject: [PATCH] fixup! bisect--helper: `bisect_next_check` & bisect_voc
- shell function in C
-Message-ID: <a1b9143bb29a8a5979dd733ed20161e6769b2b83.1486736391.git.johannes.schindelin@gmx.de>
+cc:     Jeff Hostetler <jeffhost@microsoft.com>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH] preload-index: avoid lstat for skip-worktree items
+Message-ID: <a1297b9426e7980f41e9e662fc0f30717c576c3e.1486739428.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:t7Ibjy9YB/kuzAM8SAVaG6wrA+EGh/nLWr3XYrq5NxgOOD9EJeh
- soiove3BAZ4BkpJDVsyK5NKkES5aEcg0i5ONGl2JC7XZMwX7gyz8635T1NYx66tXDjb9wEO
- RLv1ARo56oV2hm9UAcBwYHECqgYrisn0t5M6YRBnLy2rxKJuYADLzXw9W5E0GKqibg8HHJj
- VikWL79DJEiOdyYALEdvQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:GUf2gPvU++w=:rTU/IZC08Puf9bX/ycOCcF
- 2AAl1eZqmk/ajHLPttiqTK/fMAkf5O2HbCdRkTMBpx3TkXyz/2vsERGVroj1phOYx4FTFbpyh
- mXL/xNMeKUy4siRwDNToEntwVPGkdq5fAK99lz7kRpSQStqZ+eHaAjRnJU/rEDIe9qB7tMMXx
- lDX/GVR3azReZA8WPMGzpaQmOGj5iBWujw2v9AJIyc8CcAoDtofcchgMkkCt4/N7q0g+ef4EY
- 2PnS/HGtfxmNivVPGwo8FjQZtW3euk27aq6sMDZZpmgUSfPLfuxKXXxEid61QtXi+6nLeu3w9
- 3nYJ5cK7pUfR6/noEnJcBNYUGlf+rPa6IrLu7NvrF1XlZQTWyT9tK1vWhjJ0Gl5u3oQvid9VU
- 5Z+/5vKQRPQBqBev/AfxcOGuNIQ497/F8/6DJouPvJc4Udiwy8eJneikWELhfcvoDMoBFNdna
- 9CQiQEI+z7878mT2C/rLS7Vgsa0EsxCKySQ9qT6v5ZtmU/b3kkoXs+/8fPY4B935ozFB5fGMl
- 87J1cHQyM9l2rD9hxh9QD05evUpEXiNdJqTXJgfDuBAad5ykIq28CJKIRiVsnaQZBaCj/HSW8
- +xV5iEabIVQTKW1zxrspMsU1oH7U7i+V1KbT8JC1Py/gygCntS2qHKjG7jeeGFOJUQGWMekE+
- RgJekTGnxHMVkmkxeSBfp+29s6ZaeUiEB+8Dqo+gDH8Fk3VzT4t9K8lXSe0+11sIe7NGE9SQW
- iJcb4SgChzCrE6Pib2t46wQl6aaFE2mNDKTX2rqp7Gn1DjTDyHfAeaUPiN2wLNY5bfeDe/NKz
- 5obcAWNCSXX8rGa2DoRUjF+oZMNkIhCJZDNC2NKUttZBFLDhdf2WauIDAmEJymk3fSwgUjkJo
- +5s+zyhKYhpM8OYK2dNNQh/Morjn4ubun8TI0LQAgoVrJxlnm7G59C5NOtC+aN+8epTGGGv+t
- a/9KOt7MDEvrD1jg7jXUAbBbXzZVL0xv55/T13oiiughrjd4Gl6JBVf3uWU9dhUV84IzWffRe
- sQMegsW9SzbQKl8IbzD3cwER1S2YA79sDQCo6/m4oa5X+8Am2NcG7oIL8Qdz9/b1uA==
+X-Provags-ID: V03:K0:gTgzMZH54PRtWr0dgt2AbWWPKFIwrSUS3m+n/K4mor2+AjOMRST
+ lbIzzRAP6xB6cC5xmi4O9GwuRhxffxebuFXfgozH+hmvGrDsMSLhienKe11GwOgduoIRz6E
+ vhmYtQiSUOaWm6O8rURRwGL5ZPABHWIqOHvFh3zPzMmuRu+Ys9xQmyDwRkBfSv0yNl270lo
+ ctKgZr6rg1lp4jq2HPyAg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:j+t2bmTj3cA=:AidVBKsjv3GVolIymeOtVa
+ b4lVQDRtsLGp5ItYIwEyRUHYqxmoWjpj3VGwIiZE16hvZ/NiGoLPBU99XbtHByJHZ27u6wjUV
+ Gaf9H2saga3ET60KVKqHT8rFYgLC/RzNpfFtQtCeS14kBvjpR+JwDLYHk80lMJ47LowFxiVbN
+ Ln01Jc6ojyX0jENRp4qwkaufrep5q18ijeKdAOM2rfDxb7iJLY6CZ2GEXiCUfj2uAjjaFoQwt
+ zzb89LXTmHcpleQw7GJO7g7zzuxjS6lxFQ34Rg6Kl2Yr9SnV2YDrSbT1mmelUwUHpgQhITnq7
+ /YpvyzWSyObE/f+OFc99AFBMgm5Q9il8ChADfA3U7rxKR/AZp4qk2Ar10NgsUgfr76qiwfIfm
+ Nt3VnUnK4+4ENIbQ/ZVQSLFTlbn9vb90Foh2KR5zuCZRdQXzNW1DJOG0U3g3Vdpc0oN6mL3nJ
+ PkGdZoe1WnAAjlE4UFBHo5hA2wXy8912s8u5cw3tpY5rqerRhcJkfHcShhc4EL+qzpC/o8HQN
+ P9sraf7TONLDFlUwQ8nKhfgZc/1fNyw/lXz9LBvdkElCWnC/dhANR4ZlTd0UPPKjhXoZXQopV
+ 7eOQXU8s//5MB6/KVbgROPaGTA7DD8sOF8uMnXuISPiTwItJOBetWz0bP2CZFE6pwDn2NlKWH
+ F7u2pAetBoz+knGPRnA8mFGWJvA3Xl1MSqO2f4ta44yIZ28i2Ha7/yOZxCEtHFpCXxfZ9znEG
+ AFnVPJfJOghQZWHQ2GxvekY4x91U0Lmv5bOMtHuOjnfDXIqBwDGZju9AavOxy227PgjZCY+Az
+ cm0O+5AXhLSYV1zzFPL9BqI26gGxF87vxtNM5lDE5r8OaQEt2rruXWnZgnfuLbCrSTjrS1McW
+ VZwbk77ZWFjVJCnUwAfDp+1swsrnPiVSrHbIiJwhnMmL95U527FsG0gTu+SGfTOkRaDU2w1Cu
+ W7PVcZS6yY/I5fafh3GkWSjxfWKwvW4StmZYmolm/Hs/tvyUOQWgZ3+fGB49dNBacdBb32m7C
+ xz12uf7FR8nO5zadIYACPE1XIsVe1lOVzfyiJOCXOFpqYOd/SQdCyFgQWi+Ubq7MLw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-It is curious that only MacOSX builds trigger an error about this, both
-GCC and Clang, but not Linux GCC nor Clang (see
-https://travis-ci.org/git/git/jobs/200182819#L1152 for details):
+From: Jeff Hostetler <jeffhost@microsoft.com>
 
-builtin/bisect--helper.c:299:6: error: variable 'good_syn' is used
-		uninitialized whenever 'if' condition is true
-		[-Werror,-Wsometimes-uninitialized]
-        if (missing_good && !missing_bad && current_term &&
-            ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-builtin/bisect--helper.c:350:7: note: uninitialized use occurs here
-        if (!good_syn)
-             ^~~~~~~~
+Teach preload-index to avoid lstat() calls for index-entries
+with skip-worktree bit set.  This is a performance optimization.
 
-If you "re-roll" (or, as pointed out at the Contributors' Summit, better
-put: if you send another iteration of the patch series), please squash
-this fix in.
+During a sparse-checkout, the skip-worktree bit is set on items
+that were not populated and therefore are not present in the
+worktree.  The per-thread preload-index loop performs a series
+of tests on each index-entry as it attempts to compare the
+worktree version with the index and mark them up-to-date.
+This patch short-cuts that work.
 
+On a Windows 10 system with a very large repo (450MB index)
+and various levels of sparseness, performance was improved
+in the {preloadindex=true, fscache=false} case by 80% and
+in the {preloadindex=true, fscache=true} case by 20% for various
+commands.
+
+Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
-Based-On: pu at https://github.com/dscho/git
-Fetch-Base-Via: git fetch https://github.com/dscho/git pu
-Published-As: https://github.com/dscho/git/releases/tag/bisect--helper-fixup-v1
-Fetch-It-Via: git fetch https://github.com/dscho/git bisect--helper-fixup-v1
+Published-As: https://github.com/dscho/git/releases/tag/preload-index-sparse-v1
+Fetch-It-Via: git fetch https://github.com/dscho/git preload-index-sparse-v1
 
- builtin/bisect--helper.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ preload-index.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
-index 8cd6527bd1..614a85ffb5 100644
---- a/builtin/bisect--helper.c
-+++ b/builtin/bisect--helper.c
-@@ -280,7 +280,7 @@ static int bisect_next_check(const struct bisect_terms *terms,
- 	int missing_good = 1, missing_bad = 1, retval = 0;
- 	char *bad_ref = xstrfmt("refs/bisect/%s", terms->term_bad);
- 	char *good_glob = xstrfmt("%s-*", terms->term_good);
--	char *bad_syn, *good_syn;
-+	char *bad_syn = NULL, *good_syn = NULL;
- 
- 	if (ref_exists(bad_ref))
- 		missing_bad = 0;
+diff --git a/preload-index.c b/preload-index.c
+index c1fe3a3ef9c..70a4c808783 100644
+--- a/preload-index.c
++++ b/preload-index.c
+@@ -53,6 +53,8 @@ static void *preload_thread(void *_data)
+ 			continue;
+ 		if (ce_uptodate(ce))
+ 			continue;
++		if (ce_skip_worktree(ce))
++			continue;
+ 		if (!ce_path_match(ce, &p->pathspec, NULL))
+ 			continue;
+ 		if (threaded_has_symlink_leading_path(&cache, ce->name, ce_namelen(ce)))
 
-base-commit: 6fa4b393c01a84c9adf2e2435fba6de13227eabf
+base-commit: 6e3a7b3398559305c7a239a42e447c21a8f39ff8
 -- 
 2.11.1.windows.1
