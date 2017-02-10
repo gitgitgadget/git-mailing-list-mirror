@@ -2,252 +2,137 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 92C041FAF4
-	for <e@80x24.org>; Fri, 10 Feb 2017 09:16:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D90E51FAF4
+	for <e@80x24.org>; Fri, 10 Feb 2017 10:24:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751326AbdBJJQx (ORCPT <rfc822;e@80x24.org>);
-        Fri, 10 Feb 2017 04:16:53 -0500
-Received: from mail-pf0-f196.google.com ([209.85.192.196]:36760 "EHLO
-        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751045AbdBJJQs (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Feb 2017 04:16:48 -0500
-Received: by mail-pf0-f196.google.com with SMTP id 19so2206725pfo.3
-        for <git@vger.kernel.org>; Fri, 10 Feb 2017 01:16:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=kF6x/3he/rU9NH12OALf6mSY/Rxqy/xTp9RFWY0KWbA=;
-        b=ra/KuLkP96sybbaii8E+6lpbWluXBKR+abUF+DVSQYA06wedCDaPdKm5YwUc+3HN/b
-         vm+C34df391zWJf5W9bizMr4rcW3pF6u4h5nhvWOqQz7/7XMDIIwc/p8DiwjAED2nGle
-         GPop6ZfDa7EaNiUdEJZ9BJHlG9iqiGvpX/Bu6Wl0FRz+i0SQ2AhfYAy9Ey7cka6qOncI
-         kdBeSEsp/yxu7roBuYMBfMGQCVy/F7k7U4fedLsi8yu3r4hoR4YaQWbnjkK/H4lNv5s3
-         0CXI75q7V1rG2EnwGzBvpRber7p3eNSZ14POJROujJ7SfWd+vuOyCnw9a73b8EMjdfbr
-         KN5w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=kF6x/3he/rU9NH12OALf6mSY/Rxqy/xTp9RFWY0KWbA=;
-        b=lMe/yR4d1XzeanP5JfP3vRycdM7P+KanxfrKr27tjK3iUDWTz/I0tkAmwtSaSiFfzK
-         TElxbP5gbce3rqO0PQnpNHCy2iFB0z+wxLkANWVgXPXaq5XV8XdMS39xnXU+KQKN+kGk
-         b4tXkYeua8qy9zt9JWrkMX9o1fNExqEIahihFUI0NEyxMvpU+9dL5lzMZCTcgCHCN3Do
-         amHGHYEFqshD2wUc6AWBJlZPegN6WcxJ3DlU79JWI3gQIsClPnFNWIb++rMp9SrcgqLq
-         y4/Flf83uLDHJnQrJL71VN1lH+488juZTpTgJQwExBM5gaQLJIQHmLRNhykmnCeQbIY+
-         7wFA==
-X-Gm-Message-State: AMke39lXGZmrN46c++9sL+nT4pizT5WDvQOqRU+IQEE1GVlqVBoomIQFFYgh2SwhjDoBbw==
-X-Received: by 10.84.198.35 with SMTP id o32mr10061581pld.135.1486718207797;
-        Fri, 10 Feb 2017 01:16:47 -0800 (PST)
-Received: from localhost ([2620:0:1000:8622:704f:61dd:c9f4:9782])
-        by smtp.gmail.com with ESMTPSA id p14sm478111pfl.75.2017.02.10.01.16.45
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Fri, 10 Feb 2017 01:16:46 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     David Turner <dturner@twosigma.com>
-Cc:     git@vger.kernel.org, peff@peff.net, pclouds@gmail.com
-Subject: Re: [PATCH v2] gc: ignore old gc.log files
-References: <20170209191724.3987-1-dturner@twosigma.com>
-Date:   Fri, 10 Feb 2017 01:16:45 -0800
-In-Reply-To: <20170209191724.3987-1-dturner@twosigma.com> (David Turner's
-        message of "Thu, 9 Feb 2017 14:17:24 -0500")
-Message-ID: <xmqq37fmmmma.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+        id S1752416AbdBJKYK (ORCPT <rfc822;e@80x24.org>);
+        Fri, 10 Feb 2017 05:24:10 -0500
+Received: from alum-mailsec-scanner-1.mit.edu ([18.7.68.12]:49161 "EHLO
+        alum-mailsec-scanner-1.mit.edu" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1752052AbdBJKYH (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 10 Feb 2017 05:24:07 -0500
+X-AuditID: 1207440c-07dff70000000a44-53-589d94be7e79
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+        by alum-mailsec-scanner-1.mit.edu (Symantec Messaging Gateway) with SMTP id DB.02.02628.EB49D985; Fri, 10 Feb 2017 05:23:59 -0500 (EST)
+Received: from [192.168.69.190] (p57906495.dip0.t-ipconnect.de [87.144.100.149])
+        (authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v1AANt9j023082
+        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+        Fri, 10 Feb 2017 05:23:56 -0500
+Subject: Re: [PATCH 1/5] refs: store submodule ref stores in a hashmap
+To:     Junio C Hamano <gitster@pobox.com>
+References: <cover.1486629195.git.mhagger@alum.mit.edu>
+ <a944446c4c374125082f5ad8b79e731704b66196.1486629195.git.mhagger@alum.mit.edu>
+ <xmqqh943p0hv.fsf@gitster.mtv.corp.google.com>
+Cc:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>, Stefan Beller <sbeller@google.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        David Turner <novalis@novalis.org>, git@vger.kernel.org,
+        Jeff King <peff@peff.net>
+From:   Michael Haggerty <mhagger@alum.mit.edu>
+Message-ID: <c631a5eb-936b-bd88-cc3b-732786f75065@alum.mit.edu>
+Date:   Fri, 10 Feb 2017 11:23:55 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Icedove/45.6.0
 MIME-Version: 1.0
-Content-Type: text/plain
+In-Reply-To: <xmqqh943p0hv.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 7bit
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprAKsWRmVeSWpSXmKPExsUixO6iqLt/ytwIg++nNCy6rnQzWTT0XmG2
+        6F/exWax5OFrZovuKW8ZLX609DBbbN7czuLA7rFz1l12jw8f4zwWbCr16Go/wubxrHcPo8fF
+        S8oenzfJBbBHcdmkpOZklqUW6dslcGWcWb+MpeCSSMWFpz9YGxj3C3QxcnJICJhIPHh4j62L
+        kYtDSOAyo8SqQ1OYIJwLTBJLpz1gA6kSFnCTuHl2AzOILSKgJjGx7RALRNFORonOB7fZQRxm
+        gWlMEsv+P2QHqWIT0JVY1NMMNIqDg1fAXuLoYROQMIuAqkTzwb8sILaoQIjEnIUPGEFsXgFB
+        iZMzn4DFOQWsJZpv3ABbxiygJ7Hj+i9WCFteYvvbOcwTGPlnIWmZhaRsFpKyBYzMqxjlEnNK
+        c3VzEzNzilOTdYuTE/PyUot0DfVyM0v0UlNKNzFCAp5nB+O3dTKHGAU4GJV4eCdUzYkQYk0s
+        K67MPcQoycGkJMpr2zA3QogvKT+lMiOxOCO+qDQntfgQowQHs5IIr00HUI43JbGyKrUoHyYl
+        zcGiJM6rukTdT0ggPbEkNTs1tSC1CCYrw8GhJMFbOBmoUbAoNT21Ii0zpwQhzcTBCTKcB2h4
+        CEgNb3FBYm5xZjpE/hSjopQ4bxpIQgAkkVGaB9cLS0ivGMWBXhHmnQxSxQNMZnDdr4AGMwEN
+        vn56FsjgkkSElFQDY5ZC91lFKz229yvd212mdfzZkOwoybrw16R+M5Mte15d+ihx8pNMedar
+        N3EtNb/qPqw1FQ1feEZxUVa7wNdHOTwe76YrL5SNNVP+pvDja03Po7++GzJ3+sgvNVbI+PPk
+        y6wKPl63ar5KFuYw9zW3srdMy/vu+v/Jjvv1C7M1z/ffqSnU4U0VVmIpzkg01GIuKk4EAB0/
+        SwEjAwAA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-David Turner <dturner@twosigma.com> writes:
+On 02/09/2017 09:34 PM, Junio C Hamano wrote:
+> Michael Haggerty <mhagger@alum.mit.edu> writes:
+>> [...]
+>> +static int submodule_hash_cmp(const void *entry, const void *entry_or_key,
+>> +			      const void *keydata)
+>> +{
+>> +	const struct submodule_hash_entry *e1 = entry, *e2 = entry_or_key;
+>> +	const char *submodule = keydata;
+>> +
+>> +	return strcmp(e1->submodule, submodule ? submodule : e2->submodule);
+> 
+> I would have found it more readable if it were like so:
+> 
+> 	const char *submodule = keydata ? keydata : e2->submodule;
+> 
+> 	return strcmp(e1->submodule, submodule);
+> 
+> but I suspect the difference is not that huge.
 
-> The intent of automatic gc is to have a git repository be relatively
-> low-maintenance from a server-operator perspective.  
+Yes, that's better. I'll change it.
 
-This is diametrically opposite from how I recall the auto-gc came
-about in Sep 2007.  The primary purpose was to help desktop clients
-that never runs repack.
-
-By pointing this out, I do not mean that we shouldn't make auto-gc
-work well in the server settings.  I however do not want our log
-messages to distort history in order to justify a change that is
-worth making, and I do not think this change needs to do that.
-For example, a paragraph like this:
-
-    It would be really nice if the auto gc mechanism can be used to
-    help server operators, even though the original purpose it was
-    introduced was primarily to help desktop clients that never
-    repacks.
-
-followed by a description of what makes it not exactly helpful for
-server operators in the current behaviour (iow, "what is it that you
-are fixing?"), would be a useful justification that is faithful to
-the history.  Of course, ", even though..." part is irrelevant
-and/or unnecessary in that description of the motivation, and if you
-omit it, I wouldn't call that is distorting the history.
-
-> Of course, large
-> operators like GitHub will need a more complicated management strategy,
-> but for ordinary usage, git should just work.
-
-True.  "should just work" may want to be replaced by what exactly
-are the things it currently does that you view as its problems.
-
-Once you say that, "git learns to do x and y" in the next paragraph,
-i.e. the description of the solution to the problem, starts making
-sense.
-
+On 02/10/2017 05:04 AM, Jeff King wrote:
+> On Thu, Feb 09, 2017 at 12:34:04PM -0800, Junio C Hamano wrote:
 >
-> In this commit, git learns to ignore gc.log files which are older than
-> (by default) one day old.  It also learns about a config, gc.logExpiry
-> to manage this.  There is also some cleanup: a successful manual gc,
-> or a warning-free auto gc with an old log file, will remove any old
-> gc.log files.
+>>> +static struct submodule_hash_entry *alloc_submodule_hash_entry(
+>>> +		const char *submodule, struct ref_store *refs)
+>>> +{
+>>> +	size_t len = strlen(submodule);
+>>> +	struct submodule_hash_entry *entry = malloc(sizeof(*entry) + len + 1);
+>>
+>> I think this (and the later memcpy) is what FLEX_ALLOC_MEM() was
+>> invented for.
 >
-> So git should never get itself into a state where it refuses to do any
-> maintenance, just because at some point some piece of the maintenance
-> didn't make progress.  That might still happen (e.g. because the repo
-> is corrupt), but at the very least it won't be because Git is too dumb
-> to try again.
+> Yes, it was. Though since the length comes from a strlen() call, it can
+> actually use the _STR variant, like:
+>
+>   FLEX_ALLOC_STR(entry, submodule, submodule);
+>
+> Besides being shorter, this does integer-overflow checks on the final
+> length.
 
-IOW, what you wrote in this last paragraph can come earlier to
-explain what you perceive as problems the current behaviour has.
+Nice. TIL. Will fix.
 
-> Signed-off-by: David Turner <dturner@twosigma.com>
-> Helped-by: Jeff King <peff@peff.net>
-> ---
+>>> @@ -1373,16 +1405,17 @@ void base_ref_store_init(struct ref_store *refs,
+>>>  			die("BUG: main_ref_store initialized twice");
+>>>
+>>>  		refs->submodule = "";
+>>> -		refs->next = NULL;
+>>>  		main_ref_store = refs;
+>>>  	} else {
+>>> -		if (lookup_ref_store(submodule))
+>>> +		refs->submodule = xstrdup(submodule);
+>>> +
+>>> +		if (!submodule_ref_stores.tablesize)
+>>> +			hashmap_init(&submodule_ref_stores, submodule_hash_cmp, 20);
+>>
+>> Makes me wonder what "20" stands for.  Perhaps the caller should be
+>> allowed to say "I do not quite care what initial size is" by passing
+>> 0 or some equally but more clealy meaningless value (which of course
+>> would be outside the scope of this series).
+>
+> I think this is what "0" already does (grep for HASHMAP_INITIAL_SIZE).
+> In fact, that constant is 64. The 20 we pass in goes through some magic
+> load-factor computation and ends up as 25. That being smaller than the
+> INITIAL_SIZE constant, I believe that we end up allocating 64 entries
+> either way (that's just from reading the code, though; I didn't run it
+> to double check).
 
-A v2 patch is unfriendly to reviewers unless it is sent with summary
-of what got changed since v1, taking input from the discussion on
-the previous round, and here before the diffstat is a good place to
-do so.
+I guess I might as well change it to zero, then.
 
-> +gc.logExpiry::
-> +	If the file gc.log exists, then `git gc --auto` won't run
-> +	unless that file is more than 'gc.logExpiry' old.  Default is
-> +	"1.day".  See `gc.pruneExpire` for more possible values.
-> +
+Thanks for the feedback!
 
-Micronit.  Perhaps you meant by "more possible values" "more ways to
-specify its values", IOW, you didn't mean to say "instead of 1.day,
-you can say 2.days".
+Michael
 
-> diff --git a/builtin/gc.c b/builtin/gc.c
-> index 331f21926..46edcff30 100644
-> --- a/builtin/gc.c
-> +++ b/builtin/gc.c
-> @@ -33,6 +33,7 @@ static int aggressive_window = 250;
->  static int gc_auto_threshold = 6700;
->  static int gc_auto_pack_limit = 50;
->  static int detach_auto = 1;
-> +static unsigned long gc_log_expire_time;
->  static const char *prune_expire = "2.weeks.ago";
->  static const char *prune_worktrees_expire = "3.months.ago";
->  
-> @@ -76,10 +77,12 @@ static void git_config_date_string(const char *key, const char **output)
->  static void process_log_file(void)
->  {
->  	struct stat st;
-> -	if (!fstat(get_lock_file_fd(&log_lock), &st) && st.st_size)
-> +	if (!fstat(get_lock_file_fd(&log_lock), &st) && st.st_size) {
->  		commit_lock_file(&log_lock);
-> -	else
-> +	} else {
-> +		unlink(git_path("gc.log"));
->  		rollback_lock_file(&log_lock);
-
-After we grab a lock by creating gc.log.lock, if we fail to fstat(2),
-we remove gc.log?  That does not sound quite right, as the failure
-to fstat(2) sounds like a log-worthy event.  Removing the log after
-noticing that we didn't write anything (i.e. st.st_size being 0) is
-quite sensible, though.
-
-> @@ -111,6 +114,11 @@ static void gc_config(void)
->  	git_config_get_int("gc.auto", &gc_auto_threshold);
->  	git_config_get_int("gc.autopacklimit", &gc_auto_pack_limit);
->  	git_config_get_bool("gc.autodetach", &detach_auto);
-> +
-> +	if (!git_config_get_value("gc.logexpiry", &value)) {
-> +		parse_expiry_date(value, &gc_log_expire_time);
-> +	}
-
-Drop {}?
-
-> @@ -290,19 +298,34 @@ static const char *lock_repo_for_gc(int force, pid_t* ret_pid)
->  static int report_last_gc_error(void)
->  {
->  	struct strbuf sb = STRBUF_INIT;
-> -	int ret;
-> +	int ret = 0;
-> +	struct stat st;
-> +	char *gc_log_path = git_pathdup("gc.log");
->  
-> -	ret = strbuf_read_file(&sb, git_path("gc.log"), 0);
-> +	if (stat(gc_log_path, &st)) {
-> +		if (errno == ENOENT)
-> +			goto done;
-> +
-> +		ret = error(_("Can't read %s"), gc_log_path);
-
-You probably want to use error_errno() instead here.  This is not
-"can't read"; your stat() noticed there is something wrong and you
-gave up before you even attempted to read.
-
-> +		goto done;
-> +	}
-> +
-> +	if (st.st_mtime < gc_log_expire_time)
-> +		goto done;
-
-OK.
-
-> +	ret = strbuf_read_file(&sb, gc_log_path, 0);
->  	if (ret > 0)
-> -		return error(_("The last gc run reported the following. "
-> +		ret = error(_("The last gc run reported the following. "
->  			       "Please correct the root cause\n"
->  			       "and remove %s.\n"
->  			       "Automatic cleanup will not be performed "
->  			       "until the file is removed.\n\n"
->  			       "%s"),
-> -			     git_path("gc.log"), sb.buf);
-> +			    gc_log_path, sb.buf);
->  	strbuf_release(&sb);
-> -	return 0;
-> +done:
-> +	free(gc_log_path);
-> +	return ret;
->  }
-
-OK.
-
-> @@ -349,6 +372,8 @@ int cmd_gc(int argc, const char **argv, const char *prefix)
->  	argv_array_pushl(&prune_worktrees, "worktree", "prune", "--expire", NULL);
->  	argv_array_pushl(&rerere, "rerere", "gc", NULL);
->  
-> +	/* default expiry time, overwritten in gc_config */
-> +	parse_expiry_date("1.day", &gc_log_expire_time);
-
-Alternatively, we can mimick the way in which prune_expire and
-prune_worktrees_expire are set up (i.e. they are kept as strings,
-configuration overwrites the string), and then turn the final string
-into value after gc_config() returns.  I think what you wrote here
-may be simpler.  Nice.
-
->  	gc_config();
->  
->  	if (pack_refs < 0)
-> @@ -448,5 +473,8 @@ int cmd_gc(int argc, const char **argv, const char *prefix)
->  		warning(_("There are too many unreachable loose objects; "
->  			"run 'git prune' to remove them."));
->  
-> +	if (!daemonized)
-> +		unlink(git_path("gc.log"));
-> +
-
-OK.  We want to remove "gc.log" after running a successful
-foreground gc and this does exactly that.
