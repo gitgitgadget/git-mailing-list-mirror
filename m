@@ -2,116 +2,71 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DF9301FC46
-	for <e@80x24.org>; Fri, 10 Feb 2017 19:57:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 70D1C1FC46
+	for <e@80x24.org>; Fri, 10 Feb 2017 20:03:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753326AbdBJT54 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 10 Feb 2017 14:57:56 -0500
-Received: from mail-pg0-f66.google.com ([74.125.83.66]:34945 "EHLO
-        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752547AbdBJT5z (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Feb 2017 14:57:55 -0500
-Received: by mail-pg0-f66.google.com with SMTP id 204so3804970pge.2
-        for <git@vger.kernel.org>; Fri, 10 Feb 2017 11:56:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=5gK77orLWJess1HH5EWbjo7eU/Vxeck3VZreibkcUNE=;
-        b=kkaISjjYDL628zjvlghfnhmM7CpyC1I0kkKXG1x+mmOvbWhcq3lnbfMnhcHGDMwFS3
-         QUtG44ctJPhTeWJUhtkOdlxv/aqr0uTYQg6yB5UdoW8fP6sqlf3hhciz+R9x0dyTh7xn
-         ZgXAoWeBCV6K4wFRY42mqDBNHPHE83IvpbqCSoE0q9PeUrCLXwRudzND4rgzmvICdzlg
-         /VwmoRGTH9DUPUipWUsFjorYMLu9NMIgzgs/hz8dKvUHZTT+tnQ0yUOzsOu/SazhdxH+
-         DPnyDaPJu+yLP/qTTJqP4ZoFlHtguHH0I5j4sRPN1P9zdopmw7xE/YtNybRGe31Ayfjt
-         YTfQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=5gK77orLWJess1HH5EWbjo7eU/Vxeck3VZreibkcUNE=;
-        b=crg60rZeCGDMMLpz/hC04+xQMRQJeCScTQtvYzq+J90cvcQWEVmu7bGzRl3Mpy20hj
-         QWclHWOKsXbi+yI9CuXdQI4dYRmvJqauYTX19Hui8k8uxjUR/uNBwMuonNuk48InJa+/
-         7QzJzm2Vy1+rdnWVNpjirKX4yCX7TTduXCrWYatP0ggudHkF2gg5xZ07EAh/5rv5avsY
-         qWjz2+7DxLu5EFUH9QcMp/LL95u5UBxYMQ3fBkiRtAp+8rKmDmFCbhHDSyrzrbB9uvZN
-         22P9pCtHe8/r1/UeHNoGAiVLFZUcdHk5uN3BJdKIVa3/TR8x9Dhb9tXliVDkX6AQP7wQ
-         0diQ==
-X-Gm-Message-State: AMke39nVXww2R5CsHQ/s4EN28xQWHU/Oyf/RhmGWyrzF5fDUbBtxcEQq+T6W6Bz93aFhcQ==
-X-Received: by 10.99.139.68 with SMTP id j65mr12836063pge.64.1486756610325;
-        Fri, 10 Feb 2017 11:56:50 -0800 (PST)
-Received: from localhost ([2620:0:1000:8622:8499:2e0a:2c80:2b60])
-        by smtp.gmail.com with ESMTPSA id p26sm7219165pfj.23.2017.02.10.11.56.49
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Fri, 10 Feb 2017 11:56:49 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     David Turner <dturner@twosigma.com>
-Cc:     git@vger.kernel.org, peff@peff.net, pclouds@gmail.com
-Subject: Re: [PATCH v3] gc: ignore old gc.log files
-References: <20170210192019.13927-1-dturner@twosigma.com>
-        <xmqqy3xdkeuw.fsf@gitster.mtv.corp.google.com>
-Date:   Fri, 10 Feb 2017 11:56:48 -0800
-In-Reply-To: <xmqqy3xdkeuw.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-        message of "Fri, 10 Feb 2017 11:47:19 -0800")
-Message-ID: <xmqqtw81kef3.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
+        id S1753398AbdBJUDD (ORCPT <rfc822;e@80x24.org>);
+        Fri, 10 Feb 2017 15:03:03 -0500
+Received: from hapkido.dreamhost.com ([66.33.216.122]:59670 "EHLO
+        hapkido.dreamhost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752626AbdBJUDC (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Feb 2017 15:03:02 -0500
+Received: from homiemail-a11.g.dreamhost.com (sub3.mail.dreamhost.com [69.163.253.7])
+        by hapkido.dreamhost.com (Postfix) with ESMTP id A7B168838C
+        for <git@vger.kernel.org>; Fri, 10 Feb 2017 12:01:20 -0800 (PST)
+Received: from homiemail-a11.g.dreamhost.com (localhost [127.0.0.1])
+        by homiemail-a11.g.dreamhost.com (Postfix) with ESMTP id 26212314C069;
+        Fri, 10 Feb 2017 12:00:19 -0800 (PST)
+Received: from localhost.localdomain (207-38-252-131.c3-0.43d-ubr2.qens-43d.ny.cable.rcn.com [207.38.252.131])
+        (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: novalis@novalis.org)
+        by homiemail-a11.g.dreamhost.com (Postfix) with ESMTPSA id 40A66314C066;
+        Fri, 10 Feb 2017 12:00:17 -0800 (PST)
+From:   David Turner <dturner@twosigma.com>
+To:     git@vger.kernel.org
+Cc:     peff@peff.net, pclouds@gmail.com,
+        David Turner <dturner@twosigma.com>
+Subject: [PATCH v4] gc: ignore old gc.log files
+Date:   Fri, 10 Feb 2017 15:00:12 -0500
+Message-Id: <20170210200012.24822-1-dturner@twosigma.com>
+X-Mailer: git-send-email 2.11.GIT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> David Turner <dturner@twosigma.com> writes:
-> ...
->> It might still happen that manual intervention is required
->> (e.g. because the repo is corrupt), but at the very least it won't be
->> because Git is too dumb to try again.
->
-> Thanks, nicely explained.
-
-Sorry but I spotted a typo "whre" and ended up updating the proposed
-log message by reordering them, omitting redundant info, etc.  Here
-is a proposed amend with the "where does saved-errno go?" and "we do
-not seem to use keep" fix-ups squashed in.
-
--- >8 --
-Subject: gc: ignore old gc.log files
-
-A server can end up in a state where there are lots of unreferenced
-loose objects (say, because many users are doing a bunch of rebasing
-and pushing their rebased branches).  Running "git gc --auto" in
-this state would cause a gc.log file to be created, preventing
-future auto gcs, causing pack files to pile up.  Since many git
-operations are O(n) in the number of pack files, this would lead to
-poor performance.
-
 Git should never get itself into a state where it refuses to do any
 maintenance, just because at some point some piece of the maintenance
 didn't make progress.
 
-Teach Git to ignore gc.log files which are older than (by default)
-one day old, which can be tweaked via the gc.logExpiry configuration
-variable.  That way, these pack files will get cleaned up, if
+In this commit, git learns to ignore gc.log files which are older than
+(by default) one day old.  It also learns about a config, gc.logExpiry
+to manage this.  There is also some cleanup: a successful manual gc,
+or a warning-free auto gc, will remove any old gc.log files.
+
+It might still happen that manual intervention is required
+(e.g. because the repo is corrupt), but at the very least it won't be
+because Git is too dumb to try again.
+
+Automatic gc was intended to make client repositories be
+self-maintaining.  It would be good if automatic gc were also useful
+to server operators.  A server can end up in a state whre there are
+lots of unreferenced loose objects (say, because many users are doing
+a bunch of rebasing and pushing their rebased branches). Before this
+patch, this state would cause a gc.log file to be created, preventing
+future auto gcs.  Then pack files could pile up.  Since many git
+operations are O(n) in the number of pack files, this would lead to
+poor performance.  Now, the pack files will get cleaned up, if
 necessary, at least once per day.  And operators who find a need for
 more-frequent gcs can adjust gc.logExpiry to meet their needs.
 
-There is also some cleanup: a successful manual gc, or a
-warning-free auto gc with an old log file, will remove any old
-gc.log files.
-
-It might still happen that manual intervention is required
-(e.g. because the repo is corrupt), but at the very least it won't
-be because Git is too dumb to try again.
-
 Signed-off-by: David Turner <dturner@twosigma.com>
 Helped-by: Jeff King <peff@peff.net>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
  Documentation/config.txt |  6 ++++
  builtin/gc.c             | 76 +++++++++++++++++++++++++++++++++++++++++++-----
@@ -119,10 +74,10 @@ Signed-off-by: Junio C Hamano <gitster@pobox.com>
  3 files changed, 87 insertions(+), 7 deletions(-)
 
 diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 1fee83ca42..d385711b70 100644
+index fc5a28a32..a684b7e3e 100644
 --- a/Documentation/config.txt
 +++ b/Documentation/config.txt
-@@ -1397,6 +1397,12 @@ gc.autoDetach::
+@@ -1402,6 +1402,12 @@ gc.autoDetach::
  	Make `git gc --auto` return immediately and run in background
  	if the system supports it. Default is true.
  
@@ -136,7 +91,7 @@ index 1fee83ca42..d385711b70 100644
  	Running `git pack-refs` in a repository renders it
  	unclonable by Git versions prior to 1.5.1.2 over dumb
 diff --git a/builtin/gc.c b/builtin/gc.c
-index 331f219260..55c441115d 100644
+index 331f21926..55c441115 100644
 --- a/builtin/gc.c
 +++ b/builtin/gc.c
 @@ -33,6 +33,7 @@ static int aggressive_window = 250;
@@ -267,7 +222,7 @@ index 331f219260..55c441115d 100644
  	return 0;
  }
 diff --git a/t/t6500-gc.sh b/t/t6500-gc.sh
-index 1762dfa6a3..e1fb9b4d5b 100755
+index 1762dfa6a..e1fb9b4d5 100755
 --- a/t/t6500-gc.sh
 +++ b/t/t6500-gc.sh
 @@ -67,5 +67,17 @@ test_expect_success 'auto gc with too many loose objects does not attempt to cre
@@ -288,3 +243,6 @@ index 1762dfa6a3..e1fb9b4d5b 100755
 +'
  
  test_done
+-- 
+2.11.GIT
+
