@@ -2,58 +2,234 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 19CBB1FC46
-	for <e@80x24.org>; Fri, 10 Feb 2017 20:57:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id ED3901FC46
+	for <e@80x24.org>; Fri, 10 Feb 2017 21:00:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753326AbdBJU5x (ORCPT <rfc822;e@80x24.org>);
-        Fri, 10 Feb 2017 15:57:53 -0500
-Received: from cloud.peff.net ([104.130.231.41]:53168 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752874AbdBJU5w (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Feb 2017 15:57:52 -0500
-Received: (qmail 3018 invoked by uid 109); 10 Feb 2017 20:57:52 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 10 Feb 2017 20:57:52 +0000
-Received: (qmail 12294 invoked by uid 111); 10 Feb 2017 20:57:51 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 10 Feb 2017 15:57:51 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 10 Feb 2017 15:57:50 -0500
-Date:   Fri, 10 Feb 2017 15:57:50 -0500
-From:   Jeff King <peff@peff.net>
-To:     Nick Desaulniers <ndesaulniers@google.com>
-Cc:     git@vger.kernel.org
-Subject: Re: fuzzy patch application
-Message-ID: <20170210205749.c72ajnld7zjfjkwj@sigill.intra.peff.net>
-References: <CAKwvOdn9j=_Ob=xq4ucN6Ar1G537zNiU9ox4iF6o1qO7kPY41A@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAKwvOdn9j=_Ob=xq4ucN6Ar1G537zNiU9ox4iF6o1qO7kPY41A@mail.gmail.com>
+        id S1753511AbdBJVAX (ORCPT <rfc822;e@80x24.org>);
+        Fri, 10 Feb 2017 16:00:23 -0500
+Received: from sub3.mail.dreamhost.com ([69.163.253.7]:32883 "EHLO
+        homiemail-a11.g.dreamhost.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1753498AbdBJVAW (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 10 Feb 2017 16:00:22 -0500
+Received: from homiemail-a11.g.dreamhost.com (localhost [127.0.0.1])
+        by homiemail-a11.g.dreamhost.com (Postfix) with ESMTP id CB482314C069;
+        Fri, 10 Feb 2017 12:59:42 -0800 (PST)
+Received: from localhost.localdomain (207-38-252-131.c3-0.43d-ubr2.qens-43d.ny.cable.rcn.com [207.38.252.131])
+        (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: novalis@novalis.org)
+        by homiemail-a11.g.dreamhost.com (Postfix) with ESMTPSA id 22EBC314C066;
+        Fri, 10 Feb 2017 12:59:42 -0800 (PST)
+From:   David Turner <dturner@twosigma.com>
+To:     git@vger.kernel.org
+Cc:     peff@peff.net, pclouds@gmail.com,
+        David Turner <dturner@twosigma.com>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH v5] gc: ignore old gc.log files
+Date:   Fri, 10 Feb 2017 15:59:31 -0500
+Message-Id: <20170210205931.5348-1-dturner@twosigma.com>
+X-Mailer: git-send-email 2.11.GIT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Feb 10, 2017 at 11:20:59AM -0800, Nick Desaulniers wrote:
+A server can end up in a state where there are lots of unreferenced
+loose objects (say, because many users are doing a bunch of rebasing
+and pushing their rebased branches).  Running "git gc --auto" in
+this state would cause a gc.log file to be created, preventing
+future auto gcs, causing pack files to pile up.  Since many git
+operations are O(n) in the number of pack files, this would lead to
+poor performance.
 
-> I frequently need to backport patches from the Linux kernel to older
-> kernel versions (Android Security).  My usual workflow for simple
-> patches is:
-> 
-> 1. try `git am patch.txt`.
+Git should never get itself into a state where it refuses to do any
+maintenance, just because at some point some piece of the maintenance
+didn't make progress.
 
-This is not exactly an answer to your question, but "git am -3" is often
-a better solution than trying to fuzz patches. It assumes the patches
-are Git patches (and record their origin blobs), and that you have that
-blob (which should be true if the patches are based on the normal kernel
-history, and you just fetch that history into your repository).
+Teach Git to ignore gc.log files which are older than (by default)
+one day old, which can be tweaked via the gc.logExpiry configuration
+variable.  That way, these pack files will get cleaned up, if
+necessary, at least once per day.  And operators who find a need for
+more-frequent gcs can adjust gc.logExpiry to meet their needs.
 
-I've found that this often manages to apply patches that "git apply"
-will not by itself. And I also find the resulting conflicts to be much
-easier to deal with than patch's ".rej" files.
+There is also some cleanup: a successful manual gc, or a
+warning-free auto gc with an old log file, will remove any old
+gc.log files.
 
--Peff
+It might still happen that manual intervention is required
+(e.g. because the repo is corrupt), but at the very least it won't
+be because Git is too dumb to try again.
+
+Signed-off-by: David Turner <dturner@twosigma.com>
+Helped-by: Jeff King <peff@peff.net>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ Documentation/config.txt |  6 +++++
+ builtin/gc.c             | 59 ++++++++++++++++++++++++++++++++++++++++++------
+ t/t6500-gc.sh            | 15 ++++++++++++
+ 3 files changed, 73 insertions(+), 7 deletions(-)
+
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index fc5a28a32..a684b7e3e 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -1402,6 +1402,12 @@ gc.autoDetach::
+ 	Make `git gc --auto` return immediately and run in background
+ 	if the system supports it. Default is true.
+ 
++gc.logExpiry::
++	If the file gc.log exists, then `git gc --auto` won't run
++	unless that file is more than 'gc.logExpiry' old.  Default is
++	"1.day".  See `gc.pruneExpire` for more ways to specify its
++	value.
++
+ gc.packRefs::
+ 	Running `git pack-refs` in a repository renders it
+ 	unclonable by Git versions prior to 1.5.1.2 over dumb
+diff --git a/builtin/gc.c b/builtin/gc.c
+index 331f21926..8d355feb0 100644
+--- a/builtin/gc.c
++++ b/builtin/gc.c
+@@ -33,6 +33,8 @@ static int aggressive_window = 250;
+ static int gc_auto_threshold = 6700;
+ static int gc_auto_pack_limit = 50;
+ static int detach_auto = 1;
++static unsigned long gc_log_expire_time;
++static const char *gc_log_expire = "1.day.ago";
+ static const char *prune_expire = "2.weeks.ago";
+ static const char *prune_worktrees_expire = "3.months.ago";
+ 
+@@ -76,10 +78,30 @@ static void git_config_date_string(const char *key, const char **output)
+ static void process_log_file(void)
+ {
+ 	struct stat st;
+-	if (!fstat(get_lock_file_fd(&log_lock), &st) && st.st_size)
++	if (fstat(get_lock_file_fd(&log_lock), &st)) {
++		/*
++		 * Perhaps there was an i/o error or another
++		 * unlikely situation.  Try to make a note of
++		 * this in gc.log along with any existing
++		 * messages.
++		 */
++		FILE *fp;
++		int saved_errno = errno;
++		fp = fdopen(log_lock.tempfile.fd, "a");
++		fprintf(fp, _("Failed to fstat %s: %s"),
++			get_tempfile_path(&log_lock.tempfile),
++			strerror(saved_errno));
++		fclose(fp);
+ 		commit_lock_file(&log_lock);
+-	else
++		errno = saved_errno;
++	} else if (st.st_size) {
++		/* There was some error recorded in the lock file */
++		commit_lock_file(&log_lock);
++	} else {
++		/* No error, clean up any old gc.log */
++		unlink(git_path("gc.log"));
+ 		rollback_lock_file(&log_lock);
++	}
+ }
+ 
+ static void process_log_file_at_exit(void)
+@@ -113,6 +135,8 @@ static void gc_config(void)
+ 	git_config_get_bool("gc.autodetach", &detach_auto);
+ 	git_config_date_string("gc.pruneexpire", &prune_expire);
+ 	git_config_date_string("gc.worktreepruneexpire", &prune_worktrees_expire);
++	git_config_date_string("gc.logexpiry", &gc_log_expire);
++
+ 	git_config(git_default_config, NULL);
+ }
+ 
+@@ -290,19 +314,34 @@ static const char *lock_repo_for_gc(int force, pid_t* ret_pid)
+ static int report_last_gc_error(void)
+ {
+ 	struct strbuf sb = STRBUF_INIT;
+-	int ret;
++	int ret = 0;
++	struct stat st;
++	char *gc_log_path = git_pathdup("gc.log");
+ 
+-	ret = strbuf_read_file(&sb, git_path("gc.log"), 0);
++	if (stat(gc_log_path, &st)) {
++		if (errno == ENOENT)
++			goto done;
++
++		ret = error_errno(_("Can't stat %s"), gc_log_path);
++		goto done;
++	}
++
++	if (st.st_mtime < gc_log_expire_time)
++		goto done;
++
++	ret = strbuf_read_file(&sb, gc_log_path, 0);
+ 	if (ret > 0)
+-		return error(_("The last gc run reported the following. "
++		ret = error(_("The last gc run reported the following. "
+ 			       "Please correct the root cause\n"
+ 			       "and remove %s.\n"
+ 			       "Automatic cleanup will not be performed "
+ 			       "until the file is removed.\n\n"
+ 			       "%s"),
+-			     git_path("gc.log"), sb.buf);
++			    gc_log_path, sb.buf);
+ 	strbuf_release(&sb);
+-	return 0;
++done:
++	free(gc_log_path);
++	return ret;
+ }
+ 
+ static int gc_before_repack(void)
+@@ -349,7 +388,10 @@ int cmd_gc(int argc, const char **argv, const char *prefix)
+ 	argv_array_pushl(&prune_worktrees, "worktree", "prune", "--expire", NULL);
+ 	argv_array_pushl(&rerere, "rerere", "gc", NULL);
+ 
++	/* default expiry time, overwritten in gc_config */
+ 	gc_config();
++	if (parse_expiry_date(gc_log_expire, &gc_log_expire_time))
++		die(_("Failed to parse gc.logexpiry value %s"), gc_log_expire);
+ 
+ 	if (pack_refs < 0)
+ 		pack_refs = !is_bare_repository();
+@@ -448,5 +490,8 @@ int cmd_gc(int argc, const char **argv, const char *prefix)
+ 		warning(_("There are too many unreachable loose objects; "
+ 			"run 'git prune' to remove them."));
+ 
++	if (!daemonized)
++		unlink(git_path("gc.log"));
++
+ 	return 0;
+ }
+diff --git a/t/t6500-gc.sh b/t/t6500-gc.sh
+index 1762dfa6a..08de2e8ab 100755
+--- a/t/t6500-gc.sh
++++ b/t/t6500-gc.sh
+@@ -67,5 +67,20 @@ test_expect_success 'auto gc with too many loose objects does not attempt to cre
+ 	test_line_count = 2 new # There is one new pack and its .idx
+ '
+ 
++test_expect_success 'background auto gc does not run if gc.log is present and recent but does if it is old' '
++	test_commit foo &&
++	test_commit bar &&
++	git repack &&
++	test_config gc.autopacklimit 1 &&
++	test_config gc.autodetach true &&
++	echo fleem >.git/gc.log &&
++	test_must_fail git gc --auto 2>err &&
++	test_i18ngrep "^error:" err &&
++	test_config gc.logexpiry 5.days &&
++	test-chmtime =-345600 .git/gc.log &&
++	test_must_fail git gc --auto &&
++	test_config gc.logexpiry 2.days &&
++	git gc --auto
++'
+ 
+ test_done
+-- 
+2.11.GIT
+
