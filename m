@@ -2,92 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,
+	STOX_REPLY_TYPE shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0D7DA1FC46
-	for <e@80x24.org>; Fri, 10 Feb 2017 19:00:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C896E1FC46
+	for <e@80x24.org>; Fri, 10 Feb 2017 19:02:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753677AbdBJS77 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 10 Feb 2017 13:59:59 -0500
-Received: from mail-pg0-f51.google.com ([74.125.83.51]:34270 "EHLO
-        mail-pg0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752912AbdBJS76 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Feb 2017 13:59:58 -0500
-Received: by mail-pg0-f51.google.com with SMTP id 14so12707042pgg.1
-        for <git@vger.kernel.org>; Fri, 10 Feb 2017 10:59:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=4lB7106SpM91CU3ZqO9zFbbrQvU6ooz+evr5kWCgPkM=;
-        b=INxZgSJSi+WUb4bYpaOIzuN0TyurGwDEX285qlBE+zH7dK1Fjp6H1VrUdQHSFNqKN0
-         AbYrBRZJX18GVsl5Uww8FC+gWqTQ9bEtNAWDQax16p+T8RO8hlVXODOduRRNYSam2fYy
-         BUmOwTRB1IVW8qtHiWgoh0MwV+rV8niA0e89wHQwXox9UBVB7scqVtpEDAKp/L31m+Da
-         SEIQv0FtVi/bOUgWmgzy7glMwY9OeUywUwOAgobImuWLyldpfrQJ7AaaRMh2ZH8zvW2E
-         kCg2/WcxHHNhBTtQq6EODuSPCPCJUzmzOMHnWABD7A9+eezvZnP/BSCL/zDEhrO1S5oO
-         pcjA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=4lB7106SpM91CU3ZqO9zFbbrQvU6ooz+evr5kWCgPkM=;
-        b=K/QvufAK2uTYJGsjksoR1X81r2qHRiWv/SGAiEfeatUEdkKefc1+LW1pxkbE/7c/Xd
-         oOegA652pm0fHYskk7xtgz2OMpGUaf6R4wAsdIcUP0O+zJYQ37O+zb+DAN+02qi0VfaJ
-         wYZ95AX8uCjLbMZSxqCr5ys7Lh9V0cMWjz5Fz0EBwZLHZrTeOS3pK9If67z9YveVLpPW
-         h2/NWzwgGdtjFWa+37FxcdlkB/k/csXHnsOLidcsA/AC9UDNP5e6vsxrcxhkqJeVcw/G
-         3l0/N145JDurFmLhzp6kcsL9tEYm6tUziShJGUm7aIfHK5Hcs7+ObBF1AaM2JreU/ODZ
-         FkRw==
-X-Gm-Message-State: AMke39n1wOtPXQHhRYiAsrfca8+7k5qiC4QBroo5qOITlSRcMiUyHKpH+P5+CR73Ip7I1Q==
-X-Received: by 10.99.140.77 with SMTP id q13mr12434550pgn.179.1486753197818;
-        Fri, 10 Feb 2017 10:59:57 -0800 (PST)
-Received: from localhost ([2620:0:1000:8622:8499:2e0a:2c80:2b60])
-        by smtp.gmail.com with ESMTPSA id q7sm784550pfb.98.2017.02.10.10.59.57
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Fri, 10 Feb 2017 10:59:57 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <johannes.schindelin@gmx.de>
-Cc:     git@vger.kernel.org,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-        Michael Rappazzo <rappazzo@gmail.com>
-Subject: Re: [PATCH v2 0/2] Fix bugs in rev-parse's output when run in a subdirectory
-References: <50fe3ea3302c40f4c96eaa5a568837e3334f9dc4.1486555851.git.johannes.schindelin@gmx.de>
-        <cover.1486740772.git.johannes.schindelin@gmx.de>
-Date:   Fri, 10 Feb 2017 10:59:56 -0800
-In-Reply-To: <cover.1486740772.git.johannes.schindelin@gmx.de> (Johannes
-        Schindelin's message of "Fri, 10 Feb 2017 16:33:31 +0100 (CET)")
-Message-ID: <xmqqk28xlvmb.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+        id S1753550AbdBJTCK (ORCPT <rfc822;e@80x24.org>);
+        Fri, 10 Feb 2017 14:02:10 -0500
+Received: from smtp-out-2.talktalk.net ([62.24.135.66]:34301 "EHLO
+        smtp-out-2.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753118AbdBJTCJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Feb 2017 14:02:09 -0500
+Received: from PhilipOakley ([92.31.218.76])
+        by smtp.talktalk.net with SMTP
+        id cGSNcdcPD46SJcGSNcwENV; Fri, 10 Feb 2017 19:02:08 +0000
+X-Originating-IP: [92.31.218.76]
+X-Spam: 0
+X-OAuthority: v=2.2 cv=CItoZljD c=1 sm=1 tr=0 a=e6L6E7eW+5Nb7SO+DvSdIg==:117
+ a=e6L6E7eW+5Nb7SO+DvSdIg==:17 a=8nJEP1OIZ-IA:10 a=NEAV23lmAAAA:8
+ a=KjtaWa6mrfalS3hOZiAA:9 a=wPNLvfGTeEIA:10 a=Bn2pgwyD2vrAyMmN8A2t:22
+Message-ID: <93E7A279BF61414D9EE8BB12B88E16E8@PhilipOakley>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From:   "Philip Oakley" <philipoakley@iee.org>
+To:     "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+        "Junio C Hamano" <gitster@pobox.com>
+Cc:     "Ashutosh Bapat" <ashutosh.bapat@enterprisedb.com>,
+        <git@vger.kernel.org>, "Michael Haggerty" <mhagger@alum.mit.edu>,
+        "Michael J Gruber" <git@drmicha.warpmail.net>,
+        "Matthieu Moy" <Matthieu.Moy@imag.fr>
+References: <CAFjFpRe8zqxs4OLbCrjnuEzF=75sbBJ+HuZqek49B=O=TFHq8A@mail.gmail.com> <xmqqbmucuwb0.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1702092142020.3496@virtualbox> <xmqqwpcznjqi.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1702092301070.3496@virtualbox> <xmqqd1ernh7g.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1702101654500.3496@virtualbox>
+Subject: Re: Bug with fixup and autosquash
+Date:   Fri, 10 Feb 2017 19:02:06 -0000
+Organization: OPDS
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain;
+        format=flowed;
+        charset="iso-8859-1";
+        reply-type=original
+Content-Transfer-Encoding: 7bit
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+X-CMAE-Envelope: MS4wfEyEBzh3oyghLRHH8NE7ZiNv49SkdUmrmFMlLlqKUOeJxJL9WAJEBc6gEc/5AcmgdYmzIDO7QrnG0S8Bsu12TFL8FOYZXHzeFYwmdvgN+K0Z/putrAIr
+ T54K9cJMeZbogPDMHhbiMCvHZ770W3kzTsf4v199K3Lfu1T3h2eQyVHjJExZ7x5iJlV0DPehxvu8oZTtrltd9lBiAYh+40oFtgsH8SYZrYFZ2NlCIAJSjBcc
+ Qn6uWa6280U1ZJYyJp73m04lBF6dFKl9WrV2weOanpiKx3HCn6hErsifyz2jg3QxLAMKlFq+T4AxWv1FmcFZYt8uJEGMaimxuTlixf+rkcaFnn/CpCs8Pl42
+ qO4I/8+1mFKzcE7BJZABe/aLTS5tTA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+From: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+> Hi Junio,
+>
+> On Thu, 9 Feb 2017, Junio C Hamano wrote:
+>
+>> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+>>
+>> > Almost. While I fixed the performance issues as well as the design
+>> > allowed, I happened to "fix" the problem where an incomplete prefix
+>> > match could be favored over an exact match.
+>>
+>> Hmph.  Would it require too much further work to do what you said the
+>> code does:
+>
+> I was just being overly precise. I *did* fix the problem. But since it was
+> not my intention, I quoted the verb "fix".
+>
+>> > The rebase--helper code (specifically, the patch moving autosquash
+>> > logic into it: https://github.com/dscho/git/commit/7d0831637f) tries
+>> > to match exact onelines first, and falls back to prefix matching only
+>> > after that.
+>>
+>> If the code matches exact onlines and then falls back to prefix, I do
+>> not think incomplete prefix would be mistakenly chosen over an exact
+>> one, so perhaps your code already does the right thing?
+>
+> The code does exactly that. It does even more: as `fixup! <SHA-1>` is
+> allowed (for SHA-1s that have been mentioned in previous `pick` lines), it
+> tries to match that before falling back to the incomplete prefix match.
+>
+> Ciao,
+> Johannes
 
-> Johannes Schindelin (1):
->   rev-parse: fix several options when running in a subdirectory
->
-> Michael Rappazzo (1):
->   rev-parse tests: add tests executed from a subdirectory
->
->  builtin/rev-parse.c      | 15 +++++++++++----
->  t/t1500-rev-parse.sh     | 28 ++++++++++++++++++++++++++++
->  t/t1700-split-index.sh   | 17 +++++++++++++++++
->  t/t2027-worktree-list.sh | 10 +++++++++-
->  4 files changed, 65 insertions(+), 5 deletions(-)
->
->
-> base-commit: 6e3a7b3398559305c7a239a42e447c21a8f39ff8
-> Published-As: https://github.com/dscho/git/releases/tag/git-path-in-subdir-v2
-> Fetch-It-Via: git fetch https://github.com/dscho/git git-path-in-subdir-v2
+Now just the doc update to do.... ;-)
 
-Will queue as js/git-path-in-subdir topic forked at 2.12-rc0.
+I definitely think the 'fix' that allows the `fixup! <SHA-1>` as the subject 
+line is a good way to go for those who mix in the use of the gui and gitk 
+into their workflow (*)
 
-I still think the log message in 2/2 is making a mountain out of
-molehill and showing a skewed perception on pros-and-cons in a
-design decision, but I won't repeat my review.  I saw a few
-correctness issues and pointed them out on the patches.
+--
+Philip
+(*) I just don't see the point of having multiple cli tty windows, and then 
+not using the gui/k windows that are part of the tool set.
+
