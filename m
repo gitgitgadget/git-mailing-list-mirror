@@ -2,114 +2,198 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 233CC1FC46
-	for <e@80x24.org>; Fri, 10 Feb 2017 18:56:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9FAAD1FC46
+	for <e@80x24.org>; Fri, 10 Feb 2017 18:57:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753610AbdBJS4z (ORCPT <rfc822;e@80x24.org>);
-        Fri, 10 Feb 2017 13:56:55 -0500
-Received: from mail-pg0-f65.google.com ([74.125.83.65]:33954 "EHLO
-        mail-pg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752439AbdBJS4Y (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1753551AbdBJS4y (ORCPT <rfc822;e@80x24.org>);
+        Fri, 10 Feb 2017 13:56:54 -0500
+Received: from mail-pf0-f193.google.com ([209.85.192.193]:36716 "EHLO
+        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752472AbdBJS4Y (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 10 Feb 2017 13:56:24 -0500
-Received: by mail-pg0-f65.google.com with SMTP id v184so3721718pgv.1
-        for <git@vger.kernel.org>; Fri, 10 Feb 2017 10:56:17 -0800 (PST)
+Received: by mail-pf0-f193.google.com with SMTP id 19so3021502pfo.3
+        for <git@vger.kernel.org>; Fri, 10 Feb 2017 10:56:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=vtvaYtRKjcsd1pSbqyi9F7hu3WbgDQ1MSs61oJOIeZo=;
-        b=aiXy2jST/plIEtdUC13XxU6nyIjCGC2q5trhD57QITf4C+e9lq0nhOEMZQ0LKvo0mO
-         jJDnKbgMf1InL18Jo9dV77+WyAe7UOD9pBnIR/yr/ypqmjijE75dtnXhJnwj8umy8ojg
-         6RFu1DGclBTGJ3wRtUpJVA+wBk6Gigz4ZTOZsfAYb+wSnOI3cW6YfDX52XD8d3E0+QG4
-         jVjNsrXede6S1bRLW69b6ETu9QT5CztEjTWYzl21LBS7idLpDL0EBrpPa+dc/2YSrJSe
-         C+tkQz6ONxY68HRTXYm9cr77IaIeJHmh13vLRr+46c23CqGK4ygAlYEwUzWKiM6W78xk
-         oCqg==
+        bh=TZHaNV7aFt+Y2eUDEyofIYXqzcKi+CF+JtAg7aoqD1U=;
+        b=qggSxdciEDIWm61H4i5RGRrPwd+YfEKi4M8rIsBmwRe6Z8AwGW/F+1ufxT/F0BQnuD
+         c/Pf55TqDv8z5NGNFeboBDtT6VrfG0HzUgqhxEfxU5YS1ZQGud9DP4YkwO1ILfw9o5wa
+         3T04f3o/fl36oyulFWFRfEcUA6wS+oNnfHMeQgl7DiGeBsIxJwLq31IYXxu0cpMeBOre
+         OY38B1R0hZ1NZ8E7NhPAKW7mdNC/0h3GhlcoaPzF/oK//8SPFqXSOZiFnbH9lReXUEbj
+         h7IlpgTc5AnbrRiA4qVs573+FYUjERTLi4pY+nfw9p2958djCM3m4YqYNkD2zmlA1Iaq
+         +teA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=vtvaYtRKjcsd1pSbqyi9F7hu3WbgDQ1MSs61oJOIeZo=;
-        b=OnhWt64Pnzyq3DqSmI7zkjLiK2gLC8lXrMtTjlKefl3UGm5HfzVUPRyPdcKnVM9qlN
-         WZb23qu9ID3aKZOnVTMhJCf9IpJFYilLOz4BsNrbJzooVpOLP1iGgPsqidQ8DccE6dmF
-         E6lnab57meL3HN6VmBMRq6kQT4bscKGVXPKHJ7M4Wra+LnBY8bWDnjjz81Zcav5ARADD
-         pRWt/7OWo3mG96GzMP+Ym6GuHF+Y1rvnLmg/w+XeOfKmAqyVgw17xWqTz2pNuLur6N3f
-         DRiS6gXjsx9nWgTP9KtzyTKwWlNJu9uCJ4wDetzLTKjQRdFwTSdzHv2P1/xHp0JWcj2v
-         VuiA==
-X-Gm-Message-State: AMke39kltSGlBqMCbo2Rjq5G6CCbVcwx8qmoKzPaZO096RD9dEpV6GFOZPNX45569Kbykw==
-X-Received: by 10.84.149.102 with SMTP id b35mr13337884plh.3.1486752977182;
-        Fri, 10 Feb 2017 10:56:17 -0800 (PST)
+        bh=TZHaNV7aFt+Y2eUDEyofIYXqzcKi+CF+JtAg7aoqD1U=;
+        b=OlRCiw+pVzkoCyc3Juthq09S/QbXXJ48hw50YnrmL2qKiH2rtCNtFU6juGR/AlpG9X
+         y7kMbSUWHyDkRLMWkRqRs6Hn7daLKR0dtfC4pqxnTxFzlsOrnaBuR5ZnGIYl00Wi4xUB
+         bORJpsFALT0tfPvDl7Gt9EFgz0VBN7b/t+01HbNuZRV9bfgrLlJG0gUcTpS8y2QvnGRN
+         r4LElij1sdCj2tmM9o3TpWHkyo2XgWR2AOWU++l0GaouW/m/J7VxF7boPT3UlpusbmU0
+         6d8bUbi5cXdxQN1e/jiOnVzHv1z9lDkmQb7YkBrOpclcWKEbAHDUu37gqIpdhmyJ/vl+
+         XZPQ==
+X-Gm-Message-State: AMke39lo9Wsg2KqioMZVKW9ChuZJ2weK7MXwUMUdIv6gBwRYpMLuanMdgVltPHDxQFItyg==
+X-Received: by 10.99.174.4 with SMTP id q4mr12582905pgf.186.1486752980935;
+        Fri, 10 Feb 2017 10:56:20 -0800 (PST)
 Received: from localhost ([139.59.1.28])
-        by smtp.gmail.com with ESMTPSA id l25sm7092693pfb.24.2017.02.10.10.56.14
+        by smtp.gmail.com with ESMTPSA id m12sm7074444pgc.46.2017.02.10.10.56.18
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 10 Feb 2017 10:56:15 -0800 (PST)
+        Fri, 10 Feb 2017 10:56:20 -0800 (PST)
 From:   Siddharth Kannan <kannan.siddharth12@gmail.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, Matthieu.Moy@imag.fr, pranit.bauva@gmail.com,
         peff@peff.net, pclouds@gmail.com, sandals@crustytoothpaste.ath.cx,
         Siddharth Kannan <kannan.siddharth12@gmail.com>
-Subject: [PATCH 1/2 v3] revision.c: args starting with "-" might be a revision
-Date:   Fri, 10 Feb 2017 18:55:25 +0000
-Message-Id: <1486752926-12020-2-git-send-email-kannan.siddharth12@gmail.com>
+Subject: [PATCH 2/2 v3] sha1_name: teach get_sha1_1 "-" shorthand for "@{-1}"
+Date:   Fri, 10 Feb 2017 18:55:26 +0000
+Message-Id: <1486752926-12020-3-git-send-email-kannan.siddharth12@gmail.com>
 X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1486752926-12020-1-git-send-email-kannan.siddharth12@gmail.com>
+In-Reply-To: <1486752926-12020-2-git-send-email-kannan.siddharth12@gmail.com>
 References: <1486752926-12020-1-git-send-email-kannan.siddharth12@gmail.com>
+ <1486752926-12020-2-git-send-email-kannan.siddharth12@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-setup_revisions used to consider any argument starting with "-" to be either a
-valid option or nothing at all. This patch will teach it to check if the
-argument is a revision before declaring that it is nothing at all.
+This patch introduces "-" as a method to refer to a revision, and adds tests to
+test that git-log works with this shorthand.
 
-Before this patch, handle_revision_arg was not called for arguments starting
-with "-" and once for arguments that didn't start with "-". Now, it will be
-called once per argument.
+This change will touch the following commands (through
+revision.c:setup_revisions):
 
-This patch prepares the addition of "-" as a shorthand for "previous branch".
+* builtin/blame.c
+* builtin/diff.c
+* builtin/diff-files.c
+* builtin/diff-index.c
+* builtin/diff-tree.c
+* builtin/log.c
+* builtin/rev-list.c
+* builtin/shortlog.c
+* builtin/fast-export.c
+* builtin/fmt-merge-msg.c
+builtin/add.c
+builtin/checkout.c
+builtin/commit.c
+builtin/merge.c
+builtin/pack-objects.c
+builtin/revert.c
+
+* marked commands are information-only.
+
+As most commands in this list are not of the rm-variety, (i.e a command that
+would delete something), this change does not make it easier for people to
+delete. (eg: "git branch -d -" is *not* enabled by this patch)
 
 Signed-off-by: Siddharth Kannan <kannan.siddharth12@gmail.com>
 ---
- revision.c | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ sha1_name.c              |  5 ++++
+ t/t4214-log-shorthand.sh | 73 ++++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 78 insertions(+)
+ create mode 100755 t/t4214-log-shorthand.sh
 
-diff --git a/revision.c b/revision.c
-index b37dbec..4131ad5 100644
---- a/revision.c
-+++ b/revision.c
-@@ -2205,6 +2205,7 @@ int setup_revisions(int argc, const char **argv, struct rev_info *revs, struct s
- 	read_from_stdin = 0;
- 	for (left = i = 1; i < argc; i++) {
- 		const char *arg = argv[i];
-+		int handle_rev_arg_called = 0, args;
- 		if (*arg == '-') {
- 			int opts;
+diff --git a/sha1_name.c b/sha1_name.c
+index 73a915f..d774e46 100644
+--- a/sha1_name.c
++++ b/sha1_name.c
+@@ -947,6 +947,11 @@ static int get_sha1_1(const char *name, int len, unsigned char *sha1, unsigned l
+ 	if (!ret)
+ 		return 0;
  
-@@ -2234,11 +2235,18 @@ int setup_revisions(int argc, const char **argv, struct rev_info *revs, struct s
- 			}
- 			if (opts < 0)
- 				exit(128);
--			continue;
++	if (!strcmp(name, "-")) {
++		name = "@{-1}";
++		len = 5;
++	}
 +
-+			args = handle_revision_arg(arg, revs, flags, revarg_opt);
-+			handle_rev_arg_called = 1;
-+			if (args)
-+				continue;
-+			else
-+				--left;
- 		}
- 
- 
--		if (handle_revision_arg(arg, revs, flags, revarg_opt)) {
-+		if ((handle_rev_arg_called && args) ||
-+				handle_revision_arg(arg, revs, flags, revarg_opt)) {
- 			int j;
- 			if (seen_dashdash || *arg == '^')
- 				die("bad revision '%s'", arg);
+ 	ret = get_sha1_basic(name, len, sha1, lookup_flags);
+ 	if (!ret)
+ 		return 0;
+diff --git a/t/t4214-log-shorthand.sh b/t/t4214-log-shorthand.sh
+new file mode 100755
+index 0000000..dec966c
+--- /dev/null
++++ b/t/t4214-log-shorthand.sh
+@@ -0,0 +1,73 @@
++#!/bin/sh
++
++test_description='log can show previous branch using shorthand - for @{-1}'
++
++. ./test-lib.sh
++
++test_expect_success 'setup' '
++	echo hello >world &&
++	git add world &&
++	git commit -m initial &&
++	echo "hello second time" >>world &&
++	git add world &&
++	git commit -m second &&
++	echo "hello other file" >>planet &&
++	git add planet &&
++	git commit -m third &&
++	echo "hello yet another file" >>city &&
++	git add city &&
++	git commit -m fourth
++'
++
++test_expect_success '"log -" should not work initially' '
++	test_must_fail git log -
++'
++
++test_expect_success '"log -" should work' '
++	git checkout -b testing-1 master^ &&
++	git checkout -b testing-2 master~2 &&
++	git checkout master &&
++
++	git log testing-2 >expect &&
++	git log - >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'symmetric revision range should work when one end is left empty' '
++	git checkout testing-2 &&
++	git checkout master &&
++	git log ...@{-1} > expect.first_empty &&
++	git log @{-1}... > expect.last_empty &&
++	git log ...- > actual.first_empty &&
++	git log -... > actual.last_empty &&
++	test_cmp expect.first_empty actual.first_empty &&
++	test_cmp expect.last_empty actual.last_empty
++'
++
++test_expect_success 'asymmetric revision range should work when one end is left empty' '
++	git checkout testing-2 &&
++	git checkout master &&
++	git log ..@{-1} > expect.first_empty &&
++	git log @{-1}.. > expect.last_empty &&
++	git log ..- > actual.first_empty &&
++	git log -.. > actual.last_empty &&
++	test_cmp expect.first_empty actual.first_empty &&
++	test_cmp expect.last_empty actual.last_empty
++'
++
++test_expect_success 'symmetric revision range should work when both ends are given' '
++	git checkout testing-2 &&
++	git checkout master &&
++	git log -...testing-1 >expect &&
++	git log testing-2...testing-1 >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'asymmetric revision range should work when both ends are given' '
++	git checkout testing-2 &&
++	git checkout master &&
++	git log -..testing-1 >expect &&
++	git log testing-2..testing-1 >actual &&
++	test_cmp expect actual
++'
++test_done
 -- 
 2.1.4
 
