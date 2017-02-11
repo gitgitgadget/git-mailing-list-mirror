@@ -2,84 +2,119 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C617F1FAF4
-	for <e@80x24.org>; Sat, 11 Feb 2017 13:59:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4FB211FAF4
+	for <e@80x24.org>; Sat, 11 Feb 2017 14:51:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753634AbdBKN7C (ORCPT <rfc822;e@80x24.org>);
-        Sat, 11 Feb 2017 08:59:02 -0500
-Received: from mout.web.de ([212.227.15.3]:58409 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753519AbdBKN7B (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 11 Feb 2017 08:59:01 -0500
-Received: from [192.168.178.36] ([79.197.218.233]) by smtp.web.de (mrweb004
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0MhOpG-1cpFn82T3q-00Me13; Sat, 11
- Feb 2017 14:58:48 +0100
-X-Mozilla-News-Host: news://news.public-inbox.org:119
-To:     Git List <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Pranit Bauva <pranit.bauva@gmail.com>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Subject: [PATCH] cocci: detect useless free(3) calls
-Message-ID: <7e10f934-f084-ceb4-00eb-b75cdb01886b@web.de>
-Date:   Sat, 11 Feb 2017 14:58:44 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
- Thunderbird/45.7.1
+        id S1750761AbdBKOu5 (ORCPT <rfc822;e@80x24.org>);
+        Sat, 11 Feb 2017 09:50:57 -0500
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:34546 "EHLO
+        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750733AbdBKOu4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 11 Feb 2017 09:50:56 -0500
+Received: by mail-wm0-f67.google.com with SMTP id c85so11108157wmi.1
+        for <git@vger.kernel.org>; Sat, 11 Feb 2017 06:50:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=SnOxU8nTOzcTGfWdJxOamtcBmFKPzQtF++91B6IUhVM=;
+        b=Od+6r8kMabOvbOPrUovYSVkACxjVmZ7iWqAxVq4SYiZz4D4jKqo4/iQCzppMNoOsPx
+         /uHP7gwunorN0xQwauS/G8JNANrevs3+6HwDB9vaAgop80oXJyM0gpgGwQbRrZL5UeOF
+         IOUmAVjlReLHr2Y6gNRvkz7OrwLgR8kUEIBoxWOHp7wyvBF/r0wpohTLXq0SEY3DCnYx
+         jCvzWLpeioWo/9Er93fvleEuznmsHj6q0pMq6SUZbNKh62cmCC5tuMOw6aEOG8ZDeNBu
+         eaTKps93DATyNycIRFtiEVad01M3igO3FGeQ4DD/HwMQN1r4DDEpUlYlzo8c7e5LtVFt
+         ucNA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=SnOxU8nTOzcTGfWdJxOamtcBmFKPzQtF++91B6IUhVM=;
+        b=GxBLXbqmKqQ15uJHFEu9E00acpFSFWk8hd6Np1Ot7mOuJxMtFZFVywRGbKYCHupZOF
+         iG1W/N4pPvZ2K3ghjiz58cej0wXBb3VBUcMQP3495bXUXiA5xO9r+duPd25Hb4FsmyZ0
+         40r/GhH6Mv3Uy85AMgVKvN3EQfjhFDNeoAJFykMBe+E10OxkFoTWEQKGu7NvlXq9s0EN
+         OeNFyUHmRQ+1WUpFnmDN2Po5diuWFonBRu+w3EEvax9yExrRX31aAxWw8c+hoAJqbu4Z
+         XcuIyoih8ulSrUb8L6ZNB6RMS2Zs3hvf38wgY+DRMbBzvlAEVtNPYydYnhi8auHWTsBH
+         UrEA==
+X-Gm-Message-State: AMke39mblb2Av6jZ+KJ6QlMG42Y58LVYGrmU9NaQIsIB48nj3TFxUHwpjlfvUcLfqm4g8Q==
+X-Received: by 10.28.37.195 with SMTP id l186mr29830904wml.73.1486824654901;
+        Sat, 11 Feb 2017 06:50:54 -0800 (PST)
+Received: from localhost ([2a02:c7f:c42b:f900:5e51:4fff:fee9:57af])
+        by smtp.gmail.com with ESMTPSA id 10sm5376835wmi.23.2017.02.11.06.50.53
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Sat, 11 Feb 2017 06:50:53 -0800 (PST)
+Date:   Sat, 11 Feb 2017 14:51:27 +0000
+From:   Thomas Gummerer <t.gummerer@gmail.com>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org, Stephan Beyer <s-beyer@gmx.net>,
+        Junio C Hamano <gitster@pobox.com>,
+        Marc Strapetz <marc.strapetz@syntevo.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        =?iso-8859-1?Q?=D8yvind_A_=2E?= Holm <sunny@sunbase.org>,
+        Jakub =?utf-8?B?TmFyxJlic2tp?= <jnareb@gmail.com>
+Subject: Re: [PATCH v3 4/5] stash: introduce new format create
+Message-ID: <20170211145127.GA23081@hank>
+References: <20170129201604.30445-1-t.gummerer@gmail.com>
+ <20170205202642.14216-1-t.gummerer@gmail.com>
+ <20170205202642.14216-5-t.gummerer@gmail.com>
+ <20170206155606.xgkmhg656vuc6uki@sigill.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K0:E/S9c906UWadDKvOK5ix+yKOPsCTQgZUYLANFlWOBBUszBQghuq
- Ey0jM9JtifUKNUteZfdlCAU8X0FO9bR2xcRD77EEzs3KX0M4hdUKMT+igc2SuXqYHYTxqlI
- vDH4ybhmUSqYopUb1xUATJQMkv0Wrpsnp2Aj/Bj3iOC/tfXkoDfug+/sygmGgTShvPKof51
- Ok5HfkaD141jJI+B6o+rg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:OLwwvfUnsi4=:GdWFn1p+4SyTABgsMZisW1
- Ilud6j8VXvmrvyks36cvNYoUhtkpo1g5pozZHYFYrpd3+zKY/DVJHiTIGQ/6E0ry2RhpXE0tD
- 5T8oeOIrWA0cym0qtfnVhFeZig+RBxhLXBhJHmEqdib2AeJcWtDQ8tyLp0A2nckPEjlGdmeq8
- /FOjkzszfwzQUMVufFOXBG/RazJlm+FnXDyQl80jrFD6q7bbIyMZzPsKgZNF5p0ovKpY8EQv/
- judhrKbRmLytm9c7bDD90wNHl0R3nIBuOyW2HM08ziaZgaS46645HYu3qqO6Hz7KmC82Ya65p
- vwk6lsXPRAIdbKdKUdXZtUqwLv8WW7H+Op0aONzObnU/1UktK4kH6KMgIUeGonC+GwKP+sz++
- JwHTOE8TdLGH8Qbh/JA2Fb2es/HbA6cwDKLUi4BsRytP4cmtB5vALlBtAHjSvrtOv/hjccIDV
- G7FU5t8gQtaP6KxIJw4ITGNbrlje9aO2LfpOeFkZpqOnGsOaFFzFQihFz62eovfHW9xIJ9L+0
- jWSaxEVkkrGdSuhDU+0r0/zf1vvG7ts3wfgE3k1x0JzeOWy8+6gEjgQTOgFsS8BE5aqtmAt6j
- SnfUZuAuaEmthdPz3mP9SbpdocYx/xXJ9na7WngL3eJ+p8OTOcNhyHBPuFcrmN0HNDcSe2XfM
- a/qM44Igv9NlODB7V0cx4v9Rh88+cHxHkbC5wItzDJuaH1EG+LXdPS/SpzLPmXAQN67Ntl6ow
- iFK7pcGLlsEdgh+P5Wx/l2FKY9L8uTd9ioVWXJydeid8x/lio1FBz5d0e7/vKI3hyMo+jloIt
- jIBf9nY
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20170206155606.xgkmhg656vuc6uki@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.23.1-rc1 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add a semantic patch for removing checks that cause free(3) to only be
-called with a NULL pointer, as that must be a programming mistake.
+On 02/06, Jeff King wrote:
+> On Sun, Feb 05, 2017 at 08:26:41PM +0000, Thomas Gummerer wrote:
+> 
+> > git stash create currently supports a positional argument for adding a
+> > message.  This is not quite in line with how git commands usually take
+> > comments (using a -m flag).
+> > 
+> > Add a new syntax for adding a message to git stash create using a -m
+> > flag.  This is with the goal of deprecating the old style git stash
+> > create with positional arguments.
+> > 
+> > This also adds a -u argument, for untracked files.  This is already used
+> > internally as another positional argument, but can now be used from the
+> > command line.
+> 
+> How do we tell the difference between new-style invocations, and
+> old-style ones that look new-style? IOW, I think:
+> 
+>   git stash create -m works
+> 
+> currently treats "-m works" as the full message, and it would now become
+> just "works".
+> 
+> That may be an acceptable loss for the benefit we are getting. The
+> alternative is to make yet another verb for create, as we did with
+> save/push). I have a feeling that hardly anybody uses "create", though,
+> and it's mostly an implementation detail. So given the obscure nature,
+> maybe it's an acceptable level of regression. I dunno.
 
-Signed-off-by: Rene Scharfe <l.s.r@web.de>
----
-No cases are found in master or next, but 1d263b93 (bisect--helper:
-`bisect_next_check` & bisect_voc shell function in C) introduced four
-of them to pu.
+Right.  So I did a quick search on google and github for this, and
+there seems one place where git stash create -m is used [1].  From a
+quick look it does however not seem like the -m in the stash message
+is of any significance there, but rather that the intention was to use
+a flag that doesn't exist.
 
- contrib/coccinelle/free.cocci | 6 ++++++
- 1 file changed, 6 insertions(+)
+I *think* this regression is acceptable, but I'm happy to introduce
+another verb if people think otherwise.
 
-diff --git a/contrib/coccinelle/free.cocci b/contrib/coccinelle/free.cocci
-index e28213161a..c03ba737e5 100644
---- a/contrib/coccinelle/free.cocci
-+++ b/contrib/coccinelle/free.cocci
-@@ -3,3 +3,9 @@ expression E;
- @@
- - if (E)
-   free(E);
-+
-+@@
-+expression E;
-+@@
-+- if (!E)
-+  free(E);
--- 
-2.11.1
+> But either way, it should probably be in the commit message in case
+> somebody does have to track it down later.
 
+I'll add something there, thanks!
+
+> -Peff
+
+[1]: https://github.com/Andersbakken/nrdp-scripts/blob/1052fc6781c36c4b227c7dd4838a501341b0862a/bin/git-rstash#L81
