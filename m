@@ -2,52 +2,52 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9BB941FAF4
-	for <e@80x24.org>; Sat, 11 Feb 2017 13:32:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DAD4C1FAF4
+	for <e@80x24.org>; Sat, 11 Feb 2017 13:55:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932084AbdBKNcf (ORCPT <rfc822;e@80x24.org>);
-        Sat, 11 Feb 2017 08:32:35 -0500
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:34339 "EHLO
-        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932069AbdBKNce (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 11 Feb 2017 08:32:34 -0500
-Received: by mail-wm0-f68.google.com with SMTP id c85so10926234wmi.1
-        for <git@vger.kernel.org>; Sat, 11 Feb 2017 05:32:33 -0800 (PST)
+        id S1753600AbdBKNzT (ORCPT <rfc822;e@80x24.org>);
+        Sat, 11 Feb 2017 08:55:19 -0500
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:33150 "EHLO
+        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753519AbdBKNzS (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 11 Feb 2017 08:55:18 -0500
+Received: by mail-wm0-f66.google.com with SMTP id v77so10942219wmv.0
+        for <git@vger.kernel.org>; Sat, 11 Feb 2017 05:55:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=FRLeOTedVkkBvRAgVcL/pM4Y2V1+9tGMjJ3VjhLt7K0=;
-        b=a6bhEUwYRSDdXYxi0vNwWX/QctukUZzgW89HgvNp5ywH+hISe2OkSRZVjSyVq2owvF
-         jm39d9nl6GUgYd29gCYHLXfhZXgonaNb0zFKw+XM4rzcltCv3iRZyCpcMi5g6eWljvdo
-         Mymx/uYdP3++7PCq+3IF64apAbEN6t41nLl0wZ8eGelfsPVvBHrFdqMbB5uX2xE1f/wH
-         Cq3LDG7FCJi0iZY1CDYxyQOZK4FktPlqUGjXSNt4wzsI/6u04uP5VvGU/SjOOcdPL0Fz
-         XN4XlFslo06LPJVVwflHBoOjPVWrKBb9QTQ1TfSespuWmYInI5d5hpnRdEjVqF4TtvGV
-         bSPg==
+        bh=y4PBatYb2Zp7pcNG1Ya67ZGTTYF25nntA/6176iKCXM=;
+        b=BpkimkhHSIb+t1XSWWojXyN2LG509B1FtoFAfzxt9TY9cOn2JTJLdgEVoAlL4bwXvC
+         npDyLrM8xI97oW5LW3NjmzP7pgOeYOU0Bh5T1naKs+mD+JDo+kw2AYAcg4gRU1NiFfb2
+         QDuWBcXJycc+8dRd+aQkU3WK9/nAnmo6lw0/KIe3ir7bcwa3U//ejQDF3Zd2iVP+d8FT
+         zR4M/nxV7v0HCwMIy/h+NhCOrf0pPus6vDhGXB64+ywF1RDs5I+YD7UE8N4LC4AZYWRn
+         nVMZGJNp/maUtzG/Mai3Qux38MJkPMcx/Suw2IB4Mi8UU9kzICHk/8Hl1r65iliQaRGj
+         a4Ew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=FRLeOTedVkkBvRAgVcL/pM4Y2V1+9tGMjJ3VjhLt7K0=;
-        b=eIqayQavJ07lCP2D1C0/XLHYQmLqvKncRJJp5VFWmV/iKVXPHw/K0NbZ001I8n3pvi
-         Efn0NpCLIzd7Zk2/ZvlJQKeOTzIpUmpWT2pzMSacSI1oIy8a3btrWhXy2P2e2KhU6SJb
-         9WeSa5N7WQPuS9yQ+I21NQsIjkMhnEUiFeX/We3HYycbU6xum/fED+WLhr1NLGBhdok4
-         N6/iYI84ILVsIR2+hEvj/aF8Da4sRguAYr9akYzgusADn+K/KGdt5N0XudJvDGzDejly
-         hqnnDhh5xWHRi4Gfr+B18jp5vhZZiMOc6oJvurY8f7zNglkPjC1ROlB/AlamWaEI4NX3
-         HsSQ==
-X-Gm-Message-State: AMke39mFqn0xBYU7COPFublJeQyn/uKcX9t3fw690jFELgQws1YzyjSTJ2yR64ZlWQCZbA==
-X-Received: by 10.28.68.10 with SMTP id r10mr11779396wma.68.1486819952530;
-        Sat, 11 Feb 2017 05:32:32 -0800 (PST)
+        bh=y4PBatYb2Zp7pcNG1Ya67ZGTTYF25nntA/6176iKCXM=;
+        b=heTDoY0qJGD2aUdpWTBg+iXr4ANtkgnXrNsuDrjjXwHg5znG0XMO9afvWE9xJPhR13
+         BLFGMlHgbT2T6obz3ayqUMg+9BxoX+Z+HwX9sr/pHM5aRtTELYYnp50T5v8qBmtYM7hn
+         aq3VQjD3tPCG7VVquCOKw/sZIXloOA83oXbisv6E8+sGga7hxucs+pClHfrMBbAVlKtY
+         VmcFzsP8UWuMqVN7GRtvb/CxMrf2BxWntUtBEComncpAUpzJVo2W6TSzYyFeOgfi0t6S
+         Y1liWuNR9ZaUe4B8VH0khl62HPUNfK6Uw7zWgTKCEvSHV03zDFmX/KtMhz0B6yCc3xj/
+         qKLQ==
+X-Gm-Message-State: AMke39ndb7QEWxFz8YoQD5fvYWP/rxbYvNFJJW4rXzHp5VgSUoiZ/khHzullnGezw69jdA==
+X-Received: by 10.28.65.196 with SMTP id o187mr11128013wma.37.1486821316928;
+        Sat, 11 Feb 2017 05:55:16 -0800 (PST)
 Received: from localhost ([2a02:c7f:c42b:f900:5e51:4fff:fee9:57af])
-        by smtp.gmail.com with ESMTPSA id u42sm6428817wrc.1.2017.02.11.05.32.31
+        by smtp.gmail.com with ESMTPSA id c9sm5242944wmf.18.2017.02.11.05.55.15
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sat, 11 Feb 2017 05:32:31 -0800 (PST)
-Date:   Sat, 11 Feb 2017 13:33:05 +0000
+        Sat, 11 Feb 2017 05:55:16 -0800 (PST)
+Date:   Sat, 11 Feb 2017 13:55:49 +0000
 From:   Thomas Gummerer <t.gummerer@gmail.com>
 To:     Jeff King <peff@peff.net>
 Cc:     git@vger.kernel.org, Stephan Beyer <s-beyer@gmx.net>,
@@ -56,110 +56,42 @@ Cc:     git@vger.kernel.org, Stephan Beyer <s-beyer@gmx.net>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         =?iso-8859-1?Q?=D8yvind_A_=2E?= Holm <sunny@sunbase.org>,
         Jakub =?utf-8?B?TmFyxJlic2tp?= <jnareb@gmail.com>
-Subject: Re: [PATCH v3 2/5] stash: introduce push verb
-Message-ID: <20170211133305.GI31189@hank>
+Subject: Re: [PATCH v3 3/5] stash: add test for the create command line
+ arguments
+Message-ID: <20170211135549.GJ31189@hank>
 References: <20170129201604.30445-1-t.gummerer@gmail.com>
  <20170205202642.14216-1-t.gummerer@gmail.com>
- <20170205202642.14216-3-t.gummerer@gmail.com>
- <20170206154628.v27z5mqhxylz22ba@sigill.intra.peff.net>
+ <20170205202642.14216-4-t.gummerer@gmail.com>
+ <20170206155012.rb2vydjvlquchwk2@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20170206154628.v27z5mqhxylz22ba@sigill.intra.peff.net>
+In-Reply-To: <20170206155012.rb2vydjvlquchwk2@sigill.intra.peff.net>
 User-Agent: Mutt/1.5.23.1-rc1 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-[sorry for the late responses, life is keeping me busy]
-
 On 02/06, Jeff King wrote:
-> On Sun, Feb 05, 2017 at 08:26:39PM +0000, Thomas Gummerer wrote:
+> On Sun, Feb 05, 2017 at 08:26:40PM +0000, Thomas Gummerer wrote:
 > 
-> > +		-m|--message)
-> > +			shift
-> > +			stash_msg=${1?"-m needs an argument"}
-> > +			;;
+> > +test_expect_success 'create stores correct message' '
+> > +	>foo &&
+> > +	git add foo &&
+> > +	STASH_ID=$(git stash create "create test message") &&
+> > +	echo "On master: create test message" >expect &&
+> > +	git show --pretty=%s ${STASH_ID} | head -n1 >actual &&
+> > +	test_cmp expect actual
+> > +'
 > 
-> I think this is our first use of the "?" parameter expansion magic. It
-> _is_ in POSIX, so it may be fine. We may get complaints from people on
-> weird shell variants, though. If that's the only reason to avoid it, I'd
-> be inclined to try it and see, as it is much shorter.
+> This misses failure exit codes from "git show" because it's on the left
+> side of a pipe. Perhaps "git show -s" or "git log -1" would get you the
+> same output without needing "head" (and saving a process and the time
+> spent generating the diff, as a bonus).
 > 
-> OTOH, most of the other usage errors call usage(), and this one doesn't.
-> Nor is the error message translatable. Perhaps we should stick to the
-> longer form (and add a helper function if necessary to reduce the
-> boilerplate).
+> Ditto in the other tests from this patch and later ones.
 
-Yeah I do agree that calling usage is the better option here.
+Good catch, will fix.
 
-> > +save_stash () {
-> > +	push_options=
-> > +	while test $# != 0
-> > +	do
-> > +		case "$1" in
-> > +		--help)
-> > +			show_help
-> > +			;;
-> > +		--)
-> > +			shift
-> > +			break
-> > +			;;
-> > +		-*)
-> > +			# pass all options through to push_stash
-> > +			push_options="$push_options $1"
-> > +			;;
-> > +		*)
-> > +			break
-> > +			;;
-> > +		esac
-> > +		shift
-> > +	done
-> 
-> I suspect you could just let "--help" get handled in the pass-through
-> case (it generally takes precedence over errors found in other options,
-> but I do not see any other parsing errors that could be found by this
-> loop). It is not too bad to keep it, though (the important thing is that
-> we're not duplicating all of the push_stash options here).
-
-Good point, would be good to get rid of that duplication as well.
-
-> > +	if test -z "$stash_msg"
-> > +	then
-> > +		push_stash $push_options
-> > +	else
-> > +		push_stash $push_options -m "$stash_msg"
-> > +	fi
-> 
-> Hmm. So $push_options is subject to word-splitting here. That's
-> necessary to split the options back apart. It does the wrong thing if
-> any of the options had spaces in them. But I don't think there are any
-> valid options which do so, and "save" would presumably not grow any new
-> options (they would go straight to "push").
-> 
-> So there is a detectable behavior change:
-> 
->   [before]
->   $ git stash "--bogus option"
->   error: unknown option for 'stash save': --bogus option
->          To provide a message, use git stash save -- '--bogus option'
->   [etc...]
-> 
->   [after]
->   $ git stash "--bogus option"
->   error: unknown option for 'stash save': --bogus
->          To provide a message, use git stash save -- '--bogus'
-> 
-> but it's probably an acceptable casualty (the "right" way would be to
-> shell-quote everything you stuff into $push_options and then eval the
-> result when you invoke push_stash).
->
-> Likewise, it's usually a mistake to just stick a new option (like "-m")
-> after a list of unknown options. But it's OK here because we know we
-> removed any "--" or non-option arguments.
-> 
 > -Peff
-
--- 
-Thomas
