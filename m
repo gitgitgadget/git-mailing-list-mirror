@@ -2,94 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5E36B1FC44
-	for <e@80x24.org>; Sat, 11 Feb 2017 03:13:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F2AD51FC44
+	for <e@80x24.org>; Sat, 11 Feb 2017 03:26:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752083AbdBKDNN (ORCPT <rfc822;e@80x24.org>);
-        Fri, 10 Feb 2017 22:13:13 -0500
-Received: from mail-pf0-f196.google.com ([209.85.192.196]:34723 "EHLO
-        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752168AbdBKDNM (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Feb 2017 22:13:12 -0500
-Received: by mail-pf0-f196.google.com with SMTP id o64so2469847pfb.1
-        for <git@vger.kernel.org>; Fri, 10 Feb 2017 19:12:39 -0800 (PST)
+        id S1753238AbdBKD0D (ORCPT <rfc822;e@80x24.org>);
+        Fri, 10 Feb 2017 22:26:03 -0500
+Received: from mail-pg0-f66.google.com ([74.125.83.66]:35635 "EHLO
+        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752158AbdBKD0C (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Feb 2017 22:26:02 -0500
+Received: by mail-pg0-f66.google.com with SMTP id 204so4402774pge.2
+        for <git@vger.kernel.org>; Fri, 10 Feb 2017 19:26:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=PGOWFq5XXJ5Z9ayLwfHav7/NPxTBJgR/RywP0v5ZhKY=;
-        b=Kx2w5daX62jhT95pMCfViEUIxPOr9bz8BZluHJcaT2N28woiIvkMvpqlHa0kbZdPoA
-         eUbkGUDMX8JLqRIwtAXCq6/7x9LMnJQ9hshJ3yFwxz0CgXiMY41FylpyYNBLvgFNhuWD
-         f/wu32ySg0fFSWXTjtZmmZLHIl+Nep/i6T/NTCjJHaiQcqeQcZfyx5bP5kwvJmDTxYJ5
-         nBIFxc6k/ZjcCevesHgK/zzyrpCKpEzoV4pEYeigBi6THNpPH6QYcdZoWjHMaAAV3ZxU
-         mx2GR8B29mv30xxgXcxt2xauNdKi20OjotH2lMeeu+eXo4ourYUwmogwI//uLVBAHItF
-         B8nA==
+         :user-agent:mime-version;
+        bh=QW4TPhUn7Pgv6MhmU1wacd9nEQ0j/y/jB81bhjkZ1Oc=;
+        b=D4JQd3H+CzY+odre+kTLc6M/dKVPH+QLB8beNByyl/i3RTJ+AWzueiUubqMHe/UfDo
+         /OUbG5rmaKyLjvyXQZhX5KM4mdNh5rG+rOp1vQ+nursA/FnWMOJCRCFjEB75H5MPWkUT
+         5OV6O65xiH4wKC/WXnEEwUCQgHlqfOA2qxaydJZtssRrAGryo/GNyEeLxVuHDPe/Lm5m
+         5BbKXpGETSeM0uCZCpiBPzLsQOOLawgiNYE1N+fHxP4makz13uvtNIzUV8f3iiSnSEd0
+         dUFvZINi4EIuLw5jiWXrbi/KQMWVuMgM2myuU/4a3TXfwWWBjGS2Ei7CuGmTXUJCT6cK
+         Yt3A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=PGOWFq5XXJ5Z9ayLwfHav7/NPxTBJgR/RywP0v5ZhKY=;
-        b=Dh+ZJzs5WIDU3MbJ0Rm8M8EL8xlqCa+GA7IX/0T6k4rilT2Eof/AZah4Y9dv35Zr55
-         MlNSc67amM3lEAekvATgvoi+UOwpGHFfOKWHEEwEha2iyy2WIVh/JaAkoRpTjgPicXEn
-         vIUOHtfavSfspiWV016KGZHMn0mxpBscknqhN1xbg2wTCKPSA0BipZiqL2VS6TOml4xV
-         f+CB39MYoy3lo97wsbSrvdqFQA+nXNuymrTnNZKae7ixdYzDJgQ4V1K3goYnlo3TQa80
-         xFyOUKo78/TTK2n0FM/MhPL/JmtByLgFD2txIfB0kRGqL9QAQ7Ro7ZryP85FeBe8FMow
-         mxbQ==
-X-Gm-Message-State: AMke39n4S42lQ//1elfzKMIZHLUy/TONfyAX5F6DbdXCNjAPDps5R9XF+83yv63OjMhUDQ==
-X-Received: by 10.98.159.141 with SMTP id v13mr14201335pfk.50.1486782759345;
-        Fri, 10 Feb 2017 19:12:39 -0800 (PST)
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=QW4TPhUn7Pgv6MhmU1wacd9nEQ0j/y/jB81bhjkZ1Oc=;
+        b=JiUqcNw9BfNqxHWWsJoTuMVNNqb+kNPw3D1dYjPa6kGRUafq8RgiAwEg1/EghmePh3
+         ZrMIGp20evyrRbdnX/XqXmsjscJeGdtkR4gWJmDwy1jQV/6l8ziF6tW1JnEH1oUUz672
+         MZxmK5qi58p2MrezPAbpkx1BtLO0Vguccepzqnc3IOY67ZKKIdbzi4M/GYPO9AZiZT5s
+         5KU441SEgcyVuAFnYPoKXuLrDTv/4s8tqdSS5JcrQpBkNYCrO+BbIXLCVraXWVp4666T
+         O98eVAGkpgOlJtTFJLX1EGR6Bn1yc39GiOPuwrCfYtxhjYu7hAuBny4M3eVUAMW3Qt5l
+         XYWA==
+X-Gm-Message-State: AMke39lxrDrEjcn5NOyGxVIl3+RKiyhrdSGXHXht3XOEdcCAQkpWMlK1OzlEk+A4sJK+VA==
+X-Received: by 10.84.129.2 with SMTP id 2mr15996083plb.108.1486783562045;
+        Fri, 10 Feb 2017 19:26:02 -0800 (PST)
 Received: from localhost ([2620:0:1000:8622:8499:2e0a:2c80:2b60])
-        by smtp.gmail.com with ESMTPSA id h14sm8002550pgn.41.2017.02.10.19.12.38
+        by smtp.gmail.com with ESMTPSA id m29sm8000268pfi.54.2017.02.10.19.26.01
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Fri, 10 Feb 2017 19:12:38 -0800 (PST)
+        Fri, 10 Feb 2017 19:26:01 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Cc:     git@vger.kernel.org, Vegard Nossum <vegard.nossum@oracle.com>
-Subject: Re: What's cooking in git.git (Feb 2017, #03; Fri, 10)
-References: <xmqq37flk7l4.fsf@gitster.mtv.corp.google.com>
-        <77af28f3-7a8e-fc6a-40ae-c4203d1a3a67@web.de>
-Date:   Fri, 10 Feb 2017 19:12:37 -0800
-In-Reply-To: <77af28f3-7a8e-fc6a-40ae-c4203d1a3a67@web.de> (=?utf-8?Q?=22R?=
- =?utf-8?Q?en=C3=A9?= Scharfe"'s
-        message of "Sat, 11 Feb 2017 00:05:24 +0100")
-Message-ID: <xmqq8tpdifoa.fsf@gitster.mtv.corp.google.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     git@vger.kernel.org
+Subject: Re: Google Doc about the Contributors' Summit
+References: <alpine.DEB.2.20.1702021007460.3496@virtualbox>
+        <xmqq7f4zqiyj.fsf@gitster.mtv.corp.google.com>
+        <alpine.DEB.2.20.1702101658010.3496@virtualbox>
+Date:   Fri, 10 Feb 2017 19:26:00 -0800
+In-Reply-To: <alpine.DEB.2.20.1702101658010.3496@virtualbox> (Johannes
+        Schindelin's message of "Fri, 10 Feb 2017 16:59:33 +0100 (CET)")
+Message-ID: <xmqq4m01if1z.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-René Scharfe <l.s.r@web.de> writes:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> Am 10.02.2017 um 23:24 schrieb Junio C Hamano:
->> * vn/xdiff-func-context (2017-01-15) 1 commit
->>  - xdiff -W: relax end-of-file function detection
->>
->>  "git diff -W" has been taught to handle the case where a new
->>  function is added at the end of the file better.
->>
->>  Will hold.
->>  Discussion on an follow-up change to go back from the line that
->>  matches the funcline to show comments before the function
->>  definition has not resulted in an actionable conclusion.
+> Technically, it is not a write-up, and I never meant it to be that. I
+> intended this document to help me remember what had been discussed, and I
+> doubt it is useful at all to anybody who has not been there.
 >
-> This one is a bug fix and can be merged already IMHO.
+> I abused the Git mailing list to share that link, what I really should
+> have done is to use an URL shortener and jot the result down on the
+> whiteboard.
+>
+> Very sorry for that,
 
-Absolutely.  I was just waiting if the follow-up discussion would
-easily and quickly lead to another patch, forgot about what exactly
-I was waiting for (i.e. the gravity of not having the follow-up),
-and have left it in "Will hold" status forever.
+Heh, no need to apologize.
 
-Let's merge it to 'next' and then decide if we want to also merge it
-to 'master' before the final.  The above step alone is a lot less
-contriversial and tricky bugfix.
+I saw your <alpine.DEB.2.20.1702071248430.3496@virtualbox> that was
+sent to the list long after the event, which obviously no longer
+meant for collaborative note taking and thought that you are
+inviting others to read the result of that note taking, and that is
+why I commented on that.  I've hopefully touched some "ask Junio
+what he thinks of this" items and the whole thing was not wasted ;-)
 
-Thanks.
