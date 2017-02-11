@@ -2,116 +2,164 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,
-	STOX_REPLY_TYPE shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DE50B1FAF4
-	for <e@80x24.org>; Sat, 11 Feb 2017 12:48:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9BB941FAF4
+	for <e@80x24.org>; Sat, 11 Feb 2017 13:32:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753528AbdBKMsk (ORCPT <rfc822;e@80x24.org>);
-        Sat, 11 Feb 2017 07:48:40 -0500
-Received: from smtp-out-6.talktalk.net ([62.24.135.70]:47679 "EHLO
-        smtp-out-6.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753379AbdBKMsj (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 11 Feb 2017 07:48:39 -0500
-Received: from PhilipOakley ([92.31.218.76])
-        by smtp.talktalk.net with SMTP
-        id cX6SciDhdgKstcX6ScIZ5S; Sat, 11 Feb 2017 12:48:37 +0000
-X-Originating-IP: [92.31.218.76]
-X-Spam: 0
-X-OAuthority: v=2.2 cv=GdBVpkfL c=1 sm=1 tr=0 a=e6L6E7eW+5Nb7SO+DvSdIg==:117
- a=e6L6E7eW+5Nb7SO+DvSdIg==:17 a=8nJEP1OIZ-IA:10 a=5rxgeBVgAAAA:8
- a=xtxXYLxNAAAA:8 a=NEAV23lmAAAA:8 a=ybZZDoGAAAAA:8 a=FP58Ms26AAAA:8
- a=BCjA09oAAAAA:8 a=pGLkceISAAAA:8 a=Ch1mgUGq4P4hDzM_ebsA:9 a=wPNLvfGTeEIA:10
- a=ezPG0ZpnnpEA:10 a=PwKx63F5tFurRwaNxrlG:22 a=xts0dhWdiJbonKbuqhAr:22
- a=Bn2pgwyD2vrAyMmN8A2t:22 a=0RhZnL1DYvcuLYC8JZ5M:22 a=6LVbBl2NLSWPyIBDCKCu:22
- a=jYKBPJSq9nmHKCndOPe9:22 a=6kGIvZw6iX1k4Y-7sg4_:22
-Message-ID: <B8156313FCCD473C988E790F7ABEC224@PhilipOakley>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
-From:   "Philip Oakley" <philipoakley@iee.org>
-To:     "GitList" <git@vger.kernel.org>
-Cc:     "Junio C Hamano" <gitster@pobox.com>,
-        "Pat Thoyts" <patthoyts@users.sourceforge.net>,
-        "Eric Sunshine" <sunshine@sunshineco.com>,
-        "Alexey Astakhov" <asstv7@gmail.com>,
-        "Johannes Schindelin" <johannes.schindelin@gmx.de>
-References: <20170122195301.1784-1-philipoakley@iee.org>
-Subject: Re: [PATCH v3 0/4] git gui: allow for a long recentrepo list
-Date:   Sat, 11 Feb 2017 12:48:37 -0000
-Organization: OPDS
+        id S932084AbdBKNcf (ORCPT <rfc822;e@80x24.org>);
+        Sat, 11 Feb 2017 08:32:35 -0500
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:34339 "EHLO
+        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932069AbdBKNce (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 11 Feb 2017 08:32:34 -0500
+Received: by mail-wm0-f68.google.com with SMTP id c85so10926234wmi.1
+        for <git@vger.kernel.org>; Sat, 11 Feb 2017 05:32:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=FRLeOTedVkkBvRAgVcL/pM4Y2V1+9tGMjJ3VjhLt7K0=;
+        b=a6bhEUwYRSDdXYxi0vNwWX/QctukUZzgW89HgvNp5ywH+hISe2OkSRZVjSyVq2owvF
+         jm39d9nl6GUgYd29gCYHLXfhZXgonaNb0zFKw+XM4rzcltCv3iRZyCpcMi5g6eWljvdo
+         Mymx/uYdP3++7PCq+3IF64apAbEN6t41nLl0wZ8eGelfsPVvBHrFdqMbB5uX2xE1f/wH
+         Cq3LDG7FCJi0iZY1CDYxyQOZK4FktPlqUGjXSNt4wzsI/6u04uP5VvGU/SjOOcdPL0Fz
+         XN4XlFslo06LPJVVwflHBoOjPVWrKBb9QTQ1TfSespuWmYInI5d5hpnRdEjVqF4TtvGV
+         bSPg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=FRLeOTedVkkBvRAgVcL/pM4Y2V1+9tGMjJ3VjhLt7K0=;
+        b=eIqayQavJ07lCP2D1C0/XLHYQmLqvKncRJJp5VFWmV/iKVXPHw/K0NbZ001I8n3pvi
+         Efn0NpCLIzd7Zk2/ZvlJQKeOTzIpUmpWT2pzMSacSI1oIy8a3btrWhXy2P2e2KhU6SJb
+         9WeSa5N7WQPuS9yQ+I21NQsIjkMhnEUiFeX/We3HYycbU6xum/fED+WLhr1NLGBhdok4
+         N6/iYI84ILVsIR2+hEvj/aF8Da4sRguAYr9akYzgusADn+K/KGdt5N0XudJvDGzDejly
+         hqnnDhh5xWHRi4Gfr+B18jp5vhZZiMOc6oJvurY8f7zNglkPjC1ROlB/AlamWaEI4NX3
+         HsSQ==
+X-Gm-Message-State: AMke39mFqn0xBYU7COPFublJeQyn/uKcX9t3fw690jFELgQws1YzyjSTJ2yR64ZlWQCZbA==
+X-Received: by 10.28.68.10 with SMTP id r10mr11779396wma.68.1486819952530;
+        Sat, 11 Feb 2017 05:32:32 -0800 (PST)
+Received: from localhost ([2a02:c7f:c42b:f900:5e51:4fff:fee9:57af])
+        by smtp.gmail.com with ESMTPSA id u42sm6428817wrc.1.2017.02.11.05.32.31
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Sat, 11 Feb 2017 05:32:31 -0800 (PST)
+Date:   Sat, 11 Feb 2017 13:33:05 +0000
+From:   Thomas Gummerer <t.gummerer@gmail.com>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org, Stephan Beyer <s-beyer@gmx.net>,
+        Junio C Hamano <gitster@pobox.com>,
+        Marc Strapetz <marc.strapetz@syntevo.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        =?iso-8859-1?Q?=D8yvind_A_=2E?= Holm <sunny@sunbase.org>,
+        Jakub =?utf-8?B?TmFyxJlic2tp?= <jnareb@gmail.com>
+Subject: Re: [PATCH v3 2/5] stash: introduce push verb
+Message-ID: <20170211133305.GI31189@hank>
+References: <20170129201604.30445-1-t.gummerer@gmail.com>
+ <20170205202642.14216-1-t.gummerer@gmail.com>
+ <20170205202642.14216-3-t.gummerer@gmail.com>
+ <20170206154628.v27z5mqhxylz22ba@sigill.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: text/plain;
-        format=flowed;
-        charset="iso-8859-1";
-        reply-type=original
-Content-Transfer-Encoding: 7bit
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
-X-CMAE-Envelope: MS4wfCgXoP21fQ/FXhKJ+JX4qZHkpqWrYnaieH+Me6IvyT/lGBAi0jTdPVQXt+EsF0+/wrPvkZdjeXok5tDnNC3eh6tJEVqxXK5QznEjD0S2MEUI2VJvy1If
- fy1jvAC7sgOA6yUlrhdaprBHLX/ul3bNm+g5crEbTXOl0o/HjitcFo1eqBPc87Lh+9hFijNR4TfO/uB+bvqAb2vDWGZt81UY17JY849dbD3/SgOruvrzKKjl
- /PQWVDhHlEnf2SFtTl9MC9ynqaKdA6mclw4Vmd9RXfPBAZTrZyW6Ac2OccIbPkT014YDy3ERUxDXRYWVlt1wp/X21Efhh2M4PTO9aQ/P5CI=
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20170206154628.v27z5mqhxylz22ba@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.23.1-rc1 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ping
+[sorry for the late responses, life is keeping me busy]
 
-Any comments anyone?
-(https://public-inbox.org/git/20170122195301.1784-1-philipoakley@iee.org/)
-
-I understand that the Git-for-Windows team is planning to include this in 
-their next release, so additional eyes are welcomed.
-
-Philip
-
-From: "Philip Oakley" <philipoakley@iee.org> date: Sunday, January 22, 2017 
-7:52 PM
-> Way back in December 2015 I made a couple of attempts to patch up
-> the git-gui's recentrepo list in the face of duplicate entries in
-> the .gitconfig
->
-> The series end at 
-> http://public-inbox.org/git/9731888BD4C348F5BFC82FA96D978034@PhilipOakley/
->
-> A similar problem was reported recently on the Git for Windows list
-> https://github.com/git-for-windows/git/issues/1014 were a full
-> recentrepo list also stopped the gui working.
->
-> This series applies to Pat Thoyt's upstream Github repo as a merge
-> ready Pull Request https://github.com/patthoyts/git-gui/pull/10.
-> Hence if applied here it should be into the sub-tree git/git-gui.
->
-> I believe I've covered the points raised by Junio in the last review
-> and allowed for cases where the recentrepo list is now longer than the
-> maximum (which can be configured, both up and down).
->
-> I've cc'd just the cover letter to those involved previously, rather
-> than the series to avoid spamming.
->
-> There are various other low hanging fruit that the eager could look at
-> which are detailed at the end of the GfW/issues/104 referenced above.
->
-> Philip Oakley (4):
->  git-gui: remove duplicate entries from .gitconfig's gui.recentrepo
->  git gui: cope with duplicates in _get_recentrepo
->  git gui: de-dup selected repo from recentrepo history
->  git gui: allow for a long recentrepo list
->
-> lib/choose_repository.tcl | 17 ++++++++++-------
-> 1 file changed, 10 insertions(+), 7 deletions(-)
->
-> -- 
-> 2.9.0.windows.1.323.g0305acf
-> ---
-> cc: Junio C Hamano <gitster@pobox.com>
-> cc: Pat Thoyts <patthoyts@users.sourceforge.net>,
-> cc: Eric Sunshine <sunshine@sunshineco.com>,
-> cc: Alexey Astakhov <asstv7@gmail.com>
-> cc: Johannes Schindelin <johannes.schindelin@gmx.de>
->
+On 02/06, Jeff King wrote:
+> On Sun, Feb 05, 2017 at 08:26:39PM +0000, Thomas Gummerer wrote:
 > 
+> > +		-m|--message)
+> > +			shift
+> > +			stash_msg=${1?"-m needs an argument"}
+> > +			;;
+> 
+> I think this is our first use of the "?" parameter expansion magic. It
+> _is_ in POSIX, so it may be fine. We may get complaints from people on
+> weird shell variants, though. If that's the only reason to avoid it, I'd
+> be inclined to try it and see, as it is much shorter.
+> 
+> OTOH, most of the other usage errors call usage(), and this one doesn't.
+> Nor is the error message translatable. Perhaps we should stick to the
+> longer form (and add a helper function if necessary to reduce the
+> boilerplate).
 
+Yeah I do agree that calling usage is the better option here.
+
+> > +save_stash () {
+> > +	push_options=
+> > +	while test $# != 0
+> > +	do
+> > +		case "$1" in
+> > +		--help)
+> > +			show_help
+> > +			;;
+> > +		--)
+> > +			shift
+> > +			break
+> > +			;;
+> > +		-*)
+> > +			# pass all options through to push_stash
+> > +			push_options="$push_options $1"
+> > +			;;
+> > +		*)
+> > +			break
+> > +			;;
+> > +		esac
+> > +		shift
+> > +	done
+> 
+> I suspect you could just let "--help" get handled in the pass-through
+> case (it generally takes precedence over errors found in other options,
+> but I do not see any other parsing errors that could be found by this
+> loop). It is not too bad to keep it, though (the important thing is that
+> we're not duplicating all of the push_stash options here).
+
+Good point, would be good to get rid of that duplication as well.
+
+> > +	if test -z "$stash_msg"
+> > +	then
+> > +		push_stash $push_options
+> > +	else
+> > +		push_stash $push_options -m "$stash_msg"
+> > +	fi
+> 
+> Hmm. So $push_options is subject to word-splitting here. That's
+> necessary to split the options back apart. It does the wrong thing if
+> any of the options had spaces in them. But I don't think there are any
+> valid options which do so, and "save" would presumably not grow any new
+> options (they would go straight to "push").
+> 
+> So there is a detectable behavior change:
+> 
+>   [before]
+>   $ git stash "--bogus option"
+>   error: unknown option for 'stash save': --bogus option
+>          To provide a message, use git stash save -- '--bogus option'
+>   [etc...]
+> 
+>   [after]
+>   $ git stash "--bogus option"
+>   error: unknown option for 'stash save': --bogus
+>          To provide a message, use git stash save -- '--bogus'
+> 
+> but it's probably an acceptable casualty (the "right" way would be to
+> shell-quote everything you stuff into $push_options and then eval the
+> result when you invoke push_stash).
+>
+> Likewise, it's usually a mistake to just stick a new option (like "-m")
+> after a list of unknown options. But it's OK here because we know we
+> removed any "--" or non-option arguments.
+> 
+> -Peff
+
+-- 
+Thomas
