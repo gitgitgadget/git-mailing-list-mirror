@@ -7,77 +7,97 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2AE9A1FCC7
-	for <e@80x24.org>; Sat, 11 Feb 2017 19:50:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A1EB31FCC7
+	for <e@80x24.org>; Sat, 11 Feb 2017 19:51:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751179AbdBKTum (ORCPT <rfc822;e@80x24.org>);
-        Sat, 11 Feb 2017 14:50:42 -0500
-Received: from mout.web.de ([212.227.15.14]:57240 "EHLO mout.web.de"
+        id S1751193AbdBKTvR (ORCPT <rfc822;e@80x24.org>);
+        Sat, 11 Feb 2017 14:51:17 -0500
+Received: from mout.web.de ([212.227.15.14]:58904 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751175AbdBKTul (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 11 Feb 2017 14:50:41 -0500
-Received: from [192.168.178.36] ([79.197.218.233]) by smtp.web.de (mrweb002
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0MCqSB-1ckZmc2wYF-009kzM; Sat, 11
- Feb 2017 20:50:25 +0100
-Subject: Re: [PATCH] cocci: detect useless free(3) calls
-To:     Lars Schneider <larsxschneider@gmail.com>
-References: <7e10f934-f084-ceb4-00eb-b75cdb01886b@web.de>
- <5DF3AA3E-90C6-443C-A22C-489CE2C89A51@gmail.com>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Pranit Bauva <pranit.bauva@gmail.com>
+        id S1751113AbdBKTvQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 11 Feb 2017 14:51:16 -0500
+Received: from [192.168.178.36] ([79.197.218.233]) by smtp.web.de (mrweb004
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0MeNUV-1clefP0dyx-00QDT5; Sat, 11
+ Feb 2017 20:51:12 +0100
+To:     Git List <git@vger.kernel.org>, Stefan Beller <sbeller@google.com>
+Cc:     Junio C Hamano <gitster@pobox.com>
 From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <ca01f8de-f5ce-2201-450d-cadd6aca7cb8@web.de>
-Date:   Sat, 11 Feb 2017 20:50:22 +0100
+Subject: [PATCH] rm: reuse strbuf for all remove_dir_recursively() calls,
+ again
+Message-ID: <f2549b5b-b3c8-3935-cdb9-9908914195b6@web.de>
+Date:   Sat, 11 Feb 2017 20:51:08 +0100
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
  Thunderbird/45.7.1
 MIME-Version: 1.0
-In-Reply-To: <5DF3AA3E-90C6-443C-A22C-489CE2C89A51@gmail.com>
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K0:rfjmKiICpZ68j74VUHDkvYg8eBd0IHiGGUFsjPuNaoy5d1tAtCC
- Y4BfXteewXEAQ22E8ZeP17zHNycOx3QDCPJhnjHuNFD+hmP7FvB0/aRZfUx98tSBRl9jHic
- +I3vYB7tvauUPvR30yHBdPkQzLEDh71r+31+Z1228r25E38Xe9zfJP3CAV1JsKIe0GNSkEv
- RRMtoJQYL++MjP/e+4Ftg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:66CyneBV+no=:p8x4ObwMlQyfjvi89KlRKm
- SD1pVkLhT/0PqL7+MwiO0gmZDOrEYspcwLwlKOzZP5BhOPHNcaxp4AZ7kCRHg+c6QJWwZSkhO
- W4AGWvtu/y0S4Qm3qQs9cAgpJ1VGeLtyymoNBinHypP0UIL4bpoTxDUxEmCkwumlcpejrMdQ/
- X2xWAJE7EfW3YHdh941tYMSiQpUQhKYGoLh7ojYl468rZLjrCRI0e+RHtDty3KrOCaCgEmpyX
- AcOogd+hld4QsEqPv7UALuu+1ujAyQ2IEe4eXFY7xYAvUMPtTeYJZ75+WdBfgPnO7ijaieErg
- Obe4XTfwtOgujx1C9duQ6hIwo/nUFt6oZ+ranE7Na1MBgmwM5HBc9q7ConhJYRumwkUw/7nJZ
- 1w5SesUOKKaGqgXqRzicUEaG1KH6Gm9u5FPQh6f6YhNaDGYgrna7zOGiafaaLKlCmwyaZSKOv
- 0l2CDyi3R1AI1YJGLkzDHrr4zF6Nx5vzph4310k+uWbA+Pd76jO0YMmkriYd+fJRbJwMLCVAT
- cZFdyggMFAk7qSYAuc7QVQNV8FElz9fksNxZCRwBhTp90Y7bCXTDKFrqo+6pIDYYbljOCJJgP
- xrs+BfFLrS6tjCC6DAm1M74u8JfgL8IfhqNcotiX23w+LrenMX+snknEa1q4lWQqX4ubCfHtN
- cpnctqZzuOgMiNDx2a3S2IMNbCEsGaAMKK8qRxGXCn0TR793ZRrlDcvwi9edT/DQeHzMQkJE8
- R6xKUaWPN6JPeUMQILUmlnO/FKgvRaa6IKiQ67qMg38p1jpkgagSMNcYutsowyM9UgpVs6pQS
- /My4F8m
+Content-Transfer-Encoding: 7bit
+X-Provags-ID: V03:K0:oOkyE+ov6CR543UZ4/5mNxs+MnXVL0ju2+plRKIuriFniUtlJSx
+ 5ycQO55p8p61mtLruI8BJ2+r5aFUT1mp//i7SymiFiZ0aQfkj6mctdsV/9AvGkOZDsCkkBN
+ H1KJSaZOl54YfWXp8pE9Oi1++AuesJJf2Kv45rztctTyNviQryt1xjpvfzmuAd7+tC/tdLE
+ zOOuYCzimjQ0I/7QpgVvw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:CuPnn3DbeUU=:JRCivVSYd6VGwa21wCxWKB
+ oyCOtd0F1GgpOTe755NLaaxkN7ewAXu7jlZpLYQd1SILiekYYIyDrq+oIlsRpIMnlDDCU/ley
+ RJvb3Io4PSxMDPqm8BfmE2IcsnNtIdu1Zcx5A9qiCc58OmqZUlpvt73AYXWXqG3u4uDTf97tp
+ V8vLiWMvjMMaNhmkaPZMSpDmORk1WI3MnjHcnf3a/oIUlojG1dLJ5+AH1foaf0xlWHzVaNXkK
+ sgcB3dH/45djf5ife2eQ7YWgtrKrNpYjMcSBjIgvdySWkhb7IObgEP/AjNO3Y5r6FS+Hns52f
+ 7oD6pySjayZk6xtlgI6f/If+2YWX5073ljEIUhYaMF7roN52YZSUCED0m8PAxFV/GITH7pVEE
+ Pxx139W+rOspBBiORtsRWviR8tmqPSYUTni3H2EkdvGTMrEMq+8d8s8LDSzDv0/GNMvAsfil/
+ 6S83twmJW6FwrEu5pAp4prEfkzGHdm22pkvCj1RO6BgFnkcdQGvf7yCFxE39L3V62ZfPr1Lug
+ dVO+3nLpNrVY//ZiRS7gO61SxhYsjIo4tdhr3njhbSMhjnHhTYHocge0oUtx8YJfOnzif+2kw
+ mpi0OpqvyBmF3hSKrq4cQNjkMxHnNBuHrDPNdSGO9OLokEY1Tae1jof/eyb63PZ1ln+RsCRbZ
+ VdOxjVCP3QHkU4Db684MUXGGEoiTtEj/5NpY0qyJG1ix0tlTPcRq7diMb+dM2Wb09TNuRimsU
+ UVGEk+rJal+DkkqsSGrWDBsrkfvKEbIMi7anwbG3HjTxiJ89l/f0tsH+5Kgn381Y/aeUeganS
+ RUt+amV
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 11.02.2017 um 20:31 schrieb Lars Schneider:
-> how do you run these checks on the entire Git source?
-> Do you run each semantic patch file on the source like this?
-> 
-> spatch --sp-file contrib/coccinelle/qsort.cocci --dir /path/to/git/git
-> ...
-> spatch --sp-file contrib/coccinelle/free.cocci --dir /path/to/git/git
+Don't throw the memory allocated for remove_dir_recursively() away after
+a single call, use it for the other entries as well instead.
 
-With "make coccicheck", which runs spatch against the items in the make
-variable C_SOURCES, for all .cocci files.
+This change was done before in deb8e15a (rm: reuse strbuf for all
+remove_dir_recursively() calls), but was reverted as a side-effect of
+55856a35 (rm: absorb a submodules git dir before deletion). Reinstate
+the optimization.
 
-> How stable do you consider these checks? Would it make sense to run them
-> as part of the Travis-CI build [1]? 
+Signed-off-by: Rene Scharfe <l.s.r@web.de>
+---
+Was deb8e15a a rebase victim?
 
-There seem to have been problems with older versions[2], but I'm not
-aware of other issues.
+ builtin/rm.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-Having these checks run automatically would be nice because they
-require a special tool which I guess not everybody is willing (or able)
-to install and because they take multiple minutes.
+diff --git a/builtin/rm.c b/builtin/rm.c
+index 452170a3ab..fb79dcab18 100644
+--- a/builtin/rm.c
++++ b/builtin/rm.c
+@@ -360,15 +360,14 @@ int cmd_rm(int argc, const char **argv, const char *prefix)
+ 	 */
+ 	if (!index_only) {
+ 		int removed = 0, gitmodules_modified = 0;
++		struct strbuf buf = STRBUF_INIT;
+ 		for (i = 0; i < list.nr; i++) {
+ 			const char *path = list.entry[i].name;
+ 			if (list.entry[i].is_submodule) {
+-				struct strbuf buf = STRBUF_INIT;
+-
++				strbuf_reset(&buf);
+ 				strbuf_addstr(&buf, path);
+ 				if (remove_dir_recursively(&buf, 0))
+ 					die(_("could not remove '%s'"), path);
+-				strbuf_release(&buf);
+ 
+ 				removed = 1;
+ 				if (!remove_path_from_gitmodules(path))
+@@ -382,6 +381,7 @@ int cmd_rm(int argc, const char **argv, const char *prefix)
+ 			if (!removed)
+ 				die_errno("git rm: '%s'", path);
+ 		}
++		strbuf_release(&buf);
+ 		if (gitmodules_modified)
+ 			stage_updated_gitmodules();
+ 	}
+-- 
+2.11.1
 
-René
-
-
-[2] https://public-inbox.org/git/014ef44e-9dd8-40b3-a3ec-b483f938ee02@web.de/
