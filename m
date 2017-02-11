@@ -2,157 +2,166 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 251651FAF4
-	for <e@80x24.org>; Sat, 11 Feb 2017 16:49:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4DF1B1FAF4
+	for <e@80x24.org>; Sat, 11 Feb 2017 18:02:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750841AbdBKQtr (ORCPT <rfc822;e@80x24.org>);
-        Sat, 11 Feb 2017 11:49:47 -0500
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:33773 "EHLO
-        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750779AbdBKQtq (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 11 Feb 2017 11:49:46 -0500
-Received: by mail-wm0-f67.google.com with SMTP id v77so11358062wmv.0
-        for <git@vger.kernel.org>; Sat, 11 Feb 2017 08:49:45 -0800 (PST)
+        id S1750867AbdBKSCe (ORCPT <rfc822;e@80x24.org>);
+        Sat, 11 Feb 2017 13:02:34 -0500
+Received: from mail-pg0-f65.google.com ([74.125.83.65]:36664 "EHLO
+        mail-pg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750815AbdBKSCd (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 11 Feb 2017 13:02:33 -0500
+Received: by mail-pg0-f65.google.com with SMTP id 75so5477304pgf.3
+        for <git@vger.kernel.org>; Sat, 11 Feb 2017 10:02:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=WbybNf8IlSBFrh/BVTgE5mWZCtxJTWvrxjOxjnuefLQ=;
-        b=jEIgTsMLws8uLYo89Nshk3ZOvtihiUUzAN25CVmKfZxSQsqmn20tKMzlxb8lhoVI3R
-         i9DbOltQ/dS/0Uuufc6ozlJFm1ITA7T1D3uvxCaChhMx7SoaDd7Uecm4SNWybYCHg/Sv
-         F/q7FvFz67KtswuhDK4eyPSgBzDS2cP8pYkIleFMFwK5V2QwuutxyMlmTKYDpNq4WEM/
-         iDSrMlmkopmZAg/KYis/eH94HIqUXPiNQj92O8m9csQ6cD95YRPNnBQ5slZt/QJwRKV4
-         k69m4FW/DwR22C2RzyqmRv/ZWCrUriS+ddfz+Hkv5yV0oNPRL2gVVmkvIBYHBWrD+7Cc
-         WLTw==
+        h=sender:date:from:to:cc:subject:message-id:user-agent:mime-version;
+        bh=Feci6EpM4VL3S/7Lol/OpGF3B+XOhzek3MmkFbeR7oQ=;
+        b=viB/XWi5MY4gagkw8KMDP0RWVvDtTcZmS6dkze0D7iftdLLOZcK8hT0yQF3cj0/R44
+         5LbM/4Q+C5MFUnOQJNXoTRfmgX2RlN9Ld4fZe7eAGyLhd9rTasOV+TZyPHu8z1IrbD4J
+         bWggVqSS0AA0p2swDHhHShqc2slwL2AVIiJIxfpt+nVCvdXkqRSEH303NO/OdgRBWE44
+         F71ZTZ93Qh7jL2NR1nkiaRJ05GC0MAl4Ukx60uErm8Y5jMJ8b7vZ5G0SV/PwXw0wwRzi
+         0Vy7tbEJun9ceb//TS69lGGZ7upwYc6onORXHLR0SM8BQT7ng03XmV1jirg7DzOc53Y5
+         AoAw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=WbybNf8IlSBFrh/BVTgE5mWZCtxJTWvrxjOxjnuefLQ=;
-        b=lsj8UPyeWllPwyT8FhvIbFywhCEU3BVyNtxCdwbWSo5hHAYgbemVHq7/REYL3MrXxC
-         cdcuNdthX6/HC7z/n5Oty2cW+IogcrCgYlRjgOPUrPp4Ro0p1i+5dASWggHdzvWvh2ka
-         WcJP38pQvx8AjC8yn7fjOlT9hVAnnmGDIUn1GA8Dg/YCmg06M6HHd4Am1ruwlhyBfhVN
-         GbwM1kON0yGdpD1MrGz6G/7WCu9QwG+ZUL/CEjy39QsxA/rJ0bo6MJtXO0D5kbJs8Hjg
-         FAaZS9pH8QSPRkqOQyGTZYi3fFZcijJEWxMhB/8+RveXkotFDqoMpXv0F/vfFUO8KvMy
-         0L5Q==
-X-Gm-Message-State: AMke39lFQgwHDWsrdaeAvZS2pHMbrt4nKxmihBZYWzEP4h7k4lt47pPTkuVuseRNiaOqVA==
-X-Received: by 10.28.19.207 with SMTP id 198mr11270238wmt.70.1486831784763;
-        Sat, 11 Feb 2017 08:49:44 -0800 (PST)
-Received: from localhost ([2a02:c7f:c42b:f900:5e51:4fff:fee9:57af])
-        by smtp.gmail.com with ESMTPSA id k18sm3819309wrd.62.2017.02.11.08.49.43
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sat, 11 Feb 2017 08:49:44 -0800 (PST)
-Date:   Sat, 11 Feb 2017 16:50:17 +0000
-From:   Thomas Gummerer <t.gummerer@gmail.com>
+        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
+         :user-agent:mime-version;
+        bh=Feci6EpM4VL3S/7Lol/OpGF3B+XOhzek3MmkFbeR7oQ=;
+        b=N+YyBscciBv8yfUnmh0sT9MYayCX9XdkBzBr+G6q2N1jSKtY20iVTahOcFBCmHmObZ
+         0uFuD8Pu9pb7ux5SWeksm0j5/gMmvvcR6wiw9SJpcGw4oeMioX5bGCiMEEWWvBAZuMrs
+         EzDZ3c42pIHifcNSlFRHXjDj4c6blGWTDcgSVv1mPOGwdMLvb7g3loX+g5Kjxj0B+Mde
+         luiDFO0M7KzRYb8LLswTKg+6glDGXaSzP8nlHpAsAaPawSgCh0JPpmL0TeNS9vka5OIj
+         4XcX9aQ5e/TEccbW5L0U1+v0r9VAiM4aBWeKFXafAgEBHk/L9QtRZwsAZIKZf4Xuhv+8
+         JCoA==
+X-Gm-Message-State: AMke39kbiXn8hD+u9Xj60mLXFI91WRItLV71MqkaXdfGXA+bZQasRurynAdbUwz+DEeoGw==
+X-Received: by 10.99.5.15 with SMTP id 15mr17545041pgf.109.1486836152300;
+        Sat, 11 Feb 2017 10:02:32 -0800 (PST)
+Received: from i7.lan (c-73-11-52-149.hsd1.or.comcast.net. [73.11.52.149])
+        by smtp.gmail.com with ESMTPSA id s84sm5881497pfg.128.2017.02.11.10.02.31
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 11 Feb 2017 10:02:31 -0800 (PST)
+Date:   Sat, 11 Feb 2017 10:02:30 -0800 (PST)
+From:   Linus Torvalds <torvalds@linux-foundation.org>
+X-X-Sender: torvalds@i7.lan
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Stephan Beyer <s-beyer@gmx.net>,
-        Marc Strapetz <marc.strapetz@syntevo.com>,
-        Jeff King <peff@peff.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        =?iso-8859-1?Q?=D8yvind_A_=2E?= Holm <sunny@sunbase.org>,
-        Jakub =?utf-8?B?TmFyxJlic2tp?= <jnareb@gmail.com>
-Subject: Re: [PATCH v3 5/5] stash: teach 'push' (and 'create') to honor
- pathspec
-Message-ID: <20170211165017.GB23081@hank>
-References: <20170129201604.30445-1-t.gummerer@gmail.com>
- <20170205202642.14216-1-t.gummerer@gmail.com>
- <20170205202642.14216-6-t.gummerer@gmail.com>
- <xmqqmvdz3ied.fsf@gitster.mtv.corp.google.com>
+cc:     Git Mailing List <git@vger.kernel.org>
+Subject: [RFC PATCH] show decorations at the end of the line
+Message-ID: <alpine.LFD.2.20.1702110943460.31350@i7.lan>
+User-Agent: Alpine 2.20 (LFD 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqmvdz3ied.fsf@gitster.mtv.corp.google.com>
-User-Agent: Mutt/1.5.23.1-rc1 (2014-03-12)
+Content-Type: text/plain; charset=US-ASCII
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 02/05, Junio C Hamano wrote:
-> Thomas Gummerer <t.gummerer@gmail.com> writes:
-> 
-> > @@ -72,6 +72,11 @@ create_stash () {
-> >  			untracked="$1"
-> >  			new_style=t
-> >  			;;
-> > +		--)
-> > +			shift
-> > +			new_style=t
-> > +			break
-> > +			;;
-> >  		*)
-> >  			if test -n "$new_style"
-> >  			then
-> > @@ -99,6 +104,10 @@ create_stash () {
-> >  	if test -z "$new_style"
-> >  	then
-> >  		stash_msg="$*"
-> > +		while test $# != 0
-> > +		do
-> > +			shift
-> > +		done
-> >  	fi
-> 
-> The intent is correct, but I would probaly empty the "$@" not with
-> an iteration of shifts but with a single
-> 
-> 	set x && shift
-> 
-> ;-)
 
-Thanks, I knew there had to be a better way, but I was unable to find
-it.  I think I like Andreas suggestion of "shift $#" the best here.
+So I use "--show-decorations" all the time because I find it very useful 
+to see where the origin branch is, where tags are etc. In fact, my global 
+git config file has
 
-> > @@ -134,7 +143,7 @@ create_stash () {
-> >  		# Untracked files are stored by themselves in a parentless commit, for
-> >  		# ease of unpacking later.
-> >  		u_commit=$(
-> > -			untracked_files | (
-> > +			untracked_files "$@" | (
-> 
-> The above (and all other uses of "$@" was exactly what I had in mind
-> when I gave you the "can we leave the '$@' the user gave us as-is?"
-> comment during the review of the previous round.  
-> 
-> Looks much nicer.
-> 
-> > +test_expect_success 'stash push with $IFS character' '
-> > +	>"foo	bar" &&
-> 
-> IIRC, a pathname with HT in it cannot be tested on MINGW.  For the
-> purpose of this test, I think it is sufficient to use SP instead of
-> HT here (and matching change below in the expectation, of course).
+    [log]
+        decorate = auto
 
-Will change.
+in it, so that I don't have to type it out all the time when I just do my 
+usual 'git log". It's lovely.
 
-> > +	>foo &&
-> > +	>bar &&
-> > +	git add foo* &&
-> > +	git stash push --include-untracked -- foo* &&
-> 
-> While it is good that you are testing "foo*", you would also want
-> another test to cover a pathspec with $IFS in it.  That is the case
-> the code in the previous round had problems with.  Perhaps try
-> something like
-> 
-> 	>foo && >bar && >"foo bar" && git add . &&
-> 	echo modify foo >foo &&
-> 	echo modify bar >bar &&
-> 	echo modify "foo bar" >"foo bar" &&
-> 	git stash push -- "foo b*"
-> 
-> which should result in the changes to "foo bar" in the resulting
-> stash, while changes to "foo" and "bar" are not (and left in the
-> working tree).  And make sure that is what happens?  I think with
-> the code from the previous round, the above would instead stash
-> changes to "foo" and "bar" without catching changes to "foo bar",
-> because the single pathspec "foo b*" would have been mistakenly
-> split into two, i.e. "foo" and "b*", and failed to match "foo bar"
-> while matching the other two.
+However, it does make one particular case uglier: with commit decorations, 
+the "oneline" commit format ends up being not very pretty:
 
-Thanks, I'll add a test for that.
+    [torvalds@i7 git]$ git log --oneline -10
+    3f07dac29 (HEAD -> master) pathspec: don't error out on  all-exclusionary pathspec patterns
+    ca4a562f2 pathspec magic: add '^' as alias for '!'
+    02555c1b2 ls-remote: add "--diff" option to show only refs that differ
+    6e3a7b339 (tag: v2.12.0-rc0, origin/master, origin/HEAD) Git 2.12-rc0
+    fafca0f72 Merge branch 'cw/log-updates-for-all-refs-really'
+    74dee5cfa Merge branch 'pl/complete-diff-submodule-diff'
+    36acf4123 Merge branch 'rs/object-id'
+    ecc486b1f Merge branch 'js/re-running-failed-tests'
+    4ba6bb2d1 Merge branch 'sb/submodule-update-initial-runs-custom-script'
+    5348021c6 Merge branch 'sb/submodule-recursive-absorb'
+
+and note how the decoration comes right after the shortened commit hash, 
+breaking up the alignment of the messages. 
+
+The above doesn't show it with the colorization: I also have
+
+    [color]
+        ui=auto
+
+so on my terminal the decoration is also nicely colorized which makes it 
+much more obvious, it's not as obvious in this message.
+
+The oneline message handling is already pretty special, this makes it even 
+more special by putting the decorations at the end of the line:
+
+    3f07dac29 pathspec: don't error out on all-exclusionary pathspec patterns (HEAD -> master)
+    ca4a562f2 pathspec magic: add '^' as alias for '!'
+    02555c1b2 ls-remote: add "--diff" option to show only refs that differ
+    6e3a7b339 Git 2.12-rc0 (tag: v2.12.0-rc0, origin/master, origin/HEAD)
+    fafca0f72 Merge branch 'cw/log-updates-for-all-refs-really'
+    74dee5cfa Merge branch 'pl/complete-diff-submodule-diff'
+    36acf4123 Merge branch 'rs/object-id'
+    ecc486b1f Merge branch 'js/re-running-failed-tests'
+    4ba6bb2d1 Merge branch 'sb/submodule-update-initial-runs-custom-script'
+    5348021c6 Merge branch 'sb/submodule-recursive-absorb'
+
+which looks a lot better (again, this is all particularly noticeable with 
+colorization).
+
+NOTE! There's a very special case for "git log --oneline -g" that shows 
+the reflogs as oneliners, and this does *not* fix that special case. It's 
+a lot more involved and relies on the exact show_reflog_message() 
+implementation, so I left the format for that alone, along with a comment 
+about how it's not at the end of line.
+
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+---
+
+I've signed off on this, because I think it's an "obvious" improvement, 
+but I'm putting the "RFC" in the subject line because this is clearly a 
+subjective thing.
+
+"oneline" really is special: the other commit formats will just put the 
+commit SHA1 at the end of the line anyway. And with manual formats, the 
+placement of decorations is also manual, so this doesn't affect that 
+case.
+
+Comments?
+
+ log-tree.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
+
+diff --git a/log-tree.c b/log-tree.c
+index 8c2415747..3bf88182e 100644
+--- a/log-tree.c
++++ b/log-tree.c
+@@ -622,10 +622,13 @@ void show_log(struct rev_info *opt)
+ 			       find_unique_abbrev(parent->object.oid.hash,
+ 						  abbrev_commit));
+ 		fputs(diff_get_color_opt(&opt->diffopt, DIFF_RESET), opt->diffopt.file);
+-		show_decorations(opt, commit);
+ 		if (opt->commit_format == CMIT_FMT_ONELINE) {
++			/* Not at end of line, but.. */
++			if (opt->reflog_info)
++				show_decorations(opt, commit);
+ 			putc(' ', opt->diffopt.file);
+ 		} else {
++			show_decorations(opt, commit);
+ 			putc('\n', opt->diffopt.file);
+ 			graph_show_oneline(opt->graph);
+ 		}
+@@ -716,6 +719,8 @@ void show_log(struct rev_info *opt)
+ 		opt->missing_newline = 0;
+ 
+ 	graph_show_commit_msg(opt->graph, opt->diffopt.file, &msgbuf);
++	if (ctx.fmt == CMIT_FMT_ONELINE)
++		show_decorations(opt, commit);
+ 	if (opt->use_terminator && !commit_format_is_empty(opt->commit_format)) {
+ 		if (!opt->missing_newline)
+ 			graph_show_padding(opt->graph);
