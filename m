@@ -2,96 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DAD4C1FAF4
-	for <e@80x24.org>; Sat, 11 Feb 2017 13:55:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C617F1FAF4
+	for <e@80x24.org>; Sat, 11 Feb 2017 13:59:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753600AbdBKNzT (ORCPT <rfc822;e@80x24.org>);
-        Sat, 11 Feb 2017 08:55:19 -0500
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:33150 "EHLO
-        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753519AbdBKNzS (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 11 Feb 2017 08:55:18 -0500
-Received: by mail-wm0-f66.google.com with SMTP id v77so10942219wmv.0
-        for <git@vger.kernel.org>; Sat, 11 Feb 2017 05:55:17 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=y4PBatYb2Zp7pcNG1Ya67ZGTTYF25nntA/6176iKCXM=;
-        b=BpkimkhHSIb+t1XSWWojXyN2LG509B1FtoFAfzxt9TY9cOn2JTJLdgEVoAlL4bwXvC
-         npDyLrM8xI97oW5LW3NjmzP7pgOeYOU0Bh5T1naKs+mD+JDo+kw2AYAcg4gRU1NiFfb2
-         QDuWBcXJycc+8dRd+aQkU3WK9/nAnmo6lw0/KIe3ir7bcwa3U//ejQDF3Zd2iVP+d8FT
-         zR4M/nxV7v0HCwMIy/h+NhCOrf0pPus6vDhGXB64+ywF1RDs5I+YD7UE8N4LC4AZYWRn
-         nVMZGJNp/maUtzG/Mai3Qux38MJkPMcx/Suw2IB4Mi8UU9kzICHk/8Hl1r65iliQaRGj
-         a4Ew==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=y4PBatYb2Zp7pcNG1Ya67ZGTTYF25nntA/6176iKCXM=;
-        b=heTDoY0qJGD2aUdpWTBg+iXr4ANtkgnXrNsuDrjjXwHg5znG0XMO9afvWE9xJPhR13
-         BLFGMlHgbT2T6obz3ayqUMg+9BxoX+Z+HwX9sr/pHM5aRtTELYYnp50T5v8qBmtYM7hn
-         aq3VQjD3tPCG7VVquCOKw/sZIXloOA83oXbisv6E8+sGga7hxucs+pClHfrMBbAVlKtY
-         VmcFzsP8UWuMqVN7GRtvb/CxMrf2BxWntUtBEComncpAUpzJVo2W6TSzYyFeOgfi0t6S
-         Y1liWuNR9ZaUe4B8VH0khl62HPUNfK6Uw7zWgTKCEvSHV03zDFmX/KtMhz0B6yCc3xj/
-         qKLQ==
-X-Gm-Message-State: AMke39ndb7QEWxFz8YoQD5fvYWP/rxbYvNFJJW4rXzHp5VgSUoiZ/khHzullnGezw69jdA==
-X-Received: by 10.28.65.196 with SMTP id o187mr11128013wma.37.1486821316928;
-        Sat, 11 Feb 2017 05:55:16 -0800 (PST)
-Received: from localhost ([2a02:c7f:c42b:f900:5e51:4fff:fee9:57af])
-        by smtp.gmail.com with ESMTPSA id c9sm5242944wmf.18.2017.02.11.05.55.15
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sat, 11 Feb 2017 05:55:16 -0800 (PST)
-Date:   Sat, 11 Feb 2017 13:55:49 +0000
-From:   Thomas Gummerer <t.gummerer@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org, Stephan Beyer <s-beyer@gmx.net>,
-        Junio C Hamano <gitster@pobox.com>,
-        Marc Strapetz <marc.strapetz@syntevo.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        =?iso-8859-1?Q?=D8yvind_A_=2E?= Holm <sunny@sunbase.org>,
-        Jakub =?utf-8?B?TmFyxJlic2tp?= <jnareb@gmail.com>
-Subject: Re: [PATCH v3 3/5] stash: add test for the create command line
- arguments
-Message-ID: <20170211135549.GJ31189@hank>
-References: <20170129201604.30445-1-t.gummerer@gmail.com>
- <20170205202642.14216-1-t.gummerer@gmail.com>
- <20170205202642.14216-4-t.gummerer@gmail.com>
- <20170206155012.rb2vydjvlquchwk2@sigill.intra.peff.net>
+        id S1753634AbdBKN7C (ORCPT <rfc822;e@80x24.org>);
+        Sat, 11 Feb 2017 08:59:02 -0500
+Received: from mout.web.de ([212.227.15.3]:58409 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1753519AbdBKN7B (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 11 Feb 2017 08:59:01 -0500
+Received: from [192.168.178.36] ([79.197.218.233]) by smtp.web.de (mrweb004
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0MhOpG-1cpFn82T3q-00Me13; Sat, 11
+ Feb 2017 14:58:48 +0100
+X-Mozilla-News-Host: news://news.public-inbox.org:119
+To:     Git List <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Pranit Bauva <pranit.bauva@gmail.com>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Subject: [PATCH] cocci: detect useless free(3) calls
+Message-ID: <7e10f934-f084-ceb4-00eb-b75cdb01886b@web.de>
+Date:   Sat, 11 Feb 2017 14:58:44 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.7.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20170206155012.rb2vydjvlquchwk2@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.23.1-rc1 (2014-03-12)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+X-Provags-ID: V03:K0:E/S9c906UWadDKvOK5ix+yKOPsCTQgZUYLANFlWOBBUszBQghuq
+ Ey0jM9JtifUKNUteZfdlCAU8X0FO9bR2xcRD77EEzs3KX0M4hdUKMT+igc2SuXqYHYTxqlI
+ vDH4ybhmUSqYopUb1xUATJQMkv0Wrpsnp2Aj/Bj3iOC/tfXkoDfug+/sygmGgTShvPKof51
+ Ok5HfkaD141jJI+B6o+rg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:OLwwvfUnsi4=:GdWFn1p+4SyTABgsMZisW1
+ Ilud6j8VXvmrvyks36cvNYoUhtkpo1g5pozZHYFYrpd3+zKY/DVJHiTIGQ/6E0ry2RhpXE0tD
+ 5T8oeOIrWA0cym0qtfnVhFeZig+RBxhLXBhJHmEqdib2AeJcWtDQ8tyLp0A2nckPEjlGdmeq8
+ /FOjkzszfwzQUMVufFOXBG/RazJlm+FnXDyQl80jrFD6q7bbIyMZzPsKgZNF5p0ovKpY8EQv/
+ judhrKbRmLytm9c7bDD90wNHl0R3nIBuOyW2HM08ziaZgaS46645HYu3qqO6Hz7KmC82Ya65p
+ vwk6lsXPRAIdbKdKUdXZtUqwLv8WW7H+Op0aONzObnU/1UktK4kH6KMgIUeGonC+GwKP+sz++
+ JwHTOE8TdLGH8Qbh/JA2Fb2es/HbA6cwDKLUi4BsRytP4cmtB5vALlBtAHjSvrtOv/hjccIDV
+ G7FU5t8gQtaP6KxIJw4ITGNbrlje9aO2LfpOeFkZpqOnGsOaFFzFQihFz62eovfHW9xIJ9L+0
+ jWSaxEVkkrGdSuhDU+0r0/zf1vvG7ts3wfgE3k1x0JzeOWy8+6gEjgQTOgFsS8BE5aqtmAt6j
+ SnfUZuAuaEmthdPz3mP9SbpdocYx/xXJ9na7WngL3eJ+p8OTOcNhyHBPuFcrmN0HNDcSe2XfM
+ a/qM44Igv9NlODB7V0cx4v9Rh88+cHxHkbC5wItzDJuaH1EG+LXdPS/SpzLPmXAQN67Ntl6ow
+ iFK7pcGLlsEdgh+P5Wx/l2FKY9L8uTd9ioVWXJydeid8x/lio1FBz5d0e7/vKI3hyMo+jloIt
+ jIBf9nY
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 02/06, Jeff King wrote:
-> On Sun, Feb 05, 2017 at 08:26:40PM +0000, Thomas Gummerer wrote:
-> 
-> > +test_expect_success 'create stores correct message' '
-> > +	>foo &&
-> > +	git add foo &&
-> > +	STASH_ID=$(git stash create "create test message") &&
-> > +	echo "On master: create test message" >expect &&
-> > +	git show --pretty=%s ${STASH_ID} | head -n1 >actual &&
-> > +	test_cmp expect actual
-> > +'
-> 
-> This misses failure exit codes from "git show" because it's on the left
-> side of a pipe. Perhaps "git show -s" or "git log -1" would get you the
-> same output without needing "head" (and saving a process and the time
-> spent generating the diff, as a bonus).
-> 
-> Ditto in the other tests from this patch and later ones.
+Add a semantic patch for removing checks that cause free(3) to only be
+called with a NULL pointer, as that must be a programming mistake.
 
-Good catch, will fix.
+Signed-off-by: Rene Scharfe <l.s.r@web.de>
+---
+No cases are found in master or next, but 1d263b93 (bisect--helper:
+`bisect_next_check` & bisect_voc shell function in C) introduced four
+of them to pu.
 
-> -Peff
+ contrib/coccinelle/free.cocci | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/contrib/coccinelle/free.cocci b/contrib/coccinelle/free.cocci
+index e28213161a..c03ba737e5 100644
+--- a/contrib/coccinelle/free.cocci
++++ b/contrib/coccinelle/free.cocci
+@@ -3,3 +3,9 @@ expression E;
+ @@
+ - if (E)
+   free(E);
++
++@@
++expression E;
++@@
++- if (!E)
++  free(E);
+-- 
+2.11.1
+
