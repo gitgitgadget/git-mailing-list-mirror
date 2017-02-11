@@ -7,76 +7,96 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AE7FE1FAF4
-	for <e@80x24.org>; Sat, 11 Feb 2017 18:51:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 34CB01FAF4
+	for <e@80x24.org>; Sat, 11 Feb 2017 19:01:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751014AbdBKSvt (ORCPT <rfc822;e@80x24.org>);
-        Sat, 11 Feb 2017 13:51:49 -0500
-Received: from mail-pf0-f195.google.com ([209.85.192.195]:34401 "EHLO
-        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750892AbdBKSvs (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 11 Feb 2017 13:51:48 -0500
-Received: by mail-pf0-f195.google.com with SMTP id o64so3243669pfb.1
-        for <git@vger.kernel.org>; Sat, 11 Feb 2017 10:51:48 -0800 (PST)
+        id S1751155AbdBKTBK (ORCPT <rfc822;e@80x24.org>);
+        Sat, 11 Feb 2017 14:01:10 -0500
+Received: from mail-pf0-f193.google.com ([209.85.192.193]:33255 "EHLO
+        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750994AbdBKTBJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 11 Feb 2017 14:01:09 -0500
+Received: by mail-pf0-f193.google.com with SMTP id e4so4231891pfg.0
+        for <git@vger.kernel.org>; Sat, 11 Feb 2017 11:01:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=fCNa9y6++GoEfVVBM7YVQ8djr/UZ87Xke7jm/ZG9o8Y=;
-        b=eEZIYoFDmJQylRdTwKCUfwYhAJJDo1zyfVJj+E3b70uzNrB7cFh/TDuPQxyT46egga
-         qdvuRLy4Hv+zHNj5cnBEUv+cYTxdrsaE6eavHZ9hd+T4rsXYmgR7s7v4AXQWApj/i+zW
-         qC5LqvwqB5OC7aItOKpfihJXDTesk/SceZJAg8mq2z9a5QCb5kumhIGJ7H+5UJq8j76J
-         OfzN6yTrYEa5HmFPVdlVKse3wPczEZ7Bdlb7KUH7/wEacJ01XENlZ5h7zpMzRLIGDQZX
-         8SL3ukf4cwCHOvkrLkouDXLwJh1XUqe8Cxq1iSD+9ppQNkXpKPGmU5cx7/9c8W4wzzvJ
-         nSZw==
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=nQzT3UB1EqlfLNn1c72Zz2pwCbpoyGjlkmlEoRQ6n4E=;
+        b=ly2GV2D+Ui6KwHrRPJ2mA2LDFkIlUQ/J5URsKUlbfou5GzVVu/GJ85PWDs3WLoHIoJ
+         5KrcFjDRRyB58D4HUGN6Z5oygRQPwFay4AXDx8yAOgVxuoPBzibGoyzMXPEgCFkMF/Ue
+         d1jfoFCUPzwPATcnPhtAW2cNrHz2FD/uZlFMB6J1wOJ7pckEkJ1oJXtrLQjwZVm4wMDv
+         iLuLdf3P39F6GAI3IREGkSl3KNIxFZcvVXHO/dooyC+fKDg0JOobEeajHxZ48nLlOlHf
+         Y4zvbtfsJvzB2xynXMlrN2QX8Fs49PD4eV/cvJmMyY46DMZ3X1hlaj0W8tCve56KaHzX
+         bEvA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=fCNa9y6++GoEfVVBM7YVQ8djr/UZ87Xke7jm/ZG9o8Y=;
-        b=WFbuHurNDNEz+ihhoFJfx/9Sy2cjWpoZJzdc/5EFN0yoZFYI6l1+OpzEZbTl0TrcKK
-         WgCoHjW3ISm2K6crH9HiyrV045TWq8TJOIaVdDoxxvnjQZ62erU6I8BGHCoEVE+6rLSH
-         AMb+m8xOY+KhHODu/M+dnXrCtpOVIhTGo+P926FlLIMFnWvvAC6G32ZzbAmVS8hwqB06
-         biuoOKIjxpDWYE5fsPPRpwVKNlYqVcoSJ1NKgypcvD+6ttMM9BqBnqxKJvhYONgL+MrM
-         O2gJDhgMVOwsU7d5jJne63pwTX1A2yDNLU0M+Wf+jBdtWSN+8GyConrXZQmS5iK0FVoX
-         lOzA==
-X-Gm-Message-State: AMke39m2gi48he7N7su3rfx3/Tm+wsNU0FKyif8QgTf1PVbPJpglyaXON6eidnjD8pG8Rg==
-X-Received: by 10.84.169.67 with SMTP id g61mr19543275plb.137.1486839107844;
-        Sat, 11 Feb 2017 10:51:47 -0800 (PST)
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=nQzT3UB1EqlfLNn1c72Zz2pwCbpoyGjlkmlEoRQ6n4E=;
+        b=plytWdfOTHjpteEG/cstcZvAGwJozGKXFAsPIUGdGFbzHI7d72vxc2QHWoPcbRXRY5
+         uT49YHwVjED0cT2t6tLBOo7OKeNnxY4JBNl1OsCXlCp1NmZLC6GSux2fOmNtu5NMtwKa
+         KSYqkulekQVvOYIpY+SVNpvsJT2xnLP/4j6DVjFRX5T8Mbg8I15BC0vgNeJwd6p4pMYG
+         fe4QkRuDKtSku8HQd8h71poWQMXrSxdIrZKsoY8KdVopeU6a2mHFqIoVRC3AeKDMBA3L
+         ga6txWtGigTcYYinFK/nBmy3u8+GAV6qOfus3qPbet0c4zA084iEVDBka6G1iUHbrTs5
+         Tk5w==
+X-Gm-Message-State: AMke39nQKlPUVG9YiE5Tr3Q0eWf4XNosDT9Ige6rfx9hTl2Mr33OLk61tbiVBzRBaFoAog==
+X-Received: by 10.99.99.193 with SMTP id x184mr18103240pgb.226.1486839668660;
+        Sat, 11 Feb 2017 11:01:08 -0800 (PST)
 Received: from localhost ([2620:0:1000:8622:d4bf:82d:ab5d:5a31])
-        by smtp.gmail.com with ESMTPSA id s3sm6054686pgn.55.2017.02.11.10.51.45
+        by smtp.gmail.com with ESMTPSA id x81sm12319798pff.69.2017.02.11.11.01.07
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Sat, 11 Feb 2017 10:51:45 -0800 (PST)
+        Sat, 11 Feb 2017 11:01:08 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Sixt <j6t@kdbg.org>
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
-        git@vger.kernel.org, Jeff Hostetler <jeffhost@microsoft.com>
-Subject: Re: [PATCH] mingw: use OpenSSL's SHA-1 routines
-References: <6a29f8c60d315a24292c1fa9f5e84df4dfdbf813.1486679254.git.johannes.schindelin@gmx.de>
-        <xmqqbmublyo0.fsf@gitster.mtv.corp.google.com>
-        <31bb0b9f-d498-24b3-57d5-9f34cb8e3914@kdbg.org>
-Date:   Sat, 11 Feb 2017 10:51:44 -0800
-In-Reply-To: <31bb0b9f-d498-24b3-57d5-9f34cb8e3914@kdbg.org> (Johannes Sixt's
-        message of "Sat, 11 Feb 2017 09:01:23 +0100")
-Message-ID: <xmqqzihsh873.fsf@gitster.mtv.corp.google.com>
+To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
+Cc:     Git List <git@vger.kernel.org>,
+        Pranit Bauva <pranit.bauva@gmail.com>
+Subject: Re: [PATCH] cocci: detect useless free(3) calls
+References: <7e10f934-f084-ceb4-00eb-b75cdb01886b@web.de>
+Date:   Sat, 11 Feb 2017 11:01:07 -0800
+In-Reply-To: <7e10f934-f084-ceb4-00eb-b75cdb01886b@web.de> (=?utf-8?Q?=22R?=
+ =?utf-8?Q?en=C3=A9?= Scharfe"'s
+        message of "Sat, 11 Feb 2017 14:58:44 +0100")
+Message-ID: <xmqqr334h7rg.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Sixt <j6t@kdbg.org> writes:
+René Scharfe <l.s.r@web.de> writes:
 
-> Am 10.02.2017 um 00:41 schrieb Junio C Hamano:
->> ...
->> Nice.  Will queue as jh/mingw-openssl-sha1 topic; it is a bit too
->> late for today's integration cycle to be merged to 'next', but let's
->> have this by the end of the week in 'master'.
+> Add a semantic patch for removing checks that cause free(3) to only be
+> called with a NULL pointer, as that must be a programming mistake.
 >
-> Please don't rush this through. I didn't have a chance to cross-check
-> the patch; it will have to wait for Monday. I would like to address
-> Peff's concerns about additional runtime dependencies.
+> Signed-off-by: Rene Scharfe <l.s.r@web.de>
+> ---
+> No cases are found in master or next, but 1d263b93 (bisect--helper:
+> `bisect_next_check` & bisect_voc shell function in C) introduced four
+> of them to pu.
 
-OK.  Will mark it as "Will cook in 'next'" for now.
+Thanks.  This should have been caught by code inspection, but
+having automated way to do so is always good.
+
+>
+>  contrib/coccinelle/free.cocci | 6 ++++++
+>  1 file changed, 6 insertions(+)
+>
+> diff --git a/contrib/coccinelle/free.cocci b/contrib/coccinelle/free.cocci
+> index e28213161a..c03ba737e5 100644
+> --- a/contrib/coccinelle/free.cocci
+> +++ b/contrib/coccinelle/free.cocci
+> @@ -3,3 +3,9 @@ expression E;
+>  @@
+>  - if (E)
+>    free(E);
+> +
+> +@@
+> +expression E;
+> +@@
+> +- if (!E)
+> +  free(E);
