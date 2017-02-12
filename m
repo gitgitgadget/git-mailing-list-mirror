@@ -2,75 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 57FBD1FC45
-	for <e@80x24.org>; Sun, 12 Feb 2017 23:02:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F318A1FC45
+	for <e@80x24.org>; Sun, 12 Feb 2017 23:06:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751452AbdBLXCP (ORCPT <rfc822;e@80x24.org>);
-        Sun, 12 Feb 2017 18:02:15 -0500
-Received: from mout.web.de ([212.227.15.4]:57347 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751247AbdBLXCO (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 12 Feb 2017 18:02:14 -0500
-Received: from [192.168.178.36] ([79.197.218.233]) by smtp.web.de (mrweb004
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0MCvVz-1cV2fB0c2F-009fbO; Mon, 13
- Feb 2017 00:02:02 +0100
-Subject: Re: What's cooking in git.git (Feb 2017, #03; Fri, 10)
-To:     Vegard Nossum <vegard.nossum@oracle.com>,
-        Junio C Hamano <gitster@pobox.com>
-References: <xmqq37flk7l4.fsf@gitster.mtv.corp.google.com>
- <77af28f3-7a8e-fc6a-40ae-c4203d1a3a67@web.de>
- <xmqq8tpdifoa.fsf@gitster.mtv.corp.google.com>
- <36fdf8c9-f82d-4996-09ef-7d718ab3ac41@oracle.com>
-Cc:     git@vger.kernel.org
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <2bd2d811-2e2d-1aec-e864-d92c8234fef2@web.de>
-Date:   Mon, 13 Feb 2017 00:01:57 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
- Thunderbird/45.7.1
+        id S1751484AbdBLXG0 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 12 Feb 2017 18:06:26 -0500
+Received: from mail-wr0-f194.google.com ([209.85.128.194]:33098 "EHLO
+        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751247AbdBLXGZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 12 Feb 2017 18:06:25 -0500
+Received: by mail-wr0-f194.google.com with SMTP id i10so21840710wrb.0
+        for <git@vger.kernel.org>; Sun, 12 Feb 2017 15:06:25 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:references:cc:newsgroups:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding;
+        bh=q51hDWrgfG1zS1O+AvsWjiTBHxnJhVRPvhdBX5a/xnA=;
+        b=jGiJl8Okkib5Yo7E5Brk6WoKMxMVTDHtGU4R+phV/S9Z2zq9kGc+f7VrUQISNH3Jg6
+         6wIx4x7hAhXS8ecLOgujah1dachyggCtEkzrxQLbaKiKGZUmG2S8jkc1yZsQhPRQmN7J
+         qIdZdTJcULOY7rxxXS2Cb0ucNPjKu1Fx4ByasUV+Gl+fpriFwK0zuPZI2gH/hG4+E4o2
+         +Rws646+914DpELd2O0AN05q9WroOenrg6ZIwadqjF84M7WbNweK+YRI5XwWEGpipGe9
+         85nZT2iGKTgwHPUSmB4CQTszf9K+sZh1I72cJDMC9sBOZuzAfuVh5QRsZ9MNOLJi/dvv
+         XLKg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:references:cc:newsgroups:from
+         :message-id:date:user-agent:mime-version:in-reply-to
+         :content-transfer-encoding;
+        bh=q51hDWrgfG1zS1O+AvsWjiTBHxnJhVRPvhdBX5a/xnA=;
+        b=AGpSAJd6e/MD0rfU0E4o6aYP0rqwl2RRQkk2l2MPSSAU3LtdrHTr4tdYPIpL4Gfp7U
+         8zaYYUMhdCHP7OQ8hwrASd0CapcO7OFwpQXOvf1ujq254/WdQl3jXJ4abf9OBtSF/Oo7
+         9Czy2IcoIP3OjnMis0FlyOO0YrrGVBOQpSN+GNOzO4NfgdPy/QGU9K6xOXhRsvGiqPa9
+         viLVxEz90g5QxXrfFGeNb5Y2uQ/FgNjFmjcZhvU+RAWetOCaN1NOw7EaNqMEduAiHzzx
+         HwDkfwsorUOkqg2XnxoPD96uyvGr+bDuMz2UMtD/kJvc0WZJdilqh5iKbhB6YJN18mJh
+         teUg==
+X-Gm-Message-State: AMke39kn9hDUldD+LIYpJh4WLiRuQAvK2vCdHH7y4cfhSZTqT36a9J+UEP5W0KkjW600Ug==
+X-Received: by 10.223.139.213 with SMTP id w21mr17392582wra.108.1486940784012;
+        Sun, 12 Feb 2017 15:06:24 -0800 (PST)
+Received: from [192.168.5.102] ([87.116.181.111])
+        by smtp.gmail.com with ESMTPSA id o59sm8380145wrc.56.2017.02.12.15.06.23
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 12 Feb 2017 15:06:23 -0800 (PST)
+Subject: Re: [git-gui] Amending doesn't preserve timestamp
+To:     Juraj <juraj.orsulic@fer.hr>
+References: <CAEPqvoxM9_Ku-1YgwNiqearUBaaYbAJcehuSwZYNNfJLQNH1_g@mail.gmail.com>
+ <8a1179dfbb7743b6b8c23570306120b7@MAIL.fer.hr>
+ <CAEPqvozCvFqOTNPw0c1ErKoOd+Mn1WCyJr9hj6CXiWWtL93Tqw@mail.gmail.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Newsgroups: gmane.comp.version-control.git
+From:   Igor Djordjevic BugA <igor.d.djordjevic@gmail.com>
+Message-ID: <3e6e8f1f-a35c-45ee-e1a4-83e89ac3c1ec@gmail.com>
+Date:   Mon, 13 Feb 2017 00:06:19 +0100
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.7.0
 MIME-Version: 1.0
-In-Reply-To: <36fdf8c9-f82d-4996-09ef-7d718ab3ac41@oracle.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K0:RMQ6Q0piCqsbUzqMrl7+izhIAwsQcVJJ3s4xdKfDSNw1EOUr/iC
- ngHSxYHwA1mnTv5Q1vexP+dp5J1eyghXiFH8WtykJfOU2XUFvN/l6p2H3Y3iQDHhFsKpmU0
- shTh5OLyWVm2zv6oWYXverf4kA2Z25VzTRvpztj3wIoSi/9ddfR5Y1w7Hb52nbSdIOxiAdA
- clvd3Xmf0gUeqtW3cLuCQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:1b8NrsuOwYw=:82sfSN49TGhPzyiOG8fLaN
- cHnc4LyFxIqP5iD9ALBlPpP229xAIbqmq3rUPmh9ym/EY9LKMV9FDsxeFkilluCAcOUJyJFaK
- Zp9fe4qggicTxeLY4g27y0F9eF2rnwrAAoEoY9yts1Kyu1MVwS4tlZJj+5J29/qAPzRXU/Yfr
- McCM+y3JvU7YqCNH5nFc7H+kZJMEzKbsfI5X5N9WciZrnrFbkuGmdIQsOg2Jy+KAGppAEP5s/
- 12fvoiM1x1v/5Af6cTFDlwGqzpqMfz+dpZ/R6iNjuLqCAqTENbKenwaC1m3Mm2EX7yPPoAZk7
- cm06wWEuv7/tJyGX2dQaVqVBCumOhiNZSbetOz8RGjqf/DkG6kYVCRblz7lt5g6OtgLAdIsIJ
- lA76+V3Z8TSkEwmXhPMq9n6f8EgtYOwULlKOigF7MJ3rA2QOZTg2Si0zk/nhucMJ/b5OWe1YN
- Y8NXf49Vx4E06hT1KvfmJvqEth8Tm5lltOA5spbaX+6+xp6jz2Jaj4GWWRfQlenE3sgCxr+97
- Q39EHKNbZ7vuslMDCGcM0e77nADCT9ZNT6f6B8CFk1nPQchGMerpOYNRZUnH1wMaW4MxyLFPQ
- mkLfgdrjBchqqi7+3bS3cB4mrE+uvXvKZx6q/3vsM2tD8Q8W0p7kfcdr7p3PcKR45ScCFEYf2
- tfiyRE3S2RFzZizsSt0uibc1fy18O9dkX5iz43YcErWliZ6ezhmyaz+LTekknLPJuoNBFtaKQ
- FF5a3U4fd7QHQtJf65rdSYxh/RifPBO4vJLwYZKA1qjt6kWE77tg4fpaid6p3hvzjVCEyTRuG
- K6xQH0T
+In-Reply-To: <CAEPqvozCvFqOTNPw0c1ErKoOd+Mn1WCyJr9hj6CXiWWtL93Tqw@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 12.02.2017 um 19:32 schrieb Vegard Nossum:
-> I said I would resubmit the patches with more config options and more
-> command-line arguments (to avoid potentially breaking backwards
-> compatibility), but IIRC the response seemed to be "preceding blank line
-> heuristic is good enough" and "why bother", so I ended up not not
-> resubmitting anything.
+On 12/02/2017 22:40, Juraj wrote:
+> Hi Igor,
+> 
+> I forgot to write the version I'm using. It's on Ubuntu 16.04, git-gui
+> package version 1:2.7.4-0ubuntu1 (--version: git-gui version 0.20.0),
+> git version 2.7.4, tcl and tk 8.6.0+9. Perhaps it got fixed in a newer
+> version, in that case, my bad for not checking before posting.
+> 
+> Thanks,
+> Juraj
 
-I was (and still am) looking forward to your patches.  The current 
-heuristic is simplistic, the patches you already sent improve the output 
-in certain scenarios, my proposed changes on top aimed to limit 
-drawbacks in other scenarios, but together they still have shortcomings.
+Hi Juraj,
 
-Avoiding new switches would be nice, though (if possible).  I feel we 
-need a lot more tests to nail down our expectations.
+Indeed, if I`m reading it correctly, it seems to be addressed in git-gui
+version 0.21.0[1], introduced in git version 2.11.0[2] on 2016-11-29
+("git-gui: Do not reset author details on amend", 2016-04-11[3],
+referencing an old bug report[4]).
 
-René
+Regards,
+BugA
+
+[1] https://public-inbox.org/git/878ttji701.fsf@red.patthoyts.tk/
+[2]
+https://public-inbox.org/git/xmqqmvgidlsg.fsf@gitster.mtv.corp.google.com/
+[3]
+https://public-inbox.org/git/1462458182-4488-1-git-send-email-orgads@gmail.com/
+[4]
+https://public-inbox.org/git/CAGHpTB+35j0njmCZ0uCgBVroe=Ma7HLnn6fDty8yebKWgEmECg@mail.gmail.com/
