@@ -2,98 +2,121 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F318A1FC45
-	for <e@80x24.org>; Sun, 12 Feb 2017 23:06:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7B9D41FC45
+	for <e@80x24.org>; Sun, 12 Feb 2017 23:49:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751484AbdBLXG0 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 12 Feb 2017 18:06:26 -0500
-Received: from mail-wr0-f194.google.com ([209.85.128.194]:33098 "EHLO
-        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751247AbdBLXGZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 12 Feb 2017 18:06:25 -0500
-Received: by mail-wr0-f194.google.com with SMTP id i10so21840710wrb.0
-        for <git@vger.kernel.org>; Sun, 12 Feb 2017 15:06:25 -0800 (PST)
+        id S1751433AbdBLXtT (ORCPT <rfc822;e@80x24.org>);
+        Sun, 12 Feb 2017 18:49:19 -0500
+Received: from mail-pg0-f68.google.com ([74.125.83.68]:34561 "EHLO
+        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751000AbdBLXtS (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 12 Feb 2017 18:49:18 -0500
+Received: by mail-pg0-f68.google.com with SMTP id v184so8086361pgv.1
+        for <git@vger.kernel.org>; Sun, 12 Feb 2017 15:49:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:references:cc:newsgroups:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding;
-        bh=q51hDWrgfG1zS1O+AvsWjiTBHxnJhVRPvhdBX5a/xnA=;
-        b=jGiJl8Okkib5Yo7E5Brk6WoKMxMVTDHtGU4R+phV/S9Z2zq9kGc+f7VrUQISNH3Jg6
-         6wIx4x7hAhXS8ecLOgujah1dachyggCtEkzrxQLbaKiKGZUmG2S8jkc1yZsQhPRQmN7J
-         qIdZdTJcULOY7rxxXS2Cb0ucNPjKu1Fx4ByasUV+Gl+fpriFwK0zuPZI2gH/hG4+E4o2
-         +Rws646+914DpELd2O0AN05q9WroOenrg6ZIwadqjF84M7WbNweK+YRI5XwWEGpipGe9
-         85nZT2iGKTgwHPUSmB4CQTszf9K+sZh1I72cJDMC9sBOZuzAfuVh5QRsZ9MNOLJi/dvv
-         XLKg==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=2yBgGgPLBuhwtzS2W+fnKplxHy4pBW+GdzehFrQVrt8=;
+        b=LM3M+i3mWMVw5ZduOzfddyoXqARMTLzS29qW9e7VD2wfIkQdRAY6bOjKFf+pzuA492
+         2qqAclbLJaDhqJB9R/yvxGj9Q69IXFTuTT9BcLN/1GopCwzOMZPzfne3ll42aFORY0Ko
+         PFuLfIvkYe1i+5BdU8j80I7fyiwjPF8YlKONYFuKGZJd5EFJrDEMOnmZ47gbUPiSG+Vv
+         J/bAoS7nX1mUTYW9ycoTAE2f9ogP3+ebGUlR5P0ms4XrvxRMCv/R0UECgDh3shS9UFdu
+         CENg6lYtMyCDEFnAfVNaDO3CMuknFEeUWAdJSTUmgsR3UKZVAVwSR6W7zF5jrg0CqKHM
+         PByg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:references:cc:newsgroups:from
-         :message-id:date:user-agent:mime-version:in-reply-to
-         :content-transfer-encoding;
-        bh=q51hDWrgfG1zS1O+AvsWjiTBHxnJhVRPvhdBX5a/xnA=;
-        b=AGpSAJd6e/MD0rfU0E4o6aYP0rqwl2RRQkk2l2MPSSAU3LtdrHTr4tdYPIpL4Gfp7U
-         8zaYYUMhdCHP7OQ8hwrASd0CapcO7OFwpQXOvf1ujq254/WdQl3jXJ4abf9OBtSF/Oo7
-         9Czy2IcoIP3OjnMis0FlyOO0YrrGVBOQpSN+GNOzO4NfgdPy/QGU9K6xOXhRsvGiqPa9
-         viLVxEz90g5QxXrfFGeNb5Y2uQ/FgNjFmjcZhvU+RAWetOCaN1NOw7EaNqMEduAiHzzx
-         HwDkfwsorUOkqg2XnxoPD96uyvGr+bDuMz2UMtD/kJvc0WZJdilqh5iKbhB6YJN18mJh
-         teUg==
-X-Gm-Message-State: AMke39kn9hDUldD+LIYpJh4WLiRuQAvK2vCdHH7y4cfhSZTqT36a9J+UEP5W0KkjW600Ug==
-X-Received: by 10.223.139.213 with SMTP id w21mr17392582wra.108.1486940784012;
-        Sun, 12 Feb 2017 15:06:24 -0800 (PST)
-Received: from [192.168.5.102] ([87.116.181.111])
-        by smtp.gmail.com with ESMTPSA id o59sm8380145wrc.56.2017.02.12.15.06.23
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 12 Feb 2017 15:06:23 -0800 (PST)
-Subject: Re: [git-gui] Amending doesn't preserve timestamp
-To:     Juraj <juraj.orsulic@fer.hr>
-References: <CAEPqvoxM9_Ku-1YgwNiqearUBaaYbAJcehuSwZYNNfJLQNH1_g@mail.gmail.com>
- <8a1179dfbb7743b6b8c23570306120b7@MAIL.fer.hr>
- <CAEPqvozCvFqOTNPw0c1ErKoOd+Mn1WCyJr9hj6CXiWWtL93Tqw@mail.gmail.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
-Newsgroups: gmane.comp.version-control.git
-From:   Igor Djordjevic BugA <igor.d.djordjevic@gmail.com>
-Message-ID: <3e6e8f1f-a35c-45ee-e1a4-83e89ac3c1ec@gmail.com>
-Date:   Mon, 13 Feb 2017 00:06:19 +0100
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:45.0) Gecko/20100101
- Thunderbird/45.7.0
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=2yBgGgPLBuhwtzS2W+fnKplxHy4pBW+GdzehFrQVrt8=;
+        b=gKblChPdBum6VPk1cVOcQgTuNOgxTAiehF3Hiqpi3lfYlR+9gXeA0beTgtVRnAhbSX
+         fecR07qwyqiY2gkLtSx4ozuYfHmi7yobneYdX9ZGmUjEg9NkcAQCzEdfOaG/ST8MzVe0
+         f4IY3V5WqwTo+M48lVuHf19T24s0ZQeluQXE6IXKEqhSnsWyxH/6zR4Zbsl4Dab7e46b
+         AkPDBEwhkFtDVhh11LcnlTWnprGIpiAb0/wmIW0xYJA4FXC2qWB6/NUVqxoIDwZusEi3
+         OYkVvRn9dW4wPRgFLNVmAI6AHsMGUI1fPzY4i1HRSIUos7oDsTvwF57TWyvpvt2UUe0I
+         qLYQ==
+X-Gm-Message-State: AMke39kQOwOIPp+D3XDZAFSzmP9lQythyyhqDYCQnyNNH0NkwZwQacbbk0c+7TpJwllJ6Q==
+X-Received: by 10.98.35.207 with SMTP id q76mr22726399pfj.112.1486943357603;
+        Sun, 12 Feb 2017 15:49:17 -0800 (PST)
+Received: from localhost ([2620:0:1000:8622:644a:2999:a3b7:74ee])
+        by smtp.gmail.com with ESMTPSA id l25sm16817734pfb.24.2017.02.12.15.49.15
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Sun, 12 Feb 2017 15:49:15 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Matt McCutchen <matt@mattmccutchen.net>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] fetch: print an error when declining to request an unadvertised object
+References: <1486747828.17272.5.camel@mattmccutchen.net>
+        <xmqqwpcxlwpv.fsf@gitster.mtv.corp.google.com>
+        <1486934007.8517.10.camel@mattmccutchen.net>
+Date:   Sun, 12 Feb 2017 15:49:14 -0800
+In-Reply-To: <1486934007.8517.10.camel@mattmccutchen.net> (Matt McCutchen's
+        message of "Sun, 12 Feb 2017 16:13:27 -0500")
+Message-ID: <xmqq60kfezr9.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <CAEPqvozCvFqOTNPw0c1ErKoOd+Mn1WCyJr9hj6CXiWWtL93Tqw@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 12/02/2017 22:40, Juraj wrote:
-> Hi Igor,
-> 
-> I forgot to write the version I'm using. It's on Ubuntu 16.04, git-gui
-> package version 1:2.7.4-0ubuntu1 (--version: git-gui version 0.20.0),
-> git version 2.7.4, tcl and tk 8.6.0+9. Perhaps it got fixed in a newer
-> version, in that case, my bad for not checking before posting.
-> 
-> Thanks,
-> Juraj
+Matt McCutchen <matt@mattmccutchen.net> writes:
 
-Hi Juraj,
+> What do you think?  Do you not care about having a more specific error,
+> in which case I can copy the code from builtin/fetch-pack.c to
+> fetch_refs_via_pack?  Or shall I add code to filter_refs to set a flag
+> and add code to builtin/fetch-pack.c and fetch_refs_via_pack to check
+> the flag?  Or what?
 
-Indeed, if I`m reading it correctly, it seems to be addressed in git-gui
-version 0.21.0[1], introduced in git version 2.11.0[2] on 2016-11-29
-("git-gui: Do not reset author details on amend", 2016-04-11[3],
-referencing an old bug report[4]).
+The fact that we have the above two choices tells me that a two-step
+approach may be an appropriate approach.
 
-Regards,
-BugA
+The first step is to teach fetch_refs_via_pack() that it should not
+ignore the information returned in sought[].  It would add new code
+similar to what cmd_fetch_pack() uses to notice and report errors
+[*1*] to the function.  It would be a sensible first step, but would
+not let the user know which of multiple causes of "not matched" we
+noticed.
 
-[1] https://public-inbox.org/git/878ttji701.fsf@red.patthoyts.tk/
-[2]
-https://public-inbox.org/git/xmqqmvgidlsg.fsf@gitster.mtv.corp.google.com/
-[3]
-https://public-inbox.org/git/1462458182-4488-1-git-send-email-orgads@gmail.com/
-[4]
-https://public-inbox.org/git/CAGHpTB+35j0njmCZ0uCgBVroe=Ma7HLnn6fDty8yebKWgEmECg@mail.gmail.com/
+By "a more specific error", I think you are envisioning that the
+current boolean "matched" is made into an enum that allows the
+caller to tell how each request did not match [*2*].  That can be
+the topic of the second patch and would have to touch filter_refs()
+[*3*], cmd_fetch_pack() and fetch_refs_via_pack().
+
+I do not have strong preference myself offhand between stopping at
+the first step or completing both.
+
+Even if you did only the first step, as long as the second step can
+be done without reverting what the first step did [*4*] by somebody
+who cares the "specific error" deeply enough, I am OK with that.  Of
+course if you did both steps, that is fine by me as well ;-)
+
+
+[Footnote]
+
+*1* While I know that it is not right to die() in filter_refs(), and
+    fetch_refs_via_pack() is a better place to notice errors, I do
+    not offhand know if it is the right place to report errors, or a
+    caller higher in the callchain may want the callee to be silent
+    and wants to show its own error message (in which case the error
+    may have to percolate upwards in the callchain).
+
+*2* e.g. "was it a ref but they did not advertise?  Did it request
+    an explicit object name and they did not allow it?"  We may want
+    to support other "more specific" errors that can be detected in
+    the future.
+
+*3* The current code flips the sought[i]->matched bit on for matched
+    ones (relying on the initial state of the bit being false), but
+    it now needs to stuff different kind of "not matched" to the
+    field to allow the caller to act on it.
+
+*4* IOW, I am OK with an initial "small" improvement, but I'd want
+    to make sure that such an initial step does not make future
+    enhancements by others harder.
