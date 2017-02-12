@@ -7,98 +7,69 @@ X-Spam-Status: No, score=-3.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6F5161FC45
-	for <e@80x24.org>; Sun, 12 Feb 2017 15:54:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2C5551FC45
+	for <e@80x24.org>; Sun, 12 Feb 2017 16:37:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751274AbdBLPyJ (ORCPT <rfc822;e@80x24.org>);
-        Sun, 12 Feb 2017 10:54:09 -0500
-Received: from mail-it0-f46.google.com ([209.85.214.46]:36217 "EHLO
-        mail-it0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751226AbdBLPyI (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 12 Feb 2017 10:54:08 -0500
-Received: by mail-it0-f46.google.com with SMTP id c7so164344565itd.1
-        for <git@vger.kernel.org>; Sun, 12 Feb 2017 07:54:08 -0800 (PST)
+        id S1751275AbdBLQhd (ORCPT <rfc822;e@80x24.org>);
+        Sun, 12 Feb 2017 11:37:33 -0500
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:33654 "EHLO
+        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751261AbdBLQhc (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 12 Feb 2017 11:37:32 -0500
+Received: by mail-wm0-f68.google.com with SMTP id v77so14874251wmv.0
+        for <git@vger.kernel.org>; Sun, 12 Feb 2017 08:37:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=7yvRHDyyo9p7sFfWNXJ8wYF3KJeKGSkALzMgIb4+QwU=;
-        b=epUs3TrmXSPHY5UDZ6GFFnaOtWktYFF80I4cVTXo2qAqR3eEcKOd2XVwFMrp07dElx
-         RwnqzZmolBNfw4XLkdjtgk9NrB1kx95/PboCCOuSDn/uk3hR4qpphLOoABBxwEy0Rqwn
-         CzVUfzAznvUUYyZxMuVSN5dF14zGKC7nSxNNdwFxMeJlwZ+Ap1sgLbkHGV9a0cKNJdhM
-         egrG6xm+2KDG+gfuPA6RmW5TPjBKXYfIfL+8KRBMBrBtpXmsuF10Cq+qAuyia4CJi4zT
-         CTzOoDaX+CvWmeGMd/vVJtRRKTP9anQE3ccuSQ+oTTCru6mKEucsbJROoDTXoZIk58Tl
-         bfxQ==
+        h=mime-version:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=yT37Eoty1b8QcfrETt1N4LsYm1g45Jg6AQvEj2+2F1s=;
+        b=Mf2eyDl+lYePnrKdSqq/swGcq2fcifUW6hrqnMqRyXpB53+BbYPZt5UHk0WVywGrXd
+         8WYCe64qtckgnymJpph1BNyx1MCEyGrLxS8bqYqFFx1URQ7hgYE/+7WYMvGKWUoGPOJf
+         O4PYm43JBYIgtlYWmoNVOybftms8YxLrI/PDTagQMwbauHMt/3XrQIeX1SDWieLwnvG7
+         lZfQMHBR2u5Y4ZdeKtkswlzGa7fGAPqQ95QRiVtt39zLiijDd70Ls9W9Rh3lhuMo3k1g
+         lqM8AlC4qdITKhGEbXnWSff8PNnV6EpUYzJS6ymSuo9iBcAB0sYrlZaAHhCKKBJpPtjp
+         zVfA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=7yvRHDyyo9p7sFfWNXJ8wYF3KJeKGSkALzMgIb4+QwU=;
-        b=HPuaUZalFgBByoT3qqjQl1+Am7lbU5BU2LMsI6f+2ck8vdqpZnYCPCAACY6nwENWxa
-         T1LWAM+vbfi48d54gGwnitvpBJdykkZDnaIDkm62nc/xAr7Yy9zQTjgDypN/IQECVPO/
-         qJa7MymuMtI6pvM9NHrNVNVn7p/odjmbr7ICpANC9pJLFFBnltmK62+uPucQ50Ml07lr
-         DwcizfOG8jS5PfrkPT6ho3Lnp1N92GYp1bC8tPkzf86w8Ojw3H3PQLjSRFzgViVMjlN/
-         0fMvnAnOqR9rrhsscC0/oLn7HXQRLXk7D3FLARtDdNMHtN6Ws1OAbY6CYdLA0aA5gyHx
-         +YVg==
-X-Gm-Message-State: AIkVDXLx8ViWXNL4rIFTaMITqCs/aPZ4iNAxEc7w/IzW+3fmNGTegjWJiA00zPMCPfhX5Hkqm1bjLKXMxEk3jA==
-X-Received: by 10.36.93.213 with SMTP id w204mr39589447ita.60.1486914847534;
- Sun, 12 Feb 2017 07:54:07 -0800 (PST)
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=yT37Eoty1b8QcfrETt1N4LsYm1g45Jg6AQvEj2+2F1s=;
+        b=l0pDKVcqDTMKGgVZJXiH/rMIG33zojCyDcaqFX5HKozlyHfLKu4uMZ5d3A/jNA9GZf
+         iHqOgY5sqocHxUnT2Z6qMewXplwDk4MmZhIxJNd5NqLrGC8daFVHKbc8sH6Wwb0NuiSK
+         76F3OIVW2OsbB9DB2G8PJ/qVXFBVEgvFsSNNqU0OZEDabAII298i8dBbEL7YOdAAGVwQ
+         PMWE86a33dopcUoA5nThkmMRGNRJHbemrb+aF0t1xaD0fAPFhodIRuRa5pBZF+pmstYL
+         bTAcvByqm3B3ZDX05I0di1/polhiTb7wgH83MQyXFKyCfZEgCN6YX1eDzaSra9etLra9
+         b/qA==
+X-Gm-Message-State: AMke39mooBGOXhYEt9jyrp/VJCqm2h7uR3R12zMnLqtsKET3sqGJghMfjeIG1vhsaJ00v6b3e0z8AbsLdCHVqQ==
+X-Received: by 10.28.66.221 with SMTP id k90mr37256818wmi.90.1486917450900;
+ Sun, 12 Feb 2017 08:37:30 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.107.132.12 with HTTP; Sun, 12 Feb 2017 07:53:47 -0800 (PST)
-From:   Mark Gaiser <markg85@gmail.com>
-Date:   Sun, 12 Feb 2017 16:53:47 +0100
-Message-ID: <CAPd6JnGC3yeDo_sB+H+UKvh-PbiC2qySC=EbaRNLbkkwYkJM4A@mail.gmail.com>
-Subject: Git status performance on PS (command prompt)
+Received: by 10.28.174.1 with HTTP; Sun, 12 Feb 2017 08:37:30 -0800 (PST)
+From:   =?UTF-8?B?SsOhY2h5bSBCYXJ2w61uZWs=?= <jachymb@gmail.com>
+Date:   Sun, 12 Feb 2017 17:37:30 +0100
+Message-ID: <CABpqov=FE-h_2s=O9fkSjFjgFXSy6hDwc2fu5ijiVvkaLx9f_Q@mail.gmail.com>
+Subject: Confusing git messages when disk is full.
 To:     git@vger.kernel.org
 Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
-
-I'm using ZSH with some fancy prompt. In that prompt is also a quick
-git status overview (some symbols indicating if the branch is up to
-date, if there are changes, etc..
-
-The commands that are being executed to fetch the information:
-
-For the file status:
-git status --porcelain
-
-For the repository status:
-git status --porcelain -b
-
-On small repositories (or even medium sized ones) this is fast, no
-problems there.
-But on larger repositories this is notably slow (i'm taking QtBase as
-an example now, but the same is true for much of the Qt repositories,
-or chromium or even the linux kernel itself). It's no problem if it's
-slow when you do "git status" on the command line. That can be
-expected to take a little while on large repositories. But in zsh
-prompts the call to git isn't asynchronous [1] so any slowdown will be
-noticed as the prompt simply doesn't completely show till after the
-command.
-
-I did a bit of profiling in git to figure out where this slowdown comes from.
-Callgrind tells me that "read_directory_recursive" takes up ~62% of the time.
-Within that call the function "last_exclude_matching_from_list" takes
-up 49% of the time it takes to run "git status --porcelain -b".
-
-I don't really know how this code is supposed to work (i'm a git user,
-not a git developer), so i hope someone might be able to investigate
-this further. I can however apply patches to git locally and help out
-with testing.
-
-Also, is there perhaps a command out there that might be better suited
-for the git status i want to show in the prompt? What i have now is
-merely from one of the oh-my-zsh themes.
-
-Best regards,
-Mark
-
-p.s. please keep me in cc, i'm not subscribed to this list.
-
-[1] Most prompts don't have async support, but there are prompts that
-do provide this: https://github.com/sindresorhus/pure I guess that
-would be a better solution for me in the short term. Still, having the
-status being made faster would be beneficial.
+Hello, I would like to report what I consider a bug in git, I hope I'm
+doing it the right way.
+I was trying to run `git pull` in  my repository and got the following
+error: "git pull
+Your configuration specifies to merge with the ref 'refs/heads/master'
+from the remote, but no such ref was fetched."
+Which was very confusing to me, I found some answers to what might be the c=
+ause
+but none was the right one. The actual cause was that the filesystem
+had no more free space.
+When I cleaned the space, `git pull` then gave the expected answer
+("Already up-to-date.").
+I think the message is confusing and git should be able to report to
+the user that the cause
+is full disk.
+Regards, J=C3=A1chym Barv=C3=ADnek
