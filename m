@@ -2,77 +2,75 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E32F11FC45
-	for <e@80x24.org>; Sun, 12 Feb 2017 22:06:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 57FBD1FC45
+	for <e@80x24.org>; Sun, 12 Feb 2017 23:02:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751468AbdBLWGv (ORCPT <rfc822;e@80x24.org>);
-        Sun, 12 Feb 2017 17:06:51 -0500
-Received: from mail-wr0-f196.google.com ([209.85.128.196]:33186 "EHLO
-        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751275AbdBLWGu (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 12 Feb 2017 17:06:50 -0500
-Received: by mail-wr0-f196.google.com with SMTP id i10so21713464wrb.0
-        for <git@vger.kernel.org>; Sun, 12 Feb 2017 14:06:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=Qv+LGwhuriEce0SlqI5PwGvOxFyV3Kd4heaODfRio3c=;
-        b=bAKUQn1NWoQlSM64skZtLjQOPp2duojgO6i1znfNeDk0dtaRK0lrVPLbEfgfLJD6z1
-         JaJsnwiE295fUXPNIwgYhZZHLQQvP1yR2nAHDPPSDJvP3n8pxGU362P1gXa9VMbRCyQL
-         j0v787eWvRukDX6hz5kH+YNuxStv/RnManOhcZhvPxCljFIzh/VSYUDOyAjoLFUT7npV
-         uJEZUUCvqx4BZrjzfJYcx61kzMCpO2Nc1MAMmHjp3cvCeb1kGErEqfkVS/fRcC8bO4ls
-         lXdw6c6y4e2J32lBbbJEfBrQpmA74vcTafSG2o6IntU5b/kl6Y5cfzqKrKwcQQgUiqvI
-         auSA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=Qv+LGwhuriEce0SlqI5PwGvOxFyV3Kd4heaODfRio3c=;
-        b=itlJ0TvzlY+YMZ+REGut4udrYhIYh/1ZbwRxgYcuwVgEzq9mYvpq6uIk15lOoWiPVf
-         FbT3/vPFSWksAuASwbzg3vny2sDO2DGL/UvOBNgfdKE47Uok8jiI0ROdeVVWzBvZFxE2
-         47N9fl6XkTY+9b6sKJ6JqXIKesirAHuiWKrvnifdlLmfMNfiSf6ByWCyZcLNumXM4rhX
-         jL4Whu1Kb76rJnbKpJwfFIdbcrH0pYIUd0ALImuu69dmlkuLafD/powsI9wXfupOG/96
-         6SXbNmk3EAsNfoU5KlRFXaVO0U2FUsxjvYSnt+gRF6Lv3AXHkt+ihwKgIf6/EM29Rocb
-         BjHw==
-X-Gm-Message-State: AMke39kZN7aK9OQkuEU2mIz2P93EbmyBj3JEp15AH+V3mBQhrpjJbbBb4kXR7RTuq8qk9Q==
-X-Received: by 10.223.169.140 with SMTP id b12mr16995443wrd.138.1486937209373;
-        Sun, 12 Feb 2017 14:06:49 -0800 (PST)
-Received: from localhost ([2a02:c7f:c42b:f900:5e51:4fff:fee9:57af])
-        by smtp.gmail.com with ESMTPSA id i29sm11417743wrc.25.2017.02.12.14.06.48
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 12 Feb 2017 14:06:48 -0800 (PST)
-Date:   Sun, 12 Feb 2017 22:07:22 +0000
-From:   Thomas Gummerer <t.gummerer@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        =?iso-8859-1?Q?=D8yvind_A_=2E?= Holm <sunny@sunbase.org>,
-        Jakub =?utf-8?B?TmFyxJlic2tp?= <jnareb@gmail.com>
-Subject: Re: [PATCH v4 0/7] stash: support pathspec argument
-Message-ID: <20170212220722.GB652@hank>
-References: <mailto:20170205202642.14216-1-t.gummerer@gmail.com>
- <20170212215420.16701-1-t.gummerer@gmail.com>
+        id S1751452AbdBLXCP (ORCPT <rfc822;e@80x24.org>);
+        Sun, 12 Feb 2017 18:02:15 -0500
+Received: from mout.web.de ([212.227.15.4]:57347 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751247AbdBLXCO (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 12 Feb 2017 18:02:14 -0500
+Received: from [192.168.178.36] ([79.197.218.233]) by smtp.web.de (mrweb004
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0MCvVz-1cV2fB0c2F-009fbO; Mon, 13
+ Feb 2017 00:02:02 +0100
+Subject: Re: What's cooking in git.git (Feb 2017, #03; Fri, 10)
+To:     Vegard Nossum <vegard.nossum@oracle.com>,
+        Junio C Hamano <gitster@pobox.com>
+References: <xmqq37flk7l4.fsf@gitster.mtv.corp.google.com>
+ <77af28f3-7a8e-fc6a-40ae-c4203d1a3a67@web.de>
+ <xmqq8tpdifoa.fsf@gitster.mtv.corp.google.com>
+ <36fdf8c9-f82d-4996-09ef-7d718ab3ac41@oracle.com>
+Cc:     git@vger.kernel.org
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <2bd2d811-2e2d-1aec-e864-d92c8234fef2@web.de>
+Date:   Mon, 13 Feb 2017 00:01:57 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.7.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20170212215420.16701-1-t.gummerer@gmail.com>
-User-Agent: Mutt/1.5.23.1-rc1 (2014-03-12)
+In-Reply-To: <36fdf8c9-f82d-4996-09ef-7d718ab3ac41@oracle.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K0:RMQ6Q0piCqsbUzqMrl7+izhIAwsQcVJJ3s4xdKfDSNw1EOUr/iC
+ ngHSxYHwA1mnTv5Q1vexP+dp5J1eyghXiFH8WtykJfOU2XUFvN/l6p2H3Y3iQDHhFsKpmU0
+ shTh5OLyWVm2zv6oWYXverf4kA2Z25VzTRvpztj3wIoSi/9ddfR5Y1w7Hb52nbSdIOxiAdA
+ clvd3Xmf0gUeqtW3cLuCQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:1b8NrsuOwYw=:82sfSN49TGhPzyiOG8fLaN
+ cHnc4LyFxIqP5iD9ALBlPpP229xAIbqmq3rUPmh9ym/EY9LKMV9FDsxeFkilluCAcOUJyJFaK
+ Zp9fe4qggicTxeLY4g27y0F9eF2rnwrAAoEoY9yts1Kyu1MVwS4tlZJj+5J29/qAPzRXU/Yfr
+ McCM+y3JvU7YqCNH5nFc7H+kZJMEzKbsfI5X5N9WciZrnrFbkuGmdIQsOg2Jy+KAGppAEP5s/
+ 12fvoiM1x1v/5Af6cTFDlwGqzpqMfz+dpZ/R6iNjuLqCAqTENbKenwaC1m3Mm2EX7yPPoAZk7
+ cm06wWEuv7/tJyGX2dQaVqVBCumOhiNZSbetOz8RGjqf/DkG6kYVCRblz7lt5g6OtgLAdIsIJ
+ lA76+V3Z8TSkEwmXhPMq9n6f8EgtYOwULlKOigF7MJ3rA2QOZTg2Si0zk/nhucMJ/b5OWe1YN
+ Y8NXf49Vx4E06hT1KvfmJvqEth8Tm5lltOA5spbaX+6+xp6jz2Jaj4GWWRfQlenE3sgCxr+97
+ Q39EHKNbZ7vuslMDCGcM0e77nADCT9ZNT6f6B8CFk1nPQchGMerpOYNRZUnH1wMaW4MxyLFPQ
+ mkLfgdrjBchqqi7+3bS3cB4mrE+uvXvKZx6q/3vsM2tD8Q8W0p7kfcdr7p3PcKR45ScCFEYf2
+ tfiyRE3S2RFzZizsSt0uibc1fy18O9dkX5iz43YcErWliZ6ezhmyaz+LTekknLPJuoNBFtaKQ
+ FF5a3U4fd7QHQtJf65rdSYxh/RifPBO4vJLwYZKA1qjt6kWE77tg4fpaid6p3hvzjVCEyTRuG
+ K6xQH0T
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 02/12, Thomas Gummerer wrote:
-> Thanks Peff and Junio for the review of the last round.
->
+Am 12.02.2017 um 19:32 schrieb Vegard Nossum:
+> I said I would resubmit the patches with more config options and more
+> command-line arguments (to avoid potentially breaking backwards
+> compatibility), but IIRC the response seemed to be "preceding blank line
+> heuristic is good enough" and "why bother", so I ended up not not
+> resubmitting anything.
 
-Sorry it seems like I messed up the In-Reply-To header.  Previous rounds were at:
-v1: http://public-inbox.org/git/20170121200804.19009-1-t.gummerer@gmail.com/
-v2: http://public-inbox.org/git/20170129201604.30445-1-t.gummerer@gmail.com/
-v3: http://public-inbox.org/git/20170205202642.14216-1-t.gummerer@gmail.com/
+I was (and still am) looking forward to your patches.  The current 
+heuristic is simplistic, the patches you already sent improve the output 
+in certain scenarios, my proposed changes on top aimed to limit 
+drawbacks in other scenarios, but together they still have shortcomings.
+
+Avoiding new switches would be nice, though (if possible).  I feel we 
+need a lot more tests to nail down our expectations.
+
+René
