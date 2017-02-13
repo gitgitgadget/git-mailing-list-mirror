@@ -3,90 +3,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7CA1E1FC44
-	for <e@80x24.org>; Mon, 13 Feb 2017 19:25:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 224111FC44
+	for <e@80x24.org>; Mon, 13 Feb 2017 19:32:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751808AbdBMTZH (ORCPT <rfc822;e@80x24.org>);
-        Mon, 13 Feb 2017 14:25:07 -0500
-Received: from mail-ot0-f195.google.com ([74.125.82.195]:34846 "EHLO
-        mail-ot0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750853AbdBMTZG (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Feb 2017 14:25:06 -0500
-Received: by mail-ot0-f195.google.com with SMTP id 65so13125218otq.2
-        for <git@vger.kernel.org>; Mon, 13 Feb 2017 11:25:06 -0800 (PST)
+        id S1751652AbdBMTcz (ORCPT <rfc822;e@80x24.org>);
+        Mon, 13 Feb 2017 14:32:55 -0500
+Received: from mail-vk0-f47.google.com ([209.85.213.47]:35613 "EHLO
+        mail-vk0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751313AbdBMTcy (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Feb 2017 14:32:54 -0500
+Received: by mail-vk0-f47.google.com with SMTP id x75so67183326vke.2
+        for <git@vger.kernel.org>; Mon, 13 Feb 2017 11:32:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=LjCNP4DnKJYsirwNaz96IF5gPgGhCWqhvC429i4CizA=;
-        b=cEb5B1fdrq8a+XZsy1cOQte4jQZRkACinPse+X+EV7W31YELo7/4g3xzaeFzBqrdbI
-         2m7SARMEcljgOMvj+jEmMy1iE9qCgN3EkX8Ry5YBvAliJjUiRKHUxycdjQwNqz8Q/mtK
-         oqxqLUoyLoTvmo4o4cUC7+0Ua/a1Q3X5L06766qdQHk9ns3wHDf4savu9jZEk3CmoY8Y
-         HjJsc01D4P5HeeqOUIzziaTCTy0Lolhr0z5mK7NNTah4lFB54nY/HkliJ2biYjK3IexX
-         XncTU6Hjv+USX+We+jBbCWvBPjUOKeG6BKW+ESOikLBV5I+JWuVI96z5FX8LIVM06NEv
-         34FA==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=882JOqWtAhpYXLPq3dimzdgV1s1iP7VbOtX4SsLIJQs=;
+        b=OxpYKpLPLdq8XyDhZt398CgVNm2MA96U64tavtf74qQYXRLkx1/vrpwnvRCNgeSHOq
+         6cSu037o3Ui/02ltJW9JvmMMB6ytcd+6qB+l2/lH9HZ4SZNMazlfxzNntJHMsLZw+QM/
+         Xe08K/qhab/VvyGyr9tlQ9ikGmQnuf5pDxhG0OFHXUPZoAo1SpXRY5ErdOmbfMEwNKeW
+         b15vJc8cj20PPgCqNkMiUIMssT0uqNEi197CWx9H44dLg15mPmYxLl2e2jddrapDzumU
+         n4Mnz4Iiw+diTfWUG0IcN+1f4ToQGqyy5G4GIfD+dRiJE78xIcd8xPKQiptt157kU7iG
+         YUbQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=LjCNP4DnKJYsirwNaz96IF5gPgGhCWqhvC429i4CizA=;
-        b=XEou6co3UAnN3yC7DyE/XvxYge2HtCrU2hACTVXtBkF+c+WrdYCVK3kV4W1Lbt7GyS
-         jpS/Ldy3m4ICJJsSjaMBsYs6Gp6Ill21zs0Bvhmg3kdcXd8PWLNMHSam1mS36lyQWOJ0
-         G97sMGmrAkCLCxBg6GM0lARG1u5VaLlTAgt+PDDMx0A7S3G6IAk9Po84pdNe3HDtWnOA
-         DHdKmonGRKT/0PIa3OCYuWvgKtwiit+3yWBrjzjGbDhbtqWYdX1KV3whh/De19yHWz6/
-         pPnT1WKYmSc8edjiKOtdi5Ite0a6Y8JE6dS0qmdbHiQLSBcxwP+zsvmgN+hq00lfAJp4
-         lktg==
-X-Gm-Message-State: AMke39kLaMgBXduwTosimJRJx7dewCLJLHU4VxA6nvwZ1DiaCHkbKQBgQcb8QqiLN2huYQ==
-X-Received: by 10.98.210.3 with SMTP id c3mr27578033pfg.7.1487013905442;
-        Mon, 13 Feb 2017 11:25:05 -0800 (PST)
-Received: from localhost ([2620:0:1000:8622:d0e0:42a7:601f:5154])
-        by smtp.gmail.com with ESMTPSA id w76sm22407522pfd.74.2017.02.13.11.25.04
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 13 Feb 2017 11:25:04 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     hIpPy <hippy2981@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: Incorrect pipe for git log graph when using --name-status option
-References: <CAM_JFCwYAKCWrHqCtcwid27V1HvhuSmp4QpbNpgyMzrzWUNYog@mail.gmail.com>
-Date:   Mon, 13 Feb 2017 11:25:03 -0800
-In-Reply-To: <CAM_JFCwYAKCWrHqCtcwid27V1HvhuSmp4QpbNpgyMzrzWUNYog@mail.gmail.com>
-        (hIpPy's message of "Sun, 12 Feb 2017 18:49:23 -0800")
-Message-ID: <xmqqa89pevw0.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=882JOqWtAhpYXLPq3dimzdgV1s1iP7VbOtX4SsLIJQs=;
+        b=MbJCeHpHyO42uZRxso5u3wKeNP2sz5bcclSwwnNG/LRAzVINNwVloN1+g37ncRhbvU
+         eIHA4/iOwx0oU9RJqLZSo/2l593JwwS+nPbcYiYMjAFwApuGq3KFbpJ7QjBh4tmqKtFF
+         r8j4WuEbAxR/QpQ0EKkVMijNYenyDdz5h1qB3yy7rhOSZSPhbz3zYn0a6eGLu9+UJUTE
+         0J5ils7rMoMM2Xr9apGqmprJ3QU8ttImscFuQcjImJLmB5pfKSbl0otY0mhWh7EXfEMl
+         jxKrbUUox6djt/WcS/8c2awmE0dWKDELpSC0YeqTsV43ikbVpAnYWNvgjZJpw75FJBYT
+         5nDA==
+X-Gm-Message-State: AMke39nK164O9Rz58wp4TrIFB7EKM1uT3J6wgpbJusy5sts7soC42P//k74d3S+vlQFW3mCad9nHIpa3DEx/YQ==
+X-Received: by 10.31.33.200 with SMTP id h191mr12030556vkh.0.1487014373225;
+ Mon, 13 Feb 2017 11:32:53 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
+Received: by 10.176.22.131 with HTTP; Mon, 13 Feb 2017 11:32:52 -0800 (PST)
+In-Reply-To: <xmqq7f4xk9es.fsf@gitster.mtv.corp.google.com>
+References: <20170203025405.8242-13-szeder.dev@gmail.com> <20170206181545.12869-1-szeder.dev@gmail.com>
+ <xmqq7f4xk9es.fsf@gitster.mtv.corp.google.com>
+From:   =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+Date:   Mon, 13 Feb 2017 20:32:52 +0100
+Message-ID: <CAM0VKj=Pai0fL7KtMdv1sg3N2KA1aBafGQ_XzXWKUsBmo62ZoA@mail.gmail.com>
+Subject: Re: [PATCH] squash! completion: fill COMPREPLY directly when
+ completing refs
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git mailing list <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-hIpPy <hippy2981@gmail.com> writes:
+On Fri, Feb 10, 2017 at 10:44 PM, Junio C Hamano <gitster@pobox.com> wrote:
 
-> The `git log` command with `graph` and pretty format works correctly
-> as expected.
+> Should I expect a reroll to come, or is this the only fix-up to the
+> series that begins at <20170203025405.8242-1-szeder.dev@gmail.com>?
 >
-> $ git log --graph --pretty=format:'%h' -2
-> * 714a14e
-> * 87dce5f
->
->
-> However, with `--name-status` option added, there is a pipe
-> incorrectly placed after the commit hash (example below).
->
-> $ git log --graph --pretty=format:'%h' -2 --name-status
-> * 714a14e|
-> | M README.md
+> No hurries.
 
-Is it a --name-status, or is it your own custom format, that is
-causing the above issue?
+Yes, definitely.
 
- - What happens if you stop using --pretty=format:%h and replace it
-   with something like --oneline?
+I found a minor bug in the middle of the series, and haven't quite
+made up my mind about it and its fix yet.  Perhaps in a day or three.
 
- - What happens if you keep using --pretty=format:%h but replace
-   --name-status with something else, e.g. --raw or --stat?
+Regarding the 'strip' -> 'lstrip' 'for-each-ref' format modifier
+rename that broke pu: I should keep using 'strip', right?
 
+G=C3=A1bor
