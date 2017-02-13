@@ -2,100 +2,116 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B8CE31FC44
-	for <e@80x24.org>; Mon, 13 Feb 2017 22:06:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 30C841FC44
+	for <e@80x24.org>; Mon, 13 Feb 2017 22:16:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751297AbdBMWGc (ORCPT <rfc822;e@80x24.org>);
-        Mon, 13 Feb 2017 17:06:32 -0500
-Received: from mail-it0-f68.google.com ([209.85.214.68]:34282 "EHLO
-        mail-it0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750943AbdBMWGc (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Feb 2017 17:06:32 -0500
-Received: by mail-it0-f68.google.com with SMTP id r141so780924ita.1
-        for <git@vger.kernel.org>; Mon, 13 Feb 2017 14:06:31 -0800 (PST)
+        id S1751429AbdBMWP6 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 13 Feb 2017 17:15:58 -0500
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:36444 "EHLO
+        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751351AbdBMWP5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Feb 2017 17:15:57 -0500
+Received: by mail-wm0-f67.google.com with SMTP id r18so566746wmd.3
+        for <git@vger.kernel.org>; Mon, 13 Feb 2017 14:15:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=og6dlcvjtikibtqOGy5iuJWMV4dcr4lHDEcyRgC4gWQ=;
-        b=j3ZMnFL/EaGMVT6sHuv1xpYh8i42xW0KMYWoaoT+XiArz58xOqffx6C50lMhmacbes
-         FoEpl+Bu9fXmuAM2Vb3sJVeTrjrHtnTsegYIbct+BZg5xI7/CdUWoEblp/v3aH/2i+j/
-         xqSwItXdRZROT33XU2KRdqYgIIu68DWhN67ECksmT+yigcnL6ta2OVLWpJUN4wGpus7U
-         8xIQXimKTVR6isyjlO8qpaItFP4s4SZiVFbbrxqMVWAsBRhbtzK8h46Ra+vRmZFOPbK4
-         t/DVKn4a0APZpaoXwRGpF6vrOOLjOF3AoSzBdD1s8CgYF9DHHp3Kx/UlXuSBgMqDOuSZ
-         bx6Q==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=AAcMDanDdbGAV0ChVKXAYYeUXceF/0g3DoEmo/md+zQ=;
+        b=fy8d9u78lzRQMPyehp7qfAL1tmwfiA2kZs2/ruehEYLZM5jcvoi+fhQ3HaIK9BM1xv
+         D75JAtF6xu4oMXIdymAvmO0r77ErPFG9ESoLC45/b1Vxm1VPbjlsRlTu3Cfim0W41hhp
+         ts1Ky5lTdd74ilvFWVawNo6Qs4MGTbqsiPpqsDZ+JnVWTVlZm5C+/jPN9PUJdz38EyIH
+         5JYuB2Ni16NSATWsD1HYSrZxhmrxy21+mA91XgQIScwbiB3rZjQieJh1K+ZFwSpAg4h9
+         kZZF7ya9Aro5mZzrDJLNdfn9+DB9vdmHG970BjHBkUcLLO3d6/bIYSB2Fdiy+yy/l/DV
+         hvXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=og6dlcvjtikibtqOGy5iuJWMV4dcr4lHDEcyRgC4gWQ=;
-        b=X9k0nDmhe93wZ7+I6n99hfWPXBDYYKG8ItiM3gQ+LHFWiMP1hmwMoIPxxwB/lzedx3
-         vMcy4EgRznauaI48n6rl6B6ChXNEmCapWTm2mdMXv0+dsJZeX+5GfbTnwrHksH0MwQCq
-         yKupCkkEk5YbDS1GNG7ANVckDgL8vhHSw29uO2yxyqLrfl8js72JJuxzP2VOXKJDvvv7
-         zC8GwkAQlNj0NWspoBCmW/pD/FCeXcUE6t8xTD9yqdODVVvlMwQT+0hpKqkNnU/8dWTL
-         fpad4gLSesPyXe89+s+/NZrqJTgFWDNQB5r8GY4elI1lYDHMDq9b1b7z+MdK/UVmaUxS
-         jiqQ==
-X-Gm-Message-State: AMke39mOV2gH3V+tHplVW/ZXue47cmybaHxjU5biaJTkpPSBYLQj1lBcvjQg6o/2kRtALA==
-X-Received: by 10.99.247.83 with SMTP id f19mr28855385pgk.158.1487023591117;
-        Mon, 13 Feb 2017 14:06:31 -0800 (PST)
-Received: from localhost ([2620:0:1000:8622:d0e0:42a7:601f:5154])
-        by smtp.gmail.com with ESMTPSA id p17sm16419525pfi.97.2017.02.13.14.06.30
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 13 Feb 2017 14:06:30 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] docs/git-submodule: fix unbalanced quote
-References: <20170213203835.vssj64tcvuq35dny@sigill.intra.peff.net>
-        <20170213210549.jns7asrvjp3lb5wc@sigill.intra.peff.net>
-Date:   Mon, 13 Feb 2017 14:06:29 -0800
-In-Reply-To: <20170213210549.jns7asrvjp3lb5wc@sigill.intra.peff.net> (Jeff
-        King's message of "Mon, 13 Feb 2017 16:05:49 -0500")
-Message-ID: <xmqqtw7xbva2.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=AAcMDanDdbGAV0ChVKXAYYeUXceF/0g3DoEmo/md+zQ=;
+        b=j5mMPUOFPZSb4g6umtEX82Yf+IOLQFINkg/tNzTxJP1InCEbNfYyli/kRqEyl6Nc7p
+         6FBpWuYIT/n6GPuMhGp0wzXmTj80+Uo5RuMbuZUF6pEjmgHMmG33bvTcobff4DtJrCR/
+         fFfPwR6KDz8emu97CtZ/ViHHzsr70YY0bK2yeVtMPC7hdYKs0LCxEFQq9At2uba+scbS
+         pIyVdLDQI8vq1tCQ4U6qplr9GHDNUSQV9x1a6bhe/Shh0zez9Wksbg+krQL0BvEuuiTT
+         1BH4K3FmosOxP+mpt6Ck8AUk+AiqQKQ2E2qqOJizDHAJ1cMCUKXV4Au9FmT+rZrySPv/
+         53vg==
+X-Gm-Message-State: AMke39lIFK7R1vj2FiYeka8uId4ldwMOZHL8ca5/5nyaxFnZnrqgTC7wFRPvNUTCWMXa/A==
+X-Received: by 10.28.126.11 with SMTP id z11mr426527wmc.13.1487024156362;
+        Mon, 13 Feb 2017 14:15:56 -0800 (PST)
+Received: from localhost ([2a02:c7f:c42b:f900:5e51:4fff:fee9:57af])
+        by smtp.gmail.com with ESMTPSA id g71sm6984804wmc.9.2017.02.13.14.15.55
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 13 Feb 2017 14:15:55 -0800 (PST)
+Date:   Mon, 13 Feb 2017 22:16:30 +0000
+From:   Thomas Gummerer <t.gummerer@gmail.com>
+To:     Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Cc:     git@vger.kernel.org, Stephan Beyer <s-beyer@gmx.net>,
+        Junio C Hamano <gitster@pobox.com>,
+        Marc Strapetz <marc.strapetz@syntevo.com>,
+        Jeff King <peff@peff.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        =?iso-8859-1?Q?=D8yvind_A_=2E?= Holm <sunny@sunbase.org>,
+        Jakub =?utf-8?B?TmFyxJlic2tp?= <jnareb@gmail.com>
+Subject: Re: [PATCH v3 2/5] stash: introduce push verb
+Message-ID: <20170213221630.GC652@hank>
+References: <20170129201604.30445-1-t.gummerer@gmail.com>
+ <20170205202642.14216-1-t.gummerer@gmail.com>
+ <20170205202642.14216-3-t.gummerer@gmail.com>
+ <vpqlgtaz09q.fsf@anie.imag.fr>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <vpqlgtaz09q.fsf@anie.imag.fr>
+User-Agent: Mutt/1.5.23.1-rc1 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+On 02/13, Matthieu Moy wrote:
+> Thomas Gummerer <t.gummerer@gmail.com> writes:
+> 
+> > Introduce a new git stash push verb in addition to git stash save.  The
+> > push verb is used to transition from the current command line arguments
+> > to a more conventional way, in which the message is given as an argument
+> > to the -m option.
+> 
+> Sorry if this has been discussed before, but I find 'push' rather
+> confusing here. It took me a while to understand that it meant "opposite
+> of pop", because in the context of Git, "push" usually means "send to
+> remote repository".
 
-> However, let's take a step back. Even when rendered
-> correctly, it's hard to read a long command stuck into the
-> middle of a paragraph, and the important punctuation is hard
-> to notice.
+There wasn't much of a discussion about it, but it was pretty much the
+only thing that came to my mind, and nobody complained or suggested
+anything different, so I just went with it.  No other verb came to my
+mind yet, but if someone has a better suggestion, I'd be happy to
+change.
 
-Yes, I like this reasoning behind the solution very much.
+> Unfortunately, I didn't come up with a better name. "create" is already
+> taken ...
+> 
+> Another think to have in mind: changing the option name to break
+> backward compatibility is something we can't do often, so if there's
+> anything else we should change about the UI, we should do it now. I
+> don't have anything particular in mind, just thinking aloud.
 
-Thanks.
+Now that you mention this, there actually is one inconsistency that I
+introduced, which I shouldn't have.  git stash push works with
+--include-untracked and --all to decide whether or not to include
+untracked files, and if also ignored files should be included.  I also
+added a --include-untracked {untracked,all} argument to git stash
+create, which is clearly inconsistent.
 
->  Documentation/git-submodule.txt | 9 ++++++---
->  1 file changed, 6 insertions(+), 3 deletions(-)
->
-> diff --git a/Documentation/git-submodule.txt b/Documentation/git-submodule.txt
-> index 918bd1d1b..a8eb1c7ce 100644
-> --- a/Documentation/git-submodule.txt
-> +++ b/Documentation/git-submodule.txt
-> @@ -228,9 +228,12 @@ foreach::
->  	the processing to terminate. This can be overridden by adding '|| :'
->  	to the end of the command.
->  +
-> -As an example, +git submodule foreach \'echo $path {backtick}git
-> -rev-parse HEAD{backtick}'+ will show the path and currently checked out
-> -commit for each submodule.
-> +As an example, the command below will show the path and currently
-> +checked out commit for each submodule:
-> ++
-> +--------------
-> +git submodule foreach 'echo $path `git rev-parse HEAD`'
-> +--------------
->  
->  sync::
->  	Synchronizes submodules' remote URL configuration setting
+There really should only be one way.  I'd be fine with either way, but
+I think using --include-untracked and --all is the better choice,
+because it's easy to understand, and also makes it easier to switch
+git stash without a verb over to use push_stash internally.
+
+> -- 
+> Matthieu Moy
+> http://www-verimag.imag.fr/~moy/
