@@ -2,87 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E46CA2013B
-	for <e@80x24.org>; Mon, 13 Feb 2017 23:48:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 234C71FC44
+	for <e@80x24.org>; Mon, 13 Feb 2017 23:55:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751394AbdBMXsL (ORCPT <rfc822;e@80x24.org>);
-        Mon, 13 Feb 2017 18:48:11 -0500
-Received: from mail-it0-f67.google.com ([209.85.214.67]:35440 "EHLO
-        mail-it0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751250AbdBMXsK (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Feb 2017 18:48:10 -0500
-Received: by mail-it0-f67.google.com with SMTP id 203so1319245ith.2
-        for <git@vger.kernel.org>; Mon, 13 Feb 2017 15:48:09 -0800 (PST)
+        id S1751413AbdBMXzv (ORCPT <rfc822;e@80x24.org>);
+        Mon, 13 Feb 2017 18:55:51 -0500
+Received: from mail-it0-f41.google.com ([209.85.214.41]:38811 "EHLO
+        mail-it0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751333AbdBMXzu (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Feb 2017 18:55:50 -0500
+Received: by mail-it0-f41.google.com with SMTP id c7so9403829itd.1
+        for <git@vger.kernel.org>; Mon, 13 Feb 2017 15:55:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=fWzNRVAqUpn9go/HVMMpapKwvF7SKHYb2v3qCq+Bp80=;
-        b=UBthyCrahDqyz7axWKO5pvhcROkJjKdxKn92boDvAHnLcJU0GJQZBr1K99VG1scf7S
-         +EMMcDs4nvaHfB71VqG9KeTwL4o8DsQ9h+v2sZAQckT8MWtqiPhiF92Q02k/HORVRVoD
-         ibih7O7lPnThnZ9d+Ve6rOU++AqiQvj67Vo1brUa3IbUcwlTd4T/6hCysSTDdsjuNHaU
-         IX6XaFU1nCI0jNcFLsgC9W+3Dp138saTlh5M53WSiwgr16vbYuKngPoKKdj7mQXTaFKt
-         UetIJAQBUSFIfPeeZlSp+uMqZLERF2mmFHG9aevbDcIMkSWzXEkcmzzyI0n36b20J9/U
-         Ok0w==
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=url+cOgATPCnHRCWK85QY7d3Y9V/eHDHL9nx2zVwGGc=;
+        b=ZjqccUFmWBS6vhPgR3+ZaKRaA11b4t2llKK6SpVOfB837fQyCc0kRzASRTxClA3vpC
+         +wgEy5uzOcnpvBOahvaQsZ/vsdKPXeDyjUK/oYn4hJ7SUpMObGbOr6gKzneryGYQktGu
+         e1DnVZfdBaI6TzRgNvpj74lvsZKt6nBT18b8UHDSPCgEeOien2cqdBP/0oSh+A0Bpl6M
+         KESeYlIJ/Bpnl1gTcPctc/YqhsRqHgiHPsIctFGrtNcoPrhuCP52N0phDxgIldOcP3QC
+         JSdkDp3CFq0lhNl0jQzvf7fKZJQi2zNoGn7p9CLEbgtIer25sTgoci3AZUUf5EIDg8iJ
+         1IRg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=fWzNRVAqUpn9go/HVMMpapKwvF7SKHYb2v3qCq+Bp80=;
-        b=K5wVVx8SITSPDcPctAOJ468scRpPZ9PjoLiVBylNU7di6ywZhNzSoPvrosjiEe3oH8
-         qrD+Stou5lbNWBbsyV1D0hUPIVJ3kxL+j/LB/3gqDWyRYOqk0Jws5bnQ/sQSKxGiGF2H
-         gH50kh3QlwzJZIYfkIpfxO4TetB0ESAb6kVNIHVhsaf4XgWojQU7eoo2S3QpL0qDxa3j
-         UjzupLK+oZqoteONLbQzwUcAsZT3TNJVjWxSMy9OB3iQins4PLDhwxx1SNel8e+Qg+xy
-         TzUeoFPsC90/GQPGfbthT0YCoJIDArVTv1JtX3SoDo+thpcf663dhirH7wW45Z6sv00Z
-         qaYQ==
-X-Gm-Message-State: AMke39kUcBmlGDjv+hfMlFoeuUyYhITKEXMOHgxNDOUmvVWfMF2fbNyal8Q+woNoO6uSaA==
-X-Received: by 10.99.228.69 with SMTP id i5mr29821309pgk.63.1487029689157;
-        Mon, 13 Feb 2017 15:48:09 -0800 (PST)
-Received: from localhost ([2620:0:1000:8622:d0e0:42a7:601f:5154])
-        by smtp.gmail.com with ESMTPSA id d29sm22870103pfk.83.2017.02.13.15.48.08
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 13 Feb 2017 15:48:08 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH] clean: use warning_errno() when appropriate
-References: <20170213092702.10462-1-pclouds@gmail.com>
-        <xmqqwpcudjoh.fsf@gitster.mtv.corp.google.com>
-        <20170213191433.muwhz7zem64p3rxr@sigill.intra.peff.net>
-        <xmqqk28tddwo.fsf@gitster.mtv.corp.google.com>
-        <20170213211051.vsnnrtcsvuvfcwyk@sigill.intra.peff.net>
-        <xmqqy3x9bvvm.fsf@gitster.mtv.corp.google.com>
-        <20170213222210.dtfnxbbi77tsx4a6@sigill.intra.peff.net>
-Date:   Mon, 13 Feb 2017 15:48:07 -0800
-In-Reply-To: <20170213222210.dtfnxbbi77tsx4a6@sigill.intra.peff.net> (Jeff
-        King's message of "Mon, 13 Feb 2017 17:22:10 -0500")
-Message-ID: <xmqq1sv1bqko.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=url+cOgATPCnHRCWK85QY7d3Y9V/eHDHL9nx2zVwGGc=;
+        b=XrSJOpc9Y75jQsEDIkl5AEHPRPynnDZThbIpIXX4jlrr0bITs4ZSQ1Z3Lh6xvUYmG9
+         XIkZqHQSyhZiEeyYuIT6R2DVgYa10UfSsDZJSFM9jGFdxiSfgQyRkR/8uyukKVsGsyAo
+         OJjNZ/W74HyA3b0wY4vko0xmUwMOocwxXcfd4cWa+2CGU70y1mD/eZY6QKDlhbEtfb2J
+         jtTAY+EwcLZKRTQMQQaJBLADR5V20BpYGq2fdVS/aYI0rwLP60HUvfEmrmuMq7XCDVlA
+         /pPgx64N25W9ebm8J7Cf9ejCQ1AP2vBFtpy5ZyxFgAebR28S9gTZ4C2hRjJJBdGX9c+a
+         D7XA==
+X-Gm-Message-State: AMke39k23MwOHOX8FVXSCSjxJsJu3WnG9OTOffQnEJl193Q3tVmWFvPAcrFFDeIENlZRoI8EcAdP5m4EfoN4Ac/e
+X-Received: by 10.36.65.4 with SMTP id x4mr1067105ita.69.1487030149373; Mon,
+ 13 Feb 2017 15:55:49 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
+Received: by 10.79.33.148 with HTTP; Mon, 13 Feb 2017 15:55:48 -0800 (PST)
+In-Reply-To: <20170213152011.12050-12-pclouds@gmail.com>
+References: <20170213152011.12050-1-pclouds@gmail.com> <20170213152011.12050-12-pclouds@gmail.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Mon, 13 Feb 2017 15:55:48 -0800
+Message-ID: <CAGZ79kZC6TntQrW7MF6-h5z5En-u6rwNX=zuaHRNDpbO80ALHA@mail.gmail.com>
+Subject: Re: [PATCH 11/11] refs: split and make get_*_ref_store() public API
+To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Michael Haggerty <mhagger@alum.mit.edu>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        David Turner <novalis@novalis.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+>
+> +/*
+> + * Return the ref_store instance for the specified submodule. For the
+> + * main repository, use submodule==NULL; such a call cannot fail.
 
-> So in that sense doing the errno dance as close to the caller who cares
-> is the most _obvious_ thing, even if it isn't the shortest.
+So now we have both a get_main as well as a get_submodule function,
+but the submodule function can return the main as well?
 
-Yup.
+I'd rather see this as a BUG; or asking another way:
+What is the difference between get_submodule_ref_store(NULL)
+and get_main_ref_store() ?
 
-> It would be nice if there was a way to annotate a function as
-> errno-safe, and then transitively compute which other functions were
-> errno-safe when they do not call any errno-unsafe function. I don't know
-> if any static analyzers allow that kind of custom annotation, though
-> (and also I wonder whether the cost/benefit of maintaining those
-> annotations would be worth it).
+As you went through all call sites (by renaming the function), we'd
+be able to tell that there is no caller with NULL, or is it?
 
-Double yup.
+Stefan
+
+> For
+> + * a submodule, the submodule must exist and be a nonbare repository,
+> + * otherwise return NULL. If the requested reference store has not yet
+> + * been initialized, initialize it first.
+> + *
+> + * For backwards compatibility, submodule=="" is treated the same as
+> + * submodule==NULL.
+> + */
+> +struct ref_store *get_submodule_ref_store(const char *submodule);
+> +struct ref_store *get_main_ref_store(void);
