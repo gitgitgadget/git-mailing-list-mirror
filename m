@@ -2,82 +2,68 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E702E1FC44
-	for <e@80x24.org>; Mon, 13 Feb 2017 23:09:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EE73D1FC44
+	for <e@80x24.org>; Mon, 13 Feb 2017 23:11:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751481AbdBMXJm (ORCPT <rfc822;e@80x24.org>);
-        Mon, 13 Feb 2017 18:09:42 -0500
-Received: from mail-it0-f50.google.com ([209.85.214.50]:36268 "EHLO
-        mail-it0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751371AbdBMXJl (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Feb 2017 18:09:41 -0500
-Received: by mail-it0-f50.google.com with SMTP id c7so8157789itd.1
-        for <git@vger.kernel.org>; Mon, 13 Feb 2017 15:09:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=Sx+a+a5TxyW7JBmm1KZp0YN7/87bm3lrtS31rkEZmW4=;
-        b=vMcaXxf/IJAGqZWAyIFh0wt3Pd3M30zXVgBu2f6crQ6g7lkyuSJ34VGaPKsrZ2tQB+
-         dgHTQjxd/SvfFMA7vDG1DT4Z/28JSZxQbn6n8Cc+ZevxDvST4Zkgu8/eK5pF4A9hs1m5
-         pXUHraAP9wlYvjkghh7XlaJMM5j2a1tpWb55tH2MeBcixRzyL0hgeNmSDw8Sjj8L5U/F
-         +CGmw2g9GSIcNh5iuJK/PZ/Uu6hczQ8GztsYcpVJfZheXxhs4LJ7lmMA8WTqoUyeUqIp
-         jVHDzWCDuL/yC67WRPTGbBoMkibLBG5pJOH/JP5pF5jkkqTHQGjk5URPp3okQlVDdC/7
-         woUw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=Sx+a+a5TxyW7JBmm1KZp0YN7/87bm3lrtS31rkEZmW4=;
-        b=W4rZqhkVfv5ZvJUn5M17NYCbTjma7OMFf+FxGIjb0WSFC28K+IG28hZ82ouFgY0OWj
-         thS4D5LOfmk3j6gOYFfvpWUjp36m9EXgBUNqpRBoxz4PldhoIIH3hA0A6DBBDaI0EqTl
-         R4KYGLQuQf8NfMCbGNNIY9e9H2ZYzOwl0dg4EURb3IGi4+cWeUnPDMCRHG1vlYfUqgAg
-         wjQXxqZWepMkP7OIfprZxngGQvObxfB9pqsRdy1H9rwn3parD4+mZRdYhk4kw16GtLgZ
-         EbBOwrQVYYpEencV9J88S4D8BnOYXdrux7PPikxxGAWKtXN8IFvDcMY/7dn96dKmXrpu
-         AQfg==
-X-Gm-Message-State: AMke39mQaexpzKnrPPLMsjJPyMh/v0qxLdrT8HgGdXwPfRbpKEt3Qa85TP+N0YQTo0nesv8MrTKWeSmVffCdhiwh
-X-Received: by 10.36.34.79 with SMTP id o76mr808029ito.116.1487027380875; Mon,
- 13 Feb 2017 15:09:40 -0800 (PST)
+        id S1751374AbdBMXLS convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Mon, 13 Feb 2017 18:11:18 -0500
+Received: from sp-internet-ext-ply.uhc.com ([198.203.175.175]:27964 "EHLO
+        mail6.uhc.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1750975AbdBMXLS (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Feb 2017 18:11:18 -0500
+X-Greylist: delayed 574 seconds by postgrey-1.27 at vger.kernel.org; Mon, 13 Feb 2017 18:11:17 EST
+X-IronPort-AV: E=Sophos;i="5.35,158,1484028000"; 
+   d="scan'208";a="796796822"
+Received: from irmply49.uhc.com (HELO mail6.uhc.com) ([10.114.162.64])
+  by mail8.uhc.com with ESMTP; 13 Feb 2017 17:01:42 -0600
+X-IronPort-AV: E=Sophos;i="5.35,158,1484028000"; 
+   d="scan'208";a="796796812"
+X-CONF-FOOTER: True
+Received: from apsep0925.ms.ds.uhc.com ([10.114.192.113])
+  by mail6.uhc.com with ESMTP; 13 Feb 2017 17:01:42 -0600
+Received: from apswp0428.ms.ds.uhc.com ([fe80::7cb7:a560:d0b0:bc2d]) by
+ APSEP0925.ms.ds.uhc.com ([fe80::71f3:9715:e387:7dce%18]) with mapi id
+ 14.03.0279.002; Mon, 13 Feb 2017 17:01:42 -0600
+From:   "Vanderhoof, Tzadik" <tzadik.vanderhoof@optum360.com>
+To:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: new git-diff switch to eliminate leading "+" and "-" characters
+Thread-Topic: new git-diff switch to eliminate leading "+" and "-" characters
+Thread-Index: AdKGTR6IIA548fKLReSKxHY4yrqMsA==
+Date:   Mon, 13 Feb 2017 23:01:41 +0000
+Message-ID: <2C8817BDA27E034F8E9A669458E375EF11886C5A@APSWP0428.ms.ds.uhc.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.112.10.26]
+Content-Type: text/plain; charset="us-ascii"
 MIME-Version: 1.0
-Received: by 10.79.33.148 with HTTP; Mon, 13 Feb 2017 15:09:40 -0800 (PST)
-In-Reply-To: <20170213152011.12050-8-pclouds@gmail.com>
-References: <20170213152011.12050-1-pclouds@gmail.com> <20170213152011.12050-8-pclouds@gmail.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 13 Feb 2017 15:09:40 -0800
-Message-ID: <CAGZ79kbJXUY=UGvHtkeLLj-qMaoOyTwa2dr3-FqEdYi8eFs4LA@mail.gmail.com>
-Subject: Re: [PATCH 07/11] files-backend: remove the use of git_path()
-To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Michael Haggerty <mhagger@alum.mit.edu>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        David Turner <novalis@novalis.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8BIT
+X-IP-VFilter-R: R
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> +
-> +       if (submodule) {
-> +               refs->submodule = xstrdup_or_null(submodule);
+The output of git-diff includes lines beginning with "+" and "-" to indicate added and deleted lines.  A somewhat common task (at least for me) is to want to copy output from a "diff" (usually the deleted lines) and paste it back into my code.
 
-drop the _or_null here?
+This is quite inconvenient because of the leading "+" and "-" characters.  I know there are shell and IDE / editor workarounds but it would be nice if there was a switch to git-diff to make it leave out those characters, especially since "--color" kind of makes those leading characters obsolete.
 
-So in this patch we have either
-* submodule set
-* or gitdir/gitcommondir set
+Would it make sense to develop such a switch or has there been work on that already?
+______________________________
+Tzadik Vanderhoof | Optum360 
+Sr Software Engineer, NLP Innovation
+www.optum360.com
 
-which means that we exercise the commondir for regular repos.
-In the future when we want to be able to have a combination of worktrees
-and submodules this ought to be possible by setting submodule != NULL
-and still populating the gitdir/commondir buffers.
+This e-mail, including attachments, may include confidential and/or
+proprietary information, and may be used only by the person or entity
+to which it is addressed. If the reader of this e-mail is not the intended
+recipient or his or her authorized agent, the reader is hereby notified
+that any dissemination, distribution or copying of this e-mail is
+prohibited. If you have received this e-mail in error, please notify the
+sender by replying to this message and delete this e-mail immediately.
 
-Thanks,
-Stefan
