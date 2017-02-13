@@ -2,123 +2,138 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9429D1FC44
-	for <e@80x24.org>; Mon, 13 Feb 2017 18:27:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 722DC1FC44
+	for <e@80x24.org>; Mon, 13 Feb 2017 18:34:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752690AbdBMS1S (ORCPT <rfc822;e@80x24.org>);
-        Mon, 13 Feb 2017 13:27:18 -0500
-Received: from mout.web.de ([212.227.17.12]:65513 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752219AbdBMS1R (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Feb 2017 13:27:17 -0500
-Received: from [192.168.178.36] ([79.197.218.233]) by smtp.web.de (mrweb103
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0LcPWs-1bwpJL0ive-00jsJM; Mon, 13
- Feb 2017 19:27:09 +0100
-Subject: Re: [PATCH] fixup! bisect--helper: `bisect_next_check` & bisect_voc
- shell function in C
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-References: <a1b9143bb29a8a5979dd733ed20161e6769b2b83.1486736391.git.johannes.schindelin@gmx.de>
- <128b4de6-7b8e-27b9-414d-c6c6529cb491@web.de>
- <alpine.DEB.2.20.1702131722350.3496@virtualbox>
-Cc:     Pranit Bauva <pranit.bauva@gmail.com>, git@vger.kernel.org,
-        Junio C Hamano <gitster@pobox.com>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <74dfcffe-274c-7045-420a-95612394d66b@web.de>
-Date:   Mon, 13 Feb 2017 19:27:01 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
- Thunderbird/45.7.1
+        id S1752967AbdBMSeL (ORCPT <rfc822;e@80x24.org>);
+        Mon, 13 Feb 2017 13:34:11 -0500
+Received: from mail-oi0-f66.google.com ([209.85.218.66]:33191 "EHLO
+        mail-oi0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752952AbdBMSeJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Feb 2017 13:34:09 -0500
+Received: by mail-oi0-f66.google.com with SMTP id j15so364182oih.0
+        for <git@vger.kernel.org>; Mon, 13 Feb 2017 10:34:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=YPpweIFdr8JNafeVUWUHOBw8Hp2cFvcDp/wbtve1PBU=;
+        b=mG15etk394TpM+mYm0jNL3H+JrqLNug7Wgr//zY3VEtmfzmAbWqyk4xUrS2eNzDcho
+         uQqm1YvOi5sPr4KrgvklyRIbIV8YZf0Uidt3lksSyR6fs0gjP3lq/rajh25CTaslhQtp
+         +n3SAsGnNI6avZFPJm5svwPs77+pKjXRMRRSSP2sruYKzr7CziWgFj9Np7VGNbQuSdV3
+         Woh4LvU7N85V+LNv6RAAAP9uyzfTVloR3KCGbkAub+mlThWSEE9fc3YxWRNuF7JnWWdc
+         vQuAJ5Dt3qQVusPdN9NqOc/WoyF22ATZDylksGa58LtLKajclPUkLIhXuNbHSGbVES/j
+         SD5w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=YPpweIFdr8JNafeVUWUHOBw8Hp2cFvcDp/wbtve1PBU=;
+        b=PTHFvgtba0tG+q6o39V/Sh1hi7gCCrSigILLZJyt+mlwvU3FpOyPA1bjOQOe4lR2Fj
+         OL64AgV1sck3Nb+1+Xob/EEWpr7+JK/1FgtfaLi7Ltv9c4lr32vbCptxQKZjEssXHkZP
+         wTos49n6GE2OpIWn7e6L8phVreiaRnPgtiy6zPGw80bi11REj1YY16zsg4Es8zWgxk5l
+         MY3x0u+Izc1EHFddhTe2coINh5J9Ogdz3IFH8SW4tVBaI/QZZFs6mZEk+BB4/U9OHyZ7
+         9hEXaCzzd6NbMqyzBzERzWSL3cN3lRvQ/i35BbzSheiG/Wl4yFymu41yN+s3Sq7yhCpZ
+         Z1Xw==
+X-Gm-Message-State: AMke39mj42o4Xami0C1+xlcMQQdU4Fc4VNGl2hHGdFnrNMQR11hYEUxwz5XBXKbH9/zA6Q==
+X-Received: by 10.84.224.131 with SMTP id s3mr31553751plj.162.1487010848207;
+        Mon, 13 Feb 2017 10:34:08 -0800 (PST)
+Received: from localhost ([2620:0:1000:8622:d0e0:42a7:601f:5154])
+        by smtp.gmail.com with ESMTPSA id d78sm22310582pfb.43.2017.02.13.10.34.07
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Mon, 13 Feb 2017 10:34:07 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] clean: use warning_errno() when appropriate
+References: <20170213092702.10462-1-pclouds@gmail.com>
+Date:   Mon, 13 Feb 2017 10:34:06 -0800
+In-Reply-To: <20170213092702.10462-1-pclouds@gmail.com> (=?utf-8?B?Ik5n?=
+ =?utf-8?B?dXnhu4VuIFRow6FpIE5n4buNYw==?=
+        Duy"'s message of "Mon, 13 Feb 2017 16:27:02 +0700")
+Message-ID: <xmqqwpcudjoh.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <alpine.DEB.2.20.1702131722350.3496@virtualbox>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K0:u6Eb41RL4k0FN+hED29pFs7jd2lIrWkw7v6MXFiorvDbCHGAaf3
- sfBAQx4ITaYt+BruHMGc9iUbcITF4+kzW6DbO57O/7w7zWgcP1kx3fKOVfbIWpDQprxi9nu
- ee5o6mx8cJGsicXTbIG4XLh52VmhNirqpbM3H9xvlRoqVfGhJyLO8WsWDzLlOgFASyQfMx/
- pCuBVLJQ0dSBXa02BfGOQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:wdOJMnmUl8k=:vEsDD3sid+7Le9kTLtE1ki
- oaAIaovMduzR14ldKBMVnF5iFR7myZdmWeZVD8siuw5hCjHzevLrbHkyhRl7CoqM6+3YS9RIf
- WtToA3osEnNrbIfkXMK4VedMIQkhuzhJzjfl8Rr++1ySCO6wI0dDIWp81X566pCAbBiD634l1
- bAbb65eGNzGRoXPD7P/Y8KqvdHasRaPEEVnSBUlWW7W71VStfuTrROSg6VIJBTIioUv2o5fp/
- DmKq4pFh38U/lMK7cvLtBxvgPQVV0VfQG+argmq+WzCmPE92G3PgVOhKvZa9PmM7VoGGMXH/j
- XAVkv1jnGQC2Gw3mlYjElB2n9RAcqo3UZZ0uCZ1ITznAfbGhqbGJupQI+QJGhtd9ktKtHA1+n
- 1rOSD53gNBRpZjuBAe/0yWGXsCtXOtdxUDmfLG7IAvQmJKTkipdKMVbQsqa1Lk1SMxAkSPwMj
- W/obv71o1FcSt0k4nOgevQyWXox0H9KkY28UdmzM3A9Lxpox0HyVcZvH6wX693w38en+bxWEN
- 6UuPUQzHNGoRHgjGzSW1IGzwytVIp/bFLowqRok0EpayZnU64X9MUIXVBPmOkU1JlK4dzV+AW
- 7JmjWN9+IC4s1x9wA82VQcvR8PYx9iinrrSCyTVOJYdF5y//ayNDTV4ZjaZlGKoZ84otuybr5
- riOIoxxeopBLv19PeLxc6ZeVbu6s9Bxdf77YCjb+AwkLY0w5laFs1cQvVnIj6cis+o+Cmatzl
- 9eqTZ7qEU7l8P8D10GnU5NcP96P4rvLTTD7KYST8QoTnoiTn9zDxlnG1gQkRaG7muijxQ32Zw
- +VdO7Mm
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 13.02.2017 um 17:23 schrieb Johannes Schindelin:
-> Hi René,
-> 
-> On Fri, 10 Feb 2017, René Scharfe wrote:
-> 
->> Am 10.02.2017 um 15:20 schrieb Johannes Schindelin:
->>> It is curious that only MacOSX builds trigger an error about this, both
->>> GCC and Clang, but not Linux GCC nor Clang (see
->>> https://travis-ci.org/git/git/jobs/200182819#L1152 for details):
->>>
->>> builtin/bisect--helper.c:299:6: error: variable 'good_syn' is used
->>>   uninitialized whenever 'if' condition is true
->>>   [-Werror,-Wsometimes-uninitialized]
->>>         if (missing_good && !missing_bad && current_term &&
->>>             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
->>> builtin/bisect--helper.c:350:7: note: uninitialized use occurs here
->>>         if (!good_syn)
->>>              ^~~~~~~~
->>
->> The only way that good_syn could be used in the if block is by going to the
->> label finish, which does the following before returning:
->>
->> 	if (!bad_ref)
->> 		free(bad_ref);
->> 	if (!good_glob)
->> 		free(good_glob);
->> 	if (!bad_syn)
->> 		free(bad_syn);
->> 	if (!good_syn)
->> 		free(good_syn);
->>
->> On Linux that code is elided completely -- freeing NULL is a no-op.  I guess
->> free(3) has different attributes on OS X and compilers don't dare to optimize
->> it away there.
->>
->> So instead of calling free(3) only in the case when we did not allocate memory
->> (which makes no sense and leaks) we should either call it in the opposite
->> case, or (preferred) unconditionally, as it can handle the NULL case itself.
->> Once that's fixed initialization will be required even on Linux.
-> 
-> Exactly, free(NULL) is a no-op. The problem before this fixup was that
-> good_syn was not initialized to NULL.
+Nguyễn Thái Ngọc Duy  <pclouds@gmail.com> writes:
 
-Strictly speaking: no.  The value doesn't matter -- the free(3) calls
-above will be done with NULL regardless, due to the conditionals.
-Setting bad_syn and good_syn to an invalid pointer would have calmed
-the compiler just as well, and would have had no ill side effect (i.e.
-no invalid free(3) call).
+> All these warning() calls are preceded by a system call. Report the
+> actual error to help the user understand why we fail to remove
+> something.
 
-Initializing to NULL is still the correct thing to do, of course --
-together with removing the conditionals (or at least the negations).
+I think this patch is probably correct in the current code, but I
+say this only after following what quote_path_relative() and
+relative_path() that is called from it.  These warnings are preceded
+by a call to a system library function, but it is not apparent that
+they are immediately preceded without anything else that could have
+failed in between.
 
-But back to the topic of why the compilers on OS X didn't optimize out
-the free(3) calls with their conditionals.  AFAICS no attributes are
-set for the function in stdlib.h of in glibc[1] or Darwin[2].  And I
-can't see any relevant option in config.mak.uname (e.g. -no-builtin).
-It's not terribly important, but does anyone know what prevents the
-elision of "if (!p) free(p);" on OS X?
+    Side note.  There are many calls into strbuf API in these two
+    functions.  Any calls to xmalloc() and friends made by strbuf
+    functions may see ENOMEM from underlying malloc() and recover by
+    releasing cached resources, by which time the original errno is
+    unrecoverable.  So the above "probably correct" is not strictly
+    true.
 
-René
+If we care deeply enough that we want to reliably show the errno we
+got from the preceding call to a system library function even after
+whatever comes in between, I think you'd need the usual saved_errno
+trick.  Is that worth it?---I do not offhand have an opinion.
 
-
-[1] https://sourceware.org/git/?p=glibc.git;a=blob;f=stdlib/stdlib.h;h=292c6a2f053a2a578cd09d75307c26ed191e1c00;hb=b987917e6aa7ffe2fd74f0b6a989438e6edd0727
-[2] https://opensource.apple.com/source/Libc/Libc-1158.30.7/include/stdlib.h.auto.html
+> Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+> ---
+>  builtin/clean.c | 8 ++++----
+>  1 file changed, 4 insertions(+), 4 deletions(-)
+>
+> diff --git a/builtin/clean.c b/builtin/clean.c
+> index d6bc3aaaea..dc1168747e 100644
+> --- a/builtin/clean.c
+> +++ b/builtin/clean.c
+> @@ -175,7 +175,7 @@ static int remove_dirs(struct strbuf *path, const char *prefix, int force_flag,
+>  		res = dry_run ? 0 : rmdir(path->buf);
+>  		if (res) {
+>  			quote_path_relative(path->buf, prefix, &quoted);
+> -			warning(_(msg_warn_remove_failed), quoted.buf);
+> +			warning_errno(_(msg_warn_remove_failed), quoted.buf);
+>  			*dir_gone = 0;
+>  		}
+>  		return res;
+> @@ -209,7 +209,7 @@ static int remove_dirs(struct strbuf *path, const char *prefix, int force_flag,
+>  				string_list_append(&dels, quoted.buf);
+>  			} else {
+>  				quote_path_relative(path->buf, prefix, &quoted);
+> -				warning(_(msg_warn_remove_failed), quoted.buf);
+> +				warning_errno(_(msg_warn_remove_failed), quoted.buf);
+>  				*dir_gone = 0;
+>  				ret = 1;
+>  			}
+> @@ -231,7 +231,7 @@ static int remove_dirs(struct strbuf *path, const char *prefix, int force_flag,
+>  			*dir_gone = 1;
+>  		else {
+>  			quote_path_relative(path->buf, prefix, &quoted);
+> -			warning(_(msg_warn_remove_failed), quoted.buf);
+> +			warning_errno(_(msg_warn_remove_failed), quoted.buf);
+>  			*dir_gone = 0;
+>  			ret = 1;
+>  		}
+> @@ -982,7 +982,7 @@ int cmd_clean(int argc, const char **argv, const char *prefix)
+>  			res = dry_run ? 0 : unlink(abs_path.buf);
+>  			if (res) {
+>  				qname = quote_path_relative(item->string, NULL, &buf);
+> -				warning(_(msg_warn_remove_failed), qname);
+> +				warning_errno(_(msg_warn_remove_failed), qname);
+>  				errors++;
+>  			} else if (!quiet) {
+>  				qname = quote_path_relative(item->string, NULL, &buf);
