@@ -2,123 +2,77 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3092C1FC44
-	for <e@80x24.org>; Mon, 13 Feb 2017 15:21:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 920D11FC44
+	for <e@80x24.org>; Mon, 13 Feb 2017 15:54:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753209AbdBMPVN (ORCPT <rfc822;e@80x24.org>);
-        Mon, 13 Feb 2017 10:21:13 -0500
-Received: from mail-ot0-f195.google.com ([74.125.82.195]:35411 "EHLO
-        mail-ot0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752987AbdBMPVJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Feb 2017 10:21:09 -0500
-Received: by mail-ot0-f195.google.com with SMTP id 65so11880547otq.2
-        for <git@vger.kernel.org>; Mon, 13 Feb 2017 07:21:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=Ds/TNmMImbaLRdPC5Ge7lwO+nRYl6gaul+QUy4nlWtA=;
-        b=D9cw1kD9WKGRNecVRR+nQ+mG5Nc2ZiyUV5VVJN1AqrXzks1oylkNjtq6uMDM7UJqHd
-         qz9WFmPXLi+R/dMqMvFrwHCzMTl0z6DwBytib92X4/duhp5IgS/TBitCk2FX2O1xLKZ1
-         mSqDJ5kqrQPrY/qWCK5Ru4lNRcuna4gExUnR+avwjnVEpoXfwvJk9p09bqb/UpeDIjfU
-         Y94Z9t+w7BsopkhWG/u5E9i2s6MYqyz7Osu5JKeMhLvYMEEGHD7P56y+dX/BdrUTeY71
-         gYlMeNFwZjpuhMUJWpU4TO53D0eLqPnehUDC05tjgHKr07aXx1cKh8PLirHNapcXQgcj
-         g64A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=Ds/TNmMImbaLRdPC5Ge7lwO+nRYl6gaul+QUy4nlWtA=;
-        b=UmzKceu+zBEsKTTscgyI6IiBkUTOvvIyEmtXe3a33wp5pkCpp+YwJaFZGPXS2K8vDu
-         W2HNhut/k4fs/uiRtFyt9GXva1TgPIr+MarxWg86oaQPhXDP9YOIi1OLfoZUUv2EJVqt
-         lMkEYoRqEa2agZKCNQp+PYVTHubGm3RU+GY1Z69doxkRPS1YxIYWd1woKr4JPDl935z2
-         Qvp9ZcwNUfpPrykH1jAYwUbPZ4YmRfoZY9TSLaxSF/WUJm6gj/ULRqhi92AexJ7VvIJ9
-         wqi1W/oA38nvjJBwWlyOBf3SKdS67Dod29dwcCnvXvckWffNd7oQVEFL6f2/98e9EmYE
-         eAlg==
-X-Gm-Message-State: AMke39kisbVTf1Sy7VKgNw2V0dXW+bo3hFBosE+3mBAUmHz0cPMZscvLVIPf0NhI+/uJ2g==
-X-Received: by 10.98.78.66 with SMTP id c63mr26767080pfb.138.1486999263622;
-        Mon, 13 Feb 2017 07:21:03 -0800 (PST)
-Received: from ash ([115.73.162.84])
-        by smtp.gmail.com with ESMTPSA id 2sm15387469pfv.100.2017.02.13.07.21.00
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 13 Feb 2017 07:21:02 -0800 (PST)
-Received: by ash (sSMTP sendmail emulation); Mon, 13 Feb 2017 22:20:58 +0700
-From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Michael Haggerty <mhagger@alum.mit.edu>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        sbeller@google.com, novalis@novalis.org,
-        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>
-Subject: [PATCH 08/11] refs.c: factor submodule code out of get_ref_store()
-Date:   Mon, 13 Feb 2017 22:20:08 +0700
-Message-Id: <20170213152011.12050-9-pclouds@gmail.com>
-X-Mailer: git-send-email 2.11.0.157.gd943d85
-In-Reply-To: <20170213152011.12050-1-pclouds@gmail.com>
-References: <20170213152011.12050-1-pclouds@gmail.com>
+        id S1752581AbdBMPx6 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 13 Feb 2017 10:53:58 -0500
+Received: from ikke.info ([178.21.113.177]:48880 "EHLO vps892.directvps.nl"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751714AbdBMPxl (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Feb 2017 10:53:41 -0500
+X-Greylist: delayed 571 seconds by postgrey-1.27 at vger.kernel.org; Mon, 13 Feb 2017 10:53:40 EST
+Received: by vps892.directvps.nl (Postfix, from userid 1008)
+        id E74DD4400C9; Mon, 13 Feb 2017 16:44:07 +0100 (CET)
+Date:   Mon, 13 Feb 2017 16:44:07 +0100
+From:   Kevin Daudt <me@ikke.info>
+To:     Istvan Pato <istvan.pato@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: Bug in 'git describe' if I have two tags on the same commit.
+Message-ID: <20170213154407.GA31568@alpha.ikke.info>
+References: <CAOcUJQwnCJOhUUU2RqJP2H5YxUr4qCEpyDj_XiiQSe4V6rcBmg@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAOcUJQwnCJOhUUU2RqJP2H5YxUr4qCEpyDj_XiiQSe4V6rcBmg@mail.gmail.com>
+User-Agent: Mutt/1.7.2 (2016-11-26)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This code is going to be expanded a bit soon. Keep it out for
-better readability later.
+On Sun, Feb 12, 2017 at 01:15:22PM +0100, Istvan Pato wrote:
+> I didn't get back the latest tag by 'git describe --tags --always' if
+> I have two tags on the same commit.
+> 
+> // repository ppa:git-core/ppa
+> 
+> (master)⚡ % cat /etc/lsb-release
+> DISTRIB_ID=Ubuntu
+> DISTRIB_RELEASE=16.04
+> DISTRIB_CODENAME=xenial
+> DISTRIB_DESCRIPTION="Ubuntu 16.04.2 LTS"
+> 
+> (master)⚡ % git --version
+> git version 2.11.0
+> 
+> (master) [1] % git show-ref --tag
+> 76c634390... refs/tags/1.0.0
+> b77c7cd17... refs/tags/1.1.0
+> b77c7cd17... refs/tags/1.2.0
+> 
+> (master) % git describe --tags --always
+> 1.1.0-1-ge9e9ced
+> 
+> ### Expected: 1.2.0
+> 
+> References:
+> 
+> https://www.kernel.org/pub/software/scm/git/docs/RelNotes-1.7.1.1.txt
+> 
+> * "git describe" did not tie-break tags that point at the same commit
+>   correctly; newer ones are preferred by paying attention to the
+>   tagger date now.
+> 
+> http://stackoverflow.com/questions/8089002/git-describe-with-two-tags-on-the-same-commit
+> 
+> Thanks,
+> Istvan Pato
 
-Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
----
- refs.c | 22 ++++++++++++++--------
- 1 file changed, 14 insertions(+), 8 deletions(-)
-
-diff --git a/refs.c b/refs.c
-index 2cacd934e..8ef7a52ba 100644
---- a/refs.c
-+++ b/refs.c
-@@ -1445,6 +1445,18 @@ static struct ref_store *lookup_ref_store(const char *submodule)
- 	return entry ? entry->refs : NULL;
- }
- 
-+static struct ref_store *init_submodule_ref_store(const char *submodule)
-+{
-+	struct strbuf submodule_sb = STRBUF_INIT;
-+	struct ref_store *refs = NULL;
-+
-+	strbuf_addstr(&submodule_sb, submodule);
-+	if (is_nonbare_repository_dir(&submodule_sb))
-+		refs = ref_store_init(submodule);
-+	strbuf_release(&submodule_sb);
-+	return refs;
-+}
-+
- struct ref_store *get_ref_store(const char *submodule)
- {
- 	struct ref_store *refs;
-@@ -1457,14 +1469,8 @@ struct ref_store *get_ref_store(const char *submodule)
- 	} else {
- 		refs = lookup_ref_store(submodule);
- 
--		if (!refs) {
--			struct strbuf submodule_sb = STRBUF_INIT;
--
--			strbuf_addstr(&submodule_sb, submodule);
--			if (is_nonbare_repository_dir(&submodule_sb))
--				refs = ref_store_init(submodule);
--			strbuf_release(&submodule_sb);
--		}
-+		if (!refs)
-+			refs = init_submodule_ref_store(submodule);
- 	}
- 
- 	return refs;
--- 
-2.11.0.157.gd943d85
-
+Are these lightweight tags? Only annotated tags have a date associated
+to them, which is where the rel-notes refers to. 
