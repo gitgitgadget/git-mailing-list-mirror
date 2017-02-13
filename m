@@ -2,109 +2,130 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 174051FC44
-	for <e@80x24.org>; Mon, 13 Feb 2017 20:03:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 16B901FC44
+	for <e@80x24.org>; Mon, 13 Feb 2017 20:09:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752091AbdBMUDl (ORCPT <rfc822;e@80x24.org>);
-        Mon, 13 Feb 2017 15:03:41 -0500
-Received: from mail-yb0-f196.google.com ([209.85.213.196]:34248 "EHLO
-        mail-yb0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751313AbdBMUDl (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Feb 2017 15:03:41 -0500
-Received: by mail-yb0-f196.google.com with SMTP id w194so4495662ybe.1
-        for <git@vger.kernel.org>; Mon, 13 Feb 2017 12:03:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=ubIGfEX5spXo4ZyzXIonGBVpRp3FgvLcdYdsPgXJuv4=;
-        b=nWND9q7YjzGrNqB3bjW7Nw9pc5LQL4KPCDz/rbgdFXIPJuinOU7JSl4sOsp3lA9dvV
-         BjBM3S4BKh9WvgEhZNc26LXqi9A/gg0iYhAWk2GVOuTN6Jx9rGb1XwovVbwfVEIon2P0
-         k+JgBeQZ0jvYdkjBUqECefLGFNyHHk6wHiXvB6+mWnQV5ZB71raY41mq4tgmikhlyTS3
-         qiDpZUoek2JJ+orAxA1u5GRPzPOIeWEoPuxOBFhXXpxdqZyvG7kfkBEklDldl0rsHviO
-         8krHtkUPcaJyn8f9GKF6gEhete6OitzwckvVqxR5fStEP1QHQx2+ePmix783MUznwHTU
-         p+8w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=ubIGfEX5spXo4ZyzXIonGBVpRp3FgvLcdYdsPgXJuv4=;
-        b=SqSOo/bxXqVtK1S7VdpR0x9ibNPdonsehBedhWL6/cgZTQEeBBcKQOcmQpP5J0q6mS
-         bdEBuB/JT4BysXKTnKUbwEqXEztIPpF7X/RdjDUjOzkHZSkicNPs67L6Uk5HKdkqJLlI
-         ax0yDo5CNYueOz0G77So9MDlxshgDXvhWeI5hWNG1nGJrA9xx1W6AFwX+NrqFvZSNEtg
-         MYQ+E0ANw20/vc6Irr7OyNOzyQ5eMBROn3IgSy10ZlzeS0j4/oEvnOajEkcd1UD4dwtg
-         k/NGcLrk4w06zYOvRnjluYc2qnIIcq+o3KgbzH1x9DqO7v4NqWcNFbhKfU3HXXTyGhh+
-         sGIg==
-X-Gm-Message-State: AMke39khju24G0FtT1BT98TgsEQ5HewpdZpDNgFDnAw0zB3o7u4Jo3BqQduk2e9tuc/7qg==
-X-Received: by 10.98.34.130 with SMTP id p2mr27479735pfj.11.1487016220025;
-        Mon, 13 Feb 2017 12:03:40 -0800 (PST)
-Received: from localhost ([2620:0:1000:8622:d0e0:42a7:601f:5154])
-        by smtp.gmail.com with ESMTPSA id 75sm16202310pfw.103.2017.02.13.12.03.38
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 13 Feb 2017 12:03:39 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Siddharth Kannan <kannan.siddharth12@gmail.com>,
-        Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Cc:     git@vger.kernel.org, pranit.bauva@gmail.com, peff@peff.net,
-        pclouds@gmail.com, sandals@crustytoothpaste.ath.cx
-Subject: Re: [PATCH 2/2 v3] sha1_name: teach get_sha1_1 "-" shorthand for "@{-1}"
-References: <1486752926-12020-1-git-send-email-kannan.siddharth12@gmail.com>
-        <1486752926-12020-2-git-send-email-kannan.siddharth12@gmail.com>
-        <1486752926-12020-3-git-send-email-kannan.siddharth12@gmail.com>
-        <vpqbmu768on.fsf@anie.imag.fr>
-        <xmqq1sv1euob.fsf@gitster.mtv.corp.google.com>
-Date:   Mon, 13 Feb 2017 12:03:38 -0800
-In-Reply-To: <xmqq1sv1euob.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-        message of "Mon, 13 Feb 2017 11:51:16 -0800")
-Message-ID: <xmqqwpctdfj9.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+        id S1752850AbdBMUJx (ORCPT <rfc822;e@80x24.org>);
+        Mon, 13 Feb 2017 15:09:53 -0500
+Received: from cloud.peff.net ([104.130.231.41]:54382 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752809AbdBMUJw (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Feb 2017 15:09:52 -0500
+Received: (qmail 1469 invoked by uid 109); 13 Feb 2017 20:09:52 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 13 Feb 2017 20:09:52 +0000
+Received: (qmail 22354 invoked by uid 111); 13 Feb 2017 20:09:52 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 13 Feb 2017 15:09:52 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 13 Feb 2017 15:09:50 -0500
+Date:   Mon, 13 Feb 2017 15:09:50 -0500
+From:   Jeff King <peff@peff.net>
+To:     Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Cc:     Thomas Gummerer <t.gummerer@gmail.com>, git@vger.kernel.org,
+        Stephan Beyer <s-beyer@gmx.net>,
+        Junio C Hamano <gitster@pobox.com>,
+        Marc Strapetz <marc.strapetz@syntevo.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        =?utf-8?B?w5h5dmluZCBBIC4=?= Holm <sunny@sunbase.org>,
+        Jakub =?utf-8?B?TmFyxJlic2tp?= <jnareb@gmail.com>
+Subject: Re: [PATCH v3 0/5] stash: support pathspec argument
+Message-ID: <20170213200950.m3bcyp52wd25p737@sigill.intra.peff.net>
+References: <20170129201604.30445-1-t.gummerer@gmail.com>
+ <20170205202642.14216-1-t.gummerer@gmail.com>
+ <20170206161432.zvpsqegjspaa2l5l@sigill.intra.peff.net>
+ <20170212193050.GA652@hank>
+ <vpq7f4uxjmo.fsf@anie.imag.fr>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <vpq7f4uxjmo.fsf@anie.imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Mon, Feb 13, 2017 at 03:14:55PM +0100, Matthieu Moy wrote:
 
-> Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
->
->> Siddharth Kannan <kannan.siddharth12@gmail.com> writes:
->>
->>> +	if (!strcmp(name, "-")) {
->>> +		name = "@{-1}";
->>> +		len = 5;
->>> +	}
->>
->> One drawback of this approach is that further error messages will be
->> given from the "@{-1}" string that the user never typed.
->
-> Right.
->
->> There are at least:
->>
->> $ git grep -n -A1 'strcmp.*"-"' | grep -B 1 '@\{1\}'
->> builtin/checkout.c:975: if (!strcmp(arg, "-"))
->> builtin/checkout.c-976-         arg = "@{-1}";
->
-> I didn't check the surrounding context to be sure, but I think this
-> "- to @{-1}" conversion cannot be delegated down to revision parsing
-> that eventually wants to return a 40-hex as the result.  
->
-> We do want a branch _name_ sometimes when we say "@{-1}"; "checkout
-> master" (i.e. checkout by name) and "checkout master^0" (i.e. the
-> same commit object, but not by name) do different things.
+> I don't remember doing this intentionally. The goal was really to
+> prevent typos like "git stash -p drop" (which would have been
+> interpreted as "git stash save -p drop" previously). So, let's consider
+> this "only messages starting with - are accepted" as a bug: moving to
+> the new "push" command it a nice opportunity to fix it without worrying
+> about compatibility. A bit more about this in this old thread:
 
-FYI, the "@{-<number>} to branch name" translation happens in
-interpret_branch_name().  I do not offhand recall if any callers
-protect their calls to the function with conditionals that assume
-the thing must begin with "@{" or cannot begin with "-" (the latter
-of which is similar to the topic of patch 1/2 of this series), but I
-suspect that teaching the function that "-" means the same as
-"@{-1}" would bring us closer to where we want to go.
+Yeah, I consider it a bug that we treat "-foo" as a message there.
+Fortunately I think you really have to try hard to abuse it:
 
+  # doesn't work, because "save" complains about "-foo" as an option
+  git stash -foo
+
+  # does save stash with message "-foo"
+  git stash -- -foo
+
+  # doesn't work, because _any_ non-option argument is rejected
+  git stash -- use --foo option
+
+> I think we can safely allow both
+> 
+>   git stash -p -- <pathspec...>
+>   git stash push -p <pathspec...>
+> 
+> But allowing the same without -- is a bit more dangerous for the reason
+> above:
+> 
+>   git stash -p drop
+> 
+> would be interpreted as
+> 
+>   git stash push -p drop
+> 
+> (i.e. limit the stash to file named "drop"), and this would almost
+> certainly not be what the user wanted.
+
+Is it really that dangerous, though? The likely outcome is Git saying
+"nope, you don't have any changes to the file named drop". Of course the
+user may have meant something different, but I feel like "-p" is a good
+indicator that they are interested in making an actual stash.
+
+Think about this continuum of commands:
+
+  1. git stash droop
+
+  2. git stash -p drop
+
+  3. git stash -p -- drop
+
+  4. git stash push -p drop
+
+I think we can all agree that (4) is reasonable and safe. And I suspect
+we'd all agree that (1) is suspect (you probably meant "drop", not "push
+droop").
+
+But between (2) and (3), I don't see much difference. The interesting
+difference between (1) and (2) is the addition of "-p", which tells us
+that the user expects to save a stash.
+
+Another way of thinking of it is that "-p" as a command name is an alias
+for "push -p". If you wanted to err on the conservative side, you could
+literally implement it that way (so "git stash -k -p foo" would not
+work; you'd have to use "git stash -p -k foo").
+
+> > The other question is how we would deal with the -m flag for
+> > specifying a stash message.  I think we could special case it, but
+> > that would allow users to do things such as git stash -m apply, which
+> > would make the interface a bit more error prone.  So I'm leaning
+> > towards disallowing that for now.
+> 
+> We already have "git commit -m <msg> <pathspec...>", so I think stash
+> should just do the same thing as commit. Or, did I miss something?
+
+The complexity is that right now, the first-level decision of "which
+stash sub-command am I running?" doesn't know about any options. So "git
+stash -m foo" would be rejected in the name of typo prevention, unless
+that outer decision learns about "-m" as an option.
+
+-Peff
