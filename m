@@ -2,88 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C08EC1FC44
-	for <e@80x24.org>; Mon, 13 Feb 2017 22:38:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E54A11FC44
+	for <e@80x24.org>; Mon, 13 Feb 2017 22:38:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751427AbdBMWiY (ORCPT <rfc822;e@80x24.org>);
-        Mon, 13 Feb 2017 17:38:24 -0500
-Received: from cloud.peff.net ([104.130.231.41]:54575 "EHLO cloud.peff.net"
+        id S1751479AbdBMWis (ORCPT <rfc822;e@80x24.org>);
+        Mon, 13 Feb 2017 17:38:48 -0500
+Received: from mout.gmx.net ([212.227.15.15]:62642 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751350AbdBMWiW (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Feb 2017 17:38:22 -0500
-Received: (qmail 12064 invoked by uid 109); 13 Feb 2017 22:38:22 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 13 Feb 2017 22:38:22 +0000
-Received: (qmail 29080 invoked by uid 111); 13 Feb 2017 22:38:22 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 13 Feb 2017 17:38:22 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 13 Feb 2017 17:38:19 -0500
-Date:   Mon, 13 Feb 2017 17:38:19 -0500
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Linus Torvalds <torvalds@linux-foundation.org>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: [RFC PATCH] show decorations at the end of the line
-Message-ID: <20170213223819.gr3wndswieu4bbvn@sigill.intra.peff.net>
-References: <alpine.LFD.2.20.1702110943460.31350@i7.lan>
- <CA+55aFw2S14a4_4YK0b6PNK4TH_AUo_+2JN+PTyBTufNeB5t6A@mail.gmail.com>
- <xmqq1sv2fq6m.fsf@gitster.mtv.corp.google.com>
- <CA+55aFy-vvOBu5Y4KDeteUyK-7U7yTa1HoqHo+hME1=8bq7Xhw@mail.gmail.com>
- <xmqq7f4tdcua.fsf@gitster.mtv.corp.google.com>
+        id S1751467AbdBMWir (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Feb 2017 17:38:47 -0500
+Received: from virtualbox ([37.201.192.48]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0LsCdj-1cGD7E1M6h-013ygT; Mon, 13
+ Feb 2017 23:38:19 +0100
+Date:   Mon, 13 Feb 2017 23:38:17 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Johannes Sixt <j6t@kdbg.org>
+cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        git@vger.kernel.org, Jeff Hostetler <jeffhost@microsoft.com>
+Subject: Re: [PATCH] mingw: use OpenSSL's SHA-1 routines
+In-Reply-To: <b530c820-9956-4396-d853-c7d70ccaf11d@kdbg.org>
+Message-ID: <alpine.DEB.2.20.1702132337470.3496@virtualbox>
+References: <6a29f8c60d315a24292c1fa9f5e84df4dfdbf813.1486679254.git.johannes.schindelin@gmx.de> <20170210050237.gajicliueuvk6s5d@sigill.intra.peff.net> <alpine.DEB.2.20.1702101647340.3496@virtualbox> <20170210160458.pcp7mupdz24m6cms@sigill.intra.peff.net>
+ <9913e513-553e-eba6-e81a-9c21030dd767@kdbg.org> <xmqq60kdev2r.fsf@gitster.mtv.corp.google.com> <b530c820-9956-4396-d853-c7d70ccaf11d@kdbg.org>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqq7f4tdcua.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:IYgmg0tpopwwIRX5c8St8epjml0Wz5oPn/6O4MzirdQJzFKhwfs
+ CH0/3fHd6ntdnzahNYjU6INxWjPQJye2aCSgLGw0JQpSrJgAcFjIEox8jsZrw75sf3FDv11
+ BxaRBcuaMuy43VCZFUmv7/0/UxH9SPeyuvJgJOTSNUkp4Pdv6N8jhiaH6/gpEhv6RlFMIyd
+ enHJqFeufjfwh9+7fGneA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:IjatyRqTvIU=:ebs1FBM1i3OxNUsbraDNbE
+ vBz6cejMO9wokBzuqiPgDsPnAr8ckiFwFlryKbWzwOTVfWtGHSCIvRk3CrOoJXzlv501GcGI2
+ lV7GPrkiik7P/XIpQ7FnQI6drP5mDbMpumff5qSpeHlkCzaXGE2oq0CnX716pnH1EXN/w1Hy7
+ yNAlYkM7Qw8ONT4WR4cz24bhnaXMkJigIKUGS+SHkz14hZ3pnY8ivip8D5VKxfMAvzCEWbdtz
+ MvHW4I/l+tX8rub1Ai3VyygTgYcgx1+Y/nrUFYz0f8DgdOcE6dr5b6Bn+aieW07OeaYzGiITW
+ YZgbw+xhAiKnBFDwmg0wKWqcGM16MX/bW6CN9O/AtuwGa6Ocx5imaaoaSebqxg31FwdHySxFx
+ nPWevkm/H0lBnWSZdVosihd+w9HVJBNnY4GMN1vTNOg3Wm2YRk0T1QlRbPUsngGL5mMbjj2xZ
+ oE4OsDRAaT7YU3FWSJ34Nle5CSbc5ppDtviKbgNNLVmJvvf+CxCZsaf67K2OH5qqrnMPS3sEZ
+ DoTkzuvZjXmLaopVLNqnu1fyX3X4bikXzhcsrsE67ffLJ0Ug0BSoDnyUZZ0yCFDDr5yOgRxR/
+ uc90+C/T7nIcOBax/MiJhYBDsLjAYgirZkurzMckxybvVWHmbrR4zlIwS+4WD17D7GhQs0wIl
+ WRUw/72f5Qqz/5WLHjzoLpvofk3iciEjFrj+EPWP4mf4G6N9/2zxg5Y6VbUUt+9ScO2So+M5z
+ bHrlGsmROHhNFFT/5e2rxK0TpAMf1HhnZmFwIxC8TT+6lThuSzOOHWdE9dW18AjUS5y9crwpT
+ xSf/uDU
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Feb 13, 2017 at 01:01:49PM -0800, Junio C Hamano wrote:
+Hi,
 
-> Linus Torvalds <torvalds@linux-foundation.org> writes:
+On Mon, 13 Feb 2017, Johannes Sixt wrote:
+
+> Am 13.02.2017 um 20:42 schrieb Junio C Hamano:
+> > I have been operating under the assumption that everybody on Windows
+> > who builds Git works off of Dscho's Git for Windows tree, and patches
+> > that are specific to Windows from Dscho's are sent to me via the list
+> > only after they have been in Git for Windows and proven to help
+> > Windows users in the wild.
+> >
+> > The consequence of these two assumptions is that I would feel safe to
+> > treat Windows specific changes that do not touch generic part of the
+> > codebase from Dscho just like updates from any other subsystem
+> > maintainers (any git-svn thing from Eric, any gitk thing from Paul,
+> > any p4 thing Luke and Lars are both happy with, etc.).
+> >
+> > You seem to be saying that the first of the two assumptions does not
+> > hold.  Should I change my expectations while queuing Windows specific
+> > patches from Dscho?
 > 
-> > And if you actually want decorations, and you're parsing them, you are
-> > *not* going to script it with "--oneline --decorations", because the
-> > end result is basically impossible to parse already (because it's
-> > ambiguous - think about parentheses in the commit message).
-> 
-> OK.  So let's wait to hear from others if they like the "obviously"
-> improved output.  Even though I find the decorations indispensable
-> in my "git log" output, I personally do not have much preference
-> either way, as my screen is often wide enough ;-)
+> Your first assumption is incorrect as far as I am concerned. I build
+> from your tree plus some topics. During -rc period, I build off of
+> master; after a release, I build off of next. I merge some of the topics
+> that you carry in pu when I find them interesting or when I suspect them
+> to regress on Windows.  Then I carry around a few additional patches
+> that the public has never seen, and these days I also merge Dscho's
+> rebase-i topic.
 
-I have a slight preference for the new output (decorations at the end)
-versus the original, but I could go either way.
+In addition, you build from a custom MINGW/MSys1 setup, correct?
 
-I don't think the scripting compatibility concerns are an issue, for all
-the reasons given in the thread.
-
-There is one related option, --source, which also puts its data between
-the hash and the subject in --oneline. In theory that should be treated
-similarly, though:
-
-  1. It's already really ugly, as it does not even get the parentheses
-     and coloring.
-
-  2. It's perhaps more likely to get scripted, as it really is parseable
-     in the current state.
-
-I'm not sure if a better path forward would be to just extend the idea
-of "decorator" to possibly include more than just ref-tips. On the other
-hand, if you really want to get fancy with formatting, we already have a
-complete formatting language. Perhaps it should learn a placeholder for
-the "--source" data.
-
-Similarly, I've often wanted a "contained in this tags/branches"
-annotation for each commit. It's not too expensive to compute if you
-topo-sort the set of commits and just paint down as you traverse.
-
-Anyway, I think none of that needs to block changes to --decorate
-output. Just thinking out loud.
-
--Peff
+Ciao,
+Johannes
