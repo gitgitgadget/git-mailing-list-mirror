@@ -2,99 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1AEB41FC44
-	for <e@80x24.org>; Mon, 13 Feb 2017 22:34:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4BDFC1FC44
+	for <e@80x24.org>; Mon, 13 Feb 2017 22:38:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751566AbdBMWei (ORCPT <rfc822;e@80x24.org>);
-        Mon, 13 Feb 2017 17:34:38 -0500
-Received: from mout.gmx.net ([212.227.17.20]:61509 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751371AbdBMWeh (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Feb 2017 17:34:37 -0500
-Received: from virtualbox ([37.201.192.48]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MAhTr-1cWVZL0AKh-00Buwk; Mon, 13
- Feb 2017 23:34:08 +0100
-Date:   Mon, 13 Feb 2017 23:34:06 +0100 (CET)
-From:   Johannes Schindelin <johannes.schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     git@vger.kernel.org
-cc:     Junio C Hamano <gitster@pobox.com>, Johannes Sixt <j6t@kdbg.org>,
-        Jeff Hostetler <jeffhost@microsoft.com>
-Subject: [PATCH] mingw: make stderr unbuffered again
-Message-ID: <c88612da0a62bfcbc3e278296f9d3eb010057071.1487025228.git.johannes.schindelin@gmx.de>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+        id S1751289AbdBMWiB (ORCPT <rfc822;e@80x24.org>);
+        Mon, 13 Feb 2017 17:38:01 -0500
+Received: from mail-it0-f50.google.com ([209.85.214.50]:37906 "EHLO
+        mail-it0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750975AbdBMWiA (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Feb 2017 17:38:00 -0500
+Received: by mail-it0-f50.google.com with SMTP id c7so6817569itd.1
+        for <git@vger.kernel.org>; Mon, 13 Feb 2017 14:38:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=Sgbz6CdVEYjY8Ni7FgqX84HDDVlq5nm1YJN4SiD4+Is=;
+        b=JLFVyU0MTB91odHo2EhxKBA6eAZps+v92i2kR9cxbZzd9fSBUQ0l8a8Fdjq+hnTopW
+         7F7WTgCK80HdSgHusd7ivi1Zo6tug1xaonWnYfAn0xUirgxC3VG8YRrS01No0H0bVj3b
+         SG8UsqktS7ARmcxsqAXo+5fmIb4hYwpzYJef3imhQBOSGHppmdOyoAH/g9aOSuWEcCee
+         LWbH6BWSdrA8DZeyolYZR5JBqisfmITCAN9+5cT2C9ActwJ8WRBS2vR7tC5Esd78dVSL
+         iJtXgVSE0FevGa4YAC2zU/Amt7F0AatJm11fquXzCUl2vufMrN9w2Oau4DzAO/rx5YxR
+         QnXQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=Sgbz6CdVEYjY8Ni7FgqX84HDDVlq5nm1YJN4SiD4+Is=;
+        b=LZRBKrzlm8PpQZCiNwTC1JU+YUCyoA89GL6d62IMWXkbXK/VT3usLlI/BSgr9NoEHx
+         q5Ku6hcAWmI+A8CNPzFjKKrjU0mXRMcQ4DeoT8jIAwOKASWsYPBUKrXUhvFLRUglbKQl
+         Va79/2ddZwlZxCCUKXc9Va5saoUqQnhbnAh5ASVE8zG4qIwtJnXrGnrnsynRn6jMLFPF
+         QIInymtwaz1Qi+TZmeR/Vlr6j1paRI9jBnujd1JRuMcIgZkgJ4E52M9wP/LFd+scb31B
+         0Zv2+QdvqZQCwGB3WopccbfgND/JoPWlvrcguYInuxmbeAQ2ToxKrTVUOm/QUvHvELxy
+         IpDg==
+X-Gm-Message-State: AMke39kjCTZjW2RUPbe28YO9QcxSmuewpe3bReS7jwfqetuhvt8iuiIXNahVQw81s0BkDn/FmR2waucXHvHojUq2
+X-Received: by 10.107.3.160 with SMTP id e32mr23412362ioi.52.1487025479489;
+ Mon, 13 Feb 2017 14:37:59 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:E1nB3ZoSne4DzkC99P6LXi5nw4GY7ItuBp538DDQdcgj47huHk8
- pDMDDhPqjTr5KGV1JTy4NcLd5b1EV3f8KRsMnmlt8eVE795IKvY5hIfxsoyXgQ/hYxecUC5
- 1LaUkyB3MK2yHc2H9inXNUO5wzsjT3H5zJcOP8EGhjTmgCeifxvIUSx1lnGr0M0t5PqJ1a7
- y4J+ebeoh1VQ2VYWg/xuw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:ecjQmBJQivU=:fqcze00GF9kogVQvQivt1U
- uxlDb9Y73rcdJvSsjWZhKrJJOXPh5urbEP16DBjJQeMeAEhqTRXtzwcmUzFXhs6d6n9SxXnqG
- yNrNMpDv6wkSzZAejmgyzNlr9+YTA2ICVpA7XGJHPHLxrMJcGlF1b0JGioSckfBJ5gAZsaZWI
- 09r5AG21nJAO8tM3z/WDJiPxPuuhYANYHBjTUJadYUv/9YV9Ehg/nq8qHamgMceXiR+WYajtt
- 1B+VTEOJpHY+jhZ7mBoz2VYEwpSr3zd8kzCG/FXV1U+fX1e6vAv6Ik5QeyQKOb6FU8qZZRLxU
- CNwmXvf98Fk2FigqDJ1AfMDtQa6DYmzxNFtivANqO1J7Xt2uaBYedTM79wpHgGLgleRttzCqC
- JDFHwrRGaaxrEMfAbph67WrAzPtfhTA55BFDGyjolz3AYXxf9n3OT+vjxVQ3lsVfyZGVQr/1I
- XUJaeFRLDE/r/MJXZMCCCX3jr/9Jf+tSN+5Vl5THv+eKiqFwkAVbJ5EC0/8EuQp/kri+igmic
- lTsfNvXHMm3tFe3mD56KG/4EEf9JKR+vbY41Tp72mbsoxRO07Sb1pbKS/dsj2ZItVWoTyg0CV
- Jb2EnhPaK4oyeWuh93ARuEOalzT4hoAvAvOfMbNij8pnPCFrEcWuWsq0INAVGPYYjrftSAFGV
- pJxMuAQpyla+Su5amxmuJj3+/gWWGvdWEUtCkEGPoPByxF1Wwlejcib1+RkrzhkR8hRTxcIes
- uIv0X/wXoImxy4OL0aBc27HgSgI5qBu75cQduPzR1+Gv4PSaRiZatwyxafe8TMa/K5E6/oFCi
- 9NW8i3/
+Received: by 10.79.33.148 with HTTP; Mon, 13 Feb 2017 14:37:59 -0800 (PST)
+In-Reply-To: <20170213152011.12050-7-pclouds@gmail.com>
+References: <20170213152011.12050-1-pclouds@gmail.com> <20170213152011.12050-7-pclouds@gmail.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Mon, 13 Feb 2017 14:37:59 -0800
+Message-ID: <CAGZ79kYkc-_=RiK1uJ+ndhQu=B8u=UDVusXZu-dYe7KnGNye3Q@mail.gmail.com>
+Subject: Re: [PATCH 06/11] refs-internal.h: correct is_per_worktree_ref()
+To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Michael Haggerty <mhagger@alum.mit.edu>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        David Turner <novalis@novalis.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When removing the hack for isatty(), we actually removed more than just
-an isatty() hack: we removed the hack where internal data structures of
-the MSVC runtime are modified in order to redirect stdout/stderr.
+On Mon, Feb 13, 2017 at 7:20 AM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy =
+<pclouds@gmail.com> wrote:
+> All refs outside refs/ directory is per-worktree, not just HEAD.
+>
+> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.c=
+om>
+> ---
+>  refs/refs-internal.h | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/refs/refs-internal.h b/refs/refs-internal.h
+> index f4aed49f5..69d02b6ba 100644
+> --- a/refs/refs-internal.h
+> +++ b/refs/refs-internal.h
+> @@ -653,7 +653,7 @@ const char *resolve_ref_recursively(struct ref_store =
+*refs,
+>
+>  static inline int is_per_worktree_ref(const char *refname)
+>  {
+> -       return !strcmp(refname, "HEAD") ||
+> +       return !starts_with(refname, "refs/") ||
+>                 starts_with(refname, "refs/bisect/");
 
-Instead of using that hack (that does not work with newer versions of
-the runtime, anyway), we replaced it by reopening the respective file
-descriptors.
+you're loosing HEAD here? (assuming we get HEAD in
+short form here, as well as long form refs/HEAD)
 
-What we forgot was to mark stderr as unbuffered again.
-
-Reported by Hannes Sixt. Fixed with Jeff Hostetler's assistance.
-
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
-Published-As: https://github.com/dscho/git/releases/tag/mingw-unbuffered-stderr-v1
-Fetch-It-Via: git fetch https://github.com/dscho/git mingw-unbuffered-stderr-v1
-
- compat/winansi.c | 4 ++++
- 1 file changed, 4 insertions(+)
-
-diff --git a/compat/winansi.c b/compat/winansi.c
-index 82b89ab1376..793420f9d0d 100644
---- a/compat/winansi.c
-+++ b/compat/winansi.c
-@@ -510,6 +510,8 @@ static HANDLE swap_osfhnd(int fd, HANDLE new_handle)
- 	 */
- 	close(new_fd);
- 
-+	if (fd == 2)
-+		setvbuf(stderr, NULL, _IONBF, BUFSIZ);
- 	fd_is_interactive[fd] |= FD_SWAPPED;
- 
- 	return duplicate;
-@@ -547,6 +549,8 @@ static void detect_msys_tty(int fd)
- 			!wcsstr(name, L"-pty"))
- 		return;
- 
-+	if (fd == 2)
-+		setvbuf(stderr, NULL, _IONBF, BUFSIZ);
- 	fd_is_interactive[fd] |= FD_MSYS;
- }
- 
-
-base-commit: 5588dbffbd61e4906e453808c6ad32f792fea521
--- 
-2.11.1.windows.1
+>  }
+>
+> --
+> 2.11.0.157.gd943d85
+>
