@@ -2,82 +2,131 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7F8271FC44
-	for <e@80x24.org>; Mon, 13 Feb 2017 21:02:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 92CEC1FC44
+	for <e@80x24.org>; Mon, 13 Feb 2017 21:03:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753450AbdBMVB6 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 13 Feb 2017 16:01:58 -0500
-Received: from mail-oi0-f66.google.com ([209.85.218.66]:36093 "EHLO
-        mail-oi0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753164AbdBMVB4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Feb 2017 16:01:56 -0500
-Received: by mail-oi0-f66.google.com with SMTP id u143so743936oif.3
-        for <git@vger.kernel.org>; Mon, 13 Feb 2017 13:01:56 -0800 (PST)
+        id S1752482AbdBMVDP (ORCPT <rfc822;e@80x24.org>);
+        Mon, 13 Feb 2017 16:03:15 -0500
+Received: from mail-it0-f49.google.com ([209.85.214.49]:37319 "EHLO
+        mail-it0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751617AbdBMVDO (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Feb 2017 16:03:14 -0500
+Received: by mail-it0-f49.google.com with SMTP id x75so3398324itb.0
+        for <git@vger.kernel.org>; Mon, 13 Feb 2017 13:03:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=pe3FdRO/xNJLtnO00LxhNZeGRP1rkt0Ah+rU7uZWJAc=;
-        b=f0v+NR6o1SyG24gTIDMet6SP8HLIMSFrg4cclpl88zpg52r/u0jmnioF5uFqxoUF5B
-         WFMlMDvTq0Bvr/hN6Am/Av2EE2YGxQZKLXjG3BSe+RCqkMQs7/v5ogQehVPbTm5oCxQm
-         4yW3KKJdIF8FcWmV0D/ac+VKhrPpDrnqLwGdbPX65h0+E+GNGFDyWRWzjGJDF7YPOJCV
-         saZv1ICYH+LSwB5JTdcKNP3kHOgL04eETIta25/Pti2YhHFXWCQGJbXIjMowDSW1oa9i
-         sf894Wu9O8rcQtWhM/Ml18lYlyHpwyBH2DfKPfjDNb3U4OBK6+BWMRA/oi0uaWmxZTU7
-         KpvA==
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=OXxVJC4luLXq/LjBgMrpkAoczuVDiCPqba34G51OceM=;
+        b=F/OtlwfMAPjje/mpm50QcyVgrLHUBICvAtZXoz0KDDWv6MlVbgzUqajFxQf7bUJS+n
+         PAfCzPgQqERcEmoJPHlWju1t6mpdzsXFZIhViq77foExVG39voXXub36OxELho1gtdKI
+         ENZ/1xuk3oWfzSsaXQ8fM/2Nj37QtxQ+L90WlLNVDPCDJ4rqT80Wqie/bw8WY4g/qRvb
+         7hvnYzKsb2+oYDSyPJPmnV9GVTpIQwkaS/uxUi0/NKnx6vw9Bvs4UFOp2CslGel6Mq6t
+         +Z57l7K4nJEGCvtkYnxYOSB0iAsgFfa8BduwS7IKFulNoVahrdoGcaG3Ux6VYq6yeJYw
+         ADYw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=pe3FdRO/xNJLtnO00LxhNZeGRP1rkt0Ah+rU7uZWJAc=;
-        b=ITLFicceK2C6zyELm25ihocapXdAn6bWoyfvoqRwu+c/Mj/bqkme4hMFStwNs5sgWe
-         OkqIcngcFzSNYUBTkQJigkR6rhk+KQlF0tT2xOFJFzb/pffYrLjuJRYWSeFi76HVBN5I
-         0yqkokhzAiF0FIWxBCcX2XhxBpAF7c7ZiDbGH7mYlcw+LxBPAYNLgVRaJG5m8Y+6uRuA
-         O1Yo67hO6JTNlvi090BegHTCqlRhur5sO7vGPRBphNCBbsiHBYthWrl71GnOxd6+c4HU
-         730Vp/uiW8iqARbJjEbEltrQjnE3rm0Vap+ifY3OLgCGbA6fR6AktVguZTWsL5k6FfgM
-         boKA==
-X-Gm-Message-State: AMke39m6wotJa9Uvjbz/gwC949WbZFd0w6ggRCvJtG2WHOP1U/sy9Y7yKMhmRfaGB22fEQ==
-X-Received: by 10.84.232.10 with SMTP id h10mr32201981plk.121.1487019711005;
-        Mon, 13 Feb 2017 13:01:51 -0800 (PST)
-Received: from localhost ([2620:0:1000:8622:d0e0:42a7:601f:5154])
-        by smtp.gmail.com with ESMTPSA id s65sm16379279pgb.64.2017.02.13.13.01.50
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 13 Feb 2017 13:01:50 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Linus Torvalds <torvalds@linux-foundation.org>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Subject: Re: [RFC PATCH] show decorations at the end of the line
-References: <alpine.LFD.2.20.1702110943460.31350@i7.lan>
-        <CA+55aFw2S14a4_4YK0b6PNK4TH_AUo_+2JN+PTyBTufNeB5t6A@mail.gmail.com>
-        <xmqq1sv2fq6m.fsf@gitster.mtv.corp.google.com>
-        <CA+55aFy-vvOBu5Y4KDeteUyK-7U7yTa1HoqHo+hME1=8bq7Xhw@mail.gmail.com>
-Date:   Mon, 13 Feb 2017 13:01:49 -0800
-In-Reply-To: <CA+55aFy-vvOBu5Y4KDeteUyK-7U7yTa1HoqHo+hME1=8bq7Xhw@mail.gmail.com>
-        (Linus Torvalds's message of "Mon, 13 Feb 2017 11:33:18 -0800")
-Message-ID: <xmqq7f4tdcua.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=OXxVJC4luLXq/LjBgMrpkAoczuVDiCPqba34G51OceM=;
+        b=INhQSilRSu1fn2YbZvrmRsDQqFyK1j/A++g/Bqbi54QmQgLIEUYzXPN5nyxFdASIfY
+         l+AClGdKU+Wb6AvP2UuoZATBsZ7w7uz/5lTZr7oYGRegiYkhoJwQ9hoCVYaRqJUwbT7J
+         9V2HKaZoPyEDknQe3+CiLP7PDpg45VrOcEojptbxVaTA/nJMV05T4TqIX8RocwDbKz5j
+         /60yn1GGaSM2dVDJJXbhNIybOakp1mCI90FscIxQXxsRi3iTG5XTHUhi2YrjiG4Hw/c5
+         dOquZfSb3o7Y2yq3HoYnb9kPJmQJPdTu/0LHXPH1bx2qbH2m+pxjLmJPR2QThXzSq+aw
+         L8mA==
+X-Gm-Message-State: AMke39n/Mq7fhLLUYeLlQv1OMx42aa18bbD+rUynPwQPgy0x8gq46/igiT4VgjYtk69yVcLSnQci6nYCbmJDkiwb
+X-Received: by 10.36.65.4 with SMTP id x4mr308209ita.69.1487019793429; Mon, 13
+ Feb 2017 13:03:13 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
+Received: by 10.79.33.148 with HTTP; Mon, 13 Feb 2017 13:03:12 -0800 (PST)
+In-Reply-To: <f2549b5b-b3c8-3935-cdb9-9908914195b6@web.de>
+References: <f2549b5b-b3c8-3935-cdb9-9908914195b6@web.de>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Mon, 13 Feb 2017 13:03:12 -0800
+Message-ID: <CAGZ79kapfeEpX5Y5Y5ebBMjePvrXhOM80KQWU4DuLs9=ApRHTw@mail.gmail.com>
+Subject: Re: [PATCH] rm: reuse strbuf for all remove_dir_recursively() calls, again
+To:     =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Linus Torvalds <torvalds@linux-foundation.org> writes:
+On Sat, Feb 11, 2017 at 11:51 AM, Ren=C3=A9 Scharfe <l.s.r@web.de> wrote:
+> Don't throw the memory allocated for remove_dir_recursively() away after
+> a single call, use it for the other entries as well instead.
+>
+> This change was done before in deb8e15a (rm: reuse strbuf for all
+> remove_dir_recursively() calls), but was reverted as a side-effect of
+> 55856a35 (rm: absorb a submodules git dir before deletion). Reinstate
+> the optimization.
+>
+> Signed-off-by: Rene Scharfe <l.s.r@web.de>
+> ---
+> Was deb8e15a a rebase victim?
 
-> And if you actually want decorations, and you're parsing them, you are
-> *not* going to script it with "--oneline --decorations", because the
-> end result is basically impossible to parse already (because it's
-> ambiguous - think about parentheses in the commit message).
+(I do not recall it off the top of my head)
 
-OK.  So let's wait to hear from others if they like the "obviously"
-improved output.  Even though I find the decorations indispensable
-in my "git log" output, I personally do not have much preference
-either way, as my screen is often wide enough ;-)
+That commit was merged at 03f25e85,
+Merge branch 'rs/rm-strbuf-optim', but it looks
+like it was reverted as part of 55856a35b2
+(rm: absorb a submodules git dir before deletion)
 
-Thanks.  We'd need to update the tests that expects the old style
-output, though.
+Looking through the discussion at
+https://public-inbox.org/git/xmqqmvfich2e.fsf@gitster.mtv.corp.google.com/
+there was no apparent signs of confusion, but a reroll was promised, that
+I cannot find on the list.
+
+Anyway, the patch below looks good to me.
+
+Thanks,
+Stefan
+
+>
+>  builtin/rm.c | 6 +++---
+>  1 file changed, 3 insertions(+), 3 deletions(-)
+>
+> diff --git a/builtin/rm.c b/builtin/rm.c
+> index 452170a3ab..fb79dcab18 100644
+> --- a/builtin/rm.c
+> +++ b/builtin/rm.c
+> @@ -360,15 +360,14 @@ int cmd_rm(int argc, const char **argv, const char =
+*prefix)
+>          */
+>         if (!index_only) {
+>                 int removed =3D 0, gitmodules_modified =3D 0;
+> +               struct strbuf buf =3D STRBUF_INIT;
+>                 for (i =3D 0; i < list.nr; i++) {
+>                         const char *path =3D list.entry[i].name;
+>                         if (list.entry[i].is_submodule) {
+> -                               struct strbuf buf =3D STRBUF_INIT;
+> -
+> +                               strbuf_reset(&buf);
+>                                 strbuf_addstr(&buf, path);
+>                                 if (remove_dir_recursively(&buf, 0))
+>                                         die(_("could not remove '%s'"), p=
+ath);
+> -                               strbuf_release(&buf);
+>
+>                                 removed =3D 1;
+>                                 if (!remove_path_from_gitmodules(path))
+> @@ -382,6 +381,7 @@ int cmd_rm(int argc, const char **argv, const char *p=
+refix)
+>                         if (!removed)
+>                                 die_errno("git rm: '%s'", path);
+>                 }
+> +               strbuf_release(&buf);
+>                 if (gitmodules_modified)
+>                         stage_updated_gitmodules();
+>         }
+> --
+> 2.11.1
+>
