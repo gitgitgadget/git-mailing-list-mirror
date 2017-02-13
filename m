@@ -2,109 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1C5D51FC44
-	for <e@80x24.org>; Mon, 13 Feb 2017 20:58:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7F8271FC44
+	for <e@80x24.org>; Mon, 13 Feb 2017 21:02:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753233AbdBMU6l (ORCPT <rfc822;e@80x24.org>);
-        Mon, 13 Feb 2017 15:58:41 -0500
-Received: from avasout02.plus.net ([212.159.14.17]:34207 "EHLO
-        avasout02.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753062AbdBMU6k (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Feb 2017 15:58:40 -0500
-Received: from [10.0.2.15] ([146.90.175.113])
-        by avasout02 with smtp
-        id kLyd1u00C2TAAPE01Lye6i; Mon, 13 Feb 2017 20:58:39 +0000
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.2 cv=F9YnTupN c=1 sm=1 tr=0
- a=xPbQrKg7pJ/t022iV9eLWw==:117 a=xPbQrKg7pJ/t022iV9eLWw==:17
- a=IkcTkHD0fZMA:10 a=pGLkceISAAAA:8 a=Ym66rJlgl9hrx2s2FWYA:9 a=QEXdDO2ut3YA:10
- a=6kGIvZw6iX1k4Y-7sg4_:22
-X-AUTH: ramsayjones@:2500
-Subject: Re: [PATCH 04/11] files-backend: replace *git_path*() with
- files_path()
-To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>, git@vger.kernel.org
-References: <20170213152011.12050-1-pclouds@gmail.com>
- <20170213152011.12050-5-pclouds@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Michael Haggerty <mhagger@alum.mit.edu>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        sbeller@google.com, novalis@novalis.org
-From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-Message-ID: <8f6e09aa-f578-6faf-6acc-e35be71ee990@ramsayjones.plus.com>
-Date:   Mon, 13 Feb 2017 20:58:37 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.7.0
+        id S1753450AbdBMVB6 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 13 Feb 2017 16:01:58 -0500
+Received: from mail-oi0-f66.google.com ([209.85.218.66]:36093 "EHLO
+        mail-oi0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753164AbdBMVB4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Feb 2017 16:01:56 -0500
+Received: by mail-oi0-f66.google.com with SMTP id u143so743936oif.3
+        for <git@vger.kernel.org>; Mon, 13 Feb 2017 13:01:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=pe3FdRO/xNJLtnO00LxhNZeGRP1rkt0Ah+rU7uZWJAc=;
+        b=f0v+NR6o1SyG24gTIDMet6SP8HLIMSFrg4cclpl88zpg52r/u0jmnioF5uFqxoUF5B
+         WFMlMDvTq0Bvr/hN6Am/Av2EE2YGxQZKLXjG3BSe+RCqkMQs7/v5ogQehVPbTm5oCxQm
+         4yW3KKJdIF8FcWmV0D/ac+VKhrPpDrnqLwGdbPX65h0+E+GNGFDyWRWzjGJDF7YPOJCV
+         saZv1ICYH+LSwB5JTdcKNP3kHOgL04eETIta25/Pti2YhHFXWCQGJbXIjMowDSW1oa9i
+         sf894Wu9O8rcQtWhM/Ml18lYlyHpwyBH2DfKPfjDNb3U4OBK6+BWMRA/oi0uaWmxZTU7
+         KpvA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=pe3FdRO/xNJLtnO00LxhNZeGRP1rkt0Ah+rU7uZWJAc=;
+        b=ITLFicceK2C6zyELm25ihocapXdAn6bWoyfvoqRwu+c/Mj/bqkme4hMFStwNs5sgWe
+         OkqIcngcFzSNYUBTkQJigkR6rhk+KQlF0tT2xOFJFzb/pffYrLjuJRYWSeFi76HVBN5I
+         0yqkokhzAiF0FIWxBCcX2XhxBpAF7c7ZiDbGH7mYlcw+LxBPAYNLgVRaJG5m8Y+6uRuA
+         O1Yo67hO6JTNlvi090BegHTCqlRhur5sO7vGPRBphNCBbsiHBYthWrl71GnOxd6+c4HU
+         730Vp/uiW8iqARbJjEbEltrQjnE3rm0Vap+ifY3OLgCGbA6fR6AktVguZTWsL5k6FfgM
+         boKA==
+X-Gm-Message-State: AMke39m6wotJa9Uvjbz/gwC949WbZFd0w6ggRCvJtG2WHOP1U/sy9Y7yKMhmRfaGB22fEQ==
+X-Received: by 10.84.232.10 with SMTP id h10mr32201981plk.121.1487019711005;
+        Mon, 13 Feb 2017 13:01:51 -0800 (PST)
+Received: from localhost ([2620:0:1000:8622:d0e0:42a7:601f:5154])
+        by smtp.gmail.com with ESMTPSA id s65sm16379279pgb.64.2017.02.13.13.01.50
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Mon, 13 Feb 2017 13:01:50 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Linus Torvalds <torvalds@linux-foundation.org>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Subject: Re: [RFC PATCH] show decorations at the end of the line
+References: <alpine.LFD.2.20.1702110943460.31350@i7.lan>
+        <CA+55aFw2S14a4_4YK0b6PNK4TH_AUo_+2JN+PTyBTufNeB5t6A@mail.gmail.com>
+        <xmqq1sv2fq6m.fsf@gitster.mtv.corp.google.com>
+        <CA+55aFy-vvOBu5Y4KDeteUyK-7U7yTa1HoqHo+hME1=8bq7Xhw@mail.gmail.com>
+Date:   Mon, 13 Feb 2017 13:01:49 -0800
+In-Reply-To: <CA+55aFy-vvOBu5Y4KDeteUyK-7U7yTa1HoqHo+hME1=8bq7Xhw@mail.gmail.com>
+        (Linus Torvalds's message of "Mon, 13 Feb 2017 11:33:18 -0800")
+Message-ID: <xmqq7f4tdcua.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <20170213152011.12050-5-pclouds@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Linus Torvalds <torvalds@linux-foundation.org> writes:
 
+> And if you actually want decorations, and you're parsing them, you are
+> *not* going to script it with "--oneline --decorations", because the
+> end result is basically impossible to parse already (because it's
+> ambiguous - think about parentheses in the commit message).
 
-On 13/02/17 15:20, Nguyễn Thái Ngọc Duy wrote:
-> This centralizes all path rewriting of files-backend.c in one place so
-> we have easier time removing the path rewriting later. There could be
-> some hidden indirect git_path() though, I didn't audit the code to the
-> bottom.
-> 
-> Side note: set_worktree_head_symref() is a bad boy and should not be in
-> files-backend.c (probably should not exist in the first place). But
-> we'll leave it there until we have better multi-worktree support in refs
-> before we update it.
-> 
-> Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
-> ---
->  refs/files-backend.c | 193 ++++++++++++++++++++++++++-------------------------
->  1 file changed, 98 insertions(+), 95 deletions(-)
-> 
-> diff --git a/refs/files-backend.c b/refs/files-backend.c
-> index 39217a2ca..c69e4fe84 100644
-> --- a/refs/files-backend.c
-> +++ b/refs/files-backend.c
-> @@ -165,12 +165,13 @@ static struct ref_entry *create_dir_entry(struct files_ref_store *ref_store,
->  					  const char *dirname, size_t len,
->  					  int incomplete);
->  static void add_entry_to_dir(struct ref_dir *dir, struct ref_entry *entry);
-> -static int files_log_ref_write(const char *refname, const unsigned char *old_sha1,
-> +static int files_log_ref_write(struct files_ref_store *refs,
-> +			       const char *refname, const unsigned char *old_sha1,
->  			       const unsigned char *new_sha1, const char *msg,
->  			       int flags, struct strbuf *err);
->  
-> -void files_path(struct files_ref_store *refs, struct strbuf *sb,
-> -		const char *fmt, ...) __attribute__((format (printf, 3, 4)));
+OK.  So let's wait to hear from others if they like the "obviously"
+improved output.  Even though I find the decorations indispensable
+in my "git log" output, I personally do not have much preference
+either way, as my screen is often wide enough ;-)
 
-You only added this in the last commit, so maybe mark it static in
-the previous patch! Also, just in case you were wondering, the 'Why?'
-of the previous email was, "Why do you need this forward declaration?"
-(hint: you don't ;-)
-
-> +static void files_path(struct files_ref_store *refs, struct strbuf *sb,
-> +		       const char *fmt, ...) __attribute__((format (printf, 3, 4)));
->  
->  static struct ref_dir *get_ref_dir(struct ref_entry *entry)
->  {
-> @@ -933,8 +934,8 @@ struct files_ref_store {
->  /* Lock used for the main packed-refs file: */
->  static struct lock_file packlock;
->  
-> -void files_path(struct files_ref_store *refs, struct strbuf *sb,
-> -		const char *fmt, ...)
-> +static void files_path(struct files_ref_store *refs, struct strbuf *sb,
-> +		       const char *fmt, ...)
->  {
->  	struct strbuf tmp = STRBUF_INIT;
->  	va_list vap;
-
-ATB,
-Ramsay Jones
-
+Thanks.  We'd need to update the tests that expects the old style
+output, though.
