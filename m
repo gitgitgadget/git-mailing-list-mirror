@@ -2,90 +2,74 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F0CB31FC44
-	for <e@80x24.org>; Mon, 13 Feb 2017 21:05:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E56421FC44
+	for <e@80x24.org>; Mon, 13 Feb 2017 21:07:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752447AbdBMVFw (ORCPT <rfc822;e@80x24.org>);
-        Mon, 13 Feb 2017 16:05:52 -0500
-Received: from cloud.peff.net ([104.130.231.41]:54459 "EHLO cloud.peff.net"
+        id S1753228AbdBMVHZ (ORCPT <rfc822;e@80x24.org>);
+        Mon, 13 Feb 2017 16:07:25 -0500
+Received: from bsmtp7.bon.at ([213.33.87.19]:47698 "EHLO bsmtp7.bon.at"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751950AbdBMVFv (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Feb 2017 16:05:51 -0500
-Received: (qmail 5482 invoked by uid 109); 13 Feb 2017 21:05:51 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 13 Feb 2017 21:05:51 +0000
-Received: (qmail 25250 invoked by uid 111); 13 Feb 2017 21:05:51 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 13 Feb 2017 16:05:51 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 13 Feb 2017 16:05:49 -0500
-Date:   Mon, 13 Feb 2017 16:05:49 -0500
-From:   Jeff King <peff@peff.net>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] docs/git-submodule: fix unbalanced quote
-Message-ID: <20170213210549.jns7asrvjp3lb5wc@sigill.intra.peff.net>
-References: <20170213203835.vssj64tcvuq35dny@sigill.intra.peff.net>
+        id S1752618AbdBMVHX (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Feb 2017 16:07:23 -0500
+Received: from dx.site (unknown [93.83.142.38])
+        by bsmtp7.bon.at (Postfix) with ESMTPSA id 3vMdR93Lvqz5tlm;
+        Mon, 13 Feb 2017 22:07:16 +0100 (CET)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+        by dx.site (Postfix) with ESMTP id 15E7C2AAA;
+        Mon, 13 Feb 2017 22:07:16 +0100 (CET)
+Subject: Re: [PATCH] mingw: use OpenSSL's SHA-1 routines
+To:     Junio C Hamano <gitster@pobox.com>
+References: <6a29f8c60d315a24292c1fa9f5e84df4dfdbf813.1486679254.git.johannes.schindelin@gmx.de>
+ <20170210050237.gajicliueuvk6s5d@sigill.intra.peff.net>
+ <alpine.DEB.2.20.1702101647340.3496@virtualbox>
+ <20170210160458.pcp7mupdz24m6cms@sigill.intra.peff.net>
+ <9913e513-553e-eba6-e81a-9c21030dd767@kdbg.org>
+ <xmqq60kdev2r.fsf@gitster.mtv.corp.google.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jeff King <peff@peff.net>, git@vger.kernel.org,
+        Jeff Hostetler <jeffhost@microsoft.com>
+From:   Johannes Sixt <j6t@kdbg.org>
+Message-ID: <b530c820-9956-4396-d853-c7d70ccaf11d@kdbg.org>
+Date:   Mon, 13 Feb 2017 22:07:16 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.7.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20170213203835.vssj64tcvuq35dny@sigill.intra.peff.net>
+In-Reply-To: <xmqq60kdev2r.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset=iso-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The documentation gives an example of the submodule foreach
-command that uses both backticks and single-quotes. We stick
-the whole thing inside "+" markers to make it monospace, but
-the inside punctuation still needs escaping. We handle the
-backticks with "{backtick}", and use backslash-escaping for
-the single-quotes.
+Am 13.02.2017 um 20:42 schrieb Junio C Hamano:
+> I have been operating under the assumption that everybody on Windows
+> who builds Git works off of Dscho's Git for Windows tree, and
+> patches that are specific to Windows from Dscho's are sent to me via
+> the list only after they have been in Git for Windows and proven to
+> help Windows users in the wild.
+>
+> The consequence of these two assumptions is that I would feel safe
+> to treat Windows specific changes that do not touch generic part of
+> the codebase from Dscho just like updates from any other subsystem
+> maintainers (any git-svn thing from Eric, any gitk thing from Paul,
+> any p4 thing Luke and Lars are both happy with, etc.).
+>
+> You seem to be saying that the first of the two assumptions does not
+> hold.  Should I change my expectations while queuing Windows specific
+> patches from Dscho?
 
-But we missed the escaping on the second quote. Fortunately,
-asciidoc renders this unbalanced quote as we want (showing
-the quote), but asciidoctor does not. We could fix it by
-adding the missing backslash.
+Your first assumption is incorrect as far as I am concerned. I build 
+from your tree plus some topics. During -rc period, I build off of 
+master; after a release, I build off of next. I merge some of the topics 
+that you carry in pu when I find them interesting or when I suspect them 
+to regress on Windows. Then I carry around a few additional patches that 
+the public has never seen, and these days I also merge Dscho's rebase-i 
+topic.
 
-However, let's take a step back. Even when rendered
-correctly, it's hard to read a long command stuck into the
-middle of a paragraph, and the important punctuation is hard
-to notice. Let's instead bump it into its own single-line
-code block. That makes both the source and the rendered
-result more readable, and as a bonus we don't have to worry
-about quoting at all.
-
-Signed-off-by: Jeff King <peff@peff.net>
----
-Not textually related to the previous fix, but obviously along the same
-lines.
-
- Documentation/git-submodule.txt | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
-
-diff --git a/Documentation/git-submodule.txt b/Documentation/git-submodule.txt
-index 918bd1d1b..a8eb1c7ce 100644
---- a/Documentation/git-submodule.txt
-+++ b/Documentation/git-submodule.txt
-@@ -228,9 +228,12 @@ foreach::
- 	the processing to terminate. This can be overridden by adding '|| :'
- 	to the end of the command.
- +
--As an example, +git submodule foreach \'echo $path {backtick}git
--rev-parse HEAD{backtick}'+ will show the path and currently checked out
--commit for each submodule.
-+As an example, the command below will show the path and currently
-+checked out commit for each submodule:
-++
-+--------------
-+git submodule foreach 'echo $path `git rev-parse HEAD`'
-+--------------
- 
- sync::
- 	Synchronizes submodules' remote URL configuration setting
--- 
-2.12.0.rc1.466.g70234cfd8
+-- Hannes
 
