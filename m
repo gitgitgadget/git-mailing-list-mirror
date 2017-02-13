@@ -7,133 +7,111 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 722DC1FC44
-	for <e@80x24.org>; Mon, 13 Feb 2017 18:34:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C39751FC44
+	for <e@80x24.org>; Mon, 13 Feb 2017 18:47:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752967AbdBMSeL (ORCPT <rfc822;e@80x24.org>);
-        Mon, 13 Feb 2017 13:34:11 -0500
-Received: from mail-oi0-f66.google.com ([209.85.218.66]:33191 "EHLO
+        id S1752427AbdBMSrr (ORCPT <rfc822;e@80x24.org>);
+        Mon, 13 Feb 2017 13:47:47 -0500
+Received: from mail-oi0-f66.google.com ([209.85.218.66]:36397 "EHLO
         mail-oi0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752952AbdBMSeJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Feb 2017 13:34:09 -0500
-Received: by mail-oi0-f66.google.com with SMTP id j15so364182oih.0
-        for <git@vger.kernel.org>; Mon, 13 Feb 2017 10:34:08 -0800 (PST)
+        with ESMTP id S1752242AbdBMSrq (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Feb 2017 13:47:46 -0500
+Received: by mail-oi0-f66.google.com with SMTP id u143so279547oif.3
+        for <git@vger.kernel.org>; Mon, 13 Feb 2017 10:47:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=YPpweIFdr8JNafeVUWUHOBw8Hp2cFvcDp/wbtve1PBU=;
-        b=mG15etk394TpM+mYm0jNL3H+JrqLNug7Wgr//zY3VEtmfzmAbWqyk4xUrS2eNzDcho
-         uQqm1YvOi5sPr4KrgvklyRIbIV8YZf0Uidt3lksSyR6fs0gjP3lq/rajh25CTaslhQtp
-         +n3SAsGnNI6avZFPJm5svwPs77+pKjXRMRRSSP2sruYKzr7CziWgFj9Np7VGNbQuSdV3
-         Woh4LvU7N85V+LNv6RAAAP9uyzfTVloR3KCGbkAub+mlThWSEE9fc3YxWRNuF7JnWWdc
-         vQuAJ5Dt3qQVusPdN9NqOc/WoyF22ATZDylksGa58LtLKajclPUkLIhXuNbHSGbVES/j
-         SD5w==
+         :user-agent:mime-version;
+        bh=VGi33PvPzLY0scc/gFSrLduZLYJDScjkvwbVSWX4l8k=;
+        b=RnRtH33AY3NfhDTPlZkMhRHe4d4/B3DZMtzA6o4lhqdCxSLfwwUrmQ7U53zqp6n1PR
+         GQSxPtWK7vN/fznGlrWr83FSHp+sA0rYI4C5ceAdpgGJoP7mcFVVf0T1VLjKpzt2H7NX
+         lredrVRtIeoEksijuQhAxvMllUnqzv5TqknZw40Bo/CnA/SPmLbQ1P+Xss7x4SPDWTkg
+         ccCl/ZFvYG4iG7NIyT4B9BrxtQhAO4krCK3NOLdfW2qO1ozUpni8Wcx7sc1k4VdgHmSg
+         eJ0HQ7wVk9FGekQzlau9eTzQci/HXpXK1dkvmyodJHCp6z206Bf4iRm6980x7MJ5ub0E
+         cBVA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=YPpweIFdr8JNafeVUWUHOBw8Hp2cFvcDp/wbtve1PBU=;
-        b=PTHFvgtba0tG+q6o39V/Sh1hi7gCCrSigILLZJyt+mlwvU3FpOyPA1bjOQOe4lR2Fj
-         OL64AgV1sck3Nb+1+Xob/EEWpr7+JK/1FgtfaLi7Ltv9c4lr32vbCptxQKZjEssXHkZP
-         wTos49n6GE2OpIWn7e6L8phVreiaRnPgtiy6zPGw80bi11REj1YY16zsg4Es8zWgxk5l
-         MY3x0u+Izc1EHFddhTe2coINh5J9Ogdz3IFH8SW4tVBaI/QZZFs6mZEk+BB4/U9OHyZ7
-         9hEXaCzzd6NbMqyzBzERzWSL3cN3lRvQ/i35BbzSheiG/Wl4yFymu41yN+s3Sq7yhCpZ
-         Z1Xw==
-X-Gm-Message-State: AMke39mj42o4Xami0C1+xlcMQQdU4Fc4VNGl2hHGdFnrNMQR11hYEUxwz5XBXKbH9/zA6Q==
-X-Received: by 10.84.224.131 with SMTP id s3mr31553751plj.162.1487010848207;
-        Mon, 13 Feb 2017 10:34:08 -0800 (PST)
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=VGi33PvPzLY0scc/gFSrLduZLYJDScjkvwbVSWX4l8k=;
+        b=cNSvcwQAeVToxBlfrrvSb4BzIN9nvdonu2yFGEKEsq8VrBHbOVF5rNjeiV15nYG2T/
+         Gvm3IuPPMKj0rnMGWwGmC3gon17/vakyfwrlEUJvBsKv+qyNgBSlremDbt4UbvDWN15C
+         NPIL7W1u9B5kSbyJBeUMrsRL4XRdIiSp3nU0AULRXhYx7edF2kIvm/XCjp8YDUOzMo8X
+         0J2Q+0kvcu/9aZwBXZAIN245cAlzpJYPkKaQoh4ntCa426QPuzRyJ0V/trZsGe8xQIJl
+         /O7LPcvSwrlRD3iBR7YD/vl5X1D/E+yehYbDJ8JTFSNlq5VFFOPPGGiWip/mz8Df0n1D
+         SUjQ==
+X-Gm-Message-State: AMke39kfyF3dv/G8QWIGpwKkpJbjJa6xyxcbIMocEWKl4a+gWcM1U6xZHACAgrVerox+dw==
+X-Received: by 10.84.232.202 with SMTP id x10mr5100356plm.119.1487011665655;
+        Mon, 13 Feb 2017 10:47:45 -0800 (PST)
 Received: from localhost ([2620:0:1000:8622:d0e0:42a7:601f:5154])
-        by smtp.gmail.com with ESMTPSA id d78sm22310582pfb.43.2017.02.13.10.34.07
+        by smtp.gmail.com with ESMTPSA id p14sm19235155pfl.75.2017.02.13.10.47.44
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 13 Feb 2017 10:34:07 -0800 (PST)
+        Mon, 13 Feb 2017 10:47:44 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] clean: use warning_errno() when appropriate
-References: <20170213092702.10462-1-pclouds@gmail.com>
-Date:   Mon, 13 Feb 2017 10:34:06 -0800
-In-Reply-To: <20170213092702.10462-1-pclouds@gmail.com> (=?utf-8?B?Ik5n?=
- =?utf-8?B?dXnhu4VuIFRow6FpIE5n4buNYw==?=
-        Duy"'s message of "Mon, 13 Feb 2017 16:27:02 +0700")
-Message-ID: <xmqqwpcudjoh.fsf@gitster.mtv.corp.google.com>
+To:     Marc Strapetz <marc.strapetz@syntevo.com>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: git remote rename problem with trailing \\ for remote.url config entries (on Windows)
+References: <da730b21-58ae-bfa8-705f-7669c0f56764@syntevo.com>
+Date:   Mon, 13 Feb 2017 10:47:43 -0800
+In-Reply-To: <da730b21-58ae-bfa8-705f-7669c0f56764@syntevo.com> (Marc
+        Strapetz's message of "Mon, 13 Feb 2017 17:49:44 +0100")
+Message-ID: <xmqqo9y6dj1s.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Nguyễn Thái Ngọc Duy  <pclouds@gmail.com> writes:
+Marc Strapetz <marc.strapetz@syntevo.com> writes:
 
-> All these warning() calls are preceded by a system call. Report the
-> actual error to help the user understand why we fail to remove
-> something.
-
-I think this patch is probably correct in the current code, but I
-say this only after following what quote_path_relative() and
-relative_path() that is called from it.  These warnings are preceded
-by a call to a system library function, but it is not apparent that
-they are immediately preceded without anything else that could have
-failed in between.
-
-    Side note.  There are many calls into strbuf API in these two
-    functions.  Any calls to xmalloc() and friends made by strbuf
-    functions may see ENOMEM from underlying malloc() and recover by
-    releasing cached resources, by which time the original errno is
-    unrecoverable.  So the above "probably correct" is not strictly
-    true.
-
-If we care deeply enough that we want to reliably show the errno we
-got from the preceding call to a system library function even after
-whatever comes in between, I think you'd need the usual saved_errno
-trick.  Is that worth it?---I do not offhand have an opinion.
-
-> Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
-> ---
->  builtin/clean.c | 8 ++++----
->  1 file changed, 4 insertions(+), 4 deletions(-)
+> One of our users has just reported that:
 >
-> diff --git a/builtin/clean.c b/builtin/clean.c
-> index d6bc3aaaea..dc1168747e 100644
-> --- a/builtin/clean.c
-> +++ b/builtin/clean.c
-> @@ -175,7 +175,7 @@ static int remove_dirs(struct strbuf *path, const char *prefix, int force_flag,
->  		res = dry_run ? 0 : rmdir(path->buf);
->  		if (res) {
->  			quote_path_relative(path->buf, prefix, &quoted);
-> -			warning(_(msg_warn_remove_failed), quoted.buf);
-> +			warning_errno(_(msg_warn_remove_failed), quoted.buf);
->  			*dir_gone = 0;
->  		}
->  		return res;
-> @@ -209,7 +209,7 @@ static int remove_dirs(struct strbuf *path, const char *prefix, int force_flag,
->  				string_list_append(&dels, quoted.buf);
->  			} else {
->  				quote_path_relative(path->buf, prefix, &quoted);
-> -				warning(_(msg_warn_remove_failed), quoted.buf);
-> +				warning_errno(_(msg_warn_remove_failed), quoted.buf);
->  				*dir_gone = 0;
->  				ret = 1;
->  			}
-> @@ -231,7 +231,7 @@ static int remove_dirs(struct strbuf *path, const char *prefix, int force_flag,
->  			*dir_gone = 1;
->  		else {
->  			quote_path_relative(path->buf, prefix, &quoted);
-> -			warning(_(msg_warn_remove_failed), quoted.buf);
-> +			warning_errno(_(msg_warn_remove_failed), quoted.buf);
->  			*dir_gone = 0;
->  			ret = 1;
->  		}
-> @@ -982,7 +982,7 @@ int cmd_clean(int argc, const char **argv, const char *prefix)
->  			res = dry_run ? 0 : unlink(abs_path.buf);
->  			if (res) {
->  				qname = quote_path_relative(item->string, NULL, &buf);
-> -				warning(_(msg_warn_remove_failed), qname);
-> +				warning_errno(_(msg_warn_remove_failed), qname);
->  				errors++;
->  			} else if (!quiet) {
->  				qname = quote_path_relative(item->string, NULL, &buf);
+> $ git remote rename origin origin2
+>
+> will turn following remote entry:
+>
+> [remote "origin"]
+> 	url = c:\\repo\\
+> 	fetch = +refs/heads/*:refs/remotes/origin/*
+>
+> into following entry for which the url is skipped:
+>
+> [remote "origin2"]
+> [remote "origin2"]
+> 	fetch = +refs/heads/*:refs/remotes/origin2/*
+>
+> I understand that this is caused by the trailing \\ and it's easy to
+> fix, but 'git push' and 'git pull' work properly with such URLs and a
+>
+> $ git clone c:\repo\
+>
+> will even result in the problematic remote-entry. So I guess some kind
+> of validation could be helpful.
+
+If you change the original definition of the "origin" to
+
+        [remote "origin"]
+               url = "c:\\repo\\"
+               fetch = +refs/heads/*:refs/remotes/origin/*
+
+or
+
+        [remote "origin"]
+               url = c:\\repo\\ # ends with bs
+               fetch = +refs/heads/*:refs/remotes/origin/*
+
+it seems to give me a better result.  I didn't dig to determine
+where things go wrong in "remote rename", and it is possible that
+the problem is isolated to that command, or the same problem exists
+with any value that ends with a backslash.  If the latter, "git clone"
+and anything that writes to configuration such a value needs to be
+taught about this glitch and learn a workaround, I would think.
+
+Dscho Cc'ed, not for Windows expertise, but as somebody who has done
+a lot in <config.c>.
+
+
+
