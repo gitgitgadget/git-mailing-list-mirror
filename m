@@ -2,232 +2,80 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3AE691FC44
-	for <e@80x24.org>; Mon, 13 Feb 2017 20:38:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 795BC1FC44
+	for <e@80x24.org>; Mon, 13 Feb 2017 20:38:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753267AbdBMUij (ORCPT <rfc822;e@80x24.org>);
-        Mon, 13 Feb 2017 15:38:39 -0500
-Received: from avasout02.plus.net ([212.159.14.17]:56983 "EHLO
-        avasout02.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753209AbdBMUii (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Feb 2017 15:38:38 -0500
-Received: from [10.0.2.15] ([146.90.175.113])
-        by avasout02 with smtp
-        id kLeb1u0042TAAPE01LecQ4; Mon, 13 Feb 2017 20:38:36 +0000
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.2 cv=F9YnTupN c=1 sm=1 tr=0
- a=xPbQrKg7pJ/t022iV9eLWw==:117 a=xPbQrKg7pJ/t022iV9eLWw==:17
- a=IkcTkHD0fZMA:10 a=pGLkceISAAAA:8 a=49SH-MnNuw-JaQbAKbwA:9
- a=n2AuYUPkMhNymyIs:21 a=iGIQnsrOff3RhdK7:21 a=QEXdDO2ut3YA:10
- a=6kGIvZw6iX1k4Y-7sg4_:22
-X-AUTH: ramsayjones@:2500
-Subject: Re: [PATCH 02/11] files-backend: convert git_path() to
- strbuf_git_path()
-To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>, git@vger.kernel.org
-References: <20170213152011.12050-1-pclouds@gmail.com>
- <20170213152011.12050-3-pclouds@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Michael Haggerty <mhagger@alum.mit.edu>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        sbeller@google.com, novalis@novalis.org
-From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-Message-ID: <e8a83077-1d4d-1274-956c-83388957bc63@ramsayjones.plus.com>
-Date:   Mon, 13 Feb 2017 20:38:35 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.7.0
+        id S1753281AbdBMUiz (ORCPT <rfc822;e@80x24.org>);
+        Mon, 13 Feb 2017 15:38:55 -0500
+Received: from mail-ot0-f193.google.com ([74.125.82.193]:34967 "EHLO
+        mail-ot0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752203AbdBMUiy (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Feb 2017 15:38:54 -0500
+Received: by mail-ot0-f193.google.com with SMTP id 65so13454705otq.2
+        for <git@vger.kernel.org>; Mon, 13 Feb 2017 12:38:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=ORcdVpD4sT3EaVNs4c5jRNAusaPZd3PqQURD6RXaB6A=;
+        b=dVlkWEagdIoccybYsj+hQOGb9RbnGa5xU2VCtq5qq8J74JXHo3E2M2Z43l0VtxVhDK
+         TMTYEz/WtUyR1wHD0ImfGv/uEgN02urKbWwcW8vnpdUURJTtX4Wa8WI2mSeaob3id/1k
+         tQP0D84gTWrtIN4GVphYur5gpuMoYdHgw+Pxw2r4KW6hpNzstXevBZ/B4fi2ajjl3rBH
+         +n6Gea0ESXK28+6mTFBGz3ZB6ZmWbEh7B1fgympF+oqufRXiZnWqke3R3iVL4vK5YFWR
+         WhPw2dtzr9eBQ4+OEsM8zHo6N0xiixWM8iYGbYY0PRe76Dujlrd2DbMYiYtmiKHODFA1
+         4YFQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=ORcdVpD4sT3EaVNs4c5jRNAusaPZd3PqQURD6RXaB6A=;
+        b=MjUTQLx9QNfWx49DEWwi4dhhCL/N1BX1FeoBqtNvANHEGz5DVS4pYSGI97Cqx7HnCK
+         M34Nk0xTHWIllhDXOrhhQ0w23RR2v7fIQFzvNDTtDPLdY1pUC3v6IT1ZKK6atwNxYp55
+         8Ilw4HS8DUqDsnsHFBb5buUMSeOfGfKLflzyhWCLy6SNdN5I0CEIwZAuQvHRDU9XP0EH
+         j7OItQvPy1wF0q3OoyHe1UZqZ9SRejcyJQ2Wf5VqNKmCOHbTMPIdR1UparwvwekLfMjE
+         vPqSw0FuQJIrFhTDGXOuFrPZhjbInLB8zA7CtBv53Xklw0YGfKAVKP3tDbtAnYsS9IOd
+         9grg==
+X-Gm-Message-State: AMke39mAE32c3oEofo21mC2EPObYFrJCCFzaAeXjJWrBl49bqsQ9+9JbQmwdrlvI0DnHFA==
+X-Received: by 10.98.133.11 with SMTP id u11mr28015263pfd.132.1487018328505;
+        Mon, 13 Feb 2017 12:38:48 -0800 (PST)
+Received: from localhost ([2620:0:1000:8622:d0e0:42a7:601f:5154])
+        by smtp.gmail.com with ESMTPSA id x10sm16265914pfi.117.2017.02.13.12.38.47
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Mon, 13 Feb 2017 12:38:47 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH] clean: use warning_errno() when appropriate
+References: <20170213092702.10462-1-pclouds@gmail.com>
+        <xmqqwpcudjoh.fsf@gitster.mtv.corp.google.com>
+        <20170213191433.muwhz7zem64p3rxr@sigill.intra.peff.net>
+Date:   Mon, 13 Feb 2017 12:38:47 -0800
+In-Reply-To: <20170213191433.muwhz7zem64p3rxr@sigill.intra.peff.net> (Jeff
+        King's message of "Mon, 13 Feb 2017 14:14:33 -0500")
+Message-ID: <xmqqk28tddwo.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <20170213152011.12050-3-pclouds@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Jeff King <peff@peff.net> writes:
 
+> I wonder if xmalloc() should be the one doing the saved_errno trick.
+> After all, it has only two outcomes: we successfully allocated the
+> memory, or we called die().
 
-On 13/02/17 15:20, Nguyễn Thái Ngọc Duy wrote:
-> git_path() and friends are going to be killed in files-backend.c in near
-> future. And because there's a risk with overwriting buffer in
-> git_path(), let's convert them all to strbuf_git_path(). We'll have
-> easier time killing/converting strbuf_git_path() then because we won't
-> have to worry about memory management again.
-> 
-> Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
-> ---
->  refs/files-backend.c | 114 ++++++++++++++++++++++++++++++++++++++++-----------
->  1 file changed, 90 insertions(+), 24 deletions(-)
-> 
-> diff --git a/refs/files-backend.c b/refs/files-backend.c
-> index 75565c3aa..6582c9b2d 100644
-> --- a/refs/files-backend.c
-> +++ b/refs/files-backend.c
-> @@ -2169,6 +2169,8 @@ static int lock_packed_refs(struct files_ref_store *refs, int flags)
->  	static int timeout_configured = 0;
->  	static int timeout_value = 1000;
->  	struct packed_ref_cache *packed_ref_cache;
-> +	struct strbuf sb = STRBUF_INIT;
-> +	int ret;
->  
->  	files_assert_main_repository(refs, "lock_packed_refs");
->  
-> @@ -2177,10 +2179,13 @@ static int lock_packed_refs(struct files_ref_store *refs, int flags)
->  		timeout_configured = 1;
->  	}
->  
-> -	if (hold_lock_file_for_update_timeout(
-> -			    &packlock, git_path("packed-refs"),
-> -			    flags, timeout_value) < 0)
-> +	strbuf_git_path(&sb, "packed-refs");
-> +	ret = hold_lock_file_for_update_timeout(&packlock, sb.buf,
-> +						flags, timeout_value);
-> +	strbuf_release(&sb);
-> +	if (ret < 0)
->  		return -1;
-> +
->  	/*
->  	 * Get the current packed-refs while holding the lock.  If the
->  	 * packed-refs file has been modified since we last read it,
-> @@ -2335,6 +2340,9 @@ static void try_remove_empty_parents(char *name)
->  	for (q = p; *q; q++)
->  		;
->  	while (1) {
-> +		struct strbuf sb = STRBUF_INIT;
-> +		int ret;
-> +
->  		while (q > p && *q != '/')
->  			q--;
->  		while (q > p && *(q-1) == '/')
-> @@ -2342,7 +2350,10 @@ static void try_remove_empty_parents(char *name)
->  		if (q == p)
->  			break;
->  		*q = '\0';
-> -		if (rmdir(git_path("%s", name)))
-> +		strbuf_git_path(&sb, "%s", name);
-> +		ret = rmdir(sb.buf);
-> +		strbuf_release(&sb);
-> +		if (ret)
->  			break;
->  	}
->  }
-> @@ -2431,7 +2442,11 @@ static int repack_without_refs(struct files_ref_store *refs,
->  		return 0; /* no refname exists in packed refs */
->  
->  	if (lock_packed_refs(refs, 0)) {
-> -		unable_to_lock_message(git_path("packed-refs"), errno, err);
-> +		struct strbuf sb = STRBUF_INIT;
-> +
-> +		strbuf_git_path(&sb, "packed-refs");
-> +		unable_to_lock_message(sb.buf, errno, err);
-> +		strbuf_release(&sb);
->  		return -1;
->  	}
->  	packed = get_packed_refs(refs);
-> @@ -2529,11 +2544,12 @@ static int rename_tmp_log(const char *newrefname)
->  {
->  	int attempts_remaining = 4;
->  	struct strbuf path = STRBUF_INIT;
-> +	struct strbuf tmp_renamed_log = STRBUF_INIT;
->  	int ret = -1;
->  
-> - retry:
-> -	strbuf_reset(&path);
->  	strbuf_git_path(&path, "logs/%s", newrefname);
-> +	strbuf_git_path(&tmp_renamed_log, TMP_RENAMED_LOG);
-> + retry:
->  	switch (safe_create_leading_directories_const(path.buf)) {
->  	case SCLD_OK:
->  		break; /* success */
-> @@ -2546,7 +2562,7 @@ static int rename_tmp_log(const char *newrefname)
->  		goto out;
->  	}
->  
-> -	if (rename(git_path(TMP_RENAMED_LOG), path.buf)) {
-> +	if (rename(tmp_renamed_log.buf, path.buf)) {
->  		if ((errno==EISDIR || errno==ENOTDIR) && --attempts_remaining > 0) {
->  			/*
->  			 * rename(a, b) when b is an existing
-> @@ -2574,6 +2590,7 @@ static int rename_tmp_log(const char *newrefname)
->  	ret = 0;
->  out:
->  	strbuf_release(&path);
-> +	strbuf_release(&tmp_renamed_log);
->  	return ret;
->  }
->  
-> @@ -2614,9 +2631,15 @@ static int files_rename_ref(struct ref_store *ref_store,
->  	int flag = 0, logmoved = 0;
->  	struct ref_lock *lock;
->  	struct stat loginfo;
-> -	int log = !lstat(git_path("logs/%s", oldrefname), &loginfo);
-> +	struct strbuf sb_oldref = STRBUF_INIT;
-> +	struct strbuf sb_newref = STRBUF_INIT;
-> +	struct strbuf tmp_renamed_log = STRBUF_INIT;
-> +	int log, ret;
->  	struct strbuf err = STRBUF_INIT;
->  
-> +	strbuf_git_path(&sb_oldref, "logs/%s", oldrefname);
-> +	log = !lstat(sb_oldref.buf, &loginfo);
-> +	strbuf_release(&sb_oldref);
->  	if (log && S_ISLNK(loginfo.st_mode))
->  		return error("reflog for %s is a symlink", oldrefname);
->  
-> @@ -2630,7 +2653,12 @@ static int files_rename_ref(struct ref_store *ref_store,
->  	if (!rename_ref_available(oldrefname, newrefname))
->  		return 1;
->  
-> -	if (log && rename(git_path("logs/%s", oldrefname), git_path(TMP_RENAMED_LOG)))
-> +	strbuf_git_path(&sb_oldref, "logs/%s", oldrefname);
-> +	strbuf_git_path(&tmp_renamed_log, TMP_RENAMED_LOG);
-> +	ret = log && rename(sb_oldref.buf, tmp_renamed_log.buf);
-
-It probably won't make too much difference, but the two code
-sequences above are not similar in terms of side-effects when
-'log' is false. In that case, the two calls to git_path() and
-the call to rename() are not made in the original code. In the
-new sequence, the two calls to strbuf_git_path() are always made
-(but rename() is not).
-
-> +	strbuf_release(&sb_oldref);
-> +	strbuf_release(&tmp_renamed_log);
-> +	if (ret)
->  		return error("unable to move logfile logs/%s to "TMP_RENAMED_LOG": %s",
->  			oldrefname, strerror(errno));
->  
-> @@ -2709,13 +2737,19 @@ static int files_rename_ref(struct ref_store *ref_store,
->  	log_all_ref_updates = flag;
->  
->   rollbacklog:
-> -	if (logmoved && rename(git_path("logs/%s", newrefname), git_path("logs/%s", oldrefname)))
-> +	strbuf_git_path(&sb_newref, "logs/%s", newrefname);
-> +	strbuf_git_path(&sb_oldref, "logs/%s", oldrefname);
-> +	if (logmoved && rename(sb_newref.buf, sb_oldref.buf))
-
-ditto
-
->  		error("unable to restore logfile %s from %s: %s",
->  			oldrefname, newrefname, strerror(errno));
-> +	strbuf_git_path(&tmp_renamed_log, TMP_RENAMED_LOG);
->  	if (!logmoved && log &&
-> -	    rename(git_path(TMP_RENAMED_LOG), git_path("logs/%s", oldrefname)))
-> +	    rename(tmp_renamed_log.buf, sb_oldref.buf))
-
-similar
-
->  		error("unable to restore logfile %s from "TMP_RENAMED_LOG": %s",
->  			oldrefname, strerror(errno));
-> +	strbuf_release(&sb_newref);
-> +	strbuf_release(&sb_oldref);
-> +	strbuf_release(&tmp_renamed_log);
->  
->  	return 1;
->  }
-
-ATB,
-Ramsay Jones
+I would be lying if I said I did not considered it when I wrote the
+message you are responding to, but I rejected it because that would
+be optimizing for a wrong case, in that most callers of xmalloc()
+and friends do not do so in the error codepath, and we would be
+penalizing them by doing the saved_errno dance unconditionally.
 
