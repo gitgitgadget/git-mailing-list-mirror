@@ -2,96 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D29681FC44
-	for <e@80x24.org>; Mon, 13 Feb 2017 23:05:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E702E1FC44
+	for <e@80x24.org>; Mon, 13 Feb 2017 23:09:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751338AbdBMXFg (ORCPT <rfc822;e@80x24.org>);
-        Mon, 13 Feb 2017 18:05:36 -0500
-Received: from cloud.peff.net ([104.130.231.41]:54598 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751079AbdBMXFg (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Feb 2017 18:05:36 -0500
-Received: (qmail 13956 invoked by uid 109); 13 Feb 2017 23:05:35 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 13 Feb 2017 23:05:35 +0000
-Received: (qmail 29487 invoked by uid 111); 13 Feb 2017 23:05:35 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 13 Feb 2017 18:05:35 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 13 Feb 2017 18:05:33 -0500
-Date:   Mon, 13 Feb 2017 18:05:33 -0500
-From:   Jeff King <peff@peff.net>
-To:     Thomas Gummerer <t.gummerer@gmail.com>
-Cc:     git@vger.kernel.org, Stephan Beyer <s-beyer@gmx.net>,
-        Junio C Hamano <gitster@pobox.com>,
-        Marc Strapetz <marc.strapetz@syntevo.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        =?utf-8?B?w5h5dmluZCBBIC4=?= Holm <sunny@sunbase.org>,
-        Jakub =?utf-8?B?TmFyxJlic2tp?= <jnareb@gmail.com>
-Subject: Re: [PATCH v3 4/5] stash: introduce new format create
-Message-ID: <20170213230532.sr7lpl26mcfa4gfc@sigill.intra.peff.net>
-References: <20170129201604.30445-1-t.gummerer@gmail.com>
- <20170205202642.14216-1-t.gummerer@gmail.com>
- <20170205202642.14216-5-t.gummerer@gmail.com>
- <20170206155606.xgkmhg656vuc6uki@sigill.intra.peff.net>
- <20170211145127.GA23081@hank>
- <20170213215734.puoung6hhdifbgai@sigill.intra.peff.net>
+        id S1751481AbdBMXJm (ORCPT <rfc822;e@80x24.org>);
+        Mon, 13 Feb 2017 18:09:42 -0500
+Received: from mail-it0-f50.google.com ([209.85.214.50]:36268 "EHLO
+        mail-it0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751371AbdBMXJl (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Feb 2017 18:09:41 -0500
+Received: by mail-it0-f50.google.com with SMTP id c7so8157789itd.1
+        for <git@vger.kernel.org>; Mon, 13 Feb 2017 15:09:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=Sx+a+a5TxyW7JBmm1KZp0YN7/87bm3lrtS31rkEZmW4=;
+        b=vMcaXxf/IJAGqZWAyIFh0wt3Pd3M30zXVgBu2f6crQ6g7lkyuSJ34VGaPKsrZ2tQB+
+         dgHTQjxd/SvfFMA7vDG1DT4Z/28JSZxQbn6n8Cc+ZevxDvST4Zkgu8/eK5pF4A9hs1m5
+         pXUHraAP9wlYvjkghh7XlaJMM5j2a1tpWb55tH2MeBcixRzyL0hgeNmSDw8Sjj8L5U/F
+         +CGmw2g9GSIcNh5iuJK/PZ/Uu6hczQ8GztsYcpVJfZheXxhs4LJ7lmMA8WTqoUyeUqIp
+         jVHDzWCDuL/yC67WRPTGbBoMkibLBG5pJOH/JP5pF5jkkqTHQGjk5URPp3okQlVDdC/7
+         woUw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=Sx+a+a5TxyW7JBmm1KZp0YN7/87bm3lrtS31rkEZmW4=;
+        b=W4rZqhkVfv5ZvJUn5M17NYCbTjma7OMFf+FxGIjb0WSFC28K+IG28hZ82ouFgY0OWj
+         thS4D5LOfmk3j6gOYFfvpWUjp36m9EXgBUNqpRBoxz4PldhoIIH3hA0A6DBBDaI0EqTl
+         R4KYGLQuQf8NfMCbGNNIY9e9H2ZYzOwl0dg4EURb3IGi4+cWeUnPDMCRHG1vlYfUqgAg
+         wjQXxqZWepMkP7OIfprZxngGQvObxfB9pqsRdy1H9rwn3parD4+mZRdYhk4kw16GtLgZ
+         EbBOwrQVYYpEencV9J88S4D8BnOYXdrux7PPikxxGAWKtXN8IFvDcMY/7dn96dKmXrpu
+         AQfg==
+X-Gm-Message-State: AMke39mQaexpzKnrPPLMsjJPyMh/v0qxLdrT8HgGdXwPfRbpKEt3Qa85TP+N0YQTo0nesv8MrTKWeSmVffCdhiwh
+X-Received: by 10.36.34.79 with SMTP id o76mr808029ito.116.1487027380875; Mon,
+ 13 Feb 2017 15:09:40 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20170213215734.puoung6hhdifbgai@sigill.intra.peff.net>
+Received: by 10.79.33.148 with HTTP; Mon, 13 Feb 2017 15:09:40 -0800 (PST)
+In-Reply-To: <20170213152011.12050-8-pclouds@gmail.com>
+References: <20170213152011.12050-1-pclouds@gmail.com> <20170213152011.12050-8-pclouds@gmail.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Mon, 13 Feb 2017 15:09:40 -0800
+Message-ID: <CAGZ79kbJXUY=UGvHtkeLLj-qMaoOyTwa2dr3-FqEdYi8eFs4LA@mail.gmail.com>
+Subject: Re: [PATCH 07/11] files-backend: remove the use of git_path()
+To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Michael Haggerty <mhagger@alum.mit.edu>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        David Turner <novalis@novalis.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Feb 13, 2017 at 04:57:34PM -0500, Jeff King wrote:
+> +
+> +       if (submodule) {
+> +               refs->submodule = xstrdup_or_null(submodule);
 
-> Yeah, I think your patch is actually fixing that case. But your search
-> is only part of the story. You found somebody using "-m" explicitly, but
-> what about somebody blindly calling:
-> 
->   git stash create $*
-> 
-> That's now surprising to somebody who puts "-m" in their message.
-> 
-> > I *think* this regression is acceptable, but I'm happy to introduce
-> > another verb if people think otherwise.
-> 
-> Despite what I wrote above, I'm still inclined to say that this isn't an
-> important regression. I'd be surprised if "stash create" is used
-> independently much at all.
+drop the _or_null here?
 
-Just thinking on this more...do we really care about "fixing" the
-interface of "stash create"? This is really just about refactoring what
-underlies the new "push", right?
+So in this patch we have either
+* submodule set
+* or gitdir/gitcommondir set
 
-So we could just do:
+which means that we exercise the commondir for regular repos.
+In the future when we want to be able to have a combination of worktrees
+and submodules this ought to be possible by setting submodule != NULL
+and still populating the gitdir/commondir buffers.
 
-diff --git a/git-stash.sh b/git-stash.sh
-index 6d629fc43..ee37db135 100755
---- a/git-stash.sh
-+++ b/git-stash.sh
-@@ -711,7 +711,7 @@ clear)
- 	;;
- create)
- 	shift
--	create_stash "$@" && echo "$w_commit"
-+	create_stash -m "$*" && echo "$w_commit"
- 	;;
- store)
- 	shift
-
-on top of your patch and keep the external interface the same.
-
-It might be nice to clean up the interface for "create" to match other
-ones, but from this discussion I think it is mostly a historical wart
-for scripting, and we are OK to just leave its slightly-broken interface
-in place forever.
-
-I could go either way.
-
--Peff
+Thanks,
+Stefan
