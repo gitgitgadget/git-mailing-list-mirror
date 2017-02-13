@@ -7,61 +7,60 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6A0F81FC44
-	for <e@80x24.org>; Mon, 13 Feb 2017 19:42:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 539531FC44
+	for <e@80x24.org>; Mon, 13 Feb 2017 19:51:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752833AbdBMTmk (ORCPT <rfc822;e@80x24.org>);
-        Mon, 13 Feb 2017 14:42:40 -0500
-Received: from mail-ot0-f193.google.com ([74.125.82.193]:32906 "EHLO
-        mail-ot0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752619AbdBMTmj (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Feb 2017 14:42:39 -0500
-Received: by mail-ot0-f193.google.com with SMTP id f9so13210150otd.0
-        for <git@vger.kernel.org>; Mon, 13 Feb 2017 11:42:38 -0800 (PST)
+        id S1752420AbdBMTvT (ORCPT <rfc822;e@80x24.org>);
+        Mon, 13 Feb 2017 14:51:19 -0500
+Received: from mail-ot0-f194.google.com ([74.125.82.194]:36763 "EHLO
+        mail-ot0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751476AbdBMTvS (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Feb 2017 14:51:18 -0500
+Received: by mail-ot0-f194.google.com with SMTP id 36so13264819otx.3
+        for <git@vger.kernel.org>; Mon, 13 Feb 2017 11:51:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=EpuIYonAxjO+Zj9heiyrqDi8YYDLfI16vahnZ3x+6o0=;
-        b=jit9MVwt7kDbSWtQMwEFyarRk9OHCX79wS3yAqBwG5AOVcOnmkn0dQ7zEaQhEV1Lck
-         v8m9d6UnRPwsSXW9Ixnsidmk005OJ4eXhtdYOYryk27LxqAycg4NNAksI1Y5UGUjB5XH
-         +yeLMS63RMnFPN3AN3vsb5k5knrIi3qdAeCbHbpbKHQ6dUBMLt0ogkU6Tvy+8XJ8BfH2
-         9ca9tXQ/M9idgqI1K72/NKAdGWXuG1AxkISYeyk5dJdu8JVVjz7p0tWr2mYU0IjUhL3m
-         HXTrqbnGAqQ/J0DDJQK3Jx7sOAIGM4+e3NbUDbjLUtZHNn9mLIaNhoZNrER6e73vY64j
-         iSjg==
+        bh=mV8PKVjzipPsYh8K00KUqFqkb9XHRnQ5aqFhJOS4SfM=;
+        b=VdyqfB3fMUI2EjCO6lW++72Yz3w2JOyS1+hhR94UHQmPrsfF77vVlE21wC0n5LI9Ka
+         9OJHOs3DYWAuH+E/TEAvyLn5dOWjz4auHAasgAR2njvuKl8RMJOyAoBSFC+EAsaythM4
+         cyUNFAfebQmZXA9SW4QBmJ6yEcWsVljxikLz6iTd4z6SOk/zH7Yp+hCeqvL4pfKxXzHk
+         Gz6XaPm4Y04tk93bNYLvLJXw2P9qEXwmLTf638fmVpf74lXIR0fz3Th8hsTmcZ2KJ61Q
+         P9OnDQRF1Om++ECPZcKyAr9MqGSOqDdJsWWVlejfNrxPV2mgl0KUe0lkZbbGBWNAe4tZ
+         Zyfg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=EpuIYonAxjO+Zj9heiyrqDi8YYDLfI16vahnZ3x+6o0=;
-        b=UqjzOQFME7qzFV7FIKTUcdiSuwz8stIXVQj35F77m26PjbZGvpvA/P5SlThcJSD58e
-         gnHVmOikzGrRARmXyLUCocWHiQWIoInizMVEWXRsolWw6ih9qFm8o1MpEuAzM5Er6Mj/
-         +5ebRs7TYy5mraBczOu6qFo8ah5TAcUjsXxIyOzjPyQIzmO5P72cW50h8bwxxyxUNiHK
-         AuR1RMBixCURhOAQtKq53KMVy68B1DHXBxoDxMuIHh58SaJq17du/0Sc/KaSkqkrExtI
-         uEKLD0sMuXGgaYMIFYZkfqK2JFEfS/zcfa4/6KsY1PfqSeSS/uFyX8XqBgyoSfQ3NiTs
-         KwYA==
-X-Gm-Message-State: AMke39nT3k+FpiVjyi2ovwlDiceOMLRaF5Me0+2A5+1f1a4OGwZ3JJfRnJFuAkFeQmvdBQ==
-X-Received: by 10.98.41.5 with SMTP id p5mr28080047pfp.183.1487014958129;
-        Mon, 13 Feb 2017 11:42:38 -0800 (PST)
+        bh=mV8PKVjzipPsYh8K00KUqFqkb9XHRnQ5aqFhJOS4SfM=;
+        b=gBN+oXkmLqiuSJGlFTqwML8mazsihWlouBZznxPKFc9DXjVOGMZ2a6YgvhqCTjICcd
+         G+L8g+cQ+DQrAuHOU3GGHXmvw/r0uA6YdykfYYW4QbR9QMR+tvxWEAxDnVVGecc1yAm7
+         V3HXJ5M1RMebm3i8itS4s3c2c/vv9AswSVy6OurPNKQpLxaWCxvhfvJMr26o69nDAl7b
+         Yw98UOEfkMPhwlukiEIRviWfYpQd74LzX+IIv8isc2sTjLn5RXbcr26Ndw0HEA0LEh2B
+         CvAyvoMYxiS8/e8uXDBmfOLyDzmxF7CJ3BrATnRM8/X0/pdC9QIJve8sP5NYIhMk5Eh2
+         NCMw==
+X-Gm-Message-State: AMke39mgu13bivpIy8fOBp7S8gTfkMM3jgJckP9ot+kvl2YcMxl9UDKlVicok82nrsir3g==
+X-Received: by 10.98.90.196 with SMTP id o187mr27609894pfb.30.1487015477368;
+        Mon, 13 Feb 2017 11:51:17 -0800 (PST)
 Received: from localhost ([2620:0:1000:8622:d0e0:42a7:601f:5154])
-        by smtp.gmail.com with ESMTPSA id 199sm22418652pfu.91.2017.02.13.11.42.37
+        by smtp.gmail.com with ESMTPSA id o125sm16195291pfb.109.2017.02.13.11.51.16
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 13 Feb 2017 11:42:37 -0800 (PST)
+        Mon, 13 Feb 2017 11:51:16 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Sixt <j6t@kdbg.org>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jeff King <peff@peff.net>, git@vger.kernel.org,
-        Jeff Hostetler <jeffhost@microsoft.com>
-Subject: Re: [PATCH] mingw: use OpenSSL's SHA-1 routines
-References: <6a29f8c60d315a24292c1fa9f5e84df4dfdbf813.1486679254.git.johannes.schindelin@gmx.de>
-        <20170210050237.gajicliueuvk6s5d@sigill.intra.peff.net>
-        <alpine.DEB.2.20.1702101647340.3496@virtualbox>
-        <20170210160458.pcp7mupdz24m6cms@sigill.intra.peff.net>
-        <9913e513-553e-eba6-e81a-9c21030dd767@kdbg.org>
-Date:   Mon, 13 Feb 2017 11:42:36 -0800
-In-Reply-To: <9913e513-553e-eba6-e81a-9c21030dd767@kdbg.org> (Johannes Sixt's
-        message of "Mon, 13 Feb 2017 18:46:35 +0100")
-Message-ID: <xmqq60kdev2r.fsf@gitster.mtv.corp.google.com>
+To:     Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Cc:     Siddharth Kannan <kannan.siddharth12@gmail.com>,
+        git@vger.kernel.org, pranit.bauva@gmail.com, peff@peff.net,
+        pclouds@gmail.com, sandals@crustytoothpaste.ath.cx
+Subject: Re: [PATCH 2/2 v3] sha1_name: teach get_sha1_1 "-" shorthand for "@{-1}"
+References: <1486752926-12020-1-git-send-email-kannan.siddharth12@gmail.com>
+        <1486752926-12020-2-git-send-email-kannan.siddharth12@gmail.com>
+        <1486752926-12020-3-git-send-email-kannan.siddharth12@gmail.com>
+        <vpqbmu768on.fsf@anie.imag.fr>
+Date:   Mon, 13 Feb 2017 11:51:16 -0800
+In-Reply-To: <vpqbmu768on.fsf@anie.imag.fr> (Matthieu Moy's message of "Sun,
+        12 Feb 2017 10:48:56 +0100")
+Message-ID: <xmqq1sv1euob.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -70,44 +69,44 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Sixt <j6t@kdbg.org> writes:
+Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
 
-> The patch does add a new runtime dependency on libcrypto.dll in my
-> environment. I would be surprised if it does not also with your modern
-> build tools.
+> Siddharth Kannan <kannan.siddharth12@gmail.com> writes:
 >
-> I haven't had time to compare test suite runtimes.
+>> +	if (!strcmp(name, "-")) {
+>> +		name = "@{-1}";
+>> +		len = 5;
+>> +	}
 >
->> I'm open to the argument that it doesn't matter in practice for normal
->> git users. But it's not _just_ scripting. It depends on the user's
->> pattern of invoking git commands (and how expensive the symbol
->> resolution is on their system).
+> One drawback of this approach is that further error messages will be
+> given from the "@{-1}" string that the user never typed.
+
+Right.
+
+> There are at least:
 >
-> It can be argued that in normal interactive use, it is hard to notice
-> that another DLL is loaded. Don't forget, though, that on Windows it
-> is not only the pure time to resolve the entry points, but also that
-> typically virus scanners inspect every executable file that is loaded,
-> which adds another share of time.
->
-> I'll use the patch for daily work for a while to see whether it hurts.
+> $ git grep -n -A1 'strcmp.*"-"' | grep -B 1 '@\{1\}'
+> builtin/checkout.c:975: if (!strcmp(arg, "-"))
+> builtin/checkout.c-976-         arg = "@{-1}";
 
-Thanks.
+I didn't check the surrounding context to be sure, but I think this
+"- to @{-1}" conversion cannot be delegated down to revision parsing
+that eventually wants to return a 40-hex as the result.  
 
-I need to ask an unrelated question at a bit higher level, though.
+We do want a branch _name_ sometimes when we say "@{-1}"; "checkout
+master" (i.e. checkout by name) and "checkout master^0" (i.e. the
+same commit object, but not by name) do different things.
 
-I have been operating under the assumption that everybody on Windows
-who builds Git works off of Dscho's Git for Windows tree, and
-patches that are specific to Windows from Dscho's are sent to me via
-the list only after they have been in Git for Windows and proven to
-help Windows users in the wild.  
+> builtin/merge.c:1231:   } else if (argc == 1 && !strcmp(argv[0], "-")) {
+> builtin/merge.c-1232-           argv[0] = "@{-1}";
+> --
+> builtin/revert.c:158:           if (!strcmp(argv[1], "-"))
+> builtin/revert.c-159-                   argv[1] = "@{-1}";
 
-The consequence of these two assumptions is that I would feel safe
-to treat Windows specific changes that do not touch generic part of
-the codebase from Dscho just like updates from any other subsystem
-maintainers (any git-svn thing from Eric, any gitk thing from Paul,
-any p4 thing Luke and Lars are both happy with, etc.).
+These should be safe to delegate down.
 
-You seem to be saying that the first of the two assumptions does not
-hold.  Should I change my expectations while queuing Windows specific
-patches from Dscho?
+> builtin/worktree.c:344: if (!strcmp(branch, "-"))
+> builtin/worktree.c-345-         branch = "@{-1}";
 
+I do not know about this one, but it smells like a branch name that
+wants to be used before it gets turned into 40-hex.
