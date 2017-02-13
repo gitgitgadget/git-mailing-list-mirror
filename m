@@ -2,113 +2,70 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6C31C1FC44
-	for <e@80x24.org>; Mon, 13 Feb 2017 16:23:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 12E921FC44
+	for <e@80x24.org>; Mon, 13 Feb 2017 16:49:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752146AbdBMQXZ (ORCPT <rfc822;e@80x24.org>);
-        Mon, 13 Feb 2017 11:23:25 -0500
-Received: from mout.gmx.net ([212.227.15.15]:51396 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751626AbdBMQXY (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Feb 2017 11:23:24 -0500
-Received: from virtualbox ([37.201.192.48]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0Lxxw4-1cIDhv1cpA-015LdW; Mon, 13
- Feb 2017 17:23:15 +0100
-Date:   Mon, 13 Feb 2017 17:23:14 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-cc:     Pranit Bauva <pranit.bauva@gmail.com>, git@vger.kernel.org,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] fixup! bisect--helper: `bisect_next_check` & bisect_voc
- shell function in C
-In-Reply-To: <128b4de6-7b8e-27b9-414d-c6c6529cb491@web.de>
-Message-ID: <alpine.DEB.2.20.1702131722350.3496@virtualbox>
-References: <a1b9143bb29a8a5979dd733ed20161e6769b2b83.1486736391.git.johannes.schindelin@gmx.de> <128b4de6-7b8e-27b9-414d-c6c6529cb491@web.de>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+        id S1752746AbdBMQtW (ORCPT <rfc822;e@80x24.org>);
+        Mon, 13 Feb 2017 11:49:22 -0500
+Received: from smtprelay05.ispgateway.de ([80.67.31.93]:48039 "EHLO
+        smtprelay05.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751702AbdBMQtV (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Feb 2017 11:49:21 -0500
+Received: from [91.113.179.170] (helo=[192.168.92.25])
+        by smtprelay05.ispgateway.de with esmtpsa (TLSv1.2:DHE-RSA-AES128-SHA:128)
+        (Exim 4.84)
+        (envelope-from <marc.strapetz@syntevo.com>)
+        id 1cdJoU-0006Im-FV
+        for git@vger.kernel.org; Mon, 13 Feb 2017 17:49:18 +0100
+From:   Marc Strapetz <marc.strapetz@syntevo.com>
+Subject: git remote rename problem with trailing \\ for remote.url config
+ entries (on Windows)
+To:     git@vger.kernel.org
+Message-ID: <da730b21-58ae-bfa8-705f-7669c0f56764@syntevo.com>
+Date:   Mon, 13 Feb 2017 17:49:44 +0100
+User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.7.1
 MIME-Version: 1.0
-Content-Type: multipart/mixed; BOUNDARY="8323329-1683491521-1487002995=:3496"
-X-Provags-ID: V03:K0:2JNI9/KR2xdcGKM4mtzUPXpg9S0Xn7NLlsFYgffTvx9hXM+4+NF
- Wt8jLBWckOqQln8p26CD4Nck1dBMYIK9I3ZKNNaWNlwf5FIeUedgcXF8OKM2sHqtACwjVek
- Z7sbI7f7MrU0zY2hb56rNkEW7TecLMLMmJPlQ9qSAPi6lgXpfjRTtRoi/ruHn0b8HOfzwmt
- ILf5VqsD4zce86v5nCDZw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:Sxrj2G1JB+c=:hhjikNGeGo/Te/2b83HlP2
- X0fvjVUtf4m+QUwA0KlmmqO7+I71Ycs6apc/r+fdKQyQPXEzEeyQeYxg97eHs06wTjWL7xkDo
- 7a5RMKyuXFajjTF6aaVWR0RlaeutcILBJu9ZlGaYqvKiPKSQx0RMS03ijH40Qad/dG7mpiPyq
- k0CBm6whUwxR9xQONBr2IJQrqYrXH8nZzSsKyW5F7dmcujX1FKkf6o+hPzctuOQHSWhaHHLeB
- TTUdFGLY4CR1ONMiCYmGi37qJZY2ZGWR4t4qVbX1+vqKiKtpzTDz+cuFsGhKvSJt3yILanzT3
- m8YG+4ySFRhB/KE7L8rST+Tpu11qAw0sYVX0K+c+/XQr20dWBvXCpQx2YCrT8aO860WPAFn9A
- KFdKDmtZqqIJpcNyozjn5d7TV7xKOpo6QsL7BV37aDOp3ERQgg7WHQHpNxZ8C6N7WLTQEbK23
- UuP6IHFW9uQF3EF1PubOU3zTr+KjmtR6mljpaPts89SMu2nly1XoRUzQBm2R8gci8z5csG6PO
- RW8dyNubVYXwh+b2pT/iD/7brhhC+B0yHPPWcOy0l5jbUebblWAL49qYw4mdktjMQOY8mCQyU
- MJKkrNFHnfVsHwjfuBA870OY63QWvxgI9G28dtqdhWoCzv0Y3DFOxrl1dpPjNkuY9hjRnCPMs
- NBNCExAChKWmqBRJjhesE44h9mBj7Ujw+yopeRPvJkFx1rtSPkxKXmgxJwYPDqHXiUgEtySyk
- gV4kWlgXjEAkD7HC87LkrSOUf2oJf5rqxrHZPpqYlNT7NFHtqD0NbUQmeJa75uIman+DDRqpd
- iE2JLe9
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Df-Sender: bWFyYy5zdHJhcGV0ekBzeW50ZXZvLmNvbQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+One of our users has just reported that:
 
---8323329-1683491521-1487002995=:3496
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+$ git remote rename origin origin2
 
-Hi Ren=C3=A9,
+will turn following remote entry:
 
-On Fri, 10 Feb 2017, Ren=C3=A9 Scharfe wrote:
+[remote "origin"]
+	url = c:\\repo\\
+	fetch = +refs/heads/*:refs/remotes/origin/*
 
-> Am 10.02.2017 um 15:20 schrieb Johannes Schindelin:
-> > It is curious that only MacOSX builds trigger an error about this, both
-> > GCC and Clang, but not Linux GCC nor Clang (see
-> > https://travis-ci.org/git/git/jobs/200182819#L1152 for details):
-> >
-> > builtin/bisect--helper.c:299:6: error: variable 'good_syn' is used
-> >   uninitialized whenever 'if' condition is true
-> >   [-Werror,-Wsometimes-uninitialized]
-> >         if (missing_good && !missing_bad && current_term &&
-> >             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-> > builtin/bisect--helper.c:350:7: note: uninitialized use occurs here
-> >         if (!good_syn)
-> >              ^~~~~~~~
->=20
-> The only way that good_syn could be used in the if block is by going to t=
-he
-> label finish, which does the following before returning:
->=20
-> =09if (!bad_ref)
-> =09=09free(bad_ref);
-> =09if (!good_glob)
-> =09=09free(good_glob);
-> =09if (!bad_syn)
-> =09=09free(bad_syn);
-> =09if (!good_syn)
-> =09=09free(good_syn);
->=20
-> On Linux that code is elided completely -- freeing NULL is a no-op.  I gu=
-ess
-> free(3) has different attributes on OS X and compilers don't dare to opti=
-mize
-> it away there.
->=20
-> So instead of calling free(3) only in the case when we did not allocate m=
-emory
-> (which makes no sense and leaks) we should either call it in the opposite
-> case, or (preferred) unconditionally, as it can handle the NULL case itse=
-lf.
-> Once that's fixed initialization will be required even on Linux.
+into following entry for which the url is skipped:
 
-Exactly, free(NULL) is a no-op. The problem before this fixup was that
-good_syn was not initialized to NULL.
+[remote "origin2"]
+[remote "origin2"]
+	fetch = +refs/heads/*:refs/remotes/origin2/*
 
-Ciao,
-Dscho
---8323329-1683491521-1487002995=:3496--
+I understand that this is caused by the trailing \\ and it's easy to 
+fix, but 'git push' and 'git pull' work properly with such URLs and a
+
+$ git clone c:\repo\
+
+will even result in the problematic remote-entry. So I guess some kind 
+of validation could be helpful.
+
+Tested with git version 2.11.0.windows.1
+
+-Marc
+
+
+
+
