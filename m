@@ -2,141 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7EE952013B
-	for <e@80x24.org>; Mon, 13 Feb 2017 06:41:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8D3B71FAF4
+	for <e@80x24.org>; Mon, 13 Feb 2017 08:30:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751727AbdBMGlF (ORCPT <rfc822;e@80x24.org>);
-        Mon, 13 Feb 2017 01:41:05 -0500
-Received: from alum-mailsec-scanner-6.mit.edu ([18.7.68.18]:42629 "EHLO
-        alum-mailsec-scanner-6.mit.edu" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751523AbdBMGlE (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 13 Feb 2017 01:41:04 -0500
-X-AuditID: 12074412-4bbff70000000b04-b2-58a154fc1b25
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-        (using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
-        (Client did not present a certificate)
-        by alum-mailsec-scanner-6.mit.edu (Symantec Messaging Gateway) with SMTP id CD.35.02820.CF451A85; Mon, 13 Feb 2017 01:41:03 -0500 (EST)
-Received: from [192.168.69.190] (p579064F7.dip0.t-ipconnect.de [87.144.100.247])
-        (authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v1D6evpW014920
-        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-        Mon, 13 Feb 2017 01:40:58 -0500
-Subject: Re: [PATCH v2 9/9] read_loose_refs(): read refs using
- resolve_ref_recursively()
-To:     Junio C Hamano <gitster@pobox.com>
-References: <cover.1486724698.git.mhagger@alum.mit.edu>
- <d8e906d969700acbca8dc717673d0a9cdc910f62.1486724698.git.mhagger@alum.mit.edu>
- <xmqqbmu9lul6.fsf@gitster.mtv.corp.google.com>
-Cc:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>, Stefan Beller <sbeller@google.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        David Turner <novalis@novalis.org>, Jeff King <peff@peff.net>,
-        git@vger.kernel.org
-From:   Michael Haggerty <mhagger@alum.mit.edu>
-Message-ID: <ff0b0df6-9aed-9417-d9d4-1234d53f05c3@alum.mit.edu>
-Date:   Mon, 13 Feb 2017 07:40:57 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Icedove/45.6.0
+        id S1752421AbdBMIaq (ORCPT <rfc822;e@80x24.org>);
+        Mon, 13 Feb 2017 03:30:46 -0500
+Received: from mail-pg0-f66.google.com ([74.125.83.66]:35259 "EHLO
+        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752407AbdBMIap (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Feb 2017 03:30:45 -0500
+Received: by mail-pg0-f66.google.com with SMTP id 204so9282649pge.2
+        for <git@vger.kernel.org>; Mon, 13 Feb 2017 00:30:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=WGe0H5/s+epUHrkgtm1X4ysn0CrDg+9BT+ZVA66uHAU=;
+        b=BDJlUJqhfmwXr+N5fgpuR6VvoIFaBvfJ7e0pvYiSZoLYvtvlXfPsLKB/MZM8lXZhxz
+         pBKhd5Zd0r2Kt0cQ2d72Z7JIBCBSicd7T8elspuL9ZPOuWxhDs+zuMaP9Xe7bPDBtxFg
+         sC9FyCzOYxzh5umdV3b/8DLfhyY6YdSZ/DuypW1A9WQn7HgyLGr9KjB60TXcsW3N5CJO
+         oO3KMG4rVYpAGJEQ2tov7e3wzQjuDr2iFTWxeWzh9pjMvneMcytNAEVB/pgQBivLJsPU
+         7jFtG1yWRPLljSDeEBuErNKcjrKBWlXR+u7IkaauATIWpwSiXIikeAAbOY/5JAtg0XjH
+         kfpw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=WGe0H5/s+epUHrkgtm1X4ysn0CrDg+9BT+ZVA66uHAU=;
+        b=XvZoi4npyo+lcl875cb0UhjJfAb3grRjZy3uACocgALw0UAd8RP5VGwAM91fifHDrq
+         SRQfeba7bK+iYJYY7nXCbUb7jfnqKQ6AfIhbrQba6Fnm7qvGyGPnmC5Iea6ou7FizPF2
+         EEzw1SeIrnBfrYPJQOF17LblFkErlamhkMxx/oKYRZvCS1OLThzx79NQvFBT9wafMOlY
+         xvnMbgOp9XTNr54K1YpnXaRAYSkyFW4cKgJwEvlDKhVVZod1j7SpcFki+Ia4WPbG+GLo
+         nbUR4HdKKsKTqf1+ErQAclnffLc7D2MO2UVDY67cqsLnSUP0DTFVdJfTsA0mwh32k4DJ
+         c3FA==
+X-Gm-Message-State: AMke39l6fMvJ80hzM8H4zYPFzLR3/j65sgeuC3jn0VtU6jjrM9kX8k6xP6mczXQPowAB4A==
+X-Received: by 10.98.196.1 with SMTP id y1mr24929309pff.105.1486974644297;
+        Mon, 13 Feb 2017 00:30:44 -0800 (PST)
+Received: from localhost ([2620:0:1000:8622:644a:2999:a3b7:74ee])
+        by smtp.gmail.com with ESMTPSA id l188sm19173382pfl.28.2017.02.13.00.30.41
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Mon, 13 Feb 2017 00:30:42 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Linus Torvalds <torvalds@linux-foundation.org>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Subject: Re: [RFC PATCH] show decorations at the end of the line
+References: <alpine.LFD.2.20.1702110943460.31350@i7.lan>
+        <CA+55aFw2S14a4_4YK0b6PNK4TH_AUo_+2JN+PTyBTufNeB5t6A@mail.gmail.com>
+Date:   Mon, 13 Feb 2017 00:30:41 -0800
+In-Reply-To: <CA+55aFw2S14a4_4YK0b6PNK4TH_AUo_+2JN+PTyBTufNeB5t6A@mail.gmail.com>
+        (Linus Torvalds's message of "Sat, 11 Feb 2017 10:13:44 -0800")
+Message-ID: <xmqq1sv2fq6m.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <xmqqbmu9lul6.fsf@gitster.mtv.corp.google.com>
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 7bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprAKsWRmVeSWpSXmKPExsUixO6iqPs/ZGGEwdr9MhZdV7qZLBp6rzBb
-        9C/vYrNY8vA1s0X3lLeMFj9aepgtNm9uZ3Fg99g56y67x4ePcR4LNpV6dLUfYfN41ruH0ePi
-        JWWPz5vkAtijuGxSUnMyy1KL9O0SuDLun5vAVvBEuGLD/zssDYzX+bsYOTkkBEwktp5+z9TF
-        yMUhJLCDSeLx13vsEM4FJokdU4+xgVQJC0RJvLyziRHEFhFQk5jYdogFomgno8TTt/vA2pkF
-        pjFJHG9sYwKpYhPQlVjU0wxm8wrYS3S+2w00iYODRUBVYnMjF0hYVCBEYs7CB4wQJYISJ2c+
-        YQGxOQWsJVruHwRbzCygJ7Hj+i9WCFteYvvbOcwTGPlnIWmZhaRsFpKyBYzMqxjlEnNKc3Vz
-        EzNzilOTdYuTE/PyUot0zfRyM0v0UlNKNzFCAl5oB+P6k3KHGAU4GJV4eBvaFkQIsSaWFVfm
-        HmKU5GBSEuWttl8YIcSXlJ9SmZFYnBFfVJqTWnyIUYKDWUmEd3IQUI43JbGyKrUoHyYlzcGi
-        JM77c7G6n5BAemJJanZqakFqEUxWhoNDSYJ3KjCyhQSLUtNTK9Iyc0oQ0kwcnCDDeYCGu4LU
-        8BYXJOYWZ6ZD5E8xKkqJ80aDJARAEhmleXC9sIT0ilEc6BVh3r5goCoeYDKD634FNJgJZPCD
-        uSCDSxIRUlINjFZ/7Q4v8zDKLFOy7ddLf6PK+E2qdN8Er+JOpvIFIvJmZT+elk0MfbEtj+H5
-        RfE1C6attuYxsrzqxaRsKi/QW7HryNtaI6n1G2YHiU2f+04ic+2dTX+jYxJ0t7NVPLF5tqEn
-        5ezStzJ/JHd/fhgd972uIWXHpv09QSsnuCsdUQibacezYWvLdCWW4oxEQy3mouJEAGV+RTgj
-        AwAA
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 02/10/2017 08:22 PM, Junio C Hamano wrote:
-> Michael Haggerty <mhagger@alum.mit.edu> writes:
->> [...]
-> 
-> OK, but one thing puzzles me...
-> 
->> @@ -1390,27 +1390,6 @@ static struct ref_store *main_ref_store;
->>  static struct hashmap submodule_ref_stores;
->>  
->>  /*
->> - * Return the ref_store instance for the specified submodule (or the
->> - * main repository if submodule is NULL). If that ref_store hasn't
->> - * been initialized yet, return NULL.
->> - */
->> -static struct ref_store *lookup_ref_store(const char *submodule)
->> -{
->> -	struct submodule_hash_entry *entry;
->> -
->> -	if (!submodule)
->> -		return main_ref_store;
->> -
->> -	if (!submodule_ref_stores.tablesize)
->> -		/* It's initialized on demand in register_ref_store(). */
->> -		return NULL;
->> -
->> -	entry = hashmap_get_from_hash(&submodule_ref_stores,
->> -				      strhash(submodule), submodule);
->> -	return entry ? entry->refs : NULL;
->> -}
->> -
->> -/*
->>   * Register the specified ref_store to be the one that should be used
->>   * for submodule (or the main repository if submodule is NULL). It is
->>   * a fatal error to call this function twice for the same submodule.
->> @@ -1451,6 +1430,27 @@ static struct ref_store *ref_store_init(const char *submodule)
->>  	return refs;
->>  }
->>  
->> +/*
->> + * Return the ref_store instance for the specified submodule (or the
->> + * main repository if submodule is NULL). If that ref_store hasn't
->> + * been initialized yet, return NULL.
->> + */
->> +static struct ref_store *lookup_ref_store(const char *submodule)
->> +{
->> +	struct submodule_hash_entry *entry;
->> +
->> +	if (!submodule)
->> +		return main_ref_store;
->> +
->> +	if (!submodule_ref_stores.tablesize)
->> +		/* It's initialized on demand in register_ref_store(). */
->> +		return NULL;
->> +
->> +	entry = hashmap_get_from_hash(&submodule_ref_stores,
->> +				      strhash(submodule), submodule);
->> +	return entry ? entry->refs : NULL;
->> +}
->> +
-> 
-> I somehow thought that we had an early "reorder the code" step to
-> avoid hunks like these?  Am I missing some subtle changes made while
-> moving the function down?
+Linus Torvalds <torvalds@linux-foundation.org> writes:
 
-You are quite right; thanks for noticing. I forgot to un-move this
-function when re-rolling. These two hunks can be discarded (the function
-text is unchanged).
+> On Sat, Feb 11, 2017 at 10:02 AM, Linus Torvalds
+> <torvalds@linux-foundation.org> wrote:
+>>
+>> I've signed off on this, because I think it's an "obvious" improvement,
+>> but I'm putting the "RFC" in the subject line because this is clearly a
+>> subjective thing.
+>
+> Side note: the one downside of showing the decorations at the end of
+> the line is that now they are obviously at the end of the line - and
+> thus likely to be more hidden by things like line truncation.
 
-I pushed the fixed commit to branch `submodule-hash` in my fork [1]. If
-you'd like me to send it to the mailing list again, please let me know.
+Side note: I refrained from commenting on this patch because
+everybody knows that the what I would say anyway ;-) and I didn't
+want to speak first to discourage others from raising their opinion.
 
-Michael
+An obvious downside is that people (against all recommendations) are
+likely to have written a loose script expecting the --oneline format
+is cast in stone.  I personally think it is OK to break them as long
+as "workaround" (aka kosher way to do what they have been doing) is
+obvious and easily doable, and in this case their script can switch
+to use --format to keep using the order of fields and format they
+have been relying on.
 
-[1] https://github.com/mhagger/git
-
+It would be nice if we can have that --format string they can use
+somewhere in the log message, so that I can cut & paste it into the
+release notes that contains this change (i.e. "those who want to
+keep using the traditional --oneline --decorate can use this string
+as pretty.my1line configuration variable and use --pretty=my1line
+instead").
