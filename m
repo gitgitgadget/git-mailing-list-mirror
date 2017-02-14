@@ -2,116 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,
-	STOX_REPLY_TYPE shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4A5671FAF4
-	for <e@80x24.org>; Tue, 14 Feb 2017 23:27:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 876E11FAF4
+	for <e@80x24.org>; Tue, 14 Feb 2017 23:31:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750902AbdBNX1C (ORCPT <rfc822;e@80x24.org>);
-        Tue, 14 Feb 2017 18:27:02 -0500
-Received: from smtp-out-4.talktalk.net ([62.24.135.68]:25344 "EHLO
-        smtp-out-4.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750810AbdBNX1B (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Feb 2017 18:27:01 -0500
-Received: from PhilipOakley ([92.31.218.76])
-        by smtp.talktalk.net with SMTP
-        id dmUtctUXAcpskdmUtcMad6; Tue, 14 Feb 2017 23:26:59 +0000
-X-Originating-IP: [92.31.218.76]
-X-Spam: 0
-X-OAuthority: v=2.2 cv=ILRAMUnG c=1 sm=1 tr=0 a=e6L6E7eW+5Nb7SO+DvSdIg==:117
- a=e6L6E7eW+5Nb7SO+DvSdIg==:17 a=IkcTkHD0fZMA:10 a=pGLkceISAAAA:8
- a=ybZZDoGAAAAA:8 a=uPZiAMpXAAAA:8 a=5rxgeBVgAAAA:8 a=QyXUC8HyAAAA:8
- a=ZSvnttpX_xnaqSMRtX8A:9 a=QEXdDO2ut3YA:10 a=6kGIvZw6iX1k4Y-7sg4_:22
- a=0RhZnL1DYvcuLYC8JZ5M:22 a=svzibyHiZmA4t4YY0eFS:22 a=PwKx63F5tFurRwaNxrlG:22
- a=avl4LiGQNoF5OB0DmCJ7:22
-Message-ID: <E2C1B7A8FBF94C8CB1C9C5754D882800@PhilipOakley>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
-From:   "Philip Oakley" <philipoakley@iee.org>
-To:     "Christian Couder" <christian.couder@gmail.com>,
-        "Junio C Hamano" <gitster@pobox.com>
-Cc:     "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-        <git-for-windows@googlegroups.com>, "git" <git@vger.kernel.org>
-References: <alpine.DEB.2.20.1702101241210.3496@virtualbox> <xmqq60kdbqmy.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1702142150220.3496@virtualbox> <xmqqd1ek8oqo.fsf@gitster.mtv.corp.google.com> <CAP8UFD1+AgBVqSh=wHteM3uKO+55ZqqD4cHzBUfN0KTPXyvutQ@mail.gmail.com>
-Subject: Re: [git-for-windows] Re: Continuous Testing of Git on Windows
-Date:   Tue, 14 Feb 2017 23:27:00 -0000
-Organization: OPDS
+        id S1750923AbdBNXbW (ORCPT <rfc822;e@80x24.org>);
+        Tue, 14 Feb 2017 18:31:22 -0500
+Received: from mail-it0-f67.google.com ([209.85.214.67]:36608 "EHLO
+        mail-it0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750810AbdBNXbW (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Feb 2017 18:31:22 -0500
+Received: by mail-it0-f67.google.com with SMTP id f200so7938850itf.3
+        for <git@vger.kernel.org>; Tue, 14 Feb 2017 15:31:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=mSXJDhALL/JFE3M9P2k9NQnb0QKwERhEvYTZ8GCKt38=;
+        b=N/uiy5AXklL+TTy0883nXb0xjbtOA0QOsMqOJB4B4eNExDZQ3Q37QHbpDIxGhOVZrM
+         4byFVEjQUSXKQFYMPqdoHvYbXKLhJdg4fU+gRtVoSKqTEj7caVcKiU2ZhHjvSd99abaC
+         sihIEIKj9NCBYrXdQkEGCMxYvvaqZkt2rUWnLrsnqiRwSN5kjz4ruZyUs8zzefqMIARB
+         jJjrFwgGY8MVRGmWAdhyLmeg2y/h+HRYjGLI32yvycksKsPYAXxAEY9DGLoExRi2Iykj
+         RXmKjOg/mFvp3a/1ZtHcFFsfRECFiia6Cbpsx2bGXNuDCO4XumH7TWw2+9wXMcMUmEZA
+         xtsw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=mSXJDhALL/JFE3M9P2k9NQnb0QKwERhEvYTZ8GCKt38=;
+        b=RLipf4ODdcx0yhbV2GJUkkhcSF6osxjyF9URv8AwDDPHFsF4YoxlIMTXkMylLmHldx
+         BSA7AqxkNce05u8T2um9kfar7Tsm5OpwJSDLqIduXFmqcptchBcfdhZOKDdWQb5KFXhP
+         8R2V7lbEI33L/YKvujaJy2UfNaPCoNGJA1u46ZPy+r6bp0Y1ZRRxe09vv4QQH6PeojMT
+         Yj09eLiCGv7l8aiKkX6z4ZDBLkT/wbdkQyhquCBznCyY/8XEPzdVLejX+MdIxQ0GpdBB
+         TptEMAfG94UKs/RfA13en1TiT6RIZETmSWojYWeTv4aQsSV6/7b1e5q1Q2+cJoCrAls2
+         XnHg==
+X-Gm-Message-State: AMke39kut/8o0kdH8nipW2f+wkskKPFHUUTIjzQDmfgB6rg1D62T02Qz4R7YIPQ7O18H8A==
+X-Received: by 10.84.198.164 with SMTP id p33mr39215789pld.85.1487115081017;
+        Tue, 14 Feb 2017 15:31:21 -0800 (PST)
+Received: from localhost ([2620:0:1000:8622:2447:f72c:8fdf:75c6])
+        by smtp.gmail.com with ESMTPSA id u78sm3169284pfa.101.2017.02.14.15.31.20
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Tue, 14 Feb 2017 15:31:20 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     "git\@vger.kernel.org" <git@vger.kernel.org>,
+        Brandon Williams <bmwill@google.com>
+Subject: Re: [RFC-PATCHv2] submodules: add a background story
+References: <20170209020855.23486-1-sbeller@google.com>
+        <xmqqo9yblz33.fsf@gitster.mtv.corp.google.com>
+        <CAGZ79kb2jZ9fgct6gncDqmWFsbY4MRiboFXPvw7AMcU2KanyfQ@mail.gmail.com>
+        <xmqq4lzw8mim.fsf@gitster.mtv.corp.google.com>
+        <CAGZ79kbjSLaUsJH_KuT6EiC+Kt-87+GjONt08hCytXULecMijA@mail.gmail.com>
+        <xmqqmvdo76yw.fsf@gitster.mtv.corp.google.com>
+        <CAGZ79kaeVrW3_kUWWxBMztOPuWY_V6XP2SUDyw8mmQ6peFZwdw@mail.gmail.com>
+Date:   Tue, 14 Feb 2017 15:31:19 -0800
+In-Reply-To: <CAGZ79kaeVrW3_kUWWxBMztOPuWY_V6XP2SUDyw8mmQ6peFZwdw@mail.gmail.com>
+        (Stefan Beller's message of "Tue, 14 Feb 2017 14:24:48 -0800")
+Message-ID: <xmqqwpcs5ozc.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain;
-        format=flowed;
-        charset="utf-8";
-        reply-type=original
-Content-Transfer-Encoding: 7bit
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
-X-CMAE-Envelope: MS4wfCs1ea+K8neuxKQJbm7qpUFncyEWoEcbsV2bqwOrjpqThVsyqlI8TDchz1cuOGOtc/tkbikCR21pz3kaxP9knyBIqa3gEd5/UrAY7SNUCJUWCHP7EPui
- vuelfwp75UREhx1YUeaHnzQCIHzQZYQE+qTugmD9qtRjBThJQDlRsXOm5x+m8OhKcQECl99cV+iYjrReq4NLHS5qKNS4cu9c52thPefU7AZKsrOgH0SiB2ug
- CgjTa6qBYV9o5BQBsBlddVVpq5GKZCWIB0IUyi1SHVxhCgH4WrKZzxqSpNnTfhNpJsAuK6WfgvETJ8b2FHSqng==
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: "Christian Couder" <christian.couder@gmail.com>
-> On Tue, Feb 14, 2017 at 10:08 PM, Junio C Hamano <gitster@pobox.com> 
-> wrote:
->> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
->>
->>> On Mon, 13 Feb 2017, Junio C Hamano wrote:
->>>
->>>> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
->>>>
->>>> > That is why I taught the Git for Windows CI job that tests the four
->>>> > upstream Git integration branches to *also* bisect test breakages and
->>>> > then upload comments to the identified commit on GitHub
->>>>
->>>> Good.  I do not think it is useful to try 'pu' as an aggregate and
->>>> expect it to always build and work [*1*], but your "bisect and
->>>> pinpoint" approach makes it useful to identify individual topic that
->>>> brings in a breakage.
->>>
->>> Sadly the many different merge bases[*1*] between `next` and `pu` (which
->>> are the obvious good/bad points for bisecting automatically) bring my
->>> build agents to its knees. I may have to disable the bisecting feature 
->>> as
->>> a consequence.
->
-> Yeah, this is a bug in the bisect algorithm. Fixing it is in the GSoC
-> 2017 Ideas.
+Stefan Beller <sbeller@google.com> writes:
 
-There are also a few ideas at the SO answers: 
-http://stackoverflow.com/a/5652323/717355
+> I claim that the exposure into .gitmodules combined with
+> the extreme similarity to its path is confusing. Maybe this
+> can be fixed by a different default name.
 
->
->> Probably a less resource intensive approach is to find the tips of
->> the topics not in 'next' but in 'pu' and test them.  That would give
->> you which topic(s) are problematic, which is a better starting point
->> than "Oh, 'pu' does not build".  After identifying which branch is
->> problematic, bisection of individual topic would be of more manageable
->> size.
->
-> It is still probably more resource intensive than it couls be.
->
-> [...]
->
->> This is one of these times I wish "git bisect --first-parent" were
->> available.
->
-> Implementing "git bisect --first-parent" is also part of the GSoC 2017 
-> Ideas.
->
-> By the way it should not be very difficult as a patch to do this and
-> more was proposed a long time ago:
->
-> https://public-inbox.org/git/4D3CDDF9.6080405@intel.com/
->
->> The above "log" gives me 27 merges right now, which
->> should be bisectable within 5 rounds to identify a single broken
->> topic (if there is only one breakage, that is).
->
---
-Philip 
+I think that this may be worth thinking about it further.
 
+The names are something the end users are not supposed to change,
+and one way to ensure that is to make .gitmodules file a binary
+black box that can only be updated with a specialized tool---as long
+as the tool does not allow updating the "name" field, you wouldn't
+risk them mucking with it.  Limiting the update to a specialized
+tool also would give us a single place to ensure that it is globally
+unique across the history of the project (well, at least the part of
+the history that is visible to your repository).
+
+Of course, being "one way" to do so does not mean it is the only
+way, or it is the best way.  Keeping the information in a text file
+lets you merge them more easily when you add a submodule B while I
+added a submodule C, for example, and having a human readble name
+lets us learn from the output of "git log -p .gitmodules" that the
+repository of the "linux-kernel" submodule we use in our appliance
+used to live at linux-2.6.git but has moved to linux.git over time
+(for the latter use case to work well, we cannot change the name to
+something unreadable by humans like uuid---discouraging people from
+modifying and making them unreadble are two different things).
