@@ -3,99 +3,141 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6A4B31FAF4
-	for <e@80x24.org>; Tue, 14 Feb 2017 20:36:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B90931FAF4
+	for <e@80x24.org>; Tue, 14 Feb 2017 20:36:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751946AbdBNUgY (ORCPT <rfc822;e@80x24.org>);
-        Tue, 14 Feb 2017 15:36:24 -0500
-Received: from mout.gmx.net ([212.227.15.18]:52824 "EHLO mout.gmx.net"
+        id S1751812AbdBNUgk (ORCPT <rfc822;e@80x24.org>);
+        Tue, 14 Feb 2017 15:36:40 -0500
+Received: from cloud.peff.net ([104.130.231.41]:55289 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751518AbdBNUgR (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Feb 2017 15:36:17 -0500
-Received: from [192.168.178.43] ([88.71.237.147]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0LlVZv-1c4xNL09cl-00bILO; Tue, 14
- Feb 2017 21:36:04 +0100
-Subject: Re: [RFC PATCH] show decorations at the end of the line
-To:     Junio C Hamano <gitster@pobox.com>,
-        Linus Torvalds <torvalds@linux-foundation.org>
-References: <alpine.LFD.2.20.1702110943460.31350@i7.lan>
- <CA+55aFw2S14a4_4YK0b6PNK4TH_AUo_+2JN+PTyBTufNeB5t6A@mail.gmail.com>
- <xmqq1sv2fq6m.fsf@gitster.mtv.corp.google.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-From:   Stephan Beyer <s-beyer@gmx.net>
-Message-ID: <8cf9e548-bf6d-7cbc-f538-da2fbf489bc7@gmx.net>
-Date:   Tue, 14 Feb 2017 21:36:02 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Icedove/45.6.0
+        id S1751749AbdBNUgi (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Feb 2017 15:36:38 -0500
+Received: (qmail 18816 invoked by uid 109); 14 Feb 2017 20:36:22 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 14 Feb 2017 20:36:22 +0000
+Received: (qmail 6350 invoked by uid 111); 14 Feb 2017 20:36:22 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 14 Feb 2017 15:36:22 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 14 Feb 2017 15:36:19 -0500
+Date:   Tue, 14 Feb 2017 15:36:19 -0500
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
+        Duy Nguyen <pclouds@gmail.com>,
+        Stefan Beller <sbeller@google.com>
+Subject: [PATCH 2/2] remote helpers: avoid blind fall-back to ".git" when
+ setting GIT_DIR
+Message-ID: <20170214203619.62plnss65mdwf3na@sigill.intra.peff.net>
+References: <20170214203117.xnln6ahb3l32agqb@sigill.intra.peff.net>
 MIME-Version: 1.0
-In-Reply-To: <xmqq1sv2fq6m.fsf@gitster.mtv.corp.google.com>
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K0:BHjrHhD9m4/liRjz4lUsjV79d6NObd6GjwJ277zTBO4wW8s11P3
- Q9T6yfokpr7WlHQ/r4pYPDGYztIwputtNW5JgQl9nl4YKDExTf7LN1y643OViDxtyX3zPKj
- mP2je+jAqFSbNR9bUti5GRQOAblXPf9UKZHKnDAhWL9H8eoouyUJ8Lrldm0ZoGwqeW1AlN5
- zDgY4+JbqP4lxWNwG198Q==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:zyYixY5Qm4g=:F2NR+y/p8QcDG4oA0fEzn2
- jj91X20m2YyWIuqPEXksoVdKfRy/KSnnwkuJ5MT5M5qh1Py6rlnpzizjUTd11Sl7xCjD5uyVp
- ewSWeuVzuMafaTvp5noHscVVKZ1ewMN+KoPZMF2c1kIjx3KnvHWAL5LSEmHWFoRdV80TI1tVj
- JIjVbvVkE2H/eBEnnZ/kNZNHuoI2b9MsN1OmF/BlCVTVHbCGqWIwEXFTnFbjxXyYO9ROWC7h0
- 3JKSv7DKKZ5oy9Gxmv8AlRV4p69/KExHfZPL6xZjSW2xn5013n/DyYDm27WybYbRV8qTxBV05
- LGDT2xBoAhxl+UZazHcTEVaJ5x0+Rb/p4zs+j/B2sRZRLK3dcp5SxJKiFzg02unWv0chFEhA6
- 8IUDffjtfNv0LG8aMVYcVMoo8yfAmDFWaEhOmQ0hgOg49hXCfeHFnl6IT8MX926DBUkvnyWwK
- 1jvkxo1aN2T3CKC1dZouFkoa9s8D0PFC0+Z5enu10boPi9KQ/VJlWcLJyHEMM1F/Oljxw3VKt
- ZHGjWhFJuS+0VbVGZSW+ZdNIhuFJChrKJIhi+xc2kJZIDxyXbFIeHj0skTFkmMnadT405lmZA
- 55n5Z7e59wocPoacEo2jIdgyRExv6E7+mc0ucpxrDjeu/5J3jU7G7zjZEApjwAO4Kf3XIWODO
- 4qsXNQxudy6DieFGipLwentSoMrOyMMlUfexoJgU3XmvGywBsWi+M0v1eLmnS4JqLxnb5gLRH
- 6xAJRdmyJOAV8O98UBggRI4wcO3fQfSYnOa3ul5fak6dkAAkFkNKxQpf9g1k3KfWxaiWse63S
- 4WRonpU
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20170214203117.xnln6ahb3l32agqb@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+From: Jonathan Nieder <jrnieder@gmail.com>
 
-On 02/13/2017 09:30 AM, Junio C Hamano wrote:
-> Linus Torvalds <torvalds@linux-foundation.org> writes:
-> 
->> On Sat, Feb 11, 2017 at 10:02 AM, Linus Torvalds
->> <torvalds@linux-foundation.org> wrote:
->>>
->>> I've signed off on this, because I think it's an "obvious" improvement,
->>> but I'm putting the "RFC" in the subject line because this is clearly a
->>> subjective thing.
->>
->> Side note: the one downside of showing the decorations at the end of
->> the line is that now they are obviously at the end of the line - and
->> thus likely to be more hidden by things like line truncation.
-> 
-> Side note: I refrained from commenting on this patch because
-> everybody knows that the what I would say anyway ;-) and I didn't
-> want to speak first to discourage others from raising their opinion.
+To push from or fetch to the current repository, remote helpers need
+to know what repository that is.  Accordingly, Git sets the GIT_DIR
+environment variable to the path to the current repository when
+invoking remote helpers.
 
-A further side note: the current behavior of
+There is a special case it does not handle: "git ls-remote" and "git
+archive --remote" can be run to inspect a remote repository without
+being run from any local repository.  GIT_DIR is not useful in this
+scenario:
 
-	git log --oneline --decorate
+- if we are not in a repository, we don't need to set GIT_DIR to
+  override an existing GIT_DIR value from the environment.  If GIT_DIR
+  is present then we would be in a repository if it were valid and
+  would have called die() if it weren't.
 
-is equivalent to
+- not setting GIT_DIR may cause a helper to do the usual discovery
+  walk to find the repository.  But we know we're not in one, or we
+  would have found it ourselves.  So in the worst case it may expend
+  a little extra effort to try to find a repository and fail (for
+  example, remote-curl would do this to try to find repository-level
+  configuration).
 
-	git log --pretty='format:%C(auto)%h%d %s'
+So leave GIT_DIR unset in this case.  This makes GIT_DIR easier to
+understand for remote helper authors and makes transport code less of
+a special case for repository discovery.
 
-and Linus' preferred version is equivalent to
+Noticed using b1ef400e (setup_git_env: avoid blind fall-back to
+".git", 2016-10-20) from 'next':
 
-	git log --pretty='format:%C(auto)%h %s%d'
+ $ cd /tmp
+ $ git ls-remote https://kernel.googlesource.com/pub/scm/git/git
+ fatal: BUG: setup_git_env called without repository
 
-Most Git users I know have their own favorite version of git log
---pretty=format:... sometimes with --graph as an alias ("git lg" or "git
-logk" (because its output reminds of gitk) or something).
+Helped-by: Jeff King <peff@peff.net>
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+Signed-off-by: Jeff King <peff@peff.net>
+---
+I dropped this down to a single test instance, and used the nongit
+helper to shorten it.
 
-I don't know what the main benefit of this patch would be, but if it
-gets accepted, it should probably be mentioned somewhere that the old
-behavior is easily accessible using the line mentioned above.
+Possible patches on top:
 
-Cheers
-Stephan
+  - if we want to test this across more protocols, we can. I'm not sure
+    I see all that much value in it, given that we know the source of
+    the bug.
+
+    We probably _should_ have some kind of standard test-battery that
+    hits all protocols, or at the very least hits both dumb/smart http.
+    But waiting for that may be making the perfect the enemy of the
+    good. So I'm OK with doing it piece-wise for now if people really
+    feel we need to cover more protocols.
+
+  - Jonathan's original had some nice remote-ext tests, but they were
+    sufficiently complex that they should be spun into their own patch
+    with more explanation.
+
+ t/t5550-http-fetch-dumb.sh | 9 +++++++++
+ transport-helper.c         | 5 +++--
+ 2 files changed, 12 insertions(+), 2 deletions(-)
+
+diff --git a/t/t5550-http-fetch-dumb.sh b/t/t5550-http-fetch-dumb.sh
+index aeb3a63f7..b69ece1d6 100755
+--- a/t/t5550-http-fetch-dumb.sh
++++ b/t/t5550-http-fetch-dumb.sh
+@@ -34,6 +34,15 @@ test_expect_success 'clone http repository' '
+ 	test_cmp file clone/file
+ '
+ 
++test_expect_success 'list refs from outside any repository' '
++	cat >expect <<-EOF &&
++	$(git rev-parse master)	HEAD
++	$(git rev-parse master)	refs/heads/master
++	EOF
++	nongit git ls-remote "$HTTPD_URL/dumb/repo.git" >actual &&
++	test_cmp expect actual
++'
++
+ test_expect_success 'create password-protected repository' '
+ 	mkdir -p "$HTTPD_DOCUMENT_ROOT_PATH/auth/dumb/" &&
+ 	cp -Rf "$HTTPD_DOCUMENT_ROOT_PATH/repo.git" \
+diff --git a/transport-helper.c b/transport-helper.c
+index 91aed35eb..e4fd98238 100644
+--- a/transport-helper.c
++++ b/transport-helper.c
+@@ -124,8 +124,9 @@ static struct child_process *get_helper(struct transport *transport)
+ 	helper->git_cmd = 0;
+ 	helper->silent_exec_failure = 1;
+ 
+-	argv_array_pushf(&helper->env_array, "%s=%s", GIT_DIR_ENVIRONMENT,
+-			 get_git_dir());
++	if (have_git_dir())
++		argv_array_pushf(&helper->env_array, "%s=%s",
++				 GIT_DIR_ENVIRONMENT, get_git_dir());
+ 
+ 	code = start_command(helper);
+ 	if (code < 0 && errno == ENOENT)
+-- 
+2.12.0.rc1.479.g59880b11e
