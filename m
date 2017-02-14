@@ -2,203 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 18DD42013A
-	for <e@80x24.org>; Tue, 14 Feb 2017 07:56:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D31182013A
+	for <e@80x24.org>; Tue, 14 Feb 2017 08:07:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752007AbdBNH4E (ORCPT <rfc822;e@80x24.org>);
-        Tue, 14 Feb 2017 02:56:04 -0500
-Received: from mail-it0-f43.google.com ([209.85.214.43]:36823 "EHLO
-        mail-it0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751324AbdBNH4E (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Feb 2017 02:56:04 -0500
-Received: by mail-it0-f43.google.com with SMTP id c7so25055645itd.1
-        for <git@vger.kernel.org>; Mon, 13 Feb 2017 23:56:03 -0800 (PST)
+        id S1751946AbdBNIHv (ORCPT <rfc822;e@80x24.org>);
+        Tue, 14 Feb 2017 03:07:51 -0500
+Received: from mail-wr0-f180.google.com ([209.85.128.180]:34326 "EHLO
+        mail-wr0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751637AbdBNIHu (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Feb 2017 03:07:50 -0500
+Received: by mail-wr0-f180.google.com with SMTP id o16so164440715wra.1
+        for <git@vger.kernel.org>; Tue, 14 Feb 2017 00:07:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=peakgames.net; s=google;
+        d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=mMebM44MbibifKy10wEGSMG59CKAzbs9GOW1fk6911M=;
-        b=PzvF65ksMeQAn3GDL3WMEeVBZQMsX3+08+OT+MJ4LQFeX+4QmWczVT0esfvuxFk4Td
-         fTvJvq5Gqe4whYd1JBuf0RYKha/beG1TtqD2ZEtgaR+68aOp4Ytv0XXJUaGZ0gbdtZrq
-         Pxb7FllX1RwHnj0VCylDI2bV9JkwUeQA8ye2w=
+         :cc;
+        bh=rKYD2FoCwEqXnLOE/EM8dJe6Q+WToaAh/YoYvuliyoA=;
+        b=uiHU5F7sVEeR5yqPQ94XUNB0HUkvSlQxGdZ8YvbLnprbzPLzB5GuFyyu0eBbVRBNvd
+         UzQfsFeYSpHmYJmU5vxdYFWMVyge9pwLvSVgoSv8NosrrmAwy5el/1JeouUHk/kbBtHw
+         Zu7ejXca5hfMyruTiStiBxSd4t2z5rQ0pYNzDPBI/+8fzOPq2T9KQU11dOnwfpksEMQh
+         65aNvLBvjrMScdesL4BZBguTjGCgr3T1g4v253J+PGthQrUqQOSdSuIxiB46jJPDsZkB
+         MpdoHZvi9B5wVvo9oQo1mZUssjp3P7/jiooDHcvkDBQKBmmUJPg77ShRWyGhdzilVmuG
+         9+NQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=mMebM44MbibifKy10wEGSMG59CKAzbs9GOW1fk6911M=;
-        b=axk8/VrPSQQW3QyGdOMJ3RBGpoRYdAx/vFz8NG+eDth39fySyP5sIUKVH4qKizHbr8
-         1DKmNodd9X1aqFkW+rHMCmO/IQMtrZxdoM8ZSKnyLNhsnEtKETy8vFQadnF9qOtw1G8b
-         LbYE05jBf9JL44mPje0Sg5F2Cvlr6Bd9eyG+sweAXc95Xerhz8iJmnVDhZukT2THfrD+
-         StzHBioqFq/estY/h7p2dpM4/wO1Uh/hrdHzFO26Deon3lijPiqWiCgNda/wfcZ+U9jq
-         vd3XGkzIRwfN8tYVwK1tFKrAnUq60ugzqL3rG2JmkP9c8GXMPSEGHcNLxYa/+OewjdUW
-         P24A==
-X-Gm-Message-State: AMke39mLiyBWQDS9Lqru92B4ue4yvx1Lx3GZejn2F+dCjkmw7BeUJEZWOHmdXXHCLKyo5RZMrOIdVpt6wVWm66Pr
-X-Received: by 10.36.52.197 with SMTP id z188mr2416999itz.71.1487058962791;
- Mon, 13 Feb 2017 23:56:02 -0800 (PST)
+         :message-id:subject:to:cc;
+        bh=rKYD2FoCwEqXnLOE/EM8dJe6Q+WToaAh/YoYvuliyoA=;
+        b=gclAzhU8Dj768XP4A7e707zAY0MSora4D+X2DdRT2dtrf3qmv6+xH0yzfFmFi34a6p
+         sTZ9Vn1UdfItREdFtqu00Iu9d9GtLC4pBX453p+1PSX2jSiRB6FOLHD4VG41otaSCTIQ
+         Lfge28CfWPXB0QdRoPQ8/CsSTzecShXxavgZY4tbjOE2Wd/QsF+S4K4+o47ZqpfHdfam
+         4otSs4bTjK6zQQZgZ7URcNzBY1cw/7Wz+6eNzBLI4Mc9eCY2v3QcHUoZqzcwsc8/fX1I
+         YdICWi2JZohYv2QiLfKh7iD6BIUSTRiuqGOMIoFGCKUuTUcxULBhEenOYnY/leXOLDus
+         Xmqw==
+X-Gm-Message-State: AMke39nLLAA8GEFwI1raSwnTxvp8ol3dLQ8kCQECZhHkMeLaglFYQwhLDZMCKnQmAJV0jAinOkdnamhqCwa+2A==
+X-Received: by 10.223.141.229 with SMTP id o92mr25526417wrb.22.1487059669073;
+ Tue, 14 Feb 2017 00:07:49 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.107.133.16 with HTTP; Mon, 13 Feb 2017 23:56:02 -0800 (PST)
-In-Reply-To: <BE964323A3E644BBB01F8672263419EA@peakgames.net>
-References: <CAL7ZE5xYVM6=C+SJLJ2HMFZ2gvuduw8p0UnS0RnBaXibj0mgDw@mail.gmail.com>
- <CAP8UFD18Sbqo-_ZVyYTJtwNaRc8bFSd0KEYQ1oRH7-G+xnJTJg@mail.gmail.com>
- <CAL7ZE5yXaJQFci+9aF4+cxeycnf71FMyLTV14t_TGDR3cnnfVA@mail.gmail.com>
- <CAP8UFD3uEAuK5SQD8V8f4GC3-jC+ix2sPwiFBw_kW3JhBG6L=g@mail.gmail.com> <BE964323A3E644BBB01F8672263419EA@peakgames.net>
-From:   Serdar Sahin <serdar@peakgames.net>
-Date:   Tue, 14 Feb 2017 10:56:02 +0300
-Message-ID: <CAL7ZE5y5wgJfkwn0sAwVPtHhEXuX7tUc-pNkOor1WzAx_u3WhA@mail.gmail.com>
-Subject: Re: Non-zero exit code without error
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     git <git@vger.kernel.org>
+Received: by 10.80.159.227 with HTTP; Tue, 14 Feb 2017 00:07:48 -0800 (PST)
+In-Reply-To: <xmqqo9y5de1k.fsf@gitster.mtv.corp.google.com>
+References: <CAOcUJQwnCJOhUUU2RqJP2H5YxUr4qCEpyDj_XiiQSe4V6rcBmg@mail.gmail.com>
+ <20170213154407.GA31568@alpha.ikke.info> <xmqqo9y5de1k.fsf@gitster.mtv.corp.google.com>
+From:   Istvan Pato <istvan.pato@gmail.com>
+Date:   Tue, 14 Feb 2017 09:07:48 +0100
+Message-ID: <CAOcUJQzEKoCf3T2AVzck1Y4NWb8N9FMqQ=+6z6-9C4YF8-jQzA@mail.gmail.com>
+Subject: Re: Bug in 'git describe' if I have two tags on the same commit.
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Kevin Daudt <me@ikke.info>, git@vger.kernel.org
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thanks. I know it is hard to get an idea without being able to
-reproduce it. I think there is no alternative without debugging it
-with GDB.
+This is my fault: this is a lightweight tag.
+Thank you!
 
-I=E2=80=99ve tried your suggestions and nothing has changed.
-
-I=E2=80=99ve also update the GIT as you suggested, but it is still the same=
-.
-
-Just to see, if GIT server causes some issues, I=E2=80=99ve pushed to repo =
-to
-github public as a private repo, and can reproduce the issue there as
-well.
-
-Thanks for your support.
-
-On Tue, Feb 14, 2017 at 10:53 AM, Serdar Sahin <serdar@peakgames.net> wrote=
-:
-> Hi Christian,
+2017-02-13 21:35 GMT+01:00 Junio C Hamano <gitster@pobox.com>:
+> Kevin Daudt <me@ikke.info> writes:
 >
-> Thanks. I know it is hard to get an idea without being able to reproduce =
-it.
-> I think there is no alternative without debugging it with GDB.
+>> On Sun, Feb 12, 2017 at 01:15:22PM +0100, Istvan Pato wrote:
+>>
+>>> (master) [1] % git show-ref --tag
+>>> 76c634390... refs/tags/1.0.0
+>>> b77c7cd17... refs/tags/1.1.0
+>>> b77c7cd17... refs/tags/1.2.0
+>>>
+>>> (master) % git describe --tags --always
+>>> 1.1.0-1-ge9e9ced
+>>>
+>>> ### Expected: 1.2.0
+>>> ...
+>>
+>> Are these lightweight tags? Only annotated tags have a date associated
+>> to them, which is where the rel-notes refers to.
 >
-> I=E2=80=99ve tried your suggestions and nothing has changed.
+> Good eyes.  The fact that the two points at the same object means
+> that even if they were both annotated tags, they have the same
+> tagger dates.
 >
-> I=E2=80=99ve also update the GIT as you suggested, but it is still the sa=
-me.
->
-> Just to see, if GIT server causes some issues, I=E2=80=99ve pushed to rep=
-o to github
-> public as a private repo, and can reproduce the issue there as well.
->
-> Thanks for your support.
->
-> --
-> Serdar Sahin
-> Peak Games
->
-> On Saturday, 11 February 2017 at 15:28, Christian Couder wrote:
->
-> On Wed, Feb 8, 2017 at 11:26 AM, Serdar Sahin <serdar@peakgames.net> wrot=
-e:
->
-> Hi Christian,
+> If the code that compares the candidates and picks better tag to
+> describe the object with knows the refnames of these "tags", I'd
+> imagine that we could use the versioncmp() logic as the final tie
+> breaker, but I do not offhand remember if the original refname we
+> took the tag (or commit) from is propagated that deep down the
+> callchain.  It probably does not, so some code refactoring may be
+> needed if somebody wants to go in that direction.
 >
 >
-> We are using a private repo (Github Enterprise).
 >
->
-> Maybe you could try 'git fast-export --anonymize ...' on it.
->
-> Let me give you the
-> details you requested.
->
->
-> On Git Server: git version 2.6.5.1574.g5e6a493
->
-> On my client: git version 2.10.1 (Apple Git-78)
->
->
-> I=E2=80=99ve tried to reproduce it with public repos, but couldn=E2=80=99=
-t do so.
->
->
-> You might try using the latest released version (2.11.1).
->
-> For example you could install the last version on the client and then
-> clone from the server with --bare and use this bare repo as if it was
-> the server.
->
-> You could also try `git fsck` to see if there are problems on your repo.
->
-> Are there submodules or something a bit special?
->
-> In the end it's difficult for us to help if we cannot reproduce, so
-> your best bet might be to debug yourself using gdb for example.
->
-> If I
-> could get an error/log output, that would be sufficient.
->
->
-> I am also including the full output below. (also git gc)
->
->
-> MacOSX:test serdar$ git clone --mirror --depth 50 --no-single-branch
-> git@git.privateserver.com:Casual/code_repository.git
->
->
-> You could also try with different options above...
->
-> Cloning into bare repository 'code_repository.git'...
->
-> remote: Counting objects: 3362, done.
->
-> remote: Compressing objects: 100% (1214/1214), done.
->
-> remote: Total 3362 (delta 2335), reused 2968 (delta 2094), pack-reused 0
->
-> Receiving objects: 100% (3362/3362), 56.77 MiB | 1.83 MiB/s, done.
->
-> Resolving deltas: 100% (2335/2335), done.
->
-> MacOSX:test serdar$ cd code_repository.git/
->
-> MacOSX:code_repository.git serdar$ GIT_CURL_VERBOSE=3D1 GIT_TRACE=3D1 git
-> fetch --depth 50 origin cc086c96cdffe5c1ac78e6139a7a4b79e7c821ee
->
->
-> ... and above.
->
-> Also it looks like you use ssh so something like GIT_SSH_COMMAND=3D"ssh
-> -vv" might help more than GIT_CURL_VERBOSE=3D1
->
-> 13:23:15.648337 git.c:350 trace: built-in: git 'fetch'
-> '--depth' '50' 'origin' 'cc086c96cdffe5c1ac78e6139a7a4b79e7c821ee'
->
-> 13:23:15.651127 run-command.c:336 trace: run_command: 'ssh'
-> 'git@git.privateserver.com' 'git-upload-pack
-> '\''Casual/code_repository.git'\'''
->
-> 13:23:17.750015 run-command.c:336 trace: run_command: 'gc' '--auto'
->
-> 13:23:17.750829 exec_cmd.c:189 trace: exec: 'git' 'gc' '--auto'
->
-> 13:23:17.753983 git.c:350 trace: built-in: git 'gc' '--auto'
->
-> MacOSX:code_repository.git serdar$ echo $?
->
-> 1
->
-> MacOSX:code_repository.git serdar$ GIT_CURL_VERBOSE=3D1 GIT_TRACE=3D1 git=
- gc
-> --auto
->
-> 13:23:45.899038 git.c:350 trace: built-in: git 'gc' '--auto'
->
-> MacOSX:code_repository.git serdar$ echo $?
->
-> 0
 >
 >
