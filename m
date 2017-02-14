@@ -2,142 +2,122 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B90931FAF4
-	for <e@80x24.org>; Tue, 14 Feb 2017 20:36:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C1B291FAF4
+	for <e@80x24.org>; Tue, 14 Feb 2017 20:40:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751812AbdBNUgk (ORCPT <rfc822;e@80x24.org>);
-        Tue, 14 Feb 2017 15:36:40 -0500
-Received: from cloud.peff.net ([104.130.231.41]:55289 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751749AbdBNUgi (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Feb 2017 15:36:38 -0500
-Received: (qmail 18816 invoked by uid 109); 14 Feb 2017 20:36:22 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 14 Feb 2017 20:36:22 +0000
-Received: (qmail 6350 invoked by uid 111); 14 Feb 2017 20:36:22 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 14 Feb 2017 15:36:22 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 14 Feb 2017 15:36:19 -0500
-Date:   Tue, 14 Feb 2017 15:36:19 -0500
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-        Duy Nguyen <pclouds@gmail.com>,
-        Stefan Beller <sbeller@google.com>
-Subject: [PATCH 2/2] remote helpers: avoid blind fall-back to ".git" when
- setting GIT_DIR
-Message-ID: <20170214203619.62plnss65mdwf3na@sigill.intra.peff.net>
-References: <20170214203117.xnln6ahb3l32agqb@sigill.intra.peff.net>
+        id S1751941AbdBNUkk (ORCPT <rfc822;e@80x24.org>);
+        Tue, 14 Feb 2017 15:40:40 -0500
+Received: from mail-ot0-f193.google.com ([74.125.82.193]:34975 "EHLO
+        mail-ot0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751600AbdBNUki (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Feb 2017 15:40:38 -0500
+Received: by mail-ot0-f193.google.com with SMTP id 65so18895091otq.2
+        for <git@vger.kernel.org>; Tue, 14 Feb 2017 12:40:38 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=K4eOeqzWEEXLcvAFr/7ukP02/aMoyrGBmsCNEHO47YU=;
+        b=PsV6liH+zsbg1yP1Y6X+czeCCC7wSML8TU8bQHC4P0hHUUoOmBUTIweDqAT6Bm+Iei
+         UkE9dD6p7tBJOFWR5zaOLYRB2nCgDJROJH55gj9Ct2blQS8GPMcc+MvjzO7UB2wpwFTV
+         yksTEdyIWJoUe1EeynSAaXadf1dmcnbUHlLC52cS7zNBQS1TWp+PzbKDiDhrRRec6lUr
+         b1AyD686O+JPirNQ5m4GdDQrjZN1zISSSo4hRyVD54a+zd35g4BY4U4znUNsYkR7saRS
+         oGk3e98nKqt8BX4Ff3bwf3sVQSd4QY2ErWtXpgmjFstngKPi/W7vaRH2YEjchp99IeXW
+         bbcg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=K4eOeqzWEEXLcvAFr/7ukP02/aMoyrGBmsCNEHO47YU=;
+        b=NvG2Ddf5X9O2IqANpSDFdefWACvELhd77xHOx+Hb/wyC2++bt6ebag/IBJejAQYo/p
+         W6D9c8c2piBFrI7MnoTxJoCmgAvkA50tphFGEU64XcTpzLmDTqUVbAxk00ffN/U8Z3iO
+         2OJsfFwTSCA/vgwy3IBi7gbqov8AkRHiw4S5EuUrEvMEQj2dc5zzLf0Rju3aJ3e8WgTN
+         8blHuHsUPQCr4JDaZowxkrg6JMY7p47nfEKpugRvWXNRuwqAFfs1gGkTyIvuKxoK7BPf
+         0rXBYdoUg/mHXZFE7IY46/VSMfoerb8jkJMSOHjwsM6CIk2s7qpRYzoLEzw8HGbAi6/C
+         /0Qg==
+X-Gm-Message-State: AMke39kfnE97jh7PID5otZXTfYtcJ86xXiBdi9yjpvQcuRSb2jmMPeIqqhPcKHAI+KjkhA==
+X-Received: by 10.98.149.218 with SMTP id c87mr33170529pfk.88.1487104837858;
+        Tue, 14 Feb 2017 12:40:37 -0800 (PST)
+Received: from localhost ([2620:0:1000:8622:2447:f72c:8fdf:75c6])
+        by smtp.gmail.com with ESMTPSA id e129sm2971969pfe.8.2017.02.14.12.40.36
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Tue, 14 Feb 2017 12:40:37 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Olaf Hering <olaf@aepfle.de>
+Cc:     git@vger.kernel.org
+Subject: Re: missing handling of "No newline at end of file" in git am
+References: <20170214201104.GA26407@aepfle.de>
+Date:   Tue, 14 Feb 2017 12:40:36 -0800
+In-Reply-To: <20170214201104.GA26407@aepfle.de> (Olaf Hering's message of
+        "Tue, 14 Feb 2017 21:11:04 +0100")
+Message-ID: <xmqqh93w8q0r.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20170214203117.xnln6ahb3l32agqb@sigill.intra.peff.net>
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Jonathan Nieder <jrnieder@gmail.com>
+Olaf Hering <olaf@aepfle.de> writes:
 
-To push from or fetch to the current repository, remote helpers need
-to know what repository that is.  Accordingly, Git sets the GIT_DIR
-environment variable to the path to the current repository when
-invoking remote helpers.
+> How is git send-email and git am supposed to handle a text file which
+> lacks a newline at the very end? This is about git 2.11.0.
 
-There is a special case it does not handle: "git ls-remote" and "git
-archive --remote" can be run to inspect a remote repository without
-being run from any local repository.  GIT_DIR is not useful in this
-scenario:
+I think this has always worked, though.
 
-- if we are not in a repository, we don't need to set GIT_DIR to
-  override an existing GIT_DIR value from the environment.  If GIT_DIR
-  is present then we would be in a repository if it were valid and
-  would have called die() if it weren't.
+    $ cd /var/tmp/x
+    $ git init am-incomplete-line
+    $ cd am-incomplete-line/
+    $ echo one line >file
+    $ git add file
+    $ git commit -a -m initial
+    [master (root-commit) 27b4668] initial
+     1 file changed, 1 insertion(+)
+     create mode 100644 file
+    $ echo -n an incomplete line >>file
+    $ git diff file
+    diff --git a/file b/file
+    index e3c0674..f2ec9f0 100644
+    --- a/file
+    +++ b/file
+    @@ -1 +1,2 @@
+     one line
+    +an incomplete line
+    \ No newline at end of file
+    $ git commit -a -m 'incomplete second'
+    [master 57075ab] incomplete second
+     1 file changed, 1 insertion(+)
+    $ git format-patch -1
+    0001-incomplete-second.txt
+    $ cat 0001-incomplete-second.txt
+    From 57075ab402e2d3714ebc9e2e9d4efd8dbfd74d5a Mon Sep 17 00:00:00 2001
+    From: Junio C Hamano <gitster@pobox.com>
+    Date: Tue, 14 Feb 2017 12:35:50 -0800
+    Subject: [PATCH] incomplete second
 
-- not setting GIT_DIR may cause a helper to do the usual discovery
-  walk to find the repository.  But we know we're not in one, or we
-  would have found it ourselves.  So in the worst case it may expend
-  a little extra effort to try to find a repository and fail (for
-  example, remote-curl would do this to try to find repository-level
-  configuration).
+    ---
+     file | 1 +
+     1 file changed, 1 insertion(+)
 
-So leave GIT_DIR unset in this case.  This makes GIT_DIR easier to
-understand for remote helper authors and makes transport code less of
-a special case for repository discovery.
+    diff --git a/file b/file
+    index e3c0674..f2ec9f0 100644
+    --- a/file
+    +++ b/file
+    @@ -1 +1,2 @@
+     one line
+    +an incomplete line
+    \ No newline at end of file
+    -- 
+    2.12.0-rc1-235-g2fb706ef99
+    $ git checkout HEAD^
+    $ git am ./0001-incomplete-second.txt
+    Applying: incomplete second
+    $ git diff master
+    $ exit
 
-Noticed using b1ef400e (setup_git_env: avoid blind fall-back to
-".git", 2016-10-20) from 'next':
-
- $ cd /tmp
- $ git ls-remote https://kernel.googlesource.com/pub/scm/git/git
- fatal: BUG: setup_git_env called without repository
-
-Helped-by: Jeff King <peff@peff.net>
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
-Signed-off-by: Jeff King <peff@peff.net>
----
-I dropped this down to a single test instance, and used the nongit
-helper to shorten it.
-
-Possible patches on top:
-
-  - if we want to test this across more protocols, we can. I'm not sure
-    I see all that much value in it, given that we know the source of
-    the bug.
-
-    We probably _should_ have some kind of standard test-battery that
-    hits all protocols, or at the very least hits both dumb/smart http.
-    But waiting for that may be making the perfect the enemy of the
-    good. So I'm OK with doing it piece-wise for now if people really
-    feel we need to cover more protocols.
-
-  - Jonathan's original had some nice remote-ext tests, but they were
-    sufficiently complex that they should be spun into their own patch
-    with more explanation.
-
- t/t5550-http-fetch-dumb.sh | 9 +++++++++
- transport-helper.c         | 5 +++--
- 2 files changed, 12 insertions(+), 2 deletions(-)
-
-diff --git a/t/t5550-http-fetch-dumb.sh b/t/t5550-http-fetch-dumb.sh
-index aeb3a63f7..b69ece1d6 100755
---- a/t/t5550-http-fetch-dumb.sh
-+++ b/t/t5550-http-fetch-dumb.sh
-@@ -34,6 +34,15 @@ test_expect_success 'clone http repository' '
- 	test_cmp file clone/file
- '
- 
-+test_expect_success 'list refs from outside any repository' '
-+	cat >expect <<-EOF &&
-+	$(git rev-parse master)	HEAD
-+	$(git rev-parse master)	refs/heads/master
-+	EOF
-+	nongit git ls-remote "$HTTPD_URL/dumb/repo.git" >actual &&
-+	test_cmp expect actual
-+'
-+
- test_expect_success 'create password-protected repository' '
- 	mkdir -p "$HTTPD_DOCUMENT_ROOT_PATH/auth/dumb/" &&
- 	cp -Rf "$HTTPD_DOCUMENT_ROOT_PATH/repo.git" \
-diff --git a/transport-helper.c b/transport-helper.c
-index 91aed35eb..e4fd98238 100644
---- a/transport-helper.c
-+++ b/transport-helper.c
-@@ -124,8 +124,9 @@ static struct child_process *get_helper(struct transport *transport)
- 	helper->git_cmd = 0;
- 	helper->silent_exec_failure = 1;
- 
--	argv_array_pushf(&helper->env_array, "%s=%s", GIT_DIR_ENVIRONMENT,
--			 get_git_dir());
-+	if (have_git_dir())
-+		argv_array_pushf(&helper->env_array, "%s=%s",
-+				 GIT_DIR_ENVIRONMENT, get_git_dir());
- 
- 	code = start_command(helper);
- 	if (code < 0 && errno == ENOENT)
--- 
-2.12.0.rc1.479.g59880b11e
