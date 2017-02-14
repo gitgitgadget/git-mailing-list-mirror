@@ -7,52 +7,48 @@ X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 82B512013A
-	for <e@80x24.org>; Tue, 14 Feb 2017 11:33:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4D95C2013A
+	for <e@80x24.org>; Tue, 14 Feb 2017 11:33:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753786AbdBNLdP (ORCPT <rfc822;e@80x24.org>);
-        Tue, 14 Feb 2017 06:33:15 -0500
-Received: from mout.gmx.net ([212.227.17.22]:49475 "EHLO mout.gmx.net"
+        id S1752111AbdBNLdR (ORCPT <rfc822;e@80x24.org>);
+        Tue, 14 Feb 2017 06:33:17 -0500
+Received: from mout.gmx.net ([212.227.15.19]:53062 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752089AbdBNLc6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Feb 2017 06:32:58 -0500
-Received: from virtualbox ([37.201.192.48]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MeQ43-1d2ZFR2Vf5-00Q9sE; Tue, 14
- Feb 2017 12:32:38 +0100
-Date:   Tue, 14 Feb 2017 12:32:38 +0100 (CET)
+        id S1751927AbdBNLcb (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Feb 2017 06:32:31 -0500
+Received: from virtualbox ([37.201.192.48]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0M8NWM-1cPezt3Yp8-00w0PB; Tue, 14
+ Feb 2017 12:32:23 +0100
+Date:   Tue, 14 Feb 2017 12:32:18 +0100 (CET)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     git@vger.kernel.org
 cc:     Jeff Hostetler <jeffhost@microsoft.com>,
         Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 5/5] name-hash: remember previous dir_entry during
- lazy_init_name_hash
+Subject: [PATCH 3/5] name-hash: precompute hash values during preload-index
 In-Reply-To: <cover.1487071883.git.johannes.schindelin@gmx.de>
-Message-ID: <ce9f344b4d4de06320d5914b8f2cc2eaf0fcd923.1487071883.git.johannes.schindelin@gmx.de>
+Message-ID: <8621305c69898e012720d4fe66d42b096f053073.1487071883.git.johannes.schindelin@gmx.de>
 References: <cover.1487071883.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:HXI9kZf9XZpWVpXYKOkFiM2gz35ME6swqM6nGwDdK4BjhwT9NMm
- Jj2yk4wbp4rbmFJ6wI0EXgEtPB66EZDE+Cl4yt2hp0fNk2mcd05WMDybPgAKSok0P1pRRJD
- XzgIn75QfVM5/R+lExXDcc3vInSk4GbNvHkOveFoW4dBYad+8HltgXJYJBphQpC4iDJapfZ
- kHKEFnWcgbmxw+JVoeVeg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:4Cv6rafAR5s=:qpV+rEHcydCXAPjqLXPQ+e
- Ga9hsIXG/vBjyufbTRgbHXkZJm57dAmCb95l3+F3EGuq/Di99GDEjW3R2Cayfp6Pz8vXIjwfA
- qgI4AO/z63uew8r0AGSfVacmjXBpkwsLmUIN6YaM/fPgP6XGFxIBA4bbG3uusNgE0LgmdTLNm
- V5ioNGDepu+QFYG0D4O7Ioyud6TNFvOIKdwxXvOTE7ssnYTZMqOfnXp5sfgqhyUHtdjaUJ73J
- F+lumet/I0IOE8vx6G764ZvsqLcyof6O40aFA0H/gElgGJdiGjd5JEPvqW2PegJjtpmOLCK0O
- qDGwbmXLTY1qeZzJyvRd+s++wsDcbBwqK75VaoqUHtdpKtid7rFeyAwgBuOboNT1Yw0l2YOZc
- CYfOkciTnKBRQqq9ZmOFrApKTnzAFwNhmDeeVPSl9oakPK8Xo8aGplvRZnCQkQhVuY/BywJkA
- n2PLq5j8cwdoI0+L2tm0Nwxmwju9DZNX5ern/Zpsf1ILbnN/TXA0axUbbeHiXYDIoEh6yR3BN
- cBocZbWqdYji9dc3z7XDLq3gkiXCAz1Vw1Xwc9nhPq6Xq4ae09LnREd8ZapIK1SmCswZWiwT2
- frfFPy01D6opRXoKh9H/bgfgjHSm/L7FN2K7I+NbYETtY4opzWYwupb1GGQJvgZVkT3VLKn9G
- kIpweUG1206nu0riTZlVSFFUkx+dtn0ri9paFA+6KewxjSuFPn5CL2CHXd0UlQbD8m9xV1Lw7
- zLbKuL2JD9G+Y6PFDuHxwYp3ORjWLgzpG8svQHZnTRwPhWVpYtnaXn10Xd0qOQJP84Z1XT8o6
- u+155ngjn7nPjNrvg1nnlsf519R2+BWEMCDQq9wAmlXVXBknLZOMHkPg4XSD1o6zqN2NOQAbY
- 2XZJOrwc8Dlm3CpQ0JAeapnYQ7JHmyTmfn+b6nANQ0d0RoBg7Z68ea5e8Zu/3e8TokBUQ5rQr
- VUpqPcxqTohz/xhUEjOka7ZdJqieFvjBCfV41wJkGJcmdhbBU31Ifrl3FClDM9BRguHHO5U/6
- Ftyj23LtRvXXh6OHfJvS0uY=
+X-Provags-ID: V03:K0:x6GxIOpMve3xsN7Ti2JgCklTZ0g4fjE5AyqmUJeiSdBbQyfGEb0
+ vy4dRcNW1dll1T4UndscXQu452un952+Q5WhS1Dc972c+XPyPVrjQ5LLaPU421WZBusWGJI
+ v0EV8unMFnGy2BAk6egDSli4RHK6aDnKSf17Uanr0ivgr7RxqTy9jxBkYb0SCa5e4SLlrgJ
+ Qd+BmYCT3j/wG7p+qJkEw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:KWSIOHdjCHo=:m81IEhsbV9tPf+N91+wy6f
+ l5yF7dIg3hUeZrqmLcnFwP84peS0pj+4a0UdRNt+WzFMbRMDSqCG2FZbx4yFVJQxk14ImpCTs
+ +U5UT6LnXAE6qynI0RMHkzCWh/aTGq6F1gAz71HOjGxdx9v1QJ8e+yrljzS58S+o+3/kuxJVI
+ RHc1ykB3Wj06Q+DkmBukJKcfHPIsyC1+VzXybnkp6PJBdnZeO+3TPrryuv/CbYiRFVInWuw7W
+ fXFNEvevKKGYhE/B0+Zc7psrnvVPC54iqGkFWa3B7lZwRQry2DKqfjx/5rdrgnInrfCimEe+9
+ v4snsAQj0+cy4hHjhSmIOaDNJp4zOXNR3jjqvlGooFg/9ZBZXwlbjQPlu3rjWJJM0KIYd36Dj
+ izEFGh1daBdFzEloh7rvUd7jtQcKmlWOEXNHVFNJpo/Mtl9hkfI8xJTz7AEHoAT+f8/su1qYp
+ yIhIWkMzk+8f0A4NHpbYBp/LyyRfNW6KhDD2AogkTwtRfUSxht2D85sxVVTM+aZSiapo+a7TB
+ hyjB0MQcaLgKJ3ehZGQy5omqno5sGdSM8sWbA6IeglyuXxPosN6MBccZH5tcl+jw9fNgxpuSs
+ p7P9Dg+1YhMgNVmcLIQWQgCFhYfcigozL6k3EPguCYoUjnP64CBwyzg3XiVPCKr2x2ML+kvMb
+ nv0vQXhiD2zot/BeBw7wZuFbb0k/ypRpqCTGVWjs99/68DYm860Ek7ojZb9+qX3by98Vegi7D
+ Q24K+A17d5BJg6iESZVr87C6fNzEnMZIUktQLfOZWkkpZ5sscM09AaFhL5V//gefs0HWBRWQw
+ HGxeFPH
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -60,139 +56,176 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff Hostetler <jeffhost@microsoft.com>
 
-Teach hash_dir_entry() to remember the previously found dir_entry during
-lazy_init_name_hash() iteration. This is a performance optimization.
-Since items in the index array are sorted by full pathname, adjacent
-items are likely to be in the same directory. This can save memihash()
-computations and hash map lookups.
+Precompute the istate.name_hash and istate.dir_hash values
+for each cache-entry during the preload-index phase.
+
+Move the expensive memihash() calculations from lazy_init_name_hash()
+to the multi-threaded preload-index phase.
 
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- name-hash.c | 50 ++++++++++++++++++++++++++++++++++++--------------
- 1 file changed, 36 insertions(+), 14 deletions(-)
+ cache.h         |  6 ++++++
+ name-hash.c     | 57 +++++++++++++++++++++++++++++++++++++++++++++++++++++++--
+ preload-index.c |  2 ++
+ read-cache.c    |  3 +++
+ 4 files changed, 66 insertions(+), 2 deletions(-)
 
+diff --git a/cache.h b/cache.h
+index 61fc86e6d71..56f7c97cdbe 100644
+--- a/cache.h
++++ b/cache.h
+@@ -173,6 +173,10 @@ struct cache_entry {
+ 	unsigned int ce_flags;
+ 	unsigned int ce_namelen;
+ 	unsigned int index;	/* for link extension */
++	struct {
++		unsigned initialized:1, root_entry:1;
++		unsigned int name, dir;
++	} precomputed_hash;
+ 	struct object_id oid;
+ 	char name[FLEX_ARRAY]; /* more */
+ };
+@@ -229,6 +233,8 @@ struct cache_entry {
+ #error "CE_EXTENDED_FLAGS out of range"
+ #endif
+ 
++void precompute_istate_hashes(struct cache_entry *ce);
++
+ /* Forward structure decls */
+ struct pathspec;
+ struct child_process;
 diff --git a/name-hash.c b/name-hash.c
-index 8f8336cc868..f95054f44cb 100644
+index ad0bc0cef73..49eb84846df 100644
 --- a/name-hash.c
 +++ b/name-hash.c
-@@ -39,7 +39,8 @@ static struct dir_entry *find_dir_entry(struct index_state *istate,
- }
+@@ -50,6 +50,10 @@ static struct dir_entry *hash_dir_entry(struct index_state *istate,
+ 	 */
+ 	struct dir_entry *dir;
+ 	unsigned int hash;
++	int orig_namelen = namelen;
++
++	if (ce->precomputed_hash.initialized && ce->precomputed_hash.root_entry)
++		return NULL; /* item does not have a parent directory */
  
- static struct dir_entry *hash_dir_entry(struct index_state *istate,
--		struct cache_entry *ce, int namelen)
-+		struct cache_entry *ce, int namelen,
-+		struct dir_entry **previous_dir)
- {
- 	/*
- 	 * Throw each directory component in the hash for quick lookup
-@@ -63,11 +64,24 @@ static struct dir_entry *hash_dir_entry(struct index_state *istate,
+ 	/* get length of parent directory */
+ 	while (namelen > 0 && !is_dir_sep(ce->name[namelen - 1]))
+@@ -59,7 +63,10 @@ static struct dir_entry *hash_dir_entry(struct index_state *istate,
  	namelen--;
  
  	/* lookup existing entry for that directory */
--	if (ce->precomputed_hash.initialized && orig_namelen == ce_namelen(ce))
--		hash = ce->precomputed_hash.dir;
--	else
--		hash = memihash(ce->name, namelen);
--	dir = find_dir_entry_1(istate, ce->name, namelen, hash);
-+	if (previous_dir && *previous_dir
-+	    && namelen == (*previous_dir)->namelen
-+	    && memcmp(ce->name, (*previous_dir)->name, namelen) == 0) {
-+		/*
-+		 * When our caller is sequentially iterating through the index,
-+		 * items in the same directory will be sequential, and therefore
-+		 * refer to the same dir_entry.
-+		 */
-+		dir = *previous_dir;
-+	} else {
-+		if (ce->precomputed_hash.initialized &&
-+		    orig_namelen == ce_namelen(ce))
-+			hash = ce->precomputed_hash.dir;
-+		else
-+			hash = memihash(ce->name, namelen);
-+		dir = find_dir_entry_1(istate, ce->name, namelen, hash);
-+	}
-+
+-	hash = memihash(ce->name, namelen);
++	if (ce->precomputed_hash.initialized && orig_namelen == ce_namelen(ce))
++		hash = ce->precomputed_hash.dir;
++	else
++		hash = memihash(ce->name, namelen);
+ 	dir = find_dir_entry_1(istate, ce->name, namelen, hash);
  	if (!dir) {
  		/* not found, create it and add to hash table */
- 		FLEX_ALLOC_MEM(dir, name, ce->name, namelen);
-@@ -76,15 +90,21 @@ static struct dir_entry *hash_dir_entry(struct index_state *istate,
- 		hashmap_add(&istate->dir_hash, dir);
+@@ -99,10 +106,18 @@ static void remove_dir_entry(struct index_state *istate, struct cache_entry *ce)
  
- 		/* recursively add missing parent directories */
--		dir->parent = hash_dir_entry(istate, ce, namelen);
-+		dir->parent = hash_dir_entry(istate, ce, namelen, NULL);
- 	}
-+
-+	if (previous_dir)
-+		*previous_dir = dir;
-+
- 	return dir;
- }
- 
--static void add_dir_entry(struct index_state *istate, struct cache_entry *ce)
-+static void add_dir_entry(struct index_state *istate, struct cache_entry *ce,
-+			  struct dir_entry **previous_dir)
+ static void hash_index_entry(struct index_state *istate, struct cache_entry *ce)
  {
- 	/* Add reference to the directory entry (and parents if 0). */
--	struct dir_entry *dir = hash_dir_entry(istate, ce, ce_namelen(ce));
-+	struct dir_entry *dir = hash_dir_entry(istate, ce, ce_namelen(ce),
-+					       previous_dir);
- 	while (dir && !(dir->nr++))
- 		dir = dir->parent;
- }
-@@ -95,7 +115,7 @@ static void remove_dir_entry(struct index_state *istate, struct cache_entry *ce)
- 	 * Release reference to the directory entry. If 0, remove and continue
- 	 * with parent directory.
- 	 */
--	struct dir_entry *dir = hash_dir_entry(istate, ce, ce_namelen(ce));
-+	struct dir_entry *dir = hash_dir_entry(istate, ce, ce_namelen(ce), NULL);
- 	while (dir && !(--dir->nr)) {
- 		struct dir_entry *parent = dir->parent;
- 		hashmap_remove(&istate->dir_hash, dir, NULL);
-@@ -104,7 +124,8 @@ static void remove_dir_entry(struct index_state *istate, struct cache_entry *ce)
- 	}
- }
- 
--static void hash_index_entry(struct index_state *istate, struct cache_entry *ce)
-+static void hash_index_entry(struct index_state *istate, struct cache_entry *ce,
-+			     struct dir_entry **previous_dir)
- {
- 	unsigned int h;
- 
-@@ -121,7 +142,7 @@ static void hash_index_entry(struct index_state *istate, struct cache_entry *ce)
++	unsigned int h;
++
+ 	if (ce->ce_flags & CE_HASHED)
+ 		return;
+ 	ce->ce_flags |= CE_HASHED;
+-	hashmap_entry_init(ce, memihash(ce->name, ce_namelen(ce)));
++
++	if (ce->precomputed_hash.initialized)
++		h = ce->precomputed_hash.name;
++	else
++		h = memihash(ce->name, ce_namelen(ce));
++
++	hashmap_entry_init(ce, h);
  	hashmap_add(&istate->name_hash, ce);
  
  	if (ignore_case)
--		add_dir_entry(istate, ce);
-+		add_dir_entry(istate, ce, previous_dir);
+@@ -244,3 +259,41 @@ void free_name_hash(struct index_state *istate)
+ 	hashmap_free(&istate->name_hash, 0);
+ 	hashmap_free(&istate->dir_hash, 1);
  }
++
++/*
++ * Precompute the hash values for this cache_entry
++ * for use in the istate.name_hash and istate.dir_hash.
++ *
++ * If the item is in the root directory, just compute the hash value (for
++ * istate.name_hash) on the full path.
++ *
++ * If the item is in a subdirectory, first compute the hash value for the
++ * immediate parent directory (for istate.dir_hash) and then the hash value for
++ * the full path by continuing the computation.
++ *
++ * Note that these hashes will be used by wt_status_collect_untracked() as it
++ * scans the worktree and maps observed paths back to the index (optionally
++ * ignoring case). Technically, we only *NEED* to precompute this for
++ * non-skip-worktree items (since status should not observe skipped items), but
++ * because lazy_init_name_hash() hashes everything, we force it here.
++ */
++void precompute_istate_hashes(struct cache_entry *ce)
++{
++	int namelen = ce_namelen(ce);
++
++	while (namelen > 0 && !is_dir_sep(ce->name[namelen - 1]))
++		namelen--;
++
++	if (namelen <= 0) {
++		ce->precomputed_hash.name = memihash(ce->name, ce_namelen(ce));
++		ce->precomputed_hash.root_entry = 1;
++	} else {
++		namelen--;
++		ce->precomputed_hash.dir = memihash(ce->name, namelen);
++		ce->precomputed_hash.name = memihash_continue(
++			ce->precomputed_hash.dir, ce->name + namelen,
++			ce_namelen(ce) - namelen);
++		ce->precomputed_hash.root_entry = 0;
++	}
++	ce->precomputed_hash.initialized = 1;
++}
+diff --git a/preload-index.c b/preload-index.c
+index c1fe3a3ef9c..602737f9d0f 100644
+--- a/preload-index.c
++++ b/preload-index.c
+@@ -47,6 +47,8 @@ static void *preload_thread(void *_data)
+ 		struct cache_entry *ce = *cep++;
+ 		struct stat st;
  
- static int cache_entry_cmp(const struct cache_entry *ce1,
-@@ -137,6 +158,7 @@ static int cache_entry_cmp(const struct cache_entry *ce1,
++		precompute_istate_hashes(ce);
++
+ 		if (ce_stage(ce))
+ 			continue;
+ 		if (S_ISGITLINK(ce->ce_mode))
+diff --git a/read-cache.c b/read-cache.c
+index 9054369dd0c..1a25c345441 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -73,6 +73,7 @@ void rename_index_entry_at(struct index_state *istate, int nr, const char *new_n
+ 	copy_cache_entry(new, old);
+ 	new->ce_flags &= ~CE_HASHED;
+ 	new->ce_namelen = namelen;
++	new->precomputed_hash.initialized = 0;
+ 	new->index = 0;
+ 	memcpy(new->name, new_name, namelen + 1);
  
- static void lazy_init_name_hash(struct index_state *istate)
- {
-+	struct dir_entry *previous_dir = NULL;
- 	int nr;
- 
- 	if (istate->name_hash_initialized)
-@@ -146,14 +168,14 @@ static void lazy_init_name_hash(struct index_state *istate)
- 	hashmap_init(&istate->dir_hash, (hashmap_cmp_fn) dir_entry_cmp,
- 			istate->cache_nr);
- 	for (nr = 0; nr < istate->cache_nr; nr++)
--		hash_index_entry(istate, istate->cache[nr]);
-+		hash_index_entry(istate, istate->cache[nr], &previous_dir);
- 	istate->name_hash_initialized = 1;
+@@ -614,6 +615,7 @@ static struct cache_entry *create_alias_ce(struct index_state *istate,
+ 	new = xcalloc(1, cache_entry_size(len));
+ 	memcpy(new->name, alias->name, len);
+ 	copy_cache_entry(new, ce);
++	new->precomputed_hash.initialized = 0;
+ 	save_or_free_index_entry(istate, ce);
+ 	return new;
  }
- 
- void add_name_hash(struct index_state *istate, struct cache_entry *ce)
- {
- 	if (istate->name_hash_initialized)
--		hash_index_entry(istate, ce);
-+		hash_index_entry(istate, ce, NULL);
- }
- 
- void remove_name_hash(struct index_state *istate, struct cache_entry *ce)
+@@ -1446,6 +1448,7 @@ static struct cache_entry *cache_entry_from_ondisk(struct ondisk_cache_entry *on
+ 	ce->ce_stat_data.sd_size  = get_be32(&ondisk->size);
+ 	ce->ce_flags = flags & ~CE_NAMEMASK;
+ 	ce->ce_namelen = len;
++	ce->precomputed_hash.initialized = 0;
+ 	ce->index = 0;
+ 	hashcpy(ce->oid.hash, ondisk->sha1);
+ 	memcpy(ce->name, name, len);
 -- 
 2.11.1.windows.1
+
+
