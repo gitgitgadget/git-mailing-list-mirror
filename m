@@ -3,113 +3,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 01E2E1FAF4
-	for <e@80x24.org>; Tue, 14 Feb 2017 20:33:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6A4B31FAF4
+	for <e@80x24.org>; Tue, 14 Feb 2017 20:36:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753766AbdBNUdk (ORCPT <rfc822;e@80x24.org>);
-        Tue, 14 Feb 2017 15:33:40 -0500
-Received: from cloud.peff.net ([104.130.231.41]:55283 "EHLO cloud.peff.net"
+        id S1751946AbdBNUgY (ORCPT <rfc822;e@80x24.org>);
+        Tue, 14 Feb 2017 15:36:24 -0500
+Received: from mout.gmx.net ([212.227.15.18]:52824 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1755455AbdBNUda (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Feb 2017 15:33:30 -0500
-Received: (qmail 18660 invoked by uid 109); 14 Feb 2017 20:33:30 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 14 Feb 2017 20:33:30 +0000
-Received: (qmail 6326 invoked by uid 111); 14 Feb 2017 20:33:30 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 14 Feb 2017 15:33:30 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 14 Feb 2017 15:33:28 -0500
-Date:   Tue, 14 Feb 2017 15:33:28 -0500
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-        Duy Nguyen <pclouds@gmail.com>,
-        Stefan Beller <sbeller@google.com>
-Subject: [PATCH 1/2] remote: avoid reading $GIT_DIR config in non-repo
-Message-ID: <20170214203327.icdvrhwpmarvwe5y@sigill.intra.peff.net>
-References: <20170214203117.xnln6ahb3l32agqb@sigill.intra.peff.net>
+        id S1751518AbdBNUgR (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Feb 2017 15:36:17 -0500
+Received: from [192.168.178.43] ([88.71.237.147]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0LlVZv-1c4xNL09cl-00bILO; Tue, 14
+ Feb 2017 21:36:04 +0100
+Subject: Re: [RFC PATCH] show decorations at the end of the line
+To:     Junio C Hamano <gitster@pobox.com>,
+        Linus Torvalds <torvalds@linux-foundation.org>
+References: <alpine.LFD.2.20.1702110943460.31350@i7.lan>
+ <CA+55aFw2S14a4_4YK0b6PNK4TH_AUo_+2JN+PTyBTufNeB5t6A@mail.gmail.com>
+ <xmqq1sv2fq6m.fsf@gitster.mtv.corp.google.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+From:   Stephan Beyer <s-beyer@gmx.net>
+Message-ID: <8cf9e548-bf6d-7cbc-f538-da2fbf489bc7@gmx.net>
+Date:   Tue, 14 Feb 2017 21:36:02 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Icedove/45.6.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20170214203117.xnln6ahb3l32agqb@sigill.intra.peff.net>
+In-Reply-To: <xmqq1sv2fq6m.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 7bit
+X-Provags-ID: V03:K0:BHjrHhD9m4/liRjz4lUsjV79d6NObd6GjwJ277zTBO4wW8s11P3
+ Q9T6yfokpr7WlHQ/r4pYPDGYztIwputtNW5JgQl9nl4YKDExTf7LN1y643OViDxtyX3zPKj
+ mP2je+jAqFSbNR9bUti5GRQOAblXPf9UKZHKnDAhWL9H8eoouyUJ8Lrldm0ZoGwqeW1AlN5
+ zDgY4+JbqP4lxWNwG198Q==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:zyYixY5Qm4g=:F2NR+y/p8QcDG4oA0fEzn2
+ jj91X20m2YyWIuqPEXksoVdKfRy/KSnnwkuJ5MT5M5qh1Py6rlnpzizjUTd11Sl7xCjD5uyVp
+ ewSWeuVzuMafaTvp5noHscVVKZ1ewMN+KoPZMF2c1kIjx3KnvHWAL5LSEmHWFoRdV80TI1tVj
+ JIjVbvVkE2H/eBEnnZ/kNZNHuoI2b9MsN1OmF/BlCVTVHbCGqWIwEXFTnFbjxXyYO9ROWC7h0
+ 3JKSv7DKKZ5oy9Gxmv8AlRV4p69/KExHfZPL6xZjSW2xn5013n/DyYDm27WybYbRV8qTxBV05
+ LGDT2xBoAhxl+UZazHcTEVaJ5x0+Rb/p4zs+j/B2sRZRLK3dcp5SxJKiFzg02unWv0chFEhA6
+ 8IUDffjtfNv0LG8aMVYcVMoo8yfAmDFWaEhOmQ0hgOg49hXCfeHFnl6IT8MX926DBUkvnyWwK
+ 1jvkxo1aN2T3CKC1dZouFkoa9s8D0PFC0+Z5enu10boPi9KQ/VJlWcLJyHEMM1F/Oljxw3VKt
+ ZHGjWhFJuS+0VbVGZSW+ZdNIhuFJChrKJIhi+xc2kJZIDxyXbFIeHj0skTFkmMnadT405lmZA
+ 55n5Z7e59wocPoacEo2jIdgyRExv6E7+mc0ucpxrDjeu/5J3jU7G7zjZEApjwAO4Kf3XIWODO
+ 4qsXNQxudy6DieFGipLwentSoMrOyMMlUfexoJgU3XmvGywBsWi+M0v1eLmnS4JqLxnb5gLRH
+ 6xAJRdmyJOAV8O98UBggRI4wcO3fQfSYnOa3ul5fak6dkAAkFkNKxQpf9g1k3KfWxaiWse63S
+ 4WRonpU
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The "git ls-remote" command can be run outside of a
-repository, but needs to look up configured remotes. The
-config code is smart enough to handle this case itself, but
-we also check the historical "branches" and "remotes" paths
-in $GIT_DIR. The git_path() function causes us to blindly
-look at ".git/remotes", even if we know we aren't in a git
-repository.
+Hi,
 
-For now, this is just an unlikely bug (you probably don't
-have such a file if you're not in a repository), but it will
-become more obvious once we merge b1ef400ee (setup_git_env:
-avoid blind fall-back to ".git", 2016-10-20):
+On 02/13/2017 09:30 AM, Junio C Hamano wrote:
+> Linus Torvalds <torvalds@linux-foundation.org> writes:
+> 
+>> On Sat, Feb 11, 2017 at 10:02 AM, Linus Torvalds
+>> <torvalds@linux-foundation.org> wrote:
+>>>
+>>> I've signed off on this, because I think it's an "obvious" improvement,
+>>> but I'm putting the "RFC" in the subject line because this is clearly a
+>>> subjective thing.
+>>
+>> Side note: the one downside of showing the decorations at the end of
+>> the line is that now they are obviously at the end of the line - and
+>> thus likely to be more hidden by things like line truncation.
+> 
+> Side note: I refrained from commenting on this patch because
+> everybody knows that the what I would say anyway ;-) and I didn't
+> want to speak first to discourage others from raising their opinion.
 
-  [now]
-  $ git ls-remote
-  fatal: No remote configured to list refs from.
+A further side note: the current behavior of
 
-  [with b1ef400ee]
-  $ git ls-remote
-  fatal: BUG: setup_git_env called without repository
+	git log --oneline --decorate
 
-We can fix this by skipping these sources entirely when
-we're outside of a repository.
+is equivalent to
 
-The test is a little more complex than the demonstration
-above. Rather than detect the correct behavior by parsing
-the error message, we can actually set up a case where the
-remote name we give is a valid repository, but b1ef400ee
-would cause us to die in the configuration step.
+	git log --pretty='format:%C(auto)%h%d %s'
 
-This test doesn't fail now, but it future-proofs us for the
-b1ef400ee change.
+and Linus' preferred version is equivalent to
 
-Signed-off-by: Jeff King <peff@peff.net>
----
- remote.c             | 2 +-
- t/t5512-ls-remote.sh | 9 +++++++++
- 2 files changed, 10 insertions(+), 1 deletion(-)
+	git log --pretty='format:%C(auto)%h %s%d'
 
-diff --git a/remote.c b/remote.c
-index bf1bf2309..9f83fe2c4 100644
---- a/remote.c
-+++ b/remote.c
-@@ -693,7 +693,7 @@ static struct remote *remote_get_1(const char *name,
- 		name = get_default(current_branch, &name_given);
- 
- 	ret = make_remote(name, 0);
--	if (valid_remote_nick(name)) {
-+	if (valid_remote_nick(name) && have_git_dir()) {
- 		if (!valid_remote(ret))
- 			read_remotes_file(ret);
- 		if (!valid_remote(ret))
-diff --git a/t/t5512-ls-remote.sh b/t/t5512-ls-remote.sh
-index 55fc83fc0..94fc9be9c 100755
---- a/t/t5512-ls-remote.sh
-+++ b/t/t5512-ls-remote.sh
-@@ -248,4 +248,13 @@ test_expect_success PIPE,JGIT,GIT_DAEMON 'indicate no refs in standards-complian
- 	test_expect_code 2 git ls-remote --exit-code git://localhost:$JGIT_DAEMON_PORT/empty.git
- '
- 
-+test_expect_success 'ls-remote works outside repository' '
-+	# It is important for this repo to be inside the nongit
-+	# area, as we want a repo name that does not include
-+	# slashes (because those inhibit some of our configuration
-+	# lookups).
-+	nongit git init --bare dst.git &&
-+	nongit git ls-remote dst.git
-+'
-+
- test_done
--- 
-2.12.0.rc1.479.g59880b11e
+Most Git users I know have their own favorite version of git log
+--pretty=format:... sometimes with --graph as an alias ("git lg" or "git
+logk" (because its output reminds of gitk) or something).
 
+I don't know what the main benefit of this patch would be, but if it
+gets accepted, it should probably be mentioned somewhere that the old
+behavior is easily accessible using the line mentioned above.
+
+Cheers
+Stephan
