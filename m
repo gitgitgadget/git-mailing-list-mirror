@@ -2,99 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D31182013A
-	for <e@80x24.org>; Tue, 14 Feb 2017 08:07:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6DF342013A
+	for <e@80x24.org>; Tue, 14 Feb 2017 09:24:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751946AbdBNIHv (ORCPT <rfc822;e@80x24.org>);
-        Tue, 14 Feb 2017 03:07:51 -0500
-Received: from mail-wr0-f180.google.com ([209.85.128.180]:34326 "EHLO
-        mail-wr0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751637AbdBNIHu (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Feb 2017 03:07:50 -0500
-Received: by mail-wr0-f180.google.com with SMTP id o16so164440715wra.1
-        for <git@vger.kernel.org>; Tue, 14 Feb 2017 00:07:49 -0800 (PST)
+        id S1752917AbdBNJYO (ORCPT <rfc822;e@80x24.org>);
+        Tue, 14 Feb 2017 04:24:14 -0500
+Received: from mail-oi0-f67.google.com ([209.85.218.67]:34504 "EHLO
+        mail-oi0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752909AbdBNJYK (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Feb 2017 04:24:10 -0500
+Received: by mail-oi0-f67.google.com with SMTP id w144so2295057oiw.1
+        for <git@vger.kernel.org>; Tue, 14 Feb 2017 01:24:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=rKYD2FoCwEqXnLOE/EM8dJe6Q+WToaAh/YoYvuliyoA=;
-        b=uiHU5F7sVEeR5yqPQ94XUNB0HUkvSlQxGdZ8YvbLnprbzPLzB5GuFyyu0eBbVRBNvd
-         UzQfsFeYSpHmYJmU5vxdYFWMVyge9pwLvSVgoSv8NosrrmAwy5el/1JeouUHk/kbBtHw
-         Zu7ejXca5hfMyruTiStiBxSd4t2z5rQ0pYNzDPBI/+8fzOPq2T9KQU11dOnwfpksEMQh
-         65aNvLBvjrMScdesL4BZBguTjGCgr3T1g4v253J+PGthQrUqQOSdSuIxiB46jJPDsZkB
-         MpdoHZvi9B5wVvo9oQo1mZUssjp3P7/jiooDHcvkDBQKBmmUJPg77ShRWyGhdzilVmuG
-         9+NQ==
+         :cc:content-transfer-encoding;
+        bh=eSJ9T+EFNeYPRFk2IHAkFr1Krclp4EEfPs58cOe68Nc=;
+        b=Eo08jiIqB2dYYA7wJwWH8IT4s+drbxmY/2I5BjsilN8tecNd8Lbsk54gUXTfbkkLHt
+         Ox8NmYCPHB6dofMTIwKKBgl0tdZp9TRDF+oUpbCJ/aGnFAEoTULgcN0T5mrfKeRVBNKi
+         MvzQdcAjuhv8c/d258yrpqhtvLjCusUQKHP9fWHDqGWhse5mGVJzw0RS0UIyFQHDpQVc
+         T7U20+MhWl9zU0+jLp72ra2IOLFNMh9YAFTJAN6yqeQPOy6rYwcD4AtRMMcfPugL8ohW
+         SQM+GX+0ushWAWRCAHeyDar2GoAn3rjDd+0Oy225TGKuuHRfyxSGEqumyuH1qFmbKQO+
+         cZnQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=rKYD2FoCwEqXnLOE/EM8dJe6Q+WToaAh/YoYvuliyoA=;
-        b=gclAzhU8Dj768XP4A7e707zAY0MSora4D+X2DdRT2dtrf3qmv6+xH0yzfFmFi34a6p
-         sTZ9Vn1UdfItREdFtqu00Iu9d9GtLC4pBX453p+1PSX2jSiRB6FOLHD4VG41otaSCTIQ
-         Lfge28CfWPXB0QdRoPQ8/CsSTzecShXxavgZY4tbjOE2Wd/QsF+S4K4+o47ZqpfHdfam
-         4otSs4bTjK6zQQZgZ7URcNzBY1cw/7Wz+6eNzBLI4Mc9eCY2v3QcHUoZqzcwsc8/fX1I
-         YdICWi2JZohYv2QiLfKh7iD6BIUSTRiuqGOMIoFGCKUuTUcxULBhEenOYnY/leXOLDus
-         Xmqw==
-X-Gm-Message-State: AMke39nLLAA8GEFwI1raSwnTxvp8ol3dLQ8kCQECZhHkMeLaglFYQwhLDZMCKnQmAJV0jAinOkdnamhqCwa+2A==
-X-Received: by 10.223.141.229 with SMTP id o92mr25526417wrb.22.1487059669073;
- Tue, 14 Feb 2017 00:07:49 -0800 (PST)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=eSJ9T+EFNeYPRFk2IHAkFr1Krclp4EEfPs58cOe68Nc=;
+        b=di/TpKau3ib3EwqVBSZFdmlurLkt1WBiguvm7Q5WH7okRy1rqxFuM9NPG2S5+85ufP
+         MJvwvCNVNZ2oD8QjZthsYJogDf0u1tk5OAWEyj2Y7BTqJk1PF8rCjuP4XAQYANQ+dMWn
+         jtnBD17vJiP/slOVHSpjFrCLz6FSHZx+sOQp7rSCMgt4gxJW5C3as2Fa2NmX2aFsObUw
+         MZz+/F7flO2E36A/e1kP0OEhWiCgmjTf/sI9brmw92Ms6hyoGU6FoZAeuwjHhjkt0FOb
+         J+tjtTG2zm6UrkgYX/wOY1sPdJ/E4GhhZGcDvR9UPxfn6ooP/h2bOU9bNL/W8UMS41M9
+         69Nw==
+X-Gm-Message-State: AMke39nOCD84itbG/fpv7lsbSDkpSDXDCUg4Cic+92B1judxkoyLvVyyJVM055SNk+8HjIYFwSgvjNjdtm8NzQ==
+X-Received: by 10.202.78.214 with SMTP id c205mr15467829oib.65.1487064249299;
+ Tue, 14 Feb 2017 01:24:09 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.80.159.227 with HTTP; Tue, 14 Feb 2017 00:07:48 -0800 (PST)
-In-Reply-To: <xmqqo9y5de1k.fsf@gitster.mtv.corp.google.com>
-References: <CAOcUJQwnCJOhUUU2RqJP2H5YxUr4qCEpyDj_XiiQSe4V6rcBmg@mail.gmail.com>
- <20170213154407.GA31568@alpha.ikke.info> <xmqqo9y5de1k.fsf@gitster.mtv.corp.google.com>
-From:   Istvan Pato <istvan.pato@gmail.com>
-Date:   Tue, 14 Feb 2017 09:07:48 +0100
-Message-ID: <CAOcUJQzEKoCf3T2AVzck1Y4NWb8N9FMqQ=+6z6-9C4YF8-jQzA@mail.gmail.com>
-Subject: Re: Bug in 'git describe' if I have two tags on the same commit.
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Kevin Daudt <me@ikke.info>, git@vger.kernel.org
+Received: by 10.74.158.84 with HTTP; Tue, 14 Feb 2017 01:23:38 -0800 (PST)
+In-Reply-To: <6510f4b2-51bb-eabd-9cd7-30bc4164b25d@ramsayjones.plus.com>
+References: <20170213152011.12050-1-pclouds@gmail.com> <20170213152011.12050-2-pclouds@gmail.com>
+ <6510f4b2-51bb-eabd-9cd7-30bc4164b25d@ramsayjones.plus.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Tue, 14 Feb 2017 16:23:38 +0700
+Message-ID: <CACsJy8BnSdaUHx1tCu6YkMedwp3RL4riKLYfT5N4cHHjG9fNLw@mail.gmail.com>
+Subject: Re: [PATCH 01/11] refs-internal.c: make files_log_ref_write() static
+To:     Ramsay Jones <ramsay@ramsayjones.plus.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Michael Haggerty <mhagger@alum.mit.edu>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Stefan Beller <sbeller@google.com>,
+        David Turner <novalis@novalis.org>
 Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is my fault: this is a lightweight tag.
-Thank you!
+On Tue, Feb 14, 2017 at 3:14 AM, Ramsay Jones
+<ramsay@ramsayjones.plus.com> wrote:
+>
+>
+> On 13/02/17 15:20, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
+>> Created in 5f3c3a4e6f (files_log_ref_write: new function - 2015-11-10)
+>> but probably never used outside refs-internal.c
+>>
+>> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.=
+com>
+>> ---
+>>  refs/files-backend.c | 3 +++
+>>  refs/refs-internal.h | 4 ----
+>>  2 files changed, 3 insertions(+), 4 deletions(-)
+>>
+>> diff --git a/refs/files-backend.c b/refs/files-backend.c
+>> index cdb6b8ff5..75565c3aa 100644
+>> --- a/refs/files-backend.c
+>> +++ b/refs/files-backend.c
+>> @@ -165,6 +165,9 @@ static struct ref_entry *create_dir_entry(struct fil=
+es_ref_store *ref_store,
+>>                                         const char *dirname, size_t len,
+>>                                         int incomplete);
+>>  static void add_entry_to_dir(struct ref_dir *dir, struct ref_entry *ent=
+ry);
+>> +static int files_log_ref_write(const char *refname, const unsigned char=
+ *old_sha1,
+>> +                            const unsigned char *new_sha1, const char *=
+msg,
+>> +                            int flags, struct strbuf *err);
+>
+> Why? I don't like adding forward declarations unless it
+> is absolutely necessary (ie mutually recursive functions),
+> and even in the current 'pu' branch (@c04899d50), the
+> definition of this function appears before all uses in
+> this file. (ie, just add static to the definition).
+>
+> What am I missing?
 
-2017-02-13 21:35 GMT+01:00 Junio C Hamano <gitster@pobox.com>:
-> Kevin Daudt <me@ikke.info> writes:
->
->> On Sun, Feb 12, 2017 at 01:15:22PM +0100, Istvan Pato wrote:
->>
->>> (master) [1] % git show-ref --tag
->>> 76c634390... refs/tags/1.0.0
->>> b77c7cd17... refs/tags/1.1.0
->>> b77c7cd17... refs/tags/1.2.0
->>>
->>> (master) % git describe --tags --always
->>> 1.1.0-1-ge9e9ced
->>>
->>> ### Expected: 1.2.0
->>> ...
->>
->> Are these lightweight tags? Only annotated tags have a date associated
->> to them, which is where the rel-notes refers to.
->
-> Good eyes.  The fact that the two points at the same object means
-> that even if they were both annotated tags, they have the same
-> tagger dates.
->
-> If the code that compares the candidates and picks better tag to
-> describe the object with knows the refnames of these "tags", I'd
-> imagine that we could use the versioncmp() logic as the final tie
-> breaker, but I do not offhand remember if the original refname we
-> took the tag (or commit) from is propagated that deep down the
-> callchain.  It probably does not, so some code refactoring may be
-> needed if somebody wants to go in that direction.
->
->
->
->
->
+It may have been needed at one point. With all the code changes and
+movements, I guess I forgot to remove it.
+--=20
+Duy
