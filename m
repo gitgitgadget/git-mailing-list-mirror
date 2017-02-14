@@ -7,48 +7,49 @@ X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 036B52013A
-	for <e@80x24.org>; Tue, 14 Feb 2017 11:33:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id ABBCB2013A
+	for <e@80x24.org>; Tue, 14 Feb 2017 11:33:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751958AbdBNLdU (ORCPT <rfc822;e@80x24.org>);
-        Tue, 14 Feb 2017 06:33:20 -0500
-Received: from mout.gmx.net ([212.227.15.15]:62449 "EHLO mout.gmx.net"
+        id S1753789AbdBNLdQ (ORCPT <rfc822;e@80x24.org>);
+        Tue, 14 Feb 2017 06:33:16 -0500
+Received: from mout.gmx.net ([212.227.15.18]:57529 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751550AbdBNLcP (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Feb 2017 06:32:15 -0500
-Received: from virtualbox ([37.201.192.48]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MIdTM-1cfnCC1ncO-002Gax; Tue, 14
- Feb 2017 12:32:08 +0100
-Date:   Tue, 14 Feb 2017 12:32:07 +0100 (CET)
+        id S1751917AbdBNLci (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Feb 2017 06:32:38 -0500
+Received: from virtualbox ([37.201.192.48]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MbgWb-1cwVlz2zDx-00J583; Tue, 14
+ Feb 2017 12:32:30 +0100
+Date:   Tue, 14 Feb 2017 12:32:30 +0100 (CET)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     git@vger.kernel.org
 cc:     Jeff Hostetler <jeffhost@microsoft.com>,
         Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 2/5] hashmap: allow memihash computation to be continued
+Subject: [PATCH 4/5] name-hash: specify initial size for istate.dir_hash
+ table
 In-Reply-To: <cover.1487071883.git.johannes.schindelin@gmx.de>
-Message-ID: <bd4893f86c4484fc36480848bf2d0905d961e022.1487071883.git.johannes.schindelin@gmx.de>
+Message-ID: <b30c0a47b84c063cefb7a8164dd766e251433605.1487071883.git.johannes.schindelin@gmx.de>
 References: <cover.1487071883.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:B2AGTPNezBK/7PB3cj7XpC5hA5BFTqrTRKphJM/2+bYTV8yva7X
- SwJAk7hA78Oln7TaxtsB8rCKp31S2EFKPQeciAeNtSxQAS81SN3cQ0O0B/7uvUfYhcHZ8rf
- TS0xDW41h29EfTVaiXL2au2izB5mtksrGsQY52GfLK+bgHzYFt1/Sun0GmPcUcONEo6fnc7
- s7qb+elpVwDSdo8LTaYlQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:dl7FAqSz/n8=:enN9+ufTS6tjUaQLZgTphK
- rCJrkVhnWhe6Yg+fdxEGWe6pSJOsNR6AFCa0fXiVBo37/j3wexOGmWJA5g/C5qAFEQlCAuwU1
- 1KLdY63rT5ln28lzRGaYdlM4y8rlBLBnkI0o/Da9UBaeX9+6+RV1KBeQatzSmetT7oueEAub1
- oxuiKujE3LycrRLLMWzf6BSv3FexJdiSGVJCIZl0T8XCeVd78d17Bm+9qan4S3BR8iwu8A9G1
- ZHD8SKvss3+DQRQDX0JsMvTaOM+Axcw9RZcwkv/Q4PyOqnNE4IRWA40sA80vdzFsj56Ai8rwr
- JiPCx5rwrKReIeAvScrzWJ6YZ0rOheau1+xamk9qOW077TfA8sNu5KirDiJYQvnBOdxXZSx1l
- q+3stUzr8m7MoGC0oz+lKleznsK5rgsAZ0+tqb+TTm16+M80S8a1fGfjQWqtC8rCHgcz4VeBk
- RIPgeYLLFCNC5BTxryI2pOOJ4sh8CY2MkU5e3ta/gIVgEIMZb63S4eadYaJBnTs5IQcjRUxse
- hSet7hvdgnY6WYlWUeDAWdjGil+ZARf2DykI3cSnh1ZLEdWbXBvJc9oAsLVELzZWHM9YqJxMJ
- xhVoaiwLUmbfsTVt/I5/UbOcWhWt70p8XTw6mkEUHuZm/He0NT6yQh6OOmCKMd9W2TFWZm32u
- ab00rMFQkA4C3lt/XZFwVVQDA/kPZMXykqPIEFPOTxiZbsF5EUlIBIzU/jXL+HNeMyiD8vWcm
- LA0KwYQQ0FWVlrAEoc3H3Q44cuD6cc5U3nwweWB4MBqUTew3LKr4dCQ/AylSlccFd34WaonjG
- 8+bb+G+
+X-Provags-ID: V03:K0:Yrz50DqVQ3AFy2/KXltBd55eZlmqfW0TNytlVidhutGHCukQasW
+ Mk56pcrDcONn6IOpDQ+uRCSaezrtnhmPIN6tvIEHHTpX0Ve4pylaVBpp1KZyHe1mxAzuIvt
+ ZNtgj0QtV77qYms5rHl3Ui2kLp4LnoRz7ColekB41ho6qObpoQOpfmCkn6IAw1GylH3hk/P
+ Ok/hkwjfAuvy0vSplFqLg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:WdFelaxyz2k=:xt+HzGUf+Wgp3KbM23Y3Wv
+ DJmY2IHilaVTpXsforYTSQjrFXKPxg7TFOatLNOlkBRW/4kecGxlkCLONIfgV+tyssWvlZdfS
+ +WmMtQCtuQivut3phhmZgimgTYWg1H/vsvT4UuDRB2gCWaVEgasTOF4uBu/kvP1G8+aoBIjxD
+ HF7uQm1KEefMOz9kMZZX+9AuoTfgrY/zADnPTVDt5ysQ/MQkraALYDmsT8RA6ykwiB/Szw+rY
+ 119QqFWpBAG1+cGICsKIH3xvL4JtAf1UX+Iin1tmoUPtMbXygSmV1YOEzbNpb8SMNE7HQY899
+ tKyyI2eD5dEeS7ggKNtFGmw4XfPU6N8WU2B9vZ1xPDNdOok0n2byiHHCwHlMmiOQymllMw2YU
+ F4ideVPdKgv2MHW9OgkiCZJz3/gmqbRcA3XPV0KD8OF/B/h/b6wqX4v/cQwxOKqkAeAeNCe51
+ o2vHZ83BD5kII7kUBoSOaLH7/QwyD8C0d/pOzoeBIyjLPihZQpMBtvTQEnRG17/Ot6AgSa5HM
+ wJGFvAD3e76sp7ZNQDRpNLS3bU4sT7df2DJJw/mUK5huzZEMQqqcqg9HVjiRambAv0zH/3VWo
+ VEymqVXB5st6BVMSC0mazgpdmzgyd+jp/aj1CNrIECKKXw5q1LOYCcxNw5r4Gt4AFGMAFHO2r
+ Ss8NAqYZLAFOIa06KY+FNk8olJLBrVjcyUNRr0b7iGGTtF515OdhrN2OP3MOwPclx2Yy5Ssyb
+ JE3QRYxHIu7IB8f1eWUMOunx1mo8qaAvgZOkLdw0Ub4oSYFlYsLVtBjhajAaTKfWrEiD9Bu4D
+ Wp0BDR9
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -56,59 +57,35 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff Hostetler <jeffhost@microsoft.com>
 
-There are times when we compute the hash on
-a full path and then the hash on just the path to the parent
-directory. This can be expensive on large repositories.
+Specify an initial size for the istate.dir_hash hash map matching the
+size of the istate.name_hash.
 
-With the new memihash_continue() function, we can hash the parent
-directory first, and reuse that computed hash for all directory
-entries.
+Previously hashmap_init() was given 0, causing a 64 bucket hashmap to be
+created. When working with very large repositories, this would cause
+numerous rehash() calls to realloc and rebalance the hashmap. This is
+especially true when the worktree is deep, with many directories
+containing a only a few files each.
 
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- hashmap.c | 14 ++++++++++++++
- hashmap.h |  2 ++
- 2 files changed, 16 insertions(+)
+ name-hash.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/hashmap.c b/hashmap.c
-index b10b642229c..061b7d61da6 100644
---- a/hashmap.c
-+++ b/hashmap.c
-@@ -50,6 +50,20 @@ unsigned int memihash(const void *buf, size_t len)
- 	return hash;
- }
- 
-+/* Incoporate another chunk of data into a memihash computation. */
-+unsigned int memihash_continue(unsigned int hash,
-+			       const void *buf, size_t len)
-+{
-+	const unsigned char *p = buf;
-+	while (len--) {
-+		unsigned int c = *p++;
-+		if (c >= 'a' && c <= 'z')
-+			c -= 'a' - 'A';
-+		hash = (hash * FNV32_PRIME) ^ c;
-+	}
-+	return hash;
-+}
-+
- #define HASHMAP_INITIAL_SIZE 64
- /* grow / shrink by 2^2 */
- #define HASHMAP_RESIZE_BITS 2
-diff --git a/hashmap.h b/hashmap.h
-index ab7958ae333..78e14dfde71 100644
---- a/hashmap.h
-+++ b/hashmap.h
-@@ -12,6 +12,8 @@ extern unsigned int strhash(const char *buf);
- extern unsigned int strihash(const char *buf);
- extern unsigned int memhash(const void *buf, size_t len);
- extern unsigned int memihash(const void *buf, size_t len);
-+extern unsigned int memihash_continue(unsigned int hash_seed,
-+				      const void *buf, size_t len);
- 
- static inline unsigned int sha1hash(const unsigned char *sha1)
- {
+diff --git a/name-hash.c b/name-hash.c
+index 49eb84846df..8f8336cc868 100644
+--- a/name-hash.c
++++ b/name-hash.c
+@@ -143,7 +143,8 @@ static void lazy_init_name_hash(struct index_state *istate)
+ 		return;
+ 	hashmap_init(&istate->name_hash, (hashmap_cmp_fn) cache_entry_cmp,
+ 			istate->cache_nr);
+-	hashmap_init(&istate->dir_hash, (hashmap_cmp_fn) dir_entry_cmp, 0);
++	hashmap_init(&istate->dir_hash, (hashmap_cmp_fn) dir_entry_cmp,
++			istate->cache_nr);
+ 	for (nr = 0; nr < istate->cache_nr; nr++)
+ 		hash_index_entry(istate, istate->cache[nr]);
+ 	istate->name_hash_initialized = 1;
 -- 
 2.11.1.windows.1
 
