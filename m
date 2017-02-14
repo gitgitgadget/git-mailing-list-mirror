@@ -6,38 +6,38 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4A9941FC44
-	for <e@80x24.org>; Tue, 14 Feb 2017 02:32:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E11691FC44
+	for <e@80x24.org>; Tue, 14 Feb 2017 02:32:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751460AbdBNCcT (ORCPT <rfc822;e@80x24.org>);
-        Mon, 13 Feb 2017 21:32:19 -0500
-Received: from castro.crustytoothpaste.net ([75.10.60.170]:50626 "EHLO
+        id S1751423AbdBNCcS (ORCPT <rfc822;e@80x24.org>);
+        Mon, 13 Feb 2017 21:32:18 -0500
+Received: from castro.crustytoothpaste.net ([75.10.60.170]:50638 "EHLO
         castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751210AbdBNCcP (ORCPT
+        by vger.kernel.org with ESMTP id S1751345AbdBNCcP (ORCPT
         <rfc822;git@vger.kernel.org>); Mon, 13 Feb 2017 21:32:15 -0500
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 5F164280BD;
-        Tue, 14 Feb 2017 02:31:59 +0000 (UTC)
+        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 14173280B8;
+        Tue, 14 Feb 2017 02:31:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
-        s=default; t=1487039519;
-        bh=gHPJcQeK3HRIK9QsZ+vGHEPoS102SjkDJ20w+3PAdlg=;
+        s=default; t=1487039518;
+        bh=UU7SBfYg+fbZDqlGZf+q6NuPvOr00lhvRZLSa6I2X78=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=JXODUCD+Um/u7qR3smmoQMrsIWMYdKX4yEuszqddu+RMVEnFbGBnRye5zBityoNH6
-         WKEWbRZ9fEKRzNRjEvmvPDza5rrFefYsOSdjP0WutqWPILKQWSHOs0IwV1g0c9B2ur
-         VA0F/WwXBHd0mjoNgf+yrrqt/So2+Hzn2yYrUeSxZOA1QIgFW/Bj+u8NOY01uNEsMe
-         2GZBJQ86H9nmS9x94cE4DtAEbROLFct2hss5qL9pCPtQNDfhASV/ZNZptGnRh0KIFY
-         H4Dp6+Oi0dehiZUc0qZFtRYJMDSxGc6xKtCZnaSQ+AJb9AruBI8KhKkqjsB3Ua3XVm
-         efSSxW+hykb5w4maekzTSZpxsoWRzWmhddwiCFcv4r7jfuMD7XXtG9yQdavDbeuNR9
-         zkNl9JZnJYU0GOvVGf14kAZJokUl8BGlYOym53uN7M97EmgMEn0M6RKY45j8cIta3z
-         NmuHRuZTrON3hPQluZ4KFC9ltFCTpKnQnj8bl7thuujEmo+NSPJ
+        b=tv0jtt1UWz4vWaFe3maGkUwmNoJrBDvsTjFI1u96t5eYp9ird+L7TrEP369ykC7kW
+         T/BnwS1fBJFFLFCjQ1q0JLxebMcKYYLIeDTjlMZAuYPkXnpZgPSSFe2e8o5hQX+Wi4
+         +zML7eaNRkmkegvxIucH43pErwJvDFL6G9NDNzLo0dqyLAS6SlcLpswsbp/RgoWX4a
+         oO/UmPQkIE1N4fv1v8MLNiSjYsO/WccerGENMCJsdPrUS8iPmfHug8gjwgoChR0/cy
+         nmdR8t5XOgDyo5RdwKQxyUVPfUCSTAEDMusSrKVd21lsRJ3GB4X7ou1EE0/r0g5wzH
+         jETYnZcXMpCfbmWhmoEECaTeBHi7eDyEYgIc7kECvftsivq9+2JblZQZp2LA+7H7cI
+         rYDPQqgoNB3YWLJHym9F+/SKLzWmTO9ZIQuVgHHjgPRMcCprD+ZP9Vn3t4x7F6tdQS
+         MUdw+LizBfNzN6leMwoSumZdPkYgevNlN7tVaQmmXayEq6NzsIV
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     Jeff King <peff@peff.net>, Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH v2 16/19] sha1_file: introduce an nth_packed_object_oid function
-Date:   Tue, 14 Feb 2017 02:31:38 +0000
-Message-Id: <20170214023141.842922-17-sandals@crustytoothpaste.net>
+Subject: [PATCH v2 11/19] builtin/replace: convert to struct object_id
+Date:   Tue, 14 Feb 2017 02:31:33 +0000
+Message-Id: <20170214023141.842922-12-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.11.0
 In-Reply-To: <20170214023141.842922-1-sandals@crustytoothpaste.net>
 References: <20170214023141.842922-1-sandals@crustytoothpaste.net>
@@ -46,77 +46,325 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-There are places in the code where we would like to provide a struct
-object_id *, yet read the hash directly from the pack.  Provide an
-nth_packed_object_oid function that is similar to the
-nth_packed_object_sha1 function.
-
-In order to avoid a potentially invalid cast, nth_packed_object_oid
-provides a variable into which to store the value, which it returns on
-success; on error, it returns NULL, as nth_packed_object_sha1 does.
+Convert various uses of unsigned char [20] to struct object_id.  Rename
+replace_object_sha1 to rename_object_oid.  Finally, specify a constant
+in terms of GIT_SHA1_HEXSZ.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- cache.h     |  6 ++++++
- sha1_file.c | 17 ++++++++++++++---
- 2 files changed, 20 insertions(+), 3 deletions(-)
+ builtin/replace.c | 112 +++++++++++++++++++++++++++---------------------------
+ 1 file changed, 56 insertions(+), 56 deletions(-)
 
-diff --git a/cache.h b/cache.h
-index 5dc89a058c..04b1d923f3 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1607,6 +1607,12 @@ extern void check_pack_index_ptr(const struct packed_git *p, const void *ptr);
-  * error.
-  */
- extern const unsigned char *nth_packed_object_sha1(struct packed_git *, uint32_t n);
-+/*
-+ * Like nth_packed_object_oid, but write the data into the object specified by
-+ * the the first argument.  Returns the first argument on success, and NULL on
-+ * error.
-+ */
-+extern const struct object_id *nth_packed_object_oid(struct object_id *, struct packed_git *, uint32_t n);
- 
- /*
-  * Return the offset of the nth object within the specified packfile.
-diff --git a/sha1_file.c b/sha1_file.c
-index ec957db5e1..777b8e8eae 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -2628,6 +2628,17 @@ const unsigned char *nth_packed_object_sha1(struct packed_git *p,
- 	}
+diff --git a/builtin/replace.c b/builtin/replace.c
+index b58c714cb8..f7716a5472 100644
+--- a/builtin/replace.c
++++ b/builtin/replace.c
+@@ -88,78 +88,78 @@ static int list_replace_refs(const char *pattern, const char *format)
  }
  
-+const struct object_id *nth_packed_object_oid(struct object_id *oid,
-+					      struct packed_git *p,
-+					      uint32_t n)
-+{
-+	const unsigned char *hash = nth_packed_object_sha1(p, n);
-+	if (!hash)
-+		return NULL;
-+	hashcpy(oid->hash, hash);
-+	return oid;
-+}
-+
- void check_pack_index_ptr(const struct packed_git *p, const void *vptr)
+ typedef int (*each_replace_name_fn)(const char *name, const char *ref,
+-				    const unsigned char *sha1);
++				    const struct object_id *oid);
+ 
+ static int for_each_replace_name(const char **argv, each_replace_name_fn fn)
  {
- 	const unsigned char *ptr = vptr;
-@@ -3788,13 +3799,13 @@ static int for_each_object_in_pack(struct packed_git *p, each_packed_object_fn c
- 	int r = 0;
+ 	const char **p, *full_hex;
+ 	char ref[PATH_MAX];
+ 	int had_error = 0;
+-	unsigned char sha1[20];
++	struct object_id oid;
  
- 	for (i = 0; i < p->num_objects; i++) {
--		const unsigned char *sha1 = nth_packed_object_sha1(p, i);
-+		struct object_id oid;
- 
--		if (!sha1)
-+		if (!nth_packed_object_oid(&oid, p, i))
- 			return error("unable to get sha1 of object %u in %s",
- 				     i, p->pack_name);
- 
--		r = cb(sha1, p, i, data);
-+		r = cb(oid.hash, p, i, data);
- 		if (r)
- 			break;
+ 	for (p = argv; *p; p++) {
+-		if (get_sha1(*p, sha1)) {
++		if (get_oid(*p, &oid)) {
+ 			error("Failed to resolve '%s' as a valid ref.", *p);
+ 			had_error = 1;
+ 			continue;
+ 		}
+-		full_hex = sha1_to_hex(sha1);
++		full_hex = oid_to_hex(&oid);
+ 		snprintf(ref, sizeof(ref), "%s%s", git_replace_ref_base, full_hex);
+ 		/* read_ref() may reuse the buffer */
+ 		full_hex = ref + strlen(git_replace_ref_base);
+-		if (read_ref(ref, sha1)) {
++		if (read_ref(ref, oid.hash)) {
+ 			error("replace ref '%s' not found.", full_hex);
+ 			had_error = 1;
+ 			continue;
+ 		}
+-		if (fn(full_hex, ref, sha1))
++		if (fn(full_hex, ref, &oid))
+ 			had_error = 1;
  	}
+ 	return had_error;
+ }
+ 
+ static int delete_replace_ref(const char *name, const char *ref,
+-			      const unsigned char *sha1)
++			      const struct object_id *oid)
+ {
+-	if (delete_ref(ref, sha1, 0))
++	if (delete_ref(ref, oid->hash, 0))
+ 		return 1;
+ 	printf("Deleted replace ref '%s'\n", name);
+ 	return 0;
+ }
+ 
+-static void check_ref_valid(unsigned char object[20],
+-			    unsigned char prev[20],
++static void check_ref_valid(struct object_id *object,
++			    struct object_id *prev,
+ 			    char *ref,
+ 			    int ref_size,
+ 			    int force)
+ {
+ 	if (snprintf(ref, ref_size,
+ 		     "%s%s", git_replace_ref_base,
+-		     sha1_to_hex(object)) > ref_size - 1)
++		     oid_to_hex(object)) > ref_size - 1)
+ 		die("replace ref name too long: %.*s...", 50, ref);
+ 	if (check_refname_format(ref, 0))
+ 		die("'%s' is not a valid ref name.", ref);
+ 
+-	if (read_ref(ref, prev))
+-		hashclr(prev);
++	if (read_ref(ref, prev->hash))
++		oidclr(prev);
+ 	else if (!force)
+ 		die("replace ref '%s' already exists", ref);
+ }
+ 
+-static int replace_object_sha1(const char *object_ref,
+-			       unsigned char object[20],
++static int replace_object_oid(const char *object_ref,
++			       struct object_id *object,
+ 			       const char *replace_ref,
+-			       unsigned char repl[20],
++			       struct object_id *repl,
+ 			       int force)
+ {
+-	unsigned char prev[20];
++	struct object_id prev;
+ 	enum object_type obj_type, repl_type;
+ 	char ref[PATH_MAX];
+ 	struct ref_transaction *transaction;
+ 	struct strbuf err = STRBUF_INIT;
+ 
+-	obj_type = sha1_object_info(object, NULL);
+-	repl_type = sha1_object_info(repl, NULL);
++	obj_type = sha1_object_info(object->hash, NULL);
++	repl_type = sha1_object_info(repl->hash, NULL);
+ 	if (!force && obj_type != repl_type)
+ 		die("Objects must be of the same type.\n"
+ 		    "'%s' points to a replaced object of type '%s'\n"
+@@ -167,11 +167,11 @@ static int replace_object_sha1(const char *object_ref,
+ 		    object_ref, typename(obj_type),
+ 		    replace_ref, typename(repl_type));
+ 
+-	check_ref_valid(object, prev, ref, sizeof(ref), force);
++	check_ref_valid(object, &prev, ref, sizeof(ref), force);
+ 
+ 	transaction = ref_transaction_begin(&err);
+ 	if (!transaction ||
+-	    ref_transaction_update(transaction, ref, repl, prev,
++	    ref_transaction_update(transaction, ref, repl->hash, prev.hash,
+ 				   0, NULL, &err) ||
+ 	    ref_transaction_commit(transaction, &err))
+ 		die("%s", err.buf);
+@@ -182,14 +182,14 @@ static int replace_object_sha1(const char *object_ref,
+ 
+ static int replace_object(const char *object_ref, const char *replace_ref, int force)
+ {
+-	unsigned char object[20], repl[20];
++	struct object_id object, repl;
+ 
+-	if (get_sha1(object_ref, object))
++	if (get_oid(object_ref, &object))
+ 		die("Failed to resolve '%s' as a valid ref.", object_ref);
+-	if (get_sha1(replace_ref, repl))
++	if (get_oid(replace_ref, &repl))
+ 		die("Failed to resolve '%s' as a valid ref.", replace_ref);
+ 
+-	return replace_object_sha1(object_ref, object, replace_ref, repl, force);
++	return replace_object_oid(object_ref, &object, replace_ref, &repl, force);
+ }
+ 
+ /*
+@@ -197,7 +197,7 @@ static int replace_object(const char *object_ref, const char *replace_ref, int f
+  * If "raw" is true, then the object's raw contents are printed according to
+  * "type". Otherwise, we pretty-print the contents for human editing.
+  */
+-static void export_object(const unsigned char *sha1, enum object_type type,
++static void export_object(const struct object_id *oid, enum object_type type,
+ 			  int raw, const char *filename)
+ {
+ 	struct child_process cmd = CHILD_PROCESS_INIT;
+@@ -213,7 +213,7 @@ static void export_object(const unsigned char *sha1, enum object_type type,
+ 		argv_array_push(&cmd.args, typename(type));
+ 	else
+ 		argv_array_push(&cmd.args, "-p");
+-	argv_array_push(&cmd.args, sha1_to_hex(sha1));
++	argv_array_push(&cmd.args, oid_to_hex(oid));
+ 	cmd.git_cmd = 1;
+ 	cmd.out = fd;
+ 
+@@ -226,7 +226,7 @@ static void export_object(const unsigned char *sha1, enum object_type type,
+  * interpreting it as "type", and writing the result to the object database.
+  * The sha1 of the written object is returned via sha1.
+  */
+-static void import_object(unsigned char *sha1, enum object_type type,
++static void import_object(struct object_id *oid, enum object_type type,
+ 			  int raw, const char *filename)
+ {
+ 	int fd;
+@@ -254,7 +254,7 @@ static void import_object(unsigned char *sha1, enum object_type type,
+ 
+ 		if (finish_command(&cmd))
+ 			die("mktree reported failure");
+-		if (get_sha1_hex(result.buf, sha1) < 0)
++		if (get_oid_hex(result.buf, oid) < 0)
+ 			die("mktree did not return an object name");
+ 
+ 		strbuf_release(&result);
+@@ -264,7 +264,7 @@ static void import_object(unsigned char *sha1, enum object_type type,
+ 
+ 		if (fstat(fd, &st) < 0)
+ 			die_errno("unable to fstat %s", filename);
+-		if (index_fd(sha1, fd, &st, type, NULL, flags) < 0)
++		if (index_fd(oid->hash, fd, &st, type, NULL, flags) < 0)
+ 			die("unable to write object to database");
+ 		/* index_fd close()s fd for us */
+ 	}
+@@ -279,29 +279,29 @@ static int edit_and_replace(const char *object_ref, int force, int raw)
+ {
+ 	char *tmpfile = git_pathdup("REPLACE_EDITOBJ");
+ 	enum object_type type;
+-	unsigned char old[20], new[20], prev[20];
++	struct object_id old, new, prev;
+ 	char ref[PATH_MAX];
+ 
+-	if (get_sha1(object_ref, old) < 0)
++	if (get_oid(object_ref, &old) < 0)
+ 		die("Not a valid object name: '%s'", object_ref);
+ 
+-	type = sha1_object_info(old, NULL);
++	type = sha1_object_info(old.hash, NULL);
+ 	if (type < 0)
+-		die("unable to get object type for %s", sha1_to_hex(old));
++		die("unable to get object type for %s", oid_to_hex(&old));
+ 
+-	check_ref_valid(old, prev, ref, sizeof(ref), force);
++	check_ref_valid(&old, &prev, ref, sizeof(ref), force);
+ 
+-	export_object(old, type, raw, tmpfile);
++	export_object(&old, type, raw, tmpfile);
+ 	if (launch_editor(tmpfile, NULL, NULL) < 0)
+ 		die("editing object file failed");
+-	import_object(new, type, raw, tmpfile);
++	import_object(&new, type, raw, tmpfile);
+ 
+ 	free(tmpfile);
+ 
+-	if (!hashcmp(old, new))
+-		return error("new object is the same as the old one: '%s'", sha1_to_hex(old));
++	if (!oidcmp(&old, &new))
++		return error("new object is the same as the old one: '%s'", oid_to_hex(&old));
+ 
+-	return replace_object_sha1(object_ref, old, "replacement", new, force);
++	return replace_object_oid(object_ref, &old, "replacement", &new, force);
+ }
+ 
+ static void replace_parents(struct strbuf *buf, int argc, const char **argv)
+@@ -312,7 +312,7 @@ static void replace_parents(struct strbuf *buf, int argc, const char **argv)
+ 
+ 	/* find existing parents */
+ 	parent_start = buf->buf;
+-	parent_start += 46; /* "tree " + "hex sha1" + "\n" */
++	parent_start += GIT_SHA1_HEXSZ + 6; /* "tree " + "hex sha1" + "\n" */
+ 	parent_end = parent_start;
+ 
+ 	while (starts_with(parent_end, "parent "))
+@@ -320,11 +320,11 @@ static void replace_parents(struct strbuf *buf, int argc, const char **argv)
+ 
+ 	/* prepare new parents */
+ 	for (i = 0; i < argc; i++) {
+-		unsigned char sha1[20];
+-		if (get_sha1(argv[i], sha1) < 0)
++		struct object_id oid;
++		if (get_oid(argv[i], &oid) < 0)
+ 			die(_("Not a valid object name: '%s'"), argv[i]);
+-		lookup_commit_or_die(sha1, argv[i]);
+-		strbuf_addf(&new_parents, "parent %s\n", sha1_to_hex(sha1));
++		lookup_commit_or_die(oid.hash, argv[i]);
++		strbuf_addf(&new_parents, "parent %s\n", oid_to_hex(&oid));
+ 	}
+ 
+ 	/* replace existing parents with new ones */
+@@ -345,12 +345,12 @@ static void check_one_mergetag(struct commit *commit,
+ {
+ 	struct check_mergetag_data *mergetag_data = (struct check_mergetag_data *)data;
+ 	const char *ref = mergetag_data->argv[0];
+-	unsigned char tag_sha1[20];
++	struct object_id tag_oid;
+ 	struct tag *tag;
+ 	int i;
+ 
+-	hash_sha1_file(extra->value, extra->len, typename(OBJ_TAG), tag_sha1);
+-	tag = lookup_tag(tag_sha1);
++	hash_sha1_file(extra->value, extra->len, typename(OBJ_TAG), tag_oid.hash);
++	tag = lookup_tag(tag_oid.hash);
+ 	if (!tag)
+ 		die(_("bad mergetag in commit '%s'"), ref);
+ 	if (parse_tag_buffer(tag, extra->value, extra->len))
+@@ -366,7 +366,7 @@ static void check_one_mergetag(struct commit *commit,
+ 	}
+ 
+ 	die(_("original commit '%s' contains mergetag '%s' that is discarded; "
+-	      "use --edit instead of --graft"), ref, sha1_to_hex(tag_sha1));
++	      "use --edit instead of --graft"), ref, oid_to_hex(&tag_oid));
+ }
+ 
+ static void check_mergetags(struct commit *commit, int argc, const char **argv)
+@@ -380,16 +380,16 @@ static void check_mergetags(struct commit *commit, int argc, const char **argv)
+ 
+ static int create_graft(int argc, const char **argv, int force)
+ {
+-	unsigned char old[20], new[20];
++	struct object_id old, new;
+ 	const char *old_ref = argv[0];
+ 	struct commit *commit;
+ 	struct strbuf buf = STRBUF_INIT;
+ 	const char *buffer;
+ 	unsigned long size;
+ 
+-	if (get_sha1(old_ref, old) < 0)
++	if (get_oid(old_ref, &old) < 0)
+ 		die(_("Not a valid object name: '%s'"), old_ref);
+-	commit = lookup_commit_or_die(old, old_ref);
++	commit = lookup_commit_or_die(old.hash, old_ref);
+ 
+ 	buffer = get_commit_buffer(commit, &size);
+ 	strbuf_add(&buf, buffer, size);
+@@ -404,15 +404,15 @@ static int create_graft(int argc, const char **argv, int force)
+ 
+ 	check_mergetags(commit, argc, argv);
+ 
+-	if (write_sha1_file(buf.buf, buf.len, commit_type, new))
++	if (write_sha1_file(buf.buf, buf.len, commit_type, new.hash))
+ 		die(_("could not write replacement commit for: '%s'"), old_ref);
+ 
+ 	strbuf_release(&buf);
+ 
+-	if (!hashcmp(old, new))
+-		return error("new commit is the same as the old one: '%s'", sha1_to_hex(old));
++	if (!oidcmp(&old, &new))
++		return error("new commit is the same as the old one: '%s'", oid_to_hex(&old));
+ 
+-	return replace_object_sha1(old_ref, old, "replacement", new, force);
++	return replace_object_oid(old_ref, &old, "replacement", &new, force);
+ }
+ 
+ int cmd_replace(int argc, const char **argv, const char *prefix)
 -- 
 2.11.0
 
