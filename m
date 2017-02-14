@@ -6,74 +6,110 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DE86B1FAF4
-	for <e@80x24.org>; Tue, 14 Feb 2017 20:31:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 01E2E1FAF4
+	for <e@80x24.org>; Tue, 14 Feb 2017 20:33:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755273AbdBNUbW (ORCPT <rfc822;e@80x24.org>);
-        Tue, 14 Feb 2017 15:31:22 -0500
-Received: from cloud.peff.net ([104.130.231.41]:55275 "EHLO cloud.peff.net"
+        id S1753766AbdBNUdk (ORCPT <rfc822;e@80x24.org>);
+        Tue, 14 Feb 2017 15:33:40 -0500
+Received: from cloud.peff.net ([104.130.231.41]:55283 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1754220AbdBNUbU (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Feb 2017 15:31:20 -0500
-Received: (qmail 18469 invoked by uid 109); 14 Feb 2017 20:31:20 -0000
+        id S1755455AbdBNUda (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Feb 2017 15:33:30 -0500
+Received: (qmail 18660 invoked by uid 109); 14 Feb 2017 20:33:30 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 14 Feb 2017 20:31:20 +0000
-Received: (qmail 6285 invoked by uid 111); 14 Feb 2017 20:31:20 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 14 Feb 2017 20:33:30 +0000
+Received: (qmail 6326 invoked by uid 111); 14 Feb 2017 20:33:30 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 14 Feb 2017 15:31:20 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 14 Feb 2017 15:31:17 -0500
-Date:   Tue, 14 Feb 2017 15:31:17 -0500
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 14 Feb 2017 15:33:30 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 14 Feb 2017 15:33:28 -0500
+Date:   Tue, 14 Feb 2017 15:33:28 -0500
 From:   Jeff King <peff@peff.net>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
         Duy Nguyen <pclouds@gmail.com>,
         Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH v2] remote helpers: avoid blind fall-back to ".git" when
- setting GIT_DIR
-Message-ID: <20170214203117.xnln6ahb3l32agqb@sigill.intra.peff.net>
-References: <20161020061536.6fqh23xb2nhxodpa@sigill.intra.peff.net>
- <20161020062430.rxupwheaeydtcvf3@sigill.intra.peff.net>
- <20161122004421.GA12263@google.com>
- <20161122024102.otlnl6jcrb3pejux@sigill.intra.peff.net>
- <20161230001114.GB7883@aiede.mtv.corp.google.com>
- <20161230004845.rknafqsyosmyr6z2@sigill.intra.peff.net>
- <20170214061607.qyucfue335aqgji2@sigill.intra.peff.net>
- <xmqqtw7w8uay.fsf@gitster.mtv.corp.google.com>
+Subject: [PATCH 1/2] remote: avoid reading $GIT_DIR config in non-repo
+Message-ID: <20170214203327.icdvrhwpmarvwe5y@sigill.intra.peff.net>
+References: <20170214203117.xnln6ahb3l32agqb@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqtw7w8uay.fsf@gitster.mtv.corp.google.com>
+In-Reply-To: <20170214203117.xnln6ahb3l32agqb@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Feb 14, 2017 at 11:08:05AM -0800, Junio C Hamano wrote:
+The "git ls-remote" command can be run outside of a
+repository, but needs to look up configured remotes. The
+config code is smart enough to handle this case itself, but
+we also check the historical "branches" and "remotes" paths
+in $GIT_DIR. The git_path() function causes us to blindly
+look at ".git/remotes", even if we know we aren't in a git
+repository.
 
-> Thanks for prodding.  I'm tempted to just rip out everything other
-> than the 5-liner fix to transport.c and apply it, expecting that a
-> follow-up patch with updated tests to come sometime not in too
-> distant future.
+For now, this is just an unlikely bug (you probably don't
+have such a file if you're not in a repository), but it will
+become more obvious once we merge b1ef400ee (setup_git_env:
+avoid blind fall-back to ".git", 2016-10-20):
 
-I think we can at least include one basic test. Also, as it turns out
-the problem I was seeing _wasn't_ the same one Jonathan fixed. There's
-another bug. :)
+  [now]
+  $ git ls-remote
+  fatal: No remote configured to list refs from.
 
-So here's a patch series that fixes my bug, and then a cut-down version
-of Jonathan's patch. I'd be happy to see more tests come on top. I don't
-think there's a huge rush on getting any of this into master. There are
-bugs in the existing code, but they're very hard to trigger in practice
-(e.g., a non-repo which happens to have a bunch of repo-like files). It
-only becomes an issue in 'next' when we die("BUG") to flush these cases
-out.
+  [with b1ef400ee]
+  $ git ls-remote
+  fatal: BUG: setup_git_env called without repository
 
-  [1/2]: remote: avoid reading $GIT_DIR config in non-repo
-  [2/2]: remote helpers: avoid blind fall-back to ".git" when setting GIT_DIR
+We can fix this by skipping these sources entirely when
+we're outside of a repository.
 
- remote.c                   | 2 +-
- t/t5512-ls-remote.sh       | 9 +++++++++
- t/t5550-http-fetch-dumb.sh | 9 +++++++++
- transport-helper.c         | 5 +++--
- 4 files changed, 22 insertions(+), 3 deletions(-)
+The test is a little more complex than the demonstration
+above. Rather than detect the correct behavior by parsing
+the error message, we can actually set up a case where the
+remote name we give is a valid repository, but b1ef400ee
+would cause us to die in the configuration step.
 
--Peff
+This test doesn't fail now, but it future-proofs us for the
+b1ef400ee change.
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ remote.c             | 2 +-
+ t/t5512-ls-remote.sh | 9 +++++++++
+ 2 files changed, 10 insertions(+), 1 deletion(-)
+
+diff --git a/remote.c b/remote.c
+index bf1bf2309..9f83fe2c4 100644
+--- a/remote.c
++++ b/remote.c
+@@ -693,7 +693,7 @@ static struct remote *remote_get_1(const char *name,
+ 		name = get_default(current_branch, &name_given);
+ 
+ 	ret = make_remote(name, 0);
+-	if (valid_remote_nick(name)) {
++	if (valid_remote_nick(name) && have_git_dir()) {
+ 		if (!valid_remote(ret))
+ 			read_remotes_file(ret);
+ 		if (!valid_remote(ret))
+diff --git a/t/t5512-ls-remote.sh b/t/t5512-ls-remote.sh
+index 55fc83fc0..94fc9be9c 100755
+--- a/t/t5512-ls-remote.sh
++++ b/t/t5512-ls-remote.sh
+@@ -248,4 +248,13 @@ test_expect_success PIPE,JGIT,GIT_DAEMON 'indicate no refs in standards-complian
+ 	test_expect_code 2 git ls-remote --exit-code git://localhost:$JGIT_DAEMON_PORT/empty.git
+ '
+ 
++test_expect_success 'ls-remote works outside repository' '
++	# It is important for this repo to be inside the nongit
++	# area, as we want a repo name that does not include
++	# slashes (because those inhibit some of our configuration
++	# lookups).
++	nongit git init --bare dst.git &&
++	nongit git ls-remote dst.git
++'
++
+ test_done
+-- 
+2.12.0.rc1.479.g59880b11e
+
