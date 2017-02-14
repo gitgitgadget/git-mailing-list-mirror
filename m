@@ -2,88 +2,61 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4632B1FAF4
-	for <e@80x24.org>; Tue, 14 Feb 2017 22:02:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7A21B1FAF4
+	for <e@80x24.org>; Tue, 14 Feb 2017 22:03:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751327AbdBNWC1 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 14 Feb 2017 17:02:27 -0500
-Received: from mail-oi0-f68.google.com ([209.85.218.68]:34420 "EHLO
-        mail-oi0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750711AbdBNWC0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Feb 2017 17:02:26 -0500
-Received: by mail-oi0-f68.google.com with SMTP id w144so1687491oiw.1
-        for <git@vger.kernel.org>; Tue, 14 Feb 2017 14:02:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=GPy76mU01F6RfIr+VwhWgcAMK3I+qXL10bQEdkknisc=;
-        b=lyGHcMu0W3bulyUcy9+CyUcxqQvBblQ+dbBwennggq1zCo1dCxQmpnwTtCJdYtkcrq
-         WcB8HMRyewmz+GX3pNVeGmFzS2zmETbVMIeP1l1zq6IG9BW3teeClJUW79U12gv/qIME
-         thgSQFJtZxLsYlrjVE/v0xx9Qe4xyM3MP2qpzv1x5bk16u8DmYt2k/PjakKdHzQiydKk
-         8LfAwSwRboZJUoxm78p6rlYbnOxlweU7sdsOFWlA9UEqN3W0F4Q1s2TK4ub2bttLbOHj
-         YlZ2X0RY+lNyofGS3LPwPvRolOmhgjRyQPxXotqTJDS+7UWiWmPTPsuS4yqorqjM9nma
-         CYTA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=GPy76mU01F6RfIr+VwhWgcAMK3I+qXL10bQEdkknisc=;
-        b=WFeVNYci/HvSKkZ6Ca6usAsACFsZgRMB2R+JpxgL3bSuqPHi2flZl/yBXUWbkBCEmD
-         CKFUCjVUMFCcuBpoHxBpchMZnOVr/T0/Ytojb8ZcQEZBeC1/DMzdK7JcsxhWnH3s7d52
-         84lGzA4aWJ9Ts4GZr+m2qVZST1vwfzKs32/Miyn2FkCdraXoi33JO2X7nKJRSWovQUO8
-         uvQ7EOD4ljDx6ZmmHmwIRNukcVnq61skG3A3kTAgJ3GHeq1cixx7y3CS1IIIzhZZ+RHq
-         TkEfFg0zwZsngvcQv60zCFk0GNKlAkl9kV2vGILnIaQDMmUAnhzrfjWgeZp7gOYgjz9+
-         61SA==
-X-Gm-Message-State: AMke39mcbY4rw2kDt65FMm0rka2K4iRGMjiplIsyEgeHGxcfXRiirlGS7+moW/v7PQY1jQ==
-X-Received: by 10.84.238.1 with SMTP id u1mr39337045plk.174.1487109745482;
-        Tue, 14 Feb 2017 14:02:25 -0800 (PST)
-Received: from localhost ([2620:0:1000:8622:2447:f72c:8fdf:75c6])
-        by smtp.gmail.com with ESMTPSA id m6sm3096127pfm.22.2017.02.14.14.02.24
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 14 Feb 2017 14:02:24 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH v2 00/19] object_id part 6
-References: <20170214023141.842922-1-sandals@crustytoothpaste.net>
-Date:   Tue, 14 Feb 2017 14:02:24 -0800
-In-Reply-To: <20170214023141.842922-1-sandals@crustytoothpaste.net> (brian
-        m. carlson's message of "Tue, 14 Feb 2017 02:31:22 +0000")
-Message-ID: <xmqqvasc77nz.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+        id S1751599AbdBNWDg (ORCPT <rfc822;e@80x24.org>);
+        Tue, 14 Feb 2017 17:03:36 -0500
+Received: from cloud.peff.net ([104.130.231.41]:55374 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751587AbdBNWDf (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Feb 2017 17:03:35 -0500
+Received: (qmail 24627 invoked by uid 109); 14 Feb 2017 22:03:35 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 14 Feb 2017 22:03:35 +0000
+Received: (qmail 7428 invoked by uid 111); 14 Feb 2017 22:03:35 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 14 Feb 2017 17:03:35 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 14 Feb 2017 17:03:32 -0500
+Date:   Tue, 14 Feb 2017 17:03:32 -0500
+From:   Jeff King <peff@peff.net>
+To:     Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Jeff Hostetler <jeffhost@microsoft.com>
+Subject: Re: [PATCH 0/5] A series of performance enhancements in the memihash
+ and name-cache area
+Message-ID: <20170214220332.753i4tgclm62er4f@sigill.intra.peff.net>
+References: <cover.1487071883.git.johannes.schindelin@gmx.de>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <cover.1487071883.git.johannes.schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
+On Tue, Feb 14, 2017 at 12:31:46PM +0100, Johannes Schindelin wrote:
 
-> This is another series in the continuing conversion to struct object_id.
->
-> This series converts more of the builtin directory and some of the refs
-> code to use struct object_id. Additionally, it implements an
-> nth_packed_object_oid function which provides a struct object_id version
-> of the nth_packed_object function, and a parse_oid_hex function that
-> makes parsing easier.
->
-> The patch to use parse_oid_hex in the refs code has been split out into
-> its own patch, just because I'm wary of that code and potentially
-> breaking things, and I want it to be easy to revert in case things go
-> wrong.  I have no reason to believe it is anything other than fully
-> functional, however.
+> On Windows, calls to memihash() and maintaining the istate.name_hash and
+> istate.dir_hash HashMaps take significant time on very large
+> repositories. This series of changes reduces the overall time taken for
+> various operations by reducing the number calls to memihash(), moving
+> some of them into multi-threaded code, and etc.
+> 
+> Note: one commenter in https://github.com/git-for-windows/git/pull/964
+> pointed out that memihash() only handles ASCII correctly. That is true.
+> And fixing this is outside the purview of this patch series.
 
-Thanks.  Will queue.
+Out of curiosity, do you have numbers? Bonus points if the speedup can
+be shown via a t/perf script.
 
-There are a few hunks in builtin/merge.c that ends up getting discarded
-when merged to 'pu' as is-old-style-invocation will just be removed,
-but the conflict resolution was trivial.
+We have a read-cache perf-test already, but I suspect you'd want
+something more like "git status" or "ls-files -o" that calls into
+read_directory().
 
+-Peff
