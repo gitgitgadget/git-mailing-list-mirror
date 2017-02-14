@@ -2,83 +2,57 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3B51A1FC44
-	for <e@80x24.org>; Tue, 14 Feb 2017 06:10:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 543631FC44
+	for <e@80x24.org>; Tue, 14 Feb 2017 06:14:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750965AbdBNGK4 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 14 Feb 2017 01:10:56 -0500
-Received: from cloud.peff.net ([104.130.231.41]:54907 "EHLO cloud.peff.net"
+        id S1751023AbdBNGOF (ORCPT <rfc822;e@80x24.org>);
+        Tue, 14 Feb 2017 01:14:05 -0500
+Received: from bsmtp7.bon.at ([213.33.87.19]:20363 "EHLO bsmtp7.bon.at"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750749AbdBNGK4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Feb 2017 01:10:56 -0500
-Received: (qmail 12371 invoked by uid 109); 14 Feb 2017 06:10:56 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 14 Feb 2017 06:10:56 +0000
-Received: (qmail 820 invoked by uid 111); 14 Feb 2017 06:10:56 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 14 Feb 2017 01:10:56 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 14 Feb 2017 01:10:53 -0500
-Date:   Tue, 14 Feb 2017 01:10:53 -0500
-From:   Jeff King <peff@peff.net>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org, gitster@pobox.com
-Subject: Re: [PATCH 0/7] grep rev/path parsing fixes
-Message-ID: <20170214061053.jibv2vibfnazmwsz@sigill.intra.peff.net>
-References: <20170214001159.19079-1-jonathantanmy@google.com>
- <20170214012037.u2eg2n7mvteullcx@sigill.intra.peff.net>
- <20170214060021.einv7372exbxa23z@sigill.intra.peff.net>
+        id S1750818AbdBNGOE (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Feb 2017 01:14:04 -0500
+Received: from dx.site (unknown [93.83.142.38])
+        by bsmtp7.bon.at (Postfix) with ESMTPSA id 3vMsZ12Ltyz5tlh;
+        Tue, 14 Feb 2017 07:14:01 +0100 (CET)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+        by dx.site (Postfix) with ESMTP id D30531E70;
+        Tue, 14 Feb 2017 07:14:00 +0100 (CET)
+Subject: Re: [PATCH] mingw: use OpenSSL's SHA-1 routines
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+References: <6a29f8c60d315a24292c1fa9f5e84df4dfdbf813.1486679254.git.johannes.schindelin@gmx.de>
+ <20170210050237.gajicliueuvk6s5d@sigill.intra.peff.net>
+ <alpine.DEB.2.20.1702101647340.3496@virtualbox>
+ <20170210160458.pcp7mupdz24m6cms@sigill.intra.peff.net>
+ <9913e513-553e-eba6-e81a-9c21030dd767@kdbg.org>
+ <xmqq60kdev2r.fsf@gitster.mtv.corp.google.com>
+ <b530c820-9956-4396-d853-c7d70ccaf11d@kdbg.org>
+ <alpine.DEB.2.20.1702132337470.3496@virtualbox>
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        git@vger.kernel.org, Jeff Hostetler <jeffhost@microsoft.com>
+From:   Johannes Sixt <j6t@kdbg.org>
+Message-ID: <6c2bbca7-7a8f-d3d8-04b6-31494a3e1b43@kdbg.org>
+Date:   Tue, 14 Feb 2017 07:14:00 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.7.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20170214060021.einv7372exbxa23z@sigill.intra.peff.net>
+In-Reply-To: <alpine.DEB.2.20.1702132337470.3496@virtualbox>
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Feb 14, 2017 at 01:00:21AM -0500, Jeff King wrote:
+Am 13.02.2017 um 23:38 schrieb Johannes Schindelin:
+> In addition, you build from a custom MINGW/MSys1 setup, correct?
 
-> On Mon, Feb 13, 2017 at 08:20:37PM -0500, Jeff King wrote:
-> 
-> > > If there is a repo and "foo" is a rev, the "--no-index or --untracked
-> > > cannot be used with revs." error would occur. If there is a repo and
-> > > "foo" is not a rev, this command would proceed as usual. If there is no
-> > > repo, the "setup_git_env called without repository" error would occur.
-> > > (This is my understanding from reading the code - I haven't tested it
-> > > out.)
-> > 
-> > Yes, it's easy to see that "git grep --no-index foo bar" outside of a
-> > repo generates the same BUG. I suspect that "--no-index" should just
-> > disable looking up revs entirely, even if we are actually in a
-> > repository directory.
-> 
-> I've fixed that, along with a few other bugs and cleanups. The complete
-> series is below. Patch 2 is your (untouched) patch. My suggestions for
-> your test are in patch 3, which can either remain on its own or be
-> squashed in.
-> 
->   [1/7]: grep: move thread initialization a little lower
->   [2/7]: grep: do not unnecessarily query repo for "--"
->   [3/7]: t7810: make "--no-index --" test more robust
->   [4/7]: grep: re-order rev-parsing loop
->   [5/7]: grep: fix "--" rev/pathspec disambiguation
->   [6/7]: grep: avoid resolving revision names in --no-index case
->   [7/7]: grep: do not diagnose misspelt revs with --no-index
-> 
->  builtin/grep.c  | 78 +++++++++++++++++++++++++++++++++++++++------------------
->  t/t7810-grep.sh | 66 ++++++++++++++++++++++++++++++++++++++++++++++++
->  2 files changed, 119 insertions(+), 25 deletions(-)
+Correct. Specifically, I use the build tools from "msysgit" times, but 
+build outside the premanufactured build environement; i.e., the 
+"THIS_IS_MSYSGIT" section in config.mak.uname is not used.
 
-Just to clarify: these are all existing bugs, and I think these are
-probably maint-worthy patches (even the --no-index ones; though we don't
-BUG on the out-of-repo without the patch from 'next', the code is still
-doing the wrong thing in subtle ways).
+-- Hannes
 
-But AFAIK they are all much older bugs than the upcoming v2.12, so there
-is no pressing need to fit them into the upcoming release.
-
--Peff
