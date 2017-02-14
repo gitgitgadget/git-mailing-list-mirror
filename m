@@ -2,107 +2,158 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 457AD1FAF4
-	for <e@80x24.org>; Tue, 14 Feb 2017 18:48:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A68651FAF4
+	for <e@80x24.org>; Tue, 14 Feb 2017 18:53:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752827AbdBNSst (ORCPT <rfc822;e@80x24.org>);
-        Tue, 14 Feb 2017 13:48:49 -0500
-Received: from mail-ot0-f196.google.com ([74.125.82.196]:33879 "EHLO
-        mail-ot0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752814AbdBNSsr (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Feb 2017 13:48:47 -0500
-Received: by mail-ot0-f196.google.com with SMTP id 73so18418588otj.1
-        for <git@vger.kernel.org>; Tue, 14 Feb 2017 10:48:47 -0800 (PST)
+        id S1752398AbdBNSxz (ORCPT <rfc822;e@80x24.org>);
+        Tue, 14 Feb 2017 13:53:55 -0500
+Received: from mail-it0-f68.google.com ([209.85.214.68]:34252 "EHLO
+        mail-it0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752233AbdBNSxx (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Feb 2017 13:53:53 -0500
+Received: by mail-it0-f68.google.com with SMTP id r141so6526833ita.1
+        for <git@vger.kernel.org>; Tue, 14 Feb 2017 10:53:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=dKq2MTEdUXhosyJFc1GRIFrsA4ll9ZAXNIXr6NJ0AOo=;
-        b=obpnALsqY2FftpO+FxtC2a3I9JYMGSKpiYTrYwukY2FIAAnTy5N+VHc2WOFWPMyWH6
-         jIqvBDHscDa9Q4pMaVihNjPygd7qJNBPFRb5pOaz5tckTopRUF0CR865Ch7liqqs/PjG
-         H1UV7iaVRaKgA49dEQC6rTWGW/KKymVzAt8/2SYqUnvUA8oUTeW6AYIceultjAp4GhHS
-         BZBCQM0mXOiP0r3ulT9gBKV7EBoFjsLfbJPLq6Z84KRi5afCbf4bMju+zVV0tI8s/ZVj
-         C76trPvkClPY7/zz3Gb7X6nbz94tz1q83vGUmXdjt8gUkWSJ0Az0NnHrvuFZELyjTg66
-         f5jQ==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=q4JxqVz2y4LRWkdeCYNMQE9JrVkS8KqVx+pteUlPHTw=;
+        b=sVB9ngwpoBrM6CzXHdLbNu43M86coAIvnjh780b+DfoZ+I/8PapkXJ4yJc15hcChV/
+         8BtVOsQWnGGChVze8bwrPwok1u1mWxAjijrd+K4HVjTuIglgO1izdg/pgbFQfiR+gzKq
+         QBQopeOD0cCVCY3w8LiCQYPW7IB9mSLaIFkUofGARug+B8tArX1IYVKKDdL6PAnWDisY
+         X+dSQDaqsVbJ0dnVBrRe6/ippLYoi3o4wgJP88qkDpdlC2nRgcbSVW+j5tsgCRLv1d8E
+         uHoPLYnOnkJKewNwTH2x8Mnx/rrLin0KXJBVxucoR9ejR53Wijh3z7akwHR6XBkBHRlT
+         ibGQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=dKq2MTEdUXhosyJFc1GRIFrsA4ll9ZAXNIXr6NJ0AOo=;
-        b=FbBddrlcOfBpgbdV0afcOuCOd0KTX0ql2Bi2tw1B1b8XYCCNDY/WY7P4/vfRoP0HpZ
-         V+tSYdbPUl6kSnBT1gCWVg73YHtnvTcZXy3V0HCM3CqBKFyWxPlAeJngEWjtpqUcJyFY
-         +k2Ii5vFPvqQCZwgx70D6QwIipBSpXocn9HCopFRXHeDD1WzrAg5xAupvr14B/yxG/aT
-         P4VrruagKp9MsUZHqrq2qmdFHFxl6SQnJLraOjiy96RhMyxO5trCcnsNfwTDwA0b7ISS
-         VAHP8nC0ksNkvLNjA+VOUPo9HUPmjO0xS7wDeCf20pOJRCiOgxbIP0YtRMR/4VtV+dtk
-         XVYw==
-X-Gm-Message-State: AMke39nAvXyJj+kagMeu8IH3o3vlO2a6bbvV2+cjuENlQIhWZ15d0ZeynttCMbqFbTzJrA==
-X-Received: by 10.99.152.65 with SMTP id l1mr34760117pgo.28.1487098126595;
-        Tue, 14 Feb 2017 10:48:46 -0800 (PST)
-Received: from localhost ([2620:0:1000:8622:2447:f72c:8fdf:75c6])
-        by smtp.gmail.com with ESMTPSA id y201sm2730091pfb.16.2017.02.14.10.48.45
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 14 Feb 2017 10:48:45 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     git@vger.kernel.org, Johannes Sixt <j6t@kdbg.org>,
-        Jeff Hostetler <jeffhost@microsoft.com>
-Subject: Re: [PATCH] mingw: make stderr unbuffered again
-References: <c88612da0a62bfcbc3e278296f9d3eb010057071.1487025228.git.johannes.schindelin@gmx.de>
-        <xmqqlgt9btrv.fsf@gitster.mtv.corp.google.com>
-        <alpine.DEB.2.20.1702141545380.3496@virtualbox>
-Date:   Tue, 14 Feb 2017 10:48:44 -0800
-In-Reply-To: <alpine.DEB.2.20.1702141545380.3496@virtualbox> (Johannes
-        Schindelin's message of "Tue, 14 Feb 2017 15:47:05 +0100 (CET)")
-Message-ID: <xmqq37fga9rn.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=q4JxqVz2y4LRWkdeCYNMQE9JrVkS8KqVx+pteUlPHTw=;
+        b=iQ7iVno2RkICTaF8jBG1MD7If/oopczers73H+J2bRCtf9PXXtmoEtHi+0nOSsyqSu
+         wvji7BidSQ1urEgLxwo+5U7xY9YHoeHguKe3CrIE/uMi/MuYa/o3FfzOsrpMKC2A8crp
+         tjZj1TLJYNGYPFx/E8e7mBD5NjxjYaDJ850A+jOHLDojQvKsvevXGrNvR48wa6/qNRTZ
+         Ec5xsg35PFthoJ6Nl7bswUSXyl9cfBYiYvFckxVqQv62dGREawKLLTR8bF3TlecQzLSV
+         WcTkvIdclEvEeqQlhEw3AIo0TmDelcikllvWK73RakegsBdViWyVOjUSvdlP4N5pFlLd
+         abFg==
+X-Gm-Message-State: AMke39m27+N+TI2JHctByUWeiEi/CybwfGQ4nQ3abqC6MFDaU3F01mawUes5cEc8mzTmXyJmTjoTRvfAF7PzCw==
+X-Received: by 10.107.182.214 with SMTP id g205mr31456972iof.120.1487098432671;
+ Tue, 14 Feb 2017 10:53:52 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
+Received: by 10.79.142.147 with HTTP; Tue, 14 Feb 2017 10:53:52 -0800 (PST)
+In-Reply-To: <20170214172829.6w3cnnqy6ozxl424@sigill.intra.peff.net>
+References: <20170214172526.hzpm3d3ubd3vjnzr@sigill.intra.peff.net> <20170214172829.6w3cnnqy6ozxl424@sigill.intra.peff.net>
+From:   Pranit Bauva <pranit.bauva@gmail.com>
+Date:   Wed, 15 Feb 2017 00:23:52 +0530
+Message-ID: <CAFZEwPOYGRGd5PWSfLRd6vMs35TT1ZzUSfr79fwRA4VzVjAWXA@mail.gmail.com>
+Subject: Re: [PATCH 3/3] show-branch: use skip_prefix to drop magic numbers
+To:     Jeff King <peff@peff.net>
+Cc:     Christian Couder <christian.couder@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Maxim Kuvyrkov <maxim.kuvyrkov@linaro.org>,
+        Christian Couder <chriscool@tuxfamily.org>
+Content-Type: multipart/mixed; boundary=001a114a4cf2d45e8e0548821564
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+--001a114a4cf2d45e8e0548821564
+Content-Type: text/plain; charset=UTF-8
 
->> OK.  Should this go directly to 'master', as the isatty thing is
->> already in?
+Hey Peff,
+
+On Tue, Feb 14, 2017 at 10:58 PM, Jeff King <peff@peff.net> wrote:
+> We make several starts_with() calls, only to advance
+> pointers. This is exactly what skip_prefix() is for, which
+> lets us avoid manually-counted magic numbers.
 >
-> From my point of view, it is not crucial. The next Git for Windows version
-> will have it, of course, and Hannes is always running with his set of
-> patches, he can easily cherry-pick this one, too.
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+>  builtin/show-branch.c | 16 +++++++---------
+>  1 file changed, 7 insertions(+), 9 deletions(-)
+>
+> diff --git a/builtin/show-branch.c b/builtin/show-branch.c
+> index 404c4d09a..c03d3ec7c 100644
+> --- a/builtin/show-branch.c
+> +++ b/builtin/show-branch.c
+> @@ -470,17 +470,14 @@ static void snarf_refs(int head, int remotes)
+>         }
+>  }
+>
+> -static int rev_is_head(char *head, char *name,
+> +static int rev_is_head(const char *head, const char *name,
+>                        unsigned char *head_sha1, unsigned char *sha1)
+>  {
+>         if (!head || (head_sha1 && sha1 && hashcmp(head_sha1, sha1)))
+>                 return 0;
+> -       if (starts_with(head, "refs/heads/"))
+> -               head += 11;
+> -       if (starts_with(name, "refs/heads/"))
+> -               name += 11;
+> -       else if (starts_with(name, "heads/"))
+> -               name += 6;
+> +       skip_prefix(head, "refs/heads/", &head);
+> +       if (!skip_prefix(name, "refs/heads/", &name))
+> +               skip_prefix(name, "heads/", &name);
+>         return !strcmp(head, name);
+>  }
+>
+> @@ -799,8 +796,9 @@ int cmd_show_branch(int ac, const char **av, const char *prefix)
+>                                 has_head++;
+>                 }
+>                 if (!has_head) {
+> -                       int offset = starts_with(head, "refs/heads/") ? 11 : 0;
+> -                       append_one_rev(head + offset);
+> +                       const char *name = head;
+> +                       skip_prefix(name, "refs/heads/", &name);
+> +                       append_one_rev(name);
+>                 }
+>         }
+>
 
-What hat were you wearing when you said the above "From my point of
-view"?  Were you the "Git for Windows" maintainer, or were you a
-contributor and a member of the Git development community that works
-to improve the upstream?  If it was not clear, I was asking the
-question to you wearing the latter hat.
 
-To put it differently, what is our position, as the upstream
-developers, toward those who are on Windows and wants to build from
-the source?  It's not just Hannes.
+Did you purposely miss the one in line number 278 of
+builtin/show-branch.c because I think you only touched up the parts
+which were related to "refs/" but didn't explicitly mention it in the
+commit message?
 
-Is our position "unless you are extremely competent and are willing
-to cherry-pick missing things from Git for Windows tree as needed,
-we recommend you to build Git for Windows source instead"?
+    if (starts_with(pretty_str, "[PATCH] "))
+        pretty_str += 8;
 
-It is inevitable that the upstream lags behind in Windows specific
-changes.  Even though you have been trickling Windows specific
-changes (both things in compat/ and also changes to the generic
-parts, updating "c == '/'" to "is_dir_sep(c)") in, and I have been
-accepting them for the past few years, in order to reduce the size
-of the patch pile Git for Windows needs on top of the upstream,
-until the patch pile becomes empty, it will always be the case.
+If not, you can squash this patch attached. Sorry, couldn't send it in
+mail because of proxy issues.
 
-So I won't object if that were our position.  I just need to know
-what it is to adjust my expectations, and as far as I am concerned,
-you and Hannes are the two people whose thinking I'd trust regarding
-what to do with/to Windows users; even though I keep saying "our"
-position, I am asking yours and Hannes's.
+Regards,
+Pranit Bauva
 
-Thanks.
+--001a114a4cf2d45e8e0548821564
+Content-Type: text/x-patch; charset=US-ASCII; 
+	name="0001-squash-show-branch-use-skip_prefix-to-drop-magic-num.patch"
+Content-Disposition: attachment; 
+	filename="0001-squash-show-branch-use-skip_prefix-to-drop-magic-num.patch"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: f_iz5vwzjw0
 
+RnJvbSAyZTgwZDQ0NThkZjY1OTc2NTAxMTQ1MDYyMWVlMzQ0NTlkYzc0OWY5IE1vbiBTZXAgMTcg
+MDA6MDA6MDAgMjAwMQpGcm9tOiBQcmFuaXQgQmF1dmEgPHByYW5pdC5iYXV2YUBnbWFpbC5jb20+
+CkRhdGU6IFR1ZSwgMTQgRmViIDIwMTcgMjM6NTM6MzYgKzA1MzAKU3ViamVjdDogW1BBVENIXSAh
+c3F1YXNoOiBzaG93LWJyYW5jaDogdXNlIHNraXBfcHJlZml4IHRvIGRyb3AgbWFnaWMgbnVtYmVy
+cwoKU2lnbmVkLW9mZi1ieTogUHJhbml0IEJhdXZhIDxwcmFuaXQuYmF1dmFAZ21haWwuY29tPgot
+LS0KIGJ1aWx0aW4vc2hvdy1icmFuY2guYyB8IDMgKy0tCiAxIGZpbGUgY2hhbmdlZCwgMSBpbnNl
+cnRpb24oKyksIDIgZGVsZXRpb25zKC0pCgpkaWZmIC0tZ2l0IGEvYnVpbHRpbi9zaG93LWJyYW5j
+aC5jIGIvYnVpbHRpbi9zaG93LWJyYW5jaC5jCmluZGV4IGMwM2QzZWM3Yy4uMTk3NTY1OTVkIDEw
+MDY0NAotLS0gYS9idWlsdGluL3Nob3ctYnJhbmNoLmMKKysrIGIvYnVpbHRpbi9zaG93LWJyYW5j
+aC5jCkBAIC0yNzUsOCArMjc1LDcgQEAgc3RhdGljIHZvaWQgc2hvd19vbmVfY29tbWl0KHN0cnVj
+dCBjb21taXQgKmNvbW1pdCwgaW50IG5vX25hbWUpCiAJCXBwX2NvbW1pdF9lYXN5KENNSVRfRk1U
+X09ORUxJTkUsIGNvbW1pdCwgJnByZXR0eSk7CiAJCXByZXR0eV9zdHIgPSBwcmV0dHkuYnVmOwog
+CX0KLQlpZiAoc3RhcnRzX3dpdGgocHJldHR5X3N0ciwgIltQQVRDSF0gIikpCi0JCXByZXR0eV9z
+dHIgKz0gODsKKwlza2lwX3ByZWZpeChwcmV0dHlfc3RyLCAiW1BBVENIXSAiLCAmcHJldHR5X3N0
+cik7CiAKIAlpZiAoIW5vX25hbWUpIHsKIAkJaWYgKG5hbWUgJiYgbmFtZS0+aGVhZF9uYW1lKSB7
+Ci0tIAoyLjExLjAKCg==
+--001a114a4cf2d45e8e0548821564--
