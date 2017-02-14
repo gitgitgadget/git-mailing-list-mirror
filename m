@@ -7,60 +7,56 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E59E11FAF4
-	for <e@80x24.org>; Tue, 14 Feb 2017 21:59:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4632B1FAF4
+	for <e@80x24.org>; Tue, 14 Feb 2017 22:02:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751351AbdBNV7C (ORCPT <rfc822;e@80x24.org>);
-        Tue, 14 Feb 2017 16:59:02 -0500
-Received: from mail-ot0-f194.google.com ([74.125.82.194]:34295 "EHLO
-        mail-ot0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751289AbdBNV7B (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Feb 2017 16:59:01 -0500
-Received: by mail-ot0-f194.google.com with SMTP id 73so19184276otj.1
-        for <git@vger.kernel.org>; Tue, 14 Feb 2017 13:59:01 -0800 (PST)
+        id S1751327AbdBNWC1 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 14 Feb 2017 17:02:27 -0500
+Received: from mail-oi0-f68.google.com ([209.85.218.68]:34420 "EHLO
+        mail-oi0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750711AbdBNWC0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Feb 2017 17:02:26 -0500
+Received: by mail-oi0-f68.google.com with SMTP id w144so1687491oiw.1
+        for <git@vger.kernel.org>; Tue, 14 Feb 2017 14:02:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=+y+Zgsku6B/2nH/92nX5igFpr+m6FiErfuPM2qu27ts=;
-        b=b1pA9+qQCZs3b4UTfAuK7X+GzSCI/rLMxAi6vtCivEocwsWrFs7erLUWnAKEFSXX9a
-         mZJoNxYo1VnjIXH2ZuJeE0e2VLlz3Iet/ghs363BNkmLOKJTq6Ef2438XbadSvkM5Wz7
-         A+ztPIs/p7bTAg6sblnjhjVzf5xoOYg7j8TBM3JI5EXSX2x1tLgDf1JHjnLKurCxZ6pj
-         F/nCm12Qd4Xkl6uZJ+y8h117sZo22dL4T20E3CPlv8DirP9/YO5it1PF22xjFHmFUnUo
-         sG5blD4a98h/22oVSH6U2Sa7Vd2jivwYI8do+FNqERv+BDvVfK9yvtQpt95OFHAGK6SX
-         aCEw==
+        bh=GPy76mU01F6RfIr+VwhWgcAMK3I+qXL10bQEdkknisc=;
+        b=lyGHcMu0W3bulyUcy9+CyUcxqQvBblQ+dbBwennggq1zCo1dCxQmpnwTtCJdYtkcrq
+         WcB8HMRyewmz+GX3pNVeGmFzS2zmETbVMIeP1l1zq6IG9BW3teeClJUW79U12gv/qIME
+         thgSQFJtZxLsYlrjVE/v0xx9Qe4xyM3MP2qpzv1x5bk16u8DmYt2k/PjakKdHzQiydKk
+         8LfAwSwRboZJUoxm78p6rlYbnOxlweU7sdsOFWlA9UEqN3W0F4Q1s2TK4ub2bttLbOHj
+         YlZ2X0RY+lNyofGS3LPwPvRolOmhgjRyQPxXotqTJDS+7UWiWmPTPsuS4yqorqjM9nma
+         CYTA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=+y+Zgsku6B/2nH/92nX5igFpr+m6FiErfuPM2qu27ts=;
-        b=DjTMP9bBjlcxdm9Eluap+w5BAtF1bVk3KyDtbS5pxVe3ZC+453X1YkWTrxwvBUYMxM
-         RksrKnVe8gLIgNVhvudKLEIhUrR8cQmA+KVQdLBfu1LZezCkVybuGG7o/I49ZdW5HTca
-         bH6ofCngLHvT5AIZXfcxzlhwLFTTNZE/qh/5z9YIoRrR81S6yiJIDGOEM0V67upBVHEV
-         lQnYQ+nGcCqQTuFM41NhbWMeG3r4CMJZnTNPrcKdXZtUJ7A6E7vlDlGrg6no2uhiGD2R
-         a/vqf7UQL8U+Da7GiAXK5anbY19L4aUpirpTPjM2ZBkofIn1YL6abwBo+yo7b4jym+CS
-         ic0Q==
-X-Gm-Message-State: AMke39kXozs3ChpjPYBypj/N8F24SauMdYF+4fO3AtsO9/Nw8lE9BjNFWZ3XSnhxl2b1pw==
-X-Received: by 10.99.127.71 with SMTP id p7mr35027876pgn.125.1487109540507;
-        Tue, 14 Feb 2017 13:59:00 -0800 (PST)
+        bh=GPy76mU01F6RfIr+VwhWgcAMK3I+qXL10bQEdkknisc=;
+        b=WFeVNYci/HvSKkZ6Ca6usAsACFsZgRMB2R+JpxgL3bSuqPHi2flZl/yBXUWbkBCEmD
+         CKFUCjVUMFCcuBpoHxBpchMZnOVr/T0/Ytojb8ZcQEZBeC1/DMzdK7JcsxhWnH3s7d52
+         84lGzA4aWJ9Ts4GZr+m2qVZST1vwfzKs32/Miyn2FkCdraXoi33JO2X7nKJRSWovQUO8
+         uvQ7EOD4ljDx6ZmmHmwIRNukcVnq61skG3A3kTAgJ3GHeq1cixx7y3CS1IIIzhZZ+RHq
+         TkEfFg0zwZsngvcQv60zCFk0GNKlAkl9kV2vGILnIaQDMmUAnhzrfjWgeZp7gOYgjz9+
+         61SA==
+X-Gm-Message-State: AMke39mcbY4rw2kDt65FMm0rka2K4iRGMjiplIsyEgeHGxcfXRiirlGS7+moW/v7PQY1jQ==
+X-Received: by 10.84.238.1 with SMTP id u1mr39337045plk.174.1487109745482;
+        Tue, 14 Feb 2017 14:02:25 -0800 (PST)
 Received: from localhost ([2620:0:1000:8622:2447:f72c:8fdf:75c6])
-        by smtp.gmail.com with ESMTPSA id 75sm2998668pfw.103.2017.02.14.13.58.59
+        by smtp.gmail.com with ESMTPSA id m6sm3096127pfm.22.2017.02.14.14.02.24
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 14 Feb 2017 13:58:59 -0800 (PST)
+        Tue, 14 Feb 2017 14:02:24 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org
-Subject: Re: [PATCH 8/7] grep: treat revs the same for --untracked as for --no-index
-References: <20170214060021.einv7372exbxa23z@sigill.intra.peff.net>
-        <20170214060729.v4r24y5tuaov3jrh@sigill.intra.peff.net>
-        <eef97cc4-d616-b298-bc99-b2772b757190@google.com>
-        <20170214180453.tpze2hdv3eytxfju@sigill.intra.peff.net>
-        <82212eaa-76d2-3357-8e06-5e4d56028c2e@google.com>
-        <20170214215436.kqca4c7gv2kwevw7@sigill.intra.peff.net>
-Date:   Tue, 14 Feb 2017 13:58:59 -0800
-In-Reply-To: <20170214215436.kqca4c7gv2kwevw7@sigill.intra.peff.net> (Jeff
-        King's message of "Tue, 14 Feb 2017 16:54:36 -0500")
-Message-ID: <xmqqziho77to.fsf@gitster.mtv.corp.google.com>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH v2 00/19] object_id part 6
+References: <20170214023141.842922-1-sandals@crustytoothpaste.net>
+Date:   Tue, 14 Feb 2017 14:02:24 -0800
+In-Reply-To: <20170214023141.842922-1-sandals@crustytoothpaste.net> (brian
+        m. carlson's message of "Tue, 14 Feb 2017 02:31:22 +0000")
+Message-ID: <xmqqvasc77nz.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -69,18 +65,25 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
-> ...
-> The rationale for doing this with --no-index is that it is
-> meant to be used outside a repository, and so parsing revs
-> at all does not make sense.
+> This is another series in the continuing conversion to struct object_id.
 >
-> This patch gives --untracked the same treatment. While it
-> _is_ meant to be used in a repository, it is explicitly
-> about grepping the non-repository contents. Telling the user
-> "we found a rev, but you are not allowed to use revs" is
-> not really helpful compared to "we treated your argument as
-> a path, and could not find it".
+> This series converts more of the builtin directory and some of the refs
+> code to use struct object_id. Additionally, it implements an
+> nth_packed_object_oid function which provides a struct object_id version
+> of the nth_packed_object function, and a parse_oid_hex function that
+> makes parsing easier.
+>
+> The patch to use parse_oid_hex in the refs code has been split out into
+> its own patch, just because I'm wary of that code and potentially
+> breaking things, and I want it to be easy to revert in case things go
+> wrong.  I have no reason to believe it is anything other than fully
+> functional, however.
 
-Yup, both sounds very sensible.  Thanks.
+Thanks.  Will queue.
+
+There are a few hunks in builtin/merge.c that ends up getting discarded
+when merged to 'pu' as is-old-style-invocation will just be removed,
+but the conflict resolution was trivial.
+
