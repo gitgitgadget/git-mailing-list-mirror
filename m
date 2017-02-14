@@ -7,59 +7,63 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BEB801FAF4
-	for <e@80x24.org>; Tue, 14 Feb 2017 18:58:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1A4EC1FAF4
+	for <e@80x24.org>; Tue, 14 Feb 2017 19:08:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752987AbdBNS6t (ORCPT <rfc822;e@80x24.org>);
-        Tue, 14 Feb 2017 13:58:49 -0500
-Received: from mail-ot0-f193.google.com ([74.125.82.193]:36773 "EHLO
+        id S1753126AbdBNTIJ (ORCPT <rfc822;e@80x24.org>);
+        Tue, 14 Feb 2017 14:08:09 -0500
+Received: from mail-ot0-f193.google.com ([74.125.82.193]:33412 "EHLO
         mail-ot0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752967AbdBNS6r (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Feb 2017 13:58:47 -0500
-Received: by mail-ot0-f193.google.com with SMTP id l26so4811839ota.3
-        for <git@vger.kernel.org>; Tue, 14 Feb 2017 10:58:47 -0800 (PST)
+        with ESMTP id S1753221AbdBNTIH (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Feb 2017 14:08:07 -0500
+Received: by mail-ot0-f193.google.com with SMTP id t47so3251795ota.0
+        for <git@vger.kernel.org>; Tue, 14 Feb 2017 11:08:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=SJGlQpmyDvpCvgEfG1aGNbUoqNdPOeuu8khfrJc3Qtk=;
-        b=MjLb6gRhDp5dhFIMqx+JQ8Z8HhHCskcNp8U369np2sYBHCkWMDKuiQe55Z4yJVUCxu
-         U0A5HF0HQhT3g4Az/8TsJgxCVjPcvw/Bofxz83vn3w6HPZ0E3cogFgkplh0K+RUNDuRY
-         DzENfwOts/XwbgZ+taAd9prSgxfZSDeOsEW/BVpQU024jkJowRBgxz6MnJCGbBgloZNV
-         oIexBtZMVyChnfvz3m5ggHnhG3G7Am61vSfxHDswmqkvGIsBBPcVAnqBrnkUVU/+i0CC
-         nWSSgkCrC1azqf6CjaKeG0WH/cMKtWOy/BCwXKigI+KEh8Ai4HO2vGS/1IfKCooC6Kdn
-         PFvQ==
+        bh=aj0f5v4v7jXiAevRKTs9MmUZc1mwLpnTszto9WtdDOI=;
+        b=ZW9yVo4lBP/kjTDwKN1SZ4mXrCtsTL6HCWL9xs28gPBxWnr+9z4jcSF0TKxeKV8HLh
+         n6f0HxsQDBpFrJBIWdpmr/A2SgLT89roO3gVVfduA1L1o1Cphh3Gbm//0tT18vY78Lf0
+         /FtBxwgpnZFqjEdVoRwXN1NmgooY6Vuobyh8PHTuhPZKd3cA64+L1b5IGpkrOr5m57Ui
+         FTHnhfSi7YgCNDwv0LnqFj9owsZVTyA2/Qg/yYCjBLNLonTzSTb1UaSQ8efJ4Xf3ZsiL
+         HbVbb71RqrW44jcmV5Eleqw//zhbcnO/l5CtslLtIkr7ugtLgdZxg7xfdeZFnCsSr0yJ
+         8e/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=SJGlQpmyDvpCvgEfG1aGNbUoqNdPOeuu8khfrJc3Qtk=;
-        b=dKxn685Wr9iPQydmZSQjrnCIBEk5w8tt0fpl/pV1Ofufqf5fKTFFbRrkIg5A5/OeCT
-         DnGAP9rUHyyG1nlvLlJ3F9rhyjiDki9tbuKu0wvuKKxOC9g+yJqkA5GIYEEAfpbAgDUh
-         ipScH4wKP48mgeT2psggIwvbxK1b0Ebg1u4UX2PFbFl+/mrFn76ypL0V1RFfY+VjH8e0
-         h8Zi0vogSQ1MoPxikOk+zlnkuPUXPP5S0v3nojHd4Cgn58oAZVyOOIfhNe0tWj5YLbjv
-         xu72MM4Qp5xOAK+OujG8V78zvnSFlYLjqfeU8dnhBEbNP15KsWEP401WhFFoD7fwGx7m
-         al5w==
-X-Gm-Message-State: AMke39m/spE7Cq+UiwcHhs9A1FkMLI8xxIbDhDPyP2bfbx+pXg5FV1Fr98wOMoj53VKMTQ==
-X-Received: by 10.99.8.4 with SMTP id 4mr33895307pgi.204.1487098726921;
-        Tue, 14 Feb 2017 10:58:46 -0800 (PST)
+        bh=aj0f5v4v7jXiAevRKTs9MmUZc1mwLpnTszto9WtdDOI=;
+        b=W0VlSEGrhOHZXmkUzhuoNvKX5pxdu9FDGgK29vA8aFQI6vsaVon7k5iCbcP93J4FqD
+         oDV8HLfODbG21S9BviXfHIwdsHl5tQBC71g+eukSXqRvdROi57lahdRBvkaMcD69Z+Yn
+         67dL97lrNx4sw8l4am26Ck5ruOez1sqw10bH0mi95XK+t56+TkZa885fxOq39znpB/8X
+         pBGZqHKPJDO7uFrapEbMS5U+2r7WpmCwI0PF2OoCYhHSKQxTt6sliIHj+OIc2dYfMAMG
+         uxX3kBglN+73okdy39TxTjCdfXcJIyLBRZZiD4DoDVlzfJJZsgAwc8Q4RKd5iZGs/kkz
+         B1VQ==
+X-Gm-Message-State: AMke39mF1H3GjAWmZotqbAAs15njYha+bxu82mfOGuYgoMo7wo44T3wBLxw0duJxFRcTqA==
+X-Received: by 10.98.86.68 with SMTP id k65mr33156356pfb.13.1487099286713;
+        Tue, 14 Feb 2017 11:08:06 -0800 (PST)
 Received: from localhost ([2620:0:1000:8622:2447:f72c:8fdf:75c6])
-        by smtp.gmail.com with ESMTPSA id q7sm2669977pfb.98.2017.02.14.10.58.45
+        by smtp.gmail.com with ESMTPSA id t87sm2729292pfe.59.2017.02.14.11.08.05
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 14 Feb 2017 10:58:46 -0800 (PST)
+        Tue, 14 Feb 2017 11:08:05 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Sixt <j6t@kdbg.org>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        git@vger.kernel.org, Jeff Hostetler <jeffhost@microsoft.com>
-Subject: Re: [PATCH] mingw: make stderr unbuffered again
-References: <c88612da0a62bfcbc3e278296f9d3eb010057071.1487025228.git.johannes.schindelin@gmx.de>
-        <xmqqlgt9btrv.fsf@gitster.mtv.corp.google.com>
-        <alpine.DEB.2.20.1702141545380.3496@virtualbox>
-        <ef8549ea-7222-fdd0-739d-855ad428e39c@kdbg.org>
-Date:   Tue, 14 Feb 2017 10:58:45 -0800
-In-Reply-To: <ef8549ea-7222-fdd0-739d-855ad428e39c@kdbg.org> (Johannes Sixt's
-        message of "Tue, 14 Feb 2017 19:45:28 +0100")
-Message-ID: <xmqqy3x88uqi.fsf@gitster.mtv.corp.google.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
+        Duy Nguyen <pclouds@gmail.com>,
+        Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCH v2] remote helpers: avoid blind fall-back to ".git" when setting GIT_DIR
+References: <20161020061536.6fqh23xb2nhxodpa@sigill.intra.peff.net>
+        <20161020062430.rxupwheaeydtcvf3@sigill.intra.peff.net>
+        <20161122004421.GA12263@google.com>
+        <20161122024102.otlnl6jcrb3pejux@sigill.intra.peff.net>
+        <20161230001114.GB7883@aiede.mtv.corp.google.com>
+        <20161230004845.rknafqsyosmyr6z2@sigill.intra.peff.net>
+        <20170214061607.qyucfue335aqgji2@sigill.intra.peff.net>
+Date:   Tue, 14 Feb 2017 11:08:05 -0800
+In-Reply-To: <20170214061607.qyucfue335aqgji2@sigill.intra.peff.net> (Jeff
+        King's message of "Tue, 14 Feb 2017 01:16:07 -0500")
+Message-ID: <xmqqtw7w8uay.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -68,30 +72,27 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Sixt <j6t@kdbg.org> writes:
+Jeff King <peff@peff.net> writes:
 
-> Am 14.02.2017 um 15:47 schrieb Johannes Schindelin:
+> On Thu, Dec 29, 2016 at 07:48:45PM -0500, Jeff King wrote:
 >
->>>From my point of view, it is not crucial. The next Git for Windows version
->> will have it, of course, and Hannes is always running with his set of
->> patches, he can easily cherry-pick this one, too.
+>> On Thu, Dec 29, 2016 at 04:11:14PM -0800, Jonathan Nieder wrote:
+>> 
+>> > Thanks.  Here's the patch again, now with commit messages and a test.
+>> > Thanks for the analysis and sorry for the slow turnaround.
+>> 
+>> Thanks for following up. While working on a similar one recently, I had
+>> the nagging feeling that there was a case we had found that was still to
+>> be dealt with, and I think this was it. :)
+>> 
+>> The patch to the C code looks good. I have a few comments on the tests:
 >
-> The patch fixes the problem for me here.
->
-> I am a bit hesitant to call it "not crucial": The symptom I observed
-> is certainly not a show stopper; but who knows where else it is
-> important that stderr goes to the terminal earlier than other
-> output. As it is a new regression, it should be included in the next
-> release.
+> I happened to run into this problem myself today, so I thought I'd prod
+> you. I think your patch looks good. Hopefully I didn't scare you off
+> with my comments. :)
 
-I tend to agree with you on the "not crucial" bit.
-
-I applied the patch with "Tested-by: Johannes Sixt <j6t@kdbg.org>"
-on top of 1d3f065e0e ("mingw: follow-up to "replace isatty() hack"",
-2017-01-18), which was the tip of js/mingw-isatty topic that was
-merged to both master and maint during this cycle.  Unless I hear
-the "fix" turns out to be undesirable in the coming few days, let's
-plan to merge it to 'master' by the final.
-
-Thanks.
+Thanks for prodding.  I'm tempted to just rip out everything other
+than the 5-liner fix to transport.c and apply it, expecting that a
+follow-up patch with updated tests to come sometime not in too
+distant future.
 
