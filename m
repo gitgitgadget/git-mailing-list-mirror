@@ -2,77 +2,136 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 253741FAF4
-	for <e@80x24.org>; Tue, 14 Feb 2017 21:13:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9FAFB1FAF4
+	for <e@80x24.org>; Tue, 14 Feb 2017 21:24:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754138AbdBNVNk convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Tue, 14 Feb 2017 16:13:40 -0500
-Received: from zimbra-vnc.tngtech.com ([83.144.240.98]:29632 "EHLO
+        id S1755541AbdBNVYx (ORCPT <rfc822;e@80x24.org>);
+        Tue, 14 Feb 2017 16:24:53 -0500
+Received: from zimbra-vnc.tngtech.com ([83.144.240.98]:26874 "EHLO
         proxy.tng.vnc.biz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752985AbdBNVNj (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Feb 2017 16:13:39 -0500
+        with ESMTP id S1755502AbdBNVYs (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Feb 2017 16:24:48 -0500
 Received: from localhost (localhost [127.0.0.1])
-        by proxy.tng.vnc.biz (Postfix) with ESMTP id 1EF331E3063;
-        Tue, 14 Feb 2017 22:13:36 +0100 (CET)
+        by proxy.tng.vnc.biz (Postfix) with ESMTP id BC08B1E3128;
+        Tue, 14 Feb 2017 22:24:45 +0100 (CET)
 Received: from proxy.tng.vnc.biz ([127.0.0.1])
         by localhost (proxy.tng.vnc.biz [127.0.0.1]) (amavisd-new, port 10032)
-        with ESMTP id ML8x9685hmAG; Tue, 14 Feb 2017 22:13:35 +0100 (CET)
+        with ESMTP id eyIxAF2IODrt; Tue, 14 Feb 2017 22:24:45 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-        by proxy.tng.vnc.biz (Postfix) with ESMTP id B797C1E3082;
-        Tue, 14 Feb 2017 22:13:35 +0100 (CET)
+        by proxy.tng.vnc.biz (Postfix) with ESMTP id 5D54C1E3130;
+        Tue, 14 Feb 2017 22:24:45 +0100 (CET)
 X-Virus-Scanned: amavisd-new at 
 Received: from proxy.tng.vnc.biz ([127.0.0.1])
         by localhost (proxy.tng.vnc.biz [127.0.0.1]) (amavisd-new, port 10026)
-        with ESMTP id edz08bfW-BRo; Tue, 14 Feb 2017 22:13:35 +0100 (CET)
-Received: from [192.168.178.28] (aftr-185-17-204-143.dynamic.mnet-online.de [185.17.204.143])
-        by proxy.tng.vnc.biz (Postfix) with ESMTPSA id 629FC1E3063;
-        Tue, 14 Feb 2017 22:13:35 +0100 (CET)
-Subject: Re: [PATCH] completion: complete modified files for checkout with
- '--'
-To:     =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>
-References: <20170213233359.11149-1-cornelius.weig@tngtech.com>
- <CAM0VKj=d+hAiF6_8TLuJfccNiPtHyg9F6zESA8SuTEeaLsrw4Q@mail.gmail.com>
-Cc:     Git mailing list <git@vger.kernel.org>, j6t@kdbg.org,
-        Richard Wagner <bitte.keine.werbung.einwerfen@googlemail.com>
-From:   Cornelius Weig <cornelius.weig@tngtech.com>
-Message-ID: <4f8a0aaa-4ce1-d4a6-d2e1-28aac7209c90@tngtech.com>
-Date:   Tue, 14 Feb 2017 22:13:35 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.7.0
-MIME-Version: 1.0
-In-Reply-To: <CAM0VKj=d+hAiF6_8TLuJfccNiPtHyg9F6zESA8SuTEeaLsrw4Q@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8BIT
+        with ESMTP id xUK1xiADJEcV; Tue, 14 Feb 2017 22:24:45 +0100 (CET)
+Received: from snowflake.fritz.box (aftr-185-17-204-143.dynamic.mnet-online.de [185.17.204.143])
+        by proxy.tng.vnc.biz (Postfix) with ESMTPSA id E2C4E1E312F;
+        Tue, 14 Feb 2017 22:24:44 +0100 (CET)
+From:   cornelius.weig@tngtech.com
+To:     git@vger.kernel.org
+Cc:     Cornelius Weig <cornelius.weig@tngtech.com>, szeder.dev@gmail.com,
+        bitte.keine.werbung.einwerfen@googlemail.com, j6t@kdbg.org
+Subject: [PATCH v2 2/2] completion: checkout: complete paths when ref given
+Date:   Tue, 14 Feb 2017 22:24:04 +0100
+Message-Id: <20170214212404.31469-2-cornelius.weig@tngtech.com>
+X-Mailer: git-send-email 2.10.2
+In-Reply-To: <20170214212404.31469-1-cornelius.weig@tngtech.com>
+References: <4f8a0aaa-4ce1-d4a6-d2e1-28aac7209c90@tngtech.com>
+ <20170214212404.31469-1-cornelius.weig@tngtech.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 02/14/2017 01:50 AM, SZEDER Gábor wrote:
-> On Tue, Feb 14, 2017 at 12:33 AM,  <cornelius.weig@tngtech.com> wrote:
->> From: Cornelius Weig <cornelius.weig@tngtech.com>
->>
->> The command line completion for git-checkout bails out when seeing '--'
->> as an isolated argument. For git-checkout this signifies the start of a
->> list of files which are to be checked out. Checkout of files makes only
->> sense for modified files,
-> 
-> No, there is e.g. 'git checkout that-branch this-path', too.
+From: Cornelius Weig <cornelius.weig@tngtech.com>
 
-Very true. Thanks for prodding me to this palpable oversight.
+Git-checkout completes words starting with '--' as options and other
+words as refs. Even after specifying a ref, further words not starting
+with '--' are completed as refs, which is invalid for git-checkout.
 
-My error was to aim for a small improvement. I think the correct
-approach is to improve the overall completion of git-checkout. IMHO it
-is a completion bug that after giving a ref, completion will still offer
-refs, e.g.
-$ git checkout HEAD <TAB><TAB> --> list of refs
+This commit ensures that after specifying a ref, further non-option
+words are completed as paths. Four cases are considered:
 
-As far as I can see, giving two refs to checkout is always an error. The
-correct behavior in the example above would be to offer paths instead.
+ - If the word contains a ':', do not treat it as reference and use
+   regular revlist completion.
+ - If no ref is found on the command line, complete non-options as refs
+   as before.
+ - If the ref is HEAD or @, complete only with modified files because
+   checking out unmodified files is a noop.
+   This case also applies if no ref is given, but '--' is present.
+ - If a ref other than HEAD or @ is found, offer only valid paths from
+   that revision.
 
-I'll follow up with an improved version which considers these cases.
+Note that one corner-case is not covered by the current implementation:
+if a refname contains a ':' and is followed by '--' the completion would
+not recognize the valid refname.
+
+Signed-off-by: Cornelius Weig <cornelius.weig@tngtech.com>
+---
+ contrib/completion/git-completion.bash | 39 +++++++++++++++++++++++++++-------
+ 1 file changed, 31 insertions(+), 8 deletions(-)
+
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index 4ab119d..df46f62 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -1068,7 +1068,7 @@ _git_bundle ()
+ 
+ _git_checkout ()
+ {
+-	__git_has_doubledash && return
++	local i c=2 ref="" seen_double_dash=""
+ 
+ 	case "$cur" in
+ 	--conflict=*)
+@@ -1081,13 +1081,36 @@ _git_checkout ()
+ 			"
+ 		;;
+ 	*)
+-		# check if --track, --no-track, or --no-guess was specified
+-		# if so, disable DWIM mode
+-		local flags="--track --no-track --no-guess" track=1
+-		if [ -n "$(__git_find_on_cmdline "$flags")" ]; then
+-			track=''
+-		fi
+-		__gitcomp_nl "$(__git_refs '' $track)"
++		while [ $c -lt $cword ]; do
++			i="${words[c]}"
++			case "$i" in
++			--) seen_double_dash=1 ;;
++			-*|?*:*) ;;
++			*) ref="$i"; break ;;
++			esac
++			((c++))
++		done
++
++		case "$ref,$seen_double_dash,$cur" in
++		,,*:*)
++		    __git_complete_revlist_file
++		    ;;
++		,,*)
++			# check for --track, --no-track, or --no-guess
++			# if so, disable DWIM mode
++			local flags="--track --no-track --no-guess" track=1
++			if [ -n "$(__git_find_on_cmdline "$flags")" ]; then
++				track=''
++			fi
++			__gitcomp_nl "$(__git_refs '' $track)"
++			;;
++		,1,*|@,*|HEAD,*)
++			__git_complete_index_file "--modified"
++			;;
++		*)
++			__git_complete_tree_file "$ref" "$cur"
++			;;
++		esac
+ 		;;
+ 	esac
+ }
+-- 
+2.10.2
 
