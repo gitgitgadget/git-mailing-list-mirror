@@ -2,75 +2,77 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0C71D1FAF4
-	for <e@80x24.org>; Tue, 14 Feb 2017 19:55:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E829B1FAF4
+	for <e@80x24.org>; Tue, 14 Feb 2017 20:11:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754588AbdBNTzY (ORCPT <rfc822;e@80x24.org>);
-        Tue, 14 Feb 2017 14:55:24 -0500
-Received: from cloud.peff.net ([104.130.231.41]:55262 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753807AbdBNTzV (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Feb 2017 14:55:21 -0500
-Received: (qmail 16132 invoked by uid 109); 14 Feb 2017 19:55:15 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 14 Feb 2017 19:55:15 +0000
-Received: (qmail 6060 invoked by uid 111); 14 Feb 2017 19:55:16 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 14 Feb 2017 14:55:16 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 14 Feb 2017 14:55:13 -0500
-Date:   Tue, 14 Feb 2017 14:55:13 -0500
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org,
-        Maxim Kuvyrkov <maxim.kuvyrkov@linaro.org>,
-        Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH] show-branch: fix crash with long ref name
-Message-ID: <20170214195513.7zae6x22advkrms6@sigill.intra.peff.net>
-References: <20170214154816.12625-1-chriscool@tuxfamily.org>
- <20170214172526.hzpm3d3ubd3vjnzr@sigill.intra.peff.net>
- <xmqqlgt88t0r.fsf@gitster.mtv.corp.google.com>
+        id S1754620AbdBNULI (ORCPT <rfc822;e@80x24.org>);
+        Tue, 14 Feb 2017 15:11:08 -0500
+Received: from mo4-p00-ob.smtp.rzone.de ([81.169.146.220]:16914 "EHLO
+        mo4-p00-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751798AbdBNULI (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Feb 2017 15:11:08 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1487103065;
+        l=857; s=domk; d=aepfle.de;
+        h=Content-Disposition:Content-Type:MIME-Version:Subject:To:From:Date;
+        bh=cb5esb0dRZi1soJlV8BJ57hjpeGeZCUc9W8hEErgBIA=;
+        b=Vh9S6HVItsH6FNQ88iovzNgAziFazqZ/N/GGWcMTrBgf5e2ngifAK8TEgWNhR6GHDZ
+        GYjKTcUnsGBPQXMkiIkCttdxlTfSWh8J5h4koSl0EsjeHTNJ6A0EnmKa+luuV+s2rE5X
+        XJ/jvWAsSZ3jgfcdsWKaoZCHlzoxFB6R8Aecs=
+X-RZG-AUTH: :P2EQZWCpfu+qG7CngxMFH1J+yackYocTD1iAi8x+OWi/zfN1cLnAYQz4mzReNqcqYjtpsQ74r5YPOZnnb6/KqEhYo5+P1A==
+X-RZG-CLASS-ID: mo00
+Received: from probook ([2001:a61:3430:6aff:7470:afe4:5c34:8968])
+        by smtp.strato.de (RZmta 39.12 AUTH)
+        with ESMTPSA id n0b399t1EKB4Ic5
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (curve secp521r1 with 521 ECDH bits, eq. 15360 bits RSA))
+        (Client did not present a certificate)
+        for <git@vger.kernel.org>;
+        Tue, 14 Feb 2017 21:11:04 +0100 (CET)
+Received: by probook (Postfix, from userid 1000)
+        id 4912750B9D; Tue, 14 Feb 2017 21:11:04 +0100 (CET)
+Date:   Tue, 14 Feb 2017 21:11:04 +0100
+From:   Olaf Hering <olaf@aepfle.de>
+To:     git@vger.kernel.org
+Subject: missing handling of "No newline at end of file" in git am
+Message-ID: <20170214201104.GA26407@aepfle.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: multipart/signed; micalg=pgp-sha1;
+        protocol="application/pgp-signature"; boundary="X1bOJ3K7DJ5YkBrT"
 Content-Disposition: inline
-In-Reply-To: <xmqqlgt88t0r.fsf@gitster.mtv.corp.google.com>
+User-Agent: Mutt/1.7.2 (6927)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Feb 14, 2017 at 11:35:48AM -0800, Junio C Hamano wrote:
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > This fixes the problem, but I think we can simplify it quite a bit by
-> > using resolve_refdup(). Here's the patch series I ended up with:
-> >
-> >   [1/3]: show-branch: drop head_len variable
-> >   [2/3]: show-branch: store resolved head in heap buffer
-> >   [3/3]: show-branch: use skip_prefix to drop magic numbers
-> >
-> >  builtin/show-branch.c | 39 ++++++++++++---------------------------
-> >  1 file changed, 12 insertions(+), 27 deletions(-)
-> 
-> Yes, the whole thing is my fault ;-) and I agree with what these
-> patches do.
-> 
-> The second one lacks free(head) but I think that is OK; it is
-> something we allocate in cmd_*() and use pretty much thruout the
-> rest of the program.
+--X1bOJ3K7DJ5YkBrT
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 
-Yes, I actually tested the whole thing under ASAN (which was necessary
-to notice the problem), which complained about the leak. I don't mind
-adding a free(head), but there are a bunch of similar "leaks" in that
-function, so I didn't bother.
+How is git send-email and git am supposed to handle a text file which
+lacks a newline at the very end? This is about git 2.11.0.
 
-I notice Christian's patch added a few tests. I don't know if we'd want
-to squash them in (I didn't mean to override his patch at all; I was
-about to send mine out when I noticed his, and I wondered if we wanted
-to combine the two efforts).
+Right now the patch in an email generated with 'git send-email' ends
+with '\ No newline at end of file', which 'git am' can not handle.  To
+me it looks like whatever variant of "diff" is used does the right thing
+and indicates the lack of newline. Just the used variant of "patch" does
+not deal with it.
 
--Peff
+
+Olaf
+
+--X1bOJ3K7DJ5YkBrT
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iF0EARECAB0WIQSkRyP6Rn//f03pRUBdQqD6ppg2fgUCWKNkVwAKCRBdQqD6ppg2
+fqDGAJ47m+4NvOE/4OYhWBpSbqMVdR6nFACg30UcTdYkGXNVUw0k4yHaHInzrpY=
+=PsKk
+-----END PGP SIGNATURE-----
+
+--X1bOJ3K7DJ5YkBrT--
