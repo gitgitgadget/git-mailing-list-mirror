@@ -2,92 +2,155 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 234C71FC44
-	for <e@80x24.org>; Mon, 13 Feb 2017 23:55:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C82F21FC44
+	for <e@80x24.org>; Tue, 14 Feb 2017 00:12:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751413AbdBMXzv (ORCPT <rfc822;e@80x24.org>);
-        Mon, 13 Feb 2017 18:55:51 -0500
-Received: from mail-it0-f41.google.com ([209.85.214.41]:38811 "EHLO
-        mail-it0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751333AbdBMXzu (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Feb 2017 18:55:50 -0500
-Received: by mail-it0-f41.google.com with SMTP id c7so9403829itd.1
-        for <git@vger.kernel.org>; Mon, 13 Feb 2017 15:55:50 -0800 (PST)
+        id S1751427AbdBNAMK (ORCPT <rfc822;e@80x24.org>);
+        Mon, 13 Feb 2017 19:12:10 -0500
+Received: from mail-it0-f44.google.com ([209.85.214.44]:34824 "EHLO
+        mail-it0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751408AbdBNAMJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Feb 2017 19:12:09 -0500
+Received: by mail-it0-f44.google.com with SMTP id 203so10367148ith.0
+        for <git@vger.kernel.org>; Mon, 13 Feb 2017 16:12:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=url+cOgATPCnHRCWK85QY7d3Y9V/eHDHL9nx2zVwGGc=;
-        b=ZjqccUFmWBS6vhPgR3+ZaKRaA11b4t2llKK6SpVOfB837fQyCc0kRzASRTxClA3vpC
-         +wgEy5uzOcnpvBOahvaQsZ/vsdKPXeDyjUK/oYn4hJ7SUpMObGbOr6gKzneryGYQktGu
-         e1DnVZfdBaI6TzRgNvpj74lvsZKt6nBT18b8UHDSPCgEeOien2cqdBP/0oSh+A0Bpl6M
-         KESeYlIJ/Bpnl1gTcPctc/YqhsRqHgiHPsIctFGrtNcoPrhuCP52N0phDxgIldOcP3QC
-         JSdkDp3CFq0lhNl0jQzvf7fKZJQi2zNoGn7p9CLEbgtIer25sTgoci3AZUUf5EIDg8iJ
-         1IRg==
+        h=from:to:cc:subject:date:message-id;
+        bh=bEJHPUqpzNHbz8KVhD1v8h/bUNMjDmedX0THOM34TH0=;
+        b=ssb9rLN45DSNx47XuaT4kcyDU4AtN1zL3Ofw2d/+XgwsAnRgunHLJXRBVSKdpJjXpo
+         SPIcdsjubMIiIJ7EsLTq/aBoo7FEdYGpUGl/7pPalKbe8MZ7Ck0fvAs9kTV6C1SAQ0f+
+         0WlgZCVmUWUSSp3JQh0DjXrm9Wr7mi9gRNgUdlifRqUhV+bPyKnf29ZqJ9IpL4sjL+U5
+         HCIQEz2r5fNrmrDFRcao4GhyoLMLGWqdVeUpGWLLLkyAu8uBh4HiZri6gHjy4CSOPbwI
+         yRh8IXZaRr6BQVOb4p+KFB5MDAXTREMYkxJwbAOWN1J37H7h00y8ZZ5AIE1DBJu2mwPl
+         0nDg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=url+cOgATPCnHRCWK85QY7d3Y9V/eHDHL9nx2zVwGGc=;
-        b=XrSJOpc9Y75jQsEDIkl5AEHPRPynnDZThbIpIXX4jlrr0bITs4ZSQ1Z3Lh6xvUYmG9
-         XIkZqHQSyhZiEeyYuIT6R2DVgYa10UfSsDZJSFM9jGFdxiSfgQyRkR/8uyukKVsGsyAo
-         OJjNZ/W74HyA3b0wY4vko0xmUwMOocwxXcfd4cWa+2CGU70y1mD/eZY6QKDlhbEtfb2J
-         jtTAY+EwcLZKRTQMQQaJBLADR5V20BpYGq2fdVS/aYI0rwLP60HUvfEmrmuMq7XCDVlA
-         /pPgx64N25W9ebm8J7Cf9ejCQ1AP2vBFtpy5ZyxFgAebR28S9gTZ4C2hRjJJBdGX9c+a
-         D7XA==
-X-Gm-Message-State: AMke39k23MwOHOX8FVXSCSjxJsJu3WnG9OTOffQnEJl193Q3tVmWFvPAcrFFDeIENlZRoI8EcAdP5m4EfoN4Ac/e
-X-Received: by 10.36.65.4 with SMTP id x4mr1067105ita.69.1487030149373; Mon,
- 13 Feb 2017 15:55:49 -0800 (PST)
-MIME-Version: 1.0
-Received: by 10.79.33.148 with HTTP; Mon, 13 Feb 2017 15:55:48 -0800 (PST)
-In-Reply-To: <20170213152011.12050-12-pclouds@gmail.com>
-References: <20170213152011.12050-1-pclouds@gmail.com> <20170213152011.12050-12-pclouds@gmail.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 13 Feb 2017 15:55:48 -0800
-Message-ID: <CAGZ79kZC6TntQrW7MF6-h5z5En-u6rwNX=zuaHRNDpbO80ALHA@mail.gmail.com>
-Subject: Re: [PATCH 11/11] refs: split and make get_*_ref_store() public API
-To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Michael Haggerty <mhagger@alum.mit.edu>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        David Turner <novalis@novalis.org>
-Content-Type: text/plain; charset=UTF-8
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=bEJHPUqpzNHbz8KVhD1v8h/bUNMjDmedX0THOM34TH0=;
+        b=pHW5nXciH9kqPulYGNmhvbK276jsWBRpqitMSEN67t34iQl7M8GgdAgl0c3SA3VrON
+         k0cD3l2CzZBTl+Uv4yAFCluo/XBCxthz3aNIiZguY/VKRjgKgj3lS9IgACw/JAiQuAeq
+         GjbDec6PREeM6vCjgbv1QjSAt3rIfU2ihGfT0rNC5oEU87TpMkP4vOvuAshbjQHK6wUM
+         T1XfeJpYzCUza8C0AjKso34l/Zx5l5sh1hEXRCKz39IAIGdcQ+3+f8hAeV03JHtClzpN
+         /0xQlhNbDHBHY2FwbxFOF0//07kurb0LC8m5avxvyjLd5dI2m1WIk2yMJkjM2PrQxXG8
+         ZoWg==
+X-Gm-Message-State: AMke39lK4qMooAXZ8KDRShbYkBksOcl0/3Cqr50vAN5zvKZ8gVR8KRBZHsapwpur1b0AtDU1
+X-Received: by 10.98.194.22 with SMTP id l22mr28549610pfg.178.1487031128285;
+        Mon, 13 Feb 2017 16:12:08 -0800 (PST)
+Received: from twelve2.mtv.corp.google.com ([100.96.238.13])
+        by smtp.gmail.com with ESMTPSA id 75sm22901751pfp.80.2017.02.13.16.12.07
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Mon, 13 Feb 2017 16:12:07 -0800 (PST)
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     git@vger.kernel.org
+Cc:     Jonathan Tan <jonathantanmy@google.com>, peff@peff.net,
+        gitster@pobox.com
+Subject: [PATCH for NEXT] grep: do not unnecessarily query repo for "--"
+Date:   Mon, 13 Feb 2017 16:11:59 -0800
+Message-Id: <20170214001159.19079-1-jonathantanmy@google.com>
+X-Mailer: git-send-email 2.11.0.483.g087da7b7c-goog
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
->
-> +/*
-> + * Return the ref_store instance for the specified submodule. For the
-> + * main repository, use submodule==NULL; such a call cannot fail.
+When running a command of the form
 
-So now we have both a get_main as well as a get_submodule function,
-but the submodule function can return the main as well?
+  git grep --no-index pattern -- path
 
-I'd rather see this as a BUG; or asking another way:
-What is the difference between get_submodule_ref_store(NULL)
-and get_main_ref_store() ?
+in the absence of a Git repository, an error message will be printed:
 
-As you went through all call sites (by renaming the function), we'd
-be able to tell that there is no caller with NULL, or is it?
+  fatal: BUG: setup_git_env called without repository
 
-Stefan
+This is because "git grep" tries to interpret "--" as a rev. "git grep"
+has always tried to first interpret "--" as a rev for at least a few
+years, but this issue was upgraded from a pessimization to a bug in
+commit 59332d1 ("Resurrect "git grep --no-index"", 2010-02-06), which
+calls get_sha1 regardless of whether --no-index was specified. This bug
+appeared to be benign until commit b1ef400 ("setup_git_env: avoid blind
+fall-back to ".git"", 2016-10-20) when Git was taught to die in this
+situation.  (This "git grep" bug appears to be one of the bugs that
+commit b1ef400 is meant to flush out.)
 
-> For
-> + * a submodule, the submodule must exist and be a nonbare repository,
-> + * otherwise return NULL. If the requested reference store has not yet
-> + * been initialized, initialize it first.
-> + *
-> + * For backwards compatibility, submodule=="" is treated the same as
-> + * submodule==NULL.
-> + */
-> +struct ref_store *get_submodule_ref_store(const char *submodule);
-> +struct ref_store *get_main_ref_store(void);
+Therefore, always interpret "--" as signaling the end of options,
+instead of trying to interpret it as a rev first.
+
+Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+---
+
+There is probably a similar bug for commands of the form:
+
+  git grep --no-index pattern foo
+
+If there is a repo and "foo" is a rev, the "--no-index or --untracked
+cannot be used with revs." error would occur. If there is a repo and
+"foo" is not a rev, this command would proceed as usual. If there is no
+repo, the "setup_git_env called without repository" error would occur.
+(This is my understanding from reading the code - I haven't tested it
+out.)
+
+This patch does not fix this similar bug, but I decided to send it out
+anyway because it still fixes a bug and unlocks the ability to
+specify paths with "git grep --no-index".
+
+ builtin/grep.c  |  9 +++++----
+ t/t7810-grep.sh | 12 ++++++++++++
+ 2 files changed, 17 insertions(+), 4 deletions(-)
+
+diff --git a/builtin/grep.c b/builtin/grep.c
+index 2c727ef49..1b68d1638 100644
+--- a/builtin/grep.c
++++ b/builtin/grep.c
+@@ -1154,6 +1154,11 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
+ 		const char *arg = argv[i];
+ 		unsigned char sha1[20];
+ 		struct object_context oc;
++		if (!strcmp(arg, "--")) {
++			i++;
++			seen_dashdash = 1;
++			break;
++		}
+ 		/* Is it a rev? */
+ 		if (!get_sha1_with_context(arg, 0, sha1, &oc)) {
+ 			struct object *object = parse_object_or_die(sha1, arg);
+@@ -1162,10 +1167,6 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
+ 			add_object_array_with_path(object, arg, &list, oc.mode, oc.path);
+ 			continue;
+ 		}
+-		if (!strcmp(arg, "--")) {
+-			i++;
+-			seen_dashdash = 1;
+-		}
+ 		break;
+ 	}
+ 
+diff --git a/t/t7810-grep.sh b/t/t7810-grep.sh
+index 19f0108f8..29202f0e7 100755
+--- a/t/t7810-grep.sh
++++ b/t/t7810-grep.sh
+@@ -982,6 +982,18 @@ test_expect_success 'grep -e -- -- path' '
+ 	test_cmp expected actual
+ '
+ 
++test_expect_success 'grep --no-index pattern -- path' '
++	rm -fr non &&
++	mkdir -p non/git &&
++	(
++		GIT_CEILING_DIRECTORIES="$(pwd)/non" &&
++		export GIT_CEILING_DIRECTORIES &&
++		cd non/git &&
++		echo hello >hello &&
++		git grep --no-index o -- .
++	)
++'
++
+ cat >expected <<EOF
+ hello.c:int main(int argc, const char **argv)
+ hello.c:	printf("Hello world.\n");
+-- 
+2.11.0.483.g087da7b7c-goog
+
