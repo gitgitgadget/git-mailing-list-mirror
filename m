@@ -2,80 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	shortcircuit=no autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id ECD771FC44
-	for <e@80x24.org>; Tue, 14 Feb 2017 06:23:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 489F52013C
+	for <e@80x24.org>; Tue, 14 Feb 2017 07:13:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751863AbdBNGW6 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 14 Feb 2017 01:22:58 -0500
-Received: from cloud.peff.net ([104.130.231.41]:54921 "EHLO cloud.peff.net"
+        id S1752364AbdBNHN0 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 14 Feb 2017 02:13:26 -0500
+Received: from dcvr.yhbt.net ([64.71.152.64]:56920 "EHLO dcvr.yhbt.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750965AbdBNGW6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Feb 2017 01:22:58 -0500
-Received: (qmail 13531 invoked by uid 109); 14 Feb 2017 06:22:58 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 14 Feb 2017 06:22:58 +0000
-Received: (qmail 977 invoked by uid 111); 14 Feb 2017 06:22:58 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 14 Feb 2017 01:22:58 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 14 Feb 2017 01:22:55 -0500
-Date:   Tue, 14 Feb 2017 01:22:55 -0500
-From:   Jeff King <peff@peff.net>
-To:     Oleg Taranenko <olegtaranenko@gmail.com>
-Cc:     git <git@vger.kernel.org>
-Subject: Re: Developing git with IDE
-Message-ID: <20170214062255.5oumhsou7isaei7n@sigill.intra.peff.net>
-References: <CABEd3j-kxA+ap7vqr85X-4HpQCvShPJUsS2Qq0BrMEK09BYS7A@mail.gmail.com>
+        id S1751023AbdBNHN0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Feb 2017 02:13:26 -0500
+Received: from localhost (dcvr.yhbt.net [127.0.0.1])
+        by dcvr.yhbt.net (Postfix) with ESMTP id 9FE342013A;
+        Tue, 14 Feb 2017 07:13:24 +0000 (UTC)
+Date:   Tue, 14 Feb 2017 07:13:24 +0000
+From:   Eric Wong <e@80x24.org>
+To:     Arif Khokar <arif.i.khokar@gmail.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jakub =?utf-8?B?TmFyxJlic2tp?= <jnareb@gmail.com>,
+        Jeff King <peff@peff.net>, Stefan Beller <sbeller@google.com>,
+        meta@public-inbox.org, git@vger.kernel.org
+Subject: Re: Working with public-inbox.org [Was: [PATCH] rev-parse: respect
+ core.hooksPath in --git-path]
+Message-ID: <20170214071324.GA747@starla>
+References: <CAGZ79kasebzJb=b2n=JQiVMrSfJKaVfZaaoaVJFkXWuqKjfYKw@mail.gmail.com>
+ <alpine.DEB.2.20.1608181430280.4924@virtualbox>
+ <20160819150340.725bejnps6474u2e@sigill.intra.peff.net>
+ <46a5b9b6-f3f6-7650-8a5b-b0b52223e375@gmail.com>
+ <DM5PR17MB1353EFB1F6FE3B05EFDF86DCD3EB0@DM5PR17MB1353.namprd17.prod.outlook.com>
+ <alpine.DEB.2.20.1608241509200.4924@virtualbox>
+ <alpine.DEB.2.20.1702101707060.3496@virtualbox>
+ <d16546a4-25be-7b85-3191-e9393fda1164@hotmail.com>
+ <alpine.DEB.2.20.1702131533400.3496@virtualbox>
+ <7dbe0866-4a9b-7afe-8f51-ca1d5524d4a4@hotmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CABEd3j-kxA+ap7vqr85X-4HpQCvShPJUsS2Qq0BrMEK09BYS7A@mail.gmail.com>
+In-Reply-To: <7dbe0866-4a9b-7afe-8f51-ca1d5524d4a4@hotmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Feb 14, 2017 at 12:15:00AM +0100, Oleg Taranenko wrote:
-
-> being last decade working with java & javascript I completely lost
-> relation to c/c++ world. Trying to get into git internals I'm facing
-> with issue what IDE is more suitable for developing git @ macos ?
+Arif Khokar <arif.i.khokar@gmail.com> wrote:
+> On 02/13/2017 09:37 AM, Johannes Schindelin wrote:
+> >I actually had expected *you* to put in a little bit of an effort, too. In
+> >fact, I was very disappointed that you did not even look into porting that
+> >script to use public-inbox instead of GMane.
 > 
-> Have googled, but any my search queries following to non-relevant
-> themes, like supporting git in IDEs etc.
+> I wasn't aware of that expectation.  My idea was to use NNTP as a way to
+> facilitate the development of a new git utility that would serve as the
+> inverse of git-send-email (sort of like the relationship between git
+> format-patch and git am), rather than using a
+
+Speaking for myself, I usually don't expect much, especially
+from newcomers.  So I am disappointed to see Dscho's disappointment
+aimed at you, Arif.  Especially since you're not a regular and
+we have no idea how much free time, attention span, or familiarity
+with Bourne shell you have.
+
+> IIRC, I had posted some proof-of-concept Perl code to do so back in August
+> in <DM5PR17MB1353B99EBD5F4FD23360DD41D3ED0@DM5PR17MB1353.namprd17.prod.outlook.com>
 > 
-> my first attempt - CLion (as far as I'm Jetbrains fan) - got failed,
-> as far as doesn't support makefile-based projects, only CMake.
-> 
-> There are a number of free C/C++ dev tools: Xcode, CodeBlocks,
-> CodeLite. Gnat, Qt creator, Dev C++, C++ Builder (Borland? :),
-> Eclipse, NetBeans... what else?
-> 
-> Because of  lack my modern C experience, could somebody share his own
-> attempts/thoughts/use cases how more convenient dive into the git
-> development process on the Mac?
+> Looking at public-inbox now at the archives of this group, it appears that
+> several of the messages I sent weren't archived for some reason (and I
+> didn't see any more responses to what I posted at the time).  The messages
+> are accessible via NNTP when connecting to gmane though.
 
-I think most people just use a good editor (emacs or vim), and no IDE. I
-do recommend using ctags or similar (and there is a "make tags" target
-to build the tags) to help with jumping between functions.
+It looks like it went to gmane via the meta@public-inbox.org to
+gmane.mail.public-inbox.general mirror, not via the git@vger mirror.
+I can't find it on git@vger's mail-archive.com mirror, either:
 
-> Tried to find in the git distribution Documentation more information
-> about this, nothing as well...  Would be nice to have a kind of
-> 'Getting Started Manual'
+https://mail-archive.com/search?q=Arif+Khokar&l=git%40vger.kernel.org
 
-There is Documentation/CodingGuidelines, but that's mostly about how to
-_write_ code, not read it. Some protocols and subsystems are covered in
-Documentation/technical. If you want a "big picture", I think you'd do
-best to read something like:
+> Also, looking at the source of the message I referenced, it appears that my
+> MUA decided to base64 encode the message for some reason (which may have
+> resulted in it getting filtered by those who I sent the message to).
 
-  https://git-scm.com/book/en/v2/Git-Internals-Plumbing-and-Porcelain
+It probably wasn't base64, but maybe it was one of these:
+http://vger.kernel.org/majordomo-taboos.txt
 
-That talks about the system as a whole, not the code, but the layout of
-the code follows the overall system design (e.g., the entry point for
-the "log" command is cmd_log(), and you can see which subsystems it uses
-from there).
+Or it was the SPF softfail which you can see in the headers on both
+gmane and public-inbox.
+It might even be the '_' (underscore) in your other address.
+But even Junio gets dropped by vger sometimes:
+https://public-inbox.org/git/20170127035753.GA2604@dcvr/
 
--Peff
+But if I had to guess, vger gets hit by truckloads of spam and
+the the backscatter volume could become unimaginable, so perhaps
+it has good reason to discard silently.
+
+
+
+Anyways, the eventual goal of public-inbox is to flip the
+mailing list model backwards into "archives first" mode,
+so a message needs to make it into public archives before
+it goes out to subscribers.  That might prevent or avoid
+such problems... *shrug*
