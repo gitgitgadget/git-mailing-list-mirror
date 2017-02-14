@@ -2,180 +2,224 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 264F51FC44
-	for <e@80x24.org>; Tue, 14 Feb 2017 01:20:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8ED0F1FC44
+	for <e@80x24.org>; Tue, 14 Feb 2017 02:32:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751637AbdBNBUk (ORCPT <rfc822;e@80x24.org>);
-        Mon, 13 Feb 2017 20:20:40 -0500
-Received: from cloud.peff.net ([104.130.231.41]:54679 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751580AbdBNBUk (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Feb 2017 20:20:40 -0500
-Received: (qmail 23422 invoked by uid 109); 14 Feb 2017 01:20:39 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 14 Feb 2017 01:20:39 +0000
-Received: (qmail 30709 invoked by uid 111); 14 Feb 2017 01:20:39 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 13 Feb 2017 20:20:39 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 13 Feb 2017 20:20:37 -0500
-Date:   Mon, 13 Feb 2017 20:20:37 -0500
-From:   Jeff King <peff@peff.net>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org, gitster@pobox.com
-Subject: Re: [PATCH for NEXT] grep: do not unnecessarily query repo for "--"
-Message-ID: <20170214012037.u2eg2n7mvteullcx@sigill.intra.peff.net>
-References: <20170214001159.19079-1-jonathantanmy@google.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20170214001159.19079-1-jonathantanmy@google.com>
+        id S1751324AbdBNCcO (ORCPT <rfc822;e@80x24.org>);
+        Mon, 13 Feb 2017 21:32:14 -0500
+Received: from castro.crustytoothpaste.net ([75.10.60.170]:50602 "EHLO
+        castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1750999AbdBNCcM (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 13 Feb 2017 21:32:12 -0500
+Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 339EE280B0;
+        Tue, 14 Feb 2017 02:31:56 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
+        s=default; t=1487039516;
+        bh=bEm7oYn7NHtJxPBdW6uIQJbRPNWA4cyVBhHIC3zOJSI=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=bpKeCsqmmVgarvB6P8LKDMvVmN7Lu66Rhgksvxs9muNqzejDl/m8bVEnNLf9AxdSV
+         ynAlcEb/FW9+4n2kbjTjcRmUYa2t3dV8Um+1r0Bx4a9dlTFmgTUnTBi2BGOmTr564q
+         h8u88JWKKQDl56agNCRzRL1pfOVGnsvukGFKNo+MV/wOa1e9IwWQv7KEoXmlzj8YkC
+         cE9dGU56xshbrfh3rdDBrzMlV/6HmMID+idPTyjo7mazR9SGqeZ8EzzKsR5weE9Hkt
+         zgz87/8ZdxSdN9D0Y4e8JevatFs3bad+Jfhp3BJk/zVNI70wipYI4mh5faHTOOXY/w
+         v/kvZQzxv9T0gf+90IepvFonAKI8fTmb3svWSiEiImFr9XlrVhF125+Ojjgsn3vnPa
+         TrY+ZMk0+fjLlKUUkVEocnYN29ONhMKxUEcBR87Poe7Lp61OX44lxjigeyCdhoSWtb
+         cSSkxpcsz17ecYffGc9ZO5V18a6J8KlITJ2n75yTWnTIOxrE8w9
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     git@vger.kernel.org
+Cc:     Jeff King <peff@peff.net>, Michael Haggerty <mhagger@alum.mit.edu>
+Subject: [PATCH v2 03/19] builtin/describe: convert to struct object_id
+Date:   Tue, 14 Feb 2017 02:31:25 +0000
+Message-Id: <20170214023141.842922-4-sandals@crustytoothpaste.net>
+X-Mailer: git-send-email 2.11.0
+In-Reply-To: <20170214023141.842922-1-sandals@crustytoothpaste.net>
+References: <20170214023141.842922-1-sandals@crustytoothpaste.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Feb 13, 2017 at 04:11:59PM -0800, Jonathan Tan wrote:
+Convert the functions in this file and struct commit_name  to struct
+object_id.
 
-> When running a command of the form
-> 
->   git grep --no-index pattern -- path
-> 
-> in the absence of a Git repository, an error message will be printed:
-> 
->   fatal: BUG: setup_git_env called without repository
-> 
-> This is because "git grep" tries to interpret "--" as a rev. "git grep"
-> has always tried to first interpret "--" as a rev for at least a few
-> years, but this issue was upgraded from a pessimization to a bug in
-> commit 59332d1 ("Resurrect "git grep --no-index"", 2010-02-06), which
-> calls get_sha1 regardless of whether --no-index was specified. This bug
-> appeared to be benign until commit b1ef400 ("setup_git_env: avoid blind
-> fall-back to ".git"", 2016-10-20) when Git was taught to die in this
-> situation.  (This "git grep" bug appears to be one of the bugs that
-> commit b1ef400 is meant to flush out.)
-> 
-> Therefore, always interpret "--" as signaling the end of options,
-> instead of trying to interpret it as a rev first.
+Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+---
+ builtin/describe.c | 50 +++++++++++++++++++++++++-------------------------
+ 1 file changed, 25 insertions(+), 25 deletions(-)
 
-Nicely explained.
+diff --git a/builtin/describe.c b/builtin/describe.c
+index 01490a157e..738e68f95b 100644
+--- a/builtin/describe.c
++++ b/builtin/describe.c
+@@ -39,11 +39,11 @@ static const char *diff_index_args[] = {
+ 
+ struct commit_name {
+ 	struct hashmap_entry entry;
+-	unsigned char peeled[20];
++	struct object_id peeled;
+ 	struct tag *tag;
+ 	unsigned prio:2; /* annotated tag = 2, tag = 1, head = 0 */
+ 	unsigned name_checked:1;
+-	unsigned char sha1[20];
++	struct object_id oid;
+ 	char *path;
+ };
+ 
+@@ -54,17 +54,17 @@ static const char *prio_names[] = {
+ static int commit_name_cmp(const struct commit_name *cn1,
+ 		const struct commit_name *cn2, const void *peeled)
+ {
+-	return hashcmp(cn1->peeled, peeled ? peeled : cn2->peeled);
++	return oidcmp(&cn1->peeled, peeled ? peeled : &cn2->peeled);
+ }
+ 
+-static inline struct commit_name *find_commit_name(const unsigned char *peeled)
++static inline struct commit_name *find_commit_name(const struct object_id *peeled)
+ {
+-	return hashmap_get_from_hash(&names, sha1hash(peeled), peeled);
++	return hashmap_get_from_hash(&names, sha1hash(peeled->hash), peeled->hash);
+ }
+ 
+ static int replace_name(struct commit_name *e,
+ 			       int prio,
+-			       const unsigned char *sha1,
++			       const struct object_id *oid,
+ 			       struct tag **tag)
+ {
+ 	if (!e || e->prio < prio)
+@@ -77,13 +77,13 @@ static int replace_name(struct commit_name *e,
+ 		struct tag *t;
+ 
+ 		if (!e->tag) {
+-			t = lookup_tag(e->sha1);
++			t = lookup_tag(e->oid.hash);
+ 			if (!t || parse_tag(t))
+ 				return 1;
+ 			e->tag = t;
+ 		}
+ 
+-		t = lookup_tag(sha1);
++		t = lookup_tag(oid->hash);
+ 		if (!t || parse_tag(t))
+ 			return 0;
+ 		*tag = t;
+@@ -96,24 +96,24 @@ static int replace_name(struct commit_name *e,
+ }
+ 
+ static void add_to_known_names(const char *path,
+-			       const unsigned char *peeled,
++			       const struct object_id *peeled,
+ 			       int prio,
+-			       const unsigned char *sha1)
++			       const struct object_id *oid)
+ {
+ 	struct commit_name *e = find_commit_name(peeled);
+ 	struct tag *tag = NULL;
+-	if (replace_name(e, prio, sha1, &tag)) {
++	if (replace_name(e, prio, oid, &tag)) {
+ 		if (!e) {
+ 			e = xmalloc(sizeof(struct commit_name));
+-			hashcpy(e->peeled, peeled);
+-			hashmap_entry_init(e, sha1hash(peeled));
++			oidcpy(&e->peeled, peeled);
++			hashmap_entry_init(e, sha1hash(peeled->hash));
+ 			hashmap_add(&names, e);
+ 			e->path = NULL;
+ 		}
+ 		e->tag = tag;
+ 		e->prio = prio;
+ 		e->name_checked = 0;
+-		hashcpy(e->sha1, sha1);
++		oidcpy(&e->oid, oid);
+ 		free(e->path);
+ 		e->path = xstrdup(path);
+ 	}
+@@ -154,7 +154,7 @@ static int get_name(const char *path, const struct object_id *oid, int flag, voi
+ 	else
+ 		prio = 0;
+ 
+-	add_to_known_names(all ? path + 5 : path + 10, peeled.hash, prio, oid->hash);
++	add_to_known_names(all ? path + 5 : path + 10, &peeled, prio, oid);
+ 	return 0;
+ }
+ 
+@@ -212,7 +212,7 @@ static unsigned long finish_depth_computation(
+ static void display_name(struct commit_name *n)
+ {
+ 	if (n->prio == 2 && !n->tag) {
+-		n->tag = lookup_tag(n->sha1);
++		n->tag = lookup_tag(n->oid.hash);
+ 		if (!n->tag || parse_tag(n->tag))
+ 			die(_("annotated tag %s not available"), n->path);
+ 	}
+@@ -230,14 +230,14 @@ static void display_name(struct commit_name *n)
+ 		printf("%s", n->path);
+ }
+ 
+-static void show_suffix(int depth, const unsigned char *sha1)
++static void show_suffix(int depth, const struct object_id *oid)
+ {
+-	printf("-%d-g%s", depth, find_unique_abbrev(sha1, abbrev));
++	printf("-%d-g%s", depth, find_unique_abbrev(oid->hash, abbrev));
+ }
+ 
+ static void describe(const char *arg, int last_one)
+ {
+-	unsigned char sha1[20];
++	struct object_id oid;
+ 	struct commit *cmit, *gave_up_on = NULL;
+ 	struct commit_list *list;
+ 	struct commit_name *n;
+@@ -246,20 +246,20 @@ static void describe(const char *arg, int last_one)
+ 	unsigned long seen_commits = 0;
+ 	unsigned int unannotated_cnt = 0;
+ 
+-	if (get_sha1(arg, sha1))
++	if (get_oid(arg, &oid))
+ 		die(_("Not a valid object name %s"), arg);
+-	cmit = lookup_commit_reference(sha1);
++	cmit = lookup_commit_reference(oid.hash);
+ 	if (!cmit)
+ 		die(_("%s is not a valid '%s' object"), arg, commit_type);
+ 
+-	n = find_commit_name(cmit->object.oid.hash);
++	n = find_commit_name(&cmit->object.oid);
+ 	if (n && (tags || all || n->prio == 2)) {
+ 		/*
+ 		 * Exact match to an existing ref.
+ 		 */
+ 		display_name(n);
+ 		if (longformat)
+-			show_suffix(0, n->tag ? n->tag->tagged->oid.hash : sha1);
++			show_suffix(0, n->tag ? &n->tag->tagged->oid : &oid);
+ 		if (dirty)
+ 			printf("%s", dirty);
+ 		printf("\n");
+@@ -276,7 +276,7 @@ static void describe(const char *arg, int last_one)
+ 		struct commit *c;
+ 		struct commit_name *n = hashmap_iter_first(&names, &iter);
+ 		for (; n; n = hashmap_iter_next(&iter)) {
+-			c = lookup_commit_reference_gently(n->peeled, 1);
++			c = lookup_commit_reference_gently(n->peeled.hash, 1);
+ 			if (c)
+ 				c->util = n;
+ 		}
+@@ -380,7 +380,7 @@ static void describe(const char *arg, int last_one)
+ 
+ 	display_name(all_matches[0].name);
+ 	if (abbrev)
+-		show_suffix(all_matches[0].depth, cmit->object.oid.hash);
++		show_suffix(all_matches[0].depth, &cmit->object.oid);
+ 	if (dirty)
+ 		printf("%s", dirty);
+ 	printf("\n");
+-- 
+2.11.0
 
-> There is probably a similar bug for commands of the form:
-> 
->   git grep --no-index pattern foo
-> 
-> If there is a repo and "foo" is a rev, the "--no-index or --untracked
-> cannot be used with revs." error would occur. If there is a repo and
-> "foo" is not a rev, this command would proceed as usual. If there is no
-> repo, the "setup_git_env called without repository" error would occur.
-> (This is my understanding from reading the code - I haven't tested it
-> out.)
-
-Yes, it's easy to see that "git grep --no-index foo bar" outside of a
-repo generates the same BUG. I suspect that "--no-index" should just
-disable looking up revs entirely, even if we are actually in a
-repository directory.
-
-> This patch does not fix this similar bug, but I decided to send it out
-> anyway because it still fixes a bug and unlocks the ability to
-> specify paths with "git grep --no-index".
-
-Yes, I think even if we fix the other bug, fixing this "--" thing is an
-improvement.
-
-> diff --git a/builtin/grep.c b/builtin/grep.c
-> index 2c727ef49..1b68d1638 100644
-> --- a/builtin/grep.c
-> +++ b/builtin/grep.c
-> @@ -1154,6 +1154,11 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
->  		const char *arg = argv[i];
->  		unsigned char sha1[20];
->  		struct object_context oc;
-> +		if (!strcmp(arg, "--")) {
-> +			i++;
-> +			seen_dashdash = 1;
-> +			break;
-> +		}
->  		/* Is it a rev? */
->  		if (!get_sha1_with_context(arg, 0, sha1, &oc)) {
->  			struct object *object = parse_object_or_die(sha1, arg);
-
-So I think this is a definite improvement, but I see a few leftover
-oddities:
-
-  - the end logic for this loop is now:
-
-      if (arg is a rev) {
-         ... handle rev ...
-         continue;
-      }
-      break;
-
-    It would probably be more obvious as:
-
-      if (arg is not a rev)
-          break;
-      ... handle rev ...
-
-  - the rev-handling code does:
-
-      if (!seen_dashdash)
-          verify_non_filename(prefix, arg);
-
-    But I do not see how seen_dashdash could ever be untrue. We set it
-    inside this loop, and break immediately when we see it. And indeed,
-    running:
-
-      echo content >master
-      git grep content master --
-
-    does not work. The "--" should tell us that "master" is a rev, but
-    we don't know yet that we have a dashdash.
-
-    I think we need a separate loop to find the "--" first, and _then_
-    walk through the arguments, treating them as revs or paths as
-    appropriate. This is how setup_revisions() does it.
-
-    So this isn't a problem introduced by your patch, but it's
-    intimately related.
-
-> diff --git a/t/t7810-grep.sh b/t/t7810-grep.sh
-> index 19f0108f8..29202f0e7 100755
-> --- a/t/t7810-grep.sh
-> +++ b/t/t7810-grep.sh
-> @@ -982,6 +982,18 @@ test_expect_success 'grep -e -- -- path' '
->  	test_cmp expected actual
->  '
->  
-> +test_expect_success 'grep --no-index pattern -- path' '
-> +	rm -fr non &&
-> +	mkdir -p non/git &&
-> +	(
-> +		GIT_CEILING_DIRECTORIES="$(pwd)/non" &&
-> +		export GIT_CEILING_DIRECTORIES &&
-> +		cd non/git &&
-> +		echo hello >hello &&
-> +		git grep --no-index o -- .
-> +	)
-> +'
-
-Since de95302a4, you can do:
-
-  nongit git grep --no-index -o -- .
-
-Though if this is destined for maint, it might need to be done
-separately this way and cleaned up later.
-
-It might also be a good idea to confirm that the pathspec is actually
-being respected in the --no-index case. Something like:
-
-  echo hello >hello &&
-  echo goodbye >goodbye &&
-  echo hello:hello >expect &&
-  git grep --no-index o -- hello >actual &&
-  test_cmp expect actual
-
--Peff
