@@ -2,158 +2,123 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A68651FAF4
-	for <e@80x24.org>; Tue, 14 Feb 2017 18:53:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 95F8F1FAF4
+	for <e@80x24.org>; Tue, 14 Feb 2017 18:56:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752398AbdBNSxz (ORCPT <rfc822;e@80x24.org>);
-        Tue, 14 Feb 2017 13:53:55 -0500
-Received: from mail-it0-f68.google.com ([209.85.214.68]:34252 "EHLO
-        mail-it0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752233AbdBNSxx (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Feb 2017 13:53:53 -0500
-Received: by mail-it0-f68.google.com with SMTP id r141so6526833ita.1
-        for <git@vger.kernel.org>; Tue, 14 Feb 2017 10:53:53 -0800 (PST)
+        id S1752857AbdBNS41 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 14 Feb 2017 13:56:27 -0500
+Received: from mail-it0-f44.google.com ([209.85.214.44]:34943 "EHLO
+        mail-it0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752324AbdBNS4Z (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Feb 2017 13:56:25 -0500
+Received: by mail-it0-f44.google.com with SMTP id 203so45632693ith.0
+        for <git@vger.kernel.org>; Tue, 14 Feb 2017 10:56:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=q4JxqVz2y4LRWkdeCYNMQE9JrVkS8KqVx+pteUlPHTw=;
-        b=sVB9ngwpoBrM6CzXHdLbNu43M86coAIvnjh780b+DfoZ+I/8PapkXJ4yJc15hcChV/
-         8BtVOsQWnGGChVze8bwrPwok1u1mWxAjijrd+K4HVjTuIglgO1izdg/pgbFQfiR+gzKq
-         QBQopeOD0cCVCY3w8LiCQYPW7IB9mSLaIFkUofGARug+B8tArX1IYVKKDdL6PAnWDisY
-         X+dSQDaqsVbJ0dnVBrRe6/ippLYoi3o4wgJP88qkDpdlC2nRgcbSVW+j5tsgCRLv1d8E
-         uHoPLYnOnkJKewNwTH2x8Mnx/rrLin0KXJBVxucoR9ejR53Wijh3z7akwHR6XBkBHRlT
-         ibGQ==
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=igL2hmO7122ogVdAbAjCNN+ACLq6H/PXAs/iEjxMezA=;
+        b=SHPaSEkEKswpqM1IJqtx6rRKWmIkYv1px5/tT0PAQifO8ufQERBR8USikpqrMte3OC
+         tegOKqpR9r1RQyyg3ctL/3lUwX6X+t0LzBnLHN4Rvr3dZEhpHU+iwp7pWo8LlaWFFnY0
+         f+i+8VWAT3xusdcb12bjH1QyzFEK3bKbKBvuGNWnRKAy7MBvbDlLl2AbBvBfjrNVVmyO
+         X73yhThdbmhiku5kX62TflIMACviQHzMPD0g/eGJ10rUB99hL9Kf+C1+64BwSDNfkx97
+         xtsmvUCT0XihGz2oIyTMtMpHWil9nfaLF2stQLSzng0Eup3x+Uo80CbwpOwc/R3Xa2Or
+         7C7w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=q4JxqVz2y4LRWkdeCYNMQE9JrVkS8KqVx+pteUlPHTw=;
-        b=iQ7iVno2RkICTaF8jBG1MD7If/oopczers73H+J2bRCtf9PXXtmoEtHi+0nOSsyqSu
-         wvji7BidSQ1urEgLxwo+5U7xY9YHoeHguKe3CrIE/uMi/MuYa/o3FfzOsrpMKC2A8crp
-         tjZj1TLJYNGYPFx/E8e7mBD5NjxjYaDJ850A+jOHLDojQvKsvevXGrNvR48wa6/qNRTZ
-         Ec5xsg35PFthoJ6Nl7bswUSXyl9cfBYiYvFckxVqQv62dGREawKLLTR8bF3TlecQzLSV
-         WcTkvIdclEvEeqQlhEw3AIo0TmDelcikllvWK73RakegsBdViWyVOjUSvdlP4N5pFlLd
-         abFg==
-X-Gm-Message-State: AMke39m27+N+TI2JHctByUWeiEi/CybwfGQ4nQ3abqC6MFDaU3F01mawUes5cEc8mzTmXyJmTjoTRvfAF7PzCw==
-X-Received: by 10.107.182.214 with SMTP id g205mr31456972iof.120.1487098432671;
- Tue, 14 Feb 2017 10:53:52 -0800 (PST)
-MIME-Version: 1.0
-Received: by 10.79.142.147 with HTTP; Tue, 14 Feb 2017 10:53:52 -0800 (PST)
-In-Reply-To: <20170214172829.6w3cnnqy6ozxl424@sigill.intra.peff.net>
-References: <20170214172526.hzpm3d3ubd3vjnzr@sigill.intra.peff.net> <20170214172829.6w3cnnqy6ozxl424@sigill.intra.peff.net>
-From:   Pranit Bauva <pranit.bauva@gmail.com>
-Date:   Wed, 15 Feb 2017 00:23:52 +0530
-Message-ID: <CAFZEwPOYGRGd5PWSfLRd6vMs35TT1ZzUSfr79fwRA4VzVjAWXA@mail.gmail.com>
-Subject: Re: [PATCH 3/3] show-branch: use skip_prefix to drop magic numbers
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=igL2hmO7122ogVdAbAjCNN+ACLq6H/PXAs/iEjxMezA=;
+        b=l1obr1Gm0+ue/ujT6uzl1hqkf6DKa6C90Hn9xtFN6w9Q6TwPWOhzHbgJBSO5zUrIAS
+         COWpSPUED59Xg1aZq6zggxgSzdLPwliX5RQsGehSNlHadPJdrbrlNW1Tq2DEHijQUgh5
+         tUEnOkZHSpZ7bRfJt+64+jfS8efkXw11LDmxdqdnAJFMFTYDxB3xYlaT2YpBKH1wQQDa
+         cSB9IAMEq/OTfwRjxM+7jAPQxLvgHG6pIG7O3lSJXBEvBzuL9M8m7i8VemKNLtpsj3r4
+         8hW5+V4CiRvpTAyv1Uy175MWRXvRKFCBxykKw1wgOGih7LC3P26/kf7w3C/GsZ8/W60Z
+         Op8w==
+X-Gm-Message-State: AMke39m0vpBd/xd+dGJUV93jcw3+mCnF1i2ThgZ5gALu1U4xbc5R73pMbnWmGfVxFWKV9JWb
+X-Received: by 10.99.123.68 with SMTP id k4mr34379972pgn.101.1487098584264;
+        Tue, 14 Feb 2017 10:56:24 -0800 (PST)
+Received: from google.com ([2620:0:1000:5b10:35a2:93b7:75dd:e184])
+        by smtp.gmail.com with ESMTPSA id m136sm2736855pga.22.2017.02.14.10.56.22
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Tue, 14 Feb 2017 10:56:22 -0800 (PST)
+Date:   Tue, 14 Feb 2017 10:56:21 -0800
+From:   Brandon Williams <bmwill@google.com>
 To:     Jeff King <peff@peff.net>
-Cc:     Christian Couder <christian.couder@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Maxim Kuvyrkov <maxim.kuvyrkov@linaro.org>,
-        Christian Couder <chriscool@tuxfamily.org>
-Content-Type: multipart/mixed; boundary=001a114a4cf2d45e8e0548821564
+Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org,
+        gitster@pobox.com
+Subject: Re: [PATCH 5/7] grep: fix "--" rev/pathspec disambiguation
+Message-ID: <20170214185621.GC44208@google.com>
+References: <20170214060021.einv7372exbxa23z@sigill.intra.peff.net>
+ <20170214060555.yzh6hhi2t7pkeqvi@sigill.intra.peff.net>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20170214060555.yzh6hhi2t7pkeqvi@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
---001a114a4cf2d45e8e0548821564
-Content-Type: text/plain; charset=UTF-8
+On 02/14, Jeff King wrote:
+> -	/* Check revs and then paths */
+> +	/*
+> +	 * We have to find "--" in a separate pass, because its presence
+> +	 * influences how we will parse arguments that come before it.
+> +	 */
+> +	for (i = 0; i < argc; i++) {
+> +		if (!strcmp(argv[i], "--")) {
+> +			seen_dashdash = 1;
+> +			break;
+> +		}
+> +	}
 
-Hey Peff,
+So this simply checks if "--" is an argument that was provided.  This
+then allows grep to know ahead of time how to handle revs/paths
+preceding a "--" or in the absences of the "--".  Seems sensible to me.
 
-On Tue, Feb 14, 2017 at 10:58 PM, Jeff King <peff@peff.net> wrote:
-> We make several starts_with() calls, only to advance
-> pointers. This is exactly what skip_prefix() is for, which
-> lets us avoid manually-counted magic numbers.
->
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
->  builtin/show-branch.c | 16 +++++++---------
->  1 file changed, 7 insertions(+), 9 deletions(-)
->
-> diff --git a/builtin/show-branch.c b/builtin/show-branch.c
-> index 404c4d09a..c03d3ec7c 100644
-> --- a/builtin/show-branch.c
-> +++ b/builtin/show-branch.c
-> @@ -470,17 +470,14 @@ static void snarf_refs(int head, int remotes)
->         }
->  }
->
-> -static int rev_is_head(char *head, char *name,
-> +static int rev_is_head(const char *head, const char *name,
->                        unsigned char *head_sha1, unsigned char *sha1)
->  {
->         if (!head || (head_sha1 && sha1 && hashcmp(head_sha1, sha1)))
->                 return 0;
-> -       if (starts_with(head, "refs/heads/"))
-> -               head += 11;
-> -       if (starts_with(name, "refs/heads/"))
-> -               name += 11;
-> -       else if (starts_with(name, "heads/"))
-> -               name += 6;
-> +       skip_prefix(head, "refs/heads/", &head);
-> +       if (!skip_prefix(name, "refs/heads/", &name))
-> +               skip_prefix(name, "heads/", &name);
->         return !strcmp(head, name);
->  }
->
-> @@ -799,8 +796,9 @@ int cmd_show_branch(int ac, const char **av, const char *prefix)
->                                 has_head++;
->                 }
->                 if (!has_head) {
-> -                       int offset = starts_with(head, "refs/heads/") ? 11 : 0;
-> -                       append_one_rev(head + offset);
-> +                       const char *name = head;
-> +                       skip_prefix(name, "refs/heads/", &name);
-> +                       append_one_rev(name);
->                 }
->         }
->
+> +
+> +	/*
+> +	 * Resolve any rev arguments. If we have a dashdash, then everything up
+> +	 * to it must resolve as a rev. If not, then we stop at the first
+> +	 * non-rev and assume everything else is a path.
+> +	 */
+>  	for (i = 0; i < argc; i++) {
+>  		const char *arg = argv[i];
+>  		unsigned char sha1[20];
+> @@ -1158,13 +1173,14 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
+>  
+>  		if (!strcmp(arg, "--")) {
+>  			i++;
+> -			seen_dashdash = 1;
+>  			break;
+>  		}
+>  
+> -		/* Stop at the first non-rev */
+> -		if (get_sha1_with_context(arg, 0, sha1, &oc))
+> +		if (get_sha1_with_context(arg, 0, sha1, &oc)) {
+> +			if (seen_dashdash)
+> +				die(_("unable to resolve revision: %s"), arg);
+>  			break;
+> +		}
+>  
+>  		object = parse_object_or_die(sha1, arg);
+>  		if (!seen_dashdash)
+> @@ -1172,7 +1188,10 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
+>  		add_object_array_with_path(object, arg, &list, oc.mode, oc.path);
+>  	}
+>  
+> -	/* The rest are paths */
+> +	/*
+> +	 * Anything left over is presumed to be a path. But in the non-dashdash
+> +	 * "do what I mean" case, we verify and complain when that isn't true.
+> +	 */
 
-
-Did you purposely miss the one in line number 278 of
-builtin/show-branch.c because I think you only touched up the parts
-which were related to "refs/" but didn't explicitly mention it in the
-commit message?
-
-    if (starts_with(pretty_str, "[PATCH] "))
-        pretty_str += 8;
-
-If not, you can squash this patch attached. Sorry, couldn't send it in
-mail because of proxy issues.
-
-Regards,
-Pranit Bauva
-
---001a114a4cf2d45e8e0548821564
-Content-Type: text/x-patch; charset=US-ASCII; 
-	name="0001-squash-show-branch-use-skip_prefix-to-drop-magic-num.patch"
-Content-Disposition: attachment; 
-	filename="0001-squash-show-branch-use-skip_prefix-to-drop-magic-num.patch"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: f_iz5vwzjw0
-
-RnJvbSAyZTgwZDQ0NThkZjY1OTc2NTAxMTQ1MDYyMWVlMzQ0NTlkYzc0OWY5IE1vbiBTZXAgMTcg
-MDA6MDA6MDAgMjAwMQpGcm9tOiBQcmFuaXQgQmF1dmEgPHByYW5pdC5iYXV2YUBnbWFpbC5jb20+
-CkRhdGU6IFR1ZSwgMTQgRmViIDIwMTcgMjM6NTM6MzYgKzA1MzAKU3ViamVjdDogW1BBVENIXSAh
-c3F1YXNoOiBzaG93LWJyYW5jaDogdXNlIHNraXBfcHJlZml4IHRvIGRyb3AgbWFnaWMgbnVtYmVy
-cwoKU2lnbmVkLW9mZi1ieTogUHJhbml0IEJhdXZhIDxwcmFuaXQuYmF1dmFAZ21haWwuY29tPgot
-LS0KIGJ1aWx0aW4vc2hvdy1icmFuY2guYyB8IDMgKy0tCiAxIGZpbGUgY2hhbmdlZCwgMSBpbnNl
-cnRpb24oKyksIDIgZGVsZXRpb25zKC0pCgpkaWZmIC0tZ2l0IGEvYnVpbHRpbi9zaG93LWJyYW5j
-aC5jIGIvYnVpbHRpbi9zaG93LWJyYW5jaC5jCmluZGV4IGMwM2QzZWM3Yy4uMTk3NTY1OTVkIDEw
-MDY0NAotLS0gYS9idWlsdGluL3Nob3ctYnJhbmNoLmMKKysrIGIvYnVpbHRpbi9zaG93LWJyYW5j
-aC5jCkBAIC0yNzUsOCArMjc1LDcgQEAgc3RhdGljIHZvaWQgc2hvd19vbmVfY29tbWl0KHN0cnVj
-dCBjb21taXQgKmNvbW1pdCwgaW50IG5vX25hbWUpCiAJCXBwX2NvbW1pdF9lYXN5KENNSVRfRk1U
-X09ORUxJTkUsIGNvbW1pdCwgJnByZXR0eSk7CiAJCXByZXR0eV9zdHIgPSBwcmV0dHkuYnVmOwog
-CX0KLQlpZiAoc3RhcnRzX3dpdGgocHJldHR5X3N0ciwgIltQQVRDSF0gIikpCi0JCXByZXR0eV9z
-dHIgKz0gODsKKwlza2lwX3ByZWZpeChwcmV0dHlfc3RyLCAiW1BBVENIXSAiLCAmcHJldHR5X3N0
-cik7CiAKIAlpZiAoIW5vX25hbWUpIHsKIAkJaWYgKG5hbWUgJiYgbmFtZS0+aGVhZF9uYW1lKSB7
-Ci0tIAoyLjExLjAKCg==
---001a114a4cf2d45e8e0548821564--
+-- 
+Brandon Williams
