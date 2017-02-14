@@ -2,108 +2,77 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E38C21FAF4
-	for <e@80x24.org>; Tue, 14 Feb 2017 21:08:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 253741FAF4
+	for <e@80x24.org>; Tue, 14 Feb 2017 21:13:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754039AbdBNVIT (ORCPT <rfc822;e@80x24.org>);
-        Tue, 14 Feb 2017 16:08:19 -0500
-Received: from mail-ot0-f193.google.com ([74.125.82.193]:32854 "EHLO
-        mail-ot0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752791AbdBNVIR (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Feb 2017 16:08:17 -0500
-Received: by mail-ot0-f193.google.com with SMTP id t47so3750749ota.0
-        for <git@vger.kernel.org>; Tue, 14 Feb 2017 13:08:17 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=jgfnnjZzMo3v75uh6CduTmZi1LNN1IMiDOAOYyN9eMw=;
-        b=bXwvBN9r1pN9hs6polfopvZybkd3Ww9NbMh9ddMNq4c5/V+XvuIUzzYR4pH+ovJirr
-         J4NXn439VgGNIbUIqv6kzXuG7jsMhZyLt/PQ3AkNSwieDRZBN8W6ttleaaGPNS4vsveI
-         3OPnzdnmHy+Iidl8MKnaB3xUtEzRxzB35fM68tE4KAWJbI+GN2dBXuzxx+US6VAzsfx0
-         Se6u3xl1niFJyxeA/TAzRvuZdSDYxkAs4z7DgHzKOm5abPizvjZwNhl7QZhG9/PvHMhO
-         3Y2wLd7Pogh5V1lsn5eb9Ks/hy1ABg3T1WoFwZwM/ANsM3/aS8qx8JUA4aKNAjk9P6g4
-         PvEg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=jgfnnjZzMo3v75uh6CduTmZi1LNN1IMiDOAOYyN9eMw=;
-        b=W2DSrPUjgFnqTX0Qa7JEvHc63pfbgqNsF66RwmiWVvnotGTPJrtP+/a636KYD678Al
-         D+lzXLF13h3z6gGI9Sa2jbUrWK52N6sDLVZSaUiNv7Tlbelcrb11hKY6BWYhNNnV2Ibf
-         J4kIHQsLLLOu21pULTqVULbbr2IyCR0cDbsFhM9VK30CazVfmo2znI3zfgR70yOM6Ouq
-         txk9IOC5Hd3LardKE2hljDds9+Keux4VXVTwp7MtEadsyfcyi1p4ay5qMTn3/ea9Pmgj
-         cyaPp/DhhAPEWDGdHRynXuQxLPoF0ZeJpjpt6AKo7QW/aGEE62WA/pDL0b9342jrn+0U
-         A+Yw==
-X-Gm-Message-State: AMke39mtiWo3zSQq9ZCozuNbukMYIylRGaVSJy28QzBWIzJ7ngHa3os/XJpzzLn0jV5wWA==
-X-Received: by 10.98.74.202 with SMTP id c71mr33659794pfj.28.1487106496586;
-        Tue, 14 Feb 2017 13:08:16 -0800 (PST)
-Received: from localhost ([2620:0:1000:8622:2447:f72c:8fdf:75c6])
-        by smtp.gmail.com with ESMTPSA id s64sm3002527pfe.27.2017.02.14.13.08.15
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 14 Feb 2017 13:08:15 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     git-for-windows@googlegroups.com, git@vger.kernel.org
-Subject: Re: [git-for-windows] Re: Continuous Testing of Git on Windows
-References: <alpine.DEB.2.20.1702101241210.3496@virtualbox>
-        <xmqq60kdbqmy.fsf@gitster.mtv.corp.google.com>
-        <alpine.DEB.2.20.1702142150220.3496@virtualbox>
-Date:   Tue, 14 Feb 2017 13:08:15 -0800
-In-Reply-To: <alpine.DEB.2.20.1702142150220.3496@virtualbox> (Johannes
-        Schindelin's message of "Tue, 14 Feb 2017 21:55:28 +0100 (CET)")
-Message-ID: <xmqqd1ek8oqo.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+        id S1754138AbdBNVNk convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Tue, 14 Feb 2017 16:13:40 -0500
+Received: from zimbra-vnc.tngtech.com ([83.144.240.98]:29632 "EHLO
+        proxy.tng.vnc.biz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752985AbdBNVNj (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Feb 2017 16:13:39 -0500
+Received: from localhost (localhost [127.0.0.1])
+        by proxy.tng.vnc.biz (Postfix) with ESMTP id 1EF331E3063;
+        Tue, 14 Feb 2017 22:13:36 +0100 (CET)
+Received: from proxy.tng.vnc.biz ([127.0.0.1])
+        by localhost (proxy.tng.vnc.biz [127.0.0.1]) (amavisd-new, port 10032)
+        with ESMTP id ML8x9685hmAG; Tue, 14 Feb 2017 22:13:35 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+        by proxy.tng.vnc.biz (Postfix) with ESMTP id B797C1E3082;
+        Tue, 14 Feb 2017 22:13:35 +0100 (CET)
+X-Virus-Scanned: amavisd-new at 
+Received: from proxy.tng.vnc.biz ([127.0.0.1])
+        by localhost (proxy.tng.vnc.biz [127.0.0.1]) (amavisd-new, port 10026)
+        with ESMTP id edz08bfW-BRo; Tue, 14 Feb 2017 22:13:35 +0100 (CET)
+Received: from [192.168.178.28] (aftr-185-17-204-143.dynamic.mnet-online.de [185.17.204.143])
+        by proxy.tng.vnc.biz (Postfix) with ESMTPSA id 629FC1E3063;
+        Tue, 14 Feb 2017 22:13:35 +0100 (CET)
+Subject: Re: [PATCH] completion: complete modified files for checkout with
+ '--'
+To:     =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>
+References: <20170213233359.11149-1-cornelius.weig@tngtech.com>
+ <CAM0VKj=d+hAiF6_8TLuJfccNiPtHyg9F6zESA8SuTEeaLsrw4Q@mail.gmail.com>
+Cc:     Git mailing list <git@vger.kernel.org>, j6t@kdbg.org,
+        Richard Wagner <bitte.keine.werbung.einwerfen@googlemail.com>
+From:   Cornelius Weig <cornelius.weig@tngtech.com>
+Message-ID: <4f8a0aaa-4ce1-d4a6-d2e1-28aac7209c90@tngtech.com>
+Date:   Tue, 14 Feb 2017 22:13:35 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.7.0
 MIME-Version: 1.0
-Content-Type: text/plain
+In-Reply-To: <CAM0VKj=d+hAiF6_8TLuJfccNiPtHyg9F6zESA8SuTEeaLsrw4Q@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8BIT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+On 02/14/2017 01:50 AM, SZEDER Gábor wrote:
+> On Tue, Feb 14, 2017 at 12:33 AM,  <cornelius.weig@tngtech.com> wrote:
+>> From: Cornelius Weig <cornelius.weig@tngtech.com>
+>>
+>> The command line completion for git-checkout bails out when seeing '--'
+>> as an isolated argument. For git-checkout this signifies the start of a
+>> list of files which are to be checked out. Checkout of files makes only
+>> sense for modified files,
+> 
+> No, there is e.g. 'git checkout that-branch this-path', too.
 
-> On Mon, 13 Feb 2017, Junio C Hamano wrote:
->
->> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
->> 
->> > That is why I taught the Git for Windows CI job that tests the four
->> > upstream Git integration branches to *also* bisect test breakages and
->> > then upload comments to the identified commit on GitHub
->> 
->> Good.  I do not think it is useful to try 'pu' as an aggregate and
->> expect it to always build and work [*1*], but your "bisect and
->> pinpoint" approach makes it useful to identify individual topic that
->> brings in a breakage.
->
-> Sadly the many different merge bases[*1*] between `next` and `pu` (which
-> are the obvious good/bad points for bisecting automatically) bring my
-> build agents to its knees. I may have to disable the bisecting feature as
-> a consequence.
+Very true. Thanks for prodding me to this palpable oversight.
 
-Probably a less resource intensive approach is to find the tips of
-the topics not in 'next' but in 'pu' and test them.  That would give
-you which topic(s) are problematic, which is a better starting point
-than "Oh, 'pu' does not build".  After identifying which branch is
-problematic, bisection of individual topic would be of more manageable
-size.
+My error was to aim for a small improvement. I think the correct
+approach is to improve the overall completion of git-checkout. IMHO it
+is a completion bug that after giving a ref, completion will still offer
+refs, e.g.
+$ git checkout HEAD <TAB><TAB> --> list of refs
 
-  $ git log --first-parent --oneline 'pu^{/^### match next}..pu'
+As far as I can see, giving two refs to checkout is always an error. The
+correct behavior in the example above would be to offer paths instead.
 
-will you the merges of topics left outside 'next'.  I often reorder
-to make the ones that look more OK than others closer to the bottom,
-and if the breakages caused by them are caught earlier than they hit
-'next', that would be ideal.
-
-This is one of these times I wish "git bisect --first-parent" were
-available.  The above "log" gives me 27 merges right now, which
-should be bisectable within 5 rounds to identify a single broken
-topic (if there is only one breakage, that is).
-
-
+I'll follow up with an improved version which considers these cases.
 
