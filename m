@@ -2,67 +2,80 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C44431FAF4
-	for <e@80x24.org>; Tue, 14 Feb 2017 20:54:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 201DB1FAF4
+	for <e@80x24.org>; Tue, 14 Feb 2017 20:55:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752683AbdBNUyS (ORCPT <rfc822;e@80x24.org>);
-        Tue, 14 Feb 2017 15:54:18 -0500
-Received: from mo4-p00-ob.smtp.rzone.de ([81.169.146.221]:21623 "EHLO
-        mo4-p00-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751941AbdBNUyQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Feb 2017 15:54:16 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1487105654;
-        l=513; s=domk; d=aepfle.de;
-        h=Content-Transfer-Encoding:Content-Type:MIME-Version:References:
-        In-Reply-To:Subject:Cc:To:From:Date;
-        bh=qoZn6Wso2VNfL1+TdkVxC1IyFa2iV7oHgicnsSCVoBw=;
-        b=SZjPGJ98hsqmU4u+qhjoUjH4TzY0S4h1cRGSaGGs+OS7DIz/G2oEkCmzSyKtgFdJdP
-        KsgL8+USIbDFhp7iaoU4d9s5mnS4TvNZlBAQga/vSKyv4Ossv+n5dtgbowE+qzONdpxS
-        Z1RfTqBuNNiy9VpwpHYd35LUypp7bd4Pw6ZFo=
-X-RZG-AUTH: :P2EQZWCpfu+qG7CngxMFH1J+zrwiavkK6tmQaLfsxs2aAREi5ot6NU0wDBWWeW25QkpkaVPRNR/WGwYzqxpk0rRpE0c=
-X-RZG-CLASS-ID: mo00
-Received: from probook.ubnt.lan ([2001:a61:3430:6aff:7470:afe4:5c34:8968])
-        by smtp.strato.de (RZmta 39.12 AUTH)
-        with ESMTPSA id d08837t1EKpAPhX
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (curve secp521r1 with 521 ECDH bits, eq. 15360 bits RSA))
-        (Client did not present a certificate);
-        Tue, 14 Feb 2017 21:51:10 +0100 (CET)
-Date:   Tue, 14 Feb 2017 21:51:03 +0100
-From:   Olaf Hering <olaf@aepfle.de>
+        id S1752790AbdBNUzk (ORCPT <rfc822;e@80x24.org>);
+        Tue, 14 Feb 2017 15:55:40 -0500
+Received: from mout.gmx.net ([212.227.15.18]:58447 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752667AbdBNUzi (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Feb 2017 15:55:38 -0500
+Received: from virtualbox ([37.201.192.48]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0Lugbo-1cDNWk273Q-00zpOR; Tue, 14
+ Feb 2017 21:55:30 +0100
+Date:   Tue, 14 Feb 2017 21:55:28 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: missing handling of "No newline at end of file" in git am
-Message-ID: <20170214215103.7d5e5f4c@probook.ubnt.lan>
-In-Reply-To: <xmqqh93w8q0r.fsf@gitster.mtv.corp.google.com>
-References: <20170214201104.GA26407@aepfle.de>
-        <xmqqh93w8q0r.fsf@gitster.mtv.corp.google.com>
-X-Mailer: Claws Mail 3.14.1 (GTK+ 2.24.31; x86_64-suse-linux-gnu)
+cc:     git-for-windows@googlegroups.com, git@vger.kernel.org
+Subject: Re: [git-for-windows] Re: Continuous Testing of Git on Windows
+In-Reply-To: <xmqq60kdbqmy.fsf@gitster.mtv.corp.google.com>
+Message-ID: <alpine.DEB.2.20.1702142150220.3496@virtualbox>
+References: <alpine.DEB.2.20.1702101241210.3496@virtualbox> <xmqq60kdbqmy.fsf@gitster.mtv.corp.google.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+X-Provags-ID: V03:K0:vzB7dDr0C+ABaHznYGaiA4hHcTPcG57RCzB+HrSQKIYK/Q2t8n+
+ t4bpOjdVkajxmfxC+Gl1GkDWRQm3f1O88X8G+Bzd94vpXSBySbA/8YQ/ft02DokYYGUWcZ7
+ lQqD+XUQxk7JQsSsCygwL/iwpzs2r9THmqFdH1ZhiiPOrJz4AduCOItYLbizSzsw5ZlfRId
+ vQ7WB6rWRkUB33oGpDslg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:/2dM911TmWo=:oVYwx7Xesq2jZKDcrD6Aeq
+ hNq1EY+BL+HeAHVkZ5/+AVcxj4YT7sp3Wv/PEmQYSUENnkk5+AF2kGqyjkVWLOFcW5KyA1pDD
+ E795hdlL688DJeKb4tPJTIldGAQiuv+heZubp/bklXupWgeEnkpLYOQp7Zp2amjMGjKXgFBhT
+ PYEFXvrp5FL8LXzJcOQMTqfhE5B8wpPMk8o9E2aFO5ock23w6WJ8PIgGmk/U8WRvXIYVMBqYJ
+ 7bML12PqAwh+TIPmCmCwsi+mb3SnIn8uZeaIRQyBIH6DAPT1HXnxpwdtHfCK6IDxDIUz6mUV/
+ EOwVR31atTt5IAztkhFdQ7N1hETXlqVpUQPm0kYQAI+0M0nT7UCggC76DyPJ5Zx8f45xlMd/G
+ v1ze0uaodczxwKBVpkWttx3In57IAGBohqHPMy1MofNwc2aEms0whg141CT/z4sozlY1s+/bF
+ DeQy4DE5y46kmGIGUHWrDgY32y2Bb9NMsuT5IoauSYrIsRVDFQC2+olsCB+cSBvsRVyCIbIkb
+ S4PtsE91ZQkVRjFdDJab7kl9Iekl9oOnTfHpuA/WfXoXHjB7mUEW7PR3jUCO/2MTpOgW4C1AY
+ 5GzboVGwC/jEr4Djpwlk/B/QoEpCvNMYTS3HXkclfJQuUFQV/ahQiGYN87TZmI2Sl58jPH1bh
+ JTE9B6sQftG/yNL2JT3d13Rk4zcf4XMdxS7swpR2pfkjLASTO+JKcotOlJSUubXv9yucZB9zk
+ zbsHVpzUWMqWQxRhVwXuRdezkgYOh8mzNX5DlB3aMDXfcbMaKeA+UNDLj03xr42mhvKp1dPdK
+ ViYUCx3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am Tue, 14 Feb 2017 12:40:36 -0800
-schrieb Junio C Hamano <gitster@pobox.com>:
+Hi,
 
-> Olaf Hering <olaf@aepfle.de> writes:
+On Mon, 13 Feb 2017, Junio C Hamano wrote:
+
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 > 
-> > How is git send-email and git am supposed to handle a text file
-> > which lacks a newline at the very end? This is about git 2.11.0.  
+> > That is why I taught the Git for Windows CI job that tests the four
+> > upstream Git integration branches to *also* bisect test breakages and
+> > then upload comments to the identified commit on GitHub
 > 
-> I think this has always worked, though.
+> Good.  I do not think it is useful to try 'pu' as an aggregate and
+> expect it to always build and work [*1*], but your "bisect and
+> pinpoint" approach makes it useful to identify individual topic that
+> brings in a breakage.
 
-For me it complains in line 721, which is the problematic one.
-I try to apply from mutt via (cd /some/dir && git am), but that
-probably does not make a difference.
+Sadly the many different merge bases[*1*] between `next` and `pu` (which
+are the obvious good/bad points for bisecting automatically) bring my
+build agents to its knees. I may have to disable the bisecting feature as
+a consequence.
 
-How would I debug it?
+Ciao,
+Johannes
 
-Olaf
+Footnote *1*: There are currently 21, some of which stemming back from a
+year ago. For bisecting, they all have to be tested individually, putting
+a major dent into bisect's otherwise speedy process.
