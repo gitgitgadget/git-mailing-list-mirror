@@ -2,77 +2,78 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E829B1FAF4
-	for <e@80x24.org>; Tue, 14 Feb 2017 20:11:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DE86B1FAF4
+	for <e@80x24.org>; Tue, 14 Feb 2017 20:31:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754620AbdBNULI (ORCPT <rfc822;e@80x24.org>);
-        Tue, 14 Feb 2017 15:11:08 -0500
-Received: from mo4-p00-ob.smtp.rzone.de ([81.169.146.220]:16914 "EHLO
-        mo4-p00-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751798AbdBNULI (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Feb 2017 15:11:08 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1487103065;
-        l=857; s=domk; d=aepfle.de;
-        h=Content-Disposition:Content-Type:MIME-Version:Subject:To:From:Date;
-        bh=cb5esb0dRZi1soJlV8BJ57hjpeGeZCUc9W8hEErgBIA=;
-        b=Vh9S6HVItsH6FNQ88iovzNgAziFazqZ/N/GGWcMTrBgf5e2ngifAK8TEgWNhR6GHDZ
-        GYjKTcUnsGBPQXMkiIkCttdxlTfSWh8J5h4koSl0EsjeHTNJ6A0EnmKa+luuV+s2rE5X
-        XJ/jvWAsSZ3jgfcdsWKaoZCHlzoxFB6R8Aecs=
-X-RZG-AUTH: :P2EQZWCpfu+qG7CngxMFH1J+yackYocTD1iAi8x+OWi/zfN1cLnAYQz4mzReNqcqYjtpsQ74r5YPOZnnb6/KqEhYo5+P1A==
-X-RZG-CLASS-ID: mo00
-Received: from probook ([2001:a61:3430:6aff:7470:afe4:5c34:8968])
-        by smtp.strato.de (RZmta 39.12 AUTH)
-        with ESMTPSA id n0b399t1EKB4Ic5
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (curve secp521r1 with 521 ECDH bits, eq. 15360 bits RSA))
-        (Client did not present a certificate)
-        for <git@vger.kernel.org>;
-        Tue, 14 Feb 2017 21:11:04 +0100 (CET)
-Received: by probook (Postfix, from userid 1000)
-        id 4912750B9D; Tue, 14 Feb 2017 21:11:04 +0100 (CET)
-Date:   Tue, 14 Feb 2017 21:11:04 +0100
-From:   Olaf Hering <olaf@aepfle.de>
-To:     git@vger.kernel.org
-Subject: missing handling of "No newline at end of file" in git am
-Message-ID: <20170214201104.GA26407@aepfle.de>
+        id S1755273AbdBNUbW (ORCPT <rfc822;e@80x24.org>);
+        Tue, 14 Feb 2017 15:31:22 -0500
+Received: from cloud.peff.net ([104.130.231.41]:55275 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1754220AbdBNUbU (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Feb 2017 15:31:20 -0500
+Received: (qmail 18469 invoked by uid 109); 14 Feb 2017 20:31:20 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 14 Feb 2017 20:31:20 +0000
+Received: (qmail 6285 invoked by uid 111); 14 Feb 2017 20:31:20 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 14 Feb 2017 15:31:20 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 14 Feb 2017 15:31:17 -0500
+Date:   Tue, 14 Feb 2017 15:31:17 -0500
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
+        Duy Nguyen <pclouds@gmail.com>,
+        Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCH v2] remote helpers: avoid blind fall-back to ".git" when
+ setting GIT_DIR
+Message-ID: <20170214203117.xnln6ahb3l32agqb@sigill.intra.peff.net>
+References: <20161020061536.6fqh23xb2nhxodpa@sigill.intra.peff.net>
+ <20161020062430.rxupwheaeydtcvf3@sigill.intra.peff.net>
+ <20161122004421.GA12263@google.com>
+ <20161122024102.otlnl6jcrb3pejux@sigill.intra.peff.net>
+ <20161230001114.GB7883@aiede.mtv.corp.google.com>
+ <20161230004845.rknafqsyosmyr6z2@sigill.intra.peff.net>
+ <20170214061607.qyucfue335aqgji2@sigill.intra.peff.net>
+ <xmqqtw7w8uay.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-        protocol="application/pgp-signature"; boundary="X1bOJ3K7DJ5YkBrT"
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-User-Agent: Mutt/1.7.2 (6927)
+In-Reply-To: <xmqqtw7w8uay.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Tue, Feb 14, 2017 at 11:08:05AM -0800, Junio C Hamano wrote:
 
---X1bOJ3K7DJ5YkBrT
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+> Thanks for prodding.  I'm tempted to just rip out everything other
+> than the 5-liner fix to transport.c and apply it, expecting that a
+> follow-up patch with updated tests to come sometime not in too
+> distant future.
 
-How is git send-email and git am supposed to handle a text file which
-lacks a newline at the very end? This is about git 2.11.0.
+I think we can at least include one basic test. Also, as it turns out
+the problem I was seeing _wasn't_ the same one Jonathan fixed. There's
+another bug. :)
 
-Right now the patch in an email generated with 'git send-email' ends
-with '\ No newline at end of file', which 'git am' can not handle.  To
-me it looks like whatever variant of "diff" is used does the right thing
-and indicates the lack of newline. Just the used variant of "patch" does
-not deal with it.
+So here's a patch series that fixes my bug, and then a cut-down version
+of Jonathan's patch. I'd be happy to see more tests come on top. I don't
+think there's a huge rush on getting any of this into master. There are
+bugs in the existing code, but they're very hard to trigger in practice
+(e.g., a non-repo which happens to have a bunch of repo-like files). It
+only becomes an issue in 'next' when we die("BUG") to flush these cases
+out.
 
+  [1/2]: remote: avoid reading $GIT_DIR config in non-repo
+  [2/2]: remote helpers: avoid blind fall-back to ".git" when setting GIT_DIR
 
-Olaf
+ remote.c                   | 2 +-
+ t/t5512-ls-remote.sh       | 9 +++++++++
+ t/t5550-http-fetch-dumb.sh | 9 +++++++++
+ transport-helper.c         | 5 +++--
+ 4 files changed, 22 insertions(+), 3 deletions(-)
 
---X1bOJ3K7DJ5YkBrT
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iF0EARECAB0WIQSkRyP6Rn//f03pRUBdQqD6ppg2fgUCWKNkVwAKCRBdQqD6ppg2
-fqDGAJ47m+4NvOE/4OYhWBpSbqMVdR6nFACg30UcTdYkGXNVUw0k4yHaHInzrpY=
-=PsKk
------END PGP SIGNATURE-----
-
---X1bOJ3K7DJ5YkBrT--
+-Peff
