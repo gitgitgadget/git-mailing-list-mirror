@@ -6,38 +6,38 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1B87B1FC44
-	for <e@80x24.org>; Tue, 14 Feb 2017 02:32:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5496B1FC44
+	for <e@80x24.org>; Tue, 14 Feb 2017 02:32:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751609AbdBNCcf (ORCPT <rfc822;e@80x24.org>);
-        Mon, 13 Feb 2017 21:32:35 -0500
-Received: from castro.crustytoothpaste.net ([75.10.60.170]:50628 "EHLO
+        id S1751578AbdBNCce (ORCPT <rfc822;e@80x24.org>);
+        Mon, 13 Feb 2017 21:32:34 -0500
+Received: from castro.crustytoothpaste.net ([75.10.60.170]:50624 "EHLO
         castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751351AbdBNCcP (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 13 Feb 2017 21:32:15 -0500
+        by vger.kernel.org with ESMTP id S1751374AbdBNCcQ (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 13 Feb 2017 21:32:16 -0500
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id A9FC6280BE;
-        Tue, 14 Feb 2017 02:31:59 +0000 (UTC)
+        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 217E5280C0;
+        Tue, 14 Feb 2017 02:32:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
-        s=default; t=1487039519;
-        bh=uibvkVvNh9OO1ytjEkTXvfrkkSIaLwC4VenrC15ZmjU=;
+        s=default; t=1487039520;
+        bh=eSDDmQX75pEW3HTs7khoeJZ0VlcTgjviAqumf7nKZyw=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=DfMw05X+SIFMaVEXUW+oA49QJBeuuobw5jWtR+r9S3zvXXEE9AtiEN7ApS03frd1a
-         Wl63ldPnDpLM2EOlFfETb6Aj2RdFFSpGYIzYuC9f5vFr/kGtNN8KqjNDPtEgKJKb1q
-         gf17IsHXUObncPIm/Zhepfoft3rjvFZ6VSoRbTfvezmtJdTbj67QuZ+2n4LRat8zEF
-         N/gpwjp4AOAFOHCQMIQlcA+CLbpN3NUyToomypDOpV/BEzSxcD8txlDmGt7oDX+qCg
-         Obz+4PKkvVzl3OQEFV4VbhubXKC9h72hv0sLasyeV44MJnNnqYbCjzJnyfQrysFDDW
-         XCUj9zp4nkHfw2ABY0h66H2wF9oP7viTs/kv/DTvfq7Lki1EAZ+89R6hzFNc/2mKVi
-         WzK1MQcUHPgZdUKcCuzgdZNNQWTDJ8bziOQJ2HwXGgIQUWX2nx5xQ1QdfPM7SgF+pf
-         UFiFTzHWAFh7yO69AG8qacEIYf21nUeAa0CezFttT3O64pVffmH
+        b=YS81mOUmPK/D2Z7rmFM/B5fiiUrKtexZM/T1fEVGJ9RenW75l+YhBpEj1aCFstHhZ
+         INV1u7L0ELMF/ZTfswiWpiLrDmfc2L9QmMnTgdnj3fF9k/4AhiEO+6vGThrAbHH5iD
+         VzyIwbBYC8iL0loyYhvl5LsRynT4Lt2NF7Ic3XGwzitpzbfcTfVAo2DE0LmIcnk875
+         9lvX3IkxGWB4F+sml/wsfP3etsnDPgTLljwaAasunBBzk/QbMINtLFbvRVgXPDi+Z6
+         k1kmk2HhKtAE7ia0bNq/t/UjinPnr7uiBNZcT/pkburOyn2jEYnCmmjtE/HtgnKL/K
+         H6WVCxAjxn3jSXpxjHWWp+X3Kaf29iYUXf/2YMXl5s784j+YrBld315/Xs9KwTqkAg
+         iRJvj6M03QI4uu1IJrk5BwpdTzCHuEOwNT31YvTSGO/FS/UGLTtzvUiyLRVRyLV0KH
+         FTwMDKHb0XqRMsUss//hiOmbmkoQpIbvg9faQfvgZ1mGVydHUzQ
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     Jeff King <peff@peff.net>, Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH v2 17/19] Convert object iteration callbacks to struct object_id
-Date:   Tue, 14 Feb 2017 02:31:39 +0000
-Message-Id: <20170214023141.842922-18-sandals@crustytoothpaste.net>
+Subject: [PATCH v2 19/19] wt-status: convert to struct object_id
+Date:   Tue, 14 Feb 2017 02:31:41 +0000
+Message-Id: <20170214023141.842922-20-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.11.0
 In-Reply-To: <20170214023141.842922-1-sandals@crustytoothpaste.net>
 References: <20170214023141.842922-1-sandals@crustytoothpaste.net>
@@ -46,374 +46,144 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Convert each_loose_object_fn and each_packed_object_fn to take a pointer
-to struct object_id.  Update the various callbacks.  Convert several
-40-based constants to use GIT_SHA1_HEXSZ.
+Convert the remaining uses of unsigned char [20] to struct object_id.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- builtin/cat-file.c      |  8 ++++----
- builtin/count-objects.c |  4 ++--
- builtin/fsck.c          | 24 ++++++++++++------------
- builtin/pack-objects.c  |  6 +++---
- builtin/prune-packed.c  |  4 ++--
- builtin/prune.c         |  8 ++++----
- cache.h                 |  4 ++--
- reachable.c             | 30 +++++++++++++++---------------
- sha1_file.c             | 12 ++++++------
- 9 files changed, 50 insertions(+), 50 deletions(-)
+ wt-status.c | 44 ++++++++++++++++++++++----------------------
+ 1 file changed, 22 insertions(+), 22 deletions(-)
 
-diff --git a/builtin/cat-file.c b/builtin/cat-file.c
-index 30383e9eb4..8b85cb8cf0 100644
---- a/builtin/cat-file.c
-+++ b/builtin/cat-file.c
-@@ -409,20 +409,20 @@ static int batch_object_cb(const unsigned char sha1[20], void *vdata)
- 	return 0;
- }
+diff --git a/wt-status.c b/wt-status.c
+index 5fac8437b0..a8d1faf80d 100644
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -1115,16 +1115,16 @@ static void abbrev_sha1_in_line(struct strbuf *line)
  
--static int batch_loose_object(const unsigned char *sha1,
-+static int batch_loose_object(const struct object_id *oid,
- 			      const char *path,
- 			      void *data)
+ 	split = strbuf_split_max(line, ' ', 3);
+ 	if (split[0] && split[1]) {
+-		unsigned char sha1[20];
++		struct object_id oid;
+ 
+ 		/*
+ 		 * strbuf_split_max left a space. Trim it and re-add
+ 		 * it after abbreviation.
+ 		 */
+ 		strbuf_trim(split[1]);
+-		if (!get_sha1(split[1]->buf, sha1)) {
++		if (!get_oid(split[1]->buf, &oid)) {
+ 			strbuf_reset(split[1]);
+-			strbuf_add_unique_abbrev(split[1], sha1,
++			strbuf_add_unique_abbrev(split[1], oid.hash,
+ 						 DEFAULT_ABBREV);
+ 			strbuf_addch(split[1], ' ');
+ 			strbuf_reset(line);
+@@ -1340,7 +1340,7 @@ static void show_bisect_in_progress(struct wt_status *s,
+ static char *get_branch(const struct worktree *wt, const char *path)
  {
--	sha1_array_append(data, sha1);
-+	sha1_array_append(data, oid->hash);
- 	return 0;
- }
+ 	struct strbuf sb = STRBUF_INIT;
+-	unsigned char sha1[20];
++	struct object_id oid;
+ 	const char *branch_name;
  
--static int batch_packed_object(const unsigned char *sha1,
-+static int batch_packed_object(const struct object_id *oid,
- 			       struct packed_git *pack,
- 			       uint32_t pos,
- 			       void *data)
- {
--	sha1_array_append(data, sha1);
-+	sha1_array_append(data, oid->hash);
- 	return 0;
- }
+ 	if (strbuf_read_file(&sb, worktree_git_path(wt, "%s", path), 0) <= 0)
+@@ -1354,9 +1354,9 @@ static char *get_branch(const struct worktree *wt, const char *path)
+ 		strbuf_remove(&sb, 0, branch_name - sb.buf);
+ 	else if (starts_with(sb.buf, "refs/"))
+ 		;
+-	else if (!get_sha1_hex(sb.buf, sha1)) {
++	else if (!get_oid_hex(sb.buf, &oid)) {
+ 		strbuf_reset(&sb);
+-		strbuf_add_unique_abbrev(&sb, sha1, DEFAULT_ABBREV);
++		strbuf_add_unique_abbrev(&sb, oid.hash, DEFAULT_ABBREV);
+ 	} else if (!strcmp(sb.buf, "detached HEAD")) /* rebase */
+ 		goto got_nothing;
+ 	else			/* bisect */
+@@ -1370,7 +1370,7 @@ static char *get_branch(const struct worktree *wt, const char *path)
  
-diff --git a/builtin/count-objects.c b/builtin/count-objects.c
-index a04b4f2ef3..acb05940fc 100644
---- a/builtin/count-objects.c
-+++ b/builtin/count-objects.c
-@@ -53,7 +53,7 @@ static void loose_garbage(const char *path)
- 		report_garbage(PACKDIR_FILE_GARBAGE, path);
- }
- 
--static int count_loose(const unsigned char *sha1, const char *path, void *data)
-+static int count_loose(const struct object_id *oid, const char *path, void *data)
- {
- 	struct stat st;
- 
-@@ -62,7 +62,7 @@ static int count_loose(const unsigned char *sha1, const char *path, void *data)
- 	else {
- 		loose_size += on_disk_bytes(st);
- 		loose++;
--		if (verbose && has_sha1_pack(sha1))
-+		if (verbose && has_sha1_pack(oid->hash))
- 			packed_loose++;
- 	}
- 	return 0;
-diff --git a/builtin/fsck.c b/builtin/fsck.c
-index 9b37606858..f76e4163ab 100644
---- a/builtin/fsck.c
-+++ b/builtin/fsck.c
-@@ -491,7 +491,7 @@ static void get_default_heads(void)
- 	}
- }
- 
--static struct object *parse_loose_object(const unsigned char *sha1,
-+static struct object *parse_loose_object(const struct object_id *oid,
- 					 const char *path)
- {
- 	struct object *obj;
-@@ -500,27 +500,27 @@ static struct object *parse_loose_object(const unsigned char *sha1,
- 	unsigned long size;
- 	int eaten;
- 
--	if (read_loose_object(path, sha1, &type, &size, &contents) < 0)
-+	if (read_loose_object(path, oid->hash, &type, &size, &contents) < 0)
- 		return NULL;
- 
- 	if (!contents && type != OBJ_BLOB)
- 		die("BUG: read_loose_object streamed a non-blob");
- 
--	obj = parse_object_buffer(sha1, type, size, contents, &eaten);
-+	obj = parse_object_buffer(oid->hash, type, size, contents, &eaten);
- 
- 	if (!eaten)
- 		free(contents);
- 	return obj;
- }
- 
--static int fsck_loose(const unsigned char *sha1, const char *path, void *data)
-+static int fsck_loose(const struct object_id *oid, const char *path, void *data)
- {
--	struct object *obj = parse_loose_object(sha1, path);
-+	struct object *obj = parse_loose_object(oid, path);
- 
- 	if (!obj) {
- 		errors_found |= ERROR_OBJECT;
- 		error("%s: object corrupt or missing: %s",
--		      sha1_to_hex(sha1), path);
-+		      oid_to_hex(oid), path);
- 		return 0; /* keep checking other objects */
- 	}
- 
-@@ -619,26 +619,26 @@ static int fsck_cache_tree(struct cache_tree *it)
- 	return err;
- }
- 
--static void mark_object_for_connectivity(const unsigned char *sha1)
-+static void mark_object_for_connectivity(const struct object_id *oid)
- {
--	struct object *obj = lookup_unknown_object(sha1);
-+	struct object *obj = lookup_unknown_object(oid->hash);
- 	obj->flags |= HAS_OBJ;
- }
- 
--static int mark_loose_for_connectivity(const unsigned char *sha1,
-+static int mark_loose_for_connectivity(const struct object_id *oid,
- 				       const char *path,
- 				       void *data)
- {
--	mark_object_for_connectivity(sha1);
-+	mark_object_for_connectivity(oid);
- 	return 0;
- }
- 
--static int mark_packed_for_connectivity(const unsigned char *sha1,
-+static int mark_packed_for_connectivity(const struct object_id *oid,
- 					struct packed_git *pack,
- 					uint32_t pos,
- 					void *data)
- {
--	mark_object_for_connectivity(sha1);
-+	mark_object_for_connectivity(oid);
- 	return 0;
- }
- 
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index 8841f8b366..6e7c3a6575 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -2534,17 +2534,17 @@ static void add_objects_in_unpacked_packs(struct rev_info *revs)
- 	free(in_pack.array);
- }
- 
--static int add_loose_object(const unsigned char *sha1, const char *path,
-+static int add_loose_object(const struct object_id *oid, const char *path,
- 			    void *data)
- {
--	enum object_type type = sha1_object_info(sha1, NULL);
-+	enum object_type type = sha1_object_info(oid->hash, NULL);
- 
- 	if (type < 0) {
- 		warning("loose object at %s could not be examined", path);
- 		return 0;
- 	}
- 
--	add_object_entry(sha1, type, "", 0);
-+	add_object_entry(oid->hash, type, "", 0);
- 	return 0;
- }
- 
-diff --git a/builtin/prune-packed.c b/builtin/prune-packed.c
-index 7cf900ea07..c026299e78 100644
---- a/builtin/prune-packed.c
-+++ b/builtin/prune-packed.c
-@@ -19,12 +19,12 @@ static int prune_subdir(int nr, const char *path, void *data)
- 	return 0;
- }
- 
--static int prune_object(const unsigned char *sha1, const char *path,
-+static int prune_object(const struct object_id *oid, const char *path,
- 			 void *data)
- {
- 	int *opts = data;
- 
--	if (!has_sha1_pack(sha1))
-+	if (!has_sha1_pack(oid->hash))
- 		return 0;
- 
- 	if (*opts & PRUNE_PACKED_DRY_RUN)
-diff --git a/builtin/prune.c b/builtin/prune.c
-index 8f4f052285..42633e0c6e 100644
---- a/builtin/prune.c
-+++ b/builtin/prune.c
-@@ -30,7 +30,7 @@ static int prune_tmp_file(const char *fullpath)
- 	return 0;
- }
- 
--static int prune_object(const unsigned char *sha1, const char *fullpath,
-+static int prune_object(const struct object_id *oid, const char *fullpath,
- 			void *data)
- {
- 	struct stat st;
-@@ -39,7 +39,7 @@ static int prune_object(const unsigned char *sha1, const char *fullpath,
- 	 * Do we know about this object?
- 	 * It must have been reachable
- 	 */
--	if (lookup_object(sha1))
-+	if (lookup_object(oid->hash))
- 		return 0;
- 
- 	if (lstat(fullpath, &st)) {
-@@ -50,8 +50,8 @@ static int prune_object(const unsigned char *sha1, const char *fullpath,
- 	if (st.st_mtime > expire)
- 		return 0;
- 	if (show_only || verbose) {
--		enum object_type type = sha1_object_info(sha1, NULL);
--		printf("%s %s\n", sha1_to_hex(sha1),
-+		enum object_type type = sha1_object_info(oid->hash, NULL);
-+		printf("%s %s\n", oid_to_hex(oid),
- 		       (type > 0) ? typename(type) : "unknown");
- 	}
- 	if (!show_only)
-diff --git a/cache.h b/cache.h
-index 04b1d923f3..32278400d2 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1654,7 +1654,7 @@ extern int unpack_object_header(struct packed_git *, struct pack_window **, off_
-  * scratch buffer, but restored to its original contents before
-  * the function returns.
-  */
--typedef int each_loose_object_fn(const unsigned char *sha1,
-+typedef int each_loose_object_fn(const struct object_id *oid,
- 				 const char *path,
- 				 void *data);
- typedef int each_loose_cruft_fn(const char *basename,
-@@ -1680,7 +1680,7 @@ int for_each_loose_file_in_objdir_buf(struct strbuf *path,
-  * LOCAL_ONLY flag is set).
-  */
- #define FOR_EACH_OBJECT_LOCAL_ONLY 0x1
--typedef int each_packed_object_fn(const unsigned char *sha1,
-+typedef int each_packed_object_fn(const struct object_id *oid,
- 				  struct packed_git *pack,
- 				  uint32_t pos,
- 				  void *data);
-diff --git a/reachable.c b/reachable.c
-index d0199cace4..a8a979bd4f 100644
---- a/reachable.c
-+++ b/reachable.c
-@@ -58,7 +58,7 @@ struct recent_data {
- 	unsigned long timestamp;
+ struct grab_1st_switch_cbdata {
+ 	struct strbuf buf;
+-	unsigned char nsha1[20];
++	struct object_id noid;
  };
  
--static void add_recent_object(const unsigned char *sha1,
-+static void add_recent_object(const struct object_id *oid,
- 			      unsigned long mtime,
- 			      struct recent_data *data)
+ static int grab_1st_switch(struct object_id *ooid, struct object_id *noid,
+@@ -1387,7 +1387,7 @@ static int grab_1st_switch(struct object_id *ooid, struct object_id *noid,
+ 		return 0;
+ 	target += strlen(" to ");
+ 	strbuf_reset(&cb->buf);
+-	hashcpy(cb->nsha1, noid->hash);
++	oidcpy(&cb->noid, noid);
+ 	end = strchrnul(target, '\n');
+ 	strbuf_add(&cb->buf, target, end - target);
+ 	if (!strcmp(cb->buf.buf, "HEAD")) {
+@@ -1402,7 +1402,7 @@ static void wt_status_get_detached_from(struct wt_status_state *state)
  {
-@@ -75,37 +75,37 @@ static void add_recent_object(const unsigned char *sha1,
- 	 * later processing, and the revision machinery expects
- 	 * commits and tags to have been parsed.
- 	 */
--	type = sha1_object_info(sha1, NULL);
-+	type = sha1_object_info(oid->hash, NULL);
- 	if (type < 0)
--		die("unable to get object info for %s", sha1_to_hex(sha1));
-+		die("unable to get object info for %s", oid_to_hex(oid));
+ 	struct grab_1st_switch_cbdata cb;
+ 	struct commit *commit;
+-	unsigned char sha1[20];
++	struct object_id oid;
+ 	char *ref = NULL;
  
- 	switch (type) {
- 	case OBJ_TAG:
- 	case OBJ_COMMIT:
--		obj = parse_object_or_die(sha1, NULL);
-+		obj = parse_object_or_die(oid->hash, NULL);
- 		break;
- 	case OBJ_TREE:
--		obj = (struct object *)lookup_tree(sha1);
-+		obj = (struct object *)lookup_tree(oid->hash);
- 		break;
- 	case OBJ_BLOB:
--		obj = (struct object *)lookup_blob(sha1);
-+		obj = (struct object *)lookup_blob(oid->hash);
- 		break;
- 	default:
- 		die("unknown object type for %s: %s",
--		    sha1_to_hex(sha1), typename(type));
-+		    oid_to_hex(oid), typename(type));
+ 	strbuf_init(&cb.buf, 0);
+@@ -1411,22 +1411,22 @@ static void wt_status_get_detached_from(struct wt_status_state *state)
+ 		return;
  	}
  
- 	if (!obj)
--		die("unable to lookup %s", sha1_to_hex(sha1));
-+		die("unable to lookup %s", oid_to_hex(oid));
+-	if (dwim_ref(cb.buf.buf, cb.buf.len, sha1, &ref) == 1 &&
++	if (dwim_ref(cb.buf.buf, cb.buf.len, oid.hash, &ref) == 1 &&
+ 	    /* sha1 is a commit? match without further lookup */
+-	    (!hashcmp(cb.nsha1, sha1) ||
++	    (!oidcmp(&cb.noid, &oid) ||
+ 	     /* perhaps sha1 is a tag, try to dereference to a commit */
+-	     ((commit = lookup_commit_reference_gently(sha1, 1)) != NULL &&
+-	      !hashcmp(cb.nsha1, commit->object.oid.hash)))) {
++	     ((commit = lookup_commit_reference_gently(oid.hash, 1)) != NULL &&
++	      !oidcmp(&cb.noid, &commit->object.oid)))) {
+ 		const char *from = ref;
+ 		if (!skip_prefix(from, "refs/tags/", &from))
+ 			skip_prefix(from, "refs/remotes/", &from);
+ 		state->detached_from = xstrdup(from);
+ 	} else
+ 		state->detached_from =
+-			xstrdup(find_unique_abbrev(cb.nsha1, DEFAULT_ABBREV));
+-	hashcpy(state->detached_sha1, cb.nsha1);
+-	state->detached_at = !get_sha1("HEAD", sha1) &&
+-			     !hashcmp(sha1, state->detached_sha1);
++			xstrdup(find_unique_abbrev(cb.noid.hash, DEFAULT_ABBREV));
++	hashcpy(state->detached_sha1, cb.noid.hash);
++	state->detached_at = !get_oid("HEAD", &oid) &&
++			     !hashcmp(oid.hash, state->detached_sha1);
  
- 	add_pending_object(data->revs, obj, "");
- }
- 
--static int add_recent_loose(const unsigned char *sha1,
-+static int add_recent_loose(const struct object_id *oid,
- 			    const char *path, void *data)
+ 	free(ref);
+ 	strbuf_release(&cb.buf);
+@@ -1476,22 +1476,22 @@ void wt_status_get_state(struct wt_status_state *state,
+ 			 int get_detached_from)
  {
  	struct stat st;
--	struct object *obj = lookup_object(sha1);
-+	struct object *obj = lookup_object(oid->hash);
+-	unsigned char sha1[20];
++	struct object_id oid;
  
- 	if (obj && obj->flags & SEEN)
- 		return 0;
-@@ -119,22 +119,22 @@ static int add_recent_loose(const unsigned char *sha1,
- 		 */
- 		if (errno == ENOENT)
- 			return 0;
--		return error_errno("unable to stat %s", sha1_to_hex(sha1));
-+		return error_errno("unable to stat %s", oid_to_hex(oid));
+ 	if (!stat(git_path_merge_head(), &st)) {
+ 		state->merge_in_progress = 1;
+ 	} else if (wt_status_check_rebase(NULL, state)) {
+ 		;		/* all set */
+ 	} else if (!stat(git_path_cherry_pick_head(), &st) &&
+-			!get_sha1("CHERRY_PICK_HEAD", sha1)) {
++			!get_oid("CHERRY_PICK_HEAD", &oid)) {
+ 		state->cherry_pick_in_progress = 1;
+-		hashcpy(state->cherry_pick_head_sha1, sha1);
++		hashcpy(state->cherry_pick_head_sha1, oid.hash);
+ 	}
+ 	wt_status_check_bisect(NULL, state);
+ 	if (!stat(git_path_revert_head(), &st) &&
+-	    !get_sha1("REVERT_HEAD", sha1)) {
++	    !get_oid("REVERT_HEAD", &oid)) {
+ 		state->revert_in_progress = 1;
+-		hashcpy(state->revert_head_sha1, sha1);
++		hashcpy(state->revert_head_sha1, oid.hash);
  	}
  
--	add_recent_object(sha1, st.st_mtime, data);
-+	add_recent_object(oid, st.st_mtime, data);
- 	return 0;
- }
- 
--static int add_recent_packed(const unsigned char *sha1,
-+static int add_recent_packed(const struct object_id *oid,
- 			     struct packed_git *p, uint32_t pos,
- 			     void *data)
- {
--	struct object *obj = lookup_object(sha1);
-+	struct object *obj = lookup_object(oid->hash);
- 
- 	if (obj && obj->flags & SEEN)
- 		return 0;
--	add_recent_object(sha1, p->mtime, data);
-+	add_recent_object(oid, p->mtime, data);
- 	return 0;
- }
- 
-diff --git a/sha1_file.c b/sha1_file.c
-index 777b8e8eae..6b74c7d3bc 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -3685,15 +3685,15 @@ static int for_each_file_in_obj_subdir(int subdir_nr,
- 		strbuf_setlen(path, baselen);
- 		strbuf_addf(path, "/%s", de->d_name);
- 
--		if (strlen(de->d_name) == 38)  {
--			char hex[41];
--			unsigned char sha1[20];
-+		if (strlen(de->d_name) == GIT_SHA1_HEXSZ - 2)  {
-+			char hex[GIT_SHA1_HEXSZ+1];
-+			struct object_id oid;
- 
- 			snprintf(hex, sizeof(hex), "%02x%s",
- 				 subdir_nr, de->d_name);
--			if (!get_sha1_hex(hex, sha1)) {
-+			if (!get_oid_hex(hex, &oid)) {
- 				if (obj_cb) {
--					r = obj_cb(sha1, path->buf, data);
-+					r = obj_cb(&oid, path->buf, data);
- 					if (r)
- 						break;
- 				}
-@@ -3805,7 +3805,7 @@ static int for_each_object_in_pack(struct packed_git *p, each_packed_object_fn c
- 			return error("unable to get sha1 of object %u in %s",
- 				     i, p->pack_name);
- 
--		r = cb(oid.hash, p, i, data);
-+		r = cb(&oid, p, i, data);
- 		if (r)
- 			break;
- 	}
+ 	if (get_detached_from)
 -- 
 2.11.0
 
