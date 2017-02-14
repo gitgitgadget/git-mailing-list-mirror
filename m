@@ -2,110 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AB0D91FAF4
-	for <e@80x24.org>; Tue, 14 Feb 2017 18:20:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id ED0EF1FAF4
+	for <e@80x24.org>; Tue, 14 Feb 2017 18:24:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752318AbdBNSUA (ORCPT <rfc822;e@80x24.org>);
-        Tue, 14 Feb 2017 13:20:00 -0500
-Received: from mail-oi0-f54.google.com ([209.85.218.54]:34010 "EHLO
-        mail-oi0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750987AbdBNST7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Feb 2017 13:19:59 -0500
-Received: by mail-oi0-f54.google.com with SMTP id s203so74980265oie.1
-        for <git@vger.kernel.org>; Tue, 14 Feb 2017 10:19:58 -0800 (PST)
+        id S1751883AbdBNSYq (ORCPT <rfc822;e@80x24.org>);
+        Tue, 14 Feb 2017 13:24:46 -0500
+Received: from mail-ot0-f196.google.com ([74.125.82.196]:33280 "EHLO
+        mail-ot0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751542AbdBNSY2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Feb 2017 13:24:28 -0500
+Received: by mail-ot0-f196.google.com with SMTP id t47so3058983ota.0
+        for <git@vger.kernel.org>; Tue, 14 Feb 2017 10:24:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=subject:to:references:cc:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding;
-        bh=zFFPUgnIGXrfr8FJKOTGanjG7UhzK1cXRGFXyhPkQhw=;
-        b=jlAEOAPJg5dC9JjyzOoUsPy+7h8Z7p976NwrOiCgRvklaGmEnwTWhYmxo0d57HjYxz
-         t8FD3/MVnhmgvFQkwntQbVXAurwok+OE1m02Uqnht0wGGkXuyeUYw3qtx39ySAyexG/5
-         4iTB83kmDGpruXi6i0Cgn9NJajsOxoTewn53WyuUlddXIZz2HI1QLFyTEdB0AGIW+xn1
-         9PpFUkgSWA9m2AApb2MXxm35xAe+zxlVoVVOODGtEJPpkGYipvYZQpqlVUJZkoaS5d5P
-         HJZOLfL7kFdP3OJI0QpnZZY/CGZLrUkk+N6LgkTlf8nsLisAGto7/oGo/nNplxZDlte/
-         QTEw==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=mGIEB+8+KHwSGwtOIBO4S8IyV53pAuXe0t5xFnQ8gjg=;
+        b=o0DUEdDfmKNYnGsrIqK94t0hWH3/vjky+MKUQcz1mm2hv6wgNMT/ptYArGrLB7dr+E
+         St6rzW7dq2HHmlRpxrlD1dB3H6Cc4rRu0F8PbHP0eCi10QnvJP881FVTr+ZoUwR7TPzt
+         Y8xzZzudmRz2n4QT+TPpYTIajtr7/qaDyifrXWJGs16diBQyRDMvoYX4rn4JHxV5ReYa
+         GZDapu2rVb58EzZVcWfMJ7PhToPcqyOYcUoRct+FRFzqUDAnalOgPFakNVn0tRPHMNZJ
+         LhtKsatZ2lDgU1O++sAOyM2zyNd5H7GEct1/bscOOPfPz+YbqxDNn/yRPZRq+ssYntLa
+         ll5Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
-        bh=zFFPUgnIGXrfr8FJKOTGanjG7UhzK1cXRGFXyhPkQhw=;
-        b=pHZweW3hwgPa4c2akbe++v6Q71DwQTYGrAGmMar99u+oySS5I2JLCoPN33uxXHVjEX
-         FfXckiPieBCSHXs2bKoR8loEiobDf9/854Y0EIvUvSdZinam0vd/vIp4IkMFL7p4E04s
-         jVGVEAQhxKmE1DTveYWYCAqVS6EuwE88qMBVrbw8YtGOzqdwEQ1RnF8tbwGq7AUwPN2A
-         PAty6wgnY12E2ulATQkbKAKV7pXoaID5dsxO5vpXfudfaN2AXRjuIkcLIl0cFGI1NpIe
-         0yHB+/YV97iDUbr1ZlNJ1R2LZKGBVcGO0bdUufVWvlwqGDONlV21FtTJxBpzODqfY2uZ
-         GlVg==
-X-Gm-Message-State: AMke39l8U3WMSQTErXQ6Sj2MMxxdQq5K9cJBWX0JTMrmKX1adZkmhMPJJ5qaXhjrgEfEafSj
-X-Received: by 10.84.217.153 with SMTP id p25mr35257159pli.164.1487096397902;
-        Tue, 14 Feb 2017 10:19:57 -0800 (PST)
-Received: from twelve2.mtv.corp.google.com ([2620:0:1000:5b10:55a2:e20d:aab0:fd6b])
-        by smtp.gmail.com with ESMTPSA id 2sm2575513pfv.100.2017.02.14.10.19.57
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 14 Feb 2017 10:19:57 -0800 (PST)
-Subject: Re: [PATCH 6/7] grep: avoid resolving revision names in --no-index
- case
-To:     Jeff King <peff@peff.net>
-References: <20170214060021.einv7372exbxa23z@sigill.intra.peff.net>
- <20170214060729.v4r24y5tuaov3jrh@sigill.intra.peff.net>
- <eef97cc4-d616-b298-bc99-b2772b757190@google.com>
- <20170214180453.tpze2hdv3eytxfju@sigill.intra.peff.net>
-Cc:     git@vger.kernel.org, gitster@pobox.com
-From:   Jonathan Tan <jonathantanmy@google.com>
-Message-ID: <82212eaa-76d2-3357-8e06-5e4d56028c2e@google.com>
-Date:   Tue, 14 Feb 2017 10:19:56 -0800
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.7.0
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=mGIEB+8+KHwSGwtOIBO4S8IyV53pAuXe0t5xFnQ8gjg=;
+        b=ueOeVmnTT9ENUvxKZfV4AtuIIrlPSs+Xd4Vov4SGURBnKsHekV9K7UguiMMv61RtZU
+         JWv0pTck03eJSmJxgTgBUqLodZCfY4iDvMs7mBhJfTq+02VWqZz125qMr/HdoGw/7g1l
+         +UXhazqgIu7NdLTvIwAKlMrskNlN2u04JErkGyaPGsJG/5QojvzvSLl8nNrOLPRUBv56
+         P1LjOJXMqgX9r6VBM16ks4IRWtchsJOcxocqc0j/vuhCD6nVLpCanYi3JStXvuydro8y
+         VO40LJ2ki6YeOoKp3AAKdeBdMhHvgJ+7Kdji1X8MIpxKrOj90OrzuGA1idWDmSQhEvlE
+         Y40A==
+X-Gm-Message-State: AMke39k+7Lx3305nt29jRUFRc6R3LlQnzEkKasVPPvZMgg35qsL1CX2pGZByZtbzAaA7tA==
+X-Received: by 10.98.59.204 with SMTP id w73mr33329272pfj.73.1487096662277;
+        Tue, 14 Feb 2017 10:24:22 -0800 (PST)
+Received: from localhost ([2620:0:1000:8622:2447:f72c:8fdf:75c6])
+        by smtp.gmail.com with ESMTPSA id e13sm2621485pgn.38.2017.02.14.10.24.21
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Tue, 14 Feb 2017 10:24:21 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Stefan Beller <sbeller@google.com>,
+        "git\@vger.kernel.org" <git@vger.kernel.org>,
+        Michael Haggerty <mhagger@alum.mit.edu>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        David Turner <novalis@novalis.org>
+Subject: Re: [PATCH 11/11] refs: split and make get_*_ref_store() public API
+References: <20170213152011.12050-1-pclouds@gmail.com>
+        <20170213152011.12050-12-pclouds@gmail.com>
+        <CAGZ79kZC6TntQrW7MF6-h5z5En-u6rwNX=zuaHRNDpbO80ALHA@mail.gmail.com>
+        <CACsJy8ChQqUd4poeeKQruQSwdys=ydzxGDC8fU6ZgfrFEEm7NQ@mail.gmail.com>
+Date:   Tue, 14 Feb 2017 10:24:20 -0800
+In-Reply-To: <CACsJy8ChQqUd4poeeKQruQSwdys=ydzxGDC8fU6ZgfrFEEm7NQ@mail.gmail.com>
+        (Duy Nguyen's message of "Tue, 14 Feb 2017 17:04:06 +0700")
+Message-ID: <xmqq8tp8aawb.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <20170214180453.tpze2hdv3eytxfju@sigill.intra.peff.net>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 02/14/2017 10:04 AM, Jeff King wrote:
-> On Tue, Feb 14, 2017 at 08:53:04AM -0800, Jonathan Tan wrote:
->
->> On 02/13/2017 10:07 PM, Jeff King wrote:
->>> diff --git a/builtin/grep.c b/builtin/grep.c
->>> index e83b33bda..c4c632594 100644
->>> --- a/builtin/grep.c
->>> +++ b/builtin/grep.c
->>> @@ -1176,6 +1176,12 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
->>>  			break;
->>>  		}
->>>
->>> +		if (!use_index) {
->>> +			if (seen_dashdash)
->>> +				die(_("--no-index cannot be used with revs"));
->>
->> There is a subsequent check that prints "--no-index or --untracked cannot be
->> used with revs." - maybe we should just expand this part to incorporate that
->> case. (That is, write `if (!use_index || untracked)` instead of `if
->> (!use_index)`.) This also allows us to preserve the error message, which
->> might be useful for someone using a translated version of Git.
->
-> I wasn't sure if we wanted to treat "untracked" in the same way.
-> Certainly we can catch the error here for the seen_dashdash case, but is
-> it also the case that:
->
->   echo content >master
->   git grep --untracked pattern master
->
-> should treat "master" as a path?
->
-> -Peff
+Duy Nguyen <pclouds@gmail.com> writes:
 
-It is already the case that it cannot be treated as a rev:
+> Direct call sites are just middle men though, e.g.
+> for_each_ref_submodule(). I'll attempt to clean this up at some point
+> in future (probably at the same time I attempt to kill *_submodule ref
+> api). But I think for now I'll just put a TODO or FIXME comment here.
 
-   $ git grep --untracked pattern master
-   fatal: --no-index or --untracked cannot be used with revs.
+So we'd have get_*_ref_store() for various cases and then will have
+a unifying for_each_ref_in_refstore() that takes a ref-store, which
+supersedes all the ad-hoc iterators like for_each_ref_submodule(),
+for_each_namespaced_ref(), etc?
 
-So I think it would be better if it was treated as a path, for 
-consistency with --no-index. I'm OK either way, though.
+That's a very sensible longer-term goal, methinks.
+
+I am wondering what we should do to for_each_{tag,branch,...}_ref().  
+Would that become
+
+	ref_store = get_ref_main_store();
+	tag_ref_store = filter_ref_store(ref_store, "refs/tags/");
+	for_each_ref_in_refstore(tag_ref_store, ...);
+
+or do you plan to have some other pattern?
