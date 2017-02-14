@@ -2,123 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 95F8F1FAF4
-	for <e@80x24.org>; Tue, 14 Feb 2017 18:56:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BEB801FAF4
+	for <e@80x24.org>; Tue, 14 Feb 2017 18:58:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752857AbdBNS41 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 14 Feb 2017 13:56:27 -0500
-Received: from mail-it0-f44.google.com ([209.85.214.44]:34943 "EHLO
-        mail-it0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752324AbdBNS4Z (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Feb 2017 13:56:25 -0500
-Received: by mail-it0-f44.google.com with SMTP id 203so45632693ith.0
-        for <git@vger.kernel.org>; Tue, 14 Feb 2017 10:56:25 -0800 (PST)
+        id S1752987AbdBNS6t (ORCPT <rfc822;e@80x24.org>);
+        Tue, 14 Feb 2017 13:58:49 -0500
+Received: from mail-ot0-f193.google.com ([74.125.82.193]:36773 "EHLO
+        mail-ot0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752967AbdBNS6r (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Feb 2017 13:58:47 -0500
+Received: by mail-ot0-f193.google.com with SMTP id l26so4811839ota.3
+        for <git@vger.kernel.org>; Tue, 14 Feb 2017 10:58:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=igL2hmO7122ogVdAbAjCNN+ACLq6H/PXAs/iEjxMezA=;
-        b=SHPaSEkEKswpqM1IJqtx6rRKWmIkYv1px5/tT0PAQifO8ufQERBR8USikpqrMte3OC
-         tegOKqpR9r1RQyyg3ctL/3lUwX6X+t0LzBnLHN4Rvr3dZEhpHU+iwp7pWo8LlaWFFnY0
-         f+i+8VWAT3xusdcb12bjH1QyzFEK3bKbKBvuGNWnRKAy7MBvbDlLl2AbBvBfjrNVVmyO
-         X73yhThdbmhiku5kX62TflIMACviQHzMPD0g/eGJ10rUB99hL9Kf+C1+64BwSDNfkx97
-         xtsmvUCT0XihGz2oIyTMtMpHWil9nfaLF2stQLSzng0Eup3x+Uo80CbwpOwc/R3Xa2Or
-         7C7w==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=SJGlQpmyDvpCvgEfG1aGNbUoqNdPOeuu8khfrJc3Qtk=;
+        b=MjLb6gRhDp5dhFIMqx+JQ8Z8HhHCskcNp8U369np2sYBHCkWMDKuiQe55Z4yJVUCxu
+         U0A5HF0HQhT3g4Az/8TsJgxCVjPcvw/Bofxz83vn3w6HPZ0E3cogFgkplh0K+RUNDuRY
+         DzENfwOts/XwbgZ+taAd9prSgxfZSDeOsEW/BVpQU024jkJowRBgxz6MnJCGbBgloZNV
+         oIexBtZMVyChnfvz3m5ggHnhG3G7Am61vSfxHDswmqkvGIsBBPcVAnqBrnkUVU/+i0CC
+         nWSSgkCrC1azqf6CjaKeG0WH/cMKtWOy/BCwXKigI+KEh8Ai4HO2vGS/1IfKCooC6Kdn
+         PFvQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=igL2hmO7122ogVdAbAjCNN+ACLq6H/PXAs/iEjxMezA=;
-        b=l1obr1Gm0+ue/ujT6uzl1hqkf6DKa6C90Hn9xtFN6w9Q6TwPWOhzHbgJBSO5zUrIAS
-         COWpSPUED59Xg1aZq6zggxgSzdLPwliX5RQsGehSNlHadPJdrbrlNW1Tq2DEHijQUgh5
-         tUEnOkZHSpZ7bRfJt+64+jfS8efkXw11LDmxdqdnAJFMFTYDxB3xYlaT2YpBKH1wQQDa
-         cSB9IAMEq/OTfwRjxM+7jAPQxLvgHG6pIG7O3lSJXBEvBzuL9M8m7i8VemKNLtpsj3r4
-         8hW5+V4CiRvpTAyv1Uy175MWRXvRKFCBxykKw1wgOGih7LC3P26/kf7w3C/GsZ8/W60Z
-         Op8w==
-X-Gm-Message-State: AMke39m0vpBd/xd+dGJUV93jcw3+mCnF1i2ThgZ5gALu1U4xbc5R73pMbnWmGfVxFWKV9JWb
-X-Received: by 10.99.123.68 with SMTP id k4mr34379972pgn.101.1487098584264;
-        Tue, 14 Feb 2017 10:56:24 -0800 (PST)
-Received: from google.com ([2620:0:1000:5b10:35a2:93b7:75dd:e184])
-        by smtp.gmail.com with ESMTPSA id m136sm2736855pga.22.2017.02.14.10.56.22
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=SJGlQpmyDvpCvgEfG1aGNbUoqNdPOeuu8khfrJc3Qtk=;
+        b=dKxn685Wr9iPQydmZSQjrnCIBEk5w8tt0fpl/pV1Ofufqf5fKTFFbRrkIg5A5/OeCT
+         DnGAP9rUHyyG1nlvLlJ3F9rhyjiDki9tbuKu0wvuKKxOC9g+yJqkA5GIYEEAfpbAgDUh
+         ipScH4wKP48mgeT2psggIwvbxK1b0Ebg1u4UX2PFbFl+/mrFn76ypL0V1RFfY+VjH8e0
+         h8Zi0vogSQ1MoPxikOk+zlnkuPUXPP5S0v3nojHd4Cgn58oAZVyOOIfhNe0tWj5YLbjv
+         xu72MM4Qp5xOAK+OujG8V78zvnSFlYLjqfeU8dnhBEbNP15KsWEP401WhFFoD7fwGx7m
+         al5w==
+X-Gm-Message-State: AMke39m/spE7Cq+UiwcHhs9A1FkMLI8xxIbDhDPyP2bfbx+pXg5FV1Fr98wOMoj53VKMTQ==
+X-Received: by 10.99.8.4 with SMTP id 4mr33895307pgi.204.1487098726921;
+        Tue, 14 Feb 2017 10:58:46 -0800 (PST)
+Received: from localhost ([2620:0:1000:8622:2447:f72c:8fdf:75c6])
+        by smtp.gmail.com with ESMTPSA id q7sm2669977pfb.98.2017.02.14.10.58.45
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 14 Feb 2017 10:56:22 -0800 (PST)
-Date:   Tue, 14 Feb 2017 10:56:21 -0800
-From:   Brandon Williams <bmwill@google.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org,
-        gitster@pobox.com
-Subject: Re: [PATCH 5/7] grep: fix "--" rev/pathspec disambiguation
-Message-ID: <20170214185621.GC44208@google.com>
-References: <20170214060021.einv7372exbxa23z@sigill.intra.peff.net>
- <20170214060555.yzh6hhi2t7pkeqvi@sigill.intra.peff.net>
+        Tue, 14 Feb 2017 10:58:46 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Sixt <j6t@kdbg.org>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        git@vger.kernel.org, Jeff Hostetler <jeffhost@microsoft.com>
+Subject: Re: [PATCH] mingw: make stderr unbuffered again
+References: <c88612da0a62bfcbc3e278296f9d3eb010057071.1487025228.git.johannes.schindelin@gmx.de>
+        <xmqqlgt9btrv.fsf@gitster.mtv.corp.google.com>
+        <alpine.DEB.2.20.1702141545380.3496@virtualbox>
+        <ef8549ea-7222-fdd0-739d-855ad428e39c@kdbg.org>
+Date:   Tue, 14 Feb 2017 10:58:45 -0800
+In-Reply-To: <ef8549ea-7222-fdd0-739d-855ad428e39c@kdbg.org> (Johannes Sixt's
+        message of "Tue, 14 Feb 2017 19:45:28 +0100")
+Message-ID: <xmqqy3x88uqi.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20170214060555.yzh6hhi2t7pkeqvi@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 02/14, Jeff King wrote:
-> -	/* Check revs and then paths */
-> +	/*
-> +	 * We have to find "--" in a separate pass, because its presence
-> +	 * influences how we will parse arguments that come before it.
-> +	 */
-> +	for (i = 0; i < argc; i++) {
-> +		if (!strcmp(argv[i], "--")) {
-> +			seen_dashdash = 1;
-> +			break;
-> +		}
-> +	}
+Johannes Sixt <j6t@kdbg.org> writes:
 
-So this simply checks if "--" is an argument that was provided.  This
-then allows grep to know ahead of time how to handle revs/paths
-preceding a "--" or in the absences of the "--".  Seems sensible to me.
+> Am 14.02.2017 um 15:47 schrieb Johannes Schindelin:
+>
+>>>From my point of view, it is not crucial. The next Git for Windows version
+>> will have it, of course, and Hannes is always running with his set of
+>> patches, he can easily cherry-pick this one, too.
+>
+> The patch fixes the problem for me here.
+>
+> I am a bit hesitant to call it "not crucial": The symptom I observed
+> is certainly not a show stopper; but who knows where else it is
+> important that stderr goes to the terminal earlier than other
+> output. As it is a new regression, it should be included in the next
+> release.
 
-> +
-> +	/*
-> +	 * Resolve any rev arguments. If we have a dashdash, then everything up
-> +	 * to it must resolve as a rev. If not, then we stop at the first
-> +	 * non-rev and assume everything else is a path.
-> +	 */
->  	for (i = 0; i < argc; i++) {
->  		const char *arg = argv[i];
->  		unsigned char sha1[20];
-> @@ -1158,13 +1173,14 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
->  
->  		if (!strcmp(arg, "--")) {
->  			i++;
-> -			seen_dashdash = 1;
->  			break;
->  		}
->  
-> -		/* Stop at the first non-rev */
-> -		if (get_sha1_with_context(arg, 0, sha1, &oc))
-> +		if (get_sha1_with_context(arg, 0, sha1, &oc)) {
-> +			if (seen_dashdash)
-> +				die(_("unable to resolve revision: %s"), arg);
->  			break;
-> +		}
->  
->  		object = parse_object_or_die(sha1, arg);
->  		if (!seen_dashdash)
-> @@ -1172,7 +1188,10 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
->  		add_object_array_with_path(object, arg, &list, oc.mode, oc.path);
->  	}
->  
-> -	/* The rest are paths */
-> +	/*
-> +	 * Anything left over is presumed to be a path. But in the non-dashdash
-> +	 * "do what I mean" case, we verify and complain when that isn't true.
-> +	 */
+I tend to agree with you on the "not crucial" bit.
 
--- 
-Brandon Williams
+I applied the patch with "Tested-by: Johannes Sixt <j6t@kdbg.org>"
+on top of 1d3f065e0e ("mingw: follow-up to "replace isatty() hack"",
+2017-01-18), which was the tip of js/mingw-isatty topic that was
+merged to both master and maint during this cycle.  Unless I hear
+the "fix" turns out to be undesirable in the coming few days, let's
+plan to merge it to 'master' by the final.
+
+Thanks.
+
