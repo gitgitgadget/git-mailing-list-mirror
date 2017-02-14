@@ -2,90 +2,75 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 57C321FAF4
-	for <e@80x24.org>; Tue, 14 Feb 2017 14:47:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1D27A1FAF4
+	for <e@80x24.org>; Tue, 14 Feb 2017 14:53:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754080AbdBNOr0 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 14 Feb 2017 09:47:26 -0500
-Received: from mout.gmx.net ([212.227.17.20]:59243 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752974AbdBNOrY (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Feb 2017 09:47:24 -0500
-Received: from virtualbox ([37.201.192.48]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0M7DVi-1cRCH63IAw-00x0ct; Tue, 14
- Feb 2017 15:47:06 +0100
-Date:   Tue, 14 Feb 2017 15:47:05 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     git@vger.kernel.org, Johannes Sixt <j6t@kdbg.org>,
-        Jeff Hostetler <jeffhost@microsoft.com>
-Subject: Re: [PATCH] mingw: make stderr unbuffered again
-In-Reply-To: <xmqqlgt9btrv.fsf@gitster.mtv.corp.google.com>
-Message-ID: <alpine.DEB.2.20.1702141545380.3496@virtualbox>
-References: <c88612da0a62bfcbc3e278296f9d3eb010057071.1487025228.git.johannes.schindelin@gmx.de> <xmqqlgt9btrv.fsf@gitster.mtv.corp.google.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+        id S1753575AbdBNOwq (ORCPT <rfc822;e@80x24.org>);
+        Tue, 14 Feb 2017 09:52:46 -0500
+Received: from mail-lf0-f49.google.com ([209.85.215.49]:36786 "EHLO
+        mail-lf0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752367AbdBNOwn (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Feb 2017 09:52:43 -0500
+Received: by mail-lf0-f49.google.com with SMTP id z134so67459112lff.3
+        for <git@vger.kernel.org>; Tue, 14 Feb 2017 06:52:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=qM/2miixGC32EtpPMMPhwP44lEtQrCX7L9EPuhi1TG8=;
+        b=JfZksv7lfwFuQfvDAk6n4tSUyEPI0jh5uORx9y6pLG8kFgNyO4nSFf+kScFFpncxi/
+         4KvkuqCqw7a4tD7sF/qvInj0An4VusKFz4PmDoSy5Ax+4Tu6AWlH90vyLPwiIj7lVI/o
+         dAhSCv82tdFNib/k/+C3DMHcmXfVCw9dwTN+uER11oeBZLtg8uT4nE2vfStXF9qfVEy6
+         MZHKq45jI1sE8ln/lJji40nLNp6GJniQdyGIp/Jo9wXVck8NPrydxmxpAiNSdZXMdL5b
+         uXnqn3Q4Qx+gyCij+ml6zXjtc5VsDSxmpdqQY3w6oo6seZCw8sK52n554LcHXP4y3NPj
+         svVg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=qM/2miixGC32EtpPMMPhwP44lEtQrCX7L9EPuhi1TG8=;
+        b=h8EMO4sou2ytt/vq+XFqY4jc3GvZKsEYScSZVt3FJ1jYHFNRmofdRH3jpUF3/Z8xkM
+         I72Nr907nKXXlpMoFoc6X53KwfbyPc8yTBwXOSOdj5gqgNdy9Gma7vgu4MXQUK2qi2ea
+         +37IzJk0nMDtZaylbQfXTM9lhyWhTSMXzl1GPSxqZSTY8OkNjU7dn5Ub56C5Ijc2li4l
+         YBXf/Rqqv41UyClYFw3FXXsszTDbOb9/9bM9QRvHEUaq/aUYdUzNL1zEi+bPsPDxiul+
+         yLKV5Sptji/rLa+jm2mgcsCJ/8pigBwLQk0GrC6DFWI3IzuN3Bf2GSv2B8f7z+m2ctcv
+         tcRQ==
+X-Gm-Message-State: AMke39nkjO9n0iTm1z2ogRkYgOABkt82IRfKZWyMrwOwCLMc1qI4mvZPsYoLX1GUwwRcqW68aTGia64bLIV7Zw==
+X-Received: by 10.25.225.141 with SMTP id l13mr6474907lfk.129.1487083961217;
+ Tue, 14 Feb 2017 06:52:41 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:NH/b6bxpz/9KSDMCUSCw7uvEXORpTJxJvvAziR9g/6FJYsIqAL2
- oPCg3QdyAjWjiI2cmb57FTcfMecqXIcShd5b5DM1sSrCWK9aLA+C6j5QndnsnR95zeMz3xF
- 0G7jq+IK+1A7HMnJZ95jtceHMLusx+de6GssZbOjHMiPZNFcAigwA/sTxWVIGSLimpE+30r
- W3TNR+ucf+0IIQ6a/UQdw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:V0Uq3Du8EnE=:72b7mX2hvXpin5HYov4zUb
- t9bVOOJtSaVPVrMQnZZwjqd3CxehU6xZ0mUpP0KaxF+Ja3pXKR2R5+2wUth21KH0YXqiLHObe
- tYD5QQPHL3LSo1/ekOzzrSmfJzicVwa+LMjlRmQCEalJFV6b8KKPVL8c68fgEC7km8dp5ThYs
- lxgP2fHeHEDx6KBomCTX5OC3LJ37UmtyjGwOMKacHqBlTzhUwY4j1Mjk8n+dMEhS0lKR52QW/
- IfD/dmCfVJXwew986AswB6qx/adECa2dK7yDI+UhFGh/jHv375xen06ZmK3t6zJcfhB5Rt8sg
- CX4fhBQkSDtamD8KZ85WbGTULYRuoNmBzi2BXp1Wo3htb9oYSlUA0mNwuEyrkHm0Rbplvl0To
- 9mcqglY2891BzqNC4j0miXylIp3aVty6DKQOmM6zMWqERmUZiBy9qzbBMVtCKT9wWGqtEf18X
- 4BwFk7wspyMxZsW+rLpIR1VoG35uhOd6hImDWvXMrZvQs/Jfcc5FZsFBVJdUZmNSPjxduPSKp
- AFBkONdV/AIUmbsy1Y7IJO/7l9+8RBbIVL0Fz5fvdO096+EzOckhow5Exe6ZMP4NsUyGdXgJM
- DyyClPObGU4RVQfLYAjsxdq0c4y5SLSSlY4JbyGr4mYluHpz+NX4EJfcfxmKxQFTUzlII6XLY
- gFtfg2pqeB463xI7UpvbOV/+pDduvQszFE0v6yX/nmpHj8gxOcL3XC+GYJ+gRfIJWrCAlgWbt
- /gkURbDE6EgNlhm0p35dg++hAsFlH6zYTrkIXAmw/JruJgvipxUT40i2O7ok/EXOh/XfIDfwC
- 64LhQPH
+Received: by 10.25.199.13 with HTTP; Tue, 14 Feb 2017 06:52:40 -0800 (PST)
+In-Reply-To: <A7AEC719-6E15-4622-8E21-3E11BAF74A3C@linaro.org>
+References: <A7AEC719-6E15-4622-8E21-3E11BAF74A3C@linaro.org>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Tue, 14 Feb 2017 15:52:40 +0100
+Message-ID: <CAP8UFD12tQmWRV29BLO+KJGcGHXOqPaOLbovL7kTBHPWdyMM3g@mail.gmail.com>
+Subject: Re: [BUG] Memory corruption crash with "git bisect start"
+To:     Maxim Kuvyrkov <maxim.kuvyrkov@linaro.org>
+Cc:     git <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+On Tue, Feb 14, 2017 at 12:56 PM, Maxim Kuvyrkov
+<maxim.kuvyrkov@linaro.org> wrote:
+> I'm seeing the following memory corruption crash on a script-constructed repo when starting git bisect.  I'm seeing this crash both with system git of Ubuntu Xenial and with freshly-compiled git master from the official repo.
+>
+> The log of the crash is attached.
 
-On Mon, 13 Feb 2017, Junio C Hamano wrote:
+Yeah, thanks for the report.
 
-> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
-> 
-> > When removing the hack for isatty(), we actually removed more than just
-> > an isatty() hack: we removed the hack where internal data structures of
-> > the MSVC runtime are modified in order to redirect stdout/stderr.
-> >
-> > Instead of using that hack (that does not work with newer versions of
-> > the runtime, anyway), we replaced it by reopening the respective file
-> > descriptors.
-> >
-> > What we forgot was to mark stderr as unbuffered again.
-> >
-> > Reported by Hannes Sixt. Fixed with Jeff Hostetler's assistance.
-> >
-> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> > ---
-> > Published-As: https://github.com/dscho/git/releases/tag/mingw-unbuffered-stderr-v1
-> > Fetch-It-Via: git fetch https://github.com/dscho/git mingw-unbuffered-stderr-v1
-> 
-> OK.  Should this go directly to 'master', as the isatty thing is
-> already in?
+I took a look and it looks like git bisect crashes when it runs git
+show-branch and it can be reproduced with just `git show-branch
+bottom` instead of `git bisect start bottom top`.
 
-From my point of view, it is not crucial. The next Git for Windows version
-will have it, of course, and Hannes is always running with his set of
-patches, he can easily cherry-pick this one, too.
+> It is possible that the bug is in Xenial glibc, in which case -- please let me know and I will take it up with the glibc developers.
 
-Ciao,
-Johannes
-
-P.S.: Could you please cut the remainder of the mail that you are not
-responding to? Thanks.
+I have Ubuntu GLIBC 2.23-0ubuntu5 and I get a crash too.
