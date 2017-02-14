@@ -6,29 +6,31 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E4B121FC44
-	for <e@80x24.org>; Tue, 14 Feb 2017 06:08:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3B51A1FC44
+	for <e@80x24.org>; Tue, 14 Feb 2017 06:10:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752043AbdBNGIM (ORCPT <rfc822;e@80x24.org>);
-        Tue, 14 Feb 2017 01:08:12 -0500
-Received: from cloud.peff.net ([104.130.231.41]:54900 "EHLO cloud.peff.net"
+        id S1750965AbdBNGK4 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 14 Feb 2017 01:10:56 -0500
+Received: from cloud.peff.net ([104.130.231.41]:54907 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751324AbdBNGIL (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Feb 2017 01:08:11 -0500
-Received: (qmail 12134 invoked by uid 109); 14 Feb 2017 06:08:11 -0000
+        id S1750749AbdBNGK4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Feb 2017 01:10:56 -0500
+Received: (qmail 12371 invoked by uid 109); 14 Feb 2017 06:10:56 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 14 Feb 2017 06:08:11 +0000
-Received: (qmail 781 invoked by uid 111); 14 Feb 2017 06:08:11 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 14 Feb 2017 06:10:56 +0000
+Received: (qmail 820 invoked by uid 111); 14 Feb 2017 06:10:56 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 14 Feb 2017 01:08:11 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 14 Feb 2017 01:08:09 -0500
-Date:   Tue, 14 Feb 2017 01:08:09 -0500
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 14 Feb 2017 01:10:56 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 14 Feb 2017 01:10:53 -0500
+Date:   Tue, 14 Feb 2017 01:10:53 -0500
 From:   Jeff King <peff@peff.net>
 To:     Jonathan Tan <jonathantanmy@google.com>
 Cc:     git@vger.kernel.org, gitster@pobox.com
-Subject: [PATCH 7/7] grep: do not diagnose misspelt revs with --no-index
-Message-ID: <20170214060809.pgqaxt6rylnsy6d7@sigill.intra.peff.net>
-References: <20170214060021.einv7372exbxa23z@sigill.intra.peff.net>
+Subject: Re: [PATCH 0/7] grep rev/path parsing fixes
+Message-ID: <20170214061053.jibv2vibfnazmwsz@sigill.intra.peff.net>
+References: <20170214001159.19079-1-jonathantanmy@google.com>
+ <20170214012037.u2eg2n7mvteullcx@sigill.intra.peff.net>
+ <20170214060021.einv7372exbxa23z@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
@@ -38,45 +40,45 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-If we are using --no-index, then our arguments cannot be
-revs in the first place. Not only is it pointless to
-diagnose them, but if we are not in a repository, we should
-not be trying to resolve any names.
+On Tue, Feb 14, 2017 at 01:00:21AM -0500, Jeff King wrote:
 
-Signed-off-by: Jeff King <peff@peff.net>
----
- builtin/grep.c  | 2 +-
- t/t7810-grep.sh | 5 +++++
- 2 files changed, 6 insertions(+), 1 deletion(-)
+> On Mon, Feb 13, 2017 at 08:20:37PM -0500, Jeff King wrote:
+> 
+> > > If there is a repo and "foo" is a rev, the "--no-index or --untracked
+> > > cannot be used with revs." error would occur. If there is a repo and
+> > > "foo" is not a rev, this command would proceed as usual. If there is no
+> > > repo, the "setup_git_env called without repository" error would occur.
+> > > (This is my understanding from reading the code - I haven't tested it
+> > > out.)
+> > 
+> > Yes, it's easy to see that "git grep --no-index foo bar" outside of a
+> > repo generates the same BUG. I suspect that "--no-index" should just
+> > disable looking up revs entirely, even if we are actually in a
+> > repository directory.
+> 
+> I've fixed that, along with a few other bugs and cleanups. The complete
+> series is below. Patch 2 is your (untouched) patch. My suggestions for
+> your test are in patch 3, which can either remain on its own or be
+> squashed in.
+> 
+>   [1/7]: grep: move thread initialization a little lower
+>   [2/7]: grep: do not unnecessarily query repo for "--"
+>   [3/7]: t7810: make "--no-index --" test more robust
+>   [4/7]: grep: re-order rev-parsing loop
+>   [5/7]: grep: fix "--" rev/pathspec disambiguation
+>   [6/7]: grep: avoid resolving revision names in --no-index case
+>   [7/7]: grep: do not diagnose misspelt revs with --no-index
+> 
+>  builtin/grep.c  | 78 +++++++++++++++++++++++++++++++++++++++------------------
+>  t/t7810-grep.sh | 66 ++++++++++++++++++++++++++++++++++++++++++++++++
+>  2 files changed, 119 insertions(+), 25 deletions(-)
 
-diff --git a/builtin/grep.c b/builtin/grep.c
-index c4c632594..1454bef49 100644
---- a/builtin/grep.c
-+++ b/builtin/grep.c
-@@ -1201,7 +1201,7 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
- 	if (!seen_dashdash) {
- 		int j;
- 		for (j = i; j < argc; j++)
--			verify_filename(prefix, argv[j], j == i);
-+			verify_filename(prefix, argv[j], j == i && use_index);
- 	}
- 
- 	parse_pathspec(&pathspec, 0,
-diff --git a/t/t7810-grep.sh b/t/t7810-grep.sh
-index c051c7ee8..0ff9f6cae 100755
---- a/t/t7810-grep.sh
-+++ b/t/t7810-grep.sh
-@@ -1043,6 +1043,11 @@ test_expect_success 'grep --no-index prefers paths to revs' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'grep --no-index does not "diagnose" revs' '
-+	test_must_fail git grep --no-index o :1:hello.c 2>err &&
-+	test_i18ngrep ! -i "did you mean" err
-+'
-+
- cat >expected <<EOF
- hello.c:int main(int argc, const char **argv)
- hello.c:	printf("Hello world.\n");
--- 
-2.12.0.rc1.471.ga79ec8999
+Just to clarify: these are all existing bugs, and I think these are
+probably maint-worthy patches (even the --no-index ones; though we don't
+BUG on the out-of-repo without the patch from 'next', the code is still
+doing the wrong thing in subtle ways).
+
+But AFAIK they are all much older bugs than the upcoming v2.12, so there
+is no pressing need to fit them into the upcoming release.
+
+-Peff
