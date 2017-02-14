@@ -2,84 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9A8931FAF4
-	for <e@80x24.org>; Tue, 14 Feb 2017 13:38:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 57C321FAF4
+	for <e@80x24.org>; Tue, 14 Feb 2017 14:47:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753935AbdBNNgF (ORCPT <rfc822;e@80x24.org>);
-        Tue, 14 Feb 2017 08:36:05 -0500
-Received: from mx1.redhat.com ([209.132.183.28]:35052 "EHLO mx1.redhat.com"
+        id S1754080AbdBNOr0 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 14 Feb 2017 09:47:26 -0500
+Received: from mout.gmx.net ([212.227.17.20]:59243 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752573AbdBNJn1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Feb 2017 04:43:27 -0500
-Received: from int-mx11.intmail.prod.int.phx2.redhat.com (int-mx11.intmail.prod.int.phx2.redhat.com [10.5.11.24])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mx1.redhat.com (Postfix) with ESMTPS id E4337C0567B2;
-        Tue, 14 Feb 2017 09:43:27 +0000 (UTC)
-Received: from localhost (ovpn-117-160.ams2.redhat.com [10.36.117.160])
-        by int-mx11.intmail.prod.int.phx2.redhat.com (8.14.4/8.14.4) with ESMTP id v1E9hPh7008327;
-        Tue, 14 Feb 2017 04:43:27 -0500
-Date:   Tue, 14 Feb 2017 09:43:20 +0000
-From:   Stefan Hajnoczi <stefanha@redhat.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Brandon Williams <bmwill@google.com>, git@vger.kernel.org
-Subject: Re: [PATCH v2 2/2] grep: use '/' delimiter for paths
-Message-ID: <20170214094320.GA23310@stefanha-x1.localdomain>
-References: <20170120171126.16269-1-stefanha@redhat.com>
- <20170120171126.16269-3-stefanha@redhat.com>
- <xmqqpojhwf2r.fsf@gitster.mtv.corp.google.com>
- <20170120235133.GA146274@google.com>
- <20170207150414.GD8583@stefanha-x1.localdomain>
- <xmqq8tphzr41.fsf@gitster.mtv.corp.google.com>
- <20170209035839.wqsh6ibgnmxyjusi@sigill.intra.peff.net>
- <xmqqtw84rlna.fsf@gitster.mtv.corp.google.com>
- <20170209052034.ksoupjcj4qs7x4hz@sigill.intra.peff.net>
+        id S1752974AbdBNOrY (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Feb 2017 09:47:24 -0500
+Received: from virtualbox ([37.201.192.48]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0M7DVi-1cRCH63IAw-00x0ct; Tue, 14
+ Feb 2017 15:47:06 +0100
+Date:   Tue, 14 Feb 2017 15:47:05 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     git@vger.kernel.org, Johannes Sixt <j6t@kdbg.org>,
+        Jeff Hostetler <jeffhost@microsoft.com>
+Subject: Re: [PATCH] mingw: make stderr unbuffered again
+In-Reply-To: <xmqqlgt9btrv.fsf@gitster.mtv.corp.google.com>
+Message-ID: <alpine.DEB.2.20.1702141545380.3496@virtualbox>
+References: <c88612da0a62bfcbc3e278296f9d3eb010057071.1487025228.git.johannes.schindelin@gmx.de> <xmqqlgt9btrv.fsf@gitster.mtv.corp.google.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-        protocol="application/pgp-signature"; boundary="9jxsPFA5p3P2qPhR"
-Content-Disposition: inline
-In-Reply-To: <20170209052034.ksoupjcj4qs7x4hz@sigill.intra.peff.net>
-User-Agent: Mutt/1.7.1 (2016-10-04)
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.24
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.32]); Tue, 14 Feb 2017 09:43:28 +0000 (UTC)
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:NH/b6bxpz/9KSDMCUSCw7uvEXORpTJxJvvAziR9g/6FJYsIqAL2
+ oPCg3QdyAjWjiI2cmb57FTcfMecqXIcShd5b5DM1sSrCWK9aLA+C6j5QndnsnR95zeMz3xF
+ 0G7jq+IK+1A7HMnJZ95jtceHMLusx+de6GssZbOjHMiPZNFcAigwA/sTxWVIGSLimpE+30r
+ W3TNR+ucf+0IIQ6a/UQdw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:V0Uq3Du8EnE=:72b7mX2hvXpin5HYov4zUb
+ t9bVOOJtSaVPVrMQnZZwjqd3CxehU6xZ0mUpP0KaxF+Ja3pXKR2R5+2wUth21KH0YXqiLHObe
+ tYD5QQPHL3LSo1/ekOzzrSmfJzicVwa+LMjlRmQCEalJFV6b8KKPVL8c68fgEC7km8dp5ThYs
+ lxgP2fHeHEDx6KBomCTX5OC3LJ37UmtyjGwOMKacHqBlTzhUwY4j1Mjk8n+dMEhS0lKR52QW/
+ IfD/dmCfVJXwew986AswB6qx/adECa2dK7yDI+UhFGh/jHv375xen06ZmK3t6zJcfhB5Rt8sg
+ CX4fhBQkSDtamD8KZ85WbGTULYRuoNmBzi2BXp1Wo3htb9oYSlUA0mNwuEyrkHm0Rbplvl0To
+ 9mcqglY2891BzqNC4j0miXylIp3aVty6DKQOmM6zMWqERmUZiBy9qzbBMVtCKT9wWGqtEf18X
+ 4BwFk7wspyMxZsW+rLpIR1VoG35uhOd6hImDWvXMrZvQs/Jfcc5FZsFBVJdUZmNSPjxduPSKp
+ AFBkONdV/AIUmbsy1Y7IJO/7l9+8RBbIVL0Fz5fvdO096+EzOckhow5Exe6ZMP4NsUyGdXgJM
+ DyyClPObGU4RVQfLYAjsxdq0c4y5SLSSlY4JbyGr4mYluHpz+NX4EJfcfxmKxQFTUzlII6XLY
+ gFtfg2pqeB463xI7UpvbOV/+pDduvQszFE0v6yX/nmpHj8gxOcL3XC+GYJ+gRfIJWrCAlgWbt
+ /gkURbDE6EgNlhm0p35dg++hAsFlH6zYTrkIXAmw/JruJgvipxUT40i2O7ok/EXOh/XfIDfwC
+ 64LhQPH
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Junio,
 
---9jxsPFA5p3P2qPhR
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+On Mon, 13 Feb 2017, Junio C Hamano wrote:
 
-On Thu, Feb 09, 2017 at 12:20:34AM -0500, Jeff King wrote:
-> On Wed, Feb 08, 2017 at 09:14:17PM -0800, Junio C Hamano wrote:
-> > Jeff King <peff@peff.net> writes:
-> (I _do_ think Stefan's proposed direction is worth it simply because the
-> result is easier to read, but I agree the whole thing can be avoided by
-> using pathspecs, as you've noted).
+> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+> 
+> > When removing the hack for isatty(), we actually removed more than just
+> > an isatty() hack: we removed the hack where internal data structures of
+> > the MSVC runtime are modified in order to redirect stdout/stderr.
+> >
+> > Instead of using that hack (that does not work with newer versions of
+> > the runtime, anyway), we replaced it by reopening the respective file
+> > descriptors.
+> >
+> > What we forgot was to mark stderr as unbuffered again.
+> >
+> > Reported by Hannes Sixt. Fixed with Jeff Hostetler's assistance.
+> >
+> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> > ---
+> > Published-As: https://github.com/dscho/git/releases/tag/mingw-unbuffered-stderr-v1
+> > Fetch-It-Via: git fetch https://github.com/dscho/git mingw-unbuffered-stderr-v1
+> 
+> OK.  Should this go directly to 'master', as the isatty thing is
+> already in?
 
-I won't be pushing this series further due to limited time.
+From my point of view, it is not crucial. The next Git for Windows version
+will have it, of course, and Hannes is always running with his set of
+patches, he can easily cherry-pick this one, too.
 
-Stefan
+Ciao,
+Johannes
 
---9jxsPFA5p3P2qPhR
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEcBAEBAgAGBQJYotE4AAoJEJykq7OBq3PI2I8IAIAC+9ZjbVCJTDwdq9eC9sKv
-8YX6raATpxpm0mmgOdEe4L15y8ekW8XVX1lqJXLDS73mKGA3ZHDwfdRMPeGRB4fb
-SQBpwqXdaWTZTCZ4GyFX2C5Tk03Gb8V+eGJUrFmJBDiXdxg4fB/9VrrpbvKBqlro
-iWQdNxwlQR2kQAQM/5zS2SGHXPUNhz4dYWipOXqNqeJbV2rQ7mlEoAfrbjtVn6tj
-GtYpD+5OXlNqScCHTmE8EnYlADo2VABMVn+1kFerqYMmTvwZ0ySrfv7NnIqIDbSr
-rNSyqEIfr7gxHUehVIu78/PgTLs+nsyPyoVn3ms9vSM1ORCuIpMClJfNU8CKUW8=
-=FWDB
------END PGP SIGNATURE-----
-
---9jxsPFA5p3P2qPhR--
+P.S.: Could you please cut the remainder of the mail that you are not
+responding to? Thanks.
