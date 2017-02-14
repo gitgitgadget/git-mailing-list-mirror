@@ -6,38 +6,38 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5496B1FC44
-	for <e@80x24.org>; Tue, 14 Feb 2017 02:32:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 190921FC44
+	for <e@80x24.org>; Tue, 14 Feb 2017 02:32:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751578AbdBNCce (ORCPT <rfc822;e@80x24.org>);
-        Mon, 13 Feb 2017 21:32:34 -0500
-Received: from castro.crustytoothpaste.net ([75.10.60.170]:50624 "EHLO
+        id S1751507AbdBNCcd (ORCPT <rfc822;e@80x24.org>);
+        Mon, 13 Feb 2017 21:32:33 -0500
+Received: from castro.crustytoothpaste.net ([75.10.60.170]:50650 "EHLO
         castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751374AbdBNCcQ (ORCPT
+        by vger.kernel.org with ESMTP id S1751384AbdBNCcQ (ORCPT
         <rfc822;git@vger.kernel.org>); Mon, 13 Feb 2017 21:32:16 -0500
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 217E5280C0;
-        Tue, 14 Feb 2017 02:32:00 +0000 (UTC)
+        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id ECE95280BF;
+        Tue, 14 Feb 2017 02:31:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
         s=default; t=1487039520;
-        bh=eSDDmQX75pEW3HTs7khoeJZ0VlcTgjviAqumf7nKZyw=;
+        bh=5jj4CKZto4kN7x4tIM92UdyOELib38nihb+opUMfge4=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=YS81mOUmPK/D2Z7rmFM/B5fiiUrKtexZM/T1fEVGJ9RenW75l+YhBpEj1aCFstHhZ
-         INV1u7L0ELMF/ZTfswiWpiLrDmfc2L9QmMnTgdnj3fF9k/4AhiEO+6vGThrAbHH5iD
-         VzyIwbBYC8iL0loyYhvl5LsRynT4Lt2NF7Ic3XGwzitpzbfcTfVAo2DE0LmIcnk875
-         9lvX3IkxGWB4F+sml/wsfP3etsnDPgTLljwaAasunBBzk/QbMINtLFbvRVgXPDi+Z6
-         k1kmk2HhKtAE7ia0bNq/t/UjinPnr7uiBNZcT/pkburOyn2jEYnCmmjtE/HtgnKL/K
-         H6WVCxAjxn3jSXpxjHWWp+X3Kaf29iYUXf/2YMXl5s784j+YrBld315/Xs9KwTqkAg
-         iRJvj6M03QI4uu1IJrk5BwpdTzCHuEOwNT31YvTSGO/FS/UGLTtzvUiyLRVRyLV0KH
-         FTwMDKHb0XqRMsUss//hiOmbmkoQpIbvg9faQfvgZ1mGVydHUzQ
+        b=rtDU8R7ePCvMx8QlzkVwM0QF7p1pAD8TfqONV+pm6AHQSdDNbOjugO8ZJSFmhQ0jj
+         Ge1lHhd3RqQRiG0ziBd2DxJETBwtzErRixJ7iKnQtcrbjhVsT9ZNeqPDvP3qfxQabZ
+         cQTZsTu5eFVOB55vaEir5xc1IT3HGSjsk6uPNvE5z2uRBGI/w10DG8rZbZUUOU0utw
+         46OvZv2XV3i2zs9hpmkrwWpNmjxtizTlN/STrBJ7PU/D+gXgfuVAJgWZgW945NX89p
+         H5OO4GdrUuGGlUTvbZQSzeoIEo0AH2UL9Mz9KgfZUm5QSUfA1BaFSCujytdhsA1NRO
+         lOWJp++2QDVHf4j82h1AqAvGjDvF8UDp7uN/ldNjWhYjnAEPhp6kQL1O8hwtGmj4au
+         JfG/wF2KWjZ/9bkYl7egvCvnmXvrHcolmD/L3rrE/A1cqtcz5E58EnyxZVm6+Q0usH
+         597iZfa6ZlGv8hFg2VPMr0kLu6y2UhBYJjBA2MusvDLG1aGqPG8
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     Jeff King <peff@peff.net>, Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH v2 19/19] wt-status: convert to struct object_id
-Date:   Tue, 14 Feb 2017 02:31:41 +0000
-Message-Id: <20170214023141.842922-20-sandals@crustytoothpaste.net>
+Subject: [PATCH v2 18/19] builtin/merge-base: convert to struct object_id
+Date:   Tue, 14 Feb 2017 02:31:40 +0000
+Message-Id: <20170214023141.842922-19-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.11.0
 In-Reply-To: <20170214023141.842922-1-sandals@crustytoothpaste.net>
 References: <20170214023141.842922-1-sandals@crustytoothpaste.net>
@@ -50,140 +50,96 @@ Convert the remaining uses of unsigned char [20] to struct object_id.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- wt-status.c | 44 ++++++++++++++++++++++----------------------
- 1 file changed, 22 insertions(+), 22 deletions(-)
+ builtin/merge-base.c | 28 ++++++++++++++--------------
+ 1 file changed, 14 insertions(+), 14 deletions(-)
 
-diff --git a/wt-status.c b/wt-status.c
-index 5fac8437b0..a8d1faf80d 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -1115,16 +1115,16 @@ static void abbrev_sha1_in_line(struct strbuf *line)
+diff --git a/builtin/merge-base.c b/builtin/merge-base.c
+index db95bc29cf..cfe2a796f8 100644
+--- a/builtin/merge-base.c
++++ b/builtin/merge-base.c
+@@ -36,12 +36,12 @@ static const char * const merge_base_usage[] = {
  
- 	split = strbuf_split_max(line, ' ', 3);
- 	if (split[0] && split[1]) {
--		unsigned char sha1[20];
-+		struct object_id oid;
- 
- 		/*
- 		 * strbuf_split_max left a space. Trim it and re-add
- 		 * it after abbreviation.
- 		 */
- 		strbuf_trim(split[1]);
--		if (!get_sha1(split[1]->buf, sha1)) {
-+		if (!get_oid(split[1]->buf, &oid)) {
- 			strbuf_reset(split[1]);
--			strbuf_add_unique_abbrev(split[1], sha1,
-+			strbuf_add_unique_abbrev(split[1], oid.hash,
- 						 DEFAULT_ABBREV);
- 			strbuf_addch(split[1], ' ');
- 			strbuf_reset(line);
-@@ -1340,7 +1340,7 @@ static void show_bisect_in_progress(struct wt_status *s,
- static char *get_branch(const struct worktree *wt, const char *path)
+ static struct commit *get_commit_reference(const char *arg)
  {
- 	struct strbuf sb = STRBUF_INIT;
--	unsigned char sha1[20];
-+	struct object_id oid;
- 	const char *branch_name;
+-	unsigned char revkey[20];
++	struct object_id revkey;
+ 	struct commit *r;
  
- 	if (strbuf_read_file(&sb, worktree_git_path(wt, "%s", path), 0) <= 0)
-@@ -1354,9 +1354,9 @@ static char *get_branch(const struct worktree *wt, const char *path)
- 		strbuf_remove(&sb, 0, branch_name - sb.buf);
- 	else if (starts_with(sb.buf, "refs/"))
- 		;
--	else if (!get_sha1_hex(sb.buf, sha1)) {
-+	else if (!get_oid_hex(sb.buf, &oid)) {
- 		strbuf_reset(&sb);
--		strbuf_add_unique_abbrev(&sb, sha1, DEFAULT_ABBREV);
-+		strbuf_add_unique_abbrev(&sb, oid.hash, DEFAULT_ABBREV);
- 	} else if (!strcmp(sb.buf, "detached HEAD")) /* rebase */
- 		goto got_nothing;
- 	else			/* bisect */
-@@ -1370,7 +1370,7 @@ static char *get_branch(const struct worktree *wt, const char *path)
+-	if (get_sha1(arg, revkey))
++	if (get_oid(arg, &revkey))
+ 		die("Not a valid object name %s", arg);
+-	r = lookup_commit_reference(revkey);
++	r = lookup_commit_reference(revkey.hash);
+ 	if (!r)
+ 		die("Not a valid commit name %s", arg);
  
- struct grab_1st_switch_cbdata {
- 	struct strbuf buf;
--	unsigned char nsha1[20];
-+	struct object_id noid;
+@@ -113,14 +113,14 @@ struct rev_collect {
+ 	unsigned int initial : 1;
  };
  
- static int grab_1st_switch(struct object_id *ooid, struct object_id *noid,
-@@ -1387,7 +1387,7 @@ static int grab_1st_switch(struct object_id *ooid, struct object_id *noid,
- 		return 0;
- 	target += strlen(" to ");
- 	strbuf_reset(&cb->buf);
--	hashcpy(cb->nsha1, noid->hash);
-+	oidcpy(&cb->noid, noid);
- 	end = strchrnul(target, '\n');
- 	strbuf_add(&cb->buf, target, end - target);
- 	if (!strcmp(cb->buf.buf, "HEAD")) {
-@@ -1402,7 +1402,7 @@ static void wt_status_get_detached_from(struct wt_status_state *state)
+-static void add_one_commit(unsigned char *sha1, struct rev_collect *revs)
++static void add_one_commit(struct object_id *oid, struct rev_collect *revs)
  {
- 	struct grab_1st_switch_cbdata cb;
  	struct commit *commit;
--	unsigned char sha1[20];
-+	struct object_id oid;
- 	char *ref = NULL;
  
- 	strbuf_init(&cb.buf, 0);
-@@ -1411,22 +1411,22 @@ static void wt_status_get_detached_from(struct wt_status_state *state)
+-	if (is_null_sha1(sha1))
++	if (is_null_oid(oid))
  		return;
+ 
+-	commit = lookup_commit(sha1);
++	commit = lookup_commit(oid->hash);
+ 	if (!commit ||
+ 	    (commit->object.flags & TMP_MARK) ||
+ 	    parse_commit(commit))
+@@ -139,15 +139,15 @@ static int collect_one_reflog_ent(struct object_id *ooid, struct object_id *noid
+ 
+ 	if (revs->initial) {
+ 		revs->initial = 0;
+-		add_one_commit(ooid->hash, revs);
++		add_one_commit(ooid, revs);
  	}
+-	add_one_commit(noid->hash, revs);
++	add_one_commit(noid, revs);
+ 	return 0;
+ }
  
--	if (dwim_ref(cb.buf.buf, cb.buf.len, sha1, &ref) == 1 &&
-+	if (dwim_ref(cb.buf.buf, cb.buf.len, oid.hash, &ref) == 1 &&
- 	    /* sha1 is a commit? match without further lookup */
--	    (!hashcmp(cb.nsha1, sha1) ||
-+	    (!oidcmp(&cb.noid, &oid) ||
- 	     /* perhaps sha1 is a tag, try to dereference to a commit */
--	     ((commit = lookup_commit_reference_gently(sha1, 1)) != NULL &&
--	      !hashcmp(cb.nsha1, commit->object.oid.hash)))) {
-+	     ((commit = lookup_commit_reference_gently(oid.hash, 1)) != NULL &&
-+	      !oidcmp(&cb.noid, &commit->object.oid)))) {
- 		const char *from = ref;
- 		if (!skip_prefix(from, "refs/tags/", &from))
- 			skip_prefix(from, "refs/remotes/", &from);
- 		state->detached_from = xstrdup(from);
- 	} else
- 		state->detached_from =
--			xstrdup(find_unique_abbrev(cb.nsha1, DEFAULT_ABBREV));
--	hashcpy(state->detached_sha1, cb.nsha1);
--	state->detached_at = !get_sha1("HEAD", sha1) &&
--			     !hashcmp(sha1, state->detached_sha1);
-+			xstrdup(find_unique_abbrev(cb.noid.hash, DEFAULT_ABBREV));
-+	hashcpy(state->detached_sha1, cb.noid.hash);
-+	state->detached_at = !get_oid("HEAD", &oid) &&
-+			     !hashcmp(oid.hash, state->detached_sha1);
- 
- 	free(ref);
- 	strbuf_release(&cb.buf);
-@@ -1476,22 +1476,22 @@ void wt_status_get_state(struct wt_status_state *state,
- 			 int get_detached_from)
+ static int handle_fork_point(int argc, const char **argv)
  {
- 	struct stat st;
 -	unsigned char sha1[20];
 +	struct object_id oid;
+ 	char *refname;
+ 	const char *commitname;
+ 	struct rev_collect revs;
+@@ -155,7 +155,7 @@ static int handle_fork_point(int argc, const char **argv)
+ 	struct commit_list *bases;
+ 	int i, ret = 0;
  
- 	if (!stat(git_path_merge_head(), &st)) {
- 		state->merge_in_progress = 1;
- 	} else if (wt_status_check_rebase(NULL, state)) {
- 		;		/* all set */
- 	} else if (!stat(git_path_cherry_pick_head(), &st) &&
--			!get_sha1("CHERRY_PICK_HEAD", sha1)) {
-+			!get_oid("CHERRY_PICK_HEAD", &oid)) {
- 		state->cherry_pick_in_progress = 1;
--		hashcpy(state->cherry_pick_head_sha1, sha1);
-+		hashcpy(state->cherry_pick_head_sha1, oid.hash);
- 	}
- 	wt_status_check_bisect(NULL, state);
- 	if (!stat(git_path_revert_head(), &st) &&
--	    !get_sha1("REVERT_HEAD", sha1)) {
-+	    !get_oid("REVERT_HEAD", &oid)) {
- 		state->revert_in_progress = 1;
--		hashcpy(state->revert_head_sha1, sha1);
-+		hashcpy(state->revert_head_sha1, oid.hash);
+-	switch (dwim_ref(argv[0], strlen(argv[0]), sha1, &refname)) {
++	switch (dwim_ref(argv[0], strlen(argv[0]), oid.hash, &refname)) {
+ 	case 0:
+ 		die("No such ref: '%s'", argv[0]);
+ 	case 1:
+@@ -165,16 +165,16 @@ static int handle_fork_point(int argc, const char **argv)
  	}
  
- 	if (get_detached_from)
+ 	commitname = (argc == 2) ? argv[1] : "HEAD";
+-	if (get_sha1(commitname, sha1))
++	if (get_oid(commitname, &oid))
+ 		die("Not a valid object name: '%s'", commitname);
+ 
+-	derived = lookup_commit_reference(sha1);
++	derived = lookup_commit_reference(oid.hash);
+ 	memset(&revs, 0, sizeof(revs));
+ 	revs.initial = 1;
+ 	for_each_reflog_ent(refname, collect_one_reflog_ent, &revs);
+ 
+-	if (!revs.nr && !get_sha1(refname, sha1))
+-		add_one_commit(sha1, &revs);
++	if (!revs.nr && !get_oid(refname, &oid))
++		add_one_commit(&oid, &revs);
+ 
+ 	for (i = 0; i < revs.nr; i++)
+ 		revs.commit[i]->object.flags &= ~TMP_MARK;
 -- 
 2.11.0
 
