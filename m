@@ -2,137 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 448AC1FAF4
-	for <e@80x24.org>; Tue, 14 Feb 2017 22:11:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E0A441FAF4
+	for <e@80x24.org>; Tue, 14 Feb 2017 22:13:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751837AbdBNWLK (ORCPT <rfc822;e@80x24.org>);
-        Tue, 14 Feb 2017 17:11:10 -0500
-Received: from mail-it0-f65.google.com ([209.85.214.65]:36135 "EHLO
-        mail-it0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751638AbdBNWLJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Feb 2017 17:11:09 -0500
-Received: by mail-it0-f65.google.com with SMTP id f200so7590163itf.3
-        for <git@vger.kernel.org>; Tue, 14 Feb 2017 14:11:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=qb8REV+WLq6vZc7BWzpiIpRb7Cm0z1L3+IanM4EwNYU=;
-        b=P6CZ7FuXCSPYQrp1KarwZD1BckRq/E927vhFvZ0PzAKOyDr0zEFfX7PvQCu9nlYXK/
-         qXf0b8EbsoiezKUdKXox5c++zBp3Mrhjc8JpBTnSUvT/0ZPh4/jWvVX6/HefFS/Z7Syh
-         9TCmHRdArfL63TBJvSa+EZujROyhMETwIZ7Q0A7JmI6DHcALmHl2pqUVunjBS3FiMwEG
-         Gywa5wfR3kCzFNoqvwH1YiP7Ww2Tu+qmZQ8zDM6NVaNcUuarDedEx9j4/vIGADOdzlaG
-         Bdxlu17OlQz9aLc5Xw5/CL/uY8EFxAU2buMJ83aUPAMM+XhaKgdg5Tga6eU60GrmqWUW
-         89kA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=qb8REV+WLq6vZc7BWzpiIpRb7Cm0z1L3+IanM4EwNYU=;
-        b=nPcROLrOHnJVBPIhSYF8TMGzfLQy1k5tKcXXBDY9YuSnWy7S0neaGDTL9M96jjd033
-         wa97ze7Syyh2mbNlngf6YamJV1wSi3beBPGKQQdVjk4FXIvQKIYrN3eHsFDUP9vvJnGE
-         TJzNEYDJ8Ls5YuX+84RrZ0QRtjkDUL4MimxV3nXeO8avapbBTWKzn3scC5P9DWsBAnXv
-         q3kOgBAKjx3LO5jTtGKKH0s7SuQ43KFtsPaKX1ugG5bngu+QOcfv7E3evGcJTsjD4Lfo
-         dte86Q82qtGcFxAlqsAmFgN39tfYXw1QcEu7/h6tybeyFeaX5HmOlxl6IPivWgSIlHma
-         VjYw==
-X-Gm-Message-State: AMke39lD8YbvrfldTryauSLLkk8N6IHcTFgPTwZrUlhUmyzzkuUkGWf3WsUXOQveP/sb/A==
-X-Received: by 10.84.162.204 with SMTP id o12mr39280594plg.132.1487110268300;
-        Tue, 14 Feb 2017 14:11:08 -0800 (PST)
-Received: from localhost ([2620:0:1000:8622:2447:f72c:8fdf:75c6])
-        by smtp.gmail.com with ESMTPSA id 191sm3069348pgd.40.2017.02.14.14.11.07
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 14 Feb 2017 14:11:07 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Linus Torvalds <torvalds@linux-foundation.org>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Subject: Re: [RFC PATCH] show decorations at the end of the line
-References: <alpine.LFD.2.20.1702110943460.31350@i7.lan>
-        <CA+55aFw2S14a4_4YK0b6PNK4TH_AUo_+2JN+PTyBTufNeB5t6A@mail.gmail.com>
-        <xmqq1sv2fq6m.fsf@gitster.mtv.corp.google.com>
-        <CA+55aFy-vvOBu5Y4KDeteUyK-7U7yTa1HoqHo+hME1=8bq7Xhw@mail.gmail.com>
-        <xmqq7f4tdcua.fsf@gitster.mtv.corp.google.com>
-Date:   Tue, 14 Feb 2017 14:11:06 -0800
-In-Reply-To: <xmqq7f4tdcua.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-        message of "Mon, 13 Feb 2017 13:01:49 -0800")
-Message-ID: <xmqqr330779h.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+        id S1751747AbdBNWNR convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Tue, 14 Feb 2017 17:13:17 -0500
+Received: from zimbra-vnc.tngtech.com ([83.144.240.98]:35675 "EHLO
+        proxy.tng.vnc.biz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750782AbdBNWNQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Feb 2017 17:13:16 -0500
+Received: from localhost (localhost [127.0.0.1])
+        by proxy.tng.vnc.biz (Postfix) with ESMTP id 45A361E2FB1;
+        Tue, 14 Feb 2017 23:13:13 +0100 (CET)
+Received: from proxy.tng.vnc.biz ([127.0.0.1])
+        by localhost (proxy.tng.vnc.biz [127.0.0.1]) (amavisd-new, port 10032)
+        with ESMTP id RThYFFlEF9tV; Tue, 14 Feb 2017 23:13:12 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+        by proxy.tng.vnc.biz (Postfix) with ESMTP id CECCD1E305D;
+        Tue, 14 Feb 2017 23:13:12 +0100 (CET)
+X-Virus-Scanned: amavisd-new at 
+Received: from proxy.tng.vnc.biz ([127.0.0.1])
+        by localhost (proxy.tng.vnc.biz [127.0.0.1]) (amavisd-new, port 10026)
+        with ESMTP id Lm68WZCCGeLa; Tue, 14 Feb 2017 23:13:12 +0100 (CET)
+Received: from [192.168.178.28] (aftr-185-17-204-143.dynamic.mnet-online.de [185.17.204.143])
+        by proxy.tng.vnc.biz (Postfix) with ESMTPSA id 697901E2FB1;
+        Tue, 14 Feb 2017 23:13:12 +0100 (CET)
+Subject: Re: [PATCH v2 2/2] completion: checkout: complete paths when ref
+ given
+To:     Junio C Hamano <gitster@pobox.com>
+References: <4f8a0aaa-4ce1-d4a6-d2e1-28aac7209c90@tngtech.com>
+ <20170214212404.31469-1-cornelius.weig@tngtech.com>
+ <20170214212404.31469-2-cornelius.weig@tngtech.com>
+ <xmqq8tp88nnj.fsf@gitster.mtv.corp.google.com>
+Cc:     git@vger.kernel.org, szeder.dev@gmail.com,
+        bitte.keine.werbung.einwerfen@googlemail.com, j6t@kdbg.org
+From:   Cornelius Weig <cornelius.weig@tngtech.com>
+Message-ID: <9be8b988-f5b3-7365-ae7f-b46888253f4c@tngtech.com>
+Date:   Tue, 14 Feb 2017 23:13:11 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.7.0
 MIME-Version: 1.0
-Content-Type: text/plain
+In-Reply-To: <xmqq8tp88nnj.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8BIT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
 
-> Thanks.  We'd need to update the tests that expects the old style
-> output, though.
 
-The updates to the expectation look like this (already squashed).
-The --source decorations in 4202 are also shown at the end, which
-probably is in line with the way --show-decorations adds them at the
-end of the line, but was somewhat surprising from reading only the
-log message.
+On 02/14/2017 10:31 PM, Junio C Hamano wrote:
+> cornelius.weig@tngtech.com writes:
+> 
+>> From: Cornelius Weig <cornelius.weig@tngtech.com>
+>>
+>> Git-checkout completes words starting with '--' as options and other
+>> words as refs. Even after specifying a ref, further words not starting
+>> with '--' are completed as refs, which is invalid for git-checkout.
+>>
+>> This commit ensures that after specifying a ref, further non-option
+>> words are completed as paths. Four cases are considered:
+>>
+>>  - If the word contains a ':', do not treat it as reference and use
+>>    regular revlist completion.
+>>  - If no ref is found on the command line, complete non-options as refs
+>>    as before.
+>>  - If the ref is HEAD or @, complete only with modified files because
+>>    checking out unmodified files is a noop.
+>>    This case also applies if no ref is given, but '--' is present.
+> 
+> Please at least do not do this one; a completion that is or pretends
+> to be more clever than the end users will confuse them at best and
+> annoy them.  Maybe the user does not recall if she touched the path
+> or not, and just trying to be extra sure that it matches HEAD or
+> index by doing "git checkout [HEAD] path<TAB>".  Leave the "make it
+> a noop" to Git, but just allow her do so.
 
-diff --git a/t/t4202-log.sh b/t/t4202-log.sh
-index 48b55bfd27..dea2d449ab 100755
---- a/t/t4202-log.sh
-+++ b/t/t4202-log.sh
-@@ -1353,9 +1353,9 @@ test_expect_success 'set up --source tests' '
- 
- test_expect_success 'log --source paints branch names' '
- 	cat >expect <<-\EOF &&
--	09e12a9	source-b three
--	8e393e1	source-a two
--	1ac6c77	source-b one
-+	09e12a9 three	source-b
-+	8e393e1 two	source-a
-+	1ac6c77 one	source-b
- 	EOF
- 	git log --oneline --source source-a source-b >actual &&
- 	test_cmp expect actual
-@@ -1364,9 +1364,9 @@ test_expect_success 'log --source paints branch names' '
- test_expect_success 'log --source paints tag names' '
- 	git tag -m tagged source-tag &&
- 	cat >expect <<-\EOF &&
--	09e12a9	source-tag three
--	8e393e1	source-a two
--	1ac6c77	source-tag one
-+	09e12a9 three	source-tag
-+	8e393e1 two	source-a
-+	1ac6c77 one	source-tag
- 	EOF
- 	git log --oneline --source source-tag source-a >actual &&
- 	test_cmp expect actual
-diff --git a/t/t4207-log-decoration-colors.sh b/t/t4207-log-decoration-colors.sh
-index b972296f06..08236a83e7 100755
---- a/t/t4207-log-decoration-colors.sh
-+++ b/t/t4207-log-decoration-colors.sh
-@@ -44,15 +44,15 @@ test_expect_success setup '
- '
- 
- cat >expected <<EOF
--${c_commit}COMMIT_ID${c_reset}${c_commit} (${c_reset}${c_HEAD}HEAD ->\
-+${c_commit}COMMIT_ID${c_reset} B${c_commit} (${c_reset}${c_HEAD}HEAD ->\
-  ${c_reset}${c_branch}master${c_reset}${c_commit},\
-  ${c_reset}${c_tag}tag: v1.0${c_reset}${c_commit},\
-- ${c_reset}${c_tag}tag: B${c_reset}${c_commit})${c_reset} B
--${c_commit}COMMIT_ID${c_reset}${c_commit} (${c_reset}${c_tag}tag: A1${c_reset}${c_commit},\
-- ${c_reset}${c_remoteBranch}other/master${c_reset}${c_commit})${c_reset} A1
--${c_commit}COMMIT_ID${c_reset}${c_commit} (${c_reset}${c_stash}refs/stash${c_reset}${c_commit})${c_reset}\
-- On master: Changes to A.t
--${c_commit}COMMIT_ID${c_reset}${c_commit} (${c_reset}${c_tag}tag: A${c_reset}${c_commit})${c_reset} A
-+ ${c_reset}${c_tag}tag: B${c_reset}${c_commit})${c_reset}
-+${c_commit}COMMIT_ID${c_reset} A1${c_commit} (${c_reset}${c_tag}tag: A1${c_reset}${c_commit},\
-+ ${c_reset}${c_remoteBranch}other/master${c_reset}${c_commit})${c_reset}
-+${c_commit}COMMIT_ID${c_reset} On master: Changes to A.t\
-+${c_commit} (${c_reset}${c_stash}refs/stash${c_reset}${c_commit})${c_reset}
-+${c_commit}COMMIT_ID${c_reset} A${c_commit} (${c_reset}${c_tag}tag: A${c_reset}${c_commit})${c_reset}
- EOF
- 
- # We want log to show all, but the second parent to refs/stash is irrelevant
+Hmm.. I'm a bit reluctant to let go of this just yet, because it was my
+original motivation for the whole patch. I admit that it may be
+confusing to not get completion in your example. However, I think that
+once acquainted with the new behavior, a user who wants some files
+cleaned would start by having a look at the list of files from "git
+checkout HEAD <TAB><TAB>". That's probably faster than spelling the
+first few characters and hit <TAB> for a file that's already clean.
+Let's hear if anybody else has an opinion about this.
+
+> I personally feel that "git checkout <anything>... foo<TAB>" should
+> just fall back to the normal "path on the filesystem" without any
+> cleverness, instead of opening a tree object or peek into the index.
+
+I was thinking about that as well, but it's not what happens for "git
+checkout topic:path<TAB>". And given that "git checkout topic path<TAB>"
+refers to the same object, consistency kind of demands that the tree
+objects are opened in the latter case as well. However, because the
+differences to filesystem path completion are somewhat corner cases, I'm
+fine with that as long as I'm not offered ref names any longer...
+
