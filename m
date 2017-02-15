@@ -7,64 +7,58 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 30D9C2013C
-	for <e@80x24.org>; Wed, 15 Feb 2017 01:17:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6C8092013C
+	for <e@80x24.org>; Wed, 15 Feb 2017 01:28:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750902AbdBOBQ7 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 14 Feb 2017 20:16:59 -0500
-Received: from mail-it0-f67.google.com ([209.85.214.67]:36118 "EHLO
-        mail-it0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750791AbdBOBQ6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Feb 2017 20:16:58 -0500
-Received: by mail-it0-f67.google.com with SMTP id f200so8374638itf.3
-        for <git@vger.kernel.org>; Tue, 14 Feb 2017 17:16:58 -0800 (PST)
+        id S1751460AbdBOB2k (ORCPT <rfc822;e@80x24.org>);
+        Tue, 14 Feb 2017 20:28:40 -0500
+Received: from mail-it0-f68.google.com ([209.85.214.68]:34143 "EHLO
+        mail-it0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751210AbdBOB2j (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Feb 2017 20:28:39 -0500
+Received: by mail-it0-f68.google.com with SMTP id r141so8420212ita.1
+        for <git@vger.kernel.org>; Tue, 14 Feb 2017 17:28:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=cG8Vd8mJ6wWwOrAFlofZONaewrWCMXNA3SKME7J3a6g=;
-        b=TXjoSF52hgq7E6izuLs0Dw7jELGO9gVPqFQJOaZKoGd6fC8IJRbDB/2EbegCvjCqp6
-         gGbuiSx+e0INv62Mfd/dkYCzNsTth9/8PMytioSSEGDGhYA5yy19Tg32k13oTBAyHEF4
-         neVSteH1ZJPUSZy/pJv9kKnTDGkIm4L0VoxAM6VQqoNPPeUDMiBijWr9pbkSg2qum9gT
-         8JIMHAYnSzXjdoM5V0uV4Ar846HH0NcEUHhhv5QsNqK3/d/hPKXThThOg/mQOKtnFSzg
-         gUOwl0jo/TeNq5dMjLBmJsEw3aqBOnLnQr4ho6lHZiTT7w3ZxizK4SuqhGjthxPnCKBU
-         V83g==
+        bh=/GohLMAzzB1W8lqZ1UpDbJFByBQLji/OS28vys/yyHM=;
+        b=B8wzWXG8+Kqq4zALfMkUcasupJT1vs+RLsNJEvbf6Vsw8Efk60fRVDlh6s/oBqeiHx
+         F5Ic4fnawszomiy9/IJPrYGiE4heKNiRMS8VDrqay73qWlWBtCo71TdQNnDmHXIZ1tcw
+         wcsvzKgOSN0JPPgg+DPfpUOUmI61z2zXrCUSEGIJlu/tQ08Dqb3w9sHrS043dBio2pVj
+         wAEkeke5eTEHCWzwfvyaL4g1Xj7v2kv5LNdWtsk/BgveUBZbzt2I3+chJng/8+fw8sqq
+         W3KBReH3b1P+ZDrhjnR573jqJqp12pLP+EpngJooeIDsQlhxt8oCkLilPSbfJTdrV+fE
+         EDzw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=cG8Vd8mJ6wWwOrAFlofZONaewrWCMXNA3SKME7J3a6g=;
-        b=CrWR6x7bVuJF/JzIp7BE4zo1qCodfJIAheoWQpMM5eqYEANmsJsFr0zahAuvjEIX2t
-         18s6hDQDY15D9/SMg1if5vvBFXJrv/GpzZEadDQH3/nLxr0DmxdhS3XvZxW7+1sqStzw
-         zwhN6aiOiO+V58UO5YcDuYZFJZDtQP+0KjwuOoHgcj57wASqz3vulFiRaTlcjDxqqQFY
-         JUZHaLtF6FzYaOCM+SFsglupk6mTGTiTmGmoINxZe5Xe85LG0ArLzyScDoA1d/7Fyodr
-         HYb36XL9fiZYE+6Dgre/AB8399J/xpClbXsz0oiJOaqqxWIafF/SfSafzo4uWPJ8JrKx
-         sfAQ==
-X-Gm-Message-State: AMke39lfrtgSwCwi06ISs+n2smAlPRasMnSLyjTIskgZBpBjXKw+CoJ3HMITIHOh8n8Ghw==
-X-Received: by 10.99.247.83 with SMTP id f19mr35310125pgk.158.1487121417610;
-        Tue, 14 Feb 2017 17:16:57 -0800 (PST)
+        bh=/GohLMAzzB1W8lqZ1UpDbJFByBQLji/OS28vys/yyHM=;
+        b=TH0ZX7OLB5gABhyp61F/UY4+I4MAW3auJHBxwqqwka4wKSYm+cLsfuy3v8arc66FZH
+         gkN2H6owksEEkXDEOs/XbO+mGtMOID6IiP+Jt8qzHl0njrbn9bqZ+wXhb3d/0kEi7kUh
+         CCYxsucQvvVWia1eSlwkSsOxAKlRDhqN+ThKPIOPa4EriuzM09MMFnwxbQWPQ9xbMEoX
+         4Z/Hzg9IbM2r8f2+WD+ajrQMShhvtj94lNI8rnTGyly29krSuwgoLpeL256PST3CBNAF
+         c4Sx/DTAyxSwntv8bUaJI1WHmUsv14GcctfHvrpDYDsywr9iMuYun9R+5Mr/mMeWbMD3
+         usUg==
+X-Gm-Message-State: AMke39kvjDxweU9Jx9Pj/7trp/i9igq/bKv4e1Xf4xzYxpFYD7FHnekBgOjiksQyk06NgQ==
+X-Received: by 10.84.135.34 with SMTP id 31mr39662493pli.50.1487122118071;
+        Tue, 14 Feb 2017 17:28:38 -0800 (PST)
 Received: from localhost ([2620:0:1000:8622:2447:f72c:8fdf:75c6])
-        by smtp.gmail.com with ESMTPSA id e13sm3384525pgf.48.2017.02.14.17.16.55
+        by smtp.gmail.com with ESMTPSA id 66sm3409446pgg.47.2017.02.14.17.28.37
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 14 Feb 2017 17:16:55 -0800 (PST)
+        Tue, 14 Feb 2017 17:28:37 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Stefan Beller <sbeller@google.com>,
-        "git\@vger.kernel.org" <git@vger.kernel.org>,
-        Michael Haggerty <mhagger@alum.mit.edu>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        David Turner <novalis@novalis.org>
-Subject: Re: [PATCH 11/11] refs: split and make get_*_ref_store() public API
-References: <20170213152011.12050-1-pclouds@gmail.com>
-        <20170213152011.12050-12-pclouds@gmail.com>
-        <CAGZ79kZC6TntQrW7MF6-h5z5En-u6rwNX=zuaHRNDpbO80ALHA@mail.gmail.com>
-        <CACsJy8ChQqUd4poeeKQruQSwdys=ydzxGDC8fU6ZgfrFEEm7NQ@mail.gmail.com>
-        <xmqq8tp8aawb.fsf@gitster.mtv.corp.google.com>
-        <CACsJy8AfwGK_Y8vH-mF4NXWts_4_CPZamO0L_rWD-1WR3=36Yg@mail.gmail.com>
-Date:   Tue, 14 Feb 2017 17:16:54 -0800
-In-Reply-To: <CACsJy8AfwGK_Y8vH-mF4NXWts_4_CPZamO0L_rWD-1WR3=36Yg@mail.gmail.com>
-        (Duy Nguyen's message of "Wed, 15 Feb 2017 07:44:14 +0700")
-Message-ID: <xmqqo9y45k3d.fsf@gitster.mtv.corp.google.com>
+Cc:     Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2] clean: use warning_errno() when appropriate
+References: <20170213092702.10462-1-pclouds@gmail.com>
+        <20170214095449.15585-1-pclouds@gmail.com>
+        <xmqqh93wabev.fsf@gitster.mtv.corp.google.com>
+        <CACsJy8BXSAUr2knrkOfO0gXYAwQoJpL2hCXy44Q37H4GE_-yVA@mail.gmail.com>
+Date:   Tue, 14 Feb 2017 17:28:36 -0800
+In-Reply-To: <CACsJy8BXSAUr2knrkOfO0gXYAwQoJpL2hCXy44Q37H4GE_-yVA@mail.gmail.com>
+        (Duy Nguyen's message of "Wed, 15 Feb 2017 07:49:48 +0700")
+Message-ID: <xmqqfujg5jjv.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -75,11 +69,51 @@ X-Mailing-List: git@vger.kernel.org
 
 Duy Nguyen <pclouds@gmail.com> writes:
 
-> Long term, I think that's what Mike wants. Though the filter_ref_store
-> might return an (opaque) iterator instead of a ref store and
-> for_each_refstore() becomes a thin wrapper around the iterator
-> interface.
+> On Wed, Feb 15, 2017 at 1:13 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> ...
+>> The reason to store the errno in saved_errno here is not because we
+>> want to help code after "if (res) {...}", but the patch sent as-is
+>> gives that impression and is confusing to the readers.
+>>
+>> Perhaps all hunks of this patch share the same issue?  I could
+>> locally amend, of course, but I'd like to double check before doing
+>> so myself---perhaps you did it this way for a good reason that I am
+>> missing?
+>
+> One thing I like about putting saved_errno right next to the related
+> syscall is, the syscall is visible from the diff (previously some are
+> out of context). This is really minor though.
 
-Ah, yes, an iterator would be a lot more suitable abstraction there.
+I agree that this is minor.
+
+I care more about looking at errno ONLY after we saw our call to a
+system library function indicated an error, and I wanted to avoid
+doing:
+
+	res = dry_run ? 0 : rmdir(path);
+        saved_errno = errno;
+	if (res) {
+		... do something else ...
+		errno = saved_errno;
+                call_something_that_uses_errno();
+
+When our call to rmdir() did not fail, or when we didn't even call
+rmdir() at all, what is in errno has nothing to do with what we are
+doing, and making a copy of it makes the code doubly confusing.
+
+Rather, I'd prefer to see:
+
+	res = dry_run ? 0 : rmdir(path);
+	if (res) {
+                int saved_errno = errno;
+		... do something else ...
+		errno = saved_errno;
+                call_something_that_uses_errno();
+
+which makes it clear what is going on when reading the resulting
+code.
+
+For now, I'll queue a separate SQUASH??? and wait for others to
+comment.
 
 Thanks.
