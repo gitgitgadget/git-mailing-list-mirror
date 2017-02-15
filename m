@@ -2,124 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1CCC82013C
-	for <e@80x24.org>; Wed, 15 Feb 2017 00:35:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B9B392013C
+	for <e@80x24.org>; Wed, 15 Feb 2017 00:44:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751531AbdBOAfi (ORCPT <rfc822;e@80x24.org>);
-        Tue, 14 Feb 2017 19:35:38 -0500
-Received: from mail-it0-f43.google.com ([209.85.214.43]:34984 "EHLO
-        mail-it0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751451AbdBOAfT (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Feb 2017 19:35:19 -0500
-Received: by mail-it0-f43.google.com with SMTP id 203so56275695ith.0
-        for <git@vger.kernel.org>; Tue, 14 Feb 2017 16:35:19 -0800 (PST)
+        id S1751298AbdBOAoq (ORCPT <rfc822;e@80x24.org>);
+        Tue, 14 Feb 2017 19:44:46 -0500
+Received: from mail-oi0-f54.google.com ([209.85.218.54]:36153 "EHLO
+        mail-oi0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751238AbdBOAop (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Feb 2017 19:44:45 -0500
+Received: by mail-oi0-f54.google.com with SMTP id u143so79601509oif.3
+        for <git@vger.kernel.org>; Tue, 14 Feb 2017 16:44:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=9YcyJ8n69b11NfBBwfyGKV5Y1v1QAhe70h397KiYY3w=;
-        b=TMcn7hiuffEtYUApLvEs+z/DFsk9qtiDHxZvwVE9cdSox5O4FfJGSrx5Mi7bDPM2/j
-         p+IjBrNGpdNlSxAgKO65NeVjZbrpRMQz+mflMnnbygombzM7HlxGApFpRJmccGUtvAUN
-         +JuouMKfpGGLrvjwbCwmZEwkwOIZXKLi1Xhx0lkPzGdmS/5cM4Oz4wyOpsUn3UvKBobm
-         TEHMhkOfUlbiCFzEVXdjU8Y/SJ7ondXxO7FShAdvVwk2vzzafxymZKRJ3A3JCGQnZBCw
-         4DBwrlvlvkSLZKr173oW3SOKlEXPBF23E+UP73EvYJSPU3rW/zLa7YcAxIMgLd0e4YiP
-         6KVg==
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=yPJ/9rx5ZJPbTrn40m2T/Kn11PGaeR1Grb1XvVBTrAs=;
+        b=tPC9wQvaezVx8nZkVYxrGxnLcp/Ap+dCY6ITxUNY8RfgUG/kSMbXqZQCcuwT6ycNlF
+         fJskD0EKtgtKOYnPnqx1ftMm0oQ6JCEpkrkT8ZSlkPKtyoH9v4/GFlEgY57vK/MwJ7Tq
+         HUdKsei9GiJW0rKXCJwbb/dTs7nCyzuRGO+epx7Jxl6khfnVFhLA8bSGF1E3JMp1MUcR
+         wVxRcQSfNA/4H0DFYytDELbmi+k2Tbb+kekmxrCxiWhndu/1kThrRfRA5/5mWe2VCxxY
+         jKYtmEI9crgI/7I8cXNo7duPkdNVF4w1q8ecfVcdKJr+32bhusxxAjASFFv+N5QqpgZx
+         HNZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=9YcyJ8n69b11NfBBwfyGKV5Y1v1QAhe70h397KiYY3w=;
-        b=awWtrIsUe3dr9Vx2uAgGZ3mYLQ6SsbP5+FV8D4FcE/5XXQHWTcPktjFp+go/EYCxl2
-         2+IYAJUuFtPFts4VUaAUvjr/mXPWpL252i9iBOWLvwerPR9G76KnHnnlb0FBpvMIFXpQ
-         qJvpV4hG68Q2o7KaPXfAVVyJ4BUqTXtLnAVk2FVE7l1meYYEJyLI3RmZLmC+QfnYxPmv
-         A64ecjo6+O3NI3Brrl9+BtDJ1O9wZL2cBUW/mKDoLPh56QaPzWHve65hcdh2Wst7tbN+
-         50TJgDw+P9HmUsf/HfkGssWeR42zGNOVoMnLcwgeZg9hdj2kzTG4KHojsP+3I9TS8mVR
-         nO2Q==
-X-Gm-Message-State: AMke39n4qO2dC5V1ZxPS0g7NJwFNxhOSrbyQzGKtef1V1EI0YTAxENmX3QYN9XNey3j4uuaQ
-X-Received: by 10.99.213.81 with SMTP id v17mr35145549pgi.130.1487118913866;
-        Tue, 14 Feb 2017 16:35:13 -0800 (PST)
-Received: from localhost ([2620:0:1000:5b10:c832:5c94:8ab0:6fa4])
-        by smtp.gmail.com with ESMTPSA id v8sm3370586pgo.14.2017.02.14.16.35.13
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 14 Feb 2017 16:35:13 -0800 (PST)
-From:   Stefan Beller <sbeller@google.com>
-Cc:     git@vger.kernel.org, bmwill@google.com, jrnieder@gmail.com,
-        sandals@crustytoothpaste.net, gitster@pobox.com,
-        Stefan Beller <sbeller@google.com>
-Subject: [PATCH 08/14] update submodules: move up prepare_submodule_repo_env
-Date:   Tue, 14 Feb 2017 16:34:17 -0800
-Message-Id: <20170215003423.20245-9-sbeller@google.com>
-X-Mailer: git-send-email 2.12.0.rc0.16.gd1691994b4.dirty
-In-Reply-To: <20170215003423.20245-1-sbeller@google.com>
-References: <20170215003423.20245-1-sbeller@google.com>
-To:     unlisted-recipients:; (no To-header on input)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=yPJ/9rx5ZJPbTrn40m2T/Kn11PGaeR1Grb1XvVBTrAs=;
+        b=by2tZQyqq1W+I1Q4bp2FFtFjqYaZhJksFUootDhwdlDBxcKxFya1kKteDyJdS96D20
+         p+9Iqf2O/Hrk69jREzTD9tTEnFHD88htb4MK+pk2VlDBV7OC09UozBxBeceMMZjS7M9q
+         n/fOgZMW2Jf2sxNoGGAgmLwMGMgGfuMBHbR/t4qKnk1DGv1nJ2raL00t8G2QL9hjnbbv
+         mUZr6OKLoe8cwths61MqP6D/0CsHYu7EpuWCwdaSonOx6fOCGx+YXH0IvXxXOGex68uz
+         VO3Qgu7bFQ2jxfvpav0X7LWb6Owfi8dVWgE1quaOrwTiPelOwZDC7lHVAGxYEbzcM48w
+         Rv3g==
+X-Gm-Message-State: AMke39njRYM+Z5uesOLnl4uZPKi8Ed08n1Zj9PgPo/WU2wbXXgiZJ4LdqouQfs7mqzrNSN5BunpmgvMTjAqEdA==
+X-Received: by 10.202.78.214 with SMTP id c205mr18056383oib.65.1487119484998;
+ Tue, 14 Feb 2017 16:44:44 -0800 (PST)
+MIME-Version: 1.0
+Received: by 10.74.158.84 with HTTP; Tue, 14 Feb 2017 16:44:14 -0800 (PST)
+In-Reply-To: <xmqq8tp8aawb.fsf@gitster.mtv.corp.google.com>
+References: <20170213152011.12050-1-pclouds@gmail.com> <20170213152011.12050-12-pclouds@gmail.com>
+ <CAGZ79kZC6TntQrW7MF6-h5z5En-u6rwNX=zuaHRNDpbO80ALHA@mail.gmail.com>
+ <CACsJy8ChQqUd4poeeKQruQSwdys=ydzxGDC8fU6ZgfrFEEm7NQ@mail.gmail.com> <xmqq8tp8aawb.fsf@gitster.mtv.corp.google.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Wed, 15 Feb 2017 07:44:14 +0700
+Message-ID: <CACsJy8AfwGK_Y8vH-mF4NXWts_4_CPZamO0L_rWD-1WR3=36Yg@mail.gmail.com>
+Subject: Re: [PATCH 11/11] refs: split and make get_*_ref_store() public API
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Stefan Beller <sbeller@google.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>,
+        Michael Haggerty <mhagger@alum.mit.edu>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        David Turner <novalis@novalis.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In a later patch we need to prepare the submodule environment with
-another git directory, so split up the function.
+On Wed, Feb 15, 2017 at 1:24 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Duy Nguyen <pclouds@gmail.com> writes:
+>
+>> Direct call sites are just middle men though, e.g.
+>> for_each_ref_submodule(). I'll attempt to clean this up at some point
+>> in future (probably at the same time I attempt to kill *_submodule ref
+>> api). But I think for now I'll just put a TODO or FIXME comment here.
+>
+> So we'd have get_*_ref_store() for various cases and then will have
+> a unifying for_each_ref_in_refstore() that takes a ref-store, which
+> supersedes all the ad-hoc iterators like for_each_ref_submodule(),
+> for_each_namespaced_ref(), etc?
+>
+> That's a very sensible longer-term goal, methinks.
 
-Also move it up in the file such that we do not need to declare the
-function later before using it.
+Ah I forgot about ref namespace. I'll need to try something out in that area.
 
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
- submodule.c | 29 +++++++++++++++++------------
- 1 file changed, 17 insertions(+), 12 deletions(-)
+> I am wondering what we should do to for_each_{tag,branch,...}_ref().
+> Would that become
+>
+>         ref_store = get_ref_main_store();
+>         tag_ref_store = filter_ref_store(ref_store, "refs/tags/");
+>         for_each_ref_in_refstore(tag_ref_store, ...);
+>
+> or do you plan to have some other pattern?
 
-diff --git a/submodule.c b/submodule.c
-index 4c33374ae8..d3fc6c2a75 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -359,6 +359,23 @@ static void print_submodule_summary(struct rev_info *rev, FILE *f,
- 	strbuf_release(&sb);
- }
- 
-+static void prepare_submodule_repo_env_no_git_dir(struct argv_array *out)
-+{
-+	const char * const *var;
-+
-+	for (var = local_repo_env; *var; var++) {
-+		if (strcmp(*var, CONFIG_DATA_ENVIRONMENT))
-+			argv_array_push(out, *var);
-+	}
-+}
-+
-+void prepare_submodule_repo_env(struct argv_array *out)
-+{
-+	prepare_submodule_repo_env_no_git_dir(out);
-+	argv_array_pushf(out, "%s=%s", GIT_DIR_ENVIRONMENT,
-+			 DEFAULT_GIT_DIR_ENVIRONMENT);
-+}
-+
- /* Helper function to display the submodule header line prior to the full
-  * summary output. If it can locate the submodule objects directory it will
-  * attempt to lookup both the left and right commits and put them into the
-@@ -1403,18 +1420,6 @@ int parallel_submodules(void)
- 	return parallel_jobs;
- }
- 
--void prepare_submodule_repo_env(struct argv_array *out)
--{
--	const char * const *var;
--
--	for (var = local_repo_env; *var; var++) {
--		if (strcmp(*var, CONFIG_DATA_ENVIRONMENT))
--			argv_array_push(out, *var);
--	}
--	argv_array_pushf(out, "%s=%s", GIT_DIR_ENVIRONMENT,
--			 DEFAULT_GIT_DIR_ENVIRONMENT);
--}
--
- /*
-  * Embeds a single submodules git directory into the superprojects git dir,
-  * non recursively.
+Long term, I think that's what Mike wants. Though the filter_ref_store
+might return an (opaque) iterator instead of a ref store and
+for_each_refstore() becomes a thin wrapper around the iterator
+interface.
 -- 
-2.12.0.rc0.16.gd1691994b4.dirty
-
+Duy
