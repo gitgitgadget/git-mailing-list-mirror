@@ -2,70 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,
+	STOX_REPLY_TYPE shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BF1152013A
-	for <e@80x24.org>; Wed, 15 Feb 2017 21:56:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 357162013A
+	for <e@80x24.org>; Wed, 15 Feb 2017 22:19:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752127AbdBOV4h (ORCPT <rfc822;e@80x24.org>);
-        Wed, 15 Feb 2017 16:56:37 -0500
-Received: from cloud.peff.net ([104.130.231.41]:56035 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750719AbdBOV4g (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Feb 2017 16:56:36 -0500
-Received: (qmail 24966 invoked by uid 109); 15 Feb 2017 21:56:36 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 15 Feb 2017 21:56:36 +0000
-Received: (qmail 17971 invoked by uid 111); 15 Feb 2017 21:56:37 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 15 Feb 2017 16:56:37 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 15 Feb 2017 16:56:34 -0500
-Date:   Wed, 15 Feb 2017 16:56:34 -0500
-From:   Jeff King <peff@peff.net>
-To:     Fabrizio Cucci <fabrizio.cucci@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: Back quote typo in error messages (?)
-Message-ID: <20170215215633.deyxp76j7o3ceoq3@sigill.intra.peff.net>
-References: <CAOxYW4z=bABqhmHWCc9rizykMcGBjDvqLEuqpJ6DtPve5442Fw@mail.gmail.com>
- <20170215212157.qgscyglgzrd5cplf@sigill.intra.peff.net>
- <CAOxYW4xqk4j6Uu86jq2Vi9Bpgihxfr2Tw-DQLc+7YTZiPmDtiA@mail.gmail.com>
+        id S1752669AbdBOWTh (ORCPT <rfc822;e@80x24.org>);
+        Wed, 15 Feb 2017 17:19:37 -0500
+Received: from smtp-out-5.talktalk.net ([62.24.135.69]:55563 "EHLO
+        smtp-out-5.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752660AbdBOWTg (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Feb 2017 17:19:36 -0500
+Received: from PhilipOakley ([92.31.218.76])
+        by smtp.talktalk.net with SMTP
+        id e7vBcevfNHGLwe7vBctEcW; Wed, 15 Feb 2017 22:19:33 +0000
+X-Originating-IP: [92.31.218.76]
+X-Spam: 0
+X-OAuthority: v=2.2 cv=dsCZMBo4 c=1 sm=1 tr=0 a=e6L6E7eW+5Nb7SO+DvSdIg==:117
+ a=e6L6E7eW+5Nb7SO+DvSdIg==:17 a=8nJEP1OIZ-IA:10 a=ybZZDoGAAAAA:8
+ a=xtxXYLxNAAAA:8 a=uPZiAMpXAAAA:8 a=5rxgeBVgAAAA:8 a=cknCivPPAAAA:8
+ a=wfXgXtNeUAN-X1wavz0A:9 a=wPNLvfGTeEIA:10 a=0RhZnL1DYvcuLYC8JZ5M:22
+ a=xts0dhWdiJbonKbuqhAr:22 a=svzibyHiZmA4t4YY0eFS:22 a=PwKx63F5tFurRwaNxrlG:22
+ a=6dIZNVGIe6rtUBgokTih:22
+Message-ID: <4E11838A459C46928A7B817E2F67BA08@PhilipOakley>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From:   "Philip Oakley" <philipoakley@iee.org>
+To:     "Junio C Hamano" <gitster@pobox.com>
+Cc:     "Christian Couder" <christian.couder@gmail.com>,
+        "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+        <git-for-windows@googlegroups.com>, "git" <git@vger.kernel.org>
+References: <alpine.DEB.2.20.1702101241210.3496@virtualbox>        <xmqq60kdbqmy.fsf@gitster.mtv.corp.google.com>        <alpine.DEB.2.20.1702142150220.3496@virtualbox>        <xmqqd1ek8oqo.fsf@gitster.mtv.corp.google.com>        <CAP8UFD1+AgBVqSh=wHteM3uKO+55ZqqD4cHzBUfN0KTPXyvutQ@mail.gmail.com>        <E2C1B7A8FBF94C8CB1C9C5754D882800@PhilipOakley> <xmqqshng5osz.fsf@gitster.mtv.corp.google.com>
+Subject: Re: [git-for-windows] Re: Continuous Testing of Git on Windows
+Date:   Wed, 15 Feb 2017 22:19:33 -0000
+Organization: OPDS
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAOxYW4xqk4j6Uu86jq2Vi9Bpgihxfr2Tw-DQLc+7YTZiPmDtiA@mail.gmail.com>
+Content-Type: text/plain;
+        format=flowed;
+        charset="iso-8859-1";
+        reply-type=original
+Content-Transfer-Encoding: 7bit
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+X-CMAE-Envelope: MS4wfBpaZaEKyOyJQAKRrY6RZdiNz41DJloWWHFeGUOiTztJIBkqpY/9yahu+EJpJumX1q+zeqXjMeh9p51Upt6qk2fqYIpsRSV2eG0VVgT6IR6GnMCZMd1c
+ 6ULYbw49FZReXqYrLfwCfnhReKuI8SgR6uvCpDQPB4AIYNDcPZ6uqsV/RHJa/x0LmJPW5t8j8EQj412ZPie1cMx3LRlgC79hN/4t9I9xlzGcYdT6fVCuCDMI
+ auK9/FGk03l6ouXNWCiRD7Jh98VDfNUH/apF3HDFw1Jnv/fj3w4wZU2InlgyKEShV2OQiOnHoS5smVixCmmINA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Feb 15, 2017 at 09:51:30PM +0000, Fabrizio Cucci wrote:
+From: "Junio C Hamano" <gitster@pobox.com>
+> "Philip Oakley" <philipoakley@iee.org> writes:
+>
+>> There are also a few ideas at the SO answers:
+>> http://stackoverflow.com/a/5652323/717355
+>
+> I vaguely recall that I saw somebody said the same "mark tips of
+> topics as good" on the list and answered with why it does not quite
+> work, though.
+>
+I think you may mean
+https://public-inbox.org/git/7v8vyam5la.fsf@alter.siamese.dyndns.org/
 
-> > Some people use the matched backtick/single-quote to emulate the
-> > non-symmetric start/end quotes used in traditional typography (and in
-> > fact, ``foo'' in languages like asciidoc are typically rendered using
-> > smart-quotes).
-> 
-> I definitely didn't know about the use of them in traditional typography!
-> But I couldn't find any example of non-symmetric quotes in AsciiDoc...
+I think we are thinking of opposite abstractions.
 
-Grep for "``" in Git's documentation directory, and you will see many
-examples (asciidoc only accepts the double-quote form, not singles).
+For regular bisect, the assumption (to a first order) is that there is a
+single point of infection of a single persistent bug with a well defined
+test, and that the goal is to find the point of first infection, as all
+other incidents of the bug are in successor commits, which are all infected.
+The fail-fix-break again sequence you mentioned in that thread is to my mind
+a red herring as it contradicts the normal bisection assumptions (but see
+below).
 
-You can also try:
+In the next..pu case the abstraction is in the other direction, we have
+potentially multiple points of infection (from feature branches), and a
+broad test (the whole test suite). In this case I believe we would like to
+investigate initially the --first-parent line with a classic bisect for the
+first point of failure (obviously including feature branch merges). This
+would identify which feature merge, or regular commit, created the first
+breakage.
 
-  echo "this is \`\`quoted'' text" >foo.txt
-  asciidoc foo.txt
+Once the first point of failure has been identified, for the next..pu case,
+each of the post-fail second parents of merge commits _could_ then also be
+checked (which is a linear search, not a bisection), to identify any
+additional feature branches that need attention. This second stage search
+would probably be an option, but if the merging sequence onto pu is
+generally from good to bad, then the search is likely to be short. At least
+for a CI system this 2nd stage could provide useful feedback to the authors
+of their mistakes...
 
-and then open "foo.html" in your browser.
+I haven't looked back at the actual patches in that thread, so they may not
+have followed my expectation of the --multi-bug (TM) search algorithm.
+--
 
-> > I don't know how much we care about standardizing that punctuation.
-> 
-> I mentioned it was very minor but, still, in my opinion a project like
-> Git deserves consistent punctuation! :)
+Philip
 
-I think patches would be welcome, but as Junio said, it probably should
-wait for the next cycle.
 
--Peff
