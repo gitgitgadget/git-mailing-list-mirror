@@ -2,104 +2,75 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
-	DATE_IN_PAST_03_06,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD,STOX_REPLY_TYPE shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 233FE2013A
-	for <e@80x24.org>; Wed, 15 Feb 2017 21:06:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0AF402013A
+	for <e@80x24.org>; Wed, 15 Feb 2017 21:06:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751298AbdBOVGT (ORCPT <rfc822;e@80x24.org>);
-        Wed, 15 Feb 2017 16:06:19 -0500
-Received: from smtp-out-5.talktalk.net ([62.24.135.69]:18176 "EHLO
-        smtp-out-5.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750806AbdBOVGS (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Feb 2017 16:06:18 -0500
-Received: from PhilipOakley ([92.31.218.76])
-        by smtp.talktalk.net with SMTP
-        id e6mFcenlzHGLwe6mFctC1S; Wed, 15 Feb 2017 21:06:16 +0000
-X-Originating-IP: [92.31.218.76]
-X-Spam: 0
-X-OAuthority: v=2.2 cv=dsCZMBo4 c=1 sm=1 tr=0 a=e6L6E7eW+5Nb7SO+DvSdIg==:117
- a=e6L6E7eW+5Nb7SO+DvSdIg==:17 a=8nJEP1OIZ-IA:10 a=ybZZDoGAAAAA:8
- a=xtxXYLxNAAAA:8 a=uPZiAMpXAAAA:8 a=5rxgeBVgAAAA:8 a=cknCivPPAAAA:8
- a=aMjiMxutf5xWqGt5Aq4A:9 a=wPNLvfGTeEIA:10 a=0RhZnL1DYvcuLYC8JZ5M:22
- a=xts0dhWdiJbonKbuqhAr:22 a=svzibyHiZmA4t4YY0eFS:22 a=PwKx63F5tFurRwaNxrlG:22
- a=6dIZNVGIe6rtUBgokTih:22
-Message-ID: <7EA15219331242ABB08B9A9AA9F08CBE@PhilipOakley>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
-From:   "Philip Oakley" <philipoakley@iee.org>
-To:     "Junio C Hamano" <gitster@pobox.com>
-Cc:     "Christian Couder" <christian.couder@gmail.com>,
-        "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-        <git-for-windows@googlegroups.com>, "git" <git@vger.kernel.org>
-References: <alpine.DEB.2.20.1702101241210.3496@virtualbox>        <xmqq60kdbqmy.fsf@gitster.mtv.corp.google.com>        <alpine.DEB.2.20.1702142150220.3496@virtualbox>        <xmqqd1ek8oqo.fsf@gitster.mtv.corp.google.com>        <CAP8UFD1+AgBVqSh=wHteM3uKO+55ZqqD4cHzBUfN0KTPXyvutQ@mail.gmail.com>        <E2C1B7A8FBF94C8CB1C9C5754D882800@PhilipOakley> <xmqqshng5osz.fsf@gitster.mtv.corp.google.com>
-Subject: Re: [git-for-windows] Re: Continuous Testing of Git on Windows
-Date:   Wed, 15 Feb 2017 17:31:07 -0000
-Organization: OPDS
+        id S1751338AbdBOVGt (ORCPT <rfc822;e@80x24.org>);
+        Wed, 15 Feb 2017 16:06:49 -0500
+Received: from mail-wm0-f42.google.com ([74.125.82.42]:38875 "EHLO
+        mail-wm0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750719AbdBOVGs (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Feb 2017 16:06:48 -0500
+Received: by mail-wm0-f42.google.com with SMTP id r141so1320076wmg.1
+        for <git@vger.kernel.org>; Wed, 15 Feb 2017 13:06:47 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=/S+O1tgV9SH7iwFDK8CYUwhoxw/wBhU1H4ZN6peBS68=;
+        b=vArSHp2IuW+xi321Zq9uuza45aGVA4MckzyziLNZi45RWO9ULZTy2UY9lU880EOI+Z
+         fsH2yjigEC2WToUVpTA7tnx1LTWWc6HBWbaClqxoGRpyC0SKDcsz4eoSy2K+lep4r/Oi
+         pZPU4rGtDIK1/DlfKy2gOIaPye0MYO4+jK+HVI7OCenYMRmIyu85ZqJBRErvDtKx4z68
+         /wjBwG9q5pCL/MEsR33LS7Ff48YkF+bB7sXLCeoOtspvN7DY49L9/ko6HY/jdyl/S5A9
+         JZoL4lQ3SVO+P7j2BOzN64YOA9TWQrIv8mD/MTqMnfwtneSwZv5eDg4kD7ZILnpQx1pg
+         pCbg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=/S+O1tgV9SH7iwFDK8CYUwhoxw/wBhU1H4ZN6peBS68=;
+        b=N4tfLMTEp3zPWNSb61VWjNFHZyOshHGJAgVYsCrtxeKt3z6UMvxIaWuA3j9ykkKKlW
+         amJdCJqvngxcTOFOI+bIFbiWiNZIEJ880PmEMvwr+5NOVh7Rjq8pKmtdIs3C34piRoOr
+         H3yAqtYcVWOEW2W8A81BNE+f3ef0e9hfYgez/ROEYDt4EhfDn2AUYvnDF46M+CN0dEVM
+         TtgyE7VnDjFPqjUJvkeXJwFyOYoNWuoz49cP+opuoM/uBDJvL922Ia2+EHVgz/uv+nPN
+         xTgrB5SInXvcGR5iyXAKoJh3nYZRJjWouunnESefkz4gb8cqNEVvAU58qjenNk13dLmB
+         3DAg==
+X-Gm-Message-State: AMke39lo/ODjpfAS6fgZfXPNG6BnnukVds8xGWdJtKHXjEM/Qis1Jx2BN8KtItLR8NP1QhHeyjcAyPWvPuVtBA==
+X-Received: by 10.28.17.20 with SMTP id 20mr9972967wmr.106.1487192806767; Wed,
+ 15 Feb 2017 13:06:46 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain;
-        format=flowed;
-        charset="iso-8859-1";
-        reply-type=original
-Content-Transfer-Encoding: 7bit
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
-X-CMAE-Envelope: MS4wfFd549V8sb+VcKgjDg9DsbIwE9lwQW16Gd03ShYLU/1z/jQO/sGqAF1rd7FaXjYLhR+O5FrYX6cCFvLnLgEGXhppJIBDIXvyh7GO+eQG7M+i6EmnOl4g
- xXfGzcnZ8VUbdM8osU0bup3j8HuNs/4HOzXmLeZC8XDdxdhMitw41n9Nm6FFcM1VKJhmUr0CXoMFpNOooScrE5OS6CnxMegY6HW8TKtCvYINNy7JF8uw3bBv
- k694Q0/pEVI6348OX2wV67W2zPXwGzYi0RZYq34gw/0mA0EypO54rybltrRYB40gC3H3hXPKfi5M3mFsmACKkA==
+Received: by 10.80.138.211 with HTTP; Wed, 15 Feb 2017 13:06:46 -0800 (PST)
+From:   Fabrizio Cucci <fabrizio.cucci@gmail.com>
+Date:   Wed, 15 Feb 2017 21:06:46 +0000
+Message-ID: <CAOxYW4z=bABqhmHWCc9rizykMcGBjDvqLEuqpJ6DtPve5442Fw@mail.gmail.com>
+Subject: Back quote typo in error messages (?)
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: "Junio C Hamano" <gitster@pobox.com>
-> "Philip Oakley" <philipoakley@iee.org> writes:
->
->> There are also a few ideas at the SO answers:
->> http://stackoverflow.com/a/5652323/717355
->
-> I vaguely recall that I saw somebody said the same "mark tips of
-> topics as good" on the list and answered with why it does not quite
-> work, though.
->
-I think you may mean 
-https://public-inbox.org/git/7v8vyam5la.fsf@alter.siamese.dyndns.org/
+Hello everyone,
 
-I think we are thinking of opposite abstractions.
+it's been a couple of days that I keep noticing something (very minor)
+that my OCD for symmetric things can't really stand.
 
-For regular bisect, the assumption (to a first order) is that there is a 
-single point of infection of a single persistent bug with a well defined 
-test, and that the goal is to find the point of first infection, as all 
-other incidents of the bug are in successor commits, which are all infected. 
-The fail-fix-break again sequence you mentioned in that thread is to my mind 
-a red herring as it contradicts the normal bisection assumptions (but see 
-below).
+If you run the following command:
 
-In the next..pu case the abstraction is in the other direction, we have 
-potentially multiple points of infection (from feature branches), and a 
-broad test (the whole test suite). In this case I believe we would like to 
-investigate initially the --first-parent line with a classic bisect for the 
-first point of failure (obviously including feature branch merges). This 
-would identify which feature merge, or regular commit, created the first 
-breakage.
+$ git branch --i-dont-exists
 
-Once the first point of failure has been identified, for the next..pu case, 
-each of the post-fail second parents of merge commits _could_ then also be 
-checked (which is a linear search, not a bisection), to identify any 
-additional feature branches that need attention. This second stage search 
-would probably be an option, but if the merging sequence onto pu is 
-generally from good to bad, then the search is likely to be short. At least 
-for a CI system this 2nd stage could provide useful feedback to the authors 
-of their mistakes...
+you should get:
 
-I haven't looked back at the actual patches in that thread, so they may not 
-have followed my expectation of the --multi-bug (TM) search algorithm.
---
+error: unknown option `i-dont-exists'
 
-Philip
+Shouldn't the wrong flag be surrounded by two single quotes instead of
+a back quote and a single quote?
 
+For the sake of completeness, I'm on Mac running Git 2.10.1.
 
+Thanks,
+Fabrizio
