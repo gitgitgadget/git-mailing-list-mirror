@@ -6,61 +6,66 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5C9422013A
-	for <e@80x24.org>; Wed, 15 Feb 2017 21:53:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BF1152013A
+	for <e@80x24.org>; Wed, 15 Feb 2017 21:56:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751571AbdBOVw7 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 15 Feb 2017 16:52:59 -0500
-Received: from cloud.peff.net ([104.130.231.41]:56029 "EHLO cloud.peff.net"
+        id S1752127AbdBOV4h (ORCPT <rfc822;e@80x24.org>);
+        Wed, 15 Feb 2017 16:56:37 -0500
+Received: from cloud.peff.net ([104.130.231.41]:56035 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750806AbdBOVw7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Feb 2017 16:52:59 -0500
-Received: (qmail 24683 invoked by uid 109); 15 Feb 2017 21:52:58 -0000
+        id S1750719AbdBOV4g (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Feb 2017 16:56:36 -0500
+Received: (qmail 24966 invoked by uid 109); 15 Feb 2017 21:56:36 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 15 Feb 2017 21:52:58 +0000
-Received: (qmail 17947 invoked by uid 111); 15 Feb 2017 21:52:59 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 15 Feb 2017 21:56:36 +0000
+Received: (qmail 17971 invoked by uid 111); 15 Feb 2017 21:56:37 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 15 Feb 2017 16:52:59 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 15 Feb 2017 16:52:56 -0500
-Date:   Wed, 15 Feb 2017 16:52:56 -0500
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 15 Feb 2017 16:56:37 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 15 Feb 2017 16:56:34 -0500
+Date:   Wed, 15 Feb 2017 16:56:34 -0500
 From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Christian Couder <christian.couder@gmail.com>,
-        git <git@vger.kernel.org>,
-        Maxim Kuvyrkov <maxim.kuvyrkov@linaro.org>,
-        Pranit Bauva <pranit.bauva@gmail.com>
-Subject: Re: [PATCH] show-branch: fix crash with long ref name
-Message-ID: <20170215215256.crg3t5nrj6kjvw2i@sigill.intra.peff.net>
-References: <20170214154816.12625-1-chriscool@tuxfamily.org>
- <20170214172526.hzpm3d3ubd3vjnzr@sigill.intra.peff.net>
- <xmqqlgt88t0r.fsf@gitster.mtv.corp.google.com>
- <20170214195513.7zae6x22advkrms6@sigill.intra.peff.net>
- <CAP8UFD0EfUgfmTB4dj-A+rw79F7SWKxYvatNfR+Nj-8ukWYAQA@mail.gmail.com>
- <20170215214052.5py4pxkcz4g2bmtk@sigill.intra.peff.net>
- <xmqqfujf2kfk.fsf@gitster.mtv.corp.google.com>
+To:     Fabrizio Cucci <fabrizio.cucci@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: Back quote typo in error messages (?)
+Message-ID: <20170215215633.deyxp76j7o3ceoq3@sigill.intra.peff.net>
+References: <CAOxYW4z=bABqhmHWCc9rizykMcGBjDvqLEuqpJ6DtPve5442Fw@mail.gmail.com>
+ <20170215212157.qgscyglgzrd5cplf@sigill.intra.peff.net>
+ <CAOxYW4xqk4j6Uu86jq2Vi9Bpgihxfr2Tw-DQLc+7YTZiPmDtiA@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqfujf2kfk.fsf@gitster.mtv.corp.google.com>
+In-Reply-To: <CAOxYW4xqk4j6Uu86jq2Vi9Bpgihxfr2Tw-DQLc+7YTZiPmDtiA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Feb 15, 2017 at 01:50:07PM -0800, Junio C Hamano wrote:
+On Wed, Feb 15, 2017 at 09:51:30PM +0000, Fabrizio Cucci wrote:
 
-> Jeff King <peff@peff.net> writes:
+> > Some people use the matched backtick/single-quote to emulate the
+> > non-symmetric start/end quotes used in traditional typography (and in
+> > fact, ``foo'' in languages like asciidoc are typically rendered using
+> > smart-quotes).
 > 
-> > I see the patches are marked for 'next' in the latest What's Cooking.
-> > If it is not too late in today's integration cycle, here is a re-roll of
-> > patch 3 that squashes in Pranit's suggestion (if it is too late, then
-> > Pranit, you may want to re-send it as a squash on top).
-> 
-> Thanks.  
-> 
-> I think that matches what I queued last night, except for the
-> Helped-by: line.  Will replace.
+> I definitely didn't know about the use of them in traditional typography!
+> But I couldn't find any example of non-symmetric quotes in AsciiDoc...
 
-Oh, indeed. I should have actually checked what you queued. Thanks.
+Grep for "``" in Git's documentation directory, and you will see many
+examples (asciidoc only accepts the double-quote form, not singles).
+
+You can also try:
+
+  echo "this is \`\`quoted'' text" >foo.txt
+  asciidoc foo.txt
+
+and then open "foo.html" in your browser.
+
+> > I don't know how much we care about standardizing that punctuation.
+> 
+> I mentioned it was very minor but, still, in my opinion a project like
+> Git deserves consistent punctuation! :)
+
+I think patches would be welcome, but as Junio said, it probably should
+wait for the next cycle.
 
 -Peff
