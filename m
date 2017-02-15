@@ -7,52 +7,52 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 72D9E2013C
-	for <e@80x24.org>; Wed, 15 Feb 2017 00:35:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DC8F72013C
+	for <e@80x24.org>; Wed, 15 Feb 2017 00:35:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751441AbdBOAfR (ORCPT <rfc822;e@80x24.org>);
-        Tue, 14 Feb 2017 19:35:17 -0500
-Received: from mail-it0-f44.google.com ([209.85.214.44]:37556 "EHLO
-        mail-it0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750853AbdBOAfN (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Feb 2017 19:35:13 -0500
-Received: by mail-it0-f44.google.com with SMTP id x75so54906310itb.0
-        for <git@vger.kernel.org>; Tue, 14 Feb 2017 16:35:13 -0800 (PST)
+        id S1751429AbdBOAfO (ORCPT <rfc822;e@80x24.org>);
+        Tue, 14 Feb 2017 19:35:14 -0500
+Received: from mail-it0-f50.google.com ([209.85.214.50]:33097 "EHLO
+        mail-it0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751338AbdBOAfM (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Feb 2017 19:35:12 -0500
+Received: by mail-it0-f50.google.com with SMTP id d9so22204507itc.0
+        for <git@vger.kernel.org>; Tue, 14 Feb 2017 16:35:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=ciJpgIf2pP/R8HIoDCcArN38sA/IbWZi9LBYrCra7q8=;
-        b=h0Pid60MAvMf4MqKqDUqawq0pCisZ4wr9R/tq1iHAsTpkeD5R9r3krl3VhHkUMS+bp
-         ZobQwU7rp1EyzOy6dV4R8uL9Ib8zz66fWsyqAWQqcQ6Jtvf0fnNVjbhgWIK4RAhSOXKk
-         so85HTOy9Cj1SQxm5CKi8gf/X6Fe+wLQXHNg2aj59JD7/TRSk9Ou1YmPWmY533/vbEnY
-         5XyV80BqkvGJ0KxaWRMJe7VkowkUox/kyTftwLIWjHyMYIdH/JeCY4YZ7j1NYG0tMBo3
-         g/uMGVFPzr6RXu3T1ojxe6GwNd9NsMigBEAV6N/qs8xpeHixeW53ADx6DsjjnSew8UVW
-         RLfQ==
+        bh=S+cF/ed77RJRj8gLjH4FQCDXDatfDelT403SI0vwGNo=;
+        b=Ckc/NhJViovKRco1xWcRPRJQiaB2DZJXeka+5GW5/ChevQl5FDmykaWZnscjuhV6Rf
+         QJn7EwyBpIEk4tiieMzVKrp1qnnGYl6ogkYENeUOoho0ZdrlcR57FK4ILBUfZRBlJSyY
+         jX+Dx+wvV7czGkuaE89i5kih0o1al4F4n+T8TUt1tyQFRhhLPz+F3Y5B6t09WJRTlG+R
+         yYXStbef7/iGedi8BuQtYIIlkZT4cJPLD/89phLiD7o6EJ/xnaxpBjELfTX2KXOPN028
+         5B3uK2uFCwo83f57T2vVKbVOnyHCqrDxSy9yRkR5/J5SrOcQ2XqwLOrENexU6XD1DBPo
+         E1bA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=ciJpgIf2pP/R8HIoDCcArN38sA/IbWZi9LBYrCra7q8=;
-        b=ugV+NmgtrmKbWAGuZbfJf2o0374wMq4qzhF5SWnF847ABrxn1ltCtNwIB6x7DK03mL
-         y7SmZIIGw9MUSNyKjYqgZ6Ssl98ouUlk07WvYw6a5AikbwhjmPsP7hPWKJMlpY9b27SZ
-         48p0fEhCH6MnmtHEsbstEOUTdiN2n4n+7bJu6N2+PChxTvrwxWh9xiX7zIa/4GyTn1iH
-         XbUEf+oeQNFJf1MOreBBrMiVuWvwZwic2csjnjKLrKYxErGuMhM6hrLPQIgJFo+dlCL0
-         PZYIZgbStGs2dqT95FXiic11ld+gXsL6kUnOdX1qDcfKbChpgifuoPWrc0D3XmrNzxpF
-         sGyQ==
-X-Gm-Message-State: AMke39ky+SKKnvt6o0TidTkfikK9GynhMkh0+KJA2rklsnUycBpbOasrOTBNVH/rFB/E2m9s
-X-Received: by 10.99.67.130 with SMTP id q124mr35896295pga.221.1487118912592;
-        Tue, 14 Feb 2017 16:35:12 -0800 (PST)
+        bh=S+cF/ed77RJRj8gLjH4FQCDXDatfDelT403SI0vwGNo=;
+        b=LvjOTd8AeasoA/SsRijMvYqdplNqBL/7o49lSL1o8aXnEloImJpmiZfyTY4qbqObzp
+         m1S+KK8HGlS4mTFSZLXHyvUla2dAZZMpDvQ2lLHMp0VrXB02cr6DAElejoPNi2SbANkc
+         Guy+752evHhD1NpSTsJYuJyLuUYGZHodVfAUEPVMkM+LZBhrFiSfQcuenNAUw3+OzcXn
+         OtiRSwc7bTJCc2N5u3AxO49PaS9myNO1qcjJ4ekld2vBrgd7tlla046JylYEtBMmVuiO
+         ANM0nfDSTNHXvFlMl+6O2JaGCcjnMhs7XW9Oer2oCwK44bqTzxvDJNtllY+1KnlE9SeN
+         lRVw==
+X-Gm-Message-State: AMke39ndaIad873tkENriSVNrfHAWjkd5FP6xYjq+z6u2vEOXUoPQcYwxy7Q99Zj4KFabry6
+X-Received: by 10.99.54.196 with SMTP id d187mr35421930pga.91.1487118911492;
+        Tue, 14 Feb 2017 16:35:11 -0800 (PST)
 Received: from localhost ([2620:0:1000:5b10:c832:5c94:8ab0:6fa4])
-        by smtp.gmail.com with ESMTPSA id x15sm3292243pgo.56.2017.02.14.16.35.11
+        by smtp.gmail.com with ESMTPSA id m21sm3402864pgh.4.2017.02.14.16.35.10
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 14 Feb 2017 16:35:12 -0800 (PST)
+        Tue, 14 Feb 2017 16:35:10 -0800 (PST)
 From:   Stefan Beller <sbeller@google.com>
 Cc:     git@vger.kernel.org, bmwill@google.com, jrnieder@gmail.com,
         sandals@crustytoothpaste.net, gitster@pobox.com,
         Stefan Beller <sbeller@google.com>
-Subject: [PATCH 07/14] update submodules: introduce is_interesting_submodule
-Date:   Tue, 14 Feb 2017 16:34:16 -0800
-Message-Id: <20170215003423.20245-8-sbeller@google.com>
+Subject: [PATCH 06/14] update submodules: add a config option to determine if submodules are updated
+Date:   Tue, 14 Feb 2017 16:34:15 -0800
+Message-Id: <20170215003423.20245-7-sbeller@google.com>
 X-Mailer: git-send-email 2.12.0.rc0.16.gd1691994b4.dirty
 In-Reply-To: <20170215003423.20245-1-sbeller@google.com>
 References: <20170215003423.20245-1-sbeller@google.com>
@@ -62,75 +62,51 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In later patches we introduce the --recurse-submodule flag for commands
+In later patches we introduce the options and flag for commands
 that modify the working directory, e.g. git-checkout.
 
-It is potentially expensive to check if a submodule needs an update,
-because a common theme to interact with submodules is to spawn a child
-process for each interaction.
-
-So let's introduce a function that pre checks if a submodule needs
-to be checked for an update.
+Have a central place to store such settings whether we want to update
+a submodule.
 
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- submodule.c | 26 ++++++++++++++++++++++++++
- submodule.h |  8 ++++++++
- 2 files changed, 34 insertions(+)
+ submodule.c | 6 ++++++
+ submodule.h | 1 +
+ 2 files changed, 7 insertions(+)
 
 diff --git a/submodule.c b/submodule.c
-index c0060c29f2..4c33374ae8 100644
+index 9bbdd3ce7c..c0060c29f2 100644
 --- a/submodule.c
 +++ b/submodule.c
-@@ -551,6 +551,32 @@ void set_config_update_recurse_submodules(int value)
- 	config_update_recurse_submodules = value;
+@@ -17,6 +17,7 @@
+ #include "worktree.h"
+ 
+ static int config_fetch_recurse_submodules = RECURSE_SUBMODULES_ON_DEMAND;
++static int config_update_recurse_submodules = RECURSE_SUBMODULES_DEFAULT;
+ static int parallel_jobs = 1;
+ static struct string_list changed_submodule_paths = STRING_LIST_INIT_NODUP;
+ static int initialized_fetch_ref_tips;
+@@ -545,6 +546,11 @@ void set_config_fetch_recurse_submodules(int value)
+ 	config_fetch_recurse_submodules = value;
  }
  
-+int submodules_interesting_for_update(void)
++void set_config_update_recurse_submodules(int value)
 +{
-+	/*
-+	 * Update can't be "none", "merge" or "rebase",
-+	 * treat any value as OFF, except an explicit ON.
-+	 */
-+	return config_update_recurse_submodules == RECURSE_SUBMODULES_ON;
-+}
-+
-+int is_interesting_submodule(const struct cache_entry *ce)
-+{
-+	const struct submodule *sub;
-+
-+	if (!S_ISGITLINK(ce->ce_mode))
-+		return 0;
-+
-+	if (!submodules_interesting_for_update())
-+		return 0;
-+
-+	sub = submodule_from_path(null_sha1, ce->name);
-+	if (!sub)
-+		return 0;
-+
-+	return sub->update_strategy.type != SM_UPDATE_NONE;
++	config_update_recurse_submodules = value;
 +}
 +
  static int has_remote(const char *refname, const struct object_id *oid,
  		      int flags, void *cb_data)
  {
 diff --git a/submodule.h b/submodule.h
-index c4e1ac828e..84b67a7c4a 100644
+index 689033e538..c4e1ac828e 100644
 --- a/submodule.h
 +++ b/submodule.h
-@@ -59,6 +59,14 @@ extern void show_submodule_inline_diff(FILE *f, const char *path,
+@@ -58,6 +58,7 @@ extern void show_submodule_inline_diff(FILE *f, const char *path,
+ 		const char *del, const char *add, const char *reset,
  		const struct diff_options *opt);
  extern void set_config_fetch_recurse_submodules(int value);
- extern void set_config_update_recurse_submodules(int value);
-+
-+/*
-+ * Traditionally Git ignored changes made for submodules.
-+ * This function checks if we are interested in the given submodule
-+ * for any kind of operation.
-+ */
-+extern int submodules_interesting_for_update(void);
-+extern int is_interesting_submodule(const struct cache_entry *ce);
++extern void set_config_update_recurse_submodules(int value);
  extern void check_for_new_submodule_commits(unsigned char new_sha1[20]);
  extern int fetch_populated_submodules(const struct argv_array *options,
  			       const char *prefix, int command_line_option,
