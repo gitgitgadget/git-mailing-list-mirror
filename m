@@ -2,109 +2,77 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7F8592013A
-	for <e@80x24.org>; Wed, 15 Feb 2017 18:52:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4A41D2013A
+	for <e@80x24.org>; Wed, 15 Feb 2017 18:53:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752418AbdBOSwo (ORCPT <rfc822;e@80x24.org>);
-        Wed, 15 Feb 2017 13:52:44 -0500
-Received: from mail-it0-f42.google.com ([209.85.214.42]:35294 "EHLO
-        mail-it0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752166AbdBOSwn (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Feb 2017 13:52:43 -0500
-Received: by mail-it0-f42.google.com with SMTP id 203so73271243ith.0
-        for <git@vger.kernel.org>; Wed, 15 Feb 2017 10:52:43 -0800 (PST)
+        id S1752527AbdBOSxF (ORCPT <rfc822;e@80x24.org>);
+        Wed, 15 Feb 2017 13:53:05 -0500
+Received: from mail-pf0-f193.google.com ([209.85.192.193]:34344 "EHLO
+        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751429AbdBOSxE (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Feb 2017 13:53:04 -0500
+Received: by mail-pf0-f193.google.com with SMTP id o64so8343900pfb.1
+        for <git@vger.kernel.org>; Wed, 15 Feb 2017 10:53:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=7gzjOLWmOBpZ6JG1kJLHnKcsLOylOJKPpg+0ySNoLwY=;
-        b=fFoJDRQNT6rE59Sss9STbuxOJ2U+gqOcUEWmRqI0Byk3zQCC2p3v7fUquW5NDsPwqo
-         23Hqu1bwKqc7g0YgZxnY6Vvo7pgGZbF4YRNh9kPGDI9Q4aApQxUN9LFphcY0MDn6W69h
-         nMTw56HqZJYb5NnPw4wcHHvWUrmGyJNEhzP+ELtcAZCpuIkm8veYz8flmstonW6MOCas
-         J6vfgP63evNlQTUhwxzEi58JJ7wbt/pVbpaGXqivt7urSZLDBn4M5JNIuNMLDvlGi7h2
-         Sbi8MLUhG30xAhYM5w2tS8oJ8uau3dp46h7ELThv8AL0PF+a3KuGxa8v/19LhykACnnH
-         VFRA==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=GDx3fLfBXI4AQhmhTjHJoya3+Sh9RVG4dgbn+Y0a0ZU=;
+        b=ZHcPCaKcFeKhs2h/bNzPloYuywFQi0gmqpbXxNeiaNfoTvZc7Vq6zXUVefmbb2Rg8E
+         /A9F+WiY2UrGF973aJ0DV1Ua1Hzf04Y2/rRQwqfOa1/fMacNDUQjoNCmtnQwMzH4Iuoi
+         ihb+CGCe2rSz72QaEqsWdV4tCn9Lv++1gAYjMEt8VkRTpE7cmhsH+KVK+lE/ZTBsZen6
+         ARx3UiusATGIGINWefH97sCBiRQ9p5/gDXvqOcSYwxMYo5mgxDvPjEfwdjF8Oswc7jP4
+         O27U/Qjzcvszx2efNXAQd5adZfn+5qEq8VFeGs/q7BS46eIsuMjatUoY5n80CPdQ0k3X
+         IEdA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=7gzjOLWmOBpZ6JG1kJLHnKcsLOylOJKPpg+0ySNoLwY=;
-        b=LKhy8BA8toRqTpq1BLMBHlyPYfjG/je07yNhXvfi/WrGKMYACVgRT438P7iI+ORBXw
-         /3heaX4tE5i515kWJeVIbMhMZnX4+qoAC6nzSoN2jyCRoVvEsqG/XmYOEtwtnjjz0Be4
-         KbwtSiGrVtX+E9MUM+hVXtIPAiyv/bEcYsriiEmddamU513Ehbp7VT84XD2JM7iRqmgr
-         BhO58yF1/mepJM+R80FYrYGRGEYb0ce60zyVlMbvE2CuQB7Snoo+ixb8Awe0yZ3xIW6k
-         xck8EBSXUOR9fXPPxS8ceY2jmsPtkEeAL7OAGbS4kz8PjfXVafjzyM+RKT07WwoGLhxI
-         +APQ==
-X-Gm-Message-State: AMke39kGxVnHR6OcURelmKWFscrJHungEwnej8npK47zTdseUwhlOBUr2vqVZbcEtjLwqF+d3UDe7umaU6FjgKtJ
-X-Received: by 10.36.65.161 with SMTP id b33mr10495162itd.114.1487184762885;
- Wed, 15 Feb 2017 10:52:42 -0800 (PST)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=GDx3fLfBXI4AQhmhTjHJoya3+Sh9RVG4dgbn+Y0a0ZU=;
+        b=TZh0oGRWKULq2/X3PO43VHDF5zuuulyaLT0Tay8a+DwJpNpLIHHJMfuIdSAd9bykPy
+         EpzOL3U/j5KU/eVXJNLhMimEWWjpTOfOXwceuGsmx12OsDXn69/Arjq2ta/NpJzrbYTR
+         iaveCBmBvpNBG85NEXqiyUdp8AYBBS8OWYeXFp+j/3/0PBEAttWL0b2jVdGH0lqU8ZoY
+         9DjIbtp/h94VjveSsPrn1zojQILhSolY1WkyfSgsxeaJIoTs7ZHWTMxoEEUOn9dY/ZtK
+         tIOf97iVXJSvnWGLIWF/2tgNXWO41CuHhEGE15ApqUwMt04uqXJsNbRmspKigzh45Zro
+         5oXw==
+X-Gm-Message-State: AMke39k4OKF/8RGteLmsHx4WbFFxqTY/L4ORzV9zwodEoTW5qd3ZGtlJsJ6KbhC3AcPSeQ==
+X-Received: by 10.99.136.198 with SMTP id l189mr40046017pgd.45.1487184784061;
+        Wed, 15 Feb 2017 10:53:04 -0800 (PST)
+Received: from localhost ([2620:0:1000:8622:3551:31c7:1fe1:8b9b])
+        by smtp.gmail.com with ESMTPSA id z74sm8907685pfd.70.2017.02.15.10.53.03
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Wed, 15 Feb 2017 10:53:03 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Lars Schneider <larsxschneider@gmail.com>
+Cc:     git@vger.kernel.org, sbeller@google.com
+Subject: Re: [BUG] submodule config does not apply to upper case submodules?
+References: <20170215111704.78320-1-larsxschneider@gmail.com>
+Date:   Wed, 15 Feb 2017 10:53:02 -0800
+In-Reply-To: <20170215111704.78320-1-larsxschneider@gmail.com> (Lars
+        Schneider's message of "Wed, 15 Feb 2017 12:17:04 +0100")
+Message-ID: <xmqqzihn2smp.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.79.33.148 with HTTP; Wed, 15 Feb 2017 10:52:42 -0800 (PST)
-In-Reply-To: <20170215165107.GA29448@google.com>
-References: <20170215003423.20245-1-sbeller@google.com> <20170215003423.20245-3-sbeller@google.com>
- <20170215165107.GA29448@google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Wed, 15 Feb 2017 10:52:42 -0800
-Message-ID: <CAGZ79kaYRHHas-qiAr+RJB2+TLwEgcsOcXUk-SQ65qiSPSWXOw@mail.gmail.com>
-Subject: Re: [PATCH 02/14] lib-submodule-update.sh: define tests for recursing
- into submodules
-To:     Brandon Williams <bmwill@google.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Feb 15, 2017 at 8:51 AM, Brandon Williams <bmwill@google.com> wrote:
-> On 02/14, Stefan Beller wrote:
->> diff --git a/t/lib-submodule-update.sh b/t/lib-submodule-update.sh
->> index 61c54f2098..7c8c557572 100755
->> --- a/t/lib-submodule-update.sh
->> +++ b/t/lib-submodule-update.sh
->> @@ -4,6 +4,7 @@
->>  # - New submodule (no_submodule => add_sub1)
->>  # - Removed submodule (add_sub1 => remove_sub1)
->>  # - Updated submodule (add_sub1 => modify_sub1)
->> +# - Updated submodule recursively (modify_sub1 => modify_sub1_recursively)
->>  # - Submodule updated to invalid commit (add_sub1 => invalid_sub1)
->>  # - Submodule updated from invalid commit (invalid_sub1 => valid_sub1)
->>  # - Submodule replaced by tracked files in directory (add_sub1 =>
->> @@ -19,8 +20,8 @@
->>  #                    /    ^
->>  #                   /     remove_sub1
->>  #                  /
->> -#       add_sub1  /-------O
->> -#             |  /        ^
->> +#       add_sub1  /-------O---------O
->> +#             |  /        ^         modify_sub1_recursive
->>  #             | /         modify_sub1
->>  #             v/
->>  #      O------O-----------O---------O
->> @@ -73,6 +74,14 @@ create_lib_submodule_repo () {
->>               git add sub1 &&
->>               git commit -m "Modify sub1" &&
->>
->> +             git checkout -b modify_sub1_recursively modify_sub1 &&
->> +             git -C sub1 checkout -b "add_nested_sub" &&
->> +             git -C sub1 submodule add --branch no_submodule ./. sub2 &&
->
-> I thought we were trying to avoid './.' when adding submodules?
->
+Lars Schneider <larsxschneider@gmail.com> writes:
 
-Yes we should; I'll fix that in a reroll.
-It's also still on my long term fix list to remove the ./.
-$ git grep 'add \./\.'
-lib-submodule-update.sh:                git submodule add ./. sub1 &&
-t7001-mv.sh:    git submodule add ./. sub &&
-t7001-mv.sh:    git submodule add ./. deep/directory/hierarchy/sub &&
-t7507-commit-verbose.sh:        git submodule add ./. sub &&
-t7800-difftool.sh:      git submodule add ./. submod/ule &&
+> It looks like as if submodule configs ("submodule.*") for submodules
+> with upper case names are ignored.
+
+This observation is surprising, as the second level in three-level
+names like "<section>.<name>.<variable>" is designed to be case
+sensitive.  A code that uses the config API needs to do extra things
+to cause the behaviour you showed, i.e. to get submodule.U.update
+ignored while submodule.l.update to be honoured.  Perhaps somebody
+downcases things too aggressively before comparing?
+
+This is worth making it work as expected, needless to say ;-)
