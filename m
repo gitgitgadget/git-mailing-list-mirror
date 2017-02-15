@@ -2,90 +2,120 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 244C72013A
-	for <e@80x24.org>; Wed, 15 Feb 2017 22:45:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6F98B2013A
+	for <e@80x24.org>; Wed, 15 Feb 2017 22:50:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751210AbdBOWpw convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Wed, 15 Feb 2017 17:45:52 -0500
-Received: from zimbra-vnc.tngtech.com ([83.144.240.98]:41161 "EHLO
-        proxy.tng.vnc.biz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750905AbdBOWpv (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Feb 2017 17:45:51 -0500
-Received: from localhost (localhost [127.0.0.1])
-        by proxy.tng.vnc.biz (Postfix) with ESMTP id 0DE841E310B;
-        Wed, 15 Feb 2017 23:45:48 +0100 (CET)
-Received: from proxy.tng.vnc.biz ([127.0.0.1])
-        by localhost (proxy.tng.vnc.biz [127.0.0.1]) (amavisd-new, port 10032)
-        with ESMTP id 90vc6QXVvBJ7; Wed, 15 Feb 2017 23:45:47 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
-        by proxy.tng.vnc.biz (Postfix) with ESMTP id 8CADA1E313E;
-        Wed, 15 Feb 2017 23:45:47 +0100 (CET)
-X-Virus-Scanned: amavisd-new at 
-Received: from proxy.tng.vnc.biz ([127.0.0.1])
-        by localhost (proxy.tng.vnc.biz [127.0.0.1]) (amavisd-new, port 10026)
-        with ESMTP id RlrSR3ESl_L6; Wed, 15 Feb 2017 23:45:47 +0100 (CET)
-Received: from [192.168.178.31] (aftr-185-17-204-22.dynamic.mnet-online.de [185.17.204.22])
-        by proxy.tng.vnc.biz (Postfix) with ESMTPSA id 44A241E310B;
-        Wed, 15 Feb 2017 23:45:47 +0100 (CET)
-Subject: Re: [PATCH v2 2/2] completion: checkout: complete paths when ref
- given
-To:     =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>
-References: <4f8a0aaa-4ce1-d4a6-d2e1-28aac7209c90@tngtech.com>
- <20170214212404.31469-1-cornelius.weig@tngtech.com>
- <20170214212404.31469-2-cornelius.weig@tngtech.com>
- <CAM0VKjkUu2k73+PxZ2UNKrnBg0nW_za+10O7eHEgcko6BaGx6Q@mail.gmail.com>
-Cc:     Git mailing list <git@vger.kernel.org>,
-        Richard Wagner <bitte.keine.werbung.einwerfen@googlemail.com>
-From:   Cornelius Weig <cornelius.weig@tngtech.com>
-Message-ID: <11424310-7f76-12fe-0e56-e585ccf06aea@tngtech.com>
-Date:   Wed, 15 Feb 2017 23:45:47 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.7.0
+        id S1751712AbdBOWuW (ORCPT <rfc822;e@80x24.org>);
+        Wed, 15 Feb 2017 17:50:22 -0500
+Received: from mail-pg0-f68.google.com ([74.125.83.68]:35464 "EHLO
+        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751389AbdBOWuV (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Feb 2017 17:50:21 -0500
+Received: by mail-pg0-f68.google.com with SMTP id 204so57495pge.2
+        for <git@vger.kernel.org>; Wed, 15 Feb 2017 14:50:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=a31HpM6JO6m2Ji6zC6/cZA/RQtNKNxRxzdKiU1PZx58=;
+        b=di7Ls0MtVSfebRKS6oZzf7+wn4/jQtTs6LQOXrlbJmcwAOvt03Gmk+/C7X1uTmHixb
+         nTLP9ezY5z7rpM58B26rBxI/KPa+zk5nRGFRyJ2Vpw0dVc93ouOS6CKeBzkBKtu/2Dnr
+         ez7OpG1/E+/Y+jjzQBDT9c/isGFL1wHsv8JMSjfAWetZ4Zo2p1n2yopiHJzZg6ITCbFl
+         OCBPBMRO+Sybso6wR4BqyBp07Vp8aJIFESa4K7NNsOmsj61CQAH0OUJA7XWjwXUTYO/5
+         zbSsXmcHB7nQVZs/zzW6dzbKOgWHto3qrSETIZ3/jkwi8t+2OqRIe8Q/O80lR8Eorpu2
+         EqXg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=a31HpM6JO6m2Ji6zC6/cZA/RQtNKNxRxzdKiU1PZx58=;
+        b=mWU+RIV+tInWNWGfK/S8x9Tz0OFgEJIe9L221YSZGl/gryFoPYMFYMEaiWWSro12r1
+         /Nq/+GBt1opNW2q3pvMKiD4vjC/DytBaz1Gx/fPTKZTNg6kfivi1UegGMvDaF6MSooa3
+         FZqo8mcm4D58ccWGsJa+4R2nBFKPXTZTH/LTgYZI3lwiTfMwJ4LG6Qdncp4EWkWnlbvn
+         ErEv9FRNOQFKdAs3BRwRacY1zzHd2Yo6PNgtsOVZL0ekcdkyxJHIlP2HULfzyB6gUocQ
+         i1kPKili8uW6Cj/1PGflfnCeco784yIBpOhQ2FkkvC5jlc24ybg5KEMFs/aEEq5UNs5d
+         tthA==
+X-Gm-Message-State: AMke39n89SBg5/IzmA//5oZi7/Om6Rw38w8w83R+fK0xnJKLtmMFaOXn+rakEyXZLDRK8A==
+X-Received: by 10.84.211.137 with SMTP id c9mr46026248pli.8.1487199020483;
+        Wed, 15 Feb 2017 14:50:20 -0800 (PST)
+Received: from localhost ([2620:0:1000:8622:3551:31c7:1fe1:8b9b])
+        by smtp.gmail.com with ESMTPSA id o66sm9311002pfa.119.2017.02.15.14.50.19
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Wed, 15 Feb 2017 14:50:19 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     =?utf-8?Q?J=C3=A1chym_Barv=C3=ADnek?= <jachymb@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: Confusing git messages when disk is full.
+References: <CABpqov=FE-h_2s=O9fkSjFjgFXSy6hDwc2fu5ijiVvkaLx9f_Q@mail.gmail.com>
+        <20170215213221.lnraiktneokpk3mg@sigill.intra.peff.net>
+        <xmqqk28r2kk4.fsf@gitster.mtv.corp.google.com>
+        <20170215215151.a5chtxyjhbe3og4p@sigill.intra.peff.net>
+        <xmqq7f4r2io5.fsf@gitster.mtv.corp.google.com>
+        <20170215223246.mkaz22yrovnscnne@sigill.intra.peff.net>
+Date:   Wed, 15 Feb 2017 14:50:19 -0800
+In-Reply-To: <20170215223246.mkaz22yrovnscnne@sigill.intra.peff.net> (Jeff
+        King's message of "Wed, 15 Feb 2017 17:32:46 -0500")
+Message-ID: <xmqq37ff2hn8.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <CAM0VKjkUu2k73+PxZ2UNKrnBg0nW_za+10O7eHEgcko6BaGx6Q@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8BIT
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 02/15/2017 03:26 PM, SZEDER Gábor wrote:
-> On Tue, Feb 14, 2017 at 10:24 PM,  <cornelius.weig@tngtech.com> wrote:
-> 
->> +               *)
->> +                       __git_complete_tree_file "$ref" "$cur"
->> +                       ;;
-> 
-> There is one more caveat here.
-> 
-> Both our __git_complete_index_file() and Bash's builtin filename
-> completion lists matching paths like this:
-> 
->   $ git rm contrib/co<TAB>
->   coccinelle/                        contacts/
->   completion/                        convert-grafts-to-replace-refs.sh
-> 
-> i.e. the leading path components are not redundantly repeated.
-> 
-> Now, with this patch in this code path the list would look like this:
-> 
->   $ git checkout completion-refs-speedup contrib/co<TAB>
->   contrib/coccinelle/
->   contrib/completion/
->   contrib/contacts/
->   contrib/convert-grafts-to-replace-refs.sh
-> 
-> See the difference?
+Jeff King <peff@peff.net> writes:
 
-Now that you say it.. I had never noticed it though.
+> Good catch. I think we use a nasty bitwise-OR elsewhere to do that.
+> Ah, here it is, in tempfile.c:
+>
+>                 /*
+>                  * Note: no short-circuiting here; we want to fclose()
+>                  * in any case!
+>                  */
+>                 err = ferror(fp) | fclose(fp);
+>
+> That works, but the fact that we need a comment is a good sign that it's
+> kind of gross. It's too bad stdio does not specify the return of fclose
+> to report an error in the close _or_ any previous error. I guess we
+> could wrap it with our own function.
 
-> I once made a feeble attempt to make completion of the <ref>:<path>
-> notation (i.e. what you extracted into __git_complete_tree_file())
-> look like regular filename completion, but couldn't.
+Sure.  I am happy to add something like this:
 
-Can you dig up what you tried out? Maybe somebody comes up with a good idea.
+	/*
+	 * closes a FILE *, returns 0 if closing and all the
+	 * previous stdio operations on fp were successful,
+	 * otherwise non-zero.
+	 */
+	int xfclose(FILE *fp)
+	{
+		return ferror(fp) | fclose(fp);
+	}
+
+I do not think we should try to do anything fancier to allow the
+caller to tell ferror() and fclose() apart, as such a caller would
+then need to do
+
+	switch (xfclose(fp)) {
+	case 0: /* happy */ break;
+	case XFCLOSE_CLOSE: do "close failed" thing; break;
+	case XFCLOSE_ERROR: do "other things failed" thing; break;
+	}
+
+and at that point, "other things failed" code would not have much to
+work with to do more detailed diagnosis anyway (the errno is likely
+not trustable), and it is not too much to write
+
+	if (ferror(fp))
+		do "saw some failure before" thing;
+	if (fclose(fp))
+		do "close failed" thing;
+
+instead.
+        
