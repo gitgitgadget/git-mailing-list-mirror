@@ -2,102 +2,76 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B13A72013A
-	for <e@80x24.org>; Wed, 15 Feb 2017 13:10:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5ED412013A
+	for <e@80x24.org>; Wed, 15 Feb 2017 14:07:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751297AbdBONKm (ORCPT <rfc822;e@80x24.org>);
-        Wed, 15 Feb 2017 08:10:42 -0500
-Received: from mail-wr0-f180.google.com ([209.85.128.180]:33153 "EHLO
-        mail-wr0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750711AbdBONKk (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Feb 2017 08:10:40 -0500
-Received: by mail-wr0-f180.google.com with SMTP id i10so190828873wrb.0
-        for <git@vger.kernel.org>; Wed, 15 Feb 2017 05:10:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=bzkS8GgTWr2i+sr73ngCgo3+h+thbWhNFXlhdhvo2Z4=;
-        b=IZW5RvlMpZQ+nWYtU2rUMOeruin7fVG0hdUxk9Q16FX3OweL+wWOzMiw4hUeSXi1+e
-         MzXxp6Fkk4ZWGLGlgCH8iR8fORpIy+kUMxyWWH9TKZvTRJ72rtO8h3rjuyzmRGfohHZg
-         bJldMRdPDdOusYCvAg9aYmiGvnWoXFguKtLJUzr6ScAqYhAbsCE2AjT2WWuJG+rjHYvf
-         taJQtEhfmjdR2CNMN2Qw/NQ7DzexmrazcFzS+4VfUj5WgAYmfXOjOvNLKVj4urvUE6ug
-         PcFpZyC6gSenBvq5d7qheGWK2VYbBX50nD+lbMT5EnV4nvnV5Sn1O6eri+z/bOMj0oHB
-         6Org==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=bzkS8GgTWr2i+sr73ngCgo3+h+thbWhNFXlhdhvo2Z4=;
-        b=nsbsCy3SybnimgIzNuf2HbMSi6DrtgB7WHom/WCYzORAh5MTZtOIhRjNYB2/DiW8/8
-         XdEN9MT8GWL4MMpq30KdKFM7gRwBP6SocIWVHECgSmPLIsmJrS6Rk+lgS/EQJ9CVvNDo
-         /JYN7aO37+R9QOZzLO2wNbfiUDDCzhWlX+G+ELyrztVVbAlax96XgiqlRCOzSl7UeOZR
-         Y2W0pLNx1ZbCjKDAumjPJkFOiCHL2HdORciFXiSmT6hW2454riqvWeADm0ipLhRw5pos
-         4hgBJhQdr48BGYU/1OzNpTp1XnGMb95RgZaCReOpCG4J5DXhZXgalepjRBKvZVg6qDlk
-         17ow==
-X-Gm-Message-State: AMke39nr9pudy8U2nFaNE1O3pPBqe4IjwttwAbFY4sXMd0s+d09xwDNSi0qw/EZV+AQrOw==
-X-Received: by 10.223.128.5 with SMTP id 5mr29532280wrk.163.1487164239244;
-        Wed, 15 Feb 2017 05:10:39 -0800 (PST)
-Received: from slxbook4.ads.autodesk.com ([62.159.156.210])
-        by smtp.gmail.com with ESMTPSA id h75sm4849258wrh.37.2017.02.15.05.10.38
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 15 Feb 2017 05:10:38 -0800 (PST)
-Content-Type: text/plain; charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-Subject: Re: git-p4.py caching
-From:   Lars Schneider <larsxschneider@gmail.com>
-In-Reply-To: <CAG2PGsqs2dQM0SJ25ocHJ+Nex_m2NC5yQQuROxcF6SG2e93wCQ@mail.gmail.com>
-Date:   Wed, 15 Feb 2017 14:10:37 +0100
-Cc:     Git List <git@vger.kernel.org>, Luke Diamand <luke@diamand.org>,
-        George Vanburgh <george@vanburgh.me>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <A8AD20AC-C069-4572-9C6A-519E1855220F@gmail.com>
-References: <CAG2PGsqs2dQM0SJ25ocHJ+Nex_m2NC5yQQuROxcF6SG2e93wCQ@mail.gmail.com>
-To:     Martin-Louis Bright <mlbright@gmail.com>
-X-Mailer: Apple Mail (2.3124)
+        id S1751644AbdBOOHy (ORCPT <rfc822;e@80x24.org>);
+        Wed, 15 Feb 2017 09:07:54 -0500
+Received: from mout.gmx.net ([212.227.15.15]:61413 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751702AbdBOOHn (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Feb 2017 09:07:43 -0500
+Received: from virtualbox ([37.201.192.48]) by mail.gmx.com (mrgmx001
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MX16a-1cq1M63vuO-00VvSR; Wed, 15
+ Feb 2017 15:07:07 +0100
+Date:   Wed, 15 Feb 2017 15:07:06 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Christian Couder <christian.couder@gmail.com>
+cc:     Junio C Hamano <gitster@pobox.com>,
+        git-for-windows@googlegroups.com, git <git@vger.kernel.org>
+Subject: Re: [git-for-windows] Re: Continuous Testing of Git on Windows
+In-Reply-To: <CAP8UFD1+AgBVqSh=wHteM3uKO+55ZqqD4cHzBUfN0KTPXyvutQ@mail.gmail.com>
+Message-ID: <alpine.DEB.2.20.1702151506250.3496@virtualbox>
+References: <alpine.DEB.2.20.1702101241210.3496@virtualbox> <xmqq60kdbqmy.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1702142150220.3496@virtualbox> <xmqqd1ek8oqo.fsf@gitster.mtv.corp.google.com>
+ <CAP8UFD1+AgBVqSh=wHteM3uKO+55ZqqD4cHzBUfN0KTPXyvutQ@mail.gmail.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:lrdwH0m7eGGzurxoRSiu7KaA2DG+IlmBWHqylcPg8aP/Wjq6z7Q
+ C5PJJNp+3NjavnIaj6+Y8hcHnw+AdRs0MM3l123orvnaLjaWmZO8jUrkVVzjDRW7DYVbAOo
+ jAvkNhpa8pdNlns3+G+Wyz15HfHcRPOWY9jB58AyRn7iS+F0e7E4ZNIRXZhdSvtxSm0GA8r
+ T4x+O/VY2d4XbHSEeDlDQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:QZGjHL+wwQ4=:qwbM9Qx5KtlOAQ8pL/KIWn
+ G9M0JS/xaFqVMHCX44GfdEDkKKC1pqGGvwMu9/8QAkCkSrFtjWC2cD+pCp1DlRjA3JqIXZv41
+ wGKiZ4sHYwCfGZpLrpOAoO/RpWC/V6AqHeu4vwZDpSJRlfRnlHHCN4dnAUrcUy3BPKUpitkxL
+ Int2syir/G9vxIFB3rF/V9H6ghL9RyuFjnHIe4q6WYzBui/+/KZboqzI7Do/rnQToLiAMZLqs
+ Mht0tpNlYwB2Pg1KR5rSRcgNQK6aDGtvcmLhtfQ/DHYZ3s2Jkhgtm1nxJUOLxEl0AwHEcKD7v
+ EwD5vtS/IyvBtAmXi7fz8l9DOxCNGAgSvJi2wL7i8NRz/JnuH+kjdgx5hxo4A+5QEn0bKWuBy
+ DDZBPoeDMWuCJJUxZDquU4DqGsRvgvB/XQWYCadcvVTxQ1bw6h4de2iboEVtjcI8kZQaGBC90
+ wTW/1vVa4djQNpBTNcmLVyJmqabeeABLBiUu1PWfpsHYWu+seu8KRuCIphh3tlbl4JjRbgkQU
+ eMV5gIpZd874ZvOTQZL5qStSu6ly1GBf3UengVYNQFvfcjVFBzWZHFISLHoSWbQ9i3XQo0tHX
+ d2lOw8kMgtpAMYlJ2RFNNFlP5X0sWGm4LtNhSJeCta6nvKkMdr5Bej5uH+RbvDUbm9Hska1WY
+ Tz8RE6JpxMLVip6/UxVw/GE0d4Y7PS4IePN+d2IOeQp1tbIFx7yFvf0gmjbjG+8VSsxTDNktm
+ JEiHE8Zl1fjHBjTZGJ0/Hu/+f0drHOvQWEEEYNCJ5QTUmmYZ2SQvsFUCJ8z2wT9PSyBWO3w1h
+ VAsbpzw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Christian,
 
-> On 14 Feb 2017, at 19:16, Martin-Louis Bright <mlbright@gmail.com> =
-wrote:
+On Wed, 15 Feb 2017, Christian Couder wrote:
 
-[CC'ing Luke and George]=20
+> On Tue, Feb 14, 2017 at 10:08 PM, Junio C Hamano <gitster@pobox.com>
+> wrote:
+> 
+> > Probably a less resource intensive approach is to find the tips of the
+> > topics not in 'next' but in 'pu' and test them.  That would give you
+> > which topic(s) are problematic, which is a better starting point than
+> > "Oh, 'pu' does not build".  After identifying which branch is
+> > problematic, bisection of individual topic would be of more manageable
+> > size.
+> 
+> It is still probably more resource intensive than it couls be.
 
+Indeed.
 
-> hi!
->=20
-> I am using git-p4.py to migrate a lot of medium and large Perforce
-> depots into git. I almost exclusively go one way: from Perforce to
-> git. I also frequently re-clone/re-migrate as the Perforce migration
-> client spec is refined.
->=20
-> For this, I have added rudimentary caching in git-p4.py so that
-> Perforce requests are not repeated over the network.
-
-Martin implemented an on disk cache and "requests not repeated" applies=20=
-
-mostly for re-migrations. Re-migrations are multiple test migrations =
-("git-p4 clone")=20
-with minor client spec changes until we find the right client spec for =
-the
-production migration.
-
-> I have it working and tested on a ~150MB repo and the migration time =
-was halved.
->=20
-> Is this something that would be of interest to the larger community?
-
-I like the idea!
-Disclaimer: I work together with Martin on the P4 -> Git migrations :-)
-
-Cheers,
-Lars
-
+Ciao,
+Dscho
