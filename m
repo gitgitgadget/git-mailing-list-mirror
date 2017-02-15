@@ -2,66 +2,66 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 348082013C
-	for <e@80x24.org>; Wed, 15 Feb 2017 23:35:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 742B12013A
+	for <e@80x24.org>; Wed, 15 Feb 2017 23:38:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932197AbdBOXe7 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 15 Feb 2017 18:34:59 -0500
-Received: from mail-pg0-f66.google.com ([74.125.83.66]:36859 "EHLO
-        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753673AbdBOXe6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Feb 2017 18:34:58 -0500
-Received: by mail-pg0-f66.google.com with SMTP id 75so134859pgf.3
-        for <git@vger.kernel.org>; Wed, 15 Feb 2017 15:34:58 -0800 (PST)
+        id S1755472AbdBOXiQ (ORCPT <rfc822;e@80x24.org>);
+        Wed, 15 Feb 2017 18:38:16 -0500
+Received: from mail-pg0-f67.google.com ([74.125.83.67]:34316 "EHLO
+        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753306AbdBOXhp (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Feb 2017 18:37:45 -0500
+Received: by mail-pg0-f67.google.com with SMTP id v184so147036pgv.1
+        for <git@vger.kernel.org>; Wed, 15 Feb 2017 15:37:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=1X24K/Z05XmY/M8aN3oBCPNfNsKrqz0+OeBU1oY4i24=;
-        b=ekuexo4vE48k3Obgnr3UQC9rHqWmYfNMA1OJwxh/y4xc1sLhhe7rnYXOGXkQELmTNA
-         4ZmzansR4n3w+X4PIT+aK6HwNYxD1iwvW2ki3LIxEAjRR9Qivzgn7On43G2SA13+fn3l
-         yn1n+naf6DLPTJcP50HZjGdxQfDstFUOvyfMWD9G4YwJ/1m+tByWaEwMs9pzMCnsXHd9
-         BJ3yzGAD6zNNPs2nQ2agDxnabsrFmJJk2HfNfhTHvOg6MpMrZ8XtNh1MFaQPuOaduQ5K
-         BGhoZd2RoGN1cF9luqQKqbzuu6a+TQfaDupt+ttcIpGlyXUNZ5JPg6CFupUt6fsOxJYR
-         I9YA==
+        bh=GU7W5CClVB84uNCVZEwYtNwnmOm9wK0P69QVE603pic=;
+        b=EQpkMsRJKl3dMi1LPywIpc1wHDui/yBEqikHS87tcmTyTxTmc/PsWR6VECMzbTKs7j
+         JgnJNkiijFX6rkUN8YBqAOGm1D6kF8DcSs0FFeBjT2Gx12ZxPTIrthYmTOiGnIHopxRQ
+         ZB1yJCtGZjWOBrO+Y3KdvVAjWZJAC0fanfiAAnegAnistFLajfiA99l2amf6ebVp4+Lu
+         BCVC64MwaaBgQFAfBb64Gfx1E8lxxf+90nM8FFVZXVFe3c6ucslyw5RERle0CxnRMIpB
+         otyhtDRRitennbuznzAxgxXBzvf6ZC++6p4093l4pl3QXOw6gZN96PHkSnv/dOD10Bgb
+         zToA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=1X24K/Z05XmY/M8aN3oBCPNfNsKrqz0+OeBU1oY4i24=;
-        b=q6Q8BgyK3p9PzxbAjlHCQTmSVAElXUNBl7Uw8ffnVF0+lV3yKST3c7kvYFVwzlwYtW
-         vsVbmj5MXiby2p7WFvW5YucgzCAhd7bKAERmWC/XDjVLXENB4cizjXcVLsLE26E1mkIy
-         7fcF1dly8ldFaTclk6WCrsO+P44sD7K7p2HY1QWLlDO8aZwoqLCSFKrwtTnnlQSOq3t+
-         dI4gn/BMolaxtT7Y4hTEy6bWsbDT8rH+zZpw47sJiRSyk4fPtUQrwXLQufBRLoLvuLpv
-         C7dqNvdHkuY5adMo15hvpOOON3+dDKeflJF25pnpDMnwuE02kenqNnIBAA9qbAYuZNYO
-         jQng==
-X-Gm-Message-State: AMke39k6BSNDHXedeaJCmceXlIAvUao1HX1+1RVCYUU/2xjcID7/mtR0IHW05aTHKM7LaA==
-X-Received: by 10.98.215.70 with SMTP id v6mr40492135pfl.141.1487201687381;
-        Wed, 15 Feb 2017 15:34:47 -0800 (PST)
+        bh=GU7W5CClVB84uNCVZEwYtNwnmOm9wK0P69QVE603pic=;
+        b=Y3NhZ95ESu+CSPp61pQrCdsO0rj0/OGk6/gEAJwxqmcUD6Bcp5EUbH2XWHETeujGWw
+         vFZydR0YyOcKdghUh6A9m/d6gDDAiySojPfmatr9GAhx8JEWSOhtea/zxDRmBk9Zwyw0
+         KhkBH/qzkav8fiXAIQ2+P1Fw8xaWkNvqbyN2rw+HWqoQBYYRkYyfN0TB4iNexgLZHXWj
+         ovzdLAv2AWJep/h4efM8ZgxLfXI7An0jy5muOCHVQLjhUjlWoP17wBNVOu2FqvOOdbu0
+         t1Vrry3B/lyau6j2ZvaIHFdOhmu0NM+dZVXRBSWnImXQxDfa6lau6A0Br/zDjCaqJ/Ld
+         Abjg==
+X-Gm-Message-State: AMke39nYhsNHyMabP8KaMCatJ5aUh6+EkQtUUA/g0f37jypfcOJOUhC6hAQYz7jZTktDew==
+X-Received: by 10.99.248.17 with SMTP id n17mr41546381pgh.17.1487201859576;
+        Wed, 15 Feb 2017 15:37:39 -0800 (PST)
 Received: from localhost ([2620:0:1000:8622:3551:31c7:1fe1:8b9b])
-        by smtp.gmail.com with ESMTPSA id 75sm9371446pfw.103.2017.02.15.15.34.46
+        by smtp.gmail.com with ESMTPSA id y184sm9433963pfg.86.2017.02.15.15.37.38
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 15 Feb 2017 15:34:46 -0800 (PST)
+        Wed, 15 Feb 2017 15:37:38 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     git@vger.kernel.org, Johannes Sixt <j6t@kdbg.org>,
-        Jeff Hostetler <jeffhost@microsoft.com>
-Subject: Re: [PATCH] mingw: make stderr unbuffered again
-References: <c88612da0a62bfcbc3e278296f9d3eb010057071.1487025228.git.johannes.schindelin@gmx.de>
-        <xmqqlgt9btrv.fsf@gitster.mtv.corp.google.com>
-        <alpine.DEB.2.20.1702141545380.3496@virtualbox>
-        <xmqq37fga9rn.fsf@gitster.mtv.corp.google.com>
-        <alpine.DEB.2.20.1702151332540.3496@virtualbox>
-        <xmqqbmu32iyb.fsf@gitster.mtv.corp.google.com>
-Date:   Wed, 15 Feb 2017 15:34:45 -0800
-In-Reply-To: <xmqqbmu32iyb.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-        message of "Wed, 15 Feb 2017 14:22:04 -0800")
-Message-ID: <xmqqlgt7110q.fsf@gitster.mtv.corp.google.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Jonathan Tan <jonathantanmy@google.com>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        "git\@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: [BUG] submodule config does not apply to upper case submodules?
+References: <20170215111704.78320-1-larsxschneider@gmail.com>
+        <xmqqzihn2smp.fsf@gitster.mtv.corp.google.com>
+        <f238248f-0df2-19a5-581d-95c8a61b4632@google.com>
+        <xmqqy3x712if.fsf@gitster.mtv.corp.google.com>
+        <xmqqtw7v123n.fsf@gitster.mtv.corp.google.com>
+        <CAGZ79kaKhjNPGRVJ6H=CMKQ1RKXmVvSPOMo4c3haNeS60aWQXA@mail.gmail.com>
+Date:   Wed, 15 Feb 2017 15:37:37 -0800
+In-Reply-To: <CAGZ79kaKhjNPGRVJ6H=CMKQ1RKXmVvSPOMo4c3haNeS60aWQXA@mail.gmail.com>
+        (Stefan Beller's message of "Wed, 15 Feb 2017 15:28:34 -0800")
+Message-ID: <xmqqh93v10vy.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -70,41 +70,53 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+Stefan Beller <sbeller@google.com> writes:
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> Yes; though I'd place it in strbuf.{c,h} as it is operating
+> on the internals of the strbuf. (Do we make any promises outside of
+> strbuf about the internals? I mean we use .buf all the time, so maybe
+> I am overly cautious here)
+
+I'd rather have it not use struct strbuf as an interface.  It only
+needs to pass "char *" and its promise that it touches the string
+in-place without changing the length need to be documented as a
+comment before the function.
+
+>>  config.c | 16 +++++++++++++++-
+>>  1 file changed, 15 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/config.c b/config.c
+>> index c6b874a7bf..98bf8fee32 100644
+>> --- a/config.c
+>> +++ b/config.c
+>> @@ -201,6 +201,20 @@ void git_config_push_parameter(const char *text)
+>>         strbuf_release(&env);
+>>  }
+>>
+>> +static void canonicalize_config_variable_name(struct strbuf *var)
+>> +{
+>> +       char *first_dot = strchr(var->buf, '.');
+>> +       char *last_dot = strrchr(var->buf, '.');
 >
->> FWIW I wish it were different, that git.git's `master` reflected more
->> closely what the current Git for Windows version has.
->
-> Well, we two wishing the same thing together without doing anything
-> else would make it happen.
+> If first_dot != NULL, then last_dot !+ NULL as well.
+> (either both are NULL or none of them),
+> so we can loose one condition below.
 
-ehh, would *not* make it happen, of course.
+I do not think it is worth it, though.
 
-> As an experiment to see if our process can be improved, I've been
-> meaning to suggest (which is what was behind my "question at a bit
-> higher level" to Hannes [*1*]) asking you to throw me occasional
-> pull requests for changes that are only about Windows specific
-> issues, bypassing "patches on the list" for things like a hotfix to
-> js/mingw-isatty [*2*] and use of OpenSSL SHA-1 on Windows [*3*],
-> essentially treating Windows specific changes as "a sub-maintainer
-> makes pull requests" we already do with Paul, Eric and Pat.
+>> +       char *cp;
+>> +
+>> +       if (first_dot)
+>> +               for (cp = var->buf; *cp && cp < first_dot; cp++)
+>> +                       *cp = tolower(*cp);
+>> +       if (last_dot)
+>> +               for (cp = last_dot; *cp; cp++)
+>> +                       *cp = tolower(*cp);
 
-While this may ease the flow of upstreaming windows specific
-changes, we need a separate thing to address the on-going issue you
-raised in your message.  A Windows-less person would not know his
-change to a generic code that is innocuous-looking has fallouts on
-Windows (read this sentence with "Windows" replaced with any
-specific platform name).  When somebody writes c == '/' that should
-have been written as is_dir_sep(c), you or Hannes often finds it
-during the review here, and after repeatedly seeing such reviews,
-that (slowly) rubs off on other Window-less folks.  A new code may
-still hit 'next' and 'master' with such an issue if it goes
-unnoticed during the review.
+	if (first_dot) {
+		scan up to first dot
+		if (last_dot)
+			scan from last dot to the end
+	}
 
-The CI you are setting up [*1*] may certainly be a step in the good
-direction.  Having more people like Hannes working off of upstream
-may also be a great way to help the "forget 'next' and upstream in
-general" issue.  Any other ideas?
-
+would be uglier.
