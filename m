@@ -2,181 +2,163 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F3B002013C
-	for <e@80x24.org>; Wed, 15 Feb 2017 05:19:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 265B91FC44
+	for <e@80x24.org>; Wed, 15 Feb 2017 10:46:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750810AbdBOFTH (ORCPT <rfc822;e@80x24.org>);
-        Wed, 15 Feb 2017 00:19:07 -0500
-Received: from mail-qt0-f178.google.com ([209.85.216.178]:36079 "EHLO
-        mail-qt0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750729AbdBOFTG (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Feb 2017 00:19:06 -0500
-Received: by mail-qt0-f178.google.com with SMTP id k15so129295678qtg.3
-        for <git@vger.kernel.org>; Tue, 14 Feb 2017 21:19:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to:cc
-         :content-transfer-encoding;
-        bh=PpkrECq+4rQUpu1sIopnaRMjBa9xuODkKqUwy77tcXo=;
-        b=trbo9JqjQT+IuEtFc2n8GYikIPKLrKVo+0ytbMAsEPRxQv1J/2X2MTEwCr5kEqdt2E
-         wiTS2k4cYSqSQJ0n1JpvN/tgqAi29RAs4PpV5JDviobVjZ25om4rCK71vA0M4sAaNk8J
-         89dTNe3kw/PXbNtGjLov0cqL9eRDSxMBdUV/XibkEKt0t3czGsA8HxO6zTU8dxnaQ0+r
-         2jurgLurfL3gq2XNyMqd3WOTQ223qkXpx5tSRJPzS/k+86htoCnhKWuFDJSq+b8ps2Of
-         Q2lGhx1ePp4KOVHWDDM+F3XVQ4U3YJ5oEJsRe/vobYqVBB7mZgomZFElIopQrfoIt/oD
-         qOfQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc
-         :content-transfer-encoding;
-        bh=PpkrECq+4rQUpu1sIopnaRMjBa9xuODkKqUwy77tcXo=;
-        b=BC1lW3FaLDIdro/i7L7pBZwopGQmA/Dzp9xq2IhrIrDcILEDcgx4K9skgT4yFm+K+/
-         3HNH0WZTfKVtklAf/S9twsV4s9DIZ82dYq3kGeB6qwHquGHzdvIIIQpwSU7Heoo9DVZz
-         k31OggmwGOIvd28m2b/uc78qQagzB00Th+iyG4N/07d3UHQKvHe3Q/A1gI/WUHzHVzsn
-         ity6czm0PoR0vfS+dF2Ksbh+pSNyW3MVtN7uP9j2aTR+hcpTRYkVMZl6f+y3Ey1vvGAM
-         rsN+6wYv/UrJMdJFRmlAXThX2usf8a3ELWyq3I1RSvi+S9qrjJmsSYjeJJ+O3JP/pJ5x
-         73Cg==
-X-Gm-Message-State: AMke39lgGe9tiDbKv3xOHINubqdaphWeJAEUIB2swhq3fJ7I3ov+88qdyRhNU9zAJ4pL2npphx9CubJ7Y+BvYA==
-X-Received: by 10.200.40.177 with SMTP id i46mr30142856qti.279.1487135945742;
- Tue, 14 Feb 2017 21:19:05 -0800 (PST)
+        id S1751532AbdBOKqz convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Wed, 15 Feb 2017 05:46:55 -0500
+Received: from zimbra-vnc.tngtech.com ([83.144.240.98]:1187 "EHLO
+        proxy.tng.vnc.biz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751474AbdBOKqx (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Feb 2017 05:46:53 -0500
+Received: from localhost (localhost [127.0.0.1])
+        by proxy.tng.vnc.biz (Postfix) with ESMTP id 42B4E1E2FB4;
+        Wed, 15 Feb 2017 11:46:50 +0100 (CET)
+Received: from proxy.tng.vnc.biz ([127.0.0.1])
+        by localhost (proxy.tng.vnc.biz [127.0.0.1]) (amavisd-new, port 10032)
+        with ESMTP id 4DkcdffxyoQ1; Wed, 15 Feb 2017 11:46:49 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+        by proxy.tng.vnc.biz (Postfix) with ESMTP id C36421E3138;
+        Wed, 15 Feb 2017 11:46:49 +0100 (CET)
+X-Virus-Scanned: amavisd-new at 
+Received: from proxy.tng.vnc.biz ([127.0.0.1])
+        by localhost (proxy.tng.vnc.biz [127.0.0.1]) (amavisd-new, port 10026)
+        with ESMTP id fiDhMC_w5c3T; Wed, 15 Feb 2017 11:46:49 +0100 (CET)
+Received: from [192.168.178.70] (46.128.140.114.dynamic.cablesurf.de [46.128.140.114])
+        by proxy.tng.vnc.biz (Postfix) with ESMTPSA id 607721E2FB4;
+        Wed, 15 Feb 2017 11:46:49 +0100 (CET)
+Subject: Re: [PATCH v2 2/2] completion: checkout: complete paths when ref
+ given
+To:     =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>
+References: <4f8a0aaa-4ce1-d4a6-d2e1-28aac7209c90@tngtech.com>
+ <20170214212404.31469-1-cornelius.weig@tngtech.com>
+ <20170214212404.31469-2-cornelius.weig@tngtech.com>
+ <CAM0VKjkqdto83Qo8PVbxt-2r8prQguNbAtNELxj5AmJEgugC_Q@mail.gmail.com>
+Cc:     Git mailing list <git@vger.kernel.org>,
+        Richard Wagner <bitte.keine.werbung.einwerfen@googlemail.com>,
+        j6t@kdbg.org
+From:   Cornelius Weig <cornelius.weig@tngtech.com>
+Message-ID: <1cff1dea-baeb-3576-ad33-04b2c5d233d8@tngtech.com>
+Date:   Wed, 15 Feb 2017 11:46:48 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.7.0
 MIME-Version: 1.0
-Received: by 10.237.52.198 with HTTP; Tue, 14 Feb 2017 21:19:05 -0800 (PST)
-From:   Edmundo Carmona Antoranz <eantoranz@gmail.com>
-Date:   Tue, 14 Feb 2017 23:19:05 -0600
-Message-ID: <CAOc6etYz6+FzDRbkLS2SB9=F9DP18=6uLKdfCN3D3yd2Gug-tw@mail.gmail.com>
-Subject: difflame improvements
-To:     Git List <git@vger.kernel.org>
-Cc:     Jeff King <peff@peff.net>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <CAM0VKjkqdto83Qo8PVbxt-2r8prQguNbAtNELxj5AmJEgugC_Q@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8BIT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi!
+Although I'm not convinced that completion of modified files is unnecessary, I'm at least persuaded that not all users would welcome such a change. Given the hint from Gabor that Alt-/ forces filesystem completion, there is even no big win in stopping to offer further refnames after one has already been given.
 
-I've been working on detecting revisions where a "real" deletion was
-made and I think I advanced a lot in that front. I still have to work
-on many scenarios (renamed files, for example... also performance) but
-at least I'm using a few runs against git-scm history and the results
-are "promising":
-
-23:05 $ git blame -s --reverse -L 25,40 HEAD~20..HEAD -- versioncmp.c
-066fb0494e 25) static int initialized;
-066fb0494e 26)
-066fb0494e 27) /*
-8ec68d1ae2 28)  * p1 and p2 point to the first different character in
-two strings. If
-8ec68d1ae2 29)  * either p1 or p2 starts with a prerelease suffix, it
-will be forced
-8ec68d1ae2 30)  * to be on top.
-8ec68d1ae2 31)  *
-8ec68d1ae2 32)  * If both p1 and p2 start with (different) suffix, the orde=
-r is
-8ec68d1ae2 33)  * determined by config file.
-066fb0494e 34)  *
-8ec68d1ae2 35)  * Note that we don't have to deal with the situation
-when both p1 and
-8ec68d1ae2 36)  * p2 start with the same suffix because the common
-part is already
-8ec68d1ae2 37)  * consumed by the caller.
-066fb0494e 38)  *
-066fb0494e 39)  * Return non-zero if *diff contains the return value
-for versioncmp()
-066fb0494e 40)  */
-
-Lines 28-33:
-
-23:05 $ git show --summary 8ec68d1ae2
-commit 8ec68d1ae2863823b74d67c5e92297e38bbf97bc
-Merge: e801be066 c48886779
-Author: Junio C Hamano <>
-Date:   Mon Jan 23 15:59:21 2017 -0800
-
-    Merge branch 'vn/diff-ihc-config'
-
-    "git diff" learned diff.interHunkContext configuration variable
-    that gives the default value for its --inter-hunk-context option.
-
-    * vn/diff-ihc-config:
-      diff: add interhunk context config option
+If you think that this would be desirable, find a revised version below. Otherwise drop it.
 
 
+On 02/15/2017 04:11 AM, SZEDER Gábor wrote:
+> On Tue, Feb 14, 2017 at 10:24 PM,  <cornelius.weig@tngtech.com> wrote:
+>> From: Cornelius Weig <cornelius.weig@tngtech.com>
+>> Note that one corner-case is not covered by the current implementation:
+>> if a refname contains a ':' and is followed by '--' the completion would
+>> not recognize the valid refname.
+> 
+> I'm not sure what you mean here.  Refnames can't contain ':'.
 
-And this is not telling me the _real_ revision where the lines were
-_deleted_ so it's not very helpful, as Peff has already mentioned.
+Yes, my bad. I was confusing it with the case where filename and ref name are identical.
 
-Running difflame:
+>> +               while [ $c -lt $cword ]; do
+>> +                       i="${words[c]}"
+>> +                       case "$i" in
+>> +                       --) seen_double_dash=1 ;;
+>> +                       -*|?*:*) ;;
+>> +                       *) ref="$i"; break ;;
+> 
+> I haven't tried it, but this would trigger on e.g. 'git checkout -b
+> new-feature <TAB>', wouldn't it?
 
-23:06 $ time ~/proyectos/git/difflame/difflame.py -bp=3D-s -w HEAD~20
-HEAD -- versioncmp.c
-diff --git a/versioncmp.c b/versioncmp.c
-index 80bfd109f..9f81dc106 100644
---- a/versioncmp.c
-+++ b/versioncmp.c
-@@ -24,42 +24,83 @@
-.
-.
-.
-+b17846432d  33) static void find_better_matching_suffix(const char
-*tagname, const char *suffix,
-+b17846432d  34)                                        int
-suffix_len, int start, int conf_pos,
-+b17846432d  35)                                        struct
-suffix_match *match)
-+b17846432d  36) {
-b17846432d  37)        /*
-       c026557a3 versioncmp: generalize version sort suffix reordering
--c026557a3 (SZEDER 28)  * p1 and p2 point to the first different
-character in two strings. If
--c026557a3 (SZEDER 29)  * either p1 or p2 starts with a prerelease
-suffix, it will be forced
--c026557a3 (SZEDER 30)  * to be on top.
--c026557a3 (SZEDER 31)  *
--c026557a3 (SZEDER 32)  * If both p1 and p2 start with (different)
-suffix, the order is
--c026557a3 (SZEDER 33)  * determined by config file.
-       b17846432 versioncmp: factor out helper for suffix matching
-+b17846432d  38)         * A better match either starts earlier or
-starts at the same offset
-+b17846432d  39)         * but is longer.
-+b17846432d  40)         */
-+b17846432d  41)        int end =3D match->len < suffix_len ?
-match->start : match->start-1;
-.
-.
-.
+Correct, good eyes.
 
-Same range of (deleted) lines:
+> What about
+> 
+>   $ echo "unintentional change" >>tracked-file && git add -u
+>   $ git rm important-file
+>   $ git checkout HEAD <TAB>
+> 
+> ?  It seems it will offer neither 'tracked-file' nor 'important-file',
+> but I think it should offer both.
 
-23:10 $ git --show --name-status c026557a3
-commit c026557a37361b7019acca28f240a19f546739e9
-Author: SZEDER G=C3=A1bor <>
-Date:   Thu Dec 8 15:24:01 2016 +0100
-
-   versioncmp: generalize version sort suffix reordering
-
-   The 'versionsort.prereleaseSuffix' configuration variable, as its name
-   suggests, is supposed to only deal with tagnames with prerelease
-.
-.
-.
+Ideally yes. The latter of the two would also not work with Alt/.
 
 
-   Signed-off-by: SZEDER G=C3=A1bor <>
-   Signed-off-by: Junio C Hamano <>
+-------------------------------------------------------------------
+From d0e0c9af8a30dec479c393ae7fe75205c9b3b229 Mon Sep 17 00:00:00 2001
+From: Cornelius Weig <cornelius.weig@tngtech.com>
+Date: Tue, 14 Feb 2017 21:01:45 +0100
+Subject: [PATCH] completion: checkout: complete paths when ref given
 
-M       Documentation/config.txt
-M       Documentation/git-tag.txt
-M       t/t7004-tag.sh
-M       versioncmp.c
+Git-checkout completes words starting with '--' as options and other
+words as refs. Even after specifying a ref, further words not starting
+with '--' are completed as refs, which is invalid for git-checkout.
 
+With this commit completion suppresses refname suggestion after finding
+what looks like a refname. Words before a '--' not starting with a '-'
+and containing no ':' are considered to be refnames.
 
-This is the revision where the deletion happened.
+Signed-off-by: Cornelius Weig <cornelius.weig@tngtech.com>
+---
+ contrib/completion/git-completion.bash | 26 +++++++++++++++++++-------
+ 1 file changed, 19 insertions(+), 7 deletions(-)
 
-That's it for the time being.
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index 6c6e1c774d..42e6463b67 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -1059,7 +1059,16 @@ _git_bundle ()
+ 
+ _git_checkout ()
+ {
+-	__git_has_doubledash && return
++	local c=2 seen_ref=""
++	while [ $c -lt $cword ]; do
++		case "${words[c]}" in
++		--) return ;;
++		-b|-B|--orphan|--branch) ((c++)) ;;
++		-*|*:*) ;;
++		*) seen_ref="y" ;;
++		esac
++		((c++))
++	done
+ 
+ 	case "$cur" in
+ 	--conflict=*)
+@@ -1072,13 +1081,16 @@ _git_checkout ()
+ 			"
+ 		;;
+ 	*)
+-		# check if --track, --no-track, or --no-guess was specified
+-		# if so, disable DWIM mode
+-		local flags="--track --no-track --no-guess" track=1
+-		if [ -n "$(__git_find_on_cmdline "$flags")" ]; then
+-			track=''
++		if [ -z "$seen_ref" ]
++		then
++			# check for --track, --no-track, or --no-guess
++			# if so, disable DWIM mode
++			local flags="--track --no-track --no-guess" track=1
++			if [ -n "$(__git_find_on_cmdline "$flags")" ]; then
++				track=''
++			fi
++			__gitcomp_nl "$(__git_refs '' $track)"
+ 		fi
+-		__gitcomp_nl "$(__git_refs '' $track)"
+ 		;;
+ 	esac
+ }
+-- 
+2.11.1
+
