@@ -7,51 +7,52 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D33722013A
-	for <e@80x24.org>; Wed, 15 Feb 2017 18:46:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7F8592013A
+	for <e@80x24.org>; Wed, 15 Feb 2017 18:52:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751860AbdBOSqI (ORCPT <rfc822;e@80x24.org>);
-        Wed, 15 Feb 2017 13:46:08 -0500
-Received: from mail-it0-f54.google.com ([209.85.214.54]:37947 "EHLO
-        mail-it0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751383AbdBOSqI (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Feb 2017 13:46:08 -0500
-Received: by mail-it0-f54.google.com with SMTP id c7so71013415itd.1
-        for <git@vger.kernel.org>; Wed, 15 Feb 2017 10:46:07 -0800 (PST)
+        id S1752418AbdBOSwo (ORCPT <rfc822;e@80x24.org>);
+        Wed, 15 Feb 2017 13:52:44 -0500
+Received: from mail-it0-f42.google.com ([209.85.214.42]:35294 "EHLO
+        mail-it0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752166AbdBOSwn (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Feb 2017 13:52:43 -0500
+Received: by mail-it0-f42.google.com with SMTP id 203so73271243ith.0
+        for <git@vger.kernel.org>; Wed, 15 Feb 2017 10:52:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=LpHxO+Hmy8c9HIt1uc0dE6doh/rBXoeP0WgU/GUs30A=;
-        b=dMcs2BcaAhB/86cLt7aHf0ABO/L5m0dbUReNWU9yptp09kCt54VKnC1CH8d0yjF+xv
-         OVG9MbD6o9MBoi2F08y9k4ceX2kn7ViNHJCNrgbgKVyJZgxInLpOhwTtpSRooJ4ptdYe
-         TOnxebKGwBXDWAblMn7o9tYhhLLHgEglG8e8qdH0LpZmesalJzDd4od6qPJuzdk/pMEx
-         7VUBOMkViJtXUc9l/WX6w7sgytBjqpptLM66u2rwVr6GXkgnnLmvqonHAo1RZJvz+Apb
-         fiAcYSxsWtVT8iTA4vE68IeFG6c+7An2DrNuEP6L8GHSKMiaT2mtYXaZapKT0rX/B6zk
-         skhA==
+        bh=7gzjOLWmOBpZ6JG1kJLHnKcsLOylOJKPpg+0ySNoLwY=;
+        b=fFoJDRQNT6rE59Sss9STbuxOJ2U+gqOcUEWmRqI0Byk3zQCC2p3v7fUquW5NDsPwqo
+         23Hqu1bwKqc7g0YgZxnY6Vvo7pgGZbF4YRNh9kPGDI9Q4aApQxUN9LFphcY0MDn6W69h
+         nMTw56HqZJYb5NnPw4wcHHvWUrmGyJNEhzP+ELtcAZCpuIkm8veYz8flmstonW6MOCas
+         J6vfgP63evNlQTUhwxzEi58JJ7wbt/pVbpaGXqivt7urSZLDBn4M5JNIuNMLDvlGi7h2
+         Sbi8MLUhG30xAhYM5w2tS8oJ8uau3dp46h7ELThv8AL0PF+a3KuGxa8v/19LhykACnnH
+         VFRA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=LpHxO+Hmy8c9HIt1uc0dE6doh/rBXoeP0WgU/GUs30A=;
-        b=QiNFQFRim/Z9toZaCoe5Weoy2wKnTc2QlUBvul51PZw4ccJQGQqprMIcqINziBOCDs
-         iagB4gqxxqFt6aa1KBSGHfRk3BC7hTWcYVEnwhDVwvesig89QDE88BCgmq5Xgx948F0e
-         /JoAdtQ5wV8bMatSGUDjDon/vfqdqF6r8oBT7P2qE8POfHktETyko8kjXtX/kOsjkZrk
-         bq9NIJybFeeqm7wGivwc4H20k2dyWLnhdGhBv+A6X24BNPxvkkGWPBdhjYGGmeWC0MBi
-         Ywc83z2K++psqlY2lnDJyxebhq56jIg2BlREs5xBo6xXXmG5ooqQOGHX3YdoaxZHJd5g
-         sN8A==
-X-Gm-Message-State: AMke39nvfHFvfWK8B+mhLY3HZlUNhG/9MWr9Vn060kZ4Wr9rKKs8hRqWbO6wLuXwcCb8T4arch+vVU/Px6mAxtum
-X-Received: by 10.36.65.161 with SMTP id b33mr10469074itd.114.1487184366823;
- Wed, 15 Feb 2017 10:46:06 -0800 (PST)
+        bh=7gzjOLWmOBpZ6JG1kJLHnKcsLOylOJKPpg+0ySNoLwY=;
+        b=LKhy8BA8toRqTpq1BLMBHlyPYfjG/je07yNhXvfi/WrGKMYACVgRT438P7iI+ORBXw
+         /3heaX4tE5i515kWJeVIbMhMZnX4+qoAC6nzSoN2jyCRoVvEsqG/XmYOEtwtnjjz0Be4
+         KbwtSiGrVtX+E9MUM+hVXtIPAiyv/bEcYsriiEmddamU513Ehbp7VT84XD2JM7iRqmgr
+         BhO58yF1/mepJM+R80FYrYGRGEYb0ce60zyVlMbvE2CuQB7Snoo+ixb8Awe0yZ3xIW6k
+         xck8EBSXUOR9fXPPxS8ceY2jmsPtkEeAL7OAGbS4kz8PjfXVafjzyM+RKT07WwoGLhxI
+         +APQ==
+X-Gm-Message-State: AMke39kGxVnHR6OcURelmKWFscrJHungEwnej8npK47zTdseUwhlOBUr2vqVZbcEtjLwqF+d3UDe7umaU6FjgKtJ
+X-Received: by 10.36.65.161 with SMTP id b33mr10495162itd.114.1487184762885;
+ Wed, 15 Feb 2017 10:52:42 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.79.33.148 with HTTP; Wed, 15 Feb 2017 10:46:06 -0800 (PST)
-In-Reply-To: <20170215170441.GB29448@google.com>
-References: <20170215003423.20245-1-sbeller@google.com> <20170215003423.20245-8-sbeller@google.com>
- <20170215170441.GB29448@google.com>
+Received: by 10.79.33.148 with HTTP; Wed, 15 Feb 2017 10:52:42 -0800 (PST)
+In-Reply-To: <20170215165107.GA29448@google.com>
+References: <20170215003423.20245-1-sbeller@google.com> <20170215003423.20245-3-sbeller@google.com>
+ <20170215165107.GA29448@google.com>
 From:   Stefan Beller <sbeller@google.com>
-Date:   Wed, 15 Feb 2017 10:46:06 -0800
-Message-ID: <CAGZ79kbN4e4btgVzzW7yKyUuaf7htmYFutp7ALhtygsKpFsTyQ@mail.gmail.com>
-Subject: Re: [PATCH 07/14] update submodules: introduce is_interesting_submodule
+Date:   Wed, 15 Feb 2017 10:52:42 -0800
+Message-ID: <CAGZ79kaYRHHas-qiAr+RJB2+TLwEgcsOcXUk-SQ65qiSPSWXOw@mail.gmail.com>
+Subject: Re: [PATCH 02/14] lib-submodule-update.sh: define tests for recursing
+ into submodules
 To:     Brandon Williams <bmwill@google.com>
 Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
         Jonathan Nieder <jrnieder@gmail.com>,
@@ -63,57 +64,47 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Feb 15, 2017 at 9:04 AM, Brandon Williams <bmwill@google.com> wrote:
+On Wed, Feb 15, 2017 at 8:51 AM, Brandon Williams <bmwill@google.com> wrote:
 > On 02/14, Stefan Beller wrote:
->> In later patches we introduce the --recurse-submodule flag for commands
->> that modify the working directory, e.g. git-checkout.
+>> diff --git a/t/lib-submodule-update.sh b/t/lib-submodule-update.sh
+>> index 61c54f2098..7c8c557572 100755
+>> --- a/t/lib-submodule-update.sh
+>> +++ b/t/lib-submodule-update.sh
+>> @@ -4,6 +4,7 @@
+>>  # - New submodule (no_submodule => add_sub1)
+>>  # - Removed submodule (add_sub1 => remove_sub1)
+>>  # - Updated submodule (add_sub1 => modify_sub1)
+>> +# - Updated submodule recursively (modify_sub1 => modify_sub1_recursively)
+>>  # - Submodule updated to invalid commit (add_sub1 => invalid_sub1)
+>>  # - Submodule updated from invalid commit (invalid_sub1 => valid_sub1)
+>>  # - Submodule replaced by tracked files in directory (add_sub1 =>
+>> @@ -19,8 +20,8 @@
+>>  #                    /    ^
+>>  #                   /     remove_sub1
+>>  #                  /
+>> -#       add_sub1  /-------O
+>> -#             |  /        ^
+>> +#       add_sub1  /-------O---------O
+>> +#             |  /        ^         modify_sub1_recursive
+>>  #             | /         modify_sub1
+>>  #             v/
+>>  #      O------O-----------O---------O
+>> @@ -73,6 +74,14 @@ create_lib_submodule_repo () {
+>>               git add sub1 &&
+>>               git commit -m "Modify sub1" &&
 >>
->> It is potentially expensive to check if a submodule needs an update,
->> because a common theme to interact with submodules is to spawn a child
->> process for each interaction.
->>
->> So let's introduce a function that pre checks if a submodule needs
->> to be checked for an update.
->>
->> Signed-off-by: Stefan Beller <sbeller@google.com>
->> ---
->>  submodule.c | 26 ++++++++++++++++++++++++++
->>  submodule.h |  8 ++++++++
->>  2 files changed, 34 insertions(+)
->>
->> diff --git a/submodule.c b/submodule.c
->> index c0060c29f2..4c33374ae8 100644
->> --- a/submodule.c
->> +++ b/submodule.c
->> @@ -551,6 +551,32 @@ void set_config_update_recurse_submodules(int value)
->>       config_update_recurse_submodules = value;
->>  }
->>
->> +int submodules_interesting_for_update(void)
->> +{
->> +     /*
->> +      * Update can't be "none", "merge" or "rebase",
->> +      * treat any value as OFF, except an explicit ON.
->> +      */
->> +     return config_update_recurse_submodules == RECURSE_SUBMODULES_ON;
->> +}
->> +
->> +int is_interesting_submodule(const struct cache_entry *ce)
+>> +             git checkout -b modify_sub1_recursively modify_sub1 &&
+>> +             git -C sub1 checkout -b "add_nested_sub" &&
+>> +             git -C sub1 submodule add --branch no_submodule ./. sub2 &&
 >
-> Is there perhaps a more descriptive function name we could use instead
-> of "is_interesting"?  The problem is that its difficult to know why its
-> interesting or for what purpose it is interesting.
+> I thought we were trying to avoid './.' when adding submodules?
+>
 
-I should finish the background story patch first. By 'is_interesting' I mean
-* it is active/initialized/"The user expressed interested in the submodule by
-  setting submodule.<name>.URL
-* its submodule.<name>.update strategy is != NONE.
-
-The second point is interesting, as that entertains the thought that we'll pay
-attention to the submodule.<name>.update strategy at all and
-we may want to also implement rebase/merge eventually.
-
-So I think we'd want to tighten that down to "checkout" only for now.
-
-Thanks,
-Stefan
+Yes we should; I'll fix that in a reroll.
+It's also still on my long term fix list to remove the ./.
+$ git grep 'add \./\.'
+lib-submodule-update.sh:                git submodule add ./. sub1 &&
+t7001-mv.sh:    git submodule add ./. sub &&
+t7001-mv.sh:    git submodule add ./. deep/directory/hierarchy/sub &&
+t7507-commit-verbose.sh:        git submodule add ./. sub &&
+t7800-difftool.sh:      git submodule add ./. submod/ule &&
