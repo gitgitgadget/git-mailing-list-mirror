@@ -7,180 +7,131 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B3C952013A
-	for <e@80x24.org>; Wed, 15 Feb 2017 12:02:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F01E82013A
+	for <e@80x24.org>; Wed, 15 Feb 2017 12:32:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751768AbdBOMCj (ORCPT <rfc822;e@80x24.org>);
-        Wed, 15 Feb 2017 07:02:39 -0500
-Received: from mout.gmx.net ([212.227.17.20]:61082 "EHLO mout.gmx.net"
+        id S1751840AbdBOMct (ORCPT <rfc822;e@80x24.org>);
+        Wed, 15 Feb 2017 07:32:49 -0500
+Received: from mout.gmx.net ([212.227.15.18]:62109 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751412AbdBOMCi (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Feb 2017 07:02:38 -0500
-Received: from virtualbox ([37.201.192.48]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MYwQh-1cryVR3DUJ-00VkH0; Wed, 15
- Feb 2017 13:02:31 +0100
-Date:   Wed, 15 Feb 2017 13:02:29 +0100 (CET)
+        id S1751557AbdBOMcs (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Feb 2017 07:32:48 -0500
+Received: from virtualbox ([37.201.192.48]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MIu7d-1cgRjV09zV-002WBD; Wed, 15
+ Feb 2017 13:32:40 +0100
+Date:   Wed, 15 Feb 2017 13:32:39 +0100 (CET)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     git@vger.kernel.org
-Subject: Clarification about "Better tooling for reviews", was Re: Google
- Doc about the Contributors' Summit
-In-Reply-To: <xmqq4m01if1z.fsf@gitster.mtv.corp.google.com>
-Message-ID: <alpine.DEB.2.20.1702151215570.3496@virtualbox>
-References: <alpine.DEB.2.20.1702021007460.3496@virtualbox> <xmqq7f4zqiyj.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1702101658010.3496@virtualbox> <xmqq4m01if1z.fsf@gitster.mtv.corp.google.com>
+To:     Johannes Sixt <j6t@kdbg.org>
+cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        Jeff Hostetler <jeffhost@microsoft.com>
+Subject: Re: [PATCH] mingw: make stderr unbuffered again
+In-Reply-To: <ef8549ea-7222-fdd0-739d-855ad428e39c@kdbg.org>
+Message-ID: <alpine.DEB.2.20.1702151312330.3496@virtualbox>
+References: <c88612da0a62bfcbc3e278296f9d3eb010057071.1487025228.git.johannes.schindelin@gmx.de> <xmqqlgt9btrv.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1702141545380.3496@virtualbox> <ef8549ea-7222-fdd0-739d-855ad428e39c@kdbg.org>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:+71b5jSl3oIMC4jTYFLAnm5u1qU4m5wr/+x63aO0CXRIRDZrf+p
- K/oon33uzLcxo2Djtyz19zDYxVp/tjEqM0WTuHs6xnD7FVnpEtbJh713AK10+Ts1Okj//dD
- 3TRM0HILLFS6578hB8S5OmCDdFtmNTfb4NDYztISkCsxgCvQSGW99xwnE7htYFKH3BhHX1Y
- 209SsZh6nUN3AKQYu9IHg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:Efm0Zf3iM44=:Mk20WLshl7Yl1F2gsISmVe
- aWViQzhqS/lNTm/FY2D7FLBEO6bzFl5jvZm1D3boafRW5pd8PGM3BCL1bAm/p9reys1Afjd+1
- 9Jsqk+V39phZj8JQ7XNA/QdDDNbVExjxwPzTujFQV0Ox73WGf/rWVNniiXJoHcFS+osTSRUwP
- 5Ll/8n/1dDy6Y+9+WrR2x6K67Rm6BV4SpJogAS1W2JCTsYqI8+xvv33p0OrHWCC08sEfQeqKc
- KD/276lmKFIkD5WZUIj08j0cEsNYI4c64bBUFnjmfgNcjWn7M6Jkitat2SsJeydG3en+HKxp3
- 3HXjMKeOzVHX82asqMDgCha6OpqAAGbfJ/3ou+lWhEQ7LFenYc/xS5CTIBYYwZmNjROphNvPe
- tX+vEqbGYxVaC5oIcrBZQi6fQyIpqVrl4AOlCmTGusr2BCk+U96LkupTvIb3rVeE+H7gUGCGj
- RdJnqCfPA/M29uvXFD300b4Nm6SXrECEVc7XrgkoEQvfRp/Yd3doIit6xFi9M1VSh0+Kf1K4u
- bNarGGEegwhZIcuqqaBYJVE8UwVfI+R+2a7hKUnwI/6M6SVRhmlH160CQyybXfipfwNTb9nMt
- liFynsk9zfpMpiOsaJdTEMZ4CDzti6cF+AkShLcZO2bWhvmDlUjVDCMgH/op+ky9x1RBQhfam
- PnyFiBUHGCCWDyp1nIQLMO7+r4vZdVu0PlBj5Pen0WaB/7Cbn0ILFa6hUJ0CdNoyICZVXJbxH
- WEAmj8cThBOZmpIZFNQH/k+UwTKsyhN26sIlBW2EzsrXKAbzVC4/JEScWF0I+K4PnffnGkxww
- g2wbE5/
+X-Provags-ID: V03:K0:bSpzqgBygXSK0m/Yd5mxa7Q7ouyH3ymkmo6wfbj9A4Soxia2NX7
+ I6lIzACr28XpiyOIEZr5jL+UpwPumWdwKWwJOM/Hg8hIMegwM9a3uDkdFqVIdfqs+mrHtGq
+ luFR/TxGLGD+Ah6mNm+9cgcOzLHeA8uls36vBKZXtOXirbqJ0Q4+tkiAEJOxby2yDU3f8Jl
+ qUSwde/YqIuBZdvajB2cQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:r6igC0IwKxg=:vpnaiEBkJBMvoN2GjaaAdt
+ 3P2x6iVIViZNzLOz931wtN4nDmPkGp6RXlRDjXLtN6ZtGTPd3VdXtaxApKpDZDjuD7Kv9Gc6K
+ iNm/uEHssm1qaZ0Mad9yY4x5FdzhOPSh0AuuvuneXNj2Nt/nIHmyXEGLd/wpMdWLElfub3WR4
+ LP6MXpRcigMJPI6fe5GTGy2wetgMYdxxndSvBBfW0oDO9/rkQt78tSlx/U1DtHOPXOPi0G6sb
+ qCMgcdONrSW2mmcjI0c88aioxzbIR35S11WOcedvMFSBFaWNuZVTUyH5iAdoMtd3pgDQldw7P
+ mt0S8b86Ee4nXJTzuek8qfT92zzuMBsTJYhXnO3BOJMKOmrKfz2z0+FPT21Fx6014MExsd8uq
+ nP2/VOAh0222HcmmWtPanPijfXv35OCTyh8j0/TD54GXBSfFC2kogKdjG1ppUSfZLk/OUyC0J
+ +Moak9K0okvdeZd+uj+tjha2jJobGYpz7vDl4XFbj4JlHtbYRSZxmdIaboSw9Qepp8LBmnvRt
+ 5K75MEdpDEMzGTszvRPlXN07TFJIEBtQmBQ28X1c1245i3hVILGoW3TmlJVYEkBpWVTDR8wS5
+ pUQEKW8ChYYyrcoHP3RbO5AXfmv2YCg8O+9jhFTwARXQEkpGAwF5t04SzV0latGwiB3ZNKuFk
+ cZoMNLIyaYiNV99mB/obOih2M0eFuciFEnAEVhiR0pJk42SXv+EIqv2s0/ilg+OC5Kn2JnLGj
+ Az7WcTFR3nwYy0WuAewH3LEfRE0MJwkcGOE4mri6meNtTkaqQE7ehDEf4p0DWAk3HvUXR9cOa
+ hTZvNzi
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+Hi Hannes,
 
-On Fri, 10 Feb 2017, Junio C Hamano wrote:
+On Tue, 14 Feb 2017, Johannes Sixt wrote:
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> Am 14.02.2017 um 15:47 schrieb Johannes Schindelin:
+> > On Mon, 13 Feb 2017, Junio C Hamano wrote:
+> > > Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+> > > > When removing the hack for isatty(), we actually removed more than
+> > > > just an isatty() hack: we removed the hack where internal data
+> > > > structures of the MSVC runtime are modified in order to redirect
+> > > > stdout/stderr.
+> > > >
+> > > > Instead of using that hack (that does not work with newer versions
+> > > > of the runtime, anyway), we replaced it by reopening the
+> > > > respective file descriptors.
+> > > >
+> > > > What we forgot was to mark stderr as unbuffered again.
 > 
-> > Technically, it is not a write-up, and I never meant it to be that. I
-> > intended this document to help me remember what had been discussed,
-> > and I doubt it is useful at all to anybody who has not been there.
-> >
-> > I abused the Git mailing list to share that link, what I really should
-> > have done is to use an URL shortener and jot the result down on the
-> > whiteboard.
-> >
-> > Very sorry for that,
-> 
-> Heh, no need to apologize.
+> I do not see how the earlier patch turned stderr from unbuffered to
+> buffered, as it did not add or remove any setvbuf() call. Can you
+> explain?
 
-Well, you clearly misunderstood the purpose of the document, and that was
-my fault, as I had not made that clear.
+Certainly. I hoped that the commit message would do the job, but then, I
+am under time pressure these days, so it was probably a bit terse.
 
-> I saw your <alpine.DEB.2.20.1702071248430.3496@virtualbox> that was
-> sent to the list long after the event, which obviously no longer
-> meant for collaborative note taking and thought that you are
-> inviting others to read the result of that note taking, and that is
-> why I commented on that.
+The hack we used to make isatty() work used to change data structures
+directly that are *internal* to the MSVC runtime. That is, instead of
+*really* redirecting stdout/stderr, we simply changed the target of the
+existing stdout/stderr and thereby could fool MSVC into believing that it
+is *still* writing to the terminal (because the bit is set) and that it is
+*not* a pipe (because we forcibly unset that bit).
 
-Of course you are free to read it, and to guess from the sparse notes
-around what the discussions revolved. I do not think that you'll get much
-out of the notes, though.
+Needless to say, this meddling with internal data structures is not only
+prone to break with future updates of the MSVC runtime, it is also
+inappropriate because the implementation may rely on certain side effects
+(or not so side effects) that may very well cause crashes or data loss.
+Imagine, for example, that the internal data structure were variable-size,
+based on the HANDLE type. That is totally legitimate for an internal data
+structure. And if we meddle with the HANDLE, we can easily cause data
+corruption.
 
-> I've hopefully touched some "ask Junio what he thinks of this" items and
-> the whole thing was not wasted ;-)
+As GCC is basically tied to using an older version of the MSVC runtime
+(unlike GLIBC, multiple versions of the MSVC runtime can coexist happily,
+making it relatively easy to maintain backwards-compatibility, but that
+concept is foreign to GCC), this used to not be a problem.
 
-I am afraid that it was quite clear to everybody in the room "what you
-think of this".
+However, with our recent push to allow developing, building, debugging and
+performance profiling in Visual Studio, that limitation no longer holds
+true: if you develop with Visual Studio 2015, you will link to a newer
+MSVC runtime, and that runtime changed those internal data structures
+rather dramatically.
 
-And I do not think that your clarifications how you review code had any
-direct relation with the discussions in particular about better tooling
-for the review process.
+That means that we had to come up with a non-hacky way to redirect
+stdout/stderr (e.g. to parse ESC color sequences and apply them to the
+Win32 Console as appropriate) and still have isatty() report what we want
+it to report. That is, if we redirect stdout/stderr to a pipe that parses
+the color sequences for use in the Win32 Console, we want isatty() to
+report that we are writing to a Terminal Typewriter (a charming
+anachronism, isn't it?).
 
-To open the discussion of that particular part of the Contributors'
-Summit, I mentioned a couple of pain points, and the remainder of the
-discussion really revolved around those, constructively so, I want to add:
+My colleague Jeff Hostetler worked on this and figured out that the only
+way to do this properly is to wrap isatty() and override it via a #define,
+and simply remember when stdout/stderr referred to a terminal before
+redirecting, say, to that pipe.
 
-- we actively keep potential contributors out by insisting that email
-  communication is the most open and inclusive, when right off the bat,
-  without any notice to anybody, our mailing list rejects mails sent both
-  by the most popular desktop mail client as well as by the most popular
-  web mail client.
+As my famously broken patch to override isatty() (so that /dev/null would
+not be treated as a terminal) *already* overrode isatty() with a custom
+wrapper, and as it was broken and needed fixing, I decided to reconcile
+the two approaches into what is now the version in `master`.
 
-- developers who really, really want to contribute may switch email
-  clients or try to configure their existing email clients to skip the
-  HTML part of their emails, only to be met with the reply "your patch is
-  white-space corrupted" which cannot fail to sound harsh.
+So instead of "bending" the target HANDLE of the existing stdout/stderr
+(which would *naturally* have kept the buffered/unbuffered nature as-is),
+we now redirect with correct API calls. And the patch I provided at the
+bottom of this mail thread reinstates the unbuffered nature of stderr now
+that it gets reopened.
 
-- the few contributors not deterred by this problem, and persistent enough
-  to try until they manage to get through, often drop the ball after being
-  met with suggestions that would ideally be addressed by automation so
-  that humans can focus on problems only humans can solve (every time I
-  read "this line is too long" in a review I want to cry: how is this
-  worth the time of contributor or reviewer? There are *tools* for that).
-
-- discussions often veer into completely tangential topics so that the
-  actual review of the patches is drowned out (and subsequently
-  forgotten).
-
-- for any given patch series, it requires a good amount of manual digging
-  to figure out what its current state is: what reviewers' comments are
-  still unaddressed? Is the patch series in pu/next/master yet? Is the
-  *correct* iteration of the patch series in pu/next/master? How does the
-  version in pu/next/master differ from what the contributor has in their
-  local repository? etc
-
-- the closest thing to "this is the state of that patch series" is the
-  What's Cooking email that neither CC:s the original contributors nor
-  does it bear any reliable link to the original patch mail, let alone the
-  original commit(s) in the contributor's repository.
-
-I really do not think that any of your descriptions of your workflow and
-of your review priorities could possibly be expected to fix any of these.
-
-I have an additional pain point, of course, in that your priorities in
-patch review (let's admit that it is not a code review, but a patch review
-instead, and as such limited in other ways than just the lack of focus on
-avoiding potential bugs) are unfortunate in my opinion. But that is not
-your problem.
-
-It is clear to me that these pain points only affect potential
-contributors (and some of them only frequent contributors who are as
-uncomfortable with the sheer amount of tedious "where is that mail that
-contained that patch? Oh, and what was the latest reply to this one? Okay,
-and in which worktree do I have those changes again?" type of things that
-really should not by *my* burden, given that we are trying to develop an
-application that helps relieve developers of tedious burden by automating
-recurring tasks).
-
-That is why I did not call session "Let's criticize Junio for something
-that does not even bother him", but instead "Better tooling for reviews".
-
-The only way forward, as I see it, is for other like-minded contributors
-(one of the GitMerge talks even dedicated a good chunk of time to the
-description of the pitfalls of the Git mailing list, and home-grown tools
-to work around them, so I am definitely not alone) to come together and
-try to consolidate and develop the tools to work around the problems
-incurred from the choice of using the Git mailing list as the only vehicle
-for code contributions [*1*].
-
-When (or if?) those tools become polished and convenient enough to make a
-difference, who knows? Maybe even you or Peff find them useful enough to
-switch. After all, even The Linus switched from tarballs and patches to
-BitKeeper (and I read that it took only a substantial amount of time and
-effort and money on Larry McVoy's part[*2*]).
-
-But nothing of that comes as news to you. You knew all that about my
-opinions and my pains. I actually did not expect there to be any benefit
-in the "Better tools for review" session for you, specifically, and it
-seems I was correct in that assumption.
+Hopefully that makes it clear why the setvbuf() call is required now, but
+was previously unnecessary?
 
 Ciao,
-Johannes
-
-Footnote *1*: git-svn, gitk and git-gui Pull Requests and subsequent
-merges do not count, as it is clear that they are not *really* part of the
-Git source code, and therefore not *really* reviewed on the Git mailing
-list.
-
-Footnote *2*: Some posts I read about it are unfortuntely gone, but here
-is an archived one that still works:
-https://web.archive.org/web/20120414183625/http://kerneltrap.org/node/222
+Dscho
