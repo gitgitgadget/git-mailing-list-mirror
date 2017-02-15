@@ -2,107 +2,118 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 821182013A
-	for <e@80x24.org>; Wed, 15 Feb 2017 18:39:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D33722013A
+	for <e@80x24.org>; Wed, 15 Feb 2017 18:46:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751583AbdBOSjv (ORCPT <rfc822;e@80x24.org>);
-        Wed, 15 Feb 2017 13:39:51 -0500
-Received: from mail-pf0-f195.google.com ([209.85.192.195]:34201 "EHLO
-        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751067AbdBOSju (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Feb 2017 13:39:50 -0500
-Received: by mail-pf0-f195.google.com with SMTP id o64so8324270pfb.1
-        for <git@vger.kernel.org>; Wed, 15 Feb 2017 10:39:50 -0800 (PST)
+        id S1751860AbdBOSqI (ORCPT <rfc822;e@80x24.org>);
+        Wed, 15 Feb 2017 13:46:08 -0500
+Received: from mail-it0-f54.google.com ([209.85.214.54]:37947 "EHLO
+        mail-it0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751383AbdBOSqI (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Feb 2017 13:46:08 -0500
+Received: by mail-it0-f54.google.com with SMTP id c7so71013415itd.1
+        for <git@vger.kernel.org>; Wed, 15 Feb 2017 10:46:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=fqgdvJLyzORGV5j42GxSoRQqTNt7jBAElHyA/6x6+UI=;
-        b=lLx2pE9dZGZGUMi9V+9tOpWv+rVelQXfmHy0Vp9dzSN4kbFxgs2zRtofN/4gSxJxjA
-         nQueOk5G6d4S039VR7cyO7O6fgoLxPi+XCGFyAqOJjRshQI4UH8VVU7ekbl9SO70qQCD
-         DmjyxjC9EbgfESDsTniwp01KOW+K5BvJ16kAdPozmyz7AMvIxyZKcmFX8x+8+9y2Frf0
-         s3sAAz+8RjlZO802zarBtXavqb37gdYgmruReMN/82dwyZXAPkXKkOZ0tzg3YR8pyPfH
-         iirdvBvURpUROZuYMe+I1tOdpom45TnDpomfNqcmztIgkn4+QhRvLHO2xZo1GVcxrRdU
-         chUQ==
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=LpHxO+Hmy8c9HIt1uc0dE6doh/rBXoeP0WgU/GUs30A=;
+        b=dMcs2BcaAhB/86cLt7aHf0ABO/L5m0dbUReNWU9yptp09kCt54VKnC1CH8d0yjF+xv
+         OVG9MbD6o9MBoi2F08y9k4ceX2kn7ViNHJCNrgbgKVyJZgxInLpOhwTtpSRooJ4ptdYe
+         TOnxebKGwBXDWAblMn7o9tYhhLLHgEglG8e8qdH0LpZmesalJzDd4od6qPJuzdk/pMEx
+         7VUBOMkViJtXUc9l/WX6w7sgytBjqpptLM66u2rwVr6GXkgnnLmvqonHAo1RZJvz+Apb
+         fiAcYSxsWtVT8iTA4vE68IeFG6c+7An2DrNuEP6L8GHSKMiaT2mtYXaZapKT0rX/B6zk
+         skhA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=fqgdvJLyzORGV5j42GxSoRQqTNt7jBAElHyA/6x6+UI=;
-        b=RxwsRUTacXdlSbP7s60r5EEEa4BAZkNoxpzLEhJOOgc1viTiqyRsjnYLEhvpj5U9g0
-         DlVcqUwflywJPZei/FqR1Ol36Ot+jtPiUFgtNQkivrkWqyKAotri7nGpJkDyAWB5B4ee
-         4wnNS6JsBqBZRUKlOuZFSSjO6f93BqZpdeZpyrh9xk41JK0n1TljG4iI/KF+foRXt+T3
-         XboRY9fqNEzzV1an6JVRzIsku6/UdPXCx5KTL14ocIvIo12AEBjLh4twCvW/oJyvATpw
-         47UZm6m54wdl5Lon47qOXKQb4bcVkfVAr40P2N0w5+so6wY5mjgTSCEAp0HiTUvK7ey+
-         S4gw==
-X-Gm-Message-State: AMke39k5GLWQpbpRZXaWaJ/lLhnynAGXCvaKZfodZtddd8pgL7OrMjRffr877hzbwP4KcQ==
-X-Received: by 10.98.86.68 with SMTP id k65mr39103683pfb.13.1487183990108;
-        Wed, 15 Feb 2017 10:39:50 -0800 (PST)
-Received: from localhost ([2620:0:1000:8622:3551:31c7:1fe1:8b9b])
-        by smtp.gmail.com with ESMTPSA id o18sm8926608pgn.36.2017.02.15.10.39.49
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 15 Feb 2017 10:39:49 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Lars Schneider <larsxschneider@gmail.com>
-Cc:     git@vger.kernel.org, sbeller@google.com
-Subject: Re: [PATCH v1] t7400: cleanup "submodule add clone shallow submodule" test
-References: <20170215111704.78320-1-larsxschneider@gmail.com>
-        <20170215113325.14393-1-larsxschneider@gmail.com>
-Date:   Wed, 15 Feb 2017 10:39:48 -0800
-In-Reply-To: <20170215113325.14393-1-larsxschneider@gmail.com> (Lars
-        Schneider's message of "Wed, 15 Feb 2017 12:33:25 +0100")
-Message-ID: <xmqq4lzv47t7.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=LpHxO+Hmy8c9HIt1uc0dE6doh/rBXoeP0WgU/GUs30A=;
+        b=QiNFQFRim/Z9toZaCoe5Weoy2wKnTc2QlUBvul51PZw4ccJQGQqprMIcqINziBOCDs
+         iagB4gqxxqFt6aa1KBSGHfRk3BC7hTWcYVEnwhDVwvesig89QDE88BCgmq5Xgx948F0e
+         /JoAdtQ5wV8bMatSGUDjDon/vfqdqF6r8oBT7P2qE8POfHktETyko8kjXtX/kOsjkZrk
+         bq9NIJybFeeqm7wGivwc4H20k2dyWLnhdGhBv+A6X24BNPxvkkGWPBdhjYGGmeWC0MBi
+         Ywc83z2K++psqlY2lnDJyxebhq56jIg2BlREs5xBo6xXXmG5ooqQOGHX3YdoaxZHJd5g
+         sN8A==
+X-Gm-Message-State: AMke39nvfHFvfWK8B+mhLY3HZlUNhG/9MWr9Vn060kZ4Wr9rKKs8hRqWbO6wLuXwcCb8T4arch+vVU/Px6mAxtum
+X-Received: by 10.36.65.161 with SMTP id b33mr10469074itd.114.1487184366823;
+ Wed, 15 Feb 2017 10:46:06 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
+Received: by 10.79.33.148 with HTTP; Wed, 15 Feb 2017 10:46:06 -0800 (PST)
+In-Reply-To: <20170215170441.GB29448@google.com>
+References: <20170215003423.20245-1-sbeller@google.com> <20170215003423.20245-8-sbeller@google.com>
+ <20170215170441.GB29448@google.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Wed, 15 Feb 2017 10:46:06 -0800
+Message-ID: <CAGZ79kbN4e4btgVzzW7yKyUuaf7htmYFutp7ALhtygsKpFsTyQ@mail.gmail.com>
+Subject: Re: [PATCH 07/14] update submodules: introduce is_interesting_submodule
+To:     Brandon Williams <bmwill@google.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Lars Schneider <larsxschneider@gmail.com> writes:
+On Wed, Feb 15, 2017 at 9:04 AM, Brandon Williams <bmwill@google.com> wrote:
+> On 02/14, Stefan Beller wrote:
+>> In later patches we introduce the --recurse-submodule flag for commands
+>> that modify the working directory, e.g. git-checkout.
+>>
+>> It is potentially expensive to check if a submodule needs an update,
+>> because a common theme to interact with submodules is to spawn a child
+>> process for each interaction.
+>>
+>> So let's introduce a function that pre checks if a submodule needs
+>> to be checked for an update.
+>>
+>> Signed-off-by: Stefan Beller <sbeller@google.com>
+>> ---
+>>  submodule.c | 26 ++++++++++++++++++++++++++
+>>  submodule.h |  8 ++++++++
+>>  2 files changed, 34 insertions(+)
+>>
+>> diff --git a/submodule.c b/submodule.c
+>> index c0060c29f2..4c33374ae8 100644
+>> --- a/submodule.c
+>> +++ b/submodule.c
+>> @@ -551,6 +551,32 @@ void set_config_update_recurse_submodules(int value)
+>>       config_update_recurse_submodules = value;
+>>  }
+>>
+>> +int submodules_interesting_for_update(void)
+>> +{
+>> +     /*
+>> +      * Update can't be "none", "merge" or "rebase",
+>> +      * treat any value as OFF, except an explicit ON.
+>> +      */
+>> +     return config_update_recurse_submodules == RECURSE_SUBMODULES_ON;
+>> +}
+>> +
+>> +int is_interesting_submodule(const struct cache_entry *ce)
+>
+> Is there perhaps a more descriptive function name we could use instead
+> of "is_interesting"?  The problem is that its difficult to know why its
+> interesting or for what purpose it is interesting.
 
-> The test creates a "super" directory that is not removed after the
-> test finished. This directory is not used in any subsequent tests and
-> should therefore be removed.
->
-> Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
-> ---
->
-> I just noticed that my bug report test does not run properly without this
-> patch: http://public-inbox.org/git/20170215111704.78320-1-larsxschneider@gmail.com/
->
-> @Junio: I think this patch should be applied regardless of the bug.
+I should finish the background story patch first. By 'is_interesting' I mean
+* it is active/initialized/"The user expressed interested in the submodule by
+  setting submodule.<name>.URL
+* its submodule.<name>.update strategy is != NONE.
 
-Without the other one, this is not strictly needed, but I agree that
-it is a good code hygiene to make sure each test cleans up after
-itself.
+The second point is interesting, as that entertains the thought that we'll pay
+attention to the submodule.<name>.update strategy at all and
+we may want to also implement rebase/merge eventually.
 
-Is this the only one that needs change in the script from that
-"hygiene" point of view, or are there others?  An alternative that
-is also acceptable is to squash this one into the other patch.
+So I think we'd want to tighten that down to "checkout" only for now.
 
->  t/t7400-submodule-basic.sh | 1 +
->  1 file changed, 1 insertion(+)
->
-> diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
-> index b77cce8e40..08df483280 100755
-> --- a/t/t7400-submodule-basic.sh
-> +++ b/t/t7400-submodule-basic.sh
-> @@ -1078,6 +1078,7 @@ test_expect_success 'submodule with UTF-8 name' '
->  '
->
->  test_expect_success 'submodule add clone shallow submodule' '
-> +	test_when_finished "rm -rf super" &&
->  	mkdir super &&
->  	pwd=$(pwd) &&
->  	(
->
-> base-commit: 3b9e3c2cede15057af3ff8076c45ad5f33829436
-> --
-> 2.11.0
+Thanks,
+Stefan
