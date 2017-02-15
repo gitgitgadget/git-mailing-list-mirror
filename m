@@ -2,163 +2,133 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 265B91FC44
-	for <e@80x24.org>; Wed, 15 Feb 2017 10:46:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8A05E1FC44
+	for <e@80x24.org>; Wed, 15 Feb 2017 11:17:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751532AbdBOKqz convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Wed, 15 Feb 2017 05:46:55 -0500
-Received: from zimbra-vnc.tngtech.com ([83.144.240.98]:1187 "EHLO
-        proxy.tng.vnc.biz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751474AbdBOKqx (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Feb 2017 05:46:53 -0500
-Received: from localhost (localhost [127.0.0.1])
-        by proxy.tng.vnc.biz (Postfix) with ESMTP id 42B4E1E2FB4;
-        Wed, 15 Feb 2017 11:46:50 +0100 (CET)
-Received: from proxy.tng.vnc.biz ([127.0.0.1])
-        by localhost (proxy.tng.vnc.biz [127.0.0.1]) (amavisd-new, port 10032)
-        with ESMTP id 4DkcdffxyoQ1; Wed, 15 Feb 2017 11:46:49 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
-        by proxy.tng.vnc.biz (Postfix) with ESMTP id C36421E3138;
-        Wed, 15 Feb 2017 11:46:49 +0100 (CET)
-X-Virus-Scanned: amavisd-new at 
-Received: from proxy.tng.vnc.biz ([127.0.0.1])
-        by localhost (proxy.tng.vnc.biz [127.0.0.1]) (amavisd-new, port 10026)
-        with ESMTP id fiDhMC_w5c3T; Wed, 15 Feb 2017 11:46:49 +0100 (CET)
-Received: from [192.168.178.70] (46.128.140.114.dynamic.cablesurf.de [46.128.140.114])
-        by proxy.tng.vnc.biz (Postfix) with ESMTPSA id 607721E2FB4;
-        Wed, 15 Feb 2017 11:46:49 +0100 (CET)
-Subject: Re: [PATCH v2 2/2] completion: checkout: complete paths when ref
- given
-To:     =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>
-References: <4f8a0aaa-4ce1-d4a6-d2e1-28aac7209c90@tngtech.com>
- <20170214212404.31469-1-cornelius.weig@tngtech.com>
- <20170214212404.31469-2-cornelius.weig@tngtech.com>
- <CAM0VKjkqdto83Qo8PVbxt-2r8prQguNbAtNELxj5AmJEgugC_Q@mail.gmail.com>
-Cc:     Git mailing list <git@vger.kernel.org>,
-        Richard Wagner <bitte.keine.werbung.einwerfen@googlemail.com>,
-        j6t@kdbg.org
-From:   Cornelius Weig <cornelius.weig@tngtech.com>
-Message-ID: <1cff1dea-baeb-3576-ad33-04b2c5d233d8@tngtech.com>
-Date:   Wed, 15 Feb 2017 11:46:48 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.7.0
-MIME-Version: 1.0
-In-Reply-To: <CAM0VKjkqdto83Qo8PVbxt-2r8prQguNbAtNELxj5AmJEgugC_Q@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8BIT
+        id S1751724AbdBOLRJ (ORCPT <rfc822;e@80x24.org>);
+        Wed, 15 Feb 2017 06:17:09 -0500
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:32927 "EHLO
+        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751412AbdBOLRI (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Feb 2017 06:17:08 -0500
+Received: by mail-wm0-f68.google.com with SMTP id v77so7643663wmv.0
+        for <git@vger.kernel.org>; Wed, 15 Feb 2017 03:17:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id;
+        bh=v2PKTEQZoRVeIhtUVw1ZjR9JMrqFdVlZNRSn3vBER9c=;
+        b=EPCEMUl8NXrUhATu6u831r77ppbKHctLEHk0kYNg2L8/8SzQZdxjzFmN9XMyBVhaNO
+         EPZIgR/Mw8h8PY/mRG0zcsmxqLpqVwzENgkZhebOHo7EIigiMjWmY8yFZb5x2HTM26FJ
+         YytePtm1nwMH8zbAOg0/qIutP7ZDaJGNXFAyOB81jJJJ3nMKEeZRXft7tsgeOcF80u7X
+         Cg7BiraZO0bIn1Cp11r/e7h52fBbbRfbQTuc7WCazJL2qT8f88qP2Cmw8NjPQ4mPeKjA
+         i/WJTo79MsZgKw+0tu8BNlAjLZb1TG3o7PBSFctZDemKOAYn1wihKQ8a6RNEHFNvCSue
+         6mzA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=v2PKTEQZoRVeIhtUVw1ZjR9JMrqFdVlZNRSn3vBER9c=;
+        b=BRym2KMZAmRtIveEpl0BlWbmqwc3ruX0iseDBVwqkOjk6vJKfS3M60phb+nudEdHef
+         UPA4V+kGjpJKaPeGzHiQu3kM2qdr+Tao1Q9LvPf7C2zX8/cWhg5afgVWk0ejXXad2JVV
+         flrCtd0e/3/CDklzX/HG9yataMqN1nGR5itW83/bx4WaCgJzLbxetEazwkSDVkBfQILF
+         uEaV4cTPt24UqS3mbSEa9yOcAsAxO3QXTA+ZsaQcfCLivZuvLFM80tcEsXsHf48pn1jJ
+         sY85WKEY6Iqx3pVC+h5iyagfHL0TDnFhNuhiyQMpIQ5uB9PnkUPfKBP/J63BXzMkRQEf
+         PLxQ==
+X-Gm-Message-State: AMke39lo6qREl6+4+ev95yc/1hNwIhR4WvOyjZxp/n75WURO2RmXQlyXY4WIMkqiat7RdQ==
+X-Received: by 10.28.65.132 with SMTP id o126mr7223208wma.14.1487157426873;
+        Wed, 15 Feb 2017 03:17:06 -0800 (PST)
+Received: from slxbook4.ads.autodesk.com ([62.159.156.210])
+        by smtp.gmail.com with ESMTPSA id w207sm7120775wmw.29.2017.02.15.03.17.05
+        (version=TLS1 cipher=AES128-SHA bits=128/128);
+        Wed, 15 Feb 2017 03:17:05 -0800 (PST)
+From:   Lars Schneider <larsxschneider@gmail.com>
+To:     git@vger.kernel.org
+Cc:     sbeller@google.com
+Subject: [BUG] submodule config does not apply to upper case submodules?
+Date:   Wed, 15 Feb 2017 12:17:04 +0100
+Message-Id: <20170215111704.78320-1-larsxschneider@gmail.com>
+X-Mailer: git-send-email 2.11.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Although I'm not convinced that completion of modified files is unnecessary, I'm at least persuaded that not all users would welcome such a change. Given the hint from Gabor that Alt-/ forces filesystem completion, there is even no big win in stopping to offer further refnames after one has already been given.
+It looks like as if submodule configs ("submodule.*") for submodules
+with upper case names are ignored. The test cases shows that skipping
+a submodule during a recursive clone seems not to work.
 
-If you think that this would be desirable, find a revised version below. Otherwise drop it.
-
-
-On 02/15/2017 04:11 AM, SZEDER Gábor wrote:
-> On Tue, Feb 14, 2017 at 10:24 PM,  <cornelius.weig@tngtech.com> wrote:
->> From: Cornelius Weig <cornelius.weig@tngtech.com>
->> Note that one corner-case is not covered by the current implementation:
->> if a refname contains a ':' and is followed by '--' the completion would
->> not recognize the valid refname.
-> 
-> I'm not sure what you mean here.  Refnames can't contain ':'.
-
-Yes, my bad. I was confusing it with the case where filename and ref name are identical.
-
->> +               while [ $c -lt $cword ]; do
->> +                       i="${words[c]}"
->> +                       case "$i" in
->> +                       --) seen_double_dash=1 ;;
->> +                       -*|?*:*) ;;
->> +                       *) ref="$i"; break ;;
-> 
-> I haven't tried it, but this would trigger on e.g. 'git checkout -b
-> new-feature <TAB>', wouldn't it?
-
-Correct, good eyes.
-
-> What about
-> 
->   $ echo "unintentional change" >>tracked-file && git add -u
->   $ git rm important-file
->   $ git checkout HEAD <TAB>
-> 
-> ?  It seems it will offer neither 'tracked-file' nor 'important-file',
-> but I think it should offer both.
-
-Ideally yes. The latter of the two would also not work with Alt/.
-
-
--------------------------------------------------------------------
-From d0e0c9af8a30dec479c393ae7fe75205c9b3b229 Mon Sep 17 00:00:00 2001
-From: Cornelius Weig <cornelius.weig@tngtech.com>
-Date: Tue, 14 Feb 2017 21:01:45 +0100
-Subject: [PATCH] completion: checkout: complete paths when ref given
-
-Git-checkout completes words starting with '--' as options and other
-words as refs. Even after specifying a ref, further words not starting
-with '--' are completed as refs, which is invalid for git-checkout.
-
-With this commit completion suppresses refname suggestion after finding
-what looks like a refname. Words before a '--' not starting with a '-'
-and containing no ':' are considered to be refnames.
-
-Signed-off-by: Cornelius Weig <cornelius.weig@tngtech.com>
+Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
 ---
- contrib/completion/git-completion.bash | 26 +++++++++++++++++++-------
- 1 file changed, 19 insertions(+), 7 deletions(-)
 
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 6c6e1c774d..42e6463b67 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -1059,7 +1059,16 @@ _git_bundle ()
- 
- _git_checkout ()
- {
--	__git_has_doubledash && return
-+	local c=2 seen_ref=""
-+	while [ $c -lt $cword ]; do
-+		case "${words[c]}" in
-+		--) return ;;
-+		-b|-B|--orphan|--branch) ((c++)) ;;
-+		-*|*:*) ;;
-+		*) seen_ref="y" ;;
-+		esac
-+		((c++))
-+	done
- 
- 	case "$cur" in
- 	--conflict=*)
-@@ -1072,13 +1081,16 @@ _git_checkout ()
- 			"
- 		;;
- 	*)
--		# check if --track, --no-track, or --no-guess was specified
--		# if so, disable DWIM mode
--		local flags="--track --no-track --no-guess" track=1
--		if [ -n "$(__git_find_on_cmdline "$flags")" ]; then
--			track=''
-+		if [ -z "$seen_ref" ]
-+		then
-+			# check for --track, --no-track, or --no-guess
-+			# if so, disable DWIM mode
-+			local flags="--track --no-track --no-guess" track=1
-+			if [ -n "$(__git_find_on_cmdline "$flags")" ]; then
-+				track=''
-+			fi
-+			__gitcomp_nl "$(__git_refs '' $track)"
- 		fi
--		__gitcomp_nl "$(__git_refs '' $track)"
- 		;;
- 	esac
- }
--- 
-2.11.1
+I observed the bug on Windows, macOS, and Linux and at least on
+v2.11.0 and v2.11.1:
+https://travis-ci.org/larsxschneider/git/builds/201828672
+
+Right now I have no time to fix it but I might be able to look into it
+next week (if no one else tackles it before that).
+
+Cheers,
+Lars
+
+
+Notes:
+    Base Commit: 3b9e3c2ced (v2.11.1)
+    Diff on Web: https://github.com/larsxschneider/git/commit/a122feaf9f
+    Checkout:    git fetch https://github.com/larsxschneider/git submodule/uppercase-bug-v1 && git checkout a122feaf9f
+
+ t/t7400-submodule-basic.sh | 34 ++++++++++++++++++++++++++++++++++
+ 1 file changed, 34 insertions(+)
+
+diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
+index b77cce8e40..83b5c0d1e0 100755
+--- a/t/t7400-submodule-basic.sh
++++ b/t/t7400-submodule-basic.sh
+@@ -1116,5 +1116,39 @@ test_expect_success 'submodule helper list is not confused by common prefixes' '
+ 	test_cmp expect actual
+ '
+
++test_expect_success 'submodule config does not apply to upper case submodules' '
++	test_when_finished "rm -rf super lowersub clone-success clone-failure" &&
++	mkdir lowersub &&
++	(
++		cd lowersub &&
++		git init &&
++		>t &&
++		git add t &&
++		git commit -m "initial commit lowersub"
++	) &&
++	mkdir UPPERSUB &&
++	(
++		cd UPPERSUB &&
++		git init &&
++		>t &&
++		git add t &&
++		git commit -m "initial commit UPPERSUB"
++	) &&
++	mkdir super &&
++	(
++		cd super &&
++		git init &&
++		>t &&
++		git add t &&
++		git commit -m "initial commit super" &&
++		git submodule add ../lowersub &&
++		git submodule add ../UPPERSUB &&
++		git commit -m "add submodules"
++	) &&
++	git -c submodule.lowersub.update=none clone --recursive super clone-success 2>&1 |
++		grep "Skipping submodule" &&
++	git -c submodule.UPPERSUB.update=none clone --recursive super clone-failure 2>&1 |
++		grep "Skipping submodule"
++'
+
+ test_done
+
+base-commit: 3b9e3c2cede15057af3ff8076c45ad5f33829436
+--
+2.11.0
 
