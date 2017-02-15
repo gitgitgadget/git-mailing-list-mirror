@@ -2,151 +2,138 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C022D2013A
-	for <e@80x24.org>; Wed, 15 Feb 2017 17:04:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 81A2E2013A
+	for <e@80x24.org>; Wed, 15 Feb 2017 18:10:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751571AbdBOREp (ORCPT <rfc822;e@80x24.org>);
-        Wed, 15 Feb 2017 12:04:45 -0500
-Received: from mail-pf0-f170.google.com ([209.85.192.170]:34085 "EHLO
-        mail-pf0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751332AbdBOREo (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Feb 2017 12:04:44 -0500
-Received: by mail-pf0-f170.google.com with SMTP id e4so32784410pfg.1
-        for <git@vger.kernel.org>; Wed, 15 Feb 2017 09:04:44 -0800 (PST)
+        id S1750918AbdBOSKh (ORCPT <rfc822;e@80x24.org>);
+        Wed, 15 Feb 2017 13:10:37 -0500
+Received: from mail-pg0-f65.google.com ([74.125.83.65]:34762 "EHLO
+        mail-pg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750767AbdBOSKg (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Feb 2017 13:10:36 -0500
+Received: by mail-pg0-f65.google.com with SMTP id v184so11737138pgv.1
+        for <git@vger.kernel.org>; Wed, 15 Feb 2017 10:10:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=cdOnk/68nZibEhrN6icYXqvLQVesHK+HXPRv6oUub5Y=;
-        b=VEMl0XrcxZJi3aaWpX05D9KLgVFeNEVbUzW1LhOehgnkgkNuefXWFfEXMBcSPree0a
-         rozZtx1fwwAZWU1tJJTb/Vr190E7TTXNX6AHh9+8c6wAIeQX8XNSxyWIO9CchEKzD+J8
-         7gM6Zlsby197GRrPDxNQKHNwS8vq1pCdDtoT1q/e9ZWxr5xhzDVRxXdIp1cS5nL1ubs6
-         4ur+3JWWHtbbT7aQjDLmgHdWqmSNwQpRdajfWh/yFbnKw3fizanQxV+xONKU1opLfbpf
-         G8HyRsEXU39NPoyPPgPP+54kmjefqA/U8ksgNPAM1FnCEZA3SBNm/Lc6KV6K2FzlH0Ed
-         1Trg==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=TpDsAHqIijoAZ7Gc5TVZwMYult9V8HzwX4d5H1gYnf8=;
+        b=lOX5JDDaaCFcgMbFhgcM69WCa4wq1Ew+HZZiQJQJaLSUzG5o51MUwukFicq0GEUEat
+         7FSRx3JZkHE053w3UhgNrtSpBw6cFSvfAVTizR8NLPnmeSrOSiK/4jBEAWZZJTV8spbw
+         QKORU2OxjaYzpunRymjpODwpv0Sdt+bsrScPR5I7wcD+lhGre/MEvtNYd/dk+7rtvqYk
+         VL4PAehNQ+jWEWRXbE2zcQyoW8ncaViOgwSIk8OITuvnBFA9VXXv2I/wb9rwpK0KJZhJ
+         vk1grzz9zZ+9/CRUcrXhUkTdg2OYb5+MxqbfliyjZt0lk8t3d7LQ2BTQMDvfkmnStRrg
+         AIaQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=cdOnk/68nZibEhrN6icYXqvLQVesHK+HXPRv6oUub5Y=;
-        b=nVuY+K4BVZIktrFbKt49KPxfvagZj50s5LCvTaSdt4+4CDl/KG8Oa0gYrbyzgPCHnO
-         b8U92aaP1osMHmU7ZeKPZGSIVGYxA2eIRWDdD+i3NYsUsoiGbrnwWDVQ+SewOtW8cBRn
-         iCI2Hi9UTzL8jlgHWcUWk2/x7UCFMuqK+O/SEDEL1qxw3W9wQ18zVD0rEYOQVqdOEV+W
-         uAu6zVKFQP9GUVt+qcXiPuKqf9yiFqwSriACHMYpoAtBi3on07CmcU56Ry0H+WJjnanv
-         aPK3GIPdoGI5N1MZfBOx+Wv1FBInB/vP7VSFqp3IY+Bxu8bdtLFpETHNxugdCXcDp+F4
-         0e7g==
-X-Gm-Message-State: AMke39mQc26cqzrD4lTbnIx5y05wZoNyHxM6XYhy+aXODrs3WObiUzvZMJaIENpbbiXuxfLk
-X-Received: by 10.99.163.81 with SMTP id v17mr1444757pgn.39.1487178283841;
-        Wed, 15 Feb 2017 09:04:43 -0800 (PST)
-Received: from google.com ([2620:0:1000:5b10:78f6:794e:151:8624])
-        by smtp.gmail.com with ESMTPSA id r8sm8598365pfi.82.2017.02.15.09.04.42
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=TpDsAHqIijoAZ7Gc5TVZwMYult9V8HzwX4d5H1gYnf8=;
+        b=jdt1D7PcmI8Mn7jeKkYSxobwg4gXTJ4hXcojul0TN1TOx/DUkFs8zGkHJ3eLIm7lTs
+         5oOR7+nqDL4PVGOdKQ7xVTQZBHdqbdyD9M2IGBT47xCXhdJOlZSUFOFHa+8zclEgFfIZ
+         drmkRmqdR6h1g4dxbFNyEitOhuFEXd/T7hAcSFWxcFJwCnQygbr5zvtYvNt94u24+Y58
+         6gPA8zB1uqgXEUMR1Wvze33PmvlZyRzO5pF+wUEJMMIYg0MjZVVmsyHqVCnPfv51W2XP
+         VlrQ3verbioL5RWB9oJVHODfdoUqDHNGI761LiK7mpZDoT9E4ztjivbKbFI/cxdA95Qu
+         4mSQ==
+X-Gm-Message-State: AMke39kdEBS9C2KGBxwEx3pO72T/UjRwQfrle2OmfgntQlI5/yHvTgfJ13uTT812OPJLAg==
+X-Received: by 10.98.34.82 with SMTP id i79mr38499798pfi.120.1487182235386;
+        Wed, 15 Feb 2017 10:10:35 -0800 (PST)
+Received: from localhost ([2620:0:1000:8622:3551:31c7:1fe1:8b9b])
+        by smtp.gmail.com with ESMTPSA id l25sm8846936pfb.24.2017.02.15.10.10.32
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 15 Feb 2017 09:04:42 -0800 (PST)
-Date:   Wed, 15 Feb 2017 09:04:41 -0800
-From:   Brandon Williams <bmwill@google.com>
+        Wed, 15 Feb 2017 10:10:33 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
 To:     Stefan Beller <sbeller@google.com>
-Cc:     git@vger.kernel.org, jrnieder@gmail.com,
-        sandals@crustytoothpaste.net, gitster@pobox.com
-Subject: Re: [PATCH 07/14] update submodules: introduce
- is_interesting_submodule
-Message-ID: <20170215170441.GB29448@google.com>
+Cc:     git@vger.kernel.org, bmwill@google.com, jrnieder@gmail.com,
+        sandals@crustytoothpaste.net
+Subject: Re: [PATCH 03/14] make is_submodule_populated gently
 References: <20170215003423.20245-1-sbeller@google.com>
- <20170215003423.20245-8-sbeller@google.com>
+        <20170215003423.20245-4-sbeller@google.com>
+Date:   Wed, 15 Feb 2017 10:10:32 -0800
+In-Reply-To: <20170215003423.20245-4-sbeller@google.com> (Stefan Beller's
+        message of "Tue, 14 Feb 2017 16:34:12 -0800")
+Message-ID: <xmqqlgt7495z.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20170215003423.20245-8-sbeller@google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 02/14, Stefan Beller wrote:
-> In later patches we introduce the --recurse-submodule flag for commands
-> that modify the working directory, e.g. git-checkout.
-> 
-> It is potentially expensive to check if a submodule needs an update,
-> because a common theme to interact with submodules is to spawn a child
-> process for each interaction.
-> 
-> So let's introduce a function that pre checks if a submodule needs
-> to be checked for an update.
-> 
+Stefan Beller <sbeller@google.com> writes:
+
+> We need the gentle version in a later patch. As we have just one caller,
+> migrate the caller.
+
+Ordinarily, we keep the original helper implemented as a thin
+wrapper that passes NULL as retun_error_code, which causes it to
+die() on error for existing callers.  But because we only have one
+caller (and topics in-flight do not add new ones), we do not bother
+with that.
+
+The reasoning makes sense, at least to me.
+
+We may want to add a comment about the behaviour upon error for the
+helper function?  I see resolve_gitdir_gently() does not do so and
+the readers have to follow the callflow down to read_gitfile_gently()
+which does have the comment, so perhaps we are OK without any.
+
+Looks good to me.
+
 > Signed-off-by: Stefan Beller <sbeller@google.com>
 > ---
->  submodule.c | 26 ++++++++++++++++++++++++++
->  submodule.h |  8 ++++++++
->  2 files changed, 34 insertions(+)
-> 
+>  builtin/grep.c | 2 +-
+>  submodule.c    | 4 ++--
+>  submodule.h    | 2 +-
+>  3 files changed, 4 insertions(+), 4 deletions(-)
+>
+> diff --git a/builtin/grep.c b/builtin/grep.c
+> index 2c727ef499..b17835aed6 100644
+> --- a/builtin/grep.c
+> +++ b/builtin/grep.c
+> @@ -616,7 +616,7 @@ static int grep_submodule(struct grep_opt *opt, const unsigned char *sha1,
+>  {
+>  	if (!is_submodule_initialized(path))
+>  		return 0;
+> -	if (!is_submodule_populated(path)) {
+> +	if (!is_submodule_populated_gently(path, NULL)) {
+>  		/*
+>  		 * If searching history, check for the presense of the
+>  		 * submodule's gitdir before skipping the submodule.
 > diff --git a/submodule.c b/submodule.c
-> index c0060c29f2..4c33374ae8 100644
+> index 3b98766a6b..9bbdd3ce7c 100644
 > --- a/submodule.c
 > +++ b/submodule.c
-> @@ -551,6 +551,32 @@ void set_config_update_recurse_submodules(int value)
->  	config_update_recurse_submodules = value;
->  }
->  
-> +int submodules_interesting_for_update(void)
-> +{
-> +	/*
-> +	 * Update can't be "none", "merge" or "rebase",
-> +	 * treat any value as OFF, except an explicit ON.
-> +	 */
-> +	return config_update_recurse_submodules == RECURSE_SUBMODULES_ON;
-> +}
-> +
-> +int is_interesting_submodule(const struct cache_entry *ce)
-
-Is there perhaps a more descriptive function name we could use instead
-of "is_interesting"?  The problem is that its difficult to know why its
-interesting or for what purpose it is interesting.
-
-> +{
-> +	const struct submodule *sub;
-> +
-> +	if (!S_ISGITLINK(ce->ce_mode))
-> +		return 0;
-> +
-> +	if (!submodules_interesting_for_update())
-> +		return 0;
-> +
-> +	sub = submodule_from_path(null_sha1, ce->name);
-> +	if (!sub)
-> +		return 0;
-> +
-> +	return sub->update_strategy.type != SM_UPDATE_NONE;
-> +}
-> +
->  static int has_remote(const char *refname, const struct object_id *oid,
->  		      int flags, void *cb_data)
+> @@ -237,12 +237,12 @@ int is_submodule_initialized(const char *path)
+>  /*
+>   * Determine if a submodule has been populated at a given 'path'
+>   */
+> -int is_submodule_populated(const char *path)
+> +int is_submodule_populated_gently(const char *path, int *return_error_code)
 >  {
+>  	int ret = 0;
+>  	char *gitdir = xstrfmt("%s/.git", path);
+>  
+> -	if (resolve_gitdir(gitdir))
+> +	if (resolve_gitdir_gently(gitdir, return_error_code))
+>  		ret = 1;
+>  
+>  	free(gitdir);
 > diff --git a/submodule.h b/submodule.h
-> index c4e1ac828e..84b67a7c4a 100644
+> index 05ab674f06..689033e538 100644
 > --- a/submodule.h
 > +++ b/submodule.h
-> @@ -59,6 +59,14 @@ extern void show_submodule_inline_diff(FILE *f, const char *path,
->  		const struct diff_options *opt);
->  extern void set_config_fetch_recurse_submodules(int value);
->  extern void set_config_update_recurse_submodules(int value);
-> +
-> +/*
-> + * Traditionally Git ignored changes made for submodules.
-> + * This function checks if we are interested in the given submodule
-> + * for any kind of operation.
-> + */
-> +extern int submodules_interesting_for_update(void);
-> +extern int is_interesting_submodule(const struct cache_entry *ce);
->  extern void check_for_new_submodule_commits(unsigned char new_sha1[20]);
->  extern int fetch_populated_submodules(const struct argv_array *options,
->  			       const char *prefix, int command_line_option,
-> -- 
-> 2.12.0.rc0.16.gd1691994b4.dirty
-> 
-
--- 
-Brandon Williams
+> @@ -41,7 +41,7 @@ extern int submodule_config(const char *var, const char *value, void *cb);
+>  extern void gitmodules_config(void);
+>  extern void gitmodules_config_sha1(const unsigned char *commit_sha1);
+>  extern int is_submodule_initialized(const char *path);
+> -extern int is_submodule_populated(const char *path);
+> +extern int is_submodule_populated_gently(const char *path, int *return_error_code);
+>  extern int parse_submodule_update_strategy(const char *value,
+>  		struct submodule_update_strategy *dst);
+>  extern const char *submodule_strategy_to_string(const struct submodule_update_strategy *s);
