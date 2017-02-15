@@ -2,121 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 859912013A
-	for <e@80x24.org>; Wed, 15 Feb 2017 14:23:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C328A2013A
+	for <e@80x24.org>; Wed, 15 Feb 2017 14:26:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750791AbdBOOXC (ORCPT <rfc822;e@80x24.org>);
-        Wed, 15 Feb 2017 09:23:02 -0500
-Received: from mout.gmx.net ([212.227.17.22]:57146 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750760AbdBOOXB (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Feb 2017 09:23:01 -0500
-Received: from virtualbox ([37.201.192.48]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0M6fXs-1cPn2e0DyO-00wRCW; Wed, 15
- Feb 2017 15:22:44 +0100
-Date:   Wed, 15 Feb 2017 15:22:42 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     Philip Oakley <philipoakley@iee.org>
-cc:     Christian Couder <christian.couder@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        git-for-windows@googlegroups.com, git <git@vger.kernel.org>
-Subject: Re: [git-for-windows] Re: Continuous Testing of Git on Windows
-In-Reply-To: <E2C1B7A8FBF94C8CB1C9C5754D882800@PhilipOakley>
-Message-ID: <alpine.DEB.2.20.1702151509251.3496@virtualbox>
-References: <alpine.DEB.2.20.1702101241210.3496@virtualbox> <xmqq60kdbqmy.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1702142150220.3496@virtualbox> <xmqqd1ek8oqo.fsf@gitster.mtv.corp.google.com> <CAP8UFD1+AgBVqSh=wHteM3uKO+55ZqqD4cHzBUfN0KTPXyvutQ@mail.gmail.com>
- <E2C1B7A8FBF94C8CB1C9C5754D882800@PhilipOakley>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+        id S1751296AbdBOO0q (ORCPT <rfc822;e@80x24.org>);
+        Wed, 15 Feb 2017 09:26:46 -0500
+Received: from mail-ua0-f193.google.com ([209.85.217.193]:35796 "EHLO
+        mail-ua0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750829AbdBOO0p (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Feb 2017 09:26:45 -0500
+Received: by mail-ua0-f193.google.com with SMTP id 96so13691654uaq.2
+        for <git@vger.kernel.org>; Wed, 15 Feb 2017 06:26:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=P82PqbSsYG8btyGDlBm8m4DmiCWYiioOuqGGz5FHgKU=;
+        b=bWKEFNiMG+yX9aCiqndbgqUp2v10L+YA51nYrXip+iIWjEQ2gznfeC1NGJxek2zc2l
+         LB1ilI1roYNJR3k4GoRWXg4T3pwn8roxLtORELGH3+gCDjs3K9GQBELlkVLLr862dUCk
+         SZDobH9QZzbvsloNxLtGEJjtUwESPJQv5gG9D1TuKxgX88G1ItPu4vp6eGqcPRkf+54w
+         VPystfTZn7pMWh7CIH3Fy/3UxCO5ScGk1KOHMKbUeV53CxEOAoKpXWW5tgzsdDZ3TTz/
+         YK/aqg2T69WUz8vmzVDy4N4UGqOHWJyW8JLyQPb9FuuCoo7Me0hLO/61iRk/5ZOBidV6
+         JCeg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=P82PqbSsYG8btyGDlBm8m4DmiCWYiioOuqGGz5FHgKU=;
+        b=do8CDQVlwSDJxAypQiNHlZreKxwn/71aGJAPA9pfbFalt8X6UeNmKf0iuzgRaEg/Re
+         +7/YB/DURV2tIf8aQr6ERqintbxetVXX4yXHHERsvSZUf/DRXqib92oQtMi+n1mLeVIc
+         dwG49dz3SxI50RV7lCt1bUzI5vkp1XIMi4t0jftNxZtU3QwEzfQ03bcK5a52qDAjEC2G
+         QnKqS5lFhL4jN7qO6KN6YDcbTkqIUT6Db5r+vcgxJsXnKv5Erom4zjwaYfvgxbQL6O8R
+         fmGNt80e30zMRJUtogzsrzhvbUODGUioFXrlNtexj/d81r/ubEijISBDjXHkAaT7uzbO
+         YMfg==
+X-Gm-Message-State: AMke39kannOfWo7kyLh2iR8CgpVHg0EQOL4GVbT+K13A3BaZUbdB7JB98i0/8Q4MK8ukaiW1GE4olBnNwjTIeA==
+X-Received: by 10.159.48.69 with SMTP id i5mr18010162uab.121.1487168804996;
+ Wed, 15 Feb 2017 06:26:44 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:PVVs8kjQadaQqVOoMfs67QBYK7LvboDgUU+Py9lMhcSCT9Bqy6n
- jT+A/D52qtBC5RD2je5WpLwY3jxC80BSIiwkJ2/1pE/Fpv0lg2sXLj79CgEk+uTu1XryGR7
- WvWQaZvi3caNPmur1/YXuruYVZiwgY2zKLX8Le32L1zwwgUdvJvjf283SrMOAtn0J0IzXHh
- v6FS/StgETXInJh8y22Tw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:GFg+ddZanQg=:TQcGgWCgxs62ubhDd2u7Es
- iymI+Kw40GrZ2A/IRZ4FEK6xw8Rx2ffEfX3feAThlcLP4y3thijM4G0/1rcbDzVID6xvqjIPI
- HaHqREREJGm44TTZZKpiRz84kjLUFTA+xoPVCLW4fzzOUPR0h5NAL7KlS5m43KTRdFxZakv7W
- ZZF8JiILQySMnF078Y1lJCm/WkmVZEiUCmMv5HdwxKXJrPXQX1tSaqFJRSjTCDFec/dYNLeyk
- TuQhnnJWviMvdHB0YLjGMv/PfxPkslaFWfBnI7TcU3j6g1zpiSWBUmemQ7oxC238FTXHfRi9g
- KZXY/ZzyD0RnyqW5s7FNhxP5UBo9wTPY+iilDVitlC8fKRCMOn3ISvMB0tTSx+Zya+oS9h9Ms
- KEyGxDdQrw84ZvsqtEXmwulEO41qYCtjnrtjtIVlFXo8d6Hf5z/WglHsiIdukI2ca0J6AUz4w
- LDMb9duhhvVNmUqVotlfsoQvKhfNo9YjhEgxzYNoHLcSUvQO+iFt0LHwM6pk9TjKLuURC2dW8
- PqSSfI94akQWrS1ufaN6qForV7saMsjo8akJFCD9ffcsfdomiG+EVB4yBaFFqgEdJCVJWjDt9
- GlFOEe6xxsuE1Sn3gjS5j3KJ01btQgnaXl5XXsXChIjyha+nUjamqnWIUSC3jHBSqCRtJdC2a
- z7M5YsvjXL62YUDQmndFcVOoojkHun24NvXhRh2RBXP8ein67godXYEcxyguX9GE4F1GfHc0Y
- sleb4M0b8juumgwlNmX+XHl39WG7H4uVSHqjdgZoTWThfPhqAdcL8qJzVnsnDKomBBo4JlrYZ
- MJE1CSJ/gFTQ4ztOhmFkAAr5gmS1XE7Gi0adRgaMpiFmx+QwVQzSVV4x/QG1vyvyuqBe9L2Bq
- NMqMKSJEuqOJop5PxM92jZZojrphf0f9xFYXkH6fXGoJqWEJ1UiQLGVYyYSdCWrHbgr1YkchL
- i1d6Eq8mh6w+K9vRk086ovQviTeVqnuJhuGsmo1VU9JRb8dGSswYzM1cnGnT+33vHxzmLKfKl
- cuz6YerSVCA1ulUDWVnsr/iiubvNRg5ooqf6dZ2o8DpjE1Nwpj0c12bU2HdOyzgkOQ==
+Received: by 10.176.22.131 with HTTP; Wed, 15 Feb 2017 06:26:44 -0800 (PST)
+In-Reply-To: <20170214212404.31469-2-cornelius.weig@tngtech.com>
+References: <4f8a0aaa-4ce1-d4a6-d2e1-28aac7209c90@tngtech.com>
+ <20170214212404.31469-1-cornelius.weig@tngtech.com> <20170214212404.31469-2-cornelius.weig@tngtech.com>
+From:   =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+Date:   Wed, 15 Feb 2017 15:26:44 +0100
+Message-ID: <CAM0VKjkUu2k73+PxZ2UNKrnBg0nW_za+10O7eHEgcko6BaGx6Q@mail.gmail.com>
+Subject: Re: [PATCH v2 2/2] completion: checkout: complete paths when ref given
+To:     Cornelius Weig <cornelius.weig@tngtech.com>
+Cc:     Git mailing list <git@vger.kernel.org>,
+        Richard Wagner <bitte.keine.werbung.einwerfen@googlemail.com>,
+        j6t@kdbg.org
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Philip,
+On Tue, Feb 14, 2017 at 10:24 PM,  <cornelius.weig@tngtech.com> wrote:
 
-On Tue, 14 Feb 2017, Philip Oakley wrote:
+> +               *)
+> +                       __git_complete_tree_file "$ref" "$cur"
+> +                       ;;
 
-> From: "Christian Couder" <christian.couder@gmail.com>
-> > On Tue, Feb 14, 2017 at 10:08 PM, Junio C Hamano <gitster@pobox.com>
-> > wrote:
-> > > Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> > >
-> > > > On Mon, 13 Feb 2017, Junio C Hamano wrote:
-> > > >
-> > > > > Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> > > > >
-> > > > > > That is why I taught the Git for Windows CI job that tests the
-> > > > > > four upstream Git integration branches to *also* bisect test
-> > > > > > breakages and then upload comments to the identified commit on
-> > > > > > GitHub
-> > > > >
-> > > > > Good.  I do not think it is useful to try 'pu' as an aggregate
-> > > > > and expect it to always build and work [*1*], but your "bisect
-> > > > > and pinpoint" approach makes it useful to identify individual
-> > > > > topic that brings in a breakage.
-> > > >
-> > > > Sadly the many different merge bases[*1*] between `next` and `pu`
-> > > > (which are the obvious good/bad points for bisecting
-> > > > automatically) bring my build agents to its knees. I may have to
-> > > > disable the bisecting feature as a consequence.
-> >
-> > Yeah, this is a bug in the bisect algorithm. Fixing it is in the GSoC
-> > 2017 Ideas.
-> 
-> There are also a few ideas at the SO answers:
-> http://stackoverflow.com/a/5652323/717355
+There is one more caveat here.
 
-Thanks for that link!
+Both our __git_complete_index_file() and Bash's builtin filename
+completion lists matching paths like this:
 
-However, my main aim was not to get distracted into yet another corner of
-Git that needs to be fixed (I am on enough of those projects already).
+  $ git rm contrib/co<TAB>
+  coccinelle/                        contacts/
+  completion/                        convert-grafts-to-replace-refs.sh
 
-I was merely surprised (and not in a good way) that a plenty ordinary
-bisect between `next` and `pu` all of a sudden tested a *one year old*
-commit whether it was good or not.
+i.e. the leading path components are not redundantly repeated.
 
-And I doubt that the strategy to mark all second parents of all merge
-commits in pu..next as "good" would work well, as the merge bases *still*
-would have to be tested.
+Now, with this patch in this code path the list would look like this:
 
-I guess what I have to resort to is this: if I know that `next` tests
-fine, and that `pu` fails, I shall mark all merge bases as "good". I am
-sure this has its own set of pitfalls, undoubtedly costing me more time on
-that front...
+  $ git checkout completion-refs-speedup contrib/co<TAB>
+  contrib/coccinelle/
+  contrib/completion/
+  contrib/contacts/
+  contrib/convert-grafts-to-replace-refs.sh
 
-But at least my cursory analysis of this idea seems to make sense: I use
-`next` essentially as a catch-all to verify that the breakage has entered
-`pu`, but not yet `next`. This reasoning makes sense, given that we know
-the waterfall topology of pu/next/master/maint: patches enter from left to
-right, i.e. anything that entered `pu` may later enter `next`, but not
-vice versa.
+See the difference?
 
-Ciao,
-Dscho
+I once made a feeble attempt to make completion of the <ref>:<path>
+notation (i.e. what you extracted into __git_complete_tree_file())
+look like regular filename completion, but couldn't.
+
+G=C3=A1bor
