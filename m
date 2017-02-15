@@ -7,154 +7,171 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DCB4A2013C
-	for <e@80x24.org>; Wed, 15 Feb 2017 00:35:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8A6612013C
+	for <e@80x24.org>; Wed, 15 Feb 2017 00:35:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751336AbdBOAfG (ORCPT <rfc822;e@80x24.org>);
+        id S1751362AbdBOAfI (ORCPT <rfc822;e@80x24.org>);
+        Tue, 14 Feb 2017 19:35:08 -0500
+Received: from mail-it0-f53.google.com ([209.85.214.53]:37506 "EHLO
+        mail-it0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750931AbdBOAfG (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 14 Feb 2017 19:35:06 -0500
-Received: from mail-io0-f175.google.com ([209.85.223.175]:33598 "EHLO
-        mail-io0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750853AbdBOAfF (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Feb 2017 19:35:05 -0500
-Received: by mail-io0-f175.google.com with SMTP id g18so1948603ioe.0
-        for <git@vger.kernel.org>; Tue, 14 Feb 2017 16:35:04 -0800 (PST)
+Received: by mail-it0-f53.google.com with SMTP id x75so54903902itb.0
+        for <git@vger.kernel.org>; Tue, 14 Feb 2017 16:35:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=from:to:cc:subject:date:message-id;
-        bh=SHiHQqc6L3VNzAIWanfMNSGbmRAgHmUG8W8l8yv31+A=;
-        b=ocKhDW/6D0DBuDt3EumEkXZ0wp4b3VmknogyapoDhIfR7QZVqatVyYePh19bZWNos3
-         EKRoUzPn0x1Yn/FFSVmKPRxZRGrk1T9WvSxsXVeHD7h9mLIvdyvCrGOES02xsW2yXVsi
-         arrxgjA3f8tZie/+AlIkJ+IRTsQ77pTj+4L9zmLqPTAGpVeW0kx60WL6T4Uy6Td0RBV0
-         svBc2ahRMgQ97VmriqxkPY1OJxh5gbd/SRYBG4Rmk3LgyKVh9eeAhiCoClJ5xkKxYRvv
-         FBrynh9O66kApCWiv7esdN67GAYntJ/yuHNkO2mwQXbmzsh1lIhae4lPLDbsr3slM5cc
-         JuLA==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=pw2AumVUgTzrRQi8ep1rjSIrCIjf1VyybORx+84kyD0=;
+        b=CqGiwwZpLmVU9l9iZZz1ey/BZjpCy3kFn1f6fmEQMgORHhecbSGGvuc1gG2ZFzABi9
+         nYcNypwFlcFh+v7mo/0id1hrXJ6GCUg4/9Tjdp6Rv1bUe3ZrY13ralqiUX/44ui58hzG
+         +08y8uT19aoFjhwTL9/TfFUKwCJ7tFkNz8Jch+9VEFu/nA5oH1F0yoPZABngjzNDpsOp
+         jXrQD0t0mM+x3UJNwabTxzC1nQGde4NI+G+EzMxmbtfPFyW+tWHEghJnLe137tBOjvMf
+         icWVw0oNrig1GzBJE88bewbWLyMIdd1+dP4oOcO6KnzOM/ByxcCYJBjktzWyw0QAds8O
+         Mgaw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=SHiHQqc6L3VNzAIWanfMNSGbmRAgHmUG8W8l8yv31+A=;
-        b=p0mzxh+2UcyFhzQK2NlUqkYksDSF2XvlRcxgJGCb1FpaeeL1onmcoqRyI0FeIZIXvT
-         +aSDHRI79n5+ZfO7I75LvCDg8DpTk2dU2TL3zYbzZlzYnmPWD38ewuF7/nIN2WJUfGcS
-         0T3ILdcja90tHftF+OKOIEXOKS4p7/BIyZptnR8CgjKbFz04tUFRVkTNLMg6XjvyZ1qa
-         55eNUIxReqAKWPRCvnDIiViGWLzjxcmv/w7R+vcV1j2pOcoglyZTvwy62T3sUKGbmKhz
-         EBUdEVYHgjevhrqOYLf2UYM+zjV4JjZ9NUzt3Rf/vxtHOkac+NNwgxjvSpcAd+tdTvpO
-         v1DA==
-X-Gm-Message-State: AMke39mhuk669taFUVrcwiTM9SaRaHCq+e1SQwgfn0jgqbZ9JIzmQ1VTXhWQQ3aOG+Ih/YSi
-X-Received: by 10.98.102.21 with SMTP id a21mr34288356pfc.29.1487118904094;
-        Tue, 14 Feb 2017 16:35:04 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=pw2AumVUgTzrRQi8ep1rjSIrCIjf1VyybORx+84kyD0=;
+        b=SEXjooqaERIu0zBmlg1mJYmo0kMioLp9soL517GEAtRhiaSKSTxBsmenZQ2QnRFo8A
+         NNIxGyvxu5S0HZBVP8Z3ksw0godNsyH8QhPipKC3NDYN+voBl4oJnHhS7ARrKsv1d91L
+         cnQyQk3Ao+7HYjVu6pICVL8URqKjocGOv1zIEMklDtc5fIhk0oFOQsMf+nleacK4fNaG
+         aNdrWHg1KfDsTeFuhyzYttaaLERz1Rd6c3z/mekCMkRZ+XOuSoJpse1VKmeF0Ewbo1gI
+         8hQVV5u1zZUdt78RRLqnJwo+COm9XSqX4AkDnplBvXOcl5j5mQFATR4UJonisnyc06Gh
+         xLOg==
+X-Gm-Message-State: AMke39mT4+ADF1squMOj67RL9+KS64vg1TJTvhWWWq4jY+J2g16s1EvQQxTo2KLbJjdbpCwH
+X-Received: by 10.84.136.75 with SMTP id 69mr40338690plk.172.1487118905367;
+        Tue, 14 Feb 2017 16:35:05 -0800 (PST)
 Received: from localhost ([2620:0:1000:5b10:c832:5c94:8ab0:6fa4])
-        by smtp.gmail.com with ESMTPSA id q90sm3308059pfk.73.2017.02.14.16.35.03
+        by smtp.gmail.com with ESMTPSA id b74sm3254151pfc.129.2017.02.14.16.35.04
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 14 Feb 2017 16:35:03 -0800 (PST)
+        Tue, 14 Feb 2017 16:35:04 -0800 (PST)
 From:   Stefan Beller <sbeller@google.com>
 Cc:     git@vger.kernel.org, bmwill@google.com, jrnieder@gmail.com,
         sandals@crustytoothpaste.net, gitster@pobox.com,
         Stefan Beller <sbeller@google.com>
-Subject: [RFCv3 PATCH 00/14] Checkout aware of Submodules!
-Date:   Tue, 14 Feb 2017 16:34:09 -0800
-Message-Id: <20170215003423.20245-1-sbeller@google.com>
+Subject: [PATCH 01/14] lib-submodule-update.sh: reorder create_lib_submodule_repo
+Date:   Tue, 14 Feb 2017 16:34:10 -0800
+Message-Id: <20170215003423.20245-2-sbeller@google.com>
 X-Mailer: git-send-email 2.12.0.rc0.16.gd1691994b4.dirty
+In-Reply-To: <20170215003423.20245-1-sbeller@google.com>
+References: <20170215003423.20245-1-sbeller@google.com>
 To:     unlisted-recipients:; (no To-header on input)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-previous work:
-https://public-inbox.org/git/20161203003022.29797-1-sbeller@google.com/
+Redraw the ASCII art describing the setup using more space, such that
+it is easier to understand.  The leaf commits are now ordered the same
+way the actual code is ordered.
 
-v3:
- * moved tests from t2013 to the generic submodule library.
- * factored out the refactoring patches to be up front
- * As I redid the complete implementation, I have the impression this time
-   it is cleaner than previous versions.
+Add empty lines to the setup code separating each of the leaf commits,
+each starting with a "checkout -b".
+
+Signed-off-by: Stefan Beller <sbeller@google.com>
+---
+ t/lib-submodule-update.sh | 49 ++++++++++++++++++++++++++++-------------------
+ 1 file changed, 29 insertions(+), 20 deletions(-)
+
+diff --git a/t/lib-submodule-update.sh b/t/lib-submodule-update.sh
+index 915eb4a7c6..61c54f2098 100755
+--- a/t/lib-submodule-update.sh
++++ b/t/lib-submodule-update.sh
+@@ -15,22 +15,27 @@
+ # - Tracked file replaced by submodule (replace_sub1_with_file =>
+ #   replace_file_with_sub1)
+ #
+-#                   --O-----O
+-#                  /  ^     replace_directory_with_sub1
+-#                 /   replace_sub1_with_directory
+-#                /----O
+-#               /     ^
+-#              /      modify_sub1
+-#      O------O-------O
+-#      ^      ^\      ^
+-#      |      | \     remove_sub1
+-#      |      |  -----O-----O
+-#      |      |   \   ^     replace_file_with_sub1
+-#      |      |    \  replace_sub1_with_file
+-#      |   add_sub1 --O-----O
+-# no_submodule        ^     valid_sub1
+-#                     invalid_sub1
++#                     ----O
++#                    /    ^
++#                   /     remove_sub1
++#                  /
++#       add_sub1  /-------O
++#             |  /        ^
++#             | /         modify_sub1
++#             v/
++#      O------O-----------O---------O
++#      ^       \          ^         replace_directory_with_sub1
++#      |        \         replace_sub1_with_directory
++# no_submodule   \
++#                 --------O---------O
++#                  \      ^         replace_file_with_sub1
++#                   \     replace_sub1_with_file
++#                    \
++#                     ----O---------O
++#                         ^         valid_sub1
++#                         invalid_sub1
+ #
++
+ create_lib_submodule_repo () {
+ 	git init submodule_update_repo &&
+ 	(
+@@ -49,10 +54,11 @@ create_lib_submodule_repo () {
+ 		git config submodule.sub1.ignore all &&
+ 		git add .gitmodules &&
+ 		git commit -m "Add sub1" &&
+-		git checkout -b remove_sub1 &&
++
++		git checkout -b remove_sub1 add_sub1&&
+ 		git revert HEAD &&
  
- I think we still have to fix the corner cases of directory/file/submodule 
- conflicts before merging, but this serves as a status update on my current
- way of thinking how to implement the worktree commands being aware of
- submodules.
+-		git checkout -b "modify_sub1" "add_sub1" &&
++		git checkout -b modify_sub1 add_sub1 &&
+ 		git submodule update &&
+ 		(
+ 			cd sub1 &&
+@@ -67,7 +73,7 @@ create_lib_submodule_repo () {
+ 		git add sub1 &&
+ 		git commit -m "Modify sub1" &&
  
-Thanks,
-Stefan
-
-v2:
-* based on top of the series sent out an hour ago
-  "[PATCHv4 0/5] submodule embedgitdirs"
-* Try to embed a submodule if we need to remove it.
-* Strictly do not change behavior if not giving the new flag.
-* I think I missed some review comments from v1, but I'd like to get
-  the current state out over the weekend, as a lot has changed so far.
-  On Monday I'll go through the previous discussion with a comb to see
-  if I missed something.
-  
-v1:
-When working with submodules, nearly anytime after checking out
-a different state of the projects, that has submodules changed
-you'd run "git submodule update" with a current version of Git.
-
-There are two problems with this approach:
-
-* The "submodule update" command is dangerous as it
-  doesn't check for work that may be lost in the submodule
-  (e.g. a dangling commit).
-* you may forget to run the command as checkout is supposed
-  to do all the work for you.
-
-Integrate updating the submodules into git checkout, with the same
-safety promises that git-checkout has, i.e. not throw away data unless
-asked to. This is done by first checking if the submodule is at the same
-sha1 as it is recorded in the superproject. If there are changes we stop
-proceeding the checkout just like it is when checking out a file that
-has local changes.
-
-The integration happens in the code that is also used in other commands
-such that it will be easier in the future to make other commands aware
-of submodule.
-
-This also solves d/f conflicts in case you replace a file/directory
-with a submodule or vice versa.
-
-The patches are still a bit rough, but the overall series seems
-promising enough to me that I want to put it out here.
-
-Any review, specifically on the design level welcome!
-
-Thanks,
-Stefan
-
-
-Stefan Beller (14):
-  lib-submodule-update.sh: reorder create_lib_submodule_repo
-  lib-submodule-update.sh: define tests for recursing into submodules
-  make is_submodule_populated gently
-  connect_work_tree_and_git_dir: safely create leading directories
-  update submodules: add submodule config parsing
-  update submodules: add a config option to determine if submodules are
-    updated
-  update submodules: introduce is_interesting_submodule
-  update submodules: move up prepare_submodule_repo_env
-  update submodules: add submodule_go_from_to
-  unpack-trees: pass old oid to verify_clean_submodule
-  unpack-trees: check if we can perform the operation for submodules
-  read-cache: remove_marked_cache_entries to wipe selected submodules.
-  entry.c: update submodules when interesting
-  builtin/checkout: add --recurse-submodules switch
-
- Documentation/git-checkout.txt |   7 +
- builtin/checkout.c             |  28 +++
- builtin/grep.c                 |   2 +-
- dir.c                          |   2 +
- entry.c                        |  28 +++
- read-cache.c                   |   3 +
- submodule-config.c             |  22 ++
- submodule-config.h             |  17 +-
- submodule.c                    | 216 +++++++++++++++--
- submodule.h                    |  16 +-
- t/lib-submodule-update.sh      | 534 +++++++++++++++++++++++++++++++++++++++--
- t/t2013-checkout-submodule.sh  |   5 +
- unpack-trees.c                 | 115 +++++++--
- unpack-trees.h                 |   1 +
- 14 files changed, 936 insertions(+), 60 deletions(-)
-
+-		git checkout -b "replace_sub1_with_directory" "add_sub1" &&
++		git checkout -b replace_sub1_with_directory add_sub1 &&
+ 		git submodule update &&
+ 		git -C sub1 checkout modifications &&
+ 		git rm --cached sub1 &&
+@@ -75,22 +81,25 @@ create_lib_submodule_repo () {
+ 		git config -f .gitmodules --remove-section "submodule.sub1" &&
+ 		git add .gitmodules sub1/* &&
+ 		git commit -m "Replace sub1 with directory" &&
++
+ 		git checkout -b replace_directory_with_sub1 &&
+ 		git revert HEAD &&
+ 
+-		git checkout -b "replace_sub1_with_file" "add_sub1" &&
++		git checkout -b replace_sub1_with_file add_sub1 &&
+ 		git rm sub1 &&
+ 		echo "content" >sub1 &&
+ 		git add sub1 &&
+ 		git commit -m "Replace sub1 with file" &&
++
+ 		git checkout -b replace_file_with_sub1 &&
+ 		git revert HEAD &&
+ 
+-		git checkout -b "invalid_sub1" "add_sub1" &&
++		git checkout -b invalid_sub1 add_sub1 &&
+ 		git update-index --cacheinfo 160000 0123456789012345678901234567890123456789 sub1 &&
+ 		git commit -m "Invalid sub1 commit" &&
+ 		git checkout -b valid_sub1 &&
+ 		git revert HEAD &&
++
+ 		git checkout master
+ 	)
+ }
 -- 
 2.12.0.rc0.16.gd1691994b4.dirty
 
