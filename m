@@ -2,90 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8ADC02013A
-	for <e@80x24.org>; Wed, 15 Feb 2017 22:53:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 665FE2013A
+	for <e@80x24.org>; Wed, 15 Feb 2017 22:55:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752601AbdBOWw6 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 15 Feb 2017 17:52:58 -0500
-Received: from mail-it0-f51.google.com ([209.85.214.51]:37469 "EHLO
-        mail-it0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752922AbdBOWw4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Feb 2017 17:52:56 -0500
-Received: by mail-it0-f51.google.com with SMTP id x75so5589375itb.0
-        for <git@vger.kernel.org>; Wed, 15 Feb 2017 14:52:56 -0800 (PST)
+        id S1753066AbdBOWyw (ORCPT <rfc822;e@80x24.org>);
+        Wed, 15 Feb 2017 17:54:52 -0500
+Received: from mail-pg0-f50.google.com ([74.125.83.50]:35785 "EHLO
+        mail-pg0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752626AbdBOWyv (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Feb 2017 17:54:51 -0500
+Received: by mail-pg0-f50.google.com with SMTP id t188so231237pgt.2
+        for <git@vger.kernel.org>; Wed, 15 Feb 2017 14:54:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=sB/MOceFvD3xfdVIPdWO0O5TjdFjxaFF7QCqvzByKcs=;
-        b=AN0xCvta/jsM6gFu5O4YoOdEwBa3SL4XvMTRCe9fNLAFRW6pm8SpXT5pjbzroF0MkF
-         Q51gGJrvg/vJHtu+vL9Q4WAjuP0TmpEyRPyt8VTuCzYNnZInDcGTyjwwZJ/Nz5YndU+V
-         gU0DZorZC/CNa/NFOeVsyRelE+Inpd5agmGhhXZZ5LdA4eICrAWoJk7f0vs6bwYmW2Rz
-         r3GbDnLiCFLjv9ZKbXiLobZcpWcPhiFkwejg4WGipwcvuPGsj5AlOPCWAjaweFcHoUvw
-         4snl2LO4p7Vl1q/imbZT3R1gPdDvtG3ejmNMuA6Dli51+FuLoOvm4INGGFPvXFlSThwW
-         u4tQ==
+        h=subject:to:references:cc:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding;
+        bh=xZqFkUyKcMNXlArLIpMp1oRucq+fJ2DcBn7Mcdf/eD0=;
+        b=kxK9GuoK3Ezb6Es4m5D9Y5xSpSgAOX1iay1OIFO192OJG3tAWm7GqCk32U5btcmBGD
+         YdF5qgLezJVfQvQMtoCNxjU+At/u1m+XChLRnVXcW+mnxefWAC9Iz3C5Z2uBXn1gY+0C
+         QqADNUP4pCiDEDGhXGKiT9l+Ht4tKItAK52bm+0KSILCJe4V55m6VUqwRftW2gUM58G9
+         7Dfgpjr1MS2R4pbexjeVUikDaLaaFJzaqPiwUbZOgRYE3AHaKcFXLcu5Jl1UDiGXd7Vk
+         g+rJYTn+QoUITBu9QfEJs8HfXY5XV91n2B/L7asKlS9kDU0TFXphcZ1GRKSSaZMzSuAU
+         cZYQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=sB/MOceFvD3xfdVIPdWO0O5TjdFjxaFF7QCqvzByKcs=;
-        b=tGS2MuHITNp0zIvcdQ1EUf0o4KZuRC+4Cr6UcKnaSbaMZc20uqlZ5IxhLuFO+bDdTF
-         +HONmpn6/ZXfwdwO19Rgr67yc6LqgkE6W0BVyF0pgIL/FjbTaNaXP7BVtn/ruawb1DTd
-         Go3hCh/z0Zn7JzBW1kKvmq2pfKJE1kf/Ah3B7lqCQWO4F9HU0hUbtX3d4qld+lOcCLEN
-         sQx6ufUPGvclzo4oGcwV8N+Z6lA7nbnA8LFFp0bozu/c8YVUTRIQK3wpwUkLQjQr2pOg
-         mrcSXCZIAWn7iyAUue5UK+5wCqU94ygnfZiVsP0C7+5rSk48t2Cesmu6G/879eqGfNz9
-         Q+cQ==
-X-Gm-Message-State: AMke39nhXQwUDu015bEKcYxqsPrR6kCEmexyWkHFOWD4DsA5IVFXuG7WSP52AnFYdcSLEFLLKChEL0QbXeBUsnUn
-X-Received: by 10.107.16.14 with SMTP id y14mr32806122ioi.164.1487199170617;
- Wed, 15 Feb 2017 14:52:50 -0800 (PST)
+        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
+        bh=xZqFkUyKcMNXlArLIpMp1oRucq+fJ2DcBn7Mcdf/eD0=;
+        b=qjHoPXT4W399sa5uuf+0+R8c33hX6V2QFa3ggiDyAgzZZ04fid1iZlJ/NW53ZW+ZAo
+         h1v4BpuBBdlR86XEyWL7rD7QpK/RcX3gfMtxRpII6cnu2TKHAzInmNJX8/ZKRuGCP3nR
+         SVz1Mvl/h89ZM8ZfRhLYrwctXoqPMC/XrCXD2gr2JtA5LgR5ab2T9qCuHUwnNwQHTkEm
+         Hn6sA45Psj/v52BUFIyFYOKNpZqRbjiU+0iHp5c43CLQmOzRQcnoAPFj4XMEEo5zqU6n
+         0/feywyZN0fd5U3LR3quW8wIiOAo5cJXfenmp5ISZEOsWZ8SPqMLrXhPehL4zePntsE9
+         cyrw==
+X-Gm-Message-State: AMke39nk7QB9wUuPT9Q/kovMiOfUAZBeEbUq9XlpYGWAaUF65gBsjWUWYJNPVJ7ufOD4kqTt
+X-Received: by 10.98.61.207 with SMTP id x76mr39873579pfj.152.1487199290041;
+        Wed, 15 Feb 2017 14:54:50 -0800 (PST)
+Received: from twelve2.mtv.corp.google.com ([2620:0:1000:5b10:458b:2f1f:f100:cb93])
+        by smtp.gmail.com with ESMTPSA id s26sm9421604pge.33.2017.02.15.14.54.49
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 15 Feb 2017 14:54:49 -0800 (PST)
+Subject: Re: [BUG] submodule config does not apply to upper case submodules?
+To:     Junio C Hamano <gitster@pobox.com>,
+        Lars Schneider <larsxschneider@gmail.com>
+References: <20170215111704.78320-1-larsxschneider@gmail.com>
+ <xmqqzihn2smp.fsf@gitster.mtv.corp.google.com>
+Cc:     git@vger.kernel.org, sbeller@google.com
+From:   Jonathan Tan <jonathantanmy@google.com>
+Message-ID: <f238248f-0df2-19a5-581d-95c8a61b4632@google.com>
+Date:   Wed, 15 Feb 2017 14:54:48 -0800
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.7.0
 MIME-Version: 1.0
-Received: by 10.79.33.148 with HTTP; Wed, 15 Feb 2017 14:52:50 -0800 (PST)
-In-Reply-To: <xmqqh93v48mv.fsf@gitster.mtv.corp.google.com>
-References: <20170215003423.20245-1-sbeller@google.com> <20170215003423.20245-5-sbeller@google.com>
- <xmqqh93v48mv.fsf@gitster.mtv.corp.google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Wed, 15 Feb 2017 14:52:50 -0800
-Message-ID: <CAGZ79kaX1URNvzp8QuFEFnJDzSW9nE971+nvhPLOQQx4aSyBkA@mail.gmail.com>
-Subject: Re: [PATCH 04/14] connect_work_tree_and_git_dir: safely create
- leading directories
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        Brandon Williams <bmwill@google.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>
-Content-Type: text/plain; charset=UTF-8
+In-Reply-To: <xmqqzihn2smp.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Feb 15, 2017 at 10:22 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Stefan Beller <sbeller@google.com> writes:
+On 02/15/2017 10:53 AM, Junio C Hamano wrote:
+> Lars Schneider <larsxschneider@gmail.com> writes:
 >
->> In a later patch we'll use connect_work_tree_and_git_dir when the
->> directory for the gitlink file doesn't exist yet. Safely create
->> the directory first.
->>
->> Signed-off-by: Stefan Beller <sbeller@google.com>
+>> It looks like as if submodule configs ("submodule.*") for submodules
+>> with upper case names are ignored.
 >
-> Among the existing two callers, the "absorb" logic in submodule.c
-> has safe-create-leading-directory (SCLD) immediately before the call
-> to this function, which can now be lost with this change.  The other
-> one in cmd_mv() has the target directory as the result of moving the
-> original directory, and I do not think there is any corresponding
-> call that can be lost from there after this change, but it is not an
-> error to call SCLD on a path that already exists, so all is OK.
+> This observation is surprising, as the second level in three-level
+> names like "<section>.<name>.<variable>" is designed to be case
+> sensitive.  A code that uses the config API needs to do extra things
+> to cause the behaviour you showed, i.e. to get submodule.U.update
+> ignored while submodule.l.update to be honoured.  Perhaps somebody
+> downcases things too aggressively before comparing?
 >
-> Is it sensible to let the code continue with just an fprintf() (not
-> even warning() or error()) when SCLD fails?
+> This is worth making it work as expected, needless to say ;-)
 
-I'll move the code from the absorbing here (i.e. lose the
-SCLD lines there) and make it a die(_(..)) instead of fprintf here.
+I had some time to look into this, and yes, command-line parameters are 
+too aggressively downcased ("git_config_parse_parameter" calls 
+"strbuf_tolower" on the entire key part in config.c). Updating the 
+original patch to use "test_global_config" makes the test pass, and 
+commenting out the "strbuf_tolower" line in config.c also makes the test 
+pass.
 
-Thanks,
-Stefan
+I'll see if I can fix this.
