@@ -2,125 +2,135 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,
+	STOX_REPLY_TYPE shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9BFBD2013A
-	for <e@80x24.org>; Wed, 15 Feb 2017 23:53:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 809632013A
+	for <e@80x24.org>; Wed, 15 Feb 2017 23:57:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755591AbdBOXxz (ORCPT <rfc822;e@80x24.org>);
-        Wed, 15 Feb 2017 18:53:55 -0500
-Received: from mail-qt0-f196.google.com ([209.85.216.196]:36522 "EHLO
-        mail-qt0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755026AbdBOXxx (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Feb 2017 18:53:53 -0500
-Received: by mail-qt0-f196.google.com with SMTP id h53so233505qth.3
-        for <git@vger.kernel.org>; Wed, 15 Feb 2017 15:53:53 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=LoDBNGmz0MakWQEkcqT7Zf8wNhpg6kpz0hQvQkxriUc=;
-        b=X01Oz7LtlmHvyB2wm1qWcFcld/t+c4em71Nq82JmpZ+nsiak68FcIy+LWB9Hsz8/a/
-         AQIoB91hoA08foFS2INqsZXfyG6MpNauXfFJ8dkAW8vVSCYBjHSYKYqEPxb7bFNz/o3S
-         KH9yIORHi5l+Q9iv9Yfh+yC1aknCGqOiP39e9NBLz6is+IRcNDbeT3XyvxgN0DbjJ6r3
-         LG/c5aAnbE+sYGBVLPNTphsF/pkcpUHNT5vaNhJiYZB7HxDp9Wm7YtRC1OB96cZAsqxb
-         4ipi8TLsvs57WyAQ6nuEYT21e6bmgdYVwJsL5JE8WIorPfvwhJsaizJnygtaTIP3S7wt
-         wwsw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=LoDBNGmz0MakWQEkcqT7Zf8wNhpg6kpz0hQvQkxriUc=;
-        b=YSlTDKhViclUGJJfuX26F++0EZxj7/WNjv1aNLIk2ThLe3oGBi3ikcDwHHZiOmskm8
-         9ssYS0Zu1CD5pCLguGztlSsGdobktew5lBAjG2nDWrxv9laEDl/PnwEZaznD+7PoiQ3S
-         jSgatI6DCqcjVIH53QK8mUCMFZujXh0J5Bx1YBYp8cUTYIYlZYJ/hK1u4Pp4o37HLs0Y
-         rxv9KOnmQap5HrAZGodKnMZ0Jc/7zp52FdzYJljUxLJm9If13CZsRPSbKzHWO8GLYAJ/
-         5kJAw2jzbjWv4d+RIAndmjQI/YMopXqSLHyvI5qgpAiUYrDuIlvN/Yf2iLiJzzQSXqC4
-         I8GA==
-X-Gm-Message-State: AMke39lMjuzMbtEAV5Q9QHwQFNAURGIWYFtMQXvqn5KMMW+V22zNfQJrLaLeZI6qowkt9FKR+q8fnPeE9LjP2A==
-X-Received: by 10.200.35.105 with SMTP id b38mr33846907qtb.1.1487202832648;
- Wed, 15 Feb 2017 15:53:52 -0800 (PST)
+        id S1755890AbdBOX5c (ORCPT <rfc822;e@80x24.org>);
+        Wed, 15 Feb 2017 18:57:32 -0500
+Received: from smtp-out-6.talktalk.net ([62.24.135.70]:15582 "EHLO
+        smtp-out-6.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755531AbdBOX5a (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Feb 2017 18:57:30 -0500
+Received: from PhilipOakley ([92.31.218.76])
+        by smtp.talktalk.net with SMTP
+        id e9RrcusbFgKste9RrcP1di; Wed, 15 Feb 2017 23:57:23 +0000
+X-Originating-IP: [92.31.218.76]
+X-Spam: 0
+X-OAuthority: v=2.2 cv=GdBVpkfL c=1 sm=1 tr=0 a=e6L6E7eW+5Nb7SO+DvSdIg==:117
+ a=e6L6E7eW+5Nb7SO+DvSdIg==:17 a=8nJEP1OIZ-IA:10 a=pGLkceISAAAA:8
+ a=ybZZDoGAAAAA:8 a=uPZiAMpXAAAA:8 a=kE_PIER_e4T5cFN5X-QA:9 a=wPNLvfGTeEIA:10
+ a=6kGIvZw6iX1k4Y-7sg4_:22 a=0RhZnL1DYvcuLYC8JZ5M:22 a=svzibyHiZmA4t4YY0eFS:22
+Message-ID: <77C7E23E18774409AA1818B12C844985@PhilipOakley>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From:   "Philip Oakley" <philipoakley@iee.org>
+To:     "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+Cc:     "Christian Couder" <christian.couder@gmail.com>,
+        "Junio C Hamano" <gitster@pobox.com>,
+        <git-for-windows@googlegroups.com>, "git" <git@vger.kernel.org>
+References: <alpine.DEB.2.20.1702101241210.3496@virtualbox> <xmqq60kdbqmy.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1702142150220.3496@virtualbox> <xmqqd1ek8oqo.fsf@gitster.mtv.corp.google.com> <CAP8UFD1+AgBVqSh=wHteM3uKO+55ZqqD4cHzBUfN0KTPXyvutQ@mail.gmail.com> <E2C1B7A8FBF94C8CB1C9C5754D882800@PhilipOakley> <alpine.DEB.2.20.1702151509251.3496@virtualbox>
+Subject: Re: [git-for-windows] Re: Continuous Testing of Git on Windows
+Date:   Wed, 15 Feb 2017 23:57:23 -0000
+Organization: OPDS
 MIME-Version: 1.0
-Received: by 10.12.178.131 with HTTP; Wed, 15 Feb 2017 15:53:31 -0800 (PST)
-In-Reply-To: <CAGZ79kZgmtH1-1i5Fenq8kELbafBL1tCx66SGqGVBmjbpLoBGQ@mail.gmail.com>
-References: <20170215111704.78320-1-larsxschneider@gmail.com>
- <xmqqzihn2smp.fsf@gitster.mtv.corp.google.com> <f238248f-0df2-19a5-581d-95c8a61b4632@google.com>
- <xmqqy3x712if.fsf@gitster.mtv.corp.google.com> <xmqqtw7v123n.fsf@gitster.mtv.corp.google.com>
- <CAGZ79kaKhjNPGRVJ6H=CMKQ1RKXmVvSPOMo4c3haNeS60aWQXA@mail.gmail.com>
- <xmqqh93v10vy.fsf@gitster.mtv.corp.google.com> <CAGZ79kZgmtH1-1i5Fenq8kELbafBL1tCx66SGqGVBmjbpLoBGQ@mail.gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-Date:   Wed, 15 Feb 2017 15:53:31 -0800
-X-Google-Sender-Auth: QOHPpSBHp784PKfXBXIfY3WP-Sc
-Message-ID: <CAPc5daVwYNvChw8_q7m=NS8aM5QKRMvUKN6r8PMycLZKy=PLKg@mail.gmail.com>
-Subject: Re: [BUG] submodule config does not apply to upper case submodules?
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Jonathan Tan <jonathantanmy@google.com>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain;
+        format=flowed;
+        charset="iso-8859-1";
+        reply-type=original
+Content-Transfer-Encoding: 7bit
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+X-CMAE-Envelope: MS4wfCE7kfr5FdPCb3RG2i+rbLeiuYIOQYotwVvMPx3PCQg3G2oIHZtfJRJFFmmQU/hRmxlt2PrHUs9+8fyHR+257Eh2h3ItjcQ1AXMeUCcm6zbyQMZY++mI
+ cc2DFoWq0sZmWoMeK4UUTPrhT+PmhSvGSLSHY0btM9PdxwOVnZEduIOgykmi5T0i8EebPaGVT+o1jRvz/m5YQgzbOxMe4UFn0QvFtpu2xk1Iw5h8PWfjt4mx
+ 1mcMmXXIOvk1op788KKvJZ5+884hH+amKRgYFQUIDmTxe/oXlUJ4Zk+MpNm6YQ9piFCHYw8ewksJjA8BR1K/cA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ahh, that would work, too.
+From: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+> Hi Philip,
+>
+> On Tue, 14 Feb 2017, Philip Oakley wrote:
+>
+>> From: "Christian Couder" <christian.couder@gmail.com>
+>> > On Tue, Feb 14, 2017 at 10:08 PM, Junio C Hamano <gitster@pobox.com>
+>> > wrote:
+>> > > Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+>> > >
+>> > > > On Mon, 13 Feb 2017, Junio C Hamano wrote:
+>> > > >
+>> > > > > Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+>> > > > >
+>> > > > > > That is why I taught the Git for Windows CI job that tests the
+>> > > > > > four upstream Git integration branches to *also* bisect test
+>> > > > > > breakages and then upload comments to the identified commit on
+>> > > > > > GitHub
+>> > > > >
+>> > > > > Good.  I do not think it is useful to try 'pu' as an aggregate
+>> > > > > and expect it to always build and work [*1*], but your "bisect
+>> > > > > and pinpoint" approach makes it useful to identify individual
+>> > > > > topic that brings in a breakage.
+>> > > >
+>> > > > Sadly the many different merge bases[*1*] between `next` and `pu`
+>> > > > (which are the obvious good/bad points for bisecting
+>> > > > automatically) bring my build agents to its knees. I may have to
+>> > > > disable the bisecting feature as a consequence.
+>> >
+>> > Yeah, this is a bug in the bisect algorithm. Fixing it is in the GSoC
+>> > 2017 Ideas.
+>>
+>> There are also a few ideas at the SO answers:
+>> http://stackoverflow.com/a/5652323/717355
+>
+> Thanks for that link!
+>
+> However, my main aim was not to get distracted into yet another corner of
+> Git that needs to be fixed (I am on enough of those projects already).
+>
+> I was merely surprised (and not in a good way) that a plenty ordinary
+> bisect between `next` and `pu` all of a sudden tested a *one year old*
+> commit whether it was good or not.
+>
+> And I doubt that the strategy to mark all second parents of all merge
+> commits in pu..next as "good" would work well, as the merge bases *still*
+> would have to be tested.
 
-On Wed, Feb 15, 2017 at 3:43 PM, Stefan Beller <sbeller@google.com> wrote:
-> On Wed, Feb 15, 2017 at 3:37 PM, Junio C Hamano <gitster@pobox.com> wrote:
->> Stefan Beller <sbeller@google.com> writes:
->>
->>> Yes; though I'd place it in strbuf.{c,h} as it is operating
->>> on the internals of the strbuf. (Do we make any promises outside of
->>> strbuf about the internals? I mean we use .buf all the time, so maybe
->>> I am overly cautious here)
->>
->> I'd rather have it not use struct strbuf as an interface.  It only
->> needs to pass "char *" and its promise that it touches the string
->> in-place without changing the length need to be documented as a
->> comment before the function.
->>
->>>>  config.c | 16 +++++++++++++++-
->>>>  1 file changed, 15 insertions(+), 1 deletion(-)
->>>>
->>>> diff --git a/config.c b/config.c
->>>> index c6b874a7bf..98bf8fee32 100644
->>>> --- a/config.c
->>>> +++ b/config.c
->>>> @@ -201,6 +201,20 @@ void git_config_push_parameter(const char *text)
->>>>         strbuf_release(&env);
->>>>  }
->>>>
->>>> +static void canonicalize_config_variable_name(struct strbuf *var)
->>>> +{
->>>> +       char *first_dot = strchr(var->buf, '.');
->>>> +       char *last_dot = strrchr(var->buf, '.');
->>>
->>> If first_dot != NULL, then last_dot !+ NULL as well.
->>> (either both are NULL or none of them),
->>> so we can loose one condition below.
->>
->> I do not think it is worth it, though.
->>
->>>> +       char *cp;
->>>> +
->>>> +       if (first_dot)
->>>> +               for (cp = var->buf; *cp && cp < first_dot; cp++)
->>>> +                       *cp = tolower(*cp);
->>>> +       if (last_dot)
->>>> +               for (cp = last_dot; *cp; cp++)
->>>> +                       *cp = tolower(*cp);
->>
->>         if (first_dot) {
->>                 scan up to first dot
->>                 if (last_dot)
+I was expecting that if all the second parents were marked as good, then 
+there would be no merge bases, as there shouldn't be a forked graph, just 
+the linear string of pearls - if bisect doesn't do that then there's an 
+failed optimisation to be had.
+
+I don't see anything in the `git bisect --help` page that would indicate 
+that the merges themselves are omitted from the bisection.
+
 >
-> just leave out the 'if (last_dot)' ?
+> I guess what I have to resort to is this: if I know that `next` tests
+> fine, and that `pu` fails, I shall mark all merge bases as "good". I am
+> sure this has its own set of pitfalls, undoubtedly costing me more time on
+> that front...
 >
->     if (first_dot)  {
->         /* also implies last_dot */
->         do 0 -> first
->         do last -> end
->     }
+> But at least my cursory analysis of this idea seems to make sense: I use
+> `next` essentially as a catch-all to verify that the breakage has entered
+> `pu`, but not yet `next`. This reasoning makes sense, given that we know
+> the waterfall topology of pu/next/master/maint: patches enter from left to
+> right, i.e. anything that entered `pu` may later enter `next`, but not
+> vice versa.
+
+It may even be worth 'splitting' the pu branch sequence into the existing pu 
+(with merges from series that are selected as reasonable), and then a pr 
+branch (public review?) on top of that holding the rest of the series that 
+have been submitted, so that the CI can do a full test on the tips of them 
+to support those devs with limited test capability.
+
+
+>
+> Ciao,
+> Dscho
+> 
+
