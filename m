@@ -2,115 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EC8D92013C
-	for <e@80x24.org>; Wed, 15 Feb 2017 02:13:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 806582013C
+	for <e@80x24.org>; Wed, 15 Feb 2017 02:41:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751387AbdBOCNx (ORCPT <rfc822;e@80x24.org>);
-        Tue, 14 Feb 2017 21:13:53 -0500
-Received: from castro.crustytoothpaste.net ([75.10.60.170]:53368 "EHLO
-        castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1750791AbdBOCNw (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 14 Feb 2017 21:13:52 -0500
-Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 67CA8280AD;
-        Wed, 15 Feb 2017 02:13:51 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
-        s=default; t=1487124831;
-        bh=j5+SQlcA6ArLj0f3LgoFLmBSailTzfOj1eM0pNNmIvg=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=NmxPa9ULlKY3I0QTeEJz6xXEvGssWHx2QZXALAbftZQXsLEX9VLrd+IIFtS1wXbVe
-         8PCr/kObeU4rkttHhOTaQi2CYJRFH5m4y3BnEXJzPjMaM+QaVSLruuhc/9G9t4Ty4K
-         LgFt06ZcprsXnvYMywZopc6IkDLKc/P7HsBEmbyl96v/tFavL/epvBhZF2l9ZhgrRf
-         UPUzmU+1+3Y2hCkQ3G1Nz5jTZJ1J+q9DDORrJ8plQlzWlfBHGIMhKRWIxyBjmo2DSz
-         y8SOdvEwbece5aiy06AjFurAfrgb/tJ2JBH2cmKQRXcJBC8grhBW0oGmmvGeZjEoUe
-         RY6NlwC6oj0FgYhbFJcVT6DiAVbB9tcd6p8ZAfgCV+fJ9LKDpmuB5D1zRTfkp5wXej
-         NgZ2qiFuyyv7u7NtkuQpd1a2W4bzQZIlRFEFd+Q8kMvg45Wdy4ygwBer7tWjZhMj/t
-         aSSJ12AhwcW+PJUbPWphAmBhqToGq6CqPhDIzytZK7VNmWuiZ1X
-Date:   Wed, 15 Feb 2017 02:13:47 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     git@vger.kernel.org, bmwill@google.com, jrnieder@gmail.com,
-        gitster@pobox.com
-Subject: Re: [RFCv3 PATCH 00/14] Checkout aware of Submodules!
-Message-ID: <20170215021347.q6ko55eqj64roqcp@genre.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Stefan Beller <sbeller@google.com>, git@vger.kernel.org,
-        bmwill@google.com, jrnieder@gmail.com, gitster@pobox.com
-References: <20170215003423.20245-1-sbeller@google.com>
+        id S1751516AbdBOCl1 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 14 Feb 2017 21:41:27 -0500
+Received: from mail-pf0-f195.google.com ([209.85.192.195]:34921 "EHLO
+        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751410AbdBOCl0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Feb 2017 21:41:26 -0500
+Received: by mail-pf0-f195.google.com with SMTP id 68so5611055pfx.2
+        for <git@vger.kernel.org>; Tue, 14 Feb 2017 18:41:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=VXjOXoCIGLj51NK2kwxgxaR3kD45pXrSXIXmxx3nJ/8=;
+        b=aHkyNlll2q7WUXF+draHz8kvW2KeDAHGa0vq9K6DqfQ2rrFKYrmIlMc4/cVEONhqN2
+         3XgcI/Q0kgM03V2OytK1+qxB2oMYP5Ls3mein/mvRlzIdrOV3jtii2vydmFzFVKgroZW
+         omL3pE9r2vxGIc/TN9R50qvxfbaDuJrLK2Kmzcpd30d88lUDVcctRT9LyrnmpqJJQFzu
+         Cxlh3po+HvdQDANNld09F6RqQSaQb/ZDuQI3PoONJA1YKz7ul+uSXgWXWlHQ6CKXkuaE
+         5cx+fOgULJTzhRvWlYR1sNY3rsw0fggS2fvmousj+7MMXe61hep9czMnoEG32tnMxxkq
+         IjWQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=VXjOXoCIGLj51NK2kwxgxaR3kD45pXrSXIXmxx3nJ/8=;
+        b=RRpYxctSxZEUbFZxiPbE1Yn/7invq9Q4aGVQAQmy4zojTeYA4rDwcHs/RC/wjVc93V
+         3Dk55ul9ntV7tPHtrDTo5Y4iT5As7Y3/Jte84A+39CPGqXqmhcDm6lHHw7rg3Po+eAQA
+         dsSvWOGHIuZnym6xXOJeaNnyfQ197vF4+q+z2iVJNX1AwyFjuPE1pUp9OB39HOJkMdwz
+         LqwCHjzjJAj8ZAuVSoajGln+nnrKh/GjXieNbIPBaxhN9JlG2rBiXUnFwPWf+sVlYumx
+         SoIfzNkSx+GCSGj+wEGQp6AmKG8oXdWhSFR1JO3Wy6IhOUpyw+qCyZ1EJFuZvNKJWAT9
+         0rEQ==
+X-Gm-Message-State: AMke39nqMZf0t/NpZWroD9K6YB60K8KKdTsnTsowJ+uANEaST/xVmds4FnSzjVk8sH5e2w==
+X-Received: by 10.98.163.23 with SMTP id s23mr34636075pfe.60.1487126485453;
+        Tue, 14 Feb 2017 18:41:25 -0800 (PST)
+Received: from localhost ([2620:0:1000:8622:2447:f72c:8fdf:75c6])
+        by smtp.gmail.com with ESMTPSA id l3sm3645667pgn.10.2017.02.14.18.41.23
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Tue, 14 Feb 2017 18:41:23 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
+Cc:     Git mailing list <git@vger.kernel.org>
+Subject: Re: [PATCH] completion: restore removed line continuating backslash
+References: <20170213192036.10671-1-szeder.dev@gmail.com>
+        <xmqqfujhddl2.fsf@gitster.mtv.corp.google.com>
+        <CAM0VKjmU57saSfyRuoWfC+UZFNypH1Wp9X33VgzPq9fatD=qtg@mail.gmail.com>
+Date:   Tue, 14 Feb 2017 18:41:22 -0800
+In-Reply-To: <CAM0VKjmU57saSfyRuoWfC+UZFNypH1Wp9X33VgzPq9fatD=qtg@mail.gmail.com>
+        ("SZEDER =?utf-8?Q?G=C3=A1bor=22's?= message of "Wed, 15 Feb 2017 02:35:28
+ +0100")
+Message-ID: <xmqqtw7w41m5.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="nmvqlekaspoze56s"
-Content-Disposition: inline
-In-Reply-To: <20170215003423.20245-1-sbeller@google.com>
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.9.0-1-amd64)
-User-Agent: NeoMutt/20170113 (1.7.2)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+SZEDER Gábor <szeder.dev@gmail.com> writes:
 
---nmvqlekaspoze56s
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+>> If you feel uncomfortable and want these to cook longer, please tell
+>> me so.
+>
+> Well, it was mainly my surprise that a 20+ patch series arriving so
+> late that it gets queued on top of -rc0 would still make it into the
+> release.
 
-On Tue, Feb 14, 2017 at 04:34:09PM -0800, Stefan Beller wrote:
-> Integrate updating the submodules into git checkout, with the same
-> safety promises that git-checkout has, i.e. not throw away data unless
-> asked to. This is done by first checking if the submodule is at the same
-> sha1 as it is recorded in the superproject. If there are changes we stop
-> proceeding the checkout just like it is when checking out a file that
-> has local changes.
->=20
-> The integration happens in the code that is also used in other commands
-> such that it will be easier in the future to make other commands aware
-> of submodule.
->=20
-> This also solves d/f conflicts in case you replace a file/directory
-> with a submodule or vice versa.
->=20
-> The patches are still a bit rough, but the overall series seems
-> promising enough to me that I want to put it out here.
->=20
-> Any review, specifically on the design level welcome!
+It all depends on what area the changes are about ;-)
 
-Overall, I'm very pleased with this.  I don't really have any
-design-level comments at this point, only small nits.  I'm considering
-building and testing it out at work, where this would be extremely
-useful.  I'm therefore hoping to see how it works under real-world
-conditions shortly.
---=20
-brian m. carlson / brian with sandals: Houston, Texas, US
-+1 832 623 2791 | https://www.crustytoothpaste.net/~bmc | My opinion only
-OpenPGP: https://keybase.io/bk2204
+Not meaning to make light of your contribution, but if the upcoming
+version of Git shipped with a slightly broken completion, and the
+breakage is severe enough, the only thing we need to do is to do a
+maintenance release that reverts a single script.  Distro packagers
+may do that for us.  While waiting, the user can choose not to load
+the completion and can keep using Git just fine.  A broken
+"mergetool" would be similar in that a workaround to inspect "git
+diff" is available.  If we break "pull" or "commit" on the other
+hand, the necessary workaround would be a lot more involved.
 
---nmvqlekaspoze56s
-Content-Type: application/pgp-signature; name="signature.asc"
+Some changes in low-impact areas can wait without reducing the
+end-user value of the new release, but if the risk of regression is
+small, I favour merging them, rather than postponing them for one
+cycle, if only to reduce the number of patches that I need to hold
+onto.  Patches to clarify existing documentation fall into this
+category.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.1.18 (GNU/Linux)
+My perception of "risk of regression" obviously is affected by the
+size of the series, and 20+ is certainly on the larger side.  But
+other things also come into the picture.  Patches from an author who
+knows the area the patches touch very well and with track record of
+not causing embarrassing regressions, would make me feel safer than
+patches from others, for example.
 
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlijuVsACgkQv1NdgR9S
-9ouxXg/+IF1XKeoEmRWw6IJSbRob5X+vtdzAp/DPHTUgGSnGDJk0OelnWBOZm49Z
-4WCF0FHjnnusAZoCKC4ARHrSZQkH05oxm45vNq8DCHIgNUOX1ef/p6N8JjcXKU7Y
-7eyVlYzO9o2UBGYLtf5OA/LgdjkEfevrI48nOqmxgB02ZXZghxbrHs0J1+OGpTsn
-EsNzocwrEoFmw9yF1dlm5qgrkyRNaAjJ5WCqjnHRoevFKheZbIm54r7suoydPNKE
-RAUeEVDRNH1bAHCv2KnAl0ClWu3PrBlhdjx6UVNEGacsePwOeXUyROhC5WCFf1U6
-vjFqvCWw8k7c/4eGy9aNM47OC5QFT5oUZxDO+WLeqFmfutOtnjHJViOahHNFPdlV
-49YgJ1fAqE7EAPcxxFXuZIVZ2Q7r5t6/RZqbtR+h/6gyHFi+ONqPvk4A4SKA8/bm
-l1PaEV2CCWcWaQNIOdKz2yEY0U8DlaOIOZIvd4afROF27c6ikUOkXsegiho7ovGp
-0EuPXQn14t5iETFZ8iaTF9sCT0L39R5CnF1+4E7ny5LeobczjS1S2ZgwBob5FKQh
-HJlrHqWqhQAbgvXYVUWHdxUajzqbw8jxCZlcJjZ0GvokjFwnJDjt+3b9kSkZPtNV
-evhEdKity8rVmp+qGbUuDOuqKGgGamwzCUSAEYCQysPB2mPqXJE=
-=aQjQ
------END PGP SIGNATURE-----
-
---nmvqlekaspoze56s--
