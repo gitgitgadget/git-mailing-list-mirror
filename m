@@ -2,85 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BA91C2013A
-	for <e@80x24.org>; Wed, 15 Feb 2017 21:51:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9B91A2013A
+	for <e@80x24.org>; Wed, 15 Feb 2017 21:51:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752173AbdBOVve (ORCPT <rfc822;e@80x24.org>);
-        Wed, 15 Feb 2017 16:51:34 -0500
-Received: from mail-wr0-f174.google.com ([209.85.128.174]:34950 "EHLO
-        mail-wr0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752061AbdBOVvd (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Feb 2017 16:51:33 -0500
-Received: by mail-wr0-f174.google.com with SMTP id c4so42190386wrd.2
-        for <git@vger.kernel.org>; Wed, 15 Feb 2017 13:51:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=xbBH60ItV00MdNezuexd6OGDMJmWlikd/jTBQm3vmbs=;
-        b=N3WGhebEFMCbBv/Hw65wrHMPCAZ7s0emmd+QeVBrsJcLsJV+94pwmDzV5ph3kk+iij
-         JaNgZWH/1DkVaTzIzesBqvvpJTH4vOXn6DU1l05ylmgwtI/3LO0pzKSH02GZ1phpa5L2
-         6zTnH7Es0Ai1L0TNE1lh/NWVPFxADARkJwdD8fqvRdGq2WNuQTH8mUZNFvOIWZSxkchf
-         923oTwJ+Erce4ZRxi/q0bPAP+CaDoSe910iWPTjgFQ6604W6tP80HJAUpagD22XEswNh
-         PIL9LfpcLk9i0S/eOdFJxQ7YfFvP2ia+Iwzzx9ODcZZXjUQagj1MIQO+AU5qYezPmJTV
-         QC2g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=xbBH60ItV00MdNezuexd6OGDMJmWlikd/jTBQm3vmbs=;
-        b=FuJrXarK6SbORaJ/hQHUHDcm8EmTwxXa3Hv5yiKdu29H0LmFI/e/6+Zy5LXTH/GJ9K
-         ZFR4cQpjyN2OcfoFhk63UJgyMY5yPDA9fqTURb9leYk75thPOpX03PWROw7MYbeiy6L+
-         7H3yAX/Wrdsa4o2q6hcjxuJgbG3Z8b1+XwZJelLIaJoKu4i256yyWo39jSrmWAv6URnd
-         lbz3+d0qBh8LYhAGLfOg3QK5iwT6aQ5Lv2Bo4imGDphf6yHzNe8Ft0zppd1tTHOojqsl
-         gqD+iJtCG5Ir2X6r89L5kbmv4Q2euu33M86s7/a5Y4j3DMc3ceObZq2AWQsDndh7i2A1
-         kHDw==
-X-Gm-Message-State: AMke39ksKG89vWBKzV8oU6RboShENcYxvIFbnaials81g/B8GTT7IFODpmju7xPtnKhpbyLDTawnqM04urHmLQ==
-X-Received: by 10.223.165.87 with SMTP id j23mr36752420wrb.79.1487195491466;
- Wed, 15 Feb 2017 13:51:31 -0800 (PST)
+        id S1752350AbdBOVvy (ORCPT <rfc822;e@80x24.org>);
+        Wed, 15 Feb 2017 16:51:54 -0500
+Received: from cloud.peff.net ([104.130.231.41]:56024 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751994AbdBOVvx (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Feb 2017 16:51:53 -0500
+Received: (qmail 24605 invoked by uid 109); 15 Feb 2017 21:51:53 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 15 Feb 2017 21:51:53 +0000
+Received: (qmail 17928 invoked by uid 111); 15 Feb 2017 21:51:54 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 15 Feb 2017 16:51:54 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 15 Feb 2017 16:51:51 -0500
+Date:   Wed, 15 Feb 2017 16:51:51 -0500
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     =?utf-8?B?SsOhY2h5bSBCYXJ2w61uZWs=?= <jachymb@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: Confusing git messages when disk is full.
+Message-ID: <20170215215151.a5chtxyjhbe3og4p@sigill.intra.peff.net>
+References: <CABpqov=FE-h_2s=O9fkSjFjgFXSy6hDwc2fu5ijiVvkaLx9f_Q@mail.gmail.com>
+ <20170215213221.lnraiktneokpk3mg@sigill.intra.peff.net>
+ <xmqqk28r2kk4.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-Received: by 10.80.138.211 with HTTP; Wed, 15 Feb 2017 13:51:30 -0800 (PST)
-In-Reply-To: <20170215212157.qgscyglgzrd5cplf@sigill.intra.peff.net>
-References: <CAOxYW4z=bABqhmHWCc9rizykMcGBjDvqLEuqpJ6DtPve5442Fw@mail.gmail.com>
- <20170215212157.qgscyglgzrd5cplf@sigill.intra.peff.net>
-From:   Fabrizio Cucci <fabrizio.cucci@gmail.com>
-Date:   Wed, 15 Feb 2017 21:51:30 +0000
-Message-ID: <CAOxYW4xqk4j6Uu86jq2Vi9Bpgihxfr2Tw-DQLc+7YTZiPmDtiA@mail.gmail.com>
-Subject: Re: Back quote typo in error messages (?)
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <xmqqk28r2kk4.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 15 February 2017 at 21:21, Jeff King <peff@peff.net> wrote:
+On Wed, Feb 15, 2017 at 01:47:23PM -0800, Junio C Hamano wrote:
 
-> On Wed, Feb 15, 2017 at 09:06:46PM +0000, Fabrizio Cucci wrote:
->> Shouldn't the wrong flag be surrounded by two single quotes instead of
->> a back quote and a single quote?
->
-> Some people use the matched backtick/single-quote to emulate the
-> non-symmetric start/end quotes used in traditional typography (and in
-> fact, ``foo'' in languages like asciidoc are typically rendered using
-> smart-quotes).
+> Jeff King <peff@peff.net> writes:
+> 
+> > On Sun, Feb 12, 2017 at 05:37:30PM +0100, Jáchym Barvínek wrote:
+> > If FETCH_HEAD failed to write because of a full disk (or any other
+> > reason), then the right thing is for "git fetch" to write an error to
+> > stderr, and git-pull should not continue the operation at all.
+> >
+> > If we're not doing that, then that is certainly a bug.
+> 
+> One suspect would be store_updated_refs().  We do catch failure from
+> fopen("a") of FETCH_HEAD (it is truncated earlier in the code when
+> the --append option is not given), but all the writes go through
+> stdio without error checking.
+> 
+> I wonder if this lazy patch is sufficient.  I want to avoid having
+> to sprinkle
+> 
+> 	if (fputs("\\n", fp))
+> 		error(...);
+> 
+> all over the code.
 
-I definitely didn't know about the use of them in traditional typography!
-But I couldn't find any example of non-symmetric quotes in AsciiDoc...
+Heh, I was just tracking down the exact same spot.
 
-> So I think what you are seeing is not wrong in the sense of being
-> unintended by the author of the message.
+I think that yes, the lazy check-error-flag-at-the-end approach is fine
+for stdio.
 
-I had the opposite impression from the quick search in the GitHub
-repo, this is why I wrote here looking for some confirmation.
+I tried to reproduce the original problem on a full loopback filesystem,
+but got:
 
-> I don't know how much we care about standardizing that punctuation.
+  fatal: update_ref failed for ref 'ORIG_HEAD': could not write to '.git/ORIG_HEAD'
 
-I mentioned it was very minor but, still, in my opinion a project like
-Git deserves consistent punctuation! :)
+I suspect you'd need the _exact_ right amount of free space to get all
+of the predecessor steps done, and then run out of space right when
+trying to flush the FETCH_HEAD contents.
+
+> diff --git a/builtin/fetch.c b/builtin/fetch.c
+> index b5ad09d046..72347f0054 100644
+> --- a/builtin/fetch.c
+> +++ b/builtin/fetch.c
+> @@ -868,7 +868,10 @@ static int store_updated_refs(const char *raw_url, const char *remote_name,
+>   abort:
+>  	strbuf_release(&note);
+>  	free(url);
+> -	fclose(fp);
+> +	if (ferror(fp))
+> +		rc = -1;
+> +	if (fclose(fp))
+> +		rc = -1;
+>  	return rc;
+
+Yeah, I think this works. Normally you'd want to flush before checking
+ferror(), but since you detect errors from fclose, too, it should be
+fine.
+
+We probably should write something stderr, though. Maybe:
+
+  if (ferror(fp) || fclose(fp))
+	rc = error_errno("unable to write to %s", filename);
+
+-Peff
