@@ -7,131 +7,105 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F01E82013A
-	for <e@80x24.org>; Wed, 15 Feb 2017 12:32:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A5E9D2013A
+	for <e@80x24.org>; Wed, 15 Feb 2017 12:49:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751840AbdBOMct (ORCPT <rfc822;e@80x24.org>);
-        Wed, 15 Feb 2017 07:32:49 -0500
-Received: from mout.gmx.net ([212.227.15.18]:62109 "EHLO mout.gmx.net"
+        id S1751864AbdBOMtB (ORCPT <rfc822;e@80x24.org>);
+        Wed, 15 Feb 2017 07:49:01 -0500
+Received: from mout.gmx.net ([212.227.15.18]:53913 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751557AbdBOMcs (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Feb 2017 07:32:48 -0500
-Received: from virtualbox ([37.201.192.48]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MIu7d-1cgRjV09zV-002WBD; Wed, 15
- Feb 2017 13:32:40 +0100
-Date:   Wed, 15 Feb 2017 13:32:39 +0100 (CET)
+        id S1751609AbdBOMtA (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Feb 2017 07:49:00 -0500
+Received: from virtualbox ([37.201.192.48]) by mail.gmx.com (mrgmx001
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MQiVh-1co6xn3TCf-00Tyao; Wed, 15
+ Feb 2017 13:48:46 +0100
+Date:   Wed, 15 Feb 2017 13:48:46 +0100 (CET)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
-To:     Johannes Sixt <j6t@kdbg.org>
-cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     git@vger.kernel.org, Johannes Sixt <j6t@kdbg.org>,
         Jeff Hostetler <jeffhost@microsoft.com>
 Subject: Re: [PATCH] mingw: make stderr unbuffered again
-In-Reply-To: <ef8549ea-7222-fdd0-739d-855ad428e39c@kdbg.org>
-Message-ID: <alpine.DEB.2.20.1702151312330.3496@virtualbox>
-References: <c88612da0a62bfcbc3e278296f9d3eb010057071.1487025228.git.johannes.schindelin@gmx.de> <xmqqlgt9btrv.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1702141545380.3496@virtualbox> <ef8549ea-7222-fdd0-739d-855ad428e39c@kdbg.org>
+In-Reply-To: <xmqq37fga9rn.fsf@gitster.mtv.corp.google.com>
+Message-ID: <alpine.DEB.2.20.1702151332540.3496@virtualbox>
+References: <c88612da0a62bfcbc3e278296f9d3eb010057071.1487025228.git.johannes.schindelin@gmx.de> <xmqqlgt9btrv.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1702141545380.3496@virtualbox> <xmqq37fga9rn.fsf@gitster.mtv.corp.google.com>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:bSpzqgBygXSK0m/Yd5mxa7Q7ouyH3ymkmo6wfbj9A4Soxia2NX7
- I6lIzACr28XpiyOIEZr5jL+UpwPumWdwKWwJOM/Hg8hIMegwM9a3uDkdFqVIdfqs+mrHtGq
- luFR/TxGLGD+Ah6mNm+9cgcOzLHeA8uls36vBKZXtOXirbqJ0Q4+tkiAEJOxby2yDU3f8Jl
- qUSwde/YqIuBZdvajB2cQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:r6igC0IwKxg=:vpnaiEBkJBMvoN2GjaaAdt
- 3P2x6iVIViZNzLOz931wtN4nDmPkGp6RXlRDjXLtN6ZtGTPd3VdXtaxApKpDZDjuD7Kv9Gc6K
- iNm/uEHssm1qaZ0Mad9yY4x5FdzhOPSh0AuuvuneXNj2Nt/nIHmyXEGLd/wpMdWLElfub3WR4
- LP6MXpRcigMJPI6fe5GTGy2wetgMYdxxndSvBBfW0oDO9/rkQt78tSlx/U1DtHOPXOPi0G6sb
- qCMgcdONrSW2mmcjI0c88aioxzbIR35S11WOcedvMFSBFaWNuZVTUyH5iAdoMtd3pgDQldw7P
- mt0S8b86Ee4nXJTzuek8qfT92zzuMBsTJYhXnO3BOJMKOmrKfz2z0+FPT21Fx6014MExsd8uq
- nP2/VOAh0222HcmmWtPanPijfXv35OCTyh8j0/TD54GXBSfFC2kogKdjG1ppUSfZLk/OUyC0J
- +Moak9K0okvdeZd+uj+tjha2jJobGYpz7vDl4XFbj4JlHtbYRSZxmdIaboSw9Qepp8LBmnvRt
- 5K75MEdpDEMzGTszvRPlXN07TFJIEBtQmBQ28X1c1245i3hVILGoW3TmlJVYEkBpWVTDR8wS5
- pUQEKW8ChYYyrcoHP3RbO5AXfmv2YCg8O+9jhFTwARXQEkpGAwF5t04SzV0latGwiB3ZNKuFk
- cZoMNLIyaYiNV99mB/obOih2M0eFuciFEnAEVhiR0pJk42SXv+EIqv2s0/ilg+OC5Kn2JnLGj
- Az7WcTFR3nwYy0WuAewH3LEfRE0MJwkcGOE4mri6meNtTkaqQE7ehDEf4p0DWAk3HvUXR9cOa
- hTZvNzi
+X-Provags-ID: V03:K0:h5NALFFf9ASNdCKsb7GdjuucvY2TnlcGpzDMVdDYeJoxKdnfE52
+ LzYTuwzg7jucJRXM9ki+cJ070IfW1JmWQE7SJpWtE9CDM091x0xIWjPCDYFLjzTSl2WyPX1
+ 1/DFu7o/P+NRDITVuIMAhCd5PFvB5aeL5thbReFu0bQjhcNQ/6K2bzs8ZJ6B7w9cC+dUx2o
+ RiRVqO1rfecUwLhkXooAQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:2Vm6uxthB+A=:EfTgDwhvSxTXkl4MAYRlGF
+ Dus/mMFHt9MbvAN2J5bQp+s8aBdr1Ta/LExZIMfaMm4lt2gAFo0yqq6XzbK5vJTsTkTB3ceiQ
+ TDrRhZ84Ob9i9lvG8RpWlOZLz+rgfZuiunB9RnXHUrfkle51wpwZ4Y782hnjsdmCeyAVoAYQS
+ aOpxNfH3iadLv5+L8ix3LQfLQ+q0PfwRgBQztU1K0TznWgCsFXmXRsYJa5xpXMvANKSSVlfLX
+ cxoCGaKE6iqIRGx58/+pDy0RYHHhllDL5nRY/NHbZ7/226a4+HESJw+EppvSg8/qPMqUsO8GA
+ SDhEHeoR0sqPYto1+oGA3JY/GnOODPAkphnZMTvoqaD6FjTZxSZT43LjUEv7FEgu3TWz3Vfup
+ TVMGVjuPmzWvBreXiaUWItqNQqdQ8esATXlsUYB0XXBeHS/OwWYO2z0FbWGNOXALKNGxu0o/d
+ tmgW+r7ENhEVIeklCl2d+8qLcQb1SogBLa+fnSUqDhieIUg6kRL12PZcMvb5i64GwcMPEjvzj
+ A/0Euf6yWFccp+QrGHi0mAesxKFCCyj7WDXLhHSSOvS7IXwS8YU2JNKC32/6348XH7E1uee59
+ J77p7rz3wczzjAx/2sXZV1WNiG26Yid7rJ7EIQIIar2vhakvDna29LJ6ca+eZabU3fEKrgoSE
+ En+lTvPXtsU/ITuMy3S+i6DDSy6XPoVw49eaxseYJi6lc4W1jVom44IkxOZfCND4q1hZgYU3s
+ WQIhHqUakdrstMPxERsncvogWMxiSC8Is7w0xIPh7cDt/my7CcZE118QyjdmA4dEGP5mM0kwL
+ SxgTiQD
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Hannes,
+Hi Junio,
 
-On Tue, 14 Feb 2017, Johannes Sixt wrote:
+On Tue, 14 Feb 2017, Junio C Hamano wrote:
 
-> Am 14.02.2017 um 15:47 schrieb Johannes Schindelin:
-> > On Mon, 13 Feb 2017, Junio C Hamano wrote:
-> > > Johannes Schindelin <johannes.schindelin@gmx.de> writes:
-> > > > When removing the hack for isatty(), we actually removed more than
-> > > > just an isatty() hack: we removed the hack where internal data
-> > > > structures of the MSVC runtime are modified in order to redirect
-> > > > stdout/stderr.
-> > > >
-> > > > Instead of using that hack (that does not work with newer versions
-> > > > of the runtime, anyway), we replaced it by reopening the
-> > > > respective file descriptors.
-> > > >
-> > > > What we forgot was to mark stderr as unbuffered again.
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 > 
-> I do not see how the earlier patch turned stderr from unbuffered to
-> buffered, as it did not add or remove any setvbuf() call. Can you
-> explain?
+> >> OK.  Should this go directly to 'master', as the isatty thing is
+> >> already in?
+> >
+> > From my point of view, it is not crucial. The next Git for Windows
+> > version will have it, of course, and Hannes is always running with his
+> > set of patches, he can easily cherry-pick this one, too.
+> 
+> What hat were you wearing when you said the above "From my point of
+> view"?
 
-Certainly. I hoped that the commit message would do the job, but then, I
-am under time pressure these days, so it was probably a bit terse.
+The hat of a person who sees how patches are reviewed before they enter
+pu/next/master/maint of git.git.
 
-The hack we used to make isatty() work used to change data structures
-directly that are *internal* to the MSVC runtime. That is, instead of
-*really* redirecting stdout/stderr, we simply changed the target of the
-existing stdout/stderr and thereby could fool MSVC into believing that it
-is *still* writing to the terminal (because the bit is set) and that it is
-*not* a pipe (because we forcibly unset that bit).
+If that review had anything to do with Windows, and refused to accept
+patches unless they work correctly on Windows, I would agree that it is a
+wise idea to fast-track important fixes for Windows.
 
-Needless to say, this meddling with internal data structures is not only
-prone to break with future updates of the MSVC runtime, it is also
-inappropriate because the implementation may rely on certain side effects
-(or not so side effects) that may very well cause crashes or data loss.
-Imagine, for example, that the internal data structure were variable-size,
-based on the HANDLE type. That is totally legitimate for an internal data
-structure. And if we meddle with the HANDLE, we can easily cause data
-corruption.
+But that is not the case. Quite often `pu`, sometimes `next`, and rarely
+even `master` are regularly broken on Windows.
 
-As GCC is basically tied to using an older version of the MSVC runtime
-(unlike GLIBC, multiple versions of the MSVC runtime can coexist happily,
-making it relatively easy to maintain backwards-compatibility, but that
-concept is foreign to GCC), this used to not be a problem.
+The only branch that is tested very stringently on Windows, and into which
+nothing is allowed that breaks on Windows, is git-for-windows/git's
+`master` branch.
 
-However, with our recent push to allow developing, building, debugging and
-performance profiling in Visual Studio, that limitation no longer holds
-true: if you develop with Visual Studio 2015, you will link to a newer
-MSVC runtime, and that runtime changed those internal data structures
-rather dramatically.
+BTW this is not just an opinion, this is just an account of the current
+state.
 
-That means that we had to come up with a non-hacky way to redirect
-stdout/stderr (e.g. to parse ESC color sequences and apply them to the
-Win32 Console as appropriate) and still have isatty() report what we want
-it to report. That is, if we redirect stdout/stderr to a pipe that parses
-the color sequences for use in the Win32 Console, we want isatty() to
-report that we are writing to a Terminal Typewriter (a charming
-anachronism, isn't it?).
+Once you accept that this is reality, you will understand why I *dared* to
+say that a criticial Windows-specific fix needs to be fast-tracked to
+git-for-windows/git's `master`, but not into git.git's `master` branch.
 
-My colleague Jeff Hostetler worked on this and figured out that the only
-way to do this properly is to wrap isatty() and override it via a #define,
-and simply remember when stdout/stderr referred to a terminal before
-redirecting, say, to that pipe.
-
-As my famously broken patch to override isatty() (so that /dev/null would
-not be treated as a terminal) *already* overrode isatty() with a custom
-wrapper, and as it was broken and needed fixing, I decided to reconcile
-the two approaches into what is now the version in `master`.
-
-So instead of "bending" the target HANDLE of the existing stdout/stderr
-(which would *naturally* have kept the buffered/unbuffered nature as-is),
-we now redirect with correct API calls. And the patch I provided at the
-bottom of this mail thread reinstates the unbuffered nature of stderr now
-that it gets reopened.
-
-Hopefully that makes it clear why the setvbuf() call is required now, but
-was previously unnecessary?
+FWIW I wish it were different, that git.git's `master` reflected more
+closely what the current Git for Windows version has. If you are
+attentive, you will have noticed that I continuously work toward that
+goal. I frequently "upstream patches" from Git for Windows[*1*], even if
+it seems that the influx of new patches is higher than the rate of patches
+that make it into git.git's `master`. And even if I am often asked to
+change these patches so much that it is virtually guaranteed that they
+regress (hence my recently increasing reluctance to accept each and every
+reviewer's suggestions as "must implement").
 
 Ciao,
-Dscho
+Johannes
+
+Footnote *1*: Yes, I even "upstream patches" from developers other than
+myself, trying to shield contributors from having to send their patches as
+mails and to cope with the reviewers' suggestions that may, or may not,
+make sense. This makes my life harder, but I believe that the alternative
+would be *not* to have those patches in git.git *at all*.
