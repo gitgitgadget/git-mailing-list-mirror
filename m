@@ -2,120 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6F98B2013A
-	for <e@80x24.org>; Wed, 15 Feb 2017 22:50:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8ADC02013A
+	for <e@80x24.org>; Wed, 15 Feb 2017 22:53:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751712AbdBOWuW (ORCPT <rfc822;e@80x24.org>);
-        Wed, 15 Feb 2017 17:50:22 -0500
-Received: from mail-pg0-f68.google.com ([74.125.83.68]:35464 "EHLO
-        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751389AbdBOWuV (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Feb 2017 17:50:21 -0500
-Received: by mail-pg0-f68.google.com with SMTP id 204so57495pge.2
-        for <git@vger.kernel.org>; Wed, 15 Feb 2017 14:50:21 -0800 (PST)
+        id S1752601AbdBOWw6 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 15 Feb 2017 17:52:58 -0500
+Received: from mail-it0-f51.google.com ([209.85.214.51]:37469 "EHLO
+        mail-it0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752922AbdBOWw4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Feb 2017 17:52:56 -0500
+Received: by mail-it0-f51.google.com with SMTP id x75so5589375itb.0
+        for <git@vger.kernel.org>; Wed, 15 Feb 2017 14:52:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=a31HpM6JO6m2Ji6zC6/cZA/RQtNKNxRxzdKiU1PZx58=;
-        b=di7Ls0MtVSfebRKS6oZzf7+wn4/jQtTs6LQOXrlbJmcwAOvt03Gmk+/C7X1uTmHixb
-         nTLP9ezY5z7rpM58B26rBxI/KPa+zk5nRGFRyJ2Vpw0dVc93ouOS6CKeBzkBKtu/2Dnr
-         ez7OpG1/E+/Y+jjzQBDT9c/isGFL1wHsv8JMSjfAWetZ4Zo2p1n2yopiHJzZg6ITCbFl
-         OCBPBMRO+Sybso6wR4BqyBp07Vp8aJIFESa4K7NNsOmsj61CQAH0OUJA7XWjwXUTYO/5
-         zbSsXmcHB7nQVZs/zzW6dzbKOgWHto3qrSETIZ3/jkwi8t+2OqRIe8Q/O80lR8Eorpu2
-         EqXg==
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=sB/MOceFvD3xfdVIPdWO0O5TjdFjxaFF7QCqvzByKcs=;
+        b=AN0xCvta/jsM6gFu5O4YoOdEwBa3SL4XvMTRCe9fNLAFRW6pm8SpXT5pjbzroF0MkF
+         Q51gGJrvg/vJHtu+vL9Q4WAjuP0TmpEyRPyt8VTuCzYNnZInDcGTyjwwZJ/Nz5YndU+V
+         gU0DZorZC/CNa/NFOeVsyRelE+Inpd5agmGhhXZZ5LdA4eICrAWoJk7f0vs6bwYmW2Rz
+         r3GbDnLiCFLjv9ZKbXiLobZcpWcPhiFkwejg4WGipwcvuPGsj5AlOPCWAjaweFcHoUvw
+         4snl2LO4p7Vl1q/imbZT3R1gPdDvtG3ejmNMuA6Dli51+FuLoOvm4INGGFPvXFlSThwW
+         u4tQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=a31HpM6JO6m2Ji6zC6/cZA/RQtNKNxRxzdKiU1PZx58=;
-        b=mWU+RIV+tInWNWGfK/S8x9Tz0OFgEJIe9L221YSZGl/gryFoPYMFYMEaiWWSro12r1
-         /Nq/+GBt1opNW2q3pvMKiD4vjC/DytBaz1Gx/fPTKZTNg6kfivi1UegGMvDaF6MSooa3
-         FZqo8mcm4D58ccWGsJa+4R2nBFKPXTZTH/LTgYZI3lwiTfMwJ4LG6Qdncp4EWkWnlbvn
-         ErEv9FRNOQFKdAs3BRwRacY1zzHd2Yo6PNgtsOVZL0ekcdkyxJHIlP2HULfzyB6gUocQ
-         i1kPKili8uW6Cj/1PGflfnCeco784yIBpOhQ2FkkvC5jlc24ybg5KEMFs/aEEq5UNs5d
-         tthA==
-X-Gm-Message-State: AMke39n89SBg5/IzmA//5oZi7/Om6Rw38w8w83R+fK0xnJKLtmMFaOXn+rakEyXZLDRK8A==
-X-Received: by 10.84.211.137 with SMTP id c9mr46026248pli.8.1487199020483;
-        Wed, 15 Feb 2017 14:50:20 -0800 (PST)
-Received: from localhost ([2620:0:1000:8622:3551:31c7:1fe1:8b9b])
-        by smtp.gmail.com with ESMTPSA id o66sm9311002pfa.119.2017.02.15.14.50.19
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 15 Feb 2017 14:50:19 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     =?utf-8?Q?J=C3=A1chym_Barv=C3=ADnek?= <jachymb@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: Confusing git messages when disk is full.
-References: <CABpqov=FE-h_2s=O9fkSjFjgFXSy6hDwc2fu5ijiVvkaLx9f_Q@mail.gmail.com>
-        <20170215213221.lnraiktneokpk3mg@sigill.intra.peff.net>
-        <xmqqk28r2kk4.fsf@gitster.mtv.corp.google.com>
-        <20170215215151.a5chtxyjhbe3og4p@sigill.intra.peff.net>
-        <xmqq7f4r2io5.fsf@gitster.mtv.corp.google.com>
-        <20170215223246.mkaz22yrovnscnne@sigill.intra.peff.net>
-Date:   Wed, 15 Feb 2017 14:50:19 -0800
-In-Reply-To: <20170215223246.mkaz22yrovnscnne@sigill.intra.peff.net> (Jeff
-        King's message of "Wed, 15 Feb 2017 17:32:46 -0500")
-Message-ID: <xmqq37ff2hn8.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=sB/MOceFvD3xfdVIPdWO0O5TjdFjxaFF7QCqvzByKcs=;
+        b=tGS2MuHITNp0zIvcdQ1EUf0o4KZuRC+4Cr6UcKnaSbaMZc20uqlZ5IxhLuFO+bDdTF
+         +HONmpn6/ZXfwdwO19Rgr67yc6LqgkE6W0BVyF0pgIL/FjbTaNaXP7BVtn/ruawb1DTd
+         Go3hCh/z0Zn7JzBW1kKvmq2pfKJE1kf/Ah3B7lqCQWO4F9HU0hUbtX3d4qld+lOcCLEN
+         sQx6ufUPGvclzo4oGcwV8N+Z6lA7nbnA8LFFp0bozu/c8YVUTRIQK3wpwUkLQjQr2pOg
+         mrcSXCZIAWn7iyAUue5UK+5wCqU94ygnfZiVsP0C7+5rSk48t2Cesmu6G/879eqGfNz9
+         Q+cQ==
+X-Gm-Message-State: AMke39nhXQwUDu015bEKcYxqsPrR6kCEmexyWkHFOWD4DsA5IVFXuG7WSP52AnFYdcSLEFLLKChEL0QbXeBUsnUn
+X-Received: by 10.107.16.14 with SMTP id y14mr32806122ioi.164.1487199170617;
+ Wed, 15 Feb 2017 14:52:50 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
+Received: by 10.79.33.148 with HTTP; Wed, 15 Feb 2017 14:52:50 -0800 (PST)
+In-Reply-To: <xmqqh93v48mv.fsf@gitster.mtv.corp.google.com>
+References: <20170215003423.20245-1-sbeller@google.com> <20170215003423.20245-5-sbeller@google.com>
+ <xmqqh93v48mv.fsf@gitster.mtv.corp.google.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Wed, 15 Feb 2017 14:52:50 -0800
+Message-ID: <CAGZ79kaX1URNvzp8QuFEFnJDzSW9nE971+nvhPLOQQx4aSyBkA@mail.gmail.com>
+Subject: Re: [PATCH 04/14] connect_work_tree_and_git_dir: safely create
+ leading directories
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        Brandon Williams <bmwill@google.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
-
-> Good catch. I think we use a nasty bitwise-OR elsewhere to do that.
-> Ah, here it is, in tempfile.c:
+On Wed, Feb 15, 2017 at 10:22 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Stefan Beller <sbeller@google.com> writes:
 >
->                 /*
->                  * Note: no short-circuiting here; we want to fclose()
->                  * in any case!
->                  */
->                 err = ferror(fp) | fclose(fp);
+>> In a later patch we'll use connect_work_tree_and_git_dir when the
+>> directory for the gitlink file doesn't exist yet. Safely create
+>> the directory first.
+>>
+>> Signed-off-by: Stefan Beller <sbeller@google.com>
 >
-> That works, but the fact that we need a comment is a good sign that it's
-> kind of gross. It's too bad stdio does not specify the return of fclose
-> to report an error in the close _or_ any previous error. I guess we
-> could wrap it with our own function.
+> Among the existing two callers, the "absorb" logic in submodule.c
+> has safe-create-leading-directory (SCLD) immediately before the call
+> to this function, which can now be lost with this change.  The other
+> one in cmd_mv() has the target directory as the result of moving the
+> original directory, and I do not think there is any corresponding
+> call that can be lost from there after this change, but it is not an
+> error to call SCLD on a path that already exists, so all is OK.
+>
+> Is it sensible to let the code continue with just an fprintf() (not
+> even warning() or error()) when SCLD fails?
 
-Sure.  I am happy to add something like this:
+I'll move the code from the absorbing here (i.e. lose the
+SCLD lines there) and make it a die(_(..)) instead of fprintf here.
 
-	/*
-	 * closes a FILE *, returns 0 if closing and all the
-	 * previous stdio operations on fp were successful,
-	 * otherwise non-zero.
-	 */
-	int xfclose(FILE *fp)
-	{
-		return ferror(fp) | fclose(fp);
-	}
-
-I do not think we should try to do anything fancier to allow the
-caller to tell ferror() and fclose() apart, as such a caller would
-then need to do
-
-	switch (xfclose(fp)) {
-	case 0: /* happy */ break;
-	case XFCLOSE_CLOSE: do "close failed" thing; break;
-	case XFCLOSE_ERROR: do "other things failed" thing; break;
-	}
-
-and at that point, "other things failed" code would not have much to
-work with to do more detailed diagnosis anyway (the errno is likely
-not trustable), and it is not too much to write
-
-	if (ferror(fp))
-		do "saw some failure before" thing;
-	if (fclose(fp))
-		do "close failed" thing;
-
-instead.
-        
+Thanks,
+Stefan
