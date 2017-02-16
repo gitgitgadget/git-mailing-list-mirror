@@ -2,89 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EACD51FC44
-	for <e@80x24.org>; Thu, 16 Feb 2017 18:22:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AC2651FC44
+	for <e@80x24.org>; Thu, 16 Feb 2017 18:41:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933452AbdBPSWS (ORCPT <rfc822;e@80x24.org>);
-        Thu, 16 Feb 2017 13:22:18 -0500
-Received: from zm23-mta-out-2.grenet.fr ([130.190.191.53]:52695 "EHLO
-        zm23-mta-out-2.grenet.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933120AbdBPSWR (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Feb 2017 13:22:17 -0500
-Received: from zm23-mta-out.grenet.fr (zm23-mta-out.grenet.fr [130.190.191.35])
-        by zm23-mta-out-2.grenet.fr (Postfix) with ESMTP id 88666C8B2;
-        Thu, 16 Feb 2017 19:22:15 +0100 (CET)
-Received: from smtps.univ-grenoble-alpes.fr (mailhost.u-ga.fr [152.77.1.30])
-        by zm23-mta-out.grenet.fr (Postfix) with ESMTP id 823B91004A9;
-        Thu, 16 Feb 2017 19:22:15 +0100 (CET)
-Received: from anie (anie.imag.fr [129.88.42.32])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: moym@univ-grenoble-alpes.fr)
-        by smtps.univ-grenoble-alpes.fr (Postfix) with ESMTPSA id 77148125EA8;
-        Thu, 16 Feb 2017 19:22:15 +0100 (CET)
-From:   Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Siddharth Kannan <kannan.siddharth12@gmail.com>,
-        git@vger.kernel.org, pranit.bauva@gmail.com, peff@peff.net,
-        pclouds@gmail.com, sandals@crustytoothpaste.ath.cx
-Subject: Re: [PATCH 1/4 v4] revision.c: do not update argv with unknown option
-References: <1487258054-32292-1-git-send-email-kannan.siddharth12@gmail.com>
-        <1487258054-32292-2-git-send-email-kannan.siddharth12@gmail.com>
-        <vpqwpcqm69k.fsf@anie.imag.fr>
-        <xmqqwpcqxay0.fsf@gitster.mtv.corp.google.com>
-Date:   Thu, 16 Feb 2017 19:22:15 +0100
-In-Reply-To: <xmqqwpcqxay0.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-        message of "Thu, 16 Feb 2017 10:11:35 -0800")
-Message-ID: <vpqwpcqgfmw.fsf@anie.imag.fr>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
+        id S933293AbdBPSla (ORCPT <rfc822;e@80x24.org>);
+        Thu, 16 Feb 2017 13:41:30 -0500
+Received: from mail-wr0-f174.google.com ([209.85.128.174]:36182 "EHLO
+        mail-wr0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932694AbdBPSl2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Feb 2017 13:41:28 -0500
+Received: by mail-wr0-f174.google.com with SMTP id 89so13274257wrr.3
+        for <git@vger.kernel.org>; Thu, 16 Feb 2017 10:41:27 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=Fhj8KCKMk/7LwGxnVYCcYQqo2rUbZQj6yW7UsRQMjK0=;
+        b=pfkOKL5JIhZ/jXCkPrNilw5xKXGLkbAyadsVCQr7suEN1HjM/dOGl43r6BUL/wnsya
+         rLKXCETIhfmd2yc3fJqUYs4MD/HOEI8uBcWcuFYuIeBOv4O1z8X6xq4eHGMg45UAPRaa
+         U4QF7qyDf6hnqtH2951Q3VcT58TM9mSvWkmihiTZJqa7+0Q8XJLG0ZXV1msCSiYMpqkH
+         OOqZLoZ56t1+MFDfSzvZi5MKtJthBRqZqEBXYu1Ei7IuY2/GK8OSt38MUs6mNux9No0r
+         Bh7o9g0Y+nYVdkHbLlnKnTkDF1/EsvLgoNl8UlvdKuYOq+nGgJzOsehzRgISb4hx2nCK
+         98fg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=Fhj8KCKMk/7LwGxnVYCcYQqo2rUbZQj6yW7UsRQMjK0=;
+        b=VP1zQMmB6/pgnwnUKe+HV2f2wh38ZWGt+Mqn3NQRzmrgflw5uxFQ0f5Jvm6YJgr8CH
+         qAgRoFIuYJkWZnvzX7k6ZhTeR4LIK6xI2FF6PbrsqCUL+3KUxY/JfWYnGEocUfWtujqR
+         AM5G6f1O1wOwnUphJYVYFV3mC74q2KWPkD7AOIqEh63xystLZkx5UaZm4dXHS+jm7Zlc
+         gz6gVe3oFeyX9w1396osGCa/1OqpeFu4vbTzIJUPme0PBvJryeHPcoFbEAGH+ZuJLkc6
+         JOW0IbF27+qNUGSd7Lm46cAFL2liNF32jqjTq8sArskijJm6wUz8Ix8x2pap+oHUsZLm
+         U+Fw==
+X-Gm-Message-State: AMke39nS5SLCap6xfuMPgPd7xIdXV3ek9jfURSacIiiPQEkPwIChxR+4n4oEbgM6X5YZWkGA6H9piQWL3TkoUg==
+X-Received: by 10.223.165.87 with SMTP id j23mr4091890wrb.79.1487270487075;
+ Thu, 16 Feb 2017 10:41:27 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Greylist: Whitelist-UJF SMTP Authentifie (moym@univ-grenoble-alpes.fr) via submission-587 ACL (112)
+Received: by 10.80.138.211 with HTTP; Thu, 16 Feb 2017 10:41:26 -0800 (PST)
+In-Reply-To: <20170215215633.deyxp76j7o3ceoq3@sigill.intra.peff.net>
+References: <CAOxYW4z=bABqhmHWCc9rizykMcGBjDvqLEuqpJ6DtPve5442Fw@mail.gmail.com>
+ <20170215212157.qgscyglgzrd5cplf@sigill.intra.peff.net> <CAOxYW4xqk4j6Uu86jq2Vi9Bpgihxfr2Tw-DQLc+7YTZiPmDtiA@mail.gmail.com>
+ <20170215215633.deyxp76j7o3ceoq3@sigill.intra.peff.net>
+From:   Fabrizio Cucci <fabrizio.cucci@gmail.com>
+Date:   Thu, 16 Feb 2017 18:41:26 +0000
+Message-ID: <CAOxYW4x93cjMJoXYzSXCwqYVEstSLLcxzad_BPdvxfasrkxapw@mail.gmail.com>
+Subject: Re: Back quote typo in error messages (?)
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+On 15 February 2017 at 21:56, Jeff King <peff@peff.net> wrote:
+> Grep for "``" in Git's documentation directory, and you will see many
+> examples (asciidoc only accepts the double-quote form, not singles).
 >
->> Siddharth Kannan <kannan.siddharth12@gmail.com> writes:
->>
->>> handle_revision_opt() tries to recognize and handle the given argument. If an
->>> option was unknown to it, it used to add the option to unkv[(*unkc)++].  This
->>> increment of unkc causes the variable in the caller to change.
->>>
->>> Teach handle_revision_opt to not update unknown arguments inside unkc anymore.
->>> This is now the responsibility of the caller.
->>>
->>> There are two callers of this function:
->>>
->>> 1. setup_revision: Changes have been made so that setup_revision will now
->>> update the unknown option in argv
->>
->> You're writting "Changes have been made", but I did not see any up to
->> this point in the series.
+> You can also try:
 >
-> Actually, I think you misread the patch and explanation.
-> handle_revision_opt() used to be responsible for stuffing unknown
-> ones to unkv[] array passed from the caller even when it returns 0
-> (i.e. "I do not know what they are" case, as opposed to "I know what
-> they are, I am not handling them here and leaving them in unkv[]"
-> case--the latter returns non-zero).  The first hunk makes the
-> function stop doing so, and to compensate, the second hunk, which is
-> in setup_revisions()
+>   echo "this is \`\`quoted'' text" >foo.txt
+>   asciidoc foo.txt
+>
+> and then open "foo.html" in your browser.
 
-Indeed, I misread the patch. The explanation could be a little bit more
-"tired-reviewer-proof" by not using a past tone, perhaps
+We are probably going a bit OT here :) but AFAIK there is no such
+thing as non-symmetric start/end quotes in AsciiDoc.
 
-1. setup_revision, which is changed to ...
+Even enclosing something in curved quotes is done as follows:
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+'`single curved quotes`'
+
+"`double curved quotes`"
+
+(http://asciidoctor.org/docs/asciidoc-syntax-quick-reference/)
+
+> I think patches would be welcome, but as Junio said, it probably should
+> wait for the next cycle.
+
+It can definitely wait and I would be glad to contribute!
