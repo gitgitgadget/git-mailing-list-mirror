@@ -7,52 +7,52 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E9A942013A
-	for <e@80x24.org>; Thu, 16 Feb 2017 00:39:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E9FFD2013A
+	for <e@80x24.org>; Thu, 16 Feb 2017 00:39:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756274AbdBPAjE (ORCPT <rfc822;e@80x24.org>);
-        Wed, 15 Feb 2017 19:39:04 -0500
-Received: from mail-pf0-f176.google.com ([209.85.192.176]:35327 "EHLO
-        mail-pf0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1756255AbdBPAio (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Feb 2017 19:38:44 -0500
-Received: by mail-pf0-f176.google.com with SMTP id 202so796860pfx.2
-        for <git@vger.kernel.org>; Wed, 15 Feb 2017 16:38:44 -0800 (PST)
+        id S1753524AbdBPAjc (ORCPT <rfc822;e@80x24.org>);
+        Wed, 15 Feb 2017 19:39:32 -0500
+Received: from mail-pg0-f54.google.com ([74.125.83.54]:33630 "EHLO
+        mail-pg0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1756216AbdBPAiW (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Feb 2017 19:38:22 -0500
+Received: by mail-pg0-f54.google.com with SMTP id 204so909253pge.0
+        for <git@vger.kernel.org>; Wed, 15 Feb 2017 16:38:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=bNEJVTBtITNIf1c6zZss12MRu6TOCKzvOelyuObDXys=;
-        b=qa9uzMo1BHXwAJr6p9+v+1UsM4QH1bwUG005ZX+qRraFA9UYJqUEOrpiRXS7z9CIlo
-         W33XARkM2BTEqIXcbhoBmRw4wZORxWAVaXQ0KKLytpn/+8tzNgInnPuK+EIFJrpB3pqk
-         z+6DCyF1OgFma6xPTAbWph9xx9JmIP9qo8EoVANEk1/Fyxxk4pkF53cAmrVxRbjxRL0m
-         LuxeNXnTA5ngzz5S9vwa76sXL5nIOaTDLALjsbVb1242HLU3oMd1cG1ix0JomrwTtV3e
-         /O2IePB06D9A73OnCfpdfx9AKI4eQRMmKXwiebTjprHwZ+8ZyHq1SR0kYEDLRrXoh9zN
-         /ViA==
+        bh=yZHJFaNPRhLylKLZvG+5VYnQ1zMzYJlM5TvicAJHtJo=;
+        b=fk2YMrkgT3/Rctjk2zqmpMUt1X8JKJUmFyFOEYvaD2ve7psVKC4E9vYa8LS3A5Zm26
+         RdBFwr3ZEQRqQSKQghlgqoPipCmD0WrE8jTKO2RJuZrfwx85rZT32VP+tKhAG5d4TibZ
+         hf3Zxyj6j2ZVRJGoR/omDj8Z17PQ0eaF3CBa2mvnz7/ojGfOowwPcHXQoq1r/uusi10q
+         e9Y10ZyS8UX7oB/xN3SL5cmZAuLh1xw8kTpWaKjj8uYGulDqmQlcW0g0CPb2xfV6RvsH
+         PpNKAXCerr4ANYFmURFxbGw4nG8qSg7w9Z7ee+/io+DbUTevRi/wOFAL0BR6OVmO2brc
+         Ap7g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=bNEJVTBtITNIf1c6zZss12MRu6TOCKzvOelyuObDXys=;
-        b=bu+9+q84mUvSjtY4/OPVpC9O0tfimg0ZmdqRCsvDUpeH9YcJRftTkClH/D84l/li8W
-         a8x8nKB4Y6vyihid7ON6sRHICUxglrNKZ2WJX3/VUyNBxBNKulWBxpt3/ktKVCWa5mvb
-         wyQUoSp0bnGcJRdEC4Yf5yQIpx+MjvEll4vx1hD1JpEPaUOE2tK1t1QQS02vXs76nLqp
-         xbqxAo84TlrZLgwZwhTje/y0u83RR77V+PRDZriNe6qbdpqPJ28CYEoqpj+MJJcDB1ZD
-         r7TxnGOMuhBpxyNBG8uHubOA6HsTNv2K7MYezuP03dmTLeyim9X4R7U+AG8A6ONyFQ05
-         623Q==
-X-Gm-Message-State: AMke39m6bj7LdM3/xeZaej0f2e/7oF/Fhl7MkbjoAbePWEFHfgEBFzRI58+0wQf9zjoB5VwG
-X-Received: by 10.99.121.195 with SMTP id u186mr42207653pgc.96.1487205518631;
-        Wed, 15 Feb 2017 16:38:38 -0800 (PST)
+        bh=yZHJFaNPRhLylKLZvG+5VYnQ1zMzYJlM5TvicAJHtJo=;
+        b=HRQTn6xM/HlwSqp/JUrRBXRubf+WGCkZUP/jW904c/aLenMEfoxlyKsG0gOTNBjVbp
+         3O40Xb9mqI16avSHcHFLzfcrvfBLBbdjpElS/tNZytOUKMo8rLdSdrX18Pl06qwLueZv
+         WOWHmW7lWjENnmUIQCj2UcLNsVPhSpkteAuAfRiztO8lonwMnvpSrAgfP5syQSMJRNRN
+         pea0pUYWVpQbe+x8frca5xdbcwIiLpAA6tN7zytP/rnO4xK4cplaToTR/8Gh5o9ummWg
+         WFMqK3l6irnkR6+rLLWeWhjyISFsUWiOwx1lBoPxpye54ARghP+GMWe0Fvv+UUdatjBg
+         aeng==
+X-Gm-Message-State: AMke39kVvlq/yQ5HyYv/YaWOdBha/182Xstsm41SJb0MvxJ8/MEHd0+l3IFllqeqjZri2Cl6
+X-Received: by 10.84.241.10 with SMTP id a10mr47432773pll.47.1487205501146;
+        Wed, 15 Feb 2017 16:38:21 -0800 (PST)
 Received: from localhost ([2620:0:1000:5b10:2ca1:506:4965:89ed])
-        by smtp.gmail.com with ESMTPSA id s65sm9525107pgb.64.2017.02.15.16.38.37
+        by smtp.gmail.com with ESMTPSA id a24sm9570174pfh.33.2017.02.15.16.38.20
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 15 Feb 2017 16:38:37 -0800 (PST)
+        Wed, 15 Feb 2017 16:38:20 -0800 (PST)
 From:   Stefan Beller <sbeller@google.com>
 Cc:     git@vger.kernel.org, sandals@crustytoothpaste.net,
         jrnieder@gmail.com, bmwill@google.com, gitster@pobox.com,
         Stefan Beller <sbeller@google.com>
-Subject: [PATCH 14/15] entry.c: update submodules when interesting
-Date:   Wed, 15 Feb 2017 16:38:10 -0800
-Message-Id: <20170216003811.18273-15-sbeller@google.com>
+Subject: [PATCH 01/15] lib-submodule-update.sh: reorder create_lib_submodule_repo
+Date:   Wed, 15 Feb 2017 16:37:57 -0800
+Message-Id: <20170216003811.18273-2-sbeller@google.com>
 X-Mailer: git-send-email 2.12.0.rc1.16.ge4278d41a0.dirty
 In-Reply-To: <20170216003811.18273-1-sbeller@google.com>
 References: <xmqq8tp74823.fsf@gitster.mtv.corp.google.com>
@@ -63,64 +63,116 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Redraw the ASCII art describing the setup using more space, such that
+it is easier to understand.  The leaf commits are now ordered the same
+way the actual code is ordered.
+
+Add empty lines to the setup code separating each of the leaf commits,
+each starting with a "checkout -b".
+
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- entry.c | 28 ++++++++++++++++++++++++++++
- 1 file changed, 28 insertions(+)
+ t/lib-submodule-update.sh | 49 ++++++++++++++++++++++++++++-------------------
+ 1 file changed, 29 insertions(+), 20 deletions(-)
 
-diff --git a/entry.c b/entry.c
-index c6eea240b6..ae40611c97 100644
---- a/entry.c
-+++ b/entry.c
-@@ -2,6 +2,7 @@
- #include "blob.h"
- #include "dir.h"
- #include "streaming.h"
-+#include "submodule.h"
- 
- static void create_directories(const char *path, int path_len,
- 			       const struct checkout *state)
-@@ -203,6 +204,13 @@ static int write_entry(struct cache_entry *ce,
- 			return error("cannot create temporary submodule %s", path);
- 		if (mkdir(path, 0777) < 0)
- 			return error("cannot create submodule directory %s", path);
-+		if (is_active_submodule_with_strategy(ce, SM_UPDATE_UNSPECIFIED))
-+				/*
-+				 * force=1 is ok for any case as we did a dry
-+				 * run before with appropriate force setting
-+				 */
-+				return submodule_go_from_to(ce->name,
-+					NULL, oid_to_hex(&ce->oid), 0, 1);
- 		break;
- 	default:
- 		return error("unknown file mode for %s in index", path);
-@@ -260,6 +268,26 @@ int checkout_entry(struct cache_entry *ce,
- 
- 	if (!check_path(path.buf, path.len, &st, state->base_dir_len)) {
- 		unsigned changed = ce_match_stat(ce, &st, CE_MATCH_IGNORE_VALID|CE_MATCH_IGNORE_SKIP_WORKTREE);
-+		/*
-+		 * Needs to be checked before !changed returns early,
-+		 * as the possibly empty directory was not changed
-+		 */
-+		if (is_active_submodule_with_strategy(ce, SM_UPDATE_UNSPECIFIED)) {
-+			int err;
-+			if (!is_submodule_populated_gently(ce->name, &err)) {
-+				struct stat sb;
-+				if (lstat(ce->name, &sb))
-+					die(_("could not stat file '%s'"), ce->name);
-+				if (!(st.st_mode & S_IFDIR))
-+					unlink_or_warn(ce->name);
+diff --git a/t/lib-submodule-update.sh b/t/lib-submodule-update.sh
+index 915eb4a7c6..5df528ea81 100755
+--- a/t/lib-submodule-update.sh
++++ b/t/lib-submodule-update.sh
+@@ -15,22 +15,27 @@
+ # - Tracked file replaced by submodule (replace_sub1_with_file =>
+ #   replace_file_with_sub1)
+ #
+-#                   --O-----O
+-#                  /  ^     replace_directory_with_sub1
+-#                 /   replace_sub1_with_directory
+-#                /----O
+-#               /     ^
+-#              /      modify_sub1
+-#      O------O-------O
+-#      ^      ^\      ^
+-#      |      | \     remove_sub1
+-#      |      |  -----O-----O
+-#      |      |   \   ^     replace_file_with_sub1
+-#      |      |    \  replace_sub1_with_file
+-#      |   add_sub1 --O-----O
+-# no_submodule        ^     valid_sub1
+-#                     invalid_sub1
++#                     ----O
++#                    /    ^
++#                   /     remove_sub1
++#                  /
++#       add_sub1  /-------O
++#             |  /        ^
++#             | /         modify_sub1
++#             v/
++#      O------O-----------O---------O
++#      ^       \          ^         replace_directory_with_sub1
++#      |        \         replace_sub1_with_directory
++# no_submodule   \
++#                 --------O---------O
++#                  \      ^         replace_file_with_sub1
++#                   \     replace_sub1_with_file
++#                    \
++#                     ----O---------O
++#                         ^         valid_sub1
++#                         invalid_sub1
+ #
 +
-+				return submodule_go_from_to(ce->name,
-+					NULL, oid_to_hex(&ce->oid), 0, 1);
-+			} else
-+				return submodule_go_from_to(ce->name,
-+					"HEAD", oid_to_hex(&ce->oid), 0, 1);
-+		}
+ create_lib_submodule_repo () {
+ 	git init submodule_update_repo &&
+ 	(
+@@ -49,10 +54,11 @@ create_lib_submodule_repo () {
+ 		git config submodule.sub1.ignore all &&
+ 		git add .gitmodules &&
+ 		git commit -m "Add sub1" &&
+-		git checkout -b remove_sub1 &&
 +
- 		if (!changed)
- 			return 0;
- 		if (!state->force) {
++		git checkout -b remove_sub1 add_sub1 &&
+ 		git revert HEAD &&
+ 
+-		git checkout -b "modify_sub1" "add_sub1" &&
++		git checkout -b modify_sub1 add_sub1 &&
+ 		git submodule update &&
+ 		(
+ 			cd sub1 &&
+@@ -67,7 +73,7 @@ create_lib_submodule_repo () {
+ 		git add sub1 &&
+ 		git commit -m "Modify sub1" &&
+ 
+-		git checkout -b "replace_sub1_with_directory" "add_sub1" &&
++		git checkout -b replace_sub1_with_directory add_sub1 &&
+ 		git submodule update &&
+ 		git -C sub1 checkout modifications &&
+ 		git rm --cached sub1 &&
+@@ -75,22 +81,25 @@ create_lib_submodule_repo () {
+ 		git config -f .gitmodules --remove-section "submodule.sub1" &&
+ 		git add .gitmodules sub1/* &&
+ 		git commit -m "Replace sub1 with directory" &&
++
+ 		git checkout -b replace_directory_with_sub1 &&
+ 		git revert HEAD &&
+ 
+-		git checkout -b "replace_sub1_with_file" "add_sub1" &&
++		git checkout -b replace_sub1_with_file add_sub1 &&
+ 		git rm sub1 &&
+ 		echo "content" >sub1 &&
+ 		git add sub1 &&
+ 		git commit -m "Replace sub1 with file" &&
++
+ 		git checkout -b replace_file_with_sub1 &&
+ 		git revert HEAD &&
+ 
+-		git checkout -b "invalid_sub1" "add_sub1" &&
++		git checkout -b invalid_sub1 add_sub1 &&
+ 		git update-index --cacheinfo 160000 0123456789012345678901234567890123456789 sub1 &&
+ 		git commit -m "Invalid sub1 commit" &&
+ 		git checkout -b valid_sub1 &&
+ 		git revert HEAD &&
++
+ 		git checkout master
+ 	)
+ }
 -- 
 2.12.0.rc1.16.ge4278d41a0.dirty
 
