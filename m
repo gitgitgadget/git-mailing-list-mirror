@@ -7,46 +7,46 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 100E91FC44
-	for <e@80x24.org>; Thu, 16 Feb 2017 21:20:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AF5471FC44
+	for <e@80x24.org>; Thu, 16 Feb 2017 21:23:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933566AbdBPVUB (ORCPT <rfc822;e@80x24.org>);
-        Thu, 16 Feb 2017 16:20:01 -0500
-Received: from mail-pf0-f195.google.com ([209.85.192.195]:32939 "EHLO
-        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933107AbdBPVT7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Feb 2017 16:19:59 -0500
-Received: by mail-pf0-f195.google.com with SMTP id e4so2406469pfg.0
-        for <git@vger.kernel.org>; Thu, 16 Feb 2017 13:19:59 -0800 (PST)
+        id S933289AbdBPVX5 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 16 Feb 2017 16:23:57 -0500
+Received: from mail-pg0-f67.google.com ([74.125.83.67]:34337 "EHLO
+        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932975AbdBPVX4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Feb 2017 16:23:56 -0500
+Received: by mail-pg0-f67.google.com with SMTP id v184so2944513pgv.1
+        for <git@vger.kernel.org>; Thu, 16 Feb 2017 13:23:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=O9OrS3Rc+q/AHnJQCQ00RHG7HT8D5RHmmKB2iKK8r8M=;
-        b=MollcAehsEH7cHbBAzMNft4rea7EBKNQ43FKk1+makKN7Lv25Fkf/fB5P3NU05jnxO
-         Imc33nOTOAyXeAowlzlb5TQERwI6Y7++tPuvpf2FnnCbYXpN61WlcTfZkandY0Tm/4Yt
-         b/q9oEITcAiptQXcEP+dPfoMlrvLnJ1eB6k8fOgEFjgj3fI/MKz5X/cE1TzZ5BzfmV+o
-         YBMn7qYem3uQDGK+UxcdagyLG8R09Gx3RmgAAU2UHdz4pR+fZ1zOm+NIq6zrnW6DFvqk
-         X+NU7xCbVzzEEMDLU+Ts3ERsMn0m/+HAC2jbvAT56vckT5HOHnm0T10Mj+e+HrJn5jpC
-         Qqlg==
+        bh=vJFXt0YrBCEBz3T1rys58ti2sYS2AGovfkGNuqXxOL4=;
+        b=TSNjvVTbnvd1Xzfj4r9KKnOLQ5YapPgt9Jt21FiQ9i8QE1+fgp7RC2GJbTkaFyUWaG
+         zaKZ9kBjjdudWw2YeSFqsRjnII7Trzt8BvM6k/Pc/CCTchHZxStn9caPpV+ydE7lNdH9
+         NOr1Rzz+ih+5GjeXTek1DWKVkA4Pni480ifDDVl0pZngXjFLyUp9yoRYV9FkbWtqcr9F
+         djMxeX7DVo5shZsUnwBCaUpWO9wjM3yWOdLnkB4YPU99fbmnYxO7iaA4wrZ4PMxJgBu+
+         23jicaSCX7iBLYvP1j+SW5RcYVkUjPf+6thDGtixzJ9XgsTbVNjzj/cNLR4B4skttYrN
+         ZhIQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=O9OrS3Rc+q/AHnJQCQ00RHG7HT8D5RHmmKB2iKK8r8M=;
-        b=Sxv+KdgULh6jFRB4R1d9+VTanlIvNWFDLmuey6avQcI5PgHj4VxbAjI4nnA1X15FnF
-         EO3Z7acm+ptNJ8p2HVUIhgbctZPgPEMw8bKb8zFNVK+cXVftcBbqoArmiD/L8+gg0k26
-         0Z+NRJiPmSsPG4u4sAB2+jHafaUqF22IkckDxUnJ5CT/Ji73xAfIdeW7SuuyKOYDRMQl
-         7wtXjukimRNfaWArA1rHTh9hcDa5i/ViQVnnRRxytVb6keBPFvGejcNxxgezfa09vPCw
-         ZwsR6uIIZJFdx0yv06A/qE64GXZ4EWaEttpcHXlj0or/6ipoUN5ohj7FFLfiriu5hsfx
-         wjcQ==
-X-Gm-Message-State: AMke39nKYyFAyK4igDAypVcCV3DQaBQ3oXAzT+uJDi85J+LW3kPhX7L7XHh6j+RL3xlnNQ==
-X-Received: by 10.99.177.79 with SMTP id g15mr5488989pgp.185.1487279999078;
-        Thu, 16 Feb 2017 13:19:59 -0800 (PST)
+        bh=vJFXt0YrBCEBz3T1rys58ti2sYS2AGovfkGNuqXxOL4=;
+        b=ug+/p8GNIEuwn6mBLf5tFu2mz4s3fyRjBjexfFImGNOlgvl/1gPoLcJwJb4JvQLRBj
+         mVCpXTaet2lx2EE5fIGfRtEGfZ3eL8bTdzd8aLl/QIPhFsgwduvOzfMWxOuITJ5iB/50
+         Lz4dF3cZuH34B7TEXK+eM5UeJI0Oi0hpTYYwQoDtdCG3DdDofqGSMWcDnT6BjAtXq0O9
+         VycEy++WnXv3Xt3GQMvlkBPTjTe9AaR+Szf3KcaRRcfT1CaZ8fJGL96bLU2ObmeEm1xL
+         vbG7uR394giiUPsZ/TsOBUklQO/R80KKyFmuULt8+Bzo6ktLuyVf3aRnpyns2TGiGDV6
+         tTNw==
+X-Gm-Message-State: AMke39ltWfboKMCgzuk8M3qPAO9rPK2gO8VqghnA4sRR0+awxfBdwxeyOlI2ihrPlhL29w==
+X-Received: by 10.99.95.87 with SMTP id t84mr5470950pgb.209.1487280235889;
+        Thu, 16 Feb 2017 13:23:55 -0800 (PST)
 Received: from localhost ([2620:0:1000:8622:9476:4c5c:6ee4:ba3])
-        by smtp.gmail.com with ESMTPSA id 9sm15255578pfk.121.2017.02.16.13.19.58
+        by smtp.gmail.com with ESMTPSA id 9sm15262124pfk.121.2017.02.16.13.23.54
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 16 Feb 2017 13:19:58 -0800 (PST)
+        Thu, 16 Feb 2017 13:23:54 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Stefan Beller <sbeller@google.com>
 Cc:     unlisted-recipients:; (no To-header on input) git@vger.kernel.org,
@@ -54,14 +54,14 @@ Cc:     unlisted-recipients:; (no To-header on input) git@vger.kernel.org,
 Illegal-Object: Syntax error in Cc: address found on vger.kernel.org:
         Cc:     unlisted-recipients:; (no To-header on input)git@vger.kernel.org
                                                                      ^-missing end of address
-Subject: Re: [PATCH 11/15] unpack-trees: pass old oid to verify_clean_submodule
+Subject: Re: [PATCH 12/15] unpack-trees: check if we can perform the operation for submodules
 References: <xmqq8tp74823.fsf@gitster.mtv.corp.google.com>
         <20170216003811.18273-1-sbeller@google.com>
-        <20170216003811.18273-12-sbeller@google.com>
-Date:   Thu, 16 Feb 2017 13:19:57 -0800
-In-Reply-To: <20170216003811.18273-12-sbeller@google.com> (Stefan Beller's
-        message of "Wed, 15 Feb 2017 16:38:07 -0800")
-Message-ID: <xmqq37fdx282.fsf@gitster.mtv.corp.google.com>
+        <20170216003811.18273-13-sbeller@google.com>
+Date:   Thu, 16 Feb 2017 13:23:54 -0800
+In-Reply-To: <20170216003811.18273-13-sbeller@google.com> (Stefan Beller's
+        message of "Wed, 15 Feb 2017 16:38:08 -0800")
+Message-ID: <xmqqy3x5vnh1.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -72,57 +72,30 @@ X-Mailing-List: git@vger.kernel.org
 
 Stefan Beller <sbeller@google.com> writes:
 
-> The check (which uses the old oid) is yet to be implemented, but this part
-> is just a refactor, so it can go separately first.
+> +
+> +	/* ERROR_WOULD_LOSE_UNTRACKED_SUBMODULE */
+> +	"Submodule '%s' cannot be deleted as it contains untracked files.",
 
-If this didn't pass an unused parameter, then the change is just a
-refactor, and I do think such a "just a refactor" can be a good step
-on its own to keep the future step to manageable complexity.
+OK.
 
-With an unused parameter being passed, I do not think it is a good
-logical single step anymore, though.
+> +	msgs[ERROR_WOULD_LOSE_UNTRACKED_SUBMODULE] =
+> +		_("Submodule '%s' cannot be deleted as it contains untracked files.");
 
-> Signed-off-by: Stefan Beller <sbeller@google.com>
-> ---
->  unpack-trees.c | 17 ++++++++++-------
->  1 file changed, 10 insertions(+), 7 deletions(-)
->
-> diff --git a/unpack-trees.c b/unpack-trees.c
-> index 3a8ee19fe8..616a0ae4b2 100644
-> --- a/unpack-trees.c
-> +++ b/unpack-trees.c
-> @@ -1407,7 +1407,8 @@ static void invalidate_ce_path(const struct cache_entry *ce,
->   * Currently, git does not checkout subprojects during a superproject
->   * checkout, so it is not going to overwrite anything.
->   */
-> -static int verify_clean_submodule(const struct cache_entry *ce,
-> +static int verify_clean_submodule(const char *old_sha1,
-> +				  const struct cache_entry *ce,
->  				  enum unpack_trees_error_types error_type,
->  				  struct unpack_trees_options *o)
->  {
-> @@ -1427,16 +1428,18 @@ static int verify_clean_subdirectory(const struct cache_entry *ce,
->  	struct dir_struct d;
->  	char *pathbuf;
->  	int cnt = 0;
-> -	unsigned char sha1[20];
+OK again.
+
+> @@ -240,12 +246,44 @@ static void display_error_msgs(struct unpack_trees_options *o)
+>  		fprintf(stderr, _("Aborting\n"));
+>  }
 >  
-> -	if (S_ISGITLINK(ce->ce_mode) &&
-> -	    resolve_gitlink_ref(ce->name, "HEAD", sha1) == 0) {
-> -		/* If we are not going to update the submodule, then
-> +	if (S_ISGITLINK(ce->ce_mode)) {
-> +		unsigned char sha1[20];
-> +		int sub_head = resolve_gitlink_ref(ce->name, "HEAD", sha1);
-> +		/*
-> +		 * If we are not going to update the submodule, then
->  		 * we don't care.
->  		 */
-> -		if (!hashcmp(sha1, ce->oid.hash))
-> +		if (!sub_head && !hashcmp(sha1, ce->oid.hash))
->  			return 0;
-> -		return verify_clean_submodule(ce, error_type, o);
-> +		return verify_clean_submodule(sub_head ? NULL : sha1_to_hex(sha1),
-> +					      ce, error_type, o);
->  	}
->  
->  	/*
+> +static int submodule_check_from_to(const struct cache_entry *ce, const char *old_id, const char *new_id, struct unpack_trees_options *o)
+> +{
+> +	if (submodule_go_from_to(ce->name, old_id,
+> +				 new_id, 1, o->reset))
+> +		return o->gently ? -1 :
+> +			add_rejected_path(o, ERROR_WOULD_LOSE_UNTRACKED_SUBMODULE, ce->name);
+
+Is potential loss of untracked paths the only reason
+submodule_go_from_to() would fail?  I somehow thought that it would
+not even care about untracked paths but cared deeply about already
+added changes.
+
