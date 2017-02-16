@@ -2,116 +2,113 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BBA721FC44
-	for <e@80x24.org>; Thu, 16 Feb 2017 18:14:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4296A1FC44
+	for <e@80x24.org>; Thu, 16 Feb 2017 18:17:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933108AbdBPSOV (ORCPT <rfc822;e@80x24.org>);
-        Thu, 16 Feb 2017 13:14:21 -0500
-Received: from mail-lf0-f67.google.com ([209.85.215.67]:34328 "EHLO
-        mail-lf0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933042AbdBPSOU (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Feb 2017 13:14:20 -0500
-Received: by mail-lf0-f67.google.com with SMTP id q89so2083782lfi.1
-        for <git@vger.kernel.org>; Thu, 16 Feb 2017 10:14:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=F6TjaStrTuzbCwqUMv6/W5XmO0trNg/bUZXO2Ii0cME=;
-        b=IiVrffTDDity9sdWL6ljRgvgfq6/vK5QPpsrEH8KmawEoT3JQxIfzWmy1018aeWr4J
-         XEJMEcGOEq1lLrDbvw71Qp8AUVwuqECmLDiVxMYb5kT6R+o6fOt5RF5VK03DBjHUCfKs
-         DA8w4Z6s2TTI+EUny3FqPW08OTgwba74ou9jHii97bwkwy3GTBzLjlIK1+u80Z+nu99c
-         oiDWBYog2v37MHcSbUi6Y6v950yoNLXzEsN4FU0RMjV201/Qgp4qLeYtg5SkjivAGJ2M
-         lCMvS2+Au0nwHdeiZL3EGsrUr1iZD9PSYdgXgwe/WQprksTNcR06EIQw8Sfji1dTCxw9
-         KxOA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
-         :references:mime-version:content-disposition:in-reply-to:user-agent;
-        bh=F6TjaStrTuzbCwqUMv6/W5XmO0trNg/bUZXO2Ii0cME=;
-        b=kStEcp699ughvuT9VzB6FTV9/VvEeNn7oJrBtxldfgnbjkEPMnERYtihBZ83Nr36Pg
-         WyysEbBB4FZoiWgF8WgzqWNDl7U1RCeh9tIsPdLXgQyuuIZSU7wUMGkNW3Vv7bP9mTdJ
-         pcu0cDSXLuALzNLILFNDWkGevowpQKX3Xxdbu75Irt4quhKcoAVnlAS3SH9dz6AELgWE
-         nWHfV6b8to+7YGVgHzsqyl0bWPao3fYlwZ8mLzWQNEE1qzcPMj7Vzo7b4F5I/SsvYsHa
-         joXMp4AtkvNVCXTqFkum0BTOgt2n0xqcj1v5hi5bkKCGEXhYnVhB/aSa446Ghd5UGd8d
-         Fe/A==
-X-Gm-Message-State: AMke39m169tXHjU4SB7WXzrZu3lQ+kIPVvH46BuYWzoYZUBiHpBNBCYxFI+XtVSk/LIMng==
-X-Received: by 10.25.21.142 with SMTP id 14mr1160271lfv.138.1487268858854;
-        Thu, 16 Feb 2017 10:14:18 -0800 (PST)
-Received: from xi.terra ([84.216.234.102])
-        by smtp.gmail.com with ESMTPSA id o80sm660705lff.23.2017.02.16.10.14.17
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 16 Feb 2017 10:14:18 -0800 (PST)
-Received: from johan by xi.terra with local (Exim 4.88)
-        (envelope-from <johan@kernel.org>)
-        id 1ceQZO-0004UW-9u; Thu, 16 Feb 2017 19:14:18 +0100
-Date:   Thu, 16 Feb 2017 19:14:18 +0100
-From:   Johan Hovold <johan@kernel.org>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Johan Hovold <johan@kernel.org>, git@vger.kernel.org,
-        Jeff King <peff@peff.net>,
-        Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-        Kevin Daudt <me@ikke.info>,
+        id S933419AbdBPSRB (ORCPT <rfc822;e@80x24.org>);
+        Thu, 16 Feb 2017 13:17:01 -0500
+Received: from zm23-mta-out-2.grenet.fr ([130.190.191.53]:52526 "EHLO
+        zm23-mta-out-2.grenet.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S933100AbdBPSRA (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Feb 2017 13:17:00 -0500
+Received: from zm23-mta-out.grenet.fr (zm23-mta-out.grenet.fr [130.190.191.35])
+        by zm23-mta-out-2.grenet.fr (Postfix) with ESMTP id A851BC45E;
+        Thu, 16 Feb 2017 19:16:57 +0100 (CET)
+Received: from smtps.univ-grenoble-alpes.fr (smtps1.u-ga.fr [152.77.1.30])
+        by zm23-mta-out.grenet.fr (Postfix) with ESMTP id A33791004A9;
+        Thu, 16 Feb 2017 19:16:57 +0100 (CET)
+Received: from anie (anie.imag.fr [129.88.42.32])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: moym@univ-grenoble-alpes.fr)
+        by smtps.univ-grenoble-alpes.fr (Postfix) with ESMTPSA id 9A16A125EAE;
+        Thu, 16 Feb 2017 19:16:57 +0100 (CET)
+From:   Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+To:     Johan Hovold <johan@kernel.org>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Kevin Daudt <me@ikke.info>, Junio C Hamano <gitster@pobox.com>,
         Larry Finger <Larry.Finger@lwfinger.net>
 Subject: Re: body-CC-comment regression
-Message-ID: <20170216181418.GC2625@localhost>
 References: <20170216174924.GB2625@localhost>
- <xmqq60kayq2q.fsf@gitster.mtv.corp.google.com>
+Date:   Thu, 16 Feb 2017 19:16:57 +0100
+In-Reply-To: <20170216174924.GB2625@localhost> (Johan Hovold's message of
+        "Thu, 16 Feb 2017 18:49:24 +0100")
+Message-ID: <vpqlgt6hug6.fsf@anie.imag.fr>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqq60kayq2q.fsf@gitster.mtv.corp.google.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+Content-Type: text/plain
+X-Greylist: Whitelist-UJF SMTP Authentifie (moym@univ-grenoble-alpes.fr) via submission-587 ACL (112)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Feb 16, 2017 at 09:59:25AM -0800, Junio C Hamano wrote:
-> Johan Hovold <johan@kernel.org> writes:
-> 
-> > I recently noticed that after an upgrade, git-send-email (2.10.2)
-> > started aborting when trying to send patches that had a linux-kernel
-> > stable-tag in its body. For example,
-> >
-> > 	Cc: <stable@vger.kernel.org>	# 4.4
-> >
-> > was now parsed as
-> >
-> > 	"stable@vger.kernel.org#4.4"
-> > ...
-> 
-> It sounds like a fallout of this:
-> 
->   https://public-inbox.org/git/41164484-309b-bfff-ddbb-55153495d41a@lwfinger.net/#t 
-> 
-> and any change to "fix" you may break the other person.
+Johan Hovold <johan@kernel.org> writes:
 
-Yes, that's the thread I was referring to as well, and the reported
-breakage is the same even if the reporter used a non-standard stable-tag
-format (e.g. a "[4.8+]" suffix).
+> Hi,
+>
+> I recently noticed that after an upgrade, git-send-email (2.10.2)
+> started aborting when trying to send patches that had a linux-kernel
+> stable-tag in its body. For example,
+>
+> 	Cc: <stable@vger.kernel.org>	# 4.4
+>
+> was now parsed as
+>
+> 	"stable@vger.kernel.org#4.4"
+>
+> which resulted in
+>
+> 	Died at /usr/libexec/git-core/git-send-email line 1332, <FIN> line 1.
 
-What I'm wondering is whether the alternative fix proposed in that
-thread, to revert to the old behaviour of discarding trailing comments,
-should be considered instead of what was implemented.
+This has changed in e3fdbcc8e1 (parse_mailboxes: accept extra text after
+<...> address, 2016-10-13), released v2.11.0 as you noticed:
 
-> > Can we please revert to the old behaviour of simply discarding such
-> > comments (from body-CC:s) or at least make it configurable through a
-> > configuration option?
-> 
-> If I recall the old thread correctly, it was reported that using
-> Mail::Address without forcing git-send-email fall back to its own
-> non-parsing-but-paste-address-looking-things-together code would
-> solve it, so can the "make it configurable" be just "install
-> Mail::Address"?
+> The problem with the resulting fixes that are now in 2.11.1 is that
+> git-send-email no longer discards the trailing comment but rather
+> shoves it into the name after adding some random white space:
+>
+> 	"# 3 . 3 . x : 1b9508f : sched : Rate-limit newidle" <stable@vger.kernel.org>"
+>
+> This example is based on the example from
+> Documentation/process/stable-kernel-rules.rst:
+>
+> 	Cc: <stable@vger.kernel.org> # 3.3.x: 1b9508f: sched: Rate-limit newidle
+>
+> and this format for stable-tags has been documented at least since 2009
+> and 8e9b9362266d ("Doc/stable rules: add new cherry-pick logic"), and
+> has been supported by git since 2012 and 831a488b76e0 ("git-send-email:
+> remove garbage after email address") I believe.
+>
+> Can we please revert to the old behaviour of simply discarding such
+> comments (from body-CC:s) or at least make it configurable through a
+> configuration option?
 
-I believe git-send-email's parser was changed to mimic Mail::Address,
-and installing it does not seem to change the behaviour of including any
-trailing comments in the name.
+The problem is that we now accept list of emails instead of just one
+email, so it's hard to define what "comments after the email", for
+example
 
-Thanks,
-Johan
+Cc: <foo@example.com> # , <boz@example.com>
+
+Is not accepted as two emails.
+
+So, just stripping whatever comes after # before parsing the list of
+emails would change the behavior once more, and possibly break other
+user's flow. Dropping the garbage after the email while parsing is
+possible, but only when we use our in-house parser (and we currently use
+Perl's Mail::Address when available).
+
+So, a proper fix is far from obvious, and unfortunately I won't have
+time to work on that, at least not before a while.
+
+OTOH, the current behavior isn't that bad. It accepts the input, and
+extracts a valid email out of it. Just the display name is admitedly
+suboptimal ...
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
