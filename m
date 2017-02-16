@@ -7,61 +7,58 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8A9FF1FC44
-	for <e@80x24.org>; Thu, 16 Feb 2017 20:39:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 189801FC44
+	for <e@80x24.org>; Thu, 16 Feb 2017 20:54:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933308AbdBPUjw (ORCPT <rfc822;e@80x24.org>);
-        Thu, 16 Feb 2017 15:39:52 -0500
-Received: from mail-pg0-f68.google.com ([74.125.83.68]:34328 "EHLO
-        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933086AbdBPUjv (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Feb 2017 15:39:51 -0500
-Received: by mail-pg0-f68.google.com with SMTP id v184so2863709pgv.1
-        for <git@vger.kernel.org>; Thu, 16 Feb 2017 12:39:51 -0800 (PST)
+        id S933219AbdBPUyL (ORCPT <rfc822;e@80x24.org>);
+        Thu, 16 Feb 2017 15:54:11 -0500
+Received: from mail-pf0-f196.google.com ([209.85.192.196]:35112 "EHLO
+        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S933105AbdBPUyK (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Feb 2017 15:54:10 -0500
+Received: by mail-pf0-f196.google.com with SMTP id 68so2367674pfx.2
+        for <git@vger.kernel.org>; Thu, 16 Feb 2017 12:54:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=zkzXsN/djBVR2OtFGnY6+y8f/hhe+TEj6Dhayc0gFIE=;
-        b=gfnbK6IrBS26W7PyTeXTx3nI9Cg+9IdfbtpIV9Dz0e5nXxvjO9/M4Wr9Fyp9lEQvKK
-         b6THwssmRW9FkPjVxyFCfGIb94Fefu5eLk/drWpvwANwm3YbFAELH2AbErj1e9UpSChN
-         Zk6CviiOQ1RbW1Y5eRtN/o0gsRZCr+AOKToS+HkswSFQhiWFfW/4rQN7ik7faJzy1+Gr
-         z0YkiPCvwSjIZXpn/qbWGdWrnretU+dKlICYRxju+ZwXlNGySS14CcWwkar8zafg/2sm
-         08QZ7CYCG4Y35O0pYzrM+MFiMzFT2nSzkXr/cO/y2XFX2pM5VeAIWnjYpMZyoEmXt5fV
-         GmrQ==
+        bh=ZP4GXfqzL+Avbr8e8Vt8FBsQkgBhDKq+RCxrS5p2c1E=;
+        b=ED53PZaS9U5DUzhJW+h4pefZMdxa9ed6bYy1nyCr2+OlE9WfPIir8zNMS3Gry6570B
+         HesFBMznlYgolx90zJY1H+sOZ6bpGyL2/RQYvxwr+j4phQeyQnhU7cc9s8/LjduF0Nle
+         9zpNGFi1b3xjeqH/LbdY852/aUjFZq2M7kGpLGFG77Ma7CzEzlVudhase2eVgOY18Gg4
+         QPWIkeZsqS8Wvs4YH/BGgr8i9lebx3jIzYHbvUe3TILy7S8VhUEuSbLClAGPJLw5t8L3
+         F4VFYYoCyDaiMzZ3vEOpn9RiDiGr3xWEtbzyFQTeQXB5szi5LKYL7d568oe/R9AxwtWG
+         OCYQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=zkzXsN/djBVR2OtFGnY6+y8f/hhe+TEj6Dhayc0gFIE=;
-        b=qZdWuYB3heTQ6QvqQCtcQluLl30UHkM5wwpcLkCf8ALLQjWoekd1IH7y1zRI5yyAMx
-         nwljJgjE/OGaU5m8MQhc1FUu/DEtvgMvL6s4Sn4RIvsM64qWAvJ8R2CuKTOf3aFNhJec
-         76VrBkQjPOcj2iQj7kJekRrKeZxCWZNTy3qMHiLoP/5N2BsK/TlxPboBQW4nwBpXYAx5
-         pjiuN0OmF9yCEESyCv4rfzQVM5jXLXJv/AMms1Z4gWVHMbXLDclK1APFhqhzutaW3Tlj
-         dmjL9euwh9FZfbph+VNc2jprVhg1iYPoI/HssEII+3ui+9BPt/ymUW3W75GWZVcMTH0K
-         kEpw==
-X-Gm-Message-State: AMke39ljrHdUg/YJvZ56Qaa76UdFqkz1fsuT1iXdEkfmibhbXZ3zSKDEYQshcE2Tux9fbg==
-X-Received: by 10.84.231.205 with SMTP id g13mr5952221pln.30.1487277590515;
-        Thu, 16 Feb 2017 12:39:50 -0800 (PST)
+        bh=ZP4GXfqzL+Avbr8e8Vt8FBsQkgBhDKq+RCxrS5p2c1E=;
+        b=CeUXxa+ne3vTM988+wWkREBDrF38sANXUhcZ8HJDb4PQZhSO2xFQ2UAGn+M/egJMoK
+         1n4glSf7zO32JZ4s5p2gbuDcPWWMujQMhylKAYdkQOgP72YKCgCS+v3mTAr16jBwqf8f
+         DtsJvLDE1aDByEkk5H+YBg5PRqwNYV/Vv7KhPbMXvm3o2C4WS5iJFCdNYLdIDqDVzncS
+         ut0YnNrZf35Js89eeYjqsuFgPYx8Om/9Yt/jW77x7uDeoC+BqjJK8vt6TpbVUWrWtqSA
+         WWWpjXHMjMK1fgege5YPqQvh0hZ503U614MLMEtMxHk9zFhLQf7BEbB4eZyS5QoP6q9W
+         Id+g==
+X-Gm-Message-State: AMke39kecjZdolmAX2lLn9zBy39f9EMcEbtUf6z5QvU2K92NqPzZFhdWihUUwLL55SHR9A==
+X-Received: by 10.98.44.10 with SMTP id s10mr4945037pfs.161.1487278449922;
+        Thu, 16 Feb 2017 12:54:09 -0800 (PST)
 Received: from localhost ([2620:0:1000:8622:9476:4c5c:6ee4:ba3])
-        by smtp.gmail.com with ESMTPSA id q19sm15281679pfl.21.2017.02.16.12.39.48
+        by smtp.gmail.com with ESMTPSA id l188sm15292723pfl.28.2017.02.16.12.54.08
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 16 Feb 2017 12:39:48 -0800 (PST)
+        Thu, 16 Feb 2017 12:54:09 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Stefan Beller <sbeller@google.com>
-Cc:     unlisted-recipients:; (no To-header on input) git@vger.kernel.org,
-        sandals@crustytoothpaste.net, jrnieder@gmail.com, bmwill@google.com
-Illegal-Object: Syntax error in Cc: address found on vger.kernel.org:
-        Cc:     unlisted-recipients:; (no To-header on input)git@vger.kernel.org
-                                                                     ^-missing end of address
-Subject: Re: [PATCH 03/15] lib-submodule-update.sh: define tests for recursing into submodules
+Cc:     git@vger.kernel.org, sandals@crustytoothpaste.net,
+        jrnieder@gmail.com, bmwill@google.com
+Subject: Re: [PATCH 05/15] connect_work_tree_and_git_dir: safely create leading directories
 References: <xmqq8tp74823.fsf@gitster.mtv.corp.google.com>
         <20170216003811.18273-1-sbeller@google.com>
-        <20170216003811.18273-4-sbeller@google.com>
-Date:   Thu, 16 Feb 2017 12:39:47 -0800
-In-Reply-To: <20170216003811.18273-4-sbeller@google.com> (Stefan Beller's
-        message of "Wed, 15 Feb 2017 16:37:59 -0800")
-Message-ID: <xmqqlgt5x430.fsf@gitster.mtv.corp.google.com>
+        <20170216003811.18273-6-sbeller@google.com>
+Date:   Thu, 16 Feb 2017 12:54:08 -0800
+In-Reply-To: <20170216003811.18273-6-sbeller@google.com> (Stefan Beller's
+        message of "Wed, 15 Feb 2017 16:38:01 -0800")
+Message-ID: <xmqqh93tx3f3.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -72,110 +69,85 @@ X-Mailing-List: git@vger.kernel.org
 
 Stefan Beller <sbeller@google.com> writes:
 
-> Currently lib-submodule-update.sh provides 2 functions
-> test_submodule_switch and test_submodule_forced_switch that are used by a
-> variety of tests to ensure that submodules behave as expected. The current
-> expected behavior is that submodules are not touched at all (see
-> 42639d2317a for the exact setup).
+> In a later patch we'll use connect_work_tree_and_git_dir when the
+> directory for the gitlink file doesn't exist yet. Safely create
+> the directory first.
 >
-> In the future we want to teach all these commands to properly recurse
-> into submodules. To do that, we'll add two testing functions to
-> submodule-update-lib.sh test_submodule_switch_recursing and
-> test_submodule_forced_switch_recursing.
-
-I'd remove "properly" and insert a colon after "add two ... to
-submodule-update-lib.sh" before the names of two functions.
-
-> +reset_work_tree_to_interested () {
-> +	reset_work_tree_to $1 &&
-> +	# indicate we are interested in the submodule:
-> +	git -C submodule_update config submodule.sub1.url "bogus" &&
-> +	# also have it available:
-> +	if ! test -d submodule_update/.git/modules/sub1
-> +	then
-> +		mkdir submodule_update/.git/modules &&
-
-Would we want "mkdir -p" here to be safe?
-
-> +		cp -r submodule_update_repo/.git/modules/sub1 submodule_update/.git/modules/sub1
-
-... ahh, wouldn't matter that much, we checked that modules/sub1
-does not exist, and as long as nobody creates modules/ or modules/somethingelse
-we are OK.
-
-> +	fi
-> +}
+> One of the two users of 'connect_work_tree_and_git_dir' already checked
+> for the directory being there, so we can loose that check.
+>
+> Signed-off-by: Stefan Beller <sbeller@google.com>
+> ---
+>  dir.c       | 32 +++++++++++++++++++++-----------
+>  submodule.c | 11 ++---------
+>  2 files changed, 23 insertions(+), 20 deletions(-)
+>
+> diff --git a/dir.c b/dir.c
+> index 4541f9e146..6f52af7abb 100644
+> --- a/dir.c
+> +++ b/dir.c
+> @@ -2728,23 +2728,33 @@ void untracked_cache_add_to_index(struct index_state *istate,
+>  /* Update gitfile and core.worktree setting to connect work tree and git dir */
+>  void connect_work_tree_and_git_dir(const char *work_tree_, const char *git_dir_)
+>  {
+> -	struct strbuf file_name = STRBUF_INIT;
+> +	struct strbuf gitfile_sb = STRBUF_INIT;
+> +	struct strbuf cfg_sb = STRBUF_INIT;
+>  	struct strbuf rel_path = STRBUF_INIT;
+> -	char *git_dir = real_pathdup(git_dir_);
+> -	char *work_tree = real_pathdup(work_tree_);
+> +	char *git_dir, *work_tree;
+>  
+> -	/* Update gitfile */
+> -	strbuf_addf(&file_name, "%s/.git", work_tree);
+> -	write_file(file_name.buf, "gitdir: %s",
+> -		   relative_path(git_dir, work_tree, &rel_path));
+> +	/* Prepare .git file */
+> +	strbuf_addf(&gitfile_sb, "%s/.git", work_tree_);
+> +	if (safe_create_leading_directories_const(gitfile_sb.buf))
+> +		die(_("could not create directories for %s"), gitfile_sb.buf);
 > +
-
-> @@ -695,3 +736,443 @@ test_submodule_forced_switch () {
->  		)
->  	'
->  }
+> +	/* Prepare config file */
+> +	strbuf_addf(&cfg_sb, "%s/config", git_dir_);
+> +	if (safe_create_leading_directories_const(cfg_sb.buf))
+> +		die(_("could not create directories for %s"), cfg_sb.buf);
+>  
+> +	git_dir = real_pathdup(git_dir_);
+> +	work_tree = real_pathdup(work_tree_);
 > +
-> +# Test that submodule contents are correctly updated when switching
-> +# between commits that change a submodule.
-> +# Test that the following transitions are correctly handled:
-> +# (These tests are also above in the case where we expect no change
-> +#  in the submodule)
-> +# - Updated submodule
-> +# - New submodule
-> +# - Removed submodule
-> +# - Directory containing tracked files replaced by submodule
-> +# - Submodule replaced by tracked files in directory
-> +# - Submodule replaced by tracked file with the same name
-> +# - tracked file replaced by submodule
+> +	/* Write .git file */
+> +	write_file(gitfile_sb.buf, "gitdir: %s",
+> +		   relative_path(git_dir, work_tree, &rel_path));
 
-These should work without trouble only when the paths involved in
-the operation in the working tree are clean, right?  Just double
-checking.  If they are dirty we should expect a failure, instead of
-silent loss of information.
+The above does somewhat more than advertised and was a bit hard to
+grok.  Initially I thought the reason why pathdup()s were delayed
+was perhaps because you pathdup() something potentially different
+from the given parameter to the function (i.e. new code before
+pathdup() may tweak what is pathdup()ed).
 
-> +# New test cases
-> +# - Removing a submodule with a git directory absorbs the submodules
-> +#   git directory first into the superproject.
-> +
-> +test_submodule_switch_recursing () {
-> +	command="$1"
+But that is not what is happening.  I suspect that you did this to
+avoid leaking allocated memory when the code calls die().
 
-The dq-pair is not strictly needed on the RHS of the assignment, but
-it is a good way to signal that we considered that we might receive
-an argument with $IFS in it...
+If the code was written like so from the beginning, I do not see a
+reason to move the pathdup() up to deliberately make it leak [*1*].
+But as a part of this change, I found it distracting and getting in
+the way of understanding the change.  If you really care, it is
+nicer to do it to reviewers as a separate preparatory clean-up step,
+or follow-up standalone clean-up patch after the series settles.
 
-> +	######################### Appearing submodule #########################
-> +	# Switching to a commit letting a submodule appear checks it out ...
-> +	test_expect_success "$command: added submodule is checked out" '
-> +		prolog &&
-> +		reset_work_tree_to_interested no_submodule &&
-> +		(
-> +			cd submodule_update &&
-> +			git branch -t add_sub1 origin/add_sub1 &&
-> +			$command add_sub1 &&
+The comment "prepare config file" was misleading; it is preparing
+the place the config file will be created (same for "prepare .git
+file").
 
-... and after doing so, not quoting $command here signals that we
-expect command line splitting to happen.  Am I reading it correctly?
-Without an actual caller appearing in this step, it is rather hard
-to judge.
+It is a good thing to do to make sure git_dir_ exists and it should
+be mentioned in the log message.  Adding "Do the same for the place
+where the per-repo config file is created". at the end of the first
+paragraph should be sufficient.
 
-> +			test_superproject_content origin/add_sub1 &&
-> +			test_submodule_content sub1 origin/add_sub1
-> +		)
-> ...
-> +	# ... but an ignored file is fine.
-> +	test_expect_success "$command: added submodule removes an untracked ignored file" '
-> +		test_when_finished "rm submodule_update/.git/info/exclude" &&
-> +		prolog &&
-> +		reset_work_tree_to_interested no_submodule &&
-> +		(
-> +			cd submodule_update &&
-> +			git branch -t add_sub1 origin/add_sub1 &&
-> +			: >sub1 &&
-> +			echo sub1 > .git/info/exclude
+Thanks.
 
-    ">.git/info/exclude"
 
-> +			$command add_sub1 &&
-> +			test_superproject_content origin/add_sub1 &&
-> +			test_submodule_content sub1 origin/add_sub1
-> +		)
-> +	'
+[Footnote]
 
+*1* it is arguable a small piece of unfreed memory before exit() or
+    die() is worth called "leak", though.
