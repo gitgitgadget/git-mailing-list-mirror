@@ -2,88 +2,72 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AC2651FC44
+	by dcvr.yhbt.net (Postfix) with ESMTP id C178A1FC44
 	for <e@80x24.org>; Thu, 16 Feb 2017 18:41:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933293AbdBPSla (ORCPT <rfc822;e@80x24.org>);
-        Thu, 16 Feb 2017 13:41:30 -0500
-Received: from mail-wr0-f174.google.com ([209.85.128.174]:36182 "EHLO
-        mail-wr0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932694AbdBPSl2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Feb 2017 13:41:28 -0500
-Received: by mail-wr0-f174.google.com with SMTP id 89so13274257wrr.3
-        for <git@vger.kernel.org>; Thu, 16 Feb 2017 10:41:27 -0800 (PST)
+        id S933620AbdBPSld (ORCPT <rfc822;e@80x24.org>);
+        Thu, 16 Feb 2017 13:41:33 -0500
+Received: from mail-it0-f43.google.com ([209.85.214.43]:36585 "EHLO
+        mail-it0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932694AbdBPSlb (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Feb 2017 13:41:31 -0500
+Received: by mail-it0-f43.google.com with SMTP id h10so710937ith.1
+        for <git@vger.kernel.org>; Thu, 16 Feb 2017 10:41:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
+        d=google.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=Fhj8KCKMk/7LwGxnVYCcYQqo2rUbZQj6yW7UsRQMjK0=;
-        b=pfkOKL5JIhZ/jXCkPrNilw5xKXGLkbAyadsVCQr7suEN1HjM/dOGl43r6BUL/wnsya
-         rLKXCETIhfmd2yc3fJqUYs4MD/HOEI8uBcWcuFYuIeBOv4O1z8X6xq4eHGMg45UAPRaa
-         U4QF7qyDf6hnqtH2951Q3VcT58TM9mSvWkmihiTZJqa7+0Q8XJLG0ZXV1msCSiYMpqkH
-         OOqZLoZ56t1+MFDfSzvZi5MKtJthBRqZqEBXYu1Ei7IuY2/GK8OSt38MUs6mNux9No0r
-         Bh7o9g0Y+nYVdkHbLlnKnTkDF1/EsvLgoNl8UlvdKuYOq+nGgJzOsehzRgISb4hx2nCK
-         98fg==
+        bh=FTN13AAAGCZlmKP1le0HpvYMrptu3xtY0lj4l/wBw3M=;
+        b=KiI8W0VWHkj1afH3Wd1XAhS1ThX0L5eRw23rR0h1nCkMzXZ7z7D2iry77pXugGVVMn
+         vLmpge+TRO+EsAjda5clY1bObplmlIEE5jQxuUbGMZWfkf4TdGQYm6jo4m9cc7L1LdOh
+         ye2dCt7WMeQiOVWK14TXNNq4Zw7l/+El1BzSxZoES/frU6LiYmTqkWduJGFpS+gDWVtu
+         BS/34sI9ki3eim4PgrSQaB8Sp+3Hvdx3tffozDtc+oRtyZhEul+/KKvH9Iy9yeOzceqq
+         g+NiU9OqapjrCeOjn2eH4UFEEAi2Pi+tv5REpF0dEZJ+0eRMeGsHn1HcLxTMsnSIxD/T
+         KYAQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=Fhj8KCKMk/7LwGxnVYCcYQqo2rUbZQj6yW7UsRQMjK0=;
-        b=VP1zQMmB6/pgnwnUKe+HV2f2wh38ZWGt+Mqn3NQRzmrgflw5uxFQ0f5Jvm6YJgr8CH
-         qAgRoFIuYJkWZnvzX7k6ZhTeR4LIK6xI2FF6PbrsqCUL+3KUxY/JfWYnGEocUfWtujqR
-         AM5G6f1O1wOwnUphJYVYFV3mC74q2KWPkD7AOIqEh63xystLZkx5UaZm4dXHS+jm7Zlc
-         gz6gVe3oFeyX9w1396osGCa/1OqpeFu4vbTzIJUPme0PBvJryeHPcoFbEAGH+ZuJLkc6
-         JOW0IbF27+qNUGSd7Lm46cAFL2liNF32jqjTq8sArskijJm6wUz8Ix8x2pap+oHUsZLm
-         U+Fw==
-X-Gm-Message-State: AMke39nS5SLCap6xfuMPgPd7xIdXV3ek9jfURSacIiiPQEkPwIChxR+4n4oEbgM6X5YZWkGA6H9piQWL3TkoUg==
-X-Received: by 10.223.165.87 with SMTP id j23mr4091890wrb.79.1487270487075;
- Thu, 16 Feb 2017 10:41:27 -0800 (PST)
+        bh=FTN13AAAGCZlmKP1le0HpvYMrptu3xtY0lj4l/wBw3M=;
+        b=pFu6le9iJKjY+jYC6WgjeLmw98ZZY3w3P2o2vFQ/jfktV710I97uL09fsfEkPuJkQo
+         fLiH38SqFqUGmzECJuLKeSqEPkGN6txl/BkWsGDQRby0/7a0/DZUkVgYSAQDpxcc/dOJ
+         NG35hyGTBJdRaf67i9ka/ekNwkrDZjKIhwCUiofIFuV2tnefjbiBNELOOODkbOAoahBl
+         fLJdC6zN6W/+9BYFHFhBRas77hi1tV9HbW2RJZwT7wSsuzJIbve05KDRDQSwgZ5r79Sm
+         9s/a0xvxGrA9K+woebQN//vcpr35epKrLK8aGyOOjSQeAEOnKJDI08QzKPmr111cPH9m
+         bOFg==
+X-Gm-Message-State: AMke39n1Iif9XmIMftV7FVy9ILbDKFofL3/m5obCdT44O8OdnGlWGc88qoCmQ5U/EpYUvgphTnsl7R9i2OG3ZD/Q
+X-Received: by 10.36.34.79 with SMTP id o76mr3339496ito.116.1487270491027;
+ Thu, 16 Feb 2017 10:41:31 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.80.138.211 with HTTP; Thu, 16 Feb 2017 10:41:26 -0800 (PST)
-In-Reply-To: <20170215215633.deyxp76j7o3ceoq3@sigill.intra.peff.net>
-References: <CAOxYW4z=bABqhmHWCc9rizykMcGBjDvqLEuqpJ6DtPve5442Fw@mail.gmail.com>
- <20170215212157.qgscyglgzrd5cplf@sigill.intra.peff.net> <CAOxYW4xqk4j6Uu86jq2Vi9Bpgihxfr2Tw-DQLc+7YTZiPmDtiA@mail.gmail.com>
- <20170215215633.deyxp76j7o3ceoq3@sigill.intra.peff.net>
-From:   Fabrizio Cucci <fabrizio.cucci@gmail.com>
-Date:   Thu, 16 Feb 2017 18:41:26 +0000
-Message-ID: <CAOxYW4x93cjMJoXYzSXCwqYVEstSLLcxzad_BPdvxfasrkxapw@mail.gmail.com>
-Subject: Re: Back quote typo in error messages (?)
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org
+Received: by 10.79.33.148 with HTTP; Thu, 16 Feb 2017 10:41:30 -0800 (PST)
+In-Reply-To: <20170216050535.64593-2-david.pursehouse@gmail.com>
+References: <20170216050535.64593-1-david.pursehouse@gmail.com> <20170216050535.64593-2-david.pursehouse@gmail.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Thu, 16 Feb 2017 10:41:30 -0800
+Message-ID: <CAGZ79kaPFP3aQB8=gZ+BvRUqJa+NPuDQ+5kvKNqqYs3S28EEew@mail.gmail.com>
+Subject: Re: [PATCH 1/1] config.txt: Fix formatting of submodule.alternateErrorStrategy
+ section
+To:     David Pursehouse <david.pursehouse@gmail.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        David Pursehouse <dpursehouse@collab.net>
 Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 15 February 2017 at 21:56, Jeff King <peff@peff.net> wrote:
-> Grep for "``" in Git's documentation directory, and you will see many
-> examples (asciidoc only accepts the double-quote form, not singles).
+On Wed, Feb 15, 2017 at 9:05 PM, David Pursehouse
+<david.pursehouse@gmail.com> wrote:
+> From: David Pursehouse <dpursehouse@collab.net>
 >
-> You can also try:
+> Add missing `::` after the title.
 >
->   echo "this is \`\`quoted'' text" >foo.txt
->   asciidoc foo.txt
->
-> and then open "foo.html" in your browser.
+> Signed-off-by: David Pursehouse <dpursehouse@collab.net>
 
-We are probably going a bit OT here :) but AFAIK there is no such
-thing as non-symmetric start/end quotes in AsciiDoc.
-
-Even enclosing something in curved quotes is done as follows:
-
-'`single curved quotes`'
-
-"`double curved quotes`"
-
-(http://asciidoctor.org/docs/asciidoc-syntax-quick-reference/)
-
-> I think patches would be welcome, but as Junio said, it probably should
-> wait for the next cycle.
-
-It can definitely wait and I would be glad to contribute!
+Thanks!
+Stefan
