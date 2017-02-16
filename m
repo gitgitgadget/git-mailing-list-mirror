@@ -7,70 +7,103 @@ X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 52B8B1FC44
-	for <e@80x24.org>; Thu, 16 Feb 2017 17:07:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 47E4D1FC44
+	for <e@80x24.org>; Thu, 16 Feb 2017 17:07:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932424AbdBPRHV (ORCPT <rfc822;e@80x24.org>);
-        Thu, 16 Feb 2017 12:07:21 -0500
-Received: from mail-lf0-f65.google.com ([209.85.215.65]:32954 "EHLO
-        mail-lf0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932348AbdBPRHU (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Feb 2017 12:07:20 -0500
-Received: by mail-lf0-f65.google.com with SMTP id x1so1964946lff.0
-        for <git@vger.kernel.org>; Thu, 16 Feb 2017 09:07:20 -0800 (PST)
+        id S932492AbdBPRHX (ORCPT <rfc822;e@80x24.org>);
+        Thu, 16 Feb 2017 12:07:23 -0500
+Received: from mail-lf0-f67.google.com ([209.85.215.67]:32956 "EHLO
+        mail-lf0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932410AbdBPRHW (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Feb 2017 12:07:22 -0500
+Received: by mail-lf0-f67.google.com with SMTP id x1so1964970lff.0
+        for <git@vger.kernel.org>; Thu, 16 Feb 2017 09:07:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id;
-        bh=3GsMORHnuYG29fwYGWOhc39DZSOwWwMd/0+Eyn8+ZFc=;
-        b=F1KuO3fnhZMkbXvHTPb0rb50QVSO+vypfeK+dWuAq6+Zk96yOIs+n2HMqBJBXMQORY
-         D16K0KGQVIfUXOU+yFTbGmDSWII9ULPxKwVZIHtkpL5G3Y8XVrSb2OJqL2CjkRiwR4gh
-         ZQ2UsbjG+9I25T1eAQvRf75/pmxLJiEYK0JKIRd1u/Y+MNd7b68M7YyWD00UuVvawREr
-         2z3wbqP2iZodTkcyBjxBseAPMr+T+Sc3dfu4rL6ZkL4dnBA2ZqVDtYVQNXOuFKf5mCBG
-         s4K8k0TWOkzkYrxjyqWp7vCVcbYvbCGpG55uj9G6krTfSgYEN8APyo/WKQIcItQ8sSFW
-         x9Uw==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=KZNbhpGztUtUDJC/MNHzu6E7OEMMTKpxhlBqYuNW+uU=;
+        b=jp0Yg84b+Z9q43zR5W+6qppAsFEEeKnrARZBsBvrkoeCjGA8HOGaoADGPgeQT0zMCQ
+         1jIvVseXF/oKDSZfb7Dj1viR34KxHlNJN6r1I6FwHDx0gOzdHa8HZBKl8yPXr628/ml0
+         2EJq/gp5CxwdphjMCdoJUYcufhwVO9XE18xFzz6cSHEy+C+GWH8nECoHyLFV40KH236a
+         Ty3SpQgBmzrnTybxxQ7hqsfzE0xKVWw40rrQ2WrKe5PkR+fEjwsXR2fzrTD6rCv8G/pp
+         rhEVZTuRPQEOtnCT1ZkZ2zkdsq7fdzjLQdydRU1pdhm3d8kKueBLyEVrKnqK4Yj/fmrK
+         dGbg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=3GsMORHnuYG29fwYGWOhc39DZSOwWwMd/0+Eyn8+ZFc=;
-        b=RWykVBq26rB9lO1e3IA4yVBGzXDOAA0Xf9u1VuDm65e9ZMw4kGwqo3vP7atoMPhwRg
-         BqVDS2DrAVYjeNLrqsAoJGnVAypnpddFD26FVY/ZOL6cXZNE9R7zJh99M8Rb1ec19K+t
-         UWiJ11AyHmU7TVuizlCUBfHmrpR50V5S3FoJai9eAzCYiP2A3zohMFF1fYlmLLdw/FwJ
-         4A2Slsjlg6erQVq0a9xTW3ifcICmDJ1cT7GYAP3C0tci3pX7qb9bSzhA3Nd68QLoj+5e
-         4ikhJnjmlEHdyTDt5m1jy5ocyj6mW6wRXoAvIkYEJ1R9ThQIpBDydyvqq3U1aMHIZ4Te
-         aP3w==
-X-Gm-Message-State: AMke39nzvAq5zoQcfAcWJsKHwx4FUDdCHfatfCITVQ/xkZoJShSmSxEGZHqNdYBclWzLvw==
-X-Received: by 10.46.83.29 with SMTP id h29mr903488ljb.84.1487264838969;
-        Thu, 16 Feb 2017 09:07:18 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=KZNbhpGztUtUDJC/MNHzu6E7OEMMTKpxhlBqYuNW+uU=;
+        b=Nue0F7La9htHZtslscGpgC+NrcGQn7+nmxb4D2nMUja/kUM0BFwaXOYV4mEp1GSFUX
+         eclsFrX3HRm6MDydp8wTAkN0R17ttPaMeJ89trWRJZ5dwK3T/DVNi7NzeCTM6IaiPNQt
+         zOMyCVRV/PLM0aLSuxu8QjFafolPr6OSwtPCIzacb/Tg9+7VGcKCP925OHDMRhAila07
+         BbytdRpLAv9JrpNXFxqlUuBt31jKU5tRjL2tUSSH6NNhe2Tb2pInVT6pNe/qkOFwDS1Z
+         IySTvQtCY6uWM3V5XD1U1Ozi/OUtT40JnedZqkStX1wXjtFLe15bGXa5R//Ata5SltWD
+         YQWQ==
+X-Gm-Message-State: AMke39mVN5mVrppl11Ffe8Mt9U/Po9bEFRgF/CruunA76Sn8ufiMK3VYAes3Dyrntrcmkw==
+X-Received: by 10.46.21.23 with SMTP id s23mr915531ljd.54.1487264840351;
+        Thu, 16 Feb 2017 09:07:20 -0800 (PST)
 Received: from localhost.localdomain ([2001:470:1f0b:8fc:eda1:2dcd:3a83:adeb])
-        by smtp.gmail.com with ESMTPSA id s7sm1867896lja.27.2017.02.16.09.07.17
+        by smtp.gmail.com with ESMTPSA id s7sm1867896lja.27.2017.02.16.09.07.19
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 16 Feb 2017 09:07:18 -0800 (PST)
+        Thu, 16 Feb 2017 09:07:19 -0800 (PST)
 From:   Maxim Moseychuk <franchesko.salias.hudro.pedros@gmail.com>
 To:     git@vger.kernel.org
 Cc:     peff@peff.net, jonathantanmy@google.com,
         Maxim Moseychuk <franchesko.salias.hudro.pedros@gmail.com>
-Subject: [PATCH V2 0/2] Fix l10n
-Date:   Thu, 16 Feb 2017 20:07:11 +0300
-Message-Id: <20170216170713.10065-1-franchesko.salias.hudro.pedros@gmail.com>
+Subject: [PATCH V2 1/2] bisect_next_all: convert xsnprintf to xstrfmt
+Date:   Thu, 16 Feb 2017 20:07:12 +0300
+Message-Id: <20170216170713.10065-2-franchesko.salias.hudro.pedros@gmail.com>
 X-Mailer: git-send-email 2.11.1
+In-Reply-To: <20170216170713.10065-1-franchesko.salias.hudro.pedros@gmail.com>
+References: <20170216170713.10065-1-franchesko.salias.hudro.pedros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In some places static size buffers can't store formatted string.
-If it be happen then git die.
+Git can't run bisect between 2048+ commits if use russian translation.
+Reproduce "LANG=ru_RU.UTF8 git bisect start v4.9 v4.8" on linux sources.
 
-Jonathan Tan: Thanks a lot for your help.
+Dummy solution: just increase buffer size but is not safe.
+Size gettext string is a runtime value.
 
-Maxim Moseychuk (2):
-  bisect_next_all: convert xsnprintf to xstrfmt
-  stop_progress_msg: convert xsnprintf to xstrfmt
+Signed-off-by: Maxim Moseychuk <franchesko.salias.hudro.pedros@gmail.com>
+---
+ bisect.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
- bisect.c   | 9 +++++----
- progress.c | 9 +++------
- 2 files changed, 8 insertions(+), 10 deletions(-)
-
---
+diff --git a/bisect.c b/bisect.c
+index 21bc6daa4..787543cad 100644
+--- a/bisect.c
++++ b/bisect.c
+@@ -940,7 +940,7 @@ int bisect_next_all(const char *prefix, int no_checkout)
+ 	struct commit_list *tried;
+ 	int reaches = 0, all = 0, nr, steps;
+ 	const unsigned char *bisect_rev;
+-	char steps_msg[32];
++	char *steps_msg;
+ 
+ 	read_bisect_terms(&term_bad, &term_good);
+ 	if (read_bisect_refs())
+@@ -990,14 +990,15 @@ int bisect_next_all(const char *prefix, int no_checkout)
+ 
+ 	nr = all - reaches - 1;
+ 	steps = estimate_bisect_steps(all);
+-	xsnprintf(steps_msg, sizeof(steps_msg),
+-		  Q_("(roughly %d step)", "(roughly %d steps)", steps),
+-		  steps);
++
++	steps_msg = xstrfmt(Q_("(roughly %d step)", "(roughly %d steps)",
++		  steps), steps);
+ 	/* TRANSLATORS: the last %s will be replaced with
+ 	   "(roughly %d steps)" translation */
+ 	printf(Q_("Bisecting: %d revision left to test after this %s\n",
+ 		  "Bisecting: %d revisions left to test after this %s\n",
+ 		  nr), nr, steps_msg);
++	free(steps_msg);
+ 
+ 	return bisect_checkout(bisect_rev, no_checkout);
+ }
+-- 
 2.11.1
 
