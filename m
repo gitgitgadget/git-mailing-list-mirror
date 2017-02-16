@@ -2,122 +2,77 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 771322013A
-	for <e@80x24.org>; Thu, 16 Feb 2017 00:22:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 364562013A
+	for <e@80x24.org>; Thu, 16 Feb 2017 00:34:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754115AbdBPAWW (ORCPT <rfc822;e@80x24.org>);
-        Wed, 15 Feb 2017 19:22:22 -0500
-Received: from mga04.intel.com ([192.55.52.120]:42629 "EHLO mga04.intel.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1754119AbdBPAWU (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Feb 2017 19:22:20 -0500
-Received: from fmsmga002.fm.intel.com ([10.253.24.26])
-  by fmsmga104.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384; 15 Feb 2017 16:22:14 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.35,167,1484035200"; 
-   d="scan'208";a="1127483886"
-Received: from jekeller-desk.amr.corp.intel.com (HELO jekeller-desk.jekeller.internal) ([10.166.35.174])
-  by fmsmga002.fm.intel.com with ESMTP; 15 Feb 2017 16:22:14 -0800
-From:   Jacob Keller <jacob.e.keller@intel.com>
-To:     git@vger.kernel.org
-Cc:     Jacob Keller <jacob.keller@gmail.com>,
+        id S1753495AbdBPAd7 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 15 Feb 2017 19:33:59 -0500
+Received: from mail-it0-f49.google.com ([209.85.214.49]:36912 "EHLO
+        mail-it0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753311AbdBPAd6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Feb 2017 19:33:58 -0500
+Received: by mail-it0-f49.google.com with SMTP id x75so7844869itb.0
+        for <git@vger.kernel.org>; Wed, 15 Feb 2017 16:33:57 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to;
+        bh=hsWx8A7DChtr2WegC4niLPwBgis+JB2nZe6uzzrWnE8=;
+        b=rZsma2hnhl2ma3tQbHQ8p2EYn9TEsKCpmA6rPE3gYNDgjwey9gXkrORvoqGOEIXVzI
+         QP6BE3V3oPWFFiTdpTJ/K7XDSlLWHFRPWW25E1a7IHkkNthAkiSTb8m2xF5pJcqNe7zR
+         7mxaG0M4P8O7qOFqenNVos35pj9R/3Grvu5ZddlVxZIr0QCWTd/N39ZVsvr2Xj51Rs6N
+         hAO4yEov1DA8tR4RWB53bs/+jZ75wzzrpKl1l1puvskxL9Tq/TEPJZvwA36TYc+h3qlc
+         XkildxyzbW3oDVPaWA9puJU7jVUjAP5xBS/Gqwixll0yIW87yx8W2q3H/8yFvXA574P9
+         JCYQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to;
+        bh=hsWx8A7DChtr2WegC4niLPwBgis+JB2nZe6uzzrWnE8=;
+        b=LImYqGGA8KAVwadasMg2OHjV/6bGFbXMpaBsgHT0cZptGONIf1OryOT5Csu3O4bgAj
+         +h8SA6wDW+NBRwisbbLlUhNjTgoPBGCFgguuVN8aePz757FKsXSqq7xH5s19HP6XAyUr
+         a3bv1vV5OP/2o8bHo+L0vAeBSSwE6V9poRZ3WssbiAK+VMqo3RI95dCTVHTJTRpiflqo
+         zyoFNgDGIea8yBqNJO4QnZD7rfKM0SDHg8QvZkxWqtmVGHGNAZU80tye6sqrStTrmlVJ
+         xrdEdM2uM0CBbRzgG/YHIyWzM/v5U7sZKcniSBbMaVc7nELA95ef01y40RoM8y29h8g3
+         Tiqg==
+X-Gm-Message-State: AMke39ltxUqnOxm0Hyt86Hpzkc3n6yuPwFkq61yZCS9hbPzzeYsK7PMY81TVs9g7gQKDmJ2UcsRqQXf+a5iySXvp
+X-Received: by 10.107.3.160 with SMTP id e32mr21896ioi.52.1487205236947; Wed,
+ 15 Feb 2017 16:33:56 -0800 (PST)
+MIME-Version: 1.0
+Received: by 10.79.33.148 with HTTP; Wed, 15 Feb 2017 16:33:56 -0800 (PST)
+In-Reply-To: <20170215020851.awwddgprd7nsdbuv@genre.crustytoothpaste.net>
+References: <20170215003423.20245-1-sbeller@google.com> <20170215003423.20245-15-sbeller@google.com>
+ <20170215020851.awwddgprd7nsdbuv@genre.crustytoothpaste.net>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Wed, 15 Feb 2017 16:33:56 -0800
+Message-ID: <CAGZ79kbT2Gh70_OsE7d63pCxNSDb-RJBZmXsPKvkuRD9x__b9A@mail.gmail.com>
+Subject: Re: [PATCH 14/14] builtin/checkout: add --recurse-submodules switch
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Stefan Beller <sbeller@google.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>,
+        Brandon Williams <bmwill@google.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
         Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v3] reset: add an example of how to split a commit into two
-Date:   Wed, 15 Feb 2017 16:22:12 -0800
-Message-Id: <20170216002212.31088-1-jacob.e.keller@intel.com>
-X-Mailer: git-send-email 2.12.0.rc0.177.g63172abf21d0
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Jacob Keller <jacob.keller@gmail.com>
+On Tue, Feb 14, 2017 at 6:08 PM, brian m. carlson
+<sandals@crustytoothpaste.net> wrote:
+> On Tue, Feb 14, 2017 at 04:34:23PM -0800, Stefan Beller wrote:
+>> +--[no-]recurse-submodules::
+>> +     Using --recurse-submodules will update the content of all initialized
+>> +     submodules according to the commit recorded in the superproject. If
+>> +     local modifications in a submodule would be overwritten the checkout
+>> +     will fail until `-f` is used. If nothing (or --no-recurse-submodules)
+>
+> I would say "unless" instead of "until".  "Until" implies an ongoing
+> or repetitive action being interrupted, which isn't the case here.
 
-It is often useful to break a commit into multiple parts that are more
-logical separations. This can be tricky to learn how to do without the
-brute-force method if re-writing code or commit messages from scratch.
-
-Add a section to the git-reset documentation which shows an example
-process for how to use git add -p and git commit -c HEAD@{1} to
-interactively break a commit apart and re-use the original commit
-message as a starting point when making the new commit message.
-
-Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
-The interdiff between v2 and v3 is not really worth showing since I
-basically re-wrote the entire section a bit. I reworded the descriptions
-and steps to indicate that you can break a commit apart into an
-arbitrary number of separate commits. I also added a bit more
-explanation to each step, and separately numbered the "repeat some steps
-multiple times" portion.
-
- Documentation/git-reset.txt | 48 +++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 48 insertions(+)
-
-diff --git a/Documentation/git-reset.txt b/Documentation/git-reset.txt
-index 25432d9257f9..67a63574092d 100644
---- a/Documentation/git-reset.txt
-+++ b/Documentation/git-reset.txt
-@@ -292,6 +292,54 @@ $ git reset --keep start                    <3>
- <3> But you can use "reset --keep" to remove the unwanted commit after
-     you switched to "branch2".
- 
-+Split a commit apart into a sequence of commits::
-++
-+Suppose that you have create lots of logically separate changes and commit them
-+together. Then, later you decide that it might be better to have each logical
-+chunk associated with its own commit. You can use git reset to rewind history
-+without changing the contents of your local files, and then successively use
-+git add -p to interactively select which hunks to include into each commit,
-+using git commit -c to pre-populate the commit message.
-++
-+------------
-+$ git reset -N HEAD^                        <1>
-+$ git add -p                                <2>
-+$ git diff --cached                         <3>
-+$ git commit -c HEAD@{1}                    <4>
-+...                                         <5>
-+$ git add ...                               <6>
-+$ git diff --cached                         <7>
-+$ git commit ...                            <8>
-+------------
-++
-+<1> First, reset the history back one commit so that we remove the original
-+    commit, but leave the working tree with all the changes. The -N ensures
-+    that any new files added with HEAD are still marked so that git add -p
-+    will find them.
-+<2> Next, we interactively select diff hunks to add using the git add -p
-+    facility. This will ask you about each diff hunk in sequence and you can
-+    use simple commands such as "yes, include this", "No don't include this"
-+    or even the very powerful "edit" facility.
-+<3> Once satisfied with the hunks you want to include, you should verify what
-+    has been prepared for the first commit by using git diff --cached. This
-+    shows all the changes that have been moved into the index and are about
-+    to be committed.
-+<4> Next, commit the changes stored in the index. The -c option specifies to
-+    pre-populate the commit message from the original message that you started
-+    with in the first commit. This is helpful to avoid retyping it. The HEAD@{1}
-+    is a special notation for the commit that HEAD used to be at prior to the
-+    original reset commit (1 change ago). See linkgit:git-reflog[1] for more
-+    details. You may also use any other valid commit reference.
-+<5> You can repeat steps 2-4 multiple times to break the original code into
-+    any number of commits.
-+<6> Now you've split out many of the changes into their own commits, and might
-+    no longer use the patch mode of git add, in order to select all remaining
-+    uncommitted changes.
-+<7> Once again, check to verify that you've included what you want to. You may
-+    also wish to verify that git diff doesn't show any remaining changes to be
-+    committed later.
-+<8> And finally create the final commit.
-+
- 
- DISCUSSION
- ----------
--- 
-2.12.0.rc0.177.g63172abf21d0
-
+eh, of course.
