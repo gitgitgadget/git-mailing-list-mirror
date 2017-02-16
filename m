@@ -2,42 +2,45 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4296A1FC44
-	for <e@80x24.org>; Thu, 16 Feb 2017 18:17:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EACD51FC44
+	for <e@80x24.org>; Thu, 16 Feb 2017 18:22:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933419AbdBPSRB (ORCPT <rfc822;e@80x24.org>);
-        Thu, 16 Feb 2017 13:17:01 -0500
-Received: from zm23-mta-out-2.grenet.fr ([130.190.191.53]:52526 "EHLO
+        id S933452AbdBPSWS (ORCPT <rfc822;e@80x24.org>);
+        Thu, 16 Feb 2017 13:22:18 -0500
+Received: from zm23-mta-out-2.grenet.fr ([130.190.191.53]:52695 "EHLO
         zm23-mta-out-2.grenet.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933100AbdBPSRA (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Feb 2017 13:17:00 -0500
+        with ESMTP id S933120AbdBPSWR (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Feb 2017 13:22:17 -0500
 Received: from zm23-mta-out.grenet.fr (zm23-mta-out.grenet.fr [130.190.191.35])
-        by zm23-mta-out-2.grenet.fr (Postfix) with ESMTP id A851BC45E;
-        Thu, 16 Feb 2017 19:16:57 +0100 (CET)
-Received: from smtps.univ-grenoble-alpes.fr (smtps1.u-ga.fr [152.77.1.30])
-        by zm23-mta-out.grenet.fr (Postfix) with ESMTP id A33791004A9;
-        Thu, 16 Feb 2017 19:16:57 +0100 (CET)
+        by zm23-mta-out-2.grenet.fr (Postfix) with ESMTP id 88666C8B2;
+        Thu, 16 Feb 2017 19:22:15 +0100 (CET)
+Received: from smtps.univ-grenoble-alpes.fr (mailhost.u-ga.fr [152.77.1.30])
+        by zm23-mta-out.grenet.fr (Postfix) with ESMTP id 823B91004A9;
+        Thu, 16 Feb 2017 19:22:15 +0100 (CET)
 Received: from anie (anie.imag.fr [129.88.42.32])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
         (Authenticated sender: moym@univ-grenoble-alpes.fr)
-        by smtps.univ-grenoble-alpes.fr (Postfix) with ESMTPSA id 9A16A125EAE;
-        Thu, 16 Feb 2017 19:16:57 +0100 (CET)
+        by smtps.univ-grenoble-alpes.fr (Postfix) with ESMTPSA id 77148125EA8;
+        Thu, 16 Feb 2017 19:22:15 +0100 (CET)
 From:   Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-To:     Johan Hovold <johan@kernel.org>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Kevin Daudt <me@ikke.info>, Junio C Hamano <gitster@pobox.com>,
-        Larry Finger <Larry.Finger@lwfinger.net>
-Subject: Re: body-CC-comment regression
-References: <20170216174924.GB2625@localhost>
-Date:   Thu, 16 Feb 2017 19:16:57 +0100
-In-Reply-To: <20170216174924.GB2625@localhost> (Johan Hovold's message of
-        "Thu, 16 Feb 2017 18:49:24 +0100")
-Message-ID: <vpqlgt6hug6.fsf@anie.imag.fr>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Siddharth Kannan <kannan.siddharth12@gmail.com>,
+        git@vger.kernel.org, pranit.bauva@gmail.com, peff@peff.net,
+        pclouds@gmail.com, sandals@crustytoothpaste.ath.cx
+Subject: Re: [PATCH 1/4 v4] revision.c: do not update argv with unknown option
+References: <1487258054-32292-1-git-send-email-kannan.siddharth12@gmail.com>
+        <1487258054-32292-2-git-send-email-kannan.siddharth12@gmail.com>
+        <vpqwpcqm69k.fsf@anie.imag.fr>
+        <xmqqwpcqxay0.fsf@gitster.mtv.corp.google.com>
+Date:   Thu, 16 Feb 2017 19:22:15 +0100
+In-Reply-To: <xmqqwpcqxay0.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
+        message of "Thu, 16 Feb 2017 10:11:35 -0800")
+Message-ID: <vpqwpcqgfmw.fsf@anie.imag.fr>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -47,67 +50,40 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johan Hovold <johan@kernel.org> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> Hi,
+> Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
 >
-> I recently noticed that after an upgrade, git-send-email (2.10.2)
-> started aborting when trying to send patches that had a linux-kernel
-> stable-tag in its body. For example,
+>> Siddharth Kannan <kannan.siddharth12@gmail.com> writes:
+>>
+>>> handle_revision_opt() tries to recognize and handle the given argument. If an
+>>> option was unknown to it, it used to add the option to unkv[(*unkc)++].  This
+>>> increment of unkc causes the variable in the caller to change.
+>>>
+>>> Teach handle_revision_opt to not update unknown arguments inside unkc anymore.
+>>> This is now the responsibility of the caller.
+>>>
+>>> There are two callers of this function:
+>>>
+>>> 1. setup_revision: Changes have been made so that setup_revision will now
+>>> update the unknown option in argv
+>>
+>> You're writting "Changes have been made", but I did not see any up to
+>> this point in the series.
 >
-> 	Cc: <stable@vger.kernel.org>	# 4.4
->
-> was now parsed as
->
-> 	"stable@vger.kernel.org#4.4"
->
-> which resulted in
->
-> 	Died at /usr/libexec/git-core/git-send-email line 1332, <FIN> line 1.
+> Actually, I think you misread the patch and explanation.
+> handle_revision_opt() used to be responsible for stuffing unknown
+> ones to unkv[] array passed from the caller even when it returns 0
+> (i.e. "I do not know what they are" case, as opposed to "I know what
+> they are, I am not handling them here and leaving them in unkv[]"
+> case--the latter returns non-zero).  The first hunk makes the
+> function stop doing so, and to compensate, the second hunk, which is
+> in setup_revisions()
 
-This has changed in e3fdbcc8e1 (parse_mailboxes: accept extra text after
-<...> address, 2016-10-13), released v2.11.0 as you noticed:
+Indeed, I misread the patch. The explanation could be a little bit more
+"tired-reviewer-proof" by not using a past tone, perhaps
 
-> The problem with the resulting fixes that are now in 2.11.1 is that
-> git-send-email no longer discards the trailing comment but rather
-> shoves it into the name after adding some random white space:
->
-> 	"# 3 . 3 . x : 1b9508f : sched : Rate-limit newidle" <stable@vger.kernel.org>"
->
-> This example is based on the example from
-> Documentation/process/stable-kernel-rules.rst:
->
-> 	Cc: <stable@vger.kernel.org> # 3.3.x: 1b9508f: sched: Rate-limit newidle
->
-> and this format for stable-tags has been documented at least since 2009
-> and 8e9b9362266d ("Doc/stable rules: add new cherry-pick logic"), and
-> has been supported by git since 2012 and 831a488b76e0 ("git-send-email:
-> remove garbage after email address") I believe.
->
-> Can we please revert to the old behaviour of simply discarding such
-> comments (from body-CC:s) or at least make it configurable through a
-> configuration option?
-
-The problem is that we now accept list of emails instead of just one
-email, so it's hard to define what "comments after the email", for
-example
-
-Cc: <foo@example.com> # , <boz@example.com>
-
-Is not accepted as two emails.
-
-So, just stripping whatever comes after # before parsing the list of
-emails would change the behavior once more, and possibly break other
-user's flow. Dropping the garbage after the email while parsing is
-possible, but only when we use our in-house parser (and we currently use
-Perl's Mail::Address when available).
-
-So, a proper fix is far from obvious, and unfortunately I won't have
-time to work on that, at least not before a while.
-
-OTOH, the current behavior isn't that bad. It accepts the input, and
-extracts a valid email out of it. Just the display name is admitedly
-suboptimal ...
+1. setup_revision, which is changed to ...
 
 -- 
 Matthieu Moy
