@@ -7,64 +7,61 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D0FC020136
-	for <e@80x24.org>; Thu, 16 Feb 2017 11:50:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0D94F1FC44
+	for <e@80x24.org>; Thu, 16 Feb 2017 12:03:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755068AbdBPLug (ORCPT <rfc822;e@80x24.org>);
-        Thu, 16 Feb 2017 06:50:36 -0500
-Received: from mail-pf0-f196.google.com ([209.85.192.196]:33119 "EHLO
-        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755060AbdBPLud (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Feb 2017 06:50:33 -0500
-Received: by mail-pf0-f196.google.com with SMTP id e4so1485599pfg.0
-        for <git@vger.kernel.org>; Thu, 16 Feb 2017 03:50:28 -0800 (PST)
+        id S1754065AbdBPMDt (ORCPT <rfc822;e@80x24.org>);
+        Thu, 16 Feb 2017 07:03:49 -0500
+Received: from mail-pf0-f177.google.com ([209.85.192.177]:34586 "EHLO
+        mail-pf0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751801AbdBPMDs (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Feb 2017 07:03:48 -0500
+Received: by mail-pf0-f177.google.com with SMTP id e4so5441378pfg.1
+        for <git@vger.kernel.org>; Thu, 16 Feb 2017 04:03:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=vSHiE9kJKU5aBnrQSyI8Mxkz3ixZ9OC1D7R4D54TY7Q=;
-        b=OK61aQ3yebuIzO4x6msR2Mh4yZbf2JLE9KrQe80nnV91vDXpxWVENhI1H1FMdLdAtW
-         Hyfvcc1zmGV/6Aa7jDnSaQ115Q/ZwrdUQcaT4buny3LxD+R+VjOR85PcNmnB3Q1fVJyk
-         3Wx10C7hgcuiRXEpLNTVVczGN/Kt2HpDXHrxwmV+dRNF6zGXBUxpeR+rPqvMA/8mLMTv
-         vpOMOV2i9/DgFIcUpMTs9xCOrNQjT/bGlcQSZh40SpF+S5Wq400bVVXSfMFm5kw86OUh
-         vvwuySg/OfCY9PkCFvEaZcHhzf3LbsTkANoZ7POkWje0JQ/5aJ3LgMBJq/gF/0AsqMAq
-         yu1A==
+        bh=7nuyFC+B1kuXHpQ0wOBTImWJkjeFdMgURHxG6JeWs04=;
+        b=oJErNHd9WLE9iq1X+XPlOhWV74cGvcCp1pHpnT+u7sM3mj34F0bDjVI4exPdxOj84K
+         /u8hMo0TP0EXkb3+k+wytdn+iVwHauxqChOxdo+nhJTURn94DtZgqfu5PnKD0ILAAU01
+         zuje0QskZ1msF/kb+c3HAsvSdIdJWSLmBX1wFT61pudEH4XbhDuNHIpZwh+f8TTyFSOa
+         uoyu68igX7sbconq+FzkI4+XVw71uPUrxRZ9OoUVMAZjh9rRBDL9vr8H50XP2dNrTPgJ
+         ZwjnF6uP1dObxovcsq72/ACj/w3KG868wnc8PN6y5Yf2W+cfm3YKpscJzs8Tdis6Hsll
+         wpDA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=vSHiE9kJKU5aBnrQSyI8Mxkz3ixZ9OC1D7R4D54TY7Q=;
-        b=njC6qdTe5y31Zc54tYsJip5p85Or7E4Xu67SZIeSrk4SG3s8AFPyq3jpmMf9vrUf6z
-         xu3uj3eZ/WIHHsm34f7nF5WCmKYZla/WDMPROG1MdP1B1DKntAn2Qz8qwbYiegy7yj1g
-         w+mD0lcOYncyvd4u3GrLsjU86seLEqsKLdyBlGpPSkyd24/jSGiaGC0MmC8zvhU5+H6y
-         tc+XHT1WrGqCw32fcehes/YSARKRsuMXFpJuwku6Unvir96xvQbUIB6qzjzV36r+TCFE
-         UUP2/jJZaYPRlxsRjxIawezaY0nYClsNtNDUMfFGfrR6HbDaxdj9NrLvEwHK90/JiSbY
-         fpUA==
-X-Gm-Message-State: AMke39noGoPQ0kuH96ZE9nMu9/aLE18STQ6JlF7IqaZM1ZFXNuj1JneGWmr8jmbWfLkXzA==
-X-Received: by 10.84.211.106 with SMTP id b97mr2698119pli.16.1487245823057;
-        Thu, 16 Feb 2017 03:50:23 -0800 (PST)
+        bh=7nuyFC+B1kuXHpQ0wOBTImWJkjeFdMgURHxG6JeWs04=;
+        b=cFFIbpMMXLiqm6Bov+weYcLA2v5RFkgqPQqZNZaiz+2jJ+wBglXEWKWF4dvFkuPrKV
+         p96HFdZbTvfOqFtlZPuXL2LWTWKi9phlPO6RyOJjcYV3qc0d+Tjv0j+xUZuEtP8lG4k6
+         VhLZBNFJNbvbzYsZdIUuRuaJCGFDbgquWWwfstCnutDOO053Wr7BcA9fsn20Po3AF/Ht
+         NP+l7gJqde9LSCV4O38btnqVIHVUhUfMOnCOg/g5vnufzjASVHlbOGsnREdeE6+DZoLs
+         jms34mBAFfSZnmtaLBMsx7xiatrxhXwr1xdi3wq6beyUC3v5dZswFDUrxQTzCl4wsXp5
+         3tOQ==
+X-Gm-Message-State: AMke39n8vB6kCh8GyGOgo+8g8lOLzSck1GAqmbaP/4/dJFv+A/+grmwcfvTwar0Q2HWr3A==
+X-Received: by 10.84.233.134 with SMTP id l6mr2697548plk.49.1487246628226;
+        Thu, 16 Feb 2017 04:03:48 -0800 (PST)
 Received: from ash ([115.73.162.84])
-        by smtp.gmail.com with ESMTPSA id y184sm13312292pfg.86.2017.02.16.03.50.19
+        by smtp.gmail.com with ESMTPSA id t87sm13408666pfe.59.2017.02.16.04.03.45
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 16 Feb 2017 03:50:22 -0800 (PST)
-Received: by ash (sSMTP sendmail emulation); Thu, 16 Feb 2017 18:50:17 +0700
+        Thu, 16 Feb 2017 04:03:47 -0800 (PST)
+Received: by ash (sSMTP sendmail emulation); Thu, 16 Feb 2017 19:03:43 +0700
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
         Michael Haggerty <mhagger@alum.mit.edu>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
-        Stefan Beller <sbeller@google.com>, novalis@novalis.org,
+        Stefan Beller <sbeller@google.com>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH v2 16/16] refs: rename get_ref_store() to get_submodule_ref_store() and make it public
-Date:   Thu, 16 Feb 2017 18:48:18 +0700
-Message-Id: <20170216114818.6080-17-pclouds@gmail.com>
+Subject: [PATCH v2 0/5]  Kill manual ref parsing code in worktree.c
+Date:   Thu, 16 Feb 2017 19:02:57 +0700
+Message-Id: <20170216120302.5302-1-pclouds@gmail.com>
 X-Mailer: git-send-email 2.11.0.157.gd943d85
-In-Reply-To: <20170216114818.6080-1-pclouds@gmail.com>
-References: <20170213152011.12050-1-pclouds@gmail.com>
- <20170216114818.6080-1-pclouds@gmail.com>
+In-Reply-To: <20170208113144.8201-1-pclouds@gmail.com>
+References: <20170208113144.8201-1-pclouds@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -73,120 +70,34 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This function is intended to replace *_submodule() refs API. It provides
-a ref store for a specific submodule, which can be operated on by a new
-set of refs API.
+v2 still kills parse_ref(), but the series now depends on my other
+series [1] and as a result does not make any confusing "submodule"
+calls any more.
 
-Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
----
- refs.c               | 12 ++++++++----
- refs.h               | 11 +++++++++++
- refs/files-backend.c |  2 +-
- refs/refs-internal.h | 12 ------------
- 4 files changed, 20 insertions(+), 17 deletions(-)
+It also kills another function, introduced for multi-worktree, that
+should not have been there to begin with. Good riddance.
 
-diff --git a/refs.c b/refs.c
-index 58ac9a2a8..e7206a420 100644
---- a/refs.c
-+++ b/refs.c
-@@ -1160,7 +1160,7 @@ int head_ref(each_ref_fn fn, void *cb_data)
- static int do_for_each_ref(const char *submodule, const char *prefix,
- 			   each_ref_fn fn, int trim, int flags, void *cb_data)
- {
--	struct ref_store *refs = get_ref_store(submodule);
-+	struct ref_store *refs = get_submodule_ref_store(submodule);
- 	struct ref_iterator *iter;
- 
- 	if (!refs)
-@@ -1333,10 +1333,10 @@ int resolve_gitlink_ref(const char *submodule, const char *refname,
- 		/* We need to strip off one or more trailing slashes */
- 		char *stripped = xmemdupz(submodule, len);
- 
--		refs = get_ref_store(stripped);
-+		refs = get_submodule_ref_store(stripped);
- 		free(stripped);
- 	} else {
--		refs = get_ref_store(submodule);
-+		refs = get_submodule_ref_store(submodule);
- 	}
- 
- 	if (!refs)
-@@ -1452,13 +1452,17 @@ struct ref_store *get_main_ref_store(void)
- 	return refs;
- }
- 
--struct ref_store *get_ref_store(const char *submodule)
-+struct ref_store *get_submodule_ref_store(const char *submodule)
- {
- 	struct strbuf submodule_sb = STRBUF_INIT;
- 	struct ref_store *refs;
- 	int ret;
- 
- 	if (!submodule || !*submodule) {
-+		/*
-+		 * FIXME: This case is ideally not allowed. But that
-+		 * can't happen until we clean up all the callers.
-+		 */
- 		return get_main_ref_store();
- 	}
- 
-diff --git a/refs.h b/refs.h
-index f803528fc..1287ba59c 100644
---- a/refs.h
-+++ b/refs.h
-@@ -554,5 +554,16 @@ int reflog_expire(const char *refname, const unsigned char *sha1,
- int ref_storage_backend_exists(const char *name);
- 
- struct ref_store *get_main_ref_store(void);
-+/*
-+ * Return the ref_store instance for the specified submodule. For the
-+ * main repository, use submodule==NULL; such a call cannot fail. For
-+ * a submodule, the submodule must exist and be a nonbare repository,
-+ * otherwise return NULL. If the requested reference store has not yet
-+ * been initialized, initialize it first.
-+ *
-+ * For backwards compatibility, submodule=="" is treated the same as
-+ * submodule==NULL.
-+ */
-+struct ref_store *get_submodule_ref_store(const char *submodule);
- 
- #endif /* REFS_H */
-diff --git a/refs/files-backend.c b/refs/files-backend.c
-index d9fc29d8d..685ea5c14 100644
---- a/refs/files-backend.c
-+++ b/refs/files-backend.c
-@@ -3115,7 +3115,7 @@ int set_worktree_head_symref(const char *gitdir, const char *target)
- 	 * backends. This function needs to die.
- 	 */
- 	struct files_ref_store *refs =
--		files_downcast(get_ref_store(NULL), "set_head_symref");
-+		files_downcast(get_main_ref_store(), "set_head_symref");
- 	static struct lock_file head_lock;
- 	struct ref_lock *lock;
- 	struct strbuf head_path = STRBUF_INIT;
-diff --git a/refs/refs-internal.h b/refs/refs-internal.h
-index d7112770d..cb6882779 100644
---- a/refs/refs-internal.h
-+++ b/refs/refs-internal.h
-@@ -634,18 +634,6 @@ struct ref_store {
- void base_ref_store_init(struct ref_store *refs,
- 			 const struct ref_storage_be *be);
- 
--/*
-- * Return the ref_store instance for the specified submodule. For the
-- * main repository, use submodule==NULL; such a call cannot fail. For
-- * a submodule, the submodule must exist and be a nonbare repository,
-- * otherwise return NULL. If the requested reference store has not yet
-- * been initialized, initialize it first.
-- *
-- * For backwards compatibility, submodule=="" is treated the same as
-- * submodule==NULL.
-- */
--struct ref_store *get_ref_store(const char *submodule);
--
- const char *resolve_ref_recursively(struct ref_store *refs,
- 				    const char *refname,
- 				    int resolve_flags,
+Again, the naming convention with refs_ prefix for new APIs may not be
+the best idea...
+
+[1] public-inbox.org/git/20170213152011.12050-1-pclouds@gmail.com
+
+Nguyễn Thái Ngọc Duy (5):
+  refs: introduce get_worktree_ref_store()
+  refs.c: add refs_resolve_ref_unsafe()
+  worktree.c: kill parse_ref() in favor of refs_resolve_ref_unsafe()
+  refs: add refs_create_symref()
+  refs: kill set_worktree_head_symref()
+
+ branch.c             |  15 ++++----
+ refs.c               |  58 ++++++++++++++++++++++++-----
+ refs.h               |  21 ++++++-----
+ refs/files-backend.c |  43 +---------------------
+ refs/refs-internal.h |   5 ---
+ worktree.c           | 102 ++++++++++++++-------------------------------------
+ worktree.h           |   2 +-
+ 7 files changed, 98 insertions(+), 148 deletions(-)
+
 -- 
 2.11.0.157.gd943d85
 
