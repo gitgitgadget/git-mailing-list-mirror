@@ -2,192 +2,120 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D837C1FC44
-	for <e@80x24.org>; Thu, 16 Feb 2017 12:04:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 30EC71FC44
+	for <e@80x24.org>; Thu, 16 Feb 2017 12:40:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754648AbdBPMEP (ORCPT <rfc822;e@80x24.org>);
-        Thu, 16 Feb 2017 07:04:15 -0500
-Received: from mail-pf0-f195.google.com ([209.85.192.195]:33804 "EHLO
-        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752983AbdBPMEO (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Feb 2017 07:04:14 -0500
-Received: by mail-pf0-f195.google.com with SMTP id o64so1515138pfb.1
-        for <git@vger.kernel.org>; Thu, 16 Feb 2017 04:04:13 -0800 (PST)
+        id S1754377AbdBPMkD (ORCPT <rfc822;e@80x24.org>);
+        Thu, 16 Feb 2017 07:40:03 -0500
+Received: from mail-lf0-f47.google.com ([209.85.215.47]:36398 "EHLO
+        mail-lf0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753618AbdBPMkC (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Feb 2017 07:40:02 -0500
+Received: by mail-lf0-f47.google.com with SMTP id z134so7483290lff.3
+        for <git@vger.kernel.org>; Thu, 16 Feb 2017 04:40:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=a6QVWv6J62m2sLwaE5KF3WcaP/W0uKwpxIk4ljU4YP0=;
-        b=Masx5naBTC2Tf4tiRJFkSCtRq7dMtyb8kpWgjDp/waI/4wzNNW62wD1EXKITD/65Bf
-         /ILcbKHFjt104rNoDP1+QPOazJg4sQVyuHA9AYyKyCqljrG5JVzs4j1ObZL8WYcWReSG
-         ZtuPREylmLHh3SYzAdUX6XaZhLK5ap/5/tH7Nqq+3XHU3Z9aeHZ6BRq4ijFOJ5ggVfpA
-         rf2mgRsYSD0D0y9i6EVFJH7NIizRIJ7SNYZ5TFG1Ci+bGYRwPGSJvLxhMju11MVd7KQU
-         Ao40vz3aPLIkDbgAXpxIhjdhr/Y4pzxlpNy0O7Vz/a9njW+gZaB5HfZEGsqHtYIp+y9A
-         XFdA==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=+c1Fya7DYUWr8gHPArgm3+bf8cSoDjUA/HYNRfy1Dqk=;
+        b=WQR9jncOUZOB7koLpP7vW4iLh/u8MBGue7QiD7a+kpAAR45b0zxK7uGIn91upx8RWF
+         ZeYm6q2hP6yh+oToQE9kuaOGLvgZifyFWCcinp+Y1Ppp5uP5u8s64yVK7cF7lddSvp6G
+         w/d7uC1sAe9L9+xoZ7lfiq9VNJM0rS1vOUuTxGhUHybdrm5AdCYCMh8Uk3bpU64chEmx
+         2ga2cy6VrUPyQKGapu4r/+m87Gfv4swI/GL9rvOnb0YYS4ZUdh2L3YK0NMbWgXFKgggI
+         Mz1p8LehKtjqX2O+aK5akvYK+5dzWdO64Yk2HIG43khZde+MFxgVhRKTJr1PYiJv42Om
+         Dxjw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=a6QVWv6J62m2sLwaE5KF3WcaP/W0uKwpxIk4ljU4YP0=;
-        b=LMm+S6S268DtLir6aLLgLeP1PzRBhjMTBOh7AM41OyEXlpXgxUarIqXBO+F2GLmIzZ
-         4vG8mSyLwBBeIkv7aD0Jk+IzY5Bb93VctUhlgtXbaDvVJl+WMyJan4RjX1RPGATjber/
-         Yn2y+ljhUL6r4UvpuN0imJfEQN1yrP8fbsIPUso5wnz8u6vflrQu8HEDJWThN15zB7PA
-         sv6Lr/FFZr81s91Hy9vPgx85ls92Z+zzcwGJnHd594eC2QyWPlNN/WUf4fK0k9kdgWI4
-         ibuc1+4zCDXx1OePSuaJmAeuvyUrc/rxWfl9scsfaV9+j1VxGbVXdHc1D2O5uJukhjLL
-         1Jyw==
-X-Gm-Message-State: AMke39lKXIYyBJaX5y8RymW4DOsKSDlIFQvOoscYf/TlKNUwLlOtYxIdRsLRAVVanCV/sQ==
-X-Received: by 10.98.66.82 with SMTP id p79mr2264154pfa.10.1487246653257;
-        Thu, 16 Feb 2017 04:04:13 -0800 (PST)
-Received: from ash ([115.73.162.84])
-        by smtp.gmail.com with ESMTPSA id t6sm13553096pgt.8.2017.02.16.04.04.10
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 16 Feb 2017 04:04:12 -0800 (PST)
-Received: by ash (sSMTP sendmail emulation); Thu, 16 Feb 2017 19:04:08 +0700
-From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Michael Haggerty <mhagger@alum.mit.edu>,
-        Stefan Beller <sbeller@google.com>,
-        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>
-Subject: [PATCH v2 5/5] refs: kill set_worktree_head_symref()
-Date:   Thu, 16 Feb 2017 19:03:02 +0700
-Message-Id: <20170216120302.5302-6-pclouds@gmail.com>
-X-Mailer: git-send-email 2.11.0.157.gd943d85
-In-Reply-To: <20170216120302.5302-1-pclouds@gmail.com>
-References: <20170208113144.8201-1-pclouds@gmail.com>
- <20170216120302.5302-1-pclouds@gmail.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=+c1Fya7DYUWr8gHPArgm3+bf8cSoDjUA/HYNRfy1Dqk=;
+        b=s9yOiMu24Q6HGtK6CQXkwhm49G+kC9RMD46sLHIdVu3SZhdj4falxBSXv7JtGnAvat
+         QlVRRTvt/AhPRlJP7MtAmcSXiMEnn4b+NCiumoQQgz3NYtQeqvPDGFCKcZHNvfZpm70U
+         PXwCg38cuJ2r1i1LbPLKmRbnU5VTpDrY3DuFYkO6xiKQ/NdaJzUtkOG+DcsEKIqyEnTk
+         +ZqsikKPqHQ6gWfrHg6r+0o4uSA4VWmJorfzB5mSq7hwQur6yOuvgZGqTGDkSQljSeA2
+         0KyHPVIK8z5+iMdQQ5rNJ8TlGZTblzDqIusMIGH8OlJ6uPPw5IjaHW052zQMRnN3ZJqR
+         XFjg==
+X-Gm-Message-State: AMke39nZu1oUjsI0AEx+FvouuqlDSRK3mn2VRalbdA52+bPzmKAclKr2bgmILIfE5TpcPmP1/eJxcfCXdJVFFw==
+X-Received: by 10.25.225.141 with SMTP id l13mr659272lfk.129.1487248801256;
+ Thu, 16 Feb 2017 04:40:01 -0800 (PST)
 MIME-Version: 1.0
+Received: by 10.25.199.13 with HTTP; Thu, 16 Feb 2017 04:40:00 -0800 (PST)
+In-Reply-To: <20170215214052.5py4pxkcz4g2bmtk@sigill.intra.peff.net>
+References: <20170214154816.12625-1-chriscool@tuxfamily.org>
+ <20170214172526.hzpm3d3ubd3vjnzr@sigill.intra.peff.net> <xmqqlgt88t0r.fsf@gitster.mtv.corp.google.com>
+ <20170214195513.7zae6x22advkrms6@sigill.intra.peff.net> <CAP8UFD0EfUgfmTB4dj-A+rw79F7SWKxYvatNfR+Nj-8ukWYAQA@mail.gmail.com>
+ <20170215214052.5py4pxkcz4g2bmtk@sigill.intra.peff.net>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Thu, 16 Feb 2017 13:40:00 +0100
+Message-ID: <CAP8UFD20=zVy=1Tr4D1Rxf+a4yR_X2zmexNCTNKV5RSF9ueYrg@mail.gmail.com>
+Subject: Re: [PATCH] show-branch: fix crash with long ref name
+To:     Jeff King <peff@peff.net>
+Cc:     Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>,
+        Maxim Kuvyrkov <maxim.kuvyrkov@linaro.org>,
+        Pranit Bauva <pranit.bauva@gmail.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-70999e9cec (branch -m: update all per-worktree HEADs - 2016-03-27)
-added this function in order to update HEADs of all relevant
-worktrees, when a branch is renamed.
+On Wed, Feb 15, 2017 at 10:40 PM, Jeff King <peff@peff.net> wrote:
+> On Tue, Feb 14, 2017 at 10:29:46PM +0100, Christian Couder wrote:
+>
+>> > I notice Christian's patch added a few tests. I don't know if we'd want
+>> > to squash them in (I didn't mean to override his patch at all; I was
+>> > about to send mine out when I noticed his, and I wondered if we wanted
+>> > to combine the two efforts).
+>>
+>> I think it would be nice to have at least one test. Feel free to
+>> squash mine if you want.
+>
+> I started to add some tests, but I had second thoughts. It _is_ nice
+> to show off the fix, but as far as regressions go, this specific case is
+> unlikely to come up again. What would be more valuable, I think, is a
+> test script which set up a very long refname (not just 150 bytes or
+> whatever) and ran it through a series of git commands.
 
-It, as a public ref api, kind of breaks abstraction when it uses
-internal functions of files backend. With the introduction of
-refs_create_symref(), we can move back pretty close to the code before
-70999e9cec, where create_symref() was used for updating HEAD.
+I agree that a test script running through a series of command with
+long refnames would be great.
 
-Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
----
- branch.c             | 12 ++++++------
- refs.h               |  9 ---------
- refs/files-backend.c | 41 -----------------------------------------
- 3 files changed, 6 insertions(+), 56 deletions(-)
+But I think the refname should not necesarily be too long. As I wrote
+in the commit message of my patch, if the ref name had been much
+longer the crash would not have happened because the ref could not
+have been created in the first place.
 
-diff --git a/branch.c b/branch.c
-index fcb4a765c..ad0cc0489 100644
---- a/branch.c
-+++ b/branch.c
-@@ -352,18 +352,18 @@ int replace_each_worktree_head_symref(const char *oldref, const char *newref)
- 	int i;
- 
- 	for (i = 0; worktrees[i]; i++) {
-+		struct ref_store *refs;
-+
- 		if (worktrees[i]->is_detached)
- 			continue;
- 		if (worktrees[i]->head_ref &&
- 		    strcmp(oldref, worktrees[i]->head_ref))
- 			continue;
- 
--		if (set_worktree_head_symref(get_worktree_git_dir(worktrees[i]),
--					     newref)) {
--			ret = -1;
--			error(_("HEAD of working tree %s is not updated"),
--			      worktrees[i]->path);
--		}
-+		refs = get_worktree_ref_store(worktrees[i]);
-+		if (refs_create_symref(refs, "HEAD", newref, NULL))
-+			ret = error(_("HEAD of working tree %s is not updated"),
-+				    worktrees[i]->path);
- 	}
- 
- 	free_worktrees(worktrees);
-diff --git a/refs.h b/refs.h
-index 694769963..bce77891a 100644
---- a/refs.h
-+++ b/refs.h
-@@ -325,15 +325,6 @@ int rename_ref(const char *oldref, const char *newref, const char *logmsg);
- 
- int create_symref(const char *refname, const char *target, const char *logmsg);
- 
--/*
-- * Update HEAD of the specified gitdir.
-- * Similar to create_symref("relative-git-dir/HEAD", target, NULL), but
-- * this can update the main working tree's HEAD regardless of where
-- * $GIT_DIR points to.
-- * Return 0 if successful, non-zero otherwise.
-- * */
--int set_worktree_head_symref(const char *gitdir, const char *target);
--
- enum action_on_err {
- 	UPDATE_REFS_MSG_ON_ERR,
- 	UPDATE_REFS_DIE_ON_ERR,
-diff --git a/refs/files-backend.c b/refs/files-backend.c
-index f3be620ab..ba56e46d4 100644
---- a/refs/files-backend.c
-+++ b/refs/files-backend.c
-@@ -3108,47 +3108,6 @@ static int files_create_symref(struct ref_store *ref_store,
- 	return ret;
- }
- 
--int set_worktree_head_symref(const char *gitdir, const char *target)
--{
--	/*
--	 * FIXME: this obviously will not work well for future refs
--	 * backends. This function needs to die.
--	 */
--	struct files_ref_store *refs =
--		files_downcast(get_main_ref_store(), "set_head_symref");
--	static struct lock_file head_lock;
--	struct ref_lock *lock;
--	struct strbuf head_path = STRBUF_INIT;
--	const char *head_rel;
--	int ret;
--
--	strbuf_addf(&head_path, "%s/HEAD", absolute_path(gitdir));
--	if (hold_lock_file_for_update(&head_lock, head_path.buf,
--				      LOCK_NO_DEREF) < 0) {
--		struct strbuf err = STRBUF_INIT;
--		unable_to_lock_message(head_path.buf, errno, &err);
--		error("%s", err.buf);
--		strbuf_release(&err);
--		strbuf_release(&head_path);
--		return -1;
--	}
--
--	/* head_rel will be "HEAD" for the main tree, "worktrees/wt/HEAD" for
--	   linked trees */
--	head_rel = remove_leading_path(head_path.buf,
--				       absolute_path(get_git_common_dir()));
--	/* to make use of create_symref_locked(), initialize ref_lock */
--	lock = xcalloc(1, sizeof(struct ref_lock));
--	lock->lk = &head_lock;
--	lock->ref_name = xstrdup(head_rel);
--
--	ret = create_symref_locked(refs, lock, head_rel, target, NULL);
--
--	unlock_ref(lock); /* will free lock */
--	strbuf_release(&head_path);
--	return ret;
--}
--
- static int files_reflog_exists(struct ref_store *ref_store,
- 			       const char *refname)
- {
--- 
-2.11.0.157.gd943d85
+So the best would be to run through a series of commands with a
+refname ranging from let's say 80 chars to 300 chars.
 
+That would have a chance to catch crashes due to legacy code using for
+example things like `char stuff[128]` or `char stuff[256]`.
+
+Implementing those tests could have started with something like the
+test case I sent, but as it would in the end be about many different
+commands, one can see it as part of a different topic.
+
+> But then you run into all sorts of portability annoyances with pathname
+> restrictions (you can hack around creation by writing the refname
+> directly into packed-refs, but most manipulations will want to take the
+> .lock in the filesystem).
+
+Yeah, but if a crash doesn't happen because we die() as the ref is too
+long for the file system, we could detect that and make the test
+succeed.
+
+> So I dunno. It seems like being thorough is a
+> lot of hassle for not much gain. Being not-thorough is easy, but is
+> mostly a token that is unlikely to find any real bugs.
+
+Yeah, if we really care, it might be better to start using a fuzzer or
+a property based testing tool instead of bothering with these kind of
+tests by ourselves, which is also a different topic.
+
+> So I punted, at least for now.
+
+Ok, no problem.
