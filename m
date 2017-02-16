@@ -2,64 +2,65 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E232E1FC44
-	for <e@80x24.org>; Thu, 16 Feb 2017 16:41:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 24C851FC44
+	for <e@80x24.org>; Thu, 16 Feb 2017 16:44:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932655AbdBPQlg (ORCPT <rfc822;e@80x24.org>);
-        Thu, 16 Feb 2017 11:41:36 -0500
-Received: from zm23-mta-out-2.grenet.fr ([130.190.191.53]:48397 "EHLO
-        zm23-mta-out-2.grenet.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932386AbdBPQlf (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Feb 2017 11:41:35 -0500
-Received: from zm23-mta-out.grenet.fr (zm23-mta-out.grenet.fr [130.190.191.35])
-        by zm23-mta-out-2.grenet.fr (Postfix) with ESMTP id A4A67C554;
-        Thu, 16 Feb 2017 17:41:32 +0100 (CET)
-Received: from smtps.univ-grenoble-alpes.fr (smtps2.u-ga.fr [195.83.24.202])
-        by zm23-mta-out.grenet.fr (Postfix) with ESMTP id 9E71A100494;
-        Thu, 16 Feb 2017 17:41:32 +0100 (CET)
-Received: from anie (anie.imag.fr [129.88.42.32])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: moym@univ-grenoble-alpes.fr)
-        by smtps.univ-grenoble-alpes.fr (Postfix) with ESMTPSA id 991A160457;
-        Thu, 16 Feb 2017 16:58:28 +0100 (CET)
-From:   Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-To:     Siddharth Kannan <kannan.siddharth12@gmail.com>
-Cc:     git@vger.kernel.org, gitster@pobox.com, pranit.bauva@gmail.com,
-        peff@peff.net, pclouds@gmail.com, sandals@crustytoothpaste.ath.cx
-Subject: Re: [PATCH 0/4 v4] WIP: allow "-" as a shorthand for "previous branch"
-References: <1487258054-32292-1-git-send-email-kannan.siddharth12@gmail.com>
-Date:   Thu, 16 Feb 2017 17:41:32 +0100
-In-Reply-To: <1487258054-32292-1-git-send-email-kannan.siddharth12@gmail.com>
-        (Siddharth Kannan's message of "Thu, 16 Feb 2017 15:14:10 +0000")
-Message-ID: <vpqa89mnl4z.fsf@anie.imag.fr>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
+        id S932951AbdBPQoE (ORCPT <rfc822;e@80x24.org>);
+        Thu, 16 Feb 2017 11:44:04 -0500
+Received: from cloud.peff.net ([104.130.231.41]:56471 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S932652AbdBPQoC (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Feb 2017 11:44:02 -0500
+Received: (qmail 5239 invoked by uid 109); 16 Feb 2017 16:44:02 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 16 Feb 2017 16:44:02 +0000
+Received: (qmail 24615 invoked by uid 111); 16 Feb 2017 16:44:03 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 16 Feb 2017 11:44:03 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 16 Feb 2017 11:44:00 -0500
+Date:   Thu, 16 Feb 2017 11:44:00 -0500
+From:   Jeff King <peff@peff.net>
+To:     Andreas Schwab <schwab@linux-m68k.org>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?utf-8?B?SsOhY2h5bSBCYXJ2w61uZWs=?= <jachymb@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: Confusing git messages when disk is full.
+Message-ID: <20170216164359.k2ab7laqqvusfsm2@sigill.intra.peff.net>
+References: <CABpqov=FE-h_2s=O9fkSjFjgFXSy6hDwc2fu5ijiVvkaLx9f_Q@mail.gmail.com>
+ <20170215213221.lnraiktneokpk3mg@sigill.intra.peff.net>
+ <xmqqk28r2kk4.fsf@gitster.mtv.corp.google.com>
+ <20170215215151.a5chtxyjhbe3og4p@sigill.intra.peff.net>
+ <xmqq7f4r2io5.fsf@gitster.mtv.corp.google.com>
+ <20170215223246.mkaz22yrovnscnne@sigill.intra.peff.net>
+ <xmqq37ff2hn8.fsf@gitster.mtv.corp.google.com>
+ <20170215231832.bzg3ygz4ualcvqlc@sigill.intra.peff.net>
+ <87tw7uv439.fsf@linux-m68k.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Greylist: Whitelist-UJF SMTP Authentifie (moym@univ-grenoble-alpes.fr) via smtps.univ-grenoble-alpes.fr ACL (97)
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <87tw7uv439.fsf@linux-m68k.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Siddharth Kannan <kannan.siddharth12@gmail.com> writes:
+On Thu, Feb 16, 2017 at 11:10:18AM +0100, Andreas Schwab wrote:
 
-> This is as per our discussion[1]. The patches and commit messages are based on
-> Junio's patches that were posted as a reply to
-> <20170212184132.12375-1-gitster@pobox.com>.
->
-> As per Matthieu's comments, I have updated the tests, but there is still one
-> thing that is not working: log -@{yesterday} or log -@{2.days.ago}
+> >> 	int xfclose(FILE *fp)
+> >> 	{
+> >> 		return ferror(fp) | fclose(fp);
+> >> 	}
+> >
+> > Yes, that's exactly what I had in mind (might be worth calling out the
+> > bitwise-OR, though, just to make it clear it's not a typo).
+> 
+> Since the order of evaluation is unspecified, it would be better to
+> force sequencing ferror before fclose.
 
-Note that I did not request that these things work, just that they seem
-to be relevant tests: IMHO it's OK to reject them, but for example we
-don't want them to segfault. And having a test is a good hint that you
-thought about what could happen and to document it.
+Good point. Arguably the call in tempfile.c is buggy.
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+-Peff
