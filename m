@@ -2,103 +2,116 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD,T_DKIM_INVALID
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 771971FC44
-	for <e@80x24.org>; Thu, 16 Feb 2017 18:12:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BBA721FC44
+	for <e@80x24.org>; Thu, 16 Feb 2017 18:14:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932882AbdBPSMX (ORCPT <rfc822;e@80x24.org>);
-        Thu, 16 Feb 2017 13:12:23 -0500
-Received: from bsmtp7.bon.at ([213.33.87.19]:30434 "EHLO bsmtp7.bon.at"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S932567AbdBPSMW (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Feb 2017 13:12:22 -0500
-Received: from dx.site (unknown [93.83.142.38])
-        by bsmtp7.bon.at (Postfix) with ESMTPSA id 3vPPPv46vLz5tlK;
-        Thu, 16 Feb 2017 19:12:19 +0100 (CET)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-        by dx.site (Postfix) with ESMTP id C94CB1D16;
-        Thu, 16 Feb 2017 19:12:17 +0100 (CET)
-Subject: Re: [PATCH] mingw: use OpenSSL's SHA-1 routines
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-References: <6a29f8c60d315a24292c1fa9f5e84df4dfdbf813.1486679254.git.johannes.schindelin@gmx.de>
- <xmqqbmublyo0.fsf@gitster.mtv.corp.google.com>
- <31bb0b9f-d498-24b3-57d5-9f34cb8e3914@kdbg.org>
- <alpine.DEB.2.20.1702131815351.3496@virtualbox>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        Jeff Hostetler <jeffhost@microsoft.com>
-From:   Johannes Sixt <j6t@kdbg.org>
-Message-ID: <0080edd6-a515-2fe9-6266-b6f6bbedfdde@kdbg.org>
-Date:   Thu, 16 Feb 2017 19:12:17 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.7.0
+        id S933108AbdBPSOV (ORCPT <rfc822;e@80x24.org>);
+        Thu, 16 Feb 2017 13:14:21 -0500
+Received: from mail-lf0-f67.google.com ([209.85.215.67]:34328 "EHLO
+        mail-lf0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S933042AbdBPSOU (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Feb 2017 13:14:20 -0500
+Received: by mail-lf0-f67.google.com with SMTP id q89so2083782lfi.1
+        for <git@vger.kernel.org>; Thu, 16 Feb 2017 10:14:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=F6TjaStrTuzbCwqUMv6/W5XmO0trNg/bUZXO2Ii0cME=;
+        b=IiVrffTDDity9sdWL6ljRgvgfq6/vK5QPpsrEH8KmawEoT3JQxIfzWmy1018aeWr4J
+         XEJMEcGOEq1lLrDbvw71Qp8AUVwuqECmLDiVxMYb5kT6R+o6fOt5RF5VK03DBjHUCfKs
+         DA8w4Z6s2TTI+EUny3FqPW08OTgwba74ou9jHii97bwkwy3GTBzLjlIK1+u80Z+nu99c
+         oiDWBYog2v37MHcSbUi6Y6v950yoNLXzEsN4FU0RMjV201/Qgp4qLeYtg5SkjivAGJ2M
+         lCMvS2+Au0nwHdeiZL3EGsrUr1iZD9PSYdgXgwe/WQprksTNcR06EIQw8Sfji1dTCxw9
+         KxOA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
+         :references:mime-version:content-disposition:in-reply-to:user-agent;
+        bh=F6TjaStrTuzbCwqUMv6/W5XmO0trNg/bUZXO2Ii0cME=;
+        b=kStEcp699ughvuT9VzB6FTV9/VvEeNn7oJrBtxldfgnbjkEPMnERYtihBZ83Nr36Pg
+         WyysEbBB4FZoiWgF8WgzqWNDl7U1RCeh9tIsPdLXgQyuuIZSU7wUMGkNW3Vv7bP9mTdJ
+         pcu0cDSXLuALzNLILFNDWkGevowpQKX3Xxdbu75Irt4quhKcoAVnlAS3SH9dz6AELgWE
+         nWHfV6b8to+7YGVgHzsqyl0bWPao3fYlwZ8mLzWQNEE1qzcPMj7Vzo7b4F5I/SsvYsHa
+         joXMp4AtkvNVCXTqFkum0BTOgt2n0xqcj1v5hi5bkKCGEXhYnVhB/aSa446Ghd5UGd8d
+         Fe/A==
+X-Gm-Message-State: AMke39m169tXHjU4SB7WXzrZu3lQ+kIPVvH46BuYWzoYZUBiHpBNBCYxFI+XtVSk/LIMng==
+X-Received: by 10.25.21.142 with SMTP id 14mr1160271lfv.138.1487268858854;
+        Thu, 16 Feb 2017 10:14:18 -0800 (PST)
+Received: from xi.terra ([84.216.234.102])
+        by smtp.gmail.com with ESMTPSA id o80sm660705lff.23.2017.02.16.10.14.17
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 16 Feb 2017 10:14:18 -0800 (PST)
+Received: from johan by xi.terra with local (Exim 4.88)
+        (envelope-from <johan@kernel.org>)
+        id 1ceQZO-0004UW-9u; Thu, 16 Feb 2017 19:14:18 +0100
+Date:   Thu, 16 Feb 2017 19:14:18 +0100
+From:   Johan Hovold <johan@kernel.org>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Johan Hovold <johan@kernel.org>, git@vger.kernel.org,
+        Jeff King <peff@peff.net>,
+        Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+        Kevin Daudt <me@ikke.info>,
+        Larry Finger <Larry.Finger@lwfinger.net>
+Subject: Re: body-CC-comment regression
+Message-ID: <20170216181418.GC2625@localhost>
+References: <20170216174924.GB2625@localhost>
+ <xmqq60kayq2q.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-In-Reply-To: <alpine.DEB.2.20.1702131815351.3496@virtualbox>
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqq60kayq2q.fsf@gitster.mtv.corp.google.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 13.02.2017 um 18:16 schrieb Johannes Schindelin:
-> On Sat, 11 Feb 2017, Johannes Sixt wrote:
->> Am 10.02.2017 um 00:41 schrieb Junio C Hamano:
->>> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
->>>
->>>> From: Jeff Hostetler <jeffhost@microsoft.com>
->>>>
->>>> Use OpenSSL's SHA-1 routines rather than builtin block-sha1
->>>> routines.  This improves performance on SHA1 operations on Intel
->>>> processors.
->>>> ...
->>>>
->>>> Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
->>>> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
->>>> ---
->>>
->>> Nice.  Will queue as jh/mingw-openssl-sha1 topic; it is a bit too
->>> late for today's integration cycle to be merged to 'next', but let's
->>> have this by the end of the week in 'master'.
->>
->> Please don't rush this through. I didn't have a chance to cross-check the
->> patch; it will have to wait for Monday. I would like to address Peff's
->> concerns about additional runtime dependencies.
->
-> I never meant this to be fast-tracked into git.git. We have all the time
-> in our lives to get this in, as Git for Windows already carries this patch
-> for a while, and shall continue to do so.
+On Thu, Feb 16, 2017 at 09:59:25AM -0800, Junio C Hamano wrote:
+> Johan Hovold <johan@kernel.org> writes:
+> 
+> > I recently noticed that after an upgrade, git-send-email (2.10.2)
+> > started aborting when trying to send patches that had a linux-kernel
+> > stable-tag in its body. For example,
+> >
+> > 	Cc: <stable@vger.kernel.org>	# 4.4
+> >
+> > was now parsed as
+> >
+> > 	"stable@vger.kernel.org#4.4"
+> > ...
+> 
+> It sounds like a fallout of this:
+> 
+>   https://public-inbox.org/git/41164484-309b-bfff-ddbb-55153495d41a@lwfinger.net/#t 
+> 
+> and any change to "fix" you may break the other person.
 
-I've been working with this patch for the past few days, and I did not 
-notice any disadvantage during interactive work even though there is a 
-new dependency on libcrypto.dll.
+Yes, that's the thread I was referring to as well, and the reported
+breakage is the same even if the reporter used a non-standard stable-tag
+format (e.g. a "[4.8+]" suffix).
 
-Here are some unscientific numbers collected during test suite runs:
+What I'm wondering is whether the alternative fix proposed in that
+thread, to revert to the old behaviour of discarding trailing comments,
+should be considered instead of what was implemented.
 
-bash -c "time make -j4 -k test"
+> > Can we please revert to the old behaviour of simply discarding such
+> > comments (from body-CC:s) or at least make it configurable through a
+> > configuration option?
+> 
+> If I recall the old thread correctly, it was reported that using
+> Mail::Address without forcing git-send-email fall back to its own
+> non-parsing-but-paste-address-looking-things-together code would
+> solve it, so can the "make it configurable" be just "install
+> Mail::Address"?
 
-with this patch:
+I believe git-send-email's parser was changed to mimic Mail::Address,
+and installing it does not seem to change the behaviour of including any
+trailing comments in the name.
 
-real    34m47.242s
-user    9m55.827s
-sys     25m20.483s
-
-without this patch:
-
-real    34m2.330s
-user    9m56.556s
-sys     25m5.520s
-
-It looks like BLK_SHA1 has some advantage, but I would not count on 
-these figures too much. (I certainly did not sit idly in front of the 
-workstation during these tests, for example. That may have skewed the 
-numbers somewhat.) (And, no, I'm not going to measure best-of-five 
-timings, not even best-of-two. ;)
-
-In summary: Interactive response times do not decline noticably. I do 
-not object the patch.
-
--- Hannes
-
+Thanks,
+Johan
