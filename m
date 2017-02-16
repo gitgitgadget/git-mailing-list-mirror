@@ -2,169 +2,115 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
 	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 993032013A
-	for <e@80x24.org>; Thu, 16 Feb 2017 00:38:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1CB362013A
+	for <e@80x24.org>; Thu, 16 Feb 2017 00:38:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754206AbdBPAi2 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 15 Feb 2017 19:38:28 -0500
-Received: from mail-pf0-f177.google.com ([209.85.192.177]:36503 "EHLO
-        mail-pf0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1756241AbdBPAiZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Feb 2017 19:38:25 -0500
-Received: by mail-pf0-f177.google.com with SMTP id 189so781153pfu.3
-        for <git@vger.kernel.org>; Wed, 15 Feb 2017 16:38:20 -0800 (PST)
+        id S1756250AbdBPAik (ORCPT <rfc822;e@80x24.org>);
+        Wed, 15 Feb 2017 19:38:40 -0500
+Received: from mail-pg0-f49.google.com ([74.125.83.49]:34246 "EHLO
+        mail-pg0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1756244AbdBPAie (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Feb 2017 19:38:34 -0500
+Received: by mail-pg0-f49.google.com with SMTP id z67so898822pgb.1
+        for <git@vger.kernel.org>; Wed, 15 Feb 2017 16:38:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=AQjOW5b+28SdeXlX61yVTgvUfUoz/3KZq9kS0LJDOQk=;
-        b=I4aD7fkuQr5hta2Tc7AIbIfHjinBqFrdRymhWAePS6emZm5mKgMzz4ch7fxSAwX8zc
-         6vTBokVi4TvHsWWow9A/ty4AnL7w218yAGh7a0kd3GHOcP6F1qtxGDe24HDfHdKPFZSr
-         0CaYbWHujCGaQwMNmJRJyK0rU/ViEMn/QOSyozcMinW3x1H5XFj2NSjbI3lXbsbfmjp5
-         Lxn9qjSF75DwTpGDKGt4ADCoWWg4m62buBu4EnDRS5iYqraOfCtStk2rmep+kJpE2FXV
-         NgHiQBD5R3Rm3jEq3pdYRyjuGqv8KAY+md0N5EOisSVs7/XS6F9M+/Z+PdILt4dtnch1
-         UP0g==
+        bh=w1cI2EFWb9lMxcuuzSyOwJyetS/w05jlCg34NcUCfxc=;
+        b=ij2TObnAElwdvAgY4fmNEB7YjbLe2hXNfBWrw9LBYPzS7NPUqhPLeVmqFinWg9RBor
+         fwEO1iH8MB0k5l8OEVaQVmtrGjGV98Z+mJeZCONAUE4UZfJ/idGy3xyHCfYL+yeS0vox
+         NnEmd3g6z7yW4kPPDFRJpSc9uYRQfHKRRKsKcLrE3Z8xUAzNTKLpOgC38YXaMtC1Lw9R
+         IPahx/HFnWCQsx2pZIyPCuBw4w+YPtB7q0RQMcMHzlBFS3qSV8FUzrG2/MFEvG424BwU
+         MzN71TNBXFShD93hKiUDDas8DraCPId3duhMc6mUYBDlJzQZ/w4v0ePVjVtoqsAtmub0
+         ML3g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=AQjOW5b+28SdeXlX61yVTgvUfUoz/3KZq9kS0LJDOQk=;
-        b=U3Y+cndHwRYrgQKgGPsc3zHH+TCh8Z3Xn3stTgVWvc9ZNgRn9CAQUG14epJN8QvRSI
-         QGxpxl52xbwjBY+xUPkIAd8CJGJmcohKtgBrYMiL3cQjyyuTkGo26ls/D9rcOnR2Gsf6
-         JkFrJjcRAruexcXwbOpvgQtXIIHMS9IwjgtdFN/7QjKtOpjrXdfv8v1nezplKXKmjsAK
-         cVgGQyUy3EDwquDh7lbApQEPFLQnl6SGEavF4qiRxWFpKQuYFtTjq8VT6fTP+LxC2zsL
-         m4rsH8wJyN/XpLR9DY6nBrJHSmxp5R3oRpUYkTmSQ9tP3LLV7xeIfrTAFNO+XByJsaI7
-         PN6A==
-X-Gm-Message-State: AMke39n0uoM3/W1JFDcLZ0KZkDVvSoiO9gOukE6Xn34cMusfetEp9gIL+xFJ8jMiOwKMcYER
-X-Received: by 10.99.125.17 with SMTP id y17mr42161814pgc.27.1487205499858;
-        Wed, 15 Feb 2017 16:38:19 -0800 (PST)
+        bh=w1cI2EFWb9lMxcuuzSyOwJyetS/w05jlCg34NcUCfxc=;
+        b=WeD/i9sR3o/NYuoApjhxh6Rw/hTbpEH62SJrclZvGy7z7+/XPGVlNjR+lUTTy8x4KY
+         o2HsaeUjion82k9FcZJScSEt0z0LJLutbtkBJCHQjiZivF+xTCyA+y99+4+hYXW4NfjX
+         y7CeYruLf3JpeqxVqe7LiQyJXkwfwHJIXkH3PsSLas89ygoCIVEOrW1vgt1PbSy/+q/G
+         RBKYyNLbOHFDRVCPw1gSksx64WpVRjdbnPLsqFoAqQZhEw2whmwlcEWR9tNtfA61mQhM
+         He1l8imEOQ7mK9eLuj+3KimwPMK35vcFp/IQ8xdnsOBIxpAdQwjCjtJYej6LL5hMje2R
+         vuEw==
+X-Gm-Message-State: AMke39mMv/8bBXsoof9sp91f+5eu84C0/e1lSPqmQBiPG9yNt/nXRKBf91SIIe24shiHefas
+X-Received: by 10.98.103.195 with SMTP id t64mr40947726pfj.106.1487205508309;
+        Wed, 15 Feb 2017 16:38:28 -0800 (PST)
 Received: from localhost ([2620:0:1000:5b10:2ca1:506:4965:89ed])
-        by smtp.gmail.com with ESMTPSA id g70sm9553501pfb.50.2017.02.15.16.38.18
+        by smtp.gmail.com with ESMTPSA id n70sm9577547pfg.34.2017.02.15.16.38.27
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 15 Feb 2017 16:38:19 -0800 (PST)
+        Wed, 15 Feb 2017 16:38:27 -0800 (PST)
 From:   Stefan Beller <sbeller@google.com>
 Cc:     git@vger.kernel.org, sandals@crustytoothpaste.net,
         jrnieder@gmail.com, bmwill@google.com, gitster@pobox.com,
         Stefan Beller <sbeller@google.com>
-Subject: [RFCv4 PATCH 00/14] Checkout aware of Submodules!
-Date:   Wed, 15 Feb 2017 16:37:56 -0800
-Message-Id: <20170216003811.18273-1-sbeller@google.com>
+Subject: [PATCH 07/15] update submodules: add a config option to determine if submodules are updated
+Date:   Wed, 15 Feb 2017 16:38:03 -0800
+Message-Id: <20170216003811.18273-8-sbeller@google.com>
 X-Mailer: git-send-email 2.12.0.rc1.16.ge4278d41a0.dirty
-In-Reply-To: <xmqq8tp74823.fsf@gitster.mtv.corp.google.com>
+In-Reply-To: <20170216003811.18273-1-sbeller@google.com>
 References: <xmqq8tp74823.fsf@gitster.mtv.corp.google.com>
+ <20170216003811.18273-1-sbeller@google.com>
 To:     unlisted-recipients:; (no To-header on input)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-previous work:
-https://public-inbox.org/git/20161203003022.29797-1-sbeller@google.com/
+In later patches we introduce the options and flag for commands
+that modify the working directory, e.g. git-checkout.
 
-v4:
- * addressed all comments of Brian, Junio and Brandon.
- Thanks!
- * one major point of change is the introduction of another patch
-   "lib-submodule-update.sh: do not use ./. as submodule remote",
-   as that took some time to track down the existing bug.
+Have a central place to store such settings whether we want to update
+a submodule.
+
+Signed-off-by: Stefan Beller <sbeller@google.com>
+---
+ submodule.c | 6 ++++++
+ submodule.h | 1 +
+ 2 files changed, 7 insertions(+)
+
+diff --git a/submodule.c b/submodule.c
+index 04d185738f..591f4a694e 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -17,6 +17,7 @@
+ #include "worktree.h"
  
-v3:
- * moved tests from t2013 to the generic submodule library.
- * factored out the refactoring patches to be up front
- * As I redid the complete implementation, I have the impression this time
-   it is cleaner than previous versions.
+ static int config_fetch_recurse_submodules = RECURSE_SUBMODULES_ON_DEMAND;
++static int config_update_recurse_submodules = RECURSE_SUBMODULES_DEFAULT;
+ static int parallel_jobs = 1;
+ static struct string_list changed_submodule_paths = STRING_LIST_INIT_NODUP;
+ static int initialized_fetch_ref_tips;
+@@ -542,6 +543,11 @@ void set_config_fetch_recurse_submodules(int value)
+ 	config_fetch_recurse_submodules = value;
+ }
  
- I think we still have to fix the corner cases of directory/file/submodule 
- conflicts before merging, but this serves as a status update on my current
- way of thinking how to implement the worktree commands being aware of
- submodules.
- 
-Thanks,
-Stefan
-
-v2:
-* based on top of the series sent out an hour ago
-  "[PATCHv4 0/5] submodule embedgitdirs"
-* Try to embed a submodule if we need to remove it.
-* Strictly do not change behavior if not giving the new flag.
-* I think I missed some review comments from v1, but I'd like to get
-  the current state out over the weekend, as a lot has changed so far.
-  On Monday I'll go through the previous discussion with a comb to see
-  if I missed something.
-  
-v1:
-When working with submodules, nearly anytime after checking out
-a different state of the projects, that has submodules changed
-you'd run "git submodule update" with a current version of Git.
-
-There are two problems with this approach:
-
-* The "submodule update" command is dangerous as it
-  doesn't check for work that may be lost in the submodule
-  (e.g. a dangling commit).
-* you may forget to run the command as checkout is supposed
-  to do all the work for you.
-
-Integrate updating the submodules into git checkout, with the same
-safety promises that git-checkout has, i.e. not throw away data unless
-asked to. This is done by first checking if the submodule is at the same
-sha1 as it is recorded in the superproject. If there are changes we stop
-proceeding the checkout just like it is when checking out a file that
-has local changes.
-
-The integration happens in the code that is also used in other commands
-such that it will be easier in the future to make other commands aware
-of submodule.
-
-This also solves d/f conflicts in case you replace a file/directory
-with a submodule or vice versa.
-
-The patches are still a bit rough, but the overall series seems
-promising enough to me that I want to put it out here.
-
-Any review, specifically on the design level welcome!
-
-Thanks,
-Stefan
-
-
-Stefan Beller (14):
-  lib-submodule-update.sh: reorder create_lib_submodule_repo
-  lib-submodule-update.sh: define tests for recursing into submodules
-  make is_submodule_populated gently
-  connect_work_tree_and_git_dir: safely create leading directories
-  update submodules: add submodule config parsing
-  update submodules: add a config option to determine if submodules are
-    updated
-  update submodules: introduce is_interesting_submodule
-  update submodules: move up prepare_submodule_repo_env
-  update submodules: add submodule_go_from_to
-  unpack-trees: pass old oid to verify_clean_submodule
-  unpack-trees: check if we can perform the operation for submodules
-  read-cache: remove_marked_cache_entries to wipe selected submodules.
-  entry.c: update submodules when interesting
-  builtin/checkout: add --recurse-submodules switch
-
- Documentation/git-checkout.txt |   7 +
- builtin/checkout.c             |  28 +++
- builtin/grep.c                 |   2 +-
- dir.c                          |   2 +
- entry.c                        |  28 +++
- read-cache.c                   |   3 +
- submodule-config.c             |  22 ++
- submodule-config.h             |  17 +-
- submodule.c                    | 216 +++++++++++++++--
- submodule.h                    |  16 +-
- t/lib-submodule-update.sh      | 534 +++++++++++++++++++++++++++++++++++++++--
- t/t2013-checkout-submodule.sh  |   5 +
- unpack-trees.c                 | 115 +++++++--
- unpack-trees.h                 |   1 +
- 14 files changed, 936 insertions(+), 60 deletions(-)
-
++void set_config_update_recurse_submodules(int value)
++{
++	config_update_recurse_submodules = value;
++}
++
+ static int has_remote(const char *refname, const struct object_id *oid,
+ 		      int flags, void *cb_data)
+ {
+diff --git a/submodule.h b/submodule.h
+index 0b915bd3ac..b4e60c08d2 100644
+--- a/submodule.h
++++ b/submodule.h
+@@ -64,6 +64,7 @@ extern void show_submodule_inline_diff(FILE *f, const char *path,
+ 		const char *del, const char *add, const char *reset,
+ 		const struct diff_options *opt);
+ extern void set_config_fetch_recurse_submodules(int value);
++extern void set_config_update_recurse_submodules(int value);
+ extern void check_for_new_submodule_commits(unsigned char new_sha1[20]);
+ extern int fetch_populated_submodules(const struct argv_array *options,
+ 			       const char *prefix, int command_line_option,
 -- 
-2.12.0.rc0.16.gd1691994b4.dirty
+2.12.0.rc1.16.ge4278d41a0.dirty
 
