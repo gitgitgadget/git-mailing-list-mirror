@@ -2,96 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B52F11FC44
-	for <e@80x24.org>; Thu, 16 Feb 2017 17:59:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B17A11FC44
+	for <e@80x24.org>; Thu, 16 Feb 2017 18:01:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933424AbdBPR7e (ORCPT <rfc822;e@80x24.org>);
-        Thu, 16 Feb 2017 12:59:34 -0500
-Received: from mail-pf0-f195.google.com ([209.85.192.195]:34611 "EHLO
-        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932637AbdBPR7c (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Feb 2017 12:59:32 -0500
-Received: by mail-pf0-f195.google.com with SMTP id o64so2108654pfb.1
-        for <git@vger.kernel.org>; Thu, 16 Feb 2017 09:59:32 -0800 (PST)
+        id S933166AbdBPSBX (ORCPT <rfc822;e@80x24.org>);
+        Thu, 16 Feb 2017 13:01:23 -0500
+Received: from mail-pf0-f172.google.com ([209.85.192.172]:33355 "EHLO
+        mail-pf0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S933001AbdBPSBV (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Feb 2017 13:01:21 -0500
+Received: by mail-pf0-f172.google.com with SMTP id c73so7211783pfb.0
+        for <git@vger.kernel.org>; Thu, 16 Feb 2017 10:01:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=QtKrHo6y6A5vLkfnyqaCTKajkN+NF68GWcMx8AzcWog=;
-        b=vTFPNO/Nmhm2vqphpZb6WwsqObdFkJbxWzMIe2RVaYqrL9YcOAX9NPmeV0kI1BHQ7C
-         5NIpUz/XFgdlt4qQFxTDhOuYHN7ajrTspjPtJt/Lb3YAB6Ls3L9u5Vqo4exw0PIfclbR
-         5G8hX5ub1cau6Kb8DU8KDhiIR+qeym7CA/LMGOFJgVL2tivesoHnPB8fH4i/aE0OYvlq
-         wDfbSB4cT/Qv4AsJSBiknCqY8FU5abTlaV+XeB6FieRK0B/SLOF9F11AlDbWbVWpEATv
-         HdJStlJ9lZrzccprc7IFgc2GHLBJSqvjhJPujS64VAJms3oVkSZUW/y4HaGiz5oexDGI
-         /vcg==
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=iTdaNPk6d0i87IflWjkbif6bfyRGBtjhVyIlz/zdllo=;
+        b=eLhcRLhtTJ6tFl6IfC/SO3hd6Kp9brJLVyzqm5WC9mhbAw+6g0oR+hnamCxug5xtPh
+         jt2eW8DPxIYjnEdRIyVqkCk97Mibkp06casZczt/wvpL6ZHi9dp8diOaR+aIlHoh1L5E
+         YjLj976MrWpiiUnlQL5pQQG1lo7N1yYfYRKMVp0YrM3Q/x2XH71s65L4UXtRH/U0xi5B
+         Opebl2H2/SHwkL6FqhryMqMVmxhRHLc53Gq6zmlBI+FjDasNf7v4ZquOwj9umDpz13OH
+         oqn/PbKbSlx4xfN4KEQFN/ked4lf1vzh5039tsm8m9iSiaWPKuzEoBaxWoU75Tj6XCJl
+         K66g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=QtKrHo6y6A5vLkfnyqaCTKajkN+NF68GWcMx8AzcWog=;
-        b=Xp8XhgURUO0IyfLx3eWdhow+uQcDV2IjVlQnNeR+uEGI9nnzvmrvnu1DEWtxewMKOJ
-         morAKbh4OkWHIFfUpUVyRl4f1RfjZtLgBj0MEWqlWeKM77FJ+BWLJXDEYm0sHQXl8LeY
-         UFrl7Mq8q8IlpQaqCOLU063gkk+l/nS28btpuY1aLfXAQNiDMsjuoNIj0boeG0SpCCUP
-         AyODdJtaLtU2nGjgBduHJOl5AG4zK0YES+66aXZ1zFSiMJ/brRgDI2w7INbUQHim556p
-         h/yz9cgMBO8p6JB3L4xr9SQ6wSx0hJMbbzEkNzQ91/ekEuTgtYCZfAil4+wTqLzC5Yxq
-         u1pA==
-X-Gm-Message-State: AMke39lx3vXEu5K0nhKvHVh5Ys9Tw5gYhF9D+OaUjRUTytfuN6RE69DAWe10nDp0AKIysA==
-X-Received: by 10.98.106.132 with SMTP id f126mr4113678pfc.1.1487267966961;
-        Thu, 16 Feb 2017 09:59:26 -0800 (PST)
-Received: from localhost ([2620:0:1000:8622:9476:4c5c:6ee4:ba3])
-        by smtp.gmail.com with ESMTPSA id m15sm14841845pfk.104.2017.02.16.09.59.25
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=iTdaNPk6d0i87IflWjkbif6bfyRGBtjhVyIlz/zdllo=;
+        b=echXGHJQK723eLtMc1JhK979ZN1xgU2OuWI+voaB727ZNl5cIEgiPCoTqElvfRSSZN
+         rcx0Dl4kSWzTEO+EXIn7mEBSHK9JWpWYOn2N/nOVN9wMxzsOayb8TKSf/zy/xH27DaY8
+         s6ImHIlZykWSjrORhcigjuocFL+nOMSKsynjaOVhkQEUX2mAoEHSiZlpGvxMpWDiYlMn
+         QS+c/gIDa1vZX+yLARX4whLg2QmJV/otRbtv8G1IKa8oYKb2mnyvK7yJyr7F1Ge1ZRcs
+         tSAE4m24RBebgBaK1gJTlGlRGO3VYZTvn/EZd6xWRs2VjKbdEQfMjX6p0J5t691whUVL
+         Gr5A==
+X-Gm-Message-State: AMke39kyneuvKbys62IEVL/dGGzZMq5r/GWUPBKdr1WwswIMoQJRNyUSwH76xYV+tIOxzpSv
+X-Received: by 10.84.131.36 with SMTP id 33mr4949277pld.45.1487268075556;
+        Thu, 16 Feb 2017 10:01:15 -0800 (PST)
+Received: from google.com ([2620:0:1000:5b10:e041:12b6:2a42:f1dd])
+        by smtp.gmail.com with ESMTPSA id m12sm14970526pgc.46.2017.02.16.10.01.13
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 16 Feb 2017 09:59:26 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johan Hovold <johan@kernel.org>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-        Kevin Daudt <me@ikke.info>,
-        Larry Finger <Larry.Finger@lwfinger.net>
-Subject: Re: body-CC-comment regression
-References: <20170216174924.GB2625@localhost>
-Date:   Thu, 16 Feb 2017 09:59:25 -0800
-In-Reply-To: <20170216174924.GB2625@localhost> (Johan Hovold's message of
-        "Thu, 16 Feb 2017 18:49:24 +0100")
-Message-ID: <xmqq60kayq2q.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+        Thu, 16 Feb 2017 10:01:14 -0800 (PST)
+Date:   Thu, 16 Feb 2017 10:01:13 -0800
+From:   Brandon Williams <bmwill@google.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     git@vger.kernel.org, sandals@crustytoothpaste.net,
+        jrnieder@gmail.com, gitster@pobox.com
+Subject: Re: [PATCH 12/15] unpack-trees: check if we can perform the
+ operation for submodules
+Message-ID: <20170216180113.GA158636@google.com>
+References: <xmqq8tp74823.fsf@gitster.mtv.corp.google.com>
+ <20170216003811.18273-1-sbeller@google.com>
+ <20170216003811.18273-13-sbeller@google.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20170216003811.18273-13-sbeller@google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johan Hovold <johan@kernel.org> writes:
+On 02/15, Stefan Beller wrote:
+> +static void reload_gitmodules_file(struct index_state *index,
+> +				   struct checkout *state)
+> +{
+> +	int i;
+> +	for (i = 0; i < index->cache_nr; i++) {
+> +		struct cache_entry *ce = index->cache[i];
+> +		if (ce->ce_flags & CE_UPDATE) {
+> +
+> +			int r = strcmp(ce->name, ".gitmodules");
+> +			if (r < 0)
+> +				continue;
+> +			else if (r == 0) {
+> +				checkout_entry(ce, state, NULL);
+> +			} else
+> +				break;
+> +		}
+> +	}
+> +	gitmodules_config();
+> +	git_config(submodule_config, NULL);
+> +}
 
-> I recently noticed that after an upgrade, git-send-email (2.10.2)
-> started aborting when trying to send patches that had a linux-kernel
-> stable-tag in its body. For example,
->
-> 	Cc: <stable@vger.kernel.org>	# 4.4
->
-> was now parsed as
->
-> 	"stable@vger.kernel.org#4.4"
-> ...
+If we are reloading the gitmodules file do you think it would makes
+sense to add in a call to 'submodule_free()' to clear the cache used to
+store the gitmodules config?
 
-It sounds like a fallout of this:
-
-  https://public-inbox.org/git/41164484-309b-bfff-ddbb-55153495d41a@lwfinger.net/#t 
-
-and any change to "fix" you may break the other person.
-
-> Can we please revert to the old behaviour of simply discarding such
-> comments (from body-CC:s) or at least make it configurable through a
-> configuration option?
-
-If I recall the old thread correctly, it was reported that using
-Mail::Address without forcing git-send-email fall back to its own
-non-parsing-but-paste-address-looking-things-together code would
-solve it, so can the "make it configurable" be just "install
-Mail::Address"?
+-- 
+Brandon Williams
