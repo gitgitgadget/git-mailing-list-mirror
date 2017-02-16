@@ -2,76 +2,76 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D5D071FC44
-	for <e@80x24.org>; Thu, 16 Feb 2017 23:27:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D36371FC44
+	for <e@80x24.org>; Thu, 16 Feb 2017 23:33:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933716AbdBPX1d (ORCPT <rfc822;e@80x24.org>);
-        Thu, 16 Feb 2017 18:27:33 -0500
-Received: from cloud.peff.net ([104.130.231.41]:56756 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S933590AbdBPX1d (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Feb 2017 18:27:33 -0500
-Received: (qmail 1601 invoked by uid 109); 16 Feb 2017 23:27:32 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 16 Feb 2017 23:27:32 +0000
-Received: (qmail 28721 invoked by uid 111); 16 Feb 2017 23:27:33 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 16 Feb 2017 18:27:33 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 16 Feb 2017 18:27:30 -0500
-Date:   Thu, 16 Feb 2017 18:27:30 -0500
-From:   Jeff King <peff@peff.net>
-To:     Lars Schneider <larsxschneider@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org,
-        sbeller@google.com
-Subject: Re: [PATCH] config: preserve <subsection> case for one-shot config
- on the command line
-Message-ID: <20170216232730.xsx3xks5ppjws5rg@sigill.intra.peff.net>
-References: <20170215111704.78320-1-larsxschneider@gmail.com>
- <xmqqzihn2smp.fsf@gitster.mtv.corp.google.com>
- <f238248f-0df2-19a5-581d-95c8a61b4632@google.com>
- <xmqqy3x712if.fsf@gitster.mtv.corp.google.com>
- <xmqqtw7v123n.fsf@gitster.mtv.corp.google.com>
- <xmqqa89n10df.fsf_-_@gitster.mtv.corp.google.com>
- <D0CDD1AC-05CA-47F3-8CB5-61EA1C6515A8@gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <D0CDD1AC-05CA-47F3-8CB5-61EA1C6515A8@gmail.com>
+        id S933742AbdBPXdC (ORCPT <rfc822;e@80x24.org>);
+        Thu, 16 Feb 2017 18:33:02 -0500
+Received: from mail-lf0-f67.google.com ([209.85.215.67]:34806 "EHLO
+        mail-lf0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S933695AbdBPXdB (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Feb 2017 18:33:01 -0500
+Received: by mail-lf0-f67.google.com with SMTP id q89so2587221lfi.1
+        for <git@vger.kernel.org>; Thu, 16 Feb 2017 15:33:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id;
+        bh=OFvNdjKmgfuaBJ+TgFdbqNLON42Akyn7UroIGts5gDU=;
+        b=S9wmFlLP5V9NdIuE+trbpUXx2bBkZwxmUtfUnzfacnV+2fHXqZKftaCNCn3r4x1Zp/
+         Uw3BtlrfW1qDbuoAdl19Q+m/KPiK18sDJt78W7FGh4L7W8LGysk1bNCYgIfEhOPxP+iw
+         HxsaYJO2qIir20c7KRt2+MfdPOxHLs1G+2AcWT0WMOYH/JUTfve95P96x1gO4zXeFi3o
+         yM9cW/wTlwhk5utLFcPNwaM1KeDh0+d2vXW21q2KAcQxLS0Mg0AIYAfBqvuhyP19Ki3V
+         xQ7BsSvv/GRMe9/8+5da8+3Tw3jJaFLoxhYFTJNfanykvrdHZALPGMJKYKaaLg+4HSRV
+         yCDQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=OFvNdjKmgfuaBJ+TgFdbqNLON42Akyn7UroIGts5gDU=;
+        b=C6tcDzj2UQEMjMUwDbvUE1YBFb5ICpFlDEoMvoeHI88v1Jx5QlRKv8rmne7udWPxND
+         QBt8oMgqPND6nHZp02I8WwK+Zw21jhmvZkGLE25ffDRp49KxfnXy8X3eNhYcx4mPvE/p
+         ssNoC4pK/4E4hXTdEUyoPzN9rVz9gBbftYM7u7RaLMmETj6p5utOWKCP3hvZ29QDML5i
+         UAR9vNT7nGisqxOgDzb5uq3eNbdtjN2/YnygAf1zqjzqnRatUHHOjInTQlXlaYsBlt0W
+         B5D8Uv8cl+tj8tdttXIW+2mBzEB33HszKUmeo+q1omsbRMYhbQ3espp9+8M5uavb5PUd
+         hKXA==
+X-Gm-Message-State: AMke39lxC6gqaZONfjewXaUnDo2b792+0zmbwjwj2qh4IASWmwfqB24AvxyzbhpbQywzMA==
+X-Received: by 10.25.27.147 with SMTP id b141mr1483570lfb.183.1487287979897;
+        Thu, 16 Feb 2017 15:32:59 -0800 (PST)
+Received: from localhost.localdomain ([2001:470:1f0b:8fc:eda1:2dcd:3a83:adeb])
+        by smtp.gmail.com with ESMTPSA id k127sm2071074lfg.10.2017.02.16.15.32.58
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 16 Feb 2017 15:32:59 -0800 (PST)
+From:   Maxim Moseychuk <franchesko.salias.hudro.pedros@gmail.com>
+To:     git@vger.kernel.org
+Cc:     peff@peff.net, jonathantanmy@google.com,
+        Maxim Moseychuk <franchesko.salias.hudro.pedros@gmail.com>
+Subject: [PATCH v3 0/2] Fix l10n
+Date:   Fri, 17 Feb 2017 02:32:47 +0300
+Message-Id: <20170216233249.24757-1-franchesko.salias.hudro.pedros@gmail.com>
+X-Mailer: git-send-email 2.11.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Feb 16, 2017 at 11:30:28AM +0100, Lars Schneider wrote:
+In some places fixed-size buffers can't store formatted string.
+If it be happen then git die.
 
-> 
-> > On 16 Feb 2017, at 00:48, Junio C Hamano <gitster@pobox.com> wrote:
-> > 
-> > The "git -c <var>=<val> cmd" mechanism is to pretend that a
-> 
-> The problem is also present for gitconfig variables e.g.
-> git config --local submodule.UPPERSUB.update none
+Jonathan Tan, Jeff King thanks a lot for your help.
+This is really my first patches. Your help is invaluable.
 
-Hrm, is it?
+Maxim Moseychuk (2):
+  bisect_next_all(): fix bisect crash when used the gettext translation
+  stop_progress_msg(): simplification function
 
-  $ git config --file foo submodule.UPPERSUB.update none
-  $ cat foo
-  [submodule "UPPERSUB"]
-	update = none
+ bisect.c   |  9 +++++----
+ progress.c | 11 ++++-------
+ 2 files changed, 9 insertions(+), 11 deletions(-)
 
-I could believe that some of the submodule code may try to pass it
-through "-c", though, so certain config ends up being missed.
+--
+2.11.1
 
-AFAICT, though, the writing code takes what you gave it verbatim. The
-reader is responsible for downcasing everything but the subsection
-before it hands it to a callback. Commands calling git-config for lookup
-should generally ask for the canonical downcased name. There is some
-code to downcase, but IIRC there are corner cases around some of the
-regex lookup functions.
-
--Peff
