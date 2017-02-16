@@ -2,85 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2039F1FC44
-	for <e@80x24.org>; Thu, 16 Feb 2017 22:00:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 74F4E1FC44
+	for <e@80x24.org>; Thu, 16 Feb 2017 22:35:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933520AbdBPWAU (ORCPT <rfc822;e@80x24.org>);
-        Thu, 16 Feb 2017 17:00:20 -0500
-Received: from mail-pg0-f67.google.com ([74.125.83.67]:34557 "EHLO
-        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933157AbdBPWAT (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Feb 2017 17:00:19 -0500
-Received: by mail-pg0-f67.google.com with SMTP id v184so3006300pgv.1
-        for <git@vger.kernel.org>; Thu, 16 Feb 2017 14:00:19 -0800 (PST)
+        id S933644AbdBPWey (ORCPT <rfc822;e@80x24.org>);
+        Thu, 16 Feb 2017 17:34:54 -0500
+Received: from mail-lf0-f67.google.com ([209.85.215.67]:36167 "EHLO
+        mail-lf0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S933429AbdBPWex (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Feb 2017 17:34:53 -0500
+Received: by mail-lf0-f67.google.com with SMTP id h65so2508636lfi.3
+        for <git@vger.kernel.org>; Thu, 16 Feb 2017 14:34:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=aD/+gvkKSxqjIYeosGL0C19xjZTevTf8H5tsL7YC1Aw=;
-        b=hXsURClmBdayTFGukce2NGPHTPglPUQ4nJZ2sP6K8Bd5vPO+xf3+vGNPkmSqLO8OTi
-         bs8cJ09DA5GYwMUY9vmXa23nPAPSd8V0Hn8Qh4w0TO5YQj3XM5CnNt69cBi/NCJwqfMJ
-         C29P0ZkcHYlrPDFCsk44b7nX2Fse5RfMhA0Ob6RXgQJsOTaPrS3gJDbSZy1BE8ZU392v
-         w03eGDbXPbNDMhmU+IpaWj0MOiVrK0cFxe+X5sX7Pd6FKN0SYLBNZbsBn6fIDDlPnbd3
-         KilzY7C6Rtvn7yjBzW9w8IEJJT/vil+TCe22Jizw3VPjDXhObyEHpL9jd8U0CPVTD5kB
-         H/PA==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=kocP1TpWx7enZvaDs0MwJx7R4+NG8dLbTst//Jek70k=;
+        b=Q/UZyqMcxboiuMGb559Avozhv4quTDb6FuSaxbWsi7LcmWBk1cfhe/8MZR8pYdOtEn
+         S1mXDPQwvP8c6BO5H5+mhQ7da/Zz/LwvVBaV5I8ZnC27AypOzRG+8OW+STRsNb8xSo41
+         2Ri3DIvA0eMhIT7B7pQE7jDW2Umt5kVv7dCKgqzy//BjWTGmgnvN1hEE7C1tOhZkF/Vg
+         EVqW8WIIq1hjiuhDkXKUjfvacitsQdPo7uvqS0HJm4ben5IrX5KuoS1TFWAHP7fDC54F
+         ZHr6I3WtxCKaS2ONJ+Y1CTnkF7wr+3acYTP0OpXl4nW6CCgaZsxn2hb4XVVCxEK6O1UM
+         jKwQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=aD/+gvkKSxqjIYeosGL0C19xjZTevTf8H5tsL7YC1Aw=;
-        b=EjIBGiNZ8SRuVvIO1HtjwrS0BZDvHiNmrN4rYda6k4KfHgCC//mvsYefeBKKst15d0
-         I5bPbiJJzNqmMoxEcQ1ReKqe6Gg635Hk4MebRxzG4RlL50FEssSZdGaR9+qqF09owYLd
-         ZR1e5vwaC5uk+XqMhoO69oD0XRF70YHYvFz74cZaKa9AtL29m/c4Gjznxv/ouJf+88ef
-         JUH4bsXecH8EDCA8PTYgiDJs6B1kBGNo0t75BAEZVSlkjuGBEYSVUVqvQySvTeOrlucB
-         jDjvGg+xaRzBXXLfewSfW4EQekHmdtNstXkxk8JxDjzFbODwJJhlznnn65d2ce+ATptQ
-         W0Xw==
-X-Gm-Message-State: AMke39n0JguX4mIkLN8W4iqO69W/mzHtUQU3abBwKRQAduT51zVkep9D6f4dWXt0qCiFlA==
-X-Received: by 10.99.238.5 with SMTP id e5mr5627589pgi.49.1487282418584;
-        Thu, 16 Feb 2017 14:00:18 -0800 (PST)
-Received: from localhost ([2620:0:1000:8622:9476:4c5c:6ee4:ba3])
-        by smtp.gmail.com with ESMTPSA id x2sm15355641pfa.71.2017.02.16.14.00.17
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 16 Feb 2017 14:00:17 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     git@vger.kernel.org, sandals@crustytoothpaste.net,
-        jrnieder@gmail.com, bmwill@google.com
-Subject: Re: [RFCv4 PATCH 00/14] Checkout aware of Submodules!
-References: <xmqq8tp74823.fsf@gitster.mtv.corp.google.com>
-        <20170216003811.18273-1-sbeller@google.com>
-Date:   Thu, 16 Feb 2017 14:00:17 -0800
-In-Reply-To: <20170216003811.18273-1-sbeller@google.com> (Stefan Beller's
-        message of "Wed, 15 Feb 2017 16:37:56 -0800")
-Message-ID: <xmqqlgt5vlse.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=kocP1TpWx7enZvaDs0MwJx7R4+NG8dLbTst//Jek70k=;
+        b=WX5Stj0uV7IsC0vcovdYf+Zs1QwGUTLX3LtiojB+shwl2XlK4O99vfYNje7IER+9CN
+         ppaMJj3QWW8Ns7FDNR9vv2jp9NR2DAyH38ZPVnzyXQM4eB6OwpuO7sitde3Tiopkq0nC
+         JADzikxWzv8d2DpGf4AYc7cNDfSdM8HdoikzV0DtCUGY9/Lnw5+krgXN1p36bzuiiID8
+         vtU77+OxG4GA+EXNvhfslLHNSyzyw1xSD8XEUsPD5EgMz9n3nZjbT0DB36osTABDtxFI
+         bjfhHdAGvBxTFbxoe4Y7nRqcti7pjBkUDYKyetA3B9UKsSM8uvN2LgnVuxGxa8QplgJe
+         6fMg==
+X-Gm-Message-State: AMke39nidMrL/kArx6uTNjDoBaT4QweiAFqq5Q8Ba0unVRmaFhAuwC73qcYgt0suI2R+TjOQyYwMZS6n8EpFgg==
+X-Received: by 10.46.0.210 with SMTP id e79mr1339016lji.34.1487284491605; Thu,
+ 16 Feb 2017 14:34:51 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
+Received: by 10.25.145.14 with HTTP; Thu, 16 Feb 2017 14:34:31 -0800 (PST)
+In-Reply-To: <20170216003811.18273-9-sbeller@google.com>
+References: <xmqq8tp74823.fsf@gitster.mtv.corp.google.com> <20170216003811.18273-1-sbeller@google.com>
+ <20170216003811.18273-9-sbeller@google.com>
+From:   Jacob Keller <jacob.keller@gmail.com>
+Date:   Thu, 16 Feb 2017 14:34:31 -0800
+Message-ID: <CA+P7+xr=2=ZvFvSjMMKsS_T9uPzVW3K3jtaCjc4DSaxNGgozOQ@mail.gmail.com>
+Subject: Re: [PATCH 08/15] submodules: introduce check to see whether to touch
+ a submodule
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Git mailing list <git@vger.kernel.org>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Brandon Williams <bmwill@google.com>,
+        Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
+On Wed, Feb 15, 2017 at 4:38 PM, Stefan Beller <sbeller@google.com> wrote:
+> +int touch_submodules_in_worktree(void)
+> +{
+> +       /*
+> +        * Update can't be "none", "merge" or "rebase",
+> +        * treat any value as OFF, except an explicit ON.
+> +        */
+> +       return config_update_recurse_submodules == RECURSE_SUBMODULES_ON;
+> +}
+> +
 
-> Integrate updating the submodules into git checkout,...
-
-It was more or less a pleasant read, once I decided to pretend that
-I were a machine who uses identifiers only to identify locations in
-the program ;-) IOW, for human consumption, the new names introduced
-were sometimes quite confusing and went against helping understanding.
-
-I saw a few places where logic looked somewhat iffy, which I sent
-separate comments on; I may spot more if the code used more
-understandable names and calling conventions, but that is OK.  It is
-an expected part of an iterative process.  
-
-I can feel that this topic is getting closer to where we eventually
-want to go.
-
-Thanks.
+This function doesn't and the comment don't make sense to me. What do
+you mean update can't be "none", "merge", or "rebase"? I'm thinking
+this means that the update_recurse_submodules checks whether it's ok
+for doing recursive update on submodules but only when the update type
+is checkout? This appears to be connected directly to the previous
+patch that reads the config value somehow. This is pretty convoluted
+to me, and took me quite a while to understand. Is it possible to make
+this more clear in the comments or in the name?
