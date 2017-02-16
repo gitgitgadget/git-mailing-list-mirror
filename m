@@ -2,110 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E51CC1FC44
-	for <e@80x24.org>; Thu, 16 Feb 2017 19:44:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EE50D1FC44
+	for <e@80x24.org>; Thu, 16 Feb 2017 19:49:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932955AbdBPToj (ORCPT <rfc822;e@80x24.org>);
-        Thu, 16 Feb 2017 14:44:39 -0500
-Received: from mail-qt0-f181.google.com ([209.85.216.181]:34640 "EHLO
-        mail-qt0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932742AbdBPToj (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Feb 2017 14:44:39 -0500
-Received: by mail-qt0-f181.google.com with SMTP id w20so23640912qtb.1
-        for <git@vger.kernel.org>; Thu, 16 Feb 2017 11:44:38 -0800 (PST)
+        id S933083AbdBPTtW (ORCPT <rfc822;e@80x24.org>);
+        Thu, 16 Feb 2017 14:49:22 -0500
+Received: from mail-pf0-f196.google.com ([209.85.192.196]:36049 "EHLO
+        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932344AbdBPTtV (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Feb 2017 14:49:21 -0500
+Received: by mail-pf0-f196.google.com with SMTP id 19so2265927pfo.3
+        for <git@vger.kernel.org>; Thu, 16 Feb 2017 11:49:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=Pa5w30EsXYp00jScBl4poesUCyyRgkVpgU8nBkKS4hs=;
-        b=hRtCSBs+v5yZRcMST13vv2vFEtcr11FF6FGRzvdyxMTVKAS3fnGegVmrp45wIWvemX
-         ocgdAnLhlIeD/v/Ts0bb2WmYFSFflpfIzKbymIGlRyS7fzLu8Q5+GDgaHEFLMEvmqE72
-         zUHfPHYfSd3acDsKcBTkXeriGdAu37MhLb6YhNSrdeJh0K2siW9AJoYytZUi4Mf9Q6Ls
-         DQqKQOQs7WMMruWgiGDjblmQmEUmI61RgCzEjumRO6frGFgEMiwKRL5UWfYo0HmQpfMu
-         2uWyLb1Y80hnObhuza5xZ/+7NXFa+F/LhQCBp0aVRmj87sST+qXy/u3ZLOQMqYWhEjiG
-         gueQ==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=QKanUHBgeIo2AjNjaPSKl+JF4Y0ZAO5jRsbd60J4wgM=;
+        b=PvQEBdDgxzKQTY/6XH7SNXY3Vmk0zdWuptse409eo0ZbSKC5Ur9GnCf9jIknbaY56m
+         4NdkGEj0Av8+1qc1TbcDi75K2l93toJqIALBDYGPfpQSAlfFZBsfhMAE8qB6/dbkOYpl
+         tZkDwr736yA5gWTigYx1W9Mq/EgfZ4uR7eIIfdMGe4nkI4OIFqt0y+ta/x7KXqiybGlz
+         LiVVuJZHKaYZlaNkACQcR6QKbFj2hfY9RyX2PRuQvN7exYFey5v1dXHLZC078TV9wC5V
+         cGu1OAq1BLlqXjGeDInVGi5bI6CxF5WC0ctk3wzP+cztjw8tYvd84B8lOW+R3DyuNQST
+         FtJQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=Pa5w30EsXYp00jScBl4poesUCyyRgkVpgU8nBkKS4hs=;
-        b=sDjMbmWhJ4C3L7pi82QEXy91RoO2KfHeerWCVECb4/2Pnuv2xyolTdvwXk/ChtOatV
-         wIX7CPXRuB/R6lG3vZflUE3f1psDoon+5sDZ43b6zUAlV15EiA6Aa47ZcoOWBwCMpuu+
-         lzD4N0jvorO+UgPOMyHnDP7KnzvRFA6pIcA5RbWjW8OXAqffHi25chhPHJRpOWMHYEnc
-         vRT8Ts1gnNNZC8ZtTmsVgXSHQ0kHuf6Au17cPR8d6bzMIA264hyyTK4kjZ7aU9TUx7pU
-         waKvlVS2rmbz4tGM8P2l8SnZ7JUcgXq+cV4B1+kHREdnG3XIk1G/DuIlSgXxiWNtQbhC
-         r9zw==
-X-Gm-Message-State: AMke39nrJhq0+oVejVdmaxPBGofccl+6ymQxTXtaWgeye1Tbnzm37NjBRBTuGhte+KSCzjpYXhEq1+YooiJmAA==
-X-Received: by 10.237.41.229 with SMTP id o92mr3624361qtd.223.1487274277884;
- Thu, 16 Feb 2017 11:44:37 -0800 (PST)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=QKanUHBgeIo2AjNjaPSKl+JF4Y0ZAO5jRsbd60J4wgM=;
+        b=N+ZsN8PHQfjjNuUS63AppeLTocbjE9uj/QF0RL5a3Y7tWnfvxChIYJE0HHwuhPMw3q
+         nJy//QiOJX7/T12C72viLQfanG1GhfioLY6wba6VN3FrFB31vsaBQo7tMZ3Au5QD6CoO
+         L/b2J9UUBS14EtkrlbXhSNxMnZuaZxAaV5XRm5HUIiGgRipXQj8yScRbxTJRuD8pB+Qm
+         O3EjMlB6gBgU+Ibbg5gZg+FLDZVNMdagbH1SsOax01RAQtvWtuvKxOYuLv6z1OtU9Pex
+         r21cc2JticzeFcSXboJzrWeivtfqgLRv9o9x4KwAiSDQzOe5ohWwcWQN9he0WBWzppPv
+         7VEA==
+X-Gm-Message-State: AMke39n6ZXrhB610hmoUF+BvIjBLe4BPQV66YuoUufrmTPh+ABSxRhsHrcS+JtDP5oxByQ==
+X-Received: by 10.84.218.129 with SMTP id r1mr5530983pli.6.1487274561233;
+        Thu, 16 Feb 2017 11:49:21 -0800 (PST)
+Received: from localhost ([2620:0:1000:8622:9476:4c5c:6ee4:ba3])
+        by smtp.gmail.com with ESMTPSA id c11sm15151410pfe.68.2017.02.16.11.49.20
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Thu, 16 Feb 2017 11:49:20 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jacob Keller <jacob.e.keller@intel.com>
+Cc:     git@vger.kernel.org, Jacob Keller <jacob.keller@gmail.com>
+Subject: Re: [PATCH v3] reset: add an example of how to split a commit into two
+References: <20170216002212.31088-1-jacob.e.keller@intel.com>
+        <xmqq4lzux7sc.fsf@gitster.mtv.corp.google.com>
+Date:   Thu, 16 Feb 2017 11:49:19 -0800
+In-Reply-To: <xmqq4lzux7sc.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
+        message of "Thu, 16 Feb 2017 11:19:47 -0800")
+Message-ID: <xmqqpoihx6f4.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.140.106.138 with HTTP; Thu, 16 Feb 2017 11:43:57 -0800 (PST)
-In-Reply-To: <xmqqinoax96u.fsf@gitster.mtv.corp.google.com>
-References: <1487258054-32292-1-git-send-email-kannan.siddharth12@gmail.com>
- <vpqa89mnl4z.fsf@anie.imag.fr> <xmqqinoax96u.fsf@gitster.mtv.corp.google.com>
-From:   Siddharth Kannan <kannan.siddharth12@gmail.com>
-Date:   Fri, 17 Feb 2017 01:13:57 +0530
-Message-ID: <CAN-3Qhok0WVZHBc-tFgTCNebGKRH87jPGe-rbRwTrsh1qLTfDQ@mail.gmail.com>
-Subject: Re: [PATCH 0/4 v4] WIP: allow "-" as a shorthand for "previous branch"
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-        Git List <git@vger.kernel.org>,
-        Pranit Bauva <pranit.bauva@gmail.com>,
-        Jeff King <peff@peff.net>, pclouds@gmail.com,
-        "brian m. carlson" <sandals@crustytoothpaste.ath.cx>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hey Junio and Matthieu,
+Junio C Hamano <gitster@pobox.com> writes:
 
-On 17 February 2017 at 00:19, Junio C Hamano <gitster@pobox.com> wrote:
-> Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+> Jacob Keller <jacob.e.keller@intel.com> writes:
 >
->> Siddharth Kannan <kannan.siddharth12@gmail.com> writes:
->>
->>> This is as per our discussion[1]. The patches and commit messages are based on
->>> Junio's patches that were posted as a reply to
->>> <20170212184132.12375-1-gitster@pobox.com>.
->>>
->>> As per Matthieu's comments, I have updated the tests, but there is still one
->>> thing that is not working: log -@{yesterday} or log -@{2.days.ago}
->>
->> Note that I did not request that these things work, just that they seem
->> to be relevant tests: IMHO it's OK to reject them, but for example we
->> don't want them to segfault. And having a test is a good hint that you
->> thought about what could happen and to document it.
+>> The interdiff between v2 and v3 is not really worth showing since I
+>> basically re-wrote the entire section a bit.
 >
-> The branch we were on before would be a ref, and the ref may know
-> where it was yesterday?  If @{-1}@{1.day} works it would be natural
-> to expect -@{1.day} to, too, but there probably is some disambiguity
-> or other reasons that they cannot or should not work that way I am
-> missing, in which case it is fine ("too much work for too obscure
-> feature that is not expected to be used often" is also an acceptable
-> reason) to punt or deliberately not support it, as long as it is
-> explained in the log and/or doc (future developers need to know if
-> we are simply punting, or if we found a case where it would hurt end
-> user experience if we supported the feature), and as long as it does
-> not do a wrong thing (dying with "we do not support it" is OK,
-> segfaulting or doing random other things is not).
+> Could this be made into an incremental, now that v2 has been in
+> 'next' for about 10 days, please?
+
+Nah, I think it is easier to read "log -p" if I just revert v2 out
+of existence from 'next', and queue this (with a minor typofixes) as
+a different topic to be merged later to 'master'.
+
+So no need to resend and certainly no need to make it incremental.
+
+>> +Split a commit apart into a sequence of commits::
+>> ++
+>> +Suppose that you have create lots of logically separate changes and commit them
 >
+> s/create/&d/; s/commit/&ed/
 
-Right now, these commands die with an "fatal: unrecognized argument:
--@{yesterday}" or a "fatal: unrecognized argument: -@{2.days.ago}".
-So, it is definitely not doing anything "random" :)
+I'd do this myself while queuing.
 
-I will wait for consensus on whether these should or should not be
-supported.
+Thanks.
 
--- 
-
-Best Regards,
-
-- Siddharth.
+>
+>> +together. Then, later you decide that it might be better to have each logical
+>> +chunk associated with its own commit. ...
