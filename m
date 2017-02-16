@@ -2,82 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A4E921FC44
-	for <e@80x24.org>; Thu, 16 Feb 2017 21:58:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2039F1FC44
+	for <e@80x24.org>; Thu, 16 Feb 2017 22:00:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933497AbdBPV6h (ORCPT <rfc822;e@80x24.org>);
-        Thu, 16 Feb 2017 16:58:37 -0500
-Received: from mail-lf0-f48.google.com ([209.85.215.48]:35086 "EHLO
-        mail-lf0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933157AbdBPV6g (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Feb 2017 16:58:36 -0500
-Received: by mail-lf0-f48.google.com with SMTP id z127so14617584lfa.2
-        for <git@vger.kernel.org>; Thu, 16 Feb 2017 13:58:36 -0800 (PST)
+        id S933520AbdBPWAU (ORCPT <rfc822;e@80x24.org>);
+        Thu, 16 Feb 2017 17:00:20 -0500
+Received: from mail-pg0-f67.google.com ([74.125.83.67]:34557 "EHLO
+        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S933157AbdBPWAT (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Feb 2017 17:00:19 -0500
+Received: by mail-pg0-f67.google.com with SMTP id v184so3006300pgv.1
+        for <git@vger.kernel.org>; Thu, 16 Feb 2017 14:00:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=pX64iFSvwG3DwFbulRMUJ1nd513Tu5ebQjzWquBp1S4=;
-        b=cuhLG+8OpNCgVQGDKF+cS/k7PV7t6ppF++Y9chJHmQ08L3Eus/76YkNViuIjTgFVRx
-         o3Q96TrXVgoCHwOl4u7Hfpc0V5l1R4TJpbKERn18fBAjwMzGb4K/hkR+wcaPQzv5u7tH
-         2tGsPkwUXwvx1LTp40DwDvXkSCaK/kFsGAgrwltsHYfIQ9xTLQQyt6iaNTRCVaNtEHMM
-         FIREYACGrDws2uMTwqXG+B5a5BbUenmFWF+lokiVG4v3J8E8Wx5lzHae/5vRqIMCfmhp
-         Q8amXGGLuINQJsz60QSloHxfofgw/B1Svk1RpiLX0eXWs9JeFKKJYByRTEeq3QyGRcl3
-         H3SQ==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=aD/+gvkKSxqjIYeosGL0C19xjZTevTf8H5tsL7YC1Aw=;
+        b=hXsURClmBdayTFGukce2NGPHTPglPUQ4nJZ2sP6K8Bd5vPO+xf3+vGNPkmSqLO8OTi
+         bs8cJ09DA5GYwMUY9vmXa23nPAPSd8V0Hn8Qh4w0TO5YQj3XM5CnNt69cBi/NCJwqfMJ
+         C29P0ZkcHYlrPDFCsk44b7nX2Fse5RfMhA0Ob6RXgQJsOTaPrS3gJDbSZy1BE8ZU392v
+         w03eGDbXPbNDMhmU+IpaWj0MOiVrK0cFxe+X5sX7Pd6FKN0SYLBNZbsBn6fIDDlPnbd3
+         KilzY7C6Rtvn7yjBzW9w8IEJJT/vil+TCe22Jizw3VPjDXhObyEHpL9jd8U0CPVTD5kB
+         H/PA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=pX64iFSvwG3DwFbulRMUJ1nd513Tu5ebQjzWquBp1S4=;
-        b=P71Wtqp9IBv19TU+HD8joF62pALFNzdT88aw/3igqY1cjpop5BNYTiegl1tjjEGSs1
-         xUTDTOwI8xwd/9gMBgA1X7zlUaBuuIZksoQixMZapZsmN4nwr3NAbnxOIRs+yi8DScwo
-         6yoeuyrTc6KvplREUgjHYxpKfTjwA+eBP16A+JYr98XQtnnx5pVeNNHutd5lj/c3725n
-         6WhXWSJ9c0qgd9wAvokgDi+/IV/LqDItdk9o2HeRflr7FMc6Id1m78aBltxXK1A9x26B
-         PSfkLBWhQpU392W4cQYB2FlC/wu0+liYWY1UOJEU83i0D880EX18w+BZjGnGXj38TDsT
-         BwTA==
-X-Gm-Message-State: AMke39mp571Kpmkb1TLlEZPdo1juEwPe0jOVPCt4V7oNo60wJumSbOvMhuw6UhnX+5iIICWNxqAvGCZoXPlNLQ==
-X-Received: by 10.25.16.158 with SMTP id 30mr1349098lfq.119.1487282315036;
- Thu, 16 Feb 2017 13:58:35 -0800 (PST)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=aD/+gvkKSxqjIYeosGL0C19xjZTevTf8H5tsL7YC1Aw=;
+        b=EjIBGiNZ8SRuVvIO1HtjwrS0BZDvHiNmrN4rYda6k4KfHgCC//mvsYefeBKKst15d0
+         I5bPbiJJzNqmMoxEcQ1ReKqe6Gg635Hk4MebRxzG4RlL50FEssSZdGaR9+qqF09owYLd
+         ZR1e5vwaC5uk+XqMhoO69oD0XRF70YHYvFz74cZaKa9AtL29m/c4Gjznxv/ouJf+88ef
+         JUH4bsXecH8EDCA8PTYgiDJs6B1kBGNo0t75BAEZVSlkjuGBEYSVUVqvQySvTeOrlucB
+         jDjvGg+xaRzBXXLfewSfW4EQekHmdtNstXkxk8JxDjzFbODwJJhlznnn65d2ce+ATptQ
+         W0Xw==
+X-Gm-Message-State: AMke39n0JguX4mIkLN8W4iqO69W/mzHtUQU3abBwKRQAduT51zVkep9D6f4dWXt0qCiFlA==
+X-Received: by 10.99.238.5 with SMTP id e5mr5627589pgi.49.1487282418584;
+        Thu, 16 Feb 2017 14:00:18 -0800 (PST)
+Received: from localhost ([2620:0:1000:8622:9476:4c5c:6ee4:ba3])
+        by smtp.gmail.com with ESMTPSA id x2sm15355641pfa.71.2017.02.16.14.00.17
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Thu, 16 Feb 2017 14:00:17 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     git@vger.kernel.org, sandals@crustytoothpaste.net,
+        jrnieder@gmail.com, bmwill@google.com
+Subject: Re: [RFCv4 PATCH 00/14] Checkout aware of Submodules!
+References: <xmqq8tp74823.fsf@gitster.mtv.corp.google.com>
+        <20170216003811.18273-1-sbeller@google.com>
+Date:   Thu, 16 Feb 2017 14:00:17 -0800
+In-Reply-To: <20170216003811.18273-1-sbeller@google.com> (Stefan Beller's
+        message of "Wed, 15 Feb 2017 16:37:56 -0800")
+Message-ID: <xmqqlgt5vlse.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.25.20.193 with HTTP; Thu, 16 Feb 2017 13:58:14 -0800 (PST)
-From:   Hilco Wijbenga <hilco.wijbenga@gmail.com>
-Date:   Thu, 16 Feb 2017 13:58:14 -0800
-Message-ID: <CAE1pOi3bpL0zTS9w2QCOrXcWk5pHj=xthxo2nYi8KEwJ=TgXfA@mail.gmail.com>
-Subject: There are too many unreachable loose objects
-To:     Git Users <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi all,
+Stefan Beller <sbeller@google.com> writes:
 
-Whenever I run "git push --force(-with-lease)" I get a variation of
+> Integrate updating the submodules into git checkout,...
 
-Counting objects: 187, done.
-Delta compression using up to 12 threads.
-Compressing objects: 100% (126/126), done.
-Writing objects: 100% (187/187), 21.35 KiB | 0 bytes/s, done.
-Total 187 (delta 78), reused 71 (delta 20)
-warning: There are too many unreachable loose objects; run 'git prune'
-to remove them.
-To git@git.company.com:project.git
- + 51338ea...b0ebe39 my-branch -> my-branch (forced update)
+It was more or less a pleasant read, once I decided to pretend that
+I were a machine who uses identifiers only to identify locations in
+the program ;-) IOW, for human consumption, the new names introduced
+were sometimes quite confusing and went against helping understanding.
 
-So I'll run "git prune" and, for good measure, "git gc" (which even
-includes "git prune"?). The first seems to do nothing, the latter does
-its thing.
+I saw a few places where logic looked somewhat iffy, which I sent
+separate comments on; I may spot more if the code used more
+understandable names and calling conventions, but that is OK.  It is
+an expected part of an iterative process.  
 
-And then the next time (which could be a few minutes later) I get the
-same warning. My branches aren't that big, the largest ever had 40-ish
-commits. So abandoning a few dozen commits should not lead to this
-warning, I would think.
+I can feel that this topic is getting closer to where we eventually
+want to go.
 
-What am I doing wrong?
-
-Cheers,
-Hilco
+Thanks.
