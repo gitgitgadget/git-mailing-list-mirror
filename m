@@ -2,86 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6D0772013C
-	for <e@80x24.org>; Thu, 16 Feb 2017 05:05:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D370D20136
+	for <e@80x24.org>; Thu, 16 Feb 2017 10:10:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750794AbdBPFFu (ORCPT <rfc822;e@80x24.org>);
-        Thu, 16 Feb 2017 00:05:50 -0500
-Received: from mail-pg0-f68.google.com ([74.125.83.68]:33002 "EHLO
-        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750728AbdBPFFt (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Feb 2017 00:05:49 -0500
-Received: by mail-pg0-f68.google.com with SMTP id 5so882334pgj.0
-        for <git@vger.kernel.org>; Wed, 15 Feb 2017 21:05:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=d+Rh1sKAnEzH+cAK7S7fUso0kwpwSW2u/ticMgx+4E0=;
-        b=Tdy6eMXm5bdF0tvnSXyqXMby0Jo35quFF4nVf6MjfqqnWsZkbS44u93NqgV1TllhBf
-         kFffa4zjLoUSKSBGR+KpuFm4q0d2kGM6zFbQ+ubgA0cBPgUJI+3weSWw9ssb+DzrN1zQ
-         PeH1tOPHmmMByE7B5zyOGtGs2rn+kBPKW3eL4qb3G5bdYQkxGf7R0Egi62tRZOm3Yvh6
-         WloCULZX4mfuSLY68wUAkNSYfpm0Iih06dfvUlHzMpuj1Z1EolCfDL/2dc9FQ15T4X4g
-         DffwXKRbxOXE2m0KTLd816Q/Lw54y+1fq6dJXf0oJL6whrgtby2kbG0UE6gd91l3lJ7k
-         miew==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=d+Rh1sKAnEzH+cAK7S7fUso0kwpwSW2u/ticMgx+4E0=;
-        b=ZVQZuqjeazVCqXvfHJgZGeMD84GBIL7mRWs6jThVJMZmlpmsC8VN+aqyMB/k72htuI
-         tz5ZsNArRX3BV4PhjQn1PIvz4QDWUeiUuQptwPScguFcXTz/ZniaA0N5autTsh8Vpwyw
-         uCCxeSzXE7Qrkb5Cbof+VP/62xabzfLoFJem4Wy3SKsMgxZ18y3uykqQNARJyNd6kJUu
-         6DXluSg3Suabu4Blo40czDUHmJFHsL73e98vGCEpqYumOD4uNaaLG3HJYf70uFHRGpKb
-         oIi7j8OPHeIrPoelzwlSQsPa3qwoRwcVxHjHPic0gEblx5D3orWNYhHJD6dZeWKdmekm
-         NfTQ==
-X-Gm-Message-State: AMke39nuJPYcdxO+nllUYAIwjzrtMIAtralun6u4Kw7xLFLUOq5n9z7WbpeHf34CZmoQEQ==
-X-Received: by 10.98.134.2 with SMTP id x2mr477334pfd.158.1487221548140;
-        Wed, 15 Feb 2017 21:05:48 -0800 (PST)
-Received: from localhost.localdomain (x084097.dynamic.ppp.asahi-net.or.jp. [122.249.84.97])
-        by smtp.gmail.com with ESMTPSA id k76sm10398835pfg.42.2017.02.15.21.05.46
-        (version=TLS1 cipher=AES128-SHA bits=128/128);
-        Wed, 15 Feb 2017 21:05:47 -0800 (PST)
-From:   David Pursehouse <david.pursehouse@gmail.com>
-To:     git@vger.kernel.org
-Cc:     David Pursehouse <dpursehouse@collab.net>
-Subject: [PATCH 1/1] config.txt: Fix formatting of submodule.alternateErrorStrategy section
-Date:   Thu, 16 Feb 2017 14:05:35 +0900
-Message-Id: <20170216050535.64593-2-david.pursehouse@gmail.com>
-X-Mailer: git-send-email 2.11.1
-In-Reply-To: <20170216050535.64593-1-david.pursehouse@gmail.com>
-References: <20170216050535.64593-1-david.pursehouse@gmail.com>
+        id S1753399AbdBPKKZ (ORCPT <rfc822;e@80x24.org>);
+        Thu, 16 Feb 2017 05:10:25 -0500
+Received: from mail-out.m-online.net ([212.18.0.10]:38351 "EHLO
+        mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753096AbdBPKKX (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Feb 2017 05:10:23 -0500
+Received: from frontend01.mail.m-online.net (unknown [192.168.8.182])
+        by mail-out.m-online.net (Postfix) with ESMTP id 3vPBjl5hwKz3hldm;
+        Thu, 16 Feb 2017 11:10:19 +0100 (CET)
+Received: from localhost (dynscan1.mnet-online.de [192.168.6.68])
+        by mail.m-online.net (Postfix) with ESMTP id 3vPBjl58mhzvkW8;
+        Thu, 16 Feb 2017 11:10:19 +0100 (CET)
+X-Virus-Scanned: amavisd-new at mnet-online.de
+Received: from mail.mnet-online.de ([192.168.8.182])
+        by localhost (dynscan1.mail.m-online.net [192.168.6.68]) (amavisd-new, port 10024)
+        with ESMTP id s2Kwt6Jyrq3i; Thu, 16 Feb 2017 11:10:18 +0100 (CET)
+X-Auth-Info: hQoqLoB1eUt77eXGCGhjPfflTOKXSignpfCMSPx64mDvu4XxAHJAiMotW6bFX4lm
+Received: from igel.home (ppp-88-217-3-149.dynamic.mnet-online.de [88.217.3.149])
+        (using TLSv1 with cipher DHE-RSA-CAMELLIA256-SHA (256/256 bits))
+        (No client certificate requested)
+        by mail.mnet-online.de (Postfix) with ESMTPSA;
+        Thu, 16 Feb 2017 11:10:18 +0100 (CET)
+Received: by igel.home (Postfix, from userid 1000)
+        id 232212C1AA3; Thu, 16 Feb 2017 11:10:18 +0100 (CET)
+From:   Andreas Schwab <schwab@linux-m68k.org>
+To:     Jeff King <peff@peff.net>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?utf-8?Q?J=C3=A1chym_Barv=C3=ADn?= =?utf-8?Q?ek?= 
+        <jachymb@gmail.com>, git@vger.kernel.org
+Subject: Re: Confusing git messages when disk is full.
+References: <CABpqov=FE-h_2s=O9fkSjFjgFXSy6hDwc2fu5ijiVvkaLx9f_Q@mail.gmail.com>
+        <20170215213221.lnraiktneokpk3mg@sigill.intra.peff.net>
+        <xmqqk28r2kk4.fsf@gitster.mtv.corp.google.com>
+        <20170215215151.a5chtxyjhbe3og4p@sigill.intra.peff.net>
+        <xmqq7f4r2io5.fsf@gitster.mtv.corp.google.com>
+        <20170215223246.mkaz22yrovnscnne@sigill.intra.peff.net>
+        <xmqq37ff2hn8.fsf@gitster.mtv.corp.google.com>
+        <20170215231832.bzg3ygz4ualcvqlc@sigill.intra.peff.net>
+X-Yow:  Should I start with the time I SWITCHED personalities with a BEATNIK
+ hair stylist or my failure to refer five TEENAGERS to a good OCULIST?
+Date:   Thu, 16 Feb 2017 11:10:18 +0100
+In-Reply-To: <20170215231832.bzg3ygz4ualcvqlc@sigill.intra.peff.net> (Jeff
+        King's message of "Wed, 15 Feb 2017 18:18:33 -0500")
+Message-ID: <87tw7uv439.fsf@linux-m68k.org>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: David Pursehouse <dpursehouse@collab.net>
+On Feb 15 2017, Jeff King <peff@peff.net> wrote:
 
-Add missing `::` after the title.
+> On Wed, Feb 15, 2017 at 02:50:19PM -0800, Junio C Hamano wrote:
+>
+>> > That works, but the fact that we need a comment is a good sign that it's
+>> > kind of gross. It's too bad stdio does not specify the return of fclose
+>> > to report an error in the close _or_ any previous error. I guess we
+>> > could wrap it with our own function.
+>> 
+>> Sure.  I am happy to add something like this:
+>> 
+>> 	/*
+>> 	 * closes a FILE *, returns 0 if closing and all the
+>> 	 * previous stdio operations on fp were successful,
+>> 	 * otherwise non-zero.
+>> 	 */
+>> 	int xfclose(FILE *fp)
+>> 	{
+>> 		return ferror(fp) | fclose(fp);
+>> 	}
+>
+> Yes, that's exactly what I had in mind (might be worth calling out the
+> bitwise-OR, though, just to make it clear it's not a typo).
 
-Signed-off-by: David Pursehouse <dpursehouse@collab.net>
----
- Documentation/config.txt | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Since the order of evaluation is unspecified, it would be better to
+force sequencing ferror before fclose.
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 1fee83ca4..6c378c6fc 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -2894,7 +2894,7 @@ submodule.alternateLocation::
- 	value is set to `superproject` the submodule to be cloned computes
- 	its alternates location relative to the superprojects alternate.
- 
--submodule.alternateErrorStrategy
-+submodule.alternateErrorStrategy::
- 	Specifies how to treat errors with the alternates for a submodule
- 	as computed via `submodule.alternateLocation`. Possible values are
- 	`ignore`, `info`, `die`. Default is `die`.
+Andreas.
+
 -- 
-2.11.1
-
+Andreas Schwab, schwab@linux-m68k.org
+GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
+"And now for something completely different."
