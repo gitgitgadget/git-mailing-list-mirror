@@ -2,83 +2,70 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3685A1FC44
-	for <e@80x24.org>; Thu, 16 Feb 2017 22:55:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B20961FC44
+	for <e@80x24.org>; Thu, 16 Feb 2017 22:55:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933471AbdBPWzN (ORCPT <rfc822;e@80x24.org>);
-        Thu, 16 Feb 2017 17:55:13 -0500
-Received: from mail-lf0-f44.google.com ([209.85.215.44]:36489 "EHLO
-        mail-lf0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933157AbdBPWzN (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Feb 2017 17:55:13 -0500
-Received: by mail-lf0-f44.google.com with SMTP id z134so15147461lff.3
-        for <git@vger.kernel.org>; Thu, 16 Feb 2017 14:55:12 -0800 (PST)
+        id S933558AbdBPWzQ (ORCPT <rfc822;e@80x24.org>);
+        Thu, 16 Feb 2017 17:55:16 -0500
+Received: from mail-it0-f45.google.com ([209.85.214.45]:35413 "EHLO
+        mail-it0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S933157AbdBPWzP (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Feb 2017 17:55:15 -0500
+Received: by mail-it0-f45.google.com with SMTP id 203so118797429ith.0
+        for <git@vger.kernel.org>; Thu, 16 Feb 2017 14:55:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
+        d=google.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=rUBoBca3Jeuq6nnY20P5gpuq76uTU6yuOFKGOW8cOCI=;
-        b=Nhlb+lzZ0FVDdOTE7ba+oNg+Ld6r6LODi7YZ2JBOEbVMEIruAxKS6QBm/NNSxcgmwT
-         o4WAgk/+h+DJxEmYHXOekSse8cOz/+M3kV/WAJneDh3YNMKhztud51pxtTZMkEXnHX3E
-         jejOmP7i6ErU723b4JQ4Nf1XdYYmajxeD0xe6iC2fgkcnmoSP30fGnsW4wALcMcAIl6b
-         wr7zZ70abNh1DBwITOOQwNjUPC95W087gOja2JuHrPzWcNvtcCSDdipSe1GSnpFuyotV
-         hHatBA6V0LO7CVDccJBDfMuGSDfhJj1c4xfQBe74/0fmL79fsKcFPZRK78ZiRXAggipr
-         CfOw==
+        bh=XfJ23et3/9UYCyV+YnI8X4cw7AoifyWCRpYao4XZpAI=;
+        b=MgCYCGgJzpJMyuF/CfZY6WytsrGwWubYobg6qXNcsyDOdy/EtEWa+OZVndjXzeRfzw
+         U+ImLhV+29bIke4/4E6JRF16gVqRPt+69Lo9ljDBrQFaVRzSQIDuEZl+uqXrblGBHoco
+         mMMXWXFN2bGtsZaYpqvHLIXYBOZ4qvOJnmPUdCaE3vKFqTKtbgTg8ukrbDanx6M5HQ5T
+         JhzB9pxVlhdG6QPp0jP5xve/ZX8GsPMebQomHzp32mRaNT6CVX8z0eKL6oMAgxlEWKyA
+         sKPivYuA96eVclqPm0QHDSLNUHRtJUnZ/qWJrnvn/Pau4cmTGOCJnKHQBQ7w/ZB2nvE3
+         9JoA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=rUBoBca3Jeuq6nnY20P5gpuq76uTU6yuOFKGOW8cOCI=;
-        b=uVB/ioV7c9OrAIUn73kfFZTiZasu9wiPoYi/+4YFmLftTpZT2vnq9OkjnD3LLiTcV7
-         dAJ5fer5XhDkoI7MTC31uRUbQqK2/1H8qo8QgbIlRFXttHQgNbIUMhbUOFSY3JFLskp6
-         agNGA0MGu/FCRAaWtrvCCdyGKrKspUQc3ESkuG4onkn5t9hNnPlAffe/OSg50vKXavm/
-         Dw17COUaFQYDqE6MQ1XDf5ls7Ejt7ggz7fkRr9lhYz9yyXNejVDiIrZT1iS/mF8UhBQ2
-         SgKCxxUfr6b1+cIWelOL1OYCWINgoLL3iWcLuhfTcWZP18jXEPElpkpG+GDfz/zNxA6B
-         Aziw==
-X-Gm-Message-State: AMke39l4cvM6Mtry6yo8kTmv/a4zUj78JoIfKQCfQr+MIE+2KGR1m0Imt6iY1KVryaJ16l4hBlhu4XPIfwrq4Q==
-X-Received: by 10.46.7.18 with SMTP id 18mr16109ljh.119.1487285711284; Thu, 16
- Feb 2017 14:55:11 -0800 (PST)
+        bh=XfJ23et3/9UYCyV+YnI8X4cw7AoifyWCRpYao4XZpAI=;
+        b=hhw8ax2qaHcIF1gN/fmKjfErg7FVYB2gB7bbhCm6Dx8OVQ0XO1vDIBJ4ZIv/+k7iEy
+         6bonVbf4E9Y5oPRkZr3g2wZvpO3+0aotEgYvRB/kPKxfGWnNisGnWNd0ugzLYvX5gZdf
+         vn096gkSW9uEO95qsHqdL55e0+gsTfecV2y2hdbhzlsGcIv7bGmgxKK4gVVkpvdtOdkq
+         29dCWyJIPm3/4V9Obbwh9qeXzOEhWihn/6TOvRnKevT7707InWcvBocfx5dEKjSzUXUw
+         YayWLBXHqTk9XIeDBFCPHMzz0p9aE1Z+t7U/Z9PsCMKBQSmfHe2lqEGp1HXuUm6zNZnU
+         fRrQ==
+X-Gm-Message-State: AMke39km/V80jIGZPbNO/F6l40RgGoZN7Uc/Q/BV6nVAkXJU/ZzWCb312LkPGQ7CdQzKVlqZ/8Saj7XKfddgTaxK
+X-Received: by 10.36.65.161 with SMTP id b33mr4551461itd.114.1487285714649;
+ Thu, 16 Feb 2017 14:55:14 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.25.145.14 with HTTP; Thu, 16 Feb 2017 14:54:50 -0800 (PST)
-In-Reply-To: <xmqqlgt5vlse.fsf@gitster.mtv.corp.google.com>
-References: <xmqq8tp74823.fsf@gitster.mtv.corp.google.com> <20170216003811.18273-1-sbeller@google.com>
- <xmqqlgt5vlse.fsf@gitster.mtv.corp.google.com>
-From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Thu, 16 Feb 2017 14:54:50 -0800
-Message-ID: <CA+P7+xpWqiWeMOMauYgtVaiUngd73_dUqRxyWcp0QPHvgOe+vg@mail.gmail.com>
-Subject: Re: [RFCv4 PATCH 00/14] Checkout aware of Submodules!
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Stefan Beller <sbeller@google.com>,
-        Git mailing list <git@vger.kernel.org>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Brandon Williams <bmwill@google.com>
+Received: by 10.79.33.148 with HTTP; Thu, 16 Feb 2017 14:55:14 -0800 (PST)
+In-Reply-To: <20170216114818.6080-1-pclouds@gmail.com>
+References: <20170213152011.12050-1-pclouds@gmail.com> <20170216114818.6080-1-pclouds@gmail.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Thu, 16 Feb 2017 14:55:14 -0800
+Message-ID: <CAGZ79kYwCK=WRbMRoKNzecL8XtxLriJxVYzJBixopmOa=hqtcg@mail.gmail.com>
+Subject: Re: [PATCH v2 00/16] Remove submodule from files-backend.c
+To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Michael Haggerty <mhagger@alum.mit.edu>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
+        David Turner <novalis@novalis.org>
 Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Feb 16, 2017 at 2:00 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Stefan Beller <sbeller@google.com> writes:
->
->> Integrate updating the submodules into git checkout,...
->
-> It was more or less a pleasant read, once I decided to pretend that
-> I were a machine who uses identifiers only to identify locations in
-> the program ;-) IOW, for human consumption, the new names introduced
-> were sometimes quite confusing and went against helping understanding.
->
+This series looks good to me.
 
-Based on my cursory reading, I agree. I had trouble understanding how
-the process worked because the names were somewhat confusing. They
-started to make some sense as I read more. I think v4 had better names
-than v3, but they were still somewhat confusing to me.
-
-Regards,
-Jake
+Thanks,
+Stefan
