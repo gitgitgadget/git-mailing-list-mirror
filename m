@@ -7,52 +7,52 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 28AE92013A
-	for <e@80x24.org>; Thu, 16 Feb 2017 00:38:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5AD762013A
+	for <e@80x24.org>; Thu, 16 Feb 2017 00:38:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756265AbdBPAit (ORCPT <rfc822;e@80x24.org>);
-        Wed, 15 Feb 2017 19:38:49 -0500
-Received: from mail-pf0-f177.google.com ([209.85.192.177]:36519 "EHLO
+        id S1756271AbdBPAiy (ORCPT <rfc822;e@80x24.org>);
+        Wed, 15 Feb 2017 19:38:54 -0500
+Received: from mail-pf0-f177.google.com ([209.85.192.177]:35324 "EHLO
         mail-pf0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753008AbdBPAid (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Feb 2017 19:38:33 -0500
-Received: by mail-pf0-f177.google.com with SMTP id 189so781989pfu.3
-        for <git@vger.kernel.org>; Wed, 15 Feb 2017 16:38:32 -0800 (PST)
+        with ESMTP id S1756261AbdBPAis (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Feb 2017 19:38:48 -0500
+Received: by mail-pf0-f177.google.com with SMTP id 202so796729pfx.2
+        for <git@vger.kernel.org>; Wed, 15 Feb 2017 16:38:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=0/FMUmBMrti5fPmFvdOcI0rAGSwT2c6nlwZa/IS/+Zc=;
-        b=ki4WDWvxR23sJuM8KRQy8U0sC0hJnMbvNffBoSWAHNJ0C8YgHbB69UT0wkhnL8Ru4F
-         oX3ifTXDa/d93mLYIkCgwaPn88nuR6C4uVXAvQdSJ9tnoLb+ML7ryCMXQAGpIkSi1lA6
-         u6XRT/icyRO13Ewl6hUWfSUBIzuPhnfTNOHUKVEwuGq92GQ5bz+6PVOuR/r19Bi/N+qX
-         t6wKvUcdveZSJ3ypeevdlhCjDMBzHCz1JYsS9ke28y85IVyzwoR6gPmV3faLB1oTsugN
-         tNouV3jufpfV44mWzHxzP69HOxvyxlKUbheH5F9Y8lnU36LMsqk1HjWLgB6Xh68UCXTP
-         HIQg==
+        bh=L8rX3Y11T2tC8W9UAAJTVzH2YhCmHbIhWYdnMtK7XPk=;
+        b=Z6y0UKeunqTiQp86FVyeAjZn37IBTLvyYeVHFK/4HcY3L2M+rziczF/DEMf2Jzrd+A
+         NUQY5pkdEnlPYtDZhxPZ3cyZF7m28sNC0M3u2vQx1yKT0jR2YtZhivQOKWN3QhYTwMVy
+         WuOpreDnMf+hLwUOQgsjSre2cD+iwfKZ54RpeBtJwRlTA84fKKLD7uTwfzFerpgaxaQ3
+         XkQIX9pITP1TTF5q21CLxir0BPIxAposWassVA9lMF7ln0ti1JTSzJ2Q8toF4ckyljK4
+         y6Wol1aQrzC+UaBgz1oCXIJP2jvIDZquPrVnTHpvV+0wWSoNw0AhSwUcrxSjFXT9fYPl
+         nmHw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=0/FMUmBMrti5fPmFvdOcI0rAGSwT2c6nlwZa/IS/+Zc=;
-        b=ViwbxBpQ1xeDQuLpGk4W9aKD4tfe0Pas12x8dMqV6f9VD6GPFR/heCQNXmT3avxc4X
-         pw99W7aryn7GkDMY9EnPPlb5uZEDvUbM8pGx/dNTGDnaG/bmQpNSAdugGQjsVJfJKjl4
-         a0zOmfZIX7V7zKLRLj1L+ksdzaaU3NdjSYaUnzxQSe6XBrVTJ/heyhHNSwYAOAtRlzl0
-         HLg62BYWHTaVZBWH26fu40OP7YzsJudQRIkbDi7p1Ma3WVQYRr9ZQS6fM5YjPBTtiZ9s
-         AqYAVje7hCLKfsNSsH7bN+ZnYmv+17vyi1UrrLju/qvT1a6WH7dYZh6XGkhhaSyKtiN3
-         Mhsw==
-X-Gm-Message-State: AMke39nm+sSUPubctCDq6vI6FgvcR40yTli1q08neTwz13VyOWuehT5kOU8Yv/kKK2Y9aqkr
-X-Received: by 10.98.192.72 with SMTP id x69mr41103451pff.129.1487205507126;
-        Wed, 15 Feb 2017 16:38:27 -0800 (PST)
+        bh=L8rX3Y11T2tC8W9UAAJTVzH2YhCmHbIhWYdnMtK7XPk=;
+        b=TcMX7QdSkpVaJlP2EuAzH7eISM/aIBDZuof5GBJ985jrDVPoSFIJiX5K7KYGewooyJ
+         utrsXW/mGQMK+vCrCw8hc1cyPE+eWMOsbzeiHRdkCL6cNrkYAqj/daFLME1MgMznAlkp
+         /lG1Z5v8YyMexxGG7PTFL9LU7m+K57Qczs+TubKPVN/u/ejzg9L9G/lnH6M1zrS4r6uq
+         399eYH6b/DX268FksJ7mMenbv2YFAKED14z4mBUpsYQFcpl9a+2xVTGu5Es/X2U3PquE
+         NvXNjdPZ+YwwB7LgBe3U+nTTCdZFe8QgelRr6bn377HGiubgB50XmkKzSiGnRgM9vvi8
+         QxWA==
+X-Gm-Message-State: AMke39lhHKY5E4ZcXgZDRFxdKsZi8VjeoYt0Kf8FuAwrxa8isz+s9s9h9EgN2pImcBtx06tF
+X-Received: by 10.98.155.155 with SMTP id e27mr40524557pfk.140.1487205517312;
+        Wed, 15 Feb 2017 16:38:37 -0800 (PST)
 Received: from localhost ([2620:0:1000:5b10:2ca1:506:4965:89ed])
-        by smtp.gmail.com with ESMTPSA id n70sm9577506pfg.34.2017.02.15.16.38.26
+        by smtp.gmail.com with ESMTPSA id 75sm9480577pfw.103.2017.02.15.16.38.36
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 15 Feb 2017 16:38:26 -0800 (PST)
+        Wed, 15 Feb 2017 16:38:36 -0800 (PST)
 From:   Stefan Beller <sbeller@google.com>
 Cc:     git@vger.kernel.org, sandals@crustytoothpaste.net,
         jrnieder@gmail.com, bmwill@google.com, gitster@pobox.com,
         Stefan Beller <sbeller@google.com>
-Subject: [PATCH 06/15] update submodules: add submodule config parsing
-Date:   Wed, 15 Feb 2017 16:38:02 -0800
-Message-Id: <20170216003811.18273-7-sbeller@google.com>
+Subject: [PATCH 13/15] read-cache: remove_marked_cache_entries to wipe selected submodules.
+Date:   Wed, 15 Feb 2017 16:38:09 -0800
+Message-Id: <20170216003811.18273-14-sbeller@google.com>
 X-Mailer: git-send-email 2.12.0.rc1.16.ge4278d41a0.dirty
 In-Reply-To: <20170216003811.18273-1-sbeller@google.com>
 References: <xmqq8tp74823.fsf@gitster.mtv.corp.google.com>
@@ -63,86 +63,32 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Similar to b33a15b08 (push: add recurseSubmodules config option,
-2015-11-17) and 027771fcb1 (submodule: allow erroneous values for the
-fetchRecurseSubmodules option, 2015-08-17), we add submodule-config code
-that is later used to parse whether we are interested in updating
-submodules.
-
-We need the `die_on_error` parameter to be able to call this parsing
-function for the config file as well, which if incorrect lets Git die.
-
-As we're just touching the header file, also mark all functions extern.
-
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- submodule-config.c | 22 ++++++++++++++++++++++
- submodule-config.h | 17 +++++++++--------
- 2 files changed, 31 insertions(+), 8 deletions(-)
+ read-cache.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/submodule-config.c b/submodule-config.c
-index 93453909cf..93f01c4378 100644
---- a/submodule-config.c
-+++ b/submodule-config.c
-@@ -234,6 +234,28 @@ int parse_fetch_recurse_submodules_arg(const char *opt, const char *arg)
- 	return parse_fetch_recurse(opt, arg, 1);
- }
+diff --git a/read-cache.c b/read-cache.c
+index 9054369dd0..b78a7f02e3 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -18,6 +18,7 @@
+ #include "varint.h"
+ #include "split-index.h"
+ #include "utf8.h"
++#include "submodule.h"
  
-+static int parse_update_recurse(const char *opt, const char *arg,
-+				int die_on_error)
-+{
-+	switch (git_config_maybe_bool(opt, arg)) {
-+	case 1:
-+		return RECURSE_SUBMODULES_ON;
-+	case 0:
-+		return RECURSE_SUBMODULES_OFF;
-+	default:
-+		if (!strcmp(arg, "checkout"))
-+			return RECURSE_SUBMODULES_ON;
-+		if (die_on_error)
-+			die("bad %s argument: %s", opt, arg);
-+		return RECURSE_SUBMODULES_ERROR;
-+	}
-+}
-+
-+int parse_update_recurse_submodules_arg(const char *opt, const char *arg)
-+{
-+	return parse_update_recurse(opt, arg, 1);
-+}
-+
- static int parse_push_recurse(const char *opt, const char *arg,
- 			       int die_on_error)
- {
-diff --git a/submodule-config.h b/submodule-config.h
-index 70f19363fd..d434ecdb45 100644
---- a/submodule-config.h
-+++ b/submodule-config.h
-@@ -22,16 +22,17 @@ struct submodule {
- 	int recommend_shallow;
- };
+ /* Mask for the name length in ce_flags in the on-disk index */
  
--int parse_fetch_recurse_submodules_arg(const char *opt, const char *arg);
--int parse_push_recurse_submodules_arg(const char *opt, const char *arg);
--int parse_submodule_config_option(const char *var, const char *value);
--const struct submodule *submodule_from_name(const unsigned char *commit_or_tree,
--		const char *name);
--const struct submodule *submodule_from_path(const unsigned char *commit_or_tree,
--		const char *path);
-+extern int parse_fetch_recurse_submodules_arg(const char *opt, const char *arg);
-+extern int parse_update_recurse_submodules_arg(const char *opt, const char *arg);
-+extern int parse_push_recurse_submodules_arg(const char *opt, const char *arg);
-+extern int parse_submodule_config_option(const char *var, const char *value);
-+extern const struct submodule *submodule_from_name(
-+		const unsigned char *commit_or_tree, const char *name);
-+extern const struct submodule *submodule_from_path(
-+		const unsigned char *commit_or_tree, const char *path);
- extern int gitmodule_sha1_from_commit(const unsigned char *commit_sha1,
- 				      unsigned char *gitmodules_sha1,
- 				      struct strbuf *rev);
--void submodule_free(void);
-+extern void submodule_free(void);
+@@ -532,6 +533,8 @@ void remove_marked_cache_entries(struct index_state *istate)
  
- #endif /* SUBMODULE_CONFIG_H */
+ 	for (i = j = 0; i < istate->cache_nr; i++) {
+ 		if (ce_array[i]->ce_flags & CE_REMOVE) {
++			if (is_active_submodule_with_strategy(ce_array[i], SM_UPDATE_UNSPECIFIED))
++				submodule_go_from_to(ce_array[i]->name, "HEAD", NULL, 0, 1);
+ 			remove_name_hash(istate, ce_array[i]);
+ 			save_or_free_index_entry(istate, ce_array[i]);
+ 		}
 -- 
 2.12.0.rc1.16.ge4278d41a0.dirty
 
