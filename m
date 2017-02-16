@@ -7,47 +7,47 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CCBE41FC44
-	for <e@80x24.org>; Thu, 16 Feb 2017 12:03:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 586661FC44
+	for <e@80x24.org>; Thu, 16 Feb 2017 12:04:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754131AbdBPMDz (ORCPT <rfc822;e@80x24.org>);
-        Thu, 16 Feb 2017 07:03:55 -0500
-Received: from mail-pg0-f67.google.com ([74.125.83.67]:33882 "EHLO
-        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754144AbdBPMDx (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Feb 2017 07:03:53 -0500
-Received: by mail-pg0-f67.google.com with SMTP id v184so1864236pgv.1
-        for <git@vger.kernel.org>; Thu, 16 Feb 2017 04:03:53 -0800 (PST)
+        id S1754410AbdBPMEA (ORCPT <rfc822;e@80x24.org>);
+        Thu, 16 Feb 2017 07:04:00 -0500
+Received: from mail-pg0-f66.google.com ([74.125.83.66]:35773 "EHLO
+        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754315AbdBPMD7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Feb 2017 07:03:59 -0500
+Received: by mail-pg0-f66.google.com with SMTP id y6so760789pgy.2
+        for <git@vger.kernel.org>; Thu, 16 Feb 2017 04:03:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=wT92m0QjwEe8GNp/FpDA65sj8lHLkmiLp5i0WzNZGME=;
-        b=PBTzOBg0oBMnDqzF3hQ7fiGjNW4SMgkVpgPHbdVcn3M3WEkMMEX31J2CGsAWB8hKHe
-         N01mFRd0wBlCwxm016fdD+pos5dUURQayJ3+6Lf8F+MXRzPJY6l5b2kUZJwCv6T0YdJo
-         4omd4Aq0NhnOTTbcBqoelGjkOKhYpvR4R8r323H34JPoR2EmSrTJW7Qzdo+HfPKlNycN
-         JpoFz3OATm+FLtqQwV+R5/hjDvj0WyfuJrY3VtE2dbGJFWz/Ja4A6OW+RS6JDKpkRgzd
-         9gTF7hVRbU7Bjcv9JlzvdAsyl7qtLVN0/DYry3KdV2v7EDFxgLMiLZ002iSpZxQWq3j7
-         1nsQ==
+        bh=isPrcxPzUeC0ShhM9KASL0CzUtgV8vlZTZDgDJDrMzs=;
+        b=Q4PdCc8YeeqyMIdPv9DZmktwdN5D6EQIO5ieQExnyD9QrtMxmCwz7XIw4k4572W2mY
+         SMgL7LpP6hJrosBKV4gZHnKSRQ4kkOjvjMKcKb3siYHwdyrxzc5o4QRxjlvv9eVPCdJF
+         36ss4x0CGvMk+oy5+bi1bMKiiYy7tFg373SSx6vKbPBtchYpnAALbUEaA8Cd6gFXiZqk
+         4FO+Xs2b3omFJUhjWna6Mx11Bt9J3fGqsm0DB7TOixrW0kC91G/qfkLqtK15dQe89G1z
+         2sw5CLB3XJW3yn6GtnAsvb1/+dzTRq1C/OQyPIIfB6miq7Kjy2LM8EWqNhoQY1iqQQKY
+         t3Lw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=wT92m0QjwEe8GNp/FpDA65sj8lHLkmiLp5i0WzNZGME=;
-        b=q19w/RqauQMx+s6L40r4SEgJ9kefDjN5n/LTwa1FmxNXMgLuAocOowWPWOcJpyTtEp
-         wfEQXnGeBDOecYOe0/kFWxgkFqJv11pV38FOvzTmuKmrgySYWqluOSwPJuc5QzU/+yVh
-         GPQbC9Vvfn7KnKlFbctWmFTEh/3EUpEu7EAqVaJqp9vIAr+OJpp/xgoGgyIZZD2OZJCz
-         zb1Z808hKRyhEJ5SMVKrGz2wUIQsi2shVUKkhO+GDnc+sxS9OHFI61l0mb4TSrE7v4kq
-         khFgT3b+Fl0yITFWaUOwmdIgcS7foQ+2WW2XIBUtTe+lWOFwIo0m8E2fmqREFH3dulTD
-         T/Lg==
-X-Gm-Message-State: AMke39nQJbCPIF+vmVb8g2/JFZ0p0dXSy02uz1/ODNBqbotyjI0VzvmWWxVPeTD2WIvgAQ==
-X-Received: by 10.99.128.65 with SMTP id j62mr2391991pgd.4.1487246633290;
-        Thu, 16 Feb 2017 04:03:53 -0800 (PST)
+        bh=isPrcxPzUeC0ShhM9KASL0CzUtgV8vlZTZDgDJDrMzs=;
+        b=g+Le/QYZLaxHet1kThGbmC4yDhFv/mmIV3URm2YLwRjk9OvWeAkvq/bLRaZO1HmtFv
+         XjyE0s70rshzG+cf0ZkhOCMqB3Y6OkLtk0kzO5KxsIggKX4FTPNw0QldtL36icK1Kq7B
+         LmkWxTcAmaL0IzDxouKo5PN/CDRI3IkFBVLJjLAVvvXmCe5e1kmY8yFfmtx5N68tR6vf
+         o3aPTedpP5doj9Rqaub3xg1JhdM/J8HPsiJEYXdHXshaOQFQojg/8f1IHR8mL3/jCbDa
+         x8QEHtEW7kuPFjYWKG5l1Y6Opu15/lhGMHusGDdQQ1gbutozFOd49Z2gsaYUHzipxIvf
+         lKLg==
+X-Gm-Message-State: AMke39mwc9mL0tFerOnDit4+vePZRLNGiNjFgTNE5RUw2zw5GJPhF4369wufgI8QmBYmLg==
+X-Received: by 10.98.72.88 with SMTP id v85mr2240864pfa.54.1487246638325;
+        Thu, 16 Feb 2017 04:03:58 -0800 (PST)
 Received: from ash ([115.73.162.84])
-        by smtp.gmail.com with ESMTPSA id y23sm13416931pfi.66.2017.02.16.04.03.50
+        by smtp.gmail.com with ESMTPSA id r16sm13390617pfg.76.2017.02.16.04.03.55
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 16 Feb 2017 04:03:52 -0800 (PST)
-Received: by ash (sSMTP sendmail emulation); Thu, 16 Feb 2017 19:03:48 +0700
+        Thu, 16 Feb 2017 04:03:57 -0800 (PST)
+Received: by ash (sSMTP sendmail emulation); Thu, 16 Feb 2017 19:03:53 +0700
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
@@ -56,9 +56,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Stefan Beller <sbeller@google.com>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH v2 1/5] refs: introduce get_worktree_ref_store()
-Date:   Thu, 16 Feb 2017 19:02:58 +0700
-Message-Id: <20170216120302.5302-2-pclouds@gmail.com>
+Subject: [PATCH v2 2/5] refs.c: add refs_resolve_ref_unsafe()
+Date:   Thu, 16 Feb 2017 19:02:59 +0700
+Message-Id: <20170216120302.5302-3-pclouds@gmail.com>
 X-Mailer: git-send-email 2.11.0.157.gd943d85
 In-Reply-To: <20170216120302.5302-1-pclouds@gmail.com>
 References: <20170208113144.8201-1-pclouds@gmail.com>
@@ -71,77 +71,95 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-files-backend at this point is still aware of the per-repo/worktree
-separation in refs, so it can handle a linked worktree.
-
-Note: accessing a worktree of a submodule remains unaddressed. Perhaps
-after get_worktrees() can access submodule (or rather a new function
-get_submodule_worktrees(), that lists worktrees of a submodule), we can
-update this function to work with submodules as well.
+Surprise surprise. This is just rename and introduce
+resolve_ref_recursively() to the public.
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- refs.c | 27 +++++++++++++++++++++++++++
- refs.h |  2 ++
- 2 files changed, 29 insertions(+)
+ refs.c               | 9 +++++----
+ refs.h               | 6 ++++++
+ refs/files-backend.c | 2 +-
+ refs/refs-internal.h | 5 -----
+ 4 files changed, 12 insertions(+), 10 deletions(-)
 
 diff --git a/refs.c b/refs.c
-index e7206a420..ba4d9420c 100644
+index ba4d9420c..e0e191107 100644
 --- a/refs.c
 +++ b/refs.c
-@@ -10,6 +10,7 @@
- #include "object.h"
- #include "tag.h"
- #include "submodule.h"
-+#include "worktree.h"
- 
- /*
-  * List of all available backends
-@@ -1486,6 +1487,32 @@ struct ref_store *get_submodule_ref_store(const char *submodule)
- 	return refs;
+@@ -1226,7 +1226,7 @@ int for_each_rawref(each_ref_fn fn, void *cb_data)
  }
  
-+struct ref_store *get_worktree_ref_store(const struct worktree *wt)
-+{
-+	struct ref_store *refs;
-+
-+	if (wt->is_current)
-+		return get_main_ref_store();
-+
-+	/*
-+	 * We share the same hash map with submodules for
-+	 * now. submodule paths are always relative (to topdir) while
-+	 * worktree paths are always absolute. No chance of conflict.
-+	 */
-+	refs = lookup_submodule_ref_store(wt->path);
-+	if (refs)
-+		return refs;
-+
-+	if (wt->id)
-+		refs = ref_store_init(git_common_path("worktrees/%s", wt->id));
-+	else
-+		refs = ref_store_init(get_git_common_dir());
-+
-+	if (refs)
-+		register_submodule_ref_store(refs, wt->path);
-+	return refs;
-+}
-+
- void base_ref_store_init(struct ref_store *refs,
- 			 const struct ref_storage_be *be)
+ /* This function needs to return a meaningful errno on failure */
+-const char *resolve_ref_recursively(struct ref_store *refs,
++const char *refs_resolve_ref_unsafe(struct ref_store *refs,
+ 				    const char *refname,
+ 				    int resolve_flags,
+ 				    unsigned char *sha1, int *flags)
+@@ -1313,8 +1313,9 @@ int refs_init_db(struct strbuf *err)
+ const char *resolve_ref_unsafe(const char *refname, int resolve_flags,
+ 			       unsigned char *sha1, int *flags)
  {
+-	return resolve_ref_recursively(get_main_ref_store(), refname,
+-				       resolve_flags, sha1, flags);
++	return refs_resolve_ref_unsafe(get_main_ref_store(),
++				       refname, resolve_flags,
++				       sha1, flags);
+ }
+ 
+ int resolve_gitlink_ref(const char *submodule, const char *refname,
+@@ -1343,7 +1344,7 @@ int resolve_gitlink_ref(const char *submodule, const char *refname,
+ 	if (!refs)
+ 		return -1;
+ 
+-	if (!resolve_ref_recursively(refs, refname, 0, sha1, &flags) ||
++	if (!refs_resolve_ref_unsafe(refs, refname, 0, sha1, &flags) ||
+ 	    is_null_sha1(sha1))
+ 		return -1;
+ 	return 0;
 diff --git a/refs.h b/refs.h
-index 1287ba59c..464cc384a 100644
+index 464cc384a..10c2cfc00 100644
 --- a/refs.h
 +++ b/refs.h
-@@ -565,5 +565,7 @@ struct ref_store *get_main_ref_store(void);
-  * submodule==NULL.
-  */
- struct ref_store *get_submodule_ref_store(const char *submodule);
-+struct worktree;
-+struct ref_store *get_worktree_ref_store(const struct worktree *wt);
+@@ -568,4 +568,10 @@ struct ref_store *get_submodule_ref_store(const char *submodule);
+ struct worktree;
+ struct ref_store *get_worktree_ref_store(const struct worktree *wt);
  
++const char *refs_resolve_ref_unsafe(struct ref_store *refs,
++				    const char *refname,
++				    int resolve_flags,
++				    unsigned char *sha1,
++				    int *flags);
++
  #endif /* REFS_H */
+diff --git a/refs/files-backend.c b/refs/files-backend.c
+index 685ea5c14..f3be620ab 100644
+--- a/refs/files-backend.c
++++ b/refs/files-backend.c
+@@ -1276,7 +1276,7 @@ static void read_loose_refs(const char *dirname, struct ref_dir *dir)
+ 					 create_dir_entry(refs, refname.buf,
+ 							  refname.len, 1));
+ 		} else {
+-			if (!resolve_ref_recursively(&refs->base,
++			if (!refs_resolve_ref_unsafe(&refs->base,
+ 						     refname.buf,
+ 						     RESOLVE_REF_READING,
+ 						     sha1, &flag)) {
+diff --git a/refs/refs-internal.h b/refs/refs-internal.h
+index cb6882779..6b29dc3b1 100644
+--- a/refs/refs-internal.h
++++ b/refs/refs-internal.h
+@@ -634,11 +634,6 @@ struct ref_store {
+ void base_ref_store_init(struct ref_store *refs,
+ 			 const struct ref_storage_be *be);
+ 
+-const char *resolve_ref_recursively(struct ref_store *refs,
+-				    const char *refname,
+-				    int resolve_flags,
+-				    unsigned char *sha1, int *flags);
+-
+ static inline int is_per_worktree_ref(const char *refname)
+ {
+ 	return !starts_with(refname, "refs/") ||
 -- 
 2.11.0.157.gd943d85
 
