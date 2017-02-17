@@ -7,47 +7,47 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CE20120136
-	for <e@80x24.org>; Fri, 17 Feb 2017 14:05:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9191520136
+	for <e@80x24.org>; Fri, 17 Feb 2017 14:05:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934090AbdBQOFE (ORCPT <rfc822;e@80x24.org>);
-        Fri, 17 Feb 2017 09:05:04 -0500
-Received: from mail-pg0-f67.google.com ([74.125.83.67]:34894 "EHLO
-        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933832AbdBQOFB (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 Feb 2017 09:05:01 -0500
-Received: by mail-pg0-f67.google.com with SMTP id y6so3937977pgy.2
-        for <git@vger.kernel.org>; Fri, 17 Feb 2017 06:05:01 -0800 (PST)
+        id S934095AbdBQOFJ (ORCPT <rfc822;e@80x24.org>);
+        Fri, 17 Feb 2017 09:05:09 -0500
+Received: from mail-pg0-f68.google.com ([74.125.83.68]:33588 "EHLO
+        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S933832AbdBQOFH (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 Feb 2017 09:05:07 -0500
+Received: by mail-pg0-f68.google.com with SMTP id 5so5043367pgj.0
+        for <git@vger.kernel.org>; Fri, 17 Feb 2017 06:05:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=bo3vDQk7f011U6wKVRvDwPig6hJtnp6rHHRthhhM0E0=;
-        b=db2SP8BTkI/wcrLscybQybb1IwdAtcgxuJAaR+52124VSnPPbrSMVgS4jitK3jg+lA
-         WVdyIFY839eAlM5cwU03cX49x7ac42ThmhPQhLDT2HMfk/NpYlnazWe+8j2lasHxjdwZ
-         BCUEo1SGqL4TiWfp6Q7JYdGjvoaoeGyfsYSBgZj0eiZYLeD0GVJlBAg+LWLj2ctYr0h6
-         F0xoPNDMKbhXwCWfHxI+X1qzRpMryxF/cqWpmGJjfw/yTkMkEv56cm7N9JlpTIAasKXE
-         uYSCSQLL/h3VKonHZdf7DEkDEzergVfJblNABIhwrZ1DukoOI1pVm0+qXx0W62/QHWRe
-         WHkA==
+        bh=iHCFtGZSG5sVsu7aVxR3hqPAJR+IuJ8zb4Wj1/MUwvg=;
+        b=NiIsv/oNyxy1JpTeJCOxEwXkh83RHpZ+Zb6562710tvQc+yHekJ0v163la2CO93Syl
+         TsThsVX/vRkR5p0GmA5vRtezLcoUL6k/BGEYCgV8C6NIjNCkyLsEz3GJEGSexD5UFX0a
+         krikmn5el8gTLS31ekTiQnG4Mj6WVp1OGLECPRNOEjDZf4TXL54qgU7zJWg3t3nQ4HfB
+         cvPs5+hRoGOb0ATyfwbEulLw5QKaEOqYwfHq17kP/Ow5S+6+XpBxdSr+Q9JfYezMy1FM
+         1Imx+jYS6dKvYAemnHxZ8hoiwyGTTwlwJ+c4w8St/PtFRSebA2MUNrkYAgmWEbNJ67zs
+         2rfA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=bo3vDQk7f011U6wKVRvDwPig6hJtnp6rHHRthhhM0E0=;
-        b=DTWRgdIjKX0z8BVY9Y6Jg2uBOUaVOlWjRPIKEDp+6v9jVLMZuzshFoKlEOdSCVXfjz
-         O7IMU7XV/qNIzUr2QFD0PGwzUW4uYpCpDJZQ7xNtwj82jwqRayZAEw9Ixs4z8rbfZYqb
-         PRYL9lnKEmqoEvKY03e/WaAsaAlyjgLkDDMFjpFglH1OeGaH59NyTa6XjvbqPbQT1vfO
-         Tv/tHnlJI2P+NUq4hBnG2b27UGm1+OuVE8+E2pTFEkUEePJh8ZgQXt59sMv6K8UHyzWn
-         RoVGqny0M2tP0rx8IUAkszHU9eZ60JLKWT68s2ayGPR1dcAeMUbJVcU96Y9KIyyzdlLi
-         0xOg==
-X-Gm-Message-State: AMke39lJYwPIbiLo/dreVeNR4AAkMitdxXzAluDVxq6/1PYnUAbEAk4UpvPfXTRTmbvDBQ==
-X-Received: by 10.99.172.88 with SMTP id z24mr6383381pgn.12.1487340300834;
-        Fri, 17 Feb 2017 06:05:00 -0800 (PST)
+        bh=iHCFtGZSG5sVsu7aVxR3hqPAJR+IuJ8zb4Wj1/MUwvg=;
+        b=T3sF4lYcj7Q7jofTS2Vty7/J5g0MV8I/o34mFuC3LbmzHxY0Agt6+S1S/pti1+Ru5v
+         ocDFkXcWL349+plcWL+d8AF68cyzb6/aNYPPSxnh+TCX2Sqd8jN7uqjwJScUdeGvlK6T
+         oGCrvFuY86WOAR7BEl4d6JpEHoL/8meZiQ8RykdxPxfXq3ouOJ0wakx8TbJLHlatKH32
+         8qDLJxUO7eXMaS01ZprxiuDGpxf8vHJHNfJnC5FJJY3t+vjx4XzIlnTQOTqHzg3gM7Fj
+         Sn70MxHfUAZoiiIViNXlZWRM8+tTfVcPOk/Y1q+H6kaaU1qWgDyeMM9DDrmOQUnhwIGn
+         UXDA==
+X-Gm-Message-State: AMke39n2M8bQuRiHyzI4uqE3mbw2QgmP0Xc0jT2IUkiKWru/RcrHqFR2ybTJivP6b5vpBQ==
+X-Received: by 10.84.136.7 with SMTP id 7mr11668581plk.100.1487340306898;
+        Fri, 17 Feb 2017 06:05:06 -0800 (PST)
 Received: from ash ([115.73.162.84])
-        by smtp.gmail.com with ESMTPSA id t185sm20124902pgb.32.2017.02.17.06.04.57
+        by smtp.gmail.com with ESMTPSA id n73sm20038729pfa.9.2017.02.17.06.05.02
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 17 Feb 2017 06:05:00 -0800 (PST)
-Received: by ash (sSMTP sendmail emulation); Fri, 17 Feb 2017 21:04:55 +0700
+        Fri, 17 Feb 2017 06:05:06 -0800 (PST)
+Received: by ash (sSMTP sendmail emulation); Fri, 17 Feb 2017 21:05:01 +0700
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
@@ -58,9 +58,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Stefan Beller <sbeller@google.com>, novalis@novalis.org,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH v3 01/16] refs-internal.c: make files_log_ref_write() static
-Date:   Fri, 17 Feb 2017 21:04:21 +0700
-Message-Id: <20170217140436.17336-2-pclouds@gmail.com>
+Subject: [PATCH v3 02/16] files-backend: convert git_path() to strbuf_git_path()
+Date:   Fri, 17 Feb 2017 21:04:22 +0700
+Message-Id: <20170217140436.17336-3-pclouds@gmail.com>
 X-Mailer: git-send-email 2.11.0.157.gd943d85
 In-Reply-To: <20170217140436.17336-1-pclouds@gmail.com>
 References: <20170216114818.6080-1-pclouds@gmail.com>
@@ -73,44 +73,287 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Created in 5f3c3a4e6f (files_log_ref_write: new function - 2015-11-10)
-but probably never used outside refs-internal.c
+git_path() and friends are going to be killed in files-backend.c in near
+future. And because there's a risk with overwriting buffer in
+git_path(), let's convert them all to strbuf_git_path(). We'll have
+easier time killing/converting strbuf_git_path() then because we won't
+have to worry about memory management again.
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- refs/files-backend.c | 3 +++
- refs/refs-internal.h | 4 ----
- 2 files changed, 3 insertions(+), 4 deletions(-)
+ refs/files-backend.c | 111 +++++++++++++++++++++++++++++++++++++++++----------
+ 1 file changed, 89 insertions(+), 22 deletions(-)
 
 diff --git a/refs/files-backend.c b/refs/files-backend.c
-index cdb6b8ff5..75565c3aa 100644
+index 75565c3aa..f0c878b92 100644
 --- a/refs/files-backend.c
 +++ b/refs/files-backend.c
-@@ -165,6 +165,9 @@ static struct ref_entry *create_dir_entry(struct files_ref_store *ref_store,
- 					  const char *dirname, size_t len,
- 					  int incomplete);
- static void add_entry_to_dir(struct ref_dir *dir, struct ref_entry *entry);
-+static int files_log_ref_write(const char *refname, const unsigned char *old_sha1,
-+			       const unsigned char *new_sha1, const char *msg,
-+			       int flags, struct strbuf *err);
+@@ -2169,6 +2169,8 @@ static int lock_packed_refs(struct files_ref_store *refs, int flags)
+ 	static int timeout_configured = 0;
+ 	static int timeout_value = 1000;
+ 	struct packed_ref_cache *packed_ref_cache;
++	struct strbuf sb = STRBUF_INIT;
++	int ret;
  
- static struct ref_dir *get_ref_dir(struct ref_entry *entry)
+ 	files_assert_main_repository(refs, "lock_packed_refs");
+ 
+@@ -2177,10 +2179,13 @@ static int lock_packed_refs(struct files_ref_store *refs, int flags)
+ 		timeout_configured = 1;
+ 	}
+ 
+-	if (hold_lock_file_for_update_timeout(
+-			    &packlock, git_path("packed-refs"),
+-			    flags, timeout_value) < 0)
++	strbuf_git_path(&sb, "packed-refs");
++	ret = hold_lock_file_for_update_timeout(&packlock, sb.buf,
++						flags, timeout_value);
++	strbuf_release(&sb);
++	if (ret < 0)
+ 		return -1;
++
+ 	/*
+ 	 * Get the current packed-refs while holding the lock.  If the
+ 	 * packed-refs file has been modified since we last read it,
+@@ -2335,6 +2340,9 @@ static void try_remove_empty_parents(char *name)
+ 	for (q = p; *q; q++)
+ 		;
+ 	while (1) {
++		struct strbuf sb = STRBUF_INIT;
++		int ret;
++
+ 		while (q > p && *q != '/')
+ 			q--;
+ 		while (q > p && *(q-1) == '/')
+@@ -2342,7 +2350,10 @@ static void try_remove_empty_parents(char *name)
+ 		if (q == p)
+ 			break;
+ 		*q = '\0';
+-		if (rmdir(git_path("%s", name)))
++		strbuf_git_path(&sb, "%s", name);
++		ret = rmdir(sb.buf);
++		strbuf_release(&sb);
++		if (ret)
+ 			break;
+ 	}
+ }
+@@ -2431,7 +2442,11 @@ static int repack_without_refs(struct files_ref_store *refs,
+ 		return 0; /* no refname exists in packed refs */
+ 
+ 	if (lock_packed_refs(refs, 0)) {
+-		unable_to_lock_message(git_path("packed-refs"), errno, err);
++		struct strbuf sb = STRBUF_INIT;
++
++		strbuf_git_path(&sb, "packed-refs");
++		unable_to_lock_message(sb.buf, errno, err);
++		strbuf_release(&sb);
+ 		return -1;
+ 	}
+ 	packed = get_packed_refs(refs);
+@@ -2529,8 +2544,10 @@ static int rename_tmp_log(const char *newrefname)
  {
-diff --git a/refs/refs-internal.h b/refs/refs-internal.h
-index 33adbf93b..59e65958a 100644
---- a/refs/refs-internal.h
-+++ b/refs/refs-internal.h
-@@ -222,10 +222,6 @@ struct ref_transaction {
- 	enum ref_transaction_state state;
- };
+ 	int attempts_remaining = 4;
+ 	struct strbuf path = STRBUF_INIT;
++	struct strbuf tmp_renamed_log = STRBUF_INIT;
+ 	int ret = -1;
  
--int files_log_ref_write(const char *refname, const unsigned char *old_sha1,
--			const unsigned char *new_sha1, const char *msg,
--			int flags, struct strbuf *err);
--
- /*
-  * Check for entries in extras that are within the specified
-  * directory, where dirname is a reference directory name including
++	strbuf_git_path(&tmp_renamed_log, TMP_RENAMED_LOG);
+  retry:
+ 	strbuf_reset(&path);
+ 	strbuf_git_path(&path, "logs/%s", newrefname);
+@@ -2546,7 +2563,7 @@ static int rename_tmp_log(const char *newrefname)
+ 		goto out;
+ 	}
+ 
+-	if (rename(git_path(TMP_RENAMED_LOG), path.buf)) {
++	if (rename(tmp_renamed_log.buf, path.buf)) {
+ 		if ((errno==EISDIR || errno==ENOTDIR) && --attempts_remaining > 0) {
+ 			/*
+ 			 * rename(a, b) when b is an existing
+@@ -2574,6 +2591,7 @@ static int rename_tmp_log(const char *newrefname)
+ 	ret = 0;
+ out:
+ 	strbuf_release(&path);
++	strbuf_release(&tmp_renamed_log);
+ 	return ret;
+ }
+ 
+@@ -2614,9 +2632,15 @@ static int files_rename_ref(struct ref_store *ref_store,
+ 	int flag = 0, logmoved = 0;
+ 	struct ref_lock *lock;
+ 	struct stat loginfo;
+-	int log = !lstat(git_path("logs/%s", oldrefname), &loginfo);
++	struct strbuf sb_oldref = STRBUF_INIT;
++	struct strbuf sb_newref = STRBUF_INIT;
++	struct strbuf tmp_renamed_log = STRBUF_INIT;
++	int log, ret;
+ 	struct strbuf err = STRBUF_INIT;
+ 
++	strbuf_git_path(&sb_oldref, "logs/%s", oldrefname);
++	log = !lstat(sb_oldref.buf, &loginfo);
++	strbuf_release(&sb_oldref);
+ 	if (log && S_ISLNK(loginfo.st_mode))
+ 		return error("reflog for %s is a symlink", oldrefname);
+ 
+@@ -2630,7 +2654,12 @@ static int files_rename_ref(struct ref_store *ref_store,
+ 	if (!rename_ref_available(oldrefname, newrefname))
+ 		return 1;
+ 
+-	if (log && rename(git_path("logs/%s", oldrefname), git_path(TMP_RENAMED_LOG)))
++	strbuf_git_path(&sb_oldref, "logs/%s", oldrefname);
++	strbuf_git_path(&tmp_renamed_log, TMP_RENAMED_LOG);
++	ret = log && rename(sb_oldref.buf, tmp_renamed_log.buf);
++	strbuf_release(&sb_oldref);
++	strbuf_release(&tmp_renamed_log);
++	if (ret)
+ 		return error("unable to move logfile logs/%s to "TMP_RENAMED_LOG": %s",
+ 			oldrefname, strerror(errno));
+ 
+@@ -2709,13 +2738,19 @@ static int files_rename_ref(struct ref_store *ref_store,
+ 	log_all_ref_updates = flag;
+ 
+  rollbacklog:
+-	if (logmoved && rename(git_path("logs/%s", newrefname), git_path("logs/%s", oldrefname)))
++	strbuf_git_path(&sb_newref, "logs/%s", newrefname);
++	strbuf_git_path(&sb_oldref, "logs/%s", oldrefname);
++	if (logmoved && rename(sb_newref.buf, sb_oldref.buf))
+ 		error("unable to restore logfile %s from %s: %s",
+ 			oldrefname, newrefname, strerror(errno));
++	strbuf_git_path(&tmp_renamed_log, TMP_RENAMED_LOG);
+ 	if (!logmoved && log &&
+-	    rename(git_path(TMP_RENAMED_LOG), git_path("logs/%s", oldrefname)))
++	    rename(tmp_renamed_log.buf, sb_oldref.buf))
+ 		error("unable to restore logfile %s from "TMP_RENAMED_LOG": %s",
+ 			oldrefname, strerror(errno));
++	strbuf_release(&sb_newref);
++	strbuf_release(&sb_oldref);
++	strbuf_release(&tmp_renamed_log);
+ 
+ 	return 1;
+ }
+@@ -3111,22 +3146,32 @@ int set_worktree_head_symref(const char *gitdir, const char *target)
+ static int files_reflog_exists(struct ref_store *ref_store,
+ 			       const char *refname)
+ {
++	struct strbuf sb = STRBUF_INIT;
+ 	struct stat st;
++	int ret;
+ 
+ 	/* Check validity (but we don't need the result): */
+ 	files_downcast(ref_store, 0, "reflog_exists");
+ 
+-	return !lstat(git_path("logs/%s", refname), &st) &&
+-		S_ISREG(st.st_mode);
++	strbuf_git_path(&sb, "logs/%s", refname);
++	ret = !lstat(sb.buf, &st) && S_ISREG(st.st_mode);
++	strbuf_release(&sb);
++	return ret;
+ }
+ 
+ static int files_delete_reflog(struct ref_store *ref_store,
+ 			       const char *refname)
+ {
++	struct strbuf sb = STRBUF_INIT;
++	int ret;
++
+ 	/* Check validity (but we don't need the result): */
+ 	files_downcast(ref_store, 0, "delete_reflog");
+ 
+-	return remove_path(git_path("logs/%s", refname));
++	strbuf_git_path(&sb, "logs/%s", refname);
++	ret = remove_path(sb.buf);
++	strbuf_release(&sb);
++	return ret;
+ }
+ 
+ static int show_one_reflog_ent(struct strbuf *sb, each_reflog_ent_fn fn, void *cb_data)
+@@ -3181,7 +3226,9 @@ static int files_for_each_reflog_ent_reverse(struct ref_store *ref_store,
+ 	/* Check validity (but we don't need the result): */
+ 	files_downcast(ref_store, 0, "for_each_reflog_ent_reverse");
+ 
+-	logfp = fopen(git_path("logs/%s", refname), "r");
++	strbuf_git_path(&sb, "logs/%s", refname);
++	logfp = fopen(sb.buf, "r");
++	strbuf_release(&sb);
+ 	if (!logfp)
+ 		return -1;
+ 
+@@ -3287,7 +3334,9 @@ static int files_for_each_reflog_ent(struct ref_store *ref_store,
+ 	/* Check validity (but we don't need the result): */
+ 	files_downcast(ref_store, 0, "for_each_reflog_ent");
+ 
+-	logfp = fopen(git_path("logs/%s", refname), "r");
++	strbuf_git_path(&sb, "logs/%s", refname);
++	logfp = fopen(sb.buf, "r");
++	strbuf_release(&sb);
+ 	if (!logfp)
+ 		return -1;
+ 
+@@ -3369,12 +3418,15 @@ static struct ref_iterator *files_reflog_iterator_begin(struct ref_store *ref_st
+ {
+ 	struct files_reflog_iterator *iter = xcalloc(1, sizeof(*iter));
+ 	struct ref_iterator *ref_iterator = &iter->base;
++	struct strbuf sb = STRBUF_INIT;
+ 
+ 	/* Check validity (but we don't need the result): */
+ 	files_downcast(ref_store, 0, "reflog_iterator_begin");
+ 
+ 	base_ref_iterator_init(ref_iterator, &files_reflog_iterator_vtable);
+-	iter->dir_iterator = dir_iterator_begin(git_path("logs"));
++	strbuf_git_path(&sb, "logs");
++	iter->dir_iterator = dir_iterator_begin(sb.buf);
++	strbuf_release(&sb);
+ 	return ref_iterator;
+ }
+ 
+@@ -3843,8 +3895,13 @@ static int files_transaction_commit(struct ref_store *ref_store,
+ 		ret = TRANSACTION_GENERIC_ERROR;
+ 		goto cleanup;
+ 	}
+-	for_each_string_list_item(ref_to_delete, &refs_to_delete)
+-		unlink_or_warn(git_path("logs/%s", ref_to_delete->string));
++	for_each_string_list_item(ref_to_delete, &refs_to_delete) {
++		struct strbuf sb = STRBUF_INIT;
++
++		strbuf_git_path(&sb, "logs/%s", ref_to_delete->string);
++		unlink_or_warn(sb.buf);
++		strbuf_release(&sb);
++	}
+ 	clear_loose_ref_cache(refs);
+ 
+ cleanup:
+@@ -4098,18 +4155,28 @@ static int files_reflog_expire(struct ref_store *ref_store,
+ 
+ static int files_init_db(struct ref_store *ref_store, struct strbuf *err)
+ {
++	struct strbuf sb = STRBUF_INIT;
++
+ 	/* Check validity (but we don't need the result): */
+ 	files_downcast(ref_store, 0, "init_db");
+ 
+ 	/*
+ 	 * Create .git/refs/{heads,tags}
+ 	 */
+-	safe_create_dir(git_path("refs/heads"), 1);
+-	safe_create_dir(git_path("refs/tags"), 1);
++	strbuf_git_path(&sb, "refs/heads");
++	safe_create_dir(sb.buf, 1);
++	strbuf_reset(&sb);
++	strbuf_git_path(&sb, "refs/tags");
++	safe_create_dir(sb.buf, 1);
++	strbuf_reset(&sb);
+ 	if (get_shared_repository()) {
+-		adjust_shared_perm(git_path("refs/heads"));
+-		adjust_shared_perm(git_path("refs/tags"));
++		strbuf_git_path(&sb, "refs/heads");
++		adjust_shared_perm(sb.buf);
++		strbuf_reset(&sb);
++		strbuf_git_path(&sb, "refs/tags");
++		adjust_shared_perm(sb.buf);
+ 	}
++	strbuf_release(&sb);
+ 	return 0;
+ }
+ 
 -- 
 2.11.0.157.gd943d85
 
