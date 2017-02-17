@@ -7,47 +7,47 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E06FF20136
-	for <e@80x24.org>; Fri, 17 Feb 2017 14:19:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 81F9320136
+	for <e@80x24.org>; Fri, 17 Feb 2017 14:19:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934445AbdBQOTk (ORCPT <rfc822;e@80x24.org>);
-        Fri, 17 Feb 2017 09:19:40 -0500
-Received: from mail-pg0-f66.google.com ([74.125.83.66]:32929 "EHLO
-        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S934098AbdBQOTh (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 Feb 2017 09:19:37 -0500
-Received: by mail-pg0-f66.google.com with SMTP id 5so5069873pgj.0
-        for <git@vger.kernel.org>; Fri, 17 Feb 2017 06:19:37 -0800 (PST)
+        id S934450AbdBQOTp (ORCPT <rfc822;e@80x24.org>);
+        Fri, 17 Feb 2017 09:19:45 -0500
+Received: from mail-pf0-f195.google.com ([209.85.192.195]:36087 "EHLO
+        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S934098AbdBQOTm (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 Feb 2017 09:19:42 -0500
+Received: by mail-pf0-f195.google.com with SMTP id 19so4203633pfo.3
+        for <git@vger.kernel.org>; Fri, 17 Feb 2017 06:19:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=XjmhnSDriTqE8MXD8Q4O0wxE54t0BYXKWehAhvd19bU=;
-        b=S0/Vj+ifpOo4jDoeems7BqBX1NzomqubrAXRZWWipDitLZdvcrKRcBZQZ2A4j4nrcl
-         CVFvkkbG2MaOwp+MRwXUDh9FpMbuuR1IljprY/UwvJTofhHrjpV9L/eHscnust2Lsi8/
-         FLJJCS+hvXAh0T+Ti4YuNAV1UlijOKOkshrMLyZp+R+PDO7CUpwLd8a0W2yFe/VjK7K+
-         N3sAGd8IV7IbNKK0kk4o7LH6pPemNlfa8cAX4lPWqPz0igINaN7gZ4ysfZe4DV/n49pr
-         ZDvhT9QmZhs7ZPaC4uZnLhdu+esyA+v5IyL5X09D4fjORSrfbgnGetHj/1OpMKc6tagy
-         7WxA==
+        bh=MLdHtS73ZFxnvXEm7ImURFsbhaYHMVlhGGRJUWApfgY=;
+        b=KeF7e3413xIRLoj2fQNX4dAIaHmkfns4W3G6AyLsYb/FqMscdKgEtpU/t96nahk0Io
+         GPjbcsfYm/3GLcelntNNhJLHZ4bw29RbntdyAJWQwYUwWCINsn+CyuIVvrrIvcGWr1LB
+         p7enwFtpObcGlYn6ksEERO0reoKjptagZJIpSLKfk0ildixM+nbsZ17zI49/jlDIxfU0
+         IxXlYlIjcTkBlrFDzuPgoBk+lxLgGe5DuOz6URm8k5SC/ZoW60hSMrVpBmYyMrZmEGl2
+         9wQyAY9ym12x7Ykh1VcQHAnnSTDEim3HTycEa70BrS9+9nXAypt/NaaacDY6kazNlZ6m
+         HUww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=XjmhnSDriTqE8MXD8Q4O0wxE54t0BYXKWehAhvd19bU=;
-        b=VtSsULb8CYcdkhlVy0a61FqWyZaVkHtlDPFix+ag6xgE/G8VhscUnJ6f0376sub+kA
-         H3m9X1NGaOHdLkZH5SCMDdny7nmuPP7jeWjVdwBFjKqPVLOYn2OdirwCx3JxQLmKwMet
-         Kp5an9WfRc+/df2r+zLDDF8fyA8y40NX3Jk5xL3rL3XsqfENHa3D7LtJ3Z+Tgrpj60pB
-         EqExgqY0Bsv1n6xN6BLjgWkFu0LJkkmA2Mw1pnAqrbKKWuPsYivKnLOAwmmttt6nDMgM
-         EbWxyk6PzkBW096DvhN3oQ8eD4wUZylMjiNZ6sVS0VB7+/pmEcZ1VWjjOOYsiwkD5xsI
-         JlOQ==
-X-Gm-Message-State: AMke39m3T+caMKN+eiSauo/8PbFFyU0LTaRUji2yplguosI3Es5Hvt6UDtmnlvRIwFyUsw==
-X-Received: by 10.84.212.136 with SMTP id e8mr11662210pli.140.1487341171972;
-        Fri, 17 Feb 2017 06:19:31 -0800 (PST)
+        bh=MLdHtS73ZFxnvXEm7ImURFsbhaYHMVlhGGRJUWApfgY=;
+        b=UuSW4iy9V1I1tj7LQo4Zfp7FtgWon3PcnHaAK0z8FjbTFzgn/J/4SsnhfTrbmaum/4
+         LFkv0iCcdcvzQhFGppGQv7s1S7shKBydMUh8jY8hKYenJdo26ErgrjhYdulUl201PTFR
+         7d2ygC3dk+FPfUEYBE727/owHlOumhN54oyj9VIfqktyB66WGOQ6ww+0eBeXKqPvOdcM
+         7ShYgBNMBjCewPGcnps5UCT+MBL/hys2xG4d9OocCrIiO/y8PMH5/JauPQqmLSr20bXH
+         wAdUmCEfMe5SBb46klxMAkbLb33tbsQkCAal72kfay9Wn2Ct3ExqgCLOR0M/bxRFIWZw
+         sN4g==
+X-Gm-Message-State: AMke39ku9jrnKMt4fUhg2kXd6saHYJH39yL3GSp1FwOw0+9AKwvrfs0DTFWx6x07wKQWqw==
+X-Received: by 10.98.215.70 with SMTP id v6mr9629502pfl.141.1487341177172;
+        Fri, 17 Feb 2017 06:19:37 -0800 (PST)
 Received: from ash ([115.73.162.84])
-        by smtp.gmail.com with ESMTPSA id 143sm20108775pgb.66.2017.02.17.06.19.28
+        by smtp.gmail.com with ESMTPSA id 75sm20043924pfp.80.2017.02.17.06.19.33
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 17 Feb 2017 06:19:31 -0800 (PST)
-Received: by ash (sSMTP sendmail emulation); Fri, 17 Feb 2017 21:19:27 +0700
+        Fri, 17 Feb 2017 06:19:36 -0800 (PST)
+Received: by ash (sSMTP sendmail emulation); Fri, 17 Feb 2017 21:19:32 +0700
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
@@ -57,9 +57,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH 01/15] revision.h: new flag in struct rev_info wrt. worktree-related refs
-Date:   Fri, 17 Feb 2017 21:18:54 +0700
-Message-Id: <20170217141908.18012-2-pclouds@gmail.com>
+Subject: [PATCH 02/15] revision.c: refactor add_index_objects_to_pending()
+Date:   Fri, 17 Feb 2017 21:18:55 +0700
+Message-Id: <20170217141908.18012-3-pclouds@gmail.com>
 X-Mailer: git-send-email 2.11.0.157.gd943d85
 In-Reply-To: <20170217141908.18012-1-pclouds@gmail.com>
 References: <20170217141908.18012-1-pclouds@gmail.com>
@@ -71,40 +71,59 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The revision walker can walk through per-worktree refs like HEAD or
-SHA-1 references in the index. These currently are from the current
-worktree only. This new flag is added to change rev-list behavior in
-this regard:
-
-When single_worktree is set, only current worktree is considered. When
-it is not set (which is the default), all worktrees are considered.
-
-The default is chosen so because the two big components that rev-list
-works with are object database (entirely shared between worktrees) and
-refs (mostly shared). It makes sense that default behavior goes per-repo
-too instead of per-worktree.
-
-The flag will eventually be exposed as a rev-list argument with
-documents. For now it stays internal until the new behavior is fully
-implemented.
+The core code is factored out and take 'struct index_state *' instead so
+that we can reuse it to add objects from index files other than .git/index
+in the next patch.
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- revision.h | 1 +
- 1 file changed, 1 insertion(+)
+ revision.c | 18 ++++++++++++------
+ 1 file changed, 12 insertions(+), 6 deletions(-)
 
-diff --git a/revision.h b/revision.h
-index 9fac1a607..c851b94ad 100644
---- a/revision.h
-+++ b/revision.h
-@@ -88,6 +88,7 @@ struct rev_info {
- 			topo_order:1,
- 			simplify_merges:1,
- 			simplify_by_decoration:1,
-+			single_worktree:1,
- 			tag_objects:1,
- 			tree_objects:1,
- 			blob_objects:1,
+diff --git a/revision.c b/revision.c
+index b37dbec37..ece868a25 100644
+--- a/revision.c
++++ b/revision.c
+@@ -1263,13 +1263,13 @@ static void add_cache_tree(struct cache_tree *it, struct rev_info *revs,
+ 
+ }
+ 
+-void add_index_objects_to_pending(struct rev_info *revs, unsigned flags)
++static void do_add_index_objects_to_pending(struct rev_info *revs,
++					    struct index_state *istate)
+ {
+ 	int i;
+ 
+-	read_cache();
+-	for (i = 0; i < active_nr; i++) {
+-		struct cache_entry *ce = active_cache[i];
++	for (i = 0; i < istate->cache_nr; i++) {
++		struct cache_entry *ce = istate->cache[i];
+ 		struct blob *blob;
+ 
+ 		if (S_ISGITLINK(ce->ce_mode))
+@@ -1282,13 +1282,19 @@ void add_index_objects_to_pending(struct rev_info *revs, unsigned flags)
+ 					     ce->ce_mode, ce->name);
+ 	}
+ 
+-	if (active_cache_tree) {
++	if (istate->cache_tree) {
+ 		struct strbuf path = STRBUF_INIT;
+-		add_cache_tree(active_cache_tree, revs, &path);
++		add_cache_tree(istate->cache_tree, revs, &path);
+ 		strbuf_release(&path);
+ 	}
+ }
+ 
++void add_index_objects_to_pending(struct rev_info *revs, unsigned int flags)
++{
++	read_cache();
++	do_add_index_objects_to_pending(revs, &the_index);
++}
++
+ static int add_parents_only(struct rev_info *revs, const char *arg_, int flags,
+ 			    int exclude_parent)
+ {
 -- 
 2.11.0.157.gd943d85
 
