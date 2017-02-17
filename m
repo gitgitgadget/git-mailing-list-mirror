@@ -2,69 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5063E201A9
-	for <e@80x24.org>; Fri, 17 Feb 2017 20:20:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 78F57201A9
+	for <e@80x24.org>; Fri, 17 Feb 2017 20:42:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934869AbdBQUUa (ORCPT <rfc822;e@80x24.org>);
-        Fri, 17 Feb 2017 15:20:30 -0500
-Received: from zm23-mta-out-2.grenet.fr ([130.190.191.53]:56007 "EHLO
-        zm23-mta-out-2.grenet.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S934090AbdBQUU3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 Feb 2017 15:20:29 -0500
-Received: from zm23-mta-out.grenet.fr (zm23-mta-out.grenet.fr [130.190.191.35])
-        by zm23-mta-out-2.grenet.fr (Postfix) with ESMTP id 3E0FDC8F1;
-        Fri, 17 Feb 2017 21:20:26 +0100 (CET)
-Received: from smtps.univ-grenoble-alpes.fr (smtps2.u-ga.fr [195.83.24.202])
-        by zm23-mta-out.grenet.fr (Postfix) with ESMTP id 360FA10057B;
-        Fri, 17 Feb 2017 21:20:26 +0100 (CET)
-Received: from anie (anie.imag.fr [129.88.42.32])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: moym@univ-grenoble-alpes.fr)
-        by smtps.univ-grenoble-alpes.fr (Postfix) with ESMTPSA id 325E460360;
-        Fri, 17 Feb 2017 20:37:22 +0100 (CET)
-From:   Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Johan Hovold <johan@kernel.org>, git@vger.kernel.org,
-        Jeff King <peff@peff.net>, Kevin Daudt <me@ikke.info>,
-        Larry Finger <Larry.Finger@lwfinger.net>
-Subject: Re: body-CC-comment regression
-References: <20170216174924.GB2625@localhost> <vpqlgt6hug6.fsf@anie.imag.fr>
-        <20170217110642.GD2625@localhost> <vpq7f4pdkjp.fsf@anie.imag.fr>
-        <20170217164241.GE2625@localhost> <vpq4lzs7o0s.fsf@anie.imag.fr>
-        <xmqqd1egu1dl.fsf@gitster.mtv.corp.google.com>
-        <20170217182326.GA479@localhost>
-        <xmqq4lzsu0wo.fsf@gitster.mtv.corp.google.com>
-        <vpq7f4owtbi.fsf@anie.imag.fr>
-        <xmqqd1egshv1.fsf@gitster.mtv.corp.google.com>
-Date:   Fri, 17 Feb 2017 21:20:26 +0100
-In-Reply-To: <xmqqd1egshv1.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-        message of "Fri, 17 Feb 2017 12:05:38 -0800")
-Message-ID: <vpq1suwvab9.fsf@anie.imag.fr>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
+        id S935012AbdBQUmc (ORCPT <rfc822;e@80x24.org>);
+        Fri, 17 Feb 2017 15:42:32 -0500
+Received: from cloud.peff.net ([104.130.231.41]:57404 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S932303AbdBQUma (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 Feb 2017 15:42:30 -0500
+Received: (qmail 20031 invoked by uid 109); 17 Feb 2017 20:42:29 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 17 Feb 2017 20:42:29 +0000
+Received: (qmail 5791 invoked by uid 111); 17 Feb 2017 20:42:31 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 17 Feb 2017 15:42:31 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 17 Feb 2017 15:42:27 -0500
+Date:   Fri, 17 Feb 2017 15:42:27 -0500
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     hIpPy <hippy2981@gmail.com>, Git Mailing List <git@vger.kernel.org>
+Subject: Re: git alias for options
+Message-ID: <20170217204227.kreormjoo5lr6zu4@sigill.intra.peff.net>
+References: <CAM_JFCz+9mxp37BTT7XPJ0fMd41DdbAxnvQF7id9msH+SDe6_Q@mail.gmail.com>
+ <CACBZZX4Zmwb8ZHGBXCpm6=yH_uxc-K1X1vv1jQ+wwnUPneqM4A@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Greylist: Whitelist-UJF SMTP Authentifie (moym@univ-grenoble-alpes.fr) via smtps.univ-grenoble-alpes.fr ACL (97)
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CACBZZX4Zmwb8ZHGBXCpm6=yH_uxc-K1X1vv1jQ+wwnUPneqM4A@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Fri, Feb 17, 2017 at 02:50:23PM +0100, Ævar Arnfjörð Bjarmason wrote:
 
-> That approach may still constrain what those in the former camp can
-> write in the "cruft" part, like they cannot write comma or semicolon
-> as part of the "cruft", no?
+> On Fri, Feb 17, 2017 at 9:23 AM, hIpPy <hippy2981@gmail.com> wrote:
+> > Git has aliases for git commands. Is there a (an inbuilt) way to alias
+> > options? If not, what is the reason?
+> 
+> This has long been on my  wishlist, because there's a lot of
+> copy/pasted logic all over Git to make git foo --whatever aliased to
+> foo.whatever in the config, but only for some options.
+> 
+> It should ideally be part of something every option just supports, via
+> the getopts struct.
+> 
+> However, it can't allow you to modify whatever option you want,
+> because some things like git-commit-tree should not be customized
+> based on config, it would break things that rely on the plumbing
+> commands.
+> 
+> So it would have to be a whitelist for each option we allow to be
+> configured like this via the getopts struct.
+> 
+> Also there are surely other edge cases, like maybe the config option
+> now doesn't 1=1 map to the name for the option in some cases, or the
+> flag should be config-able but is has no long form (which we'd like
+> for the config), then we'd want to add that etc.
 
-Right. Indeed, this may be a problem since the use of "#" for stable
-seem to include commit message, and they may contain commas.
+I think your idea is roughly equivalent in functionality to just
+allowing aliases to override command names. E.g., anything you could do
+with:
 
-So, maybe Johan's patch is better indeed.
+  [log]
+  follow = true
+  decorate = false
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+could be done with:
+
+  [alias]
+  log = "log --follow --no-decorate"
+
+The reason we have historically not allowed that is for the
+"commit-tree" plumbing reason you gave above. One option would be to
+relax it for a whitelist of porcelain commands. Then your whitelist at
+least only has to cover commands, and not each individual option.
+
+I think there are a lot of corner cases in that whitelist, though. A lot
+of commands serve dual porcelain/plumbing purposes. E.g., "log" and
+"tag" are commonly used by both humans and by scripts.
+
+A first step in that direction would probably be an environment variable
+to tell Git to suppress command-aliases. Scripts would set that to
+ensure a more vanilla experience. It doesn't fix _existing_ scripts, but
+if that option were introduced, then over time scripts would start to
+use it. Then eventually it would be safe(r) to introduce something like
+command aliases.
+
+But nobody has ever taken that first step, so here we are.
+
+-Peff
