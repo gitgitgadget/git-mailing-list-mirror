@@ -2,101 +2,180 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6DD43201A9
-	for <e@80x24.org>; Fri, 17 Feb 2017 20:05:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 21AB0201A9
+	for <e@80x24.org>; Fri, 17 Feb 2017 20:02:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934787AbdBQUFl (ORCPT <rfc822;e@80x24.org>);
-        Fri, 17 Feb 2017 15:05:41 -0500
-Received: from mail-pg0-f66.google.com ([74.125.83.66]:34068 "EHLO
-        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S934613AbdBQUFk (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 Feb 2017 15:05:40 -0500
-Received: by mail-pg0-f66.google.com with SMTP id v184so5695893pgv.1
-        for <git@vger.kernel.org>; Fri, 17 Feb 2017 12:05:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=Faezp5FAW147DKWgNbk35C5gdfj3MRG516GpENQe4aw=;
-        b=pjQLwlNERzckK8+aN7whTfmDBpyrTK8OJaT5bv+UlIhr4yTTMDCYf2Og/xt0qk6Vqi
-         L0F0dMesh72ruE1ZllWBkbLdOOd6voF5Cw490iViK6fvXQ7Z2Ia8TQRdfael1zxyC2I0
-         5olv5WoIcf8ihBCaND7XcN4SZ185uGNkBap0zr789Y9b6LY8uIJ8eLQdvUpdGQq0AzT2
-         CGF4FKg1MuZOeS8iCfvXCjSJZHUNloKEp6wvlVVjN+Z9dytTfZYnSgcPoc5i8xPN5D1v
-         oBK/zNKr7Z0XqEpvcBpV7qrl9aNeR35e6+mde/6adYTsAr18vdXP2v3wPnud3S7tbO9G
-         Rosw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=Faezp5FAW147DKWgNbk35C5gdfj3MRG516GpENQe4aw=;
-        b=NuOeJRwlYofNkv5LRx1Thbymi95J+SX4HbdX9GI+a1V4xM7FvvUMNkW6g1sbqqzMC/
-         4pRiiSPzHKHXjIQLbU77MHYAccnTgMpy3ejqz8/JFiQi7P3oXx6bKlJXFQ8VrCGVahCO
-         4ZTxdfhlP1s2FliMan8I/Z21cmJCDyxQAOGCN/vYjj/ltTZR11OUAVPcDiKsud750nbv
-         Ml3j+lqdGvQVKJ0PiVWVJ3e5ui96OWPK/Fti9O+xU3adFwd5jUQGhSHKLrlYzTHU8RFt
-         sW0qRglKEH97FvuexvhoNP7EH5Bvcm2EkP06mj+ujFNhF9Ub7sWY6sJc7h/RqjiZa8fk
-         38WA==
-X-Gm-Message-State: AMke39ltk+5IMNn4pgK0tjI6Y5IOUdaIlacjyQJrn6Bvj94ItXBo9NxS/WZkRaitLhK05A==
-X-Received: by 10.99.139.68 with SMTP id j65mr12357423pge.64.1487361939470;
-        Fri, 17 Feb 2017 12:05:39 -0800 (PST)
-Received: from localhost ([2620:0:1000:8622:3130:38b1:b121:8f0d])
-        by smtp.gmail.com with ESMTPSA id 191sm21232874pgd.40.2017.02.17.12.05.38
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Fri, 17 Feb 2017 12:05:38 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Cc:     Johan Hovold <johan@kernel.org>, git@vger.kernel.org,
-        Jeff King <peff@peff.net>, Kevin Daudt <me@ikke.info>,
-        Larry Finger <Larry.Finger@lwfinger.net>
-Subject: Re: body-CC-comment regression
-References: <20170216174924.GB2625@localhost> <vpqlgt6hug6.fsf@anie.imag.fr>
-        <20170217110642.GD2625@localhost> <vpq7f4pdkjp.fsf@anie.imag.fr>
-        <20170217164241.GE2625@localhost> <vpq4lzs7o0s.fsf@anie.imag.fr>
-        <xmqqd1egu1dl.fsf@gitster.mtv.corp.google.com>
-        <20170217182326.GA479@localhost>
-        <xmqq4lzsu0wo.fsf@gitster.mtv.corp.google.com>
-        <vpq7f4owtbi.fsf@anie.imag.fr>
-Date:   Fri, 17 Feb 2017 12:05:38 -0800
-In-Reply-To: <vpq7f4owtbi.fsf@anie.imag.fr> (Matthieu Moy's message of "Fri,
-        17 Feb 2017 19:44:33 +0100")
-Message-ID: <xmqqd1egshv1.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+        id S935020AbdBQUCl (ORCPT <rfc822;e@80x24.org>);
+        Fri, 17 Feb 2017 15:02:41 -0500
+Received: from cloud.peff.net ([104.130.231.41]:57351 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S935015AbdBQUCi (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 Feb 2017 15:02:38 -0500
+Received: (qmail 16965 invoked by uid 109); 17 Feb 2017 19:55:52 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 17 Feb 2017 19:55:52 +0000
+Received: (qmail 5104 invoked by uid 111); 17 Feb 2017 19:55:53 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 17 Feb 2017 14:55:53 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 17 Feb 2017 14:55:49 -0500
+Date:   Fri, 17 Feb 2017 14:55:49 -0500
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Kyle Meyer <kyle@kyleam.com>, git@vger.kernel.org
+Subject: Re: [PATCH 3/3] rename_ref: replace empty deletion message in HEAD's
+ log
+Message-ID: <20170217195549.z6uyy7hbbhj5avh7@sigill.intra.peff.net>
+References: <20170126211205.5gz3zsrptop7n34n@sigill.intra.peff.net>
+ <20170217035800.13214-1-kyle@kyleam.com>
+ <20170217035800.13214-4-kyle@kyleam.com>
+ <20170217083112.vn7m4udsopmlvnn5@sigill.intra.peff.net>
+ <xmqqk28ou2o1.fsf@gitster.mtv.corp.google.com>
+ <20170217194350.prhp5joh33cbvwsd@sigill.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20170217194350.prhp5joh33cbvwsd@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+On Fri, Feb 17, 2017 at 02:43:50PM -0500, Jeff King wrote:
 
-> Junio C Hamano <gitster@pobox.com> writes:
->
->> Johan Hovold <johan@kernel.org> writes:
->>
->>> That's precisely what the patch I posted earlier in the thread did.
->>
->> That's good.  I didn't see any patch yet 
->
-> It's here:
->
-> http://public-inbox.org/git/20170217110642.GD2625@localhost/
->
-> but as I explained, this removes a feature suported since several major
-> releases and we have no idea how many users may use the "mupliple emails
-> in one field". The approach I proposed does not suffer from this.
+> Yes. I think the options are basically (in order of decreasing
+> preference in my opinion):
+> 
+>   1. Log a rename entry (same sha1, but note the rename in the free-form
+>      text).
+> 
+>   2. Log a delete (sha1 goes to null) followed by a creation (from null
+>      back to the original sha1).
+> 
+>   3. Log nothing at all for HEAD.
+> 
+> This does half of (2). If we do the second half, then I'd prefer it to
+> (3). But if we can do (1), that is better still (IMHO).
+> 
+> > *1* Is the reason why the code in files_rename_ref() we are looking
+> >     at does not adjust HEAD to point at the new ref is because it is
+> >     just handing one ref-store and obviouvious to symrefs in other
+> >     backends?
+> 
+> I'm actually confused about which bit of code is updating HEAD. I do not
+> see it either in files_rename_ref() or in the caller. Yet it clearly
+> happens. But that is the code that would know enough to do (1) or the
+> second half of (2) above.
 
-OK, so you are aiming higher to please both parties, i.e. those who
-place a single address but cruft at the end would get the cruft
-stripped when we grab a usable address from the field, and those who
-write two or more addresses would get all of these addresses?
+Ah, I found it. It's in replace_each_worktree_head_symref() these days,
+which does not bother to pass a log message.
 
-That approach may still constrain what those in the former camp can
-write in the "cruft" part, like they cannot write comma or semicolon
-as part of the "cruft", no?  If that does not pose a practical problem,
-then I can imagine it would work well for people in both camps.
+So I think the second half of (2) is probably something like the patch
+below.
 
+Thinking on it more, we probably _do_ want two entries. Because the
+operations are not atomic, it's possible that we may end up in a
+half-way state after the first entry is written. And when debugging such
+a case, I'd much rather see the first half of the operation logged than
+nothing at all.
+
+-Peff
+
+---
+diff --git a/branch.c b/branch.c
+index b955d4f31..5c12036b0 100644
+--- a/branch.c
++++ b/branch.c
+@@ -345,7 +345,8 @@ void die_if_checked_out(const char *branch, int ignore_current_worktree)
+ 	    branch, wt->path);
+ }
+ 
+-int replace_each_worktree_head_symref(const char *oldref, const char *newref)
++int replace_each_worktree_head_symref(const char *oldref, const char *newref,
++				      const char *logmsg)
+ {
+ 	int ret = 0;
+ 	struct worktree **worktrees = get_worktrees(0);
+@@ -358,7 +359,7 @@ int replace_each_worktree_head_symref(const char *oldref, const char *newref)
+ 			continue;
+ 
+ 		if (set_worktree_head_symref(get_worktree_git_dir(worktrees[i]),
+-					     newref)) {
++					     newref, logmsg)) {
+ 			ret = -1;
+ 			error(_("HEAD of working tree %s is not updated"),
+ 			      worktrees[i]->path);
+diff --git a/branch.h b/branch.h
+index 3103eb9ad..b07788558 100644
+--- a/branch.h
++++ b/branch.h
+@@ -71,6 +71,7 @@ extern void die_if_checked_out(const char *branch, int ignore_current_worktree);
+  * This will be used when renaming a branch. Returns 0 if successful, non-zero
+  * otherwise.
+  */
+-extern int replace_each_worktree_head_symref(const char *oldref, const char *newref);
++extern int replace_each_worktree_head_symref(const char *oldref, const char *newref,
++					     const char *logmsg);
+ 
+ #endif
+diff --git a/builtin/branch.c b/builtin/branch.c
+index cbaa6d03c..383005912 100644
+--- a/builtin/branch.c
++++ b/builtin/branch.c
+@@ -471,14 +471,15 @@ static void rename_branch(const char *oldname, const char *newname, int force)
+ 
+ 	if (rename_ref(oldref.buf, newref.buf, logmsg.buf))
+ 		die(_("Branch rename failed"));
+-	strbuf_release(&logmsg);
+ 
+ 	if (recovery)
+ 		warning(_("Renamed a misnamed branch '%s' away"), oldref.buf + 11);
+ 
+-	if (replace_each_worktree_head_symref(oldref.buf, newref.buf))
++	if (replace_each_worktree_head_symref(oldref.buf, newref.buf, logmsg.buf))
+ 		die(_("Branch renamed to %s, but HEAD is not updated!"), newname);
+ 
++	strbuf_release(&logmsg);
++
+ 	strbuf_addf(&oldsection, "branch.%s", oldref.buf + 11);
+ 	strbuf_release(&oldref);
+ 	strbuf_addf(&newsection, "branch.%s", newref.buf + 11);
+diff --git a/refs.h b/refs.h
+index 9fbff90e7..b33035c4a 100644
+--- a/refs.h
++++ b/refs.h
+@@ -334,7 +334,8 @@ int create_symref(const char *refname, const char *target, const char *logmsg);
+  * $GIT_DIR points to.
+  * Return 0 if successful, non-zero otherwise.
+  * */
+-int set_worktree_head_symref(const char *gitdir, const char *target);
++int set_worktree_head_symref(const char *gitdir, const char *target,
++			     const char *logmsg);
+ 
+ enum action_on_err {
+ 	UPDATE_REFS_MSG_ON_ERR,
+diff --git a/refs/files-backend.c b/refs/files-backend.c
+index 4f1a88f6d..fa8d08e3c 100644
+--- a/refs/files-backend.c
++++ b/refs/files-backend.c
+@@ -3024,7 +3024,7 @@ static int files_create_symref(struct ref_store *ref_store,
+ 	return ret;
+ }
+ 
+-int set_worktree_head_symref(const char *gitdir, const char *target)
++int set_worktree_head_symref(const char *gitdir, const char *target, const char *logmsg)
+ {
+ 	static struct lock_file head_lock;
+ 	struct ref_lock *lock;
+@@ -3052,7 +3052,7 @@ int set_worktree_head_symref(const char *gitdir, const char *target)
+ 	lock->lk = &head_lock;
+ 	lock->ref_name = xstrdup(head_rel);
+ 
+-	ret = create_symref_locked(lock, head_rel, target, NULL);
++	ret = create_symref_locked(lock, head_rel, target, logmsg);
+ 
+ 	unlock_ref(lock); /* will free lock */
+ 	strbuf_release(&head_path);
