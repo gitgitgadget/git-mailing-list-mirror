@@ -2,123 +2,80 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7364C201A9
-	for <e@80x24.org>; Fri, 17 Feb 2017 22:17:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A819D201A9
+	for <e@80x24.org>; Fri, 17 Feb 2017 22:18:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S935040AbdBQWRF (ORCPT <rfc822;e@80x24.org>);
-        Fri, 17 Feb 2017 17:17:05 -0500
-Received: from cloud.peff.net ([104.130.231.41]:57497 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S935044AbdBQWRE (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 Feb 2017 17:17:04 -0500
-Received: (qmail 25841 invoked by uid 109); 17 Feb 2017 22:10:22 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 17 Feb 2017 22:10:22 +0000
-Received: (qmail 6580 invoked by uid 111); 17 Feb 2017 22:10:23 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 17 Feb 2017 17:10:23 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 17 Feb 2017 17:10:19 -0500
-Date:   Fri, 17 Feb 2017 17:10:19 -0500
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Michael Haggerty <mhagger@alum.mit.edu>,
-        Andreas Schwab <schwab@linux-m68k.org>,
-        =?utf-8?B?SsOhY2h5bSBCYXJ2w61uZWs=?= <jachymb@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH] tempfile: avoid "ferror | fclose" trick
-Message-ID: <20170217221019.wjuaxmaatqtx2olt@sigill.intra.peff.net>
-References: <87tw7uv439.fsf@linux-m68k.org>
- <20170216164359.k2ab7laqqvusfsm2@sigill.intra.peff.net>
- <20170216213140.xqw7gzjimhvg7tcm@sigill.intra.peff.net>
- <923e328c-7fea-a9e4-1059-3bd6b8e58164@alum.mit.edu>
- <20170217080759.2357wzdiuymcyosw@sigill.intra.peff.net>
- <64eedabd-c0de-a7e0-8d98-ad23a9625b45@alum.mit.edu>
- <20170217205442.wnldfsxbj3dnnqvj@sigill.intra.peff.net>
- <xmqq37fcsejx.fsf@gitster.mtv.corp.google.com>
- <20170217212106.bew6krtb7pqpi3rr@sigill.intra.peff.net>
- <xmqqy3x4qyte.fsf@gitster.mtv.corp.google.com>
+        id S935044AbdBQWSw (ORCPT <rfc822;e@80x24.org>);
+        Fri, 17 Feb 2017 17:18:52 -0500
+Received: from mail-pg0-f66.google.com ([74.125.83.66]:34528 "EHLO
+        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S934963AbdBQWSI (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 Feb 2017 17:18:08 -0500
+Received: by mail-pg0-f66.google.com with SMTP id v184so5895601pgv.1
+        for <git@vger.kernel.org>; Fri, 17 Feb 2017 14:18:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=DZhnHXDBa7DQj/EA9+6xgd7EthqU4zBSSluvtfJgFAM=;
+        b=SOXkVjGXigPbm7cwxjTYeZnoeIXUTSwbKE8YTmavYh6DQ4hrOQhZArNaU9kBMeuI5o
+         wwmQnWploRPIynu5/WoXII8aDlF17KSTEl9RXy4sUkF/REUR+/vxNgyZ0PvvFBfWtdSb
+         lnmKYkiIys4RKDM5+R4xCoReXLt0r5rVTysQuUMUUIWomRxb7sexv1msiLuRsgxFut5f
+         a45pZEVppc47VXXKt6t7ts2uGtXmPxrpF8h4+9qGK7FL03PqKEpR43WITe+JgFKd09VD
+         FGy3QFy82KiQP/3cOPSLIQDCRcjej3ViQ7sjM8Sfs1RrLRVATD/Sls542qGYD289QXbC
+         wWTA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=DZhnHXDBa7DQj/EA9+6xgd7EthqU4zBSSluvtfJgFAM=;
+        b=eVBXIIDM31YVjrrN6atTMGTNkyiW3yo84hnHZtaT7/Bu8aUD+7RGN5ZGZfbtFhnBsl
+         OzAh5QgBDUA11lGiinjxcCqPGrBzAHsWZtzvrS8zj4N0sXsmm/7hDMvYyHy4VwOZnIGD
+         q+pkyvpK35zcERWREYJoPLgN6WJRkJeDA6I4TX6xj/u6TbstgWTmwnSGh2CrI48MTAg1
+         wNmG/BNiYZI0W/Rx45NNszvl+ig+EYm60RmZJA4OXYrRNwg1kSBgM2SciBl1M2wfwXsP
+         bJGJa0QxmU2f/Qb9eigdCA6KyeMr7oX/j/KHAKPXp7HJCs6ijLPfvTb/KnkOc7EvHQXn
+         v3DQ==
+X-Gm-Message-State: AMke39mAAKm4TWVQN/mn2gEAqdktkAjmSPMXdfYvGfnqsmLZRzg+dh4VxKux5fEVe9tVOA==
+X-Received: by 10.84.238.1 with SMTP id u1mr14466647plk.174.1487369887886;
+        Fri, 17 Feb 2017 14:18:07 -0800 (PST)
+Received: from localhost ([2620:0:1000:8622:3130:38b1:b121:8f0d])
+        by smtp.gmail.com with ESMTPSA id l25sm21366330pfb.24.2017.02.17.14.18.07
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Fri, 17 Feb 2017 14:18:07 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Kyle Meyer <kyle@kyleam.com>, git@vger.kernel.org
+Subject: Re: [PATCH 3/3] rename_ref: replace empty deletion message in HEAD's log
+References: <20170126211205.5gz3zsrptop7n34n@sigill.intra.peff.net>
+        <20170217035800.13214-1-kyle@kyleam.com>
+        <20170217035800.13214-4-kyle@kyleam.com>
+        <20170217083112.vn7m4udsopmlvnn5@sigill.intra.peff.net>
+        <xmqqk28ou2o1.fsf@gitster.mtv.corp.google.com>
+        <20170217194350.prhp5joh33cbvwsd@sigill.intra.peff.net>
+        <20170217195549.z6uyy7hbbhj5avh7@sigill.intra.peff.net>
+Date:   Fri, 17 Feb 2017 14:18:06 -0800
+In-Reply-To: <20170217195549.z6uyy7hbbhj5avh7@sigill.intra.peff.net> (Jeff
+        King's message of "Fri, 17 Feb 2017 14:55:49 -0500")
+Message-ID: <xmqqino8qx5t.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqy3x4qyte.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Feb 17, 2017 at 01:42:21PM -0800, Junio C Hamano wrote:
+Jeff King <peff@peff.net> writes:
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > On Fri, Feb 17, 2017 at 01:17:06PM -0800, Junio C Hamano wrote:
-> >
-> >> Stepping back a bit, would this be really needed?  Even if the ferror()
-> >> does not update errno, the original stdio operation that failed
-> >> would have, no?
-> >
-> > Sure, but we have no clue what happened in between.
-> 
-> Hmm, so we are protecting against somebody who does "errno = 0"
-> explicitly, because she knows that she's dealt with the error from
-> stdio earlier?  Such a careful person would have called clearerr()
-> as well, I would guess.
+> Thinking on it more, we probably _do_ want two entries. Because the
+> operations are not atomic, it's possible that we may end up in a
+> half-way state after the first entry is written. And when debugging such
+> a case, I'd much rather see the first half of the operation logged than
+> nothing at all.
 
-I'm not sure I understand what you are saying here. If somebody calls
-clearerr(), our ferror() handling does not trigger at all, and do not
-care what is in errno either way. They can reset errno or not when they
-clearerr(), but it is not relevant.
-
-If you are asking about somebody who sets errno to "0" and _doesn't_
-call clearerr(), then I don't know what that person is trying to
-accomplish. Setting errno to "0" is not the right way to clear an error.
-And they certainly should not be relying on it not to get overwritten
-before we make it to the final ferror()/fclose().
-
-> So let's assume we only care about the case where some other error
-> was detected and errno was updated by a system library call.
-
-Right.
-
-> > I think our emails crossed, but our patches are obviously quite similar.
-> > My commit message maybe explains a bit more of my thinking.
-> 
-> Yes, but ;-)
-> 
-> If we are trying to make sure that the caller would not say "failed
-> to close tempfile: ERRNO" with an ERRNO that is unrelated to any
-> stdio opration, I am not sure if the patch improves things.  The
-> caller did not fail to close (most likely we successfully closed
-> it), and no matter what futzing we do to errno, the message supplied
-> by such a caller will not be improved.
-
-Right. EIO is almost certainly _not_ the error we saw. But I would
-rather consistently say "I/O error" and have the user scratch their
-head, look up this thread, and say "ah, it was probably a deferred
-error", as opposed to the alternative: the user sees something
-nonsensical like ENOMEM or EBADF. Those are more misleading, and worse,
-may change from run to run based on what other code runs or fails in
-between.
-
-> If the caller used "noticed an earlier error while closing tempfile:
-> ERRNO", such a message would describe the situation more correctly,
-> but then ERRNO that is not about stdio is probably acceptable in the
-> context of that message (the original ERRNO might be ENOSPC that is
-> even more specific than EIO, FWIW).  So I am not sure if the things
-> will improve from the status quo.
-
-Yes, that's I suggested that xfclose() is probably not a good direction.
-The _best_ thing we can do is have the caller not report errno at all
-(or even say "there was an earlier error, I have no idea what errno
-was"). And xfclose() works in the opposite direction.
-
-The only reason I do not think we should do so for close_tempfile() is
-that the fclose is typically far away from the code that actually calls
-error(). We'd have to pass the tristate (success, fail, fail-with-errno)
-state up through the stack (most of the calls indirectly come from
-commit_lock_file(), I would think).
-
--Peff
+Yes, that sounds right.
