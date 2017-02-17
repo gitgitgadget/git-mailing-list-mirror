@@ -2,162 +2,166 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0FEE520136
-	for <e@80x24.org>; Fri, 17 Feb 2017 16:42:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D99A120136
+	for <e@80x24.org>; Fri, 17 Feb 2017 16:53:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934551AbdBQQmo (ORCPT <rfc822;e@80x24.org>);
-        Fri, 17 Feb 2017 11:42:44 -0500
-Received: from mail-lf0-f66.google.com ([209.85.215.66]:34719 "EHLO
-        mail-lf0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933900AbdBQQmn (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 Feb 2017 11:42:43 -0500
-Received: by mail-lf0-f66.google.com with SMTP id q89so4236801lfi.1
-        for <git@vger.kernel.org>; Fri, 17 Feb 2017 08:42:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=OrpYRJKmHaLXJOFD8hnCkTvvFpt89oEwBdUjxq/FpR4=;
-        b=MpGf5uMOTHLNPayztxpCeDISrFCF3+Oy8VcLPRfqEficHhQHUzrueKuMbaGz9SNk/2
-         PZUki0eSD7aaekoS5g/mK2UNxEXxC3qmVBgMojRJKUGCIOBQpJgSiYy7pDo1v6MYiFvL
-         2Y9xM2+W0BM/A0ABTUS+/HIZYpTB5smRRAkTtY9fpYNQJZmTMyYwF3sQyUCsibGvJ8cp
-         oZ+b72BnK9KZ2BO9GnBkYo7E8NL+HdmCkAACohHabEkazQw0J9zVeFcg1komOMgP7NGE
-         Iu65+H2+by7MftF9tT++q6luAC7ujqYIXuNZjGaoBJpRh8LDlnQfvsDzYPrpQ9Yurnm5
-         6Igg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
-         :references:mime-version:content-disposition:in-reply-to:user-agent;
-        bh=OrpYRJKmHaLXJOFD8hnCkTvvFpt89oEwBdUjxq/FpR4=;
-        b=q/FSNtnfjapnX+2tB/BZgLOcp4nNt+vsVPXPS2dC8aeQ8sxWzgoiHSM9DvjfqCVOEw
-         4yV3+YlWYaf2z7K16DVsG+Ezkkjtx6u6BXOqKZFBX342yvSGtghjbWlBKstiFGEUPQSD
-         QOm9e0UIsIFMgomVZPCwim4LKa41SLZyLtZG9GEaTyshA4/iC9t9LS+niTABOhBKNlwG
-         5CluXo8aM6B6pv1n7PskNwbVknpqSKfs2JLSq2r8ZH49B0o+vC73KtqIaKkTXhT18F9T
-         ZCqD5mcfQ1/UYsIjltQenrGq3lbx3OPdHSbuWTJIUg9LODXOWBvVYkXobnQLUZvTtD96
-         h64g==
-X-Gm-Message-State: AMke39mnzzFHKn3r1iDtY83N6UfSX8jWTpAqOKEkqKLBE/g+bNOMVMO7zZ61lLl1Pz/Bpw==
-X-Received: by 10.25.74.72 with SMTP id x69mr2541237lfa.66.1487349761703;
-        Fri, 17 Feb 2017 08:42:41 -0800 (PST)
-Received: from xi.terra ([84.216.234.102])
-        by smtp.gmail.com with ESMTPSA id h41sm2670675lji.59.2017.02.17.08.42.40
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 17 Feb 2017 08:42:41 -0800 (PST)
-Received: from johan by xi.terra with local (Exim 4.88)
-        (envelope-from <johan@kernel.org>)
-        id 1celcH-0008JZ-Ej; Fri, 17 Feb 2017 17:42:41 +0100
-Date:   Fri, 17 Feb 2017 17:42:41 +0100
-From:   Johan Hovold <johan@kernel.org>
-To:     Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Cc:     Johan Hovold <johan@kernel.org>, git@vger.kernel.org,
-        Jeff King <peff@peff.net>, Kevin Daudt <me@ikke.info>,
-        Junio C Hamano <gitster@pobox.com>,
-        Larry Finger <Larry.Finger@lwfinger.net>
-Subject: Re: body-CC-comment regression
-Message-ID: <20170217164241.GE2625@localhost>
-References: <20170216174924.GB2625@localhost>
- <vpqlgt6hug6.fsf@anie.imag.fr>
- <20170217110642.GD2625@localhost>
- <vpq7f4pdkjp.fsf@anie.imag.fr>
+        id S934360AbdBQQx3 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 17 Feb 2017 11:53:29 -0500
+Received: from mout.gmx.net ([212.227.15.19]:60888 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S934066AbdBQQx1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 Feb 2017 11:53:27 -0500
+Received: from virtualbox ([37.201.192.48]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MUI8w-1cn3Dk269i-00R59v; Fri, 17
+ Feb 2017 17:53:14 +0100
+Date:   Fri, 17 Feb 2017 17:53:13 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     git@vger.kernel.org,
+        =?UTF-8?Q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc_Duy?= 
+        <pclouds@gmail.com>, Michael Rappazzo <rappazzo@gmail.com>
+Subject: Re: [PATCH v2 2/2] rev-parse: fix several options when running in
+ a subdirectory
+In-Reply-To: <xmqqo9y9lvqk.fsf@gitster.mtv.corp.google.com>
+Message-ID: <alpine.DEB.2.20.1702171749180.3496@virtualbox>
+References: <50fe3ea3302c40f4c96eaa5a568837e3334f9dc4.1486555851.git.johannes.schindelin@gmx.de> <cover.1486740772.git.johannes.schindelin@gmx.de> <9242ee9717dcec95351b356070102f198eeb2537.1486740772.git.johannes.schindelin@gmx.de>
+ <xmqqo9y9lvqk.fsf@gitster.mtv.corp.google.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <vpq7f4pdkjp.fsf@anie.imag.fr>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:de9qLykukEGxWd9YgG7TfIOzhERdxigCNryc3HO6YV4FNvAa0Gn
+ 7eohnSeXp9eXUcqaS5wouIuQYB1hIjEHYLLfmIb6snJvfWYR4xjrglrddVA1bMqn8kMjNsN
+ dndtTsCJwwkuKBswwt0pZ8u1bs2SqoB25t+q4SReRubOIua2yKZ9BcBdUpQgGzzoh9m4iUU
+ PTYN3gRwezScS46BR+fOw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:Z6psQ/TLYMc=:DfSeLgTNRUGB6Tr3KMhT2/
+ Ioq1qQvaGb5PioFew9kNsULqK60uDQLR24sm1r8NgWO7j8z2gNlTLt911kD6TqiLZrjPqkN4Y
+ 5Bg3sP56qyJjSpkZbE0PbLyFP6+FVn5hltqcQQdcy682jRnJHIL9lWGo2twwPydfPzMfZ4Qmn
+ C2uZ0yPMuGi5Ic6/A7/S47+WzViqI/EzGwZm42/wCtJ/lwbsaLBQPqMfqmf9k9obgJzGEJYV1
+ kJKLN+BdxTbNR6EEakp+83vcmGBo4o1GFnbi0t2KlrKGHMV9hOHoQQgo+Qb5MG+yHfKuxLVdI
+ 7IGD6t7gtxrUr50zysa0CfAGgLP3OsYt/KYpClOcRf+pOrJ7Q6YdtPCfkGEoc+8BJtJMjLHOu
+ YEO3qd8WNQPOD5Jhjx8OKysas2bMEbU3mUj2Rxzkh9/vFccu/DtdYpxSlJVH7C1e1mqdNtYRP
+ ShM8BP6QDG5Guf2tcJ9yNLjEZxT4+KnkMc85Bw7QbF0g3zTo0IAk+RPyRNmGEzUYRlB2zJJ5g
+ AkRFAlIIGjS+2IlATqZnb/WeR1fo96td3xOXCfgszvvwlDC7RnzGidGkI9nARKm/G/S0A2x/C
+ +2Tp82U3Yk0Qi20+IuZPxemkhD0HwR703dzjDNcuJcZEBUBJLSFkQzI28Xcah5tPWD1UA3oc/
+ 83V1K3QBsaM5pzKxZeMoEa0QNz0xmFmu47uPF75JnoLATymoO2BscH0BSe+EbDgu77TXfaFDG
+ yML30l/AP+zpfGiitowxBw0TUwS7+I6jntG9PVbCYxSdynaupDe75l31Bqa0goMaqwBimOQvq
+ TZo+w9o
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Feb 17, 2017 at 02:16:42PM +0100, Matthieu Moy wrote:
-> Johan Hovold <johan@kernel.org> writes:
+Hi Junio,
+
+On Fri, 10 Feb 2017, Junio C Hamano wrote:
+
+> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
 > 
-> > There is another option, namely to only accept a single address for tags
-> > in the body. I understand that being able to copy a CC-header to either
-> > the header section or to the command line could be useful, but I don't
-> > really see the point in allowing this in the tags in the body (a SoB
-> > always has one address, and so should a CC-tag).
+> > diff --git a/builtin/rev-parse.c b/builtin/rev-parse.c
+> > index ff13e59e1db..84af2802f6f 100644
+> > --- a/builtin/rev-parse.c
+> > +++ b/builtin/rev-parse.c
+> > @@ -545,6 +545,7 @@ int cmd_rev_parse(int argc, const char **argv, const char *prefix)
+> >  	unsigned int flags = 0;
+> >  	const char *name = NULL;
+> >  	struct object_context unused;
+> > +	struct strbuf buf = STRBUF_INIT;
+> >  
+> >  	if (argc > 1 && !strcmp("--parseopt", argv[1]))
+> >  		return cmd_parseopt(argc - 1, argv + 1, prefix);
+> > @@ -599,7 +600,9 @@ int cmd_rev_parse(int argc, const char **argv, const char *prefix)
+> >  		if (!strcmp(arg, "--git-path")) {
+> >  			if (!argv[i + 1])
+> >  				die("--git-path requires an argument");
+> > -			puts(git_path("%s", argv[i + 1]));
+> > +			strbuf_reset(&buf);
+> > +			puts(relative_path(git_path("%s", argv[i + 1]),
+> > +					   prefix, &buf));
+> >  			i++;
+> >  			continue;
+> >  		}
+> > @@ -821,8 +824,9 @@ int cmd_rev_parse(int argc, const char **argv, const char *prefix)
+> >  				continue;
+> >  			}
+> >  			if (!strcmp(arg, "--git-common-dir")) {
+> > -				const char *pfx = prefix ? prefix : "";
+> > -				puts(prefix_filename(pfx, strlen(pfx), get_git_common_dir()));
+> > +				strbuf_reset(&buf);
+> > +				puts(relative_path(get_git_common_dir(),
+> > +						   prefix, &buf));
+> >  				continue;
+> >  			}
+> >  			if (!strcmp(arg, "--is-inside-git-dir")) {
+> > @@ -845,7 +849,9 @@ int cmd_rev_parse(int argc, const char **argv, const char *prefix)
+> >  					die(_("Could not read the index"));
+> >  				if (the_index.split_index) {
+> >  					const unsigned char *sha1 = the_index.split_index->base_sha1;
+> > -					puts(git_path("sharedindex.%s", sha1_to_hex(sha1)));
+> > +					const char *path = git_path("sharedindex.%s", sha1_to_hex(sha1));
+> > +					strbuf_reset(&buf);
+> > +					puts(relative_path(path, prefix, &buf));
+> >  				}
+> >  				continue;
+> >  			}
+> > @@ -906,5 +912,6 @@ int cmd_rev_parse(int argc, const char **argv, const char *prefix)
+> >  		die_no_single_rev(quiet);
+> >  	} else
+> >  		show_default();
+> > +	strbuf_release(&buf);
 > 
-> I mostly agree for the SoB, but why should a Cc tag have only one email?
+> This uses "reset then use" pattern for repeated use of strbuf, and
+> causes the string last held in the strbuf to leak on early return,
 
-For symmetry (with SoB) and readability reasons (one tag per line).
-These are body tags, not mail headers, after all.
+... which cannot happen due to the lack of an early return...
 
-> The "multiple emails per Cc: field" has been there for a while already
-> (b1c8a11c8024 released in 2.6.0, sept 2015), some users may have got
-> used to it. What you are proposing breaks their flow.
-
-Note that that commit never mentions multiple addresses in either
-headers or body-tags -- it's all about being able to specify multiple
-entries on the command line.
-
-There does not seem to be single commit in the kernel where multiple
-address are specified in a CC tag since after git-send-email started
-allowing it, but there are ten commits before (to my surprise), and that
-should be contrasted with at least 4178 commits with trailing comments
-including a # sign.
-
-> > And since this is a regression for something that has been working for
-> > years that was introduced by a new feature, I also think it's reasonable
-> > to (partially) revert the feature.
+> which can be mitigated by using "use then reset" pattern.  I.e.
 > 
-> I'd find it rather ironic to fix your case by breaking a feature that
-> has been working for more than a year :-(. What would you answer to a
-> contributor comming one year from now and proposing to revert your
-> reversion because it breaks his flow?
-
-Such conflicts are not uncommon when dealing with regressions introduced
-by new features, and need to be dealt with on a case-by-case basis. But
-the fact that trailing comments have been properly supported for more
-than four years should carry some weight.
-
-> All that said, I think another fix would be both satisfactory for
-> everyone and rather simple:
+> 			if (!strcmp(arg, "--git-common-dir")) {
+> 				puts(relative_path(get_git_common_dir(),
+> 						   prefix, &buf));
+> 				strbuf_reset(&buf);
+> 				continue;
+> 			}
 > 
-> 1) Stop calling Mail::Address even if available. It used to make sense
->    to do that when our in-house parser was really poor, but we now have
->    something essentially as good as Mail::Address. We test our parser
->    against Mail::Address and we do have a few known differences (see
->    t9000), but they are really corner-cases and shouldn't matter.
->
->    A good consequence of this is that we stop depending on the way Perl
->    is installed to parse emails. Regardless of the current issue, I
->    think it is a good thing.
+> I'd think.
 
-Right, that sounds like the right thing to do regardless.
+This would not release the memory, though:
 
-> 2) Modify our in-house parser to discard garbage after the >. The patch
->    should look like (untested):
-> 
-> --- a/perl/Git.pm
-> +++ b/perl/Git.pm
-> @@ -903,11 +903,11 @@ sub parse_mailboxes {
->         my (@addr_list, @phrase, @address, @comment, @buffer) = ();
->         foreach my $token (@tokens) {
->                 if ($token =~ /^[,;]$/) {
-> -                       # if buffer still contains undeterminated strings
-> -                       # append it at the end of @address or @phrase
-> -                       if ($end_of_addr_seen) {
-> -                               push @phrase, @buffer;
-> -                       } else {
-> +                       # if buffer still contains undeterminated
-> +                       # strings append it at the end of @address,
-> +                       # unless we already saw the closing >, in
-> +                       # which case we discard it.
-> +                       if (!$end_of_addr_seen) {
->                                 push @address, @buffer;
->                         }
->  
-> What do you think?
+	#define strbuf_reset(sb)  strbuf_setlen(sb, 0)
 
-Sounds perfectly fine to me, and seems to work too after quick test.
+and
 
-Note however that there's another minor issue with using multiple
-addresses in a Cc-tag in that it breaks --suppress-cc=self, but I guess
-that can be fixed separately.
+	static inline void strbuf_setlen(struct strbuf *sb, size_t len)
+	{
+		if (len > (sb->alloc ? sb->alloc - 1 : 0))
+			die("BUG: strbuf_setlen() beyond buffer");
+		sb->len = len;
+		sb->buf[len] = '\0';
+	}
 
-Thanks,
-Johan
+There is not a single free() statement there.
+
+So the "use then reset" scheme would leak *just the same*.
+
+> You'd still want to release it at the end anyway for good code hygiene,
+> though.
+
+Which I do.
+
+Technically, this is not even necessary because all of the cmd_*()
+functions are immediately followed by a call to exit(). Wasn't that the
+genius idea in the early Git days, that we could simply get away with
+sloppy memory management because the program exit()s shortly afterwards,
+anyway? ;-)
+
+In any case, I adjusted the commit message to clarify why the "reset then
+use" scheme is correct here.
+
+Ciao,
+Johannes
