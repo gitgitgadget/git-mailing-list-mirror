@@ -2,118 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EB14420136
-	for <e@80x24.org>; Fri, 17 Feb 2017 16:55:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8218F20136
+	for <e@80x24.org>; Fri, 17 Feb 2017 16:58:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934084AbdBQQzy (ORCPT <rfc822;e@80x24.org>);
-        Fri, 17 Feb 2017 11:55:54 -0500
-Received: from mout.gmx.net ([212.227.15.19]:60626 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S933900AbdBQQzx (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 Feb 2017 11:55:53 -0500
-Received: from virtualbox ([37.201.192.48]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0LpcBS-1c8To827R0-00fRWQ; Fri, 17
- Feb 2017 17:55:42 +0100
-Date:   Fri, 17 Feb 2017 17:55:41 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     git@vger.kernel.org, Michael Rappazzo <rappazzo@gmail.com>,
-        =?UTF-8?Q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc_Duy?= 
-        <pclouds@gmail.com>
-Subject: Re: [PATCH v2 1/2] rev-parse tests: add tests executed from a
- subdirectory
-In-Reply-To: <xmqqshnllw2f.fsf@gitster.mtv.corp.google.com>
-Message-ID: <alpine.DEB.2.20.1702171753340.3496@virtualbox>
-References: <50fe3ea3302c40f4c96eaa5a568837e3334f9dc4.1486555851.git.johannes.schindelin@gmx.de> <cover.1486740772.git.johannes.schindelin@gmx.de> <cc23463af8096c5f8429f939ce881cf0eb5c2dcd.1486740772.git.johannes.schindelin@gmx.de>
- <xmqqshnllw2f.fsf@gitster.mtv.corp.google.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+        id S934087AbdBQQ6P (ORCPT <rfc822;e@80x24.org>);
+        Fri, 17 Feb 2017 11:58:15 -0500
+Received: from zm23-mta-out-2.grenet.fr ([130.190.191.53]:51046 "EHLO
+        zm23-mta-out-2.grenet.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S933900AbdBQQ6P (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 Feb 2017 11:58:15 -0500
+Received: from zm23-mta-out.grenet.fr (zm23-mta-out.grenet.fr [130.190.191.35])
+        by zm23-mta-out-2.grenet.fr (Postfix) with ESMTP id D96CEC7E4;
+        Fri, 17 Feb 2017 17:58:11 +0100 (CET)
+Received: from smtps.univ-grenoble-alpes.fr (smtps2.u-ga.fr [195.83.24.202])
+        by zm23-mta-out.grenet.fr (Postfix) with ESMTP id D408310052B;
+        Fri, 17 Feb 2017 17:58:11 +0100 (CET)
+Received: from anie (anie.imag.fr [129.88.42.32])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: moym@univ-grenoble-alpes.fr)
+        by smtps.univ-grenoble-alpes.fr (Postfix) with ESMTPSA id D08736069E;
+        Fri, 17 Feb 2017 17:15:07 +0100 (CET)
+From:   Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+To:     Johan Hovold <johan@kernel.org>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Kevin Daudt <me@ikke.info>, Junio C Hamano <gitster@pobox.com>,
+        Larry Finger <Larry.Finger@lwfinger.net>
+Subject: Re: body-CC-comment regression
+References: <20170216174924.GB2625@localhost> <vpqlgt6hug6.fsf@anie.imag.fr>
+        <20170217110642.GD2625@localhost> <vpq7f4pdkjp.fsf@anie.imag.fr>
+        <20170217164241.GE2625@localhost>
+Date:   Fri, 17 Feb 2017 17:58:11 +0100
+In-Reply-To: <20170217164241.GE2625@localhost> (Johan Hovold's message of
+        "Fri, 17 Feb 2017 17:42:41 +0100")
+Message-ID: <vpq4lzs7o0s.fsf@anie.imag.fr>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:3nuQ3THyeNziJ75qKbB8QlTE6R8JuCQEeQKT6+jlJ/xJCsgQ+n1
- 3t1nvOusX5KpsTPI8Is6JmdrMISsGjXMJERHmOCAVAmjWKf3YJ2an1a04hoY3xKLLW4lOwz
- JMqzBBfvRHfS470Re4jQmQ/JL8Qf08CV8O/AkGokRy+2rlOX72tdWkQsDNYtmIhcHAtFG/O
- WRNvqevBx6WO9wFZjH4TA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:sOJkSwreAik=:gIjhT7lJgjn1xapJ/KsSw6
- cBpezv8/qpCzCkqtm4h9ALHVNcnn1UtLD6d0r1Uh32q+iqjecSDh5m6r0e7I6bNmnSEi8QZPY
- 751CfWwMoJjZatVM2iahwvSZQLXyoDrTNTDnfCxvLsylKI1cQF1c/JJpAk7gZYQ9KQWwohQIB
- x3F3egPR2J2CLChFErDT2je+WZmiNt0I30pfxeZcj8s/wvRZtO1vXniWfSBwPmLNGWACopBnu
- jMKL9T0RKVliZqeAUCSG5Foe+nRtOm+Mk34z43pApML+4PVfn2egaqIHGleRTx7oKJPydCOZe
- uV4wHkUUq4pcce2IFxIhB34Xk4Fst0BgmyExEwHPhyKilyHSKp+XxZrBEkLYoU3WTAIvhnLUB
- 3t86kXybKKKwFK5HpjCT0Zd2FPlgdpsVP+1XA4HnoPGtAVlh+xKGMcoD11QR0rs8jUXcjTh48
- ykeGeIXk6xP5hkoOJACflcyGt9Q3CPyNlCDBPeV4HmceJfjXGtiLKckPDFFxRNMqP6yL1eZWP
- R7tITgKX7TKspOwCT0LMa8GlcAbqrQq7Ltizv7W2PIx5h6zYO5vPyjsJvtmugFmKqoRUP+s0J
- EaYtw77xq/+gYxAIJp4z6DQIpwsgT1yB9STXBaga3P5tJWEp5jIkeZbrUyuY/k6JVJfhvmx+n
- MiVCgMDrf/LeCnPMJEP0v6L6mnXToaKW8nKncH+Kv5Euks3+MWcg3fZ1tgQhUIGD6f39Jpoz9
- 9RyFBkJ7Uwyi6btOGCAnYU1dsF4tu8GnOMQqaGCn8annaGjuzfo+IPPMOHFj+GQMDEn5Nyxml
- UaOeT/n
+Content-Type: text/plain
+X-Greylist: Whitelist-UJF SMTP Authentifie (moym@univ-grenoble-alpes.fr) via smtps.univ-grenoble-alpes.fr ACL (97)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+> On Fri, Feb 17, 2017 at 02:16:42PM +0100, Matthieu Moy wrote:
+>> Johan Hovold <johan@kernel.org> writes:
+>
+>> The "multiple emails per Cc: field" has been there for a while already
+>> (b1c8a11c8024 released in 2.6.0, sept 2015), some users may have got
+>> used to it. What you are proposing breaks their flow.
+>
+> Note that that commit never mentions multiple addresses in either
+> headers or body-tags -- it's all about being able to specify multiple
+> entries on the command line.
 
-On Fri, 10 Feb 2017, Junio C Hamano wrote:
+Indeed. I'm not the author of the patch, but I was supervising the
+students who wrote it and "multiple addresses in Cc:" was not the goal,
+but a (IMHO positive) side effect we discovered after the fact.
 
-> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
-> 
-> > diff --git a/t/t1700-split-index.sh b/t/t1700-split-index.sh
-> > index 292a0720fcc..1d6e27a09d8 100755
-> > --- a/t/t1700-split-index.sh
-> > +++ b/t/t1700-split-index.sh
-> > @@ -200,4 +200,21 @@ EOF
-> >  	test_cmp expect actual
-> >  '
-> >  
-> > +test_expect_failure 'rev-parse --shared-index-path' '
-> > +	rm -rf .git &&
-> > +	test_create_repo . &&
-> > +	git update-index --split-index &&
-> > +	ls -t .git/sharedindex* | tail -n 1 >expect &&
-> > +	git rev-parse --shared-index-path >actual &&
-> > +	test_cmp expect actual &&
-> > +	mkdir work &&
-> > +	test_when_finished "rm -rf work" &&
-> > +	(
-> > +		cd work &&
-> > +		ls -t ../.git/sharedindex* | tail -n 1 >expect &&
-> > +		git rev-parse --shared-index-path >actual &&
-> > +		test_cmp expect actual
-> > +	)
-> 
-> This looks iffy.
+If I had a time machine, I'd probably go back then and forbid multiple
+addresses there, but ...
 
-Indeed.
+> There does not seem to be single commit in the kernel where multiple
+> address are specified in a CC tag since after git-send-email started
+> allowing it, but there are ten commits before (to my surprise), and that
+> should be contrasted with at least 4178 commits with trailing comments
+> including a # sign.
 
-> If we expect multiple sharedindex* files, the first output from "ls -t"
-> may or may not match the real one in use (multiple things do happen
-> within a single second or whatever your filesystem's time granularity
-> is).  Two "ls -t" run in this test would (hopefully) give stable
-> results, but I suspect that the chance the first line in the output
-> matches what --shared-index-path reports is 50% if we expect to have two
-> sharedindex* files.
-> 
-> On the other hand, if we do not expect multiple sharedindex* files,
-> use of "ls" piped to "tail" is simply misleading.
-> 
-> If this test can be written in such a way that there is only one
-> such file that match the pattern, it would be the cleanest to
-> understand and explain.  As there is only a single invocation of
-> "update-index --split-index" immediately after a new repository is
-> created, I suspect that the expectation to see only one sharedindex*
-> file already holds (because its name is unpredictable, we still need
-> to catch it with wildcard), and if that is the case, we can just
-> lose "-t" and pipe to tail, i.e. "ls .git/sharedindex* >expect".
+Hey, there's a life outside the kernel ;-).
 
-Indeed. We can expect only one sharedindex file to be present, and we do
-not even have to call out to `ls` but can get away with calling `echo`
-(which is a builtin in Bash).
+>> 1) Stop calling Mail::Address even if available.[...]
+>
+> Right, that sounds like the right thing to do regardless.
+>
+>> 2) Modify our in-house parser to discard garbage after the >. [...]
+>
+> Sounds perfectly fine to me, and seems to work too after quick test.
 
-Ciao,
-Johannes
+OK, sounds like the way to go.
+
+Do you want to work on a patch? If not, I should be able to do that
+myself. The code changes are straightforward, but we probably want a
+proper test for that.
+
+> addresses in a Cc-tag in that it breaks --suppress-cc=self, but I guess
+> that can be fixed separately.
+
+OK. If it's unrelated enough, please start a separate thread to explain
+the problem (and/or write a patch ;-) ).
+
+Thanks,
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
