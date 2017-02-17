@@ -7,47 +7,47 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4AEAB20136
-	for <e@80x24.org>; Fri, 17 Feb 2017 14:06:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0B51F20136
+	for <e@80x24.org>; Fri, 17 Feb 2017 14:06:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934167AbdBQOGQ (ORCPT <rfc822;e@80x24.org>);
-        Fri, 17 Feb 2017 09:06:16 -0500
-Received: from mail-pg0-f68.google.com ([74.125.83.68]:32853 "EHLO
+        id S934170AbdBQOGW (ORCPT <rfc822;e@80x24.org>);
+        Fri, 17 Feb 2017 09:06:22 -0500
+Received: from mail-pg0-f68.google.com ([74.125.83.68]:35211 "EHLO
         mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S934043AbdBQOGP (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 Feb 2017 09:06:15 -0500
-Received: by mail-pg0-f68.google.com with SMTP id 5so5045585pgj.0
-        for <git@vger.kernel.org>; Fri, 17 Feb 2017 06:06:14 -0800 (PST)
+        with ESMTP id S934043AbdBQOGU (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 Feb 2017 09:06:20 -0500
+Received: by mail-pg0-f68.google.com with SMTP id y6so3940501pgy.2
+        for <git@vger.kernel.org>; Fri, 17 Feb 2017 06:06:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=D6Ug8uewcVCHD+71rHLd8lVtElm/mDCIMGUDTfs4WyU=;
-        b=iikLTbygKt8WT/meZrGpw/EpCa+/GI/+HWABQbmghu894017hQu0E61MqVBQ2s9KW3
-         fc7wR20O1ORFRvGA+pYAxVppAE7Mr40bx2Ug7WcmeVfDqPwlvaXxpZNfnfATygGm+9Oh
-         cOnUjD1Jdf+H6blzq0hpK4GcSk5zlG2vJ4Gj6yMCSt8xznOHlDUTgQ+YsPXazf53dwTR
-         Di3vl0YQNELZ3UeJyb52NBz4Gx9M54AVo0sFj4eIO5SwiaUGCjXsya/hKeSFD3T5YgvO
-         BS6uXn1At881BKXYSEP1prjgT3y5yDMXzYS/kYycrR3nCaVXx7M3iEqM0+6BgaaT7Fkv
-         rnmQ==
+        bh=Ur3Q5FNV10I5w3E8FzAceEjR9hNHAnCX+Hi7BALXsog=;
+        b=SOLC0XEkfwQFYAfiVpzgPem28X4gv6e1lGbCrywUpjuJPfis+v1PbkiSlwi9iTCwLm
+         ODm5kpyOzsRJwRfttGZmvPGmCcMjAe5ZLe4U4c6ltpXWl4cM3FZRBiny24SPuRR3G/Tf
+         lhFIdEludnk96rY2+vDkZGzBszKq6gNKRJ8baU1nd5eT+1dKBwUN8S/DxKKpoyiSbn+h
+         9sopCMIICtrAJfjOBpl2nc4DHKiBffuKPO0AlW+z7ZK8/TmWW/Kmh/5Bju3LYZR8lm+t
+         0IBEPMlvRhrD7fxxFSXnyeyyDCImJt9UsmU3hON9B4fYwPYdMfb4szjuW/nKgafXyViN
+         BinA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=D6Ug8uewcVCHD+71rHLd8lVtElm/mDCIMGUDTfs4WyU=;
-        b=FvHvu2+wbSV/5EvWexWNwAMDHScLzqOL0LXhhLheP8l5WW4Ml83VDthDkFL56MiO98
-         42VNI+yPdfuWIzS6iNW4kd7vG3orbORSxpUgR+S5dd1IO6I+RqXYJKsdZG+fkDjbXJtK
-         pPPc7seIQf+efHUOZb6ReIIr2InCr82ZkAmtwAai1wDnqbTEpM0K+rVTuuUWWTA1vgvk
-         K9S0m6DpwbsF1Ut7x7IWyo2JY3zSDzbujVezo0R4/fQMziwzSJ/alnY7KtSpDnhWIlbh
-         ekAT2LO+JvzBx4t1fyUiJLydzjITt46xeQ/YW0bdp/tGfww/UTx79pKdw4hPrEFn2Qd/
-         X30w==
-X-Gm-Message-State: AMke39lJTKPl1jxTpo56JXVcrH6gSI5Moylmpm2tqoItsoSs6N8QyztNKP9gMr+VEEVeMg==
-X-Received: by 10.99.94.195 with SMTP id s186mr10395182pgb.198.1487340374405;
-        Fri, 17 Feb 2017 06:06:14 -0800 (PST)
+        bh=Ur3Q5FNV10I5w3E8FzAceEjR9hNHAnCX+Hi7BALXsog=;
+        b=F1DGT90NYTJFZ5eQ5Rpw4mEO4/NKFcv2ox2sq9dijiVlT/7ttv0NttMIrp35xDBFGf
+         2/wbObdFh0Q5f3T60r4SaxU/zyPFPSWAqbiWh38VJo32+oeIk6as0J6AXL9NEj5eHQoa
+         bE4tMfW57Nkez+EGwJa9j80WfMSddItUe7fAOLWvv1h0lmmQbBFnfoEs+/Yro441xcSx
+         kfAEf7ilgzMjcHwzJrB3XF2kegO75lTvCg+MJXsGh9Ji69JMJFNYy52kMR69wAXrKR9t
+         V2BRJ9Yjd1Vhp1sGl7Ox5UcG6vdBsn1B07ca46aOuiOOHlNEqBzys/ANiKR7KLuur5V8
+         2CCg==
+X-Gm-Message-State: AMke39mYWwKWKMtgxnPoKrxv+3z5zqoUmUoD5JaazhxJaqQxsgKZ66jZkSJfDOTa870mHg==
+X-Received: by 10.98.37.132 with SMTP id l126mr9706199pfl.45.1487340380084;
+        Fri, 17 Feb 2017 06:06:20 -0800 (PST)
 Received: from ash ([115.73.162.84])
-        by smtp.gmail.com with ESMTPSA id u28sm20206495pgo.20.2017.02.17.06.06.10
+        by smtp.gmail.com with ESMTPSA id c2sm20010963pfl.61.2017.02.17.06.06.16
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 17 Feb 2017 06:06:13 -0800 (PST)
-Received: by ash (sSMTP sendmail emulation); Fri, 17 Feb 2017 21:06:09 +0700
+        Fri, 17 Feb 2017 06:06:19 -0800 (PST)
+Received: by ash (sSMTP sendmail emulation); Fri, 17 Feb 2017 21:06:14 +0700
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
@@ -58,9 +58,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Stefan Beller <sbeller@google.com>, novalis@novalis.org,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH v3 12/16] refs.c: make get_main_ref_store() public and use it
-Date:   Fri, 17 Feb 2017 21:04:32 +0700
-Message-Id: <20170217140436.17336-13-pclouds@gmail.com>
+Subject: [PATCH v3 13/16] path.c: move some code out of strbuf_git_path_submodule()
+Date:   Fri, 17 Feb 2017 21:04:33 +0700
+Message-Id: <20170217140436.17336-14-pclouds@gmail.com>
 X-Mailer: git-send-email 2.11.0.157.gd943d85
 In-Reply-To: <20170217140436.17336-1-pclouds@gmail.com>
 References: <20170216114818.6080-1-pclouds@gmail.com>
@@ -73,188 +73,124 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-get_ref_store() will soon be renamed to get_submodule_ref_store().
-Together with future get_worktree_ref_store(), the three functions
-provide an appropriate ref store for different operation modes. New APIs
-will be added to operate directly on ref stores.
+refs is learning to avoid path rewriting that is done by
+strbuf_git_path_submodule(). Factor out this code so it could be reused
+by refs*
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- refs.c | 36 ++++++++++++++++++------------------
- refs.h |  2 ++
- 2 files changed, 20 insertions(+), 18 deletions(-)
+ path.c      | 34 +++++++---------------------------
+ submodule.c | 31 +++++++++++++++++++++++++++++++
+ submodule.h |  1 +
+ 3 files changed, 39 insertions(+), 27 deletions(-)
 
-diff --git a/refs.c b/refs.c
-index 55a80a83d..25f657a6f 100644
---- a/refs.c
-+++ b/refs.c
-@@ -1303,7 +1303,7 @@ const char *resolve_ref_recursively(struct ref_store *refs,
- /* backend functions */
- int refs_init_db(struct strbuf *err)
+diff --git a/path.c b/path.c
+index efcedafba..3451d2916 100644
+--- a/path.c
++++ b/path.c
+@@ -475,35 +475,16 @@ const char *worktree_git_path(const struct worktree *wt, const char *fmt, ...)
+ static int do_submodule_path(struct strbuf *buf, const char *path,
+ 			     const char *fmt, va_list args)
  {
--	struct ref_store *refs = get_ref_store(NULL);
-+	struct ref_store *refs = get_main_ref_store();
+-	const char *git_dir;
+ 	struct strbuf git_submodule_common_dir = STRBUF_INIT;
+ 	struct strbuf git_submodule_dir = STRBUF_INIT;
+-	const struct submodule *sub;
+-	int err = 0;
++	int ret;
  
- 	return refs->be->init_db(refs, err);
- }
-@@ -1311,7 +1311,7 @@ int refs_init_db(struct strbuf *err)
- const char *resolve_ref_unsafe(const char *refname, int resolve_flags,
- 			       unsigned char *sha1, int *flags)
- {
--	return resolve_ref_recursively(get_ref_store(NULL), refname,
-+	return resolve_ref_recursively(get_main_ref_store(), refname,
- 				       resolve_flags, sha1, flags);
- }
+-	strbuf_addstr(buf, path);
+-	strbuf_complete(buf, '/');
+-	strbuf_addstr(buf, ".git");
+-
+-	git_dir = read_gitfile(buf->buf);
+-	if (git_dir) {
+-		strbuf_reset(buf);
+-		strbuf_addstr(buf, git_dir);
+-	}
+-	if (!is_git_directory(buf->buf)) {
+-		gitmodules_config();
+-		sub = submodule_from_path(null_sha1, path);
+-		if (!sub) {
+-			err = SUBMODULE_PATH_ERR_NOT_CONFIGURED;
+-			goto cleanup;
+-		}
+-		strbuf_reset(buf);
+-		strbuf_git_path(buf, "%s/%s", "modules", sub->name);
+-	}
+-
+-	strbuf_addch(buf, '/');
+-	strbuf_addbuf(&git_submodule_dir, buf);
++	ret = submodule_to_gitdir(&git_submodule_dir, path);
++	if (ret)
++		goto cleanup;
  
-@@ -1434,7 +1434,7 @@ static struct ref_store *ref_store_init(const char *submodule)
- 	return refs;
- }
++	strbuf_complete(&git_submodule_dir, '/');
++	strbuf_addbuf(buf, &git_submodule_dir);
+ 	strbuf_vaddf(buf, fmt, args);
  
--static struct ref_store *get_main_ref_store(void)
-+struct ref_store *get_main_ref_store(void)
- {
- 	struct ref_store *refs;
- 
-@@ -1483,14 +1483,14 @@ void base_ref_store_init(struct ref_store *refs,
- /* backend functions */
- int pack_refs(unsigned int flags)
- {
--	struct ref_store *refs = get_ref_store(NULL);
-+	struct ref_store *refs = get_main_ref_store();
- 
- 	return refs->be->pack_refs(refs, flags);
- }
- 
- int peel_ref(const char *refname, unsigned char *sha1)
- {
--	struct ref_store *refs = get_ref_store(NULL);
-+	struct ref_store *refs = get_main_ref_store();
- 
- 	return refs->be->peel_ref(refs, refname, sha1);
- }
-@@ -1498,7 +1498,7 @@ int peel_ref(const char *refname, unsigned char *sha1)
- int create_symref(const char *ref_target, const char *refs_heads_master,
- 		  const char *logmsg)
- {
--	struct ref_store *refs = get_ref_store(NULL);
-+	struct ref_store *refs = get_main_ref_store();
- 
- 	return refs->be->create_symref(refs, ref_target, refs_heads_master,
- 				       logmsg);
-@@ -1507,7 +1507,7 @@ int create_symref(const char *ref_target, const char *refs_heads_master,
- int ref_transaction_commit(struct ref_transaction *transaction,
- 			   struct strbuf *err)
- {
--	struct ref_store *refs = get_ref_store(NULL);
-+	struct ref_store *refs = get_main_ref_store();
- 
- 	return refs->be->transaction_commit(refs, transaction, err);
- }
-@@ -1517,14 +1517,14 @@ int verify_refname_available(const char *refname,
- 			     const struct string_list *skip,
- 			     struct strbuf *err)
- {
--	struct ref_store *refs = get_ref_store(NULL);
-+	struct ref_store *refs = get_main_ref_store();
- 
- 	return refs->be->verify_refname_available(refs, refname, extra, skip, err);
+ 	if (get_common_dir_noenv(&git_submodule_common_dir, git_submodule_dir.buf))
+@@ -514,8 +495,7 @@ static int do_submodule_path(struct strbuf *buf, const char *path,
+ cleanup:
+ 	strbuf_release(&git_submodule_dir);
+ 	strbuf_release(&git_submodule_common_dir);
+-
+-	return err;
++	return ret;
  }
  
- int for_each_reflog(each_ref_fn fn, void *cb_data)
- {
--	struct ref_store *refs = get_ref_store(NULL);
-+	struct ref_store *refs = get_main_ref_store();
- 	struct ref_iterator *iter;
- 
- 	iter = refs->be->reflog_iterator_begin(refs);
-@@ -1535,7 +1535,7 @@ int for_each_reflog(each_ref_fn fn, void *cb_data)
- int for_each_reflog_ent_reverse(const char *refname, each_reflog_ent_fn fn,
- 				void *cb_data)
- {
--	struct ref_store *refs = get_ref_store(NULL);
-+	struct ref_store *refs = get_main_ref_store();
- 
- 	return refs->be->for_each_reflog_ent_reverse(refs, refname,
- 						     fn, cb_data);
-@@ -1544,14 +1544,14 @@ int for_each_reflog_ent_reverse(const char *refname, each_reflog_ent_fn fn,
- int for_each_reflog_ent(const char *refname, each_reflog_ent_fn fn,
- 			void *cb_data)
- {
--	struct ref_store *refs = get_ref_store(NULL);
-+	struct ref_store *refs = get_main_ref_store();
- 
- 	return refs->be->for_each_reflog_ent(refs, refname, fn, cb_data);
+ char *git_pathdup_submodule(const char *path, const char *fmt, ...)
+diff --git a/submodule.c b/submodule.c
+index ece17315d..3ce589d55 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -1335,3 +1335,34 @@ void prepare_submodule_repo_env(struct argv_array *out)
+ 	}
+ 	argv_array_push(out, "GIT_DIR=.git");
  }
- 
- int reflog_exists(const char *refname)
- {
--	struct ref_store *refs = get_ref_store(NULL);
-+	struct ref_store *refs = get_main_ref_store();
- 
- 	return refs->be->reflog_exists(refs, refname);
- }
-@@ -1559,14 +1559,14 @@ int reflog_exists(const char *refname)
- int safe_create_reflog(const char *refname, int force_create,
- 		       struct strbuf *err)
- {
--	struct ref_store *refs = get_ref_store(NULL);
-+	struct ref_store *refs = get_main_ref_store();
- 
- 	return refs->be->create_reflog(refs, refname, force_create, err);
- }
- 
- int delete_reflog(const char *refname)
- {
--	struct ref_store *refs = get_ref_store(NULL);
-+	struct ref_store *refs = get_main_ref_store();
- 
- 	return refs->be->delete_reflog(refs, refname);
- }
-@@ -1578,7 +1578,7 @@ int reflog_expire(const char *refname, const unsigned char *sha1,
- 		  reflog_expiry_cleanup_fn cleanup_fn,
- 		  void *policy_cb_data)
- {
--	struct ref_store *refs = get_ref_store(NULL);
-+	struct ref_store *refs = get_main_ref_store();
- 
- 	return refs->be->reflog_expire(refs, refname, sha1, flags,
- 				       prepare_fn, should_prune_fn,
-@@ -1588,21 +1588,21 @@ int reflog_expire(const char *refname, const unsigned char *sha1,
- int initial_ref_transaction_commit(struct ref_transaction *transaction,
- 				   struct strbuf *err)
- {
--	struct ref_store *refs = get_ref_store(NULL);
-+	struct ref_store *refs = get_main_ref_store();
- 
- 	return refs->be->initial_transaction_commit(refs, transaction, err);
- }
- 
- int delete_refs(struct string_list *refnames, unsigned int flags)
- {
--	struct ref_store *refs = get_ref_store(NULL);
-+	struct ref_store *refs = get_main_ref_store();
- 
- 	return refs->be->delete_refs(refs, refnames, flags);
- }
- 
- int rename_ref(const char *oldref, const char *newref, const char *logmsg)
- {
--	struct ref_store *refs = get_ref_store(NULL);
-+	struct ref_store *refs = get_main_ref_store();
- 
- 	return refs->be->rename_ref(refs, oldref, newref, logmsg);
- }
-diff --git a/refs.h b/refs.h
-index 694784391..f803528fc 100644
---- a/refs.h
-+++ b/refs.h
-@@ -553,4 +553,6 @@ int reflog_expire(const char *refname, const unsigned char *sha1,
- 
- int ref_storage_backend_exists(const char *name);
- 
-+struct ref_store *get_main_ref_store(void);
 +
- #endif /* REFS_H */
++int submodule_to_gitdir(struct strbuf *buf, const char *submodule)
++{
++	const struct submodule *sub;
++	const char *git_dir;
++	int ret = 0;
++
++	strbuf_reset(buf);
++	strbuf_addstr(buf, submodule);
++	strbuf_complete(buf, '/');
++	strbuf_addstr(buf, ".git");
++
++	git_dir = read_gitfile(buf->buf);
++	if (git_dir) {
++		strbuf_reset(buf);
++		strbuf_addstr(buf, git_dir);
++	}
++	if (!is_git_directory(buf->buf)) {
++		gitmodules_config();
++		sub = submodule_from_path(null_sha1, submodule);
++		if (!sub) {
++			ret = -1;
++			goto cleanup;
++		}
++		strbuf_reset(buf);
++		strbuf_git_path(buf, "%s/%s", "modules", sub->name);
++	}
++
++cleanup:
++	return ret;
++}
+diff --git a/submodule.h b/submodule.h
+index 23d76682b..2728494ce 100644
+--- a/submodule.h
++++ b/submodule.h
+@@ -70,6 +70,7 @@ extern int push_unpushed_submodules(struct sha1_array *commits,
+ 				    int dry_run);
+ void connect_work_tree_and_git_dir(const char *work_tree, const char *git_dir);
+ int parallel_submodules(void);
++int submodule_to_gitdir(struct strbuf *buf, const char *submodule);
+ 
+ /*
+  * Prepare the "env_array" parameter of a "struct child_process" for executing
 -- 
 2.11.0.157.gd943d85
 
