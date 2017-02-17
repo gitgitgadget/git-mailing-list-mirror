@@ -7,47 +7,47 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6F5C820136
-	for <e@80x24.org>; Fri, 17 Feb 2017 14:20:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2E6D920136
+	for <e@80x24.org>; Fri, 17 Feb 2017 14:20:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934466AbdBQOUz (ORCPT <rfc822;e@80x24.org>);
-        Fri, 17 Feb 2017 09:20:55 -0500
-Received: from mail-pg0-f66.google.com ([74.125.83.66]:35609 "EHLO
+        id S934344AbdBQOU4 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 17 Feb 2017 09:20:56 -0500
+Received: from mail-pg0-f66.google.com ([74.125.83.66]:36510 "EHLO
         mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S934383AbdBQOUu (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S934431AbdBQOUu (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 17 Feb 2017 09:20:50 -0500
-Received: by mail-pg0-f66.google.com with SMTP id y6so3967609pgy.2
-        for <git@vger.kernel.org>; Fri, 17 Feb 2017 06:20:45 -0800 (PST)
+Received: by mail-pg0-f66.google.com with SMTP id a123so2292341pgc.3
+        for <git@vger.kernel.org>; Fri, 17 Feb 2017 06:20:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=OPo8ItH07UUm5UqGzeU2Bho7Q6PecDREfiGovttpzmE=;
-        b=LneT7Nea9jnUZlA7MPmdTQhzTGJwUsceXtmhqdQqJrg6NFn8gij7t6eO4KKXOVNXIg
-         7A6ENeXF8/rGvKFm8/WIig6UBdQYsjATsy4SQGLpeBnnOYxncKxjV1JAmQt8IDUqujhz
-         gPRvMWs+pbtcxxixghrExtwnGUY4S8aF9qHfCSxEB2pLF3VAs9+CPgDU4MDoYKzpMFh9
-         DUG3u1I2uf081RjorTXjyMh/C9XWAjciZ8ize8GLyQt3aru+ya5+uqI4/pvAh1/+BtLt
-         ZDjv9URIP1ehFVXviDYqu5bACEgmsFWY0dYcOKyJmo5SqEht7fXEfVhvSixg4JasgsjX
-         KIhA==
+        bh=AoAPjvnNI0tXD3RgSfvQv7BjSkQ1Te/l0Ubq57ex+Tc=;
+        b=Ky8ITlMaTqxZc575LWjYfQmMN0vtkNWWgTLHFh6aL/jw21FGeuX0GMbi27AYBoXy1q
+         njJoN9ZYJOskR8Bo15ohmRDt6Eojk9z1YRT5zfnNQW1SWjkAFMwozCX3VWS3ly2BRyg1
+         oXeeJci5pfSXdMh4iiVPR3lGL4GsYRwmKc1c9QItLWLmlnO1HLUIWj8p/pa2bwCOo6Y7
+         +fxySpvQYe/2yJWaG8abDnNlmKdx0syvH5pfnJemRXtXZB0HzMWuMOVEDsL/b9RDexoP
+         QbmhnmsOJyI0UuTO8pLvGsMfRuT/ZABBFenXkJWwcU1zZFxLm0yQPgiFDXOzdlLn7i9k
+         JIyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=OPo8ItH07UUm5UqGzeU2Bho7Q6PecDREfiGovttpzmE=;
-        b=oP/8wV9QTbHDd9uNsZ/9L3GG6MYOrWoaiBW7WjGSX9KUg25imHXP1Qif3a65kiHrBw
-         EY9W9ASvhRdgmBQ8n6LUduq8WTcj1+mqDg4UdG2+yVeGfTW/Kni9tXfnmfPR8G5q+ZxQ
-         pLVK7oxSeMYWZ0oaJ6GbIEl3XgUU83/PFk5pQE1xqRGeuuEat2MViwVTDdlM+QEfaNS8
-         FYEXNnMmWLpql73wkhW81hlzCS1cirJgwhuUvGkuw5aL2S/1bB/iIeHBzE3cMrV+mque
-         +zc1rRVv5XeEifr5SqZuOK7FcBsP5jdF272blCVik2ZpM9SWXaR7BdYVmC1prlFbrzBL
-         lBLw==
-X-Gm-Message-State: AMke39nO6M237OrH6NgmXXEqIDfRoRjGupWHZFYi8Z8g9n3LyNAuZYTqS5B3YXlg+S6iUw==
-X-Received: by 10.98.50.66 with SMTP id y63mr9736408pfy.21.1487341244718;
-        Fri, 17 Feb 2017 06:20:44 -0800 (PST)
+        bh=AoAPjvnNI0tXD3RgSfvQv7BjSkQ1Te/l0Ubq57ex+Tc=;
+        b=BauJofmpXl5jJ65OhKl23s7u2sr6RWLYC2BYZEeoqaBpuDZVYnvybkj8rV6LvBaAgk
+         7p2+uGHIOEVIu2W+q8JAouo3i9uZocAp22yJ1dwVOeJcVc/8zeGA1GHJO2EfSGths047
+         EWLpgoUvUA2jQZ5MUgpsJGa7vEYPxdOCIiDH5ZjY5p2+CgVq/2yj5oJJpkjFl7L1qUh7
+         k4uBPgrOI7xUNtzOewaqyTF6QeFvcSqOcQptke5Pa5HIjwDOWClb0N69SrV8T9OJeW9o
+         /aD8hu5Cz6fvJf3t3NbDJu4jnpyAefAAErgy+pNz8flX/B1CjyF+jgEDr67nRej4gRr7
+         69GA==
+X-Gm-Message-State: AMke39kZRqjiugqG4/Z3QuMbQgVgsnj+8Cq7lUYpmd8EjHTXbZt4jDfpBZ9cbaBmKIMcCQ==
+X-Received: by 10.99.127.71 with SMTP id p7mr10499747pgn.125.1487341249764;
+        Fri, 17 Feb 2017 06:20:49 -0800 (PST)
 Received: from ash ([115.73.162.84])
-        by smtp.gmail.com with ESMTPSA id d69sm20092986pfd.11.2017.02.17.06.20.41
+        by smtp.gmail.com with ESMTPSA id g64sm20082797pfc.57.2017.02.17.06.20.46
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 17 Feb 2017 06:20:44 -0800 (PST)
-Received: by ash (sSMTP sendmail emulation); Fri, 17 Feb 2017 21:20:39 +0700
+        Fri, 17 Feb 2017 06:20:49 -0800 (PST)
+Received: by ash (sSMTP sendmail emulation); Fri, 17 Feb 2017 21:20:45 +0700
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
@@ -57,9 +57,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH 14/15] revision.c: --reflog add HEAD reflog from all worktrees
-Date:   Fri, 17 Feb 2017 21:19:07 +0700
-Message-Id: <20170217141908.18012-15-pclouds@gmail.com>
+Subject: [PATCH 15/15] rev-list: expose and document --single-worktree
+Date:   Fri, 17 Feb 2017 21:19:08 +0700
+Message-Id: <20170217141908.18012-16-pclouds@gmail.com>
 X-Mailer: git-send-email 2.11.0.157.gd943d85
 In-Reply-To: <20170217141908.18012-1-pclouds@gmail.com>
 References: <20170217141908.18012-1-pclouds@gmail.com>
@@ -71,112 +71,44 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Note that add_other_reflogs_to_pending() is a bit inefficient, since
-it scans reflog for all refs of each worktree, including shared refs,
-so the shared ref's reflog is scanned over and over again.
-
-We could update refs API to pass "per-worktree only" flag to avoid
-that. But long term we should be able to obtain a "per-worktree only"
-ref store and would need to revert the changes in reflog iteration
-API. So let's just wait until then.
-
-add_reflogs_to_pending() is called by reachable.c so by default "git
-prune" will examine reflog from all worktrees.
-
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- revision.c       | 28 +++++++++++++++++++++++++++-
- t/t5304-prune.sh | 16 ++++++++++++++++
- 2 files changed, 43 insertions(+), 1 deletion(-)
+ Documentation/rev-list-options.txt | 8 ++++++++
+ revision.c                         | 2 ++
+ 2 files changed, 10 insertions(+)
 
+diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
+index 5da7cf5a8..dd773f97c 100644
+--- a/Documentation/rev-list-options.txt
++++ b/Documentation/rev-list-options.txt
+@@ -179,6 +179,14 @@ explicitly.
+ 	Pretend as if all objects mentioned by reflogs are listed on the
+ 	command line as `<commit>`.
+ 
++--single-worktree::
++	By default, all working trees will be examined by the
++	following options when there are more than one (see
++	linkgit:git-worktree[1]): `--all`, `--reflog` and
++	`--indexed-objects`.
++	This option forces them to examine the current working tree
++	only.
++
+ --ignore-missing::
+ 	Upon seeing an invalid object name in the input, pretend as if
+ 	the bad input was not given.
 diff --git a/revision.c b/revision.c
-index 8ee929cef..ecfd6fea6 100644
+index ecfd6fea6..2a27e55fe 100644
 --- a/revision.c
 +++ b/revision.c
-@@ -1134,6 +1134,7 @@ struct all_refs_cb {
- 	int warned_bad_reflog;
- 	struct rev_info *all_revs;
- 	const char *name_for_errormsg;
-+	struct ref_store *refs;
- };
- 
- int ref_excluded(struct string_list *ref_excludes, const char *path)
-@@ -1169,6 +1170,7 @@ static void init_all_refs_cb(struct all_refs_cb *cb, struct rev_info *revs,
- {
- 	cb->all_revs = revs;
- 	cb->all_flags = flags;
-+	cb->refs = NULL;
- }
- 
- void clear_ref_exclusion(struct string_list **ref_excludes_p)
-@@ -1237,17 +1239,41 @@ static int handle_one_reflog(const char *path, const struct object_id *oid,
- 	struct all_refs_cb *cb = cb_data;
- 	cb->warned_bad_reflog = 0;
- 	cb->name_for_errormsg = path;
--	for_each_reflog_ent(path, handle_one_reflog_ent, cb_data);
-+	refs_for_each_reflog_ent(cb->refs, path,
-+				 handle_one_reflog_ent, cb_data);
- 	return 0;
- }
- 
-+static void add_other_reflogs_to_pending(struct all_refs_cb *cb)
-+{
-+	struct worktree **worktrees, **p;
-+
-+	worktrees = get_worktrees(0);
-+	for (p = worktrees; *p; p++) {
-+		struct worktree *wt = *p;
-+
-+		if (wt->is_current)
-+			continue;
-+
-+		cb->refs = get_worktree_ref_store(wt);
-+		refs_for_each_reflog(cb->refs,
-+				     handle_one_reflog,
-+				     cb);
-+	}
-+	free_worktrees(worktrees);
-+}
-+
- void add_reflogs_to_pending(struct rev_info *revs, unsigned flags)
- {
- 	struct all_refs_cb cb;
- 
- 	cb.all_revs = revs;
- 	cb.all_flags = flags;
-+	cb.refs = get_main_ref_store();
- 	for_each_reflog(handle_one_reflog, &cb);
-+
-+	if (!revs->single_worktree)
-+		add_other_reflogs_to_pending(&cb);
- }
- 
- static void add_cache_tree(struct cache_tree *it, struct rev_info *revs,
-diff --git a/t/t5304-prune.sh b/t/t5304-prune.sh
-index 683bdb031..6694c19a1 100755
---- a/t/t5304-prune.sh
-+++ b/t/t5304-prune.sh
-@@ -304,4 +304,20 @@ test_expect_success 'prune: handle HEAD in multiple worktrees' '
- 	test_cmp third-worktree/blob actual
- '
- 
-+test_expect_success 'prune: handle HEAD reflog in multiple worktrees' '
-+	git config core.logAllRefUpdates true &&
-+	echo "lost blob for third-worktree" >expected &&
-+	(
-+		cd third-worktree &&
-+		cat ../expected >blob &&
-+		git add blob &&
-+		git commit -m "second commit in third" &&
-+		git reset --hard HEAD^
-+	) &&
-+	git prune --expire=now &&
-+	SHA1=`git hash-object expected` &&
-+	git -C third-worktree show "$SHA1" >actual &&
-+	test_cmp expected actual
-+'
-+
- test_done
+@@ -2222,6 +2222,8 @@ static int handle_revision_pseudo_opt(const char *submodule,
+ 			return error("invalid argument to --no-walk");
+ 	} else if (!strcmp(arg, "--do-walk")) {
+ 		revs->no_walk = 0;
++	} else if (!strcmp(arg, "--single-worktree")) {
++		revs->single_worktree = 1;
+ 	} else {
+ 		return 0;
+ 	}
 -- 
 2.11.0.157.gd943d85
 
