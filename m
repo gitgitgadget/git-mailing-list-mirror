@@ -2,101 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8218F20136
-	for <e@80x24.org>; Fri, 17 Feb 2017 16:58:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 203B020136
+	for <e@80x24.org>; Fri, 17 Feb 2017 16:58:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934087AbdBQQ6P (ORCPT <rfc822;e@80x24.org>);
-        Fri, 17 Feb 2017 11:58:15 -0500
-Received: from zm23-mta-out-2.grenet.fr ([130.190.191.53]:51046 "EHLO
-        zm23-mta-out-2.grenet.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933900AbdBQQ6P (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 Feb 2017 11:58:15 -0500
-Received: from zm23-mta-out.grenet.fr (zm23-mta-out.grenet.fr [130.190.191.35])
-        by zm23-mta-out-2.grenet.fr (Postfix) with ESMTP id D96CEC7E4;
-        Fri, 17 Feb 2017 17:58:11 +0100 (CET)
-Received: from smtps.univ-grenoble-alpes.fr (smtps2.u-ga.fr [195.83.24.202])
-        by zm23-mta-out.grenet.fr (Postfix) with ESMTP id D408310052B;
-        Fri, 17 Feb 2017 17:58:11 +0100 (CET)
-Received: from anie (anie.imag.fr [129.88.42.32])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: moym@univ-grenoble-alpes.fr)
-        by smtps.univ-grenoble-alpes.fr (Postfix) with ESMTPSA id D08736069E;
-        Fri, 17 Feb 2017 17:15:07 +0100 (CET)
-From:   Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-To:     Johan Hovold <johan@kernel.org>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Kevin Daudt <me@ikke.info>, Junio C Hamano <gitster@pobox.com>,
-        Larry Finger <Larry.Finger@lwfinger.net>
-Subject: Re: body-CC-comment regression
-References: <20170216174924.GB2625@localhost> <vpqlgt6hug6.fsf@anie.imag.fr>
-        <20170217110642.GD2625@localhost> <vpq7f4pdkjp.fsf@anie.imag.fr>
-        <20170217164241.GE2625@localhost>
-Date:   Fri, 17 Feb 2017 17:58:11 +0100
-In-Reply-To: <20170217164241.GE2625@localhost> (Johan Hovold's message of
-        "Fri, 17 Feb 2017 17:42:41 +0100")
-Message-ID: <vpq4lzs7o0s.fsf@anie.imag.fr>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
+        id S934113AbdBQQ6U (ORCPT <rfc822;e@80x24.org>);
+        Fri, 17 Feb 2017 11:58:20 -0500
+Received: from mout.gmx.net ([212.227.17.22]:56580 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S933900AbdBQQ6T (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 Feb 2017 11:58:19 -0500
+Received: from virtualbox ([37.201.192.48]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0LwXCt-1cJEEO2sLX-018J9o; Fri, 17
+ Feb 2017 17:58:11 +0100
+Date:   Fri, 17 Feb 2017 17:57:56 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     git@vger.kernel.org, Michael Rappazzo <rappazzo@gmail.com>,
+        =?UTF-8?Q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc_Duy?= 
+        <pclouds@gmail.com>
+Subject: Re: [PATCH v2 1/2] rev-parse tests: add tests executed from a
+ subdirectory
+In-Reply-To: <xmqqpoipkd3l.fsf@gitster.mtv.corp.google.com>
+Message-ID: <alpine.DEB.2.20.1702171755470.3496@virtualbox>
+References: <50fe3ea3302c40f4c96eaa5a568837e3334f9dc4.1486555851.git.johannes.schindelin@gmx.de> <cover.1486740772.git.johannes.schindelin@gmx.de> <cc23463af8096c5f8429f939ce881cf0eb5c2dcd.1486740772.git.johannes.schindelin@gmx.de>
+ <xmqqpoipkd3l.fsf@gitster.mtv.corp.google.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Greylist: Whitelist-UJF SMTP Authentifie (moym@univ-grenoble-alpes.fr) via smtps.univ-grenoble-alpes.fr ACL (97)
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:/S9yg0/pD2b8lw3deT+Q6o7ph00QJllDPX9aZbH6Do06sj/6t3j
+ NC+BkL5OxkUae3t2nMADW5jAG40XwY0y1NHkhGNoKRBbUcSJ+KHfdLuuXBvdmUtRBzN2cxf
+ 5k8swqYfzbeO/iXYAHz6TPeRTaQAVEUtEFjw/mcUnVjnU2AA0MurmRQwytiN2CCjOvy1egL
+ uIYChXskcu795PTA7E50A==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:9K1MVErMGBA=:K8xVxJJBjvwlpxynW5LRia
+ WcKTtC7rAScCNnJyz2tmLPWuDOpzO57oci0SgndXY6A0YUm4NDsWYLMtd3QJfb5vg7LsUEmam
+ FvGe5sqam6UrOW2zc3u6fLSPpBMQpC4HhHkrPRCA2YWcnayoGUI/oa8duVkVVmRhQkWgIFltL
+ X/vCNfUaMiirZynpJfKDhYilyLw1b8Wij4/qCj+Qx93pvE4/TGh0j3rwkWu4QBkpn3cbPbhcD
+ GFxg9iqN2UVKAJ2VAdokM0YSYwgqyPXgJCmbCY8M0f/K7bM5yWcxITmFFei8/K3Ko3BkfkY81
+ PfnjYDDciV90KVCJC2VeYhSTfRZNZLXjOEbZP4142DtKwjhcKxD/uq9VNmomMGME157IW0Qqm
+ a76KOpOOGMoTYqv2kihu3cmdAVqnwYsgjMpPOzORSGN/C8TQGGSX9fgKD5WXqynKHIQywI8pk
+ AdCRXBC+e35Sg58vM4UWv0oHUS1SmbgpYGmNzI+w9tnjpUU0IwFBpfxpGWAYfxCmWXsxThIBd
+ ck/Qb3xzjAOMYPgQ57LM7jS4ztKspnabFkoIP6e6jX81glJs7t58DMl8K1xMo3ENonJ2at7S7
+ Qor5ZMY2i41U5E6cgtYBhrdZ7qsiq17bJs2iIN1DzZF5gEV5YxkiML5kOnu0F74salx/vj67l
+ mZcwSyw3GlX0/houvCZW/ht9jmSwCFaDM4RWUG/NhGheByUiYSyQrqi6AHWeY9zf6R6L4820N
+ 5kfQpktiON2I79TG7jB8PsHs0ZpWsOvOsNmyt/DlgXpYoEBoBI5d+bZkpdQ+TSftSDCtvSayC
+ Zog10LHIKnaoCUFoUA3RbW4MU43Qw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> On Fri, Feb 17, 2017 at 02:16:42PM +0100, Matthieu Moy wrote:
->> Johan Hovold <johan@kernel.org> writes:
->
->> The "multiple emails per Cc: field" has been there for a while already
->> (b1c8a11c8024 released in 2.6.0, sept 2015), some users may have got
->> used to it. What you are proposing breaks their flow.
->
-> Note that that commit never mentions multiple addresses in either
-> headers or body-tags -- it's all about being able to specify multiple
-> entries on the command line.
+Hi Junio,
 
-Indeed. I'm not the author of the patch, but I was supervising the
-students who wrote it and "multiple addresses in Cc:" was not the goal,
-but a (IMHO positive) side effect we discovered after the fact.
+On Fri, 10 Feb 2017, Junio C Hamano wrote:
 
-If I had a time machine, I'd probably go back then and forbid multiple
-addresses there, but ...
+> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+> 
+> > diff --git a/t/t1700-split-index.sh b/t/t1700-split-index.sh
+> > index 292a0720fcc..1d6e27a09d8 100755
+> > --- a/t/t1700-split-index.sh
+> > +++ b/t/t1700-split-index.sh
+> > @@ -200,4 +200,21 @@ EOF
+> >  	test_cmp expect actual
+> >  '
+> >  
+> > +test_expect_failure 'rev-parse --shared-index-path' '
+> > +	rm -rf .git &&
+> > +	test_create_repo . &&
+> 
+> Another thing that I notice only after merging this and other topics
+> to 'pu' was that this piece needs to always come at the end of the
+> script because of this removal.  It would make the test more robust
+> to create a test repository for this test and work inside it.
 
-> There does not seem to be single commit in the kernel where multiple
-> address are specified in a CC tag since after git-send-email started
-> allowing it, but there are ten commits before (to my surprise), and that
-> should be contrasted with at least 4178 commits with trailing comments
-> including a # sign.
+Yes, this is indeed unnecessary and even undesirable.
 
-Hey, there's a life outside the kernel ;-).
+I waited a couple of days to give the original author a chance to fix
+this. As I want a fix really badly (because I am really embarrassed of
+this bug), I adjusted t1700 appropriately and will send out v3 in a
+second.
 
->> 1) Stop calling Mail::Address even if available.[...]
->
-> Right, that sounds like the right thing to do regardless.
->
->> 2) Modify our in-house parser to discard garbage after the >. [...]
->
-> Sounds perfectly fine to me, and seems to work too after quick test.
-
-OK, sounds like the way to go.
-
-Do you want to work on a patch? If not, I should be able to do that
-myself. The code changes are straightforward, but we probably want a
-proper test for that.
-
-> addresses in a Cc-tag in that it breaks --suppress-cc=self, but I guess
-> that can be fixed separately.
-
-OK. If it's unrelated enough, please start a separate thread to explain
-the problem (and/or write a patch ;-) ).
-
-Thanks,
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Ciao,
+Johannes
