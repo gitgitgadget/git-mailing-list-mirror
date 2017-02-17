@@ -2,118 +2,134 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CA693201A8
-	for <e@80x24.org>; Fri, 17 Feb 2017 01:25:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F01AC201A8
+	for <e@80x24.org>; Fri, 17 Feb 2017 01:52:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932090AbdBQBZp (ORCPT <rfc822;e@80x24.org>);
-        Thu, 16 Feb 2017 20:25:45 -0500
-Received: from mail-pf0-f196.google.com ([209.85.192.196]:35433 "EHLO
-        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932081AbdBQBZn (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Feb 2017 20:25:43 -0500
-Received: by mail-pf0-f196.google.com with SMTP id 68so2790455pfx.2
-        for <git@vger.kernel.org>; Thu, 16 Feb 2017 17:25:43 -0800 (PST)
+        id S1755303AbdBQBwS (ORCPT <rfc822;e@80x24.org>);
+        Thu, 16 Feb 2017 20:52:18 -0500
+Received: from mail-ot0-f173.google.com ([74.125.82.173]:36012 "EHLO
+        mail-ot0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754985AbdBQBwR (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Feb 2017 20:52:17 -0500
+Received: by mail-ot0-f173.google.com with SMTP id 32so23466106oth.3
+        for <git@vger.kernel.org>; Thu, 16 Feb 2017 17:52:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=+NwTZlNfz8n0eWnRR5dwecjzJ/xobF9ipYkAO1KYrFc=;
-        b=jNq3nPAjJ56hwRJqslj1SqPIvmbfgu2/lfxBRI57yotyyURWqh6YgUriPwL9cMEWFt
-         bNGMU/xyJH8NqgXmlFwqU9Z5wAq2cABy84Xz6EDWATI3IYCsiGpX7yBhBf5ZmV4t7eHx
-         g/LWa0rbnT1OIhMQmkJq5Dx5/XXUBf3yunyVr4Z20k57FhseJOPg2sEU5hwG5Qzc4X2n
-         BXY68hyAGG5wWRcFNt3a2iDe1M6U1HDk+S2PeaJNY4RVDMfaKsJxTY1/YITKAy1A2i8U
-         UGXuRva/uUhpTvyUJ87xdEdjIcQpSON8znPFfkuvs96ayY4JdZqtX26mkEq2fS+eT5is
-         oLUg==
+        h=mime-version:from:date:message-id:subject:to;
+        bh=Z1Z3oFJJTFCENJzJbWBCEk/zpAp4eQSlylPHqUSaJfI=;
+        b=D0eHUZ5O2rAMxCDa3TBA5cXVPE+P7d5EyFXjeqkeizZX157pXW22Xh2DONA0QN32Ux
+         QjjqGaaa1SmC5TMRt/kk/V2BZiF/tTwggScyoc7lfIYnO+LeaHiU2SRJU8XHwxs+zofR
+         HQZ3iVlE/VETXz7j/FGaJtWLNZEwSdgO4epsrYFszUawTmeKC0GgNZ5/VKOjvSUHsSZP
+         roN0fMV3FV9ZU1BaYHo/1YGkUJf79cDSRrdIEAWBgqu8aMVeGbFm8tgdsVZ6rEW+/kA7
+         GRYCkHZjd0HjaSLD35VH6qFtsXD7MIFlRDWNV+UBfBBFJmHqNnLNgWUk0F8Z4XneiWdr
+         zibA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=+NwTZlNfz8n0eWnRR5dwecjzJ/xobF9ipYkAO1KYrFc=;
-        b=PuOqNa2yDv8yghy1cYSM1Z9+9wDjKggs2otIQtqBKb98oKB5jDRwqjBqSToNJw/gSH
-         QHUb3lyuP0x67fjnQfsLaecZ2J7zBlUOkbYHpPAaacWMOxzS7ovbmGda7KUOw5N0d6YJ
-         2XRY9xtLTSg6pkutb75nWhofs1uXjFFLJfys5egkhxM1cpRkU86fWQHUwoFvQaDQWDHE
-         mZoEcoh1Yrzv9DnEdxAZuqPkSzsGTf0vKxvyspVFnqWzrCPbybcN3nfyi5R7x/AI1XO0
-         QzQoab/QXMTCJmQX7J/C7H8Cn8Rv/8oq5ZW0dsLRtOXWQT7t8jRALQ8QbJPGHQ0yX1oi
-         osDQ==
-X-Gm-Message-State: AMke39mezDRIellYH2tyvnLdkRDGL4pS26lSFxL1vH1siirsFsz1gifhUp7wlFbDetBPyQ==
-X-Received: by 10.98.153.25 with SMTP id d25mr6276366pfe.15.1487294737833;
-        Thu, 16 Feb 2017 17:25:37 -0800 (PST)
-Received: from localhost ([2620:0:1000:8622:9476:4c5c:6ee4:ba3])
-        by smtp.gmail.com with ESMTPSA id e13sm15803393pgf.48.2017.02.16.17.25.36
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 16 Feb 2017 17:25:36 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Lars Schneider <larsxschneider@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org,
-        sbeller@google.com
-Subject: Re: [PATCH] config: preserve <subsection> case for one-shot config on the command line
-References: <20170215111704.78320-1-larsxschneider@gmail.com>
-        <xmqqzihn2smp.fsf@gitster.mtv.corp.google.com>
-        <f238248f-0df2-19a5-581d-95c8a61b4632@google.com>
-        <xmqqy3x712if.fsf@gitster.mtv.corp.google.com>
-        <xmqqtw7v123n.fsf@gitster.mtv.corp.google.com>
-        <xmqqa89n10df.fsf_-_@gitster.mtv.corp.google.com>
-        <D0CDD1AC-05CA-47F3-8CB5-61EA1C6515A8@gmail.com>
-        <20170216232730.xsx3xks5ppjws5rg@sigill.intra.peff.net>
-Date:   Thu, 16 Feb 2017 17:25:35 -0800
-In-Reply-To: <20170216232730.xsx3xks5ppjws5rg@sigill.intra.peff.net> (Jeff
-        King's message of "Thu, 16 Feb 2017 18:27:30 -0500")
-Message-ID: <xmqqwpcptxps.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=Z1Z3oFJJTFCENJzJbWBCEk/zpAp4eQSlylPHqUSaJfI=;
+        b=IuEaTr5/54+MIYCbh5WK3S4OMYBy2erVoBjx+ynDzVNYsZT81wGfn9rOwHl9RuR3/n
+         yQSTB7ik3usjziTAwxen8uP/4rj7XaNVZxUOaISaMTD7z6MItdw2EMGcbofoVHI+wCsK
+         dodq6JTZa9Yqic8Mh1yopArXxT6CeBw026/F4B4O/HJEtag/OMn+iTbijMJA0F9HfZJ6
+         zVLMCH7d26zKyzrxzkLNgTp1Etmqi4PvDQ5aGtB8aeZNdj8BIIaqVoaRDGC/6lG3Gj9p
+         NSjUcJ75XmKAOK1qFcwENrpnLCnf+71mv4Qt6nkTtM4g2sJnWNw50b235sAA4XkQidwF
+         xCow==
+X-Gm-Message-State: AMke39kBxX5XmoKYZUGduSTDaUmgKFCqP7n2LtjO0suTDnHmTkfP6hl8p2BOaGHdTfKJjsuXJPgoS9vWoQJsbQ==
+X-Received: by 10.157.48.47 with SMTP id d44mr3393150otc.111.1487296336685;
+ Thu, 16 Feb 2017 17:52:16 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
+Received: by 10.157.50.225 with HTTP; Thu, 16 Feb 2017 17:51:36 -0800 (PST)
+From:   Luna Kid <lunakid@gmail.com>
+Date:   Fri, 17 Feb 2017 02:51:36 +0100
+Message-ID: <CA+-W3ctdRtLpziJ9TX2hqk7RagMyJpHsrfwj=rN7oXQ8EeUPnw@mail.gmail.com>
+Subject: `git show --oneline commit` does not do what's intuitively expected
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Hello,
 
-> On Thu, Feb 16, 2017 at 11:30:28AM +0100, Lars Schneider wrote:
->
->> 
->> > On 16 Feb 2017, at 00:48, Junio C Hamano <gitster@pobox.com> wrote:
->> > 
->> > The "git -c <var>=<val> cmd" mechanism is to pretend that a
->> 
->> The problem is also present for gitconfig variables e.g.
->> git config --local submodule.UPPERSUB.update none
->
-> Hrm, is it?
->
->   $ git config --file foo submodule.UPPERSUB.update none
->   $ cat foo
->   [submodule "UPPERSUB"]
-> 	update = none
->
-> I could believe that some of the submodule code may try to pass it
-> through "-c", though, so certain config ends up being missed.
+tl;dr; --> Please add --no-diff (or --msg-only) to git show. We'll
+love you for that. :)
 
-You are right.  
+Expanded:
 
-The builtin/config.c::get_value() codepath, when it is not using the
-hacky regexp interface, uses config.c::git_config_parse_key(), and
-it does the right thing.  git_config_parse_parameter(), which is the
-broken one we found, is not used.
+(I've been a casual git user for 2-3 years; "casual" means using a
+small subset, nowadays daily, with some less trivial things at times,
+like per-commit patching for post-hoc auto-versioning, or
+push-deploying (the old way), so not 100% newbie; doing SW for 25+
+years. I'm telling this, because I'm probably a representative sample
+of a huge number of experienced professionals, who are relatively new
+to git (compared to their age...), but already routinely use it in
+"survival mode", learning it gradually, on-demand.)
 
-When I did the patch in response to Jonathan's observation, I did
-briefly wonder if it should be using git_config_parse_key() instead
-of doing its own thing, but I didn't follow it up fully before
-deciding that it is the quickest to replace the tolower thing.  If I
-at least tried to see if it is feasible, I would have noticed that
-the query from the command line wouldn't share the same problem as
-Lars reported.
+Today I bumped into this issue, which I then tried googling for, and
+found it kinda' hanging:
+http://stackoverflow.com/questions/17226117/git-show-commit-oneline-not-showing-oneline
 
-I still haven't queued any of the variants I posted (and I do not
-think other people sent their own versions, either).  I need to pick
-one and queue, with a test or two.  Perhaps after -rc2.  
+The source of the confusion is that git show --oneline insists on
+showing the diff, no matter what, while the man page is misleadingly
+subtle on that, as illustrated best by a comment on that SO page,
+exactly matching my case, too:
 
-Others are welcome to work on it while I cut -rc2 tomorrow, so that
-by the time I see their patch all that is left for me to do is to
-apply it ;-)
+    "the answer does not however explain why git show HEAD --oneline
+    does not produce an output as stated in the documentation:
+    <sha1> <title line> This is designed to be as compact as possible."
+
+Note: I do understand now (after 5-10 minutes of googling in vain,
+mucking around with git, re-reading the man page a few times, and
+considering the fact that a bug like that in such a feature couldn't
+exist for this long -- in fact, this clue helped me more than the docs
++ googling together), that it's indeed, not a bug, but our lack of
+intimate familiarity with git and the terseness/wording of the man
+page together cause the confusion.
+
+(BTW, just realized: on the git show man page, also the strangely
+implied "log of a commit" concept (i.e. in "Pretty-print the contents
+of the commit logs") is partly responsible for the confusion. The term
+"log" doesn't mean a single event-like item, but a series of entries,
+a running record of events. In VCS lingo the established concept is
+that "a log is a list of commits", and that's even the case with git,
+too, of course. So, readers of the git show man page will have an
+impedance match there, and unnecessary difficulties understanding what
+is actually going on. My overloaded brain, for example, apparently
+opted for just filtering out that part without warning, upon the first
+(two) reading.)
+
+Assuming that we (the SO guy + his upvoters + me) are not the only
+ones, I'd suggest that instead of perhaps changing the man page,
+there's an other easy, also backwardly compatible, and quite
+straightforward way to address this: actually implementing that
+"unexpectedly missing" feature people intuitively look for.
+
+Please note that "show" is such a profoundly generic command verb,
+probably also used heavily in git, especially to show commits, that it
+comes to mind as second nature, without thinking, as the primary (or
+even as "the only") choice for showing various items in various ways
+-- which, in fact, it already properly does, indeed.
+
+Forcing us to use a different command (git log) for a minor sub-case
+of the main "show me a commit" scenario (of git show), is highly
+unnatural.
+
+Also, --oneline (as all the other formatting options) look and feel
+global to the entire context (result) of the show command, so people
+who have not yet unlearned to expect that, will be surprised
+(unpleasantly).
+
+However, simply adding --no-diff to the git show command (and the man
+page) would help a lot. (Something like --message-only or --only-msg
+etc., would be more correct (than the "potentially leaky" complement),
+but I'm not familiar with the general use of the "only" modifier in
+git options and cannot comment on that, but I've certainly seen the
+--no-... form at least.)
+
+Thanks a lot, and have a nice next message! :)
+Szabolcs
