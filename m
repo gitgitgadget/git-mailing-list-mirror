@@ -2,112 +2,83 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EF91320136
-	for <e@80x24.org>; Fri, 17 Feb 2017 13:16:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DF9CC20136
+	for <e@80x24.org>; Fri, 17 Feb 2017 13:50:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933967AbdBQNQq (ORCPT <rfc822;e@80x24.org>);
-        Fri, 17 Feb 2017 08:16:46 -0500
-Received: from zm23-mta-out-2.grenet.fr ([130.190.191.53]:33185 "EHLO
-        zm23-mta-out-2.grenet.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933915AbdBQNQq (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 Feb 2017 08:16:46 -0500
-Received: from zm23-mta-out.grenet.fr (zm23-mta-out.grenet.fr [130.190.191.35])
-        by zm23-mta-out-2.grenet.fr (Postfix) with ESMTP id B4691C92B;
-        Fri, 17 Feb 2017 14:16:42 +0100 (CET)
-Received: from smtps.univ-grenoble-alpes.fr (smtps1.u-ga.fr [152.77.1.30])
-        by zm23-mta-out.grenet.fr (Postfix) with ESMTP id B5A6E100543;
-        Fri, 17 Feb 2017 14:16:42 +0100 (CET)
-Received: from anie (anie.imag.fr [129.88.42.32])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: moym@univ-grenoble-alpes.fr)
-        by smtps.univ-grenoble-alpes.fr (Postfix) with ESMTPSA id 95BBE125EAE;
-        Fri, 17 Feb 2017 14:16:42 +0100 (CET)
-From:   Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-To:     Johan Hovold <johan@kernel.org>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Kevin Daudt <me@ikke.info>, Junio C Hamano <gitster@pobox.com>,
-        Larry Finger <Larry.Finger@lwfinger.net>
-Subject: Re: body-CC-comment regression
-References: <20170216174924.GB2625@localhost> <vpqlgt6hug6.fsf@anie.imag.fr>
-        <20170217110642.GD2625@localhost>
-Date:   Fri, 17 Feb 2017 14:16:42 +0100
-In-Reply-To: <20170217110642.GD2625@localhost> (Johan Hovold's message of
-        "Fri, 17 Feb 2017 12:06:42 +0100")
-Message-ID: <vpq7f4pdkjp.fsf@anie.imag.fr>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
+        id S933957AbdBQNup (ORCPT <rfc822;e@80x24.org>);
+        Fri, 17 Feb 2017 08:50:45 -0500
+Received: from mail-it0-f41.google.com ([209.85.214.41]:33229 "EHLO
+        mail-it0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S933336AbdBQNuo (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 Feb 2017 08:50:44 -0500
+Received: by mail-it0-f41.google.com with SMTP id d9so13556511itc.0
+        for <git@vger.kernel.org>; Fri, 17 Feb 2017 05:50:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=n0euzFZxU/KyWblsu2v3PAsfbe4H2X/6UJYHqVIqfUs=;
+        b=GCzWQh03XuXlBnqTPsvXdiWS9DmxwFGMx4M2E8jVpVs17Peuf5Nzzlkfz+3R9LA8q3
+         AS/A1w5atgVWaVoVdadd0Hhjv+bdENgqg+9aHAUsDaB/F1l7I9uDU3HEl1ws2WxhEOxC
+         2jKDZQxP2SmFk7HbTwcDYfamvynd1t5DKlCrced5sv7jaqAAnWM3JUYqsJl2vB1dLbmg
+         ohfuFHmgHhOx+iUWRGmB/JjFbdwawtLIjBhGgc+JGoXajM9cxzXiqHTmAOeQxTzTJP3/
+         yLTdbuSXaSSmK61ZTLam4NY/JlvagaGomqmzXU7q9MiId277Xr/e934631xTRRxF54Ct
+         XVIQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=n0euzFZxU/KyWblsu2v3PAsfbe4H2X/6UJYHqVIqfUs=;
+        b=JKSdA062c1k7Uk+mjVqPTtsWXV6dVqlFWDILf25MGVPrDD/i1fZE113jlKcglSkvCK
+         0S9Mk3p4+Sbn/FRQ7p2oDcs6o/7NbD3/FC9yCkatO3TYADg8/KY/55LdjBrbcXJbTjcf
+         wMRNZC3+sm7mtIgoJQeSuAKBK8MQE5jJ9fgSMjiB8KgoBGbv//EiG/y9KJclpCPPXwCm
+         54GGP825AsKNIhSDRYGF8sdQrscfNW3JyjZAwyHjtWfZn0xrHzSF9aE471JeY98YCwJc
+         fIZPjCXtsESa0iJlU+KmiObq/LbKZ39Hfoj+1urK8PvoHLaBcbm0QEuPnuTdFvSSfqcQ
+         6Iyg==
+X-Gm-Message-State: AMke39mtm4jFx9MTB5Nm/PKgB/N7gOe+nAjurhfrE+9hhc2MeF+18M9LvhIzqh7Bf63LLhLyaVXSs78ikEzhWg==
+X-Received: by 10.36.103.9 with SMTP id u9mr3393323itc.91.1487339444135; Fri,
+ 17 Feb 2017 05:50:44 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Greylist: Whitelist-UJF SMTP Authentifie (moym@univ-grenoble-alpes.fr) via submission-587 ACL (112)
+Received: by 10.107.130.157 with HTTP; Fri, 17 Feb 2017 05:50:23 -0800 (PST)
+In-Reply-To: <CAM_JFCz+9mxp37BTT7XPJ0fMd41DdbAxnvQF7id9msH+SDe6_Q@mail.gmail.com>
+References: <CAM_JFCz+9mxp37BTT7XPJ0fMd41DdbAxnvQF7id9msH+SDe6_Q@mail.gmail.com>
+From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Date:   Fri, 17 Feb 2017 14:50:23 +0100
+Message-ID: <CACBZZX4Zmwb8ZHGBXCpm6=yH_uxc-K1X1vv1jQ+wwnUPneqM4A@mail.gmail.com>
+Subject: Re: git alias for options
+To:     hIpPy <hippy2981@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johan Hovold <johan@kernel.org> writes:
+On Fri, Feb 17, 2017 at 9:23 AM, hIpPy <hippy2981@gmail.com> wrote:
+> Git has aliases for git commands. Is there a (an inbuilt) way to alias
+> options? If not, what is the reason?
 
-> There is another option, namely to only accept a single address for tags
-> in the body. I understand that being able to copy a CC-header to either
-> the header section or to the command line could be useful, but I don't
-> really see the point in allowing this in the tags in the body (a SoB
-> always has one address, and so should a CC-tag).
+This has long been on my  wishlist, because there's a lot of
+copy/pasted logic all over Git to make git foo --whatever aliased to
+foo.whatever in the config, but only for some options.
 
-I mostly agree for the SoB, but why should a Cc tag have only one email?
+It should ideally be part of something every option just supports, via
+the getopts struct.
 
-The "multiple emails per Cc: field" has been there for a while already
-(b1c8a11c8024 released in 2.6.0, sept 2015), some users may have got
-used to it. What you are proposing breaks their flow.
+However, it can't allow you to modify whatever option you want,
+because some things like git-commit-tree should not be customized
+based on config, it would break things that rely on the plumbing
+commands.
 
-> And since this is a regression for something that has been working for
-> years that was introduced by a new feature, I also think it's reasonable
-> to (partially) revert the feature.
+So it would have to be a whitelist for each option we allow to be
+configured like this via the getopts struct.
 
-I'd find it rather ironic to fix your case by breaking a feature that
-has been working for more than a year :-(. What would you answer to a
-contributor comming one year from now and proposing to revert your
-reversion because it breaks his flow?
-
-All that said, I think another fix would be both satisfactory for
-everyone and rather simple:
-
-1) Stop calling Mail::Address even if available. It used to make sense
-   to do that when our in-house parser was really poor, but we now have
-   something essentially as good as Mail::Address. We test our parser
-   against Mail::Address and we do have a few known differences (see
-   t9000), but they are really corner-cases and shouldn't matter.
-
-   A good consequence of this is that we stop depending on the way Perl
-   is installed to parse emails. Regardless of the current issue, I
-   think it is a good thing.
-
-2) Modify our in-house parser to discard garbage after the >. The patch
-   should look like (untested):
-
---- a/perl/Git.pm
-+++ b/perl/Git.pm
-@@ -903,11 +903,11 @@ sub parse_mailboxes {
-        my (@addr_list, @phrase, @address, @comment, @buffer) = ();
-        foreach my $token (@tokens) {
-                if ($token =~ /^[,;]$/) {
--                       # if buffer still contains undeterminated strings
--                       # append it at the end of @address or @phrase
--                       if ($end_of_addr_seen) {
--                               push @phrase, @buffer;
--                       } else {
-+                       # if buffer still contains undeterminated
-+                       # strings append it at the end of @address,
-+                       # unless we already saw the closing >, in
-+                       # which case we discard it.
-+                       if (!$end_of_addr_seen) {
-                                push @address, @buffer;
-                        }
- 
-What do you think?
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Also there are surely other edge cases, like maybe the config option
+now doesn't 1=1 map to the name for the option in some cases, or the
+flag should be config-able but is has no long form (which we'd like
+for the config), then we'd want to add that etc.
