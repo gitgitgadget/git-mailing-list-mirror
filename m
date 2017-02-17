@@ -2,80 +2,134 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A819D201A9
-	for <e@80x24.org>; Fri, 17 Feb 2017 22:18:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DA53C201A9
+	for <e@80x24.org>; Fri, 17 Feb 2017 22:18:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S935044AbdBQWSw (ORCPT <rfc822;e@80x24.org>);
-        Fri, 17 Feb 2017 17:18:52 -0500
-Received: from mail-pg0-f66.google.com ([74.125.83.66]:34528 "EHLO
-        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S934963AbdBQWSI (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 Feb 2017 17:18:08 -0500
-Received: by mail-pg0-f66.google.com with SMTP id v184so5895601pgv.1
-        for <git@vger.kernel.org>; Fri, 17 Feb 2017 14:18:08 -0800 (PST)
+        id S964777AbdBQWS4 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 17 Feb 2017 17:18:56 -0500
+Received: from mail-it0-f53.google.com ([209.85.214.53]:36893 "EHLO
+        mail-it0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S934963AbdBQWSx (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 Feb 2017 17:18:53 -0500
+Received: by mail-it0-f53.google.com with SMTP id x75so27708820itb.0
+        for <git@vger.kernel.org>; Fri, 17 Feb 2017 14:18:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=DZhnHXDBa7DQj/EA9+6xgd7EthqU4zBSSluvtfJgFAM=;
-        b=SOXkVjGXigPbm7cwxjTYeZnoeIXUTSwbKE8YTmavYh6DQ4hrOQhZArNaU9kBMeuI5o
-         wwmQnWploRPIynu5/WoXII8aDlF17KSTEl9RXy4sUkF/REUR+/vxNgyZ0PvvFBfWtdSb
-         lnmKYkiIys4RKDM5+R4xCoReXLt0r5rVTysQuUMUUIWomRxb7sexv1msiLuRsgxFut5f
-         a45pZEVppc47VXXKt6t7ts2uGtXmPxrpF8h4+9qGK7FL03PqKEpR43WITe+JgFKd09VD
-         FGy3QFy82KiQP/3cOPSLIQDCRcjej3ViQ7sjM8Sfs1RrLRVATD/Sls542qGYD289QXbC
-         wWTA==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=vA7k9vsQx1u9Pmu7f/lb0FSxIO86GJnOra9+XkKewF8=;
+        b=qxd7HBS915cYE0UW91uA3VNMC52AsrUGySVvRAOjdKgXolLv9sL9GmGGZN0ZQvG2oV
+         WXtz7sCXNpT6C4ZtRlYtQwBF75eZn1Nrj5MMkf7rhQhnIKmWILL+f9p6F0wNCzkdiHjd
+         3ax2vmglk9iNFxN7JhaOCsXGu06hTZLjuaynusaM18NiTR8RrsKd1OCb3FuYwjVSr13n
+         CfmTknduRCtTzzGKUBbM+SptTXZUGVM7YFkTlMPQMqOAr3fxY7LwMJ459aloUcDa62Jw
+         jMtnLGYQMR9rIaFxR393wxVqJ9AwQCJtbJ/394vcpIE6mp2Ce422RHkwGNlU6i/hCWUb
+         w3cA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=DZhnHXDBa7DQj/EA9+6xgd7EthqU4zBSSluvtfJgFAM=;
-        b=eVBXIIDM31YVjrrN6atTMGTNkyiW3yo84hnHZtaT7/Bu8aUD+7RGN5ZGZfbtFhnBsl
-         OzAh5QgBDUA11lGiinjxcCqPGrBzAHsWZtzvrS8zj4N0sXsmm/7hDMvYyHy4VwOZnIGD
-         q+pkyvpK35zcERWREYJoPLgN6WJRkJeDA6I4TX6xj/u6TbstgWTmwnSGh2CrI48MTAg1
-         wNmG/BNiYZI0W/Rx45NNszvl+ig+EYm60RmZJA4OXYrRNwg1kSBgM2SciBl1M2wfwXsP
-         bJGJa0QxmU2f/Qb9eigdCA6KyeMr7oX/j/KHAKPXp7HJCs6ijLPfvTb/KnkOc7EvHQXn
-         v3DQ==
-X-Gm-Message-State: AMke39mAAKm4TWVQN/mn2gEAqdktkAjmSPMXdfYvGfnqsmLZRzg+dh4VxKux5fEVe9tVOA==
-X-Received: by 10.84.238.1 with SMTP id u1mr14466647plk.174.1487369887886;
-        Fri, 17 Feb 2017 14:18:07 -0800 (PST)
-Received: from localhost ([2620:0:1000:8622:3130:38b1:b121:8f0d])
-        by smtp.gmail.com with ESMTPSA id l25sm21366330pfb.24.2017.02.17.14.18.07
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Fri, 17 Feb 2017 14:18:07 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Kyle Meyer <kyle@kyleam.com>, git@vger.kernel.org
-Subject: Re: [PATCH 3/3] rename_ref: replace empty deletion message in HEAD's log
-References: <20170126211205.5gz3zsrptop7n34n@sigill.intra.peff.net>
-        <20170217035800.13214-1-kyle@kyleam.com>
-        <20170217035800.13214-4-kyle@kyleam.com>
-        <20170217083112.vn7m4udsopmlvnn5@sigill.intra.peff.net>
-        <xmqqk28ou2o1.fsf@gitster.mtv.corp.google.com>
-        <20170217194350.prhp5joh33cbvwsd@sigill.intra.peff.net>
-        <20170217195549.z6uyy7hbbhj5avh7@sigill.intra.peff.net>
-Date:   Fri, 17 Feb 2017 14:18:06 -0800
-In-Reply-To: <20170217195549.z6uyy7hbbhj5avh7@sigill.intra.peff.net> (Jeff
-        King's message of "Fri, 17 Feb 2017 14:55:49 -0500")
-Message-ID: <xmqqino8qx5t.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=vA7k9vsQx1u9Pmu7f/lb0FSxIO86GJnOra9+XkKewF8=;
+        b=FMcc18RipCZUw7l2kGLfYmDnxaHeKZJbVp/tjEs1nzpciPfdQiKpODuZroazhSpEvl
+         jjAIna3ugjzKchVpAdP/JbGB2ARJj35p99sLIssXJbbjGJSuZVDlvMEm4Lu4pKmiSMKr
+         X3xrR8FCoeB5Zap955diBbuRW9CSAhLRCFgqGQpTZplAB594LeNRxcDbM1thgmv7fFcJ
+         DP+4aCoehT+sJhHK+ekEOa9h4MzwDu1k5KVu8xgnw6MVtzFWlgZr29ONT4dYcr0z1gw/
+         LVu4GUge5XDokcJh1iVTBBRxI3QKRUDsAepa3E5HJ44gUq3Am8K16Dx3giv38daJWRIv
+         UesA==
+X-Gm-Message-State: AMke39lb3ltN6Xqm+clqlKNm295pMwJpE0YZrmeWxMUD8EKOlcVUZV7e/aP94tTsYBPQ0plmNoPDebmJ5JzoEQ==
+X-Received: by 10.36.103.9 with SMTP id u9mr6180874itc.91.1487369429361; Fri,
+ 17 Feb 2017 14:10:29 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
+Received: by 10.107.130.157 with HTTP; Fri, 17 Feb 2017 14:10:08 -0800 (PST)
+In-Reply-To: <20170217204227.kreormjoo5lr6zu4@sigill.intra.peff.net>
+References: <CAM_JFCz+9mxp37BTT7XPJ0fMd41DdbAxnvQF7id9msH+SDe6_Q@mail.gmail.com>
+ <CACBZZX4Zmwb8ZHGBXCpm6=yH_uxc-K1X1vv1jQ+wwnUPneqM4A@mail.gmail.com> <20170217204227.kreormjoo5lr6zu4@sigill.intra.peff.net>
+From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Date:   Fri, 17 Feb 2017 23:10:08 +0100
+Message-ID: <CACBZZX7nJkRmSxTdvhgXz5Zuk0KeovSZM1D_eGqbBn7i20+ePQ@mail.gmail.com>
+Subject: Re: git alias for options
+To:     Jeff King <peff@peff.net>
+Cc:     hIpPy <hippy2981@gmail.com>, Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+On Fri, Feb 17, 2017 at 9:42 PM, Jeff King <peff@peff.net> wrote:
+> On Fri, Feb 17, 2017 at 02:50:23PM +0100, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
+armason wrote:
+>
+>> On Fri, Feb 17, 2017 at 9:23 AM, hIpPy <hippy2981@gmail.com> wrote:
+>> > Git has aliases for git commands. Is there a (an inbuilt) way to alias
+>> > options? If not, what is the reason?
+>>
+>> This has long been on my  wishlist, because there's a lot of
+>> copy/pasted logic all over Git to make git foo --whatever aliased to
+>> foo.whatever in the config, but only for some options.
+>>
+>> It should ideally be part of something every option just supports, via
+>> the getopts struct.
+>>
+>> However, it can't allow you to modify whatever option you want,
+>> because some things like git-commit-tree should not be customized
+>> based on config, it would break things that rely on the plumbing
+>> commands.
+>>
+>> So it would have to be a whitelist for each option we allow to be
+>> configured like this via the getopts struct.
+>>
+>> Also there are surely other edge cases, like maybe the config option
+>> now doesn't 1=3D1 map to the name for the option in some cases, or the
+>> flag should be config-able but is has no long form (which we'd like
+>> for the config), then we'd want to add that etc.
+>
+> I think your idea is roughly equivalent in functionality to just
+> allowing aliases to override command names. E.g., anything you could do
+> with:
+>
+>   [log]
+>   follow =3D true
+>   decorate =3D false
+>
+> could be done with:
+>
+>   [alias]
+>   log =3D "log --follow --no-decorate"
 
-> Thinking on it more, we probably _do_ want two entries. Because the
-> operations are not atomic, it's possible that we may end up in a
-> half-way state after the first entry is written. And when debugging such
-> a case, I'd much rather see the first half of the operation logged than
-> nothing at all.
+Indeed, exact same thing, different syntax. Mostly I like this
+suggestion better, although the bad side of it is that it's not as
+easy to introspect with a dump of git-config -l.
 
-Yes, that sounds right.
+> The reason we have historically not allowed that is for the
+> "commit-tree" plumbing reason you gave above. One option would be to
+> relax it for a whitelist of porcelain commands. Then your whitelist at
+> least only has to cover commands, and not each individual option.
+>
+> I think there are a lot of corner cases in that whitelist, though. A lot
+> of commands serve dual porcelain/plumbing purposes. E.g., "log" and
+> "tag" are commonly used by both humans and by scripts.
+>
+> A first step in that direction would probably be an environment variable
+> to tell Git to suppress command-aliases. Scripts would set that to
+> ensure a more vanilla experience. It doesn't fix _existing_ scripts, but
+> if that option were introduced, then over time scripts would start to
+> use it. Then eventually it would be safe(r) to introduce something like
+> command aliases.
+
+The most gentle first step would be to try to turn the existing config
+options where you can override cli-options into some declarative thing
+from the current ad-hoc code we have for each one.
+
+That would be no change in behavior, but would make it easier to
+migrate more things in the future.
+
+Anyway, words are cheap. Just replied because to the extent that hIpPy
+wants to work on this I thought I'd sprinkle some historical caveats
+from memory. Other than that no point in keeping talking about this
+without patches.
