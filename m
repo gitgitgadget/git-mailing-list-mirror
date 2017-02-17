@@ -2,115 +2,120 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A351C201A9
-	for <e@80x24.org>; Fri, 17 Feb 2017 21:34:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B3037201A9
+	for <e@80x24.org>; Fri, 17 Feb 2017 21:42:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934951AbdBQVeP (ORCPT <rfc822;e@80x24.org>);
-        Fri, 17 Feb 2017 16:34:15 -0500
-Received: from avasout06.plus.net ([212.159.14.18]:46700 "EHLO
-        avasout06.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S934415AbdBQVeO (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 Feb 2017 16:34:14 -0500
-X-Greylist: delayed 458 seconds by postgrey-1.27 at vger.kernel.org; Fri, 17 Feb 2017 16:34:14 EST
-Received: from deneb ([80.229.24.9])
-        by avasout06 with smtp
-        id lxSZ1u0030BmcFC01xSbSw; Fri, 17 Feb 2017 21:26:35 +0000
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.2 cv=QoEu5R6d c=1 sm=1 tr=0
- a=E/9URZZQ5L3bK/voZ0g0HQ==:117 a=E/9URZZQ5L3bK/voZ0g0HQ==:17
- a=kj9zAlcOel0A:10 a=n2v9WMKugxEA:10 a=8mQH5kNUae4DCTJlzd4A:9 a=CjuIK1q_8ugA:10
-Received: from mac by deneb with local (Exim 4.84_2)
-        (envelope-from <mac@mcrowe.com>)
-        id 1ceq2z-0002Tm-TM
-        for git@vger.kernel.org; Fri, 17 Feb 2017 21:26:33 +0000
-Date:   Fri, 17 Feb 2017 21:26:33 +0000
-From:   Mike Crowe <mac@mcrowe.com>
-To:     git@vger.kernel.org
-Subject: git diff --quiet exits with 1 on clean tree with CRLF conversions
-Message-ID: <20170217212633.GA24937@mcrowe.com>
+        id S935035AbdBQVmY (ORCPT <rfc822;e@80x24.org>);
+        Fri, 17 Feb 2017 16:42:24 -0500
+Received: from mail-pf0-f193.google.com ([209.85.192.193]:35469 "EHLO
+        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S934415AbdBQVmX (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 Feb 2017 16:42:23 -0500
+Received: by mail-pf0-f193.google.com with SMTP id 68so4841190pfx.2
+        for <git@vger.kernel.org>; Fri, 17 Feb 2017 13:42:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=PnwIAzsZzafzLwBDGCMRcUzG1SECgn8oSyacIFkJ36Y=;
+        b=VN6Z8TDsDTSkE61XXWhM0bpR4z5ybNpwLz6eBxk4+CepLrG8GAugcaysoMj98AkFzi
+         a7XIbHc+xD9ITOcHkKVlsCwBpIqf2pNeBMeLcKNVa5PoplChfIE3xbq6fL4aNrv2TXbN
+         5vV3pTShDJg+BIG/kjgQbVqleuT/0LwBehFBeD+1XzwLl1BltsqUqccxHcxCKbbHfDfp
+         ++F+Qrot5ByQfwmEh813TW4rgCg+s6gEjN86gdRP/GSs8I/tHtq3u5MhgIiJ9XQQXbcI
+         zaFUuKSYPKFfPPwPM4dK21WVSJApvFfddJqM7o/9lXIigPQjsxXqbq+CETXVBkqhM6sy
+         vU2A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=PnwIAzsZzafzLwBDGCMRcUzG1SECgn8oSyacIFkJ36Y=;
+        b=bqhS8awGpPZwG2NyBo3haLnFGagGzU1LhM28+P3I/RKZabbQydoiXyqPZoCggZBD4V
+         DnidMDknXr36LYqPp3+WZMHO0VsltXjJpdbM5ZQrCF0j+l7pJEPT7sm8R9CgEc4Wbitj
+         n+OpPuPLHZDpBUv1hBKQ6v+HBo6h54PeUlLwCb7h9dN2+Sk/9c5UwnZzEEV3wS+z/GOI
+         V2224zmwEeQnvGwHAJWgRUe+VqNTFf0G0GMdX8XfqRkGdgNVZOJZkG/LnpoStB9K0kDK
+         Xqd+Qw1mU2CH/IOATQMxDtVycd5U4lz8M74SSTpMYDMyCxNqFKWc6lgw/ZI2MOCd2JIG
+         NoRQ==
+X-Gm-Message-State: AMke39lZKEC5vrdoPVSXJJrGKwqoDpAKdmAkprK03wy0cvWXSYg9L4xHFP+jO4coQyYGyg==
+X-Received: by 10.99.60.91 with SMTP id i27mr11152294pgn.170.1487367742749;
+        Fri, 17 Feb 2017 13:42:22 -0800 (PST)
+Received: from localhost ([2620:0:1000:8622:3130:38b1:b121:8f0d])
+        by smtp.gmail.com with ESMTPSA id c2sm21289539pfl.61.2017.02.17.13.42.21
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Fri, 17 Feb 2017 13:42:21 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Michael Haggerty <mhagger@alum.mit.edu>,
+        Andreas Schwab <schwab@linux-m68k.org>,
+        =?utf-8?Q?J=C3=A1chym_Barv=C3=ADnek?= <jachymb@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH] tempfile: avoid "ferror | fclose" trick
+References: <xmqq37ff2hn8.fsf@gitster.mtv.corp.google.com>
+        <20170215231832.bzg3ygz4ualcvqlc@sigill.intra.peff.net>
+        <87tw7uv439.fsf@linux-m68k.org>
+        <20170216164359.k2ab7laqqvusfsm2@sigill.intra.peff.net>
+        <20170216213140.xqw7gzjimhvg7tcm@sigill.intra.peff.net>
+        <923e328c-7fea-a9e4-1059-3bd6b8e58164@alum.mit.edu>
+        <20170217080759.2357wzdiuymcyosw@sigill.intra.peff.net>
+        <64eedabd-c0de-a7e0-8d98-ad23a9625b45@alum.mit.edu>
+        <20170217205442.wnldfsxbj3dnnqvj@sigill.intra.peff.net>
+        <xmqq37fcsejx.fsf@gitster.mtv.corp.google.com>
+        <20170217212106.bew6krtb7pqpi3rr@sigill.intra.peff.net>
+Date:   Fri, 17 Feb 2017 13:42:21 -0800
+In-Reply-To: <20170217212106.bew6krtb7pqpi3rr@sigill.intra.peff.net> (Jeff
+        King's message of "Fri, 17 Feb 2017 16:21:06 -0500")
+Message-ID: <xmqqy3x4qyte.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-User-Agent: Mutt/1.5.23 (2014-03-12)
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-If "git diff --quiet" finds it necessary to compare actual file contents,
-and a file requires CRLF conversion, then it incorrectly exits with an exit
-code of 1 even if there have been no changes.
+Jeff King <peff@peff.net> writes:
 
-The patch below adds a test file that shows the problem.
+> On Fri, Feb 17, 2017 at 01:17:06PM -0800, Junio C Hamano wrote:
+>
+>> Stepping back a bit, would this be really needed?  Even if the ferror()
+>> does not update errno, the original stdio operation that failed
+>> would have, no?
+>
+> Sure, but we have no clue what happened in between.
 
-The first test of diff without --quiet correctly has an exit status of zero
-on both invocations.
+Hmm, so we are protecting against somebody who does "errno = 0"
+explicitly, because she knows that she's dealt with the error from
+stdio earlier?  Such a careful person would have called clearerr()
+as well, I would guess.
 
-The second test of diff with --quiet has an exit code of zero on the first
-invocation, but an exit code of one on the second invocation. Further
-invocations (not included in the test) may yield an exit code of 1. Calling
-"git status" always fixes things.
+So let's assume we only care about the case where some other error
+was detected and errno was updated by a system library call.
 
-(The touching with "tomorrow" was my attempt to avoid the sleep, but that
-didn't seem to help - it appears that time must pass in order to ensure
-that the cache is not used.)
+> I think our emails crossed, but our patches are obviously quite similar.
+> My commit message maybe explains a bit more of my thinking.
 
-The culprit would appear to be in diff_filespec_check_stat_unmatch where it
-assumes that the files are different if their sizes are different:
+Yes, but ;-)
 
-	if (!DIFF_FILE_VALID(p->one) || /* (1) */
-	    !DIFF_FILE_VALID(p->two) ||
-	    (p->one->oid_valid && p->two->oid_valid) ||
-	    (p->one->mode != p->two->mode) ||
-	    diff_populate_filespec(p->one, CHECK_SIZE_ONLY) ||
-	    diff_populate_filespec(p->two, CHECK_SIZE_ONLY) ||
-	    (p->one->size != p->two->size) ||
-	    !diff_filespec_is_identical(p->one, p->two)) /* (2) */
-		p->skip_stat_unmatch_result = 1;
+If we are trying to make sure that the caller would not say "failed
+to close tempfile: ERRNO" with an ERRNO that is unrelated to any
+stdio opration, I am not sure if the patch improves things.  The
+caller did not fail to close (most likely we successfully closed
+it), and no matter what futzing we do to errno, the message supplied
+by such a caller will not be improved.
 
-In the failing case p->one->size == 14 and p->two->size == 12.
+If the caller used "noticed an earlier error while closing tempfile:
+ERRNO", such a message would describe the situation more correctly,
+but then ERRNO that is not about stdio is probably acceptable in the
+context of that message (the original ERRNO might be ENOSPC that is
+even more specific than EIO, FWIW).  So I am not sure if the things
+will improve from the status quo.
 
-Mike.
+It's easy for us to either apply the patch and be done with it (or
+drop and do the same), and in the bigger picture it wouldn't make
+that much of a difference, I would think, so I can go either way.
 
-diff --git a/t/t4063-diff-converted.sh b/t/t4063-diff-converted.sh
-new file mode 100755
-index 0000000..a108dfb
---- /dev/null
-+++ b/t/t4063-diff-converted.sh
-@@ -0,0 +1,32 @@
-+#!/bin/sh
-+#
-+# Copyright (c) 2017 Mike Crowe
-+#
-+
-+test_description='git diff with files that require CRLF conversion'
-+
-+. ./test-lib.sh
-+
-+test_expect_success setup '
-+	echo "* text=auto" > .gitattributes &&
-+	printf "Hello\r\nWorld\r\n" > crlf.txt &&
-+	git add .gitattributes crlf.txt &&
-+	git commit -m "initial"
-+'
-+test_expect_success 'noisy diff works on file that requires CRLF conversion' '
-+	git status >/dev/null &&
-+	git diff >/dev/null &&
-+	sleep 1 &&
-+	touch --date=tomorrow crlf.txt &&
-+	git diff >/dev/null
-+'
-+# The sleep is required for reasons I don't fully understand
-+test_expect_success 'quiet diff works on file that requires CRLF conversion with no changes' '
-+	git status &&
-+	git diff --quiet &&
-+	sleep 1 &&
-+	touch --date=tomorrow crlf.txt &&
-+	git diff --quiet
-+'
-+
-+test_done
+
