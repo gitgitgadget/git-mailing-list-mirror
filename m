@@ -2,52 +2,52 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 97D2920136
-	for <e@80x24.org>; Fri, 17 Feb 2017 14:19:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A0FB620136
+	for <e@80x24.org>; Fri, 17 Feb 2017 14:19:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934369AbdBQOTu (ORCPT <rfc822;e@80x24.org>);
-        Fri, 17 Feb 2017 09:19:50 -0500
-Received: from mail-pg0-f66.google.com ([74.125.83.66]:33850 "EHLO
-        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S934423AbdBQOTn (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 Feb 2017 09:19:43 -0500
-Received: by mail-pg0-f66.google.com with SMTP id v184so5074203pgv.1
-        for <git@vger.kernel.org>; Fri, 17 Feb 2017 06:19:42 -0800 (PST)
+        id S934370AbdBQOTy (ORCPT <rfc822;e@80x24.org>);
+        Fri, 17 Feb 2017 09:19:54 -0500
+Received: from mail-pg0-f65.google.com ([74.125.83.65]:32996 "EHLO
+        mail-pg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S934098AbdBQOTs (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 Feb 2017 09:19:48 -0500
+Received: by mail-pg0-f65.google.com with SMTP id 5so5070326pgj.0
+        for <git@vger.kernel.org>; Fri, 17 Feb 2017 06:19:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=aY489bfxjvduLElTguXL7GbYIRjdCDXKmcqJ3KO2BQs=;
-        b=Sa0ZIFQjfj4lS9kyv9LXWU4gUvhKLrqGp0DCkKQ3Bs92b9m+5EpTCukrgF03X3sOQ5
-         aOY6tgBGAzhR4a7f1wRoAV/8w/DFhZ74f0wyhxHegrlb5b92P3QtqicTVg6MMMwtq4Xj
-         oXVYWy9r308dcKwWN0j8ScEsPTX2CTFWtxXD8moK4S/dp8aEUprEO5Vl5OIren2cryjT
-         LkTu20n59PNHWYHe1fEjT1qkR6UgHvWaSLR6kQ7fDWVEFDeqSQZXVGv1TJRmizQncls4
-         efNhw8rBNNTHvlhpd9OnCifgi7UF25HkgTajyR6a8uBXMPtZXJ3lm4RJLnEHFzE7a/M6
-         hQcA==
+        bh=SYZRuRF1o64L3LFBwRp1Wbtg3ayk6gVe/oW8sT1u2Vk=;
+        b=Iz8MwrDaUunD+aUflRsxTnvqiduGm+hSuNZINNO0TBgax/V28kf2ZVRUpQ0DPj9AHW
+         jd5AWFzGHVvdeg/WulazjUSHf8TQCu/Pi85i7hHnLkA6+2U+1rTDB/x1qrSN1H2KNxYT
+         /74s6TVGUDEOfJLnAGPilqLDXJk4CE6bl+TXkxwurYQ8J3+djNJ1JGTcm98jI1kE/04v
+         z8EFo4XzcQBBkT/V18yGd9dBc0PCEXftZdiEGGHQHfnp5uZ65+CSS2j12WHGcAS5nmJj
+         luLj8j866QhipjUwzei3JIKsD6qnBTnBW3mCzw0m+7qnmDslrTZWG9pJurB/zBTzz0KX
+         SuCw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=aY489bfxjvduLElTguXL7GbYIRjdCDXKmcqJ3KO2BQs=;
-        b=HJCXn5uw5IEo9sF0lZzAqEnYB6D4q6eZXwMjjAwqm/W1Xyn3CBU9/NimTWpru/sqYV
-         mGm2q0cHD2CA1MtNScXM7y9k6HNeu0hLrbCJWRs8lwIS5zkutidQNdncTJySjgEhKqD+
-         Ef3WFLtqdurpTeAkrXoV3hJgRZxV+MRJEX9+XWXt0f9SSqB6TSl8KCY0RB53s+oq1Abz
-         d9bXW7gYjR4NDsI4Ff3XU8YlYZxK2VaFHg8WCc7S+CLm6Z0VeA5iRjqVrdt/Eo53ntdT
-         G0ff4ttX1kv4v75GSq1ADhnPtCsT4pJRCkIPhUIWwX+1SOOIkfwpN7ptufnBO4usB0yP
-         zdxA==
-X-Gm-Message-State: AMke39m0JNRx63UaWV8LjnkzvnBuUY3JQOgJvR6J4gMQ4glQ3HQ+w+VSzEurtfGjeWcoEg==
-X-Received: by 10.84.254.66 with SMTP id a2mr11516543pln.57.1487341182366;
-        Fri, 17 Feb 2017 06:19:42 -0800 (PST)
+        bh=SYZRuRF1o64L3LFBwRp1Wbtg3ayk6gVe/oW8sT1u2Vk=;
+        b=b/G+0iF1Dn1z2K7x0TqRd5nBWPn+bpE3VggNc88oNhKfIIw4f56PFbBB7H5WMm/g9z
+         eL+2lGHak/B/332RrtGnDFoKp2r44TKKEvcUuu9tn9R2irBzVjbExOEEOj/d+TMfjRId
+         na2hS99Q+7ed4PrQgAQaf7PmoeUakVkOESRjDwe80ixGi50rIEJ3pcZ+km4+BoM+csQT
+         EojX/a498yiRwz6VJTJEQgRS+zjnTn2RoSf59/DtwOEbAeC7Tv8dqRtEr6T+JnQoTb/D
+         tmcf3n8AQvTTg+BThtg0MOZZQP7kIAR46LNn0Wco4t/LEug3fOKpDQJHtAEqF5O8rYjJ
+         JWog==
+X-Gm-Message-State: AMke39nEMNglOMMqPXEl85AbnHUEypjAqvYE8Ke0SM3SsSpdX/2ql8W2q7S3BrlYWn2KRw==
+X-Received: by 10.98.90.196 with SMTP id o187mr9682959pfb.30.1487341187471;
+        Fri, 17 Feb 2017 06:19:47 -0800 (PST)
 Received: from ash ([115.73.162.84])
-        by smtp.gmail.com with ESMTPSA id b190sm20022227pfa.110.2017.02.17.06.19.39
+        by smtp.gmail.com with ESMTPSA id o12sm20123611pfg.15.2017.02.17.06.19.44
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 17 Feb 2017 06:19:41 -0800 (PST)
-Received: by ash (sSMTP sendmail emulation); Fri, 17 Feb 2017 21:19:37 +0700
+        Fri, 17 Feb 2017 06:19:46 -0800 (PST)
+Received: by ash (sSMTP sendmail emulation); Fri, 17 Feb 2017 21:19:42 +0700
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
@@ -57,9 +57,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH 03/15] revision.c: --indexed-objects add objects from all worktrees
-Date:   Fri, 17 Feb 2017 21:18:56 +0700
-Message-Id: <20170217141908.18012-4-pclouds@gmail.com>
+Subject: [PATCH 04/15] refs: move submodule slash stripping code to get_submodule_ref_store
+Date:   Fri, 17 Feb 2017 21:18:57 +0700
+Message-Id: <20170217141908.18012-5-pclouds@gmail.com>
 X-Mailer: git-send-email 2.11.0.157.gd943d85
 In-Reply-To: <20170217141908.18012-1-pclouds@gmail.com>
 References: <20170217141908.18012-1-pclouds@gmail.com>
@@ -71,77 +71,95 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is the result of single_worktree flag never being set (no way to up
-until now). To get objects from current index only, set single_worktree.
-
-The other add_index_objects_to_pending's caller is mark_reachable_objects()
-(e.g. "git prune") which also mark objects from all indexes.
+This is a better place that will benefit all submodule callers instead
+of just resolve_gitlink_ref()
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- revision.c       | 21 +++++++++++++++++++++
- t/t5304-prune.sh |  9 +++++++++
- 2 files changed, 30 insertions(+)
+ refs.c | 38 ++++++++++++++++++++------------------
+ 1 file changed, 20 insertions(+), 18 deletions(-)
 
-diff --git a/revision.c b/revision.c
-index ece868a25..d82f72ff3 100644
---- a/revision.c
-+++ b/revision.c
-@@ -19,6 +19,7 @@
- #include "dir.h"
- #include "cache-tree.h"
- #include "bisect.h"
-+#include "worktree.h"
- 
- volatile show_early_output_fn_t show_early_output;
- 
-@@ -1291,8 +1292,28 @@ static void do_add_index_objects_to_pending(struct rev_info *revs,
- 
- void add_index_objects_to_pending(struct rev_info *revs, unsigned int flags)
+diff --git a/refs.c b/refs.c
+index 23e0a8eda..9c86c44b8 100644
+--- a/refs.c
++++ b/refs.c
+@@ -1321,25 +1321,10 @@ const char *resolve_ref_unsafe(const char *refname, int resolve_flags,
+ int resolve_gitlink_ref(const char *submodule, const char *refname,
+ 			unsigned char *sha1)
  {
-+	struct worktree **worktrees, **p;
+-	size_t len = strlen(submodule);
+ 	struct ref_store *refs;
+ 	int flags;
+ 
+-	while (len && submodule[len - 1] == '/')
+-		len--;
+-
+-	if (!len)
+-		return -1;
+-
+-	if (submodule[len]) {
+-		/* We need to strip off one or more trailing slashes */
+-		char *stripped = xmemdupz(submodule, len);
+-
+-		refs = get_submodule_ref_store(stripped);
+-		free(stripped);
+-	} else {
+-		refs = get_submodule_ref_store(submodule);
+-	}
++	refs = get_submodule_ref_store(submodule);
+ 
+ 	if (!refs)
+ 		return -1;
+@@ -1458,7 +1443,17 @@ struct ref_store *get_submodule_ref_store(const char *submodule)
+ {
+ 	struct strbuf submodule_sb = STRBUF_INIT;
+ 	struct ref_store *refs;
++	char *to_free = NULL;
+ 	int ret;
++	size_t len;
 +
- 	read_cache();
- 	do_add_index_objects_to_pending(revs, &the_index);
-+
-+	if (revs->single_worktree)
-+		return;
-+
-+	worktrees = get_worktrees(0);
-+	for (p = worktrees; *p; p++) {
-+		struct worktree *wt = *p;
-+		struct index_state istate = {0};
-+
-+		if (wt->is_current)
-+			continue; /* current index already taken care of */
-+
-+		if (read_index_from(&istate,
-+				    worktree_git_path(wt, "index")) > 0)
-+			do_add_index_objects_to_pending(revs, &istate);
-+		discard_index(&istate);
++	if (submodule) {
++		len = strlen(submodule);
++		while (len && submodule[len - 1] == '/')
++			len--;
++		if (!len)
++			submodule = NULL;
 +	}
-+	free_worktrees(worktrees);
+ 
+ 	if (!submodule || !*submodule) {
+ 		/*
+@@ -1468,15 +1463,19 @@ struct ref_store *get_submodule_ref_store(const char *submodule)
+ 		return get_main_ref_store();
+ 	}
+ 
++	if (submodule[len])
++		/* We need to strip off one or more trailing slashes */
++		submodule = to_free = xmemdupz(submodule, len);
++
+ 	refs = lookup_submodule_ref_store(submodule);
+ 	if (refs)
+-		return refs;
++		goto done;
+ 
+ 	strbuf_addstr(&submodule_sb, submodule);
+ 	ret = is_nonbare_repository_dir(&submodule_sb);
+ 	strbuf_release(&submodule_sb);
+ 	if (!ret)
+-		return refs;
++		goto done;
+ 
+ 	ret = submodule_to_gitdir(&submodule_sb, submodule);
+ 	if (!ret)
+@@ -1485,6 +1484,9 @@ struct ref_store *get_submodule_ref_store(const char *submodule)
+ 
+ 	if (refs)
+ 		register_submodule_ref_store(refs, submodule);
++
++done:
++	free(to_free);
+ 	return refs;
  }
  
- static int add_parents_only(struct rev_info *revs, const char *arg_, int flags,
-diff --git a/t/t5304-prune.sh b/t/t5304-prune.sh
-index 133b5842b..cba45c7be 100755
---- a/t/t5304-prune.sh
-+++ b/t/t5304-prune.sh
-@@ -283,4 +283,13 @@ test_expect_success 'prune: handle alternate object database' '
- 	git -C B prune
- '
- 
-+test_expect_success 'prune: handle index in multiple worktrees' '
-+	git worktree add second-worktree &&
-+	echo "new blob for second-worktree" >second-worktree/blob &&
-+	git -C second-worktree add blob &&
-+	git prune --expire=now &&
-+	git -C second-worktree show :blob >actual &&
-+	test_cmp second-worktree/blob actual
-+'
-+
- test_done
 -- 
 2.11.0.157.gd943d85
 
