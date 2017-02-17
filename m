@@ -2,112 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0410920136
-	for <e@80x24.org>; Fri, 17 Feb 2017 18:25:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3887F20136
+	for <e@80x24.org>; Fri, 17 Feb 2017 18:25:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934671AbdBQSZO (ORCPT <rfc822;e@80x24.org>);
-        Fri, 17 Feb 2017 13:25:14 -0500
-Received: from mail-lf0-f65.google.com ([209.85.215.65]:35607 "EHLO
-        mail-lf0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S934211AbdBQSZN (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 Feb 2017 13:25:13 -0500
-Received: by mail-lf0-f65.google.com with SMTP id z127so2045879lfa.2
-        for <git@vger.kernel.org>; Fri, 17 Feb 2017 10:25:12 -0800 (PST)
+        id S934819AbdBQSZs (ORCPT <rfc822;e@80x24.org>);
+        Fri, 17 Feb 2017 13:25:48 -0500
+Received: from mail-pg0-f65.google.com ([74.125.83.65]:33543 "EHLO
+        mail-pg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S934211AbdBQSZr (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 Feb 2017 13:25:47 -0500
+Received: by mail-pg0-f65.google.com with SMTP id 5so5520894pgj.0
+        for <git@vger.kernel.org>; Fri, 17 Feb 2017 10:25:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=XtD0Xcm5bsJNh0tygcWtmLB3FEnEo2oh8sb5BDEyHDc=;
-        b=E3nsooJ1khhyvjqZJsAcr7D/j+CawRBWeeB1ElFJkUYgexWVTcX0lemRbx8GuUqqCy
-         Lr/vnaKpkNaH9EZ4EvfpCeQGKSIQWAn3mVdSieuYYUYLzu9mDl1xq/qA5PJa9v6t2phb
-         PXTD1kVdryL+2WqhI9179MTSOq+NAwohDjNZnl/QOoSpJ8H4uAj128MxIbvIHgWdVzF2
-         HRqgtGhZwMe8zBq/1xlDARO8hjvT1xAoqM2lfJF+ofgJGfdJaHdWNUbQow2baaImCSYi
-         /rSEQ+fzBEJPDTtQ+jj8/5v4wg58OapjUWzCTziiv9rYcH8sh0dTeoYsmGzX/B9NdCE8
-         dNbw==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=X1K/U7/AWNWndcczoowI6t6P06ydUa3ktE7RuLfqq5Y=;
+        b=ginwwp4WUqVEj4U5K6WUXgo23E8rWXlivb9YKmUkAuBKeuyieJQVAHGdaoXK8LrCYG
+         HhVrcVANZ0xqy3CEcP13wfcWHYbQ9JLH8T7CiieqHLzFzL4KZvT2nlKocHSdVORSByzP
+         Gh8enEuH0Ra/YZ+9SBvP08dYyBzv1xIm1uCyhH4yVlSeLiU3U5SdMQSnkyLX6ERNBMJC
+         ieluvv950uXsOMi2Y47xpgZUPj894AtqblNa2ZYkI8xATAAEddWoUtaIrXTDMma8g4gm
+         9d3lJ1nhn0wq5j1fiMX7wcg+7wzQ/rdSViTRpakBp0YHRt4zULxLvcNQT5+PnpASSuT5
+         DDIA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=XtD0Xcm5bsJNh0tygcWtmLB3FEnEo2oh8sb5BDEyHDc=;
-        b=Hvte68CnKB0QFNRyJNXjPjXu3CFvOVKzJpQaD7EUkS0Td/JhiDeGHI/ZVLU8fClRo3
-         8OC4kDBuJRBs2FhjXAUKPXEPYtEBcUqeNf7zHQOXzFCzkCqqF1SaUzaQ21mHNL5G15ew
-         qLqxalbgUWI+4QSCRJ6vyJsHwEDdxJM1MgX7r3SCPpnrFzv09xtLzmscVs1Mg7R5As3R
-         +6ssHU9CbS4mZI2XEVGk14JR+gc0soQOWulkSzaPpjdqhUES+Qz8nn/LwcN4KkOhx57c
-         bCaZ/B1RQKQmTR5ssjACkDbmKew+U7mTi5lFf3myMKX09jVC6W+AeCQUcaiYjPsWgLIw
-         39JQ==
-X-Gm-Message-State: AMke39kMEtYaqse1KLV1Duanvq322ITT9YYwOAvHd5/1nTDzvg00qQFu6+9hLxBM6AIizoffTH4X1S3CBkPsBQ==
-X-Received: by 10.25.87.196 with SMTP id l187mr2674736lfb.143.1487355911830;
- Fri, 17 Feb 2017 10:25:11 -0800 (PST)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=X1K/U7/AWNWndcczoowI6t6P06ydUa3ktE7RuLfqq5Y=;
+        b=VwHK2rHKmzbtO0Vm0OhEw7+T6GIuiyrK/YdUSRfaRyU57CpPPIhhkCfcLSA6wDhdXS
+         xP29618CwmtaTyjcV2ubm9Ylqf+JH+fwppG+vRRfIWtQGfgIBPO8BSglh4sETPJxVziX
+         dOEObWgH+Rdh0JRvU1BDbqULDjaaEiBCgINiXopKC2u8Z21kyyCi4ZxBeF3IDPx6vxxr
+         7jsRSPxZxD+kCg+CEh34dhbDldj4SXwRbWbgT+fVwxpXFYjlz8h2wNmB+4JUUm42aBPr
+         pj2S36VsDQoAOpojfciMUuP78xnzQ4Jx7Q6umQSrtZvkCzfklK7YHXUX/lEHZrD1fvI6
+         7WTA==
+X-Gm-Message-State: AMke39my2apu22c5BElai9U2kA2m3x3etWIofLquvObN3yV+/BSTIZAjRN3KQgL5y/FoWg==
+X-Received: by 10.84.176.131 with SMTP id v3mr13267566plb.20.1487355946327;
+        Fri, 17 Feb 2017 10:25:46 -0800 (PST)
+Received: from localhost ([2620:0:1000:8622:3130:38b1:b121:8f0d])
+        by smtp.gmail.com with ESMTPSA id f9sm20927614pfj.56.2017.02.17.10.25.43
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Fri, 17 Feb 2017 10:25:44 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc:     git@vger.kernel.org,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        Michael Rappazzo <rappazzo@gmail.com>
+Subject: Re: [PATCH v3 0/2] Fix bugs in rev-parse's output when run in a subdirectory
+References: <cover.1486740772.git.johannes.schindelin@gmx.de>
+        <cover.1487350582.git.johannes.schindelin@gmx.de>
+Date:   Fri, 17 Feb 2017 10:25:34 -0800
+In-Reply-To: <cover.1487350582.git.johannes.schindelin@gmx.de> (Johannes
+        Schindelin's message of "Fri, 17 Feb 2017 17:58:53 +0100 (CET)")
+Message-ID: <xmqq8tp4u129.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.25.145.14 with HTTP; Fri, 17 Feb 2017 10:24:51 -0800 (PST)
-In-Reply-To: <20170216003811.18273-7-sbeller@google.com>
-References: <xmqq8tp74823.fsf@gitster.mtv.corp.google.com> <20170216003811.18273-1-sbeller@google.com>
- <20170216003811.18273-7-sbeller@google.com>
-From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Fri, 17 Feb 2017 10:24:51 -0800
-Message-ID: <CA+P7+xozip8TuvyUe9vAPYLAg=QFieExhOyR7a0pgGFhiuO3jw@mail.gmail.com>
-Subject: Re: [PATCH 06/15] update submodules: add submodule config parsing
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Git mailing list <git@vger.kernel.org>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Brandon Williams <bmwill@google.com>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Feb 15, 2017 at 4:38 PM, Stefan Beller <sbeller@google.com> wrote:
-> Similar to b33a15b08 (push: add recurseSubmodules config option,
-> 2015-11-17) and 027771fcb1 (submodule: allow erroneous values for the
-> fetchRecurseSubmodules option, 2015-08-17), we add submodule-config code
-> that is later used to parse whether we are interested in updating
-> submodules.
->
-> We need the `die_on_error` parameter to be able to call this parsing
-> function for the config file as well, which if incorrect lets Git die.
->
-> As we're just touching the header file, also mark all functions extern.
->
-> Signed-off-by: Stefan Beller <sbeller@google.com>
-> ---
->  submodule-config.c | 22 ++++++++++++++++++++++
->  submodule-config.h | 17 +++++++++--------
->  2 files changed, 31 insertions(+), 8 deletions(-)
->
-> diff --git a/submodule-config.c b/submodule-config.c
-> index 93453909cf..93f01c4378 100644
-> --- a/submodule-config.c
-> +++ b/submodule-config.c
-> @@ -234,6 +234,28 @@ int parse_fetch_recurse_submodules_arg(const char *opt, const char *arg)
->         return parse_fetch_recurse(opt, arg, 1);
->  }
->
-> +static int parse_update_recurse(const char *opt, const char *arg,
-> +                               int die_on_error)
-> +{
-> +       switch (git_config_maybe_bool(opt, arg)) {
-> +       case 1:
-> +               return RECURSE_SUBMODULES_ON;
-> +       case 0:
-> +               return RECURSE_SUBMODULES_OFF;
-> +       default:
-> +               if (!strcmp(arg, "checkout"))
-> +                       return RECURSE_SUBMODULES_ON;
-> +               if (die_on_error)
-> +                       die("bad %s argument: %s", opt, arg);
-> +               return RECURSE_SUBMODULES_ERROR;
-> +       }
-> +}
+Johannes Schindelin <johannes.schindelin@gmx.de> writes:
 
-Ok so this function here reads a recurse submodules parameter which is
-a boolean or it can be set to the word "checkout"? Why does checkout
-need its own value separate from true? Just so that we have a synonym?
-or so that we can expand on it in the future?
+> The bug that bit me (hard!) and that triggered not only a long series of
+> curses but also my writing a patch and sending it to the list was that
+> `git rev-parse --git-path HEAD` would give *incorrect* output when run
+> in a subdirectory of a regular checkout, but *correct* output when run
+> in a subdirectory of an associated *worktree*.
+>
+> I had tested the script in question quite a bit, but in a worktree. And
+> in production, it quietly did exactly the wrong thing.
+>
+> Changes relative to v2:
+>
+> - the "iffy" test in t1700 was made "uniffy"
+>
+> - clarified in the commit message of 2/2 why we can get away with the
+>   "reset then use" pattern
+
+It is no longer relevant between "reset then use" and "use then
+reset", I think, because you did something much better, which is to
+move strbuf_release() up so that it comes before the possible early
+returns.
+
+Both patches look good.  Let's queue this and move it to 'next'
+shortly.  Personally, I think it is OK to fast-track this to
+'master' before the final, but just like any other bugs, we've lived
+with the bug for some time, and it is not a big deal if we have to
+live with it for a bit longer.
+
+Thanks.
