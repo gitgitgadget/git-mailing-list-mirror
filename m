@@ -2,59 +2,71 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 19218201A9
-	for <e@80x24.org>; Fri, 17 Feb 2017 23:41:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 338D4201A9
+	for <e@80x24.org>; Fri, 17 Feb 2017 23:41:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S964911AbdBQXlb (ORCPT <rfc822;e@80x24.org>);
-        Fri, 17 Feb 2017 18:41:31 -0500
-Received: from cloud.peff.net ([104.130.231.41]:57657 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S964905AbdBQXla (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 Feb 2017 18:41:30 -0500
-Received: (qmail 31919 invoked by uid 109); 17 Feb 2017 23:41:30 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 17 Feb 2017 23:41:30 +0000
-Received: (qmail 8795 invoked by uid 111); 17 Feb 2017 23:41:32 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 17 Feb 2017 18:41:32 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 17 Feb 2017 18:41:28 -0500
-Date:   Fri, 17 Feb 2017 18:41:28 -0500
-From:   Jeff King <peff@peff.net>
-To:     Kyle Meyer <kyle@kyleam.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: [PATCH 2/3] update-ref: pass reflog message argument to
- delete_refs
-Message-ID: <20170217234128.d7uhxu4fjzsc4yjh@sigill.intra.peff.net>
-References: <20170126211205.5gz3zsrptop7n34n@sigill.intra.peff.net>
- <20170217035800.13214-1-kyle@kyleam.com>
- <20170217035800.13214-3-kyle@kyleam.com>
- <20170217082253.kxjezkxfqkfxjhzr@sigill.intra.peff.net>
- <8737fcqtcj.fsf@kyleam.com>
+        id S964912AbdBQXlg (ORCPT <rfc822;e@80x24.org>);
+        Fri, 17 Feb 2017 18:41:36 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:61335 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S964862AbdBQXlf (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 Feb 2017 18:41:35 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 64680691B8;
+        Fri, 17 Feb 2017 18:41:34 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:in-reply-to:references:date:message-id:mime-version
+        :content-type; s=sasl; bh=7vhteOxjB3NZs//fnFNWJVqsAO4=; b=eqneEa
+        mU5NACPz/tFeKjSJNIrpqH4wdhOGzDeiyIko5IT0XTLVyhS7e2EB+yIFYek6ewu2
+        4wkKD56Y1yiOokpd9OatMRghq/5uEGPEegohMoUmwGCvtGgSMk/mLLPtgPJG04I5
+        6o7ZrkUEq4MtWTZezSAh/Z0jqMXO2Z5w3jhxA=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 4E0C4691B7;
+        Fri, 17 Feb 2017 18:41:34 -0500 (EST)
+Received: from localhost (unknown [24.60.167.92])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id C4753691B6;
+        Fri, 17 Feb 2017 18:41:33 -0500 (EST)
+From:   Kyle Meyer <kyle@kyleam.com>
+To:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 3/3] rename_ref: replace empty deletion message in HEAD's log
+In-Reply-To: <xmqqk28ou2o1.fsf@gitster.mtv.corp.google.com>
+References: <20170126211205.5gz3zsrptop7n34n@sigill.intra.peff.net> <20170217035800.13214-1-kyle@kyleam.com> <20170217035800.13214-4-kyle@kyleam.com> <20170217083112.vn7m4udsopmlvnn5@sigill.intra.peff.net> <xmqqk28ou2o1.fsf@gitster.mtv.corp.google.com>
+Date:   Fri, 17 Feb 2017 18:41:32 -0500
+Message-ID: <871suwqtar.fsf@kyleam.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <8737fcqtcj.fsf@kyleam.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 9D71A0EE-F56A-11E6-9E70-FE3F13518317-24757444!pb-smtp1.pobox.com
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=kyleam.com;
+ h=from:to:cc:subject:in-reply-to:references:date:message-id:mime-version:content-type; s=mesmtp; bh=7vhteOxjB3NZs//fnFNWJVqsAO4=; b=pj48QEDBN/SrJzf+zVG1G2yRcELqL1/vFjl6kpg19nwZ/8lfct2pTu2OPAy8Le6wkiPZ5GNe6796HXK0fdhkKO2qQtfh6WoGCYBc8Oi+JBNpiTwmPLV02/1rjPlhUU8AFr5FgyCuvjfIEdcmyxx89+jTYw9Hk6bgI5v5CIRFWFY=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Feb 17, 2017 at 06:40:28PM -0500, Kyle Meyer wrote:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> > For reference, the two things I notice are:
-> >
-> >   - we prefer test_path_is_missing to "! test -f" these days.
-> >
-> >   - we don't redirect the output of grep (it's handled already in
-> >     non-verbose mode, and in verbose mode we try to be...verbose).
-> 
-> Would moving cleanup like "rm -f .git/$m" within the test's body using
-> test_when_finished also be preferred?
+[...]
 
-Yeah, that too.  I forgot to mention it.
+> Do we even want these "internal" delete_ref() invocations to be
+> logged in HEAD's reflog?  I understand that this is inside the
+> implementation of renaming an old ref to a new ref, and reflog
+> message given to delete_ref() would matter only if the HEAD happens
+> to be pointing at old ref---but then HEAD will be repointed to the
+> new ref by somebody else [*1*] that called this function to rename
+> old to new and it _will_ log it.
 
--Peff
+I know the discussion has developed further, but just a note that I
+think the last statement is inaccurate: currently, a rename will not be
+recorded in HEAD's log.  "git branch -m" will show a renaming event in
+the new branch's log, but the only trace of the event in HEAD's log is
+the deletion entry with an empty message.
+
+-- 
+Kyle
