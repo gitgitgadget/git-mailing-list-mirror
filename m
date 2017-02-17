@@ -2,107 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1936A201A9
-	for <e@80x24.org>; Fri, 17 Feb 2017 23:07:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D875C201A9
+	for <e@80x24.org>; Fri, 17 Feb 2017 23:09:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S964799AbdBQXHM (ORCPT <rfc822;e@80x24.org>);
-        Fri, 17 Feb 2017 18:07:12 -0500
-Received: from mail-pf0-f181.google.com ([209.85.192.181]:35078 "EHLO
-        mail-pf0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S964788AbdBQXHL (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 Feb 2017 18:07:11 -0500
-Received: by mail-pf0-f181.google.com with SMTP id 68so5558489pfx.2
-        for <git@vger.kernel.org>; Fri, 17 Feb 2017 15:07:11 -0800 (PST)
+        id S964807AbdBQXJL (ORCPT <rfc822;e@80x24.org>);
+        Fri, 17 Feb 2017 18:09:11 -0500
+Received: from mail-pf0-f195.google.com ([209.85.192.195]:33922 "EHLO
+        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S964788AbdBQXJK (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 Feb 2017 18:09:10 -0500
+Received: by mail-pf0-f195.google.com with SMTP id o64so4955064pfb.1
+        for <git@vger.kernel.org>; Fri, 17 Feb 2017 15:09:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=K6kx5NkIzZ1qOxbHzB5NKnU2tE8tcm2vNwyTdOQt/Ic=;
-        b=mEN5+l8p8EqZEIci1GCAJwqnU8FQWSGVMPXvRXeeTtNofums1pq94kKZvKHSEPSiMh
-         gg8R7TMZvy43+AIvWarDhAGZb6sBgYpfymw4rF1m6GRYkzs1RDT9m8gy9T21ScGJSir8
-         N8Od4v+4o3FKsBuS0t0ycrGF8p9y3eB3jbaKMSv951KTTgZ0l0MBajAW/F2zj8g4SUra
-         zxDz9KLN9Qtv5h2lEs3V9vANq0k3oxMP5OOhr28vi5ZgBC+mF23IjecEa+M0h8cpzyoW
-         PGnGIML9CSliXFUnebLKi258/DqMAbmoQ+Sh1OT5KHTJjTsj4ahAB/jqnDBdAJIqa2+3
-         OpLg==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=7QwlHxxYKbKYicRVjxCQzXAFs0lAgtl70dqXkCOsfbQ=;
+        b=Dwp+ApmpK/gWtQAqsTqgw5/7ZuM5ETrCsjlNnuVDXDCUpM6EcXSzSVm5D3hNpjFP2R
+         WkICbmrtJLsq5pLu1rKkyTblC2lbFUJIbHHtPebxa0+kd9Fgcc0dCQGxStDnecMuLkWU
+         7sWyNgwdSO+/KM3IgHiW9ojcEgRDtcOxJgtOXI5jEfwQ8L7rbLDlS9yIfk08pkld3U3u
+         MEVZHVAlbXoFywjrGahy6cCisw/+BhCOQqoHxTr5gpSX6DgTA2XwnOU+yHOR07oWGpyi
+         lLrlpgqzRt+b/JQtvvHdWCwzd3bJ3MefaoJ7wnXCFqzhHT6bSUzitISeArdEcdS5iwff
+         5F2w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=K6kx5NkIzZ1qOxbHzB5NKnU2tE8tcm2vNwyTdOQt/Ic=;
-        b=M07kCMGSOlq2CkKw6EhpkxUHtBUl0/GXlcGWgiI2gk7WLt0ZtF+Td0oV0zNVwCrhs7
-         BhQenG62xBLdwqtzUf1m6eInBBV9tKobFa33rdolPFamV2P+3m83RTqiw8XZqmxwiFEI
-         cxidN0Wgg7m1tMN/nD2kxeMjxOP1VKWV11H9cHCoQktbpLM/SKP0eH1L6IG4ujCYk+su
-         MG5VKnByGvpJUZpgZZuIk+SYuJoqGP6+dHcR9sE6rbjIcQjI14U+HbkKDkFGOFjzjqGs
-         eLAz/aL0XCl470MQhyitXI5Ms2Csf8FXnfkUbXdy/kO4sKClU+DNuWmnX8kqIFOUILj8
-         tD4w==
-X-Gm-Message-State: AMke39l1Q5eIXOle+tcRCWCA8u4WVGx/iNicMrD0x4s+Zba8l2F/0PvcfFJ9d9Y+71/Vops+
-X-Received: by 10.99.215.5 with SMTP id d5mr13267894pgg.51.1487372830317;
-        Fri, 17 Feb 2017 15:07:10 -0800 (PST)
-Received: from google.com ([2620:0:1000:5b10:8ee:9aa0:dea:69e7])
-        by smtp.gmail.com with ESMTPSA id s21sm21477422pgg.65.2017.02.17.15.07.08
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=7QwlHxxYKbKYicRVjxCQzXAFs0lAgtl70dqXkCOsfbQ=;
+        b=dHiE99tcNdsYllk5v9Gm0HAvxRCk/lZlFGTY3Y+O2fn+pPMCjRE1PWUGCIammRghln
+         X56mEubrY6pOg7mEoNcwBL5HxKircDRLgBB+Rhm4+Hy0riCSzSRaWGXVtO60+oMzJ3Zh
+         uxPPMtD9FS3E0/EVFdifs5amhZaQp9vj6KgWErlaKsQSiFOnLSUOMRCJpxZlaEYSM9Up
+         VWTUTUmj2WQBKrseNVV5NYeLzwEx5uc/HXjXRlQJBCrQKoVF2JFzl6lCkGVl8KbYHSKC
+         IBkrSKNGTgjn3Oktc2x5KmGsPuUhLL7tKXaxVQ1JqF9O2V6pbU6oXWWjji1VZaOusp7D
+         T8Yw==
+X-Gm-Message-State: AMke39nyYhbpBXCFa+iTQkt00CMiMfvvca7IM9cwwH5GeVaKZMZZ92z29Wa8fTomnqCP3w==
+X-Received: by 10.99.108.74 with SMTP id h71mr12793263pgc.99.1487372495513;
+        Fri, 17 Feb 2017 15:01:35 -0800 (PST)
+Received: from localhost ([2620:0:1000:8622:3130:38b1:b121:8f0d])
+        by smtp.gmail.com with ESMTPSA id j7sm21397359pfe.84.2017.02.17.15.01.34
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Fri, 17 Feb 2017 15:07:09 -0800 (PST)
-Date:   Fri, 17 Feb 2017 15:07:08 -0800
-From:   Brandon Williams <bmwill@google.com>
-To:     Phillip Sz <phillip.szelat@gmail.com>
-Cc:     git@vger.kernel.org, sbeller@google.com
-Subject: Re: [PATCH] submodule.c: Add missing quotation marks
-Message-ID: <20170217230708.GA13751@google.com>
-References: <20170217230433.23336-1-phillip.szelat@gmail.com>
+        Fri, 17 Feb 2017 15:01:34 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Thomas Gummerer <t.gummerer@gmail.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        =?utf-8?Q?=C3=98yvind_A_=2E_Holm?= <sunny@sunbase.org>,
+        Jakub =?utf-8?Q?Nar=C4=99bski?= <jnareb@gmail.com>,
+        Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH v5 0/6] stash: support pathspec argument
+References: <20170212215420.16701-1-t.gummerer@gmail.com>
+        <20170217224141.19183-1-t.gummerer@gmail.com>
+Date:   Fri, 17 Feb 2017 15:01:33 -0800
+In-Reply-To: <20170217224141.19183-1-t.gummerer@gmail.com> (Thomas Gummerer's
+        message of "Fri, 17 Feb 2017 22:41:35 +0000")
+Message-ID: <xmqqfujcpgky.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20170217230433.23336-1-phillip.szelat@gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 02/18, Phillip Sz wrote:
-> Hi,
-> 
-> just found this while translating, sorry if this is intended.
-> 
-> Best regards,
-> 
-> Phillip
+Thomas Gummerer <t.gummerer@gmail.com> writes:
 
-Definitely not intended.  Thanks for catching that.
+[some people may see this message twice, as I forgot to check if the
+copy I received had "Some A . Body" not enclosed in dq; blindly
+doing "Reply-All" ended up listing an invalid address on my Cc: line
+and dropped by vger. apologies]
 
-> ---
->  submodule.c | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/submodule.c b/submodule.c
-> index 3b98766a6..b064ed080 100644
-> --- a/submodule.c
-> +++ b/submodule.c
-> @@ -1181,7 +1181,7 @@ int bad_to_remove_submodule(const char *path, unsigned flags)
->  	cp.dir = path;
->  	if (start_command(&cp)) {
->  		if (flags & SUBMODULE_REMOVAL_DIE_ON_ERROR)
-> -			die(_("could not start 'git status in submodule '%s'"),
-> +			die(_("could not start 'git status' in submodule '%s'"),
->  				path);
->  		ret = -1;
->  		goto out;
-> @@ -1194,7 +1194,7 @@ int bad_to_remove_submodule(const char *path, unsigned flags)
->  
->  	if (finish_command(&cp)) {
->  		if (flags & SUBMODULE_REMOVAL_DIE_ON_ERROR)
-> -			die(_("could not run 'git status in submodule '%s'"),
-> +			die(_("could not run 'git status' in submodule '%s'"),
->  				path);
->  		ret = -1;
->  	}
-> -- 
-> 2.11.1
-> 
+> diff --git a/git-stash.sh b/git-stash.sh
+> index a184b1e274..1446fbe2e8 100755
+> --- a/git-stash.sh
+> +++ b/git-stash.sh
+> @@ -67,51 +67,20 @@ create_stash () {
+>  		case "$1" in
+>  		-m|--message)
+>  			shift
+> -			test -z ${1+x} && usage
+> -			stash_msg="$1"
+> -			new_style=t
+> +			stash_msg=${1-"BUG: create_stash () -m requires an argument"}
+>  			;;
 
--- 
-Brandon Williams
+Did you mean ${1?"BUG: ..."} here and also "-u" below?
+
+>  		-u|--include-untracked)
+>  			shift
+> -			test -z ${1+x} && usage
+> -			untracked="$1"
+> -			new_style=t
+> +			untracked=${1-"BUG: create_stash () -u requires an argument"}
+>  			;;
+
+Other than that the whole series looked sensible to me.
+
+Thanks, will replace but that may not happen today.
