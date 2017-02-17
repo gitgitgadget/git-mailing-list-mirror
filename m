@@ -2,134 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DA53C201A9
-	for <e@80x24.org>; Fri, 17 Feb 2017 22:18:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C56C0201A9
+	for <e@80x24.org>; Fri, 17 Feb 2017 22:22:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S964777AbdBQWS4 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 17 Feb 2017 17:18:56 -0500
-Received: from mail-it0-f53.google.com ([209.85.214.53]:36893 "EHLO
-        mail-it0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S934963AbdBQWSx (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 Feb 2017 17:18:53 -0500
-Received: by mail-it0-f53.google.com with SMTP id x75so27708820itb.0
-        for <git@vger.kernel.org>; Fri, 17 Feb 2017 14:18:52 -0800 (PST)
+        id S964776AbdBQWWe (ORCPT <rfc822;e@80x24.org>);
+        Fri, 17 Feb 2017 17:22:34 -0500
+Received: from mail-pf0-f195.google.com ([209.85.192.195]:33289 "EHLO
+        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S935044AbdBQWWd (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 Feb 2017 17:22:33 -0500
+Received: by mail-pf0-f195.google.com with SMTP id e4so4887183pfg.0
+        for <git@vger.kernel.org>; Fri, 17 Feb 2017 14:22:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=vA7k9vsQx1u9Pmu7f/lb0FSxIO86GJnOra9+XkKewF8=;
-        b=qxd7HBS915cYE0UW91uA3VNMC52AsrUGySVvRAOjdKgXolLv9sL9GmGGZN0ZQvG2oV
-         WXtz7sCXNpT6C4ZtRlYtQwBF75eZn1Nrj5MMkf7rhQhnIKmWILL+f9p6F0wNCzkdiHjd
-         3ax2vmglk9iNFxN7JhaOCsXGu06hTZLjuaynusaM18NiTR8RrsKd1OCb3FuYwjVSr13n
-         CfmTknduRCtTzzGKUBbM+SptTXZUGVM7YFkTlMPQMqOAr3fxY7LwMJ459aloUcDa62Jw
-         jMtnLGYQMR9rIaFxR393wxVqJ9AwQCJtbJ/394vcpIE6mp2Ce422RHkwGNlU6i/hCWUb
-         w3cA==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=pZj/y36ZC1Rpjr14xh3Uuw8XAWb52f+6OB/eC+FelkA=;
+        b=AjYNngcoX826LlB/9Y8302tEndGvtng3fKVbdy7zjzr+HSNLTZzi7iS6n01m9nl/8X
+         33f/oDvIKt3BssQIUObc8Yi9SFT/L2uyWpy75V2of9oYPMriKbf57VLOaS7S6OSs4pK7
+         hQs6rWnzw9wqjc+nmcgHWjnnewqb5vO4yzBoBBUZpNkhJo61BXTql4XXkFYphmmV9xtQ
+         0dCtTTwKOSX0ctUsZU9I3VlTljraUn9fg4vBlcX3kxAivsRD1pBlxerXmzP2nI2l8FRo
+         b4pAGNOFr/Rx4uoS004XDmkTtdK06KrRq3Tq/I7Ub1w5aKsfsvWFFmDGED4UmfsO4ogt
+         Ejiw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=vA7k9vsQx1u9Pmu7f/lb0FSxIO86GJnOra9+XkKewF8=;
-        b=FMcc18RipCZUw7l2kGLfYmDnxaHeKZJbVp/tjEs1nzpciPfdQiKpODuZroazhSpEvl
-         jjAIna3ugjzKchVpAdP/JbGB2ARJj35p99sLIssXJbbjGJSuZVDlvMEm4Lu4pKmiSMKr
-         X3xrR8FCoeB5Zap955diBbuRW9CSAhLRCFgqGQpTZplAB594LeNRxcDbM1thgmv7fFcJ
-         DP+4aCoehT+sJhHK+ekEOa9h4MzwDu1k5KVu8xgnw6MVtzFWlgZr29ONT4dYcr0z1gw/
-         LVu4GUge5XDokcJh1iVTBBRxI3QKRUDsAepa3E5HJ44gUq3Am8K16Dx3giv38daJWRIv
-         UesA==
-X-Gm-Message-State: AMke39lb3ltN6Xqm+clqlKNm295pMwJpE0YZrmeWxMUD8EKOlcVUZV7e/aP94tTsYBPQ0plmNoPDebmJ5JzoEQ==
-X-Received: by 10.36.103.9 with SMTP id u9mr6180874itc.91.1487369429361; Fri,
- 17 Feb 2017 14:10:29 -0800 (PST)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=pZj/y36ZC1Rpjr14xh3Uuw8XAWb52f+6OB/eC+FelkA=;
+        b=pbg5kilDKDsUlz5yUlB4+NqECUZPqyGU/XuaySd48nQHrUvuqupj3sbqNSz789G8K2
+         Dn0DzrZj+5FH9n9PSMu60Hy3qOx7/EAszpV3yPSmNUTig0rodaNU1eyDGKMySaKks51k
+         z/LHdeNCe89XC65LWyizy+hEw3wp5X16e7arNTtuSu/WesYnzGVKlRKSfkgemljV3cf8
+         pe9VIplnvGPhewdJZ3mEfHm0de+opZBWHfI2XUYyfIYhXNONwgIJYPMZMxeGsngOB2gP
+         JwM7Gl+lC+W0xCw2+tkSgDKAQ+hemtsJEX2iOc5CBerG/TRr8B8q8Wo3IBQyj77xwybX
+         rjnQ==
+X-Gm-Message-State: AMke39lx0BRb36FPcmcwaIHTF22fAa+179+9LZckE1FZtTmJUD3teLe5mc/ku6ujnCh0fw==
+X-Received: by 10.84.143.233 with SMTP id 96mr14397515plz.124.1487370152692;
+        Fri, 17 Feb 2017 14:22:32 -0800 (PST)
+Received: from localhost ([2620:0:1000:8622:3130:38b1:b121:8f0d])
+        by smtp.gmail.com with ESMTPSA id n87sm21281459pfi.122.2017.02.17.14.22.31
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Fri, 17 Feb 2017 14:22:31 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Cc:     Johan Hovold <johan@kernel.org>, git@vger.kernel.org,
+        Jeff King <peff@peff.net>, Kevin Daudt <me@ikke.info>,
+        Larry Finger <Larry.Finger@lwfinger.net>
+Subject: Re: body-CC-comment regression
+References: <20170216174924.GB2625@localhost> <vpqlgt6hug6.fsf@anie.imag.fr>
+        <20170217110642.GD2625@localhost> <vpq7f4pdkjp.fsf@anie.imag.fr>
+        <20170217164241.GE2625@localhost> <vpq4lzs7o0s.fsf@anie.imag.fr>
+        <xmqqd1egu1dl.fsf@gitster.mtv.corp.google.com>
+        <20170217182326.GA479@localhost>
+        <xmqq4lzsu0wo.fsf@gitster.mtv.corp.google.com>
+        <vpq7f4owtbi.fsf@anie.imag.fr>
+        <xmqqd1egshv1.fsf@gitster.mtv.corp.google.com>
+        <vpq1suwvab9.fsf@anie.imag.fr>
+Date:   Fri, 17 Feb 2017 14:22:31 -0800
+In-Reply-To: <vpq1suwvab9.fsf@anie.imag.fr> (Matthieu Moy's message of "Fri,
+        17 Feb 2017 21:20:26 +0100")
+Message-ID: <xmqqbmu0qwyg.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.107.130.157 with HTTP; Fri, 17 Feb 2017 14:10:08 -0800 (PST)
-In-Reply-To: <20170217204227.kreormjoo5lr6zu4@sigill.intra.peff.net>
-References: <CAM_JFCz+9mxp37BTT7XPJ0fMd41DdbAxnvQF7id9msH+SDe6_Q@mail.gmail.com>
- <CACBZZX4Zmwb8ZHGBXCpm6=yH_uxc-K1X1vv1jQ+wwnUPneqM4A@mail.gmail.com> <20170217204227.kreormjoo5lr6zu4@sigill.intra.peff.net>
-From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Date:   Fri, 17 Feb 2017 23:10:08 +0100
-Message-ID: <CACBZZX7nJkRmSxTdvhgXz5Zuk0KeovSZM1D_eGqbBn7i20+ePQ@mail.gmail.com>
-Subject: Re: git alias for options
-To:     Jeff King <peff@peff.net>
-Cc:     hIpPy <hippy2981@gmail.com>, Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Feb 17, 2017 at 9:42 PM, Jeff King <peff@peff.net> wrote:
-> On Fri, Feb 17, 2017 at 02:50:23PM +0100, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
-armason wrote:
->
->> On Fri, Feb 17, 2017 at 9:23 AM, hIpPy <hippy2981@gmail.com> wrote:
->> > Git has aliases for git commands. Is there a (an inbuilt) way to alias
->> > options? If not, what is the reason?
->>
->> This has long been on my  wishlist, because there's a lot of
->> copy/pasted logic all over Git to make git foo --whatever aliased to
->> foo.whatever in the config, but only for some options.
->>
->> It should ideally be part of something every option just supports, via
->> the getopts struct.
->>
->> However, it can't allow you to modify whatever option you want,
->> because some things like git-commit-tree should not be customized
->> based on config, it would break things that rely on the plumbing
->> commands.
->>
->> So it would have to be a whitelist for each option we allow to be
->> configured like this via the getopts struct.
->>
->> Also there are surely other edge cases, like maybe the config option
->> now doesn't 1=3D1 map to the name for the option in some cases, or the
->> flag should be config-able but is has no long form (which we'd like
->> for the config), then we'd want to add that etc.
->
-> I think your idea is roughly equivalent in functionality to just
-> allowing aliases to override command names. E.g., anything you could do
-> with:
->
->   [log]
->   follow =3D true
->   decorate =3D false
->
-> could be done with:
->
->   [alias]
->   log =3D "log --follow --no-decorate"
+Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
 
-Indeed, exact same thing, different syntax. Mostly I like this
-suggestion better, although the bad side of it is that it's not as
-easy to introspect with a dump of git-config -l.
-
-> The reason we have historically not allowed that is for the
-> "commit-tree" plumbing reason you gave above. One option would be to
-> relax it for a whitelist of porcelain commands. Then your whitelist at
-> least only has to cover commands, and not each individual option.
+> Junio C Hamano <gitster@pobox.com> writes:
 >
-> I think there are a lot of corner cases in that whitelist, though. A lot
-> of commands serve dual porcelain/plumbing purposes. E.g., "log" and
-> "tag" are commonly used by both humans and by scripts.
+>> That approach may still constrain what those in the former camp can
+>> write in the "cruft" part, like they cannot write comma or semicolon
+>> as part of the "cruft", no?
 >
-> A first step in that direction would probably be an environment variable
-> to tell Git to suppress command-aliases. Scripts would set that to
-> ensure a more vanilla experience. It doesn't fix _existing_ scripts, but
-> if that option were introduced, then over time scripts would start to
-> use it. Then eventually it would be safe(r) to introduce something like
-> command aliases.
+> Right. Indeed, this may be a problem since the use of "#" for stable
+> seem to include commit message, and they may contain commas.
+>
+> So, maybe Johan's patch is better indeed.
 
-The most gentle first step would be to try to turn the existing config
-options where you can override cli-options into some declarative thing
-from the current ad-hoc code we have for each one.
+OK, so I'll queue that one with your Ack for now so that we won't
+forget.  I guess we still want a few tests?
 
-That would be no change in behavior, but would make it easier to
-migrate more things in the future.
-
-Anyway, words are cheap. Just replied because to the extent that hIpPy
-wants to work on this I thought I'd sprinkle some historical caveats
-from memory. Other than that no point in keeping talking about this
-without patches.
+Thanks.
