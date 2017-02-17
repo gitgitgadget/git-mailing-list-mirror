@@ -7,58 +7,59 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0829D20136
-	for <e@80x24.org>; Fri, 17 Feb 2017 18:16:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 253C820136
+	for <e@80x24.org>; Fri, 17 Feb 2017 18:18:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934735AbdBQSQw (ORCPT <rfc822;e@80x24.org>);
-        Fri, 17 Feb 2017 13:16:52 -0500
-Received: from mail-pf0-f196.google.com ([209.85.192.196]:36296 "EHLO
-        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S934140AbdBQSQu (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 Feb 2017 13:16:50 -0500
-Received: by mail-pf0-f196.google.com with SMTP id 19so4560604pfo.3
-        for <git@vger.kernel.org>; Fri, 17 Feb 2017 10:16:50 -0800 (PST)
+        id S934386AbdBQSSt (ORCPT <rfc822;e@80x24.org>);
+        Fri, 17 Feb 2017 13:18:49 -0500
+Received: from mail-pg0-f67.google.com ([74.125.83.67]:36473 "EHLO
+        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S934053AbdBQSSt (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 Feb 2017 13:18:49 -0500
+Received: by mail-pg0-f67.google.com with SMTP id a123so2732042pgc.3
+        for <git@vger.kernel.org>; Fri, 17 Feb 2017 10:18:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=6+yP5euXg1kiaON/qkO6kwQ+U3V4+EAys5DT1iH6LcQ=;
-        b=aemxqi7bol4o6FxCnQb5KALwT6fLWeG5pBiqTxvRe7z3GzgNnn6QPSjOTi/xSfrENV
-         TdXmHk6wgk1FpxeTvLAZVdzy2ZLb4aMlIrbKap0+6wh6ny5WQTnqrLGtdcz3LV/+jdCj
-         GKSoqLcKOGBtv0+4ntngxV4sLrztEVqkoLdEnfl2iiIr45CbAeWWvvf+qG1fnx59Tk6W
-         T6dQPNFsIuhC50bt01BrAxUUPgLZ0EroNU31n4QnSH8opLKr6JIOAUuygWCvdEknD47W
-         /ZqhLn04v4b4V9T47siHvGcWWLMedyc2+nipK+XVs8Ip3NKPTIbNMSZaQ+0ya/PDyooO
-         EOEw==
+        bh=e9SI8KL9VlX2Hxu+A82kiKOvpfIBdw9x8FaJZ72h9HU=;
+        b=KGUixZH6bgqg0imdxT/DHUd+Pwky6uY/R2RJ3jiDSKoovU7vFeB8lP/sAxk3nfH1nQ
+         UgScDwkveMnUZc9UOTnB7iWOWuk2X0vx441iY6dTRNDyGF7WSTowdsul2kk7/QcGhHUt
+         /gDraR3439vpzZBMj9PeKc6snkdRPl/YPzd8ter3TticBT4iRprwBORp1a9dWxWn4Xfw
+         HqPzlnfUsIZ0CrIa8d+Ke2jxj9k5ZW4/mgtpWFiYj4gihwo1DA8k6C8x/ybh+9fa0tKB
+         s7Y2bKmlNuxPqhDsYVRMhAlFLWQzYs/0rr2vJAp8oBvgjTwkaQYGPdaugk4ZYS9bw4F+
+         602g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=6+yP5euXg1kiaON/qkO6kwQ+U3V4+EAys5DT1iH6LcQ=;
-        b=a/Pccjv2edSFjEvJckFgai7fwIxuAzED4M13CcangqysZhsbpyZHOfIcmMk+u316NC
-         0l4O4P+AzGU6FECuznRMvVFUYwU/LGp5eNGVq2F/vDTijlvZ9k8jHvVmODr4C6glxIXB
-         GsjUcvAehyL1tdjkcOfFTXHCBJT8iUc7uca/aDL2+83qMmnQafXb7M1oJb2neKgyY1QX
-         vhYXz3lYx0sIJcCwLGxOZ56ufy02XQmhpIAc34qXdNOCS1j+ma14BU/Wg+Z90ParbWgR
-         Ay/KuLqwSGraBoYuoCtGnHRilIocdm8lSGCXyxSqWMPxrs1JFA/qxe3jZ9lHq1xjUSb1
-         60uQ==
-X-Gm-Message-State: AMke39lKieNc1Pj3tA4iD6xeArBxTzK4BPyLTCvQl8v2u3emIldvvPcTDh6mDX/IJDEr4Q==
-X-Received: by 10.98.204.83 with SMTP id a80mr10816706pfg.114.1487353856794;
-        Fri, 17 Feb 2017 09:50:56 -0800 (PST)
+        bh=e9SI8KL9VlX2Hxu+A82kiKOvpfIBdw9x8FaJZ72h9HU=;
+        b=CK0w65+4+ve4LEaA1ndc7ZKGRMyWQSw1Elimb0B13IJAz0O+hhoXj9EWRle3+PZJeI
+         x18A+38tDnEzK24DYdae2YmnNpw2R6GUWItuX/Lnp6CE85cfRkLZIv5bbNsPIaPHT0X/
+         BhLS43Z59Wt5ePi4le7meLCa8uaahrnJu3JZYWNDZ7sODz6Sgr+VWf3BLbtInohw3PHu
+         FF7t8JyhdKvp1OpP9NximVjrBkUecXjEcela6PpOvrUOFWBHNuWfqCkPQph+53aEeq2N
+         D84IJeBua2bN0s2CjkFyueplDPFFqD3ra6lF7sM7CL24o+l2Lkx7Sx4SAELbpRazH7sv
+         lhSQ==
+X-Gm-Message-State: AMke39mSOEvERAAXMb364qssh4XF1zRwRfT6Zeh6Hmc9Kt65rADKy2z7CYbLT3j/qGWAKg==
+X-Received: by 10.84.136.7 with SMTP id 7mr13246569plk.100.1487355528276;
+        Fri, 17 Feb 2017 10:18:48 -0800 (PST)
 Received: from localhost ([2620:0:1000:8622:3130:38b1:b121:8f0d])
-        by smtp.gmail.com with ESMTPSA id u24sm20852067pfi.25.2017.02.17.09.50.55
+        by smtp.gmail.com with ESMTPSA id 67sm20823316pfd.120.2017.02.17.10.18.46
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Fri, 17 Feb 2017 09:50:55 -0800 (PST)
+        Fri, 17 Feb 2017 10:18:47 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Kyle Meyer <kyle@kyleam.com>, git@vger.kernel.org
-Subject: Re: [PATCH 3/3] rename_ref: replace empty deletion message in HEAD's log
-References: <20170126211205.5gz3zsrptop7n34n@sigill.intra.peff.net>
-        <20170217035800.13214-1-kyle@kyleam.com>
-        <20170217035800.13214-4-kyle@kyleam.com>
-        <20170217083112.vn7m4udsopmlvnn5@sigill.intra.peff.net>
-Date:   Fri, 17 Feb 2017 09:50:54 -0800
-In-Reply-To: <20170217083112.vn7m4udsopmlvnn5@sigill.intra.peff.net> (Jeff
-        King's message of "Fri, 17 Feb 2017 03:31:12 -0500")
-Message-ID: <xmqqk28ou2o1.fsf@gitster.mtv.corp.google.com>
+To:     Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Cc:     Johan Hovold <johan@kernel.org>, git@vger.kernel.org,
+        Jeff King <peff@peff.net>, Kevin Daudt <me@ikke.info>,
+        Larry Finger <Larry.Finger@lwfinger.net>
+Subject: Re: body-CC-comment regression
+References: <20170216174924.GB2625@localhost> <vpqlgt6hug6.fsf@anie.imag.fr>
+        <20170217110642.GD2625@localhost> <vpq7f4pdkjp.fsf@anie.imag.fr>
+        <20170217164241.GE2625@localhost> <vpq4lzs7o0s.fsf@anie.imag.fr>
+Date:   Fri, 17 Feb 2017 10:18:46 -0800
+In-Reply-To: <vpq4lzs7o0s.fsf@anie.imag.fr> (Matthieu Moy's message of "Fri,
+        17 Feb 2017 17:58:11 +0100")
+Message-ID: <xmqqd1egu1dl.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -67,58 +68,39 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
 
-> On Thu, Feb 16, 2017 at 10:58:00PM -0500, Kyle Meyer wrote:
+>> On Fri, Feb 17, 2017 at 02:16:42PM +0100, Matthieu Moy wrote:
+> ...
+> If I had a time machine, I'd probably go back then and forbid multiple
+> addresses there, but ...
 >
->> When the current branch is renamed, the deletion of the old ref is
->> recorded in HEAD's log with an empty message.  Now that delete_refs()
->> accepts a reflog message, provide a more descriptive message.  This
->> message will not be included in the reflog of the renamed branch, but
->> its log already covers the renaming event with a message of "Branch:
->> renamed ...".
+>> There does not seem to be single commit in the kernel where multiple
+>> address are specified in a CC tag since after git-send-email started
+>> allowing it, but there are ten commits before (to my surprise), and that
+>> should be contrasted with at least 4178 commits with trailing comments
+>> including a # sign.
 >
-> Right, makes sense. The code overall looks fine, though I have one
-> nit:
+> Hey, there's a life outside the kernel ;-).
+> ...
+>>> 1) Stop calling Mail::Address even if available.[...]
+>>
+>> Right, that sounds like the right thing to do regardless.
+>>
+>>> 2) Modify our in-house parser to discard garbage after the >. [...]
+>>
+>> Sounds perfectly fine to me, and seems to work too after quick test.
 >
->> @@ -2616,10 +2617,15 @@ static int files_rename_ref(struct ref_store *ref_store,
->>  		return error("unable to move logfile logs/%s to "TMP_RENAMED_LOG": %s",
->>  			oldrefname, strerror(errno));
->>  
->> -	if (delete_ref(oldrefname, orig_sha1, REF_NODEREF, NULL)) {
->> +	strbuf_addf(&logmsg_del, "Deleted %s", oldrefname);
+> OK, sounds like the way to go.
 >
-> We've been anything but consistent with our reflog messages in the past,
-> but I think the general guideline for new ones is to use "command:
-> action". Of course we don't _know_ the action here, because we're deep
-> in rename_ref().
->
-> Should we have the caller pass it in for us, as we do with delete_ref()
-> and update_ref()?
->
-> I see we actually already have a "logmsg" parameter. It already says
-> "Branch: renamed %s to %s". Could we just reuse that? I know that this
-> step is technically just the deletion, but I think it more accurately
-> describes the whole operation that the deletion is part of.
+> Do you want to work on a patch? If not, I should be able to do that
+> myself. The code changes are straightforward, but we probably want a
+> proper test for that.
 
-True, but stepping back a bit,...
-
-Do we even want these "internal" delete_ref() invocations to be
-logged in HEAD's reflog?  I understand that this is inside the
-implementation of renaming an old ref to a new ref, and reflog
-message given to delete_ref() would matter only if the HEAD happens
-to be pointing at old ref---but then HEAD will be repointed to the
-new ref by somebody else [*1*] that called this function to rename
-old to new and it _will_ log it.  So I am not sure if it is a good
-thing to describe the deletion more readably with a message (which
-is what this patch does) in the first place.  If we can just say
-"don't log this deletion event in HEAD's reflog", wouldn't that be
-more desirable?
-
-
-[Footnote]
-
-*1* Is the reason why the code in files_rename_ref() we are looking
-    at does not adjust HEAD to point at the new ref is because it is
-    just handing one ref-store and obviouvious to symrefs in other
-    backends?
+The true headers and the things at the bottom seem to be handled in
+a separate loop in send-email, so treating Cc: found in the former
+and in the latter differently should be doable.  I think it is OK to
+explicitly treat the latter as "these are not e-mail addresses, but
+just a single e-mail address possibly with non-address cruft",
+without losing the ability to have more than one addresses on a
+single CC: e-mail header.
