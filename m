@@ -2,122 +2,125 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID,URIBL_DBL_ABUSE_BOTCC shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E63CB201A9
-	for <e@80x24.org>; Fri, 17 Feb 2017 22:56:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 014C4201A9
+	for <e@80x24.org>; Fri, 17 Feb 2017 23:05:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S964868AbdBQW4s (ORCPT <rfc822;e@80x24.org>);
-        Fri, 17 Feb 2017 17:56:48 -0500
-Received: from mail-pf0-f193.google.com ([209.85.192.193]:36679 "EHLO
-        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S964811AbdBQW4r (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 Feb 2017 17:56:47 -0500
-Received: by mail-pf0-f193.google.com with SMTP id c193so196828pfb.3
-        for <git@vger.kernel.org>; Fri, 17 Feb 2017 14:56:47 -0800 (PST)
+        id S964795AbdBQXFj (ORCPT <rfc822;e@80x24.org>);
+        Fri, 17 Feb 2017 18:05:39 -0500
+Received: from mail-wr0-f196.google.com ([209.85.128.196]:33202 "EHLO
+        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S964779AbdBQXFh (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 Feb 2017 18:05:37 -0500
+Received: by mail-wr0-f196.google.com with SMTP id i10so6652323wrb.0
+        for <git@vger.kernel.org>; Fri, 17 Feb 2017 15:05:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=xaGhjtwi3NKbXv7Re54Q5paZNakplsi/CSVyn/SY9wM=;
-        b=YCk/ICeQLPcWUa/oxck8SI4L2hBCilzuZnS1e9e2a0gafT5FxQA1ZgWoRMgwXgyM8v
-         DtsmIVD8FHuBdYGfFEB5xaUfptVyP2CSc1WCB8OsP8CqFaDWnAAWM4G6vVUUWY8xk44O
-         /1jwFo8OE1s4PxsGPGTtcRGWHzp5B5fwlk3xHCG0q6klJ8YjJOsieNWzUYvxSDsVO1av
-         PtnNR8oofjtVqZDTPq/L+3Kw5hE2liivP2ZbUGuC05Kx/ALSxcBxGpBpmrVDMdwpYdiw
-         Iq7MfdwpKZpbuEFRP4vOcZlZNw04+/QjDxm8lzPY7ocrtfWiQlYWvXA7UfAFjyInVZWB
-         oNuA==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=DNVYvP1RamjVN18T4d7jGmMqJur+iKhzlQuMTMLxUOc=;
+        b=nGRmdLju9SK0erVNKUQkqtzCFfc1fHyVWchmKZ9w76rhqwp1KoqjOO+eGF16UjmOYg
+         TxQF+lgNgyTE2kycQvyONt1jcMcbTfoqyK00bFff/EhPN/HE7yKO0tbokKuoRq4aWicP
+         VGg5QpKnUiEM1Aqf95HJC7TlggOr71Vfy73twS97/c42gVoOOy0gRAd/qZyO8UlGzVKA
+         TaHrOUe8FSuwh6mik8zL3v3xYeKhYEwurOAL8N2CwpwhlSeKNYURZrfDztEZMjIA76TL
+         52zwLgwfBbYbaC5Ui35Oh637IgP2L0qSpOXbP0ZROle+jVfcscM8ijvttYego/ZfrjXT
+         rz3w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=xaGhjtwi3NKbXv7Re54Q5paZNakplsi/CSVyn/SY9wM=;
-        b=gCdHWxGvoZ8K1YGL8HuU7fDQ2Ex3tkHmvXqoyyxsy2CvoemqOrUVJSuOUQCnsdLlYS
-         WEXVSmrmWzHLKZE14drZDhR6gh8bSpvBDbnq791gKHNVrcBmLJ2yrcCi4J0tpaylnuwZ
-         V28GEhzKc7ohU4nXvtrDz0zeSlE4o5Rb4T8BOMJIH940ptponcUgf0BcHE5USfs39mCa
-         zC3we+vTxY6kAYO/2ZuZhzUMmswfBriZpLtJP/Lj3qZAWZg31zl9s4dkB2hezmmqtY51
-         ze01z575KMlTI6yKH14aOXNPTsNWIc8cdvKoQ9l576/bbg0+bnspyHhNj7lrWWjZ6V0D
-         dHnQ==
-X-Gm-Message-State: AMke39nnL8bsHHes0+WkFMRb+tNG+zFjW2aah0KyRDji7ABldiWHviN2DeMQ1p/mmBwdgQ==
-X-Received: by 10.99.42.78 with SMTP id q75mr12885234pgq.144.1487372206698;
-        Fri, 17 Feb 2017 14:56:46 -0800 (PST)
-Received: from localhost ([2620:0:1000:8622:3130:38b1:b121:8f0d])
-        by smtp.gmail.com with ESMTPSA id b67sm21394028pfj.81.2017.02.17.14.56.45
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Fri, 17 Feb 2017 14:56:45 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?Q?Gr=C3=A9goire?= PARIS <postmaster@greg0ire.fr>
-Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org
-Subject: Re: dotfiles in git template dir are not copied
-References: <ebd661c3-7d99-54d2-dda9-09c4a76cfe93@greg0ire.fr>
-        <20170217204411.2yixhuazgczxmmxa@sigill.intra.peff.net>
-        <2bae8d8a-f0bf-fa8b-8ce4-6880d3490b43@greg0ire.fr>
-Date:   Fri, 17 Feb 2017 14:56:45 -0800
-In-Reply-To: <2bae8d8a-f0bf-fa8b-8ce4-6880d3490b43@greg0ire.fr>
- (=?utf-8?Q?=22Gr=C3=A9goire?=
-        PARIS"'s message of "Fri, 17 Feb 2017 22:42:43 +0100")
-Message-ID: <xmqqk28opgsy.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=DNVYvP1RamjVN18T4d7jGmMqJur+iKhzlQuMTMLxUOc=;
+        b=nsMEqihHd9RcC7I6lNbkYjqHk/YRjyc/9k4nm8qFJp69haP5NUw14MzUAJ94O2Zepz
+         6vVNdO5ktCjjLbx/s1odaaKkAp5/IAOM/kruTV3F1CcRqtuXl+7KTl+VVp9C+lCHbsZT
+         FiQvFQ4JzplTepjxwY/GaXGV0JWYmJNPEyxHx5ky4a7LDOibywmNBmGo0idK5+gOFMwD
+         h68JXJEc4ugSLnee9dnF0WBmTi4KQC8DFuKYCsitdmzulRVET51y6TpPHzoeYZjvhF9C
+         N5spKLdl/tRoh6OG7oTXE7lgtDLEjGZc4eKWuYTtMzYi1Ga934i8Aj2xpNRv+FAoIrXF
+         e0fw==
+X-Gm-Message-State: AMke39mQEN+b7h+VeAytQT7kCVaUnFM/soruDnSpGEFtw+X7K5cu/NbrBIyVpSLRRa3nFA==
+X-Received: by 10.223.179.78 with SMTP id k14mr9201681wrd.34.1487372735698;
+        Fri, 17 Feb 2017 15:05:35 -0800 (PST)
+Received: from localhost ([2a02:c7f:c42b:f900:5e51:4fff:fee9:57af])
+        by smtp.gmail.com with ESMTPSA id m80sm3328937wmi.34.2017.02.17.15.05.34
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 17 Feb 2017 15:05:35 -0800 (PST)
+Date:   Fri, 17 Feb 2017 23:06:14 +0000
+From:   Thomas Gummerer <t.gummerer@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        =?iso-8859-1?Q?=D8yvind_A_=2E?= Holm <sunny@sunbase.org>,
+        Jakub =?utf-8?B?TmFyxJlic2tp?= <jnareb@gmail.com>,
+        Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH v5 0/6] stash: support pathspec argument
+Message-ID: <20170217230614.GH652@hank>
+References: <20170212215420.16701-1-t.gummerer@gmail.com>
+ <20170217224141.19183-1-t.gummerer@gmail.com>
+ <xmqqr32wph97.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqr32wph97.fsf@gitster.mtv.corp.google.com>
+User-Agent: Mutt/1.5.23.1-rc1 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Grégoire PARIS <postmaster@greg0ire.fr> writes:
-
->> You could, for example, have your template directory itself be a git 
-> repository.
->
-> I can and I do and indeed, that might be the reason behind this.
-> I made a PR to document this : https://github.com/git/git/pull/325
-
-Let's take a look.
-
-> From: Grégoire PARIS <postmaster@greg0ire.fr>
-> Date: Fri, 17 Feb 2017 22:33:40 +0100
-> Subject: [PATCH] Document dotfiles exclusion on template copy
+On 02/17, Junio C Hamano wrote:
+> Thomas Gummerer <t.gummerer@gmail.com> writes:
 > 
-> Since there is no dotfile in the default template directory, there was
-> no point in making the check for . or .. more accurate when copying. Now
-> that you can customize the template directory, it would make sense, but
-> it's actually a good thing to at this because you would not want to have
-> your git directory copied in every git directory that is created should
-> you decide to put your template directory under version control. Plus it
-> might be used as a feature by people who would want to exclude some
-> files.
-
-OK.
-
-> See https://public-inbox.org/git/20170217204411.2yixhuazgczxmmxa@sigill.intra.peff.net/T/#t
-
-I do not think what was discussed there adds much.  Drop this line.
-
-Instead, add your sign-off (Documentation/SubmittingPatches) here
-
-    Signed-off-by: Grégoire PARIS <postmaster@greg0ire.fr>
-
-> ---
->  Documentation/git-init.txt | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+> > Thanks Matthieu, Peff and Junio for the discussion on v3 and v4.
+> >
+> > Changes since v4:
+> > Dropped patch 1 from the series, as it's already in master
+> >
+> > Instead of changing the external interface to git stash create, only
+> > refactor the internal create_stash() function to take -m and -u
+> > arguments.  This also simplifies the internal option parsing.
 > 
-> diff --git a/Documentation/git-init.txt b/Documentation/git-init.txt
-> index 9d27197de8..e3b185cf86 100644
-> --- a/Documentation/git-init.txt
-> +++ b/Documentation/git-init.txt
-> @@ -117,7 +117,7 @@ TEMPLATE DIRECTORY
->  ------------------
->  
->  The template directory contains files and directories that will be copied to
-> -the `$GIT_DIR` after it is created.
-> +the `$GIT_DIR` after it is created, unless their name starts with a dot.
+> Yay.
+> 
+> > Make git stash -p an alias for git stash push -p, so git stash -p
+> > <pathspec> is allowed.
+> 
+> Nice.
+> 
+> >
+> > Interdiff below:
+> >
+> > diff --git a/Documentation/git-stash.txt b/Documentation/git-stash.txt
+> > index b0825f4aca..97194576ef 100644
+> > --- a/Documentation/git-stash.txt
+> > +++ b/Documentation/git-stash.txt
+> > @@ -53,9 +53,8 @@ OPTIONS
+> >  save [-p|--patch] [-k|--[no-]keep-index] [-u|--include-untracked] [-a|--all] [-q|--quiet] [<message>]::
+> >  push [-p|--patch] [-k|--[no-]keep-index] [-u|--include-untracked] [-a|--all] [-q|--quiet] [-m|--message <message>] [--] [<pathspec>...]::
+> >  
+> > -	Save your local modifications to a new 'stash' and roll them
+> > -	back to HEAD (in the working tree and in the index).
+> > -	The <message> part is optional and gives
+> > +	Save your local modifications to a new 'stash', and run `git reset
+> > +	--hard` to revert them.  The <message> part is optional and gives
+> >  	the description along with the stashed state.  For quickly making
+> >  	a snapshot, you can omit _both_ "save" and <message>, but giving
+> >  	only <message> does not trigger this action to prevent a misspelled
+> > diff --git a/git-stash.sh b/git-stash.sh
+> > index a184b1e274..1446fbe2e8 100755
+> > --- a/git-stash.sh
+> > +++ b/git-stash.sh
+> > @@ -67,51 +67,20 @@ create_stash () {
+> >  		case "$1" in
+> >  		-m|--message)
+> >  			shift
+> > -			test -z ${1+x} && usage
+> > -			stash_msg="$1"
+> > -			new_style=t
+> > +			stash_msg=${1-"BUG: create_stash () -m requires an argument"}
+> 
+> Hmph, did you mean ${1?"BUG: ..."}?  The same for the one in "-u".
 
-"... that will be copied ..., unless they are dot" is not incorrect
-per-se, but perhaps rewriting the whole sentence, e.g. "Files and
-directories in the template directory whose name do not start with a
-dot will be copied to ...", may make it easier to read, I suspect.
+Ah yes sorry, you're right course.  Thanks.
