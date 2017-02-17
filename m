@@ -2,84 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3E3FF20136
-	for <e@80x24.org>; Fri, 17 Feb 2017 17:10:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6E07A20136
+	for <e@80x24.org>; Fri, 17 Feb 2017 17:11:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934599AbdBQRKE (ORCPT <rfc822;e@80x24.org>);
-        Fri, 17 Feb 2017 12:10:04 -0500
-Received: from mout.gmx.net ([212.227.17.22]:61999 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S934325AbdBQRKD (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 Feb 2017 12:10:03 -0500
-Received: from virtualbox ([37.201.192.48]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MAQMg-1cXZym0nl4-00Bdiq; Fri, 17
- Feb 2017 18:09:42 +0100
-Date:   Fri, 17 Feb 2017 18:09:41 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     =?UTF-8?Q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc_Duy?= 
-        <pclouds@gmail.com>
-cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Michael Haggerty <mhagger@alum.mit.edu>,
-        Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH/RFC 00/15] Fix git-gc losing objects in multi worktree
-In-Reply-To: <20170217141908.18012-1-pclouds@gmail.com>
-Message-ID: <alpine.DEB.2.20.1702171808460.3496@virtualbox>
-References: <20170217141908.18012-1-pclouds@gmail.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+        id S934325AbdBQRLX (ORCPT <rfc822;e@80x24.org>);
+        Fri, 17 Feb 2017 12:11:23 -0500
+Received: from mail-qk0-f194.google.com ([209.85.220.194]:33793 "EHLO
+        mail-qk0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S934122AbdBQRLW (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 Feb 2017 12:11:22 -0500
+Received: by mail-qk0-f194.google.com with SMTP id s186so302550qkb.1
+        for <git@vger.kernel.org>; Fri, 17 Feb 2017 09:11:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to:cc
+         :content-transfer-encoding;
+        bh=P+nf80GT8rZgsoaZlHBPRDe/nvXt8mrftRzyn9iRblc=;
+        b=YxAdql14FbhXzXjiZCBLE4BNeqV7ZuxY+sOo5ToCLZlQZku3UK+yqHUoTD4x9TJfAK
+         cvezBckF7fMkq6IGA0GVJ1+H5EzYh1uyBuX4Dmm4lfCg3qm8t99qlFMTC9nA4zGaJKDC
+         q0tdESTPj+GtXYBvWBr4lRY6myWUGALDngYF6K7TLeeX5/3AYxdsNW+UVBuWIZWCKn+i
+         K7L38vmSfRcz7ppghFjF5INecwHUIXmVu89gf+qJ1yv1g9D1j8C9YTUL9y0r5y3b/vYG
+         7pO1jT3m9HgAzABR+HVR2ZOtxHP7PvfBsdcvoTAL9/rOKHqGvHmQL/ccZFyeUwVzg8CI
+         Rhjw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc
+         :content-transfer-encoding;
+        bh=P+nf80GT8rZgsoaZlHBPRDe/nvXt8mrftRzyn9iRblc=;
+        b=MefeAxX7JZ1oNpsXMvurpqCi6pGhgMCR8/ZmkXaTfoUCec0x9Hae08z0+Qq2QA9ekT
+         S9Vj/lDtbo98RtrW2oO4ou/F6Tm1ijP8PhLSEFz+v+S+pvuJQPlqyt/7KYMFekvc4N6H
+         RwpuNDpQn3S3c4t2k/fvP8cVHj5fa/nsgrPz9M54WDKB+drMkp01A0Hv5KXEqcF0+gc0
+         mdCBESS4YE23lD9K9TDKV8oohKOztgeSI785xEHLOe1l6QFwvpzkOAPPObl76CvxqSWl
+         XKz1JubzukiOsbjub9E0A7h7klVOJRA0oDTRIen/pL6mbjB5kwjLb7K8SbIibNrTS0ev
+         sNLA==
+X-Gm-Message-State: AMke39mUp35TaLjlHu2GD60BannAL+hmUeGH9HG1ufyJ0gsYoZsnNRV7KdGW34oQsw78sFO+gaWD6B2aJkBpnQ==
+X-Received: by 10.55.139.67 with SMTP id n64mr5654369qkd.157.1487351481503;
+ Fri, 17 Feb 2017 09:11:21 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; BOUNDARY="8323329-129518087-1487351382=:3496"
-X-Provags-ID: V03:K0:RfQ6iYRcNblJua8tKbTSNVEKG8urhaJiGUqqrKHNq8Z3YmCs2HJ
- PthKw/0RaYyc8A+ttxCgF6o0l1eZugHzeJeDLBFvyyxEK6K/z0nfdjI2Re7Gi9INz983TtH
- +2bGN83GSax2Lk/5Ua+5Sia5E2GYFgA7ntHW6AFSHK1xMDO/KeRAnjrVOnhitqRGVXtFho2
- fM8S5sZaoRb/lpmP7Ly5g==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:MsLk1O96Md4=:qn4OIJhjEIn+sm91SLT0m/
- mIuaxhUdmoD1Gxu5NY/kSywzx++TcxjRFr8BFDw8WML3CGQwaj4FNJbKEwuY4cA9Z/gyAJkOF
- O12SjmxhZj5c5QszU03fJBWzRcO6Wc3qhBuV3cs5hxKc+RDlk+5KVkSTtzNdgkhwzybvxCE4o
- EtMsRLz/T6e2Z64tYsWZiS5nDL2BRXB4do9irolFi6KXGOs+qA4MkVqW5XsxwSoABKyG4gVhm
- iBiu3u0Nx/xZf/tmnKNkF4Z+P1VB2IJck73ObGbUBzOybX1UmjQBpLqIRT/tXdjOV+Q9XN3di
- 1pFUrFfL9l5DnCkzkEY50eCDH2CYfCAo6rnhtiOkYbWO55LgK0u7DiZaVAh/oPy111Dh2RrVS
- dl6Lh5o8Mzx3+kxV5fkFCS+GjMtGZkFXr51Y9Tq27ETs/Argpvi6EiC9lmVDqqnJ+E5W22VgF
- ccrg41vHx79sxtn8FRHOvUKKmdOFV502XNz4vaLP4MCHctE9tMah9hRJEd9nK5e26MiKRQVYA
- LDXYcHkKm+aScroe/qFWbNVYSM1T76rfGUoxUFaGUW0RjWBJsaLW5X2FMl1ejCUkV4RA67zF/
- tWWgLATihJCjAIMHHfsAspCBMKXYyKA/YVE7udHBZht7u/CDS1rP6xO3+7uU94MBLNIo8OuhQ
- KkNWtQhMjWmPCW5j9QC/TPGLnjM66C1T9axMvEeUFAzF7by7u78xTXc3BQWnyMxBrcMHEZNjr
- RcrlOKWZ2tuyDTPEan6RtjrGzNvf0kOaDYXXwvbpaqtwpVJjHEi2d3LdJ5uqH1+aXNBf/SoM6
- spDFVhS6ZSFvuaXpUGNTNxSthzvGbIJ6zEHjHUVsU+GUK1ChsPfU5xnfAA31r7h4ayQyjAVwp
- cRubcvCwVGjsuIUhELyAB3pgeFOw2QDEEay6JCKszTRGVYeUvuk7FjWX8ElWJf75+vJ1LUmaY
- gezcpaR93jB/Ue99zblWm3ZVASzhqoODT2adYST0WsYMZxbi3Lqz3U0kI4NsGN0l1pHuA2B8Y
- biHjiKhxoibRnMn8Ny3gCok=
+Received: by 10.12.147.40 with HTTP; Fri, 17 Feb 2017 09:11:20 -0800 (PST)
+From:   Jiang Xin <worldhello.net@gmail.com>
+Date:   Sat, 18 Feb 2017 01:11:20 +0800
+Message-ID: <CANYiYbFQ=Oz3VQL+YM5xp5-58wROL-7J=7rFshVzwQAtGDk2cQ@mail.gmail.com>
+Subject: [L10N] Kickoff for Git 2.12.0 l10n round 2
+To:     Alexander Shopov <ash@kambanaria.org>,
+        Jordi Mas <jmas@softcatala.org>,
+        Ralf Thielow <ralf.thielow@gmail.com>,
+        =?UTF-8?Q?Jean=2DNo=C3=ABl_Avila?= <jn.avila@free.fr>,
+        Marco Paolone <marcopaolone@gmail.com>,
+        Changwoo Ryu <cwryu@debian.org>,
+        Vasco Almeida <vascomalmeida@sapo.pt>,
+        Dimitriy Ryazantcev <DJm00n@mail.ru>,
+        Peter Krefting <peter@softwolves.pp.se>,
+        =?UTF-8?B?VHLhuqduIE5n4buNYyBRdcOibg==?= <vnwildman@gmail.com>,
+        Jiang Xin <worldhello.net@gmail.com>
+Cc:     Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Hi guys,
 
---8323329-129518087-1487351382=:3496
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Git v2.12.0-rc1 introduced another two new messages need to be translated,
+so let's start l10n for Git 2.12.0 round 2:
 
-Hi Duy,
+    l10n: git.pot: v2.12.0 round 2 (2 new)
 
-On Fri, 17 Feb 2017, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
+    Generate po/git.pot from v2.12.0-rc1 for git v2.12.0 l10n round 2.
 
-> So here is my latest attempt on fixing this issue. For people who are
-> not aware of it, git-gc does not take per-worktree refs, reflogs and
-> indexes into account. An odb prune may leave HEAD and references in
-> other worktrees pointing to nowhere.
+    Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
 
-Thank you so much for working on this. The bug really affects my daily
-work very, very negatively.
+You can get it from the usual place:
 
-Will try to review as soon as possible.
+    https://github.com/git-l10n/git-po/
 
-Ciao,
-Dscho
---8323329-129518087-1487351382=:3496--
+As how to update your XX.po and help to translate Git, please see
+"Updating a XX.po file" and other sections in =E2=80=9Cpo/README" file.
+
+--
+Jiang Xin
