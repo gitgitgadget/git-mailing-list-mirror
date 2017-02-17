@@ -2,87 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 48265201A9
-	for <e@80x24.org>; Fri, 17 Feb 2017 22:29:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7386A201A9
+	for <e@80x24.org>; Fri, 17 Feb 2017 22:29:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S935115AbdBQW3B (ORCPT <rfc822;e@80x24.org>);
-        Fri, 17 Feb 2017 17:29:01 -0500
-Received: from avasout05.plus.net ([84.93.230.250]:60620 "EHLO
-        avasout05.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S935084AbdBQW27 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 Feb 2017 17:28:59 -0500
-X-Greylist: delayed 536 seconds by postgrey-1.27 at vger.kernel.org; Fri, 17 Feb 2017 17:28:59 EST
-Received: from deneb ([80.229.24.9])
-        by avasout05 with smtp
-        id lyKy1u0030BmcFC01yL0G8; Fri, 17 Feb 2017 22:20:01 +0000
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.2 cv=Hr8GIwbS c=1 sm=1 tr=0
- a=E/9URZZQ5L3bK/voZ0g0HQ==:117 a=E/9URZZQ5L3bK/voZ0g0HQ==:17
- a=kj9zAlcOel0A:10 a=n2v9WMKugxEA:10 a=-An2I_7KAAAA:8 a=2WD7L6A_4iVDFT5ujK4A:9
- a=CjuIK1q_8ugA:10 a=Sq34B_EcNBM9_nrAYB9S:22
-Received: from mac by deneb with local (Exim 4.84_2)
-        (envelope-from <mac@mcrowe.com>)
-        id 1ceqsg-0003Gl-RC; Fri, 17 Feb 2017 22:19:58 +0000
-Date:   Fri, 17 Feb 2017 22:19:58 +0000
-From:   Mike Crowe <mac@mcrowe.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: git diff --quiet exits with 1 on clean tree with CRLF conversions
-Message-ID: <20170217221958.GA12163@mcrowe.com>
-References: <20170217212633.GA24937@mcrowe.com>
- <xmqqr32wqxr6.fsf@gitster.mtv.corp.google.com>
+        id S964777AbdBQW3g (ORCPT <rfc822;e@80x24.org>);
+        Fri, 17 Feb 2017 17:29:36 -0500
+Received: from mail-wm0-f54.google.com ([74.125.82.54]:38781 "EHLO
+        mail-wm0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S935000AbdBQW3e (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 Feb 2017 17:29:34 -0500
+Received: by mail-wm0-f54.google.com with SMTP id r141so19488928wmg.1
+        for <git@vger.kernel.org>; Fri, 17 Feb 2017 14:29:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gal-ro.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:sender:from:date:message-id:subject:to;
+        bh=FDBj+eBaO2uGRrSVfy5SYpd2LYh3m6kXEGvSWmpwuf4=;
+        b=EBGF6/3+OXBZTIZA4jhvb3+28S/mAWHQ5nvUBtKKsBo8PsKzF3nbqVEt7lBj89cJyg
+         NVzFGq9umOESH2JrEV1WPFdKy/LaAwR4v6kAC8G1V1jjCyYOLAtYrzGYr1x8M6mij+of
+         ISt0U+70oZscn6CF7+FY3/qUbeiRYKpYBOgJsKQ8/2b4qPy7CJctbEpqHkqMsxOhr+Zo
+         Ouo9Yr1wO1Y6f0OP48Juv2Dxwx3HZN7/lnAdMpvvSplE98cA0N//s2XsqX2nWvcSetak
+         UN3ueoxyxMFJQSp+K/oJSsRlSG7QkreTgqzZJ+i3Gz3Zg05jkFrmtHsb3H1R+7p81A9J
+         PRlQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:sender:from:date:message-id:subject
+         :to;
+        bh=FDBj+eBaO2uGRrSVfy5SYpd2LYh3m6kXEGvSWmpwuf4=;
+        b=EwgnMhMh4QKIVK3zwQ7dBd2d2CRbtq2JLRHa0OVJKD634CJ+hG5gQDpxTUX4VnFoh6
+         TJzGcFkEyn2r5Ya0CvLa38orYFsid4kQHM0WO/CBN7VX6lC5oYwk3xs908Y1Aq0qeOIP
+         ItyFkbBlqM3N+V7ELmUkVtMaCKwx7DqQlmrqBl8N11Z4JtsfjICHSDDm2g+dxiKDIrLE
+         sPdcGQaL+9v35AiDzOwJ0c4sPdoeWYi5uGRq+tIrhrmTJyZuh5FmKQRwr6lC1Cp3pC6s
+         WXLS4iEqKRIvDDT5BXPmf1gbvJelCCrO4zLsSZ4bVs1X9I9fw0euQ/XQLjLKyfJOYu6J
+         OvQA==
+X-Gm-Message-State: AMke39kEwWB7Gj5KxLYM97byTCbQsMD0MqdEAi3snlloDs5WTTpR2K/3VHVUehNXEF7w957B5qOw3EwqcCmVSQ==
+X-Received: by 10.28.207.7 with SMTP id f7mr6049308wmg.112.1487370562257; Fri,
+ 17 Feb 2017 14:29:22 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqr32wqxr6.fsf@gitster.mtv.corp.google.com>
-User-Agent: Mutt/1.5.23 (2014-03-12)
+Received: by 10.28.226.6 with HTTP; Fri, 17 Feb 2017 14:29:21 -0800 (PST)
+X-Originating-IP: [77.176.41.146]
+From:   Alex Hoffman <spec@gal.ro>
+Date:   Fri, 17 Feb 2017 23:29:21 +0100
+X-Google-Sender-Auth: 08uLo2S0FTe-pwmFoYnvyMoZJZk
+Message-ID: <CAMX8fZWe2HO78ySonHX0adtPUxVPbj5_vo-NUGrjwpb7gPdGrQ@mail.gmail.com>
+Subject: Git bisect does not find commit introducing the bug
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Friday 17 February 2017 at 14:05:17 -0800, Junio C Hamano wrote:
-> Mike Crowe <mac@mcrowe.com> writes:
-> 
-> > If "git diff --quiet" finds it necessary to compare actual file contents,
-> > and a file requires CRLF conversion, then it incorrectly exits with an exit
-> > code of 1 even if there have been no changes.
-> >
-> > The patch below adds a test file that shows the problem.
-> 
-> If "git diff" does not show any output and "git diff --exit-code" or
-> "git diff --quiet" says there are differences, then it is a bug.
-> 
-> I would however have expected that any culprit would involve a code
-> that says "under QUICK option, we do not have to bother doing
-> this".  The part you quoted:
-> 
-> > 	if (!DIFF_FILE_VALID(p->one) || /* (1) */
-> > 	    !DIFF_FILE_VALID(p->two) ||
-> > 	    (p->one->oid_valid && p->two->oid_valid) ||
-> > 	    (p->one->mode != p->two->mode) ||
-> > 	    diff_populate_filespec(p->one, CHECK_SIZE_ONLY) ||
-> > 	    diff_populate_filespec(p->two, CHECK_SIZE_ONLY) ||
-> > 	    (p->one->size != p->two->size) ||
-> > 	    !diff_filespec_is_identical(p->one, p->two)) /* (2) */
-> > 		p->skip_stat_unmatch_result = 1;
-> 
-> is used by "git diff" with and without "--quiet", afacr, so I
-> suspect that the bug lies somewhere else.
+Hi there,
 
-I can't say that I really understand the code fully, but it appears that
-the first pass generates a queue of files that contain differences. The
-result of the quiet diff comes from the size of that queue,
-diff_queued_diff.nr, being non-zero in diffcore_std. I'm assuming that the
-result of the noisy diff comes from actually comparing the files.
+According to the documentation "git bisect" is designed "to find the
+commit that introduced a bug" .
+I have found a situation in which it does not returns the commit I expected.
+In order to reproduce the problem:
 
-But, I've only spent a short while looking so I may have got the wrong end
-of the stick.
+1. mkdir test; cd test;
+git clone https://github.com/entbugger/git-bisect-issue.git
+cd git-bisect-issue
 
-Thanks.
+The tag "v.bad" is one bad version and tag "v.good" is the first good
+version. A good version is one having the line "FEATURE2" in
+file1.txt, which was introduced in "v.good".
 
-Mike.
+2. Copy test scripts to another folder to make sure they are not
+overridden by 'git bisect'
+cp *.sh ../
+cd ..
+./search-bug-git.sh
+
+3. Run ./search-bug-git.sh to search for the commit introducing the
+bug. It finds that the commit 04c6f4b9ed with the message "Feature 1"
+is the first one introducing the bug.
+
+First of all this is confusing, as this commit cannot be reached
+starting from "v.good". Then I expected the commit with the message
+"Introduce bug" to be returned by 'git bisect', as it is the first
+commit  between "v.good" and "v.bad" that does not contain the line
+"FEATURE2" in file1.txt, which is what I understand by the commit
+"that introduced a bug" (cited from the manpage of git bisect).
+
+Thanks for looking to this,
+
+Best regards,
+VG
