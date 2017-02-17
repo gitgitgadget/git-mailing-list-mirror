@@ -7,47 +7,47 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 173D620136
-	for <e@80x24.org>; Fri, 17 Feb 2017 14:19:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E06FF20136
+	for <e@80x24.org>; Fri, 17 Feb 2017 14:19:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934460AbdBQOTa (ORCPT <rfc822;e@80x24.org>);
-        Fri, 17 Feb 2017 09:19:30 -0500
-Received: from mail-pf0-f177.google.com ([209.85.192.177]:33267 "EHLO
-        mail-pf0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S934098AbdBQOT1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 Feb 2017 09:19:27 -0500
-Received: by mail-pf0-f177.google.com with SMTP id c73so14162241pfb.0
-        for <git@vger.kernel.org>; Fri, 17 Feb 2017 06:19:27 -0800 (PST)
+        id S934445AbdBQOTk (ORCPT <rfc822;e@80x24.org>);
+        Fri, 17 Feb 2017 09:19:40 -0500
+Received: from mail-pg0-f66.google.com ([74.125.83.66]:32929 "EHLO
+        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S934098AbdBQOTh (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 Feb 2017 09:19:37 -0500
+Received: by mail-pg0-f66.google.com with SMTP id 5so5069873pgj.0
+        for <git@vger.kernel.org>; Fri, 17 Feb 2017 06:19:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=l514Qwi/SygxSZQG59au5XvmWPLDrWeKgWcCbQ+01UA=;
-        b=hJs0AKNxRJ6eOtO5h1G9nMWWDkDEvOxesEi3Flmw43LxHeFjV16jM9L2laxc4MyBAH
-         a10o8bf6LJItQbmmUiELahdx+wJAB0fVy2H0b12B/XN0MXhqYp0EG65S8seA52/2AZJc
-         r4UKoy8UhANG3s+oBaLSEr0ejS4tdVWxkSrV+PdmnnmgF/V31g/gdTdG1sypEo8rQyyB
-         VvQDcF/rNR2ZeeDFGQ558t7uQJRRubMCal8GTHGnCjJ45pTXM7yRhc8iDql7SEhCO+Ko
-         QTL4FLiN344bKaQiV5cabiPtKDPJedmF02iCTLOKVmRdnjJSuiDGPHVWq5FEq9zPawRu
-         WrHA==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=XjmhnSDriTqE8MXD8Q4O0wxE54t0BYXKWehAhvd19bU=;
+        b=S0/Vj+ifpOo4jDoeems7BqBX1NzomqubrAXRZWWipDitLZdvcrKRcBZQZ2A4j4nrcl
+         CVFvkkbG2MaOwp+MRwXUDh9FpMbuuR1IljprY/UwvJTofhHrjpV9L/eHscnust2Lsi8/
+         FLJJCS+hvXAh0T+Ti4YuNAV1UlijOKOkshrMLyZp+R+PDO7CUpwLd8a0W2yFe/VjK7K+
+         N3sAGd8IV7IbNKK0kk4o7LH6pPemNlfa8cAX4lPWqPz0igINaN7gZ4ysfZe4DV/n49pr
+         ZDvhT9QmZhs7ZPaC4uZnLhdu+esyA+v5IyL5X09D4fjORSrfbgnGetHj/1OpMKc6tagy
+         7WxA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=l514Qwi/SygxSZQG59au5XvmWPLDrWeKgWcCbQ+01UA=;
-        b=miwTC7jf0GykFMfliUA6BFSVhePQ0Mas+i1OrEIK1Sv/q9CHwYgixG77N1tgsPeFWr
-         uKK0gG3331yGM2XZ005xfR2vmJ+6krFssKdt6+rk572fR9kzrSSk3x0GE1ASzh5Qn+uP
-         c68IyY5R8dAAeQO6uMq2NaLLo4YyhKdjOiscRYNIYH0cvQEL7ou2vZpN3C8LrPvUQXGG
-         gRj/mo5Ajd9RAYOw9lm2LiUDBVb9TQWEoTttnAc2gh6qQ4hNr5NIfw+3Zp7KF2IUc0Qu
-         Safa05zhPZXj6es83OczuycfSmEiTKITuXfQaKR9IuOZJPcLD9z7JLr6atJcDDjkf5l+
-         zTGw==
-X-Gm-Message-State: AMke39lCFCO4Vzp14dJopu2A+HIuCAnxRph0XlPEArCYfw03S6/j8diMh/0bagVGEr7BQA==
-X-Received: by 10.98.139.22 with SMTP id j22mr9680906pfe.115.1487341166757;
-        Fri, 17 Feb 2017 06:19:26 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=XjmhnSDriTqE8MXD8Q4O0wxE54t0BYXKWehAhvd19bU=;
+        b=VtSsULb8CYcdkhlVy0a61FqWyZaVkHtlDPFix+ag6xgE/G8VhscUnJ6f0376sub+kA
+         H3m9X1NGaOHdLkZH5SCMDdny7nmuPP7jeWjVdwBFjKqPVLOYn2OdirwCx3JxQLmKwMet
+         Kp5an9WfRc+/df2r+zLDDF8fyA8y40NX3Jk5xL3rL3XsqfENHa3D7LtJ3Z+Tgrpj60pB
+         EqExgqY0Bsv1n6xN6BLjgWkFu0LJkkmA2Mw1pnAqrbKKWuPsYivKnLOAwmmttt6nDMgM
+         EbWxyk6PzkBW096DvhN3oQ8eD4wUZylMjiNZ6sVS0VB7+/pmEcZ1VWjjOOYsiwkD5xsI
+         JlOQ==
+X-Gm-Message-State: AMke39m3T+caMKN+eiSauo/8PbFFyU0LTaRUji2yplguosI3Es5Hvt6UDtmnlvRIwFyUsw==
+X-Received: by 10.84.212.136 with SMTP id e8mr11662210pli.140.1487341171972;
+        Fri, 17 Feb 2017 06:19:31 -0800 (PST)
 Received: from ash ([115.73.162.84])
-        by smtp.gmail.com with ESMTPSA id m21sm20282912pgh.4.2017.02.17.06.19.23
+        by smtp.gmail.com with ESMTPSA id 143sm20108775pgb.66.2017.02.17.06.19.28
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 17 Feb 2017 06:19:26 -0800 (PST)
-Received: by ash (sSMTP sendmail emulation); Fri, 17 Feb 2017 21:19:21 +0700
+        Fri, 17 Feb 2017 06:19:31 -0800 (PST)
+Received: by ash (sSMTP sendmail emulation); Fri, 17 Feb 2017 21:19:27 +0700
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
@@ -57,10 +57,12 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH/RFC 00/15] Fix git-gc losing objects in multi worktree
-Date:   Fri, 17 Feb 2017 21:18:53 +0700
-Message-Id: <20170217141908.18012-1-pclouds@gmail.com>
+Subject: [PATCH 01/15] revision.h: new flag in struct rev_info wrt. worktree-related refs
+Date:   Fri, 17 Feb 2017 21:18:54 +0700
+Message-Id: <20170217141908.18012-2-pclouds@gmail.com>
 X-Mailer: git-send-email 2.11.0.157.gd943d85
+In-Reply-To: <20170217141908.18012-1-pclouds@gmail.com>
+References: <20170217141908.18012-1-pclouds@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -69,61 +71,40 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-So here is my latest attempt on fixing this issue. For people who are
-not aware of it, git-gc does not take per-worktree refs, reflogs and
-indexes into account. An odb prune may leave HEAD and references in other
-worktrees pointing to nowhere.
+The revision walker can walk through per-worktree refs like HEAD or
+SHA-1 references in the index. These currently are from the current
+worktree only. This new flag is added to change rev-list behavior in
+this regard:
 
-This series is based on my "kill parse_ref()" series [1], which is
-based on yet another one, which is on top of mh/submodule-hash. But
-you can get everything from my github [2].
+When single_worktree is set, only current worktree is considered. When
+it is not set (which is the default), all worktrees are considered.
 
-The series introduces a new set of refs_* API and replaces the old
-*_submodule() one, opening up the opportunity to access refs from
-another worktree. rev-list learns a new option, --single-worktree, to
-control the new behavior.
+The default is chosen so because the two big components that rev-list
+works with are object database (entirely shared between worktrees) and
+refs (mostly shared). It makes sense that default behavior goes per-repo
+too instead of per-worktree.
 
-reflog iterator from files-backend.c does not support per-worktree
-items, so it's updated here to do that. It still looks ugly, but I
-think this is a good "middle ground" until compound ref store comes.
-At that point we can separate "single worktree" ref store vs "linked
-worktree" one.
+The flag will eventually be exposed as a rev-list argument with
+documents. For now it stays internal until the new behavior is fully
+implemented.
 
-I'm adding Stefan here as well since I added a new FIXME in
-submodule.c in 11/15. I think it's ok (again, for now). But another
-look from submodule people would be much better.
+Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+---
+ revision.h | 1 +
+ 1 file changed, 1 insertion(+)
 
-[1] http://public-inbox.org/git/%3C20170216120302.5302-1-pclouds@gmail.com%3E/
-[2] https://github.com/pclouds/git/commits/prune-in-worktrees-2
-
-Nguyễn Thái Ngọc Duy (15):
-  revision.h: new flag in struct rev_info wrt. worktree-related refs
-  revision.c: refactor add_index_objects_to_pending()
-  revision.c: --indexed-objects add objects from all worktrees
-  refs: move submodule slash stripping code to get_submodule_ref_store
-  refs: add refs_read_ref[_full]()
-  refs: add refs_head_ref()
-  refs: add refs_for_each_ref()
-  refs: add a refs_for_each_in() and friends
-  revision.c: use refs_for_each*() instead of for_each_*_submodule()
-  refs: remove dead for_each_*_submodule()
-  revision.c: --all adds HEAD from all worktrees
-  refs: add refs_for_each_reflog[_ent]()
-  files-backend: make reflog iterator go through per-worktree reflog
-  revision.c: --reflog add HEAD reflog from all worktrees
-  rev-list: expose and document --single-worktree
-
- Documentation/rev-list-options.txt |   8 ++
- reachable.c                        |   1 +
- refs.c                             | 171 ++++++++++++++++++++++++-------------
- refs.h                             |  25 ++++--
- refs/files-backend.c               |  24 +++++-
- revision.c                         | 130 +++++++++++++++++++++++-----
- revision.h                         |   1 +
- submodule.c                        |   2 +
- t/t5304-prune.sh                   |  37 ++++++++
- 9 files changed, 305 insertions(+), 94 deletions(-)
-
+diff --git a/revision.h b/revision.h
+index 9fac1a607..c851b94ad 100644
+--- a/revision.h
++++ b/revision.h
+@@ -88,6 +88,7 @@ struct rev_info {
+ 			topo_order:1,
+ 			simplify_merges:1,
+ 			simplify_by_decoration:1,
++			single_worktree:1,
+ 			tag_objects:1,
+ 			tree_objects:1,
+ 			blob_objects:1,
 -- 
 2.11.0.157.gd943d85
 
