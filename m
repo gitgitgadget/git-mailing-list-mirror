@@ -7,47 +7,47 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D67FE20136
-	for <e@80x24.org>; Fri, 17 Feb 2017 14:06:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4AEAB20136
+	for <e@80x24.org>; Fri, 17 Feb 2017 14:06:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934164AbdBQOGK (ORCPT <rfc822;e@80x24.org>);
-        Fri, 17 Feb 2017 09:06:10 -0500
-Received: from mail-pf0-f194.google.com ([209.85.192.194]:33741 "EHLO
-        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S934043AbdBQOGJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 Feb 2017 09:06:09 -0500
-Received: by mail-pf0-f194.google.com with SMTP id e4so4181824pfg.0
-        for <git@vger.kernel.org>; Fri, 17 Feb 2017 06:06:09 -0800 (PST)
+        id S934167AbdBQOGQ (ORCPT <rfc822;e@80x24.org>);
+        Fri, 17 Feb 2017 09:06:16 -0500
+Received: from mail-pg0-f68.google.com ([74.125.83.68]:32853 "EHLO
+        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S934043AbdBQOGP (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 Feb 2017 09:06:15 -0500
+Received: by mail-pg0-f68.google.com with SMTP id 5so5045585pgj.0
+        for <git@vger.kernel.org>; Fri, 17 Feb 2017 06:06:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=11s2EiWfxXw+pndnfpYTWapwcvghkyaM5rB9yWt1ZGc=;
-        b=inndEkqkVfNtEFoKqAYI3msOn5J4sAye+uaFa5G0HSnJ/7fAocTcLapnWVJ/pyF7kR
-         h/kVJLCRyTW9l9VoCUUV5lw9uc4zHK4qR5qUAt+PTyWAexcn3qfqhU/JZTdSFFEE132J
-         54hBoqP1NBZRFRzNqivfDsiiIXz11u8Io+8YvaUUc5Iv9ljCD23ffqrmrX93pAutXKLx
-         oZ/9iiTB+7NtJP5/P4zyHnpfaceBpvKlO4jAHrvVSdbLnPaISrG9fjgXbdFwYouQrQKk
-         h08QzGunCgl5u57p2+bNRRhKDm79vwq/6WlOZqAK7HU5iXhZDlNkTexZPi6jRud8L01Z
-         4Gug==
+        bh=D6Ug8uewcVCHD+71rHLd8lVtElm/mDCIMGUDTfs4WyU=;
+        b=iikLTbygKt8WT/meZrGpw/EpCa+/GI/+HWABQbmghu894017hQu0E61MqVBQ2s9KW3
+         fc7wR20O1ORFRvGA+pYAxVppAE7Mr40bx2Ug7WcmeVfDqPwlvaXxpZNfnfATygGm+9Oh
+         cOnUjD1Jdf+H6blzq0hpK4GcSk5zlG2vJ4Gj6yMCSt8xznOHlDUTgQ+YsPXazf53dwTR
+         Di3vl0YQNELZ3UeJyb52NBz4Gx9M54AVo0sFj4eIO5SwiaUGCjXsya/hKeSFD3T5YgvO
+         BS6uXn1At881BKXYSEP1prjgT3y5yDMXzYS/kYycrR3nCaVXx7M3iEqM0+6BgaaT7Fkv
+         rnmQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=11s2EiWfxXw+pndnfpYTWapwcvghkyaM5rB9yWt1ZGc=;
-        b=JpAnvROLteEhR9ENpNtqqGLHAYtcQLMk5k7F8evjVQchIYfimFiy3BTl8VEECXiBr6
-         0Uw+mUGThVOK5Pb16nfKmuwPuWNVS/9oiimslAK9NlYjDTE6X9LK6yX6rqBEtQQqNM5S
-         We7Dy919cEK2SQZh/0Nm5wlT8MBhc505eFz3o7mRt2Ud7rUtwWVdwu0P9/0PkyLKBwQF
-         HWrf1cz20ynSsfxdstppsPNSR0KF8VhVOn6JFOEoHsmhqYviHszODOle1I93InEMob5Y
-         25TzCPT6+NY15x32gdUUIXMBYyTWRxJw/qz7tiEr4KUQi14zHnULpNrEnPdHILGekAzm
-         Xctw==
-X-Gm-Message-State: AMke39lod/vo1+Qf/vJRn+qQKKIZpgmCqzpRw+0ZBj4RNK3S2Bviz1jzku8bwOdQlBQcAA==
-X-Received: by 10.98.134.2 with SMTP id x2mr9609785pfd.158.1487340368735;
-        Fri, 17 Feb 2017 06:06:08 -0800 (PST)
+        bh=D6Ug8uewcVCHD+71rHLd8lVtElm/mDCIMGUDTfs4WyU=;
+        b=FvHvu2+wbSV/5EvWexWNwAMDHScLzqOL0LXhhLheP8l5WW4Ml83VDthDkFL56MiO98
+         42VNI+yPdfuWIzS6iNW4kd7vG3orbORSxpUgR+S5dd1IO6I+RqXYJKsdZG+fkDjbXJtK
+         pPPc7seIQf+efHUOZb6ReIIr2InCr82ZkAmtwAai1wDnqbTEpM0K+rVTuuUWWTA1vgvk
+         K9S0m6DpwbsF1Ut7x7IWyo2JY3zSDzbujVezo0R4/fQMziwzSJ/alnY7KtSpDnhWIlbh
+         ekAT2LO+JvzBx4t1fyUiJLydzjITt46xeQ/YW0bdp/tGfww/UTx79pKdw4hPrEFn2Qd/
+         X30w==
+X-Gm-Message-State: AMke39lJTKPl1jxTpo56JXVcrH6gSI5Moylmpm2tqoItsoSs6N8QyztNKP9gMr+VEEVeMg==
+X-Received: by 10.99.94.195 with SMTP id s186mr10395182pgb.198.1487340374405;
+        Fri, 17 Feb 2017 06:06:14 -0800 (PST)
 Received: from ash ([115.73.162.84])
-        by smtp.gmail.com with ESMTPSA id l25sm20032680pfb.24.2017.02.17.06.06.05
+        by smtp.gmail.com with ESMTPSA id u28sm20206495pgo.20.2017.02.17.06.06.10
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 17 Feb 2017 06:06:07 -0800 (PST)
-Received: by ash (sSMTP sendmail emulation); Fri, 17 Feb 2017 21:06:03 +0700
+        Fri, 17 Feb 2017 06:06:13 -0800 (PST)
+Received: by ash (sSMTP sendmail emulation); Fri, 17 Feb 2017 21:06:09 +0700
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
@@ -58,9 +58,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Stefan Beller <sbeller@google.com>, novalis@novalis.org,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH v3 11/16] refs.c: kill register_ref_store(), add register_submodule_ref_store()
-Date:   Fri, 17 Feb 2017 21:04:31 +0700
-Message-Id: <20170217140436.17336-12-pclouds@gmail.com>
+Subject: [PATCH v3 12/16] refs.c: make get_main_ref_store() public and use it
+Date:   Fri, 17 Feb 2017 21:04:32 +0700
+Message-Id: <20170217140436.17336-13-pclouds@gmail.com>
 X-Mailer: git-send-email 2.11.0.157.gd943d85
 In-Reply-To: <20170217140436.17336-1-pclouds@gmail.com>
 References: <20170216114818.6080-1-pclouds@gmail.com>
@@ -73,87 +73,188 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is the last function in this code (besides public API) that takes
-submodule argument and handles both main/submodule cases. Break it down,
-move main store registration in get_main_ref_store() and keep the rest
-in register_submodule_ref_store().
+get_ref_store() will soon be renamed to get_submodule_ref_store().
+Together with future get_worktree_ref_store(), the three functions
+provide an appropriate ref store for different operation modes. New APIs
+will be added to operate directly on ref stores.
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- refs.c | 36 +++++++++++++++++++-----------------
- 1 file changed, 19 insertions(+), 17 deletions(-)
+ refs.c | 36 ++++++++++++++++++------------------
+ refs.h |  2 ++
+ 2 files changed, 20 insertions(+), 18 deletions(-)
 
 diff --git a/refs.c b/refs.c
-index 76a0e7b5a..55a80a83d 100644
+index 55a80a83d..25f657a6f 100644
 --- a/refs.c
 +++ b/refs.c
-@@ -1402,25 +1402,19 @@ static struct ref_store *lookup_submodule_ref_store(const char *submodule)
- 
- /*
-  * Register the specified ref_store to be the one that should be used
-- * for submodule (or the main repository if submodule is NULL). It is
-- * a fatal error to call this function twice for the same submodule.
-+ * for submodule. It is a fatal error to call this function twice for
-+ * the same submodule.
-  */
--static void register_ref_store(struct ref_store *refs, const char *submodule)
-+static void register_submodule_ref_store(struct ref_store *refs,
-+					 const char *submodule)
+@@ -1303,7 +1303,7 @@ const char *resolve_ref_recursively(struct ref_store *refs,
+ /* backend functions */
+ int refs_init_db(struct strbuf *err)
  {
--	if (!submodule) {
--		if (main_ref_store)
--			die("BUG: main_ref_store initialized twice");
--
--		main_ref_store = refs;
--	} else {
--		if (!submodule_ref_stores.tablesize)
--			hashmap_init(&submodule_ref_stores, submodule_hash_cmp, 0);
-+	if (!submodule_ref_stores.tablesize)
-+		hashmap_init(&submodule_ref_stores, submodule_hash_cmp, 0);
+-	struct ref_store *refs = get_ref_store(NULL);
++	struct ref_store *refs = get_main_ref_store();
  
--		if (hashmap_put(&submodule_ref_stores,
--				alloc_submodule_hash_entry(submodule, refs)))
--			die("BUG: ref_store for submodule '%s' initialized twice",
--			    submodule);
--	}
-+	if (hashmap_put(&submodule_ref_stores,
-+			alloc_submodule_hash_entry(submodule, refs)))
-+		die("BUG: ref_store for submodule '%s' initialized twice",
-+		    submodule);
+ 	return refs->be->init_db(refs, err);
+ }
+@@ -1311,7 +1311,7 @@ int refs_init_db(struct strbuf *err)
+ const char *resolve_ref_unsafe(const char *refname, int resolve_flags,
+ 			       unsigned char *sha1, int *flags)
+ {
+-	return resolve_ref_recursively(get_ref_store(NULL), refname,
++	return resolve_ref_recursively(get_main_ref_store(), refname,
+ 				       resolve_flags, sha1, flags);
  }
  
- /*
-@@ -1437,7 +1431,6 @@ static struct ref_store *ref_store_init(const char *submodule)
- 		die("BUG: reference backend %s is unknown", be_name);
- 
- 	refs = be->init(submodule);
--	register_ref_store(refs, submodule);
+@@ -1434,7 +1434,7 @@ static struct ref_store *ref_store_init(const char *submodule)
  	return refs;
  }
  
-@@ -1449,6 +1442,12 @@ static struct ref_store *get_main_ref_store(void)
- 		return main_ref_store;
+-static struct ref_store *get_main_ref_store(void)
++struct ref_store *get_main_ref_store(void)
+ {
+ 	struct ref_store *refs;
  
- 	refs = ref_store_init(NULL);
-+	if (refs) {
-+		if (main_ref_store)
-+			die("BUG: main_ref_store initialized twice");
+@@ -1483,14 +1483,14 @@ void base_ref_store_init(struct ref_store *refs,
+ /* backend functions */
+ int pack_refs(unsigned int flags)
+ {
+-	struct ref_store *refs = get_ref_store(NULL);
++	struct ref_store *refs = get_main_ref_store();
+ 
+ 	return refs->be->pack_refs(refs, flags);
+ }
+ 
+ int peel_ref(const char *refname, unsigned char *sha1)
+ {
+-	struct ref_store *refs = get_ref_store(NULL);
++	struct ref_store *refs = get_main_ref_store();
+ 
+ 	return refs->be->peel_ref(refs, refname, sha1);
+ }
+@@ -1498,7 +1498,7 @@ int peel_ref(const char *refname, unsigned char *sha1)
+ int create_symref(const char *ref_target, const char *refs_heads_master,
+ 		  const char *logmsg)
+ {
+-	struct ref_store *refs = get_ref_store(NULL);
++	struct ref_store *refs = get_main_ref_store();
+ 
+ 	return refs->be->create_symref(refs, ref_target, refs_heads_master,
+ 				       logmsg);
+@@ -1507,7 +1507,7 @@ int create_symref(const char *ref_target, const char *refs_heads_master,
+ int ref_transaction_commit(struct ref_transaction *transaction,
+ 			   struct strbuf *err)
+ {
+-	struct ref_store *refs = get_ref_store(NULL);
++	struct ref_store *refs = get_main_ref_store();
+ 
+ 	return refs->be->transaction_commit(refs, transaction, err);
+ }
+@@ -1517,14 +1517,14 @@ int verify_refname_available(const char *refname,
+ 			     const struct string_list *skip,
+ 			     struct strbuf *err)
+ {
+-	struct ref_store *refs = get_ref_store(NULL);
++	struct ref_store *refs = get_main_ref_store();
+ 
+ 	return refs->be->verify_refname_available(refs, refname, extra, skip, err);
+ }
+ 
+ int for_each_reflog(each_ref_fn fn, void *cb_data)
+ {
+-	struct ref_store *refs = get_ref_store(NULL);
++	struct ref_store *refs = get_main_ref_store();
+ 	struct ref_iterator *iter;
+ 
+ 	iter = refs->be->reflog_iterator_begin(refs);
+@@ -1535,7 +1535,7 @@ int for_each_reflog(each_ref_fn fn, void *cb_data)
+ int for_each_reflog_ent_reverse(const char *refname, each_reflog_ent_fn fn,
+ 				void *cb_data)
+ {
+-	struct ref_store *refs = get_ref_store(NULL);
++	struct ref_store *refs = get_main_ref_store();
+ 
+ 	return refs->be->for_each_reflog_ent_reverse(refs, refname,
+ 						     fn, cb_data);
+@@ -1544,14 +1544,14 @@ int for_each_reflog_ent_reverse(const char *refname, each_reflog_ent_fn fn,
+ int for_each_reflog_ent(const char *refname, each_reflog_ent_fn fn,
+ 			void *cb_data)
+ {
+-	struct ref_store *refs = get_ref_store(NULL);
++	struct ref_store *refs = get_main_ref_store();
+ 
+ 	return refs->be->for_each_reflog_ent(refs, refname, fn, cb_data);
+ }
+ 
+ int reflog_exists(const char *refname)
+ {
+-	struct ref_store *refs = get_ref_store(NULL);
++	struct ref_store *refs = get_main_ref_store();
+ 
+ 	return refs->be->reflog_exists(refs, refname);
+ }
+@@ -1559,14 +1559,14 @@ int reflog_exists(const char *refname)
+ int safe_create_reflog(const char *refname, int force_create,
+ 		       struct strbuf *err)
+ {
+-	struct ref_store *refs = get_ref_store(NULL);
++	struct ref_store *refs = get_main_ref_store();
+ 
+ 	return refs->be->create_reflog(refs, refname, force_create, err);
+ }
+ 
+ int delete_reflog(const char *refname)
+ {
+-	struct ref_store *refs = get_ref_store(NULL);
++	struct ref_store *refs = get_main_ref_store();
+ 
+ 	return refs->be->delete_reflog(refs, refname);
+ }
+@@ -1578,7 +1578,7 @@ int reflog_expire(const char *refname, const unsigned char *sha1,
+ 		  reflog_expiry_cleanup_fn cleanup_fn,
+ 		  void *policy_cb_data)
+ {
+-	struct ref_store *refs = get_ref_store(NULL);
++	struct ref_store *refs = get_main_ref_store();
+ 
+ 	return refs->be->reflog_expire(refs, refname, sha1, flags,
+ 				       prepare_fn, should_prune_fn,
+@@ -1588,21 +1588,21 @@ int reflog_expire(const char *refname, const unsigned char *sha1,
+ int initial_ref_transaction_commit(struct ref_transaction *transaction,
+ 				   struct strbuf *err)
+ {
+-	struct ref_store *refs = get_ref_store(NULL);
++	struct ref_store *refs = get_main_ref_store();
+ 
+ 	return refs->be->initial_transaction_commit(refs, transaction, err);
+ }
+ 
+ int delete_refs(struct string_list *refnames, unsigned int flags)
+ {
+-	struct ref_store *refs = get_ref_store(NULL);
++	struct ref_store *refs = get_main_ref_store();
+ 
+ 	return refs->be->delete_refs(refs, refnames, flags);
+ }
+ 
+ int rename_ref(const char *oldref, const char *newref, const char *logmsg)
+ {
+-	struct ref_store *refs = get_ref_store(NULL);
++	struct ref_store *refs = get_main_ref_store();
+ 
+ 	return refs->be->rename_ref(refs, oldref, newref, logmsg);
+ }
+diff --git a/refs.h b/refs.h
+index 694784391..f803528fc 100644
+--- a/refs.h
++++ b/refs.h
+@@ -553,4 +553,6 @@ int reflog_expire(const char *refname, const unsigned char *sha1,
+ 
+ int ref_storage_backend_exists(const char *name);
+ 
++struct ref_store *get_main_ref_store(void);
 +
-+		main_ref_store = refs;
-+	}
- 	return refs;
- }
- 
-@@ -1469,6 +1468,9 @@ struct ref_store *get_ref_store(const char *submodule)
- 	if (is_nonbare_repository_dir(&submodule_sb))
- 		refs = ref_store_init(submodule);
- 	strbuf_release(&submodule_sb);
-+
-+	if (refs)
-+		register_submodule_ref_store(refs, submodule);
- 	return refs;
- }
- 
+ #endif /* REFS_H */
 -- 
 2.11.0.157.gd943d85
 
