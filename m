@@ -2,103 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 63BE7201A9
-	for <e@80x24.org>; Fri, 17 Feb 2017 23:14:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 72131201A9
+	for <e@80x24.org>; Fri, 17 Feb 2017 23:22:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S964872AbdBQXOh (ORCPT <rfc822;e@80x24.org>);
-        Fri, 17 Feb 2017 18:14:37 -0500
-Received: from mail-pg0-f65.google.com ([74.125.83.65]:33006 "EHLO
-        mail-pg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S964821AbdBQXOg (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 Feb 2017 18:14:36 -0500
-Received: by mail-pg0-f65.google.com with SMTP id 5so5973346pgj.0
-        for <git@vger.kernel.org>; Fri, 17 Feb 2017 15:14:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=0UswQk7tPfPFGMJZ+fy/+bcqUNRipkNU5m5f1AL8Syc=;
-        b=GJ3aV4ILx7dbsllOdK2carzWr3hrJpo6ttYJGpb7OqV9vxqKTGItwIsZs2yHf7yogq
-         0F4tHap/B74Tvo0/58nqtq4b0pEVXVJP39y3SyoTOEawgRS3jK8tSk/cGvdHe2Ll3cmg
-         ul3zkNA5yyYL0s62v8hcovDkLmru465K9Em8n4e/Al/4TlRxNXtP5qqKqgj+9sF7ssOL
-         zog39KGtVi/vPlivrZO8ekivCUuRgx4EmNBEw2KMk8x/H5b5LinLgeWh0uS+vNp00bjV
-         UwgCF6slM/+sfHhvl/Q5YbE2ntAj0b13XA5dydh1WovfMvCTVlmgggoDmRRF3aWjksIM
-         k5jg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=0UswQk7tPfPFGMJZ+fy/+bcqUNRipkNU5m5f1AL8Syc=;
-        b=ZBPkn8TOBgHsWQJNCmViPofQAFOB1slWGZvi8W3NRPJ69wJJ8B9icZk+LsSpe0I9Mh
-         Ux7s8cz+Fq5vOkzAyoftOitPrwrgh2PjX60dwG1u6glUCRUC4MhkOMSc9Nk3agoNJbfY
-         7e0eMAP27Z7CLMmPzLActvNfhQVnCkf7V5lsrPTZ4o8Fg4TdKK43VQgncdrp0CSXL2A4
-         n3HiIlz43b3aTZzPmVT+02fCi8cuz1cM1PrlAwRC7UaFu+TujXW0kHkLG5DRM+bOeyM0
-         9PrB6xP0fPtRN/Aq7CwSeLv9OiHIZTIFdck0Poqbp0aoC4lLU6clFi7kSE6e0lZYJ+I2
-         9jUQ==
-X-Gm-Message-State: AMke39msyUDkgwHyn4StOFKInO1mB/OcqoTUcoebkmxEHpO/NBUruFpA4x3nt8wCf6BJIg==
-X-Received: by 10.99.52.196 with SMTP id b187mr12936803pga.131.1487373275456;
-        Fri, 17 Feb 2017 15:14:35 -0800 (PST)
-Received: from localhost ([2620:0:1000:8622:3130:38b1:b121:8f0d])
-        by smtp.gmail.com with ESMTPSA id y201sm11310802pfb.16.2017.02.17.15.14.34
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Fri, 17 Feb 2017 15:14:34 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Thomas Gummerer <t.gummerer@gmail.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        =?utf-8?Q?=C3=98yvind_A_=2E_Holm?= <sunny@sunbase.org>,
-        Jakub =?utf-8?Q?Nar=C4=99bski?= <jnareb@gmail.com>,
-        Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH v5 0/6] stash: support pathspec argument
-References: <20170212215420.16701-1-t.gummerer@gmail.com>
-        <20170217224141.19183-1-t.gummerer@gmail.com>
-        <xmqqfujcpgky.fsf@gitster.mtv.corp.google.com>
-        <20170217231246.GI652@hank>
-Date:   Fri, 17 Feb 2017 15:14:33 -0800
-In-Reply-To: <20170217231246.GI652@hank> (Thomas Gummerer's message of "Fri,
-        17 Feb 2017 23:12:46 +0000")
-Message-ID: <xmqq37fcpfza.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+        id S964910AbdBQXWs (ORCPT <rfc822;e@80x24.org>);
+        Fri, 17 Feb 2017 18:22:48 -0500
+Received: from mout.gmx.net ([212.227.15.15]:61321 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S964851AbdBQXWb (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 Feb 2017 18:22:31 -0500
+Received: from [192.168.178.43] ([92.76.250.75]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MNZ9u-1ckweo3z10-007Bo1; Sat, 18
+ Feb 2017 00:21:37 +0100
+Subject: Re: Git bisect does not find commit introducing the bug
+To:     Alex Hoffman <spec@gal.ro>, git@vger.kernel.org
+References: <CAMX8fZWe2HO78ySonHX0adtPUxVPbj5_vo-NUGrjwpb7gPdGrQ@mail.gmail.com>
+From:   Stephan Beyer <s-beyer@gmx.net>
+Message-ID: <d4991e4b-cbc4-da14-381a-88704e457a19@gmx.net>
+Date:   Sat, 18 Feb 2017 00:21:35 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Icedove/45.6.0
 MIME-Version: 1.0
-Content-Type: text/plain
+In-Reply-To: <CAMX8fZWe2HO78ySonHX0adtPUxVPbj5_vo-NUGrjwpb7gPdGrQ@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+X-Provags-ID: V03:K0:Z0QzWlga40iBnS48s4o8wjNWQ/0uxT6kxr/A1HxPD8pbJMCVql1
+ H7WsNDGVqOytueYlxZyAeoSLwcoq6fb9Aua3SEfSBKS+S/yHvtqB9GVfMqH7q1mnGBiTEtC
+ W0uyUIrSPbj7uaVxBo5KA8NVzL0MJ7OKIzzfBUBu2Dw5eDiiQZ8DWU0MBB3Oy79gg9t5gU+
+ VqmqrWBb3wxg/We4zVVuA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:uaFLbOxxj1o=:Lso8rG7+WLGze1WIvmO993
+ hbRbOnhLOYciqUzvRE77NLQsLxLyeIK0wK+AqQdI0MBGu0lRG9I6FAz4h1UwBMUToEZIheh+9
+ i+iFzJc2opiPaYGFj/EoX1HM4Yx8p4ZOluV4xqhvjXyxxp5naiJ3o6dhxOJgqWjUCrlhhlGuk
+ S1hiKcV5uWoIpoXQqcMPvjSOi4biH12O9YhvQji9Om1lTUINBflZa4Z1paQ5aOElNjC1X4TqC
+ fqw6WBNjh4jqIjZ5SqFj6UpGUByPIMcW14N8VRZWC6yWzE4PhCcSVETBCeVLIpBR1EbB2f/Yp
+ 3nCMIFflxQ9YRskIaGcgUWFr32tHS1FRFSNPi+KRM36s2Gz8iwI7CZiVhJ3mTQfIxN4nQA7Jh
+ oyIu/eN5t4nNy/P8Kg5ow5XcEQTfYKpb+O4j3bcaHeTmwSttkSLsmIJAAcNnYFEBlBkm58UA7
+ Djc6j1rS0ITn12KZBfGg7Nv8KfzDn28o6m41AU3iDosA910iaPqYxNSv4UtI6lV1Kj4Kp1WDJ
+ Je5SWumzhZa0w+pSTCM8to4Uymz7J4RZjDayCep+o8c6IeVOPezakCu7mJZpAWhf1Uf/Oo/VP
+ 72qoZrB29NjVlekZpaxxVTl4OpLIIXLy3STv12469hEqDsnlDc8s4UVmArVFWq9gj323qiibK
+ KDRllycGfRMJVoktaGP3GjqbR38fPr6gzhmah/D7kxehEHsNyZPBgEkfn0bJkmlNMQt2r/IJZ
+ g19abKzjNKNFvZuYE4glaJvJ67OcoGaMEWDnvPo5xLLY5BMP1hgyGFxEziL3d7IahL1um2l/Z
+ OeurVrJ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thomas Gummerer <t.gummerer@gmail.com> writes:
+Hi,
 
-> On 02/17, Junio C Hamano wrote:
->> Thomas Gummerer <t.gummerer@gmail.com> writes:
->> 
->> [some people may see this message twice, as I forgot to check if the
->> copy I received had "Some A . Body" not enclosed in dq; blindly
->> doing "Reply-All" ended up listing an invalid address on my Cc: line
->> and dropped by vger. apologies]
->> 
->> > diff --git a/git-stash.sh b/git-stash.sh
->> > index a184b1e274..1446fbe2e8 100755
->> > --- a/git-stash.sh
->> > +++ b/git-stash.sh
->> > @@ -67,51 +67,20 @@ create_stash () {
->> >  		case "$1" in
->> >  		-m|--message)
->> >  			shift
->> > -			test -z ${1+x} && usage
->> > -			stash_msg="$1"
->> > -			new_style=t
->> > +			stash_msg=${1-"BUG: create_stash () -m requires an argument"}
->> >  			;;
->> 
->> Did you mean ${1?"BUG: ..."} here and also "-u" below?
->
-> Yeah, shell scripts are still confusing me sometimes.  Thanks for
-> catching.  Would you mind fixing this up while queuing or do you want
-> me to resend?
+On 02/17/2017 11:29 PM, Alex Hoffman wrote:
+> According to the documentation "git bisect" is designed "to find the
+> commit that introduced a bug" .
+> I have found a situation in which it does not returns the commit I expected.
+> In order to reproduce the problem:
 
-I'll fix it up myself (please remind me if you notice that I forgot ;-).
+For the others who are too lazy to clone your repo and run the scripts,
+the history is like that (read from bottom to top) and I marked the
+commit found by git bisect and the on you expected:
+
+*   7a9e952 (bisect bad) <BAD>
+|\
+| *   671cec2 <BAD> <--- expected
+| |\
+| * | 04c6f4b <BAD> <--- found
+* | |   3915157 <GOOD>
+|\ \ \
+| | |/
+| |/|
+| * | f4154e9 (bisect good) <GOOD>
+| * | 85855bf <BAD>
+| |/
+* | f1a36f5 <BAD>
+|/
+* 1b7fb88 <BAD>
+
+The <BAD> and <GOOD> markers are set by your definition of what good and
+what bad commits are.
+
+> First of all this is confusing, as this commit cannot be reached
+> starting from "v.good".
+
+Hm, IMHO it shows that your example is pretty artificial (although you
+might have come across it in a real-world scenario): you introduced a
+new feature in f4154e9 (and it worked) and you broke that feature by
+making the merge 671cec2. However, the feature (that broke in 671cec2)
+did not even exist in 04c6f4b; so a test on the feature would not fail
+(leading to "bisect bad" as in the example), it would not exist (leading
+to "bisect skip").
+
+And if we are not talking about passing or failing tests but about
+crashing, bisect finds the right thing: f4154e9 was not crashing, but
+04c6f4b is crashing. Yes, it's not the commit that introduced the crash
+(which would be the first commit in the repo) but it's the first
+crashing commit after the one marked as good.
+
+So I'd consider this a feature or rather correct behavior, not a bug.
+
+In other words: bisect assumes that your repo is usually in a good state
+and you have a commit that changes it to a bad state. In your case you
+have a repo that is in a bad state and you have a commit that switches
+it to a good state and later you merge a bad-state branch and you have a
+bad state again. It is not made for that use-case, I think.
+
+Cheers
+  Stephan
