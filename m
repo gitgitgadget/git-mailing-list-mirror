@@ -2,120 +2,142 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B3037201A9
-	for <e@80x24.org>; Fri, 17 Feb 2017 21:42:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B0578201A9
+	for <e@80x24.org>; Fri, 17 Feb 2017 21:45:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S935035AbdBQVmY (ORCPT <rfc822;e@80x24.org>);
-        Fri, 17 Feb 2017 16:42:24 -0500
-Received: from mail-pf0-f193.google.com ([209.85.192.193]:35469 "EHLO
-        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S934415AbdBQVmX (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 Feb 2017 16:42:23 -0500
-Received: by mail-pf0-f193.google.com with SMTP id 68so4841190pfx.2
-        for <git@vger.kernel.org>; Fri, 17 Feb 2017 13:42:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=PnwIAzsZzafzLwBDGCMRcUzG1SECgn8oSyacIFkJ36Y=;
-        b=VN6Z8TDsDTSkE61XXWhM0bpR4z5ybNpwLz6eBxk4+CepLrG8GAugcaysoMj98AkFzi
-         a7XIbHc+xD9ITOcHkKVlsCwBpIqf2pNeBMeLcKNVa5PoplChfIE3xbq6fL4aNrv2TXbN
-         5vV3pTShDJg+BIG/kjgQbVqleuT/0LwBehFBeD+1XzwLl1BltsqUqccxHcxCKbbHfDfp
-         ++F+Qrot5ByQfwmEh813TW4rgCg+s6gEjN86gdRP/GSs8I/tHtq3u5MhgIiJ9XQQXbcI
-         zaFUuKSYPKFfPPwPM4dK21WVSJApvFfddJqM7o/9lXIigPQjsxXqbq+CETXVBkqhM6sy
-         vU2A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=PnwIAzsZzafzLwBDGCMRcUzG1SECgn8oSyacIFkJ36Y=;
-        b=bqhS8awGpPZwG2NyBo3haLnFGagGzU1LhM28+P3I/RKZabbQydoiXyqPZoCggZBD4V
-         DnidMDknXr36LYqPp3+WZMHO0VsltXjJpdbM5ZQrCF0j+l7pJEPT7sm8R9CgEc4Wbitj
-         n+OpPuPLHZDpBUv1hBKQ6v+HBo6h54PeUlLwCb7h9dN2+Sk/9c5UwnZzEEV3wS+z/GOI
-         V2224zmwEeQnvGwHAJWgRUe+VqNTFf0G0GMdX8XfqRkGdgNVZOJZkG/LnpoStB9K0kDK
-         Xqd+Qw1mU2CH/IOATQMxDtVycd5U4lz8M74SSTpMYDMyCxNqFKWc6lgw/ZI2MOCd2JIG
-         NoRQ==
-X-Gm-Message-State: AMke39lZKEC5vrdoPVSXJJrGKwqoDpAKdmAkprK03wy0cvWXSYg9L4xHFP+jO4coQyYGyg==
-X-Received: by 10.99.60.91 with SMTP id i27mr11152294pgn.170.1487367742749;
-        Fri, 17 Feb 2017 13:42:22 -0800 (PST)
-Received: from localhost ([2620:0:1000:8622:3130:38b1:b121:8f0d])
-        by smtp.gmail.com with ESMTPSA id c2sm21289539pfl.61.2017.02.17.13.42.21
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Fri, 17 Feb 2017 13:42:21 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Michael Haggerty <mhagger@alum.mit.edu>,
-        Andreas Schwab <schwab@linux-m68k.org>,
-        =?utf-8?Q?J=C3=A1chym_Barv=C3=ADnek?= <jachymb@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH] tempfile: avoid "ferror | fclose" trick
-References: <xmqq37ff2hn8.fsf@gitster.mtv.corp.google.com>
-        <20170215231832.bzg3ygz4ualcvqlc@sigill.intra.peff.net>
-        <87tw7uv439.fsf@linux-m68k.org>
-        <20170216164359.k2ab7laqqvusfsm2@sigill.intra.peff.net>
-        <20170216213140.xqw7gzjimhvg7tcm@sigill.intra.peff.net>
-        <923e328c-7fea-a9e4-1059-3bd6b8e58164@alum.mit.edu>
-        <20170217080759.2357wzdiuymcyosw@sigill.intra.peff.net>
-        <64eedabd-c0de-a7e0-8d98-ad23a9625b45@alum.mit.edu>
-        <20170217205442.wnldfsxbj3dnnqvj@sigill.intra.peff.net>
-        <xmqq37fcsejx.fsf@gitster.mtv.corp.google.com>
-        <20170217212106.bew6krtb7pqpi3rr@sigill.intra.peff.net>
-Date:   Fri, 17 Feb 2017 13:42:21 -0800
-In-Reply-To: <20170217212106.bew6krtb7pqpi3rr@sigill.intra.peff.net> (Jeff
-        King's message of "Fri, 17 Feb 2017 16:21:06 -0500")
-Message-ID: <xmqqy3x4qyte.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+        id S934949AbdBQVpW (ORCPT <rfc822;e@80x24.org>);
+        Fri, 17 Feb 2017 16:45:22 -0500
+Received: from castro.crustytoothpaste.net ([75.10.60.170]:59624 "EHLO
+        castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S934415AbdBQVpV (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 17 Feb 2017 16:45:21 -0500
+Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id D272A280AD;
+        Fri, 17 Feb 2017 21:45:18 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
+        s=default; t=1487367918;
+        bh=l9ocq2Vhu3vowIatBI3BPwfb4MqkQiylAJu5ywm/yVA=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=Ou+rl+6WdOQ4LWu/Jh+4yidYVIIVoGqRk1O5fgBfWRS6jNI1whrQ7JqC7qA+M/CVL
+         8ZA/rGpgQeHxR5kE0B6AH2o05lUVEnBiS5MgzBixWIpczwOqKN0LRPbNn1SFUlB6IX
+         48pCu/tSDSV0llDV2wOmrBeX/g2S5e9yPY87CBIl8bz2HIT91gagn4rWig+W78ucM0
+         hnwXueEDCreeOgpcZZM6ftJsG5T2kLvEpeVI7P5QkBDrYPU4sf4WfBgBb6GIKS0JnC
+         vV44CpbAae4sj2Rrea1mK37JIpxl2FU+S99NJk5gyPepDDh9tDvGvSDqMjUN80dFDJ
+         z2TT34imfyaFUJ1ggePpsZuguRZbfRYjHuAKSmMu5oS3dGECIFaiLJI866E7FGIoBE
+         OTFa9VZWC7wYJx3MQx5sWp+rD17+q1mQ/2Lh4O7pv24CywToPmv59QQNTmKXe08OlS
+         vXnLAJDBebc1mJPGnc+egvJufeqhCa9eArww/TNz2kZV8jaEJd3
+Date:   Fri, 17 Feb 2017 21:45:13 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Michael Haggerty <mhagger@alum.mit.edu>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2 00/19] object_id part 6
+Message-ID: <20170217214513.giua5ksuiqqs2laj@genre.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Michael Haggerty <mhagger@alum.mit.edu>, git@vger.kernel.org,
+        Jeff King <peff@peff.net>
+References: <20170214023141.842922-1-sandals@crustytoothpaste.net>
+ <3644df30-71e2-584b-ebed-ae117a5ded3f@alum.mit.edu>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="husj5qsxbjia2lm3"
+Content-Disposition: inline
+In-Reply-To: <3644df30-71e2-584b-ebed-ae117a5ded3f@alum.mit.edu>
+X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
+ 4.9.0-1-amd64)
+User-Agent: NeoMutt/20170113 (1.7.2)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
 
-> On Fri, Feb 17, 2017 at 01:17:06PM -0800, Junio C Hamano wrote:
->
->> Stepping back a bit, would this be really needed?  Even if the ferror()
->> does not update errno, the original stdio operation that failed
->> would have, no?
->
-> Sure, but we have no clue what happened in between.
+--husj5qsxbjia2lm3
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Hmm, so we are protecting against somebody who does "errno = 0"
-explicitly, because she knows that she's dealt with the error from
-stdio earlier?  Such a careful person would have called clearerr()
-as well, I would guess.
+On Fri, Feb 17, 2017 at 10:55:03AM +0100, Michael Haggerty wrote:
+> On 02/14/2017 03:31 AM, brian m. carlson wrote:
+> > This is another series in the continuing conversion to struct object_id.
+> >=20
+> > This series converts more of the builtin directory and some of the refs
+> > code to use struct object_id. Additionally, it implements an
+> > nth_packed_object_oid function which provides a struct object_id version
+> > of the nth_packed_object function, and a parse_oid_hex function that
+> > makes parsing easier.
+> >=20
+> > The patch to use parse_oid_hex in the refs code has been split out into
+> > its own patch, just because I'm wary of that code and potentially
+> > breaking things, and I want it to be easy to revert in case things go
+> > wrong.  I have no reason to believe it is anything other than fully
+> > functional, however.
+> >=20
+> > Changes from v1:
+> > * Implement parse_oid_hex and use it.
+> > * Make nth_packed_object_oid take a variable into which to store the
+> >   object ID.  This avoids concerns about unsafe casts.
+> > * Rebase on master.
+>=20
+> Thanks as always for working on this!
+>=20
+> I skimmed over the patches (looking more carefully at the refs-related
+> ones) and left a few minor comments but didn't find anything serious.
 
-So let's assume we only care about the case where some other error
-was detected and errno was updated by a system library call.
+I'll send out a new series shortly with those changes.
 
-> I think our emails crossed, but our patches are obviously quite similar.
-> My commit message maybe explains a bit more of my thinking.
+> I'm curious; what fraction of the overall convert-to-object_id campaign
+> do you estimate is done so far? Are you getting close to the promised
+> land yet?
 
-Yes, but ;-)
+So I think that the current scope left is best estimated by the
+following command:
 
-If we are trying to make sure that the caller would not say "failed
-to close tempfile: ERRNO" with an ERRNO that is unrelated to any
-stdio opration, I am not sure if the patch improves things.  The
-caller did not fail to close (most likely we successfully closed
-it), and no matter what futzing we do to errno, the message supplied
-by such a caller will not be improved.
+  git grep -P 'unsigned char\s+(\*|.*20)' | grep -v '^Documentation'
 
-If the caller used "noticed an earlier error while closing tempfile:
-ERRNO", such a message would describe the situation more correctly,
-but then ERRNO that is not about stdio is probably acceptable in the
-context of that message (the original ERRNO might be ENOSPC that is
-even more specific than EIO, FWIW).  So I am not sure if the things
-will improve from the status quo.
+So there are approximately 1200 call sites left, which is quite a bit of
+work.  I estimate between the work I've done and other people's
+refactoring work (such as the refs backend refactor), we're about 40%
+done.
 
-It's easy for us to either apply the patch and be done with it (or
-drop and do the same), and in the bigger picture it wouldn't make
-that much of a difference, I would think, so I can go either way.
+I'm hoping to send out more smaller series in the future, since running
+make test on a huge series takes a long time.
 
+Part of the problem is that some places are almost completely
+convertible, except for one or two components that rely on something
+like sha1_array.  I have patches somewhere that convert that to
+oid_array, but I'm not sure how well they'll be received at this point.
+I think converting a lot of shallow-related code requires that
+conversion, though.
+--=20
+brian m. carlson / brian with sandals: Houston, Texas, US
++1 832 623 2791 | https://www.crustytoothpaste.net/~bmc | My opinion only
+OpenPGP: https://keybase.io/bk2204
 
+--husj5qsxbjia2lm3
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.1.18 (GNU/Linux)
+
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlinbugACgkQv1NdgR9S
+9ouFJBAAyJEZqtr5JDmRtPWhCcT7n/SpT1G/kLP+RgjuRBbcuWr1dZm+o8qekWEA
+HxBNpBNkW9QIZHbS8egMUPfCAAJIvrODZTckAGJhe8kjldk4sNWaTP1lm7onPvoD
+I4M+0kELRyW4C6w7AnjWBpNzChDSeJTAQ9UUos01v+GvgxvezH6eRKsTUz5juVSZ
+x05qkYqNbO4KbR1xc/LjxYuVnsIIp7agq7hSZSZtBMlhvWwNsWjzD2CZHVjah/2E
+/PAkR4OyGP+IyI/0S1mZhQVZFlpwnoB37aqF6vnnJ+W+ynXDmT0VKZwRrt38eneF
+Iz3hxFlV+II8QICwqjduxk0kCsVcclmI1cQyplT5NSQwWmFNW1U6FCHyIehCHV8B
+FqZPyen1BEaZ+6QLR/cWX12hnUMNWU5vC8YwLQiVcNyGYYMTMziONWHqbQzVJZYl
+kZVOfAmBzjsN3vMhGgaKNK98VQ5UqruB0CZyn0nv8ccEvPlDtlg4GY6O9/SorHCn
+s3gu69XWYE7eFOvsCGGG3utPt5/AUlt4e93FNgg7ARxz1wCSDjoSbY559m0kMwTR
+6W1kp2jVvxWGI+9/StUrZXsK1TkZXl1uXKCS2EvAbZlA6C96ELQ2hUvsRuA8TP6d
+uoRocvnmnQ5NYdYXGyh3wqj4qsIOnn1mwzDJeVzMlJCNzLmMk1E=
+=Vzmc
+-----END PGP SIGNATURE-----
+
+--husj5qsxbjia2lm3--
