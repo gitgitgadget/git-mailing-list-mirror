@@ -2,99 +2,80 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-0.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,URIBL_DBL_ABUSE_BOTCC shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7556E201A9
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8F05D201A9
 	for <e@80x24.org>; Fri, 17 Feb 2017 23:37:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S964930AbdBQXhP (ORCPT <rfc822;e@80x24.org>);
-        Fri, 17 Feb 2017 18:37:15 -0500
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:36050 "EHLO
-        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S964872AbdBQXhM (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 Feb 2017 18:37:12 -0500
-Received: by mail-wm0-f66.google.com with SMTP id r18so4938078wmd.3
-        for <git@vger.kernel.org>; Fri, 17 Feb 2017 15:37:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=JefNlinx4hTyEXJY5G6B8ay50NM5X9ALOM3yBlIK2qc=;
-        b=Fagp6bn1Y77x+Yuy6rsDlZRtHsBAkP7voJK1/mknWu9mXA9rMKS2J8N1xjo/VBece+
-         Rw0jMWZQx094LLXuCditRYnQHxJVadhclBBssrFhtxAl/c8XIhtIxh/IbU/k8TpTuW4R
-         mueFB53cvD8ShG0vpgz8MV0qERmObm5/+lfMNMVmnlD9CbOAAQAM0NcEuK65nEPTqPiM
-         uuWqUr+yU5cluyzfV+J622v8EqL0YjOvpQipX3VjtVOiYu3ac2ABtjHl26vIRgQkD5ZS
-         OeNZcc3xiYMYpCT03+Rco/fUWzW7Cn9Ojp07/RKa+qj1QNZWSqSwX+RCwppjx6jxujcu
-         scbg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=JefNlinx4hTyEXJY5G6B8ay50NM5X9ALOM3yBlIK2qc=;
-        b=EX57TRtJujIqB8LC2ut/X/XzCm449qmG+PCfxpEsyXp2nVeYVpYbpP8VO4z0vIYH+Y
-         WEo7XrNRPeLWbzG5q6etZLY6zqTOAUCO5S4XC//ltwxRqY3RZeCSCj2xqwM2pTS+OH6Y
-         o0zdkFspfvFXg5yHVey10iZpowSLg3j0lTD7ZJeyM7bKASfpPQUOPdM48iVU70TGQzfA
-         hcgKe/C4a0zV1admWRT8HKLn83kpDNuNunXdFyFz1oCcSKZ1Tq3qSshlsysKCOqSDXLh
-         xtsHLmAn2za+gdl8vwlaotx4L2lzHjkEgy0AZLYXWnr2CRxmkO9AtI945hLm6sSqgASC
-         R1Bg==
-X-Gm-Message-State: AMke39mQLPHvie3gHoFfh9+SCW5fYYc4NoabEuUz/s9WrtFOgNoIJ1YWqgX90VY7rlnZOg==
-X-Received: by 10.28.1.213 with SMTP id 204mr5810905wmb.70.1487374626177;
-        Fri, 17 Feb 2017 15:37:06 -0800 (PST)
-Received: from localhost.localdomain (2a02-8420-6e4a-3c00-8e4d-cd7f-8556-25c4.rev.sfr.net. [2a02:8420:6e4a:3c00:8e4d:cd7f:8556:25c4])
-        by smtp.gmail.com with ESMTPSA id b10sm3408871wmi.34.2017.02.17.15.37.05
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 17 Feb 2017 15:37:05 -0800 (PST)
-From:   "=?UTF-8?q?Gr=C3=A9goire=20Paris?=" 
-        <gregoire.paris.greg0ire@gmail.com>
-X-Google-Original-From: =?UTF-8?q?Gr=C3=A9goire=20Paris?= <postmaster@greg0ire.fr>
-To:     git@vger.kernel.org
-Cc:     =?UTF-8?q?Gr=C3=A9goire=20Paris?= <postmaster@greg0ire.fr>
-Subject: [PATCH] Document dotfiles exclusion on template copy
-Date:   Sat, 18 Feb 2017 00:37:00 +0100
-Message-Id: <20170217233700.14643-1-postmaster@greg0ire.fr>
-X-Mailer: git-send-email 2.9.3
+        id S964847AbdBQXhC (ORCPT <rfc822;e@80x24.org>);
+        Fri, 17 Feb 2017 18:37:02 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:65302 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S964844AbdBQXhA (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 Feb 2017 18:37:00 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 1CAC06A3A9;
+        Fri, 17 Feb 2017 18:36:01 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:in-reply-to:references:date:message-id:mime-version
+        :content-type; s=sasl; bh=Fu1HBt7vciNsJeR55qr49QPQE+U=; b=jSebS2
+        zQ1lEcUmPZq6Z33blMyWMD3FBeN3Eui9+rElx5jhvqSv+YogSkgepZk3ZSFBMV9s
+        cHfJQ9ha2kZIRHqaqFd/wjTBOd348439mgDJ4b/iSlNvcU6R60ko45RfBqyPvZxk
+        tty7hhWFu56bnUp4warTDkIax2uWlCz36K4i0=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 9F84A6A3A7;
+        Fri, 17 Feb 2017 18:36:01 -0500 (EST)
+Received: from localhost (unknown [24.60.167.92])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id A50706A3A6;
+        Fri, 17 Feb 2017 18:36:00 -0500 (EST)
+From:   Kyle Meyer <kyle@kyleam.com>
+To:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 1/3] delete_refs(): accept a reflog message argument
+In-Reply-To: <xmqqshncu4r4.fsf@gitster.mtv.corp.google.com>
+References: <20170126211205.5gz3zsrptop7n34n@sigill.intra.peff.net> <20170217035800.13214-1-kyle@kyleam.com> <20170217035800.13214-2-kyle@kyleam.com> <20170217081205.zn7j6d5cffgdvfbn@sigill.intra.peff.net> <xmqqshncu4r4.fsf@gitster.mtv.corp.google.com>
+Date:   Fri, 17 Feb 2017 18:35:59 -0500
+Message-ID: <874lzsqtk0.fsf@kyleam.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: D6E2F0E0-F569-11E6-ACB7-A7617B1B28F4-24757444!pb-smtp2.pobox.com
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=kyleam.com;
+ h=from:to:cc:subject:in-reply-to:references:date:message-id:mime-version:content-type; s=mesmtp; bh=Fu1HBt7vciNsJeR55qr49QPQE+U=; b=WjkfJg3RcHoK4Bgg/YYJJkcqJUGK+8s9PL2w0ZUB5jeQw3YSAYxm46WbbU+kW01iGoyI73FbYXDfFMV0RgP/iFCylC/ySVE/U85xyz14Byj2gsz3ruH6q1BUXeq/uuW6a4m+1xRJ9CVXC7qfXstu9lx5BfWelWGeunA2Iim2Zj4=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Since there is no dotfile in the default template directory, there was
-no point in making the check for . or .. more accurate when copying. Now
-that you can customize the template directory, it would make sense, but
-it's actually a good thing to at this because you would not want to have
-your git directory copied in every git directory that is created should
-you decide to put your template directory under version control. Plus, it
-might be used as a feature by people who would want to exclude some
-files.
+Junio C Hamano <gitster@pobox.com> writes:
 
-Signed-off-by: Grégoire Paris <postmaster@greg0ire.fr>
----
-Here is a better version.
- Documentation/git-init.txt | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+> Jeff King <peff@peff.net> writes:
+>
+>>> diff --git a/refs.h b/refs.h
+>>> index 9fbff90e7..81627a63d 100644
+>>> --- a/refs.h
+>>> +++ b/refs.h
+>>> @@ -277,7 +277,7 @@ int reflog_exists(const char *refname);
+>>>   * be NULL_SHA1. flags is passed through to ref_transaction_delete().
+>>>   */
+>>>  int delete_ref(const char *refname, const unsigned char *old_sha1,
+>>> -	       unsigned int flags);
+>>> +	       unsigned int flags, const char *msg);
+>>
+>> Should the "msg" argument go at the beginning, to match update_ref()?
+>
+> Probably.  rename/create have the message at the end but their
+> parameters are very different from update/delete.  The parameters
+> update and delete take are not identical, but we can view them as a
+> lot more similar than the other two.  So I think it makes sense for
+> delete to try matching update, even though trying to make all four
+> the same may proabably be pointless.
 
-diff --git a/Documentation/git-init.txt b/Documentation/git-init.txt
-index 9d27197..3c5a67f 100644
---- a/Documentation/git-init.txt
-+++ b/Documentation/git-init.txt
-@@ -116,8 +116,8 @@ does not exist, it will be created.
- TEMPLATE DIRECTORY
- ------------------
- 
--The template directory contains files and directories that will be copied to
--the `$GIT_DIR` after it is created.
-+Files and directories in the template directory whose name do not start with a
-+dot will be copied to the `$GIT_DIR` after it is created.
- 
- The template directory will be one of the following (in order):
- 
+I put "msg" after "flags" because that's where it occurs in
+ref_transaction_delete(), but matching update_ref() makes sense.
+
 -- 
-2.9.3
-
+Kyle
