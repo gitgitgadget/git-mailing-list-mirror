@@ -2,145 +2,66 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-1.9 required=3.0 tests=AWL,BAYES_00,BODY_URI_ONLY,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,
+	URIBL_DBL_ABUSE_BOTCC shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3A644201A9
-	for <e@80x24.org>; Fri, 17 Feb 2017 22:41:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D37E6201A9
+	for <e@80x24.org>; Fri, 17 Feb 2017 22:49:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S964795AbdBQWlX (ORCPT <rfc822;e@80x24.org>);
-        Fri, 17 Feb 2017 17:41:23 -0500
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:35301 "EHLO
-        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S935122AbdBQWlK (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 Feb 2017 17:41:10 -0500
-Received: by mail-wm0-f67.google.com with SMTP id u63so4783413wmu.2
-        for <git@vger.kernel.org>; Fri, 17 Feb 2017 14:41:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=5KiLlFP5CpGuBmGivMNuo442iHZ34qrdffnMTrlf0FE=;
-        b=eTfVytixFzGmORnIT+cZTTcarkIAcmGp8uv6rn9SriBUMNIdBmzWRRJfspyEjGcXET
-         1abGZ9ZzBlFlrZ0luh6YmA+GoyeooiwZSrPWjhjA2X4c459OVdnFoffkycBIlKRm6CyJ
-         /PI8Zj0OiPwJ2jOsnfylcZZ5zQ1D9+kEWbWd/uxTZSoeoIbECJTQyyVlMts8rNNzsbo1
-         Z96PE7iF80RK2Q09e2Kj5ibxs/lE8jEMa8LEQb/FCu/HN+51i55zUZ50/kas+SvvwmEa
-         gh0/YCKE7WC9Va7M6X5hSYU8EFKsSAqwkdUhJRgdmkYbm+H4eAnGLyOauoghiAxGinXd
-         tMQw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=5KiLlFP5CpGuBmGivMNuo442iHZ34qrdffnMTrlf0FE=;
-        b=QvezHK3KVtX8XJqGKzGWY6z40BpKTLsWUqQYp54pPa4AKpfC0E1QMYXOcUJ6Ix7eqS
-         ehCtydVsQdqv9snGtQmd4fV8ISTMTETVqq8DM057DKxatwYNR688GvEZuCd3Qo2hCE/3
-         g+4+/9BH9Zc4qnYgqV+JswRJeyJGFL7yX/fbR2txxMsh1YZA5dUfBOZdyS6tANIY8AFl
-         xhdOQxkTyLs12P9uvnulAbXsiIYEv1oyAWCFG9lCzQZuVPGDC5xZNQRNw9xgLKps+ZfY
-         9Ttt6mUNlugD6reZW8c/OjP3tTfyK2RS32RE+jStveuJrzL55J9P3fbjVZBR0nVOjP0F
-         6EuA==
-X-Gm-Message-State: AMke39k9knUQ+Uuk7n78AO05zdgIlDYNUcGTMiU3bhSvnHQN6zw8zvE/12NcH4UyrEHmig==
-X-Received: by 10.28.181.145 with SMTP id e139mr3437171wmf.103.1487371268239;
-        Fri, 17 Feb 2017 14:41:08 -0800 (PST)
-Received: from localhost ([2a02:c7f:c42b:f900:5e51:4fff:fee9:57af])
-        by smtp.gmail.com with ESMTPSA id v128sm3302241wmv.2.2017.02.17.14.41.07
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 17 Feb 2017 14:41:07 -0800 (PST)
-From:   Thomas Gummerer <t.gummerer@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        =?UTF-8?q?=C3=98yvind=20A=20=2E=20Holm?= <sunny@sunbase.org>,
-        =?UTF-8?q?Jakub=20Nar=C4=99bski?= <jnareb@gmail.com>,
-        Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-        Thomas Gummerer <t.gummerer@gmail.com>
-Subject: [PATCH v5 3/6] stash: refactor stash_create
-Date:   Fri, 17 Feb 2017 22:41:38 +0000
-Message-Id: <20170217224141.19183-4-t.gummerer@gmail.com>
-X-Mailer: git-send-email 2.11.0.301.g27b9849079.dirty
-In-Reply-To: <20170217224141.19183-1-t.gummerer@gmail.com>
-References: <20170212215420.16701-1-t.gummerer@gmail.com>
- <20170217224141.19183-1-t.gummerer@gmail.com>
+        id S964793AbdBQWtQ (ORCPT <rfc822;e@80x24.org>);
+        Fri, 17 Feb 2017 17:49:16 -0500
+Received: from smtp26.services.sfr.fr ([93.17.128.163]:44897 "EHLO
+        smtp26.services.sfr.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S935084AbdBQWtP (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 Feb 2017 17:49:15 -0500
+Received: from [192.168.1.57] (220.208.99.84.rev.sfr.net [84.99.208.220])
+        by msfrf2603.sfr.fr (SMTP Server) with ESMTP id 852791C001433;
+        Fri, 17 Feb 2017 23:49:09 +0100 (CET)
+Received: from [192.168.1.57] (220.208.99.84.rev.sfr.net [84.99.208.220])       (using TLSv1
+        with cipher ECDHE-RSA-AES128-SHA (128/128 bits))        (No client certificate requested)
+        by msfrf2603.sfr.fr (SMTP Server) with ESMTPS;
+        Fri, 17 Feb 2017 23:49:08 +0100 (CET)
+Subject: Re: dotfiles in git template dir are not copied
+To:     Philip Oakley <philipoakley@iee.org>, Jeff King <peff@peff.net>
+References: <ebd661c3-7d99-54d2-dda9-09c4a76cfe93@greg0ire.fr>
+        <20170217204411.2yixhuazgczxmmxa@sigill.intra.peff.net>
+        <2bae8d8a-f0bf-fa8b-8ce4-6880d3490b43@greg0ire.fr>
+        <0C79F8D069F240A6A2C5BF7D7243122F@PhilipOakley>
+Cc:     git@vger.kernel.org
+From:   =?iso-8859-1?q?Gr=E9goire?= PARIS <postmaster@greg0ire.fr>
+Message-ID: <38a843d6-4755-cc0b-011b-62e3378ddb59@greg0ire.fr>
+Date:   Fri, 17 Feb 2017 23:49:08 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+        Thunderbird/45.7.0
+MIME-Version: 1.0
+In-Reply-To: <0C79F8D069F240A6A2C5BF7D7243122F@PhilipOakley>
+X-sfr-mailing: LEGIT
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Refactor the internal stash_create function to use a -m flag for
-specifying the message and -u flag to indicate whether untracked files
-should be added to the stash.
-
-This makes it easier to pass a pathspec argument to stash_create in the
-next patch.
-
-The user interface for git stash create stays the same.
-
-Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
----
- Documentation/git-stash.txt |  1 +
- git-stash.sh                | 23 +++++++++++++++++++----
- 2 files changed, 20 insertions(+), 4 deletions(-)
-
-diff --git a/Documentation/git-stash.txt b/Documentation/git-stash.txt
-index 2e9cef06e6..d93c47446a 100644
---- a/Documentation/git-stash.txt
-+++ b/Documentation/git-stash.txt
-@@ -17,6 +17,7 @@ SYNOPSIS
- 	     [-u|--include-untracked] [-a|--all] [<message>]]
- 'git stash' clear
- 'git stash' create [<message>]
-+'git stash' create [-m <message>] [-u|--include-untracked <untracked|all>]
- 'git stash' store [-m|--message <message>] [-q|--quiet] <commit>
- 
- DESCRIPTION
-diff --git a/git-stash.sh b/git-stash.sh
-index 8365ebba2a..e76741d37d 100755
---- a/git-stash.sh
-+++ b/git-stash.sh
-@@ -58,8 +58,23 @@ clear_stash () {
- }
- 
- create_stash () {
--	stash_msg="$1"
--	untracked="$2"
-+	stash_msg=
-+	untracked=
-+	new_style=
-+	while test $# != 0
-+	do
-+		case "$1" in
-+		-m|--message)
-+			shift
-+			stash_msg=${1-"BUG: create_stash () -m requires an argument"}
-+			;;
-+		-u|--include-untracked)
-+			shift
-+			untracked=${1-"BUG: create_stash () -u requires an argument"}
-+			;;
-+		esac
-+		shift
-+	done
- 
- 	git update-index -q --refresh
- 	if no_changes
-@@ -268,7 +283,7 @@ push_stash () {
- 	git reflog exists $ref_stash ||
- 		clear_stash || die "$(gettext "Cannot initialize stash")"
- 
--	create_stash "$stash_msg" $untracked
-+	create_stash -m "$stash_msg" -u "$untracked"
- 	store_stash -m "$stash_msg" -q $w_commit ||
- 	die "$(gettext "Cannot save the current status")"
- 	say "$(eval_gettext "Saved working directory and index state \$stash_msg")"
-@@ -667,7 +682,7 @@ clear)
- 	;;
- create)
- 	shift
--	create_stash "$*" && echo "$w_commit"
-+	create_stash -m "$*" && echo "$w_commit"
- 	;;
- store)
- 	shift
--- 
-2.11.0.301.g27b9849079.dirty
-
+Le 17/02/2017 à 23:39, Philip Oakley a écrit :
+> From: "Grégoire PARIS" <postmaster@greg0ire.fr>
+>> > You could, for example, have your template directory itself be a git
+>> repository.
+>>
+>> I can and I do and indeed, that might be the reason behind this.
+>> I made a PR to document this : https://github.com/git/git/pull/325
+>>
+> While the PR is a simple one line change to the documention, the patch 
+> should be submitted to the list.
+> See Documenation/SubmittingPatches
+>
+> Don't forget to Sign Off your patch (see the Developer's Certificate 
+> of Origin section).
+> -- 
+> Philip
+>
+Ok sorry, I'll fix this rightaway!
+--
+greg0ire
