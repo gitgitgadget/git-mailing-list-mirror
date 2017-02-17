@@ -2,101 +2,113 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 646D72013A
-	for <e@80x24.org>; Fri, 17 Feb 2017 09:29:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1C1A02013A
+	for <e@80x24.org>; Fri, 17 Feb 2017 09:41:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932730AbdBQJ3m (ORCPT <rfc822;e@80x24.org>);
-        Fri, 17 Feb 2017 04:29:42 -0500
-Received: from mail-yw0-f170.google.com ([209.85.161.170]:35158 "EHLO
-        mail-yw0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751646AbdBQJ3l (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 Feb 2017 04:29:41 -0500
-Received: by mail-yw0-f170.google.com with SMTP id l19so20585579ywc.2
-        for <git@vger.kernel.org>; Fri, 17 Feb 2017 01:29:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=J1T7pmwjlFpJxhbMtra/ycZQu4khTv56JEz0UuwiPeI=;
-        b=cDHg9E078p4qdovC8bgFaUC+HGzleme7toe+OtsNxw6IWGw6ZfADrf9zstne8hC5Q6
-         o/UwqQnextLwQOJyt+OWRt5YksXyP6dTluLr9dp+hz4vx0EZPBSODrjCVnjPM4CMKk5w
-         ccTASpJDotxU0rvgjjpddzT55iTPLzdXPS7OATCCsPZPqr+ZuofxyrKM1WjwMEAAR2y4
-         5xP7lllOMw8IcFkUqjVxhLkmem1+xxQ8IfPZjxeu/zmTq3wbJvSNySrR79LrZBMCYhfA
-         MlACqQRJPPXXZ8gzcjLp66TivJ+ZDJsloMZSHYqE2mjErdYjizj+/MeCKRccSXwfBDlg
-         FjKA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=J1T7pmwjlFpJxhbMtra/ycZQu4khTv56JEz0UuwiPeI=;
-        b=CqfwYpcL8pM6p46fTOc0z3KhSTQuEd5tDozmlbbJEhWJTyTSo+zoBEzVFfn9NUB8+z
-         WADqY1yq+dFFFoMXChop//ODNJ/voVfZ8eGyfAh3XCUphwd43f1WO9r+vC4p+FajSGZU
-         iWP2GWfyk4Nt1MhH+HvgMX3lE+iZaltNItlRc8k+v6yNJIDfAkrhSHiwqN5eC7IrCq0f
-         4wXoReB21eWYvYno2XbrQWGq62HuYCpCNrEC/qDAzVmXWouEOSyB2ZtrSPl+3Lgbbk+e
-         Y50We6bbbe4xUa8BIedDU07jKhzUfJxH9l9OIJw6cKY4AfwxHlJKHV3IcdTlcWL2b4IA
-         oSLg==
-X-Gm-Message-State: AMke39nS08W3x29udnmA5pzDBS9AFgnFMjR5sw0Zm8wCHDCCCJbHeHdtKy+kn4sTr7svvK3GlZXgxEQtyAYfXw==
-X-Received: by 10.129.165.201 with SMTP id c192mr5015147ywh.192.1487323780136;
- Fri, 17 Feb 2017 01:29:40 -0800 (PST)
+        id S1755431AbdBQJlu (ORCPT <rfc822;e@80x24.org>);
+        Fri, 17 Feb 2017 04:41:50 -0500
+Received: from alum-mailsec-scanner-8.mit.edu ([18.7.68.20]:46986 "EHLO
+        alum-mailsec-scanner-8.mit.edu" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1755335AbdBQJlr (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 17 Feb 2017 04:41:47 -0500
+X-AuditID: 12074414-807ff70000002bfd-1c-58a6c54ed9cc
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+        (using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
+        (Client did not present a certificate)
+        by alum-mailsec-scanner-8.mit.edu (Symantec Messaging Gateway) with SMTP id 37.F4.11261.E45C6A85; Fri, 17 Feb 2017 04:41:37 -0500 (EST)
+Received: from [192.168.69.190] (p4FEDF52F.dip0.t-ipconnect.de [79.237.245.47])
+        (authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v1H9fWdl023554
+        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+        Fri, 17 Feb 2017 04:41:33 -0500
+Subject: Re: [PATCH v2 15/19] refs: simplify parsing of reflog entries
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        git@vger.kernel.org
+References: <20170214023141.842922-1-sandals@crustytoothpaste.net>
+ <20170214023141.842922-16-sandals@crustytoothpaste.net>
+Cc:     Jeff King <peff@peff.net>
+From:   Michael Haggerty <mhagger@alum.mit.edu>
+Message-ID: <784a4960-e890-eec4-0349-3e27b4c7997a@alum.mit.edu>
+Date:   Fri, 17 Feb 2017 10:41:32 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Icedove/45.6.0
 MIME-Version: 1.0
-Received: by 10.83.25.12 with HTTP; Fri, 17 Feb 2017 01:28:59 -0800 (PST)
-In-Reply-To: <20170217092616.ulassn3472stbfga@sigill.intra.peff.net>
-References: <f15a14a5-f39d-9c41-16b9-fe0a48d7450b@syntevo.com>
- <CAPc5daVC-+0Vr30L_pbcL0GN2OmnGm-+V4tE2WTos_vPRb_S1g@mail.gmail.com>
- <CAGZ79kY6Ry+DfO90wza_RrVbCRAgNB4N=0W6svuJgvGNxeFh5Q@mail.gmail.com>
- <xmqqk2h73f2i.fsf@gitster.mtv.corp.google.com> <20160629205647.GA25987@sigill.intra.peff.net>
- <5774426F.3090000@gmail.com> <20160629220049.GA4416@sigill.intra.peff.net>
- <578EC0CA.8060501@gmail.com> <20160720130231.GB17469@sigill.intra.peff.net>
- <CANQwDwfk2k+qGtx-_RqoLKObAgyV+ebE57UAd-VXDv86HDw2vg@mail.gmail.com> <20170217092616.ulassn3472stbfga@sigill.intra.peff.net>
-From:   =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
-Date:   Fri, 17 Feb 2017 10:28:59 +0100
-Message-ID: <CANQwDwe258tbv0cfPs5YQwu_KOt275X-c4-oMQLDqYVTVHqd=g@mail.gmail.com>
-Subject: Re: topological index field for commit objects
-To:     Jeff King <peff@peff.net>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20170214023141.842922-16-sandals@crustytoothpaste.net>
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 7bit
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrBIsWRmVeSWpSXmKPExsUixO6iqBt4dFmEwYtrmhZdV7qZLH609DBb
+        tM38weTA7LH85l8mj2e9exg9Pm+SC2CO4rJJSc3JLEst0rdL4Mro2X2BrWCGUEX7vIgGxjl8
+        XYycHBICJhLbZk5n7mLk4hAS2MEk8fD9fFYI5zyTROOUVhaQKmEBN4nt/VeZQWwRAS+J+Y9m
+        ABVxABXVSGzaYQcSZhaQlVi/4i8jiM0moCuxqKeZCcTmFbCX2LX5DjuIzSKgKjF55yVWEFtU
+        IERizsIHjBA1ghInZz4BW8Up4CKx/kEDK8RMPYkd139B2fIS29/OYZ7AyD8LScssJGWzkJQt
+        YGRexSiXmFOaq5ubmJlTnJqsW5ycmJeXWqRroZebWaKXmlK6iRESoCI7GI+clDvEKMDBqMTD
+        m7F9aYQQa2JZcWXuIUZJDiYlUd5F05ZFCPEl5adUZiQWZ8QXleakFh9ilOBgVhLhVdsHlONN
+        SaysSi3Kh0lJc7AoifN+W6zuJySQnliSmp2aWpBaBJOV4eBQkuDVOwLUKFiUmp5akZaZU4KQ
+        ZuLgBBnOAzT88SGQ4cUFibnFmekQ+VOMilLivDsPAyUEQBIZpXlwvbAE8opRHOgVYd4AkBU8
+        wOQD1/0KaDAT0ODOiKUgg0sSEVJSDYwJ2vcD+efy7Pm+cUf7l6L5/fON57+bbym6z/7JglU+
+        v5YFVrrZrZX1a9ConcrHK93xIf+p4x0Ja1Wde/wKx4LXH2SVObrN4WZqU0rVmw7b1jSVmesZ
+        PofVOrA/a67beUZmAb+e84YfR9vWhXryuf9V8P2ictlWK3ZX7xYV1QuL07QYnj7f3afEUpyR
+        aKjFXFScCADJpv1R+wIAAA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 17 February 2017 at 10:26, Jeff King <peff@peff.net> wrote:
-> On Sat, Feb 04, 2017 at 02:43:01PM +0100, Jakub Nar=C4=99bski wrote:
->
->> >>>> Do Git use EWAH / EWOK bitmaps for reachability analysis, or is it =
-still
->> >>>> limited to object counting?
->> >>>
->> >>> At GitHub we are using them for --contains analysis, along with mass
->> >>> ahead/behind (e.g., as in https://github.com/gitster/git/branches). =
-My
->> >>> plan is to send patches upstream, but they need some cleanup first.
->> >>
->> >> Ping. have you got time to clean up those patches?
->> >
->> > No, I haven't. Don't hold your breath; it's something I hope to work o=
-n
->> > in the next 6 months, not the next 6 weeks.
->>
->> Ping, Was there any progress on this front? It is now almost 6 months
->> later...
->>
->> Could those patches be made available in a "dirty" form?
->
-> I just pushed them up to the "jk/ahead-behind" branch of
-> https://github.com/peff/git.
->
-> They were originally done on top of v1.9.1, but I forward-ported them to
-> the current "master" just now. The result compiles, but I haven't really
-> tested it extensively. Caveat applier.
+On 02/14/2017 03:31 AM, brian m. carlson wrote:
+> The current code for reflog entries uses a lot of hard-coded constants,
+> making it hard to read and modify.  Use parse_oid_hex and two temporary
+> variables to simplify the code and reduce the use of magic constants.
+> 
+> Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+> ---
+>  refs/files-backend.c | 12 +++++++-----
+>  1 file changed, 7 insertions(+), 5 deletions(-)
+> 
+> diff --git a/refs/files-backend.c b/refs/files-backend.c
+> index d7a5fd2a7c..09227a3f63 100644
+> --- a/refs/files-backend.c
+> +++ b/refs/files-backend.c
+> @@ -3117,12 +3117,14 @@ static int show_one_reflog_ent(struct strbuf *sb, each_reflog_ent_fn fn, void *c
+>  	char *email_end, *message;
+>  	unsigned long timestamp;
+>  	int tz;
+> +	const char *p = sb->buf;
+> +	const int minlen = 2 * GIT_SHA1_HEXSZ + 3;
+>  
+>  	/* old SP new SP name <email> SP time TAB msg LF */
+> -	if (sb->len < 83 || sb->buf[sb->len - 1] != '\n' ||
+> -	    get_oid_hex(sb->buf, &ooid) || sb->buf[40] != ' ' ||
+> -	    get_oid_hex(sb->buf + 41, &noid) || sb->buf[81] != ' ' ||
+> -	    !(email_end = strchr(sb->buf + 82, '>')) ||
+> +	if (sb->len < minlen || sb->buf[sb->len - 1] != '\n' ||
+> +	    parse_oid_hex(p, &ooid, &p) || *p++ != ' ' ||
+> +	    parse_oid_hex(p, &noid, &p) || *p++ != ' ' ||
+> +	    !(email_end = strchr(p, '>')) ||
+>  	    email_end[1] != ' ' ||
+>  	    !(timestamp = strtoul(email_end + 2, &message, 10)) ||
+>  	    !message || message[0] != ' ' ||
+> @@ -3136,7 +3138,7 @@ static int show_one_reflog_ent(struct strbuf *sb, each_reflog_ent_fn fn, void *c
+>  		message += 6;
+>  	else
+>  		message += 7;
+> -	return fn(&ooid, &noid, sb->buf + 82, timestamp, tz, message, cb_data);
+> +	return fn(&ooid, &noid, sb->buf + minlen - 1, timestamp, tz, message, cb_data);
 
-Thanks a lot! I'll check this out.
+I think `sb->buf + minlen - 1` is just `p` here, isn't it?
 
---=20
-Jakub Narebski
+Also, I think instead of the initial test `sb->len < minlen`, it would
+be enough to check `!sb->len` (i.e., error if it's zero to avoid a
+buffer underflow in `sb->buf[sb->len - 1])`, because the
+`parse_oid_hex()` calls together with the `*p++ != ' '` and
+`sb->buf[sb->len - 1] != '\n'` checks already ensure that the string has
+at least the minimum length.
+
+Then you could do away with `minlen` entirely.
+
+Michael
+
