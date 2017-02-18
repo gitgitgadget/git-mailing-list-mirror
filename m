@@ -2,117 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,
-	STOX_REPLY_TYPE shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DFCD8201A8
-	for <e@80x24.org>; Sat, 18 Feb 2017 11:49:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5CDB0201B0
+	for <e@80x24.org>; Sat, 18 Feb 2017 13:16:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752074AbdBRLt2 (ORCPT <rfc822;e@80x24.org>);
-        Sat, 18 Feb 2017 06:49:28 -0500
-Received: from smtp-out-3.talktalk.net ([62.24.135.67]:45770 "EHLO
-        smtp-out-3.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751162AbdBRLt1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 18 Feb 2017 06:49:27 -0500
-Received: from PhilipOakley ([92.31.218.76])
-        by smtp.talktalk.net with SMTP
-        id f3W0cpyxwxR4bf3W0c42lh; Sat, 18 Feb 2017 11:49:25 +0000
-X-Originating-IP: [92.31.218.76]
-X-Spam: 0
-X-OAuthority: v=2.2 cv=JNN5iICb c=1 sm=1 tr=0 a=e6L6E7eW+5Nb7SO+DvSdIg==:117
- a=e6L6E7eW+5Nb7SO+DvSdIg==:17 a=8nJEP1OIZ-IA:10 a=ybZZDoGAAAAA:8
- a=xtxXYLxNAAAA:8 a=uPZiAMpXAAAA:8 a=XBZPwp8dKfLoi_RSh9AA:9 a=wPNLvfGTeEIA:10
- a=0RhZnL1DYvcuLYC8JZ5M:22 a=xts0dhWdiJbonKbuqhAr:22 a=svzibyHiZmA4t4YY0eFS:22
-Message-ID: <D4A69FDAB8BD4D0080108611B61E5EF8@PhilipOakley>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
-From:   "Philip Oakley" <philipoakley@iee.org>
-To:     "Junio C Hamano" <gitster@pobox.com>
-Cc:     "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-        "Christian Couder" <christian.couder@gmail.com>,
-        <git-for-windows@googlegroups.com>, "git" <git@vger.kernel.org>
-References: <alpine.DEB.2.20.1702101241210.3496@virtualbox><xmqq60kdbqmy.fsf@gitster.mtv.corp.google.com><alpine.DEB.2.20.1702142150220.3496@virtualbox><xmqqd1ek8oqo.fsf@gitster.mtv.corp.google.com><CAP8UFD1+AgBVqSh=wHteM3uKO+55ZqqD4cHzBUfN0KTPXyvutQ@mail.gmail.com><E2C1B7A8FBF94C8CB1C9C5754D882800@PhilipOakley><alpine.DEB.2.20.1702151509251.3496@virtualbox><77C7E23E18774409AA1818B12C844985@PhilipOakley> <xmqq60kb0ywi.fsf@gitster.mtv.corp.google.com>
-Subject: Re: [git-for-windows] Re: Continuous Testing of Git on Windows
-Date:   Sat, 18 Feb 2017 11:49:25 -0000
-Organization: OPDS
+        id S1753231AbdBRNQT (ORCPT <rfc822;e@80x24.org>);
+        Sat, 18 Feb 2017 08:16:19 -0500
+Received: from mail-ot0-f178.google.com ([74.125.82.178]:33660 "EHLO
+        mail-ot0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752311AbdBRNQK (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 18 Feb 2017 08:16:10 -0500
+Received: by mail-ot0-f178.google.com with SMTP id k4so26337636otc.0
+        for <git@vger.kernel.org>; Sat, 18 Feb 2017 05:16:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=Qp4DHTgT0LPqhy4oshh4ZHU3WhRGDkeEiGLHSs+JvDw=;
+        b=HJ/aFBVne58rErOWhC5jIlzYSGdmYjR89O5VMAzAjjCfK7JcTWw0/TlC0V2X1W40gk
+         5hQ98ePxzBXha4Dj8JQW7XH39YiaCLjPX8ckiVDgVy3/Uwf1vvsIvuyQXGGcYV99jq2i
+         YGvZ+sf6U0i/5ISH4AhtcGnqkTE4VwuKIfBNUCdCWAt9ogqvO0euY5LjM2X27yamzurl
+         QybtqDLTr9Lf1U2KbVsVI/4zqVfF5iFi5iqq9stbH53ZSo4bRzoaN5HGepWsDRlO7cPm
+         GeYY4bRUA45ZRbtTr0WuA23WGhmmmNxLKM2qU4GinrKNmELxHfY80EO80+kvcHRVPoKv
+         nx8Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=Qp4DHTgT0LPqhy4oshh4ZHU3WhRGDkeEiGLHSs+JvDw=;
+        b=qEZuG+6OtchSCFM7/tolzwKlBTWVREHK0Ud45bDTFZuDXzD0GYxPKnalLqkS4Nw4In
+         +sZ7VbNzmeBlflB4YqnmuXqGsUxVCX4T26EgiYHohtjwOPD6P5qibVZX96iyBa+GMfFJ
+         HjjeRXh5r9XzOffuWR2dNxegk69BX1yuZiKWXGuKDkobdFRYI26VeVONyVypmCiO6qoy
+         pK8b2xKUMV/QVKdzQu3hOaETbYJLTMWlIfd6k+qlNtQfzgLniroAr7VZVBZGbijhGZR1
+         FEKeYuDyHa0856Ith74DHI0Y2hKvIQ7r06SF1yltM6uJwTT3AuTkvzx7Nff7tW+MEprM
+         bXbA==
+X-Gm-Message-State: AMke39nCCepleXt2kitykWwSDB51CKTh8gqjjYgors4DO5DntIQvjO4Yc09nfJSOYdVNOqsp7jkaEW8TiLagLA==
+X-Received: by 10.157.37.39 with SMTP id k36mr506862otb.271.1487423769140;
+ Sat, 18 Feb 2017 05:16:09 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain;
-        format=flowed;
-        charset="iso-8859-1";
-        reply-type=original
-Content-Transfer-Encoding: 7bit
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
-X-CMAE-Envelope: MS4wfPNZcvkaxZHdaDCPs2owCd6vuBHIkdHNVDF6Ka/vlFfX73PUPP1wAssBVBelF/ibMXvE8tw9k4mupnd4wVW8G8WbCMFjW5kSIcGK1BTNPE7cZgG5Rrzl
- 084x/B984wIEkb6vTQoXagOuQ57zmbqkMQ1V4dhBUa2qarATZ8vI49QZdW0iGuOxK4NXH/3LAAfu9xxkghtO7YI1XcT6a8pjiGg1zFPpStf6+D19/8dqOjiw
- Iq9Cdie0BFXWYc7NoRhgHw9CzkC1rwVIYmZdQYIc0ifGTEdj3JrlU7n6hki0zg3uBgLMPP7zi5OjUUF+zottEw==
+Received: by 10.74.158.84 with HTTP; Sat, 18 Feb 2017 05:15:38 -0800 (PST)
+In-Reply-To: <xmqqzihksm0i.fsf@gitster.mtv.corp.google.com>
+References: <20170213152011.12050-1-pclouds@gmail.com> <20170216114818.6080-1-pclouds@gmail.com>
+ <xmqqzihksm0i.fsf@gitster.mtv.corp.google.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Sat, 18 Feb 2017 20:15:38 +0700
+Message-ID: <CACsJy8AhVPTLNkW+y+pHDa+FfknR4x4Gj-eksKp4MZEZmNdviw@mail.gmail.com>
+Subject: Re: [PATCH v2 00/16] Remove submodule from files-backend.c
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Michael Haggerty <mhagger@alum.mit.edu>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
+        Stefan Beller <sbeller@google.com>,
+        David Turner <novalis@novalis.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: "Junio C Hamano" <gitster@pobox.com>
-Sent: Thursday, February 16, 2017 12:20 AM
-> "Philip Oakley" <philipoakley@iee.org> writes:
+On Sat, Feb 18, 2017 at 1:35 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
 >
->> It may even be worth 'splitting' the pu branch sequence into the
->> existing pu (with merges from series that are selected as reasonable),
->> and then a pr branch (public review?) on top of that holding the rest
->> of the series that have been submitted, so that the CI can do a full
->> test on the tips of them to support those devs with limited test
->> capability.
+>> I'll be sending two more follow-up series, if you are interested, soon:
+>>
+>> 1) v2 of nd/worktree-gc-protection
+>>
+>> which kills parse_ref() in worktree.c _and_ set_worktree_head_symref()
+>> in files-backend.c. Both are bad things that should not have happened.
+>> (PS. The topic name is misleading as this is mostly about eliminating
+>> warts, unless Junio intended to combine my second series as well)
 >
-> I won't stop you from publishing such a pr branch yourself.
-
-But would others see it?... (rhetorical, better thoughts below))
-
+> Your description sounded that these two are just preparatory step
+> for the main one that would soon follow, and that was why these two
+> patches landed on a topic named as such without any of its friends
+> (which were yet to come).  If you prefer to keep these a separate
+> preparatory step from the remainder and have them graduate sooner,
+> let's do so, as that is my preference as well.
 >
-> For patches whose merit is not clear because the problem they try to
-> solve is under-explained, whose solution is ill-designed, etc., IOW,
-> with issues that makes me judge that they are not interesting enough
-> for 'pu',
+> Rename it "nd/worktree-kill-parse-ref" perhaps?
 
-It is reasonble that that a project's integrator is able to make these 
-decisions. For some projects they may have a layered approach of descisions 
-which does allow the gradations for the submitted feature series.
-
-Some of this does fall into dscho's differentiation between those patch 
-series that should pass the CI (continuous integration) testing, and those 
-that are there for CT (continuous testing) feedback. This could either be an 
-extra branch marking the transition, or a named commit similar to the 
-"pu^{/^### match next}", etc. In some ways it is similar to my 'pr' 
-suggestion, without the inclusion of the 'all and sundry' series.
-
-For for integrators who are willing/want to recieve any/all contributions 
-for public view (usually those for projects of a more lenient and less 
-critical variety), then even the CT grouping could then have those 
-additional pr submissions. For Git, you provide that that 'voice of reason' 
-for gatekeeping the pu branch.
-
-
-> it is not worth my time to deal with whitespace brekages
-> in them to make them not even apply, to figure out what base the
-> patches are meant to apply to, or to resolve conflicts caused by
-> them with topics already in flight, etc.
->
-If a centralised CT service was available to the project, maybe via the 
-GitHub PR process (which isn't curently used by the project) then is may be 
-a way of allowing the 'all and sundry' contributors to get their ideas upto 
-a basic level before even bothering yourself (because PRs do not trouble 
-you).
-
-It may need an extra gatekeeper between the passing patches (PRs) and auto 
-submission  (the Heroku script thingy) which could flood the list with with 
-inane changes - one only has to look at the 
-http://stackoverflow.com/questions/tagged/git stream to see that.
-
-At least if there was a break point within pu that allowed differentiation 
-between the series that should fit a CI view, and those that are still at 
-the CT stage, then that may help.
-
-Thanks
-
-Philip.
-
+That's exactly my branch name (minus the nd/)
+--=20
+Duy
