@@ -6,39 +6,39 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 36E1B201A9
-	for <e@80x24.org>; Sat, 18 Feb 2017 00:07:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 11B44201A9
+	for <e@80x24.org>; Sat, 18 Feb 2017 00:07:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752059AbdBRAH2 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 17 Feb 2017 19:07:28 -0500
-Received: from castro.crustytoothpaste.net ([75.10.60.170]:60126 "EHLO
+        id S1752144AbdBRAHb (ORCPT <rfc822;e@80x24.org>);
+        Fri, 17 Feb 2017 19:07:31 -0500
+Received: from castro.crustytoothpaste.net ([75.10.60.170]:60104 "EHLO
         castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751389AbdBRAHE (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 17 Feb 2017 19:07:04 -0500
+        by vger.kernel.org with ESMTP id S1750788AbdBRAHD (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 17 Feb 2017 19:07:03 -0500
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 4EAC8280BB;
-        Sat, 18 Feb 2017 00:07:01 +0000 (UTC)
+        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id CEA55280B9;
+        Sat, 18 Feb 2017 00:07:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
-        s=default; t=1487376421;
-        bh=0SIK9utIvfmdOKiy4LUNz7tvbNHYaCnxPBMJT06N4LQ=;
+        s=default; t=1487376420;
+        bh=06e4PHd1ii+p/H1lNShFufVP7Va/cItw6kp3vAAHsZA=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=CNuwhRj1N7WVJf1HIZJAgbHJSOGQ7ZXOXy7TCuQgDnJBnJm4bAuwr0iDGKLTOPdJF
-         3+75/ckNPPAZ7y3fdh/Slo537PR/BRAWcqNw0B2+E4EeWLzIPkhYYFN9yTwXsJDoZv
-         Q3wQY8TWgPR3RPTkwSbI4spUPV76uyvx/dAWMMwEvMilxXYMEWyDc86WuQLMW/71jT
-         Aj5jZaffbzTOgW1VHByn+oYYlzIpB4HNkecf/yfzQIxIkh+jiFTmosS9mvKf0505F2
-         S838GbFs8zwz4fnVEjqlNXK8yOwt/Y/wjGERjNNU2pU3BIDPihqqmvMD9iTqK7fwO/
-         vZXKcdprdbZQVWe9+fRl0xCPK867MRUc0C5WApw6A2xMOoPF2j0+VZgpsGR4+cxXDr
-         uZJlZbMCtHq8dhiXMsbA/HzWcrzIb/XJheIFpvTqXxpnx0dt/Brx6t+8/is9nVT4W3
-         Twuo7h9YiazVOTBGXgb/4uO76hM9wbkwYpKjhcW3HOEvuEi8Aiq
+        b=dQYyKcO9Tt3FUDguehh9owODdaIHgMBwlnzIIM1ZODjE9T/jyoZYhXPHVOSHlHvwQ
+         KmwiP84Xr1HpnuDodbEkeJah+RBuyUSVYn6KRZ7Z2UhPFKttUNkdXJ2Z8IYUry/dgA
+         NFiCsu0B+dVyGHx5v67JzHYSqlxk5OtJa67C/fB4f/gynmelISvwoeAlTOHrfp2gdu
+         FMyplFP8viYsMKFsVEpXftdwFoEbaEVb/iS2JnQvUu67IMyHyhwY0/z85lr/x82Blr
+         PSzDgC5bNPIjuEVqq9S4FGCx7sZkMN4g8yPJ1iDJsM7yELu7zKMO5knVDq8h8Q0GbB
+         slrXq1JlsHqsZNFszCZH1L/V8fg9ZBtawTwYllMJBnqlDJoo3kRGdgB7kSdl8b6JiW
+         AwlvQyI80H/BMJWixQuP2M15xgEZdCrXUu8gynQuII9RKgH+1ugM9LeJfeAL+Awp7v
+         gjj6Yaebg+7wbx7dVJhHp2d+hah5RlnsP3V1om1js5bQcBzW99e
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     Jeff King <peff@peff.net>, Michael Haggerty <mhagger@alum.mit.edu>,
         Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v3 13/19] refs: convert each_reflog_ent_fn to struct object_id
-Date:   Sat, 18 Feb 2017 00:06:46 +0000
-Message-Id: <20170218000652.375129-14-sandals@crustytoothpaste.net>
+Subject: [PATCH v3 11/19] builtin/replace: convert to struct object_id
+Date:   Sat, 18 Feb 2017 00:06:44 +0000
+Message-Id: <20170218000652.375129-12-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.11.0
 In-Reply-To: <20170218000652.375129-1-sandals@crustytoothpaste.net>
 References: <20170218000652.375129-1-sandals@crustytoothpaste.net>
@@ -47,379 +47,325 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Make each_reflog_ent_fn take two struct object_id pointers instead of
-two pointers to unsigned char.  Convert the various callbacks to use
-struct object_id as well.  Also, rename fsck_handle_reflog_sha1 to
-fsck_handle_reflog_oid.
+Convert various uses of unsigned char [20] to struct object_id.  Rename
+replace_object_sha1 to replace_object_oid.  Finally, specify a constant
+in terms of GIT_SHA1_HEXSZ.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- builtin/fsck.c       | 16 ++++++++--------
- builtin/merge-base.c |  6 +++---
- builtin/reflog.c     |  2 +-
- reflog-walk.c        |  6 +++---
- refs.c               | 24 ++++++++++++------------
- refs.h               |  2 +-
- refs/files-backend.c | 24 ++++++++++++------------
- revision.c           | 12 ++++++------
- sha1_name.c          |  2 +-
- wt-status.c          |  6 +++---
- 10 files changed, 50 insertions(+), 50 deletions(-)
+ builtin/replace.c | 112 +++++++++++++++++++++++++++---------------------------
+ 1 file changed, 56 insertions(+), 56 deletions(-)
 
-diff --git a/builtin/fsck.c b/builtin/fsck.c
-index 1a5caccd0f..9b37606858 100644
---- a/builtin/fsck.c
-+++ b/builtin/fsck.c
-@@ -396,13 +396,13 @@ static int fsck_obj_buffer(const unsigned char *sha1, enum object_type type,
+diff --git a/builtin/replace.c b/builtin/replace.c
+index b58c714cb8..f7716a5472 100644
+--- a/builtin/replace.c
++++ b/builtin/replace.c
+@@ -88,78 +88,78 @@ static int list_replace_refs(const char *pattern, const char *format)
+ }
  
- static int default_refs;
+ typedef int (*each_replace_name_fn)(const char *name, const char *ref,
+-				    const unsigned char *sha1);
++				    const struct object_id *oid);
  
--static void fsck_handle_reflog_sha1(const char *refname, unsigned char *sha1,
-+static void fsck_handle_reflog_oid(const char *refname, struct object_id *oid,
- 	unsigned long timestamp)
+ static int for_each_replace_name(const char **argv, each_replace_name_fn fn)
  {
- 	struct object *obj;
+ 	const char **p, *full_hex;
+ 	char ref[PATH_MAX];
+ 	int had_error = 0;
+-	unsigned char sha1[20];
++	struct object_id oid;
  
--	if (!is_null_sha1(sha1)) {
--		obj = lookup_object(sha1);
-+	if (!is_null_oid(oid)) {
-+		obj = lookup_object(oid->hash);
- 		if (obj && (obj->flags & HAS_OBJ)) {
- 			if (timestamp && name_objects)
- 				add_decoration(fsck_walk_options.object_names,
-@@ -411,13 +411,13 @@ static void fsck_handle_reflog_sha1(const char *refname, unsigned char *sha1,
- 			obj->used = 1;
- 			mark_object_reachable(obj);
- 		} else {
--			error("%s: invalid reflog entry %s", refname, sha1_to_hex(sha1));
-+			error("%s: invalid reflog entry %s", refname, oid_to_hex(oid));
- 			errors_found |= ERROR_REACHABLE;
+ 	for (p = argv; *p; p++) {
+-		if (get_sha1(*p, sha1)) {
++		if (get_oid(*p, &oid)) {
+ 			error("Failed to resolve '%s' as a valid ref.", *p);
+ 			had_error = 1;
+ 			continue;
  		}
- 	}
- }
- 
--static int fsck_handle_reflog_ent(unsigned char *osha1, unsigned char *nsha1,
-+static int fsck_handle_reflog_ent(struct object_id *ooid, struct object_id *noid,
- 		const char *email, unsigned long timestamp, int tz,
- 		const char *message, void *cb_data)
- {
-@@ -425,10 +425,10 @@ static int fsck_handle_reflog_ent(unsigned char *osha1, unsigned char *nsha1,
- 
- 	if (verbose)
- 		fprintf(stderr, "Checking reflog %s->%s\n",
--			sha1_to_hex(osha1), sha1_to_hex(nsha1));
-+			oid_to_hex(ooid), oid_to_hex(noid));
- 
--	fsck_handle_reflog_sha1(refname, osha1, 0);
--	fsck_handle_reflog_sha1(refname, nsha1, timestamp);
-+	fsck_handle_reflog_oid(refname, ooid, 0);
-+	fsck_handle_reflog_oid(refname, noid, timestamp);
- 	return 0;
- }
- 
-diff --git a/builtin/merge-base.c b/builtin/merge-base.c
-index b572a37c26..db95bc29cf 100644
---- a/builtin/merge-base.c
-+++ b/builtin/merge-base.c
-@@ -131,7 +131,7 @@ static void add_one_commit(unsigned char *sha1, struct rev_collect *revs)
- 	commit->object.flags |= TMP_MARK;
- }
- 
--static int collect_one_reflog_ent(unsigned char *osha1, unsigned char *nsha1,
-+static int collect_one_reflog_ent(struct object_id *ooid, struct object_id *noid,
- 				  const char *ident, unsigned long timestamp,
- 				  int tz, const char *message, void *cbdata)
- {
-@@ -139,9 +139,9 @@ static int collect_one_reflog_ent(unsigned char *osha1, unsigned char *nsha1,
- 
- 	if (revs->initial) {
- 		revs->initial = 0;
--		add_one_commit(osha1, revs);
-+		add_one_commit(ooid->hash, revs);
- 	}
--	add_one_commit(nsha1, revs);
-+	add_one_commit(noid->hash, revs);
- 	return 0;
- }
- 
-diff --git a/builtin/reflog.c b/builtin/reflog.c
-index 7a7136e53e..7472775778 100644
---- a/builtin/reflog.c
-+++ b/builtin/reflog.c
-@@ -615,7 +615,7 @@ static int cmd_reflog_expire(int argc, const char **argv, const char *prefix)
- 	return status;
- }
- 
--static int count_reflog_ent(unsigned char *osha1, unsigned char *nsha1,
-+static int count_reflog_ent(struct object_id *ooid, struct object_id *noid,
- 		const char *email, unsigned long timestamp, int tz,
- 		const char *message, void *cb_data)
- {
-diff --git a/reflog-walk.c b/reflog-walk.c
-index fe5be41471..99679f5825 100644
---- a/reflog-walk.c
-+++ b/reflog-walk.c
-@@ -19,7 +19,7 @@ struct complete_reflogs {
- 	int nr, alloc;
- };
- 
--static int read_one_reflog(unsigned char *osha1, unsigned char *nsha1,
-+static int read_one_reflog(struct object_id *ooid, struct object_id *noid,
- 		const char *email, unsigned long timestamp, int tz,
- 		const char *message, void *cb_data)
- {
-@@ -28,8 +28,8 @@ static int read_one_reflog(unsigned char *osha1, unsigned char *nsha1,
- 
- 	ALLOC_GROW(array->items, array->nr + 1, array->alloc);
- 	item = array->items + array->nr;
--	hashcpy(item->ooid.hash, osha1);
--	hashcpy(item->noid.hash, nsha1);
-+	oidcpy(&item->ooid, ooid);
-+	oidcpy(&item->noid, noid);
- 	item->email = xstrdup(email);
- 	item->timestamp = timestamp;
- 	item->tz = tz;
-diff --git a/refs.c b/refs.c
-index cd36b64ed9..b900626d3f 100644
---- a/refs.c
-+++ b/refs.c
-@@ -674,7 +674,7 @@ struct read_ref_at_cb {
- 	int *cutoff_cnt;
- };
- 
--static int read_ref_at_ent(unsigned char *osha1, unsigned char *nsha1,
-+static int read_ref_at_ent(struct object_id *ooid, struct object_id *noid,
- 		const char *email, unsigned long timestamp, int tz,
- 		const char *message, void *cb_data)
- {
-@@ -698,30 +698,30 @@ static int read_ref_at_ent(unsigned char *osha1, unsigned char *nsha1,
- 		 * hold the values for the previous record.
- 		 */
- 		if (!is_null_sha1(cb->osha1)) {
--			hashcpy(cb->sha1, nsha1);
--			if (hashcmp(cb->osha1, nsha1))
-+			hashcpy(cb->sha1, noid->hash);
-+			if (hashcmp(cb->osha1, noid->hash))
- 				warning("Log for ref %s has gap after %s.",
- 					cb->refname, show_date(cb->date, cb->tz, DATE_MODE(RFC2822)));
+-		full_hex = sha1_to_hex(sha1);
++		full_hex = oid_to_hex(&oid);
+ 		snprintf(ref, sizeof(ref), "%s%s", git_replace_ref_base, full_hex);
+ 		/* read_ref() may reuse the buffer */
+ 		full_hex = ref + strlen(git_replace_ref_base);
+-		if (read_ref(ref, sha1)) {
++		if (read_ref(ref, oid.hash)) {
+ 			error("replace ref '%s' not found.", full_hex);
+ 			had_error = 1;
+ 			continue;
  		}
- 		else if (cb->date == cb->at_time)
--			hashcpy(cb->sha1, nsha1);
--		else if (hashcmp(nsha1, cb->sha1))
-+			hashcpy(cb->sha1, noid->hash);
-+		else if (hashcmp(noid->hash, cb->sha1))
- 			warning("Log for ref %s unexpectedly ended on %s.",
- 				cb->refname, show_date(cb->date, cb->tz,
- 						       DATE_MODE(RFC2822)));
--		hashcpy(cb->osha1, osha1);
--		hashcpy(cb->nsha1, nsha1);
-+		hashcpy(cb->osha1, ooid->hash);
-+		hashcpy(cb->nsha1, noid->hash);
- 		cb->found_it = 1;
+-		if (fn(full_hex, ref, sha1))
++		if (fn(full_hex, ref, &oid))
+ 			had_error = 1;
+ 	}
+ 	return had_error;
+ }
+ 
+ static int delete_replace_ref(const char *name, const char *ref,
+-			      const unsigned char *sha1)
++			      const struct object_id *oid)
+ {
+-	if (delete_ref(ref, sha1, 0))
++	if (delete_ref(ref, oid->hash, 0))
  		return 1;
- 	}
--	hashcpy(cb->osha1, osha1);
--	hashcpy(cb->nsha1, nsha1);
-+	hashcpy(cb->osha1, ooid->hash);
-+	hashcpy(cb->nsha1, noid->hash);
- 	if (cb->cnt > 0)
- 		cb->cnt--;
+ 	printf("Deleted replace ref '%s'\n", name);
  	return 0;
  }
  
--static int read_ref_at_ent_oldest(unsigned char *osha1, unsigned char *nsha1,
-+static int read_ref_at_ent_oldest(struct object_id *ooid, struct object_id *noid,
- 				  const char *email, unsigned long timestamp,
- 				  int tz, const char *message, void *cb_data)
+-static void check_ref_valid(unsigned char object[20],
+-			    unsigned char prev[20],
++static void check_ref_valid(struct object_id *object,
++			    struct object_id *prev,
+ 			    char *ref,
+ 			    int ref_size,
+ 			    int force)
  {
-@@ -735,9 +735,9 @@ static int read_ref_at_ent_oldest(unsigned char *osha1, unsigned char *nsha1,
- 		*cb->cutoff_tz = tz;
- 	if (cb->cutoff_cnt)
- 		*cb->cutoff_cnt = cb->reccnt;
--	hashcpy(cb->sha1, osha1);
-+	hashcpy(cb->sha1, ooid->hash);
- 	if (is_null_sha1(cb->sha1))
--		hashcpy(cb->sha1, nsha1);
-+		hashcpy(cb->sha1, noid->hash);
- 	/* We just want the first entry */
- 	return 1;
+ 	if (snprintf(ref, ref_size,
+ 		     "%s%s", git_replace_ref_base,
+-		     sha1_to_hex(object)) > ref_size - 1)
++		     oid_to_hex(object)) > ref_size - 1)
+ 		die("replace ref name too long: %.*s...", 50, ref);
+ 	if (check_refname_format(ref, 0))
+ 		die("'%s' is not a valid ref name.", ref);
+ 
+-	if (read_ref(ref, prev))
+-		hashclr(prev);
++	if (read_ref(ref, prev->hash))
++		oidclr(prev);
+ 	else if (!force)
+ 		die("replace ref '%s' already exists", ref);
  }
-diff --git a/refs.h b/refs.h
-index 9fbff90e79..a075117a2a 100644
---- a/refs.h
-+++ b/refs.h
-@@ -292,7 +292,7 @@ int delete_reflog(const char *refname);
  
- /* iterate over reflog entries */
- typedef int each_reflog_ent_fn(
--		unsigned char *old_sha1, unsigned char *new_sha1,
-+		struct object_id *old_oid, struct object_id *new_oid,
- 		const char *committer, unsigned long timestamp,
- 		int tz, const char *msg, void *cb_data);
- 
-diff --git a/refs/files-backend.c b/refs/files-backend.c
-index c041d4ba21..d7a5fd2a7c 100644
---- a/refs/files-backend.c
-+++ b/refs/files-backend.c
-@@ -3113,15 +3113,15 @@ static int files_delete_reflog(struct ref_store *ref_store,
- 
- static int show_one_reflog_ent(struct strbuf *sb, each_reflog_ent_fn fn, void *cb_data)
+-static int replace_object_sha1(const char *object_ref,
+-			       unsigned char object[20],
++static int replace_object_oid(const char *object_ref,
++			       struct object_id *object,
+ 			       const char *replace_ref,
+-			       unsigned char repl[20],
++			       struct object_id *repl,
+ 			       int force)
  {
--	unsigned char osha1[20], nsha1[20];
-+	struct object_id ooid, noid;
- 	char *email_end, *message;
- 	unsigned long timestamp;
- 	int tz;
+-	unsigned char prev[20];
++	struct object_id prev;
+ 	enum object_type obj_type, repl_type;
+ 	char ref[PATH_MAX];
+ 	struct ref_transaction *transaction;
+ 	struct strbuf err = STRBUF_INIT;
  
- 	/* old SP new SP name <email> SP time TAB msg LF */
- 	if (sb->len < 83 || sb->buf[sb->len - 1] != '\n' ||
--	    get_sha1_hex(sb->buf, osha1) || sb->buf[40] != ' ' ||
--	    get_sha1_hex(sb->buf + 41, nsha1) || sb->buf[81] != ' ' ||
-+	    get_oid_hex(sb->buf, &ooid) || sb->buf[40] != ' ' ||
-+	    get_oid_hex(sb->buf + 41, &noid) || sb->buf[81] != ' ' ||
- 	    !(email_end = strchr(sb->buf + 82, '>')) ||
- 	    email_end[1] != ' ' ||
- 	    !(timestamp = strtoul(email_end + 2, &message, 10)) ||
-@@ -3136,7 +3136,7 @@ static int show_one_reflog_ent(struct strbuf *sb, each_reflog_ent_fn fn, void *c
- 		message += 6;
+-	obj_type = sha1_object_info(object, NULL);
+-	repl_type = sha1_object_info(repl, NULL);
++	obj_type = sha1_object_info(object->hash, NULL);
++	repl_type = sha1_object_info(repl->hash, NULL);
+ 	if (!force && obj_type != repl_type)
+ 		die("Objects must be of the same type.\n"
+ 		    "'%s' points to a replaced object of type '%s'\n"
+@@ -167,11 +167,11 @@ static int replace_object_sha1(const char *object_ref,
+ 		    object_ref, typename(obj_type),
+ 		    replace_ref, typename(repl_type));
+ 
+-	check_ref_valid(object, prev, ref, sizeof(ref), force);
++	check_ref_valid(object, &prev, ref, sizeof(ref), force);
+ 
+ 	transaction = ref_transaction_begin(&err);
+ 	if (!transaction ||
+-	    ref_transaction_update(transaction, ref, repl, prev,
++	    ref_transaction_update(transaction, ref, repl->hash, prev.hash,
+ 				   0, NULL, &err) ||
+ 	    ref_transaction_commit(transaction, &err))
+ 		die("%s", err.buf);
+@@ -182,14 +182,14 @@ static int replace_object_sha1(const char *object_ref,
+ 
+ static int replace_object(const char *object_ref, const char *replace_ref, int force)
+ {
+-	unsigned char object[20], repl[20];
++	struct object_id object, repl;
+ 
+-	if (get_sha1(object_ref, object))
++	if (get_oid(object_ref, &object))
+ 		die("Failed to resolve '%s' as a valid ref.", object_ref);
+-	if (get_sha1(replace_ref, repl))
++	if (get_oid(replace_ref, &repl))
+ 		die("Failed to resolve '%s' as a valid ref.", replace_ref);
+ 
+-	return replace_object_sha1(object_ref, object, replace_ref, repl, force);
++	return replace_object_oid(object_ref, &object, replace_ref, &repl, force);
+ }
+ 
+ /*
+@@ -197,7 +197,7 @@ static int replace_object(const char *object_ref, const char *replace_ref, int f
+  * If "raw" is true, then the object's raw contents are printed according to
+  * "type". Otherwise, we pretty-print the contents for human editing.
+  */
+-static void export_object(const unsigned char *sha1, enum object_type type,
++static void export_object(const struct object_id *oid, enum object_type type,
+ 			  int raw, const char *filename)
+ {
+ 	struct child_process cmd = CHILD_PROCESS_INIT;
+@@ -213,7 +213,7 @@ static void export_object(const unsigned char *sha1, enum object_type type,
+ 		argv_array_push(&cmd.args, typename(type));
  	else
- 		message += 7;
--	return fn(osha1, nsha1, sb->buf + 82, timestamp, tz, message, cb_data);
-+	return fn(&ooid, &noid, sb->buf + 82, timestamp, tz, message, cb_data);
- }
+ 		argv_array_push(&cmd.args, "-p");
+-	argv_array_push(&cmd.args, sha1_to_hex(sha1));
++	argv_array_push(&cmd.args, oid_to_hex(oid));
+ 	cmd.git_cmd = 1;
+ 	cmd.out = fd;
  
- static char *find_beginning_of_line(char *bob, char *scan)
-@@ -3936,10 +3936,10 @@ struct expire_reflog_cb {
- 	reflog_expiry_should_prune_fn *should_prune_fn;
- 	void *policy_cb;
- 	FILE *newlog;
--	unsigned char last_kept_sha1[20];
-+	struct object_id last_kept_oid;
- };
- 
--static int expire_reflog_ent(unsigned char *osha1, unsigned char *nsha1,
-+static int expire_reflog_ent(struct object_id *ooid, struct object_id *noid,
- 			     const char *email, unsigned long timestamp, int tz,
- 			     const char *message, void *cb_data)
+@@ -226,7 +226,7 @@ static void export_object(const unsigned char *sha1, enum object_type type,
+  * interpreting it as "type", and writing the result to the object database.
+  * The sha1 of the written object is returned via sha1.
+  */
+-static void import_object(unsigned char *sha1, enum object_type type,
++static void import_object(struct object_id *oid, enum object_type type,
+ 			  int raw, const char *filename)
  {
-@@ -3947,9 +3947,9 @@ static int expire_reflog_ent(unsigned char *osha1, unsigned char *nsha1,
- 	struct expire_reflog_policy_cb *policy_cb = cb->policy_cb;
+ 	int fd;
+@@ -254,7 +254,7 @@ static void import_object(unsigned char *sha1, enum object_type type,
  
- 	if (cb->flags & EXPIRE_REFLOGS_REWRITE)
--		osha1 = cb->last_kept_sha1;
-+		ooid = &cb->last_kept_oid;
+ 		if (finish_command(&cmd))
+ 			die("mktree reported failure");
+-		if (get_sha1_hex(result.buf, sha1) < 0)
++		if (get_oid_hex(result.buf, oid) < 0)
+ 			die("mktree did not return an object name");
  
--	if ((*cb->should_prune_fn)(osha1, nsha1, email, timestamp, tz,
-+	if ((*cb->should_prune_fn)(ooid->hash, noid->hash, email, timestamp, tz,
- 				   message, policy_cb)) {
- 		if (!cb->newlog)
- 			printf("would prune %s", message);
-@@ -3958,9 +3958,9 @@ static int expire_reflog_ent(unsigned char *osha1, unsigned char *nsha1,
- 	} else {
- 		if (cb->newlog) {
- 			fprintf(cb->newlog, "%s %s %s %lu %+05d\t%s",
--				sha1_to_hex(osha1), sha1_to_hex(nsha1),
-+				oid_to_hex(ooid), oid_to_hex(noid),
- 				email, timestamp, tz, message);
--			hashcpy(cb->last_kept_sha1, nsha1);
-+			oidcpy(&cb->last_kept_oid, noid);
- 		}
- 		if (cb->flags & EXPIRE_REFLOGS_VERBOSE)
- 			printf("keep %s", message);
-@@ -4047,14 +4047,14 @@ static int files_reflog_expire(struct ref_store *ref_store,
- 		 */
- 		int update = (flags & EXPIRE_REFLOGS_UPDATE_REF) &&
- 			!(type & REF_ISSYMREF) &&
--			!is_null_sha1(cb.last_kept_sha1);
-+			!is_null_oid(&cb.last_kept_oid);
+ 		strbuf_release(&result);
+@@ -264,7 +264,7 @@ static void import_object(unsigned char *sha1, enum object_type type,
  
- 		if (close_lock_file(&reflog_lock)) {
- 			status |= error("couldn't write %s: %s", log_file,
- 					strerror(errno));
- 		} else if (update &&
- 			   (write_in_full(get_lock_file_fd(lock->lk),
--				sha1_to_hex(cb.last_kept_sha1), 40) != 40 ||
-+				oid_to_hex(&cb.last_kept_oid), GIT_SHA1_HEXSZ) != GIT_SHA1_HEXSZ ||
- 			    write_str_in_full(get_lock_file_fd(lock->lk), "\n") != 1 ||
- 			    close_ref(lock) < 0)) {
- 			status |= error("couldn't write %s",
-diff --git a/revision.c b/revision.c
-index b37dbec378..d9fe73318a 100644
---- a/revision.c
-+++ b/revision.c
-@@ -1196,11 +1196,11 @@ static void handle_refs(const char *submodule, struct rev_info *revs, unsigned f
- 	for_each(submodule, handle_one_ref, &cb);
- }
- 
--static void handle_one_reflog_commit(unsigned char *sha1, void *cb_data)
-+static void handle_one_reflog_commit(struct object_id *oid, void *cb_data)
- {
- 	struct all_refs_cb *cb = cb_data;
--	if (!is_null_sha1(sha1)) {
--		struct object *o = parse_object(sha1);
-+	if (!is_null_oid(oid)) {
-+		struct object *o = parse_object(oid->hash);
- 		if (o) {
- 			o->flags |= cb->all_flags;
- 			/* ??? CMDLINEFLAGS ??? */
-@@ -1214,12 +1214,12 @@ static void handle_one_reflog_commit(unsigned char *sha1, void *cb_data)
+ 		if (fstat(fd, &st) < 0)
+ 			die_errno("unable to fstat %s", filename);
+-		if (index_fd(sha1, fd, &st, type, NULL, flags) < 0)
++		if (index_fd(oid->hash, fd, &st, type, NULL, flags) < 0)
+ 			die("unable to write object to database");
+ 		/* index_fd close()s fd for us */
  	}
+@@ -279,29 +279,29 @@ static int edit_and_replace(const char *object_ref, int force, int raw)
+ {
+ 	char *tmpfile = git_pathdup("REPLACE_EDITOBJ");
+ 	enum object_type type;
+-	unsigned char old[20], new[20], prev[20];
++	struct object_id old, new, prev;
+ 	char ref[PATH_MAX];
+ 
+-	if (get_sha1(object_ref, old) < 0)
++	if (get_oid(object_ref, &old) < 0)
+ 		die("Not a valid object name: '%s'", object_ref);
+ 
+-	type = sha1_object_info(old, NULL);
++	type = sha1_object_info(old.hash, NULL);
+ 	if (type < 0)
+-		die("unable to get object type for %s", sha1_to_hex(old));
++		die("unable to get object type for %s", oid_to_hex(&old));
+ 
+-	check_ref_valid(old, prev, ref, sizeof(ref), force);
++	check_ref_valid(&old, &prev, ref, sizeof(ref), force);
+ 
+-	export_object(old, type, raw, tmpfile);
++	export_object(&old, type, raw, tmpfile);
+ 	if (launch_editor(tmpfile, NULL, NULL) < 0)
+ 		die("editing object file failed");
+-	import_object(new, type, raw, tmpfile);
++	import_object(&new, type, raw, tmpfile);
+ 
+ 	free(tmpfile);
+ 
+-	if (!hashcmp(old, new))
+-		return error("new object is the same as the old one: '%s'", sha1_to_hex(old));
++	if (!oidcmp(&old, &new))
++		return error("new object is the same as the old one: '%s'", oid_to_hex(&old));
+ 
+-	return replace_object_sha1(object_ref, old, "replacement", new, force);
++	return replace_object_oid(object_ref, &old, "replacement", &new, force);
  }
  
--static int handle_one_reflog_ent(unsigned char *osha1, unsigned char *nsha1,
-+static int handle_one_reflog_ent(struct object_id *ooid, struct object_id *noid,
- 		const char *email, unsigned long timestamp, int tz,
- 		const char *message, void *cb_data)
- {
--	handle_one_reflog_commit(osha1, cb_data);
--	handle_one_reflog_commit(nsha1, cb_data);
-+	handle_one_reflog_commit(ooid, cb_data);
-+	handle_one_reflog_commit(noid, cb_data);
- 	return 0;
- }
+ static void replace_parents(struct strbuf *buf, int argc, const char **argv)
+@@ -312,7 +312,7 @@ static void replace_parents(struct strbuf *buf, int argc, const char **argv)
  
-diff --git a/sha1_name.c b/sha1_name.c
-index 73a915ff1b..744e9f884a 100644
---- a/sha1_name.c
-+++ b/sha1_name.c
-@@ -1051,7 +1051,7 @@ struct grab_nth_branch_switch_cbdata {
- 	struct strbuf buf;
- };
+ 	/* find existing parents */
+ 	parent_start = buf->buf;
+-	parent_start += 46; /* "tree " + "hex sha1" + "\n" */
++	parent_start += GIT_SHA1_HEXSZ + 6; /* "tree " + "hex sha1" + "\n" */
+ 	parent_end = parent_start;
  
--static int grab_nth_branch_switch(unsigned char *osha1, unsigned char *nsha1,
-+static int grab_nth_branch_switch(struct object_id *ooid, struct object_id *noid,
- 				  const char *email, unsigned long timestamp, int tz,
- 				  const char *message, void *cb_data)
- {
-diff --git a/wt-status.c b/wt-status.c
-index 0ec090a338..5fac8437b0 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -1373,7 +1373,7 @@ struct grab_1st_switch_cbdata {
- 	unsigned char nsha1[20];
- };
+ 	while (starts_with(parent_end, "parent "))
+@@ -320,11 +320,11 @@ static void replace_parents(struct strbuf *buf, int argc, const char **argv)
  
--static int grab_1st_switch(unsigned char *osha1, unsigned char *nsha1,
-+static int grab_1st_switch(struct object_id *ooid, struct object_id *noid,
- 			   const char *email, unsigned long timestamp, int tz,
- 			   const char *message, void *cb_data)
- {
-@@ -1387,13 +1387,13 @@ static int grab_1st_switch(unsigned char *osha1, unsigned char *nsha1,
- 		return 0;
- 	target += strlen(" to ");
- 	strbuf_reset(&cb->buf);
--	hashcpy(cb->nsha1, nsha1);
-+	hashcpy(cb->nsha1, noid->hash);
- 	end = strchrnul(target, '\n');
- 	strbuf_add(&cb->buf, target, end - target);
- 	if (!strcmp(cb->buf.buf, "HEAD")) {
- 		/* HEAD is relative. Resolve it to the right reflog entry. */
- 		strbuf_reset(&cb->buf);
--		strbuf_add_unique_abbrev(&cb->buf, nsha1, DEFAULT_ABBREV);
-+		strbuf_add_unique_abbrev(&cb->buf, noid->hash, DEFAULT_ABBREV);
+ 	/* prepare new parents */
+ 	for (i = 0; i < argc; i++) {
+-		unsigned char sha1[20];
+-		if (get_sha1(argv[i], sha1) < 0)
++		struct object_id oid;
++		if (get_oid(argv[i], &oid) < 0)
+ 			die(_("Not a valid object name: '%s'"), argv[i]);
+-		lookup_commit_or_die(sha1, argv[i]);
+-		strbuf_addf(&new_parents, "parent %s\n", sha1_to_hex(sha1));
++		lookup_commit_or_die(oid.hash, argv[i]);
++		strbuf_addf(&new_parents, "parent %s\n", oid_to_hex(&oid));
  	}
- 	return 1;
+ 
+ 	/* replace existing parents with new ones */
+@@ -345,12 +345,12 @@ static void check_one_mergetag(struct commit *commit,
+ {
+ 	struct check_mergetag_data *mergetag_data = (struct check_mergetag_data *)data;
+ 	const char *ref = mergetag_data->argv[0];
+-	unsigned char tag_sha1[20];
++	struct object_id tag_oid;
+ 	struct tag *tag;
+ 	int i;
+ 
+-	hash_sha1_file(extra->value, extra->len, typename(OBJ_TAG), tag_sha1);
+-	tag = lookup_tag(tag_sha1);
++	hash_sha1_file(extra->value, extra->len, typename(OBJ_TAG), tag_oid.hash);
++	tag = lookup_tag(tag_oid.hash);
+ 	if (!tag)
+ 		die(_("bad mergetag in commit '%s'"), ref);
+ 	if (parse_tag_buffer(tag, extra->value, extra->len))
+@@ -366,7 +366,7 @@ static void check_one_mergetag(struct commit *commit,
+ 	}
+ 
+ 	die(_("original commit '%s' contains mergetag '%s' that is discarded; "
+-	      "use --edit instead of --graft"), ref, sha1_to_hex(tag_sha1));
++	      "use --edit instead of --graft"), ref, oid_to_hex(&tag_oid));
  }
+ 
+ static void check_mergetags(struct commit *commit, int argc, const char **argv)
+@@ -380,16 +380,16 @@ static void check_mergetags(struct commit *commit, int argc, const char **argv)
+ 
+ static int create_graft(int argc, const char **argv, int force)
+ {
+-	unsigned char old[20], new[20];
++	struct object_id old, new;
+ 	const char *old_ref = argv[0];
+ 	struct commit *commit;
+ 	struct strbuf buf = STRBUF_INIT;
+ 	const char *buffer;
+ 	unsigned long size;
+ 
+-	if (get_sha1(old_ref, old) < 0)
++	if (get_oid(old_ref, &old) < 0)
+ 		die(_("Not a valid object name: '%s'"), old_ref);
+-	commit = lookup_commit_or_die(old, old_ref);
++	commit = lookup_commit_or_die(old.hash, old_ref);
+ 
+ 	buffer = get_commit_buffer(commit, &size);
+ 	strbuf_add(&buf, buffer, size);
+@@ -404,15 +404,15 @@ static int create_graft(int argc, const char **argv, int force)
+ 
+ 	check_mergetags(commit, argc, argv);
+ 
+-	if (write_sha1_file(buf.buf, buf.len, commit_type, new))
++	if (write_sha1_file(buf.buf, buf.len, commit_type, new.hash))
+ 		die(_("could not write replacement commit for: '%s'"), old_ref);
+ 
+ 	strbuf_release(&buf);
+ 
+-	if (!hashcmp(old, new))
+-		return error("new commit is the same as the old one: '%s'", sha1_to_hex(old));
++	if (!oidcmp(&old, &new))
++		return error("new commit is the same as the old one: '%s'", oid_to_hex(&old));
+ 
+-	return replace_object_sha1(old_ref, old, "replacement", new, force);
++	return replace_object_oid(old_ref, &old, "replacement", &new, force);
+ }
+ 
+ int cmd_replace(int argc, const char **argv, const char *prefix)
 -- 
 2.11.0
 
