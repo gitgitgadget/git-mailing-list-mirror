@@ -3,116 +3,144 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 61EE1201B0
-	for <e@80x24.org>; Sat, 18 Feb 2017 19:12:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3F09C201B0
+	for <e@80x24.org>; Sat, 18 Feb 2017 19:59:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754003AbdBRTM1 (ORCPT <rfc822;e@80x24.org>);
-        Sat, 18 Feb 2017 14:12:27 -0500
-Received: from castro.crustytoothpaste.net ([75.10.60.170]:33608 "EHLO
-        castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1753357AbdBRTM0 (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 18 Feb 2017 14:12:26 -0500
-Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 99ECF280AD;
-        Sat, 18 Feb 2017 19:12:23 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
-        s=default; t=1487445143;
-        bh=o02qMXAsO/RHofyt17kBAePUB8L0HzJCa6M+acRoxYE=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=tefH0sm0mrjou2edL0LKhsgClu5xRnsGbWCdxL8wM3MhSnhP4EN6G+CVbKdV0dEKS
-         MaSqbWZHEB0HB+KWfKa3u4cKU36LpGOfzCGIpHDSZndGLsCzRRdvVXiB19FMIqpiP5
-         8qrJ2vNYbKI/x16U3VjC2u3QIyKUBjDEH6xmgiTZcczoCoDGRyxW9DnGzH3tzFVLp3
-         dPH3xyM3GZyKms525vln81Su9CDBdjP7QIAoOnDGeApBSSLUGQ8JSbYhSN3WqeRPN+
-         jfEhAQCbl1ENIwh7nO960XWHtY+TRJBfQ6yOyKJooN56KBOMRC9tOR8NK2D565QRV6
-         afKQhGmcwdRJTnTBflmfDwRwF2mNOzvi8kWAwSm0v6cy2f3lELYjY47dJG+i9YXbtD
-         17RMp5h0/Ztk+iJb435nW93sHx1EM62bK7nSI/A16kL1p1Mry2WSFh+FPKP2PsH2sB
-         gOH/TTCX2LowegUNmZ0OsoSidN7Fo+/GEI4obredBGOg1aUo5bx
-Date:   Sat, 18 Feb 2017 19:12:18 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Jeff King <peff@peff.net>
-Cc:     Ramsay Jones <ramsay@ramsayjones.plus.com>, git@vger.kernel.org,
-        Michael Haggerty <mhagger@alum.mit.edu>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 02/19] builtin/diff-tree: convert to struct object_id
-Message-ID: <20170218191217.thn3c2bympv2g7pm@genre.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Jeff King <peff@peff.net>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>, git@vger.kernel.org,
-        Michael Haggerty <mhagger@alum.mit.edu>,
-        Junio C Hamano <gitster@pobox.com>
-References: <20170218000652.375129-1-sandals@crustytoothpaste.net>
- <20170218000652.375129-3-sandals@crustytoothpaste.net>
- <3630da01-5af3-bc02-3a8c-1e3495512279@ramsayjones.plus.com>
- <20170218012607.kdisudmmponvts35@genre.crustytoothpaste.net>
- <20170218014217.sil4jyukkbqguxfz@sigill.intra.peff.net>
- <20170218031530.2bhlnjcukl4ybt6h@sigill.intra.peff.net>
+        id S1753626AbdBRT73 (ORCPT <rfc822;e@80x24.org>);
+        Sat, 18 Feb 2017 14:59:29 -0500
+Received: from mail-lf0-f47.google.com ([209.85.215.47]:33960 "EHLO
+        mail-lf0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753607AbdBRT72 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 18 Feb 2017 14:59:28 -0500
+Received: by mail-lf0-f47.google.com with SMTP id o140so20888835lff.1
+        for <git@vger.kernel.org>; Sat, 18 Feb 2017 11:59:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=xozX8izWYbTS6og1CyB8AbyFhlLq/wPczHnr0p/Li1w=;
+        b=VL7k/fBxIgMyYWc94h2J3/CxAC4gRmzaJn8jyxQjqAvKlkJg9fwEEn32vfKHNdGiKM
+         aY/Lsoxtju9tt4Vahcg8hG1442f/WoYNDIRoIQLzcTltgOweDLpTRVOu1ZJjzhLtcgBv
+         PcGZwKcbLc0Kd8SlbfmHW6qBID8rWCmZW0G3luWHpmlvRrQb//7fb/M4t7DMI5yapyEH
+         rByfftCpbpFDHdJPcOyMST/lpX+r08F6Trn00MnoQKhAfROqC/ZKshp4LbJzc6bRsVIL
+         dJPIXSCU8R9cLO6YDrtK7qps4M0DalJK+6uuHMxihf7qahpnnIEiailhhXoT2gp1K/+M
+         6iKQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=xozX8izWYbTS6og1CyB8AbyFhlLq/wPczHnr0p/Li1w=;
+        b=ROvl4gaEK7AlaTmz8wdMdS5cjytYpt9Q4wE3HaR/xsonZDuhH6CMoh3NYOUh51JJTO
+         e7/jIE6MOm+U42ZC6ROtvjTCYrLdAxD0gAzZy8AiKXRQkb4S/F7nFU53pzGggw9y9I4D
+         THCrzoqQ5Ts5fsMaY3G9Uy+ozohfKiLW7xFSfMlUxcVCmZxaQVZfGdqRiPzYKNupzGSV
+         F6gQWqYQNEWTCXfg16JAGakhIEP9O2ncvfGQ2043eJ8u4LUyjx/6MfTnneUMY/lQnaOy
+         AAeoJjepWabe84XwKmy1dBmc1P6oi0VBhHno9A1suiOQpVa41rgK5EVYdiRD7oTt5TZJ
+         5n7A==
+X-Gm-Message-State: AMke39nFP+ZCm884azNVhlsLTzJ9H5KGbOBo2qIbBE3bGrJPWnjzaFTfSTDdvQms0ZSQbh09XtbTBeJSLK0fKw==
+X-Received: by 10.25.67.83 with SMTP id m19mr3387335lfj.24.1487447939690; Sat,
+ 18 Feb 2017 11:58:59 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="nf3z7bmdxmszdpxr"
-Content-Disposition: inline
-In-Reply-To: <20170218031530.2bhlnjcukl4ybt6h@sigill.intra.peff.net>
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.9.0-1-amd64)
-User-Agent: NeoMutt/20170113 (1.7.2)
+Received: by 10.25.150.204 with HTTP; Sat, 18 Feb 2017 11:58:59 -0800 (PST)
+In-Reply-To: <CAMX8fZW2y+iPRfSbXVcHufbM+CsqgekS_0WnCEJ++=njy_TvKg@mail.gmail.com>
+References: <CAMX8fZWe2HO78ySonHX0adtPUxVPbj5_vo-NUGrjwpb7gPdGrQ@mail.gmail.com>
+ <d4991e4b-cbc4-da14-381a-88704e457a19@gmx.net> <3ff5ce3c-285f-cb9a-d1d4-46323524dab7@kdbg.org>
+ <CAMX8fZVkBU6M8fkUcRr69V97_NTSOGGmPB1U-ObhmVv3i6wQhg@mail.gmail.com>
+ <477d3533-d453-9499-e06e-72f45488d421@kdbg.org> <CAMX8fZW2y+iPRfSbXVcHufbM+CsqgekS_0WnCEJ++=njy_TvKg@mail.gmail.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Sat, 18 Feb 2017 20:58:59 +0100
+Message-ID: <CAP8UFD3ngMvVy2XLzYNn9OFbS+zQpWTW=pravpHhA-0PcDVhfg@mail.gmail.com>
+Subject: Re: Git bisect does not find commit introducing the bug
+To:     Alex Hoffman <spec@gal.ro>
+Cc:     Johannes Sixt <j6t@kdbg.org>, Stephan Beyer <s-beyer@gmx.net>,
+        git <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Sat, Feb 18, 2017 at 7:36 PM, Alex Hoffman <spec@gal.ro> wrote:
+>> But this is not how Git works. Git computes graph differences, i.e., it
+>> subtracts from the commits reachable from v.bad those that are reachable
+>> from v.good. This leaves more than just those on some path from v.good to
+>> v.bad. And it should work this way. Consider this history:
+>>
+>> --o--o--o--G--X
+>>    \           \
+>>     x--x--x--x--X--B--
+>>
+>> When you find B bad and G good, than any one of the x or X may have
+>> introduced the breakage, not just one of the X.
+>>
+>
+> Thank you for clarifying how git bisect works. How did you find that
+> out? Did you check the source code? If that is not documented in the
+> man page may be it worth documenting it in order to avoid future
+> confusion for other users.
 
---nf3z7bmdxmszdpxr
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+At the end of the git-bisect man page (in the SEE ALSO section) there
+is a link to https://github.com/git/git/blob/master/Documentation/git-bisect-lk2009.txt
+which has a lot of details about how bisect works.
 
-On Fri, Feb 17, 2017 at 10:15:31PM -0500, Jeff King wrote:
-> So for this case, something like the patch below.
->=20
-> Incidentally, there's an off-by-one in the original loop of
-> stdin_diff_commit that reads past the end of the trailing NUL for the
-> final sha1 on the line. The problem is the:
->=20
->   pos +=3D GIT_SHA1_HEXSZ + 1;
->=20
-> which assumes we're slurping up the trailing space. This works in
-> practice because the caller will only permit a string which had a
-> newline (which it converted into a NUL).
->=20
-> I suspect that function could be more aggressive about complaining about
-> nonsense on the line, rather than silently ignoring it.
+> Let's consider your example with distinct names for nodes:
+>
+> --o1--o2--o3--G--X1
+>     \                \
+>      x1--x2--x3--x4--X1--B--
+>
+> It makes sense that git bisect is expecting a single transition, as
+> this is a precondition for a binary search to work. My definition of
+> "the transition" is a commit with at least one of its parents as a
+> good version, but the commit itself a bad version.
 
-I'd come to basically the same patch, but I did pick up a few niceties
-=66rom your patch, like avoiding the off-by-one issue you mentioned above.
-Can I place your sign-off on the resulting change?
---=20
-brian m. carlson / brian with sandals: Houston, Texas, US
-+1 832 623 2791 | https://www.crustytoothpaste.net/~bmc | My opinion only
-OpenPGP: https://keybase.io/bk2204
+What if a commit C has one good parent A and one bad parent B?
+Isn't it more likely that the first bad commit is B instead of C?
 
---nf3z7bmdxmszdpxr
-Content-Type: application/pgp-signature; name="signature.asc"
+> I hope we agree
+> that git bisect's mission is to search for this transition (as I
+> suppose that most of people need such a functionality from git, if not
+> exactly from git bisect).
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.1.18 (GNU/Linux)
+The goal is to find the first bad commit, which is a commit that has
+only good parents.
 
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlionJEACgkQv1NdgR9S
-9ot1qA/8CjEi3ePe6NfGbwiweSGBpMUHKGE+7GVFNgKTDyFxk0VAL3vdV3Qs/8Jp
-Qu4ttpmY7mY2LYzPqdTMpzxSyveOaHkj2jLE6pScfZa3kgZY9VCHxfQtoBEqpRHO
-zvLJK9HBdFvEKZSrKda/763oHNVOjqU6eWYoOhXpQxlYAtz0/wHBZOU3dg/VBYsG
-q2D/5JD8TS/D2mnRUkj8WwpDxoXp5SnCx8TwgbB9ldFJkMrpcs7ySgZQ2di6tuY7
-ki1fVHjUwypbA+dVSibpOKb20lR464tiXLUwvkWB+e/RlFeAQwmcn3M+uu0+dCnt
-37Ncb6xvZVa0wzUI4wOrITiK/s603XNIAeoCL3f4g3Mbn4Wj8Y2lkoVw8WOuk1pW
-r//udwZoTeiNsrTTd+hof6bpm5dw4H9ct6ZA1vJSHda+Wg5GhkCC+jJFncbHBc+3
-MvhT057g8H0OlYTvKg/9YUsEJtYLaNG1aU9kEGSfl0dKek86lX4AddrG6EaAPwHk
-7z+KJbmR3zY9cjw00p745+byYJ4Vgic1EOR3i8QuT758t21Zb7WYv4NfXDLn/NU9
-i0bmC5gdfQCmvZXAsb9+Fe7c0sxwxjK2KKvdveSGcNVd91JEHiqzn5KH1LBlf5dl
-M4O1ZtlzTdkPodJK3Y3qaa+iBn8Lyrzlo+j9htHIjIXLdwD7SeM=
-=AE1m
------END PGP SIGNATURE-----
+> How could be x1 or x3 be the transition, if
+> chances are that o1 is not a good version?
 
---nf3z7bmdxmszdpxr--
+As o1 is an ancestor of G, then o1 is considered good by the bisect algorithm.
+If it was bad, it would means that there is a transition from bad to
+good between o1 and G.
+But when a good commit is an ancestor of the bad commit, git bisect
+makes the assumption that there is no transition from bad to good in
+the graph.
+
+> Of course it would make
+> sense to me if bisect would check o1 whether good and only then to
+> check also x1-x3, but this is not what git makes (at least not in my
+> initial example).
+>
+> If you consider that git bisect's mission is different from finding
+> the transition, could you please explain what exact commit git bisect
+> is supposed to return (ideally with terms from the graph theory) and
+> when it makes sense to return that? Because I do not see any sense in
+> looking in the path x1-x3 without knowing that those commits may be a
+> transition.
+
+I hope it makes sense with the above explanations.
+
+>> Oh, IMO git bisect was well thought through. If it considered just paths
+>> from good to bad, it would not given the correct answer. See the example
+>> history above. Bisect authors would not have deemed that sufficiently good
+>
+> You definitely convinced me that git MUST search more than only in the
+> paths between good and bad commits, as the good commit G does not have
+> to be the first good commit (thank you for that). My problem/confusion
+> is that it returns something that does not make sense to me, because
+> it does not make sure it returns a transition.
+
+git bisect makes some assumptions that are true most of the time, so
+in practice it works well most of the time.
