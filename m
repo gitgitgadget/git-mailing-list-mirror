@@ -6,132 +6,101 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1D7FE201A9
-	for <e@80x24.org>; Sat, 18 Feb 2017 00:07:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2D7B9201A9
+	for <e@80x24.org>; Sat, 18 Feb 2017 00:07:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750938AbdBRAHB (ORCPT <rfc822;e@80x24.org>);
-        Fri, 17 Feb 2017 19:07:01 -0500
-Received: from castro.crustytoothpaste.net ([75.10.60.170]:59994 "EHLO
+        id S1751621AbdBRAHH (ORCPT <rfc822;e@80x24.org>);
+        Fri, 17 Feb 2017 19:07:07 -0500
+Received: from castro.crustytoothpaste.net ([75.10.60.170]:60058 "EHLO
         castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1750772AbdBRAHA (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 17 Feb 2017 19:07:00 -0500
+        by vger.kernel.org with ESMTP id S1750981AbdBRAHC (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 17 Feb 2017 19:07:02 -0500
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 4BA8F280AD;
-        Sat, 18 Feb 2017 00:06:58 +0000 (UTC)
+        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 22E05280B5;
+        Sat, 18 Feb 2017 00:07:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
-        s=default; t=1487376418;
-        bh=7hlrxWZ+4P9MAoeVcdtC/zKaIMWObdIIoRqvnx4RkUk=;
-        h=From:To:Cc:Subject:Date:From;
-        b=EjfffCNv3ZGCdWz3A6CO6d1FAirpDxgL+cQfp+onpfhA5cyRSnzBz5uciV2qreA+q
-         MEQXsrXgnLFuFJ9jDXofZZykTJ24IdaG9qf8paMyBUl05FUwwTNC71kSViZwtRmkXk
-         P4+J7gV338XDqYWrg8dy0EjesxFqu00DYEcBHTqfkU9CXcGDDHYLZ3UrxKtpIT14qN
-         xBrHeaThvlCi9OmHTTr/jZruOQwbaA87bjZsKQlxSWoC5UZsaVAicyTo46gacu10vD
-         FqPgTIfAhEmLi2Woqy5S7PnvTR5vB3HxSEl4ZOjMKjg1m0HP/EHeQaLsSVLwSZ/UJ2
-         +ZW3dwb1kRZrjHwr0dffIb/BxRuQNSMiA9kiwZqm4+2wgdc6T24sFzFstuYuge92Tj
-         BNV+nZ+XnuyXDnaKxQQFYF4lKZitjub1h61VaO8xyGKYbc/w2ejhmWHfMd58sU0ymA
-         HW4sdoTyhlJQFf8zxztcjMPYHbyb55UPF3D5znmRjo+tJ38yhGS
+        s=default; t=1487376420;
+        bh=CXDBzHlSBieTWZdeaFBGOTi0fuuRaZ+oUL1CuCq8Oes=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=BO9D5vilWAagOIzP5Dw7bu9K29NbUFSCYAY+bVkFNoVRfU1T0cHKgUR/epyBW6UrA
+         7P6tpPzIG04jRR0JOJ1ugySfaNxM0nQTP5+KlWVHUTPJ4qn5q/P6T3/CWu9HJWQRdi
+         ILGN2q5cQz8eUkxba1gUnxENB0Pf/EmsNSYIO8W5z7zjpVTgmsv9CyB9O8/wsHiXca
+         30FFUgs803Sv520lZXTgVl1z5eVvM2DCGiLEl67MJOsXIC2CjBFlVFQx22e5o6Q47r
+         ciyRT3MbQ29ssTc/SY8Yq3TS63oNwi/pkqCWsZMLAM6XqRIPrcdLQhFvHaLAFHmct0
+         QF61xBVlKVmZDmRXVVr1xPSgR5mxb6v7F/q2+Zxj5XlosfoL7V9hmq7mgdwYTZkqC7
+         XB5j1kAPImqMj11ALrESCp1MlFLx7x1TzgeF1JbKXuRhqH86a4H8x+xEA/OZ657XN6
+         GkzLNDTEgWEBkZH1P9clAPU4kJHm7+wPG+WWIELDlqrWddCJxPg
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     Jeff King <peff@peff.net>, Michael Haggerty <mhagger@alum.mit.edu>,
         Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v3 00/19] object_id part 6
-Date:   Sat, 18 Feb 2017 00:06:33 +0000
-Message-Id: <20170218000652.375129-1-sandals@crustytoothpaste.net>
+Subject: [PATCH v3 08/19] builtin/clone: convert to struct object_id
+Date:   Sat, 18 Feb 2017 00:06:41 +0000
+Message-Id: <20170218000652.375129-9-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.11.0
+In-Reply-To: <20170218000652.375129-1-sandals@crustytoothpaste.net>
+References: <20170218000652.375129-1-sandals@crustytoothpaste.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is another series in the continuing conversion to struct object_id.
+Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+---
+ builtin/clone.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-This series converts more of the builtin directory and some of the refs
-code to use struct object_id. Additionally, it implements an
-nth_packed_object_oid function which provides a struct object_id version
-of the nth_packed_object function, and a parse_oid_hex function that
-makes parsing easier.
-
-The patch to use parse_oid_hex in the refs code has been split out into
-its own patch, just because I'm wary of that code and potentially
-breaking things, and I want it to be easy to revert in case things go
-wrong.  I have no reason to believe it is anything other than fully
-functional, however.
-
-The conflicts in pu with v2 are probably still present, but I expect the
-resolution should be easy (and I suspect Junio uses git rerere, so they'll be
-even easier).
-
-Changes from v2:
-* Fix misnamed function in commit message.
-* Improve parameter name of parse_oid_hex.
-* Improve docstring of parse_oid_hex.
-* Remove needless variable.
-* Rebase on master.
-
-Changes from v1:
-* Implement parse_oid_hex and use it.
-* Make nth_packed_object_oid take a variable into which to store the
-  object ID.  This avoids concerns about unsafe casts.
-* Rebase on master.
-
-brian m. carlson (19):
-  builtin/commit: convert to struct object_id
-  builtin/diff-tree: convert to struct object_id
-  builtin/describe: convert to struct object_id
-  builtin/fast-export: convert to struct object_id
-  builtin/fmt-merge-message: convert to struct object_id
-  builtin/grep: convert to struct object_id
-  builtin/branch: convert to struct object_id
-  builtin/clone: convert to struct object_id
-  builtin/merge: convert to struct object_id
-  Convert remaining callers of resolve_refdup to object_id
-  builtin/replace: convert to struct object_id
-  reflog-walk: convert struct reflog_info to struct object_id
-  refs: convert each_reflog_ent_fn to struct object_id
-  hex: introduce parse_oid_hex
-  refs: simplify parsing of reflog entries
-  sha1_file: introduce an nth_packed_object_oid function
-  Convert object iteration callbacks to struct object_id
-  builtin/merge-base: convert to struct object_id
-  wt-status: convert to struct object_id
-
- builtin/branch.c        |  26 +++++-----
- builtin/cat-file.c      |   8 +--
- builtin/clone.c         |  10 ++--
- builtin/commit.c        |  46 ++++++++---------
- builtin/count-objects.c |   4 +-
- builtin/describe.c      |  50 +++++++++---------
- builtin/diff-tree.c     |  38 +++++++-------
- builtin/fast-export.c   |  58 ++++++++++-----------
- builtin/fmt-merge-msg.c |  70 ++++++++++++-------------
- builtin/fsck.c          |  40 +++++++--------
- builtin/grep.c          |  24 ++++-----
- builtin/merge-base.c    |  30 +++++------
- builtin/merge.c         | 134 ++++++++++++++++++++++++------------------------
- builtin/notes.c         |  18 +++----
- builtin/pack-objects.c  |   6 +--
- builtin/prune-packed.c  |   4 +-
- builtin/prune.c         |   8 +--
- builtin/receive-pack.c  |   4 +-
- builtin/reflog.c        |   2 +-
- builtin/replace.c       | 112 ++++++++++++++++++++--------------------
- cache.h                 |  19 ++++++-
- hex.c                   |   8 +++
- reachable.c             |  30 +++++------
- ref-filter.c            |   4 +-
- reflog-walk.c           |  26 +++++-----
- refs.c                  |  24 ++++-----
- refs.h                  |   2 +-
- refs/files-backend.c    |  29 ++++++-----
- revision.c              |  12 ++---
- sha1_file.c             |  27 +++++++---
- sha1_name.c             |   2 +-
- transport.c             |   4 +-
- wt-status.c             |  52 +++++++++----------
- 33 files changed, 483 insertions(+), 448 deletions(-)
-
+diff --git a/builtin/clone.c b/builtin/clone.c
+index 3f63edbbf9..b4c929bb8a 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -681,7 +681,7 @@ static void update_head(const struct ref *our, const struct ref *remote,
+ 
+ static int checkout(int submodule_progress)
+ {
+-	unsigned char sha1[20];
++	struct object_id oid;
+ 	char *head;
+ 	struct lock_file *lock_file;
+ 	struct unpack_trees_options opts;
+@@ -692,7 +692,7 @@ static int checkout(int submodule_progress)
+ 	if (option_no_checkout)
+ 		return 0;
+ 
+-	head = resolve_refdup("HEAD", RESOLVE_REF_READING, sha1, NULL);
++	head = resolve_refdup("HEAD", RESOLVE_REF_READING, oid.hash, NULL);
+ 	if (!head) {
+ 		warning(_("remote HEAD refers to nonexistent ref, "
+ 			  "unable to checkout.\n"));
+@@ -700,7 +700,7 @@ static int checkout(int submodule_progress)
+ 	}
+ 	if (!strcmp(head, "HEAD")) {
+ 		if (advice_detached_head)
+-			detach_advice(sha1_to_hex(sha1));
++			detach_advice(oid_to_hex(&oid));
+ 	} else {
+ 		if (!starts_with(head, "refs/heads/"))
+ 			die(_("HEAD not found below refs/heads!"));
+@@ -721,7 +721,7 @@ static int checkout(int submodule_progress)
+ 	opts.src_index = &the_index;
+ 	opts.dst_index = &the_index;
+ 
+-	tree = parse_tree_indirect(sha1);
++	tree = parse_tree_indirect(oid.hash);
+ 	parse_tree(tree);
+ 	init_tree_desc(&t, tree->buffer, tree->size);
+ 	if (unpack_trees(1, &t, &opts) < 0)
+@@ -731,7 +731,7 @@ static int checkout(int submodule_progress)
+ 		die(_("unable to write new index file"));
+ 
+ 	err |= run_hook_le(NULL, "post-checkout", sha1_to_hex(null_sha1),
+-			   sha1_to_hex(sha1), "1", NULL);
++			   oid_to_hex(&oid), "1", NULL);
+ 
+ 	if (!err && option_recursive) {
+ 		struct argv_array args = ARGV_ARRAY_INIT;
 -- 
 2.11.0
 
