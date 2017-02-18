@@ -6,39 +6,39 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AED2F201A9
-	for <e@80x24.org>; Sat, 18 Feb 2017 00:07:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 60176201A9
+	for <e@80x24.org>; Sat, 18 Feb 2017 00:07:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751801AbdBRAHN (ORCPT <rfc822;e@80x24.org>);
-        Fri, 17 Feb 2017 19:07:13 -0500
-Received: from castro.crustytoothpaste.net ([75.10.60.170]:60046 "EHLO
+        id S1751958AbdBRAHQ (ORCPT <rfc822;e@80x24.org>);
+        Fri, 17 Feb 2017 19:07:16 -0500
+Received: from castro.crustytoothpaste.net ([75.10.60.170]:60056 "EHLO
         castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751616AbdBRAHG (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 17 Feb 2017 19:07:06 -0500
+        by vger.kernel.org with ESMTP id S1751411AbdBRAHF (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 17 Feb 2017 19:07:05 -0500
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id B70A1280B3;
-        Sat, 18 Feb 2017 00:06:59 +0000 (UTC)
+        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 29191280BD;
+        Sat, 18 Feb 2017 00:07:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
-        s=default; t=1487376419;
-        bh=CVzshxDk2+Z+rp/+LfzPUSQSemXELl8DbRLn/Kwpi20=;
+        s=default; t=1487376423;
+        bh=5jj4CKZto4kN7x4tIM92UdyOELib38nihb+opUMfge4=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=tCrWyRgma0+1VNrOIQ4cG8vWNx6si3nRbqZ2vjBODEuEv4z/Fw0968zJ45ouAAGng
-         NQNuqVgEZ6/aT0/ITv7MNVf/iZjiWnak7PgI8FFxMvt8pSmu06HtMhZ3yrTroELNMw
-         +hcDimOGGQeeXTMnPpylBaW+Rl9AuMx3XMgz2P0ysNg5VvXpue4ETFzpxngSt9LkzF
-         YXatV+PCGE5RhbNlnb7X8YVCCwe/F2pY7cKupehWcg9fESF1AkXOTuJD0cRBSAE145
-         8wT8AR4pQkTI3uq8E/vUlma34wHKkZs8HT0isXxK8qaqCf2F/ap7f/MpSCZCGd1NDy
-         Kw7XW7wNkcfSdtUX6fqUyq/Z5m34j7+GwdEvXM4VCj6eKpE93lnUrIhofOsnfYZNMp
-         ILOGlNP0UaG+huvtGIANgslshbqH9UQ/QVO3/L4qOMZo3mzSOAyH2zo0PNVJmqyARK
-         yxkSFEJBsewaC4wle5IZRo/JYxDLoQ93ZUtUMvNLVBAOLYIKo33
+        b=ZwqsFK6QIRnhXpgidzUv33xiNP4CU+LCmIWdPRSdrr+J+j/1SRBNRju5qnGyPk7zm
+         v5DtlN65WLL6JVTGb+nlXaXRRwKlm5NPLiwgfb7h2cY0Ng/P0TgK12qV9SzWftiHL7
+         1J1qzGJfvfd1kl0RZV5ahQ6ZE3V1zvoHiJvm+TbeMAB4yRLPUexdQtyMiAn6Uw4KRY
+         3q9x231hVbjxSHTiRD2Q2YfPMt/OElOhIYag1o2FrAewQb3XEXu9fXLv3G6Pz73xsQ
+         zp4oUZre+/duh+UH5jECFAZXxkni3DdK8ZLOu5Xk+FVCxmKGDI1DPADK8ErU2eCU0v
+         ULRH99wauxJkBtOSQ/rtGabv2BnYJol1l+EtZ4G1vKbrP5oDDKpuLAObSXMW/bhZbf
+         MUibmzIlCmb8UanIGH0jxAZuB7aPOWAwbnFGmDgGHWjxVTTXs6Q+B9LVC0R3OqHxFE
+         P0jFlWJc6QoRXryBNdreQDLCP4pga++p5otD969yl+LWJzhPSkq
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     Jeff King <peff@peff.net>, Michael Haggerty <mhagger@alum.mit.edu>,
         Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v3 06/19] builtin/grep: convert to struct object_id
-Date:   Sat, 18 Feb 2017 00:06:39 +0000
-Message-Id: <20170218000652.375129-7-sandals@crustytoothpaste.net>
+Subject: [PATCH v3 18/19] builtin/merge-base: convert to struct object_id
+Date:   Sat, 18 Feb 2017 00:06:51 +0000
+Message-Id: <20170218000652.375129-19-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.11.0
 In-Reply-To: <20170218000652.375129-1-sandals@crustytoothpaste.net>
 References: <20170218000652.375129-1-sandals@crustytoothpaste.net>
@@ -47,108 +47,100 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Convert several functions to use struct object_id, and rename them so
-that they no longer refer to SHA-1.
+Convert the remaining uses of unsigned char [20] to struct object_id.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- builtin/grep.c | 24 ++++++++++++------------
- 1 file changed, 12 insertions(+), 12 deletions(-)
+ builtin/merge-base.c | 28 ++++++++++++++--------------
+ 1 file changed, 14 insertions(+), 14 deletions(-)
 
-diff --git a/builtin/grep.c b/builtin/grep.c
-index 2c727ef499..0393b0fdc4 100644
---- a/builtin/grep.c
-+++ b/builtin/grep.c
-@@ -294,17 +294,17 @@ static int grep_cmd_config(const char *var, const char *value, void *cb)
- 	return st;
+diff --git a/builtin/merge-base.c b/builtin/merge-base.c
+index db95bc29cf..cfe2a796f8 100644
+--- a/builtin/merge-base.c
++++ b/builtin/merge-base.c
+@@ -36,12 +36,12 @@ static const char * const merge_base_usage[] = {
+ 
+ static struct commit *get_commit_reference(const char *arg)
+ {
+-	unsigned char revkey[20];
++	struct object_id revkey;
+ 	struct commit *r;
+ 
+-	if (get_sha1(arg, revkey))
++	if (get_oid(arg, &revkey))
+ 		die("Not a valid object name %s", arg);
+-	r = lookup_commit_reference(revkey);
++	r = lookup_commit_reference(revkey.hash);
+ 	if (!r)
+ 		die("Not a valid commit name %s", arg);
+ 
+@@ -113,14 +113,14 @@ struct rev_collect {
+ 	unsigned int initial : 1;
+ };
+ 
+-static void add_one_commit(unsigned char *sha1, struct rev_collect *revs)
++static void add_one_commit(struct object_id *oid, struct rev_collect *revs)
+ {
+ 	struct commit *commit;
+ 
+-	if (is_null_sha1(sha1))
++	if (is_null_oid(oid))
+ 		return;
+ 
+-	commit = lookup_commit(sha1);
++	commit = lookup_commit(oid->hash);
+ 	if (!commit ||
+ 	    (commit->object.flags & TMP_MARK) ||
+ 	    parse_commit(commit))
+@@ -139,15 +139,15 @@ static int collect_one_reflog_ent(struct object_id *ooid, struct object_id *noid
+ 
+ 	if (revs->initial) {
+ 		revs->initial = 0;
+-		add_one_commit(ooid->hash, revs);
++		add_one_commit(ooid, revs);
+ 	}
+-	add_one_commit(noid->hash, revs);
++	add_one_commit(noid, revs);
+ 	return 0;
  }
  
--static void *lock_and_read_sha1_file(const unsigned char *sha1, enum object_type *type, unsigned long *size)
-+static void *lock_and_read_oid_file(const struct object_id *oid, enum object_type *type, unsigned long *size)
+ static int handle_fork_point(int argc, const char **argv)
  {
- 	void *data;
+-	unsigned char sha1[20];
++	struct object_id oid;
+ 	char *refname;
+ 	const char *commitname;
+ 	struct rev_collect revs;
+@@ -155,7 +155,7 @@ static int handle_fork_point(int argc, const char **argv)
+ 	struct commit_list *bases;
+ 	int i, ret = 0;
  
- 	grep_read_lock();
--	data = read_sha1_file(sha1, type, size);
-+	data = read_sha1_file(oid->hash, type, size);
- 	grep_read_unlock();
- 	return data;
- }
+-	switch (dwim_ref(argv[0], strlen(argv[0]), sha1, &refname)) {
++	switch (dwim_ref(argv[0], strlen(argv[0]), oid.hash, &refname)) {
+ 	case 0:
+ 		die("No such ref: '%s'", argv[0]);
+ 	case 1:
+@@ -165,16 +165,16 @@ static int handle_fork_point(int argc, const char **argv)
+ 	}
  
--static int grep_sha1(struct grep_opt *opt, const unsigned char *sha1,
-+static int grep_oid(struct grep_opt *opt, const struct object_id *oid,
- 		     const char *filename, int tree_name_len,
- 		     const char *path)
- {
-@@ -323,7 +323,7 @@ static int grep_sha1(struct grep_opt *opt, const unsigned char *sha1,
+ 	commitname = (argc == 2) ? argv[1] : "HEAD";
+-	if (get_sha1(commitname, sha1))
++	if (get_oid(commitname, &oid))
+ 		die("Not a valid object name: '%s'", commitname);
  
- #ifndef NO_PTHREADS
- 	if (num_threads) {
--		add_work(opt, GREP_SOURCE_SHA1, pathbuf.buf, path, sha1);
-+		add_work(opt, GREP_SOURCE_SHA1, pathbuf.buf, path, oid);
- 		strbuf_release(&pathbuf);
- 		return 0;
- 	} else
-@@ -332,7 +332,7 @@ static int grep_sha1(struct grep_opt *opt, const unsigned char *sha1,
- 		struct grep_source gs;
- 		int hit;
+-	derived = lookup_commit_reference(sha1);
++	derived = lookup_commit_reference(oid.hash);
+ 	memset(&revs, 0, sizeof(revs));
+ 	revs.initial = 1;
+ 	for_each_reflog_ent(refname, collect_one_reflog_ent, &revs);
  
--		grep_source_init(&gs, GREP_SOURCE_SHA1, pathbuf.buf, path, sha1);
-+		grep_source_init(&gs, GREP_SOURCE_SHA1, pathbuf.buf, path, oid);
- 		strbuf_release(&pathbuf);
- 		hit = grep_source(opt, &gs);
+-	if (!revs.nr && !get_sha1(refname, sha1))
+-		add_one_commit(sha1, &revs);
++	if (!revs.nr && !get_oid(refname, &oid))
++		add_one_commit(&oid, &revs);
  
-@@ -690,7 +690,7 @@ static int grep_cache(struct grep_opt *opt, const struct pathspec *pathspec,
- 			    ce_skip_worktree(ce)) {
- 				if (ce_stage(ce) || ce_intent_to_add(ce))
- 					continue;
--				hit |= grep_sha1(opt, ce->oid.hash, ce->name,
-+				hit |= grep_oid(opt, &ce->oid, ce->name,
- 						 0, ce->name);
- 			} else {
- 				hit |= grep_file(opt, ce->name);
-@@ -750,7 +750,7 @@ static int grep_tree(struct grep_opt *opt, const struct pathspec *pathspec,
- 		strbuf_add(base, entry.path, te_len);
- 
- 		if (S_ISREG(entry.mode)) {
--			hit |= grep_sha1(opt, entry.oid->hash, base->buf, tn_len,
-+			hit |= grep_oid(opt, entry.oid, base->buf, tn_len,
- 					 check_attr ? base->buf + tn_len : NULL);
- 		} else if (S_ISDIR(entry.mode)) {
- 			enum object_type type;
-@@ -758,7 +758,7 @@ static int grep_tree(struct grep_opt *opt, const struct pathspec *pathspec,
- 			void *data;
- 			unsigned long size;
- 
--			data = lock_and_read_sha1_file(entry.oid->hash, &type, &size);
-+			data = lock_and_read_oid_file(entry.oid, &type, &size);
- 			if (!data)
- 				die(_("unable to read tree (%s)"),
- 				    oid_to_hex(entry.oid));
-@@ -787,7 +787,7 @@ static int grep_object(struct grep_opt *opt, const struct pathspec *pathspec,
- 		       struct object *obj, const char *name, const char *path)
- {
- 	if (obj->type == OBJ_BLOB)
--		return grep_sha1(opt, obj->oid.hash, name, 0, path);
-+		return grep_oid(opt, &obj->oid, name, 0, path);
- 	if (obj->type == OBJ_COMMIT || obj->type == OBJ_TREE) {
- 		struct tree_desc tree;
- 		void *data;
-@@ -1152,11 +1152,11 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
- 	/* Check revs and then paths */
- 	for (i = 0; i < argc; i++) {
- 		const char *arg = argv[i];
--		unsigned char sha1[20];
-+		struct object_id oid;
- 		struct object_context oc;
- 		/* Is it a rev? */
--		if (!get_sha1_with_context(arg, 0, sha1, &oc)) {
--			struct object *object = parse_object_or_die(sha1, arg);
-+		if (!get_sha1_with_context(arg, 0, oid.hash, &oc)) {
-+			struct object *object = parse_object_or_die(oid.hash, arg);
- 			if (!seen_dashdash)
- 				verify_non_filename(prefix, arg);
- 			add_object_array_with_path(object, arg, &list, oc.mode, oc.path);
+ 	for (i = 0; i < revs.nr; i++)
+ 		revs.commit[i]->object.flags &= ~TMP_MARK;
 -- 
 2.11.0
 
