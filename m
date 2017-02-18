@@ -2,143 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DC397201A9
-	for <e@80x24.org>; Sat, 18 Feb 2017 01:29:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 29450201A9
+	for <e@80x24.org>; Sat, 18 Feb 2017 01:42:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752823AbdBRB3y (ORCPT <rfc822;e@80x24.org>);
-        Fri, 17 Feb 2017 20:29:54 -0500
-Received: from castro.crustytoothpaste.net ([75.10.60.170]:60358 "EHLO
-        castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1752527AbdBRB3x (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 17 Feb 2017 20:29:53 -0500
-Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 11AAF280AD;
-        Sat, 18 Feb 2017 01:29:47 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
-        s=default; t=1487381387;
-        bh=ARmn19rNBspm5bxRaAqIMfmBbq0wusLJy7WW1jIksRs=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=ZmQ+7HZkb1/jvALge014XUtA+HSXn2eXKa9XuhvpugQyA9IUaY/MIXAYjn13i+i7E
-         4baAMQnAx2UXuxn2tnGWskiZPXlkAEPk6lBbhZ5jfWBr3Mbm2SO2Uc5AQb18vFYLnk
-         zlQ4COvX1GOx0MdlX36WeuHUvXBSFoTVXjqPExIqNpebD0VxMxpBqGbC2IU10tfvoy
-         6M8BSk5Wj9znEXxihF4mpPhS93kaLrQ2lpzwOO70IUwuOM6XMxcvxxoePCib/nKWnn
-         Rswwqz/bEo3im8TZBADQGU0dtPvEni8bQm+csx8CVdijxK44DMd0Exy8TSRdWpX1dy
-         ZbPEf0tIEsxpl9aEdjbZmeX1QaQR0p1diOLhkYtp8I9ikaTKOfSVAiF6VzRW1TGsZs
-         tdJLs6OYfLBJUTL7kkLAHBvfUFkSnraV1MNB1b+empTjO+k8PE7N2RrCxGmTUkkFj3
-         61KihYuVViw4uWdyGGGYg96AEQp7gHCifZJJH0pLvFIHMn7pQag
-Date:   Sat, 18 Feb 2017 01:29:43 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Ramsay Jones <ramsay@ramsayjones.plus.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Michael Haggerty <mhagger@alum.mit.edu>,
+        id S1752912AbdBRBmV (ORCPT <rfc822;e@80x24.org>);
+        Fri, 17 Feb 2017 20:42:21 -0500
+Received: from cloud.peff.net ([104.130.231.41]:57902 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752597AbdBRBmV (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 Feb 2017 20:42:21 -0500
+Received: (qmail 7442 invoked by uid 109); 18 Feb 2017 01:42:20 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sat, 18 Feb 2017 01:42:20 +0000
+Received: (qmail 11230 invoked by uid 111); 18 Feb 2017 01:42:21 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 17 Feb 2017 20:42:21 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 17 Feb 2017 20:42:17 -0500
+Date:   Fri, 17 Feb 2017 20:42:17 -0500
+From:   Jeff King <peff@peff.net>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>,
         Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 16/19] sha1_file: introduce an nth_packed_object_oid
- function
-Message-ID: <20170218012942.gr5atoshytfa2f2u@genre.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>, git@vger.kernel.org,
-        Jeff King <peff@peff.net>, Michael Haggerty <mhagger@alum.mit.edu>,
-        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 02/19] builtin/diff-tree: convert to struct object_id
+Message-ID: <20170218014217.sil4jyukkbqguxfz@sigill.intra.peff.net>
 References: <20170218000652.375129-1-sandals@crustytoothpaste.net>
- <20170218000652.375129-17-sandals@crustytoothpaste.net>
- <fc5aff14-a047-1a51-c40c-8918098f1f59@ramsayjones.plus.com>
+ <20170218000652.375129-3-sandals@crustytoothpaste.net>
+ <3630da01-5af3-bc02-3a8c-1e3495512279@ramsayjones.plus.com>
+ <20170218012607.kdisudmmponvts35@genre.crustytoothpaste.net>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="fmtj6qwrslmsixw3"
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <fc5aff14-a047-1a51-c40c-8918098f1f59@ramsayjones.plus.com>
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.9.0-1-amd64)
-User-Agent: NeoMutt/20170113 (1.7.2)
+In-Reply-To: <20170218012607.kdisudmmponvts35@genre.crustytoothpaste.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Sat, Feb 18, 2017 at 01:26:07AM +0000, brian m. carlson wrote:
 
---fmtj6qwrslmsixw3
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> > > +	struct object_id oid;
+> > >  	struct tree *tree2;
+> > > -	if (len != 82 || !isspace(line[40]) || get_sha1_hex(line + 41, sha1))
+> > > +	const int chunksz = GIT_SHA1_HEXSZ + 1;
+> > > +	if (len != 2 * chunksz || !isspace(line[chunksz-1]) ||
+> > > +		get_sha1_hex(line + chunksz, oid.hash))
+> > 
+> > I'm not sure that this is an improvement. The input expected in 'line'
+> > is supposed to look like: '<sha1> + <space> + <sha1> + <\n>'. So your
+> > 'chunk' would be a <sha1> plus one 'char' of some sort. Except that the
+> > caller of this function has already replaced the newline character with
+> > a '\0' char (so strlen(line) would return 81), but still passes the
+> > original line length! Also, note that this (and other functions in this
+> > file) actually test for 'isspace(char)' rather than for a ' ' char!
+> > 
+> > Hmm, maybe just:
+> > 
+> > if (len < (2 * GIT_SHA1_HEXSZ + 1) || line[GIT_SHA1_HEXSZ] != ' ' ||
+> >     get_sha1_hex(line + GIT_SHA1_HEXSZ + 1, oid.hash))
+> > 
+> > (or, perhaps, still call isspace() in this patch ...)
+> 
+> Well, I think it's strictly an improvement in that we have avoided
+> writing hardcoded constants[0].  I did intend it as a "hash plus one"
+> chunk, which is actually quite common throughout the code.
+> 
+> I'm wondering if parse_oid_hex could be useful here as well.
 
-On Sat, Feb 18, 2017 at 01:24:34AM +0000, Ramsay Jones wrote:
->=20
->=20
-> On 18/02/17 00:06, brian m. carlson wrote:
-> > There are places in the code where we would like to provide a struct
-> > object_id *, yet read the hash directly from the pack.  Provide an
-> > nth_packed_object_oid function that is similar to the
-> > nth_packed_object_sha1 function.
-> >=20
-> > In order to avoid a potentially invalid cast, nth_packed_object_oid
-> > provides a variable into which to store the value, which it returns on
-> > success; on error, it returns NULL, as nth_packed_object_sha1 does.
-> >=20
-> > Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
-> > ---
-> >  cache.h     |  6 ++++++
-> >  sha1_file.c | 17 ++++++++++++++---
-> >  2 files changed, 20 insertions(+), 3 deletions(-)
-> >=20
-> > diff --git a/cache.h b/cache.h
-> > index e03a672d15..4f3bfc5ee7 100644
-> > --- a/cache.h
-> > +++ b/cache.h
-> > @@ -1608,6 +1608,12 @@ extern void check_pack_index_ptr(const struct pa=
-cked_git *p, const void *ptr);
-> >   * error.
-> >   */
-> >  extern const unsigned char *nth_packed_object_sha1(struct packed_git *=
-, uint32_t n);
-> > +/*
-> > + * Like nth_packed_object_oid, but write the data into the object spec=
-ified by
->                              ^^^
-> ... Like nth_packed_object_sha1, but ...
+I know I haven't looked at this chunk nearly as carefully as you have,
+but it seems somewhat crazy to me that these functions get the original
+"line" in the first place. Shouldn't they get line+40 from the caller
+(who in turn should be using parse_oid_hex to compute that)?
 
-Good catch.
+And then each function should subsequently parse left-to-right with
+a mix of isspace() and parse_oid_hex(), and probably doesn't even need
+to care about the original "len" at all (yes, you can quit early if you
+know your len isn't long enough, but that's the unusual error case
+anyway; it's not a big deal to find that out while parsing).
 
-> Having said that, if the intent is to eventually replace that function wi=
-th
-> the new nth_packed_object_oid(), then it is probably not a good idea to
-> describe this function in terms of the function it will obsolete. ;-)
+In general, I think this sort of left-to-right incremental pointer
+movement is safe and simple. There may be a few cases where it doesn't
+apply (i.e., where you need to look at the end of the string to know how
+to parse the beginning), but that should be relatively rare.
 
-I've chosen to define them that way for now, in the hopes that it will
-make them easier to use (as people are already familiar with the _sha1
-version).  When I remove nth_packed_object_sha1 eventually, I'll update
-the docstring so that the oid version is standalone.  I think I've
-already done that somewhere else before (although it may be in a patch
-that I haven't sent yet).
---=20
-brian m. carlson / brian with sandals: Houston, Texas, US
-+1 832 623 2791 | https://www.crustytoothpaste.net/~bmc | My opinion only
-OpenPGP: https://keybase.io/bk2204
+> [0] If we change the hash size, all of the GIT_SHA1_HEXSZ constants can
+> be replaced with a variable that varies based on hash size, and the code
+> still works.
 
---fmtj6qwrslmsixw3
-Content-Type: application/pgp-signature; name="signature.asc"
+I am happy to see fewer magic numbers. But I think with incremental
+pointer-movements, we don't even need to use the numeric constants,
+either. If one day we can parse "sha256:1234abcd..." as an oid, then the
+existing code would "just work".
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.1.18 (GNU/Linux)
-
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlino4YACgkQv1NdgR9S
-9ouuTA//Z7Yf6a6pCFwLkdVMQ2x9pe/yvx2YvhrwkvneadA1+rxLUhS22c7AIO7x
-L7KsWOtqANPHcsX4MUVNAHE+cahZaR8RPaUOdt0qTJUfqu8fB5VRGLMWRnl3fNEu
-652nVL0NN4nfqtOFS/UPIiGhWtJSEqDoQJkPWiFtCcFqo3CjjCXnJTzMInyit8Ge
-z+0sEZwY/PRVnvtbaoEdHS/w0nIvUSQwdpn7c1Diz9y8Z9KUyVm8VI/GSGskq2NL
-SWF1cryTZTUlIL/Vu0MiNRL5F1e8lkqx9IkS3j1YeWyVD7dj6E+UHRI2pRx3cCpm
-xPjX04b9uMlcyyZ32osAaM5PjqadYmMRniKa7QYIyNrAxOYozRNm1lZl534gF3Je
-q6gq40891vczHYXYjv7Qyk9C0Fq2n0obqogUu1ZS+TRpmmRLhaZotrvz15sFAKLM
-FOZAkz5eRJKZZP1Yj7di0BZmwV1S4wzk5LXuaeIcFjnjcz5954HVoot+ytYV1Mvh
-dycduiSvWfRxeOcJK166eEmeEWEilsJdlIsiNN/oEyKq7G9l0wXjisQTsJEoumdZ
-fNIyJJFWiuAdBNCV1Mx7tEVNFOv6b0uPRCD6HK6wH6Rug/g3CEzdJX3e8cheQ8Kf
-XKFAdGdwyECMkEEz3FdYQw3gIk8v7fTV5PpFbCp8ZLttTdBlMFo=
-=RYNT
------END PGP SIGNATURE-----
-
---fmtj6qwrslmsixw3--
+-Peff
