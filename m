@@ -2,94 +2,119 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,
+	STOX_REPLY_TYPE shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DF8A3201B0
-	for <e@80x24.org>; Sat, 18 Feb 2017 21:14:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B5B71201B0
+	for <e@80x24.org>; Sat, 18 Feb 2017 22:10:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754064AbdBRVO0 (ORCPT <rfc822;e@80x24.org>);
-        Sat, 18 Feb 2017 16:14:26 -0500
-Received: from mail-pf0-f196.google.com ([209.85.192.196]:34288 "EHLO
-        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753600AbdBRVOZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 18 Feb 2017 16:14:25 -0500
-Received: by mail-pf0-f196.google.com with SMTP id o64so6730440pfb.1
-        for <git@vger.kernel.org>; Sat, 18 Feb 2017 13:13:38 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=2c97YvaMbUe83S0mzxXNFy5HplWIH6d3qHZgvnSIRDU=;
-        b=U6Nz6OXzo2H7uKLmq7RFwDRX3tiaNkX4O3rYFTwrq8XHjpkpPA6x+prZCZRUKAxL0L
-         qJmDwVBUArWlUoGnseUTgAX3gZT0kWQpyYGhx05BXkWhzxPPM5OZA2vDsOs1fbpfC+oj
-         jqv1Xc/ZX5NdjLHevhiMy7OrbCW1z2D30xbIcDsk9HSC3EXV5yqwe+NG1rKSjEx4VORr
-         gVUldWqiB2vv3G1DVdD0WtR949XJhiYj3K4IplEEBZnsbXLt5FRdRPWbH215pLQaboti
-         R7e3D/WEwyOnG5dIbEif/rPOQB2fTv8tS3Fv9btlu7vaVurq9GkC4i4Y5CVMILggSf1c
-         1Otg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=2c97YvaMbUe83S0mzxXNFy5HplWIH6d3qHZgvnSIRDU=;
-        b=Chc980uP46hSJcKDa1lWGbObW+40fucedmxyRdsb0RqKvSgIf/3//lJ7oo/QL9nfw9
-         iv9V636RhAr5abI1Wu9HHsP2RruK5esj+9bvQaLMHGHSsgq3dDSd/75Ry9HNVayFLaxu
-         OJruY+UP5IMnk+4HAoiSQawkyRubMqbpd0r2gea+Hid8dmQt0zdYgp0edjxJ3UdRcJc2
-         dcjmVMDUvnoKzEA2lU2mYM/HtxZpch95fFRRBJN6rQMZDnNw20Gqt29j07S0MLg65yXt
-         k2JE9ypUYU92gOSVmPpAWXX1/mIhMHtL7NPxZKbQKdbdfUQGieghP05tf4Msscl2cVrw
-         MUHQ==
-X-Gm-Message-State: AMke39mph9WMopDPJVWqB+ShELTI88gW2jj2fA4UW9W4r4b37uXM/Ubl7PDIXKEuBOtNOQ==
-X-Received: by 10.84.248.11 with SMTP id p11mr20472746pll.72.1487450918893;
-        Sat, 18 Feb 2017 12:48:38 -0800 (PST)
-Received: from localhost ([2620:0:1000:8622:a885:1880:3813:e02])
-        by smtp.gmail.com with ESMTPSA id 66sm26763654pfx.29.2017.02.18.12.48.36
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Sat, 18 Feb 2017 12:48:36 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Jeff Hostetler <git@jeffhostetler.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        git@vger.kernel.org, Jeff Hostetler <jeffhost@microsoft.com>
-Subject: Re: [PATCH 0/5] A series of performance enhancements in the memihash and name-cache area
-References: <cover.1487071883.git.johannes.schindelin@gmx.de>
-        <20170214220332.753i4tgclm62er4f@sigill.intra.peff.net>
-        <16b1259c-4cdc-8f4d-db47-d724386a3d2b@jeffhostetler.com>
-        <xmqqo9y0m45e.fsf@gitster.mtv.corp.google.com>
-        <20170218062943.j2llxuuylqs2qemy@sigill.intra.peff.net>
-Date:   Sat, 18 Feb 2017 12:48:35 -0800
-In-Reply-To: <20170218062943.j2llxuuylqs2qemy@sigill.intra.peff.net> (Jeff
-        King's message of "Sat, 18 Feb 2017 01:29:43 -0500")
-Message-ID: <xmqqk28nmdi4.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+        id S1750792AbdBRWKH (ORCPT <rfc822;e@80x24.org>);
+        Sat, 18 Feb 2017 17:10:07 -0500
+Received: from smtp-out-6.talktalk.net ([62.24.135.70]:27565 "EHLO
+        smtp-out-6.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750746AbdBRWKG (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 18 Feb 2017 17:10:06 -0500
+Received: from PhilipOakley ([92.31.218.76])
+        by smtp.talktalk.net with SMTP
+        id fDCdc1bDigKstfDCdcSTzk; Sat, 18 Feb 2017 22:10:04 +0000
+X-Originating-IP: [92.31.218.76]
+X-Spam: 0
+X-OAuthority: v=2.2 cv=GdBVpkfL c=1 sm=1 tr=0 a=e6L6E7eW+5Nb7SO+DvSdIg==:117
+ a=e6L6E7eW+5Nb7SO+DvSdIg==:17 a=IkcTkHD0fZMA:10 a=EXqp801FARq2IAb0GIgA:9
+ a=QEXdDO2ut3YA:10
+Message-ID: <6545FDC46D2741A289D0D5E9A84ADD75@PhilipOakley>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From:   "Philip Oakley" <philipoakley@iee.org>
+To:     "Alex Hoffman" <spec@gal.ro>, "Johannes Sixt" <j6t@kdbg.org>
+Cc:     "Stephan Beyer" <s-beyer@gmx.net>, <git@vger.kernel.org>
+References: <CAMX8fZWe2HO78ySonHX0adtPUxVPbj5_vo-NUGrjwpb7gPdGrQ@mail.gmail.com> <d4991e4b-cbc4-da14-381a-88704e457a19@gmx.net> <3ff5ce3c-285f-cb9a-d1d4-46323524dab7@kdbg.org> <CAMX8fZVkBU6M8fkUcRr69V97_NTSOGGmPB1U-ObhmVv3i6wQhg@mail.gmail.com> <477d3533-d453-9499-e06e-72f45488d421@kdbg.org> <CAMX8fZW2y+iPRfSbXVcHufbM+CsqgekS_0WnCEJ++=njy_TvKg@mail.gmail.com>
+Subject: Re: Git bisect does not find commit introducing the bug
+Date:   Sat, 18 Feb 2017 22:10:05 -0000
+Organization: OPDS
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain;
+        format=flowed;
+        charset="utf-8";
+        reply-type=original
+Content-Transfer-Encoding: 7bit
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+X-CMAE-Envelope: MS4wfF88/zHud26FRknpaLUbXDAY4cHP+5XV1HFFxnEGyjcH/Y3cb1KFzX+kTyPPOsYS9vqUXUH1sJSdVEF5UqueOzjjSORVbe9EOUeZB+vNO5XtoOicupnw
+ UwCV7cLOVjFLgmhc0fCxoHZ473C+Bsjf2+7UhBsGS2n/UZf5uGExiVJoei5ctAOd6NTadjGQtNWCCHGUTDgojliPffAS0dHl4M/rampkIFZM1Ltr8E1UNv+B
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
-
-> On Fri, Feb 17, 2017 at 09:58:21PM -0800, Junio C Hamano wrote:
+From: "Alex Hoffman" <spec@gal.ro>
+>> But this is not how Git works. Git computes graph differences, i.e., it
+>> subtracts from the commits reachable from v.bad those that are reachable
+>> from v.good. This leaves more than just those on some path from v.good to
+>> v.bad. And it should work this way. Consider this history:
+>>
+>> --o--o--o--G--X
+>>    \           \
+>>     x--x--x--x--X--B--
+>>
+>> When you find B bad and G good, than any one of the x or X may have
+>> introduced the breakage, not just one of the X.
+>>
 >
->> Jeff Hostetler <git@jeffhostetler.com> writes:
->> 
->> > I'll try to put together a before/after perf-test to better
->> > demonstrate this.
->> 
->> I didn't pick up the series while watching these exchanges, as I
->> didn't know how quick your turnaround would be, but now a few days
->> have passed.  Just to make sure we won't forget this topic, I'll
->> pick up these 5 patches in the meantime.
+> Thank you for clarifying how git bisect works. How did you find that
+> out? Did you check the source code? If that is not documented in the
+> man page may be it worth documenting it in order to avoid future
+> confusion for other users.
+
+Any suggestions for improving the documentation are always worthwhile. As 
+someone who asked, what extra info would have helped?
+
+Even beetter if it looks like a patch ;-)
+
 >
-> Yeah, to be clear my question was not an objection, but mostly
-> curiosity and interest.
-
-Yes, it was very clear that it wasn't an objection.
-
-But the other Jeff sounded like a follow-up was to follow shortly if
-not imminent so I decided to allocate my time on other topics still
-only on the list first while waiting to see what happens.
+> Let's consider your example with distinct names for nodes:
+>
+> --o1--o2--o3--G--X1
+>    \                \
+>     x1--x2--x3--x4--X1--B--
+>
+> It makes sense that git bisect is expecting a single transition, as
+> this is a precondition for a binary search to work. My definition of
+> "the transition" is a commit with at least one of its parents as a
+> good version, but the commit itself a bad version. I hope we agree
+> that git bisect's mission is to search for this transition (as I
+> suppose that most of people need such a functionality from git, if not
+> exactly from git bisect). How could be x1 or x3 be the transition, if
+> chances are that o1 is not a good version? Of course it would make
+> sense to me if bisect would check o1 whether good and only then to
+> check also x1-x3, but this is not what git makes (at least not in my
+> initial example).
+>
+> If you consider that git bisect's mission is different from finding
+> the transition, could you please explain what exact commit git bisect
+> is supposed to return (ideally with terms from the graph theory) and
+> when it makes sense to return that? Because I do not see any sense in
+> looking in the path x1-x3 without knowing that those commits may be a
+> transition.
+>
+>
+>> Oh, IMO git bisect was well thought through. If it considered just paths
+>> from good to bad, it would not given the correct answer. See the example
+>> history above. Bisect authors would not have deemed that sufficiently 
+>> good
+>
+> You definitely convinced me that git MUST search more than only in the
+> paths between good and bad commits, as the good commit G does not have
+> to be the first good commit (thank you for that). My problem/confusion
+> is that it returns something that does not make sense to me, because
+> it does not make sure it returns a transition.
+>
+> VG
+>
+> PS: thank you for continuing this discussion.
+>
+--
+Philip 
 
