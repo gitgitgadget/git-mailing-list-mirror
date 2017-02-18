@@ -2,142 +2,117 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,
+	STOX_REPLY_TYPE shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CE59D201A8
-	for <e@80x24.org>; Sat, 18 Feb 2017 11:19:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DFCD8201A8
+	for <e@80x24.org>; Sat, 18 Feb 2017 11:49:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752358AbdBRLPR (ORCPT <rfc822;e@80x24.org>);
-        Sat, 18 Feb 2017 06:15:17 -0500
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:35468 "EHLO
-        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751166AbdBRLPQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 18 Feb 2017 06:15:16 -0500
-Received: by mail-wm0-f66.google.com with SMTP id u63so6455101wmu.2
-        for <git@vger.kernel.org>; Sat, 18 Feb 2017 03:15:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gal-ro.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=/qN1qwGcjYOcB2aVntuQfy/AOzWXBVU5hEZ1FvYVRkk=;
-        b=YNRZB1n4QmUQtj5ERhF9MaaNsWszSgbo6JEsctMwPsritdeoJWPm+YEpWfVM+RYK0J
-         vIucp+vAPeyAwNqWFehJcsd0yBMQWt8esnsn9b1C3jZUqoP0WnjGykONUgXO+Bw8LKaP
-         hb8RhfJqHUXcJ/iEAYzsG4Yc26vvV3c0izU2PsdG3O5/Q2H/J8FkH57M0I2od9r5O/5G
-         xy72XBtERE1Bz4pqSnKMNM4LP+p54936PsP+LftZCUCiEMlNcEyHlwezR48PpHObGEmA
-         SFkyiIPTcY1cX84YCzYqmU9t49H8tv9JQyNWP4C6PcQ7RMcdsLqIys6yuRBdepnUAJhF
-         rKDw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=/qN1qwGcjYOcB2aVntuQfy/AOzWXBVU5hEZ1FvYVRkk=;
-        b=Zp3GACaqwZ2wMMtXqi/1trvHBp6pbyBP232YYiFfZqS/+4SYBWhKbZ7Ya/1qVBQY2P
-         0kL1HTAWeyBeukwAWCtqYhDyPsTvdhVOWs55S7DX0aCmHzU5PCHbf2a+9eBRSZtwDRh7
-         Xl8Mosg8vjgNfex9hm2vVD8Tzeo7cmw4SpyobuGUeYMO3E86JdvXoTJ4tWvKKOLog30e
-         4EKPJT1P3FCbx69HKeVv8ou0wX7p4m0lhmaP+jWiwswJVVbx5T3a6QCmGDrGTbVT+1ku
-         BWzVHHNG9aQOuBLMAU3qOtUtw1ssUIZJvLPjvh6EFTn390tn8C/n1xzB4suAs+7VQ5ps
-         nLHQ==
-X-Gm-Message-State: AMke39leJ7emDX0s8t5ap7oxDop00BnSQxi0ZkxGTSNddvy5eNP3sAlVSbLonpXeQEPOaIWDZS7Jxwim7OgFNA==
-X-Received: by 10.28.186.197 with SMTP id k188mr8630787wmf.25.1487416513913;
- Sat, 18 Feb 2017 03:15:13 -0800 (PST)
+        id S1752074AbdBRLt2 (ORCPT <rfc822;e@80x24.org>);
+        Sat, 18 Feb 2017 06:49:28 -0500
+Received: from smtp-out-3.talktalk.net ([62.24.135.67]:45770 "EHLO
+        smtp-out-3.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751162AbdBRLt1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 18 Feb 2017 06:49:27 -0500
+Received: from PhilipOakley ([92.31.218.76])
+        by smtp.talktalk.net with SMTP
+        id f3W0cpyxwxR4bf3W0c42lh; Sat, 18 Feb 2017 11:49:25 +0000
+X-Originating-IP: [92.31.218.76]
+X-Spam: 0
+X-OAuthority: v=2.2 cv=JNN5iICb c=1 sm=1 tr=0 a=e6L6E7eW+5Nb7SO+DvSdIg==:117
+ a=e6L6E7eW+5Nb7SO+DvSdIg==:17 a=8nJEP1OIZ-IA:10 a=ybZZDoGAAAAA:8
+ a=xtxXYLxNAAAA:8 a=uPZiAMpXAAAA:8 a=XBZPwp8dKfLoi_RSh9AA:9 a=wPNLvfGTeEIA:10
+ a=0RhZnL1DYvcuLYC8JZ5M:22 a=xts0dhWdiJbonKbuqhAr:22 a=svzibyHiZmA4t4YY0eFS:22
+Message-ID: <D4A69FDAB8BD4D0080108611B61E5EF8@PhilipOakley>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From:   "Philip Oakley" <philipoakley@iee.org>
+To:     "Junio C Hamano" <gitster@pobox.com>
+Cc:     "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+        "Christian Couder" <christian.couder@gmail.com>,
+        <git-for-windows@googlegroups.com>, "git" <git@vger.kernel.org>
+References: <alpine.DEB.2.20.1702101241210.3496@virtualbox><xmqq60kdbqmy.fsf@gitster.mtv.corp.google.com><alpine.DEB.2.20.1702142150220.3496@virtualbox><xmqqd1ek8oqo.fsf@gitster.mtv.corp.google.com><CAP8UFD1+AgBVqSh=wHteM3uKO+55ZqqD4cHzBUfN0KTPXyvutQ@mail.gmail.com><E2C1B7A8FBF94C8CB1C9C5754D882800@PhilipOakley><alpine.DEB.2.20.1702151509251.3496@virtualbox><77C7E23E18774409AA1818B12C844985@PhilipOakley> <xmqq60kb0ywi.fsf@gitster.mtv.corp.google.com>
+Subject: Re: [git-for-windows] Re: Continuous Testing of Git on Windows
+Date:   Sat, 18 Feb 2017 11:49:25 -0000
+Organization: OPDS
 MIME-Version: 1.0
-Received: by 10.28.226.6 with HTTP; Sat, 18 Feb 2017 03:15:13 -0800 (PST)
-X-Originating-IP: [77.178.91.90]
-In-Reply-To: <3ff5ce3c-285f-cb9a-d1d4-46323524dab7@kdbg.org>
-References: <CAMX8fZWe2HO78ySonHX0adtPUxVPbj5_vo-NUGrjwpb7gPdGrQ@mail.gmail.com>
- <d4991e4b-cbc4-da14-381a-88704e457a19@gmx.net> <3ff5ce3c-285f-cb9a-d1d4-46323524dab7@kdbg.org>
-From:   Alex Hoffman <spec@gal.ro>
-Date:   Sat, 18 Feb 2017 12:15:13 +0100
-X-Google-Sender-Auth: bwY9YjSIl_AB_4117H_Iaa4ALWs
-Message-ID: <CAMX8fZVkBU6M8fkUcRr69V97_NTSOGGmPB1U-ObhmVv3i6wQhg@mail.gmail.com>
-Subject: Re: Git bisect does not find commit introducing the bug
-To:     Johannes Sixt <j6t@kdbg.org>
-Cc:     Stephan Beyer <s-beyer@gmx.net>, git@vger.kernel.org
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain;
+        format=flowed;
+        charset="iso-8859-1";
+        reply-type=original
+Content-Transfer-Encoding: 7bit
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+X-CMAE-Envelope: MS4wfPNZcvkaxZHdaDCPs2owCd6vuBHIkdHNVDF6Ka/vlFfX73PUPP1wAssBVBelF/ibMXvE8tw9k4mupnd4wVW8G8WbCMFjW5kSIcGK1BTNPE7cZgG5Rrzl
+ 084x/B984wIEkb6vTQoXagOuQ57zmbqkMQ1V4dhBUa2qarATZ8vI49QZdW0iGuOxK4NXH/3LAAfu9xxkghtO7YI1XcT6a8pjiGg1zFPpStf6+D19/8dqOjiw
+ Iq9Cdie0BFXWYc7NoRhgHw9CzkC1rwVIYmZdQYIc0ifGTEdj3JrlU7n6hki0zg3uBgLMPP7zi5OjUUF+zottEw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
->> First of all this is confusing, as this commit cannot be reached
->> starting from "v.good".
-
-> Hm, IMHO it shows that your example is pretty artificial (although you
-> might have come across it in a real-world scenario): you introduced a
-> new feature in f4154e9 (and it worked) and you broke that feature by
-> making the merge 671cec2. However, the feature (that broke in 671cec2)
-> did not even exist in 04c6f4b; so a test on the feature would not fail
-> (leading to "bisect bad" as in the example), it would not exist (leading
-> to "bisect skip").
-
-No one commented the fact, that I find this very confusing. Don't you
-find this confusing? I will underline, that 'git bisect good v.good'
-will fail if the commit 'v.good' is not a parent of the bad commit,
-meaning there MUST be at least a path between 'v.good' and 'v.bad',
-thus I would expect it looks on this path ONLY. Beside that, this is
-what I understand by 'binary search' (to search on this commit path).
-You might find this example artificial, but I doubt git is/was
-intentionally designed to work with  'natural' examples only (no
-matter how you define 'natural' and 'artificial').
-
-
-
->> In other words: bisect assumes that your repo is usually in a good state
->> and you have a commit that changes it to a bad state. In your case you
->> have a repo that is in a bad state and you have a commit that switches
->> it to a good state and later you merge a bad-state branch and you have a
->> bad state again. It is not made for that use-case, I think.
-
-> Correct. The assumption of bisection is that there is only one transition between GOOD and BAD. By violating that assumption, anything can happen.
-
-I did not find that in the manpage or did I miss it? Why would someone
-assume that the commit graph looks in a certain way? I assume, that
-'git bisect' was not thought through and that it considers the first
-directed path between v.good and v.bad, instead of all paths (in my
-example graph there are two such paths). I will also underline that
-git bisect was designed to work with multiple good commits and one bad
-commit (also multiple paths), but probably NOT with multiple paths
-between the same pair of good and bad commits.
-
-VG
-
-
-2017-02-18 10:12 GMT+01:00 Johannes Sixt <j6t@kdbg.org>:
-> Am 18.02.2017 um 00:21 schrieb Stephan Beyer:
->>
->> On 02/17/2017 11:29 PM, Alex Hoffman wrote:
->> *   7a9e952 (bisect bad) <BAD>
->> |\
->> | *   671cec2 <BAD> <--- expected
->> | |\
->> | * | 04c6f4b <BAD> <--- found
->> * | |   3915157 <GOOD>
->> |\ \ \
->> | | |/
->> | |/|
->> | * | f4154e9 (bisect good) <GOOD>
->> | * | 85855bf <BAD>
->> | |/
->> * | f1a36f5 <BAD>
->> |/
->> * 1b7fb88 <BAD>
->>
->> The <BAD> and <GOOD> markers are set by your definition of what good and
->> what bad commits are.
->>
->> [...]
->> In other words: bisect assumes that your repo is usually in a good state
->> and you have a commit that changes it to a bad state. In your case you
->> have a repo that is in a bad state and you have a commit that switches
->> it to a good state and later you merge a bad-state branch and you have a
->> bad state again. It is not made for that use-case, I think.
+From: "Junio C Hamano" <gitster@pobox.com>
+Sent: Thursday, February 16, 2017 12:20 AM
+> "Philip Oakley" <philipoakley@iee.org> writes:
 >
+>> It may even be worth 'splitting' the pu branch sequence into the
+>> existing pu (with merges from series that are selected as reasonable),
+>> and then a pr branch (public review?) on top of that holding the rest
+>> of the series that have been submitted, so that the CI can do a full
+>> test on the tips of them to support those devs with limited test
+>> capability.
 >
-> Correct. The assumption of bisection is that there is only one transition
-> between GOOD and BAD. By violating that assumption, anything can happen.
+> I won't stop you from publishing such a pr branch yourself.
+
+But would others see it?... (rhetorical, better thoughts below))
+
 >
-> -- Hannes
+> For patches whose merit is not clear because the problem they try to
+> solve is under-explained, whose solution is ill-designed, etc., IOW,
+> with issues that makes me judge that they are not interesting enough
+> for 'pu',
+
+It is reasonble that that a project's integrator is able to make these 
+decisions. For some projects they may have a layered approach of descisions 
+which does allow the gradations for the submitted feature series.
+
+Some of this does fall into dscho's differentiation between those patch 
+series that should pass the CI (continuous integration) testing, and those 
+that are there for CT (continuous testing) feedback. This could either be an 
+extra branch marking the transition, or a named commit similar to the 
+"pu^{/^### match next}", etc. In some ways it is similar to my 'pr' 
+suggestion, without the inclusion of the 'all and sundry' series.
+
+For for integrators who are willing/want to recieve any/all contributions 
+for public view (usually those for projects of a more lenient and less 
+critical variety), then even the CT grouping could then have those 
+additional pr submissions. For Git, you provide that that 'voice of reason' 
+for gatekeeping the pu branch.
+
+
+> it is not worth my time to deal with whitespace brekages
+> in them to make them not even apply, to figure out what base the
+> patches are meant to apply to, or to resolve conflicts caused by
+> them with topics already in flight, etc.
 >
+If a centralised CT service was available to the project, maybe via the 
+GitHub PR process (which isn't curently used by the project) then is may be 
+a way of allowing the 'all and sundry' contributors to get their ideas upto 
+a basic level before even bothering yourself (because PRs do not trouble 
+you).
+
+It may need an extra gatekeeper between the passing patches (PRs) and auto 
+submission  (the Heroku script thingy) which could flood the list with with 
+inane changes - one only has to look at the 
+http://stackoverflow.com/questions/tagged/git stream to see that.
+
+At least if there was a break point within pu that allowed differentiation 
+between the series that should fit a CI view, and those that are still at 
+the CT stage, then that may help.
+
+Thanks
+
+Philip.
+
