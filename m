@@ -6,167 +6,132 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B921D201A9
-	for <e@80x24.org>; Sat, 18 Feb 2017 00:07:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1D7FE201A9
+	for <e@80x24.org>; Sat, 18 Feb 2017 00:07:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751215AbdBRAHC (ORCPT <rfc822;e@80x24.org>);
-        Fri, 17 Feb 2017 19:07:02 -0500
-Received: from castro.crustytoothpaste.net ([75.10.60.170]:60000 "EHLO
+        id S1750938AbdBRAHB (ORCPT <rfc822;e@80x24.org>);
+        Fri, 17 Feb 2017 19:07:01 -0500
+Received: from castro.crustytoothpaste.net ([75.10.60.170]:59994 "EHLO
         castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1750788AbdBRAHA (ORCPT
+        by vger.kernel.org with ESMTP id S1750772AbdBRAHA (ORCPT
         <rfc822;git@vger.kernel.org>); Fri, 17 Feb 2017 19:07:00 -0500
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id A9BA3280AF;
+        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 4BA8F280AD;
         Sat, 18 Feb 2017 00:06:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
         s=default; t=1487376418;
-        bh=kMHhi8wEwX8KTal1Bz0WEqvRD7ABzyfgEe+0i+0XRBk=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=dpFOhv975H3WFQ9bNUywHIQqfKesjSkbPu9KywRvFTz0RXtQ2TPemPVevhXlsJa3I
-         QjUqZyUfdKtpYFgrQz9Rkir24NYQcXqtcGe2WWsqxT0Wv69uEfZ5nAwYCrTxiRAPv+
-         5nGVEKYGdQY6qYcYEgKQUvtl05olLc491lugJvPCVcf0ennQ1z2FTLW1ozVl1tozRY
-         VyCFf6V53pXy/GXCJJ2srbCAEFiFHAJHR4q7sbBLb8Fyh344F0bkds3c81YNSYcAZb
-         SKGHa8IyJu8LlFHolrTcjzfr4EEk4FwiVxU6fbf7B0xzrqyDdxyH6uG6TOw61W1SKn
-         yd33bfmP2BOCiowgO2S+0UUNcxF5iECnrnWfo2Ftqo+YOhIc6Bo2ngjsjPfxS50os6
-         bvlxdtpawXv7q+gZhTiHuw/aHJ9mzTbul6CsoUggyvflu3LZUg1gcnfiw2Y4lVmnOe
-         d2eRjGCt0WQAUU/VyHvcp9YiC0Z0OWFGyAAvkFje9HpFpjHrRcu
+        bh=7hlrxWZ+4P9MAoeVcdtC/zKaIMWObdIIoRqvnx4RkUk=;
+        h=From:To:Cc:Subject:Date:From;
+        b=EjfffCNv3ZGCdWz3A6CO6d1FAirpDxgL+cQfp+onpfhA5cyRSnzBz5uciV2qreA+q
+         MEQXsrXgnLFuFJ9jDXofZZykTJ24IdaG9qf8paMyBUl05FUwwTNC71kSViZwtRmkXk
+         P4+J7gV338XDqYWrg8dy0EjesxFqu00DYEcBHTqfkU9CXcGDDHYLZ3UrxKtpIT14qN
+         xBrHeaThvlCi9OmHTTr/jZruOQwbaA87bjZsKQlxSWoC5UZsaVAicyTo46gacu10vD
+         FqPgTIfAhEmLi2Woqy5S7PnvTR5vB3HxSEl4ZOjMKjg1m0HP/EHeQaLsSVLwSZ/UJ2
+         +ZW3dwb1kRZrjHwr0dffIb/BxRuQNSMiA9kiwZqm4+2wgdc6T24sFzFstuYuge92Tj
+         BNV+nZ+XnuyXDnaKxQQFYF4lKZitjub1h61VaO8xyGKYbc/w2ejhmWHfMd58sU0ymA
+         HW4sdoTyhlJQFf8zxztcjMPYHbyb55UPF3D5znmRjo+tJ38yhGS
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     Jeff King <peff@peff.net>, Michael Haggerty <mhagger@alum.mit.edu>,
         Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v3 02/19] builtin/diff-tree: convert to struct object_id
-Date:   Sat, 18 Feb 2017 00:06:35 +0000
-Message-Id: <20170218000652.375129-3-sandals@crustytoothpaste.net>
+Subject: [PATCH v3 00/19] object_id part 6
+Date:   Sat, 18 Feb 2017 00:06:33 +0000
+Message-Id: <20170218000652.375129-1-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.11.0
-In-Reply-To: <20170218000652.375129-1-sandals@crustytoothpaste.net>
-References: <20170218000652.375129-1-sandals@crustytoothpaste.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Convert most leaf functions to struct object_id.  Rewrite several
-hardcoded numbers in terms of GIT_SHA1_HEXSZ, using an intermediate
-variable where that makes sense.
+This is another series in the continuing conversion to struct object_id.
 
-Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
----
- builtin/diff-tree.c | 38 ++++++++++++++++++++------------------
- 1 file changed, 20 insertions(+), 18 deletions(-)
+This series converts more of the builtin directory and some of the refs
+code to use struct object_id. Additionally, it implements an
+nth_packed_object_oid function which provides a struct object_id version
+of the nth_packed_object function, and a parse_oid_hex function that
+makes parsing easier.
 
-diff --git a/builtin/diff-tree.c b/builtin/diff-tree.c
-index 8ce00480cd..1f1573bb2a 100644
---- a/builtin/diff-tree.c
-+++ b/builtin/diff-tree.c
-@@ -7,9 +7,9 @@
- 
- static struct rev_info log_tree_opt;
- 
--static int diff_tree_commit_sha1(const unsigned char *sha1)
-+static int diff_tree_commit_sha1(const struct object_id *oid)
- {
--	struct commit *commit = lookup_commit_reference(sha1);
-+	struct commit *commit = lookup_commit_reference(oid->hash);
- 	if (!commit)
- 		return -1;
- 	return log_tree_commit(&log_tree_opt, commit);
-@@ -18,22 +18,22 @@ static int diff_tree_commit_sha1(const unsigned char *sha1)
- /* Diff one or more commits. */
- static int stdin_diff_commit(struct commit *commit, char *line, int len)
- {
--	unsigned char sha1[20];
--	if (isspace(line[40]) && !get_sha1_hex(line+41, sha1)) {
-+	struct object_id oid;
-+	if (isspace(line[GIT_SHA1_HEXSZ]) && !get_oid_hex(line+GIT_SHA1_HEXSZ+1, &oid)) {
- 		/* Graft the fake parents locally to the commit */
--		int pos = 41;
-+		int pos = GIT_SHA1_HEXSZ + 1;
- 		struct commit_list **pptr;
- 
- 		/* Free the real parent list */
- 		free_commit_list(commit->parents);
- 		commit->parents = NULL;
- 		pptr = &(commit->parents);
--		while (line[pos] && !get_sha1_hex(line + pos, sha1)) {
--			struct commit *parent = lookup_commit(sha1);
-+		while (line[pos] && !get_oid_hex(line + pos, &oid)) {
-+			struct commit *parent = lookup_commit(oid.hash);
- 			if (parent) {
- 				pptr = &commit_list_insert(parent, pptr)->next;
- 			}
--			pos += 41;
-+			pos += GIT_SHA1_HEXSZ + 1;
- 		}
- 	}
- 	return log_tree_commit(&log_tree_opt, commit);
-@@ -42,11 +42,13 @@ static int stdin_diff_commit(struct commit *commit, char *line, int len)
- /* Diff two trees. */
- static int stdin_diff_trees(struct tree *tree1, char *line, int len)
- {
--	unsigned char sha1[20];
-+	struct object_id oid;
- 	struct tree *tree2;
--	if (len != 82 || !isspace(line[40]) || get_sha1_hex(line + 41, sha1))
-+	const int chunksz = GIT_SHA1_HEXSZ + 1;
-+	if (len != 2 * chunksz || !isspace(line[chunksz-1]) ||
-+		get_sha1_hex(line + chunksz, oid.hash))
- 		return error("Need exactly two trees, separated by a space");
--	tree2 = lookup_tree(sha1);
-+	tree2 = lookup_tree(oid.hash);
- 	if (!tree2 || parse_tree(tree2))
- 		return -1;
- 	printf("%s %s\n", oid_to_hex(&tree1->object.oid),
-@@ -60,15 +62,15 @@ static int stdin_diff_trees(struct tree *tree1, char *line, int len)
- static int diff_tree_stdin(char *line)
- {
- 	int len = strlen(line);
--	unsigned char sha1[20];
-+	struct object_id oid;
- 	struct object *obj;
- 
- 	if (!len || line[len-1] != '\n')
- 		return -1;
- 	line[len-1] = 0;
--	if (get_sha1_hex(line, sha1))
-+	if (get_oid_hex(line, &oid))
- 		return -1;
--	obj = parse_object(sha1);
-+	obj = parse_object(oid.hash);
- 	if (!obj)
- 		return -1;
- 	if (obj->type == OBJ_COMMIT)
-@@ -76,7 +78,7 @@ static int diff_tree_stdin(char *line)
- 	if (obj->type == OBJ_TREE)
- 		return stdin_diff_trees((struct tree *)obj, line, len);
- 	error("Object %s is a %s, not a commit or tree",
--	      sha1_to_hex(sha1), typename(obj->type));
-+	      oid_to_hex(&oid), typename(obj->type));
- 	return -1;
- }
- 
-@@ -141,7 +143,7 @@ int cmd_diff_tree(int argc, const char **argv, const char *prefix)
- 		break;
- 	case 1:
- 		tree1 = opt->pending.objects[0].item;
--		diff_tree_commit_sha1(tree1->oid.hash);
-+		diff_tree_commit_sha1(&tree1->oid);
- 		break;
- 	case 2:
- 		tree1 = opt->pending.objects[0].item;
-@@ -164,9 +166,9 @@ int cmd_diff_tree(int argc, const char **argv, const char *prefix)
- 			opt->diffopt.setup |= (DIFF_SETUP_USE_SIZE_CACHE |
- 					       DIFF_SETUP_USE_CACHE);
- 		while (fgets(line, sizeof(line), stdin)) {
--			unsigned char sha1[20];
-+			struct object_id oid;
- 
--			if (get_sha1_hex(line, sha1)) {
-+			if (get_oid_hex(line, &oid)) {
- 				fputs(line, stdout);
- 				fflush(stdout);
- 			}
+The patch to use parse_oid_hex in the refs code has been split out into
+its own patch, just because I'm wary of that code and potentially
+breaking things, and I want it to be easy to revert in case things go
+wrong.  I have no reason to believe it is anything other than fully
+functional, however.
+
+The conflicts in pu with v2 are probably still present, but I expect the
+resolution should be easy (and I suspect Junio uses git rerere, so they'll be
+even easier).
+
+Changes from v2:
+* Fix misnamed function in commit message.
+* Improve parameter name of parse_oid_hex.
+* Improve docstring of parse_oid_hex.
+* Remove needless variable.
+* Rebase on master.
+
+Changes from v1:
+* Implement parse_oid_hex and use it.
+* Make nth_packed_object_oid take a variable into which to store the
+  object ID.  This avoids concerns about unsafe casts.
+* Rebase on master.
+
+brian m. carlson (19):
+  builtin/commit: convert to struct object_id
+  builtin/diff-tree: convert to struct object_id
+  builtin/describe: convert to struct object_id
+  builtin/fast-export: convert to struct object_id
+  builtin/fmt-merge-message: convert to struct object_id
+  builtin/grep: convert to struct object_id
+  builtin/branch: convert to struct object_id
+  builtin/clone: convert to struct object_id
+  builtin/merge: convert to struct object_id
+  Convert remaining callers of resolve_refdup to object_id
+  builtin/replace: convert to struct object_id
+  reflog-walk: convert struct reflog_info to struct object_id
+  refs: convert each_reflog_ent_fn to struct object_id
+  hex: introduce parse_oid_hex
+  refs: simplify parsing of reflog entries
+  sha1_file: introduce an nth_packed_object_oid function
+  Convert object iteration callbacks to struct object_id
+  builtin/merge-base: convert to struct object_id
+  wt-status: convert to struct object_id
+
+ builtin/branch.c        |  26 +++++-----
+ builtin/cat-file.c      |   8 +--
+ builtin/clone.c         |  10 ++--
+ builtin/commit.c        |  46 ++++++++---------
+ builtin/count-objects.c |   4 +-
+ builtin/describe.c      |  50 +++++++++---------
+ builtin/diff-tree.c     |  38 +++++++-------
+ builtin/fast-export.c   |  58 ++++++++++-----------
+ builtin/fmt-merge-msg.c |  70 ++++++++++++-------------
+ builtin/fsck.c          |  40 +++++++--------
+ builtin/grep.c          |  24 ++++-----
+ builtin/merge-base.c    |  30 +++++------
+ builtin/merge.c         | 134 ++++++++++++++++++++++++------------------------
+ builtin/notes.c         |  18 +++----
+ builtin/pack-objects.c  |   6 +--
+ builtin/prune-packed.c  |   4 +-
+ builtin/prune.c         |   8 +--
+ builtin/receive-pack.c  |   4 +-
+ builtin/reflog.c        |   2 +-
+ builtin/replace.c       | 112 ++++++++++++++++++++--------------------
+ cache.h                 |  19 ++++++-
+ hex.c                   |   8 +++
+ reachable.c             |  30 +++++------
+ ref-filter.c            |   4 +-
+ reflog-walk.c           |  26 +++++-----
+ refs.c                  |  24 ++++-----
+ refs.h                  |   2 +-
+ refs/files-backend.c    |  29 ++++++-----
+ revision.c              |  12 ++---
+ sha1_file.c             |  27 +++++++---
+ sha1_name.c             |   2 +-
+ transport.c             |   4 +-
+ wt-status.c             |  52 +++++++++----------
+ 33 files changed, 483 insertions(+), 448 deletions(-)
+
 -- 
 2.11.0
 
