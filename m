@@ -6,39 +6,39 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 19508201A9
-	for <e@80x24.org>; Sat, 18 Feb 2017 00:07:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AED2F201A9
+	for <e@80x24.org>; Sat, 18 Feb 2017 00:07:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751525AbdBRAHF (ORCPT <rfc822;e@80x24.org>);
-        Fri, 17 Feb 2017 19:07:05 -0500
-Received: from castro.crustytoothpaste.net ([75.10.60.170]:60056 "EHLO
+        id S1751801AbdBRAHN (ORCPT <rfc822;e@80x24.org>);
+        Fri, 17 Feb 2017 19:07:13 -0500
+Received: from castro.crustytoothpaste.net ([75.10.60.170]:60046 "EHLO
         castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1750772AbdBRAHC (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 17 Feb 2017 19:07:02 -0500
+        by vger.kernel.org with ESMTP id S1751616AbdBRAHG (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 17 Feb 2017 19:07:06 -0500
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id E85DA280B4;
+        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id B70A1280B3;
         Sat, 18 Feb 2017 00:06:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
         s=default; t=1487376419;
-        bh=HScHg5Pr4wKDj6iQBgn0ByY3R9AUuGvZNAneuu2D6xk=;
+        bh=CVzshxDk2+Z+rp/+LfzPUSQSemXELl8DbRLn/Kwpi20=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=Xm+t3LScR9MR7GGbm21QF0+1+J5hauxjxROQ4TI9AFoSvU06PzlDEsEcPhVHDGipf
-         hnJXl+kCYDw30+umJ2keO9lSm93WniidAnAqXW4uPp40luxro4JjEx7sluBTjX5zjB
-         +cl6rlMchgK+k6h34HHBb5EiSicO6BhTRPjmSOz6mvilP5kI/adUNByKV1LQVj8xuZ
-         oITDN+9hWAoUc/jtZ6Dh7aNkrqlJDExojuXxumfz5ptNy1x8utHY7OH0deCaJkRZig
-         cqLqqU7hEZhAHY16Gnid2n7hZZfrx7dqimXAQK9f+ZDtWtWQIHP3JCODtnCraydxaW
-         rEwiTgGV9obwhhL1+/IJkg6H0qLGbgWyshNwoX8AXWaqWwwsGQSmZ/mWE3osh1UW4f
-         sF8ZrmM7ISXQMUuJcOsJdsZK+6LBkQMz7YfzQyT66LM9Cc6LCzMD+sFA4NpHgZ3Baz
-         zjBNv8b8XXnHIlpDQaNhrMzcbOQoEE+Uk7iTZXffJd/V88Uw3d0
+        b=tCrWyRgma0+1VNrOIQ4cG8vWNx6si3nRbqZ2vjBODEuEv4z/Fw0968zJ45ouAAGng
+         NQNuqVgEZ6/aT0/ITv7MNVf/iZjiWnak7PgI8FFxMvt8pSmu06HtMhZ3yrTroELNMw
+         +hcDimOGGQeeXTMnPpylBaW+Rl9AuMx3XMgz2P0ysNg5VvXpue4ETFzpxngSt9LkzF
+         YXatV+PCGE5RhbNlnb7X8YVCCwe/F2pY7cKupehWcg9fESF1AkXOTuJD0cRBSAE145
+         8wT8AR4pQkTI3uq8E/vUlma34wHKkZs8HT0isXxK8qaqCf2F/ap7f/MpSCZCGd1NDy
+         Kw7XW7wNkcfSdtUX6fqUyq/Z5m34j7+GwdEvXM4VCj6eKpE93lnUrIhofOsnfYZNMp
+         ILOGlNP0UaG+huvtGIANgslshbqH9UQ/QVO3/L4qOMZo3mzSOAyH2zo0PNVJmqyARK
+         yxkSFEJBsewaC4wle5IZRo/JYxDLoQ93ZUtUMvNLVBAOLYIKo33
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     Jeff King <peff@peff.net>, Michael Haggerty <mhagger@alum.mit.edu>,
         Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v3 07/19] builtin/branch: convert to struct object_id
-Date:   Sat, 18 Feb 2017 00:06:40 +0000
-Message-Id: <20170218000652.375129-8-sandals@crustytoothpaste.net>
+Subject: [PATCH v3 06/19] builtin/grep: convert to struct object_id
+Date:   Sat, 18 Feb 2017 00:06:39 +0000
+Message-Id: <20170218000652.375129-7-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.11.0
 In-Reply-To: <20170218000652.375129-1-sandals@crustytoothpaste.net>
 References: <20170218000652.375129-1-sandals@crustytoothpaste.net>
@@ -47,115 +47,108 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Convert several functions to use struct object_id, and rename them so
+that they no longer refer to SHA-1.
+
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- builtin/branch.c | 26 +++++++++++++-------------
- 1 file changed, 13 insertions(+), 13 deletions(-)
+ builtin/grep.c | 24 ++++++++++++------------
+ 1 file changed, 12 insertions(+), 12 deletions(-)
 
-diff --git a/builtin/branch.c b/builtin/branch.c
-index 9d30f55b0b..faf472ff8f 100644
---- a/builtin/branch.c
-+++ b/builtin/branch.c
-@@ -32,7 +32,7 @@ static const char * const builtin_branch_usage[] = {
- };
- 
- static const char *head;
--static unsigned char head_sha1[20];
-+static struct object_id head_oid;
- 
- static int branch_use_color = -1;
- static char branch_colors[][COLOR_MAXLEN] = {
-@@ -117,13 +117,13 @@ static int branch_merged(int kind, const char *name,
- 	if (kind == FILTER_REFS_BRANCHES) {
- 		struct branch *branch = branch_get(name);
- 		const char *upstream = branch_get_upstream(branch, NULL);
--		unsigned char sha1[20];
-+		struct object_id oid;
- 
- 		if (upstream &&
- 		    (reference_name = reference_name_to_free =
- 		     resolve_refdup(upstream, RESOLVE_REF_READING,
--				    sha1, NULL)) != NULL)
--			reference_rev = lookup_commit_reference(sha1);
-+				    oid.hash, NULL)) != NULL)
-+			reference_rev = lookup_commit_reference(oid.hash);
- 	}
- 	if (!reference_rev)
- 		reference_rev = head_rev;
-@@ -153,10 +153,10 @@ static int branch_merged(int kind, const char *name,
+diff --git a/builtin/grep.c b/builtin/grep.c
+index 2c727ef499..0393b0fdc4 100644
+--- a/builtin/grep.c
++++ b/builtin/grep.c
+@@ -294,17 +294,17 @@ static int grep_cmd_config(const char *var, const char *value, void *cb)
+ 	return st;
  }
  
- static int check_branch_commit(const char *branchname, const char *refname,
--			       const unsigned char *sha1, struct commit *head_rev,
-+			       const struct object_id *oid, struct commit *head_rev,
- 			       int kinds, int force)
+-static void *lock_and_read_sha1_file(const unsigned char *sha1, enum object_type *type, unsigned long *size)
++static void *lock_and_read_oid_file(const struct object_id *oid, enum object_type *type, unsigned long *size)
  {
--	struct commit *rev = lookup_commit_reference(sha1);
-+	struct commit *rev = lookup_commit_reference(oid->hash);
- 	if (!rev) {
- 		error(_("Couldn't look up commit object for '%s'"), refname);
- 		return -1;
-@@ -183,7 +183,7 @@ static int delete_branches(int argc, const char **argv, int force, int kinds,
- 			   int quiet)
+ 	void *data;
+ 
+ 	grep_read_lock();
+-	data = read_sha1_file(sha1, type, size);
++	data = read_sha1_file(oid->hash, type, size);
+ 	grep_read_unlock();
+ 	return data;
+ }
+ 
+-static int grep_sha1(struct grep_opt *opt, const unsigned char *sha1,
++static int grep_oid(struct grep_opt *opt, const struct object_id *oid,
+ 		     const char *filename, int tree_name_len,
+ 		     const char *path)
  {
- 	struct commit *head_rev = NULL;
--	unsigned char sha1[20];
-+	struct object_id oid;
- 	char *name = NULL;
- 	const char *fmt;
- 	int i;
-@@ -207,7 +207,7 @@ static int delete_branches(int argc, const char **argv, int force, int kinds,
- 	}
+@@ -323,7 +323,7 @@ static int grep_sha1(struct grep_opt *opt, const unsigned char *sha1,
  
- 	if (!force) {
--		head_rev = lookup_commit_reference(head_sha1);
-+		head_rev = lookup_commit_reference(head_oid.hash);
- 		if (!head_rev)
- 			die(_("Couldn't look up commit object for HEAD"));
- 	}
-@@ -235,7 +235,7 @@ static int delete_branches(int argc, const char **argv, int force, int kinds,
- 					RESOLVE_REF_READING
- 					| RESOLVE_REF_NO_RECURSE
- 					| RESOLVE_REF_ALLOW_BAD_NAME,
--					sha1, &flags);
-+					oid.hash, &flags);
- 		if (!target) {
- 			error(remote_branch
- 			      ? _("remote-tracking branch '%s' not found.")
-@@ -245,13 +245,13 @@ static int delete_branches(int argc, const char **argv, int force, int kinds,
- 		}
+ #ifndef NO_PTHREADS
+ 	if (num_threads) {
+-		add_work(opt, GREP_SOURCE_SHA1, pathbuf.buf, path, sha1);
++		add_work(opt, GREP_SOURCE_SHA1, pathbuf.buf, path, oid);
+ 		strbuf_release(&pathbuf);
+ 		return 0;
+ 	} else
+@@ -332,7 +332,7 @@ static int grep_sha1(struct grep_opt *opt, const unsigned char *sha1,
+ 		struct grep_source gs;
+ 		int hit;
  
- 		if (!(flags & (REF_ISSYMREF|REF_ISBROKEN)) &&
--		    check_branch_commit(bname.buf, name, sha1, head_rev, kinds,
-+		    check_branch_commit(bname.buf, name, &oid, head_rev, kinds,
- 					force)) {
- 			ret = 1;
- 			goto next;
- 		}
+-		grep_source_init(&gs, GREP_SOURCE_SHA1, pathbuf.buf, path, sha1);
++		grep_source_init(&gs, GREP_SOURCE_SHA1, pathbuf.buf, path, oid);
+ 		strbuf_release(&pathbuf);
+ 		hit = grep_source(opt, &gs);
  
--		if (delete_ref(name, is_null_sha1(sha1) ? NULL : sha1,
-+		if (delete_ref(name, is_null_oid(&oid) ? NULL : oid.hash,
- 			       REF_NODEREF)) {
- 			error(remote_branch
- 			      ? _("Error deleting remote-tracking branch '%s'")
-@@ -267,7 +267,7 @@ static int delete_branches(int argc, const char **argv, int force, int kinds,
- 			       bname.buf,
- 			       (flags & REF_ISBROKEN) ? "broken"
- 			       : (flags & REF_ISSYMREF) ? target
--			       : find_unique_abbrev(sha1, DEFAULT_ABBREV));
-+			       : find_unique_abbrev(oid.hash, DEFAULT_ABBREV));
- 		}
- 		delete_branch_config(bname.buf);
+@@ -690,7 +690,7 @@ static int grep_cache(struct grep_opt *opt, const struct pathspec *pathspec,
+ 			    ce_skip_worktree(ce)) {
+ 				if (ce_stage(ce) || ce_intent_to_add(ce))
+ 					continue;
+-				hit |= grep_sha1(opt, ce->oid.hash, ce->name,
++				hit |= grep_oid(opt, &ce->oid, ce->name,
+ 						 0, ce->name);
+ 			} else {
+ 				hit |= grep_file(opt, ce->name);
+@@ -750,7 +750,7 @@ static int grep_tree(struct grep_opt *opt, const struct pathspec *pathspec,
+ 		strbuf_add(base, entry.path, te_len);
  
-@@ -693,7 +693,7 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
+ 		if (S_ISREG(entry.mode)) {
+-			hit |= grep_sha1(opt, entry.oid->hash, base->buf, tn_len,
++			hit |= grep_oid(opt, entry.oid, base->buf, tn_len,
+ 					 check_attr ? base->buf + tn_len : NULL);
+ 		} else if (S_ISDIR(entry.mode)) {
+ 			enum object_type type;
+@@ -758,7 +758,7 @@ static int grep_tree(struct grep_opt *opt, const struct pathspec *pathspec,
+ 			void *data;
+ 			unsigned long size;
  
- 	track = git_branch_track;
- 
--	head = resolve_refdup("HEAD", 0, head_sha1, NULL);
-+	head = resolve_refdup("HEAD", 0, head_oid.hash, NULL);
- 	if (!head)
- 		die(_("Failed to resolve HEAD as a valid ref."));
- 	if (!strcmp(head, "HEAD"))
+-			data = lock_and_read_sha1_file(entry.oid->hash, &type, &size);
++			data = lock_and_read_oid_file(entry.oid, &type, &size);
+ 			if (!data)
+ 				die(_("unable to read tree (%s)"),
+ 				    oid_to_hex(entry.oid));
+@@ -787,7 +787,7 @@ static int grep_object(struct grep_opt *opt, const struct pathspec *pathspec,
+ 		       struct object *obj, const char *name, const char *path)
+ {
+ 	if (obj->type == OBJ_BLOB)
+-		return grep_sha1(opt, obj->oid.hash, name, 0, path);
++		return grep_oid(opt, &obj->oid, name, 0, path);
+ 	if (obj->type == OBJ_COMMIT || obj->type == OBJ_TREE) {
+ 		struct tree_desc tree;
+ 		void *data;
+@@ -1152,11 +1152,11 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
+ 	/* Check revs and then paths */
+ 	for (i = 0; i < argc; i++) {
+ 		const char *arg = argv[i];
+-		unsigned char sha1[20];
++		struct object_id oid;
+ 		struct object_context oc;
+ 		/* Is it a rev? */
+-		if (!get_sha1_with_context(arg, 0, sha1, &oc)) {
+-			struct object *object = parse_object_or_die(sha1, arg);
++		if (!get_sha1_with_context(arg, 0, oid.hash, &oc)) {
++			struct object *object = parse_object_or_die(oid.hash, arg);
+ 			if (!seen_dashdash)
+ 				verify_non_filename(prefix, arg);
+ 			add_object_array_with_path(object, arg, &list, oc.mode, oc.path);
 -- 
 2.11.0
 
