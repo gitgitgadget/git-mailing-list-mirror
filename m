@@ -2,63 +2,64 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2DCD3201A9
+	by dcvr.yhbt.net (Postfix) with ESMTP id 432AC201A9
 	for <e@80x24.org>; Sat, 18 Feb 2017 05:56:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750836AbdBRFyN (ORCPT <rfc822;e@80x24.org>);
-        Sat, 18 Feb 2017 00:54:13 -0500
-Received: from mail-pf0-f193.google.com ([209.85.192.193]:34163 "EHLO
-        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750759AbdBRFyN (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 18 Feb 2017 00:54:13 -0500
-Received: by mail-pf0-f193.google.com with SMTP id o64so5535189pfb.1
-        for <git@vger.kernel.org>; Fri, 17 Feb 2017 21:54:12 -0800 (PST)
+        id S1750852AbdBRF4F (ORCPT <rfc822;e@80x24.org>);
+        Sat, 18 Feb 2017 00:56:05 -0500
+Received: from mail-pf0-f194.google.com ([209.85.192.194]:36168 "EHLO
+        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750759AbdBRF4E (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 18 Feb 2017 00:56:04 -0500
+Received: by mail-pf0-f194.google.com with SMTP id c193so798610pfb.3
+        for <git@vger.kernel.org>; Fri, 17 Feb 2017 21:56:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=lxbDKLchH54mbQ7fAhPGC2bSnNG6GVPgeUxzlkmYX1g=;
-        b=l9eMKOMc4+4wlz7UOqFl+CFDn+iJCf8Adrib7hFQ4GwlD4E3z2gcoE40p/o4LnsKwu
-         /TVIC1qrfDvp2W+uM1GrkVaKyEEsCG0H4bA2rJol5m4rUn5G16/1ioF5GfJtzR7/709X
-         oIlSd7ZfOK1BUZ+qvujDuPKGhVdiCT816VBsxB6ClT7Iy7TQdH2J6jmUeCFs7oexReWM
-         hS2Rte5KCnaM2UUUatIGIB15KA3OigNNbyAO44AGXy2NMMSyeHQyY4lT19sIZabFo5AM
-         Nec6Fp65XxHaGeCZqArSFwJbApbwQhiGy9jpi14vkMY9taQ+9xhdFJLghQdziFlCikjd
-         HXtg==
+        bh=RrN0hSG2wzXfb7ClYT+QXQb+l5dBukdyhrqjSy7Wbqk=;
+        b=jetlV5eBawSdYKsZogsXyApUs6J8vAPzUexn98d97CLgIubqzYjLiQV0HAnloe/SKu
+         d/ika8VdTCmrx0uoEkNV/vELJMQQgRS3NRPSfUNPtk8A49zuaMrNDQIHCWFRAypSHldO
+         Oe92JFga4Y/xOpf4lXAKEjY10JrRUGDXHRN1eaxF4E3sRxzvZd2O5Brfutd5nWBk7cT2
+         iagKiv/wfX0na1ht/UA+lm7qBVeKcDIyQcXhf3K7DRaa9x16Q+ce3KqmPWyUTVRUb9TT
+         Dzt0cWprwI3fElYAlJQKH/8FM8mBZVpXoTwt3Qa4+qZSYfxr2qG5P6H+EyIKUa0s4vXA
+         tFxw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=lxbDKLchH54mbQ7fAhPGC2bSnNG6GVPgeUxzlkmYX1g=;
-        b=Bpit3XWPbnIwV/d9UNGqRXYQKNzTjFuigJdfABK50WMtCqqXfLVNFrxgaTfU/nKJsU
-         kXYruyVQMTjkj4aD7//Nxq5ebkK1aboyw20wDwpfCQepV6JZmUw4FNgddhgapD5yEXKi
-         sH8HiLoDtO4fBkNT9bwWQCVEsriu5pkBpshNMUXFlqUgnISXEYvCLPJn4MtNVsQPx0j8
-         dezJlstcLba3OWDgorxS9JGLdb5DSXQBrNrb9g6+mcU9KA0l4hYPGa9hvYyLmqkwko70
-         70RUdeB3mKW1VSK8N90NdLGIBTxA11smGAi7eKexLKrtwzSMbWapR4ZSVGaEwiZErtmN
-         QG2w==
-X-Gm-Message-State: AMke39mrPVMYfXp7oUSCv3D1AFyE2wSvArGpW1zYXQL/cC/atH7GOYKIWCcsI6nG8AwQtw==
-X-Received: by 10.84.129.2 with SMTP id 2mr16354485plb.108.1487396854319;
-        Fri, 17 Feb 2017 21:47:34 -0800 (PST)
+        bh=RrN0hSG2wzXfb7ClYT+QXQb+l5dBukdyhrqjSy7Wbqk=;
+        b=oAV1eXjUFYiCG1ubUAaTQTgYQzKdbhlGAl3exc9YS17oUH96AvFF38/2kCT0gwDJH8
+         c7cyTmzkUDG9K6xm4YY2LeKYOboIFl+61zrV3NXMuktpOaM4eFmfdduR9Rw2q5zuL/yI
+         l/qHAXCDU5FJqDBjw+0mCvhnHIExR0dPCL1RdHfh/c03mrRWdMNbWTUggEjjPqVcRxmO
+         gWVMV5EsB1z4jJPCPfckUJTRAZiVlDP/lH+e274gpH05f6W61NfNWiq3lS3nR9QEU4PL
+         Z9daTGVL8gqdSie3kRP7MdvWw7OYYhGPc5gfSMYJ6INQ6e8l442t65qz2QzL/LT9GARq
+         R8/Q==
+X-Gm-Message-State: AMke39nYdgAcI0aSb/cS9YhkeCw0bzbxSkPFExQCOrZbgir3I1k92ikaNQAge1cmx20gLw==
+X-Received: by 10.99.219.21 with SMTP id e21mr14652922pgg.29.1487397363983;
+        Fri, 17 Feb 2017 21:56:03 -0800 (PST)
 Received: from localhost ([2620:0:1000:8622:3130:38b1:b121:8f0d])
-        by smtp.gmail.com with ESMTPSA id r78sm22587671pfl.63.2017.02.17.21.47.33
+        by smtp.gmail.com with ESMTPSA id 66sm22674976pfx.29.2017.02.17.21.56.03
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Fri, 17 Feb 2017 21:47:33 -0800 (PST)
+        Fri, 17 Feb 2017 21:56:03 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff Hostetler <jeffhost@microsoft.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH 3/5] name-hash: precompute hash values during preload-index
+To:     Jeff King <peff@peff.net>
+Cc:     Jeff Hostetler <git@jeffhostetler.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        git@vger.kernel.org, Jeff Hostetler <jeffhost@microsoft.com>
+Subject: Re: [PATCH 0/5] A series of performance enhancements in the memihash and name-cache area
 References: <cover.1487071883.git.johannes.schindelin@gmx.de>
-        <8621305c69898e012720d4fe66d42b096f053073.1487071883.git.johannes.schindelin@gmx.de>
-Date:   Fri, 17 Feb 2017 21:47:32 -0800
-In-Reply-To: <8621305c69898e012720d4fe66d42b096f053073.1487071883.git.johannes.schindelin@gmx.de>
-        (Johannes Schindelin's message of "Tue, 14 Feb 2017 12:32:18 +0100
-        (CET)")
-Message-ID: <xmqq37fcnj7v.fsf@gitster.mtv.corp.google.com>
+        <20170214220332.753i4tgclm62er4f@sigill.intra.peff.net>
+        <16b1259c-4cdc-8f4d-db47-d724386a3d2b@jeffhostetler.com>
+        <20170215164416.tekykkzhm6qlj2h2@sigill.intra.peff.net>
+Date:   Fri, 17 Feb 2017 21:56:02 -0800
+In-Reply-To: <20170215164416.tekykkzhm6qlj2h2@sigill.intra.peff.net> (Jeff
+        King's message of "Wed, 15 Feb 2017 11:44:16 -0500")
+Message-ID: <xmqqvas8m499.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -67,50 +68,34 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+Jeff King <peff@peff.net> writes:
 
-> +void precompute_istate_hashes(struct cache_entry *ce)
-> +{
-> +	int namelen = ce_namelen(ce);
-> +
-> +	while (namelen > 0 && !is_dir_sep(ce->name[namelen - 1]))
-> +		namelen--;
-> +
-> +	if (namelen <= 0) {
-> +		ce->precomputed_hash.name = memihash(ce->name, ce_namelen(ce));
-> +		ce->precomputed_hash.root_entry = 1;
-> +	} else {
-> +		namelen--;
-> +		ce->precomputed_hash.dir = memihash(ce->name, namelen);
-> +		ce->precomputed_hash.name = memihash_continue(
-> +			ce->precomputed_hash.dir, ce->name + namelen,
-> +			ce_namelen(ce) - namelen);
-> +		ce->precomputed_hash.root_entry = 0;
-> +	}
-> +	ce->precomputed_hash.initialized = 1;
-> +}
-> diff --git a/preload-index.c b/preload-index.c
-> index c1fe3a3ef9c..602737f9d0f 100644
-> --- a/preload-index.c
-> +++ b/preload-index.c
-> @@ -47,6 +47,8 @@ static void *preload_thread(void *_data)
->  		struct cache_entry *ce = *cep++;
->  		struct stat st;
->  
-> +		precompute_istate_hashes(ce);
-> +
+> On Wed, Feb 15, 2017 at 09:27:53AM -0500, Jeff Hostetler wrote:
+>
+>> I have some informal numbers in a spreadsheet.  I was seeing
+>> a 8-9% speed up on a status on my gigantic repo.
+>> 
+>> I'll try to put together a before/after perf-test to better
+>> demonstrate this.
+>
+> Thanks. What I'm mostly curious about is how much each individual step
+> buys. Sometimes when doing a long optimization series, I find that some
+> of the optimizations make other ones somewhat redundant (e.g., if patch
+> 2 causes us to call the optimized code from patch 3 less often).
 
-The fact that each preload_thread() still walks the index in-order
-makes me wonder if it may allow us to further optimize the "dir"
-part of the hash by passing the previous ce for which we already
-precomputed hash values.  While the loop is iterating over the paths
-in the same directory, .dir component from the previous ce can be
-reused and .name component can "continue", no?
+I am curious too.
 
-It's possible that you already tried such an optimization and
-rejected it after finding that the cost of comparison of pathnames
-to tell if ce and previous ce are still in the same directory is
-more than unconditionally memihash() the directory part, and I am in
-no way saying that I found a missed optimization opportunity you
-must pursue.  I am just being curious.
+To me 1/5 (reduction of redundant calls), 4/5 (correctly size the
+hash that would grow to a known size anyway) and 5/5 (take advantage
+of the fact that adjacent cache entries are often in the same
+directory) look like no brainers to take, regardless of the others
+(including themselves).
 
+It is not clear to me if 3/5 (preload-index uses available cores to
+compute hashes) is an unconditional win (an operation that is
+pathspec limited may need hashes for only a small fraction of the
+index---would it still be a win to compute the hash for all entries
+upon loading the index, even if we are using otherwise-idel cores?).
+
+Of course 2/5 is a prerequisite step for 3/5 and 5/5, so if we want
+either of the latter two, we cannot avoid it.
