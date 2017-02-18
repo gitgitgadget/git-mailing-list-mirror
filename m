@@ -6,39 +6,39 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B2CCC201A9
-	for <e@80x24.org>; Sat, 18 Feb 2017 00:07:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B5A3B201A9
+	for <e@80x24.org>; Sat, 18 Feb 2017 00:07:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752133AbdBRAHa (ORCPT <rfc822;e@80x24.org>);
-        Fri, 17 Feb 2017 19:07:30 -0500
-Received: from castro.crustytoothpaste.net ([75.10.60.170]:60106 "EHLO
+        id S1752063AbdBRAH2 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 17 Feb 2017 19:07:28 -0500
+Received: from castro.crustytoothpaste.net ([75.10.60.170]:60048 "EHLO
         castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751299AbdBRAHD (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 17 Feb 2017 19:07:03 -0500
+        by vger.kernel.org with ESMTP id S1751371AbdBRAHE (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 17 Feb 2017 19:07:04 -0500
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 288F2280BA;
-        Sat, 18 Feb 2017 00:07:01 +0000 (UTC)
+        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 9D5F9280B0;
+        Sat, 18 Feb 2017 00:07:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
-        s=default; t=1487376421;
-        bh=0vgCHK+UWBA203Hq9P6hTvw0bInp1bYAKflUgZLwyFU=;
+        s=default; t=1487376422;
+        bh=sbrXO9FkSyyUPd1wVmmIHyvjIDi2MKUL4/1/R07gjfs=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=qF26FEL/bYmB/moehKPlxYj0LWeWmxo6y9L+oIVRBbf3Lwy8Nj5wYcH2sb+L+S6NI
-         2UiencKpkRL0vwb2wdgLS7A+97FQpW4fHARtZB57Gxvyyr+StUWLIEhEa/q4REKWgX
-         lQZPIYBJuC8SqiTugjU6Qmb1wMsK1DFjD9zGkiU11j/AWu+lDGZbBjZce7qNRmDvA4
-         HSicVUTbz3qpE0BPuy2k442coPINi4M/kASkKICdFR111sRqK21YpbOwUNAfVL8Ap2
-         Hb9D3cAG5nDM4ehmhl/FnZHCARn0MunHuGB/rTJgvdYLSCJr+7TilZtBekVVYpZMp/
-         QESLmJ3KxhmhGkO3EAqIgaT3gIGJ6Hk+5EqqfqT4zPbDeDqtVCsIaIrkSJO3WNVexo
-         X7KeAjuoP/iP51WNmY1HShSjvN/FbucmU+Wk742WSHxtl4STuhkVFn+gfkLNYlJyJP
-         2zaXO+ufwaX3WL0xZeKzijy+h7KDrVEVrZ7XC3UapXS+EEOw8Ac
+        b=RMbK8kcbv+QmHKOUO5xc8nil0lCiMm+JVgZezY92k1nsMwBxyYrYIjR+qp2m7f7jk
+         AMc13ORZldFR10Z1BrzP7xtotO0nNcaiXU3ytNGDzMZkaf5/hS9eA+b7b9CZwXcZ8g
+         mwl9KktxFR0DgU8nQrFX0Sa6RtWJgPTjRbNLbffEIkf9kNav+MNzv5tYlM4QU0FRYm
+         HjeYcYo1W7WcvkpU4oMRKW+WWqBQ4FxKdGjuqKKWWUxfK4MZrB0tcSYB093OBJ8Lx3
+         79kbpUhBiM+KsBp050SYLvSHo2GGXq1N7KjegIGCB3k4XqMu0HcibfwHCkeX4/Bfs/
+         ftHuwFr1yXdIUayHeMdIOAaG8+UmycoytLif7sMzYkZ6aw07E3EFQNaQLkvN3DC2gC
+         ui70mPdpds7vZLlurcL8ct+cI6B6f8nmWVDOniTvo/YVAj/Qn+z/GT2y+5PZNPNzwU
+         CaH1qVYFbwOVzmzx9aErqxtQCkN3jpZ+aPK46eLPwy8s0fKoWvt
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     Jeff King <peff@peff.net>, Michael Haggerty <mhagger@alum.mit.edu>,
         Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v3 12/19] reflog-walk: convert struct reflog_info to struct object_id
-Date:   Sat, 18 Feb 2017 00:06:45 +0000
-Message-Id: <20170218000652.375129-13-sandals@crustytoothpaste.net>
+Subject: [PATCH v3 16/19] sha1_file: introduce an nth_packed_object_oid function
+Date:   Sat, 18 Feb 2017 00:06:49 +0000
+Message-Id: <20170218000652.375129-17-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.11.0
 In-Reply-To: <20170218000652.375129-1-sandals@crustytoothpaste.net>
 References: <20170218000652.375129-1-sandals@crustytoothpaste.net>
@@ -47,79 +47,77 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Convert struct reflog_info to use struct object_id by changing the
-structure definition and applying the following semantic patch:
+There are places in the code where we would like to provide a struct
+object_id *, yet read the hash directly from the pack.  Provide an
+nth_packed_object_oid function that is similar to the
+nth_packed_object_sha1 function.
 
-@@
-struct reflog_info E1;
-@@
-- E1.osha1
-+ E1.ooid.hash
-
-@@
-struct reflog_info *E1;
-@@
-- E1->osha1
-+ E1->ooid.hash
-
-@@
-struct reflog_info E1;
-@@
-- E1.nsha1
-+ E1.noid.hash
-
-@@
-struct reflog_info *E1;
-@@
-- E1->nsha1
-+ E1->noid.hash
+In order to avoid a potentially invalid cast, nth_packed_object_oid
+provides a variable into which to store the value, which it returns on
+success; on error, it returns NULL, as nth_packed_object_sha1 does.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- reflog-walk.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ cache.h     |  6 ++++++
+ sha1_file.c | 17 ++++++++++++++---
+ 2 files changed, 20 insertions(+), 3 deletions(-)
 
-diff --git a/reflog-walk.c b/reflog-walk.c
-index f98748e2ae..fe5be41471 100644
---- a/reflog-walk.c
-+++ b/reflog-walk.c
-@@ -10,7 +10,7 @@ struct complete_reflogs {
- 	char *ref;
- 	const char *short_ref;
- 	struct reflog_info {
--		unsigned char osha1[20], nsha1[20];
-+		struct object_id ooid, noid;
- 		char *email;
- 		unsigned long timestamp;
- 		int tz;
-@@ -28,8 +28,8 @@ static int read_one_reflog(unsigned char *osha1, unsigned char *nsha1,
+diff --git a/cache.h b/cache.h
+index e03a672d15..4f3bfc5ee7 100644
+--- a/cache.h
++++ b/cache.h
+@@ -1608,6 +1608,12 @@ extern void check_pack_index_ptr(const struct packed_git *p, const void *ptr);
+  * error.
+  */
+ extern const unsigned char *nth_packed_object_sha1(struct packed_git *, uint32_t n);
++/*
++ * Like nth_packed_object_oid, but write the data into the object specified by
++ * the the first argument.  Returns the first argument on success, and NULL on
++ * error.
++ */
++extern const struct object_id *nth_packed_object_oid(struct object_id *, struct packed_git *, uint32_t n);
  
- 	ALLOC_GROW(array->items, array->nr + 1, array->alloc);
- 	item = array->items + array->nr;
--	hashcpy(item->osha1, osha1);
--	hashcpy(item->nsha1, nsha1);
-+	hashcpy(item->ooid.hash, osha1);
-+	hashcpy(item->noid.hash, nsha1);
- 	item->email = xstrdup(email);
- 	item->timestamp = timestamp;
- 	item->tz = tz;
-@@ -238,13 +238,13 @@ void fake_reflog_parent(struct reflog_walk_info *info, struct commit *commit)
- 	do {
- 		reflog = &commit_reflog->reflogs->items[commit_reflog->recno];
- 		commit_reflog->recno--;
--		logobj = parse_object(reflog->osha1);
-+		logobj = parse_object(reflog->ooid.hash);
- 	} while (commit_reflog->recno && (logobj && logobj->type != OBJ_COMMIT));
- 
--	if (!logobj && commit_reflog->recno >= 0 && is_null_sha1(reflog->osha1)) {
-+	if (!logobj && commit_reflog->recno >= 0 && is_null_sha1(reflog->ooid.hash)) {
- 		/* a root commit, but there are still more entries to show */
- 		reflog = &commit_reflog->reflogs->items[commit_reflog->recno];
--		logobj = parse_object(reflog->nsha1);
-+		logobj = parse_object(reflog->noid.hash);
+ /*
+  * Return the offset of the nth object within the specified packfile.
+diff --git a/sha1_file.c b/sha1_file.c
+index ec957db5e1..777b8e8eae 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -2628,6 +2628,17 @@ const unsigned char *nth_packed_object_sha1(struct packed_git *p,
  	}
+ }
  
- 	if (!logobj || logobj->type != OBJ_COMMIT) {
++const struct object_id *nth_packed_object_oid(struct object_id *oid,
++					      struct packed_git *p,
++					      uint32_t n)
++{
++	const unsigned char *hash = nth_packed_object_sha1(p, n);
++	if (!hash)
++		return NULL;
++	hashcpy(oid->hash, hash);
++	return oid;
++}
++
+ void check_pack_index_ptr(const struct packed_git *p, const void *vptr)
+ {
+ 	const unsigned char *ptr = vptr;
+@@ -3788,13 +3799,13 @@ static int for_each_object_in_pack(struct packed_git *p, each_packed_object_fn c
+ 	int r = 0;
+ 
+ 	for (i = 0; i < p->num_objects; i++) {
+-		const unsigned char *sha1 = nth_packed_object_sha1(p, i);
++		struct object_id oid;
+ 
+-		if (!sha1)
++		if (!nth_packed_object_oid(&oid, p, i))
+ 			return error("unable to get sha1 of object %u in %s",
+ 				     i, p->pack_name);
+ 
+-		r = cb(sha1, p, i, data);
++		r = cb(oid.hash, p, i, data);
+ 		if (r)
+ 			break;
+ 	}
 -- 
 2.11.0
 
