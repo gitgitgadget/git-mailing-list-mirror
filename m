@@ -6,39 +6,39 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F1A7C201A9
-	for <e@80x24.org>; Sat, 18 Feb 2017 00:07:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 341AA201A9
+	for <e@80x24.org>; Sat, 18 Feb 2017 00:07:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752196AbdBRAHn (ORCPT <rfc822;e@80x24.org>);
-        Fri, 17 Feb 2017 19:07:43 -0500
-Received: from castro.crustytoothpaste.net ([75.10.60.170]:60018 "EHLO
+        id S1752203AbdBRAHo (ORCPT <rfc822;e@80x24.org>);
+        Fri, 17 Feb 2017 19:07:44 -0500
+Received: from castro.crustytoothpaste.net ([75.10.60.170]:60004 "EHLO
         castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1750766AbdBRAHA (ORCPT
+        by vger.kernel.org with ESMTP id S1750839AbdBRAHA (ORCPT
         <rfc822;git@vger.kernel.org>); Fri, 17 Feb 2017 19:07:00 -0500
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 22BA4280B1;
-        Sat, 18 Feb 2017 00:06:59 +0000 (UTC)
+        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id D3888280B0;
+        Sat, 18 Feb 2017 00:06:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
-        s=default; t=1487376419;
-        bh=kgg2IZbLFB9gnqR2coRq05CxMPsnKISRojBmhvZZ2fA=;
+        s=default; t=1487376418;
+        bh=bEm7oYn7NHtJxPBdW6uIQJbRPNWA4cyVBhHIC3zOJSI=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=SJnUzbZBPYKkAgcC8bUllYJVh907WXamGRxDfXSMqm3N9dvUCHubROhaQRBPNPrbd
-         bkeqjMHnh84KIvjDCKMRg6eU9BY/glAlRDqLzVAqRUbG/kLWh/ZpQ2yCbRjtiZImP6
-         AqAzQ/8/BzCwdwbwGbH97YW7Ok10rWBXEoz2vSxB2TtH4HYMTJRux9w8pFOnLnBiCN
-         slwpmvyXnXFo74gw1/anBzhyToQAlNnDQhZuicec45lQl/UxNnBMrDMf3z13i513mi
-         HCVNxmmgqLnaIN7DFzgikW6VahXeY4233f+siuuoOU+F3k0aPSVxcLYfmkK56VVQDk
-         Um5ftJK0eQvDv93+LO87kccm6/FsMH6ok6CMZ8qo1rVDoHuLLQ2GmxENiDC/dwqFU1
-         RDttEAFr7+7b076Qeb3W8gjMNKzJxAaWjG6rfO/5iSpwz0UQ6t7TREr5hIYj4xVXCl
-         +tborNUidi0S46ZCjriHeNa1Kc8FGX4Ao1PI5B/3dzH9ZboJb4U
+        b=igu8gKLw8qtU4RfRT3OVxjpPxVB2m9G6bPaAeFdHxlnCJETjkloa45H9+9FlOVBNW
+         K9TxMkLaoVfc5fF/lOEVHwHoLaKVVm/4Z3Tsc41mFK9irswSd3mIgD32Hpz+COZilj
+         JJDOfx++028twuD3gOSuac3bF4KSY/gHGHizW3kUt5/v8HwDauhGKqLrmHZ2EdkPBC
+         ew7RT1xJaxSAV4pj+2Sa0nQ0wJKN30K1FbrXKyrrjaqiaqWmu6biYNr0ihg/J1iX55
+         pHU5NQlN7E8BYHzo8ZOcm5e/5ZoBNbk+Z6x0c1Tk+nwzzsICPqD2NFNnd+BoCg3Zun
+         Yw4Q3WE7xMM5w2dvSxzw4rnl6gwaBhjs46Fvh2tIQKEkf5EXRUM3lWibaBPpbeSLZb
+         bDKM1jcbrkv2npk5IHiR/7APeQvehk+1K+0ozMiJb3Mz0sCgAMEOefsQs6y3ErbmVg
+         68oBgAAAsbKQA2QGxKDr9dUa+1BIwbwUz3uzO1fSTvlMUWAv0f4
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     Jeff King <peff@peff.net>, Michael Haggerty <mhagger@alum.mit.edu>,
         Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v3 04/19] builtin/fast-export: convert to struct object_id
-Date:   Sat, 18 Feb 2017 00:06:37 +0000
-Message-Id: <20170218000652.375129-5-sandals@crustytoothpaste.net>
+Subject: [PATCH v3 03/19] builtin/describe: convert to struct object_id
+Date:   Sat, 18 Feb 2017 00:06:36 +0000
+Message-Id: <20170218000652.375129-4-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.11.0
 In-Reply-To: <20170218000652.375129-1-sandals@crustytoothpaste.net>
 References: <20170218000652.375129-1-sandals@crustytoothpaste.net>
@@ -47,186 +47,180 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In addition to converting to struct object_id, write some hardcoded
-buffer sizes in terms of GIT_SHA1_RAWSZ.
+Convert the functions in this file and struct commit_name  to struct
+object_id.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- builtin/fast-export.c | 58 +++++++++++++++++++++++++--------------------------
- 1 file changed, 29 insertions(+), 29 deletions(-)
+ builtin/describe.c | 50 +++++++++++++++++++++++++-------------------------
+ 1 file changed, 25 insertions(+), 25 deletions(-)
 
-diff --git a/builtin/fast-export.c b/builtin/fast-export.c
-index 1e815b5577..e0220630d0 100644
---- a/builtin/fast-export.c
-+++ b/builtin/fast-export.c
-@@ -212,7 +212,7 @@ static char *anonymize_blob(unsigned long *size)
- 	return strbuf_detach(&out, NULL);
+diff --git a/builtin/describe.c b/builtin/describe.c
+index 01490a157e..738e68f95b 100644
+--- a/builtin/describe.c
++++ b/builtin/describe.c
+@@ -39,11 +39,11 @@ static const char *diff_index_args[] = {
+ 
+ struct commit_name {
+ 	struct hashmap_entry entry;
+-	unsigned char peeled[20];
++	struct object_id peeled;
+ 	struct tag *tag;
+ 	unsigned prio:2; /* annotated tag = 2, tag = 1, head = 0 */
+ 	unsigned name_checked:1;
+-	unsigned char sha1[20];
++	struct object_id oid;
+ 	char *path;
+ };
+ 
+@@ -54,17 +54,17 @@ static const char *prio_names[] = {
+ static int commit_name_cmp(const struct commit_name *cn1,
+ 		const struct commit_name *cn2, const void *peeled)
+ {
+-	return hashcmp(cn1->peeled, peeled ? peeled : cn2->peeled);
++	return oidcmp(&cn1->peeled, peeled ? peeled : &cn2->peeled);
  }
  
--static void export_blob(const unsigned char *sha1)
-+static void export_blob(const struct object_id *oid)
+-static inline struct commit_name *find_commit_name(const unsigned char *peeled)
++static inline struct commit_name *find_commit_name(const struct object_id *peeled)
  {
- 	unsigned long size;
- 	enum object_type type;
-@@ -223,34 +223,34 @@ static void export_blob(const unsigned char *sha1)
- 	if (no_data)
- 		return;
+-	return hashmap_get_from_hash(&names, sha1hash(peeled), peeled);
++	return hashmap_get_from_hash(&names, sha1hash(peeled->hash), peeled->hash);
+ }
  
--	if (is_null_sha1(sha1))
-+	if (is_null_oid(oid))
- 		return;
+ static int replace_name(struct commit_name *e,
+ 			       int prio,
+-			       const unsigned char *sha1,
++			       const struct object_id *oid,
+ 			       struct tag **tag)
+ {
+ 	if (!e || e->prio < prio)
+@@ -77,13 +77,13 @@ static int replace_name(struct commit_name *e,
+ 		struct tag *t;
  
--	object = lookup_object(sha1);
-+	object = lookup_object(oid->hash);
- 	if (object && object->flags & SHOWN)
- 		return;
+ 		if (!e->tag) {
+-			t = lookup_tag(e->sha1);
++			t = lookup_tag(e->oid.hash);
+ 			if (!t || parse_tag(t))
+ 				return 1;
+ 			e->tag = t;
+ 		}
  
- 	if (anonymize) {
- 		buf = anonymize_blob(&size);
--		object = (struct object *)lookup_blob(sha1);
-+		object = (struct object *)lookup_blob(oid->hash);
- 		eaten = 0;
- 	} else {
--		buf = read_sha1_file(sha1, &type, &size);
-+		buf = read_sha1_file(oid->hash, &type, &size);
- 		if (!buf)
--			die ("Could not read blob %s", sha1_to_hex(sha1));
--		if (check_sha1_signature(sha1, buf, size, typename(type)) < 0)
--			die("sha1 mismatch in blob %s", sha1_to_hex(sha1));
--		object = parse_object_buffer(sha1, type, size, buf, &eaten);
-+			die ("Could not read blob %s", oid_to_hex(oid));
-+		if (check_sha1_signature(oid->hash, buf, size, typename(type)) < 0)
-+			die("sha1 mismatch in blob %s", oid_to_hex(oid));
-+		object = parse_object_buffer(oid->hash, type, size, buf, &eaten);
+-		t = lookup_tag(sha1);
++		t = lookup_tag(oid->hash);
+ 		if (!t || parse_tag(t))
+ 			return 0;
+ 		*tag = t;
+@@ -96,24 +96,24 @@ static int replace_name(struct commit_name *e,
+ }
+ 
+ static void add_to_known_names(const char *path,
+-			       const unsigned char *peeled,
++			       const struct object_id *peeled,
+ 			       int prio,
+-			       const unsigned char *sha1)
++			       const struct object_id *oid)
+ {
+ 	struct commit_name *e = find_commit_name(peeled);
+ 	struct tag *tag = NULL;
+-	if (replace_name(e, prio, sha1, &tag)) {
++	if (replace_name(e, prio, oid, &tag)) {
+ 		if (!e) {
+ 			e = xmalloc(sizeof(struct commit_name));
+-			hashcpy(e->peeled, peeled);
+-			hashmap_entry_init(e, sha1hash(peeled));
++			oidcpy(&e->peeled, peeled);
++			hashmap_entry_init(e, sha1hash(peeled->hash));
+ 			hashmap_add(&names, e);
+ 			e->path = NULL;
+ 		}
+ 		e->tag = tag;
+ 		e->prio = prio;
+ 		e->name_checked = 0;
+-		hashcpy(e->sha1, sha1);
++		oidcpy(&e->oid, oid);
+ 		free(e->path);
+ 		e->path = xstrdup(path);
  	}
+@@ -154,7 +154,7 @@ static int get_name(const char *path, const struct object_id *oid, int flag, voi
+ 	else
+ 		prio = 0;
  
- 	if (!object)
--		die("Could not read blob %s", sha1_to_hex(sha1));
-+		die("Could not read blob %s", oid_to_hex(oid));
+-	add_to_known_names(all ? path + 5 : path + 10, peeled.hash, prio, oid->hash);
++	add_to_known_names(all ? path + 5 : path + 10, &peeled, prio, oid);
+ 	return 0;
+ }
  
- 	mark_next_object(object);
+@@ -212,7 +212,7 @@ static unsigned long finish_depth_computation(
+ static void display_name(struct commit_name *n)
+ {
+ 	if (n->prio == 2 && !n->tag) {
+-		n->tag = lookup_tag(n->sha1);
++		n->tag = lookup_tag(n->oid.hash);
+ 		if (!n->tag || parse_tag(n->tag))
+ 			die(_("annotated tag %s not available"), n->path);
+ 	}
+@@ -230,14 +230,14 @@ static void display_name(struct commit_name *n)
+ 		printf("%s", n->path);
+ }
  
- 	printf("blob\nmark :%"PRIu32"\ndata %lu\n", last_idnum, size);
- 	if (size && fwrite(buf, size, 1, stdout) != 1)
--		die_errno ("Could not write blob '%s'", sha1_to_hex(sha1));
-+		die_errno ("Could not write blob '%s'", oid_to_hex(oid));
+-static void show_suffix(int depth, const unsigned char *sha1)
++static void show_suffix(int depth, const struct object_id *oid)
+ {
+-	printf("-%d-g%s", depth, find_unique_abbrev(sha1, abbrev));
++	printf("-%d-g%s", depth, find_unique_abbrev(oid->hash, abbrev));
+ }
+ 
+ static void describe(const char *arg, int last_one)
+ {
+-	unsigned char sha1[20];
++	struct object_id oid;
+ 	struct commit *cmit, *gave_up_on = NULL;
+ 	struct commit_list *list;
+ 	struct commit_name *n;
+@@ -246,20 +246,20 @@ static void describe(const char *arg, int last_one)
+ 	unsigned long seen_commits = 0;
+ 	unsigned int unannotated_cnt = 0;
+ 
+-	if (get_sha1(arg, sha1))
++	if (get_oid(arg, &oid))
+ 		die(_("Not a valid object name %s"), arg);
+-	cmit = lookup_commit_reference(sha1);
++	cmit = lookup_commit_reference(oid.hash);
+ 	if (!cmit)
+ 		die(_("%s is not a valid '%s' object"), arg, commit_type);
+ 
+-	n = find_commit_name(cmit->object.oid.hash);
++	n = find_commit_name(&cmit->object.oid);
+ 	if (n && (tags || all || n->prio == 2)) {
+ 		/*
+ 		 * Exact match to an existing ref.
+ 		 */
+ 		display_name(n);
+ 		if (longformat)
+-			show_suffix(0, n->tag ? n->tag->tagged->oid.hash : sha1);
++			show_suffix(0, n->tag ? &n->tag->tagged->oid : &oid);
+ 		if (dirty)
+ 			printf("%s", dirty);
+ 		printf("\n");
+@@ -276,7 +276,7 @@ static void describe(const char *arg, int last_one)
+ 		struct commit *c;
+ 		struct commit_name *n = hashmap_iter_first(&names, &iter);
+ 		for (; n; n = hashmap_iter_next(&iter)) {
+-			c = lookup_commit_reference_gently(n->peeled, 1);
++			c = lookup_commit_reference_gently(n->peeled.hash, 1);
+ 			if (c)
+ 				c->util = n;
+ 		}
+@@ -380,7 +380,7 @@ static void describe(const char *arg, int last_one)
+ 
+ 	display_name(all_matches[0].name);
+ 	if (abbrev)
+-		show_suffix(all_matches[0].depth, cmit->object.oid.hash);
++		show_suffix(all_matches[0].depth, &cmit->object.oid);
+ 	if (dirty)
+ 		printf("%s", dirty);
  	printf("\n");
- 
- 	show_progress();
-@@ -323,19 +323,19 @@ static void print_path(const char *path)
- 	}
- }
- 
--static void *generate_fake_sha1(const void *old, size_t *len)
-+static void *generate_fake_oid(const void *old, size_t *len)
- {
- 	static uint32_t counter = 1; /* avoid null sha1 */
--	unsigned char *out = xcalloc(20, 1);
--	put_be32(out + 16, counter++);
-+	unsigned char *out = xcalloc(GIT_SHA1_RAWSZ, 1);
-+	put_be32(out + GIT_SHA1_RAWSZ - 4, counter++);
- 	return out;
- }
- 
--static const unsigned char *anonymize_sha1(const unsigned char *sha1)
-+static const unsigned char *anonymize_sha1(const struct object_id *oid)
- {
- 	static struct hashmap sha1s;
--	size_t len = 20;
--	return anonymize_mem(&sha1s, generate_fake_sha1, sha1, &len);
-+	size_t len = GIT_SHA1_RAWSZ;
-+	return anonymize_mem(&sha1s, generate_fake_oid, oid, &len);
- }
- 
- static void show_filemodify(struct diff_queue_struct *q,
-@@ -383,7 +383,7 @@ static void show_filemodify(struct diff_queue_struct *q,
- 			if (no_data || S_ISGITLINK(spec->mode))
- 				printf("M %06o %s ", spec->mode,
- 				       sha1_to_hex(anonymize ?
--						   anonymize_sha1(spec->oid.hash) :
-+						   anonymize_sha1(&spec->oid) :
- 						   spec->oid.hash));
- 			else {
- 				struct object *object = lookup_object(spec->oid.hash);
-@@ -572,7 +572,7 @@ static void handle_commit(struct commit *commit, struct rev_info *rev)
- 	/* Export the referenced blobs, and remember the marks. */
- 	for (i = 0; i < diff_queued_diff.nr; i++)
- 		if (!S_ISGITLINK(diff_queued_diff.queue[i]->two->mode))
--			export_blob(diff_queued_diff.queue[i]->two->oid.hash);
-+			export_blob(&diff_queued_diff.queue[i]->two->oid);
- 
- 	refname = commit->util;
- 	if (anonymize) {
-@@ -797,14 +797,14 @@ static void get_tags_and_duplicates(struct rev_cmdline_info *info)
- 
- 	for (i = 0; i < info->nr; i++) {
- 		struct rev_cmdline_entry *e = info->rev + i;
--		unsigned char sha1[20];
-+		struct object_id oid;
- 		struct commit *commit;
- 		char *full_name;
- 
- 		if (e->flags & UNINTERESTING)
- 			continue;
- 
--		if (dwim_ref(e->name, strlen(e->name), sha1, &full_name) != 1)
-+		if (dwim_ref(e->name, strlen(e->name), oid.hash, &full_name) != 1)
- 			continue;
- 
- 		if (refspecs) {
-@@ -828,7 +828,7 @@ static void get_tags_and_duplicates(struct rev_cmdline_info *info)
- 		case OBJ_COMMIT:
- 			break;
- 		case OBJ_BLOB:
--			export_blob(commit->object.oid.hash);
-+			export_blob(&commit->object.oid);
- 			continue;
- 		default: /* OBJ_TAG (nested tags) is already handled */
- 			warning("Tag points to object of unexpected type %s, skipping.",
-@@ -912,7 +912,7 @@ static void import_marks(char *input_file)
- 	while (fgets(line, sizeof(line), f)) {
- 		uint32_t mark;
- 		char *line_end, *mark_end;
--		unsigned char sha1[20];
-+		struct object_id oid;
- 		struct object *object;
- 		struct commit *commit;
- 		enum object_type type;
-@@ -924,28 +924,28 @@ static void import_marks(char *input_file)
- 
- 		mark = strtoumax(line + 1, &mark_end, 10);
- 		if (!mark || mark_end == line + 1
--			|| *mark_end != ' ' || get_sha1_hex(mark_end + 1, sha1))
-+			|| *mark_end != ' ' || get_oid_hex(mark_end + 1, &oid))
- 			die("corrupt mark line: %s", line);
- 
- 		if (last_idnum < mark)
- 			last_idnum = mark;
- 
--		type = sha1_object_info(sha1, NULL);
-+		type = sha1_object_info(oid.hash, NULL);
- 		if (type < 0)
--			die("object not found: %s", sha1_to_hex(sha1));
-+			die("object not found: %s", oid_to_hex(&oid));
- 
- 		if (type != OBJ_COMMIT)
- 			/* only commits */
- 			continue;
- 
--		commit = lookup_commit(sha1);
-+		commit = lookup_commit(oid.hash);
- 		if (!commit)
--			die("not a commit? can't happen: %s", sha1_to_hex(sha1));
-+			die("not a commit? can't happen: %s", oid_to_hex(&oid));
- 
- 		object = &commit->object;
- 
- 		if (object->flags & SHOWN)
--			error("Object %s already has a mark", sha1_to_hex(sha1));
-+			error("Object %s already has a mark", oid_to_hex(&oid));
- 
- 		mark_object(object, mark);
- 
 -- 
 2.11.0
 
