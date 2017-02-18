@@ -6,39 +6,39 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2802B201A9
-	for <e@80x24.org>; Sat, 18 Feb 2017 00:07:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 19508201A9
+	for <e@80x24.org>; Sat, 18 Feb 2017 00:07:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751609AbdBRAHG (ORCPT <rfc822;e@80x24.org>);
-        Fri, 17 Feb 2017 19:07:06 -0500
-Received: from castro.crustytoothpaste.net ([75.10.60.170]:60048 "EHLO
+        id S1751525AbdBRAHF (ORCPT <rfc822;e@80x24.org>);
+        Fri, 17 Feb 2017 19:07:05 -0500
+Received: from castro.crustytoothpaste.net ([75.10.60.170]:60056 "EHLO
         castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1750918AbdBRAHB (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 17 Feb 2017 19:07:01 -0500
+        by vger.kernel.org with ESMTP id S1750772AbdBRAHC (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 17 Feb 2017 19:07:02 -0500
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 76039280B2;
+        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id E85DA280B4;
         Sat, 18 Feb 2017 00:06:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
         s=default; t=1487376419;
-        bh=M6Wj8OeRwLxg/WhhL9ZV9yKOp0D4go9aS2avjL8rEmI=;
+        bh=HScHg5Pr4wKDj6iQBgn0ByY3R9AUuGvZNAneuu2D6xk=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=W/kXya+Z0+xtyYfUoRAVlNpy4hm9Wapl55U5hPiayIhTpxlq+oiMiKDyCw4JHp9Es
-         VTK/Ck59bxjgfHEcYNUxt3FKdu0nXqd6hfj7bqqKd91SJc6TfyPbs48s52aboE89my
-         86+u285m+XPMV9IAjAAqMcV+S6ry6PDfY9EFlnFD3ZSF3zeCS+p784Z6KFyiSJmEwh
-         D0knt+V9fb4Md7TVyJnVJIWqyU1rh2v2HK3t3DOYDshJGwGM9JobbYCzyu5GrQdnhg
-         +jAdDYhZOBTpdI6nVrxjqxC8DXL9ZH9gSGxHv08iIKw/fiMgsckV7GmhT/ep+AQF7d
-         DwbHHVQNfXI8yX+flL2npPdSe4MuD2jcAmYU5UPIYr47IeBVdzYW7QIqvpxzzHjYaX
-         OlvHJpKYnbKxoAggrIT0XO0zE9wssR9KUWj9Me7N7/oKbkOnnSuX6gvYC2f8j46fj+
-         EOAE6G+L4dU1NALqdvoo82IGwOjdZVMrVHuglNAIVKCdS4Pac81
+        b=Xm+t3LScR9MR7GGbm21QF0+1+J5hauxjxROQ4TI9AFoSvU06PzlDEsEcPhVHDGipf
+         hnJXl+kCYDw30+umJ2keO9lSm93WniidAnAqXW4uPp40luxro4JjEx7sluBTjX5zjB
+         +cl6rlMchgK+k6h34HHBb5EiSicO6BhTRPjmSOz6mvilP5kI/adUNByKV1LQVj8xuZ
+         oITDN+9hWAoUc/jtZ6Dh7aNkrqlJDExojuXxumfz5ptNy1x8utHY7OH0deCaJkRZig
+         cqLqqU7hEZhAHY16Gnid2n7hZZfrx7dqimXAQK9f+ZDtWtWQIHP3JCODtnCraydxaW
+         rEwiTgGV9obwhhL1+/IJkg6H0qLGbgWyshNwoX8AXWaqWwwsGQSmZ/mWE3osh1UW4f
+         sF8ZrmM7ISXQMUuJcOsJdsZK+6LBkQMz7YfzQyT66LM9Cc6LCzMD+sFA4NpHgZ3Baz
+         zjBNv8b8XXnHIlpDQaNhrMzcbOQoEE+Uk7iTZXffJd/V88Uw3d0
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     Jeff King <peff@peff.net>, Michael Haggerty <mhagger@alum.mit.edu>,
         Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v3 05/19] builtin/fmt-merge-message: convert to struct object_id
-Date:   Sat, 18 Feb 2017 00:06:38 +0000
-Message-Id: <20170218000652.375129-6-sandals@crustytoothpaste.net>
+Subject: [PATCH v3 07/19] builtin/branch: convert to struct object_id
+Date:   Sat, 18 Feb 2017 00:06:40 +0000
+Message-Id: <20170218000652.375129-8-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.11.0
 In-Reply-To: <20170218000652.375129-1-sandals@crustytoothpaste.net>
 References: <20170218000652.375129-1-sandals@crustytoothpaste.net>
@@ -47,221 +47,115 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Convert most of the code to use struct object_id, including struct
-origin_data and struct merge_parents.  Convert several instances of
-hardcoded numbers into references to GIT_SHA1_HEXSZ.
-
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- builtin/fmt-merge-msg.c | 70 ++++++++++++++++++++++++-------------------------
- 1 file changed, 35 insertions(+), 35 deletions(-)
+ builtin/branch.c | 26 +++++++++++++-------------
+ 1 file changed, 13 insertions(+), 13 deletions(-)
 
-diff --git a/builtin/fmt-merge-msg.c b/builtin/fmt-merge-msg.c
-index efab62fd85..6faa3c0d24 100644
---- a/builtin/fmt-merge-msg.c
-+++ b/builtin/fmt-merge-msg.c
-@@ -41,7 +41,7 @@ struct src_data {
+diff --git a/builtin/branch.c b/builtin/branch.c
+index 9d30f55b0b..faf472ff8f 100644
+--- a/builtin/branch.c
++++ b/builtin/branch.c
+@@ -32,7 +32,7 @@ static const char * const builtin_branch_usage[] = {
  };
  
- struct origin_data {
--	unsigned char sha1[20];
-+	struct object_id oid;
- 	unsigned is_local_branch:1;
- };
+ static const char *head;
+-static unsigned char head_sha1[20];
++static struct object_id head_oid;
  
-@@ -59,8 +59,8 @@ static struct string_list origins = STRING_LIST_INIT_DUP;
- struct merge_parents {
- 	int alloc, nr;
- 	struct merge_parent {
--		unsigned char given[20];
--		unsigned char commit[20];
-+		struct object_id given;
-+		struct object_id commit;
- 		unsigned char used;
- 	} *item;
- };
-@@ -70,14 +70,14 @@ struct merge_parents {
-  * hundreds of heads at a time anyway.
-  */
- static struct merge_parent *find_merge_parent(struct merge_parents *table,
--					      unsigned char *given,
--					      unsigned char *commit)
-+					      struct object_id *given,
-+					      struct object_id *commit)
- {
- 	int i;
- 	for (i = 0; i < table->nr; i++) {
--		if (given && hashcmp(table->item[i].given, given))
-+		if (given && oidcmp(&table->item[i].given, given))
- 			continue;
--		if (commit && hashcmp(table->item[i].commit, commit))
-+		if (commit && oidcmp(&table->item[i].commit, commit))
- 			continue;
- 		return &table->item[i];
- 	}
-@@ -85,14 +85,14 @@ static struct merge_parent *find_merge_parent(struct merge_parents *table,
- }
- 
- static void add_merge_parent(struct merge_parents *table,
--			     unsigned char *given,
--			     unsigned char *commit)
-+			     struct object_id *given,
-+			     struct object_id *commit)
- {
- 	if (table->nr && find_merge_parent(table, given, commit))
- 		return;
- 	ALLOC_GROW(table->item, table->nr + 1, table->alloc);
--	hashcpy(table->item[table->nr].given, given);
--	hashcpy(table->item[table->nr].commit, commit);
-+	oidcpy(&table->item[table->nr].given, given);
-+	oidcpy(&table->item[table->nr].commit, commit);
- 	table->item[table->nr].used = 0;
- 	table->nr++;
- }
-@@ -106,30 +106,30 @@ static int handle_line(char *line, struct merge_parents *merge_parents)
- 	struct src_data *src_data;
- 	struct string_list_item *item;
- 	int pulling_head = 0;
--	unsigned char sha1[20];
-+	struct object_id oid;
- 
--	if (len < 43 || line[40] != '\t')
-+	if (len < GIT_SHA1_HEXSZ + 3 || line[GIT_SHA1_HEXSZ] != '\t')
- 		return 1;
- 
--	if (starts_with(line + 41, "not-for-merge"))
-+	if (starts_with(line + GIT_SHA1_HEXSZ + 1, "not-for-merge"))
- 		return 0;
- 
--	if (line[41] != '\t')
-+	if (line[GIT_SHA1_HEXSZ + 1] != '\t')
- 		return 2;
- 
--	i = get_sha1_hex(line, sha1);
-+	i = get_oid_hex(line, &oid);
- 	if (i)
- 		return 3;
- 
--	if (!find_merge_parent(merge_parents, sha1, NULL))
-+	if (!find_merge_parent(merge_parents, &oid, NULL))
- 		return 0; /* subsumed by other parents */
- 
- 	origin_data = xcalloc(1, sizeof(struct origin_data));
--	hashcpy(origin_data->sha1, sha1);
-+	oidcpy(&origin_data->oid, &oid);
- 
- 	if (line[len - 1] == '\n')
- 		line[len - 1] = 0;
--	line += 42;
-+	line += GIT_SHA1_HEXSZ + 2;
- 
- 	/*
- 	 * At this point, line points at the beginning of comment e.g.
-@@ -338,10 +338,10 @@ static void shortlog(const char *name,
- 	struct string_list committers = STRING_LIST_INIT_DUP;
- 	int flags = UNINTERESTING | TREESAME | SEEN | SHOWN | ADDED;
- 	struct strbuf sb = STRBUF_INIT;
--	const unsigned char *sha1 = origin_data->sha1;
-+	const struct object_id *oid = &origin_data->oid;
- 	int limit = opts->shortlog_len;
- 
--	branch = deref_tag(parse_object(sha1), sha1_to_hex(sha1), 40);
-+	branch = deref_tag(parse_object(oid->hash), oid_to_hex(oid), GIT_SHA1_HEXSZ);
- 	if (!branch || branch->type != OBJ_COMMIT)
- 		return;
- 
-@@ -531,7 +531,7 @@ static void fmt_merge_msg_sigs(struct strbuf *out)
- }
- 
- static void find_merge_parents(struct merge_parents *result,
--			       struct strbuf *in, unsigned char *head)
-+			       struct strbuf *in, struct object_id *head)
- {
- 	struct commit_list *parents;
- 	struct commit *head_commit;
-@@ -542,31 +542,31 @@ static void find_merge_parents(struct merge_parents *result,
- 		int len;
- 		char *p = in->buf + pos;
- 		char *newline = strchr(p, '\n');
+ static int branch_use_color = -1;
+ static char branch_colors[][COLOR_MAXLEN] = {
+@@ -117,13 +117,13 @@ static int branch_merged(int kind, const char *name,
+ 	if (kind == FILTER_REFS_BRANCHES) {
+ 		struct branch *branch = branch_get(name);
+ 		const char *upstream = branch_get_upstream(branch, NULL);
 -		unsigned char sha1[20];
 +		struct object_id oid;
- 		struct commit *parent;
- 		struct object *obj;
  
- 		len = newline ? newline - p : strlen(p);
- 		pos += len + !!newline;
- 
--		if (len < 43 ||
--		    get_sha1_hex(p, sha1) ||
--		    p[40] != '\t' ||
--		    p[41] != '\t')
-+		if (len < GIT_SHA1_HEXSZ + 3 ||
-+		    get_oid_hex(p, &oid) ||
-+		    p[GIT_SHA1_HEXSZ] != '\t' ||
-+		    p[GIT_SHA1_HEXSZ + 1] != '\t')
- 			continue; /* skip not-for-merge */
- 		/*
- 		 * Do not use get_merge_parent() here; we do not have
- 		 * "name" here and we do not want to contaminate its
- 		 * util field yet.
- 		 */
--		obj = parse_object(sha1);
-+		obj = parse_object(oid.hash);
- 		parent = (struct commit *)peel_to_type(NULL, 0, obj, OBJ_COMMIT);
- 		if (!parent)
- 			continue;
- 		commit_list_insert(parent, &parents);
--		add_merge_parent(result, obj->oid.hash, parent->object.oid.hash);
-+		add_merge_parent(result, &obj->oid, &parent->object.oid);
+ 		if (upstream &&
+ 		    (reference_name = reference_name_to_free =
+ 		     resolve_refdup(upstream, RESOLVE_REF_READING,
+-				    sha1, NULL)) != NULL)
+-			reference_rev = lookup_commit_reference(sha1);
++				    oid.hash, NULL)) != NULL)
++			reference_rev = lookup_commit_reference(oid.hash);
  	}
--	head_commit = lookup_commit(head);
-+	head_commit = lookup_commit(head->hash);
- 	if (head_commit)
- 		commit_list_insert(head_commit, &parents);
- 	parents = reduce_heads(parents);
-@@ -574,7 +574,7 @@ static void find_merge_parents(struct merge_parents *result,
- 	while (parents) {
- 		struct commit *cmit = pop_commit(&parents);
- 		for (i = 0; i < result->nr; i++)
--			if (!hashcmp(result->item[i].commit, cmit->object.oid.hash))
-+			if (!oidcmp(&result->item[i].commit, &cmit->object.oid))
- 				result->item[i].used = 1;
- 	}
+ 	if (!reference_rev)
+ 		reference_rev = head_rev;
+@@ -153,10 +153,10 @@ static int branch_merged(int kind, const char *name,
+ }
  
-@@ -592,7 +592,7 @@ int fmt_merge_msg(struct strbuf *in, struct strbuf *out,
- 		  struct fmt_merge_msg_opts *opts)
+ static int check_branch_commit(const char *branchname, const char *refname,
+-			       const unsigned char *sha1, struct commit *head_rev,
++			       const struct object_id *oid, struct commit *head_rev,
+ 			       int kinds, int force)
  {
- 	int i = 0, pos = 0;
--	unsigned char head_sha1[20];
-+	struct object_id head_oid;
- 	const char *current_branch;
- 	void *current_branch_to_free;
- 	struct merge_parents merge_parents;
-@@ -601,13 +601,13 @@ int fmt_merge_msg(struct strbuf *in, struct strbuf *out,
+-	struct commit *rev = lookup_commit_reference(sha1);
++	struct commit *rev = lookup_commit_reference(oid->hash);
+ 	if (!rev) {
+ 		error(_("Couldn't look up commit object for '%s'"), refname);
+ 		return -1;
+@@ -183,7 +183,7 @@ static int delete_branches(int argc, const char **argv, int force, int kinds,
+ 			   int quiet)
+ {
+ 	struct commit *head_rev = NULL;
+-	unsigned char sha1[20];
++	struct object_id oid;
+ 	char *name = NULL;
+ 	const char *fmt;
+ 	int i;
+@@ -207,7 +207,7 @@ static int delete_branches(int argc, const char **argv, int force, int kinds,
+ 	}
  
- 	/* get current branch */
- 	current_branch = current_branch_to_free =
--		resolve_refdup("HEAD", RESOLVE_REF_READING, head_sha1, NULL);
-+		resolve_refdup("HEAD", RESOLVE_REF_READING, head_oid.hash, NULL);
- 	if (!current_branch)
- 		die("No current branch");
- 	if (starts_with(current_branch, "refs/heads/"))
- 		current_branch += 11;
+ 	if (!force) {
+-		head_rev = lookup_commit_reference(head_sha1);
++		head_rev = lookup_commit_reference(head_oid.hash);
+ 		if (!head_rev)
+ 			die(_("Couldn't look up commit object for HEAD"));
+ 	}
+@@ -235,7 +235,7 @@ static int delete_branches(int argc, const char **argv, int force, int kinds,
+ 					RESOLVE_REF_READING
+ 					| RESOLVE_REF_NO_RECURSE
+ 					| RESOLVE_REF_ALLOW_BAD_NAME,
+-					sha1, &flags);
++					oid.hash, &flags);
+ 		if (!target) {
+ 			error(remote_branch
+ 			      ? _("remote-tracking branch '%s' not found.")
+@@ -245,13 +245,13 @@ static int delete_branches(int argc, const char **argv, int force, int kinds,
+ 		}
  
--	find_merge_parents(&merge_parents, in, head_sha1);
-+	find_merge_parents(&merge_parents, in, &head_oid);
+ 		if (!(flags & (REF_ISSYMREF|REF_ISBROKEN)) &&
+-		    check_branch_commit(bname.buf, name, sha1, head_rev, kinds,
++		    check_branch_commit(bname.buf, name, &oid, head_rev, kinds,
+ 					force)) {
+ 			ret = 1;
+ 			goto next;
+ 		}
  
- 	/* get a line */
- 	while (pos < in->len) {
-@@ -633,7 +633,7 @@ int fmt_merge_msg(struct strbuf *in, struct strbuf *out,
- 		struct commit *head;
- 		struct rev_info rev;
+-		if (delete_ref(name, is_null_sha1(sha1) ? NULL : sha1,
++		if (delete_ref(name, is_null_oid(&oid) ? NULL : oid.hash,
+ 			       REF_NODEREF)) {
+ 			error(remote_branch
+ 			      ? _("Error deleting remote-tracking branch '%s'")
+@@ -267,7 +267,7 @@ static int delete_branches(int argc, const char **argv, int force, int kinds,
+ 			       bname.buf,
+ 			       (flags & REF_ISBROKEN) ? "broken"
+ 			       : (flags & REF_ISSYMREF) ? target
+-			       : find_unique_abbrev(sha1, DEFAULT_ABBREV));
++			       : find_unique_abbrev(oid.hash, DEFAULT_ABBREV));
+ 		}
+ 		delete_branch_config(bname.buf);
  
--		head = lookup_commit_or_die(head_sha1, "HEAD");
-+		head = lookup_commit_or_die(head_oid.hash, "HEAD");
- 		init_revisions(&rev, NULL);
- 		rev.commit_format = CMIT_FMT_ONELINE;
- 		rev.ignore_merges = 1;
+@@ -693,7 +693,7 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
+ 
+ 	track = git_branch_track;
+ 
+-	head = resolve_refdup("HEAD", 0, head_sha1, NULL);
++	head = resolve_refdup("HEAD", 0, head_oid.hash, NULL);
+ 	if (!head)
+ 		die(_("Failed to resolve HEAD as a valid ref."));
+ 	if (!strcmp(head, "HEAD"))
 -- 
 2.11.0
 
