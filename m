@@ -2,52 +2,53 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,
+	TVD_SUBJ_WIPE_DEBT shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1A125201B0
-	for <e@80x24.org>; Sat, 18 Feb 2017 13:35:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 73148201B0
+	for <e@80x24.org>; Sat, 18 Feb 2017 13:35:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753410AbdBRNe6 (ORCPT <rfc822;e@80x24.org>);
-        Sat, 18 Feb 2017 08:34:58 -0500
-Received: from mail-pg0-f68.google.com ([74.125.83.68]:34279 "EHLO
-        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753231AbdBRNe5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 18 Feb 2017 08:34:57 -0500
-Received: by mail-pg0-f68.google.com with SMTP id v184so7383874pgv.1
-        for <git@vger.kernel.org>; Sat, 18 Feb 2017 05:34:57 -0800 (PST)
+        id S1753428AbdBRNfF (ORCPT <rfc822;e@80x24.org>);
+        Sat, 18 Feb 2017 08:35:05 -0500
+Received: from mail-pg0-f67.google.com ([74.125.83.67]:35296 "EHLO
+        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753231AbdBRNfE (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 18 Feb 2017 08:35:04 -0500
+Received: by mail-pg0-f67.google.com with SMTP id 1so160119pgz.2
+        for <git@vger.kernel.org>; Sat, 18 Feb 2017 05:35:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=9HS4gfbnbQm/IcJpBK9JsctKyYJfG7g1z3X87wi+qD8=;
-        b=uDhsjYAQ77jm0y+nErhxyiXFTEXWLTusZ6c+etgnPQtZG/Z+CwVxQAdFSq6p7kscX+
-         qs+54ok123CMy/DsuZ37UxpnzXE8ceko0VrBuO3pVmDfLhr0AxIodU1huNNjlzyPW6mC
-         cpoGz4j8EL4iGZpn6Olz7Mukv27fYGrqO2wFXYxykoAjuwQTN+TMuLnHNwOaoto/hMXc
-         iuP9mxm7jkZwGfGTgVTBI6xbzDgdM+dq4A/S5D5Z0PJ+/Cu6mIwBk58ueWTOaR/9jvuQ
-         yknlHrIQG6naFVKc0usOp1YEisdMneE6KGju4bY9n5JEwOCHzfeLeN1gU0rfH/NMcZHQ
-         ZW3w==
+        bh=LQIxpLSEYxqiiS7OmWk9V8V2Qj6QZUFLvk+/sm1xnzQ=;
+        b=O8l7RVOZ6hLIq3diVct2crx22HVAxIiiJ9h8tQCcP8LUaHmakTph/7J7Ttqq0IZCWM
+         ADn8hBbZB2J8NX3A/s0RhyD3pbWyVYhG8lIcXmNLeh7vQq4vyzl9QkW0yu/mFaQrxfgj
+         M2QeOUm0YtEWDGzKpCQyKTOY1FSM3wqOnZ8NzVni6yzApvv7jZaGunOJxIctiwIs7lpQ
+         PuX656o+1eKVJkREb67xqyw3hf8Wwde5pshbK3z0LSl8EI3tj300HpaCxcAg5DxoSghP
+         nBwgQO4OmUv5wxhd9dTxMWeNwuwMZMhtvMR3JWYLKF9m92aAus7e1Tp6PYMj1M0ep/VB
+         rMSg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=9HS4gfbnbQm/IcJpBK9JsctKyYJfG7g1z3X87wi+qD8=;
-        b=jl2Fip06UzACDlIemL5SGWPjto04zkR3khq5xKocWDfL9cj7iF9iaVsTZi4GtD9F3H
-         4qv0HigflXh3Bk0XCbbtVbja4tJH7VKgZE0tkMYl0oz0eQLRIiO4CDY2tZ8iYuCgYOAG
-         ODmJPtFrSLL7aUGv/c6CkIwyOMemF5HuvYRNxnbkOiN/TnFJzivrsr3dVxZYU4XlcOnA
-         L7WI42IDjdv5F2uw2UEZ59LwtSywbYhUbmSObQa+rYdBtiyTSfJ7lk291EjMuqnFqehk
-         +LCOj14IYdXbebDEk8BEQx5UBzRhcNIhsK7T9KMgb5iKVAwhxz5SpCsRObmuN6Grk9p9
-         LruQ==
-X-Gm-Message-State: AMke39ne8NU2N7iyO0D3GYNHYHE3EhoJGSASkSiDtPVOUeeJ79xCgqTMyz83iS3GHkr97g==
-X-Received: by 10.84.231.201 with SMTP id g9mr18432532pln.13.1487424896569;
-        Sat, 18 Feb 2017 05:34:56 -0800 (PST)
+        bh=LQIxpLSEYxqiiS7OmWk9V8V2Qj6QZUFLvk+/sm1xnzQ=;
+        b=quZIP4JOxHJfvlpgHpKxY7dJRhB9oW07DL3cW1KN3c1clW5QYLCHaRNlWdGzLEMfQ7
+         xc3TF2waXxhC89g5y715voV8bX79vW8r4kDm4DUssAxF57tWiNlGMciVsjNyfC0eZxxO
+         7qIrAqkVB3rnCoIsr6k9YINeDarXLF8CKnEV75RqENEKLwb2Xo58YmOanopEBFxGC2qC
+         CxaFKUkXxAnzqYRN0VWhaF9ZezB4qNx7RAlFrSf5hv1VTKZAdGGSxNUDHe9mki+OmgCO
+         9CGmEaXmkUjOusNxCAuVYpdcya+PC4KevS5rZWIx24lcxxS//zOJUSEcHfWfssLfD59i
+         UOpw==
+X-Gm-Message-State: AMke39lnAosJ/aaRHgQ9S8l2b6CEZxXLib06FY7RpGM240ugMH8bQVsEq1aAdjKkTkoZGA==
+X-Received: by 10.98.198.90 with SMTP id m87mr14990747pfg.153.1487424904060;
+        Sat, 18 Feb 2017 05:35:04 -0800 (PST)
 Received: from ash ([115.73.162.84])
-        by smtp.gmail.com with ESMTPSA id e13sm25625682pgf.48.2017.02.18.05.34.52
+        by smtp.gmail.com with ESMTPSA id m29sm25523254pfi.54.2017.02.18.05.34.59
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 18 Feb 2017 05:34:55 -0800 (PST)
-Received: by ash (sSMTP sendmail emulation); Sat, 18 Feb 2017 20:34:49 +0700
+        Sat, 18 Feb 2017 05:35:03 -0800 (PST)
+Received: by ash (sSMTP sendmail emulation); Sat, 18 Feb 2017 20:34:57 +0700
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
@@ -58,9 +59,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Stefan Beller <sbeller@google.com>, novalis@novalis.org,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH v4 13/15] refs: move submodule code out of files-backend.c
-Date:   Sat, 18 Feb 2017 20:33:01 +0700
-Message-Id: <20170218133303.3682-14-pclouds@gmail.com>
+Subject: [PATCH v4 14/15] files-backend: remove submodule_allowed from files_downcast()
+Date:   Sat, 18 Feb 2017 20:33:02 +0700
+Message-Id: <20170218133303.3682-15-pclouds@gmail.com>
 X-Mailer: git-send-email 2.11.0.157.gd943d85
 In-Reply-To: <20170218133303.3682-1-pclouds@gmail.com>
 References: <20170217140436.17336-1-pclouds@gmail.com>
@@ -73,167 +74,300 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-files-backend is now initialized with a $GIT_DIR. Converting a submodule
-path to where real submodule gitdir is located is done in get_ref_store().
+Since submodule or not is irrelevant to files-backend after the last
+patch, remove the parameter from files_downcast() and kill
+files_assert_main_repository().
 
-The new code in init_submodule_ref_store() is basically a copy of
-strbuf_git_path_submodule().
-
-This gives a slight performance improvement for submodules since we
-don't convert submodule path to gitdir at every backend call like
-before. We pay that once at ref-store creation.
-
-More cleanup in files_downcast() follows shortly. It's separate to keep
-noises from this patch.
+PS. This implies that all ref operations are allowed for submodules. But
+we may need to look more closely to see if that's really true...
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- refs.c               | 18 +++++++++++++-----
- refs/files-backend.c | 24 +++++++-----------------
- refs/refs-internal.h |  6 +++---
- 3 files changed, 23 insertions(+), 25 deletions(-)
+ refs/files-backend.c | 70 ++++++++++++++++------------------------------------
+ 1 file changed, 21 insertions(+), 49 deletions(-)
 
-diff --git a/refs.c b/refs.c
-index 1b60e6180..8035c3ea7 100644
---- a/refs.c
-+++ b/refs.c
-@@ -9,6 +9,7 @@
- #include "refs/refs-internal.h"
- #include "object.h"
- #include "tag.h"
-+#include "submodule.h"
+diff --git a/refs/files-backend.c b/refs/files-backend.c
+index 529c80af1..b8ccf4e47 100644
+--- a/refs/files-backend.c
++++ b/refs/files-backend.c
+@@ -1030,24 +1030,13 @@ static struct ref_store *files_ref_store_create(const char *gitdir)
+ }
  
  /*
-  * List of all available backends
-@@ -1424,9 +1425,9 @@ static void register_submodule_ref_store(struct ref_store *refs,
- 
- /*
-  * Create, record, and return a ref_store instance for the specified
-- * submodule (or the main repository if submodule is NULL).
-+ * gitdir (or the main repository if gitdir is NULL).
+- * Die if refs is for a submodule (i.e., not for the main repository).
+- * caller is used in any necessary error messages.
+- */
+-static void files_assert_main_repository(struct files_ref_store *refs,
+-					 const char *caller)
+-{
+-	/* This function is to be deleted in the next patch */
+-}
+-
+-/*
+  * Downcast ref_store to files_ref_store. Die if ref_store is not a
+  * files_ref_store. If submodule_allowed is not true, then also die if
+  * files_ref_store is for a submodule (i.e., not for the main
+  * repository). caller is used in any necessary error messages.
   */
--static struct ref_store *ref_store_init(const char *submodule)
-+static struct ref_store *ref_store_init(const char *gitdir)
+-static struct files_ref_store *files_downcast(
+-		struct ref_store *ref_store, int submodule_allowed,
+-		const char *caller)
++static struct files_ref_store *files_downcast(struct ref_store *ref_store,
++					      const char *caller)
  {
- 	const char *be_name = "files";
- 	struct ref_storage_be *be = find_ref_storage_backend(be_name);
-@@ -1435,7 +1436,7 @@ static struct ref_store *ref_store_init(const char *submodule)
- 	if (!be)
- 		die("BUG: reference backend %s is unknown", be_name);
+ 	struct files_ref_store *refs;
  
--	refs = be->init(submodule);
-+	refs = be->init(gitdir);
+@@ -1057,9 +1046,6 @@ static struct files_ref_store *files_downcast(
+ 
+ 	refs = (struct files_ref_store *)ref_store;
+ 
+-	if (!submodule_allowed)
+-		files_assert_main_repository(refs, caller);
+-
  	return refs;
  }
  
-@@ -1460,6 +1461,7 @@ struct ref_store *get_ref_store(const char *submodule)
+@@ -1395,7 +1381,7 @@ static int files_read_raw_ref(struct ref_store *ref_store,
+ 			      struct strbuf *referent, unsigned int *type)
  {
- 	struct strbuf submodule_sb = STRBUF_INIT;
- 	struct ref_store *refs;
-+	int ret;
+ 	struct files_ref_store *refs =
+-		files_downcast(ref_store, 1, "read_raw_ref");
++		files_downcast(ref_store, "read_raw_ref");
+ 	struct strbuf sb_contents = STRBUF_INIT;
+ 	struct strbuf sb_path = STRBUF_INIT;
+ 	const char *path;
+@@ -1588,7 +1574,6 @@ static int lock_raw_ref(struct files_ref_store *refs,
+ 	int ret = TRANSACTION_GENERIC_ERROR;
  
- 	if (!submodule || !*submodule) {
- 		return get_main_ref_store();
-@@ -1470,8 +1472,14 @@ struct ref_store *get_ref_store(const char *submodule)
- 		return refs;
+ 	assert(err);
+-	files_assert_main_repository(refs, "lock_raw_ref");
  
- 	strbuf_addstr(&submodule_sb, submodule);
--	if (is_nonbare_repository_dir(&submodule_sb))
--		refs = ref_store_init(submodule);
-+	ret = is_nonbare_repository_dir(&submodule_sb);
-+	strbuf_release(&submodule_sb);
-+	if (!ret)
-+		return refs;
-+
-+	ret = submodule_to_gitdir(&submodule_sb, submodule);
-+	if (!ret)
-+		refs = ref_store_init(submodule_sb.buf);
- 	strbuf_release(&submodule_sb);
+ 	*type = 0;
  
- 	if (refs)
-diff --git a/refs/files-backend.c b/refs/files-backend.c
-index dbcaf9bda..529c80af1 100644
---- a/refs/files-backend.c
-+++ b/refs/files-backend.c
-@@ -917,13 +917,6 @@ struct packed_ref_cache {
- struct files_ref_store {
- 	struct ref_store base;
+@@ -1812,7 +1797,7 @@ static enum peel_status peel_entry(struct ref_entry *entry, int repeel)
+ static int files_peel_ref(struct ref_store *ref_store,
+ 			  const char *refname, unsigned char *sha1)
+ {
+-	struct files_ref_store *refs = files_downcast(ref_store, 0, "peel_ref");
++	struct files_ref_store *refs = files_downcast(ref_store, "peel_ref");
+ 	int flag;
+ 	unsigned char base[20];
  
--	/*
--	 * The name of the submodule represented by this object, or
--	 * NULL if it represents the main repository's reference
--	 * store:
--	 */
--	const char *submodule;
+@@ -1921,7 +1906,7 @@ static struct ref_iterator *files_ref_iterator_begin(
+ 		const char *prefix, unsigned int flags)
+ {
+ 	struct files_ref_store *refs =
+-		files_downcast(ref_store, 1, "ref_iterator_begin");
++		files_downcast(ref_store, "ref_iterator_begin");
+ 	struct ref_dir *loose_dir, *packed_dir;
+ 	struct ref_iterator *loose_iter, *packed_iter;
+ 	struct files_ref_iterator *iter;
+@@ -2059,7 +2044,6 @@ static struct ref_lock *lock_ref_sha1_basic(struct files_ref_store *refs,
+ 	int resolve_flags = RESOLVE_REF_NO_RECURSE;
+ 	int resolved;
+ 
+-	files_assert_main_repository(refs, "lock_ref_sha1_basic");
+ 	assert(err);
+ 
+ 	lock = xcalloc(1, sizeof(struct ref_lock));
+@@ -2184,8 +2168,6 @@ static int lock_packed_refs(struct files_ref_store *refs, int flags)
+ 	struct strbuf sb = STRBUF_INIT;
+ 	int ret;
+ 
+-	files_assert_main_repository(refs, "lock_packed_refs");
 -
- 	struct strbuf gitdir;
- 	struct strbuf gitcommondir;
+ 	if (!timeout_configured) {
+ 		git_config_get_int("core.packedrefstimeout", &timeout_value);
+ 		timeout_configured = 1;
+@@ -2225,8 +2207,6 @@ static int commit_packed_refs(struct files_ref_store *refs)
+ 	int save_errno = 0;
+ 	FILE *out;
  
-@@ -945,11 +938,8 @@ static void files_path(struct files_ref_store *refs, struct strbuf *sb,
- 	va_start(vap, fmt);
- 	strbuf_vaddf(&tmp, fmt, vap);
- 	va_end(vap);
--	if (refs->submodule) {
--		strbuf_git_path_submodule(sb, refs->submodule,
--					  "%s", tmp.buf);
--	} else if (!strcmp(tmp.buf, "packed-refs") ||
--		   !strcmp(tmp.buf, "logs")) { /* non refname path */
-+	if (!strcmp(tmp.buf, "packed-refs") || !strcmp(tmp.buf, "logs")) {
-+		/* non refname path */
- 		strbuf_addf(sb, "%s/%s", refs->gitcommondir.buf, tmp.buf);
- 	} else if (skip_prefix(tmp.buf, "logs/", &ref)) { /* reflog */
- 		if (is_per_worktree_ref(ref))
-@@ -1018,7 +1008,7 @@ static void clear_loose_ref_cache(struct files_ref_store *refs)
-  * Create a new submodule ref cache and add it to the internal
-  * set of caches.
-  */
--static struct ref_store *files_ref_store_create(const char *submodule)
-+static struct ref_store *files_ref_store_create(const char *gitdir)
+-	files_assert_main_repository(refs, "commit_packed_refs");
+-
+ 	if (!packed_ref_cache->lock)
+ 		die("internal error: packed-refs not locked");
+ 
+@@ -2258,8 +2238,6 @@ static void rollback_packed_refs(struct files_ref_store *refs)
+ 	struct packed_ref_cache *packed_ref_cache =
+ 		get_packed_ref_cache(refs);
+ 
+-	files_assert_main_repository(refs, "rollback_packed_refs");
+-
+ 	if (!packed_ref_cache->lock)
+ 		die("internal error: packed-refs not locked");
+ 	rollback_lock_file(packed_ref_cache->lock);
+@@ -2420,7 +2398,7 @@ static void prune_refs(struct files_ref_store *refs, struct ref_to_prune *r)
+ static int files_pack_refs(struct ref_store *ref_store, unsigned int flags)
  {
- 	struct files_ref_store *refs = xcalloc(1, sizeof(*refs));
- 	struct ref_store *ref_store = (struct ref_store *)refs;
-@@ -1028,8 +1018,9 @@ static struct ref_store *files_ref_store_create(const char *submodule)
- 	strbuf_init(&refs->gitdir, 0);
- 	strbuf_init(&refs->gitcommondir, 0);
+ 	struct files_ref_store *refs =
+-		files_downcast(ref_store, 0, "pack_refs");
++		files_downcast(ref_store, "pack_refs");
+ 	struct pack_refs_cb_data cbdata;
  
--	if (submodule) {
--		refs->submodule = xstrdup(submodule);
-+	if (gitdir) {
-+		strbuf_addstr(&refs->gitdir, gitdir);
-+		get_common_dir_noenv(&refs->gitcommondir, gitdir);
- 	} else {
- 		strbuf_addstr(&refs->gitdir, get_git_dir());
- 		strbuf_addstr(&refs->gitcommondir, get_git_common_dir());
-@@ -1045,8 +1036,7 @@ static struct ref_store *files_ref_store_create(const char *submodule)
- static void files_assert_main_repository(struct files_ref_store *refs,
- 					 const char *caller)
+ 	memset(&cbdata, 0, sizeof(cbdata));
+@@ -2453,7 +2431,6 @@ static int repack_without_refs(struct files_ref_store *refs,
+ 	struct string_list_item *refname;
+ 	int ret, needs_repacking = 0, removed = 0;
+ 
+-	files_assert_main_repository(refs, "repack_without_refs");
+ 	assert(err);
+ 
+ 	/* Look for a packed ref */
+@@ -2503,7 +2480,7 @@ static int files_delete_refs(struct ref_store *ref_store,
+ 			     struct string_list *refnames, unsigned int flags)
  {
--	if (refs->submodule)
--		die("BUG: %s called for a submodule", caller);
-+	/* This function is to be deleted in the next patch */
- }
+ 	struct files_ref_store *refs =
+-		files_downcast(ref_store, 0, "delete_refs");
++		files_downcast(ref_store, "delete_refs");
+ 	struct strbuf err = STRBUF_INIT;
+ 	int i, result = 0;
  
- /*
-diff --git a/refs/refs-internal.h b/refs/refs-internal.h
-index 8c5febf54..3ef020acf 100644
---- a/refs/refs-internal.h
-+++ b/refs/refs-internal.h
-@@ -482,12 +482,12 @@ struct ref_store;
- /* refs backends */
+@@ -2615,7 +2592,7 @@ static int files_verify_refname_available(struct ref_store *ref_store,
+ 					  struct strbuf *err)
+ {
+ 	struct files_ref_store *refs =
+-		files_downcast(ref_store, 1, "verify_refname_available");
++		files_downcast(ref_store, "verify_refname_available");
+ 	struct ref_dir *packed_refs = get_packed_refs(refs);
+ 	struct ref_dir *loose_refs = get_loose_refs(refs);
  
- /*
-- * Initialize the ref_store for the specified submodule, or for the
-- * main repository if submodule == NULL. These functions should call
-+ * Initialize the ref_store for the specified gitdir, or for the
-+ * current repository if gitdir == NULL. These functions should call
-  * base_ref_store_init() to initialize the shared part of the
-  * ref_store and to record the ref_store for later lookup.
-  */
--typedef struct ref_store *ref_store_init_fn(const char *submodule);
-+typedef struct ref_store *ref_store_init_fn(const char *gitdir);
+@@ -2640,7 +2617,7 @@ static int files_rename_ref(struct ref_store *ref_store,
+ 			    const char *logmsg)
+ {
+ 	struct files_ref_store *refs =
+-		files_downcast(ref_store, 0, "rename_ref");
++		files_downcast(ref_store, "rename_ref");
+ 	unsigned char sha1[20], orig_sha1[20];
+ 	int flag = 0, logmoved = 0;
+ 	struct ref_lock *lock;
+@@ -2883,7 +2860,7 @@ static int files_create_reflog(struct ref_store *ref_store,
+ 			       struct strbuf *err)
+ {
+ 	struct files_ref_store *refs =
+-		files_downcast(ref_store, 0, "create_reflog");
++		files_downcast(ref_store, "create_reflog");
+ 	int fd;
  
- typedef int ref_init_db_fn(struct ref_store *refs, struct strbuf *err);
+ 	if (log_ref_setup(refs, refname, force_create, &fd, err))
+@@ -3014,8 +2991,6 @@ static int commit_ref_update(struct files_ref_store *refs,
+ 			     const unsigned char *sha1, const char *logmsg,
+ 			     struct strbuf *err)
+ {
+-	files_assert_main_repository(refs, "commit_ref_update");
+-
+ 	clear_loose_ref_cache(refs);
+ 	if (files_log_ref_write(refs, lock->ref_name, lock->old_oid.hash,
+ 				sha1, logmsg, 0, err)) {
+@@ -3124,7 +3099,7 @@ static int files_create_symref(struct ref_store *ref_store,
+ 			       const char *logmsg)
+ {
+ 	struct files_ref_store *refs =
+-		files_downcast(ref_store, 0, "create_symref");
++		files_downcast(ref_store, "create_symref");
+ 	struct strbuf err = STRBUF_INIT;
+ 	struct ref_lock *lock;
+ 	int ret;
+@@ -3150,7 +3125,7 @@ int set_worktree_head_symref(const char *gitdir, const char *target)
+ 	 * backends. This function needs to die.
+ 	 */
+ 	struct files_ref_store *refs =
+-		files_downcast(get_ref_store(NULL), 0, "set_head_symref");
++		files_downcast(get_ref_store(NULL), "set_head_symref");
+ 	static struct lock_file head_lock;
+ 	struct ref_lock *lock;
+ 	struct strbuf head_path = STRBUF_INIT;
+@@ -3188,7 +3163,7 @@ static int files_reflog_exists(struct ref_store *ref_store,
+ 			       const char *refname)
+ {
+ 	struct files_ref_store *refs =
+-		files_downcast(ref_store, 0, "reflog_exists");
++		files_downcast(ref_store, "reflog_exists");
+ 	struct strbuf sb = STRBUF_INIT;
+ 	struct stat st;
+ 	int ret;
+@@ -3203,7 +3178,7 @@ static int files_delete_reflog(struct ref_store *ref_store,
+ 			       const char *refname)
+ {
+ 	struct files_ref_store *refs =
+-		files_downcast(ref_store, 0, "delete_reflog");
++		files_downcast(ref_store, "delete_reflog");
+ 	struct strbuf sb = STRBUF_INIT;
+ 	int ret;
  
+@@ -3258,7 +3233,7 @@ static int files_for_each_reflog_ent_reverse(struct ref_store *ref_store,
+ 					     void *cb_data)
+ {
+ 	struct files_ref_store *refs =
+-		files_downcast(ref_store, 0, "for_each_reflog_ent_reverse");
++		files_downcast(ref_store, "for_each_reflog_ent_reverse");
+ 	struct strbuf sb = STRBUF_INIT;
+ 	FILE *logfp;
+ 	long pos;
+@@ -3366,7 +3341,7 @@ static int files_for_each_reflog_ent(struct ref_store *ref_store,
+ 				     each_reflog_ent_fn fn, void *cb_data)
+ {
+ 	struct files_ref_store *refs =
+-		files_downcast(ref_store, 0, "for_each_reflog_ent");
++		files_downcast(ref_store, "for_each_reflog_ent");
+ 	FILE *logfp;
+ 	struct strbuf sb = STRBUF_INIT;
+ 	int ret = 0;
+@@ -3454,7 +3429,7 @@ static struct ref_iterator_vtable files_reflog_iterator_vtable = {
+ static struct ref_iterator *files_reflog_iterator_begin(struct ref_store *ref_store)
+ {
+ 	struct files_ref_store *refs =
+-		files_downcast(ref_store, 0, "reflog_iterator_begin");
++		files_downcast(ref_store, "reflog_iterator_begin");
+ 	struct files_reflog_iterator *iter = xcalloc(1, sizeof(*iter));
+ 	struct ref_iterator *ref_iterator = &iter->base;
+ 	struct strbuf sb = STRBUF_INIT;
+@@ -3666,8 +3641,6 @@ static int lock_ref_for_update(struct files_ref_store *refs,
+ 	int ret;
+ 	struct ref_lock *lock;
+ 
+-	files_assert_main_repository(refs, "lock_ref_for_update");
+-
+ 	if ((update->flags & REF_HAVE_NEW) && is_null_sha1(update->new_sha1))
+ 		update->flags |= REF_DELETING;
+ 
+@@ -3792,7 +3765,7 @@ static int files_transaction_commit(struct ref_store *ref_store,
+ 				    struct strbuf *err)
+ {
+ 	struct files_ref_store *refs =
+-		files_downcast(ref_store, 0, "ref_transaction_commit");
++		files_downcast(ref_store, "ref_transaction_commit");
+ 	int ret = 0, i;
+ 	struct string_list refs_to_delete = STRING_LIST_INIT_NODUP;
+ 	struct string_list_item *ref_to_delete;
+@@ -4000,7 +3973,7 @@ static int files_initial_transaction_commit(struct ref_store *ref_store,
+ 					    struct strbuf *err)
+ {
+ 	struct files_ref_store *refs =
+-		files_downcast(ref_store, 0, "initial_ref_transaction_commit");
++		files_downcast(ref_store, "initial_ref_transaction_commit");
+ 	int ret = 0, i;
+ 	struct string_list affected_refnames = STRING_LIST_INIT_NODUP;
+ 
+@@ -4122,7 +4095,7 @@ static int files_reflog_expire(struct ref_store *ref_store,
+ 			       void *policy_cb_data)
+ {
+ 	struct files_ref_store *refs =
+-		files_downcast(ref_store, 0, "reflog_expire");
++		files_downcast(ref_store, "reflog_expire");
+ 	static struct lock_file reflog_lock;
+ 	struct expire_reflog_cb cb;
+ 	struct ref_lock *lock;
+@@ -4227,8 +4200,7 @@ static int files_reflog_expire(struct ref_store *ref_store,
+ 
+ static int files_init_db(struct ref_store *ref_store, struct strbuf *err)
+ {
+-	struct files_ref_store *refs =
+-		files_downcast(ref_store, 0, "init_db");
++	struct files_ref_store *refs = files_downcast(ref_store, "init_db");
+ 	struct strbuf sb = STRBUF_INIT;
+ 
+ 	/*
 -- 
 2.11.0.157.gd943d85
 
