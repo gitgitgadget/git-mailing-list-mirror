@@ -7,45 +7,45 @@ X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B81BD201A9
-	for <e@80x24.org>; Sun, 19 Feb 2017 11:10:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 651C8201A9
+	for <e@80x24.org>; Sun, 19 Feb 2017 11:11:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751670AbdBSLKR (ORCPT <rfc822;e@80x24.org>);
-        Sun, 19 Feb 2017 06:10:17 -0500
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:36465 "EHLO
-        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751382AbdBSLKQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 19 Feb 2017 06:10:16 -0500
-Received: by mail-wm0-f68.google.com with SMTP id r18so9597721wmd.3
-        for <git@vger.kernel.org>; Sun, 19 Feb 2017 03:10:16 -0800 (PST)
+        id S1751483AbdBSLLR (ORCPT <rfc822;e@80x24.org>);
+        Sun, 19 Feb 2017 06:11:17 -0500
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:35479 "EHLO
+        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751418AbdBSLLQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 19 Feb 2017 06:11:16 -0500
+Received: by mail-wm0-f67.google.com with SMTP id u63so9572085wmu.2
+        for <git@vger.kernel.org>; Sun, 19 Feb 2017 03:11:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=2CVKDyO6xH2KUwNnTi6RXsWYbCgguFXHHxg97d+G4fY=;
-        b=gDLUDMR3BhXGHlBQ546QaK2FAP2WbSMpujvgPX0yJkrXF11rI09klL+DtgDHAHWjVb
-         XL2i4W4c8a1BdfTFU/B/0TtAkILCEHob8cGQKEKtet96zfIdwb8tlJZSYch9M4qoQFIH
-         u3wrc7c4ov7IJ6qiWb4PXTbNnq5Nb5qprl8ac3JnujqViwWjswrxb19ynNqb/it99FTr
-         upVMjHiYWIJ/hR3qQQbmd+P46cgD4vCrlfAos5yf+9a5XCj+kcxcEBrnOudnosB8EkEZ
-         fZMJYWnE5AuzJrAgrb6SReuELZT2CRB7vPbsM3lvyubTdu5/SL1N1/d5Ag2pO3RcEPpy
-         Lmag==
+        bh=xUG3kJu3BSIy5EWqe/16rzjGOG5ONxzwsuyBgZJnOaY=;
+        b=I1ak9NBcMG9e5e2Gi1LNhZM4z2QdoSXaCXl3SjNt86d9V1I+GqjurxD9MwGp7ioXUc
+         7Or0UnGDm2zeRWR2nQBhiE7cxx6nDD0L9jaH6SbuAsn0omixZPIsHZfIIhjtXUo2rof5
+         rpbUXMv9v/qA0FJfRjH9lv1cC2kYDyqRuA2X1I9dnuaV9VngHX6troaeTGW8CPsY5kG/
+         KjdBQdGrEbnqKY3sXUOD51DdSuVJ8mLqHKxjlo/WlB6L/RtsVsdLTtWFlNOsf82ED1/b
+         BmqaBqV1Wb9Pgg0/xsRVDJNQbSmOHxTfal8HNYQ+BcAIMR584xoTNqSeVZGSzGW5mRGg
+         4qOQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=2CVKDyO6xH2KUwNnTi6RXsWYbCgguFXHHxg97d+G4fY=;
-        b=UDrB1VtEqv8j9epNrRcQT6U/bAKAdE8oooitO49m8DGJ7X2p76H5Ys22dsZ66HUlVq
-         Lg+wkMZ8HyWelC2KkoTNA9iLs0w9Wev8yFftcNiRcJvljhMEIR+NeqZ1Njq7n6ViMc4X
-         Z0Sz93i87UngaPTgRE2UtDgQd7apjm2zENwLqT/uAP2P22GWA1yHJ9wMXd+KXGYVnWcw
-         aIf0pMjPK5DsmDkI+4xqlTwp2f3oO78YsXf0brXfSukjGtMZzTlE7H2Qwds9e5wLKW8q
-         z6uPSPmCStF1+aV7HscQUR0IRB5OtJOrqgXR+z1oeXFuV1CFEZFM0re30TPpMIJkDNVm
-         An1w==
-X-Gm-Message-State: AMke39lSxi8Ix4Eb+1YZb36GXK52Ox0+N1+fEkD7pQMZcFwjnK3Xk/XNNF3qQnRYIKyJwQ==
-X-Received: by 10.28.94.2 with SMTP id s2mr6967473wmb.127.1487502189335;
-        Sun, 19 Feb 2017 03:03:09 -0800 (PST)
+        bh=xUG3kJu3BSIy5EWqe/16rzjGOG5ONxzwsuyBgZJnOaY=;
+        b=k6ssQZlulo4RNoCvYwqxb80OQSsO3Y4ulHN7XcckHpu9dSQRMhXlq4NRIpzDxWIQfi
+         eiXFKyEbsBXCAGTJ7+/9+wbc5MPpwV6T2hwcI+LqqL/+V+T7aOA0+LNdvASWO8Z9toIJ
+         ZduFk5BkAKRsFgkGIZnHMjJS5UVTgjQyyASla0iCsBTwcgTMqzp+DgvGh+HY82ER0NOT
+         Bg6bp/HtIfeRmSStWx72ZrlT+FWHCp+5oH+nh2YULHlhQGPH0O1890kqmICiIrV6vqRJ
+         cII3uhr4K5jpChMKkj4pGnOgSHEAKJxnaRSk5cYmJzFaYwaeqbv0DZrMi5X2t4/j3slx
+         AZjw==
+X-Gm-Message-State: AMke39nHt8+d+zZCqKYan7enXHMNlkolkogKgz0kHAEijq8V0CdoTP1O8rb7uKt6BVOi4g==
+X-Received: by 10.28.140.140 with SMTP id o134mr13849927wmd.87.1487502190491;
+        Sun, 19 Feb 2017 03:03:10 -0800 (PST)
 Received: from localhost ([2a02:c7f:c42b:f900:5e51:4fff:fee9:57af])
-        by smtp.gmail.com with ESMTPSA id 10sm9054145wmi.23.2017.02.19.03.03.08
+        by smtp.gmail.com with ESMTPSA id g5sm20342878wrd.0.2017.02.19.03.03.09
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 19 Feb 2017 03:03:08 -0800 (PST)
+        Sun, 19 Feb 2017 03:03:09 -0800 (PST)
 From:   Thomas Gummerer <t.gummerer@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
@@ -54,9 +54,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         =?UTF-8?q?Jakub=20Nar=C4=99bski?= <jnareb@gmail.com>,
         Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
         Thomas Gummerer <t.gummerer@gmail.com>
-Subject: [PATCH v6 2/6] stash: add test for the create command line arguments
-Date:   Sun, 19 Feb 2017 11:03:09 +0000
-Message-Id: <20170219110313.24070-3-t.gummerer@gmail.com>
+Subject: [PATCH v6 3/6] stash: refactor stash_create
+Date:   Sun, 19 Feb 2017 11:03:10 +0000
+Message-Id: <20170219110313.24070-4-t.gummerer@gmail.com>
 X-Mailer: git-send-email 2.12.0.rc2.399.g0ca89a282
 In-Reply-To: <20170219110313.24070-1-t.gummerer@gmail.com>
 References: <20170217224141.19183-1-t.gummerer@gmail.com>
@@ -66,43 +66,67 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Currently there is no test showing the expected behaviour of git stash
-create's command line arguments.  Add a test for that to show the
-current expected behaviour and to make sure future refactorings don't
-break those expectations.
+Refactor the internal stash_create function to use a -m flag for
+specifying the message and -u flag to indicate whether untracked files
+should be added to the stash.
+
+This makes it easier to pass a pathspec argument to stash_create in the
+next patch.
+
+The user interface for git stash create stays the same.
 
 Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
 ---
- t/t3903-stash.sh | 18 ++++++++++++++++++
- 1 file changed, 18 insertions(+)
+ git-stash.sh | 22 ++++++++++++++++++----
+ 1 file changed, 18 insertions(+), 4 deletions(-)
 
-diff --git a/t/t3903-stash.sh b/t/t3903-stash.sh
-index 3577115807..ffe3549ea5 100755
---- a/t/t3903-stash.sh
-+++ b/t/t3903-stash.sh
-@@ -784,4 +784,22 @@ test_expect_success 'push -m shows right message' '
- 	test_cmp expect actual
- '
+diff --git a/git-stash.sh b/git-stash.sh
+index 8365ebba2a..ef5d1b45be 100755
+--- a/git-stash.sh
++++ b/git-stash.sh
+@@ -58,8 +58,22 @@ clear_stash () {
+ }
  
-+test_expect_success 'create stores correct message' '
-+	>foo &&
-+	git add foo &&
-+	STASH_ID=$(git stash create "create test message") &&
-+	echo "On master: create test message" >expect &&
-+	git show --pretty=%s -s ${STASH_ID} >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'create with multiple arguments for the message' '
-+	>foo &&
-+	git add foo &&
-+	STASH_ID=$(git stash create test untracked) &&
-+	echo "On master: test untracked" >expect &&
-+	git show --pretty=%s -s ${STASH_ID} >actual &&
-+	test_cmp expect actual
-+'
-+
- test_done
+ create_stash () {
+-	stash_msg="$1"
+-	untracked="$2"
++	stash_msg=
++	untracked=
++	while test $# != 0
++	do
++		case "$1" in
++		-m|--message)
++			shift
++			stash_msg=${1?"BUG: create_stash () -m requires an argument"}
++			;;
++		-u|--include-untracked)
++			shift
++			untracked=${1?"BUG: create_stash () -u requires an argument"}
++			;;
++		esac
++		shift
++	done
+ 
+ 	git update-index -q --refresh
+ 	if no_changes
+@@ -268,7 +282,7 @@ push_stash () {
+ 	git reflog exists $ref_stash ||
+ 		clear_stash || die "$(gettext "Cannot initialize stash")"
+ 
+-	create_stash "$stash_msg" $untracked
++	create_stash -m "$stash_msg" -u "$untracked"
+ 	store_stash -m "$stash_msg" -q $w_commit ||
+ 	die "$(gettext "Cannot save the current status")"
+ 	say "$(eval_gettext "Saved working directory and index state \$stash_msg")"
+@@ -667,7 +681,7 @@ clear)
+ 	;;
+ create)
+ 	shift
+-	create_stash "$*" && echo "$w_commit"
++	create_stash -m "$*" && echo "$w_commit"
+ 	;;
+ store)
+ 	shift
 -- 
 2.12.0.rc2.399.g0ca89a282
 
