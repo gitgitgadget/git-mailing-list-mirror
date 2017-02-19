@@ -2,99 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,
+	STOX_REPLY_TYPE shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 77C7E201A8
-	for <e@80x24.org>; Sun, 19 Feb 2017 20:39:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0EB02201A8
+	for <e@80x24.org>; Sun, 19 Feb 2017 20:41:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751362AbdBSUjG (ORCPT <rfc822;e@80x24.org>);
-        Sun, 19 Feb 2017 15:39:06 -0500
-Received: from mail-lf0-f43.google.com ([209.85.215.43]:33935 "EHLO
-        mail-lf0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751183AbdBSUjF (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 19 Feb 2017 15:39:05 -0500
-Received: by mail-lf0-f43.google.com with SMTP id o140so27226327lff.1
-        for <git@vger.kernel.org>; Sun, 19 Feb 2017 12:37:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to:cc;
-        bh=fzxaWpqg5Q9ED77WKB2UlbyFY8EzXl/lRC0qV62zP5U=;
-        b=ENBUDu79mmnv+Ngo1yuKAK/Md6qTOpe0+n+B/2xptJrJmJiQSIpzhDTze2h37BbtU9
-         CUSzlwRSp6HPDsEn5SyQlnckvFU6CvXY30sO7JMJtyS2++OmGDvEAWYAf3lwJZSTtFLu
-         vPXwDZoLnk6S9ztAUWlJ/Hlgrlivl+ZGHPI9GaxAgJr7wHxA19KriGnzDeeqNSW6Uhy0
-         cUU3xAiYKCHEwLDs1+K+kYlb5c8YQhkO4atT7lEZqA23QHpMhi94P0VWgGB67txR7iAM
-         eb28e82Ri3wRQZ6EwcqsD+ys1zyDX9iOxRv2UMskXZpOoBbEw1O52SbQDFkBS+NQH3nM
-         Bd4g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=fzxaWpqg5Q9ED77WKB2UlbyFY8EzXl/lRC0qV62zP5U=;
-        b=UUI+F0FU6DJK4wN7XkZsoQhlsr1vDpUiGtu3Hrj+q8djdZT4S1LbnkUVHyW/ZfVoQA
-         EFNAVRdXt/cPSyv5cCy0Or7SOYJgSPj1pCsumQRc3F51O2ip/3aUOp9XAPfRmTaRWEYS
-         6QKOBYfrDgDl2YQgBVSZe5taxdF1uedLYqU0HuDYiwQpylxLwrhX8vVgQ3s/CW1NT70/
-         gJXB/lnrVCKnyJCy06UTleDl7P9g3NTsT8poPUw63mw0EpaPROW/h7XSnpS6dFmDkpS5
-         YyQri4m7/YfKq7IsykfduE5TVvrqeNZ0WgIWR2gkW4gZmjusAhzAzPtF8MTyFAZ9AL9e
-         5nIw==
-X-Gm-Message-State: AMke39mB2+l31f5rIVoUoyPCUSkQXalgipDBgNTQo/tO/dG8ZE35AoxcNsRTCfbH/T6/1bYW0ySm7jw+ZPoIyQ==
-X-Received: by 10.46.20.66 with SMTP id 2mr4538584lju.87.1487536665725; Sun,
- 19 Feb 2017 12:37:45 -0800 (PST)
+        id S1751418AbdBSUlC (ORCPT <rfc822;e@80x24.org>);
+        Sun, 19 Feb 2017 15:41:02 -0500
+Received: from smtp-out-2.talktalk.net ([62.24.135.66]:6907 "EHLO
+        smtp-out-2.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751183AbdBSUlB (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 19 Feb 2017 15:41:01 -0500
+Received: from PhilipOakley ([92.31.218.76])
+        by smtp.talktalk.net with SMTP
+        id fYHyc1gOb46SJfYHyc3uq3; Sun, 19 Feb 2017 20:40:59 +0000
+X-Originating-IP: [92.31.218.76]
+X-Spam: 0
+X-OAuthority: v=2.2 cv=CItoZljD c=1 sm=1 tr=0 a=e6L6E7eW+5Nb7SO+DvSdIg==:117
+ a=e6L6E7eW+5Nb7SO+DvSdIg==:17 a=IkcTkHD0fZMA:10 a=PKzvZo6CAAAA:8
+ a=Pc-lDKLFxtHrjyiF4uMA:9 a=QEXdDO2ut3YA:10 a=q92HNjYiIAC_jH7JDaYf:22
+Message-ID: <8147218721BE4F239D00CBFAFD9B495D@PhilipOakley>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From:   "Philip Oakley" <philipoakley@iee.org>
+To:     "Jeff King" <peff@peff.net>
+Cc:     "Michael Haggerty" <mhagger@alum.mit.edu>,
+        "Damien Regad" <dregad@mantisbt.org>, <git@vger.kernel.org>
+References: <c27d7861-b161-a3eb-fcfc-bf766fc7b20b@gmail.com> <2116CBFFB78A482D8FA176BC680B3B9C@PhilipOakley> <20170219022756.pwxhjluxizuedf46@sigill.intra.peff.net>
+Subject: Re: [PATCH] git-check-ref-format: fix typo in man page
+Date:   Sun, 19 Feb 2017 20:40:59 -0000
+Organization: OPDS
 MIME-Version: 1.0
-Received: by 10.25.150.204 with HTTP; Sun, 19 Feb 2017 12:37:45 -0800 (PST)
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Sun, 19 Feb 2017 21:37:45 +0100
-Message-ID: <CAP8UFD1NvR-djxpyY_85345DjHyj570rrXY-wt_GtWYSDLRwaQ@mail.gmail.com>
-Subject: Draft of Git Rev News edition 24
-To:     git <git@vger.kernel.org>
-Cc:     Thomas Ferris Nicolaisen <tfnico@gmail.com>,
-        Jakub Narebski <jnareb@gmail.com>,
-        Markus Jansen <mja@jansen-preisler.de>,
-        Michael J Gruber <git@drmicha.warpmail.net>,
-        Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jeff King <peff@peff.net>, Stefan Beller <sbeller@google.com>,
-        Jacob Vosmaer <jacob@gitlab.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Josh Triplett <josh@joshtriplett.org>,
-        Erik van Zijst <erik.van.zijst@gmail.com>,
-        Brendan Forster <brendan@github.com>,
-        Stefan Saasen <ssaasen@atlassian.com>,
-        David Turner <novalis@novalis.org>,
-        Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-        "Shawn O. Pierce" <spearce@spearce.org>,
-        =?UTF-8?Q?Carlos_Mart=C3=ADn_Nieto?= <cmn@dwim.me>,
-        Charles Bailey <charles@hashpling.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain;
+        format=flowed;
+        charset="UTF-8";
+        reply-type=original
+Content-Transfer-Encoding: 7bit
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+X-CMAE-Envelope: MS4wfJqheMe7D8Q7WzRSqRjw6Z5SW6IB/eyuknDxxMoJlMKbOUI2mCfITaBtqxZHxjbX0CAHqtGDlc1JfbXcsR/lJNPBbNxuKA3Y+kIgGPCOR6zuVw/g00fZ
+ ro59MIzNep24rEx91OR/k1OIWniMYyEf3q8+6jikYJzdJl+tqdrXPxQEE38fBeGxuHzxzd/ee4GET1rwIMSUwUg5XnCdwg0Xh7IIE++hsXoC/GnTrnTbLUXm
+ QDYvIRkKv1Sx2sai9ITnrg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+From: "Jeff King" <peff@peff.net>
+> On Sun, Feb 19, 2017 at 12:20:33AM -0000, Philip Oakley wrote:
+>
+>> >  Normalize 'refname' by removing any leading slash (`/`)
+>> >  characters and collapsing runs of adjacent slashes between
+>> > - name components into a single slash.  Iff the normalized
+>> > + name components into a single slash.  If the normalized
+>> >  refname is valid then print it to standard output and exit
+>> >  with a status of 0.  (`--print` is a deprecated way to spell
+>> >  `--normalize`.)
+>> > -- 
+>>
+>> Could that be an 'iff' == 'If and only if' (which is common in 
+>> mathematics)?
+>> Still could be spelling error though.
+>
+> When we're not sure what the intent of a change is, a good first step is
+> to dig up the original commit via `git blame` or similar. In this case,
+> it comes from a40e6fb67 (Change check_refname_format() to reject
+> unnormalized refnames, 2011-09-15).
 
-A draft of a new Git Rev News edition is available here:
+Oops, blaming a bit of code feels 'obvious' but I just hadn't thought to 
+blame the doc, though it does feel as though code and the docs don't always 
+go hand in hand.
 
-  https://github.com/git/git.github.io/blob/master/rev_news/drafts/edition-24.md
+>
+> The commit message doesn't mention it (not that I really expected it
+> to), but it does tell you who the author is. And a good second step is
+> to cc them on the patch. :)
+>
+> I suspect it _was_ intended as "iff" here. In my opinion, we probably
+> don't need to be so rigorous in this instance. However, I note that we
+> do not describe the "else" half of that "if". So maybe an overall
+> improvement would be something like:
 
-Everyone is welcome to contribute in any section either by editing the
-above page on GitHub and sending a pull request, or by commenting on
-this GitHub issue:
+I read the commit message the same, that is, only if the given ref name 
+normalises to a true (properly formatted) ref will it be printed (sucess).
 
-  https://github.com/git/git.github.io/issues/221
+For those not familiar with 'iff', then a change to the doc is worthwhile.
 
-You can also reply to this email.
+>
+>  If the normalized refname is valid then print it to standard output
+>  and exit with a status of 0. Otherwise, exit with a non-zero status.
+>
+> -Peff
+>
+Thanks, Philip. 
 
-In general all kinds of contribution, for example proofreading,
-suggestions for articles or links, help on the issues in GitHub, and
-so on, are very much appreciated.
-
-I tried to cc everyone who appears in this edition, but maybe I missed
-some people, sorry about that.
-
-Thomas, Jakub, Markus and myself plan to publish this edition on
-Wednesday February 22.
-
-Thanks,
-Christian.
