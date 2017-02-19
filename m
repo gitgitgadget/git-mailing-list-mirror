@@ -2,93 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6B132201A9
-	for <e@80x24.org>; Sun, 19 Feb 2017 06:35:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 272AF201A9
+	for <e@80x24.org>; Sun, 19 Feb 2017 09:16:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751547AbdBSGfm (ORCPT <rfc822;e@80x24.org>);
-        Sun, 19 Feb 2017 01:35:42 -0500
-Received: from mail-qk0-f174.google.com ([209.85.220.174]:36187 "EHLO
-        mail-qk0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750960AbdBSGfl (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 19 Feb 2017 01:35:41 -0500
-Received: by mail-qk0-f174.google.com with SMTP id x71so8244495qkb.3
-        for <git@vger.kernel.org>; Sat, 18 Feb 2017 22:35:40 -0800 (PST)
+        id S1751351AbdBSJQh (ORCPT <rfc822;e@80x24.org>);
+        Sun, 19 Feb 2017 04:16:37 -0500
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:35956 "EHLO
+        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751196AbdBSJQh (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 19 Feb 2017 04:16:37 -0500
+Received: by mail-wm0-f65.google.com with SMTP id r18so9316263wmd.3
+        for <git@vger.kernel.org>; Sun, 19 Feb 2017 01:16:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=OmE4MfUlZHpowXl9hlDipOpzz82RUcQWZ95cxKBQui0=;
-        b=ms1CoHkeTWTo8XfkXaGLu68qlmcFYsdXeumBn3YLGR9++tBZvKG1pRIIaO9H3Qz2Sh
-         Ywym8vXVxokQUzcqsW+uAf9uYdEfUgb5nu8o3I5TfTfkjnQefLS9A905Eb5ogeC2YH2B
-         Dd9Lcgnm6VEFHwzIY3NkPqpSde7Rp7KqjLsw4W99KPqX/5rlITtP9frnXr9druLUd4iy
-         xYs3Oyyh7cr6L0RBWRzKMoV5iMAELO4yAxuuKagKY/wvYbTatL+SX1hnTCr/uDmzqq1w
-         ZtVeRnLCPGXeIm0zwbQoN8Hejjb+D1qPFrV11/jTyYrTrboiOBq8TJU/qSaer0ZHbjRE
-         xXLA==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=eFbmrvdOxrSwbiv4Yt/872VPWZyAWHFgZ3z20lsXtJ8=;
+        b=WlPsfEdbk5U1ssEYA9EmTjjJ3cVQ9j0wFvMSKjHoN0Gkj0+DcSPEoK5gyXHsEUgocA
+         dd16PiiowPdAKgYbalmKI5Eujysc3qVLbbSk/sMd3bpuezFLxxjxWM7x3EpQfwmRkx+/
+         UZ/F0rYRXJKsZ0gpW981MhvPHXqdw87pOC10bQvfzUaIArampf5N73v5ce/l8KhH/w/c
+         /DB542GwUOO/AGI7XbQIj7Qw0IDQJxF+XeMnDFO1lwaZEUSJ66b5IlUVz/H3bumboAkR
+         Ybhl0jgD1Mau4txc/1mnKBMw9P+TTi/Oa8PcYZbuCPFj6nlr7lmsB1etLO9jtkVgQWLW
+         nupA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=OmE4MfUlZHpowXl9hlDipOpzz82RUcQWZ95cxKBQui0=;
-        b=WqqPNWD27hQaUjJVqO+KpWKqExFhMjYyShMSgq81Pi/3tuyADoB/GMcPT0LZiVNTE8
-         tnk2sFyWAqpVW8Ii0iMEhdnxnUJbh1T40Z285El7Ojqtu4sf3aPMvvbxIOTO8XLS9sSu
-         yosBJD2fwnKp6iqTwop1kr5aLbTfVU7hQe6BUg4Uqg3SCyvJT5j99ceD2dGuzTPIaTEG
-         wn6Ri89LPI3BfdMcWr/5tub5dn8+Gp/qP4s2pK/Dh8crJS6An7QtjQnlUbAXbY6c6dkM
-         9DoaCfcF6xWubQG3x9uvZMbc1hlLi9G3JYRe1wY6mU4ZIouQSFE5XfJ6mS6RhGEpe2LF
-         h09Q==
-X-Gm-Message-State: AMke39m/fUWUOU8aC37sjFjRJdmIsKDboUcfpbuvYmlgLsMLo4pC3MIWwUCBKb+gDDj19yZLH2lvpeUmcqwD+w==
-X-Received: by 10.55.102.199 with SMTP id a190mr6536459qkc.277.1487486140113;
- Sat, 18 Feb 2017 22:35:40 -0800 (PST)
-MIME-Version: 1.0
-Received: by 10.237.52.198 with HTTP; Sat, 18 Feb 2017 22:35:39 -0800 (PST)
-In-Reply-To: <CAOc6etZxkspqafifjPTbRDoVBt0XuOLbhiuY9bFTD2Wjtxw-HQ@mail.gmail.com>
-References: <CAOc6etYz6+FzDRbkLS2SB9=F9DP18=6uLKdfCN3D3yd2Gug-tw@mail.gmail.com>
- <20170217051755.fx2ueizsprw2vida@sigill.intra.peff.net> <CAOc6etZxkspqafifjPTbRDoVBt0XuOLbhiuY9bFTD2Wjtxw-HQ@mail.gmail.com>
-From:   Edmundo Carmona Antoranz <eantoranz@gmail.com>
-Date:   Sun, 19 Feb 2017 00:35:39 -0600
-Message-ID: <CAOc6etY39Pi72U3ibtF94oh4xqzP4SB3VEj8QJOhX-GobTOTRA@mail.gmail.com>
-Subject: Re: difflame improvements
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=eFbmrvdOxrSwbiv4Yt/872VPWZyAWHFgZ3z20lsXtJ8=;
+        b=dnEMP6KC6BwgNANTF05n3emYr5Fgg8uKFHKxnkXEg4lMXIbQafU6J+xenUIphac+We
+         bruxua7Hpen/u/cvxs//dBRb1amQ2NgG5oWGYZ+t8Wy56DLlxDLIUCmSJ6hHj+SukfvP
+         m5Sg1FsGs7geKnHMecj/pBiuyJ/KIGfwywzxufNCuiFy6GtkBY76/1iM31UXI+V5+ZOJ
+         LVwjxL6TQxyVh1gN5uxG/HJh5b/OKaeRMK6yX0YFzg6KDJnyZlnWwVvGamsk4gXwdY/0
+         uogRfCOD/IXTrMjJawcoYtHZ2lbVAUYNbmP4Pq1xV8kGUwT+2gq6pmD5vIwDyC/647Fe
+         f42w==
+X-Gm-Message-State: AMke39nWtzmCR9u65TvvsazRJhyxzNLvr95uiSMwbhTS4Rrgnq9/laO5QwM4F+o6MnDWTw==
+X-Received: by 10.28.157.70 with SMTP id g67mr12502623wme.111.1487495795285;
+        Sun, 19 Feb 2017 01:16:35 -0800 (PST)
+Received: from localhost ([2a02:c7f:c42b:f900:5e51:4fff:fee9:57af])
+        by smtp.gmail.com with ESMTPSA id i29sm20061815wrc.25.2017.02.19.01.16.34
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Sun, 19 Feb 2017 01:16:34 -0800 (PST)
+Date:   Sun, 19 Feb 2017 09:17:14 +0000
+From:   Thomas Gummerer <t.gummerer@gmail.com>
 To:     Jeff King <peff@peff.net>
-Cc:     Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        =?iso-8859-1?Q?=D8yvind_A_=2E?= Holm <sunny@sunbase.org>,
+        Jakub =?utf-8?B?TmFyxJlic2tp?= <jnareb@gmail.com>,
+        Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH v5 3/6] stash: refactor stash_create
+Message-ID: <20170219091714.GJ652@hank>
+References: <20170212215420.16701-1-t.gummerer@gmail.com>
+ <20170217224141.19183-1-t.gummerer@gmail.com>
+ <20170217224141.19183-4-t.gummerer@gmail.com>
+ <20170217234805.glvhyfbxab6nwgb7@sigill.intra.peff.net>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20170217234805.glvhyfbxab6nwgb7@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.23.1-rc1 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Feb 17, 2017 at 1:01 AM, Edmundo Carmona Antoranz
-<eantoranz@gmail.com> wrote:
-> On Thu, Feb 16, 2017 at 11:17 PM, Jeff King <peff@peff.net> wrote:
->
->> This isn't difflame's fault; that's what "git blame" tells you about
->> that line. But since I already told difflame "v2.6.5..HEAD", it would
->> probably make sense to similarly limit the blame to that range. That
->> turns up a boundary commit for the line. Which is _also_ not helpful,
->> but at least the tool is telling me that the line came from before
->> v2.6.5, and I don't really need to care much about it.
->
->
-> I'm running my own tests on difflame and I have a theory about "when"
-> it breaks.... at least one of the cases when it breaks:
->
-> Analysis for deleted lines is being driven by git blame --reverse.
-> What I have noticed is that it "breaks" when blame --reverse drives
-> the analysis into revisions where "treeish1" is not part of their
-> history (like, bringing analysis "to the sides" of treeish1 instead of
-> keeping analysis in revisions in the history of treeish2 that have
-> treeish1 as one of their ancestors.... which is definitely a valid
-> case for analysis, anyway). In this case, blame --reverse stops being
-> helpful.
->
+On 02/17, Jeff King wrote:
+> On Fri, Feb 17, 2017 at 10:41:38PM +0000, Thomas Gummerer wrote:
+> 
+> > Refactor the internal stash_create function to use a -m flag for
+> > specifying the message and -u flag to indicate whether untracked files
+> > should be added to the stash.
+> > 
+> > This makes it easier to pass a pathspec argument to stash_create in the
+> > next patch.
+> > 
+> > The user interface for git stash create stays the same.
+> 
+> Sounds good, but...
+> 
+> > diff --git a/Documentation/git-stash.txt b/Documentation/git-stash.txt
+> > index 2e9cef06e6..d93c47446a 100644
+> > --- a/Documentation/git-stash.txt
+> > +++ b/Documentation/git-stash.txt
+> > @@ -17,6 +17,7 @@ SYNOPSIS
+> >  	     [-u|--include-untracked] [-a|--all] [<message>]]
+> >  'git stash' clear
+> >  'git stash' create [<message>]
+> > +'git stash' create [-m <message>] [-u|--include-untracked <untracked|all>]
+> >  'git stash' store [-m|--message <message>] [-q|--quiet] <commit>
+> 
+> Should this hunk be dropped from the manpage, then?
+> 
+> I think there is a similar one in the next patch that adds the
+> "pathspec" argument, and should be dropped, too.
 
-At the cost of being slower, I just pushed to master the best results yet.
+Argh yes I should have been more careful.  Thanks for catching.
 
-The workaround I developed for the case I described on the previous
-mail ended up providing much better results overall so I ended up
-replacing the whole merge-analysis logic with it.
-
-Thanks for your kind help and comments, Peff. Let me know how it goes.
+> -Peff
