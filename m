@@ -2,150 +2,145 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 25EAF201A9
-	for <e@80x24.org>; Sun, 19 Feb 2017 11:12:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5ADCD201A9
+	for <e@80x24.org>; Sun, 19 Feb 2017 11:32:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751680AbdBSLMO (ORCPT <rfc822;e@80x24.org>);
-        Sun, 19 Feb 2017 06:12:14 -0500
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:35829 "EHLO
-        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751627AbdBSLMN (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 19 Feb 2017 06:12:13 -0500
-Received: by mail-wm0-f66.google.com with SMTP id u63so9574761wmu.2
-        for <git@vger.kernel.org>; Sun, 19 Feb 2017 03:12:12 -0800 (PST)
+        id S1751663AbdBSLcF (ORCPT <rfc822;e@80x24.org>);
+        Sun, 19 Feb 2017 06:32:05 -0500
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:36756 "EHLO
+        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751628AbdBSLcE (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 19 Feb 2017 06:32:04 -0500
+Received: by mail-wm0-f65.google.com with SMTP id r18so9653469wmd.3
+        for <git@vger.kernel.org>; Sun, 19 Feb 2017 03:32:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=6FWIVKoxgzazOAVDP9DKRPupWyRNtLUgJ+nNxZrOKdU=;
-        b=X2RPp2/XGp9ZUTRQk4e1c/pEy2VjfI4QEPzl/MkUTzKYTWHK8IOlhrj1/jKxVWblpc
-         HzM3LxJxL1DQ6+4dGV7sSkNlD0ZkDIKPT+qCpo4eNyZuc0t4qyh1f3tmFslCu+OaMsV9
-         yuqcJ2StgEaF2DbL00wLIa5gYNJOxEWh0wgEV3wQqKEhXE2GVczJ+luXlN3cosZ2GabL
-         YQDCVJKkqdZL+060qkACph4SjiAbxIv54tiOsFB83qUu0WOzwfdCRX/eQg+Z9SJ2r/Pe
-         qGK0Oc4QmP2IU42myhmkOCv9JpSHj0O32y+KBIjKI9SPbgP7tvuNqog1IXRDGCN4tmgZ
-         SIOA==
+        d=gal-ro.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=9m7BFa0UHVoSZ+UA7K44aAtkAKzu1FCV/hPZ2B+mh6k=;
+        b=U1AC+RN9rlUrLQumfU9S19kw0Drjosbgwm0cidAfSxAoKy90ZN2GFScFzZTmXfNtna
+         yhnfg8cAukq0pYzsPasYs06CMQNYzNHarEdNeB+SBG1xdOYf3fazPdE1zUEQc8VChFMD
+         gRwrQO1KoRjU9MjnjWk9V2JpDvpP0NrdGILh1c65hJkOAzgUr+J6fuWwRdhwJAd0beGz
+         QjA1eIrf8y54xpuRCLEYBIaxnqY8BjjvY/kI9sODNnzi3YqZeSBMSXG6xJBKXdzwCd6I
+         58+08l0wT1dKGkC04TmgCv9SVIz+ooUiPKVLSONstIuFJE88LeLwNprQ++0rApGpyvJH
+         c0Xw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=6FWIVKoxgzazOAVDP9DKRPupWyRNtLUgJ+nNxZrOKdU=;
-        b=jKrgbk2vTMNM74izpr09rk/GdxKHalosy36vWkTcMHYEBSyOTHx+Vb53eCNURhaxlQ
-         joHfRKQ/IZWx7GHDGOLBZ5tUtVS/0tGjk2YxT2YlDAJUwYEwFiIwMR3EZPqUVKbpJ1Si
-         TgxZnbMoI841ZwKQ3VdLB9dmjovvFt6GZ4z3SrmkPuSBdQOm02em5SHmEEBgAbHe8oFl
-         kji6VV05PMJ+6XX51zIQiDWHgnxPl4oyEdqFb5lqlJWx1yPvo+ag/KIMNkPpesnm/kWz
-         1AWE4ENV4fwNmEu8T3Jyt8qgAyhT/kdgKElemDS6cLnuvWy8x7bCgJG6/KQgNcevCmPv
-         jW9Q==
-X-Gm-Message-State: AMke39lxZ7sLsRlVqKubyQmngudFf+hXkBqM+GvptFrgsOXvbe1tqsoXN2om9hUCCN5G5Q==
-X-Received: by 10.28.69.28 with SMTP id s28mr12471728wma.40.1487502194632;
-        Sun, 19 Feb 2017 03:03:14 -0800 (PST)
-Received: from localhost ([2a02:c7f:c42b:f900:5e51:4fff:fee9:57af])
-        by smtp.gmail.com with ESMTPSA id 17sm20405402wru.16.2017.02.19.03.03.13
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 19 Feb 2017 03:03:14 -0800 (PST)
-From:   Thomas Gummerer <t.gummerer@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        =?UTF-8?q?=C3=98yvind=20A=2E=20Holm?= <sunny@sunbase.org>,
-        =?UTF-8?q?Jakub=20Nar=C4=99bski?= <jnareb@gmail.com>,
-        Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-        Thomas Gummerer <t.gummerer@gmail.com>
-Subject: [PATCH v6 6/6] stash: allow pathspecs in the no verb form
-Date:   Sun, 19 Feb 2017 11:03:13 +0000
-Message-Id: <20170219110313.24070-7-t.gummerer@gmail.com>
-X-Mailer: git-send-email 2.12.0.rc2.399.g0ca89a282
-In-Reply-To: <20170219110313.24070-1-t.gummerer@gmail.com>
-References: <20170217224141.19183-1-t.gummerer@gmail.com>
- <20170219110313.24070-1-t.gummerer@gmail.com>
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=9m7BFa0UHVoSZ+UA7K44aAtkAKzu1FCV/hPZ2B+mh6k=;
+        b=Esn/uFzTkuGHVHmU2aIyhlj+nzgMB3hfu5bkBjJDDjtOWUGzwigx/HkwIAaNcILbpk
+         L1knU31QLVuMz0ufiyjICYIqb1B6NKaJStxMn5kW5PEna5UoNgQU4dpYSdWcXpVp71eT
+         8Hm7M9jc+x3WiozOD/RJhPHSFM4sTQ2716aMOCrxMf8BKhGH8qY6aTycDwAcWb7EBPPB
+         7vfCGjLYKdEpWRqF7nvEgAHwxo2aI1HZPGdfu1x8Gr0w7ljd10uo9VhKCK/ZsA8lmqNB
+         A7iktNOqw/sRmj9k7MMtYfkP6wOFTkkVXSQZ+ZqpeSyeXWGpLjETaktDcOspL1tgciT0
+         KY7w==
+X-Gm-Message-State: AMke39k+u9emR2bF1AJyiLOvwxcHl2skmS+JnR/iXSm05vGGcfaDAQ1kGbYfNDlnOuyFtJ1/3yGUggB4qzawrQ==
+X-Received: by 10.28.217.83 with SMTP id q80mr12897667wmg.58.1487503922164;
+ Sun, 19 Feb 2017 03:32:02 -0800 (PST)
+MIME-Version: 1.0
+Received: by 10.28.226.6 with HTTP; Sun, 19 Feb 2017 03:32:01 -0800 (PST)
+X-Originating-IP: [77.178.200.206]
+In-Reply-To: <CAP8UFD3ngMvVy2XLzYNn9OFbS+zQpWTW=pravpHhA-0PcDVhfg@mail.gmail.com>
+References: <CAMX8fZWe2HO78ySonHX0adtPUxVPbj5_vo-NUGrjwpb7gPdGrQ@mail.gmail.com>
+ <d4991e4b-cbc4-da14-381a-88704e457a19@gmx.net> <3ff5ce3c-285f-cb9a-d1d4-46323524dab7@kdbg.org>
+ <CAMX8fZVkBU6M8fkUcRr69V97_NTSOGGmPB1U-ObhmVv3i6wQhg@mail.gmail.com>
+ <477d3533-d453-9499-e06e-72f45488d421@kdbg.org> <CAMX8fZW2y+iPRfSbXVcHufbM+CsqgekS_0WnCEJ++=njy_TvKg@mail.gmail.com>
+ <CAP8UFD3ngMvVy2XLzYNn9OFbS+zQpWTW=pravpHhA-0PcDVhfg@mail.gmail.com>
+From:   Alex Hoffman <spec@gal.ro>
+Date:   Sun, 19 Feb 2017 12:32:01 +0100
+X-Google-Sender-Auth: vRjnBBmoozRv--m-_ByOoAJxMxE
+Message-ID: <CAMX8fZVeAEJ5tfCO_4Pebnq=rysaJ2xDMjH-9pjmPeF4FziLFw@mail.gmail.com>
+Subject: Re: Git bisect does not find commit introducing the bug
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     Johannes Sixt <j6t@kdbg.org>, Stephan Beyer <s-beyer@gmx.net>,
+        git <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Now that stash_push is used in the no verb form of stash, allow
-specifying the command line for this form as well.  Always use -- to
-disambiguate pathspecs from other non-option arguments.
+> At the end of the git-bisect man page (in the SEE ALSO section) there
+> is a link to https://github.com/git/git/blob/master/Documentation/git-bisect-lk2009.txt
+> which has a lot of details about how bisect works.
+>
 
-Also make git stash -p an alias for git stash push -p.  This allows
-users to use git stash -p <pathspec>.
+Thanks for pointing out the SEE ALSO section. I think it makes sense
+to include/describe the entire algorithm in the man page itself,
+although I am not sure whether the graphs would be always correctly
+visually represented in the man page format.
 
-Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
----
- Documentation/git-stash.txt | 11 +++++++----
- git-stash.sh                |  3 +++
- t/t3903-stash.sh            | 15 +++++++++++++++
- 3 files changed, 25 insertions(+), 4 deletions(-)
+> The goal is to find the first bad commit, which is a commit that has
+> only good parents.
 
-diff --git a/Documentation/git-stash.txt b/Documentation/git-stash.txt
-index 3f7fa88ddc..369bfae33d 100644
---- a/Documentation/git-stash.txt
-+++ b/Documentation/git-stash.txt
-@@ -53,10 +53,13 @@ push [-p|--patch] [-k|--[no-]keep-index] [-u|--include-untracked] [-a|--all] [-q
- 
- 	Save your local modifications to a new 'stash', and run `git reset
- 	--hard` to revert them.  The <message> part is optional and gives
--	the description along with the stashed state.  For quickly making
--	a snapshot, you can omit _both_ "save" and <message>, but giving
--	only <message> does not trigger this action to prevent a misspelled
--	subcommand from making an unwanted stash.
-+	the description along with the stashed state.
-++
-+For quickly making a snapshot, you can omit "push".  In this mode,
-+non-option arguments are not allowed to prevent a misspelled
-+subcommand from making an unwanted stash.  The two exceptions to this
-+are `stash -p` which acts as alias for `stash push -p` and pathspecs,
-+which are allowed after a double hyphen `--` for disambiguation.
- +
- When pathspec is given to 'git stash push', the new stash records the
- modified states only for the files that match the pathspec.  The index
-diff --git a/git-stash.sh b/git-stash.sh
-index 1e55cd5fdd..18aba1346f 100755
---- a/git-stash.sh
-+++ b/git-stash.sh
-@@ -666,12 +666,15 @@ apply_to_branch () {
- 	}
- }
- 
-+test "$1" = "-p" && set "push" "$@"
-+
- PARSE_CACHE='--not-parsed'
- # The default command is "push" if nothing but options are given
- seen_non_option=
- for opt
- do
- 	case "$opt" in
-+	--) break ;;
- 	-*) ;;
- 	*) seen_non_option=t; break ;;
- 	esac
-diff --git a/t/t3903-stash.sh b/t/t3903-stash.sh
-index 7f90a247b4..c0ae41e724 100755
---- a/t/t3903-stash.sh
-+++ b/t/t3903-stash.sh
-@@ -872,4 +872,19 @@ test_expect_success 'untracked files are left in place when -u is not given' '
- 	test_path_is_file untracked
- '
- 
-+test_expect_success 'stash without verb with pathspec' '
-+	>"foo bar" &&
-+	>foo &&
-+	>bar &&
-+	git add foo* &&
-+	git stash -- "foo b*" &&
-+	test_path_is_missing "foo bar" &&
-+	test_path_is_file foo &&
-+	test_path_is_file bar &&
-+	git stash pop &&
-+	test_path_is_file "foo bar" &&
-+	test_path_is_file foo &&
-+	test_path_is_file bar
-+'
-+
- test_done
--- 
-2.12.0.rc2.399.g0ca89a282
+OK, bisect's mission is more exact than I thought, which is good. M
 
+> As o1 is an ancestor of G, then o1 is considered good by the bisect algorithm.
+> If it was bad, it would means that there is a transition from bad to
+> good between o1 and G.
+> But when a good commit is an ancestor of the bad commit, git bisect
+> makes the assumption that there is no transition from bad to good in
+> the graph.
+
+The assumption that there is no transition from bad to good in the
+graph did not hold in my example and it does not hold when a feature
+was recently introduced and gets broken relative shortly afterwards.
+But I consider it is easy to change the algorithm not to assume, but
+rather to check it.
+
+> git bisect makes some assumptions that are true most of the time, so
+> in practice it works well most of the time.
+
+Whatever the definition of "most of the time" everyone might have, I
+think there is room for improvement. Below I am trying to make a small
+change to the current algorithm in order to deal with the assumption
+that sometimes does not hold (e.g in my example), by explicitly
+validating the check.
+
+> --o1--o2--o3--G--X1
+>     \                \
+>      x1--x2--x3--x4--X2--B--
+>       \              /
+>        y1--y2--y3
+
+Step 1a. (Unchanged) keep only the commits that:
+
+        a) are ancestor of the "bad" commit (including the "bad" commit itself),
+        b) are not ancestor of a "good" commit (excluding the "good" commits).
+
+The following graph results:
+      x1--x2--x3--x4--X2--B--
+       \              /
+        y1--y2--y3
+
+Step 1b. (New) Mark all root commits of the resulting graph (i.e
+commits without parents) as unconfirmed (unconfirmed=node that has
+only bad parents). Remove all root commits that user already confirmed
+(e.g if user already marked its parent as good right before starting
+bisect run). For every unconfirmed root commit check if it has any
+good parents. In the example above check whether x1 has good parents.
+     If the current root element has any parents and none of them is
+good, we can delete all paths from it until to the next commit that
+has a parent in the ancestors of GOOD. In the example above to delete
+the path x1-x3 and x1-y3. Also add new resulting root commits to the
+list of unconfirmed commits (commit x4).
+     Otherwise mark it as confirmed.
+
+Step2. Continue the existing algorithm.
+
+
+If this improvement works (i.e you do not find any bugs in it and it
+is feasible to implement, which seems to me) the following would be
+its advantages:
+1. An assumption less, as we explicitly check the assumption.
+2. It might be quicker, because we delete parts of graph that cannot
+contain transitions.
+3. It returns more exact results.
+
+VG
