@@ -2,116 +2,140 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,
-	TVD_SUBJ_WIPE_DEBT shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5F990201A9
-	for <e@80x24.org>; Mon, 20 Feb 2017 12:30:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F26CF201A9
+	for <e@80x24.org>; Mon, 20 Feb 2017 12:32:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753146AbdBTMar (ORCPT <rfc822;e@80x24.org>);
-        Mon, 20 Feb 2017 07:30:47 -0500
-Received: from alum-mailsec-scanner-1.mit.edu ([18.7.68.12]:56761 "EHLO
-        alum-mailsec-scanner-1.mit.edu" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1753317AbdBTMaq (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 20 Feb 2017 07:30:46 -0500
-X-AuditID: 1207440c-aa5ff70000002e8f-23-58aae174cec5
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-        (using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
-        (Client did not present a certificate)
-        by alum-mailsec-scanner-1.mit.edu (Symantec Messaging Gateway) with SMTP id 20.73.11919.471EAA85; Mon, 20 Feb 2017 07:30:44 -0500 (EST)
-Received: from [192.168.69.190] (p579060C0.dip0.t-ipconnect.de [87.144.96.192])
-        (authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v1KCUfQJ029099
-        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-        Mon, 20 Feb 2017 07:30:42 -0500
-Subject: Re: [PATCH v4 14/15] files-backend: remove submodule_allowed from
- files_downcast()
-To:     Duy Nguyen <pclouds@gmail.com>
-References: <20170217140436.17336-1-pclouds@gmail.com>
- <20170218133303.3682-1-pclouds@gmail.com>
- <20170218133303.3682-15-pclouds@gmail.com>
- <25fcb527-595a-7865-41e3-ee7c4c1ad668@alum.mit.edu>
- <CACsJy8AZ27O-pxTqHOzYXRBuyv8dkxdGJ_5Z0u3eaxkNdnaEYA@mail.gmail.com>
+        id S1752869AbdBTMcK (ORCPT <rfc822;e@80x24.org>);
+        Mon, 20 Feb 2017 07:32:10 -0500
+Received: from mail-oi0-f66.google.com ([209.85.218.66]:32796 "EHLO
+        mail-oi0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752767AbdBTMcJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Feb 2017 07:32:09 -0500
+Received: by mail-oi0-f66.google.com with SMTP id 2so2323096oif.0
+        for <git@vger.kernel.org>; Mon, 20 Feb 2017 04:32:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=lKfC1hospWYKEzQVKU8yJ4Ti8hnEwzKgBM1+cPW5SvY=;
+        b=JcY82hhEfwf2MEfVG3mI0kx1gAX9hHbpYjYIkXf9PYzUcyDrp8bwIkeJJXyTmqiqb2
+         1WoUwkAi0RbE1hIp/4jZMMWIg7tX0uB4Vl9K76v3dL7DBVj/xhR8w8318SBPt1vDkUv8
+         nBMghYvlr2dXhHQCNpKKvXd71J7ygrdv4kBsojcX8QDDRmY9mhxX4+hybjqeGki+j3ZO
+         Vh8mipT1M8S7aljPOF6fnZc5pH7Gf9cjX0pCMid2L1Mckklhx05GtanYlMvSCbLsZ2Dq
+         viiNLR3hC72m2jUk+KVZrGHgs+oErAVTBKftr1asZIZUNDyifQ83HjMjTZZ3JkpEJnBU
+         gobQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=lKfC1hospWYKEzQVKU8yJ4Ti8hnEwzKgBM1+cPW5SvY=;
+        b=hrzzXRf0pdQeNKCUgdZlJifVa8fcqqLhwn/AmQJuuo2XmZXtUy1W/pfB0d7XdT9Ikl
+         GQmerXeRn3w1Efl4OqnG8ZLGNAbendb7cLY/krTtQN+wtQU3M7o6f0kEkNgik/LAy3sg
+         W126zZEjQlDB0bKSK80XPpAL/J/Ye2ewfasfzZldQy3a3SDlSqHLY2LuqoiSzNr5ATli
+         KuXx6nYte3WhvGzTlfWGMoKCtsT2RSoWH6nQsfom8QYmB/E5vE/ZnwyGAIO62mDWuPcY
+         +Dd3Mw5p1hzYS4rs99yIbjEm96XQwRZsLUdnyFo9mKQ/2gQaop6z/EMDM3fECAccTmeH
+         n1aw==
+X-Gm-Message-State: AMke39kGLRnPF4KiZP/KeKTBe/CG1orXBnKnQPlt/8uGIgGB0IUboSv9KCficd7R8shpY4C7lI09dmlpfhCGww==
+X-Received: by 10.202.173.18 with SMTP id w18mr11562957oie.146.1487593928829;
+ Mon, 20 Feb 2017 04:32:08 -0800 (PST)
+MIME-Version: 1.0
+Received: by 10.74.158.84 with HTTP; Mon, 20 Feb 2017 04:31:38 -0800 (PST)
+In-Reply-To: <1d750672-441d-14ae-21e9-d7bdd47a50a4@alum.mit.edu>
+References: <20170217140436.17336-1-pclouds@gmail.com> <20170218133303.3682-1-pclouds@gmail.com>
+ <20170218133303.3682-7-pclouds@gmail.com> <1d750672-441d-14ae-21e9-d7bdd47a50a4@alum.mit.edu>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Mon, 20 Feb 2017 19:31:38 +0700
+Message-ID: <CACsJy8Dk+DY0Evf0_P9mg_ezkTWJDL-eDdXChrp8K1P5C1rQdg@mail.gmail.com>
+Subject: Re: [PATCH v4 06/15] files-backend: remove the use of git_path()
+To:     Michael Haggerty <mhagger@alum.mit.edu>
 Cc:     Git Mailing List <git@vger.kernel.org>,
         Junio C Hamano <gitster@pobox.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Ramsay Jones <ramsay@ramsayjones.plus.com>,
         Stefan Beller <sbeller@google.com>,
         David Turner <novalis@novalis.org>
-From:   Michael Haggerty <mhagger@alum.mit.edu>
-Message-ID: <c4265faf-a04a-552b-fd72-1631a220f788@alum.mit.edu>
-Date:   Mon, 20 Feb 2017 13:30:41 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Icedove/45.6.0
-MIME-Version: 1.0
-In-Reply-To: <CACsJy8AZ27O-pxTqHOzYXRBuyv8dkxdGJ_5Z0u3eaxkNdnaEYA@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFupnleLIzCtJLcpLzFFi42IRYndR1C15uCrC4PkLU4uuK91MFg29V5gt
-        +pd3sVksefia2aJ7yltGi5lXrS02b25ncWD32DnrLrvHh49xHgs2lXp0tR9h87h4Sdlj/9Jt
-        bB6fN8kFsEdx2aSk5mSWpRbp2yVwZWztbGEtmClQMWnfBrYGxj7eLkZODgkBE4k7rU8ZQWwh
-        gR1MEh8eyHYxcgHZ55kktn4/zwSSEBaIlTjec4UdxBYRUJJ407GNGaKoh0niwolLLCAOs8As
-        JomLexexgVSxCehKLOppBuvmFbCXWLL0MAuIzSKgKrHz1mKwSaICIRJzFj5ghKgRlDg58wlY
-        DadAoMTin1vB4swC6hJ/5l1ihrDlJZq3zmaewMg/C0nLLCRls5CULWBkXsUol5hTmqubm5iZ
-        U5yarFucnJiXl1qka6iXm1mil5pSuokREu48Oxi/rZM5xCjAwajEw6sxc2WEEGtiWXFl7iFG
-        SQ4mJVHeO0tWRQjxJeWnVGYkFmfEF5XmpBYfYpTgYFYS4X1zGSjHm5JYWZValA+TkuZgURLn
-        VV2i7ickkJ5YkpqdmlqQWgSTleHgUJLgrX0A1ChYlJqeWpGWmVOCkGbi4AQZzgM0/AJIDW9x
-        QWJucWY6RP4Uo6KUOO/L+0AJAZBERmkeXC8sHb1iFAd6RZg3HaSdB5jK4LpfAQ1mAhp802Ml
-        yOCSRISUVAOj49yP9/N+Oe27sERy78cza91TWjb6BBRFcx52+dt/OJizeb4Wz+602fOkeQ1f
-        i70pyly+/XTzdfkHFjdy/B3ktnIru0tFnmLuPy/E/rHxc+bcBd+eRBxSCAlZ6zyD8+ehkxMU
-        ztgeuFAcUjuvQHXNTZ8js/4GGWyxvtGXw/hmUWf/zbTnm6+5K7EUZyQaajEXFScCADJVsAUi
-        AwAA
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 02/20/2017 01:21 PM, Duy Nguyen wrote:
-> On Mon, Feb 20, 2017 at 7:11 PM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
->> On 02/18/2017 02:33 PM, Nguyễn Thái Ngọc Duy wrote:
->>> Since submodule or not is irrelevant to files-backend after the last
->>> patch, remove the parameter from files_downcast() and kill
->>> files_assert_main_repository().
->>>
->>> PS. This implies that all ref operations are allowed for submodules. But
->>> we may need to look more closely to see if that's really true...
+On Mon, Feb 20, 2017 at 6:34 PM, Michael Haggerty <mhagger@alum.mit.edu> wr=
+ote:
+> On 02/18/2017 02:32 PM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
+>> Given $GIT_DIR and $GIT_COMMON_DIR, files-backend is now in charge of
+>> deciding what goes where. The end goal is to pass $GIT_DIR only. A
+>> refs "view" of a linked worktree is a logical ref store that combines
+>> two files backends together.
 >>
->> I think you are jumping the gun here.
+>> (*) Not entirely true since strbuf_git_path_submodule() still does path
+>> translation underneath. But that's for another patch.
 >>
->> Even after your changes, there is still a significant difference between
->> the main repository and submodules: we have access to the object
->> database for the main repository, but not for submodules.
+>> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.=
+com>
+>> ---
+>>  refs/files-backend.c | 37 +++++++++++++++++++++++++++++++++----
+>>  1 file changed, 33 insertions(+), 4 deletions(-)
 >>
->> So, for example, the following don't work for submodules:
+>> diff --git a/refs/files-backend.c b/refs/files-backend.c
+>> index b599ddf92..dbcaf9bda 100644
+>> --- a/refs/files-backend.c
+>> +++ b/refs/files-backend.c
+>> @@ -924,6 +924,9 @@ struct files_ref_store {
+>>        */
+>>       const char *submodule;
 >>
->> * `parse_object()` is used to ensure that references are only pointed at
->> valid objects, and that branches are only pointed at commit objects.
->>
->> * `peel_object()` is used to write the peeled version of references in
->> `packed-refs`, and to peel references while they are being iterated
->> over. Since this doesn't work, I think you can't write `packed-refs` in
->> a submodule.
->>
->> These limitations, I think, imply that submodule references have to be
->> treated as read-only.
-> 
-> Behind the scene submodule does add_submodule_odb(), which basically
-> makes the submodule's odb an alternate of in-core odb. So odb access
-> works. I was puzzled how submodules could by pass odb access at the
-> beginning only to find that out. technical/api-ref-iteration.txt also
-> mentions that you need to add_submodule_odb(), so I think it's
-> deliberate (albeit hacky) design.
+>> +     struct strbuf gitdir;
+>> +     struct strbuf gitcommondir;
+>
+> Is there a reason for these to be `strbuf`s rather than `const char *`?
+> (One reason would be if you planned to use the `len` field, but I don't
+> think you do so.)
 
-That's interesting. I didn't know it before.
+Nope. I just didn't think about char *. It may have to lose "const"
+though because in submodule case we may need a new allocation.
 
-But I still don't think that means that reference writing can work
-correctly. If I try to set a submodule branch to an SHA-1 and I verify
-that the SHA-1 points to a valid commit, how do I know that the commit
-is in the same submodule that holds the reference?
+>
+>> @@ -937,15 +940,33 @@ static void files_path(struct files_ref_store *ref=
+s, struct strbuf *sb,
+>>  {
+>>       struct strbuf tmp =3D STRBUF_INIT;
+>>       va_list vap;
+>> +     const char *ref;
+>>
+>>       va_start(vap, fmt);
+>>       strbuf_vaddf(&tmp, fmt, vap);
+>>       va_end(vap);
+>> -     if (refs->submodule)
+>> +     if (refs->submodule) {
+>>               strbuf_git_path_submodule(sb, refs->submodule,
+>>                                         "%s", tmp.buf);
+>> -     else
+>> -             strbuf_git_path(sb, "%s", tmp.buf);
+>> +     } else if (!strcmp(tmp.buf, "packed-refs") ||
+>> +                !strcmp(tmp.buf, "logs")) { /* non refname path */
+>> +             strbuf_addf(sb, "%s/%s", refs->gitcommondir.buf, tmp.buf);
+>> +     } else if (skip_prefix(tmp.buf, "logs/", &ref)) { /* reflog */
+>> +             if (is_per_worktree_ref(ref))
+>> +                     strbuf_addf(sb, "%s/%s", refs->gitdir.buf, tmp.buf=
+);
+>> +             else
+>> +                     strbuf_addf(sb, "%s/%s", refs->gitcommondir.buf, t=
+mp.buf);
+>
+> This code would also be simpler if there were separate functions for
+> packed-refs, loose references, and reflogs.
 
-> [...]
-
-Michael
+And maybe keep the path to packed-refs, the base path up to "logs" in
+struct files_ref_store too (they will be calculated at ref store
+init)? That way the files_packed_refs_path() does no calculation.
+files_reflog_path() and files_ref_path() will just do string
+concatenation, no fancy addf.
+--=20
+Duy
