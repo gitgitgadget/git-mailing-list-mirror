@@ -6,40 +6,40 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DB5DA201A8
-	for <e@80x24.org>; Mon, 20 Feb 2017 00:11:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2CADC201A8
+	for <e@80x24.org>; Mon, 20 Feb 2017 00:11:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751978AbdBTAKs (ORCPT <rfc822;e@80x24.org>);
-        Sun, 19 Feb 2017 19:10:48 -0500
-Received: from castro.crustytoothpaste.net ([75.10.60.170]:36326 "EHLO
+        id S1751927AbdBTAKr (ORCPT <rfc822;e@80x24.org>);
+        Sun, 19 Feb 2017 19:10:47 -0500
+Received: from castro.crustytoothpaste.net ([75.10.60.170]:36336 "EHLO
         castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751307AbdBTAKq (ORCPT
+        by vger.kernel.org with ESMTP id S1751833AbdBTAKq (ORCPT
         <rfc822;git@vger.kernel.org>); Sun, 19 Feb 2017 19:10:46 -0500
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 95D9D280B3;
+        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id E03B7280B4;
         Mon, 20 Feb 2017 00:10:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
         s=default; t=1487549444;
-        bh=M6Wj8OeRwLxg/WhhL9ZV9yKOp0D4go9aS2avjL8rEmI=;
+        bh=CVzshxDk2+Z+rp/+LfzPUSQSemXELl8DbRLn/Kwpi20=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=rknI8GPBkJP6YcRGy85rL8SxbNVqIJ1JBeoVacbWXKwL7u8A+eXbqUZricm2l36+L
-         VVM5CxBessEV7Soh9rA7/LE+vC8Y/Xu08P9x0whPdZAqnAnC5dgttYhZv6OJzKM6Qt
-         jriHS8d3N+Lb3yqGdTwl1RO7cwxa43mP2mfs+4mXqrQ8RPDaZIKXCpn/BcUKlyJHtI
-         xDKCMhhjSjSfXH9cArhCjapsNI+IzwBwHQxKiE7VXZxsGvqCbD1EFe6A6RKkMBN8SQ
-         uOZZ+ZFp6Vxddq4ktbAiCnibyHCBGafjZEb5+sVuPrR/oZgpIi5ngPm899c7AOKjuL
-         YbWNZ146hoRkxlxXv/TsrsQJmGACINJpKUZEGfcMi64rbSz9XQ0WQD0fJom+Vmbdaa
-         FMsXeHRXKiXzXlakC8mOCgRzIrHWyoph/2esi79R8GlCieKTZn+s1R5qGKMKje2V2S
-         /louoeZ/9bmtPFQ3NE3JEgK2BJqRN03UiNSTWwjwnhegeCmXjD9
+        b=erbuqC0+MKyODSu3P2luQaaVV6EYrj51ZN92KZqzCGwCcbHl/plxy0sX2keBoj/Gj
+         q+YATalAl9DNP48JxtNB41O5y2apImRkTfy6ZRW+qUl/jOvWB9jnSmjWGVX/dsbrna
+         73XNSPeXzcnteByqEmpXTIrSkqWSgr8N3shDlHz3HRntCYYS2wVXJIqEgylxBPKfnP
+         4mPVyNjsDhM6NO90xx08ii6tChIf1lz9msnf9hplrVe67thrWnFsZV3OX8OM8S/Q4L
+         N53uVtZuTTd6HtjE9nqsbdi8D4WhQEnVgl6GLM09u9TZKAHHumw9jsiaqtbN9UFxyZ
+         chbrvPtgSCLL+IcGX2rETexkfQZQHCMmn/MKegsnrxtuwP6NKLqp98GAaiGei8RmOD
+         KuDffA+CcEd5CjWEz2fUTeZTW5SqQaKCr9e1+LaPaZX0Dlmcel2wBGMi4tXUt3S5Tv
+         Wtl/775J0n3rYUGvX339/d39iecuJqlQwFI2XLU5oVV12gxUd6i
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     Jeff King <peff@peff.net>, Michael Haggerty <mhagger@alum.mit.edu>,
         Junio C Hamano <gitster@pobox.com>,
         Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: [PATCH v4 06/19] builtin/fmt-merge-message: convert to struct object_id
-Date:   Mon, 20 Feb 2017 00:10:18 +0000
-Message-Id: <20170220001031.559931-7-sandals@crustytoothpaste.net>
+Subject: [PATCH v4 07/19] builtin/grep: convert to struct object_id
+Date:   Mon, 20 Feb 2017 00:10:19 +0000
+Message-Id: <20170220001031.559931-8-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.11.0
 In-Reply-To: <20170220001031.559931-1-sandals@crustytoothpaste.net>
 References: <20170220001031.559931-1-sandals@crustytoothpaste.net>
@@ -48,221 +48,108 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Convert most of the code to use struct object_id, including struct
-origin_data and struct merge_parents.  Convert several instances of
-hardcoded numbers into references to GIT_SHA1_HEXSZ.
+Convert several functions to use struct object_id, and rename them so
+that they no longer refer to SHA-1.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- builtin/fmt-merge-msg.c | 70 ++++++++++++++++++++++++-------------------------
- 1 file changed, 35 insertions(+), 35 deletions(-)
+ builtin/grep.c | 24 ++++++++++++------------
+ 1 file changed, 12 insertions(+), 12 deletions(-)
 
-diff --git a/builtin/fmt-merge-msg.c b/builtin/fmt-merge-msg.c
-index efab62fd85..6faa3c0d24 100644
---- a/builtin/fmt-merge-msg.c
-+++ b/builtin/fmt-merge-msg.c
-@@ -41,7 +41,7 @@ struct src_data {
- };
- 
- struct origin_data {
--	unsigned char sha1[20];
-+	struct object_id oid;
- 	unsigned is_local_branch:1;
- };
- 
-@@ -59,8 +59,8 @@ static struct string_list origins = STRING_LIST_INIT_DUP;
- struct merge_parents {
- 	int alloc, nr;
- 	struct merge_parent {
--		unsigned char given[20];
--		unsigned char commit[20];
-+		struct object_id given;
-+		struct object_id commit;
- 		unsigned char used;
- 	} *item;
- };
-@@ -70,14 +70,14 @@ struct merge_parents {
-  * hundreds of heads at a time anyway.
-  */
- static struct merge_parent *find_merge_parent(struct merge_parents *table,
--					      unsigned char *given,
--					      unsigned char *commit)
-+					      struct object_id *given,
-+					      struct object_id *commit)
- {
- 	int i;
- 	for (i = 0; i < table->nr; i++) {
--		if (given && hashcmp(table->item[i].given, given))
-+		if (given && oidcmp(&table->item[i].given, given))
- 			continue;
--		if (commit && hashcmp(table->item[i].commit, commit))
-+		if (commit && oidcmp(&table->item[i].commit, commit))
- 			continue;
- 		return &table->item[i];
- 	}
-@@ -85,14 +85,14 @@ static struct merge_parent *find_merge_parent(struct merge_parents *table,
+diff --git a/builtin/grep.c b/builtin/grep.c
+index 2c727ef499..0393b0fdc4 100644
+--- a/builtin/grep.c
++++ b/builtin/grep.c
+@@ -294,17 +294,17 @@ static int grep_cmd_config(const char *var, const char *value, void *cb)
+ 	return st;
  }
  
- static void add_merge_parent(struct merge_parents *table,
--			     unsigned char *given,
--			     unsigned char *commit)
-+			     struct object_id *given,
-+			     struct object_id *commit)
+-static void *lock_and_read_sha1_file(const unsigned char *sha1, enum object_type *type, unsigned long *size)
++static void *lock_and_read_oid_file(const struct object_id *oid, enum object_type *type, unsigned long *size)
  {
- 	if (table->nr && find_merge_parent(table, given, commit))
- 		return;
- 	ALLOC_GROW(table->item, table->nr + 1, table->alloc);
--	hashcpy(table->item[table->nr].given, given);
--	hashcpy(table->item[table->nr].commit, commit);
-+	oidcpy(&table->item[table->nr].given, given);
-+	oidcpy(&table->item[table->nr].commit, commit);
- 	table->item[table->nr].used = 0;
- 	table->nr++;
+ 	void *data;
+ 
+ 	grep_read_lock();
+-	data = read_sha1_file(sha1, type, size);
++	data = read_sha1_file(oid->hash, type, size);
+ 	grep_read_unlock();
+ 	return data;
  }
-@@ -106,30 +106,30 @@ static int handle_line(char *line, struct merge_parents *merge_parents)
- 	struct src_data *src_data;
- 	struct string_list_item *item;
- 	int pulling_head = 0;
--	unsigned char sha1[20];
-+	struct object_id oid;
  
--	if (len < 43 || line[40] != '\t')
-+	if (len < GIT_SHA1_HEXSZ + 3 || line[GIT_SHA1_HEXSZ] != '\t')
- 		return 1;
+-static int grep_sha1(struct grep_opt *opt, const unsigned char *sha1,
++static int grep_oid(struct grep_opt *opt, const struct object_id *oid,
+ 		     const char *filename, int tree_name_len,
+ 		     const char *path)
+ {
+@@ -323,7 +323,7 @@ static int grep_sha1(struct grep_opt *opt, const unsigned char *sha1,
  
--	if (starts_with(line + 41, "not-for-merge"))
-+	if (starts_with(line + GIT_SHA1_HEXSZ + 1, "not-for-merge"))
+ #ifndef NO_PTHREADS
+ 	if (num_threads) {
+-		add_work(opt, GREP_SOURCE_SHA1, pathbuf.buf, path, sha1);
++		add_work(opt, GREP_SOURCE_SHA1, pathbuf.buf, path, oid);
+ 		strbuf_release(&pathbuf);
  		return 0;
+ 	} else
+@@ -332,7 +332,7 @@ static int grep_sha1(struct grep_opt *opt, const unsigned char *sha1,
+ 		struct grep_source gs;
+ 		int hit;
  
--	if (line[41] != '\t')
-+	if (line[GIT_SHA1_HEXSZ + 1] != '\t')
- 		return 2;
+-		grep_source_init(&gs, GREP_SOURCE_SHA1, pathbuf.buf, path, sha1);
++		grep_source_init(&gs, GREP_SOURCE_SHA1, pathbuf.buf, path, oid);
+ 		strbuf_release(&pathbuf);
+ 		hit = grep_source(opt, &gs);
  
--	i = get_sha1_hex(line, sha1);
-+	i = get_oid_hex(line, &oid);
- 	if (i)
- 		return 3;
+@@ -690,7 +690,7 @@ static int grep_cache(struct grep_opt *opt, const struct pathspec *pathspec,
+ 			    ce_skip_worktree(ce)) {
+ 				if (ce_stage(ce) || ce_intent_to_add(ce))
+ 					continue;
+-				hit |= grep_sha1(opt, ce->oid.hash, ce->name,
++				hit |= grep_oid(opt, &ce->oid, ce->name,
+ 						 0, ce->name);
+ 			} else {
+ 				hit |= grep_file(opt, ce->name);
+@@ -750,7 +750,7 @@ static int grep_tree(struct grep_opt *opt, const struct pathspec *pathspec,
+ 		strbuf_add(base, entry.path, te_len);
  
--	if (!find_merge_parent(merge_parents, sha1, NULL))
-+	if (!find_merge_parent(merge_parents, &oid, NULL))
- 		return 0; /* subsumed by other parents */
+ 		if (S_ISREG(entry.mode)) {
+-			hit |= grep_sha1(opt, entry.oid->hash, base->buf, tn_len,
++			hit |= grep_oid(opt, entry.oid, base->buf, tn_len,
+ 					 check_attr ? base->buf + tn_len : NULL);
+ 		} else if (S_ISDIR(entry.mode)) {
+ 			enum object_type type;
+@@ -758,7 +758,7 @@ static int grep_tree(struct grep_opt *opt, const struct pathspec *pathspec,
+ 			void *data;
+ 			unsigned long size;
  
- 	origin_data = xcalloc(1, sizeof(struct origin_data));
--	hashcpy(origin_data->sha1, sha1);
-+	oidcpy(&origin_data->oid, &oid);
- 
- 	if (line[len - 1] == '\n')
- 		line[len - 1] = 0;
--	line += 42;
-+	line += GIT_SHA1_HEXSZ + 2;
- 
- 	/*
- 	 * At this point, line points at the beginning of comment e.g.
-@@ -338,10 +338,10 @@ static void shortlog(const char *name,
- 	struct string_list committers = STRING_LIST_INIT_DUP;
- 	int flags = UNINTERESTING | TREESAME | SEEN | SHOWN | ADDED;
- 	struct strbuf sb = STRBUF_INIT;
--	const unsigned char *sha1 = origin_data->sha1;
-+	const struct object_id *oid = &origin_data->oid;
- 	int limit = opts->shortlog_len;
- 
--	branch = deref_tag(parse_object(sha1), sha1_to_hex(sha1), 40);
-+	branch = deref_tag(parse_object(oid->hash), oid_to_hex(oid), GIT_SHA1_HEXSZ);
- 	if (!branch || branch->type != OBJ_COMMIT)
- 		return;
- 
-@@ -531,7 +531,7 @@ static void fmt_merge_msg_sigs(struct strbuf *out)
- }
- 
- static void find_merge_parents(struct merge_parents *result,
--			       struct strbuf *in, unsigned char *head)
-+			       struct strbuf *in, struct object_id *head)
+-			data = lock_and_read_sha1_file(entry.oid->hash, &type, &size);
++			data = lock_and_read_oid_file(entry.oid, &type, &size);
+ 			if (!data)
+ 				die(_("unable to read tree (%s)"),
+ 				    oid_to_hex(entry.oid));
+@@ -787,7 +787,7 @@ static int grep_object(struct grep_opt *opt, const struct pathspec *pathspec,
+ 		       struct object *obj, const char *name, const char *path)
  {
- 	struct commit_list *parents;
- 	struct commit *head_commit;
-@@ -542,31 +542,31 @@ static void find_merge_parents(struct merge_parents *result,
- 		int len;
- 		char *p = in->buf + pos;
- 		char *newline = strchr(p, '\n');
+ 	if (obj->type == OBJ_BLOB)
+-		return grep_sha1(opt, obj->oid.hash, name, 0, path);
++		return grep_oid(opt, &obj->oid, name, 0, path);
+ 	if (obj->type == OBJ_COMMIT || obj->type == OBJ_TREE) {
+ 		struct tree_desc tree;
+ 		void *data;
+@@ -1152,11 +1152,11 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
+ 	/* Check revs and then paths */
+ 	for (i = 0; i < argc; i++) {
+ 		const char *arg = argv[i];
 -		unsigned char sha1[20];
 +		struct object_id oid;
- 		struct commit *parent;
- 		struct object *obj;
- 
- 		len = newline ? newline - p : strlen(p);
- 		pos += len + !!newline;
- 
--		if (len < 43 ||
--		    get_sha1_hex(p, sha1) ||
--		    p[40] != '\t' ||
--		    p[41] != '\t')
-+		if (len < GIT_SHA1_HEXSZ + 3 ||
-+		    get_oid_hex(p, &oid) ||
-+		    p[GIT_SHA1_HEXSZ] != '\t' ||
-+		    p[GIT_SHA1_HEXSZ + 1] != '\t')
- 			continue; /* skip not-for-merge */
- 		/*
- 		 * Do not use get_merge_parent() here; we do not have
- 		 * "name" here and we do not want to contaminate its
- 		 * util field yet.
- 		 */
--		obj = parse_object(sha1);
-+		obj = parse_object(oid.hash);
- 		parent = (struct commit *)peel_to_type(NULL, 0, obj, OBJ_COMMIT);
- 		if (!parent)
- 			continue;
- 		commit_list_insert(parent, &parents);
--		add_merge_parent(result, obj->oid.hash, parent->object.oid.hash);
-+		add_merge_parent(result, &obj->oid, &parent->object.oid);
- 	}
--	head_commit = lookup_commit(head);
-+	head_commit = lookup_commit(head->hash);
- 	if (head_commit)
- 		commit_list_insert(head_commit, &parents);
- 	parents = reduce_heads(parents);
-@@ -574,7 +574,7 @@ static void find_merge_parents(struct merge_parents *result,
- 	while (parents) {
- 		struct commit *cmit = pop_commit(&parents);
- 		for (i = 0; i < result->nr; i++)
--			if (!hashcmp(result->item[i].commit, cmit->object.oid.hash))
-+			if (!oidcmp(&result->item[i].commit, &cmit->object.oid))
- 				result->item[i].used = 1;
- 	}
- 
-@@ -592,7 +592,7 @@ int fmt_merge_msg(struct strbuf *in, struct strbuf *out,
- 		  struct fmt_merge_msg_opts *opts)
- {
- 	int i = 0, pos = 0;
--	unsigned char head_sha1[20];
-+	struct object_id head_oid;
- 	const char *current_branch;
- 	void *current_branch_to_free;
- 	struct merge_parents merge_parents;
-@@ -601,13 +601,13 @@ int fmt_merge_msg(struct strbuf *in, struct strbuf *out,
- 
- 	/* get current branch */
- 	current_branch = current_branch_to_free =
--		resolve_refdup("HEAD", RESOLVE_REF_READING, head_sha1, NULL);
-+		resolve_refdup("HEAD", RESOLVE_REF_READING, head_oid.hash, NULL);
- 	if (!current_branch)
- 		die("No current branch");
- 	if (starts_with(current_branch, "refs/heads/"))
- 		current_branch += 11;
- 
--	find_merge_parents(&merge_parents, in, head_sha1);
-+	find_merge_parents(&merge_parents, in, &head_oid);
- 
- 	/* get a line */
- 	while (pos < in->len) {
-@@ -633,7 +633,7 @@ int fmt_merge_msg(struct strbuf *in, struct strbuf *out,
- 		struct commit *head;
- 		struct rev_info rev;
- 
--		head = lookup_commit_or_die(head_sha1, "HEAD");
-+		head = lookup_commit_or_die(head_oid.hash, "HEAD");
- 		init_revisions(&rev, NULL);
- 		rev.commit_format = CMIT_FMT_ONELINE;
- 		rev.ignore_merges = 1;
+ 		struct object_context oc;
+ 		/* Is it a rev? */
+-		if (!get_sha1_with_context(arg, 0, sha1, &oc)) {
+-			struct object *object = parse_object_or_die(sha1, arg);
++		if (!get_sha1_with_context(arg, 0, oid.hash, &oc)) {
++			struct object *object = parse_object_or_die(oid.hash, arg);
+ 			if (!seen_dashdash)
+ 				verify_non_filename(prefix, arg);
+ 			add_object_array_with_path(object, arg, &list, oc.mode, oc.path);
 -- 
 2.11.0
 
