@@ -2,155 +2,75 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3864C201A9
-	for <e@80x24.org>; Mon, 20 Feb 2017 12:44:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 67BAA201A9
+	for <e@80x24.org>; Mon, 20 Feb 2017 12:44:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753022AbdBTMoH (ORCPT <rfc822;e@80x24.org>);
-        Mon, 20 Feb 2017 07:44:07 -0500
-Received: from mout.gmx.net ([212.227.17.21]:52751 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753005AbdBTMoF (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Feb 2017 07:44:05 -0500
-Received: from virtualbox ([37.201.192.48]) by mail.gmx.com (mrgmx101
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MP0LT-1cl2Eu2d6N-006OIm; Mon, 20
- Feb 2017 13:43:39 +0100
-Date:   Mon, 20 Feb 2017 13:43:38 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     git@vger.kernel.org, Jeff Hostetler <jeffhost@microsoft.com>
-Subject: Re: [PATCH 2/5] hashmap: allow memihash computation to be
- continued
-In-Reply-To: <xmqq7f4onjrs.fsf@gitster.mtv.corp.google.com>
-Message-ID: <alpine.DEB.2.20.1702201342020.3496@virtualbox>
-References: <cover.1487071883.git.johannes.schindelin@gmx.de> <bd4893f86c4484fc36480848bf2d0905d961e022.1487071883.git.johannes.schindelin@gmx.de> <xmqq7f4onjrs.fsf@gitster.mtv.corp.google.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+        id S1753061AbdBTMo2 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 20 Feb 2017 07:44:28 -0500
+Received: from alum-mailsec-scanner-6.mit.edu ([18.7.68.18]:44358 "EHLO
+        alum-mailsec-scanner-6.mit.edu" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1752969AbdBTMo1 (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 20 Feb 2017 07:44:27 -0500
+X-AuditID: 12074412-4a3ff70000000b04-77-58aae43038f6
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+        (using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
+        (Client did not present a certificate)
+        by alum-mailsec-scanner-6.mit.edu (Symantec Messaging Gateway) with SMTP id 61.B3.02820.034EAA85; Mon, 20 Feb 2017 07:42:25 -0500 (EST)
+Received: from [192.168.69.190] (p579060C0.dip0.t-ipconnect.de [87.144.96.192])
+        (authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v1KCgMMd029564
+        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+        Mon, 20 Feb 2017 07:42:23 -0500
+Subject: Re: [PATCH v4 00/15] Remove submodule from files-backend.c
+To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>, git@vger.kernel.org
+References: <20170217140436.17336-1-pclouds@gmail.com>
+ <20170218133303.3682-1-pclouds@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        Stefan Beller <sbeller@google.com>, novalis@novalis.org
+From:   Michael Haggerty <mhagger@alum.mit.edu>
+Message-ID: <cdf01f55-f3df-d3ce-149c-0249a03d27bf@alum.mit.edu>
+Date:   Mon, 20 Feb 2017 13:42:21 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Icedove/45.6.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:cVR2eZ2sYJ89CaOi6FL5uqRF6cOBK4XGV8zizBOvL7jy3SYDWtI
- 5yJEbwxYRzH12GjPZ3hrMgYz1Oj3a+1sGQIvYwbGt9DY+JvQGepfc3wmkGVa7wGRt1ve9Rf
- LfqisNbG+00yj2AO5EBCvPo6M10899mlPZprL9TafCdtJhuvKcsGXhQeOY+U5Nm8izXWyIn
- ywIeeOjsaD1cOdMnodXWQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:1fGGvzMtu8o=:4ZmxboIiV7AmCuA2OnVrsT
- 4xKHohaRpRYUztWa92c+RJ6VV4sNphW8Gh063O2lES9xBCt3Ga0JHBJ2M/OImP8uhOJejptgw
- ndaksp1SnOVslUxwgB+03NNVjHSVg39GCdPDaFozbmXtt1xVm4F0Hik+w24RWUwezgTkwmtXk
- FyFDqDTrqct3XhzS9mahOjVeuSWa7nTjzM3urauXUY4d9R/ilQJ6d1lrR1c0HbTvyARdgcLMU
- io01h7SnVca1jLQbjTkhNrMqKG8yMMK3keyQhf02TOEK3QsnZy7wh7pn7D8xSM7hLGMwaE9O2
- gCGNDhdfHz9iq9/MITukE3hrDgvkJAvc5Hp6wn+oRem/fJb/I++DibvtifTHWWoVfXs0KnYNO
- Hh8sqzBxgXangv38Zu8QCU0ezT/LkuX9r79S2qUdngogN5EZvV5uLX3QhDqPWVa3taFZgV5pY
- VhJB0lxTMex8Y1ZehpHTBx9/NQSnMWg84+tZBfnDimE1MYRXPWERRLbseL+prfCJgoBYTCZNO
- xNGXUMCCw08N8vpwujkjIlh0S1z04YlI6q2miXhCbhXhlosodo77LNbvtBsh2m+j2st1z4t2R
- Y+d93+vii1CxdvRM1zeWCzVE6sf4oE9EoaToOW+OT00fnlJpeyUtlmYZNx05LNM556ELexw9U
- zZA9fl2zaAJj2ccLT1h/QMfIEngepbtw6kh+Tx5zt+cdwNpHv1Bp4JDUdKetWhqKQRpsHsq/b
- dLptDZ5FGt0LNkulkqi8p/Z1QW5UcmciAEFAjRXdRaHaXi2boQR9UmLny4vP4T+5EOGWuT/Pe
- eng39hN
+In-Reply-To: <20170218133303.3682-1-pclouds@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprFKsWRmVeSWpSXmKPExsUixO6iqGv4ZFWEQfcHLYuuK91MFg29V5gt
+        +pd3sVksefia2aJ7yltGi5lXrS02b25ncWD32DnrLrvHh49xHgs2lXp0tR9h87h4Sdlj/9Jt
+        bB6fN8kFsEdx2aSk5mSWpRbp2yVwZfxdfJe54BNTxYkHNQ2My5i6GDk5JARMJBpb1zJ2MXJx
+        CAnsYJL48P0HO4Rznkmid/dqFpAqYQFnifaNDYwgtohAmsTiye+ZQWwhgSSJeVd6mEAamAVu
+        MEpcmvgRbCybgK7Eop5mMJtXwF7iwu4lrCA2i4CqxPrVV8CGigqESMxZ+IARokZQ4uTMJ2Bx
+        TgEziXNbb4EtYBZQl/gz7xKULS/RvHU28wRG/llIWmYhKZuFpGwBI/MqRrnEnNJc3dzEzJzi
+        1GTd4uTEvLzUIl0zvdzMEr3UlNJNjJBgF9rBuP6k3CFGAQ5GJR7ehtkrI4RYE8uKK3MPMUpy
+        MCmJ8t5ZsipCiC8pP6UyI7E4I76oNCe1+BCjBAezkgjvm8tAOd6UxMqq1KJ8mJQ0B4uSOO/P
+        xep+QgLpiSWp2ampBalFMFkZDg4lCV67x0CNgkWp6akVaZk5JQhpJg5OkOE8QMPLHoEMLy5I
+        zC3OTIfIn2LU5Tj16cJLJiGWvPy8VClx3q0gRQIgRRmleXBzYEnqFaM40FvCvK0g63iACQ5u
+        0iugJUxAS256rARZUpKIkJJqYAx7kjP1Q5t+7s6nFSGXv4Veu3A0efOLWG9pmaAvl0U8/SNL
+        dTr+TjN8/Ng+OUPdYEf+Bqa4mzWNz4X3vzr5+tF/g+0vv0iGRP/Y5Hcv8cIipdCjj6YE5fct
+        +vHN/9nVoBQV8/BNO1mrU/+Yx+6VirgpozeP6+v73a/fPcv1ePzjdfPjSP5LUxcrsRRnJBpq
+        MRcVJwIAaJevXy0DAAA=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+On 02/18/2017 02:32 PM, Nguyễn Thái Ngọc Duy wrote:
+> v4:
 
-On Fri, 17 Feb 2017, Junio C Hamano wrote:
+I very much like the direction of this patch series. I reviewed the
+design pretty carefully and left some comments about it, and skimmed
+through the code changes. But I haven't yet reviewed the code in detail.
+I'll wait for your reaction to my design comments before doing so.
 
-> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
-> 
-> > diff --git a/hashmap.c b/hashmap.c
-> > index b10b642229c..061b7d61da6 100644
-> > --- a/hashmap.c
-> > +++ b/hashmap.c
-> > @@ -50,6 +50,20 @@ unsigned int memihash(const void *buf, size_t len)
-> >  	return hash;
-> >  }
-> >  
-> > +/* Incoporate another chunk of data into a memihash computation. */
-> > +unsigned int memihash_continue(unsigned int hash,
-> > +			       const void *buf, size_t len)
-> > +{
-> > +	const unsigned char *p = buf;
-> > +	while (len--) {
-> > +		unsigned int c = *p++;
-> > +		if (c >= 'a' && c <= 'z')
-> > +			c -= 'a' - 'A';
-> > +		hash = (hash * FNV32_PRIME) ^ c;
-> > +	}
-> > +	return hash;
-> > +}
-> 
-> This makes me wonder if we want to reduce the duplication (primarily
-> to avoid risking the loop body to go out of sync) by doing:
-> 
-> 	unsigned int memihash(const void *buf, size_t len)
-> 	{
-> 		return memihash_continue(buf, len, FNV32_BASE);
-> 	}                
-> 
-> If an extra call level really matters, its "inline" equivalent in
-> the header would probably be good.
+Thanks,
+Michael
 
-Well, the hashing is supposed to be as fast as possible, so I would like
-to avoid that extra call level. However, the end result is not so pretty
-because FNV32_BASE needs to be made public (OTOH it removes more lines
-than it adds):
-
--- snipsnap --
-diff --git a/hashmap.c b/hashmap.c
-index 061b7d61da6..470a0832688 100644
---- a/hashmap.c
-+++ b/hashmap.c
-@@ -4,7 +4,6 @@
- #include "cache.h"
- #include "hashmap.h"
- 
--#define FNV32_BASE ((unsigned int) 0x811c9dc5)
- #define FNV32_PRIME ((unsigned int) 0x01000193)
- 
- unsigned int strhash(const char *str)
-@@ -37,19 +36,6 @@ unsigned int memhash(const void *buf, size_t len)
- 	return hash;
- }
- 
--unsigned int memihash(const void *buf, size_t len)
--{
--	unsigned int hash = FNV32_BASE;
--	unsigned char *ucbuf = (unsigned char *) buf;
--	while (len--) {
--		unsigned int c = *ucbuf++;
--		if (c >= 'a' && c <= 'z')
--			c -= 'a' - 'A';
--		hash = (hash * FNV32_PRIME) ^ c;
--	}
--	return hash;
--}
--
- /* Incoporate another chunk of data into a memihash computation. */
- unsigned int memihash_continue(unsigned int hash,
- 			       const void *buf, size_t len)
-diff --git a/hashmap.h b/hashmap.h
-index 78e14dfde71..a1a8fd7dc54 100644
---- a/hashmap.h
-+++ b/hashmap.h
-@@ -8,12 +8,17 @@
- 
- /* FNV-1 functions */
- 
-+#define FNV32_BASE ((unsigned int) 0x811c9dc5)
-+
- extern unsigned int strhash(const char *buf);
- extern unsigned int strihash(const char *buf);
- extern unsigned int memhash(const void *buf, size_t len);
--extern unsigned int memihash(const void *buf, size_t len);
- extern unsigned int memihash_continue(unsigned int hash_seed,
- 				      const void *buf, size_t len);
-+static inline unsigned int memihash(const void *buf, size_t len)
-+{
-+	return memihash_continue(FNV32_BASE, buf, len);
-+}
- 
- static inline unsigned int sha1hash(const unsigned char *sha1)
- {
