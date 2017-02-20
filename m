@@ -2,84 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 57629201A9
-	for <e@80x24.org>; Mon, 20 Feb 2017 20:39:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7E925201A9
+	for <e@80x24.org>; Mon, 20 Feb 2017 20:52:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751426AbdBTUjw (ORCPT <rfc822;e@80x24.org>);
-        Mon, 20 Feb 2017 15:39:52 -0500
-Received: from mail-wm0-f43.google.com ([74.125.82.43]:35465 "EHLO
-        mail-wm0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751228AbdBTUjv (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Feb 2017 15:39:51 -0500
-Received: by mail-wm0-f43.google.com with SMTP id v186so90864390wmd.0
-        for <git@vger.kernel.org>; Mon, 20 Feb 2017 12:39:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gal-ro.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=QZByiD4QlonbZdpQ3ZHSE5ElQRIk9zQm7CzGUJqvjGs=;
-        b=XOOAObjmvF7N2h8GbvB7kToZT/trl+zMCCyyILc0uqk4HyLO0V1s8xMWWC3e6t6ixe
-         INEhE1PXzelC+/dYDohEIiZyp5nWW9Sys8fAocykFmt9DMZkml5WVItlQbYod4W2CKRS
-         CAnvRVWyLPpbzhMcsLdEBqkLWuhwogiT9Lo2PLDRrAdBYdpi4+UF9HaLKLZRPo3bRbP3
-         acZBcXMhbBLf/RLdleLhO0ZANdLLn7XF+SIhgB9jOQvvur8GucbEK9JAhi5BmOSJ2MiM
-         YY4Gx1w383kVC9ozDwWxhd7d540E2X1gSVU/W6W5986PDnqwjKLXEdVW3r3wzXf8wuLy
-         qE6Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=QZByiD4QlonbZdpQ3ZHSE5ElQRIk9zQm7CzGUJqvjGs=;
-        b=nX3rFNOa87E5V7k7+5bxGDZ97eAvh7jboYBHb+clfs8yYWtEjfqwCdQbv2+9zrJAnD
-         mDcNFvnF9leDU1MqnCAMOr99kOxz7yFgq9/TpiRiQvnnv0Q4onqhE3vt8Eb9AlNMRFbj
-         SQWTFT+n127CrWCkpOrYyi3BTNQ4VZXQcksNkaulr8KSC/h6UBT5vBxgYJKH2z7NVIwn
-         rhZri0ZFEHjE8CySIHzA9xP1zronznfgYa5KrnZPRpyojS10G3qO988zmm8L0yeHsWYx
-         ly8+rr5kJQWVyebiPsYx8J4Rtz+h9cD9G5q6dnYtbvPtklntYCglIdDDb3Ijsco+EeFI
-         qrqQ==
-X-Gm-Message-State: AMke39ltluZqTid8q/qnrDmgfvCpGD61L2zEiBqbOhRJmDTtEmHHqdw4w8uVmAufbHxTc32PAhZNKPcoD/XHcw==
-X-Received: by 10.28.125.22 with SMTP id y22mr12212136wmc.112.1487623190168;
- Mon, 20 Feb 2017 12:39:50 -0800 (PST)
+        id S1750835AbdBTUwq (ORCPT <rfc822;e@80x24.org>);
+        Mon, 20 Feb 2017 15:52:46 -0500
+Received: from cloud.peff.net ([104.130.231.41]:58920 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1750827AbdBTUwq (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Feb 2017 15:52:46 -0500
+Received: (qmail 2914 invoked by uid 109); 20 Feb 2017 20:52:45 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 20 Feb 2017 20:52:45 +0000
+Received: (qmail 30813 invoked by uid 111); 20 Feb 2017 20:52:48 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 20 Feb 2017 15:52:48 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 20 Feb 2017 15:52:43 -0500
+Date:   Mon, 20 Feb 2017 15:52:43 -0500
+From:   Jeff King <peff@peff.net>
+To:     Toolforger <toolforger@durchholz.org>
+Cc:     git@vger.kernel.org
+Subject: Re: url.<base>.insteadOf vs. submodules
+Message-ID: <20170220205243.lynnmxouwq7jelld@sigill.intra.peff.net>
+References: <84fcb0bd-85dc-0142-dd58-47a04eaa7c2b@durchholz.org>
+ <20170220090115.6kfzwl62opj4q7k7@sigill.intra.peff.net>
+ <404d109f-e5a7-85a3-e64c-ab1b21c3045d@durchholz.org>
 MIME-Version: 1.0
-Received: by 10.28.226.6 with HTTP; Mon, 20 Feb 2017 12:39:49 -0800 (PST)
-X-Originating-IP: [77.178.206.182]
-In-Reply-To: <ca1ef8f6-58cf-4994-d1bf-39e04b42dd4c@gmail.com>
-References: <CAMX8fZWe2HO78ySonHX0adtPUxVPbj5_vo-NUGrjwpb7gPdGrQ@mail.gmail.com>
- <d4991e4b-cbc4-da14-381a-88704e457a19@gmx.net> <3ff5ce3c-285f-cb9a-d1d4-46323524dab7@kdbg.org>
- <CAMX8fZVkBU6M8fkUcRr69V97_NTSOGGmPB1U-ObhmVv3i6wQhg@mail.gmail.com>
- <477d3533-d453-9499-e06e-72f45488d421@kdbg.org> <CAMX8fZW2y+iPRfSbXVcHufbM+CsqgekS_0WnCEJ++=njy_TvKg@mail.gmail.com>
- <CAP8UFD3ngMvVy2XLzYNn9OFbS+zQpWTW=pravpHhA-0PcDVhfg@mail.gmail.com>
- <CAMX8fZVeAEJ5tfCO_4Pebnq=rysaJ2xDMjH-9pjmPeF4FziLFw@mail.gmail.com>
- <d7bb866d-4a50-f75e-ff4c-bcdd54f75459@kdbg.org> <CAMX8fZWRgeK5XjSrFYzZea8YgT9Mqm0XJBxQGt1eqdWZU+DEnA@mail.gmail.com>
- <CA+P7+xrch9WDo6OgU3vUEpXqAETZ07mkf76dC9nJctm0LTFQHQ@mail.gmail.com>
- <CABEd3j8sgDd8DXW8+2Q7pjANPTr-Ws1Xs1ap875mkxFOfnenYw@mail.gmail.com>
- <58d25138-de2e-6995-444f-79c3ac0bbad2@gmail.com> <CABEd3j8m5D=bBbUD+uzvE9c8AwdBEM79Np7Pnin-RLL=Hjq06A@mail.gmail.com>
- <CAMX8fZUNHmouUsgEY3+0CmTaEp+y5b1-Cp8Nk3OttTc30v0R5A@mail.gmail.com> <ca1ef8f6-58cf-4994-d1bf-39e04b42dd4c@gmail.com>
-From:   Alex Hoffman <spec@gal.ro>
-Date:   Mon, 20 Feb 2017 21:39:49 +0100
-X-Google-Sender-Auth: UWPV8KYmuAT3bF6sG1rqF1GEYZo
-Message-ID: <CAMX8fZUbZQiKF6aXa9BifU5vAwJ1wWR3CTUg70jUbjxahrGdAQ@mail.gmail.com>
-Subject: Re: Git bisect does not find commit introducing the bug
-To:     =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
-Cc:     Oleg Taranenko <olegtaranenko@gmail.com>,
-        Jacob Keller <jacob.keller@gmail.com>,
-        Johannes Sixt <j6t@kdbg.org>,
-        Christian Couder <christian.couder@gmail.com>,
-        Stephan Beyer <s-beyer@gmx.net>, git <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <404d109f-e5a7-85a3-e64c-ab1b21c3045d@durchholz.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> If `git bisect` is/would be affected by `git log` history-related options
-> then this is what `--strict-ancestor` option gives/would give.
+On Mon, Feb 20, 2017 at 09:31:40PM +0100, Toolforger wrote:
 
-Exactly my thoughts. All that needs to be changed in the 2nd problem
-is the graph where to search.
+> > The submodule operations happen in their own processes, and do not look
+> > at the config of the parent repo.
+> 
+> Ah, then we have a docbug.
+> git help config has this to say:
+> 
+> url.<base>.insteadOf
+>     Any URL that starts with this value will be rewritten to start,
+>     instead, with <base>.
+> 
+> The "Any" here is wrong, it would be "any except submodule" (possibly other
+> exceptions).
 
-But first we must agree about the usefulness of the 2nd problem. Any
-thoughts/comments/votes for/against?
+I'm not sure that "any" is wrong here. Repository-specific config does
+not cross repository boundaries. That applies to this config value, and
+to all the others, too (e.g., if you set "diff.renames" in the
+super-project, it would not have an effect in the submodule).
+
+I think if there is a doc bug, it is that the repo boundary between the
+submodule and the super-project is not made more clear.
+
+That said, I do think it would be a useful feature for the super-project
+to rewrite URLs before handing them off to the submodule. But I do not
+really work on submodules nor use them myself, so there may be
+complications.
+
+I suppose you could argue that failing to rewrite violates the "any" in
+the quoted text. It doesn't say when the rewriting occurs, but it is
+essentially "when the URL is accessed". So the super-project feeds the
+raw URL to the submodule `git clone`, which then applies any URL
+rewriting.
+
+> > but one workaround is to set the config in ~/.gitconfig.
+> 
+> No can do - that's under version control.
+> My personal setup does not belong there I think ;-)
+
+I'm not sure I understand. You have a project policy to use certain
+URLs. But you, the user, want to override that. Why isn't the
+user-specific config file the right place to put that?
+
+(I think there _is_ a mismatch, in that the change is specific not just
+to your user, but to the repo. So you would not want to rewrite other
+references to the same URL in other repos. But that does not seem to be
+your objection).
+
+-Peff
