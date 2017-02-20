@@ -2,124 +2,135 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D96EA201A9
-	for <e@80x24.org>; Mon, 20 Feb 2017 12:26:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AE674201A9
+	for <e@80x24.org>; Mon, 20 Feb 2017 12:27:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752581AbdBTM0p (ORCPT <rfc822;e@80x24.org>);
-        Mon, 20 Feb 2017 07:26:45 -0500
-Received: from mail-oi0-f44.google.com ([209.85.218.44]:33081 "EHLO
-        mail-oi0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752297AbdBTM0o (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Feb 2017 07:26:44 -0500
-Received: by mail-oi0-f44.google.com with SMTP id 2so13002399oif.0
-        for <git@vger.kernel.org>; Mon, 20 Feb 2017 04:26:21 -0800 (PST)
+        id S1752622AbdBTM1h (ORCPT <rfc822;e@80x24.org>);
+        Mon, 20 Feb 2017 07:27:37 -0500
+Received: from mail-lf0-f47.google.com ([209.85.215.47]:33259 "EHLO
+        mail-lf0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751669AbdBTM1g (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Feb 2017 07:27:36 -0500
+Received: by mail-lf0-f47.google.com with SMTP id l12so11597205lfe.0
+        for <git@vger.kernel.org>; Mon, 20 Feb 2017 04:27:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=TbQhRn2jJIps3rW/U9dlmIxNPgCOdaxGixbXam0NzPA=;
-        b=BajBYO5u13a+LhjGjNYhpoGv1JTxhGQ0d5mjXokCUaeZXkT04zLqfFb7aijiy7YQkQ
-         GMNnmtajZ4lYFSwjKmFOPsSnK8aDd1h6tTzUN2BZn2+hMnKHYSiMFtJFuBdXdoXvTSso
-         xQVt4Xe3/ndQuz0U++dA1Nza6sv1kE3zB38+4IMlm3DhKY0MmvxbljD2v+CXrtKhUdy1
-         CE/RVLpe/XcLkKjGp8+PnZkGpFVuGZxSIkAjti4bdxuomla16KbmlHz57Xj729iLMWTe
-         0WXxoi++MnSk6nQkIQsluvrXvchiOiTtrVRFNTn6WwREC3x9yvq3GReRanif3vDMqgJ0
-         agYg==
+        h=subject:to:references:cc:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding;
+        bh=N4jDfW5sBTMHiFGaCVw9oOPsKw3FgQ6NE8bdOYHRxz0=;
+        b=jJl2MAuQlXUYZG+kwWSKYzNonyZaPFaXLTSCbtzVmnD9S/e3TtLV/d+Mj8XIQwca7z
+         ycT3d671ik53ZYo/CiyABMFxziPqOYExNYJnFZnYiqRHUMvA8iCMwEPKmZfDX7WUTMjt
+         /6FQVdhwmLIr8i7EDujuCRUfTLi1n25wFNZO8gyJJIjNxS1mT2Pu0QGkNbGX12uGPRxA
+         wGGTX++wYI1Zi4Cu+3KQSrJMwuYGFxE//6+CzAKhSbRFVaCRHad5b9KIl3ejg67S5YkC
+         8cOoRoNPB8cpbEaAwSvvW8KyV+uiGagP8PuSg/jB6VAfBQve0otlmsIw4gTjhcdJLbSt
+         WRnw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=TbQhRn2jJIps3rW/U9dlmIxNPgCOdaxGixbXam0NzPA=;
-        b=ZdWoPaU6CZMCOXdulF73t7MnBx+oNv4ErFjFEdqOGXImIh8EuZGnXWwQKlOliqsUEd
-         6XENvf10qd28IFVDAZfpp69pC4CUzMt+mSt96e4gWbCJXaQoNoYAEqLDrR9zXD7KHeMB
-         VcI8XMdlD+q43M4/O3LJM1JrnV2CI14kltz4a1Vtj+RVHmqQ4kf8K8b68ntEToKZl0Vo
-         scmmqmzg5vpvToRE9wH3c3djTfxJd4vocsIBR4FM1lJzR9J4Tv/qWFKTUM6WP4x7bpeh
-         C9G4xrivrRutKdedAnbgffqNhGe+OxLJ3EuPsLVEL0m0ZNDfMEpvoWp1lsMjD1fI7+WN
-         SFvg==
-X-Gm-Message-State: AMke39kJAAlulsf/UxlJyolKZXFw17W5flFKyqh6rIXIjlz3kwLbFoVS4Qe+Kq+oQ0Y8hQIzS4LVJTFv30HK2A==
-X-Received: by 10.202.207.134 with SMTP id f128mr1013298oig.55.1487593580523;
- Mon, 20 Feb 2017 04:26:20 -0800 (PST)
+        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
+        bh=N4jDfW5sBTMHiFGaCVw9oOPsKw3FgQ6NE8bdOYHRxz0=;
+        b=PljI1Q5gQz6s5TlnOUDletEsg2GvJw5juel7gv2B5YnL24JeNUorzo8vtcy5q8pCAW
+         xI0kPvh/WPyq/3IKdFxyf2uJpQpJpkueKI3rSydxh4I6dwoIreOuOliFK/qpZTmE4K16
+         0s3oY8S6LG9yZfJRF4RbbClPr+pVPgHa0h5CudSV7kuIKfZFWOFIkAPDQmIKHrDeyoat
+         eI3hDVrSmQTKMoQzmpH62f0KDUeZzzwwNZAFCYCNsntsjJz9btEj37TP2uqfJLhWhkWb
+         QUDLko2Gq4x4hSqqTCj7R6EBOUXnPU4iZOzOxRzPcEAALR/gknVs5E8Jjdb6Clq1dyyR
+         LpYA==
+X-Gm-Message-State: AMke39keGAg6o64YncPT0CUVopluYCvFvIMjboOJ3X9W/bCcBT0VquI5SBfkxyetXBmfcA==
+X-Received: by 10.46.87.67 with SMTP id r3mr5505750ljd.31.1487593655055;
+        Mon, 20 Feb 2017 04:27:35 -0800 (PST)
+Received: from [192.168.1.26] (adat244.neoplus.adsl.tpnet.pl. [83.11.255.244])
+        by smtp.googlemail.com with ESMTPSA id p19sm5179269lfe.1.2017.02.20.04.27.33
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 20 Feb 2017 04:27:34 -0800 (PST)
+Subject: Re: Git bisect does not find commit introducing the bug
+To:     Oleg Taranenko <olegtaranenko@gmail.com>,
+        Jacob Keller <jacob.keller@gmail.com>
+References: <CAMX8fZWe2HO78ySonHX0adtPUxVPbj5_vo-NUGrjwpb7gPdGrQ@mail.gmail.com>
+ <d4991e4b-cbc4-da14-381a-88704e457a19@gmx.net>
+ <3ff5ce3c-285f-cb9a-d1d4-46323524dab7@kdbg.org>
+ <CAMX8fZVkBU6M8fkUcRr69V97_NTSOGGmPB1U-ObhmVv3i6wQhg@mail.gmail.com>
+ <477d3533-d453-9499-e06e-72f45488d421@kdbg.org>
+ <CAMX8fZW2y+iPRfSbXVcHufbM+CsqgekS_0WnCEJ++=njy_TvKg@mail.gmail.com>
+ <CAP8UFD3ngMvVy2XLzYNn9OFbS+zQpWTW=pravpHhA-0PcDVhfg@mail.gmail.com>
+ <CAMX8fZVeAEJ5tfCO_4Pebnq=rysaJ2xDMjH-9pjmPeF4FziLFw@mail.gmail.com>
+ <d7bb866d-4a50-f75e-ff4c-bcdd54f75459@kdbg.org>
+ <CAMX8fZWRgeK5XjSrFYzZea8YgT9Mqm0XJBxQGt1eqdWZU+DEnA@mail.gmail.com>
+ <CA+P7+xrch9WDo6OgU3vUEpXqAETZ07mkf76dC9nJctm0LTFQHQ@mail.gmail.com>
+ <CABEd3j8sgDd8DXW8+2Q7pjANPTr-Ws1Xs1ap875mkxFOfnenYw@mail.gmail.com>
+Cc:     Alex Hoffman <spec@gal.ro>, Johannes Sixt <j6t@kdbg.org>,
+        Christian Couder <christian.couder@gmail.com>,
+        Stephan Beyer <s-beyer@gmx.net>, git <git@vger.kernel.org>
+From:   =?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
+Message-ID: <58d25138-de2e-6995-444f-79c3ac0bbad2@gmail.com>
+Date:   Mon, 20 Feb 2017 13:27:23 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.7.1
 MIME-Version: 1.0
-Received: by 10.74.158.84 with HTTP; Mon, 20 Feb 2017 04:25:50 -0800 (PST)
-In-Reply-To: <330bfd35-ec00-92a2-a221-c7be9f0199e5@alum.mit.edu>
-References: <20170213152011.12050-1-pclouds@gmail.com> <20170216114818.6080-1-pclouds@gmail.com>
- <20170216114818.6080-5-pclouds@gmail.com> <330bfd35-ec00-92a2-a221-c7be9f0199e5@alum.mit.edu>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Mon, 20 Feb 2017 19:25:50 +0700
-Message-ID: <CACsJy8AJuosFnamsJT8BWGcicFpZF=5gdifhazAigrdQ7R2vXA@mail.gmail.com>
-Subject: Re: [PATCH v2 04/16] files-backend: replace *git_path*() with files_path()
-To:     Michael Haggerty <mhagger@alum.mit.edu>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
-        Stefan Beller <sbeller@google.com>,
-        David Turner <novalis@novalis.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <CABEd3j8sgDd8DXW8+2Q7pjANPTr-Ws1Xs1ap875mkxFOfnenYw@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Feb 20, 2017 at 6:23 PM, Michael Haggerty <mhagger@alum.mit.edu> wr=
-ote:
-> On 02/16/2017 12:48 PM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
->> This centralizes all path rewriting of files-backend.c in one place so
->> we have easier time removing the path rewriting later. There could be
->> some hidden indirect git_path() though, I didn't audit the code to the
->> bottom.
->
-> Almost all of the calls to `files_path()` [1] take one of the following
-> forms:
->
-> * `files_path(refs, &sb, "packed-refs")`
-> * `files_path(refs, &sb, "%s", refname)`
-> * `files_path(refs, &sb, "logs/%s", refname)`
->
-> (though sometimes `refname` is not the name of a reference but rather
-> the name of a directory containing references, like "refs/heads").
->
-> This suggests to me that it would be more natural to have three
-> functions, `files_packed_refs_path()`, `files_loose_ref_path()`, and
-> `files_reflog_path()`, with no `fmt` arguments. Aside from making the
-> callers a bit simpler and the implementation of each of the three
-> functions simpler (they wouldn't have to deal with variable argument
-> lists), at the cost of needing three similar functions.
->
-> But I think the split would also be advantageous from a design point of
-> view. The relative path locations of loose reference files, reflog
-> files, and the packed-refs file is kind of a coincidence, and it would
-> be advantageous to encode that policy in three functions rather than
-> continuing to spread knowledge of those assumptions around.
->
-> It would also make it easier to switch to a new system of encoding
-> reference names, for example so that reference names that differ only in
-> case can be stored on a case-insensitive filesystem, or to store reflogs
-> using a naming scheme that is not susceptible to D/F conflicts so that
-> we can retain reflogs for deleted references.
+W dniu 20.02.2017 o 08:38, Oleg Taranenko pisze:
 
-I agree. I didn't see it clearly at the beginning (and made several
-mistakes in earlier iterations) but as you have seen files_path() the
-separation is pretty clear there. I was going to do it when
-introducing the "linked worktree" backend. But since you pointed it
-out, I'll update it in this series too.
+>>>> Then you must adjust your definition of "good": All commits that do not have
+>>>> the feature, yet, are "good": since they do not have the feature in the
+>>>> first place, they cannot have the breakage that you found in the feature.
+>>>>
+>>>> That is exactly the situation in your original example! But you constructed
+>>>> the condition of goodness in such a simplistic way (depending on the
+>>>> presence of a string), that it was impossible to distinguish between "does
+>>>> not have the feature at all" and "has the feature, but it is broken".
+>>>
+>>> Johannes, thank you for correctly identifying the error in my logic.
+>>> Indeed I was using the term 'bad' also for the commit without the
+>>> feature. In order to find the commit introducing the bug in my example
+>>> a new state is needed, which would make 'git bisect' a bit more
+>>> complicated than the user 'most of the time' probably needs. Or do you
+>>> think, it would make sense to ask the user for this state (if e.g 'git
+>>> bisect' would be started with a new parameter)?
+> 
+>> If a commit doesn't have the feature, then it is by definition, not
+>> containing a broken feature, and you can simply use the "good" state.
+>> There is no need for a different state. If you can't test the commit
+>> because it's broken in some other way, you can use "git bisect skip"
+>> but that isn't what you want in this case.
+> 
+> Commits missing feature == 'good' commit is a very confusing one.
 
-> Michael
->
-> [1] The only exception I see is one call `files_path(refs, &sb,
-> "logs")`, which is a prelude to iterating over the reflog files. This is
-> actually an example of the code giving us a hint that the design is
-> wrong: if you iterate only over the directories under `git_path(logs)`,
-> you miss the reflogs for worktree references.
+Nowadays you can change the names for 'old' and 'new' with
+`git bisect terms`.  HTH.
+ 
+> Looks like in real life it happens much often, then git developers can
+> imagine. For multi-branch/multi-feature workflow it's pretty easy not
+> to recognize whether it is missing or not developed yet, especially on
+> retrospective view where cherry-picking/squashing/merging is being
+> used. My experience shows most annoying bugs are generating after a
+> heavy merge (evil merge) with conflicts resolutions, where developer
+> is not involved in the knowing what happens on counterpart changes.
+> Then feature can be disappeared after it was worked & tested in its
+> own branches.
 
-Oh yes, I had to fix the reflog iterator [1] exactly for that :)
+Good to know about this problem.
 
-[1] https://public-inbox.org/git/20170217141908.18012-14-pclouds@gmail.com/=
-T/#u
---=20
-Duy
+> @Alex, I'm pretty interesting in fixing this weird bisect behaviour as
+> well, as far as I struggled on it last summer and continue struggling
+> so far :) If you want we can join to your efforts on fixing.
+
+Anyway, I don't think it is feasible to weaken the assumption that there
+is only one transition from 'old' ('good') to 'new' ('bad'); this is
+what allows O(log(N)) operations.  See bisection method of root finding,
+that is finding zeros of a continuous function.
+
+Best,
+-- 
+Jakub Narębski
+
