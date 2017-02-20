@@ -2,198 +2,117 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 06293201A9
-	for <e@80x24.org>; Mon, 20 Feb 2017 17:18:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 59BAE201A9
+	for <e@80x24.org>; Mon, 20 Feb 2017 17:59:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754562AbdBTRSE (ORCPT <rfc822;e@80x24.org>);
-        Mon, 20 Feb 2017 12:18:04 -0500
-Received: from mail-wr0-f196.google.com ([209.85.128.196]:36500 "EHLO
-        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754556AbdBTRR7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Feb 2017 12:17:59 -0500
-Received: by mail-wr0-f196.google.com with SMTP id z61so11928313wrc.3
-        for <git@vger.kernel.org>; Mon, 20 Feb 2017 09:17:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=OZWdYt9/YMh78goxhIUuJOUeS1KL58ROZe2pXGrF/fg=;
-        b=t3gwW9j9G+9R51XBXp28R5Yy11+7efk0tgSXBQaJrLJ4ewb9TwfAAgPhlLbDmlcUSo
-         yyRUkplk3hrUChYSsbcCp94Wmu6yre/YTLPgGYnam/PFAVDrWNfp5iJfLaNEW6e49YHa
-         S+f2T+4pKKwjC/9N/GpHSeJXse/FdLxg8MY6h2u7YIqZuQNBx7X80xQSItXyl5XD3Sd5
-         BCQxqWW/L8AYHcbc4CrmbelrkhdSqTtYLoFEezg/wC1b2GAMw+r4NnHy7G6UYr3GMhVi
-         vY78UNf60wjQqycRRy2X1bSiD/SSrNIkyG6ZPsh3x+26ZfwVWolXAaSbKT1zQBlOAb2F
-         ZBAA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=OZWdYt9/YMh78goxhIUuJOUeS1KL58ROZe2pXGrF/fg=;
-        b=LF0ihm5v9/itNd2+uH/M3oh6rgkoRRLi2jSqYJw1vKlMR81ZKTxw7KmSSq7iVXQ0qh
-         DWs9R9xytI8nk1/ymS+Qz7M+gIqcAIN5RwJSdDpFgp5c3W1cFCInIyV2rC5bJ4VOxfzC
-         c70/5ZonHav9XTno6Dhk+gOyZJOxCZ7RaGpNjnHfqvVlgAw8ZFSm4zE31cbh3oADqgat
-         kmMftKF+TQk2+qAY+pb7v63uxnrgnL772nhtj3RslREd6EVLfWSEKNZFxbBuAGZlj6T6
-         ay3iUQOaEtleNiQGDWKB13/fbM4FYO2xuOAMYeKKrzDnzbZ8Hi8fwMYCI2uNzPKb1P3R
-         Y2/w==
-X-Gm-Message-State: AMke39kptSMAAWoGJy4Xo2PExoIjiLhKbSIHYACbgoIx+RigyfXRDZ2YaEfwQaARv6xMvA==
-X-Received: by 10.223.154.210 with SMTP id a76mr14865884wrc.193.1487611067591;
-        Mon, 20 Feb 2017 09:17:47 -0800 (PST)
-Received: from slxbook4.ads.autodesk.com ([62.159.156.210])
-        by smtp.gmail.com with ESMTPSA id d75sm10118294wmd.25.2017.02.20.09.17.46
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 20 Feb 2017 09:17:46 -0800 (PST)
-Content-Type: text/plain; charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-Subject: Re: [PATCH] config: preserve <subsection> case for one-shot config on the command line
-From:   Lars Schneider <larsxschneider@gmail.com>
-In-Reply-To: <xmqqino5jia8.fsf@gitster.mtv.corp.google.com>
-Date:   Mon, 20 Feb 2017 18:17:46 +0100
-Cc:     Jeff King <peff@peff.net>, Jonathan Tan <jonathantanmy@google.com>,
-        git@vger.kernel.org, sbeller@google.com
-Content-Transfer-Encoding: 7bit
-Message-Id: <CC2769D6-2F21-433B-A972-ED795F31A868@gmail.com>
-References: <20170215111704.78320-1-larsxschneider@gmail.com> <xmqqzihn2smp.fsf@gitster.mtv.corp.google.com> <f238248f-0df2-19a5-581d-95c8a61b4632@google.com> <xmqqy3x712if.fsf@gitster.mtv.corp.google.com> <xmqqtw7v123n.fsf@gitster.mtv.corp.google.com> <xmqqa89n10df.fsf_-_@gitster.mtv.corp.google.com> <D0CDD1AC-05CA-47F3-8CB5-61EA1C6515A8@gmail.com> <20170216232730.xsx3xks5ppjws5rg@sigill.intra.peff.net> <xmqqwpcptxps.fsf@gitster.mtv.corp.google.com> <xmqqino5jia8.fsf@gitster.mtv.corp.google.com>
-To:     Junio C Hamano <gitster@pobox.com>
-X-Mailer: Apple Mail (2.3124)
+        id S1751316AbdBTR7L convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Mon, 20 Feb 2017 12:59:11 -0500
+Received: from goliath.siemens.de ([192.35.17.28]:59669 "EHLO
+        goliath.siemens.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750920AbdBTR7K (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Feb 2017 12:59:10 -0500
+Received: from mail1.sbs.de (mail1.sbs.de [192.129.41.35])
+        by goliath.siemens.de (8.15.2/8.15.2) with ESMTPS id v1KHx8nL021696
+        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
+        for <git@vger.kernel.org>; Mon, 20 Feb 2017 18:59:08 +0100
+Received: from DEFTHW99ERHMSX.ww902.siemens.net (defthw99erhmsx.ww902.siemens.net [139.22.70.133])
+        by mail1.sbs.de (8.15.2/8.15.2) with ESMTPS id v1KHx6xT005460
+        (version=TLSv1 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK)
+        for <git@vger.kernel.org>; Mon, 20 Feb 2017 18:59:08 +0100
+Received: from DENBGAT9EREMSX.ww902.siemens.net (139.22.70.81) by
+ DEFTHW99ERHMSX.ww902.siemens.net (139.22.70.133) with Microsoft SMTP Server
+ (TLS) id 14.3.339.0; Mon, 20 Feb 2017 18:59:07 +0100
+Received: from DEFTHW99EH3MSX.ww902.siemens.net ([169.254.1.100]) by
+ DENBGAT9EREMSX.ww902.siemens.net ([139.22.70.81]) with mapi id
+ 14.03.0339.000; Mon, 20 Feb 2017 18:59:06 +0100
+From:   "Sokolov, Konstantin" <konstantin.sokolov.ext@siemens.com>
+To:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Inconsistent results of git blame --porcelain when detecting copies
+ from other files
+Thread-Topic: Inconsistent results of git blame --porcelain when detecting
+ copies from other files
+Thread-Index: AdKLoGqv8pkPtzH8SbSXH2hSKQRR8QAAmuIA
+Date:   Mon, 20 Feb 2017 17:59:06 +0000
+Message-ID: <71BF70CE41AEE741896AF3A5450D86F11F4268FF@DEFTHW99EH3MSX.ww902.siemens.net>
+Accept-Language: de-DE, en-US
+Content-Language: de-DE
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [139.22.70.11]
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: 8BIT
+MIME-Version: 1.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Folks!
 
-> On 20 Feb 2017, at 10:58, Junio C Hamano <gitster@pobox.com> wrote:
-> 
-> Junio C Hamano <gitster@pobox.com> writes:
-> 
->> I still haven't queued any of the variants I posted (and I do not
->> think other people sent their own versions, either).  I need to pick
->> one and queue, with a test or two.  Perhaps after -rc2.  
->> 
->> Others are welcome to work on it while I cut -rc2 tomorrow, so that
->> by the time I see their patch all that is left for me to do is to
->> apply it ;-)
-> 
-> Since nothing seems to have happened in the meantime, here is what
-> I'll queue so that we won't forget for now.  Lars's tests based on
-> how the scripted "git submodule" uses "git config" may still be
-> valid, but it is somewhat a roundabout way to demonstrate the
-> breakage and not very effective way to protect the fix, so I added a
-> new test that directly tests "git -c <var>=<val> <command>".
+The issue is best explained on an example. You can reproduce it using the Lucene repo https://github.com/apache/lucene-solr.git. Tested with the following versions:  1.8.1.6 (Ubuntu), 2.11.0.windows.1, 2.11.1.windows.1.
 
-Agreed. Please ignore my tests.
-If you want to you could queue this tiny cleanup, though:
-http://public-inbox.org/git/20170215113325.14393-1-larsxschneider@gmail.com/
+First, let's produce the correct results without using --procelain:
 
-> ...
-> 
-> +/*
-> + * downcase the <section> and <variable> in <section>.<variable> or
-> + * <section>.<subsection>.<variable> and do so in place.  <subsection>
-> + * is left intact.
-> + */
-> +static void canonicalize_config_variable_name(char *varname)
-> +{
-> +	char *cp, *last_dot;
+> git blame --show-name --show-number -s -w --abbrev=40 -C -C -C d1165b19726fa0cd13a539827a7cd43237a4feef..10ba9abeb208d37df985e95a742f756de067353f --not f5dba8b76709ff0ef8715b8b288a4b64d4993fa3 -- lucene/src/java/org/apache/lucene/index/DirectoryReader.java
 
-What does cp stand for? "char pointer"?
+The following excerpt shows lines 501-505 from the output. In particular we can see that lines 502-503 originate from IndexReader.java.
 
-> +
-> +	/* downcase the first segment */
-> +	for (cp = varname; *cp; cp++) {
-> +		if (*cp == '.')
-> +			break;
-> +		*cp = tolower(*cp);
-> +	}
-> +	if (!*cp)
-> +		return;
-> +
-> +	/* scan for the last dot */
-> +	for (last_dot = cp; *cp; cp++)
-> +		if (*cp == '.')
-> +			last_dot = cp;
-> +
-> +	/* downcase the last segment */
-> +	for (cp = last_dot; *cp; cp++)
-> +		*cp = tolower(*cp);
-> +}
-> +
-> int git_config_parse_parameter(const char *text,
-> 			       config_fn_t fn, void *data)
-> {
-> @@ -221,7 +249,7 @@ int git_config_parse_parameter(const char *text,
-> 		strbuf_list_free(pair);
-> 		return error("bogus config parameter: %s", text);
-> 	}
-> -	strbuf_tolower(pair[0]);
-> +	canonicalize_config_variable_name(pair[0]->buf);
-> 	if (fn(pair[0]->buf, value, data) < 0) {
-> 		strbuf_list_free(pair);
-> 		return -1;
-> diff --git a/t/t1351-config-cmdline.sh b/t/t1351-config-cmdline.sh
-> new file mode 100755
-> index 0000000000..acb8dc3b15
-> --- /dev/null
-> +++ b/t/t1351-config-cmdline.sh
-> @@ -0,0 +1,48 @@
-> +#!/bin/sh
-> +
-> +test_description='git -c var=val'
-> +
-> +. ./test-lib.sh
-> +
-> +test_expect_success 'last one wins: two level vars' '
-> +	echo VAL >expect &&
-> +
-> +	# sec.var and sec.VAR are the same variable, as the first
-> +	# and the last level of a configuration variable name is
-> +	# case insensitive.  Test both setting and querying.
-> +
-> +	git -c sec.var=val -c sec.VAR=VAL config --get sec.var >actual &&
-> +	test_cmp expect actual &&
-> +	git -c SEC.var=val -c sec.var=VAL config --get sec.var >actual &&
-> +	test_cmp expect actual &&
-> +
-> +	git -c sec.var=val -c sec.VAR=VAL config --get SEC.var >actual &&
-> +	test_cmp expect actual &&
-> +	git -c SEC.var=val -c sec.var=VAL config --get sec.VAR >actual &&
-> +	test_cmp expect actual
-> +'
-> +
-> +test_expect_success 'last one wins: three level vars' '
-> +	echo val >expect &&
-> +
-> +	# v.a.r and v.A.r are not the same variable, as the middle
-> +	# level of a three-level configuration variable name is
-> +	# case sensitive.  Test both setting and querying.
-> +
-> +	git -c v.a.r=val -c v.A.r=VAL config --get v.a.r >actual &&
-> +	test_cmp expect actual &&
-> +	git -c v.a.r=val -c v.A.r=VAL config --get V.a.R >actual &&
-> +	test_cmp expect actual &&
-> +
-> +	echo VAL >expect &&
-> +	git -c v.a.r=val -c v.a.R=VAL config --get v.a.r >actual &&
-> +	test_cmp expect actual &&
-> +	git -c v.a.r=val -c V.a.r=VAL config --get v.a.r >actual &&
-> +	test_cmp expect actual &&
-> +	git -c v.a.r=val -c v.a.R=VAL config --get V.a.R >actual &&
-> +	test_cmp expect actual &&
-> +	git -c v.a.r=val -c V.a.r=VAL config --get V.a.R >actual &&
-> +	test_cmp expect actual
-> +'
-> +
-> +test_done
-> -- 
-> 2.12.0-rc2-221-g8fa194a99f
-> 
+10ba9abeb208d37df985e95a742f756de067353f lucene/src/java/org/apache/lucene/index/DirectoryReader.java 501 501)    * <p>This method
+^d1165b19726fa0cd13a539827a7cd43237a4fee lucene/src/java/org/apache/lucene/index/IndexReader.java     496 502)    * returns the version recorded in the commit that the
+^d1165b19726fa0cd13a539827a7cd43237a4fee lucene/src/java/org/apache/lucene/index/IndexReader.java     497 503)    * reader opened.  This version is advanced every time
+^d1165b19726fa0cd13a539827a7cd43237a4fee lucene/src/java/org/apache/lucene/index/IndexReader.java     498 504)    * a change is made with {@link IndexWriter}.</p>
+10ba9abeb208d37df985e95a742f756de067353f lucene/src/java/org/apache/lucene/index/DirectoryReader.java 505 505)    */
 
-Looks good to me!
+The same information can be obtained as well by using --line-porcelain:
 
-Thank you,
-Lars
+> git blame --show-name --show-number --line-porcelain -s -w --abbrev=40 -C -C -C d1165b19726fa0cd13a539827a7cd43237a4feef..10ba9abeb208d37df985e95a742f756de067353f --not f5dba8b76709ff0ef8715b8b288a4b64d4993fa3 -- lucene/src/java/org/apache/lucene/index/DirectoryReader.java
 
+Here is the output for line 502:
+
+d1165b19726fa0cd13a539827a7cd43237a4feef 496 502 3
+author Michael McCandless
+author-mail <mikemccand@apache.org>
+author-time 1327877325
+author-tz +0000
+committer Michael McCandless
+committer-mail <mikemccand@apache.org>
+committer-time 1327877325
+committer-tz +0000
+summary LUCENE-3725: add optional packing to FSTs
+boundary
+filename lucene/src/java/org/apache/lucene/index/IndexReader.java
+        * returns the version recorded in the commit that the
+
+However, when using --porcelain DirectoryReader.java is reported as the origin of lines 502-504:
+
+> git blame --show-name --show-number --porcelain -s -w --abbrev=40 -C -C -C d1165b19726fa0cd13a539827a7cd43237a4feef..10ba9abeb208d37df985e95a742f756de067353f --not f5dba8b76709ff0ef8715b8b288a4b64d4993fa3 -- lucene/src/java/org/apache/lucene/index/DirectoryReader.java
+
+10ba9abeb208d37df985e95a742f756de067353f 501 501 1
+author Uwe Schindler
+author-mail <uschindler@apache.org>
+author-time 1327879145
+author-tz +0000
+committer Uwe Schindler
+committer-mail <uschindler@apache.org>
+committer-time 1327879145
+committer-tz +0000
+summary Reverse merged revision(s) from lucene/dev/trunk up to 1237502
+previous f5dba8b76709ff0ef8715b8b288a4b64d4993fa3 lucene/src/java/org/apache/lucene/index/DirectoryReader.java
+filename lucene/src/java/org/apache/lucene/index/DirectoryReader.java
+        * <p>This method
+d1165b19726fa0cd13a539827a7cd43237a4feef 496 502 3
+        * returns the version recorded in the commit that the
+d1165b19726fa0cd13a539827a7cd43237a4feef 497 503
+        * reader opened.  This version is advanced every time
+d1165b19726fa0cd13a539827a7cd43237a4feef 498 504
+
+This is not only inconsistent with the other outputs but the output is also inconsistent in itself because lines 496 -498 do not even exist in a previous version of DirectoryReader.java.
+
+Thanks for any feedback.
+
+Kind Regards
+Konstantin Sokolov
