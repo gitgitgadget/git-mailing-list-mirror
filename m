@@ -6,40 +6,40 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C537E201A8
+	by dcvr.yhbt.net (Postfix) with ESMTP id DB5DA201A8
 	for <e@80x24.org>; Mon, 20 Feb 2017 00:11:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752081AbdBTAL2 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 19 Feb 2017 19:11:28 -0500
+        id S1751978AbdBTAKs (ORCPT <rfc822;e@80x24.org>);
+        Sun, 19 Feb 2017 19:10:48 -0500
 Received: from castro.crustytoothpaste.net ([75.10.60.170]:36326 "EHLO
         castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751950AbdBTAKs (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 19 Feb 2017 19:10:48 -0500
+        by vger.kernel.org with ESMTP id S1751307AbdBTAKq (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 19 Feb 2017 19:10:46 -0500
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id F1BD9280BE;
-        Mon, 20 Feb 2017 00:10:47 +0000 (UTC)
+        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 95D9D280B3;
+        Mon, 20 Feb 2017 00:10:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
-        s=default; t=1487549448;
-        bh=1m2xuC0c2/f5SxCvdnUWGHVWHYwOcVydZPd7tuNoD0s=;
+        s=default; t=1487549444;
+        bh=M6Wj8OeRwLxg/WhhL9ZV9yKOp0D4go9aS2avjL8rEmI=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=qg/4Rj/DvDeiTMnKla50My5aqEdiuCb3EcBNROVAkSOfldMb+L2lSa9gZyHAD4C37
-         ehf0omS5TFZ76GG2wjBS9jNmVW3zRdQkgeDuTvnwf488SNdVdXskzhU5X/7BPx8Q9F
-         6cNUOF1xljvZqx7hdRFl23pU5987mPt3olvRxSPDuQfyxSEcsME/9SE5Gdg6g1s6eW
-         +gNrnVJZoTklPV7QLTC59WYwZExVEFzsFvoPAKPBPycGJ2rWaxphcqsmzSIWVEPVEr
-         LaMAB3XHm0eHDehDYBz0grFE3FW9LbWwgkgXt2Jy16xHSv42wNkIaC2/H+YA4spEM4
-         61ZAhhown6peQBwjP6I47wVoRHiJt4UOqXgMPEGbyHzujRJRyD1ieof/dCwdmRlBnZ
-         zbdNTn0D5gXwxmzH1npoKLDaAF5p+NJNGf0SNaNszSAGM99LBNwhV7jeXmK6NuGNK3
-         X1nvIvVQhnyev6Zt1LyDVZI/uAXpWtBFS3gkwW/V+PMvmTm7Saf
+        b=rknI8GPBkJP6YcRGy85rL8SxbNVqIJ1JBeoVacbWXKwL7u8A+eXbqUZricm2l36+L
+         VVM5CxBessEV7Soh9rA7/LE+vC8Y/Xu08P9x0whPdZAqnAnC5dgttYhZv6OJzKM6Qt
+         jriHS8d3N+Lb3yqGdTwl1RO7cwxa43mP2mfs+4mXqrQ8RPDaZIKXCpn/BcUKlyJHtI
+         xDKCMhhjSjSfXH9cArhCjapsNI+IzwBwHQxKiE7VXZxsGvqCbD1EFe6A6RKkMBN8SQ
+         uOZZ+ZFp6Vxddq4ktbAiCnibyHCBGafjZEb5+sVuPrR/oZgpIi5ngPm899c7AOKjuL
+         YbWNZ146hoRkxlxXv/TsrsQJmGACINJpKUZEGfcMi64rbSz9XQ0WQD0fJom+Vmbdaa
+         FMsXeHRXKiXzXlakC8mOCgRzIrHWyoph/2esi79R8GlCieKTZn+s1R5qGKMKje2V2S
+         /louoeZ/9bmtPFQ3NE3JEgK2BJqRN03UiNSTWwjwnhegeCmXjD9
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     Jeff King <peff@peff.net>, Michael Haggerty <mhagger@alum.mit.edu>,
         Junio C Hamano <gitster@pobox.com>,
         Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: [PATCH v4 17/19] Convert object iteration callbacks to struct object_id
-Date:   Mon, 20 Feb 2017 00:10:29 +0000
-Message-Id: <20170220001031.559931-18-sandals@crustytoothpaste.net>
+Subject: [PATCH v4 06/19] builtin/fmt-merge-message: convert to struct object_id
+Date:   Mon, 20 Feb 2017 00:10:18 +0000
+Message-Id: <20170220001031.559931-7-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.11.0
 In-Reply-To: <20170220001031.559931-1-sandals@crustytoothpaste.net>
 References: <20170220001031.559931-1-sandals@crustytoothpaste.net>
@@ -48,374 +48,221 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Convert each_loose_object_fn and each_packed_object_fn to take a pointer
-to struct object_id.  Update the various callbacks.  Convert several
-40-based constants to use GIT_SHA1_HEXSZ.
+Convert most of the code to use struct object_id, including struct
+origin_data and struct merge_parents.  Convert several instances of
+hardcoded numbers into references to GIT_SHA1_HEXSZ.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- builtin/cat-file.c      |  8 ++++----
- builtin/count-objects.c |  4 ++--
- builtin/fsck.c          | 24 ++++++++++++------------
- builtin/pack-objects.c  |  6 +++---
- builtin/prune-packed.c  |  4 ++--
- builtin/prune.c         |  8 ++++----
- cache.h                 |  4 ++--
- reachable.c             | 30 +++++++++++++++---------------
- sha1_file.c             | 12 ++++++------
- 9 files changed, 50 insertions(+), 50 deletions(-)
+ builtin/fmt-merge-msg.c | 70 ++++++++++++++++++++++++-------------------------
+ 1 file changed, 35 insertions(+), 35 deletions(-)
 
-diff --git a/builtin/cat-file.c b/builtin/cat-file.c
-index 30383e9eb4..8b85cb8cf0 100644
---- a/builtin/cat-file.c
-+++ b/builtin/cat-file.c
-@@ -409,20 +409,20 @@ static int batch_object_cb(const unsigned char sha1[20], void *vdata)
- 	return 0;
- }
- 
--static int batch_loose_object(const unsigned char *sha1,
-+static int batch_loose_object(const struct object_id *oid,
- 			      const char *path,
- 			      void *data)
- {
--	sha1_array_append(data, sha1);
-+	sha1_array_append(data, oid->hash);
- 	return 0;
- }
- 
--static int batch_packed_object(const unsigned char *sha1,
-+static int batch_packed_object(const struct object_id *oid,
- 			       struct packed_git *pack,
- 			       uint32_t pos,
- 			       void *data)
- {
--	sha1_array_append(data, sha1);
-+	sha1_array_append(data, oid->hash);
- 	return 0;
- }
- 
-diff --git a/builtin/count-objects.c b/builtin/count-objects.c
-index a04b4f2ef3..acb05940fc 100644
---- a/builtin/count-objects.c
-+++ b/builtin/count-objects.c
-@@ -53,7 +53,7 @@ static void loose_garbage(const char *path)
- 		report_garbage(PACKDIR_FILE_GARBAGE, path);
- }
- 
--static int count_loose(const unsigned char *sha1, const char *path, void *data)
-+static int count_loose(const struct object_id *oid, const char *path, void *data)
- {
- 	struct stat st;
- 
-@@ -62,7 +62,7 @@ static int count_loose(const unsigned char *sha1, const char *path, void *data)
- 	else {
- 		loose_size += on_disk_bytes(st);
- 		loose++;
--		if (verbose && has_sha1_pack(sha1))
-+		if (verbose && has_sha1_pack(oid->hash))
- 			packed_loose++;
- 	}
- 	return 0;
-diff --git a/builtin/fsck.c b/builtin/fsck.c
-index 9b37606858..f76e4163ab 100644
---- a/builtin/fsck.c
-+++ b/builtin/fsck.c
-@@ -491,7 +491,7 @@ static void get_default_heads(void)
- 	}
- }
- 
--static struct object *parse_loose_object(const unsigned char *sha1,
-+static struct object *parse_loose_object(const struct object_id *oid,
- 					 const char *path)
- {
- 	struct object *obj;
-@@ -500,27 +500,27 @@ static struct object *parse_loose_object(const unsigned char *sha1,
- 	unsigned long size;
- 	int eaten;
- 
--	if (read_loose_object(path, sha1, &type, &size, &contents) < 0)
-+	if (read_loose_object(path, oid->hash, &type, &size, &contents) < 0)
- 		return NULL;
- 
- 	if (!contents && type != OBJ_BLOB)
- 		die("BUG: read_loose_object streamed a non-blob");
- 
--	obj = parse_object_buffer(sha1, type, size, contents, &eaten);
-+	obj = parse_object_buffer(oid->hash, type, size, contents, &eaten);
- 
- 	if (!eaten)
- 		free(contents);
- 	return obj;
- }
- 
--static int fsck_loose(const unsigned char *sha1, const char *path, void *data)
-+static int fsck_loose(const struct object_id *oid, const char *path, void *data)
- {
--	struct object *obj = parse_loose_object(sha1, path);
-+	struct object *obj = parse_loose_object(oid, path);
- 
- 	if (!obj) {
- 		errors_found |= ERROR_OBJECT;
- 		error("%s: object corrupt or missing: %s",
--		      sha1_to_hex(sha1), path);
-+		      oid_to_hex(oid), path);
- 		return 0; /* keep checking other objects */
- 	}
- 
-@@ -619,26 +619,26 @@ static int fsck_cache_tree(struct cache_tree *it)
- 	return err;
- }
- 
--static void mark_object_for_connectivity(const unsigned char *sha1)
-+static void mark_object_for_connectivity(const struct object_id *oid)
- {
--	struct object *obj = lookup_unknown_object(sha1);
-+	struct object *obj = lookup_unknown_object(oid->hash);
- 	obj->flags |= HAS_OBJ;
- }
- 
--static int mark_loose_for_connectivity(const unsigned char *sha1,
-+static int mark_loose_for_connectivity(const struct object_id *oid,
- 				       const char *path,
- 				       void *data)
- {
--	mark_object_for_connectivity(sha1);
-+	mark_object_for_connectivity(oid);
- 	return 0;
- }
- 
--static int mark_packed_for_connectivity(const unsigned char *sha1,
-+static int mark_packed_for_connectivity(const struct object_id *oid,
- 					struct packed_git *pack,
- 					uint32_t pos,
- 					void *data)
- {
--	mark_object_for_connectivity(sha1);
-+	mark_object_for_connectivity(oid);
- 	return 0;
- }
- 
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index 8841f8b366..6e7c3a6575 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -2534,17 +2534,17 @@ static void add_objects_in_unpacked_packs(struct rev_info *revs)
- 	free(in_pack.array);
- }
- 
--static int add_loose_object(const unsigned char *sha1, const char *path,
-+static int add_loose_object(const struct object_id *oid, const char *path,
- 			    void *data)
- {
--	enum object_type type = sha1_object_info(sha1, NULL);
-+	enum object_type type = sha1_object_info(oid->hash, NULL);
- 
- 	if (type < 0) {
- 		warning("loose object at %s could not be examined", path);
- 		return 0;
- 	}
- 
--	add_object_entry(sha1, type, "", 0);
-+	add_object_entry(oid->hash, type, "", 0);
- 	return 0;
- }
- 
-diff --git a/builtin/prune-packed.c b/builtin/prune-packed.c
-index 7cf900ea07..c026299e78 100644
---- a/builtin/prune-packed.c
-+++ b/builtin/prune-packed.c
-@@ -19,12 +19,12 @@ static int prune_subdir(int nr, const char *path, void *data)
- 	return 0;
- }
- 
--static int prune_object(const unsigned char *sha1, const char *path,
-+static int prune_object(const struct object_id *oid, const char *path,
- 			 void *data)
- {
- 	int *opts = data;
- 
--	if (!has_sha1_pack(sha1))
-+	if (!has_sha1_pack(oid->hash))
- 		return 0;
- 
- 	if (*opts & PRUNE_PACKED_DRY_RUN)
-diff --git a/builtin/prune.c b/builtin/prune.c
-index 8f4f052285..42633e0c6e 100644
---- a/builtin/prune.c
-+++ b/builtin/prune.c
-@@ -30,7 +30,7 @@ static int prune_tmp_file(const char *fullpath)
- 	return 0;
- }
- 
--static int prune_object(const unsigned char *sha1, const char *fullpath,
-+static int prune_object(const struct object_id *oid, const char *fullpath,
- 			void *data)
- {
- 	struct stat st;
-@@ -39,7 +39,7 @@ static int prune_object(const unsigned char *sha1, const char *fullpath,
- 	 * Do we know about this object?
- 	 * It must have been reachable
- 	 */
--	if (lookup_object(sha1))
-+	if (lookup_object(oid->hash))
- 		return 0;
- 
- 	if (lstat(fullpath, &st)) {
-@@ -50,8 +50,8 @@ static int prune_object(const unsigned char *sha1, const char *fullpath,
- 	if (st.st_mtime > expire)
- 		return 0;
- 	if (show_only || verbose) {
--		enum object_type type = sha1_object_info(sha1, NULL);
--		printf("%s %s\n", sha1_to_hex(sha1),
-+		enum object_type type = sha1_object_info(oid->hash, NULL);
-+		printf("%s %s\n", oid_to_hex(oid),
- 		       (type > 0) ? typename(type) : "unknown");
- 	}
- 	if (!show_only)
-diff --git a/cache.h b/cache.h
-index 29e59cbb56..724e905f7a 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1655,7 +1655,7 @@ extern int unpack_object_header(struct packed_git *, struct pack_window **, off_
-  * scratch buffer, but restored to its original contents before
-  * the function returns.
-  */
--typedef int each_loose_object_fn(const unsigned char *sha1,
-+typedef int each_loose_object_fn(const struct object_id *oid,
- 				 const char *path,
- 				 void *data);
- typedef int each_loose_cruft_fn(const char *basename,
-@@ -1681,7 +1681,7 @@ int for_each_loose_file_in_objdir_buf(struct strbuf *path,
-  * LOCAL_ONLY flag is set).
-  */
- #define FOR_EACH_OBJECT_LOCAL_ONLY 0x1
--typedef int each_packed_object_fn(const unsigned char *sha1,
-+typedef int each_packed_object_fn(const struct object_id *oid,
- 				  struct packed_git *pack,
- 				  uint32_t pos,
- 				  void *data);
-diff --git a/reachable.c b/reachable.c
-index d0199cace4..a8a979bd4f 100644
---- a/reachable.c
-+++ b/reachable.c
-@@ -58,7 +58,7 @@ struct recent_data {
- 	unsigned long timestamp;
+diff --git a/builtin/fmt-merge-msg.c b/builtin/fmt-merge-msg.c
+index efab62fd85..6faa3c0d24 100644
+--- a/builtin/fmt-merge-msg.c
++++ b/builtin/fmt-merge-msg.c
+@@ -41,7 +41,7 @@ struct src_data {
  };
  
--static void add_recent_object(const unsigned char *sha1,
-+static void add_recent_object(const struct object_id *oid,
- 			      unsigned long mtime,
- 			      struct recent_data *data)
+ struct origin_data {
+-	unsigned char sha1[20];
++	struct object_id oid;
+ 	unsigned is_local_branch:1;
+ };
+ 
+@@ -59,8 +59,8 @@ static struct string_list origins = STRING_LIST_INIT_DUP;
+ struct merge_parents {
+ 	int alloc, nr;
+ 	struct merge_parent {
+-		unsigned char given[20];
+-		unsigned char commit[20];
++		struct object_id given;
++		struct object_id commit;
+ 		unsigned char used;
+ 	} *item;
+ };
+@@ -70,14 +70,14 @@ struct merge_parents {
+  * hundreds of heads at a time anyway.
+  */
+ static struct merge_parent *find_merge_parent(struct merge_parents *table,
+-					      unsigned char *given,
+-					      unsigned char *commit)
++					      struct object_id *given,
++					      struct object_id *commit)
  {
-@@ -75,37 +75,37 @@ static void add_recent_object(const unsigned char *sha1,
- 	 * later processing, and the revision machinery expects
- 	 * commits and tags to have been parsed.
- 	 */
--	type = sha1_object_info(sha1, NULL);
-+	type = sha1_object_info(oid->hash, NULL);
- 	if (type < 0)
--		die("unable to get object info for %s", sha1_to_hex(sha1));
-+		die("unable to get object info for %s", oid_to_hex(oid));
- 
- 	switch (type) {
- 	case OBJ_TAG:
- 	case OBJ_COMMIT:
--		obj = parse_object_or_die(sha1, NULL);
-+		obj = parse_object_or_die(oid->hash, NULL);
- 		break;
- 	case OBJ_TREE:
--		obj = (struct object *)lookup_tree(sha1);
-+		obj = (struct object *)lookup_tree(oid->hash);
- 		break;
- 	case OBJ_BLOB:
--		obj = (struct object *)lookup_blob(sha1);
-+		obj = (struct object *)lookup_blob(oid->hash);
- 		break;
- 	default:
- 		die("unknown object type for %s: %s",
--		    sha1_to_hex(sha1), typename(type));
-+		    oid_to_hex(oid), typename(type));
+ 	int i;
+ 	for (i = 0; i < table->nr; i++) {
+-		if (given && hashcmp(table->item[i].given, given))
++		if (given && oidcmp(&table->item[i].given, given))
+ 			continue;
+-		if (commit && hashcmp(table->item[i].commit, commit))
++		if (commit && oidcmp(&table->item[i].commit, commit))
+ 			continue;
+ 		return &table->item[i];
  	}
- 
- 	if (!obj)
--		die("unable to lookup %s", sha1_to_hex(sha1));
-+		die("unable to lookup %s", oid_to_hex(oid));
- 
- 	add_pending_object(data->revs, obj, "");
+@@ -85,14 +85,14 @@ static struct merge_parent *find_merge_parent(struct merge_parents *table,
  }
  
--static int add_recent_loose(const unsigned char *sha1,
-+static int add_recent_loose(const struct object_id *oid,
- 			    const char *path, void *data)
+ static void add_merge_parent(struct merge_parents *table,
+-			     unsigned char *given,
+-			     unsigned char *commit)
++			     struct object_id *given,
++			     struct object_id *commit)
  {
- 	struct stat st;
--	struct object *obj = lookup_object(sha1);
-+	struct object *obj = lookup_object(oid->hash);
+ 	if (table->nr && find_merge_parent(table, given, commit))
+ 		return;
+ 	ALLOC_GROW(table->item, table->nr + 1, table->alloc);
+-	hashcpy(table->item[table->nr].given, given);
+-	hashcpy(table->item[table->nr].commit, commit);
++	oidcpy(&table->item[table->nr].given, given);
++	oidcpy(&table->item[table->nr].commit, commit);
+ 	table->item[table->nr].used = 0;
+ 	table->nr++;
+ }
+@@ -106,30 +106,30 @@ static int handle_line(char *line, struct merge_parents *merge_parents)
+ 	struct src_data *src_data;
+ 	struct string_list_item *item;
+ 	int pulling_head = 0;
+-	unsigned char sha1[20];
++	struct object_id oid;
  
- 	if (obj && obj->flags & SEEN)
+-	if (len < 43 || line[40] != '\t')
++	if (len < GIT_SHA1_HEXSZ + 3 || line[GIT_SHA1_HEXSZ] != '\t')
+ 		return 1;
+ 
+-	if (starts_with(line + 41, "not-for-merge"))
++	if (starts_with(line + GIT_SHA1_HEXSZ + 1, "not-for-merge"))
  		return 0;
-@@ -119,22 +119,22 @@ static int add_recent_loose(const unsigned char *sha1,
+ 
+-	if (line[41] != '\t')
++	if (line[GIT_SHA1_HEXSZ + 1] != '\t')
+ 		return 2;
+ 
+-	i = get_sha1_hex(line, sha1);
++	i = get_oid_hex(line, &oid);
+ 	if (i)
+ 		return 3;
+ 
+-	if (!find_merge_parent(merge_parents, sha1, NULL))
++	if (!find_merge_parent(merge_parents, &oid, NULL))
+ 		return 0; /* subsumed by other parents */
+ 
+ 	origin_data = xcalloc(1, sizeof(struct origin_data));
+-	hashcpy(origin_data->sha1, sha1);
++	oidcpy(&origin_data->oid, &oid);
+ 
+ 	if (line[len - 1] == '\n')
+ 		line[len - 1] = 0;
+-	line += 42;
++	line += GIT_SHA1_HEXSZ + 2;
+ 
+ 	/*
+ 	 * At this point, line points at the beginning of comment e.g.
+@@ -338,10 +338,10 @@ static void shortlog(const char *name,
+ 	struct string_list committers = STRING_LIST_INIT_DUP;
+ 	int flags = UNINTERESTING | TREESAME | SEEN | SHOWN | ADDED;
+ 	struct strbuf sb = STRBUF_INIT;
+-	const unsigned char *sha1 = origin_data->sha1;
++	const struct object_id *oid = &origin_data->oid;
+ 	int limit = opts->shortlog_len;
+ 
+-	branch = deref_tag(parse_object(sha1), sha1_to_hex(sha1), 40);
++	branch = deref_tag(parse_object(oid->hash), oid_to_hex(oid), GIT_SHA1_HEXSZ);
+ 	if (!branch || branch->type != OBJ_COMMIT)
+ 		return;
+ 
+@@ -531,7 +531,7 @@ static void fmt_merge_msg_sigs(struct strbuf *out)
+ }
+ 
+ static void find_merge_parents(struct merge_parents *result,
+-			       struct strbuf *in, unsigned char *head)
++			       struct strbuf *in, struct object_id *head)
+ {
+ 	struct commit_list *parents;
+ 	struct commit *head_commit;
+@@ -542,31 +542,31 @@ static void find_merge_parents(struct merge_parents *result,
+ 		int len;
+ 		char *p = in->buf + pos;
+ 		char *newline = strchr(p, '\n');
+-		unsigned char sha1[20];
++		struct object_id oid;
+ 		struct commit *parent;
+ 		struct object *obj;
+ 
+ 		len = newline ? newline - p : strlen(p);
+ 		pos += len + !!newline;
+ 
+-		if (len < 43 ||
+-		    get_sha1_hex(p, sha1) ||
+-		    p[40] != '\t' ||
+-		    p[41] != '\t')
++		if (len < GIT_SHA1_HEXSZ + 3 ||
++		    get_oid_hex(p, &oid) ||
++		    p[GIT_SHA1_HEXSZ] != '\t' ||
++		    p[GIT_SHA1_HEXSZ + 1] != '\t')
+ 			continue; /* skip not-for-merge */
+ 		/*
+ 		 * Do not use get_merge_parent() here; we do not have
+ 		 * "name" here and we do not want to contaminate its
+ 		 * util field yet.
  		 */
- 		if (errno == ENOENT)
- 			return 0;
--		return error_errno("unable to stat %s", sha1_to_hex(sha1));
-+		return error_errno("unable to stat %s", oid_to_hex(oid));
+-		obj = parse_object(sha1);
++		obj = parse_object(oid.hash);
+ 		parent = (struct commit *)peel_to_type(NULL, 0, obj, OBJ_COMMIT);
+ 		if (!parent)
+ 			continue;
+ 		commit_list_insert(parent, &parents);
+-		add_merge_parent(result, obj->oid.hash, parent->object.oid.hash);
++		add_merge_parent(result, &obj->oid, &parent->object.oid);
+ 	}
+-	head_commit = lookup_commit(head);
++	head_commit = lookup_commit(head->hash);
+ 	if (head_commit)
+ 		commit_list_insert(head_commit, &parents);
+ 	parents = reduce_heads(parents);
+@@ -574,7 +574,7 @@ static void find_merge_parents(struct merge_parents *result,
+ 	while (parents) {
+ 		struct commit *cmit = pop_commit(&parents);
+ 		for (i = 0; i < result->nr; i++)
+-			if (!hashcmp(result->item[i].commit, cmit->object.oid.hash))
++			if (!oidcmp(&result->item[i].commit, &cmit->object.oid))
+ 				result->item[i].used = 1;
  	}
  
--	add_recent_object(sha1, st.st_mtime, data);
-+	add_recent_object(oid, st.st_mtime, data);
- 	return 0;
- }
- 
--static int add_recent_packed(const unsigned char *sha1,
-+static int add_recent_packed(const struct object_id *oid,
- 			     struct packed_git *p, uint32_t pos,
- 			     void *data)
+@@ -592,7 +592,7 @@ int fmt_merge_msg(struct strbuf *in, struct strbuf *out,
+ 		  struct fmt_merge_msg_opts *opts)
  {
--	struct object *obj = lookup_object(sha1);
-+	struct object *obj = lookup_object(oid->hash);
+ 	int i = 0, pos = 0;
+-	unsigned char head_sha1[20];
++	struct object_id head_oid;
+ 	const char *current_branch;
+ 	void *current_branch_to_free;
+ 	struct merge_parents merge_parents;
+@@ -601,13 +601,13 @@ int fmt_merge_msg(struct strbuf *in, struct strbuf *out,
  
- 	if (obj && obj->flags & SEEN)
- 		return 0;
--	add_recent_object(sha1, p->mtime, data);
-+	add_recent_object(oid, p->mtime, data);
- 	return 0;
- }
+ 	/* get current branch */
+ 	current_branch = current_branch_to_free =
+-		resolve_refdup("HEAD", RESOLVE_REF_READING, head_sha1, NULL);
++		resolve_refdup("HEAD", RESOLVE_REF_READING, head_oid.hash, NULL);
+ 	if (!current_branch)
+ 		die("No current branch");
+ 	if (starts_with(current_branch, "refs/heads/"))
+ 		current_branch += 11;
  
-diff --git a/sha1_file.c b/sha1_file.c
-index 777b8e8eae..6b74c7d3bc 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -3685,15 +3685,15 @@ static int for_each_file_in_obj_subdir(int subdir_nr,
- 		strbuf_setlen(path, baselen);
- 		strbuf_addf(path, "/%s", de->d_name);
+-	find_merge_parents(&merge_parents, in, head_sha1);
++	find_merge_parents(&merge_parents, in, &head_oid);
  
--		if (strlen(de->d_name) == 38)  {
--			char hex[41];
--			unsigned char sha1[20];
-+		if (strlen(de->d_name) == GIT_SHA1_HEXSZ - 2)  {
-+			char hex[GIT_SHA1_HEXSZ+1];
-+			struct object_id oid;
+ 	/* get a line */
+ 	while (pos < in->len) {
+@@ -633,7 +633,7 @@ int fmt_merge_msg(struct strbuf *in, struct strbuf *out,
+ 		struct commit *head;
+ 		struct rev_info rev;
  
- 			snprintf(hex, sizeof(hex), "%02x%s",
- 				 subdir_nr, de->d_name);
--			if (!get_sha1_hex(hex, sha1)) {
-+			if (!get_oid_hex(hex, &oid)) {
- 				if (obj_cb) {
--					r = obj_cb(sha1, path->buf, data);
-+					r = obj_cb(&oid, path->buf, data);
- 					if (r)
- 						break;
- 				}
-@@ -3805,7 +3805,7 @@ static int for_each_object_in_pack(struct packed_git *p, each_packed_object_fn c
- 			return error("unable to get sha1 of object %u in %s",
- 				     i, p->pack_name);
- 
--		r = cb(oid.hash, p, i, data);
-+		r = cb(&oid, p, i, data);
- 		if (r)
- 			break;
- 	}
+-		head = lookup_commit_or_die(head_sha1, "HEAD");
++		head = lookup_commit_or_die(head_oid.hash, "HEAD");
+ 		init_revisions(&rev, NULL);
+ 		rev.commit_format = CMIT_FMT_ONELINE;
+ 		rev.ignore_merges = 1;
 -- 
 2.11.0
 
