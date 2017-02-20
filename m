@@ -6,40 +6,40 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 12CDA201A8
-	for <e@80x24.org>; Mon, 20 Feb 2017 00:11:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 15E8F201A8
+	for <e@80x24.org>; Mon, 20 Feb 2017 00:11:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752098AbdBTALo (ORCPT <rfc822;e@80x24.org>);
-        Sun, 19 Feb 2017 19:11:44 -0500
-Received: from castro.crustytoothpaste.net ([75.10.60.170]:36318 "EHLO
+        id S1752101AbdBTALs (ORCPT <rfc822;e@80x24.org>);
+        Sun, 19 Feb 2017 19:11:48 -0500
+Received: from castro.crustytoothpaste.net ([75.10.60.170]:36294 "EHLO
         castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751790AbdBTAKp (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 19 Feb 2017 19:10:45 -0500
+        by vger.kernel.org with ESMTP id S1751684AbdBTAKo (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 19 Feb 2017 19:10:44 -0500
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 5CF0E280B1;
+        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 129BC280B0;
         Mon, 20 Feb 2017 00:10:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
         s=default; t=1487549443;
-        bh=bEm7oYn7NHtJxPBdW6uIQJbRPNWA4cyVBhHIC3zOJSI=;
+        bh=Fik5RDpk3pAuyrIhA5BLskcFY/Xma4FRYXCMt78GpU8=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=rhoCMJLNmn0DU3vUbC72ajBfjChiGf15RWJaWIaQjiR31Su7qfqIcF6u5iJR+0h32
-         0N+vVHLBX2nSqTBi/tIm1jWZtFg2ES9+giVrGnt+/8NbWuuX5yjwp7mDpEbMRUjELw
-         IbZQ6rEJnJ44rfW5mHROkk+9nmXEe+Em4Rp2oR/EYkl8P0nfjhbFVG9T1MeAK39emF
-         BCc5IfLiUuf4plOcsfIUUL5iYra8VZD4wgoVjW4uSVkVE/Az/D9vn21yS4Qps+yl2x
-         MQ+9+iQQGGUJ4pU79Hu2EhgBIf0VuESk9dLUzRXWBSsWtsqvmQe1WwgW7n3vtsr5Qh
-         NuCGn8i2Adwo/f/PZd/B9c7V6eL24QznNfBJ180gjJz+AoUXxaB2b/HVjdsfB8eAKa
-         b12o4PVmYQ+NkD2HPcaWST/HtlIh08MQ3mjvghta1NTdhRyiFdldaXuNVlDC6qX+ds
-         izcoEZOX2JvcAP5bzaVODFrxjFCWFvYVEhMOiIzj7fanwVsVYHs
+        b=lqmLD6cYfc0pQo+WLPlV7KeJCTKm32+5MtbBFdEGcwViwtw7Ez72iclrsi4GLwoRI
+         HPVfS452v3FTHeM7CYW0Y0KmuRzpYXpD9n5Z3qE0Wc641Y57iU7eG031DJielMn08F
+         F/KYOgjSqi9Q7+1sA8hRPJqBtsrGwUqko5HrPE8rbQNlwRtg/Dw6It+mD1ekai24Mz
+         vtM9h7CUnLr6W/S/ltwoRqy6uyuceBdzpn3zfjxEOsWmmPymnb6qlJrkXnokUXrX/6
+         hhShmiKoa9uWokhPrImc1Qxnix6so6XZ0h6ClbKVUyli4/JjpOQ8d5tofhoPVJgrIl
+         qZkQRwjXAcsYbcm2Ec4UQV1N8pIyrNdILY7aTftm5Dm20aIVtpw4hl5uckrU3MTWXi
+         KuCdRWB6sDhY0lw6nGreMv6pJz2C1fUKEo4lYqx6cwacGkJb8xrnwe87Cm3LMeufcI
+         EWDilZT0SmYiUxr9jPSIWXEOUW0Y9vQ2M2WCyrflYl5tySL7CHU
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     Jeff King <peff@peff.net>, Michael Haggerty <mhagger@alum.mit.edu>,
         Junio C Hamano <gitster@pobox.com>,
         Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: [PATCH v4 04/19] builtin/describe: convert to struct object_id
-Date:   Mon, 20 Feb 2017 00:10:16 +0000
-Message-Id: <20170220001031.559931-5-sandals@crustytoothpaste.net>
+Subject: [PATCH v4 03/19] builtin/diff-tree: convert to struct object_id
+Date:   Mon, 20 Feb 2017 00:10:15 +0000
+Message-Id: <20170220001031.559931-4-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.11.0
 In-Reply-To: <20170220001031.559931-1-sandals@crustytoothpaste.net>
 References: <20170220001031.559931-1-sandals@crustytoothpaste.net>
@@ -48,180 +48,136 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Convert the functions in this file and struct commit_name  to struct
-object_id.
+Convert most leaf functions to struct object_id.  Change several
+hardcoded numbers to uses of parse_oid_hex.  In doing so, verify that we
+when we want two trees, we have exactly two trees.
+
+Finally, in stdin_diff_commit, avoid accessing the byte after the NUL.
+This will be a NUL as well, since the first NUL was a newline we
+overwrote.  However, with parse_oid_hex, we no longer need to increment
+the pointer directly, and can simply increment it as part of our check
+for the space character.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+Signed-off-by: Jeff King <peff@peff.net>
 ---
- builtin/describe.c | 50 +++++++++++++++++++++++++-------------------------
- 1 file changed, 25 insertions(+), 25 deletions(-)
+ builtin/diff-tree.c | 43 +++++++++++++++++++++----------------------
+ 1 file changed, 21 insertions(+), 22 deletions(-)
 
-diff --git a/builtin/describe.c b/builtin/describe.c
-index 01490a157e..738e68f95b 100644
---- a/builtin/describe.c
-+++ b/builtin/describe.c
-@@ -39,11 +39,11 @@ static const char *diff_index_args[] = {
+diff --git a/builtin/diff-tree.c b/builtin/diff-tree.c
+index 8ce00480cd..1656e092bd 100644
+--- a/builtin/diff-tree.c
++++ b/builtin/diff-tree.c
+@@ -7,46 +7,44 @@
  
- struct commit_name {
- 	struct hashmap_entry entry;
--	unsigned char peeled[20];
-+	struct object_id peeled;
- 	struct tag *tag;
- 	unsigned prio:2; /* annotated tag = 2, tag = 1, head = 0 */
- 	unsigned name_checked:1;
+ static struct rev_info log_tree_opt;
+ 
+-static int diff_tree_commit_sha1(const unsigned char *sha1)
++static int diff_tree_commit_sha1(const struct object_id *oid)
+ {
+-	struct commit *commit = lookup_commit_reference(sha1);
++	struct commit *commit = lookup_commit_reference(oid->hash);
+ 	if (!commit)
+ 		return -1;
+ 	return log_tree_commit(&log_tree_opt, commit);
+ }
+ 
+ /* Diff one or more commits. */
+-static int stdin_diff_commit(struct commit *commit, char *line, int len)
++static int stdin_diff_commit(struct commit *commit, const char *p)
+ {
 -	unsigned char sha1[20];
+-	if (isspace(line[40]) && !get_sha1_hex(line+41, sha1)) {
 +	struct object_id oid;
- 	char *path;
- };
++	if (isspace(*p++) && !parse_oid_hex(p, &oid, &p)) {
+ 		/* Graft the fake parents locally to the commit */
+-		int pos = 41;
+ 		struct commit_list **pptr;
  
-@@ -54,17 +54,17 @@ static const char *prio_names[] = {
- static int commit_name_cmp(const struct commit_name *cn1,
- 		const struct commit_name *cn2, const void *peeled)
- {
--	return hashcmp(cn1->peeled, peeled ? peeled : cn2->peeled);
-+	return oidcmp(&cn1->peeled, peeled ? peeled : &cn2->peeled);
- }
- 
--static inline struct commit_name *find_commit_name(const unsigned char *peeled)
-+static inline struct commit_name *find_commit_name(const struct object_id *peeled)
- {
--	return hashmap_get_from_hash(&names, sha1hash(peeled), peeled);
-+	return hashmap_get_from_hash(&names, sha1hash(peeled->hash), peeled->hash);
- }
- 
- static int replace_name(struct commit_name *e,
- 			       int prio,
--			       const unsigned char *sha1,
-+			       const struct object_id *oid,
- 			       struct tag **tag)
- {
- 	if (!e || e->prio < prio)
-@@ -77,13 +77,13 @@ static int replace_name(struct commit_name *e,
- 		struct tag *t;
- 
- 		if (!e->tag) {
--			t = lookup_tag(e->sha1);
-+			t = lookup_tag(e->oid.hash);
- 			if (!t || parse_tag(t))
- 				return 1;
- 			e->tag = t;
+ 		/* Free the real parent list */
+ 		free_commit_list(commit->parents);
+ 		commit->parents = NULL;
+ 		pptr = &(commit->parents);
+-		while (line[pos] && !get_sha1_hex(line + pos, sha1)) {
+-			struct commit *parent = lookup_commit(sha1);
++		while (isspace(*p++) && !parse_oid_hex(p, &oid, &p)) {
++			struct commit *parent = lookup_commit(oid.hash);
+ 			if (parent) {
+ 				pptr = &commit_list_insert(parent, pptr)->next;
+ 			}
+-			pos += 41;
  		}
- 
--		t = lookup_tag(sha1);
-+		t = lookup_tag(oid->hash);
- 		if (!t || parse_tag(t))
- 			return 0;
- 		*tag = t;
-@@ -96,24 +96,24 @@ static int replace_name(struct commit_name *e,
- }
- 
- static void add_to_known_names(const char *path,
--			       const unsigned char *peeled,
-+			       const struct object_id *peeled,
- 			       int prio,
--			       const unsigned char *sha1)
-+			       const struct object_id *oid)
- {
- 	struct commit_name *e = find_commit_name(peeled);
- 	struct tag *tag = NULL;
--	if (replace_name(e, prio, sha1, &tag)) {
-+	if (replace_name(e, prio, oid, &tag)) {
- 		if (!e) {
- 			e = xmalloc(sizeof(struct commit_name));
--			hashcpy(e->peeled, peeled);
--			hashmap_entry_init(e, sha1hash(peeled));
-+			oidcpy(&e->peeled, peeled);
-+			hashmap_entry_init(e, sha1hash(peeled->hash));
- 			hashmap_add(&names, e);
- 			e->path = NULL;
- 		}
- 		e->tag = tag;
- 		e->prio = prio;
- 		e->name_checked = 0;
--		hashcpy(e->sha1, sha1);
-+		oidcpy(&e->oid, oid);
- 		free(e->path);
- 		e->path = xstrdup(path);
  	}
-@@ -154,7 +154,7 @@ static int get_name(const char *path, const struct object_id *oid, int flag, voi
- 	else
- 		prio = 0;
- 
--	add_to_known_names(all ? path + 5 : path + 10, peeled.hash, prio, oid->hash);
-+	add_to_known_names(all ? path + 5 : path + 10, &peeled, prio, oid);
- 	return 0;
+ 	return log_tree_commit(&log_tree_opt, commit);
  }
  
-@@ -212,7 +212,7 @@ static unsigned long finish_depth_computation(
- static void display_name(struct commit_name *n)
- {
- 	if (n->prio == 2 && !n->tag) {
--		n->tag = lookup_tag(n->sha1);
-+		n->tag = lookup_tag(n->oid.hash);
- 		if (!n->tag || parse_tag(n->tag))
- 			die(_("annotated tag %s not available"), n->path);
- 	}
-@@ -230,14 +230,14 @@ static void display_name(struct commit_name *n)
- 		printf("%s", n->path);
- }
- 
--static void show_suffix(int depth, const unsigned char *sha1)
-+static void show_suffix(int depth, const struct object_id *oid)
- {
--	printf("-%d-g%s", depth, find_unique_abbrev(sha1, abbrev));
-+	printf("-%d-g%s", depth, find_unique_abbrev(oid->hash, abbrev));
- }
- 
- static void describe(const char *arg, int last_one)
+ /* Diff two trees. */
+-static int stdin_diff_trees(struct tree *tree1, char *line, int len)
++static int stdin_diff_trees(struct tree *tree1, const char *p)
  {
 -	unsigned char sha1[20];
 +	struct object_id oid;
- 	struct commit *cmit, *gave_up_on = NULL;
- 	struct commit_list *list;
- 	struct commit_name *n;
-@@ -246,20 +246,20 @@ static void describe(const char *arg, int last_one)
- 	unsigned long seen_commits = 0;
- 	unsigned int unannotated_cnt = 0;
+ 	struct tree *tree2;
+-	if (len != 82 || !isspace(line[40]) || get_sha1_hex(line + 41, sha1))
++	if (!isspace(*p++) || parse_oid_hex(p, &oid, &p) || *p)
+ 		return error("Need exactly two trees, separated by a space");
+-	tree2 = lookup_tree(sha1);
++	tree2 = lookup_tree(oid.hash);
+ 	if (!tree2 || parse_tree(tree2))
+ 		return -1;
+ 	printf("%s %s\n", oid_to_hex(&tree1->object.oid),
+@@ -60,23 +58,24 @@ static int stdin_diff_trees(struct tree *tree1, char *line, int len)
+ static int diff_tree_stdin(char *line)
+ {
+ 	int len = strlen(line);
+-	unsigned char sha1[20];
++	struct object_id oid;
+ 	struct object *obj;
++	const char *p;
  
--	if (get_sha1(arg, sha1))
-+	if (get_oid(arg, &oid))
- 		die(_("Not a valid object name %s"), arg);
--	cmit = lookup_commit_reference(sha1);
-+	cmit = lookup_commit_reference(oid.hash);
- 	if (!cmit)
- 		die(_("%s is not a valid '%s' object"), arg, commit_type);
+ 	if (!len || line[len-1] != '\n')
+ 		return -1;
+ 	line[len-1] = 0;
+-	if (get_sha1_hex(line, sha1))
++	if (parse_oid_hex(line, &oid, &p))
+ 		return -1;
+-	obj = parse_object(sha1);
++	obj = parse_object(oid.hash);
+ 	if (!obj)
+ 		return -1;
+ 	if (obj->type == OBJ_COMMIT)
+-		return stdin_diff_commit((struct commit *)obj, line, len);
++		return stdin_diff_commit((struct commit *)obj, p);
+ 	if (obj->type == OBJ_TREE)
+-		return stdin_diff_trees((struct tree *)obj, line, len);
++		return stdin_diff_trees((struct tree *)obj, p);
+ 	error("Object %s is a %s, not a commit or tree",
+-	      sha1_to_hex(sha1), typename(obj->type));
++	      oid_to_hex(&oid), typename(obj->type));
+ 	return -1;
+ }
  
--	n = find_commit_name(cmit->object.oid.hash);
-+	n = find_commit_name(&cmit->object.oid);
- 	if (n && (tags || all || n->prio == 2)) {
- 		/*
- 		 * Exact match to an existing ref.
- 		 */
- 		display_name(n);
- 		if (longformat)
--			show_suffix(0, n->tag ? n->tag->tagged->oid.hash : sha1);
-+			show_suffix(0, n->tag ? &n->tag->tagged->oid : &oid);
- 		if (dirty)
- 			printf("%s", dirty);
- 		printf("\n");
-@@ -276,7 +276,7 @@ static void describe(const char *arg, int last_one)
- 		struct commit *c;
- 		struct commit_name *n = hashmap_iter_first(&names, &iter);
- 		for (; n; n = hashmap_iter_next(&iter)) {
--			c = lookup_commit_reference_gently(n->peeled, 1);
-+			c = lookup_commit_reference_gently(n->peeled.hash, 1);
- 			if (c)
- 				c->util = n;
- 		}
-@@ -380,7 +380,7 @@ static void describe(const char *arg, int last_one)
+@@ -141,7 +140,7 @@ int cmd_diff_tree(int argc, const char **argv, const char *prefix)
+ 		break;
+ 	case 1:
+ 		tree1 = opt->pending.objects[0].item;
+-		diff_tree_commit_sha1(tree1->oid.hash);
++		diff_tree_commit_sha1(&tree1->oid);
+ 		break;
+ 	case 2:
+ 		tree1 = opt->pending.objects[0].item;
+@@ -164,9 +163,9 @@ int cmd_diff_tree(int argc, const char **argv, const char *prefix)
+ 			opt->diffopt.setup |= (DIFF_SETUP_USE_SIZE_CACHE |
+ 					       DIFF_SETUP_USE_CACHE);
+ 		while (fgets(line, sizeof(line), stdin)) {
+-			unsigned char sha1[20];
++			struct object_id oid;
  
- 	display_name(all_matches[0].name);
- 	if (abbrev)
--		show_suffix(all_matches[0].depth, cmit->object.oid.hash);
-+		show_suffix(all_matches[0].depth, &cmit->object.oid);
- 	if (dirty)
- 		printf("%s", dirty);
- 	printf("\n");
+-			if (get_sha1_hex(line, sha1)) {
++			if (get_oid_hex(line, &oid)) {
+ 				fputs(line, stdout);
+ 				fflush(stdout);
+ 			}
 -- 
 2.11.0
 
