@@ -7,56 +7,60 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CC7CC201A9
-	for <e@80x24.org>; Mon, 20 Feb 2017 19:33:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 77606201A9
+	for <e@80x24.org>; Mon, 20 Feb 2017 19:39:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752216AbdBTTd1 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 20 Feb 2017 14:33:27 -0500
-Received: from mail-pg0-f66.google.com ([74.125.83.66]:33575 "EHLO
-        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751100AbdBTTd1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Feb 2017 14:33:27 -0500
-Received: by mail-pg0-f66.google.com with SMTP id 5so14158721pgj.0
-        for <git@vger.kernel.org>; Mon, 20 Feb 2017 11:33:26 -0800 (PST)
+        id S1751454AbdBTTjx (ORCPT <rfc822;e@80x24.org>);
+        Mon, 20 Feb 2017 14:39:53 -0500
+Received: from mail-pg0-f67.google.com ([74.125.83.67]:33054 "EHLO
+        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751100AbdBTTjw (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Feb 2017 14:39:52 -0500
+Received: by mail-pg0-f67.google.com with SMTP id 5so14178321pgj.0
+        for <git@vger.kernel.org>; Mon, 20 Feb 2017 11:39:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=ywAezXOLOf/G6emu7waNByuQS84hEaqlsO+QFjk9ulg=;
-        b=s6yxNG+lQ+gszpnSKvhRYdCY9a/HPZBeYz/NzchLNN08r5CI1i2z+PHDg+YaF5382q
-         3HslSjPem+7SGEpMFccIl8v5VskvJyYaJdr/KpkXfiKJEOraqsriWDyoqS25kOeilAPt
-         fQkkhqg58sOm1CMMJK6+1qdRpgg0rrjoV3BCL7N6su4jmdmxPjqC9xTJ8uITuXgdPQZG
-         aQOGdnP3V0s5TwTT60HBmoqIxiwNKsBcFCutBGr+src5c7SBswHPmPo8w8NaQz+RM8Wr
-         jv1RWEIdH4eL6hN4UDAsST4qSFgKTIEreP9E9yJbkgq7YtR8LTtiWgxzoFDZbQE+kqz+
-         sPag==
+        bh=CabXiO49CdD7yB2dJm2LcOMbFpuFHiRKY0mOrkXWGTY=;
+        b=oFuqxmCG5cBFriNyZ60Xqx4c9g0gvfGBICToDE4lxYBT6ioAU4RCeHpT3oRfqwPBw/
+         xaz8R/X1QDhoRa+UnGmS+rA/NTU94e3MjJOzQ9soTVDZVeyTzrquM2Ib2CnHhBsGIdlC
+         kPnmJrPlQ6coiR5F0rEWo7ra3Xnq4U64e2gBTQmHrc8XGsFDZxpUftar/Dhzvo7GntGI
+         eKKLhZNc/+4VDOfvSTr5HKkLi4BE9qPRNE9FlbLG2IDQKKh+c2aTa3VQsqxmG8GD/fEk
+         SwwU9KmseLPYHq/dSv0/eROe0nVG6f3Y+pi2C9pmX0Iq9brGan4/e2rxV56umapJ3G+7
+         d/rA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=ywAezXOLOf/G6emu7waNByuQS84hEaqlsO+QFjk9ulg=;
-        b=f4kSF0R4EywxQtobqYoUQ+WHOka2sgilQBN1wxgaqddeM582VHvro5XwhxkTc64IAo
-         3ezpFAaJKAl+rGVqfTd5DsKd7w7qys8C3lQqq9keah42L2joV/+3k1c7czBuaeCX31Xe
-         rvO3WdsMP+gAmg6C++4eFanuhD++NjBP1dDGuy9Y0ud+RET1Bw8estXLwhH6PHSkcUEo
-         wLUWXj67QREP1FwrWnqTIGhdgcRfB1m1rSIck8+E3/KiAZp3Y4ico/eZpT/6TWyWPcfQ
-         cyimrsmbNL2JYhkgZCOUwsOoExpxcCQFOBFjyKOE012uhmzwEqyZK2erq1S89r497HGV
-         yt2w==
-X-Gm-Message-State: AMke39mxHSyyHAMr5eFLgsTMIe3fxUrovohDz47TLxWgr//bOZHTMO707SOp8of6YRQj1A==
-X-Received: by 10.99.114.70 with SMTP id c6mr13003248pgn.163.1487619205909;
-        Mon, 20 Feb 2017 11:33:25 -0800 (PST)
+        bh=CabXiO49CdD7yB2dJm2LcOMbFpuFHiRKY0mOrkXWGTY=;
+        b=fUbSFBIFektbwILCY+ip2+lGtCYOFBGfmZ5i03mje6WbfwqSJQazYEMO0xQfhaqOvR
+         ljjrdchW+2JsVOKXnIjQeg/xFpxm0fUxxGsEjOj/dkg13ntSG0fKxctYiPBKykHLcHgQ
+         Q5YSSUFt2lIBhFrzQLGsHFtArfbN4ypP2qOXOUCQ2N3zvxTQ6rtkK5YZ6/qrMbHgQ2ph
+         WU9BfFafE/Ixh/Be2vkKoeUirIsa8dPrOX62saC8Aj/hSflsN5R5YFYicKXKdlvdC3sa
+         mHvn5hZgDy2Kn7phZWAyfIASneWe1ZL5pWphG+z64HnKD5uZkGkSEkS3H395EbXehcL4
+         Xp9A==
+X-Gm-Message-State: AMke39nP/iCD+ovFDg9vIXU4HzblsY9Nx8RxsLmWoo6oKjBjUJwM+C87Jo63auoSVtR15Q==
+X-Received: by 10.99.61.202 with SMTP id k193mr29629391pga.154.1487619591776;
+        Mon, 20 Feb 2017 11:39:51 -0800 (PST)
 Received: from localhost ([2620:0:1000:8622:71d2:895f:c7:4f5e])
-        by smtp.gmail.com with ESMTPSA id g28sm36828188pgn.3.2017.02.20.11.33.24
+        by smtp.gmail.com with ESMTPSA id m6sm36546484pfm.22.2017.02.20.11.39.50
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 20 Feb 2017 11:33:24 -0800 (PST)
+        Mon, 20 Feb 2017 11:39:51 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Josh Triplett <josh@joshtriplett.org>, git@vger.kernel.org
-Subject: Re: Cross-referencing the Git mailing list archive with their corresponding commits in `pu`
-References: <alpine.DEB.2.20.1702041206130.3496@virtualbox>
-        <alpine.DEB.2.20.1702171841450.3496@virtualbox>
-Date:   Mon, 20 Feb 2017 11:33:24 -0800
-In-Reply-To: <alpine.DEB.2.20.1702171841450.3496@virtualbox> (Johannes
-        Schindelin's message of "Fri, 17 Feb 2017 18:50:00 +0100 (CET)")
-Message-ID: <xmqqefysk67v.fsf@gitster.mtv.corp.google.com>
+To:     Thomas Gummerer <t.gummerer@gmail.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        =?utf-8?Q?=C3=98yvind_A_Holm?= <sunny@sunbase.org>,
+        Jakub =?utf-8?Q?Nar=C4=99bski?= <jnareb@gmail.com>,
+        Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH v6 0/6] stash: support pathspec argument
+References: <20170217224141.19183-1-t.gummerer@gmail.com>
+        <20170219110313.24070-1-t.gummerer@gmail.com>
+Date:   Mon, 20 Feb 2017 11:39:50 -0800
+In-Reply-To: <20170219110313.24070-1-t.gummerer@gmail.com> (Thomas Gummerer's
+        message of "Sun, 19 Feb 2017 11:03:07 +0000")
+Message-ID: <xmqqd1eck5x5.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -65,26 +69,18 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Thomas Gummerer <t.gummerer@gmail.com> writes:
 
-> There is a third category, and this one *does* come as a surprise to me.
-> It appears that at least *some* patches' Date: lines are either ignored or
-> overridden or changed on their way from the mailing list into Git's commit
-> history. There was only one commit in that commit range:
->
-> 3c0cb0c (read_loose_refs(): read refs using resolve_ref_recursively(),
-> 	Michael Haggerty 2017-02-09)
->
-> This one was committed with an author date "Thu, 09 Feb 2017 21:53:52
-> +0100" but it appears that there was no mail sent to the Git mailing list
+> @@ -55,10 +53,13 @@ push [-p|--patch] [-k|--[no-]keep-index] [-u|--include-untracked] [-a|--all] [-q
+>  
+>  	Save your local modifications to a new 'stash', and run `git reset
+>  	--hard` to revert them.  The <message> part is optional and gives
 
-I think this is this one:
+I didn't notice this during v5 review, but the above seems to be
+based on the codebase before your documentation update (which used
+to be part of the series in older iteration).  I had to tweak the
+series to apply on top of your 20a7e06172 ("Documentation/stash:
+remove mention of git reset --hard", 2017-02-12) while queuing, so
+please double check the result when it is pushed out to 'pu'.
 
-    <ff0b0df6-9aed-9417-d9d4-1234d53f05c3@alum.mit.edu>
-
-Recent "What's cooking" lists the topic this one is part with this
-comment:
-
- The tip one is newer than the one posted to the list but was sent
- privately by the author via his GitHub repository.
-
+Thanks.
