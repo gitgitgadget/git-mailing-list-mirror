@@ -6,40 +6,40 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4F2A8201A8
-	for <e@80x24.org>; Mon, 20 Feb 2017 00:11:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 12CDA201A8
+	for <e@80x24.org>; Mon, 20 Feb 2017 00:11:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751801AbdBTAKp (ORCPT <rfc822;e@80x24.org>);
-        Sun, 19 Feb 2017 19:10:45 -0500
-Received: from castro.crustytoothpaste.net ([75.10.60.170]:36296 "EHLO
+        id S1752098AbdBTALo (ORCPT <rfc822;e@80x24.org>);
+        Sun, 19 Feb 2017 19:11:44 -0500
+Received: from castro.crustytoothpaste.net ([75.10.60.170]:36318 "EHLO
         castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751307AbdBTAKo (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 19 Feb 2017 19:10:44 -0500
+        by vger.kernel.org with ESMTP id S1751790AbdBTAKp (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 19 Feb 2017 19:10:45 -0500
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id BAD7E280AF;
-        Mon, 20 Feb 2017 00:10:42 +0000 (UTC)
+        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 5CF0E280B1;
+        Mon, 20 Feb 2017 00:10:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
-        s=default; t=1487549442;
-        bh=eQ/tajx1wJdp6ksBcl2O/A7+lCJtUXqjKQV+4Q7cA9g=;
+        s=default; t=1487549443;
+        bh=bEm7oYn7NHtJxPBdW6uIQJbRPNWA4cyVBhHIC3zOJSI=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=Xr6nwgteukghLOMiiGAhQ9ESS07WAQMjv+nW1Qzc0IBWIKkX3r+6CISizCJHPBsOs
-         j1L2SWcgp08b67P8gjZgCn45WZjj0VlKrUEoHF0Ro6Hn+IjU2689ET5IIo62y6ONPM
-         zdRgmZxlbkeuVV/YtjV3Cws8FSGLBQjv7J1CcAfhxOUAd8drum4jnKe8UHiPdBxNc8
-         JRvOHV9oCBwCqyW53xO0eCcIrXLKV/BThpuudJ3jKXNgiB39VkOo6QrbbuitQrLtXy
-         Mrun9cNdWjECTO/BcIsGCtBvpaiC250ZRvVoSgajZM43MmtCd7Alcu390h6wKm+ldk
-         W0RtfE5916ALhL2dC3JRKqZpLitkj3Ydfhtxfb9HG9uvo71MvbB5cv2+ZiczrPhsyd
-         AxMA7+KKrcNPNp06UWiwUF/KOJ0PZqkIS2icFmjgzT3mb+BpVOeaiAbeU+8wObX821
-         jHdk19uzsVhBCfLlJJ0rPDEEC/B6A6gZd0Njxhhm6z7Vg42onhQ
+        b=rhoCMJLNmn0DU3vUbC72ajBfjChiGf15RWJaWIaQjiR31Su7qfqIcF6u5iJR+0h32
+         0N+vVHLBX2nSqTBi/tIm1jWZtFg2ES9+giVrGnt+/8NbWuuX5yjwp7mDpEbMRUjELw
+         IbZQ6rEJnJ44rfW5mHROkk+9nmXEe+Em4Rp2oR/EYkl8P0nfjhbFVG9T1MeAK39emF
+         BCc5IfLiUuf4plOcsfIUUL5iYra8VZD4wgoVjW4uSVkVE/Az/D9vn21yS4Qps+yl2x
+         MQ+9+iQQGGUJ4pU79Hu2EhgBIf0VuESk9dLUzRXWBSsWtsqvmQe1WwgW7n3vtsr5Qh
+         NuCGn8i2Adwo/f/PZd/B9c7V6eL24QznNfBJ180gjJz+AoUXxaB2b/HVjdsfB8eAKa
+         b12o4PVmYQ+NkD2HPcaWST/HtlIh08MQ3mjvghta1NTdhRyiFdldaXuNVlDC6qX+ds
+         izcoEZOX2JvcAP5bzaVODFrxjFCWFvYVEhMOiIzj7fanwVsVYHs
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     Jeff King <peff@peff.net>, Michael Haggerty <mhagger@alum.mit.edu>,
         Junio C Hamano <gitster@pobox.com>,
         Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: [PATCH v4 02/19] builtin/commit: convert to struct object_id
-Date:   Mon, 20 Feb 2017 00:10:14 +0000
-Message-Id: <20170220001031.559931-3-sandals@crustytoothpaste.net>
+Subject: [PATCH v4 04/19] builtin/describe: convert to struct object_id
+Date:   Mon, 20 Feb 2017 00:10:16 +0000
+Message-Id: <20170220001031.559931-5-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.11.0
 In-Reply-To: <20170220001031.559931-1-sandals@crustytoothpaste.net>
 References: <20170220001031.559931-1-sandals@crustytoothpaste.net>
@@ -48,186 +48,180 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Convert most leaf functions to use struct object_id.
+Convert the functions in this file and struct commit_name  to struct
+object_id.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- builtin/commit.c | 46 +++++++++++++++++++++++-----------------------
- 1 file changed, 23 insertions(+), 23 deletions(-)
+ builtin/describe.c | 50 +++++++++++++++++++++++++-------------------------
+ 1 file changed, 25 insertions(+), 25 deletions(-)
 
-diff --git a/builtin/commit.c b/builtin/commit.c
-index 2de5f6cc64..4e288bc513 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -496,7 +496,7 @@ static const char *prepare_index(int argc, const char **argv, const char *prefix
- static int run_status(FILE *fp, const char *index_file, const char *prefix, int nowarn,
- 		      struct wt_status *s)
- {
+diff --git a/builtin/describe.c b/builtin/describe.c
+index 01490a157e..738e68f95b 100644
+--- a/builtin/describe.c
++++ b/builtin/describe.c
+@@ -39,11 +39,11 @@ static const char *diff_index_args[] = {
+ 
+ struct commit_name {
+ 	struct hashmap_entry entry;
+-	unsigned char peeled[20];
++	struct object_id peeled;
+ 	struct tag *tag;
+ 	unsigned prio:2; /* annotated tag = 2, tag = 1, head = 0 */
+ 	unsigned name_checked:1;
 -	unsigned char sha1[20];
 +	struct object_id oid;
+ 	char *path;
+ };
  
- 	if (s->relative_paths)
- 		s->prefix = prefix;
-@@ -509,9 +509,9 @@ static int run_status(FILE *fp, const char *index_file, const char *prefix, int
- 	s->index_file = index_file;
- 	s->fp = fp;
- 	s->nowarn = nowarn;
--	s->is_initial = get_sha1(s->reference, sha1) ? 1 : 0;
-+	s->is_initial = get_sha1(s->reference, oid.hash) ? 1 : 0;
- 	if (!s->is_initial)
--		hashcpy(s->sha1_commit, sha1);
-+		hashcpy(s->sha1_commit, oid.hash);
- 	s->status_format = status_format;
- 	s->ignore_submodule_arg = ignore_submodule_arg;
- 
-@@ -885,7 +885,7 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
- 		commitable = run_status(s->fp, index_file, prefix, 1, s);
- 		s->use_color = saved_color_setting;
- 	} else {
--		unsigned char sha1[20];
-+		struct object_id oid;
- 		const char *parent = "HEAD";
- 
- 		if (!active_nr && read_cache() < 0)
-@@ -894,7 +894,7 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
- 		if (amend)
- 			parent = "HEAD^1";
- 
--		if (get_sha1(parent, sha1)) {
-+		if (get_sha1(parent, oid.hash)) {
- 			int i, ita_nr = 0;
- 
- 			for (i = 0; i < active_nr; i++)
-@@ -1332,7 +1332,7 @@ int cmd_status(int argc, const char **argv, const char *prefix)
+@@ -54,17 +54,17 @@ static const char *prio_names[] = {
+ static int commit_name_cmp(const struct commit_name *cn1,
+ 		const struct commit_name *cn2, const void *peeled)
  {
- 	static struct wt_status s;
- 	int fd;
--	unsigned char sha1[20];
-+	struct object_id oid;
- 	static struct option builtin_status_options[] = {
- 		OPT__VERBOSE(&verbose, N_("be verbose")),
- 		OPT_SET_INT('s', "short", &status_format,
-@@ -1382,9 +1382,9 @@ int cmd_status(int argc, const char **argv, const char *prefix)
- 
- 	fd = hold_locked_index(&index_lock, 0);
- 
--	s.is_initial = get_sha1(s.reference, sha1) ? 1 : 0;
-+	s.is_initial = get_sha1(s.reference, oid.hash) ? 1 : 0;
- 	if (!s.is_initial)
--		hashcpy(s.sha1_commit, sha1);
-+		hashcpy(s.sha1_commit, oid.hash);
- 
- 	s.ignore_submodule_arg = ignore_submodule_arg;
- 	s.status_format = status_format;
-@@ -1418,19 +1418,19 @@ static const char *implicit_ident_advice(void)
- 
+-	return hashcmp(cn1->peeled, peeled ? peeled : cn2->peeled);
++	return oidcmp(&cn1->peeled, peeled ? peeled : &cn2->peeled);
  }
  
--static void print_summary(const char *prefix, const unsigned char *sha1,
-+static void print_summary(const char *prefix, const struct object_id *oid,
- 			  int initial_commit)
+-static inline struct commit_name *find_commit_name(const unsigned char *peeled)
++static inline struct commit_name *find_commit_name(const struct object_id *peeled)
  {
- 	struct rev_info rev;
- 	struct commit *commit;
- 	struct strbuf format = STRBUF_INIT;
--	unsigned char junk_sha1[20];
-+	struct object_id junk_oid;
- 	const char *head;
- 	struct pretty_print_context pctx = {0};
- 	struct strbuf author_ident = STRBUF_INIT;
- 	struct strbuf committer_ident = STRBUF_INIT;
- 
--	commit = lookup_commit(sha1);
-+	commit = lookup_commit(oid->hash);
- 	if (!commit)
- 		die(_("couldn't look up newly created commit"));
- 	if (parse_commit(commit))
-@@ -1477,7 +1477,7 @@ static void print_summary(const char *prefix, const unsigned char *sha1,
- 	rev.diffopt.break_opt = 0;
- 	diff_setup_done(&rev.diffopt);
- 
--	head = resolve_ref_unsafe("HEAD", 0, junk_sha1, NULL);
-+	head = resolve_ref_unsafe("HEAD", 0, junk_oid.hash, NULL);
- 	if (!strcmp(head, "HEAD"))
- 		head = _("detached HEAD");
- 	else
-@@ -1522,8 +1522,8 @@ static int git_commit_config(const char *k, const char *v, void *cb)
- 	return git_status_config(k, v, s);
+-	return hashmap_get_from_hash(&names, sha1hash(peeled), peeled);
++	return hashmap_get_from_hash(&names, sha1hash(peeled->hash), peeled->hash);
  }
  
--static int run_rewrite_hook(const unsigned char *oldsha1,
--			    const unsigned char *newsha1)
-+static int run_rewrite_hook(const struct object_id *oldoid,
-+			    const struct object_id *newoid)
+ static int replace_name(struct commit_name *e,
+ 			       int prio,
+-			       const unsigned char *sha1,
++			       const struct object_id *oid,
+ 			       struct tag **tag)
  {
- 	struct child_process proc = CHILD_PROCESS_INIT;
- 	const char *argv[3];
-@@ -1544,7 +1544,7 @@ static int run_rewrite_hook(const unsigned char *oldsha1,
- 	code = start_command(&proc);
- 	if (code)
- 		return code;
--	strbuf_addf(&sb, "%s %s\n", sha1_to_hex(oldsha1), sha1_to_hex(newsha1));
-+	strbuf_addf(&sb, "%s %s\n", oid_to_hex(oldoid), oid_to_hex(newoid));
- 	sigchain_push(SIGPIPE, SIG_IGN);
- 	write_in_full(proc.in, sb.buf, sb.len);
- 	close(proc.in);
-@@ -1636,7 +1636,7 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
- 	struct strbuf author_ident = STRBUF_INIT;
- 	const char *index_file, *reflog_msg;
- 	char *nl;
--	unsigned char sha1[20];
-+	struct object_id oid;
- 	struct commit_list *parents = NULL;
- 	struct stat statbuf;
- 	struct commit *current_head = NULL;
-@@ -1651,10 +1651,10 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
- 	status_format = STATUS_FORMAT_NONE; /* Ignore status.short */
- 	s.colopts = 0;
+ 	if (!e || e->prio < prio)
+@@ -77,13 +77,13 @@ static int replace_name(struct commit_name *e,
+ 		struct tag *t;
  
--	if (get_sha1("HEAD", sha1))
-+	if (get_sha1("HEAD", oid.hash))
- 		current_head = NULL;
- 	else {
--		current_head = lookup_commit_or_die(sha1, "HEAD");
-+		current_head = lookup_commit_or_die(oid.hash, "HEAD");
- 		if (parse_commit(current_head))
- 			die(_("could not parse HEAD commit"));
- 	}
-@@ -1759,7 +1759,7 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
- 	}
- 
- 	if (commit_tree_extended(sb.buf, sb.len, active_cache_tree->sha1,
--			 parents, sha1, author_ident.buf, sign_commit, extra)) {
-+			 parents, oid.hash, author_ident.buf, sign_commit, extra)) {
- 		rollback_index_files();
- 		die(_("failed to write commit object"));
- 	}
-@@ -1776,7 +1776,7 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
- 
- 	transaction = ref_transaction_begin(&err);
- 	if (!transaction ||
--	    ref_transaction_update(transaction, "HEAD", sha1,
-+	    ref_transaction_update(transaction, "HEAD", oid.hash,
- 				   current_head
- 				   ? current_head->object.oid.hash : null_sha1,
- 				   0, sb.buf, &err) ||
-@@ -1805,13 +1805,13 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
- 		cfg = init_copy_notes_for_rewrite("amend");
- 		if (cfg) {
- 			/* we are amending, so current_head is not NULL */
--			copy_note_for_rewrite(cfg, current_head->object.oid.hash, sha1);
-+			copy_note_for_rewrite(cfg, current_head->object.oid.hash, oid.hash);
- 			finish_copy_notes_for_rewrite(cfg, "Notes added by 'git commit --amend'");
+ 		if (!e->tag) {
+-			t = lookup_tag(e->sha1);
++			t = lookup_tag(e->oid.hash);
+ 			if (!t || parse_tag(t))
+ 				return 1;
+ 			e->tag = t;
  		}
--		run_rewrite_hook(current_head->object.oid.hash, sha1);
-+		run_rewrite_hook(&current_head->object.oid, &oid);
- 	}
- 	if (!quiet)
--		print_summary(prefix, sha1, !current_head);
-+		print_summary(prefix, &oid, !current_head);
  
- 	strbuf_release(&err);
+-		t = lookup_tag(sha1);
++		t = lookup_tag(oid->hash);
+ 		if (!t || parse_tag(t))
+ 			return 0;
+ 		*tag = t;
+@@ -96,24 +96,24 @@ static int replace_name(struct commit_name *e,
+ }
+ 
+ static void add_to_known_names(const char *path,
+-			       const unsigned char *peeled,
++			       const struct object_id *peeled,
+ 			       int prio,
+-			       const unsigned char *sha1)
++			       const struct object_id *oid)
+ {
+ 	struct commit_name *e = find_commit_name(peeled);
+ 	struct tag *tag = NULL;
+-	if (replace_name(e, prio, sha1, &tag)) {
++	if (replace_name(e, prio, oid, &tag)) {
+ 		if (!e) {
+ 			e = xmalloc(sizeof(struct commit_name));
+-			hashcpy(e->peeled, peeled);
+-			hashmap_entry_init(e, sha1hash(peeled));
++			oidcpy(&e->peeled, peeled);
++			hashmap_entry_init(e, sha1hash(peeled->hash));
+ 			hashmap_add(&names, e);
+ 			e->path = NULL;
+ 		}
+ 		e->tag = tag;
+ 		e->prio = prio;
+ 		e->name_checked = 0;
+-		hashcpy(e->sha1, sha1);
++		oidcpy(&e->oid, oid);
+ 		free(e->path);
+ 		e->path = xstrdup(path);
+ 	}
+@@ -154,7 +154,7 @@ static int get_name(const char *path, const struct object_id *oid, int flag, voi
+ 	else
+ 		prio = 0;
+ 
+-	add_to_known_names(all ? path + 5 : path + 10, peeled.hash, prio, oid->hash);
++	add_to_known_names(all ? path + 5 : path + 10, &peeled, prio, oid);
  	return 0;
+ }
+ 
+@@ -212,7 +212,7 @@ static unsigned long finish_depth_computation(
+ static void display_name(struct commit_name *n)
+ {
+ 	if (n->prio == 2 && !n->tag) {
+-		n->tag = lookup_tag(n->sha1);
++		n->tag = lookup_tag(n->oid.hash);
+ 		if (!n->tag || parse_tag(n->tag))
+ 			die(_("annotated tag %s not available"), n->path);
+ 	}
+@@ -230,14 +230,14 @@ static void display_name(struct commit_name *n)
+ 		printf("%s", n->path);
+ }
+ 
+-static void show_suffix(int depth, const unsigned char *sha1)
++static void show_suffix(int depth, const struct object_id *oid)
+ {
+-	printf("-%d-g%s", depth, find_unique_abbrev(sha1, abbrev));
++	printf("-%d-g%s", depth, find_unique_abbrev(oid->hash, abbrev));
+ }
+ 
+ static void describe(const char *arg, int last_one)
+ {
+-	unsigned char sha1[20];
++	struct object_id oid;
+ 	struct commit *cmit, *gave_up_on = NULL;
+ 	struct commit_list *list;
+ 	struct commit_name *n;
+@@ -246,20 +246,20 @@ static void describe(const char *arg, int last_one)
+ 	unsigned long seen_commits = 0;
+ 	unsigned int unannotated_cnt = 0;
+ 
+-	if (get_sha1(arg, sha1))
++	if (get_oid(arg, &oid))
+ 		die(_("Not a valid object name %s"), arg);
+-	cmit = lookup_commit_reference(sha1);
++	cmit = lookup_commit_reference(oid.hash);
+ 	if (!cmit)
+ 		die(_("%s is not a valid '%s' object"), arg, commit_type);
+ 
+-	n = find_commit_name(cmit->object.oid.hash);
++	n = find_commit_name(&cmit->object.oid);
+ 	if (n && (tags || all || n->prio == 2)) {
+ 		/*
+ 		 * Exact match to an existing ref.
+ 		 */
+ 		display_name(n);
+ 		if (longformat)
+-			show_suffix(0, n->tag ? n->tag->tagged->oid.hash : sha1);
++			show_suffix(0, n->tag ? &n->tag->tagged->oid : &oid);
+ 		if (dirty)
+ 			printf("%s", dirty);
+ 		printf("\n");
+@@ -276,7 +276,7 @@ static void describe(const char *arg, int last_one)
+ 		struct commit *c;
+ 		struct commit_name *n = hashmap_iter_first(&names, &iter);
+ 		for (; n; n = hashmap_iter_next(&iter)) {
+-			c = lookup_commit_reference_gently(n->peeled, 1);
++			c = lookup_commit_reference_gently(n->peeled.hash, 1);
+ 			if (c)
+ 				c->util = n;
+ 		}
+@@ -380,7 +380,7 @@ static void describe(const char *arg, int last_one)
+ 
+ 	display_name(all_matches[0].name);
+ 	if (abbrev)
+-		show_suffix(all_matches[0].depth, cmit->object.oid.hash);
++		show_suffix(all_matches[0].depth, &cmit->object.oid);
+ 	if (dirty)
+ 		printf("%s", dirty);
+ 	printf("\n");
 -- 
 2.11.0
 
