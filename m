@@ -2,94 +2,132 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DEC19201A8
-	for <e@80x24.org>; Sun, 19 Feb 2017 23:03:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 42C03201A8
+	for <e@80x24.org>; Mon, 20 Feb 2017 00:10:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751517AbdBSXDp (ORCPT <rfc822;e@80x24.org>);
-        Sun, 19 Feb 2017 18:03:45 -0500
-Received: from mail-lf0-f67.google.com ([209.85.215.67]:35282 "EHLO
-        mail-lf0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751126AbdBSXDo (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 19 Feb 2017 18:03:44 -0500
-Received: by mail-lf0-f67.google.com with SMTP id z127so5282728lfa.2
-        for <git@vger.kernel.org>; Sun, 19 Feb 2017 15:03:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=pCqPz8BGMhPkH8fO/bLUEierAkhxq2FIc0mHbKLBTc8=;
-        b=SR9jxpPZIuxRwUszEQOBSn077st3ml0S1M5CwKsxbQNlE4WKDT4HwHldU23glHjMGg
-         qXNg1uPtfsRMc06eGiBuvP+yPD61EPTd7lMiZjbeCYJL7yZhYpYAbtkd4vYiV/cEPMPc
-         qmPgjcSOKCvoTjXTqG2YLaU+VawWCnC9G9FVUgwmoVc7VwpOTZzpTL6isqmB+9gzI82U
-         H8lIU6YjmLZ8hymIppHjgxSHfXjXemOrrdWOEHnhezekEk+wiTNpe1Wbzy0z7GFLtMDt
-         Uo+HeDrziotEZEu+LGPABjaXeXpNUxSWfavqkv0pOaf4TCaVO5eJ5vZHhTtihERAKcIE
-         74Uw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=pCqPz8BGMhPkH8fO/bLUEierAkhxq2FIc0mHbKLBTc8=;
-        b=EfUB+IjJX4GNsb7+1wdMk4mQMVKj39Pr9HWDZrL8MTUesqj45ktstz8TkCcvynMTOr
-         u7eKTHzsXgWeQ+ysLm7q+Sm03AzqMpeQZzJjeJFbL3TykGNhwQHxLW/3Giuc6AYKZNLr
-         941eysDz0O/Axn8BbWRluRUvcVo80zHU4AE6JkzflkmQ20R2pzVER2PCkPkt2fHVfjUL
-         B9kFKLQqtJjlGNjjGQIjhkiPox2CZRsYNtq+XfrpQpLRQRKeMrtw0r6BtodgG/kd8uBm
-         l/NqYve1NHs5Wclrzn45ZPbV0J9pZNWHTT2aoLmyR7RFzLOH+mkGQB4xXItr8RSwLYU+
-         /+aA==
-X-Gm-Message-State: AMke39kWbIzI8sYfJxuDVOo6ydsav12YfdJYbuM6nIEGvdHpnR2xhjpVyS5BTwIbzMqf5wHpWSHc/bx8Bf+LhA==
-X-Received: by 10.25.87.196 with SMTP id l187mr5195300lfb.143.1487545422117;
- Sun, 19 Feb 2017 15:03:42 -0800 (PST)
-MIME-Version: 1.0
-Received: by 10.25.145.14 with HTTP; Sun, 19 Feb 2017 15:03:21 -0800 (PST)
-In-Reply-To: <CA+55aFw3ZRtgsLGW-TFqpq-3uCw55L42p7cF=Q-73qM_VPuYsQ@mail.gmail.com>
-References: <alpine.LFD.2.20.1702110943460.31350@i7.lan> <CA+55aFw2S14a4_4YK0b6PNK4TH_AUo_+2JN+PTyBTufNeB5t6A@mail.gmail.com>
- <xmqq1sv2fq6m.fsf@gitster.mtv.corp.google.com> <CA+55aFy-vvOBu5Y4KDeteUyK-7U7yTa1HoqHo+hME1=8bq7Xhw@mail.gmail.com>
- <xmqq7f4tdcua.fsf@gitster.mtv.corp.google.com> <xmqqr330779h.fsf@gitster.mtv.corp.google.com>
- <20170215002901.gtzegvhyy7d6cvrb@sigill.intra.peff.net> <xmqqefywnk5a.fsf@gitster.mtv.corp.google.com>
- <CA+55aFw3ZRtgsLGW-TFqpq-3uCw55L42p7cF=Q-73qM_VPuYsQ@mail.gmail.com>
-From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Sun, 19 Feb 2017 15:03:21 -0800
-Message-ID: <CA+P7+xqtPwzt3J6O05TP=E_hh-ko97adn+__Zmc0DNSDqEnEHw@mail.gmail.com>
-Subject: Re: [RFC PATCH] show decorations at the end of the line
-To:     Linus Torvalds <torvalds@linux-foundation.org>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Jeff King <peff@peff.net>
-Content-Type: text/plain; charset=UTF-8
+        id S1751886AbdBTAKq (ORCPT <rfc822;e@80x24.org>);
+        Sun, 19 Feb 2017 19:10:46 -0500
+Received: from castro.crustytoothpaste.net ([75.10.60.170]:36298 "EHLO
+        castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1751470AbdBTAKo (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 19 Feb 2017 19:10:44 -0500
+Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 93891280AD;
+        Mon, 20 Feb 2017 00:10:41 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
+        s=default; t=1487549441;
+        bh=bPOv5Dn8gN9EX6iX+r/boxUIL7zTgcm+KAXojpuMHS8=;
+        h=From:To:Cc:Subject:Date:From;
+        b=qkkFcxl8rm7CTA+d/6qAfSN0E1dzOB9InLJpJD3RmSTRZ+nu8qqwU+mGuEYuL8Msz
+         5VuUrW9AR4vasiJWw9a+M2nLYwbYX2Abu6IUzp0XLOHSYC1MPOOF1lXeGWfBQE/oTp
+         1zz0VjXqwxMfg9qshut0ncvoR0WHSxIGNjnTFwuUvzgb+zZuUApT8bL6Kbhl0EeZq+
+         y8R3S9qBgPFBJrd21gmxb7jLkdzvd8VIS32m8H7EM2xogcqHzexDb1ViF/NtSszKlQ
+         /Vi847jrx8PMxy6kcDROypZZXi3G5VO/O3n+bQfS3zaKUXjw5qY5KokAHaBiimyadX
+         HfXP59/MNH852TEr2+E6odVDmc1k496u2Mn6/3ccLmiT9KmljH4JRH02RDVVh+8wvO
+         P33QP2YBZBdE2Rxqj4Yv49msJeGJBE/RzNQiuPtoIDRR2HX2UZhQP4Ok6zg/MNHvXB
+         mYRVuLi3jLUxlogl9KvfoQQ4MugjiKOAsdwRWVP/EzJ27rYYMRW
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     git@vger.kernel.org
+Cc:     Jeff King <peff@peff.net>, Michael Haggerty <mhagger@alum.mit.edu>,
+        Junio C Hamano <gitster@pobox.com>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>
+Subject: [PATCH v4 00/19] object_id part 6
+Date:   Mon, 20 Feb 2017 00:10:12 +0000
+Message-Id: <20170220001031.559931-1-sandals@crustytoothpaste.net>
+X-Mailer: git-send-email 2.11.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Feb 19, 2017 at 2:33 PM, Linus Torvalds
-<torvalds@linux-foundation.org> wrote:
-> On Fri, Feb 17, 2017 at 9:27 PM, Junio C Hamano <gitster@pobox.com> wrote:
->>
->> I just got bitten by a fallout.  I have
->>
->>     $ git recent --help
->>     `git recent' is aliased to `log --oneline --branches --no-merges \
->>          --source --since=3.weeks'
->>
->> but now the branch names are shown at the end, which defeats the
->> whole point of the alias.
->
-> Yes, your situation actually wants those decorations as primary
-> things, so having them at the end is indeed pointless.
->
-> So I think we should just discard that patch of mine.
->
->                  Linus
+This is another series in the continuing conversion to struct object_id.
 
-I would think that in general putting them at the end makes more
-sense, but we should have the ability to use them in format specifiers
-so that users are free to customize it exactly how they want. That is,
-I agree with the reasoning presented in the original patch, but think
-Junio's case can be solved by strengthening the custom formats.
+This series converts more of the builtin directory and some of the refs
+code to use struct object_id. Additionally, it implements an
+nth_packed_object_oid function which provides a struct object_id version
+of the nth_packed_object function, and a parse_oid_hex function that
+makes parsing easier.
 
-Thanks,
-Jake
+Changes from v3:
+* Move the parse_oid_hex patch earlier in the series.
+* Use parse_oid_hex in builtin/diff-tree.c.
+* Fix several warts with parse_oid_hex pointed out by Peff.
+
+Changes from v2:
+* Fix misnamed function in commit message.
+* Improve parameter name of parse_oid_hex.
+* Improve docstring of parse_oid_hex.
+* Remove needless variable.
+* Rebase on master.
+
+Changes from v1:
+* Implement parse_oid_hex and use it.
+* Make nth_packed_object_oid take a variable into which to store the
+  object ID.  This avoids concerns about unsafe casts.
+* Rebase on master.
+
+brian m. carlson (19):
+  hex: introduce parse_oid_hex
+  builtin/commit: convert to struct object_id
+  builtin/diff-tree: convert to struct object_id
+  builtin/describe: convert to struct object_id
+  builtin/fast-export: convert to struct object_id
+  builtin/fmt-merge-message: convert to struct object_id
+  builtin/grep: convert to struct object_id
+  builtin/branch: convert to struct object_id
+  builtin/clone: convert to struct object_id
+  builtin/merge: convert to struct object_id
+  Convert remaining callers of resolve_refdup to object_id
+  builtin/replace: convert to struct object_id
+  reflog-walk: convert struct reflog_info to struct object_id
+  refs: convert each_reflog_ent_fn to struct object_id
+  refs: simplify parsing of reflog entries
+  sha1_file: introduce an nth_packed_object_oid function
+  Convert object iteration callbacks to struct object_id
+  builtin/merge-base: convert to struct object_id
+  wt-status: convert to struct object_id
+
+ builtin/branch.c        |  26 +++++-----
+ builtin/cat-file.c      |   8 +--
+ builtin/clone.c         |  10 ++--
+ builtin/commit.c        |  46 ++++++++---------
+ builtin/count-objects.c |   4 +-
+ builtin/describe.c      |  50 +++++++++---------
+ builtin/diff-tree.c     |  43 ++++++++--------
+ builtin/fast-export.c   |  58 ++++++++++-----------
+ builtin/fmt-merge-msg.c |  70 ++++++++++++-------------
+ builtin/fsck.c          |  40 +++++++--------
+ builtin/grep.c          |  24 ++++-----
+ builtin/merge-base.c    |  30 +++++------
+ builtin/merge.c         | 134 ++++++++++++++++++++++++------------------------
+ builtin/notes.c         |  18 +++----
+ builtin/pack-objects.c  |   6 +--
+ builtin/prune-packed.c  |   4 +-
+ builtin/prune.c         |   8 +--
+ builtin/receive-pack.c  |   4 +-
+ builtin/reflog.c        |   2 +-
+ builtin/replace.c       | 112 ++++++++++++++++++++--------------------
+ cache.h                 |  19 ++++++-
+ hex.c                   |   8 +++
+ reachable.c             |  30 +++++------
+ ref-filter.c            |   4 +-
+ reflog-walk.c           |  26 +++++-----
+ refs.c                  |  24 ++++-----
+ refs.h                  |   2 +-
+ refs/files-backend.c    |  29 ++++++-----
+ revision.c              |  12 ++---
+ sha1_file.c             |  27 +++++++---
+ sha1_name.c             |   2 +-
+ transport.c             |   4 +-
+ wt-status.c             |  52 +++++++++----------
+ 33 files changed, 484 insertions(+), 452 deletions(-)
+
+-- 
+2.11.0
+
