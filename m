@@ -6,40 +6,40 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 97F2F201A8
-	for <e@80x24.org>; Mon, 20 Feb 2017 00:10:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 06186201A8
+	for <e@80x24.org>; Mon, 20 Feb 2017 00:10:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752004AbdBTAKv (ORCPT <rfc822;e@80x24.org>);
-        Sun, 19 Feb 2017 19:10:51 -0500
-Received: from castro.crustytoothpaste.net ([75.10.60.170]:36340 "EHLO
+        id S1752029AbdBTAKz (ORCPT <rfc822;e@80x24.org>);
+        Sun, 19 Feb 2017 19:10:55 -0500
+Received: from castro.crustytoothpaste.net ([75.10.60.170]:36324 "EHLO
         castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751833AbdBTAKs (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 19 Feb 2017 19:10:48 -0500
+        by vger.kernel.org with ESMTP id S1751930AbdBTAKv (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 19 Feb 2017 19:10:51 -0500
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id A1891280BC;
-        Mon, 20 Feb 2017 00:10:47 +0000 (UTC)
+        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 49DDB280B2;
+        Mon, 20 Feb 2017 00:10:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
-        s=default; t=1487549447;
-        bh=jHQnwaMgK8Agc+/uxk+DuietfSN4QsJpBqKdzfZGUu8=;
+        s=default; t=1487549444;
+        bh=kgg2IZbLFB9gnqR2coRq05CxMPsnKISRojBmhvZZ2fA=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=rnc5KFhWspGqpuQMyObOGH602mD5zICOyc19Hcrrs2ruecDa06HPbG80k2LRnnu5t
-         fpEFF6jWnc9BNpz6BRDvWpFFXWx+15xr4mI6Xlba1sG1QzoqEfmhvmtNING/iJKu4j
-         SalZ17tWGPfz5Z/M5nlNOz+tVrUI6klHbdpv8N4/SnLssakNvhuPLV4LL6a2jtWV/h
-         fguBtJzssCkK8EeMbT/Lx1RmjcuHq7zqzlayZeA9TmilnQXJRKQzZkEhC6S241mIW+
-         Hr7tQDR8pGzfhOPVhNePZ9s6N5UikuXZhiE6HFypOB3G7ccBjNbHvW93iWfar1povQ
-         +w4jGM6jtInQZ1Exyp1iNARZQXHC/xEzUKgtGKXYAM+JPZZdW+6H/fljWSWG1AhGEq
-         Y54G2feOsPwYzgyhKnyqGLgDuGi8/TtgblDbvJHhhB1FMiLolU0Os8H3BvOEeSqd+c
-         pY1wNG9mEYseCE8keBQiCU4V3rm+hBb4p9MUkWfxJTNbmyB3fkR
+        b=mM7HeSK30JmWukbQUIKuI0Cl2GEUFJCFs2ZECC75L37R7aiHSwNP9pF/IQ6jdEDEC
+         /zE8mOlw//h2ktkiCogMMjyGtKjNMDY3amjMn8PENcPFFfwfS555YYSFP6zxJrTXpj
+         ZfT3pZcGTIXXIEIxKECFvjNqhn6RzuhvW2KvnOCXwByWjtLRDrTASJZOuCMbf8T5DW
+         FUyAw6hkaEZwAu2PFXEDWpfqoMrEQQta+i1D2YtntLRcFkTVJfOwHD6TqNbIpdiNal
+         SGwku/3LDhZRPP5K3VDI6eqzyWcFajO0myFH8cUa2z5buYjJzcCHJv9cLozSiMx8Nd
+         4OD9IltZsFjfQVq6r6xU8/1yf5iGP6HVnVXfVhQaVwKZ55nCU0xr1zbvGHl3geyI7f
+         +dEomwBIbTlUdPwVbxWT9IgFG79FRdOuKyUudfRy2O/OoIIAtacr5FjkDdTi2pkJfb
+         SQ7aGej92/x5vA2kb0/5232K7T3T+nsTpEhlqbZrg3uL151VyBC
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     Jeff King <peff@peff.net>, Michael Haggerty <mhagger@alum.mit.edu>,
         Junio C Hamano <gitster@pobox.com>,
         Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: [PATCH v4 15/19] refs: simplify parsing of reflog entries
-Date:   Mon, 20 Feb 2017 00:10:27 +0000
-Message-Id: <20170220001031.559931-16-sandals@crustytoothpaste.net>
+Subject: [PATCH v4 05/19] builtin/fast-export: convert to struct object_id
+Date:   Mon, 20 Feb 2017 00:10:17 +0000
+Message-Id: <20170220001031.559931-6-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.11.0
 In-Reply-To: <20170220001031.559931-1-sandals@crustytoothpaste.net>
 References: <20170220001031.559931-1-sandals@crustytoothpaste.net>
@@ -48,46 +48,186 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The current code for reflog entries uses a lot of hard-coded constants,
-making it hard to read and modify.  Use parse_oid_hex and two temporary
-variables to simplify the code and reduce the use of magic constants.
+In addition to converting to struct object_id, write some hardcoded
+buffer sizes in terms of GIT_SHA1_RAWSZ.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- refs/files-backend.c | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ builtin/fast-export.c | 58 +++++++++++++++++++++++++--------------------------
+ 1 file changed, 29 insertions(+), 29 deletions(-)
 
-diff --git a/refs/files-backend.c b/refs/files-backend.c
-index d7a5fd2a7c..fea20e99fe 100644
---- a/refs/files-backend.c
-+++ b/refs/files-backend.c
-@@ -3117,12 +3117,13 @@ static int show_one_reflog_ent(struct strbuf *sb, each_reflog_ent_fn fn, void *c
- 	char *email_end, *message;
- 	unsigned long timestamp;
- 	int tz;
-+	const char *p = sb->buf;
- 
- 	/* old SP new SP name <email> SP time TAB msg LF */
--	if (sb->len < 83 || sb->buf[sb->len - 1] != '\n' ||
--	    get_oid_hex(sb->buf, &ooid) || sb->buf[40] != ' ' ||
--	    get_oid_hex(sb->buf + 41, &noid) || sb->buf[81] != ' ' ||
--	    !(email_end = strchr(sb->buf + 82, '>')) ||
-+	if (!sb->len || sb->buf[sb->len - 1] != '\n' ||
-+	    parse_oid_hex(p, &ooid, &p) || *p++ != ' ' ||
-+	    parse_oid_hex(p, &noid, &p) || *p++ != ' ' ||
-+	    !(email_end = strchr(p, '>')) ||
- 	    email_end[1] != ' ' ||
- 	    !(timestamp = strtoul(email_end + 2, &message, 10)) ||
- 	    !message || message[0] != ' ' ||
-@@ -3136,7 +3137,7 @@ static int show_one_reflog_ent(struct strbuf *sb, each_reflog_ent_fn fn, void *c
- 		message += 6;
- 	else
- 		message += 7;
--	return fn(&ooid, &noid, sb->buf + 82, timestamp, tz, message, cb_data);
-+	return fn(&ooid, &noid, p, timestamp, tz, message, cb_data);
+diff --git a/builtin/fast-export.c b/builtin/fast-export.c
+index 1e815b5577..e0220630d0 100644
+--- a/builtin/fast-export.c
++++ b/builtin/fast-export.c
+@@ -212,7 +212,7 @@ static char *anonymize_blob(unsigned long *size)
+ 	return strbuf_detach(&out, NULL);
  }
  
- static char *find_beginning_of_line(char *bob, char *scan)
+-static void export_blob(const unsigned char *sha1)
++static void export_blob(const struct object_id *oid)
+ {
+ 	unsigned long size;
+ 	enum object_type type;
+@@ -223,34 +223,34 @@ static void export_blob(const unsigned char *sha1)
+ 	if (no_data)
+ 		return;
+ 
+-	if (is_null_sha1(sha1))
++	if (is_null_oid(oid))
+ 		return;
+ 
+-	object = lookup_object(sha1);
++	object = lookup_object(oid->hash);
+ 	if (object && object->flags & SHOWN)
+ 		return;
+ 
+ 	if (anonymize) {
+ 		buf = anonymize_blob(&size);
+-		object = (struct object *)lookup_blob(sha1);
++		object = (struct object *)lookup_blob(oid->hash);
+ 		eaten = 0;
+ 	} else {
+-		buf = read_sha1_file(sha1, &type, &size);
++		buf = read_sha1_file(oid->hash, &type, &size);
+ 		if (!buf)
+-			die ("Could not read blob %s", sha1_to_hex(sha1));
+-		if (check_sha1_signature(sha1, buf, size, typename(type)) < 0)
+-			die("sha1 mismatch in blob %s", sha1_to_hex(sha1));
+-		object = parse_object_buffer(sha1, type, size, buf, &eaten);
++			die ("Could not read blob %s", oid_to_hex(oid));
++		if (check_sha1_signature(oid->hash, buf, size, typename(type)) < 0)
++			die("sha1 mismatch in blob %s", oid_to_hex(oid));
++		object = parse_object_buffer(oid->hash, type, size, buf, &eaten);
+ 	}
+ 
+ 	if (!object)
+-		die("Could not read blob %s", sha1_to_hex(sha1));
++		die("Could not read blob %s", oid_to_hex(oid));
+ 
+ 	mark_next_object(object);
+ 
+ 	printf("blob\nmark :%"PRIu32"\ndata %lu\n", last_idnum, size);
+ 	if (size && fwrite(buf, size, 1, stdout) != 1)
+-		die_errno ("Could not write blob '%s'", sha1_to_hex(sha1));
++		die_errno ("Could not write blob '%s'", oid_to_hex(oid));
+ 	printf("\n");
+ 
+ 	show_progress();
+@@ -323,19 +323,19 @@ static void print_path(const char *path)
+ 	}
+ }
+ 
+-static void *generate_fake_sha1(const void *old, size_t *len)
++static void *generate_fake_oid(const void *old, size_t *len)
+ {
+ 	static uint32_t counter = 1; /* avoid null sha1 */
+-	unsigned char *out = xcalloc(20, 1);
+-	put_be32(out + 16, counter++);
++	unsigned char *out = xcalloc(GIT_SHA1_RAWSZ, 1);
++	put_be32(out + GIT_SHA1_RAWSZ - 4, counter++);
+ 	return out;
+ }
+ 
+-static const unsigned char *anonymize_sha1(const unsigned char *sha1)
++static const unsigned char *anonymize_sha1(const struct object_id *oid)
+ {
+ 	static struct hashmap sha1s;
+-	size_t len = 20;
+-	return anonymize_mem(&sha1s, generate_fake_sha1, sha1, &len);
++	size_t len = GIT_SHA1_RAWSZ;
++	return anonymize_mem(&sha1s, generate_fake_oid, oid, &len);
+ }
+ 
+ static void show_filemodify(struct diff_queue_struct *q,
+@@ -383,7 +383,7 @@ static void show_filemodify(struct diff_queue_struct *q,
+ 			if (no_data || S_ISGITLINK(spec->mode))
+ 				printf("M %06o %s ", spec->mode,
+ 				       sha1_to_hex(anonymize ?
+-						   anonymize_sha1(spec->oid.hash) :
++						   anonymize_sha1(&spec->oid) :
+ 						   spec->oid.hash));
+ 			else {
+ 				struct object *object = lookup_object(spec->oid.hash);
+@@ -572,7 +572,7 @@ static void handle_commit(struct commit *commit, struct rev_info *rev)
+ 	/* Export the referenced blobs, and remember the marks. */
+ 	for (i = 0; i < diff_queued_diff.nr; i++)
+ 		if (!S_ISGITLINK(diff_queued_diff.queue[i]->two->mode))
+-			export_blob(diff_queued_diff.queue[i]->two->oid.hash);
++			export_blob(&diff_queued_diff.queue[i]->two->oid);
+ 
+ 	refname = commit->util;
+ 	if (anonymize) {
+@@ -797,14 +797,14 @@ static void get_tags_and_duplicates(struct rev_cmdline_info *info)
+ 
+ 	for (i = 0; i < info->nr; i++) {
+ 		struct rev_cmdline_entry *e = info->rev + i;
+-		unsigned char sha1[20];
++		struct object_id oid;
+ 		struct commit *commit;
+ 		char *full_name;
+ 
+ 		if (e->flags & UNINTERESTING)
+ 			continue;
+ 
+-		if (dwim_ref(e->name, strlen(e->name), sha1, &full_name) != 1)
++		if (dwim_ref(e->name, strlen(e->name), oid.hash, &full_name) != 1)
+ 			continue;
+ 
+ 		if (refspecs) {
+@@ -828,7 +828,7 @@ static void get_tags_and_duplicates(struct rev_cmdline_info *info)
+ 		case OBJ_COMMIT:
+ 			break;
+ 		case OBJ_BLOB:
+-			export_blob(commit->object.oid.hash);
++			export_blob(&commit->object.oid);
+ 			continue;
+ 		default: /* OBJ_TAG (nested tags) is already handled */
+ 			warning("Tag points to object of unexpected type %s, skipping.",
+@@ -912,7 +912,7 @@ static void import_marks(char *input_file)
+ 	while (fgets(line, sizeof(line), f)) {
+ 		uint32_t mark;
+ 		char *line_end, *mark_end;
+-		unsigned char sha1[20];
++		struct object_id oid;
+ 		struct object *object;
+ 		struct commit *commit;
+ 		enum object_type type;
+@@ -924,28 +924,28 @@ static void import_marks(char *input_file)
+ 
+ 		mark = strtoumax(line + 1, &mark_end, 10);
+ 		if (!mark || mark_end == line + 1
+-			|| *mark_end != ' ' || get_sha1_hex(mark_end + 1, sha1))
++			|| *mark_end != ' ' || get_oid_hex(mark_end + 1, &oid))
+ 			die("corrupt mark line: %s", line);
+ 
+ 		if (last_idnum < mark)
+ 			last_idnum = mark;
+ 
+-		type = sha1_object_info(sha1, NULL);
++		type = sha1_object_info(oid.hash, NULL);
+ 		if (type < 0)
+-			die("object not found: %s", sha1_to_hex(sha1));
++			die("object not found: %s", oid_to_hex(&oid));
+ 
+ 		if (type != OBJ_COMMIT)
+ 			/* only commits */
+ 			continue;
+ 
+-		commit = lookup_commit(sha1);
++		commit = lookup_commit(oid.hash);
+ 		if (!commit)
+-			die("not a commit? can't happen: %s", sha1_to_hex(sha1));
++			die("not a commit? can't happen: %s", oid_to_hex(&oid));
+ 
+ 		object = &commit->object;
+ 
+ 		if (object->flags & SHOWN)
+-			error("Object %s already has a mark", sha1_to_hex(sha1));
++			error("Object %s already has a mark", oid_to_hex(&oid));
+ 
+ 		mark_object(object, mark);
+ 
 -- 
 2.11.0
 
