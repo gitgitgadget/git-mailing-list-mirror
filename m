@@ -2,112 +2,152 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 04183201A9
-	for <e@80x24.org>; Tue, 21 Feb 2017 20:34:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 34035201A9
+	for <e@80x24.org>; Tue, 21 Feb 2017 20:38:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751397AbdBUUeE (ORCPT <rfc822;e@80x24.org>);
-        Tue, 21 Feb 2017 15:34:04 -0500
-Received: from mail-pg0-f66.google.com ([74.125.83.66]:35918 "EHLO
-        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751069AbdBUUeC (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Feb 2017 15:34:02 -0500
-Received: by mail-pg0-f66.google.com with SMTP id z128so1138190pgb.3
-        for <git@vger.kernel.org>; Tue, 21 Feb 2017 12:34:02 -0800 (PST)
+        id S1752427AbdBUUio (ORCPT <rfc822;e@80x24.org>);
+        Tue, 21 Feb 2017 15:38:44 -0500
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:33982 "EHLO
+        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752578AbdBUUih (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Feb 2017 15:38:37 -0500
+Received: by mail-wm0-f66.google.com with SMTP id c85so21757134wmi.1
+        for <git@vger.kernel.org>; Tue, 21 Feb 2017 12:38:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=HGMazA29BytCjbMs6s5l8+Rlxkt6U189fq2gtgq45q0=;
-        b=MDYP9LhYw+Tb9oeOmSw2XSVO/oBvqbB+C0yXXa3+cKWPmXW59LN3NK0Jho8xZ+nII7
-         ZrhwYZPCqxJbuee2jPHQVguJ8sPln/e+H28bZYCBbqhZ29rvYStpzFeA8+xL8M5d8SwV
-         frUBEghn50J4NhoL/8J90IyVElIqqs0poCyCockmB8VnFxnKWYMDqAPBIAUwvXrOhqSt
-         Sw7yhdDyn7sp6jLL3ySz/OrVvHkTw83BO0j0ppAmhfs1DSKGEq1ImFG7q/ZjOLksBvLB
-         lPcLdwv+ySOD8lRPE+94Ib9ouZKC9u2jA1rpTPJTU7MqtjYEUutrw6hqrl2PwP2ImFoQ
-         J40w==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=ke4/0tvIRphKfLFxkzQZ5/wbPlLf8HNFU/Vy2OKZzoo=;
+        b=BymU6yNMoAqzsFEi/gPAoMXnoS2Dg+AxH+/86efSmyp2ZrF4++hXGb5yBvsqqcTXGL
+         m4LrlRB+LpbWLDEPrvTL4h2aATn9F4YJ53RT02ILrq+Um8Va+83DxsUvWJxz0A04GFn2
+         teVn6Zzab9jEY8/rCuQBwEaPWpIbPljsY7cRpoSktAOdDOlBlHFLiavfGT57FdbdNU2B
+         C7Th8KEUo64zOGPjqvbHe4+09y6sVgX930p/xKZ9VCFO0EUFe4ljzesmN1JZyPYxPMmu
+         6XlDc3pcqWQ/x3v0Snob3diEb60P7snFk0crB7Upa71+px0mrn0Oyuh8wSdKKBgJd9/G
+         yJRw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=HGMazA29BytCjbMs6s5l8+Rlxkt6U189fq2gtgq45q0=;
-        b=tB/EgA+gKKw0/9NeVrTy0dhyRpFiZTrSxktAlag1ECumtrbK+sytgouKTYY9TaQ1jj
-         tPt3tMDfwehGEC1xStQalHQbNqA8afqL/Rjpx4dVOJgorJqKWcyi9vYmX1P+SKDaIpid
-         PlKwG6swDUC5DrJ0u4EW27X8cuEUEaXalvIUykA5+QSWXuo8lCocpFf/e1BN+Wjxk7JG
-         MRHb4WnY8O6iosAPYnCwNGwniUEMOiwG/qdAl2rj+eg9mQeKpFuIz0RCy8Nz2No8klDH
-         UwfNODndYg/D7tIp0GiHS8QlGIawygri04+IVC1hCQ1hLTgr65cLCTAeY/UnQY1hDmp4
-         BJ3w==
-X-Gm-Message-State: AMke39kNd/47HipsJyBNTa7NmaScm5kwLYrphLXk0I/ITTYfbXvFzJW23qu/1vOR87voRw==
-X-Received: by 10.98.160.140 with SMTP id p12mr34827783pfl.97.1487709241611;
-        Tue, 21 Feb 2017 12:34:01 -0800 (PST)
-Received: from localhost ([2620:0:1000:8622:d997:8b5d:f579:2a90])
-        by smtp.gmail.com with ESMTPSA id y67sm15651952pfa.96.2017.02.21.12.34.00
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 21 Feb 2017 12:34:00 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     "git\@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: [PATCH] config: reject invalid VAR in 'git -c VAR=VAL command'
-References: <20170215111704.78320-1-larsxschneider@gmail.com>
-        <xmqqzihn2smp.fsf@gitster.mtv.corp.google.com>
-        <f238248f-0df2-19a5-581d-95c8a61b4632@google.com>
-        <xmqqy3x712if.fsf@gitster.mtv.corp.google.com>
-        <xmqqtw7v123n.fsf@gitster.mtv.corp.google.com>
-        <xmqqa89n10df.fsf_-_@gitster.mtv.corp.google.com>
-        <D0CDD1AC-05CA-47F3-8CB5-61EA1C6515A8@gmail.com>
-        <20170216232730.xsx3xks5ppjws5rg@sigill.intra.peff.net>
-        <xmqqwpcptxps.fsf@gitster.mtv.corp.google.com>
-        <xmqqino5jia8.fsf@gitster.mtv.corp.google.com>
-        <xmqq37f7gyuj.fsf_-_@gitster.mtv.corp.google.com>
-        <CAGZ79kbR2QQyYO1dnQ0jW3-ztKEFj1MtJfDqEc0xoftMFeN=WA@mail.gmail.com>
-Date:   Tue, 21 Feb 2017 12:33:59 -0800
-In-Reply-To: <CAGZ79kbR2QQyYO1dnQ0jW3-ztKEFj1MtJfDqEc0xoftMFeN=WA@mail.gmail.com>
-        (Stefan Beller's message of "Tue, 21 Feb 2017 11:15:52 -0800")
-Message-ID: <xmqqlgszffm0.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=ke4/0tvIRphKfLFxkzQZ5/wbPlLf8HNFU/Vy2OKZzoo=;
+        b=ILtFUyIApub3imiaC8VoiNRpReWqCCXc7rIsw36myqJHymGqDO1GWupFYSEneDyzUo
+         uN63TFwYUbpRyoanGMr2U7+TI/Njcr6aq1e7oBEtpVjL+nkR+B35+l1Af9dbNray5X4W
+         Zy5IEOQCDBgqbDy/34KSZDK20Z3G2Mlh/24ERaxHCGiXrHuaof8lgmidNv79nkwSPOEw
+         jOEYROKDZngAQ5YDz/h6A0jQjqC21aqAloEZBk9hq8jLqpxTScKU/a7YOZqdR6m7mmBn
+         I4Hdr1qTqeAClXENAUR0EJNySVVmNrFYDnVqZAG9Ew/WqtuJrLfC0ST8tTLZf/X/zA1r
+         tRTw==
+X-Gm-Message-State: AMke39lWuEfwFgRsj9P+h5/ST1JnQc4kilP7lyQbqheh8n06wEbi7eDaDj1YdAIcnQ0OXA==
+X-Received: by 10.28.67.134 with SMTP id q128mr26421581wma.34.1487709504947;
+        Tue, 21 Feb 2017 12:38:24 -0800 (PST)
+Received: from hobo (139.14.90.146.dyn.plus.net. [146.90.14.139])
+        by smtp.gmail.com with ESMTPSA id s17sm30284762wrc.6.2017.02.21.12.38.24
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Tue, 21 Feb 2017 12:38:24 -0800 (PST)
+Date:   Tue, 21 Feb 2017 20:38:36 +0000
+From:   Ross Lagerwall <rosslagerwall@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] remote: Ignore failure to remove missing
+ branch.<name>.merge
+Message-ID: <20170221203836.GA11736@hobo.lan>
+References: <20170218002341.23099-1-rosslagerwall@gmail.com>
+ <xmqqtw7nfift.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqtw7nfift.fsf@gitster.mtv.corp.google.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
+On Tue, Feb 21, 2017 at 11:32:54AM -0800, Junio C Hamano wrote:
+> Ross Lagerwall <rosslagerwall@gmail.com> writes:
+> 
+> > If a branch is configured with a default remote but no
+> > branch.<name>.merge and then the remote is removed, git fails to remove
+> > the remote with:
+> > "fatal: could not unset 'branch.<name>.merge'"
+> >
+> > Instead, ignore this since it is not an error and shouldn't prevent the
+> > remote from being removed.
+> >
+> > Signed-off-by: Ross Lagerwall <rosslagerwall@gmail.com>
+> > ---
+> 
+> I was waiting for others to comment on this patch but nobody seems
+> to be interested.  Which is a bit sad, because except for minor
+> nits, this patch is very well done.
+> 
+> The explanation of the motivation and solution in the proposed log
+> message is excellent.  It would have been perfect if you described
+> HOW you get into a state where branch.<name>.remote is pointing at
+> the remote being removed, without having branch.<name>.merge in the
+> first place, but even if such a state is invalid or unplausible,
+> removing the remote should be a usable way to recover from such a
+> situation.
 
-> Combining this thought with another email[1] that flew by,
-> do we also need to have this treatment for "git clone -c"
+I got into this situation by setting branch.<name>.remote directly.  I
+was using push.default=current, and wanted a bare "git push" on the
+branch to push to a different remote from origin (which it defaults to).
+Configuring branch.<name>.remote made git do the right thing.
 
-You tell me ;-) 
+Perhaps what I did was invalid, I'm not sure, but it achieved what I
+wanted.
 
-Do we share the same parser?  If not, should we make them share the
-same code?
+> 
+> And the proposed solution in the diff seems to correctly implement
+> what the description of the solution in the log message (modulo a
+> minor nit).
+> 
+> >  builtin/remote.c | 4 +++-
+> >  1 file changed, 3 insertions(+), 1 deletion(-)
+> >
+> > diff --git a/builtin/remote.c b/builtin/remote.c
+> > index e52cf3925..5dd22c2eb 100644
+> > --- a/builtin/remote.c
+> > +++ b/builtin/remote.c
+> > @@ -769,7 +769,9 @@ static int rm(int argc, const char **argv)
+> >  				strbuf_reset(&buf);
+> >  				strbuf_addf(&buf, "branch.%s.%s",
+> >  						item->string, *k);
+> > -				git_config_set(buf.buf, NULL);
+> > +				result = git_config_set_gently(buf.buf, NULL);
+> > +				if (result && result != CONFIG_NOTHING_SET)
+> > +					die(_("COULd not unset '%s'"), buf.buf);
+> 
+> With s/COUL/coul/, the result would be more in line with our
+> existing practice.
 
->> +for VAR in a .a a. a.0b a."b c". a."b c".0d
->> +do
->> +       test_expect_success "git -c $VAR=VAL rejects invalid '$VAR'" '
->> +               test_must_fail git -c $VAR=VAL config -l
->> +       '
->> +done
->> +
->>  test_expect_success 'git -c is not confused by empty environment' '
->>         GIT_CONFIG_PARAMETERS="" git -c x.one=1 config --list
->
-> Do we also want to test obscure cases of expected success?
-> e.g. I suspect we never use a."b c".d in the test suite elsewhere but it
-> would be a valid key to be handed to git?
+Oops. That's what I get for coding when I should have been sleeping.
 
-I wasn't aiming for anything obscure (and a."b c".d is not at all
-obscure); as the new tests like "git -c V.a.R config --get V.A.R"
-added in the previous step makes sure that the second level is not
-molested and passed as is, so it is less urgent to see what can and
-cannot come at the second level.
+> 
+> >  			}
+> >  		}
+> >  	}
+> 
+> We do want an additional test so that this fix will not be broken
+> again in the future by mistake, perhaps in t5505.
+> 
+> As it is unclear to me how you got into a state where branch.*.remote
+> exists without branch.*.merge, the attached patch to the test manually
+> removes it, which probably falls into a "deliberate sabotage" category.
+> If there are a valid sequence of operations that leads to such a state
+> without being a deliberate sabotage, we should use it instead in the
+> real test.
+> 
 
-I didn't check if the existing coverage was sufficient, but we
-certainly should test that three-level names with non-alpha and
-non-keychar letters in the second are allowed in the overall "git
-config" test, not limited to the case where the configuration comes
-on a one-shot command line but from files.  I tend to think that is
-a separate issue, though.
+See my explanation above. I wouldn't call it "deliberate sabotage", but
+rather using config knobs in unexpected ways.
+
+The test case looks reasonable. Do you want me to resend a patch with
+the test case included (and nit fixed), or will you fix it up?
+
+Thanks,
+-- 
+Ross Lagerwall
