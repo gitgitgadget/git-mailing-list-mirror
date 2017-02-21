@@ -6,40 +6,40 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0D918201A9
-	for <e@80x24.org>; Tue, 21 Feb 2017 23:48:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 20DB3201A9
+	for <e@80x24.org>; Tue, 21 Feb 2017 23:48:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753580AbdBUXsX (ORCPT <rfc822;e@80x24.org>);
-        Tue, 21 Feb 2017 18:48:23 -0500
-Received: from castro.crustytoothpaste.net ([75.10.60.170]:39886 "EHLO
+        id S1753599AbdBUXs1 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 21 Feb 2017 18:48:27 -0500
+Received: from castro.crustytoothpaste.net ([75.10.60.170]:39884 "EHLO
         castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1753427AbdBUXry (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 21 Feb 2017 18:47:54 -0500
+        by vger.kernel.org with ESMTP id S1753491AbdBUXrx (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 21 Feb 2017 18:47:53 -0500
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id C2BCB280B8;
-        Tue, 21 Feb 2017 23:47:44 +0000 (UTC)
+        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 853D6280BE;
+        Tue, 21 Feb 2017 23:47:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
-        s=default; t=1487720864;
-        bh=+h+9VqLVJR8nAQGXsxteIiLpSIw0Ib10zPysaAmHmAM=;
+        s=default; t=1487720866;
+        bh=1m2xuC0c2/f5SxCvdnUWGHVWHYwOcVydZPd7tuNoD0s=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=FVLOoSVi2h031oj7dXlDTxv/muh4gp/zzTJyaKQi/R3yS34iMaxAHxiCPF90Brbjg
-         6YiMOSLqyPHuw3T+a9cxXJp3qjXArX4zZ0TT2l3os9eBQuI2+ojofDcHZHRuEQd7Pg
-         Cs7qyNabIA5ak0ywmEZMtsxE+owmAWEIrK6HvsQmoac34AcNaHpG6lE2eln2OADl3U
-         MiGtsXhO3y9mhMOnmEwFCCvnt7nW8GoFe4OUQg+0Dl5GaO4HYB6QY57AtwdZnIOrVK
-         5KueirejF/x8U+R2oUDi2UBx7vFw4y+YtBI0LgFvsoo7KJ8bth2HVwTNdbQjhKdW7S
-         S/QHILtLgm8kEOeGrsNcTdohYM+s5nD4NSAVD7dY+PTPN+E1u1eWF1awcCzLgu+JQ3
-         5eBwUbA3RIbinKDcb5iwOVPWbir7W19ASDgoFxjuPqrDZ+5w5OZRFA9J1UEDs15R6/
-         QgwBoC4gQPGucTeEyJ/DqtDjtQ28sLXvon8IRYQWnvyWkwml5DA
+        b=FC1VinpLvgVpc1UjCqZs9OqVajXXyOyYrZ5Q0P0hOb/t3ED3IZmOcm8FSYWuwXigd
+         FQUhIUNJIEJ1J6+tlIJXjgi1gXLdqcZ3014D7+3CfNl8BUkMTh0/rZI0iujxByf54B
+         LnDx7JXhxJDsVacPDRSHO9qMLpcXNg62NsDRBm2lndfqhzAYJV2wsk8+IFWYa7B0RC
+         i3DtVoCGvF4CeVG9MsmrKBmmlsnS/MflX652IdxoQcDXbbjZ8pln6CU7hisZvJeSLe
+         NzpN9h7aEEgj7P9ipzPkDA2iTQOde7yZ7UxcFm3TxPjD0tFSKw5SxY0vHgISUvj6mo
+         z4jKCuh5AxggJTceK09P/5LNXwjG5u/AMuhyc2h8uhMcr3pE/iedZvFyj6YBEGFsIy
+         rEZU1pEEKxvYsklQ+quUpYSeAaOQwUSX1opj0Dxxf2sd3+BW5z0aHdV3phj/8vVjKK
+         H1bPSGcCkUy3v4+6sY9TrahTBC2+Wf6nwAWMXZsWpJYvZM6T4d9
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     Jeff King <peff@peff.net>, Michael Haggerty <mhagger@alum.mit.edu>,
         Junio C Hamano <gitster@pobox.com>,
         Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: [PATCH v5 11/19] Convert remaining callers of resolve_refdup to object_id
-Date:   Tue, 21 Feb 2017 23:47:29 +0000
-Message-Id: <20170221234737.894681-12-sandals@crustytoothpaste.net>
+Subject: [PATCH v5 17/19] Convert object iteration callbacks to struct object_id
+Date:   Tue, 21 Feb 2017 23:47:35 +0000
+Message-Id: <20170221234737.894681-18-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.11.0
 In-Reply-To: <20170221234737.894681-1-sandals@crustytoothpaste.net>
 References: <20170221234737.894681-1-sandals@crustytoothpaste.net>
@@ -48,197 +48,374 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-There are a few leaf functions in various files that call
-resolve_refdup.  Convert these functions to use struct object_id
-internally to prepare for transitioning resolve_refdup itself.
+Convert each_loose_object_fn and each_packed_object_fn to take a pointer
+to struct object_id.  Update the various callbacks.  Convert several
+40-based constants to use GIT_SHA1_HEXSZ.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- builtin/notes.c        | 18 +++++++++---------
- builtin/receive-pack.c |  4 ++--
- ref-filter.c           |  4 ++--
- reflog-walk.c          | 12 ++++++------
- transport.c            |  4 ++--
- wt-status.c            |  4 ++--
- 6 files changed, 23 insertions(+), 23 deletions(-)
+ builtin/cat-file.c      |  8 ++++----
+ builtin/count-objects.c |  4 ++--
+ builtin/fsck.c          | 24 ++++++++++++------------
+ builtin/pack-objects.c  |  6 +++---
+ builtin/prune-packed.c  |  4 ++--
+ builtin/prune.c         |  8 ++++----
+ cache.h                 |  4 ++--
+ reachable.c             | 30 +++++++++++++++---------------
+ sha1_file.c             | 12 ++++++------
+ 9 files changed, 50 insertions(+), 50 deletions(-)
 
-diff --git a/builtin/notes.c b/builtin/notes.c
-index 5248a9bad8..8c569a49a0 100644
---- a/builtin/notes.c
-+++ b/builtin/notes.c
-@@ -693,7 +693,7 @@ static int merge_abort(struct notes_merge_options *o)
- static int merge_commit(struct notes_merge_options *o)
+diff --git a/builtin/cat-file.c b/builtin/cat-file.c
+index 30383e9eb4..8b85cb8cf0 100644
+--- a/builtin/cat-file.c
++++ b/builtin/cat-file.c
+@@ -409,20 +409,20 @@ static int batch_object_cb(const unsigned char sha1[20], void *vdata)
+ 	return 0;
+ }
+ 
+-static int batch_loose_object(const unsigned char *sha1,
++static int batch_loose_object(const struct object_id *oid,
+ 			      const char *path,
+ 			      void *data)
  {
- 	struct strbuf msg = STRBUF_INIT;
--	unsigned char sha1[20], parent_sha1[20];
-+	struct object_id oid, parent_oid;
- 	struct notes_tree *t;
- 	struct commit *partial;
- 	struct pretty_print_context pretty_ctx;
-@@ -705,27 +705,27 @@ static int merge_commit(struct notes_merge_options *o)
- 	 * and target notes ref from .git/NOTES_MERGE_REF.
- 	 */
+-	sha1_array_append(data, sha1);
++	sha1_array_append(data, oid->hash);
+ 	return 0;
+ }
  
--	if (get_sha1("NOTES_MERGE_PARTIAL", sha1))
-+	if (get_oid("NOTES_MERGE_PARTIAL", &oid))
- 		die(_("failed to read ref NOTES_MERGE_PARTIAL"));
--	else if (!(partial = lookup_commit_reference(sha1)))
-+	else if (!(partial = lookup_commit_reference(oid.hash)))
- 		die(_("could not find commit from NOTES_MERGE_PARTIAL."));
- 	else if (parse_commit(partial))
- 		die(_("could not parse commit from NOTES_MERGE_PARTIAL."));
- 
- 	if (partial->parents)
--		hashcpy(parent_sha1, partial->parents->item->object.oid.hash);
-+		oidcpy(&parent_oid, &partial->parents->item->object.oid);
- 	else
--		hashclr(parent_sha1);
-+		oidclr(&parent_oid);
- 
- 	t = xcalloc(1, sizeof(struct notes_tree));
- 	init_notes(t, "NOTES_MERGE_PARTIAL", combine_notes_overwrite, 0);
- 
- 	o->local_ref = local_ref_to_free =
--		resolve_refdup("NOTES_MERGE_REF", 0, sha1, NULL);
-+		resolve_refdup("NOTES_MERGE_REF", 0, oid.hash, NULL);
- 	if (!o->local_ref)
- 		die(_("failed to resolve NOTES_MERGE_REF"));
- 
--	if (notes_merge_commit(o, t, partial, sha1))
-+	if (notes_merge_commit(o, t, partial, oid.hash))
- 		die(_("failed to finalize notes merge"));
- 
- 	/* Reuse existing commit message in reflog message */
-@@ -733,8 +733,8 @@ static int merge_commit(struct notes_merge_options *o)
- 	format_commit_message(partial, "%s", &msg, &pretty_ctx);
- 	strbuf_trim(&msg);
- 	strbuf_insert(&msg, 0, "notes: ", 7);
--	update_ref(msg.buf, o->local_ref, sha1,
--		   is_null_sha1(parent_sha1) ? NULL : parent_sha1,
-+	update_ref(msg.buf, o->local_ref, oid.hash,
-+		   is_null_oid(&parent_oid) ? NULL : parent_oid.hash,
- 		   0, UPDATE_REFS_DIE_ON_ERR);
- 
- 	free_notes(t);
-diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index 1dbb8a0692..7966f4f4df 100644
---- a/builtin/receive-pack.c
-+++ b/builtin/receive-pack.c
-@@ -1414,7 +1414,7 @@ static void execute_commands(struct command *commands,
+-static int batch_packed_object(const unsigned char *sha1,
++static int batch_packed_object(const struct object_id *oid,
+ 			       struct packed_git *pack,
+ 			       uint32_t pos,
+ 			       void *data)
  {
- 	struct check_connected_options opt = CHECK_CONNECTED_INIT;
- 	struct command *cmd;
--	unsigned char sha1[20];
-+	struct object_id oid;
- 	struct iterate_data data;
- 	struct async muxer;
- 	int err_fd = 0;
-@@ -1471,7 +1471,7 @@ static void execute_commands(struct command *commands,
- 	check_aliased_updates(commands);
+-	sha1_array_append(data, sha1);
++	sha1_array_append(data, oid->hash);
+ 	return 0;
+ }
  
- 	free(head_name_to_free);
--	head_name = head_name_to_free = resolve_refdup("HEAD", 0, sha1, NULL);
-+	head_name = head_name_to_free = resolve_refdup("HEAD", 0, oid.hash, NULL);
+diff --git a/builtin/count-objects.c b/builtin/count-objects.c
+index a04b4f2ef3..acb05940fc 100644
+--- a/builtin/count-objects.c
++++ b/builtin/count-objects.c
+@@ -53,7 +53,7 @@ static void loose_garbage(const char *path)
+ 		report_garbage(PACKDIR_FILE_GARBAGE, path);
+ }
  
- 	if (use_atomic)
- 		execute_commands_atomic(commands, si);
-diff --git a/ref-filter.c b/ref-filter.c
-index 3820b21cc7..f0de30e2ef 100644
---- a/ref-filter.c
-+++ b/ref-filter.c
-@@ -961,9 +961,9 @@ static void populate_value(struct ref_array_item *ref)
- 	ref->value = xcalloc(used_atom_cnt, sizeof(struct atom_value));
+-static int count_loose(const unsigned char *sha1, const char *path, void *data)
++static int count_loose(const struct object_id *oid, const char *path, void *data)
+ {
+ 	struct stat st;
  
- 	if (need_symref && (ref->flag & REF_ISSYMREF) && !ref->symref) {
--		unsigned char unused1[20];
-+		struct object_id unused1;
- 		ref->symref = resolve_refdup(ref->refname, RESOLVE_REF_READING,
--					     unused1, NULL);
-+					     unused1.hash, NULL);
- 		if (!ref->symref)
- 			ref->symref = "";
- 	}
-diff --git a/reflog-walk.c b/reflog-walk.c
-index a246af2767..f98748e2ae 100644
---- a/reflog-walk.c
-+++ b/reflog-walk.c
-@@ -45,11 +45,11 @@ static struct complete_reflogs *read_complete_reflog(const char *ref)
- 	reflogs->ref = xstrdup(ref);
- 	for_each_reflog_ent(ref, read_one_reflog, reflogs);
- 	if (reflogs->nr == 0) {
--		unsigned char sha1[20];
-+		struct object_id oid;
- 		const char *name;
- 		void *name_to_free;
- 		name = name_to_free = resolve_refdup(ref, RESOLVE_REF_READING,
--						     sha1, NULL);
-+						     oid.hash, NULL);
- 		if (name) {
- 			for_each_reflog_ent(name, read_one_reflog, reflogs);
- 			free(name_to_free);
-@@ -172,18 +172,18 @@ int add_reflog_for_walk(struct reflog_walk_info *info,
- 		reflogs = item->util;
+@@ -62,7 +62,7 @@ static int count_loose(const unsigned char *sha1, const char *path, void *data)
  	else {
- 		if (*branch == '\0') {
--			unsigned char sha1[20];
-+			struct object_id oid;
- 			free(branch);
--			branch = resolve_refdup("HEAD", 0, sha1, NULL);
-+			branch = resolve_refdup("HEAD", 0, oid.hash, NULL);
- 			if (!branch)
- 				die ("No current branch");
+ 		loose_size += on_disk_bytes(st);
+ 		loose++;
+-		if (verbose && has_sha1_pack(sha1))
++		if (verbose && has_sha1_pack(oid->hash))
+ 			packed_loose++;
+ 	}
+ 	return 0;
+diff --git a/builtin/fsck.c b/builtin/fsck.c
+index 9b37606858..f76e4163ab 100644
+--- a/builtin/fsck.c
++++ b/builtin/fsck.c
+@@ -491,7 +491,7 @@ static void get_default_heads(void)
+ 	}
+ }
  
- 		}
- 		reflogs = read_complete_reflog(branch);
- 		if (!reflogs || reflogs->nr == 0) {
--			unsigned char sha1[20];
-+			struct object_id oid;
- 			char *b;
--			if (dwim_log(branch, strlen(branch), sha1, &b) == 1) {
-+			if (dwim_log(branch, strlen(branch), oid.hash, &b) == 1) {
- 				if (reflogs) {
- 					free(reflogs->ref);
- 					free(reflogs);
-diff --git a/transport.c b/transport.c
-index d72e089484..141af31e8e 100644
---- a/transport.c
-+++ b/transport.c
-@@ -467,11 +467,11 @@ void transport_print_push_status(const char *dest, struct ref *refs,
+-static struct object *parse_loose_object(const unsigned char *sha1,
++static struct object *parse_loose_object(const struct object_id *oid,
+ 					 const char *path)
  {
- 	struct ref *ref;
- 	int n = 0;
--	unsigned char head_sha1[20];
-+	struct object_id head_oid;
- 	char *head;
- 	int summary_width = transport_summary_width(refs);
+ 	struct object *obj;
+@@ -500,27 +500,27 @@ static struct object *parse_loose_object(const unsigned char *sha1,
+ 	unsigned long size;
+ 	int eaten;
  
--	head = resolve_refdup("HEAD", RESOLVE_REF_READING, head_sha1, NULL);
-+	head = resolve_refdup("HEAD", RESOLVE_REF_READING, head_oid.hash, NULL);
+-	if (read_loose_object(path, sha1, &type, &size, &contents) < 0)
++	if (read_loose_object(path, oid->hash, &type, &size, &contents) < 0)
+ 		return NULL;
  
- 	if (verbose) {
- 		for (ref = refs; ref; ref = ref->next)
-diff --git a/wt-status.c b/wt-status.c
-index d47012048f..0ec090a338 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -121,7 +121,7 @@ static void status_printf_more(struct wt_status *s, const char *color,
+ 	if (!contents && type != OBJ_BLOB)
+ 		die("BUG: read_loose_object streamed a non-blob");
  
- void wt_status_prepare(struct wt_status *s)
+-	obj = parse_object_buffer(sha1, type, size, contents, &eaten);
++	obj = parse_object_buffer(oid->hash, type, size, contents, &eaten);
+ 
+ 	if (!eaten)
+ 		free(contents);
+ 	return obj;
+ }
+ 
+-static int fsck_loose(const unsigned char *sha1, const char *path, void *data)
++static int fsck_loose(const struct object_id *oid, const char *path, void *data)
  {
--	unsigned char sha1[20];
-+	struct object_id oid;
+-	struct object *obj = parse_loose_object(sha1, path);
++	struct object *obj = parse_loose_object(oid, path);
  
- 	memset(s, 0, sizeof(*s));
- 	memcpy(s->color_palette, default_wt_status_colors,
-@@ -129,7 +129,7 @@ void wt_status_prepare(struct wt_status *s)
- 	s->show_untracked_files = SHOW_NORMAL_UNTRACKED_FILES;
- 	s->use_color = -1;
- 	s->relative_paths = 1;
--	s->branch = resolve_refdup("HEAD", 0, sha1, NULL);
-+	s->branch = resolve_refdup("HEAD", 0, oid.hash, NULL);
- 	s->reference = "HEAD";
- 	s->fp = stdout;
- 	s->index_file = get_index_file();
+ 	if (!obj) {
+ 		errors_found |= ERROR_OBJECT;
+ 		error("%s: object corrupt or missing: %s",
+-		      sha1_to_hex(sha1), path);
++		      oid_to_hex(oid), path);
+ 		return 0; /* keep checking other objects */
+ 	}
+ 
+@@ -619,26 +619,26 @@ static int fsck_cache_tree(struct cache_tree *it)
+ 	return err;
+ }
+ 
+-static void mark_object_for_connectivity(const unsigned char *sha1)
++static void mark_object_for_connectivity(const struct object_id *oid)
+ {
+-	struct object *obj = lookup_unknown_object(sha1);
++	struct object *obj = lookup_unknown_object(oid->hash);
+ 	obj->flags |= HAS_OBJ;
+ }
+ 
+-static int mark_loose_for_connectivity(const unsigned char *sha1,
++static int mark_loose_for_connectivity(const struct object_id *oid,
+ 				       const char *path,
+ 				       void *data)
+ {
+-	mark_object_for_connectivity(sha1);
++	mark_object_for_connectivity(oid);
+ 	return 0;
+ }
+ 
+-static int mark_packed_for_connectivity(const unsigned char *sha1,
++static int mark_packed_for_connectivity(const struct object_id *oid,
+ 					struct packed_git *pack,
+ 					uint32_t pos,
+ 					void *data)
+ {
+-	mark_object_for_connectivity(sha1);
++	mark_object_for_connectivity(oid);
+ 	return 0;
+ }
+ 
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index 8841f8b366..6e7c3a6575 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -2534,17 +2534,17 @@ static void add_objects_in_unpacked_packs(struct rev_info *revs)
+ 	free(in_pack.array);
+ }
+ 
+-static int add_loose_object(const unsigned char *sha1, const char *path,
++static int add_loose_object(const struct object_id *oid, const char *path,
+ 			    void *data)
+ {
+-	enum object_type type = sha1_object_info(sha1, NULL);
++	enum object_type type = sha1_object_info(oid->hash, NULL);
+ 
+ 	if (type < 0) {
+ 		warning("loose object at %s could not be examined", path);
+ 		return 0;
+ 	}
+ 
+-	add_object_entry(sha1, type, "", 0);
++	add_object_entry(oid->hash, type, "", 0);
+ 	return 0;
+ }
+ 
+diff --git a/builtin/prune-packed.c b/builtin/prune-packed.c
+index 7cf900ea07..c026299e78 100644
+--- a/builtin/prune-packed.c
++++ b/builtin/prune-packed.c
+@@ -19,12 +19,12 @@ static int prune_subdir(int nr, const char *path, void *data)
+ 	return 0;
+ }
+ 
+-static int prune_object(const unsigned char *sha1, const char *path,
++static int prune_object(const struct object_id *oid, const char *path,
+ 			 void *data)
+ {
+ 	int *opts = data;
+ 
+-	if (!has_sha1_pack(sha1))
++	if (!has_sha1_pack(oid->hash))
+ 		return 0;
+ 
+ 	if (*opts & PRUNE_PACKED_DRY_RUN)
+diff --git a/builtin/prune.c b/builtin/prune.c
+index 8f4f052285..42633e0c6e 100644
+--- a/builtin/prune.c
++++ b/builtin/prune.c
+@@ -30,7 +30,7 @@ static int prune_tmp_file(const char *fullpath)
+ 	return 0;
+ }
+ 
+-static int prune_object(const unsigned char *sha1, const char *fullpath,
++static int prune_object(const struct object_id *oid, const char *fullpath,
+ 			void *data)
+ {
+ 	struct stat st;
+@@ -39,7 +39,7 @@ static int prune_object(const unsigned char *sha1, const char *fullpath,
+ 	 * Do we know about this object?
+ 	 * It must have been reachable
+ 	 */
+-	if (lookup_object(sha1))
++	if (lookup_object(oid->hash))
+ 		return 0;
+ 
+ 	if (lstat(fullpath, &st)) {
+@@ -50,8 +50,8 @@ static int prune_object(const unsigned char *sha1, const char *fullpath,
+ 	if (st.st_mtime > expire)
+ 		return 0;
+ 	if (show_only || verbose) {
+-		enum object_type type = sha1_object_info(sha1, NULL);
+-		printf("%s %s\n", sha1_to_hex(sha1),
++		enum object_type type = sha1_object_info(oid->hash, NULL);
++		printf("%s %s\n", oid_to_hex(oid),
+ 		       (type > 0) ? typename(type) : "unknown");
+ 	}
+ 	if (!show_only)
+diff --git a/cache.h b/cache.h
+index 29e59cbb56..724e905f7a 100644
+--- a/cache.h
++++ b/cache.h
+@@ -1655,7 +1655,7 @@ extern int unpack_object_header(struct packed_git *, struct pack_window **, off_
+  * scratch buffer, but restored to its original contents before
+  * the function returns.
+  */
+-typedef int each_loose_object_fn(const unsigned char *sha1,
++typedef int each_loose_object_fn(const struct object_id *oid,
+ 				 const char *path,
+ 				 void *data);
+ typedef int each_loose_cruft_fn(const char *basename,
+@@ -1681,7 +1681,7 @@ int for_each_loose_file_in_objdir_buf(struct strbuf *path,
+  * LOCAL_ONLY flag is set).
+  */
+ #define FOR_EACH_OBJECT_LOCAL_ONLY 0x1
+-typedef int each_packed_object_fn(const unsigned char *sha1,
++typedef int each_packed_object_fn(const struct object_id *oid,
+ 				  struct packed_git *pack,
+ 				  uint32_t pos,
+ 				  void *data);
+diff --git a/reachable.c b/reachable.c
+index d0199cace4..a8a979bd4f 100644
+--- a/reachable.c
++++ b/reachable.c
+@@ -58,7 +58,7 @@ struct recent_data {
+ 	unsigned long timestamp;
+ };
+ 
+-static void add_recent_object(const unsigned char *sha1,
++static void add_recent_object(const struct object_id *oid,
+ 			      unsigned long mtime,
+ 			      struct recent_data *data)
+ {
+@@ -75,37 +75,37 @@ static void add_recent_object(const unsigned char *sha1,
+ 	 * later processing, and the revision machinery expects
+ 	 * commits and tags to have been parsed.
+ 	 */
+-	type = sha1_object_info(sha1, NULL);
++	type = sha1_object_info(oid->hash, NULL);
+ 	if (type < 0)
+-		die("unable to get object info for %s", sha1_to_hex(sha1));
++		die("unable to get object info for %s", oid_to_hex(oid));
+ 
+ 	switch (type) {
+ 	case OBJ_TAG:
+ 	case OBJ_COMMIT:
+-		obj = parse_object_or_die(sha1, NULL);
++		obj = parse_object_or_die(oid->hash, NULL);
+ 		break;
+ 	case OBJ_TREE:
+-		obj = (struct object *)lookup_tree(sha1);
++		obj = (struct object *)lookup_tree(oid->hash);
+ 		break;
+ 	case OBJ_BLOB:
+-		obj = (struct object *)lookup_blob(sha1);
++		obj = (struct object *)lookup_blob(oid->hash);
+ 		break;
+ 	default:
+ 		die("unknown object type for %s: %s",
+-		    sha1_to_hex(sha1), typename(type));
++		    oid_to_hex(oid), typename(type));
+ 	}
+ 
+ 	if (!obj)
+-		die("unable to lookup %s", sha1_to_hex(sha1));
++		die("unable to lookup %s", oid_to_hex(oid));
+ 
+ 	add_pending_object(data->revs, obj, "");
+ }
+ 
+-static int add_recent_loose(const unsigned char *sha1,
++static int add_recent_loose(const struct object_id *oid,
+ 			    const char *path, void *data)
+ {
+ 	struct stat st;
+-	struct object *obj = lookup_object(sha1);
++	struct object *obj = lookup_object(oid->hash);
+ 
+ 	if (obj && obj->flags & SEEN)
+ 		return 0;
+@@ -119,22 +119,22 @@ static int add_recent_loose(const unsigned char *sha1,
+ 		 */
+ 		if (errno == ENOENT)
+ 			return 0;
+-		return error_errno("unable to stat %s", sha1_to_hex(sha1));
++		return error_errno("unable to stat %s", oid_to_hex(oid));
+ 	}
+ 
+-	add_recent_object(sha1, st.st_mtime, data);
++	add_recent_object(oid, st.st_mtime, data);
+ 	return 0;
+ }
+ 
+-static int add_recent_packed(const unsigned char *sha1,
++static int add_recent_packed(const struct object_id *oid,
+ 			     struct packed_git *p, uint32_t pos,
+ 			     void *data)
+ {
+-	struct object *obj = lookup_object(sha1);
++	struct object *obj = lookup_object(oid->hash);
+ 
+ 	if (obj && obj->flags & SEEN)
+ 		return 0;
+-	add_recent_object(sha1, p->mtime, data);
++	add_recent_object(oid, p->mtime, data);
+ 	return 0;
+ }
+ 
+diff --git a/sha1_file.c b/sha1_file.c
+index 777b8e8eae..6b74c7d3bc 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -3685,15 +3685,15 @@ static int for_each_file_in_obj_subdir(int subdir_nr,
+ 		strbuf_setlen(path, baselen);
+ 		strbuf_addf(path, "/%s", de->d_name);
+ 
+-		if (strlen(de->d_name) == 38)  {
+-			char hex[41];
+-			unsigned char sha1[20];
++		if (strlen(de->d_name) == GIT_SHA1_HEXSZ - 2)  {
++			char hex[GIT_SHA1_HEXSZ+1];
++			struct object_id oid;
+ 
+ 			snprintf(hex, sizeof(hex), "%02x%s",
+ 				 subdir_nr, de->d_name);
+-			if (!get_sha1_hex(hex, sha1)) {
++			if (!get_oid_hex(hex, &oid)) {
+ 				if (obj_cb) {
+-					r = obj_cb(sha1, path->buf, data);
++					r = obj_cb(&oid, path->buf, data);
+ 					if (r)
+ 						break;
+ 				}
+@@ -3805,7 +3805,7 @@ static int for_each_object_in_pack(struct packed_git *p, each_packed_object_fn c
+ 			return error("unable to get sha1 of object %u in %s",
+ 				     i, p->pack_name);
+ 
+-		r = cb(oid.hash, p, i, data);
++		r = cb(&oid, p, i, data);
+ 		if (r)
+ 			break;
+ 	}
 -- 
 2.11.0
 
