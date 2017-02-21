@@ -2,92 +2,221 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6DD65201B0
-	for <e@80x24.org>; Tue, 21 Feb 2017 18:20:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EB629201B0
+	for <e@80x24.org>; Tue, 21 Feb 2017 18:56:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754689AbdBUSUA (ORCPT <rfc822;e@80x24.org>);
-        Tue, 21 Feb 2017 13:20:00 -0500
-Received: from mail-it0-f50.google.com ([209.85.214.50]:35263 "EHLO
-        mail-it0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752631AbdBUSTy (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Feb 2017 13:19:54 -0500
-Received: by mail-it0-f50.google.com with SMTP id 203so120483402ith.0
-        for <git@vger.kernel.org>; Tue, 21 Feb 2017 10:19:53 -0800 (PST)
+        id S1753328AbdBUSyr (ORCPT <rfc822;e@80x24.org>);
+        Tue, 21 Feb 2017 13:54:47 -0500
+Received: from mail-pg0-f66.google.com ([74.125.83.66]:33092 "EHLO
+        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751358AbdBUSxL (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Feb 2017 13:53:11 -0500
+Received: by mail-pg0-f66.google.com with SMTP id 5so19527217pgj.0
+        for <git@vger.kernel.org>; Tue, 21 Feb 2017 10:53:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=xiaQd1J1Iew9r8FywXmyT6JbyYTDwIfeasl63ttJnkQ=;
-        b=j0lc3RdSJLy+5YOYISjtpTypaR6QZ7o7SI2O4TtcLe7Dd4zBaN6mVErYbQPMnBBF3O
-         pB3WlBT6KFGnhI2TO0/pNPf0/iI0u90cEqJL2MJjlxBvflhlDgZf6IcQZlXNIp3U/upL
-         C7laipAJ840E5zW+n2+veVB/dBfGDGHK18hNHKCHE5pZ/hFPStO3Ua3RXnyORcxtzuab
-         DPScS8h4QaXsjnOSWVXVxxLX7NkugW83lXsvXliqNhDMx1DGRGR25XB1f/k2MxX2WQBa
-         2sYfnTlkYQSndvezsEGyFSa36FkktJYsVvP0F+6WxpVY38oOLZaUE1hsG0pZ5XLL39yt
-         061w==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=eIZb9jE/nYggX7tKkSA+wkWv1NklEsUoZkiNWzuS/Dk=;
+        b=b+UhrCihy2DAXZ2+HsbJSJEv4DhWEhHCU29K3Xfp1hQ7DQslQIcRXfbMx+rxw5gkLl
+         yiDbofiBIEliRtKNmdD6FOnyLDWvDGeIgUVEay53FDuVbffvnCg3QW1y6IzxC99teuwa
+         To5VJIyUHDl8KVgyIJjoDmOCx87TlQdL91L/mqYYvyTH6AU307BEUTh1Hvu0NzSmiknE
+         7v4aWyrH0KXOzjd+tWffjwBQDe/cXHD4YGuBWy/xMyDvg79qzyR3nTgjwAVy6xiGAOvx
+         Uefyrx7kjv+3YAO+Vl5RCrRXHPN+o2Zqhi1qZBougPgHRzzRxUmS8T9NVnu7eDc2Dbm+
+         vz1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=xiaQd1J1Iew9r8FywXmyT6JbyYTDwIfeasl63ttJnkQ=;
-        b=pCoBxCNH/9y/bNwP1Nc1f/MO/TgDkJ1UgjX0H6H2S+Jk+KS5i9R4M2d98+0aZD3c6V
-         VXrz9kBvy8Vi/ESvo8yc2Qwf6/xXZliA0GDr29ZzYQuST/7EK9+vUSX0AhijnmM1R5Xq
-         Rnc0kCPfmBNfiL6hn/0jVjHEobtJfLC1py32aatcajiSYqngDyyg78PDmk26e83XYZSO
-         TaLBhvwHlnjKw1JQagWzv8yEXKEpitvNUD1/nxdZDk8Ww8ya/nIofs4SGiw9RPi5zmne
-         lmDu06O08nIusyqhmuAY6EaE8nq5zcCmxanHN0UzOF9df0H9ifVvRKlq4ojBgc0/ZzX2
-         l/QA==
-X-Gm-Message-State: AMke39n57ZW+uPd/n/MBRao5X0lLypaiuQf75xKObPadoGnUrGdQ/7eJ/RyUkhFoJlLganLABWnq5h1EdA04ezL0
-X-Received: by 10.36.40.198 with SMTP id h189mr28646130ith.114.1487701178778;
- Tue, 21 Feb 2017 10:19:38 -0800 (PST)
+        h=x-gm-message-state:sender:from:to:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=eIZb9jE/nYggX7tKkSA+wkWv1NklEsUoZkiNWzuS/Dk=;
+        b=Ez4itXCGEQv8OTYb09a4fb0FR4yGfROCD+zI7lK9eBF+tVPC79yNajuTO+yYoeTZeE
+         sbxUZNvRyY/a0MPhyjnbmWi43lgp4RySCHAmWe8fSLriJhhzAMe3FX/s8z2QtfyduVx9
+         u9s3Cem06AQuyNEgaRFZxCsLoc+CHdO/rmGG9yXSpP9kg1lJvBjJWKy9keYlC+RNR0AW
+         yZi7wNaJ+OUNSYlzlHCkcC8Bc6CtGJhAqI39TQmeXV/KZxdik6Jdw3OLPKUZOpQfkHH8
+         EJQHBTKKMN4jy9Xi63wxwztpuoqYRO2G0u+VCzFQA4oQDHnfF6LPYUORfrslpBrdk/M2
+         +bqg==
+X-Gm-Message-State: AMke39klK8KvqE57UF3nSEfpO9FcuUAahht0TtV8+gVzfnD2U4z8JmgOyTaew+1Lvuy1xA==
+X-Received: by 10.84.215.15 with SMTP id k15mr41590358pli.58.1487703190902;
+        Tue, 21 Feb 2017 10:53:10 -0800 (PST)
+Received: from localhost ([2620:0:1000:8622:d997:8b5d:f579:2a90])
+        by smtp.gmail.com with ESMTPSA id y201sm32284904pfb.16.2017.02.21.10.53.08
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Tue, 21 Feb 2017 10:53:09 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     git@vger.kernel.org
+Subject: [PATCH] config: reject invalid VAR in 'git -c VAR=VAL command'
+References: <20170215111704.78320-1-larsxschneider@gmail.com>
+        <xmqqzihn2smp.fsf@gitster.mtv.corp.google.com>
+        <f238248f-0df2-19a5-581d-95c8a61b4632@google.com>
+        <xmqqy3x712if.fsf@gitster.mtv.corp.google.com>
+        <xmqqtw7v123n.fsf@gitster.mtv.corp.google.com>
+        <xmqqa89n10df.fsf_-_@gitster.mtv.corp.google.com>
+        <D0CDD1AC-05CA-47F3-8CB5-61EA1C6515A8@gmail.com>
+        <20170216232730.xsx3xks5ppjws5rg@sigill.intra.peff.net>
+        <xmqqwpcptxps.fsf@gitster.mtv.corp.google.com>
+        <xmqqino5jia8.fsf@gitster.mtv.corp.google.com>
+Date:   Tue, 21 Feb 2017 10:53:08 -0800
+In-Reply-To: <xmqqino5jia8.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
+        message of "Mon, 20 Feb 2017 01:58:07 -0800")
+Message-ID: <xmqq37f7gyuj.fsf_-_@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.79.33.148 with HTTP; Tue, 21 Feb 2017 10:19:38 -0800 (PST)
-In-Reply-To: <20170221070653.65ho2anbp55uzjeu@sigill.intra.peff.net>
-References: <84fcb0bd-85dc-0142-dd58-47a04eaa7c2b@durchholz.org>
- <20170220090115.6kfzwl62opj4q7k7@sigill.intra.peff.net> <404d109f-e5a7-85a3-e64c-ab1b21c3045d@durchholz.org>
- <20170220205243.lynnmxouwq7jelld@sigill.intra.peff.net> <28fb85d4-89cd-1f32-3063-2f48d8b935be@durchholz.org>
- <20170221070653.65ho2anbp55uzjeu@sigill.intra.peff.net>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Tue, 21 Feb 2017 10:19:38 -0800
-Message-ID: <CAGZ79kZgMbEZy7hoA+VxsKdKBavt59SmC1c6FpDdgrW2GKMHvQ@mail.gmail.com>
-Subject: Re: url.<base>.insteadOf vs. submodules
-To:     Jeff King <peff@peff.net>
-Cc:     Toolforger <toolforger@durchholz.org>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Feb 20, 2017 at 11:06 PM, Jeff King <peff@peff.net> wrote:
->
-> We'll see if the submodule folks have any ideas on how to implement
-> that.
->
+The parsing of one-shot assignments of configuration variables that
+come from the command line historically was quite loose and allowed
+anything to pass.
 
-So from reading your discussion, the user expectation is to have
-`git submodule {init, update --init, sync}`
-to pay attention to url.<base>.insteadOf when setting up the
-submodule.<name>.URL, such that the modified URL is used for the
-initial clone of the submodule (and hence any subsequent usage within
-the submodule).
+The configuration variable names that come from files are validated
+in git_config_parse_source(), which uses get_base_var() that grabs
+the <section> (and subsection) while making sure that <section>
+consists of iskeychar() letters, the function itself that makes sure
+that the first letter in <variable> is isalpha(), and get_value()
+that grabs the remainder of the <variable> name while making sure
+that it consists of iskeychar() letters.
 
-That sounds like a good idea to me.
+Perform an equivalent check in canonicalize_config_variable_name()
+to catch invalid configuration variable names that come from the
+command line.
 
-Two caveates:
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
 
-* After running `git submodule init`, you change url.<base>.insteadOf
-  in the superproject. How do we need to word the documentation to
-  have users expecting this change doesn't affect submodules?
-  (See above Any vs. "Any except (initialized) submodules")
+    Junio C Hamano <gitster@pobox.com> writes:
 
-* So with the point above the insteadOf config only applies to the
-  init/sync process, (i.e. once in time, ideally).
-  Is that confusing or actually simplifying the submodule workflow?
+    > One thing I noticed is that "git config --get X" will correctly
+    > diagnose that a dot-less X is not a valid variable name, but we do
+    > not seem to diagnose "git -c X=V <cmd>" as invalid.
+    >
+    > Perhaps we should, but it is not the focus of this topic.
 
-Thanks,
-Stefan
+    And here is a follow-up on that tangent.
+
+ config.c               | 48 +++++++++++++++++++++++++++++++++++++-----------
+ t/t1300-repo-config.sh |  7 +++++++
+ 2 files changed, 44 insertions(+), 11 deletions(-)
+
+diff --git a/config.c b/config.c
+index 4128debc71..e7f7ff1938 100644
+--- a/config.c
++++ b/config.c
+@@ -199,32 +199,62 @@ void git_config_push_parameter(const char *text)
+ 	strbuf_release(&env);
+ }
+ 
++static inline int iskeychar(int c)
++{
++	return isalnum(c) || c == '-';
++}
++
+ /*
+  * downcase the <section> and <variable> in <section>.<variable> or
+  * <section>.<subsection>.<variable> and do so in place.  <subsection>
+  * is left intact.
++ *
++ * The configuration variable names that come from files are validated
++ * in git_config_parse_source(), which uses get_base_var() that grabs
++ * the <section> (and subsection) while making sure that <section>
++ * consists of iskeychar() letters, the function itself that makes
++ * sure that the first letter in <variable> is isalpha(), and
++ * get_value() that grabs the remainder of the <variable> name while
++ * making sure that it consists of iskeychar() letters.  Perform a
++ * matching validation for configuration variables that come from
++ * the command line.
+  */
+-static void canonicalize_config_variable_name(char *varname)
++static int canonicalize_config_variable_name(char *varname)
+ {
+-	char *cp, *last_dot;
++	char *cp, *first_dot, *last_dot;
+ 
+ 	/* downcase the first segment */
+ 	for (cp = varname; *cp; cp++) {
+ 		if (*cp == '.')
+ 			break;
++		if (!iskeychar(*cp))
++			return -1;
+ 		*cp = tolower(*cp);
+ 	}
+ 	if (!*cp)
+-		return;
++		return -1; /* no dot anywhere? */
++
++	first_dot = cp;
++	if (first_dot == varname)
++		return -1; /* no section? */
+ 
+ 	/* find the last dot (we start from the first dot we just found) */
+-	for (last_dot = cp; *cp; cp++)
++	for (; *cp; cp++)
+ 		if (*cp == '.')
+ 			last_dot = cp;
+ 
++	if (!last_dot[1])
++		return -1; /* no variable? */
++
+ 	/* downcase the last segment */
+-	for (cp = last_dot; *cp; cp++)
++	for (cp = last_dot + 1; *cp; cp++) {
++		if (cp == last_dot + 1 && !isalpha(*cp))
++			return -1;
++		else if (!iskeychar(*cp))
++			return -1;
+ 		*cp = tolower(*cp);
++	}
++	return 0;
+ }
+ 
+ int git_config_parse_parameter(const char *text,
+@@ -249,7 +279,8 @@ int git_config_parse_parameter(const char *text,
+ 		strbuf_list_free(pair);
+ 		return error("bogus config parameter: %s", text);
+ 	}
+-	canonicalize_config_variable_name(pair[0]->buf);
++	if (canonicalize_config_variable_name(pair[0]->buf))
++		return error("bogus config parameter: %s", text);
+ 	if (fn(pair[0]->buf, value, data) < 0) {
+ 		strbuf_list_free(pair);
+ 		return -1;
+@@ -382,11 +413,6 @@ static char *parse_value(void)
+ 	}
+ }
+ 
+-static inline int iskeychar(int c)
+-{
+-	return isalnum(c) || c == '-';
+-}
+-
+ static int get_value(config_fn_t fn, void *data, struct strbuf *name)
+ {
+ 	int c;
+diff --git a/t/t1300-repo-config.sh b/t/t1300-repo-config.sh
+index 7a16f66a9d..92a5d0dfb1 100755
+--- a/t/t1300-repo-config.sh
++++ b/t/t1300-repo-config.sh
+@@ -1143,6 +1143,13 @@ test_expect_success 'last one wins: three level vars' '
+ 	test_cmp expect actual
+ '
+ 
++for VAR in a .a a. a.0b a."b c". a."b c".0d
++do
++	test_expect_success "git -c $VAR=VAL rejects invalid '$VAR'" '
++		test_must_fail git -c $VAR=VAL config -l
++	'
++done
++
+ test_expect_success 'git -c is not confused by empty environment' '
+ 	GIT_CONFIG_PARAMETERS="" git -c x.one=1 config --list
+ '
+-- 
+2.12.0-rc2-221-ga92f6f5816
+
