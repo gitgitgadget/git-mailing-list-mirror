@@ -2,139 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,TVD_SUBJ_WIPE_DEBT shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C8D26201B0
-	for <e@80x24.org>; Tue, 21 Feb 2017 12:25:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5DD1D201B0
+	for <e@80x24.org>; Tue, 21 Feb 2017 13:25:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752122AbdBUMZy (ORCPT <rfc822;e@80x24.org>);
-        Tue, 21 Feb 2017 07:25:54 -0500
-Received: from thoth.sbs.de ([192.35.17.2]:41394 "EHLO thoth.sbs.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752109AbdBUMZx (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Feb 2017 07:25:53 -0500
-Received: from mail2.sbs.de (mail2.sbs.de [192.129.41.66])
-        by thoth.sbs.de (8.15.2/8.15.2) with ESMTPS id v1LCPdo5023660
-        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-        Tue, 21 Feb 2017 13:25:39 +0100
-Received: from DEFTHW99ERJMSX.ww902.siemens.net (defthw99erjmsx.ww902.siemens.net [139.22.70.135])
-        by mail2.sbs.de (8.15.2/8.15.2) with ESMTPS id v1LCPdP8005393
-        (version=TLSv1 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
-        Tue, 21 Feb 2017 13:25:39 +0100
-Received: from DENBGAT9ER3MSX.ww902.siemens.net (139.22.70.84) by
- DEFTHW99ERJMSX.ww902.siemens.net (139.22.70.135) with Microsoft SMTP Server
- (TLS) id 14.3.339.0; Tue, 21 Feb 2017 13:25:38 +0100
-Received: from DEFTHW99EH3MSX.ww902.siemens.net ([169.254.1.100]) by
- DENBGAT9ER3MSX.ww902.siemens.net ([139.22.70.84]) with mapi id
- 14.03.0339.000; Tue, 21 Feb 2017 13:25:38 +0100
-From:   "Sokolov, Konstantin" <konstantin.sokolov.ext@siemens.com>
-To:     "peff@peff.net" <peff@peff.net>,
-        "gitster@pobox.com" <gitster@pobox.com>
-CC:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: AW: Inconsistent results of git blame --porcelain when detecting
- copies from other files
-Thread-Topic: Inconsistent results of git blame --porcelain when detecting
- copies from other files
-Thread-Index: AdKLoGqv8pkPtzH8SbSXH2hSKQRR8QAAmuIAAAdu+lf///vVAP//BAnw
-Date:   Tue, 21 Feb 2017 12:25:37 +0000
-Message-ID: <71BF70CE41AEE741896AF3A5450D86F11F42694F@DEFTHW99EH3MSX.ww902.siemens.net>
-References: <71BF70CE41AEE741896AF3A5450D86F11F4268FF@DEFTHW99EH3MSX.ww902.siemens.net>
- <xmqqd1ecim8a.fsf@gitster.mtv.corp.google.com>
- <20170220221540.6vemjdvyvwonpqyt@sigill.intra.peff.net>
-In-Reply-To: <20170220221540.6vemjdvyvwonpqyt@sigill.intra.peff.net>
-Accept-Language: de-DE, en-US
-Content-Language: de-DE
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [139.22.70.54]
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+        id S1752628AbdBUNZg (ORCPT <rfc822;e@80x24.org>);
+        Tue, 21 Feb 2017 08:25:36 -0500
+Received: from mail-ot0-f170.google.com ([74.125.82.170]:35908 "EHLO
+        mail-ot0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752494AbdBUNZf (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Feb 2017 08:25:35 -0500
+Received: by mail-ot0-f170.google.com with SMTP id 32so88342882oth.3
+        for <git@vger.kernel.org>; Tue, 21 Feb 2017 05:25:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=0wgWFvKN6nfpsQ6yYYKWCUCmkkd/MuA4UlzsbDu0xiI=;
+        b=RGA5RhWUjWTeaiRX2CvgbdQUYYZ7L3f9d65RAgscZ+3QQ85IsvobbwVD+egDPBP9oZ
+         DTw5g52ZNEkernW/rnTvvEGQnnBLdo5NLkMjkaZJIoNUN1swKkVgMg4SGk4L3M+cxZqL
+         jak9izx/ngkNdflUmY3KeLguk0/VRvgbfILCnp8069v7Pq19oVE6s88UIyvMUWg4M//G
+         g+cti3NUgtR2IN/joeJ1IIbueTSGNgHnN3TZNBoqPN85GOKAa8RoszRg+eEbgR6wR55o
+         NEZiLZaWxTIZK6syAyI4GSaOUF+gqjIdU8ibiud1fhbp/RVcY36zx1zRgP6C5FqH4h7z
+         qntQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=0wgWFvKN6nfpsQ6yYYKWCUCmkkd/MuA4UlzsbDu0xiI=;
+        b=o8LN9IQUEndM+Qwav5IcqWuXjhPUXXd5FMD4yjofK8yY5m19/EqfM3ZM+KP4X8MTbB
+         yqoLwYezqd+ToZZ7ucj3HBo3MYCf/NrE8TtzO6TVnfocWTbF10vyWJtNubP1CkHsVRFK
+         GVtt9iZMObwNaNmvWm9M1ZwM+MSkwpY6ZpXt6o/O6LpmojTYHZTLLebxAYDZRawz3TX9
+         6jRCzLd7dNQS2j1mo1cVSY2brC9nGsXKcAN/WRIVDZnbVVh/4pFxatZOBxQXeXWLC/aJ
+         u/WI5eg7OjqK5xbJLGiWYgMA4yrctz58G9M8UZSiL1F/gAxEH/b2PMUJBCHJFd5lsoNp
+         tUSw==
+X-Gm-Message-State: AMke39lqTq38mgbpehABPGanqW9nsqaO+bp8c9CdHXFZwOyw8HXb7V+73QQ8mzPzQWNe9DI8covkIv6ItRLrZg==
+X-Received: by 10.157.9.242 with SMTP id 47mr14247369otz.128.1487683534367;
+ Tue, 21 Feb 2017 05:25:34 -0800 (PST)
 MIME-Version: 1.0
+Received: by 10.74.158.84 with HTTP; Tue, 21 Feb 2017 05:25:03 -0800 (PST)
+In-Reply-To: <25fcb527-595a-7865-41e3-ee7c4c1ad668@alum.mit.edu>
+References: <20170217140436.17336-1-pclouds@gmail.com> <20170218133303.3682-1-pclouds@gmail.com>
+ <20170218133303.3682-15-pclouds@gmail.com> <25fcb527-595a-7865-41e3-ee7c4c1ad668@alum.mit.edu>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Tue, 21 Feb 2017 20:25:03 +0700
+Message-ID: <CACsJy8CqHo_sCz0mFasvWJBP_cwWUu-dccowvtWs4pMoc5uLiQ@mail.gmail.com>
+Subject: Re: [PATCH v4 14/15] files-backend: remove submodule_allowed from files_downcast()
+To:     Michael Haggerty <mhagger@alum.mit.edu>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        Stefan Beller <sbeller@google.com>,
+        David Turner <novalis@novalis.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-VGhhbmtzIGZvciBnb2luZyBpbnRvIHRoZSBpc3N1ZS4gQXMgZmFyIGFzIEkgdW5kZXJzdGFuZCAy
-LjEyIHdvbid0IGNoYW5nZSB0aGUgZGlzY3Vzc2VkIGJlaGF2aW9yIG9mIC0tcHJvY2VsYWluLiBX
-ZSB3aWxsIHN3aXRjaCB0byAtLWxpbmUtcHJvY2VsYWluLiBBZnRlciB0aGUgY3VycmVudCBkaXNj
-dXNzaW9uIGl0IHNlZW1zIHRvIGJlIGxlc3MgZXJyb3IgcHJvbmUsIG1vcmUgZnV0dXJlLXByb29m
-IGFuZCBvdXIgY3VycmVudCBwYXJzZXIgY2FuIGhhbmRsZSBpdCB3aXRob3V0IGFueSBjaGFuZ2Vz
-Lg0KDQpSZWdhcmRzDQpLb25zdGFudGluDQoNCi0tLS0tVXJzcHLDvG5nbGljaGUgTmFjaHJpY2h0
-LS0tLS0NClZvbjogSmVmZiBLaW5nIFttYWlsdG86cGVmZkBwZWZmLm5ldF0NCkdlc2VuZGV0OiBN
-b250YWcsIDIwLiBGZWJydWFyIDIwMTcgMjM6MTYNCkFuOiBKdW5pbyBDIEhhbWFubw0KQ2M6IFNv
-a29sb3YsIEtvbnN0YW50aW4gKGV4dCkgKENUIFJEQSBTU0kgQURNLURFKTsgZ2l0QHZnZXIua2Vy
-bmVsLm9yZw0KQmV0cmVmZjogUmU6IEluY29uc2lzdGVudCByZXN1bHRzIG9mIGdpdCBibGFtZSAt
-LXBvcmNlbGFpbiB3aGVuIGRldGVjdGluZyBjb3BpZXMgZnJvbSBvdGhlciBmaWxlcw0KDQpPbiBN
-b24sIEZlYiAyMCwgMjAxNyBhdCAwMTozMDoyOVBNIC0wODAwLCBKdW5pbyBDIEhhbWFubyB3cm90
-ZToNCg0KPiAiU29rb2xvdiwgS29uc3RhbnRpbiIgPGtvbnN0YW50aW4uc29rb2xvdi5leHRAc2ll
-bWVucy5jb20+IHdyaXRlczoNCj4NCj4gPiBIb3dldmVyLCB3aGVuIHVzaW5nIC0tcG9yY2VsYWlu
-IERpcmVjdG9yeVJlYWRlci5qYXZhIGlzIHJlcG9ydGVkIGFzIHRoZSBvcmlnaW4gb2YgbGluZXMg
-NTAyLTUwNDoNCj4gPiAuLi4NCj4gPiBUaGlzIGlzIG5vdCBvbmx5IGluY29uc2lzdGVudCB3aXRo
-IHRoZSBvdGhlciBvdXRwdXRzIGJ1dCB0aGUgb3V0cHV0IGlzIGFsc28gaW5jb25zaXN0ZW50IGlu
-IGl0c2VsZiBiZWNhdXNlIGxpbmVzIDQ5NiAtNDk4IGRvIG5vdCBldmVuIGV4aXN0IGluIGEgcHJl
-dmlvdXMgdmVyc2lvbiBvZiBEaXJlY3RvcnlSZWFkZXIuamF2YS4NCj4NCj4gSG1waCwgdGhpcyBz
-b3VuZHMgdmFndWVseSBmYW1pbGlhciB3aXRoDQo+DQo+DQo+IGh0dHA6Ly9wdWJsaWMtaW5ib3gu
-b3JnL2dpdC8yMDE3MDEwNjA0MjA1MS5ud2ppdXl5cDdsamhzNHNyQHNpZ2lsbC5pbnQNCj4gcmEu
-cGVmZi5uZXQNCj4NCj4gd2hpY2ggaXMgcGFydCBvZiBHaXQgMi4xMi1yYzANCg0KWWVhaCwgSSBo
-YWQgdGhlIHNhbWUgdGhvdWdodCB3aGlsZSByZWFkaW5nIEtvbnN0YW50aW4ncyByZXBvcnQuDQoN
-CkknbSBub3Qgc3VyZSBHaXQgaXMgd3JvbmcsIHRob3VnaC4gSSB0aGluayBpdCdzIGp1c3QgdGhl
-IHdheSB0aGUgcG9yY2VsYWluIG91dHB1dCB3b3Jrcy4NCg0KSGVyZSdzIGEgbWluaW1hbCByZXBy
-b2R1Y3Rpb247IHRoZSBpbnRlcmVzdGluZyB0aGluZyBpcyB3aGVuIGEgY29tbWl0IGlzIG1lbnRp
-b25lZCB0d2ljZSAoYXMgaGFwcGVucyBvbiBsaW5lcyAxIGFuZCA1IGhlcmUpOg0KDQogIGdpdCBp
-bml0IHJlcG8NCiAgY2QgcmVwbw0KDQogICMgdXNlIGxvbmcgbGluZXMgdG8gbWFrZSBzdXJlIHdl
-IHRyaWdnZXIgY29udGVudC1tb3ZlbWVudCBkZXRlY3Rpb24NCiAgZm9yIGkgaW4gJChzZXEgMSA1
-KTsgZG8NCiAgICAgICAgZWNobyB0aGlzIGlzIHJlYWxseSBsb25nIGxpbmUgbnVtYmVyICRpDQog
-IGRvbmUgPmZpbGUNCiAgZ2l0IGFkZCBmaWxlDQogIGdpdCBjb21taXQgLW0gaW5pdGlhbA0KDQog
-IHNlZCAncy8xL29uZS87IHMvNS9maXZlLycgPGZpbGUgPnJlbmFtZWQNCiAgZ2l0IHJtIGZpbGUN
-CiAgZ2l0IGFkZCByZW5hbWVkDQogIGdpdCBjb21taXQgLW0gJ3JlbmFtZSBhbmQgdXNlIGVuZ2xp
-c2gnDQoNCiAgZ2l0IGJsYW1lIHJlbmFtZWQNCiAgZ2l0IGJsYW1lIC0tbGluZS1wb3JjZWxhaW4g
-cmVuYW1lZA0KICBnaXQgYmxhbWUgLS1wb3JjZWxhaW4gcmVuYW1lZA0KDQpUaGUgZmlyc3QgYmxh
-bWUgb3V0cHV0IGxvb2tzIHNvbWV0aGluZyBsaWtlIHRoaXM6DQoNCiAgYmFiMDM3MDEgcmVuYW1l
-ZCAuLi4gbGluZSBudW1iZXIgMQ0KICBeZGRhMTM0OSBmaWxlICAgIC4uLiBsaW5lIG51bWJlciAy
-DQogIF5kZGExMzQ5IGZpbGUgICAgLi4uIGxpbmUgbnVtYmVyIDMNCiAgXmRkYTEzNDkgZmlsZSAg
-ICAuLi4gbGluZSBudW1iZXIgNA0KICBiYWIwMzcwMSByZW5hbWVkIC4uLiBsaW5lIG51bWJlciA1
-DQoNCnNvIHdlIGNhbiBzZWUgaXQncyB0aGUgc2FtZSBjYXNlLiBUaGUgLS1saW5lLXBvcmNlbGFp
-biBzaW1pbGFybHkgbWF0Y2hlcyB0aGUgY29tbWl0cyBhbmQgZmlsZW5hbWVzLg0KDQpCdXQgdGhl
-IC0tcG9yY2VsYWluIG91dHB1dCBpczoNCg0KICBiYWIwMzcwMTBkY2FiYWYwNTA5ZGIyN2JmMjMy
-ZDI1NjU5YjE4MGZhIDEgMSAxDQogIC4uLg0KICBmaWxlbmFtZSByZW5hbWVkDQogICAgICAgICAg
-dGhpcyBpcyByZWFsbHkgbG9uZyBsaW5lIG51bWJlciBvbmUNCiAgZGRhMTM0OWQ0MWRhODU5ZjRj
-MzdlMDE4ZGJlZDcxNGJhNmMxYWExOCAyIDIgMw0KICAuLi4NCiAgZmlsZW5hbWUgZmlsZQ0KICAg
-ICAgICAgIHRoaXMgaXMgcmVhbGx5IGxvbmcgbGluZSBudW1iZXIgMg0KICBkZGExMzQ5ZDQxZGE4
-NTlmNGMzN2UwMThkYmVkNzE0YmE2YzFhYTE4IDMgMw0KICAgICAgICAgIHRoaXMgaXMgcmVhbGx5
-IGxvbmcgbGluZSBudW1iZXIgMw0KICBkZGExMzQ5ZDQxZGE4NTlmNGMzN2UwMThkYmVkNzE0YmE2
-YzFhYTE4IDQgNA0KICAgICAgICAgIHRoaXMgaXMgcmVhbGx5IGxvbmcgbGluZSBudW1iZXIgNA0K
-ICBiYWIwMzcwMTBkY2FiYWYwNTA5ZGIyN2JmMjMyZDI1NjU5YjE4MGZhIDUgNSAxDQogICAgICAg
-ICAgdGhpcyBpcyByZWFsbHkgbG9uZyBsaW5lIG51bWJlciBmaXZlDQoNCllvdSBtaWdodCBiZSB0
-ZW1wdGVkIHRvIHNheSB0aGF0IHRoZSBmaWZ0aCBsaW5lIGNvbWVzIGZyb20gImZpbGVuYW1lIGZp
-bGUiLCBiZWNhdXNlIHRoYXQgd2FzIHRoZSBsYXN0ICJmaWxlbmFtZSIgZW50cnkgd2Ugc2F3LiBC
-dXQgdGhhdCdzIF9ub3RfIGhvdyB0aGUgcG9yY2VsYWluIG91dHB1dCB3b3Jrcy4gVGhhdCAiZmls
-ZW5hbWUiIGVudHJ5IHdhcyBhc3NvY2lhdGVkIHdpdGggZGRhMTM0OSwgYnV0IHRoZSBsaW5lIGNv
-bWVzIGZyb20gYmFiMDM3MCBoZXJlLg0KDQpUaGUgc2ltcGxlc3Qgd2F5IChJTUhPKSB0byBwYXJz
-ZSAtLXBvcmNlbGFpbiBvdXRwdXQgaXM6DQoNCiAgLSBtYWludGFpbiBhIG1hcHBpbmcgb2YgY29t
-bWl0IHNoYTFzIHRvIHRoZSBjb21taXQncyBkZXRhaWxzDQoNCiAgLSB3aGVuZXZlciB5b3Ugc2Vl
-IGEgIjxzaGExPiA8bGluZV9ucj4gPG9yaWdfbnI+IFs8c2l6ZS1vZi1odW5rPl0iDQogICAgbGlu
-ZSwgYW55IGtleS12YWx1ZSBmaWVsZHMgd2hpY2ggZm9sbG93IGltcGFjdCBfb25seV8gdGhhdCBz
-aGExLCBhbmQNCiAgICB5b3Ugc2hvdWxkIHVwZGF0ZSB0aGUgZGV0YWlscyBmb3IgdGhhdCBtYXAg
-ZW50cnkNCg0KICAtIHdoZW4geW91IHNlZSB0aGUgYWN0dWFsIHRhYi1pbmRlbnRlZCBsaW5lIGNv
-bnRlbnQsIHlvdSBoYXZlIGdvdHRlbg0KICAgIGFsbCBvZiB0aGUga2V5LXZhbHVlIHVwZGF0ZXMg
-Zm9yIHRoYXQgc2hhMS4gWW91IGNhbiBub3cgc2FmZWx5IGRvDQogICAgd2hhdCB5b3UgbGlrZSB3
-aXRoIHRoZSBsaW5lIGVudHJ5Lg0KDQpBbm90aGVyIHdheSwgaWYgeW91IGRvbid0IHdhbnQgdG8g
-dXBkYXRlIHlvdXIgbWFwcGluZywgaXMgdG8gYWN0dWFsbHkgcGF5IGF0dGVudGlvbiB0byB0aGUg
-c2l6ZS1vZi1odW5rIGhlYWRlcnMuIEluIHRoaXMgY2FzZSB0aGUgbWlkZGxlIHRocmVlIGxpbmVz
-IGNvbWUgaW4gdGhlaXIgb3duIGh1bmsgKHdoaWNoIHlvdSBjYW4gc2VlIGZyb20gdGhlICIyIDIg
-MyIgaGVhZGVyIG9uIHRoZSBzZWNvbmQgbGluZSkuIFRoZSAiZmlsZW5hbWUiIGZpZWxkIHdlIGdl
-dCBhcHBsaWVzIHRvIHRoYXQgaHVuaywgYnV0IG9uY2Ugd2Ugc3dpdGNoIHRvIGEgZGlmZmVyZW50
-IG9uZSwgdGhlIGZpbGVuYW1lIGZpZWxkIG5lZWRzIHRvIGJlIGxvb2tlZCB1cCBpbiB0aGUgY29t
-bWl0IG1hcHBpbmcuDQoNCkJ1dCBpdCdzIGRlZmluaXRlbHkgbm90IGNvcnJlY3QgdG8gYmxpbmRs
-eSBhcHBseSBvbmUgImZpbGVuYW1lIiBmaWVsZCB0byBzdWJzZXF1ZW50IGxpbmVzIGluIG90aGVy
-IGh1bmtzLg0KDQpBbmQgeWVzLCBJIGRvIHRoaW5rIHRoaXMgaXMgcHJvYmFibHkgbW9yZSBjb21w
-bGV4IHRoYW4gaXQgbmVlZHMgdG8gYmUuDQpJIGRpZG4ndCB3cml0ZSBpdC4gQW5kIEkgZG9uJ3Qg
-dGhpbmsgaXQgaXMgd29ydGggdGhlIGJhY2t3YXJkcyBjb21wYXRpYmlsaXR5IGhlYWRhY2hlIG9m
-IHRyeWluZyB0byBjaGFuZ2UgaXQgbm93LiBJdCdzIHBvc3NpYmxlIHRoaXMgY291bGQgYmUgYmV0
-dGVyIGRvY3VtZW50ZWQgKEkgZGlkbid0IGxvb2sgYXQgdGhlIGRvY3VtZW50YXRpb24gdG8gd3Jp
-dGUgdGhhdCBleHBsYW5hdGlvbjsgSSBoYXBwZW5lZCB0byBwdXp6bGUgaXQgb3V0IGZvciBzb21l
-Ym9keSBlbHNlIHJlY2VudGx5IHdobyBoYWQgYSBzaW1pbGFyIGNhc2UuIFRoYXQncyB3aGF0IGxl
-ZCB0byB0aGUgYnVnLWZpeCBpbiB0aGUgbWVzc2FnZSB5b3UgbGlua2VkKS4NCg0KLVBlZmYNCg==
+On Mon, Feb 20, 2017 at 7:11 PM, Michael Haggerty <mhagger@alum.mit.edu> wr=
+ote:
+> On 02/18/2017 02:33 PM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
+>> Since submodule or not is irrelevant to files-backend after the last
+>> patch, remove the parameter from files_downcast() and kill
+>> files_assert_main_repository().
+>>
+>> PS. This implies that all ref operations are allowed for submodules. But
+>> we may need to look more closely to see if that's really true...
+>
+> I think you are jumping the gun here.
+>
+> Even after your changes, there is still a significant difference between
+> the main repository and submodules: we have access to the object
+> database for the main repository, but not for submodules.
+
+I did jump the gun for another reason: files-backend makes function
+calls to the frontend, which unconditionally target the main ref store
+(e.g. resolve_ref_unsafe, delete_ref...). Of course, because
+store-aware api does not exist. My decision (off-list) to add
+test-ref-store was the right call. I would not have seen these because
+I was not (and still am not) familiar with files-backend.c enough to
+see its dark corners.
+
+files-backend.c is not all unicorn and rainbow :(
+--=20
+Duy
