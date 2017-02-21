@@ -2,144 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 032832021B
-	for <e@80x24.org>; Tue, 21 Feb 2017 09:34:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 431632021B
+	for <e@80x24.org>; Tue, 21 Feb 2017 11:36:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751538AbdBUJe2 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 21 Feb 2017 04:34:28 -0500
-Received: from forward15h.cmail.yandex.net ([87.250.230.157]:56711 "EHLO
-        forward15h.cmail.yandex.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751069AbdBUJe1 (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 21 Feb 2017 04:34:27 -0500
-X-Greylist: delayed 594 seconds by postgrey-1.27 at vger.kernel.org; Tue, 21 Feb 2017 04:34:26 EST
-Received: from mxback3h.mail.yandex.net (mxback3h.mail.yandex.net [IPv6:2a02:6b8:0:f05::10c])
-        by forward15h.cmail.yandex.net (Yandex) with ESMTP id 0991721C26
-        for <git@vger.kernel.org>; Tue, 21 Feb 2017 12:24:28 +0300 (MSK)
-Received: from web22g.yandex.ru (web22g.yandex.ru [95.108.253.231])
-        by mxback3h.mail.yandex.net (nwsmtp/Yandex) with ESMTP id 1BiAsDYwNo-OSj4Nmb3;
-        Tue, 21 Feb 2017 12:24:28 +0300
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex.ru; s=mail; t=1487669068;
-        bh=9qDLSKYe6yWvfUsY427JHRdF/KhpzfPjzvUUcWQfytg=;
-        h=From:To:Subject:Message-Id:Date;
-        b=RyuUkB1Q4UaWjT4aBE/PYXbjXzEwcuHagWlk3wVo5Vd6v8+Uh9f9SMAgr2D59j+8C
-         aT1xwmwI+QLT6x+XMr6NttrqVQl+Lsad2oImfxEg1YTZnD7DAmr9n1WwwMhbpH8FtW
-         kNJ3K3f96YETV8wWb1/vq6y6Js2WLnI4fHIZs2YM=
-Authentication-Results: mxback3h.mail.yandex.net; dkim=pass header.i=@yandex.ru
-Received: by web22g.yandex.ru with HTTP;
-        Tue, 21 Feb 2017 12:24:28 +0300
-From:   KES <kes-kes@yandex.ru>
-Envelope-From: kes-kes@yandex.ua
-To:     git <git@vger.kernel.org>
-Subject: Not expected merge conflict output
-MIME-Version: 1.0
-Message-Id: <16011487669068@web22g.yandex.ru>
-X-Mailer: Yamail [ http://yandex.ru ] 5.0
-Date:   Tue, 21 Feb 2017 11:24:28 +0200
+        id S1751936AbdBULgb (ORCPT <rfc822;e@80x24.org>);
+        Tue, 21 Feb 2017 06:36:31 -0500
+Received: from mail-wm0-f45.google.com ([74.125.82.45]:37166 "EHLO
+        mail-wm0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751637AbdBULga (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Feb 2017 06:36:30 -0500
+Received: by mail-wm0-f45.google.com with SMTP id v77so73068066wmv.0
+        for <git@vger.kernel.org>; Tue, 21 Feb 2017 03:36:29 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:content-transfer-encoding:subject:date:message-id:cc:to
+         :mime-version;
+        bh=+w4wycODtluS4jZazAoOnOf6lnMSoM4WXHAB3SltZ1g=;
+        b=epNojUjM76PnI6yUdruc8wkTHSy1T5x5z76Y+M0vi2Hjssct9QlMjhdaqvpNaiBTLG
+         g8fEbepZ3xg8cyie+FhR+xyXrQXRanB36iy9+OVHeulTxbmtybU3LBhHri2a5LvFEV9l
+         Hry4Fj7uOmuvsJkv/EahofoHvAfcHlC+8RGGiBfrpr3PLtNAT4JU3l0WAbAzVvYXu3r0
+         l5oT0XcLeBFHHQSrREJQZUJEltYm/ZlbonnXiYrVS1vfvYupS6t53LNtGhGP58RoDMrd
+         qUJe8w3IgyuU0V+GOcmZ/BNbbUjflfZOByloIiVm9BiSx+6WBUiOnMeVhY0NAqiw/7tp
+         gGlA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:content-transfer-encoding:subject:date
+         :message-id:cc:to:mime-version;
+        bh=+w4wycODtluS4jZazAoOnOf6lnMSoM4WXHAB3SltZ1g=;
+        b=PUOAdNANU/JZLEt2aPctZ2XtHjHUZa3eYCPqnzhgJjV9NlTHXkwKSSkDf7AhPa2ECk
+         xBb89A0dHOJZzlrn8ijuMpZO+noGgCyeYMTx38Z19RLq/FaWdQvx0GYDZ7an/qEKurnD
+         /3bt+tPHmTdLLGsgNUmJf2nOuAXvHCgDMMD0vBhvuq9ELsXdfazAkDLQJOQ5EeTSVRyS
+         vB6V838IKX+75HqWg46bH6S0T+b+MQs0Po+FTcumKwtzMEINoyrsEqW0UqLocZ5QF3G2
+         nUATgt6qu9uBrxF9Il+XaN7n68+D5I+spx6oef20sV5NohvEJ42GpTiwehM+Kkr2E1cy
+         upRA==
+X-Gm-Message-State: AMke39nUO7ZpdVlCf7iGFosK59FPDieWQ310jbmeSrx82dyAqHe/XcywpoPbQepKzvXEFg==
+X-Received: by 10.28.130.207 with SMTP id e198mr24487723wmd.4.1487676988102;
+        Tue, 21 Feb 2017 03:36:28 -0800 (PST)
+Received: from [10.146.248.58] ([62.159.156.210])
+        by smtp.gmail.com with ESMTPSA id j18sm28477293wrb.33.2017.02.21.03.36.26
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Tue, 21 Feb 2017 03:36:27 -0800 (PST)
+From:   Lars Schneider <larsxschneider@gmail.com>
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-Content-Type: text/plain
+Subject: [RFC] Subtle differences in passing configs to git clone
+Date:   Tue, 21 Feb 2017 12:36:25 +0100
+Message-Id: <EC270E42-9431-446C-96F9-E1A0C3E45333@gmail.com>
+Cc:     Jeff King <peff@peff.net>
+To:     Git List <git@vger.kernel.org>
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+X-Mailer: Apple Mail (2.3124)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi. I have merge conflict and this output:
+Hi,
 
---- a/crypto/lib/Crypto/Routes.pm
-+++ b/crypto/lib/Crypto/Routes.pm
-@@@ -98,17 -94,16 +98,36 @@@ sub register 
-          ,payment_cancel_landing  =>  '/payment-cancel'
-      }});
-      # Route configuration is moved from plugin:
-++<<<<<<< ours
- +    $rn->get( '/stripe/payment_success' )->to( 'Stripe#payment_success' )->name( 'stripe_payment_s
- +    $rn->get( '/stripe/payment_cancel'  )->to( 'Stripe#payment_cancel'  )->name( 'stripe_payment_c
- +    $rn->options( '/stripe' )->to( 'Stripe#options' )->name( 'stripe_options' );
- +    $rn->post( '/stripe/payment/create', { required_level => 'user' } )->to( 'Stripe#payment_creat
- +    $rn->post( '/stripe/payment/execute', { required_level => 'user' } )->to( 'Stripe#payment_exec
-++||||||| base
-++    $guest->get( '/stripe/payment_success' )->to( 'Stripe#payment_success' )->name( 'stripe_paymen
-++    $guest->get( '/stripe/payment_cancel'  )->to( 'Stripe#payment_cancel'  )->name( 'stripe_paymen
-++    $guest->options( '/stripe' )->to( 'Stripe#options' )->name( 'stripe_options' );
-++    $user->post( '/stripe/payment/create'  )->to( 'Stripe#payment_create'  )->name( 'stripe_paymen
-++    $user->post( '/stripe/payment/execute' )->to( 'Stripe#payment_execute' )->name( 'stripe_paymen
-++
-++    $guest->post( '/stripe/hook' )->to( 'Stripe#hook' )->name( 'stripe_hook' );
-++=======
-+     $guest->get( '/stripe/payment_success' )->to( 'Stripe#payment_success' )->name( 'stripe_paymen
-+     $guest->get( '/stripe/payment_cancel'  )->to( 'Stripe#payment_cancel'  )->name( 'stripe_paymen
-+     $guest->options( '/stripe' )->to( 'Stripe#options' )->name( 'stripe_options' );
-+     $user->post( '/stripe/payment/create'  )->to( 'Stripe#payment_create'  )->name( 'stripe_paymen
-+     $user->post( '/stripe/payment/execute' )->to( 'Stripe#payment_execute' )->name( 'stripe_paymen
-+ 
-+     $guest->post( '/stripe/hook' )->to( 'Stripe#hook' )->name( 'stripe_hook' );
-+     $guest->get ( '/stripe/:form' )->to( 'Stripe#button' );
-++>>>>>>> theirs
-  
- +    $rn->post( '/stripe/hook' )->to( 'Stripe#hook' )->name( 'stripe_hook' );
-  
- +    # Static routes
- +    # QR code dowlnload url
- +    $app->routes->get('/uploads/qrcode/:file')->name('qr_url');
+I stumbled across the following today:
+
+(1) git -c foo.bar="foobar" clone <URL>
+
+--> uses the config temporarily
 
 
-But I expect this output:
+(2) git clone -c foo.bar="foobar" <URL>
 
---- a/crypto/lib/Crypto/Routes.pm
-+++ b/crypto/lib/Crypto/Routes.pm
-@@@ -98,17 -94,16 +98,36 @@@ sub register 
-          ,payment_cancel_landing  =>  '/payment-cancel'
-      }});
-      # Route configuration is moved from plugin:
-++<<<<<<< ours
- +    $rn->get( '/stripe/payment_success' )->to( 'Stripe#payment_success' )->name( 'stripe_payment_s
- +    $rn->get( '/stripe/payment_cancel'  )->to( 'Stripe#payment_cancel'  )->name( 'stripe_payment_c
- +    $rn->options( '/stripe' )->to( 'Stripe#options' )->name( 'stripe_options' );
- +    $rn->post( '/stripe/payment/create', { required_level => 'user' } )->to( 'Stripe#payment_creat
- +    $rn->post( '/stripe/payment/execute', { required_level => 'user' } )->to( 'Stripe#payment_exec
-  
- +    $rn->post( '/stripe/hook' )->to( 'Stripe#hook' )->name( 'stripe_hook' );
-++||||||| base
-++    $guest->get( '/stripe/payment_success' )->to( 'Stripe#payment_success' )->name( 'stripe_paymen
-++    $guest->get( '/stripe/payment_cancel'  )->to( 'Stripe#payment_cancel'  )->name( 'stripe_paymen
-++    $guest->options( '/stripe' )->to( 'Stripe#options' )->name( 'stripe_options' );
-++    $user->post( '/stripe/payment/create'  )->to( 'Stripe#payment_create'  )->name( 'stripe_paymen
-++    $user->post( '/stripe/payment/execute' )->to( 'Stripe#payment_execute' )->name( 'stripe_paymen
-++
-++    $guest->post( '/stripe/hook' )->to( 'Stripe#hook' )->name( 'stripe_hook' );
-++=======
-+     $guest->get( '/stripe/payment_success' )->to( 'Stripe#payment_success' )->name( 'stripe_paymen
-+     $guest->get( '/stripe/payment_cancel'  )->to( 'Stripe#payment_cancel'  )->name( 'stripe_paymen
-+     $guest->options( '/stripe' )->to( 'Stripe#options' )->name( 'stripe_options' );
-+     $user->post( '/stripe/payment/create'  )->to( 'Stripe#payment_create'  )->name( 'stripe_paymen
-+     $user->post( '/stripe/payment/execute' )->to( 'Stripe#payment_execute' )->name( 'stripe_paymen
-+ 
-+     $guest->post( '/stripe/hook' )->to( 'Stripe#hook' )->name( 'stripe_hook' );
-+     $guest->get ( '/stripe/:form' )->to( 'Stripe#button' );
-++>>>>>>> theirs
-  
- +    # Static routes
- +    # QR code dowlnload url
- +    $app->routes->get('/uploads/qrcode/:file')->name('qr_url');
-
-Because this diff has less difference between ours&&base, Also 
-
-This (second expected patch)
- +    # Static routes
- +    # QR code dowlnload url
- +    $app->routes->get('/uploads/qrcode/:file')->name('qr_url');
-is less in compare to (first not expected):
-  
- +    $rn->post( '/stripe/hook' )->to( 'Stripe#hook' )->name( 'stripe_hook' );
-  
- +    # Static routes
- +    # QR code dowlnload url
- +    $app->routes->get('/uploads/qrcode/:file')->name('qr_url');
+--> uses the config and writes it to .git/config
 
 
-Did I wrong and first output is right thing or maybe I right and I should open new bug report.
-Please explain me
+This was introduced in 84054f7 ("clone: accept config options on the 
+command line") and it makes total sense. However, I think this subtitle
+difference can easily confuse users.
+
+I think we should tell the users that we've written to .git/config.
+Maybe something like this:
+
+git clone -c foo.bar="foobar" <URL>
+Cloning into 'test'...
+Writing foo.bar="foobar" to local config...
+remote: Counting objects: 2152, done.
+remote: Compressing objects: 100% (33/33), done.
+remote: Total 2152 (delta 19), reused 0 (delta 0), pack-reused 2119
+Receiving objects: 100% (2152/2152), 328.66 KiB | 217.00 KiB/s, done.
+Resolving deltas: 100% (1289/1289), done.
+
+What do you think?
+
+Thanks,
+Lars
