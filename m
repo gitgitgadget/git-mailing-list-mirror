@@ -2,51 +2,139 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 43E18201B0
-	for <e@80x24.org>; Tue, 21 Feb 2017 12:22:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C8D26201B0
+	for <e@80x24.org>; Tue, 21 Feb 2017 12:25:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752123AbdBUMWX (ORCPT <rfc822;e@80x24.org>);
-        Tue, 21 Feb 2017 07:22:23 -0500
-Received: from mailhub.007spb.ru ([84.204.203.130]:60882 "EHLO
-        mailhub.007spb.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752117AbdBUMWV (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Feb 2017 07:22:21 -0500
-Received: from tigra.domain007.com ([192.168.2.102])
-        by mailhub.007spb.ru (8.14.4/8.14.4/Debian-4+deb7u1) with SMTP id v1LCMG8N017008;
-        Tue, 21 Feb 2017 15:22:17 +0300
-Date:   Tue, 21 Feb 2017 15:22:16 +0300
-From:   Konstantin Khomoutov <kostix+git@007spb.ru>
-To:     "Nikita Malikov" <nikitam@devart.com>
-Cc:     <git@vger.kernel.org>
-Subject: Re: Partnership with Git
-Message-Id: <20170221152216.be2b8401f65650bf766cdd8d@domain007.com>
-In-Reply-To: <02FFA5DBB1C64A8DA1BF45F11EBF9930@datasoft.local>
-References: <02FFA5DBB1C64A8DA1BF45F11EBF9930@datasoft.local>
-X-Mailer: Sylpheed 3.5.1 (GTK+ 2.24.31; x86_64-pc-linux-gnu)
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+        id S1752122AbdBUMZy (ORCPT <rfc822;e@80x24.org>);
+        Tue, 21 Feb 2017 07:25:54 -0500
+Received: from thoth.sbs.de ([192.35.17.2]:41394 "EHLO thoth.sbs.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752109AbdBUMZx (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Feb 2017 07:25:53 -0500
+Received: from mail2.sbs.de (mail2.sbs.de [192.129.41.66])
+        by thoth.sbs.de (8.15.2/8.15.2) with ESMTPS id v1LCPdo5023660
+        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+        Tue, 21 Feb 2017 13:25:39 +0100
+Received: from DEFTHW99ERJMSX.ww902.siemens.net (defthw99erjmsx.ww902.siemens.net [139.22.70.135])
+        by mail2.sbs.de (8.15.2/8.15.2) with ESMTPS id v1LCPdP8005393
+        (version=TLSv1 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
+        Tue, 21 Feb 2017 13:25:39 +0100
+Received: from DENBGAT9ER3MSX.ww902.siemens.net (139.22.70.84) by
+ DEFTHW99ERJMSX.ww902.siemens.net (139.22.70.135) with Microsoft SMTP Server
+ (TLS) id 14.3.339.0; Tue, 21 Feb 2017 13:25:38 +0100
+Received: from DEFTHW99EH3MSX.ww902.siemens.net ([169.254.1.100]) by
+ DENBGAT9ER3MSX.ww902.siemens.net ([139.22.70.84]) with mapi id
+ 14.03.0339.000; Tue, 21 Feb 2017 13:25:38 +0100
+From:   "Sokolov, Konstantin" <konstantin.sokolov.ext@siemens.com>
+To:     "peff@peff.net" <peff@peff.net>,
+        "gitster@pobox.com" <gitster@pobox.com>
+CC:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: AW: Inconsistent results of git blame --porcelain when detecting
+ copies from other files
+Thread-Topic: Inconsistent results of git blame --porcelain when detecting
+ copies from other files
+Thread-Index: AdKLoGqv8pkPtzH8SbSXH2hSKQRR8QAAmuIAAAdu+lf///vVAP//BAnw
+Date:   Tue, 21 Feb 2017 12:25:37 +0000
+Message-ID: <71BF70CE41AEE741896AF3A5450D86F11F42694F@DEFTHW99EH3MSX.ww902.siemens.net>
+References: <71BF70CE41AEE741896AF3A5450D86F11F4268FF@DEFTHW99EH3MSX.ww902.siemens.net>
+ <xmqqd1ecim8a.fsf@gitster.mtv.corp.google.com>
+ <20170220221540.6vemjdvyvwonpqyt@sigill.intra.peff.net>
+In-Reply-To: <20170220221540.6vemjdvyvwonpqyt@sigill.intra.peff.net>
+Accept-Language: de-DE, en-US
+Content-Language: de-DE
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [139.22.70.54]
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
+MIME-Version: 1.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, 21 Feb 2017 13:21:38 +0200
-"Nikita Malikov" <nikitam@devart.com> wrote:
-
-> My name is Nikita and I'm from Devart https://www.devart.com/.
-> I would like to contact someone from executive staff of Git. I would
-> be very thankful for some information how to do this or if someone
-> contacts me.
-
-Git is a free software volunteer project and as such, it has no
-"executive staff" in the sense enterprises put into it.
-
-Can you maybe state your actual goals please?
-
-Say, if you're looking for commercial support, we could possibly
-suggests a couple of pointers.
+VGhhbmtzIGZvciBnb2luZyBpbnRvIHRoZSBpc3N1ZS4gQXMgZmFyIGFzIEkgdW5kZXJzdGFuZCAy
+LjEyIHdvbid0IGNoYW5nZSB0aGUgZGlzY3Vzc2VkIGJlaGF2aW9yIG9mIC0tcHJvY2VsYWluLiBX
+ZSB3aWxsIHN3aXRjaCB0byAtLWxpbmUtcHJvY2VsYWluLiBBZnRlciB0aGUgY3VycmVudCBkaXNj
+dXNzaW9uIGl0IHNlZW1zIHRvIGJlIGxlc3MgZXJyb3IgcHJvbmUsIG1vcmUgZnV0dXJlLXByb29m
+IGFuZCBvdXIgY3VycmVudCBwYXJzZXIgY2FuIGhhbmRsZSBpdCB3aXRob3V0IGFueSBjaGFuZ2Vz
+Lg0KDQpSZWdhcmRzDQpLb25zdGFudGluDQoNCi0tLS0tVXJzcHLDvG5nbGljaGUgTmFjaHJpY2h0
+LS0tLS0NClZvbjogSmVmZiBLaW5nIFttYWlsdG86cGVmZkBwZWZmLm5ldF0NCkdlc2VuZGV0OiBN
+b250YWcsIDIwLiBGZWJydWFyIDIwMTcgMjM6MTYNCkFuOiBKdW5pbyBDIEhhbWFubw0KQ2M6IFNv
+a29sb3YsIEtvbnN0YW50aW4gKGV4dCkgKENUIFJEQSBTU0kgQURNLURFKTsgZ2l0QHZnZXIua2Vy
+bmVsLm9yZw0KQmV0cmVmZjogUmU6IEluY29uc2lzdGVudCByZXN1bHRzIG9mIGdpdCBibGFtZSAt
+LXBvcmNlbGFpbiB3aGVuIGRldGVjdGluZyBjb3BpZXMgZnJvbSBvdGhlciBmaWxlcw0KDQpPbiBN
+b24sIEZlYiAyMCwgMjAxNyBhdCAwMTozMDoyOVBNIC0wODAwLCBKdW5pbyBDIEhhbWFubyB3cm90
+ZToNCg0KPiAiU29rb2xvdiwgS29uc3RhbnRpbiIgPGtvbnN0YW50aW4uc29rb2xvdi5leHRAc2ll
+bWVucy5jb20+IHdyaXRlczoNCj4NCj4gPiBIb3dldmVyLCB3aGVuIHVzaW5nIC0tcG9yY2VsYWlu
+IERpcmVjdG9yeVJlYWRlci5qYXZhIGlzIHJlcG9ydGVkIGFzIHRoZSBvcmlnaW4gb2YgbGluZXMg
+NTAyLTUwNDoNCj4gPiAuLi4NCj4gPiBUaGlzIGlzIG5vdCBvbmx5IGluY29uc2lzdGVudCB3aXRo
+IHRoZSBvdGhlciBvdXRwdXRzIGJ1dCB0aGUgb3V0cHV0IGlzIGFsc28gaW5jb25zaXN0ZW50IGlu
+IGl0c2VsZiBiZWNhdXNlIGxpbmVzIDQ5NiAtNDk4IGRvIG5vdCBldmVuIGV4aXN0IGluIGEgcHJl
+dmlvdXMgdmVyc2lvbiBvZiBEaXJlY3RvcnlSZWFkZXIuamF2YS4NCj4NCj4gSG1waCwgdGhpcyBz
+b3VuZHMgdmFndWVseSBmYW1pbGlhciB3aXRoDQo+DQo+DQo+IGh0dHA6Ly9wdWJsaWMtaW5ib3gu
+b3JnL2dpdC8yMDE3MDEwNjA0MjA1MS5ud2ppdXl5cDdsamhzNHNyQHNpZ2lsbC5pbnQNCj4gcmEu
+cGVmZi5uZXQNCj4NCj4gd2hpY2ggaXMgcGFydCBvZiBHaXQgMi4xMi1yYzANCg0KWWVhaCwgSSBo
+YWQgdGhlIHNhbWUgdGhvdWdodCB3aGlsZSByZWFkaW5nIEtvbnN0YW50aW4ncyByZXBvcnQuDQoN
+CkknbSBub3Qgc3VyZSBHaXQgaXMgd3JvbmcsIHRob3VnaC4gSSB0aGluayBpdCdzIGp1c3QgdGhl
+IHdheSB0aGUgcG9yY2VsYWluIG91dHB1dCB3b3Jrcy4NCg0KSGVyZSdzIGEgbWluaW1hbCByZXBy
+b2R1Y3Rpb247IHRoZSBpbnRlcmVzdGluZyB0aGluZyBpcyB3aGVuIGEgY29tbWl0IGlzIG1lbnRp
+b25lZCB0d2ljZSAoYXMgaGFwcGVucyBvbiBsaW5lcyAxIGFuZCA1IGhlcmUpOg0KDQogIGdpdCBp
+bml0IHJlcG8NCiAgY2QgcmVwbw0KDQogICMgdXNlIGxvbmcgbGluZXMgdG8gbWFrZSBzdXJlIHdl
+IHRyaWdnZXIgY29udGVudC1tb3ZlbWVudCBkZXRlY3Rpb24NCiAgZm9yIGkgaW4gJChzZXEgMSA1
+KTsgZG8NCiAgICAgICAgZWNobyB0aGlzIGlzIHJlYWxseSBsb25nIGxpbmUgbnVtYmVyICRpDQog
+IGRvbmUgPmZpbGUNCiAgZ2l0IGFkZCBmaWxlDQogIGdpdCBjb21taXQgLW0gaW5pdGlhbA0KDQog
+IHNlZCAncy8xL29uZS87IHMvNS9maXZlLycgPGZpbGUgPnJlbmFtZWQNCiAgZ2l0IHJtIGZpbGUN
+CiAgZ2l0IGFkZCByZW5hbWVkDQogIGdpdCBjb21taXQgLW0gJ3JlbmFtZSBhbmQgdXNlIGVuZ2xp
+c2gnDQoNCiAgZ2l0IGJsYW1lIHJlbmFtZWQNCiAgZ2l0IGJsYW1lIC0tbGluZS1wb3JjZWxhaW4g
+cmVuYW1lZA0KICBnaXQgYmxhbWUgLS1wb3JjZWxhaW4gcmVuYW1lZA0KDQpUaGUgZmlyc3QgYmxh
+bWUgb3V0cHV0IGxvb2tzIHNvbWV0aGluZyBsaWtlIHRoaXM6DQoNCiAgYmFiMDM3MDEgcmVuYW1l
+ZCAuLi4gbGluZSBudW1iZXIgMQ0KICBeZGRhMTM0OSBmaWxlICAgIC4uLiBsaW5lIG51bWJlciAy
+DQogIF5kZGExMzQ5IGZpbGUgICAgLi4uIGxpbmUgbnVtYmVyIDMNCiAgXmRkYTEzNDkgZmlsZSAg
+ICAuLi4gbGluZSBudW1iZXIgNA0KICBiYWIwMzcwMSByZW5hbWVkIC4uLiBsaW5lIG51bWJlciA1
+DQoNCnNvIHdlIGNhbiBzZWUgaXQncyB0aGUgc2FtZSBjYXNlLiBUaGUgLS1saW5lLXBvcmNlbGFp
+biBzaW1pbGFybHkgbWF0Y2hlcyB0aGUgY29tbWl0cyBhbmQgZmlsZW5hbWVzLg0KDQpCdXQgdGhl
+IC0tcG9yY2VsYWluIG91dHB1dCBpczoNCg0KICBiYWIwMzcwMTBkY2FiYWYwNTA5ZGIyN2JmMjMy
+ZDI1NjU5YjE4MGZhIDEgMSAxDQogIC4uLg0KICBmaWxlbmFtZSByZW5hbWVkDQogICAgICAgICAg
+dGhpcyBpcyByZWFsbHkgbG9uZyBsaW5lIG51bWJlciBvbmUNCiAgZGRhMTM0OWQ0MWRhODU5ZjRj
+MzdlMDE4ZGJlZDcxNGJhNmMxYWExOCAyIDIgMw0KICAuLi4NCiAgZmlsZW5hbWUgZmlsZQ0KICAg
+ICAgICAgIHRoaXMgaXMgcmVhbGx5IGxvbmcgbGluZSBudW1iZXIgMg0KICBkZGExMzQ5ZDQxZGE4
+NTlmNGMzN2UwMThkYmVkNzE0YmE2YzFhYTE4IDMgMw0KICAgICAgICAgIHRoaXMgaXMgcmVhbGx5
+IGxvbmcgbGluZSBudW1iZXIgMw0KICBkZGExMzQ5ZDQxZGE4NTlmNGMzN2UwMThkYmVkNzE0YmE2
+YzFhYTE4IDQgNA0KICAgICAgICAgIHRoaXMgaXMgcmVhbGx5IGxvbmcgbGluZSBudW1iZXIgNA0K
+ICBiYWIwMzcwMTBkY2FiYWYwNTA5ZGIyN2JmMjMyZDI1NjU5YjE4MGZhIDUgNSAxDQogICAgICAg
+ICAgdGhpcyBpcyByZWFsbHkgbG9uZyBsaW5lIG51bWJlciBmaXZlDQoNCllvdSBtaWdodCBiZSB0
+ZW1wdGVkIHRvIHNheSB0aGF0IHRoZSBmaWZ0aCBsaW5lIGNvbWVzIGZyb20gImZpbGVuYW1lIGZp
+bGUiLCBiZWNhdXNlIHRoYXQgd2FzIHRoZSBsYXN0ICJmaWxlbmFtZSIgZW50cnkgd2Ugc2F3LiBC
+dXQgdGhhdCdzIF9ub3RfIGhvdyB0aGUgcG9yY2VsYWluIG91dHB1dCB3b3Jrcy4gVGhhdCAiZmls
+ZW5hbWUiIGVudHJ5IHdhcyBhc3NvY2lhdGVkIHdpdGggZGRhMTM0OSwgYnV0IHRoZSBsaW5lIGNv
+bWVzIGZyb20gYmFiMDM3MCBoZXJlLg0KDQpUaGUgc2ltcGxlc3Qgd2F5IChJTUhPKSB0byBwYXJz
+ZSAtLXBvcmNlbGFpbiBvdXRwdXQgaXM6DQoNCiAgLSBtYWludGFpbiBhIG1hcHBpbmcgb2YgY29t
+bWl0IHNoYTFzIHRvIHRoZSBjb21taXQncyBkZXRhaWxzDQoNCiAgLSB3aGVuZXZlciB5b3Ugc2Vl
+IGEgIjxzaGExPiA8bGluZV9ucj4gPG9yaWdfbnI+IFs8c2l6ZS1vZi1odW5rPl0iDQogICAgbGlu
+ZSwgYW55IGtleS12YWx1ZSBmaWVsZHMgd2hpY2ggZm9sbG93IGltcGFjdCBfb25seV8gdGhhdCBz
+aGExLCBhbmQNCiAgICB5b3Ugc2hvdWxkIHVwZGF0ZSB0aGUgZGV0YWlscyBmb3IgdGhhdCBtYXAg
+ZW50cnkNCg0KICAtIHdoZW4geW91IHNlZSB0aGUgYWN0dWFsIHRhYi1pbmRlbnRlZCBsaW5lIGNv
+bnRlbnQsIHlvdSBoYXZlIGdvdHRlbg0KICAgIGFsbCBvZiB0aGUga2V5LXZhbHVlIHVwZGF0ZXMg
+Zm9yIHRoYXQgc2hhMS4gWW91IGNhbiBub3cgc2FmZWx5IGRvDQogICAgd2hhdCB5b3UgbGlrZSB3
+aXRoIHRoZSBsaW5lIGVudHJ5Lg0KDQpBbm90aGVyIHdheSwgaWYgeW91IGRvbid0IHdhbnQgdG8g
+dXBkYXRlIHlvdXIgbWFwcGluZywgaXMgdG8gYWN0dWFsbHkgcGF5IGF0dGVudGlvbiB0byB0aGUg
+c2l6ZS1vZi1odW5rIGhlYWRlcnMuIEluIHRoaXMgY2FzZSB0aGUgbWlkZGxlIHRocmVlIGxpbmVz
+IGNvbWUgaW4gdGhlaXIgb3duIGh1bmsgKHdoaWNoIHlvdSBjYW4gc2VlIGZyb20gdGhlICIyIDIg
+MyIgaGVhZGVyIG9uIHRoZSBzZWNvbmQgbGluZSkuIFRoZSAiZmlsZW5hbWUiIGZpZWxkIHdlIGdl
+dCBhcHBsaWVzIHRvIHRoYXQgaHVuaywgYnV0IG9uY2Ugd2Ugc3dpdGNoIHRvIGEgZGlmZmVyZW50
+IG9uZSwgdGhlIGZpbGVuYW1lIGZpZWxkIG5lZWRzIHRvIGJlIGxvb2tlZCB1cCBpbiB0aGUgY29t
+bWl0IG1hcHBpbmcuDQoNCkJ1dCBpdCdzIGRlZmluaXRlbHkgbm90IGNvcnJlY3QgdG8gYmxpbmRs
+eSBhcHBseSBvbmUgImZpbGVuYW1lIiBmaWVsZCB0byBzdWJzZXF1ZW50IGxpbmVzIGluIG90aGVy
+IGh1bmtzLg0KDQpBbmQgeWVzLCBJIGRvIHRoaW5rIHRoaXMgaXMgcHJvYmFibHkgbW9yZSBjb21w
+bGV4IHRoYW4gaXQgbmVlZHMgdG8gYmUuDQpJIGRpZG4ndCB3cml0ZSBpdC4gQW5kIEkgZG9uJ3Qg
+dGhpbmsgaXQgaXMgd29ydGggdGhlIGJhY2t3YXJkcyBjb21wYXRpYmlsaXR5IGhlYWRhY2hlIG9m
+IHRyeWluZyB0byBjaGFuZ2UgaXQgbm93LiBJdCdzIHBvc3NpYmxlIHRoaXMgY291bGQgYmUgYmV0
+dGVyIGRvY3VtZW50ZWQgKEkgZGlkbid0IGxvb2sgYXQgdGhlIGRvY3VtZW50YXRpb24gdG8gd3Jp
+dGUgdGhhdCBleHBsYW5hdGlvbjsgSSBoYXBwZW5lZCB0byBwdXp6bGUgaXQgb3V0IGZvciBzb21l
+Ym9keSBlbHNlIHJlY2VudGx5IHdobyBoYWQgYSBzaW1pbGFyIGNhc2UuIFRoYXQncyB3aGF0IGxl
+ZCB0byB0aGUgYnVnLWZpeCBpbiB0aGUgbWVzc2FnZSB5b3UgbGlua2VkKS4NCg0KLVBlZmYNCg==
