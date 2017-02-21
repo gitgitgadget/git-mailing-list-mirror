@@ -7,90 +7,87 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D8A09201B0
-	for <e@80x24.org>; Tue, 21 Feb 2017 17:57:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6DD65201B0
+	for <e@80x24.org>; Tue, 21 Feb 2017 18:20:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754439AbdBUR5m (ORCPT <rfc822;e@80x24.org>);
-        Tue, 21 Feb 2017 12:57:42 -0500
-Received: from mail-it0-f48.google.com ([209.85.214.48]:36520 "EHLO
-        mail-it0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754426AbdBUR5h (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Feb 2017 12:57:37 -0500
-Received: by mail-it0-f48.google.com with SMTP id h10so113156151ith.1
-        for <git@vger.kernel.org>; Tue, 21 Feb 2017 09:57:37 -0800 (PST)
+        id S1754689AbdBUSUA (ORCPT <rfc822;e@80x24.org>);
+        Tue, 21 Feb 2017 13:20:00 -0500
+Received: from mail-it0-f50.google.com ([209.85.214.50]:35263 "EHLO
+        mail-it0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752631AbdBUSTy (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Feb 2017 13:19:54 -0500
+Received: by mail-it0-f50.google.com with SMTP id 203so120483402ith.0
+        for <git@vger.kernel.org>; Tue, 21 Feb 2017 10:19:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=+78MqEjFhFeOaEy1wEJVLjd9qaVDGUfeiNZT3U8TxEc=;
-        b=IRxlHjBorBaGSGmR5v/YL31DZxAqvRm9dyXfC1E1+6PT1zBeudUE5ZuFrvWq3af9Ff
-         E+/SDuIZHQgKHHhvLtUsrJkMzMSNrehwpvFqnaf4lqr9q6aw7sb3rJsE54ZlOtXYcbS5
-         WNg5WaxSXhTWg6kLGWA1ACvFKp3otQJCizDXjnrsTsaFxWloEjRK4IwbAGOqJ6QPp/HH
-         wUi3iEHXX50MxWdVlfbUGkSL6XD90pLK/VgfGiy7NAXAcUh+0Kv6x2GKpA0Eh5g6tKWr
-         OJAbVdw/NH1fb/+GSeUjiJAG5RXLcditajHjBuhMJUAqV4zqJt8bBTRnBcd7+f6CdH/R
-         wrqA==
+        bh=xiaQd1J1Iew9r8FywXmyT6JbyYTDwIfeasl63ttJnkQ=;
+        b=j0lc3RdSJLy+5YOYISjtpTypaR6QZ7o7SI2O4TtcLe7Dd4zBaN6mVErYbQPMnBBF3O
+         pB3WlBT6KFGnhI2TO0/pNPf0/iI0u90cEqJL2MJjlxBvflhlDgZf6IcQZlXNIp3U/upL
+         C7laipAJ840E5zW+n2+veVB/dBfGDGHK18hNHKCHE5pZ/hFPStO3Ua3RXnyORcxtzuab
+         DPScS8h4QaXsjnOSWVXVxxLX7NkugW83lXsvXliqNhDMx1DGRGR25XB1f/k2MxX2WQBa
+         2sYfnTlkYQSndvezsEGyFSa36FkktJYsVvP0F+6WxpVY38oOLZaUE1hsG0pZ5XLL39yt
+         061w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=+78MqEjFhFeOaEy1wEJVLjd9qaVDGUfeiNZT3U8TxEc=;
-        b=nNNBzK6Bk0s7cgqg23YeCOFkbzqFRY4qHtGYB4F2ZoEsFsA6upnYyBPFlwprD/maeU
-         pfXilPZBNIFhpoI6cUB3MoqfiOfusUBRGido43MKPIh1/yDWePMj6FKl5eHOusNSCBp3
-         +NPnX9Mxlfv1oBiNif0BxdVYzdvWFDB3V61qaNMLtTcRny1dugaHt3x2g7WYWUQFsqiH
-         jjsCkWOXXBJPjNCePxhnnFMR9Vpgm3D+BqoAcdQj7wJqPrqJnNfys2oIipSmRt+RzsQ/
-         /AYjzs8LUdE1naKJhRfXiOktHyBgxClZUeXrdxMqa8pMDv1iC41AScxLvH9o5y2kvShz
-         DFtw==
-X-Gm-Message-State: AMke39kKPmI7ScWoSOOfq8W9L3W/f9HSOSZDrjOfUCbG8z0B10Nj2Q1hRWF/CAJsfDRL4d0A1AWQZakoE+//lzl3
-X-Received: by 10.36.40.198 with SMTP id h189mr28534012ith.114.1487699853001;
- Tue, 21 Feb 2017 09:57:33 -0800 (PST)
+        bh=xiaQd1J1Iew9r8FywXmyT6JbyYTDwIfeasl63ttJnkQ=;
+        b=pCoBxCNH/9y/bNwP1Nc1f/MO/TgDkJ1UgjX0H6H2S+Jk+KS5i9R4M2d98+0aZD3c6V
+         VXrz9kBvy8Vi/ESvo8yc2Qwf6/xXZliA0GDr29ZzYQuST/7EK9+vUSX0AhijnmM1R5Xq
+         Rnc0kCPfmBNfiL6hn/0jVjHEobtJfLC1py32aatcajiSYqngDyyg78PDmk26e83XYZSO
+         TaLBhvwHlnjKw1JQagWzv8yEXKEpitvNUD1/nxdZDk8Ww8ya/nIofs4SGiw9RPi5zmne
+         lmDu06O08nIusyqhmuAY6EaE8nq5zcCmxanHN0UzOF9df0H9ifVvRKlq4ojBgc0/ZzX2
+         l/QA==
+X-Gm-Message-State: AMke39n57ZW+uPd/n/MBRao5X0lLypaiuQf75xKObPadoGnUrGdQ/7eJ/RyUkhFoJlLganLABWnq5h1EdA04ezL0
+X-Received: by 10.36.40.198 with SMTP id h189mr28646130ith.114.1487701178778;
+ Tue, 21 Feb 2017 10:19:38 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.79.33.148 with HTTP; Tue, 21 Feb 2017 09:57:32 -0800 (PST)
-In-Reply-To: <20170221175021.znvpfvnlfjh4jsrf@sigill.intra.peff.net>
-References: <xmqqy3x712if.fsf@gitster.mtv.corp.google.com> <xmqqtw7v123n.fsf@gitster.mtv.corp.google.com>
- <xmqqa89n10df.fsf_-_@gitster.mtv.corp.google.com> <D0CDD1AC-05CA-47F3-8CB5-61EA1C6515A8@gmail.com>
- <20170216232730.xsx3xks5ppjws5rg@sigill.intra.peff.net> <xmqqwpcptxps.fsf@gitster.mtv.corp.google.com>
- <xmqqino5jia8.fsf@gitster.mtv.corp.google.com> <20170221073813.w4zrkky2d4drnwbs@sigill.intra.peff.net>
- <xmqqino3h3zv.fsf@gitster.mtv.corp.google.com> <xmqqd1ebh3ak.fsf_-_@gitster.mtv.corp.google.com>
- <20170221175021.znvpfvnlfjh4jsrf@sigill.intra.peff.net>
+Received: by 10.79.33.148 with HTTP; Tue, 21 Feb 2017 10:19:38 -0800 (PST)
+In-Reply-To: <20170221070653.65ho2anbp55uzjeu@sigill.intra.peff.net>
+References: <84fcb0bd-85dc-0142-dd58-47a04eaa7c2b@durchholz.org>
+ <20170220090115.6kfzwl62opj4q7k7@sigill.intra.peff.net> <404d109f-e5a7-85a3-e64c-ab1b21c3045d@durchholz.org>
+ <20170220205243.lynnmxouwq7jelld@sigill.intra.peff.net> <28fb85d4-89cd-1f32-3063-2f48d8b935be@durchholz.org>
+ <20170221070653.65ho2anbp55uzjeu@sigill.intra.peff.net>
 From:   Stefan Beller <sbeller@google.com>
-Date:   Tue, 21 Feb 2017 09:57:32 -0800
-Message-ID: <CAGZ79kb-fbm9N9ocVpW43nd_S9JMvcBiU8eiA7AoPVg6W1Sodw@mail.gmail.com>
-Subject: Re: [PATCH v2] config: preserve <subsection> case for one-shot config
- on the command line
+Date:   Tue, 21 Feb 2017 10:19:38 -0800
+Message-ID: <CAGZ79kZgMbEZy7hoA+VxsKdKBavt59SmC1c6FpDdgrW2GKMHvQ@mail.gmail.com>
+Subject: Re: url.<base>.insteadOf vs. submodules
 To:     Jeff King <peff@peff.net>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>
+Cc:     Toolforger <toolforger@durchholz.org>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Feb 21, 2017 at 9:50 AM, Jeff King <peff@peff.net> wrote:
-> On Tue, Feb 21, 2017 at 09:17:07AM -0800, Junio C Hamano wrote:
+On Mon, Feb 20, 2017 at 11:06 PM, Jeff King <peff@peff.net> wrote:
 >
->>  * Changes from v1:
->>
->>    - update the comment before the second loop to find the last
->>      dot.
->>
->>    - move two new tests into existing t1300 (at least for now).
->>
->>    - make it clear that the second of the new tests check two
->>      aspects of "three level vars" by setting up the expectation for
->>      the first half near the actual tests and adding comments on
->>      what it tests before the second half.
+> We'll see if the submodule folks have any ideas on how to implement
+> that.
 >
-> Thanks, this addresses all of my (admittedly minor) concerns.
->
-> -Peff
 
-This patch looks different than what I last looked at. I like it.
-Though the manual search of the last dot instead of using
-strrchr seems to be over-optimizing to me.
-Anyway it is still very understandable.
+So from reading your discussion, the user expectation is to have
+`git submodule {init, update --init, sync}`
+to pay attention to url.<base>.insteadOf when setting up the
+submodule.<name>.URL, such that the modified URL is used for the
+initial clone of the submodule (and hence any subsequent usage within
+the submodule).
+
+That sounds like a good idea to me.
+
+Two caveates:
+
+* After running `git submodule init`, you change url.<base>.insteadOf
+  in the superproject. How do we need to word the documentation to
+  have users expecting this change doesn't affect submodules?
+  (See above Any vs. "Any except (initialized) submodules")
+
+* So with the point above the insteadOf config only applies to the
+  init/sync process, (i.e. once in time, ideally).
+  Is that confusing or actually simplifying the submodule workflow?
 
 Thanks,
 Stefan
