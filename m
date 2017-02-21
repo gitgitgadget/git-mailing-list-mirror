@@ -2,149 +2,121 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 162D2201A9
-	for <e@80x24.org>; Tue, 21 Feb 2017 23:35:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BAAA5201A9
+	for <e@80x24.org>; Tue, 21 Feb 2017 23:37:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752875AbdBUXfn (ORCPT <rfc822;e@80x24.org>);
-        Tue, 21 Feb 2017 18:35:43 -0500
-Received: from mail-lf0-f50.google.com ([209.85.215.50]:34756 "EHLO
-        mail-lf0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752000AbdBUXfl (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Feb 2017 18:35:41 -0500
-Received: by mail-lf0-f50.google.com with SMTP id g134so28497616lfe.1
-        for <git@vger.kernel.org>; Tue, 21 Feb 2017 15:35:40 -0800 (PST)
+        id S1753161AbdBUXhl (ORCPT <rfc822;e@80x24.org>);
+        Tue, 21 Feb 2017 18:37:41 -0500
+Received: from mail-pg0-f65.google.com ([74.125.83.65]:33838 "EHLO
+        mail-pg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752873AbdBUXhj (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Feb 2017 18:37:39 -0500
+Received: by mail-pg0-f65.google.com with SMTP id s67so9955196pgb.1
+        for <git@vger.kernel.org>; Tue, 21 Feb 2017 15:37:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=wMLBsuA9YLnYkXu6viOR7lVyS9FBsWfZhfZyom9qY5k=;
-        b=veWCUqQ8bMk0+5Maevf1Hj9gHlLNEef+y6OJfDK3FMGdy50RXttNVYy+V3wurPen4A
-         avwNYCViOdb99aOQt+lQkr3VxMkafmvAQdfo5qjgV232X7CfKl7XPkc3+pJtAUDNDbIB
-         cE0s0kpLuegSOglFlf+ykyCdXf/AZUjwzQp7+WH7Ylzy1JCwtYpr3nTuUBlmQMgoPJEl
-         O54yy83A5BfVql/20oRoKW4uZeMvBpoAm8YzIY8h8rVpscjjxUpZiWPOPbxacsAcf20g
-         c3g2j62qtudTzX050tQ3YZLPCG4EcOlv9xKBezZGZnmqBoOCX8UPkaFlWt2J5REdFnkO
-         iiKw==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=PACs7xBOqE+Dnltt9XnyAgihl7dGryBNjgBh1ni8zYQ=;
+        b=UtHr3giwTmdStWiiMFgBn9F3z8jmhOM9D5ZFmuH+ULoYC3TQP3X2dlyTb0KZzlx39g
+         jh/SYmeVFiTh/zdpmYu88W21MAwvDPEyvJVKdj1zjrktPi4lFttv6ff0Iv9aME8Qc2Xf
+         sEsN/KMqvkFUPxCNZjTGhX453ys618pqwMHAyVLiZ2/vG1aLmMdPsViQcMDy6OaDd+3+
+         61xDKDxpSSNh3FSu9LIGQlEbbLLFFP2EhODDuAXz7qwv3KUrBxEELJH6Q9G4lLBkswDn
+         iRNNykH5xsFB49bX+v6XWbuU0iJXcyBp45ph6cZ6VURWnBJoxbJDTD7pq1LSa2AvZ/ce
+         OWMQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=wMLBsuA9YLnYkXu6viOR7lVyS9FBsWfZhfZyom9qY5k=;
-        b=jIc/e8Ae0dC4rsMGlgwXQUE2zzmy6I78vnF+HAS1yOY9MH8zvnIDwRCdqp7FxRJpj+
-         BMht8qlhKeyx1BKkwzO14CBtwtAIb+pUDJaWcrT3MgDRCp52F4/erNag3Vj62nqdjXJK
-         VweIEVvGnlJAXszWd3B7lW8oIHQFSjsD9pkN/3xDqTN+HwxEHgiFJ9Hlmqfo2dWiFkU8
-         DfUC2SKZ7JvSQx03Jm9XpAqDn7HaecUvFh9bH4jlKGi3PicoA7Qm4lAF241+FU0+oBQl
-         UGGtom4erP5lZ+Xr2s9oeOEqg0ZGi3te7E3ZMTfwF0LWyXXvzQ/n7Ry0cGPk8HIK+Xay
-         cZXA==
-X-Gm-Message-State: AMke39lezzjW01lbYC3rq9geKDh0d9Edqn2+6IuGRSJ8CkYSiHtJl/Y0abbq5Pmpje6txkTv2oVzUsNBgoSJxg==
-X-Received: by 10.46.80.29 with SMTP id e29mr7634781ljb.121.1487720138928;
- Tue, 21 Feb 2017 15:35:38 -0800 (PST)
-MIME-Version: 1.0
-Received: by 10.25.145.30 with HTTP; Tue, 21 Feb 2017 15:35:18 -0800 (PST)
-In-Reply-To: <CAGZ79kahCN2dd9=CzqXJWSJKrkOfvd3HeQ-NORhyP=6B=KCrqg@mail.gmail.com>
-References: <xmqq8tp74823.fsf@gitster.mtv.corp.google.com> <20170216003811.18273-1-sbeller@google.com>
- <20170216003811.18273-13-sbeller@google.com> <CA+P7+xrwxb9G3QVOascSZqnBa_vGEx95nv0jN9USmBqB5Q_Mzw@mail.gmail.com>
- <CAGZ79kahCN2dd9=CzqXJWSJKrkOfvd3HeQ-NORhyP=6B=KCrqg@mail.gmail.com>
-From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Tue, 21 Feb 2017 15:35:18 -0800
-Message-ID: <CA+P7+xq3XF2=erRLiNjOUq9H66Sa5VCxNBzTF=RAycPYrPRFJg@mail.gmail.com>
-Subject: Re: [PATCH 12/15] unpack-trees: check if we can perform the operation
- for submodules
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=PACs7xBOqE+Dnltt9XnyAgihl7dGryBNjgBh1ni8zYQ=;
+        b=COEs5gw8mhUxwrnOg2H9Vm/5e7izdbX0vc4+7JnW2OvMtrg80b2/nlzqCqOFyUB8ks
+         iUtGDd9xKqH2uefAFYUlHX1WBE9aABwpDMxLrQkmnTJzrevFtiRE1SO5EpiccBgss41J
+         /yOi+I7nF2vusRT67hLZAqtSuRBgnsh7VsG26SrcfyoUEc2mjy+XGANXg9XkX6xEEEWJ
+         5jUanA8GI1ivRNGpj5NWB1po0eLIoYZuT/ePLZVG+pELOaJM5uIdB5RQh02ns+sYAIJc
+         gqruM42fXkwDYqzXEWZ0qjooCq8/3hOdWDG0HUrBuT65ejHc83dnwhmngZsDghT1C7WP
+         i+Jg==
+X-Gm-Message-State: AMke39nDv+Y4idk9uMNuMQUXmFQW+C+qUjlrvPBmU4lgJzAJa/QeJTzZjEqmbEWCeI5vtw==
+X-Received: by 10.98.32.7 with SMTP id g7mr36036953pfg.119.1487720258655;
+        Tue, 21 Feb 2017 15:37:38 -0800 (PST)
+Received: from localhost ([2620:0:1000:8622:d997:8b5d:f579:2a90])
+        by smtp.gmail.com with ESMTPSA id x15sm43131158pgo.56.2017.02.21.15.37.37
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Tue, 21 Feb 2017 15:37:38 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
 To:     Stefan Beller <sbeller@google.com>
-Cc:     Git mailing list <git@vger.kernel.org>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Brandon Williams <bmwill@google.com>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset=UTF-8
+Cc:     Jeff King <peff@peff.net>, Toolforger <toolforger@durchholz.org>,
+        "git\@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: url.<base>.insteadOf vs. submodules
+References: <84fcb0bd-85dc-0142-dd58-47a04eaa7c2b@durchholz.org>
+        <20170220090115.6kfzwl62opj4q7k7@sigill.intra.peff.net>
+        <404d109f-e5a7-85a3-e64c-ab1b21c3045d@durchholz.org>
+        <20170220205243.lynnmxouwq7jelld@sigill.intra.peff.net>
+        <28fb85d4-89cd-1f32-3063-2f48d8b935be@durchholz.org>
+        <20170221070653.65ho2anbp55uzjeu@sigill.intra.peff.net>
+        <CAGZ79kZgMbEZy7hoA+VxsKdKBavt59SmC1c6FpDdgrW2GKMHvQ@mail.gmail.com>
+        <20170221230029.cs36tjwpsw2opuwp@sigill.intra.peff.net>
+        <CAGZ79kby-UhUqci9Mgdhw+wvS5Y39=Q7AmCrWaTMWbcZPNT6Dw@mail.gmail.com>
+Date:   Tue, 21 Feb 2017 15:37:37 -0800
+In-Reply-To: <CAGZ79kby-UhUqci9Mgdhw+wvS5Y39=Q7AmCrWaTMWbcZPNT6Dw@mail.gmail.com>
+        (Stefan Beller's message of "Tue, 21 Feb 2017 15:16:27 -0800")
+Message-ID: <xmqqo9xvdsji.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Feb 21, 2017 at 2:16 PM, Stefan Beller <sbeller@google.com> wrote:
-> On Fri, Feb 17, 2017 at 10:42 AM, Jacob Keller <jacob.keller@gmail.com> wrote:
->> On Wed, Feb 15, 2017 at 4:38 PM, Stefan Beller <sbeller@google.com> wrote:
->>> +       if (is_active_submodule_with_strategy(ce, SM_UPDATE_UNSPECIFIED))
->>
->> Here, and in other cases where we use
->> is_active_submodule_with_strategy(), why do we only ever check
->> SM_UPDATE_UNSPECIFIED? It seems really weird that we're only going to
->> check submodules who's strategy is unspecified, when that defaults to
->> checkout if I recall correctly? Shouldn't we check both? This applies
->> to pretty much everywhere that you call this function that I noticed,
->> which is why I removed the context.
->
-> I am torn between this.
->
-> submodule.<name>.update = {rebase, merge, checkout, none !command}
-> is currently documented in GIT-CONFIG(1) as
->
->        submodule.<name>.update
->            The default update procedure for a submodule. This variable is
->            populated by git submodule init from the gitmodules(5) file. See
->            description of update command in git-submodule(1).
->
-> and in GIT-SUBMODULE(1) as
->
->        update
->            [...] can be done in several ways
->            depending on command line options and the value of
->            submodule.<name>.update configuration variable. Supported update
->            procedures are:
->
->            checkout
->                [...] or no option is given, and
->                submodule.<name>.update is unset, or if it is set to checkout.
->
-> So the "update" config clearly only applies to the "submodule update"
-> command, right?
->
-> Well no, "checkout --recurse-submodules" is very similar
-> to running "submodule update", except with a bit more checks, so you could
-> think that such an option applies to checkout as well. (and eventually
-> rebase/merge etc. are supported as well.)
->
-> So initially I assumed both "unspecified" as well as "checkout"
-> are good matches to support in the first round.
->
-> Then I flip flopped to think that we should not interfere with these
-> settings at all (The checkout command does checkout and checkout only;
-> no implicit rebase/merge ever in the future, because that would be
-> confusing). So ignoring that option seemed like the way to go.
+Stefan Beller <sbeller@google.com> writes:
 
-Hmm. So it's a bit complicated.
-
+> On Tue, Feb 21, 2017 at 3:00 PM, Jeff King <peff@peff.net> wrote:
+> ...
+>> I guess one answer is that this is the wrong approach entirely, and the
+>> right one is something like: submodules should understand that they are
+>> part of a superproject, and respect some whitelisted set of config from
+>> the superproject .git/config file.
 >
-> But ignoring that option is also not the right approach.
-> What if you have set it to "none" and really *expect* Git to not touch
-> that submodule?
-
-Or set it to "rebase" and suddenly git-checkout is ignoring you and
-just checking things out anyways.
-
+> This would break one of the core assumptions that submodules
+> are "independent" repos.
 >
-> So I dunno. Maybe it is a documentation issue, we need to spell out
-> in the man page for checkout that --recurse-submodules is
-> following one of these models. Now which is the best default model here?
+> The way of action is a one way street:
+> * The superproject is aware of the submodule and when you invoke a
+> command on the superproject, you may mess around with the submodule,
+> e.g. update/remove it; absorb its git directory.
+> * The submodule is "just" a repository with weird .git link file and a
+>   respective core.worktree setup. Currently it doesn't know if it is
+>   guided by a superproject.
 
-Personally, I would go with that the config option sets the general
-strategy used by the submodule whenever its updated, regardless of
-how.
+While that is a good discipline to follow, I think you need to
+differenciate the project that is bound as a submodule to a
+superproject, and a specific instance of a submodule repository,
+i.e. a clone of such a project.
 
-So, for example, setting it to none, means that recurse-submoduls will
-ignore it when checking out. Setting it to rebase, or merge, and the
-checkout will try to do those things?
+It is true that the Linux kernel project should *NEVER* know your
+appliance project only because you happen to use it as a component
+of your appliance that happens to use the kernel as one of its
+submodules.  But that does not mean your copy of the kernel that
+sits in your recursive checkout of your appliance project should
+not know anything about your superproject.
 
-Or, if that's not really feasible, have the checkout go "hey.. you
-asked me to recurse, but uhhh these submodules don't allow me to do
-checkout, so I'm gonna fail"? I think that's the best approach for
-now.
+This is true even without any submodules.  The Git project itself
+does not even care you are Stefan, but you still can and do add
+[user] name = "Stefan Beller" to .git/config of your clone of the
+Git project.  A clone of the project may want to know more than the
+data project itself keeps track of to describe the context in which
+the particular clone is being used.  And .git/config is a good place
+to keep such pieces of information.
 
->
-> Thanks,
-> Stefan
+So I would think it is entirely reasonable if "git submodule init
+sub" that is run in the superproject to initialize "sub" writes
+something in "sub/.git" to tell that "sub" is used in the context of
+that particular toplevel superproject and customize its behavour
+accordingly.  Perhaps it may want to add the url.*.insteadOf that is
+useful for updating the submodule repository when it does "submodule
+init", for example.
