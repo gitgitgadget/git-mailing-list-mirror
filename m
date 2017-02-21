@@ -2,88 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3BCF3201B0
-	for <e@80x24.org>; Tue, 21 Feb 2017 19:42:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3B1692022D
+	for <e@80x24.org>; Tue, 21 Feb 2017 20:11:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752283AbdBUTm1 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 21 Feb 2017 14:42:27 -0500
-Received: from mail-it0-f44.google.com ([209.85.214.44]:37738 "EHLO
-        mail-it0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751687AbdBUTmZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Feb 2017 14:42:25 -0500
-Received: by mail-it0-f44.google.com with SMTP id 203so55820729ith.0
-        for <git@vger.kernel.org>; Tue, 21 Feb 2017 11:42:24 -0800 (PST)
+        id S1751462AbdBUULM (ORCPT <rfc822;e@80x24.org>);
+        Tue, 21 Feb 2017 15:11:12 -0500
+Received: from mail-pg0-f68.google.com ([74.125.83.68]:33973 "EHLO
+        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751397AbdBUULL (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Feb 2017 15:11:11 -0500
+Received: by mail-pg0-f68.google.com with SMTP id s67so9255665pgb.1
+        for <git@vger.kernel.org>; Tue, 21 Feb 2017 12:11:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=3LgkAwxrOrJmfibbQp/4fh2uxRXP4bby7pjmhwkl49Q=;
-        b=Nuyce2hn2S8JnpZQHKxu0ukCLT9b8zTY07YOV8UGisWMOn9N2b6ci0g2VqAx2BAi1s
-         07PfDoPUKukLUIsPOjbJVg8n2SY2SrZo8Nn+cG4lC/DiHi/ifujkCUh9EuHJFwICeyrv
-         LutkvU9csHbGtu9WVVJ8Tnd4OBwd+BncN0yyDJi/EpzmGgx5Jcz5zI/I3j1E+XV3smGX
-         oFOkFMUwSsBHfFPiNLf72ZetnRwTCyZE0BU8RhR6KbQDndAw7keo7guCNpicVp3sLMSU
-         jEKSzHv5LuE8eOHXMYJH89XQ5JkmRFJkkMOlt5IUrebCsjRccLnQTbQM+/6q5O3sHkSH
-         9YOA==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=eiG74z3Zok9J5FGkAqlZYDLiP+07Lyp5j1d1soibcnQ=;
+        b=VKBnJleJFkRmsN9qEMtuPeoSwujTpV1qnSBsMLTaHTUOtqtdjuGiP2oWxaNmmItGvA
+         +rnAA4VI+SpAQGp8/INialkLsrviDUljAoHBLdY94w270GRBd3XmhUuSDsgmEUGQjItF
+         f6e67SsZbndg1b8zBuhOknu2cNrZ1QCOXze/F7zwwDEB/unq79lMul9qOdcMN8gpNg0+
+         yvB45Vo5qg9IFgWjclRrdEz7zoxzCixcls0f2Rp4zMw2/3+u4L4G52pOC0fzTZk9Ibqt
+         Gz3BCSBxT2n0oelHv7Q3jyjk/c4NuCivp/hnRHsJW7YUmbLjnrUPzVEcyZUP/GPsUvYR
+         VH8A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=3LgkAwxrOrJmfibbQp/4fh2uxRXP4bby7pjmhwkl49Q=;
-        b=oZ9x2wXwY7UhoczqDG0KZ4WS77gNUt0Jj8YAg8P/8Ji39yGJ/nCOIdg8BddGwy1I+K
-         E7tRm1z5w/PdmYNfHEer2M/mGXCkxlma73Suukxy+i2ay6OMTlLW1PsciQzr4dJ+ODmI
-         ERJya7kQc901URkgasIXX3WsP00oYiV3k4Bfw3KJBza7SVJ41xVE9y6WmvHC7n0P0Hy5
-         yYAv/+Qhp3rlx2vJL+9c5i6zrjeFTN8iSLHmGuUWHD07XegQGi+EI5wQhBarvk7qHkUs
-         DCZ+ar4054qzH0+9Jt/IiX8Phl/CbGgWBGq5Zj7EOouiJdzcU+Ye0NWhOdc/XyR/N0hg
-         Xlyw==
-X-Gm-Message-State: AMke39lQWV9Uo1xDaJB+tWc/fAqFhVg/nmfkL+blQQs3civtw/qcxL7VzcRVa12L2Ya+owAA4+qSE3CTFd85zOLn
-X-Received: by 10.107.37.148 with SMTP id l142mr20090204iol.159.1487706144233;
- Tue, 21 Feb 2017 11:42:24 -0800 (PST)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=eiG74z3Zok9J5FGkAqlZYDLiP+07Lyp5j1d1soibcnQ=;
+        b=it1T0C1R4kCQSeOxJHm/q1tqDCRzSmYeWAsktwgfy0ph0OoYE9AWl/GLzMSxhTfQxZ
+         7PI1w8CvbZzYaiOtnun4k3cba0NlvwpcfNk9nosrz+PnZD36MGjHEZAuHV2iAnDVbhe4
+         vecCdzcCW1xUOx7m7dnsTAqXciF5DT0XiwCQME1A/dB+2D42ddO+tfK78fwmG7ByO14p
+         D/OriVHGFZDxJ9+N+mLdaO3ZxShu+BIsUyse5AAuHpgbEi7n0h94LRks8IWcdXX2Tkf0
+         OBnjiDgCWemUCorcWJnF+WFdstdlTBUgybReym7kS1KCk4cc9Wx36wZCitOG10zaGmvL
+         QJ9Q==
+X-Gm-Message-State: AMke39koa9BUHFsih/GQ5Jk87J9BTbj1lCuX1OsycxLplY6HLFy3jfRmHih0P7BuuBt5XQ==
+X-Received: by 10.98.194.22 with SMTP id l22mr35202085pfg.178.1487707870299;
+        Tue, 21 Feb 2017 12:11:10 -0800 (PST)
+Received: from localhost ([2620:0:1000:8622:d997:8b5d:f579:2a90])
+        by smtp.gmail.com with ESMTPSA id 73sm14691814pfh.56.2017.02.21.12.11.09
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Tue, 21 Feb 2017 12:11:09 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Linus Torvalds <torvalds@linux-foundation.org>
+Cc:     Jeff King <peff@peff.net>, Jacob Keller <jacob.keller@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: [RFC PATCH] show decorations at the end of the line
+References: <alpine.LFD.2.20.1702110943460.31350@i7.lan>
+        <CA+55aFw2S14a4_4YK0b6PNK4TH_AUo_+2JN+PTyBTufNeB5t6A@mail.gmail.com>
+        <xmqq1sv2fq6m.fsf@gitster.mtv.corp.google.com>
+        <CA+55aFy-vvOBu5Y4KDeteUyK-7U7yTa1HoqHo+hME1=8bq7Xhw@mail.gmail.com>
+        <xmqq7f4tdcua.fsf@gitster.mtv.corp.google.com>
+        <xmqqr330779h.fsf@gitster.mtv.corp.google.com>
+        <20170215002901.gtzegvhyy7d6cvrb@sigill.intra.peff.net>
+        <xmqqefywnk5a.fsf@gitster.mtv.corp.google.com>
+        <CA+55aFw3ZRtgsLGW-TFqpq-3uCw55L42p7cF=Q-73qM_VPuYsQ@mail.gmail.com>
+        <CA+P7+xqtPwzt3J6O05TP=E_hh-ko97adn+__Zmc0DNSDqEnEHw@mail.gmail.com>
+        <20170220004648.c2zz6bm2hylvep6x@sigill.intra.peff.net>
+        <CA+55aFwdUxCvmi28T3yn1K4rqn2bZmJBdTRr7tSbMa-g5izHbw@mail.gmail.com>
+Date:   Tue, 21 Feb 2017 12:11:08 -0800
+In-Reply-To: <CA+55aFwdUxCvmi28T3yn1K4rqn2bZmJBdTRr7tSbMa-g5izHbw@mail.gmail.com>
+        (Linus Torvalds's message of "Sun, 19 Feb 2017 17:48:28 -0800")
+Message-ID: <xmqqpoibfgo3.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.79.33.148 with HTTP; Tue, 21 Feb 2017 11:42:23 -0800 (PST)
-In-Reply-To: <CA+P7+xozip8TuvyUe9vAPYLAg=QFieExhOyR7a0pgGFhiuO3jw@mail.gmail.com>
-References: <xmqq8tp74823.fsf@gitster.mtv.corp.google.com> <20170216003811.18273-1-sbeller@google.com>
- <20170216003811.18273-7-sbeller@google.com> <CA+P7+xozip8TuvyUe9vAPYLAg=QFieExhOyR7a0pgGFhiuO3jw@mail.gmail.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Tue, 21 Feb 2017 11:42:23 -0800
-Message-ID: <CAGZ79kZyFfC9Xx-p8dpoAFFpz48BqmftpMonuxeiKg1sV68iuQ@mail.gmail.com>
-Subject: Re: [PATCH 06/15] update submodules: add submodule config parsing
-To:     Jacob Keller <jacob.keller@gmail.com>
-Cc:     Git mailing list <git@vger.kernel.org>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Brandon Williams <bmwill@google.com>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Feb 17, 2017 at 10:24 AM, Jacob Keller <jacob.keller@gmail.com> wrote:
+Linus Torvalds <torvalds@linux-foundation.org> writes:
+
+> That source showing should never have been in "show_decorations()" in
+> the first place. It just happened to be a convenient place for it.
 >
-> Ok so this function here reads a recurse submodules parameter which is
-> a boolean or it can be set to the word "checkout"? Why does checkout
-> need its own value separate from true? Just so that we have a synonym?
-> or so that we can expand on it in the future?
+> So this attached patch is just my original patch updated to split up
+> "show_source()" from "show_decorations()", and show it where it used
+> to be.
 
-I think eventually we want all the commands that touch the worktree to
-be able to cope with submodules.
+The updated organization smells a lot better to me ;-) 
 
-  Now what should e.g. git-revert --recurse-submodules do?
-  yes == "checkout" means we'd revert the superproject commit and
-  if that commit changed any submodule pointers we'd just "checkout"
-  those states in the submodule.
+Most of the time it is convenient to have "show source" at the
+beginning of a single helper that is to show both, but oneline
+format is so special that it makes it inconvenient to have them at
+the same place.
 
-  For revert you could also imagine to have
-  git-revert --recurse-submodules=revert-in-subs
-  that would not repoint the submodule pointer to the old state, but
-  would try to revert $OLD..$NEW in the submodule and take the newly
-  reverted state as the new submodule pointer.
+I can lose the patch to 4202 (update the expectation for --source)
+I added to the previous one, but the patch to 4207 (update the
+expectation for --decorate) needs to be kept with this round.
 
-As I want to focus on checkout first, I went with "yes == checkout"
-here (or rather the other way round).
+Will replace; thanks.
