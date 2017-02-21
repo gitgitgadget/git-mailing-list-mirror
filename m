@@ -3,99 +3,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CBCB0201A9
-	for <e@80x24.org>; Tue, 21 Feb 2017 01:11:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BAD4C201A9
+	for <e@80x24.org>; Tue, 21 Feb 2017 01:11:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751171AbdBUBK5 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 20 Feb 2017 20:10:57 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:60381 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751119AbdBUBKx (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Feb 2017 20:10:53 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id DF624696CA;
-        Mon, 20 Feb 2017 20:10:51 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:date:message-id:in-reply-to:references; s=sasl; bh=PC1Q
-        pb1yhwLQP5DiCnt9Z+el5BY=; b=TPb4lC6uhKcIR3JDhDUdcmSWGxod/+TJUpzc
-        G4us4VCRjrToxZKx9NN7tEFrYXL916/WyFJJ1g5I0ufRocD2hbZHrrBWE/2eBVy7
-        Pobxf4oZF60KRJUuaUjiVyNd2ZDOrg5WTOXB6FARkkXkb8TAvY7g9bmRoDdruDi7
-        EfTN7zY=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id D6E9D696C9;
-        Mon, 20 Feb 2017 20:10:51 -0500 (EST)
-Received: from kmlap.hsd1.ct.comcast.net (unknown [24.60.167.92])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        id S1751202AbdBUBLH (ORCPT <rfc822;e@80x24.org>);
+        Mon, 20 Feb 2017 20:11:07 -0500
+Received: from castro.crustytoothpaste.net ([75.10.60.170]:39010 "EHLO
+        castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1751195AbdBUBLG (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 20 Feb 2017 20:11:06 -0500
+Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 0ADF9696C4;
-        Mon, 20 Feb 2017 20:10:50 -0500 (EST)
-From:   Kyle Meyer <kyle@kyleam.com>
-To:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
-Cc:     Kyle Meyer <kyle@kyleam.com>, git@vger.kernel.org
-Subject: [PATCH v2 3/4] rename_ref: replace empty message in HEAD's log
-Date:   Mon, 20 Feb 2017 20:10:34 -0500
-Message-Id: <20170221011035.847-4-kyle@kyleam.com>
-X-Mailer: git-send-email 2.11.1
-In-Reply-To: <20170221011035.847-1-kyle@kyleam.com>
-References: <20170217035800.13214-1-kyle@kyleam.com>
- <20170221011035.847-1-kyle@kyleam.com>
-X-Pobox-Relay-ID: 95EB9374-F7D2-11E6-A11D-FE3F13518317-24757444!pb-smtp1.pobox.com
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=kyleam.com;
- h=from:to:cc:subject:date:message-id:in-reply-to:references; s=mesmtp;
- bh=PC1Qpb1yhwLQP5DiCnt9Z+el5BY=;
- b=r1gUUkkll4Gyqpv9OwEJKbyGFVpm/XqPNJ62NNAfDdpMEkTA22clsQH137GKDIbMVafofL9lTmLehztq9EQBrCHVgiDEY95RBdoq2G69v+ex1y9bgDT7inPpd01yoAlNSvwk1D1aIXf2ZhH6eIIsM0NmxBJIuTFt/jhSAOpwIP4=
+        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id D14E2280AD;
+        Tue, 21 Feb 2017 01:11:04 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
+        s=default; t=1487639464;
+        bh=Y5MYmTXM+5r+1nYd6VDREAbSHSDrARp8vE1cbXZRCh0=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=EbXkVo7z5onyPjaQf/T+XYXuCYDeLk9Go+wtPfiIO2Gaoc/GXcjzFBXO31tnP+30T
+         PHglugL3azbdUQ1QdSSWVYUl2xRVCYxTc/PhDkQYU/su1jXXRM0CPn3dHJUFwpi+qO
+         yddKJyn4jz7exMDkEeqi8yMl5gnVLhoXO0kgXQf+Co9CsbF8hynSpP3zjxIZh4D6hw
+         ycbaphZ9FnwASpUZWAkkxS9rdnydH0taAEhMjt56Vkheb0cibKy3OnCngxpgwsx4OM
+         wvabuNExk156Ik1cWR2MLZLTtKJTN7u2qRevECc4ES5+eMJ0Kq3VlTKyom3rS2wtgo
+         D1UTJQ207+lREKjjBPFAZTCBdQBa/NDeGIlfvfgeryLW+8JNMfARfslKATtJIzoaX/
+         hYEYLfrD77U4jOWemH+yFA3q1tph+DJm1BbiBuR/UjOAWa3eNL5jd5SNbnyC1GphvD
+         ikDTiyK+YGGLPkwf5vShzyB1Sjy3CNqgaFHvTfx1zf4+k/IPkPh
+Date:   Tue, 21 Feb 2017 01:10:58 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>,
+        Junio C Hamano <gitster@pobox.com>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>
+Subject: Re: [PATCH v4 03/19] builtin/diff-tree: convert to struct object_id
+Message-ID: <20170221011058.cpx7uio6ibkvrtbv@genre.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Jeff King <peff@peff.net>, git@vger.kernel.org,
+        Michael Haggerty <mhagger@alum.mit.edu>,
+        Junio C Hamano <gitster@pobox.com>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>
+References: <20170220001031.559931-1-sandals@crustytoothpaste.net>
+ <20170220001031.559931-4-sandals@crustytoothpaste.net>
+ <20170220080902.vkexezd5solnhrhb@sigill.intra.peff.net>
+ <20170221002519.55d4mlljia3mposi@genre.crustytoothpaste.net>
+ <20170221010836.nuv6uvyzatql2yyu@sigill.intra.peff.net>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="yz5mcdhxyvud5rp5"
+Content-Disposition: inline
+In-Reply-To: <20170221010836.nuv6uvyzatql2yyu@sigill.intra.peff.net>
+X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
+ 4.9.0-2-amd64)
+User-Agent: NeoMutt/20170113 (1.7.2)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When the current branch is renamed, the deletion of the old ref is
-recorded in HEAD's log with an empty message.  Now that delete_ref()
-accepts a reflog message, provide a more descriptive message by
-passing along the log message that is given to rename_ref().
 
-The next step will be to extend HEAD's log to also include the second
-part of the rename, the creation of the new branch.
+--yz5mcdhxyvud5rp5
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Helped-by: Jeff King <peff@peff.net>
-Signed-off-by: Kyle Meyer <kyle@kyleam.com>
----
- refs/files-backend.c | 2 +-
- t/t3200-branch.sh    | 5 +++++
- 2 files changed, 6 insertions(+), 1 deletion(-)
+On Mon, Feb 20, 2017 at 08:08:36PM -0500, Jeff King wrote:
+> On Tue, Feb 21, 2017 at 12:25:19AM +0000, brian m. carlson wrote:
+>=20
+> > On Mon, Feb 20, 2017 at 03:09:02AM -0500, Jeff King wrote:
+> > > It's a little disturbing that we do not seem to have even a basic test
+> > > of:
+> > >=20
+> > >   git rev-list --parents HEAD | git diff-tree --stdin
+> > >=20
+> > > which would exercise this code.
+> >=20
+> > I'm unsure, so I'll add a test.  The only way to know if it works is to
+> > test it.
+>=20
+> Not to spoil the ending, but I did test and it does not work. :)
 
-diff --git a/refs/files-backend.c b/refs/files-backend.c
-index 299eb4d8a..f6e7c192c 100644
---- a/refs/files-backend.c
-+++ b/refs/files-backend.c
-@@ -2616,7 +2616,7 @@ static int files_rename_ref(struct ref_store *ref_store,
- 		return error("unable to move logfile logs/%s to "TMP_RENAMED_LOG": %s",
- 			oldrefname, strerror(errno));
- 
--	if (delete_ref(NULL, oldrefname, orig_sha1, REF_NODEREF)) {
-+	if (delete_ref(logmsg, oldrefname, orig_sha1, REF_NODEREF)) {
- 		error("unable to delete old %s", oldrefname);
- 		goto rollback;
- 	}
-diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
-index 8a833f354..0dbc54003 100755
---- a/t/t3200-branch.sh
-+++ b/t/t3200-branch.sh
-@@ -139,6 +139,11 @@ test_expect_success 'git branch -M baz bam should succeed when baz is checked ou
- 	test $(git rev-parse --abbrev-ref HEAD) = bam
- '
- 
-+test_expect_success 'git branch -M baz bam should add entry to .git/logs/HEAD' '
-+        msg="Branch: renamed refs/heads/baz to refs/heads/bam" &&
-+	grep " 0\{40\}.*$msg$" .git/logs/HEAD
-+'
-+
- test_expect_success 'git branch -M baz bam should succeed when baz is checked out as linked working tree' '
- 	git checkout master &&
- 	git worktree add -b baz bazdir &&
--- 
-2.11.1
+Well, then I suppose I'll also end up sending out a new patch series. :)
+--=20
+brian m. carlson / brian with sandals: Houston, Texas, US
++1 832 623 2791 | https://www.crustytoothpaste.net/~bmc | My opinion only
+OpenPGP: https://keybase.io/bk2204
 
+--yz5mcdhxyvud5rp5
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.1.18 (GNU/Linux)
+
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlirk6IACgkQv1NdgR9S
+9osu9w/+L8tv8lWqNWlNCEsmcIsCIVcNqHn5B4EVWk4Zqj6nLj4z6iXHTtPspG9v
+Fn9NF4lxJWfMRqPVaL/1FL+gddCjK+8XPbQeaBOlmzXcocKlKgRs1qXWAXgbbJPG
+uUvVFBCfgTDZNi+tC+i/c+exJ0Bv+zHOupwtB/jsgrq1u3JI1TJGh7d1RxDF5QMo
+r8ttkvtLzPPZF+eUY8B8XstN3QC9RWbepB+QnCPnAfbvkeOgfhVGaZSotBhk+dwL
+VUBCbRU4rXFdI59LbAMA+MxAsqN9mNkJYfYO7PRYU/gDxhdpf2rYFvTW83ryVqy1
+4n8h7TSbJqPWE3EAu6FWGsiB8y03J2njt4Th2hwh8iDs9hFsvGIMBOsTHZbWNH94
+unmbyj7xVv2Du8lWcwGdNCa8eCRWgT4e2t/C9CtIViqNOWZIr0oVuGu2O1oUMGMH
+BQaP6FP28qQJVfrMj7kbRTSol4ccFeQqDQEWpByHaiVyq+S6Wo33SZtGjP+yQaNy
+9zr1GPzkIeF64W6yL81kXTOA0YnhHFxz/yCzTJIWVjUjWYeneAALlbzDzI+y4BIV
+fWomc1qpIzipfHeReWps2bYTccdC8iFN8uaX01WcT6wE6UPwZcQudBCT968Oo0kJ
+WLuighQGtnPzTYdgD/IS4vy4TT9YZqMLZpwUgcKhh+Fw2RgLljI=
+=7Plb
+-----END PGP SIGNATURE-----
+
+--yz5mcdhxyvud5rp5--
