@@ -2,104 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7B3B4201A9
-	for <e@80x24.org>; Tue, 21 Feb 2017 20:48:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 64A30201A9
+	for <e@80x24.org>; Tue, 21 Feb 2017 20:49:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753048AbdBUUsJ (ORCPT <rfc822;e@80x24.org>);
-        Tue, 21 Feb 2017 15:48:09 -0500
-Received: from mail-pg0-f65.google.com ([74.125.83.65]:35857 "EHLO
-        mail-pg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752605AbdBUUsH (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Feb 2017 15:48:07 -0500
-Received: by mail-pg0-f65.google.com with SMTP id z128so1183805pgb.3
-        for <git@vger.kernel.org>; Tue, 21 Feb 2017 12:48:07 -0800 (PST)
+        id S1752357AbdBUUtD (ORCPT <rfc822;e@80x24.org>);
+        Tue, 21 Feb 2017 15:49:03 -0500
+Received: from mail-lf0-f53.google.com ([209.85.215.53]:33293 "EHLO
+        mail-lf0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751271AbdBUUtB (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Feb 2017 15:49:01 -0500
+Received: by mail-lf0-f53.google.com with SMTP id l12so32953321lfe.0
+        for <git@vger.kernel.org>; Tue, 21 Feb 2017 12:49:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=sw5D1DQmm313yP6v4PPCc3wYzdQEW36G8nH4FTU6w4c=;
-        b=mBPOsvz0F4Mk81pOrhq3pZVWoCDEGJirRgYy7CWNRUJBiSig5OvlDf9GEEqtCiJv9g
-         lweXiWx14hGh79GV4qO7rGvOfM1L/FNMFZe+a//fqJA0zVmYBOjpRWJLy/PEcIIAr4ds
-         a5h39RaB3zBvh65QokFOeoBKk+DFrsB6PQfLJi+1VIn5GXFKIJzzpS5j3ujoh7JPEQKM
-         F0zPFoDF2a0N020DHiV1yTrZTgIW+T7hwZVfZfOonRcT+J5AiwzuqXXj1d2EpeBOBW5w
-         86q585RB65x+4SYskpzFSrxyUon0bL9lFdlONzNxzhd+uw0ILC4cj+5qgBiss/RJWics
-         1k8g==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=JWI4vxBSyETgS3Y2uZtFS3LxsgMT4DU5YgxGEr8SUAk=;
+        b=frgnYgwWgGwl8xnnh1Bh+SCltcKybRvAYApqltXdGDGvRKITDl/gSIvfbY7hIp7lvB
+         Xkg1TkL2P3nSBXrdEv4hUWUQImxjx7iAZosKDWFqUBnSGFY/kdwYKI+DnSP0UJAa9IJf
+         ZiLDQzeX96nxJRHdoDZjJO0v0f/gVnbGLMEpvBaVt2xe6k+9mnerBk5z9Q6vBeBHuh4C
+         pyXwqA+iRg/fz3Q/LDWHNq3l7xYNJcUETLb/wwBsYm2vUP5BgfCSQ+OuIiBl0rMTiThY
+         5t7Wp9nq3hAYGYID4P+ZpoIon/kGBEbrG3qzv6T7fz7eIg/KpwhYIZ5kVZOPo62FSpXM
+         3Waw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=sw5D1DQmm313yP6v4PPCc3wYzdQEW36G8nH4FTU6w4c=;
-        b=cFOufYl/Il0LL6ijxC9MuIVBeyPkzZfcwWTtRl47BzNZkpaMMLRpo0rx38HjSMPb12
-         AyRNJn/s6E/nm6PdrUgqUu2DICuluxZr1iHKJ6kA7M+bz7XKoHXG8icCrVpcq9rN0fJY
-         HuVsw02Ze4jWZ9StpaoVwuKPtUKqr6AZPnPjCfqjQ9437Noar2oAxRXq45GQDjGEVWvw
-         /vntr/dKKGJa11jB3AddlEEW5kQvl6x6fMEUZfdX1ZLXM+kGokgnip0XKuuhiDctvkg5
-         +iPrnZx+E7TfxiE13CRJY2fCEhRhZ8M+/oxQjAMCGOTG3/UZ5J2rx+D0oIJKVftiXXOj
-         10Hg==
-X-Gm-Message-State: AMke39mDzBkRHT7a9lsfvlHWhflCKYlycgTY6ep8FpqrrRfkDQXgy80Gyl+DNpBSZ72LuA==
-X-Received: by 10.84.229.76 with SMTP id d12mr42740645pln.21.1487710086631;
-        Tue, 21 Feb 2017 12:48:06 -0800 (PST)
-Received: from localhost ([2620:0:1000:8622:d997:8b5d:f579:2a90])
-        by smtp.gmail.com with ESMTPSA id n80sm970214pfb.111.2017.02.21.12.48.05
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 21 Feb 2017 12:48:05 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Andreas Heiduk <asheiduk@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] Documentation: Link git-ls-files to core.quotePath variable.
-References: <2b0ce702-60de-534b-8a86-5c7ae84060de@gmail.com>
-Date:   Tue, 21 Feb 2017 12:48:04 -0800
-In-Reply-To: <2b0ce702-60de-534b-8a86-5c7ae84060de@gmail.com> (Andreas
-        Heiduk's message of "Sun, 19 Feb 2017 23:05:59 +0100")
-Message-ID: <xmqqh93nfeyj.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=JWI4vxBSyETgS3Y2uZtFS3LxsgMT4DU5YgxGEr8SUAk=;
+        b=IHFiT8hZhGM4xw6CzKIM0e/nPZjFxR/8a899Mqo9bGK6cZx0kU5oYrmKkepOeoaJJi
+         AfB+fQnyKJVRR1xf/idrSxXJDY8NvuFh8q+WjyRg1DHxOniTGJhGpFYqmWOT8KuOBOs7
+         JKPT41oNOdMYEUplIn69Jx84h5j59orCr13O2O8wENIikRnIUOlCtJ3DR8HUvD14vveQ
+         fvTKC1wVgqGjSnNKztKpTBP1C1z3bBNExcABmOOyOzwHBHQCH2NU8z1kx9K5n5j4iH9C
+         l7/W+Mqq72bvy8qo3PAr3WoV48jqLJxaoTqMB92hNfEXNpfYk8umtG8CdSo8Mh5obsuF
+         eayQ==
+X-Gm-Message-State: AMke39kcE8moRsZJhMI/CgH8W9r959RKKD1RIMSyjW8XBlBcsqymiquEmbqhApAe/PgzxRHab0CfDw0rfZkAOw==
+X-Received: by 10.46.22.11 with SMTP id w11mr7524080ljd.108.1487710139698;
+ Tue, 21 Feb 2017 12:48:59 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
+Received: by 10.25.145.30 with HTTP; Tue, 21 Feb 2017 12:48:39 -0800 (PST)
+In-Reply-To: <CAGZ79kZyFfC9Xx-p8dpoAFFpz48BqmftpMonuxeiKg1sV68iuQ@mail.gmail.com>
+References: <xmqq8tp74823.fsf@gitster.mtv.corp.google.com> <20170216003811.18273-1-sbeller@google.com>
+ <20170216003811.18273-7-sbeller@google.com> <CA+P7+xozip8TuvyUe9vAPYLAg=QFieExhOyR7a0pgGFhiuO3jw@mail.gmail.com>
+ <CAGZ79kZyFfC9Xx-p8dpoAFFpz48BqmftpMonuxeiKg1sV68iuQ@mail.gmail.com>
+From:   Jacob Keller <jacob.keller@gmail.com>
+Date:   Tue, 21 Feb 2017 12:48:39 -0800
+Message-ID: <CA+P7+xoVOxBgubfZP1uUnbXvbVNrCN_w2je7_tcxJ97pXzL1VQ@mail.gmail.com>
+Subject: Re: [PATCH 06/15] update submodules: add submodule config parsing
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Git mailing list <git@vger.kernel.org>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Brandon Williams <bmwill@google.com>,
+        Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Andreas Heiduk <asheiduk@gmail.com> writes:
-
-> Add a hint for script writers where additional quoting can be configured.
+On Tue, Feb 21, 2017 at 11:42 AM, Stefan Beller <sbeller@google.com> wrote:
+> On Fri, Feb 17, 2017 at 10:24 AM, Jacob Keller <jacob.keller@gmail.com> wrote:
+>>
+>> Ok so this function here reads a recurse submodules parameter which is
+>> a boolean or it can be set to the word "checkout"? Why does checkout
+>> need its own value separate from true? Just so that we have a synonym?
+>> or so that we can expand on it in the future?
 >
-> Signed-off-by: Andreas Heiduk <asheiduk@gmail.com>
-> ---
->  Documentation/git-ls-files.txt | 3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
+> I think eventually we want all the commands that touch the worktree to
+> be able to cope with submodules.
 >
-> diff --git a/Documentation/git-ls-files.txt b/Documentation/git-ls-files.txt
-> index 446209e..19e0636 100644
-> --- a/Documentation/git-ls-files.txt
-> +++ b/Documentation/git-ls-files.txt
-> @@ -198,7 +198,8 @@ path. (see linkgit:git-read-tree[1] for more information on state)
->  
->  When `-z` option is not used, TAB, LF, and backslash characters
->  in pathnames are represented as `\t`, `\n`, and `\\`,
-> -respectively.
-> +respectively. The path is also quoted according to the
-> +configuration variable `core.quotePath` (see linkgit:git-config[1]).
+>   Now what should e.g. git-revert --recurse-submodules do?
+>   yes == "checkout" means we'd revert the superproject commit and
+>   if that commit changed any submodule pointers we'd just "checkout"
+>   those states in the submodule.
+>
+>   For revert you could also imagine to have
+>   git-revert --recurse-submodules=revert-in-subs
+>   that would not repoint the submodule pointer to the old state, but
+>   would try to revert $OLD..$NEW in the submodule and take the newly
+>   reverted state as the new submodule pointer.
+>
+> As I want to focus on checkout first, I went with "yes == checkout"
+> here (or rather the other way round).
 
-I was waiting for others to comment on this patch but nobody seems
-to be interested.  Which is a bit sad, as this may not be a bad
-idea.
+Ok I understand, but this seems like the variable could eventually
+start to included more and more complex things? For now, "checkout"
+means "when changing submodules prefer to check out contents" right?
 
-If we refer to core.quotePath, the mention of control characters
-being quoted can also be omitted, I think, as that is part of what
-appears in the description of core.quotePath variable.
+I guess that sort of makes some sense.
 
-Alternatively, instead of referring to another page, we can spend
-the additional lines to say what is more interesting to most of the
-readers from that page, e.g.
-
-    When `-z` option is not used, a pathname with "unusual" characters
-    in it is quoted by enclosing it in a double-quote pair and with
-    backslashes the same way strings in C source code are quoted.  By
-    setting core.quotePath configuration to false, the bytes whose
-    values are higher than 0x80 are output verbatim.
-
+Thanks,
+Jake
