@@ -2,89 +2,113 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8629D201B0
-	for <e@80x24.org>; Tue, 21 Feb 2017 19:05:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2B13A201B0
+	for <e@80x24.org>; Tue, 21 Feb 2017 19:16:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753063AbdBUTFX (ORCPT <rfc822;e@80x24.org>);
-        Tue, 21 Feb 2017 14:05:23 -0500
-Received: from mail-pg0-f68.google.com ([74.125.83.68]:32819 "EHLO
-        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751659AbdBUTEM (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Feb 2017 14:04:12 -0500
-Received: by mail-pg0-f68.google.com with SMTP id 5so19564680pgj.0
-        for <git@vger.kernel.org>; Tue, 21 Feb 2017 11:04:12 -0800 (PST)
+        id S1754694AbdBUTQP (ORCPT <rfc822;e@80x24.org>);
+        Tue, 21 Feb 2017 14:16:15 -0500
+Received: from mail-it0-f49.google.com ([209.85.214.49]:35149 "EHLO
+        mail-it0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754684AbdBUTQA (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Feb 2017 14:16:00 -0500
+Received: by mail-it0-f49.google.com with SMTP id 203so122777162ith.0
+        for <git@vger.kernel.org>; Tue, 21 Feb 2017 11:15:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=cU5BwUeEP+wZ9mFXWYIPzb/X8knP03B5GGtHXT6fuYo=;
-        b=UCNMPClfj8gh5vVXZCtmkBUVdrVgoc4kqfPLM4tFL6CaWDzm3rf/iuDkVRaWp8oOP/
-         sBjm+688N6clK5sq3LSN9RJqs757CQ1K3ZPUzeRhyIhQ3c99Q1+GuMk31cGORDqlbrzH
-         ibbfbolg8iWQY1OMHnGlWMWtyVzIBVjMMTF8OACB7kUFOdFsHTY310jGghu3OZa7aP0H
-         JzDZM8AabNceRtB0/WKDYdcGNVYuYjLibvL8kQ/lkvDBB3We4irTKMBdvF5/Lmopl6Ps
-         Rtf7NDSJai4+SgPpWhKEaBIj7IrCVVHkysJs11/YqNLd5fRRNEAu1tQPqNz+PsiYbii8
-         XHeQ==
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=mdXb9uR8K053JDTr9PegKruN0b7cLooMz/Sqqt6PdH4=;
+        b=FNuglQ1H2vt6mdOMCQFWt0IsCua0+q8/+PAP+l3pL0rO+AzHemWHdSmSkI+0etV67P
+         Zc2T9LSLvYp7ojcleBB6FrwbEwVGsX0UrNGax669sboR12zAfgaLvQXx7SPIwLV7XvVV
+         VlJcDVg7Z1JkcCKtp2m5v+CL+LyRTsSS7gEko9bL2LDu8tW0s+1AnXMuRtnBcgNZNeQr
+         W3gmLNdR5jtB5v0/DbxgrSWPSwmaCHfwn9p/JiEQI7Th5zI1w74wbG+1DmX1AWuZS7tQ
+         xtqNKbVZDUZMVT4miIuhnzDZ4YrA7i4MiRT0wkV3LLZyOkJMC7SSYLFHJUTTYfwsQdcf
+         QEBA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=cU5BwUeEP+wZ9mFXWYIPzb/X8knP03B5GGtHXT6fuYo=;
-        b=rJ1GmGNgZlssuiP9iumM2R+HoW5YXM7j7uzGQXb3MpGyi90zODa8QoKfddRPyvaq1c
-         AocSVu4HK9s/EfLYcIPfQrCK+GTEcyaAj1tPiUjlWO78mKhqA4U15ew4Th8D50w445+e
-         QXrNfd1nwYFDyq7ScMW9t2b/9l2qpxJyd3FoIvU7d8CAOqPNqNSuywoXEVwyqk1qth7w
-         Alvy7Z8AaxZKRv3fzvbgslfPqPfHy1iAJEa10V2fvcThh7zhUL8Z4bz/nCWLCgNVQw8U
-         IrcqaBRcLHabUi9HlTXlwbzsA5aP3VV+SqaQWp4he9vwQQuVCbHwfNdy0eupgwHDc6pf
-         ffOQ==
-X-Gm-Message-State: AMke39l92023di6mNcp3vK89nbbKEJTNXV5HuCpuOpCzpgxeEa0RWePslqhG5GLqBkdldQ==
-X-Received: by 10.99.43.74 with SMTP id r71mr17000122pgr.83.1487703851537;
-        Tue, 21 Feb 2017 11:04:11 -0800 (PST)
-Received: from localhost ([2620:0:1000:8622:d997:8b5d:f579:2a90])
-        by smtp.gmail.com with ESMTPSA id r78sm42427739pfl.63.2017.02.21.11.04.10
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 21 Feb 2017 11:04:10 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Dov Grobgeld <dov.grobgeld@gmail.com>
-Cc:     Nikita Malikov <nikitam@devart.com>,
-        Konstantin Khomoutov <kostix+git@007spb.ru>,
-        git@vger.kernel.org
-Subject: Re: Partnership with Git
-References: <02FFA5DBB1C64A8DA1BF45F11EBF9930@datasoft.local>
-        <20170221152216.be2b8401f65650bf766cdd8d@domain007.com>
-        <D0D8D50D4A2E47568029FE8BC52C3DC4@datasoft.local>
-        <CA++fsGEvYPeP1UYniHF7OnowTH8-UeH3Kwe2KqaYMRouWVzEbg@mail.gmail.com>
-Date:   Tue, 21 Feb 2017 11:04:09 -0800
-In-Reply-To: <CA++fsGEvYPeP1UYniHF7OnowTH8-UeH3Kwe2KqaYMRouWVzEbg@mail.gmail.com>
-        (Dov Grobgeld's message of "Tue, 21 Feb 2017 17:04:21 +0200")
-Message-ID: <xmqqy3wzfjrq.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=mdXb9uR8K053JDTr9PegKruN0b7cLooMz/Sqqt6PdH4=;
+        b=hPlNsmTr8dawbnN36MJe1IJg7ggiviDabDKclYJuzpCBW31dVXcHbAeUsudtieCT1C
+         IIkPQT1iQg+PqjT0BCnQl1x3UGaI5J54SDm1AX9C3+Qy5IyY7CAPcWByacIOHYpRZFH9
+         X2IgQxOLg69T4aM6337cX3JIH+AVZ6Je2a8J/qUcCDLmqTPMSldTTssPnGFxmClF4Yg0
+         fKatXZPFEJ/ZqSyVsuRpyiWVlpVee5XOtfuk8OGK3gUoD+qRJ/mfWkC4zXX/UeQ7IJWA
+         7J0BteAup68WOlOubSrNFqWUumO4LO+zcTm64sXFXczKZCZ8vFUTD3CS14YkOgAdWjpy
+         exoQ==
+X-Gm-Message-State: AMke39nQ22lhJCNsvMLyI4bHKul+WF2TwogsFlIcE9+ADAlhRwCHsGBQw5QZU/JqcSOTVeRHuyhcDSXSmJoWhEae
+X-Received: by 10.36.225.13 with SMTP id n13mr11262686ith.114.1487704553329;
+ Tue, 21 Feb 2017 11:15:53 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
+Received: by 10.79.33.148 with HTTP; Tue, 21 Feb 2017 11:15:52 -0800 (PST)
+In-Reply-To: <xmqq37f7gyuj.fsf_-_@gitster.mtv.corp.google.com>
+References: <20170215111704.78320-1-larsxschneider@gmail.com>
+ <xmqqzihn2smp.fsf@gitster.mtv.corp.google.com> <f238248f-0df2-19a5-581d-95c8a61b4632@google.com>
+ <xmqqy3x712if.fsf@gitster.mtv.corp.google.com> <xmqqtw7v123n.fsf@gitster.mtv.corp.google.com>
+ <xmqqa89n10df.fsf_-_@gitster.mtv.corp.google.com> <D0CDD1AC-05CA-47F3-8CB5-61EA1C6515A8@gmail.com>
+ <20170216232730.xsx3xks5ppjws5rg@sigill.intra.peff.net> <xmqqwpcptxps.fsf@gitster.mtv.corp.google.com>
+ <xmqqino5jia8.fsf@gitster.mtv.corp.google.com> <xmqq37f7gyuj.fsf_-_@gitster.mtv.corp.google.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Tue, 21 Feb 2017 11:15:52 -0800
+Message-ID: <CAGZ79kbR2QQyYO1dnQ0jW3-ztKEFj1MtJfDqEc0xoftMFeN=WA@mail.gmail.com>
+Subject: Re: [PATCH] config: reject invalid VAR in 'git -c VAR=VAL command'
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Dov Grobgeld <dov.grobgeld@gmail.com> writes:
+On Tue, Feb 21, 2017 at 10:53 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> The parsing of one-shot assignments of configuration variables that
+> come from the command line historically was quite loose and allowed
+> anything to pass.
+>
+> The configuration variable names that come from files are validated
+> in git_config_parse_source(), which uses get_base_var() that grabs
+> the <section> (and subsection) while making sure that <section>
+> consists of iskeychar() letters, the function itself that makes sure
+> that the first letter in <variable> is isalpha(), and get_value()
+> that grabs the remainder of the <variable> name while making sure
+> that it consists of iskeychar() letters.
+>
+> Perform an equivalent check in canonicalize_config_variable_name()
+> to catch invalid configuration variable names that come from the
+> command line.
+>
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+>
+>     Junio C Hamano <gitster@pobox.com> writes:
+>
+>     > One thing I noticed is that "git config --get X" will correctly
+>     > diagnose that a dot-less X is not a valid variable name, but we do
+>     > not seem to diagnose "git -c X=V <cmd>" as invalid.
+>     >
+>     > Perhaps we should, but it is not the focus of this topic.
+>
+>     And here is a follow-up on that tangent.
 
-> As git is free software, you are free to use it in any way you see fit, as
-> long as you adhere to its licensing terms, and to the copyright
-> restrictions on using the term "git". Thus there is no need to ask
-> permission and there does not on the git side exist any entity interested
-> in "cross marketing activities".
+Combining this thought with another email[1] that flew by,
+do we also need to have this treatment for "git clone -c"
+[1] http://public-inbox.org/git/EC270E42-9431-446C-96F9-E1A0C3E45333@gmail.com/
 
-s/copyright/trademark/.  
+>
+> +for VAR in a .a a. a.0b a."b c". a."b c".0d
+> +do
+> +       test_expect_success "git -c $VAR=VAL rejects invalid '$VAR'" '
+> +               test_must_fail git -c $VAR=VAL config -l
+> +       '
+> +done
+> +
+>  test_expect_success 'git -c is not confused by empty environment' '
+>         GIT_CONFIG_PARAMETERS="" git -c x.one=1 config --list
 
-As one of Software Freedom Conservancy projects, I suspect that the
-Git PLC git@sfconservancy.org may be the closest to such "entity"
-that represents open source Git community's interest to the outside
-world with help from lawyers.
-
-Not that I think Git PLC is interested in such a cross marketting
-arrangement, but if Devart wants to advertise on their webpage
-saying "we support Git by making contributions to SFC" or something
-like that, they are the people to talk to.
+Do we also want to test obscure cases of expected success?
+e.g. I suspect we never use a."b c".d in the test suite elsewhere but it
+would be a valid key to be handed to git?
