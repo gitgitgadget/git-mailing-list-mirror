@@ -6,40 +6,40 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 99DEB201A9
-	for <e@80x24.org>; Tue, 21 Feb 2017 23:48:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E5B8D201A9
+	for <e@80x24.org>; Tue, 21 Feb 2017 23:48:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753624AbdBUXse (ORCPT <rfc822;e@80x24.org>);
-        Tue, 21 Feb 2017 18:48:34 -0500
-Received: from castro.crustytoothpaste.net ([75.10.60.170]:39858 "EHLO
+        id S1753639AbdBUXsh (ORCPT <rfc822;e@80x24.org>);
+        Tue, 21 Feb 2017 18:48:37 -0500
+Received: from castro.crustytoothpaste.net ([75.10.60.170]:39860 "EHLO
         castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1753480AbdBUXrx (ORCPT
+        by vger.kernel.org with ESMTP id S1753477AbdBUXrx (ORCPT
         <rfc822;git@vger.kernel.org>); Tue, 21 Feb 2017 18:47:53 -0500
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id A31A7280B5;
-        Tue, 21 Feb 2017 23:47:43 +0000 (UTC)
+        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 3A4B0280BD;
+        Tue, 21 Feb 2017 23:47:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
-        s=default; t=1487720863;
-        bh=HScHg5Pr4wKDj6iQBgn0ByY3R9AUuGvZNAneuu2D6xk=;
+        s=default; t=1487720866;
+        bh=93FSBC/jOwArwDszYY/m4FdedoB/y8qbMs2X8J90IwY=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=ZzWX57MedT0hBtLGrkuDa+KyQrl7d9eEjSyCM5A9IdQDnpQcZ0uol7b5/qL1SuPsE
-         YD/yTmM+ejdTmuBMA6Y015EMdng2GMtZCj4j+f9CZT3xCgxhI6pjCRK2ftGf8b4HZk
-         ekLLo1kIlOp+YxxkpioSOhQlspVoUpzVc1cW482XuKZP//xjxVgsfX5ULzSsOBRCq7
-         A/dUjdIf5HREHDD2JOmg6PDD63lwiNy6SGESY1UXKaBXWbLJTQ60jjmXjDXPMIf10w
-         Nb3HRhb9H2lXO43HyA4aEuaiuNF8Lx8SGQIdobJtyefzpRM8DEMTGClbuceMozmg5I
-         W9bXx4rjv6LEL4JisOapu7sqOqEvPrEhczFdRirAdosss8Pv1Zi9U//50mcZGLNHwD
-         8WkZ3wtgaHTs92Rd0J63u2qZjLoch2vhadvwjtWWy5vRWizcgQ7jkexmJB74tgsUQU
-         IJUoCMTjGYSx/SY/FV1ZXoLhVq7DIWwBIkdl4kmNZrQvL28Iis7
+        b=T7g/YGtsRtGLPi7zW9wa6amvDA69RJhurEKMinDWqLHpCdAuexcKSEJVTcllnFu82
+         FMMOKNEYPZ0Q83YLirjb6B1BD3ck8Yo67VO1YYiZKnyShK0T3YwRKStJMhtT3//R/R
+         l2WsPOv5AZqQyxHXuSqR2EkG8045V2Icd9krmunhXoAD5yxV6T2vU5creBznaKJE8g
+         v49C6ZiZ5T4PKHF2ifzRFIFdXOdGl+O9dS7xZbWBXeUubdgcQ/YYCNCeBNc79RvNXS
+         RUSp12iGo3pdvAmvz1wERnVsnuOEjVJuZDz2A2tdRefGF4AcB5Tlo3M3usqyCnphRH
+         oXkwp3WeTQGDZB3Lxdcp6IoScDEdfqrX/gVgVGb35XTqN12ENbD6f5tK9BJCd0ntZn
+         AfUYnOYGEGLC6By6D8hr31Z13zMMgwu69V5ykYli+Nxg7JGCAkXfbuUfewk3JMcmVc
+         QlCvWq7IzBiwErbUuGcagvb22U8l1YykN7AUDUDp/Fl+pS2xaOp
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     Jeff King <peff@peff.net>, Michael Haggerty <mhagger@alum.mit.edu>,
         Junio C Hamano <gitster@pobox.com>,
         Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: [PATCH v5 08/19] builtin/branch: convert to struct object_id
-Date:   Tue, 21 Feb 2017 23:47:26 +0000
-Message-Id: <20170221234737.894681-9-sandals@crustytoothpaste.net>
+Subject: [PATCH v5 16/19] sha1_file: introduce an nth_packed_object_oid function
+Date:   Tue, 21 Feb 2017 23:47:34 +0000
+Message-Id: <20170221234737.894681-17-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.11.0
 In-Reply-To: <20170221234737.894681-1-sandals@crustytoothpaste.net>
 References: <20170221234737.894681-1-sandals@crustytoothpaste.net>
@@ -48,115 +48,77 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+There are places in the code where we would like to provide a struct
+object_id *, yet read the hash directly from the pack.  Provide an
+nth_packed_object_oid function that is similar to the
+nth_packed_object_sha1 function.
+
+In order to avoid a potentially invalid cast, nth_packed_object_oid
+provides a variable into which to store the value, which it returns on
+success; on error, it returns NULL, as nth_packed_object_sha1 does.
+
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- builtin/branch.c | 26 +++++++++++++-------------
- 1 file changed, 13 insertions(+), 13 deletions(-)
+ cache.h     |  6 ++++++
+ sha1_file.c | 17 ++++++++++++++---
+ 2 files changed, 20 insertions(+), 3 deletions(-)
 
-diff --git a/builtin/branch.c b/builtin/branch.c
-index 9d30f55b0b..faf472ff8f 100644
---- a/builtin/branch.c
-+++ b/builtin/branch.c
-@@ -32,7 +32,7 @@ static const char * const builtin_branch_usage[] = {
- };
+diff --git a/cache.h b/cache.h
+index e03a672d15..29e59cbb56 100644
+--- a/cache.h
++++ b/cache.h
+@@ -1608,6 +1608,12 @@ extern void check_pack_index_ptr(const struct packed_git *p, const void *ptr);
+  * error.
+  */
+ extern const unsigned char *nth_packed_object_sha1(struct packed_git *, uint32_t n);
++/*
++ * Like nth_packed_object_sha1, but write the data into the object specified by
++ * the the first argument.  Returns the first argument on success, and NULL on
++ * error.
++ */
++extern const struct object_id *nth_packed_object_oid(struct object_id *, struct packed_git *, uint32_t n);
  
- static const char *head;
--static unsigned char head_sha1[20];
-+static struct object_id head_oid;
- 
- static int branch_use_color = -1;
- static char branch_colors[][COLOR_MAXLEN] = {
-@@ -117,13 +117,13 @@ static int branch_merged(int kind, const char *name,
- 	if (kind == FILTER_REFS_BRANCHES) {
- 		struct branch *branch = branch_get(name);
- 		const char *upstream = branch_get_upstream(branch, NULL);
--		unsigned char sha1[20];
-+		struct object_id oid;
- 
- 		if (upstream &&
- 		    (reference_name = reference_name_to_free =
- 		     resolve_refdup(upstream, RESOLVE_REF_READING,
--				    sha1, NULL)) != NULL)
--			reference_rev = lookup_commit_reference(sha1);
-+				    oid.hash, NULL)) != NULL)
-+			reference_rev = lookup_commit_reference(oid.hash);
+ /*
+  * Return the offset of the nth object within the specified packfile.
+diff --git a/sha1_file.c b/sha1_file.c
+index ec957db5e1..777b8e8eae 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -2628,6 +2628,17 @@ const unsigned char *nth_packed_object_sha1(struct packed_git *p,
  	}
- 	if (!reference_rev)
- 		reference_rev = head_rev;
-@@ -153,10 +153,10 @@ static int branch_merged(int kind, const char *name,
  }
  
- static int check_branch_commit(const char *branchname, const char *refname,
--			       const unsigned char *sha1, struct commit *head_rev,
-+			       const struct object_id *oid, struct commit *head_rev,
- 			       int kinds, int force)
++const struct object_id *nth_packed_object_oid(struct object_id *oid,
++					      struct packed_git *p,
++					      uint32_t n)
++{
++	const unsigned char *hash = nth_packed_object_sha1(p, n);
++	if (!hash)
++		return NULL;
++	hashcpy(oid->hash, hash);
++	return oid;
++}
++
+ void check_pack_index_ptr(const struct packed_git *p, const void *vptr)
  {
--	struct commit *rev = lookup_commit_reference(sha1);
-+	struct commit *rev = lookup_commit_reference(oid->hash);
- 	if (!rev) {
- 		error(_("Couldn't look up commit object for '%s'"), refname);
- 		return -1;
-@@ -183,7 +183,7 @@ static int delete_branches(int argc, const char **argv, int force, int kinds,
- 			   int quiet)
- {
- 	struct commit *head_rev = NULL;
--	unsigned char sha1[20];
-+	struct object_id oid;
- 	char *name = NULL;
- 	const char *fmt;
- 	int i;
-@@ -207,7 +207,7 @@ static int delete_branches(int argc, const char **argv, int force, int kinds,
+ 	const unsigned char *ptr = vptr;
+@@ -3788,13 +3799,13 @@ static int for_each_object_in_pack(struct packed_git *p, each_packed_object_fn c
+ 	int r = 0;
+ 
+ 	for (i = 0; i < p->num_objects; i++) {
+-		const unsigned char *sha1 = nth_packed_object_sha1(p, i);
++		struct object_id oid;
+ 
+-		if (!sha1)
++		if (!nth_packed_object_oid(&oid, p, i))
+ 			return error("unable to get sha1 of object %u in %s",
+ 				     i, p->pack_name);
+ 
+-		r = cb(sha1, p, i, data);
++		r = cb(oid.hash, p, i, data);
+ 		if (r)
+ 			break;
  	}
- 
- 	if (!force) {
--		head_rev = lookup_commit_reference(head_sha1);
-+		head_rev = lookup_commit_reference(head_oid.hash);
- 		if (!head_rev)
- 			die(_("Couldn't look up commit object for HEAD"));
- 	}
-@@ -235,7 +235,7 @@ static int delete_branches(int argc, const char **argv, int force, int kinds,
- 					RESOLVE_REF_READING
- 					| RESOLVE_REF_NO_RECURSE
- 					| RESOLVE_REF_ALLOW_BAD_NAME,
--					sha1, &flags);
-+					oid.hash, &flags);
- 		if (!target) {
- 			error(remote_branch
- 			      ? _("remote-tracking branch '%s' not found.")
-@@ -245,13 +245,13 @@ static int delete_branches(int argc, const char **argv, int force, int kinds,
- 		}
- 
- 		if (!(flags & (REF_ISSYMREF|REF_ISBROKEN)) &&
--		    check_branch_commit(bname.buf, name, sha1, head_rev, kinds,
-+		    check_branch_commit(bname.buf, name, &oid, head_rev, kinds,
- 					force)) {
- 			ret = 1;
- 			goto next;
- 		}
- 
--		if (delete_ref(name, is_null_sha1(sha1) ? NULL : sha1,
-+		if (delete_ref(name, is_null_oid(&oid) ? NULL : oid.hash,
- 			       REF_NODEREF)) {
- 			error(remote_branch
- 			      ? _("Error deleting remote-tracking branch '%s'")
-@@ -267,7 +267,7 @@ static int delete_branches(int argc, const char **argv, int force, int kinds,
- 			       bname.buf,
- 			       (flags & REF_ISBROKEN) ? "broken"
- 			       : (flags & REF_ISSYMREF) ? target
--			       : find_unique_abbrev(sha1, DEFAULT_ABBREV));
-+			       : find_unique_abbrev(oid.hash, DEFAULT_ABBREV));
- 		}
- 		delete_branch_config(bname.buf);
- 
-@@ -693,7 +693,7 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
- 
- 	track = git_branch_track;
- 
--	head = resolve_refdup("HEAD", 0, head_sha1, NULL);
-+	head = resolve_refdup("HEAD", 0, head_oid.hash, NULL);
- 	if (!head)
- 		die(_("Failed to resolve HEAD as a valid ref."));
- 	if (!strcmp(head, "HEAD"))
 -- 
 2.11.0
 
