@@ -2,114 +2,151 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8F6F1201B0
-	for <e@80x24.org>; Wed, 22 Feb 2017 17:40:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E30962023D
+	for <e@80x24.org>; Wed, 22 Feb 2017 17:41:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933165AbdBVRj7 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 22 Feb 2017 12:39:59 -0500
-Received: from sub3.mail.dreamhost.com ([69.163.253.7]:36336 "EHLO
-        homiemail-a12.g.dreamhost.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S932858AbdBVRj5 (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 22 Feb 2017 12:39:57 -0500
-Received: from homiemail-a12.g.dreamhost.com (localhost [127.0.0.1])
-        by homiemail-a12.g.dreamhost.com (Postfix) with ESMTP id 5273B26206D;
-        Wed, 22 Feb 2017 09:39:56 -0800 (PST)
-Received: from localhost.localdomain (gzac12-mdf2-1.aoa.twosigma.com [208.77.215.155])
-        (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: novalis@novalis.org)
-        by homiemail-a12.g.dreamhost.com (Postfix) with ESMTPSA id C933926206A;
-        Wed, 22 Feb 2017 09:39:55 -0800 (PST)
-From:   David Turner <dturner@twosigma.com>
-To:     git@vger.kernel.org
-Cc:     sandals@crustytoothpaste.net,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        David Turner <dturner@twosigma.com>
-Subject: [PATCH] http(s): automatically try NTLM authentication first
-Date:   Wed, 22 Feb 2017 12:39:36 -0500
-Message-Id: <20170222173936.25016-1-dturner@twosigma.com>
-X-Mailer: git-send-email 2.11.GIT
+        id S932704AbdBVRlL (ORCPT <rfc822;e@80x24.org>);
+        Wed, 22 Feb 2017 12:41:11 -0500
+Received: from mail-pg0-f66.google.com ([74.125.83.66]:36496 "EHLO
+        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932223AbdBVRlK (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Feb 2017 12:41:10 -0500
+Received: by mail-pg0-f66.google.com with SMTP id z128so1342193pgb.3
+        for <git@vger.kernel.org>; Wed, 22 Feb 2017 09:41:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=SbXPnlPFPBFoPsqy10CrdzfH+uEq5Qr16XZKbL2Nl/w=;
+        b=snsQg0wdhc4XKLuezvnhoT6gVRJqW1rDkJ+ysQT1edW31meUWddmt9YRFXOgghumaN
+         BoqVox/X+d71UHi5FLH5slJA3Vv1lDTxuzo+bwCOYITuZIDpJOgY6OBrEBF0Ao0KmHIi
+         LyGUYls1Yqsk4NCfEEf26WRAcp6ZlYXRC9bVi/WPwC+CComLsX9uZhU+RaAPzTZ67/Tj
+         ezYNYvgkYpoYGo4aBAqmReD91cnrzbwdSZJ4UbN/hxqoxgoSEJfitEIa41536GEwcxuH
+         hVOWYjr0nSs7tisrFWPr++RJWtpZiCRoLNuSEDKR/PF3Wk7RSv1C/y6R5YYUXLBcuEIw
+         GGJA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=SbXPnlPFPBFoPsqy10CrdzfH+uEq5Qr16XZKbL2Nl/w=;
+        b=TyrAKu74y/ebdCDV3AYLvCH+mze1gWLuWEzrwUulDHFIxgjfO10R4Xq5d6zYjwMR/q
+         WhQ1KV3VsLk66k23oqioYIvk74TEuCmUwnyXMBVqdRkbgEPHgv3YNA5UYfwKpYxMloU6
+         mJZgBp5M8/Kve9ERu1nZfK3xOPAM7Er/bT/AKyxkEbVR2Rkmz2AZcjSelFOL24EFoFtC
+         GIkzEbWqTCuj8MDmMp0fjOZgiengVO7c5PtsFARsTe/fQxqQr/yg8U6B6lNUYDw1qAis
+         9GCXgnFXrl7bJdnr/4evO3F/fONg4FSiv30KEJKOEEekG0Wn3OaEJ6/sAc6yztpsSAbO
+         oQ0w==
+X-Gm-Message-State: AMke39lVqPPoUlgA81mRzz7edpBw31Tmhah9UueTy2Hw2LtQxFGeqduiAued3RXlMr49EA==
+X-Received: by 10.99.213.81 with SMTP id v17mr42776017pgi.130.1487785269162;
+        Wed, 22 Feb 2017 09:41:09 -0800 (PST)
+Received: from localhost ([2620:0:1000:8622:21a0:716b:e013:d129])
+        by smtp.gmail.com with ESMTPSA id u24sm4913670pfi.25.2017.02.22.09.41.08
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Wed, 22 Feb 2017 09:41:08 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Andreas Heiduk <asheiduk@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] Documentation: Link git-ls-files to core.quotePath variable.
+References: <2b0ce702-60de-534b-8a86-5c7ae84060de@gmail.com>
+        <xmqqh93nfeyj.fsf@gitster.mtv.corp.google.com>
+        <e55b3cb7-65bf-1609-2e8d-823b4336e07a@gmail.com>
+Date:   Wed, 22 Feb 2017 09:41:07 -0800
+In-Reply-To: <e55b3cb7-65bf-1609-2e8d-823b4336e07a@gmail.com> (Andreas
+        Heiduk's message of "Wed, 22 Feb 2017 02:38:21 +0100")
+Message-ID: <xmqqbmtucedo.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Andreas Heiduk <asheiduk@gmail.com> writes:
 
-It is common in corporate setups to have permissions managed via a
-domain account. That means that the user does not really have to log in
-when accessing a central repository via https://, but that the login
-credentials are used to authenticate with that repository.
+> [PATCH] Documentation: Clarify core.quotePath, remove cruft in
+>  git-ls-files.
+>
+> Signed-off-by: Andreas Heiduk <asheiduk@gmail.com>
+> ---
+>
+> I have merged the best parts about quoting into the core.quotePath
+> description and cleaned up the text in git-ls-files.txt regarding the
+> control characters.
+>
+>
+>  Documentation/config.txt       | 22 ++++++++++++----------
+>  Documentation/git-ls-files.txt | 11 ++++++-----
+>  2 files changed, 18 insertions(+), 15 deletions(-)
+>
+> diff --git a/Documentation/config.txt b/Documentation/config.txt
+> index f4721a0..25e65ae 100644
+> --- a/Documentation/config.txt
+> +++ b/Documentation/config.txt
+> @@ -340,16 +340,18 @@ core.checkStat::
+>  	all fields, including the sub-second part of mtime and ctime.
+>
+>  core.quotePath::
+> -	The commands that output paths (e.g. 'ls-files',
+> -	'diff'), when not given the `-z` option, will quote
+> -	"unusual" characters in the pathname by enclosing the
+> -	pathname in a double-quote pair and with backslashes the
+> -	same way strings in C source code are quoted.  If this
+> -	variable is set to false, the bytes higher than 0x80 are
+> -	not quoted but output as verbatim.  Note that double
+> -	quote, backslash and control characters are always
+> -	quoted without `-z` regardless of the setting of this
+> -	variable.
+> +	Commands that output paths (e.g. 'ls-files', 'diff'), will
+> +	quote "unusual" characters in the pathname by enclosing the
+> +	pathname in double-quotes and escaping those characters with
+> +	backslashes in the same way C escapes control characters (e.g.
+> +	`\t` for TAB, `\n` for LF, `\\` for backslash) or bytes with
+> +	values larger than 0x80 (e.g. octal `\265` for "micro").  If
+> +	this variable is set to false, bytes higher than 0x80 are not
+> +	considered "unusual" any more.  Double-quotes, backslash and
+> +	control characters are always escaped regardless of the
+> +	setting of this variable.  Many commands can output pathnames
+> +	completely verbatim using the `-z` option. The default value is
+> +	true.
 
-The common way to do that used to require empty credentials, i.e. hitting
-Enter twice when being asked for user name and password, or by using the
-very funny notation https://:@server/repository
+Even though I am not sure "\265 is micro" is a good example these
+days, as "high-bit set" is primarily meant to catch UTF-8
+multi-bytes, I find the above much easier to read than the original.
 
-A recent commit (5275c3081c (http: http.emptyauth should allow empty (not
-just NULL) usernames, 2016-10-04)) broke that usage, though, all of a
-sudden requiring users to set http.emptyAuth = true.
+> diff --git a/Documentation/git-ls-files.txt b/Documentation/git-ls-files.txt
+> index d2b17f2..88df561 100644
+> --- a/Documentation/git-ls-files.txt
+> +++ b/Documentation/git-ls-files.txt
+> @@ -76,7 +76,8 @@ OPTIONS
+>  	succeed.
+>
+>  -z::
+> -	\0 line termination on output.
+> +	\0 line termination on output and do not quote filenames.
+> +	See OUTPUT below for more information.
+>
+>  -x <pattern>::
+>  --exclude=<pattern>::
+> @@ -192,10 +193,10 @@ the index records up to three such pairs; one from
+> tree O in stage
+>  the user (or the porcelain) to see what should eventually be recorded
+> at the
+>  path. (see linkgit:git-read-tree[1] for more information on state)
+>
+> -When `-z` option is not used, TAB, LF, and backslash characters
+> -in pathnames are represented as `\t`, `\n`, and `\\`,
+> -respectively. The path is also quoted according to the
+> -configuration variable `core.quotePath` (see linkgit:git-config[1]).
+> +Without the `-z` option pathnamens with "unusual" characters are
+> +quoted as explained for the configuration variable `core.quotePath`
+> +(see linkgit:git-config[1]).  Using `-z` the filename is output
+> +verbatim and the line is terminated by a NUL byte.
 
-Which brings us to the bigger question why http.emptyAuth defaults to
-false, to begin with.
+Yup, this looks much nicer than the original.
 
-It would be one thing if cURL would not let the user specify credentials
-interactively after attempting NTLM authentication (i.e. login
-credentials), but that is not the case.
-
-It would be another thing if attempting NTLM authentication was not
-usually what users need to do when trying to authenticate via https://.
-But that is also not the case.
-
-So let's just go ahead and change the default, and unbreak the NTLM
-authentication. As a bonus, this also makes the "you need to hit Enter
-twice" (which is hard to explain: why enter empty credentials when you
-want to authenticate with your login credentials?) and the ":@" hack
-(which is also pretty, pretty hard to explain to users) obsolete.
-
-This fixes https://github.com/git-for-windows/git/issues/987
-
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-Signed-off-by: David Turner <dturner@twosigma.com>
----
-This has been in git for Windows for a few months (without the
-config.txt change).  We've also been using it internally.  So I think
-it's time to merge back to upstream git.
-
- Documentation/config.txt | 3 ++-
- http.c                   | 2 +-
- 2 files changed, 3 insertions(+), 2 deletions(-)
-
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index fc5a28a320..b0da64ed33 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -1742,7 +1742,8 @@ http.emptyAuth::
- 	Attempt authentication without seeking a username or password.  This
- 	can be used to attempt GSS-Negotiate authentication without specifying
- 	a username in the URL, as libcurl normally requires a username for
--	authentication.
-+	authentication.  Default is true, since if this fails, git will fall
-+	back to asking the user for their username/password.
- 
- http.delegation::
- 	Control GSSAPI credential delegation. The delegation is disabled
-diff --git a/http.c b/http.c
-index 90a1c0f113..943e630ea6 100644
---- a/http.c
-+++ b/http.c
-@@ -109,7 +109,7 @@ static int curl_save_cookies;
- struct credential http_auth = CREDENTIAL_INIT;
- static int http_proactive_auth;
- static const char *user_agent;
--static int curl_empty_auth;
-+static int curl_empty_auth = 1;
- 
- enum http_follow_config http_follow_config = HTTP_FOLLOW_INITIAL;
- 
--- 
-2.11.GIT
-
+Thanks.
