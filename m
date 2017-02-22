@@ -2,118 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D6D77201A9
-	for <e@80x24.org>; Wed, 22 Feb 2017 01:06:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 81FC4201A9
+	for <e@80x24.org>; Wed, 22 Feb 2017 01:20:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753016AbdBVBGO (ORCPT <rfc822;e@80x24.org>);
-        Tue, 21 Feb 2017 20:06:14 -0500
-Received: from mail-pg0-f68.google.com ([74.125.83.68]:36434 "EHLO
-        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752397AbdBVBGM (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Feb 2017 20:06:12 -0500
-Received: by mail-pg0-f68.google.com with SMTP id z128so2082727pgb.3
-        for <git@vger.kernel.org>; Tue, 21 Feb 2017 17:06:12 -0800 (PST)
+        id S1753758AbdBVBUM (ORCPT <rfc822;e@80x24.org>);
+        Tue, 21 Feb 2017 20:20:12 -0500
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:33429 "EHLO
+        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753612AbdBVBUD (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Feb 2017 20:20:03 -0500
+Received: by mail-wm0-f68.google.com with SMTP id v77so22581034wmv.0
+        for <git@vger.kernel.org>; Tue, 21 Feb 2017 17:20:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=tcTjTUyBpOmrj28Ml1Ghb0RmJiCNFeLtf5MHTBSsnn0=;
-        b=UD7l/Fnu3IHKuPFfFspmP42Y6BfgCw0Uhu0SaPjvVO3EeP5vjnE3GC7AmWLLZXX9XI
-         LJTc086Q9gphHirhpIDjZaTawDV+dzUq12yjlcLjNch/gOuIh4zv5mntLPZaq0F3S+tT
-         tGwd2foFLBRqUbc636cDD90cRjGiIrmNBCDdv6xzOAqjSGrLdoPDPQrfvzHhotnzPCBc
-         6Jm7xb41wJs2y+6tFPQrC1Pfv6KDSCiX1Owei7DgYAJ1OOBBMDodDJ3ROBhHl+x+ge92
-         QkRvFEcJEaIgydwWBJp0sszCfu1kJDKMAGT6iCcwn+qzPfMWuakdIm4F4FH7M0tZFmAw
-         ZEjA==
+        h=subject:to:references:cc:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding;
+        bh=DfUMT7q/Basgf4GK/t6Ib+in2UMXG9rZWdbBfTvl7V0=;
+        b=gTr8dBQXyFXLDmMX/8av3fh4l4tLNhMqnWuAPDEYSWEh7M/OQV6EgqqaI9rT6tcRsD
+         xT5NUGrpWzjDCIziNS/T7UbPL/Os7bNfueAqmQkY9qL/Iz5RWhGMrwekUZDxO75R9UOB
+         Sxi6R3enWStWVcoRoQjcpxXwqVDB+kwR8mUAj5sE15uT+lYj4wM6rC7SvXsgNKXHW8w5
+         ZoUPpZVrlK/GoiLr5hFHn65RqRsm3N5zdcTuEjQuo+Q3rXZbSCl7vYPTyrfNEYVVW0m3
+         Kb7KC0F7eUqNc9mBydGms0+nvatpeZdR1ZmOHgHTfCS6aZFl/v2sM8oSWbXNLlLL0zX3
+         unsg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=tcTjTUyBpOmrj28Ml1Ghb0RmJiCNFeLtf5MHTBSsnn0=;
-        b=XM4ntxZN/WfDIScnvfl1u6jgyulzci0z24ur/LoYjkedpKFHJhWujWw4MYk99Uug5J
-         coMdds8fLV+MEu+I600X4h+CuCiQz41cxcC+t20qKjFmAXL6Mx3XFxqW2prUm4oIh7cj
-         P6Cnmw01QRULRlcs3nSqeYaHPvkOI53F3fuyzyUCVO5dNoPGR2HhuB+NqRrckP41rkq7
-         Kx5lSenCnRxO5yXwQpqrkj0isF0HRTs1YnRmyVXrY4hymiwYJgUAvir7BKMf9Y9JWTci
-         OydMxGlq8UGe5uAT1qcNKk54DZHbu/cBqnCmWvpm2eY7Ejrm7g+JpGton4z4dj8C8yLs
-         4fJw==
-X-Gm-Message-State: AMke39mXY2CBdjzgOsfsLBAzPPScF+V3W36KaOt9yS+XePrt/aWeL1PMMfa1nCYFku5kdw==
-X-Received: by 10.98.94.2 with SMTP id s2mr36588911pfb.133.1487725571730;
-        Tue, 21 Feb 2017 17:06:11 -0800 (PST)
-Received: from localhost ([2620:0:1000:8622:d997:8b5d:f579:2a90])
-        by smtp.gmail.com with ESMTPSA id g2sm23934714pfg.105.2017.02.21.17.06.10
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 21 Feb 2017 17:06:10 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "git\@vger.kernel.org" <git@vger.kernel.org>
-Cc:     Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH v2] config: reject invalid VAR in 'git -c VAR=VAL command'
-References: <20170215111704.78320-1-larsxschneider@gmail.com>
-        <xmqqzihn2smp.fsf@gitster.mtv.corp.google.com>
-        <f238248f-0df2-19a5-581d-95c8a61b4632@google.com>
-        <xmqqy3x712if.fsf@gitster.mtv.corp.google.com>
-        <xmqqtw7v123n.fsf@gitster.mtv.corp.google.com>
-        <xmqqa89n10df.fsf_-_@gitster.mtv.corp.google.com>
-        <D0CDD1AC-05CA-47F3-8CB5-61EA1C6515A8@gmail.com>
-        <20170216232730.xsx3xks5ppjws5rg@sigill.intra.peff.net>
-        <xmqqwpcptxps.fsf@gitster.mtv.corp.google.com>
-        <xmqqino5jia8.fsf@gitster.mtv.corp.google.com>
-        <xmqq37f7gyuj.fsf_-_@gitster.mtv.corp.google.com>
-        <CAGZ79kbR2QQyYO1dnQ0jW3-ztKEFj1MtJfDqEc0xoftMFeN=WA@mail.gmail.com>
-        <xmqqlgszffm0.fsf@gitster.mtv.corp.google.com>
-        <xmqqd1ebfd9l.fsf_-_@gitster.mtv.corp.google.com>
-Date:   Tue, 21 Feb 2017 17:06:10 -0800
-In-Reply-To: <xmqqd1ebfd9l.fsf_-_@gitster.mtv.corp.google.com> (Junio
-        C. Hamano's message of "Tue, 21 Feb 2017 13:24:38 -0800")
-Message-ID: <xmqqfuj7dofx.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
+        bh=DfUMT7q/Basgf4GK/t6Ib+in2UMXG9rZWdbBfTvl7V0=;
+        b=E5KSvWVIQwZVy8BPinA1AojPN/RaDZFzCpimYOkPI2xaq/4fxj/Ekw8tRXlzb3eY6I
+         XjC5/Fp+brgAcyMd6Ta69UOGrEGGJFDpaEWc882EGK7RJ6xwrR1DLUa/sKBceOqsHfK8
+         VtcFdkeUgy2AOIPHi7v4DA7hRkBEo+GCWAZXSRZatqug94sNEGHKF7/BvwfKExgHUDu8
+         mRe4vVAXgY+Rg0og/dqroHfY/2918LQSVLxtc+2hZ4oM1yCn9iC+GZIxeIzI+lJ8BSm7
+         yTqK6CxpVCJFRqeqMP1bd4lFv+0mmiYDZMs+Pqm59n6Wy1s3rq2ckZe0NT90cY1Klp0/
+         tjWg==
+X-Gm-Message-State: AMke39lJPGXGPA+32sKWXOljVs2kMIXK9FlgxbF55ghoiekJJo81s8KCEmPVZL1Qp0iKnA==
+X-Received: by 10.28.37.195 with SMTP id l186mr29211wml.73.1487726401646;
+        Tue, 21 Feb 2017 17:20:01 -0800 (PST)
+Received: from ?IPv6:2001:a61:3434:d400:f45e:e7e:d939:ba62? ([2001:a61:3434:d400:f45e:e7e:d939:ba62])
+        by smtp.googlemail.com with ESMTPSA id m29sm30899759wrm.38.2017.02.21.17.20.00
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 21 Feb 2017 17:20:00 -0800 (PST)
+Subject: Re: [PATCH] Documentation: Link git-ls-files to core.quotePath
+ variable.
+To:     Junio C Hamano <gitster@pobox.com>
+References: <2b0ce702-60de-534b-8a86-5c7ae84060de@gmail.com>
+ <xmqqh93nfeyj.fsf@gitster.mtv.corp.google.com>
+Cc:     git@vger.kernel.org
+From:   Andreas Heiduk <asheiduk@gmail.com>
+Message-ID: <61a3e1a7-e70c-cb68-184f-95dff28d1271@gmail.com>
+Date:   Wed, 22 Feb 2017 02:20:00 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.7.0
 MIME-Version: 1.0
-Content-Type: text/plain
+In-Reply-To: <xmqqh93nfeyj.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset=iso-8859-15
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+Am 21.02.2017 um 21:48 schrieb Junio C Hamano:
+> 
+> I was waiting for others to comment on this patch but nobody seems
+> to be interested.  Which is a bit sad, as this may not be a bad
+> idea.
+> 
+> If we refer to core.quotePath, the mention of control characters
+> being quoted can also be omitted, I think, as that is part of what
+> appears in the description of core.quotePath variable.
+> 
+> Alternatively, instead of referring to another page, we can spend
+> the additional lines to say what is more interesting to most of the
+> readers from that page, e.g.
+> 
+>     When `-z` option is not used, a pathname with "unusual" characters
+>     in it is quoted by enclosing it in a double-quote pair and with
+>     backslashes the same way strings in C source code are quoted.  By
+>     setting core.quotePath configuration to false, the bytes whose
+>     values are higher than 0x80 are output verbatim.
+>
 
->  	/* find the last dot (we start from the first dot we just found) */
-> -	for (last_dot = cp; *cp; cp++)
-> +	for (; *cp; cp++)
->  		if (*cp == '.')
->  			last_dot = cp;
+Without `-z` but with core.quotePath=false the path may still be
+surrounded with double-quotes if it contains control characters (and
+some more). The documentation in `core.quotePath` mentions this, your
+"inline" alternative does not.
 
-This line probably needs this fix-up on top.
-
--- >8 --
-Subject: [PATCH] config: squelch stupid compiler warnings
-
-Some compilers do not realize that *cp is always '.' when the loop
-to find the last dot begins, and instead gives a useless warning
-that says last_dot may be uninitialized.
-
-Squelch it by being a bit more explicit if stupid.
-
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- config.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/config.c b/config.c
-index e7f7ff1938..90de27853f 100644
---- a/config.c
-+++ b/config.c
-@@ -239,7 +239,7 @@ static int canonicalize_config_variable_name(char *varname)
- 		return -1; /* no section? */
- 
- 	/* find the last dot (we start from the first dot we just found) */
--	for (; *cp; cp++)
-+	for (last_dot = cp; *cp; cp++)
- 		if (*cp == '.')
- 			last_dot = cp;
- 
--- 
-2.12.0-rc2-231-g83a1c8597c
+I will send second patch. :-)
 
