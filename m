@@ -2,58 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 12438201B0
-	for <e@80x24.org>; Wed, 22 Feb 2017 14:35:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 61EFC201B0
+	for <e@80x24.org>; Wed, 22 Feb 2017 16:19:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932834AbdBVOfq (ORCPT <rfc822;e@80x24.org>);
-        Wed, 22 Feb 2017 09:35:46 -0500
-Received: from mylo.jdl.com ([208.123.73.151]:53242 "EHLO mylo.jdl.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S932827AbdBVOfk (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Feb 2017 09:35:40 -0500
-X-Greylist: delayed 2130 seconds by postgrey-1.27 at vger.kernel.org; Wed, 22 Feb 2017 09:35:40 EST
-Received: from jdl (helo=mylo)
-        by mylo.jdl.com with local-esmtp (Exim 4.82)
-        (envelope-from <jdl@jdl.com>)
-        id 1cgXSe-0007jp-QI; Wed, 22 Feb 2017 08:00:04 -0600
-From:   Jon Loeliger <jdl@jdl.com>
+        id S932493AbdBVQTz (ORCPT <rfc822;e@80x24.org>);
+        Wed, 22 Feb 2017 11:19:55 -0500
+Received: from hapkido.dreamhost.com ([66.33.216.122]:34784 "EHLO
+        hapkido.dreamhost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932197AbdBVQTx (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Feb 2017 11:19:53 -0500
+Received: from homiemail-a1.g.dreamhost.com (homie.mail.dreamhost.com [208.97.132.208])
+        by hapkido.dreamhost.com (Postfix) with ESMTP id 451EEC1D66
+        for <git@vger.kernel.org>; Wed, 22 Feb 2017 08:19:17 -0800 (PST)
+Received: from homiemail-a1.g.dreamhost.com (localhost [127.0.0.1])
+        by homiemail-a1.g.dreamhost.com (Postfix) with ESMTP id AAD9D348078;
+        Wed, 22 Feb 2017 08:17:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=mattmccutchen.net; h=
+        message-id:subject:from:to:cc:date:in-reply-to:references
+        :content-type:mime-version:content-transfer-encoding; s=
+        mattmccutchen.net; bh=T14P+iIHvK+R6oXPCGC4H1xb6us=; b=XskxDwjGYg
+        v44x8V7RHi1gIPn/fI70LhIEQIyauQ2h2zP4iuOlmmRmXBh4yLPT7BMR0qFpGVkV
+        yFgqWNoUtpSSRXtAP4o1FhiAYgpcwLS6LMWI6E19VCIlqdu1h53hPDS8bpmAZJGj
+        dWFAM+dlSy0jlrH1LorsfwQEXc8oQ2r+k=
+Received: from main (30-86-202.dynamic.csail.mit.edu [128.30.86.202])
+        (using TLSv1 with cipher AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: matt@mattmccutchen.net)
+        by homiemail-a1.g.dreamhost.com (Postfix) with ESMTPSA id 4C4FF348074;
+        Wed, 22 Feb 2017 08:17:37 -0800 (PST)
+Message-ID: <1487780254.3016.1.camel@mattmccutchen.net>
+Subject: Re: [PATCH] fetch: print an error when declining to request an
+ unadvertised object
+From:   Matt McCutchen <matt@mattmccutchen.net>
 To:     Junio C Hamano <gitster@pobox.com>
-cc:     Stefan Beller <sbeller@google.com>, Jeff King <peff@peff.net>,
-        Toolforger <toolforger@durchholz.org>,
-        "git\@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: url.<base>.insteadOf vs. submodules
-In-reply-to: <xmqqbmtvdj7p.fsf@gitster.mtv.corp.google.com>
-References: <84fcb0bd-85dc-0142-dd58-47a04eaa7c2b@durchholz.org> <20170220090115.6kfzwl62opj4q7k7@sigill.intra.peff.net> <404d109f-e5a7-85a3-e64c-ab1b21c3045d@durchholz.org> <20170220205243.lynnmxouwq7jelld@sigill.intra.peff.net> <28fb85d4-89cd-1f32-3063-2f48d8b935be@durchholz.org> <20170221070653.65ho2anbp55uzjeu@sigill.intra.peff.net> <CAGZ79kZgMbEZy7hoA+VxsKdKBavt59SmC1c6FpDdgrW2GKMHvQ@mail.gmail.com> <20170221230029.cs36tjwpsw2opuwp@sigill.intra.peff.net> <CAGZ79kby-UhUqci9Mgdhw+wvS5Y39=Q7AmCrWaTMWbcZPNT6Dw@mail.gmail.com> <xmqqo9xvdsji.fsf@gitster.mtv.corp.google.com> <CAGZ79ka2S=V1x2fSQq+E-yE0Ao36-4tuTvnD6uXpPXJPLFN3JA@mail.gmail.com> <xmqqbmtvdj7p.fsf@gitster.mtv.corp.google.com>
-Comments: In-reply-to Junio C Hamano <gitster@pobox.com>
-   message dated "Tue, 21 Feb 2017 18:59:06 -0800."
-Date:   Wed, 22 Feb 2017 08:00:04 -0600
-Message-Id: <E1cgXSe-0007jp-QI@mylo.jdl.com>
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: jdl@jdl.com
-X-SA-Exim-Scanned: No (on mylo.jdl.com); SAEximRunCond expanded to false
+Cc:     git@vger.kernel.org
+Date:   Wed, 22 Feb 2017 11:17:34 -0500
+In-Reply-To: <xmqqvas4gie9.fsf@gitster.mtv.corp.google.com>
+References: <xmqq60kfezr9.fsf@gitster.mtv.corp.google.com>
+         <1487470080.3570.8.camel@mattmccutchen.net>
+         <xmqqvas4gie9.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.22.4 (3.22.4-2.fc25) 
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-So, like, Junio C Hamano said:
-> Stefan Beller <sbeller@google.com> writes:
-> 
-> > Do we want to invent a special value for url.*.insteadOf to mean
-> >   "look up in superproject, so I don't have to keep
-> >   a copy that may get stale" ?
-> 
-> My gut feeling is that we should do the selective/filtered include
-> Peff mentioned when a repository is known to be used as a submodule
-> of somebody else.
+On Mon, 2017-02-20 at 22:36 -0800, Junio C Hamano wrote:
+> Hmph, I would have expected this to be done as a three-patch series,
+>=20
+> =C2=A0* move the loop at the end of cmd_fetch_pack() to a separate help=
+er
+> =C2=A0=C2=A0=C2=A0function report_unmatched_refs() and call it;
+>=20
+> =C2=A0* add a call to report_unmatched_refs() to the transport layer;
+>=20
+> =C2=A0* enhance report_unmatched_refs() by introducing match_status
+> =C2=A0=C2=A0=C2=A0field and adding new code to filter_refs() to diagnos=
+e other
+> =C2=A0=C2=A0=C2=A0kinds of errors.
 
-Does the management of these submodue-related config values
-become easier if, instead of placing them in .config, we
-place them in a git/.context file?
+Sure.
 
-jdl
+> The result looks reasonable from a cursory read, though.
+>=20
+> Thanks for following it up to the completion.
 
+This remark led me to believe you were satisfied with the single patch,
+but the last "What's cooking in git.git" mail says "Expecting a split
+series?".
+
+Anyway, I made a split series and will send it in a moment.  I don't
+know if all the commit messages include exactly the information you
+want; hopefully you're happy to edit them as desired.  Compared to the
+previous patch, there is one fix in the net result: fixing t5500-fetch-
+pack.sh to deal with the internationalized "no such remote ref"
+message.
+
+Matt
