@@ -2,88 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 394B7201B0
-	for <e@80x24.org>; Wed, 22 Feb 2017 17:18:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F08862023D
+	for <e@80x24.org>; Wed, 22 Feb 2017 17:21:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932498AbdBVRSg (ORCPT <rfc822;e@80x24.org>);
-        Wed, 22 Feb 2017 12:18:36 -0500
-Received: from mail-oi0-f48.google.com ([209.85.218.48]:36394 "EHLO
-        mail-oi0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932225AbdBVRSe (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Feb 2017 12:18:34 -0500
-Received: by mail-oi0-f48.google.com with SMTP id s205so4944719oif.3
-        for <git@vger.kernel.org>; Wed, 22 Feb 2017 09:18:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linux-foundation.org; s=google;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=aAdNuveHnYvSTE8yWG77K53nKF/i0h0t7+uEzvcEStI=;
-        b=PHkzvPcUBz5r4jrZxpij7gTE6OYNIqffOgQYzrXASbd6PhixPvR8HURPJeP99QJkht
-         O2R8EcMy+O4m51oYgA8cGzXKBjdewsHK91E5qwQOsGApvOONZl5aSxOIViDBFpq9cAIb
-         9IypMES5Qe5uHaod/V7UivoA12awHnkheVqFw=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=aAdNuveHnYvSTE8yWG77K53nKF/i0h0t7+uEzvcEStI=;
-        b=ia+w4yC2nhcR04lXJG76IqdWh3Q3O/quQdRmjGDlounFbr+LWrfq0btttaxODIyY3O
-         9SkOHDYFdwDuiwO0+55q5BeKNiqdR1e9ySAVSN2YB37JFOGY4oMtqr7NQYIacK75yXkw
-         M4GQETk3/ev/v+T9q+OwDkvL7lg7GTf30NzGXuzHZ2oTn688Uk1l0Lq7UJBSBqNPoJGd
-         87cor0JtJeaBZOh5v4OZEsKz5qEEiS92cwwzd9ibEXSddUbp57FZvx4Kfa5Ei/CNaCDe
-         9KDTd+E/rfVvlPdzLLqOMFnKEDCPT0+mOdgYXNC/M9CZApm776nL0pTC4YRfqCLNtP1/
-         s/ig==
-X-Gm-Message-State: AMke39kAVHdxtnLMuJ83e3qkg0rMvPBuxlWw10pECkUpyyzjLj0yAlflcb8Vw9u4SLI9Re+iBYxyf0GSSorg3ioy
-X-Received: by 10.202.3.197 with SMTP id 188mr18123162oid.31.1487783913700;
- Wed, 22 Feb 2017 09:18:33 -0800 (PST)
+        id S932578AbdBVRV5 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 22 Feb 2017 12:21:57 -0500
+Received: from smtp74.ord1c.emailsrvr.com ([108.166.43.74]:52334 "EHLO
+        smtp74.ord1c.emailsrvr.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S932498AbdBVRV4 (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 22 Feb 2017 12:21:56 -0500
+X-Greylist: delayed 380 seconds by postgrey-1.27 at vger.kernel.org; Wed, 22 Feb 2017 12:21:55 EST
+Received: from smtp26.relay.ord1c.emailsrvr.com (localhost [127.0.0.1])
+        by smtp26.relay.ord1c.emailsrvr.com (SMTP Server) with ESMTP id A7CE8E03B0;
+        Wed, 22 Feb 2017 12:15:34 -0500 (EST)
+X-Auth-ID: mbranchaud@xiplink.com
+Received: by smtp26.relay.ord1c.emailsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id 624DCE0265;
+        Wed, 22 Feb 2017 12:15:34 -0500 (EST)
+X-Sender-Id: mbranchaud@xiplink.com
+Received: from [10.10.1.32] ([UNAVAILABLE]. [192.252.130.194])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA)
+        by 0.0.0.0:465 (trex/5.7.12);
+        Wed, 22 Feb 2017 12:15:34 -0500
+Subject: Re: [RFC][Git GUI] Make Commit message field in git GUI re sizable.
+To:     Jessie Hernandez <jessie@jessiehernandez.com>,
+        Bert Wesarg <bert.wesarg@googlemail.com>
+References: <44fd4dce451fb0783de02c0a8c4a14aa.squirrel@mail.jessiehernandez.com>
+ <CAKPyHN3f0NwMt1aXx6keSrhaiqRqH6s_xQFdKv5rZ+pL7fmXFw@mail.gmail.com>
+ <dfcc54b406d9f46cf358b7ead128bf65.squirrel@mail.jessiehernandez.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Pat Thoyts <patthoyts@users.sourceforge.net>
+From:   Marc Branchaud <marcnarc@xiplink.com>
+Message-ID: <59ab152c-62d1-a2ec-eee5-0bd909674988@xiplink.com>
+Date:   Wed, 22 Feb 2017 12:15:34 -0500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.7.0
 MIME-Version: 1.0
-Received: by 10.157.42.51 with HTTP; Wed, 22 Feb 2017 09:18:33 -0800 (PST)
-In-Reply-To: <20170217040522.jugt4uuak74l3qjw@sigill.intra.peff.net>
-References: <CA+-W3ctdRtLpziJ9TX2hqk7RagMyJpHsrfwj=rN7oXQ8EeUPnw@mail.gmail.com>
- <20170217040522.jugt4uuak74l3qjw@sigill.intra.peff.net>
-From:   Linus Torvalds <torvalds@linux-foundation.org>
-Date:   Wed, 22 Feb 2017 09:18:33 -0800
-Message-ID: <CAADWXX_S8RWE7pSZ-2JM_JeNT7LfHFgEopt6SUUUQYx0yumojw@mail.gmail.com>
-Subject: Re: `git show --oneline commit` does not do what's intuitively expected
-To:     Jeff King <peff@peff.net>
-Cc:     Luna Kid <lunakid@gmail.com>, git@vger.kernel.org
-Content-Type: text/plain; charset=UTF-8
+In-Reply-To: <dfcc54b406d9f46cf358b7ead128bf65.squirrel@mail.jessiehernandez.com>
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Feb 16, 2017 at 8:05 PM, Jeff King <peff@peff.net> wrote:
-> On Fri, Feb 17, 2017 at 02:51:36AM +0100, Luna Kid wrote:
+On 2017-02-22 06:59 AM, Jessie Hernandez wrote:
+>> HI,
+>>
+>> the reason why it is fixed, is because commit messages should be
+>> wrapped at 76 characters to be used in mails. So it helps you with the
+>> wrapping.
+>>
+>> Bert
 >
->> tl;dr; --> Please add --no-diff (or --msg-only) to git show. We'll
->> love you for that. :)
+> Right ok. I understand.
+> Knowing this I think I might start writing my commit messages differently
+> then.
+
+You can configure gui.commitMsgWidth if you don't like the default 
+(which is 75, not 76).
+
+		M.
+
+
+> Thank you for this.
 >
-> I think it is already spelled "--no-patch", or "-s" for short.
-
-I think people should also learn about "--no-walk" (or the numberic
-walk limiters) to the revision walking logic, because it can often be
-useful.
-
-IOW, if you only want the commit info, you can certainly use "git show
--s", but you can also use
-
-    git log --no-walk .. list of commits ..
-
-or
-
-    git log -1 <single-commit>
-
-to show a commit without any other details.
-
-Basically, "git show" for a commit does what is mostly equivalent to
-
-     git log --cc --no-walk
-
-although "git show" then has other features too (ie it shows non-commits etc).
-
-                Linus
+> Regards
+>
+> -----------------
+> Jessie Hernandez
+>
+>>
+>>
+>> On Wed, Feb 22, 2017 at 10:27 AM, Jessie Hernandez
+>> <jessie@jessiehernandez.com> wrote:
+>>> Hi all,
+>>>
+>>> I have been using git for a few years now and really like the software.
+>>> I have a small annoyance and was wondering if I could get the
+>>> communities
+>>> view on this.
+>>>
+>>> When using git GUI I find it handy to be able to re-size the "Unstaged
+>>> Changes" and the "Staged Changed" fields.
+>>>
+>>> I would like the same thing for the "Commit Message" field, or to have
+>>> it
+>>> re-size with the git GUI window.
+>>>
+>>> I can re-size the "Commit Message" vertically when making the "Modified"
+>>> panel smaller.
+>>>
+>>> Does this make sense?
+>>> I would be happy to get into more detail if that is necessary or if
+>>> something is not clear.
+>>>
+>>> Thank you.
+>>>
+>>> -----------------
+>>> Jessie Hernandez
+>>>
+>>>
+>>
+>
+>
