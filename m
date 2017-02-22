@@ -2,140 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1C73A201B0
-	for <e@80x24.org>; Wed, 22 Feb 2017 23:35:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1FD53201B0
+	for <e@80x24.org>; Wed, 22 Feb 2017 23:36:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934002AbdBVXfq (ORCPT <rfc822;e@80x24.org>);
-        Wed, 22 Feb 2017 18:35:46 -0500
-Received: from castro.crustytoothpaste.net ([75.10.60.170]:40238 "EHLO
-        castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S932906AbdBVXfp (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 22 Feb 2017 18:35:45 -0500
-Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id CA1A5280AD;
-        Wed, 22 Feb 2017 23:34:22 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
-        s=default; t=1487806462;
-        bh=JBUfQK9iiuB0l75XSlOKu4R7q2rv4xZfcXtb+mVrJFg=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=flCY4wZFgnUiYG06HK6jS9DUfKtxdbNXw9kF9bELXRiJEpK97MqF0h2Fmwpq8oh4d
-         19CxylTWIsIm0q232JAqMpZA4KShgIgRxTkzLUSy4FJUkV6uqJDLYiPD+/0INxtHzK
-         fs8N8pEJBoCm4oMwJT+MhrZtlLLiR2FGh+7xzV3VNnaT7SGeeI8NilQcW7giJOe6t7
-         5o0iJhuN8rdhoemeZjL+WMPRTB7F+hEQmg3F7AsP4zXGxgKrH5qeCH4xzy6i0xgwkM
-         C5lhMBWSaWLHtcKdM12dPZ8fL9253Awt5fNqJlcBIGfG61Fv+QVs0Znv5NcZ/NXQ01
-         oJiZ5pqX7UcvI65n9vh2ADbpS46V5PX/jX2YarFbBkjlhNgsObcI5u94lxXpkLwLai
-         9IwIrWZW3VAyN7c1+b+RWsduiotv0ViJYQlkhIMjq6W1j/tX8DIdfg93/N60hfvUwz
-         z5iEW3nCxTZSHE7I7QBXuURwRWMbXceWR5DaHg34fWyiyLOYAHN
-Date:   Wed, 22 Feb 2017 23:34:19 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     David Turner <David.Turner@twosigma.com>
-Cc:     'Junio C Hamano' <gitster@pobox.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Jeff King <peff@peff.net>
-Subject: Re: [PATCH] http(s): automatically try NTLM authentication first
-Message-ID: <20170222233419.q3fxqmrscosumbjm@genre.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        David Turner <David.Turner@twosigma.com>,
-        'Junio C Hamano' <gitster@pobox.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Eric Sunshine <sunshine@sunshineco.com>, Jeff King <peff@peff.net>
-References: <20170222173936.25016-1-dturner@twosigma.com>
- <xmqqpoiaasgj.fsf@gitster.mtv.corp.google.com>
- <97ab9a812f7b46d7b10d4d06f73259d8@exmbdft7.ad.twosigma.com>
+        id S934451AbdBVXgm (ORCPT <rfc822;e@80x24.org>);
+        Wed, 22 Feb 2017 18:36:42 -0500
+Received: from mail-pg0-f67.google.com ([74.125.83.67]:34732 "EHLO
+        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S934396AbdBVXgh (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Feb 2017 18:36:37 -0500
+Received: by mail-pg0-f67.google.com with SMTP id s67so2307863pgb.1
+        for <git@vger.kernel.org>; Wed, 22 Feb 2017 15:36:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=rlNmeK71+rB+1jNgSAot+1RgaY3alXkDWTNCO3VRomI=;
+        b=QpstHWUwg6Z5zAAZtQnnzoq/DEIv+SQNeyWK3YGIq/a48tPDq6X/F+cNeaORLsZS77
+         2I83RLgfD50a8Yc2fkk/xiVyHHJMUSRmGfjutTgr06LkSngAlsDC4MKjH4DAwFXNlvon
+         pPUMbCWEU3nxHQ+tb+GQIMaq86JsctmzYwhKFUmLzpk+QAqrYx0WJ+YzAtn+ax71NuMR
+         jGjif3Irg+Ym65Wh7JeFjvj1S5Z5FF0jejODfezdBArlpaFfVG+RicZWx2pe4LlUHmz3
+         UWHNIeIgSRDExiNr8duUh4PvtRrArsUl0kvRS/mz3sxi/w6Hk172R7TI9KOmBvlxyrt8
+         sb+Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=rlNmeK71+rB+1jNgSAot+1RgaY3alXkDWTNCO3VRomI=;
+        b=cg7JiQ/knmjjK00e9Dn6tGTikS+m02391KEkxydeMWyJAf1FVx8krEla8UKpRFQ3Na
+         o2oBtLgXYvyMCbm2U7Rn2eChhI7zN00D0j3SlSxalDjVOSVp5cl5vayBnDbvBcGTQL9p
+         6Dnf34TMnz6oS4vEDeL0nrMZgJPSvx9IXfNBCwCpc6ERuvdox+5ZojDkpSN0gfPZEArA
+         sKu+kVKLp6ElG8DfLAw7wDC0dG2dNKlcN6tC9xEWzwGkxc7jPuuqVP5GrkfUkbzQh57N
+         yifDqzb3SXlFXq8c9TDy7LJ1bFd4PnMNEb5pCK29FB8UtidBeX0P+Ewg2ZNexpOkVQ/K
+         nC9Q==
+X-Gm-Message-State: AMke39lat13SkOo2XkOP7Q/R37pnTt1LbSJ1f87lgt3vFk9DPRtzL7yXdF3SXOQAMcN1KA==
+X-Received: by 10.98.216.202 with SMTP id e193mr23843402pfg.80.1487806595617;
+        Wed, 22 Feb 2017 15:36:35 -0800 (PST)
+Received: from localhost ([2620:0:1000:8622:21a0:716b:e013:d129])
+        by smtp.gmail.com with ESMTPSA id t184sm5651206pgb.11.2017.02.22.15.36.34
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Wed, 22 Feb 2017 15:36:34 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [RFC 03/14] upload-pack: test negotiation with changing repo
+References: <cover.1485381677.git.jonathantanmy@google.com>
+        <cover.1485381677.git.jonathantanmy@google.com>
+        <afe5d7d3f876893fdad318665805df1e056717c6.1485381677.git.jonathantanmy@google.com>
+        <xmqq8tpx30zq.fsf@gitster.mtv.corp.google.com>
+        <0c727063-0583-f713-68fb-bd284be696b2@google.com>
+Date:   Wed, 22 Feb 2017 15:36:33 -0800
+In-Reply-To: <0c727063-0583-f713-68fb-bd284be696b2@google.com> (Jonathan Tan's
+        message of "Thu, 26 Jan 2017 16:44:14 -0800")
+Message-ID: <xmqqo9xtajcu.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="4udwhupbswj2wpru"
-Content-Disposition: inline
-In-Reply-To: <97ab9a812f7b46d7b10d4d06f73259d8@exmbdft7.ad.twosigma.com>
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.9.0-2-amd64)
-User-Agent: NeoMutt/20170113 (1.7.2)
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Jonathan Tan <jonathantanmy@google.com> writes:
 
---4udwhupbswj2wpru
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+>> This somehow looks like a good thing to do even in production.  Am I
+>> mistaken?
+>
+> Yes, that's true. If this patch set stalls (for whatever reason), I'll
+> spin this off into an independent patch.
 
-On Wed, Feb 22, 2017 at 09:04:14PM +0000, David Turner wrote:
-> > -----Original Message-----
-> > From: Junio C Hamano [mailto:jch2355@gmail.com] On Behalf Of Junio C
-> > Hamano
-> > Sent: Wednesday, February 22, 2017 3:20 PM
-> > To: David Turner <David.Turner@twosigma.com>
-> > Cc: git@vger.kernel.org; sandals@crustytoothpaste.net; Johannes Schinde=
-lin
-> > <johannes.schindelin@gmx.de>; Eric Sunshine
-> > <sunshine@sunshineco.com>; Jeff King <peff@peff.net>
-> > Subject: Re: [PATCH] http(s): automatically try NTLM authentication fir=
-st
-> >=20
-> >=20
-> > Some other possible worries we may have had I can think of are:
-> >=20
-> >  - With this enabled unconditionally, would we leak some information?
->=20
-> I think "NTLM" is actually a misnomer here (I just copied Johannes's=20
-> commit message). The mechanism is actually SPNEGO, if I understand this=
-=20
-> correctly. It seems to me that this is probably secure, since it is appar=
-ently
-> widely implemented in browsers.
+... which may be needed.
 
-This is SPNEGO.  It will work with NTLM as well as Kerberos.
+As to the main goal of this topic, I think the "ask by refname (with
+glob)" is very good thing to start the "client speaks first" v2
+protocol, as it would allow us to reduce the size of the initial
+advertisement for common cases (i.e. remote.<name>.fetch is likely
+to list only refs/heads/* on the left hand side of a refspec).  And
+adding this to v1 is probably a good first step to make sure the
+code that is currently used by v1 protocol exchange that will be
+shared with the v2 protocols are prepared to be driven by refname
+without knowing the exact object name until the final round.
 
-Browsers usually disable this feature by default, as it basically will
-attempt to authenticate to any site that sends a 401.  For Kerberos
-against a malicious site, the user will either not have a valid ticket
-for that domain, or the user's Kerberos server will refuse to provide a
-ticket to pass to the server, so there's no security risk involved.
 
-I'm unclear how SPNEGO works with NTLM, so I can't speak for the
-security of it.  From what I understand of NTLM and from RFC 4559, it
-consists of a shared secret.  I'm unsure what security measures are in
-place to not send that to an untrusted server.
 
-As far as Kerberos, this is a desirable feature to have enabled, with
-little downside.  I just don't know about the security of the NTLM part,
-and I don't think we should take this patch unless we're sure we know
-the consequences of it.
---=20
-brian m. carlson / brian with sandals: Houston, Texas, US
-+1 832 623 2791 | https://www.crustytoothpaste.net/~bmc | My opinion only
-OpenPGP: https://keybase.io/bk2204
-
---4udwhupbswj2wpru
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.1.18 (GNU/Linux)
-
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAliuH/oACgkQv1NdgR9S
-9ou70w//TUu5etrmp3WcLk3kieQepi5jZ3xDDwAv4QAuDdOb0i+FObha35nEAAIy
-Miba6lNmXOnhz7gAHrVS5gnw/NsnYYdYTLyfxLLtvyFTc6sjlalw5no7vIPQvjeO
-qBJUdssbur778Pcm0HdUUUTmOiWXSCo6wFnYcgc+fDyULdS7WnzAXrIOyw4h5cAD
-vTB4aclZEPEHyXcMQpG9+RaufQ29yuV+PW0okU/3BeaE139pGOb+WaEX5WDqrNCL
-8z7syocq8/di0I91bCAuORv5ZxsUgWqq3lGvcNlj4TJYJp0x5d0GYcxs55H0/HJX
-Mgqa9padluWdSIPnrMi9JBlxGdv7rY4c4uqXGENvqa1dMC7eFBD8XK2ZvUjvXzea
-6icgjTfcUqpm1b0ZCTSdFNG7tqD0IMqljZBTfLsNqJSNYscHKSVmEE17aP5pdUym
-MXDnshUatHEAQ4V7II+ERjGjt3aGv2tMW0cVXA9O24FgaiffBp1qa14GUxJBp0Mu
-gAJwjf+l8CV3DY6WWG71PoXuRBah8yx2e4qNVd+LyXzrfU3TCG8NGgR5zKO+y22+
-kfKKpo52JKzsfohfIfGZQUGnXkT0FdrjyGPEEkCwZBqCTjwAX1MkccMJp4r6BYUX
-5+C/mrfEh9P/Z2HaMTrrfAiKs0zf9gGaYygnhn9EYf2O8KpzLrc=
-=nmHA
------END PGP SIGNATURE-----
-
---4udwhupbswj2wpru--
