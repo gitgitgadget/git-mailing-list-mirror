@@ -2,166 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 39DFF201B0
-	for <e@80x24.org>; Wed, 22 Feb 2017 18:45:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0AC09201B0
+	for <e@80x24.org>; Wed, 22 Feb 2017 18:46:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754931AbdBVSot (ORCPT <rfc822;e@80x24.org>);
-        Wed, 22 Feb 2017 13:44:49 -0500
-Received: from mail-it0-f50.google.com ([209.85.214.50]:35713 "EHLO
-        mail-it0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754651AbdBVSoe (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Feb 2017 13:44:34 -0500
-Received: by mail-it0-f50.google.com with SMTP id 203so146249987ith.0
-        for <git@vger.kernel.org>; Wed, 22 Feb 2017 10:43:58 -0800 (PST)
+        id S932566AbdBVSqp (ORCPT <rfc822;e@80x24.org>);
+        Wed, 22 Feb 2017 13:46:45 -0500
+Received: from mail-wr0-f196.google.com ([209.85.128.196]:35710 "EHLO
+        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755008AbdBVSqn (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Feb 2017 13:46:43 -0500
+Received: by mail-wr0-f196.google.com with SMTP id q39so1463456wrb.2
+        for <git@vger.kernel.org>; Wed, 22 Feb 2017 10:46:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=OsCX09Lgcc5t4JqNbjFqCZXIiwRKWLjw2O/tyLG96dU=;
-        b=B9aZPAhwTAV9tcelGQXQ1zwRyjMdPSLYbErqGRFj9q0BY2fMILioFqSO5dDBgFj8w+
-         w36wPR19jpYKWVKCGOoDB9AKyGkvxEMmqxp7fwP6IGfr24eMvofuEb3XjeTKXyiSnhKB
-         SgPu0kkNACwg2JZO9GGoYKvKzwsJHj7ERNL8EQ5+VgrNWeQ/WM08HbGOGnJJCq2IEdwm
-         kXnVDTwU+MtHbV1dwg6UhovXFBMmAI6vse7LQEf7b/vpxyJABYUsUhHs2TTV85VaNiff
-         MltgN0sR3YECgGdeV8gSo2b6dOwWcXsp25A42BGhx/GztBiaYWXGUwquxWlMcQJ8eUQX
-         V2MQ==
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id;
+        bh=FPogeswIjeX/pJFZ0DmSBupOAXFpQOuwVvX8MCvDFzc=;
+        b=pZlRRYuPIBcgjNR5PzAdCci2MxaAAuYHc6F1lVKy7i6HjJmGlHlwJrrfP4Cn+hl/W4
+         s3/u/SyTSkOsyj4OWSorB+qEgY/E/zFAnV9Mhvv8qCG0nL4MBr3AFYhco3b9BGDzTeJO
+         6Hzfegtlu352J8QIX1PSFmImc4osf2Yh/uRoEHkgQ+M+5DSI9E4V3WvsQalD+tvHnvDY
+         SRk41IpARrpxuQzB87BSelpjn6qzaCQorj9EN+czfNPQ2UIF8M2Zi81mURE/CAjIfJRt
+         FxcrneJ6VBYPKrT04QNypZILrJ8C+MwJhO4jkofuzI/CYqwE9O71hSEOT8rYBJFRN3vW
+         JjOw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=OsCX09Lgcc5t4JqNbjFqCZXIiwRKWLjw2O/tyLG96dU=;
-        b=ppd/5ytV9iVcM0h51u4ZnKV49iwYU1hpauVoZAIrxovDKNoTn/Tv1xfQx0ZW0E8/fB
-         KHaxbmqeXKyDpp/PXjXHCIWthazCqWH44OYacx5YkhogkHkSqd9p0LLmE4T11e6wbzpS
-         9ZTtAeYWdfyWWGbG54Y93wtpez6H6cvEJb8xkbeWRMzFvfmOTpYXys8+qiEYH8Axpesx
-         Chyp8fTWsWu67YaNU/Qub4+iWTrghbpJspE/vzQUO8zNlXqJEBsiQQ7MdougBRrtU3Gh
-         OI1Sq6UWXW7714ao0S9W59oECW/sJ3UTmZIm5YJAW/x4g2JVx1lgFakX94QqeW8fsQE3
-         z0sw==
-X-Gm-Message-State: AMke39kOzOIJ7unW8/EICMmFDfV7X3d0jdtF30kTA3CIqZbcU+ecbi0vfE35kvwHNVhpTxMfJZf+PQJKve6NZyuZ
-X-Received: by 10.107.16.14 with SMTP id y14mr24226960ioi.164.1487789037393;
- Wed, 22 Feb 2017 10:43:57 -0800 (PST)
-MIME-Version: 1.0
-Received: by 10.79.33.148 with HTTP; Wed, 22 Feb 2017 10:43:56 -0800 (PST)
-In-Reply-To: <xmqqlgt5x430.fsf@gitster.mtv.corp.google.com>
-References: <xmqq8tp74823.fsf@gitster.mtv.corp.google.com> <20170216003811.18273-1-sbeller@google.com>
- <20170216003811.18273-4-sbeller@google.com> <xmqqlgt5x430.fsf@gitster.mtv.corp.google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Wed, 22 Feb 2017 10:43:56 -0800
-Message-ID: <CAGZ79kYhT4ikj2pfDJM_PQsh5XzGTVT2kByiE1moK8RUcusLcA@mail.gmail.com>
-Subject: Re: [PATCH 03/15] lib-submodule-update.sh: define tests for recursing
- into submodules
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Brandon Williams <bmwill@google.com>
-Content-Type: text/plain; charset=UTF-8
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=FPogeswIjeX/pJFZ0DmSBupOAXFpQOuwVvX8MCvDFzc=;
+        b=gahbNOzg1dMVnw4onuDYRpIDCGxHvEHwzKBsubBVexsij7ZsgVI0aVDvsXarXRIhVv
+         6dGMdwawUvYV6TAqlew2ac60B1hDI5hLUlOwVARdOGhjHbNOazUVVpNOw1Tuq5CUhJvM
+         yHiybAICfdm4gs9wyyeBJZN+q/axrQW81OUAcgoXYEA7aKeEVfuNkMl1Vi4JWs+Y1jEU
+         3MkviF39ivDsfu7VerI7+73Ek5VE4lTbBiETgeLt09Uu9Uo0BxcDZFK5XgJBxaUSK9Ht
+         k5eN68ASI95OL1Vm/uWZSh8WRcXD0cFyDXG4tmgn+eanLN+KLvsQgYxSR1hkdCOJboO4
+         0vUg==
+X-Gm-Message-State: AMke39mH1Foyh1FMekBIQRJ9ptMmMwQq9jtBT4nGrXa2bbSM+4Dw2ejvQ1aM7Tgp5sDp5A==
+X-Received: by 10.223.152.177 with SMTP id w46mr976702wrb.72.1487789193079;
+        Wed, 22 Feb 2017 10:46:33 -0800 (PST)
+Received: from localhost (cable-158-181-73-214.cust.telecolumbus.net. [158.181.73.214])
+        by smtp.gmail.com with ESMTPSA id q4sm2768741wrc.35.2017.02.22.10.46.32
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 22 Feb 2017 10:46:32 -0800 (PST)
+From:   Ralf Thielow <ralf.thielow@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Jiang Xin <worldhello.net@gmail.com>,
+        Ralf Thielow <ralf.thielow@gmail.com>
+Subject: [PATCH] git add -i: replace \t with blanks in the help message
+Date:   Wed, 22 Feb 2017 19:46:27 +0100
+Message-Id: <20170222184627.3811-1-ralf.thielow@gmail.com>
+X-Mailer: git-send-email 2.12.0.rc2.424.g63d3652c7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Feb 16, 2017 at 12:39 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Stefan Beller <sbeller@google.com> writes:
->
->> Currently lib-submodule-update.sh provides 2 functions
->> test_submodule_switch and test_submodule_forced_switch that are used by a
->> variety of tests to ensure that submodules behave as expected. The current
->> expected behavior is that submodules are not touched at all (see
->> 42639d2317a for the exact setup).
->>
->> In the future we want to teach all these commands to properly recurse
->> into submodules. To do that, we'll add two testing functions to
->> submodule-update-lib.sh test_submodule_switch_recursing and
->> test_submodule_forced_switch_recursing.
->
-> I'd remove "properly" and insert a colon after "add two ... to
-> submodule-update-lib.sh" before the names of two functions.
+Within the help message of 'git add -i', the 'diff' command uses one
+tab character and blanks to create the space between the name and the
+description while the others use blanks only.  So if the tab size is
+not at 4 characters, this description will not be in range.
+Replace the tab character with blanks.
 
-ok
+Signed-off-by: Ralf Thielow <ralf.thielow@gmail.com>
+---
+ git-add--interactive.perl | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
->
->> +reset_work_tree_to_interested () {
->> +     reset_work_tree_to $1 &&
->> +     # indicate we are interested in the submodule:
->> +     git -C submodule_update config submodule.sub1.url "bogus" &&
->> +     # also have it available:
->> +     if ! test -d submodule_update/.git/modules/sub1
->> +     then
->> +             mkdir submodule_update/.git/modules &&
->
-> Would we want "mkdir -p" here to be safe?
+diff --git a/git-add--interactive.perl b/git-add--interactive.perl
+index cf6fc926a..982593c89 100755
+--- a/git-add--interactive.perl
++++ b/git-add--interactive.perl
+@@ -1678,7 +1678,7 @@ status        - show paths with changes
+ update        - add working tree state to the staged set of changes
+ revert        - revert staged set of changes back to the HEAD version
+ patch         - pick hunks and update selectively
+-diff	      - view diff between HEAD and index
++diff          - view diff between HEAD and index
+ add untracked - add contents of untracked files to the staged set of changes
+ EOF
+ }
+-- 
+2.12.0.rc2.424.g63d3652c7
 
-Yes I cannot think of a downside of being overly cautious here.
-
->
->> +             cp -r submodule_update_repo/.git/modules/sub1 submodule_update/.git/modules/sub1
->
-> ... ahh, wouldn't matter that much, we checked that modules/sub1
-> does not exist, and as long as nobody creates modules/ or modules/somethingelse
-> we are OK.
-
-Well, I'll add the -p
-
->> +# Test that submodule contents are correctly updated when switching
->> +# between commits that change a submodule.
->> +# Test that the following transitions are correctly handled:
->> +# (These tests are also above in the case where we expect no change
->> +#  in the submodule)
->> +# - Updated submodule
->> +# - New submodule
->> +# - Removed submodule
->> +# - Directory containing tracked files replaced by submodule
->> +# - Submodule replaced by tracked files in directory
->> +# - Submodule replaced by tracked file with the same name
->> +# - tracked file replaced by submodule
->
-> These should work without trouble only when the paths involved in
-> the operation in the working tree are clean, right?  Just double
-> checking.  If they are dirty we should expect a failure, instead of
-> silent loss of information.
-
-yes, I'll go over the tests again and add those cases if missing.
-
-
->> +     command="$1"
->
-> The dq-pair is not strictly needed on the RHS of the assignment, but
-> it is a good way to signal that we considered that we might receive
-> an argument with $IFS in it...
->
->> +                     $command add_sub1 &&
->
-> ... and after doing so, not quoting $command here signals that we
-> expect command line splitting to happen.  Am I reading it correctly?
-> Without an actual caller appearing in this step, it is rather hard
-> to judge.
->
-
-I followed the existing code without thinking about these points, but they are
-valid and exactly how we'd expect the code to behave.
-$1 / $command will be e.g. "git checkout --recurse-submodules" in
-this patch series; but later on we could also have functions.
-C.f.  t4137 which defines a function
-
-    apply_3way () {
-        git diff --ignore-submodules=dirty "..$1" | git apply --3way -
-    }
-    test_submodule_switch "apply_3way"
-
-We'd want to have a similar thing for the recursing part, e.g.
-
-    apply_3way_recursing () {
-        git diff --submodule=diff "..$1" | git apply
---recurse-submodules --3way -
-    }
-    test_submodule_switch_recursing "apply_3way_recursing"
-
->> +                     echo sub1 > .git/info/exclude
->
->     ">.git/info/exclude"
-
-ok
