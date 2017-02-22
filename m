@@ -2,87 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0AC09201B0
-	for <e@80x24.org>; Wed, 22 Feb 2017 18:46:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BA705201B0
+	for <e@80x24.org>; Wed, 22 Feb 2017 18:51:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932566AbdBVSqp (ORCPT <rfc822;e@80x24.org>);
-        Wed, 22 Feb 2017 13:46:45 -0500
-Received: from mail-wr0-f196.google.com ([209.85.128.196]:35710 "EHLO
-        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755008AbdBVSqn (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Feb 2017 13:46:43 -0500
-Received: by mail-wr0-f196.google.com with SMTP id q39so1463456wrb.2
-        for <git@vger.kernel.org>; Wed, 22 Feb 2017 10:46:39 -0800 (PST)
+        id S1755039AbdBVSuh (ORCPT <rfc822;e@80x24.org>);
+        Wed, 22 Feb 2017 13:50:37 -0500
+Received: from mail-pf0-f196.google.com ([209.85.192.196]:33503 "EHLO
+        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754936AbdBVSub (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Feb 2017 13:50:31 -0500
+Received: by mail-pf0-f196.google.com with SMTP id p185so90744pfb.0
+        for <git@vger.kernel.org>; Wed, 22 Feb 2017 10:50:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id;
-        bh=FPogeswIjeX/pJFZ0DmSBupOAXFpQOuwVvX8MCvDFzc=;
-        b=pZlRRYuPIBcgjNR5PzAdCci2MxaAAuYHc6F1lVKy7i6HjJmGlHlwJrrfP4Cn+hl/W4
-         s3/u/SyTSkOsyj4OWSorB+qEgY/E/zFAnV9Mhvv8qCG0nL4MBr3AFYhco3b9BGDzTeJO
-         6Hzfegtlu352J8QIX1PSFmImc4osf2Yh/uRoEHkgQ+M+5DSI9E4V3WvsQalD+tvHnvDY
-         SRk41IpARrpxuQzB87BSelpjn6qzaCQorj9EN+czfNPQ2UIF8M2Zi81mURE/CAjIfJRt
-         FxcrneJ6VBYPKrT04QNypZILrJ8C+MwJhO4jkofuzI/CYqwE9O71hSEOT8rYBJFRN3vW
-         JjOw==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=bDOXp85u+oAS0W0hhdueSm2vaiViE6QDZ9sz3jvGbNY=;
+        b=qaM/j6etrZ4edje9WfgZA7T8x+/ZI8OS2BeslG3e6YCmvJjF9fJ5yNpFq9UCq356Zv
+         9Sfyg7obqkNWugKowZzn/5UcbyKy4r5YFv8uGNmKSCSxOQIIaQKnGJh6junXgVHZK5au
+         Dq+YwYOUIoajQPiuTSw4NFM8z8NbCn9Vxc2GJ6DN/lEib9QqyilrGNvGJ8zlf/w0DUs9
+         42P8qRvjVYcbiAAe7AaOdb6j1TvB8Dpo8iQDxf02J/ULI25/rG5YcVxrn5jt79EDIku5
+         qZ93h8gLPbbKkwdnrLBdFouz/RnRW3PIsa6avlKGsZNafeoj6AsrhJQWywVMN5aMYnjX
+         +odQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=FPogeswIjeX/pJFZ0DmSBupOAXFpQOuwVvX8MCvDFzc=;
-        b=gahbNOzg1dMVnw4onuDYRpIDCGxHvEHwzKBsubBVexsij7ZsgVI0aVDvsXarXRIhVv
-         6dGMdwawUvYV6TAqlew2ac60B1hDI5hLUlOwVARdOGhjHbNOazUVVpNOw1Tuq5CUhJvM
-         yHiybAICfdm4gs9wyyeBJZN+q/axrQW81OUAcgoXYEA7aKeEVfuNkMl1Vi4JWs+Y1jEU
-         3MkviF39ivDsfu7VerI7+73Ek5VE4lTbBiETgeLt09Uu9Uo0BxcDZFK5XgJBxaUSK9Ht
-         k5eN68ASI95OL1Vm/uWZSh8WRcXD0cFyDXG4tmgn+eanLN+KLvsQgYxSR1hkdCOJboO4
-         0vUg==
-X-Gm-Message-State: AMke39mH1Foyh1FMekBIQRJ9ptMmMwQq9jtBT4nGrXa2bbSM+4Dw2ejvQ1aM7Tgp5sDp5A==
-X-Received: by 10.223.152.177 with SMTP id w46mr976702wrb.72.1487789193079;
-        Wed, 22 Feb 2017 10:46:33 -0800 (PST)
-Received: from localhost (cable-158-181-73-214.cust.telecolumbus.net. [158.181.73.214])
-        by smtp.gmail.com with ESMTPSA id q4sm2768741wrc.35.2017.02.22.10.46.32
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 22 Feb 2017 10:46:32 -0800 (PST)
-From:   Ralf Thielow <ralf.thielow@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Jiang Xin <worldhello.net@gmail.com>,
-        Ralf Thielow <ralf.thielow@gmail.com>
-Subject: [PATCH] git add -i: replace \t with blanks in the help message
-Date:   Wed, 22 Feb 2017 19:46:27 +0100
-Message-Id: <20170222184627.3811-1-ralf.thielow@gmail.com>
-X-Mailer: git-send-email 2.12.0.rc2.424.g63d3652c7
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=bDOXp85u+oAS0W0hhdueSm2vaiViE6QDZ9sz3jvGbNY=;
+        b=TnJ+BzXdUO/OQlglvKXOE37/wUEEcK5oguKKXAa/O4Hk1OCaAB9ykbz+2My8yVLzM+
+         dTOeUf57vpklZzpGu/EaXLp0+hkuWUx2FC2pqzKiBy3lJPKFgs7s2uucEM0G+ESpeXLr
+         hpg7IRby6ZXEz8VBEezLOQrldRyJfjDdZ+YneiAzO8OaddWpHfYqFOKyapRU+s/pER2k
+         4CI2F3jYv+3AaIq7yupPFeomASRLXB3pOEwjpzvy4wsc3VSup2M5lJvc4ycE7T4PB/hl
+         nLJMfdzlfoGNEj3Ke2eGNWmDZQ7pLM6t9EimSpCaQbiF69YOCqwYn9k8As+MzDWTrU1b
+         3qPA==
+X-Gm-Message-State: AMke39kswNbJDKLLFnLvwuzn1Eb9RvddU5NABFD2wtAuPNW3c7Zpmhm2aA+8OxI+fI940g==
+X-Received: by 10.99.1.87 with SMTP id 84mr43544423pgb.142.1487789423013;
+        Wed, 22 Feb 2017 10:50:23 -0800 (PST)
+Received: from localhost ([2620:0:1000:8622:21a0:716b:e013:d129])
+        by smtp.gmail.com with ESMTPSA id n123sm5120818pga.9.2017.02.22.10.50.22
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Wed, 22 Feb 2017 10:50:22 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Michael Haggerty <mhagger@alum.mit.edu>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>
+Subject: Re: [PATCH v5 03/19] builtin/diff-tree: convert to struct object_id
+References: <20170221234737.894681-1-sandals@crustytoothpaste.net>
+        <20170221234737.894681-4-sandals@crustytoothpaste.net>
+Date:   Wed, 22 Feb 2017 10:50:21 -0800
+In-Reply-To: <20170221234737.894681-4-sandals@crustytoothpaste.net> (brian
+        m. carlson's message of "Tue, 21 Feb 2017 23:47:21 +0000")
+Message-ID: <xmqqy3wyawlu.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Within the help message of 'git add -i', the 'diff' command uses one
-tab character and blanks to create the space between the name and the
-description while the others use blanks only.  So if the tab size is
-not at 4 characters, this description will not be in range.
-Replace the tab character with blanks.
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
-Signed-off-by: Ralf Thielow <ralf.thielow@gmail.com>
----
- git-add--interactive.perl | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+> Convert most leaf functions to struct object_id.  Change several
+> hardcoded numbers to uses of parse_oid_hex.  In doing so, verify that we
+> when we want two trees, we have exactly two trees.
+>
+> Finally, in stdin_diff_commit, avoid accessing the byte after the NUL.
+> This will be a NUL as well, since the first NUL was a newline we
+> overwrote.  However, with parse_oid_hex, we no longer need to increment
+> the pointer directly, and can simply increment it as part of our check
+> for the space character.
 
-diff --git a/git-add--interactive.perl b/git-add--interactive.perl
-index cf6fc926a..982593c89 100755
---- a/git-add--interactive.perl
-+++ b/git-add--interactive.perl
-@@ -1678,7 +1678,7 @@ status        - show paths with changes
- update        - add working tree state to the staged set of changes
- revert        - revert staged set of changes back to the HEAD version
- patch         - pick hunks and update selectively
--diff	      - view diff between HEAD and index
-+diff          - view diff between HEAD and index
- add untracked - add contents of untracked files to the staged set of changes
- EOF
- }
--- 
-2.12.0.rc2.424.g63d3652c7
+After reading the pre- and post-image twice, I think I convinced
+myself that this is a faithful conersion and they do the same thing.
+
+What the function does appears somewhat iffy in the modern world.
+We are relying on the fact that while Git is operating in this mode
+of reading a tuple of commits per line and doing log-tree, that Git
+itself will not do the history traversal (instead, another instance
+of Git that feeds us via our standard input is walking the history)
+for this piece of code to work correctly.  
+
+Of course, the "diff-tree --stdin" command was meant to sit on the
+downstream of "rev-list --parents", so the assumption the code makes
+(i.e. the parents field of the in-core commit objects do not have to
+be usable for history traversal) may be reasonable, but still...
 
