@@ -2,64 +2,254 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B8F7D201A9
-	for <e@80x24.org>; Wed, 22 Feb 2017 00:53:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1E4C0201A9
+	for <e@80x24.org>; Wed, 22 Feb 2017 01:01:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753027AbdBVAwO (ORCPT <rfc822;e@80x24.org>);
-        Tue, 21 Feb 2017 19:52:14 -0500
-Received: from mail-it0-f47.google.com ([209.85.214.47]:34892 "EHLO
-        mail-it0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752298AbdBVAwN (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Feb 2017 19:52:13 -0500
-Received: by mail-it0-f47.google.com with SMTP id 203so129550183ith.0
-        for <git@vger.kernel.org>; Tue, 21 Feb 2017 16:52:12 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=rodarmor-com.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to;
-        bh=X75+yCmf2+L8AtGP7+Vk2lVwPqaw+NcFU9fR+9Z1BDI=;
-        b=ng/z6IpZ9jZlUzGF6c8Cdzw8LpP5wOf0Xp9LTxPVGET8eSrvAe8mkqjaXOl9JSuiEn
-         d7hcvef4NlueBy4qsKYpkTdQ81KAUnr7HnVy0OHNv5osh0Jlu4uLND91k1nvniXtataI
-         xi3I0fvOkpH8IdE3rzfIS4p8K+O52RPHmz2pHeKqHGX/SFjrneE3PI9U0P8XKSdYxNJN
-         h25y2illPK4nsTgegFvLrkkzktOvARfWIdJ+legh941Uk3Tj6Fi31gtrnS6PqqKv8e/9
-         yNGzY74g+k4gOCZCSSwIhIPux44rAzNhTSo7Csr3kIHslY1J8Alv+hnG0zmgAiiPVnxA
-         z/Cg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to;
-        bh=X75+yCmf2+L8AtGP7+Vk2lVwPqaw+NcFU9fR+9Z1BDI=;
-        b=QzCgCJ6fwbnW65eiHY0cy3lcxmmwh7RLwlLjFLsTSz/nwKdlM1HMrNT/teOlcVbkeV
-         z6dLs+4tDjcoQNH7L5JfK3vZ/htcbxme1asUgKVjCpLtPKsxbuCNNhEN2isOiE+e7GMj
-         uM0+U1qj1tLcZ6uhAX+u7T8z5XZEEnndkrzWxk1VNCToGF8JHzMsvbzmzh3b4wTa7vM+
-         2yIapgToAqn1lzfgrIx+7gEZ2VZiSnt2GITsTqSrp3NrwNdAD3rJsXJeFAH+1t2KQggo
-         9PffkVlAw4GQcbSjeC9lWz4TciuGQdPPXawfcBpBdaCzOQd9pFh5PYWbF2TIuTKDR2xA
-         84Hw==
-X-Gm-Message-State: AMke39m6pwpMGRa0bDQ9GhiUJtGyi+mmWu+MtxaC3l9y5FhKhalQbWxsjcho2A4RW6JonV7CvaNETSsS6J0F+A==
-X-Received: by 10.36.192.214 with SMTP id u205mr3751itf.8.1487724732059; Tue,
- 21 Feb 2017 16:52:12 -0800 (PST)
+        id S1753474AbdBVBBx (ORCPT <rfc822;e@80x24.org>);
+        Tue, 21 Feb 2017 20:01:53 -0500
+Received: from homie.mail.dreamhost.com ([208.97.132.208]:58967 "EHLO
+        homiemail-a4.g.dreamhost.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1753114AbdBVBBw (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 21 Feb 2017 20:01:52 -0500
+Received: from homiemail-a4.g.dreamhost.com (localhost [127.0.0.1])
+        by homiemail-a4.g.dreamhost.com (Postfix) with ESMTP id 19C7651C088
+        for <git@vger.kernel.org>; Tue, 21 Feb 2017 17:01:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=bit-booster.com; h=
+        mime-version:in-reply-to:references:from:date:message-id:subject
+        :to:cc:content-type; s=bit-booster.com; bh=2mUlCqflADHv5crNiadAW
+        IheAZ8=; b=QkHsJ3h/bMzVsMnTrRnQ1AkYvrhrXyCPa1FfsPl5hnNKfWkjyxkLV
+        CZXxepD3oK6qNykg+sTm5jEbg//wl91t2EPpBLAhBE4/wyk74f3vdTPChu0+MnmO
+        DatzOGu8BIe3EWrtR5KY6lwQdSE3q2U3ICDVlshG5tRiD5xuauQGQc=
+Received: from mail-it0-f52.google.com (mail-it0-f52.google.com [209.85.214.52])
+        (using TLSv1 with cipher AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: sylvie@bit-booster.com)
+        by homiemail-a4.g.dreamhost.com (Postfix) with ESMTPSA id EF78E51C063
+        for <git@vger.kernel.org>; Tue, 21 Feb 2017 17:01:50 -0800 (PST)
+Received: by mail-it0-f52.google.com with SMTP id h10so122500208ith.1
+        for <git@vger.kernel.org>; Tue, 21 Feb 2017 17:01:50 -0800 (PST)
+X-Gm-Message-State: AMke39mvWhOPQbOipyDHtaFZqav7m6vv1RYGbeDCAZw7LWjoQ63sng8VuMJaODyopjFMxmS9jv52vdiMuVI8TA==
+X-Received: by 10.36.33.135 with SMTP id e129mr3103ita.9.1487725310139; Tue,
+ 21 Feb 2017 17:01:50 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.79.104.1 with HTTP; Tue, 21 Feb 2017 16:52:11 -0800 (PST)
-In-Reply-To: <CANLPe+NVs9sJ7XQqvMabPBLg3DxS2Fyrrg3AzvZPBoWTPpnFzQ@mail.gmail.com>
-References: <CANLPe+NVs9sJ7XQqvMabPBLg3DxS2Fyrrg3AzvZPBoWTPpnFzQ@mail.gmail.com>
-From:   Casey Rodarmor <casey@rodarmor.com>
-Date:   Tue, 21 Feb 2017 16:52:11 -0800
-Message-ID: <CANLPe+OaSnNb1jhAnFtMsOCfho0H7mHVHiXs7rqo6ZHNvRe3-w@mail.gmail.com>
-Subject: Fwd: Typo in worktree man page
-To:     git@vger.kernel.org
+Received: by 10.107.16.83 with HTTP; Tue, 21 Feb 2017 17:01:49 -0800 (PST)
+In-Reply-To: <CAAj3zPzrD+R6kDdqR3C7aYTDjaE+Y5zN+MfoXe5EuH4ZPxroHA@mail.gmail.com>
+References: <20170202022655.2jwvudhvo4hmueaw@sigill.intra.peff.net> <CAAj3zPzrD+R6kDdqR3C7aYTDjaE+Y5zN+MfoXe5EuH4ZPxroHA@mail.gmail.com>
+From:   "G. Sylvie Davies" <sylvie@bit-booster.com>
+Date:   Tue, 21 Feb 2017 17:01:49 -0800
+X-Gmail-Original-Message-ID: <CAAj3zPx+mcfTU=iKC=GS53==+UP=ZxtCxrMx_zs=tDB9U76xAA@mail.gmail.com>
+Message-ID: <CAAj3zPx+mcfTU=iKC=GS53==+UP=ZxtCxrMx_zs=tDB9U76xAA@mail.gmail.com>
+Subject: Re: Git trademark status and policy
+To:     "G. Sylvie Davies" <sylvie@bit-booster.com>, git@sfconservancy.org
+Cc:     Git Users <git@vger.kernel.org>, Jeff King <peff@peff.net>
 Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi there,
+On Tue, Feb 21, 2017 at 7:55 AM, G. Sylvie Davies
+<sylvie@bit-booster.com> wrote:
+> On Wed, Feb 1, 2017 at 6:26 PM, Jeff King <peff@peff.net> wrote:
+>> As many of you already know, the Git project (as a member of Software
+>> Freedom Conservancy) holds a trademark on "Git".  This email will try to
+>> lay out a bit of the history and procedure around the enforcement of
+>> that trademark, along with some open questions about policy.
+>>
+>> I'll use "we" in the text below, which will generally mean the Git
+>> Project Leadership Committee (PLC). I.e., the people who represent the
+>> Git project as part of Conservancy -- me, Junio Hamano, and Shawn
+>> Pearce.
+>>
+>> We approached Conservancy in Feb 2013 about getting a trademark on Git
+>> to ensure that anything calling itself "Git" remained interoperable with
+>> Git. Conservancy's lawyer drafted the USPTO application and submitted it
+>> that summer. The trademark was granted in late 2014 (more on that delay
+>> in a moment).
+>>
+>> Concurrently, we developed a written trademark policy, which you can
+>> find here:
+>>
+>>   https://git-scm.com/trademark
+>>
+>> This was started from a template that Conservancy uses and customized by
+>> Conservancy and the Git PLC.
+>>
+>> While the original idea was to prevent people from forking the
+>> software, breaking compatibility, and still calling it Git, the policy
+>> covers several other cases.
+>>
+>> One is that you can't imply successorship. So you also can't fork the
+>> software, call it "Git++", and then tell everybody your implementation
+>> is the next big thing.
+>>
+>> Another is that you can't use the mark in a way that implies association
+>> with or endorsement by the Git project. To some degree this is necessary
+>> to prevent dilution of the mark for other uses, but there are also cases
+>> we directly want to prevent.
+>>
+>> For example, imagine a software project which is only tangentially
+>> related to Git. It might use Git as a side effect, or might just be
+>> "Git-like" in the sense of being a distributed system with chained
+>> hashes. Let's say as an example that it does backups. We'd prefer it
+>> not call itself GitBackups. We don't endorse it, and it's just using the
+>> name to imply association that isn't there. You can come up with similar
+>> hypotheticals: GitMail that stores mailing list archives in Git, or
+>> GitWiki that uses Git as a backing store.
+>>
+>> Those are all fictitious examples (actually, there _are_ real projects
+>> that do each of those things, but they gave themselves much more unique
+>> names). But they're indicative of some of the cases we've seen. I'm
+>> intentionally not giving the real names here, because my point isn't to
+>> shame any particular projects, but to discuss general policy.
+>>
+>> Careful readers among you may now be wondering about GitHub, GitLab,
+>> Gitolite, etc. And now we get back to why it took over a year to get the
+>> trademark granted.
+>>
+>> The USPTO initially rejected our application as confusingly similar to
+>> the existing trademark on GitHub, which was filed in 2008. While one
+>> might imagine where the "Git" in GitHub comes from, by the time we
+>> applied to the USPTO, both marks had been widely used in parallel for
+>> years.  So we worked out an agreement with GitHub which basically says
+>> "we are mutually OK with the other trademark existing".
+>>
+>> (There was another delay caused by a competing application from a
+>> proprietary version control company that wanted to re-brand portions of
+>> their system as "GitFocused" (not the real name, but similar in spirit).
+>> We argued our right to the name and refused to settle; they eventually
+>> withdrew their application).
+>>
+>> So GitHub is essentially outside the scope of the trademark policy, due
+>> to the history. We also decided to explicitly grandfather some major
+>> projects that were using similar portmanteaus, but which had generally
+>> been good citizens of the Git ecosystem (building on Git in a useful
+>> way, not breaking compatibility). Those include GitLab, JGit, libgit2,
+>> and some others. The reasoning was generally that it would be a big pain
+>> for those projects, which have established their own brands, to have to
+>> switch names. It's hard to hold them responsible for picking a name that
+>> violated a policy that didn't yet exist.
+>>
+>> If the "libgit2" project were starting from scratch today, we'd probably
+>> ask it to use a different name (because the name may imply that it's an
+>> official successor). However, we effectively granted permission for this
+>> use and it would be unfair to disrupt that.
+>>
+>> There's one other policy point that has come up: the written policy
+>> disallows the use of "Git" or the logo on merchandise. This is something
+>> people have asked about it (e.g., somebody made some Git stress balls,
+>> and another person was printing keycaps with a Git logo). We have always
+>> granted it, but wanted to reserve the right in case there was some use
+>> that we hadn't anticipated that would be confusing or unsavory.
+>>
+>> Enforcement of the policy is done as cases are brought to the attention
+>> of Conservancy and the Git PLC. Sometimes people mail Conservancy
+>> directly, and sometimes a use is noticed by the Git PLC, which mails
+>> Conservancy.  In either case, Conservancy's lawyer pings the Git PLC,
+>> and we decide what to do about it, with advice from the lawyer. The end
+>> result is usually a letter from the lawyer politely asking them to stop
+>> using the trademark.
+>>
+>> So how does the Git PLC make decisions? We generally try to follow the
+>> policy in an equitable way, but there are a lot of corner cases. Here
+>> are some rules of thumb we've worked out:
+>>
+>>   - Things that are only tangentially related to Git are out of policy
+>>     (e.g., if you had a service which rewards bitcoin for people's
+>>     commits, we'd prefer it not be branded GitRewards).
+>>
+>>   - Anything that claims to be Git but does not interoperate is out.
+>>     We haven't had to use that one yet.
+>>
+>>   - Portmanteaus ("GitFoo" or "FooGit") are out. Most of the cases run
+>>     into this rule. For instance, we asked GitHub to not to use "DGit"
+>>     to refer to their replicated Git solution, and they[1] rebranded.
+>>     We also asked "GitTorrent" not to use that name based on this rule.
+>>
+>>   - Commands like "git-foo" (so you run "git foo") are generally OK.
+>>     This is Git's well-known extension mechanism, so it doesn't really
+>>     imply endorsement (on the other hand, you do not get to complain if
+>>     you choose too generic a name and conflict with somebody else's use
+>>     of the same git-foo name).
+>>
+>>   - When "git-foo" exists, we've approved "Git Foo" as a matching
+>>     project name, but we haven't decided on a general rule to cover this
+>>     case.  The only example here is "Git LFS".
+>>
+>> So that's more or less where we're at now.  In my opinion, a few open
+>> questions are:
+>>
+>>   1. Is the portmanteau clause a good idea? GitTorrent is a possibly
+>>      interesting case there. It's an open source project trying to
+>>      make a torrent-like protocol for Git. That's something we'd like to
+>>      have happen. But does the name imply more endorsement than we're
+>>      willing to give (especially at an early stage)?
+>>
+>>   2. Is it a problem that the grandfathering of some names may create a
+>>      branding advantage? Under the policy today, we wouldn't grant
+>>      "GitHub" or "GitLab". Does that give an unfair advantage to the
+>>      incumbents?
+>>
+>>      I think the answer is "yes", but the Git PLC is also not sure that
+>>      there is a good solution. If we'd thought about trademark issues
+>>      much earlier, we would have been in different circumstances and
+>>      probably would have made different decisions. But we didn't, so we
+>>      have to live with how things developed in the meantime.
+>>
+>>      Loosening now would be a mistake as it would cause a lot of
+>>      confusion around the trademark and make it harder for us to stop
+>>      the uses that we really care about stopping now.
+>>
+>>   3. Was granting "Git LFS" the right call? I think the project is a good
+>>      one and has worked well with the greater Git community. But I think
+>>      the name has implied some level of "officialness". We obviously
+>>      need to allow "git-lfs" as a name. But should the policy have said
+>>      "you can call this LFS, and the command is git-lfs, but don't say
+>>      'Git LFS'". I'm not sure.
+>>
+>>      One option would have been to ask "git-foo" to prefer "Foo for Git"
+>>      instead of "Git Foo" in their branding (it's too late now for "Git
+>>      LFS", so this is a hypothetical question for future requests now).
+>>
+>>   4. I think the merchandise clause has worked fine, and in general the
+>>      plan is to grant it in most cases. I have trouble thinking of an
+>>      item I _wouldn't_ want the Git logo on, and I'd rather err on the
+>>      side of permissiveness than be the arbiter of taste. And having the
+>>      Git logo on merchandise generally raises awareness of Git.
+>>
+>>      But perhaps people have stronger opinions (either about the type of
+>>      item, or perhaps the practices of the manufacturer producing it).
+>>      It's hard to predict how a particular item would impact how people
+>>      see the Git brand.
+>>
+>> -Peff
+>>
+>> [1] I used "they" to refer to GitHub, but as many of you know, I am also
+>>     employed by GitHub. If you are wondering how that works, I generally
+>>     abstain from any decisions regarding GitHub (and that includes the
+>>     "Git LFS" decision, which was a project started by GitHub). That
+>>     leaves two voting PLC members for those decisions; Conservancy gets
+>>     a tie-breaking vote, but it has never come up.
+>
+>
+>
+> Is "Gitter" allowed?   (https://gitter.im/).
+>
+> More info here:
+>
+> https://en.wikipedia.org/wiki/Gitter
+>
+> Also, their twitter handle is @gitchat.
+>
+> Not sure I'd even classify "gitter" as a portmanteau.
+>
 
-The git worktree man page mentions the `--detached` flag in the
-section on `add`, but the flag is actually called `--detach`.
+As per Junio's earlier email today, "Re: Partnership with Git", sounds
+like questions of this sort go to git@sfconservancy.org.  CC'ing them.
 
-Best,
-Casey
+- Sylvie
