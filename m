@@ -2,94 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EED82201B0
-	for <e@80x24.org>; Wed, 22 Feb 2017 17:12:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 394B7201B0
+	for <e@80x24.org>; Wed, 22 Feb 2017 17:18:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754967AbdBVRLx (ORCPT <rfc822;e@80x24.org>);
-        Wed, 22 Feb 2017 12:11:53 -0500
-Received: from mail-pg0-f65.google.com ([74.125.83.65]:36172 "EHLO
-        mail-pg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754948AbdBVRLs (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Feb 2017 12:11:48 -0500
-Received: by mail-pg0-f65.google.com with SMTP id z128so1256080pgb.3
-        for <git@vger.kernel.org>; Wed, 22 Feb 2017 09:11:42 -0800 (PST)
+        id S932498AbdBVRSg (ORCPT <rfc822;e@80x24.org>);
+        Wed, 22 Feb 2017 12:18:36 -0500
+Received: from mail-oi0-f48.google.com ([209.85.218.48]:36394 "EHLO
+        mail-oi0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932225AbdBVRSe (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Feb 2017 12:18:34 -0500
+Received: by mail-oi0-f48.google.com with SMTP id s205so4944719oif.3
+        for <git@vger.kernel.org>; Wed, 22 Feb 2017 09:18:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:message-id:user-agent
-         :mime-version;
-        bh=Z2LCrz9iOvR5P22apqrKUCY3JhLKHEYURLx1XZW9ieM=;
-        b=Ii4Y8aLHMaPIMLsXK1/fSXhbjEELEWBdOYPahZ00s3XJX8hKGuo+PNVKAQJWC6Xj56
-         Jp5bryTtybyqCmUZiM56jnOQbkxZiWvjQ50ueJmWHsUoUOOg9HhXzcDu2KLBSgwfc/UE
-         KoEiZiyzwFQ16ZKQCOTdUoXM7VLqeV86rMVCih8Hbvup9mi7/1dLREzMjUQ9CBDtZGd7
-         BJASQvtigTY26xo9ZXPN2C4L6koUhuj9JGIKpFaSFEmDN+VXHteVnoY/WNFcuNRaZphS
-         hQlG4m3PvARhp6X1JVpfwlFk7vj1EvICmzu0K8KRhorX2wNVpLwwSxLzLVPcCjzuAotA
-         bNew==
+        d=linux-foundation.org; s=google;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=aAdNuveHnYvSTE8yWG77K53nKF/i0h0t7+uEzvcEStI=;
+        b=PHkzvPcUBz5r4jrZxpij7gTE6OYNIqffOgQYzrXASbd6PhixPvR8HURPJeP99QJkht
+         O2R8EcMy+O4m51oYgA8cGzXKBjdewsHK91E5qwQOsGApvOONZl5aSxOIViDBFpq9cAIb
+         9IypMES5Qe5uHaod/V7UivoA12awHnkheVqFw=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :message-id:user-agent:mime-version;
-        bh=Z2LCrz9iOvR5P22apqrKUCY3JhLKHEYURLx1XZW9ieM=;
-        b=PIQc6lh9g+QqLHGLDoesKKI9FCugVoWer2vp8360gdEhHrFZwAWUMuD9MVJoxFHNZc
-         azoFgT31jsGmuJ89QnIcd6qxNDIruwbf23/9Yc9+nEsyEAmfnii1mRD7EyqAgw58TbKC
-         +/s5VRSUDfkViq00CCxg/218cMohnuHQirlfQnbzyjgOn2MVfxBFbi52XwqHV1mB2c0/
-         lT9KLlD/Iu/O1ktEgA5OgEwvpDBuzn/wbo6e/4vAzNBed2VpBqJLaOA5Fy/RHosXqgLM
-         oXJkIsfCfpcvcY+VgaO9G0QvYum7b3uCeluHsiHkst2YGOW+Zakk/yY1iOWZlPtAroV9
-         07mA==
-X-Gm-Message-State: AMke39mfit2B4eBbZO0RMdst4WiUWiCvIkUxaFe3IxEuSTfYgaui9FU0d8nTvcPaXUG9UA==
-X-Received: by 10.98.88.133 with SMTP id m127mr41465678pfb.155.1487783497219;
-        Wed, 22 Feb 2017 09:11:37 -0800 (PST)
-Received: from localhost ([2620:0:1000:8622:21a0:716b:e013:d129])
-        by smtp.gmail.com with ESMTPSA id a1sm4800287pgn.51.2017.02.22.09.11.36
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 22 Feb 2017 09:11:36 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Matt McCutchen <matt@mattmccutchen.net>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 1/3] fetch-pack: move code to report unmatched refs to a function
-References: <xmqqvas4gie9.fsf@gitster.mtv.corp.google.com>
-        <b9b52233e84a7f5bd0526f9625e4be06cbbd0ace.1487779910.git.matt@mattmccutchen.net>
-Date:   Wed, 22 Feb 2017 09:11:35 -0800
-Message-ID: <xmqqpoiacfqw.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=aAdNuveHnYvSTE8yWG77K53nKF/i0h0t7+uEzvcEStI=;
+        b=ia+w4yC2nhcR04lXJG76IqdWh3Q3O/quQdRmjGDlounFbr+LWrfq0btttaxODIyY3O
+         9SkOHDYFdwDuiwO0+55q5BeKNiqdR1e9ySAVSN2YB37JFOGY4oMtqr7NQYIacK75yXkw
+         M4GQETk3/ev/v+T9q+OwDkvL7lg7GTf30NzGXuzHZ2oTn688Uk1l0Lq7UJBSBqNPoJGd
+         87cor0JtJeaBZOh5v4OZEsKz5qEEiS92cwwzd9ibEXSddUbp57FZvx4Kfa5Ei/CNaCDe
+         9KDTd+E/rfVvlPdzLLqOMFnKEDCPT0+mOdgYXNC/M9CZApm776nL0pTC4YRfqCLNtP1/
+         s/ig==
+X-Gm-Message-State: AMke39kAVHdxtnLMuJ83e3qkg0rMvPBuxlWw10pECkUpyyzjLj0yAlflcb8Vw9u4SLI9Re+iBYxyf0GSSorg3ioy
+X-Received: by 10.202.3.197 with SMTP id 188mr18123162oid.31.1487783913700;
+ Wed, 22 Feb 2017 09:18:33 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
+Received: by 10.157.42.51 with HTTP; Wed, 22 Feb 2017 09:18:33 -0800 (PST)
+In-Reply-To: <20170217040522.jugt4uuak74l3qjw@sigill.intra.peff.net>
+References: <CA+-W3ctdRtLpziJ9TX2hqk7RagMyJpHsrfwj=rN7oXQ8EeUPnw@mail.gmail.com>
+ <20170217040522.jugt4uuak74l3qjw@sigill.intra.peff.net>
+From:   Linus Torvalds <torvalds@linux-foundation.org>
+Date:   Wed, 22 Feb 2017 09:18:33 -0800
+Message-ID: <CAADWXX_S8RWE7pSZ-2JM_JeNT7LfHFgEopt6SUUUQYx0yumojw@mail.gmail.com>
+Subject: Re: `git show --oneline commit` does not do what's intuitively expected
+To:     Jeff King <peff@peff.net>
+Cc:     Luna Kid <lunakid@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Matt McCutchen <matt@mattmccutchen.net> writes:
-
-> We're preparing to reuse this code in transport.c for "git fetch".
+On Thu, Feb 16, 2017 at 8:05 PM, Jeff King <peff@peff.net> wrote:
+> On Fri, Feb 17, 2017 at 02:51:36AM +0100, Luna Kid wrote:
 >
-> While I'm here, internationalize the existing error message.
-> ---
+>> tl;dr; --> Please add --no-diff (or --msg-only) to git show. We'll
+>> love you for that. :)
+>
+> I think it is already spelled "--no-patch", or "-s" for short.
 
-Sounds good.  Please just say it is OK for me to forge your sign-off ;-)
+I think people should also learn about "--no-walk" (or the numberic
+walk limiters) to the revision walking logic, because it can often be
+useful.
 
-> diff --git a/fetch-pack.h b/fetch-pack.h
-> index c912e3d..fd4d80e 100644
-> --- a/fetch-pack.h
-> +++ b/fetch-pack.h
-> @@ -45,4 +45,13 @@ struct ref *fetch_pack(struct fetch_pack_args *args,
->  		       struct sha1_array *shallow,
->  		       char **pack_lockfile);
->  
-> +/*
-> + * Print an appropriate error message for each sought ref that wasn't
-> + * matched.  Return 0 if all sought refs were matched, otherwise 1.
-> + *
-> + * The type of "sought" should be "const struct ref *const *" but for
-> + * http://stackoverflow.com/questions/5055655/double-pointer-const-correctness-warnings-in-c .
-> + */
+IOW, if you only want the commit info, you can certainly use "git show
+-s", but you can also use
 
-This is an unfinished sentence, but I wonder if we even need to have
-it here?  I'd be surprised if this function was unique in the
-codebase that takes an array pointer whose type is looser than
-necessary because of well-known language rules.
+    git log --no-walk .. list of commits ..
 
+or
+
+    git log -1 <single-commit>
+
+to show a commit without any other details.
+
+Basically, "git show" for a commit does what is mostly equivalent to
+
+     git log --cc --no-walk
+
+although "git show" then has other features too (ie it shows non-commits etc).
+
+                Linus
