@@ -2,64 +2,63 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 721052023D
-	for <e@80x24.org>; Wed, 22 Feb 2017 20:04:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 93F0B201B0
+	for <e@80x24.org>; Wed, 22 Feb 2017 20:22:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754819AbdBVUES (ORCPT <rfc822;e@80x24.org>);
-        Wed, 22 Feb 2017 15:04:18 -0500
-Received: from mail-pf0-f196.google.com ([209.85.192.196]:35404 "EHLO
-        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754606AbdBVUEQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Feb 2017 15:04:16 -0500
-Received: by mail-pf0-f196.google.com with SMTP id 68so190392pfx.2
-        for <git@vger.kernel.org>; Wed, 22 Feb 2017 12:04:16 -0800 (PST)
+        id S1755150AbdBVUUO (ORCPT <rfc822;e@80x24.org>);
+        Wed, 22 Feb 2017 15:20:14 -0500
+Received: from mail-pg0-f68.google.com ([74.125.83.68]:34927 "EHLO
+        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755125AbdBVUT6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Feb 2017 15:19:58 -0500
+Received: by mail-pg0-f68.google.com with SMTP id 1so1763134pgz.2
+        for <git@vger.kernel.org>; Wed, 22 Feb 2017 12:19:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=fjYWnGyV+ykMjaRwId6rJ8d1wvduaPJYQNWKDmD/Ry8=;
-        b=gjLF0rft7rvLvfKnpdC3kk21GIDjc7JAS83fK/x9gZHgF9rpYHyMrGb9UfEGDh7sP8
-         4OwuRGPPEm8vT3RVJ9qHpp+h3UkeqcYMV3tqJjkzrQFnqaWGUBOlwHr37sPDjYVqoTSW
-         BHr1XJjjRbPt25wa/DTP2FZsBWRl8pIjNBrGDIYmxgf5VKtr5ZqofUT0KTUb247uE19P
-         /5GN4zxQOiu/E9QKQvKit7AWSQL5U27yzqFeUEAdTcow0ZjW2awbky6UTn8R+YY8YkEU
-         Q81B4Eb4Dm7/7pSsQzckwvRf2iQlWXAn3n3IXLpaAOBwjmif8bCsklZVuWjFUqLK53TR
-         KgcQ==
+        bh=zXA10mjT1wnuXrdns2nDAhgn5vw3xk+VrlUG0a0wt1U=;
+        b=fOtMYJdGH2+zwTL6ahn9YcKsBrCk4vU5BLLqoaNQ9s/fDKLk/1NGQy2lyTgTIk7IkA
+         7ggFFBkVhgF4bzSV5NfYvBH9HtjfNd3h+puqTaFGQargbOiOtksW/W9aWD4Jgglfzi2o
+         mjzXipv2lUkvG3tTmFPDcjZFbTzXIP7fZhyPKOznjpJYpStNdirmRPWdFgfTnIdfd0eB
+         6IejAj1RrRxIQb+YtKFAiWhI+Brl/OUGQgmPYp7h10TLlinG7ERkTqDmsf0YI9YvTRg4
+         +C0xbUWhqAzIgoI3kVdS/s7Ny+YEvA5jaUYshpmyEXP6+70NTbvAFjEqsGUu+danIhfQ
+         paCQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=fjYWnGyV+ykMjaRwId6rJ8d1wvduaPJYQNWKDmD/Ry8=;
-        b=Jd+aUBnLhCEwttKL/fHwx+xKZXEAEcniqDaivwp0L6POex6NEDMRf0WMbpW9XLZrrF
-         C1xqsBXYyVbMJcd5SEIDLtiRIW4tz8RQ9IRpXiKhZa+kd2tkhf4gn8J2LVw+6q819qvj
-         hOgLLdKh0D+s6c1PYlnLFSjjG26hTe6wqbnsw8CjYGUS/4a4OOobyF0bkks8YNZW+6NJ
-         Evw/G6yiV2pqH5T5SKiQml8s89vp2B9MBlAr5YIAnn0WD/9aVwXlal2IvI/gZG9phs40
-         tMfBsx/WGtVBJ/UOPt/Z7ZOAqH1qoXQBOJpgKWAvMahyyiLbxMJC6+4dA+3zuK3CHTu3
-         0kbg==
-X-Gm-Message-State: AMke39kzi7ZTkJMaBNDEkg1Aap/fwVxir+CZJTIgt0x9123Q11ta/p0RHL4DyQHoSGkoGQ==
-X-Received: by 10.84.148.134 with SMTP id k6mr50219118pla.142.1487793856078;
-        Wed, 22 Feb 2017 12:04:16 -0800 (PST)
+        bh=zXA10mjT1wnuXrdns2nDAhgn5vw3xk+VrlUG0a0wt1U=;
+        b=K3ly49p2dCLOtxUoAA8EFYTk/ZD4pOh5Dt4mX6Q5j0KaaH9tKjA1Dwe6ak47fzuc4u
+         AyJUmrnx5zbPHWx8Fdk5oCcMdw7T4iIIX5PGQ5Vevz9KZZYd3uh5x/Qk2UvV2Ph10L6U
+         bCIjJlAzqWN9M9PFZsA/DQRUa3ipViSZyD1l0i9K8lNU6r8f8cNt4eGMZttItG7Gp+4r
+         p47D+YNvefMdImMaFF/MnYNAi10kf+O/FkDlCD4oWLBMv1WOLPEgX+kplss4OrbS03h1
+         15LGkuIgNyCAx5EOfEphADauVTs9JJbtBR3/CLc35HDaRnO3cdEvBPAyc109+MteA7Kc
+         RODg==
+X-Gm-Message-State: AMke39kPabZozoKVRHmqrYxVUtDqk2QxPp0J2eyrQZDps6OZgOqvPJYfj8YyVlWvGVQGcQ==
+X-Received: by 10.99.37.135 with SMTP id l129mr43884311pgl.206.1487794797813;
+        Wed, 22 Feb 2017 12:19:57 -0800 (PST)
 Received: from localhost ([2620:0:1000:8622:21a0:716b:e013:d129])
-        by smtp.gmail.com with ESMTPSA id p14sm5214578pfl.75.2017.02.22.12.04.13
+        by smtp.gmail.com with ESMTPSA id t22sm5216072pfa.114.2017.02.22.12.19.56
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 22 Feb 2017 12:04:13 -0800 (PST)
+        Wed, 22 Feb 2017 12:19:56 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: Re: [PATCH v5 03/19] builtin/diff-tree: convert to struct object_id
-References: <20170221234737.894681-1-sandals@crustytoothpaste.net>
-        <20170221234737.894681-4-sandals@crustytoothpaste.net>
-        <xmqqy3wyawlu.fsf@gitster.mtv.corp.google.com>
-        <20170222191641.o2rtt2ymtb4h2yqe@sigill.intra.peff.net>
-Date:   Wed, 22 Feb 2017 12:04:03 -0800
-In-Reply-To: <20170222191641.o2rtt2ymtb4h2yqe@sigill.intra.peff.net> (Jeff
-        King's message of "Wed, 22 Feb 2017 14:16:42 -0500")
-Message-ID: <xmqqtw7mat70.fsf@gitster.mtv.corp.google.com>
+To:     David Turner <dturner@twosigma.com>
+Cc:     git@vger.kernel.org, sandals@crustytoothpaste.net,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Jeff King <peff@peff.net>
+Subject: Re: [PATCH] http(s): automatically try NTLM authentication first
+References: <20170222173936.25016-1-dturner@twosigma.com>
+Date:   Wed, 22 Feb 2017 12:19:56 -0800
+In-Reply-To: <20170222173936.25016-1-dturner@twosigma.com> (David Turner's
+        message of "Wed, 22 Feb 2017 12:39:36 -0500")
+Message-ID: <xmqqpoiaasgj.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -68,30 +67,78 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+David Turner <dturner@twosigma.com> writes:
 
-> On Wed, Feb 22, 2017 at 10:50:21AM -0800, Junio C Hamano wrote:
+> From: Johannes Schindelin <johannes.schindelin@gmx.de>
 >
->> What the function does appears somewhat iffy in the modern world.
->> We are relying on the fact that while Git is operating in this mode
->> of reading a tuple of commits per line and doing log-tree, that Git
->> itself will not do the history traversal (instead, another instance
->> of Git that feeds us via our standard input is walking the history)
->> for this piece of code to work correctly.  
->> 
->> Of course, the "diff-tree --stdin" command was meant to sit on the
->> downstream of "rev-list --parents", so the assumption the code makes
->> (i.e. the parents field of the in-core commit objects do not have to
->> be usable for history traversal) may be reasonable, but still...
+> It is common in corporate setups to have permissions managed via a
+> domain account. That means that the user does not really have to log in
+> when accessing a central repository via https://, but that the login
+> credentials are used to authenticate with that repository.
 >
-> I'm not sure it's that weird. "diff-tree" is about diffing, not
-> traversal. The only reason it touches commit->parents at all (and
-> doesn't just kick off a diff between the arguments it gets) is that it's
-> been stuck with pretty-printing the commits, which might ask to show the
-> parents.
+> The common way to do that used to require empty credentials, i.e. hitting
+> Enter twice when being asked for user name and password, or by using the
+> very funny notation https://:@server/repository
+>
+> A recent commit (5275c3081c (http: http.emptyauth should allow empty (not
+> just NULL) usernames, 2016-10-04)) broke that usage, though, all of a
+> sudden requiring users to set http.emptyAuth = true.
+>
+> Which brings us to the bigger question why http.emptyAuth defaults to
+> false, to begin with.
 
-Yeah, I understand all that as 45392a648d ("git-diff-tree --stdin:
-show all parents.", 2006-02-05) was mostly mine.  It's just I sense
-that the recent trend is to take whatever existing code and see if
-they are reusable in other contexts, and this is one of the things
-that people might want to libify, but cannot be as-is.
+This is a valid question, and and I do not see it explicitly asked
+in the thread:
+
+https://public-inbox.org/git/CAPig+cSphEu3iRJrkdBA+BRhi9HnopLJnKOHVuGhUqavtV1RXg@mail.gmail.com/#t
+
+even though there is a hint of it already there.
+
+> It would be one thing if cURL would not let the user specify credentials
+> interactively after attempting NTLM authentication (i.e. login
+> credentials), but that is not the case.
+>
+> It would be another thing if attempting NTLM authentication was not
+> usually what users need to do when trying to authenticate via https://.
+> But that is also not the case.
+
+Some other possible worries we may have had I can think of are:
+
+ - With this enabled unconditionally, would we leak some information?
+
+ - With this enabled unconditionally, would we always incur an extra
+   roundtrip for people who are not running NTLM at all?
+
+I do not think the former is the case, but what would I know (adding a
+few people involved in the original thread to CC: ;-)
+
+>  Documentation/config.txt | 3 ++-
+>  http.c                   | 2 +-
+>  2 files changed, 3 insertions(+), 2 deletions(-)
+>
+> diff --git a/Documentation/config.txt b/Documentation/config.txt
+> index fc5a28a320..b0da64ed33 100644
+> --- a/Documentation/config.txt
+> +++ b/Documentation/config.txt
+> @@ -1742,7 +1742,8 @@ http.emptyAuth::
+>  	Attempt authentication without seeking a username or password.  This
+>  	can be used to attempt GSS-Negotiate authentication without specifying
+>  	a username in the URL, as libcurl normally requires a username for
+> -	authentication.
+> +	authentication.  Default is true, since if this fails, git will fall
+> +	back to asking the user for their username/password.
+>  
+>  http.delegation::
+>  	Control GSSAPI credential delegation. The delegation is disabled
+> diff --git a/http.c b/http.c
+> index 90a1c0f113..943e630ea6 100644
+> --- a/http.c
+> +++ b/http.c
+> @@ -109,7 +109,7 @@ static int curl_save_cookies;
+>  struct credential http_auth = CREDENTIAL_INIT;
+>  static int http_proactive_auth;
+>  static const char *user_agent;
+> -static int curl_empty_auth;
+> +static int curl_empty_auth = 1;
+>  
+>  enum http_follow_config http_follow_config = HTTP_FOLLOW_INITIAL;
