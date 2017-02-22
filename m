@@ -2,91 +2,188 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DC2F4201B0
-	for <e@80x24.org>; Wed, 22 Feb 2017 23:38:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0DB45201B0
+	for <e@80x24.org>; Wed, 22 Feb 2017 23:42:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934187AbdBVXin (ORCPT <rfc822;e@80x24.org>);
-        Wed, 22 Feb 2017 18:38:43 -0500
-Received: from castro.crustytoothpaste.net ([75.10.60.170]:40250 "EHLO
-        castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S933785AbdBVXim (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 22 Feb 2017 18:38:42 -0500
-Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 37A8F280AD;
-        Wed, 22 Feb 2017 23:38:41 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
-        s=default; t=1487806721;
-        bh=TQ85D+gyWlDuBtjdyTygaoXYlH5cGvlMJkmy9wOhCG0=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=tHh1ae0mZ4XFYjxf6nBt0CPiWoHz5jhz9qVHdmNOt4+flfBrcId8tiWDQN67PLWbl
-         OMpA+EnkdXWbVTQEGZX2yh3+uyd0a4d9sePVOgPBF1kbrXLneBvTDro3UQ2xiBqKDs
-         1EGjX9pTPO2fxALaQZSZAyelQZ5ZhCed7VvLCWYEJg4nc4ycPy6PMoi3EKfb20FNlU
-         72/2v1WlynsQo9iw6+Cz7jMt9q5w6xdBCporMUuc6RPCeRes5HhaOShhQdWxmL6s3G
-         7INmu/mU4UBumawiybSDr4bcIZ6uFNFkDCvE2c3Rc20XHoC65T7GAmj/zOuYHIzhs1
-         2k9UY/2HMs/YPzhcWXtPEkpERFVepgLI5oCwjQJH9Gk7BLmXdC6WvVUeqUWe9n0ToA
-         prC9TQkjZSq0c7oGnTn+pO2/9dJmKLM8dfvzVvfdEHcmKQMQQ4YJjNJy2/ywsmBQ9e
-         9AycvLYBQVISD576/8+3D8ddWaGCwAGxqPRHvql3hoOxJ3oTbV5
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     git@vger.kernel.org
-Cc:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-        Michael Haggerty <mhagger@alum.mit.edu>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: [PATCH] t: add multi-parent test of diff-tree --stdin
-Date:   Wed, 22 Feb 2017 23:38:38 +0000
-Message-Id: <20170222233838.925157-1-sandals@crustytoothpaste.net>
-X-Mailer: git-send-email 2.11.0
-In-Reply-To: <20170222232215.u2agozagwsyy2ooe@genre.crustytoothpaste.net>
-References: <20170222232215.u2agozagwsyy2ooe@genre.crustytoothpaste.net>
+        id S934342AbdBVXmV (ORCPT <rfc822;e@80x24.org>);
+        Wed, 22 Feb 2017 18:42:21 -0500
+Received: from cloud.peff.net ([104.130.231.41]:60324 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S934171AbdBVXl4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Feb 2017 18:41:56 -0500
+Received: (qmail 1290 invoked by uid 109); 22 Feb 2017 23:41:02 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 22 Feb 2017 23:41:02 +0000
+Received: (qmail 25341 invoked by uid 111); 22 Feb 2017 23:41:05 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 22 Feb 2017 18:41:05 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 22 Feb 2017 18:40:59 -0500
+Date:   Wed, 22 Feb 2017 18:40:59 -0500
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     David Turner <dturner@twosigma.com>, git@vger.kernel.org,
+        sandals@crustytoothpaste.net,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: [PATCH 2/2] http: add an "auto" mode for http.emptyauth
+Message-ID: <20170222234059.iajn2zuwzkzjxit2@sigill.intra.peff.net>
+References: <20170222233333.dx5lknw4fpopu5hy@sigill.intra.peff.net>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20170222233333.dx5lknw4fpopu5hy@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We were lacking a test that covered the multi-parent case for commits.
-Add a basic test to ensure we do not regress this behavior in the
-future.
+This variable needs to be specified to make some types of
+non-basic authentication work, but ideally this would just
+work out of the box for everyone.
 
-Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+However, simply setting it to "1" by default introduces an
+extra round-trip for cases where it _isn't_ useful. We end
+up sending a bogus empty credential that the server rejects.
+
+Instead, let's introduce an automatic mode, that works like
+this:
+
+  1. We won't try to send the bogus credential on the first
+     request. We'll wait to get an HTTP 401, as usual.
+
+  2. After seeing an HTTP 401, the empty-auth hack will kick
+     in only when we know there is an auth method beyond
+     "Basic" to be tried.
+
+That should make it work out of the box, without incurring
+any extra round-trips for people hitting Basic-only servers.
+
+This _does_ incur an extra round-trip if you really want to
+use "Basic" but your server advertises other methods (the
+emptyauth hack will kick in but fail, and then Git will
+actually ask for a password).
+
+The auto mode may incur an extra round-trip over setting
+http.emptyauth=true, because part of the emptyauth hack is
+to feed this blank password to curl even before we've made a
+single request.
+
+Signed-off-by: Jeff King <peff@peff.net>
 ---
- t/t4013-diff-various.sh | 19 +++++++++++++++++++
- 1 file changed, 19 insertions(+)
+My open questions are:
 
-It's a little bit ugly to me that this test hard-codes so many values,
-and I'm concerned that it may be unnecessarily brittle.  However, I
-don't have a good idea of how to perform the kind of comprehensive test
-we need otherwise.
+  - I don't have anything but a Basic server to test against. So it's
+    entirely possible that this doesn't actually work in the NTLM case.
 
-diff --git a/t/t4013-diff-various.sh b/t/t4013-diff-various.sh
-index d09acfe48e..e6c2a7a369 100755
---- a/t/t4013-diff-various.sh
-+++ b/t/t4013-diff-various.sh
-@@ -349,4 +349,23 @@ test_expect_success 'diff-tree --stdin with log formatting' '
- 	test_cmp expect actual
- '
+  - what does a request log look like for somebody actually using NTLM?
+    It's possible if the initial request sends a restrict auth_avail,
+    that curl could get away without the extra probe request, and we'd
+    end up with the same number of requests for "auto" mode versus
+    http.emptyauth=true.
+
+  - the whole "don't use this on the initial request" flag feels really
+    hacky. It's a side effect of how emptyauth tries to kick in even
+    before we have sent any requests. Probably it should have been
+    handled in the 401 code path originally, but I'm hesitant to change
+    it now. I suspect it is eliminating a round-trip in practice when it
+    is enabled.
+
+  - I didn't test a server that advertises Basic and something else, but
+    really only takes Basic. So I'm just assuming that it incurs the
+    extra round-trip (actually probably two, one for curl's method
+    probe).
+
+  - When your curl is too old to do CURLAUTH_ANY, I just left the
+    default to disable emptyauth. But it could easily be "1" if people
+    care.
+
+ http.c | 38 ++++++++++++++++++++++++++++++++++----
+ 1 file changed, 34 insertions(+), 4 deletions(-)
+
+diff --git a/http.c b/http.c
+index a05609766..ea70ec1ee 100644
+--- a/http.c
++++ b/http.c
+@@ -109,7 +109,7 @@ static int curl_save_cookies;
+ struct credential http_auth = CREDENTIAL_INIT;
+ static int http_proactive_auth;
+ static const char *user_agent;
+-static int curl_empty_auth;
++static int curl_empty_auth = -1;
  
-+test_expect_success 'diff-tree --stdin with two parent commits' '
-+	cat >expect <<-\EOF &&
-+	c7a2ab9e8eac7b117442a607d5a9b3950ae34d5a
-+	:040000 040000 da7a33fa77d8066d6698643940ce5860fe2d7fb3 f977ed46ae6873c1c30ab878e15a4accedc3618b M	dir
-+	:100644 100644 01e79c32a8c99c557f0757da7cb6d65b3414466d f4615da674c09df322d6ba8d6b21ecfb1b1ba510 M	file0
-+	:000000 100644 0000000000000000000000000000000000000000 7289e35bff32727c08dda207511bec138fdb9ea5 A	file3
-+	9a6d4949b6b76956d9d5e26f2791ec2ceff5fdc0
-+	:040000 040000 847b63d013de168b2de618c5ff9720d5ab27e775 65f5c9dd60ce3b2b3324b618ac7accf8d912c113 M	dir
-+	:000000 100644 0000000000000000000000000000000000000000 b1e67221afe8461efd244b487afca22d46b95eb8 A	file1
-+	1bde4ae5f36c8d9abe3a0fce0c6aab3c4a12fe44
-+	:040000 040000 da7a33fa77d8066d6698643940ce5860fe2d7fb3 847b63d013de168b2de618c5ff9720d5ab27e775 M	dir
-+	:100644 100644 01e79c32a8c99c557f0757da7cb6d65b3414466d b414108e81e5091fe0974a1858b4d0d22b107f70 M	file0
-+	:100644 000000 01e79c32a8c99c557f0757da7cb6d65b3414466d 0000000000000000000000000000000000000000 D	file2
-+	EOF
-+	git rev-list --parents master | git diff-tree --stdin >actual &&
-+	test_cmp expect actual
-+'
+ enum http_follow_config http_follow_config = HTTP_FOLLOW_INITIAL;
+ 
+@@ -125,6 +125,7 @@ static struct credential cert_auth = CREDENTIAL_INIT;
+ static int ssl_cert_password_required;
+ #ifdef LIBCURL_CAN_HANDLE_AUTH_ANY
+ static unsigned long http_auth_methods = CURLAUTH_ANY;
++static int http_auth_methods_restricted;
+ #endif
+ 
+ static struct curl_slist *pragma_header;
+@@ -382,10 +383,37 @@ static int http_options(const char *var, const char *value, void *cb)
+ 	return git_default_config(var, value, cb);
+ }
+ 
++static int curl_empty_auth_enabled(void)
++{
++	if (curl_empty_auth < 0) {
++#ifdef LIBCURL_CAN_HANDLE_AUTH_ANY
++		/*
++		 * In the automatic case, kick in the empty-auth
++		 * hack as long as we would potentially try some
++		 * method more exotic than "Basic".
++		 *
++		 * But only do so when this is _not_ our initial
++		 * request, as we would not then yet know what
++		 * methods are available.
++		 */
++		return http_auth_methods_restricted &&
++		       http_auth_methods != CURLAUTH_BASIC;
++#else
++		/*
++		 * Our libcurl is too old to do AUTH_ANY in the first place;
++		 * just default to turning the feature off.
++		 */
++		return 0;
++#endif
++	}
 +
++	return curl_empty_auth;
++}
 +
- test_done
+ static void init_curl_http_auth(CURL *result)
+ {
+ 	if (!http_auth.username || !*http_auth.username) {
+-		if (curl_empty_auth)
++		if (curl_empty_auth_enabled())
+ 			curl_easy_setopt(result, CURLOPT_USERPWD, ":");
+ 		return;
+ 	}
+@@ -1079,7 +1107,7 @@ struct active_request_slot *get_active_slot(void)
+ #ifdef LIBCURL_CAN_HANDLE_AUTH_ANY
+ 	curl_easy_setopt(slot->curl, CURLOPT_HTTPAUTH, http_auth_methods);
+ #endif
+-	if (http_auth.password || curl_empty_auth)
++	if (http_auth.password || curl_empty_auth_enabled())
+ 		init_curl_http_auth(slot->curl);
+ 
+ 	return slot;
+@@ -1347,8 +1375,10 @@ static int handle_curl_result(struct slot_results *results)
+ 		} else {
+ #ifdef LIBCURL_CAN_HANDLE_AUTH_ANY
+ 			http_auth_methods &= ~CURLAUTH_GSSNEGOTIATE;
+-			if (results->auth_avail)
++			if (results->auth_avail) {
+ 				http_auth_methods &= results->auth_avail;
++				http_auth_methods_restricted = 1;
++			}
+ #endif
+ 			return HTTP_REAUTH;
+ 		}
+-- 
+2.12.0.rc2.597.g959f68882
