@@ -7,47 +7,47 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A7819201B0
-	for <e@80x24.org>; Wed, 22 Feb 2017 14:08:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EF3C4201B0
+	for <e@80x24.org>; Wed, 22 Feb 2017 14:08:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932642AbdBVOIC (ORCPT <rfc822;e@80x24.org>);
-        Wed, 22 Feb 2017 09:08:02 -0500
-Received: from mail-pg0-f68.google.com ([74.125.83.68]:36147 "EHLO
-        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932576AbdBVOIB (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Feb 2017 09:08:01 -0500
-Received: by mail-pg0-f68.google.com with SMTP id z128so544684pgb.3
-        for <git@vger.kernel.org>; Wed, 22 Feb 2017 06:08:01 -0800 (PST)
+        id S932698AbdBVOIK (ORCPT <rfc822;e@80x24.org>);
+        Wed, 22 Feb 2017 09:08:10 -0500
+Received: from mail-pg0-f67.google.com ([74.125.83.67]:35146 "EHLO
+        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932406AbdBVOIJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Feb 2017 09:08:09 -0500
+Received: by mail-pg0-f67.google.com with SMTP id 1so547884pgz.2
+        for <git@vger.kernel.org>; Wed, 22 Feb 2017 06:08:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=D3sPippmSUGYYJ1rvIJ6WC2ka3V9BgD8kVMrUQ0dqhk=;
-        b=BDov5a+pZvWtH5V83ihOsCaH/ep2xBKroJ4vUeugdJYbdaT/fgYnl1VoqATIEiMYrn
-         y0HBvNa42fOowRdOwNgsmmlalz0k52d3IMHcFklkoPmshkYsZ2hs+vkz01IR4VhXtSzu
-         pYO/KOW93aST8wne1mSLgRhiokIc1xLFgCrfU2ZLvoJiaoH4MwgYHsx3XdzyW8GrHEXc
-         mUlZ7p7x9+v6crMxg6NOP2Ol73d5N8MONVD2SsDsZU05a3MhkUlLDT1g8Z1nPhxrK04H
-         hyXKyjfg4KAryKsAVqcnFwbPpXv/icl96CJHsiId6i6EVxNnLbPiIPkT1m3DOEUnGsvs
-         Y3Uw==
+        bh=uv9aWRK3bKzhglK22YNJ+JjyAME/T/cyKCPDhcvVntg=;
+        b=GfU1aeaeURY2QpR2mVUIQqr6bA/B90d+ZasIoXV+fduPscrxSPSpQobWHIi4qBbFVQ
+         d63sKbW0HQbTaF0z8ZhoNIFPXIkGWRoKk2JNgRwcoKmoAIe7kLv5t60OhZBFEbuTTQhm
+         CnnnTFvx7doWtnlXwoNxAr5qMz2XocjMztuDX6+izMxxtqbZv9Wd4kmvsi3tQo1sD9q6
+         DpCoj2QnmK+TcHHQzCBABNVBV05456xJo5Euj0JP9lxbHkCmqElEEuUszHluPFuJWr0b
+         s5Kmh7Vd/WizvYuQvFSBGwGOPr99kLxxqGpXlP3wQEITLcERDY5dkOKugbqgyozqm1CG
+         /PFQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=D3sPippmSUGYYJ1rvIJ6WC2ka3V9BgD8kVMrUQ0dqhk=;
-        b=DVQWY9AzcyYZaQIjLgnfg7NhhnDFoKSXiSM/Oh8xJihv/YexMkdvETkVUBrFWJP4ET
-         BXJ5KWHnUwTKzVtBxVgedQUWsmdH/yIAAgFRtXbySLgkofZuiPcJvCFs5ZFBvEgZeswh
-         2cJ36xriJwFnSnbOrL62E2wTAshGVp0MwVg2rXk2bVAYrFxGRdss8BpLUIhrcWgvzmkK
-         cu0RicPHcucH2rMRXR9+rHx427ZhEZCIPMkqRVPGSC2gU1zScU9fJObUxuYk02rwIIIE
-         uoHtYCU5yALI852GDNwV0OEth8Uch8DZkWrY4UHUkVuTrkYH9PGGJQh3z/HWV5h12s3t
-         +HJQ==
-X-Gm-Message-State: AMke39maIseSx2vdDZHXFEzcvih8wUScvB/ygaAS1qhuO3qtn45LUPo/VFiJ7wigpnnxSg==
-X-Received: by 10.98.10.216 with SMTP id 85mr25420560pfk.3.1487772480556;
-        Wed, 22 Feb 2017 06:08:00 -0800 (PST)
+        bh=uv9aWRK3bKzhglK22YNJ+JjyAME/T/cyKCPDhcvVntg=;
+        b=b4M0X5QAvop8JLQcpwgMCCtcYfz7QzxjUTeF3FYuKswjwe/G5r757i72NJYqpMSNB8
+         epKSCfIRNE6sDDfhw2cO17Gfm8y9SV5ArVMJ+mZhURQIb8BBc01gOA7oJyzDP0+S0r2Y
+         7AvFUM2zzlOO3vT3i9zKAW4vAoacytcjheylFlFoutd9zn3vv0EakchDkb15wsdBLz5N
+         WAwina0Av4l3nvLbcbQJq3uvitMUSOVJcbQKQRp0T0+O63evI3KPqlpfdmRPHx/+uvM7
+         9YiSoOraku3KvgfKfy+4L87Psne1vv7q44CLqBk9tjGHHFDOClizFrcI9FWI62pgDt1S
+         ZjVA==
+X-Gm-Message-State: AMke39nlLSl1wkyUUaZQ0rAROAvKQOfEKdH87jKKtaL7w6uxeODemzom1gFYoPD6jmM7kw==
+X-Received: by 10.84.225.18 with SMTP id t18mr48517875plj.154.1487772488197;
+        Wed, 22 Feb 2017 06:08:08 -0800 (PST)
 Received: from ash ([115.73.162.84])
-        by smtp.gmail.com with ESMTPSA id m21sm4156455pgh.4.2017.02.22.06.07.56
+        by smtp.gmail.com with ESMTPSA id t6sm4101259pgo.42.2017.02.22.06.08.03
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 22 Feb 2017 06:07:59 -0800 (PST)
-Received: by ash (sSMTP sendmail emulation); Wed, 22 Feb 2017 21:07:53 +0700
+        Wed, 22 Feb 2017 06:08:07 -0800 (PST)
+Received: by ash (sSMTP sendmail emulation); Wed, 22 Feb 2017 21:08:01 +0700
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
@@ -58,9 +58,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Stefan Beller <sbeller@google.com>, novalis@novalis.org,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH v5 19/24] refs: new transaction related ref-store api
-Date:   Wed, 22 Feb 2017 21:04:45 +0700
-Message-Id: <20170222140450.30886-20-pclouds@gmail.com>
+Subject: [PATCH v5 20/24] files-backend: avoid ref api targetting main ref store
+Date:   Wed, 22 Feb 2017 21:04:46 +0700
+Message-Id: <20170222140450.30886-21-pclouds@gmail.com>
 X-Mailer: git-send-email 2.11.0.157.gd943d85
 In-Reply-To: <20170222140450.30886-1-pclouds@gmail.com>
 References: <20170218133303.3682-1-pclouds@gmail.com>
@@ -73,185 +73,287 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The transaction struct now takes a ref store at creation and will
-operate on that ref store alone.
+A small step towards making files-backend works as a non-main ref store
+using the newly added store-aware API.
+
+For the record, `join` and `nm` on refs.o and files-backend.o tell me
+that files-backend no longer uses functions that defaults to
+get_main_ref_store().
+
+I'm not yet comfortable at the idea of removing
+files_assert_main_repository() (or converting REF_STORE_MAIN to
+REF_STORE_WRITE). More staring and testing is required before that can
+happen. Well, except peel_ref(). I'm pretty sure that function is safe.
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- refs.c               | 54 ++++++++++++++++++++++++++++++++++++++++------------
- refs.h               |  8 ++++++++
- refs/refs-internal.h |  1 +
- 3 files changed, 51 insertions(+), 12 deletions(-)
+ refs/files-backend.c | 85 ++++++++++++++++++++++++++++++----------------------
+ 1 file changed, 49 insertions(+), 36 deletions(-)
 
-diff --git a/refs.c b/refs.c
-index 9137ac283..851b5e125 100644
---- a/refs.c
-+++ b/refs.c
-@@ -618,16 +618,19 @@ static int delete_pseudoref(const char *pseudoref, const unsigned char *old_sha1
- 	return 0;
+diff --git a/refs/files-backend.c b/refs/files-backend.c
+index dafddefd3..09c280fd3 100644
+--- a/refs/files-backend.c
++++ b/refs/files-backend.c
+@@ -1836,8 +1836,6 @@ static int files_peel_ref(struct ref_store *ref_store,
+ 	int flag;
+ 	unsigned char base[20];
+ 
+-	files_assert_main_repository(refs, "peel_ref");
+-
+ 	if (current_ref_iter && current_ref_iter->refname == refname) {
+ 		struct object_id peeled;
+ 
+@@ -1847,7 +1845,8 @@ static int files_peel_ref(struct ref_store *ref_store,
+ 		return 0;
+ 	}
+ 
+-	if (read_ref_full(refname, RESOLVE_REF_READING, base, &flag))
++	if (refs_read_ref_full(ref_store, refname,
++			       RESOLVE_REF_READING, base, &flag))
+ 		return -1;
+ 
+ 	/*
+@@ -2017,15 +2016,15 @@ static struct ref_iterator *files_ref_iterator_begin(
+  * on success. On error, write an error message to err, set errno, and
+  * return a negative value.
+  */
+-static int verify_lock(struct ref_lock *lock,
++static int verify_lock(struct ref_store *ref_store, struct ref_lock *lock,
+ 		       const unsigned char *old_sha1, int mustexist,
+ 		       struct strbuf *err)
+ {
+ 	assert(err);
+ 
+-	if (read_ref_full(lock->ref_name,
+-			  mustexist ? RESOLVE_REF_READING : 0,
+-			  lock->old_oid.hash, NULL)) {
++	if (refs_read_ref_full(ref_store, lock->ref_name,
++			       mustexist ? RESOLVE_REF_READING : 0,
++			       lock->old_oid.hash, NULL)) {
+ 		if (old_sha1) {
+ 			int save_errno = errno;
+ 			strbuf_addf(err, "can't verify ref '%s'", lock->ref_name);
+@@ -2094,8 +2093,9 @@ static struct ref_lock *lock_ref_sha1_basic(struct files_ref_store *refs,
+ 		resolve_flags |= RESOLVE_REF_ALLOW_BAD_NAME;
+ 
+ 	files_refname_path(refs, &ref_file, refname);
+-	resolved = !!resolve_ref_unsafe(refname, resolve_flags,
+-					lock->old_oid.hash, type);
++	resolved = !!refs_resolve_ref_unsafe(&refs->base,
++					     refname, resolve_flags,
++					     lock->old_oid.hash, type);
+ 	if (!resolved && errno == EISDIR) {
+ 		/*
+ 		 * we are trying to lock foo but we used to
+@@ -2112,8 +2112,9 @@ static struct ref_lock *lock_ref_sha1_basic(struct files_ref_store *refs,
+ 					    refname);
+ 			goto error_return;
+ 		}
+-		resolved = !!resolve_ref_unsafe(refname, resolve_flags,
+-						lock->old_oid.hash, type);
++		resolved = !!refs_resolve_ref_unsafe(&refs->base,
++						     refname, resolve_flags,
++						     lock->old_oid.hash, type);
+ 	}
+ 	if (!resolved) {
+ 		last_errno = errno;
+@@ -2151,7 +2152,7 @@ static struct ref_lock *lock_ref_sha1_basic(struct files_ref_store *refs,
+ 		goto error_return;
+ 	}
+ 
+-	if (verify_lock(lock, old_sha1, mustexist, err)) {
++	if (verify_lock(&refs->base, lock, old_sha1, mustexist, err)) {
+ 		last_errno = errno;
+ 		goto error_return;
+ 	}
+@@ -2406,7 +2407,7 @@ static void try_remove_empty_parents(struct files_ref_store *refs,
  }
  
--int delete_ref(const char *refname, const unsigned char *old_sha1,
--	       unsigned int flags)
-+int refs_delete_ref(struct ref_store *refs, const char *refname,
-+		    const unsigned char *old_sha1,
-+		    unsigned int flags)
+ /* make sure nobody touched the ref, and unlink */
+-static void prune_ref(struct ref_to_prune *r)
++static void prune_ref(struct files_ref_store *refs, struct ref_to_prune *r)
  {
  	struct ref_transaction *transaction;
  	struct strbuf err = STRBUF_INIT;
- 
--	if (ref_type(refname) == REF_TYPE_PSEUDOREF)
-+	if (ref_type(refname) == REF_TYPE_PSEUDOREF) {
-+		assert(refs == get_main_ref_store());
- 		return delete_pseudoref(refname, old_sha1);
-+	}
+@@ -2414,7 +2415,7 @@ static void prune_ref(struct ref_to_prune *r)
+ 	if (check_refname_format(r->name, 0))
+ 		return;
  
 -	transaction = ref_transaction_begin(&err);
-+	transaction = ref_store_transaction_begin(refs, &err);
++	transaction = ref_store_transaction_begin(&refs->base, &err);
  	if (!transaction ||
- 	    ref_transaction_delete(transaction, refname, old_sha1,
- 				   flags, NULL, &err) ||
-@@ -642,6 +645,13 @@ int delete_ref(const char *refname, const unsigned char *old_sha1,
+ 	    ref_transaction_delete(transaction, r->name, r->sha1,
+ 				   REF_ISPRUNING | REF_NODEREF, NULL, &err) ||
+@@ -2428,10 +2429,10 @@ static void prune_ref(struct ref_to_prune *r)
+ 	strbuf_release(&err);
+ }
+ 
+-static void prune_refs(struct ref_to_prune *r)
++static void prune_refs(struct files_ref_store *refs, struct ref_to_prune *r)
+ {
+ 	while (r) {
+-		prune_ref(r);
++		prune_ref(refs, r);
+ 		r = r->next;
+ 	}
+ }
+@@ -2455,7 +2456,7 @@ static int files_pack_refs(struct ref_store *ref_store, unsigned int flags)
+ 	if (commit_packed_refs(refs))
+ 		die_errno("unable to overwrite old ref-pack file");
+ 
+-	prune_refs(cbdata.ref_to_prune);
++	prune_refs(refs, cbdata.ref_to_prune);
  	return 0;
  }
  
-+int delete_ref(const char *refname, const unsigned char *old_sha1,
-+	       unsigned int flags)
-+{
-+	return refs_delete_ref(get_main_ref_store(), refname,
-+			       old_sha1, flags);
-+}
-+
- int copy_reflog_msg(char *buf, const char *msg)
+@@ -2547,7 +2548,7 @@ static int files_delete_refs(struct ref_store *ref_store,
+ 	for (i = 0; i < refnames->nr; i++) {
+ 		const char *refname = refnames->items[i].string;
+ 
+-		if (delete_ref(refname, NULL, flags))
++		if (refs_delete_ref(&refs->base, refname, NULL, flags))
+ 			result |= error(_("could not remove reference %s"), refname);
+ 	}
+ 
+@@ -2665,8 +2666,9 @@ static int files_rename_ref(struct ref_store *ref_store,
+ 	if (log && S_ISLNK(loginfo.st_mode))
+ 		return error("reflog for %s is a symlink", oldrefname);
+ 
+-	if (!resolve_ref_unsafe(oldrefname, RESOLVE_REF_READING | RESOLVE_REF_NO_RECURSE,
+-				orig_sha1, &flag))
++	if (!refs_resolve_ref_unsafe(&refs->base, oldrefname,
++				     RESOLVE_REF_READING | RESOLVE_REF_NO_RECURSE,
++				     orig_sha1, &flag))
+ 		return error("refname %s not found", oldrefname);
+ 
+ 	if (flag & REF_ISSYMREF)
+@@ -2684,7 +2686,7 @@ static int files_rename_ref(struct ref_store *ref_store,
+ 		return error("unable to move logfile logs/%s to logs/"TMP_RENAMED_LOG": %s",
+ 			oldrefname, strerror(errno));
+ 
+-	if (delete_ref(oldrefname, orig_sha1, REF_NODEREF)) {
++	if (refs_delete_ref(&refs->base, oldrefname, orig_sha1, REF_NODEREF)) {
+ 		error("unable to delete old %s", oldrefname);
+ 		goto rollback;
+ 	}
+@@ -2696,9 +2698,10 @@ static int files_rename_ref(struct ref_store *ref_store,
+ 	 * the safety anyway; we want to delete the reference whatever
+ 	 * its current value.
+ 	 */
+-	if (!read_ref_full(newrefname, RESOLVE_REF_READING | RESOLVE_REF_NO_RECURSE,
+-			   sha1, NULL) &&
+-	    delete_ref(newrefname, NULL, REF_NODEREF)) {
++	if (!refs_read_ref_full(&refs->base, newrefname,
++				RESOLVE_REF_READING | RESOLVE_REF_NO_RECURSE,
++				sha1, NULL) &&
++	    refs_delete_ref(&refs->base, newrefname, NULL, REF_NODEREF)) {
+ 		if (errno == EISDIR) {
+ 			struct strbuf path = STRBUF_INIT;
+ 			int result;
+@@ -3054,8 +3057,9 @@ static int commit_ref_update(struct files_ref_store *refs,
+ 		int head_flag;
+ 		const char *head_ref;
+ 
+-		head_ref = resolve_ref_unsafe("HEAD", RESOLVE_REF_READING,
+-					      head_sha1, &head_flag);
++		head_ref = refs_resolve_ref_unsafe(&refs->base, "HEAD",
++						   RESOLVE_REF_READING,
++						   head_sha1, &head_flag);
+ 		if (head_ref && (head_flag & REF_ISSYMREF) &&
+ 		    !strcmp(head_ref, lock->ref_name)) {
+ 			struct strbuf log_err = STRBUF_INIT;
+@@ -3099,7 +3103,9 @@ static void update_symref_reflog(struct files_ref_store *refs,
  {
- 	char *cp = buf;
-@@ -801,11 +811,20 @@ int read_ref_at(const char *refname, unsigned int flags, unsigned long at_time,
- 	return 1;
- }
- 
--struct ref_transaction *ref_transaction_begin(struct strbuf *err)
-+struct ref_transaction *ref_store_transaction_begin(struct ref_store *refs,
-+						    struct strbuf *err)
- {
-+	struct ref_transaction *tr;
- 	assert(err);
- 
--	return xcalloc(1, sizeof(struct ref_transaction));
-+	tr = xcalloc(1, sizeof(struct ref_transaction));
-+	tr->ref_store = refs;
-+	return tr;
-+}
-+
-+struct ref_transaction *ref_transaction_begin(struct strbuf *err)
-+{
-+	return ref_store_transaction_begin(get_main_ref_store(), err);
- }
- 
- void ref_transaction_free(struct ref_transaction *transaction)
-@@ -922,18 +941,20 @@ int update_ref_oid(const char *msg, const char *refname,
- 		old_oid ? old_oid->hash : NULL, flags, onerr);
- }
- 
--int update_ref(const char *msg, const char *refname,
--	       const unsigned char *new_sha1, const unsigned char *old_sha1,
--	       unsigned int flags, enum action_on_err onerr)
-+int refs_update_ref(struct ref_store *refs, const char *msg,
-+		    const char *refname, const unsigned char *new_sha1,
-+		    const unsigned char *old_sha1, unsigned int flags,
-+		    enum action_on_err onerr)
- {
- 	struct ref_transaction *t = NULL;
  	struct strbuf err = STRBUF_INIT;
- 	int ret = 0;
+ 	unsigned char new_sha1[20];
+-	if (logmsg && !read_ref(target, new_sha1) &&
++	if (logmsg &&
++	    !refs_read_ref_full(&refs->base, target,
++				RESOLVE_REF_READING, new_sha1, NULL) &&
+ 	    files_log_ref_write(refs, refname, lock->old_oid.hash,
+ 				new_sha1, logmsg, 0, &err)) {
+ 		error("%s", err.buf);
+@@ -3403,6 +3409,7 @@ static int files_for_each_reflog_ent(struct ref_store *ref_store,
+ struct files_reflog_iterator {
+ 	struct ref_iterator base;
  
- 	if (ref_type(refname) == REF_TYPE_PSEUDOREF) {
-+		assert(refs == get_main_ref_store());
- 		ret = write_pseudoref(refname, new_sha1, old_sha1, &err);
- 	} else {
--		t = ref_transaction_begin(&err);
-+		t = ref_store_transaction_begin(refs, &err);
- 		if (!t ||
- 		    ref_transaction_update(t, refname, new_sha1, old_sha1,
- 					   flags, msg, &err) ||
-@@ -964,6 +985,15 @@ int update_ref(const char *msg, const char *refname,
- 	return 0;
- }
- 
-+int update_ref(const char *msg, const char *refname,
-+	       const unsigned char *new_sha1,
-+	       const unsigned char *old_sha1,
-+	       unsigned int flags, enum action_on_err onerr)
-+{
-+	return refs_update_ref(get_main_ref_store(), msg, refname, new_sha1,
-+			       old_sha1, flags, onerr);
-+}
-+
- char *shorten_unambiguous_ref(const char *refname, int strict)
- {
- 	int i;
-@@ -1600,7 +1630,7 @@ int create_symref(const char *ref_target, const char *refs_heads_master,
- int ref_transaction_commit(struct ref_transaction *transaction,
- 			   struct strbuf *err)
- {
--	struct ref_store *refs = get_main_ref_store();
-+	struct ref_store *refs = transaction->ref_store;
- 
- 	return refs->be->transaction_commit(refs, transaction, err);
- }
-@@ -1719,7 +1749,7 @@ int reflog_expire(const char *refname, const unsigned char *sha1,
- int initial_ref_transaction_commit(struct ref_transaction *transaction,
- 				   struct strbuf *err)
- {
--	struct ref_store *refs = get_main_ref_store();
-+	struct ref_store *refs = transaction->ref_store;
- 
- 	return refs->be->initial_transaction_commit(refs, transaction, err);
- }
-diff --git a/refs.h b/refs.h
-index 70d4eb87c..342cecd23 100644
---- a/refs.h
-+++ b/refs.h
-@@ -330,6 +330,9 @@ int reflog_exists(const char *refname);
-  * exists, regardless of its old value. It is an error for old_sha1 to
-  * be NULL_SHA1. flags is passed through to ref_transaction_delete().
-  */
-+int refs_delete_ref(struct ref_store *refs, const char *refname,
-+		    const unsigned char *old_sha1,
-+		    unsigned int flags);
- int delete_ref(const char *refname, const unsigned char *old_sha1,
- 	       unsigned int flags);
- 
-@@ -414,6 +417,8 @@ enum action_on_err {
-  * Begin a reference transaction.  The reference transaction must
-  * be freed by calling ref_transaction_free().
-  */
-+struct ref_transaction *ref_store_transaction_begin(struct ref_store *refs,
-+						    struct strbuf *err);
- struct ref_transaction *ref_transaction_begin(struct strbuf *err);
- 
- /*
-@@ -548,6 +553,9 @@ void ref_transaction_free(struct ref_transaction *transaction);
-  * ref_transaction_update(). Handle errors as requested by the `onerr`
-  * argument.
-  */
-+int refs_update_ref(struct ref_store *refs, const char *msg, const char *refname,
-+		    const unsigned char *new_sha1, const unsigned char *old_sha1,
-+		    unsigned int flags, enum action_on_err onerr);
- int update_ref(const char *msg, const char *refname,
- 	       const unsigned char *new_sha1, const unsigned char *old_sha1,
- 	       unsigned int flags, enum action_on_err onerr);
-diff --git a/refs/refs-internal.h b/refs/refs-internal.h
-index 5f26208c2..690498698 100644
---- a/refs/refs-internal.h
-+++ b/refs/refs-internal.h
-@@ -200,6 +200,7 @@ enum ref_transaction_state {
-  * as atomically as possible.  This structure is opaque to callers.
-  */
- struct ref_transaction {
 +	struct ref_store *ref_store;
- 	struct ref_update **updates;
- 	size_t alloc;
- 	size_t nr;
+ 	struct dir_iterator *dir_iterator;
+ 	struct object_id oid;
+ };
+@@ -3424,8 +3431,9 @@ static int files_reflog_iterator_advance(struct ref_iterator *ref_iterator)
+ 		if (ends_with(diter->basename, ".lock"))
+ 			continue;
+ 
+-		if (read_ref_full(diter->relative_path, 0,
+-				  iter->oid.hash, &flags)) {
++		if (refs_read_ref_full(iter->ref_store,
++				       diter->relative_path, 0,
++				       iter->oid.hash, &flags)) {
+ 			error("bad ref for %s", diter->path.buf);
+ 			continue;
+ 		}
+@@ -3479,6 +3487,7 @@ static struct ref_iterator *files_reflog_iterator_begin(struct ref_store *ref_st
+ 	base_ref_iterator_init(ref_iterator, &files_reflog_iterator_vtable);
+ 	files_reflog_path(refs, &sb, NULL);
+ 	iter->dir_iterator = dir_iterator_begin(sb.buf);
++	iter->ref_store = ref_store;
+ 	strbuf_release(&sb);
+ 	return ref_iterator;
+ }
+@@ -3718,8 +3727,9 @@ static int lock_ref_for_update(struct files_ref_store *refs,
+ 			 * the transaction, so we have to read it here
+ 			 * to record and possibly check old_sha1:
+ 			 */
+-			if (read_ref_full(referent.buf, 0,
+-					  lock->old_oid.hash, NULL)) {
++			if (refs_read_ref_full(&refs->base,
++					       referent.buf, 0,
++					       lock->old_oid.hash, NULL)) {
+ 				if (update->flags & REF_HAVE_OLD) {
+ 					strbuf_addf(err, "cannot lock ref '%s': "
+ 						    "error reading reference",
+@@ -3873,8 +3883,10 @@ static int files_transaction_commit(struct ref_store *ref_store,
+ 	 * head_ref within the transaction, then split_head_update()
+ 	 * arranges for the reflog of HEAD to be updated, too.
+ 	 */
+-	head_ref = resolve_refdup("HEAD", RESOLVE_REF_NO_RECURSE,
+-				  head_oid.hash, &head_type);
++	head_ref = (char *)refs_resolve_ref_unsafe(ref_store, "HEAD",
++						   RESOLVE_REF_NO_RECURSE,
++						   head_oid.hash, &head_type);
++	head_ref = xstrdup_or_null(head_ref);
+ 
+ 	if (head_ref && !(head_type & REF_ISSYMREF)) {
+ 		free(head_ref);
+@@ -4047,7 +4059,8 @@ static int files_initial_transaction_commit(struct ref_store *ref_store,
+ 	 * so here we really only check that none of the references
+ 	 * that we are creating already exists.
+ 	 */
+-	if (for_each_rawref(ref_present, &affected_refnames))
++	if (refs_for_each_rawref(&refs->base, ref_present,
++				 &affected_refnames))
+ 		die("BUG: initial ref transaction called with existing refs");
+ 
+ 	for (i = 0; i < transaction->nr; i++) {
+@@ -4166,7 +4179,7 @@ static int files_reflog_expire(struct ref_store *ref_store,
+ 		strbuf_release(&err);
+ 		return -1;
+ 	}
+-	if (!reflog_exists(refname)) {
++	if (!refs_reflog_exists(ref_store, refname)) {
+ 		unlock_ref(lock);
+ 		return 0;
+ 	}
+@@ -4197,7 +4210,7 @@ static int files_reflog_expire(struct ref_store *ref_store,
+ 	}
+ 
+ 	(*prepare_fn)(refname, sha1, cb.policy_cb);
+-	for_each_reflog_ent(refname, expire_reflog_ent, &cb);
++	refs_for_each_reflog_ent(ref_store, refname, expire_reflog_ent, &cb);
+ 	(*cleanup_fn)(cb.policy_cb);
+ 
+ 	if (!(flags & EXPIRE_REFLOGS_DRY_RUN)) {
 -- 
 2.11.0.157.gd943d85
 
