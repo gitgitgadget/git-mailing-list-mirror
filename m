@@ -2,110 +2,134 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 02161201B0
-	for <e@80x24.org>; Wed, 22 Feb 2017 21:05:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 34D03201B0
+	for <e@80x24.org>; Wed, 22 Feb 2017 21:06:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754946AbdBVVF4 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 22 Feb 2017 16:05:56 -0500
-Received: from mail-pf0-f195.google.com ([209.85.192.195]:35945 "EHLO
-        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754853AbdBVVFx (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1755055AbdBVVF7 convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Wed, 22 Feb 2017 16:05:59 -0500
+Received: from mxo1.dft.dmz.twosigma.com ([208.77.212.183]:33801 "EHLO
+        mxo1.dft.dmz.twosigma.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754567AbdBVVFx (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 22 Feb 2017 16:05:53 -0500
-Received: by mail-pf0-f195.google.com with SMTP id c193so248610pfb.3
-        for <git@vger.kernel.org>; Wed, 22 Feb 2017 13:04:38 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=qbMKC2ywwQ02jBdY4BrkeJfTJHLgem5GLCCX6n1WX6Y=;
-        b=uKJl4gdH1o9JCRCGOL1k+musjfM8pEmZsKPsZFNufoHqKXc4RPdcscvo6z3L/Qi7pY
-         d23F/OfNNG5H9ndohNU8U0YannBeO5PWTfPfj0hSIlB885/3lnxebfzgX2W7+MRs6do4
-         HqwWhW6q/l4LnGCdsy53fj5oYjEO6JBuWT8rSsKAUjbQliQ/ANk0y31eE/I2dxAgCDP8
-         HfwitoyoCttGxl+8KKIB0F74PYtvXEWLUxQzIaaykzckY54P1aPQvwmbKkYiML1jgDwN
-         oY7xRQLv4TdWnSksOa8c5vO4izujjj7MtfTT45oCPEgW5/bQxC2TYuDgMeRRrnbbg6to
-         Q3hA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=qbMKC2ywwQ02jBdY4BrkeJfTJHLgem5GLCCX6n1WX6Y=;
-        b=I9iUtb+GVrOiVwvlXcqsVbZFLd3dnpzeqhUcgKj8UoGaZ6dsgm4QyBcuGI7g6Q9+UJ
-         pIIS4uVGisfy+tUkwwfRPOLT4to/X7oVSRg9FAaQIdN0hXYqE7Em7/btyQeKRND6wvSZ
-         sbZOguT/bfmxi2BSiS/ybX2P1NW/5mWGuZnShlzAIql5fVg9d75tKfYXeLV1IHwKvP6g
-         zF27i/3Y+gevor+WArbEG5t3Ah/RcdLANHptQVqPhQNSIzb5sy3XylfQf5Qu7+/vELLG
-         UOzURrhDUTLg2pBzn2F88Mw1zgpUadA70r28Iq0lMQG2AYgl50aQeN/NzhVCY4Gomcrk
-         hwMg==
-X-Gm-Message-State: AMke39kmpF8LaBiuUqGGuVkFA2fgt8CluzF6OWQj09hn36EFHaRbhYZ/qBRqs7K2zBx70w==
-X-Received: by 10.99.168.76 with SMTP id i12mr43704692pgp.73.1487797477910;
-        Wed, 22 Feb 2017 13:04:37 -0800 (PST)
-Received: from localhost ([2620:0:1000:8622:21a0:716b:e013:d129])
-        by smtp.gmail.com with ESMTPSA id b8sm5402754pgn.6.2017.02.22.13.04.36
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 22 Feb 2017 13:04:36 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Cc:     git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Stefan Beller <sbeller@google.com>, novalis@novalis.org
-Subject: Re: [PATCH v5 00/24] Remove submodule from files-backend.c
-References: <20170218133303.3682-1-pclouds@gmail.com>
-        <20170222140450.30886-1-pclouds@gmail.com>
-        <xmqqlgsycfeu.fsf@gitster.mtv.corp.google.com>
-Date:   Wed, 22 Feb 2017 13:04:36 -0800
-In-Reply-To: <xmqqlgsycfeu.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-        message of "Wed, 22 Feb 2017 09:18:49 -0800")
-Message-ID: <xmqqd1eaaqe3.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+Received: from localhost (localhost [127.0.0.1])
+        by mxo1.dft.dmz.twosigma.com (Postfix) with ESMTP id 3FB56100143;
+        Wed, 22 Feb 2017 21:04:15 +0000 (GMT)
+X-Virus-Scanned: Debian amavisd-new at twosigma.com
+Received: from mxo1.dft.dmz.twosigma.com ([127.0.0.1])
+        by localhost (mxo1.dft.dmz.twosigma.com [127.0.0.1]) (amavisd-new, port 10024)
+        with ESMTP id ysZ87ZrL8YFz; Wed, 22 Feb 2017 21:04:15 +0000 (GMT)
+Received: from exmbdft8.ad.twosigma.com (exmbdft8.ad.twosigma.com [172.22.2.84])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mxo1.dft.dmz.twosigma.com (Postfix) with ESMTPS id 2E80880035;
+        Wed, 22 Feb 2017 21:04:15 +0000 (GMT)
+Received: from exmbdft7.ad.twosigma.com (172.22.2.43) by
+ exmbdft8.ad.twosigma.com (172.22.2.84) with Microsoft SMTP Server (TLS) id
+ 15.0.1263.5; Wed, 22 Feb 2017 21:04:14 +0000
+Received: from exmbdft7.ad.twosigma.com ([fe80::552e:5f62:35e9:7955]) by
+ exmbdft7.ad.twosigma.com ([fe80::552e:5f62:35e9:7955%23]) with mapi id
+ 15.00.1263.000; Wed, 22 Feb 2017 21:04:14 +0000
+From:   David Turner <David.Turner@twosigma.com>
+To:     'Junio C Hamano' <gitster@pobox.com>
+CC:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        "sandals@crustytoothpaste.net" <sandals@crustytoothpaste.net>,
+        "Johannes Schindelin" <johannes.schindelin@gmx.de>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Jeff King <peff@peff.net>
+Subject: RE: [PATCH] http(s): automatically try NTLM authentication first
+Thread-Topic: [PATCH] http(s): automatically try NTLM authentication first
+Thread-Index: AQHSjUkLCk8cFwxeyUi81jfhwIejKqF1d7vg
+Date:   Wed, 22 Feb 2017 21:04:14 +0000
+Message-ID: <97ab9a812f7b46d7b10d4d06f73259d8@exmbdft7.ad.twosigma.com>
+References: <20170222173936.25016-1-dturner@twosigma.com>
+ <xmqqpoiaasgj.fsf@gitster.mtv.corp.google.com>
+In-Reply-To: <xmqqpoiaasgj.fsf@gitster.mtv.corp.google.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-ms-exchange-transport-fromentityheader: Hosted
+x-originating-ip: [172.20.60.10]
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+> -----Original Message-----
+> From: Junio C Hamano [mailto:jch2355@gmail.com] On Behalf Of Junio C
+> Hamano
+> Sent: Wednesday, February 22, 2017 3:20 PM
+> To: David Turner <David.Turner@twosigma.com>
+> Cc: git@vger.kernel.org; sandals@crustytoothpaste.net; Johannes Schindelin
+> <johannes.schindelin@gmx.de>; Eric Sunshine
+> <sunshine@sunshineco.com>; Jeff King <peff@peff.net>
+> Subject: Re: [PATCH] http(s): automatically try NTLM authentication first
+> 
+> David Turner <dturner@twosigma.com> writes:
+> 
+> > From: Johannes Schindelin <johannes.schindelin@gmx.de>
+> >
+> > It is common in corporate setups to have permissions managed via a
+> > domain account. That means that the user does not really have to log
+> > in when accessing a central repository via https://, but that the
+> > login credentials are used to authenticate with that repository.
+> >
+> > The common way to do that used to require empty credentials, i.e.
+> > hitting Enter twice when being asked for user name and password, or by
+> > using the very funny notation https://:@server/repository
+> >
+> > A recent commit (5275c3081c (http: http.emptyauth should allow empty
+> > (not just NULL) usernames, 2016-10-04)) broke that usage, though, all
+> > of a sudden requiring users to set http.emptyAuth = true.
+> >
+> > Which brings us to the bigger question why http.emptyAuth defaults to
+> > false, to begin with.
+> 
+> This is a valid question, and and I do not see it explicitly asked in the thread:
+> 
+> https://public-
+> inbox.org/git/CAPig+cSphEu3iRJrkdBA+BRhi9HnopLJnKOHVuGhUqavtV1RXg
+> @mail.gmail.com/#t
+> 
+> even though there is a hint of it already there.
+> 
+> > It would be one thing if cURL would not let the user specify
+> > credentials interactively after attempting NTLM authentication (i.e.
+> > login credentials), but that is not the case.
+> >
+> > It would be another thing if attempting NTLM authentication was not
+> > usually what users need to do when trying to authenticate via https://.
+> > But that is also not the case.
+> 
+> Some other possible worries we may have had I can think of are:
+> 
+>  - With this enabled unconditionally, would we leak some information?
 
-> Nguyễn Thái Ngọc Duy  <pclouds@gmail.com> writes:
->
->> v5 goes a bit longer than v4, basically:
->>
->>  - files_path() is broken down into three smaller functions,
->>    files_{packed_refs,reflog,refname}_path().
->>
->>  - most of store-based api is added because..
->>
->>  - test-ref-store.c is added with t1405 and t1406 for some basic tests
->>    I'm not aimimg for complete ref store coverage. But we can continue
->>    to improve from there.
->>
->>  - refs_store_init() now takes a "permission" flag, like open().
->>    Operations are allowed or forbidden based on this flag. The
->>    submodule_allowed flag is killed. files_assert_main.. remains.
->>
->>  - get_*_ref_store() remain public api because it's used by
->>    test-ref-store.c and pack-refs.c.
->>
->>  - files-backend.c should now make no function calls that implicitly
->>    target the main store. But this will have to be tested more to be
->>    sure. I'm tempted to add a tracing backend just for this purpose.
->
-> OK.
->
->> Junio, if you take this on 'pu', you'll have to kick my other two
->> series out (they should not even compile). I'm not resending them
->> until I get a "looks mostly ok" from Michael. No point in updating
->> them when this series keeps moving.
->
-> Thanks for a note.
+I think "NTLM" is actually a misnomer here (I just copied Johannes's 
+commit message). The mechanism is actually SPNEGO, if I understand this 
+correctly. It seems to me that this is probably secure, since it is apparently
+widely implemented in browsers.
 
-As this round seems to have added conflicts with another topic that
-is already in flight that the previous round did not conflict with,
-I'll eject all three for now until this one solidifies a bit more.
+>  - With this enabled unconditionally, would we always incur an extra
+>    roundtrip for people who are not running NTLM at all?
+>
+> I do not think the former is the case, but what would I know (adding a few
+> people involved in the original thread to CC: ;-)
+
+Always, no.  For failed authentication (or authorization), apparently, yes.  
+I tested this by  setting the variable to false and then true, and trying to 
+Push to a github repository which I didn't have write access to, with 
+both an empty username (https://@:github.com/...) and no username 
+(http://github.com/...).   I ran this under GIT_CURL_VERBOSE=1 and
+I saw two 401 responses in the "http.emptyauth=true" case and one
+in the false case.  I also tried with a repo that I did have access to (first
+configuring the necessary tokens for HTTPS push access), and saw two
+401 responses in *both* cases.  
+
