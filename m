@@ -7,47 +7,47 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 246ED201B0
-	for <e@80x24.org>; Wed, 22 Feb 2017 14:07:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0C3D3201B0
+	for <e@80x24.org>; Wed, 22 Feb 2017 14:07:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932729AbdBVOHn (ORCPT <rfc822;e@80x24.org>);
-        Wed, 22 Feb 2017 09:07:43 -0500
-Received: from mail-pg0-f68.google.com ([74.125.83.68]:35619 "EHLO
-        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932728AbdBVOHk (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Feb 2017 09:07:40 -0500
-Received: by mail-pg0-f68.google.com with SMTP id 1so545516pgz.2
-        for <git@vger.kernel.org>; Wed, 22 Feb 2017 06:07:40 -0800 (PST)
+        id S932732AbdBVOHs (ORCPT <rfc822;e@80x24.org>);
+        Wed, 22 Feb 2017 09:07:48 -0500
+Received: from mail-pg0-f67.google.com ([74.125.83.67]:33828 "EHLO
+        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932728AbdBVOHq (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Feb 2017 09:07:46 -0500
+Received: by mail-pg0-f67.google.com with SMTP id s67so557808pgb.1
+        for <git@vger.kernel.org>; Wed, 22 Feb 2017 06:07:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=lYg7uFB5KTeOpmfAuVJBPI3GKxh3KvDMwRGo12otrXI=;
-        b=KIDKhAePq5CDJgmFhaepHE1AfASIQoYsv+QFcyzojklFXhAUMaF27FFloI3r8zHoNA
-         HtcvGTYDb5IOKZNltmAwXc1lEphimfgB+VeB+UkvVu/6OJVMauXHeY/4t4w6rSBjBJgz
-         cqDt7vRtOnQQdzPLNaLBtXtYNAoRipDviFb5YTHsj/apcg31fjIWU3GZa06h1PK9BrJv
-         XNVihzs/Jl3LmXl1iH/erv7g8EyIQVn+pip09lkuFYOwSawMmQ3TAsFz9qnc6AKEQhzM
-         MQx4BwcJpSEZb0pVAQZZv2j4ehr3bCpWcutynBo7MrNUYWvl+7lKoi9XiutPtPJnowRS
-         xicg==
+        bh=prVfqR3W46V6beNiyBn+bWGWikFo6nOxgV0aJO1i+Ow=;
+        b=i10n0nPHZ1MeL24j2QqfgOuteJaimibQvCNiH6vd6mjEobyjOFl1Ka6r4QOacAdOxs
+         6o5zzEbsRGkNPsSfLdAxoEhc/kUlDhb6btMkjHVhoeA46+XTxfg+auoHLn7e07KN2h5K
+         6TidMi2LEddKl30QLlMA1ag9h/HXrVajnWazfj+LXwQJ1IijM4YJm5aSGgBTaXRp3rte
+         VC5Gakb4t2jksz3FJyqOjO3WxTAYTzqFnxk33bBRejBPt0SOLl/3a+NO77cdAI57oT98
+         ZeaCJ8kfmMZzV9SEoJRuyAA3jjFZxUbs0KfmdEqKgaPqllN2B/u0F6ZWoCiIxXIu1rwx
+         2ZVw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=lYg7uFB5KTeOpmfAuVJBPI3GKxh3KvDMwRGo12otrXI=;
-        b=qb9/YitJea0tSoR2B9CeWH0uuV4qQbjzNC4jlRoGIqItoSClRbMJxr2BIgQmZoP2f8
-         XY3eVF0zKPX3Cfh05rxZ3ujduCA1W6YL7FMqtZ52jWp5+N6qGLn2uHh8z1yXM94DODvp
-         gawRlQaE/MG/qfr7vFkTlDwHkkYHRdgETch1X7JfVHUUqcmYcWpGUxyuJyeUqdOfBjei
-         dDSMpEzuh3M6ziobZukYiV82Mj/Q62eU3RzoYpQga7hxTV4aX/krr+KLVRjRLmZsKnFE
-         JXQQECaK7QgQAy+dWHBaCM1fUnOo/kHNfdK9b4LbBR+/3bcsEHncJBE+vlrL5aYQDnne
-         ZhVw==
-X-Gm-Message-State: AMke39l63PoEmfonxLlA9tu5vG0rEc0RuYMMqlqVXYz2LNLhng58sMwAcdYzAvDdW9pS7g==
-X-Received: by 10.98.7.21 with SMTP id b21mr8219608pfd.66.1487772449544;
-        Wed, 22 Feb 2017 06:07:29 -0800 (PST)
+        bh=prVfqR3W46V6beNiyBn+bWGWikFo6nOxgV0aJO1i+Ow=;
+        b=dOQQX1PPywt72AvXynK4dsi/4ZMs5vJ4qRi42/4f1hu0NngodFBtf7e+1WA/UG2wGE
+         rJu3aIxqMu6l11zpMs7TMRMaIvQwIY3P007mdjM3lg6zHna2zMmmO5XqGb2hL638TOzm
+         2s2mZWna/dLiPfy7YqMat39LNLrhTNP8iGCBX0/hYB/q2tUPX/9tl0lojxIDFUsAGwEO
+         Ur/cNwzrVMO5VfONUS6gxJtJjZzPrjy8sJu9hGNU8aJFAvDCP2UHplM1ZBbRpgeSoFjL
+         tXxRIQONowxJg5U0XNGni7VZih4LVFwb92kn397BR2SrIVLSRbyJtleuFGHNZOdO/UV1
+         LvNQ==
+X-Gm-Message-State: AMke39kLdyEyL8tEvo3J7EJUaCOM69Y3JpFF+4q8TgVzdqbS8NB51por19v6ig8JQya09g==
+X-Received: by 10.84.241.201 with SMTP id t9mr22496780plm.18.1487772465203;
+        Wed, 22 Feb 2017 06:07:45 -0800 (PST)
 Received: from ash ([115.73.162.84])
-        by smtp.gmail.com with ESMTPSA id w18sm4041802pfa.127.2017.02.22.06.07.25
+        by smtp.gmail.com with ESMTPSA id n79sm4114524pfj.31.2017.02.22.06.07.40
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 22 Feb 2017 06:07:28 -0800 (PST)
-Received: by ash (sSMTP sendmail emulation); Wed, 22 Feb 2017 21:07:17 +0700
+        Wed, 22 Feb 2017 06:07:44 -0800 (PST)
+Received: by ash (sSMTP sendmail emulation); Wed, 22 Feb 2017 21:07:37 +0700
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
@@ -58,9 +58,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Stefan Beller <sbeller@google.com>, novalis@novalis.org,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH v5 15/24] refs: move submodule code out of files-backend.c
-Date:   Wed, 22 Feb 2017 21:04:41 +0700
-Message-Id: <20170222140450.30886-16-pclouds@gmail.com>
+Subject: [PATCH v5 17/24] refs: rename get_ref_store() to get_submodule_ref_store() and make it public
+Date:   Wed, 22 Feb 2017 21:04:43 +0700
+Message-Id: <20170222140450.30886-18-pclouds@gmail.com>
 X-Mailer: git-send-email 2.11.0.157.gd943d85
 In-Reply-To: <20170222140450.30886-1-pclouds@gmail.com>
 References: <20170218133303.3682-1-pclouds@gmail.com>
@@ -73,174 +73,106 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-files-backend is now initialized with a $GIT_DIR. Converting a submodule
-path to where real submodule gitdir is located is done in get_ref_store().
-
-This gives a slight performance improvement for submodules since we
-don't convert submodule path to gitdir at every backend call like
-before. We pay that once at ref-store creation.
-
-More cleanup in files_downcast() and files_assert_main_repository()
-follows shortly. It's separate to keep noises from this patch.
+This function is intended to replace *_submodule() refs API. It provides
+a ref store for a specific submodule, which can be operated on by a new
+set of refs API.
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- refs.c               | 20 ++++++++++++++------
- refs/files-backend.c | 24 ++----------------------
- refs/refs-internal.h |  9 ++++-----
- 3 files changed, 20 insertions(+), 33 deletions(-)
+ refs.c               | 12 ++++++++----
+ refs.h               | 11 +++++++++++
+ refs/refs-internal.h | 12 ------------
+ 3 files changed, 19 insertions(+), 16 deletions(-)
 
 diff --git a/refs.c b/refs.c
-index 562834fc0..67acae60c 100644
+index 2dc97891a..7843d3085 100644
 --- a/refs.c
 +++ b/refs.c
-@@ -9,6 +9,7 @@
- #include "refs/refs-internal.h"
- #include "object.h"
- #include "tag.h"
-+#include "submodule.h"
- 
- /*
-  * List of all available backends
-@@ -1413,9 +1414,9 @@ static struct ref_store *lookup_submodule_ref_store(const char *submodule)
- 
- /*
-  * Create, record, and return a ref_store instance for the specified
-- * submodule (or the main repository if submodule is NULL).
-+ * gitdir.
-  */
--static struct ref_store *ref_store_init(const char *submodule)
-+static struct ref_store *ref_store_init(const char *gitdir)
+@@ -1171,7 +1171,7 @@ int head_ref(each_ref_fn fn, void *cb_data)
+ static int do_for_each_ref(const char *submodule, const char *prefix,
+ 			   each_ref_fn fn, int trim, int flags, void *cb_data)
  {
- 	const char *be_name = "files";
- 	struct ref_storage_be *be = find_ref_storage_backend(be_name);
-@@ -1424,7 +1425,7 @@ static struct ref_store *ref_store_init(const char *submodule)
- 	if (!be)
- 		die("BUG: reference backend %s is unknown", be_name);
+-	struct ref_store *refs = get_ref_store(submodule);
++	struct ref_store *refs = get_submodule_ref_store(submodule);
+ 	struct ref_iterator *iter;
  
--	refs = be->init(submodule);
-+	refs = be->init(gitdir);
- 	return refs;
+ 	if (!refs)
+@@ -1344,10 +1344,10 @@ int resolve_gitlink_ref(const char *submodule, const char *refname,
+ 		/* We need to strip off one or more trailing slashes */
+ 		char *stripped = xmemdupz(submodule, len);
+ 
+-		refs = get_ref_store(stripped);
++		refs = get_submodule_ref_store(stripped);
+ 		free(stripped);
+ 	} else {
+-		refs = get_ref_store(submodule);
++		refs = get_submodule_ref_store(submodule);
+ 	}
+ 
+ 	if (!refs)
+@@ -1468,13 +1468,17 @@ static void register_submodule_ref_store(struct ref_store *refs,
+ 		    submodule);
  }
  
-@@ -1435,7 +1436,7 @@ struct ref_store *get_main_ref_store(void)
- 	if (main_ref_store)
- 		return main_ref_store;
- 
--	refs = ref_store_init(NULL);
-+	refs = ref_store_init(get_git_dir());
- 	if (refs) {
- 		if (main_ref_store)
- 			die("BUG: main_ref_store initialized twice");
-@@ -1466,6 +1467,7 @@ struct ref_store *get_ref_store(const char *submodule)
+-struct ref_store *get_ref_store(const char *submodule)
++struct ref_store *get_submodule_ref_store(const char *submodule)
  {
  	struct strbuf submodule_sb = STRBUF_INIT;
  	struct ref_store *refs;
-+	int ret;
+ 	int ret;
  
  	if (!submodule || !*submodule) {
++		/*
++		 * FIXME: This case is ideally not allowed. But that
++		 * can't happen until we clean up all the callers.
++		 */
  		return get_main_ref_store();
-@@ -1476,8 +1478,14 @@ struct ref_store *get_ref_store(const char *submodule)
- 		return refs;
+ 	}
  
- 	strbuf_addstr(&submodule_sb, submodule);
--	if (is_nonbare_repository_dir(&submodule_sb))
--		refs = ref_store_init(submodule);
-+	ret = is_nonbare_repository_dir(&submodule_sb);
-+	strbuf_release(&submodule_sb);
-+	if (!ret)
-+		return refs;
-+
-+	ret = submodule_to_gitdir(&submodule_sb, submodule);
-+	if (!ret)
-+		refs = ref_store_init(submodule_sb.buf);
- 	strbuf_release(&submodule_sb);
+diff --git a/refs.h b/refs.h
+index 29013cb7e..2efba6ba9 100644
+--- a/refs.h
++++ b/refs.h
+@@ -561,5 +561,16 @@ int reflog_expire(const char *refname, const unsigned char *sha1,
+ int ref_storage_backend_exists(const char *name);
  
- 	if (refs)
-diff --git a/refs/files-backend.c b/refs/files-backend.c
-index d80c27837..37443369b 100644
---- a/refs/files-backend.c
-+++ b/refs/files-backend.c
-@@ -917,12 +917,6 @@ struct packed_ref_cache {
- struct files_ref_store {
- 	struct ref_store base;
+ struct ref_store *get_main_ref_store(void);
++/*
++ * Return the ref_store instance for the specified submodule. For the
++ * main repository, use submodule==NULL; such a call cannot fail. For
++ * a submodule, the submodule must exist and be a nonbare repository,
++ * otherwise return NULL. If the requested reference store has not yet
++ * been initialized, initialize it first.
++ *
++ * For backwards compatibility, submodule=="" is treated the same as
++ * submodule==NULL.
++ */
++struct ref_store *get_submodule_ref_store(const char *submodule);
  
--	/*
--	 * The name of the submodule represented by this object, or
--	 * NULL if it represents the main repository's reference
--	 * store:
--	 */
--	const char *submodule;
- 	char *gitdir;
- 	char *gitcommondir;
- 	char *packed_refs_path;
-@@ -982,22 +976,14 @@ static void clear_loose_ref_cache(struct files_ref_store *refs)
-  * Create a new submodule ref cache and add it to the internal
-  * set of caches.
-  */
--static struct ref_store *files_ref_store_create(const char *submodule)
-+static struct ref_store *files_ref_store_create(const char *gitdir)
- {
- 	struct files_ref_store *refs = xcalloc(1, sizeof(*refs));
- 	struct ref_store *ref_store = (struct ref_store *)refs;
- 	struct strbuf sb = STRBUF_INIT;
--	const char *gitdir = get_git_dir();
- 
- 	base_ref_store_init(ref_store, &refs_be_files);
- 
--	if (submodule) {
--		refs->submodule = xstrdup(submodule);
--		refs->packed_refs_path = git_pathdup_submodule(
--			refs->submodule, "packed-refs");
--		return ref_store;
--	}
--
- 	refs->gitdir = xstrdup(gitdir);
- 	get_common_dir_noenv(&sb, gitdir);
- 	refs->gitcommondir = strbuf_detach(&sb, NULL);
-@@ -1014,8 +1000,7 @@ static struct ref_store *files_ref_store_create(const char *submodule)
- static void files_assert_main_repository(struct files_ref_store *refs,
- 					 const char *caller)
- {
--	if (refs->submodule)
--		die("BUG: %s called for a submodule", caller);
-+	/* This function is to be deleted in the next patch */
- }
- 
- /*
-@@ -1206,11 +1191,6 @@ static void files_refname_path(struct files_ref_store *refs,
- 			       struct strbuf *sb,
- 			       const char *refname)
- {
--	if (refs->submodule) {
--		strbuf_git_path_submodule(sb, refs->submodule, "%s", refname);
--		return;
--	}
--
- 	switch (ref_type(refname)) {
- 	case REF_TYPE_PER_WORKTREE:
- 	case REF_TYPE_PSEUDOREF:
+ #endif /* REFS_H */
 diff --git a/refs/refs-internal.h b/refs/refs-internal.h
-index f732473e1..dfa181792 100644
+index 0cca280b5..f20dde39e 100644
 --- a/refs/refs-internal.h
 +++ b/refs/refs-internal.h
-@@ -482,12 +482,11 @@ struct ref_store;
- /* refs backends */
+@@ -646,18 +646,6 @@ struct ref_store {
+ void base_ref_store_init(struct ref_store *refs,
+ 			 const struct ref_storage_be *be);
  
- /*
-- * Initialize the ref_store for the specified submodule, or for the
-- * main repository if submodule == NULL. These functions should call
-- * base_ref_store_init() to initialize the shared part of the
-- * ref_store and to record the ref_store for later lookup.
-+ * Initialize the ref_store for the specified gitdir. These functions
-+ * should call base_ref_store_init() to initialize the shared part of
-+ * the ref_store and to record the ref_store for later lookup.
-  */
--typedef struct ref_store *ref_store_init_fn(const char *submodule);
-+typedef struct ref_store *ref_store_init_fn(const char *gitdir);
- 
- typedef int ref_init_db_fn(struct ref_store *refs, struct strbuf *err);
- 
+-/*
+- * Return the ref_store instance for the specified submodule. For the
+- * main repository, use submodule==NULL; such a call cannot fail. For
+- * a submodule, the submodule must exist and be a nonbare repository,
+- * otherwise return NULL. If the requested reference store has not yet
+- * been initialized, initialize it first.
+- *
+- * For backwards compatibility, submodule=="" is treated the same as
+- * submodule==NULL.
+- */
+-struct ref_store *get_ref_store(const char *submodule);
+-
+ const char *resolve_ref_recursively(struct ref_store *refs,
+ 				    const char *refname,
+ 				    int resolve_flags,
 -- 
 2.11.0.157.gd943d85
 
