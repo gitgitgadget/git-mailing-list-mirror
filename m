@@ -2,134 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 34D03201B0
-	for <e@80x24.org>; Wed, 22 Feb 2017 21:06:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E30642023D
+	for <e@80x24.org>; Wed, 22 Feb 2017 21:12:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755055AbdBVVF7 convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Wed, 22 Feb 2017 16:05:59 -0500
-Received: from mxo1.dft.dmz.twosigma.com ([208.77.212.183]:33801 "EHLO
-        mxo1.dft.dmz.twosigma.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754567AbdBVVFx (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Feb 2017 16:05:53 -0500
-Received: from localhost (localhost [127.0.0.1])
-        by mxo1.dft.dmz.twosigma.com (Postfix) with ESMTP id 3FB56100143;
-        Wed, 22 Feb 2017 21:04:15 +0000 (GMT)
-X-Virus-Scanned: Debian amavisd-new at twosigma.com
-Received: from mxo1.dft.dmz.twosigma.com ([127.0.0.1])
-        by localhost (mxo1.dft.dmz.twosigma.com [127.0.0.1]) (amavisd-new, port 10024)
-        with ESMTP id ysZ87ZrL8YFz; Wed, 22 Feb 2017 21:04:15 +0000 (GMT)
-Received: from exmbdft8.ad.twosigma.com (exmbdft8.ad.twosigma.com [172.22.2.84])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mxo1.dft.dmz.twosigma.com (Postfix) with ESMTPS id 2E80880035;
-        Wed, 22 Feb 2017 21:04:15 +0000 (GMT)
-Received: from exmbdft7.ad.twosigma.com (172.22.2.43) by
- exmbdft8.ad.twosigma.com (172.22.2.84) with Microsoft SMTP Server (TLS) id
- 15.0.1263.5; Wed, 22 Feb 2017 21:04:14 +0000
-Received: from exmbdft7.ad.twosigma.com ([fe80::552e:5f62:35e9:7955]) by
- exmbdft7.ad.twosigma.com ([fe80::552e:5f62:35e9:7955%23]) with mapi id
- 15.00.1263.000; Wed, 22 Feb 2017 21:04:14 +0000
-From:   David Turner <David.Turner@twosigma.com>
-To:     'Junio C Hamano' <gitster@pobox.com>
-CC:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        "sandals@crustytoothpaste.net" <sandals@crustytoothpaste.net>,
-        "Johannes Schindelin" <johannes.schindelin@gmx.de>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Jeff King <peff@peff.net>
-Subject: RE: [PATCH] http(s): automatically try NTLM authentication first
-Thread-Topic: [PATCH] http(s): automatically try NTLM authentication first
-Thread-Index: AQHSjUkLCk8cFwxeyUi81jfhwIejKqF1d7vg
-Date:   Wed, 22 Feb 2017 21:04:14 +0000
-Message-ID: <97ab9a812f7b46d7b10d4d06f73259d8@exmbdft7.ad.twosigma.com>
-References: <20170222173936.25016-1-dturner@twosigma.com>
- <xmqqpoiaasgj.fsf@gitster.mtv.corp.google.com>
-In-Reply-To: <xmqqpoiaasgj.fsf@gitster.mtv.corp.google.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-ms-exchange-transport-fromentityheader: Hosted
-x-originating-ip: [172.20.60.10]
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
+        id S934033AbdBVVLw (ORCPT <rfc822;e@80x24.org>);
+        Wed, 22 Feb 2017 16:11:52 -0500
+Received: from mail-wr0-f194.google.com ([209.85.128.194]:34892 "EHLO
+        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754838AbdBVVKm (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Feb 2017 16:10:42 -0500
+Received: by mail-wr0-f194.google.com with SMTP id q39so1861154wrb.2
+        for <git@vger.kernel.org>; Wed, 22 Feb 2017 13:08:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:references:cc:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding;
+        bh=IB+2ZUuR7IfSs2ZaANItCb6J3241++LmcHBQOnuWLTM=;
+        b=FKa+4B7L0wFNloYHBx2Y8Bxh+PnYLp74f4jIzmpK37Y0e1jGeCjkQYu75qeErcKYlP
+         JBj9eSdhu8y1U5+Ycb+1OO3rSIo3LcBlaqr4zZWdZknR0J6kgUlYO5NJYywZuRffeRga
+         d9fgxxlWAQJMLJUiQaOaxLVBwyxMWVs4abvF1jX1e4Q63TpxaByL6MUVkeyLmMVYlei7
+         qIbnt+T/du7p9vkdvZg/M2WhZZ8y52E141g1UNd6UYFKdLDGq89elv+Sgin8f870lxIJ
+         4M5USwiytqFmYuBpmeZ7zxucS7C6HpnNzemZUtRkQ10sueNUCvCJoCJP3tIvfKJTKhjO
+         DOEA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
+        bh=IB+2ZUuR7IfSs2ZaANItCb6J3241++LmcHBQOnuWLTM=;
+        b=tSij21cZvGlEitsT6LZK/M+Zh9FP5o4rvCBjq2MNkhPiQFwDFkRPREZpSQ87ukgNK9
+         wvy8B2uq2f4TfMf2vz5QfFsXY+ol9H2+j8pRaIJyeleGTq3vx5hyT5/iKzrHD1vAf1ji
+         ccmJmCy14lRLhS6cChgeF8noerwOqO19eAgha8zeABmt2PTTx9hyyLCdL7guw7RN+5pO
+         8r7l9WPrA5rhe3zFHze+Bw6weBHQ1KLGsT3QRSBC7UQ1PSP07jrqkFRkb0eXLE0HUfW7
+         1JfQubfKrxhfiP1pE0Rx8/+LjFizRQ6u41TIFWV9GOoaYaK1kbQApoCf4yi3CmOojWQ0
+         9rWw==
+X-Gm-Message-State: AMke39nx6amXOheRZyowZHQ68a16AhxfKYyVfp8bvZa+1sv3MRy4ZN8Sv+m3RLQBOC9H5g==
+X-Received: by 10.223.136.123 with SMTP id e56mr26257627wre.28.1487797728628;
+        Wed, 22 Feb 2017 13:08:48 -0800 (PST)
+Received: from ?IPv6:2001:a61:100e:ec01:5d44:1c25:e25a:95ac? ([2001:a61:100e:ec01:5d44:1c25:e25a:95ac])
+        by smtp.googlemail.com with ESMTPSA id o50sm3191880wrc.56.2017.02.22.13.08.47
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 22 Feb 2017 13:08:47 -0800 (PST)
+Subject: Re: [PATCH] Documentation: Link git-ls-files to core.quotePath
+ variable.
+To:     Junio C Hamano <gitster@pobox.com>,
+        Philip Oakley <philipoakley@iee.org>
+References: <2b0ce702-60de-534b-8a86-5c7ae84060de@gmail.com>
+ <xmqqh93nfeyj.fsf@gitster.mtv.corp.google.com>
+ <e55b3cb7-65bf-1609-2e8d-823b4336e07a@gmail.com>
+ <F71515D0E29940CA9C421D18480AD726@PhilipOakley>
+ <xmqqh93maqgw.fsf@gitster.mtv.corp.google.com>
+Cc:     git@vger.kernel.org
+From:   Andreas Heiduk <asheiduk@gmail.com>
+Message-ID: <3c801e54-28c7-52d0-6915-ee7aaf1d89c9@gmail.com>
+Date:   Wed, 22 Feb 2017 22:08:46 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.7.0
 MIME-Version: 1.0
+In-Reply-To: <xmqqh93maqgw.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset=iso-8859-15
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> -----Original Message-----
-> From: Junio C Hamano [mailto:jch2355@gmail.com] On Behalf Of Junio C
-> Hamano
-> Sent: Wednesday, February 22, 2017 3:20 PM
-> To: David Turner <David.Turner@twosigma.com>
-> Cc: git@vger.kernel.org; sandals@crustytoothpaste.net; Johannes Schindelin
-> <johannes.schindelin@gmx.de>; Eric Sunshine
-> <sunshine@sunshineco.com>; Jeff King <peff@peff.net>
-> Subject: Re: [PATCH] http(s): automatically try NTLM authentication first
-> 
-> David Turner <dturner@twosigma.com> writes:
-> 
-> > From: Johannes Schindelin <johannes.schindelin@gmx.de>
-> >
-> > It is common in corporate setups to have permissions managed via a
-> > domain account. That means that the user does not really have to log
-> > in when accessing a central repository via https://, but that the
-> > login credentials are used to authenticate with that repository.
-> >
-> > The common way to do that used to require empty credentials, i.e.
-> > hitting Enter twice when being asked for user name and password, or by
-> > using the very funny notation https://:@server/repository
-> >
-> > A recent commit (5275c3081c (http: http.emptyauth should allow empty
-> > (not just NULL) usernames, 2016-10-04)) broke that usage, though, all
-> > of a sudden requiring users to set http.emptyAuth = true.
-> >
-> > Which brings us to the bigger question why http.emptyAuth defaults to
-> > false, to begin with.
-> 
-> This is a valid question, and and I do not see it explicitly asked in the thread:
-> 
-> https://public-
-> inbox.org/git/CAPig+cSphEu3iRJrkdBA+BRhi9HnopLJnKOHVuGhUqavtV1RXg
-> @mail.gmail.com/#t
-> 
-> even though there is a hint of it already there.
-> 
-> > It would be one thing if cURL would not let the user specify
-> > credentials interactively after attempting NTLM authentication (i.e.
-> > login credentials), but that is not the case.
-> >
-> > It would be another thing if attempting NTLM authentication was not
-> > usually what users need to do when trying to authenticate via https://.
-> > But that is also not the case.
-> 
-> Some other possible worries we may have had I can think of are:
-> 
->  - With this enabled unconditionally, would we leak some information?
 
-I think "NTLM" is actually a misnomer here (I just copied Johannes's 
-commit message). The mechanism is actually SPNEGO, if I understand this 
-correctly. It seems to me that this is probably secure, since it is apparently
-widely implemented in browsers.
+@Phillip: Thanks.
 
->  - With this enabled unconditionally, would we always incur an extra
->    roundtrip for people who are not running NTLM at all?
+@Junio: Don't bother, I'm about to fix other man-pages with the text
+from ls-files. I will include that typo-fix and prepare a new patch
+based on maint.
+
+
+Am 22.02.2017 um 22:02 schrieb Junio C Hamano:
+> "Philip Oakley" <philipoakley@iee.org> writes:
+>> s/option pathnamens/option, pathnames/    # comma and spelling.
+> 
+> Thanks.  Will squash it in while queuing (I need to discard the new
+> text added in the previous attempt in the preimage to make it apply,
+> too).
 >
-> I do not think the former is the case, but what would I know (adding a few
-> people involved in the original thread to CC: ;-)
-
-Always, no.  For failed authentication (or authorization), apparently, yes.  
-I tested this by  setting the variable to false and then true, and trying to 
-Push to a github repository which I didn't have write access to, with 
-both an empty username (https://@:github.com/...) and no username 
-(http://github.com/...).   I ran this under GIT_CURL_VERBOSE=1 and
-I saw two 401 responses in the "http.emptyauth=true" case and one
-in the false case.  I also tried with a repo that I did have access to (first
-configuring the necessary tokens for HTTPS push access), and saw two
-401 responses in *both* cases.  
-
