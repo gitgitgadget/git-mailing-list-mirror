@@ -2,94 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B09D2201B0
-	for <e@80x24.org>; Wed, 22 Feb 2017 17:50:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 40FA1201B0
+	for <e@80x24.org>; Wed, 22 Feb 2017 18:18:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932873AbdBVRut (ORCPT <rfc822;e@80x24.org>);
-        Wed, 22 Feb 2017 12:50:49 -0500
-Received: from mail-pf0-f195.google.com ([209.85.192.195]:36189 "EHLO
-        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932851AbdBVRur (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Feb 2017 12:50:47 -0500
-Received: by mail-pf0-f195.google.com with SMTP id c193so35988pfb.3
-        for <git@vger.kernel.org>; Wed, 22 Feb 2017 09:50:47 -0800 (PST)
+        id S932481AbdBVSSU (ORCPT <rfc822;e@80x24.org>);
+        Wed, 22 Feb 2017 13:18:20 -0500
+Received: from mail-it0-f51.google.com ([209.85.214.51]:37564 "EHLO
+        mail-it0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932766AbdBVSSS (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Feb 2017 13:18:18 -0500
+Received: by mail-it0-f51.google.com with SMTP id 203so7662348ith.0
+        for <git@vger.kernel.org>; Wed, 22 Feb 2017 10:18:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=z5Q0mVUUxWDxAfdB2h8kbQMtaeQoXR1U24T9XP2klJg=;
-        b=k55Jjoeo5q//FEfcgyuuzcWgoXytoi/miHl3fW8CMYm7sbfczLbOOxF3qxSzqIBJ/d
-         zpUeonSxcVgrYrikWhvfevSzJnVZVUZK+2BwyDCszBoTJEbRUhVPv4b0CnM8aQKNYN8n
-         34Ek7dBtc/Np7qatWHLWTrqx3+ZeBylr/BaXi5bZ0UruQnaYbpWa7YXAuCCETqHXtI1W
-         f0BSJEYAst5fYbTp/67L90mk2cU4ANe/F8efB9FSZ4WmrNoeva+nMxlR1Axt2YvXBSf1
-         iy5yDmTblTEP2W6Q33PC7Zzsq1iRDynH69GfZ1iacCEQF9ex6u66BC0BLGeIsMXuEg6p
-         GLZA==
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=YGsroRehSHzT80SWzIBzM3DwMqgkEsWVcsWZoGg+Ckk=;
+        b=o1GYtwDepr5wdDi4a8zgxSLBQ2gs1aE8fKuUM4/B+X+3ui/4pWt8yEqeAkPV9COD6K
+         CkSuaeZ9cLpmqOJLwU23GckyTyeg22+HXGVB5S/yxnaRcS8JkOJNoMKoaGC3ow/D0g+k
+         JmjOnh4PTWGq4e1FmgZaCOu6TUr6/Uc9qlQOtu+qAAU7TSo0m1/u1lOFmNRhQabkgMWe
+         JJ9VmP7Ml+n52g383/ZOOuyHpHt2Aq/rYNERzjiWg+tPmOQ3NQlKZzO4Ons00nxniLWt
+         j/oPD3l3gtamAqjgaR/vbg06p/gseBtPTIUecvFeGONXBcinjWB6eHrgB+lhZmnNwlru
+         LxVw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=z5Q0mVUUxWDxAfdB2h8kbQMtaeQoXR1U24T9XP2klJg=;
-        b=G+xE2vf2z1XmRLovdg0m0CKXwN/YnxQn7g35K8cZz0dF0D1J6ttOQO28/L0sGKcj6l
-         gwN6o8Rg+XkYp4u3srQByvtuy1U80eOFG/WvFn/DcfZyaxN9P4PRbUsW9BQ0eZ8gIMzG
-         bU2CBUp3sKh6hJiGosmi0s/qjT068QBGmz9FHfZ9nqZssZwzQn37DBNeDJm2pi6YqxOU
-         7KesQuaRhuraPCXlN9ZMKH6XBu7nX4p6SC6aw+NUWw5MS74jdUlz7qOmQVeZPBUZYjcU
-         TNa1BwI8q78GZ+BMv2kIsi6NmA1MhkG3Tvzfo7yQQ2cl5MG0UZxl7ao8xL0PYp5eaRhA
-         7z4g==
-X-Gm-Message-State: AMke39mp84u5wITHaiJjPfX0PLPzd04xcapBaNBMRy3cj2IRthheALuTzu4mtQD3B64RSg==
-X-Received: by 10.98.184.1 with SMTP id p1mr3746601pfe.127.1487785846932;
-        Wed, 22 Feb 2017 09:50:46 -0800 (PST)
-Received: from localhost ([2620:0:1000:8622:21a0:716b:e013:d129])
-        by smtp.gmail.com with ESMTPSA id s8sm4940568pfj.30.2017.02.22.09.50.45
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 22 Feb 2017 09:50:46 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     git@vger.kernel.org, Casey Rodarmor <casey@rodarmor.com>
-Subject: Re: [PATCH] Documentation: correctly spell git worktree --detach
-References: <CANLPe+OaSnNb1jhAnFtMsOCfho0H7mHVHiXs7rqo6ZHNvRe3-w@mail.gmail.com>
-        <20170222123442.923694-1-sandals@crustytoothpaste.net>
-Date:   Wed, 22 Feb 2017 09:50:45 -0800
-In-Reply-To: <20170222123442.923694-1-sandals@crustytoothpaste.net> (brian
-        m. carlson's message of "Wed, 22 Feb 2017 12:34:42 +0000")
-Message-ID: <xmqq7f4icdxm.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=YGsroRehSHzT80SWzIBzM3DwMqgkEsWVcsWZoGg+Ckk=;
+        b=YSKkDxhC9JG1YxOBQLlr8pnEdGjHx4Gef2ks1GVvdzKTYi11Gb3556dvKlOu3TGUen
+         43COU+enJ+ZWJpj6JNi3fls1nRBJ76SSMqSDJ7zKiVcSvbXqIJ6JrX35k1s/ydB+fHq5
+         4zIkWtorvwF4fVqJeohT6mk+AyH4WeT9Jv+0trQ2YlAhKeSQOUTnvFJTHQzYvNOcBiv8
+         T6E/gINI3azul6G5swW4cj2FvHthr4X1Fy2+T67o4yPeuvtga0Q2yb27DC7plPYg1BWo
+         uRY7c4bazpb+LObFhc0E7Dm6h8xuL9q5v1kLAvZW2zdJl0WwDYbYEDX7DfRomMlud0Ir
+         92mA==
+X-Gm-Message-State: AMke39lCBK41FVvc9Qov128vM3SkXVzv25982jxCJ796wyjC8mNvrHxLIuBY1b18KlK/nmscYA2ep90AtgOAFQqa
+X-Received: by 10.36.1.197 with SMTP id 188mr3130016itk.116.1487787496807;
+ Wed, 22 Feb 2017 10:18:16 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Received: by 10.79.33.148 with HTTP; Wed, 22 Feb 2017 10:18:16 -0800 (PST)
+In-Reply-To: <20170222140450.30886-2-pclouds@gmail.com>
+References: <20170218133303.3682-1-pclouds@gmail.com> <20170222140450.30886-1-pclouds@gmail.com>
+ <20170222140450.30886-2-pclouds@gmail.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Wed, 22 Feb 2017 10:18:16 -0800
+Message-ID: <CAGZ79kZTr924RrvG6RsasmhT1yswN875XShtmrrcJ8ztaAGJUw@mail.gmail.com>
+Subject: Re: [PATCH v5 01/24] refs.h: add forward declaration for structs used
+ in this file
+To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Michael Haggerty <mhagger@alum.mit.edu>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        David Turner <novalis@novalis.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
-
-> The option is “--detach”, but we accidentally spelled it “--detached” at
-> one point in the man page.
->
-> Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
-> Reported-by: Casey Rodarmor <casey@rodarmor.com>
+On Wed, Feb 22, 2017 at 6:04 AM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy =
+<pclouds@gmail.com> wrote:
+> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.c=
+om>
 > ---
-
-Thanks, both.
-
->  Documentation/git-worktree.txt | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+>  refs.h | 6 +++++-
+>  1 file changed, 5 insertions(+), 1 deletion(-)
 >
-> diff --git a/Documentation/git-worktree.txt b/Documentation/git-worktree.txt
-> index e257c19ebe..553cf8413f 100644
-> --- a/Documentation/git-worktree.txt
-> +++ b/Documentation/git-worktree.txt
-> @@ -52,7 +52,7 @@ is linked to the current repository, sharing everything except working
->  directory specific files such as HEAD, index, etc. `-` may also be
->  specified as `<branch>`; it is synonymous with `@{-1}`.
->  +
-> -If `<branch>` is omitted and neither `-b` nor `-B` nor `--detached` used,
-> +If `<branch>` is omitted and neither `-b` nor `-B` nor `--detach` used,
->  then, as a convenience, a new branch based at HEAD is created automatically,
->  as if `-b $(basename <path>)` was specified.
->  
+> diff --git a/refs.h b/refs.h
+> index 9fbff90e7..c494b641a 100644
+> --- a/refs.h
+> +++ b/refs.h
+> @@ -1,6 +1,11 @@
+>  #ifndef REFS_H
+>  #define REFS_H
+>
+> +struct object_id;
+> +struct ref_transaction;
+> +struct strbuf;
+> +struct string_list;
+> +
+>  /*
+>   * Resolve a reference, recursively following symbolic refererences.
+>   *
+> @@ -144,7 +149,6 @@ int dwim_log(const char *str, int len, unsigned char =
+*sha1, char **ref);
+>   * `ref_transaction_commit` is called.  So `ref_transaction_verify`
+>   * won't report a verification failure until the commit is attempted.
+>   */
+> -struct ref_transaction;
+
+Leaving the detailed comment about ref_transaction dangling?
+I can understand if you don't want to move it with the declaration,
+as you want all declarations terse in a few lines.
+Maybe move the comment to be part of the first large comment
+(The one that you can see in the first hunk, starting with
+" * Resolve a reference, recursively following")
+
+Maybe Michael has a better idea how to make this comment
+more accessible to the casual refs-reader.
+
+Thanks,
+Stefan
