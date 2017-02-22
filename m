@@ -2,72 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,HK_RANDOM_FROM,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 03EE6201B0
-	for <e@80x24.org>; Wed, 22 Feb 2017 12:34:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 71288201B0
+	for <e@80x24.org>; Wed, 22 Feb 2017 13:12:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754565AbdBVMes (ORCPT <rfc822;e@80x24.org>);
-        Wed, 22 Feb 2017 07:34:48 -0500
-Received: from castro.crustytoothpaste.net ([75.10.60.170]:40098 "EHLO
-        castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1753108AbdBVMer (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 22 Feb 2017 07:34:47 -0500
-Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 2E6E0280AD;
-        Wed, 22 Feb 2017 12:34:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
-        s=default; t=1487766886;
-        bh=pendZFQCij63eDVzY1T9ujeaMo6AFqIGUjwT6e+j4tk=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=cBui9bJ9o3bfhH6uanLYfJ//BFNml0dPF1juA/ktQdi3fe51tXCELXHwEAZ1RGtpW
-         w5QA20lE78jSyU9wXGyuXdXJnYiFMQXz4GhLzHBs89dDQpC3bch8ovBvWpGkR2ut8m
-         41EY1Biumgw1RzXrAkk/PU0cQKlM/VDtuMoOJJ1LYLlqFdX3JOPn2U/nQA7luJ0R6T
-         8p7ZbRgri03o2q8RzWEZrjJ42se16UsuUyhoamgpjTRgWra8sEMBGqFXLduSyBynpe
-         SwlOh1/kv1nIW+gfqgy4Ts+yvqfbCDiZsz6dMf9GSA9Nw4kAOyH0y9nsEDiHj+FbXo
-         Un2+1yBgFX8813uukdnmBtKxWKYHWak4G6DbzTVWTODTuejVrteZHOdUjY3HB16Dda
-         YrECSB7EokW+jKcS/FYdfDXvZlYlJWMzgZC99TAhzcOg9XaqHCPRmY7xdK55JYn1Nt
-         vNEOWcKTwTdciVoLjYOIRH/4MaWuv0+vewKzD14LejrKl0PVQZw
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     git@vger.kernel.org
-Cc:     Casey Rodarmor <casey@rodarmor.com>
-Subject: [PATCH] Documentation: correctly spell git worktree --detach
-Date:   Wed, 22 Feb 2017 12:34:42 +0000
-Message-Id: <20170222123442.923694-1-sandals@crustytoothpaste.net>
-X-Mailer: git-send-email 2.11.0
-In-Reply-To: <CANLPe+OaSnNb1jhAnFtMsOCfho0H7mHVHiXs7rqo6ZHNvRe3-w@mail.gmail.com>
-References: <CANLPe+OaSnNb1jhAnFtMsOCfho0H7mHVHiXs7rqo6ZHNvRe3-w@mail.gmail.com>
+        id S932495AbdBVNMb (ORCPT <rfc822;e@80x24.org>);
+        Wed, 22 Feb 2017 08:12:31 -0500
+Received: from mail-ua0-f178.google.com ([209.85.217.178]:35286 "EHLO
+        mail-ua0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932482AbdBVNMZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Feb 2017 08:12:25 -0500
+Received: by mail-ua0-f178.google.com with SMTP id 40so1316489uau.2
+        for <git@vger.kernel.org>; Wed, 22 Feb 2017 05:12:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=BDE7bkyDf9uaJJUEDXt0tR0qbjr30O/kuW2Sh01aLog=;
+        b=kqwKAZw5JiUBsxvIh9vKJPViXp3Xuyj1c9eI+EGzDFhWorWwWL6inVkBidWSwvXEYw
+         iGSoCDxDyP/xoMMPik5cq+5lzUZEwvYQdjwEJ227ov1pV8U2k6FJJTkYikm+PsEN9QXH
+         Btb4VY8iMcD+KjjXjuxudVmz7Pg0/qe9IRvk8TQulPC9l9gIyggQPmW9sBpLjohm8uTv
+         gguMqqniC12puE4urVbLnodLjo6aTpq6gBJUxLe3QsntHVYDvEdXpfbh8VbpXTGdR4T1
+         PEwTO1YaqstAphVMzBOEFRCd6lNZsQDHCnTRi8454zrTVQBCt3c+RgXRI3PvIA3jBOMa
+         9PIw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=BDE7bkyDf9uaJJUEDXt0tR0qbjr30O/kuW2Sh01aLog=;
+        b=uFDEqjIuwmVKdKOTTgtU1SGvXvoGCkrQfSPhzIdQ0yC5QTuwMt/EM+eX98n+NSxCaW
+         tSaitc0krWzrLHkru0R+WCKSnvKCmzS41cAKP0XFBZ9Ws3gkh2ojRNJM2Wzh+5i2Cdtk
+         CBfiP+b8p+L7pJP+PLgNPj67KG76x9MDNfZLlkJPvfmnqfJU/3zTJHcFxzs0W1U652gu
+         2++6EZbNytyXbMGazpDokAZpGUbYx6Irg/8XIcBpa5I3zdM7k7D/tPxvDki5m1sR2GvP
+         fZEMKxTW42jSGD0UddtfnLuXde0S8WigKrWh9900k5Lp7FFerA4Uke9KnWK1Ht32Pt06
+         JahQ==
+X-Gm-Message-State: AMke39kXxPdCr9cz4dmU6lewkzKyUj3EKdMKF+kC0fjwogIEUPJSEPMNIpBtA1Tg3U6vGFKi6oqXbinQcKeZVw==
+X-Received: by 10.176.85.89 with SMTP id u25mr7348919uaa.82.1487769143098;
+ Wed, 22 Feb 2017 05:12:23 -0800 (PST)
 MIME-Version: 1.0
+Received: by 10.31.221.69 with HTTP; Wed, 22 Feb 2017 05:12:02 -0800 (PST)
+From:   Tushar Kapila <tgkprog@gmail.com>
+Date:   Wed, 22 Feb 2017 18:42:02 +0530
+Message-ID: <CAN0Skmmjd5Y0uWz_WC69mAStucZ6nR0mjdp4-ODJz2UnTaB-eQ@mail.gmail.com>
+Subject: feature request: user email config per domain
+To:     git@vger.kernel.org
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The option is “--detach”, but we accidentally spelled it “--detached” at
-one point in the man page.
+I can set my email via:
+git config --global user.email tgkprog@xyz.dom
 
-Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
-Reported-by: Casey Rodarmor <casey@rodarmor.com>
----
- Documentation/git-worktree.txt | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+this is dangerous when I use this my office or in a multi repository
+provider environment where my email is different for a few (like
+tgkprog@search.com for github and tushar@mycompany.com for my company
+private repo). I know I can over ride it per repository, but sometimes
+forget to do that. And even if I unset it, it inadvertantly gets set
+elsewhere when I make a repo and the site 'helps' me by showing me the
+commands to init and clone my new repo.
+I did an analysis on a bunch of company git repositories using jgit
+(only master branch), and we have 57 emails out of 346 which are not
+the company email. Also in there are cases when name is the same but
+some commits are by email 1 and others by email 2, because of this
+global config. As some of us work on open source and company repos on
+the same computer.
 
-diff --git a/Documentation/git-worktree.txt b/Documentation/git-worktree.txt
-index e257c19ebe..553cf8413f 100644
---- a/Documentation/git-worktree.txt
-+++ b/Documentation/git-worktree.txt
-@@ -52,7 +52,7 @@ is linked to the current repository, sharing everything except working
- directory specific files such as HEAD, index, etc. `-` may also be
- specified as `<branch>`; it is synonymous with `@{-1}`.
- +
--If `<branch>` is omitted and neither `-b` nor `-B` nor `--detached` used,
-+If `<branch>` is omitted and neither `-b` nor `-B` nor `--detach` used,
- then, as a convenience, a new branch based at HEAD is created automatically,
- as if `-b $(basename <path>)` was specified.
- 
+Feature request :  can we have a config for email per repo domain ?
+Something like:
+
+git config --global domain.user.email tgkprog@test.xyz.com
+testing.abc.doman:8080
+
+git config --global domain.user.email tgkprog@xyz.com abc.doman:80
+
+git config --global domain.user.email tgkprog@search.com github.com
+
+So when remote URL has github.com push as tgkprog@search.com but for
+testing.abc.doman:8080 use tgkprog@test.xyz.com ?
+
+For me one name is enough. But can do the same for name if others need it?
+
+Thank you.
+
+Regards
+Tushar Kapila
