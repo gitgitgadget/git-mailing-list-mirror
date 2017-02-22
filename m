@@ -2,107 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E0615201B0
-	for <e@80x24.org>; Wed, 22 Feb 2017 17:44:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B09D2201B0
+	for <e@80x24.org>; Wed, 22 Feb 2017 17:50:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932704AbdBVRo7 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 22 Feb 2017 12:44:59 -0500
-Received: from mail-pg0-f68.google.com ([74.125.83.68]:35471 "EHLO
-        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932223AbdBVRo5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Feb 2017 12:44:57 -0500
-Received: by mail-pg0-f68.google.com with SMTP id 1so1351603pgz.2
-        for <git@vger.kernel.org>; Wed, 22 Feb 2017 09:44:57 -0800 (PST)
+        id S932873AbdBVRut (ORCPT <rfc822;e@80x24.org>);
+        Wed, 22 Feb 2017 12:50:49 -0500
+Received: from mail-pf0-f195.google.com ([209.85.192.195]:36189 "EHLO
+        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932851AbdBVRur (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Feb 2017 12:50:47 -0500
+Received: by mail-pf0-f195.google.com with SMTP id c193so35988pfb.3
+        for <git@vger.kernel.org>; Wed, 22 Feb 2017 09:50:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=jg6BO2vAZQoQTK9sgJrSY2whvOk3u1cZFYBne0PBC9E=;
-        b=uD1McFwAcmCt5PpQ7WruIPxzq3O/MmB8vS/Ln87MWKNkZGEMIRXCt+ibn45mhhBt2J
-         ATjkApVT0OZX4ads0KC/4zWvCxbaOlb4TfzbIar0Gj9X3SYT0W0cgfBFYUWhYQ6MGcGo
-         WG/bUuetzuAbfvz3PaOWwIhxUz2TElHdkRqyGAK/ijFM5G63WLA6VS6RmDKGtKyS3zVh
-         CfLtuxigUIuh2iJyLq8Nnu9r7wcDVXSK8r0wq7ToUgzFRPjG2aHtu9dKU33qUeJdBE0n
-         XVE2N/RcTGbWzh3uwGVeRWbJ+gYVUDYpv0gPylI2Vmr9SHRBtT1WMNsPSRYbJYS732PF
-         VpwA==
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=z5Q0mVUUxWDxAfdB2h8kbQMtaeQoXR1U24T9XP2klJg=;
+        b=k55Jjoeo5q//FEfcgyuuzcWgoXytoi/miHl3fW8CMYm7sbfczLbOOxF3qxSzqIBJ/d
+         zpUeonSxcVgrYrikWhvfevSzJnVZVUZK+2BwyDCszBoTJEbRUhVPv4b0CnM8aQKNYN8n
+         34Ek7dBtc/Np7qatWHLWTrqx3+ZeBylr/BaXi5bZ0UruQnaYbpWa7YXAuCCETqHXtI1W
+         f0BSJEYAst5fYbTp/67L90mk2cU4ANe/F8efB9FSZ4WmrNoeva+nMxlR1Axt2YvXBSf1
+         iy5yDmTblTEP2W6Q33PC7Zzsq1iRDynH69GfZ1iacCEQF9ex6u66BC0BLGeIsMXuEg6p
+         GLZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=jg6BO2vAZQoQTK9sgJrSY2whvOk3u1cZFYBne0PBC9E=;
-        b=Pd9B36mKPvtbjR5fYardeKXRdfmZY7hebvILUixgih7QkyQ4Q0RG6a0+jQrn/gMB6s
-         kwjYdAfau2vyMouwz9X/e8AjOtaZ4gyMQlmxdec+N1ibSOmUkxmpJtwniv60BAaGQskB
-         ZgAqu3suQZGAm4O/QTdVKqjZtFJeWZRNX+zNYcGHjwfni4P2nIuJ+zTVSs7vNlxMIa6S
-         vyoY7adQwUC4olT4egTG6obbhzx7uIPmpIMzPoGhn5EfHcCIFjKlI3sdO6L5IfUzB3cn
-         iD3UwCSdK3Tel2qRDGYAu20XDa2X9Tw5JpK8fJwrVjKRakJ+jrVMZm7zWav8S1fBZ/hl
-         AfVA==
-X-Gm-Message-State: AMke39mGA4r9wCoNJrCTYA6/yUZasB0WvwZ7EnwnKkIaPDkucdckEvM9WZuFxKEwY+zv9w==
-X-Received: by 10.98.102.129 with SMTP id s1mr24934973pfj.26.1487784973745;
-        Wed, 22 Feb 2017 09:36:13 -0800 (PST)
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=z5Q0mVUUxWDxAfdB2h8kbQMtaeQoXR1U24T9XP2klJg=;
+        b=G+xE2vf2z1XmRLovdg0m0CKXwN/YnxQn7g35K8cZz0dF0D1J6ttOQO28/L0sGKcj6l
+         gwN6o8Rg+XkYp4u3srQByvtuy1U80eOFG/WvFn/DcfZyaxN9P4PRbUsW9BQ0eZ8gIMzG
+         bU2CBUp3sKh6hJiGosmi0s/qjT068QBGmz9FHfZ9nqZssZwzQn37DBNeDJm2pi6YqxOU
+         7KesQuaRhuraPCXlN9ZMKH6XBu7nX4p6SC6aw+NUWw5MS74jdUlz7qOmQVeZPBUZYjcU
+         TNa1BwI8q78GZ+BMv2kIsi6NmA1MhkG3Tvzfo7yQQ2cl5MG0UZxl7ao8xL0PYp5eaRhA
+         7z4g==
+X-Gm-Message-State: AMke39mp84u5wITHaiJjPfX0PLPzd04xcapBaNBMRy3cj2IRthheALuTzu4mtQD3B64RSg==
+X-Received: by 10.98.184.1 with SMTP id p1mr3746601pfe.127.1487785846932;
+        Wed, 22 Feb 2017 09:50:46 -0800 (PST)
 Received: from localhost ([2620:0:1000:8622:21a0:716b:e013:d129])
-        by smtp.gmail.com with ESMTPSA id f78sm4837786pfe.116.2017.02.22.09.36.12
+        by smtp.gmail.com with ESMTPSA id s8sm4940568pfj.30.2017.02.22.09.50.45
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 22 Feb 2017 09:36:12 -0800 (PST)
+        Wed, 22 Feb 2017 09:50:46 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jon Loeliger <jdl@jdl.com>
-Cc:     Stefan Beller <sbeller@google.com>, Jeff King <peff@peff.net>,
-        Toolforger <toolforger@durchholz.org>,
-        "git\@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: url.<base>.insteadOf vs. submodules
-References: <84fcb0bd-85dc-0142-dd58-47a04eaa7c2b@durchholz.org>
-        <20170220090115.6kfzwl62opj4q7k7@sigill.intra.peff.net>
-        <404d109f-e5a7-85a3-e64c-ab1b21c3045d@durchholz.org>
-        <20170220205243.lynnmxouwq7jelld@sigill.intra.peff.net>
-        <28fb85d4-89cd-1f32-3063-2f48d8b935be@durchholz.org>
-        <20170221070653.65ho2anbp55uzjeu@sigill.intra.peff.net>
-        <CAGZ79kZgMbEZy7hoA+VxsKdKBavt59SmC1c6FpDdgrW2GKMHvQ@mail.gmail.com>
-        <20170221230029.cs36tjwpsw2opuwp@sigill.intra.peff.net>
-        <CAGZ79kby-UhUqci9Mgdhw+wvS5Y39=Q7AmCrWaTMWbcZPNT6Dw@mail.gmail.com>
-        <xmqqo9xvdsji.fsf@gitster.mtv.corp.google.com>
-        <CAGZ79ka2S=V1x2fSQq+E-yE0Ao36-4tuTvnD6uXpPXJPLFN3JA@mail.gmail.com>
-        <xmqqbmtvdj7p.fsf@gitster.mtv.corp.google.com>
-        <E1cgXSe-0007jp-QI@mylo.jdl.com>
-Date:   Wed, 22 Feb 2017 09:36:12 -0800
-In-Reply-To: <E1cgXSe-0007jp-QI@mylo.jdl.com> (Jon Loeliger's message of "Wed,
-        22 Feb 2017 08:00:04 -0600")
-Message-ID: <xmqqh93mcelv.fsf@gitster.mtv.corp.google.com>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     git@vger.kernel.org, Casey Rodarmor <casey@rodarmor.com>
+Subject: Re: [PATCH] Documentation: correctly spell git worktree --detach
+References: <CANLPe+OaSnNb1jhAnFtMsOCfho0H7mHVHiXs7rqo6ZHNvRe3-w@mail.gmail.com>
+        <20170222123442.923694-1-sandals@crustytoothpaste.net>
+Date:   Wed, 22 Feb 2017 09:50:45 -0800
+In-Reply-To: <20170222123442.923694-1-sandals@crustytoothpaste.net> (brian
+        m. carlson's message of "Wed, 22 Feb 2017 12:34:42 +0000")
+Message-ID: <xmqq7f4icdxm.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jon Loeliger <jdl@jdl.com> writes:
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
-> So, like, Junio C Hamano said:
->> Stefan Beller <sbeller@google.com> writes:
->> 
->> > Do we want to invent a special value for url.*.insteadOf to mean
->> >   "look up in superproject, so I don't have to keep
->> >   a copy that may get stale" ?
->> 
->> My gut feeling is that we should do the selective/filtered include
->> Peff mentioned when a repository is known to be used as a submodule
->> of somebody else.
+> The option is “--detach”, but we accidentally spelled it “--detached” at
+> one point in the man page.
 >
-> Does the management of these submodue-related config values
-> become easier if, instead of placing them in .config, we
-> place them in a git/.context file?
+> Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+> Reported-by: Casey Rodarmor <casey@rodarmor.com>
+> ---
 
-Do you mean that Git users that use submodules adopt a convention
-where a separate file in $GIT_DIR of the toplevel superproject holds
-pieces of configuration that are meant to be shared between the
-superproject and across all its submodules, and the $GIT_DIR/config
-file in submodules and the superproject all include that shared one
-via include.path mechanism?
+Thanks, both.
 
-That may allow us to do without being responsible for sifting of
-configuration variables into safe and unsafe bins.
-
-I dunno.
+>  Documentation/git-worktree.txt | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/Documentation/git-worktree.txt b/Documentation/git-worktree.txt
+> index e257c19ebe..553cf8413f 100644
+> --- a/Documentation/git-worktree.txt
+> +++ b/Documentation/git-worktree.txt
+> @@ -52,7 +52,7 @@ is linked to the current repository, sharing everything except working
+>  directory specific files such as HEAD, index, etc. `-` may also be
+>  specified as `<branch>`; it is synonymous with `@{-1}`.
+>  +
+> -If `<branch>` is omitted and neither `-b` nor `-B` nor `--detached` used,
+> +If `<branch>` is omitted and neither `-b` nor `-B` nor `--detach` used,
+>  then, as a convenience, a new branch based at HEAD is created automatically,
+>  as if `-b $(basename <path>)` was specified.
+>  
