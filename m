@@ -7,47 +7,47 @@ X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 79504201B0
-	for <e@80x24.org>; Wed, 22 Feb 2017 14:06:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 36A0D201B0
+	for <e@80x24.org>; Wed, 22 Feb 2017 14:06:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932686AbdBVOGd (ORCPT <rfc822;e@80x24.org>);
-        Wed, 22 Feb 2017 09:06:33 -0500
-Received: from mail-pg0-f65.google.com ([74.125.83.65]:33240 "EHLO
-        mail-pg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932365AbdBVOGc (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Feb 2017 09:06:32 -0500
-Received: by mail-pg0-f65.google.com with SMTP id 5so555847pgj.0
-        for <git@vger.kernel.org>; Wed, 22 Feb 2017 06:06:32 -0800 (PST)
+        id S932690AbdBVOGl (ORCPT <rfc822;e@80x24.org>);
+        Wed, 22 Feb 2017 09:06:41 -0500
+Received: from mail-pg0-f68.google.com ([74.125.83.68]:35988 "EHLO
+        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932365AbdBVOGk (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Feb 2017 09:06:40 -0500
+Received: by mail-pg0-f68.google.com with SMTP id z128so539416pgb.3
+        for <git@vger.kernel.org>; Wed, 22 Feb 2017 06:06:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=UEo2/OCQu8sd7KWiLTBMdl0lkSkBL/Z/HhYcGQNH3zA=;
-        b=hbspRf/kvjfIe589G/rA8RHvNBvyZ71KxCs9AVNF1PmZQM88Ib39D2wBb+LJ4wNC+c
-         8hnxxsFfNDIVTVXFUvREHPkCM0P1JTaAU2QMsVz8tsI3lj3T+lVua+mtLy/HGI7vC8SM
-         czN1V8F1YCY4i6c+S1me+yFBc+BdkbmljB39o76q8e592FPNXyHGkNZmAD6kqAkGqbEU
-         21NFMxSiOXtvNpTeWkP1TaoykQWdi15n6ZPU+5tDUwUCk9004jkS5XeBBYFK58DlI8dV
-         89gbfUsStRsTaGJd6oYFd5B8NnTu/UfLOlbjS950XgTxZmwGC/fLzAZyjVz3loLaRtEK
-         GxkA==
+        bh=TIw9PBTBHIyMZ9BkJC1y1YW/KkGDKKbAXzGJbN5i9r8=;
+        b=c4Fa8uWJfc9O/w1lRRNUNo/dJEK/BJsAniIozQXy9g4OPWluI1ryrkkyOCsG/7tlBu
+         AQr6qHj4maUOo2qLT4IT0D7yTJcaEMyFbQrcHy8nhHlT/rqo5jULxFeXqGPBn4wdHKlB
+         DtiapZ3Z9PFg8EKaVUKRJQYn4mKJfnbuZUvwEU/Mv/lmXZW5Fv3U7+paeB/tQnk1CmiN
+         8uv51LWAFTDwHNCUVebKWonOqwSNSCyy0wepqfV6XKUPLH5D9yfKv7sXsoQFOLhlDYEm
+         b66WpvfHtqVts4j9RyhJGw7e390Oi4gxsprckHeEQy3ntd7Ya4eJV61IUUaB0ylb5+y4
+         SgIQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=UEo2/OCQu8sd7KWiLTBMdl0lkSkBL/Z/HhYcGQNH3zA=;
-        b=gAu24wlB4LgvwEX2wYLIkx36gD2bOprMzvYEtXXDhnCwTxJUUcrbUTEx7Fo9uWSqJa
-         9pu7d1hunG9nUGjaKQkBHUosL72W4v2fsq2sdicR5Cya0MjKq5LKi0LqPOM53gxbVJ/L
-         +Xse3zEGZ/e6fVJF92obHb5yvPCgYhKAnMlYlYn6es04DAK1N8Xvsvg00NrtHnLjRpA+
-         1XKygbOPXu8cNBsd++fGfuX3B4QqBR585cyIwOhNtoJVf5e6E22CSrrz8Hf8uAdlRyHB
-         QpyCGTSxfqoVqb1Ve+u2PvCXZl4NN//JQcAiptnkFF5YAv75LKQ9drznwGAXPwjM+Udo
-         4dJg==
-X-Gm-Message-State: AMke39kemEO0ukO7Uq/25qTQAcZguIlAhyT3ZE/CnFQDm+8MHqb+ZeWdu0E9J/KtIBiAFg==
-X-Received: by 10.84.140.36 with SMTP id 33mr47738492pls.136.1487772391838;
-        Wed, 22 Feb 2017 06:06:31 -0800 (PST)
+        bh=TIw9PBTBHIyMZ9BkJC1y1YW/KkGDKKbAXzGJbN5i9r8=;
+        b=WWup9DiXVdgutFBQ0K8CjnZstLtpx9cRdBOmmloIRD4sZVdgckxgc6WG7cYDIKb4/K
+         5FTa8PCejF6T7flng+ppe27mR8OAy3nl9evvlfG8bsfaNPMFTLdZCNlFjiEH8gTwtBF8
+         nGMMuxbnXJ8HEpnf5tQyPQT+4CVuXKTVr7BIUk8FIeaxLEgZLp7X+KTSme8cQKHD0+KS
+         6h00KdGoF4yynyl01KpuSemiBx1jdUIJbYtnGBjFzG9jejTiVWeMqoC4R/wimmmQAK8M
+         IamCmq27/fHlGKRpf3wYN9BwUNKasvvNx4je7gu72fF7zwNyzjOUZffOfmENal9Hsl5W
+         OsHA==
+X-Gm-Message-State: AMke39lyfBoL+A4Is11NM1FNiSAvdiy/ipJEeTroTZmJAHufMIqfY1QmIoOyjAfSMsZTng==
+X-Received: by 10.84.214.150 with SMTP id j22mr48530139pli.23.1487772399637;
+        Wed, 22 Feb 2017 06:06:39 -0800 (PST)
 Received: from ash ([115.73.162.84])
-        by smtp.gmail.com with ESMTPSA id r66sm4039222pfj.125.2017.02.22.06.06.27
+        by smtp.gmail.com with ESMTPSA id r66sm4039831pfj.125.2017.02.22.06.06.35
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 22 Feb 2017 06:06:31 -0800 (PST)
-Received: by ash (sSMTP sendmail emulation); Wed, 22 Feb 2017 21:06:24 +0700
+        Wed, 22 Feb 2017 06:06:38 -0800 (PST)
+Received: by ash (sSMTP sendmail emulation); Wed, 22 Feb 2017 21:06:32 +0700
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
@@ -58,9 +58,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Stefan Beller <sbeller@google.com>, novalis@novalis.org,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH v5 08/24] files-backend: remove the use of git_path()
-Date:   Wed, 22 Feb 2017 21:04:34 +0700
-Message-Id: <20170222140450.30886-9-pclouds@gmail.com>
+Subject: [PATCH v5 09/24] refs.c: introduce get_main_ref_store()
+Date:   Wed, 22 Feb 2017 21:04:35 +0700
+Message-Id: <20170222140450.30886-10-pclouds@gmail.com>
 X-Mailer: git-send-email 2.11.0.157.gd943d85
 In-Reply-To: <20170222140450.30886-1-pclouds@gmail.com>
 References: <20170218133303.3682-1-pclouds@gmail.com>
@@ -73,104 +73,43 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Given $GIT_DIR and $GIT_COMMON_DIR, files-backend is now in charge of
-deciding what goes where (*). The end goal is to pass $GIT_DIR only. A
-refs "view" of a linked worktree is a logical ref store that combines
-two files backends together.
-
-(*) Not entirely true since strbuf_git_path_submodule() still does path
-translation underneath. But that's for another patch.
-
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- refs/files-backend.c | 43 ++++++++++++++++++++++++++++++++++++++-----
- 1 file changed, 38 insertions(+), 5 deletions(-)
+ refs.c | 16 ++++++++++++----
+ 1 file changed, 12 insertions(+), 4 deletions(-)
 
-diff --git a/refs/files-backend.c b/refs/files-backend.c
-index 72f4e1746..a390eaadf 100644
---- a/refs/files-backend.c
-+++ b/refs/files-backend.c
-@@ -923,7 +923,8 @@ struct files_ref_store {
- 	 * store:
- 	 */
- 	const char *submodule;
+diff --git a/refs.c b/refs.c
+index 81b64b4ed..dab1a21ac 100644
+--- a/refs.c
++++ b/refs.c
+@@ -1456,15 +1456,23 @@ static struct ref_store *ref_store_init(const char *submodule)
+ 	return refs;
+ }
+ 
++static struct ref_store *get_main_ref_store(void)
++{
++	struct ref_store *refs;
++
++	if (main_ref_store)
++		return main_ref_store;
++
++	refs = ref_store_init(NULL);
++	return refs;
++}
++
+ struct ref_store *get_ref_store(const char *submodule)
+ {
+ 	struct ref_store *refs;
+ 
+ 	if (!submodule || !*submodule) {
+-		refs = lookup_ref_store(NULL);
 -
-+	char *gitdir;
-+	char *gitcommondir;
- 	char *packed_refs_path;
+-		if (!refs)
+-			refs = ref_store_init(NULL);
++		return get_main_ref_store();
+ 	} else {
+ 		refs = lookup_ref_store(submodule);
  
- 	struct ref_entry *loose;
-@@ -985,6 +986,8 @@ static struct ref_store *files_ref_store_create(const char *submodule)
- {
- 	struct files_ref_store *refs = xcalloc(1, sizeof(*refs));
- 	struct ref_store *ref_store = (struct ref_store *)refs;
-+	struct strbuf sb = STRBUF_INIT;
-+	const char *gitdir = get_git_dir();
- 
- 	base_ref_store_init(ref_store, &refs_be_files);
- 
-@@ -995,7 +998,11 @@ static struct ref_store *files_ref_store_create(const char *submodule)
- 		return ref_store;
- 	}
- 
--	refs->packed_refs_path = git_pathdup("packed-refs");
-+	refs->gitdir = xstrdup(gitdir);
-+	get_common_dir_noenv(&sb, gitdir);
-+	refs->gitcommondir = strbuf_detach(&sb, NULL);
-+	strbuf_addf(&sb, "%s/packed-refs", refs->gitcommondir);
-+	refs->packed_refs_path = strbuf_detach(&sb, NULL);
- 
- 	return ref_store;
- }
-@@ -1173,11 +1180,26 @@ static void files_reflog_path(struct files_ref_store *refs,
- 			      const char *refname)
- {
- 	if (!refname) {
--		strbuf_git_path(sb, "logs");
-+		/*
-+		 * FIXME: of course this is wrong in multi worktree
-+		 * setting. To be fixed real soon.
-+		 */
-+		strbuf_addf(sb, "%s/logs", refs->gitcommondir);
- 		return;
- 	}
- 
--	strbuf_git_path(sb, "logs/%s", refname);
-+	switch (ref_type(refname)) {
-+	case REF_TYPE_PER_WORKTREE:
-+	case REF_TYPE_PSEUDOREF:
-+		strbuf_addf(sb, "%s/logs/%s", refs->gitdir, refname);
-+		break;
-+	case REF_TYPE_NORMAL:
-+		strbuf_addf(sb, "%s/logs/%s", refs->gitcommondir, refname);
-+		break;
-+	default:
-+		die("BUG: unknown ref type %d of ref %s",
-+		    ref_type(refname), refname);
-+	}
- }
- 
- static void files_refname_path(struct files_ref_store *refs,
-@@ -1189,7 +1211,18 @@ static void files_refname_path(struct files_ref_store *refs,
- 		return;
- 	}
- 
--	strbuf_git_path(sb, "%s", refname);
-+	switch (ref_type(refname)) {
-+	case REF_TYPE_PER_WORKTREE:
-+	case REF_TYPE_PSEUDOREF:
-+		strbuf_addf(sb, "%s/%s", refs->gitdir, refname);
-+		break;
-+	case REF_TYPE_NORMAL:
-+		strbuf_addf(sb, "%s/%s", refs->gitcommondir, refname);
-+		break;
-+	default:
-+		die("BUG: unknown ref type %d of ref %s",
-+		    ref_type(refname), refname);
-+	}
- }
- 
- /*
 -- 
 2.11.0.157.gd943d85
 
