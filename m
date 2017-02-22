@@ -2,101 +2,114 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4DCA3201B0
-	for <e@80x24.org>; Wed, 22 Feb 2017 17:29:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8F6F1201B0
+	for <e@80x24.org>; Wed, 22 Feb 2017 17:40:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933121AbdBVR3u (ORCPT <rfc822;e@80x24.org>);
-        Wed, 22 Feb 2017 12:29:50 -0500
-Received: from homie.mail.dreamhost.com ([208.97.132.208]:53048 "EHLO
-        homiemail-a1.g.dreamhost.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S933023AbdBVR3r (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 22 Feb 2017 12:29:47 -0500
-Received: from homiemail-a1.g.dreamhost.com (localhost [127.0.0.1])
-        by homiemail-a1.g.dreamhost.com (Postfix) with ESMTP id 1A006348070;
-        Wed, 22 Feb 2017 09:29:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=mattmccutchen.net; h=
-        message-id:subject:from:to:cc:in-reply-to:references
-        :content-type:date:mime-version:content-transfer-encoding; s=
-        mattmccutchen.net; bh=ZabhrT3rXHrUIq1kDWOY1eoOh/Y=; b=UwEvE02xBG
-        wloQnxc5g2lGCIpqI6mbidLyf7tfg5Lg7pTSkvEiOpPhSrxTL+/PtLiFIDPFHGV6
-        tL90B55lfpX8ZcGBqs6bXYZqMCFlEAkY5YbXX2Rm0UQXE+qDykq4Y9JsGjluVJ7C
-        Io+D7O1eIMwAREHKlZGjiB8pSMZJAKjXU=
-Received: from main (30-86-202.dynamic.csail.mit.edu [128.30.86.202])
-        (using TLSv1 with cipher AES256-SHA (256/256 bits))
+        id S933165AbdBVRj7 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 22 Feb 2017 12:39:59 -0500
+Received: from sub3.mail.dreamhost.com ([69.163.253.7]:36336 "EHLO
+        homiemail-a12.g.dreamhost.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S932858AbdBVRj5 (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 22 Feb 2017 12:39:57 -0500
+Received: from homiemail-a12.g.dreamhost.com (localhost [127.0.0.1])
+        by homiemail-a12.g.dreamhost.com (Postfix) with ESMTP id 5273B26206D;
+        Wed, 22 Feb 2017 09:39:56 -0800 (PST)
+Received: from localhost.localdomain (gzac12-mdf2-1.aoa.twosigma.com [208.77.215.155])
+        (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
         (No client certificate requested)
-        (Authenticated sender: matt@mattmccutchen.net)
-        by homiemail-a1.g.dreamhost.com (Postfix) with ESMTPSA id 7D2FE34806F;
-        Wed, 22 Feb 2017 09:29:46 -0800 (PST)
-Message-ID: <1487784377.3016.14.camel@mattmccutchen.net>
-Subject: Re: [PATCH 1/3] fetch-pack: move code to report unmatched refs to
- a function
-From:   Matt McCutchen <matt@mattmccutchen.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-In-Reply-To: <xmqqpoiacfqw.fsf@gitster.mtv.corp.google.com>
-References: <xmqqvas4gie9.fsf@gitster.mtv.corp.google.com>
-         <b9b52233e84a7f5bd0526f9625e4be06cbbd0ace.1487779910.git.matt@mattmccutchen.net>
-         <xmqqpoiacfqw.fsf@gitster.mtv.corp.google.com>
-Content-Type: text/plain; charset="UTF-8"
-Date:   Wed, 22 Feb 2017 12:26:17 -0500
-Mime-Version: 1.0
-X-Mailer: Evolution 3.22.4 (3.22.4-2.fc25) 
-Content-Transfer-Encoding: quoted-printable
+        (Authenticated sender: novalis@novalis.org)
+        by homiemail-a12.g.dreamhost.com (Postfix) with ESMTPSA id C933926206A;
+        Wed, 22 Feb 2017 09:39:55 -0800 (PST)
+From:   David Turner <dturner@twosigma.com>
+To:     git@vger.kernel.org
+Cc:     sandals@crustytoothpaste.net,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        David Turner <dturner@twosigma.com>
+Subject: [PATCH] http(s): automatically try NTLM authentication first
+Date:   Wed, 22 Feb 2017 12:39:36 -0500
+Message-Id: <20170222173936.25016-1-dturner@twosigma.com>
+X-Mailer: git-send-email 2.11.GIT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, 2017-02-22 at 09:11 -0800, Junio C Hamano wrote:
-> Matt McCutchen <matt@mattmccutchen.net> writes:
->=20
-> > We're preparing to reuse this code in transport.c for "git fetch".
-> >=20
-> > While I'm here, internationalize the existing error message.
-> > ---
->=20
-> Sounds good.=C2=A0=C2=A0Please just say it is OK for me to forge your s=
-ign-off
-> ;-)
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-Oops.  Given the other issue below, I'll just regenerate the patch
-series.
+It is common in corporate setups to have permissions managed via a
+domain account. That means that the user does not really have to log in
+when accessing a central repository via https://, but that the login
+credentials are used to authenticate with that repository.
 
-> > diff --git a/fetch-pack.h b/fetch-pack.h
-> > index c912e3d..fd4d80e 100644
-> > --- a/fetch-pack.h
-> > +++ b/fetch-pack.h
-> > @@ -45,4 +45,13 @@ struct ref *fetch_pack(struct fetch_pack_args
-> > *args,
-> > =C2=A0		=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0struct sha1_array *=
-shallow,
-> > =C2=A0		=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0char **pack_lockfil=
-e);
-> > =C2=A0
-> > +/*
-> > + * Print an appropriate error message for each sought ref that
-> > wasn't
-> > + * matched.=C2=A0=C2=A0Return 0 if all sought refs were matched, oth=
-erwise
-> > 1.
-> > + *
-> > + * The type of "sought" should be "const struct ref *const *" but
-> > for
-> > + * http://stackoverflow.com/questions/5055655/double-pointer-const
-> > -correctness-warnings-in-c .
-> > + */
->=20
-> This is an unfinished sentence, but I wonder if we even need to have
-> it here?=C2=A0=C2=A0I'd be surprised if this function was unique in the
-> codebase that takes an array pointer whose type is looser than
-> necessary because of well-known language rules.
+The common way to do that used to require empty credentials, i.e. hitting
+Enter twice when being asked for user name and password, or by using the
+very funny notation https://:@server/repository
 
-You're probably right.  I'm in the habit of documenting things that
-were unknown to me, but I'll take your word for what's well-known to
-the average git developer.  I'll remove the remark.
+A recent commit (5275c3081c (http: http.emptyauth should allow empty (not
+just NULL) usernames, 2016-10-04)) broke that usage, though, all of a
+sudden requiring users to set http.emptyAuth = true.
 
-Matt
+Which brings us to the bigger question why http.emptyAuth defaults to
+false, to begin with.
+
+It would be one thing if cURL would not let the user specify credentials
+interactively after attempting NTLM authentication (i.e. login
+credentials), but that is not the case.
+
+It would be another thing if attempting NTLM authentication was not
+usually what users need to do when trying to authenticate via https://.
+But that is also not the case.
+
+So let's just go ahead and change the default, and unbreak the NTLM
+authentication. As a bonus, this also makes the "you need to hit Enter
+twice" (which is hard to explain: why enter empty credentials when you
+want to authenticate with your login credentials?) and the ":@" hack
+(which is also pretty, pretty hard to explain to users) obsolete.
+
+This fixes https://github.com/git-for-windows/git/issues/987
+
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+Signed-off-by: David Turner <dturner@twosigma.com>
+---
+This has been in git for Windows for a few months (without the
+config.txt change).  We've also been using it internally.  So I think
+it's time to merge back to upstream git.
+
+ Documentation/config.txt | 3 ++-
+ http.c                   | 2 +-
+ 2 files changed, 3 insertions(+), 2 deletions(-)
+
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index fc5a28a320..b0da64ed33 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -1742,7 +1742,8 @@ http.emptyAuth::
+ 	Attempt authentication without seeking a username or password.  This
+ 	can be used to attempt GSS-Negotiate authentication without specifying
+ 	a username in the URL, as libcurl normally requires a username for
+-	authentication.
++	authentication.  Default is true, since if this fails, git will fall
++	back to asking the user for their username/password.
+ 
+ http.delegation::
+ 	Control GSSAPI credential delegation. The delegation is disabled
+diff --git a/http.c b/http.c
+index 90a1c0f113..943e630ea6 100644
+--- a/http.c
++++ b/http.c
+@@ -109,7 +109,7 @@ static int curl_save_cookies;
+ struct credential http_auth = CREDENTIAL_INIT;
+ static int http_proactive_auth;
+ static const char *user_agent;
+-static int curl_empty_auth;
++static int curl_empty_auth = 1;
+ 
+ enum http_follow_config http_follow_config = HTTP_FOLLOW_INITIAL;
+ 
+-- 
+2.11.GIT
+
