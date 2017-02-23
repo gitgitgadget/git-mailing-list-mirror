@@ -2,115 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9C2BB2022D
-	for <e@80x24.org>; Thu, 23 Feb 2017 17:37:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 07F732022D
+	for <e@80x24.org>; Thu, 23 Feb 2017 17:40:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750828AbdBWRhG (ORCPT <rfc822;e@80x24.org>);
-        Thu, 23 Feb 2017 12:37:06 -0500
-Received: from kitenet.net ([66.228.36.95]:37228 "EHLO kitenet.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751169AbdBWRhE (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Feb 2017 12:37:04 -0500
-X-Question: 42
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=joeyh.name; s=mail;
-        t=1487871407; bh=ic5XPi/6+ingyJh9AHM2CmPnKTKWit/d4G0jXpEnOmQ=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=hTqyVshSYtL4HZH0NKm1YscN8Lrhukc6oZd1HHi4sRW6jC7/f1LxWCBz0zqHmPkcs
-         l6mcTqWM2G9kN8Yt0OuQ8kuT5wExbuzAntwNgMrB7hOMXPry2OvA9g2DLUbR5rKE6I
-         Bhc3p63Fe63LhPgAod1x5ggTvxxMI05U6cQ8Y8PA=
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=joeyh.name; s=mail;
-        t=1487871347; bh=ic5XPi/6+ingyJh9AHM2CmPnKTKWit/d4G0jXpEnOmQ=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=SASSfG9BmyaAQuNnc+k1Rd7s4dE1BJhtsnXNOV5OTA6bibELOJZvffG7b5bQLzSOL
-         e0CvviL9beEwQGBIJWDW6AT/MhjH8jzweZpDaZl1Xakj1EJL2FwgVDruZxnWcEI20W
-         7ThaBTSWFN5mlsY7J/UgWQJP2AEFVsBL8v4xV664=
-Date:   Thu, 23 Feb 2017 13:35:47 -0400
-From:   Joey Hess <id@joeyh.name>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Subject: Re: SHA1 collisions found
-Message-ID: <20170223173547.qljypk7sdqi37oha@kitenet.net>
-References: <20170223164306.spg2avxzukkggrpb@kitenet.net>
- <CAPc5daVZ79WWKSw76kxHgDra9a7fSR1AibZa_pvK9aUuuVawLQ@mail.gmail.com>
+        id S1751283AbdBWRkO (ORCPT <rfc822;e@80x24.org>);
+        Thu, 23 Feb 2017 12:40:14 -0500
+Received: from mail-oi0-f52.google.com ([209.85.218.52]:33703 "EHLO
+        mail-oi0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751267AbdBWRkN (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Feb 2017 12:40:13 -0500
+Received: by mail-oi0-f52.google.com with SMTP id 2so21204782oif.0
+        for <git@vger.kernel.org>; Thu, 23 Feb 2017 09:38:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=TK+gCH34Ww5WIFs14oYCtMy9yIF4waykz7TRi9bBxOg=;
+        b=GRU7iJ2tShUxV3KrW14vcmbELektKp1dGVJqSUQen+adkkA1ZsD5ixeHNI87Pb+H0v
+         jzLmxaRTAdA3eYpO6VnPYYv9ZcAk/1e+8pfNfsxJKFuVLMC5ZMGy1ZCRwH+zSyTGfFzE
+         CcHRqi7qc4LCNcnSm4gxOrA2QH3+yZi2hPLakqQX1hN8JipEaFJlIHQfIwcTSfAtnU6s
+         2Cq+auKQDOxsF9eOfTMDt/bTWfvYEkGSYS5C7YaDNwOMtb+s5kDb8fsMrro9ZH4sAtHd
+         7gwraV69Deatknt/zRsIcrTYiC6njceGhzmpy2oUDtqJ+HWY+9FIPfEOrcfiLLZLHh5W
+         HOBg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=TK+gCH34Ww5WIFs14oYCtMy9yIF4waykz7TRi9bBxOg=;
+        b=CNRpOLudKpkyeK6e4wWdvd6F678ObJdOBbgNIJdYwu/vgeUoal26O+tKlUZyxCaJE3
+         3WP+tpN5crwUlqpE2mskU/zua1PVA2yrvyQqwa3iOHARx7Ias++IGuy5IInyC+6RNCje
+         ++FvaB98t7CIVFM1Ir/GOKDxA8+nAHnDWvxYcFeniJNP94lPKv5c5POOkSe7y+/ALPwX
+         ChyWxMULRuOj+LCx60M//C3eyzA1qHs8dqjkqTbaLd9J1pYGSB3K7CKmTr/c8d7VQ4OJ
+         EbDCkYnWyLddoqnMzxEvgkKAEDsziuvv5XDYKZFZ6PU/JUZl3XapeqvUT4a185KmC9UO
+         3Nfg==
+X-Gm-Message-State: AMke39mRsYL+LtMYxp/WCcms6MbYaMQDJ+MDwVqJ0B5EouWL16LtTb2qPvupjERQymTBvlKgmLCF7ruC9PYOOw==
+X-Received: by 10.202.232.210 with SMTP id f201mr4065121oih.60.1487870988633;
+ Thu, 23 Feb 2017 09:29:48 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-        protocol="application/pgp-signature"; boundary="ycj5mvo4eznpkhsi"
-Content-Disposition: inline
-In-Reply-To: <CAPc5daVZ79WWKSw76kxHgDra9a7fSR1AibZa_pvK9aUuuVawLQ@mail.gmail.com>
-User-Agent: NeoMutt/20161126 (1.7.1)
+Received: by 10.182.164.66 with HTTP; Thu, 23 Feb 2017 09:29:48 -0800 (PST)
+In-Reply-To: <CA+55aFxJGDpJXqpcoPnwvzcn_fB-zaggj=w7P2At-TOt4buOqw@mail.gmail.com>
+References: <20170223164306.spg2avxzukkggrpb@kitenet.net> <CA+55aFxJGDpJXqpcoPnwvzcn_fB-zaggj=w7P2At-TOt4buOqw@mail.gmail.com>
+From:   Linus Torvalds <torvalds@linux-foundation.org>
+Date:   Thu, 23 Feb 2017 09:29:48 -0800
+X-Google-Sender-Auth: 10pO5QH2IKHYKPrsgOftaOOWTi8
+Message-ID: <CA+55aFxjY7mv7YPLZwit7bEhC3VqpEDk1YSRFwSGOEKVw13x4w@mail.gmail.com>
+Subject: Re: SHA1 collisions found
+To:     Joey Hess <id@joeyh.name>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Thu, Feb 23, 2017 at 9:19 AM, Linus Torvalds
+<torvalds@linux-foundation.org> wrote:
+>
+> I don't think you'd necessarily want to change the size of the hash.
+> You can use a different hash and just use the same 160 bits from it.
 
---ycj5mvo4eznpkhsi
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Side note: I do believe that in practice you should just change the
+size of the hash too, I'm just saying that the size of the hash and
+the choice of the hash algorithm are independent issues.
 
-Junio C Hamano wrote:
-> On Thu, Feb 23, 2017 at 8:43 AM, Joey Hess <id@joeyh.name> wrote:
-> >
-> > Since we now have collisions in valid PDF files, collisions in valid git
-> > commit and tree objects are probably able to be constructed.
->=20
-> That may be true, but
-> https://public-inbox.org/git/Pine.LNX.4.58.0504291221250.18901@ppc970.osd=
-l.org/
+So you *could* just use  something like SHA3-256, but then pick the
+first 160 bits.
 
-That's about someone replacing an valid object in Linus's repository
-with an invalid random blob they found that collides. This SHA1
-break doesn't allow generating such a blob anyway. Linus is right,
-that's an impractical attack.
+Realistically, changing the few hardcoded sizes internally in git is
+likely the least problem in switching hashes.
 
-Attacks using this SHA1 break will look something more like:
+So what you'd probably do is switch to a 256-bit hash, use that
+internally and in the native git database, and then by default only
+*show* the hash as a 40-character hex string (kind of like how we
+already abbreviate things in many situations).
 
-* I push a "bad" object to a repo on github I set up under a
-  pseudonym.
-* I publish a "good" object in a commit and convince the maintainer to
-  merge it.
-* I wait for the maintainer to push to github.
-* I wait for github to deduplicate and hope they'll replace the good
-  object with the bad one I pre-uploaded, thus silently changing the
-  content of the good commit the maintainer reviewed and pushed.
-* The bad object is pulled from github and deployed.
-* The maintainer still has the good object. They may not notice the bad
-  object is out there for a long time.
+That way tools around git don't even see the change unless passed in
+some special "--full-hash" argument (or "--abbrev=64" or whatever -
+the default being that we abbreviate to 40).
 
-Of course, it doesn't need to involve Github, and doesn't need to
-rely on internal details of their deduplication[1];=20
-that only let me publish the bad object under a psydonym.
-
---=20
-see shy jo
-
-[1] Which I'm only guessing about, but now that we have colliding
-    objects, we can upload them to different repos and see if such
-    dedupication happens.
-
---ycj5mvo4eznpkhsi
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCAAdFiEE6FpfY7MdJMHr8NgcyRDZIiUS48cFAlivHXEACgkQyRDZIiUS
-48dYIw//ariVxwkyBr5LHucunYQS1hCturaUDJ9BO0Ow5eISFDOEsWnMzaP/La6n
-f91TxsmddrUWKT8+/HJsNITWYyhzt07TLjJvvRpJH35IYOVZe6915FUf9mvTulWN
-eWoApm5/kXi7DzFJZ+5zdlIlYhfxtWl36OQ732Tk0zS9F23I7m8FAB1vtCK6ixe7
-u+5enYkWVQcK/E+mDZFAg/DNntjGdduFQki6iK3TUXz2aZg/EHH0Ze1WoN4FS0xE
-PH3Y7zuHrZEt/OiApyWE2P5IUeXMgPbCAKRyCt/qkLbr+lIFiGoOez3f0wh9UBHW
-CSAi1w0YPLCbpvfvrjiwbxpuLRcZdg2CNHfnXba2qagj9jZeNVZcefylvJKHiyQK
-gWnPb0T3egv+bxrkR7oy9L6EVbQTYxLgEs0jjbrgc3NPcCxSPHaun0L42aHUHndJ
-yZuCPm8xudhoGLBG0VyyUonYXirNZybQoNHvFE1ScdyTa2ZF0Pl3FIJuOTua/RfB
-dZhyGuMZc4C/1eQ0nYf/Pli8hZXcI0oV/XEAakljdoGYcHJHglLmqdhuJw6NAq2T
-QAGiNa2Lcyv4le6j/598m2IcnaR1UPep5FfUuTUIgL4deTMN7ivQnnXTm7kdhX+a
-ghBXhIsK2u1xiBgNe0G42YLHnu1p918XLvAvwcznb7OHIP/sNaA=
-=o5lN
------END PGP SIGNATURE-----
-
---ycj5mvo4eznpkhsi--
+               Linus
