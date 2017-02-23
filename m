@@ -2,115 +2,186 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B81632022D
-	for <e@80x24.org>; Thu, 23 Feb 2017 23:06:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5E9EE2022D
+	for <e@80x24.org>; Thu, 23 Feb 2017 23:06:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751465AbdBWXGc (ORCPT <rfc822;e@80x24.org>);
-        Thu, 23 Feb 2017 18:06:32 -0500
-Received: from mail-pg0-f48.google.com ([74.125.83.48]:35058 "EHLO
-        mail-pg0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751277AbdBWXGO (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Feb 2017 18:06:14 -0500
-Received: by mail-pg0-f48.google.com with SMTP id b129so2306264pgc.2
-        for <git@vger.kernel.org>; Thu, 23 Feb 2017 15:06:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=w1cI2EFWb9lMxcuuzSyOwJyetS/w05jlCg34NcUCfxc=;
-        b=oFEyn7oye4P5yDbVMzDaxAAPUiBqenEiF6rDoa6f6Yw1qiN3gM6xuQVUhSSXAt59zW
-         8y+eg8lmowmKYuSNPJdI2G4EXbWzL/tBIZVdaz0u/XD9Uiytb3oHSWfxglJoB8NN9rdh
-         Tu4nkZV1VPLE889otFa4KTqSX/g0uoWs1sZ7KvvpG3NSts/7SXVKAs0GIW829MmIlZOf
-         FG+tTdakt+ZvzdIAlJB57qX6aqSDYrL5wxN4fLXaRD9K0koadDVkUbs1UmrGuw4BoB3G
-         Z8rfIY8/lBO8QRvUSwHWtYP6Kh1sbqfuKoSWmzZuD5BUycGY+ZlEU8duuaijyORii0VQ
-         z1vQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=w1cI2EFWb9lMxcuuzSyOwJyetS/w05jlCg34NcUCfxc=;
-        b=kpxDr/1soHWnWGqrH6fNNZEyaaaFDblACvcHNSMZt+PPifdPzaW+KrxL7Fyph2cSwF
-         D3fXr3l9pjJ6Wlik6TXUw4EnEmV0lGYnuTvSN7JmssAe1IUJUmY0A0iz2zbJulNRgF1H
-         LeOz7syahgQhSRdTryh5oGV8Reg64uuyC116Agp04mlyaxzlvV9HLbSbLYo83MT8FOQO
-         QJx+u0UjglUi3cud7Csm036ytpiNsU+u5ARfO51HoXu97Mz/Zzb+bN/vzgV1Ha325S5W
-         gXHoeH8rcFNQn6KxaTBL5jDsS8x1klUuSPlLFiBKuHGNQ6n6xvBIa3yy1le7nOjQByBn
-         bhlw==
-X-Gm-Message-State: AMke39mXYZny8PTdUlrKsCOUEKTz8kvBo1J19E3p3vpFrHvyjnfVsX2Z+/xjvFsd82ZS66lg
-X-Received: by 10.99.60.24 with SMTP id j24mr12291889pga.32.1487890680247;
-        Thu, 23 Feb 2017 14:58:00 -0800 (PST)
-Received: from localhost ([2620:0:1000:5b10:ad75:dfc7:8a6:1152])
-        by smtp.gmail.com with ESMTPSA id n79sm11622471pfj.31.2017.02.23.14.57.59
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 23 Feb 2017 14:57:59 -0800 (PST)
-From:   Stefan Beller <sbeller@google.com>
-To:     sbeller@google.com
-Cc:     git@vger.kernel.org, sandals@crustytoothpaste.net,
-        jrnieder@gmail.com, bmwill@google.com, gitster@pobox.com,
-        novalis@novalis.org
-Subject: [PATCH 07/15] update submodules: add a config option to determine if submodules are updated
-Date:   Thu, 23 Feb 2017 14:57:27 -0800
-Message-Id: <20170223225735.10994-8-sbeller@google.com>
-X-Mailer: git-send-email 2.12.0.rc1.16.ge4278d41a0.dirty
-In-Reply-To: <20170223225735.10994-1-sbeller@google.com>
-References: <xmqqlgt5vlse.fsf@gitster.mtv.corp.google.com>
- <20170223225735.10994-1-sbeller@google.com>
+        id S1751474AbdBWXGg (ORCPT <rfc822;e@80x24.org>);
+        Thu, 23 Feb 2017 18:06:36 -0500
+Received: from cloud.peff.net ([104.130.231.41]:32972 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751277AbdBWXGf (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Feb 2017 18:06:35 -0500
+Received: (qmail 26119 invoked by uid 109); 23 Feb 2017 23:06:24 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 23 Feb 2017 23:06:24 +0000
+Received: (qmail 9668 invoked by uid 111); 23 Feb 2017 23:06:28 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 23 Feb 2017 18:06:28 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 23 Feb 2017 18:06:21 -0500
+Date:   Thu, 23 Feb 2017 18:06:21 -0500
+From:   Jeff King <peff@peff.net>
+To:     Linus Torvalds <torvalds@linux-foundation.org>
+Cc:     Joey Hess <id@joeyh.name>, Git Mailing List <git@vger.kernel.org>
+Subject: [PATCH 3/3] Makefile: add USE_SHA1DC knob
+Message-ID: <20170223230621.43anex65ndoqbgnf@sigill.intra.peff.net>
+References: <20170223230507.kuxjqtg3ghcfskc6@sigill.intra.peff.net>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20170223230507.kuxjqtg3ghcfskc6@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In later patches we introduce the options and flag for commands
-that modify the working directory, e.g. git-checkout.
+This knob lets you use the sha1dc implementation from:
 
-Have a central place to store such settings whether we want to update
-a submodule.
+      https://github.com/cr-marcstevens/sha1collisiondetection
 
-Signed-off-by: Stefan Beller <sbeller@google.com>
+which can detect certain types of collision attacks (even
+when we only see half of the colliding pair).
+
+The big downside is that it's slower than either the openssl
+or block-sha1 implementations.
+
+Here are some timings based off of linux.git:
+
+  - compute sha1 over whole packfile
+    before: 1.349s
+     after: 5.067s
+    change: +275%
+
+  - rev-list --all
+    before: 5.742s
+     after: 5.730s
+    change: -0.2%
+
+  - rev-list --all --objects
+    before: 33.257s
+     after: 33.392s
+    change: +0.4%
+
+  - index-pack --verify
+    before: 2m20s
+     after: 5m43s
+    change: +145%
+
+  - git log --no-merges -10000 -p
+    before: 9.532s
+     after: 9.683s
+    change: +1.5%
+
+So overall the sha1 computation is about 3-4x slower. But of
+course most operations do more than just sha1. Accessing
+commits and trees isn't slowed at all (both the +/- changes
+there are well within the run-to-run noise). Accessing the
+blobs is a little slower, but mostly drowned out by the cost
+of things like actually generating patches.
+
+The most-affected operation is `index-pack --verify`, which
+is essentially just computing the sha1 on every object. It's
+a bit worse than twice as slow, which means every push and
+every fetch is going to experience that.
+
+Signed-off-by: Jeff King <peff@peff.net>
 ---
- submodule.c | 6 ++++++
- submodule.h | 1 +
- 2 files changed, 7 insertions(+)
+ Makefile      | 10 ++++++++++
+ sha1dc/sha1.c | 22 ++++++++++++++++++++++
+ sha1dc/sha1.h | 16 ++++++++++++++++
+ 3 files changed, 48 insertions(+)
 
-diff --git a/submodule.c b/submodule.c
-index 04d185738f..591f4a694e 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -17,6 +17,7 @@
- #include "worktree.h"
+diff --git a/Makefile b/Makefile
+index 8e4081e06..7c4906250 100644
+--- a/Makefile
++++ b/Makefile
+@@ -142,6 +142,10 @@ all::
+ # Define PPC_SHA1 environment variable when running make to make use of
+ # a bundled SHA1 routine optimized for PowerPC.
+ #
++# Define USE_SHA1DC to unconditionally enable the collision-detecting sha1
++# algorithm. This is slower, but may detect attempted collision attacks.
++# Takes priority over other *_SHA1 knobs.
++#
+ # Define SHA1_MAX_BLOCK_SIZE to limit the amount of data that will be hashed
+ # in one call to the platform's SHA1_Update(). e.g. APPLE_COMMON_CRYPTO
+ # wants 'SHA1_MAX_BLOCK_SIZE=1024L*1024L*1024L' defined.
+@@ -1386,6 +1390,11 @@ ifdef APPLE_COMMON_CRYPTO
+ 	SHA1_MAX_BLOCK_SIZE = 1024L*1024L*1024L
+ endif
  
- static int config_fetch_recurse_submodules = RECURSE_SUBMODULES_ON_DEMAND;
-+static int config_update_recurse_submodules = RECURSE_SUBMODULES_DEFAULT;
- static int parallel_jobs = 1;
- static struct string_list changed_submodule_paths = STRING_LIST_INIT_NODUP;
- static int initialized_fetch_ref_tips;
-@@ -542,6 +543,11 @@ void set_config_fetch_recurse_submodules(int value)
- 	config_fetch_recurse_submodules = value;
++ifdef USE_SHA1DC
++	SHA1_HEADER = "sha1dc/sha1.h"
++	LIB_OBJS += sha1dc/sha1.o
++	LIB_OBJS += sha1dc/ubc_check.o
++else
+ ifdef BLK_SHA1
+ 	SHA1_HEADER = "block-sha1/sha1.h"
+ 	LIB_OBJS += block-sha1/sha1.o
+@@ -1403,6 +1412,7 @@ else
+ endif
+ endif
+ endif
++endif
+ 
+ ifdef SHA1_MAX_BLOCK_SIZE
+ 	LIB_OBJS += compat/sha1-chunked.o
+diff --git a/sha1dc/sha1.c b/sha1dc/sha1.c
+index 762c6fff8..1566ec4c7 100644
+--- a/sha1dc/sha1.c
++++ b/sha1dc/sha1.c
+@@ -1141,3 +1141,25 @@ int SHA1DCFinal(unsigned char output[20], SHA1_CTX *ctx)
+ 	output[19] = (unsigned char)(ctx->ihv[4]);
+ 	return ctx->found_collision;
  }
- 
-+void set_config_update_recurse_submodules(int value)
++
++static const char collision_message[] =
++"The SHA1 computation detected evidence of a collision attack;\n"
++"refusing to process the contents.";
++
++void git_SHA1DCFinal(unsigned char hash[20], SHA1_CTX *ctx)
 +{
-+	config_update_recurse_submodules = value;
++	if (SHA1DCFinal(hash, ctx))
++		die(collision_message);
 +}
 +
- static int has_remote(const char *refname, const struct object_id *oid,
- 		      int flags, void *cb_data)
- {
-diff --git a/submodule.h b/submodule.h
-index 0b915bd3ac..b4e60c08d2 100644
---- a/submodule.h
-+++ b/submodule.h
-@@ -64,6 +64,7 @@ extern void show_submodule_inline_diff(FILE *f, const char *path,
- 		const char *del, const char *add, const char *reset,
- 		const struct diff_options *opt);
- extern void set_config_fetch_recurse_submodules(int value);
-+extern void set_config_update_recurse_submodules(int value);
- extern void check_for_new_submodule_commits(unsigned char new_sha1[20]);
- extern int fetch_populated_submodules(const struct argv_array *options,
- 			       const char *prefix, int command_line_option,
++void git_SHA1DCUpdate(SHA1_CTX *ctx, const void *vdata, unsigned long len)
++{
++	const char *data = vdata;
++	/* We expect an unsigned long, but sha1dc only takes an int */
++	while (len > INT_MAX) {
++		SHA1DCUpdate(ctx, data, INT_MAX);
++		data += INT_MAX;
++		len -= INT_MAX;
++	}
++	SHA1DCUpdate(ctx, data, len);
++}
+diff --git a/sha1dc/sha1.h b/sha1dc/sha1.h
+index ce5390397..1bb0ace99 100644
+--- a/sha1dc/sha1.h
++++ b/sha1dc/sha1.h
+@@ -90,3 +90,19 @@ void SHA1DCUpdate(SHA1_CTX*, const char*, unsigned);
+ // obtain SHA-1 hash from SHA-1 context
+ // returns: 0 = no collision detected, otherwise = collision found => warn user for active attack
+ int  SHA1DCFinal(unsigned char[20], SHA1_CTX*); 
++
++
++/*
++ * Same as SHA1DCFinal, but convert collision attack case into a verbose die().
++ */
++void git_SHA1DCFinal(unsigned char [20], SHA1_CTX *);
++
++/*
++ * Same as SHA1DCUpdate, but adjust types to match git's usual interface.
++ */
++void git_SHA1DCUpdate(SHA1_CTX *ctx, const void *data, unsigned long len);
++
++#define platform_SHA_CTX SHA1_CTX
++#define platform_SHA1_Init SHA1DCInit
++#define platform_SHA1_Update git_SHA1DCUpdate
++#define platform_SHA1_Final git_SHA1DCFinal
 -- 
-2.12.0.rc1.16.ge4278d41a0.dirty
-
+2.12.0.rc2.629.ga7951ed82
