@@ -7,53 +7,53 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C03B42022D
-	for <e@80x24.org>; Thu, 23 Feb 2017 23:05:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 61B732022D
+	for <e@80x24.org>; Thu, 23 Feb 2017 23:05:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751351AbdBWXFE (ORCPT <rfc822;e@80x24.org>);
-        Thu, 23 Feb 2017 18:05:04 -0500
-Received: from mail-pg0-f47.google.com ([74.125.83.47]:34186 "EHLO
-        mail-pg0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751242AbdBWXFD (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Feb 2017 18:05:03 -0500
-Received: by mail-pg0-f47.google.com with SMTP id 1so2305198pgi.1
-        for <git@vger.kernel.org>; Thu, 23 Feb 2017 15:05:03 -0800 (PST)
+        id S1751367AbdBWXFK (ORCPT <rfc822;e@80x24.org>);
+        Thu, 23 Feb 2017 18:05:10 -0500
+Received: from mail-pg0-f49.google.com ([74.125.83.49]:34848 "EHLO
+        mail-pg0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751358AbdBWXFJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Feb 2017 18:05:09 -0500
+Received: by mail-pg0-f49.google.com with SMTP id b129so2294735pgc.2
+        for <git@vger.kernel.org>; Thu, 23 Feb 2017 15:05:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=Gh9KnnWkXTk5gAYH3Ad4z+xQUIObfJnKEBk4Xxg8wE4=;
-        b=oydnMT4OsST9QPBKA+iVl5SfUB2E6vz8633GMbaabPcPsUC6R91Sa92Y0xg9aEerwK
-         d+DML6OhU3YyYHF+rmTES9ResSdvHN2NBKAV1z+M+GfzIPVZk8hoHBpIhHLaiQ4WJl9/
-         a9e1Zud5LsVoAXxTBZollxt63hHeAyvKK8yUefJ78P8HVEvNxItHL9P5OtMm+pmZwcZi
-         7zDP2lp5+5QHgyXnGbwXXmq8iqo16p2qJfUK7eATRlI27YwJ2dU8qQeP1gLmH3+tLOgB
-         Zy4HZv+KuCdpf1NeLRXWjQGp0U/iE/fMpVaOwcQFuTJMrjkbiAZaGtl0+O0Q4cSPiJCy
-         ez0A==
+        bh=skbdvf+IPqG2B1OU28o73eRHTbSQ7ouizHHy0njrU30=;
+        b=im/KVWZko9s/C7f5tn5D2xwU60s93Uo9VNM/217nxNVVBWl7mMt6c+zl2zAS5pvot1
+         wxTJAQQpRrorfcn+9QYo/TPB3hgnEkHhW7xCsM+c0fujp4gvDJQ3iC3fC83jiZOawVZY
+         16osYyzoc9NncxQnlu/5bDdN3PI2byWpIDWiKL9ITlsKtna6nE5Ajf2LXbPwyFmMZ7GU
+         p0fniRr1oPj5Td8tHHjJHF+CVNZjTluSgXjcr77e6G5YAhgbe7QeKgtVfyMU0yUXKYJ1
+         P6yYxFom133kOZL7QFT6sl/curKjam5xqP7JE+6jX5ENCKoxajlaQ7K/FReIw4gwzt17
+         2M/w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=Gh9KnnWkXTk5gAYH3Ad4z+xQUIObfJnKEBk4Xxg8wE4=;
-        b=JosfHVvteV+Ybj16qlZtZioutsCbG4Ps8DGNNBdMb8b5Q116rrv48DkOEOmB6EO9nA
-         XKx1aNRIQy48aNXfgSxbmva3DbqMASiV2BKeZUFH9ETgnD7eWppzdcfR037Ir+28mDAt
-         YOwjlVzbgd/rUNTI33hUF3ao2yrA9+LLf1C8SQk/UK2kqfJqHUINwY8gV4tJEvhjrjTS
-         159457j5FfEoME1saxBQs5Xj5r949icV1J/S8zgVEixYrjCKI2iGm4t0rCYTRwhyE1Ey
-         ag/FCeXqcEmS/pazAnyOtitDXA9bqttOmMN8qHCHCKkQ3/T7LFU6JSW1GkmKA/mYXcV0
-         s6eA==
-X-Gm-Message-State: AMke39lfXm8+1cfmith53NeHjVrFXFqA9nIF/QLT2SP7HP69k5nuvBTrgOivDceESXCDoJeR
-X-Received: by 10.98.133.202 with SMTP id m71mr49492003pfk.102.1487890674047;
-        Thu, 23 Feb 2017 14:57:54 -0800 (PST)
+        bh=skbdvf+IPqG2B1OU28o73eRHTbSQ7ouizHHy0njrU30=;
+        b=CUMe2++67lqiOtDoHQ1+wNBEX2TUs7GiTe4gkWJVAWXLdNsD0k8yS3jLIACdwJR3pB
+         p8XbzjwfyE9rsO/Ru512DdLKJV6PTpoVrJ1DgXFljdu++YkHErD0eWrXLoNHyBj63kom
+         QZIE3yJakuImzznzQl5NVLrGlcydB+jat+GlQXfGJ9qMaEcTKaT8xpk7HfcXCxb0a/wM
+         vGIsBNWwWmWUoz8KQi24sSUmppWv1VV6NkDvrAoGvFKmhsmOHixU1K0Y7mZReLbmmXvk
+         l2VrRRDnaKU4tpwKhHa0eBb/n0iZgKY067mM9YrVG7TkfTlsFhId6u4OrOsogZ2xitfD
+         UdOQ==
+X-Gm-Message-State: AMke39n4EwmFzQ7BhzYQgEAP+glcOwZFLUxFtUdVk2hxuagwhrsBMlVOcMFzuOn4d7T69Kvu
+X-Received: by 10.98.215.70 with SMTP id v6mr48926486pfl.141.1487890678982;
+        Thu, 23 Feb 2017 14:57:58 -0800 (PST)
 Received: from localhost ([2620:0:1000:5b10:ad75:dfc7:8a6:1152])
-        by smtp.gmail.com with ESMTPSA id p14sm11596716pfl.75.2017.02.23.14.57.53
+        by smtp.gmail.com with ESMTPSA id r66sm11544891pfj.125.2017.02.23.14.57.58
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 23 Feb 2017 14:57:53 -0800 (PST)
+        Thu, 23 Feb 2017 14:57:58 -0800 (PST)
 From:   Stefan Beller <sbeller@google.com>
 To:     sbeller@google.com
 Cc:     git@vger.kernel.org, sandals@crustytoothpaste.net,
         jrnieder@gmail.com, bmwill@google.com, gitster@pobox.com,
         novalis@novalis.org
-Subject: [PATCH 02/15] lib-submodule-update.sh: do not use ./. as submodule remote
-Date:   Thu, 23 Feb 2017 14:57:22 -0800
-Message-Id: <20170223225735.10994-3-sbeller@google.com>
+Subject: [PATCH 06/15] update submodules: add submodule config parsing
+Date:   Thu, 23 Feb 2017 14:57:26 -0800
+Message-Id: <20170223225735.10994-7-sbeller@google.com>
 X-Mailer: git-send-email 2.12.0.rc1.16.ge4278d41a0.dirty
 In-Reply-To: <20170223225735.10994-1-sbeller@google.com>
 References: <xmqqlgt5vlse.fsf@gitster.mtv.corp.google.com>
@@ -63,67 +63,84 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Adding the repository itself as a submodule does not make sense in the
-real world. In our test suite we used to do that out of convenience in
-some tests as the current repository has easiest access for setting up
-'just a submodule'.
+Similar to b33a15b08 (push: add recurseSubmodules config option,
+2015-11-17) and 027771fcb1 (submodule: allow erroneous values for the
+fetchRecurseSubmodules option, 2015-08-17), we add submodule-config code
+that is later used to parse whether we are interested in updating
+submodules.
 
-However this doesn't quite test the real world, so let's do not follow
-this pattern any further and actually create an independent repository
-that we can use as a submodule.
+We need the `die_on_error` parameter to be able to call this parsing
+function for the config file as well, which if incorrect lets Git die.
 
-When using './.' as the remote the superproject and submodule share the
-same objects, such that testing if a given sha1 is a valid commit works
-in either repository.  As running commands in an unpopulated submodule
-fall back to the superproject, this happens in `reset_work_tree_to`
-to determine if we need to populate the submodule. Fix this bug by
-checking in the actual remote now.
+As we're just touching the header file, also mark all functions extern.
 
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- t/lib-submodule-update.sh | 15 +++++++++++++--
- 1 file changed, 13 insertions(+), 2 deletions(-)
+ submodule-config.c | 20 ++++++++++++++++++++
+ submodule-config.h | 17 +++++++++--------
+ 2 files changed, 29 insertions(+), 8 deletions(-)
 
-diff --git a/t/lib-submodule-update.sh b/t/lib-submodule-update.sh
-index 5df528ea81..c0d6325133 100755
---- a/t/lib-submodule-update.sh
-+++ b/t/lib-submodule-update.sh
-@@ -37,6 +37,17 @@
- #
+diff --git a/submodule-config.c b/submodule-config.c
+index 93453909cf..3e8e380d98 100644
+--- a/submodule-config.c
++++ b/submodule-config.c
+@@ -234,6 +234,26 @@ int parse_fetch_recurse_submodules_arg(const char *opt, const char *arg)
+ 	return parse_fetch_recurse(opt, arg, 1);
+ }
  
- create_lib_submodule_repo () {
-+	git init submodule_update_sub1 &&
-+	(
-+		cd submodule_update_sub1 &&
-+		echo "expect" >>.gitignore &&
-+		echo "actual" >>.gitignore &&
-+		echo "x" >file1 &&
-+		echo "y" >file2 &&
-+		git add .gitignore file1 file2 &&
-+		git commit -m "Base inside first submodule" &&
-+		git branch "no_submodule"
-+	) &&
- 	git init submodule_update_repo &&
- 	(
- 		cd submodule_update_repo &&
-@@ -49,7 +60,7 @@ create_lib_submodule_repo () {
- 		git branch "no_submodule" &&
++static int parse_update_recurse(const char *opt, const char *arg,
++				int die_on_error)
++{
++	switch (git_config_maybe_bool(opt, arg)) {
++	case 1:
++		return RECURSE_SUBMODULES_ON;
++	case 0:
++		return RECURSE_SUBMODULES_OFF;
++	default:
++		if (die_on_error)
++			die("bad %s argument: %s", opt, arg);
++		return RECURSE_SUBMODULES_ERROR;
++	}
++}
++
++int parse_update_recurse_submodules_arg(const char *opt, const char *arg)
++{
++	return parse_update_recurse(opt, arg, 1);
++}
++
+ static int parse_push_recurse(const char *opt, const char *arg,
+ 			       int die_on_error)
+ {
+diff --git a/submodule-config.h b/submodule-config.h
+index 70f19363fd..d434ecdb45 100644
+--- a/submodule-config.h
++++ b/submodule-config.h
+@@ -22,16 +22,17 @@ struct submodule {
+ 	int recommend_shallow;
+ };
  
- 		git checkout -b "add_sub1" &&
--		git submodule add ./. sub1 &&
-+		git submodule add ../submodule_update_sub1 sub1 &&
- 		git config -f .gitmodules submodule.sub1.ignore all &&
- 		git config submodule.sub1.ignore all &&
- 		git add .gitmodules &&
-@@ -162,7 +173,7 @@ reset_work_tree_to () {
- 		test_must_be_empty actual &&
- 		sha1=$(git rev-parse --revs-only HEAD:sub1) &&
- 		if test -n "$sha1" &&
--		   test $(cd "sub1" && git rev-parse --verify "$sha1^{commit}")
-+		   test $(cd "../submodule_update_sub1" && git rev-parse --verify "$sha1^{commit}")
- 		then
- 			git submodule update --init --recursive "sub1"
- 		fi
+-int parse_fetch_recurse_submodules_arg(const char *opt, const char *arg);
+-int parse_push_recurse_submodules_arg(const char *opt, const char *arg);
+-int parse_submodule_config_option(const char *var, const char *value);
+-const struct submodule *submodule_from_name(const unsigned char *commit_or_tree,
+-		const char *name);
+-const struct submodule *submodule_from_path(const unsigned char *commit_or_tree,
+-		const char *path);
++extern int parse_fetch_recurse_submodules_arg(const char *opt, const char *arg);
++extern int parse_update_recurse_submodules_arg(const char *opt, const char *arg);
++extern int parse_push_recurse_submodules_arg(const char *opt, const char *arg);
++extern int parse_submodule_config_option(const char *var, const char *value);
++extern const struct submodule *submodule_from_name(
++		const unsigned char *commit_or_tree, const char *name);
++extern const struct submodule *submodule_from_path(
++		const unsigned char *commit_or_tree, const char *path);
+ extern int gitmodule_sha1_from_commit(const unsigned char *commit_sha1,
+ 				      unsigned char *gitmodules_sha1,
+ 				      struct strbuf *rev);
+-void submodule_free(void);
++extern void submodule_free(void);
+ 
+ #endif /* SUBMODULE_CONFIG_H */
 -- 
 2.12.0.rc1.16.ge4278d41a0.dirty
 
