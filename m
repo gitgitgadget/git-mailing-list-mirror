@@ -2,111 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 204DF2022D
-	for <e@80x24.org>; Thu, 23 Feb 2017 19:11:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F2E052022D
+	for <e@80x24.org>; Thu, 23 Feb 2017 19:13:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751457AbdBWTLK (ORCPT <rfc822;e@80x24.org>);
-        Thu, 23 Feb 2017 14:11:10 -0500
-Received: from mail-pg0-f65.google.com ([74.125.83.65]:33893 "EHLO
-        mail-pg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751099AbdBWTLH (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Feb 2017 14:11:07 -0500
-Received: by mail-pg0-f65.google.com with SMTP id s67so39320pgb.1
-        for <git@vger.kernel.org>; Thu, 23 Feb 2017 11:11:07 -0800 (PST)
+        id S1751815AbdBWTNf (ORCPT <rfc822;e@80x24.org>);
+        Thu, 23 Feb 2017 14:13:35 -0500
+Received: from mail-wm0-f46.google.com ([74.125.82.46]:36981 "EHLO
+        mail-wm0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751228AbdBWTNe (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Feb 2017 14:13:34 -0500
+Received: by mail-wm0-f46.google.com with SMTP id v77so7972882wmv.0
+        for <git@vger.kernel.org>; Thu, 23 Feb 2017 11:13:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=8CfzGvwTfVSm64vZzpSiNViwboPYWoqo6KT/YpdsTRY=;
-        b=bo25/uJB/lB1kF4VE5E69r15hG4rt7sxfgND67OCvuxmILHuz6eWPGClzwZOMnmWfi
-         W5r5kHmJOtlH8Sj3sDD7evk+0WlPqe6tyJ4FLXWlMNQSHiEH8snitb2wezs/724iDDmK
-         RbDbKTcLuvVUHcItcaJH1LckWK+fRzKKjPJVhnYWCEI707AqnGWJhWKXJmNqtDaqAyhA
-         WRp/Gy93tMxfbJc/b43aLzIA7ma2uXkleABcCQQBNDTVnR4p2nkpZ5mRYXqHS9RW+6hq
-         5lHAh7/P4OyW4BRTbtBBe2gGryXRioPDga+s3n8PUe5DujMxx33HENJ5di3EUCyCzaBY
-         OnVg==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=XokYMLIfg9OXTlgugVgQPzI7VAIkrFD77mzwpcoNc2E=;
+        b=JG9HT7I6MekvnMLcQ907ijR5tezKnSVX5RX/r5/a4K6FLboVGuo6enmYHdpXr0jGTz
+         kTyql7ey+07QZONGsJhVBp+LVrpGRyH9Fii0N6b+NpbfW/FBEnt4iwtCsutVAwVBZthE
+         SwlsGAPHiuXXPrq6Fu6XzlOa/FFrf6xsKMvRPdzFjcOx21EhP71PTMtc0LpYtoY59Czy
+         K+8gwACaBFa11ccpT8lC7NoLXjFXIkKev5CkAEdgDCn9aIakdy/LGGwLeDkc+WzEjR8C
+         8bAytnjaka3dp/u3KJybLLcEHa6oRBPq5fybMiheQZUObv2hJnMN/8OOc6Vf7zZo/1OM
+         PlQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=8CfzGvwTfVSm64vZzpSiNViwboPYWoqo6KT/YpdsTRY=;
-        b=WfBM5OERpMeBSEhXtUcpnNw3/yR7VDwJthNd1/02u/s9kaI1J9NYOu73ggXYSC5oYc
-         lIhC0s8/vuLLB9CucVZnqZrytPGW0Y0mOaKC3vQOVFy4qPbRFMqxVXYT91l+H3ueyVJV
-         J4kk1ePY8xNmnTmbpQBSzBIJARZbcmPlGP2GhHNvmBgaofGX0rQZEBpDsKQNCnIAMTFu
-         8EsupaNLjUIXBJEGhc/9ps3O9GBiScb1oeqP2hWJnYjJhnVFsAI7RGWftaXCKttQ71f4
-         pitnwOIQyEgCjqGmWRSdeGHCLabToJ6FvS19QZlGKU3Lktcmd0J5ufEluBSUyjwAy19B
-         KLcg==
-X-Gm-Message-State: AMke39nO9gQ+iCU3skV3XT96mol94NseNMowKIZwDY6Qhe1Zxtj1aJ3GKevxb8749dhJQw==
-X-Received: by 10.84.130.100 with SMTP id 91mr57121617plc.167.1487877066918;
-        Thu, 23 Feb 2017 11:11:06 -0800 (PST)
-Received: from localhost ([2620:0:1000:8622:8829:f260:c132:141f])
-        by smtp.gmail.com with ESMTPSA id h17sm11188815pfh.62.2017.02.23.11.11.05
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 23 Feb 2017 11:11:06 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        David Turner <David.Turner@twosigma.com>,
-        "git\@vger.kernel.org" <git@vger.kernel.org>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH] http(s): automatically try NTLM authentication first
-References: <20170222173936.25016-1-dturner@twosigma.com>
-        <xmqqpoiaasgj.fsf@gitster.mtv.corp.google.com>
-        <97ab9a812f7b46d7b10d4d06f73259d8@exmbdft7.ad.twosigma.com>
-        <20170222233419.q3fxqmrscosumbjm@genre.crustytoothpaste.net>
-        <20170222234246.wjp3567vesdusiaf@sigill.intra.peff.net>
-Date:   Thu, 23 Feb 2017 11:11:05 -0800
-In-Reply-To: <20170222234246.wjp3567vesdusiaf@sigill.intra.peff.net> (Jeff
-        King's message of "Wed, 22 Feb 2017 18:42:46 -0500")
-Message-ID: <xmqq1suo90za.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=XokYMLIfg9OXTlgugVgQPzI7VAIkrFD77mzwpcoNc2E=;
+        b=Y1kQWXbt5rOcO1Z7eIAxQ5ECbY30vxf4xqToZ4MslYK1sRhpxKG510tPgi6RDnSia9
+         DP/8iuV7DqAfq0qY7xyZE5y3zLeBCLKpvhI5nNVVtPSaF6pMcd3oSS0mhOCMc2rdaCjD
+         EBGbkDL7bAGe9LIJ+atzBJp++WBAShjmDqIkEAdB0RJMSPMfDjehnP5MRx6IwsYH+lmv
+         ulh+l1MIS4DNxBNGJ5X9dOSfk3l2TRjfiNdPSPRu6b8znItBttvTxy/hoV18VQsOW8rO
+         n7wOtdd9GCWjsaG5d/gDYb3/k62qSovMmVb7BzWfenqQhFyT+T0SfUjR+wt2Ll/8pUqB
+         yVpQ==
+X-Gm-Message-State: AMke39lYX27rNueLoLTRoAWq2M+5iki/psbsyw8V+7GOsXuKMcubwi82GrFSO5+kdyt5ArJPtwvSCcGjMhHhLA==
+X-Received: by 10.28.65.132 with SMTP id o126mr3768666wma.14.1487877212309;
+ Thu, 23 Feb 2017 11:13:32 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
+Received: by 10.28.209.139 with HTTP; Thu, 23 Feb 2017 11:13:31 -0800 (PST)
+In-Reply-To: <20170223183105.joxtpbut4wcqfbtu@kitenet.net>
+References: <20170223164306.spg2avxzukkggrpb@kitenet.net> <CAPc5daVZ79WWKSw76kxHgDra9a7fSR1AibZa_pvK9aUuuVawLQ@mail.gmail.com>
+ <20170223173547.qljypk7sdqi37oha@kitenet.net> <CA+55aFzFEpi1crykZ33r9f7BsvLt_kiB-CHXOkuCAX=fd4BU-w@mail.gmail.com>
+ <20170223182147.hbsyxsmyijgkqu75@kitenet.net> <20170223183105.joxtpbut4wcqfbtu@kitenet.net>
+From:   Morten Welinder <mwelinder@gmail.com>
+Date:   Thu, 23 Feb 2017 14:13:31 -0500
+Message-ID: <CANv4PNmSjJUhFgC7GhpuBjiSQhwfAhrP8WxiP_siP2AjjXnrnw@mail.gmail.com>
+Subject: Re: SHA1 collisions found
+To:     Joey Hess <id@joeyh.name>
+Cc:     Linus Torvalds <torvalds@linux-foundation.org>,
+        Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+The attack seems to generate two 64-bytes blocks, one quarter of which
+is repeated data.  (Table-1 in the paper.)
 
-> On Wed, Feb 22, 2017 at 11:34:19PM +0000, brian m. carlson wrote:
->
->> Browsers usually disable this feature by default, as it basically will
->> attempt to authenticate to any site that sends a 401.  For Kerberos
->> against a malicious site, the user will either not have a valid ticket
->> for that domain, or the user's Kerberos server will refuse to provide a
->> ticket to pass to the server, so there's no security risk involved.
->> 
->> I'm unclear how SPNEGO works with NTLM, so I can't speak for the
->> security of it.  From what I understand of NTLM and from RFC 4559, it
->> consists of a shared secret.  I'm unsure what security measures are in
->> place to not send that to an untrusted server.
->> 
->> As far as Kerberos, this is a desirable feature to have enabled, with
->> little downside.  I just don't know about the security of the NTLM part,
->> and I don't think we should take this patch unless we're sure we know
->> the consequences of it.
->
-> Hmm. That would be a problem with my proposed patch 2 then, too, if only
-> because it turns the feature on by default in more places.
->
-> If it _is_ dangerous to turn on all the time, I'd think we should
-> consider warning people in the http.emptyauth documentation.
+Assuming the result of that is evenly distributed and that bytes are
+independent, we can estimate the chances that the result is NUL-free
+as (255/256)^192 = 47% and the probability that the result is NUL and
+newline free as (254/256)^192 = 22%.  Clearly one should not rely of
+NULs or newlines to save the day.  On  the other hand, the chances of
+an ascii result is something like (95/256)^192 = 10^-83.
 
-I presume that we have finished discussing the security
-ramification, and if I am not mistaken the conclusion was that it
-could leak information if we turned on emptyAuth unconditionally
-when talking to a wrong server, and that the documentation needs an
-update to recommend those who use emptyAuth because they want to
-talk to Negotiate servers to use the http.<site>.emptyAuth form,
-limited to such servers, not a more generic http.emptyAuth, to avoid
-information leakage?
+The actual collision in the paper has no newline, but it does have a NUL.
 
-If that is the case, let's take your 1/2 in the near-by thread
-without 2/2 (auto-enable emptyAuth) for now, as Dscho seems to have
-a case that may be helped by it.
+M.
+
+
+
+
+On Thu, Feb 23, 2017 at 1:31 PM, Joey Hess <id@joeyh.name> wrote:
+> Joey Hess wrote:
+>> Linus Torvalds wrote:
+>> > What you describe pretty much already requires a pre-image attack,
+>> > which the new attack is _not_.
+>> >
+>> > It's not clear that the "good" object can be anything sane.
+>>
+>> Generate a regular commit object; use the entire commit object + NUL as the
+>> chosen prefix, and use the identical-prefix collision attack to generate
+>> the colliding good/bad objects.
+>>
+>> (The size in git's object header is a minor complication. Set the size
+>> field to something sufficiently large, and then pad out the colliding
+>> objects to that size once they're generated.)
+>
+> Sorry! While that would work, it's a useless attack because the good and bad
+> commit objects still point to the same tree.
+>
+> It would be interesting to have such colliding objects, to see what beaks,
+> but probably not worth $75k to generate them.
+>
+> --
+> see shy jo
