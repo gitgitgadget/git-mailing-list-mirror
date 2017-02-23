@@ -2,56 +2,56 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 57F222022D
-	for <e@80x24.org>; Thu, 23 Feb 2017 23:49:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2C8AA2022D
+	for <e@80x24.org>; Thu, 23 Feb 2017 23:49:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751513AbdBWXtK (ORCPT <rfc822;e@80x24.org>);
-        Thu, 23 Feb 2017 18:49:10 -0500
-Received: from mail-pg0-f53.google.com ([74.125.83.53]:35755 "EHLO
-        mail-pg0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751413AbdBWXs6 (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1751507AbdBWXtI (ORCPT <rfc822;e@80x24.org>);
+        Thu, 23 Feb 2017 18:49:08 -0500
+Received: from mail-pg0-f48.google.com ([74.125.83.48]:36007 "EHLO
+        mail-pg0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751419AbdBWXs6 (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 23 Feb 2017 18:48:58 -0500
-Received: by mail-pg0-f53.google.com with SMTP id b129so2725277pgc.2
-        for <git@vger.kernel.org>; Thu, 23 Feb 2017 15:47:49 -0800 (PST)
+Received: by mail-pg0-f48.google.com with SMTP id s67so2688046pgb.3
+        for <git@vger.kernel.org>; Thu, 23 Feb 2017 15:47:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=j3AuqP3W9SRPQciySCZKlceMUoWuoXAzXGOwOP20c6I=;
-        b=Ft4Rzby6p8F2gvtA31ISQMng5RIEk65jqDbRG/3jLX1od5cDgbztK5bRiVSMxbYKuZ
-         u+LYBz0ITjCXWSe2QOWP9vFJWBWSwx7hu8mOt5D/a77JPlw4pJ3ai2W9oEDgg63CIpW4
-         QUIYUGWiPy9PX0FO7faZ8X7dmxYuehy00fAEY3QvWyHKEhSkJwaNdjjjkaxJ/GreOGtt
-         LB5LE3UsEInR+rzIhWnIpN/o6f6qH3o5G8PPzfndo0TrAxbAZs1jBd1eL0aqSkFC6i1z
-         4Vsp95tmJJmqDezjAcPPpGwt4aKAcXeGHHSkqTZko4MvFMaKls9Zn/2eibbyjnde926n
-         6t/g==
+        bh=gFQDhvWjPtszUDKGzeD+dpNk/N/GTpxHEo46C04b+rA=;
+        b=j2Gz6paQgsu8tdGafzqWs+E/miUesHb9vtgHhbHgiKEE9K/0uyJWt/mGo3SYh4nVFm
+         M+fHtgfa1eLVjS5eu4axL579FYNEDPfTjF6CppUl9hcabHuqdFrufpc7zRrDzG/oG/UW
+         d5Ox0cUQ899DD09WI/io0vJIr4X5jep1Dpv2FnAN0X0nYzxiNa0pimCRT/sxw/0bM3Ge
+         7+r2mNnEMPzAYYtt5yMOQgz9qg96VjI1BucUtl1YSXu0611TBFqSmghFbQFG6aq12TLl
+         1T49OpYa7X3AQ1dqzmudUlXbfq4EppmN/ZLdfTifXYGJ1rd4Bs3+pCx/fnU3UgbgJi7n
+         9Lqw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=j3AuqP3W9SRPQciySCZKlceMUoWuoXAzXGOwOP20c6I=;
-        b=nh/EojQO5Uqg5ayQLd36q8HrvlIaC0DYomPMTEIyo22oeM9ZBoif1Cv1cYitHcKiq9
-         /OGE5uCJsUBehBHz/onuubqhtfM0fKo+/KCDJ2otF8EeQfhmik6JO5MQr/77w9QCc8g4
-         8v2Mm5dgKaXWydp6GXvvDl5HxzPPV+6p0uhweEh1VUpog1QY4vqPnCRttaQXaQ8397NE
-         bbTH/0/rTc8MBrJgUVq3WlYZ5Gx8YTyLZzwi62XKTFZaQEWXWWOHAoD7C1ABdOuPiTqD
-         gbuYWKKjVBbyjgWtn7fEc6VgAeyJJZMVo5pDOwCGQcru7d7Wg7vb7ynyd/hmTZh6K+Iv
-         Qo2w==
-X-Gm-Message-State: AMke39naL22y61LXN2Lg/cp4YkutAPmr3GmwNskyvhuyUMsU7dWzUkZ0o9klWcDV3tebKdJ4
-X-Received: by 10.84.191.165 with SMTP id a34mr16363964pld.62.1487893669157;
-        Thu, 23 Feb 2017 15:47:49 -0800 (PST)
+        bh=gFQDhvWjPtszUDKGzeD+dpNk/N/GTpxHEo46C04b+rA=;
+        b=jV+GIVFAVQfNEaeMtuT4AYbCfHhido+JVj38v6cvv02OYujJZJ2B3XqmjShugJj6zR
+         P1o38rzqft1n1+z3+HZgsmvWM2l++yglbekzrX6EgC44G7TvciJ4fPyc8eQGi8D11665
+         VYVomYkrOZNPfUW9+PQib0gWok5Co8y8dzzkRpJmj1U42TGGlfExx0RxhJrjYzh/HT1d
+         9e2Knlj2zAhzPKLdu5tMhYuSPQxoVRUEfjHfN56M6xg7WDZUy458JjaiPnCB54ixxyCH
+         RflGtcHR3shWCxKbD6l9hmYLfFerTAlgkPZjfLPfpGC6D8XfLM0HwpfH11bquGefLll2
+         JcZA==
+X-Gm-Message-State: AMke39nk3uzw52AVRd9Lijjv6Ja0lImrpBFpVUiH6EnPrW5iF68+HyEXe5mjZrb57x1U1Ndi
+X-Received: by 10.98.6.133 with SMTP id 127mr13588398pfg.110.1487893670582;
+        Thu, 23 Feb 2017 15:47:50 -0800 (PST)
 Received: from roshar.mtv.corp.google.com ([100.96.238.26])
-        by smtp.gmail.com with ESMTPSA id r74sm11660300pfb.67.2017.02.23.15.47.47
+        by smtp.gmail.com with ESMTPSA id r74sm11660300pfb.67.2017.02.23.15.47.49
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 23 Feb 2017 15:47:48 -0800 (PST)
+        Thu, 23 Feb 2017 15:47:49 -0800 (PST)
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org
 Cc:     sbeller@google.com, Brandon Williams <bmwill@google.com>
-Subject: [PATCH 07/10] submodule status: use submodule--helper is-active
-Date:   Thu, 23 Feb 2017 15:47:25 -0800
-Message-Id: <20170223234728.164111-8-bmwill@google.com>
+Subject: [PATCH 08/10] submodule deinit: use most reliable url
+Date:   Thu, 23 Feb 2017 15:47:26 -0800
+Message-Id: <20170223234728.164111-9-bmwill@google.com>
 X-Mailer: git-send-email 2.11.0.483.g087da7b7c-goog
 In-Reply-To: <20170223234728.164111-1-bmwill@google.com>
 References: <20170223234728.164111-1-bmwill@google.com>
@@ -60,31 +60,29 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+The user could have configured the submodule to have a different URL
+from the one in the superproject's config.  To account for this read
+what the submodule has configured for remote.origin.url and use that
+instead.
+
 Signed-off-by: Brandon Williams <bmwill@google.com>
 ---
- git-submodule.sh | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ git-submodule.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/git-submodule.sh b/git-submodule.sh
-index 4633a4336..f8adfb179 100755
+index f8adfb179..02b85dceb 100755
 --- a/git-submodule.sh
 +++ b/git-submodule.sh
-@@ -1026,14 +1026,13 @@ cmd_status()
- 	do
- 		die_if_unmatched "$mode" "$sha1"
- 		name=$(git submodule--helper name "$sm_path") || exit
--		url=$(git config submodule."$name".url)
- 		displaypath=$(git submodule--helper relative-path "$prefix$sm_path" "$wt_prefix")
- 		if test "$stage" = U
+@@ -466,7 +466,7 @@ Submodule work tree '\$displaypath' contains a .git directory
  		then
- 			say "U$sha1 $displaypath"
- 			continue
+ 			# Remove the whole section so we have a clean state when
+ 			# the user later decides to init this submodule again
+-			url=$(git config submodule."$name".url)
++			url=$(GIT_DIR="$(git rev-parse --git-path modules/$name)" git config remote.origin.url)
+ 			git config --remove-section submodule."$name" 2>/dev/null &&
+ 			say "$(eval_gettext "Submodule '\$name' (\$url) unregistered for path '\$displaypath'")"
  		fi
--		if test -z "$url" ||
-+		if ! git submodule--helper is-active "$sm_path" ||
- 		{
- 			! test -d "$sm_path"/.git &&
- 			! test -f "$sm_path"/.git
 -- 
 2.11.0.483.g087da7b7c-goog
 
