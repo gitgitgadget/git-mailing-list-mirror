@@ -2,145 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 61B732022D
-	for <e@80x24.org>; Thu, 23 Feb 2017 23:05:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A85AE2022D
+	for <e@80x24.org>; Thu, 23 Feb 2017 23:05:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751367AbdBWXFK (ORCPT <rfc822;e@80x24.org>);
+        id S1751377AbdBWXFM (ORCPT <rfc822;e@80x24.org>);
+        Thu, 23 Feb 2017 18:05:12 -0500
+Received: from cloud.peff.net ([104.130.231.41]:32949 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751361AbdBWXFK (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 23 Feb 2017 18:05:10 -0500
-Received: from mail-pg0-f49.google.com ([74.125.83.49]:34848 "EHLO
-        mail-pg0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751358AbdBWXFJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Feb 2017 18:05:09 -0500
-Received: by mail-pg0-f49.google.com with SMTP id b129so2294735pgc.2
-        for <git@vger.kernel.org>; Thu, 23 Feb 2017 15:05:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=skbdvf+IPqG2B1OU28o73eRHTbSQ7ouizHHy0njrU30=;
-        b=im/KVWZko9s/C7f5tn5D2xwU60s93Uo9VNM/217nxNVVBWl7mMt6c+zl2zAS5pvot1
-         wxTJAQQpRrorfcn+9QYo/TPB3hgnEkHhW7xCsM+c0fujp4gvDJQ3iC3fC83jiZOawVZY
-         16osYyzoc9NncxQnlu/5bDdN3PI2byWpIDWiKL9ITlsKtna6nE5Ajf2LXbPwyFmMZ7GU
-         p0fniRr1oPj5Td8tHHjJHF+CVNZjTluSgXjcr77e6G5YAhgbe7QeKgtVfyMU0yUXKYJ1
-         P6yYxFom133kOZL7QFT6sl/curKjam5xqP7JE+6jX5ENCKoxajlaQ7K/FReIw4gwzt17
-         2M/w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=skbdvf+IPqG2B1OU28o73eRHTbSQ7ouizHHy0njrU30=;
-        b=CUMe2++67lqiOtDoHQ1+wNBEX2TUs7GiTe4gkWJVAWXLdNsD0k8yS3jLIACdwJR3pB
-         p8XbzjwfyE9rsO/Ru512DdLKJV6PTpoVrJ1DgXFljdu++YkHErD0eWrXLoNHyBj63kom
-         QZIE3yJakuImzznzQl5NVLrGlcydB+jat+GlQXfGJ9qMaEcTKaT8xpk7HfcXCxb0a/wM
-         vGIsBNWwWmWUoz8KQi24sSUmppWv1VV6NkDvrAoGvFKmhsmOHixU1K0Y7mZReLbmmXvk
-         l2VrRRDnaKU4tpwKhHa0eBb/n0iZgKY067mM9YrVG7TkfTlsFhId6u4OrOsogZ2xitfD
-         UdOQ==
-X-Gm-Message-State: AMke39n4EwmFzQ7BhzYQgEAP+glcOwZFLUxFtUdVk2hxuagwhrsBMlVOcMFzuOn4d7T69Kvu
-X-Received: by 10.98.215.70 with SMTP id v6mr48926486pfl.141.1487890678982;
-        Thu, 23 Feb 2017 14:57:58 -0800 (PST)
-Received: from localhost ([2620:0:1000:5b10:ad75:dfc7:8a6:1152])
-        by smtp.gmail.com with ESMTPSA id r66sm11544891pfj.125.2017.02.23.14.57.58
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 23 Feb 2017 14:57:58 -0800 (PST)
-From:   Stefan Beller <sbeller@google.com>
-To:     sbeller@google.com
-Cc:     git@vger.kernel.org, sandals@crustytoothpaste.net,
-        jrnieder@gmail.com, bmwill@google.com, gitster@pobox.com,
-        novalis@novalis.org
-Subject: [PATCH 06/15] update submodules: add submodule config parsing
-Date:   Thu, 23 Feb 2017 14:57:26 -0800
-Message-Id: <20170223225735.10994-7-sbeller@google.com>
-X-Mailer: git-send-email 2.12.0.rc1.16.ge4278d41a0.dirty
-In-Reply-To: <20170223225735.10994-1-sbeller@google.com>
-References: <xmqqlgt5vlse.fsf@gitster.mtv.corp.google.com>
- <20170223225735.10994-1-sbeller@google.com>
+Received: (qmail 25996 invoked by uid 109); 23 Feb 2017 23:05:10 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 23 Feb 2017 23:05:10 +0000
+Received: (qmail 3321 invoked by uid 111); 23 Feb 2017 23:05:13 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 23 Feb 2017 18:05:13 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 23 Feb 2017 18:05:07 -0500
+Date:   Thu, 23 Feb 2017 18:05:07 -0500
+From:   Jeff King <peff@peff.net>
+To:     Linus Torvalds <torvalds@linux-foundation.org>
+Cc:     Joey Hess <id@joeyh.name>, Git Mailing List <git@vger.kernel.org>
+Subject: Re: SHA1 collisions found
+Message-ID: <20170223230507.kuxjqtg3ghcfskc6@sigill.intra.peff.net>
+References: <CA+55aFzFEpi1crykZ33r9f7BsvLt_kiB-CHXOkuCAX=fd4BU-w@mail.gmail.com>
+ <20170223182147.hbsyxsmyijgkqu75@kitenet.net>
+ <CA+55aFxckeEW1ePcebrgG4iN4Lp62A2vU6tA=xnSDC_BnKQiCQ@mail.gmail.com>
+ <20170223184637.xr74k42vc6y2pmse@sigill.intra.peff.net>
+ <CA+55aFx=0EVfSG2iEKKa78g3hFN_yZ+L_FRm4R749nNAmTGO9w@mail.gmail.com>
+ <20170223193210.munuqcjltwbrdy22@sigill.intra.peff.net>
+ <CA+55aFxmr6ntWGbJDa8tOyxXDX3H-yd4TQthgV_Tn1u91yyT8w@mail.gmail.com>
+ <20170223195753.ppsat2gwd3jq22by@sigill.intra.peff.net>
+ <alpine.LFD.2.20.1702231428540.30435@i7.lan>
+ <20170223224302.joti4zqucme3vqr2@sigill.intra.peff.net>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20170223224302.joti4zqucme3vqr2@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Similar to b33a15b08 (push: add recurseSubmodules config option,
-2015-11-17) and 027771fcb1 (submodule: allow erroneous values for the
-fetchRecurseSubmodules option, 2015-08-17), we add submodule-config code
-that is later used to parse whether we are interested in updating
-submodules.
+On Thu, Feb 23, 2017 at 05:43:02PM -0500, Jeff King wrote:
 
-We need the `die_on_error` parameter to be able to call this parsing
-function for the config file as well, which if incorrect lets Git die.
+> On Thu, Feb 23, 2017 at 02:38:29PM -0800, Linus Torvalds wrote:
+> 
+> > > Thanks, I hadn't seen that yet. That doesn't look like it should be hard
+> > > to integrate into Git.
+> > 
+> > Here's a *very* ugly patch that is absolutely disgusting and should not be 
+> > used. But it does kind of work (I tested it with a faked-up extra patch 
+> > that made git accept the broken pdf as a loose object).
+> > 
+> > What do I mean by "kind of work"? It uses that ugly and slow checking 
+> > SHA1 routine from the collision detection project for the SHA1 object 
+> > verification, and it means that "git fsck" ends up being about twice as 
+> > slow as it used to be.
+> 
+> Heh. I was just putting the finishing touches on a similar patch. Mine
+> is much less gross, in that it actually just adds a new USE_SHA1DC knob
+> (instead of, say, BLK_SHA1).
 
-As we're just touching the header file, also mark all functions extern.
+Here's my patches. They _might_ be worth including if only because they
+shouldn't bother anybody unless they enable USE_SHA1DC. So it makes it a
+bit more accessible for people to experiment with (or be paranoid with
+if they like).
 
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
- submodule-config.c | 20 ++++++++++++++++++++
- submodule-config.h | 17 +++++++++--------
- 2 files changed, 29 insertions(+), 8 deletions(-)
+The first one is 98K. Mail headers may bump it over vger's 100K barrier.
+It's actually the _least_ interesting patch of the 3, because it just
+imports the code wholesale from the other project. But if it doesn't
+make it, you can fetch the whole series from:
 
-diff --git a/submodule-config.c b/submodule-config.c
-index 93453909cf..3e8e380d98 100644
---- a/submodule-config.c
-+++ b/submodule-config.c
-@@ -234,6 +234,26 @@ int parse_fetch_recurse_submodules_arg(const char *opt, const char *arg)
- 	return parse_fetch_recurse(opt, arg, 1);
- }
- 
-+static int parse_update_recurse(const char *opt, const char *arg,
-+				int die_on_error)
-+{
-+	switch (git_config_maybe_bool(opt, arg)) {
-+	case 1:
-+		return RECURSE_SUBMODULES_ON;
-+	case 0:
-+		return RECURSE_SUBMODULES_OFF;
-+	default:
-+		if (die_on_error)
-+			die("bad %s argument: %s", opt, arg);
-+		return RECURSE_SUBMODULES_ERROR;
-+	}
-+}
-+
-+int parse_update_recurse_submodules_arg(const char *opt, const char *arg)
-+{
-+	return parse_update_recurse(opt, arg, 1);
-+}
-+
- static int parse_push_recurse(const char *opt, const char *arg,
- 			       int die_on_error)
- {
-diff --git a/submodule-config.h b/submodule-config.h
-index 70f19363fd..d434ecdb45 100644
---- a/submodule-config.h
-+++ b/submodule-config.h
-@@ -22,16 +22,17 @@ struct submodule {
- 	int recommend_shallow;
- };
- 
--int parse_fetch_recurse_submodules_arg(const char *opt, const char *arg);
--int parse_push_recurse_submodules_arg(const char *opt, const char *arg);
--int parse_submodule_config_option(const char *var, const char *value);
--const struct submodule *submodule_from_name(const unsigned char *commit_or_tree,
--		const char *name);
--const struct submodule *submodule_from_path(const unsigned char *commit_or_tree,
--		const char *path);
-+extern int parse_fetch_recurse_submodules_arg(const char *opt, const char *arg);
-+extern int parse_update_recurse_submodules_arg(const char *opt, const char *arg);
-+extern int parse_push_recurse_submodules_arg(const char *opt, const char *arg);
-+extern int parse_submodule_config_option(const char *var, const char *value);
-+extern const struct submodule *submodule_from_name(
-+		const unsigned char *commit_or_tree, const char *name);
-+extern const struct submodule *submodule_from_path(
-+		const unsigned char *commit_or_tree, const char *path);
- extern int gitmodule_sha1_from_commit(const unsigned char *commit_sha1,
- 				      unsigned char *gitmodules_sha1,
- 				      struct strbuf *rev);
--void submodule_free(void);
-+extern void submodule_free(void);
- 
- #endif /* SUBMODULE_CONFIG_H */
--- 
-2.12.0.rc1.16.ge4278d41a0.dirty
+  https://github.com/peff/git jk/sha1dc
 
+(By the way, I don't see your version on the list, Linus, which probably
+means it was eaten by the 100K filter).
+
+  [1/3]: add collision-detecting sha1 implementation
+  [2/3]: sha1dc: adjust header includes for git
+  [3/3]: Makefile: add USE_SHA1DC knob
+
+ Makefile           |   10 +
+ sha1dc/sha1.c      | 1165 ++++++++++++++++++++++++++++++++++++++++++++++++++++
+ sha1dc/sha1.h      |  108 +++++
+ sha1dc/ubc_check.c |  361 ++++++++++++++++
+ sha1dc/ubc_check.h |   33 ++
+ 5 files changed, 1677 insertions(+)
+ create mode 100644 sha1dc/sha1.c
+ create mode 100644 sha1dc/sha1.h
+ create mode 100644 sha1dc/ubc_check.c
+ create mode 100644 sha1dc/ubc_check.h
+
+-Peff
