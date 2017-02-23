@@ -2,186 +2,248 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5E9EE2022D
-	for <e@80x24.org>; Thu, 23 Feb 2017 23:06:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D85172022D
+	for <e@80x24.org>; Thu, 23 Feb 2017 23:07:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751474AbdBWXGg (ORCPT <rfc822;e@80x24.org>);
-        Thu, 23 Feb 2017 18:06:36 -0500
-Received: from cloud.peff.net ([104.130.231.41]:32972 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751277AbdBWXGf (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Feb 2017 18:06:35 -0500
-Received: (qmail 26119 invoked by uid 109); 23 Feb 2017 23:06:24 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 23 Feb 2017 23:06:24 +0000
-Received: (qmail 9668 invoked by uid 111); 23 Feb 2017 23:06:28 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 23 Feb 2017 18:06:28 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 23 Feb 2017 18:06:21 -0500
-Date:   Thu, 23 Feb 2017 18:06:21 -0500
-From:   Jeff King <peff@peff.net>
-To:     Linus Torvalds <torvalds@linux-foundation.org>
-Cc:     Joey Hess <id@joeyh.name>, Git Mailing List <git@vger.kernel.org>
-Subject: [PATCH 3/3] Makefile: add USE_SHA1DC knob
-Message-ID: <20170223230621.43anex65ndoqbgnf@sigill.intra.peff.net>
-References: <20170223230507.kuxjqtg3ghcfskc6@sigill.intra.peff.net>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20170223230507.kuxjqtg3ghcfskc6@sigill.intra.peff.net>
+        id S1751296AbdBWXHC (ORCPT <rfc822;e@80x24.org>);
+        Thu, 23 Feb 2017 18:07:02 -0500
+Received: from mail-pg0-f46.google.com ([74.125.83.46]:33359 "EHLO
+        mail-pg0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751268AbdBWXHB (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Feb 2017 18:07:01 -0500
+Received: by mail-pg0-f46.google.com with SMTP id z128so2353228pgb.0
+        for <git@vger.kernel.org>; Thu, 23 Feb 2017 15:07:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=EFqeP6CvyLrBFzaUcyuol/EqtNsLkEYGxz7hYQCK2Ks=;
+        b=XFZabdQWwDdOKV3ouc2NTlkUbvRMbaPgJu2EJt+x8UT8+DbfgQ8vprqYFcCZ8EKBA3
+         OHGNMCal2VViM6CwY+0daix2sU3t2DKVA3Qbk1F3XNha3UtPf30A295BjKXYDVeQ3OPW
+         TGouZvSwSY8Hmvb/7uMMIIFjJR640ziZoCkV5y2B5m71kR6tKG2zl0WerTrdcDCmaoMB
+         20pgzpOUitXUpBIp/LsoTltfB4njp2ouCYzzrHwgFplu5he1KztXTwx6UgSZYv6cHKuu
+         FwRME0XL3uOFfzFI/CvyeadZewfXalavNRdZWvn7kJQa2nODJfb2AjPbfNt1RFZ7fJdR
+         LwAQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=EFqeP6CvyLrBFzaUcyuol/EqtNsLkEYGxz7hYQCK2Ks=;
+        b=QIxeeXPuDgkTpJw6rhWd6zFbL+Vcb71RFtnUaCWa5nPX0rkaZwPvBcohITcx+9zTLa
+         +T5htkxoGSc2sOMrq+um4XDzFlx7tyvxg8/ViXMJF9xAykYRBWyWTGhQVFLamh2FpGS/
+         FLL08TLwrrqiuKh0gc/ivqiYFf4z4yalzQqPkNOsDN2q5Sn9ycaZab0GGhcUUMjwFH6O
+         PiXoYEQAi2JBQu2f/Mn07JaXVsGeAkVhye0UfXi7O6DV79bc++ND+Ygp6gvHQGi4qv4M
+         FxSKWE4yjyAB3UI9P0/Ctf9+V1iKtSXF596s64C5qn5rmPtltTPFruLcHSxxOLlj6oBP
+         qPFg==
+X-Gm-Message-State: AMke39nNbuUQ34+K3QVXp3zxuZnf4KMl2IH1GbtMhn8XQlIwsMdFH20oZlpdq/Kxpd07xHNo
+X-Received: by 10.99.39.71 with SMTP id n68mr50411628pgn.85.1487890684169;
+        Thu, 23 Feb 2017 14:58:04 -0800 (PST)
+Received: from localhost ([2620:0:1000:5b10:ad75:dfc7:8a6:1152])
+        by smtp.gmail.com with ESMTPSA id w28sm172115pge.27.2017.02.23.14.58.03
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Thu, 23 Feb 2017 14:58:03 -0800 (PST)
+From:   Stefan Beller <sbeller@google.com>
+To:     sbeller@google.com
+Cc:     git@vger.kernel.org, sandals@crustytoothpaste.net,
+        jrnieder@gmail.com, bmwill@google.com, gitster@pobox.com,
+        novalis@novalis.org
+Subject: [PATCH 10/15] update submodules: add submodule_move_head
+Date:   Thu, 23 Feb 2017 14:57:30 -0800
+Message-Id: <20170223225735.10994-11-sbeller@google.com>
+X-Mailer: git-send-email 2.12.0.rc1.16.ge4278d41a0.dirty
+In-Reply-To: <20170223225735.10994-1-sbeller@google.com>
+References: <xmqqlgt5vlse.fsf@gitster.mtv.corp.google.com>
+ <20170223225735.10994-1-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This knob lets you use the sha1dc implementation from:
+In later patches we introduce the options and flag for commands
+that modify the working directory, e.g. git-checkout.
 
-      https://github.com/cr-marcstevens/sha1collisiondetection
+This piece of code will be used universally for
+all these working tree modifications as it
+* supports dry run to answer the question:
+  "Is it safe to change the submodule to this new state?"
+  e.g. is it overwriting untracked files or are there local
+  changes that would be overwritten?
+* supports a force flag that can be used for resetting
+  the tree.
 
-which can detect certain types of collision attacks (even
-when we only see half of the colliding pair).
-
-The big downside is that it's slower than either the openssl
-or block-sha1 implementations.
-
-Here are some timings based off of linux.git:
-
-  - compute sha1 over whole packfile
-    before: 1.349s
-     after: 5.067s
-    change: +275%
-
-  - rev-list --all
-    before: 5.742s
-     after: 5.730s
-    change: -0.2%
-
-  - rev-list --all --objects
-    before: 33.257s
-     after: 33.392s
-    change: +0.4%
-
-  - index-pack --verify
-    before: 2m20s
-     after: 5m43s
-    change: +145%
-
-  - git log --no-merges -10000 -p
-    before: 9.532s
-     after: 9.683s
-    change: +1.5%
-
-So overall the sha1 computation is about 3-4x slower. But of
-course most operations do more than just sha1. Accessing
-commits and trees isn't slowed at all (both the +/- changes
-there are well within the run-to-run noise). Accessing the
-blobs is a little slower, but mostly drowned out by the cost
-of things like actually generating patches.
-
-The most-affected operation is `index-pack --verify`, which
-is essentially just computing the sha1 on every object. It's
-a bit worse than twice as slow, which means every push and
-every fetch is going to experience that.
-
-Signed-off-by: Jeff King <peff@peff.net>
+Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- Makefile      | 10 ++++++++++
- sha1dc/sha1.c | 22 ++++++++++++++++++++++
- sha1dc/sha1.h | 16 ++++++++++++++++
- 3 files changed, 48 insertions(+)
+ submodule.c | 135 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ submodule.h |   7 ++++
+ 2 files changed, 142 insertions(+)
 
-diff --git a/Makefile b/Makefile
-index 8e4081e06..7c4906250 100644
---- a/Makefile
-+++ b/Makefile
-@@ -142,6 +142,10 @@ all::
- # Define PPC_SHA1 environment variable when running make to make use of
- # a bundled SHA1 routine optimized for PowerPC.
- #
-+# Define USE_SHA1DC to unconditionally enable the collision-detecting sha1
-+# algorithm. This is slower, but may detect attempted collision attacks.
-+# Takes priority over other *_SHA1 knobs.
-+#
- # Define SHA1_MAX_BLOCK_SIZE to limit the amount of data that will be hashed
- # in one call to the platform's SHA1_Update(). e.g. APPLE_COMMON_CRYPTO
- # wants 'SHA1_MAX_BLOCK_SIZE=1024L*1024L*1024L' defined.
-@@ -1386,6 +1390,11 @@ ifdef APPLE_COMMON_CRYPTO
- 	SHA1_MAX_BLOCK_SIZE = 1024L*1024L*1024L
- endif
- 
-+ifdef USE_SHA1DC
-+	SHA1_HEADER = "sha1dc/sha1.h"
-+	LIB_OBJS += sha1dc/sha1.o
-+	LIB_OBJS += sha1dc/ubc_check.o
-+else
- ifdef BLK_SHA1
- 	SHA1_HEADER = "block-sha1/sha1.h"
- 	LIB_OBJS += block-sha1/sha1.o
-@@ -1403,6 +1412,7 @@ else
- endif
- endif
- endif
-+endif
- 
- ifdef SHA1_MAX_BLOCK_SIZE
- 	LIB_OBJS += compat/sha1-chunked.o
-diff --git a/sha1dc/sha1.c b/sha1dc/sha1.c
-index 762c6fff8..1566ec4c7 100644
---- a/sha1dc/sha1.c
-+++ b/sha1dc/sha1.c
-@@ -1141,3 +1141,25 @@ int SHA1DCFinal(unsigned char output[20], SHA1_CTX *ctx)
- 	output[19] = (unsigned char)(ctx->ihv[4]);
- 	return ctx->found_collision;
+diff --git a/submodule.c b/submodule.c
+index 0b2596e88a..a2cf8c9376 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -1239,6 +1239,141 @@ int bad_to_remove_submodule(const char *path, unsigned flags)
+ 	return ret;
  }
-+
-+static const char collision_message[] =
-+"The SHA1 computation detected evidence of a collision attack;\n"
-+"refusing to process the contents.";
-+
-+void git_SHA1DCFinal(unsigned char hash[20], SHA1_CTX *ctx)
+ 
++static int submodule_has_dirty_index(const struct submodule *sub)
 +{
-+	if (SHA1DCFinal(hash, ctx))
-+		die(collision_message);
++	struct child_process cp = CHILD_PROCESS_INIT;
++
++	prepare_submodule_repo_env_no_git_dir(&cp.env_array);
++
++	cp.git_cmd = 1;
++	argv_array_pushl(&cp.args, "diff-index", "--quiet", \
++					"--cached", "HEAD", NULL);
++	cp.no_stdin = 1;
++	cp.no_stdout = 1;
++	cp.dir = sub->path;
++	if (start_command(&cp))
++		die("could not recurse into submodule '%s'", sub->path);
++
++	return finish_command(&cp);
 +}
 +
-+void git_SHA1DCUpdate(SHA1_CTX *ctx, const void *vdata, unsigned long len)
++void submodule_reset_index(const char *path)
 +{
-+	const char *data = vdata;
-+	/* We expect an unsigned long, but sha1dc only takes an int */
-+	while (len > INT_MAX) {
-+		SHA1DCUpdate(ctx, data, INT_MAX);
-+		data += INT_MAX;
-+		len -= INT_MAX;
++	struct child_process cp = CHILD_PROCESS_INIT;
++	prepare_submodule_repo_env_no_git_dir(&cp.env_array);
++
++	cp.git_cmd = 1;
++	cp.no_stdin = 1;
++	cp.dir = path;
++
++	argv_array_pushf(&cp.args, "--super-prefix=%s/", path);
++	argv_array_pushl(&cp.args, "read-tree", "-u", "--reset", NULL);
++
++	argv_array_push(&cp.args, EMPTY_TREE_SHA1_HEX);
++
++	if (run_command(&cp))
++		die("could not reset submodule index");
++}
++
++/**
++ * Moves a submodule at a given path from a given head to another new head.
++ * For edge cases (a submodule coming into existence or removing a submodule)
++ * pass NULL for old or new respectively.
++ */
++int submodule_move_head(const char *path,
++			 const char *old,
++			 const char *new,
++			 unsigned flags)
++{
++	int ret = 0;
++	struct child_process cp = CHILD_PROCESS_INIT;
++	const struct submodule *sub;
++
++	sub = submodule_from_path(null_sha1, path);
++
++	if (!sub)
++		die("BUG: could not get submodule information for '%s'", path);
++
++	if (old && !(flags & SUBMODULE_MOVE_HEAD_FORCE)) {
++		/* Check if the submodule has a dirty index. */
++		if (submodule_has_dirty_index(sub))
++			return error(_("submodule '%s' has dirty index"), path);
 +	}
-+	SHA1DCUpdate(ctx, data, len);
++
++	if (!(flags & SUBMODULE_MOVE_HEAD_DRY_RUN)) {
++		if (old) {
++			if (!submodule_uses_gitfile(path))
++				absorb_git_dir_into_superproject("", path,
++					ABSORB_GITDIR_RECURSE_SUBMODULES);
++		} else {
++			struct strbuf sb = STRBUF_INIT;
++			strbuf_addf(&sb, "%s/modules/%s",
++				    get_git_common_dir(), sub->name);
++			connect_work_tree_and_git_dir(path, sb.buf);
++			strbuf_release(&sb);
++
++			/* make sure the index is clean as well */
++			submodule_reset_index(path);
++		}
++	}
++
++	prepare_submodule_repo_env_no_git_dir(&cp.env_array);
++
++	cp.git_cmd = 1;
++	cp.no_stdin = 1;
++	cp.dir = path;
++
++	argv_array_pushf(&cp.args, "--super-prefix=%s/", path);
++	argv_array_pushl(&cp.args, "read-tree", NULL);
++
++	if (flags & SUBMODULE_MOVE_HEAD_DRY_RUN)
++		argv_array_push(&cp.args, "-n");
++	else
++		argv_array_push(&cp.args, "-u");
++
++	if (flags & SUBMODULE_MOVE_HEAD_FORCE)
++		argv_array_push(&cp.args, "--reset");
++	else
++		argv_array_push(&cp.args, "-m");
++
++	argv_array_push(&cp.args, old ? old : EMPTY_TREE_SHA1_HEX);
++	argv_array_push(&cp.args, new ? new : EMPTY_TREE_SHA1_HEX);
++
++	if (run_command(&cp)) {
++		ret = -1;
++		goto out;
++	}
++
++	if (!(flags & SUBMODULE_MOVE_HEAD_DRY_RUN)) {
++		if (new) {
++			struct child_process cp1 = CHILD_PROCESS_INIT;
++			/* also set the HEAD accordingly */
++			cp1.git_cmd = 1;
++			cp1.no_stdin = 1;
++			cp1.dir = path;
++
++			argv_array_pushl(&cp1.args, "update-ref", "HEAD",
++					 new ? new : EMPTY_TREE_SHA1_HEX, NULL);
++
++			if (run_command(&cp1)) {
++				ret = -1;
++				goto out;
++			}
++		} else {
++			struct strbuf sb = STRBUF_INIT;
++
++			strbuf_addf(&sb, "%s/.git", path);
++			unlink_or_warn(sb.buf);
++			strbuf_release(&sb);
++
++			if (is_empty_dir(path))
++				rmdir_or_warn(path);
++		}
++	}
++out:
++	return ret;
 +}
-diff --git a/sha1dc/sha1.h b/sha1dc/sha1.h
-index ce5390397..1bb0ace99 100644
---- a/sha1dc/sha1.h
-+++ b/sha1dc/sha1.h
-@@ -90,3 +90,19 @@ void SHA1DCUpdate(SHA1_CTX*, const char*, unsigned);
- // obtain SHA-1 hash from SHA-1 context
- // returns: 0 = no collision detected, otherwise = collision found => warn user for active attack
- int  SHA1DCFinal(unsigned char[20], SHA1_CTX*); 
 +
+ static int find_first_merges(struct object_array *result, const char *path,
+ 		struct commit *a, struct commit *b)
+ {
+diff --git a/submodule.h b/submodule.h
+index 6f3fe85c7c..4cdf6445f7 100644
+--- a/submodule.h
++++ b/submodule.h
+@@ -96,6 +96,13 @@ extern int push_unpushed_submodules(struct sha1_array *commits,
+ extern void connect_work_tree_and_git_dir(const char *work_tree, const char *git_dir);
+ extern int parallel_submodules(void);
+ 
++#define SUBMODULE_MOVE_HEAD_DRY_RUN (1<<0)
++#define SUBMODULE_MOVE_HEAD_FORCE   (1<<1)
++extern int submodule_move_head(const char *path,
++			       const char *old,
++			       const char *new,
++			       unsigned flags);
 +
-+/*
-+ * Same as SHA1DCFinal, but convert collision attack case into a verbose die().
-+ */
-+void git_SHA1DCFinal(unsigned char [20], SHA1_CTX *);
-+
-+/*
-+ * Same as SHA1DCUpdate, but adjust types to match git's usual interface.
-+ */
-+void git_SHA1DCUpdate(SHA1_CTX *ctx, const void *data, unsigned long len);
-+
-+#define platform_SHA_CTX SHA1_CTX
-+#define platform_SHA1_Init SHA1DCInit
-+#define platform_SHA1_Update git_SHA1DCUpdate
-+#define platform_SHA1_Final git_SHA1DCFinal
+ /*
+  * Prepare the "env_array" parameter of a "struct child_process" for executing
+  * a submodule by clearing any repo-specific envirionment variables, but
 -- 
-2.12.0.rc2.629.ga7951ed82
+2.12.0.rc1.16.ge4278d41a0.dirty
+
