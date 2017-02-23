@@ -6,122 +6,98 @@ X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 27E7E2022D
-	for <e@80x24.org>; Thu, 23 Feb 2017 23:49:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BE7922022D
+	for <e@80x24.org>; Thu, 23 Feb 2017 23:49:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751444AbdBWXtA (ORCPT <rfc822;e@80x24.org>);
-        Thu, 23 Feb 2017 18:49:00 -0500
-Received: from mail-pg0-f50.google.com ([74.125.83.50]:35751 "EHLO
-        mail-pg0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751411AbdBWXs6 (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1751431AbdBWXs7 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 23 Feb 2017 18:48:59 -0500
+Received: from mail-pf0-f180.google.com ([209.85.192.180]:35350 "EHLO
+        mail-pf0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751265AbdBWXs6 (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 23 Feb 2017 18:48:58 -0500
-Received: by mail-pg0-f50.google.com with SMTP id b129so2725053pgc.2
-        for <git@vger.kernel.org>; Thu, 23 Feb 2017 15:47:48 -0800 (PST)
+Received: by mail-pf0-f180.google.com with SMTP id 68so478883pfx.2
+        for <git@vger.kernel.org>; Thu, 23 Feb 2017 15:47:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=8uCejwKXUpDggvgM+VNAU6j15u2h4GopmWjUSiLz1mY=;
-        b=TS0roEAODhuMC0gopLNFe0jdGDEFRejHi7+38bvf1EWGszxvrTR0iu5a3w2xo0kvgE
-         eVg4Ykm8Q20rOKL7H13jz5FLF/t5J6md9WPK6EPVNIrSD4TuKtw7ZBiG0W0ok0Vl28BB
-         QT35PjeyTyitemqN+uVx4aDH3oNwjqCWZz/gC7xT+Zy8iaN9d4kUGm+hp4NpNP6FtviD
-         Aod1+rM+F6OfS50GJCzBdxzIod1CCOrKMqGA2ZiwWBEa+EEHmgRU3N0JhEbgu8nn6EGY
-         wH9+IlQLAllh88cxsXjBmOZHN2t/9xib3LuGk9dtmcXlrIGqtKyeL0oOs4aVozlToE9B
-         i4bQ==
+        h=from:to:cc:subject:date:message-id;
+        bh=QOiVwhOcABS7lMOQHn8pUVghKISNw2Y+3TQ+FVp9o5w=;
+        b=mvLtQRl6LQwE91Nyw2mC8czc+kJmSjfWv8auCcN3xHeL+zey4YEyfSv8kr9cX1I1s6
+         h0j6Yo+7i0ibDYa0G5Vsdl+NUcHAd3x/VdhsZEX0QxlW9Kz6w7+49cTkwtcjLU691HZC
+         BxazEdCSa78LxnYESfmcJg2H6brVtw1heE01Zkq1ZUJ+tF0VX90pjvwpOKzUNrWkZ0U3
+         GqlBpfvqdC7TygyzWmYkvM8XieL34TsoQMNpkcaouVxPv5eUY/uEchbdFjc7Xc9xyLJU
+         FIoxGt+MffJ12aXDbaL1XEh6Z8fRs4p7YqHtM6lO9M6vkrKNARUEeVmL31jITk58d0pr
+         tdWw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=8uCejwKXUpDggvgM+VNAU6j15u2h4GopmWjUSiLz1mY=;
-        b=SsU4/PjqhkFIUi4xoxsZ5AT39CUc/0EdGMXQDzhaPz0FmEt+svGVdA8RG2CLXgB3mA
-         ABCeF78efUvMEo1Q+/u80g+WKdMbIvUcQlV99jfLTYqGcdrIs1eaSugSrjRqgJqG7fU2
-         YKGei+Us7ORXnr0HFtcw+ZOFe8NP8dWK/KrPasnnWJ2XuSxnH8WM8yxOY9t0x50BEX76
-         v4crhxBdWhQnsw7br3lqaGP0m3g2bxZQ1QVzOCqjTdFdpnoOE4fKcOc2XXZkDIuTTbZp
-         A4ZUlWKqpIXjfz4tnFDg4e+R8T5Yv34kXr5dWytqQY4Ft06O+Ll0dJIySzd/dhkoeZPV
-         lwag==
-X-Gm-Message-State: AMke39l3RiyCFE0tsavvce/lnUzAEzOLQqH1eP/TQaBqhmkGYKcHuP9tJqlHeB3cz/X6ucG1
-X-Received: by 10.98.150.70 with SMTP id c67mr49278754pfe.84.1487893667768;
-        Thu, 23 Feb 2017 15:47:47 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=QOiVwhOcABS7lMOQHn8pUVghKISNw2Y+3TQ+FVp9o5w=;
+        b=lJichkzjTKStiapPZuGUfk1hD/ii5jYSGVeksQYMjOnGpaCzcQML+U3WPbPs6lWJC6
+         FmJ7CtGQRU/wt2P6obnA7NQZxVqaDRNpRe7UkHnvBuJZ9mYV5Y8x2Ri89g9Au8qQ5TPd
+         n8Iv1JF06kMc8sLdny7RABwiqGW5ccXbajDW+KXwFcdWIf7Q3Gzc3n4ffiKP8NmzX1c0
+         rraUktLEatyCKRiv36A+bsrTxoRE22a4oT26T9L1ciTGOUYTDCW/NCtxg4X7PIWkCNL2
+         aDR/qGOvGHpo2BhhFfpVT1J1tMr/7Jxl8GeF9M/jofVOEY3tEMcOf6SYAKJyUvlTAkhy
+         BUQQ==
+X-Gm-Message-State: AMke39mf8xAZuxwUQuIvvMqX56MV0b6n+cdkL1kXhuNiwHh9DUih6/KnFoGde/hXhcz/l3BL
+X-Received: by 10.84.142.1 with SMTP id 1mr58886844plw.127.1487893659117;
+        Thu, 23 Feb 2017 15:47:39 -0800 (PST)
 Received: from roshar.mtv.corp.google.com ([100.96.238.26])
-        by smtp.gmail.com with ESMTPSA id r74sm11660300pfb.67.2017.02.23.15.47.46
+        by smtp.gmail.com with ESMTPSA id r74sm11660300pfb.67.2017.02.23.15.47.37
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 23 Feb 2017 15:47:46 -0800 (PST)
+        Thu, 23 Feb 2017 15:47:37 -0800 (PST)
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org
 Cc:     sbeller@google.com, Brandon Williams <bmwill@google.com>
-Subject: [PATCH 06/10] submodule add: respect submodule.active
-Date:   Thu, 23 Feb 2017 15:47:24 -0800
-Message-Id: <20170223234728.164111-7-bmwill@google.com>
+Subject: [PATCH 00/10] decoupling a submodule's existence and its url
+Date:   Thu, 23 Feb 2017 15:47:18 -0800
+Message-Id: <20170223234728.164111-1-bmwill@google.com>
 X-Mailer: git-send-email 2.11.0.483.g087da7b7c-goog
-In-Reply-To: <20170223234728.164111-1-bmwill@google.com>
-References: <20170223234728.164111-1-bmwill@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When submodule.active is configured, in addition to adding
-submodule."<name>".url to the config, add the path of the added
-submodule if it isn't already covered by the current config values.
+There are two motivations for decoupling a submodule's existence from the url
+that is stored in .git/config.
 
-Signed-off-by: Brandon Williams <bmwill@google.com>
----
- git-submodule.sh               | 11 +++++++++++
- t/t7413-submodule-is-active.sh | 22 ++++++++++++++++++++++
- 2 files changed, 33 insertions(+)
+1. Worktrees can't really be used with submodules since the existence is
+   checked based on the shared .git/config.  This means that two different
+   worktress have to have the same initialized submodules.  By decoupling a
+   submodule's existence from the url, two different work trees can be
+   configured to have different submodules checked out.
+2. Easily configure gorups of submodules that a user is interested in.  In a
+   repository with hundreds of submodules it would be difficult to easily tell git
+   which modules to worry about without having to individually init all of
+   them.  Instead, a pathspec can be used to more easily select or deselect
+   groups of submodules.
 
-diff --git a/git-submodule.sh b/git-submodule.sh
-index e5b9a8920..4633a4336 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -271,6 +271,17 @@ or you are unsure what this means choose another name with the '--name' option."
- 	fi &&
- 	git add --force .gitmodules ||
- 	die "$(eval_gettext "Failed to register submodule '\$sm_path'")"
-+
-+	if git config --get submodule.active >/dev/null
-+	then
-+		# If the submodule being adding isn't already covered by the
-+		# current configured pathspec, add the submodule's path to
-+		# 'submodule.active'
-+		if ! git submodule--helper is-active "$sm_path"
-+		then
-+			git config --add submodule.active "$sm_path"
-+		fi
-+	fi
- }
- 
- #
-diff --git a/t/t7413-submodule-is-active.sh b/t/t7413-submodule-is-active.sh
-index 683487020..8a519163b 100755
---- a/t/t7413-submodule-is-active.sh
-+++ b/t/t7413-submodule-is-active.sh
-@@ -60,4 +60,26 @@ test_expect_success 'is-active works with exclusions in submodule.active config'
- 	git -C super config --unset-all submodule.active
- '
- 
-+test_expect_success 'is-active and submodule add' '
-+	test_when_finished "rm -rf super2" &&
-+	git init super2 &&
-+	test_commit -C super2 initial &&
-+	git -C super2 config --add submodule.active "sub*" &&
-+
-+	cat >expect <<-\EOF &&
-+	sub*
-+	EOF
-+	git -C super2 submodule add ../sub sub1 &&
-+	git -C super2 config --get-all submodule.active >actual &&
-+	test_cmp actual expect &&
-+
-+	cat >expect <<-\EOF &&
-+	sub*
-+	mod
-+	EOF
-+	git -C super2 submodule add ../sub mod &&
-+	git -C super2 config --get-all submodule.active >actual &&
-+	test_cmp actual expect
-+'
-+
- test_done
+This patch series works to do this decoupling and instead allows a user to
+configure submodule.active with a pathspec to use to check if a submodule is
+initialized.
+
+Brandon Williams (10):
+  submodule: decouple url and submodule existence
+  submodule update: add `--init-active` switch
+  clone: add --submodule-spec=<pathspec> switch
+  completion: clone can initialize specific submodules
+  submodule--helper: add is_active command
+  submodule add: respect submodule.active
+  submodule status: use submodule--helper is-active
+  submodule deinit: use most reliable url
+  submodule sync: use submodule--helper is-active
+  submodule--helper clone: check for configured submodules using helper
+
+ Documentation/git-clone.txt            |  23 ++++---
+ Documentation/git-submodule.txt        |  11 +++-
+ builtin/clone.c                        |  36 ++++++++++-
+ builtin/submodule--helper.c            |  22 ++++---
+ contrib/completion/git-completion.bash |   1 +
+ git-submodule.sh                       |  39 +++++++++---
+ submodule.c                            |  25 +++++++-
+ t/t7400-submodule-basic.sh             | 109 +++++++++++++++++++++++++++++++++
+ t/t7413-submodule-is-active.sh         |  85 +++++++++++++++++++++++++
+ 9 files changed, 323 insertions(+), 28 deletions(-)
+ create mode 100755 t/t7413-submodule-is-active.sh
+
 -- 
 2.11.0.483.g087da7b7c-goog
 
