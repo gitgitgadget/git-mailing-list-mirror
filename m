@@ -2,103 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DF3752022D
-	for <e@80x24.org>; Thu, 23 Feb 2017 18:57:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5371C2022D
+	for <e@80x24.org>; Thu, 23 Feb 2017 19:06:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751413AbdBWS5n (ORCPT <rfc822;e@80x24.org>);
-        Thu, 23 Feb 2017 13:57:43 -0500
-Received: from kitenet.net ([66.228.36.95]:43752 "EHLO kitenet.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751557AbdBWS5n (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Feb 2017 13:57:43 -0500
-X-Question: 42
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=joeyh.name; s=mail;
-        t=1487874713; bh=gZI6CwjxMMyXkR2UYK+gROhIEbR1ABnlPzGQLe0/Kv8=;
-        h=Date:From:To:Subject:References:In-Reply-To:From;
-        b=LNLMQ5iaDPSRH504+O3L4NJbQjQgXSZaeyKib8itDYxOPkUDkKkC8eGT7ESLqQHBz
-         5zVwWkmp6od/r3/YLlDU18qfMIOy/WfcWFg98GG0Odb5rYvRCGnwyfQJnh1V+CjOMY
-         QZASBHeiYrK+HKvwI9KDvUiMAEXxHAVDNDpg1XI8=
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=joeyh.name; s=mail;
-        t=1487874666; bh=gZI6CwjxMMyXkR2UYK+gROhIEbR1ABnlPzGQLe0/Kv8=;
-        h=Date:From:To:Subject:References:In-Reply-To:From;
-        b=BqvXUX4OwNFGdoy/YRwPIqT3Pjrl6AkDNPCQ2nQAAglPz7Q/+Q0fBKEQm64u7I1i5
-         EE9b4BVHlWodojyDtpwLbSgEZBhKw2W9IGFUON1m9bNyCqOAKXaIOurSSq3gvEq1i/
-         SoW+eaYeWxsBDnnlISda/CCiJ4I+0tP6oEVIFAwQ=
-Date:   Thu, 23 Feb 2017 14:31:05 -0400
-From:   Joey Hess <id@joeyh.name>
-To:     Linus Torvalds <torvalds@linux-foundation.org>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: SHA1 collisions found
-Message-ID: <20170223183105.joxtpbut4wcqfbtu@kitenet.net>
-References: <20170223164306.spg2avxzukkggrpb@kitenet.net>
- <CAPc5daVZ79WWKSw76kxHgDra9a7fSR1AibZa_pvK9aUuuVawLQ@mail.gmail.com>
- <20170223173547.qljypk7sdqi37oha@kitenet.net>
- <CA+55aFzFEpi1crykZ33r9f7BsvLt_kiB-CHXOkuCAX=fd4BU-w@mail.gmail.com>
- <20170223182147.hbsyxsmyijgkqu75@kitenet.net>
+        id S1751228AbdBWTGe (ORCPT <rfc822;e@80x24.org>);
+        Thu, 23 Feb 2017 14:06:34 -0500
+Received: from mail-pg0-f66.google.com ([74.125.83.66]:33574 "EHLO
+        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751210AbdBWTGc (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Feb 2017 14:06:32 -0500
+Received: by mail-pg0-f66.google.com with SMTP id 5so30218pgj.0
+        for <git@vger.kernel.org>; Thu, 23 Feb 2017 11:06:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=CpapTQrr6xrpCwMmfOxbSyzyz7Fn+8rtBN4dmPvY+uc=;
+        b=tiz1b2N+SLncRJ0SnbnLSfuJUMXYXmHxrHdRztsbBwLuzfVQoljiZoBY+/tB4kFybJ
+         sB8ZIn+RffKnzhay7dU1NkX+T8GfyQJ/v1/+GR2sNco2Njz75bK9T7t4YyLKsd+vpv/A
+         +95fTaXMxcDNmHpfDxQUDQV76QV1PX96RSQIZfutHc4sjZTCxC8UvfGvT7C1jNZf8GmS
+         5udt1Z4BvurD4utLd0wjuNn5I+UodUbTQOxA77eCDpxJKmnoREknJBEhDEMpeHnTOSGv
+         A1sHl6tF5fj1OPardPMHGzSYf/b3VWsfA+sL6uD2SlialiZdvPm9ayfE7Z+LxoeSnCX6
+         u8lw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=CpapTQrr6xrpCwMmfOxbSyzyz7Fn+8rtBN4dmPvY+uc=;
+        b=irGWk0DOeIr143LVxNkTG5I52FPM2wS+Z6ofjNMRhYHMAgyslidj7CgVTT2xgMXbHe
+         zsaKhrnjvOnxoLGBJDoox2DIR7omGzsvN9q4vRiw/uWWEpJ8tbnIZcT/T+gqpQPQAMne
+         SqlpM9YwbZyr4GNDsbVshHOOx2Vh73E7W6y7vUOxS7+ASndIA3ZQIFCr7bVn/YnxK5Eg
+         czfhD0QMbcGHg/ml/YbG+NaIppwshinniI+w4dlXdUr5TsmDUpNsWFVtJyqX1d9w2SsS
+         wBNqPL3GxY0qNlObTUesUPUiOB6CitYZcaiOERztpVmJpDlCxlB9gomcSNaz1qZXo6ab
+         lyyQ==
+X-Gm-Message-State: AMke39k+nmZ9UFCnLaEV4mtb8U4IxPpTbn83KpkeFjlR9NvIeCsDq4YKYAFvm5ZSIJNwQA==
+X-Received: by 10.98.24.7 with SMTP id 7mr43037774pfy.11.1487876782222;
+        Thu, 23 Feb 2017 11:06:22 -0800 (PST)
+Received: from localhost ([2620:0:1000:8622:8829:f260:c132:141f])
+        by smtp.gmail.com with ESMTPSA id u84sm11209896pgb.39.2017.02.23.11.06.21
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Thu, 23 Feb 2017 11:06:21 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Jeff King <peff@peff.net>,
+        David Turner <David.Turner@twosigma.com>,
+        "git\@vger.kernel.org" <git@vger.kernel.org>,
+        "sandals\@crustytoothpaste.net" <sandals@crustytoothpaste.net>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH] http(s): automatically try NTLM authentication first
+References: <20170222173936.25016-1-dturner@twosigma.com>
+        <xmqqpoiaasgj.fsf@gitster.mtv.corp.google.com>
+        <97ab9a812f7b46d7b10d4d06f73259d8@exmbdft7.ad.twosigma.com>
+        <xmqq8toyapu6.fsf@gitster.mtv.corp.google.com>
+        <20170222213410.iak43asq775tzr42@sigill.intra.peff.net>
+        <alpine.DEB.2.20.1702231806340.3767@virtualbox>
+Date:   Thu, 23 Feb 2017 11:06:20 -0800
+In-Reply-To: <alpine.DEB.2.20.1702231806340.3767@virtualbox> (Johannes
+        Schindelin's message of "Thu, 23 Feb 2017 18:08:49 +0100 (CET)")
+Message-ID: <xmqqbmts9177.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-        protocol="application/pgp-signature"; boundary="pnkrlpqwfykgz2dp"
-Content-Disposition: inline
-In-Reply-To: <20170223182147.hbsyxsmyijgkqu75@kitenet.net>
-User-Agent: NeoMutt/20161126 (1.7.1)
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
---pnkrlpqwfykgz2dp
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> On Wed, 22 Feb 2017, Jeff King wrote:
+>> This patch drops the useless probe request:
+> ...
+>> but setting http.emptyauth adds back in the useless request. I think
+>> that could be fixed by skipping the empty-auth thing when
+>> http_auth_methods does not have CURLAUTH_NEGOTIATE in it (or perhaps
+>> other methods need it to, so maybe skip it if _just_ BASIC is set).
+>> 
+>> I suspect the patch above could probably be generalized as:
+>> 
+>>   /* cut out methods we know the server doesn't support */
+>>   http_auth_methods &= results.auth_avail;
+>> 
+>> and let curl figure it out from there.
+>
+> Maybe this patch (or a variation thereof) would also be able to fix this
+> problem with the patch:
+>
+> 	https://github.com/git-for-windows/git/issues/1034
+>
+> Short version: for certain servers (that do *not* advertise Negotiate),
+> setting emptyauth to true will result in a failed fetch, without letting
+> the user type in their credentials.
 
-Joey Hess wrote:
-> Linus Torvalds wrote:
-> > What you describe pretty much already requires a pre-image attack,
-> > which the new attack is _not_.
-> >=20
-> > It's not clear that the "good" object can be anything sane.
->=20
-> Generate a regular commit object; use the entire commit object + NUL as t=
-he
-> chosen prefix, and use the identical-prefix collision attack to generate
-> the colliding good/bad objects.
->=20
-> (The size in git's object header is a minor complication. Set the size
-> field to something sufficiently large, and then pad out the colliding
-> objects to that size once they're generated.)
+The issue described in that page looks rather serious.
 
-Sorry! While that would work, it's a useless attack because the good and bad
-commit objects still point to the same tree.
-
-It would be interesting to have such colliding objects, to see what beaks,
-but probably not worth $75k to generate them.
-
---=20
-see shy jo
-
---pnkrlpqwfykgz2dp
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCAAdFiEE6FpfY7MdJMHr8NgcyRDZIiUS48cFAlivKmkACgkQyRDZIiUS
-48fTpQ/8DwlaoNtHG6ECYSNTUX6th1F87Nr4C3NrUvV2YHmF4b36dPNWIb2t/5GB
-wR6jqGGRXdqnb4imBki130ym+iOsN3ooalTi5gP+qEdvxMRQJ0jc8JXlo+gF5zRJ
-Ihu9tMPn0SEsWaGjLNseItsk8YgGx0kgk5GNBfRvfkJ0N1YVrDtRYAUyxLKwG17P
-C6XsAkLuxwLZ7ZmxqSs6uCC2zpFE5WD9awYQ15bHxzU+RXOiIrdncxBjjceBAtKJ
-wEsvO1Fsygf98IR8rrrCC2XeQr0vwZDxUmBGdemM90jAOrZRSHXcxIY89aC9OpNk
-FaEEq550EJJiesLX/1Fe6AWH9EHIRfuC18NO1hYJLsjZwc0m4772+HP7rDkbwdak
-CfQr8eKklRM+1kkLZbcMab3ha7x5hnslTu35BTHfTwJKE+74J+5TmMu1QS5Er3b0
-szPFUXmqTWczBvNkjuzJU5/m7MUWqL/jkqwNSRVUoF9hlf8hRDJkNQuU2uOJfFjw
-ilm1Co2KjyjnYDRX4ENEr6dAMWQwJSW6wpFS6VXP6K5zY+iKGMni6/gGjCKyRZDr
-DiayARO1UokUZ5QVENK3/jVh741ImW367J0EB7C/zlwWpaq/tg2UpoIkwi8IdFdn
-zYpGJSsoft0Uss1Na8tg3oo24cL2wPNALXouGBZQMxhtll1Yq2U=
-=/rSM
------END PGP SIGNATURE-----
-
---pnkrlpqwfykgz2dp--
+I believe that a "variation" has become the first part of a
+two-patch series that appear in the downthread from here.  Perhaps
+you can ask them to test it out (or even better if you have a setup
+you can easily test against yourself)?
