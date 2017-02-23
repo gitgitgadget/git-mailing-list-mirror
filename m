@@ -2,100 +2,114 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9E0232022D
-	for <e@80x24.org>; Thu, 23 Feb 2017 18:01:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9EA2D2022D
+	for <e@80x24.org>; Thu, 23 Feb 2017 18:10:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751353AbdBWSBE (ORCPT <rfc822;e@80x24.org>);
-        Thu, 23 Feb 2017 13:01:04 -0500
-Received: from mail-ot0-f176.google.com ([74.125.82.176]:32917 "EHLO
-        mail-ot0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751049AbdBWR7k (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Feb 2017 12:59:40 -0500
-Received: by mail-ot0-f176.google.com with SMTP id k4so29190709otc.0
-        for <git@vger.kernel.org>; Thu, 23 Feb 2017 09:59:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=INnyEcaHW3NmlVR6m1ui3lH3LEQNIyWa70fUrQqYreg=;
-        b=XEHNf51D7bsE11Jnmv0VUAsU8e5ECbUAFLswpmZh4vKYFXF5NxEgGMtjtUsL2TCmrS
-         YkzptXgqTomuuZmSUawDwfoZadJZLfIHUVkIA7UAxYQXZrhnC911G+WNUqe7SSlHuYS2
-         CyPjBWzmE2j9piwURK/RDkMO5OiiIY+VRu7VTaJM7gS9HGpJ//dQJKU4v89sThEhZH8b
-         57/W5sqQxusYyyT8w1hyduKI62xFmXJBvuJxEruDhwQymLIytDuOdbIthBektUmnD8nR
-         V+eUGxOCJY2CKHo1PhDPqiZcEXryRZsj90pGep/ac/fLuorjorIHGwN/fCGUJR30eb5L
-         nVhQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=INnyEcaHW3NmlVR6m1ui3lH3LEQNIyWa70fUrQqYreg=;
-        b=uDO5qLAsbnAMDp27t2kOfARHdgDoROvT2htGY2VsUSqSCsJfox1TufGflARdeLfdMV
-         n4+Wf64ZCYAiEdtzSe2UIWh+6gg8yqr5XR8lNVvpz5ZSMaHppNQY4cAnthVgfK6i/0I9
-         KgoEcVbOIVyOst+jWBF6Wd0taJgs/faEGOv1VSWe7Gb9WBstINkyNcyyoaLxmvU1QfvH
-         t28PkaPWl2bcI8pa8+klaI8DUTaeWkcaIFS2p/ZDa5QN3hgZlTZkSREyqHQfHTYf3lZ+
-         s+0iSTmJ8rQhodnnfJERGAioIo2vCHWIAw7iErAJ9BRBKtR0JVagdPy+3Hx7pI3ubcIK
-         Sf/Q==
-X-Gm-Message-State: AMke39nxnuQRODv/s7eOIKdsF53jYaUxhbXrIPtNeC3VW2gxhOMsdVmXff4kiWuO+8x3Rya04TtILbYYyx5VsA==
-X-Received: by 10.157.45.194 with SMTP id g60mr18973243otb.87.1487872356719;
- Thu, 23 Feb 2017 09:52:36 -0800 (PST)
-MIME-Version: 1.0
-Received: by 10.182.164.66 with HTTP; Thu, 23 Feb 2017 09:52:36 -0800 (PST)
-In-Reply-To: <20170223173547.qljypk7sdqi37oha@kitenet.net>
-References: <20170223164306.spg2avxzukkggrpb@kitenet.net> <CAPc5daVZ79WWKSw76kxHgDra9a7fSR1AibZa_pvK9aUuuVawLQ@mail.gmail.com>
- <20170223173547.qljypk7sdqi37oha@kitenet.net>
-From:   Linus Torvalds <torvalds@linux-foundation.org>
-Date:   Thu, 23 Feb 2017 09:52:36 -0800
-X-Google-Sender-Auth: SIJs2eu9XC1btpvOlWEqRG0KV7E
-Message-ID: <CA+55aFzFEpi1crykZ33r9f7BsvLt_kiB-CHXOkuCAX=fd4BU-w@mail.gmail.com>
+        id S1751378AbdBWSKr (ORCPT <rfc822;e@80x24.org>);
+        Thu, 23 Feb 2017 13:10:47 -0500
+Received: from kitenet.net ([66.228.36.95]:39556 "EHLO kitenet.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751224AbdBWSK2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Feb 2017 13:10:28 -0500
+X-Question: 42
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=joeyh.name; s=mail;
+        t=1487873424; bh=BBJzA6T/c8ceitTX6mBMupjMxXFprI76stJBFMPg4P0=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=F4gFjMCKPwWUOlY1zyeGmBWHenCSC2LFZnk7hU4EHjIVOuh7lRpHTDtg7xMpmUw2H
+         Gu5YwNc+TSXhyYUmRDNDtCXYKTNefwE/cLlubWyDQ2aojPrjNRXBTzwngoi4LvMKyw
+         TlSXal+1mU/cudWWzPVE44b5e0RpmXBkA5ZUxt2Y=
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=joeyh.name; s=mail;
+        t=1487873418; bh=BBJzA6T/c8ceitTX6mBMupjMxXFprI76stJBFMPg4P0=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=bwjhgiS4G43/h6V1JnmJdvH+0fDZLV+GkjWfz69wH/rJFD0t5HAW/fHjBjLKtN0RK
+         aBOj5meDaiJNTscc83HGfht72IZ/tuhJYSxJzGlc0/Bpuovxd1giZgqhn+YDXv03H3
+         ev3S8jD+h2Ur4kSKK1Gw5JsBl2+T5G5/UtkrDnXQ=
+Date:   Thu, 23 Feb 2017 14:10:18 -0400
+From:   Joey Hess <id@joeyh.name>
+To:     Linus Torvalds <torvalds@linux-foundation.org>
+Cc:     Git Mailing List <git@vger.kernel.org>
 Subject: Re: SHA1 collisions found
-To:     Joey Hess <id@joeyh.name>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Message-ID: <20170223181018.ns4vyosgzmuoyiva@kitenet.net>
+References: <20170223164306.spg2avxzukkggrpb@kitenet.net>
+ <CA+55aFxJGDpJXqpcoPnwvzcn_fB-zaggj=w7P2At-TOt4buOqw@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha256;
+        protocol="application/pgp-signature"; boundary="2hqzzl4z3tzahsqv"
+Content-Disposition: inline
+In-Reply-To: <CA+55aFxJGDpJXqpcoPnwvzcn_fB-zaggj=w7P2At-TOt4buOqw@mail.gmail.com>
+User-Agent: NeoMutt/20161126 (1.7.1)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Feb 23, 2017 at 9:35 AM, Joey Hess <id@joeyh.name> wrote:
->
-> Attacks using this SHA1 break will look something more like:
 
-We don't actually know what the break is, but it's likely that you
-can't actually do what you think you can do:
+--2hqzzl4z3tzahsqv
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> * I push a "bad" object to a repo on github I set up under a
->   pseudonym.
-> * I publish a "good" object in a commit and convince the maintainer to
->   merge it.
+Linus Torvalds wrote:
+> I haven't seen the attack yet, but git doesn't actually just hash the
+> data, it does prepend a type/length field to it. That usually tends to
+> make collision attacks much harder, because you either have to make
+> the resulting size the same too, or you have to be able to also edit
+> the size field in the header.
 
-It's not clear that the "good" object can be anything sane.
+I have some sha1 collisions (and other fun along these lines) in=20
+https://github.com/joeyh/supercollider
 
-What you describe pretty much already requires a pre-image attack,
-which the new attack is _not_.
+That includes two files with the same SHA and size, which do get
+different blobs thanks to the way git prepends the header to the
+content.
 
-The new attack doesn't have a controlled "good" case, you need two
-different objects that both have "near-collision" blocks in the
-middle. I don't know what the format of those near-collision blocks
-are, but it's a big problem.
+joey@darkstar:~/tmp/supercollider>sha1sum  bad.pdf good.pdf=20
+d00bbe65d80f6d53d5c15da7c6b4f0a655c5a86a  bad.pdf
+d00bbe65d80f6d53d5c15da7c6b4f0a655c5a86a  good.pdf
+joey@darkstar:~/tmp/supercollider>git ls-tree HEAD
+100644 blob ca44e9913faf08d625346205e228e2265dd12b65	bad.pdf
+100644 blob 5f90b67523865ad5b1391cb4a1c010d541c816c1	good.pdf
 
-You blithely just say "I create a good object". It's not that simple.
-If it was, this would be a pre-image attack.
+While appending identical data to these colliding files does generate
+other collisions, prepending data does not.
 
-So basically, the attack needs some kind of random binary garbage in
-*both* objects in the middle.
+It would cost 6500 CPU years + 100 GPU years to generate valid colliding
+git objects using the methods of the paper's authors. That might be cost
+effective if it helped get a backdoor into eg, the kernel.
 
-That's why pdf's are the classic model for showing these attacks: it's
-easy to insert garbage in the middle of a pdf that is invisible.
+>  (b) we can probably easily add some extra sanity checks to the opaque
+> data we do have, to make it much harder to do the hiding of random
+> data that these attacks pretty much always depend on.
 
-In a psf, you can just define a bitmap that you don't use for printing
-- but you can use them to then make a decision about what to print -
-making the printed version of the pdf look radically different in ways
-that are not so much _directly_ about the invisible block itself.
+For example, git fsck does warn about a commit message with opaque
+data hidden after a NUL. But, git show/merge/pull give no indication
+that something funky is going on when working with such commits.
 
-              Linus
+--=20
+see shy jo
+
+--2hqzzl4z3tzahsqv
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCAAdFiEE6FpfY7MdJMHr8NgcyRDZIiUS48cFAlivJYoACgkQyRDZIiUS
+48ejOg//YbPNeKikwVYfHkChjjCMksDKcQgfgzD+GesXI+Ejtap/SMB3Nrl9c0nP
+g2iehkZemwsa1UAhWP2p8cyskhc9DzPLbmMsLbKc8XzqvbeyG4WKaukDLIul2KGS
++fPAGU81y0oGn31DvxmExkyfYkUYZQo99B2bbfeKnMoxGvJUnv9dvSI6Ul9FRaaq
+jMZtDELmpJJcBFhOkL1jASzUIGYfH4jzu1sjRss2YArsotTW0IpK5bS5tS9ZtnZM
+O8jh57eYgF1TFZruCfasPUvYE0S2kDNfe8k/nKt62Qat+LtcJ1t6EFaNh+HjFJRt
+wXBt6UJ6KPhzVnWoEkKdQuuUeOuEAbfxkbjAOCSSaJ3pUXA7R1j8e4ixl3dGeAO1
+F7U1NATh6PU/J2L8+rRDl9ZdXnPK+Ru4J7yyrYbQPv96mLbZqS51JFS6vSTkXNzL
+Yfp7LqWrg21doMpP02m3Cs+vnJlVptXgWqqa2rXYIlWG2KrvB/mnjypfXkffjGo6
+Cb+KhI2nnv7pAS5wHhZbMXeBS2W/i44ToOCNoNVfyU/JtDR2uYV7MQuW4eMCWcp0
+qH5Z9EDQkMbAAMdySQggs5BRE/ehD350pLP78+825b7u5AsWCkdk3uPiAOIqAslm
+4AMYOcVO56duC0oeoOQKaJONqXCxLcz+t3GP4Gv99zOmtX7BPRY=
+=Y5k3
+-----END PGP SIGNATURE-----
+
+--2hqzzl4z3tzahsqv--
