@@ -2,94 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 249282022D
-	for <e@80x24.org>; Thu, 23 Feb 2017 16:41:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 164EC2022D
+	for <e@80x24.org>; Thu, 23 Feb 2017 16:52:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751125AbdBWQlg (ORCPT <rfc822;e@80x24.org>);
-        Thu, 23 Feb 2017 11:41:36 -0500
-Received: from mxo1.dft.dmz.twosigma.com ([208.77.212.183]:49623 "EHLO
-        mxo1.dft.dmz.twosigma.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751041AbdBWQlf (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Feb 2017 11:41:35 -0500
-Received: from localhost (localhost [127.0.0.1])
-        by mxo1.dft.dmz.twosigma.com (Postfix) with ESMTP id 0CDB4100119;
-        Thu, 23 Feb 2017 16:31:14 +0000 (GMT)
-X-Virus-Scanned: Debian amavisd-new at twosigma.com
-Received: from mxo1.dft.dmz.twosigma.com ([127.0.0.1])
-        by localhost (mxo1.dft.dmz.twosigma.com [127.0.0.1]) (amavisd-new, port 10024)
-        with ESMTP id gN35LCfhLMMn; Thu, 23 Feb 2017 16:31:13 +0000 (GMT)
-Received: from exmbdft5.ad.twosigma.com (exmbdft5.ad.twosigma.com [172.22.1.56])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mxo1.dft.dmz.twosigma.com (Postfix) with ESMTPS id EE96780035;
-        Thu, 23 Feb 2017 16:31:13 +0000 (GMT)
-Received: from exmbdft7.ad.twosigma.com (172.22.2.43) by
- exmbdft5.ad.twosigma.com (172.22.1.56) with Microsoft SMTP Server (TLS) id
- 15.0.1263.5; Thu, 23 Feb 2017 16:31:13 +0000
-Received: from exmbdft7.ad.twosigma.com ([fe80::552e:5f62:35e9:7955]) by
- exmbdft7.ad.twosigma.com ([fe80::552e:5f62:35e9:7955%23]) with mapi id
- 15.00.1263.000; Thu, 23 Feb 2017 16:31:13 +0000
-From:   David Turner <David.Turner@twosigma.com>
-To:     'Jeff King' <peff@peff.net>
-CC:     Junio C Hamano <gitster@pobox.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        "sandals@crustytoothpaste.net" <sandals@crustytoothpaste.net>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: RE: [PATCH 2/2] http: add an "auto" mode for http.emptyauth
-Thread-Topic: [PATCH 2/2] http: add an "auto" mode for http.emptyauth
-Thread-Index: AQHSjWUg+yBJWek6a0SPI8i/WVMpNaF1yAXggAAIDgCAAPjBoA==
-Date:   Thu, 23 Feb 2017 16:31:13 +0000
-Message-ID: <092a87cf9aa94d53aebf42facb75b985@exmbdft7.ad.twosigma.com>
-References: <20170222233333.dx5lknw4fpopu5hy@sigill.intra.peff.net>
- <20170222234059.iajn2zuwzkzjxit2@sigill.intra.peff.net>
- <b5778a7988ad4dfa9adfc8d312432189@exmbdft7.ad.twosigma.com>
- <20170223013746.lturqad7lnehedb4@sigill.intra.peff.net>
-In-Reply-To: <20170223013746.lturqad7lnehedb4@sigill.intra.peff.net>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-ms-exchange-transport-fromentityheader: Hosted
-x-originating-ip: [172.20.60.10]
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+        id S1751320AbdBWQwo (ORCPT <rfc822;e@80x24.org>);
+        Thu, 23 Feb 2017 11:52:44 -0500
+Received: from kitenet.net ([66.228.36.95]:33944 "EHLO kitenet.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751119AbdBWQwn (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Feb 2017 11:52:43 -0500
+X-Greylist: delayed 389 seconds by postgrey-1.27 at vger.kernel.org; Thu, 23 Feb 2017 11:52:43 EST
+X-Question: 42
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=joeyh.name; s=mail;
+        t=1487868372; bh=oQwLSpCbsNaFhIPDGiYNLoO0PCRl7hfFCt3GizIGtRQ=;
+        h=Date:From:To:Subject:From;
+        b=E0fhJWRntZw78fZ3X5xo8uZjh9aTFGu5Yq/vJF8sAVjkBIxoQz2uuR4KFfixv+PjC
+         6kabGRnRNzPS7n5R99WVZ9dePTm2RBD2DybZYJfHAkWtTr4dp+H0a2K/PmtY1a1vV/
+         F0hyLOtJfcWZ3QqnJdSEp/nZa+67yPbTQqGTkzq4=
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=joeyh.name; s=mail;
+        t=1487868186; bh=oQwLSpCbsNaFhIPDGiYNLoO0PCRl7hfFCt3GizIGtRQ=;
+        h=Date:From:To:Subject:From;
+        b=eqe90P2w94P4JixsYVdqLU91BS5nCj7f+PqnwxcEV23mYh6gdoeSpe8hK8TWjNgb/
+         en1a7hhM4OY9eBVQYqpVHq99NNlClKkjSscMrdsIByVG1h6v6/urDOzsm4aBo7XTMI
+         Os8JoeF20aYn+LWN30fQdyVTnDb/vEHpgl/uk76I=
+Date:   Thu, 23 Feb 2017 12:43:06 -0400
+From:   Joey Hess <id@joeyh.name>
+To:     git@vger.kernel.org
+Subject: SHA1 collisions found
+Message-ID: <20170223164306.spg2avxzukkggrpb@kitenet.net>
 MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha256;
+        protocol="application/pgp-signature"; boundary="2gtyzd63bduirdmw"
+Content-Disposition: inline
+User-Agent: NeoMutt/20161126 (1.7.1)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-DQoNCj4gLS0tLS1PcmlnaW5hbCBNZXNzYWdlLS0tLS0NCj4gRnJvbTogSmVmZiBLaW5nIFttYWls
-dG86cGVmZkBwZWZmLm5ldF0NCj4gU2VudDogV2VkbmVzZGF5LCBGZWJydWFyeSAyMiwgMjAxNyA4
-OjM4IFBNDQo+IFRvOiBEYXZpZCBUdXJuZXIgPERhdmlkLlR1cm5lckB0d29zaWdtYS5jb20+DQo+
-IENjOiBKdW5pbyBDIEhhbWFubyA8Z2l0c3RlckBwb2JveC5jb20+OyBnaXRAdmdlci5rZXJuZWwu
-b3JnOw0KPiBzYW5kYWxzQGNydXN0eXRvb3RocGFzdGUubmV0OyBKb2hhbm5lcyBTY2hpbmRlbGlu
-DQo+IDxqb2hhbm5lcy5zY2hpbmRlbGluQGdteC5kZT47IEVyaWMgU3Vuc2hpbmUgPHN1bnNoaW5l
-QHN1bnNoaW5lY28uY29tPg0KPiBTdWJqZWN0OiBSZTogW1BBVENIIDIvMl0gaHR0cDogYWRkIGFu
-ICJhdXRvIiBtb2RlIGZvciBodHRwLmVtcHR5YXV0aA0KPiANCj4gT24gVGh1LCBGZWIgMjMsIDIw
-MTcgYXQgMDE6MTY6MzNBTSArMDAwMCwgRGF2aWQgVHVybmVyIHdyb3RlOg0KPiANCj4gPiBJIGRv
-bid0IGtub3cgZW5vdWdoIGFib3V0IGhvdyBsaWJjdXJsIGhhbmRsZXMgYXV0aGVudGljYXRpb24g
-dG8ga25vdw0KPiA+IHdoZXRoZXIgdGhlc2UgcGF0Y2hlcyBhcmUgYSBnb29kIGlkZWEsIGJ1dCBJ
-IGhhdmUgYSBtaW5vciBjb21tZW50DQo+IGFueXdheS4NCj4gDQo+IEFzIHNvbWVib2R5IHdobyBp
-cyB1c2luZyBub24tQmFzaWMgYXV0aCwgY2FuIHlvdSBhcHBseSB0aGVzZSBwYXRjaGVzIGFuZA0K
-PiBzaG93IHVzIHRoZSBvdXRwdXQgb2Y6DQo+IA0KPiAgICBHSVRfVFJBQ0VfQ1VSTD0xIFwNCj4g
-ICAgZ2l0IGxzLXJlbW90ZSBodHRwczovL3lvdXItc2VydmVyIDI+JjEgPi9kZXYvbnVsbCB8DQo+
-ICAgIGVncmVwICcoU2VuZHxSZWN2KSBoZWFkZXI6IChHRVR8SFRUUHxBdXRoKScNCj4gDQo+ICh3
-aXRob3V0IGh0dHAuZW1wdHlhdXRoIHR1cm5lZCBvbiwgb2J2aW91c2x5KS4NCg0KVGhlIHJlc3Vs
-dHMgYXBwZWFyIHRvIGJlIGlkZW50aWNhbCB3aXRoIGFuZCB3aXRob3V0DQp0aGUgcGF0Y2guICBX
-aXRoIGh0dHAuZW1wdHlhdXRoIHR1cm5lZCBvZmYsDQoxNjoyNzoyOC4yMDg5MjQgaHR0cC5jOjUy
-NCAgICAgICAgICAgICAgPT4gU2VuZCBoZWFkZXI6IEdFVCAvaW5mby9yZWZzP3NlcnZpY2U9Z2l0
-LXVwbG9hZC1wYWNrIEhUVFAvMS4xDQoxNjoyNzoyOC4yMTI4NzIgaHR0cC5jOjUyNCAgICAgICAg
-ICAgICAgPD0gUmVjdiBoZWFkZXI6IEhUVFAvMS4xIDQwMSBBdXRob3JpemF0aW9uIFJlcXVpcmVk
-DQpVc2VybmFtZSBmb3IgJ2h0dHA6Ly9naXQnOiBbSSBqdXN0IHByZXNzZWQgZW50ZXJdDQpQYXNz
-d29yZCBmb3IgJ2h0dHA6Ly9naXQnOiBbZGl0dG9dDQoxNjoyNzoyOS45Mjg4NzIgaHR0cC5jOjUy
-NCAgICAgICAgICAgICAgPT4gU2VuZCBoZWFkZXI6IEdFVCAvaW5mby9yZWZzP3NlcnZpY2U9Z2l0
-LXVwbG9hZC1wYWNrIEhUVFAvMS4xDQoxNjoyNzoyOS45Mjk3ODcgaHR0cC5jOjUyNCAgICAgICAg
-ICAgICAgPD0gUmVjdiBoZWFkZXI6IEhUVFAvMS4xIDQwMSBBdXRob3JpemF0aW9uIFJlcXVpcmVk
-DQoNCihpZiBzb21lb25lIGVsc2Ugd2FudHMgdG8gcmVwbGljYXRlIHRoaXMsIGRlbGV0ZSA+L2Rl
-di9udWxsIGJpdCANCmZyb20gSmVmZidzIHNoZWxsIHNuaXBwZXQpDQoNCg0K
+
+--2gtyzd63bduirdmw
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+https://shattered.io/static/shattered.pdf
+https://freedom-to-tinker.com/2017/02/23/rip-sha-1/
+
+IIRC someone has been working on parameterizing git's SHA1 assumptions
+so a repository could eventually use a more secure hash. How far has
+that gotten? There are still many "40" constants in git.git HEAD.
+
+In the meantime, git commit -S, and checks that commits are signed,
+seems like the only way to mitigate against attacks such as
+the ones described in the threads at
+https://joeyh.name/blog/sha-1/ and
+https://joeyh.name/blog/entry/size_of_the_git_sha1_collision_attack_surface/
+
+Since we now have collisions in valid PDF files, collisions in valid git
+commit and tree objects are probably able to be constructed.
+
+--=20
+see shy jo
+
+--2gtyzd63bduirdmw
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCAAdFiEE6FpfY7MdJMHr8NgcyRDZIiUS48cFAlivERoACgkQyRDZIiUS
+48eaoA//chGZEsK1QlW/tDMeG21rQ5Qz/RoI76UYwWLLouVqzeTxaxfYRgjj7QUG
+6azLobp0zx0UmLwviJ4z+f+sYWbuM1z5Gucz2MwPSsaGWOjhs0FbxFwtS1Aldm6D
+bx6ZB6J5VdQAXO+Pxul2/0xu5aAoNIgjmw9bXzo7IdtAotreRLCoWE+VWuwjEoc4
+RUm1/jgDf4NQAMRVMo7+EA02Lm2VXK9jJR5wjSOjneCqdUw8s8vWfDwSx5NDi0NE
+Hgwrx0f+dMrs43UUIHLlLXGT8suVuwvCCX2ujIwzPs2lmBHH7XPsZ+yynWVg8ZVZ
+YwH9esVOAR+q8JiYoHOFb/okHPgbiboMYBUXJiE4vYg4KbVRvVQVYQF1p8OLk3/r
+046oWrBQFofxABRXvSdQbah9OL5M1TW3n40eIozTnS+s6Hw2cdU44EGw5PLkSHb2
+oSgHiC7GQe/L0fpC2NUO/ut8QNv7nKDJKp0CzYdvQUpigszMvfJumy64qEPK8IoS
+Rx8AuaSt6FzBZkaNhHTbouA/iO9IiIdsz4hMuQsffE9zdbqzaSAvKQwquA9zaTFA
+dz1gLh1If6m/+8H8b1z4icgz+CWHcEkOX9/+eRISiBX/DqH2XoqtPpiOeXpGDAmW
+C99uDdQcyWpE0kZ1VHLwiv92ZYw8SkEo7Sk8cjYgGGOO1Sk+uGw=
+=R1UC
+-----END PGP SIGNATURE-----
+
+--2gtyzd63bduirdmw--
