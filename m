@@ -2,87 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 07F732022D
-	for <e@80x24.org>; Thu, 23 Feb 2017 17:40:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9E0232022D
+	for <e@80x24.org>; Thu, 23 Feb 2017 18:01:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751283AbdBWRkO (ORCPT <rfc822;e@80x24.org>);
-        Thu, 23 Feb 2017 12:40:14 -0500
-Received: from mail-oi0-f52.google.com ([209.85.218.52]:33703 "EHLO
-        mail-oi0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751267AbdBWRkN (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Feb 2017 12:40:13 -0500
-Received: by mail-oi0-f52.google.com with SMTP id 2so21204782oif.0
-        for <git@vger.kernel.org>; Thu, 23 Feb 2017 09:38:54 -0800 (PST)
+        id S1751353AbdBWSBE (ORCPT <rfc822;e@80x24.org>);
+        Thu, 23 Feb 2017 13:01:04 -0500
+Received: from mail-ot0-f176.google.com ([74.125.82.176]:32917 "EHLO
+        mail-ot0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751049AbdBWR7k (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Feb 2017 12:59:40 -0500
+Received: by mail-ot0-f176.google.com with SMTP id k4so29190709otc.0
+        for <git@vger.kernel.org>; Thu, 23 Feb 2017 09:59:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:sender:in-reply-to:references:from:date:message-id
          :subject:to:cc;
-        bh=TK+gCH34Ww5WIFs14oYCtMy9yIF4waykz7TRi9bBxOg=;
-        b=GRU7iJ2tShUxV3KrW14vcmbELektKp1dGVJqSUQen+adkkA1ZsD5ixeHNI87Pb+H0v
-         jzLmxaRTAdA3eYpO6VnPYYv9ZcAk/1e+8pfNfsxJKFuVLMC5ZMGy1ZCRwH+zSyTGfFzE
-         CcHRqi7qc4LCNcnSm4gxOrA2QH3+yZi2hPLakqQX1hN8JipEaFJlIHQfIwcTSfAtnU6s
-         2Cq+auKQDOxsF9eOfTMDt/bTWfvYEkGSYS5C7YaDNwOMtb+s5kDb8fsMrro9ZH4sAtHd
-         7gwraV69Deatknt/zRsIcrTYiC6njceGhzmpy2oUDtqJ+HWY+9FIPfEOrcfiLLZLHh5W
-         HOBg==
+        bh=INnyEcaHW3NmlVR6m1ui3lH3LEQNIyWa70fUrQqYreg=;
+        b=XEHNf51D7bsE11Jnmv0VUAsU8e5ECbUAFLswpmZh4vKYFXF5NxEgGMtjtUsL2TCmrS
+         YkzptXgqTomuuZmSUawDwfoZadJZLfIHUVkIA7UAxYQXZrhnC911G+WNUqe7SSlHuYS2
+         CyPjBWzmE2j9piwURK/RDkMO5OiiIY+VRu7VTaJM7gS9HGpJ//dQJKU4v89sThEhZH8b
+         57/W5sqQxusYyyT8w1hyduKI62xFmXJBvuJxEruDhwQymLIytDuOdbIthBektUmnD8nR
+         V+eUGxOCJY2CKHo1PhDPqiZcEXryRZsj90pGep/ac/fLuorjorIHGwN/fCGUJR30eb5L
+         nVhQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
          :date:message-id:subject:to:cc;
-        bh=TK+gCH34Ww5WIFs14oYCtMy9yIF4waykz7TRi9bBxOg=;
-        b=CNRpOLudKpkyeK6e4wWdvd6F678ObJdOBbgNIJdYwu/vgeUoal26O+tKlUZyxCaJE3
-         3WP+tpN5crwUlqpE2mskU/zua1PVA2yrvyQqwa3iOHARx7Ias++IGuy5IInyC+6RNCje
-         ++FvaB98t7CIVFM1Ir/GOKDxA8+nAHnDWvxYcFeniJNP94lPKv5c5POOkSe7y+/ALPwX
-         ChyWxMULRuOj+LCx60M//C3eyzA1qHs8dqjkqTbaLd9J1pYGSB3K7CKmTr/c8d7VQ4OJ
-         EbDCkYnWyLddoqnMzxEvgkKAEDsziuvv5XDYKZFZ6PU/JUZl3XapeqvUT4a185KmC9UO
-         3Nfg==
-X-Gm-Message-State: AMke39mRsYL+LtMYxp/WCcms6MbYaMQDJ+MDwVqJ0B5EouWL16LtTb2qPvupjERQymTBvlKgmLCF7ruC9PYOOw==
-X-Received: by 10.202.232.210 with SMTP id f201mr4065121oih.60.1487870988633;
- Thu, 23 Feb 2017 09:29:48 -0800 (PST)
+        bh=INnyEcaHW3NmlVR6m1ui3lH3LEQNIyWa70fUrQqYreg=;
+        b=uDO5qLAsbnAMDp27t2kOfARHdgDoROvT2htGY2VsUSqSCsJfox1TufGflARdeLfdMV
+         n4+Wf64ZCYAiEdtzSe2UIWh+6gg8yqr5XR8lNVvpz5ZSMaHppNQY4cAnthVgfK6i/0I9
+         KgoEcVbOIVyOst+jWBF6Wd0taJgs/faEGOv1VSWe7Gb9WBstINkyNcyyoaLxmvU1QfvH
+         t28PkaPWl2bcI8pa8+klaI8DUTaeWkcaIFS2p/ZDa5QN3hgZlTZkSREyqHQfHTYf3lZ+
+         s+0iSTmJ8rQhodnnfJERGAioIo2vCHWIAw7iErAJ9BRBKtR0JVagdPy+3Hx7pI3ubcIK
+         Sf/Q==
+X-Gm-Message-State: AMke39nxnuQRODv/s7eOIKdsF53jYaUxhbXrIPtNeC3VW2gxhOMsdVmXff4kiWuO+8x3Rya04TtILbYYyx5VsA==
+X-Received: by 10.157.45.194 with SMTP id g60mr18973243otb.87.1487872356719;
+ Thu, 23 Feb 2017 09:52:36 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.182.164.66 with HTTP; Thu, 23 Feb 2017 09:29:48 -0800 (PST)
-In-Reply-To: <CA+55aFxJGDpJXqpcoPnwvzcn_fB-zaggj=w7P2At-TOt4buOqw@mail.gmail.com>
-References: <20170223164306.spg2avxzukkggrpb@kitenet.net> <CA+55aFxJGDpJXqpcoPnwvzcn_fB-zaggj=w7P2At-TOt4buOqw@mail.gmail.com>
+Received: by 10.182.164.66 with HTTP; Thu, 23 Feb 2017 09:52:36 -0800 (PST)
+In-Reply-To: <20170223173547.qljypk7sdqi37oha@kitenet.net>
+References: <20170223164306.spg2avxzukkggrpb@kitenet.net> <CAPc5daVZ79WWKSw76kxHgDra9a7fSR1AibZa_pvK9aUuuVawLQ@mail.gmail.com>
+ <20170223173547.qljypk7sdqi37oha@kitenet.net>
 From:   Linus Torvalds <torvalds@linux-foundation.org>
-Date:   Thu, 23 Feb 2017 09:29:48 -0800
-X-Google-Sender-Auth: 10pO5QH2IKHYKPrsgOftaOOWTi8
-Message-ID: <CA+55aFxjY7mv7YPLZwit7bEhC3VqpEDk1YSRFwSGOEKVw13x4w@mail.gmail.com>
+Date:   Thu, 23 Feb 2017 09:52:36 -0800
+X-Google-Sender-Auth: SIJs2eu9XC1btpvOlWEqRG0KV7E
+Message-ID: <CA+55aFzFEpi1crykZ33r9f7BsvLt_kiB-CHXOkuCAX=fd4BU-w@mail.gmail.com>
 Subject: Re: SHA1 collisions found
 To:     Joey Hess <id@joeyh.name>
-Cc:     Git Mailing List <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Feb 23, 2017 at 9:19 AM, Linus Torvalds
-<torvalds@linux-foundation.org> wrote:
+On Thu, Feb 23, 2017 at 9:35 AM, Joey Hess <id@joeyh.name> wrote:
 >
-> I don't think you'd necessarily want to change the size of the hash.
-> You can use a different hash and just use the same 160 bits from it.
+> Attacks using this SHA1 break will look something more like:
 
-Side note: I do believe that in practice you should just change the
-size of the hash too, I'm just saying that the size of the hash and
-the choice of the hash algorithm are independent issues.
+We don't actually know what the break is, but it's likely that you
+can't actually do what you think you can do:
 
-So you *could* just use  something like SHA3-256, but then pick the
-first 160 bits.
+> * I push a "bad" object to a repo on github I set up under a
+>   pseudonym.
+> * I publish a "good" object in a commit and convince the maintainer to
+>   merge it.
 
-Realistically, changing the few hardcoded sizes internally in git is
-likely the least problem in switching hashes.
+It's not clear that the "good" object can be anything sane.
 
-So what you'd probably do is switch to a 256-bit hash, use that
-internally and in the native git database, and then by default only
-*show* the hash as a 40-character hex string (kind of like how we
-already abbreviate things in many situations).
+What you describe pretty much already requires a pre-image attack,
+which the new attack is _not_.
 
-That way tools around git don't even see the change unless passed in
-some special "--full-hash" argument (or "--abbrev=64" or whatever -
-the default being that we abbreviate to 40).
+The new attack doesn't have a controlled "good" case, you need two
+different objects that both have "near-collision" blocks in the
+middle. I don't know what the format of those near-collision blocks
+are, but it's a big problem.
 
-               Linus
+You blithely just say "I create a good object". It's not that simple.
+If it was, this would be a pre-image attack.
+
+So basically, the attack needs some kind of random binary garbage in
+*both* objects in the middle.
+
+That's why pdf's are the classic model for showing these attacks: it's
+easy to insert garbage in the middle of a pdf that is invisible.
+
+In a psf, you can just define a bitmap that you don't use for printing
+- but you can use them to then make a decision about what to print -
+making the printed version of the pdf look radically different in ways
+that are not so much _directly_ about the invisible block itself.
+
+              Linus
