@@ -2,103 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4D54F2022D
-	for <e@80x24.org>; Thu, 23 Feb 2017 20:48:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6E2292022D
+	for <e@80x24.org>; Thu, 23 Feb 2017 20:48:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751297AbdBWUsS (ORCPT <rfc822;e@80x24.org>);
-        Thu, 23 Feb 2017 15:48:18 -0500
-Received: from sunbase.org ([178.79.142.16]:58298 "EHLO sunbase.org"
+        id S1751279AbdBWUsR (ORCPT <rfc822;e@80x24.org>);
+        Thu, 23 Feb 2017 15:48:17 -0500
+Received: from cloud.peff.net ([104.130.231.41]:32847 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751228AbdBWUsQ (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1751259AbdBWUsQ (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 23 Feb 2017 15:48:16 -0500
-Received: from sunny by sunbase.org with local (Exim 4.84_2)
-        (envelope-from <sunny@sunbase.org>)
-        id 1ch0Ie-0003rE-Ro; Thu, 23 Feb 2017 20:47:40 +0000
-Date:   Thu, 23 Feb 2017 21:47:40 +0100
-From:   =?utf-8?Q?=C3=98yvind_A=2E?= Holm <sunny@sunbase.org>
-To:     Linus Torvalds <torvalds@linux-foundation.org>
-Cc:     Jeff King <peff@peff.net>, Joey Hess <id@joeyh.name>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: SHA1 collisions found
-Message-ID: <20170223204739.f6aqri3l2fydxe2b@sunbase.org>
-Mail-Followup-To: =?utf-8?Q?=C3=98yvind_A=2E?= Holm <sunny@sunbase.org>,
-        Linus Torvalds <torvalds@linux-foundation.org>,
-        Jeff King <peff@peff.net>, Joey Hess <id@joeyh.name>,
-        Git Mailing List <git@vger.kernel.org>
-References: <20170223164306.spg2avxzukkggrpb@kitenet.net>
- <CAPc5daVZ79WWKSw76kxHgDra9a7fSR1AibZa_pvK9aUuuVawLQ@mail.gmail.com>
- <20170223173547.qljypk7sdqi37oha@kitenet.net>
- <CA+55aFzFEpi1crykZ33r9f7BsvLt_kiB-CHXOkuCAX=fd4BU-w@mail.gmail.com>
- <20170223182147.hbsyxsmyijgkqu75@kitenet.net>
- <CA+55aFxckeEW1ePcebrgG4iN4Lp62A2vU6tA=xnSDC_BnKQiCQ@mail.gmail.com>
- <20170223184637.xr74k42vc6y2pmse@sigill.intra.peff.net>
- <CA+55aFx=0EVfSG2iEKKa78g3hFN_yZ+L_FRm4R749nNAmTGO9w@mail.gmail.com>
+Received: (qmail 16657 invoked by uid 109); 23 Feb 2017 20:48:07 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 23 Feb 2017 20:48:07 +0000
+Received: (qmail 15817 invoked by uid 111); 23 Feb 2017 20:48:10 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 23 Feb 2017 15:48:10 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 23 Feb 2017 15:48:04 -0500
+Date:   Thu, 23 Feb 2017 15:48:04 -0500
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        David Turner <David.Turner@twosigma.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>,
+        "sandals@crustytoothpaste.net" <sandals@crustytoothpaste.net>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH] http(s): automatically try NTLM authentication first
+Message-ID: <20170223204804.syj6tgjdrgmqdzna@sigill.intra.peff.net>
+References: <20170222173936.25016-1-dturner@twosigma.com>
+ <xmqqpoiaasgj.fsf@gitster.mtv.corp.google.com>
+ <97ab9a812f7b46d7b10d4d06f73259d8@exmbdft7.ad.twosigma.com>
+ <xmqq8toyapu6.fsf@gitster.mtv.corp.google.com>
+ <20170222213410.iak43asq775tzr42@sigill.intra.peff.net>
+ <alpine.DEB.2.20.1702231806340.3767@virtualbox>
+ <20170223194237.eckkpiqv7inuz7un@sigill.intra.peff.net>
+ <xmqqlgsw7iey.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-        protocol="application/pgp-signature"; boundary="os2ytfitvwy7hsm4"
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CA+55aFx=0EVfSG2iEKKa78g3hFN_yZ+L_FRm4R749nNAmTGO9w@mail.gmail.com>
-OpenPGP: id=94A506E5; url=http://www.sunbase.org/pubkey.asc
-X-Request-PGP: http://www.sunbase.org/pubkey.asc
-User-Agent: NeoMutt/20170206-255-40b62d (1.7.2)
+In-Reply-To: <xmqqlgsw7iey.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Thu, Feb 23, 2017 at 12:37:25PM -0800, Junio C Hamano wrote:
 
---os2ytfitvwy7hsm4
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> Jeff King <peff@peff.net> writes:
+> 
+> > I suspect it isn't enough to help without 2/2. This will tell curl that
+> > the server does not do Negotiate, so it will skip the probe request. But
+> > Git will still feed curl the bogus empty credential.
+> >
+> > That's what 2/2 tries to fix: only kick in the emptyAuth hack when there
+> > is something besides Basic[1] to try. The way it is written adds an
+> 
+> In your [1] you wanted to mention that Digest would have the same
+> property as Basic, or something like that?
 
-On 2017-02-23 11:09:32, Linus Torvalds wrote:
-> I'm aware of the fsck checks, but I have to admit I wasn't aware of=20
-> 'transfer.fsckobjects'. I should turn that on myself.
->
-> Or maybe git should just turn it on by default?
+Oops, yeah. What I was going to say is that we may want a list of auth
+types where we _do_ want the hack on, rather than ones where we know it
+does not work. People are more likely to notice when the list is wrong,
+then.
 
-The problem with this is that there are many repos with errors out=20
-there, for example coreutils.git and nasm.git, which complains about=20
-"missingSpaceBeforeDate: invalid author/committer line - missing space=20
-before date".
+> > But if we are worried about turning on emptyAuth everywhere, the auto
+> > behavior could be tied to emptyauth=true (and have something like
+> > "emptyauth=always" to _really_ force it). I don't have an opinion there.
+> 
+> I do not have a strong opinion, either, but it sounds like that even
+> the "disable emptyAuth hack if the server is Basic only" variant
+> would be much better than setting emptyAuth on by default.  At least
+> the user whose issue was reported in Dscho's message would be fixed
+> by such a variant, I would think (i.e. talking to a server with no
+> Negotiate and emptyAuth set to true results in no attempt to give
+> the user a chance to tell who s/he is --- your 2/2 will turn
+> emptyAuth off in that case).
 
-There are also lots of repositories bitten by the Github bug from back=20
-in 2011 where they zero-padded the file modes, git clone aborts with=20
-"zeroPaddedFilemode: contains zero-padded file modes".
+Yes, I agree that the "auto" behavior is better than defaulting to
+"true". I am speaking from the perspective of git.git, which is
+currently defaulting to "false". It is not clear to me if "auto" is
+better than "false" because of the security implications.
 
-Paranoid as I am, I'm using fetch.fsckObjects and receive.fsckObjects=20
-set to "true", but that means I'm not able to clone repositories with=20
-these kind of errors, have to use the alias
+For Git for Windows, it seems like the auto behavior would be a strict
+improvement over the "true" default they've been shipping.
 
-  fclone =3D clone -c "fetch.fsckObjects=3Dfalse"
-
-So enabling them by default will create problems among users. Of course,=20
-one solution would be to turn these kind of errors into warnings so the=20
-clone isn't aborted.
-
-Reagards,
-=C3=98yvind
-
-+-| =C3=98yvind A. Holm <sunny@sunbase.org> - N 60.37604=C2=B0 E 5.33339=C2=
-=B0 |-+
-| OpenPGP: 0xFB0CBEE894A506E5 - http://www.sunbase.org/pubkey.asc |
-| Fingerprint: A006 05D6 E676 B319 55E2  E77E FB0C BEE8 94A5 06E5 |
-+------------| c7e47a18-fa06-11e6-ad93-db5caa6d21d3 |-------------+
-
---os2ytfitvwy7hsm4
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iEYEARECAAYFAlivSmsACgkQ+wy+6JSlBuW+KgCbBe9TpS+9gccWF5Y0M36i5H42
-RLkAn2mbA0BDUgMkRp2H+gcwn6Gtdv0u
-=P6BO
------END PGP SIGNATURE-----
-
---os2ytfitvwy7hsm4--
+-Peff
