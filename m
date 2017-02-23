@@ -2,99 +2,135 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A85AE2022D
-	for <e@80x24.org>; Thu, 23 Feb 2017 23:05:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 81CB520254
+	for <e@80x24.org>; Thu, 23 Feb 2017 23:05:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751377AbdBWXFM (ORCPT <rfc822;e@80x24.org>);
-        Thu, 23 Feb 2017 18:05:12 -0500
-Received: from cloud.peff.net ([104.130.231.41]:32949 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751361AbdBWXFK (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Feb 2017 18:05:10 -0500
-Received: (qmail 25996 invoked by uid 109); 23 Feb 2017 23:05:10 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 23 Feb 2017 23:05:10 +0000
-Received: (qmail 3321 invoked by uid 111); 23 Feb 2017 23:05:13 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 23 Feb 2017 18:05:13 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 23 Feb 2017 18:05:07 -0500
-Date:   Thu, 23 Feb 2017 18:05:07 -0500
-From:   Jeff King <peff@peff.net>
-To:     Linus Torvalds <torvalds@linux-foundation.org>
-Cc:     Joey Hess <id@joeyh.name>, Git Mailing List <git@vger.kernel.org>
-Subject: Re: SHA1 collisions found
-Message-ID: <20170223230507.kuxjqtg3ghcfskc6@sigill.intra.peff.net>
-References: <CA+55aFzFEpi1crykZ33r9f7BsvLt_kiB-CHXOkuCAX=fd4BU-w@mail.gmail.com>
- <20170223182147.hbsyxsmyijgkqu75@kitenet.net>
- <CA+55aFxckeEW1ePcebrgG4iN4Lp62A2vU6tA=xnSDC_BnKQiCQ@mail.gmail.com>
- <20170223184637.xr74k42vc6y2pmse@sigill.intra.peff.net>
- <CA+55aFx=0EVfSG2iEKKa78g3hFN_yZ+L_FRm4R749nNAmTGO9w@mail.gmail.com>
- <20170223193210.munuqcjltwbrdy22@sigill.intra.peff.net>
- <CA+55aFxmr6ntWGbJDa8tOyxXDX3H-yd4TQthgV_Tn1u91yyT8w@mail.gmail.com>
- <20170223195753.ppsat2gwd3jq22by@sigill.intra.peff.net>
- <alpine.LFD.2.20.1702231428540.30435@i7.lan>
- <20170223224302.joti4zqucme3vqr2@sigill.intra.peff.net>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20170223224302.joti4zqucme3vqr2@sigill.intra.peff.net>
+        id S1751379AbdBWXFW (ORCPT <rfc822;e@80x24.org>);
+        Thu, 23 Feb 2017 18:05:22 -0500
+Received: from mail-pg0-f53.google.com ([74.125.83.53]:36268 "EHLO
+        mail-pg0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751272AbdBWXFW (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Feb 2017 18:05:22 -0500
+Received: by mail-pg0-f53.google.com with SMTP id s67so2266724pgb.3
+        for <git@vger.kernel.org>; Thu, 23 Feb 2017 15:05:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=m68MjCSCfqoJ6jzekbnTiNdy9dx/e4lBg8B4YoEuUOI=;
+        b=SJC3VcrCMOC6RP+BAPmal6EY0Q723OQZjoCpU77TmlujwhYO1grT+lX0PcYpQ9tAaU
+         h+rGu8iGSYxR2V4HtrM+Nn8CWXl8kIbk59o/+u2lcfbgjN3grnAP2ZDGTb6KqN8MFdAd
+         s8R6w6aRTTB+ZM88qmFFmHJNFcUBCoLIw5fZZye5Z1X3x3kQShwv8hWTXNGbKgXyOrfI
+         HHZ6Wt3Ol2U7p2SUbp621/u0YIQztGZQGBuEDHDGsJJXBmj5z2I2phCqvg6GQzB4/9Vr
+         pI5kZOVxrRC3CQSEyGO32hIbLtSXbZWoci5ser/+Wv+7xol57plpdrkUGyI6h813Mu7T
+         ot7Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=m68MjCSCfqoJ6jzekbnTiNdy9dx/e4lBg8B4YoEuUOI=;
+        b=c4g2f9R7ws9g4rWI+T7DkVsgIkvwXIwue+BhFq1rTjQwIpH5RsErjAjf6M0uJ/Nkzf
+         bMz8QX4rljlLCnWdnbV5MV2HpSER2D+LaoGNdmnu5ulsT7WMrRUngyrSN4I0nav8PvlU
+         hIea98lpQ/QzNUC6VyEEnAgC6vlhxUnUIsyOu0XTu6noSOI3d76vUetOrx5T86VZ4vJ0
+         vD31wsVIQdGtT4gExtb96wSdRm3Ifs4AvHiWgJyu9BsuZCLg8GnWgKUtGKkpiMpgSZn+
+         pIllskm5G6U/gJcRDDQ0vikgHjpZwldop519F35wmliPvlbobmKQ2NUa7qx1//3OgyD9
+         mkDA==
+X-Gm-Message-State: AMke39lYvkonrTHcvGtzQof+UUgtwkqROjgNHts8SmPNr9Ygqf2vQN0rRQXdZ8JuyEKdmK6K
+X-Received: by 10.98.66.82 with SMTP id p79mr48859054pfa.10.1487890690648;
+        Thu, 23 Feb 2017 14:58:10 -0800 (PST)
+Received: from localhost ([2620:0:1000:5b10:ad75:dfc7:8a6:1152])
+        by smtp.gmail.com with ESMTPSA id e129sm11623699pfe.8.2017.02.23.14.58.09
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Thu, 23 Feb 2017 14:58:09 -0800 (PST)
+From:   Stefan Beller <sbeller@google.com>
+To:     sbeller@google.com
+Cc:     git@vger.kernel.org, sandals@crustytoothpaste.net,
+        jrnieder@gmail.com, bmwill@google.com, gitster@pobox.com,
+        novalis@novalis.org
+Subject: [PATCH 14/15] entry.c: update submodules when interesting
+Date:   Thu, 23 Feb 2017 14:57:34 -0800
+Message-Id: <20170223225735.10994-15-sbeller@google.com>
+X-Mailer: git-send-email 2.12.0.rc1.16.ge4278d41a0.dirty
+In-Reply-To: <20170223225735.10994-1-sbeller@google.com>
+References: <xmqqlgt5vlse.fsf@gitster.mtv.corp.google.com>
+ <20170223225735.10994-1-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Feb 23, 2017 at 05:43:02PM -0500, Jeff King wrote:
+Signed-off-by: Stefan Beller <sbeller@google.com>
+---
+ entry.c | 30 ++++++++++++++++++++++++++++++
+ 1 file changed, 30 insertions(+)
 
-> On Thu, Feb 23, 2017 at 02:38:29PM -0800, Linus Torvalds wrote:
-> 
-> > > Thanks, I hadn't seen that yet. That doesn't look like it should be hard
-> > > to integrate into Git.
-> > 
-> > Here's a *very* ugly patch that is absolutely disgusting and should not be 
-> > used. But it does kind of work (I tested it with a faked-up extra patch 
-> > that made git accept the broken pdf as a loose object).
-> > 
-> > What do I mean by "kind of work"? It uses that ugly and slow checking 
-> > SHA1 routine from the collision detection project for the SHA1 object 
-> > verification, and it means that "git fsck" ends up being about twice as 
-> > slow as it used to be.
-> 
-> Heh. I was just putting the finishing touches on a similar patch. Mine
-> is much less gross, in that it actually just adds a new USE_SHA1DC knob
-> (instead of, say, BLK_SHA1).
+diff --git a/entry.c b/entry.c
+index c6eea240b6..d2b512da90 100644
+--- a/entry.c
++++ b/entry.c
+@@ -2,6 +2,7 @@
+ #include "blob.h"
+ #include "dir.h"
+ #include "streaming.h"
++#include "submodule.h"
+ 
+ static void create_directories(const char *path, int path_len,
+ 			       const struct checkout *state)
+@@ -146,6 +147,7 @@ static int write_entry(struct cache_entry *ce,
+ 	unsigned long size;
+ 	size_t wrote, newsize = 0;
+ 	struct stat st;
++	const struct submodule *sub;
+ 
+ 	if (ce_mode_s_ifmt == S_IFREG) {
+ 		struct stream_filter *filter = get_stream_filter(ce->name,
+@@ -203,6 +205,10 @@ static int write_entry(struct cache_entry *ce,
+ 			return error("cannot create temporary submodule %s", path);
+ 		if (mkdir(path, 0777) < 0)
+ 			return error("cannot create submodule directory %s", path);
++		sub = submodule_from_ce(ce);
++		if (sub)
++			return submodule_move_head(ce->name,
++				NULL, oid_to_hex(&ce->oid), SUBMODULE_MOVE_HEAD_FORCE);
+ 		break;
+ 	default:
+ 		return error("unknown file mode for %s in index", path);
+@@ -259,7 +265,31 @@ int checkout_entry(struct cache_entry *ce,
+ 	strbuf_add(&path, ce->name, ce_namelen(ce));
+ 
+ 	if (!check_path(path.buf, path.len, &st, state->base_dir_len)) {
++		const struct submodule *sub;
+ 		unsigned changed = ce_match_stat(ce, &st, CE_MATCH_IGNORE_VALID|CE_MATCH_IGNORE_SKIP_WORKTREE);
++		/*
++		 * Needs to be checked before !changed returns early,
++		 * as the possibly empty directory was not changed
++		 */
++		sub = submodule_from_ce(ce);
++		if (sub) {
++			int err;
++			if (!is_submodule_populated_gently(ce->name, &err)) {
++				struct stat sb;
++				if (lstat(ce->name, &sb))
++					die(_("could not stat file '%s'"), ce->name);
++				if (!(st.st_mode & S_IFDIR))
++					unlink_or_warn(ce->name);
++
++				return submodule_move_head(ce->name,
++					NULL, oid_to_hex(&ce->oid),
++					SUBMODULE_MOVE_HEAD_FORCE);
++			} else
++				return submodule_move_head(ce->name,
++					"HEAD", oid_to_hex(&ce->oid),
++					SUBMODULE_MOVE_HEAD_FORCE);
++		}
++
+ 		if (!changed)
+ 			return 0;
+ 		if (!state->force) {
+-- 
+2.12.0.rc1.16.ge4278d41a0.dirty
 
-Here's my patches. They _might_ be worth including if only because they
-shouldn't bother anybody unless they enable USE_SHA1DC. So it makes it a
-bit more accessible for people to experiment with (or be paranoid with
-if they like).
-
-The first one is 98K. Mail headers may bump it over vger's 100K barrier.
-It's actually the _least_ interesting patch of the 3, because it just
-imports the code wholesale from the other project. But if it doesn't
-make it, you can fetch the whole series from:
-
-  https://github.com/peff/git jk/sha1dc
-
-(By the way, I don't see your version on the list, Linus, which probably
-means it was eaten by the 100K filter).
-
-  [1/3]: add collision-detecting sha1 implementation
-  [2/3]: sha1dc: adjust header includes for git
-  [3/3]: Makefile: add USE_SHA1DC knob
-
- Makefile           |   10 +
- sha1dc/sha1.c      | 1165 ++++++++++++++++++++++++++++++++++++++++++++++++++++
- sha1dc/sha1.h      |  108 +++++
- sha1dc/ubc_check.c |  361 ++++++++++++++++
- sha1dc/ubc_check.h |   33 ++
- 5 files changed, 1677 insertions(+)
- create mode 100644 sha1dc/sha1.c
- create mode 100644 sha1dc/sha1.h
- create mode 100644 sha1dc/ubc_check.c
- create mode 100644 sha1dc/ubc_check.h
-
--Peff
