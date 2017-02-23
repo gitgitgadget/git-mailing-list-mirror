@@ -2,141 +2,185 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8DF6B2022D
-	for <e@80x24.org>; Thu, 23 Feb 2017 04:20:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 985BE201B0
+	for <e@80x24.org>; Thu, 23 Feb 2017 06:05:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752110AbdBWEUW (ORCPT <rfc822;e@80x24.org>);
-        Wed, 22 Feb 2017 23:20:22 -0500
-Received: from castro.crustytoothpaste.net ([75.10.60.170]:40312 "EHLO
-        castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751190AbdBWEUU (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 22 Feb 2017 23:20:20 -0500
-Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 92D35280AD;
-        Thu, 23 Feb 2017 04:19:25 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
-        s=default; t=1487823565;
-        bh=KtWhCPNPQrhqnWvdWO1Z9x7gQQiEwrtdc0kQ73E4ALQ=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=DPIvkQgDOs3WNoRMOUaO6l+I5CzGIPXFqY+9HVpu8zsF3DAcWWpMNs43nTbTRWFs3
-         +vq8D+dmObj2ZG4M0JDS1QAb++91K24bK542KiEbBeiHOyN/f1N0ddP3TezT39evM/
-         uCXlA7PF/rNXJUEratBrCj2+ojcjPs3jpmMaF4TtjEJxnIhu0J+gzM9tekA1D1QfNt
-         6JHLYxgvbZJqJ7Mj3GYxUBxsWfRxLLX5yJQXTdTmEYP7bZH/rXwWNXxIOPo7slhmdw
-         hAqAWbOU4FC1MJTqNzbqTbmOZ1yag0f6aWWq7VXZuiNsapKHN0DRf9vAs0POYFjRrB
-         XJYWU8UEA9MwcPwR0NIR5FfxFwrHckYisE+ujDZ9ZuXpE6WvW+UB09f3G/sF6ceMJa
-         02j59h8dgFGjpjcL0qoDbb3z18lMxbecyw9VeNSsZPH/kIxriRQXCksYeYrCrxtZZ4
-         XoIa1hv26w/UF3fp/BKh7pGCEpXlzcXzloOIxyI4S3FS2J2rNcc
-Date:   Thu, 23 Feb 2017 04:19:19 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     David Turner <David.Turner@twosigma.com>
-Cc:     'Junio C Hamano' <gitster@pobox.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Jeff King <peff@peff.net>
-Subject: Re: [PATCH] http(s): automatically try NTLM authentication first
-Message-ID: <20170223041919.xwdux5rxpojvms7k@genre.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        David Turner <David.Turner@twosigma.com>,
-        'Junio C Hamano' <gitster@pobox.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Eric Sunshine <sunshine@sunshineco.com>, Jeff King <peff@peff.net>
-References: <20170222173936.25016-1-dturner@twosigma.com>
- <xmqqpoiaasgj.fsf@gitster.mtv.corp.google.com>
- <97ab9a812f7b46d7b10d4d06f73259d8@exmbdft7.ad.twosigma.com>
- <20170222233419.q3fxqmrscosumbjm@genre.crustytoothpaste.net>
- <b152fad7e79046c5aa6cac9e21066c1c@exmbdft7.ad.twosigma.com>
+        id S1751385AbdBWGEw (ORCPT <rfc822;e@80x24.org>);
+        Thu, 23 Feb 2017 01:04:52 -0500
+Received: from mail.linuxfoundation.org ([140.211.169.12]:46898 "EHLO
+        mail.linuxfoundation.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751084AbdBWGEv (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Feb 2017 01:04:51 -0500
+Received: from localhost (unknown [78.192.101.3])
+        by mail.linuxfoundation.org (Postfix) with ESMTPSA id AB4E56C;
+        Thu, 23 Feb 2017 06:04:49 +0000 (UTC)
+Date:   Thu, 23 Feb 2017 07:04:44 +0100
+From:   Greg KH <gregkh@linuxfoundation.org>
+To:     Linus Torvalds <torvalds@linux-foundation.org>,
+        Simon =?iso-8859-1?Q?Sandstr=F6m?= <simon@nikanor.nu>
+Cc:     Andrew Morton <akpm@linux-foundation.org>, git@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        Linux Driver Project <devel@linuxdriverproject.org>
+Subject: git email From: parsing (was Re: [GIT PULL] Staging/IIO driver
+ patches for 4.11-rc1)
+Message-ID: <20170223060444.GA26196@kroah.com>
+References: <20170222145613.GA17333@kroah.com>
+ <CA+55aFy1JpXmo_PpC7f0zZa0YAP6rz+bztJ+fpDUoWgCz0_FMw@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="j5cotu5npsygwtwz"
+Content-Type: multipart/mixed; boundary="2oS5YaxWCcQjTEyO"
 Content-Disposition: inline
-In-Reply-To: <b152fad7e79046c5aa6cac9e21066c1c@exmbdft7.ad.twosigma.com>
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.9.0-2-amd64)
-User-Agent: NeoMutt/20170113 (1.7.2)
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CA+55aFy1JpXmo_PpC7f0zZa0YAP6rz+bztJ+fpDUoWgCz0_FMw@mail.gmail.com>
+User-Agent: Mutt/1.7.2 (2016-11-26)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---j5cotu5npsygwtwz
-Content-Type: text/plain; charset=utf-8
+--2oS5YaxWCcQjTEyO
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+
+On Wed, Feb 22, 2017 at 11:59:01AM -0800, Linus Torvalds wrote:
+> On Wed, Feb 22, 2017 at 6:56 AM, Greg KH <gregkh@linuxfoundation.org> wrote:
+> >
+> > =?UTF-8?q?Simon=20Sandstr=C3=B6m?= (1):
+> >       staging: vt6656: Add missing identifier names
+> 
+> Wow, your scripts really screwed up that name.
+> 
+> I'm assuming this is quilt not doing proper character set handling..
+> 
+> Because if it's git, we need to get that fixed (but I'm pretty sure
+> git gets this right - there are various tests for email header
+> quoting).
+> 
+> Alternatively, somebody hand-edited some email and moved the From:
+> header to the body without fixing up the RFC 1342 mail header quoting
+> (which is very different from how quoting works in the *body* of an
+> email).
+> 
+> Poor Simon Sandström.
+> 
+> Funnily enough, this only exists for one commit. You've got several
+> other commits from Simon that get his name right.
+> 
+> What happened?
+
+I don't know what happened, I used git for this, I don't use quilt for
+"normal" patches accepted into my trees anymore, only for stable kernel
+work.
+
+So either the mail is malformed, or git couldn't figure it out, I've
+attached the original message below, and cc:ed the git mailing list.
+
+Also, Simon emailed me after this was committed saying something went
+wrong, but I couldn't go back and rebase my tree.  Simon, did you ever
+figure out if something was odd on your end?
+
+Git developers, any ideas?
+
+thanks,
+
+greg k-h
+
+--2oS5YaxWCcQjTEyO
+Content-Type: application/mbox
+Content-Disposition: attachment; filename="messy_email.mbox"
 Content-Transfer-Encoding: quoted-printable
 
-On Thu, Feb 23, 2017 at 01:03:39AM +0000, David Turner wrote:
-> So, I guess, this patch might be considered a security risk. But on the=
-=20
-> other hand, even *without* this patch, and without http.allowempty at=20
-> all, I think a config which simply uses a https://  url without the magic=
- :@
-> would try SPNEGO.  As I understand it, the http.allowempty config just=20
-> makes the traditional :@ urls work.=20
-
-No, it's a bit different.  libcurl won't try to authenticate to a server
-unless it has a username (and possibly password).  With the curl command
-line client, you use a dummy value or -u: to force it to do auth anyway
-(because you want, say, GSSAPI).  http.emptyAuth just sets that option
-to =E2=80=9C:=E2=80=9D so libcurl will auth:
-
-		if (curl_empty_auth)
-			curl_easy_setopt(result, CURLOPT_USERPWD, ":");
-
-I just use a dummy username for my URLs, but you can write :@ or any
-other permutation to get it to work without emptyAuth.  As a
-consequence, you have to opt-in to that on a per-URL (or per-domain)
-basis, which is a bit more secure.
-
-> Actually, though, I am not sure this is as bad as it seems, because gssapi
-> might protect us.  When I locally tried a fake server, git (libcurl) refu=
-sed to=20
-> send my Kerberos credentials because "Server not found in Kerberos=20
-> database".  I don't have a machine set up with NTLM authentication=20
-> (because, apparently, that would be insane), so I don't know how to=20
-> confirm that gssapi would operate off of a whitelist for NTLM as well.=20
-
-Yup.  That's pretty much what I thought would happen, since the Kerberos
-server has no HTTP/malicious.evil.tld@YOURREALM.TLD service ticket.
-Again, I don't know how NTLM does things, or if it's wrapped in a
-suitable ticket format somehow.
-
-Last I base64-decoded an NTLM SPNEGO response, it did not contain the
-OID required by GSSAPI as a prefix; it instead contained an =E2=80=9CNTLMSS=
-P=E2=80=9D
-header, which isn't a valid OID.  I didn't delve much further, since I
-was pretty sure I didn't want to know more.
---=20
-brian m. carlson / brian with sandals: Houston, Texas, US
-+1 832 623 2791 | https://www.crustytoothpaste.net/~bmc | My opinion only
-OpenPGP: https://keybase.io/bk2204
-
---j5cotu5npsygwtwz
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.1.18 (GNU/Linux)
-
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAliuYscACgkQv1NdgR9S
-9otIkw/8CmxTy2WR+uAYoqpFOAn40QKgfEzXJmYRxtDePJrrqtyWyYwDK0o+I1/E
-DiG5QY06jSVSvShkBNP2DmrR9tcTlXgxtJSXhMPKlLiHMNN9YNIqVHjgtdgsknjE
-tp6tF6EH1L1kfPxkiVRDLh5VJFHth68FxqlFV2QDyCTPXoKqFzfSoX6rg80wDwik
-qHoMsJSfiac8z+gI8I+8phH/pJsGQbIn9ho+IOSyv3w9BzdlEb4F4E/mNYDlMoSi
-yIrciL+z5a4YfYt3PxAV1ygnjVMzpg35MQliTQdA9MBJyutIVLa0HU3AxEJa4EjC
-FvpE/jzXuJxagHQ9Rq73cwqe7TbCEMztN8ga8ejInxouJx1NCr4y8nDjUwmYhzt1
-Jai7ASxZvpLiHT6oRRaOvFe+LREyPaTOALsmwNC3LTq1I9y9aWeBniU3j5DECjJ1
-uLogn+IgVFSvzRWHetAXi0zB3bnqOOHZNHt/xxTETUaGwWL20FdknSVd7jT+3lzm
-XPQpaqYcdcU6H5oDyIvHyUcEkrB1TbZ0GpsgvtvxMdLacI4zqpWZl+iDDnRAvKTb
-XOJUEfaitwZxVv0p4n9JpXfFu3UBQsen/UKMYOOf8lfirs5UABeB0TqGBPr0BAXb
-DfGP9NiUywTQP/OA1nVajpC5eW8EOFhrWXmBsr4/d2g9y8FNPzE=
-=m56O
------END PGP SIGNATURE-----
-
---j5cotu5npsygwtwz--
+=46rom simon@nikanor.nu Thu Jan 26 22:29:51 2017=0AReturn-Path: <simon@nika=
+nor.nu>=0ADelivered-To: unknown=0ADelivered-To: gregkh@linuxfoundation.org=
+=0AReceived: by 10.129.160.73 with SMTP id x70csp394432ywg;=0A        Thu, =
+26 Jan 2017 13:29:51 -0800 (PST)=0AX-Received: by 10.46.83.27 with SMTP id =
+h27mr1786169ljb.28.1485466190974;=0A        Thu, 26 Jan 2017 13:29:50 -0800=
+ (PST)=0AReceived: from mail-lf0-x235.google.com (mail-lf0-x235.google.com.=
+ [2a00:1450:4010:c07::235])=0A        by mx.google.com with ESMTPS id e86si=
+1676067lji.10.2017.01.26.13.29.50=0A        for <gregkh@linuxfoundation.org=
+>=0A        (version=3DTLS1_2 cipher=3DECDHE-RSA-AES128-GCM-SHA256 bits=3D1=
+28/128);=0A        Thu, 26 Jan 2017 13:29:50 -0800 (PST)=0AReceived-SPF: ne=
+utral (google.com: 2a00:1450:4010:c07::235 is neither permitted nor denied =
+by best guess record for domain of simon@nikanor.nu) client-ip=3D2a00:1450:=
+4010:c07::235;=0AAuthentication-Results: mx.google.com;=0A       dkim=3Dpas=
+s header.i=3D@nikanor-nu.20150623.gappssmtp.com;=0A       spf=3Dneutral (go=
+ogle.com: 2a00:1450:4010:c07::235 is neither permitted nor denied by best g=
+uess record for domain of simon@nikanor.nu) smtp.mailfrom=3Dsimon@nikanor.n=
+u=0AReceived: by mail-lf0-x235.google.com with SMTP id n124so152124581lfd.2=
+=0A        for <gregkh@linuxfoundation.org>; Thu, 26 Jan 2017 13:29:50 -080=
+0 (PST)=0ADKIM-Signature: v=3D1; a=3Drsa-sha256; c=3Drelaxed/relaxed;=0A   =
+     d=3Dnikanor-nu.20150623.gappssmtp.com; s=3D20150623;=0A        h=3Ddat=
+e:from:to:cc:subject:message-id:mime-version:content-disposition=0A        =
+ :content-transfer-encoding:user-agent;=0A        bh=3D9C0rvPoWzqLgVVzKWPxc=
+ge1xPI9pYicMRrGJwSwgTAo=3D;=0A        b=3DQoMLK5Q+09xfAGkTNn78MRmKbfe/1oks6=
+pzh7B704blHPh7hd7AzAdLkjicP142dK8=0A         8x80r3Yb6Tuabf4QMd5uYboV4aBZvh=
+ir/0uuCfTLNUkJPgI588LHaO+jmY4jXEgawDbf=0A         8Qgkg8/uMnFxWb9Ztl3Ve9MDh=
+dLqrwJy4EgEKWeGRNE1S8bNco51ZDQBVCuoBb6+DUgY=0A         cpP/VAYY5Z91nNc9Uf4/=
+VvqSE3EwNWFdriURFpF8d03E7uAR1xDWhB/+14lZNZ8XJ3DG=0A         FikOx1nSLgM9P4w=
+Qr/Kzdetp7ZNAZ60EkDD6eQk7cE8nKdgyrh6jg7jCybEd2v9e9Jxo=0A         26tQ=3D=3D=
+=0AX-Google-DKIM-Signature: v=3D1; a=3Drsa-sha256; c=3Drelaxed/relaxed;=0A =
+       d=3D1e100.net; s=3D20161025;=0A        h=3Dx-gm-message-state:date:f=
+rom:to:cc:subject:message-id:mime-version=0A         :content-disposition:c=
+ontent-transfer-encoding:user-agent;=0A        bh=3D9C0rvPoWzqLgVVzKWPxcge1=
+xPI9pYicMRrGJwSwgTAo=3D;=0A        b=3DIRmb/w2TCZCFmTUxY6JCWuFrTmW/G7CfsIYx=
+tQZafikUMYKD/O4FD3w5gwm+PaPSow=0A         QZghegrHurazlc1uD9GFDx3aJ7KefWKl5=
+u7I1UyY8F9xgKRyPZmQkRhSWKaszgNYgIeI=0A         7Gvp08bXlOWy2AZWxtrT2WrQVo4y=
+FHDMMNsM94eUFutQ69RFtYmRXoMKuaBJsdAuUhhP=0A         Bpm2OGgO8KVr4POcz5boe2m=
+diPzKrNvgxjg4YuV0HB718kv78ixLW0GTqECetaarL/4y=0A         6HsHqKcfnODAad07M4=
+n7rb6Mlsec/boW77qo2qWJLnY3bwD3dvOKsB60MiunckdyEByO=0A         Cz7Q=3D=3D=0A=
+X-Gm-Message-State: AIkVDXKR2bWnJwyCwuY8BMULLHQRii/HUbYeDNdRUDpsoP0fR9yYemW=
+55m9qNc9WKxOwyg=3D=3D=0AX-Received: by 10.46.7.26 with SMTP id 26mr1891307l=
+jh.60.1485466190448;=0A        Thu, 26 Jan 2017 13:29:50 -0800 (PST)=0ARece=
+ived: from localhost (h-129-173.a258.priv.bahnhof.se. [81.170.129.173])=0A =
+       by smtp.gmail.com with ESMTPSA id h13sm799302ljh.5.2017.01.26.13.29.=
+49=0A        (version=3DTLS1_2 cipher=3DECDHE-RSA-AES128-GCM-SHA256 bits=3D=
+128/128);=0A        Thu, 26 Jan 2017 13:29:49 -0800 (PST)=0ADate: Thu, 26 J=
+an 2017 22:29:48 +0100=0AFrom: =3D?us-ascii?B?PT9VVEYtOD9xP1NpbW9uPTIwU2FuZ=
+HN0cj1DMz1CNm0/PQ=3D=3D?=3D <simon@nikanor.nu>=0ATo: forest@alittletooquiet=
+=2Enet=0ACc: gregkh@linuxfoundation.org, devel@driverdev.osuosl.org,=0A	lin=
+ux-kernel@vger.kernel.org=0ASubject: [PATCH] staging: vt6656: Add missing i=
+dentifier names=0AMessage-ID: <20170126212948.GA15093@gamma.nikanor.nu>=0AM=
+IME-Version: 1.0=0AContent-Type: text/plain; charset=3Diso-8859-1=0AContent=
+-Disposition: inline=0AContent-Transfer-Encoding: 8bit=0AUser-Agent: Mutt/1=
+=2E5.23 (2014-03-12)=0AX-getmail-retrieved-from-mailbox: INBOX=0AX-GMAIL-TH=
+RID: =3D?utf-8?q?1557624196707287078?=3D=0AX-GMAIL-MSGID: =3D?utf-8?q?15576=
+24196707287078?=3D=0AStatus: RO=0AContent-Length: 2339=0ALines: 54=0A=0AFix=
+ multiple checkpatch.pl warnings:=0Afunction definition argument '...' shou=
+ld also have an identifier name=0A=0ASigned-off-by: Simon Sandstr=F6m <simo=
+n@nikanor.nu>=0A---=0A drivers/staging/vt6656/card.h | 34 +++++++++++++++++=
++----------------=0A 1 file changed, 18 insertions(+), 16 deletions(-)=0A=
+=0Adiff --git a/drivers/staging/vt6656/card.h b/drivers/staging/vt6656/card=
+=2Eh=0Aindex c2cde7e92c8f..7f08cda27e2c 100644=0A--- a/drivers/staging/vt66=
+56/card.h=0A+++ b/drivers/staging/vt6656/card.h=0A@@ -35,21 +35,23 @@=0A =
+=0A struct vnt_private;=0A =0A-void vnt_set_channel(struct vnt_private *, u=
+32);=0A-void vnt_set_rspinf(struct vnt_private *, u8);=0A-void vnt_update_i=
+fs(struct vnt_private *);=0A-void vnt_update_top_rates(struct vnt_private *=
+);=0A-int vnt_ofdm_min_rate(struct vnt_private *);=0A-void vnt_adjust_tsf(s=
+truct vnt_private *, u8, u64, u64);=0A-bool vnt_get_current_tsf(struct vnt_=
+private *, u64 *);=0A-bool vnt_clear_current_tsf(struct vnt_private *);=0A-=
+void vnt_reset_next_tbtt(struct vnt_private *, u16);=0A-void vnt_update_nex=
+t_tbtt(struct vnt_private *, u64, u16);=0A-u64 vnt_get_next_tbtt(u64, u16);=
+=0A-u64 vnt_get_tsf_offset(u8 byRxRate, u64 qwTSF1, u64 qwTSF2);=0A-int vnt=
+_radio_power_off(struct vnt_private *);=0A-int vnt_radio_power_on(struct vn=
+t_private *);=0A-u8 vnt_get_pkt_type(struct vnt_private *);=0A-void vnt_set=
+_bss_mode(struct vnt_private *);=0A+void vnt_set_channel(struct vnt_private=
+ *priv, u32 connection_channel);=0A+void vnt_set_rspinf(struct vnt_private =
+*priv, u8 bb_type);=0A+void vnt_update_ifs(struct vnt_private *priv);=0A+vo=
+id vnt_update_top_rates(struct vnt_private *priv);=0A+int vnt_ofdm_min_rate=
+(struct vnt_private *priv);=0A+void vnt_adjust_tsf(struct vnt_private *priv=
+, u8 rx_rate,=0A+		    u64 time_stamp, u64 local_tsf);=0A+bool vnt_get_curr=
+ent_tsf(struct vnt_private *priv, u64 *current_tsf);=0A+bool vnt_clear_curr=
+ent_tsf(struct vnt_private *priv);=0A+void vnt_reset_next_tbtt(struct vnt_p=
+rivate *priv, u16 beacon_interval);=0A+void vnt_update_next_tbtt(struct vnt=
+_private *priv, u64 tsf,=0A+			  u16 beacon_interval);=0A+u64 vnt_get_next_=
+tbtt(u64 tsf, u16 beacon_interval);=0A+u64 vnt_get_tsf_offset(u8 rx_rate, u=
+64 tsf1, u64 tsf2);=0A+int vnt_radio_power_off(struct vnt_private *priv);=
+=0A+int vnt_radio_power_on(struct vnt_private *priv);=0A+u8 vnt_get_pkt_typ=
+e(struct vnt_private *priv);=0A+void vnt_set_bss_mode(struct vnt_private *p=
+riv);=0A =0A #endif /* __CARD_H__ */=0A-- =0A2.11.0=0A=0A
+--2oS5YaxWCcQjTEyO--
