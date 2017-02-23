@@ -2,83 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 02FA820254
-	for <e@80x24.org>; Thu, 23 Feb 2017 23:50:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0089B2022D
+	for <e@80x24.org>; Thu, 23 Feb 2017 23:58:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751533AbdBWXue (ORCPT <rfc822;e@80x24.org>);
-        Thu, 23 Feb 2017 18:50:34 -0500
-Received: from mail-pf0-f196.google.com ([209.85.192.196]:32906 "EHLO
-        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751487AbdBWXue (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Feb 2017 18:50:34 -0500
-Received: by mail-pf0-f196.google.com with SMTP id p185so176413pfb.0
-        for <git@vger.kernel.org>; Thu, 23 Feb 2017 15:50:04 -0800 (PST)
+        id S1751486AbdBWX6I (ORCPT <rfc822;e@80x24.org>);
+        Thu, 23 Feb 2017 18:58:08 -0500
+Received: from mail-it0-f41.google.com ([209.85.214.41]:35893 "EHLO
+        mail-it0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751448AbdBWX6H (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Feb 2017 18:58:07 -0500
+Received: by mail-it0-f41.google.com with SMTP id h10so4042361ith.1
+        for <git@vger.kernel.org>; Thu, 23 Feb 2017 15:58:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=Wqymc+moEt5wJXV5eFfpHT/qHxobPMQnYx0g7VgGA1U=;
-        b=BKzULyPUJRzK46sQEjwMKI/V6DP77j4tLr5qxyXEC4zJ+r1ZD1+3ssNjAmTbXTmn/9
-         F6OmFTVQWAXJAIJktKPqzllTS/iZM80EJkxBNbGRfxJ0J4qWHQFWjpt7l+PtZ2QXUk7i
-         fDUUl49q1VKisxj227bavl0hgNp1QoQiXN0VnhCxykYIzMqVjOrbcRSx16ugy/pN7wrQ
-         6Q6vv6T4oXoG+pa3Hr1xwTBH8CFas6kc+1NDhvbxVSlQGw9nVmpTZMsJnbQfr2bnxsNJ
-         4nAfP4rO8R/MJDcdR0emcho+p2zeCNDP1gzIhOJ3E9qgt3mWcjAqfL2spaDZMYntZxLh
-         X+hg==
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=hL9M8gQ9XDtdq3I01piQAZwbwL6q/Hvt+1QSPJmsstQ=;
+        b=kDzgW7Y+axy0fTnUTjcMmQi9XYU2nJ1uwXzMXEgChlg6WSuj1ZFg2LaOM62E5u81sL
+         RENMpz6my++pS2f4/4Xrk+I0kmGw52rMsR26JShC4e01htqmugTooKt2UuV5KBsuKDmL
+         X1kUvtvbBRv4gHeo/9c0FnKb5hh5oIxxOvdn3ncDq6z0ON3kIngM6Vmu+VtJu41Pl8OD
+         U77/+fgjyZRPMvyhTCB6VAX2q2VQhWng1bpBwnlRll+cUehHRsOPm7zm+2Bt8FCruySY
+         XSLqkdYSRAnVcNT68Eq/8tVk8C6rFcrQYku69LT4zkrnc2J1BhZPmBMtOzU13/ZcmZ+4
+         hb2A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=Wqymc+moEt5wJXV5eFfpHT/qHxobPMQnYx0g7VgGA1U=;
-        b=IaNu/o7vew+HYnqrwQFi7ttk/TQYII1sHahUDaOxVditT6lIpVOo8RQxAoXrC7FMzQ
-         Qn8TtJDVraqIQr8n04O8zhe6PRI4zP7dtJcUVuYzbhSPJWkj7zEy4rZXyDlWTOn51FEs
-         bJ+ZvBo5aj6mxGFmw+V1R3ea5kUAc6ZgDFcyGiIutJaIe6wUfP4wFMPoStRHI5GQNO7h
-         tcfgqMKePF9k9Ndpyige4NGG6a/fQLasbGqPw4medy0CEsmHJ13NMJaXEVWrxAzOuk9v
-         utzXHtYmO7wi6ov23SaMmcZheO5rIaQERMaAHjOaShgTJvCE0Dgx7WAA6XcJaU/AGmq0
-         iLbw==
-X-Gm-Message-State: AMke39klmNnJMc4AidGfx0saFIX4J541Y5Rmbtpa0g/PTKkLl7YhbNtu+usA+zFxu11fuQ==
-X-Received: by 10.98.57.23 with SMTP id g23mr5165704pfa.32.1487893801767;
-        Thu, 23 Feb 2017 15:50:01 -0800 (PST)
-Received: from localhost ([2620:0:1000:8622:8829:f260:c132:141f])
-        by smtp.gmail.com with ESMTPSA id r22sm6661590pfi.51.2017.02.23.15.50.00
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 23 Feb 2017 15:50:00 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org, peff@peff.net, peartben@gmail.com,
-        benpeart@microsoft.com
-Subject: Re: [BUG] allowtipsha1inwant serves unreachable blobs if you know its hash
-References: <20170223230358.30050-1-jonathantanmy@google.com>
-Date:   Thu, 23 Feb 2017 15:50:00 -0800
-In-Reply-To: <20170223230358.30050-1-jonathantanmy@google.com> (Jonathan Tan's
-        message of "Thu, 23 Feb 2017 15:03:58 -0800")
-Message-ID: <xmqqtw7k5uxj.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=hL9M8gQ9XDtdq3I01piQAZwbwL6q/Hvt+1QSPJmsstQ=;
+        b=gp23IIXREox/JmQGz+C/Ll6ZJN4hpYmQhf3UeJ9yYtGGH58PO5whVi28TR+69ozezD
+         DoTEv4pQ9IZZ6gPVGjE1bDZ4hv+fkXRARcmMWB4UFq7dFghfFgRBqar7ZZPrs0mOdVAv
+         UlfjH0j+o3BdwERNhGzZZYToNrNLLDFaNhf3/YFkY2i35ym1YXyCm7O8jwSuNTTsdbFA
+         Kp3tKpvRdD74n9OisBu9omGjDozDpceF0Ez3LI5hFfpaudzGxL8ATr/ivAqPlQIj+kj9
+         3FXnrCzU46GdVJIJmduubhQHcKJOqWAJFuxiMqI3grxb4fl61n+Z0Bsdklr4/CenVdh9
+         4BpQ==
+X-Gm-Message-State: AMke39kVMIRGAPLXobbhYqXHw32VHNZ2BGQASYFBuQ2osji0AUBhCNySbumrMORHb7fdMoObwTBfH0FAwFZB/8nM
+X-Received: by 10.36.169.12 with SMTP id r12mr212975ite.69.1487894286007; Thu,
+ 23 Feb 2017 15:58:06 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
+Received: by 10.79.33.148 with HTTP; Thu, 23 Feb 2017 15:58:05 -0800 (PST)
+In-Reply-To: <20170223234728.164111-1-bmwill@google.com>
+References: <20170223234728.164111-1-bmwill@google.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Thu, 23 Feb 2017 15:58:05 -0800
+Message-ID: <CAGZ79kbf6tWjgV6V96gBzjPABHrEAdL0zhmrRqdNw9ZQQ-2QXw@mail.gmail.com>
+Subject: Re: [PATCH 00/10] decoupling a submodule's existence and its url
+To:     Brandon Williams <bmwill@google.com>,
+        Duy Nguyen <pclouds@gmail.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Tan <jonathantanmy@google.com> writes:
+On Thu, Feb 23, 2017 at 3:47 PM, Brandon Williams <bmwill@google.com> wrote:
+> There are two motivations for decoupling a submodule's existence from the url
+> that is stored in .git/config.
+>
+> 1. Worktrees can't really be used with submodules since the existence is
+>    checked based on the shared .git/config.  This means that two different
+>    worktress have to have the same initialized submodules.  By decoupling a
+>    submodule's existence from the url, two different work trees can be
+>    configured to have different submodules checked out.
 
-> Adding "--objects" works, and all existing tests pass, except for the
-> potential performance issue and the side effect that even fetching a
-> reachable blob no longer works. This is due to a possible bug where a
-> call like "git rev-list --objects $tree ^master" (where $tree is the
-> tree object corresponding to master) prints out objects ...
+cc Duy for this one:
 
-The "reachable from this, excluding what is reachable from that"
-notation was originally designed to work only on commits, and I
-wouldn't be surprised if "$tree ^master" did not work as you expect
-in the current implementation.
+Well once we have the per-worktree configuration, e.g. [1] we can *technically*
+have different submodules in different worktrees by saying
 
-I agree that ideally it shouldn't show anything, but I suspect that
-it would make it very expensive if done naively---we'd end up having
-to call mark_tree_uninteresting() for all uninteresting commits, not
-just for the commits at the edge of the DAG as we do right now.
+  workingtree0: submodule.<name>.url = git://example.org/real-submodule
+  workingtree1: submodule.<name>.url = bogus
+  workingtree2: submodule.<name>.url = more bogus
+
+and once we used the URL in the first workingtree all urls are
+degraded to a boolean flag,
+so the different (possible bogus) content does not do harm, only user-confusion,
+because the model of the URL being the flag indicating existence doesn't quite
+fit multiple working trees.
+
+[1] https://public-inbox.org/git/20170110112524.12870-3-pclouds@gmail.com/
+
+> 2. Easily configure gorups of submodules that a user is interested in.  In a
+>    repository with hundreds of submodules it would be difficult to easily tell git
+>    which modules to worry about without having to individually init all of
+>    them.  Instead, a pathspec can be used to more easily select or deselect
+>    groups of submodules.
+>
+> This patch series works to do this decoupling and instead allows a user to
+> configure submodule.active with a pathspec to use to check if a submodule is
+> initialized.
+
+Thanks for stating both intentions!
+Stefan
