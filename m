@@ -2,83 +2,119 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 42E54201B0
-	for <e@80x24.org>; Thu, 23 Feb 2017 00:49:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 91B2E201B0
+	for <e@80x24.org>; Thu, 23 Feb 2017 01:05:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932634AbdBWAtW (ORCPT <rfc822;e@80x24.org>);
-        Wed, 22 Feb 2017 19:49:22 -0500
-Received: from cloud.peff.net ([104.130.231.41]:60387 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S932611AbdBWAtU (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Feb 2017 19:49:20 -0500
-Received: (qmail 5152 invoked by uid 109); 23 Feb 2017 00:42:38 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 23 Feb 2017 00:42:38 +0000
-Received: (qmail 15811 invoked by uid 111); 23 Feb 2017 00:42:41 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 22 Feb 2017 19:42:41 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 22 Feb 2017 19:42:35 -0500
-Date:   Wed, 22 Feb 2017 19:42:35 -0500
-From:   Jeff King <peff@peff.net>
-To:     Tushar Kapila <tgkprog@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: feature request: user email config per domain
-Message-ID: <20170223004235.lsfyboofmqg6btt7@sigill.intra.peff.net>
-References: <CAN0Skmmjd5Y0uWz_WC69mAStucZ6nR0mjdp4-ODJz2UnTaB-eQ@mail.gmail.com>
+        id S932456AbdBWBFN convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Wed, 22 Feb 2017 20:05:13 -0500
+Received: from mxo1.dft.dmz.twosigma.com ([208.77.212.183]:37273 "EHLO
+        mxo1.dft.dmz.twosigma.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932197AbdBWBFL (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Feb 2017 20:05:11 -0500
+Received: from localhost (localhost [127.0.0.1])
+        by mxo1.dft.dmz.twosigma.com (Postfix) with ESMTP id 4DEFB100152;
+        Thu, 23 Feb 2017 01:03:40 +0000 (GMT)
+X-Virus-Scanned: Debian amavisd-new at twosigma.com
+Received: from mxo1.dft.dmz.twosigma.com ([127.0.0.1])
+        by localhost (mxo1.dft.dmz.twosigma.com [127.0.0.1]) (amavisd-new, port 10024)
+        with ESMTP id XxBSizTOWL4R; Thu, 23 Feb 2017 01:03:40 +0000 (GMT)
+Received: from exmbdft6.ad.twosigma.com (exmbdft6.ad.twosigma.com [172.22.1.5])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mxo1.dft.dmz.twosigma.com (Postfix) with ESMTPS id 3BA1D80035;
+        Thu, 23 Feb 2017 01:03:40 +0000 (GMT)
+Received: from exmbdft7.ad.twosigma.com (172.22.2.43) by
+ exmbdft6.ad.twosigma.com (172.22.1.5) with Microsoft SMTP Server (TLS) id
+ 15.0.1263.5; Thu, 23 Feb 2017 01:03:39 +0000
+Received: from exmbdft7.ad.twosigma.com ([fe80::552e:5f62:35e9:7955]) by
+ exmbdft7.ad.twosigma.com ([fe80::552e:5f62:35e9:7955%23]) with mapi id
+ 15.00.1263.000; Thu, 23 Feb 2017 01:03:39 +0000
+From:   David Turner <David.Turner@twosigma.com>
+To:     "'brian m. carlson'" <sandals@crustytoothpaste.net>
+CC:     'Junio C Hamano' <gitster@pobox.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        "Eric Sunshine" <sunshine@sunshineco.com>,
+        Jeff King <peff@peff.net>
+Subject: RE: [PATCH] http(s): automatically try NTLM authentication first
+Thread-Topic: [PATCH] http(s): automatically try NTLM authentication first
+Thread-Index: AQHSjUkLCk8cFwxeyUi81jfhwIejKqF1d7vggAA2E4CAAAH0cA==
+Date:   Thu, 23 Feb 2017 01:03:39 +0000
+Message-ID: <b152fad7e79046c5aa6cac9e21066c1c@exmbdft7.ad.twosigma.com>
+References: <20170222173936.25016-1-dturner@twosigma.com>
+ <xmqqpoiaasgj.fsf@gitster.mtv.corp.google.com>
+ <97ab9a812f7b46d7b10d4d06f73259d8@exmbdft7.ad.twosigma.com>
+ <20170222233419.q3fxqmrscosumbjm@genre.crustytoothpaste.net>
+In-Reply-To: <20170222233419.q3fxqmrscosumbjm@genre.crustytoothpaste.net>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-ms-exchange-transport-fromentityheader: Hosted
+x-originating-ip: [172.20.60.10]
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAN0Skmmjd5Y0uWz_WC69mAStucZ6nR0mjdp4-ODJz2UnTaB-eQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Feb 22, 2017 at 06:42:02PM +0530, Tushar Kapila wrote:
-
-> Feature request :  can we have a config for email per repo domain ?
-> Something like:
+> -----Original Message-----
+> From: brian m. carlson [mailto:sandals@crustytoothpaste.net]
 > 
-> git config --global domain.user.email tgkprog@test.xyz.com
-> testing.abc.doman:8080
+> This is SPNEGO.  It will work with NTLM as well as Kerberos.
 > 
-> git config --global domain.user.email tgkprog@xyz.com abc.doman:80
+> Browsers usually disable this feature by default, as it basically will attempt to
+> authenticate to any site that sends a 401.  For Kerberos against a malicious
+> site, the user will either not have a valid ticket for that domain, or the user's
+> Kerberos server will refuse to provide a ticket to pass to the server, so
+> there's no security risk involved.
 > 
-> git config --global domain.user.email tgkprog@search.com github.com
+> I'm unclear how SPNEGO works with NTLM, so I can't speak for the security
+> of it.  From what I understand of NTLM and from RFC 4559, it consists of a
+> shared secret.  I'm unsure what security measures are in place to not send
+> that to an untrusted server.
 > 
-> So when remote URL has github.com push as tgkprog@search.com but for
-> testing.abc.doman:8080 use tgkprog@test.xyz.com ?
+> As far as Kerberos, this is a desirable feature to have enabled, with little
+> downside.  I just don't know about the security of the NTLM part, and I don't
+> think we should take this patch unless we're sure we know the
+> consequences of it.
 
-The idea of "the domain for this repo" doesn't really match Git's
-distributed model. A repo may have no remotes at all, or multiple
-remotes with different domains (or even remotes which do not have a
-domain associated with them, like local files, or remote helpers which
-obscure the domain name).
+NTLM on its own is bad:
 
-It sounds like you're assuming that the domain would come from looking
-at remote.origin.url. Which I agree would work in the common case of
-"git clone https://example.com", but I'm not comfortable with the number
-of corner cases the feature has.
+https://msdn.microsoft.com/en-us/library/windows/desktop/aa378749(v=vs.85).aspx
+says:
 
-I'd much rather see something based on the working tree path, like Duy's
-conditional config includes. Then you write something in your
-~/.gitconfig like:
+"
+1. (Interactive authentication only) A user accesses a client computer and 
+provides a domain name, user name, and password. The client computes a 
+cryptographic hash of the password and discards the actual password.
+2. The client sends the user name to the server (in plaintext).
+3. The server generates a 16-byte random number, called a challenge or 
+nonce, and sends it to the client.
+4. The client encrypts this challenge with the hash of the user's password 
+and returns the result to the server. This is called the response.
+..."
 
-  [include "gitdir:/home/peff/work/"]
-  path = .gitconfig-work
+Wait, what?  If I'm a malicious server, I can get access to an offline oracle
+for whether I've correctly guessed the user's password?  That doesn't 
+sound secure at all!  Skimming the SPNEGO RFCs, there appears to be no
+mitigation for this.  
 
-  [include "gitdir:/home/peff/play/"]
-  path = .gitconfig-play
+So, I guess, this patch might be considered a security risk. But on the 
+other hand, even *without* this patch, and without http.allowempty at 
+all, I think a config which simply uses a https://  url without the magic :@
+would try SPNEGO.  As I understand it, the http.allowempty config just 
+makes the traditional :@ urls work. 
 
-and set user.email as appropriate in each.
-
-You may also set user.useConfigOnly in your ~/.gitconfig. Then you'd
-have to set user.email in each individual repository, but at least Git
-would complain and remind you when you forget to do so, rather than
-silently using the wrong email.
-
--Peff
+Actually, though, I am not sure this is as bad as it seems, because gssapi
+might protect us.  When I locally tried a fake server, git (libcurl) refused to 
+send my Kerberos credentials because "Server not found in Kerberos 
+database".  I don't have a machine set up with NTLM authentication 
+(because, apparently, that would be insane), so I don't know how to 
+confirm that gssapi would operate off of a whitelist for NTLM as well. 
