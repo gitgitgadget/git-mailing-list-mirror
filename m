@@ -2,77 +2,181 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 910DE2022D
-	for <e@80x24.org>; Thu, 23 Feb 2017 22:50:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id ED59C2022D
+	for <e@80x24.org>; Thu, 23 Feb 2017 23:04:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751285AbdBWWu2 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 23 Feb 2017 17:50:28 -0500
-Received: from mail-ot0-f172.google.com ([74.125.82.172]:33119 "EHLO
-        mail-ot0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751207AbdBWWu2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Feb 2017 17:50:28 -0500
-Received: by mail-ot0-f172.google.com with SMTP id k4so4040522otc.0
-        for <git@vger.kernel.org>; Thu, 23 Feb 2017 14:50:27 -0800 (PST)
+        id S1751305AbdBWXEE (ORCPT <rfc822;e@80x24.org>);
+        Thu, 23 Feb 2017 18:04:04 -0500
+Received: from mail-pg0-f43.google.com ([74.125.83.43]:33989 "EHLO
+        mail-pg0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751253AbdBWXED (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Feb 2017 18:04:03 -0500
+Received: by mail-pg0-f43.google.com with SMTP id 1so2294928pgi.1
+        for <git@vger.kernel.org>; Thu, 23 Feb 2017 15:04:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=mOsA8l34lb8vq/cYM50r7SIfTYo7yw/2FUm8rnyLScc=;
-        b=B0I6CZ7bxLdQiaTk5wxa+mg6rnrBgNS0W8MsiGPAzgWGheE1QgjuFE/KtSfS7notIL
-         vLzsxIyhBdPhI5eV0uiobRtiuHz7NQ/rGOfYNcMJy90wnAeKWvHOgpqDBWQkCrRfHUkE
-         GUHkgn9bXu4CiYNzsR1qrNO4fbTnoFNcDi2ykIkkwrpsHIquzGJ1iB0WTJph7gbvLfgm
-         WRpWU7aVayusWiTDgQJxt62A4hbeUHCZnCm7ZkUgRtYfvoxPhvMx0Lt3J7hsC/5bfwfk
-         DgcsAfmMVrPDfUKROixUjD40Mp/nuwrzf8lV5Wfvchl1GQnN0Kbhl30Q0usKzUxlFS0S
-         jdUw==
+        d=google.com; s=20161025;
+        h=from:to:cc:subject:date:message-id;
+        bh=7+HkgYbVEURBuvkFlIM1NRo4raEaueIpZi375UgrJUY=;
+        b=m2OHHLKG2Z/5f4KVEVddGIuku43XksKh50QjualGxxIyhOfhom5Dtq6gXQC8Z2ykaT
+         B6OTaUYWoQjKiD0dhJdDo8xZOUeY7qdh/I/Rf73EZFHHU3z6QzZZGK+mUolD7Vu75OHb
+         phSNGuHwGUWs4/OpcfRXdy2lL5viTf0zJvxQlunpyIAiUDbZHeg9JufQ6LkECv1KFPm6
+         VD8QanufnqXcU8g833z7o3QjiH8pnbkv8W0n5JSrOoFsDEMuGflJxMiiU2s27+AEjLk6
+         9TUhc+q2wmd1Sc9f8LsIdgCKlzRCk6xJLBPFQmcyuA+3ZMqGsX4RIJ5uwoit6f0xAIw6
+         sszA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=mOsA8l34lb8vq/cYM50r7SIfTYo7yw/2FUm8rnyLScc=;
-        b=ICy5UgwyzWHg7W3NmdppHDYOQvKgmIPyLtjbMtPD/A+stn6Q6m/F+dhy/V/k1i0MzF
-         DykSVZmtrBPrAmsjFy+5vTrwynuDtPiGkRjMWu4lhNrlka6zgekFotml2t6QXgsFLKC2
-         4ZMYjG5PQhhq78oM6H7PMWS/sf0J+m2h+AhR5CXRt+bcT3CT435/mnIZhIpS9L5vtDTL
-         319tZd5FXXV+NWkWoGkvLjjO2Keu/w2vSmrmnNblI8ZJ0Gmwc0GK2BfsfP24EoNCyUGl
-         Nbyr8smN3pBKDnUsXjDjPza2XE68KseczHMoqaDUWtzob1jcJzy00/W4MDYn70hJSLIs
-         Hv6g==
-X-Gm-Message-State: AMke39nozS3plK9hbwgHGjaBjrV77ZGdgKLPzlFwc4usuAdiB1CsPMuCTMYbB0a/jtUkcfHG2T1WaRF2Ms9byg==
-X-Received: by 10.157.4.36 with SMTP id 33mr20582731otc.221.1487890227044;
- Thu, 23 Feb 2017 14:50:27 -0800 (PST)
-MIME-Version: 1.0
-Received: by 10.182.164.66 with HTTP; Thu, 23 Feb 2017 14:50:26 -0800 (PST)
-In-Reply-To: <20170223224302.joti4zqucme3vqr2@sigill.intra.peff.net>
-References: <20170223173547.qljypk7sdqi37oha@kitenet.net> <CA+55aFzFEpi1crykZ33r9f7BsvLt_kiB-CHXOkuCAX=fd4BU-w@mail.gmail.com>
- <20170223182147.hbsyxsmyijgkqu75@kitenet.net> <CA+55aFxckeEW1ePcebrgG4iN4Lp62A2vU6tA=xnSDC_BnKQiCQ@mail.gmail.com>
- <20170223184637.xr74k42vc6y2pmse@sigill.intra.peff.net> <CA+55aFx=0EVfSG2iEKKa78g3hFN_yZ+L_FRm4R749nNAmTGO9w@mail.gmail.com>
- <20170223193210.munuqcjltwbrdy22@sigill.intra.peff.net> <CA+55aFxmr6ntWGbJDa8tOyxXDX3H-yd4TQthgV_Tn1u91yyT8w@mail.gmail.com>
- <20170223195753.ppsat2gwd3jq22by@sigill.intra.peff.net> <alpine.LFD.2.20.1702231428540.30435@i7.lan>
- <20170223224302.joti4zqucme3vqr2@sigill.intra.peff.net>
-From:   Linus Torvalds <torvalds@linux-foundation.org>
-Date:   Thu, 23 Feb 2017 14:50:26 -0800
-X-Google-Sender-Auth: 39Sc0sxOieersJpfsUamgI67kE8
-Message-ID: <CA+55aFyfWVHYMC+sSyct=uNLK=mHV-NqyNQXXtFY5YX1Uc-tAw@mail.gmail.com>
-Subject: Re: SHA1 collisions found
-To:     Jeff King <peff@peff.net>
-Cc:     Joey Hess <id@joeyh.name>, Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=7+HkgYbVEURBuvkFlIM1NRo4raEaueIpZi375UgrJUY=;
+        b=nkatzmIVbHtiSFgVOwyn6dXDlyZK33/gqsSvIIb9aKhCxSBH486XCG4l/LZaONFFSn
+         BSIbb1zDwTtlJ42BzfW9Gn0PnpYaPDyZVU5xi9ve4F5uHc2waU8FDEaFdfv1M3Y8kQfk
+         YtkjMQrrurLdMHm+gLUXzh6Ss73wmeyQOSkL6leM9/XoXRKKpoT/F8QQSp0L8ETFWQ13
+         VjRQiMzvS/x2C4F8OWeiaqD1djp1+IiF76Z6sLkJyXFAD1Ej0e02Wz2gpwvYdYZdXqFn
+         Q3+wouOLGHw3y9+/HBljZmQbPRZOFjE0oOejHZhgnpd2O3geIh19rLGajfB8slHHKEVO
+         DuIw==
+X-Gm-Message-State: AMke39nGJXO5u4u9fbpdNKB3PtZdXO7dtEDNPIhChR/wPos9AouEJ785J48hoF9+cGXxVH3O
+X-Received: by 10.99.103.133 with SMTP id b127mr50871464pgc.168.1487891042695;
+        Thu, 23 Feb 2017 15:04:02 -0800 (PST)
+Received: from twelve2.mtv.corp.google.com ([100.96.238.13])
+        by smtp.gmail.com with ESMTPSA id g28sm11698787pgn.3.2017.02.23.15.04.01
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Thu, 23 Feb 2017 15:04:01 -0800 (PST)
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     git@vger.kernel.org
+Cc:     Jonathan Tan <jonathantanmy@google.com>, peff@peff.net,
+        peartben@gmail.com, benpeart@microsoft.com
+Subject: [BUG] allowtipsha1inwant serves unreachable blobs if you know its hash
+Date:   Thu, 23 Feb 2017 15:03:58 -0800
+Message-Id: <20170223230358.30050-1-jonathantanmy@google.com>
+X-Mailer: git-send-email 2.11.0.483.g087da7b7c-goog
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Feb 23, 2017 at 2:43 PM, Jeff King <peff@peff.net> wrote:
->
-> Yeah. I started looking at that, but the ubc check happens after the
-> initial expansion.
+If a server sets allowtipsha1inwant (or allowreachablesha1inwant), a
+client can call "git fetch <server> <SHA-1>" where SHA-1 is the hash of
+a blob (reachable or unreachable) to obtain it. The test below (which
+passes) demonstrates that.
 
-Yes. That's the point where I gave up and just included their ugly sha1.c file.
+I have bisected this, and this bug occurs at least as early as the
+introduction of allowreachablesha1inwant in commit 68ee628
+("upload-pack: optionally allow fetching reachable sha1", 2015-05-21).
+It may have occurred earlier, though - initially, I thought that this
+was due to allowreachablesha1inwant, so I did not investigate
+allowtipsha1inwant until later.
 
-I suspect it can be done, but it would need somebody to really know
-what they are doing.
+I found this out while investigating the feasibility of using the
+existing fetch-pack/upload-pack protocol to support fetching of
+arbitrary blobs.
 
-            Linus
+This happens most likely because the "rev-list" call in
+"do_reachable_revlist" (called through "has_unreachable") is invoked
+without the "--objects" argument. "has_unreachable" determines that an
+object is unreachable if nothing is printed to stdout, which normally
+works, except that "rev-list" prints nothing when asked which commits
+are reachable from a blob (which makes sense).
+
+Adding "--objects" works, and all existing tests pass, except for the
+potential performance issue and the side effect that even fetching a
+reachable blob no longer works. This is due to a possible bug where a
+call like "git rev-list --objects $tree ^master" (where $tree is the
+tree object corresponding to master) prints out objects even though all
+objects reachable from the tree are also reachable from master. (There
+should be no issue with "get_reachable_list", the other invoker of
+"do_reachable_revlist", because non-commits in the command's stdout are
+skipped.)
+
+The other option, of course, is to whitelist object types (that is, only
+allow commits and tags - I haven't checked if this is sufficient,
+though). This might be a sufficient temporary fix, although I expect
+that we would still have to revisit this later (especially if we decide
+that we want to allow downloading blobs through this interface).
+
+I don't mind taking a look at either solution, but thought of putting
+this out first in case people have any opinion or insight into this
+problem and its possible solutions.
+
+(CC-ing some people who might have an interest in downloading arbitrary
+blobs.)
+
+Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+---
+ t/t9999-mytests.sh | 61 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 61 insertions(+)
+ create mode 100644 t/t9999-mytests.sh
+
+diff --git a/t/t9999-mytests.sh b/t/t9999-mytests.sh
+new file mode 100644
+index 000000000..e71cfbf48
+--- /dev/null
++++ b/t/t9999-mytests.sh
+@@ -0,0 +1,61 @@
++#!/bin/sh
++
++test_description='my tests'
++. ./test-lib.sh
++. "$TEST_DIRECTORY"/lib-httpd.sh
++start_httpd
++
++test_expect_success 'setup' '
++	server="$HTTPD_DOCUMENT_ROOT_PATH/blobs" &&
++	git init "$server" &&
++	(
++		cd "$server" &&
++		test_commit myfile
++	) &&
++
++	# A reachable blob.
++	reachable=$(
++		git -C "$server" cat-file -p \
++		$(git -C "$server" cat-file -p HEAD | grep "^tree " | cut -c6-) | \
++		grep myfile | cut -c13-52) &&
++	test -n "$reachable" &&
++
++	# 2 unreachable blobs. Only one will be fetched. (2 are included here
++	# to demonstrate that there is no whole-repo copying or anything like
++	# that.)
++	unreachable=$(echo abc123 | git -C "$server" hash-object -w --stdin) &&
++	test -n "$unreachable" &&
++	another_unreachable=$(echo def456 | git -C "$server" hash-object -w --stdin) &&
++	test -n "$another_unreachable" &&
++
++	git init --bare client.git &&
++	git -C client.git remote add origin "$HTTPD_URL/smart/blobs" &&
++
++	# These fetches are supposed to fail (and do)
++	test_must_fail git -C client.git fetch origin $reachable &&
++	test_must_fail git -C client.git fetch origin $unreachable
++'
++
++test_expect_success 'allowtipsha1inwant suddenly allows blobs' '
++	test -n "$reachable" &&
++
++	git -C "$server" config uploadpack.allowtipsha1inwant 1 &&
++
++	# This fetch passes
++	git -C client.git fetch origin $reachable &&
++	test "myfile" = $(git -C client.git cat-file -p $reachable)
++'
++
++test_expect_success 'even unreachable ones' '
++	test -n "$unreachable" &&
++
++	# This fetch is supposed to fail (for multiple reasons), but passes.
++	# Only the wanted blob is fetched.
++	git -C client.git fetch origin $unreachable &&
++	git -C client.git cat-file -e $unreachable &&
++	test_must_fail git -C client.git cat-file -e $another_unreachable &&
++	test "abc123" = $(git -C client.git cat-file -p $unreachable)
++'
++
++stop_httpd
++test_done
+-- 
+2.11.0.483.g087da7b7c-goog
+
