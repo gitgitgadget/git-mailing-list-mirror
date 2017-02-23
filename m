@@ -6,53 +6,53 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D85172022D
-	for <e@80x24.org>; Thu, 23 Feb 2017 23:07:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 537372022D
+	for <e@80x24.org>; Thu, 23 Feb 2017 23:07:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751296AbdBWXHC (ORCPT <rfc822;e@80x24.org>);
-        Thu, 23 Feb 2017 18:07:02 -0500
-Received: from mail-pg0-f46.google.com ([74.125.83.46]:33359 "EHLO
+        id S1751293AbdBWXHV (ORCPT <rfc822;e@80x24.org>);
+        Thu, 23 Feb 2017 18:07:21 -0500
+Received: from mail-pg0-f46.google.com ([74.125.83.46]:34633 "EHLO
         mail-pg0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751268AbdBWXHB (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Feb 2017 18:07:01 -0500
-Received: by mail-pg0-f46.google.com with SMTP id z128so2353228pgb.0
-        for <git@vger.kernel.org>; Thu, 23 Feb 2017 15:07:00 -0800 (PST)
+        with ESMTP id S1751265AbdBWXHU (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Feb 2017 18:07:20 -0500
+Received: by mail-pg0-f46.google.com with SMTP id 1so2328824pgi.1
+        for <git@vger.kernel.org>; Thu, 23 Feb 2017 15:07:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=EFqeP6CvyLrBFzaUcyuol/EqtNsLkEYGxz7hYQCK2Ks=;
-        b=XFZabdQWwDdOKV3ouc2NTlkUbvRMbaPgJu2EJt+x8UT8+DbfgQ8vprqYFcCZ8EKBA3
-         OHGNMCal2VViM6CwY+0daix2sU3t2DKVA3Qbk1F3XNha3UtPf30A295BjKXYDVeQ3OPW
-         TGouZvSwSY8Hmvb/7uMMIIFjJR640ziZoCkV5y2B5m71kR6tKG2zl0WerTrdcDCmaoMB
-         20pgzpOUitXUpBIp/LsoTltfB4njp2ouCYzzrHwgFplu5he1KztXTwx6UgSZYv6cHKuu
-         FwRME0XL3uOFfzFI/CvyeadZewfXalavNRdZWvn7kJQa2nODJfb2AjPbfNt1RFZ7fJdR
-         LwAQ==
+        bh=ctcxOn5xn+031fK1+Cf4jj5n7vYNbLtfYGAgiWFpCfE=;
+        b=a2RIiDc3PquVStHf22BEBvr85k0mBA4YoI9ga2T5OlCfbVfzaMpx6AayIxMjucKp7x
+         r9DmjyTr1O/ZipX3ZobTnNa1CtIm5a/eMQ8bBDq8Sj99hW8W/kHvbqZv2F6SNPEqaHX7
+         CfgeVS8hewLY7uL5LZiTR2gjYQIBQ75jrIwZfvELa8NGpnHA4xeBUJlH6RtgTo+WNB3X
+         gKIgAM/vHa7m2Gv/FRK0OdIdOenxYIhMWIOQEpBO+W52HJ3phZMC3lQAT7cuhoI1yceA
+         13QxTWcgQIhEoXiqee2R9D0qCDF5GymL6ZJ7OAN4UyclOgwmr3FVFsyoOy4FSYuYO65a
+         g1mA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=EFqeP6CvyLrBFzaUcyuol/EqtNsLkEYGxz7hYQCK2Ks=;
-        b=QIxeeXPuDgkTpJw6rhWd6zFbL+Vcb71RFtnUaCWa5nPX0rkaZwPvBcohITcx+9zTLa
-         +T5htkxoGSc2sOMrq+um4XDzFlx7tyvxg8/ViXMJF9xAykYRBWyWTGhQVFLamh2FpGS/
-         FLL08TLwrrqiuKh0gc/ivqiYFf4z4yalzQqPkNOsDN2q5Sn9ycaZab0GGhcUUMjwFH6O
-         PiXoYEQAi2JBQu2f/Mn07JaXVsGeAkVhye0UfXi7O6DV79bc++ND+Ygp6gvHQGi4qv4M
-         FxSKWE4yjyAB3UI9P0/Ctf9+V1iKtSXF596s64C5qn5rmPtltTPFruLcHSxxOLlj6oBP
-         qPFg==
-X-Gm-Message-State: AMke39nNbuUQ34+K3QVXp3zxuZnf4KMl2IH1GbtMhn8XQlIwsMdFH20oZlpdq/Kxpd07xHNo
-X-Received: by 10.99.39.71 with SMTP id n68mr50411628pgn.85.1487890684169;
-        Thu, 23 Feb 2017 14:58:04 -0800 (PST)
+        bh=ctcxOn5xn+031fK1+Cf4jj5n7vYNbLtfYGAgiWFpCfE=;
+        b=jPeIpSCQMsKEKy+ZLfTX+9RSrrPr7rc4TfsFkzZLhvp2tIok4FJOIBtN27/PKrrCl1
+         /40AdSVIf2aZR3uSf+7G9Gef5aE7xhFr+lN+3jpxMNVAXJP1rcanATROtJnPSwgxaVpE
+         1vt3R/CIv6yOZyHWTu4zTeyU7ix6qMSGlOM+ZwRjS/Qr9K0wYFhd3inoJM+Ajp7iHr6b
+         uxe3AXi6D8gEgkbjtXd/7s0MBynnkI+Mw7IUxLsidMnStGlTj8UdYChrf0eBJBc9K3Rp
+         ebrv5AdDWbYgE5oo6WdJT09Inr9UbaEXJBztu6kb9EYOPKw/XEz4vDjLh4PW3Il4FEGE
+         PxZA==
+X-Gm-Message-State: AMke39ljrpbQrJmt6GHIeWCxKs/NlJjETU6npL9hiU6Vme7hPmAirVwEt4/VHH80K7vCnzPi
+X-Received: by 10.84.212.2 with SMTP id d2mr58354244pli.152.1487890687678;
+        Thu, 23 Feb 2017 14:58:07 -0800 (PST)
 Received: from localhost ([2620:0:1000:5b10:ad75:dfc7:8a6:1152])
-        by smtp.gmail.com with ESMTPSA id w28sm172115pge.27.2017.02.23.14.58.03
+        by smtp.gmail.com with ESMTPSA id p66sm11581453pfb.88.2017.02.23.14.58.06
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 23 Feb 2017 14:58:03 -0800 (PST)
+        Thu, 23 Feb 2017 14:58:07 -0800 (PST)
 From:   Stefan Beller <sbeller@google.com>
 To:     sbeller@google.com
 Cc:     git@vger.kernel.org, sandals@crustytoothpaste.net,
         jrnieder@gmail.com, bmwill@google.com, gitster@pobox.com,
         novalis@novalis.org
-Subject: [PATCH 10/15] update submodules: add submodule_move_head
-Date:   Thu, 23 Feb 2017 14:57:30 -0800
-Message-Id: <20170223225735.10994-11-sbeller@google.com>
+Subject: [PATCH 13/15] read-cache, remove_marked_cache_entries: wipe selected submodules.
+Date:   Thu, 23 Feb 2017 14:57:33 -0800
+Message-Id: <20170223225735.10994-14-sbeller@google.com>
 X-Mailer: git-send-email 2.12.0.rc1.16.ge4278d41a0.dirty
 In-Reply-To: <20170223225735.10994-1-sbeller@google.com>
 References: <xmqqlgt5vlse.fsf@gitster.mtv.corp.google.com>
@@ -62,188 +62,63 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In later patches we introduce the options and flag for commands
-that modify the working directory, e.g. git-checkout.
-
-This piece of code will be used universally for
-all these working tree modifications as it
-* supports dry run to answer the question:
-  "Is it safe to change the submodule to this new state?"
-  e.g. is it overwriting untracked files or are there local
-  changes that would be overwritten?
-* supports a force flag that can be used for resetting
-  the tree.
-
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- submodule.c | 135 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- submodule.h |   7 ++++
- 2 files changed, 142 insertions(+)
+ read-cache.c | 27 +++++++++++++++++++++++++--
+ 1 file changed, 25 insertions(+), 2 deletions(-)
 
-diff --git a/submodule.c b/submodule.c
-index 0b2596e88a..a2cf8c9376 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -1239,6 +1239,141 @@ int bad_to_remove_submodule(const char *path, unsigned flags)
- 	return ret;
+diff --git a/read-cache.c b/read-cache.c
+index 9054369dd0..9a2abacf7a 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -18,6 +18,8 @@
+ #include "varint.h"
+ #include "split-index.h"
+ #include "utf8.h"
++#include "submodule.h"
++#include "submodule-config.h"
+ 
+ /* Mask for the name length in ce_flags in the on-disk index */
+ 
+@@ -520,6 +522,22 @@ int remove_index_entry_at(struct index_state *istate, int pos)
+ 	return 1;
  }
  
-+static int submodule_has_dirty_index(const struct submodule *sub)
++static void remove_submodule_according_to_strategy(const struct submodule *sub)
 +{
-+	struct child_process cp = CHILD_PROCESS_INIT;
-+
-+	prepare_submodule_repo_env_no_git_dir(&cp.env_array);
-+
-+	cp.git_cmd = 1;
-+	argv_array_pushl(&cp.args, "diff-index", "--quiet", \
-+					"--cached", "HEAD", NULL);
-+	cp.no_stdin = 1;
-+	cp.no_stdout = 1;
-+	cp.dir = sub->path;
-+	if (start_command(&cp))
-+		die("could not recurse into submodule '%s'", sub->path);
-+
-+	return finish_command(&cp);
++	switch (sub->update_strategy.type) {
++	case SM_UPDATE_UNSPECIFIED:
++	case SM_UPDATE_CHECKOUT:
++	case SM_UPDATE_REBASE:
++	case SM_UPDATE_MERGE:
++		submodule_move_head(sub->path, "HEAD", NULL, \
++				    SUBMODULE_MOVE_HEAD_FORCE);
++		break;
++	case SM_UPDATE_NONE:
++	case SM_UPDATE_COMMAND:
++		; /* Do not touch the submodule. */
++	}
 +}
-+
-+void submodule_reset_index(const char *path)
-+{
-+	struct child_process cp = CHILD_PROCESS_INIT;
-+	prepare_submodule_repo_env_no_git_dir(&cp.env_array);
-+
-+	cp.git_cmd = 1;
-+	cp.no_stdin = 1;
-+	cp.dir = path;
-+
-+	argv_array_pushf(&cp.args, "--super-prefix=%s/", path);
-+	argv_array_pushl(&cp.args, "read-tree", "-u", "--reset", NULL);
-+
-+	argv_array_push(&cp.args, EMPTY_TREE_SHA1_HEX);
-+
-+	if (run_command(&cp))
-+		die("could not reset submodule index");
-+}
-+
-+/**
-+ * Moves a submodule at a given path from a given head to another new head.
-+ * For edge cases (a submodule coming into existence or removing a submodule)
-+ * pass NULL for old or new respectively.
-+ */
-+int submodule_move_head(const char *path,
-+			 const char *old,
-+			 const char *new,
-+			 unsigned flags)
-+{
-+	int ret = 0;
-+	struct child_process cp = CHILD_PROCESS_INIT;
-+	const struct submodule *sub;
-+
-+	sub = submodule_from_path(null_sha1, path);
-+
-+	if (!sub)
-+		die("BUG: could not get submodule information for '%s'", path);
-+
-+	if (old && !(flags & SUBMODULE_MOVE_HEAD_FORCE)) {
-+		/* Check if the submodule has a dirty index. */
-+		if (submodule_has_dirty_index(sub))
-+			return error(_("submodule '%s' has dirty index"), path);
-+	}
-+
-+	if (!(flags & SUBMODULE_MOVE_HEAD_DRY_RUN)) {
-+		if (old) {
-+			if (!submodule_uses_gitfile(path))
-+				absorb_git_dir_into_superproject("", path,
-+					ABSORB_GITDIR_RECURSE_SUBMODULES);
-+		} else {
-+			struct strbuf sb = STRBUF_INIT;
-+			strbuf_addf(&sb, "%s/modules/%s",
-+				    get_git_common_dir(), sub->name);
-+			connect_work_tree_and_git_dir(path, sb.buf);
-+			strbuf_release(&sb);
-+
-+			/* make sure the index is clean as well */
-+			submodule_reset_index(path);
-+		}
-+	}
-+
-+	prepare_submodule_repo_env_no_git_dir(&cp.env_array);
-+
-+	cp.git_cmd = 1;
-+	cp.no_stdin = 1;
-+	cp.dir = path;
-+
-+	argv_array_pushf(&cp.args, "--super-prefix=%s/", path);
-+	argv_array_pushl(&cp.args, "read-tree", NULL);
-+
-+	if (flags & SUBMODULE_MOVE_HEAD_DRY_RUN)
-+		argv_array_push(&cp.args, "-n");
-+	else
-+		argv_array_push(&cp.args, "-u");
-+
-+	if (flags & SUBMODULE_MOVE_HEAD_FORCE)
-+		argv_array_push(&cp.args, "--reset");
-+	else
-+		argv_array_push(&cp.args, "-m");
-+
-+	argv_array_push(&cp.args, old ? old : EMPTY_TREE_SHA1_HEX);
-+	argv_array_push(&cp.args, new ? new : EMPTY_TREE_SHA1_HEX);
-+
-+	if (run_command(&cp)) {
-+		ret = -1;
-+		goto out;
-+	}
-+
-+	if (!(flags & SUBMODULE_MOVE_HEAD_DRY_RUN)) {
-+		if (new) {
-+			struct child_process cp1 = CHILD_PROCESS_INIT;
-+			/* also set the HEAD accordingly */
-+			cp1.git_cmd = 1;
-+			cp1.no_stdin = 1;
-+			cp1.dir = path;
-+
-+			argv_array_pushl(&cp1.args, "update-ref", "HEAD",
-+					 new ? new : EMPTY_TREE_SHA1_HEX, NULL);
-+
-+			if (run_command(&cp1)) {
-+				ret = -1;
-+				goto out;
-+			}
-+		} else {
-+			struct strbuf sb = STRBUF_INIT;
-+
-+			strbuf_addf(&sb, "%s/.git", path);
-+			unlink_or_warn(sb.buf);
-+			strbuf_release(&sb);
-+
-+			if (is_empty_dir(path))
-+				rmdir_or_warn(path);
-+		}
-+	}
-+out:
-+	return ret;
-+}
-+
- static int find_first_merges(struct object_array *result, const char *path,
- 		struct commit *a, struct commit *b)
- {
-diff --git a/submodule.h b/submodule.h
-index 6f3fe85c7c..4cdf6445f7 100644
---- a/submodule.h
-+++ b/submodule.h
-@@ -96,6 +96,13 @@ extern int push_unpushed_submodules(struct sha1_array *commits,
- extern void connect_work_tree_and_git_dir(const char *work_tree, const char *git_dir);
- extern int parallel_submodules(void);
- 
-+#define SUBMODULE_MOVE_HEAD_DRY_RUN (1<<0)
-+#define SUBMODULE_MOVE_HEAD_FORCE   (1<<1)
-+extern int submodule_move_head(const char *path,
-+			       const char *old,
-+			       const char *new,
-+			       unsigned flags);
 +
  /*
-  * Prepare the "env_array" parameter of a "struct child_process" for executing
-  * a submodule by clearing any repo-specific envirionment variables, but
+  * Remove all cache entries marked for removal, that is where
+  * CE_REMOVE is set in ce_flags.  This is much more effective than
+@@ -532,8 +550,13 @@ void remove_marked_cache_entries(struct index_state *istate)
+ 
+ 	for (i = j = 0; i < istate->cache_nr; i++) {
+ 		if (ce_array[i]->ce_flags & CE_REMOVE) {
+-			remove_name_hash(istate, ce_array[i]);
+-			save_or_free_index_entry(istate, ce_array[i]);
++			const struct submodule *sub = submodule_from_ce(ce_array[i]);
++			if (sub) {
++				remove_submodule_according_to_strategy(sub);
++			} else {
++				remove_name_hash(istate, ce_array[i]);
++				save_or_free_index_entry(istate, ce_array[i]);
++			}
+ 		}
+ 		else
+ 			ce_array[j++] = ce_array[i];
 -- 
 2.12.0.rc1.16.ge4278d41a0.dirty
 
