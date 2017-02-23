@@ -2,120 +2,176 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 33D262022D
-	for <e@80x24.org>; Thu, 23 Feb 2017 23:05:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8A0CA2022D
+	for <e@80x24.org>; Thu, 23 Feb 2017 23:06:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751396AbdBWXFx (ORCPT <rfc822;e@80x24.org>);
-        Thu, 23 Feb 2017 18:05:53 -0500
-Received: from cloud.peff.net ([104.130.231.41]:32966 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751207AbdBWXFx (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Feb 2017 18:05:53 -0500
-Received: (qmail 26101 invoked by uid 109); 23 Feb 2017 23:05:52 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 23 Feb 2017 23:05:52 +0000
-Received: (qmail 7016 invoked by uid 111); 23 Feb 2017 23:05:56 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 23 Feb 2017 18:05:56 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 23 Feb 2017 18:05:50 -0500
-Date:   Thu, 23 Feb 2017 18:05:50 -0500
-From:   Jeff King <peff@peff.net>
-To:     Linus Torvalds <torvalds@linux-foundation.org>
-Cc:     Joey Hess <id@joeyh.name>, Git Mailing List <git@vger.kernel.org>
-Subject: [PATCH 2/3] sha1dc: adjust header includes for git
-Message-ID: <20170223230550.7eosg57dzy346jkk@sigill.intra.peff.net>
-References: <20170223230507.kuxjqtg3ghcfskc6@sigill.intra.peff.net>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20170223230507.kuxjqtg3ghcfskc6@sigill.intra.peff.net>
+        id S1751462AbdBWXGY (ORCPT <rfc822;e@80x24.org>);
+        Thu, 23 Feb 2017 18:06:24 -0500
+Received: from mail-pg0-f41.google.com ([74.125.83.41]:33238 "EHLO
+        mail-pg0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751207AbdBWXGW (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Feb 2017 18:06:22 -0500
+Received: by mail-pg0-f41.google.com with SMTP id z128so2347259pgb.0
+        for <git@vger.kernel.org>; Thu, 23 Feb 2017 15:06:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=F6LkboBLRpjm0HyWYEEIQuy+lXWUIKBRy/AAuBvqZts=;
+        b=X7QJ9eCSEk9F/H7YD7dViI61Qt+BPDL/AuW519pinNVNtz/VnTHKnjvrWKze5e8l9z
+         w221fAD00zFY8KYLudibTzfpL6gNcpmYSZDUM2azDLPum1G2pUEIiiTQgVt3axclxlWC
+         TLqjCsxz0O3SrAfPkvdNYkHhWh4PJtuvUlEZ6o9x7W7d64EHLBOBC1vZog4S5DHR+HNf
+         Cs/lZyIjnh0dnEUiQzRxJ+2VoyIu7jsp+qn9qCIHTNtseYcdSP123BWsq5w4dhRmsMP+
+         CjZ3G0KzUasTYycNC/8X1Td5dpGTk/SzObaZFMuXociLUUF18RnSt94lSpqMx0bNeFPU
+         k4kg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=F6LkboBLRpjm0HyWYEEIQuy+lXWUIKBRy/AAuBvqZts=;
+        b=L+WjMYZKffAABDbbTFuFpm3NJC3VgNafHOdMjQNEkgJpmOpPYQLMUjRN+K3V2CZPLl
+         fAUydOOh5IlUClZy1AeptxKcLe6yPxbsufEqbSQJJXzSXWKdrWFAPfva5WIScDPn+svl
+         XXfQs45vNZvU9SJRrNp+d4JlRSQzKghRzXxxhgqq9qAjlJV3FD5/5x7vdRcXuM09J9VZ
+         nP60J+C8baHwD3b4ijkIAVg7bklur0LgSZB9d7SVPwjdGAhgZpht4QUmuDeQY1+C+o1r
+         5CITOO+pTAicuPI+MTpdQWxalXc75czMpX8M3y3iKiXgviKX9dN75zfo5QJdzO3eMwuq
+         YyYQ==
+X-Gm-Message-State: AMke39mc1DYxprr3qawB0HWcTm+Tf5s/th5YbAdc4SHr/ABiwHGSmvQBp6lILlSzg38hnCsI
+X-Received: by 10.84.192.137 with SMTP id c9mr29842298pld.17.1487890677707;
+        Thu, 23 Feb 2017 14:57:57 -0800 (PST)
+Received: from localhost ([2620:0:1000:5b10:ad75:dfc7:8a6:1152])
+        by smtp.gmail.com with ESMTPSA id x2sm11600752pfb.49.2017.02.23.14.57.56
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Thu, 23 Feb 2017 14:57:57 -0800 (PST)
+From:   Stefan Beller <sbeller@google.com>
+To:     sbeller@google.com
+Cc:     git@vger.kernel.org, sandals@crustytoothpaste.net,
+        jrnieder@gmail.com, bmwill@google.com, gitster@pobox.com,
+        novalis@novalis.org
+Subject: [PATCH 05/15] connect_work_tree_and_git_dir: safely create leading directories
+Date:   Thu, 23 Feb 2017 14:57:25 -0800
+Message-Id: <20170223225735.10994-6-sbeller@google.com>
+X-Mailer: git-send-email 2.12.0.rc1.16.ge4278d41a0.dirty
+In-Reply-To: <20170223225735.10994-1-sbeller@google.com>
+References: <xmqqlgt5vlse.fsf@gitster.mtv.corp.google.com>
+ <20170223225735.10994-1-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We can replace system includes with git-compat-util.h (and
-should make sure it is included in all .c files). We can
-drop includes from headers entirely, as every .c file is
-supposed to include git-compat-util itself first.
+In a later patch we'll use connect_work_tree_and_git_dir when the
+directory for the gitlink file doesn't exist yet. This patch makes
+connect_work_tree_and_git_dir safe to use for both cases of
+either the git dir or the working dir missing.
 
-We also use the full "sha1dc/" path for including related
-files. This isn't strictly necessary, but makes the expected
-resolution more obvious.
+To do so, we need to call safe_create_leading_directories[_const]
+on both directories. However this has to happen before we construct
+the absolute paths as real_pathdup assumes the directories to
+be there already.
 
-Signed-off-by: Jeff King <peff@peff.net>
+So for both the config file in the git dir as well as the .git link
+file we need to
+a) construct the name
+b) call SCLD
+c) get the absolute path
+d) once a-c is done for both we can consume the absolute path
+   to compute the relative path to each other and store those
+   relative paths.
+
+The implementation provided here puts a) and b) for both cases first,
+and then performs c and d after.
+
+One of the two users of 'connect_work_tree_and_git_dir' already checked
+for the directory being there, so we can loose that check as
+connect_work_tree_and_git_dir handles this functionality now.
+
+Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- sha1dc/sha1.c      | 9 +++------
- sha1dc/sha1.h      | 2 --
- sha1dc/ubc_check.c | 4 ++--
- sha1dc/ubc_check.h | 2 --
- 4 files changed, 5 insertions(+), 12 deletions(-)
+ dir.c       | 32 +++++++++++++++++++++-----------
+ submodule.c | 11 ++---------
+ 2 files changed, 23 insertions(+), 20 deletions(-)
 
-diff --git a/sha1dc/sha1.c b/sha1dc/sha1.c
-index ed2010911..762c6fff8 100644
---- a/sha1dc/sha1.c
-+++ b/sha1dc/sha1.c
-@@ -5,12 +5,9 @@
- * https://opensource.org/licenses/MIT
- ***/
+diff --git a/dir.c b/dir.c
+index 4541f9e146..6f52af7abb 100644
+--- a/dir.c
++++ b/dir.c
+@@ -2728,23 +2728,33 @@ void untracked_cache_add_to_index(struct index_state *istate,
+ /* Update gitfile and core.worktree setting to connect work tree and git dir */
+ void connect_work_tree_and_git_dir(const char *work_tree_, const char *git_dir_)
+ {
+-	struct strbuf file_name = STRBUF_INIT;
++	struct strbuf gitfile_sb = STRBUF_INIT;
++	struct strbuf cfg_sb = STRBUF_INIT;
+ 	struct strbuf rel_path = STRBUF_INIT;
+-	char *git_dir = real_pathdup(git_dir_);
+-	char *work_tree = real_pathdup(work_tree_);
++	char *git_dir, *work_tree;
  
--#include <string.h>
--#include <memory.h>
--#include <stdio.h>
+-	/* Update gitfile */
+-	strbuf_addf(&file_name, "%s/.git", work_tree);
+-	write_file(file_name.buf, "gitdir: %s",
+-		   relative_path(git_dir, work_tree, &rel_path));
++	/* Prepare .git file */
++	strbuf_addf(&gitfile_sb, "%s/.git", work_tree_);
++	if (safe_create_leading_directories_const(gitfile_sb.buf))
++		die(_("could not create directories for %s"), gitfile_sb.buf);
++
++	/* Prepare config file */
++	strbuf_addf(&cfg_sb, "%s/config", git_dir_);
++	if (safe_create_leading_directories_const(cfg_sb.buf))
++		die(_("could not create directories for %s"), cfg_sb.buf);
+ 
++	git_dir = real_pathdup(git_dir_);
++	work_tree = real_pathdup(work_tree_);
++
++	/* Write .git file */
++	write_file(gitfile_sb.buf, "gitdir: %s",
++		   relative_path(git_dir, work_tree, &rel_path));
+ 	/* Update core.worktree setting */
+-	strbuf_reset(&file_name);
+-	strbuf_addf(&file_name, "%s/config", git_dir);
+-	git_config_set_in_file(file_name.buf, "core.worktree",
++	git_config_set_in_file(cfg_sb.buf, "core.worktree",
+ 			       relative_path(work_tree, git_dir, &rel_path));
+ 
+-	strbuf_release(&file_name);
++	strbuf_release(&gitfile_sb);
++	strbuf_release(&cfg_sb);
+ 	strbuf_release(&rel_path);
+ 	free(work_tree);
+ 	free(git_dir);
+diff --git a/submodule.c b/submodule.c
+index 0e55372f37..04d185738f 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -1442,8 +1442,6 @@ void absorb_git_dir_into_superproject(const char *prefix,
+ 
+ 	/* Not populated? */
+ 	if (!sub_git_dir) {
+-		char *real_new_git_dir;
+-		const char *new_git_dir;
+ 		const struct submodule *sub;
+ 
+ 		if (err_code == READ_GITFILE_ERR_STAT_FAILED) {
+@@ -1466,13 +1464,8 @@ void absorb_git_dir_into_superproject(const char *prefix,
+ 		sub = submodule_from_path(null_sha1, path);
+ 		if (!sub)
+ 			die(_("could not lookup name for submodule '%s'"), path);
+-		new_git_dir = git_path("modules/%s", sub->name);
+-		if (safe_create_leading_directories_const(new_git_dir) < 0)
+-			die(_("could not create directory '%s'"), new_git_dir);
+-		real_new_git_dir = real_pathdup(new_git_dir);
+-		connect_work_tree_and_git_dir(path, real_new_git_dir);
 -
--#include "sha1.h"
--#include "ubc_check.h"
-+#include "git-compat-util.h"
-+#include "sha1dc/sha1.h"
-+#include "sha1dc/ubc_check.h"
- 
- #define rotate_right(x,n) (((x)>>(n))|((x)<<(32-(n))))
- #define rotate_left(x,n)  (((x)<<(n))|((x)>>(32-(n))))
-diff --git a/sha1dc/sha1.h b/sha1dc/sha1.h
-index 8b522f9d2..ce5390397 100644
---- a/sha1dc/sha1.h
-+++ b/sha1dc/sha1.h
-@@ -5,8 +5,6 @@
- * https://opensource.org/licenses/MIT
- ***/
- 
--#include <stdint.h>
--
- // uses SHA-1 message expansion to expand the first 16 words of W[] to 80 words
- void sha1_message_expansion(uint32_t W[80]);
- 
-diff --git a/sha1dc/ubc_check.c b/sha1dc/ubc_check.c
-index 556aaf3c5..6bccd4f2b 100644
---- a/sha1dc/ubc_check.c
-+++ b/sha1dc/ubc_check.c
-@@ -22,8 +22,8 @@
- // a directly verifiable version named ubc_check_verify can be found in ubc_check_verify.c
- // ubc_check has been verified against ubc_check_verify using the 'ubc_check_test' program in the tools section
- 
--#include <stdint.h>
--#include "ubc_check.h"
-+#include "git-compat-util.h"
-+#include "sha1dc/ubc_check.h"
- 
- static const uint32_t DV_I_43_0_bit 	= (uint32_t)(1) << 0;
- static const uint32_t DV_I_44_0_bit 	= (uint32_t)(1) << 1;
-diff --git a/sha1dc/ubc_check.h b/sha1dc/ubc_check.h
-index 27285bdf5..05ff944eb 100644
---- a/sha1dc/ubc_check.h
-+++ b/sha1dc/ubc_check.h
-@@ -21,8 +21,6 @@
- #ifndef UBC_CHECK_H
- #define UBC_CHECK_H
- 
--#include <stdint.h>
--
- #define DVMASKSIZE 1
- typedef struct { int dvType; int dvK; int dvB; int testt; int maski; int maskb; uint32_t dm[80]; } dv_info_t;
- extern dv_info_t sha1_dvs[];
+-		free(real_new_git_dir);
++		connect_work_tree_and_git_dir(path,
++			git_path("modules/%s", sub->name));
+ 	} else {
+ 		/* Is it already absorbed into the superprojects git dir? */
+ 		char *real_sub_git_dir = real_pathdup(sub_git_dir);
 -- 
-2.12.0.rc2.629.ga7951ed82
+2.12.0.rc1.16.ge4278d41a0.dirty
 
