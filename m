@@ -2,104 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2B8BD2022D
-	for <e@80x24.org>; Thu, 23 Feb 2017 18:53:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DF3752022D
+	for <e@80x24.org>; Thu, 23 Feb 2017 18:57:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751107AbdBWSxn (ORCPT <rfc822;e@80x24.org>);
-        Thu, 23 Feb 2017 13:53:43 -0500
-Received: from mail-pg0-f68.google.com ([74.125.83.68]:33090 "EHLO
-        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750828AbdBWSxm (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Feb 2017 13:53:42 -0500
-Received: by mail-pg0-f68.google.com with SMTP id 5so5424865pgj.0
-        for <git@vger.kernel.org>; Thu, 23 Feb 2017 10:53:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=tL4f6sbFCoH5mQR9LT2FUvVbZEdMG78CBanJcbfNmJM=;
-        b=M4chqYVfmGIwb1CoFhad1tIXosDVD6myZ0A1x7IA0LLdRjoN7SAh208JkqWEEHIpin
-         Tru71KCI82f0hiXu7QVSL1NP5+Wb+JBYGhUa2d0Z92V4pgRFmy5iKqMFJoDN2tE8M1pa
-         W8WsPXR2EBhGqAsaH+jO9dToUe2a6rfL+6z5RlgwG7vTLYnZlR0LBCdehYdGRgC2ZP0A
-         C1Tj7MJKh/A3s6LvT2tgDHysOt/NenFbwRdl3EDz/YS5Okt1yWY20Z0/4i/Y5MjOBBHB
-         coTzfrOhgMbwo0xxALpyS8Xmo5GBFzlysu23yuZC+L1Juf41wb3rNAV0j0Q3IZq9qTeV
-         dozQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=tL4f6sbFCoH5mQR9LT2FUvVbZEdMG78CBanJcbfNmJM=;
-        b=leD33CgS9RDO9B2/1w8n+0NFMYStbc/8ndaACVaam/wJhaQ799AOet0ofNub9sMgxs
-         95bVbXZ6bSibf+jTtJUknNNky7Rga/WdB+SDu+ztvWD+gG8QE5ZWLHSSb9ma8UPiliia
-         K57NVHGwzYppfPXC/zZG65mYS7rKeulX3ksxzIuLiSP8xIorxhT2ZdYKbkdeyghV5bfX
-         h7Lnpk2T8u3zcxuIFUhW7W451dxrgjk2xD788xlWzBEANo44fYR5BsNCNvOKWFqYU4+C
-         pqL0Qdky5khAjrqf8ASRCd2FBahhDD/Fq8eksxge3qjdWBTZY/wj4tgwiMwGCiu5CSKB
-         IulQ==
-X-Gm-Message-State: AMke39lbG9sgAUHzKYnBm23Wl3Q9FIMNI/TRK+X1+/r6KRME7sg7dtpXn8KLwHQuIHT/Fg==
-X-Received: by 10.84.172.1 with SMTP id m1mr56495485plb.5.1487876021428;
-        Thu, 23 Feb 2017 10:53:41 -0800 (PST)
-Received: from localhost ([2620:0:1000:8622:8829:f260:c132:141f])
-        by smtp.gmail.com with ESMTPSA id v69sm11214323pgd.18.2017.02.23.10.53.40
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 23 Feb 2017 10:53:40 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Cc:     Johan Hovold <johan@kernel.org>, Jeff King <peff@peff.net>,
-        Kevin Daudt <me@ikke.info>,
-        Larry Finger <Larry.Finger@lwfinger.net>, git@vger.kernel.org
-Subject: Re: [PATCH v2] send-email: only allow one address per body tag
-References: <xmqqbmu0pgg6.fsf@gitster.mtv.corp.google.com>
-        <20170220114406.19436-1-johan@kernel.org>
-        <vpqo9xxkqqo.fsf@anie.imag.fr>
-Date:   Thu, 23 Feb 2017 10:53:39 -0800
-In-Reply-To: <vpqo9xxkqqo.fsf@anie.imag.fr> (Matthieu Moy's message of "Mon,
-        20 Feb 2017 13:10:07 +0100")
-Message-ID: <xmqqfuj491sc.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+        id S1751413AbdBWS5n (ORCPT <rfc822;e@80x24.org>);
+        Thu, 23 Feb 2017 13:57:43 -0500
+Received: from kitenet.net ([66.228.36.95]:43752 "EHLO kitenet.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751557AbdBWS5n (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Feb 2017 13:57:43 -0500
+X-Question: 42
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=joeyh.name; s=mail;
+        t=1487874713; bh=gZI6CwjxMMyXkR2UYK+gROhIEbR1ABnlPzGQLe0/Kv8=;
+        h=Date:From:To:Subject:References:In-Reply-To:From;
+        b=LNLMQ5iaDPSRH504+O3L4NJbQjQgXSZaeyKib8itDYxOPkUDkKkC8eGT7ESLqQHBz
+         5zVwWkmp6od/r3/YLlDU18qfMIOy/WfcWFg98GG0Odb5rYvRCGnwyfQJnh1V+CjOMY
+         QZASBHeiYrK+HKvwI9KDvUiMAEXxHAVDNDpg1XI8=
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=joeyh.name; s=mail;
+        t=1487874666; bh=gZI6CwjxMMyXkR2UYK+gROhIEbR1ABnlPzGQLe0/Kv8=;
+        h=Date:From:To:Subject:References:In-Reply-To:From;
+        b=BqvXUX4OwNFGdoy/YRwPIqT3Pjrl6AkDNPCQ2nQAAglPz7Q/+Q0fBKEQm64u7I1i5
+         EE9b4BVHlWodojyDtpwLbSgEZBhKw2W9IGFUON1m9bNyCqOAKXaIOurSSq3gvEq1i/
+         SoW+eaYeWxsBDnnlISda/CCiJ4I+0tP6oEVIFAwQ=
+Date:   Thu, 23 Feb 2017 14:31:05 -0400
+From:   Joey Hess <id@joeyh.name>
+To:     Linus Torvalds <torvalds@linux-foundation.org>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: SHA1 collisions found
+Message-ID: <20170223183105.joxtpbut4wcqfbtu@kitenet.net>
+References: <20170223164306.spg2avxzukkggrpb@kitenet.net>
+ <CAPc5daVZ79WWKSw76kxHgDra9a7fSR1AibZa_pvK9aUuuVawLQ@mail.gmail.com>
+ <20170223173547.qljypk7sdqi37oha@kitenet.net>
+ <CA+55aFzFEpi1crykZ33r9f7BsvLt_kiB-CHXOkuCAX=fd4BU-w@mail.gmail.com>
+ <20170223182147.hbsyxsmyijgkqu75@kitenet.net>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: multipart/signed; micalg=pgp-sha256;
+        protocol="application/pgp-signature"; boundary="pnkrlpqwfykgz2dp"
+Content-Disposition: inline
+In-Reply-To: <20170223182147.hbsyxsmyijgkqu75@kitenet.net>
+User-Agent: NeoMutt/20161126 (1.7.1)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
 
-> Johan Hovold <johan@kernel.org> writes:
->
->> --- a/git-send-email.perl
->> +++ b/git-send-email.perl
->> @@ -1563,7 +1563,7 @@ foreach my $t (@files) {
->>  	# Now parse the message body
->>  	while(<$fh>) {
->>  		$message .=  $_;
->> -		if (/^(Signed-off-by|Cc): (.*)$/i) {
->> +		if (/^(Signed-off-by|Cc): ([^>]*>?)/i) {
->
-> I think this is acceptable, but this doesn't work with trailers like
->
-> Cc: "Some > Body" <Some.Body@example.com>
->
-> A proper management of this kind of weird address should be doable by
-> reusing the regexp parsing "..." in parse_mailbox:
->
-> 	my $re_quote = qr/"(?:[^\"\\]|\\.)*"/;
->
-> So the final regex would look like
->
-> if (/^(Signed-off-by|Cc): (([^>]*|"(?:[^\"\\]|\\.)*")>?)/i) {
->
-> I don't think that should block the patch inclusion, but it may be worth
-> considering.
->
-> Anyway, thanks for the patch!
+--pnkrlpqwfykgz2dp
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Somehow this fell off the radar.  So your reviewed-by: and then
-we'll cook this in 'next' for a while?
+Joey Hess wrote:
+> Linus Torvalds wrote:
+> > What you describe pretty much already requires a pre-image attack,
+> > which the new attack is _not_.
+> >=20
+> > It's not clear that the "good" object can be anything sane.
+>=20
+> Generate a regular commit object; use the entire commit object + NUL as t=
+he
+> chosen prefix, and use the identical-prefix collision attack to generate
+> the colliding good/bad objects.
+>=20
+> (The size in git's object header is a minor complication. Set the size
+> field to something sufficiently large, and then pad out the colliding
+> objects to that size once they're generated.)
 
-Thanks.
+Sorry! While that would work, it's a useless attack because the good and bad
+commit objects still point to the same tree.
+
+It would be interesting to have such colliding objects, to see what beaks,
+but probably not worth $75k to generate them.
+
+--=20
+see shy jo
+
+--pnkrlpqwfykgz2dp
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCAAdFiEE6FpfY7MdJMHr8NgcyRDZIiUS48cFAlivKmkACgkQyRDZIiUS
+48fTpQ/8DwlaoNtHG6ECYSNTUX6th1F87Nr4C3NrUvV2YHmF4b36dPNWIb2t/5GB
+wR6jqGGRXdqnb4imBki130ym+iOsN3ooalTi5gP+qEdvxMRQJ0jc8JXlo+gF5zRJ
+Ihu9tMPn0SEsWaGjLNseItsk8YgGx0kgk5GNBfRvfkJ0N1YVrDtRYAUyxLKwG17P
+C6XsAkLuxwLZ7ZmxqSs6uCC2zpFE5WD9awYQ15bHxzU+RXOiIrdncxBjjceBAtKJ
+wEsvO1Fsygf98IR8rrrCC2XeQr0vwZDxUmBGdemM90jAOrZRSHXcxIY89aC9OpNk
+FaEEq550EJJiesLX/1Fe6AWH9EHIRfuC18NO1hYJLsjZwc0m4772+HP7rDkbwdak
+CfQr8eKklRM+1kkLZbcMab3ha7x5hnslTu35BTHfTwJKE+74J+5TmMu1QS5Er3b0
+szPFUXmqTWczBvNkjuzJU5/m7MUWqL/jkqwNSRVUoF9hlf8hRDJkNQuU2uOJfFjw
+ilm1Co2KjyjnYDRX4ENEr6dAMWQwJSW6wpFS6VXP6K5zY+iKGMni6/gGjCKyRZDr
+DiayARO1UokUZ5QVENK3/jVh741ImW367J0EB7C/zlwWpaq/tg2UpoIkwi8IdFdn
+zYpGJSsoft0Uss1Na8tg3oo24cL2wPNALXouGBZQMxhtll1Yq2U=
+=/rSM
+-----END PGP SIGNATURE-----
+
+--pnkrlpqwfykgz2dp--
