@@ -2,81 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 172262022D
-	for <e@80x24.org>; Thu, 23 Feb 2017 18:18:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 160652022D
+	for <e@80x24.org>; Thu, 23 Feb 2017 18:22:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751034AbdBWSSk (ORCPT <rfc822;e@80x24.org>);
-        Thu, 23 Feb 2017 13:18:40 -0500
-Received: from lang.hm ([66.167.227.134]:36682 "EHLO bifrost.lang.hm"
+        id S1751520AbdBWSVz (ORCPT <rfc822;e@80x24.org>);
+        Thu, 23 Feb 2017 13:21:55 -0500
+Received: from kitenet.net ([66.228.36.95]:40602 "EHLO kitenet.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751041AbdBWSSj (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Feb 2017 13:18:39 -0500
-Received: from dlang-laptop ([10.2.0.162])
-        by bifrost.lang.hm (8.13.4/8.13.4/Debian-3) with ESMTP id v1NHqlv6008817;
-        Thu, 23 Feb 2017 09:52:47 -0800
-Date:   Thu, 23 Feb 2017 09:52:47 -0800 (PST)
-From:   David Lang <david@lang.hm>
-X-X-Sender: dlang@dlang-laptop
-To:     Joey Hess <id@joeyh.name>
-cc:     Junio C Hamano <gitster@pobox.com>,
+        id S1751107AbdBWSVy (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Feb 2017 13:21:54 -0500
+X-Question: 42
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=joeyh.name; s=mail;
+        t=1487874113; bh=Us5/JrGpQ3b/oyHt1K0WI0QgStPeTA4tI7xzsUY6gZM=;
+        h=Date:From:To:Subject:References:In-Reply-To:From;
+        b=V6I+XYfkqJsq4SJCovRohwnjcqrGTOJBwhLnLk0adY2EO+XCYI+rWxMiwkacSP0UP
+         Qeo3+jP+UEQ8jOXDX/FfIEPpBZJ3lRUioRMRel+mI+3Q7MIG3UkarIriuaApbxdmRo
+         uiZu6EjvsEuoQS7y+coddPd5qYsDot6QVH4bVajc=
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=joeyh.name; s=mail;
+        t=1487874107; bh=Us5/JrGpQ3b/oyHt1K0WI0QgStPeTA4tI7xzsUY6gZM=;
+        h=Date:From:To:Subject:References:In-Reply-To:From;
+        b=l0O9SLuaq+nWggkn6dKKmkojB8xC13tROOJq28WT7Kpo1i6EdT0ZfpDVEspMm3NBT
+         pdsITL6UeieWFGBNTvqj5xeMTQn4EYln37OnpNd1LkBPFozChu7RBJ/wWgE4go0ztw
+         8vHLCpU+GMfmi77gsli5iMCPn2iRrVTbu47A7fkQ=
+Date:   Thu, 23 Feb 2017 14:21:47 -0400
+From:   Joey Hess <id@joeyh.name>
+To:     Linus Torvalds <torvalds@linux-foundation.org>,
         Git Mailing List <git@vger.kernel.org>
 Subject: Re: SHA1 collisions found
-In-Reply-To: <20170223173547.qljypk7sdqi37oha@kitenet.net>
-Message-ID: <nycvar.QRO.7.75.62.1702230950040.6590@qynat-yncgbc>
-References: <20170223164306.spg2avxzukkggrpb@kitenet.net> <CAPc5daVZ79WWKSw76kxHgDra9a7fSR1AibZa_pvK9aUuuVawLQ@mail.gmail.com> <20170223173547.qljypk7sdqi37oha@kitenet.net>
-User-Agent: Alpine 2.20.17 (DEB 179 2016-10-28)
+Message-ID: <20170223182147.hbsyxsmyijgkqu75@kitenet.net>
+References: <20170223164306.spg2avxzukkggrpb@kitenet.net>
+ <CAPc5daVZ79WWKSw76kxHgDra9a7fSR1AibZa_pvK9aUuuVawLQ@mail.gmail.com>
+ <20170223173547.qljypk7sdqi37oha@kitenet.net>
+ <CA+55aFzFEpi1crykZ33r9f7BsvLt_kiB-CHXOkuCAX=fd4BU-w@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII; format=flowed
+Content-Type: multipart/signed; micalg=pgp-sha256;
+        protocol="application/pgp-signature"; boundary="nrhl65e2acxt24b3"
+Content-Disposition: inline
+In-Reply-To: <CA+55aFzFEpi1crykZ33r9f7BsvLt_kiB-CHXOkuCAX=fd4BU-w@mail.gmail.com>
+User-Agent: NeoMutt/20161126 (1.7.1)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, 23 Feb 2017, Joey Hess wrote:
 
-> Junio C Hamano wrote:
->> On Thu, Feb 23, 2017 at 8:43 AM, Joey Hess <id@joeyh.name> wrote:
->>>
->>> Since we now have collisions in valid PDF files, collisions in valid git
->>> commit and tree objects are probably able to be constructed.
->>
->> That may be true, but
->> https://public-inbox.org/git/Pine.LNX.4.58.0504291221250.18901@ppc970.osdl.org/
->
-> That's about someone replacing an valid object in Linus's repository
-> with an invalid random blob they found that collides. This SHA1
-> break doesn't allow generating such a blob anyway. Linus is right,
-> that's an impractical attack.
->
-> Attacks using this SHA1 break will look something more like:
->
-> * I push a "bad" object to a repo on github I set up under a
->  pseudonym.
-> * I publish a "good" object in a commit and convince the maintainer to
->  merge it.
-> * I wait for the maintainer to push to github.
-> * I wait for github to deduplicate and hope they'll replace the good
->  object with the bad one I pre-uploaded, thus silently changing the
->  content of the good commit the maintainer reviewed and pushed.
-> * The bad object is pulled from github and deployed.
-> * The maintainer still has the good object. They may not notice the bad
->  object is out there for a long time.
->
-> Of course, it doesn't need to involve Github, and doesn't need to
-> rely on internal details of their deduplication[1];
-> that only let me publish the bad object under a psydonym.
+--nrhl65e2acxt24b3
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-read that e-mail again, it covers the case where a central server gets a blob 
-replaced in it.
+Linus Torvalds wrote:
+> What you describe pretty much already requires a pre-image attack,
+> which the new attack is _not_.
+>=20
+> It's not clear that the "good" object can be anything sane.
 
-tricking a maintainerinto accepting a file that contains huge amounts of binary 
-data in it is going to be a non-trivial task, and even after you trick them into 
-accepting one bad file, you then need to replace the file they accepted with a 
-new one (breaking into github or assuming that github is putting both files into 
-the same repo, both of which are fairly unlikely)
+Generate a regular commit object; use the entire commit object + NUL as the
+chosen prefix, and use the identical-prefix collision attack to generate
+the colliding good/bad objects.
 
-David Lang
+(The size in git's object header is a minor complication. Set the size
+field to something sufficiently large, and then pad out the colliding
+objects to that size once they're generated.)
+
+--=20
+see shy jo
+
+--nrhl65e2acxt24b3
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCAAdFiEE6FpfY7MdJMHr8NgcyRDZIiUS48cFAlivKDoACgkQyRDZIiUS
+48dV8w/+O7qnEgADqwNT9MGwKRflFuz26XDpbczjL+EOERCjEMAmvEbaZrFw7eEP
+E7QD2hDCIXRLkw/6zpMEDWuqZTnvelgnKY+ZtZignPt36aT27VDheJBT8FyFZAZo
+hsvcsCtFeRKfvniTj6O7kYYOBLWIZCayC2sloARxkLIDkzNFhwUbz0lYoOo5wIyT
+FL86p3jqysqR8GZs5Mr6alEaxD0PolVYxeWZi2hYCB5qXmq/fka/Gfw+rfR4ujKr
+35GlDgtv+1S2+bdqjlVGct6/DwWBVr+IsUFA+H4Q8X5GQFFLp+bWy/g1RhLPn5my
+QMpLbe7U6MP3IEM+2clFBnV0U9okgJRlWZTvn6UAPslSOt+dUgWHNN9ddTPBHpMW
+MBhFtBSVPFYkXn6O2bpiBo9q3FaDE7igbdHNcOsGhmG7T0xYDb0lJ6waaz+vDU/D
+3GKe5M64c0lMXZgYUPuwiy6fdWM+MNSLi6qJrzNg/HzTYow8ICxxZC9MntxXxaUl
+o0uOmAuszw2cI7ZaOWetPTFLirQviMifnSYp+jw2QMTDdSpyNHzgLyFSHWgXvxJd
+yAFVJbf2UGfje/21PlS9T6+DsoDVsSfkOOLhRmpWh2xgLjO8qkf+U0DlNZRa0jCu
+KyZYcDFlA5e+r7dl+pd1NX/PqemuWg+qIgRHS6SLQGRSHa2SKyU=
+=gIE9
+-----END PGP SIGNATURE-----
+
+--nrhl65e2acxt24b3--
