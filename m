@@ -2,101 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4B7CD20254
-	for <e@80x24.org>; Thu, 23 Feb 2017 09:13:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 49FF0201A9
+	for <e@80x24.org>; Thu, 23 Feb 2017 09:33:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751277AbdBWJNW (ORCPT <rfc822;e@80x24.org>);
-        Thu, 23 Feb 2017 04:13:22 -0500
-Received: from mail-wr0-f175.google.com ([209.85.128.175]:35696 "EHLO
-        mail-wr0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751275AbdBWJNV (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Feb 2017 04:13:21 -0500
-Received: by mail-wr0-f175.google.com with SMTP id s27so17718614wrb.2
-        for <git@vger.kernel.org>; Thu, 23 Feb 2017 01:13:21 -0800 (PST)
+        id S1751099AbdBWJd5 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 23 Feb 2017 04:33:57 -0500
+Received: from mail-ot0-f177.google.com ([74.125.82.177]:35515 "EHLO
+        mail-ot0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750992AbdBWJd4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Feb 2017 04:33:56 -0500
+Received: by mail-ot0-f177.google.com with SMTP id w44so20129508otw.2
+        for <git@vger.kernel.org>; Thu, 23 Feb 2017 01:33:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:references:cc:newsgroups:to:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding;
-        bh=DjTdsM9a4B45nHTNqHpoRkGa68UqGt69YVJYZoOc6hM=;
-        b=XiRKnLsyhMaVspOJ0murZbOio4IjOhS5+LrEVJXyfiDf/If5gmrcR4jWAKRYWsT3Ya
-         vMa+pKt36tKWyANIfPO0VzYvv2foB9jDZlRXFbPo/pVOs5FL1d7YiCvaPiut973Fei6N
-         ja0ltni7vhE8cXUSdDwJkgQH/PMzPY7AYPzqCwTsgUBfq0xRrnC3bfEUsOyvMmQUFahC
-         iQpUMuM/ABOVCwFweb9reEXdPq1lwvquhJnrFPDgm1vPTiUy9U6OryBAJAGMAJJqzZ/o
-         CXcY6PO/uO928a5xHL9VbjmGvVqEWFeGiBFCblYc2yUXCCZen4TsYOZ0DxHn3IqTxA/T
-         WeAg==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=WVyN0BEAbx4DBrhAdqXim7waXzqATXq1NIBab1kG8rM=;
+        b=fvewU0+x42Wg0Z61gx/BR73exMmfx4P569QQVsSbIqgdmdEY7aVVkhjOH68VnboXoc
+         E+7hrTB3NuxJq2+wwvgGXXJUKHUrQw5zcPGReaicq3nkrubSXII29nzzH4cD6lgUEXp4
+         N6HguRVsZg5YGeTUG9F8aqg6PhpkXFFjCJm4uPaqc8vvBHFf3HLuExCyEnzsG/r0jqV9
+         SomzghnarWqXXhCOgrwS5G8M1tfNjZ1exEtKHDHia0DNbGs07O2i05Ou42VBjhNow/hB
+         /H59z7x1l7dKh7dDKy+Ez4WzxaII4KgI1ZirqnzoAJu7X3Qi0KbfWkstyEqyWvdCsLvF
+         a/BA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:references:cc:newsgroups:to:from
-         :message-id:date:user-agent:mime-version:in-reply-to
-         :content-transfer-encoding;
-        bh=DjTdsM9a4B45nHTNqHpoRkGa68UqGt69YVJYZoOc6hM=;
-        b=JarQPhrLHM8UnhM9+AKYLKkwiz6OjXW5+zMRUAlBYvH+/PdBKaA1jgzaCj2SqQ1A4O
-         pOKEizszCnJFqwWS09qtgEoKVdymJVJIZmYXMQbDOx/sCb3CKszrbixlh8dg84bBwTt1
-         +i0GDaTavx8P8UcIyVbiv/Um/VBqa0KCyF/Wn6ThvQlpz3fkDgMzerqnBr76M6+Bgc+C
-         4RJ+NmyObyOxyO63WNJ6mzymx1TtGRuT9BqJuE8cwl0q8toCUnwYkh1Thn9yjGfuu9Cw
-         UXUjnnMEPAKvqpKcaXFgh6bMaYUQzWtvnzee0aQy2KaKveyppjg1fCxz0Xc4LF9Z9QDx
-         eTcw==
-X-Gm-Message-State: AMke39nxEqNmfDfTML2EfdTb4GFmwWhPCcbkgBWB/eWaSus01lB25UwRMa79E7yKluv0Gg==
-X-Received: by 10.223.153.174 with SMTP id y43mr27882366wrb.55.1487841195231;
-        Thu, 23 Feb 2017 01:13:15 -0800 (PST)
-Received: from ?IPv6:2001:778:e27f:a23:36c4:e19f:3c1:8a8? ([2001:778:e27f:a23:36c4:e19f:3c1:8a8])
-        by smtp.gmail.com with ESMTPSA id o70sm5485378wmi.26.2017.02.23.01.13.14
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 23 Feb 2017 01:13:14 -0800 (PST)
-Subject: Re: [PATCH] http(s): automatically try NTLM authentication first
-References: <20170222173936.25016-1-dturner@twosigma.com>
- <xmqqpoiaasgj.fsf@gitster.mtv.corp.google.com>
- <97ab9a812f7b46d7b10d4d06f73259d8@exmbdft7.ad.twosigma.com>
- <20170222233419.q3fxqmrscosumbjm@genre.crustytoothpaste.net>
- <b152fad7e79046c5aa6cac9e21066c1c@exmbdft7.ad.twosigma.com>
-Cc:     "'brian m. carlson'" <sandals@crustytoothpaste.net>,
-        'Junio C Hamano' <gitster@pobox.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Jeff King <peff@peff.net>
-Newsgroups: gmane.comp.version-control.git
-To:     David Turner <David.Turner@twosigma.com>
-From:   =?UTF-8?Q?Mantas_Mikul=c4=97nas?= <grawity@gmail.com>
-Message-ID: <d5375d24-cfdd-2348-84ae-b878c4aaa369@gmail.com>
-Date:   Thu, 23 Feb 2017 11:13:12 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.7.1
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=WVyN0BEAbx4DBrhAdqXim7waXzqATXq1NIBab1kG8rM=;
+        b=eL1864s1+8V1T2GYDoWJHgBWvxwCpfrkSZgLJRbpi7fJ/jVcw4IPeWAEWcQ5GGeOGj
+         O90ngq8ZRRONbT8X7o7H47xRO4Cug51zvLTf1bqKWSttxJzeLgEwaj7w3/hKPkeQsm2A
+         f6B1QUtdghatpNJzG+zW3CDkJ6S6fHGR4PWhXwP7n2gqrrL3HhJd7LdRyouJrQcO8rOd
+         5EEE+lUPa0Or7bLvw0Xvol0BWbotGoGIRdDNLcl9HZlxoELmnJf/ih8MIjZtmlRczO3O
+         3sbYkno7TcBvd0QE1u/OFOMZh2yaEW9b9c6WKgbbhkBB00jriExDL62sQIDBB0ZKzNt+
+         JZfg==
+X-Gm-Message-State: AMke39kuRsIlNPTLOZPm+MbVbVJb9dLThaS8XrPgGe/QwaPCpCt+7Amn7gAnd1DqiemgpW+mR+VrWSUVAnw1Kg==
+X-Received: by 10.157.46.202 with SMTP id w68mr3313338ota.225.1487842435653;
+ Thu, 23 Feb 2017 01:33:55 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <b152fad7e79046c5aa6cac9e21066c1c@exmbdft7.ad.twosigma.com>
+Received: by 10.74.158.84 with HTTP; Thu, 23 Feb 2017 01:33:25 -0800 (PST)
+In-Reply-To: <20170221011035.847-2-kyle@kyleam.com>
+References: <20170217035800.13214-1-kyle@kyleam.com> <20170221011035.847-1-kyle@kyleam.com>
+ <20170221011035.847-2-kyle@kyleam.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Thu, 23 Feb 2017 16:33:25 +0700
+Message-ID: <CACsJy8BJgL1i85nZ9CpAXCKaG+PQQkjRKLFPWzbsMF8WN8TEjQ@mail.gmail.com>
+Subject: Re: [PATCH v2 1/4] delete_ref: accept a reflog message argument
+To:     Kyle Meyer <kyle@kyleam.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2017-02-23 03:03, David Turner wrote:
-> Actually, though, I am not sure this is as bad as it seems, because gssapi
-> might protect us.  When I locally tried a fake server, git (libcurl) refused to 
-> send my Kerberos credentials because "Server not found in Kerberos 
-> database".  I don't have a machine set up with NTLM authentication 
-> (because, apparently, that would be insane), so I don't know how to 
-> confirm that gssapi would operate off of a whitelist for NTLM as well. 
+On Tue, Feb 21, 2017 at 8:10 AM, Kyle Meyer <kyle@kyleam.com> wrote:
+> diff --git a/refs.h b/refs.h
+> index 9fbff90e7..5880886a7 100644
+> --- a/refs.h
+> +++ b/refs.h
+> @@ -276,8 +276,8 @@ int reflog_exists(const char *refname);
+>   * exists, regardless of its old value. It is an error for old_sha1 to
+>   * be NULL_SHA1. flags is passed through to ref_transaction_delete().
+>   */
+> -int delete_ref(const char *refname, const unsigned char *old_sha1,
+> -              unsigned int flags);
+> +int delete_ref(const char *msg, const char *refname,
+> +              const unsigned char *old_sha1, unsigned int flags);
 
-NTLM and Kerberos work very differently in that regard.
-
-Kerberos is ticket-based so the client *first* has to obtain a ticket
-from the domain's KDC, so a malicious server at minimum needs to know
-what principal name to provide (i.e. which real server to try
-impersonating). And even if it does that, the ticket doesn't contain
-crackable hashes, just data encrypted with a key known only to the KDC
-and the real server. So the whitelist is only for privacy and/or
-performance reasons, I guess?
-
-NTLM is challenge/response without any third party, and yes, it requires
-the application to implement its own whitelisting to avoid the security
-problems.
-
+Is it just me who thinks it's weird that msg comes in front here? The
+key identity, refname, should be the first argument imo. You'll
+probably want to update the comment block above if msg can be NULL. We
+have _very_ good documentation in this file, let's keep it uptodate.
 -- 
-Mantas Mikulėnas <grawity@gmail.com>
+Duy
