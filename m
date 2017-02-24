@@ -7,59 +7,57 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 685BF201A9
-	for <e@80x24.org>; Fri, 24 Feb 2017 21:25:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A9317201A9
+	for <e@80x24.org>; Fri, 24 Feb 2017 21:27:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751315AbdBXVZn (ORCPT <rfc822;e@80x24.org>);
-        Fri, 24 Feb 2017 16:25:43 -0500
-Received: from mail-pg0-f65.google.com ([74.125.83.65]:36533 "EHLO
-        mail-pg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751219AbdBXVZm (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 Feb 2017 16:25:42 -0500
-Received: by mail-pg0-f65.google.com with SMTP id z128so4378051pgb.3
-        for <git@vger.kernel.org>; Fri, 24 Feb 2017 13:24:41 -0800 (PST)
+        id S1751301AbdBXV1T (ORCPT <rfc822;e@80x24.org>);
+        Fri, 24 Feb 2017 16:27:19 -0500
+Received: from mail-pg0-f67.google.com ([74.125.83.67]:35037 "EHLO
+        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751320AbdBXV1S (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 Feb 2017 16:27:18 -0500
+Received: by mail-pg0-f67.google.com with SMTP id 1so4386334pgz.2
+        for <git@vger.kernel.org>; Fri, 24 Feb 2017 13:25:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=cvAKDFa5iIfKergchJHBQ6RJlSVMqb3j9DYUwt4cgYA=;
-        b=ll0nOO2OOYfJ0JflepVjQVVcynLGnLaIy7smlFPtAsyQM3DBpHu3xDrhtuuWSjxsVo
-         wHb3enYCkUOxPCG00frxlmQYmjkkEcnMbnchi0mwuzXz8h99DvmqtH8pLg+H+C9spBjP
-         aw0DzX22RSp7qVeYFBIKWXsDAGZ7QEQKqjI8il2cWNIkwXwiPRU3f6A1WtlpURCWjl5v
-         f8R4RG3ENV+0liosjwxeMsRNrwjaq1D1DlnbVMwnD0GkUokobd+EiJxN/ijv7qCVeoBZ
-         5zrVDJ5OFO39CPfBJjpYQM6tEBYOTB6qpveQmJ6YQD204NWo7Sq3EjqVvs/NGGordahB
-         pOng==
+        bh=fhetYCmfnY6cAZohDFgovZA6iUI1pBBwxWneflFUXug=;
+        b=de+93avb0BdBy4M5p4jRYEzTAZ0RhMeAaCk7jKlb1r3glaZR2DTdjR4sQUJpQXO63Z
+         w6NvC95pZBoRidoA5WxFggZGopugoUAOjc8Gj27sDW6aory7A82u1Li/R3L8cLOiDXeg
+         2CxCCVJhBMcjfjOzEvXl6j/+i+Q4iu0Bb37V5YhPtBtwuwCEaZiXJ0AcogyolGe/x4Wr
+         eHMWBBXmaj7kRG2PoG8GMZ8mc4LdQJ+MtJ9eB1G60xo3IzOtKiZP1wXlYgal6ugxl4ro
+         L75K7EEhZKsOCLGLOkR26I0ijs9WTWo7M3/idjvFj2uVTETxZIgpUOzRSkwm7TVwh4SC
+         Ol/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=cvAKDFa5iIfKergchJHBQ6RJlSVMqb3j9DYUwt4cgYA=;
-        b=NuyLBEpgSIt8DD/LgYoYldSnx1GOf4kId9g63poRDTwu/mPHPHLhhigxvSLadbPSk5
-         Sn9u34G+nrJ8Es2XGaRNyhMtTRr+W/vJKnSH7CnS+dHmQ1zWSEH+kyv4O/KUp1W/6c9Z
-         2bcTDGeOGP0wpel+TN0xgzt9MUvI8xFp9Lfm4eGj9SuUmex4kEi3XuZz3Y8ZHt4HZBfC
-         pDaoR2pieaxptK2qUU3i6pJzV9CvjftFyQ8OOeJgV+cmoT4e+F2voHBjPxPB2gr/lEzx
-         5UFouU0tZXjrbbPjB+9jEHIJsDVFp8zfZwyXaGBwOBgHnlxVAtT0ra4gI2t6N7jVYS2b
-         JE7w==
-X-Gm-Message-State: AMke39mo84v69V+863gg2WCBpWJHe6ecB9ggssoPxRzkItQt+PN2XX4ceDvRJMbwxyimPw==
-X-Received: by 10.98.78.66 with SMTP id c63mr6054940pfb.138.1487971480528;
-        Fri, 24 Feb 2017 13:24:40 -0800 (PST)
+        bh=fhetYCmfnY6cAZohDFgovZA6iUI1pBBwxWneflFUXug=;
+        b=PgVO/evOubUGpagnXah+oplqCnqGF8vKrT9Gixi3xCVmyYb/Lds/UFHsaHim7ZZcdW
+         5UcJVjfRuOH6aHa8zifMXgAaUH9346NylI0CJgcYt2JgoyF00a/qjkhbcwlWhwWYh91u
+         q+27s3WbJcoG0xmREqFXMdx+dSQvEvxpL+NgH3sDIaENguT0Bd+NlnAEq2l2GlVSjTu/
+         EHAUy0YxIncFlhHJqoIzamNAnb5Z56gwCpDNMgdzUu86kKWipTGzb4vREvLdD+r93myG
+         XnVoavuh1kF3JfS+c0vzhYBUFGOrA9atQTonQhy+gyZPhpXop6rM2MiZdr1dINyPyD2F
+         Zr0g==
+X-Gm-Message-State: AMke39nvxiUi4Z1pqVCypTYS2HlJVOAecFi1Ehgq69hC7748G1daEU90A1LFewqIJGTpRw==
+X-Received: by 10.84.232.9 with SMTP id h9mr6764133plk.102.1487971549726;
+        Fri, 24 Feb 2017 13:25:49 -0800 (PST)
 Received: from localhost ([2620:0:1000:8622:f06c:2e0c:850d:31b4])
-        by smtp.gmail.com with ESMTPSA id q73sm3141480pfa.129.2017.02.24.13.24.39
+        by smtp.gmail.com with ESMTPSA id 143sm16733528pgb.66.2017.02.24.13.25.48
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Fri, 24 Feb 2017 13:24:39 -0800 (PST)
+        Fri, 24 Feb 2017 13:25:49 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Jeff King <peff@peff.net>
 Cc:     Stefan Beller <sbeller@google.com>, git@vger.kernel.org
-Subject: Re: [PATCH] refs: parse_hide_refs_config to use parse_config_key
-References: <20170224203335.3762-1-sbeller@google.com>
-        <20170224203940.hbmfsouw5k67l3h3@sigill.intra.peff.net>
-        <20170224210643.max6z2ykm3gbg7lw@sigill.intra.peff.net>
-        <xmqq4lzj1e4n.fsf@gitster.mtv.corp.google.com>
-        <20170224212025.hcxusnrxijzb5qox@sigill.intra.peff.net>
-Date:   Fri, 24 Feb 2017 13:24:38 -0800
-In-Reply-To: <20170224212025.hcxusnrxijzb5qox@sigill.intra.peff.net> (Jeff
-        King's message of "Fri, 24 Feb 2017 16:20:25 -0500")
-Message-ID: <xmqqvarzz3hl.fsf@gitster.mtv.corp.google.com>
+Subject: Re: [PATCH 2/3] parse_config_key: allow matching single-level config
+References: <20170224210643.max6z2ykm3gbg7lw@sigill.intra.peff.net>
+        <20170224210802.rpr5vdpqhsp3pt5v@sigill.intra.peff.net>
+        <xmqqzihbz3nz.fsf@gitster.mtv.corp.google.com>
+Date:   Fri, 24 Feb 2017 13:25:48 -0800
+In-Reply-To: <xmqqzihbz3nz.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
+        message of "Fri, 24 Feb 2017 13:20:48 -0800")
+Message-ID: <xmqqr32nz3fn.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -68,38 +66,31 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> On Fri, Feb 24, 2017 at 01:18:48PM -0800, Junio C Hamano wrote:
+> Jeff King <peff@peff.net> writes:
 >
->> > While I'm thinking about it, here are patches to do that. The third one
->> > I'd probably squash into yours (after ordering it to the end).
->> >
->> >   [1/3]: parse_config_key: use skip_prefix instead of starts_with
->> >   [2/3]: parse_config_key: allow matching single-level config
->> >   [3/3]: parse_hide_refs_config: tell parse_config_key we don't want a subsection
->> 
->> While you were doing that, I was grepping the call sites for
->> parse_config_key() and made sure that all of them are OK when fed
->> two level names.  Most of them follow this pattern:
->> 
->> 	if (parse_config_key(k, "diff", &name, &namelen, &type) || !name)
->> 		return -1;
->> 
->> and ones that do not immediately check !name does either eventually
->> do so or have separate codepaths for handlihng two- and three-level
->> names.
+>> The parse_config_key() function was introduced to make it
+>> easier to match "section.subsection.key" variables. It also
+>> handles the simpler "section.key", and the caller is
+>> responsible for distinguishing the two from its
+>> out-parameters.
+>>
+>> Most callers who _only_ want "section.key" would just use a
+>> strcmp(var, "section.key"), since there is no parsing
+>> required. However, they may still use parse_config_key() if
+>> their "section" variable isn't a constant (an example of
+>> this is in parse_hide_refs_config).
 >
-> Yeah, I did that, too. :)
->
-> I don't think there are any other sites to convert. And I don't think we
-> can make the "!name" case easier (because some call-sites do want to
-> handle both types). And it's not like it gets much easier anyway (unlike
-> the opposite case, you _do_ need to declare the extra variables.
+> Perhaps "only" at the end of the title?
 
-Yeah, because the rejection of !name as an error is not the only
-reason these call sites have &name and &namelen---they want to use
-that subsection name after that if() statement rejects malformed
-input, so we cannot really lose them.
+which still stands.  My initial reaction was "eh, I didn't know it
+was an error to call the function for two-level names".
 
-Thanks.  All three looked good.
+> After grepping for call sites of this function, I think we can
+> simplify quite a few instances of:
+>
+> 	if (parse_config_key(...) || !name)
+> 		return ...;
+
+This is false.  Sorry for the noise.
