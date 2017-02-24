@@ -2,144 +2,113 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A89E1201A9
-	for <e@80x24.org>; Fri, 24 Feb 2017 19:48:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BBAA2201A9
+	for <e@80x24.org>; Fri, 24 Feb 2017 19:51:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751297AbdBXTsk (ORCPT <rfc822;e@80x24.org>);
-        Fri, 24 Feb 2017 14:48:40 -0500
-Received: from avasout01.plus.net ([84.93.230.227]:54014 "EHLO
-        avasout01.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751221AbdBXTsj (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 Feb 2017 14:48:39 -0500
-Received: from [10.0.2.15] ([146.90.175.94])
-        by avasout01 with smtp
-        id ojob1u00522aPyA01jocUb; Fri, 24 Feb 2017 19:48:37 +0000
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.2 cv=IItyMknG c=1 sm=1 tr=0
- a=c4JbszTospdBBUsinAk+iw==:117 a=c4JbszTospdBBUsinAk+iw==:17
- a=IkcTkHD0fZMA:10 a=pGLkceISAAAA:8 a=NiL4Km4R1Mc0tGvJ__UA:9 a=QEXdDO2ut3YA:10
- a=6kGIvZw6iX1k4Y-7sg4_:22
-X-AUTH: ramsayjones@:2500
-Subject: Re: [PATCH v6 1/1] config: add conditional include
-To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>, git@vger.kernel.org
-References: <20170223122346.12222-1-pclouds@gmail.com>
- <20170224131425.32409-1-pclouds@gmail.com>
- <20170224131425.32409-2-pclouds@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        sschuberth@gmail.com, Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-Message-ID: <f1c87812-3dc1-fbfa-d12a-c9e7ddf9bb4e@ramsayjones.plus.com>
-Date:   Fri, 24 Feb 2017 19:48:35 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.7.0
+        id S1751650AbdBXTvx (ORCPT <rfc822;e@80x24.org>);
+        Fri, 24 Feb 2017 14:51:53 -0500
+Received: from mail-pg0-f66.google.com ([74.125.83.66]:33545 "EHLO
+        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751635AbdBXTvf (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 Feb 2017 14:51:35 -0500
+Received: by mail-pg0-f66.google.com with SMTP id 5so4152450pgj.0
+        for <git@vger.kernel.org>; Fri, 24 Feb 2017 11:51:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=Jlk/2YPPs8+GkgqWc+zFV4yJDplap5OKfz1vDwKONCQ=;
+        b=vKnphIHKJc1fjfNoBlZHSxvzZ4UITomwJPA7tyckkIHbB5j1qLRipJsgH81mY4zw9+
+         gImDoDrgbHRCiJtxfisag9o/IKq5JqYCM5nyBQgobhM5ask9OA9aAFZ0jeIWNe28fkKM
+         2UZqLw93lfe7Rq+s0MidOB321IPrhWR3aQ5lEtljbEdYrtaiYJiJs2kqgQPMm3VbGxym
+         626xyjQ7po0SN6RZyK/uTmENcTtyOKat5n8PJH7isZ0UmYNIFvEL3ZNmXWNfbIB58/R8
+         3pgj1WPxD4QWunamy2/WPKRGRiMFzWoneyjlfryBYEcRbx1VTykNG57ol8/fOde1QLhK
+         tscw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=Jlk/2YPPs8+GkgqWc+zFV4yJDplap5OKfz1vDwKONCQ=;
+        b=pec15S+LgkLGLZtCAHd0U++XkfHUccqhKyP01e7dT6Bb4nAQ4aFvOvgGVrxya9oeQx
+         hWDZIehgILpGh7m0JA3qE78JA4UJp7y7eiqU+U6scrz6UoxX1IL+U5eDy8ZnHrVk2545
+         m3su/wPkJ2IS34TUG7Ldfev63EG+pVwbzJIzsNvN5XwxkLXcQSvpMGtrbpao/74uIbFl
+         SSQIxk5yCRqx21/+qMrYi+yvQ9HMUw4IsG4WMElACXxBe37uaeVSCDZdRzwlfCOqPDa1
+         XsG1riYOsUFd4lfvnWx/00gvx/4I6ZoI/EDlNrd+yV4A3PmaCaohNWemOr1PyMSLZUyG
+         C7xg==
+X-Gm-Message-State: AMke39mQsdwoJL9VQ18TNE0TH5gxRVXDfB4B2d95KmSWVgAQTS+8yBusKft+D6cMcnStTA==
+X-Received: by 10.84.130.100 with SMTP id 91mr6143287plc.167.1487965884435;
+        Fri, 24 Feb 2017 11:51:24 -0800 (PST)
+Received: from localhost ([2620:0:1000:8622:f06c:2e0c:850d:31b4])
+        by smtp.gmail.com with ESMTPSA id f62sm16582590pfg.48.2017.02.24.11.51.23
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Fri, 24 Feb 2017 11:51:23 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc:     git@vger.kernel.org,
+        Christophe Macabiau <christophemacabiau@gmail.com>
+Subject: Re: fatal error when diffing changed symlinks
+References: <CAC0icTZ87yeYndPFyjD4nkJBcw5SC-bgUJYbEzYqH7YhSFZvuQ@mail.gmail.com>
+        <xmqqshn34gsh.fsf@gitster.mtv.corp.google.com>
+Date:   Fri, 24 Feb 2017 11:51:22 -0800
+In-Reply-To: <xmqqshn34gsh.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
+        message of "Fri, 24 Feb 2017 09:53:02 -0800")
+Message-ID: <xmqqtw7j1i6d.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <20170224131425.32409-2-pclouds@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Junio C Hamano <gitster@pobox.com> writes:
 
+>> cd /tmp
+>> mkdir a
+>> cd a
+>> git init
+>> touch b
+>> ln -s b c
+>> git add .
+>> git commit -m 'first'
+>> touch d
+>> rm c
+>> ln -s d c
+>> git difftool --dir-diff
+>
+> A slightly worse is that the upcoming Git will ship with a rewritten
+> "difftool" that makes the above sequence segfault.
 
-On 24/02/17 13:14, Nguyễn Thái Ngọc Duy wrote:
-[snip] 
-> Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
-> ---
->  Documentation/config.txt  | 61 +++++++++++++++++++++++++++++
->  config.c                  | 97 +++++++++++++++++++++++++++++++++++++++++++++++
->  t/t1305-config-include.sh | 56 +++++++++++++++++++++++++++
->  3 files changed, 214 insertions(+)
-> 
-> diff --git a/Documentation/config.txt b/Documentation/config.txt
-> index 015346c417..6c0cd2a273 100644
-> --- a/Documentation/config.txt
-> +++ b/Documentation/config.txt
-> @@ -91,6 +91,56 @@ found at the location of the include directive. If the value of the
->  relative to the configuration file in which the include directive was
->  found.  See below for examples.
->  
-> +Conditional includes
-> +~~~~~~~~~~~~~~~~~~~~
-> +
-> +You can include one config file from another conditionally by setting
-> +a `includeIf.<condition>.path` variable to the name of the file to be
-> +included. The variable's value is treated the same way as `include.path`.
-> +
-> +The condition starts with a keyword followed by a colon and some data
-> +whose format and meaning depends on the keyword. Supported keywords
-> +are:
-> +
-> +`gitdir`::
-> +
-> +	The data that follows the keyword `gitdir:` is used as a glob
-> +	pattern. If the location of the .git directory match the
-> +	pattern, the include condition is met.
-> ++
-> +The .git location which may be auto-discovered, or come from
-> +`$GIT_DIR` environment variable. If the repository auto discovered via
-> +a .git file (e.g. from submodules, or a linked worktree), the .git
-> +location would be the final location, not where the .git file is.
-> ++
-> +The pattern can contain standard globbing wildcards and two additional
-> +ones, `**/` and `/**`, that can match multiple path components. Please
-> +refer to linkgit:gitignore[5] for details. For convenience:
-> +
-> + * If the pattern starts with `~/`, `~` will be substituted with the
-> +   content of the environment variable `HOME`.
-> +
-> + * If the pattern starts with `./`, it is replaced with the directory
-> +   containing the current config file.
-> +
-> + * If the pattern does not start with either `~/`, `./` or `/`, `**/`
-> +   will be automatically prepended. For example, the pattern `foo/bar`
-> +   becomes `**/foo/bar` and would match `/any/path/to/foo/bar`.
-> +
-> + * If the pattern ends with `/`, `**` will be automatically added. For
-> +   example, the pattern `foo/` becomes `foo/**`. In other words, it
-> +   matches "foo" and everything inside, recursively.
-> +
-> +`gitdir/i`::
-> +	This is the same as `gitdir` except that matching is done
-> +	case-insensitively (e.g. on case-insensitive file sytems)
-> +
-> +A few more notes on matching with `gitdir` and `gitdir/i`:
-> +
-> + * Symlinks in `$GIT_DIR` are not resolved before matching.
-> +
-> + * Note that "../" is not special and will match literally, which is
-> +   unlikely what you want.
->  
->  Example
->  ~~~~~~~
-> @@ -119,6 +169,17 @@ Example
->  		path = foo ; expand "foo" relative to the current file
->  		path = ~/foo ; expand "foo" in your `$HOME` directory
->  
-> +	; include if $GIT_DIR is /path/to/foo/.git
-> +	[include-if "gitdir:/path/to/foo/.git"]
+The culprit seems to be these lines in run_dir_diff():
 
-s/include-if/includeIf/
+		if (S_ISLNK(lmode)) {
+			char *content = read_sha1_file(loid.hash, &type, &size);
+			add_left_or_right(&symlinks2, src_path, content, 0);
+			free(content);
+		}
 
-> +		path = /path/to/foo.inc
-> +
-> +	; include for all repositories inside /path/to/group
-> +	[include-if "gitdir:/path/to/group/"]
+		if (S_ISLNK(rmode)) {
+			char *content = read_sha1_file(roid.hash, &type, &size);
+			add_left_or_right(&symlinks2, dst_path, content, 1);
+			free(content);
+		}
 
-ditto
+When viewing a working tree file, oid.hash could be 0{40} and
+read_sha1_file() is not the right function to use to obtain the
+contents.
 
-> +		path = /path/to/foo.inc
-> +
-> +	; include for all repositories inside $HOME/to/group
-> +	[include-if "gitdir:~/to/group/"]
+Both of these two need to pay attention to 0{40}, I think, as the
+user may be running "difftool -R --dir-diff" in which case the
+working tree would appear in the left hand side instead.
 
-ditto
+I didn't follow the codepath for regular files closely, but the code
+that follows the above excerpt does quite different things to lstate
+and rstate, which makes me suspect that the code is not prepared to
+see "-R"(everse) diff (and I further suspect that these issues were
+inherited from the original scripted Porcelain).
 
-ATB,
-Ramsay Jones
