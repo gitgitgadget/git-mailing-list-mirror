@@ -7,95 +7,97 @@ X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 80D0C201A9
-	for <e@80x24.org>; Fri, 24 Feb 2017 20:38:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A4675201A9
+	for <e@80x24.org>; Fri, 24 Feb 2017 20:38:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751315AbdBXUid (ORCPT <rfc822;e@80x24.org>);
-        Fri, 24 Feb 2017 15:38:33 -0500
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:33325 "EHLO
-        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751297AbdBXUib (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1751341AbdBXUif (ORCPT <rfc822;e@80x24.org>);
+        Fri, 24 Feb 2017 15:38:35 -0500
+Received: from mail-wr0-f196.google.com ([209.85.128.196]:32926 "EHLO
+        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751301AbdBXUib (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 24 Feb 2017 15:38:31 -0500
-Received: by mail-wm0-f67.google.com with SMTP id v77so4713516wmv.0
-        for <git@vger.kernel.org>; Fri, 24 Feb 2017 12:38:22 -0800 (PST)
+Received: by mail-wr0-f196.google.com with SMTP id g10so3294835wrg.0
+        for <git@vger.kernel.org>; Fri, 24 Feb 2017 12:38:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=Z59bU7/+TZ5LpK6p9J4oQJkeIQMWf4w+xhfNTQh5TE0=;
-        b=PJIlW4CMnam+UYa8FgsJYXHbS43B+oDyELfjh/YhOh+dF+DiykYSy9cvt62mio2vXA
-         4JShCHW29D+fs15Wy6CWxgW36U5MkPmc9oXiSLUquFG8Hza6QGH9I/PGZeTt6KEDckEt
-         pd0LqbkJenixjfne+WeO+/aaE2RMjrrFn5MeWKcp+MxYcYM4h6DmYYyHXWWUaf3RyXNq
-         +qQQeat7aP2S/y48InjInnvGJInwDL+gSW5pwltcsXPvDn1eXTqPVlJRd1fMXO9+6P7i
-         G2GxCOhOnVnA5F7lIZY0oTNf3eMlmrgjBE3XJIcV3salRWRdIe1niQO3vU01Gxh1VSAZ
-         ic0g==
+        bh=KhKgo5xzU8QptzyqRboGSS9e6zn89WlfqiyGcvvi7sU=;
+        b=cef2JdjBZhkZgJlKNbDy+jSMwhyT0kMZHR7kqacL7uLEVYoIx6TWocdLO0LFN8pr1w
+         D6aLg1vKoaYSS8VkyGZS0G0pi0vR2zwR8sXJVAXvZpSpUlezBsiFuy1mAAYxQKQyqcdZ
+         ISZW8QtlBM0OjXtgyf/ogvHIxZBqxfD5Uuh4CWjnn1XcJb6bAqP9f6W9BkyeOVekSsEq
+         Eij7tUAQdeV04JvQIaxU1+z+cLIsLahCJfE2cY6e5fsqzOKWKnbqw3MzFzllvSSkBTIN
+         iAeBOKUjPkZLX4U17sOUIkRWuX+1auHdAM3aUB9lixcsBezeb0iFuthp2t1QzNrOmOy3
+         FXYw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=Z59bU7/+TZ5LpK6p9J4oQJkeIQMWf4w+xhfNTQh5TE0=;
-        b=mD4DYYGi/xvv3y4flOySVe2SOoZTuT5jPX9WGj3/eR5xP1Mxv+fgiFWCQ4wztbSYMJ
-         rX1dP2UcNUnhTvSQOuKD5hPpVfZ30uRYiVQ/LLQVbJSXBG8QuHYNWEfGQPGg2CRnmQB9
-         CQRPTHp9AOnh3a+riNTizo9AYti1zuM5BXuyepAUugtORLhV1SS/LGp90E2SixQtRmal
-         LPU4IJA0SDyzEDPZ2oDc+cUUsl/5fBS1WXvQ7apSBXVmtXmXgM9xdChBAzGI6lXvqxTC
-         ZfJRAIo88nNTtYgsUDv88V9TenslsaMVn0bvIDR5+sEt3maWlV8pFyesHeHI/KESU8h+
-         ztyQ==
-X-Gm-Message-State: AMke39mk+pfrcmIit85VxlqNNONZIXiF+QaFYsjJf2lkRJ0DF5R6uw4Z/WJdXvBpa+EPOg==
-X-Received: by 10.28.66.221 with SMTP id k90mr4413152wmi.90.1487968701032;
-        Fri, 24 Feb 2017 12:38:21 -0800 (PST)
+        bh=KhKgo5xzU8QptzyqRboGSS9e6zn89WlfqiyGcvvi7sU=;
+        b=IBmvrcRF3xzWZ3y5W3T/fJ7hbKk5dH//Wik9arEbOAKmEiOb5WiCSQ65KGewDNIQw5
+         J4yTe7PxMiKUXXzrSgKneZ1oX8aVhnBk1XSLaGDG1kzU2jcA8InYFHuyQd6R8z8Na/Rc
+         66107r1zCcT6lPp79NWHHYlLE3brjniWfLp0Gb2kUzImdFrRQVVSgL633iwrPN7TOduB
+         xt9oWHdIBiCSfNRwLHgz8eSQLI5NobGE0RQruH0cotbp5xkFg+HbpPgV7mnCrxm3EiEO
+         lXN9TzPplzO2RdlbTLzXS+6hH9ulW5KoiSUlix8tdrZq9NraJtN+tRGNDFVQkvLMTWMS
+         HwVQ==
+X-Gm-Message-State: AMke39kd0QIjJhjrRhNGLfHRCw/3kUjsSGlwGt7oHWupMPbDtAfQItzyaSaD9Vn2Du3P1A==
+X-Received: by 10.223.138.235 with SMTP id z40mr4561171wrz.130.1487968706455;
+        Fri, 24 Feb 2017 12:38:26 -0800 (PST)
 Received: from arrakeen.fritz.box ([2001:a61:1087:f101:3062:f226:b4ec:5b6c])
-        by smtp.gmail.com with ESMTPSA id j184sm3224550wmd.31.2017.02.24.12.38.19
+        by smtp.gmail.com with ESMTPSA id j184sm3224550wmd.31.2017.02.24.12.38.25
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 24 Feb 2017 12:38:20 -0800 (PST)
+        Fri, 24 Feb 2017 12:38:25 -0800 (PST)
 From:   Andreas Heiduk <asheiduk@gmail.com>
 To:     gitster@pobox.com
 Cc:     Andreas Heiduk <asheiduk@gmail.com>, git@vger.kernel.org
-Subject: [PATCH v2 0/2] Documentation: Link git-ls-files to core.quotePath variable.
-Date:   Fri, 24 Feb 2017 21:37:54 +0100
-Message-Id: <1487968676-6126-1-git-send-email-asheiduk@gmail.com>
+Subject: [PATCH v2 1/2] Documentation: Improve description for core.quotePath
+Date:   Fri, 24 Feb 2017 21:37:55 +0100
+Message-Id: <1487968676-6126-2-git-send-email-asheiduk@gmail.com>
 X-Mailer: git-send-email 2.7.4
-In-Reply-To: <3c801e54-28c7-52d0-6915-ee7aaf1d89c9@gmail.com>
+In-Reply-To: <1487968676-6126-1-git-send-email-asheiduk@gmail.com>
 References: <3c801e54-28c7-52d0-6915-ee7aaf1d89c9@gmail.com>
+ <1487968676-6126-1-git-send-email-asheiduk@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-These two patches replace and extend the precious patches with the
-same subject. Suggestions from Philip Oakley and Junio C Hamano are
-included.
+Signed-off-by: Andreas Heiduk <asheiduk@gmail.com>
+---
+ Documentation/config.txt | 24 ++++++++++++++----------
+ 1 file changed, 14 insertions(+), 10 deletions(-)
 
-I tried to find and adjust all places where pathname quoting and "-z"
-were described. I omitted these places:
-
-* Here "-z" is for input only. Quoting is unclear to me.
-
--- git-mktree.txt
--- git-update-index.txt
--- git-checkout-index.txt
-
-* Here pathname quoting is not mentioned:
-
--- git-check-ignore.txt
--- git-check-attr.txt
-
-And last but not least: 
-
-- git-grep.txt: The paths are always unquoted, `-z` toggles only the
-delimiter. Perhaps some CAVEAT should be added.
-
-
-Andreas Heiduk (2):
-  Documentation: Improve description for core.quotePath
-  Documentation: Link descriptions of -z to core.quotePath
-
- Documentation/config.txt              | 24 ++++++++++++++----------
- Documentation/diff-format.txt         |  7 ++++---
- Documentation/diff-generate-patch.txt |  7 +++----
- Documentation/diff-options.txt        |  7 +++----
- Documentation/git-apply.txt           |  7 +++----
- Documentation/git-commit.txt          |  9 ++++++---
- Documentation/git-ls-files.txt        | 10 ++++++----
- Documentation/git-ls-tree.txt         | 10 +++++++---
- Documentation/git-status.txt          |  7 +++----
- 9 files changed, 49 insertions(+), 39 deletions(-)
-
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 1fee83c..fa06c2a 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -347,16 +347,20 @@ core.checkStat::
+ 	all fields, including the sub-second part of mtime and ctime.
+ 
+ core.quotePath::
+-	The commands that output paths (e.g. 'ls-files',
+-	'diff'), when not given the `-z` option, will quote
+-	"unusual" characters in the pathname by enclosing the
+-	pathname in a double-quote pair and with backslashes the
+-	same way strings in C source code are quoted.  If this
+-	variable is set to false, the bytes higher than 0x80 are
+-	not quoted but output as verbatim.  Note that double
+-	quote, backslash and control characters are always
+-	quoted without `-z` regardless of the setting of this
+-	variable.
++
++	Commands that output paths (e.g. 'ls-files', 'diff'), will
++	quote "unusual" characters in the pathname by enclosing the
++	pathname in double-quotes and escaping those characters with
++	backslashes in the same way C escapes control characters (e.g.
++	`\t` for TAB, `\n` for LF, `\\` for backslash) or bytes with
++	values larger than 0x80 (e.g. octal `\302\265` for "micro" in
++	UTF-8).  If this variable is set to false, bytes higher than
++	0x80 are not considered "unusual" any more. Double-quotes,
++	backslash and control characters are always escaped regardless
++	of the setting of this variable.  A simple space character is
++	not considered "unusual".  Many commands can output pathnames
++	completely verbatim using the `-z` option. The default value
++	is true.
+ 
+ core.eol::
+ 	Sets the line ending type to use in the working directory for
