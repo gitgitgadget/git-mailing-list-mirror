@@ -2,96 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2A2AA201A9
-	for <e@80x24.org>; Fri, 24 Feb 2017 20:06:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 104BC201A9
+	for <e@80x24.org>; Fri, 24 Feb 2017 20:06:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751351AbdBXUGF (ORCPT <rfc822;e@80x24.org>);
-        Fri, 24 Feb 2017 15:06:05 -0500
-Received: from mail-pg0-f65.google.com ([74.125.83.65]:34831 "EHLO
-        mail-pg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751293AbdBXUFy (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 Feb 2017 15:05:54 -0500
-Received: by mail-pg0-f65.google.com with SMTP id 1so4184970pgz.2
-        for <git@vger.kernel.org>; Fri, 24 Feb 2017 12:05:54 -0800 (PST)
+        id S1751357AbdBXUGT (ORCPT <rfc822;e@80x24.org>);
+        Fri, 24 Feb 2017 15:06:19 -0500
+Received: from mail-qt0-f173.google.com ([209.85.216.173]:33857 "EHLO
+        mail-qt0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751287AbdBXUGR (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 Feb 2017 15:06:17 -0500
+Received: by mail-qt0-f173.google.com with SMTP id n21so25621784qta.1
+        for <git@vger.kernel.org>; Fri, 24 Feb 2017 12:06:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=EwfxWthHvPKsyE3N8Ozo55/OyWDUCF20NtQU0I9QPQE=;
-        b=RUjNMLcmkVAN+XQjwLPA8fL+ziuofZ8Bj5NGI7iLFN8DXrqe6DasXVCOEVMBH2ILfg
-         MRiBfX1gr/sjSLiDFPEPhWxfIrC3Ns03B62qpGLCIOFhBZ2ueT6/eUu2a/5M5h8afzKg
-         qw7HF6gmM7uCRkOsnNXMAQT9eLFEqI7cKgRHbfrePrNMz7DxWyOUE1deAScS8ITjTiTg
-         IFiEpe8FfsKu0n0r8JHf26TI079SECfy6iptDrs+Py/4cWWxWTGXGosVemAGHvE/K5iz
-         I9evY/6zTfVPwsO6jMMgVJE3gsGL3VmwTXxvvhynCWANb4d50dAPoN/q0+Ar+dQT0TTt
-         pq6Q==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=afZXDOpVbUrEcxmNNCBEVa+Rv9F5psPCSBEWpbS9AuU=;
+        b=SEO+g74t/hibCQT8XtgQHogS9yhzSPcgEJhgWpK5xhvWrOhia4dD8EsZ2PHN/o4ve0
+         uheqp0yX1UDhVHvFqFtwa8u7cbNbqWGrKfmFj2JfE4IXNcQrUZYjNfKt3dQDvRybFHpH
+         QTVZZlx40wWRm/Y+kSaXTvoLOr5phS+lCOrMw+pddLdmk5Wq4GU9LmhWiypm6srKl8kV
+         3op/Bpl8qMxOWP214jU3bKUJeWmpgXTtrcXCXiofz+y+OC4aQUliYYJVYpMaBs6R6K1o
+         8bEfehgCaBaBkLXRda+yqtn+K0azU8/ZECYuT7XI6Sr9yLv2y6vAdYm1xVEzGqZJ5BaE
+         O6CA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=EwfxWthHvPKsyE3N8Ozo55/OyWDUCF20NtQU0I9QPQE=;
-        b=HhWhHybanRpyEfZCcyWCTzdQfdEZnoCjsQ/1JtScdBIjKPRMlBFx46MtI9j+RlTZSY
-         WUft/ih99O4Itb61Ql1sNY1G/kEBATgn8hqudGig7A9nfSqb1ENsfydIZtCGP4FsRe1N
-         JoUTGDTS1Ya2qpWED9TERV7chqFV+4H2R0e8euLAtmWKR3UsYTE+BwmX2n0cai+FdWJ2
-         Y0bk41/7Vmp1WO2UqUMkgaCotgieIG73Up6nDYKU/HPs9snArJwH+3cCWsh0n08JOt5o
-         lusIr0mKoWSkJYfWNsNrq0MWYeTnKwsATdfkI/EuhFBgZq1A0jVxSaas70XHjm+bIO1/
-         9NWw==
-X-Gm-Message-State: AMke39l+7kMWc/SBBP+TPu4b32zhSFCGuR7kdJV4XOkJMnrNnTFKLO6OznF02kYloxDQwA==
-X-Received: by 10.98.91.131 with SMTP id p125mr5665636pfb.165.1487966753533;
-        Fri, 24 Feb 2017 12:05:53 -0800 (PST)
-Received: from localhost ([2620:0:1000:8622:f06c:2e0c:850d:31b4])
-        by smtp.gmail.com with ESMTPSA id v9sm16548603pfl.102.2017.02.24.12.05.52
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Fri, 24 Feb 2017 12:05:52 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     David Lang <david@lang.hm>,
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=afZXDOpVbUrEcxmNNCBEVa+Rv9F5psPCSBEWpbS9AuU=;
+        b=plNk0ls6kDQtaQlPXlI9BhtPKpFh4Crypsgcm28pmDnu2zAm/YuLBSomUbDOAD5nZ2
+         kix0chdGSlMxwsD31iwRcCibRZhonWOM9QCX1Hgu2qjZR8fxTZ8qzf6WyZD7PazGo8nu
+         133w3aDCUsyt+yjUbvYN+FdcfTtoBLWEcFyWxeEGCWMutMWFOdbLJNxnJVSvwqawE+Cn
+         wyBxxDQjW3jcjfifnZlAOwbjVno0cdUz1NSU4LSOnlh07fWHHEiY0wzqEB8mSCJpj8AX
+         fjrEoANqi/39BpIGnzNJrVVZRTSiz/ItZBuMHmbCkgjgpny5o4ndi4ZY4vMRnRDQ7uGz
+         AR0g==
+X-Gm-Message-State: AMke39lrKx1BOT9lXd3idX5180ib6o8NOnEU+l1z+qgfHPSPAhn6jVXmMVzz6dkhNf/5VliFRa9Sph9cqSwYig==
+X-Received: by 10.237.57.164 with SMTP id m33mr3486773qte.293.1487966770962;
+ Fri, 24 Feb 2017 12:06:10 -0800 (PST)
+MIME-Version: 1.0
+Received: by 10.12.134.218 with HTTP; Fri, 24 Feb 2017 12:05:40 -0800 (PST)
+In-Reply-To: <xmqq7f4f4cqg.fsf@gitster.mtv.corp.google.com>
+References: <20170223164306.spg2avxzukkggrpb@kitenet.net> <22704.19873.860148.22472@chiark.greenend.org.uk>
+ <xmqq60jz5wbm.fsf@gitster.mtv.corp.google.com> <nycvar.QRO.7.75.62.1702240943540.6590@qynat-yncgbc>
+ <xmqqk28f4fti.fsf@gitster.mtv.corp.google.com> <CAGZ79kaZWe-8pMZnQv7uZtr8wXWawFeJjUa68-b0oa4yFo-HcA@mail.gmail.com>
+ <xmqq7f4f4cqg.fsf@gitster.mtv.corp.google.com>
+From:   ankostis <ankostis@gmail.com>
+Date:   Fri, 24 Feb 2017 21:05:40 +0100
+Message-ID: <CA+dhYEVOyACM9ARP2deKVLm1hHOVsTah1WfGoNzGGKO6CGrQpw@mail.gmail.com>
+Subject: Re: SHA1 collisions found
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Stefan Beller <sbeller@google.com>, David Lang <david@lang.hm>,
         Ian Jackson <ijackson@chiark.greenend.org.uk>,
         Joey Hess <id@joeyh.name>,
-        "git\@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: SHA1 collisions found
-References: <20170223164306.spg2avxzukkggrpb@kitenet.net>
-        <22704.19873.860148.22472@chiark.greenend.org.uk>
-        <xmqq60jz5wbm.fsf@gitster.mtv.corp.google.com>
-        <nycvar.QRO.7.75.62.1702240943540.6590@qynat-yncgbc>
-        <xmqqk28f4fti.fsf@gitster.mtv.corp.google.com>
-        <CAGZ79kaZWe-8pMZnQv7uZtr8wXWawFeJjUa68-b0oa4yFo-HcA@mail.gmail.com>
-        <xmqq7f4f4cqg.fsf@gitster.mtv.corp.google.com>
-Date:   Fri, 24 Feb 2017 12:05:52 -0800
-In-Reply-To: <xmqq7f4f4cqg.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-        message of "Fri, 24 Feb 2017 11:20:39 -0800")
-Message-ID: <xmqqpoi71hi7.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
-
+On 24 February 2017 at 20:20, Junio C Hamano <gitster@pobox.com> wrote:
+> Stefan Beller <sbeller@google.com> writes:
+>
+>> On Fri, Feb 24, 2017 at 10:14 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>>
+>>> you are inviting people to start using
+>>>
+>>>     md5,54ddf8d47340e048166c45f439ce65fd
+>>>
+>>> as object names.
+>>
+>> which might even be okay for specific subsets of operations.
+>> (e.g. all local work including staging things, making local "fixup" commits)
+>>
+>> The addressing scheme should not be too hardcoded, we should rather
+>> treat it similar to the cipher schemes in pgp. The additional complexity that
+>> we have is the longevity of existence of things, though.
+>
 > The not-so-well-hidden agenda was exactly that we _SHOULD_ not
 > mimick PGP.  They do not have a requirement to encourage everybody
 > to use the same thing because each message is encrypted/signed
 > independently, i.e. they do not have to chain things like we do.
 
-To put it less succinctly, PGP does not have incentive to encourage
-everybody to converge to the same.  They can afford to say "You can
-use whatever you among your circles agree to use and the rest of the
-world won't care".  If two groups that have used different ones later
-meet, both of them can switch to a common one from that point forward,
-but their past exchanges won't affect the future.
+But there is a scenario where supporting more hashes, in parallel, is
+beneficial:
 
-You cannot say the same thing for Git.  Once you decide to merge two
-histories from two camps, which may have originated from the same
-codebase but then decided to use two different ones while they were
-forked, you'd be forced to support all three forever.  We have a lot
-stronger incentive to discourage fragmentation.
+Let's assume that git is retroffited to always support the "default"
+SHA-3, but support additionally more hash-funcs.
+If in the future SHA-3 also gets defeated, it would be highly unlikely
+that the same math would also break e.g. Blake.
+So certain high-profile repos might choose for extra security 2 or more hashes.
 
-
-
+Apologies if I'm misusing the list,
+  Kostis
