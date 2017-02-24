@@ -2,86 +2,121 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,
+	STOX_REPLY_TYPE shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 60A17201A9
-	for <e@80x24.org>; Fri, 24 Feb 2017 21:54:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 257E0201A9
+	for <e@80x24.org>; Fri, 24 Feb 2017 22:08:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751392AbdBXVyt (ORCPT <rfc822;e@80x24.org>);
-        Fri, 24 Feb 2017 16:54:49 -0500
-Received: from mail-pg0-f66.google.com ([74.125.83.66]:36771 "EHLO
-        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751291AbdBXVys (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 Feb 2017 16:54:48 -0500
-Received: by mail-pg0-f66.google.com with SMTP id z128so4449428pgb.3
-        for <git@vger.kernel.org>; Fri, 24 Feb 2017 13:54:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=ByWdIppmPMlFajHCUkjcaII/IVwLZJXf5ZZIl96tGxE=;
-        b=R3/4snNoyl9lXucS9xamOus5/yhFsyuKlNHy2MaM39URrsjOVMLrhvzIbpGCrHuNUV
-         iLmTgo5LUNJeueToU5JVYdqAcOKq5lYN4y9v/+20vVYpkUVEKIYpHYMl5q6ARFZeiRMG
-         n5PPo8HXlnS9qZLpfJ7vhllPOh4c8i6lCAlif3NN5eHo1zaHwZ6+ShOeBCaPK5ut83Ry
-         SGUmHwkOlXZyqICq+8tdH4qred1a2gRT81ZJ8Qz4Bvyl0CPea8sMqk9fxe0FGUrmKTCA
-         6FBVIcQ0tjq9/kJguFfrZBHZnlS75Qlb/HNywa0vpbmySiXweVzr3aKEWFmd29GWK0Zh
-         BfSg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=ByWdIppmPMlFajHCUkjcaII/IVwLZJXf5ZZIl96tGxE=;
-        b=hHye/I1gdMp8E25Mo9UVsXqquPz3Epr9UklaaLoLMCB0eDZTn//LgmormtJM53SAQb
-         WJWDDHGZ+3GEpEJAICwEgRrjvOeVuSkD5WDXvTY51h/N3MtmNwOXoAx3FaomUcLC69FU
-         WBRXCt7vLuaB3S95xNWztxM1sHIrD65bPiXz49zURfBth5c/y6hfAguTk7l2Rr62Ub61
-         GRYIXBtj20MV4FLbFv/k05SRuxNKKiUY8WdkUlFYLHomD/A5VNtuQR3Mx/dphO749lyw
-         qLl1SL+o9anim4KW0MWvlsMjlIdQ9QRm/I98VF1cl0Lti1ptgAPIVui8cw4Fw3SLhzax
-         aOog==
-X-Gm-Message-State: AMke39lkLVZXGq2d2V6BviDpxrTHW0L91CnjpphYRdmmbJ0HSNQWGdL7b7bHxT2sy/5yOA==
-X-Received: by 10.99.110.198 with SMTP id j189mr6223451pgc.120.1487973287921;
-        Fri, 24 Feb 2017 13:54:47 -0800 (PST)
-Received: from localhost ([2620:0:1000:8622:f06c:2e0c:850d:31b4])
-        by smtp.gmail.com with ESMTPSA id o1sm16831295pgf.63.2017.02.24.13.54.46
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Fri, 24 Feb 2017 13:54:47 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Sixt <j6t@kdbg.org>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jeff King <peff@peff.net>, git@vger.kernel.org,
-        Jeff Hostetler <jeffhost@microsoft.com>
-Subject: Re: [PATCH] mingw: use OpenSSL's SHA-1 routines
-References: <6a29f8c60d315a24292c1fa9f5e84df4dfdbf813.1486679254.git.johannes.schindelin@gmx.de>
-        <20170210050237.gajicliueuvk6s5d@sigill.intra.peff.net>
-        <alpine.DEB.2.20.1702101647340.3496@virtualbox>
-        <20170210160458.pcp7mupdz24m6cms@sigill.intra.peff.net>
-        <9913e513-553e-eba6-e81a-9c21030dd767@kdbg.org>
-Date:   Fri, 24 Feb 2017 13:54:46 -0800
-In-Reply-To: <9913e513-553e-eba6-e81a-9c21030dd767@kdbg.org> (Johannes Sixt's
-        message of "Mon, 13 Feb 2017 18:46:35 +0100")
-Message-ID: <xmqqmvdbz23d.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+        id S1751377AbdBXWIU (ORCPT <rfc822;e@80x24.org>);
+        Fri, 24 Feb 2017 17:08:20 -0500
+Received: from smtp-out-6.talktalk.net ([62.24.135.70]:18102 "EHLO
+        smtp-out-6.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751334AbdBXWIT (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 Feb 2017 17:08:19 -0500
+Received: from PhilipOakley ([92.31.218.76])
+        by smtp.talktalk.net with SMTP
+        id hO2CcFYkQgKsthO2CcZRyF; Fri, 24 Feb 2017 22:08:17 +0000
+X-Originating-IP: [92.31.218.76]
+X-Spam: 0
+X-OAuthority: v=2.2 cv=GdBVpkfL c=1 sm=1 tr=0 a=e6L6E7eW+5Nb7SO+DvSdIg==:117
+ a=e6L6E7eW+5Nb7SO+DvSdIg==:17 a=IkcTkHD0fZMA:10 a=pGLkceISAAAA:8
+ a=kquRS4nWwJHmo7G3Cn4A:9 a=QEXdDO2ut3YA:10 a=6kGIvZw6iX1k4Y-7sg4_:22
+Message-ID: <29A09E4EDB1F4F4D9E77E67A7A8A33FF@PhilipOakley>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From:   "Philip Oakley" <philipoakley@iee.org>
+To:     =?UTF-8?Q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc_Duy?= 
+        <pclouds@gmail.com>, <git@vger.kernel.org>
+Cc:     "Junio C Hamano" <gitster@pobox.com>, "Jeff King" <peff@peff.net>,
+        <sschuberth@gmail.com>,
+        "Matthieu Moy" <Matthieu.Moy@grenoble-inp.fr>,
+        =?UTF-8?Q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc_Duy?= 
+        <pclouds@gmail.com>
+References: <20170223122346.12222-1-pclouds@gmail.com> <20170224131425.32409-1-pclouds@gmail.com> <20170224131425.32409-2-pclouds@gmail.com>
+Subject: Re: [PATCH v6 1/1] config: add conditional include
+Date:   Fri, 24 Feb 2017 22:08:16 -0000
+Organization: OPDS
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain;
+        format=flowed;
+        charset="UTF-8";
+        reply-type=original
+Content-Transfer-Encoding: 8bit
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+X-CMAE-Envelope: MS4wfMIQAbSDU4ukL5fuKBKl05wCAuibEeS2SdIf3nu4wN7IZSI2ovgAhuXK8VQtE902XgSM4T9koCs22Xa+WzP4a+gpig+fYVh47KhJlM8HHxiGoL7kPjji
+ tmFGIVr+rtmxkyqx5OcuLUrgUX9VnGmSPiL4pQkzYfeJq+5d9jd0/n6+L8myV1KKZ4qL2hH692E62K5Khq9xF00/Qof+he+8X4MmhuEi+Rm6U/62OWPFKsul
+ mt05P/3eZ+6rPH06DNzrX+JxCjN1R1kgQRobZ5EhQ9jk+543zbreWGbwvKDSEoxEn/NJMQHxadjR9TPvSOpBzJURyk9zQzuM3wTEatUco9UApIr+Hc2X3UtZ
+ eFKElwqN
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Sixt <j6t@kdbg.org> writes:
-
-> It can be argued that in normal interactive use, it is hard to notice
-> that another DLL is loaded. Don't forget, though, that on Windows it
-> is not only the pure time to resolve the entry points, but also that
-> typically virus scanners inspect every executable file that is loaded,
-> which adds another share of time.
+From: "Nguyễn Thái Ngọc Duy" <pclouds@gmail.com>
+> Sometimes a set of repositories want to share configuration settings
+> among themselves that are distinct from other such sets of repositories.
+> A user may work on two projects, each of which have multiple
+> repositories, and use one user.email for one project while using another
+> for the other.
 >
-> I'll use the patch for daily work for a while to see whether it hurts.
+> Setting $GIT_DIR/.config works, but if the penalty of forgetting to
+> update $GIT_DIR/.config is high (especially when you end up cloning
+> often), it may not be the best way to go. Having the settings in
+> ~/.gitconfig, which would work for just one set of repositories, would
+> not well in such a situation. Having separate ${HOME}s may add more
+> problems than it solves.
+>
+> Extend the include.path mechanism that lets a config file include
+> another config file, so that the inclusion can be done only when some
+> conditions hold. Then ~/.gitconfig can say "include config-project-A
+> only when working on project-A" for each project A the user works on.
+>
+> In this patch, the only supported grouping is based on $GIT_DIR (in
+> absolute path), so you would need to group repositories by directory, or
+> something like that to take advantage of it.
+>
+> We already have include.path for unconditional includes. This patch goes
+> with includeIf.<condition>.path to make it clearer that a condition is
+> required. The new config has the same backward compatibility approach as
+> include.path: older git versions that don't understand includeIf will
+> simply ignore them.
+>
+> Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+> ---
+> Documentation/config.txt  | 61 +++++++++++++++++++++++++++++
+> config.c                  | 97 
+> +++++++++++++++++++++++++++++++++++++++++++++++
+> t/t1305-config-include.sh | 56 +++++++++++++++++++++++++++
+> 3 files changed, 214 insertions(+)
+>
+> diff --git a/Documentation/config.txt b/Documentation/config.txt
+> index 015346c417..6c0cd2a273 100644
+> --- a/Documentation/config.txt
+> +++ b/Documentation/config.txt
+> @@ -91,6 +91,56 @@ found at the location of the include directive. If the 
+> value of the
+> relative to the configuration file in which the include directive was
+> found.  See below for examples.
+>
+> +Conditional includes
+> +~~~~~~~~~~~~~~~~~~~~
+> +
+> +You can include one config file from another conditionally by setting
 
-Please ping this thread again when you have something to add.  For
-now, I'll demote this patch from 'next' to 'pu' when we rewind and
-rebuild 'next' post 2.12 release.
+On first reading I thought this implied you can only have one `includeIf` 
+within the config file.
+I think it is meant to mean that each `includeIf`could include one other 
+file, and that users can have multiple `includeIf` lines.
 
-Thanks.
+
+> +a `includeIf.<condition>.path` variable to the name of the file to be
+> +included. The variable's value is treated the same way as `include.path`.
+> +
+
+--
+Philip 
+
