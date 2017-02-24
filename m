@@ -2,86 +2,79 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8D4F5201A9
-	for <e@80x24.org>; Fri, 24 Feb 2017 18:58:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 27ABE201A9
+	for <e@80x24.org>; Fri, 24 Feb 2017 18:58:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751265AbdBXS57 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 24 Feb 2017 13:57:59 -0500
-Received: from cloud.peff.net ([104.130.231.41]:33477 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750995AbdBXS55 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 Feb 2017 13:57:57 -0500
-Received: (qmail 4578 invoked by uid 109); 24 Feb 2017 18:57:57 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 24 Feb 2017 18:57:57 +0000
-Received: (qmail 31810 invoked by uid 111); 24 Feb 2017 18:58:01 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 24 Feb 2017 13:58:01 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 24 Feb 2017 13:57:55 -0500
-Date:   Fri, 24 Feb 2017 13:57:55 -0500
-From:   Jeff King <peff@peff.net>
-To:     HW42 <hw42@ipsumj.de>
-Cc:     Linus Torvalds <torvalds@linux-foundation.org>,
-        Joey Hess <id@joeyh.name>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH 3/3] Makefile: add USE_SHA1DC knob
-Message-ID: <20170224185754.bic37suvkiwtvyn5@sigill.intra.peff.net>
-References: <20170223230507.kuxjqtg3ghcfskc6@sigill.intra.peff.net>
- <20170223230621.43anex65ndoqbgnf@sigill.intra.peff.net>
- <16c6d843-a516-9265-d3e7-61b110acbdcf@ipsumj.de>
+        id S1751275AbdBXS6c (ORCPT <rfc822;e@80x24.org>);
+        Fri, 24 Feb 2017 13:58:32 -0500
+Received: from mail-it0-f43.google.com ([209.85.214.43]:36875 "EHLO
+        mail-it0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750995AbdBXS6a (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 Feb 2017 13:58:30 -0500
+Received: by mail-it0-f43.google.com with SMTP id 203so32864961ith.0
+        for <git@vger.kernel.org>; Fri, 24 Feb 2017 10:58:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=xbjwIMBcN6FR01RtHmFLw1dKwgUSLTHjEmevB7rpFiQ=;
+        b=km2dYN/HHAkT488zvcxB+dX71YGRG8WWAIyH7KAo0W02YaWnc7HrJsWDOvWQMpTgTE
+         Ovsz7eKwud/6wGYh5ojpl99SdiQ0sWx1NXwQDgO67jspaj0hT4tZoaiJOAJwpR6WJGcj
+         RwdnlHWckw2+0luWtj9/Gs2T0ufmh6FjBbYUUzHVgQspqfilNAoT+xYN13BH+mNpagA4
+         yD9/P5snhoEyDt4BzScd3pXjXEWY/8GNorC8f+BqOquWoAVMxQ0dXLhxaAE4C6GMik4f
+         Pvrb6d7LsG8g5qc7dkoNk/GnfEjm3GqTlDTw75aLAfwKXI8q3mMOg/If5fd4bIfaGr21
+         6WbA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=xbjwIMBcN6FR01RtHmFLw1dKwgUSLTHjEmevB7rpFiQ=;
+        b=KxhkfZUu6yDestrKSVuGwQ61h6FpiBiwWQbzXJJ3B6TCelLmS0Jwyxe6a2IiKnUBc+
+         VMG1+0WGXr5RZcbB56g/c3sMAolYOI5Se8m0ixM13Gi4iO0mIOKuJJdSwup7MW2KdUQS
+         Ixm9wPJH4nUfd2m7nU0N63QFKmqyNxrwLN5savnZXbPStAyggXkI5fcIzX/QUr1aOUdr
+         GjzEChfWTotMioUARDHpmSAm6kXia0OUzoG0LP0S7zN8+sDRBv7Tg0YMd06ragwl0V8g
+         W52B68u3k5MFh3hSUOLq1H6nBG5PRBygpYSOcdXfy75Kk47D1Ep9ySQeWpWjbl5zxUWH
+         qadA==
+X-Gm-Message-State: AMke39mPJaUxi1apes2IhWij9EXrr8daQgoZpophVtvwYob1bp8vSnU8Le7lxhVjfXNaYC90w1C9ADxAyTRqyCMc
+X-Received: by 10.107.47.162 with SMTP id v34mr3707944iov.52.1487962709369;
+ Fri, 24 Feb 2017 10:58:29 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <16c6d843-a516-9265-d3e7-61b110acbdcf@ipsumj.de>
+Received: by 10.79.33.148 with HTTP; Fri, 24 Feb 2017 10:58:28 -0800 (PST)
+In-Reply-To: <xmqqk28f4fti.fsf@gitster.mtv.corp.google.com>
+References: <20170223164306.spg2avxzukkggrpb@kitenet.net> <22704.19873.860148.22472@chiark.greenend.org.uk>
+ <xmqq60jz5wbm.fsf@gitster.mtv.corp.google.com> <nycvar.QRO.7.75.62.1702240943540.6590@qynat-yncgbc>
+ <xmqqk28f4fti.fsf@gitster.mtv.corp.google.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Fri, 24 Feb 2017 10:58:28 -0800
+Message-ID: <CAGZ79kaZWe-8pMZnQv7uZtr8wXWawFeJjUa68-b0oa4yFo-HcA@mail.gmail.com>
+Subject: Re: SHA1 collisions found
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     David Lang <david@lang.hm>,
+        Ian Jackson <ijackson@chiark.greenend.org.uk>,
+        Joey Hess <id@joeyh.name>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Feb 24, 2017 at 06:36:00PM +0000, HW42 wrote:
+On Fri, Feb 24, 2017 at 10:14 AM, Junio C Hamano <gitster@pobox.com> wrote:
 
-> > +ifdef USE_SHA1DC
-> > +	SHA1_HEADER = "sha1dc/sha1.h"
-> > +	LIB_OBJS += sha1dc/sha1.o
-> > +	LIB_OBJS += sha1dc/ubc_check.o
-> > +else
-> >  ifdef BLK_SHA1
-> >  	SHA1_HEADER = "block-sha1/sha1.h"
-> >  	LIB_OBJS += block-sha1/sha1.o
-> > @@ -1403,6 +1412,7 @@ else
-> >  endif
-> >  endif
-> >  endif
-> > +endif
-> 
-> This sets SHA1_MAX_BLOCK_SIZE and the compiler flags for Apple
-> CommonCrypto even if the user selects USE_SHA1DC. The same happens for
-> BLK_SHA1. Is this intended?
+> you are inviting people to start using
+>
+>     md5,54ddf8d47340e048166c45f439ce65fd
+>
+> as object names.
 
-No, it's not. I suspect that setting BLK_SHA1 has the same problem in
-the current code, then.
+which might even be okay for specific subsets of operations.
+(e.g. all local work including staging things, making local "fixup" commits)
 
-> > +void git_SHA1DCUpdate(SHA1_CTX *ctx, const void *vdata, unsigned long len)
-> > +{
-> > +	const char *data = vdata;
-> > +	/* We expect an unsigned long, but sha1dc only takes an int */
-> > +	while (len > INT_MAX) {
-> > +		SHA1DCUpdate(ctx, data, INT_MAX);
-> > +		data += INT_MAX;
-> > +		len -= INT_MAX;
-> > +	}
-> > +	SHA1DCUpdate(ctx, data, len);
-> > +}
-> 
-> I think you can simply change the len parameter from unsigned into
-> size_t (or unsigned long) in SHA1DCUpdate().
-> https://github.com/cr-marcstevens/sha1collisiondetection/pull/6
-
-Yeah, I agree that is a cleaner solution. My focus was on changing the
-(presumably tested) sha1dc code as little as possible.
-
--Peff
+The addressing scheme should not be too hardcoded, we should rather
+treat it similar to the cipher schemes in pgp. The additional complexity that
+we have is the longevity of existence of things, though.
