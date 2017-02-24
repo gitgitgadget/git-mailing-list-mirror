@@ -6,98 +6,95 @@ X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 28CFE201A9
-	for <e@80x24.org>; Fri, 24 Feb 2017 23:51:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 66BC2201A9
+	for <e@80x24.org>; Fri, 24 Feb 2017 23:51:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751531AbdBXXvO (ORCPT <rfc822;e@80x24.org>);
-        Fri, 24 Feb 2017 18:51:14 -0500
-Received: from mail-pg0-f54.google.com ([74.125.83.54]:33140 "EHLO
-        mail-pg0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751342AbdBXXvL (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 Feb 2017 18:51:11 -0500
-Received: by mail-pg0-f54.google.com with SMTP id z128so17263588pgb.0
-        for <git@vger.kernel.org>; Fri, 24 Feb 2017 15:51:10 -0800 (PST)
+        id S1751513AbdBXXvK (ORCPT <rfc822;e@80x24.org>);
+        Fri, 24 Feb 2017 18:51:10 -0500
+Received: from mail-pg0-f41.google.com ([74.125.83.41]:36485 "EHLO
+        mail-pg0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751342AbdBXXvI (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 Feb 2017 18:51:08 -0500
+Received: by mail-pg0-f41.google.com with SMTP id s67so17195179pgb.3
+        for <git@vger.kernel.org>; Fri, 24 Feb 2017 15:51:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=jSU16u9odxC3+ey4052ikSa5Pad2YJkUz4vliCHxv+c=;
-        b=L7Rin5C0AMbJikPT1g//28oVGbAH21ziiflqRP3dbexuMAvubcC2d/8J8S5VGx6ucj
-         7JSmB88bolWodzmeA3VY0AzpnxAOM8KHpcfw6fpvpZP6nWiJ/ixnT4VHwJTEQHsIESnp
-         JvdsBAL/wRMUFQbBNUI+ueI2ZkJwKjqCY1Cze6SJHwUljuuecmvqTRc4rjMel4VpP8Uy
-         Hcfn6GH7T2iNk9X8brIp525zr2PwAjJgeNYtJVDZNRpdwRmUb9YE9ka6Pd38d4afo0t8
-         GVpLP35FQ03ibr1TURhS6AYFMHooEznp14e2PPFvy6mQu6gRvQypAYzvMymm22UOiz7e
-         wvMA==
+        h=from:to:cc:subject:date:message-id;
+        bh=VGyu16iMqxEiS1i+YhSVdFN1V6KAKddr1/gU8Yz7fFE=;
+        b=t3uZGZzKzs7VEMjvPOjmIz9g9/4d1V9NAcoqnzenxzYOU34bNn6tlbELga5z4Q1OXN
+         KS5ljGP1hEZH1FdonXZiLevYXJzhFBtF0/RRckw3IRe5xth09AEcuamnECBIdde/w2a0
+         NJmutTo92DkkGtHHdHADzHwPDvVudV3moN9uVCto0qi/y+cxI2Nwk/KfTKydRqCWbMez
+         t4DWzV6ODHTAMlzMR54EYxaiQTqlbbv8OQwLiptKmBh7MVMSGXNh7hvcPrckys3WX5v5
+         5fYvW51T36ewol6bYPEfcAC03LUl5qHCJT4u9tFJtK6Ty4T2q8eqrMsUuofky6+3+oE5
+         gPDQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=jSU16u9odxC3+ey4052ikSa5Pad2YJkUz4vliCHxv+c=;
-        b=QpZ5zH41Wi8dsC0Bw5iPIdJC8N8XhKEMQVDswXTvPuOU42lqft0FRAfmc1pgYnpED9
-         k3p3WETJ0j0X9uhzIyHJ360nsr5e8W+QCZGLC6AXzg7yPTQqjA/i+4geROQPCp/10HQA
-         ZVjr+1Lqt1gepvNYNG25VACdaWum7uJIREgWGITzKnxgKqnzb0HIHA4bEzQdRmKSkfQG
-         j+QqxBPDWFGhtbXR09Q2kjeCCZShj97TwdZzRJOUEKwoyG6VamurL6rDmHjuux39N5bX
-         w46VqrwpiwvEM9UZIWd5UImLC/HB5+A9ViQKo2XwYuA6G7zEwg1CRsWX0ogJmSX3iknK
-         lxCw==
-X-Gm-Message-State: AMke39k5JLd1sdpMaePp0HWr16RaNt8Tewynhwsbap42BTX2CocxioT4PdNgfqX4nRv414ya
-X-Received: by 10.99.215.5 with SMTP id d5mr6886416pgg.51.1487980270383;
-        Fri, 24 Feb 2017 15:51:10 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=VGyu16iMqxEiS1i+YhSVdFN1V6KAKddr1/gU8Yz7fFE=;
+        b=U2Rj11GFcZejYMKnCx7nnX2IHm90FqRayCvdYi7eQajcsn1gZ+UDRq2kdDGXTYfjUG
+         UMMTjYihEdV43NzfJjaK04919uTuTHLOXlXR3fekU/af16jgcolGcAmaaM1KIOkGEAvj
+         AB15d5daEyvMlVO42DLTr5Z0rS8/jOBnKxI2FrfohjypvHtHxJij0uOas/Uwo610EqOx
+         k2pWpR/ZQaoeQHPrT0HuZj9R33KNnsesAiUht/rI/TChQIgvyIsr/MIwIZ9faOgMdc4X
+         A3fMBeq3uey1a7qa49Ba5K2oQUkgWc2LxZRvcqlxtM9vEGH89hZ74hRhDC0YlCceBRG6
+         VBwg==
+X-Gm-Message-State: AMke39nWyL5fVWCUnEOVE51A1DsrHnMz2iIrHHAMN6VqtKUC/k1RIj0/qsQFFyAvzeVRcV5j
+X-Received: by 10.99.217.17 with SMTP id r17mr6826770pgg.140.1487980267424;
+        Fri, 24 Feb 2017 15:51:07 -0800 (PST)
 Received: from roshar.mtv.corp.google.com ([100.96.238.26])
-        by smtp.gmail.com with ESMTPSA id v69sm17048236pgd.18.2017.02.24.15.51.08
+        by smtp.gmail.com with ESMTPSA id v69sm17048236pgd.18.2017.02.24.15.51.05
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 24 Feb 2017 15:51:09 -0800 (PST)
+        Fri, 24 Feb 2017 15:51:06 -0800 (PST)
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org
 Cc:     Brandon Williams <bmwill@google.com>, sbeller@google.com,
         pclouds@gmail.com
-Subject: [PATCH 2/5] pathspec: add PATHSPEC_FROMROOT flag
-Date:   Fri, 24 Feb 2017 15:50:57 -0800
-Message-Id: <20170224235100.52627-3-bmwill@google.com>
+Subject: [PATCH 0/5] recursing submodules with relative pathspec (grep and ls-files)
+Date:   Fri, 24 Feb 2017 15:50:55 -0800
+Message-Id: <20170224235100.52627-1-bmwill@google.com>
 X-Mailer: git-send-email 2.11.0.483.g087da7b7c-goog
-In-Reply-To: <20170224235100.52627-1-bmwill@google.com>
-References: <20170224235100.52627-1-bmwill@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add the `PATHSPEC_FROMROOT` flag to allow callers to instruct
-'parse_pathspec()' that all provided pathspecs are relative to the root
-of the repository.  This allows a caller to prevent a path that may be
-outside of the repository from erroring out during the pathspec struct
-construction.
+It was discovered that when using the --recurse-submodules flag with `git grep`
+and `git ls-files` and specifying a relative path when not at the root causes
+the child processes spawned to error out with an error like:
 
-Signed-off-by: Brandon Williams <bmwill@google.com>
----
- pathspec.c | 2 +-
- pathspec.h | 2 ++
- 2 files changed, 3 insertions(+), 1 deletion(-)
+fatal: ..: '..' is outside repository
 
-diff --git a/pathspec.c b/pathspec.c
-index 7ababb315..ff622ba18 100644
---- a/pathspec.c
-+++ b/pathspec.c
-@@ -353,7 +353,7 @@ static void init_pathspec_item(struct pathspec_item *item, unsigned flags,
- 	if (pathspec_prefix >= 0) {
- 		match = xstrdup(copyfrom);
- 		prefixlen = pathspec_prefix;
--	} else if (magic & PATHSPEC_FROMTOP) {
-+	} else if ((magic & PATHSPEC_FROMTOP) || (flags & PATHSPEC_FROMROOT)) {
- 		match = xstrdup(copyfrom);
- 		prefixlen = 0;
- 	} else {
-diff --git a/pathspec.h b/pathspec.h
-index 49fd823dd..cad197436 100644
---- a/pathspec.h
-+++ b/pathspec.h
-@@ -66,6 +66,8 @@ struct pathspec {
-  * allowed, then it will automatically set for every pathspec.
-  */
- #define PATHSPEC_LITERAL_PATH (1<<8)
-+/* For callers that know all paths are relative to the root of the repository */
-+#define PATHSPEC_FROMROOT (1<<9)
- 
- extern void parse_pathspec(struct pathspec *pathspec,
- 			   unsigned magic_mask,
+While true that ".." is outside the scope of the submodule repository, it
+probably doesn't make much sense to the user who gave that pathspec with
+respect to the superproject.  Since the child processes that are spawned to
+handle the submodules have some context that they are executing underneath a
+superproject (via the 'super_prefix'), they should be able to prevent dying
+under this circumstance.
+
+This series fixes this bug in both git grep and git ls-files as well as
+correctly formatting the output from submodules to handle the relative paths
+with "..".
+
+One of the changes made to fix this was to add an additional flag for the
+parse_pathspec() function in order to treat all paths provided as being from
+the root of the repository.  I hesitantly selected the name 'PATHSPEC_FROMROOT'
+but I'm not fond of it since its too similar to the pathspec magic define
+'PATHSPEC_FROMTOP'.  So I'm open for naming suggestions.
+
+Brandon Williams (5):
+  grep: illustrate bug when recursing with relative pathspec
+  pathspec: add PATHSPEC_FROMROOT flag
+  grep: fix bug when recuring with relative pathspec
+  ls-files: illustrate bug when recursing with relative pathspec
+  ls-files: fix bug when recuring with relative pathspec
+
+ builtin/grep.c                         |  8 ++++--
+ builtin/ls-files.c                     |  8 ++++--
+ pathspec.c                             |  2 +-
+ pathspec.h                             |  2 ++
+ t/t3007-ls-files-recurse-submodules.sh | 50 ++++++++++++++++++++++++++++++++++
+ t/t7814-grep-recurse-submodules.sh     | 42 ++++++++++++++++++++++++++++
+ 6 files changed, 107 insertions(+), 5 deletions(-)
+
 -- 
 2.11.0.483.g087da7b7c-goog
 
