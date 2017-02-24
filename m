@@ -2,60 +2,57 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4DB6C2022D
-	for <e@80x24.org>; Fri, 24 Feb 2017 06:11:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 17F62201B0
+	for <e@80x24.org>; Fri, 24 Feb 2017 08:48:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751154AbdBXGL0 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 24 Feb 2017 01:11:26 -0500
-Received: from cloud.peff.net ([104.130.231.41]:33188 "EHLO cloud.peff.net"
+        id S1751555AbdBXIsQ (ORCPT <rfc822;e@80x24.org>);
+        Fri, 24 Feb 2017 03:48:16 -0500
+Received: from mx0.elegosoft.com ([78.47.87.163]:52460 "EHLO mx0.elegosoft.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750873AbdBXGLZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 Feb 2017 01:11:25 -0500
-Received: (qmail 21358 invoked by uid 109); 24 Feb 2017 06:10:48 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 24 Feb 2017 06:10:48 +0000
-Received: (qmail 5065 invoked by uid 111); 24 Feb 2017 06:10:52 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 24 Feb 2017 01:10:52 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 24 Feb 2017 01:10:46 -0500
-Date:   Fri, 24 Feb 2017 01:10:46 -0500
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH v2] config: reject invalid VAR in 'git -c VAR=VAL command'
-Message-ID: <20170224061045.bejaswcrc4youwsv@sigill.intra.peff.net>
-References: <CAGZ79kbR2QQyYO1dnQ0jW3-ztKEFj1MtJfDqEc0xoftMFeN=WA@mail.gmail.com>
- <xmqqlgszffm0.fsf@gitster.mtv.corp.google.com>
- <xmqqd1ebfd9l.fsf_-_@gitster.mtv.corp.google.com>
- <20170223055831.u3yofkby3c56t7l4@sigill.intra.peff.net>
- <xmqqo9xt8jcf.fsf@gitster.mtv.corp.google.com>
- <xmqqy3ww5wbl.fsf@gitster.mtv.corp.google.com>
- <20170224004105.ayddcwlnpmq7tifu@sigill.intra.peff.net>
- <xmqqh93k5ijb.fsf@gitster.mtv.corp.google.com>
- <20170224042227.2rjgf4zbiadxbrtz@sigill.intra.peff.net>
- <xmqqd1e85ddy.fsf@gitster.mtv.corp.google.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqd1e85ddy.fsf@gitster.mtv.corp.google.com>
+        id S1751321AbdBXIsA (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 Feb 2017 03:48:00 -0500
+Received: from localhost (unknown [10.10.10.227])
+        by mx0.elegosoft.com (Postfix) with ESMTPSA id C840816C791;
+        Fri, 24 Feb 2017 09:46:27 +0100 (CET)
+From:   Patrick Steinhardt <ps@pks.im>
+To:     git@vger.kernel.org
+Cc:     Patrick Steinhardt <ps@pks.im>, Jeff King <peff@peff.net>
+Subject: [PATCH] docs/git-gc: fix default value for `--aggressiveDepth`
+Date:   Fri, 24 Feb 2017 09:46:45 +0100
+Message-Id: <952cf1f2cb37b746d823f3b917bfb44171cbc465.1487925983.git.ps@pks.im>
+X-Mailer: git-send-email 2.11.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Feb 23, 2017 at 10:08:57PM -0800, Junio C Hamano wrote:
+In commit 07e7dbf0d (gc: default aggressive depth to 50, 2016-08-11),
+the default aggressive depth of git-gc has been changed to 50. While
+git-config(1) has been updated to represent the new default value,
+git-gc(1) still mentions the old value. This patch fixes it.
 
-> Anyway, here is an updated one (the part of the patch to t/ is not
-> shown as it is unchanged).
-> 
-> -- >8 --
-> Subject: [PATCH] config: use git_config_parse_key() in git_config_parse_parameter()
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
+---
+ Documentation/git-gc.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Looks good. Nice and simple.
+diff --git a/Documentation/git-gc.txt b/Documentation/git-gc.txt
+index 852b72c67..571b5a7e3 100644
+--- a/Documentation/git-gc.txt
++++ b/Documentation/git-gc.txt
+@@ -127,7 +127,7 @@ the documentation for the --window' option in linkgit:git-repack[1] for
+ more details.  This defaults to 250.
+ 
+ Similarly, the optional configuration variable `gc.aggressiveDepth`
+-controls --depth option in linkgit:git-repack[1]. This defaults to 250.
++controls --depth option in linkgit:git-repack[1]. This defaults to 50.
+ 
+ The optional configuration variable `gc.pruneExpire` controls how old
+ the unreferenced loose objects have to be before they are pruned.  The
+-- 
+2.11.1
 
--Peff
