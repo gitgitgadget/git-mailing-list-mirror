@@ -1,232 +1,304 @@
 Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
-X-Spam-Level: *
+X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=1.3 required=3.0 tests=BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RCVD_IN_SBL_CSS,RP_MATCHES_RCVD,ZIPFILE shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 20FE7201A9
-	for <e@80x24.org>; Fri, 24 Feb 2017 19:29:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1E9E9201A9
+	for <e@80x24.org>; Fri, 24 Feb 2017 19:30:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751298AbdBXT3A (ORCPT <rfc822;e@80x24.org>);
-        Fri, 24 Feb 2017 14:29:00 -0500
-Received: from 82.57.access.ttknet.ru ([85.15.190.82]:50315 "HELO ttknet.ru"
-        rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org with SMTP
-        id S1751219AbdBXT26 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 Feb 2017 14:28:58 -0500
-X-Greylist: delayed 337 seconds by postgrey-1.27 at vger.kernel.org; Fri, 24 Feb 2017 14:28:20 EST
-Message-ID: <148796446093.30105.5426090086826293010@ttknet.ru>
-Content-Disposition: attachment
-Date:   Fri, 24 Feb 2017 19:27:40 -0000
-Content-Type: application/zip; name="8.zip"
-Importance: High
-To:     "git" <git@vger.kernel.org>
-Content-Transfer-Encoding: base64
-From:   <gitepourlesamis@globetrotter.net>
-Subject: 52607 git
+        id S1751320AbdBXTaD (ORCPT <rfc822;e@80x24.org>);
+        Fri, 24 Feb 2017 14:30:03 -0500
+Received: from mail-pg0-f68.google.com ([74.125.83.68]:35324 "EHLO
+        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751352AbdBXT34 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 Feb 2017 14:29:56 -0500
+Received: by mail-pg0-f68.google.com with SMTP id 1so4079970pgz.2
+        for <git@vger.kernel.org>; Fri, 24 Feb 2017 11:29:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:subject:date:message-id:user-agent:mime-version;
+        bh=xeHYZaufKaWtVGHM/fYN4f4CjVyFP7ewAbqRaGyBC2g=;
+        b=Qnk1sCmrEs5GG3CHGulSg9b/5UHE1M0oDeXbE774Cj4etm9CDRG1z++ce7fP1KUSbo
+         lHYrMXRBJcAinvndFAatiqGjr5lry9KhayLnG8JGYuSgPv5KvXOKXglHm+fMzzx30TUl
+         19zHd6ydgJUMqn70ZaSWWQM/7GspklcIAbtzRPIK9BPZFjDXCjCPojSdoeq0jrgrhlr3
+         sPe473AesaSaBzkaTSt4CPX7aHXPGX1/NSMlxzhMpZhnL0FA2T4AFASQKITRYMJhLDX5
+         vljH45ZnRtrOGAB/mDGcR9obLQvdP88BOOaPhuRLKSxr2iHH55jGIl5nIC/CKjdkWTNb
+         Zpsw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:subject:date:message-id
+         :user-agent:mime-version;
+        bh=xeHYZaufKaWtVGHM/fYN4f4CjVyFP7ewAbqRaGyBC2g=;
+        b=b4lJ+YCELVCfnaGDaOq2voE7ZRu+6R3VDn4kzmbu6PrWwPAwaza7GcqCxZG9saHbWM
+         2FmVReln8gC4YeR/2q5GdVs9y4PRp16U1ym757DvWfOAOQO2r42QPv9ntqpzYeiESSJJ
+         CUsZ3mGnXqjWi/CJqLbWRnpytqUJbw7zQr8FT/UndpWBfRxJMrnEX6kHCn1FievC5lAe
+         QxfsapDGwZg5/iUztTtET/7RSWsfMHjn2/WqSPDI4r8Jqxq1kO3aLNudacTWKNfJ/p3y
+         b1fvw+U0KZIXCc0UErxQXzNKS5ysrEgezcNsV97mefHv8OklbRke1w+2vgn+P+htQaJA
+         Qbfw==
+X-Gm-Message-State: AMke39ki3OyOxwAJVU4tBbrypui9vOgjwukzv/DWEiE4BvsCbroHUewW4jWGVFnK9gXP9A==
+X-Received: by 10.99.51.76 with SMTP id z73mr5513793pgz.137.1487964546915;
+        Fri, 24 Feb 2017 11:29:06 -0800 (PST)
+Received: from localhost ([2620:0:1000:8622:f06c:2e0c:850d:31b4])
+        by smtp.gmail.com with ESMTPSA id u14sm16542319pfg.18.2017.02.24.11.29.05
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Fri, 24 Feb 2017 11:29:06 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     git@vger.kernel.org
+Subject: A note from the maintainer
+Date:   Fri, 24 Feb 2017 11:29:05 -0800
+Message-ID: <xmqq60jz2xry.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-Reply-To: <gitepourlesamis@globetrotter.net>
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-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
+Welcome to the Git development community.
+
+This message is written by the maintainer and talks about how Git
+project is managed, and how you can work with it.
+
+* Mailing list and the community
+
+The development is primarily done on the Git mailing list. Help
+requests, feature proposals, bug reports and patches should be sent to
+the list address <git@vger.kernel.org>.  You don't have to be
+subscribed to send messages.  The convention on the list is to keep
+everybody involved on Cc:, so it is unnecessary to say "Please Cc: me,
+I am not subscribed".
+
+Before sending patches, please read Documentation/SubmittingPatches
+and Documentation/CodingGuidelines to familiarize yourself with the
+project convention.
+
+If you sent a patch and you did not hear any response from anybody for
+several days, it could be that your patch was totally uninteresting,
+but it also is possible that it was simply lost in the noise.  Please
+do not hesitate to send a reminder message in such a case.  Messages
+getting lost in the noise may be a sign that those who can evaluate
+your patch don't have enough mental/time bandwidth to process them
+right at the moment, and it often helps to wait until the list traffic
+becomes calmer before sending such a reminder.
+
+The list archive is available at a few public sites:
+
+        http://public-inbox.org/git/
+        http://marc.info/?l=git
+        http://www.spinics.net/lists/git/
+
+For those who prefer to read it over NNTP:
+
+        nntp://news.public-inbox.org/inbox.comp.version-control.git
+	nntp://news.gmane.org/gmane.comp.version-control.git
+
+are available.
+
+When you point at a message in a mailing list archive, using its
+message ID is often the most robust (if not very friendly) way to do
+so, like this:
+
+	http://public-inbox.org/git/Pine.LNX.4.58.0504150753440.7211@ppc970.osdl.org
+
+Often these web interfaces accept the message ID with enclosing <>
+stripped (like the above example to point at one of the most important
+message in the Git list).
+
+Some members of the development community can sometimes be found on
+the #git and #git-devel IRC channels on Freenode.  Their logs are
+available at:
+
+        http://colabti.org/irclogger/irclogger_log/git
+        http://colabti.org/irclogger/irclogger_log/git-devel
+
+There is a volunteer-run newsletter to serve our community ("Git Rev
+News" http://git.github.io/rev_news/rev_news.html).
+
+Git is a member project of software freedom conservancy, a non-profit
+organization (https://sfconservancy.org/).  To reach a committee of
+liaisons to the conservancy, contact them at <git@sfconservancy.org>.
+
+
+* Reporting bugs
+
+When you think git does not behave as you expect, please do not stop
+your bug report with just "git does not work".  "I used git in this
+way, but it did not work" is not much better, neither is "I used git
+in this way, and X happend, which is broken".  It often is that git is
+correct to cause X happen in such a case, and it is your expectation
+that is broken. People would not know what other result Y you expected
+to see instead of X, if you left it unsaid.
+
+Please remember to always state
+
+ - what you wanted to achieve;
+
+ - what you did (the version of git and the command sequence to reproduce
+   the behavior);
+
+ - what you saw happen (X above);
+
+ - what you expected to see (Y above); and
+
+ - how the last two are different.
+
+See http://www.chiark.greenend.org.uk/~sgtatham/bugs.html for further
+hints.
+
+If you think you found a security-sensitive issue and want to disclose
+it to us without announcing it to wider public, please contact us at
+our security mailing list <git-security@googlegroups.com>.  This is
+a closed list that is limited to people who need to know early about
+vulnerabilities, including:
+
+  - people triaging and fixing reported vulnerabilities
+  - people operating major git hosting sites with many users
+  - people packaging and distributing git to large numbers of people
+
+where these issues are discussed without risk of the information
+leaking out before we're ready to make public announcements.
+
+
+* Repositories and documentation.
+
+My public git.git repositories are at:
+
+  git://git.kernel.org/pub/scm/git/git.git/
+  https://kernel.googlesource.com/pub/scm/git/git
+  git://repo.or.cz/alt-git.git/
+  https://github.com/git/git/
+  git://git.sourceforge.jp/gitroot/git-core/git.git/
+  git://git-core.git.sourceforge.net/gitroot/git-core/git-core/
+
+A few web interfaces are found at:
+
+  http://git.kernel.org/cgit/git/git.git
+  https://kernel.googlesource.com/pub/scm/git/git
+  http://repo.or.cz/w/alt-git.git
+
+Preformatted documentation from the tip of the "master" branch can be
+found in:
+
+  git://git.kernel.org/pub/scm/git/git-{htmldocs,manpages}.git/
+  git://repo.or.cz/git-{htmldocs,manpages}.git/
+  https://github.com/gitster/git-{htmldocs,manpages}.git/
+
+The manual pages formatted in HTML for the tip of 'master' can be
+viewed online at:
+
+  https://git.github.io/htmldocs/git.html
+
+
+* How various branches are used.
+
+There are four branches in git.git repository that track the source tree
+of git: "master", "maint", "next", and "pu".
+
+The "master" branch is meant to contain what are very well tested and
+ready to be used in a production setting.  Every now and then, a
+"feature release" is cut from the tip of this branch.  They used to be
+named with three dotted decimal digits (e.g. "1.8.5"), but recently we
+switched the versioning scheme and "feature releases" are named with
+three-dotted decimal digits that ends with ".0" (e.g. "1.9.0").
+
+The last such release was 2.12 done on Feb 24th, 2017. You can expect
+that the tip of the "master" branch is always more stable than any of
+the released versions.
+
+Whenever a feature release is made, "maint" branch is forked off from
+"master" at that point.  Obvious and safe fixes after a feature
+release are applied to this branch and maintenance releases are cut
+from it.  Usually the fixes are merged to the "master" branch first,
+several days before merged to the "maint" branch, to reduce the chance
+of last-minute issues.  The maintenance releases used to be named with
+four dotted decimal, named after the feature release they are updates
+to (e.g. "1.8.5.1" was the first maintenance release for "1.8.5"
+feature release).  These days, maintenance releases are named by
+incrementing the last digit of three-dotted decimal name (e.g. "2.11.1"
+was the first maintenance release for the "2.11" series).
+
+New features never go to the 'maint' branch.  This branch is also
+merged into "master" to propagate the fixes forward as needed.
+
+A new development does not usually happen on "master". When you send a
+series of patches, after review on the mailing list, a separate topic
+branch is forked from the tip of "master" and your patches are queued
+there, and kept out of "master" while people test it out. The quality of
+topic branches are judged primarily by the mailing list discussions.
+
+Topic branches that are in good shape are merged to the "next" branch. In
+general, the "next" branch always contains the tip of "master".  It might
+not be quite rock-solid, but is expected to work more or less without major
+breakage. The "next" branch is where new and exciting things take place. A
+topic that is in "next" is expected to be polished to perfection before it
+is merged to "master".  Please help this process by building & using the
+"next" branch for your daily work, and reporting any new bugs you find to
+the mailing list, before the breakage is merged down to the "master".
+
+The "pu" (proposed updates) branch bundles all the remaining topic
+branches the maintainer happens to have seen.  There is no guarantee that
+the maintainer has enough bandwidth to pick up any and all topics that
+are remotely promising from the list traffic, so please do not read
+too much into a topic being on (or not on) the "pu" branch.  This
+branch is mainly to remind the maintainer that the topics in them may
+turn out to be interesting when they are polished, nothing more.  The
+topics on this branch aren't usually complete, well tested, or well
+documented and they often need further work.  When a topic that was
+in "pu" proves to be in a testable shape, it is merged to "next".
+
+You can run "git log --first-parent master..pu" to see what topics are
+currently in flight.  Sometimes, an idea that looked promising turns out
+to be not so good and the topic can be dropped from "pu" in such a case.
+The output of the above "git log" talks about a "jch" branch, which is an
+early part of the "pu" branch; that branch contains all topics that
+are in "next" and a bit more (but not all of "pu") and is used by the
+maintainer for his daily work.
+
+The two branches "master" and "maint" are never rewound, and "next"
+usually will not be either.  After a feature release is made from
+"master", however, "next" will be rebuilt from the tip of "master"
+using the topics that didn't make the cut in the feature release.
+
+A natural consequence of how "next" and "pu" bundles topics together
+is that until a topic is merged to "next", updates to it is expected
+by replacing the patch(es) in the topic with an improved version,
+and once a topic is merged to "next", updates to it needs to come as
+incremental patches, pointing out what was wrong in the previous
+patches and how the problem was corrected.
+
+Note that being in "next" is not a guarantee to appear in the next
+release, nor even in any future release.  There were cases that topics
+needed reverting a few commits in them before graduating to "master",
+or a topic that already was in "next" was reverted from "next" because
+fatal flaws were found in it after it was merged to "next".
+
+
+* Other people's trees.
+
+Documentation/SubmittingPatches outlines to whom your proposed changes
+should be sent.  As described in contrib/README, I would delegate fixes
+and enhancements in contrib/ area to the primary contributors of them.
+
+Although the following are included in git.git repository, they have their
+own authoritative repository and maintainers:
+
+ - git-gui/ comes from git-gui project, maintained by Pat Thoyts:
+
+        git://repo.or.cz/git-gui.git
+
+ - gitk-git/ comes from Paul Mackerras's gitk project:
+
+        git://ozlabs.org/~paulus/gitk
+
+ - po/ comes from the localization coordinator, Jiang Xin:
+
+	https://github.com/git-l10n/git-po/
+
+When sending proposed updates and fixes to these parts of the system,
+please base your patches on these trees, not git.git (the former two
+even have different directory structures).
