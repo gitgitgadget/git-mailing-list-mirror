@@ -2,79 +2,134 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C413B201A9
-	for <e@80x24.org>; Fri, 24 Feb 2017 23:44:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F349A201A9
+	for <e@80x24.org>; Fri, 24 Feb 2017 23:51:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751418AbdBXXn6 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 24 Feb 2017 18:43:58 -0500
-Received: from chiark.greenend.org.uk ([212.13.197.229]:39850 "EHLO
-        chiark.greenend.org.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751212AbdBXXn5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 Feb 2017 18:43:57 -0500
-Received: by chiark.greenend.org.uk (Debian Exim 4.84_2 #1) with local
-        (return-path ijackson@chiark.greenend.org.uk)
-        id 1chPW1-0007YV-Go; Fri, 24 Feb 2017 23:43:09 +0000
-From:   Ian Jackson <ijackson@chiark.greenend.org.uk>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Message-ID: <22704.50445.435156.883001@chiark.greenend.org.uk>
-Date:   Fri, 24 Feb 2017 23:43:09 +0000
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Joey Hess <id@joeyh.name>, git@vger.kernel.org
-Subject: Re: SHA1 collisions found
-In-Reply-To: <xmqq60jz5wbm.fsf@gitster.mtv.corp.google.com>
-References: <20170223164306.spg2avxzukkggrpb@kitenet.net>
-        <22704.19873.860148.22472@chiark.greenend.org.uk>
-        <xmqq60jz5wbm.fsf@gitster.mtv.corp.google.com>
-X-Mailer: VM 8.2.0b under 24.4.1 (i586-pc-linux-gnu)
+        id S1751518AbdBXXvL (ORCPT <rfc822;e@80x24.org>);
+        Fri, 24 Feb 2017 18:51:11 -0500
+Received: from mail-pg0-f52.google.com ([74.125.83.52]:33137 "EHLO
+        mail-pg0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751507AbdBXXvJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 Feb 2017 18:51:09 -0500
+Received: by mail-pg0-f52.google.com with SMTP id z128so17263397pgb.0
+        for <git@vger.kernel.org>; Fri, 24 Feb 2017 15:51:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=7nmBWCYF87TeOqACV+SB+zX80N5hyMzQQp0XN/VPGmc=;
+        b=v+heDqL6Pjk2aDZGvks2O4OBT8L6C8NLO3eMHth/ZfPmTcle8eC9uz7pIr8wYqO9uK
+         70KHqpC8+UUHUS0HPW9ydphDDv9/T+YcHyegdfziTrWhxwpUdp8Wn61rlp+PonknIbuz
+         vi0ese7ocyhVFCkEhDWj0xr/mPKs0Y0pMo+Sn4XNnyrA3bv+lvR+dh84Vtt3kNTS03wr
+         JCv+eqRajYpiKKGjYGr915MJm6i7hpxV9fw7SWhPJISDZaJ/r/0KUauVwzLyPq0Ypjuw
+         oNtAsBjymR8POgGqi8y1sg68BWVkx2d8e5ZKpT7XHpxy1Hdtu4UXtyVgiS3qPmQabL2s
+         d1Iw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=7nmBWCYF87TeOqACV+SB+zX80N5hyMzQQp0XN/VPGmc=;
+        b=r3pHuWNkssxPlPx1DP/Xy/VsqzyrMKy9uA8FqQPtvVtrGMrCokZKq1X4Jg9fryVJ5y
+         VAjar9pJB36sbPLRsqyz8hw7wpKpNn+jPkZPCJYuEywvZOvDdgydY52kPHrdlMQflxEl
+         tB9ixQCy6hKxpaASQ1KOwC07HATH/LefIVsTo7uZ6NsDWmXL62Z4Ibp2WGFurWgwbAhB
+         QQ5shJj8oTcwv2XapxMiLRT7mIKrpQxb5ZUKZRPsGfy1VA6veisg/TSaBBWb/2y9NQCD
+         HDsk9ufhiMfoRGaMD7gzSdGD8QAFn/tcW7TyR0npy0746t/8+DAehX2EXAIWkp/Qq/sn
+         XayQ==
+X-Gm-Message-State: AMke39lY2lRXpMIW6jAH8P6htm9yf4FAhpb1S5qonRI41klJhdAgA8An7TC6kcX+uF58azcQ
+X-Received: by 10.98.184.1 with SMTP id p1mr6846513pfe.127.1487980268895;
+        Fri, 24 Feb 2017 15:51:08 -0800 (PST)
+Received: from roshar.mtv.corp.google.com ([100.96.238.26])
+        by smtp.gmail.com with ESMTPSA id v69sm17048236pgd.18.2017.02.24.15.51.07
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Fri, 24 Feb 2017 15:51:07 -0800 (PST)
+From:   Brandon Williams <bmwill@google.com>
+To:     git@vger.kernel.org
+Cc:     Brandon Williams <bmwill@google.com>, sbeller@google.com,
+        pclouds@gmail.com
+Subject: [PATCH 1/5] grep: illustrate bug when recursing with relative pathspec
+Date:   Fri, 24 Feb 2017 15:50:56 -0800
+Message-Id: <20170224235100.52627-2-bmwill@google.com>
+X-Mailer: git-send-email 2.11.0.483.g087da7b7c-goog
+In-Reply-To: <20170224235100.52627-1-bmwill@google.com>
+References: <20170224235100.52627-1-bmwill@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano writes ("Re: SHA1 collisions found"):
-> Ian Jackson <ijackson@chiark.greenend.org.uk> writes:
-> >  * Therefore the transition needs to be done by giving every object
-> >    two names (old and new hash function).  Objects may refer to each
-> >    other by either name, but must pick one.  The usual shape of
-> 
-> I do not think it is necessrily so.
+When using the --recurse-submodules flag with a relative pathspec which
+includes "..", an error is produced inside the child process spawned for
+a submodule.  When creating the pathspec struct in the child, the ".."
+is interpreted to mean "go up a directory" which causes an error stating
+that the path ".." is outside of the repository.
 
-Indeed.  And my latest thoughts involve instead having two parallel
-systems of old and new objects.
+While it is true that ".." is outside the scope of the submodule, it is
+confusing to a user who originally invoked the command where ".." was
+indeed still inside the scope of the superproject.  Since the child
+process luanched for the submodule has some context that it is operating
+underneath a superproject, this error could be avoided.
 
-> *1* In the above toy example, length being 40 vs 64 is used as a
->     sign between SHA-1 and the new hash, and careful readers may
->     wonder if we should use sha-3,20769079d22... or something like
->     that that more explicity identifies what hash is used, so that
->     we can pick a hash whose length is 64 when we transition again.
+Signed-off-by: Brandon Williams <bmwill@google.com>
+---
+ t/t7814-grep-recurse-submodules.sh | 42 ++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 42 insertions(+)
 
-I have an idea for this.  I think we should prefix new hashes with a
-single uppercase letter, probably H.
+diff --git a/t/t7814-grep-recurse-submodules.sh b/t/t7814-grep-recurse-submodules.sh
+index 67247a01d..418ba68fe 100755
+--- a/t/t7814-grep-recurse-submodules.sh
++++ b/t/t7814-grep-recurse-submodules.sh
+@@ -227,6 +227,48 @@ test_expect_success 'grep history with moved submoules' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_failure 'grep using relative path' '
++	test_when_finished "rm -rf parent sub" &&
++	git init sub &&
++	echo "foobar" >sub/file &&
++	git -C sub add file &&
++	git -C sub commit -m "add file" &&
++
++	git init parent &&
++	echo "foobar" >parent/file &&
++	git -C parent add file &&
++	mkdir parent/src &&
++	echo "foobar" >parent/src/file2 &&
++	git -C parent add src/file2 &&
++	git -C parent submodule add ../sub &&
++	git -C parent commit -m "add files and submodule" &&
++
++	# From top works
++	cat >expect <<-\EOF &&
++	file:foobar
++	src/file2:foobar
++	sub/file:foobar
++	EOF
++	git -C parent grep --recurse-submodules -e "foobar" >actual &&
++	test_cmp expect actual &&
++
++	# Relative path to top errors out
++	cat >expect <<-\EOF &&
++	../file:foobar
++	file2:foobar
++	../sub/file:foobar
++	EOF
++	git -C parent/src grep --recurse-submodules -e "foobar" -- .. >actual &&
++	test_cmp expect actual &&
++
++	# Relative path to submodule errors out
++	cat >expect <<-\EOF &&
++	../sub/file:foobar
++	EOF
++	git -C parent/src grep --recurse-submodules -e "foobar" -- ../sub >actual &&
++	test_cmp expect actual
++'
++
+ test_incompatible_with_recurse_submodules ()
+ {
+ 	test_expect_success "--recurse-submodules and $1 are incompatible" "
+-- 
+2.11.0.483.g087da7b7c-goog
 
-Uppercase because: case-only-distinguished ref names are already
-discouraged because they do not work properly on case-insensitive
-filesystems; convention is that ref names are lowercase; so an
-uppercase letter probably won't appear at the start of a ref name
-component even though almost all existing software will treat it as
-legal.  So the result is that the new object names are unlikely to
-collide with ref names.
-
-(There is of course no need to store the H as a literal in filenames,
-so the case-insensitive filesystem problem does not apply to ref
-names.)
-
-We should definitely not introduce new punctuation into object names.
-That will cause a great deal of grief for existing software which has
-to handle git object names and may thy to store them in
-representations which assume that they match \w+.
-
-The idea of using the length is a neat trick, but it cannot support
-the dcurrent object name abbreviation approach unworkable.
-
-Ian.
