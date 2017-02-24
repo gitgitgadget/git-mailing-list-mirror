@@ -2,95 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CE927201A9
-	for <e@80x24.org>; Fri, 24 Feb 2017 19:21:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C1259201A9
+	for <e@80x24.org>; Fri, 24 Feb 2017 19:21:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751348AbdBXTVJ (ORCPT <rfc822;e@80x24.org>);
-        Fri, 24 Feb 2017 14:21:09 -0500
-Received: from mail-pg0-f68.google.com ([74.125.83.68]:33207 "EHLO
-        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751232AbdBXTVG (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1751380AbdBXTVP (ORCPT <rfc822;e@80x24.org>);
+        Fri, 24 Feb 2017 14:21:15 -0500
+Received: from mail-it0-f50.google.com ([209.85.214.50]:36211 "EHLO
+        mail-it0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751268AbdBXTVG (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 24 Feb 2017 14:21:06 -0500
-Received: by mail-pg0-f68.google.com with SMTP id 5so4073237pgj.0
-        for <git@vger.kernel.org>; Fri, 24 Feb 2017 11:20:42 -0800 (PST)
+Received: by mail-it0-f50.google.com with SMTP id h10so30604987ith.1
+        for <git@vger.kernel.org>; Fri, 24 Feb 2017 11:20:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=b9VMAvr3NoyaF7phF8cGA3WNsBGxO+fVYq6SveGCAjE=;
-        b=iCdu6a6Kxlz7+FAxSM+DhMY/vD5ML8JxEQTzFV7akLRb4FUZjfvlEUjCymcNCQc7gP
-         DHd7HhllRl1XkbYqKXpC7Mz1++3Ma8viWOGeKuHU+mvGelRFpSghROUEhOn0x3X3OFsd
-         p8jgzQhu32KHkRGK9FUAYHqia0p7FfS3WPeTZRMVrSPx29IVAF1hTdLHww5hyfoh8a2B
-         Faq3YKSy3emj0aP7oD9LVb6jGqEJCAoZfPOVFN/T5ZDVJ0PYPFadJl7zbDW+LU7Ry2el
-         K1ozDGb4MOr6SvVQ3PRrFiH0ZPDHAtYAxETSdDQfdglj/+g6iOaxV+W9Xy4QWHwyV8iI
-         JeNw==
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=oZokD9KVAqOiX7By8fD7pm0Uf5cZ8z6yai74/aStJN8=;
+        b=bxFhGnD1QoMTCa3Zg2rByB+fK27Lrlsta/BYmB4ukNNXbwaSDcQLUM2ekv6q7QZVBs
+         XVNGRG1ovyeHKNrNUv/TUSy/UOeDWZiGeahzCB2CO6GFTWlV0mq+2Lctk7KQTGikRhnd
+         GySvCNLdWLrqefciff0+xlU9xrXzBj4JGpsGtEm2SrQYz9kW5GD/NaaFlepRrIRdCkNj
+         LUmKyLCYOsLcejnzh3hesSN+8OBBV0SkFsICW/FUY2+ISI0nifg9mFVZ0aIX7aPXMuNQ
+         8YNrrhq1VsLwPe+a1cMGxQQmNGCE596DLNvpDRIOdtk8PbzYfvefl4xoniDtEoaU7k48
+         i4Vg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=b9VMAvr3NoyaF7phF8cGA3WNsBGxO+fVYq6SveGCAjE=;
-        b=ap02M02L1pelnOXLcZGtv4DfnGbDYgdmbKK6puBW1d06F1D0A7mlbgQr1xqDWJrYvn
-         nU7ZhUsIJ1yZAlCB4XgazEACP8/OdubP46sPaQDC1c7j7//ussi0cE/qx/Ro9/m65e8F
-         ROt34UuuaOSg1sOuNujiKPpg66Ryvi2IB1+v4Siaj8084sytbDHi5j/q6rwK/2hcYSrP
-         CT5RktmRy/PBYb4O57SzaqUWmJACwFqENZeagWJvL3Pyt81LU0nELvwglrnAUSt5g41a
-         el0D2sIaajl5bb1vDHXj6a9Xq/6OV3pqBVwNrcO5bOu/cRGizFsH37qG6UmsEaJNWOXe
-         cPrA==
-X-Gm-Message-State: AMke39kTDBDCZrGBMyUVX+ksSapu0ssbmwYBjIQMpECf6ZPwEdXyAAnIqSoxDBArkDHn/Q==
-X-Received: by 10.98.39.195 with SMTP id n186mr5368089pfn.17.1487964041743;
-        Fri, 24 Feb 2017 11:20:41 -0800 (PST)
-Received: from localhost ([2620:0:1000:8622:f06c:2e0c:850d:31b4])
-        by smtp.gmail.com with ESMTPSA id l12sm16520725pfj.37.2017.02.24.11.20.40
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Fri, 24 Feb 2017 11:20:40 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     David Lang <david@lang.hm>,
-        Ian Jackson <ijackson@chiark.greenend.org.uk>,
-        Joey Hess <id@joeyh.name>,
-        "git\@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: SHA1 collisions found
-References: <20170223164306.spg2avxzukkggrpb@kitenet.net>
-        <22704.19873.860148.22472@chiark.greenend.org.uk>
-        <xmqq60jz5wbm.fsf@gitster.mtv.corp.google.com>
-        <nycvar.QRO.7.75.62.1702240943540.6590@qynat-yncgbc>
-        <xmqqk28f4fti.fsf@gitster.mtv.corp.google.com>
-        <CAGZ79kaZWe-8pMZnQv7uZtr8wXWawFeJjUa68-b0oa4yFo-HcA@mail.gmail.com>
-Date:   Fri, 24 Feb 2017 11:20:39 -0800
-In-Reply-To: <CAGZ79kaZWe-8pMZnQv7uZtr8wXWawFeJjUa68-b0oa4yFo-HcA@mail.gmail.com>
-        (Stefan Beller's message of "Fri, 24 Feb 2017 10:58:28 -0800")
-Message-ID: <xmqq7f4f4cqg.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=oZokD9KVAqOiX7By8fD7pm0Uf5cZ8z6yai74/aStJN8=;
+        b=FESIAQBfT6a/sE4IFyqgaRxOQGod9HySJOAF17YuOf+3jlf0ykXjA8G1pBYl23wsnh
+         42jgBNUG4bSDGebfLKzdj6UL3LinTO197WHm2QNT5amWN04qNQUduSkQB7n6LXuqP3rA
+         jePcRklevXhn0yUrZZD2Sc1rk6Thdyr9620U57S9PsXLLsPdci2yCIL569nCg89Pqi4I
+         aMtqSelzbqNGEMCZjb/d6dkraDuPdpmDIoqhicvbIHSmXvNw4kKVFvfs4F+9Z5ylno7o
+         5ZCRRhTPLJ/8krXfqw5LMEJG6BNVadjEMOyXwi7JL47MxEeWopayehIyZwko6xrFyhHd
+         +mNQ==
+X-Gm-Message-State: AMke39kSrTKZ/gQ1BH3wLk9H4H1s/M5/ncTiEKtRCY+1bwjrmFIjGBS6db1oTckuhtvBXpg3Kd4kz1uxC4fWQC/V
+X-Received: by 10.36.65.4 with SMTP id x4mr3904967ita.69.1487964048288; Fri,
+ 24 Feb 2017 11:20:48 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
+Received: by 10.79.33.148 with HTTP; Fri, 24 Feb 2017 11:20:47 -0800 (PST)
+In-Reply-To: <db5cfde2-a769-d786-8846-a5a526194b69@ramsayjones.plus.com>
+References: <xmqqlgt5vlse.fsf@gitster.mtv.corp.google.com> <20170223225735.10994-1-sbeller@google.com>
+ <20170223225735.10994-16-sbeller@google.com> <db5cfde2-a769-d786-8846-a5a526194b69@ramsayjones.plus.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Fri, 24 Feb 2017 11:20:47 -0800
+Message-ID: <CAGZ79kbD8SBHURQJvrNKKP8Ycay8wZcwUGw7V4mmo6PmfmJ9=w@mail.gmail.com>
+Subject: Re: [PATCH 15/15] builtin/checkout: add --recurse-submodules switch
+To:     Ramsay Jones <ramsay@ramsayjones.plus.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Brandon Williams <bmwill@google.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        David Turner <novalis@novalis.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
-
-> On Fri, Feb 24, 2017 at 10:14 AM, Junio C Hamano <gitster@pobox.com> wrote:
+On Thu, Feb 23, 2017 at 5:25 PM, Ramsay Jones
+<ramsay@ramsayjones.plus.com> wrote:
+>> +int option_parse_recurse_submodules(const struct option *opt,
+>> +                                 const char *arg, int unset)
 >
->> you are inviting people to start using
->>
->>     md5,54ddf8d47340e048166c45f439ce65fd
->>
->> as object names.
+> Again, this function should be marked static.
 >
-> which might even be okay for specific subsets of operations.
-> (e.g. all local work including staging things, making local "fixup" commits)
->
-> The addressing scheme should not be too hardcoded, we should rather
-> treat it similar to the cipher schemes in pgp. The additional complexity that
-> we have is the longevity of existence of things, though.
+> [I also noted _two_ other local functions with the same name
+> in builtin/fetch.c and builtin/push.c]
 
-The not-so-well-hidden agenda was exactly that we _SHOULD_ not
-mimick PGP.  They do not have a requirement to encourage everybody
-to use the same thing because each message is encrypted/signed
-independently, i.e. they do not have to chain things like we do.
+fixed in a reroll.
 
+Yes there is a pattern here. But as both fetch and push accept different
+options (not just boolean, but strings) these have to be different.
+I thought about unifying them, but I do not think we can do so easily.
+
+Thanks,
+Stefan
