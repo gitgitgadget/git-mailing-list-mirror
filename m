@@ -2,108 +2,70 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 403322022F
-	for <e@80x24.org>; Fri, 24 Feb 2017 23:25:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DBB31201A9
+	for <e@80x24.org>; Fri, 24 Feb 2017 23:28:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751418AbdBXXZ2 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 24 Feb 2017 18:25:28 -0500
-Received: from sunbase.org ([178.79.142.16]:36310 "EHLO sunbase.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750831AbdBXXZ1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 Feb 2017 18:25:27 -0500
-Received: from sunny by sunbase.org with local (Exim 4.84_2)
-        (envelope-from <sunny@sunbase.org>)
-        id 1chPDw-00083F-Lz; Fri, 24 Feb 2017 23:24:28 +0000
-Date:   Sat, 25 Feb 2017 00:24:28 +0100
-From:   =?utf-8?Q?=C3=98yvind_A=2E?= Holm <sunny@sunbase.org>
-To:     Jakub =?utf-8?B?TmFyxJlic2tp?= <jnareb@gmail.com>
-Cc:     Santiago Torres <santiago@nyu.edu>, Joey Hess <id@joeyh.name>,
-        git@vger.kernel.org
-Subject: Re: SHA1 collisions found
-Message-ID: <20170224232426.3737imr4qxtlioxd@sunbase.org>
-Mail-Followup-To: =?utf-8?Q?=C3=98yvind_A=2E?= Holm <sunny@sunbase.org>,
-        Jakub =?utf-8?B?TmFyxJlic2tp?= <jnareb@gmail.com>,
-        Santiago Torres <santiago@nyu.edu>, Joey Hess <id@joeyh.name>,
-        git@vger.kernel.org
-References: <20170223164306.spg2avxzukkggrpb@kitenet.net>
- <9cedbfa5-4095-15d8-639c-0e3b9b98d6b9@gmail.com>
- <20170224225350.xb7rudyhowmsqdbc@LykOS.localdomain>
- <e0ad3c81-aa2c-2eea-eb9e-17591b6b592c@gmail.com>
+        id S1751212AbdBXX2K (ORCPT <rfc822;e@80x24.org>);
+        Fri, 24 Feb 2017 18:28:10 -0500
+Received: from mail-io0-f182.google.com ([209.85.223.182]:36711 "EHLO
+        mail-io0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751291AbdBXX2J (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 Feb 2017 18:28:09 -0500
+Received: by mail-io0-f182.google.com with SMTP id 25so635185iom.3
+        for <git@vger.kernel.org>; Fri, 24 Feb 2017 15:28:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=Ru5YMt3NC2IX9qiTH64zzm7SUIThG7sjFy9QeswJs+o=;
+        b=vr3V7biM6PF9xEh17ffTZsc7DRrAAioXckrN6yyAUQ48qKtkVlbKqOT/97LBbDVtwq
+         xgTaP/pVovXdnGybWdw12hRw/GaoAxXe2JZdsRN1XEmelaGpHpUFkFSzRJ53nlKpaNJD
+         zhi1d/Ybf58afW5M5fFe6GW8N5s5xzXIAXVv/tmDd+QJTf95L7wli3DgWzFg6ies6TgA
+         TQ3rF0P7dpQPSbLeR83exb///ccZrX45OYUV+meijHdXBHLlHt225rhnfitEFYHzY2MY
+         BKi2loT7JGhTNwJEGu8bgwhRza+xjbF/Oyipv9gTAeh/qKopkit+SwNxmOx8l1z0X0z/
+         NbEQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=Ru5YMt3NC2IX9qiTH64zzm7SUIThG7sjFy9QeswJs+o=;
+        b=bVnFxoYS6zvzPHCAxFN2MQomOpgxNkrWLLGg6MDzEdwP8kWy4uB6OPS3TPWJ7rSBEh
+         p0d/mXYyYdOPZ1LF6tqE0aq4LxLYpEPnAxeJ1twmJwFjRvDNMKFdWG/cF+OeJz7ogREV
+         HmPCdTJA7/ewGdvsJGIXHvbBQvMKpsxFbxGHKVAhO9iOGsyl0HjBfy7rjnn1SeSdtWgp
+         EnNY6KMOEqY8ZRrPGns1gbm/MLA9RwLrK18Ck0zLQjFi0iP5TJ/tby7cFaKMWrnjHbDd
+         f1uHbFhREwlEL1wMQN1mNG1raZ7jEkvt4AKGe7h+r3rSU6TNtwEMstWXyEhepqXXI2Qy
+         3A3w==
+X-Gm-Message-State: AMke39nEa1ENAatzo02ImKzpXii+oavt2xDS6azPfcbaIp2hUVNaMb63ly3u+7+isXjVScggrpgWiJ3cECmtYSFt
+X-Received: by 10.107.37.148 with SMTP id l142mr4645633iol.159.1487978888220;
+ Fri, 24 Feb 2017 15:28:08 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-        protocol="application/pgp-signature"; boundary="ao55ug5oc2xjox3e"
-Content-Disposition: inline
-In-Reply-To: <e0ad3c81-aa2c-2eea-eb9e-17591b6b592c@gmail.com>
-OpenPGP: id=94A506E5; url=http://www.sunbase.org/pubkey.asc
-X-Request-PGP: http://www.sunbase.org/pubkey.asc
-User-Agent: NeoMutt/20170206-255-40b62d (1.7.2)
+Received: by 10.79.33.148 with HTTP; Fri, 24 Feb 2017 15:28:07 -0800 (PST)
+In-Reply-To: <20170224210816.ftcfa4jy4wltv2b7@sigill.intra.peff.net>
+References: <20170224210643.max6z2ykm3gbg7lw@sigill.intra.peff.net> <20170224210816.ftcfa4jy4wltv2b7@sigill.intra.peff.net>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Fri, 24 Feb 2017 15:28:07 -0800
+Message-ID: <CAGZ79kbR4iHnFmhpk0qZurN2sdMnk3kukMAfZ_KitZHx3X-wbA@mail.gmail.com>
+Subject: Re: [PATCH 3/3] parse_hide_refs_config: tell parse_config_key we
+ don't want a subsection
+To:     Jeff King <peff@peff.net>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Fri, Feb 24, 2017 at 1:08 PM, Jeff King <peff@peff.net> wrote:
+> +           (!parse_config_key(var, section, NULL, NULL, &key) &&
+> +            !strcmp(key, "hiderefs"))) {
 
---ao55ug5oc2xjox3e
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Heh, see how fast my code gets replaced with even better code? ;)
+All three patches look good,
 
-On 2017-02-25 00:05:34, Jakub Nar=C4=99bski wrote:
-> W dniu 24.02.2017 o 23:53, Santiago Torres pisze:
-> > On Fri, Feb 24, 2017 at 11:47:46PM +0100, Jakub Nar=C4=99bski wrote:
-> > > I have just read on ArsTechnica[1] that while Git repository could=20
-> > > be corrupted (though this would require attackers to spend great=20
-> > > amount of resources creating their own collision, while as said=20
-> > > elsewhere in this thread allegedly easy to detect), putting two=20
-> > > proof-of-concept different PDFs with same size and SHA-1 actually=20
-> > > *breaks* Subversion. Repository can become corrupt, and stop=20
-> > > accepting new commits.
-> >
-> > From what I understood in the thread[1], it was the combination of=20
-> > svn + git-svn together. I think Arstechnica may be a little bit=20
-> > sensationalistic here.
->
-> > [1] https://bugs.webkit.org/show_bug.cgi?id=3D168774#c27
->
-> Thanks for the link.  It looks like the problem was with svn itself=20
-> (couldn't checkout, couldn't sync), but repository is recovered now,=20
-> though not protected against the problem occurring again.
->
-> Well, anyone with Subversion installed (so not me) can check it for=20
-> himself/herself... though better do this with separate svnroot.
-
-I tested this yesterday by adding the two PDF files to a Subversion=20
-repository, and found that it wasn't able to clone ("checkout" in svn=20
-speak) the repository after the two files had been committed. I posted=20
-the results to the svn-dev mailing list, the thread is at=20
-<https://svn.haxx.se/dev/archive-2017-02/0142.shtml>.
-
-It seems as it only breaks the working copy because the pristine copies=20
-are identified with a SHA1 sum, but the FSFS repository backend seems to=20
-cope with it.
-
-Regards,
-=C3=98yvind
-
-+-| =C3=98yvind A. Holm <sunny@sunbase.org> - N 60.37604=C2=B0 E 5.33339=C2=
-=B0 |-+
-| OpenPGP: 0xFB0CBEE894A506E5 - http://www.sunbase.org/pubkey.asc |
-| Fingerprint: A006 05D6 E676 B319 55E2  E77E FB0C BEE8 94A5 06E5 |
-+------------| 41517b2c-fae7-11e6-9521-db5caa6d21d3 |-------------+
-
---ao55ug5oc2xjox3e
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iEYEARECAAYFAliwwKoACgkQ+wy+6JSlBuVm/wCfUF+JrbYIIpseU+h6pU01UEEZ
-t6wAn1LfnItvW9571hsK+BePmaA7cLXW
-=ETYw
------END PGP SIGNATURE-----
-
---ao55ug5oc2xjox3e--
+Thanks,
+Stefan
