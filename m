@@ -2,133 +2,156 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A8F59201A9
-	for <e@80x24.org>; Fri, 24 Feb 2017 23:36:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D8F22201A9
+	for <e@80x24.org>; Fri, 24 Feb 2017 23:39:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751342AbdBXXge (ORCPT <rfc822;e@80x24.org>);
-        Fri, 24 Feb 2017 18:36:34 -0500
-Received: from mail-lf0-f53.google.com ([209.85.215.53]:34371 "EHLO
-        mail-lf0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751334AbdBXXgd (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 Feb 2017 18:36:33 -0500
-Received: by mail-lf0-f53.google.com with SMTP id k202so1177315lfe.1
-        for <git@vger.kernel.org>; Fri, 24 Feb 2017 15:35:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:references:cc:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding;
-        bh=/HesYDWOsDKzrf/+o8kTrcETgZ/Jx/YqINx9OrMm+rw=;
-        b=fPvReiXV3rTA1THPlzWnW92ku8iUZ17OyP5skt6pbnIStS+4vdiiLo9L21nuUe6avS
-         eHFofn1K1APOqfzixUn63ziYFFxe2k8R5iDk3do0WJWEvaYPxne/h7F8fCnlfLYLHgKd
-         ZmcA1vRYjqqWH1T7vSA95t4twt8/DMLbAbAy81j8YXDWRYYhkjLned4MpOSs8W943+E/
-         7fiHPJf77y0qYVpbIthyTZu2ouPTIfZVPClL7ubYH68jp9ELQy5EdBv+1w9yMV9a4+KF
-         gjsVjjCyLL3rOSOREmTcChUPF4oq/BQxP/JOvKEN8YhhEq6/I+KNkprhY6o0rKVtbdn7
-         hPzQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
-        bh=/HesYDWOsDKzrf/+o8kTrcETgZ/Jx/YqINx9OrMm+rw=;
-        b=XmOy7RbLueNrOe2qxazymQFVYphpBD6R4JmxarVIss6yOgZpMiel+AlzzIsiedldcx
-         h09atyUFe1R1H2kFPg21nlYIZ8yhZN78bs2k3qSQCKOq2rs8egQLBoeVjlRJ8mIydQeI
-         T5195eSov+vlbWJDq3K50mpmFr3QGYW2HMehUpS8h0AV2ke1bLJxLQoqlDSiY3yFCSzB
-         ASM3Xrsba+1bE8J1cO2xWaAwPgvPglrdJGqjBG0s27pVvbjFkzFC5h7S7n+wc7TM7c0a
-         INKlwHmJbfUC1r56YGExg2VedkxPaR1jIAFxdTKa4TmW+R2ZNW5VMViQ9eZfkYCp4KAY
-         yMjg==
-X-Gm-Message-State: AMke39lAJksRYPnV8bemgxWP1qYrbHG1XjQhFOYTD1+GS//z3R2zMlarUxxWjijsb09DRg==
-X-Received: by 10.46.84.24 with SMTP id i24mr1290173ljb.8.1487979346396;
-        Fri, 24 Feb 2017 15:35:46 -0800 (PST)
-Received: from [192.168.1.26] (acuy7.neoplus.adsl.tpnet.pl. [83.11.104.7])
-        by smtp.googlemail.com with ESMTPSA id v21sm8974100ljd.9.2017.02.24.15.35.45
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 24 Feb 2017 15:35:45 -0800 (PST)
+        id S1751357AbdBXXjd (ORCPT <rfc822;e@80x24.org>);
+        Fri, 24 Feb 2017 18:39:33 -0500
+Received: from cloud.peff.net ([104.130.231.41]:33721 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751212AbdBXXjc (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 Feb 2017 18:39:32 -0500
+Received: (qmail 22300 invoked by uid 109); 24 Feb 2017 23:39:31 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 24 Feb 2017 23:39:31 +0000
+Received: (qmail 21663 invoked by uid 111); 24 Feb 2017 23:39:35 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 24 Feb 2017 18:39:35 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 24 Feb 2017 18:39:29 -0500
+Date:   Fri, 24 Feb 2017 18:39:29 -0500
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Ian Jackson <ijackson@chiark.greenend.org.uk>,
+        Joey Hess <id@joeyh.name>, git@vger.kernel.org
 Subject: Re: SHA1 collisions found
-To:     Jeff King <peff@peff.net>
+Message-ID: <20170224233929.p2yckbc6ksyox5nu@sigill.intra.peff.net>
 References: <20170223164306.spg2avxzukkggrpb@kitenet.net>
- <9cedbfa5-4095-15d8-639c-0e3b9b98d6b9@gmail.com>
- <20170224230604.nt37uw5y3uehukfd@sigill.intra.peff.net>
-Cc:     Joey Hess <id@joeyh.name>, git@vger.kernel.org
-From:   =?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
-Message-ID: <937d395f-77fe-b275-6cbe-f3477e24cd2f@gmail.com>
-Date:   Sat, 25 Feb 2017 00:35:39 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
- Thunderbird/45.7.1
+ <22704.19873.860148.22472@chiark.greenend.org.uk>
+ <xmqq60jz5wbm.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-In-Reply-To: <20170224230604.nt37uw5y3uehukfd@sigill.intra.peff.net>
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Disposition: inline
+In-Reply-To: <xmqq60jz5wbm.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-W dniu 25.02.2017 o 00:06, Jeff King pisze:
-> On Fri, Feb 24, 2017 at 11:47:46PM +0100, Jakub Narębski wrote:
-> 
->> I have just read on ArsTechnica[1] that while Git repository could be
->> corrupted (though this would require attackers to spend great amount
->> of resources creating their own collision, while as said elsewhere
->> in this thread allegedly easy to detect), putting two proof-of-concept
->> different PDFs with same size and SHA-1 actually *breaks* Subversion.
->> Repository can become corrupt, and stop accepting new commits.  
->>
->> From what I understand people tried this, and Git doesn't exhibit
->> such problem.  I wonder what assumptions SVN made that were broken...
-> 
-> To be clear, nobody has generated a sha1 collision in Git yet, and you
-> cannot blindly use the shattered PDFs to do so. Git's notion of the
-> SHA-1 of an object include the header, so somebody would have to do a
-> shattered-level collision search for something that starts with the
-> correct "blob 1234\0" header.
+On Fri, Feb 24, 2017 at 09:32:13AM -0800, Junio C Hamano wrote:
 
-What I meant by "Git doesn't exhibit such problem" (but was not clear
-enough) is that Git doesn't break by just adding SHAttered.io PDFs
-(which somebody had checked), but need customized attack.
-
+> >  * Therefore the transition needs to be done by giving every object
+> >    two names (old and new hash function).  Objects may refer to each
+> >    other by either name, but must pick one.  The usual shape of
 > 
-> So we don't actually know how Git would behave in the face of a SHA-1
-> collision. It would be pretty easy to simulate it with something like:
-
-You are right that it would be good to know if such Git-geared customized
-SHA-1 attack would break Git, or would it simply corrupt it (visibly
-or not).
-
+> I do not think it is necessrily so.  Existing code may not be able
+> to read anything new, but you can make the new code understand
+> object names in both formats, and for a smooth transition, I think
+> the new code needs to.
 > 
-> ---
-> diff --git a/block-sha1/sha1.c b/block-sha1/sha1.c
-> index 22b125cf8..1be5b5ba3 100644
-> --- a/block-sha1/sha1.c
-> +++ b/block-sha1/sha1.c
-> @@ -231,6 +231,16 @@ void blk_SHA1_Update(blk_SHA_CTX *ctx, const void *data, unsigned long len)
->  		memcpy(ctx->W, data, len);
->  }
->  
-> +/* sha1 of blobs containing "foo\n" and "bar\n" */
-> +static const unsigned char foo_sha1[] = {
-> +	0x25, 0x7c, 0xc5, 0x64, 0x2c, 0xb1, 0xa0, 0x54, 0xf0, 0x8c,
-> +	0xc8, 0x3f, 0x2d, 0x94, 0x3e, 0x56, 0xfd, 0x3e, 0xbe, 0x99
-> +};
-> +static const unsigned char bar_sha1[] = {
-> +	0x57, 0x16, 0xca, 0x59, 0x87, 0xcb, 0xf9, 0x7d, 0x6b, 0xb5,
-> +	0x49, 0x20, 0xbe, 0xa6, 0xad, 0xde, 0x24, 0x2d, 0x87, 0xe6
-> +};
-> +
->  void blk_SHA1_Final(unsigned char hashout[20], blk_SHA_CTX *ctx)
->  {
->  	static const unsigned char pad[64] = { 0x80 };
-> @@ -248,4 +258,8 @@ void blk_SHA1_Final(unsigned char hashout[20], blk_SHA_CTX *ctx)
->  	/* Output hash */
->  	for (i = 0; i < 5; i++)
->  		put_be32(hashout + i * 4, ctx->H[i]);
-> +
-> +	/* pretend "foo" and "bar" collide */
-> +	if (!memcmp(hashout, bar_sha1, 20))
-> +		memcpy(hashout, foo_sha1, 20);
->  }
+> For example, a new commit that records a merge of an old and a new
+> commit whose resulting tree happens to be the same as the tree of
+> the old commit may begin like so:
 > 
+>     tree 21b97d4c4f968d1335f16292f954dfdbb91353f0
+>     parent 20769079d22a9f8010232bdf6131918c33a1bf6910232bdf6131918c33a1bf69
+>     parent 22af6fef9b6538c9e87e147a920be9509acf1ddd
+> 
+> naming the only object whose name was done with new hash with the
+> new longer hash, while recording the names of the other existing
+> objects with SHA-1.  We would need to extend the object format for
+> tag (which would be trivial as the object reference is textual and
+> similar to a commit) and tree (much harder), of course.
 
+One thing I worry about in a mixed-hash setting is how often the two
+will be mixed. That will lead to interoperability complications, but I
+also think it creates security hazards (if I can convince you somehow to
+refer to my evil colliding file by its sha1, for example, then I can
+subvert the strength of the new hash).
+
+So I'd much rather see strong rules like:
+
+  1. Once a repo has flag-day switched over to the new hash format[1],
+     new references are _always_ done with the new hash. Even ones that
+     point to pre-flag-day objects!
+
+     So you get a "commit-v2" object instead of a "commit", and it has a
+     distinct hash identity from its "commit" counterpart. You can point
+     to a classic "commit", but you do so by its new-hash.
+
+     The flag-day switch would probably be a repo config flag based on
+     repositoryformatversion (so old versions would just punt if they
+     see it). Let's call this flag "newhash" for lack of a better term.
+
+  2. Repos that have new-hash set will consider the new hash
+     format as primary, and always use it when writing and referring to
+     new objects (e.g., in refs). A (purely local) sha1->new mapping can
+     be maintained for doing old-style object lookups, or for quick
+     equivalence checks (this mapping might need to be bi-directional
+     for some use cases; I haven't thought hard enough about it to say
+     either way).
+
+  3. For protocol interop, the rules would be something like[2]:
+
+      a. If upload-pack is serving a newhash repo, it advertises
+         so in the capabilities.
+
+	 Recent clients know that the rest of the conversation will
+	 involve the new hash format. If they're cloning, they set the
+	 newhash flag in their local config.  If they're fetching, they
+	 probably abort and say "please enable newhash" (because for an
+	 existing repo, it probably needs to migrate refs, for example).
+
+	 An old client would fail to send back the newhash capability,
+	 and the server would abort the conversation at that point.
+
+	 A new upload-pack serving a non-newhash repo behaves the same
+	 as now (use sha1, happily interoperate with existing and new
+	 clients).
+
+      b. receive-pack is more or less the mirror image.
+
+         A server for a newhash-flagged repo has a capability for "this
+	 is a newhash repo" and advertises newhash refs. An existing
+	 client might still try to push, but the server would reject it
+	 unless it advertises "newhash" back to the server.
+
+	 A newhash-enabled client on a non-newhash repo would abort more
+	 gracefully ("please upgrade your local repo to newhash").
+
+	 For a newhash-enabled server with a non-newhash repo, it would
+	 probably not advertise anything (not even "I understand
+	 newhash"). Because the process for converting to newhash is not
+	 "just push some newhash objects", but an out-of-band flag-day
+	 to convert it over.
+
+That's just a sketch I came up with. There are probably holes. And it
+definitely leaves a lot of _possible_ interoperability on the table in
+favor of the flag-day approach. But I think the flag-day approach is a
+lot easier to reason about. Both in the code, and in terms of the
+security properties.
+
+-Peff
+
+[1] I was intentionally vague on "new hash format" here. Obviously there
+    are various contenders like SHA-256. But I think there's also an
+    open question of whether the new format should be a multi-hash
+    format. That would ease further transitions. At the same time, we
+    really _don't_ want people picking bespoke hashes for their
+    repositories. It creates complications in the code, and it destroys
+    a bunch of optimizations (like knowing when we are both talking
+    about the same object based on the hash).
+
+    So I am torn between "move to SHA-256 (or whatever)" and "move to a
+    hash format that encodes the hash-type in the first byte, but refuse
+    to allocate more than one hash for now".
+
+[2] If we're having a flag-day event, this _might_ be time to consider
+    some of the breaking protocol changes that have been under
+    discussion.  I'm really hesitant to complicate this already-tricky
+    issue by throwing in the kitchen sink. But if there's going to be a
+    flag day where you need to upgrade Git to access certain repos, it
+    might be nice if there's only one. I dunno.
