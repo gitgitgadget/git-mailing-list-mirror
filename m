@@ -2,129 +2,117 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DE5DC201A9
-	for <e@80x24.org>; Fri, 24 Feb 2017 20:27:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 90A1B201A9
+	for <e@80x24.org>; Fri, 24 Feb 2017 20:32:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751351AbdBXU1f (ORCPT <rfc822;e@80x24.org>);
-        Fri, 24 Feb 2017 15:27:35 -0500
-Received: from mail-it0-f43.google.com ([209.85.214.43]:35362 "EHLO
-        mail-it0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751163AbdBXU1e (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 Feb 2017 15:27:34 -0500
-Received: by mail-it0-f43.google.com with SMTP id 203so33073749ith.0
-        for <git@vger.kernel.org>; Fri, 24 Feb 2017 12:27:33 -0800 (PST)
+        id S1751413AbdBXUcm (ORCPT <rfc822;e@80x24.org>);
+        Fri, 24 Feb 2017 15:32:42 -0500
+Received: from mail-pg0-f66.google.com ([74.125.83.66]:35606 "EHLO
+        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751296AbdBXUcj (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 Feb 2017 15:32:39 -0500
+Received: by mail-pg0-f66.google.com with SMTP id 1so4261265pgz.2
+        for <git@vger.kernel.org>; Fri, 24 Feb 2017 12:32:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=gP6pP8l+CuVdRe32LvmaDldKT8liUR4RPzD8SQaTUG8=;
-        b=LBiWXk4ZWSjw3gWpA1BNlXhUmGXInoid3L+mKpKB0ruXlca5DFCRGD1IoFQiBoFqzu
-         nsWrWiGJKyADd3GwzZNG6DU6cQWT8NMq6Pbjeki90X11atxeVDUoOR3W+IBrj7DHY/w7
-         D5YInvHE6hCEt9FlnKkqIpKC2tVuznzRTeyieoh4HD+cL2Cbe2GuAmN3VfAF2PHKiv0v
-         ZrMO0vMIayJe0ifDh2mUEJcZAM8D32PlvAf6L5z6I7t4FVW4Ej0mgNsiXAjgNbUobtaT
-         /rukMiY1T7fPsX3V0HrGcdv20t8etayePXyUeMb11thHhhMBw2tDSZZPNcJycfAZOrxv
-         oprw==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=AGFJVviqT0LZU4SnQFqZV4+ZtYlZHRFsRV65/Mhl0ek=;
+        b=puQPJAYS/oSgoqeYP7dbCayuG1ktJGJCPGTmREEIOeq0eI9Zg0f2COX78g1UIGl2LG
+         fXrxsIz2BxRSTds5EArhr/h2hwRxpiiCHjBnxxrJ2R1cWIoP6bKfWKD2IxYB7DiLo+tq
+         D7V8R5RZL7TAsN+KDg6cMxjCe54o0tSODq3uOy91K9e9G5CME0Y4B8tUT96Na+ZrFmRa
+         LsOeP+HuxQ9hKArAUbePnMdAprZxFkZspZUMcH4jypdxcRGPxUfqrgttY7cdBqiroc90
+         Y5NaGJA2sXG8XJD/Z9jnYqLsf6AxgVDKzStHnIS0z8YvZgliWm9KWuvV++kxhW5KmdA8
+         6RuQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=gP6pP8l+CuVdRe32LvmaDldKT8liUR4RPzD8SQaTUG8=;
-        b=bIr8z/oYiRskzkSMOcLuccp17mT+k+3eD/7kuOfwtW/KkYxU0lWHFoGpBftv/VS1Np
-         dyRW2DEnZ8KzKulH7GSCC+LezwmpmHrB4/urLcuVFNekEUHVkFNYkoGBwpFj2NDprZS8
-         Rxsnn9JOm9Ufvx3Rzk8nxndevD1wjXpBLeNlKIspLCXFeSVGlGYrqrjkI9F0Ogg7Uj81
-         SGGFxCnWBeLThHYsxAT4OdTTGmwETbFpIvPz4pxRskz2q5IfkP6iwNJgCs0mUax8bf3t
-         SZYRQT1Vxx7qQX+LDtqpACaekynim9+XaMc3Kl6Vzbz8clWxuwQ2oKKdqaYBmGbDNq2E
-         Cf9g==
-X-Gm-Message-State: AMke39mB6aJ5ru6exx3B/1O36MUqOSPnxe27NIFsoaTqmErssBmczAEPPtbnOeyDmWnK1HoDEe6HJJ2sv/aIvhxo
-X-Received: by 10.36.40.198 with SMTP id h189mr4128139ith.114.1487968052931;
- Fri, 24 Feb 2017 12:27:32 -0800 (PST)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=AGFJVviqT0LZU4SnQFqZV4+ZtYlZHRFsRV65/Mhl0ek=;
+        b=KZIPrmzK4rz/6NsJdRZEqA4qgnVX6JZZU3Sx2W1XBQgCTNUPchBxge8+ll492YnTQP
+         bgfVHhXqNdB3MNm+N5GhW2W5WaOtMtnfcYPdil7d+ubQkMSBUNBvLwxKbfs+DN1Tz22p
+         H/spjZN1uUte4BmIfj/aqs16WMFxWidmmH7w+le3Wrlhd5+bdRNK4TEJ9ZSaw1W7hRAd
+         MfShDvwReTAkRZZJaqbhVDBmoy8L7gZpbJ1MRq0i+cKm01osOvTL1hM9yVIocWFB+sRW
+         9AFsi2KrnSv01u5c3hMYtJIWpP+1Ocum+FEifdnTRgnLZ3FsstMCqWwP2zxJURxOr2cj
+         5n5Q==
+X-Gm-Message-State: AMke39k+bIh4qrA9xFBI70VBCfLJvV5i2xEIqOVFhhzcAih+hMMEiDwhEMbOiK/8goxzZw==
+X-Received: by 10.99.24.88 with SMTP id 24mr6024481pgy.54.1487968358204;
+        Fri, 24 Feb 2017 12:32:38 -0800 (PST)
+Received: from localhost ([2620:0:1000:8622:f06c:2e0c:850d:31b4])
+        by smtp.gmail.com with ESMTPSA id l71sm16751995pga.32.2017.02.24.12.32.37
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Fri, 24 Feb 2017 12:32:37 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     ankostis <ankostis@gmail.com>
+Cc:     Stefan Beller <sbeller@google.com>, David Lang <david@lang.hm>,
+        Ian Jackson <ijackson@chiark.greenend.org.uk>,
+        Joey Hess <id@joeyh.name>,
+        "git\@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: SHA1 collisions found
+References: <20170223164306.spg2avxzukkggrpb@kitenet.net>
+        <22704.19873.860148.22472@chiark.greenend.org.uk>
+        <xmqq60jz5wbm.fsf@gitster.mtv.corp.google.com>
+        <nycvar.QRO.7.75.62.1702240943540.6590@qynat-yncgbc>
+        <xmqqk28f4fti.fsf@gitster.mtv.corp.google.com>
+        <CAGZ79kaZWe-8pMZnQv7uZtr8wXWawFeJjUa68-b0oa4yFo-HcA@mail.gmail.com>
+        <xmqq7f4f4cqg.fsf@gitster.mtv.corp.google.com>
+        <CA+dhYEVOyACM9ARP2deKVLm1hHOVsTah1WfGoNzGGKO6CGrQpw@mail.gmail.com>
+Date:   Fri, 24 Feb 2017 12:32:36 -0800
+In-Reply-To: <CA+dhYEVOyACM9ARP2deKVLm1hHOVsTah1WfGoNzGGKO6CGrQpw@mail.gmail.com>
+        (ankostis@gmail.com's message of "Fri, 24 Feb 2017 21:05:40 +0100")
+Message-ID: <xmqqh93j1g9n.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.79.33.148 with HTTP; Fri, 24 Feb 2017 12:27:32 -0800 (PST)
-In-Reply-To: <xmqqlgsv1guq.fsf@gitster.mtv.corp.google.com>
-References: <ae377bda-0776-f98b-5b6f-afa198647400@kdbg.org>
- <20170224182237.3696-1-sbeller@google.com> <xmqqlgsv1guq.fsf@gitster.mtv.corp.google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Fri, 24 Feb 2017 12:27:32 -0800
-Message-ID: <CAGZ79kbzhHaV4-cVvqwodwXSBstRfH1FrOh=iYMvU6cqYUcUng@mail.gmail.com>
-Subject: Re: [PATCH] submodule init: warn about falling back to a local path
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Johannes Sixt <j6t@kdbg.org>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        Philip Oakley <philipoakley@iee.org>,
-        Shawn Pearce <sop@google.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Feb 24, 2017 at 12:19 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Stefan Beller <sbeller@google.com> writes:
->
->> When a submodule is initialized, the config variable 'submodule.<name>.url'
->> is set depending on the value of the same variable in the .gitmodules
->> file. When the URL indicates to be relative, then the url is computed
->> relative to its default remote. The default remote cannot be determined
->> accurately in all cases, such that it falls back to 'origin'.
->>
->> The 'origin' remote may not exist, though. In that case we give up looking
->> for a suitable remote and we'll just assume it to be a local relative path.
->
-> IOW we keep the .url to be relative, the same as the original one we
-> took from .gitmodules?
+ankostis <ankostis@gmail.com> writes:
 
-Well that is one way to say that. Another way is:
-If we cannot construct a URL based on the given relative URL, we
-demote the relative URL to be a relative PATH and resolve that instead.
+> Let's assume that git is retroffited to always support the "default"
+> SHA-3, but support additionally more hash-funcs.
+> If in the future SHA-3 also gets defeated, it would be highly unlikely
+> that the same math would also break e.g. Blake.
+> So certain high-profile repos might choose for extra security 2 or more hashes.
 
->  That sounds like a sensible thing to do and
-> I agree it makes sense to warn when it happens.
+I think you are conflating two unrelated things.
 
-ok.
+ * How are these "2 or more hashes" actually used?  Are you going to
+   add three "parent " line to a commit with just one parent, each
+   line storing the different hashes?  How will such a commit object
+   be named---does it have three names and do you plan to have three
+   copies of .git/refs/heads/master somehow, each of which have
+   SHA-1, SHA-3 and Blake, and let any one hash to identify the
+   object?
 
->
->> @@ -118,18 +122,22 @@ too (and can also report changes to a submodule's work tree).
->>
->>  init [--] [<path>...]::
->>       Initialize the submodules recorded in the index (which were
->> -     added and committed elsewhere) by copying submodule
->> -     names and urls from .gitmodules to .git/config.
->> -     Optional <path> arguments limit which submodules will be initialized.
->> -     It will also copy the value of `submodule.$name.update` into
->> -     .git/config.
->> -     The key used in .git/config is `submodule.$name.url`.
->> -     This command does not alter existing information in .git/config.
->> -     You can then customize the submodule clone URLs in .git/config
->> -     for your local setup and proceed to `git submodule update`;
->> -     you can also just use `git submodule update --init` without
->> -     the explicit 'init' step if you do not intend to customize
->> -     any submodule locations.
->> +     added and committed elsewhere) by copying `submodule.$name.url`
->> +     from .gitmodules to .git/config, resolving relative urls to be
->> +     relative to the default remote.
->
-> I read this as "copying..., resolving relative to the default remote
-> (if exists)."  A reader would wonder what happens if the default
-> remote does not exist---don't we want to describe what happens in
-> that case, like, "recording . (the current repository) as the
-> upstream" or something?
+   I suspect you are not going to do so; instead, you would use a
+   very long string that is a concatenation of these three hashes as
+   if it is an output from a single hash function that produces a
+   long result.
 
-eh, a better approach is s/copying/<something else>/
-We will resolve the relative URL no matter what. It's just that
-we may end up with an absolute path instead of an absolute URL.
+   So I think the most natural way to do the "2 or more for extra
+   security" is to allow us to use a very long hash.  It does not
+   help to allow an object to be referred to with any of these 2 or
+   more hashes at the same time.
 
->
->> ++
->> +Optional <path> arguments limit which submodules will be initialized.
->> +If no path is specified all submodules are initialized.
->
-> Perhaps s/ all submodules/,&/?
+ * If employing 2 or more hashes by combining into one may enhance
+   the security, that is wonderful.  But we want to discourage
+   people from inventing their own combinations left and right and
+   end up fragmenting the world.  If a project that begins with
+   SHA-1 only naming is forked to two (or more) and each fork uses
+   different hashes, merging them back will become harder than
+   necessary unless you support all these hashes forks used.
 
-ok
+Having said all that, the way to figure out the hash used in the way
+we spell the object name may not be the best place to discourage
+people from using random hashes of their choice.  But I think we
+want to avoid doing something that would actively encourage
+fragmentation.
 
-Will reroll, once I have found a better wording.
