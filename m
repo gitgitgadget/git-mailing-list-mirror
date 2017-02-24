@@ -2,134 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 17647201A9
-	for <e@80x24.org>; Fri, 24 Feb 2017 19:09:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CE927201A9
+	for <e@80x24.org>; Fri, 24 Feb 2017 19:21:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751232AbdBXTJp (ORCPT <rfc822;e@80x24.org>);
-        Fri, 24 Feb 2017 14:09:45 -0500
-Received: from mail-it0-f48.google.com ([209.85.214.48]:37560 "EHLO
-        mail-it0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751297AbdBXTJo (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 Feb 2017 14:09:44 -0500
-Received: by mail-it0-f48.google.com with SMTP id 203so33215546ith.0
-        for <git@vger.kernel.org>; Fri, 24 Feb 2017 11:08:18 -0800 (PST)
+        id S1751348AbdBXTVJ (ORCPT <rfc822;e@80x24.org>);
+        Fri, 24 Feb 2017 14:21:09 -0500
+Received: from mail-pg0-f68.google.com ([74.125.83.68]:33207 "EHLO
+        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751232AbdBXTVG (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 Feb 2017 14:21:06 -0500
+Received: by mail-pg0-f68.google.com with SMTP id 5so4073237pgj.0
+        for <git@vger.kernel.org>; Fri, 24 Feb 2017 11:20:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=E9fLZZRxgMyNmNk0U9ePi8hPtLmfCFxJvikVwA91BKk=;
-        b=lij4f/Vy5lTf0B6WnVRRFBLu6zNYCa4+9nqX1jUkbcETxnLJmdIk5qi1CARrfAEWg4
-         AKlii/+84Wota/rZXdWv0n5zeskuuIeBCzinjTNTBRaouvhJFhiPXTYv4xmCBww5hGmI
-         DtLnUFLiIp/9ygutbvSyhjpya6K5ITuz2CO4MamBSk0RF9qMF4SQrF/oLP5OfjR4mrq3
-         ukVWd0JV9R3XJBHOCWDKDDn8VbNEFB1gCqxMd636fRaMvKBpiODP6rPM1csqyJ+dDL2h
-         44ARD47mA1DbaRrF+R1BXV6MglZu1L05FAEgNtomUSrifjkBmGJ8hucfWMTdNifs+0gm
-         ICBA==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=b9VMAvr3NoyaF7phF8cGA3WNsBGxO+fVYq6SveGCAjE=;
+        b=iCdu6a6Kxlz7+FAxSM+DhMY/vD5ML8JxEQTzFV7akLRb4FUZjfvlEUjCymcNCQc7gP
+         DHd7HhllRl1XkbYqKXpC7Mz1++3Ma8viWOGeKuHU+mvGelRFpSghROUEhOn0x3X3OFsd
+         p8jgzQhu32KHkRGK9FUAYHqia0p7FfS3WPeTZRMVrSPx29IVAF1hTdLHww5hyfoh8a2B
+         Faq3YKSy3emj0aP7oD9LVb6jGqEJCAoZfPOVFN/T5ZDVJ0PYPFadJl7zbDW+LU7Ry2el
+         K1ozDGb4MOr6SvVQ3PRrFiH0ZPDHAtYAxETSdDQfdglj/+g6iOaxV+W9Xy4QWHwyV8iI
+         JeNw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=E9fLZZRxgMyNmNk0U9ePi8hPtLmfCFxJvikVwA91BKk=;
-        b=Q925IA8Nk4PQPg8QFzzQX8Ivd+I8G+6e1qplDuJMcz00MqEi5J62H9L44dZtZuDFke
-         6wJg6mPL5IbqCYm4g6YwvhFV2lAVGr81nYXthIjw99MktJqMAYsYfw4HTre0sdAMoyTE
-         w5MyTfzb+YRChJQcZcYWw6P5jxbxktx5OPPZlNFzabJu42TembBoJJ42QzD4UtZa+jpG
-         7z7gH2AOGr6Uky/jhC+6KYTW0NoDksgev4tOplZfowsJZV7QEEm7cAHKyeVzxvtvD+hJ
-         g4bwvtVrfQ/ftbGwAR2L735q77RnrcwG5dn0uTK3111QVf64Pok/bdroXoWeNGREL11V
-         VLiQ==
-X-Gm-Message-State: AMke39mNvqfD6QtUOBdOqBoD75yh4JeSzEOqL1yhZBr+RqKrAdpw+Xlvx212/qsTMyYpKhsSboXRbDD66C//0Wl+
-X-Received: by 10.107.16.14 with SMTP id y14mr3722521ioi.164.1487963293012;
- Fri, 24 Feb 2017 11:08:13 -0800 (PST)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=b9VMAvr3NoyaF7phF8cGA3WNsBGxO+fVYq6SveGCAjE=;
+        b=ap02M02L1pelnOXLcZGtv4DfnGbDYgdmbKK6puBW1d06F1D0A7mlbgQr1xqDWJrYvn
+         nU7ZhUsIJ1yZAlCB4XgazEACP8/OdubP46sPaQDC1c7j7//ussi0cE/qx/Ro9/m65e8F
+         ROt34UuuaOSg1sOuNujiKPpg66Ryvi2IB1+v4Siaj8084sytbDHi5j/q6rwK/2hcYSrP
+         CT5RktmRy/PBYb4O57SzaqUWmJACwFqENZeagWJvL3Pyt81LU0nELvwglrnAUSt5g41a
+         el0D2sIaajl5bb1vDHXj6a9Xq/6OV3pqBVwNrcO5bOu/cRGizFsH37qG6UmsEaJNWOXe
+         cPrA==
+X-Gm-Message-State: AMke39kTDBDCZrGBMyUVX+ksSapu0ssbmwYBjIQMpECf6ZPwEdXyAAnIqSoxDBArkDHn/Q==
+X-Received: by 10.98.39.195 with SMTP id n186mr5368089pfn.17.1487964041743;
+        Fri, 24 Feb 2017 11:20:41 -0800 (PST)
+Received: from localhost ([2620:0:1000:8622:f06c:2e0c:850d:31b4])
+        by smtp.gmail.com with ESMTPSA id l12sm16520725pfj.37.2017.02.24.11.20.40
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Fri, 24 Feb 2017 11:20:40 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     David Lang <david@lang.hm>,
+        Ian Jackson <ijackson@chiark.greenend.org.uk>,
+        Joey Hess <id@joeyh.name>,
+        "git\@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: SHA1 collisions found
+References: <20170223164306.spg2avxzukkggrpb@kitenet.net>
+        <22704.19873.860148.22472@chiark.greenend.org.uk>
+        <xmqq60jz5wbm.fsf@gitster.mtv.corp.google.com>
+        <nycvar.QRO.7.75.62.1702240943540.6590@qynat-yncgbc>
+        <xmqqk28f4fti.fsf@gitster.mtv.corp.google.com>
+        <CAGZ79kaZWe-8pMZnQv7uZtr8wXWawFeJjUa68-b0oa4yFo-HcA@mail.gmail.com>
+Date:   Fri, 24 Feb 2017 11:20:39 -0800
+In-Reply-To: <CAGZ79kaZWe-8pMZnQv7uZtr8wXWawFeJjUa68-b0oa4yFo-HcA@mail.gmail.com>
+        (Stefan Beller's message of "Fri, 24 Feb 2017 10:58:28 -0800")
+Message-ID: <xmqq7f4f4cqg.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.79.33.148 with HTTP; Fri, 24 Feb 2017 11:08:12 -0800 (PST)
-In-Reply-To: <7e920dd5-3638-57d9-0ca1-3f8aed4d700b@ramsayjones.plus.com>
-References: <xmqqlgt5vlse.fsf@gitster.mtv.corp.google.com> <20170223225735.10994-1-sbeller@google.com>
- <20170223225735.10994-11-sbeller@google.com> <7e920dd5-3638-57d9-0ca1-3f8aed4d700b@ramsayjones.plus.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Fri, 24 Feb 2017 11:08:12 -0800
-Message-ID: <CAGZ79kZX=ZmHDbBhgApHTKhyXz489V5XQXPvUhfLyRjYhTfVJA@mail.gmail.com>
-Subject: Re: [PATCH 10/15] update submodules: add submodule_move_head
-To:     Ramsay Jones <ramsay@ramsayjones.plus.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Brandon Williams <bmwill@google.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        David Turner <novalis@novalis.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Feb 23, 2017 at 5:21 PM, Ramsay Jones
-<ramsay@ramsayjones.plus.com> wrote:
->
->
-> On 23/02/17 22:57, Stefan Beller wrote:
->> In later patches we introduce the options and flag for commands
->> that modify the working directory, e.g. git-checkout.
->>
->> This piece of code will be used universally for
->> all these working tree modifications as it
->> * supports dry run to answer the question:
->>   "Is it safe to change the submodule to this new state?"
->>   e.g. is it overwriting untracked files or are there local
->>   changes that would be overwritten?
->> * supports a force flag that can be used for resetting
->>   the tree.
->>
->> Signed-off-by: Stefan Beller <sbeller@google.com>
->> ---
->>  submodule.c | 135 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
->>  submodule.h |   7 ++++
->>  2 files changed, 142 insertions(+)
->>
->> diff --git a/submodule.c b/submodule.c
->> index 0b2596e88a..a2cf8c9376 100644
->> --- a/submodule.c
->> +++ b/submodule.c
->> @@ -1239,6 +1239,141 @@ int bad_to_remove_submodule(const char *path, unsigned flags)
->>       return ret;
->>  }
->>
->> +static int submodule_has_dirty_index(const struct submodule *sub)
->> +{
->> +     struct child_process cp = CHILD_PROCESS_INIT;
->> +
->> +     prepare_submodule_repo_env_no_git_dir(&cp.env_array);
->> +
->> +     cp.git_cmd = 1;
->> +     argv_array_pushl(&cp.args, "diff-index", "--quiet", \
->> +                                     "--cached", "HEAD", NULL);
->> +     cp.no_stdin = 1;
->> +     cp.no_stdout = 1;
->> +     cp.dir = sub->path;
->> +     if (start_command(&cp))
->> +             die("could not recurse into submodule '%s'", sub->path);
->> +
->> +     return finish_command(&cp);
->> +}
->> +
->> +void submodule_reset_index(const char *path)
->
-> I was just about to send a patch against the previous series
-> (in pu branch last night), but since you have sent another
-> version ...
->
-> In the last series this was called 'submodule_clean_index()'
-> and, since it is a file-local symbol, should be marked with
-> static. I haven't applied these patches to check, but the
-> interdiff in the cover letter leads me to believe that this
-> will also apply to the renamed function.
->
-> [The patch subject was also slightly different.]
->
+Stefan Beller <sbeller@google.com> writes:
 
-good catch. Yes submodule_reset_index
-ought to be static.
+> On Fri, Feb 24, 2017 at 10:14 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>
+>> you are inviting people to start using
+>>
+>>     md5,54ddf8d47340e048166c45f439ce65fd
+>>
+>> as object names.
+>
+> which might even be okay for specific subsets of operations.
+> (e.g. all local work including staging things, making local "fixup" commits)
+>
+> The addressing scheme should not be too hardcoded, we should rather
+> treat it similar to the cipher schemes in pgp. The additional complexity that
+> we have is the longevity of existence of things, though.
 
-fixed in a reroll.
+The not-so-well-hidden agenda was exactly that we _SHOULD_ not
+mimick PGP.  They do not have a requirement to encourage everybody
+to use the same thing because each message is encrypted/signed
+independently, i.e. they do not have to chain things like we do.
+
