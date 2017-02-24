@@ -2,123 +2,190 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BD343201A9
-	for <e@80x24.org>; Fri, 24 Feb 2017 18:14:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0FC41201A9
+	for <e@80x24.org>; Fri, 24 Feb 2017 18:23:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751390AbdBXSOF (ORCPT <rfc822;e@80x24.org>);
-        Fri, 24 Feb 2017 13:14:05 -0500
-Received: from mail-pg0-f66.google.com ([74.125.83.66]:35040 "EHLO
-        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750995AbdBXSOD (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 Feb 2017 13:14:03 -0500
-Received: by mail-pg0-f66.google.com with SMTP id 1so3867540pgz.2
-        for <git@vger.kernel.org>; Fri, 24 Feb 2017 10:14:03 -0800 (PST)
+        id S1751246AbdBXSXj (ORCPT <rfc822;e@80x24.org>);
+        Fri, 24 Feb 2017 13:23:39 -0500
+Received: from mail-pg0-f52.google.com ([74.125.83.52]:36835 "EHLO
+        mail-pg0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751192AbdBXSXh (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 Feb 2017 13:23:37 -0500
+Received: by mail-pg0-f52.google.com with SMTP id s67so14288293pgb.3
+        for <git@vger.kernel.org>; Fri, 24 Feb 2017 10:22:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=B8QBYVt3K1Rpvs5n4JnjBN+duZld5cHIAA98j5fH19Q=;
-        b=kYzpelqESDv8gdk6/ewXleWvs9MzCv8cxysU2ab1ATTkXVN8w89ERdwWsoEW8gheZz
-         TTUIZ2T5eyItcGZThf97zybHDzir/g2FaSyICpZc2/CjcwMW6uCshaHNCh/rMFgpSM26
-         en2zrqBPkDgeeMDr3SDwZmtVMxbAlKJw/DrPQvcAz4mSZ/JOpJAf2NR7DYH8bWZVYzMa
-         U3pcHcaEy/UYWQ8UlIIm4FGRImE2NADqrSzHcJU4rH9YFJxDWpJ4J1wd8kBx6ZB90nGa
-         SlSm7gEceJrbzdsSPfkGqfPeblKyRjJQTJkBt3XIoVpGNETiRcWNTbV4kgDlsyLEImeB
-         06Fg==
+        d=google.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=UhlkP4g0Ic71KeDZAiLi3Uv2JJ4FRtx7L0s1xuRVM4g=;
+        b=C6uJVdElPnbReb+GLpGQaaTdH0Q0XXEusoKWKGqYwnJQTdqH0EwkL8GgcuNGuxiK9u
+         0xYazhBpnunr48HXGsdVYlvMDFRmuNfJh+yaSmFWt+MxrZDOOyawMvfa+4LFoON0qZ1k
+         ojTL/vCLS/rh9eGtyoe6TmbL6npUky8WCzzlI0gMnLQdIqqeBJY1HIkeGm3To3pmrO4x
+         Sfm976b5Q8Nj24ccIf+a6vnbLtW6wi3tEgZ5PIxpDak3Q92+YeqNhi8w7Ug4D50qmV9F
+         a+H4CQlTvE1BNE1tPiaem1HUty+xyxEQYxJhF8kb02gK28auM7hfHzVVB1z5UhCYR4dh
+         S+xg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=B8QBYVt3K1Rpvs5n4JnjBN+duZld5cHIAA98j5fH19Q=;
-        b=bbyh9/GlchSqfDcNTnF3MbOL8h3CDVt3irdKVE57aJCsg1dKznyfAgCQnhc0ZQzhl3
-         BiXrnW9cnife0JM7ilf5Wh4Bt7EpYoBLxxzp61982ncF5S2fhcBjGpQPYEvKYMDAfpIR
-         JxV2iCgWzVwhwc+SoZKSLUuIJP5hksj3DZiJY6PDcrNyeyvTQL/0QUYLxf4hPhyZCsCA
-         Zl5xDiELEgQyUjUK7bs4PYqIzER0/Vi32jh9E4q0K2KjNyvPK9CntHzYkHm0Kwth7oX3
-         lPjSzUhQRwMc/eXSbxc8pn6EDvUyI2Qp63hQ1vewwgTgXhL89rdMoeIe/L2JeQr6Zxkp
-         90Cg==
-X-Gm-Message-State: AMke39k0CGi7H8Ds4J5Rlst+8/ost/5j5/FnefQ7X6IjvgXDhrN04BSlviKnMzTSNv8K6A==
-X-Received: by 10.99.51.76 with SMTP id z73mr5110295pgz.137.1487960042651;
-        Fri, 24 Feb 2017 10:14:02 -0800 (PST)
-Received: from localhost ([2620:0:1000:8622:f06c:2e0c:850d:31b4])
-        by smtp.gmail.com with ESMTPSA id v69sm16409132pgd.18.2017.02.24.10.14.01
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=UhlkP4g0Ic71KeDZAiLi3Uv2JJ4FRtx7L0s1xuRVM4g=;
+        b=lxrqR4g8Vn2dwIOfK+Eg7Ps1iJqefGgaRuLShDTfCLE4yH57ywxAcw8RDPyQre1rlM
+         LRVKDoGn1bVYyCOgNOK3KLeZESUfk5pCRDEhel4WibpEnpn35PjkdQO8QLkLinQqHE8X
+         skFMEvjDuBRC7GAUR97J9JJF5arHbB+oU+0ezwa5bVTQBxJzVvUs8RsjhIHmvr4fO2vw
+         6/KsIFRJ5NbxKgAWXlYbNSbW/bvElTcvjIAWlVBHRosItTAenNxIKuCduzwIu4agYLPM
+         CIywKQsnm1IL4sw2PC29gvDmo07O6fTJdnquFWjh3I2IR/j1SMT2ly9etgGwWWaoD6RY
+         fMiA==
+X-Gm-Message-State: AMke39n6LH4kZxrCcZxpzUkZhoL7NjOtZH6VBUjQufDRAm9nNKUhnVWNNlXxO3bdVaWE4vIe
+X-Received: by 10.98.163.17 with SMTP id s17mr5116080pfe.61.1487960560100;
+        Fri, 24 Feb 2017 10:22:40 -0800 (PST)
+Received: from localhost ([2620:0:1000:5b10:2d9e:d4fd:456:fee4])
+        by smtp.gmail.com with ESMTPSA id h14sm16468432pgn.41.2017.02.24.10.22.39
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Fri, 24 Feb 2017 10:14:01 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     David Lang <david@lang.hm>
-Cc:     Ian Jackson <ijackson@chiark.greenend.org.uk>,
-        Joey Hess <id@joeyh.name>, git@vger.kernel.org
-Subject: Re: SHA1 collisions found
-References: <20170223164306.spg2avxzukkggrpb@kitenet.net>
-        <22704.19873.860148.22472@chiark.greenend.org.uk>
-        <xmqq60jz5wbm.fsf@gitster.mtv.corp.google.com>
-        <nycvar.QRO.7.75.62.1702240943540.6590@qynat-yncgbc>
-Date:   Fri, 24 Feb 2017 10:14:01 -0800
-In-Reply-To: <nycvar.QRO.7.75.62.1702240943540.6590@qynat-yncgbc> (David
-        Lang's message of "Fri, 24 Feb 2017 09:45:55 -0800 (PST)")
-Message-ID: <xmqqk28f4fti.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
+        Fri, 24 Feb 2017 10:22:39 -0800 (PST)
+From:   Stefan Beller <sbeller@google.com>
+To:     j6t@kdbg.org
+Cc:     git@vger.kernel.org, philipoakley@iee.org, gitster@pobox.com,
+        sop@google.com, Stefan Beller <sbeller@google.com>
+Subject: [PATCH] submodule init: warn about falling back to a local path
+Date:   Fri, 24 Feb 2017 10:22:37 -0800
+Message-Id: <20170224182237.3696-1-sbeller@google.com>
+X-Mailer: git-send-email 2.12.0.rc1.16.ge4278d41a0.dirty
+In-Reply-To: <ae377bda-0776-f98b-5b6f-afa198647400@kdbg.org>
+References: <ae377bda-0776-f98b-5b6f-afa198647400@kdbg.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-David Lang <david@lang.hm> writes:
+When a submodule is initialized, the config variable 'submodule.<name>.url'
+is set depending on the value of the same variable in the .gitmodules
+file. When the URL indicates to be relative, then the url is computed
+relative to its default remote. The default remote cannot be determined
+accurately in all cases, such that it falls back to 'origin'.
 
-> On Fri, 24 Feb 2017, Junio C Hamano wrote:
->
->> *1* In the above toy example, length being 40 vs 64 is used as a
->>    sign between SHA-1 and the new hash, and careful readers may
->>    wonder if we should use sha-3,20769079d22... or something like
->>    that that more explicity identifies what hash is used, so that
->>    we can pick a hash whose length is 64 when we transition again.
->>
->>    I personally do not think such a prefix is necessary during the
->>    first transition; we will likely to adopt a new hash again, and
->>    at that point that third one can have a prefix to differenciate
->>    it from the second one.
->
-> as the saying goes "in computer science the interesting numbers are 0,
-> 1, and many", does it really simplify things much to support 2 hashes
-> vs supporting more so that this issue doesn't have to be revisited?
-> (other than selecting new hashes over time)
+The 'origin' remote may not exist, though. In that case we give up looking
+for a suitable remote and we'll just assume it to be a local relative path.
 
-It seems that I wasn't clear enough, perhaps?  The scheme I outlined
-does not have to revisit this issue at all.  It already declares what
-you need to do when you add the third one.  
+This can be confusing to users as there is a lot of guessing involved,
+which is not obvious to the user.
 
-If it is not 40 or 64 bytes long, you just write it out.  If it is
-one of these length, then you add some identifying prefix or
-postfix.  IOW, if the second one is sha-3 and the third one is blake
-(both used at 256-bit), then we would have three kinds of names,
-written like so:
+So in the corner case of assuming a local autoritative truth, warn the
+user to lessen the confusion.
 
-    20769079d22a9f8010232bdf6131918c33a1bf69
-    20769079d22a9f8010232bdf6131918c33a1bf6910232bdf6131918c33a1bf69
-    3,20769079d22a9f8010232bdf6131918c33a1bf6910232bdf6131918c33a1bf69
+This behavior was introduced in 4d6893200 (submodule add: allow relative
+repository path even when no url is set, 2011-06-06), which shared the
+code with submodule-init and then ported to C in 3604242f080a (submodule:
+port init from shell to C, 2016-04-15).
 
-and the readers can well tell that the first one, being 40-chars
-long, is SHA-1, the second one, being 64-chars long, is SHA-3, and
-the last one, with the prefix '3' (only because that is the third
-one officially supported by Git) and being 64-chars long, is blake,
-for example.
+In case of submodule-add, this behavior makes sense in some use cases[1],
+however for submodule-init there does not seem to be an immediate obvious
+use case to fall back to a local submodule. However there might be, so
+warn instead of die here.
 
-I do not particularly care if it is prefix or postfix or something
-else.  A not-so-well-hidden agenda is to avoid inviting people into
-thinking that they can use their choice of random hash functions and
-and claim that their hacked version is still a Git, as long as they
-follow the object naming convention.  IOW, if you said something
-like:
+While adding the warning, also clarify the behavior of relative URLs in
+the documentation.
 
- * 40-hex is SHA-1 for historical reasons;
- * Others use hash-name, colon, and then N-hex.
+[1] e.g. http://stackoverflow.com/questions/8721984/git-ignore-files-for-public-repository-but-not-for-private
+"store a secret locally in a submodule, with no intention to publish it"
 
-you are inviting people to start using
+Reported-by: Shawn Pearce <spearce@spearce.org>
+Signed-off-by: Stefan Beller <sbeller@google.com>
+---
 
-    md5,54ddf8d47340e048166c45f439ce65fd
+* reworded sentence to not omit half of it.
+* tested rendering to be correct
+* warn before xgetcwd
 
-as object names.
+Thanks,
+Stefan
+
+ Documentation/git-submodule.txt | 36 ++++++++++++++++++++++--------------
+ builtin/submodule--helper.c     |  8 +++-----
+ 2 files changed, 25 insertions(+), 19 deletions(-)
+
+diff --git a/Documentation/git-submodule.txt b/Documentation/git-submodule.txt
+index 8acc72ebb8..b810d37aa2 100644
+--- a/Documentation/git-submodule.txt
++++ b/Documentation/git-submodule.txt
+@@ -73,13 +73,17 @@ configuration entries unless `--name` is used to specify a logical name.
+ +
+ <repository> is the URL of the new submodule's origin repository.
+ This may be either an absolute URL, or (if it begins with ./
+-or ../), the location relative to the superproject's origin
++or ../), the location relative to the superproject's default remote
+ repository (Please note that to specify a repository 'foo.git'
+ which is located right next to a superproject 'bar.git', you'll
+ have to use '../foo.git' instead of './foo.git' - as one might expect
+ when following the rules for relative URLs - because the evaluation
+ of relative URLs in Git is identical to that of relative directories).
+-If the superproject doesn't have an origin configured
+++
++The default remote is the remote of the remote tracking branch
++of the current branch. If no such remote tracking branch exists or
++the HEAD is detached, "origin" is assumed to be the default remote.
++If the superproject doesn't have a default remote configured
+ the superproject is its own authoritative upstream and the current
+ working directory is used instead.
+ +
+@@ -118,18 +122,22 @@ too (and can also report changes to a submodule's work tree).
+ 
+ init [--] [<path>...]::
+ 	Initialize the submodules recorded in the index (which were
+-	added and committed elsewhere) by copying submodule
+-	names and urls from .gitmodules to .git/config.
+-	Optional <path> arguments limit which submodules will be initialized.
+-	It will also copy the value of `submodule.$name.update` into
+-	.git/config.
+-	The key used in .git/config is `submodule.$name.url`.
+-	This command does not alter existing information in .git/config.
+-	You can then customize the submodule clone URLs in .git/config
+-	for your local setup and proceed to `git submodule update`;
+-	you can also just use `git submodule update --init` without
+-	the explicit 'init' step if you do not intend to customize
+-	any submodule locations.
++	added and committed elsewhere) by copying `submodule.$name.url`
++	from .gitmodules to .git/config, resolving relative urls to be
++	relative to the default remote.
+++
++Optional <path> arguments limit which submodules will be initialized.
++If no path is specified all submodules are initialized.
+++
++When present, it will also copy the value of `submodule.$name.update`.
++This command does not alter existing information in .git/config.
++You can then customize the submodule clone URLs in .git/config
++for your local setup and proceed to `git submodule update`;
++you can also just use `git submodule update --init` without
++the explicit 'init' step if you do not intend to customize
++any submodule locations.
+++
++See the add subcommand for the defintion of default remote.
+ 
+ deinit [-f|--force] (--all|[--] <path>...)::
+ 	Unregister the given submodules, i.e. remove the whole
+diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+index 899dc334e3..15a5430c00 100644
+--- a/builtin/submodule--helper.c
++++ b/builtin/submodule--helper.c
+@@ -356,12 +356,10 @@ static void init_submodule(const char *path, const char *prefix, int quiet)
+ 			strbuf_addf(&remotesb, "remote.%s.url", remote);
+ 			free(remote);
+ 
+-			if (git_config_get_string(remotesb.buf, &remoteurl))
+-				/*
+-				 * The repository is its own
+-				 * authoritative upstream
+-				 */
++			if (git_config_get_string(remotesb.buf, &remoteurl)) {
++				warning(_("could not lookup configuration '%s'. Assuming this repository is its own authoritative upstream."), remotesb.buf);
+ 				remoteurl = xgetcwd();
++			}
+ 			relurl = relative_url(remoteurl, url, NULL);
+ 			strbuf_release(&remotesb);
+ 			free(remoteurl);
+-- 
+2.12.0.rc1.16.ge4278d41a0.dirty
+
