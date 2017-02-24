@@ -2,84 +2,132 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C1259201A9
-	for <e@80x24.org>; Fri, 24 Feb 2017 19:21:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EB5D1201A9
+	for <e@80x24.org>; Fri, 24 Feb 2017 19:25:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751380AbdBXTVP (ORCPT <rfc822;e@80x24.org>);
-        Fri, 24 Feb 2017 14:21:15 -0500
-Received: from mail-it0-f50.google.com ([209.85.214.50]:36211 "EHLO
-        mail-it0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751268AbdBXTVG (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 Feb 2017 14:21:06 -0500
-Received: by mail-it0-f50.google.com with SMTP id h10so30604987ith.1
-        for <git@vger.kernel.org>; Fri, 24 Feb 2017 11:20:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=oZokD9KVAqOiX7By8fD7pm0Uf5cZ8z6yai74/aStJN8=;
-        b=bxFhGnD1QoMTCa3Zg2rByB+fK27Lrlsta/BYmB4ukNNXbwaSDcQLUM2ekv6q7QZVBs
-         XVNGRG1ovyeHKNrNUv/TUSy/UOeDWZiGeahzCB2CO6GFTWlV0mq+2Lctk7KQTGikRhnd
-         GySvCNLdWLrqefciff0+xlU9xrXzBj4JGpsGtEm2SrQYz9kW5GD/NaaFlepRrIRdCkNj
-         LUmKyLCYOsLcejnzh3hesSN+8OBBV0SkFsICW/FUY2+ISI0nifg9mFVZ0aIX7aPXMuNQ
-         8YNrrhq1VsLwPe+a1cMGxQQmNGCE596DLNvpDRIOdtk8PbzYfvefl4xoniDtEoaU7k48
-         i4Vg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=oZokD9KVAqOiX7By8fD7pm0Uf5cZ8z6yai74/aStJN8=;
-        b=FESIAQBfT6a/sE4IFyqgaRxOQGod9HySJOAF17YuOf+3jlf0ykXjA8G1pBYl23wsnh
-         42jgBNUG4bSDGebfLKzdj6UL3LinTO197WHm2QNT5amWN04qNQUduSkQB7n6LXuqP3rA
-         jePcRklevXhn0yUrZZD2Sc1rk6Thdyr9620U57S9PsXLLsPdci2yCIL569nCg89Pqi4I
-         aMtqSelzbqNGEMCZjb/d6dkraDuPdpmDIoqhicvbIHSmXvNw4kKVFvfs4F+9Z5ylno7o
-         5ZCRRhTPLJ/8krXfqw5LMEJG6BNVadjEMOyXwi7JL47MxEeWopayehIyZwko6xrFyhHd
-         +mNQ==
-X-Gm-Message-State: AMke39kSrTKZ/gQ1BH3wLk9H4H1s/M5/ncTiEKtRCY+1bwjrmFIjGBS6db1oTckuhtvBXpg3Kd4kz1uxC4fWQC/V
-X-Received: by 10.36.65.4 with SMTP id x4mr3904967ita.69.1487964048288; Fri,
- 24 Feb 2017 11:20:48 -0800 (PST)
+        id S1751392AbdBXTYz (ORCPT <rfc822;e@80x24.org>);
+        Fri, 24 Feb 2017 14:24:55 -0500
+Received: from ipsumj.de ([109.75.177.107]:55528 "EHLO ipsumj.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751275AbdBXTYz (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 Feb 2017 14:24:55 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=ipsumj.de; s=js1;
+        h=Content-Type:In-Reply-To:MIME-Version:Date:Message-ID:From:Cc:References:To:Subject; bh=IEb8e8aObkOfl5LKC80w0VAU9jJtloIyXkTsvI53W/M=;
+        b=F70fdmeESou8ZrugIwUXQVO1Us26lXp4vIXrBSpY+P/mLRlC/GJsWTSATGtao2tRoB0Owhqq1xBH7sNzHX7TOg0Yj3VHGhS5Qvhpd/2eMOazchd5uhGSCgUyu78a3F/RtAprHzQKPKj0O5sXyKk932ur7yOkeNdU7IbxGIlHxp/vasDy4VLFBJBaFkrRlNyN8FFAM9qwCf13w6HtEBncCeA9vTyyi7lQtgeOTM6gfYom9ZSVyIv5DT1noXjXmBBRtdYcxx242jSYAyIrW+zdu3bMFVH6fmpE60OfE4NQo+c69cNvMNwJ/8d109ZPlVzw7y8pKVrT5tbRmR9LBVMYNFJ6Kx49jgrh29YrsgzRCB9gb3LMzvX6/5j5d5Pxmwlb5aV95KLQLivD38dup0GqyTOq2GBGHuGRhWz7sJHnouSBLcoFqdBapb6mKry9VtXxmUH/l62OBCdggYnX20/nFhlUAqkJglMJ4fpW5vyXccuatG4TmRyYCC17phXN1N3oQyLHX7LGrog5dozM6eCl1sgxrXhoZXuLvvO0/VhpygkSPXjMWq+w/fl8x3eXKMkKPYk1IjgX0CXL12IVFv3wif42APKuYyfW7UTk8DtcfsV9V1PbjbZIm/1c80wUIn43lEOju/otCxKKw2Sxupk2n7Sjt4psoHBO/25iyNntYa8=;
+Received: by localhost with esmtpsa (TLSv1.2:DHE-RSA-AES128-SHA:128)
+        (Exim 4.84_2)
+        (envelope-from <hw42@ipsumj.de>)
+        id 1chKjM-0001Zg-Rm; Fri, 24 Feb 2017 19:36:36 +0100
+Subject: Re: [PATCH 3/3] Makefile: add USE_SHA1DC knob
+To:     Jeff King <peff@peff.net>
+References: <20170223230507.kuxjqtg3ghcfskc6@sigill.intra.peff.net>
+ <20170223230621.43anex65ndoqbgnf@sigill.intra.peff.net>
+Cc:     Linus Torvalds <torvalds@linux-foundation.org>,
+        Joey Hess <id@joeyh.name>,
+        Git Mailing List <git@vger.kernel.org>
+From:   HW42 <hw42@ipsumj.de>
+Message-ID: <16c6d843-a516-9265-d3e7-61b110acbdcf@ipsumj.de>
+Date:   Fri, 24 Feb 2017 18:36:00 +0000
 MIME-Version: 1.0
-Received: by 10.79.33.148 with HTTP; Fri, 24 Feb 2017 11:20:47 -0800 (PST)
-In-Reply-To: <db5cfde2-a769-d786-8846-a5a526194b69@ramsayjones.plus.com>
-References: <xmqqlgt5vlse.fsf@gitster.mtv.corp.google.com> <20170223225735.10994-1-sbeller@google.com>
- <20170223225735.10994-16-sbeller@google.com> <db5cfde2-a769-d786-8846-a5a526194b69@ramsayjones.plus.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Fri, 24 Feb 2017 11:20:47 -0800
-Message-ID: <CAGZ79kbD8SBHURQJvrNKKP8Ycay8wZcwUGw7V4mmo6PmfmJ9=w@mail.gmail.com>
-Subject: Re: [PATCH 15/15] builtin/checkout: add --recurse-submodules switch
-To:     Ramsay Jones <ramsay@ramsayjones.plus.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Brandon Williams <bmwill@google.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        David Turner <novalis@novalis.org>
-Content-Type: text/plain; charset=UTF-8
+In-Reply-To: <20170223230621.43anex65ndoqbgnf@sigill.intra.peff.net>
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature";
+ boundary="GSvI4iN26nUCg2F7t1m0c1TOfKnXvTfdA"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Feb 23, 2017 at 5:25 PM, Ramsay Jones
-<ramsay@ramsayjones.plus.com> wrote:
->> +int option_parse_recurse_submodules(const struct option *opt,
->> +                                 const char *arg, int unset)
->
-> Again, this function should be marked static.
->
-> [I also noted _two_ other local functions with the same name
-> in builtin/fetch.c and builtin/push.c]
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--GSvI4iN26nUCg2F7t1m0c1TOfKnXvTfdA
+Content-Type: multipart/mixed; boundary="ucUlbcFIQs8GBoIsLHJ3oav4TCQ9xOXuu";
+ protected-headers="v1"
+From: HW42 <hw42@ipsumj.de>
+To: Jeff King <peff@peff.net>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>, Joey Hess
+ <id@joeyh.name>, Git Mailing List <git@vger.kernel.org>
+Message-ID: <16c6d843-a516-9265-d3e7-61b110acbdcf@ipsumj.de>
+Subject: Re: [PATCH 3/3] Makefile: add USE_SHA1DC knob
+References: <20170223230507.kuxjqtg3ghcfskc6@sigill.intra.peff.net>
+ <20170223230621.43anex65ndoqbgnf@sigill.intra.peff.net>
+In-Reply-To: <20170223230621.43anex65ndoqbgnf@sigill.intra.peff.net>
 
-fixed in a reroll.
+--ucUlbcFIQs8GBoIsLHJ3oav4TCQ9xOXuu
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-Yes there is a pattern here. But as both fetch and push accept different
-options (not just boolean, but strings) these have to be different.
-I thought about unifying them, but I do not think we can do so easily.
+Jeff King:
+> diff --git a/Makefile b/Makefile
+> index 8e4081e06..7c4906250 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -1386,6 +1390,11 @@ ifdef APPLE_COMMON_CRYPTO
+>  	SHA1_MAX_BLOCK_SIZE =3D 1024L*1024L*1024L
+>  endif
+> =20
+> +ifdef USE_SHA1DC
+> +	SHA1_HEADER =3D "sha1dc/sha1.h"
+> +	LIB_OBJS +=3D sha1dc/sha1.o
+> +	LIB_OBJS +=3D sha1dc/ubc_check.o
+> +else
+>  ifdef BLK_SHA1
+>  	SHA1_HEADER =3D "block-sha1/sha1.h"
+>  	LIB_OBJS +=3D block-sha1/sha1.o
+> @@ -1403,6 +1412,7 @@ else
+>  endif
+>  endif
+>  endif
+> +endif
 
-Thanks,
-Stefan
+This sets SHA1_MAX_BLOCK_SIZE and the compiler flags for Apple
+CommonCrypto even if the user selects USE_SHA1DC. The same happens for
+BLK_SHA1. Is this intended?
+
+> +void git_SHA1DCUpdate(SHA1_CTX *ctx, const void *vdata, unsigned long =
+len)
+> +{
+> +	const char *data =3D vdata;
+> +	/* We expect an unsigned long, but sha1dc only takes an int */
+> +	while (len > INT_MAX) {
+> +		SHA1DCUpdate(ctx, data, INT_MAX);
+> +		data +=3D INT_MAX;
+> +		len -=3D INT_MAX;
+> +	}
+> +	SHA1DCUpdate(ctx, data, len);
+> +}
+
+I think you can simply change the len parameter from unsigned into
+size_t (or unsigned long) in SHA1DCUpdate().
+https://github.com/cr-marcstevens/sha1collisiondetection/pull/6
+
+
+--ucUlbcFIQs8GBoIsLHJ3oav4TCQ9xOXuu--
+
+--GSvI4iN26nUCg2F7t1m0c1TOfKnXvTfdA
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQJDBAEBCgAtFiEEqieyzvOmi9FGaQcT5KzJJ4pkaBYFAliwfR0PHGh3NDJAaXBz
+dW1qLmRlAAoJEOSsySeKZGgWE14P/0dklGTnH4DpiNywPL0HPMU1U3WGAr/b7J2g
+6wu4PvCD/wzxGRx6A1/jO574xFJLd+aqBu3uaXWK902oSNadytU0v6zi80HNoznL
+63u7AVwS6HL04Z9v6cn/W7yqO7MIOGntCId26aGtidxw5+tSUAXQIq8oP2KXHJlE
+945gdHeZC3/Bu04ZndCzH7ciY87M0pFFwjVBqHFGzCCjI1XMmlMYjSjnFwRAa+dE
+cJj+I8lbq6Z2Ni4J186uz9baI8Hhbs5uP29wrmFHOcDkw4V52bSHzflzdS0GOc7h
+d205bXG3hATcRnKguOTQOzj5djHdhUWDIcmiM19d6vtrLGCMdKWwiBsxwGLxbk8Q
+fae7V4bOos0NOGk1cyzzbkOcySxaLh5gOgT/EBk3mU31RCZOpf4+h/3uNJwGEQHk
+kcBkbqpowVHHEM0odlOGMHgt5thwVUR/djy1F1IDb0RlwalNkxDPpJeWv5HqnPFt
+UHXGGWr57B7U3M4lYE1WmqmHoOXvwrsTywwCWvB7ZK6O5CnRYpmFAvNBkAUZs5pu
+GBiyRlbWiwWg+dvAar2wGBANCWbpqItj4hWhFvcYU6/ISAnZR32ieI2SpTw+13f0
+9C+bjBTvxogS+ioA+a1/M11udrqC3kHTXz9bWqIiZZF5YMH+9TQmDfPgIRWHHc72
+zKsktLhh
+=2TGn
+-----END PGP SIGNATURE-----
+
+--GSvI4iN26nUCg2F7t1m0c1TOfKnXvTfdA--
