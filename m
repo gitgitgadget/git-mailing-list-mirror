@@ -2,96 +2,134 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 90175201A9
-	for <e@80x24.org>; Fri, 24 Feb 2017 19:02:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 17647201A9
+	for <e@80x24.org>; Fri, 24 Feb 2017 19:09:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751284AbdBXTCp (ORCPT <rfc822;e@80x24.org>);
-        Fri, 24 Feb 2017 14:02:45 -0500
-Received: from cloud.peff.net ([104.130.231.41]:33490 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751121AbdBXTCn (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 Feb 2017 14:02:43 -0500
-Received: (qmail 4443 invoked by uid 109); 24 Feb 2017 18:56:02 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 24 Feb 2017 18:56:02 +0000
-Received: (qmail 22107 invoked by uid 111); 24 Feb 2017 18:56:06 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 24 Feb 2017 13:56:06 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 24 Feb 2017 13:56:00 -0500
-Date:   Fri, 24 Feb 2017 13:56:00 -0500
-From:   Jeff King <peff@peff.net>
-To:     Geert Uytterhoeven <geert@linux-m68k.org>
-Cc:     Greg KH <gregkh@linuxfoundation.org>,
-        Linus Torvalds <torvalds@linux-foundation.org>,
-        Simon =?utf-8?Q?Sandstr=C3=B6m?= <simon@nikanor.nu>,
-        Andrew Morton <akpm@linux-foundation.org>,
-        Git Mailing List <git@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        Linux Driver Project <devel@linuxdriverproject.org>
-Subject: Re: git email From: parsing (was Re: [GIT PULL] Staging/IIO driver
- patches for 4.11-rc1)
-Message-ID: <20170224185600.ftfts6y2au3tvzge@sigill.intra.peff.net>
-References: <20170222145613.GA17333@kroah.com>
- <CA+55aFy1JpXmo_PpC7f0zZa0YAP6rz+bztJ+fpDUoWgCz0_FMw@mail.gmail.com>
- <20170223060444.GA26196@kroah.com>
- <20170223061702.bzzgrntotppvwdw6@sigill.intra.peff.net>
- <CAMuHMdX+xGUD+K16VCE=ywRgN1Zd4MzSr=NJ=2xz+8e_ixyGKQ@mail.gmail.com>
+        id S1751232AbdBXTJp (ORCPT <rfc822;e@80x24.org>);
+        Fri, 24 Feb 2017 14:09:45 -0500
+Received: from mail-it0-f48.google.com ([209.85.214.48]:37560 "EHLO
+        mail-it0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751297AbdBXTJo (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 Feb 2017 14:09:44 -0500
+Received: by mail-it0-f48.google.com with SMTP id 203so33215546ith.0
+        for <git@vger.kernel.org>; Fri, 24 Feb 2017 11:08:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=E9fLZZRxgMyNmNk0U9ePi8hPtLmfCFxJvikVwA91BKk=;
+        b=lij4f/Vy5lTf0B6WnVRRFBLu6zNYCa4+9nqX1jUkbcETxnLJmdIk5qi1CARrfAEWg4
+         AKlii/+84Wota/rZXdWv0n5zeskuuIeBCzinjTNTBRaouvhJFhiPXTYv4xmCBww5hGmI
+         DtLnUFLiIp/9ygutbvSyhjpya6K5ITuz2CO4MamBSk0RF9qMF4SQrF/oLP5OfjR4mrq3
+         ukVWd0JV9R3XJBHOCWDKDDn8VbNEFB1gCqxMd636fRaMvKBpiODP6rPM1csqyJ+dDL2h
+         44ARD47mA1DbaRrF+R1BXV6MglZu1L05FAEgNtomUSrifjkBmGJ8hucfWMTdNifs+0gm
+         ICBA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=E9fLZZRxgMyNmNk0U9ePi8hPtLmfCFxJvikVwA91BKk=;
+        b=Q925IA8Nk4PQPg8QFzzQX8Ivd+I8G+6e1qplDuJMcz00MqEi5J62H9L44dZtZuDFke
+         6wJg6mPL5IbqCYm4g6YwvhFV2lAVGr81nYXthIjw99MktJqMAYsYfw4HTre0sdAMoyTE
+         w5MyTfzb+YRChJQcZcYWw6P5jxbxktx5OPPZlNFzabJu42TembBoJJ42QzD4UtZa+jpG
+         7z7gH2AOGr6Uky/jhC+6KYTW0NoDksgev4tOplZfowsJZV7QEEm7cAHKyeVzxvtvD+hJ
+         g4bwvtVrfQ/ftbGwAR2L735q77RnrcwG5dn0uTK3111QVf64Pok/bdroXoWeNGREL11V
+         VLiQ==
+X-Gm-Message-State: AMke39mNvqfD6QtUOBdOqBoD75yh4JeSzEOqL1yhZBr+RqKrAdpw+Xlvx212/qsTMyYpKhsSboXRbDD66C//0Wl+
+X-Received: by 10.107.16.14 with SMTP id y14mr3722521ioi.164.1487963293012;
+ Fri, 24 Feb 2017 11:08:13 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAMuHMdX+xGUD+K16VCE=ywRgN1Zd4MzSr=NJ=2xz+8e_ixyGKQ@mail.gmail.com>
+Received: by 10.79.33.148 with HTTP; Fri, 24 Feb 2017 11:08:12 -0800 (PST)
+In-Reply-To: <7e920dd5-3638-57d9-0ca1-3f8aed4d700b@ramsayjones.plus.com>
+References: <xmqqlgt5vlse.fsf@gitster.mtv.corp.google.com> <20170223225735.10994-1-sbeller@google.com>
+ <20170223225735.10994-11-sbeller@google.com> <7e920dd5-3638-57d9-0ca1-3f8aed4d700b@ramsayjones.plus.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Fri, 24 Feb 2017 11:08:12 -0800
+Message-ID: <CAGZ79kZX=ZmHDbBhgApHTKhyXz489V5XQXPvUhfLyRjYhTfVJA@mail.gmail.com>
+Subject: Re: [PATCH 10/15] update submodules: add submodule_move_head
+To:     Ramsay Jones <ramsay@ramsayjones.plus.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Brandon Williams <bmwill@google.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        David Turner <novalis@novalis.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Feb 24, 2017 at 12:03:45PM +0100, Geert Uytterhoeven wrote:
+On Thu, Feb 23, 2017 at 5:21 PM, Ramsay Jones
+<ramsay@ramsayjones.plus.com> wrote:
+>
+>
+> On 23/02/17 22:57, Stefan Beller wrote:
+>> In later patches we introduce the options and flag for commands
+>> that modify the working directory, e.g. git-checkout.
+>>
+>> This piece of code will be used universally for
+>> all these working tree modifications as it
+>> * supports dry run to answer the question:
+>>   "Is it safe to change the submodule to this new state?"
+>>   e.g. is it overwriting untracked files or are there local
+>>   changes that would be overwritten?
+>> * supports a force flag that can be used for resetting
+>>   the tree.
+>>
+>> Signed-off-by: Stefan Beller <sbeller@google.com>
+>> ---
+>>  submodule.c | 135 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+>>  submodule.h |   7 ++++
+>>  2 files changed, 142 insertions(+)
+>>
+>> diff --git a/submodule.c b/submodule.c
+>> index 0b2596e88a..a2cf8c9376 100644
+>> --- a/submodule.c
+>> +++ b/submodule.c
+>> @@ -1239,6 +1239,141 @@ int bad_to_remove_submodule(const char *path, unsigned flags)
+>>       return ret;
+>>  }
+>>
+>> +static int submodule_has_dirty_index(const struct submodule *sub)
+>> +{
+>> +     struct child_process cp = CHILD_PROCESS_INIT;
+>> +
+>> +     prepare_submodule_repo_env_no_git_dir(&cp.env_array);
+>> +
+>> +     cp.git_cmd = 1;
+>> +     argv_array_pushl(&cp.args, "diff-index", "--quiet", \
+>> +                                     "--cached", "HEAD", NULL);
+>> +     cp.no_stdin = 1;
+>> +     cp.no_stdout = 1;
+>> +     cp.dir = sub->path;
+>> +     if (start_command(&cp))
+>> +             die("could not recurse into submodule '%s'", sub->path);
+>> +
+>> +     return finish_command(&cp);
+>> +}
+>> +
+>> +void submodule_reset_index(const char *path)
+>
+> I was just about to send a patch against the previous series
+> (in pu branch last night), but since you have sent another
+> version ...
+>
+> In the last series this was called 'submodule_clean_index()'
+> and, since it is a file-local symbol, should be marked with
+> static. I haven't applied these patches to check, but the
+> interdiff in the cover letter leads me to believe that this
+> will also apply to the renamed function.
+>
+> [The patch subject was also slightly different.]
+>
 
-> > The problem isn't on the applying end, but rather on the generating end.
-> > The From header in the attached mbox is:
-> >
-> >   From: =?us-ascii?B?PT9VVEYtOD9xP1NpbW9uPTIwU2FuZHN0cj1DMz1CNm0/PQ==?= <simon@nikanor.nu>
-> 
-> Slightly related, once in a while I get funny emails through
-> git-commits-head@vger.kernel.org, where the subject is completely screwed up:
-> 
->     Subject: \x64\x72\x6D\x2F\x74\x69\x6E\x79\x64\x72\x6D\x3A
-> \x6D\x69\x70\x69\x2D\x64\x62\x69\x3A \x53\x69\x6C\x65\x6E\x63\x65\x3A
-> ‘\x63\x6D\x64’ \x6D\x61\x79 \x62\x65
+good catch. Yes submodule_reset_index
+ought to be static.
 
-Sorry, I don't have a clue on that one.
-
-If you have UTF-8 or other non-ASCII characters in your subject,
-format-patch will correctly do the rfc2047 encoding (and it should
-always use QP). And that would kick in here because of the UTF-8 quotes.
-
-But that weird "\x" encoding is not in any mail standard I know of (and
-certainly Git would never do it).
-
-The odd thing is that the quotes themselves _aren't_ encoded. Just
-everything else.
-
-One other feature is that subject line is long enough (especially
-QP-encoded) that it spans two lines:
-
-  $ git format-patch --stdout -1 b401f34314d | grep -A1 ^Subject
-  Subject: [PATCH] =?UTF-8?q?drm/tinydrm:=20mipi-dbi:=20Silence:=20=E2=80=98?=
-   =?UTF-8?q?cmd=E2=80=99=20may=20be=20used=20uninitialized?=
-
-It's possible that something along the way is mis-handling subjects with
-line-continuation (though why it would escape those characters, I don't
-know).
-
-> and some of the mail headers end up in the body as well:
-> 
->     =?UTF-8?Q?\x75\x73\x65\x64_\x75\x6E\x69\x6E\x69\x74\x69\x61\x6C\x69\x7A\x65\x64?=
-
-That might be related to the whitespace continuation (the first line
-after the break is the second line of the subject).
-
--Peff
+fixed in a reroll.
