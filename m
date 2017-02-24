@@ -2,75 +2,81 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5FB392022D
-	for <e@80x24.org>; Fri, 24 Feb 2017 01:00:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9961E2022D
+	for <e@80x24.org>; Fri, 24 Feb 2017 01:08:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751341AbdBXA7n (ORCPT <rfc822;e@80x24.org>);
-        Thu, 23 Feb 2017 19:59:43 -0500
-Received: from mail-it0-f49.google.com ([209.85.214.49]:35157 "EHLO
-        mail-it0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751271AbdBXA7Y (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Feb 2017 19:59:24 -0500
-Received: by mail-it0-f49.google.com with SMTP id 203so5304770ith.0
-        for <git@vger.kernel.org>; Thu, 23 Feb 2017 16:58:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=6uTQN3aqg1lnZHynAAlhjKdstviuMQc4LoVrG80is0A=;
-        b=JrAbnZ7JX9xljt0DjpBf7w2Mjg/LJjeNVK0pQ6ynHsdl78BxhZkN0WdPvCxUQV+NjL
-         Gd+Ke+acBJ4R6KZmNfJfkxWRhQH9S0wjZeEcUGM/aostRuYEke6IP7s8BWY83hBSTu1L
-         6AXXHHdmmbJvXjm1z7qDkEGvzQNtqSQbhMiLM9EzvxuosCmNmY7K/90K85LlIZFYCRvL
-         kAebLfZTmo1r51Nn0YjSFo3tlFBiKwJPe10/1V+rhW9G7UsOWIxXfi2srZBvXH1tiGBC
-         a/aVQCNcImC09FONe6JTJ/JLPbhmJu/O05/fyiAfgNFk5Y9yqIYmbhchP7xU6Bz3onFW
-         ORog==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=6uTQN3aqg1lnZHynAAlhjKdstviuMQc4LoVrG80is0A=;
-        b=tN15+iiy0WL/cUNDguhYlTeeEHrltwbscudz0YRtE1aiyaDWAwtOhj93ngrUej4u5R
-         lC/mNMHQkD9z+8qscVwTaglkpEPtq9hDkyo8Hqpdl7W7bdP4gAecVZRdE/Qlo1nTCTFw
-         URTgRNO/eBBYP4dmxegjJ1dXvBpuU/C+nY6bKO/diLy5hw06RSNv6RLyjxoxbycRvPCa
-         1nKcW3XLpeOpn8bTUbV3eE9FV5qGLvMYvOZ680/qw/NWTcd96x3JThSn4bDLHXKUYc3U
-         ZxKIXRDJdBvCeAmrenetCD8pexXGkIAh7Kc4eqtIiwKy1oxbNKPjuhlbNLE07xWiGuno
-         tPqQ==
-X-Gm-Message-State: AMke39nREaDpQH1jsnOOpUK0DStPT6X9e7OfEbWlDD6fdunvdsTd6u30s5loEZIPX/qWWIlxVk5PZMYSPHBjeOsK
-X-Received: by 10.107.37.148 with SMTP id l142mr460334iol.159.1487897935949;
- Thu, 23 Feb 2017 16:58:55 -0800 (PST)
+        id S1751380AbdBXBI0 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 23 Feb 2017 20:08:26 -0500
+Received: from cloud.peff.net ([104.130.231.41]:33119 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751290AbdBXBI0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Feb 2017 20:08:26 -0500
+Received: (qmail 2170 invoked by uid 109); 24 Feb 2017 01:08:25 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 24 Feb 2017 01:08:25 +0000
+Received: (qmail 8729 invoked by uid 111); 24 Feb 2017 01:08:29 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 23 Feb 2017 20:08:29 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 23 Feb 2017 20:08:23 -0500
+Date:   Thu, 23 Feb 2017 20:08:23 -0500
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     bs.x.ttp@recursor.net, git@vger.kernel.org
+Subject: Re: [PATCH 4/4] ident: do not ignore empty config name/email
+Message-ID: <20170224010823.my4wmdyezjuqajfx@sigill.intra.peff.net>
+References: <20170223081157.hwfn3msfux5udmng@sigill.intra.peff.net>
+ <20170223081708.ge34zjkmpsolocqx@sigill.intra.peff.net>
+ <xmqqfuj47hfk.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-Received: by 10.79.33.148 with HTTP; Thu, 23 Feb 2017 16:58:55 -0800 (PST)
-In-Reply-To: <20170223234728.164111-11-bmwill@google.com>
-References: <20170223234728.164111-1-bmwill@google.com> <20170223234728.164111-11-bmwill@google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Thu, 23 Feb 2017 16:58:55 -0800
-Message-ID: <CAGZ79kYmmeVOYSPTvAbGpRQn1YL9yjPOkT5xCoSDmtNzQ1t2fw@mail.gmail.com>
-Subject: Re: [PATCH 10/10] submodule--helper clone: check for configured
- submodules using helper
-To:     Brandon Williams <bmwill@google.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqfuj47hfk.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Feb 23, 2017 at 3:47 PM, Brandon Williams <bmwill@google.com> wrote:
+On Thu, Feb 23, 2017 at 12:58:39PM -0800, Junio C Hamano wrote:
 
-> @@ -795,14 +794,11 @@ static int prepare_to_clone_next_submodule(const struct cache_entry *ce,
->         }
->
->         /*
-> -        * Looking up the url in .git/config.
-> +        * Check if the submodule has been initialized.
->          * We must not fall back to .gitmodules as we only want
->          * to process configured submodules.
+> Jeff King <peff@peff.net> writes:
+> 
+> > This one is perhaps questionable. Maybe somebody is relying on setting a
+> > per-repo user.name to override a ~/.gitconfig value and enforce
+> > auto-detection?
+> 
+> Thanks for splitting this step out.  1/4 and 2/4 are obvious
+> improvements, and 3/4 is a very sensible fix.  Compared to those
+> three, this one does smell questionable, because I do not quite see
+> any other reasonable fallback other than the auto-detection if the
+> user gives an empty ident on purpose.
 
-This sentence "we must not ..." is also no longer accurate,
-as we do exactly that when using sub->url instead of just url
-below.
+The outcomes are basically:
+
+  1. In strict mode (making a commit, etc), we'll die with "empty name
+     not allowed". My thinking was that this is less confusing for the
+     user.
+
+  2. In non-strict mode, we'd use a blank name instead of trying your
+     username (or dying if you don't have an /etc/passwd entry).
+
+> Erroring out to say "don't do that" is probably not too bad, but
+> perhaps we are being run by a script that is doing a best-effort
+> conversion from $ANOTHER_SCM using a list of known authors that is
+> incomplete, ending up feeding empty ident and allowing us to fall
+> back to attribute them to the user who runs the script.  I do not
+> see a point in breaking that user and having her or him update the
+> script to stuff in a truly bogus "Unknown <unknown>" name.
+
+Keep in mind this _only_ affects Git's config variables. So a script
+feeding git via GIT_AUTHOR_NAME, etc, shouldn't change at all with this
+code. If your script is doing "git -c user.name=whatever commit", I
+think you should reconsider your script. :)
+
+So I dunno. I could really go either way on it. Feel free to drop it, or
+even move it into a separate topic to be cooked longer.
+
+-Peff
