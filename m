@@ -2,89 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E6E9F20279
-	for <e@80x24.org>; Sat, 25 Feb 2017 08:36:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2C9082022D
+	for <e@80x24.org>; Sat, 25 Feb 2017 09:39:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751614AbdBYIgZ (ORCPT <rfc822;e@80x24.org>);
-        Sat, 25 Feb 2017 03:36:25 -0500
-Received: from wtarreau.pck.nerim.net ([62.212.114.60]:55167 "EHLO 1wt.eu"
+        id S1751577AbdBYJjP (ORCPT <rfc822;e@80x24.org>);
+        Sat, 25 Feb 2017 04:39:15 -0500
+Received: from cloud.peff.net ([104.130.231.41]:33950 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751419AbdBYIgZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 25 Feb 2017 03:36:25 -0500
-Received: (from willy@localhost)
-        by pcw.home.local (8.15.2/8.15.2/Submit) id v1P8aJ1B000558;
-        Sat, 25 Feb 2017 09:36:19 +0100
-Date:   Sat, 25 Feb 2017 09:36:19 +0100
-From:   Willy Tarreau <w@1wt.eu>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Linux Kernel <linux-kernel@vger.kernel.org>
-Subject: Re: [ANNOUNCE] Git v2.12.0
-Message-ID: <20170225083619.GA550@1wt.eu>
-References: <xmqqd1e72xs5.fsf@gitster.mtv.corp.google.com>
- <20170225074057.GA460@1wt.eu>
- <xmqqefymzn6u.fsf@gitster.mtv.corp.google.com>
+        id S1751571AbdBYJjP (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 25 Feb 2017 04:39:15 -0500
+Received: (qmail 27406 invoked by uid 109); 25 Feb 2017 09:32:33 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sat, 25 Feb 2017 09:32:33 +0000
+Received: (qmail 28575 invoked by uid 111); 25 Feb 2017 09:32:38 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Sat, 25 Feb 2017 04:32:38 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 25 Feb 2017 04:32:32 -0500
+Date:   Sat, 25 Feb 2017 04:32:32 -0500
+From:   Jeff King <peff@peff.net>
+To:     git@vger.kernel.org
+Subject: [PATCH 0/2] interoperability test harness
+Message-ID: <20170225093231.k7jtvx47jieka7qm@sigill.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqefymzn6u.fsf@gitster.mtv.corp.google.com>
-User-Agent: Mutt/1.6.1 (2016-04-27)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Feb 25, 2017 at 12:31:21AM -0800, Junio C Hamano wrote:
-> Willy Tarreau <w@1wt.eu> writes:
-> 
-> > Hi Junio,
-> >
-> > On Fri, Feb 24, 2017 at 11:28:58AM -0800, Junio C Hamano wrote:
-> >>  * Use of an empty string that is used for 'everything matches' is
-> >>    still warned and Git asks users to use a more explicit '.' for that
-> >>    instead.  The hope is that existing users will not mind this
-> >>    change, and eventually the warning can be turned into a hard error,
-> >>    upgrading the deprecation into removal of this (mis)feature.  That
-> >>    is not scheduled to happen in the upcoming release (yet).
-> >
-> > FWIW '.' is not equivalent to '' when it comes to grep or such commands,
-> 
-> I am amused and amazed ;-).  
-> 
-> The above is not about "grep" but was meant to describe "pathspec".
-> We used to take "" as a pathspec element that means "every path
-> matches", but recently started deprecating it and ask users to be
-> more explicit by using "." (as a directory as a pathspec element
-> matches everything inside the directory).  We are not changing the
-> pattern matching done by "git grep" or "log --grep".  What is
-> changing is that between the two that means the same thing:
-> 
-> 	cd t/ && git log ""
-> 	cd t/ && git log .
-> 
-> the former is deprecated.
+This series adds a small test harness for interoperability tests. The
+heavy lifting is done by the normal test-lib.sh; this just makes it easy
+for you to have access to two git versions at the same time.
 
-Ah that's fun indeed I never used it like this :-)
+This is something I've wanted a few times in the past when we make a
+fix that can only be tested when interacting with a different version of
+git.  As we start to work on changes like new protocols or hash
+functions, this will hopefully make it easier to demonstrate what
+happens when an older version of git encounters our new features.
 
-> I find it amusing that I have been writing the above in the draft
-> release notes without realizing that I failed to say that it is
-> about pathspec for quite some time, and without realizing that the
-> above can be misinterpreted as if it is talking about grep patterns.
-> 
-> And I find it amazing that it took this long for somebody to spot
-> that misleading vagueness in this description and point it out.
-> 
-> It should probably be updated to start like so:
-> 
-> 	Use of an empty string as a pathspec element that is used
-> 	for 'everything matches' is ...
+This doesn't run when the regular test suite runs (it's likely to be a
+bit flakier, as it actually has to build the alternative versions
+separately). So I don't necessarily expect people to run it all the
+time. But it lets us write down in a repeatable way the sorts of testing
+that often ends up being done manually (or not at all) today.
 
-Hey it's the usual matter of perspective and context. When you know
-what you do it's always obvious when you explain it while for others
-something different is obvious :-)
+This series just adds the harness and a basic test that we can still
+clone from modern git using v1.0.0 (yay!). If people are interested, I
+suspect there are previous cases that could be backfilled. A few I can
+think of are:
 
-Thanks for your clarification!
-Willy
+  1. How older versions handle repositoryformatversion=2.
+
+  2. Newer clients hitting older servers without various capabilities.
+     One example is in:
+
+       http://public-inbox.org/git/1433961320-1366-1-git-send-email-adgar@google.com/
+
+  3. Vice-versa: older clients without capabilities hitting newer
+     servers (especially in exotic situations, like shallow clone).
+
+I don't think there's a huge value in doing that for old changes unless
+somebody has actively reported a problem. So only do it if it sounds
+like a fun experiment. :)
+
+  [1/2]: t: add an interoperability test harness
+  [2/2]: t/interop: add test of old clients against modern git-daemon
+
+ Makefile                      |  3 ++
+ t/interop/.gitignore          |  4 ++
+ t/interop/Makefile            | 16 ++++++++
+ t/interop/README              | 84 +++++++++++++++++++++++++++++++++++++++
+ t/interop/i0000-basic.sh      | 27 +++++++++++++
+ t/interop/i5500-git-daemon.sh | 41 +++++++++++++++++++
+ t/interop/interop-lib.sh      | 92 +++++++++++++++++++++++++++++++++++++++++++
+ t/lib-git-daemon.sh           |  3 +-
+ 8 files changed, 269 insertions(+), 1 deletion(-)
+ create mode 100644 t/interop/.gitignore
+ create mode 100644 t/interop/Makefile
+ create mode 100644 t/interop/README
+ create mode 100755 t/interop/i0000-basic.sh
+ create mode 100755 t/interop/i5500-git-daemon.sh
+ create mode 100644 t/interop/interop-lib.sh
+
+-Peff
