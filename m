@@ -2,93 +2,80 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E44A61F5FB
-	for <e@80x24.org>; Sat, 25 Feb 2017 03:06:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0141A1F5FB
+	for <e@80x24.org>; Sat, 25 Feb 2017 05:39:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751462AbdBYDGL (ORCPT <rfc822;e@80x24.org>);
-        Fri, 24 Feb 2017 22:06:11 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:52037 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751348AbdBYDGK (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 Feb 2017 22:06:10 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id AEA1A6D44F;
-        Fri, 24 Feb 2017 22:05:08 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:in-reply-to:references:date:message-id:mime-version
-        :content-type; s=sasl; bh=zNSnWaxLqhjIVuej71IcjfIfMUw=; b=AMndXC
-        CWcJRjs1jP1dKuXgvy5e2ThBgeNsq8sDm3QvCyBMqK7h/3S2mPqtC1szKZzLp5sg
-        TQelZtNZaodrVyy/DKhmFmf5dvtL1xtWMuFiL1dMNHU+ru3CwNPK3tSWsv//Jknq
-        VU4WNfeyU3XlXR1uNdCrAv/3UX3MGXgy9vBd8=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id A4AC96D44D;
-        Fri, 24 Feb 2017 22:05:08 -0500 (EST)
-Received: from localhost (unknown [24.60.167.92])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 1E5196D44C;
-        Fri, 24 Feb 2017 22:05:08 -0500 (EST)
-From:   Kyle Meyer <kyle@kyleam.com>
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH v2 1/4] delete_ref: accept a reflog message argument
-In-Reply-To: <CACsJy8BJgL1i85nZ9CpAXCKaG+PQQkjRKLFPWzbsMF8WN8TEjQ@mail.gmail.com>
-References: <20170217035800.13214-1-kyle@kyleam.com> <20170221011035.847-1-kyle@kyleam.com> <20170221011035.847-2-kyle@kyleam.com> <CACsJy8BJgL1i85nZ9CpAXCKaG+PQQkjRKLFPWzbsMF8WN8TEjQ@mail.gmail.com>
-Date:   Fri, 24 Feb 2017 22:05:05 -0500
-Message-ID: <87poi7c6n2.fsf@kyleam.com>
+        id S1751513AbdBYFj3 (ORCPT <rfc822;e@80x24.org>);
+        Sat, 25 Feb 2017 00:39:29 -0500
+Received: from mail-ua0-f175.google.com ([209.85.217.175]:32990 "EHLO
+        mail-ua0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751501AbdBYFj2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 25 Feb 2017 00:39:28 -0500
+Received: by mail-ua0-f175.google.com with SMTP id h65so24100388uah.0
+        for <git@vger.kernel.org>; Fri, 24 Feb 2017 21:39:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to;
+        bh=G1qmlbuma/MMeLrDq8ikMXcqp1mPVBeptOw+PpNx6bg=;
+        b=fzZV33qjEpPDHH2mUdyngQ+mhj8zh2r62IIuO1rgFZWr/MA98u19Jtr506sSryYIwD
+         RcFvkLN83Rf5QNRQjSMaMp7ivDfgy2G+6WTYgTdf8GOLdci6z/gULSsQvDKHdZcHAjFw
+         m7kZ9+ZLKVzLJxiuHr3iidsePpbFwl7uftI/HqwpuB7xNBKwbLhqYbiP+UN9waKVm/tj
+         GHAtZ2nElx1Cs2vBxSHJP3uvxz8niHwu8Qio9Cbwh3jFGQC+5wwrMOZiX8ylWKwFRx95
+         tOZoumvWNpJ2VJPalIr5qG9bf+rwqaQDWcZwjBskWd0IYIKK+lmfNFdBEEMjer8Xjbdk
+         irCg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to;
+        bh=G1qmlbuma/MMeLrDq8ikMXcqp1mPVBeptOw+PpNx6bg=;
+        b=jNdX9Gk8/Mystac/LtL2FTZFVxlL1kxP30Fe1LjQB9BJdCFTZBvouc9Dps2k3g+6pA
+         1JJz1jbrfx1ZoMoyio3AFxlqbEtaGsYRQbbALxsbi1dsaEE/7lBnZoQYFap1q9AfvbVO
+         vwBsqdyd6tD40pktHQfSqmonBTjj+TkHwUv5fOhAO1IcO3R8xS7wkxNoSugtrxeQ5QD2
+         Yas2ZkGHSzHu10StHJ1F1lUWUjASNIMamtbrz4kmsw+j9H+7s9z6V+m161KWgojjmU0N
+         2hj2W+ytskAlKcbtNOnITb7pXZ4SXe2PtoQbaDzATRcGt2BpGrgd0LqwtDL6lKKf6JAb
+         E7jA==
+X-Gm-Message-State: AMke39nksa+PM0w2GlQ01SNHgsIhOEX60EddyspWABomO5odmgcCA+UlCeKFjBQFlgtj55qBVZgUxEiKGS+UQA==
+X-Received: by 10.159.40.101 with SMTP id c92mr2550946uac.111.1488001154282;
+ Fri, 24 Feb 2017 21:39:14 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 36A35B6C-FB07-11E6-98E0-FE3F13518317-24757444!pb-smtp1.pobox.com
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=kyleam.com;
- h=from:to:cc:subject:in-reply-to:references:date:message-id:mime-version:content-type; s=mesmtp; bh=zNSnWaxLqhjIVuej71IcjfIfMUw=; b=w6H4K7YBD3kKZUVouQ+YNMwVTt34eMoc9d35pMGvhH1MLxQ1nJe+wan+t/FuzPfup3OiM1P+q00I+Zuc9scjzgvAmOxdxgK47wMqeJ83LPE5T7vo2z/YmZfZVU0+UCCeJtxPsmpVMzvDAAV+JSrLpQy4LWDhSuJbRgakw1dwWCU=
+Received: by 10.159.48.143 with HTTP; Fri, 24 Feb 2017 21:39:13 -0800 (PST)
+In-Reply-To: <CA+P7+xqyaWHBxug0BPdCgDVJBLtsvUxbgfgy1uJcoGf3q6xMQg@mail.gmail.com>
+References: <20170223164306.spg2avxzukkggrpb@kitenet.net> <22704.19873.860148.22472@chiark.greenend.org.uk>
+ <xmqq60jz5wbm.fsf@gitster.mtv.corp.google.com> <20170224233929.p2yckbc6ksyox5nu@sigill.intra.peff.net>
+ <nycvar.QRO.7.75.62.1702241656010.6590@qynat-yncgbc> <20170225012100.ivfdlwspsqd7bkhf@sigill.intra.peff.net>
+ <CA+P7+xqyaWHBxug0BPdCgDVJBLtsvUxbgfgy1uJcoGf3q6xMQg@mail.gmail.com>
+From:   grarpamp <grarpamp@gmail.com>
+Date:   Sat, 25 Feb 2017 00:39:13 -0500
+Message-ID: <CAD2Ti29v9h5d9mqeQMd5YTi4fDmbAJ8LMT2oX_SagDkC-LBrMQ@mail.gmail.com>
+Subject: Re: SHA1 collisions found
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Duy Nguyen <pclouds@gmail.com> writes:
-
-> You'll probably want to update the comment block above if msg can be
-> NULL. We have _very_ good documentation in this file, let's keep it
-> uptodate.
-
-Looking at how other functions in refs.h document their "msg" or
-"logmsg" parameter, none seem to mention it explicitly.  update_ref
-refers to ref_transaction_update, and
-ref_transaction_{update,create,delete,verify} refer to ref.h's
-"Reference transaction updates" comment.
-
-delete_ref's docstring already mentions that "flag" is passed to
-ref_transaction_delete, so perhaps it should mention "msg" here as
-well.
-
--- >8 --
-Subject: [PATCH] delete_ref: mention "msg" parameter in docstring
-
-delete_ref() was recently extended to take a "msg" argument.
----
- refs.h | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
-
-diff --git a/refs.h b/refs.h
-index e529f4c3a..988750218 100644
---- a/refs.h
-+++ b/refs.h
-@@ -274,7 +274,8 @@ int reflog_exists(const char *refname);
-  * verify that the current value of the reference is old_sha1 before
-  * deleting it. If old_sha1 is NULL, delete the reference if it
-  * exists, regardless of its old value. It is an error for old_sha1 to
-- * be NULL_SHA1. flags is passed through to ref_transaction_delete().
-+ * be NULL_SHA1. msg and flags are passed through to
-+ * ref_transaction_delete().
-  */
- int delete_ref(const char *msg, const char *refname,
- 	       const unsigned char *old_sha1, unsigned int flags);
--- 
-2.11.1
-
+Repos should address keeping / 'fixing' broken sha-1 as needed.
+They also really need to create new native modes so users can
+initialize and use repos with (sha-3 / sha-256 / whatever) going forward.
+Backward compatibility with sha-1 or 'fixed sha-1' will be fine. Clients
+can 'taste' and 'test' repos for which hash mode to use, or add it to
+their configs. Make things flexible, modular, configurable, updateable.
+What little point is there in 'fixing / caveating' their use of broken sha-1,
+without also doing strong (sha-3 / optionals) in the first place, defaulting
+new init's to whichever strong hash looks good, and letting natural
+migration to that happen on its own through the default process.
+Introducing new hash modes also gives good oppurtunity to incorporate
+other generally 'incompatabile with the old' changes to benefit the future.
+One might argue against mixed mode, after all, export and import,
+as with any other repo migration, is generally possible.  And mixed
+mode tends to prolong the actual endeavour to move to something
+better in the init itself. Native and new makes you update to follow.
+A lot of question / wrong ramble here, but the point should be
+consistant... move, natively, even if only for sake of death of old
+broken hashes. And attacks only get worse. Thought food is all.
