@@ -2,128 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0BD1D2022D
-	for <e@80x24.org>; Sat, 25 Feb 2017 10:13:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C3D772022D
+	for <e@80x24.org>; Sat, 25 Feb 2017 10:30:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751842AbdBYKN3 (ORCPT <rfc822;e@80x24.org>);
-        Sat, 25 Feb 2017 05:13:29 -0500
-Received: from userp1040.oracle.com ([156.151.31.81]:33312 "EHLO
-        userp1040.oracle.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751810AbdBYKN3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 25 Feb 2017 05:13:29 -0500
-Received: from aserv0021.oracle.com (aserv0021.oracle.com [141.146.126.233])
-        by userp1040.oracle.com (Sentrion-MTA-4.3.2/Sentrion-MTA-4.3.2) with ESMTP id v1PADOVO016591
-        (version=TLSv1 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
-        Sat, 25 Feb 2017 10:13:24 GMT
-Received: from t460.home (dhcp-ukc1-twvpn-2-vpnpool-10-175-206-239.vpn.oracle.com [10.175.206.239])
-        by aserv0021.oracle.com (8.13.8/8.14.4) with ESMTP id v1PADC6E005857;
-        Sat, 25 Feb 2017 10:13:22 GMT
-From:   Vegard Nossum <vegard.nossum@oracle.com>
-To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Cc:     Christian Couder <christian.couder@gmail.com>,
-        Michal Zalewski <lcamtuf@google.com>,
-        Vegard Nossum <vegard.nossum@oracle.com>
-Subject: [PATCH 2/2] apply: handle assertion failure gracefully
-Date:   Sat, 25 Feb 2017 11:13:07 +0100
-Message-Id: <20170225101307.24067-2-vegard.nossum@oracle.com>
-X-Mailer: git-send-email 2.12.0.rc0
-In-Reply-To: <20170225101307.24067-1-vegard.nossum@oracle.com>
-References: <20170225101307.24067-1-vegard.nossum@oracle.com>
-X-Source-IP: aserv0021.oracle.com [141.146.126.233]
+        id S1751807AbdBYKal (ORCPT <rfc822;e@80x24.org>);
+        Sat, 25 Feb 2017 05:30:41 -0500
+Received: from mout.web.de ([212.227.17.11]:63072 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751647AbdBYKal (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 25 Feb 2017 05:30:41 -0500
+Received: from [192.168.178.36] ([79.237.49.102]) by smtp.web.de (mrweb101
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0M8zFx-1cboyO3N3l-00CTrK; Sat, 25
+ Feb 2017 11:30:05 +0100
+X-Mozilla-News-Host: news://news.public-inbox.org:119
+To:     Git List <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Subject: [PATCH] cocci: use ALLOC_ARRAY
+Message-ID: <6652d950-7de3-3b6d-0a2d-414e0e4247f4@web.de>
+Date:   Sat, 25 Feb 2017 11:30:03 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.7.1
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+X-Provags-ID: V03:K0:ZrddaTlyslB55CafA33d6/b5P2aVTRBTfPZVniQMvv86/Vl5GgE
+ 3INfPp0k7whGLt1+HiMwqIrtp0AIJClZmT+3X05dsfTy0OyQrnaP4IAYMWNmH3oAMCmsxap
+ cnmzkx1impM+P8cbCP9sws86EBRPnPrcyz6dK5nqZqtmcBNAn904ow9YiexLZLp4pFl7IPs
+ dQDcDxy/570Pr5PwAsOPg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:QyzRXM/Bts4=:4EqLcQ5baW/9C0R8eQNcg0
+ 9LmAWJJWxPPsXdrRM9Ql2Jbq50qpx3ruyYRcxW89U0gSFO/sDUu17FoBm9rbbnSqqJc7JjxE+
+ Z5t+u0hEwbNbLytyvlST0GowbK5S8N0E2rLkkiiUfgtvPdgEO7t6WiaxLkpyfAUqPOZ9dw/wy
+ kAFKkFMPrj0ttG033RUxr+JJLo8ZAj+EKZSAzTTPKdgPfDo+1tXkkIkQvrFtan6w44+loQ7DT
+ o7/PNT6GOQb8O5nBgffusi5E4R4tHh1ssP9K4Qstg/8y78jK6k7OVg0lNEO6MuCtEJu0+c78m
+ T8AeM6LuH/UVQ7mog2opr9igpmI8TVpRvToe5HB8MQxYI2pVjCm3eQmNqIKbV4T88ccq7/f31
+ jn1TmdYEFhhlF8NA+kkDs7423ztN+WpgaRve0rnfJc1oJ4qzMsQmAlS3q71yXWvcEfkqEaohv
+ i5JCfu89mGhNoj7AjozG9jRr1bwOQEkxLFHWbeTzliV1723G9DawsISe3KPTSQ0cNu1SPLZa1
+ 6u1PjxOCDwfVTFQLviADjNxXU5wqpbyuCYiZw4thmOMovcyarYHCTwrcdxT8GXY3sA90UbAu4
+ /9x0HDcDqVrNjhglQPUz452aNf6WyyBOqEVNGNcFoRwO9kG8AFCbD0zucQg8aAsTb8r7w6mUx
+ OaS9izUo1v7RYmCrjv1e/OFafuDN/Wt5JKUFXeIbsdL68P26Uc9bRckAapgByCacRYx2dv5Pq
+ pOmWqwPGYyoiyEevQoRpWeahAtpZ7CIhQvBL8Cv7Rx128JpVncitVwQWxXr3X5uLJaAqLZ2F/
+ H0JXWQ+
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-For the patches in the added testcases, we were crashing with:
+Add a semantic patch for using ALLOC_ARRAY to allocate arrays and apply
+the transformation on the current source tree.  The macro checks for
+multiplication overflow and infers the element size automatically; the
+result is shorter and safer code.
 
-    git-apply: apply.c:3665: check_preimage: Assertion `patch->is_new <= 0' failed.
-
-As it turns out, check_preimage() is prepared to handle these conditions,
-so we can remove the assertion.
-
-Found using AFL.
-
-Signed-off-by: Vegard Nossum <vegard.nossum@oracle.com>
-
+Signed-off-by: Rene Scharfe <l.s.r@web.de>
 ---
+ contrib/coccinelle/array.cocci | 16 ++++++++++++++++
+ worktree.c                     |  2 +-
+ 2 files changed, 17 insertions(+), 1 deletion(-)
 
-(I'm fully aware of how it looks to just delete an assertion to "fix" a
-bug without any other changes to accomodate the condition that was
-being tested for. I am definitely not an expert on this code, but as far
-as I can tell -- both by reviewing and testing the code -- the function
-really is prepared to handle the case where patch->is_new == 1, as it
-will always hit another error condition if that is true. I've tried to
-add more test cases to show what errors you can expect to see instead of
-the assertion failure when trying to apply these nonsensical patches. If
-you don't want to remove the assertion for whatever reason, please feel
-free to take the testcases and add "# TODO: known breakage" or whatever.)
----
- apply.c                     |  1 -
- t/t4154-apply-git-header.sh | 36 ++++++++++++++++++++++++++++++++++++
- 2 files changed, 36 insertions(+), 1 deletion(-)
-
-diff --git a/apply.c b/apply.c
-index cbf7cc7f2..9219d2737 100644
---- a/apply.c
-+++ b/apply.c
-@@ -3652,7 +3652,6 @@ static int check_preimage(struct apply_state *state,
- 	if (!old_name)
- 		return 0;
+diff --git a/contrib/coccinelle/array.cocci b/contrib/coccinelle/array.cocci
+index 2d7f25d99f..4ba98b7eaf 100644
+--- a/contrib/coccinelle/array.cocci
++++ b/contrib/coccinelle/array.cocci
+@@ -24,3 +24,19 @@ expression n;
+ @@
+ - memcpy(dst, src, n * sizeof(T));
+ + COPY_ARRAY(dst, src, n);
++
++@@
++type T;
++T *ptr;
++expression n;
++@@
++- ptr = xmalloc(n * sizeof(*ptr));
+++ ALLOC_ARRAY(ptr, n);
++
++@@
++type T;
++T *ptr;
++expression n;
++@@
++- ptr = xmalloc(n * sizeof(T));
+++ ALLOC_ARRAY(ptr, n);
+diff --git a/worktree.c b/worktree.c
+index d633761575..d7b911aac7 100644
+--- a/worktree.c
++++ b/worktree.c
+@@ -175,7 +175,7 @@ struct worktree **get_worktrees(unsigned flags)
+ 	struct dirent *d;
+ 	int counter = 0, alloc = 2;
  
--	assert(patch->is_new <= 0);
- 	previous = previous_patch(state, patch, &status);
+-	list = xmalloc(alloc * sizeof(struct worktree *));
++	ALLOC_ARRAY(list, alloc);
  
- 	if (status)
-diff --git a/t/t4154-apply-git-header.sh b/t/t4154-apply-git-header.sh
-index d651af4a2..c440c48ad 100755
---- a/t/t4154-apply-git-header.sh
-+++ b/t/t4154-apply-git-header.sh
-@@ -12,4 +12,40 @@ rename new 0
- EOF
- '
+ 	list[counter++] = get_main_worktree();
  
-+test_expect_success 'apply deleted file mode / new file mode / wrong mode' '
-+	test_must_fail git apply << EOF
-+diff --git a/. b/.
-+deleted file mode 
-+new file mode 
-+EOF
-+'
-+
-+test_expect_success 'apply deleted file mode / new file mode / wrong type' '
-+	mkdir x &&
-+	chmod 755 x &&
-+	test_must_fail git apply << EOF
-+diff --git a/x b/x
-+deleted file mode 160755
-+new file mode 
-+EOF
-+'
-+
-+test_expect_success 'apply deleted file mode / new file mode / already exists' '
-+	touch 1 &&
-+	chmod 644 1 &&
-+	test_must_fail git apply << EOF
-+diff --git a/1 b/1
-+deleted file mode 100644
-+new file mode 
-+EOF
-+'
-+
-+test_expect_success 'apply new file mode / copy from / nonexistant file' '
-+	test_must_fail git apply << EOF
-+diff --git a/. b/.
-+new file mode 
-+copy from  
-+EOF
-+'
-+
- test_done
 -- 
-2.12.0.rc0
+2.12.0
 
