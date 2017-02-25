@@ -6,67 +6,50 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CCDC2201B0
-	for <e@80x24.org>; Sat, 25 Feb 2017 20:15:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B5CDD201B0
+	for <e@80x24.org>; Sat, 25 Feb 2017 20:21:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752018AbdBYUP0 (ORCPT <rfc822;e@80x24.org>);
-        Sat, 25 Feb 2017 15:15:26 -0500
-Received: from cloud.peff.net ([104.130.231.41]:34132 "EHLO cloud.peff.net"
+        id S1752006AbdBYUVP (ORCPT <rfc822;e@80x24.org>);
+        Sat, 25 Feb 2017 15:21:15 -0500
+Received: from cloud.peff.net ([104.130.231.41]:34139 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751885AbdBYUPZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 25 Feb 2017 15:15:25 -0500
-Received: (qmail 3114 invoked by uid 109); 25 Feb 2017 20:15:25 -0000
+        id S1751873AbdBYUVO (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 25 Feb 2017 15:21:14 -0500
+Received: (qmail 3515 invoked by uid 109); 25 Feb 2017 20:21:14 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sat, 25 Feb 2017 20:15:25 +0000
-Received: (qmail 2947 invoked by uid 111); 25 Feb 2017 20:15:29 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sat, 25 Feb 2017 20:21:14 +0000
+Received: (qmail 428 invoked by uid 111); 25 Feb 2017 20:21:18 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Sat, 25 Feb 2017 15:15:29 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 25 Feb 2017 15:15:22 -0500
-Date:   Sat, 25 Feb 2017 15:15:22 -0500
+    by peff.net (qpsmtpd/0.84) with SMTP; Sat, 25 Feb 2017 15:21:18 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 25 Feb 2017 15:21:11 -0500
+Date:   Sat, 25 Feb 2017 15:21:11 -0500
 From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] commit: don't check for space twice when looking for
- header
-Message-ID: <20170225201522.uan52fwey6zjosym@sigill.intra.peff.net>
-References: <23989e76-24ba-90a4-91a9-9f66bfccb7c9@web.de>
- <b1d5c882-38b8-dd2d-2e5f-aafb8dfada81@web.de>
+To:     "Robin H. Johnson" <robbat2@gentoo.org>
+Cc:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder@ira.uka.de>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: git-clone --config order & fetching extra refs during initial
+ clone
+Message-ID: <20170225202111.ogbmjrdplyjddssi@sigill.intra.peff.net>
+References: <robbat2-20170225T185056-448272755Z@orbis-terrarum.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <b1d5c882-38b8-dd2d-2e5f-aafb8dfada81@web.de>
+In-Reply-To: <robbat2-20170225T185056-448272755Z@orbis-terrarum.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Feb 25, 2017 at 08:27:40PM +0100, René Scharfe wrote:
+On Sat, Feb 25, 2017 at 07:12:38PM +0000, Robin H. Johnson wrote:
 
-> Both standard_header_field() and excluded_header_field() check if
-> there's a space after the buffer that's handed to them.  We already
-> check in the caller if that space is present.  Don't bother calling
-> the functions if it's missing, as they are guaranteed to return 0 in
-> that case, and remove the now redundant checks from them.
+> TL;DR: git-clone ignores any fetch specs passed via --config.
 
-Makes sense, and I couldn't spot any errors in your logic or in the
-code.
+I agree that this is a bug. There's some previous discussion and an RFC
+patch from lat March (author cc'd):
 
->  static inline int standard_header_field(const char *field, size_t len)
->  {
-> -	return ((len == 4 && !memcmp(field, "tree ", 5)) ||
-> -		(len == 6 && !memcmp(field, "parent ", 7)) ||
-> -		(len == 6 && !memcmp(field, "author ", 7)) ||
-> -		(len == 9 && !memcmp(field, "committer ", 10)) ||
-> -		(len == 8 && !memcmp(field, "encoding ", 9)));
-> +	return ((len == 4 && !memcmp(field, "tree", 4)) ||
-> +		(len == 6 && !memcmp(field, "parent", 6)) ||
-> +		(len == 6 && !memcmp(field, "author", 6)) ||
-> +		(len == 9 && !memcmp(field, "committer", 9)) ||
-> +		(len == 8 && !memcmp(field, "encoding", 8)));
+  http://public-inbox.org/git/1457313062-10073-1-git-send-email-szeder@ira.uka.de/
 
-Unrelated, but this could probably be spelled with a macro and strlen()
-to avoid the magic numbers. It would probably be measurably slower for a
-compiler which doesn't pre-compute strlen() on a string literal, though.
+That discussion veered off into alternatives, but I think the v2 posted
+in that thread is taking a sane approach.
 
 -Peff
