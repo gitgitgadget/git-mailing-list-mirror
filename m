@@ -2,119 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 404D5201B0
-	for <e@80x24.org>; Sat, 25 Feb 2017 19:12:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1B7F3201B0
+	for <e@80x24.org>; Sat, 25 Feb 2017 19:12:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751916AbdBYTMd (ORCPT <rfc822;e@80x24.org>);
-        Sat, 25 Feb 2017 14:12:33 -0500
-Received: from castro.crustytoothpaste.net ([75.10.60.170]:40944 "EHLO
-        castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751885AbdBYTMc (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 25 Feb 2017 14:12:32 -0500
-Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:f8da:200e:3546:3090])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S1751924AbdBYTMl (ORCPT <rfc822;e@80x24.org>);
+        Sat, 25 Feb 2017 14:12:41 -0500
+Received: from smtp.gentoo.org ([140.211.166.183]:57198 "EHLO smtp.gentoo.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751661AbdBYTMk (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 25 Feb 2017 14:12:40 -0500
+Received: from grubbs.orbis-terrarum.net (localhost [127.0.0.1])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
         (No client certificate requested)
-        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 33226280AF;
-        Sat, 25 Feb 2017 19:04:14 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
-        s=default; t=1488049454;
-        bh=eqgl8XjYQ5h1dQADZtPbiJRNTWPynjrS67nGkGB1tp0=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=Fb+TD6yCDkxBmT3JrlonTW86dgAHyj8eTHCC2eLxoE1rJRktXhYVc7uG8ctDW9mx0
-         GoaqAY0YJQz6rnXYzIGJkgd2elvYoWUe1A2zl6nZQ7Nd7kAsxUwP/gwiAiOOoDi96g
-         lpAlO6pd6kKrU+pWq6z/hKHrcLX00KB6esjUUFQFHTdirkZsgbeosCF0FQ94mqPy+Y
-         ANEd9fiAPcPWViyXH9yt1kRxOaYMp3mfEf8Y1ze+xscQH6fLOYBIZOuDInlbDzs5y0
-         8b1Fl/SGcyCY5F6wLEVRP6srfJPAPAkaOgIOPi9hSQxlJCKLCUkWv7E2ap8Gg7FRHO
-         5DJhGGWDBDBmkwYJLNl5Cgjm8fSMLtKFeWIqazodddZBVoJ8dHiUGDQjLPlngexUwb
-         DMoRfP7OOSmG2AAUI/yc9X87sIGTq4UPClcERcp9PuT/rTFcmiprLJQY2yp15NZdPl
-         DhSrR041ICkmaw8hfP6y+y5z1OGVvtI3M4xtltzG+55KOs8dGbH
-Date:   Sat, 25 Feb 2017 19:04:10 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Joey Hess <id@joeyh.name>, Git Mailing List <git@vger.kernel.org>
-Subject: Re: SHA1 collisions found
-Message-ID: <20170225190410.anvb7ll7tlhwgm3t@genre.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Duy Nguyen <pclouds@gmail.com>, Joey Hess <id@joeyh.name>,
-        Git Mailing List <git@vger.kernel.org>
-References: <20170223164306.spg2avxzukkggrpb@kitenet.net>
- <CACsJy8AtQG8YXQ+YfSFifUxqtd==THj5weJK5jooyiRN0yamiQ@mail.gmail.com>
+        by smtp.gentoo.org (Postfix) with ESMTPS id 85032340FC8
+        for <git@vger.kernel.org>; Sat, 25 Feb 2017 19:12:39 +0000 (UTC)
+Received: (qmail 5369 invoked by uid 10000); 25 Feb 2017 19:12:38 -0000
+Date:   Sat, 25 Feb 2017 19:12:38 +0000
+From:   "Robin H. Johnson" <robbat2@gentoo.org>
+To:     Git Mailing List <git@vger.kernel.org>
+Subject: git-clone --config order & fetching extra refs during initial clone
+Message-ID: <robbat2-20170225T185056-448272755Z@orbis-terrarum.net>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="ea74hchs53s7rmne"
+        protocol="application/pgp-signature"; boundary="nzri8VXeXB/g5ayr"
 Content-Disposition: inline
-In-Reply-To: <CACsJy8AtQG8YXQ+YfSFifUxqtd==THj5weJK5jooyiRN0yamiQ@mail.gmail.com>
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.9.0-2-amd64)
-User-Agent: NeoMutt/20170113 (1.7.2)
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---ea74hchs53s7rmne
+--nzri8VXeXB/g5ayr
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, Feb 24, 2017 at 04:42:38PM +0700, Duy Nguyen wrote:
-> On Thu, Feb 23, 2017 at 11:43 PM, Joey Hess <id@joeyh.name> wrote:
-> > IIRC someone has been working on parameterizing git's SHA1 assumptions
-> > so a repository could eventually use a more secure hash. How far has
-> > that gotten? There are still many "40" constants in git.git HEAD.
->=20
-> Michael asked Brian (that "someone") the other day and he replied [1]
->=20
-> >> I'm curious; what fraction of the overall convert-to-object_id campaign
-> >> do you estimate is done so far? Are you getting close to the promised
-> >> land yet?
-> >
-> > So I think that the current scope left is best estimated by the
-> > following command:
-> >
-> >   git grep -P 'unsigned char\s+(\*|.*20)' | grep -v '^Documentation'
-> >
-> > So there are approximately 1200 call sites left, which is quite a bit of
-> > work.  I estimate between the work I've done and other people's
-> > refactoring work (such as the refs backend refactor), we're about 40%
-> > done.
+TL;DR: git-clone ignores any fetch specs passed via --config.
 
-As a note, I've been working on this pretty much nonstop since the
-collision announcement was made.  After another 27 commits, I've got it
-down from 1244 to 1119.
+The documentation for git-clone --config says:
+| Set a configuration variable in the newly-created repository; this takes
+| effect immediately __AFTER__ the repository is initialized, but __BEFORE__
+| the remote history is fetched or any files checked out. [...]
+(emphasis added)
 
-I plan to send another series out sometime after the existing series has
-hit next.  People who are interested can follow the object-id-part*
-branches at https://github.com/bk2204/git.
+However, this doesn't seem be be true, right after the clone, the refs are =
+NOT
+present, and the next fetch seems to pull the extra refs. This seems to be
+because the refspec building for the initial clone doesn't take into account
+any fetch lines added to the config.
+
+Testcase to reproduce (confirmed in v2.11.1, not tested 2.12.0 quite yet):
+# export REPOURI=3Dhttps://github.com/openstack-dev/sandbox.git DIR=3Dtest
+# git clone \
+    -c remote.origin.fetch=3D+refs/notes/*:refs/notes/* \
+    -c remote.origin.fetch=3D+refs/changes/*:refs/remotes/origin/changes/* \
+    $REPOURI $DIR \
+  && cd $DIR \
+  && git fetch
+
 --=20
-brian m. carlson / brian with sandals: Houston, Texas, US
-+1 832 623 2791 | https://www.crustytoothpaste.net/~bmc | My opinion only
-OpenPGP: https://keybase.io/bk2204
+Robin Hugh Johnson
+Gentoo Linux: Dev, Infra Lead, Foundation Trustee & Treasurer
+E-Mail   : robbat2@gentoo.org
+GnuPG FP : 11ACBA4F 4778E3F6 E4EDF38E B27B944E 34884E85
+GnuPG FP : 7D0B3CEB E9B85B1F 825BCECF EE05E6F6 A48F6136
 
---ea74hchs53s7rmne
+--nzri8VXeXB/g5ayr
 Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
 
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.1.18 (GNU/Linux)
+Version: GnuPG v2.1
+Comment: Robbat2 @ Orbis-Terrarum Networks - The text below is a digital signature. If it doesn't make any sense to you, ignore it.
 
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlix1SoACgkQv1NdgR9S
-9otr+Q//eclE7cfAu816YliCf7dbqh6K0ae1s0ZjwzHs4ewlDvkwE9x6YRH0k0B/
-rWBpJNG2imXqGww7ONQjqwVayQCOWtgsRfJSEDYg7owCKv4Dm4DZziEV75JwUX47
-37vB+l3lEEPM4vBb+qkGfUkK0SyD6nUQO0IUEeYLK81Q1bqCs/Hu521wN0eua6yN
-gxdd9Qq5eFruYrM+iiwAUOcqtZvsDKrtcIYysVYPUJvcbgDbZuW0RPOa6jU6SKzq
-+g21aG4gNbEtzPNdq7TlQdLZzLKgoc7D6oHEsYx22bC/yCZCNg3N7/P9oOEGsaBA
-QpvOCHmnQtSq6eX6oG4O3+Lq4/agkXL2zugrJT7hUfyIUcjgTC3jxtlT+z8NzQ/U
-TfgjUYFmr3Jz/Wxu4YsPHuK8OLVkX+xEabAE6l21Ff28Ra9KgJBoU0Z0cpUEWj54
-IHay/3mpieXFHnBo810n50Gdp84saIRxT779COgIeN3EU1b7JvuWXQoVUtW2xivk
-FtS0OOelSMUO+9yHMXBd8pMdKjLr/bzMmLDmJ87CB3EAMX3O1l1TEQVC59L2L+sJ
-9mOZhD0PKH65TwZdbWIP9zPQgy7UWjYBNHNmfQbswAQr8flN/KPzNmLC/mYm9/7W
-9g6fFqPwHOg63vNoTAzJ26vLEnVGBxipNeolniHoqq73MRuwQs8=
-=KjHD
+iQJ8BAEBCgBmBQJYsdclXxSAAAAAAC4AKGlzc3Vlci1mcHJAbm90YXRpb25zLm9w
+ZW5wZ3AuZmlmdGhob3JzZW1hbi5uZXRDQjJEMjlCMjBCMkM5MUFDQzE2NDk2NkRB
+RTcyMjg3ODM3QzU5RjVGAAoJEK5yKHg3xZ9fIAQP/ipf5F35bQE3Hx/leUlQgwQ4
+aLCKYdu0deyxcxlUIMln2F7hp8mOykeyEVjNl/k3KpQVKOC55LpC6vxw4Xb9l0lx
+wgwcMZnm67igmI9/r/j63nUCHGs/elNMh00d3TJg09omrpsnlVQ4JjXuQKW2dMQv
+F6vQ8R/5qbIKRrIWi7TRkt8a8KSkugTp6/Ie9dpoY/DQi4s/vugKnE5k1NSeRfhd
+z2DPebp5IynYetmYeQqWfCTSJSGDaDAW5TISBx9zSQls/1QdcSC1x6t6BTT6iLDX
+kLHlBmFD0uAqDpE1zc9t5Lhi3xUdn2YTKlNlZh9xjg5f7Ti2AwgG3aTJ1ShHVbLT
+RbZ2EorqkCTWlVT1Fxb0EagU7l0KppQz8RwlS9AmugdB+tVoQhi/Cctvc5zq58dz
+Yj9DV4VQ5UhwIpD4wugUfcU2Tr/LmLHzSSHrBV5geZ8lLvTus0x4zArx0+FOyyCR
+KpFmICzDtsF3/EKCCOk0rfq8jLyaMKp8MKZ5Y/SsegcsFC4dpIMAj/AA7eY0tVEr
+XqL6bDoZhHlmOC7cwVZqxCkY4CtB8/Gs8RRWVIiOhL707XUxpXb+TpsacG8DG/qq
+XC4mWz7XG7DTYQPtP08WafD9o+GfEIddwDHdmIFX52GeGGXf7vEEMI6y+DaQzJck
+Iau91NZBla4vKSdgvM2L
+=TBVj
 -----END PGP SIGNATURE-----
 
---ea74hchs53s7rmne--
+--nzri8VXeXB/g5ayr--
