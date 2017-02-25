@@ -2,150 +2,160 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F0D54201A9
-	for <e@80x24.org>; Sat, 25 Feb 2017 00:35:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3CE57201A9
+	for <e@80x24.org>; Sat, 25 Feb 2017 00:38:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751424AbdBYAcc (ORCPT <rfc822;e@80x24.org>);
-        Fri, 24 Feb 2017 19:32:32 -0500
-Received: from mail-qt0-f172.google.com ([209.85.216.172]:36245 "EHLO
-        mail-qt0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751395AbdBYAcb (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 Feb 2017 19:32:31 -0500
-Received: by mail-qt0-f172.google.com with SMTP id r45so29504853qte.3
-        for <git@vger.kernel.org>; Fri, 24 Feb 2017 16:32:03 -0800 (PST)
+        id S1751386AbdBYAiR (ORCPT <rfc822;e@80x24.org>);
+        Fri, 24 Feb 2017 19:38:17 -0500
+Received: from mail-it0-f49.google.com ([209.85.214.49]:38183 "EHLO
+        mail-it0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751291AbdBYAiQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 Feb 2017 19:38:16 -0500
+Received: by mail-it0-f49.google.com with SMTP id y135so40254983itc.1
+        for <git@vger.kernel.org>; Fri, 24 Feb 2017 16:38:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
+        d=google.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=6CbB5zsRNgMc3F4B0Jemuz5LZUFnSA1NUEdNBpFlrjE=;
-        b=LbAdn9Xu5zIR1YzCtGSPN270NMdEpqvJdTdbqPmTbPql9dvYXFa4/A8oWrqV1l3hZI
-         tlgOdQuqYMaxz6q4HtCjWbEq7JoD4+yxaYxaZQOOj7qmzlUQHXHOU9iRWuVQMDqej6zm
-         VBIYiW7awMtkk5X5HPVMd1NilmOJrczR5ciniQOPItQbyEwwdzsOqB3u+iIImeFnHS0s
-         UT5Ys+Q6zCsUU05dUVfU2z7LWUtwhWG2JaJQJ/LXIHJyl3LgQjvIAZ/bRbblfSj6XsiN
-         ZTVk90K9LLS+KHBaO7R4tCbDfgLAeZT+YcIkkRSq0F2+nfBo4C+A2/Ixfkf4Ss5r7ya8
-         A5JA==
+        bh=7/9eFBSMa6vvLyX3EV/pyimjkgODy3lttWrs4thh+5U=;
+        b=jh9cAbRXvGjcHyALrE65ArHNnJAHEkBXMVxfORV3YCrq2n0Pyg/6KQ8d1dSu/Ze72Y
+         HVYAupZwkv7aUo8auoSnVEZ1vTK5eDIUz8jl2aFx2gHIkBGI/WPymiifDvmnQCeHqIqr
+         tdnR9Q/03YzJpK47TKI2lqkeBMRT/mLd46LUlRbE16FqcQx+AhUV2F2S9rNvUZWg/ADq
+         kawNIa9H0+qd/NkLaczVLW7A+F/YMEDfA4moqIMJ6HHF1ewN1Jo0KUR1ekV78UCkiCjZ
+         6miSd+8/N30kJFbAT81w20WI3IMTuG2BNhmSJFFoKO8p3COt2Z0Cax0UUT+6YJW6KfD2
+         6T8g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=6CbB5zsRNgMc3F4B0Jemuz5LZUFnSA1NUEdNBpFlrjE=;
-        b=AGWmurQ16TtsKgnb2im1zR2/jsOunVo6zR22lcsneRauYFwMVw4u9jjsMlaUmE3hOp
-         Gs2UERuT9SC7Acqz+0sn8aB62MD0yUSTYrGNkZq4QxX9/lQRkgfVNvJid4YKHdJZp2N7
-         YbwntuNSntv3zpnh9y+Exw/4S7TIoZ4axFb+jHhekRDcY65CQ/PmnHbnYeQPHYDrZ1uv
-         IN+4xCOVrLM7zHk5YPSewBsrdquIED4TSCNOTT/6XxL7xrIKqNPkONjxuYvV4xedyisQ
-         ZaxxpnMlZWJFMGAkujzydn6NbzXfmbiu3coJ3S2pi6urggOtwOxlQs7UFg1ft80MIuV3
-         9DWQ==
-X-Gm-Message-State: AMke39kLyBQ5AlzFk29pIF6qr+Ib1T8IB6VOPAl4202LeiK7v75Zf9zOKjdcJIhr9CQ0gG/QotHL+JsNGtivDg==
-X-Received: by 10.200.47.88 with SMTP id k24mr6189137qta.67.1487982723082;
- Fri, 24 Feb 2017 16:32:03 -0800 (PST)
+        bh=7/9eFBSMa6vvLyX3EV/pyimjkgODy3lttWrs4thh+5U=;
+        b=M8SINzDjbJvrS+/m0ERyyszTCY7N2ljP2jSdXLH4rnecj28Y5kMQXLOxGO+Wpo1PNR
+         sPKMgm9V25D7Y8T1uG/SlgjBKo09tzC2N/bK1VXAI+Yp12aLCS98MtHABh+HJFU5T2BL
+         cFyl2IQWrqZu6v1Fxg7G0x3mGA7Lbn2LhmTnGZm4vyUbRlf7ofUFyDi0KRNFuNmwWN0s
+         HvAAa1qtg+anTu6bipqr28S/+bAcrtg3jFGsATOMLw2wh8OlGiWUkI2k60U/cvVEJ7/s
+         7mPYRUhcyvJYSG8okue4wSoxNvdxFzU7i54uxg+r2ARL4KQgr5ai3oWmTPkpPfTt//QG
+         rsDw==
+X-Gm-Message-State: AMke39kyaAnWOZWVJrjmuhjlyZD4xXf7nO+DbQcJIczpcaCma5XKe0cC4xQ6TYmzAipy40rxjraGftiaxbHWKvLD
+X-Received: by 10.36.225.13 with SMTP id n13mr5183361ith.114.1487982677832;
+ Fri, 24 Feb 2017 16:31:17 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.12.134.218 with HTTP; Fri, 24 Feb 2017 16:31:32 -0800 (PST)
-In-Reply-To: <xmqqh93j1g9n.fsf@gitster.mtv.corp.google.com>
-References: <20170223164306.spg2avxzukkggrpb@kitenet.net> <22704.19873.860148.22472@chiark.greenend.org.uk>
- <xmqq60jz5wbm.fsf@gitster.mtv.corp.google.com> <nycvar.QRO.7.75.62.1702240943540.6590@qynat-yncgbc>
- <xmqqk28f4fti.fsf@gitster.mtv.corp.google.com> <CAGZ79kaZWe-8pMZnQv7uZtr8wXWawFeJjUa68-b0oa4yFo-HcA@mail.gmail.com>
- <xmqq7f4f4cqg.fsf@gitster.mtv.corp.google.com> <CA+dhYEVOyACM9ARP2deKVLm1hHOVsTah1WfGoNzGGKO6CGrQpw@mail.gmail.com>
- <xmqqh93j1g9n.fsf@gitster.mtv.corp.google.com>
-From:   ankostis <ankostis@gmail.com>
-Date:   Sat, 25 Feb 2017 01:31:32 +0100
-Message-ID: <CA+dhYEVwLGNZh-hbcJm+kMR4W45VbwvSVY+7YKt0V9jg_b_M4g@mail.gmail.com>
-Subject: Re: SHA1 collisions found
-To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Cc:     Stefan Beller <sbeller@google.com>, David Lang <david@lang.hm>,
-        Ian Jackson <ijackson@chiark.greenend.org.uk>,
-        Joey Hess <id@joeyh.name>, git@lakedaemon.net
+Received: by 10.79.33.148 with HTTP; Fri, 24 Feb 2017 16:31:17 -0800 (PST)
+In-Reply-To: <20170224235100.52627-3-bmwill@google.com>
+References: <20170224235100.52627-1-bmwill@google.com> <20170224235100.52627-3-bmwill@google.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Fri, 24 Feb 2017 16:31:17 -0800
+Message-ID: <CAGZ79kYRrAmJ+=563PBkdiBwaUzqqQOMVANT_fTvURFv+=Yiog@mail.gmail.com>
+Subject: Re: [PATCH 2/5] pathspec: add PATHSPEC_FROMROOT flag
+To:     Brandon Williams <bmwill@google.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        Duy Nguyen <pclouds@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 24 February 2017 at 21:32, Junio C Hamano <gitster@pobox.com> wrote:
-> ankostis <ankostis@gmail.com> writes:
+On Fri, Feb 24, 2017 at 3:50 PM, Brandon Williams <bmwill@google.com> wrote:
+> Add the `PATHSPEC_FROMROOT` flag to allow callers to instruct
+> 'parse_pathspec()' that all provided pathspecs are relative to the root
+> of the repository.  This allows a caller to prevent a path that may be
+> outside of the repository from erroring out during the pathspec struct
+> construction.
 >
->> Let's assume that git is retroffited to always support the "default"
->> SHA-3, but support additionally more hash-funcs.
->> If in the future SHA-3 also gets defeated, it would be highly unlikely
->> that the same math would also break e.g. Blake.
->> So certain high-profile repos might choose for extra security 2 or more hashes.
->
-> I think you are conflating two unrelated things.
-
-I believe the two distinct things you refer to below are these:
-
-  a. storing objects in filesystem and accessing them
-     by name (e.g. from cmdline), and
-
-  b. cross-referencing inside the objects (trees, tags, notes),
-
-correct?
-
-If not, then please ignore my answers, below.
 
 
->  * How are these "2 or more hashes" actually used?  Are you going to
->    add three "parent " line to a commit with just one parent, each
->    line storing the different hashes?
+> +/* For callers that know all paths are relative to the root of the repository */
+> +#define PATHSPEC_FROMROOT (1<<9)
 
-Yes, in all places where references are involved (tags, notes).
-Based on what what the git-hackers have written so far, this might be doable.
+What is the calling convention for these submodule pathspecs?
+IIRC, we'd pass on the super-prefix and the literal pathspec,
+e.g. when there is a submodule "sub" inside the superproject,
+The invocation on the submodule would be
 
-To ensure integrity in the case of crypto-failures, all objects must
-cross-reference each other with multiple hashes.
-Of course this extra security would stop as soon as you reach "old"
-history (unless you re-write it).
+    git FOO --super-prefix="sub" <arguments> -- sub/pathspec/inside/...
 
+and then the submodule process would need to "subtract" the superprefix
+from the pathspec argument to see its actual pathspec, e.g. in gerrit:
 
->    How will such a commit object
->    be named---does it have three names and do you plan to have three
->    copies of .git/refs/heads/master somehow, each of which have
->    SHA-1, SHA-3 and Blake, and let any one hash to identify the
->    object?
+$ GIT_TRACE=1 git grep --recurse-submodules -i test -- \
+    plugins/cookbook-plugin/
+...
 
-Yes, based on Jason Cooper's idea, above, objects would be stored
-under all names in the filesystem using hard links (although this
-might not work nice on Windows).
+trace: run_command: '--super-prefix=plugins/cookbook-plugin/' 'grep' \
+  '--recurse-submodules' '-i' '-etest' '--threads=4' '--'
+'plugins/cookbook-plugin/'
+..
+but also:
+...
+ trace: run_command: '--super-prefix=plugins/download-commands/' 'grep' \
+  '--recurse-submodules' '-i' '-etest' '--threads=4' '--'
+'plugins/cookbook-plugin/'
+...
 
+So if I change into a directory:
 
->    I suspect you are not going to do so; instead, you would use a
->    very long string that is a concatenation of these three hashes as
->    if it is an output from a single hash function that produces a
->    long result.
->
->    So I think the most natural way to do the "2 or more for extra
->    security" is to allow us to use a very long hash.  It does not
->    help to allow an object to be referred to with any of these 2 or
->    more hashes at the same time.
+$ cd plugins
+plugins$ git grep --recurse-submodules -i test -- cookbook-plugin/
+plugins$ #empty?
+plugins$ git grep --recurse-submodules -i test -- plugins/cookbook-plugin/
+...
+Usual output, so the pathspecs are absolute path to the superprojects
+root? Let's try relative path:
+plugins$ git grep --recurse-submodules -i test -- ../plugins/cookbook-plugin/
+fatal: ../plugins/cookbook-plugin/: '../plugins/cookbook-plugin/' is
+outside repository
+...
+Running with GIT_TRACE=1:
 
-If hard-linking all names is doable, then most restrictions above are
-gone, correct?
+trace: run_command: '--super-prefix=plugins/cookbook-plugin/' 'grep' \
+    '--recurse-submodules' '-i' '-etest' '--threads=4' '--'
+'../plugins/cookbook-plugin/'
 
+that seems like a mismatch of pathspec and superproject prefix, the prefix ought
+to be different then? Maybe also including ../ because that is the
+relative path from
+cwd to the superporojects root and that is where we anchor all paths?
 
->  * If employing 2 or more hashes by combining into one may enhance
->    the security, that is wonderful.  But we want to discourage
->    people from inventing their own combinations left and right and
->    end up fragmenting the world.  If a project that begins with
->    SHA-1 only naming is forked to two (or more) and each fork uses
->    different hashes, merging them back will become harder than
->    necessary unless you support all these hashes forks used.
+Easy to test that out:
 
-Agree on discouraging people's inventions.
+plugins$ GIT_TRACE=1 git --super-prefix=../ grep --recurse-submodules \
+    -i test -- ../plugins/cookbook-plugin/
+fatal: can't use --super-prefix from a subdirectory
 
-That is why I believe that some HASH (e.g. SHA-3) must be the blessed one.
-All git >= 3.x.x must support at least this one (for naming and
-cross-referencing between objects).
+ok, not as easy. :/
 
+So another test with relative path:
+(in git.git)
 
-> Having said all that, the way to figure out the hash used in the way
-> we spell the object name may not be the best place to discourage
-> people from using random hashes of their choice.  But I think we
-> want to avoid doing something that would actively encourage
-> fragmentation.
+cd t/diff-lib
+t/diff-lib$ git grep freedom
+COPYING:freedom to share and change it.  By contrast, the GNU General Public
+...
 
-I guess the "blessed SHA-3 will discourage people using the other
-names., untill the next crypto-crack.
+So the path displayed is relative to the cwd (and the search results as well)
+In the submodule case we would expect to have the super prefix
+to be computed to be relative to the cwd?
+
+Checking the tests, this is handled correctly with this patch series. :)
+
+But nevertheless, I think I know why I dislike this approach now:
+The super prefix is handled "too dumb" IMHO, see the case
+    plugins$ git grep test  -- cookbook-plugin/
+above, that doesn't correctly figure out the correct output.
+Although this might be a separate bug, but it sounds like it
+is the same underlying issue.
+
+--
+for the naming: How about PATHSPEC_FROMOUTSIDE
+when going with the series as is here?
+(the superprefix is not resolved, so the pathspecs given are
+literally pathspecs that are outside this repo and we can ignore
+them?
+
+Thanks,
+Stefan
