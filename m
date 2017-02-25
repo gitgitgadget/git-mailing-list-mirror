@@ -2,194 +2,73 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
 	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.0
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 278EC2022D
-	for <e@80x24.org>; Sat, 25 Feb 2017 11:51:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C68FA2022D
+	for <e@80x24.org>; Sat, 25 Feb 2017 11:53:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751360AbdBYLu5 (ORCPT <rfc822;e@80x24.org>);
-        Sat, 25 Feb 2017 06:50:57 -0500
-Received: from mout.gmx.net ([212.227.15.15]:49738 "EHLO mout.gmx.net"
+        id S1751844AbdBYLw6 (ORCPT <rfc822;e@80x24.org>);
+        Sat, 25 Feb 2017 06:52:58 -0500
+Received: from mout.gmx.net ([212.227.17.22]:52774 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751344AbdBYLu4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 25 Feb 2017 06:50:56 -0500
-Received: from virtualbox ([37.201.192.48]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0Mg4FJ-1cvYpZ3vIj-00NS7Q; Sat, 25
- Feb 2017 12:48:57 +0100
-Date:   Sat, 25 Feb 2017 12:48:54 +0100 (CET)
+        id S1751402AbdBYLwv (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 25 Feb 2017 06:52:51 -0500
+Received: from virtualbox ([37.201.192.48]) by mail.gmx.com (mrgmx103
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MD9uq-1cXfF711si-00GZJj; Sat, 25
+ Feb 2017 12:51:21 +0100
+Date:   Sat, 25 Feb 2017 12:51:17 +0100 (CET)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     Jeff King <peff@peff.net>
-cc:     David Turner <David.Turner@twosigma.com>,
-        Junio C Hamano <gitster@pobox.com>,
+cc:     Junio C Hamano <gitster@pobox.com>,
+        David Turner <David.Turner@twosigma.com>,
         "git@vger.kernel.org" <git@vger.kernel.org>,
         "sandals@crustytoothpaste.net" <sandals@crustytoothpaste.net>,
         Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH 2/2] http: add an "auto" mode for http.emptyauth
-In-Reply-To: <20170223013746.lturqad7lnehedb4@sigill.intra.peff.net>
-Message-ID: <alpine.DEB.2.20.1702251243390.3767@virtualbox>
-References: <20170222233333.dx5lknw4fpopu5hy@sigill.intra.peff.net> <20170222234059.iajn2zuwzkzjxit2@sigill.intra.peff.net> <b5778a7988ad4dfa9adfc8d312432189@exmbdft7.ad.twosigma.com> <20170223013746.lturqad7lnehedb4@sigill.intra.peff.net>
+Subject: Re: [PATCH] http(s): automatically try NTLM authentication first
+In-Reply-To: <20170223204804.syj6tgjdrgmqdzna@sigill.intra.peff.net>
+Message-ID: <alpine.DEB.2.20.1702251250320.3767@virtualbox>
+References: <20170222173936.25016-1-dturner@twosigma.com> <xmqqpoiaasgj.fsf@gitster.mtv.corp.google.com> <97ab9a812f7b46d7b10d4d06f73259d8@exmbdft7.ad.twosigma.com> <xmqq8toyapu6.fsf@gitster.mtv.corp.google.com> <20170222213410.iak43asq775tzr42@sigill.intra.peff.net>
+ <alpine.DEB.2.20.1702231806340.3767@virtualbox> <20170223194237.eckkpiqv7inuz7un@sigill.intra.peff.net> <xmqqlgsw7iey.fsf@gitster.mtv.corp.google.com> <20170223204804.syj6tgjdrgmqdzna@sigill.intra.peff.net>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:ZtHGJp+rL/puiDNQ8du8hCc8LWeRpessgJc6dQzjTHRB3m0SMAw
- iYPeSGBc0FIi3bjigkMh6QPmm/wCv+zTIbKbCZCoOuElPJCFJNOEHxxyHTw/fvK1lIt+f5m
- HoJBq4TJQZV747NUZfTReRLC/ro5pYGGgujL4F/MReKhH2aDEJXj/ZBhAsujfrClll8BD0V
- +NbPbK9181Ek/BNdULCKg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:fHYgb/TmEBg=:nRv52xNr6cERv/iiTaVIbs
- mjc4OvjXYhoXZPzmgLyZHuDrSjBHsOYhDwpEmG4sighDOJDvcXA/gVR/+IQHaOnVt9mMYWCDZ
- 5h07C8hQc+tsXRwqgDsMPF6LmsI9vswfjsErHmKfUyB1TmBOhG2FMk1ZeAWPpNA+wXX6++hpc
- 37n72iudFz9By391HIKMRP9wwkGz8n6ighkGyCSMHWYu2H8NOl9rkLrNmV72noq/rkPzMYOst
- rjCjelFjG+16d50fbkNNVI0w3HQa4iwqKkCt12dY6+uL6+rmdaLIe337gpP4CjaWcARod3yDW
- /6fFK/PkIVjjpXx9yNdvn9JURnG4QP/8FhieNdagksUb3bJ+TUgNNNNNAdc2vGZtYuxiQREGl
- snkO8rnpKRm5OhQ4i32FfcnG7GeXGKTnL9O0PdDnzKD7SCh/VeLD8Osk4N7oHoU0enedoHF5S
- H15JdVMZZ2ckJlNTVecBp6ByPNPhMifRflqAozcU0r9+w7ZIvSJUZA38YEKZU4NiCGYW0pxtf
- 2tjl5fqsftM5bWmfg7MsNMwGfR4xArLcqPwHhkvJzoIIYUL+VTfttmani6DcA9kQxLfYLB3+V
- MWTTjoGXMdcd65N8J0tc4FdTZR2LO8UGtYXRxWO33uJsgtYg+WWqGTBrwzsAyL+ACieWXhJSt
- o98IdAJgTtuMcYLx3XZNmSHz45XO8b22INTZQWnyvFWv/LSTWVjCJBGPlAMFKfAg+kaHzKSvH
- qUoX/FNvZALtqJmlvIIkIRZ19IdXsR50mCgcKmnZjotQKhmAYZp/XNuETtxDr5BSsUxwO4DTa
- zgdNzkK
+X-Provags-ID: V03:K0:2W6Kiq0teiLUECvQa9atfCcYbdL9eKLdr33cwEnn9byf1Rvr40f
+ vg/4pcZSmpXLWQH6UEpEjZVDQnGzEYUWJw+E8i7TsYAh6YI4ZqIJAUdX8KMtFqU4Zh3bqob
+ tP6S0+iBWuUKWVOGTvZT57Mt6bzXy1GLi4czdOcD1IlPue6T64U17/7PznRGFCLCXrlS8tH
+ YcSSESokXiCBLJlW4j24Q==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:O/zSxvwhlB0=:Y7TvfEoZS/+siwYyQB+gto
+ hnPOAsSsIxU2/fJGmTfJx1+zRV29s8zxHGrJZxjiipGoFGrzoy2UUdvRCjYbgcPxkJigf558Z
+ gNjMjG2pZBqLFHkCVh5w53I4QJMjFh0A9Q7XNpdX8h3rmTQU6NYZ6meeS0fstmXF+QPzK/qcE
+ FRTsg8S9ZgWW6weQGe+hJz5aXFKoeg1gQV0dQz6n9X4nyjfoDy5Cm9zGGFiC4TeBd6ZMAi950
+ SCjzfKBqXveVb5gVaZICoW6pBSLVMw0qWFZjymQjGDwaqXpoJC0nOjbcFe7yu3XnAibS11luW
+ q9nX9YRoOR/sPpHFBEkFkGZoEOvV+0tc41dooYpNOJyc+GB2xhjSCc0vwdsbSd9j9x700Ku3m
+ JKKVpdobyPV0lEHF6U9MNiMWQPH6N2FNwCG/Iak6wQou8xKr+7o5oFDLXxUT8udXq1/9DU7oT
+ bhDWlmXcbc+yXRNEhyyPF8baZevQhU3KxeMfC+3yf97yzdUZyVWvQ2eSUVuTO2lBXxFbmkKIq
+ P2ErZDpzr5mAodaiwmoeedxJqZndjzT+mVFPNaV9SasajTBNA0Gh69yOZAfndornUNrCvT8zD
+ EYrZJ40LBmUcUNUc1CvTr5vjrLaAgIOe+x+BVIHX5x/c5lZQF9uG62cDXQKA8yPYfJxYWPktX
+ P0kV0QAV1rteSzzborut2tTqQbnnC6GKGv0Aw+DkMp1Fj/WOxjayXrZDsmPgRzSSnSBOtC9jH
+ KQKbOz9rDdhy62AV3mWtFQnTPhfV/WLV5XO45hjyPjwLn5RQ7+5g6jbRs4WdX88s1eqE8CyhS
+ BobRYUKyk1Z3686MNTRRPW3P/Y7sRFRf0C8OISsrUlQk+UKxjSd/SwjAOYG7PYV0XYYJYRyg/
+ tf/zSRnxycYcgazhVh3+qyDXqTAgQLfzhtZbmNWFu/0bmfsFYr2kkJg+07FvceMg/l8YD4mMJ
+ jrZ8GFBNuV9+asJ2+J2UsNiH08Pr64H4wgwDtS8vWdw/df4mGip8qsC45ElvsKlP37ecv/5j+
+ ZDz3OmV/dg7KXGMVqzrEl3w=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Hi Peff,
 
-On Wed, 22 Feb 2017, Jeff King wrote:
+On Thu, 23 Feb 2017, Jeff King wrote:
 
-> [two beautiful patches]
+> For Git for Windows, [PATCH 2/2] seems like the auto behavior would be a
+> strict improvement over the "true" default they've been shipping.
 
-I applied them and verified that the reported issue is fixed. Thank you!
-
-Hopefully you do not mind that I cherry-picked them in preparation for
-Git for Windows v2.12.0?
-
-I added a small fixup (https://github.com/dscho/git/commit/44ae0bcae5):
-
--- snip --
-Subject: [PATCH] fixup! http: add an "auto" mode for http.emptyauth
-
-Note: we keep a "black list" of authentication methods for which we do
-not want to enable http.emptyAuth automatically. A white list would be
-nicer, but less robust, as we want to support linking to several cURL
-versions and the list of authentication methods (as well as their names)
-changed over time.
-
-[jes: actually added the "auto" handling, excluded Digest, too]
-
-This fixes https://github.com/git-for-windows/git/issues/1034
-
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- http.c | 55 +++++++++++++++++++++++++++++++++----------------------
- 1 file changed, 33 insertions(+), 22 deletions(-)
-
-diff --git a/http.c b/http.c
-index f8eb0f23d6c..fb94c444c80 100644
---- a/http.c
-+++ b/http.c
-@@ -334,7 +334,10 @@ static int http_options(const char *var, const char *value, void *cb)
- 		return git_config_string(&user_agent, var, value);
- 
- 	if (!strcmp("http.emptyauth", var)) {
--		curl_empty_auth = git_config_bool(var, value);
-+		if (value && !strcmp("auto", value))
-+			curl_empty_auth = -1;
-+		else
-+			curl_empty_auth = git_config_bool(var, value);
- 		return 0;
- 	}
- 
-@@ -385,29 +388,37 @@ static int http_options(const char *var, const char *value, void *cb)
- 
- static int curl_empty_auth_enabled(void)
- {
--	if (curl_empty_auth < 0) {
--#ifdef LIBCURL_CAN_HANDLE_AUTH_ANY
--		/*
--		 * In the automatic case, kick in the empty-auth
--		 * hack as long as we would potentially try some
--		 * method more exotic than "Basic".
--		 *
--		 * But only do so when this is _not_ our initial
--		 * request, as we would not then yet know what
--		 * methods are available.
--		 */
--		return http_auth_methods_restricted &&
--		       http_auth_methods != CURLAUTH_BASIC;
-+	if (curl_empty_auth >= 0)
-+		return curl_empty_auth;
-+
-+#ifndef LIBCURL_CAN_HANDLE_AUTH_ANY
-+	/*
-+	 * Our libcurl is too old to do AUTH_ANY in the first place;
-+	 * just default to turning the feature off.
-+	 */
- #else
--		/*
--		 * Our libcurl is too old to do AUTH_ANY in the first place;
--		 * just default to turning the feature off.
--		 */
--		return 0;
-+	/*
-+	 * In the automatic case, kick in the empty-auth
-+	 * hack as long as we would potentially try some
-+	 * method more exotic than "Basic".
-+	 *
-+	 * But only do this when this is our second or
-+	 * subsequent * request, as by then we know what
-+	 * methods are available.
-+	 */
-+	if (http_auth_methods_restricted)
-+		switch (http_auth_methods) {
-+		case CURLAUTH_BASIC:
-+		case CURLAUTH_DIGEST:
-+#ifdef CURLAUTH_DIGEST_IE
-+		case CURLAUTH_DIGEST_IE:
- #endif
--	}
--
--	return curl_empty_auth;
-+			return 0;
-+		default:
-+			return 1;
-+		}
-+#endif
-+	return 0;
- }
- 
- static void init_curl_http_auth(CURL *result)
--- snap --
-
-As you can see, I actually implemented the handling for
-http.emptyauth=auto, and I was more comfortable with handling the "easy"
-cases first in the curl_empty_auth_enabled function.
-
-I also took Dave's suggestion:
-
-> On Thu, Feb 23, 2017 at 01:16:33AM +0000, David Turner wrote:
-> 
-> > > +		 * But only do so when this is _not_ our initial
-> > > +		 * request, as we would not then yet know what
-> > > +		 * methods are available.
-> > > +		 */
-> > 
-> > Eliminate double-negative:
-> > 
-> > "But only do this when this is our second or subsequent request, 
-> > as by then we know what methods are available."
-> 
-> Yeah, that is clearer.
-
-Thank you all!
-
-Now, how to get this into upstream Git, too? Jeff, do you want to submit a
-v2? In that case, would you please consider the fixup! I mentioned above?
-Otherwise I'd be happy to take it from here.
+Absolutely. Thank you for your tremendous help!
 
 Ciao,
 Dscho
