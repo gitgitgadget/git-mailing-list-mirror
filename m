@@ -2,160 +2,139 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 150EA201B0
-	for <e@80x24.org>; Sat, 25 Feb 2017 23:11:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 232D9201B0
+	for <e@80x24.org>; Sat, 25 Feb 2017 23:22:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751995AbdBYXLX (ORCPT <rfc822;e@80x24.org>);
-        Sat, 25 Feb 2017 18:11:23 -0500
-Received: from mail-wm0-f46.google.com ([74.125.82.46]:38523 "EHLO
-        mail-wm0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751885AbdBYXLW (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 25 Feb 2017 18:11:22 -0500
-Received: by mail-wm0-f46.google.com with SMTP id r141so38281816wmg.1
-        for <git@vger.kernel.org>; Sat, 25 Feb 2017 15:11:21 -0800 (PST)
+        id S1751926AbdBYXWm (ORCPT <rfc822;e@80x24.org>);
+        Sat, 25 Feb 2017 18:22:42 -0500
+Received: from mail-qk0-f181.google.com ([209.85.220.181]:35178 "EHLO
+        mail-qk0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751885AbdBYXWm (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 25 Feb 2017 18:22:42 -0500
+Received: by mail-qk0-f181.google.com with SMTP id u188so52774845qkc.2
+        for <git@vger.kernel.org>; Sat, 25 Feb 2017 15:22:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=G5jeqluO6AMJj3JrOUn4FckENNygiHfVEf+WWlt8MNU=;
-        b=pKv0ZIch0yGNwtjFceFB6nmxQNdJn7i2TYVq4ocWEAnFRbiQZo1EUUGJ3lO4UL3Jw3
-         t6fdeYnB4Dr8ntc0dhNqn5t7G8q8rngxa2P4AgISKFxqT+NBvRblgFSPm+Dwmqlv+mGt
-         QG9Mlhj9nr//Ec3ekkAqeq3q6CGRsN2kkuI/IbsENFs2HT9qfAi5GR2iXo3izIFLr9Zv
-         +T9OiX+wGwysGVXfHqnF8jgpG/201OJBQJKqLgNy7gAxzIqAS4m4LU+rcgphyW7djceW
-         ceLJ00TgKbEE8bB3b381lvkbPo+CvSkHnfcqckzH0tPSWznYa/9CbvQjiTa8iPCXJx9r
-         ah6A==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=dYRKLiQMOH/UBsFgeHoY6EpUcMqGxeOJ2xXhLnI3C74=;
+        b=WcZFQn364KZUShz6Atimndzt1TPXODr88aLw8LNFD0OTcClN6e9PwNnDVQ1tNmUvtW
+         4/hUbxPy5xPtrimHk1CjbbdjeW9hZ2I2cJQGKLypsvkPpA1NDt6WCIDkZxNnrfS6lxZ4
+         1H/6XIDatQ98x3WQsvp8EUsvLFjKOMnHWQDeVSi4SCA/KDAG7+NmC95OWchkoEmSRuav
+         +RxBG+4sQ96wEVY73WW+T8x4Fg98Zm1HTLMLneU7HD9Q3UqHsFRQ5PcM9AZnqJHpdKQa
+         WXvOxoB1c50+hIpMeZbC4MagumQlCdVG7/0sc/DpSVpSrdWuu7HllBUTe3N31Hm1XLnr
+         Xiug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=G5jeqluO6AMJj3JrOUn4FckENNygiHfVEf+WWlt8MNU=;
-        b=PXb9YmSJQFNwgNHFU618gj0b8OoMrYAB45+DKQUQkfJDqokOrLDR2pIJz5Xre7sfcA
-         TPL0I3DwEby+sER1pyVZ1g47AdxZgdHhCoJITZSZinj3XDZBfoAumLKAaHKS0JbP7ada
-         Hx8i17EOpQwCkLoat+GpqqmuGCLf8s6cmIjgzwbZw7olXTAdePsbzsrjXPcEWEnfVL70
-         u1vrmfzevDjjUYzpc66gT2zw6PgEiiVNfWx5TqeCqMqYqMavm5aC7shEM9P56dt8UBrC
-         HywFu4KTVF9zFZ/kicOCfltXcP1rDBTEmBYLqEu7oqK7EmxSlE/koGKrmqKZKAm32q5/
-         fcEA==
-X-Gm-Message-State: AMke39kbVLk85RRTA60PiP1aQQAwXKZN5pDGVexz1vyExI+VWXj92ntx35O+PZBclCkrpA==
-X-Received: by 10.28.154.7 with SMTP id c7mr4762950wme.119.1488063755078;
-        Sat, 25 Feb 2017 15:02:35 -0800 (PST)
-Received: from slxbook4.fritz.box (p5DDB48D9.dip0.t-ipconnect.de. [93.219.72.217])
-        by smtp.gmail.com with ESMTPSA id j80sm8039733wmd.14.2017.02.25.15.02.33
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sat, 25 Feb 2017 15:02:34 -0800 (PST)
-Content-Type: text/plain; charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-Subject: Re: [PATCH] travis-ci: run scan-build every time
-From:   Lars Schneider <larsxschneider@gmail.com>
-In-Reply-To: <20170225223146.ixubnwqkfol5q2gn@sigill.intra.peff.net>
-Date:   Sun, 26 Feb 2017 00:02:33 +0100
-Cc:     Samuel Lijin <sxlijin@gmail.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <70DA368F-97FB-4492-811D-CCDF4F237939@gmail.com>
-References: <CAJZjrdXP3n5fOLx4rEEkbJT7JBMPUqk4Qdutm6KpvMVUMwCSPQ@mail.gmail.com> <BAB1EE0E-B258-4108-AE24-110172086DE4@gmail.com> <20170225223146.ixubnwqkfol5q2gn@sigill.intra.peff.net>
-To:     Jeff King <peff@peff.net>
-X-Mailer: Apple Mail (2.3124)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=dYRKLiQMOH/UBsFgeHoY6EpUcMqGxeOJ2xXhLnI3C74=;
+        b=Tw5glkz34jlA0naWrgykXNtZh4pl7xh+InKUtZcghbDLq53L0d0NzN3wyBUp7lUE/N
+         C1X4YqenSrIHI65V0SdMM2drYEHjl3vl2GHHFJ/APmpPZxHu6bP+8hlns5/ifB2GfSOL
+         jLxn3z45ZCXd3d0CcrgfgjLocXCxxpCFbo9gia/cq/64Mq6s5UQlg9+q9VGsMdRE0o6m
+         1B39DhF2g6yipNYO2ugaDM0tBqtIIiLiNyKflOaIiyqLlzE7xp6jP036+fZt9lmOLJsV
+         dApzFw547kv7qiWQfwheDF5eoH4ajDKoPE00bYquPhP4Wbd4Mgpdn/sjRSD2AUlTaz2Q
+         +2bg==
+X-Gm-Message-State: AMke39n2b4Hoou0RAPCm98FjAunGtkDOfGxkJNNRc2W0SWbvVsTNcAwcZVMnTxy2e+8WWzUS9Bfamh7VkIT5gw==
+X-Received: by 10.55.146.4 with SMTP id u4mr8983705qkd.37.1488064961021; Sat,
+ 25 Feb 2017 15:22:41 -0800 (PST)
+MIME-Version: 1.0
+Received: by 10.12.134.218 with HTTP; Sat, 25 Feb 2017 15:22:10 -0800 (PST)
+In-Reply-To: <20170224172335.GG11350@io.lakedaemon.net>
+References: <20170223164306.spg2avxzukkggrpb@kitenet.net> <22704.19873.860148.22472@chiark.greenend.org.uk>
+ <20170224172335.GG11350@io.lakedaemon.net>
+From:   ankostis <ankostis@gmail.com>
+Date:   Sun, 26 Feb 2017 00:22:10 +0100
+Message-ID: <CA+dhYEUTZMLKfBXSHU61qx5i9P6a0muUcyAvnNKzc=_E5-z7wA@mail.gmail.com>
+Subject: Re: SHA1 collisions found
+To:     Jason Cooper <git@lakedaemon.net>
+Cc:     Ian Jackson <ijackson@chiark.greenend.org.uk>,
+        Joey Hess <id@joeyh.name>, git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-> On 25 Feb 2017, at 23:31, Jeff King <peff@peff.net> wrote:
->=20
-> On Sat, Feb 25, 2017 at 10:48:52PM +0100, Lars Schneider wrote:
->=20
->>=20
->>> On 24 Feb 2017, at 18:29, Samuel Lijin <sxlijin@gmail.com> wrote:
->>>=20
->>> Introduces the scan-build static code analysis tool from the Clang
->>> project to all Travis CI builds. Installs clang (since scan-build
->>> needs clang as a dependency) to make this possible (on macOS, also
->>> updates PATH to allow scan-build to be invoked without referencing =
-the
->>> full path).
->>=20
->> This is a pretty neat idea. However, I think this should become a
->> dedicated job in a TravisCI build (similar to the Documentation job =
-[1])
->> because:
->> a) We don't want to build and test a scan-build version of Git (AFAIK
->>    scan-build kind of proxies the compiler to do its job - I don't if
->>    this has any side effects)
->> b) We don't want to slow down the other builds
->> c) It should be enough to run scan-build once on Linux per build
->=20
-> Yeah. I am all for static analysis, but I agree it should be its own
-> job. Especially as it can be quite noisy with false positives (and I
-> really think before any static analysis is useful we need to figure =
-out
-> a way to suppress the false positives, so that we can see the signal =
-in
-> the noise).
->=20
-> Fully a third of the problem cases found are dead assignments or
-> increments. I looked at a few, and I think the right strategy is to =
-tell
-> the tool "no really, our code is fine". For instance, it complains
-> about:
->=20
->  argc =3D parse_options(argc, argv, ...);
->=20
-> when argc is not used again later. Sure, that assignment is doing
-> nothing. But from a maintainability perspective, I'd much rather have =
-a
-> dead assignment (that the compiler is free to remove) then for =
-somebody
-> to later add a loop like:
->=20
->  for (i =3D 0; i < argc; i++)
->          something(argv[i]);
->=20
-> which will read past the end of the rearranged argv (and probably
-> _wouldn't_ be caught by static analysis, because the hidden dependency
-> between argc and argv is buried inside the parse_options() call).
->=20
-> So there is definitely some bug-fixing to be done, but I think there =
-is
-> also some work in figuring out how to suppress these useless reports.
-
-That makes sense. I suspected that this assignment was intentional
-but I wasn't sure why. I didn't know about the rearrangement of argv.
-
-Apparently an "(void)argc;" silences this warning. Would that be too
-ugly to bear? :-)
+On 24 February 2017 at 18:23, Jason Cooper <git@lakedaemon.net> wrote:
+> Hi Ian,
+>
+> On Fri, Feb 24, 2017 at 03:13:37PM +0000, Ian Jackson wrote:
+>> Joey Hess writes ("SHA1 collisions found"):
+>> > https://shattered.io/static/shattered.pdf
+>> > https://freedom-to-tinker.com/2017/02/23/rip-sha-1/
+>> >
+>> > IIRC someone has been working on parameterizing git's SHA1 assumptions
+>> > so a repository could eventually use a more secure hash. How far has
+>> > that gotten? There are still many "40" constants in git.git HEAD.
+>>
+>> I have been thinking about how to do a transition from SHA1 to another
+>> hash function.
+>>
+>> I have concluded that:
+>>
+>>  * We can should avoid expecting everyone to rewrite all their
+>>    history.
+>
+> Agreed.
+>
+>>  * Unfortunately, because the data formats (particularly, the commit
+>>    header) are not in practice extensible (because of the way existing
+>>    code parses them), it is not useful to try generate new data (new
+>>    commits etc.) containing both new hashes and old hashes: old
+>>    clients will mishandle the new data.
+>
+> My thought here is:
+>
+>  a) re-hash blobs with sha256, hardlink to sha1 objects
+>  b) create new tree objects which are mirrors of each sha1 tree object,
+>     but purely sha256
+>  c) mirror commits, but they are also purely sha256
+>  d) future PGP signed tags would sign both hashes (or include both?)
 
 
-> Turning off the dead-assignment checker is one option, but I actually
-> think it _could_ produce useful results. It just isn't in these cases.
-> So I'd much rather if we can somehow suppress the specific callsites.
->=20
->> I ran scan-build on the current master and it detected 72 potential =
-bugs [2].=20
->> I looked through a few of them and they seem to be legitimate. If the =
-list agrees
->> that running scan-build is a useful thing and that these problems =
-should be fixed
->> then we could:
->>=20
->> (1) Add scan-build check to Travis CI but only print errors as =
-warning
->> (2) Fix the 72 existing bugs over time
->> (3) Turn scan-build warnings into errors
->=20
-> If they are warnings socked away in a Travis CI job that nobody looks
-> out, then I doubt anybody is going to bother fixing them.
->=20
-> Not that step (1) hurts necessarily, but I don't think it's really =
-doing
-> anything until step (2) is finished.
+IMHO that is a great idea that needs more attention.
+You get to keep 2 or more hash-functions for extra security in a PQ world.
 
-Agreed.
+And to keep sketches for the future so far,
+SHA-3 must be always one of the new hashes.
+Actually, you can get rid of SHA-1 completely, and land on Linus's
+current sketches for the way ahead.
 
-
-- Lars=
+Thanks,
+  Kostis
+>
+> Which would end up something like:
+>
+>   .git/
+>     \... #usual files
+>     \objects
+>       \ef
+>         \3c39f7522dc55a24f64da9febcfac71e984366
+>     \objects-sha2_256
+>       \72
+>         \604fd2de5f25c89d692b01081af93bcf00d2af34549d8d1bdeb68bc048932
+>     \info
+>       \...
+>     \info-sha2_256
+>       \refs #uses sha256 commit identifiers
+>
+> Basically, keep the sha256 stuff out of the way for legacy clients, and
+> new clients will still be able to use it.
+>
+> There shouldn't be a need to re-sign old signed tags if the underlying
+> objects are counter-hashed.  There might need to be some transition
+> info, though.
+>
+> Say a new client does 'git tag -v tags/v3.16' in the kernel tree.  I would
+> expect it to check the sha1 hashes, verify the PGP signed tag, and then
+> also check the sha256 counter-hashes of the relevant objects.
+>
+> thx,
+>
+> Jason.
