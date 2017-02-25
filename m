@@ -3,144 +3,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A7C041F5FB
-	for <e@80x24.org>; Sat, 25 Feb 2017 06:20:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3144D2022D
+	for <e@80x24.org>; Sat, 25 Feb 2017 07:25:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751516AbdBYGTY (ORCPT <rfc822;e@80x24.org>);
-        Sat, 25 Feb 2017 01:19:24 -0500
-Received: from mail-pf0-f196.google.com ([209.85.192.196]:35077 "EHLO
-        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751496AbdBYGTX (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 25 Feb 2017 01:19:23 -0500
-Received: by mail-pf0-f196.google.com with SMTP id o78so321360pfj.2
-        for <git@vger.kernel.org>; Fri, 24 Feb 2017 22:18:53 -0800 (PST)
+        id S1751554AbdBYHY5 (ORCPT <rfc822;e@80x24.org>);
+        Sat, 25 Feb 2017 02:24:57 -0500
+Received: from mail-pg0-f66.google.com ([74.125.83.66]:33321 "EHLO
+        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751513AbdBYHY5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 25 Feb 2017 02:24:57 -0500
+Received: by mail-pg0-f66.google.com with SMTP id 5so5903122pgj.0
+        for <git@vger.kernel.org>; Fri, 24 Feb 2017 23:24:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=HN6v6dxd1o2EHyvtnr/4V9ttLRTnQPzg26yBRbCkwmE=;
-        b=FLJxEEUS+2WSnHHeiLDO+/nR8PtS6N9MYB5ypiNuS2+Rlh3zO7F7huJJk35jo9+Q/l
-         HhoVTwAv0Cfx6Vvi5XhbGaeFqC1ENEk45/fZIpDogkaZrUh7MnlrTtaWDwfOIlaWqgMm
-         fMj36X8GRczTAQKYDaR3twNPR6yZDIwtWkJAGBnZhZ927SAZ7sO2SbHsXXELuugfrll/
-         Ll6QAJGtKjtFqUKZR0XxamK1Nyxq2803nkczGLeVF5cltAaj6hp1qC4smzhUhd8r2GwG
-         e9ZFzJ2hWuz6MxkeBqGsisy8T8N7tCDTaIhtuU6GFs27/KQlSgliFU5kEw/KndfnOjl8
-         kCog==
+        h=from:to:cc:subject:date:message-id;
+        bh=6MzYVMf+r32Cq95UDkQvCTq9r4YuJH4aIhHQeG1fLCQ=;
+        b=NPRCLwSZ3fCo8kTY4qd/kb97q5SfQXm5r0LGYFvtFH4VBZo6A18ozOYMWFXbuBso7X
+         JZFsW1NrYCKHqPXmNwRhCWcrFvfX/z2FRVORZUP2/cT8bH8tq4+vwIWy8mDnokPRV0dr
+         hmOg1nHmpfzNLWBeyDGpOf1pmg/eJ9CXuR3RAMIxuQcVXSFxOFMNpTDY6qNXZqjfStCD
+         cTncGrcZf3dR19E0OKav2n2/GRn30VmAL98h+pFdajwAVTEULQztiA+k9zBvdDZlTk4b
+         Lg33cN807IrevoDVMLZxFWOEJSQ14RYkkn8GqyEEry6iNg6AJCijLWWEWjqKAu8NP7cw
+         s+BA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=HN6v6dxd1o2EHyvtnr/4V9ttLRTnQPzg26yBRbCkwmE=;
-        b=fGSasTRmELgKhdmRTW7aQ5303wev9wgep70gTCKIebcqE/i4pKt0OVfpnFacksKo83
-         YKADNMeEPZuvvxz/krbQesHrEu43Qa8gcbUW4LQ3vhcA4S5xgUaprTHdeAZajqCCYxeQ
-         wIOrhuzufxaZNRy7vCyXrhH6G2umpZnIsQdttlsz8uk9zqz2jpva5U08T9bhExu5kfsl
-         ZPQ6PaOatuiYICD3payDnbN+aJstrTlbi29ad6IEFCVN4eyrcnnJHq7yPJuIsvGe2k5I
-         kiaP3ZK+OYpDMAn6j0TLgbMHJw01enjKukQhvJvbB/0M9VdibbxJuiccmZ2LUz5TzwCE
-         M6EQ==
-X-Gm-Message-State: AMke39nq/h1094mU60Ee4TESVJG3eouaUzEigMPsdFj1klEiFziJryD93mw2aNu1QyFdhA==
-X-Received: by 10.99.193.17 with SMTP id w17mr8381575pgf.124.1488003004109;
-        Fri, 24 Feb 2017 22:10:04 -0800 (PST)
-Received: from localhost ([2620:0:1000:8622:f06c:2e0c:850d:31b4])
-        by smtp.gmail.com with ESMTPSA id u24sm18208949pfi.25.2017.02.24.22.10.01
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Fri, 24 Feb 2017 22:10:02 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Linus Torvalds <torvalds@linux-foundation.org>
-Cc:     Jeff King <peff@peff.net>,
-        Ian Jackson <ijackson@chiark.greenend.org.uk>,
-        Joey Hess <id@joeyh.name>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: SHA1 collisions found
-References: <20170223164306.spg2avxzukkggrpb@kitenet.net>
-        <22704.19873.860148.22472@chiark.greenend.org.uk>
-        <xmqq60jz5wbm.fsf@gitster.mtv.corp.google.com>
-        <20170224233929.p2yckbc6ksyox5nu@sigill.intra.peff.net>
-        <CA+55aFw6BLjPK-F0RGd9LT7X5xosKOXOxuhmKX65ZHn09r1xow@mail.gmail.com>
-Date:   Fri, 24 Feb 2017 22:10:01 -0800
-In-Reply-To: <CA+55aFw6BLjPK-F0RGd9LT7X5xosKOXOxuhmKX65ZHn09r1xow@mail.gmail.com>
-        (Linus Torvalds's message of "Fri, 24 Feb 2017 16:39:45 -0800")
-Message-ID: <xmqqinnyztqe.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=6MzYVMf+r32Cq95UDkQvCTq9r4YuJH4aIhHQeG1fLCQ=;
+        b=LgUySI+CzOD9y1997STvgiEyFcrbwacRV9uDq4LKqSwyI4QrzCXyChtIVOJZFnw5HC
+         m04r0j9eSAVWJjzW3L4jIP61S5WNWTOlVeXyzoH5yDOpgwE6gZRUj9kfTQl4p5GVg62X
+         twepvTrPEd/iuwsFnmvEhKG7Iokd24SiWHBDGoZugKtQeKMtwpCNCJQmfrxaVU8VeDgm
+         AcvPLjJ5FdUU8LaORGg5JqMguSxJS6Cuy9B6BE6W+E20FUGBTOwOx92w2hlq1QOAAdkx
+         jfROS9kseR9Y1LL08fwy25Jw/2l3hvWgcHEJhLzpqyeMuA3LH2878AgAye/FqqLh13AZ
+         K5mA==
+X-Gm-Message-State: AMke39lfH+5vPRO7qx4ehCqO34IhYV5BfgTqVS13sVwYOboUUQAkvGDEBCz5PDOti4YJxw==
+X-Received: by 10.84.248.11 with SMTP id p11mr9447972pll.72.1488007496197;
+        Fri, 24 Feb 2017 23:24:56 -0800 (PST)
+Received: from localhost ([139.59.1.28])
+        by smtp.gmail.com with ESMTPSA id 73sm18654359pfh.56.2017.02.24.23.24.54
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 24 Feb 2017 23:24:55 -0800 (PST)
+From:   Siddharth Kannan <kannan.siddharth12@gmail.com>
+To:     git@vger.kernel.org
+Cc:     gitster@pobox.com, Matthieu.Moy@imag.fr, pranit.bauva@gmail.com,
+        peff@peff.net, pclouds@gmail.com, sandals@crustytoothpaste.ath.cx,
+        Siddharth Kannan <kannan.siddharth12@gmail.com>
+Subject: [PATCH 0/6 v5] allow "-" as a shorthand for "previous branch"
+Date:   Sat, 25 Feb 2017 07:24:41 +0000
+Message-Id: <1488007487-12965-1-git-send-email-kannan.siddharth12@gmail.com>
+X-Mailer: git-send-email 2.7.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Linus Torvalds <torvalds@linux-foundation.org> writes:
+An updated version of the patch [1]. Discussion here[1] has been taken into
+account. The test for "-@{yesterday}" is there inside the log-shorthand test,
+it is commented out for now.
 
-> For example, what I would suggest the rules be is something like this:
->
->  - introduce new tag2/commit2/tree2/blob2 object type tags that imply
-> that they were hashed using the new hash
->
->  - an old type obviously can never contain a pointer to a new type (ie
-> you can't have a "tree" object that contains a tree2 object or a blob2
-> object.
->
->  - but also make the rule that a *new* type can never contain a
-> pointer to an old type, with the *very* specific exception that a
-> commit2 can have a parent that is of type "commit".
+I have removed the redundant pieces of code in merge.c and revert.c as mentioned
+by Matthieu in [2]. As analysed by Junio[3], the same type of code inside
+checkout.c and worktree.c can not be removed because the appropriate functions
+inside revision.c are not called in their codepaths.
 
-OK, I think that is what Peff was suggesting in his message, and I
-do not have problem with such a transition plan.  Or the *very*
-specific exception could be that a reference to "commit" can use old
-name (which would allow binding a submodule before transition to a
-new project).
+Thanks for your review of the previous versions, Junio and Matthieu!
 
-We probably do not need "blob2" object as they do not embed any
-pointer to another thing.  A loose blob with old name can be made
-available on the filesystem also under new name without much "heavy"
-transition, and an in-pack blob can be pointed at with _two_ entries
-in the updated pack index file under old and new names, both for the
-base (just deflated) representation and also ofs-delta.  A ref-delta
-based on another blob with old name may need a bit of special
-handling, but the deltification would not be visible at the "struct object"
-layer, so probably not such a big deal.
+[1]: 1487258054-32292-1-git-send-email-kannan.siddharth12@gmail.com
+[2]: vpqbmu768on.fsf@anie.imag.fr
+[3]: xmqq1sv1euob.fsf@gitster.mtv.corp.google.com
 
-We may also be able to get away without "commit2" and "tag2" as
-their pointers can be widened and parse_{commit,tag}_object() should
-be able to deal with objects with new names transparently.  "tree2"
-may be a bit tricky, though, but offhand it seems to me that nothing
-is insurmountable.
+Siddharth Kannan (6):
+  revision.c: do not update argv with unknown option
+  revision.c: swap if/else blocks
+  revision.c: args starting with "-" might be a revision
+  sha1_name.c: teach get_sha1_1 "-" shorthand for "@{-1}"
+  merge.c: delegate handling of "-" shorthand to revision.c:get_sha1
+  revert.c: delegate handling of "-" shorthand to setup_revisions
 
-> That way everything "converges" towards the new format: the only way
-> you can stay on the old format is if you only have old-format objects,
-> and once you have a new-format object all your objects are going to be
-> new format - except for the history.
+ builtin/merge.c                   |   2 -
+ builtin/revert.c                  |   2 -
+ revision.c                        |  15 +++---
+ sha1_name.c                       |   5 ++
+ t/t3035-merge-hyphen-shorthand.sh |  33 ++++++++++++
+ t/t3514-revert-shorthand.sh       |  25 +++++++++
+ t/t4214-log-shorthand.sh          | 106 ++++++++++++++++++++++++++++++++++++++
+ 7 files changed, 178 insertions(+), 10 deletions(-)
+ create mode 100755 t/t3035-merge-hyphen-shorthand.sh
+ create mode 100755 t/t3514-revert-shorthand.sh
+ create mode 100755 t/t4214-log-shorthand.sh
 
-Yes.
+-- 
+2.1.4
 
-> So you will end up with duplicate objects, and that's not good (think
-> of what it does to all our full-tree "diff" optimizations, for example
-> - you no longer get the "these sub-trees are identical" across a
-> format change), but realistically you'll have a very limited time of
-> that kind of duplication.
->
-> I'd furthermore suggest that from a UI standpoint, we'd
->
->  - convert to 64-character hex numbers (32-byte hashes)
->
->  - (as mentioned earlier) default to a 40-character abbreviation
->
->  - make the old 40-character SHA1's just show up within the same
-> address space (so they'd also be encoded as 32-byte hashes, just with
-> the last 12 bytes zero).
-
-Yes to all of the above.
-
->  - you'd see in the "object->type" whether it's a new or old-style hash.
-
-I am not sure if this is needed.  We may need to abstract tree_entry walker
-a little bit as a preparatory step, but I suspect that the hash (and
-more importantly the internal format) can be kept as an internal
-knowledge to the object layer (i.e. {commit,tree,tag}.c).
-
-So,... thanks for straightening me out.  I was thinking we would
-need mixed mode support for smoother transition, but it now seems to
-me that the approach to stratify the history into old and new is
-workable.
