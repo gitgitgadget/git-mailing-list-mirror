@@ -2,91 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E7F54201A9
-	for <e@80x24.org>; Sat, 25 Feb 2017 01:15:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BE5CC201A9
+	for <e@80x24.org>; Sat, 25 Feb 2017 01:16:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751430AbdBYBPi (ORCPT <rfc822;e@80x24.org>);
-        Fri, 24 Feb 2017 20:15:38 -0500
-Received: from mail-io0-f170.google.com ([209.85.223.170]:36004 "EHLO
-        mail-io0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751291AbdBYBPi (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 Feb 2017 20:15:38 -0500
-Received: by mail-io0-f170.google.com with SMTP id 25so1573363iom.3
-        for <git@vger.kernel.org>; Fri, 24 Feb 2017 17:15:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=aCaBH/Wqobtu6jlvj3j3HKZR39dJp/fSfTpApjHOhd0=;
-        b=KkilyNA2FFXNySRJF6q2a/6z/b5ZVsfJv6T2fDMV35qD/Rfsai8O2OEUZ8X0llsB9K
-         Lk2hsvLzLGSKNdpmwjpCDrLMTvUADQwkCZuXM2j27iMAUrLgH7sRFnSUGGy+7XOQIYVX
-         +ytOvkX7GxG8V+IX0sSpy5cSZOr8xDrIqqLFQSJ9qgb268dLnrsGxmDL5adJtMT2/3Ty
-         i8CgY+sINkATXJDE8UsSvnjiucZKWO/R+6lUlmThzgyEpEtbpwR0Ew5QOFZMyd46Ux9C
-         qJVupuIKgt0LqsL9Pd4S04rhH8aztU7quc2DFrw9YEvrbSNEPG3qgH1TyzLP/vqOLBY/
-         Qamg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=aCaBH/Wqobtu6jlvj3j3HKZR39dJp/fSfTpApjHOhd0=;
-        b=b41H6oSUYL1LHpn7i+rzFGc4MOV0Q3f9zzD+ZJBgzV7l/IOwhieinRQHv1+/q6JxIS
-         036pri4ufGiVvsGThOofrRhmtkIWjoI9OBsaB7ynufEdrLYZHhVrWiQH+CFYxKkeelQT
-         L+a6tOrzmPgvnvho2cu/de7XSMYGe8OH7a35PQtbwhJanq35ptIOyOfXJKfaSXi5mYM5
-         bQ17mGCXPNZncpXNhNKsl2WMWvREyWZYI1qGlCs014wJ1RwYxJZMHBwFkdOKReI8Ats9
-         YPQf0N80TCQaTgO+5/Eu9pqGEcxf4PUaBoxSslXvAOppTBqkPkwz1bVa4yYird+gAYN+
-         w/xA==
-X-Gm-Message-State: AMke39kHLSOs+oLL9tMni+dvAptfG7FyDEIsGKwxJc9EnZER0W1C4sv7QgeHKMRCBCbpEXDAYrx0Rs4RsiabGy8h
-X-Received: by 10.107.37.148 with SMTP id l142mr4942696iol.159.1487985336807;
- Fri, 24 Feb 2017 17:15:36 -0800 (PST)
-MIME-Version: 1.0
-Received: by 10.79.33.148 with HTTP; Fri, 24 Feb 2017 17:15:35 -0800 (PST)
-In-Reply-To: <nycvar.QRO.7.75.62.1702241656010.6590@qynat-yncgbc>
-References: <20170223164306.spg2avxzukkggrpb@kitenet.net> <22704.19873.860148.22472@chiark.greenend.org.uk>
- <xmqq60jz5wbm.fsf@gitster.mtv.corp.google.com> <20170224233929.p2yckbc6ksyox5nu@sigill.intra.peff.net>
- <nycvar.QRO.7.75.62.1702241656010.6590@qynat-yncgbc>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Fri, 24 Feb 2017 17:15:35 -0800
-Message-ID: <CAGZ79ka+U-TMpjsAOQLmSEfZd0UCi2bzRZ-XsLxpVXTXHfdcLg@mail.gmail.com>
-Subject: Re: SHA1 collisions found
-To:     David Lang <david@lang.hm>
-Cc:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+        id S1751445AbdBYBQk (ORCPT <rfc822;e@80x24.org>);
+        Fri, 24 Feb 2017 20:16:40 -0500
+Received: from cloud.peff.net ([104.130.231.41]:33783 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751291AbdBYBQj (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 Feb 2017 20:16:39 -0500
+Received: (qmail 28398 invoked by uid 109); 25 Feb 2017 01:16:39 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sat, 25 Feb 2017 01:16:39 +0000
+Received: (qmail 29284 invoked by uid 111); 25 Feb 2017 01:16:42 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 24 Feb 2017 20:16:42 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 24 Feb 2017 20:16:36 -0500
+Date:   Fri, 24 Feb 2017 20:16:36 -0500
+From:   Jeff King <peff@peff.net>
+To:     Linus Torvalds <torvalds@linux-foundation.org>
+Cc:     Junio C Hamano <gitster@pobox.com>,
         Ian Jackson <ijackson@chiark.greenend.org.uk>,
         Joey Hess <id@joeyh.name>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: SHA1 collisions found
+Message-ID: <20170225011636.qjlv2luj3zefmrpz@sigill.intra.peff.net>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CA+55aFy6G1QF3Msy2DZbyhFmn974wBeXVuZK78pJ8FgkyeU85g@mail.gmail.com>
+ <CA+55aFw6BLjPK-F0RGd9LT7X5xosKOXOxuhmKX65ZHn09r1xow@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Feb 24, 2017 at 5:00 PM, David Lang <david@lang.hm> wrote:
-> On Fri, 24 Feb 2017, Jeff King wrote:
->
->>
->> So I'd much rather see strong rules like:
->>
->>  1. Once a repo has flag-day switched over to the new hash format[1],
->>     new references are _always_ done with the new hash. Even ones that
->>     point to pre-flag-day objects!
->
->
-> how do you define when a repo has "switched over" to the new format in a
-> distributed environment?
->
-> so you have one person working on a project that switches their version of
-> git to the new one that uses the new format.
->
-> But other people they interact with still use older versions of git
->
-> what happens when you have someone working on two different projects where
-> one has switched and the other hasn't?
+On Fri, Feb 24, 2017 at 04:39:45PM -0800, Linus Torvalds wrote:
 
-you get infected by the "new version requirement"
-as soon as you pull? (GPL is cancer, anyone? ;)
+> For example, what I would suggest the rules be is something like this:
+> 
+>  - introduce new tag2/commit2/tree2/blob2 object type tags that imply
+> that they were hashed using the new hash
+> 
+>  - an old type obviously can never contain a pointer to a new type (ie
+> you can't have a "tree" object that contains a tree2 object or a blob2
+> object.
+> 
+>  - but also make the rule that a *new* type can never contain a
+> pointer to an old type, with the *very* specific exception that a
+> commit2 can have a parent that is of type "commit".
 
-If you are using an old version of git that doesn't understand the new version,
-you're screwed.
+Yeah, this is exactly what I had in mind. That way everybody in
+"newhash" mode has no decisions to make. They follow the same rules and
+it's as if sha1 never existed, except when you follow links in
+historical objects.
+
+> [in reply...]
+> Actually, I take that back. I think it might be easier to keep
+> "object->type" as-is, and it would only show the current OBJ_xyz
+> fields. Then writing the SHA ends up deciding whether a OBJ_COMMIT
+> gets written as "commit" or "commit2".
+
+Yeah, I think there are some data structures with limited bits for the
+"type" fields (e.g., the pack format). So sticking with OBJ_COMMIT might
+be nice. For commits and tags, it would be nice to have an "I'm v2"
+header at the start so there's no confusion about how they are meant to
+be interpreted.
+
+Trees are more difficult, as they don't have any such field. But a valid
+tree does need to start with a mode, so sticking some non-numeric flag
+at the front of the object would work (it breaks backwards
+compatibility, but that's kind of the point).
+
+I dunno. Maybe we do not need those markers at all, and could get by
+purely on object-length, or annotating the headers in some way (like
+"parent sha256:1234abcd").
+
+It might just be nice if we could very easily identify objects as one
+type or the other without having to parse them in detail.
+
+> So you will end up with duplicate objects, and that's not good (think
+> of what it does to all our full-tree "diff" optimizations, for example
+> - you no longer get the "these sub-trees are identical" across a
+> format change), but realistically you'll have a very limited time of
+> that kind of duplication.
+
+Yeah, cross-flag-day diffs will be more expensive. I think that's
+something we have to live with. I was thinking originally that the
+sha1->newhash mapping might solve that, but it only works at the blob
+level. I.e., you can compare a sha1 and a newhash like:
+
+  if (!hashcmp(sha1_to_newhash(a), b))
+
+without having to look at the contents. But it doesn't work recursively,
+because the tree-pointing-to-newhash will have different content.
+
+-Peff
