@@ -2,99 +2,197 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1B7F3201B0
-	for <e@80x24.org>; Sat, 25 Feb 2017 19:12:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B3DA8201B0
+	for <e@80x24.org>; Sat, 25 Feb 2017 19:19:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751924AbdBYTMl (ORCPT <rfc822;e@80x24.org>);
-        Sat, 25 Feb 2017 14:12:41 -0500
-Received: from smtp.gentoo.org ([140.211.166.183]:57198 "EHLO smtp.gentoo.org"
+        id S1751873AbdBYTTq (ORCPT <rfc822;e@80x24.org>);
+        Sat, 25 Feb 2017 14:19:46 -0500
+Received: from cloud.peff.net ([104.130.231.41]:34090 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751661AbdBYTMk (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 25 Feb 2017 14:12:40 -0500
-Received: from grubbs.orbis-terrarum.net (localhost [127.0.0.1])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        by smtp.gentoo.org (Postfix) with ESMTPS id 85032340FC8
-        for <git@vger.kernel.org>; Sat, 25 Feb 2017 19:12:39 +0000 (UTC)
-Received: (qmail 5369 invoked by uid 10000); 25 Feb 2017 19:12:38 -0000
-Date:   Sat, 25 Feb 2017 19:12:38 +0000
-From:   "Robin H. Johnson" <robbat2@gentoo.org>
-To:     Git Mailing List <git@vger.kernel.org>
-Subject: git-clone --config order & fetching extra refs during initial clone
-Message-ID: <robbat2-20170225T185056-448272755Z@orbis-terrarum.net>
+        id S1751980AbdBYTTq (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 25 Feb 2017 14:19:46 -0500
+Received: (qmail 31900 invoked by uid 109); 25 Feb 2017 19:18:33 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sat, 25 Feb 2017 19:18:33 +0000
+Received: (qmail 5564 invoked by uid 111); 25 Feb 2017 19:18:38 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Sat, 25 Feb 2017 14:18:38 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 25 Feb 2017 14:18:31 -0500
+Date:   Sat, 25 Feb 2017 14:18:31 -0500
+From:   Jeff King <peff@peff.net>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     David Turner <David.Turner@twosigma.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>,
+        "sandals@crustytoothpaste.net" <sandals@crustytoothpaste.net>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: [PATCH] http: add an "auto" mode for http.emptyauth
+Message-ID: <20170225191831.dkjasyv3tmkwutre@sigill.intra.peff.net>
+References: <20170222233333.dx5lknw4fpopu5hy@sigill.intra.peff.net>
+ <20170222234059.iajn2zuwzkzjxit2@sigill.intra.peff.net>
+ <b5778a7988ad4dfa9adfc8d312432189@exmbdft7.ad.twosigma.com>
+ <20170223013746.lturqad7lnehedb4@sigill.intra.peff.net>
+ <alpine.DEB.2.20.1702251243390.3767@virtualbox>
+ <20170225191506.4it7pdsi6ijanfft@sigill.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="nzri8VXeXB/g5ayr"
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-User-Agent: Mutt/1.5.24 (2015-08-30)
+In-Reply-To: <20170225191506.4it7pdsi6ijanfft@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+This variable needs to be specified to make some types of
+non-basic authentication work, but ideally this would just
+work out of the box for everyone.
 
---nzri8VXeXB/g5ayr
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+However, simply setting it to "1" by default introduces an
+extra round-trip for cases where it _isn't_ useful. We end
+up sending a bogus empty credential that the server rejects.
 
-TL;DR: git-clone ignores any fetch specs passed via --config.
+Instead, let's introduce an automatic mode, that works like
+this:
 
-The documentation for git-clone --config says:
-| Set a configuration variable in the newly-created repository; this takes
-| effect immediately __AFTER__ the repository is initialized, but __BEFORE__
-| the remote history is fetched or any files checked out. [...]
-(emphasis added)
+  1. We won't try to send the bogus credential on the first
+     request. We'll wait to get an HTTP 401, as usual.
 
-However, this doesn't seem be be true, right after the clone, the refs are =
-NOT
-present, and the next fetch seems to pull the extra refs. This seems to be
-because the refspec building for the initial clone doesn't take into account
-any fetch lines added to the config.
+  2. After seeing an HTTP 401, the empty-auth hack will kick
+     in only when we know there is an auth method available
+     that might make use of it (i.e., something besides
+     "Basic" or "Digest").
 
-Testcase to reproduce (confirmed in v2.11.1, not tested 2.12.0 quite yet):
-# export REPOURI=3Dhttps://github.com/openstack-dev/sandbox.git DIR=3Dtest
-# git clone \
-    -c remote.origin.fetch=3D+refs/notes/*:refs/notes/* \
-    -c remote.origin.fetch=3D+refs/changes/*:refs/remotes/origin/changes/* \
-    $REPOURI $DIR \
-  && cd $DIR \
-  && git fetch
+That should make it work out of the box, without incurring
+any extra round-trips for people hitting Basic-only servers.
 
---=20
-Robin Hugh Johnson
-Gentoo Linux: Dev, Infra Lead, Foundation Trustee & Treasurer
-E-Mail   : robbat2@gentoo.org
-GnuPG FP : 11ACBA4F 4778E3F6 E4EDF38E B27B944E 34884E85
-GnuPG FP : 7D0B3CEB E9B85B1F 825BCECF EE05E6F6 A48F6136
+This _does_ incur an extra round-trip if you really want to
+use "Basic" but your server advertises other methods (the
+emptyauth hack will kick in but fail, and then Git will
+actually ask for a password).
 
---nzri8VXeXB/g5ayr
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
+The auto mode may incur an extra round-trip over setting
+http.emptyauth=true, because part of the emptyauth hack is
+to feed this blank password to curl even before we've made a
+single request.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.1
-Comment: Robbat2 @ Orbis-Terrarum Networks - The text below is a digital signature. If it doesn't make any sense to you, ignore it.
+Helped-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Signed-off-by: Jeff King <peff@peff.net>
+---
+And here's the full patch. It is meant to go on top of the
+already-queued 1/2, though I suspect it could apply separately.
 
-iQJ8BAEBCgBmBQJYsdclXxSAAAAAAC4AKGlzc3Vlci1mcHJAbm90YXRpb25zLm9w
-ZW5wZ3AuZmlmdGhob3JzZW1hbi5uZXRDQjJEMjlCMjBCMkM5MUFDQzE2NDk2NkRB
-RTcyMjg3ODM3QzU5RjVGAAoJEK5yKHg3xZ9fIAQP/ipf5F35bQE3Hx/leUlQgwQ4
-aLCKYdu0deyxcxlUIMln2F7hp8mOykeyEVjNl/k3KpQVKOC55LpC6vxw4Xb9l0lx
-wgwcMZnm67igmI9/r/j63nUCHGs/elNMh00d3TJg09omrpsnlVQ4JjXuQKW2dMQv
-F6vQ8R/5qbIKRrIWi7TRkt8a8KSkugTp6/Ie9dpoY/DQi4s/vugKnE5k1NSeRfhd
-z2DPebp5IynYetmYeQqWfCTSJSGDaDAW5TISBx9zSQls/1QdcSC1x6t6BTT6iLDX
-kLHlBmFD0uAqDpE1zc9t5Lhi3xUdn2YTKlNlZh9xjg5f7Ti2AwgG3aTJ1ShHVbLT
-RbZ2EorqkCTWlVT1Fxb0EagU7l0KppQz8RwlS9AmugdB+tVoQhi/Cctvc5zq58dz
-Yj9DV4VQ5UhwIpD4wugUfcU2Tr/LmLHzSSHrBV5geZ8lLvTus0x4zArx0+FOyyCR
-KpFmICzDtsF3/EKCCOk0rfq8jLyaMKp8MKZ5Y/SsegcsFC4dpIMAj/AA7eY0tVEr
-XqL6bDoZhHlmOC7cwVZqxCkY4CtB8/Gs8RRWVIiOhL707XUxpXb+TpsacG8DG/qq
-XC4mWz7XG7DTYQPtP08WafD9o+GfEIddwDHdmIFX52GeGGXf7vEEMI6y+DaQzJck
-Iau91NZBla4vKSdgvM2L
-=TBVj
------END PGP SIGNATURE-----
+Test reports welcome from people who actually have NTLM or Kerberos
+servers. The changes from the previous are fairly minimal, but this kind
+of bit-mangling is exactly the kind of thing where I tend to
+accidentally invert the logic. ;)
 
---nzri8VXeXB/g5ayr--
+ http.c | 50 +++++++++++++++++++++++++++++++++++++++++++++-----
+ 1 file changed, 45 insertions(+), 5 deletions(-)
+
+diff --git a/http.c b/http.c
+index a05609766..dd637d031 100644
+--- a/http.c
++++ b/http.c
+@@ -109,7 +109,7 @@ static int curl_save_cookies;
+ struct credential http_auth = CREDENTIAL_INIT;
+ static int http_proactive_auth;
+ static const char *user_agent;
+-static int curl_empty_auth;
++static int curl_empty_auth = -1;
+ 
+ enum http_follow_config http_follow_config = HTTP_FOLLOW_INITIAL;
+ 
+@@ -125,6 +125,14 @@ static struct credential cert_auth = CREDENTIAL_INIT;
+ static int ssl_cert_password_required;
+ #ifdef LIBCURL_CAN_HANDLE_AUTH_ANY
+ static unsigned long http_auth_methods = CURLAUTH_ANY;
++static int http_auth_methods_restricted;
++/* Modes for which empty_auth cannot actually help us. */
++static unsigned long empty_auth_useless =
++	CURLAUTH_BASIC
++#ifdef CURLAUTH_DIGEST_IE
++	| CURLAUTH_DIGEST_IE
++#endif
++	| CURLAUTH_DIGEST;
+ #endif
+ 
+ static struct curl_slist *pragma_header;
+@@ -333,7 +341,10 @@ static int http_options(const char *var, const char *value, void *cb)
+ 		return git_config_string(&user_agent, var, value);
+ 
+ 	if (!strcmp("http.emptyauth", var)) {
+-		curl_empty_auth = git_config_bool(var, value);
++		if (value && !strcmp("auto", value))
++			curl_empty_auth = -1;
++		else
++			curl_empty_auth = git_config_bool(var, value);
+ 		return 0;
+ 	}
+ 
+@@ -382,10 +393,37 @@ static int http_options(const char *var, const char *value, void *cb)
+ 	return git_default_config(var, value, cb);
+ }
+ 
++static int curl_empty_auth_enabled(void)
++{
++	if (curl_empty_auth >= 0)
++		return curl_empty_auth;
++
++#ifndef LIBCURL_CAN_HANDLE_AUTH_ANY
++	/*
++	 * Our libcurl is too old to do AUTH_ANY in the first place;
++	 * just default to turning the feature off.
++	 */
++#else
++	/*
++	 * In the automatic case, kick in the empty-auth
++	 * hack as long as we would potentially try some
++	 * method more exotic than "Basic" or "Digest".
++	 *
++	 * But only do this when this is our second or
++	 * subsequent * request, as by then we know what
++	 * methods are available.
++	 */
++	if (http_auth_methods_restricted &&
++	    (http_auth_methods & ~empty_auth_useless))
++		return 1;
++#endif
++	return 0;
++}
++
+ static void init_curl_http_auth(CURL *result)
+ {
+ 	if (!http_auth.username || !*http_auth.username) {
+-		if (curl_empty_auth)
++		if (curl_empty_auth_enabled())
+ 			curl_easy_setopt(result, CURLOPT_USERPWD, ":");
+ 		return;
+ 	}
+@@ -1079,7 +1117,7 @@ struct active_request_slot *get_active_slot(void)
+ #ifdef LIBCURL_CAN_HANDLE_AUTH_ANY
+ 	curl_easy_setopt(slot->curl, CURLOPT_HTTPAUTH, http_auth_methods);
+ #endif
+-	if (http_auth.password || curl_empty_auth)
++	if (http_auth.password || curl_empty_auth_enabled())
+ 		init_curl_http_auth(slot->curl);
+ 
+ 	return slot;
+@@ -1347,8 +1385,10 @@ static int handle_curl_result(struct slot_results *results)
+ 		} else {
+ #ifdef LIBCURL_CAN_HANDLE_AUTH_ANY
+ 			http_auth_methods &= ~CURLAUTH_GSSNEGOTIATE;
+-			if (results->auth_avail)
++			if (results->auth_avail) {
+ 				http_auth_methods &= results->auth_avail;
++				http_auth_methods_restricted = 1;
++			}
+ #endif
+ 			return HTTP_REAUTH;
+ 		}
+-- 
+2.12.0.616.g5f622f3b1
+
