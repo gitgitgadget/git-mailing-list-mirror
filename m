@@ -2,157 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
 	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 47F3A201B0
-	for <e@80x24.org>; Sat, 25 Feb 2017 21:22:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D5342201B0
+	for <e@80x24.org>; Sat, 25 Feb 2017 21:40:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752075AbdBYVWV (ORCPT <rfc822;e@80x24.org>);
-        Sat, 25 Feb 2017 16:22:21 -0500
-Received: from mout.web.de ([212.227.15.4]:54172 "EHLO mout.web.de"
+        id S1752045AbdBYVkA (ORCPT <rfc822;e@80x24.org>);
+        Sat, 25 Feb 2017 16:40:00 -0500
+Received: from mout.web.de ([212.227.15.4]:61677 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752021AbdBYVWT (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 25 Feb 2017 16:22:19 -0500
+        id S1752013AbdBYVj7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 25 Feb 2017 16:39:59 -0500
 Received: from [192.168.178.36] ([79.237.49.102]) by smtp.web.de (mrweb002
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0MLP9u-1ciI183MW2-000ePA; Sat, 25
- Feb 2017 22:21:49 +0100
-Subject: Re: [PATCH 2/2] apply: handle assertion failure gracefully
-To:     Vegard Nossum <vegard.nossum@oracle.com>,
-        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-References: <20170225101307.24067-1-vegard.nossum@oracle.com>
- <20170225101307.24067-2-vegard.nossum@oracle.com>
-Cc:     Christian Couder <christian.couder@gmail.com>,
-        Michal Zalewski <lcamtuf@google.com>
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0M8iei-1ccChE48wW-00CDp7; Sat, 25
+ Feb 2017 22:39:33 +0100
+Subject: Re: [PATCH 2/2] commit: don't check for space twice when looking for
+ header
+To:     Jeff King <peff@peff.net>
+References: <23989e76-24ba-90a4-91a9-9f66bfccb7c9@web.de>
+ <b1d5c882-38b8-dd2d-2e5f-aafb8dfada81@web.de>
+ <20170225201522.uan52fwey6zjosym@sigill.intra.peff.net>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
 From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <a5626d97-e644-65b5-2fd3-41ce870f85a6@web.de>
-Date:   Sat, 25 Feb 2017 22:21:45 +0100
+Message-ID: <6462e74c-1ee7-7ed0-0695-9889df803943@web.de>
+Date:   Sat, 25 Feb 2017 22:39:29 +0100
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
  Thunderbird/45.7.1
 MIME-Version: 1.0
-In-Reply-To: <20170225101307.24067-2-vegard.nossum@oracle.com>
-Content-Type: text/plain; charset=iso-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K0:Weq7/rlEVbI0kfVglGpj4VBMclvEN3VMB6z5HhB/GPR/uxEISSg
- Onsw5gqLoVj9ZFYittSBrnEdMj/tEq8J1jHIirNqOmcGPcNgObLU1XXo8t1m0LIJ3NOps9V
- LFXrSPt10+9aAJ+K8u++YVT8Fg9WBP7KG72ytk9fTldy53OkMeVk79GUQfiYTGDuVuOr8cx
- pbfWQ12UdIl+OVOUAOrUQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:IjW4/FrJRXU=:ci5Ouz9r1s3YWDaneInGPC
- TTG9gyBeO3EnSZ54pb0KKM2GdDIlHfcorIKrunD6m72lA9K159GR6ogkIhdRNhQ+n0/D58kFk
- gyLCBzpA+TXjM11lq4ZmlhwSgNT66/+d8lF0EwA78vvfn5gqxkbQi/gh+QuC8x5EppREoAbkQ
- YLoOhew9TZiWDOE6pLmoh5n60Le5fJ/zDKkLA/jyfToK9fFaQ5B2H5U05fmTXytXRG3iH6Jlw
- vcD5hdSmqvA8u1+HEuLff5Lw7KopBr5PsAGuOs4NE74t/jj39H6FFPuMlKJY0QE2kHIBq9RAP
- +rV9L7huU8CVBBhGEE5mU0JuXDLdrfUypB+u8XJOxFb4UwpNylfR+QWqas3dzKvvXv9njA5De
- 7ZkExE+6q7H/LC+9TQC5eN3V+MaK07+D/zK/xlz67e/w9iif5OKuO+m6lrTlylZrwPEW0oW+9
- fwyJC9/8f0KHdReFkaKgTU8m3uZgPEEnANyle4E0kxhmm4rQs4xtHCt7EjzF33WYkvYHFWIIA
- jKhMPmQuHOdwyfNrwwVIwW5kdMAkcncsQmNv61NYMKUU+bquugtP+LPlecbHzdTuiSfex6MxM
- 9AbUvCqYAuewIEYXDG/FVMNt3rtnATgUFff2/JbzSdY0KieejuSOYPORZLFtcqX2PRrrFFqDA
- sz+/pOeblrbvEu721e9lp7Z5YOLW3UNLnDJEXYHVBw92fh3S78+R2qIPxJ0aGGAHFA1EyB/Ia
- GJZZocsCOTLx9ovOiQN0rbJCrX0qFAy8rpIHmu5BCopi9sqkqWWLrDJVoi5m5Dgh/LMYaGsu4
- mdcGnIA
+In-Reply-To: <20170225201522.uan52fwey6zjosym@sigill.intra.peff.net>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K0:YmLvPwWyXckueEdR7skmdFtBMZTMLtFPO68cb373N7pdr/wRcA5
+ ncTzTOTJdDqit64QJ05TzR5DedLP4PyiyLXu/i4QS9XL5Rpyr4XTJ+iEniYKXp+vp078ggg
+ w1kyZu9YX+GjhAevgURP3+G9fVTygfTtIDlpHYN3G72flLP49N8v4X+TSy8u8AnLntXfQ3h
+ AeV6Omy/L4BZ5keCLQgtA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:fRiY0fSuIfk=:tFwXxvQhHIAxShRAnLvvaa
+ xz+qe1c1ixwLZoAmVITpjzcASK9SC9y36MAgpCSrcD5GHGBEfSJ0DxuY8Uj3cjuUgOgz1n7mc
+ Prli70qkTOZg2Rdhtq8Amhk+MZV6smAWPkoCPG1S2b1eRUdMijMmAlekNcgImRjUlmja7Q9nm
+ 4bTKxnho8bN5mV1BxNKNDxIDZMsabVWCjqeF5OkHG1KmgA+ds4h4uH+SmkLxJoBYGwrkCadl7
+ 2Hjix5XUhOUG3gyq54Mzb5wZA5B3nhAfNCeaRcuydJjwcNibuXTln4E3Sd2bowwueNACQ9HNU
+ yfh0jf8ckByQ3nouOnAPQez6YTl0tPzXB/rKTlwszSsyT4y2iyC5A4SKUR3jWy23ScmEpAkM1
+ k25rhE544+9KAqHeXoBk6YuCoy2oyT7TpOdnGTjVaJlemcGTnirLBoiYVIp8nArzhtmee95Ai
+ S9FpIozqmbEpAYtHvbroj3S1/qmdCWuGn/QbXsEed2iiU6qyYuhI3iw8/PtgC+yc9UI7Ye3jg
+ 8b6f9IAVhXV+D37kXqkrSYmn6PgFx5afs4k4A331DRGTXIWi+erV7RXr8hDr9AZ2LNRyQi0ab
+ FYFuDwCGJuT/z/tEn48LlLv7Uk2hIDeDo6SDfS5isg2jEawG4E92pcEgosv4lfqoMMnQmxvKA
+ 9dK9umgggf+LwS2jXSepEvP9qqiRcFZYGTuSxr9CwpHzgH+/VYihnB/NL47/oQVcgtatooSfx
+ EwvrawmI6G8Lokk3gAincVvoLouWo3z03qh3ttKTxUGkZjNSZQcc4wYB3Lev2mXt7789rUoNM
+ UPcqOxC
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 25.02.2017 um 11:13 schrieb Vegard Nossum:
-> For the patches in the added testcases, we were crashing with:
+Am 25.02.2017 um 21:15 schrieb Jeff King:
+> On Sat, Feb 25, 2017 at 08:27:40PM +0100, René Scharfe wrote:
 >
->     git-apply: apply.c:3665: check_preimage: Assertion `patch->is_new <= 0' failed.
+>> Both standard_header_field() and excluded_header_field() check if
+>> there's a space after the buffer that's handed to them.  We already
+>> check in the caller if that space is present.  Don't bother calling
+>> the functions if it's missing, as they are guaranteed to return 0 in
+>> that case, and remove the now redundant checks from them.
 >
-> As it turns out, check_preimage() is prepared to handle these conditions,
-> so we can remove the assertion.
->
-> Found using AFL.
->
-> Signed-off-by: Vegard Nossum <vegard.nossum@oracle.com>
->
-> ---
->
-> (I'm fully aware of how it looks to just delete an assertion to "fix" a
-> bug without any other changes to accomodate the condition that was
-> being tested for. I am definitely not an expert on this code, but as far
-> as I can tell -- both by reviewing and testing the code -- the function
-> really is prepared to handle the case where patch->is_new == 1, as it
-> will always hit another error condition if that is true. I've tried to
-> add more test cases to show what errors you can expect to see instead of
-> the assertion failure when trying to apply these nonsensical patches. If
-> you don't want to remove the assertion for whatever reason, please feel
-> free to take the testcases and add "# TODO: known breakage" or whatever.)
-> ---
->  apply.c                     |  1 -
->  t/t4154-apply-git-header.sh | 36 ++++++++++++++++++++++++++++++++++++
->  2 files changed, 36 insertions(+), 1 deletion(-)
->
-> diff --git a/apply.c b/apply.c
-> index cbf7cc7f2..9219d2737 100644
-> --- a/apply.c
-> +++ b/apply.c
-> @@ -3652,7 +3652,6 @@ static int check_preimage(struct apply_state *state,
->  	if (!old_name)
->  		return 0;
->
-> -	assert(patch->is_new <= 0);
+> Makes sense, and I couldn't spot any errors in your logic or in the
+> code.
 
-5c47f4c6 (builtin-apply: accept patch to an empty file) added that line. 
-  Its intent was to handle diffs that contain an old name even for a 
-file that's created.  Citing from its commit message: "When we cannot be 
-sure by parsing the patch that it is not a creation patch, we shouldn't 
-complain when if there is no such a file."  Why not stop complaining 
-also in case we happen to know for sure that it's a creation patch? 
-I.e., why not replace the assert() with:
+Thanks for checking!
 
-	if (patch->is_new == 1)
-		goto is_new;
+>>  static inline int standard_header_field(const char *field, size_t len)
+>>  {
+>> -	return ((len == 4 && !memcmp(field, "tree ", 5)) ||
+>> -		(len == 6 && !memcmp(field, "parent ", 7)) ||
+>> -		(len == 6 && !memcmp(field, "author ", 7)) ||
+>> -		(len == 9 && !memcmp(field, "committer ", 10)) ||
+>> -		(len == 8 && !memcmp(field, "encoding ", 9)));
+>> +	return ((len == 4 && !memcmp(field, "tree", 4)) ||
+>> +		(len == 6 && !memcmp(field, "parent", 6)) ||
+>> +		(len == 6 && !memcmp(field, "author", 6)) ||
+>> +		(len == 9 && !memcmp(field, "committer", 9)) ||
+>> +		(len == 8 && !memcmp(field, "encoding", 8)));
+>
+> Unrelated, but this could probably be spelled with a macro and strlen()
+> to avoid the magic numbers. It would probably be measurably slower for a
+> compiler which doesn't pre-compute strlen() on a string literal, though.
 
->  	previous = previous_patch(state, patch, &status);
->
->  	if (status)
-> diff --git a/t/t4154-apply-git-header.sh b/t/t4154-apply-git-header.sh
-> index d651af4a2..c440c48ad 100755
-> --- a/t/t4154-apply-git-header.sh
-> +++ b/t/t4154-apply-git-header.sh
-> @@ -12,4 +12,40 @@ rename new 0
->  EOF
->  '
->
-> +test_expect_success 'apply deleted file mode / new file mode / wrong mode' '
-> +	test_must_fail git apply << EOF
-> +diff --git a/. b/.
-> +deleted file mode
-> +new file mode
-> +EOF
-> +'
-> +
-> +test_expect_success 'apply deleted file mode / new file mode / wrong type' '
-> +	mkdir x &&
-> +	chmod 755 x &&
-> +	test_must_fail git apply << EOF
-> +diff --git a/x b/x
-> +deleted file mode 160755
-> +new file mode
-> +EOF
-> +'
-> +
-> +test_expect_success 'apply deleted file mode / new file mode / already exists' '
-> +	touch 1 &&
-> +	chmod 644 1 &&
-> +	test_must_fail git apply << EOF
-> +diff --git a/1 b/1
-> +deleted file mode 100644
-> +new file mode
-> +EOF
-> +'
-> +
-> +test_expect_success 'apply new file mode / copy from / nonexistant file' '
-> +	test_must_fail git apply << EOF
-> +diff --git a/. b/.
-> +new file mode
-> +copy from
-> +EOF
-> +'
-> +
->  test_done
->
+sizeof(string_constant) - 1 might be a better choice here than strlen().
+
+René
