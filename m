@@ -2,84 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 11BDB201B0
-	for <e@80x24.org>; Sat, 25 Feb 2017 12:53:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 86F34201B0
+	for <e@80x24.org>; Sat, 25 Feb 2017 15:00:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751284AbdBYMxa (ORCPT <rfc822;e@80x24.org>);
-        Sat, 25 Feb 2017 07:53:30 -0500
-Received: from smtp-out-1.talktalk.net ([62.24.135.65]:47959 "EHLO
-        smtp-out-1.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751214AbdBYMxa (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 25 Feb 2017 07:53:30 -0500
-Received: from PhilipOakley ([92.31.218.76])
-        by smtp.talktalk.net with SMTP
-        id hblRcdpvs0KuvhblRcxLrp; Sat, 25 Feb 2017 12:47:54 +0000
-X-Originating-IP: [92.31.218.76]
-X-Spam: 0
-X-OAuthority: v=2.2 cv=RZjSMBlv c=1 sm=1 tr=0 a=e6L6E7eW+5Nb7SO+DvSdIg==:117
- a=e6L6E7eW+5Nb7SO+DvSdIg==:17 a=N659UExz7-8A:10 a=yPCof4ZbAAAA:8
- a=PWi42-BxNWIbCxg3-QgA:9 a=pILNOxqGKmIA:10 a=2lfDSYhZ3Z6b8uxcDO-Z:22
-Message-ID: <36746FDD909546E29F39F1040810DA17@PhilipOakley>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
-From:   "Philip Oakley" <philipoakley@iee.org>
-To:     "Junio C Hamano" <gitster@pobox.com>, <git@vger.kernel.org>,
-        "Vegard Nossum" <vegard.nossum@oracle.com>
-Cc:     "Christian Couder" <christian.couder@gmail.com>,
-        "Michal Zalewski" <lcamtuf@google.com>
-References: <20170225101307.24067-1-vegard.nossum@oracle.com> <E14B054C79E1450F8B41E6477D1D7CD1@PhilipOakley> <0cdd4304-7b71-c38d-21ab-b4e997242bd4@oracle.com>
-Subject: Re: [PATCH 1/2] apply: guard against renames of non-existant empty files
-Date:   Sat, 25 Feb 2017 12:47:55 -0000
-Organization: OPDS
+        id S1751356AbdBYPAJ (ORCPT <rfc822;e@80x24.org>);
+        Sat, 25 Feb 2017 10:00:09 -0500
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:34578 "EHLO
+        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751257AbdBYPAI (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 25 Feb 2017 10:00:08 -0500
+Received: by mail-wm0-f68.google.com with SMTP id m70so7049949wma.1
+        for <git@vger.kernel.org>; Sat, 25 Feb 2017 07:00:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=3ZVYmH8/W8iWPrQhWABb9u7PdmCLWk5K9n3Yjv8RS9Q=;
+        b=C2HkVQ/ChDxH5Bo/Agnf2JkOsgf5MaBzTicDFE6oLNRpWFwE6Bjb2QHUT6UjCPhQlm
+         tcFAI1ZWK2aTs09aMu5KnSjk0IM5m1PNmy10EwGIay3NFEx16DAVA9KvgLT4E62IIr5T
+         fFxYS2Qvqeiz8tBZrUc0vB8Ldyzcv0UPuGEua81J6hE9tubu0gcgVUCCXg5F55+OmiHV
+         3JunejPoHqebBGHUeWYE/CkFSJKE9faX41ayNhQkZ0HjWyERPmlKh6LGy1Zb/WmnVJRK
+         20yjew8LuHajrzqO1zqfKDfVU58X+rMABRr8o++ZhPZPSolab6hbNkdJNT0TZ2gT6v1a
+         8Fag==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=3ZVYmH8/W8iWPrQhWABb9u7PdmCLWk5K9n3Yjv8RS9Q=;
+        b=jRrsSnMHj0Me+Q4SDR1VPqx9D8LLCRPuKPE+rjPDp87VrU4MDMFptNrgWvjAA2WHdR
+         EM0faJVG9ZAnIowbyKiFPnyQ67RuJ2hac4WshwOXE7/4KAibCkgUgkM8E+odENxEk5Ll
+         u7ma/dVKh0rDpjl03NuIQ0pH+WJ+My4uoLa4i///S7eWaLP9FnZDjJITHet3/hUWHdCn
+         Pj1yVS+5K8UEct5BQ9SyiNCSyVYkXMstMFdPSfqJX5V5I63aSbfmQlsfJSXxF/1kLv7L
+         AIPEnxoTmhk0C7BqXoP0tWxqMAo/RXvX7woemZ9QHay2N5nkh4NARIbiFn452eksra9l
+         ogJA==
+X-Gm-Message-State: AMke39nRaEWP/KC+0wPurUocmzGN6cZvmaNxqJf0OWZoxVU1nV12j0Kd5a67Mj0tgydoSg==
+X-Received: by 10.28.6.210 with SMTP id 201mr7137998wmg.85.1488034291926;
+        Sat, 25 Feb 2017 06:51:31 -0800 (PST)
+Received: from localhost ([2a02:c7f:c42b:f900:5e51:4fff:fee9:57af])
+        by smtp.gmail.com with ESMTPSA id z10sm6618337wmg.31.2017.02.25.06.51.30
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Sat, 25 Feb 2017 06:51:31 -0800 (PST)
+Date:   Sat, 25 Feb 2017 15:57:19 +0000
+From:   Thomas Gummerer <t.gummerer@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        sunny@sunbase.org,
+        Jakub =?utf-8?B?TmFyxJlic2tp?= <jnareb@gmail.com>,
+        Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH v6 0/6] stash: support pathspec argument
+Message-ID: <20170225155719.GA6243@hank>
+References: <20170217224141.19183-1-t.gummerer@gmail.com>
+ <20170219110313.24070-1-t.gummerer@gmail.com>
+ <xmqqd1eck5x5.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-Content-Type: text/plain;
-        format=flowed;
-        charset="Windows-1252";
-        reply-type=response
-Content-Transfer-Encoding: 7bit
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
-X-CMAE-Envelope: MS4wfDDs+0Wd9QvxpbLf3sGzayIp6vrL5f7gFfSogEIh5JLLRUb8kBi109/efTsAArfIlmHWuQM5peNADFK++beJrecsv87r0eYw9al40fF4e+32vBFaCxuF
- J/yXECchDRq9criCE+utBckomQKYpeMTJAX7DBaFVPFDYju2d9z5/sae2PvFSfOeCrWHQRBD4itidn5+RRE0sggGPeqg8srp9Agy9fSMwq/KTLcWo0Oe21yA
- cyGZF9ff46OOsmsveQFaTxugIQrStbA6slW2B2QlMOGS7W8QQrKb8UE4e4aJv9Je
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqd1eck5x5.fsf@gitster.mtv.corp.google.com>
+User-Agent: Mutt/1.5.23.1-rc1 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: "Vegard Nossum" <vegard.nossum@oracle.com>
-> On 25/02/2017 12:59, Philip Oakley wrote:
->> From: "Vegard Nossum" <vegard.nossum@oracle.com>
->>> If we have a patch like the one in the new test-case, then we will
->>
->> "the one in the new test-case" needs a clearer reference to the
->> particular case so that future readers will know what it refers to.
->> Noticed while browsing the commit message..
->
-> There is only one testcase added by this patch, so how is it possibly
-> unclear? In what situation would you read a commit message and not even
-> think to glance at the patch for more details?
->
-On initial reading of a commit message, the expectation is that the commit 
-will be about a change from some previous state, so I immediately asked 
-myself, where is that new (recent) test case from.
+On 02/20, Junio C Hamano wrote:
+> Thomas Gummerer <t.gummerer@gmail.com> writes:
+> 
+> > @@ -55,10 +53,13 @@ push [-p|--patch] [-k|--[no-]keep-index] [-u|--include-untracked] [-a|--all] [-q
+> >  
+> >  	Save your local modifications to a new 'stash', and run `git reset
+> >  	--hard` to revert them.  The <message> part is optional and gives
+> 
+> I didn't notice this during v5 review, but the above seems to be
+> based on the codebase before your documentation update (which used
+> to be part of the series in older iteration).  I had to tweak the
+> series to apply on top of your 20a7e06172 ("Documentation/stash:
+> remove mention of git reset --hard", 2017-02-12) while queuing, so
+> please double check the result when it is pushed out to 'pu'.
 
-You could say "This patch presents a new test case" which would straight 
-away set the expectation that one should read on to see what its about. It 
-was just that as a reader of the log message I didn't pick up the sense you 
-wanted to convey. It's easy to see with hindsight or fore-knowledge.
-
-I, personally, think that bringing the AFL discovery to the fore would help 
-in explaining why/how the patch appeared in the first place.
-
-Hope that helps explain why I responded.
-
-regards
-
-Philip 
-
+Sorry about that.  What you queued looks good to me, I will however
+send a re-roll based on your comments on 4/6.  (And I'll make sure to
+base it on 20a7e06172)
