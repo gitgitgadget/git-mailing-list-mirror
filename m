@@ -7,53 +7,53 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8377A2022D
-	for <e@80x24.org>; Sat, 25 Feb 2017 07:32:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 85DC92022D
+	for <e@80x24.org>; Sat, 25 Feb 2017 07:32:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751656AbdBYHcT (ORCPT <rfc822;e@80x24.org>);
-        Sat, 25 Feb 2017 02:32:19 -0500
-Received: from mail-pf0-f194.google.com ([209.85.192.194]:34600 "EHLO
-        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751513AbdBYHcR (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1751623AbdBYHcS (ORCPT <rfc822;e@80x24.org>);
+        Sat, 25 Feb 2017 02:32:18 -0500
+Received: from mail-pg0-f68.google.com ([74.125.83.68]:35055 "EHLO
+        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751516AbdBYHcR (ORCPT <rfc822;git@vger.kernel.org>);
         Sat, 25 Feb 2017 02:32:17 -0500
-Received: by mail-pf0-f194.google.com with SMTP id o64so1845551pfb.1
-        for <git@vger.kernel.org>; Fri, 24 Feb 2017 23:32:04 -0800 (PST)
+Received: by mail-pg0-f68.google.com with SMTP id 1so5904587pgz.2
+        for <git@vger.kernel.org>; Fri, 24 Feb 2017 23:32:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
         bh=qydMrluMTq6MKFE5lLXU7N1NSY2ksosB24NZf5QOAm0=;
-        b=ZINw3DcE4zSxnYPh+2U9AGrnc4hrxZf3ktai7klLDV2WZTchjEphgzwyF39PNpHkcE
-         bXfCmuUaUCOPiv3TJNKyzV6EzOh0hBjFqzrwv0UkYjIcFKxiVIX5SmPrk38LlYtsL6Ev
-         Wfb2NPsYqMSAvB2ymxtE1p2kHMdwLu9WRuYP1+wCjPoVoQ8lo5AcU8WlWSPWvt51Aqpk
-         4NBFOvyCGaQH82rkklsbMWXYPQpg2iEBjwrYq9tqCrA6fTGnY0FEmdrcXeaqbn5jzYma
-         iGZdEvwf9xaVtZhSdI1szxrnp3gOfUYLc/whxBTbWlwiujnOFyNoHskGVTqqSDASlfwh
-         wuag==
+        b=pin+eRWhfHa7EG6qaWTW/IZTqh9pp8AwT/cBiCDOa/8dGNaBan7OZsR1DIsyTFD0ZE
+         dvvvc+jsqju0AdtL+1Pdl3vM95wClQulRWgXcrMh/3AU6kMYCcpqY+RyxD9yoX6pmoh8
+         vj5XlhdLO2mdkkxU1q4ytaw58Xp3lcgR/Z0ObVlZC9Eu9sU7Q0e/2rGbY+KqjtoyCSOh
+         wItRqTpTJcxOzzPEGJUIB03qE4SDHbcEQClcXPmZovEbSU0qAZ/JQ3Agzq2FHbdGqPo6
+         RnQSDPa3ssXnoM6MuVO19CzOJbj/rnNphjk5kvE5AIOjA2VjSBfI1BXAVS4Zu8QaYpH8
+         WCEw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
         bh=qydMrluMTq6MKFE5lLXU7N1NSY2ksosB24NZf5QOAm0=;
-        b=Ipov82hU2wCKekLSHGIbh7e1hfMfx9fkTuEvVSD4ciWfCBT0zyG7am/b/SoGCCJE0h
-         roituUd22wnDYklISrvoTOe371o9gymJx37eFmHtDxBCrvX5XegF1dRgC+8ZAmlH0cOn
-         F/PVv+CHovj7ciz3uNBeQCc1NGazL5MH52KGy+EsrqgiUDLfGH2HytiGaQ7Gg4l3GtiW
-         coFLjs/SN9VrE4jB4b4YEoKoupQ7PHtLz4FIFZRJdoHkmgk2W8qaly0JgFumNO08NJmd
-         beb/aGbGUcfDzcj59OzbSilZnyxhBW5uaLi1E5EdM0gGpy/X9rUy6GmvF+x0WloY2SKj
-         iioA==
-X-Gm-Message-State: AMke39k0keKXuF6p7EaN/iAaPrpzKpcND3MVr2izr7yWimZhi2KiyAHLQ5bfRPTK6ZK6AA==
-X-Received: by 10.98.137.152 with SMTP id n24mr1551770pfk.43.1488007504482;
-        Fri, 24 Feb 2017 23:25:04 -0800 (PST)
+        b=T2eqCJMmPUk87SsZtGZqMylkRJ9UrMyoV4ac1dNbA8l40S6BJIHTmWvSWEjrJ9huIM
+         gYNNE3HKVOOIt75jZSxO7YWLsF/cWlJGvA7rA1jFt1CG9xgVpKjwS1xkz9BygKoASd3o
+         Zo2bs2wcWGI76HvZ+tTCJUGQIa3TizmKY8orH66i5kUmoWQy1h4/PeDSc8IRXj4HEHSb
+         Q54ovHaeofr0Zbi3B7EMf7GWvXT+f6uxwK09mXrI+OXbgYxtjIqWTsvGWw6AxJzFzdpT
+         sAbjBsGYlWzILX4Uu3WR3ig0sQu7dDYSWQHX6Qb+Z739jrvRS/X/FeeybPz09+tB3gYq
+         UjYw==
+X-Gm-Message-State: AMke39kIH2S95mZ6Sfr9mH9LePDU+tZp+zIHehgquc7Seaju7wMFJndZFugRllC5nipRvQ==
+X-Received: by 10.84.218.78 with SMTP id f14mr9501653plm.146.1488007926054;
+        Fri, 24 Feb 2017 23:32:06 -0800 (PST)
 Received: from localhost ([139.59.1.28])
-        by smtp.gmail.com with ESMTPSA id s5sm12615282pfd.107.2017.02.24.23.25.03
+        by smtp.gmail.com with ESMTPSA id q7sm18680789pfb.98.2017.02.24.23.32.05
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 24 Feb 2017 23:25:03 -0800 (PST)
+        Fri, 24 Feb 2017 23:32:05 -0800 (PST)
 From:   Siddharth Kannan <kannan.siddharth12@gmail.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, Matthieu.Moy@imag.fr, pranit.bauva@gmail.com,
         peff@peff.net, pclouds@gmail.com, sandals@crustytoothpaste.ath.cx,
         Siddharth Kannan <kannan.siddharth12@gmail.com>
 Subject: [PATCH 1/6 v5] revision.c: do not update argv with unknown option
-Date:   Sat, 25 Feb 2017 07:24:42 +0000
-Message-Id: <1488007487-12965-2-git-send-email-kannan.siddharth12@gmail.com>
+Date:   Sat, 25 Feb 2017 07:32:01 +0000
+Message-Id: <1488007921-13432-1-git-send-email-kannan.siddharth12@gmail.com>
 X-Mailer: git-send-email 2.7.4
 In-Reply-To: <1488007487-12965-1-git-send-email-kannan.siddharth12@gmail.com>
 References: <1488007487-12965-1-git-send-email-kannan.siddharth12@gmail.com>
