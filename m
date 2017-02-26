@@ -2,84 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 91891201B0
-	for <e@80x24.org>; Sun, 26 Feb 2017 03:12:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 88C5B201B0
+	for <e@80x24.org>; Sun, 26 Feb 2017 05:26:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751995AbdBZDMw (ORCPT <rfc822;e@80x24.org>);
-        Sat, 25 Feb 2017 22:12:52 -0500
-Received: from mail-oi0-f41.google.com ([209.85.218.41]:34426 "EHLO
-        mail-oi0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751890AbdBZDMv (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 25 Feb 2017 22:12:51 -0500
-Received: by mail-oi0-f41.google.com with SMTP id 65so26139526oig.1
-        for <git@vger.kernel.org>; Sat, 25 Feb 2017 19:11:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=DB9H7klWgQXU7eCOonkkHW6LmXFdpIRM9CGX3xHZrbc=;
-        b=jBQncQgYFaWezMC1FTXHh5bH5iSdR20f2V9nXKtvY6eamsoZ33OT9knpFeNmIKbd3k
-         /0qLdBsixQGb6sb4WGTX5EC7PxwieMPsZQ5lxmT2RXwykgMuWGwMIkfAotmIKuMyVm8x
-         Z6wBavHQqnigSJ+0KVZSV2dGNeFQQTmd4bJuwi8DOAYx78H/qDnA6UUealuCB6xNhYy6
-         MetLvHEMwnJHBK/WtZQLO1uTiOCUCGVfVSJZ+NMy3l4wWtVmOCgYXcrBxNb+CNi+N6Jd
-         Kx0PDrjtqW992vyuIQwLjTnuuSDI1HJ8W3v9OfFYmzZkbcGf/3qPU+bYsi67NAyrgCki
-         nkxw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=DB9H7klWgQXU7eCOonkkHW6LmXFdpIRM9CGX3xHZrbc=;
-        b=EwJsPimyLsl7PW/nuvdTSOn+3sF/VE9eURrfp908j8LnoSDXbqtQlR9jYnumm2PXgx
-         sNz7qXuOBUQ9PqgoD0sqTbCpEl5trWxLw1KShE42e4zLbaKr6II8OxoRmjvu/0W2zwa3
-         yw1T72Sw4+bBcNw7fGrdNANRrGA7dBlWO2XAFWrx0Ikl8/oyOV2mYNU8qIFLfKG7K7Kv
-         HN0av6G/w1VKfvEOzQnfpW8NvTnqpcY1XBbL2R/+/W+7Y05fyaKg4ejZcZ+BJ/+Nivdr
-         c82Fd98V70vnTuOxeUtdJpGGFeIh9dZFfTFyScB+cCpub0kzCfhsH8p4ofVjmRLnMWcq
-         I27Q==
-X-Gm-Message-State: AMke39lLHcOq2M3bP3eCPJ0nXSP+WSHISf1RPUqvaa9Wfxh+GGzuXRPfHvF1JXSFLllE/N3nAZBtbmYoHC12/w==
-X-Received: by 10.202.80.212 with SMTP id e203mr5625896oib.146.1488078169190;
- Sat, 25 Feb 2017 19:02:49 -0800 (PST)
+        id S1751459AbdBZF0z (ORCPT <rfc822;e@80x24.org>);
+        Sun, 26 Feb 2017 00:26:55 -0500
+Received: from cloud.peff.net ([104.130.231.41]:34293 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1750974AbdBZF0y (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 26 Feb 2017 00:26:54 -0500
+Received: (qmail 8642 invoked by uid 109); 26 Feb 2017 05:18:37 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sun, 26 Feb 2017 05:18:37 +0000
+Received: (qmail 25079 invoked by uid 111); 26 Feb 2017 05:18:41 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Sun, 26 Feb 2017 00:18:41 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 26 Feb 2017 00:18:34 -0500
+Date:   Sun, 26 Feb 2017 00:18:34 -0500
+From:   Jeff King <peff@peff.net>
+To:     Jason Cooper <git@lakedaemon.net>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Linus Torvalds <torvalds@linux-foundation.org>,
+        Ian Jackson <ijackson@chiark.greenend.org.uk>,
+        Joey Hess <id@joeyh.name>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: SHA1 collisions found
+Message-ID: <20170226051834.i37mlqv5wxwz3254@sigill.intra.peff.net>
+References: <20170223164306.spg2avxzukkggrpb@kitenet.net>
+ <22704.19873.860148.22472@chiark.greenend.org.uk>
+ <xmqq60jz5wbm.fsf@gitster.mtv.corp.google.com>
+ <20170224233929.p2yckbc6ksyox5nu@sigill.intra.peff.net>
+ <CA+55aFw6BLjPK-F0RGd9LT7X5xosKOXOxuhmKX65ZHn09r1xow@mail.gmail.com>
+ <xmqqinnyztqe.fsf@gitster.mtv.corp.google.com>
+ <20170226011359.GI11350@io.lakedaemon.net>
 MIME-Version: 1.0
-Received: by 10.74.158.84 with HTTP; Sat, 25 Feb 2017 19:02:18 -0800 (PST)
-In-Reply-To: <29A09E4EDB1F4F4D9E77E67A7A8A33FF@PhilipOakley>
-References: <20170223122346.12222-1-pclouds@gmail.com> <20170224131425.32409-1-pclouds@gmail.com>
- <20170224131425.32409-2-pclouds@gmail.com> <29A09E4EDB1F4F4D9E77E67A7A8A33FF@PhilipOakley>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Sun, 26 Feb 2017 10:02:18 +0700
-Message-ID: <CACsJy8Bq-P8Aw+f0omndCmQU54n_p7ZwDVDK9APuH_3vXDac2g@mail.gmail.com>
-Subject: Re: [PATCH v6 1/1] config: add conditional include
-To:     Philip Oakley <philipoakley@iee.org>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        Sebastian Schuberth <sschuberth@gmail.com>,
-        Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20170226011359.GI11350@io.lakedaemon.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Feb 25, 2017 at 5:08 AM, Philip Oakley <philipoakley@iee.org> wrote:
->> +Conditional includes
->> +~~~~~~~~~~~~~~~~~~~~
->> +
->> +You can include one config file from another conditionally by setting
->
->
-> On first reading I thought this implied you can only have one `includeIf`
-> within the config file.
-> I think it is meant to mean that each `includeIf`could include one other
-> file, and that users can have multiple `includeIf` lines.
+On Sun, Feb 26, 2017 at 01:13:59AM +0000, Jason Cooper wrote:
 
-Yes. Not sure how to put it better though (I basically copied the
-first paragraph from the unconditional include section above, which
-shares the same confusion). Perhaps just write "the variable can be
-specified multiple times"? Or "multiple variables include multiple
-times, the last variable does not override the previous ones"?
--- 
-Duy
+> On Fri, Feb 24, 2017 at 10:10:01PM -0800, Junio C Hamano wrote:
+> > I was thinking we would need mixed mode support for smoother
+> > transition, but it now seems to me that the approach to stratify the
+> > history into old and new is workable.
+> 
+> As someone looking to deploy (and having previously deployed) git in
+> unconventional roles, I'd like to add one caveat.  The flag day in the
+> history is great, but I'd like to be able to confirm the integrity of
+> the old history.
+> 
+> "Counter-hashing" the blobs is easy enough, but the trees, commits and
+> tags would need to have, iiuc, some sort of cross-reference.  As in my
+> previous example, "git tag -v v3.16" also checks the counter hash to
+> further verify the integrity of the history (yes, it *really* needs to
+> check all of the old hashes, but I'd like to make sure I can do step one
+> first).
+> 
+> Would there be opposition to counter-hashing the old commits at the flag
+> day?
+
+I don't think a counter-hash needs to be embedded into the git objects
+themselves. If the "modern" repo format stores everything primarily as
+sha-256, say, it will probably need to maintain a (local) mapping table
+of sha1/sha256 equivalence. That table can be generated at any time from
+the object data (though I suspect we'll keep it up to date as objects
+enter the repository).
+
+At the flag day[1], you can make a signed tag with the "correct" mapping
+in the tag body (so part of the actual GPG signed data, not referenced
+by sha1). Then later you can compare that mapping to the object content
+in the repo (or to the local copy of the mapping based on that data).
+
+-Peff
+
+[1] You don't even need to wait until the flag day. You can do it now.
+    This is conceptually similar to the git-evtag tool, though it just
+    signs the blob contents of the tag's current tree state. Signing the
+    whole mapping lets you verify the entirety of history, but of course
+    that mapping is quite big: 20 + 32 bytes per object for
+    sha1/sha-256, which is ~250MB for the kernel. So you'd probably not
+    want to do it more than once.
