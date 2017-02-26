@@ -2,120 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3B9EA2022D
-	for <e@80x24.org>; Sun, 26 Feb 2017 14:13:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 103102022D
+	for <e@80x24.org>; Sun, 26 Feb 2017 15:19:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752196AbdBZONu (ORCPT <rfc822;e@80x24.org>);
-        Sun, 26 Feb 2017 09:13:50 -0500
-Received: from mail-wr0-f171.google.com ([209.85.128.171]:33605 "EHLO
-        mail-wr0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752125AbdBZONs (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 26 Feb 2017 09:13:48 -0500
-Received: by mail-wr0-f171.google.com with SMTP id m5so18104176wrm.0
-        for <git@vger.kernel.org>; Sun, 26 Feb 2017 06:12:33 -0800 (PST)
+        id S1752312AbdBZPTV (ORCPT <rfc822;e@80x24.org>);
+        Sun, 26 Feb 2017 10:19:21 -0500
+Received: from mail-wr0-f196.google.com ([209.85.128.196]:33064 "EHLO
+        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752244AbdBZPTU (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 26 Feb 2017 10:19:20 -0500
+Received: by mail-wr0-f196.google.com with SMTP id g10so7274866wrg.0
+        for <git@vger.kernel.org>; Sun, 26 Feb 2017 07:19:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=G+uCIi4x6jjPrqy9hmQhUghhxQuM9FM2d8XWno12D0g=;
-        b=j4Y9ON1QS+I1nQgE8QMsxW6m26rBHrqbV/O2UWTPpyvq8Qr9TDuzoYTB9dkAE+PDKb
-         UcGRXKpxBYUbq2KizKTBFdPcaoJkm4GfGQNqRqdsKgmOyPVJfrtxAzrs+du863rZX/Vj
-         o7/0pgPABMO840qU7lEHhJh4sAj6OTX2vq0fq05X+unXp7DKZYgqu9QXbdzXWPzFpR2R
-         QLTnQexWYLw9yC4SiYWyhJMi0w8ppy5Fz28p2fD8ZQJ8va5aGE84URcUpvjYuuvAJTMK
-         MHq6eacO34ZVZPVPbhyz5a2qIsLstz3akaeEb441adDvqqN+yHJ2SKBert/EztSQzGLC
-         aeww==
+        h=subject:to:references:from:message-id:date:user-agent:mime-version
+         :in-reply-to:content-transfer-encoding;
+        bh=Z2aP3L763AGNcZrv1D73+tjeoSKe4ArLPHMxfDFmecg=;
+        b=KPaJVoS9voMvWGe+/QLdmn+r6OzjjV0BEGKU9RE5eijuZ48QtG09iBxXQhbOMXm7Ej
+         E4fADCyfIBwIqMZp04r6byKJQGN3ajuOSOhpVQNAwsvl0DWNShk255kF3n4EkZJ8M7IJ
+         yAWmo765k/fwAifds93MLcJjAIeJefpIuT9HGwHlbzSkHGRsXlWVD5CUaolRywnhtKGI
+         jeGimjb4b5vYF0Sy6E4RblVV5guIFvKUl3G8/KHPICIXN10sle7ASaUoM8Afi1sp3il3
+         UP6gbnd6cwjcS9GaCvcozi20JZkWtIX/yD3Fuy0u4pDTAjwq6M5cHLj0TfWFu/cEPFY+
+         SW3g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=G+uCIi4x6jjPrqy9hmQhUghhxQuM9FM2d8XWno12D0g=;
-        b=P4lkXnxKNgZcqEBr0JnygvUd4sCOY40oh89mvwa1KfGnwFmdz4lE3vc8f/vbzibGXu
-         ejvqAJPZgpBD0YRQWh7cLIveYqu0Y9twZbPyFj8BY4+JGajG6dalPbPhHLF6WEukKam+
-         8lKWFnmXKqjHGEvWVa3Ah+UkAXQ/DHMPgK8SdYoX/Db2SRokvDdFmI863HfsX2pB7xJf
-         Sz3NJD/KtuQlMUxxZsECz1FBK/pi2YX1kSVAWvO6YXJ03Mo0gz19ZBSNk+slJta2mqBM
-         VBtNxWPcUZ7B4Y5jtDDEj/sDlc6pI2l5Fibk6cO/wjSnpRQrJ8xdFiWl9YqjWvSlgq6C
-         Eu5w==
-X-Gm-Message-State: AMke39mZFyTx2GnMKVFVDKZl+gfKjMFlMeUCOTGGNbiS5166d2/AzmRm0zhMoLbQDBrExA==
-X-Received: by 10.223.139.220 with SMTP id w28mr11072189wra.172.1488118352302;
-        Sun, 26 Feb 2017 06:12:32 -0800 (PST)
-Received: from slxbook4.fritz.box (p5DDB7AEC.dip0.t-ipconnect.de. [93.219.122.236])
-        by smtp.gmail.com with ESMTPSA id y1sm10345312wme.15.2017.02.26.06.12.31
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sun, 26 Feb 2017 06:12:31 -0800 (PST)
-Content-Type: text/plain; charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-Subject: Re: [PATCH] travis-ci: run scan-build every time
-From:   Lars Schneider <larsxschneider@gmail.com>
-In-Reply-To: <CAJZjrdXg=jTXO+Dox9gTby-_JX+Lw_deihbUmbHe8V92dWJ0tg@mail.gmail.com>
-Date:   Sun, 26 Feb 2017 15:12:30 +0100
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        Jeff King <peff@peff.net>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <71030110-EB19-4F54-95F1-443D3EAE5286@gmail.com>
-References: <CAJZjrdXP3n5fOLx4rEEkbJT7JBMPUqk4Qdutm6KpvMVUMwCSPQ@mail.gmail.com> <BAB1EE0E-B258-4108-AE24-110172086DE4@gmail.com> <CAJZjrdXg=jTXO+Dox9gTby-_JX+Lw_deihbUmbHe8V92dWJ0tg@mail.gmail.com>
-To:     Samuel Lijin <sxlijin@gmail.com>
-X-Mailer: Apple Mail (2.3124)
+        h=x-gm-message-state:subject:to:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
+        bh=Z2aP3L763AGNcZrv1D73+tjeoSKe4ArLPHMxfDFmecg=;
+        b=sANtKrXmVrplOqxpLzDwXtkl/OgBu5NlVeMUYVP8jWjnfiiDtITLtLrZXNmy0D57Ae
+         WL0k3S3Z/81qrvAUTPpjIUgtRUkVoG7FwyRYvVBcJe+U11gPaSlAtZE59K0+OJkQOEz4
+         ZXtB87UE+dkz7vf4mXVXBgpAvhbjtpqdRBV8i/RR79Ja5utJuCYZBY6lINrX4sUFqTGp
+         ywrB7jE0OdXB5Gv4ieDoDk5d81DJsrsRxjwFR4WGMisykv5mc8h28OAu51adn9SiT2cf
+         kL8OzXRz5K+lKKV2TojWvsB89rBhOFDmmu/E2FRJcWZLeGbCar8x1NklztItsgWuSpMO
+         CcBw==
+X-Gm-Message-State: AMke39lCFI2jLke2NCfuphYskp3v5S1vPgXGXS3l8GOKcX3M4A+yCXhQlwWB4z3151QTPQ==
+X-Received: by 10.223.129.74 with SMTP id 68mr10034316wrm.183.1488122358117;
+        Sun, 26 Feb 2017 07:19:18 -0800 (PST)
+Received: from [192.168.5.102] ([87.116.180.111])
+        by smtp.gmail.com with ESMTPSA id g40sm18627418wrg.19.2017.02.26.07.19.16
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 26 Feb 2017 07:19:17 -0800 (PST)
+Subject: Re: Reference for quote "creating branch is not the issue, merging
+ is", in context of Subversion/Git
+To:     =?UTF-8?Q?Michael_H=c3=bcttermann?= <michael@huettermann.net>,
+        git@vger.kernel.org
+References: <c25bc18c-d599-93fd-0bad-23e1240e081e@huettermann.net>
+From:   Igor Djordjevic <igor.d.djordjevic@gmail.com>
+Message-ID: <32232f89-a6f8-be30-278a-bdfedae0716a@gmail.com>
+Date:   Sun, 26 Feb 2017 16:19:15 +0100
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.7.1
+MIME-Version: 1.0
+In-Reply-To: <c25bc18c-d599-93fd-0bad-23e1240e081e@huettermann.net>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hello Michael,
 
-> On 26 Feb 2017, at 03:09, Samuel Lijin <sxlijin@gmail.com> wrote:
->=20
-> On Sat, Feb 25, 2017 at 3:48 PM, Lars Schneider
-> <larsxschneider@gmail.com> wrote:
->>=20
->>> On 24 Feb 2017, at 18:29, Samuel Lijin <sxlijin@gmail.com> wrote:
->>>=20
->>> It's worth noting that there seems to be a weird issue with =
-scan-build
->>> where it *will* generate a report for something locally, but won't =
-do it
->>> on Travis. See [2] for an example where I have a C program with a
->>> very obvious memory leak but scan-build on Travis doesn't generate
->>> a report (despite complaining about it in stdout), even though it =
-does
->>> on my local machine.
->>>=20
->>> [1] https://travis-ci.org/sxlijin/git/builds/204853233
->>> [2] =
-https://travis-ci.org/sxlijin/travis-testing/jobs/205025319#L331-L342
->>=20
->> Scan-build stores the report in some temp folder. I assume you can't =
-access
->> this folder on TravisCI. Try the scan-build option "-o =
-scan-build-results"
->> to store the report in the local directory.
->=20
-> That occurred to me, but I don't quite think that's the issue. I just
-> noticed that on the repo I use to test build matrices, jobs 1-8 don't
-> generate a report, but 9-14 and 19-20 do [1]. I don't think it's an
-> issue with write permissions (scan-build complains much more vocally
-> if that happens), but it doesn't seem to matter if the output dir is
-> in the tmpfs [2] or a local directory [3].
->=20
-> [1] https://travis-ci.org/sxlijin/travis-testing/builds/205054253
-> [2] https://travis-ci.org/sxlijin/git/jobs/205028920#L1000
-> [2] https://travis-ci.org/sxlijin/git/jobs/205411705#L998
+On 26/02/2017 12:40, Michael Hüttermann wrote:
+> Linus Torvalds made a statement regarding merging/branching and stated
+> (as far as I know) that "creating branch is not the issue, merge is", in
+> context of Subversion/Git.
+> I do not find the origin source for that. Can you please help and point
+> me to a statement or article where Linus elaborated on this?
 
-Scan-build somehow replaces the compiler. My guess is that you=20
-tell scan-build to substitute clang but "make" is really using=20
-gcc or something? I reported something strange about the compilers
-on TravisCI some time ago but I can't find it anymore. I think I=20
-remember on OSX they always use clang even if you define gcc.=20
-Maybe it makes sense to reach out to TravisCI support in case=20
-this is a bug on their end?
+Could it be that you think of "Tech Talk: Linus Torvalds on Git"[1]
+(held on May 3, 2007)?
 
-Based on your work I tried the following and it seems to work:
-https://travis-ci.org/larsxschneider/git/jobs/205507241
-=
-https://github.com/larsxschneider/git/commit/faf4ecfdca1a732459c1f93c33492=
-8ee2826d490
+To give you some clue, here`s an excerpt from Linus' talk/presentation
+(taken from the transcript[2] containing the whole thing):
 
-- Lars=
+  "... Subversion for example, talks very loudly about how they do CVS
+  right by making branching really cheap. It's probably on their main
+  webpage where they probably say branching in subversion is O(1)
+  operation, you can do as many cheap branches as you want. Nevermind
+  that O(1) is actually with pretty large O I think, but even if it
+  takes a millionth of a second to do branching, who cares? It's the
+  wrong thing you are measuring. Nobody is interested in branching,
+  branches are completely useless unless you merge them, and CVS cannot
+  merge anything at all. You can merge things once, but because CVS
+  then forgets what you did, you can never ever merge anything again
+  without getting horrible horrible conflicts. Merging in subversion is
+  a complete disaster. The subversion people kind of acknowledge this
+  and they have a plan, and their plan sucks too. It is incredible how
+  stupid these people are. They've been looking at the wrong problem
+  all the time. Branching is not the issue, merging is..."
+
+This specific branch/merge performance talk starts at 50:20[3], where
+the part quoted above comes at 51:34[4].
+
+Please note that there`s more context before and after this excerpt
+that puts it all into the meant perspective, so you may really want
+to watch/listen/read the whole thing anyway.
+
+Regards,
+Buga
+
+[1] https://www.youtube.com/watch?v=4XpnKHJAok8
+[2] https://git.wiki.kernel.org/index.php/LinusTalk200705Transcript
+[3] https://youtu.be/4XpnKHJAok8?t=3020
+[4] https://youtu.be/4XpnKHJAok8?t=3094
