@@ -6,88 +6,89 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 88C5B201B0
-	for <e@80x24.org>; Sun, 26 Feb 2017 05:26:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CF766201B0
+	for <e@80x24.org>; Sun, 26 Feb 2017 06:09:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751459AbdBZF0z (ORCPT <rfc822;e@80x24.org>);
-        Sun, 26 Feb 2017 00:26:55 -0500
-Received: from cloud.peff.net ([104.130.231.41]:34293 "EHLO cloud.peff.net"
+        id S1751890AbdBZGIJ (ORCPT <rfc822;e@80x24.org>);
+        Sun, 26 Feb 2017 01:08:09 -0500
+Received: from cloud.peff.net ([104.130.231.41]:34304 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750974AbdBZF0y (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 26 Feb 2017 00:26:54 -0500
-Received: (qmail 8642 invoked by uid 109); 26 Feb 2017 05:18:37 -0000
+        id S1750970AbdBZGH3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 26 Feb 2017 01:07:29 -0500
+Received: (qmail 12105 invoked by uid 109); 26 Feb 2017 06:07:29 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sun, 26 Feb 2017 05:18:37 +0000
-Received: (qmail 25079 invoked by uid 111); 26 Feb 2017 05:18:41 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sun, 26 Feb 2017 06:07:29 +0000
+Received: (qmail 15885 invoked by uid 111); 26 Feb 2017 06:07:33 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Sun, 26 Feb 2017 00:18:41 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 26 Feb 2017 00:18:34 -0500
-Date:   Sun, 26 Feb 2017 00:18:34 -0500
+    by peff.net (qpsmtpd/0.84) with SMTP; Sun, 26 Feb 2017 01:07:33 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 26 Feb 2017 01:07:26 -0500
+Date:   Sun, 26 Feb 2017 01:07:26 -0500
 From:   Jeff King <peff@peff.net>
-To:     Jason Cooper <git@lakedaemon.net>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Linus Torvalds <torvalds@linux-foundation.org>,
-        Ian Jackson <ijackson@chiark.greenend.org.uk>,
-        Joey Hess <id@joeyh.name>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: SHA1 collisions found
-Message-ID: <20170226051834.i37mlqv5wxwz3254@sigill.intra.peff.net>
-References: <20170223164306.spg2avxzukkggrpb@kitenet.net>
- <22704.19873.860148.22472@chiark.greenend.org.uk>
- <xmqq60jz5wbm.fsf@gitster.mtv.corp.google.com>
- <20170224233929.p2yckbc6ksyox5nu@sigill.intra.peff.net>
- <CA+55aFw6BLjPK-F0RGd9LT7X5xosKOXOxuhmKX65ZHn09r1xow@mail.gmail.com>
- <xmqqinnyztqe.fsf@gitster.mtv.corp.google.com>
- <20170226011359.GI11350@io.lakedaemon.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Duy Nguyen <pclouds@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Sebastian Schuberth <sschuberth@gmail.com>,
+        Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH v5 1/1] config: add conditional include
+Message-ID: <20170226060726.mvdip4vnbdngypzx@sigill.intra.peff.net>
+References: <20170223122346.12222-1-pclouds@gmail.com>
+ <20170223122346.12222-2-pclouds@gmail.com>
+ <xmqqwpcg7k6r.fsf@gitster.mtv.corp.google.com>
+ <CACsJy8CerU-=PF6wqzUAM02jkrVVGJ5MA0NgL6z9bHn5KM6jiw@mail.gmail.com>
+ <xmqq1sun5vo6.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20170226011359.GI11350@io.lakedaemon.net>
+In-Reply-To: <xmqq1sun5vo6.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Feb 26, 2017 at 01:13:59AM +0000, Jason Cooper wrote:
+On Fri, Feb 24, 2017 at 09:46:17AM -0800, Junio C Hamano wrote:
 
-> On Fri, Feb 24, 2017 at 10:10:01PM -0800, Junio C Hamano wrote:
-> > I was thinking we would need mixed mode support for smoother
-> > transition, but it now seems to me that the approach to stratify the
-> > history into old and new is workable.
+> Duy Nguyen <pclouds@gmail.com> writes:
 > 
-> As someone looking to deploy (and having previously deployed) git in
-> unconventional roles, I'd like to add one caveat.  The flag day in the
-> history is great, but I'd like to be able to confirm the integrity of
-> the old history.
+> >>> +     if (skip_prefix_mem(cond, cond_len, "gitdir:", &cond, &cond_len))
+> >>> +             return include_by_gitdir(cond, cond_len, 0);
+> >>> +     else if (skip_prefix_mem(cond, cond_len, "gitdir/i:", &cond, &cond_len))
+> >>> +             return include_by_gitdir(cond, cond_len, 1);
+> >>
+> >> This may be OK for now, but it should be trivial to start from a
+> >> table with two entries, i.e.
+> >>
+> >>         struct include_cond {
+> >>                 const char *keyword;
+> >>                 int (*fn)(const char *, size_t);
+> >>         };
+> >>
+> >> and will show a better way to do things to those who follow your
+> >> footsteps.
+> >
+> > Yeah I don't see a third include coming soon and did not go with that.
+> > Let's way for it and refactor then.
 > 
-> "Counter-hashing" the blobs is easy enough, but the trees, commits and
-> tags would need to have, iiuc, some sort of cross-reference.  As in my
-> previous example, "git tag -v v3.16" also checks the counter hash to
-> further verify the integrity of the history (yes, it *really* needs to
-> check all of the old hashes, but I'd like to make sure I can do step one
-> first).
+> I would have said exactly that in my message if you already had
+> include_by_gitdir() and include_by_gitdir_i() as separate functions.
 > 
-> Would there be opposition to counter-hashing the old commits at the flag
-> day?
+> But I didn't, because the above code gives an excuse to the person
+> who adds the third one to be lazy and add another "else if" for
+> expediency, because making it table-driven would require an extra
+> work to add two wrapper functions that do not have anything to do
+> with the third one being added.
 
-I don't think a counter-hash needs to be embedded into the git objects
-themselves. If the "modern" repo format stores everything primarily as
-sha-256, say, it will probably need to maintain a (local) mapping table
-of sha1/sha256 equivalence. That table can be generated at any time from
-the object data (though I suspect we'll keep it up to date as objects
-enter the repository).
+I don't think driving that with a two-entry table is the right thing
+here. We are as likely to add another "foobar:" entry as we are to add
+another modifier "/i" modifier to "gitdir:", and it is unclear whether
+that modifier would be mutually exclusive with "/i".
 
-At the flag day[1], you can make a signed tag with the "correct" mapping
-in the tag body (so part of the actual GPG signed data, not referenced
-by sha1). Then later you can compare that mapping to the object content
-in the repo (or to the local copy of the mapping based on that data).
+E.g., imagine we add "/re" for a regex, but allow a case-insensitive
+regex with an "i", giving something like "gitdir/i/re:".  Now you would
+want to drive it by matching "gitdir" first, and then collecting the
+"/i/re" independently, to avoid an explosion of matches.
+
+Driving that with a table is much more complex. I'd just as soon keep
+things as simple as possible for now and worry about flagging it in
+review when something new gets added.
 
 -Peff
-
-[1] You don't even need to wait until the flag day. You can do it now.
-    This is conceptually similar to the git-evtag tool, though it just
-    signs the blob contents of the tag's current tree state. Signing the
-    whole mapping lets you verify the entirety of history, but of course
-    that mapping is quite big: 20 + 32 bytes per object for
-    sha1/sha-256, which is ~250MB for the kernel. So you'd probably not
-    want to do it more than once.
