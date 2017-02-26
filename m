@@ -2,108 +2,120 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,
-	STOX_REPLY_TYPE shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 928332022D
-	for <e@80x24.org>; Sun, 26 Feb 2017 12:28:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3B9EA2022D
+	for <e@80x24.org>; Sun, 26 Feb 2017 14:13:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752067AbdBZM2B (ORCPT <rfc822;e@80x24.org>);
-        Sun, 26 Feb 2017 07:28:01 -0500
-Received: from smtp-out-2.talktalk.net ([62.24.135.66]:32140 "EHLO
-        smtp-out-2.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752031AbdBZM17 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 26 Feb 2017 07:27:59 -0500
-Received: from PhilipOakley ([92.31.218.76])
-        by smtp.talktalk.net with SMTP
-        id hxv9cKPcq46SJhxv9c9OoN; Sun, 26 Feb 2017 12:27:24 +0000
-X-Originating-IP: [92.31.218.76]
-X-Spam: 0
-X-OAuthority: v=2.2 cv=CItoZljD c=1 sm=1 tr=0 a=e6L6E7eW+5Nb7SO+DvSdIg==:117
- a=e6L6E7eW+5Nb7SO+DvSdIg==:17 a=IkcTkHD0fZMA:10 a=pGLkceISAAAA:8
- a=xtxXYLxNAAAA:8 a=anyJmfQTAAAA:8 a=g0ZjVuUTkfxk5Dh_P5sA:9 a=QEXdDO2ut3YA:10
- a=6kGIvZw6iX1k4Y-7sg4_:22 a=xts0dhWdiJbonKbuqhAr:22 a=YJ_ntbLOlx1v6PCnmBeL:22
-Message-ID: <744E670407404147B290392DAD79DF44@PhilipOakley>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
-From:   "Philip Oakley" <philipoakley@iee.org>
-To:     "Duy Nguyen" <pclouds@gmail.com>
-Cc:     "Git Mailing List" <git@vger.kernel.org>,
-        "Junio C Hamano" <gitster@pobox.com>, "Jeff King" <peff@peff.net>,
-        "Sebastian Schuberth" <sschuberth@gmail.com>,
-        "Matthieu Moy" <Matthieu.Moy@grenoble-inp.fr>
-References: <20170223122346.12222-1-pclouds@gmail.com> <20170224131425.32409-1-pclouds@gmail.com> <20170224131425.32409-2-pclouds@gmail.com> <29A09E4EDB1F4F4D9E77E67A7A8A33FF@PhilipOakley> <CACsJy8Bq-P8Aw+f0omndCmQU54n_p7ZwDVDK9APuH_3vXDac2g@mail.gmail.com>
-Subject: Re: [PATCH v6 1/1] config: add conditional include
-Date:   Sun, 26 Feb 2017 12:27:24 -0000
-Organization: OPDS
-MIME-Version: 1.0
-Content-Type: text/plain;
-        format=flowed;
-        charset="utf-8";
-        reply-type=original
-Content-Transfer-Encoding: 7bit
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
-X-CMAE-Envelope: MS4wfMl1h5uBoXK9S/JpbrjaLfOb2i9FT7a0PfmO9qKqH2wJ5LnBJPhFryWEntCeBy5NvxPZiX2d+Mr2LSe9ybnv+c2uwspf364hSeHAjOImrqj0Wyej1iXj
- diPUxqAdS4ZNkFkXl8/8FSFTYHdlHXa4SJWPxPRPvPu5E4gDs0W67oozNxf+l3m2PklWISZz5AyP2EEMRog5ztdz+6U1SaXxG4FjcOdYbVH66WsSpdC0nSW0
- 4rHd+CbGnQ4aZFdtPNH8A1rqK3zsbBeliOxXQmlJpdKvRl/TofFk0OK+jmzpI4DqfZOeui2nmCN6x+Z/sL+4qA==
+        id S1752196AbdBZONu (ORCPT <rfc822;e@80x24.org>);
+        Sun, 26 Feb 2017 09:13:50 -0500
+Received: from mail-wr0-f171.google.com ([209.85.128.171]:33605 "EHLO
+        mail-wr0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752125AbdBZONs (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 26 Feb 2017 09:13:48 -0500
+Received: by mail-wr0-f171.google.com with SMTP id m5so18104176wrm.0
+        for <git@vger.kernel.org>; Sun, 26 Feb 2017 06:12:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=G+uCIi4x6jjPrqy9hmQhUghhxQuM9FM2d8XWno12D0g=;
+        b=j4Y9ON1QS+I1nQgE8QMsxW6m26rBHrqbV/O2UWTPpyvq8Qr9TDuzoYTB9dkAE+PDKb
+         UcGRXKpxBYUbq2KizKTBFdPcaoJkm4GfGQNqRqdsKgmOyPVJfrtxAzrs+du863rZX/Vj
+         o7/0pgPABMO840qU7lEHhJh4sAj6OTX2vq0fq05X+unXp7DKZYgqu9QXbdzXWPzFpR2R
+         QLTnQexWYLw9yC4SiYWyhJMi0w8ppy5Fz28p2fD8ZQJ8va5aGE84URcUpvjYuuvAJTMK
+         MHq6eacO34ZVZPVPbhyz5a2qIsLstz3akaeEb441adDvqqN+yHJ2SKBert/EztSQzGLC
+         aeww==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=G+uCIi4x6jjPrqy9hmQhUghhxQuM9FM2d8XWno12D0g=;
+        b=P4lkXnxKNgZcqEBr0JnygvUd4sCOY40oh89mvwa1KfGnwFmdz4lE3vc8f/vbzibGXu
+         ejvqAJPZgpBD0YRQWh7cLIveYqu0Y9twZbPyFj8BY4+JGajG6dalPbPhHLF6WEukKam+
+         8lKWFnmXKqjHGEvWVa3Ah+UkAXQ/DHMPgK8SdYoX/Db2SRokvDdFmI863HfsX2pB7xJf
+         Sz3NJD/KtuQlMUxxZsECz1FBK/pi2YX1kSVAWvO6YXJ03Mo0gz19ZBSNk+slJta2mqBM
+         VBtNxWPcUZ7B4Y5jtDDEj/sDlc6pI2l5Fibk6cO/wjSnpRQrJ8xdFiWl9YqjWvSlgq6C
+         Eu5w==
+X-Gm-Message-State: AMke39mZFyTx2GnMKVFVDKZl+gfKjMFlMeUCOTGGNbiS5166d2/AzmRm0zhMoLbQDBrExA==
+X-Received: by 10.223.139.220 with SMTP id w28mr11072189wra.172.1488118352302;
+        Sun, 26 Feb 2017 06:12:32 -0800 (PST)
+Received: from slxbook4.fritz.box (p5DDB7AEC.dip0.t-ipconnect.de. [93.219.122.236])
+        by smtp.gmail.com with ESMTPSA id y1sm10345312wme.15.2017.02.26.06.12.31
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Sun, 26 Feb 2017 06:12:31 -0800 (PST)
+Content-Type: text/plain; charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+Subject: Re: [PATCH] travis-ci: run scan-build every time
+From:   Lars Schneider <larsxschneider@gmail.com>
+In-Reply-To: <CAJZjrdXg=jTXO+Dox9gTby-_JX+Lw_deihbUmbHe8V92dWJ0tg@mail.gmail.com>
+Date:   Sun, 26 Feb 2017 15:12:30 +0100
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        Jeff King <peff@peff.net>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <71030110-EB19-4F54-95F1-443D3EAE5286@gmail.com>
+References: <CAJZjrdXP3n5fOLx4rEEkbJT7JBMPUqk4Qdutm6KpvMVUMwCSPQ@mail.gmail.com> <BAB1EE0E-B258-4108-AE24-110172086DE4@gmail.com> <CAJZjrdXg=jTXO+Dox9gTby-_JX+Lw_deihbUmbHe8V92dWJ0tg@mail.gmail.com>
+To:     Samuel Lijin <sxlijin@gmail.com>
+X-Mailer: Apple Mail (2.3124)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: "Duy Nguyen" <pclouds@gmail.com>
-> On Sat, Feb 25, 2017 at 5:08 AM, Philip Oakley <philipoakley@iee.org> 
-> wrote:
->>> +Conditional includes
->>> +~~~~~~~~~~~~~~~~~~~~
->>> +
->>> +You can include one config file from another conditionally by setting
->>
->>
->> On first reading I thought this implied you can only have one `includeIf`
->> within the config file.
->> I think it is meant to mean that each `includeIf`could include one other
->> file, and that users can have multiple `includeIf` lines.
->
-> Yes. Not sure how to put it better though (I basically copied the
-> first paragraph from the unconditional include section above, which
-> shares the same confusion). Perhaps just write "the variable can be
-> specified multiple times"? Or "multiple variables include multiple
-> times, the last variable does not override the previous ones"?
-> -- 
 
-My attempt, based on updating the `Includes` section would be something 
-like:
+> On 26 Feb 2017, at 03:09, Samuel Lijin <sxlijin@gmail.com> wrote:
+>=20
+> On Sat, Feb 25, 2017 at 3:48 PM, Lars Schneider
+> <larsxschneider@gmail.com> wrote:
+>>=20
+>>> On 24 Feb 2017, at 18:29, Samuel Lijin <sxlijin@gmail.com> wrote:
+>>>=20
+>>> It's worth noting that there seems to be a weird issue with =
+scan-build
+>>> where it *will* generate a report for something locally, but won't =
+do it
+>>> on Travis. See [2] for an example where I have a C program with a
+>>> very obvious memory leak but scan-build on Travis doesn't generate
+>>> a report (despite complaining about it in stdout), even though it =
+does
+>>> on my local machine.
+>>>=20
+>>> [1] https://travis-ci.org/sxlijin/git/builds/204853233
+>>> [2] =
+https://travis-ci.org/sxlijin/travis-testing/jobs/205025319#L331-L342
+>>=20
+>> Scan-build stores the report in some temp folder. I assume you can't =
+access
+>> this folder on TravisCI. Try the scan-build option "-o =
+scan-build-results"
+>> to store the report in the local directory.
+>=20
+> That occurred to me, but I don't quite think that's the issue. I just
+> noticed that on the repo I use to test build matrices, jobs 1-8 don't
+> generate a report, but 9-14 and 19-20 do [1]. I don't think it's an
+> issue with write permissions (scan-build complains much more vocally
+> if that happens), but it doesn't seem to matter if the output dir is
+> in the tmpfs [2] or a local directory [3].
+>=20
+> [1] https://travis-ci.org/sxlijin/travis-testing/builds/205054253
+> [2] https://travis-ci.org/sxlijin/git/jobs/205028920#L1000
+> [2] https://travis-ci.org/sxlijin/git/jobs/205411705#L998
 
-`You can include a config file from another by setting the special 
-`include.path` variable to the name of the file to be included. The variable 
-takes a pathname as its value, and is subject to tilde expansion. 
-`include.path` supports multiple key values.`
+Scan-build somehow replaces the compiler. My guess is that you=20
+tell scan-build to substitute clang but "make" is really using=20
+gcc or something? I reported something strange about the compilers
+on TravisCI some time ago but I can't find it anymore. I think I=20
+remember on OSX they always use clang even if you define gcc.=20
+Maybe it makes sense to reach out to TravisCI support in case=20
+this is a bug on their end?
 
-The subtle change was to s/one/a/ at the start, and then add the final short 
-sentence that states that the section's variables can have multiple key 
-values.
+Based on your work I tried the following and it seems to work:
+https://travis-ci.org/larsxschneider/git/jobs/205507241
+=
+https://github.com/larsxschneider/git/commit/faf4ecfdca1a732459c1f93c33492=
+8ee2826d490
 
-I copied the 'multiple key values' phrase from the man page intro for 
-consitency, though 'multivalued' could just as easily be used as it is the 
-term used by the 'Configuration File' section that this is part of 
-https://git-scm.com/docs/git-config#_configuration_file.
-
-Even shorter may be:
-`You can include a config file from another by setting the special 
-`include.path` variable to the name of the file to be included. The variable 
-(can be multivalued) takes a pathname as its value, and is subject to tilde 
-expansion.`
-
-
-The Conditional Includes would follow suit.
-
-Philip
-
-
-
-
-
+- Lars=
