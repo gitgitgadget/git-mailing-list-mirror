@@ -2,90 +2,145 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 30DA020254
-	for <e@80x24.org>; Sun, 26 Feb 2017 18:23:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C89C92022D
+	for <e@80x24.org>; Sun, 26 Feb 2017 18:31:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751332AbdBZSXQ (ORCPT <rfc822;e@80x24.org>);
-        Sun, 26 Feb 2017 13:23:16 -0500
-Received: from mail-pf0-f195.google.com ([209.85.192.195]:33093 "EHLO
-        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751299AbdBZSXN (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 26 Feb 2017 13:23:13 -0500
-Received: by mail-pf0-f195.google.com with SMTP id p185so3038261pfb.0
-        for <git@vger.kernel.org>; Sun, 26 Feb 2017 10:22:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=qLhSgWWnei4GifGsZzra3IjHnPEX2Wrzx8/Foz1192I=;
-        b=iWZKVvRQBXoez4aMxSP6fwAhet2Np8HDLfISoLSLxD4V6CsSJOLgzHvQo0nUtk2BMP
-         uzIxw/2jmtna6cNIFDN/WwzBiThV9mnZBajabVesc7opkvTALrzJTHzc3dogVZJkLYzK
-         Y7bis8d4AzU1td8q2F5NNAxOCuswMwaq8+MmPeoyG2/d/ccBmzX3NDBh8xovgZysO2NV
-         qsyjXUPl4E+XzH1qSAfejcYaFMFtvd6maWC/aet0BH7FTuj3xzfazwOZ4p58gfO6ZfsY
-         mfeDWNnQe3yfKHm1dVQ0V5Zt6VHI9zeTU32065bF0CNWrCBJ4wbgFVXNA4Ct4r/Z6FVi
-         Sndg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=qLhSgWWnei4GifGsZzra3IjHnPEX2Wrzx8/Foz1192I=;
-        b=ec2+KaPzjmMp9uN8E36F+SzMpu9I0jv+1cY80eLKo/SYcNIZB9mg+77MToBWH4cdof
-         zfHEcdumNGX345lw1igguSHJrhvtOxZfy+5Q2Z2FHk/a+/Xy1bg8hVio4ed3GyEyknv0
-         5UWc45EFNk4CiUB3dywsUXTMl6+PlWKdrD+EyiF6V0u+6tzFBaEOjAkP7aCZZhTHxhIk
-         orjcgcJbFulGcEsJ7BYLpN/LSX+x1XMPq1uRJfNFjjhP9Hw0baSjztkSL6pS8pSfD1yh
-         HcJPqGfwt7WT2bBORiLjxuhUbTqETV7U1p60/R2i8iuIgtoWhgAZSeHmBdSs0ghEWWPp
-         tciQ==
-X-Gm-Message-State: AMke39lydj4aaJqoeTrFGpMCv0OycFY4JmyFFKRW4vZ5BUI2kdQK6juKDtvTVqT8OjT43w==
-X-Received: by 10.99.51.76 with SMTP id z73mr16413825pgz.137.1488133376085;
-        Sun, 26 Feb 2017 10:22:56 -0800 (PST)
-Received: from localhost ([2620:0:1000:8622:2939:e4:e178:8ba9])
-        by smtp.gmail.com with ESMTPSA id c2sm25854619pfl.61.2017.02.26.10.22.55
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Sun, 26 Feb 2017 10:22:55 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
+        id S1751291AbdBZSa4 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 26 Feb 2017 13:30:56 -0500
+Received: from castro.crustytoothpaste.net ([75.10.60.170]:41190 "EHLO
+        castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1751092AbdBZSay (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 26 Feb 2017 13:30:54 -0500
+Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:f8da:200e:3546:3090])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id BEB06280AD;
+        Sun, 26 Feb 2017 18:30:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
+        s=default; t=1488133851;
+        bh=RHsyfHQTgM/91LhKocbK43cBrt2XwenQm+KtkhhM9fE=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=E5ZG5vs9W4IYS2DggNJocCfFVTIJG1MBb5AdtSHZCeiKxq9SS1ur76vy0FtBtd8ci
+         LUEGtJiFUmTmOOmYMJiuRleT5j/fZXcbV4Kw4a8ZD9qwpX+oTbYC6oHnPJU6AQksjz
+         ZOtVHFOL2zlAKQuStd2Xevg6MWACLQyTjehDIFymogfhMJCKeE8JDYho0mGCB0Q35X
+         TIb0C7vsDFevrhFKCVFsFoTBNaMkAkt1gpOHHlblXaXYd4Mw1L0CukV2StFDrP5kZ3
+         dvpUwZrPhcV+PNrJJokrDRnWn3z0s539Z5AgbBC/XR6m9DGzSpov3HZixpiuhr4XDM
+         G2lUgpR2KmLzHBv14ijii5jcU+G4yZes0HKBr3uFyk4IUFw9R8fpTZ6mrX5Vw/qC7B
+         YMgDlPZanKW7GCrkccfL1V/4lGFx660YS54xtBTpTHR8jXacoqlX0Ivw8xiwPCCV95
+         es+kjgw4KHWbTmweiJvBE/aUp9GOsoD+Q0+3mdameIFpPMbdfOa
+Date:   Sun, 26 Feb 2017 18:30:46 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     Jeff King <peff@peff.net>
-Cc:     Lars Schneider <larsxschneider@gmail.com>,
-        Jakub =?utf-8?Q?Nar=C4=99b?= =?utf-8?Q?ski?= <jnareb@gmail.com>,
-        Joey Hess <id@joeyh.name>, git@vger.kernel.org
+Cc:     Jason Cooper <git@lakedaemon.net>,
+        Junio C Hamano <gitster@pobox.com>,
+        Linus Torvalds <torvalds@linux-foundation.org>,
+        Ian Jackson <ijackson@chiark.greenend.org.uk>,
+        Joey Hess <id@joeyh.name>,
+        Git Mailing List <git@vger.kernel.org>
 Subject: Re: SHA1 collisions found
+Message-ID: <20170226183046.tbpodi5zt4kvrbpg@genre.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Jeff King <peff@peff.net>, Jason Cooper <git@lakedaemon.net>,
+        Junio C Hamano <gitster@pobox.com>,
+        Linus Torvalds <torvalds@linux-foundation.org>,
+        Ian Jackson <ijackson@chiark.greenend.org.uk>,
+        Joey Hess <id@joeyh.name>, Git Mailing List <git@vger.kernel.org>
 References: <20170223164306.spg2avxzukkggrpb@kitenet.net>
-        <9cedbfa5-4095-15d8-639c-0e3b9b98d6b9@gmail.com>
-        <20170224230604.nt37uw5y3uehukfd@sigill.intra.peff.net>
-        <D74A82FF-BF00-481F-9B2A-4AF8EF3D062F@gmail.com>
-        <20170226004657.zowlojdzqrrcalsm@sigill.intra.peff.net>
-Date:   Sun, 26 Feb 2017 10:22:54 -0800
-In-Reply-To: <20170226004657.zowlojdzqrrcalsm@sigill.intra.peff.net> (Jeff
-        King's message of "Sat, 25 Feb 2017 19:46:57 -0500")
-Message-ID: <xmqqzih8yfpd.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+ <22704.19873.860148.22472@chiark.greenend.org.uk>
+ <xmqq60jz5wbm.fsf@gitster.mtv.corp.google.com>
+ <20170224233929.p2yckbc6ksyox5nu@sigill.intra.peff.net>
+ <CA+55aFw6BLjPK-F0RGd9LT7X5xosKOXOxuhmKX65ZHn09r1xow@mail.gmail.com>
+ <xmqqinnyztqe.fsf@gitster.mtv.corp.google.com>
+ <20170226011359.GI11350@io.lakedaemon.net>
+ <20170226051834.i37mlqv5wxwz3254@sigill.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="ogvrnrsahrrlmuai"
+Content-Disposition: inline
+In-Reply-To: <20170226051834.i37mlqv5wxwz3254@sigill.intra.peff.net>
+X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
+ 4.9.0-2-amd64)
+User-Agent: NeoMutt/20170113 (1.7.2)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
 
-> On Sat, Feb 25, 2017 at 11:35:27PM +0100, Lars Schneider wrote:
-> ...
->> That's a good idea! I wonder if it would make sense to setup an 
->> additional job in TravisCI that patches every Git version with some hash 
->> collisions and then runs special tests.
->
-> I think it would be interesting to see the results under various
-> scenarios. I don't know that it would be all that interesting from an
-> ongoing CI perspective.
+--ogvrnrsahrrlmuai
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-I had the same thought.  
+On Sun, Feb 26, 2017 at 12:18:34AM -0500, Jeff King wrote:
+> On Sun, Feb 26, 2017 at 01:13:59AM +0000, Jason Cooper wrote:
+>=20
+> > On Fri, Feb 24, 2017 at 10:10:01PM -0800, Junio C Hamano wrote:
+> > > I was thinking we would need mixed mode support for smoother
+> > > transition, but it now seems to me that the approach to stratify the
+> > > history into old and new is workable.
+> >=20
+> > As someone looking to deploy (and having previously deployed) git in
+> > unconventional roles, I'd like to add one caveat.  The flag day in the
+> > history is great, but I'd like to be able to confirm the integrity of
+> > the old history.
+> >=20
+> > "Counter-hashing" the blobs is easy enough, but the trees, commits and
+> > tags would need to have, iiuc, some sort of cross-reference.  As in my
+> > previous example, "git tag -v v3.16" also checks the counter hash to
+> > further verify the integrity of the history (yes, it *really* needs to
+> > check all of the old hashes, but I'd like to make sure I can do step one
+> > first).
+> >=20
+> > Would there be opposition to counter-hashing the old commits at the flag
+> > day?
+>=20
+> I don't think a counter-hash needs to be embedded into the git objects
+> themselves. If the "modern" repo format stores everything primarily as
+> sha-256, say, it will probably need to maintain a (local) mapping table
+> of sha1/sha256 equivalence. That table can be generated at any time from
+> the object data (though I suspect we'll keep it up to date as objects
+> enter the repository).
 
-I view such a test as a very good validation while we are finishing
-up the introduction of new hash and the update to the codepaths that
-need to handle both hashes, so I'd expect such a test to be a good
-validation measure.  But once that work is concluded, I do not know
-if tests in ongoing basis is all that interesting.
+I really like this look-aside approach.  I think it makes it really easy
+to just rewrite the history internally, but still be able to verify
+signed commits and signed tags.  We could even synthesize the blobs and
+trees from the new hash versions if we didn't want to store them.
+
+This essentially avoids the need for handling competing hashes in the
+same object (and controversy about multihash or other storage
+facilities); just specify the new hash in the objects, and look up the
+old one in the database if necessary.
+
+This also will be the easiest approach to implement, IMHO.
+--=20
+brian m. carlson / brian with sandals: Houston, Texas, US
++1 832 623 2791 | https://www.crustytoothpaste.net/~bmc | My opinion only
+OpenPGP: https://keybase.io/bk2204
+
+--ogvrnrsahrrlmuai
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.1.18 (GNU/Linux)
+
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlizHtYACgkQv1NdgR9S
+9ovKWw//XknTeGntFzosCvkDDRbgqY+K+5Fm5XDEFhtmqMS5sFHWNcAfH1h4Y9Lt
+Sfu01+FVYlcG0o18TYf5R+kDLQ1b/RWP+PSer8EUJB+6/bp1LENK5kRLI8sUiRVt
+mi2Yiy90mM6RXclyNOnwJd4PTkEPUcxi/cLWuJ7CEGExQzQsg+DX8bzkuhe4AzxU
+OW+O5R1hxoXLfqTGjTLhCWx69FCZmnPONuWIe5o93sOIj/U8nC7cga2h5OgWevN4
+G2vH7kFkyL2YTLbDbQNj5Cl3eNHcIbbPu2/7JoGY/ImDL4CMm+kOLkbaum7W2t5L
+BRCvqMJHeGc98SqIVx+zCKhMhLePllYlbkjJQOUEtbqFE5M29n/i3GK92bFc8eyM
+5muW60R0TAlRCSsju43+LqEO+8sEqIhIPJaC6Ii06oFdiJisgczD6c34NjBZnYqQ
+nxydlB4q4ktRlwzGbY9vzCXMVHW+W1tmQgz1BrnZgFXDpAIJ2QOVHeYiC4V3Vbwz
+ol4tttB6/TNdbaj+E+Qx9xIuYJkueK5uyX7xJvjHBSoJizAd1gg4JUTpOeqkO//E
+TZqPM4Z5wTcudH5+THUXMNEDx+wAg4N1xvkZVKFCqebtlEh2vHWTFapVJBWv6Is/
+fo9/AUx7Ife7NDTmrt9BSSlAlWq48XSRYbK3c7Bd1fG3yUs6yFc=
+=6D/S
+-----END PGP SIGNATURE-----
+
+--ogvrnrsahrrlmuai--
