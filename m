@@ -2,104 +2,119 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 189491F5FB
-	for <e@80x24.org>; Mon, 27 Feb 2017 16:44:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E95A11F5FB
+	for <e@80x24.org>; Mon, 27 Feb 2017 17:50:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751560AbdB0QoZ (ORCPT <rfc822;e@80x24.org>);
-        Mon, 27 Feb 2017 11:44:25 -0500
-Received: from mail-io0-f170.google.com ([209.85.223.170]:34957 "EHLO
-        mail-io0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751516AbdB0QoY (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 Feb 2017 11:44:24 -0500
-Received: by mail-io0-f170.google.com with SMTP id j18so35173011ioe.2;
-        Mon, 27 Feb 2017 08:44:24 -0800 (PST)
+        id S1751485AbdB0Rtx (ORCPT <rfc822;e@80x24.org>);
+        Mon, 27 Feb 2017 12:49:53 -0500
+Received: from mail-lf0-f67.google.com ([209.85.215.67]:34436 "EHLO
+        mail-lf0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750971AbdB0Rtu (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 Feb 2017 12:49:50 -0500
+Received: by mail-lf0-f67.google.com with SMTP id a198so4078796lfb.1
+        for <git@vger.kernel.org>; Mon, 27 Feb 2017 09:48:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=Cmce0wPSDf2GKZdnapg9Do9IivCmlK/HzH3zHKum7Sg=;
-        b=Ov+2Vrnd+EgynfiDa+sITfjGd/Qc/mTeFW3Et1VXMR6/raVYkX3M+tq4dT3CRP7k3N
-         AN3X+7vPWdr4KFR0OSYsJpV/FPOGeJP8mWFj7XfzRZxofTgmE4yK2xfb8x4VNgBkHqv+
-         GGl0TlCh9w6Yh+kTGs5cwducfghfAGme4mwCFxHFFk2T6DZj1dxay+N2+mfy22Uybtpd
-         vwkOpcod17dRNsXDffGBBG7aaObB8KanUTKKbFFg1jb7dvSoRFr6dW//oVowz5wGuvm5
-         5t8C9Tbzc1Wcl7I2lN+EmE8rFnr6FWK5Q92JUbwf5gednO1VEB3B8GYepod7OsKhF5W3
-         +fVg==
+        h=subject:to:references:cc:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding;
+        bh=Unegw2S+ES7f7ay7y8X/m0+AZiaT8rvsVIyD8EYUB4I=;
+        b=BTEqb92xce7V3GjXBdTvKpjb5QJmxDuZbJ1lkjIKZaMMJjCqZWWkANo6EhS40BkwtQ
+         Lgcr1eX5cFDts3qklnX/RMY3n1q+kFEOiQyNW4+xchQ0FT4nd8HTtcwKlVC5wQ5DhEXz
+         tT20s1MZt2CsKr5q1Bs59rqnZ2W/IVLJzIVpYvEESmYMTYXRIPX+LMWRMeyovPS0gjAv
+         zdfM3pWZVFmFMA/kKFZEH0edsVbmTppnjWljl/LKpiSxc4G5Y+jJd6gFwqkLPIiUa110
+         dqkdE9a03lzDSCixGxJpumxWbfan0Iehi+YrUsFKmeAqUU1sA3PLVxlB/QeADmO00ioD
+         jCiw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=Cmce0wPSDf2GKZdnapg9Do9IivCmlK/HzH3zHKum7Sg=;
-        b=JpJGoxULVsbGXP7zXewu1JBy3kiy3pdCLQe2Cns49Bg3XBxDv0f4fSJhH88Z62+mhj
-         2yS3YDCeV4kwmxFB5JxlMV1/4g5tD9sTazomSwBi9ITEnOQ/CtW236HrX5y4yI2LFP/Q
-         0NYB0kZtWNPdE50z+Sq6I/rWFHheofvsfOrj9TxtaVrTa+mQ9rzCzD8187cOMPM7IZEj
-         yoDwUfC+OOOvhP2CHvX83QFjUQ+/GxwfXvKRyNXs9sT5k4B8ycawXIwjrYKgCFRkjDlm
-         7wz1oyHKaefLyrQE83XMMzLDUOmRubx2wjBAWVmlKhyw36KC1VcXMYpBtssIpUQj/LHf
-         bDsA==
-X-Gm-Message-State: AMke39krF7SeeVq8J9pvgDZVDG6CSVI4UNDSd/6gt+r5uY9UN5YlA3OInPFb/XygzTidvONtIkjOczo5f9Lk/g==
-X-Received: by 10.107.150.207 with SMTP id y198mr17458839iod.33.1488211950821;
- Mon, 27 Feb 2017 08:12:30 -0800 (PST)
+        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
+        bh=Unegw2S+ES7f7ay7y8X/m0+AZiaT8rvsVIyD8EYUB4I=;
+        b=FB7/OBK7W9UK1nFPh2IWKZpzu3nzrMMsxZWkDvnEjUIwiM5r/bfGK/DYIRh7DiMiy3
+         MYCbz6qctu0FawIpF68e0rzukl9Qy+8ftF6x3hz2BZxckC94+SfHQ2Fw62QXFh+h8rga
+         bBSS2Lv9SmYoRGsoUFELROPhIxcZw4WW/wGrByOXjNbYRCjOVV/7fZ/esdqPDfTvTG8R
+         /UOOO6LmFprU/KsbFWkweXlHhV5646Zad64oWM1gp9HzQHSzVFoFrYpBUHoC5NykCctm
+         ftwTUj2f9sYLjBpW1oAGc57tVu99yYwXre4H+9Pwyr+jgZIP5pan9hxZB90wKNSMPvFu
+         jb4g==
+X-Gm-Message-State: AMke39nLDL0Nv8I7dWPk9iQ2bKd3sQktdOJklX2/HpCVHi0MwzrdWgiWSCfvrm1IBg+N2Q==
+X-Received: by 10.46.84.73 with SMTP id y9mr4831193ljd.6.1488217710839;
+        Mon, 27 Feb 2017 09:48:30 -0800 (PST)
+Received: from [192.168.1.26] (deg240.neoplus.adsl.tpnet.pl. [83.23.110.240])
+        by smtp.googlemail.com with ESMTPSA id p11sm4082110lfd.20.2017.02.27.09.48.29
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 27 Feb 2017 09:48:30 -0800 (PST)
+Subject: Re: [PATCH] gitweb tests: Skip tests when we don't have Time::HiRes
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        git@vger.kernel.org
+References: <20170227123720.8493-1-avarab@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>
+From:   =?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
+Message-ID: <4b34e3a0-3da7-d821-2a7f-9a420ac1d3f6@gmail.com>
+Date:   Mon, 27 Feb 2017 18:48:21 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.7.1
 MIME-Version: 1.0
-Received: by 10.107.130.208 with HTTP; Mon, 27 Feb 2017 08:12:10 -0800 (PST)
-In-Reply-To: <xmqqd1e72xs5.fsf@gitster.mtv.corp.google.com>
-References: <xmqqd1e72xs5.fsf@gitster.mtv.corp.google.com>
-From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Date:   Mon, 27 Feb 2017 17:12:10 +0100
-Message-ID: <CACBZZX6j8ifa9WrBmBfDuae4qvD7tQ0wWe3yRdLOfFTCOxyRPw@mail.gmail.com>
-Subject: Re: [ANNOUNCE] Git v2.12.0
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Linux Kernel <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+In-Reply-To: <20170227123720.8493-1-avarab@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Feb 24, 2017 at 8:28 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> The latest feature release Git v2.12.0 is now available at the
-> usual places.  It is comprised of 517 non-merge commits since
-> v2.11.0, contributed by 80 people, 24 of which are new faces.
+W dniu 27.02.2017 o 13:37, Ævar Arnfjörð Bjarmason pisze:
+> Change the gitweb tests to skip when we can't load the Time::HiRes
+> module.
 
-Yay, some explanations / notes / elaborations:
+Could you tell us in the commit message why this module is needed?
+Is it because gitweb loads it unconditionally, or does that at least
+in the default configuration, or is it used in tests, or...?
 
->  * "git diff" learned diff.interHunkContext configuration variable
->    that gives the default value for its --inter-hunk-context option.
+[I see it is somewhat addressed below]
 
-This is really cool. Now if you have e.g. lots of changed lines each
-10 lines apart --inter-hunk-context=10 will show those all as one big
-hunk, instead of needing to specify -U10 as you had to before, which
-would give all hunks a context of 10 lines.
+> 
+> This module has bee in perl core since v5.8, which is the oldest
 
->  * An ancient repository conversion tool left in contrib/ has been
->    removed.
+s/bee/been/
 
-I thought "what tool?" so here's what this is. git.git was born on
-April 7, 2005. For the first 13 days we'd hash the contents of
-*compressed* blobs, not their uncompressed contents. Linus changed
-this in: https://github.com/git/git/commit/d98b46f8d9
+> version we support, however CentOS (and perhaps some other
+> distributions) carve it into its own non-core-perl package that's not
+> installed along with /usr/bin/perl by default. Without this we'll hard
+> fail the gitweb tests when trying to load the module.
 
-This tool was the ancient tool to convert these old incompatible
-repositories from the old format. If someone hasn't gotten around to
-this since 2005 they probably aren't ever going to do it :)
+I see that it because gitweb.perl as the following at line 20:
 
->  * Some people feel the default set of colors used by "git log --graph"
->    rather limiting.  A mechanism to customize the set of colors has
->    been introduced.
+	use Time::HiRes qw(gettimeofday tv_interval);
 
-This is controlled via the log.graphColors variable. E.g.:
+> 
+> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 
-    git -c log.graphColors="red, green, yellow" log --graph HEAD~100..
+Good catch (if a strange one...).
 
-Does anyone have a prettier invocation?
+> ---
+>  t/gitweb-lib.sh | 5 +++++
+>  1 file changed, 5 insertions(+)
+> 
+> diff --git a/t/gitweb-lib.sh b/t/gitweb-lib.sh
+> index d5dab5a94f..116c3890e6 100644
+> --- a/t/gitweb-lib.sh
+> +++ b/t/gitweb-lib.sh
+> @@ -114,4 +114,9 @@ perl -MCGI -MCGI::Util -MCGI::Carp -e 0 >/dev/null 2>&1 || {
+>  	test_done
+>  }
+>  
+> +perl -mTime::HiRes -e 0  >/dev/null 2>&1 || {
+> +	skip_all='skipping gitweb tests, Time::HiRes module unusable'
 
->  * "git diff" and its family had two experimental heuristics to shift
->    the contents of a hunk to make the patch easier to read.  One of
->    them turns out to be better than the other, so leave only the
->    "--indent-heuristic" option and remove the other one.
+Is "unusable" a good description, instead of "not found"?
 
-... the other one being --compaction-heuristic.
+> +	test_done
+> +}
+> +
+>  gitweb_init
+> 
+
