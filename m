@@ -2,82 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C703D1F5FB
-	for <e@80x24.org>; Mon, 27 Feb 2017 21:37:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D1A6A1F5FB
+	for <e@80x24.org>; Mon, 27 Feb 2017 21:49:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752003AbdB0Vgn (ORCPT <rfc822;e@80x24.org>);
-        Mon, 27 Feb 2017 16:36:43 -0500
-Received: from mail-pg0-f68.google.com ([74.125.83.68]:34301 "EHLO
-        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751747AbdB0Vey (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 Feb 2017 16:34:54 -0500
-Received: by mail-pg0-f68.google.com with SMTP id s67so2179726pgb.1
-        for <git@vger.kernel.org>; Mon, 27 Feb 2017 13:34:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=BJMNJvIeqXbXJjfj8iH6YPHDqBiRMkdmkiDCYbjbGpE=;
-        b=IPEV1YsfXUkZj8KJ/dxYXsMJk4wQF3gZCJrl1AHWFOo2HOaTabrNorNiF4X55exJbE
-         /gN6NnuwMOLWwv/hfiyOhKcJpnty/9RbcDkEX7X4EDMIpmStDodbpZ5RXQJkdRwQz40S
-         9gXlRlAjBjFg6aPcwICw9wy9851jFJ/PQ/TANOHHRcx3nZQlExk60LN4lO/YiXATtJ6+
-         QjE0a6o8gprCnaY5VZKjqJZw9XWIKgKwCLSVkVWWCRtMCbpc95mtbo9OoocmobtiBgoK
-         pDfsAipLvc6S7UPYefEaUjOMHILKke6dWv9FvOZLBMRJ8P13/cY09NM6Rn/t3hzSE2jm
-         y+ng==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=BJMNJvIeqXbXJjfj8iH6YPHDqBiRMkdmkiDCYbjbGpE=;
-        b=fAeEN6s9qCB5+hFykjXrxe2e9+fD63K7dzE/6lRuu4lUbfqLX4qh4kVTRzITyt4FwD
-         AcP2kYT9R3mZjteOs804CIqN0e0vbhuE55Km9IKMdAbEITy8fHpib2dEFslXAMfNx9Cu
-         /8+CYw2Ei6ULqPVkkiwvDF+YkZgfaHHBZ+fJkIa/liaKA17eS7SDg/4BJfcvCOtGBGj6
-         vTsULj+gERWRo48tPuLgp7n4sXo+Ll/c3f0Zqk44Gjw3xTw3vV8qOKg/RMTTJzbd17AQ
-         jjBHAmcey1ESEmH52J3gKJszgsbcUK5vygR4YW9k77H/I7f2MenPMj1ugLNFQDCUzn4S
-         8F3Q==
-X-Gm-Message-State: AMke39mAaCp7FP4B4oaRqxwpbDy/sW2Y4OxiRMWmuzrapWF+nYip9oJx/drOq4PqARbI8w==
-X-Received: by 10.99.94.195 with SMTP id s186mr23243584pgb.198.1488227733144;
-        Mon, 27 Feb 2017 12:35:33 -0800 (PST)
-Received: from localhost ([2620:0:1000:8622:c953:ec42:862e:1e81])
-        by smtp.gmail.com with ESMTPSA id m6sm32229851pfm.22.2017.02.27.12.35.32
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 27 Feb 2017 12:35:32 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Thomas Gummerer <t.gummerer@gmail.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        sunny@sunbase.org,
-        Jakub =?utf-8?Q?Nar?= =?utf-8?Q?=C4=99bski?= <jnareb@gmail.com>,
-        Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH v7 4/6] stash: teach 'push' (and 'create_stash') to honor pathspec
-References: <20170219110313.24070-1-t.gummerer@gmail.com>
-        <20170225213306.2410-1-t.gummerer@gmail.com>
-        <20170225213306.2410-5-t.gummerer@gmail.com>
-Date:   Mon, 27 Feb 2017 12:35:31 -0800
-In-Reply-To: <20170225213306.2410-5-t.gummerer@gmail.com> (Thomas Gummerer's
-        message of "Sat, 25 Feb 2017 21:33:04 +0000")
-Message-ID: <xmqq60jvwewc.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+        id S1751837AbdB0Vss (ORCPT <rfc822;e@80x24.org>);
+        Mon, 27 Feb 2017 16:48:48 -0500
+Received: from cloud.peff.net ([104.130.231.41]:35191 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751756AbdB0Vsc (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 Feb 2017 16:48:32 -0500
+Received: (qmail 31719 invoked by uid 109); 27 Feb 2017 21:41:49 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 27 Feb 2017 21:41:49 +0000
+Received: (qmail 20419 invoked by uid 111); 27 Feb 2017 21:41:54 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 27 Feb 2017 16:41:54 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 27 Feb 2017 16:41:47 -0500
+Date:   Mon, 27 Feb 2017 16:41:47 -0500
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] t6300: avoid creating refs/heads/HEAD
+Message-ID: <20170227214147.5ezxskhihi3cc77m@sigill.intra.peff.net>
+References: <20170227092931.7iquwaxomeuuusi2@sigill.intra.peff.net>
+ <xmqqzih7whrw.fsf@gitster.mtv.corp.google.com>
+ <20170227205151.rjhod347ddhmdmxp@sigill.intra.peff.net>
+ <xmqqshmzuyam.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqshmzuyam.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thomas Gummerer <t.gummerer@gmail.com> writes:
+On Mon, Feb 27, 2017 at 01:19:29PM -0800, Junio C Hamano wrote:
 
-> +	test -n "$untracked" || git ls-files --error-unmatch -- "$@" >/dev/null || exit 1
+> Jeff King <peff@peff.net> writes:
+> 
+> > I suspect there are a lot of other places that are less clear cut. E.g.,
+> > I think just:
+> >
+> >   git branch foo bar
+> >
+> > will put "foo" through the same interpretation. So you could do:
+> >
+> >   git branch -f @{-1} bar
+> >
+> > Is that insane? Maybe. But it does work now.
+> 
+> No, it _is_ very sensible, so is "git checkout -B @{-1} <someplace>"
+> 
+> Perhaps interpret-branch-name that does not error out when given "@"
+> is what is broken?  I suspect that calling interpret_empty_at() from
+> that function is fundamentally flawed.  The "@" end user types never
+> means refs/heads/HEAD, and HEAD@{either reflog or -1} would not mean
+> anything that should be taken as a branch_name, either.
+> 
+> So perhaps what interpret_empty_at() does is necessary for the "four
+> capital letters is too many to type, so just type one key while
+> holding a shift", but it should be called from somewhere else, and
+> not from interpret_branch_name()?
 
-This silent "exit 1" made me scratch my head, but --error-unmatch
-would have already given an error message, like
+I think _most_ of interpret_branch_name() is in the same boat. The
+"@{upstream}" mark is not likely to give you a branch in refs/heads
+either.
 
-    error: pathspec 'no such' did not match any file(s) known to git.
-    Did you forget to 'git add'?
+So in practice, I think strbuf_check_branch_ref() could probably get by
+with just calling interpret_nth_prior_checkout(). Or if you prefer, to
+rip everything out of interpret_branch_name() except that. :) But that
+other stuff has to go somewhere, and there are some challenges with the
+recursion from reinterpret().
 
-so that would be OK.
+The "other" stuff could sometimes be useful, I guess. It's not _always_
+wrong to do:
+
+  git branch -f @{upstream} foo
+
+It depends on what your @{upstream} resolves to. Switching to just using
+interpret_nth_prior_checkout() would break the case when it resolves to
+a local branch. I'm not sure if we're OK with that or not. If we want to
+keep all the existing cases working, I think we need something like the
+"not_in_refs_heads" patch I posted elsewhere.
+
+-Peff
