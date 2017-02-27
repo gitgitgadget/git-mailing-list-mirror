@@ -2,113 +2,140 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E146A1F5FB
-	for <e@80x24.org>; Mon, 27 Feb 2017 18:56:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 14B501F5FB
+	for <e@80x24.org>; Mon, 27 Feb 2017 18:59:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751762AbdB0Szz (ORCPT <rfc822;e@80x24.org>);
-        Mon, 27 Feb 2017 13:55:55 -0500
-Received: from mail-pf0-f177.google.com ([209.85.192.177]:34161 "EHLO
-        mail-pf0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751387AbdB0Sze (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 Feb 2017 13:55:34 -0500
-Received: by mail-pf0-f177.google.com with SMTP id p185so10107381pfb.1
-        for <git@vger.kernel.org>; Mon, 27 Feb 2017 10:55:07 -0800 (PST)
+        id S1751970AbdB0S7S (ORCPT <rfc822;e@80x24.org>);
+        Mon, 27 Feb 2017 13:59:18 -0500
+Received: from mail-wr0-f194.google.com ([209.85.128.194]:35353 "EHLO
+        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751387AbdB0S7Q (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 Feb 2017 13:59:16 -0500
+Received: by mail-wr0-f194.google.com with SMTP id q39so11517718wrb.2
+        for <git@vger.kernel.org>; Mon, 27 Feb 2017 10:59:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=43Q3BalAY7lR2kFR/4ZimbJlkWYFlaIuzmgJAzwNDpg=;
-        b=u8L0OtHec9lOBC0/WNMIsT8WQAVhKRfgcIlGEvFYEoArMawibD3ke8BZ6E9gmXK1S7
-         FCdj0mzr8JHIOZWtBLAETYfUn9qhvT0PSaPjfo8VSEGo2kTx7ba2jxRErzEE+JDurS+Q
-         3YnxibCZUdrIJpWXxm7lc+8TONLdlRA62S959b3nQmNWOB387PsLmTuNtkEgaGw3m7HS
-         du6GUpPhic8b2eMPUTtpygzCGTsNWIt4V8TVujrGhN0apLURiGOtxdO71P+ThKAA2Uo/
-         Glj5CWpDzOaPWucZVdqau+fuwcK6s1Z9bIxMi++X7gunoUhuV/QMEscyLXXFrs9IKCK1
-         +0Xw==
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=f41uPh8ou86m12p/8eZBJon39Hg+dae5uIvZ2eCt+l4=;
+        b=Dgdo5O9yR+5UVe3FSYFBLXmXhiFOz6QoN9FhLMNe4iVNp18zrATDrZ7S7vbzee1LBG
+         YVGSvBpNAa5nxX0bhPY33r+l52+hnAv6Wle8pbf2jIaYsaw5YmJ3VH3xv72h+/AjcxE6
+         oYmu44nUTDR7stOYfp8Ag3g8gI35nrLcEO0IM9hBaJLmBrwwtU7hG4M6JFcEfP/yCF2l
+         IbCJpEDlWSE2hi0UHJHWX1Hhb/IycpKSH9EKn7CeNIy6jDCBsHMP1S2MrNmDnSFbfGAV
+         5bgjEUbnHHWChi0ecQd6LC4bnylvE69wuK1TZyKpWkW0UGq0lAwLxLXFUGhx84HfdU95
+         JODg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=43Q3BalAY7lR2kFR/4ZimbJlkWYFlaIuzmgJAzwNDpg=;
-        b=DTTvcDtnZzNyfCaW1RfgQvrYlKbF75GOZinaBBnUmhGLJq7wYBDIbggos4u88Cx9U/
-         vdm3DOcM2yCbxkZ7qCH/q6uqJim1vybhze2+r6KzVWJp0NqVvf1ZDzVbAcRmByK1EY9U
-         q6dL0IsodT/erOEnPkN7BsPI/aUaXz4Hes7UN/S5YwyrJlxJAK1f4GMa4UN7eSUFQOe9
-         OUfcJrhJr0XTQt0m0iitN18YtqYXVk8YS+ZNEIpigVjujz9vk8RW1VRWWj1SMFkr37qT
-         qjaIf5Ygzcj2NuJrndh094AdUe319Dd9d50INb2VOIV/LYhy+o5hWVOaCeMu+Lmq+puF
-         Q5iA==
-X-Gm-Message-State: AMke39kzVn21OQZROA9NTnrOiKXDn0NNJ3aTeTI3VBlVgqHjZBbIc2KZkjHlthHsf363qNhS
-X-Received: by 10.98.196.12 with SMTP id y12mr22547485pff.49.1488217938779;
-        Mon, 27 Feb 2017 09:52:18 -0800 (PST)
-Received: from google.com ([2620:0:1000:5b10:5d0b:b83e:e4b4:f20d])
-        by smtp.gmail.com with ESMTPSA id w13sm6102898pgm.27.2017.02.27.09.52.17
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 27 Feb 2017 09:52:17 -0800 (PST)
-Date:   Mon, 27 Feb 2017 09:52:16 -0800
-From:   Brandon Williams <bmwill@google.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=f41uPh8ou86m12p/8eZBJon39Hg+dae5uIvZ2eCt+l4=;
+        b=eGFFLSpxBCmnG5/WvK/5pVG0AApGo1n04jzD6P7klCoH31R5M4lBd5vG77Dxyhj9Fx
+         SoKZEa9SDkh95v5JpLl0aVUNOzGWmLYntetl9p97kuYoQure0o1mYs1xXw+879rm2X5w
+         NJGzc4jzl8IvR3o75sxP+UMv98rKemPv7RAJkXJPEKa/URIsvXbPxJLJg5MgbuQd51Yr
+         vuT5uBN0qUP5kC4LJqqHkOyKyj2tDR/+FZ2ThwfcNhX1jqRHGyiRujv/kaxDfXNjG06o
+         Gsin42elPnqGKu3mk8/G8loxzen9x43d7YxfcIWCqBVRTzmTyM2c+BziOxqAJS0e3wyE
+         mwyQ==
+X-Gm-Message-State: AMke39lRueVI9wBWtC0JuVXDfSwJGmGGnfSnNJGmZBnFpmZuCygv3xPEGTYbmmRLUBrb2Q==
+X-Received: by 10.223.129.183 with SMTP id 52mr16541444wra.43.1488218457581;
+        Mon, 27 Feb 2017 10:00:57 -0800 (PST)
+Received: from localhost.localdomain (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr. [128.78.31.246])
+        by smtp.gmail.com with ESMTPSA id e73sm15226798wmi.32.2017.02.27.10.00.56
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Mon, 27 Feb 2017 10:00:56 -0800 (PST)
+From:   Christian Couder <christian.couder@gmail.com>
+X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 To:     git@vger.kernel.org
-Cc:     sbeller@google.com, pclouds@gmail.com
-Subject: Re: [PATCH 0/5] recursing submodules with relative pathspec (grep
- and ls-files)
-Message-ID: <20170227175216.GA153455@google.com>
-References: <20170224235100.52627-1-bmwill@google.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20170224235100.52627-1-bmwill@google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>, Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        Jeff King <peff@peff.net>,
+        Christian Couder <chriscool@tuxfamily.org>
+Subject: [PATCH v4 15/22] read-cache: touch shared index files when used
+Date:   Mon, 27 Feb 2017 19:00:12 +0100
+Message-Id: <20170227180019.18666-16-chriscool@tuxfamily.org>
+X-Mailer: git-send-email 2.12.0.22.g0672473d40
+In-Reply-To: <20170227180019.18666-1-chriscool@tuxfamily.org>
+References: <20170227180019.18666-1-chriscool@tuxfamily.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 02/24, Brandon Williams wrote:
-> It was discovered that when using the --recurse-submodules flag with `git grep`
-> and `git ls-files` and specifying a relative path when not at the root causes
-> the child processes spawned to error out with an error like:
-> 
-> fatal: ..: '..' is outside repository
-> 
-> While true that ".." is outside the scope of the submodule repository, it
-> probably doesn't make much sense to the user who gave that pathspec with
-> respect to the superproject.  Since the child processes that are spawned to
-> handle the submodules have some context that they are executing underneath a
-> superproject (via the 'super_prefix'), they should be able to prevent dying
-> under this circumstance.
-> 
-> This series fixes this bug in both git grep and git ls-files as well as
-> correctly formatting the output from submodules to handle the relative paths
-> with "..".
-> 
-> One of the changes made to fix this was to add an additional flag for the
-> parse_pathspec() function in order to treat all paths provided as being from
-> the root of the repository.  I hesitantly selected the name 'PATHSPEC_FROMROOT'
-> but I'm not fond of it since its too similar to the pathspec magic define
-> 'PATHSPEC_FROMTOP'.  So I'm open for naming suggestions.
-> 
-> Brandon Williams (5):
->   grep: illustrate bug when recursing with relative pathspec
->   pathspec: add PATHSPEC_FROMROOT flag
->   grep: fix bug when recuring with relative pathspec
->   ls-files: illustrate bug when recursing with relative pathspec
->   ls-files: fix bug when recuring with relative pathspec
-> 
->  builtin/grep.c                         |  8 ++++--
->  builtin/ls-files.c                     |  8 ++++--
->  pathspec.c                             |  2 +-
->  pathspec.h                             |  2 ++
->  t/t3007-ls-files-recurse-submodules.sh | 50 ++++++++++++++++++++++++++++++++++
->  t/t7814-grep-recurse-submodules.sh     | 42 ++++++++++++++++++++++++++++
->  6 files changed, 107 insertions(+), 5 deletions(-)
-> 
+When a split-index file is created, let's update the mtime of the
+shared index file that the split-index file is referencing.
 
-Turns out that this series doesn't address all of the issues.  This
-series also seems to introduce broken behavior when recursing from a
-subdirectory.  So I need to think about this problem a little bit more
-and reroll.
+In a following commit we will make shared index file expire
+depending on their mtime, so updating the mtime makes sure that
+the shared index file will not be deleted soon.
 
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+---
+ read-cache.c | 29 ++++++++++++++++++++++++++---
+ 1 file changed, 26 insertions(+), 3 deletions(-)
+
+diff --git a/read-cache.c b/read-cache.c
+index aeb413a508..5f295af4c6 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -1674,6 +1674,19 @@ int do_read_index(struct index_state *istate, const char *path, int must_exist)
+ 	die("index file corrupt");
+ }
+ 
++/*
++ * Signal that the shared index is used by updating its mtime.
++ *
++ * This way, shared index can be removed if they have not been used
++ * for some time.
++ */
++static void freshen_shared_index(char *base_sha1_hex, int warn)
++{
++	const char *shared_index = git_path("sharedindex.%s", base_sha1_hex);
++	if (!check_and_freshen_file(shared_index, 1) && warn)
++		warning("Could not freshen shared index '%s'", shared_index);
++}
++
+ int read_index_from(struct index_state *istate, const char *path)
+ {
+ 	struct split_index *split_index;
+@@ -2245,6 +2258,7 @@ static int too_many_not_shared_entries(struct index_state *istate)
+ int write_locked_index(struct index_state *istate, struct lock_file *lock,
+ 		       unsigned flags)
+ {
++	int new_shared_index, ret;
+ 	struct split_index *si = istate->split_index;
+ 
+ 	if (!si || alternate_index_output ||
+@@ -2261,13 +2275,22 @@ int write_locked_index(struct index_state *istate, struct lock_file *lock,
+ 	}
+ 	if (too_many_not_shared_entries(istate))
+ 		istate->cache_changed |= SPLIT_INDEX_ORDERED;
+-	if (istate->cache_changed & SPLIT_INDEX_ORDERED) {
+-		int ret = write_shared_index(istate, lock, flags);
++
++	new_shared_index = istate->cache_changed & SPLIT_INDEX_ORDERED;
++
++	if (new_shared_index) {
++		ret = write_shared_index(istate, lock, flags);
+ 		if (ret)
+ 			return ret;
+ 	}
+ 
+-	return write_split_index(istate, lock, flags);
++	ret = write_split_index(istate, lock, flags);
++
++	/* Freshen the shared index only if the split-index was written */
++	if (!ret && !new_shared_index)
++		freshen_shared_index(sha1_to_hex(si->base_sha1), 1);
++
++	return ret;
+ }
+ 
+ /*
 -- 
-Brandon Williams
+2.12.0.22.g0672473d40
+
