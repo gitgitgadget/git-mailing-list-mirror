@@ -7,61 +7,57 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A933220254
-	for <e@80x24.org>; Mon, 27 Feb 2017 22:44:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 13E831F5FB
+	for <e@80x24.org>; Mon, 27 Feb 2017 22:45:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751854AbdB0Wol (ORCPT <rfc822;e@80x24.org>);
-        Mon, 27 Feb 2017 17:44:41 -0500
-Received: from mail-pg0-f68.google.com ([74.125.83.68]:34058 "EHLO
-        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751586AbdB0Woh (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 Feb 2017 17:44:37 -0500
-Received: by mail-pg0-f68.google.com with SMTP id s67so2367264pgb.1
-        for <git@vger.kernel.org>; Mon, 27 Feb 2017 14:43:11 -0800 (PST)
+        id S1751635AbdB0Wp2 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 27 Feb 2017 17:45:28 -0500
+Received: from mail-pf0-f194.google.com ([209.85.192.194]:36309 "EHLO
+        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751030AbdB0Wp1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 Feb 2017 17:45:27 -0500
+Received: by mail-pf0-f194.google.com with SMTP id j5so2763491pfb.3
+        for <git@vger.kernel.org>; Mon, 27 Feb 2017 14:43:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=Vq9pkOn1xQxzJmUDuEdtNsIXMGQihEuemcc0r7FVRHY=;
-        b=qkZDUn9Fq96yH1eToF6Zm1u753uG57+TZiyw1UbOepYsDHhLU5X+NnVRZJXlIYcKap
-         G0vSFU3ZLjvJOuQXYVEGia54/RWEre6BlQ7d+LsH8Ng0NakfL6BLOtvKfAP94Pvhybmz
-         1rGDT7edPuSFDqZdt6vNukX/totjKfsojgwDouDPGP1AzvarWym5zPwmdeChavwLK+Tj
-         LI3qEc03PoR7c0+UkSc22tPrNKw8mJlADAl2j7hqxypOx5r+dRCtIf6/ZkI829g4eEIa
-         Bh0JNubnrzfsAcUVytiXwrFXbknDIcFjr3txGNhKGoyplgAl7J/6y09x4osq7KP/+6gG
-         C+yQ==
+        bh=jQxe36gNjRyexxWqsWzUXnhNuErwwhHvEykMbThCq84=;
+        b=PohgLdoS6wJLK+g7hirdt4aC5VC9xzVtthHrsKwYYStU9cag83v1m+BLC30D04plG6
+         viURAYNaZHPZ31bVmyiwL5ZlyRz8tyjRFFCjG/gsfSaLNfELVnUmeA0wkUt4RqgMkYq0
+         KwS49fmDL9kmPLo2gDkFwCcFfCyTDpK59tIh7CgO0yyXNtTWNs+7z+31FHzArHtKXlmN
+         HRj4dLx/u/nY+cFCQV6tYEJJMToSwSqdOWtM5p2MRNqt5CcAliBmdsuWj7jfRQh5uPHr
+         kvRlnPi9YKBPcmwv3fUPq6rFjD2Psj5c2ABx8cPqSPpYZhuOpsMWPjPbywPVwAFRBMT9
+         1wPg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=Vq9pkOn1xQxzJmUDuEdtNsIXMGQihEuemcc0r7FVRHY=;
-        b=uRnPvoaIgS/cgszIrLbCrDnzNQbvDQihbvsWutccedtOY2MrSXl5wt+G/n3jYVLcrx
-         0X8pQRuCoS4wbUwuH7mylpd18NHXLonRvWuaUDyu3rFOFQLw6y27MeKnHDdBA3+gXuP5
-         XrFAXibyu31U6pxmqJZQogDJ+9zDTEzZz0Z5Pd+GNUgoXJL30stXmZBdA11FxC0DybJD
-         GAdmjQTUwiE2N2/Nsau8utDnSSncnYVAlNBKZCAQDJkXx+oTE42dcys/D/8TnKhjDS80
-         mZ8/E8NXO8yjZAVrzBc8pcZ7fTbzpmZJHPU+wyCVOc8iEtszohdwJ7BQpNdxTfru+VZB
-         7U/A==
-X-Gm-Message-State: AMke39kaBk6OkQrCv0MFf3ia8gv9PAKmKzbywJ1/afJj0G9srn0MOShKiJMCooZ4gHr3+g==
-X-Received: by 10.99.215.5 with SMTP id d5mr23508669pgg.51.1488227552589;
-        Mon, 27 Feb 2017 12:32:32 -0800 (PST)
+        bh=jQxe36gNjRyexxWqsWzUXnhNuErwwhHvEykMbThCq84=;
+        b=FvOc3jedfFBMpnyoG41aVd1cpmnb5bxYPtxEFt0OzDlRcc9vfrsa49Is8+STfWyP3U
+         N0QaVxCEmY5t7JafHwrbqtErCIM0LVqwnwpJgDFRv9gzKNvc0qR/HoB6dyc2qp6vM6VZ
+         nmJdpV/D7VKLASr6RLJh0SeX0Dccv3bDWNg5DZTR7XQiPlRHibohI8lVFTdGcLHdhO/f
+         Cdgnml00i3pHwAXTlnMnyGSz+ScfC8xhbN8+46IvDPWL2enyb4gWk43Hf35QPneJhF61
+         70YvQH5NLj/uCb44r2n2cEKSuTm7RcXJ7oh9f5dgHu7JIGqc+Gt0z0PWbqvDBjNK7103
+         7qjA==
+X-Gm-Message-State: AMke39kHwZOnNeDe7BfOKAfSxM8aCWPGKVOoVJHFvbzD6b/sq7SgSJzqYNAusJWWBbYZZQ==
+X-Received: by 10.98.149.80 with SMTP id p77mr22705506pfd.56.1488235030744;
+        Mon, 27 Feb 2017 14:37:10 -0800 (PST)
 Received: from localhost ([2620:0:1000:8622:c953:ec42:862e:1e81])
-        by smtp.gmail.com with ESMTPSA id r73sm32317820pfe.55.2017.02.27.12.32.31
+        by smtp.gmail.com with ESMTPSA id m67sm32543295pfj.32.2017.02.27.14.37.09
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 27 Feb 2017 12:32:31 -0800 (PST)
+        Mon, 27 Feb 2017 14:37:10 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Thomas Gummerer <t.gummerer@gmail.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        sunny@sunbase.org,
-        Jakub =?utf-8?Q?Nar?= =?utf-8?Q?=C4=99bski?= <jnareb@gmail.com>,
-        Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH v7 4/6] stash: teach 'push' (and 'create_stash') to honor pathspec
-References: <20170219110313.24070-1-t.gummerer@gmail.com>
-        <20170225213306.2410-1-t.gummerer@gmail.com>
-        <20170225213306.2410-5-t.gummerer@gmail.com>
-Date:   Mon, 27 Feb 2017 12:32:31 -0800
-In-Reply-To: <20170225213306.2410-5-t.gummerer@gmail.com> (Thomas Gummerer's
-        message of "Sat, 25 Feb 2017 21:33:04 +0000")
-Message-ID: <xmqqa897wf1c.fsf@gitster.mtv.corp.google.com>
+To:     Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 2/6] Specify explicitly where we parse timestamps
+References: <cover.1488231002.git.johannes.schindelin@gmx.de>
+        <12b60c14dad15e3252e314771b3fe369305bbfc5.1488231002.git.johannes.schindelin@gmx.de>
+Date:   Mon, 27 Feb 2017 14:37:09 -0800
+In-Reply-To: <12b60c14dad15e3252e314771b3fe369305bbfc5.1488231002.git.johannes.schindelin@gmx.de>
+        (Johannes Schindelin's message of "Mon, 27 Feb 2017 22:30:32 +0100
+        (CET)")
+Message-ID: <xmqqwpcbmfai.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -70,34 +66,29 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thomas Gummerer <t.gummerer@gmail.com> writes:
+Johannes Schindelin <johannes.schindelin@gmx.de> writes:
 
->  	if test -z "$patch_mode"
->  	then
-> -		git reset --hard ${GIT_QUIET:+-q}
-> +		if test $# != 0
-> +		then
-> +			git reset ${GIT_QUIET:+-q} -- "$@"
-> +			git checkout ${GIT_QUIET:+-q} HEAD -- $(git ls-files -z --modified "$@")
+> Currently, Git's source code represents all timestamps as `unsigned
+> long`. In preparation for using `time_t` instead, let's introduce a
+> symbol `parse_timestamp` (currently being defined to `strtoul`) where
+> appropriate, so that we can later easily switch to use `strtoull()`
+> instead.
 
-"ls-files -z" on the command line?  
+This definitely is a very good thing to do as a separate step.
 
-Apparently new tests do not cover the correctness of this codepath.
+> diff --git a/date.c b/date.c
+> index a996331f5b3..a8848f6e141 100644
+> --- a/date.c
+> +++ b/date.c
+> ...
+> @@ -1066,7 +1066,7 @@ static const char *approxidate_digit(const char *date, struct tm *tm, int *num,
+>  				     time_t now)
+>  {
+>  	char *end;
+> -	unsigned long number = strtoul(date, &end, 10);
+> +	time_t number = parse_timestamp(date, &end, 10);
 
-I wonder if this
-
-	git ls-files -z --modified "$@" |
-	git checkout-index -z --stdin
-
-is what the above "checkout" wanted to do.  The "reset" in the
-previous step presumably updated the index entries that match
-specified pathspec to those of the HEAD, so checking out the paths
-that match "$@" from the index would be the same as checking them
-out from the HEAD (while updating the index with them).
-
-> +			git clean --force ${GIT_QUIET:+-q} -d -- "$@"
-> +		else
-> +			git reset --hard ${GIT_QUIET:+-q}
-> +		fi
-
-Thanks.
+This hunk does not belong to this step.  Everybody else in this step
+still receives parse_timestamp()'s return value in ulong, not time_t.
+I presume that that will happen in the final step 6/6 (which could
+be a huge patch that exceeds 100k?)
