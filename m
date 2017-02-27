@@ -2,92 +2,79 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CD2BD1F5FB
-	for <e@80x24.org>; Tue, 28 Feb 2017 01:01:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 042DC1F5FB
+	for <e@80x24.org>; Tue, 28 Feb 2017 01:15:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751970AbdB1BBr (ORCPT <rfc822;e@80x24.org>);
-        Mon, 27 Feb 2017 20:01:47 -0500
-Received: from mail-lf0-f50.google.com ([209.85.215.50]:34817 "EHLO
-        mail-lf0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751583AbdB1BBp (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 Feb 2017 20:01:45 -0500
-Received: by mail-lf0-f50.google.com with SMTP id z127so40448914lfa.2
-        for <git@vger.kernel.org>; Mon, 27 Feb 2017 17:01:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=PIXuaKh5gwG0oz+1WfkHutv6fZr0hB/LLtJYHc+2dqY=;
-        b=ikoWmTcA7c1MxGcd1r4funIrJ1ic3cWFCemUJvz2f98TmPm8Ixh3W/H5yrekqAxXE9
-         5UfuLUrzeR3npIx1Kr4Lgy3TqfHEkDRVwDHO2mMsu9caPVRlFlYFEtBLXlsEUVFdlqA4
-         urqJ93EkBcSBhh/I1kp+brhaiJ5v+9APqR8Oo46TXPyLfmJySSKz7/FXzMx+0hJBHN1s
-         gPRuG/amVbl8QSvssCVVo5nSTnyjvJxBjRRtnLfnuenuKgMHLDilIV0La2HEMEZM+Qwa
-         iRr8xxJAFc0mu1MwQf74wawmBmzxdljOb+2vzfuqCVF31ZOC9DOKv7G1kZbPYrw3Kq3q
-         8iCw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=PIXuaKh5gwG0oz+1WfkHutv6fZr0hB/LLtJYHc+2dqY=;
-        b=dzQGTA1g0GXf4/GTZ1/yFW+kJ1veIHiyE+6a2ZleVx/iYOV/G8ulQWf++76EwVdg0j
-         7LrIVr78/iPP8rNMT8WlhVdSjxh4SmpKa6ZQ3T+MHwuSmjkayqwoc+fik1xdOnypPAn6
-         0ELgHKKn9w00tcrz5J/qSqtfJR1l516N9kOmmT7E1IKhB7dSMLgHF+AoN7ue3jcf7J6F
-         CbrhyJDiqSAneKAf2oR0strvKG+SGWYWJyhLdopmcHaJHOSPc5Uy38mHaOZQc0PxrjkQ
-         8lVVQjFPdPd3zaJ62sShN5CbOmKnV8MpJiGem6JKQEOeHdNOBxHydzXKEFkm9hL5P+ar
-         BAvg==
-X-Gm-Message-State: AMke39mTVxWoWxXBNtsozO5tD+iSJqALY7Vwf6hDgycJ294vcUrrrpgavlmfXjWcitfKu3RAf+tD5VDDVRE44A==
-X-Received: by 10.46.20.89 with SMTP id 25mr4988901lju.10.1488236758358; Mon,
- 27 Feb 2017 15:05:58 -0800 (PST)
+        id S1751908AbdB1BPN (ORCPT <rfc822;e@80x24.org>);
+        Mon, 27 Feb 2017 20:15:13 -0500
+Received: from mout.web.de ([212.227.17.11]:51238 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751759AbdB1BOw (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 Feb 2017 20:14:52 -0500
+Received: from [192.168.178.36] ([79.237.49.102]) by smtp.web.de (mrweb101
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0LoYjO-1c7VfJ1vFS-00gZfG; Mon, 27
+ Feb 2017 23:45:51 +0100
+Subject: Re: [PATCH] strbuf: add strbuf_add_real_path()
+To:     Brandon Williams <bmwill@google.com>
+References: <4d191b86-d36c-e3ec-99c6-d15baa6b659a@web.de>
+ <20170227182217.GC153455@google.com>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <3063b6fb-02aa-703c-0b56-300109cf054d@web.de>
+Date:   Mon, 27 Feb 2017 23:45:50 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.7.1
 MIME-Version: 1.0
-Received: by 10.25.145.30 with HTTP; Mon, 27 Feb 2017 15:05:37 -0800 (PST)
-In-Reply-To: <xmqq60jvnu9y.fsf@gitster.mtv.corp.google.com>
-References: <20170227045257.yazqlrqlnggosi5t@macbook.local>
- <CAOLa=ZSyQg9uoZWADOMYc90U-5AR9Lfii9mjLre0m0FQCSqfxg@mail.gmail.com>
- <20170227074915.xljfe5jox756rlyv@sigill.intra.peff.net> <20170227080158.de2xarctzscfdsp2@sigill.intra.peff.net>
- <20170227090233.uk7dfruggytgmuw2@sigill.intra.peff.net> <xmqq60jvnu9y.fsf@gitster.mtv.corp.google.com>
-From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Mon, 27 Feb 2017 15:05:37 -0800
-Message-ID: <CA+P7+xpVt6NtSajqMX8OQ_SKdC9tfHH40JgK=9DgBxo9nMaWLA@mail.gmail.com>
-Subject: Re: [BUG] branch renamed to 'HEAD'
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jeff King <peff@peff.net>, Karthik Nayak <karthik.188@gmail.com>,
-        Luc Van Oostenryck <luc.vanoostenryck@gmail.com>,
-        Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+In-Reply-To: <20170227182217.GC153455@google.com>
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K0:w0Afcf2Kp+dlU9I74Kl3pO3daGQI/JxRdVFlH/bw/lhMUtiLbPm
+ TVQs/t9EnaRvh3rB/cMjbqVn0rMczGpE+OtKGl/EcCA/EP3G/ymFZoX2G3vYVJO1Ugr40AN
+ BkHf2Hfd9+o1l+CuQILFJzwWHdduVq3z8VjqSjweR4MNR3YGjTdirMod6S/tm6wSyeAcIdw
+ HTqniEc8rcuraJ6UdhDFA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:MsIrDJ5np9M=:m+5Jsio6yYAxWS55pTJZcn
+ PVi+uebQC34dH5WhzIH73aHEtYR/64yEjerivaReymki1Udr3uCFimxctf/1NP5dt/QXFLVe7
+ RaiAq6Lo/jW5t4MpjacE6y1X9XsaUuybBjOVhpCy7Rl1u8+KPDjvsOlFVx6htbJYIVccmnZwl
+ 5Wmp0rpOa6U6kl0gVwIcgzy1F/6aSfoLIaotfS6lzzntPEWuW/cGDjC/IKD5kiZpAgLfK4DVu
+ a/0o/5iGXF4xgeMJyGUMMll/uwZc4Un6F9SjUiHC7VJ5zEdwy+C6mzHog4UJJXRrAm7QiVzd6
+ ICLDopAnT8RL9nyAq1EkemG+DDV1YoEg4UQwbSHyCn09eHnvZ9Y88/nDubcNEzbuQu46kx8hP
+ qIrBHFdi1GQrTemGykrxusYEmEsYHCtsujnmrTaLaX8SjIZ6iTd/e7JbXwsKJ+tjM1ZFS8roq
+ qEFBDsb1zzDfGobWh29MYw0p0N0cInCuDkJ6H0hcU5fuJf3xzz2UmkWmZJ2TV9QeOy9GKwZ3f
+ viQQBEHKNMDEydB24/AxGAUHuVcx5aVZYqRqEpbaA5W9oAhjU0OVYRJKfrQgge2e0BSjnPkcy
+ W/WNp6RYptsOdVpWaKI4uDWcrZ82XRbpi2zr46KVTFh4cE9dsdDYdar2uX5sQRpAAy+percRI
+ GAgcU5J3xvSrSD5vqGs2oGvERFTen3n9xMo10tN1GNbWpTVuD5HxKePUn/nWqVvD8Ruvl4A9B
+ dwNk2Yu7/rEK7KvKeI5ybKqRJPUE1CbI2NTqCLUKZfsyuifjjUJKwHZRaVY/ENmoi4SkxYZFh
+ Gt+WKOZ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Feb 27, 2017 at 2:28 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Jeff King <peff@peff.net> writes:
+Am 27.02.2017 um 19:22 schrieb Brandon Williams:
+> On 02/25, René Scharfe wrote:
+>> +void strbuf_add_real_path(struct strbuf *sb, const char *path)
+>> +{
+>> +	if (sb->len) {
+>> +		struct strbuf resolved = STRBUF_INIT;
+>> +		strbuf_realpath(&resolved, path, 1);
+>> +		strbuf_addbuf(sb, &resolved);
+>> +		strbuf_release(&resolved);
+>> +	} else
+>> +		strbuf_realpath(sb, path, 1);
 >
->> I guess something like the patch below works, but I wonder if there is a
->> less-horrible way to accomplish the same thing.
->
-> I suspect that a less-horrible would be a lot more intrusive.  It
-> would go like "interpret-branch-name only gives local branch name,
-> and when it does not show it, the callers that know they do not
-> necessarily need local branch name would call other at-mark things".
-> As you pointed out with the @{upstream} that potentially point at a
-> local branch, it will quickly get more involved, I would think, and
-> I tend to think that this patch of yours is probably the least evil
-> one among possible solutions.
->
-> Perhaps with s/not_in_refs_heads/not_a_branch_name/ (or swapping
-> polarity, "is_a_branch_name"), the resulting code may not be too
-> hard to read?
->
-> Thanks.
+> I know its not required but I would have braces on the 'else' branch
+> since they were needed on the 'if' branch.  But that's up to you and
+> your style :)
 
-What about changing interpret-branch-name gains a flag to return a
-fully qualified ref rather than returning just the name? That seems
-like it would be more reasonable behavior.
+Personally I'd actually prefer them as well, but the project's style has 
+traditionally been to avoid braces on such trailing single-line branches 
+to save lines.  The CodingGuidelines for this topic have been clarified 
+recently, though, and seem to require them now.  Interesting.
 
-Thanks,
-Jake
+René
