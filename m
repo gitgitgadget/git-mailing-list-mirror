@@ -2,87 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D32501F5FB
-	for <e@80x24.org>; Mon, 27 Feb 2017 22:20:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B5BC61F5FB
+	for <e@80x24.org>; Mon, 27 Feb 2017 22:20:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751637AbdB0WTc (ORCPT <rfc822;e@80x24.org>);
-        Mon, 27 Feb 2017 17:19:32 -0500
-Received: from mail-pg0-f65.google.com ([74.125.83.65]:33148 "EHLO
-        mail-pg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751786AbdB0WT1 (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1751468AbdB0WTb (ORCPT <rfc822;e@80x24.org>);
+        Mon, 27 Feb 2017 17:19:31 -0500
+Received: from mout.web.de ([212.227.15.4]:61558 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751587AbdB0WT1 (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 27 Feb 2017 17:19:27 -0500
-Received: by mail-pg0-f65.google.com with SMTP id x17so2305260pgi.0
-        for <git@vger.kernel.org>; Mon, 27 Feb 2017 14:18:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=3S+05xqx5iQL5QwDGUCmdZuHx8TbS+51y4xI2BlmO2w=;
-        b=l3vbC0qbRU6807/bqPgTgiarpDDiORvPWTsdEbfR18jWuk4U1fnhu4SVLV7OxcrrMB
-         VqiC9KWst/vAfD69UvVr3/MC4vqhFHz6lDkwnYW+sMzXT6iFJOt+Mer9XvLb+9rY1n7n
-         f+I25NzTeL6K/fCK6Q9ISzJ1KGL0ah+fjoHUl9rC1JVM+KIszIHT+ra6GSeJlFklJZa9
-         OhcxdW3lemoDhpAF3EZXtJqqxT7uJE6yEo7BFGgP1TtTVBUmcjMTi1/fIsTmWpIgySda
-         1Un3begYMWY6KK1pg7Y86obAcwHUUnvu1p6Du/9IFlBdbQs6/tHc85Ffux0uZ+XqvYmg
-         yKzQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=3S+05xqx5iQL5QwDGUCmdZuHx8TbS+51y4xI2BlmO2w=;
-        b=BHyELsSW8CV7IT11/QANQEGlZC9UJ11ZiwoyJCN5s+idLnJzlxtGEedzt2ozKs3q3g
-         xaxqCTXhrvtqzCHoEwmtKmXX42t701kVOoYnPnE16nXdI+oXccx4sAYA62/wOOXy4g64
-         ij5r/YGueQSX8lnikN3f08O7PO5M+n13ajSx2R6b5NmUeZ8HqNPC70zVQw+BBi8zrS35
-         A3oiRMgZ3Bo6XA4kcKB6pnKCCDTW2utbP2IZ4KWhp3reXdMhwhvkW/s+xzZZHL/7Efam
-         Re/1xK6OBgW89FI5JDmyQgmGD/ehHrRHxrsHlFY39WT0JWtuJLEMSZ33+kxxu0iM17iB
-         7G2A==
-X-Gm-Message-State: AMke39lhUc3qOyGNvPpdH6OberdtKKvdOfgM0KKX1v6MTlFzzBVzYtztVpIbo2ciuo7KYA==
-X-Received: by 10.98.134.142 with SMTP id x136mr16201743pfd.64.1488233916364;
-        Mon, 27 Feb 2017 14:18:36 -0800 (PST)
-Received: from localhost ([2620:0:1000:8622:c953:ec42:862e:1e81])
-        by smtp.gmail.com with ESMTPSA id u75sm26907524pfk.3.2017.02.27.14.18.35
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 27 Feb 2017 14:18:35 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] t6300: avoid creating refs/heads/HEAD
-References: <20170227092931.7iquwaxomeuuusi2@sigill.intra.peff.net>
-        <xmqqzih7whrw.fsf@gitster.mtv.corp.google.com>
-        <20170227205151.rjhod347ddhmdmxp@sigill.intra.peff.net>
-        <xmqqshmzuyam.fsf@gitster.mtv.corp.google.com>
-        <20170227214147.5ezxskhihi3cc77m@sigill.intra.peff.net>
-Date:   Mon, 27 Feb 2017 14:18:34 -0800
-In-Reply-To: <20170227214147.5ezxskhihi3cc77m@sigill.intra.peff.net> (Jeff
-        King's message of "Mon, 27 Feb 2017 16:41:47 -0500")
-Message-ID: <xmqqa897nupx.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+Received: from [192.168.178.36] ([79.237.49.102]) by smtp.web.de (mrweb002
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0MXHoz-1cm68X1Z81-00WDbw; Mon, 27
+ Feb 2017 23:18:04 +0100
+Subject: Re: [PATCH 2/2] apply: handle assertion failure gracefully
+To:     Junio C Hamano <gitster@pobox.com>
+References: <20170225101307.24067-1-vegard.nossum@oracle.com>
+ <20170225101307.24067-2-vegard.nossum@oracle.com>
+ <a5626d97-e644-65b5-2fd3-41ce870f85a6@web.de>
+ <xmqqmvd7wgc7.fsf@gitster.mtv.corp.google.com>
+Cc:     Vegard Nossum <vegard.nossum@oracle.com>, git@vger.kernel.org,
+        Christian Couder <christian.couder@gmail.com>,
+        Michal Zalewski <lcamtuf@google.com>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <f191e3a8-a55b-7030-ebbb-3f46c74fdc94@web.de>
+Date:   Mon, 27 Feb 2017 23:18:03 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.7.1
 MIME-Version: 1.0
-Content-Type: text/plain
+In-Reply-To: <xmqqmvd7wgc7.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K0:3TJhCWIZIFFFQsjXmBctzlFgDEe4iwZT5Jd0IfUFF2npCZ7Oxgb
+ hecUVbZlHCGaasLdKy2VRXhQIRI1AW8w6/QEh+5tSBExroeDzrlGerFKDnY5AjfriK8V+Zm
+ LmQFO1+3AAcRkzrnnKG++zcWgRk/LSnLVXSBBDvnBEsusYDeXxAtLpXs82SK/hh8nCyAIJi
+ v0sCiV4NS3ywhyvfs0+QQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:hkeOG1ZlwCc=:bM2Cq70lHh9q4eVB1w4fVM
+ HtdyU/ptYwY/tyZ7J3gxF2I/lQtNFthR/uROSr5pyBPMUVz0QPQr3WCBcUoFrxGBQ5Z20X9Bz
+ lmvfeu0WHs4W/zfcSWe3v63/5C75w0+ANSfzEd/yfkqd7E+7AFjD04eQz6oUDESt9CICTSA6O
+ Q5UHaaGU4mtLwdgJ8jWDdiELzNiUWh8xCKIsQfOka4vjS+tifts7oSuyCUAtjK+6num0w7JAw
+ kgnjlv59oZ4Iz5OdjlN3gHDz3xyZctzgdK/1+tu3m1/wOHG0yNIKoX/RIYyIEN4l8tD2bxLPT
+ 95B4cTSs0G/gVn3+do+Au6qfajntLXU90yzyzwAtwu6qyn2QxawdxlAsycN/7/wPUrI4VnF+O
+ 48GSuXoSMT/zBfIeru0tjNybJJtRWB7dRKD2fl4Y7vJmCT7TNeeP5WuIin9UnWz7p2f+vQ2g7
+ vjIo0CHS4uUyPcz+CHTLJL0tWlpvAeeOsTqAmAGgutr7/0u1ZUPUCgcQFgkcxXk8f9nsqFSU7
+ dAx4H4UFicxDIJP8X09XEWQKmXmBE4UH53NZO+qY9GL7vAsIS0Uvdrc3i4DpwIZPMtj83Jxgi
+ FZaOM1Ye6dPmPGpy4lW63+b9PzdpIQOssOnO7/E9z9w92iPkXSZ00ayp2YR4lIIEhqWTiT8ON
+ demFZ9k5De5PaUo14av9SHtzGqekmn2xQlrpar+UepQuMFLtX/YHHNmeKi92mzEpfEgU6+sIu
+ qSFph76h6wcUeOCbSqy7Wwq8br0fWsSABzd9xB9J6m7DhUm2uD8zPYJi5O7yy21UXTYCeAL99
+ Xs+yAhV
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
-
-> The "other" stuff could sometimes be useful, I guess. It's not _always_
-> wrong to do:
+Am 27.02.2017 um 21:04 schrieb Junio C Hamano:
+> René Scharfe <l.s.r@web.de> writes:
 >
->   git branch -f @{upstream} foo
+>>> diff --git a/apply.c b/apply.c
+>>> index cbf7cc7f2..9219d2737 100644
+>>> --- a/apply.c
+>>> +++ b/apply.c
+>>> @@ -3652,7 +3652,6 @@ static int check_preimage(struct apply_state *state,
+>>>  	if (!old_name)
+>>>  		return 0;
+>>>
+>>> -	assert(patch->is_new <= 0);
+>>
+>> 5c47f4c6 (builtin-apply: accept patch to an empty file) added that
+>> line. Its intent was to handle diffs that contain an old name even for
+>> a file that's created.  Citing from its commit message: "When we
+>> cannot be sure by parsing the patch that it is not a creation patch,
+>> we shouldn't complain when if there is no such a file."  Why not stop
+>> complaining also in case we happen to know for sure that it's a
+>> creation patch? I.e., why not replace the assert() with:
+>>
+>> 	if (patch->is_new == 1)
+>> 		goto is_new;
+>>
+>>>  	previous = previous_patch(state, patch, &status);
 >
-> It depends on what your @{upstream} resolves to. Switching to just using
-> interpret_nth_prior_checkout() would break the case when it resolves to
-> a local branch. I'm not sure if we're OK with that or not. If we want to
-> keep all the existing cases working, I think we need something like the
-> "not_in_refs_heads" patch I posted elsewhere.
+> When the caller does know is_new is true, old_name must be made/left
+> NULL.  That is the invariant this assert is checking to catch an
+> error in the calling code.
 
-I haven't seen that patch, but yes, telling the caller if the
-returned value is meant to be used inside refs/heads/ is the right
-approach and makes it possible for "@{upstream}" (and just "@") to
-be handled sensibly in "git branch -m @{that at-mark thing}".
+There are some places in apply.c that set ->is_new to 1, but none of 
+them set ->old_name to NULL at the same time.
 
+Having to keep these two members in sync sounds iffy anyway.  Perhaps 
+accessors can help, e.g. a setter which frees old_name when is_new is 
+set to 1, or a getter which returns NULL for old_name if is_new is 1.
+
+René
