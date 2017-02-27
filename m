@@ -2,179 +2,128 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A738520254
-	for <e@80x24.org>; Mon, 27 Feb 2017 22:35:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 41A5820254
+	for <e@80x24.org>; Mon, 27 Feb 2017 22:44:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751639AbdB0Wfn (ORCPT <rfc822;e@80x24.org>);
-        Mon, 27 Feb 2017 17:35:43 -0500
-Received: from mail-pg0-f47.google.com ([74.125.83.47]:33218 "EHLO
-        mail-pg0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751510AbdB0Wfk (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 Feb 2017 17:35:40 -0500
-Received: by mail-pg0-f47.google.com with SMTP id 25so19742013pgy.0
-        for <git@vger.kernel.org>; Mon, 27 Feb 2017 14:34:59 -0800 (PST)
+        id S1751663AbdB0Wn6 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 27 Feb 2017 17:43:58 -0500
+Received: from mail-lf0-f66.google.com ([209.85.215.66]:35728 "EHLO
+        mail-lf0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751392AbdB0Wnv (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 Feb 2017 17:43:51 -0500
+Received: by mail-lf0-f66.google.com with SMTP id z127so7168000lfa.2
+        for <git@vger.kernel.org>; Mon, 27 Feb 2017 14:42:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=8IP3kGXqFZ9HN6Nf3Ll1qILahJ1V71EvnnPc58wY7Ss=;
-        b=a6ZG0u7aEgEGhCdqSggU0qC8wkEV/WqP92JN6WwcVqkBnLC4r+iWweTdWu+iSkqcXx
-         QTQDMD2mjXROtSIoeaZ3BivsH8NHOTjtaQgsojGO3lqx86Zn9lfEs4jKgknswqG7sfwb
-         PQZ6kFFYdnCvnECldEjwpOJAJf0X0rBjC8uQ0cubQldRjkA9//+QM41sf5kqQXkfC6T2
-         bGVYWw1pvbuxlhkdoMpPf1TxQ+FDj4hmUXWoOIWRN+vhqZSd3jlAWmz1H5q90cJMQNul
-         q7cr+FxGgESuhPtBBIy23DVzg5jLYhSVdfLCsaFGMEiX0GE6V+x1vLhpVwfRTvZkSzjU
-         BxIA==
+        d=gmail.com; s=20161025;
+        h=subject:to:references:from:message-id:date:user-agent:mime-version
+         :in-reply-to:content-transfer-encoding;
+        bh=7mbEsGcvXWmd1FxZl3dDylMRFlFoJEue7QhMYvIsN4k=;
+        b=udOSPzNtWdIr6A1ZQjHya1KZmExK/ytJ9TZ2Z+N2JNIeW6fZg3GlCSOSvv2TZSCsDF
+         uG7V35smF1ODKLY3rJg7tqmCubdhXjbec7r9iE87skghM0dd7T1eSmNdQDjimMnbR1Eu
+         dKRZBoaNH6+PS+U3aOMHUOy2CUa0w5Q/FITkhFEEVAcmrk/z3T7YA4cNulIvWlPdCPE/
+         mv3/qva3zqYYZBgYEDrRTVG87BOq0g8oJCteWnw1QkMImDbDnrom9/QEb0RjbydmXeHo
+         X42Yq4Nbx3n/7aHhb+1t4NLP+rQWhPtgOAkj4urK1dUIl6oE+HZ7HvwgNoWTR+jrHpoE
+         f/aQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=8IP3kGXqFZ9HN6Nf3Ll1qILahJ1V71EvnnPc58wY7Ss=;
-        b=OCTdOVMnmg2SQQHF4nRVc0zntQYyuJ9NH96QGW2dEZHm3SYASJ0ZgESdWUJY8apU0I
-         CVcier+qqKgkPNOdhfTXaJxqFk+z260ndojJDUhAVQWwIQR2qDCqAl47tHqbn2k0wt2/
-         ZfER6bL2m1DtwAvtN8SQB3eLvbNjgND18ujyHAv2WtKOUmVqAbjVsnmsOdQIpH6lgKC4
-         rT14D83EgZVQyKyYB4H/7nSQDVTuh3MMJUDaWRXilyO9uicDgw0FojGr5OnRiK9WMu3P
-         YjeQDfyqA0NXo00IPolFhX05Cx0wA0scU+9QqpgfJIamkKiMClGXcly3lftkI2uNfj+3
-         Ltsg==
-X-Gm-Message-State: AMke39k09utcwrvFMfIPKYIwBaLX42VHnCXcF4bD8Z03LJ8ndcLJWsnh07JKwMvtdrWSEP9O
-X-Received: by 10.84.197.1 with SMTP id m1mr26403913pld.123.1488220539032;
-        Mon, 27 Feb 2017 10:35:39 -0800 (PST)
-Received: from google.com ([2620:0:1000:5b10:5d0b:b83e:e4b4:f20d])
-        by smtp.gmail.com with ESMTPSA id p6sm32198652pgn.40.2017.02.27.10.35.37
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 27 Feb 2017 10:35:37 -0800 (PST)
-Date:   Mon, 27 Feb 2017 10:35:36 -0800
-From:   Brandon Williams <bmwill@google.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: [PATCH 05/10] submodule--helper: add is_active command
-Message-ID: <20170227183536.GD153455@google.com>
-References: <20170223234728.164111-1-bmwill@google.com>
- <20170223234728.164111-6-bmwill@google.com>
- <CAGZ79kZKH_e2NLd=A=og452f-1bfFcSoi5=SM5oetu87TT766Q@mail.gmail.com>
+        h=x-gm-message-state:subject:to:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
+        bh=7mbEsGcvXWmd1FxZl3dDylMRFlFoJEue7QhMYvIsN4k=;
+        b=RCV6gL1cgjRDjKwp0qPBJ7dCJ+lbmbFTSsKsyzoviDG0FtyDqw6w0L8eXw1Wg0nPc7
+         9YCl/h20dnQpanJvvN1WQc1Wztra/z6McQblD9RGAGMwiyJFhoLOZruYn5jvt4aSHGVX
+         mEktL4Gv0COKmF6pD0QVoUb8OmNpXuH9SJa9YlhKB0o+UCEveSZPK5LTCPKh4wj1pkl+
+         MrbUIRWfWeNLZBl35OpkSgtYYd2VYDTGSrxZjEz2rmfBUCK1FRwpfXulZMIAQyalSwGQ
+         dEfBfL26Jq7aR2SXUJChEcR7rtMQQ75EAKMkMcT6QY5jsgPMKiFmn/0iBgZj40WeqQDI
+         3MgA==
+X-Gm-Message-State: AMke39nSHqfeAf2WZS+xgYRcp8g0TFzo7v4OWthQmB0vQOwKf+rWNffAryoqdDMfIubaKQ==
+X-Received: by 10.46.14.26 with SMTP id 26mr5190104ljo.76.1488235331563;
+        Mon, 27 Feb 2017 14:42:11 -0800 (PST)
+Received: from [192.168.1.26] (deg240.neoplus.adsl.tpnet.pl. [83.23.110.240])
+        by smtp.googlemail.com with ESMTPSA id m7sm10754503ljb.24.2017.02.27.14.42.10
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 27 Feb 2017 14:42:10 -0800 (PST)
+Subject: Re: Reference for quote "creating branch is not the issue, merging
+ is", in context of Subversion/Git
+To:     Igor Djordjevic <igor.d.djordjevic@gmail.com>,
+        =?UTF-8?Q?Michael_H=c3=bcttermann?= <michael@huettermann.net>,
+        git@vger.kernel.org
+References: <c25bc18c-d599-93fd-0bad-23e1240e081e@huettermann.net>
+ <32232f89-a6f8-be30-278a-bdfedae0716a@gmail.com>
+From:   =?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
+Message-ID: <a3960248-46c1-b814-13ef-cf8c0435be9a@gmail.com>
+Date:   Mon, 27 Feb 2017 23:42:01 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.7.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAGZ79kZKH_e2NLd=A=og452f-1bfFcSoi5=SM5oetu87TT766Q@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <32232f89-a6f8-be30-278a-bdfedae0716a@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 02/23, Stefan Beller wrote:
-> On Thu, Feb 23, 2017 at 3:47 PM, Brandon Williams <bmwill@google.com> wrote:
-> > There are a lot of places where an explicit check for
-> > submodule."<name>".url is done to see if a submodule exists.  In order
-> > to more easily facilitate the use of the submodule.active config option
-> > to indicate active submodules, add a helper which can be used to query
-> > if a submodule is active or not.
-> >
-> > Signed-off-by: Brandon Williams <bmwill@google.com>
-> > ---
-> >  builtin/submodule--helper.c    | 11 ++++++++
-> >  t/t7413-submodule-is-active.sh | 63 ++++++++++++++++++++++++++++++++++++++++++
-> >  2 files changed, 74 insertions(+)
-> >  create mode 100755 t/t7413-submodule-is-active.sh
-> >
-> > diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-> > index df0d9c166..dac02604d 100644
-> > --- a/builtin/submodule--helper.c
-> > +++ b/builtin/submodule--helper.c
-> > @@ -1128,6 +1128,16 @@ static int absorb_git_dirs(int argc, const char **argv, const char *prefix)
-> >         return 0;
-> >  }
-> >
-> > +static int is_active(int argc, const char **argv, const char *prefix)
-> > +{
-> > +       if (argc != 2)
-> > +               die("submodule--helper is-active takes exactly 1 arguments");
-> > +
-> > +       gitmodules_config();
-> > +
-> > +       return !is_submodule_initialized(argv[1]);
-> > +}
-> > +
-> >  #define SUPPORT_SUPER_PREFIX (1<<0)
-> >
-> >  struct cmd_struct {
-> > @@ -1147,6 +1157,7 @@ static struct cmd_struct commands[] = {
-> >         {"init", module_init, 0},
-> >         {"remote-branch", resolve_remote_submodule_branch, 0},
-> >         {"absorb-git-dirs", absorb_git_dirs, SUPPORT_SUPER_PREFIX},
-> > +       {"is-active", is_active, 0},
-> >  };
-> >
-> >  int cmd_submodule__helper(int argc, const char **argv, const char *prefix)
-> > diff --git a/t/t7413-submodule-is-active.sh b/t/t7413-submodule-is-active.sh
-> > new file mode 100755
-> > index 000000000..683487020
-> > --- /dev/null
-> > +++ b/t/t7413-submodule-is-active.sh
-> > @@ -0,0 +1,63 @@
-> > +#!/bin/sh
-> > +
-> > +test_description='Test submodule--helper is-active
-> > +
-> > +This test verifies that `git submodue--helper is-active` correclty identifies
-> > +submodules which are "active" and interesting to the user.
-> > +'
-> > +
-> > +. ./test-lib.sh
-> > +
-> > +test_expect_success 'setup' '
-> > +       git init sub &&
-> > +       test_commit -C sub initial &&
-> > +       git init super &&
-> > +       test_commit -C super initial &&
-> > +       git -C super submodule add ../sub sub1 &&
-> > +       git -C super submodule add ../sub sub2 &&
-> > +       git -C super commit -a -m "add 2 submodules at sub{1,2}"
-> > +'
-> > +
-> > +test_expect_success 'is-active works with urls' '
-> > +       git -C super submodule--helper is-active sub1 &&
-> > +       git -C super submodule--helper is-active sub2 &&
-> > +
-> > +       git -C super config --unset submodule.sub1.URL &&
-> > +       test_must_fail git -C super submodule--helper is-active sub1 &&
-> > +       git -C super config submodule.sub1.URL ../sub &&
-> > +       git -C super submodule--helper is-active sub1
-> > +'
-> > +
-> > +test_expect_success 'is-active works with basic submodule.active config' '
-> > +       git -C super config --add submodule.active "." &&
-> > +       git -C super config --unset submodule.sub1.URL &&
-> > +       git -C super config --unset submodule.sub2.URL &&
+W dniu 26.02.2017 o 16:19, Igor Djordjevic pisze:
+> Hello Michael,
 > 
-> I think we'd want to unset only one of them here
+> On 26/02/2017 12:40, Michael Hüttermann wrote:
+>> Linus Torvalds made a statement regarding merging/branching and stated
+>> (as far as I know) that "creating branch is not the issue, merge is", in
+>> context of Subversion/Git.
+>> I do not find the origin source for that. Can you please help and point
+>> me to a statement or article where Linus elaborated on this?
 > 
-> > +
-> > +       git -C super submodule--helper is-active sub1 &&
-> > +       git -C super submodule--helper is-active sub2 &&
+> Could it be that you think of "Tech Talk: Linus Torvalds on Git"[1]
+> (held on May 3, 2007)?
 > 
-> to test 2 different cases of one being active by config setting only and
-> the other having both.
+> To give you some clue, here`s an excerpt from Linus' talk/presentation
+> (taken from the transcript[2] containing the whole thing):
+> 
+>   "... Subversion for example, talks very loudly about how they do CVS
+>   right by making branching really cheap. It's probably on their main
+>   webpage where they probably say branching in subversion is O(1)
+>   operation, you can do as many cheap branches as you want. Nevermind
+>   that O(1) is actually with pretty large O I think, but even if it
+>   takes a millionth of a second to do branching, who cares? It's the
+>   wrong thing you are measuring. Nobody is interested in branching,
+>   branches are completely useless unless you merge them, and CVS cannot
+>   merge anything at all. You can merge things once, but because CVS
+>   then forgets what you did, you can never ever merge anything again
+>   without getting horrible horrible conflicts. Merging in subversion is
+>   a complete disaster. The subversion people kind of acknowledge this
+>   and they have a plan, and their plan sucks too. It is incredible how
+>   stupid these people are. They've been looking at the wrong problem
+>   all the time. Branching is not the issue, merging is..."
+> 
+> This specific branch/merge performance talk starts at 50:20[3], where
+> the part quoted above comes at 51:34[4].
 
-Will do.
+Note also that while "creating branch is not the issue, merge is"
+remains true, modern Subversion (post 1.5) makes merging easy thanks
+to svn:mergeinfo property.
+
+Though it does it in completely different way than Git and other
+"graph of commits" VCS-es, because of the "branch is directory"
+philosophy, namely that it keeps information about what was merged
+in, rather than finding common ancestor(s) and using this information
+for resolving merge.
 
 > 
-> I could not spot test for having the URL set but the config setting set, not
-> including the submodule, e.g.
+> Please note that there`s more context before and after this excerpt
+> that puts it all into the meant perspective, so you may really want
+> to watch/listen/read the whole thing anyway.
 > 
->     git -C super config  submodule.sub1.URL ../sub &&
->     git -C super submodule.active  ":(exclude)sub1" &&
+> Regards,
+> Buga
 > 
-> which would be expected to not be active, as once the configuration
-> is there it takes precedence over any (no)URL setting?
+> [1] https://www.youtube.com/watch?v=4XpnKHJAok8
+> [2] https://git.wiki.kernel.org/index.php/LinusTalk200705Transcript
+> [3] https://youtu.be/4XpnKHJAok8?t=3020
+> [4] https://youtu.be/4XpnKHJAok8?t=3094
+> 
 
-The last test, tests this functionality as the URL settings for both
-sub1 and sub2 are in the config.  You'll notice in the tests where I
-unset the URL config, that they get added back at the end of the test so
-that future tests have a clean state to work with.
-
--- 
-Brandon Williams
