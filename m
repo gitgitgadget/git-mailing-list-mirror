@@ -2,212 +2,177 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E1C6C1F5FB
-	for <e@80x24.org>; Mon, 27 Feb 2017 18:16:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 430DD20254
+	for <e@80x24.org>; Mon, 27 Feb 2017 18:23:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751557AbdB0SQG (ORCPT <rfc822;e@80x24.org>);
-        Mon, 27 Feb 2017 13:16:06 -0500
-Received: from mail-pf0-f177.google.com ([209.85.192.177]:34925 "EHLO
-        mail-pf0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751678AbdB0SQE (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 Feb 2017 13:16:04 -0500
-Received: by mail-pf0-f177.google.com with SMTP id j5so7266294pfb.2
-        for <git@vger.kernel.org>; Mon, 27 Feb 2017 10:14:41 -0800 (PST)
+        id S1751478AbdB0SXN (ORCPT <rfc822;e@80x24.org>);
+        Mon, 27 Feb 2017 13:23:13 -0500
+Received: from mail-pg0-f41.google.com ([74.125.83.41]:35095 "EHLO
+        mail-pg0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750971AbdB0SXL (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 Feb 2017 13:23:11 -0500
+Received: by mail-pg0-f41.google.com with SMTP id b129so47279165pgc.2
+        for <git@vger.kernel.org>; Mon, 27 Feb 2017 10:22:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=/kdYTkVWxxUimDrOSQechZ4NZhq1KggekY36cveFNx8=;
-        b=t1oWJHmtsYQjyqUguQfey1lZy8JRIMGdxeE38ktWSfFNTfxm/qqZe+i2aYJUfxcXk9
-         3DHclOwNx6k72wkUHg2VEk772IcIoLOgWZOeq5npGMALbKLyoEh8V9FxRS0E0hBHhemn
-         2qrqzt3mGMW2M5AH/x6cJAGrU6KrEIcOB6XRixPdqHvEMQiO5f+lt4D0F3lRzNDTNxO7
-         CWi4jynvwQeb+wNLk6lWJa7OIWxPGVZVtAzKWHc4li6E33jMMv2g5pjGQdM/R9pNy/Ca
-         4N09untF3PZdoDgIyz4iyQngCHHyLgZeTnrFxMM7lQW9Ln3sIegsMmzY9EIx96hOfsgg
-         joEw==
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=6mTOGzv7hPwJ7i5R/dBaN4YMpIl6Sh4bmjkS8qBmWfo=;
+        b=Kbageu+SRiiJ65rXjC70xDgA3TFVpcFb+SIjvhGuYnA4kGvsGnCVXkRVuBrvG0obw6
+         xxFQ+hE6oBaY3e/O5C4Te6FgrD/XcWUvoW/2uncAQL0bTiOjNqdp23lLIvRhEKqCCMhY
+         AbwCmph4lfSCJz438PAjEO+XaZhYHkpe72YgeC0FZEhj/wZXOJGMMoWCWA737GL6hK5L
+         7Thda2s3+avK4JmwvLWxBw+24fVbUeHV2VLhBLTFt51w9oyLjC2Cs8kfS0LLUtL2dBxG
+         /+gLoFJ/0XvJdccIIjbC6t6WBZZ0ItIFyidgqAwbUUFiILxAioPMZRFOEZxfp57loOVG
+         n2og==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=/kdYTkVWxxUimDrOSQechZ4NZhq1KggekY36cveFNx8=;
-        b=VjRZRbsi3UTYiZk5Fey7fzr0OZ/1ibUiasynl8GLkA42UzEjtFjoV5T9JEJXc0btF9
-         K/IIKmpT1JCrO55ITqlK3twdQdC7vEDMGKkKiyiOUyJrADqdggDhg/gf05h8Ato/A/K7
-         wC2djMHduoDleHzwna5SDdSMMX2iG5Ngst5Mplgq8EY473O7QPV7Kno1eAG7Aym0A3D3
-         xsmVyrxHYjyjWg6IdoQ7ybSKW5lSJB+lTsWB8FcFZ2Jh55O5KEK3PsrE+YkyTNxthwpM
-         lCpsPg3uDHy54SsAtR6STp9ZcUA0gitFT/6gBK6CFi1n7wfZSYH7r1vLVevoJljZh9Yw
-         wyxg==
-X-Gm-Message-State: AMke39k1zjwUSk2MGiL76gu9JeVEGttBFMZT9jAzxRuaK1Booe+S9gy7uqULtoM9Et5wO//j
-X-Received: by 10.84.233.194 with SMTP id m2mr26207244pln.126.1488219280037;
-        Mon, 27 Feb 2017 10:14:40 -0800 (PST)
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=6mTOGzv7hPwJ7i5R/dBaN4YMpIl6Sh4bmjkS8qBmWfo=;
+        b=WfuAl1Hwk91fuEimsAx0Dgi5IxUZOiYdCFLls4jYx/hDOms5K7de0MlYjmiK30nHor
+         UV7baLJakH2N/bxBmTZdP2xE0NKaIsZrFaPdvxD9sUTvMWBeUtKKnQgZIZ+H6E2Upot9
+         46zAyUd2vDH9sxYJrpZbtSJM4NCIjWbPVMyS3af+Db53sMvbpQQzBnbNripPqABYzapQ
+         2mFEFqrieLADZpIxoAxWobtJIN7shZkDbK2t2hr85ETjrHJMJoOEBexRO1Epo7K8SyNP
+         shXXN1teTsu8LISeTlrkjUnCN/C/ozGiRfM41b9doAEfY0BU4k4y00kAeyCja2KrMuTE
+         gW2w==
+X-Gm-Message-State: AMke39lpjjQPmTdd514MDAUFo//gRCewdy+v4EovsW9X197CXnSjpAU1NLafVRT8GyePqIhz
+X-Received: by 10.84.177.36 with SMTP id w33mr26110673plb.105.1488219739159;
+        Mon, 27 Feb 2017 10:22:19 -0800 (PST)
 Received: from google.com ([2620:0:1000:5b10:5d0b:b83e:e4b4:f20d])
-        by smtp.gmail.com with ESMTPSA id s8sm32018803pfj.30.2017.02.27.10.14.38
+        by smtp.gmail.com with ESMTPSA id n8sm32247527pgd.5.2017.02.27.10.22.17
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 27 Feb 2017 10:14:39 -0800 (PST)
-Date:   Mon, 27 Feb 2017 10:14:37 -0800
+        Mon, 27 Feb 2017 10:22:18 -0800 (PST)
+Date:   Mon, 27 Feb 2017 10:22:17 -0800
 From:   Brandon Williams <bmwill@google.com>
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH 1/5] grep: illustrate bug when recursing with relative
- pathspec
-Message-ID: <20170227181437.GB153455@google.com>
-References: <20170224235100.52627-1-bmwill@google.com>
- <20170224235100.52627-2-bmwill@google.com>
- <CACsJy8Df6hhTzx5BNx385T4cuCg5w3nvOioXB=q+NCoW9kA6_w@mail.gmail.com>
+To:     =?iso-8859-1?Q?Ren=E9?= Scharfe <l.s.r@web.de>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] strbuf: add strbuf_add_real_path()
+Message-ID: <20170227182217.GC153455@google.com>
+References: <4d191b86-d36c-e3ec-99c6-d15baa6b659a@web.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <CACsJy8Df6hhTzx5BNx385T4cuCg5w3nvOioXB=q+NCoW9kA6_w@mail.gmail.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <4d191b86-d36c-e3ec-99c6-d15baa6b659a@web.de>
 User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 02/26, Duy Nguyen wrote:
-> On Sat, Feb 25, 2017 at 6:50 AM, Brandon Williams <bmwill@google.com> wrote:
-> > When using the --recurse-submodules flag with a relative pathspec which
-> > includes "..", an error is produced inside the child process spawned for
-> > a submodule.  When creating the pathspec struct in the child, the ".."
-> > is interpreted to mean "go up a directory" which causes an error stating
-> > that the path ".." is outside of the repository.
-> >
-> > While it is true that ".." is outside the scope of the submodule, it is
-> > confusing to a user who originally invoked the command where ".." was
-> > indeed still inside the scope of the superproject.  Since the child
-> > process luanched for the submodule has some context that it is operating
+On 02/25, René Scharfe wrote:
+> Add a function for appending the canonized absolute pathname of a given
+> path to a strbuf.  It keeps the existing contents intact, as expected of
+> a function of the strbuf_add() family, while avoiding copying the result
+> if the given strbuf is empty.  It's more consistent with the rest of the
+> strbuf API than strbuf_realpath(), which it's wrapping.
 > 
-> s/luanched/launched/
-> 
-> I would prefer 1/5 t to be merged with 3/5 though. The problem
-
-We can definitely merge them and I agree that it may be easier for
-looking through the logs if they are merged.
-
-> description is very light there, and the test demonstration in the
-> diff is simply switching from failure to success, which forces the
-> reader to come back here. It's easier to find here now, but it'll be a
-> bit harder when it enters master and we have to read it from git-log,
-> I think.
-> 
-> I'm still munching through the super-prefix patches. From how you
-> changed match_pathspec call in 0281e487fd (grep: optionally recurse
-> into submodules - 2016-12-16), I guess pathspecs should be handled
-> with super-prefix instead of the submodule's prefix (which is empty
-> anyway, I guess). The right solution wrt. handling relative paths may
-> be teach pathspec about super-prefix (and even original super's cwd)
-> then let it processes path in supermodule's context.
-> 
-> Does it handle relative paths with wildcards correctly btw? Ones that
-> cross submodules? I have a feeling it doesn't, but I haven't seen how
-> exactly super-prefix works yet.
-
-I'm not 100% sure about the relative paths with wildcards.  I did notice
-that this series solves one problem and introduces another (recursing
-from a subdirectory doesn't work with this series) so I need to
-rethink the solution a little bit.  And I'll take into account wildcards
-as well.
-
-> 
-> There's another problem with passing pathspec from one process to
-> another. The issue with preserving the prefix, see 233c3e6c59
-> (parse_pathspec: preserve prefix length via PATHSPEC_PREFIX_ORIGIN -
-> 2013-07-14). :(icase) needs this because given a path
-> "<prefix>/foobar", only the "foobar" part is considered case
-> insensitive, the prefix part is always case-sensitive. For example, if
-> you have 4 paths "abc/def", "abc/DEF", "ABC/def" and "ABC/DEF" and are
-> standing at "abc", you would want ":(icase)def" to match the first two
-> only, not all of them.
-
-Hmm...yeah its a really difficult thing to get 100% correct (as I'm now
-noticing).  It also makes it a little more challenging because you don't
-have the same state in both processes (child and parent).  I'm thinking
-I may have to a little bit more work, which is more involved, to
-properly handle the pathspecs passed to the children.  As in we may not
-be able to pass the raw pathspec used in the parent to the child and
-instead may have to do a little pre-processing on it.
-
-> > underneath a superproject, this error could be avoided.
-> >
-> > Signed-off-by: Brandon Williams <bmwill@google.com>
-> > ---
-> >  t/t7814-grep-recurse-submodules.sh | 42 ++++++++++++++++++++++++++++++++++++++
-> >  1 file changed, 42 insertions(+)
-> >
-> > diff --git a/t/t7814-grep-recurse-submodules.sh b/t/t7814-grep-recurse-submodules.sh
-> > index 67247a01d..418ba68fe 100755
-> > --- a/t/t7814-grep-recurse-submodules.sh
-> > +++ b/t/t7814-grep-recurse-submodules.sh
-> > @@ -227,6 +227,48 @@ test_expect_success 'grep history with moved submoules' '
-> >         test_cmp expect actual
-> >  '
-> >
-> > +test_expect_failure 'grep using relative path' '
-> > +       test_when_finished "rm -rf parent sub" &&
-> > +       git init sub &&
-> > +       echo "foobar" >sub/file &&
-> > +       git -C sub add file &&
-> > +       git -C sub commit -m "add file" &&
-> > +
-> > +       git init parent &&
-> > +       echo "foobar" >parent/file &&
-> > +       git -C parent add file &&
-> > +       mkdir parent/src &&
-> > +       echo "foobar" >parent/src/file2 &&
-> > +       git -C parent add src/file2 &&
-> > +       git -C parent submodule add ../sub &&
-> > +       git -C parent commit -m "add files and submodule" &&
-> > +
-> > +       # From top works
-> > +       cat >expect <<-\EOF &&
-> > +       file:foobar
-> > +       src/file2:foobar
-> > +       sub/file:foobar
-> > +       EOF
-> > +       git -C parent grep --recurse-submodules -e "foobar" >actual &&
-> > +       test_cmp expect actual &&
-> > +
-> > +       # Relative path to top errors out
-> 
-> After 3/5, it's not "errors out" any more, is it?
+> Also add a semantic patch demonstrating its intended usage and apply it
+> to the current tree.  Using strbuf_add_real_path() instead of calling
+> strbuf_addstr() and real_path() avoids an extra copy to a static buffer.
 > 
 
-Correct, will fix the comment.
+Seems like a reasonable thing to do.  When I wrote strbuf_realpath() I
+think I looked at the strbuf_getcwd() function for what it did (since it
+handled paths) and it simply uses the provided buffer disregarding what
+is already stored in it.
 
-> > +       cat >expect <<-\EOF &&
-> > +       ../file:foobar
-> > +       file2:foobar
-> > +       ../sub/file:foobar
-> > +       EOF
-> > +       git -C parent/src grep --recurse-submodules -e "foobar" -- .. >actual &&
-> > +       test_cmp expect actual &&
-> > +
-> > +       # Relative path to submodule errors out
+> Signed-off-by: Rene Scharfe <l.s.r@web.de>
+> ---
+>  contrib/coccinelle/strbuf.cocci |  6 ++++++
+>  setup.c                         |  2 +-
+>  strbuf.c                        | 11 +++++++++++
+>  strbuf.h                        | 14 ++++++++++++++
+>  4 files changed, 32 insertions(+), 1 deletion(-)
 > 
-> ditto
-> 
-> > +       cat >expect <<-\EOF &&
-> > +       ../sub/file:foobar
-> > +       EOF
-> > +       git -C parent/src grep --recurse-submodules -e "foobar" -- ../sub >actual &&
-> > +       test_cmp expect actual
-> > +'
-> > +
-> >  test_incompatible_with_recurse_submodules ()
-> >  {
-> >         test_expect_success "--recurse-submodules and $1 are incompatible" "
-> > --
-> > 2.11.0.483.g087da7b7c-goog
-> >
-> 
-> 
-> 
+> diff --git a/contrib/coccinelle/strbuf.cocci b/contrib/coccinelle/strbuf.cocci
+> index 63995f22ff..1d580e49b0 100644
+> --- a/contrib/coccinelle/strbuf.cocci
+> +++ b/contrib/coccinelle/strbuf.cocci
+> @@ -38,3 +38,9 @@ expression E1, E2, E3;
+>  @@
+>  - strbuf_addstr(E1, find_unique_abbrev(E2, E3));
+>  + strbuf_add_unique_abbrev(E1, E2, E3);
+> +
+> +@@
+> +expression E1, E2;
+> +@@
+> +- strbuf_addstr(E1, real_path(E2));
+> ++ strbuf_add_real_path(E1, E2);
+> diff --git a/setup.c b/setup.c
+> index 967f289f1e..f14cbcd338 100644
+> --- a/setup.c
+> +++ b/setup.c
+> @@ -254,7 +254,7 @@ int get_common_dir_noenv(struct strbuf *sb, const char *gitdir)
+>  		if (!is_absolute_path(data.buf))
+>  			strbuf_addf(&path, "%s/", gitdir);
+>  		strbuf_addbuf(&path, &data);
+> -		strbuf_addstr(sb, real_path(path.buf));
+> +		strbuf_add_real_path(sb, path.buf);
+>  		ret = 1;
+>  	} else {
+>  		strbuf_addstr(sb, gitdir);
+> diff --git a/strbuf.c b/strbuf.cq
+> index 8fec6579f7..ace58e7367 100644
+> --- a/strbuf.c
+> +++ b/strbuf.c
+> @@ -707,6 +707,17 @@ void strbuf_add_absolute_path(struct strbuf *sb, const char *path)
+>  	strbuf_addstr(sb, path);
+>  }
+>  
+> +void strbuf_add_real_path(struct strbuf *sb, const char *path)
+> +{
+> +	if (sb->len) {
+> +		struct strbuf resolved = STRBUF_INIT;
+> +		strbuf_realpath(&resolved, path, 1);
+> +		strbuf_addbuf(sb, &resolved);
+> +		strbuf_release(&resolved);
+> +	} else
+> +		strbuf_realpath(sb, path, 1);
+
+I know its not required but I would have braces on the 'else' branch
+since they were needed on the 'if' branch.  But that's up to you and
+your style :)
+
+> +}
+> +
+>  int printf_ln(const char *fmt, ...)
+>  {
+>  	int ret;
+> diff --git a/strbuf.h b/strbuf.h
+> index cf1b5409e7..cf8e4bf532 100644
+> --- a/strbuf.h
+> +++ b/strbuf.h
+> @@ -441,6 +441,20 @@ extern int strbuf_getcwd(struct strbuf *sb);
+>   */
+>  extern void strbuf_add_absolute_path(struct strbuf *sb, const char *path);
+>  
+> +/**
+> + * Canonize `path` (make it absolute, resolve symlinks, remove extra
+> + * slashes) and append it to `sb`.  Die with an informative error
+> + * message if there is a problem.
+> + *
+> + * The directory part of `path` (i.e., everything up to the last
+> + * dir_sep) must denote a valid, existing directory, but the last
+> + * component need not exist.
+> + *
+> + * Callers that don't mind links should use the more lightweight
+> + * strbuf_add_absolute_path() instead.
+> + */
+> +extern void strbuf_add_real_path(struct strbuf *sb, const char *path);
+> +
+>  
+>  /**
+>   * Normalize in-place the path contained in the strbuf. See
 > -- 
-> Duy
+> 2.12.0
+> 
 
 -- 
 Brandon Williams
