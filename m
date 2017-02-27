@@ -2,91 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 569B51F5FB
-	for <e@80x24.org>; Mon, 27 Feb 2017 20:11:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 94FC11F5FB
+	for <e@80x24.org>; Mon, 27 Feb 2017 20:57:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751610AbdB0ULQ (ORCPT <rfc822;e@80x24.org>);
-        Mon, 27 Feb 2017 15:11:16 -0500
-Received: from mail-pf0-f195.google.com ([209.85.192.195]:32991 "EHLO
-        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751341AbdB0ULO (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 Feb 2017 15:11:14 -0500
-Received: by mail-pf0-f195.google.com with SMTP id p185so1113632pfb.0
-        for <git@vger.kernel.org>; Mon, 27 Feb 2017 12:10:20 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=VEHaSvC8J5jYo0bnphDqpa0kd6UkQHBVdfROuW0xQcU=;
-        b=b8zVwpgETQpNX2f9rvdHamvHcXzlDqgfJyZjFTsAjk1/zq/6buUzY046UwsZk7a+8c
-         I3VwcGh02KESrgIsh8RnaRKNi5zhXdGl5qRqixWPGZSxkNInCfy/vXI78lZVdGNtjWBc
-         0KOHgPdFNRjYEop7R6BC7HbD4VUH9QFciQgDeyIFubuMP+njpFkKGnbogX4cXuyjPIta
-         qdD/hU/x35z9ClC9+rH0lLcHog6HWOUCIuZ4mQh06bPE6oTihqd63YqDMV0rLRCL+8lG
-         3vcfHTYWxhVT0mFZaOnRL27612+I8WjJPXHS/uJzfZXEBFTQd0nkSNLXyg2djPYp3UoT
-         Z+6w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=VEHaSvC8J5jYo0bnphDqpa0kd6UkQHBVdfROuW0xQcU=;
-        b=bHpAI6JTVuLfZnn1RGr2dbsc2lt5oHXyFMrD3jLDvHxPg7enozyUPtPreL6XpVTq7r
-         BST+/eOiqwAGj/1NlvY7Ehg4vZrIU6usICS0q61KYo3/AtoqGDKKeeY8iUbi3kgdQg67
-         oz9/RH6e0esOzqQa3bxKaY5ht51xwda+6OXvooCFbKxf1zn9c7xi9wXYNQNZfNz7sQ4f
-         6XHk7GLwkZHDKXzt1Fm4uCy5uutsKFnunF3uUg87qeb/C6h2BKgGaEq3TaSwN8RRQDj6
-         SNqP6jQXxKmlikXFr/5J+a/1AJpIWO5I2b+Um04lqAD1ik4IfSCkqSSJMgiE1SUoVnO/
-         DYxg==
-X-Gm-Message-State: AMke39nDL7xMMosjp9NuZnlmpQ20eD93ow1ADjSELrJ7pCxhkOphYBiC+waxLtOgxhJmww==
-X-Received: by 10.84.176.131 with SMTP id v3mr26429969plb.7.1488226219961;
-        Mon, 27 Feb 2017 12:10:19 -0800 (PST)
-Received: from localhost ([2620:0:1000:8622:c953:ec42:862e:1e81])
-        by smtp.gmail.com with ESMTPSA id j185sm32365957pgd.13.2017.02.27.12.10.19
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 27 Feb 2017 12:10:19 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Cc:     Vegard Nossum <vegard.nossum@oracle.com>, git@vger.kernel.org,
-        Christian Couder <christian.couder@gmail.com>,
-        Michal Zalewski <lcamtuf@google.com>
-Subject: Re: [PATCH 1/2] apply: guard against renames of non-existant empty files
-References: <20170225101307.24067-1-vegard.nossum@oracle.com>
-        <baf195cc-ef81-bbad-4e01-4149498efedb@web.de>
-Date:   Mon, 27 Feb 2017 12:10:18 -0800
-In-Reply-To: <baf195cc-ef81-bbad-4e01-4149498efedb@web.de> (=?utf-8?Q?=22R?=
- =?utf-8?Q?en=C3=A9?= Scharfe"'s
-        message of "Sat, 25 Feb 2017 21:51:47 +0100")
-Message-ID: <xmqqinnvwg2d.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+        id S1751654AbdB0U5R (ORCPT <rfc822;e@80x24.org>);
+        Mon, 27 Feb 2017 15:57:17 -0500
+Received: from ppsw-32.csi.cam.ac.uk ([131.111.8.132]:41419 "EHLO
+        ppsw-32.csi.cam.ac.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752036AbdB0U5A (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 Feb 2017 15:57:00 -0500
+X-Greylist: delayed 1153 seconds by postgrey-1.27 at vger.kernel.org; Mon, 27 Feb 2017 15:56:34 EST
+X-Cam-AntiVirus: no malware found
+X-Cam-ScannerInfo: http://help.uis.cam.ac.uk/email-scanner-virus
+Received: from grey.csi.cam.ac.uk ([131.111.57.57]:60646)
+        by ppsw-32.csi.cam.ac.uk (ppsw.cam.ac.uk [131.111.8.136]:25)
+        with esmtps (TLSv1:ECDHE-RSA-AES256-SHA:256)
+        id 1ciQwg-000GJx-1i (Exim 4.88)
+        (return-path <dot@dotat.at>); Mon, 27 Feb 2017 19:26:54 +0000
+Date:   Mon, 27 Feb 2017 19:26:54 +0000
+From:   Tony Finch <dot@dotat.at>
+To:     Ian Jackson <ijackson@chiark.greenend.org.uk>
+cc:     Jeff King <peff@peff.net>,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>, Linus Torvalds <torvalds@linux-foundation.org>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Jason Cooper <git@lakedaemon.net>,
+        ankostis <ankostis@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Stefan Beller <sbeller@google.com>, David Lang <david@lang.hm>,
+        Joey Hess <id@joeyh.name>
+Subject: Re: Transition plan for git to move to a new hash function
+In-Reply-To: <22708.8913.864049.452252@chiark.greenend.org.uk>
+Message-ID: <alpine.DEB.2.11.1702271846040.13590@grey.csi.cam.ac.uk>
+References: <xmqqk28f4fti.fsf@gitster.mtv.corp.google.com>        <CAGZ79kaZWe-8pMZnQv7uZtr8wXWawFeJjUa68-b0oa4yFo-HcA@mail.gmail.com>        <xmqq7f4f4cqg.fsf@gitster.mtv.corp.google.com>        <CA+dhYEVOyACM9ARP2deKVLm1hHOVsTah1WfGoNzGGKO6CGrQpw@mail.gmail.com>
+        <xmqqh93j1g9n.fsf@gitster.mtv.corp.google.com>        <CA+dhYEVwLGNZh-hbcJm+kMR4W45VbwvSVY+7YKt0V9jg_b_M4g@mail.gmail.com>        <20170226001607.GH11350@io.lakedaemon.net>        <20170226173810.fp2tqikrm4nzu4uk@genre.crustytoothpaste.net>       
+ <CA+55aFzJtejiCjV0e43+9oR3QuJK2PiFiLQemytoLpyJWe6P9w@mail.gmail.com>        <CACBZZX6fP_JpL+K3XUnke=4m4gZBLu-Afyz5yJkrRnGXHuhR8A@mail.gmail.com>        <20170226215220.jckz6yzgben4zbyz@sigill.intra.peff.net>
+ <22708.8913.864049.452252@chiark.greenend.org.uk>
+User-Agent: Alpine 2.11 (DEB 23 2013-08-11)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-René Scharfe <l.s.r@web.de> writes:
+Ian Jackson <ijackson@chiark.greenend.org.uk> wrote:
 
-> Would it make sense to mirror the previously existing condition and
-> check for is_new instead?  I.e.:
+A few questions and one or two suggestions...
+
+> TEXTUAL SYNTAX
+> ==============
 >
-> 			if ((!patch->is_delete && !patch->new_name) ||
-> 			    (!patch->is_new    && !patch->old_name)) {
+> We also reserve the following syntax for private experiments:
+>   E[A-Z]+[0-9a-z]+
+> We declare that public releases of git will never accept such
+> object names.
+
+Instead of this I would suggest that experimental hash names should have
+multi-character prefixes and an easy registration process - rationale:
+https://tools.ietf.org/html/rfc6648
+
+> A single object may refer to other objects the hash function which
+> names the object itself, or by other hash functions, in any
+> combination.
+
+If I understand it correctly, this freedom is greatly restricted later on
+in this document, depending on the object type in question. If so, it's
+probably worth saying so at this point.
+
+> Commits
+> -------
 >
+> The hash function naming an origin commit is controlled by the hint
+> left in .git for the ref named by HEAD (or for HEAD itself, if HEAD is
+> detached) by git checkout --orphan or git init.
 
-Yes, probably.
+This confused me for a while - I think you mean "root commit"?
 
-> or
+> TRANSITION PLAN
+> ===============
 >
-> 			if (!(patch->is_delete || patch->new_name) ||
-> 			    !(patch->is_new    || patch->old_name)) {
+> Y4: BLAKE by default for new projects.
+>
+>     When creating a new working tree, it starts using BLAKE.
+>
+>     Servers which have been updated will accept BLAKE.
 
-This happens after calling parse_git_header() so we should know the
-actual value of is_delete and is_new by now (instead of mistaking
--1 aka "unknown" as true), so this rewrite would also be OK.
+Why not allow newhash pushes before making it the default for new
+projects? Wouldn't it make sense to get the server side ready some time
+before projects start actively using new hashes?
 
+Or is the idea that newhash upgrade is driven from the server?
+
+What's the upgrade process for send-email patch exchange?
+
+Tony.
+-- 
+f.anthony.n.finch  <dot@dotat.at>  http://dotat.at/  -  I xn--zr8h punycode
+Fair Isle: Southwest 6 to gale 8, backing east 5 or 6, backing north 6 to gale
+8 later. Rough or very rough. Rain or showers. Moderate or good.
