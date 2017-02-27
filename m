@@ -2,79 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6124E1F5FB
-	for <e@80x24.org>; Mon, 27 Feb 2017 16:31:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 189491F5FB
+	for <e@80x24.org>; Mon, 27 Feb 2017 16:44:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751584AbdB0Qbu (ORCPT <rfc822;e@80x24.org>);
-        Mon, 27 Feb 2017 11:31:50 -0500
-Received: from chiark.greenend.org.uk ([212.13.197.229]:41499 "EHLO
-        chiark.greenend.org.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751444AbdB0Qbt (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 Feb 2017 11:31:49 -0500
-Received: by chiark.greenend.org.uk (Debian Exim 4.84_2 #1) with local
-        (return-path ijackson@chiark.greenend.org.uk)
-        id 1ciNRe-0006Gf-TL; Mon, 27 Feb 2017 15:42:39 +0000
-From:   Ian Jackson <ijackson@chiark.greenend.org.uk>
+        id S1751560AbdB0QoZ (ORCPT <rfc822;e@80x24.org>);
+        Mon, 27 Feb 2017 11:44:25 -0500
+Received: from mail-io0-f170.google.com ([209.85.223.170]:34957 "EHLO
+        mail-io0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751516AbdB0QoY (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 Feb 2017 11:44:24 -0500
+Received: by mail-io0-f170.google.com with SMTP id j18so35173011ioe.2;
+        Mon, 27 Feb 2017 08:44:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=Cmce0wPSDf2GKZdnapg9Do9IivCmlK/HzH3zHKum7Sg=;
+        b=Ov+2Vrnd+EgynfiDa+sITfjGd/Qc/mTeFW3Et1VXMR6/raVYkX3M+tq4dT3CRP7k3N
+         AN3X+7vPWdr4KFR0OSYsJpV/FPOGeJP8mWFj7XfzRZxofTgmE4yK2xfb8x4VNgBkHqv+
+         GGl0TlCh9w6Yh+kTGs5cwducfghfAGme4mwCFxHFFk2T6DZj1dxay+N2+mfy22Uybtpd
+         vwkOpcod17dRNsXDffGBBG7aaObB8KanUTKKbFFg1jb7dvSoRFr6dW//oVowz5wGuvm5
+         5t8C9Tbzc1Wcl7I2lN+EmE8rFnr6FWK5Q92JUbwf5gednO1VEB3B8GYepod7OsKhF5W3
+         +fVg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=Cmce0wPSDf2GKZdnapg9Do9IivCmlK/HzH3zHKum7Sg=;
+        b=JpJGoxULVsbGXP7zXewu1JBy3kiy3pdCLQe2Cns49Bg3XBxDv0f4fSJhH88Z62+mhj
+         2yS3YDCeV4kwmxFB5JxlMV1/4g5tD9sTazomSwBi9ITEnOQ/CtW236HrX5y4yI2LFP/Q
+         0NYB0kZtWNPdE50z+Sq6I/rWFHheofvsfOrj9TxtaVrTa+mQ9rzCzD8187cOMPM7IZEj
+         yoDwUfC+OOOvhP2CHvX83QFjUQ+/GxwfXvKRyNXs9sT5k4B8ycawXIwjrYKgCFRkjDlm
+         7wz1oyHKaefLyrQE83XMMzLDUOmRubx2wjBAWVmlKhyw36KC1VcXMYpBtssIpUQj/LHf
+         bDsA==
+X-Gm-Message-State: AMke39krF7SeeVq8J9pvgDZVDG6CSVI4UNDSd/6gt+r5uY9UN5YlA3OInPFb/XygzTidvONtIkjOczo5f9Lk/g==
+X-Received: by 10.107.150.207 with SMTP id y198mr17458839iod.33.1488211950821;
+ Mon, 27 Feb 2017 08:12:30 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Message-ID: <22708.18670.790503.11385@chiark.greenend.org.uk>
-Date:   Mon, 27 Feb 2017 15:42:38 +0000
-To:     Markus Trippelsdorf <markus@trippelsdorf.de>
-Cc:     Jeff King <peff@peff.net>,
-        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
-        Linus Torvalds <torvalds@linux-foundation.org>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Jason Cooper <git@lakedaemon.net>,
-        ankostis <ankostis@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Stefan Beller <sbeller@google.com>, David Lang <david@lang.hm>,
-        Joey Hess <id@joeyh.name>
-Subject: Re: Why BLAKE2?
-Newsgroups: chiark.mail.linux-rutgers.git
-In-Reply-To: <20170227143747.GB297@x4>
-References: <xmqq7f4f4cqg.fsf@gitster.mtv.corp.google.com>
-        <CA+dhYEVOyACM9ARP2deKVLm1hHOVsTah1WfGoNzGGKO6CGrQpw@mail.gmail.com>
-        <xmqqh93j1g9n.fsf@gitster.mtv.corp.google.com>
-        <CA+dhYEVwLGNZh-hbcJm+kMR4W45VbwvSVY+7YKt0V9jg_b_M4g@mail.gmail.com>
-        <20170226001607.GH11350@io.lakedaemon.net>
-        <20170226173810.fp2tqikrm4nzu4uk@genre.crustytoothpaste.net>
-        <CA+55aFzJtejiCjV0e43+9oR3QuJK2PiFiLQemytoLpyJWe6P9w@mail.gmail.com>
-        <CACBZZX6fP_JpL+K3XUnke=4m4gZBLu-Afyz5yJkrRnGXHuhR8A@mail.gmail.com>
-        <20170226215220.jckz6yzgben4zbyz@sigill.intra.peff.net>
-        <22708.8913.864049.452252@chiark.greenend.org.uk>
-        <20170227143747.GB297@x4>
-X-Mailer: VM 8.2.0b under 24.4.1 (i586-pc-linux-gnu)
+Received: by 10.107.130.208 with HTTP; Mon, 27 Feb 2017 08:12:10 -0800 (PST)
+In-Reply-To: <xmqqd1e72xs5.fsf@gitster.mtv.corp.google.com>
+References: <xmqqd1e72xs5.fsf@gitster.mtv.corp.google.com>
+From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Date:   Mon, 27 Feb 2017 17:12:10 +0100
+Message-ID: <CACBZZX6j8ifa9WrBmBfDuae4qvD7tQ0wWe3yRdLOfFTCOxyRPw@mail.gmail.com>
+Subject: Re: [ANNOUNCE] Git v2.12.0
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Linux Kernel <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Markus Trippelsdorf writes ("Re: Why BLAKE2?"):
-> On 2017.02.27 at 13:00 +0000, Ian Jackson wrote:
-> > For brevity I will write `SHA' for hashing with SHA-1, using current
-> > unqualified object names, and `BLAKE' for hasing with BLAKE2b, using
-> > H<hex> object names.
-> 
-> Why do you choose BLAKE2? SHA-2 is generally considered still fine and
-> would be the obvious choice. And if you want to be adventurous then
-> SHA-3 (Keccak) would be the next logical candidate.
+On Fri, Feb 24, 2017 at 8:28 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> The latest feature release Git v2.12.0 is now available at the
+> usual places.  It is comprised of 517 non-merge commits since
+> v2.11.0, contributed by 80 people, 24 of which are new faces.
 
-I don't have a strong opinion.  Keccak would be fine too.
-We should probably avoid SHA-2.
+Yay, some explanations / notes / elaborations:
 
-The main point of my posting was not to argue in favour of a
-particular hash function :-).
+>  * "git diff" learned diff.interHunkContext configuration variable
+>    that gives the default value for its --inter-hunk-context option.
 
-Ian.
+This is really cool. Now if you have e.g. lots of changed lines each
+10 lines apart --inter-hunk-context=10 will show those all as one big
+hunk, instead of needing to specify -U10 as you had to before, which
+would give all hunks a context of 10 lines.
 
--- 
-Ian Jackson <ijackson@chiark.greenend.org.uk>   These opinions are my own.
+>  * An ancient repository conversion tool left in contrib/ has been
+>    removed.
 
-If I emailed you from an address @fyvzl.net or @evade.org.uk, that is
-a private address which bypasses my fierce spamfilter.
+I thought "what tool?" so here's what this is. git.git was born on
+April 7, 2005. For the first 13 days we'd hash the contents of
+*compressed* blobs, not their uncompressed contents. Linus changed
+this in: https://github.com/git/git/commit/d98b46f8d9
+
+This tool was the ancient tool to convert these old incompatible
+repositories from the old format. If someone hasn't gotten around to
+this since 2005 they probably aren't ever going to do it :)
+
+>  * Some people feel the default set of colors used by "git log --graph"
+>    rather limiting.  A mechanism to customize the set of colors has
+>    been introduced.
+
+This is controlled via the log.graphColors variable. E.g.:
+
+    git -c log.graphColors="red, green, yellow" log --graph HEAD~100..
+
+Does anyone have a prettier invocation?
+
+>  * "git diff" and its family had two experimental heuristics to shift
+>    the contents of a hunk to make the patch easier to read.  One of
+>    them turns out to be better than the other, so leave only the
+>    "--indent-heuristic" option and remove the other one.
+
+... the other one being --compaction-heuristic.
