@@ -2,131 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D455D1F5FB
-	for <e@80x24.org>; Mon, 27 Feb 2017 22:29:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D1DF21F5FB
+	for <e@80x24.org>; Mon, 27 Feb 2017 22:31:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751975AbdB0W3G (ORCPT <rfc822;e@80x24.org>);
-        Mon, 27 Feb 2017 17:29:06 -0500
-Received: from mail-lf0-f66.google.com ([209.85.215.66]:34637 "EHLO
-        mail-lf0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751587AbdB0W25 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 Feb 2017 17:28:57 -0500
-Received: by mail-lf0-f66.google.com with SMTP id a198so4505749lfb.1
-        for <git@vger.kernel.org>; Mon, 27 Feb 2017 14:27:33 -0800 (PST)
+        id S1751534AbdB0WbJ (ORCPT <rfc822;e@80x24.org>);
+        Mon, 27 Feb 2017 17:31:09 -0500
+Received: from mail-pg0-f65.google.com ([74.125.83.65]:35104 "EHLO
+        mail-pg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751923AbdB0W3i (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 Feb 2017 17:29:38 -0500
+Received: by mail-pg0-f65.google.com with SMTP id 1so2329703pgz.2
+        for <git@vger.kernel.org>; Mon, 27 Feb 2017 14:28:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:references:cc:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding;
-        bh=jqMgGDZHccMr5MRZMMMoryS5qNxboTY807of/A/z3AE=;
-        b=gO6n6vjZ0Qn0yyc+6379stnimCb+44Ua7qWr5L9qbEBFELLioq+El5Zf/Czk/g9ppx
-         PAwt8Db4YbBr21iUoPFL5W2v6pTSHRIX45QcgPfCO203Ud4Z1UmeW5nh8OpUW4BCjxLS
-         GqvYomXToizRsSfZ8HStF/KzrQn6pl6v1WeQ/XDeGZKtsze8T2Rom7rnp77uzlkaoNNS
-         giDGBNCrBlHs3vZSpy7tHxHaZzc4SqyY//qU4fwTVm+PGlEH/phQyomXWJQrcye6MGdx
-         JyyFKNm5cxyTPU1pOsCjnTXp/Ou7mBrHwMr7JNU+WPBSeBU/b48awNSDLpOGr+0E0bRl
-         PemA==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=eS8AlBMt+WuFFczyOGDCYeMWlJbcsXFLdzBGqYKQIeg=;
+        b=S/EVJHFOgo9RKQu6qCsQeRWz4w825ZZGz3dqI+jcbINQDCTvglzEviSLBK/jgHnIL4
+         lBJCb2ftKQ6ZS2PuxsmTCBP2KnxOa+pEmmrMuLMEY/PMfDjGcfS0YtqeXd1Y1wwO6JNX
+         uSI4KP0j1rKFNyQmfprYrXj8MMS3YSDAyyINpXqFvCIulyVh1FrcUFEqe3SekJY7X6YW
+         so4e2fP0dOQGpdvaevTitBoEyrXwQo5dRihWSTsEljUYisO6iSxe1ddNNUTD7sxkd0k8
+         c6QD3q2CuydW3C3aOE51Az8CMH9U0cWoxLG4Uf4QQV0FRkwYenFoW+1Gm9UHi8LlRS/4
+         vnXA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
-        bh=jqMgGDZHccMr5MRZMMMoryS5qNxboTY807of/A/z3AE=;
-        b=mVRlVlBUwUM5WCbVNJnVw8hGGs7CnHGzqnm7IVotwTyJWeYqx6wYaqf4xdgYX66kZc
-         +ZtFhcVjMYWxUeMpNt+bjEMRPuVm+u+yj1ELaOWiGX7epLkrxj6YVUwInE1LOnoG3mTn
-         Xohf8stsWH3IOJIr4zxtEXIFVsrrsUmt1aV2sf7oV0ZXojvbk+mzP0e92rpChlD3jSiD
-         aR+OjrGqnDYDZhTS9es5EZuXxE0jhLQ8e0/vhB0T0idqXMn//jHsEJs7VlDJb+e0F8nm
-         Yq6byUfW6s54pqh8twyWNntR9PFmEjdv4IUHok99optebZ1hx4VVCD8adT0jTBDJS1Ia
-         8p1w==
-X-Gm-Message-State: AMke39k+UPWjzeadywnrWv/x2npKVsd8/PWY298eRiTm4fMfKkF98vdWPA3tUHowNMDTyw==
-X-Received: by 10.25.221.66 with SMTP id u63mr5568152lfg.52.1488234452311;
-        Mon, 27 Feb 2017 14:27:32 -0800 (PST)
-Received: from [192.168.1.26] (deg240.neoplus.adsl.tpnet.pl. [83.23.110.240])
-        by smtp.googlemail.com with ESMTPSA id x26sm11022950lja.10.2017.02.27.14.27.31
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 27 Feb 2017 14:27:31 -0800 (PST)
-Subject: Re: [PATCH 2/2] commit: don't check for space twice when looking for
- header
-To:     =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>,
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=eS8AlBMt+WuFFczyOGDCYeMWlJbcsXFLdzBGqYKQIeg=;
+        b=MqwAj+bB6alAK6Czj6lpvsKKoGVFXURKoM1WWLHH2ou88mspQS7CynfaRvHKc0DP97
+         /gYEPUbw31g9weNIlAkS27wyewUKLB03/M9V+UI/tiAMcCUgnoTJlG2svUplhjQV+P20
+         sy4n3XlZg5kURQr40MR066UWvMKa75TmKZOrS+VTQ9Pn/rK3Vw5eYXAgCi7ND6TnF9xh
+         CMsw+kZDQusccW5rjMikzZ4orO6F4tocgmvYmns83LCYGMe1RSzuDRdiLxgTggdW3C73
+         xacBWTrguSr94L8hTi264MXRYkGhXma4QGEbd7SV4EtxExP1WShckM52hgj9SRkBH+ng
+         T8yg==
+X-Gm-Message-State: AMke39n8U4v4KKZ969XjE3ETwt+Hs7Wp4ijxVYloIAaMlw0vT8aKg/+ORuYn7vdx1K7fZg==
+X-Received: by 10.98.14.217 with SMTP id 86mr23643728pfo.79.1488234490455;
+        Mon, 27 Feb 2017 14:28:10 -0800 (PST)
+Received: from localhost ([2620:0:1000:8622:c953:ec42:862e:1e81])
+        by smtp.gmail.com with ESMTPSA id e7sm32609038pgp.2.2017.02.27.14.28.09
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Mon, 27 Feb 2017 14:28:09 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Karthik Nayak <karthik.188@gmail.com>,
+        Luc Van Oostenryck <luc.vanoostenryck@gmail.com>,
         Git List <git@vger.kernel.org>
-References: <23989e76-24ba-90a4-91a9-9f66bfccb7c9@web.de>
- <b1d5c882-38b8-dd2d-2e5f-aafb8dfada81@web.de>
-Cc:     Junio C Hamano <gitster@pobox.com>
-From:   =?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
-Message-ID: <1dd0884c-032c-fb04-67f6-8b181fd65eea@gmail.com>
-Date:   Mon, 27 Feb 2017 23:27:22 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
- Thunderbird/45.7.1
+Subject: Re: [BUG] branch renamed to 'HEAD'
+References: <20170227045257.yazqlrqlnggosi5t@macbook.local>
+        <CAOLa=ZSyQg9uoZWADOMYc90U-5AR9Lfii9mjLre0m0FQCSqfxg@mail.gmail.com>
+        <20170227074915.xljfe5jox756rlyv@sigill.intra.peff.net>
+        <20170227080158.de2xarctzscfdsp2@sigill.intra.peff.net>
+        <20170227090233.uk7dfruggytgmuw2@sigill.intra.peff.net>
+Date:   Mon, 27 Feb 2017 14:28:09 -0800
+In-Reply-To: <20170227090233.uk7dfruggytgmuw2@sigill.intra.peff.net> (Jeff
+        King's message of "Mon, 27 Feb 2017 04:02:33 -0500")
+Message-ID: <xmqq60jvnu9y.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <b1d5c882-38b8-dd2d-2e5f-aafb8dfada81@web.de>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-W dniu 25.02.2017 o 20:27, René Scharfe pisze:
-> Both standard_header_field() and excluded_header_field() check if
-> there's a space after the buffer that's handed to them.  We already
-> check in the caller if that space is present.  Don't bother calling
-> the functions if it's missing, as they are guaranteed to return 0 in
-> that case, and remove the now redundant checks from them.
-> 
-> Signed-off-by: Rene Scharfe <l.s.r@web.de>
-> ---
->  commit.c | 18 ++++++++----------
->  1 file changed, 8 insertions(+), 10 deletions(-)
-> 
-> diff --git a/commit.c b/commit.c
-> index 173c6d3818..fab8269731 100644
-> --- a/commit.c
-> +++ b/commit.c
-> @@ -1308,11 +1308,11 @@ void for_each_mergetag(each_mergetag_fn fn, struct commit *commit, void *data)
->  
->  static inline int standard_header_field(const char *field, size_t len)
->  {
-> -	return ((len == 4 && !memcmp(field, "tree ", 5)) ||
-> -		(len == 6 && !memcmp(field, "parent ", 7)) ||
-> -		(len == 6 && !memcmp(field, "author ", 7)) ||
-> -		(len == 9 && !memcmp(field, "committer ", 10)) ||
-> -		(len == 8 && !memcmp(field, "encoding ", 9)));
-> +	return ((len == 4 && !memcmp(field, "tree", 4)) ||
-> +		(len == 6 && !memcmp(field, "parent", 6)) ||
-> +		(len == 6 && !memcmp(field, "author", 6)) ||
-> +		(len == 9 && !memcmp(field, "committer", 9)) ||
-> +		(len == 8 && !memcmp(field, "encoding", 8)));
+Jeff King <peff@peff.net> writes:
 
-I agree (for what it is worth from me) with the rest of changes,
-but I think current code is better self-documenting for this
-function.
+> I guess something like the patch below works, but I wonder if there is a
+> less-horrible way to accomplish the same thing.
 
->  }
->  
->  static int excluded_header_field(const char *field, size_t len, const char **exclude)
-> @@ -1322,8 +1322,7 @@ static int excluded_header_field(const char *field, size_t len, const char **exc
->  
->  	while (*exclude) {
->  		size_t xlen = strlen(*exclude);
-> -		if (len == xlen &&
-> -		    !memcmp(field, *exclude, xlen) && field[xlen] == ' ')
-> +		if (len == xlen && !memcmp(field, *exclude, xlen))
->  			return 1;
->  		exclude++;
->  	}
-> @@ -1357,9 +1356,8 @@ static struct commit_extra_header *read_commit_extra_header_lines(
->  		eof = memchr(line, ' ', next - line);
->  		if (!eof)
->  			eof = next;
-> -
-> -		if (standard_header_field(line, eof - line) ||
-> -		    excluded_header_field(line, eof - line, exclude))
-> +		else if (standard_header_field(line, eof - line) ||
-> +			 excluded_header_field(line, eof - line, exclude))
->  			continue;
->  
->  		it = xcalloc(1, sizeof(*it));
-> 
+I suspect that a less-horrible would be a lot more intrusive.  It
+would go like "interpret-branch-name only gives local branch name,
+and when it does not show it, the callers that know they do not
+necessarily need local branch name would call other at-mark things".
+As you pointed out with the @{upstream} that potentially point at a
+local branch, it will quickly get more involved, I would think, and
+I tend to think that this patch of yours is probably the least evil
+one among possible solutions.  
 
+Perhaps with s/not_in_refs_heads/not_a_branch_name/ (or swapping
+polarity, "is_a_branch_name"), the resulting code may not be too
+hard to read?
+
+Thanks.
