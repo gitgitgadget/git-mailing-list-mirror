@@ -2,97 +2,139 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 87D781F5FB
-	for <e@80x24.org>; Mon, 27 Feb 2017 21:21:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E7DCA1F5FB
+	for <e@80x24.org>; Mon, 27 Feb 2017 21:34:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751672AbdB0VVb (ORCPT <rfc822;e@80x24.org>);
-        Mon, 27 Feb 2017 16:21:31 -0500
-Received: from mail-pg0-f68.google.com ([74.125.83.68]:35636 "EHLO
-        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751665AbdB0VVQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 Feb 2017 16:21:16 -0500
-Received: by mail-pg0-f68.google.com with SMTP id 1so2155340pgz.2
-        for <git@vger.kernel.org>; Mon, 27 Feb 2017 13:19:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=Wef5ZBOIUkOu+CJrpzbRhj1uJ9pa5UHkserv8smgS+4=;
-        b=E3XcqZQwGKPOWXjVUaUsAfRVKBVO8/DhldGezLvZcb4r3a8nSk1Gy6Au6ZnC/9mOYv
-         WXE4TvhlMgH5n7KqZy5NrDjDf3bmKI1y7FuQF2oWH6AeMVYHTfjErNdgksF5G1aRQqJg
-         Y90qEUc8syhb1EMJ75zjJtU8MenxVBPwo3nNmZ3NwROa5CgVR6H2637YbFO8zCUpDcKO
-         Y/vngcQwqlIJSpnr07dzdqGrd5ujs3N69DW5+UQGTI2fcZqy5QJW+pb9iiu8bxRz3cz1
-         QOYXTbT97Aj79mM9y+LaaGY5o9n7f15LcOJXq3/drE/s+ztI0h3zUaLZA+9xFlUUGPyn
-         fnMw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=Wef5ZBOIUkOu+CJrpzbRhj1uJ9pa5UHkserv8smgS+4=;
-        b=nveQ6/yVQ29mYPXuci/TaiDUPNNNgGUlfFygZWCuoLy5xiUnZmuS3jx9EnLClY17lq
-         LjPtptFtdQ9KO2CRJHkdnLsZaccr1Fr44kNuuHXWw+lYUX/q2kfekuwogJqE0Fgsp96R
-         rO+kvDN6Vdt/ThvFQhuawlSsFLuBn/xWzHBJ0EDX6acnydOooI8wgSEipPBDwN1ChapJ
-         OOSJPUrCglcIfP9dJj/yDHRD863V42IzlVzPReG7D3a6MwYiW1cF/okibAvgSvT7monU
-         z7nJBdIj6YdOmIqwld7piDqEu2e4IDKMAqhVPyY97aMNENnNTSVaQXb52PdMEksdN4EE
-         W9tw==
-X-Gm-Message-State: AMke39kpPDkpwvacTfAzzZtWzo8Uv2ip2+QTeDOta/XSWQJA+dYKdVdymuFzMtDYx5nEqw==
-X-Received: by 10.99.53.204 with SMTP id c195mr23107079pga.205.1488230370651;
-        Mon, 27 Feb 2017 13:19:30 -0800 (PST)
-Received: from localhost ([2620:0:1000:8622:c953:ec42:862e:1e81])
-        by smtp.gmail.com with ESMTPSA id x2sm32304606pfa.71.2017.02.27.13.19.29
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 27 Feb 2017 13:19:29 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] t6300: avoid creating refs/heads/HEAD
-References: <20170227092931.7iquwaxomeuuusi2@sigill.intra.peff.net>
-        <xmqqzih7whrw.fsf@gitster.mtv.corp.google.com>
-        <20170227205151.rjhod347ddhmdmxp@sigill.intra.peff.net>
-Date:   Mon, 27 Feb 2017 13:19:29 -0800
-In-Reply-To: <20170227205151.rjhod347ddhmdmxp@sigill.intra.peff.net> (Jeff
-        King's message of "Mon, 27 Feb 2017 15:51:51 -0500")
-Message-ID: <xmqqshmzuyam.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+        id S1751736AbdB0Vd7 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 27 Feb 2017 16:33:59 -0500
+Received: from mout.gmx.net ([212.227.17.22]:61061 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751593AbdB0VdT (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 Feb 2017 16:33:19 -0500
+Received: from virtualbox ([37.201.192.48]) by mail.gmx.com (mrgmx103
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0LevUh-1bxrmq38FL-00qj8g; Mon, 27
+ Feb 2017 22:31:44 +0100
+Date:   Mon, 27 Feb 2017 22:31:42 +0100 (CET)
+From:   Johannes Schindelin <johannes.schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     git@vger.kernel.org
+cc:     Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH 5/6] ref-filter: avoid using `unsigned long` for catch-all
+ data type
+In-Reply-To: <cover.1488231002.git.johannes.schindelin@gmx.de>
+Message-ID: <bcc49c57cbe4c438d95cccd1cc94693431674e5b.1488231002.git.johannes.schindelin@gmx.de>
+References: <cover.1488231002.git.johannes.schindelin@gmx.de>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:4I1ZittwpwDxJiyl1/57sDP2YqADMsEj5htBy23Ga+lQO2LcYZn
+ OI/YWF2fjby3O1E//iwVXuYU021xYgPTSXIbjklL3NvkaXXmxXamf9vzDz9Q7D/8wKjhVGn
+ C7idUVmqwoRQgPuo7LGy4MsvzlnDaDa4d/VzgECT1JFGMl5TM98jnJPfpuipGAZ2TZINbk7
+ h+bV3IpucmN3HxnvcNNBA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:OIDLlPKi8fY=:z97LB3MZFgic1c7t6h2Yeb
+ N8sTlT+cE11vzvuc6ZMcC1OVAThk3jXOFq05Sprt++IhTpWsxFX4nQI9+7LCcPWa6QTDZN84O
+ BMlm/S9cutzoNye0Yrt2iXZcU73zzteTJyi9Fz2al/pyOlfdKsL3JuKDPZLxSbIHeFY0Vds1f
+ hmBhCfLzqC9wkxd/D/CSdZ5/b/I/aO++7ZCReQc/22PmaYVvAx2Q1Ekrrif4AvCatsQGYCkhF
+ mmsg5vh+dzhM7MHKfoOjhOSkGS0pvR2UhGxopOWxKMQ4avz0+Y8QilTqY1zY2El1NGXymGeJE
+ O39uEW4Jpl58P0PNUKVJulqAqv00b1Lg1sXWW1wjvxbfpQbXmRQRQgjqMsrw+QMM0EoWsAd5H
+ c0HTMImr90O9uMCWIhv7BeCGZaY9SPB6jv8Gy0I044ZGfcGVnjpLWyyR/agmIXjBSnlTZuMgo
+ LwEdhC5uGx38bHsy00ccELT6m3Lk8jAx2TaEZvpoGPOujn6y+sWbhuuJb+r6bOjXQK8Ob8BpJ
+ dzNozTQH1xin29Fm6VUWd/wowK9gTrV/n0MWazAw3DLrCqbdj9Y6QIrN0j0i5qKTMguqNR0jO
+ j7Q6XBSTZ8+i2fboYJFsR5gcNFT7XDAsPjjZGlaJhta8Wg+8cZrc7OgiWzGHO3Idpp3YLsIPK
+ uZYbIam0z160xzSYAxsk4mXHEuEyGC/9vZgQYnAdJ0E4uBY26VcrCP1UcdvOlJlfc/Pu82w0a
+ 6+kLxrZZRyWjhUe/X8QHWDt1l2UJGeNWtbzzjg7QuIoeOdIyQDOeB078oesASMHfesuHHBTpg
+ M4i/ao00BhD0fdVuS5azfBF2UGMJQU17rhXlolQwWiEYpKI2zgaNCHcIVRGrno+r09z5sD4GU
+ +bEk4zjswgvop9d+froTeM4an/EtbC5+G3GFO2AIy5wen/Pj6h1ugLb+cvsqE7jtl9snDzs5o
+ Kfrj7Mn9UVOFw08HemULUKo7j5VY5runR9EFlbfAi7xHNV7PVLfFzV2WntC5WmndXlF/EYvBM
+ d0yjtkFyMuagk4ZMWKLUSIXJZsg/1/DmA9iQnx4PtIV7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+In its `atom_value` struct, the ref-filter source code wants to store
+different values in a field called `ul` (for `unsigned long`), e.g.
+timestamps.
 
-> I suspect there are a lot of other places that are less clear cut. E.g.,
-> I think just:
->
->   git branch foo bar
->
-> will put "foo" through the same interpretation. So you could do:
->
->   git branch -f @{-1} bar
->
-> Is that insane? Maybe. But it does work now.
+However, as we are about to switch the data type of timestamps away from
+`unsigned long` (because it may be 32-bit even when `time_t` is 64-bit),
+that data type is not large enough.
 
-No, it _is_ very sensible, so is "git checkout -B @{-1} <someplace>"
+Simply use `uintmax_t` instead.
 
-Perhaps interpret-branch-name that does not error out when given "@"
-is what is broken?  I suspect that calling interpret_empty_at() from
-that function is fundamentally flawed.  The "@" end user types never
-means refs/heads/HEAD, and HEAD@{either reflog or -1} would not mean
-anything that should be taken as a branch_name, either.  
+Unfortunately, this patch is larger than that because the field's name
+was tied to its data type.
 
-So perhaps what interpret_empty_at() does is necessary for the "four
-capital letters is too many to type, so just type one key while
-holding a shift", but it should be called from somewhere else, and
-not from interpret_branch_name()?
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ ref-filter.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-
-
+diff --git a/ref-filter.c b/ref-filter.c
+index 07c1f372351..b8b34d4dd9e 100644
+--- a/ref-filter.c
++++ b/ref-filter.c
+@@ -236,7 +236,7 @@ struct atom_value {
+ 		struct align align;
+ 	} u;
+ 	void (*handler)(struct atom_value *atomv, struct ref_formatting_state *state);
+-	unsigned long ul; /* used for sorting when not FIELD_STR */
++	uintmax_t value; /* used for sorting when not FIELD_STR */
+ };
+ 
+ /*
+@@ -492,7 +492,7 @@ static void grab_common_values(struct atom_value *val, int deref, struct object
+ 		if (!strcmp(name, "objecttype"))
+ 			v->s = typename(obj->type);
+ 		else if (!strcmp(name, "objectsize")) {
+-			v->ul = sz;
++			v->value = sz;
+ 			v->s = xstrfmt("%lu", sz);
+ 		}
+ 		else if (deref)
+@@ -539,8 +539,8 @@ static void grab_commit_values(struct atom_value *val, int deref, struct object
+ 			v->s = xstrdup(oid_to_hex(&commit->tree->object.oid));
+ 		}
+ 		else if (!strcmp(name, "numparent")) {
+-			v->ul = commit_list_count(commit->parents);
+-			v->s = xstrfmt("%lu", v->ul);
++			v->value = commit_list_count(commit->parents);
++			v->s = xstrfmt("%lu", (unsigned long)v->value);
+ 		}
+ 		else if (!strcmp(name, "parent")) {
+ 			struct commit_list *parents;
+@@ -644,11 +644,11 @@ static void grab_date(const char *buf, struct atom_value *v, const char *atomnam
+ 	if ((tz == LONG_MIN || tz == LONG_MAX) && errno == ERANGE)
+ 		goto bad;
+ 	v->s = xstrdup(show_date(timestamp, tz, &date_mode));
+-	v->ul = timestamp;
++	v->value = timestamp;
+ 	return;
+  bad:
+ 	v->s = "";
+-	v->ul = 0;
++	v->value = 0;
+ }
+ 
+ /* See grab_values */
+@@ -1583,9 +1583,9 @@ static int cmp_ref_sorting(struct ref_sorting *s, struct ref_array_item *a, stru
+ 	else if (cmp_type == FIELD_STR)
+ 		cmp = cmp_fn(va->s, vb->s);
+ 	else {
+-		if (va->ul < vb->ul)
++		if (va->value < vb->value)
+ 			cmp = -1;
+-		else if (va->ul == vb->ul)
++		else if (va->value == vb->value)
+ 			cmp = cmp_fn(a->refname, b->refname);
+ 		else
+ 			cmp = 1;
+-- 
+2.11.1.windows.1.379.g44ae0bc
 
 
