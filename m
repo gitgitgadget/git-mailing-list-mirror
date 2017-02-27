@@ -2,167 +2,131 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6E0781F5FB
-	for <e@80x24.org>; Mon, 27 Feb 2017 22:28:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D455D1F5FB
+	for <e@80x24.org>; Mon, 27 Feb 2017 22:29:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751560AbdB0W1B (ORCPT <rfc822;e@80x24.org>);
-        Mon, 27 Feb 2017 17:27:01 -0500
-Received: from mout.gmx.net ([212.227.15.19]:53405 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751344AbdB0W0n (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 Feb 2017 17:26:43 -0500
-Received: from virtualbox ([37.201.192.48]) by mail.gmx.com (mrgmx001
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0M3zT0-1cRLSo1574-00rcVo; Mon, 27
- Feb 2017 22:30:28 +0100
-Date:   Mon, 27 Feb 2017 22:30:26 +0100 (CET)
-From:   Johannes Schindelin <johannes.schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     git@vger.kernel.org
-cc:     Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 1/6] t0006 & t5000: prepare for 64-bit time_t
-In-Reply-To: <cover.1488231002.git.johannes.schindelin@gmx.de>
-Message-ID: <3871d1d9de0315a1a98bce5d8f544a5e18917f25.1488231002.git.johannes.schindelin@gmx.de>
-References: <cover.1488231002.git.johannes.schindelin@gmx.de>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+        id S1751975AbdB0W3G (ORCPT <rfc822;e@80x24.org>);
+        Mon, 27 Feb 2017 17:29:06 -0500
+Received: from mail-lf0-f66.google.com ([209.85.215.66]:34637 "EHLO
+        mail-lf0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751587AbdB0W25 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 Feb 2017 17:28:57 -0500
+Received: by mail-lf0-f66.google.com with SMTP id a198so4505749lfb.1
+        for <git@vger.kernel.org>; Mon, 27 Feb 2017 14:27:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:references:cc:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding;
+        bh=jqMgGDZHccMr5MRZMMMoryS5qNxboTY807of/A/z3AE=;
+        b=gO6n6vjZ0Qn0yyc+6379stnimCb+44Ua7qWr5L9qbEBFELLioq+El5Zf/Czk/g9ppx
+         PAwt8Db4YbBr21iUoPFL5W2v6pTSHRIX45QcgPfCO203Ud4Z1UmeW5nh8OpUW4BCjxLS
+         GqvYomXToizRsSfZ8HStF/KzrQn6pl6v1WeQ/XDeGZKtsze8T2Rom7rnp77uzlkaoNNS
+         giDGBNCrBlHs3vZSpy7tHxHaZzc4SqyY//qU4fwTVm+PGlEH/phQyomXWJQrcye6MGdx
+         JyyFKNm5cxyTPU1pOsCjnTXp/Ou7mBrHwMr7JNU+WPBSeBU/b48awNSDLpOGr+0E0bRl
+         PemA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
+        bh=jqMgGDZHccMr5MRZMMMoryS5qNxboTY807of/A/z3AE=;
+        b=mVRlVlBUwUM5WCbVNJnVw8hGGs7CnHGzqnm7IVotwTyJWeYqx6wYaqf4xdgYX66kZc
+         +ZtFhcVjMYWxUeMpNt+bjEMRPuVm+u+yj1ELaOWiGX7epLkrxj6YVUwInE1LOnoG3mTn
+         Xohf8stsWH3IOJIr4zxtEXIFVsrrsUmt1aV2sf7oV0ZXojvbk+mzP0e92rpChlD3jSiD
+         aR+OjrGqnDYDZhTS9es5EZuXxE0jhLQ8e0/vhB0T0idqXMn//jHsEJs7VlDJb+e0F8nm
+         Yq6byUfW6s54pqh8twyWNntR9PFmEjdv4IUHok99optebZ1hx4VVCD8adT0jTBDJS1Ia
+         8p1w==
+X-Gm-Message-State: AMke39k+UPWjzeadywnrWv/x2npKVsd8/PWY298eRiTm4fMfKkF98vdWPA3tUHowNMDTyw==
+X-Received: by 10.25.221.66 with SMTP id u63mr5568152lfg.52.1488234452311;
+        Mon, 27 Feb 2017 14:27:32 -0800 (PST)
+Received: from [192.168.1.26] (deg240.neoplus.adsl.tpnet.pl. [83.23.110.240])
+        by smtp.googlemail.com with ESMTPSA id x26sm11022950lja.10.2017.02.27.14.27.31
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 27 Feb 2017 14:27:31 -0800 (PST)
+Subject: Re: [PATCH 2/2] commit: don't check for space twice when looking for
+ header
+To:     =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>,
+        Git List <git@vger.kernel.org>
+References: <23989e76-24ba-90a4-91a9-9f66bfccb7c9@web.de>
+ <b1d5c882-38b8-dd2d-2e5f-aafb8dfada81@web.de>
+Cc:     Junio C Hamano <gitster@pobox.com>
+From:   =?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
+Message-ID: <1dd0884c-032c-fb04-67f6-8b181fd65eea@gmail.com>
+Date:   Mon, 27 Feb 2017 23:27:22 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.7.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:PKxU+GsY2yQLidl2XDHpqRrB1LSlQ+ncV0pv5nX/5LeTKlmzMQv
- KPjy7LhLWGSUWfeTeX55KKBfsghJ2NlzS7m+a03F4vpHo403W0YjHb07R77skmbAQto7zk5
- FENkT5QKrQDWYbOBTMVEkP+U1tW7aiy2l0N/ldCWRj6hZdFcyWBVoOjmOv3xpWMXLuNh95a
- UxcMzqw8uXgQLCXQbbSqA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:doJhb0huH+A=:OUia/KTXotpuyxyay0wVjd
- T07MEbrszINw6/fvh13J25mEvZpJosG2ofBbIueImv3Eq85ZkrRBkTeg0509mYnohZa/x+HdD
- bpan92kRui3It6TFnljZIVDQBEBrtluFWVaxWMa9u2/WWctgdeTGjCzqP24lf8BiLbIg6vRmC
- WT0QakjpIjm+Ffll0mvZFgY9i1w7vFVeX23PZb3XnDgs5cbGDPikW8PeMkXBC7objjz11Y7bQ
- iAhzDXofEe15c+w+P9WZ/0heMtTekmSxZcBKs1VhYdQzJhTjhl+T7yckM8UuJ90Pc//Dokwun
- i9hl9R3VjU/OidJj0WuWEfaDXw8ZkOyquRC7CerNzk5tTwnMvGuMc6Ven43elWtI2wVZoQAik
- lQOCd2f4diBu2/iLqWtA4aYhG6EGr5ztqNc9FhLjKuQpMEHAcx7g/uVC+oJsBIDD5oplbTNhG
- 80fH//P/0FNQR+Kwhhz+Cw3zkrCvj3XIwdZhjbQQE6irSqjAVZ7jhXoiqSmAQVjgqSYKzK8mR
- JgFYihNV/DXA5xeSHy9nwK7gYVkWcVJV6nS/49qjxb6pBrlqmtsFSLWPCMyKXig5XzhSfj9LP
- NlmDZsdM8bD7wE6623QxUciAnc0vZBmndEO3XDQMRF8x883LOrrDjtM5M76pidEYgXgJGn4ni
- EEzUwXPvmF7+fe1U1mAKimn03a2fEBngRv/X2Q6jk2BA2EaaATq3mdZNE1kz8ZYJQVJSZ09i2
- 5gGTQjex7vGOqa+EvetZvrJPnUtMDb0a3TeAiJ81LJVeeMjAl0k6a7eZS0jsw8IHJGlqLZ7GG
- ihlAILj6pw4+pDSSym+WSmo1/HcJw==
+In-Reply-To: <b1d5c882-38b8-dd2d-2e5f-aafb8dfada81@web.de>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Git's source code refers to timestamps as unsigned longs. On 32-bit
-platforms, as well as on Windows, unsigned long is not large enough to
-capture dates that are "absurdly far in the future".
+W dniu 25.02.2017 o 20:27, René Scharfe pisze:
+> Both standard_header_field() and excluded_header_field() check if
+> there's a space after the buffer that's handed to them.  We already
+> check in the caller if that space is present.  Don't bother calling
+> the functions if it's missing, as they are guaranteed to return 0 in
+> that case, and remove the now redundant checks from them.
+> 
+> Signed-off-by: Rene Scharfe <l.s.r@web.de>
+> ---
+>  commit.c | 18 ++++++++----------
+>  1 file changed, 8 insertions(+), 10 deletions(-)
+> 
+> diff --git a/commit.c b/commit.c
+> index 173c6d3818..fab8269731 100644
+> --- a/commit.c
+> +++ b/commit.c
+> @@ -1308,11 +1308,11 @@ void for_each_mergetag(each_mergetag_fn fn, struct commit *commit, void *data)
+>  
+>  static inline int standard_header_field(const char *field, size_t len)
+>  {
+> -	return ((len == 4 && !memcmp(field, "tree ", 5)) ||
+> -		(len == 6 && !memcmp(field, "parent ", 7)) ||
+> -		(len == 6 && !memcmp(field, "author ", 7)) ||
+> -		(len == 9 && !memcmp(field, "committer ", 10)) ||
+> -		(len == 8 && !memcmp(field, "encoding ", 9)));
+> +	return ((len == 4 && !memcmp(field, "tree", 4)) ||
+> +		(len == 6 && !memcmp(field, "parent", 6)) ||
+> +		(len == 6 && !memcmp(field, "author", 6)) ||
+> +		(len == 9 && !memcmp(field, "committer", 9)) ||
+> +		(len == 8 && !memcmp(field, "encoding", 8)));
 
-It is perfectly valid by the C standard, of course, for the `long` data
-type to refer to 32-bit integers. That is why the `time_t` data type
-exists: so that it can be 64-bit even if `long` is 32-bit. Git's source
-code simply does not use `time_t`, is all.
+I agree (for what it is worth from me) with the rest of changes,
+but I think current code is better self-documenting for this
+function.
 
-The earlier quick fix 6b9c38e14cd (t0006: skip "far in the future" test
-when unsigned long is not long enough, 2016-07-11) forced the test cases
-to be skipped that require a 64-bit (or larger) data type to be used to
-represent the time.
-
-This quick fix, however, tests for *long* to be 64-bit or not. What we
-need, though, is a test that says whether *whatever data type we use for
-timestamps* is 64-bit or not.
-
-The same quick fix was used to handle the similar problem where Git's
-source code uses `unsigned long` to represent size, instead of `size_t`.
-
-So let's just add another prerequisite to test specifically whether
-timestamps are represented by a 64-bit data type or not. Later, when we
-will have switched to using `time_t` where appropriate, we can flip that
-prerequisite to test `time_t` instead of `long`.
-
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- t/helper/test-date.c | 5 ++++-
- t/t0006-date.sh      | 4 ++--
- t/t5000-tar-tree.sh  | 6 +++---
- t/test-lib.sh        | 2 ++
- 4 files changed, 11 insertions(+), 6 deletions(-)
-
-diff --git a/t/helper/test-date.c b/t/helper/test-date.c
-index 506054bcd5d..4727bea255c 100644
---- a/t/helper/test-date.c
-+++ b/t/helper/test-date.c
-@@ -4,7 +4,8 @@ static const char *usage_msg = "\n"
- "  test-date relative [time_t]...\n"
- "  test-date show:<format> [time_t]...\n"
- "  test-date parse [date]...\n"
--"  test-date approxidate [date]...\n";
-+"  test-date approxidate [date]...\n"
-+"  test-date is64bit\n";
- 
- static void show_relative_dates(const char **argv, struct timeval *now)
- {
-@@ -93,6 +94,8 @@ int cmd_main(int argc, const char **argv)
- 		parse_dates(argv+1, &now);
- 	else if (!strcmp(*argv, "approxidate"))
- 		parse_approxidate(argv+1, &now);
-+	else if (!strcmp(*argv, "is64bit"))
-+		return sizeof(unsigned long) == 8 ? 0 : 1;
- 	else
- 		usage(usage_msg);
- 	return 0;
-diff --git a/t/t0006-date.sh b/t/t0006-date.sh
-index c0c910867d7..9539b425ffb 100755
---- a/t/t0006-date.sh
-+++ b/t/t0006-date.sh
-@@ -53,8 +53,8 @@ check_show unix-local "$TIME" '1466000000'
- 
- # arbitrary time absurdly far in the future
- FUTURE="5758122296 -0400"
--check_show iso       "$FUTURE" "2152-06-19 18:24:56 -0400" LONG_IS_64BIT
--check_show iso-local "$FUTURE" "2152-06-19 22:24:56 +0000" LONG_IS_64BIT
-+check_show iso       "$FUTURE" "2152-06-19 18:24:56 -0400" TIME_IS_64BIT
-+check_show iso-local "$FUTURE" "2152-06-19 22:24:56 +0000" TIME_IS_64BIT
- 
- check_parse() {
- 	echo "$1 -> $2" >expect
-diff --git a/t/t5000-tar-tree.sh b/t/t5000-tar-tree.sh
-index 886b6953e40..997aa9dea28 100755
---- a/t/t5000-tar-tree.sh
-+++ b/t/t5000-tar-tree.sh
-@@ -390,7 +390,7 @@ test_expect_success TAR_HUGE,LONG_IS_64BIT 'system tar can read our huge size' '
- 	test_cmp expect actual
- '
- 
--test_expect_success LONG_IS_64BIT 'set up repository with far-future commit' '
-+test_expect_success TIME_IS_64BIT 'set up repository with far-future commit' '
- 	rm -f .git/index &&
- 	echo content >file &&
- 	git add file &&
-@@ -398,11 +398,11 @@ test_expect_success LONG_IS_64BIT 'set up repository with far-future commit' '
- 		git commit -m "tempori parendum"
- '
- 
--test_expect_success LONG_IS_64BIT 'generate tar with future mtime' '
-+test_expect_success TIME_IS_64BIT 'generate tar with future mtime' '
- 	git archive HEAD >future.tar
- '
- 
--test_expect_success TAR_HUGE,LONG_IS_64BIT 'system tar can read our future mtime' '
-+test_expect_success TAR_HUGE,TIME_IS_64BIT 'system tar can read our future mtime' '
- 	echo 4147 >expect &&
- 	tar_info future.tar | cut -d" " -f2 >actual &&
- 	test_cmp expect actual
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 86d77c16dd3..6151a3d70f8 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -1163,3 +1163,5 @@ build_option () {
- test_lazy_prereq LONG_IS_64BIT '
- 	test 8 -le "$(build_option sizeof-long)"
- '
-+
-+test_lazy_prereq TIME_IS_64BIT 'test-date is64bit'
--- 
-2.11.1.windows.1.379.g44ae0bc
-
+>  }
+>  
+>  static int excluded_header_field(const char *field, size_t len, const char **exclude)
+> @@ -1322,8 +1322,7 @@ static int excluded_header_field(const char *field, size_t len, const char **exc
+>  
+>  	while (*exclude) {
+>  		size_t xlen = strlen(*exclude);
+> -		if (len == xlen &&
+> -		    !memcmp(field, *exclude, xlen) && field[xlen] == ' ')
+> +		if (len == xlen && !memcmp(field, *exclude, xlen))
+>  			return 1;
+>  		exclude++;
+>  	}
+> @@ -1357,9 +1356,8 @@ static struct commit_extra_header *read_commit_extra_header_lines(
+>  		eof = memchr(line, ' ', next - line);
+>  		if (!eof)
+>  			eof = next;
+> -
+> -		if (standard_header_field(line, eof - line) ||
+> -		    excluded_header_field(line, eof - line, exclude))
+> +		else if (standard_header_field(line, eof - line) ||
+> +			 excluded_header_field(line, eof - line, exclude))
+>  			continue;
+>  
+>  		it = xcalloc(1, sizeof(*it));
+> 
 
