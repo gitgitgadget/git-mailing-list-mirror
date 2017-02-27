@@ -7,63 +7,57 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 833111F5FB
-	for <e@80x24.org>; Mon, 27 Feb 2017 21:14:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 87D781F5FB
+	for <e@80x24.org>; Mon, 27 Feb 2017 21:21:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751759AbdB0VOQ (ORCPT <rfc822;e@80x24.org>);
-        Mon, 27 Feb 2017 16:14:16 -0500
-Received: from mail-pf0-f194.google.com ([209.85.192.194]:36241 "EHLO
-        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751510AbdB0VOP (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 Feb 2017 16:14:15 -0500
-Received: by mail-pf0-f194.google.com with SMTP id j5so2675250pfb.3
-        for <git@vger.kernel.org>; Mon, 27 Feb 2017 13:13:22 -0800 (PST)
+        id S1751672AbdB0VVb (ORCPT <rfc822;e@80x24.org>);
+        Mon, 27 Feb 2017 16:21:31 -0500
+Received: from mail-pg0-f68.google.com ([74.125.83.68]:35636 "EHLO
+        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751665AbdB0VVQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 Feb 2017 16:21:16 -0500
+Received: by mail-pg0-f68.google.com with SMTP id 1so2155340pgz.2
+        for <git@vger.kernel.org>; Mon, 27 Feb 2017 13:19:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=TaTOXYWMuO0nJA0ZEUEG7+o6f78lSZvMo9/FnYsv/CY=;
-        b=pTWmRUvUSWk8hj+6xYRVA3xsmx8JFC5AB+CpM/Grkkd01FfVnxmAI0F0mfVzzgNVjl
-         u1K+NC1iUxD3+vRCE/qP6NxVSvHGzfjvbr2RefaZxONtXuHdoKv4HQuLe/KbhlsEIv9F
-         aX16nSx8TMqI2RU4HaogNC3BJgC3EGSOfJSQW9Ez1RPO7mbW5mhUACyrhYbQriBBcPpK
-         /lVEhIGXH5NZFh4XBG3UNfnFkmPUjbxXpO16uToHUG2QpcWcC1NP4Q8btVFee7ROxndv
-         l2e8EG2FlZLzyHJzI9+0wsrHLo2Kwhq/xrY4MsINjt1NYPOnlpqAEt1uHY1klLrKXply
-         IVfg==
+        bh=Wef5ZBOIUkOu+CJrpzbRhj1uJ9pa5UHkserv8smgS+4=;
+        b=E3XcqZQwGKPOWXjVUaUsAfRVKBVO8/DhldGezLvZcb4r3a8nSk1Gy6Au6ZnC/9mOYv
+         WXE4TvhlMgH5n7KqZy5NrDjDf3bmKI1y7FuQF2oWH6AeMVYHTfjErNdgksF5G1aRQqJg
+         Y90qEUc8syhb1EMJ75zjJtU8MenxVBPwo3nNmZ3NwROa5CgVR6H2637YbFO8zCUpDcKO
+         Y/vngcQwqlIJSpnr07dzdqGrd5ujs3N69DW5+UQGTI2fcZqy5QJW+pb9iiu8bxRz3cz1
+         QOYXTbT97Aj79mM9y+LaaGY5o9n7f15LcOJXq3/drE/s+ztI0h3zUaLZA+9xFlUUGPyn
+         fnMw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=TaTOXYWMuO0nJA0ZEUEG7+o6f78lSZvMo9/FnYsv/CY=;
-        b=uceNFlOgmpTyKYVG5qaYiWFgq3j94/btwdKEhdXQSkkUG4TC+ysulH/5wTvY+yARez
-         XqDx9iNEWnI4fcwjVuA8Cu61lnXet8RNowURQ8JYSGR3QADP+l4K4gfhr6sfR1+RjgbT
-         YAaC//9zqZ3SC06r11AhTybFwOvayOdydctjec2Id9UfF/XkC/Lgf8s5Vfyl3Vfoi+AV
-         PGachBwbAjOCr2a4StmqhqUMRX/ZuTICJhn6avUXGhwaNScLoaPsVgumEiYibnZpTL/Z
-         eLrXHHvZ6UPedAZUrDPXlpdTF5me0HaYwadsWqsKZeFhXF8C3Q/uwnCEoKg7H6Z5+bt/
-         BuEA==
-X-Gm-Message-State: AMke39mOsgNtQPvGu4p8S9mbHrEiIu46JvkDgR+R1ZHwv/SNBJXonK3Umof6xClxa6Awbg==
-X-Received: by 10.98.163.17 with SMTP id s17mr23026061pfe.61.1488228174803;
-        Mon, 27 Feb 2017 12:42:54 -0800 (PST)
+        bh=Wef5ZBOIUkOu+CJrpzbRhj1uJ9pa5UHkserv8smgS+4=;
+        b=nveQ6/yVQ29mYPXuci/TaiDUPNNNgGUlfFygZWCuoLy5xiUnZmuS3jx9EnLClY17lq
+         LjPtptFtdQ9KO2CRJHkdnLsZaccr1Fr44kNuuHXWw+lYUX/q2kfekuwogJqE0Fgsp96R
+         rO+kvDN6Vdt/ThvFQhuawlSsFLuBn/xWzHBJ0EDX6acnydOooI8wgSEipPBDwN1ChapJ
+         OOSJPUrCglcIfP9dJj/yDHRD863V42IzlVzPReG7D3a6MwYiW1cF/okibAvgSvT7monU
+         z7nJBdIj6YdOmIqwld7piDqEu2e4IDKMAqhVPyY97aMNENnNTSVaQXb52PdMEksdN4EE
+         W9tw==
+X-Gm-Message-State: AMke39kpPDkpwvacTfAzzZtWzo8Uv2ip2+QTeDOta/XSWQJA+dYKdVdymuFzMtDYx5nEqw==
+X-Received: by 10.99.53.204 with SMTP id c195mr23107079pga.205.1488230370651;
+        Mon, 27 Feb 2017 13:19:30 -0800 (PST)
 Received: from localhost ([2620:0:1000:8622:c953:ec42:862e:1e81])
-        by smtp.gmail.com with ESMTPSA id 187sm11801691pff.17.2017.02.27.12.42.53
+        by smtp.gmail.com with ESMTPSA id x2sm32304606pfa.71.2017.02.27.13.19.29
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 27 Feb 2017 12:42:54 -0800 (PST)
+        Mon, 27 Feb 2017 13:19:29 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Dennis Kaarsemaker <dennis@kaarsemaker.net>,
-        Christian Couder <christian.couder@gmail.com>
-Cc:     Jeff King <peff@peff.net>, bs.x.ttp@recursor.net,
-        git@vger.kernel.org
-Subject: Re: [PATCH 4/4] ident: do not ignore empty config name/email
-References: <20170223081157.hwfn3msfux5udmng@sigill.intra.peff.net>
-        <20170223081708.ge34zjkmpsolocqx@sigill.intra.peff.net>
-        <xmqqfuj47hfk.fsf@gitster.mtv.corp.google.com>
-        <20170224010823.my4wmdyezjuqajfx@sigill.intra.peff.net>
-        <xmqqlgsw5iu8.fsf@gitster.mtv.corp.google.com>
-        <20170224041807.5g3yogfnsoqegqkl@sigill.intra.peff.net>
-        <1488208102.10235.3.camel@kaarsemaker.net>
-Date:   Mon, 27 Feb 2017 12:42:53 -0800
-In-Reply-To: <1488208102.10235.3.camel@kaarsemaker.net> (Dennis Kaarsemaker's
-        message of "Mon, 27 Feb 2017 16:08:22 +0100")
-Message-ID: <xmqq1sujwek2.fsf@gitster.mtv.corp.google.com>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] t6300: avoid creating refs/heads/HEAD
+References: <20170227092931.7iquwaxomeuuusi2@sigill.intra.peff.net>
+        <xmqqzih7whrw.fsf@gitster.mtv.corp.google.com>
+        <20170227205151.rjhod347ddhmdmxp@sigill.intra.peff.net>
+Date:   Mon, 27 Feb 2017 13:19:29 -0800
+In-Reply-To: <20170227205151.rjhod347ddhmdmxp@sigill.intra.peff.net> (Jeff
+        King's message of "Mon, 27 Feb 2017 15:51:51 -0500")
+Message-ID: <xmqqshmzuyam.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -72,33 +66,33 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Dennis Kaarsemaker <dennis@kaarsemaker.net> writes:
+Jeff King <peff@peff.net> writes:
 
-> On Thu, 2017-02-23 at 23:18 -0500, Jeff King wrote:
->> On Thu, Feb 23, 2017 at 08:11:11PM -0800, Junio C Hamano wrote:
->> 
->> > > So I dunno. I could really go either way on it. Feel free to drop it, or
->> > > even move it into a separate topic to be cooked longer.
->> > 
->> > If it were 5 years ago, it would have been different, but I do not
->> > think cooking it longer in 'next' would smoke out breakages in
->> > obscure scripts any longer.  Git is used by too many people who have
->> > never seen its source these days.
->> 
->> Yeah, I have noticed that, too. I wonder if it would be interesting to
->> cut "weeklies" or something of "master" or even "next" that people could
->> install with a single click.
->> 
->> Of course it's not like we have a binary installer in the first place,
->> so I guess that's a prerequisite.
+> I suspect there are a lot of other places that are less clear cut. E.g.,
+> I think just:
 >
-> I provide daily[*] snapshots of git's master and next tree as packages
-> for Ubuntu, Debian, Fedora and CentOS on launchpad and SuSE's
-> openbuildservice. If there's sufficient interest in this (I know of
-> only a few users), I can try to put more effort into this.
+>   git branch foo bar
+>
+> will put "foo" through the same interpretation. So you could do:
+>
+>   git branch -f @{-1} bar
+>
+> Is that insane? Maybe. But it does work now.
 
-That sounds handy for people who do not build from the source
-themselves.
+No, it _is_ very sensible, so is "git checkout -B @{-1} <someplace>"
 
-Christian, perhaps rev-news can help advertising Dennis's effort to
-recruit like-minded souls?
+Perhaps interpret-branch-name that does not error out when given "@"
+is what is broken?  I suspect that calling interpret_empty_at() from
+that function is fundamentally flawed.  The "@" end user types never
+means refs/heads/HEAD, and HEAD@{either reflog or -1} would not mean
+anything that should be taken as a branch_name, either.  
+
+So perhaps what interpret_empty_at() does is necessary for the "four
+capital letters is too many to type, so just type one key while
+holding a shift", but it should be called from somewhere else, and
+not from interpret_branch_name()?
+
+
+
+
+
