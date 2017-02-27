@@ -7,45 +7,45 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3525A1F5FB
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4A5101F5FB
 	for <e@80x24.org>; Mon, 27 Feb 2017 18:11:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751542AbdB0SL0 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 27 Feb 2017 13:11:26 -0500
-Received: from mail-wr0-f196.google.com ([209.85.128.196]:36572 "EHLO
-        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751470AbdB0SLQ (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1751565AbdB0SL1 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 27 Feb 2017 13:11:27 -0500
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:36450 "EHLO
+        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751473AbdB0SLQ (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 27 Feb 2017 13:11:16 -0500
-Received: by mail-wr0-f196.google.com with SMTP id l37so2471078wrc.3
-        for <git@vger.kernel.org>; Mon, 27 Feb 2017 10:09:42 -0800 (PST)
+Received: by mail-wm0-f67.google.com with SMTP id r18so14674578wmd.3
+        for <git@vger.kernel.org>; Mon, 27 Feb 2017 10:10:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=AE3IeLdkqGC+UKYB/uGQWKOQkjejfnJrQLqVBJk4bhY=;
-        b=YTlifuKz6gWUixEAg2fsNo0Wc8BtOoa1hfLYh7m5K54IoEPadb0gjcvAzjaFEDPo+e
-         JgkI7SBLp5WsXU3fglZk8P1cJdBkDVH0+yJrluMDV6gvosKtcLrdR+r8JenYLnsIHnVv
-         uWUv2EqG0wEENb0Dh602LB8yJz2LiqCgV2zMmNrGVWusUyzMDkmoK4aAY0bbSBArllyJ
-         7YjZvUqGfS0APli7w0/AYHRmLF8fRgPl7pmlMdJxUEjRp7AkDOHZywT1r73jbECHqkkM
-         NMyfj2eO3kDE9beafh0Z3q79pwr03ufnIi+0FCYYf1hvim06vSLwKUqYvAlewU40p5XW
-         +VIw==
+        bh=IU23EE7IyLUY9ETBuNJo8/+Ai4xprNR3uymLoVyTZdo=;
+        b=qpOB1SS4UIkoxR0vvWsrCGZ/HVXQ5SSJHBBgw7ufUQ+mbcRQyPYrU8SdJlT9R5/38c
+         /lmJ1aAPF9+hnmRSNYWTx8ewXjEwj6yOUkRrMYyij979xQK8iYWkBBulYNh+BDO5GFyA
+         36lA7tDoLiPDOydg4oUt0uaboPgys417w1BQIaij9UL9g3+GiOaJw1QTEG1p+jDNTgRl
+         Qd3NcmvoTNMj3zPYRR83ycVA6Ir8tk8CZKvXFi+ZX2kcqC7QNlHpYUgYA6tl+4EJizBo
+         Z/kqVdA8HLoN9TQJYpLq3kT7fKiAy5g0t9pTY6eOla9skJ/XMC3gCrrpan57wv87cGSH
+         nUYg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=AE3IeLdkqGC+UKYB/uGQWKOQkjejfnJrQLqVBJk4bhY=;
-        b=gu392yG0GBlzQIQ2Vioge5bvE+e2N+xTfd0ZIKj3vImR/MqSm2vV39ll7jxH/qO0OH
-         a40iOh8ZSazsvWI3MegaQXpBkJl1qAVkQuaemBMQfKtzk7tJaVdmJHM+Y9uhUjby+oWG
-         x84C2EgmvVgIycHhMEfNxwEGZmC4PmEXV5/qiguhg22iEkGRdTt8EczWhdZQdrogwFl8
-         9NJPpYw1sETAcKlPk0i4PYc7dCaGURGaoNF56GvzhX5eFyK6OyqT4pJOwrYQAuf9K8dj
-         6NKmBSMRH/g6RF5FjPVlXNqA4Z4fV5NO0nOxLEXmvT/xT/JYvI2QyqZ2z6u6JHWqqI0l
-         96QA==
-X-Gm-Message-State: AMke39ks5025JbOHq91iSW48ckUcUKObz5QifUZm9RV1bWsVV3/b+OtYkzNlnYtkjwo/cA==
-X-Received: by 10.223.166.137 with SMTP id t9mr15356544wrc.15.1488218458909;
-        Mon, 27 Feb 2017 10:00:58 -0800 (PST)
+        bh=IU23EE7IyLUY9ETBuNJo8/+Ai4xprNR3uymLoVyTZdo=;
+        b=BsurAUNBcuGxYBL2LRVIfhXGyCRF8AHf9HzRz2kDFPVG40WElQO/6+dhPCNxw5AU36
+         kmDmfqHaax9hyvAf4a0JYZkMc8/dgc0ARPXwJ+soLyp19SAB6dxjpFdpDEiWSS8jjPpx
+         2kEsjsxrCaFGYWwgPlxtgSKae8SqFZAF8goGGhivqx7tkRpC50dZrf4DWMOtPoDoFiBQ
+         7gZw6NF62TdLbZCAq3hhiO4O8BmFM04wf4+fyNLbcyXW6AobUkudN2p9V0pZ2cjC47md
+         CggnI6ur9CiqytewX9ccJie0XcPtFvBQkJqfIT8nNjQPqYfevd5ao4Rn9cmxi4XOGyFN
+         +Erw==
+X-Gm-Message-State: AMke39kFdhbgwo+xcPaHJgpg3xNTj0TSNBpf3hYEMsum0PaxhSeg7WonwTFwgwg3GNXW0w==
+X-Received: by 10.28.191.194 with SMTP id o63mr4000982wmi.101.1488218463084;
+        Mon, 27 Feb 2017 10:01:03 -0800 (PST)
 Received: from localhost.localdomain (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr. [128.78.31.246])
-        by smtp.gmail.com with ESMTPSA id e73sm15226798wmi.32.2017.02.27.10.00.57
+        by smtp.gmail.com with ESMTPSA id e73sm15226798wmi.32.2017.02.27.10.01.01
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 27 Feb 2017 10:00:58 -0800 (PST)
+        Mon, 27 Feb 2017 10:01:02 -0800 (PST)
 From:   Christian Couder <christian.couder@gmail.com>
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 To:     git@vger.kernel.org
@@ -55,9 +55,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         <avarab@gmail.com>, Ramsay Jones <ramsay@ramsayjones.plus.com>,
         Jeff King <peff@peff.net>,
         Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v4 16/22] config: add git_config_get_expiry() from gc.c
-Date:   Mon, 27 Feb 2017 19:00:13 +0100
-Message-Id: <20170227180019.18666-17-chriscool@tuxfamily.org>
+Subject: [PATCH v4 19/22] read-cache: refactor read_index_from()
+Date:   Mon, 27 Feb 2017 19:00:16 +0100
+Message-Id: <20170227180019.18666-20-chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.12.0.22.g0672473d40
 In-Reply-To: <20170227180019.18666-1-chriscool@tuxfamily.org>
 References: <20170227180019.18666-1-chriscool@tuxfamily.org>
@@ -66,88 +66,51 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This function will be used in a following commit to get the expiration
-time of the shared index files from the config, and it is generic
-enough to be put in "config.c".
+It looks better and is simpler to review when we don't compute
+the same things many times in the function.
+
+It will also help make the following commit simpler.
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- builtin/gc.c | 15 ++-------------
- cache.h      |  3 +++
- config.c     | 13 +++++++++++++
- 3 files changed, 18 insertions(+), 13 deletions(-)
+ read-cache.c | 14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
 
-diff --git a/builtin/gc.c b/builtin/gc.c
-index 331f219260..66dff6a8af 100644
---- a/builtin/gc.c
-+++ b/builtin/gc.c
-@@ -62,17 +62,6 @@ static void report_pack_garbage(unsigned seen_bits, const char *path)
- 		string_list_append(&pack_garbage, path);
- }
- 
--static void git_config_date_string(const char *key, const char **output)
--{
--	if (git_config_get_string_const(key, output))
--		return;
--	if (strcmp(*output, "now")) {
--		unsigned long now = approxidate("now");
--		if (approxidate(*output) >= now)
--			git_die_config(key, _("Invalid %s: '%s'"), key, *output);
--	}
--}
--
- static void process_log_file(void)
+diff --git a/read-cache.c b/read-cache.c
+index 45fc831010..3ea20701a3 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -1691,6 +1691,8 @@ int read_index_from(struct index_state *istate, const char *path)
  {
- 	struct stat st;
-@@ -111,8 +100,8 @@ static void gc_config(void)
- 	git_config_get_int("gc.auto", &gc_auto_threshold);
- 	git_config_get_int("gc.autopacklimit", &gc_auto_pack_limit);
- 	git_config_get_bool("gc.autodetach", &detach_auto);
--	git_config_date_string("gc.pruneexpire", &prune_expire);
--	git_config_date_string("gc.worktreepruneexpire", &prune_worktrees_expire);
-+	git_config_get_expiry("gc.pruneexpire", &prune_expire);
-+	git_config_get_expiry("gc.worktreepruneexpire", &prune_worktrees_expire);
- 	git_config(git_default_config, NULL);
- }
+ 	struct split_index *split_index;
+ 	int ret;
++	char *base_sha1_hex;
++	const char *base_path;
  
-diff --git a/cache.h b/cache.h
-index 6b25b50aab..8994e7d373 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1888,6 +1888,9 @@ extern int git_config_get_untracked_cache(void);
- extern int git_config_get_split_index(void);
- extern int git_config_get_max_percent_split_change(void);
- 
-+/* This dies if the configured or default date is in the future */
-+extern int git_config_get_expiry(const char *key, const char **output);
+ 	/* istate->initialized covers both .git/index and .git/sharedindex.xxx */
+ 	if (istate->initialized)
+@@ -1708,15 +1710,15 @@ int read_index_from(struct index_state *istate, const char *path)
+ 		discard_index(split_index->base);
+ 	else
+ 		split_index->base = xcalloc(1, sizeof(*split_index->base));
+-	ret = do_read_index(split_index->base,
+-			    git_path("sharedindex.%s",
+-				     sha1_to_hex(split_index->base_sha1)), 1);
 +
- /*
-  * This is a hack for test programs like test-dump-untracked-cache to
-  * ensure that they do not modify the untracked cache when reading it.
-diff --git a/config.c b/config.c
-index 35b6f02960..f20d7d88f7 100644
---- a/config.c
-+++ b/config.c
-@@ -1712,6 +1712,19 @@ int git_config_get_pathname(const char *key, const char **dest)
++	base_sha1_hex = sha1_to_hex(split_index->base_sha1);
++	base_path = git_path("sharedindex.%s", base_sha1_hex);
++	ret = do_read_index(split_index->base, base_path, 1);
+ 	if (hashcmp(split_index->base_sha1, split_index->base->sha1))
+ 		die("broken index, expect %s in %s, got %s",
+-		    sha1_to_hex(split_index->base_sha1),
+-		    git_path("sharedindex.%s",
+-			     sha1_to_hex(split_index->base_sha1)),
++		    base_sha1_hex, base_path,
+ 		    sha1_to_hex(split_index->base->sha1));
++
+ 	merge_base_index(istate);
+ 	post_read_index_from(istate);
  	return ret;
- }
- 
-+int git_config_get_expiry(const char *key, const char **output)
-+{
-+	int ret = git_config_get_string_const(key, output);
-+	if (ret)
-+		return ret;
-+	if (strcmp(*output, "now")) {
-+		unsigned long now = approxidate("now");
-+		if (approxidate(*output) >= now)
-+			git_die_config(key, _("Invalid %s: '%s'"), key, *output);
-+	}
-+	return ret;
-+}
-+
- int git_config_get_untracked_cache(void)
- {
- 	int val = -1;
 -- 
 2.12.0.22.g0672473d40
 
