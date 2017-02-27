@@ -2,98 +2,111 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 929A31F5FB
-	for <e@80x24.org>; Mon, 27 Feb 2017 19:09:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 670B01F5FB
+	for <e@80x24.org>; Mon, 27 Feb 2017 19:09:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751704AbdB0TI4 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 27 Feb 2017 14:08:56 -0500
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:34864 "EHLO
-        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751510AbdB0TIy (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 Feb 2017 14:08:54 -0500
-Received: by mail-wm0-f68.google.com with SMTP id u63so14864891wmu.2
-        for <git@vger.kernel.org>; Mon, 27 Feb 2017 11:07:47 -0800 (PST)
+        id S1751630AbdB0TIz (ORCPT <rfc822;e@80x24.org>);
+        Mon, 27 Feb 2017 14:08:55 -0500
+Received: from mail-pg0-f66.google.com ([74.125.83.66]:35857 "EHLO
+        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751454AbdB0TIx (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 Feb 2017 14:08:53 -0500
+Received: by mail-pg0-f66.google.com with SMTP id 25so1892622pgy.3
+        for <git@vger.kernel.org>; Mon, 27 Feb 2017 11:07:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=3cKlTU6qwEbGfjmbgyrfPDc938Xs9WUjOUbhzzSH8oE=;
-        b=ewDJaS9H3uyxd2NJ2nVIHS/KxDFCdJbRPjYDH2kO6fK03bQOcFj/klv0KF+1k8zPE6
-         Riyc8JaS29vyQlUC3l4epinwvnYbHJEueU7tvRoCqb1yuEN0OURR2T99plNGj03WvrN8
-         TlxHecU999LLKE5HPm0mTCDvQUs9a/bvPBiwbNttT+JMuDJLMgTRQQH5JUXJ3BP+6e7L
-         RGroDq8nwQNo6+X6QelYE9WNgrW2v2pGY5bNcbTsyVLrP9xRlse3aNso3/rjgh2nJeNg
-         9TAvITbVKxEsuLdk3/Cy04P96q6PWkT7ArRfbHR/3GeM0/V2vf26O8Rsm9x4KxtquqlN
-         KlfQ==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=IyhBhNOUgwStQO/7Y1hQ8IJ8Vx0pj2pXBFuWWEGUhGE=;
+        b=UCDemByUbSKxrcYqJshmN5SrzN42qSLjBQu8MMM0Lho/awKD5il+7hwMqhMoEzSNmK
+         TAhOw681f9TH36QftYul6N+ci5zBg4ONQR+cPXR60WyMRC+IQNlolrPqkDkJpkVoBnL6
+         g7sGCv1lNDfEySSqPnRHmr+XNSKdxtqyGJqc1dafNnbtyRtVaB6e4ysA8O3fX1E+U7iW
+         BBThzowzX7YzWeyJFeFVw2uv8rlCHVEldEeaBuG9dlLuDZidALLNinRvInGWfu6x/nJn
+         qI0yNWs+t4HC3mv61bNgVug5Mde1ai80CP6X+inynCZ41smeOpo7yMrOdC5Qbi2hDg44
+         1loA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=3cKlTU6qwEbGfjmbgyrfPDc938Xs9WUjOUbhzzSH8oE=;
-        b=kezgMA6raNcqu6pQcQNJxObE2dGDZ/FrKplNQjzuwLzmWXUk3vRIDLLbYbKdY5D6Jw
-         lzsLYWIX0gH8+dAhXuyoM09OA6LQBHi+Gb4is7qjXkbr5OC23taVdqoD14i98muyVEcM
-         Jec1sJWiDUEWAUlojr4ZGWhiO4cW2ywPWzeKj+/aoUVJJaJfNeMh559crt+etmbNYFYv
-         bdXnBCBN7yTLoMgEMPlsneAcAlpMldtVV/q811blgH5EtYtLCDgSpQE9l7iASLbF9ePV
-         TSfHcn5oML8tM7FfPEdJETxf55DsKRdAFxzfzB7eQtR1J9ioYsuAfzeomFF5q5OrobNv
-         vErg==
-X-Gm-Message-State: AMke39kye2w/a4qRd6aVoWI8y24jTDmhd4p8lEWJWjoE8JmXOxETcreLMuXQ9K5UJVPhdQ==
-X-Received: by 10.28.184.198 with SMTP id i189mr13618166wmf.26.1488218466302;
-        Mon, 27 Feb 2017 10:01:06 -0800 (PST)
-Received: from localhost.localdomain (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr. [128.78.31.246])
-        by smtp.gmail.com with ESMTPSA id e73sm15226798wmi.32.2017.02.27.10.01.04
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 27 Feb 2017 10:01:04 -0800 (PST)
-From:   Christian Couder <christian.couder@gmail.com>
-X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>, Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Jeff King <peff@peff.net>,
-        Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v4 21/22] Documentation/config: add splitIndex.sharedIndexExpire
-Date:   Mon, 27 Feb 2017 19:00:18 +0100
-Message-Id: <20170227180019.18666-22-chriscool@tuxfamily.org>
-X-Mailer: git-send-email 2.12.0.22.g0672473d40
-In-Reply-To: <20170227180019.18666-1-chriscool@tuxfamily.org>
-References: <20170227180019.18666-1-chriscool@tuxfamily.org>
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=IyhBhNOUgwStQO/7Y1hQ8IJ8Vx0pj2pXBFuWWEGUhGE=;
+        b=XeFREwiUiDJS0iq8U5YTKOd511b7YLD7+Y8dk7nPfCI0bQ+vYvfRhdb40Hf7oX6FEV
+         /BDTmqKEl756PWW/Jy3nndW+5kUHSAljmwUrT3H/3DGyH5VvepmKtyBwclBI+UkWfao3
+         raqL4BjLrRDAD5Jo88x7UPHkyFwhXYQf6WVZcT1tbrq3K5+T47vJ41aRZDvqf9SSZYDG
+         RQWbDd/W6gj14SloCjoxTcTYd25lQjDcBJClXcw3i7xBjIrtm8Zv+AotoJb8OqHV0KDE
+         BTHRrxF54leJeCJFV3x0efbxwUXeN/QMViPfj6JPaHdlOspBI1F6uAvemLniiR4yCDc7
+         kLtg==
+X-Gm-Message-State: AMke39nmOdxaYu+5fuREb9KUhT+ljYPa6vOcUo8j61mBMVZJg1jXxQZqYMe9ieGNKhv5RQ==
+X-Received: by 10.99.166.17 with SMTP id t17mr22538804pge.196.1488220507409;
+        Mon, 27 Feb 2017 10:35:07 -0800 (PST)
+Received: from localhost ([2620:0:1000:8622:c953:ec42:862e:1e81])
+        by smtp.gmail.com with ESMTPSA id f188sm32062831pfa.35.2017.02.27.10.35.06
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Mon, 27 Feb 2017 10:35:06 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        David Turner <David.Turner@twosigma.com>,
+        "git\@vger.kernel.org" <git@vger.kernel.org>,
+        "sandals\@crustytoothpaste.net" <sandals@crustytoothpaste.net>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH] http: add an "auto" mode for http.emptyauth
+References: <20170222233333.dx5lknw4fpopu5hy@sigill.intra.peff.net>
+        <20170222234059.iajn2zuwzkzjxit2@sigill.intra.peff.net>
+        <b5778a7988ad4dfa9adfc8d312432189@exmbdft7.ad.twosigma.com>
+        <20170223013746.lturqad7lnehedb4@sigill.intra.peff.net>
+        <alpine.DEB.2.20.1702251243390.3767@virtualbox>
+        <20170225191506.4it7pdsi6ijanfft@sigill.intra.peff.net>
+        <20170225191831.dkjasyv3tmkwutre@sigill.intra.peff.net>
+Date:   Mon, 27 Feb 2017 10:35:05 -0800
+In-Reply-To: <20170225191831.dkjasyv3tmkwutre@sigill.intra.peff.net> (Jeff
+        King's message of "Sat, 25 Feb 2017 14:18:31 -0500")
+Message-ID: <xmqqpoi3xz1i.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
----
- Documentation/config.txt | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+Jeff King <peff@peff.net> writes:
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 8e745bda52..0e9982c5e3 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -2844,6 +2844,18 @@ splitIndex.maxPercentChange::
- 	than 20 percent of the total number of entries.
- 	See linkgit:git-update-index[1].
- 
-+splitIndex.sharedIndexExpire::
-+	When the split index feature is used, shared index files that
-+	were not modified since the time this variable specifies will
-+	be removed when a new shared index file is created. The value
-+	"now" expires all entries immediately, and "never" suppresses
-+	expiration altogether.
-+	The default value is "2.weeks.ago".
-+	Note that a shared index file is considered modified (for the
-+	purpose of expiration) each time a new split-index file is
-+	created based on it.
-+	See linkgit:git-update-index[1].
-+
- status.relativePaths::
- 	By default, linkgit:git-status[1] shows paths relative to the
- 	current directory. Setting this variable to `false` shows paths
--- 
-2.12.0.22.g0672473d40
+> The auto mode may incur an extra round-trip over setting
+> http.emptyauth=true, because part of the emptyauth hack is
+> to feed this blank password to curl even before we've made a
+> single request.
 
+IOW, people who care about an extra round-trip have this workaround,
+which is good.
+
+This, along with the possible security implications, may want to be
+added to the documentation but that is outside the topic of this
+change, and I think we would want to see such an update come from
+those who actually use NTLM (or Kerberos, but they know they have
+minimum security implications).
+
+> +#ifndef LIBCURL_CAN_HANDLE_AUTH_ANY
+> +	/*
+> +	 * Our libcurl is too old to do AUTH_ANY in the first place;
+> +	 * just default to turning the feature off.
+> +	 */
+> +#else
+> +	/*
+> +	 * In the automatic case, kick in the empty-auth
+> +	 * hack as long as we would potentially try some
+> +	 * method more exotic than "Basic" or "Digest".
+> +	 *
+> +	 * But only do this when this is our second or
+> +	 * subsequent * request, as by then we know what
+
+I'll drop the '*' that you left while line-wrapping ;-)
+
+> +	 * methods are available.
+> +	 */
+
+Thanks.  This looks good.
