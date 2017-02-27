@@ -2,119 +2,179 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 549981F5FB
-	for <e@80x24.org>; Mon, 27 Feb 2017 22:35:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A738520254
+	for <e@80x24.org>; Mon, 27 Feb 2017 22:35:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751422AbdB0WfJ (ORCPT <rfc822;e@80x24.org>);
-        Mon, 27 Feb 2017 17:35:09 -0500
-Received: from mail-pg0-f68.google.com ([74.125.83.68]:34113 "EHLO
-        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751372AbdB0WfI (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 Feb 2017 17:35:08 -0500
-Received: by mail-pg0-f68.google.com with SMTP id s67so2339002pgb.1
-        for <git@vger.kernel.org>; Mon, 27 Feb 2017 14:33:17 -0800 (PST)
+        id S1751639AbdB0Wfn (ORCPT <rfc822;e@80x24.org>);
+        Mon, 27 Feb 2017 17:35:43 -0500
+Received: from mail-pg0-f47.google.com ([74.125.83.47]:33218 "EHLO
+        mail-pg0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751510AbdB0Wfk (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 Feb 2017 17:35:40 -0500
+Received: by mail-pg0-f47.google.com with SMTP id 25so19742013pgy.0
+        for <git@vger.kernel.org>; Mon, 27 Feb 2017 14:34:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=e2E/HixhCBZuAiB0m8Ryu7E8cE9OzCnyIWzKkdqoZm8=;
-        b=qqR0oibBNhtkHMuE8hnmhwRvolEhkKVUlY9qiR4mFd/mkcm4YfPkYHBJAKVOxO+DvL
-         US/XwJB61N3zy/qVIpcEBfs7z2gF2gt+BzJyIPlz3WGIVgJqdQFxeCY9Tekn3+uY8k4K
-         3MY56Dovtk6i2qUqdRv5IEaxPY47fOYRmne+eZAnquga8DflNuqMddHD2asoUdkYovmb
-         Uomw8mMUB+Wtx2S3pd5yM2dlisCBCxpSdYWXBXhDPYa7QnpppqmtGMOzD/iudhk8MeOS
-         8bKe95TRi4NT5MG03jHnXpSs+XnHn+E2YmWYalstt+MZFJuToVspqPmhDd+GbNEFihd7
-         wZzw==
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=8IP3kGXqFZ9HN6Nf3Ll1qILahJ1V71EvnnPc58wY7Ss=;
+        b=a6ZG0u7aEgEGhCdqSggU0qC8wkEV/WqP92JN6WwcVqkBnLC4r+iWweTdWu+iSkqcXx
+         QTQDMD2mjXROtSIoeaZ3BivsH8NHOTjtaQgsojGO3lqx86Zn9lfEs4jKgknswqG7sfwb
+         PQZ6kFFYdnCvnECldEjwpOJAJf0X0rBjC8uQ0cubQldRjkA9//+QM41sf5kqQXkfC6T2
+         bGVYWw1pvbuxlhkdoMpPf1TxQ+FDj4hmUXWoOIWRN+vhqZSd3jlAWmz1H5q90cJMQNul
+         q7cr+FxGgESuhPtBBIy23DVzg5jLYhSVdfLCsaFGMEiX0GE6V+x1vLhpVwfRTvZkSzjU
+         BxIA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=e2E/HixhCBZuAiB0m8Ryu7E8cE9OzCnyIWzKkdqoZm8=;
-        b=G6egP00N38cY7t/pkqTnFBb3HUDmVYj9/wXXhsdA7U25w2Ql+p2aL48/vc5yHDNZsR
-         uQfDX0S+AWOyv5PMc2V30PVYdKYWonjRKJ/vl5ZWw7UIGaHTVOwixynEPZzDnn90dNjw
-         LFt4w7Jscn3OcpQcHIwIiHQBODdHvx3x1fk6pinVG6AxkjbTK1UInPHKuVsV6Any6qWy
-         kYToUtoHCM2l7SRIQtVyFHVQZ0A2y4/f3sLqUR7hSi8gWmP+wEapccKIwB3BG6EyTAyH
-         7++b4G6bNmew8cS0Qyl9Vn53T8Ruhe8mtzqSD0kCjZenUwAphoQu0fnd0O4IgbDkALin
-         0hMQ==
-X-Gm-Message-State: AMke39nipmNul6VjeIfOcjRmSxIQDtkP04urb3ryKur+eEJjfehv7ZoHwZPE9cWY627MXQ==
-X-Received: by 10.98.88.133 with SMTP id m127mr23763587pfb.155.1488234796725;
-        Mon, 27 Feb 2017 14:33:16 -0800 (PST)
-Received: from localhost ([2620:0:1000:8622:c953:ec42:862e:1e81])
-        by smtp.gmail.com with ESMTPSA id g27sm32448661pfk.95.2017.02.27.14.33.15
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=8IP3kGXqFZ9HN6Nf3Ll1qILahJ1V71EvnnPc58wY7Ss=;
+        b=OCTdOVMnmg2SQQHF4nRVc0zntQYyuJ9NH96QGW2dEZHm3SYASJ0ZgESdWUJY8apU0I
+         CVcier+qqKgkPNOdhfTXaJxqFk+z260ndojJDUhAVQWwIQR2qDCqAl47tHqbn2k0wt2/
+         ZfER6bL2m1DtwAvtN8SQB3eLvbNjgND18ujyHAv2WtKOUmVqAbjVsnmsOdQIpH6lgKC4
+         rT14D83EgZVQyKyYB4H/7nSQDVTuh3MMJUDaWRXilyO9uicDgw0FojGr5OnRiK9WMu3P
+         YjeQDfyqA0NXo00IPolFhX05Cx0wA0scU+9QqpgfJIamkKiMClGXcly3lftkI2uNfj+3
+         Ltsg==
+X-Gm-Message-State: AMke39k09utcwrvFMfIPKYIwBaLX42VHnCXcF4bD8Z03LJ8ndcLJWsnh07JKwMvtdrWSEP9O
+X-Received: by 10.84.197.1 with SMTP id m1mr26403913pld.123.1488220539032;
+        Mon, 27 Feb 2017 10:35:39 -0800 (PST)
+Received: from google.com ([2620:0:1000:5b10:5d0b:b83e:e4b4:f20d])
+        by smtp.gmail.com with ESMTPSA id p6sm32198652pgn.40.2017.02.27.10.35.37
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 27 Feb 2017 14:33:15 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Cc:     Vegard Nossum <vegard.nossum@oracle.com>, git@vger.kernel.org,
-        Christian Couder <christian.couder@gmail.com>,
-        Michal Zalewski <lcamtuf@google.com>
-Subject: Re: [PATCH 2/2] apply: handle assertion failure gracefully
-References: <20170225101307.24067-1-vegard.nossum@oracle.com>
-        <20170225101307.24067-2-vegard.nossum@oracle.com>
-        <a5626d97-e644-65b5-2fd3-41ce870f85a6@web.de>
-        <xmqqmvd7wgc7.fsf@gitster.mtv.corp.google.com>
-        <f191e3a8-a55b-7030-ebbb-3f46c74fdc94@web.de>
-Date:   Mon, 27 Feb 2017 14:33:15 -0800
-In-Reply-To: <f191e3a8-a55b-7030-ebbb-3f46c74fdc94@web.de> (=?utf-8?Q?=22R?=
- =?utf-8?Q?en=C3=A9?= Scharfe"'s
-        message of "Mon, 27 Feb 2017 23:18:03 +0100")
-Message-ID: <xmqq1sujnu1g.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+        Mon, 27 Feb 2017 10:35:37 -0800 (PST)
+Date:   Mon, 27 Feb 2017 10:35:36 -0800
+From:   Brandon Williams <bmwill@google.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: [PATCH 05/10] submodule--helper: add is_active command
+Message-ID: <20170227183536.GD153455@google.com>
+References: <20170223234728.164111-1-bmwill@google.com>
+ <20170223234728.164111-6-bmwill@google.com>
+ <CAGZ79kZKH_e2NLd=A=og452f-1bfFcSoi5=SM5oetu87TT766Q@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAGZ79kZKH_e2NLd=A=og452f-1bfFcSoi5=SM5oetu87TT766Q@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-René Scharfe <l.s.r@web.de> writes:
+On 02/23, Stefan Beller wrote:
+> On Thu, Feb 23, 2017 at 3:47 PM, Brandon Williams <bmwill@google.com> wrote:
+> > There are a lot of places where an explicit check for
+> > submodule."<name>".url is done to see if a submodule exists.  In order
+> > to more easily facilitate the use of the submodule.active config option
+> > to indicate active submodules, add a helper which can be used to query
+> > if a submodule is active or not.
+> >
+> > Signed-off-by: Brandon Williams <bmwill@google.com>
+> > ---
+> >  builtin/submodule--helper.c    | 11 ++++++++
+> >  t/t7413-submodule-is-active.sh | 63 ++++++++++++++++++++++++++++++++++++++++++
+> >  2 files changed, 74 insertions(+)
+> >  create mode 100755 t/t7413-submodule-is-active.sh
+> >
+> > diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+> > index df0d9c166..dac02604d 100644
+> > --- a/builtin/submodule--helper.c
+> > +++ b/builtin/submodule--helper.c
+> > @@ -1128,6 +1128,16 @@ static int absorb_git_dirs(int argc, const char **argv, const char *prefix)
+> >         return 0;
+> >  }
+> >
+> > +static int is_active(int argc, const char **argv, const char *prefix)
+> > +{
+> > +       if (argc != 2)
+> > +               die("submodule--helper is-active takes exactly 1 arguments");
+> > +
+> > +       gitmodules_config();
+> > +
+> > +       return !is_submodule_initialized(argv[1]);
+> > +}
+> > +
+> >  #define SUPPORT_SUPER_PREFIX (1<<0)
+> >
+> >  struct cmd_struct {
+> > @@ -1147,6 +1157,7 @@ static struct cmd_struct commands[] = {
+> >         {"init", module_init, 0},
+> >         {"remote-branch", resolve_remote_submodule_branch, 0},
+> >         {"absorb-git-dirs", absorb_git_dirs, SUPPORT_SUPER_PREFIX},
+> > +       {"is-active", is_active, 0},
+> >  };
+> >
+> >  int cmd_submodule__helper(int argc, const char **argv, const char *prefix)
+> > diff --git a/t/t7413-submodule-is-active.sh b/t/t7413-submodule-is-active.sh
+> > new file mode 100755
+> > index 000000000..683487020
+> > --- /dev/null
+> > +++ b/t/t7413-submodule-is-active.sh
+> > @@ -0,0 +1,63 @@
+> > +#!/bin/sh
+> > +
+> > +test_description='Test submodule--helper is-active
+> > +
+> > +This test verifies that `git submodue--helper is-active` correclty identifies
+> > +submodules which are "active" and interesting to the user.
+> > +'
+> > +
+> > +. ./test-lib.sh
+> > +
+> > +test_expect_success 'setup' '
+> > +       git init sub &&
+> > +       test_commit -C sub initial &&
+> > +       git init super &&
+> > +       test_commit -C super initial &&
+> > +       git -C super submodule add ../sub sub1 &&
+> > +       git -C super submodule add ../sub sub2 &&
+> > +       git -C super commit -a -m "add 2 submodules at sub{1,2}"
+> > +'
+> > +
+> > +test_expect_success 'is-active works with urls' '
+> > +       git -C super submodule--helper is-active sub1 &&
+> > +       git -C super submodule--helper is-active sub2 &&
+> > +
+> > +       git -C super config --unset submodule.sub1.URL &&
+> > +       test_must_fail git -C super submodule--helper is-active sub1 &&
+> > +       git -C super config submodule.sub1.URL ../sub &&
+> > +       git -C super submodule--helper is-active sub1
+> > +'
+> > +
+> > +test_expect_success 'is-active works with basic submodule.active config' '
+> > +       git -C super config --add submodule.active "." &&
+> > +       git -C super config --unset submodule.sub1.URL &&
+> > +       git -C super config --unset submodule.sub2.URL &&
+> 
+> I think we'd want to unset only one of them here
+> 
+> > +
+> > +       git -C super submodule--helper is-active sub1 &&
+> > +       git -C super submodule--helper is-active sub2 &&
+> 
+> to test 2 different cases of one being active by config setting only and
+> the other having both.
 
-> Am 27.02.2017 um 21:04 schrieb Junio C Hamano:
->> René Scharfe <l.s.r@web.de> writes:
->>
->>>> diff --git a/apply.c b/apply.c
->>>> index cbf7cc7f2..9219d2737 100644
->>>> --- a/apply.c
->>>> +++ b/apply.c
->>>> @@ -3652,7 +3652,6 @@ static int check_preimage(struct apply_state *state,
->>>>  	if (!old_name)
->>>>  		return 0;
->>>>
->>>> -	assert(patch->is_new <= 0);
->>>
->>> 5c47f4c6 (builtin-apply: accept patch to an empty file) added that
->>> line. Its intent was to handle diffs that contain an old name even for
->>> a file that's created.  Citing from its commit message: "When we
->>> cannot be sure by parsing the patch that it is not a creation patch,
->>> we shouldn't complain when if there is no such a file."  Why not stop
->>> complaining also in case we happen to know for sure that it's a
->>> creation patch? I.e., why not replace the assert() with:
->>>
->>> 	if (patch->is_new == 1)
->>> 		goto is_new;
->>>
->>>>  	previous = previous_patch(state, patch, &status);
->>
->> When the caller does know is_new is true, old_name must be made/left
->> NULL.  That is the invariant this assert is checking to catch an
->> error in the calling code.
->
-> There are some places in apply.c that set ->is_new to 1, but none of
-> them set ->old_name to NULL at the same time.
+Will do.
 
-I thought all of these are flipping ->is_new that used to be -1
-(unknown) to (now we know it is new), and sets only new_name without
-doing anything to old_name, because they know originally both names
-are set to NULL.
+> 
+> I could not spot test for having the URL set but the config setting set, not
+> including the submodule, e.g.
+> 
+>     git -C super config  submodule.sub1.URL ../sub &&
+>     git -C super submodule.active  ":(exclude)sub1" &&
+> 
+> which would be expected to not be active, as once the configuration
+> is there it takes precedence over any (no)URL setting?
 
-> Having to keep these two members in sync sounds iffy anyway.  Perhaps
-> accessors can help, e.g. a setter which frees old_name when is_new is
-> set to 1, or a getter which returns NULL for old_name if is_new is 1.
+The last test, tests this functionality as the URL settings for both
+sub1 and sub2 are in the config.  You'll notice in the tests where I
+unset the URL config, that they get added back at the end of the test so
+that future tests have a clean state to work with.
 
-Definitely, the setter would make it harder to make the mistake.
+-- 
+Brandon Williams
