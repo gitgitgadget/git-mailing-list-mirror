@@ -7,45 +7,45 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DDE2A1F5FB
-	for <e@80x24.org>; Mon, 27 Feb 2017 18:02:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5F6F31F5FB
+	for <e@80x24.org>; Mon, 27 Feb 2017 18:02:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751584AbdB0SCQ (ORCPT <rfc822;e@80x24.org>);
-        Mon, 27 Feb 2017 13:02:16 -0500
-Received: from mail-wr0-f196.google.com ([209.85.128.196]:32890 "EHLO
+        id S1751568AbdB0SCO (ORCPT <rfc822;e@80x24.org>);
+        Mon, 27 Feb 2017 13:02:14 -0500
+Received: from mail-wr0-f196.google.com ([209.85.128.196]:36824 "EHLO
         mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751419AbdB0SCD (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S1751421AbdB0SCD (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 27 Feb 2017 13:02:03 -0500
-Received: by mail-wr0-f196.google.com with SMTP id g10so11038207wrg.0
-        for <git@vger.kernel.org>; Mon, 27 Feb 2017 10:00:47 -0800 (PST)
+Received: by mail-wr0-f196.google.com with SMTP id l37so2443873wrc.3
+        for <git@vger.kernel.org>; Mon, 27 Feb 2017 10:00:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=sdObAKU/YVKmkTc1NFiJRCVh2RCXQ1Z2IPGbWGuXKTE=;
-        b=UUOyjJ9ccvU+kF4YiWd7HY3Y5EXaKJBGjIEaFsOT0FwAPSS/rdR9mE1cjKCzJvXWbv
-         cfOe/irtkY/RH/5ohvVn7vMy+s+0g3O6fck60vglDZMNKkmvl8j8XN8kQWFkWKvu41xd
-         eBWsxyfkPRnQYNAuhWX8WgCOxmCxBf31f1KWXplDsS1hjHqa5R9+PmK+YCd/ZXLiS61C
-         w+3ItvI2WZBF/yFSE71U1gmNqCNDhiUrbEDVncAANyOwqz3aNoDRQYf/et2Y5+oQvVke
-         bzoZFlwtxVeniRpeo648pc4Fniv+Xah1i+ikBwkqcFXtASBoo887q79f+Bi71JAK3qrn
-         RqJw==
+        bh=X4OLQS7HyHzNuWo8wb7UGdZ1p++Px2bTsvXXWgvC99g=;
+        b=dKBtkc6H0bVxD/dUMuaX10OaX0gVjLcIDypStR9xQo3ySJOnnlctXnrr6fxuE7G+I1
+         FU2SNPaRAoC8+SRJTlvCg3VZM1LTgaspkDh86hpXJOlfT+rdv6vS8Y/WQ9ApqJT6h8lR
+         ibDCnGVSmrPXHdD5XuuPsUp8vzWsGctj5KmcaIOjo4MJ2buCZnN99nbVN/5SC3wgAfzy
+         z+PwVgGuueVPWwCVdWNCBgqF7sx8hMX33U6TDmJr7ELI5Yg6t8RSC45ZvVRdko3iTWSc
+         deo1vZsFjMNzsbcpwYqUmftW/j2GZBsdvJTwi9rkm/w+KS7ZrejdthwgZSqbvJ9P2w5k
+         Xf2Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=sdObAKU/YVKmkTc1NFiJRCVh2RCXQ1Z2IPGbWGuXKTE=;
-        b=obapZMNrj8tp1NRvZ1rlJd6qIDwlVgdImMjTO/PfVQgBh+1ZhthW4nBEyEulpDmHD6
-         QbRc17K3uIR7MS6i5VX7bkZ3WZkcxxgZCePkS9htNvSEF3eNrJDlybwM86gfWBB8bf7h
-         rjerRcZQ4DBWeQL565+LDYmOYVM5RJzwVPGm7xxzpxlV6aopFPyWQfiWbVsbGVeaNhht
-         XaMX+Onq8VKLQePqsRdPPb1x2dkokK9vijVqqM77/nMpLENMcqKKmX/gNChAkcx55gli
-         61sygrNYvCddiQGTLWZUGv10v8XsjA9eBXEKMqupnToEIWhPtzzG1o5g2m8UUrm4jADP
-         EDUQ==
-X-Gm-Message-State: AMke39lV3RBtnLsYLB6J+0PiE6P6alzmtbO+5BrHwulH0GepK8rwK3+14+p1Yc+P4QalUA==
-X-Received: by 10.223.142.34 with SMTP id n31mr15167057wrb.11.1488218446855;
-        Mon, 27 Feb 2017 10:00:46 -0800 (PST)
+        bh=X4OLQS7HyHzNuWo8wb7UGdZ1p++Px2bTsvXXWgvC99g=;
+        b=QD+I7xUiOIDq7v5bopaqjNLC+g3FRP97VXEFf10eOWCJUdDpDM1UZpxvt46dlLOZia
+         RmkZegTqafEbvGp+DskXwwcDtQea+mbWnOgcWrWwnvnuTgtmayw9B4EwsDotKXsJT995
+         KDbB2y62vbiTU/aiqqgpbK8QLZ/ED/bbuyoQohT6Gq3e1lfOG0yAaY8lcaIDSa+UuVk0
+         q7O0UTl+lppH8JtmzHonDNX60k1f17DarF+B6f/+2OzZ2aLxL5UjKyXeo4jkw1aoH5+S
+         /7mhvo71chxQMjVsqt7UbtKW4hIoT5rvZkNZiuXOUv7CAlYd0xPssQWht1aDcNU3lu9R
+         FfwA==
+X-Gm-Message-State: AMke39lVDshAp8zOQO6mKts21L46bqssZqiciVeUcROXbkghAVZsFoXoi8D42kff3EuAXg==
+X-Received: by 10.223.166.137 with SMTP id t9mr15355870wrc.15.1488218448059;
+        Mon, 27 Feb 2017 10:00:48 -0800 (PST)
 Received: from localhost.localdomain (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr. [128.78.31.246])
-        by smtp.gmail.com with ESMTPSA id e73sm15226798wmi.32.2017.02.27.10.00.45
+        by smtp.gmail.com with ESMTPSA id e73sm15226798wmi.32.2017.02.27.10.00.46
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 27 Feb 2017 10:00:45 -0800 (PST)
+        Mon, 27 Feb 2017 10:00:47 -0800 (PST)
 From:   Christian Couder <christian.couder@gmail.com>
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 To:     git@vger.kernel.org
@@ -55,9 +55,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         <avarab@gmail.com>, Ramsay Jones <ramsay@ramsayjones.plus.com>,
         Jeff King <peff@peff.net>,
         Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v4 07/22] t1700: add tests for core.splitIndex
-Date:   Mon, 27 Feb 2017 19:00:04 +0100
-Message-Id: <20170227180019.18666-8-chriscool@tuxfamily.org>
+Subject: [PATCH v4 08/22] Documentation/config: add information for core.splitIndex
+Date:   Mon, 27 Feb 2017 19:00:05 +0100
+Message-Id: <20170227180019.18666-9-chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.12.0.22.g0672473d40
 In-Reply-To: <20170227180019.18666-1-chriscool@tuxfamily.org>
 References: <20170227180019.18666-1-chriscool@tuxfamily.org>
@@ -68,55 +68,24 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- t/t1700-split-index.sh | 37 +++++++++++++++++++++++++++++++++++++
- 1 file changed, 37 insertions(+)
+ Documentation/config.txt | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/t/t1700-split-index.sh b/t/t1700-split-index.sh
-index cb68b8dc1e..1659986d8d 100755
---- a/t/t1700-split-index.sh
-+++ b/t/t1700-split-index.sh
-@@ -200,4 +200,41 @@ test_expect_success 'unify index, two files remain' '
- 	test_cmp expect actual
- '
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 015346c417..61a863adeb 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -334,6 +334,10 @@ core.trustctime::
+ 	crawlers and some backup systems).
+ 	See linkgit:git-update-index[1]. True by default.
  
-+test_expect_success 'set core.splitIndex config variable to true' '
-+	git config core.splitIndex true &&
-+	: >three &&
-+	git update-index --add three &&
-+	git ls-files --stage >ls-files.actual &&
-+	cat >ls-files.expect <<-EOF &&
-+	100644 e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 0	one
-+	100644 e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 0	three
-+	100644 e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 0	two
-+	EOF
-+	test_cmp ls-files.expect ls-files.actual &&
-+	BASE=$(test-dump-split-index .git/index | grep "^base") &&
-+	test-dump-split-index .git/index | sed "/^own/d" >actual &&
-+	cat >expect <<-EOF &&
-+	$BASE
-+	replacements:
-+	deletions:
-+	EOF
-+	test_cmp expect actual
-+'
++core.splitIndex::
++	If true, the split-index feature of the index will be used.
++	See linkgit:git-update-index[1]. False by default.
 +
-+test_expect_success 'set core.splitIndex config variable to false' '
-+	git config core.splitIndex false &&
-+	git update-index --force-remove three &&
-+	git ls-files --stage >ls-files.actual &&
-+	cat >ls-files.expect <<-EOF &&
-+	100644 e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 0	one
-+	100644 e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 0	two
-+	EOF
-+	test_cmp ls-files.expect ls-files.actual &&
-+	test-dump-split-index .git/index | sed "/^own/d" >actual &&
-+	cat >expect <<-EOF &&
-+	not a split index
-+	EOF
-+	test_cmp expect actual
-+'
-+
- test_done
+ core.untrackedCache::
+ 	Determines what to do about the untracked cache feature of the
+ 	index. It will be kept, if this variable is unset or set to
 -- 
 2.12.0.22.g0672473d40
 
