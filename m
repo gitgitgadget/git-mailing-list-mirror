@@ -2,69 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,WEIRD_PORT
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 154FE201B0
-	for <e@80x24.org>; Tue, 28 Feb 2017 21:00:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7CD22202C9
+	for <e@80x24.org>; Tue, 28 Feb 2017 21:08:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751754AbdB1U7o (ORCPT <rfc822;e@80x24.org>);
-        Tue, 28 Feb 2017 15:59:44 -0500
-Received: from cloud.peff.net ([104.130.231.41]:36003 "EHLO cloud.peff.net"
+        id S1751623AbdB1VIZ (ORCPT <rfc822;e@80x24.org>);
+        Tue, 28 Feb 2017 16:08:25 -0500
+Received: from mout.gmx.net ([212.227.17.22]:54631 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751808AbdB1U7D (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Feb 2017 15:59:03 -0500
-Received: (qmail 18785 invoked by uid 109); 28 Feb 2017 19:58:03 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 28 Feb 2017 19:58:03 +0000
-Received: (qmail 29530 invoked by uid 111); 28 Feb 2017 19:58:08 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 28 Feb 2017 14:58:08 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 28 Feb 2017 14:58:00 -0500
-Date:   Tue, 28 Feb 2017 14:58:00 -0500
-From:   Jeff King <peff@peff.net>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] http: attempt updating base URL only if no error
-Message-ID: <20170228195800.tghcnbtjg3qjrhrv@sigill.intra.peff.net>
-References: <20170228025311.6347-1-jonathantanmy@google.com>
- <20170228132814.wp3cq4ilp7syinqy@sigill.intra.peff.net>
- <6127c0a7-800d-fcf3-c6e2-17533347f07e@google.com>
+        id S1751497AbdB1VIW (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Feb 2017 16:08:22 -0500
+Received: from virtualbox ([37.201.192.48]) by mail.gmx.com (mrgmx103
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0M1nOg-1cTm3m46eY-00tlRQ; Tue, 28
+ Feb 2017 21:59:53 +0100
+Date:   Tue, 28 Feb 2017 21:59:51 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     wth1@cornell.edu
+cc:     git-for-windows <git-for-windows@googlegroups.com>,
+        git@vger.kernel.org
+Subject: Re: [ANNOUNCE] Git for Windows 2.12.0
+In-Reply-To: <74720ad6-1bc6-4dbd-9098-33cb069f41de@googlegroups.com>
+Message-ID: <alpine.DEB.2.20.1702282158420.3767@virtualbox>
+References: <20170225165544.3956-1-johannes.schindelin@gmx.de> <74720ad6-1bc6-4dbd-9098-33cb069f41de@googlegroups.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <6127c0a7-800d-fcf3-c6e2-17533347f07e@google.com>
+Content-Type: multipart/mixed; BOUNDARY="8323329-272846480-1488315593=:3767"
+X-Provags-ID: V03:K0:eop7G9avWQAkw2dMj6R2fi3YM3aMxfB24xB6vodVOxjOJYJDab4
+ BSRctQVoPWTLhl4Sn2qclKgiM6o7lypNpElw95zVMhJpdKS7qsJSVEimnqUzAn0k0rYQrcu
+ O1f0ITD+N9mhIaQ7bcKUTt/d7lPL8U9Row+NFMbp6YCz1YWI8J5+BFxCbqwMaCkQZ8T7vNJ
+ B2v/Z0r97LcD9ag46wWTw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:Ke0tWpT26sY=:+md4cKxnT96/dHi9GYnGXX
+ 1zSoQenncHCXL197dVJFCl/Tn1wx5hUnKhAHvk3VMzihT8a2BLJSZzY2ELh1sgYTEvE3JnbM7
+ TxgYQkRsSRoFI+DK8+CmhAyIU50pfkUA0GPG7w6N0oWCsYBsVb7kSwtEwqBX07MecG8u/z+6z
+ rF7m2v1WleMAEddX+xR1EzPDLiRfDSvAa+Rr6Fwos9gQuR6c1BxEvsF8pLX+A4Qb/Huj0Jtgl
+ RX0y7A7OjdYy1dWM650lbRZZ1bOfhD22hVQn30vFe/WeR3yYEHV0oDZ5Gok9EurQpIUdp5XFx
+ VLvPwIArSKCkKwdrG4LQF1nLnGd7V6Ee2/v1yswIYLcySV0JPhw5CYhVZiLcLX8/reeD1YnxU
+ H/RK7wLhrN6uP0X7hOUQfsJ5OmELXrVwRyqyHYPgKrPZBQoE12hpdfXDdExqX1k1qvmpb6PbC
+ ypDUOGszsRatIkqdgUNuioahJ+iiCgQRZdNJCHRYQuY3IGmyphoLkjyd6ZS64+g2274P/5zt1
+ M2IB/RUVeYVqsyFcQvTCcUGCGOxMCMLeNx1uhAHeYZx4O3KAUzVwEVUVCJxgi40gyF+o1VBfb
+ t7SRy45ebjJHHA4OKqWbrZTrgVRAAwU9RBpjQsLSrA9Vt9vIp/S5Qi7J5mHGziSfiyq4E1sbR
+ D1qHrjgYa9Ap3Fk0Q200+ccLu1E4RccHNyU4ywYKVMgVL+Cd5pW2iUBf+8o9vG2qnJlsHz1sK
+ /NTb3m9OfV7NRbMesvzrXOk5y50MqVFFcJyQJHWYAt3jdFddAE+yH1sdw0b29Eod+m74sMt4F
+ +bYaQsCxyi07PUPBiBeXNpdChWcBcP3DBPv2SKc/4BGkGoY40iAGuXMS3Y4TEAR8vqzRmpAVR
+ gQIB+ao4r9jehJec+2QXblmRkx1YzqNWemq7zs2u0GMSJFNsmWgkOpivkcrdFT6F4J1gVXVWQ
+ EGS8ef0CfbmVn7BJox8nnLB6Dys2d7Y8pmKdKGzknEC0iyQljracSQfBrf641x8Sluy731JvS
+ D+9vsGy1xc9iw9n16pfgANBUVFO/QUwnECR5B/hdXOzb6Ayyz2WJK+VuZz3GyHiyZA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Feb 28, 2017 at 10:48:52AM -0800, Jonathan Tan wrote:
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-> > Running your included test, we get:
-> > 
-> >   fatal: unable to access 'http://127.0.0.1:5550/redir-to/502/': The
-> >   requested URL returned error: 502
-> > 
-> > but the error really happened in the intermediate step. I wonder if we
-> > should show the effective_url in that case, as it's more likely to
-> > pinpoint the problem. OTOH, we do not mention the intermediate redirect
-> > at all, so they might be confused about where that URL came from. If you
-> > really want to debug HTTP confusion, you should use GIT_TRACE_CURL.
-> 
-> Yeah, if we mention the effective_url, I think that there would need to be a
-> lot more explaining to be done (e.g. why does my URL have
-> "info/refs?service=git-upload-pack" tacked on at the end). It might be
-> better to just recommend GIT_TRACE_CURL.
+--8323329-272846480-1488315593=:3767
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 
-Indeed. Your comment made me realize that my suggestion was the exact
-opposite of the earlier d5ccbe4df (remote-curl: consistently report repo
-url for http errors, 2013-04-05). :)
+Hi,
 
-Given that we don't see a lot of questions on the list about this,
-either it doesn't come up much, or they are capable of finding
-GIT_TRACE_CURL or GIT_CURL_VERBOSE on their own. So I think we can leave
-the message as-is.
+On Tue, 28 Feb 2017, wth1@cornell.edu wrote:
 
--Peff
+> I have attempted to download the new version but on 2/28/2016 starting
+> at 12:00PM EST I have been unable to download GIT 2.12.  The error
+> message that is returned is:
+>=20
+> Make sure you=E2=80=99ve got the right web address:=20
+> https://github-cloud.s3.amazonaws.com
+
+It looks as if AWS has serious problems right now. Try downloading from
+here:
+
+https://instant.io/#152a79b2aad5137413e1ca2edd43fc08f736d896
+
+And please leave the browser open for a while after it downloaded.
+
+Thanks,
+Johannes
+--8323329-272846480-1488315593=:3767--
