@@ -6,77 +6,65 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 999C3202C9
-	for <e@80x24.org>; Tue, 28 Feb 2017 22:33:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 607B6202C9
+	for <e@80x24.org>; Tue, 28 Feb 2017 22:33:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751722AbdB1WdQ (ORCPT <rfc822;e@80x24.org>);
-        Tue, 28 Feb 2017 17:33:16 -0500
-Received: from cloud.peff.net ([104.130.231.41]:36115 "EHLO cloud.peff.net"
+        id S1751668AbdB1Wd2 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 28 Feb 2017 17:33:28 -0500
+Received: from cloud.peff.net ([104.130.231.41]:36120 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751492AbdB1WdP (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Feb 2017 17:33:15 -0500
-Received: (qmail 27148 invoked by uid 109); 28 Feb 2017 22:06:28 -0000
+        id S1751571AbdB1Wd2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Feb 2017 17:33:28 -0500
+Received: (qmail 28862 invoked by uid 109); 28 Feb 2017 22:33:27 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 28 Feb 2017 22:06:28 +0000
-Received: (qmail 31659 invoked by uid 111); 28 Feb 2017 22:06:34 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 28 Feb 2017 22:33:27 +0000
+Received: (qmail 32192 invoked by uid 111); 28 Feb 2017 22:33:33 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 28 Feb 2017 17:06:34 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 28 Feb 2017 17:06:26 -0500
-Date:   Tue, 28 Feb 2017 17:06:26 -0500
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 28 Feb 2017 17:33:33 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 28 Feb 2017 17:33:25 -0500
+Date:   Tue, 28 Feb 2017 17:33:25 -0500
 From:   Jeff King <peff@peff.net>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org, gitster@pobox.com, peartben@gmail.com,
-        benpeart@microsoft.com
-Subject: Re: [PATCH 1/3] revision: unify {tree,blob}_objects in rev_info
-Message-ID: <20170228220626.at4cihedmvkqiq5c@sigill.intra.peff.net>
-References: <cover.1487984670.git.jonathantanmy@google.com>
- <06a84f8c77924b275606384ead8bb2fd7d75f7b6.1487984670.git.jonathantanmy@google.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
+        git@vger.kernel.org
+Subject: Re: [PATCH 0/6] Use time_t
+Message-ID: <20170228223325.vabdrwas2qn52gup@sigill.intra.peff.net>
+References: <cover.1488231002.git.johannes.schindelin@gmx.de>
+ <20170228142802.hu5esthnqdsgc2po@sigill.intra.peff.net>
+ <xmqqvarukz0g.fsf@gitster.mtv.corp.google.com>
+ <20170228200145.ymbqmxwrbbrwagks@sigill.intra.peff.net>
+ <xmqqh93ehrxx.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <06a84f8c77924b275606384ead8bb2fd7d75f7b6.1487984670.git.jonathantanmy@google.com>
+In-Reply-To: <xmqqh93ehrxx.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Feb 24, 2017 at 05:18:36PM -0800, Jonathan Tan wrote:
+On Tue, Feb 28, 2017 at 02:27:22PM -0800, Junio C Hamano wrote:
 
-> Whenever tree_objects is set to 1 in revision.h's struct rev_info,
-> blob_objects is likewise set, and vice versa. Combine those two fields
-> into one.
+> Jeff King <peff@peff.net> writes:
 > 
-> Some of the existing code does not handle tree_objects being different
-> from blob_objects properly. For example, "handle_commit" in revision.c
-> recurses from an UNINTERESTING tree into its subtree if tree_objects ==
-> 1, completely ignoring blob_objects; it probably should still recurse if
-> tree_objects == 0 and blob_objects == 1 (to mark the blobs), and should
-> behave differently depending on blob_objects (controlling the
-> instantiation and marking of blob objects). This commit resolves the
-> issue by forbidding tree_objects from being different to blob_objects.
+> > ... We can certainly stick with it for now (it's awkward if you
+> > really do have an entry on Jan 1 1970, but other than that it's an OK
+> > marker). I agree that the most negatively value is probably a saner
+> > choice, but we can switch to it after the dust settles.
+> 
+> I was trying to suggest that we should strive to switch to the most
+> negative or whatever the most implausible value in the new range
+> (and leave it as a possible bug to be fixed if we missed a place
+> that still used "0 is impossible") while doing the ulong to time_t
+> (or timestamp_t that is i64).  
+> 
+> "safer in the short term" wasn't meant to be "let's not spend time
+> to do quality work".  As long as we are switching, we should follow
+> it through.
 
-Yeah, I agree that is awkward. I'm OK with the rule "if blob_objects is
-set, then tree_objects must also be set". It's the other way around I
-care more about.
-
-> It could be argued that in the future, Git might need to distinguish
-> tree_objects from blob_objects - in particular, a user might want
-> rev-list to print the trees but not the blobs. However, this results in
-> a minor performance savings at best in that objects no longer need to be
-> instantiated (causing memory allocations and hashtable insertions) - no
-> disk reads are being done for objects whether blob_objects is set or
-> not.
-
-In a full object-graph traversal, we actually spend a big chunk of our
-time in hash lookups. My measurements (admittedly from 2013, which I
-haven't repeated lately) show something like a 20-25% speedup for this
-case.
-
-My only use for it (and the source of those timings) was to compute
-archive reachability, which nobody seems to care too much about. But I
-suspect we could speed up your case, too, when we are just computing the
-reachability of a non-blob. I.e., you should be able to turn on the
-smallest subset of "commits only", "commits and trees", and "commits,
-trees, and blobs", based on what the other side has asked for.
+Sure, I'd be much happier to see it done now. I just didn't want to pile
+on the requirements to the point that step 1 doesn't get done. But I
+haven't even looked at the code changes needed for time_t. I suspect
+Dscho has a better feel for it at this point.
 
 -Peff
