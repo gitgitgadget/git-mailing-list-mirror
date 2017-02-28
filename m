@@ -2,125 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0C28A202C9
-	for <e@80x24.org>; Tue, 28 Feb 2017 22:57:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A70EC202C9
+	for <e@80x24.org>; Tue, 28 Feb 2017 23:14:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751688AbdB1W5U (ORCPT <rfc822;e@80x24.org>);
-        Tue, 28 Feb 2017 17:57:20 -0500
-Received: from mail-it0-f44.google.com ([209.85.214.44]:34468 "EHLO
-        mail-it0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751562AbdB1W5Q (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Feb 2017 17:57:16 -0500
-Received: by mail-it0-f44.google.com with SMTP id y135so3524301itc.1
-        for <git@vger.kernel.org>; Tue, 28 Feb 2017 14:56:41 -0800 (PST)
+        id S1751574AbdB1XN4 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 28 Feb 2017 18:13:56 -0500
+Received: from mail-pg0-f67.google.com ([74.125.83.67]:33736 "EHLO
+        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751601AbdB1XNz (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Feb 2017 18:13:55 -0500
+Received: by mail-pg0-f67.google.com with SMTP id x17so3343479pgi.0
+        for <git@vger.kernel.org>; Tue, 28 Feb 2017 15:12:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=zaw49uulSF0wwiB8Aw2IavW0vTSsPfkXl24iQ/FvPEQ=;
-        b=Nef4o5NHZ5+aCG70N4kmNOG1G1NV4pNmnjGP1vGDwo8B5VLhzofde6B+ZOA3xTMw4l
-         0C3Whfhb/uFv1rhPj2gBVo4ysWb4+EKgk0+Z4TAl6t5BzGeW0jrvpPlvCCcQPhbF31g8
-         IwHDPbzzvsR5tkmdndMbQVhMO/tm0k7MlAfORNSPRYfSaZHU0CJ9HVNIyKf5Ac/yzHEw
-         zIxbb/DUFQmylCFzG8EuCQOAP93KHua9FGdqTfAKRrhmC7u6G+n3ISGtWToGvNnFb2mL
-         tRbOX1hMz9s5+JDgW7X+V6L4nnV5+2EuQQcNIucJuz0fHHIlOdEtAOYQnWdDaWwrpFeF
-         nn5g==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=SOiNMopwqTzQr3g0j/N+305EBYNQ0GDCaabk/r9eDK4=;
+        b=ZDVJeFpz3TfwvPGWe/Vhj8/delj+bPNiYPoXftusal9Lc0epuBSPefSdPbJsGmnQFq
+         jI/J8ggxkCXCnPGQwGrO7kBmCaINc0oH8IWgvDS+Z5Q3qn4QwOyxe8etQM5bWiAukVnD
+         Lq+QNZmZjIThVItU7dwejCa1PfpdNdXbPdQEG53kv4DAjYjigmXR9GN1DjnfCXBOvbQn
+         n1xMANqxjDYKwBoeNUv91Ase4R/nWaYNVBYvrJNnh8EWUmQqC9c+N1PuWGo/JVsbQFLC
+         tG0Cvkuf/wR7BpBXhGNWOWZEtVU/wN11cawiFlwdQzNA7Wy2nyPh2D2mVgDR8QNQrh/2
+         7XXg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=zaw49uulSF0wwiB8Aw2IavW0vTSsPfkXl24iQ/FvPEQ=;
-        b=TyN80IxbZcNfYXO/juI8XMRv4/5VIbsPSTIYNr2sjascCbYn5EqeiveyNpqfMMj6/w
-         Vg8YjjTdMST/LBjnHYpGv5bBmOGFbfjnuBBxkIxOvx6kM7O0WUnh2j5jG6S+gzpm51d7
-         9TZjx5Z6Eg1k13bGmsJYBcjmo3B2tjMrn6c4hMzY+QqGZ/QvZ6kK3Q3Ztx0v93jVefBf
-         kM0GQYw8SMMvRjuOuMdZOwZsJQmU3WFvL0+rxo0tuZn6Bx9MvkyCCpy2Pm7YZbf2k+s6
-         393Hi6YHotpif++jJZD+2ruSF4RWFr58Et89VfOBd0zkeqZteO5DUDkm0/D9nkKqVTyn
-         Ua2Q==
-X-Gm-Message-State: AMke39mRcXcexmTlhC4qostozEPNgNGRjgRELHJ2dUFw/JMwC02sGQnqTTkzUgDp8oACXQwgOaUmnyvIiTwsbQ==
-X-Received: by 10.36.40.198 with SMTP id h189mr1231783ith.114.1488322600708;
- Tue, 28 Feb 2017 14:56:40 -0800 (PST)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=SOiNMopwqTzQr3g0j/N+305EBYNQ0GDCaabk/r9eDK4=;
+        b=HAQF0bzEeJTwQf7O/ntlQppzFDDIKgFNQNp+15MsQvlySJfb0PEQ1H9fud7rd3Qpj5
+         kAf0kwEGKdpoAylFy22OlWJc9T1+7eb8os+GFT82NPlDQSNPb+u3SaOvJRfbqqt42fww
+         Il+C4iIwcjJk+Jsk0t3xgnPtCVwlalgEQL7PkdsOO6te3kXQTB3nhN/9KvgnTcJ+AO7G
+         gFm+e//TIXiag4AIYRW2PiDAOo1LazCsGczo0Y1aJwpce9peEC0F+j/miC59npRbXy6b
+         l5cKIJdx/bQzMrqcYe8IAfx3gyVHk8BsxRLNzlzZp0x4KK02ouQ28r1CQPIqWGrpqskc
+         ofVQ==
+X-Gm-Message-State: AMke39mUsitxUnc0dhn5CGBvPDNl9tlY15fctxGB4JO3NR9d5NyJWx7a79CxrZjRz/6cjQ==
+X-Received: by 10.99.7.13 with SMTP id 13mr5164910pgh.121.1488323565935;
+        Tue, 28 Feb 2017 15:12:45 -0800 (PST)
+Received: from localhost ([2620:0:1000:8622:e0d7:55f8:67f2:62dd])
+        by smtp.gmail.com with ESMTPSA id p6sm6219891pgn.40.2017.02.28.15.12.45
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Tue, 28 Feb 2017 15:12:45 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org, peff@peff.net, peartben@gmail.com,
+        benpeart@microsoft.com
+Subject: Re: [PATCH 2/3] revision: exclude trees/blobs given commit
+References: <cover.1487984670.git.jonathantanmy@google.com>
+        <cover.1487984670.git.jonathantanmy@google.com>
+        <7082d91f30663b2e6d7fb1795c5ea37d3fe3446c.1487984670.git.jonathantanmy@google.com>
+Date:   Tue, 28 Feb 2017 15:12:44 -0800
+In-Reply-To: <7082d91f30663b2e6d7fb1795c5ea37d3fe3446c.1487984670.git.jonathantanmy@google.com>
+        (Jonathan Tan's message of "Fri, 24 Feb 2017 17:18:37 -0800")
+Message-ID: <xmqqa895j4er.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.107.146.131 with HTTP; Tue, 28 Feb 2017 14:56:39 -0800 (PST)
-In-Reply-To: <CAJo=hJuB9JkTZSRbhN2DX0gBqpjddU=Sk8iRV9++TYRv4xKA6Q@mail.gmail.com>
-References: <CA+55aFzFEpi1crykZ33r9f7BsvLt_kiB-CHXOkuCAX=fd4BU-w@mail.gmail.com>
- <20170223182147.hbsyxsmyijgkqu75@kitenet.net> <CA+55aFxckeEW1ePcebrgG4iN4Lp62A2vU6tA=xnSDC_BnKQiCQ@mail.gmail.com>
- <20170223184637.xr74k42vc6y2pmse@sigill.intra.peff.net> <CA+55aFx=0EVfSG2iEKKa78g3hFN_yZ+L_FRm4R749nNAmTGO9w@mail.gmail.com>
- <20170223193210.munuqcjltwbrdy22@sigill.intra.peff.net> <CA+55aFxmr6ntWGbJDa8tOyxXDX3H-yd4TQthgV_Tn1u91yyT8w@mail.gmail.com>
- <20170223195753.ppsat2gwd3jq22by@sigill.intra.peff.net> <alpine.LFD.2.20.1702231428540.30435@i7.lan>
- <20170223224302.joti4zqucme3vqr2@sigill.intra.peff.net> <20170223230507.kuxjqtg3ghcfskc6@sigill.intra.peff.net>
- <xmqqefyikvin.fsf@gitster.mtv.corp.google.com> <xmqq60jukubq.fsf@gitster.mtv.corp.google.com>
- <CA+55aFxTWqsTTiDKo4DBZT-8Z9t80bGMD3uijzKONa_bYEZABQ@mail.gmail.com> <CAJo=hJuB9JkTZSRbhN2DX0gBqpjddU=Sk8iRV9++TYRv4xKA6Q@mail.gmail.com>
-From:   Linus Torvalds <torvalds@linux-foundation.org>
-Date:   Tue, 28 Feb 2017 14:56:39 -0800
-X-Google-Sender-Auth: xO9coG_N-iUcb-gPUMGALIWtGQA
-Message-ID: <CA+55aFxG_5KU54KXZdTMC0p0EF5ixmv0C6ccjnYcPUeN_kDREA@mail.gmail.com>
-Subject: Re: SHA1 collisions found
-To:     Shawn Pearce <spearce@spearce.org>
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        Joey Hess <id@joeyh.name>,
-        Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Feb 28, 2017 at 11:52 AM, Shawn Pearce <spearce@spearce.org> wrote:
->
->> and from what I can tell, the 'maski' value is always 0, so the
->> looping over 80 state masks is really just a loop over two.
->
-> Actually, look closer at that loop:
+Jonathan Tan <jonathantanmy@google.com> writes:
 
-No, sorry, I wasn't clear and took some shortcuts in writing that made
-that sentence not parse right.
+> When the --objects argument is given to rev-list, an argument of the
+> form "^$tree" can be given to exclude all blobs and trees reachable from
+> that tree, but an argument of the form "^$commit" only excludes that
+> commit, not any blob or tree reachable from it. Make "^$commit" behave
+> consistent to "^$tree".
 
-There's two issues going on. This loop:
+So with this:
 
->   for (i = 0; sha1_dvs[i].dvType != 0; ++i)
+    $ git rev-list --objects ^HEAD^@ HEAD ^HEAD^{tree}
 
-loops over all the dvs - and then inside it has that useless "maski"
-thing as part of the test that is always zero.
+should be a round-about way to say
 
-But the "80 state masks" was not that "maski' value, but the
-"ctx->states[5][80]" thing.
+    $ git rev-parse HEAD
 
-So we have 80 of those 5-word state values, but only two of them are
-actually used: iterations 58 and 65). You can see how the code
-actually optimizes away (by hand) the SHA1_STORE_STATE() thing by
-using DOSTORESTATE58 and DOSTORESTATE65, but it does actually generate
-the code for all of them.
+;-)
 
-You can see the "only two steps" part in this:
+The expression wants to list everything reachable from HEAD, but it
+does not want to show its parents (i.e. ^HEAD^@) and it does not
+want to show its tree (i.e. ^HEAD^{tree}), so the only thing that
+remains is the commit object HEAD and nothing else?
 
-  (sha1_recompression_step[sha1_dvs[i].testt])(...)
+I agree with Peff's comment about objects that may appear beyond the
+boundary (i.e. merge base between interesting ones and uninteresting
+ones); whether that inaccuracy matters depends on what you want to
+use this for---if you want to hide sensitive objects it does, if you
+want to reduce the network cost without incurring too much cpu cost,
+it probably does not.
 
-if you notice how there are only those two different cases for "testt".
 
-So there is code generated for 80 different recompression step
-functions in that array, but there are only two different functions
-that are actually ever used.
 
-Those are not small functions, either. When I check the build, they
-generate about 3.5kB of code each. So it's literally about 250kB of
-completely wasted space in the binary.
-
-See what I'm saying? Two different issues. One is that the code
-generates tons of (fairly big) functions, and only uses two of them,
-the rest are useless and lying around. The other is that it uses a
-variable that is only ever zero.
-
-So I think that loop would actually be better not as a loop at all,
-but as a "generated code expanded from the dv_data". It would have
-been more obvious. Right now it loads values from the array, and it's
-not obvious that some of the values it loads are very very limited (to
-the point of one of them just being the constant "0").
-
-Anyway, Dan Shumow already answered and addressed both issues (and the
-smaller stylistic ones).
-
-               Linus
