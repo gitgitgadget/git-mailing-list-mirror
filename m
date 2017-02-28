@@ -6,98 +6,97 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CF57D201B0
-	for <e@80x24.org>; Tue, 28 Feb 2017 12:43:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B3FE3201B0
+	for <e@80x24.org>; Tue, 28 Feb 2017 12:52:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752381AbdB1Mng (ORCPT <rfc822;e@80x24.org>);
-        Tue, 28 Feb 2017 07:43:36 -0500
-Received: from cloud.peff.net ([104.130.231.41]:35595 "EHLO cloud.peff.net"
+        id S1752060AbdB1Mv6 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 28 Feb 2017 07:51:58 -0500
+Received: from cloud.peff.net ([104.130.231.41]:35599 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751637AbdB1Mn2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Feb 2017 07:43:28 -0500
-Received: (qmail 22707 invoked by uid 109); 28 Feb 2017 12:16:46 -0000
+        id S1752352AbdB1Mv5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Feb 2017 07:51:57 -0500
+Received: (qmail 23198 invoked by uid 109); 28 Feb 2017 12:23:40 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 28 Feb 2017 12:16:46 +0000
-Received: (qmail 25404 invoked by uid 111); 28 Feb 2017 12:16:52 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 28 Feb 2017 12:23:40 +0000
+Received: (qmail 25476 invoked by uid 111); 28 Feb 2017 12:23:46 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 28 Feb 2017 07:16:52 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 28 Feb 2017 07:16:44 -0500
-Date:   Tue, 28 Feb 2017 07:16:44 -0500
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 28 Feb 2017 07:23:46 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 28 Feb 2017 07:23:39 -0500
+Date:   Tue, 28 Feb 2017 07:23:39 -0500
 From:   Jeff King <peff@peff.net>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     Jacob Keller <jacob.keller@gmail.com>,
         Karthik Nayak <karthik.188@gmail.com>,
         Luc Van Oostenryck <luc.vanoostenryck@gmail.com>,
         Git List <git@vger.kernel.org>
-Subject: [PATCH 7/8] strbuf_check_ref_format(): expand only local branches
-Message-ID: <20170228121644.ki5k5654bxpl7caw@sigill.intra.peff.net>
+Subject: Re: [PATCH 4/8] interpret_branch_name: allow callers to restrict
+ expansions
+Message-ID: <20170228122338.xkefanyhtwbomoit@sigill.intra.peff.net>
 References: <20170228120633.zkwfqms57fk7dkl5@sigill.intra.peff.net>
+ <20170228121434.2dhngs4peq5acic2@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20170228120633.zkwfqms57fk7dkl5@sigill.intra.peff.net>
+In-Reply-To: <20170228121434.2dhngs4peq5acic2@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This function asks strbuf_branchname() to expand any @-marks
-in the branchname, and then we blindly stick refs/heads/ in
-front of the result. This is obviously nonsense if the
-expansion is "HEAD" or a ref in refs/remotes/.
+On Tue, Feb 28, 2017 at 07:14:34AM -0500, Jeff King wrote:
 
-The most obvious end-user effect is that creating or
-renaming a branch with an expansion may have confusing
-results (e.g., creating refs/heads/origin/master from
-"@{upstream}" when the operation should be disallowed).
+> However, out-parameters make calling interface somewhat
+> cumbersome. Instead, let's do the opposite: let the caller
+> tell us which elements to expand. That's easier to pass in,
+> and none of the callers give more precise error messages
+> than "@{upstream} isn't a valid branch name" anyway (which
+> should be sufficient).
 
-We can fix this by telling strbuf_branchname() that we are
-only interested in local expansions. Any unexpanded bits are
-then fed to check_ref_format(), which either disallows them
-(in the case of "@{upstream}") or lets them through
-("refs/heads/@" is technically valid, if a bit silly).
+Two things to call attention to:
 
-Signed-off-by: Jeff King <peff@peff.net>
----
- sha1_name.c                           | 2 +-
- t/t3204-branch-name-interpretation.sh | 4 ++--
- 2 files changed, 3 insertions(+), 3 deletions(-)
+> -extern int interpret_branch_name(const char *str, int len, struct strbuf *);
+> + *
+> + * If "allowed" is non-zero, it is a treated as a bitfield of allowable
+> + * expansions: local branches ("refs/heads/"), remote branches
+> + * ("refs/remotes/"), or "HEAD". If no "allowed" bits are set, any expansion is
+> + * allowed, even ones to refs outside of those namespaces.
+> + */
+> +#define INTERPRET_BRANCH_LOCAL (1<<0)
+> +#define INTERPRET_BRANCH_REMOTE (1<<1)
+> +#define INTERPRET_BRANCH_HEAD (1<<2)
 
-diff --git a/sha1_name.c b/sha1_name.c
-index b21997c29..c0cfb69a4 100644
---- a/sha1_name.c
-+++ b/sha1_name.c
-@@ -1317,7 +1317,7 @@ void strbuf_branchname(struct strbuf *sb, const char *name, unsigned allowed)
- 
- int strbuf_check_branch_ref(struct strbuf *sb, const char *name)
- {
--	strbuf_branchname(sb, name, 0);
-+	strbuf_branchname(sb, name, INTERPRET_BRANCH_LOCAL);
- 	if (name[0] == '-')
- 		return -1;
- 	strbuf_splice(sb, 0, 0, "refs/heads/", 11);
-diff --git a/t/t3204-branch-name-interpretation.sh b/t/t3204-branch-name-interpretation.sh
-index c8fec5b8c..6115ad504 100755
---- a/t/t3204-branch-name-interpretation.sh
-+++ b/t/t3204-branch-name-interpretation.sh
-@@ -42,7 +42,7 @@ test_expect_success 'update branch via local @{upstream}' '
- 	expect_branch local two
- '
- 
--test_expect_failure 'disallow updating branch via remote @{upstream}' '
-+test_expect_success 'disallow updating branch via remote @{upstream}' '
- 	git update-ref refs/remotes/origin/remote one &&
- 	git branch --set-upstream-to=origin/remote &&
- 
-@@ -98,7 +98,7 @@ test_expect_success 'delete @{upstream} expansion matches -r option' '
- # and not refs/heads/HEAD. These tests should not imply that refs/heads/@ is a
- # sane thing, but it _is_ technically allowed for now. If we disallow it, these
- # can be switched to test_must_fail.
--test_expect_failure 'create branch named "@"' '
-+test_expect_success 'create branch named "@"' '
- 	git branch -f @ one &&
- 	expect_branch refs/heads/@ one
- '
--- 
-2.12.0.359.gd4c8c42e9
+Is the "0 allows everything, but any bit turns on restrictions"
+convention too confusing? It's convenient to use in the callers which do
+not need restrictions, but we could add an INTERPRET_BRANCH_ALL flag if
+that is more clear (but note that it _isn't_ just bitwise-AND of the
+other flags, because technically an @{upstream} could point to
+"refs/foo" or some other location).
 
+> -int interpret_branch_name(const char *name, int namelen, struct strbuf *buf)
+> +int interpret_branch_name(const char *name, int namelen, struct strbuf *buf,
+> +			  unsigned allowed)
+>  {
+>  	char *at;
+>  	const char *start;
+> @@ -1254,24 +1275,29 @@ int interpret_branch_name(const char *name, int namelen, struct strbuf *buf)
+>  		if (len == namelen)
+>  			return len; /* consumed all */
+>  		else
+> -			return reinterpret(name, namelen, len, buf);
+> +			return reinterpret(name, namelen, len, buf, allowed);
+>  	}
+
+It's hard to see from this context, but a careful reader may note that
+we do not check "allowed" at all before calling
+interpret_nth_prior_checkout(). This is looking for branch names via
+HEAD, so I don't think it can ever return anything but a local name.
+
+Which, hmm. I guess was valid when the flag was "only_branches", but
+would not be valid under INTERPRET_BRANCH_REMOTE. I wonder if
+
+  git branch -r -D @{-1}
+
+incorrectly deletes refs/remotes/origin/master if you previously had
+refs/heads/origin/master checked out.
+
+-Peff
