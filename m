@@ -2,72 +2,114 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E4B52201B0
-	for <e@80x24.org>; Tue, 28 Feb 2017 20:12:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CF9FC201B0
+	for <e@80x24.org>; Tue, 28 Feb 2017 20:29:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751435AbdB1UM3 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 28 Feb 2017 15:12:29 -0500
-Received: from cloud.peff.net ([104.130.231.41]:35900 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750957AbdB1UM0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Feb 2017 15:12:26 -0500
-Received: (qmail 19223 invoked by uid 109); 28 Feb 2017 20:04:26 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 28 Feb 2017 20:04:26 +0000
-Received: (qmail 29580 invoked by uid 111); 28 Feb 2017 20:04:31 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 28 Feb 2017 15:04:31 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 28 Feb 2017 15:04:23 -0500
-Date:   Tue, 28 Feb 2017 15:04:23 -0500
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        git@vger.kernel.org
-Subject: Re: [PATCH 0/6] Use time_t
-Message-ID: <20170228200423.33dghyephxsmxrx6@sigill.intra.peff.net>
-References: <cover.1488231002.git.johannes.schindelin@gmx.de>
- <20170228142802.hu5esthnqdsgc2po@sigill.intra.peff.net>
- <f6b57868-0173-48d9-86cb-79780f7e301b@web.de>
- <xmqqa896kuve.fsf@gitster.mtv.corp.google.com>
+        id S1751648AbdB1U3n (ORCPT <rfc822;e@80x24.org>);
+        Tue, 28 Feb 2017 15:29:43 -0500
+Received: from mail-io0-f182.google.com ([209.85.223.182]:36423 "EHLO
+        mail-io0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751411AbdB1U3m (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Feb 2017 15:29:42 -0500
+Received: by mail-io0-f182.google.com with SMTP id l7so17314335ioe.3
+        for <git@vger.kernel.org>; Tue, 28 Feb 2017 12:28:52 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=BRWTECTuwgjy8cJ6w2Leg/o/nefgMNOIgNnIhxMRCag=;
+        b=UW8KHu/xVvdhRRtv6myApCqv0Wc52rmHB4ABDE5HZXMdRBj37nsKGGY26dA8clSowe
+         UYbs2PNVf+8Nf/csjufwG9iSlx3aFVJsMyoU8mPqJ54bVYXCSJoThKKWzt4quRUZk7b/
+         xSQlYjsuT6xIbIe/qxCzxXksoRbbgMQnJBbovKTuUwf0QGm0DmDbwiLpvHBV419O5AZ/
+         unBx/CNEAgjXJ9nUspyWYp46xFr5xVRZyGIIHO067/2XZw5SHerS6YLiLs/LiC2psEqw
+         e/Qf0vp/yzR3nNXDg2B0GRW64VXGlN2HBpFG8YMYcxve88kzpy/FlTYsrgbuAHNIRPIG
+         80Mw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=BRWTECTuwgjy8cJ6w2Leg/o/nefgMNOIgNnIhxMRCag=;
+        b=FTcGOdJ1BD9qhKHPk3bfQd6gggDslKx5QoIbWAYjz0NEUqZ/LPkZA0sb6LePRzPI2F
+         ZIpf2m94DQoc1GYAzpk5p07G/zXX2AK6MB/EyoMtTku7HmMy9Jozoc3Mfw4bIGISgb2U
+         1dWHUjI0wsveuaeOfVzYudL4Qe4Mqi4bIoXDcl/SqeZY8omi5IugdhTh0H79x2sjNX97
+         LifXc7chBEQmShKZSWerekKGAWj/cWovNGNSvKuvJyiAZEZrnDfzn0tpsza1bIkyPkun
+         BSmDy0qQCR6tNXJ8+tPS945qNcoFs1ypamoxAWB0Yj6G8P86WrvAokvuv5f2pxSiQ9Ci
+         h0KQ==
+X-Gm-Message-State: AMke39kx2UjxBwET/jCAbLMIm732ZzMnQqJ5EZxJp2GAmstthEzMget03kbfHswu3dy7cYzSO+Z4O0JEF/Vx+Z78
+X-Received: by 10.107.37.148 with SMTP id l142mr4432424iol.159.1488313318447;
+ Tue, 28 Feb 2017 12:21:58 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqa896kuve.fsf@gitster.mtv.corp.google.com>
+Received: by 10.79.13.1 with HTTP; Tue, 28 Feb 2017 12:21:57 -0800 (PST)
+In-Reply-To: <20170228200821.iojdzntjslwgrzcb@sigill.intra.peff.net>
+References: <CAC+L6n0YeX_n_AysCLtBWkA+jPHwg7HmOWq2PLj75byxOZE=qQ@mail.gmail.com>
+ <CAGZ79ka8saQMKeutE415WxOQ71MnEw1A4uV3b0Pa4gcehx8pdw@mail.gmail.com>
+ <20170228143710.smbzo6b7wefjc62r@sigill.intra.peff.net> <CAGZ79kb8F9_9fd9uhfPpHVPQj-zm99qt5Tr=3TUhpe=K6JknEg@mail.gmail.com>
+ <20170228200821.iojdzntjslwgrzcb@sigill.intra.peff.net>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Tue, 28 Feb 2017 12:21:57 -0800
+Message-ID: <CAGZ79kZ8ANzjauzJAbPh7m7zYoBrB=ZjgDXHxNb57_H=RYm8cQ@mail.gmail.com>
+Subject: Re: 'git submodules update' ignores credential.helper config of the
+ parent repository
+To:     Jeff King <peff@peff.net>
+Cc:     Dmitry Neverov <dmitry.neverov@gmail.com>,
+        Duy Nguyen <pclouds@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Feb 28, 2017 at 10:55:49AM -0800, Junio C Hamano wrote:
+On Tue, Feb 28, 2017 at 12:08 PM, Jeff King <peff@peff.net> wrote:
+> On Tue, Feb 28, 2017 at 10:05:24AM -0800, Stefan Beller wrote:
+>
+>> > I have a feeling that something like this would create unwelcome corner
+>> > cases in the config-writer, which is otherwise does not have to care
+>> > about which existing section of a file it adds a key to.
+>>
+>> Yeah the writer would become a lot more involved, if we're not going
+>> the stupid way (add these sections for nearly all keys. that would be
+>> a mess but easy to implement)
+>>
+>> So I guess then we rather settle with multiple config files or a white/blacklist
+>> of config options to propagate from the superproject to its submodules.
+>
+> I'm still open to the idea that we simply improve the documentation to
+> make it clear that per-repo config really is per-repo, and is not shared
+> between super-projects and submodules. And then something like Duy's
+> proposed conditional config lets you set global config that flexibly
+> covers a set of repos.
 
-> > Glibc will get a way to enable 64-bit time_t on 32-bit platforms
-> > eventually
-> > (https://sourceware.org/glibc/wiki/Y2038ProofnessDesign). Can
-> > platforms that won't provide a 64-bit time_t by 2038 be actually used
-> > at that point?  How would we get time information on them?  How would
-> > a custom timestamp_t help us?
-> 
-> That's a sensible "wait, let's step back a bit".  I take it that you
-> are saying "time_t is just fine", and I am inclined to agree.
-> 
-> Right now, they may be able to have future timestamps ranging to
-> year 2100 and switching to time_t would limit their ability to
-> express future time to 2038 but they would be able to express
-> timestamp in the past to cover most of 20th century.  Given that
-> these 32-bit time_t software platforms will die off before year 2038
-> (either by underlying hardware getting obsolete, or software updated
-> to handle 64-bit time_t), the (temporary) loss of 2038-2100 range
-> would not be too big a deal to warrant additional complexity.
+How would the workflow for that look like?
+My naive thought on that is:
 
-For what it's worth, I'm on board with just using time_t if it reduces
-the overall complexity. I agree that the "loss" of far-future timestamp
-handling is unlikely to matter between now and 2038, and those systems
-will have to figure out their time_t problems by then. By actually using
-time_t we get to piggy-back on their solution.
+  (1)  $EDIT .git/config_to_be_included
+  (2)  $ git config add-config-inclusion .git/config_to_be_included
+  (3)  $ git submodule foreach git config add-inclusion-config
+.git/config_to_be_included
 
--Peff
+which sounds a bit cumbersome to me.
+So I guess we'd want some parts of that as part of another command, e.g.
+(3) could be part of (2).
+
+--
+I am also open and willing to document this better; but were would
+we want to put documentation? Obviously we would not want to put it
+alongside each potentially useful config option to be inherited to
+submodules. (that would imply repeating ourselves quite a lot in
+the config man page).
+
+I guess putting it into "man gitmodules" that I was writing tentatively
+would make sense.
+C.f
+https://public-inbox.org/git/20161227234310.13264-4-sbeller@google.com/
+(or search for "background story" in your emails)
+
+Thanks,
+Stefan
