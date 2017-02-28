@@ -6,84 +6,90 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8580E201B0
-	for <e@80x24.org>; Tue, 28 Feb 2017 14:37:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EBA49201B0
+	for <e@80x24.org>; Tue, 28 Feb 2017 14:54:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752469AbdB1OhT (ORCPT <rfc822;e@80x24.org>);
-        Tue, 28 Feb 2017 09:37:19 -0500
-Received: from cloud.peff.net ([104.130.231.41]:35668 "EHLO cloud.peff.net"
+        id S1751737AbdB1OyS (ORCPT <rfc822;e@80x24.org>);
+        Tue, 28 Feb 2017 09:54:18 -0500
+Received: from cloud.peff.net ([104.130.231.41]:35684 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752303AbdB1OhR (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Feb 2017 09:37:17 -0500
-Received: (qmail 31441 invoked by uid 109); 28 Feb 2017 14:37:12 -0000
+        id S1751060AbdB1OyS (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Feb 2017 09:54:18 -0500
+Received: (qmail 22041 invoked by uid 109); 28 Feb 2017 12:07:36 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 28 Feb 2017 14:37:12 +0000
-Received: (qmail 26639 invoked by uid 111); 28 Feb 2017 14:37:18 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 28 Feb 2017 12:07:36 +0000
+Received: (qmail 25329 invoked by uid 111); 28 Feb 2017 12:07:42 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 28 Feb 2017 09:37:18 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 28 Feb 2017 09:37:10 -0500
-Date:   Tue, 28 Feb 2017 09:37:10 -0500
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 28 Feb 2017 07:07:42 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 28 Feb 2017 07:07:34 -0500
+Date:   Tue, 28 Feb 2017 07:07:34 -0500
 From:   Jeff King <peff@peff.net>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Dmitry Neverov <dmitry.neverov@gmail.com>,
-        Duy Nguyen <pclouds@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jacob Keller <jacob.keller@gmail.com>,
+        Karthik Nayak <karthik.188@gmail.com>,
+        Luc Van Oostenryck <luc.vanoostenryck@gmail.com>,
         Git List <git@vger.kernel.org>
-Subject: Re: 'git submodules update' ignores credential.helper config of the
- parent repository
-Message-ID: <20170228143710.smbzo6b7wefjc62r@sigill.intra.peff.net>
-References: <CAC+L6n0YeX_n_AysCLtBWkA+jPHwg7HmOWq2PLj75byxOZE=qQ@mail.gmail.com>
- <CAGZ79ka8saQMKeutE415WxOQ71MnEw1A4uV3b0Pa4gcehx8pdw@mail.gmail.com>
+Subject: [PATCH 2/8] strbuf_branchname: drop return value
+Message-ID: <20170228120734.3kbfs74yxbr2lj42@sigill.intra.peff.net>
+References: <20170228120633.zkwfqms57fk7dkl5@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CAGZ79ka8saQMKeutE415WxOQ71MnEw1A4uV3b0Pa4gcehx8pdw@mail.gmail.com>
+In-Reply-To: <20170228120633.zkwfqms57fk7dkl5@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Feb 27, 2017 at 11:09:12AM -0800, Stefan Beller wrote:
+The return value from strbuf_branchname() is confusing and
+useless: it's 0 if the whole name was consumed by an @-mark,
+but otherwise is the length of the original name we fed.
 
-> For worktrees these multiple config files sounded like
-> the obvious solution, but I wonder if there was also
-> some bike shedding about other solutions?
-> 
-> I could imagine that we would want to have attributes
-> for specific configuration, e.g.:
-> 
-> --8<--
-> [core]
->     repositoryformatversion = 0
->     filemode = true
->     bare = false
->     logallrefupdates = true
-> [remote "origin"]
->     url = git://github.com/gitster/git
->     fetch = +refs/heads/*:refs/remotes/origin/*
-> [attribute "submodules"]
->     read = true
-> # this will be read and respected by submodules as well:
-> [url."internal-git-miror"]
->     insteadOf = github.com
-> [attribute "submodules"]
->     read = false
-> # This (and the beginning of this file) will not be respected
-> # by submodules
-> [credential]
->     helper =
-> -->8--
-> 
-> This would change the semantics of a config file as the attribute for
-> each setting depends on the location (was attribute.FOO.read =
-> {true, false} read before).
+No callers actually look at the return value, so let's just
+get rid of it.
 
-I'm not enthused by this, just because there is a hidden dependency
-between attribute.* sections and other ones. They _look_ like regular
-config keys, but they really aren't.
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ sha1_name.c | 5 +----
+ strbuf.h    | 2 +-
+ 2 files changed, 2 insertions(+), 5 deletions(-)
 
-I have a feeling that something like this would create unwelcome corner
-cases in the config-writer, which is otherwise does not have to care
-about which existing section of a file it adds a key to.
+diff --git a/sha1_name.c b/sha1_name.c
+index 28865b3a1..4c1e91184 100644
+--- a/sha1_name.c
++++ b/sha1_name.c
+@@ -1279,17 +1279,14 @@ int interpret_branch_name(const char *name, int namelen, struct strbuf *buf)
+ 	return -1;
+ }
+ 
+-int strbuf_branchname(struct strbuf *sb, const char *name)
++void strbuf_branchname(struct strbuf *sb, const char *name)
+ {
+ 	int len = strlen(name);
+ 	int used = interpret_branch_name(name, len, sb);
+ 
+-	if (used == len)
+-		return 0;
+ 	if (used < 0)
+ 		used = 0;
+ 	strbuf_add(sb, name + used, len - used);
+-	return len;
+ }
+ 
+ int strbuf_check_branch_ref(struct strbuf *sb, const char *name)
+diff --git a/strbuf.h b/strbuf.h
+index cf1b5409e..47df0500d 100644
+--- a/strbuf.h
++++ b/strbuf.h
+@@ -560,7 +560,7 @@ static inline void strbuf_complete_line(struct strbuf *sb)
+ 	strbuf_complete(sb, '\n');
+ }
+ 
+-extern int strbuf_branchname(struct strbuf *sb, const char *name);
++extern void strbuf_branchname(struct strbuf *sb, const char *name);
+ extern int strbuf_check_branch_ref(struct strbuf *sb, const char *name);
+ 
+ extern void strbuf_addstr_urlencode(struct strbuf *, const char *,
+-- 
+2.12.0.359.gd4c8c42e9
 
--Peff
