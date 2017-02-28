@@ -2,101 +2,130 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 51233201B0
-	for <e@80x24.org>; Tue, 28 Feb 2017 19:37:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 01D0C201B0
+	for <e@80x24.org>; Tue, 28 Feb 2017 19:44:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751643AbdB1Tgu (ORCPT <rfc822;e@80x24.org>);
-        Tue, 28 Feb 2017 14:36:50 -0500
-Received: from mout.gmx.net ([212.227.15.15]:55709 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751769AbdB1Tfn (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Feb 2017 14:35:43 -0500
-Received: from virtualbox ([37.201.192.48]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0Lj1Xa-1cB65H1uqU-00dERn; Tue, 28
- Feb 2017 20:17:29 +0100
-Date:   Tue, 28 Feb 2017 20:17:28 +0100 (CET)
-From:   Johannes Schindelin <johannes.schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     git@vger.kernel.org
-cc:     Junio C Hamano <gitster@pobox.com>,
-        Lars Schneider <larsxschneider@gmail.com>
-Subject: [PATCH] Travis: also test on 32-bit Linux
-Message-ID: <c76a133a57514a332828099d342c9763fd946bfa.1488309430.git.johannes.schindelin@gmx.de>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+        id S1751646AbdB1ToV (ORCPT <rfc822;e@80x24.org>);
+        Tue, 28 Feb 2017 14:44:21 -0500
+Received: from mail-it0-f54.google.com ([209.85.214.54]:37074 "EHLO
+        mail-it0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751122AbdB1ToR (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Feb 2017 14:44:17 -0500
+Received: by mail-it0-f54.google.com with SMTP id 203so16492814ith.0
+        for <git@vger.kernel.org>; Tue, 28 Feb 2017 11:43:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=oJeXddgNPVzmpdUNqUGXuFUfzND8XRAv4VN2Gmc/1QE=;
+        b=HxLp6Z9zFOKiqlKmm/nDSxWoOnjOj/wt0UCw1KwWgPLHozgwke9mTqVfQq8QtKrAV6
+         rnXL2N/ZbVS7Y4XrnVYiTjEL2rfHydYA5jFSm8bpeSz1nujHjvnGCDsqXvnRNA/lC9XK
+         iFTyhxRD5S0Mlbk2/blTyZC3YNWdyS7f43L5K2aq88upHBzHFZw3nhLJCe/x6rnVGx75
+         bFt48CQ2ul1G2lYu8C/e4ohMoVJ86HPJF52bK0+w1pExu9Yo2h2GMwGpoGrfbb3NVkdZ
+         mPINphe1fpFzHr9Mw+kZqLZjWwdnCo7XhCTLtVYMo9CTHhPdbhHem4EJlmb6JS4V2o6e
+         J6pw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=oJeXddgNPVzmpdUNqUGXuFUfzND8XRAv4VN2Gmc/1QE=;
+        b=fYGYcGCAThKqMpc0xApCRbSTewM1MeTGg/Km15ZjtnxgoIOFQ9RgSbIDpoppPqTg6T
+         WmQpP0E1m02q7NQSWp+VWpuaH4TWcI/auyWlc/PK1AFTwfGAu3V+g2zMhpF1NFZSjByy
+         NBRech6pDJUucrBJIANffqO7u/19JFNKRv/MQzlT4qBr1yW3Rqi8cErwzuGnfaA7uSBZ
+         +rTv38oY992O28dDquYdY3fISPnJ+eM0IXW7ybDDk/HB23UMz142uUMbQu3aAelhANGt
+         gvJGtXNmHHq1vqD8aCA8nJx9XIsOe7LGdkv5TGZIVUrC+EFDUHO6c1o/gfBA9MajN7V+
+         nrBw==
+X-Gm-Message-State: AMke39mkIyOYOwkwFDTEOBOnvfAOBjW++AEgUPkHutOsuYqK0kjNZCoM6wSbbbKqTaLNa6UQjmSX7pbgjllndg==
+X-Received: by 10.36.225.13 with SMTP id n13mr355376ith.114.1488310456024;
+ Tue, 28 Feb 2017 11:34:16 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:Pa1fdTPUOCzipMuvV8VTzS9mppB1a4nl3QhOUmEGf5yspFgpi2O
- EyFbFEJTjS+q/+YfC16MbWsAZQAZjFzdElAOttURNI+tIpdwVow9aVClo2xbNBsK2gTUiJJ
- WViDpi3LCXfgdVrIlQ6Akyqu6/Hl4/qMK9SqB6Cf9rJxYI7USOxxhToGxRcmxzm4xS8KIP4
- zEJvmdWpSWpdRu7nuigog==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:HwXSBx61Kio=:fWI1pjanypOthygBPLQVLX
- vfH7JDPiW1H1x121VqT0g54X/EHEe9FEW9SqS/tmQJWUIIoUpYcs0gmy2ZC+DTgjEPj+QxR/J
- OIzDF2Kd2AxCdcY7SI/tcT4czVTKw6bejr6Wykw1wH/v2R662uGFP6LfQm4lMPZmW8Lv6UFum
- QpPNqvi/VVXakhTZL044/H/jAeS+wD5DiAA5JyMTZjuPoU9fH4y0HI6aaeQfQvUYrx+8GMprV
- TXBdXVphGjpwyqFdlSfCGBzZJhbF0uA4Mr//1ZZXk23h0lZxK2kGGEk21SB5XiDp0Dyov0hmu
- 4r5P9PA1hN9t1xfgaCJJRwwAmk/ttVI55M+p28OAZFiXr+w8ka25T69qJGsUZy9LiNkNwVaPs
- Wc933ny6AbJn3BWZgJ5aQXzcUg1l7jKMidaidoZXoUMav5oLSSEhYYAgEr0WxYik564Gx82ZI
- 4ylx5RQ54mWVTYqqJ+JtJZxjWWng/sOrFncX7goG1OqLbT40smbcx4Z2TDz6yBWBEfUh1gYYJ
- QO9QtMIwZgPmGcERRN2w/Nr/ZAN+pC2OuyJBu/MnDMmHWd7g1068iLOY8hMwA+M9tS1e16IyH
- fZbUrezjqfHxnamnJYmxu+5aehC7qAyAWFR/3mAUp/4PA5yYgYv5hXoJA1oJ2Q6gOGOJg2x+0
- We4ovdDqxgQGRulzbMBf1CaUei0ce548VWGkDCuBxwsJuVntMxkvVsBOQXBEweT27DhBJp8up
- tXfGq4gqyXu1lJEqVxfm2qZewVjrjrIecqlpvq3e/u8OO+yjX886MDJ1p91ZfWrHwnNa3OXnp
- eiy3FOhDncizgiEVH38qTBbFZN42w==
+Received: by 10.107.146.131 with HTTP; Tue, 28 Feb 2017 11:34:14 -0800 (PST)
+In-Reply-To: <xmqq60jukubq.fsf@gitster.mtv.corp.google.com>
+References: <CA+55aFzFEpi1crykZ33r9f7BsvLt_kiB-CHXOkuCAX=fd4BU-w@mail.gmail.com>
+ <20170223182147.hbsyxsmyijgkqu75@kitenet.net> <CA+55aFxckeEW1ePcebrgG4iN4Lp62A2vU6tA=xnSDC_BnKQiCQ@mail.gmail.com>
+ <20170223184637.xr74k42vc6y2pmse@sigill.intra.peff.net> <CA+55aFx=0EVfSG2iEKKa78g3hFN_yZ+L_FRm4R749nNAmTGO9w@mail.gmail.com>
+ <20170223193210.munuqcjltwbrdy22@sigill.intra.peff.net> <CA+55aFxmr6ntWGbJDa8tOyxXDX3H-yd4TQthgV_Tn1u91yyT8w@mail.gmail.com>
+ <20170223195753.ppsat2gwd3jq22by@sigill.intra.peff.net> <alpine.LFD.2.20.1702231428540.30435@i7.lan>
+ <20170223224302.joti4zqucme3vqr2@sigill.intra.peff.net> <20170223230507.kuxjqtg3ghcfskc6@sigill.intra.peff.net>
+ <xmqqefyikvin.fsf@gitster.mtv.corp.google.com> <xmqq60jukubq.fsf@gitster.mtv.corp.google.com>
+From:   Linus Torvalds <torvalds@linux-foundation.org>
+Date:   Tue, 28 Feb 2017 11:34:14 -0800
+X-Google-Sender-Auth: l_1sPayHFtOPLql27C65tIM_Evc
+Message-ID: <CA+55aFxTWqsTTiDKo4DBZT-8Z9t80bGMD3uijzKONa_bYEZABQ@mail.gmail.com>
+Subject: Re: SHA1 collisions found
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jeff King <peff@peff.net>, Joey Hess <id@joeyh.name>,
+        Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When Git v2.9.1 was released, it had a bug that showed only on Windows
-and on 32-bit systems: our assumption that `unsigned long` can hold
-64-bit values turned out to be wrong.
+On Tue, Feb 28, 2017 at 11:07 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>
+> In a way similar to 8415558f55 ("sha1dc: avoid c99
+> declaration-after-statement", 2017-02-24), we would want this on
+> top.
 
-This could have been caught earlier if we had a Continuous Testing
-set up that includes a build and test run on 32-bit Linux.
+There's a few other simplifications that could be done:
 
-Let's do this (and take care of the Windows build later). This patch
-asks Travis CI to install a Docker image with 32-bit libraries and then
-goes on to build and test Git using this 32-bit setup.
+ (1) make the symbols static that aren't used.
 
-A big thank you to Lars Schneider without whose help this patch would
-not have happened.
+     The sha1.h header ends up declaring several things that shouldn't
+have been exported.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
-Published-As: https://github.com/dscho/git/releases/tag/travis-32-bit-v1
-Fetch-It-Via: git fetch https://github.com/dscho/git travis-32-bit-v1
+     I suspect the code may have had some debug mode that got stripped
+out from it before making it public (or that was never there, and was
+just something the generating code could add).
 
- .travis.yml | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ (2) get rid of the "safe mode" support.
 
-diff --git a/.travis.yml b/.travis.yml
-index 9c63c8c3f68..87d9e9051a6 100644
---- a/.travis.yml
-+++ b/.travis.yml
-@@ -39,6 +39,17 @@ env:
- 
- matrix:
-   include:
-+    - env: Linux32
-+      os: linux
-+      compiler: clang
-+      sudo: required
-+      services:
-+        - docker
-+      before_install:
-+        - docker pull daald/ubuntu32:xenial
-+      before_script:
-+      script:
-+        - "sudo docker run -i -v \"${PWD}:/usr/src/git\" daald/ubuntu32:xenial /bin/bash -c \"linux32 --32bit i386 sh -c 'apt update && apt install -y build-essential libcurl4-openssl-dev libssl-dev libexpat-dev gettext python && cd /usr/src/git && DEFAULT_TEST_TARGET=prove GIT_PROVE_OPTS=\\\"--timer --jobs 3 --state=failed,slow,save\\\" GIT_TEST_OPTS=--verbose-log GIT_TEST_CLONE_2GB=YesPlease make -j2 test'\""
-     - env: Documentation
-       os: linux
-       compiler: clang
+     That one is meant for non-checking replacements where it
+generates a *different* hash for input with the collision fingerpring,
+but that's pointless for the git use when we abort on a collision
+fingerprint.
 
-base-commit: 3bc53220cb2dcf709f7a027a3f526befd021d858
--- 
-2.12.0.windows.1.3.g8a117c48243
+I think the first one will show that the sha1_compression() function
+isn't actually used, and with the removal of safe-mode I think
+sha1_compression_W() also is unused.
+
+Finally, only states 58 and 65 (out of all 80 states) are actually
+used, and from what I can tell, the 'maski' value is always 0, so the
+looping over 80 state masks is really just a loop over two.
+
+The file has code top *generate* all the 80 sha1_recompression_step()
+functions, and I don't think the compiler is smart enough to notice
+that only two of them matter.
+
+And because 'maski' is always zero, thisL
+
+   ubc_dv_mask[sha1_dvs[i].maski]
+
+code looks like it might as well just use ubc_dv_mask[0] - in fact the
+ubc_dv_mask[] "array" really is just a single-entry array anyway:
+
+   #define DVMASKSIZE 1
+
+so that code has a few oddities in it. It's generated code, which is
+probably why.
+
+Basically, some of it could be improved. In particular, the "generate
+code for 80 different recompression cases, but only ever use two of
+them" really looks like it would blow up the code generation footprint
+a lot.
+
+I'm adding Marc Stevens and Dan Shumow to this email (bcc'd, so that
+they don't get dragged into any unrelated email threads) in case they
+want to comment.
+
+I'm wondering if they perhaps have a cleaned-up version somewhere, or
+maybe they can tell me that I'm just full of sh*t and missed
+something.
+
+                    Linus
