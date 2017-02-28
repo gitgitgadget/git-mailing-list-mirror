@@ -2,74 +2,83 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3EC71202C9
-	for <e@80x24.org>; Tue, 28 Feb 2017 21:38:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D2585202C9
+	for <e@80x24.org>; Tue, 28 Feb 2017 21:42:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752263AbdB1Vi5 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 28 Feb 2017 16:38:57 -0500
-Received: from cloud.peff.net ([104.130.231.41]:36046 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751601AbdB1Vix (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Feb 2017 16:38:53 -0500
-Received: (qmail 21401 invoked by uid 109); 28 Feb 2017 20:37:04 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 28 Feb 2017 20:37:04 +0000
-Received: (qmail 30488 invoked by uid 111); 28 Feb 2017 20:37:10 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 28 Feb 2017 15:37:10 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 28 Feb 2017 15:37:02 -0500
-Date:   Tue, 28 Feb 2017 15:37:02 -0500
-From:   Jeff King <peff@peff.net>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Linus Torvalds <torvalds@linux-foundation.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: Typesafer git hash patch
-Message-ID: <20170228203701.zwboxazcbnp4gaey@sigill.intra.peff.net>
-References: <CA+55aFxYs1zp2c-UPe8EfshNNOxRVxZ2H+ipsnG489NBsE+DLQ@mail.gmail.com>
- <20170228202633.3pxbrnrhot7syiae@sigill.intra.peff.net>
- <20170228203312.jc7gia7f44goqjmj@genre.crustytoothpaste.net>
+        id S1752147AbdB1Vmy (ORCPT <rfc822;e@80x24.org>);
+        Tue, 28 Feb 2017 16:42:54 -0500
+Received: from mail-pf0-f194.google.com ([209.85.192.194]:35944 "EHLO
+        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752485AbdB1Vmr (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Feb 2017 16:42:47 -0500
+Received: by mail-pf0-f194.google.com with SMTP id j5so1862764pfb.3
+        for <git@vger.kernel.org>; Tue, 28 Feb 2017 13:42:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=z/zIyCzN8FvRUqM2OhmhTUE+iAFPXiurHX4r7T5mboM=;
+        b=ExMaAw9nX2SvAVomX7ZIJCJI9f1itJZADmu+jSVMzIcZ1BN4Bl/NHRuGPEyvYBGH9Y
+         NagBiAmjCPsSE/ZmyRcLMs5aoTc5DtTvqONR6934jMr+XIbL0odbRQhGSfLR+bcv4ADL
+         1I1TRDh6/GqOwPHe+Gqw16ICzUSWoweLi0LkLoinN+Nd43+XhCH4m2238djCra0KJMDg
+         alDWFZmWK7X5s8e3FyEBqA0vid1D56bHDPHKa9qROCSheN42rYOro+k1rtjs5tYoNIzJ
+         naY72PdvClx3hhQo3KB5HezKoH+6z1p8p9fQDkkmhnCAbMDAOi3lxiTm8kApCx4sIkWw
+         wkJg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=z/zIyCzN8FvRUqM2OhmhTUE+iAFPXiurHX4r7T5mboM=;
+        b=ev0KCbtVIV32PuYDLSKlMy7rLAeeqcLkOBwsBKVXce9GnRg70u08mW9y3wERg+s8ny
+         Yiq74D3356Xi8WibCywZL+hqY2wBAeOrN+ELKtfFOQbmIbBOuK/DiiF3y2awyZfxXjTx
+         9muE0cJb9oMVu1XfW4twWI9wGqnWfpQcm94EpSN/mGefabPqlEAycoVi1qmxUakwp9TT
+         pR5qm4QlQIXduhNINI9Gac7lKf7Osn9vq0gUxn41YGPX491oEHfnw3b/y3BMl9nwb/OO
+         /ut9emz3rQ2L1nCj6dvU9maPUqvLuPE+0f3kTjvDgEp7lugNK6chsBtDZ1Iwbi5xmahe
+         ihcg==
+X-Gm-Message-State: AMke39lOEAJ67VosDAwUBlu+ErcmbfYb8kFhkXgMXo6t4s9fVBAWwxWvJyIbKsZeF9PwQg==
+X-Received: by 10.99.37.199 with SMTP id l190mr4849064pgl.86.1488318165906;
+        Tue, 28 Feb 2017 13:42:45 -0800 (PST)
+Received: from localhost ([2620:0:1000:8622:e0d7:55f8:67f2:62dd])
+        by smtp.gmail.com with ESMTPSA id t22sm6005275pfa.114.2017.02.28.13.42.44
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Tue, 28 Feb 2017 13:42:45 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org, peff@peff.net, peartben@gmail.com,
+        benpeart@microsoft.com
+Subject: Re: [PATCH 1/3] revision: unify {tree,blob}_objects in rev_info
+References: <cover.1487984670.git.jonathantanmy@google.com>
+        <cover.1487984670.git.jonathantanmy@google.com>
+        <06a84f8c77924b275606384ead8bb2fd7d75f7b6.1487984670.git.jonathantanmy@google.com>
+Date:   Tue, 28 Feb 2017 13:42:44 -0800
+In-Reply-To: <06a84f8c77924b275606384ead8bb2fd7d75f7b6.1487984670.git.jonathantanmy@google.com>
+        (Jonathan Tan's message of "Fri, 24 Feb 2017 17:18:36 -0800")
+Message-ID: <xmqq1suij8kr.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20170228203312.jc7gia7f44goqjmj@genre.crustytoothpaste.net>
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Feb 28, 2017 at 08:33:13PM +0000, brian m. carlson wrote:
+Jonathan Tan <jonathantanmy@google.com> writes:
 
-> On Tue, Feb 28, 2017 at 03:26:34PM -0500, Jeff King wrote:
-> > Yeah, a lot of brian's patches have been focused around the fixing the
-> > related size assumptions. We've got GIT_SHA1_HEXSZ which doesn't solve
-> > the problem, but at least makes it easy to find. And a big improvement
-> > in the most recent series is a parse_oid() function that lets you parse
-> > object-ids left-to-right without knowing the size up front. So things
-> > like:
-> > 
-> >   if (len > 82 &&
-> >       !get_sha1_hex(buf, sha1_a) &&
-> >       get_sha1_hex(buf + 41, sha1_b))
-> > 
-> > becomes more like:
-> > 
-> >   if (parse_oid(p, oid_a, &p) && *p++ == ' ' &&
-> >       parse_oid(p, oid_b, &p) && *p++ == '\n')
-> 
-> What I could do instead of using GIT_SHA1_HEXSZ is use GIT_MAX_HEXSZ for
-> things that are about allocating enough memory and create a global (or
-> function) for things that only care about what the current hash size is.
-> That might be a desirable approach.  If other people agree, I can make a
-> patch to do that.
+> It could be argued that in the future, Git might need to distinguish
+> tree_objects from blob_objects - in particular, a user might want
+> rev-list to print the trees but not the blobs. 
 
-I was going to say "don't worry about it, and focus on converting to
-constants at all for now". But I guess while you are doing that, it does
-not hurt to split the MAX_HEXSZ cases out. It will save work in sorting
-them later.
+That was exactly why these bits were originally made to "appear
+independent but in practice nobody sets only one and leaves others
+off".  
 
--Peff
+And it didn't happen in the past 10 years, which tells us that we
+should take this patch.
+
+Thanks.
+
