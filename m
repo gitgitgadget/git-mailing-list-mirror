@@ -2,86 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7CD22202C9
-	for <e@80x24.org>; Tue, 28 Feb 2017 21:08:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F211E202C9
+	for <e@80x24.org>; Tue, 28 Feb 2017 21:08:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751623AbdB1VIZ (ORCPT <rfc822;e@80x24.org>);
-        Tue, 28 Feb 2017 16:08:25 -0500
-Received: from mout.gmx.net ([212.227.17.22]:54631 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751497AbdB1VIW (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Feb 2017 16:08:22 -0500
-Received: from virtualbox ([37.201.192.48]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0M1nOg-1cTm3m46eY-00tlRQ; Tue, 28
- Feb 2017 21:59:53 +0100
-Date:   Tue, 28 Feb 2017 21:59:51 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     wth1@cornell.edu
-cc:     git-for-windows <git-for-windows@googlegroups.com>,
-        git@vger.kernel.org
-Subject: Re: [ANNOUNCE] Git for Windows 2.12.0
-In-Reply-To: <74720ad6-1bc6-4dbd-9098-33cb069f41de@googlegroups.com>
-Message-ID: <alpine.DEB.2.20.1702282158420.3767@virtualbox>
-References: <20170225165544.3956-1-johannes.schindelin@gmx.de> <74720ad6-1bc6-4dbd-9098-33cb069f41de@googlegroups.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+        id S1751655AbdB1VIY (ORCPT <rfc822;e@80x24.org>);
+        Tue, 28 Feb 2017 16:08:24 -0500
+Received: from mail-pg0-f66.google.com ([74.125.83.66]:34133 "EHLO
+        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751485AbdB1VIV (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Feb 2017 16:08:21 -0500
+Received: by mail-pg0-f66.google.com with SMTP id s67so2980815pgb.1
+        for <git@vger.kernel.org>; Tue, 28 Feb 2017 13:07:14 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=XzDXIlCGTCL1hLt0QXcsHeE9ZasggEkTT1ECRgnGsls=;
+        b=Hos0/pytmofn6mrO/3obWOZ/O+G6rTiVaai0viay8YcRTKyzCBH2HDJ6HVpIpirhn+
+         Kjs8plUtxw4PpW96f6iiXczZAjssks1V5NEZ8JG216m8RwDp9niJgby1dtUdxOCcS1B7
+         aFuwu2JW+1xQyRAtM3dimGhlSei6RE5ihbddHj7f8hPRzC1CNHXJb4UpXa9dELPpoxua
+         WLE1HFD7af224jVBlBww1EMgcbynJWJoSIHxeSt0my4plssDycCHJtXJ39+0elFRmmvY
+         TdOsxVKpzSUztyRoAZGfUwsFDZmh3CXJkj0D7L/DdhWfzKqDQqQJA2v3G/W2ABjvBNIj
+         T7ZA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=XzDXIlCGTCL1hLt0QXcsHeE9ZasggEkTT1ECRgnGsls=;
+        b=URlvzwNQKPnYdDlnR/MYDeqSSMM3GJ3uEwl1r1shRBf7r0m8C6eUIkUpI18Xd203hm
+         YHi3CNOsoMHgQ8h2zihDaN7qcL4VvcEKjo2MjCib6O9CD/4Yrplmm9hzRQ+tpoHxhToT
+         oe68V1622r4H0wgqy0SriZ7xAeS1U/0hK+OoFXpEf9nFXvJ69BuuaHNrXHgQpf4Il1XQ
+         P4ya9U20UCYQFT0oThGdERYtDbkXM/9JE75KfL/8nj0zRAIvtqQftYq5zBd2A6JjGZ1E
+         8pkivXy5+YNTT3JaaZmHuozn4Z5uogoRmEJx791ldLacGHf8n63UceSAfWhupgkajuH/
+         GfkQ==
+X-Gm-Message-State: AMke39mkOeGbz4kfFdq5OBd80NV+DdW/Ktme/t9NBw/Rvuf9DkMKpC8vQamEeYdDYE3CmQ==
+X-Received: by 10.84.248.11 with SMTP id p11mr5570894pll.72.1488316033829;
+        Tue, 28 Feb 2017 13:07:13 -0800 (PST)
+Received: from localhost ([2620:0:1000:8622:e0d7:55f8:67f2:62dd])
+        by smtp.gmail.com with ESMTPSA id o24sm5957551pfj.78.2017.02.28.13.07.12
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Tue, 28 Feb 2017 13:07:13 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Brandon Williams <bmwill@google.com>
+Cc:     git@vger.kernel.org, sbeller@google.com, pclouds@gmail.com
+Subject: Re: [PATCH 5/5] ls-files: fix bug when recuring with relative pathspec
+References: <20170224235100.52627-1-bmwill@google.com>
+        <20170224235100.52627-6-bmwill@google.com>
+Date:   Tue, 28 Feb 2017 13:07:12 -0800
+In-Reply-To: <20170224235100.52627-6-bmwill@google.com> (Brandon Williams's
+        message of "Fri, 24 Feb 2017 15:51:00 -0800")
+Message-ID: <xmqqa896ja7z.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; BOUNDARY="8323329-272846480-1488315593=:3767"
-X-Provags-ID: V03:K0:eop7G9avWQAkw2dMj6R2fi3YM3aMxfB24xB6vodVOxjOJYJDab4
- BSRctQVoPWTLhl4Sn2qclKgiM6o7lypNpElw95zVMhJpdKS7qsJSVEimnqUzAn0k0rYQrcu
- O1f0ITD+N9mhIaQ7bcKUTt/d7lPL8U9Row+NFMbp6YCz1YWI8J5+BFxCbqwMaCkQZ8T7vNJ
- B2v/Z0r97LcD9ag46wWTw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:Ke0tWpT26sY=:+md4cKxnT96/dHi9GYnGXX
- 1zSoQenncHCXL197dVJFCl/Tn1wx5hUnKhAHvk3VMzihT8a2BLJSZzY2ELh1sgYTEvE3JnbM7
- TxgYQkRsSRoFI+DK8+CmhAyIU50pfkUA0GPG7w6N0oWCsYBsVb7kSwtEwqBX07MecG8u/z+6z
- rF7m2v1WleMAEddX+xR1EzPDLiRfDSvAa+Rr6Fwos9gQuR6c1BxEvsF8pLX+A4Qb/Huj0Jtgl
- RX0y7A7OjdYy1dWM650lbRZZ1bOfhD22hVQn30vFe/WeR3yYEHV0oDZ5Gok9EurQpIUdp5XFx
- VLvPwIArSKCkKwdrG4LQF1nLnGd7V6Ee2/v1yswIYLcySV0JPhw5CYhVZiLcLX8/reeD1YnxU
- H/RK7wLhrN6uP0X7hOUQfsJ5OmELXrVwRyqyHYPgKrPZBQoE12hpdfXDdExqX1k1qvmpb6PbC
- ypDUOGszsRatIkqdgUNuioahJ+iiCgQRZdNJCHRYQuY3IGmyphoLkjyd6ZS64+g2274P/5zt1
- M2IB/RUVeYVqsyFcQvTCcUGCGOxMCMLeNx1uhAHeYZx4O3KAUzVwEVUVCJxgi40gyF+o1VBfb
- t7SRy45ebjJHHA4OKqWbrZTrgVRAAwU9RBpjQsLSrA9Vt9vIp/S5Qi7J5mHGziSfiyq4E1sbR
- D1qHrjgYa9Ap3Fk0Q200+ccLu1E4RccHNyU4ywYKVMgVL+Cd5pW2iUBf+8o9vG2qnJlsHz1sK
- /NTb3m9OfV7NRbMesvzrXOk5y50MqVFFcJyQJHWYAt3jdFddAE+yH1sdw0b29Eod+m74sMt4F
- +bYaQsCxyi07PUPBiBeXNpdChWcBcP3DBPv2SKc/4BGkGoY40iAGuXMS3Y4TEAR8vqzRmpAVR
- gQIB+ao4r9jehJec+2QXblmRkx1YzqNWemq7zs2u0GMSJFNsmWgkOpivkcrdFT6F4J1gVXVWQ
- EGS8ef0CfbmVn7BJox8nnLB6Dys2d7Y8pmKdKGzknEC0iyQljracSQfBrf641x8Sluy731JvS
- D+9vsGy1xc9iw9n16pfgANBUVFO/QUwnECR5B/hdXOzb6Ayyz2WJK+VuZz3GyHiyZA==
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Brandon Williams <bmwill@google.com> writes:
 
---8323329-272846480-1488315593=:3767
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+> Fix a bug which causes a child process for a submodule to error out when a
+> relative pathspec with a ".." is provided in the superproject.
+>
+> While at it, correctly construct the super-prefix to be used in a submodule
+> when not at the root of the repository.
+>
+> Signed-off-by: Brandon Williams <bmwill@google.com>
+> ---
+>  builtin/ls-files.c                     | 8 ++++++--
+>  t/t3007-ls-files-recurse-submodules.sh | 2 +-
+>  2 files changed, 7 insertions(+), 3 deletions(-)
+>
+> diff --git a/builtin/ls-files.c b/builtin/ls-files.c
+> index 159229081..89533ab8e 100644
+> --- a/builtin/ls-files.c
+> +++ b/builtin/ls-files.c
+> @@ -194,12 +194,15 @@ static void compile_submodule_options(const struct dir_struct *dir, int show_tag
+>  static void show_gitlink(const struct cache_entry *ce)
+>  {
+>  	struct child_process cp = CHILD_PROCESS_INIT;
+> +	struct strbuf name = STRBUF_INIT;
+>  	int status;
+>  	int i;
+>  
+> +	quote_path_relative(ce->name, prefix, &name);
+>  	argv_array_pushf(&cp.args, "--super-prefix=%s%s/",
 
-Hi,
+Same comment as 3/5.  quote_path is to produce c-quote and is not
+even meant for shell script quoting.  run_command() interface would
+do its own shell quoting when needed, so  I think you just want the
+exact string you want to pass here.
 
-On Tue, 28 Feb 2017, wth1@cornell.edu wrote:
-
-> I have attempted to download the new version but on 2/28/2016 starting
-> at 12:00PM EST I have been unable to download GIT 2.12.  The error
-> message that is returned is:
->=20
-> Make sure you=E2=80=99ve got the right web address:=20
-> https://github-cloud.s3.amazonaws.com
-
-It looks as if AWS has serious problems right now. Try downloading from
-here:
-
-https://instant.io/#152a79b2aad5137413e1ca2edd43fc08f736d896
-
-And please leave the browser open for a while after it downloaded.
-
-Thanks,
-Johannes
---8323329-272846480-1488315593=:3767--
