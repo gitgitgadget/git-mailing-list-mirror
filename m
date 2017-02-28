@@ -2,150 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B4C23202CC
-	for <e@80x24.org>; Tue, 28 Feb 2017 21:59:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A00DD202C9
+	for <e@80x24.org>; Tue, 28 Feb 2017 22:15:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751555AbdB1V7l (ORCPT <rfc822;e@80x24.org>);
-        Tue, 28 Feb 2017 16:59:41 -0500
-Received: from cloud.peff.net ([104.130.231.41]:36080 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751524AbdB1V7k (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Feb 2017 16:59:40 -0500
-Received: (qmail 26711 invoked by uid 109); 28 Feb 2017 21:59:39 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 28 Feb 2017 21:59:39 +0000
-Received: (qmail 31540 invoked by uid 111); 28 Feb 2017 21:59:45 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 28 Feb 2017 16:59:45 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 28 Feb 2017 16:59:37 -0500
-Date:   Tue, 28 Feb 2017 16:59:37 -0500
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org,
-        peartben@gmail.com, benpeart@microsoft.com
-Subject: Re: [PATCH 1/3] revision: unify {tree,blob}_objects in rev_info
-Message-ID: <20170228215937.yd4juycjf7y3vish@sigill.intra.peff.net>
-References: <cover.1487984670.git.jonathantanmy@google.com>
- <cover.1487984670.git.jonathantanmy@google.com>
- <06a84f8c77924b275606384ead8bb2fd7d75f7b6.1487984670.git.jonathantanmy@google.com>
- <xmqq1suij8kr.fsf@gitster.mtv.corp.google.com>
+        id S1751733AbdB1WPq (ORCPT <rfc822;e@80x24.org>);
+        Tue, 28 Feb 2017 17:15:46 -0500
+Received: from mail-pf0-f193.google.com ([209.85.192.193]:33474 "EHLO
+        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751511AbdB1WPp (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Feb 2017 17:15:45 -0500
+Received: by mail-pf0-f193.google.com with SMTP id p185so1908652pfb.0
+        for <git@vger.kernel.org>; Tue, 28 Feb 2017 14:15:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=rwQ9eu2rO1Z151tqE6WukSioSwko6aO/4ZXvp3gZQXc=;
+        b=lWb7vnwJl+JYTzXh+PmMy8oxMzOkzGJtcoLP/dKv6YaBBv0TlfMWVHV4xb8jJwxWpQ
+         mgDencnSKZ3NJOpO9l/WSdzyHdOduwe15EsAdjjFB74+NMGA5mjOnmj+gssHoTFeCna8
+         JVK9Jk9G3x8OwJA6BBbY4zhDdrjMS0TpdajmnpcVTcbsHb4nrS6RwTB4WKZx8+A6fwpg
+         obGrmPe/akj2nA8fzJRKigBQ6t1yYlmDxQ/Bqg4nOVMAEZulWp+t7iNIbFC0Ii/+K42U
+         N1EU1atT3MYcxBvlhYkRSEXo10rBjXLzrenZO45cM8CoaBcCVp6EGMB+1H1mDDa9Jyny
+         7vTg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=rwQ9eu2rO1Z151tqE6WukSioSwko6aO/4ZXvp3gZQXc=;
+        b=uLz9eB02tadrctFeR4NdNWQ9YLsaCZywev1TNVXePEEqVS4vP3g9FAjDLLeI+IbzDL
+         Xessc5TO63+weAcCOmQ4ynmyd06sI3FKb9bTSrjSRD6g+2PUo5HcFq1HmJ/AD5VivlOp
+         lWvxqe9hiqUz+ZZaL0ncj3c6qmZpwLOo6dbJuDa4igHMYacsr01mKK00Iw+z04zYJfbf
+         2t9ImMDgAMigIe04c4Hnr03QvdohHRLcJOuWQjqQ1SZ+68DyIQ5ycbIn+n9bqv1Kw75F
+         gtD/E8X+3tj577mRNeV/Ou7q57QUBWoPHzGlp6GQaenDuuZOTiYYeZlg0Sd9fjiFZQGW
+         ssBg==
+X-Gm-Message-State: AMke39kz4H3imHwoiuCM6/84Nc/6PX4ZZcN9BL+7CQyUSqTZ1gYZBA+XuEIdgJZ0TeGZSQ==
+X-Received: by 10.98.153.25 with SMTP id d25mr5078924pfe.15.1488320143545;
+        Tue, 28 Feb 2017 14:15:43 -0800 (PST)
+Received: from localhost ([2620:0:1000:8622:e0d7:55f8:67f2:62dd])
+        by smtp.gmail.com with ESMTPSA id a77sm6101760pfj.1.2017.02.28.14.15.42
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Tue, 28 Feb 2017 14:15:42 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Thomas Gummerer <t.gummerer@gmail.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        sunny@sunbase.org,
+        Jakub =?utf-8?Q?Nar?= =?utf-8?Q?=C4=99bski?= <jnareb@gmail.com>,
+        Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH v8 4/6] stash: teach 'push' (and 'create_stash') to honor pathspec
+References: <20170225213306.2410-1-t.gummerer@gmail.com>
+        <20170228203340.18723-1-t.gummerer@gmail.com>
+        <20170228203340.18723-5-t.gummerer@gmail.com>
+Date:   Tue, 28 Feb 2017 14:15:42 -0800
+In-Reply-To: <20170228203340.18723-5-t.gummerer@gmail.com> (Thomas Gummerer's
+        message of "Tue, 28 Feb 2017 20:33:38 +0000")
+Message-ID: <xmqqo9xmhshd.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqq1suij8kr.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Feb 28, 2017 at 01:42:44PM -0800, Junio C Hamano wrote:
+Thomas Gummerer <t.gummerer@gmail.com> writes:
 
-> Jonathan Tan <jonathantanmy@google.com> writes:
-> 
-> > It could be argued that in the future, Git might need to distinguish
-> > tree_objects from blob_objects - in particular, a user might want
-> > rev-list to print the trees but not the blobs. 
-> 
-> That was exactly why these bits were originally made to "appear
-> independent but in practice nobody sets only one and leaves others
-> off".  
-> 
-> And it didn't happen in the past 10 years, which tells us that we
-> should take this patch.
+> +			git reset ${GIT_QUIET:+-q} -- "$@"
+> +			git ls-files -z --modified -- "$@" |
+> +			git checkout-index -z --force --stdin
+> +			git checkout ${GIT_QUIET:+-q} HEAD -- $(git ls-files -z --modified "$@")
 
-I actually have a patch which uses the distinction. It's for
-upload-archive doing reachability checks (which seems rather familiar to
-what's going on here).
+I think you forgot to remove this line, whose correction was added
+as two lines immediately before it.  I'll remove it while queuing.
 
-The whole series (from 2013!) is at:
+> +			git clean --force ${GIT_QUIET:+-q} -d -- "$@"
 
-  git://github.com/peff/git jk/archive-reachability
-
-but the relevant commits are below.
-
-I don't think the same logic holds for this case, though, because
-somebody actually can ask for a single blob.
-
--- >8 --
-From: Jeff King <peff@peff.net>
-Date: Wed, 5 Jun 2013 17:57:02 -0400
-Subject: [PATCH] list-objects: optimize "revs->blob_objects = 0" case
-
-If we are traversing trees during a "--objects"
-traversal, we may skip blobs if the "blob_objects" field of
-rev_info is not set. But we do so as the first thing in
-process_blob(), only after we have actually created the
-"struct blob" object, incurring a hash lookup. We can
-optimize out this no-op call completely.
-
-This does not actually affect any current code, as all of
-the current traversals always set blob_objects when looking
-at objects, anyway.
-
-Signed-off-by: Jeff King <peff@peff.net>
----
- list-objects.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/list-objects.c b/list-objects.c
-index f3ca6aafb..58ad69557 100644
---- a/list-objects.c
-+++ b/list-objects.c
-@@ -117,7 +117,7 @@ static void process_tree(struct rev_info *revs,
- 			process_gitlink(revs, entry.oid->hash,
- 					show, base, entry.path,
- 					cb_data);
--		else
-+		else if (revs->blob_objects)
- 			process_blob(revs,
- 				     lookup_blob(entry.oid->hash),
- 				     show, base, entry.path,
--- 
-2.12.0.359.gd4c8c42e9
-
--- >8 --
-From: Jeff King <peff@peff.net>
-Date: Wed, 5 Jun 2013 18:02:42 -0400
-Subject: [PATCH] archive: ignore blob objects when checking reachability
-
-We cannot create an archive from a blob object, so we would
-not expect anyone to provide one to us. And if they do, we
-will fail anyway just after the reachability check.  We can
-therefore optimize our reachability check to ignore blobs
-completely, and not even create a "struct blob" for them.
-
-Depending on the repository size and the exact place we find
-the reachable object in the traversal, this can save 20-25%,
-a we can avoid many lookups in the object hash.
-
-The downside of this is that a blob provided to a remote
-archive process will fail with "no such object" rather than
-"object is not a tree" (we could organize the code to retain
-the old message, but since we no longer know whether the
-blob is reachable or not, we would potentially be leaking
-information about the existence of unreachable objects).
-
-Signed-off-by: Jeff King <peff@peff.net>
----
- archive.c | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/archive.c b/archive.c
-index ef89b2556..489115f9f 100644
---- a/archive.c
-+++ b/archive.c
-@@ -383,6 +383,7 @@ static int object_is_reachable(const unsigned char *sha1)
- 	save_commit_buffer = 0;
- 	init_revisions(&data.revs, NULL);
- 	setup_revisions(ARRAY_SIZE(argv) - 1, argv, &data.revs, NULL);
-+	data.revs.blob_objects = 0;
- 	if (prepare_revision_walk(&data.revs))
- 		return 0;
- 
--- 
-2.12.0.359.gd4c8c42e9
-
+Thanks.
