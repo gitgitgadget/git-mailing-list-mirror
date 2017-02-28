@@ -7,50 +7,47 @@ X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 753302022D
-	for <e@80x24.org>; Tue, 28 Feb 2017 11:07:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 368E12022D
+	for <e@80x24.org>; Tue, 28 Feb 2017 11:36:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752203AbdB1LGz (ORCPT <rfc822;e@80x24.org>);
-        Tue, 28 Feb 2017 06:06:55 -0500
-Received: from mout.gmx.net ([212.227.17.22]:58843 "EHLO mout.gmx.net"
+        id S1752114AbdB1LgL (ORCPT <rfc822;e@80x24.org>);
+        Tue, 28 Feb 2017 06:36:11 -0500
+Received: from mout.gmx.net ([212.227.15.19]:59699 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751728AbdB1LGs (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Feb 2017 06:06:48 -0500
-Received: from virtualbox ([37.201.192.48]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0LlV4F-1c8mEQ49EV-00bOLL; Tue, 28
- Feb 2017 11:49:30 +0100
-Date:   Tue, 28 Feb 2017 11:49:29 +0100 (CET)
+        id S1751026AbdB1Lf7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Feb 2017 06:35:59 -0500
+Received: from virtualbox ([37.201.192.48]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0Lp3x6-1c48hF3cGq-00etLF; Tue, 28
+ Feb 2017 12:34:06 +0100
+Date:   Tue, 28 Feb 2017 12:32:01 +0100 (CET)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     Junio C Hamano <gitster@pobox.com>
 cc:     git@vger.kernel.org
-Subject: Re: [PATCH 2/6] Specify explicitly where we parse timestamps
-In-Reply-To: <xmqqh93fmemg.fsf@gitster.mtv.corp.google.com>
-Message-ID: <alpine.DEB.2.20.1702281149120.3767@virtualbox>
-References: <cover.1488231002.git.johannes.schindelin@gmx.de> <12b60c14dad15e3252e314771b3fe369305bbfc5.1488231002.git.johannes.schindelin@gmx.de> <xmqqwpcbmfai.fsf@gitster.mtv.corp.google.com> <xmqqh93fmemg.fsf@gitster.mtv.corp.google.com>
+Subject: Re: [PATCH 0/6] Use time_t
+In-Reply-To: <xmqqlgsrmesc.fsf@gitster.mtv.corp.google.com>
+Message-ID: <alpine.DEB.2.20.1702281211270.3767@virtualbox>
+References: <cover.1488231002.git.johannes.schindelin@gmx.de> <xmqqlgsrmesc.fsf@gitster.mtv.corp.google.com>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:j+6gYOhFEg6QcjWEwppejUyS6vMYty17MpYdYpkvtdXkBr7HscN
- vXHRiLj0DdctjWO6vjbMQkjS7CNQFnZvzzN+utlyIqZEKa/uvnXwtX/12RxralHT5fNyIgc
- wrT3SvVAVp3eJVpK9J2UTL3Q8AjFAmzDYD4273Hw/zmUyNL+/bMmrBvO3giyYj0lpvrZBQH
- 6FC1zgpDbBRnUPN2OgKrw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:It9JTzyhrcI=:i+WqpVIe47E+sv39RqTDTk
- qUKHhvmuxlBEdcU5lCyvj1tY9bPJ7vptcyCpcGEL1CO9Qgl2/p/32GblxxPrZL4rMNJGyY/sX
- D6rYLkBM1z4wOXz1jFDoLu4Pijihpbj4baW9WbUABFa36sxQ+L1xnmFKJ/i6ScjaZFQoj5dT9
- WZibdUb8VwbZXWNCRq5KH2r1etGJfszqzK7ioZQIrutKjuD+gbl34UgKF+s+JmVIFFW0bJ44i
- Gw13vuinzp1Jqqg7po9Eqoe32jgd5Zlw29zxGrAA74VXEWmaGqhPN2xPl3pgpx6NDPnBbD2R9
- mBC9LupgLZMYFkaefz2sllw4ZeHfp+MSZxaLJx7gsJ/RqpRX+qbGslZhX/jM6MwZvebLwJfG5
- IGHAIiFKl8+ZTlSLaul28KOJOE1CCwiSR4I5Oc4S33w68VVUHsouLm5o21i8R/7YHTxlMIJRA
- Min1KCRjLQSUN9GiPzxqDfwmhT54oy4m//2w2j8O+R3Q8ZdoxFOYXd5tfyU/6MCtpuTSAexvo
- ScIkpYciDhLaROYQJ6+pqlCfkvephWVcofoc8WmOctsVUgGwTrJu+s1oK796dYjhxxOyGuxzf
- ChBTfbpwD/M0oUPnLZOSFwCPothVCZGqocKK12yyYG6PCbPp6pIeYXNAjb8Clw6zu+vFnUWLM
- h4G0KAye5VAS2WqIly0eNtvbxmqysWS3Mm51eeIzbFNoke7e/zbkbGtEL/9590AHleifGHD8y
- W5AUtUplwTTqq4JSvOibIfz2tRulPk/uXjAaFtuqxTIFQw0/g9JtGClKTBcYwpiCgX3o1zfVp
- S2VGcBVjO+kcXxP/V6eOUhYjjuuwt0iANLpMqmWse6XCWFeRujpi2LgOpUWn04t2q5JhrDQMp
- TZdt7Lw0L2znZ7thVcsCqAP4uZar7RnDFQqJYTNr3LbLN29ASVunJu0qEpyXkq3076hmheLIV
- VgYVrTy+exSiiQIy8pkl1ylsZpKx+hHyzRtZGPmMEJIemeEUS8iseuioLnznU4dXFtyVhgd/T
- E7M1Oo9lewZs6M+gGPEu9H1smCqhtW9K9hqJ+9KB+UTM
+X-Provags-ID: V03:K0:3TuchMKtRCMZO8SFxYUsMVFY/Vy9QUECe3zC3pXs79Zi0KvmYSp
+ TVraUnI+1HhG1eDXGLPsWw0FbTGRr5j13gdcXyPdB9eB0j03CpEyuIK+qGUWWRjmeTawrD8
+ 0UDQDNjw/l3G2U2YhKYQee7h/KtPtOajvNfuPirVGIh9aEb9LIq/HtiGK2VEKQocjDPvV30
+ DJC2VSSwXxAscaabQX96Q==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:T85abI2S/PI=:XJcj7Scci94qt1ujyUB9ac
+ BDFHVbFcrEb+G0DpmK3DiLX1NusbwGwYTqnLGcOGqjs7RSN+yLe0/JCmhRu7dcNdcfBy7Ewxy
+ d7AKC0+xk73PUVyTPfI5YIq9rpd1r0cLZfInXBcE1TQ8qeyW/T9nlK5zQusTfioont6LuUQbY
+ cGZgsG9JlZVhpGZZB/AUdM+MtJV0E8Bg0XNHS1tqERtgc+zKYG7UojnkkF1eAYXRgeecLcPqQ
+ zMyC5EqBY04VPi18V8jCc1pqtdOPj32w/5JG+sWPr1jRvVtVvkz/Oj4DZMz5ljwoZlwiehxip
+ zdnq/rUe5ipXCiiPXzfc7ldD55ZvkDOad2BIDmJMMXAy6hmKxYmIwSzkI/ETRwNsnXhXxTALC
+ VRKHjjhNNBcNujb8eT8sYtVIFwGvPaH4QyvhgHhdaEJPIKe5r+xXOYXoxfi+Orcji+oNFv6ce
+ VoGCrTSJoVgSBRVqbHieTmkaONd8Qt1bmrmc7cR79sXj8PhGNz8xRpKXZLMcjdp/8ZONDh8f8
+ 8xf5C5N5aNT36/5HR+GYwME+PGHfJqSqgWLCbJVBCehTXzNSuJhMWd6J2vWpJdftBWaUpD41x
+ 5Bt5HxsYtoA7XAykLTMTL1fyLnmtlY1qNLfH4IOD1dRXarrb6n0XAp3tbm2yi6P7LCcHqzjXH
+ DQuISfEBYMwZOBiiXYwLdDz/fkElZYbpVlxGKxwZNmwty8n5kfGeoiR/0v/I3x2XWeBmKt2Va
+ Ym5G5cSLuQrltYmU4jtxJBfqzNl9y5VvFE42Qn+0hzqRAn1JK12eseUtxlRk6G7Ake6Z7HfTd
+ Dny4U7LyhM+Hj8ab+jSESLaar+VwA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -60,16 +57,73 @@ Hi Junio,
 
 On Mon, 27 Feb 2017, Junio C Hamano wrote:
 
-> Junio C Hamano <gitster@pobox.com> writes:
+> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
 > 
-> >> -	unsigned long number = strtoul(date, &end, 10);
-> >> +	time_t number = parse_timestamp(date, &end, 10);
+> > One notable fallout of this patch series is that on 64-bit Linux (and
+> > other platforms where `unsigned long` is 64-bit), we now limit the
+> > range of dates to LONG_MAX (i.e. the *signed* maximum value). This
+> > needs to be done as `time_t` can be signed (and indeed is at least on
+> > my Ubuntu setup).
 > >
-> > This hunk does not belong to this step.  Everybody else in this step
+> > Obviously, I think that we can live with that, and I hope that all
+> > interested parties agree.
 > 
-> obviously I meant "the left half of this hunk" ;-)
+> s/ulong/time_t/ is definintely a good change, and it will take us to a
+> place we would want to be in in some future.  
 
-Obviously ;-)
+Actually. I have to take back the part where I hoped that all interested
+parties would agree. The problem is 32-bit Linux:
+
+	$ cat >a1.c <<-\EOF
+	#include <stdio.h>
+	#include <limits.h>
+	#include <time.h>
+
+	int main(int argc, char **argv)
+	{
+		printf("sizeof(long): %d, sizeof(time_t): %d, ulong_max: %lu\n",
+		       (int)sizeof(long), (int)sizeof(time_t), ULONG_MAX);
+		return 0;
+	}
+	EOF
+
+	$ gcc -m32 -Wall -o a1 a1.c
+
+	$ ./a1
+	sizeof(long): 4, sizeof(time_t): 4, ulong_max: 4294967295
+
+So. Not only is `long` a 32-bit on 32-bit Linux, but so is `time_t`. And
+with that, switching from `ULONG_MAX` as the maximal time we can represent
+in Git to `LONG_MAX` is kind of a serious problem.
+
+> As long as there remains no platform we care about whose time_t and long
+> are still 32-bit signed integer, there will be a fallout to them with
+> this change.
+
+Sorry, I do not understand the verb "remains" in conjunction with "no
+platform"...
+
+Do you mean to say that currently no platform we care about has 32-bit
+signed time_t/long?
+
+If so, I just demonstrated this to be unfortunately incorrect.
+
+> It appears that we use uint64_t in many places in our code.  So
+> while philosophically time_t is the right type, uint64_t might be
+> practically a safer alternative type to use at the endgame patch in
+> this series.
+
+Yes, I think you are right. We should use uint64_t instead of time_t, but
+*semantically* we should not even use uint64_t. We should introduce our
+own data type instead of repeating the mistake to use a data type that
+does not convey its role to the reader.
+
+Currently, I am favoring timestamp_t.
+
+> I haven't seen it yet, but presumably the last one 6/6 is the endgame?
+
+Maybe it took a while to get sent out, but it made it into public inbox:
+http://public-inbox.org/git/75efe76cbb0636741a7c3aec9e21459bc1dc3cbe.1488231002.git.johannes.schindelin@gmx.de/
 
 Ciao,
 Johannes
