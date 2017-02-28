@@ -2,106 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 901FA201B0
-	for <e@80x24.org>; Tue, 28 Feb 2017 16:29:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 68983201B0
+	for <e@80x24.org>; Tue, 28 Feb 2017 16:45:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751599AbdB1QMI (ORCPT <rfc822;e@80x24.org>);
-        Tue, 28 Feb 2017 11:12:08 -0500
-Received: from smtp-out10.electric.net ([185.38.180.45]:51415 "EHLO
-        smtp-out10.electric.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751666AbdB1QLd (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Feb 2017 11:11:33 -0500
-X-Greylist: delayed 713 seconds by postgrey-1.27 at vger.kernel.org; Tue, 28 Feb 2017 11:11:32 EST
-Received: from 1cikBJ-00057o-Vf by out10a.electric.net with emc1-ok (Exim 4.87)
-        (envelope-from <Adrian.Dudau@enea.com>)
-        id 1cikBK-00058c-U3
-        for git@vger.kernel.org; Tue, 28 Feb 2017 07:59:18 -0800
-Received: by emcmailer; Tue, 28 Feb 2017 07:59:18 -0800
-Received: from [192.36.1.72] (helo=mx-3.enea.com)
-        by out10a.electric.net with esmtps (TLSv1:ECDHE-RSA-AES256-SHA:256)
-        (Exim 4.87)
-        (envelope-from <Adrian.Dudau@enea.com>)
-        id 1cikBJ-00057o-Vf
-        for git@vger.kernel.org; Tue, 28 Feb 2017 07:59:17 -0800
-Received: from SESTOEX04.enea.se ([fe80::bc2d:9299:d6b2:d0b7]) by
- SESTOEX08.enea.se ([fe80::1c3:4003:dc47:23c0%11]) with mapi id
- 14.03.0319.002; Tue, 28 Feb 2017 16:59:17 +0100
-From:   Adrian Dudau <Adrian.Dudau@enea.com>
-To:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: format-patch subject-prefix gets truncated when using the
- --numbered flag
-Thread-Topic: format-patch subject-prefix gets truncated when using the
- --numbered flag
-Thread-Index: AQHSkdudPOedU6w8Skyvjk69WjT7EA==
-Date:   Tue, 28 Feb 2017 15:59:16 +0000
-Message-ID: <1488297556.2955.11.camel@enea.com>
-Accept-Language: en-US, sv-SE
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [172.16.140.45]
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <F3925A0F57243C4C98E8384F6D8C749E@enea.com>
-Content-Transfer-Encoding: base64
+        id S1751475AbdB1Qpb (ORCPT <rfc822;e@80x24.org>);
+        Tue, 28 Feb 2017 11:45:31 -0500
+Received: from mout.web.de ([212.227.15.3]:61339 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751422AbdB1Qp0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Feb 2017 11:45:26 -0500
+Received: from [192.168.178.36] ([79.237.49.102]) by smtp.web.de (mrweb004
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0MfCyA-1cynNK0K8Q-00Opyk; Tue, 28
+ Feb 2017 17:38:40 +0100
+Subject: Re: [PATCH 0/6] Use time_t
+To:     Jeff King <peff@peff.net>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+References: <cover.1488231002.git.johannes.schindelin@gmx.de>
+ <20170228142802.hu5esthnqdsgc2po@sigill.intra.peff.net>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <f6b57868-0173-48d9-86cb-79780f7e301b@web.de>
+Date:   Tue, 28 Feb 2017 17:38:37 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.7.1
 MIME-Version: 1.0
-X-Outbound-IP: 192.36.1.72
-X-Env-From: Adrian.Dudau@enea.com
-X-Proto: esmtps
-X-Revdns: mx-3.enea.com
-X-HELO: mx-3.enea.com
-X-TLS:  TLSv1:ECDHE-RSA-AES256-SHA:256
-X-Authenticated_ID: 
-X-PolicySMART: 6551647
-X-Virus-Status: Scanned by VirusSMART (c)
-X-Virus-Status: Scanned by VirusSMART (s)
+In-Reply-To: <20170228142802.hu5esthnqdsgc2po@sigill.intra.peff.net>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K0:WcfkCWfjDf/+VNvUfGYqbX4UPsph3Y2Is4tImqpMuqv+dM/DA1K
+ u1EOxHd4lz2z9S3GcNz+sHhcyOGJUvW9mYYOQDcQatR6qdyogAijKCTiG+9hF9/wJO0wFuY
+ Om6IY/5eGmxvQ0GPRIBocatQINOkUQr+KgtER1ASxJXUsEND6qn9hW6gUNhPikNrYb4i6x8
+ Y+w8/864QEfrrBYCrtBrg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:z0Mir9mqs1k=:AsLkviFZsE/4QIwkkLX64M
+ DvT5XZzv5c9iE76ST/4+VvYfp+AxWmog2c3EHal/Gg95F3lNoEN3rNtpkWS4LP8WrgNit+lr5
+ mtu2DgaPgmDfTEjDOb1aKgg5FoLXCvIaKXjbHitGr72ThBXNekH/EU2f/seifDX8AsykiV9lY
+ kW7ROb5S1JyTAuKTNHIAdaXpCKDDPaAXp0xToUKr7QD6vRYokT2QwINAwhjpTLiSJPjZK09Ki
+ gmYWpe6LzgdkmoUj+Quv1dloTSZlLIWRg5Wvj6Zu9lkEmTjsvI7H7gAS/202OY5vGy9UpPp75
+ cGjSctgoKFYX2ovTTN6rSrp2Tk4NwbP9iIh/9rsG232DtRuVuGp2egZi/xw7utyXdtC4EQBH8
+ iywnzjCZnipRFHg9fk2RKgKGYlLFbrCkO+scTlXEiMD3k3jPrFCjCGIGp6sDuFH6pDoaQrmZm
+ zpQPU9TkOeQnwW0MhxUX9/39IRCcfLpBIyRpfun/MSZBxZOJlnjjOYV6/P02NuEZUrgb6D8ts
+ dtJ6z2udKeXXrv02JByig0Tl6ic07q7Gdketm2qs5kQ4DAYaONBpKVN609O3fbXPskHUoqmBv
+ 82a2o8fgYfEaVTNRi5FprmSfU2cwHpCnL85wl5Ob7W3xAAn9BzWNBNWa++2Ytjii+OT3r+Hbz
+ UzkNJc5irY9nMBGzoK44Pmab3T6X6df7DHfHjKn9ueF6CSKcmnuQIewfZLSSx9ldVuJh1tvmF
+ Hy6k0AnyjucGgBLtekF112iTFB8O89itLMRdX4ln3Zdk3a1ExnfC9F4QffU0Y8p4CWbBpQRJf
+ OcJvOjv
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-SGVsbG8sDQoNCkkgbm90aWNlZCB0aGF0IHRoZSAtLXN1YmplY3QtcHJlZml4IHN0cmluZyBnZXRz
-IHRydW5jYXRlZCBzb21ldGltZXMsDQpidXQgb25seSB3aGVuIHVzaW5nIHRoZSAtLW51bWJlcmVk
-IGZsYXQuIEhlcmUncyBhbiBleGFtcGxlOg0KDQphZGR1QHNlc3RvZmIxMTovZGF0YS9mYi9hZGR1
-L2dpdCQgZXhwb3J0IGxvbmdtPSJ2ZXJ5IHZlcnkgdmVyeSB2ZXJ5DQp2ZXJ5IHZlcnkgdmVyeSB2
-ZXJ5IHZlcnkgdmVyeSB2ZXJ5IHZlcnkgdmVyeSB2ZXJ5IGxvbmcgcHJlZml4Ig0KDQoNCmFkZHVA
-c2VzdG9mYjExOi9kYXRhL2ZiL2FkZHUvZ2l0JCBnaXQgZm9ybWF0LXBhdGNoIC0xIC0tc3ViamVj
-dC0NCnByZWZpeD0iJGxvbmdtXVtQQVRDSCINCg0KQXMgZXhwZWN0ZWQsIGluIHRoZSBnZW5lcmF0
-ZWQgcGF0Y2ggZmlsZSB3ZSBoYXZlOg0KU3ViamVjdDogW3ZlcnkgdmVyeSB2ZXJ5IHZlcnkgdmVy
-eSB2ZXJ5IHZlcnkgdmVyeSB2ZXJ5IHZlcnkgdmVyeSB2ZXJ5DQp2ZXJ5IHZlcnkgbG9uZyBwcmVm
-aXhdW1BBVENIXcKgDQrCoEZpcnN0IGJhdGNoIGFmdGVyIDIuMTINCg0KQnV0IG5vdywgaWYgSSBw
-YXNzIHRoZSAtLW51bWJlcmVkIGZsYWcgdG9vOg0KYWRkdUBzZXN0b2ZiMTE6L2RhdGEvZmIvYWRk
-dS9naXQkIGdpdCBmb3JtYXQtcGF0Y2ggLTEgLS1udW1iZXJlZCAtLQ0Kc3ViamVjdC1wcmVmaXg9
-IiRsb25nbV1bUEFUQ0giDQoNCkluIHRoZSBnZW5lcmF0ZWQgcGF0Y2ggZmlsZSB3ZSBnZXQgdGhp
-czrCoA0KU3ViamVjdDogW3ZlcnkgdmVyeSB2ZXJ5IHZlcnkgdmVyeSB2ZXJ5IHZlcnkgdmVyeSB2
-ZXJ5IHZlcnkgdmVyRmlyc3QNCmJhdGNowqANCsKgYWZ0ZXIgMi4xMg0KDQpUaGlzIGlzIGhhcHBl
-bmluZyBvbiB0aGUgbGF0ZXN0IG1hc3RlciBicmFuY2gsIHNvIEkgZHVnIHRocm91Z2ggdGhlDQpj
-b2RlIGFuZCB0cmFja2VkIHRoZSBpc3N1ZSB0byB0aGlzIHBpZWNlIG9mIGNvZGUgaW4gbG9nLXRy
-ZWUuYzoNCg0KwqDCoMKgwqDCoMKgwqDCoGlmIChvcHQtPnRvdGFsID4gMCkgew0KwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqBzdGF0aWMgY2hhciBidWZmZXJbNjRdOw0KwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqBzbnByaW50ZihidWZmZXIsIHNpemVvZihidWZmZXIpLA0K
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAiU3ViamVj
-dDogWyVzJXMlMCpkLyVkXSAiLA0KwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqBvcHQtPnN1YmplY3RfcHJlZml4LA0KwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAqb3B0LT5zdWJqZWN0X3ByZWZpeCA/ICIgIiA6
-ICIiLA0KwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqBk
-aWdpdHNfaW5fbnVtYmVyKG9wdC0+dG90YWwpLA0KwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqBvcHQtPm5yLCBvcHQtPnRvdGFsKTsNCsKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgc3ViamVjdCA9IGJ1ZmZlcjsNCsKgwqDCoMKgwqDCoMKgwqB9
-IGVsc2UgaWYgKG9wdC0+dG90YWwgPT0gMCAmJiBvcHQtPnN1YmplY3RfcHJlZml4ICYmICpvcHQt
-DQo+c3ViamVjdF9wcmVmaXgpIHsNCsKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgc3Rh
-dGljIGNoYXIgYnVmZmVyWzI1Nl07DQrCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoHNu
-cHJpbnRmKGJ1ZmZlciwgc2l6ZW9mKGJ1ZmZlciksDQrCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCJTdWJqZWN0OiBbJXNdICIsDQrCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoG9wdC0+c3ViamVjdF9wcmVmaXgp
-Ow0KwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqBzdWJqZWN0ID0gYnVmZmVyOw0KwqDC
-oMKgwqDCoMKgwqDCoH0gZWxzZSB7DQrCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoHN1
-YmplY3QgPSAiU3ViamVjdDogIjsNCsKgwqDCoMKgwqDCoMKgwqB9DQoNCkFwcGFyZW50bHkgdGhl
-IHNpemUgb2YgdGhlICJidWZmZXIiIHZhciBpcyBkaWZmZXJlbnQgaW4gdGhlIHR3bw0Kc2l0dWF0
-aW9ucy4gQW55Ym9keSBrbm93cyBpZiB0aGlzIGlzIGJ5IGRlc2lnbiBvciBqdXN0IGFuIG9sZA0K
-b3ZlcnNpZ2h0Pw0KSSBjYW4gc2VuZCBhIHBhdGNoIHRvIGZpeCBpdCBidXQgSSdtIG5vdCB2ZXJ5
-IGZhbWlsaWFyIHdpdGggdGhlIGdpdA0KY29kZSBhbmQgSSdtIGFmcmFpZCBzb21lIGhpZGRlbiBj
-b25zZXF1ZW5jZSBJIGRvbid0IHNlZSByaWdodCBub3cuDQoNCkNoZWVycywNCi0tQWRyaWFu
+Am 28.02.2017 um 15:28 schrieb Jeff King:
+> On Mon, Feb 27, 2017 at 10:30:20PM +0100, Johannes Schindelin wrote:
+>
+>> One notable fallout of this patch series is that on 64-bit Linux (and
+>> other platforms where `unsigned long` is 64-bit), we now limit the range
+>> of dates to LONG_MAX (i.e. the *signed* maximum value). This needs to be
+>> done as `time_t` can be signed (and indeed is at least on my Ubuntu
+>> setup).
+>>
+>> Obviously, I think that we can live with that, and I hope that all
+>> interested parties agree.
+>
+> I do not just agree, but I think the move to a signed timestamp is a big
+> improvement. Git's object format is happy to represent times before
+> 1970, but the code is not. I know this has been a pain for people who
+> import ancient histories into Git.
+>
+> It looks from the discussion like the sanest path forward is our own
+> signed-64bit timestamp_t. That's unfortunate compared to using the
+> standard time_t, but hopefully it would reduce the number of knobs (like
+> TIME_T_IS_INT64) in the long run.
+
+Glibc will get a way to enable 64-bit time_t on 32-bit platforms 
+eventually (https://sourceware.org/glibc/wiki/Y2038ProofnessDesign). 
+Can platforms that won't provide a 64-bit time_t by 2038 be actually 
+used at that point?  How would we get time information on them?  How 
+would a custom timestamp_t help us?
+
+Regarding the need for knobs: We could let the compiler chose between 
+strtoll() and strtol() based on the size of time_t, in an inline 
+function.  The maximum value can be calculated using its size as well. 
+And we could use PRIdMAX and cast to intmax_t for printing.
+
+René
