@@ -2,168 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F0D0D202C9
-	for <e@80x24.org>; Tue, 28 Feb 2017 23:26:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 79366202C9
+	for <e@80x24.org>; Tue, 28 Feb 2017 23:30:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751542AbdB1XYo (ORCPT <rfc822;e@80x24.org>);
-        Tue, 28 Feb 2017 18:24:44 -0500
-Received: from castro.crustytoothpaste.net ([75.10.60.170]:41766 "EHLO
-        castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751748AbdB1XYR (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 28 Feb 2017 18:24:17 -0500
-Received: from genre.crustytoothpaste.net (wsip-98-185-58-71.no.no.cox.net [98.185.58.71])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id B26E5280AD;
-        Tue, 28 Feb 2017 20:19:23 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
-        s=default; t=1488313163;
-        bh=Zo2vXXVwYtEwvVPmhh118Ocryp0F+jhnuAINeiec3XE=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=ULC/mgiirwiX8bMY8695gDr3u/Ejuu1lPua/T+endZ2GKZZrIqU3ZDvD1ElDBMtQO
-         flss/f64wBYS4HEv+AATGjNbNs2H98Us4zQ0nG9NDLX9cJDXHyaTW9SFiv7AS+mN1O
-         6xD6NU9RHJXiVPNtfAVu42y+t1l42H2JZ2LtaD8ndNDUFSw3yjiby2B868ZBjcCGWG
-         bPh9RMBB3Eb6/3XMV5aU9lpuiIS785u1v44RAzAXjDw0QiMuboGIqHBvkxf++gx/Jp
-         /fvzO8wIoayoegMAmvoTvfkReSmrD8EXECgCO/MV+TLR9OUPMgWVFNgEVuL+2bP8jO
-         MkuOZDOBca4Zcd/BKFvzZOsNTpqiNM6covgB6ZARwL3ch1zEmqHD99Yfk94+DylC5i
-         fSS5qTVNfrID6XaI7ywDAcu45G/cxpyoagZ8AeBNzmpfrG/+nne7FzpvRGS1TJR/FM
-         +GJBvOSn/yqnV43ZgHPbA0j6ePpiPTVVuwEshoaEhYo75CqR+Qb
-Date:   Tue, 28 Feb 2017 20:19:19 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Linus Torvalds <torvalds@linux-foundation.org>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: Typesafer git hash patch
-Message-ID: <20170228201918.dpqrrijibdapemaf@genre.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Junio C Hamano <gitster@pobox.com>,
-        Linus Torvalds <torvalds@linux-foundation.org>,
-        Git Mailing List <git@vger.kernel.org>
-References: <CA+55aFxYs1zp2c-UPe8EfshNNOxRVxZ2H+ipsnG489NBsE+DLQ@mail.gmail.com>
- <xmqqvarujdmv.fsf@gitster.mtv.corp.google.com>
+        id S1751529AbdB1Xao (ORCPT <rfc822;e@80x24.org>);
+        Tue, 28 Feb 2017 18:30:44 -0500
+Received: from mail-pg0-f65.google.com ([74.125.83.65]:33588 "EHLO
+        mail-pg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751037AbdB1Xam (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Feb 2017 18:30:42 -0500
+Received: by mail-pg0-f65.google.com with SMTP id x17so3388699pgi.0
+        for <git@vger.kernel.org>; Tue, 28 Feb 2017 15:28:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=P6bwWgGUNLayj54QF1F5uftcL7VPjiFCDD1vcJo9dGk=;
+        b=iRKlaH6M2DwRDEFu1wsRfWOTNUVRgUlOuU8FgXh/KuNbImz+V2O1m5xomsNkxmTU/I
+         X/CxisuMtWL/A6243fumKfTQ+5YS22ra2hYJnJF3bYjvt9HlHOjRl7oF6ohmJR1jpClj
+         GtKr3oj8pOG+G3sYBRyOfqevYPF103MEnegaaHHJUVFnCt3yBYeUB5L6YzdRKA2FLhh6
+         V7rw60tEI1ObZlH5jvsfXOx9YbMTEy5aENRqw0xgy2gXPxkL+W7P3gETCRU8hgYhW+uk
+         bataCkq8llxi49CxVY7QtKB0oCOo0TdBrvkMHLvgTPG6jcb9JHOrT/cV6hEEI7oXMQat
+         8zJA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=P6bwWgGUNLayj54QF1F5uftcL7VPjiFCDD1vcJo9dGk=;
+        b=a+btOBHS4BgrgKWCbM8DVPnxpS/alfrv8fh7Q9HRv+WSzASEenwViDbDvMpu6AGdBN
+         eyXg35xR9pMShACy9GVU+grmO/3NN5H7Ed3QGepRIUPQX/d/sT6aLjvrfT2CYkmFDKXA
+         fGf5ffd1QzlY7evaByc2O0LBQchRiblqxzK8u3BpDduol8hsNj6/yBeyOdabMbvO4vW7
+         ukSXfhg7U0uzeU1p/Px5W/1esiMugem0Y6BcvL586UsBtHdBE1n3dAVa4YdzVUleNRWz
+         kR1RUHA0aqAvua1uPyJrCf7LWjpRvxQrO53PkktmC3ZjUgZ/exfRVhhgk7VfmHgbnLXW
+         hQ4g==
+X-Gm-Message-State: AMke39lGf2cp6LcKhGSAgTaOpv/OPEgJPP47wBgfXqIkBYvKWaLHVrYcZEPjtk0jIicISA==
+X-Received: by 10.99.51.76 with SMTP id z73mr5077561pgz.137.1488320844127;
+        Tue, 28 Feb 2017 14:27:24 -0800 (PST)
+Received: from localhost ([2620:0:1000:8622:e0d7:55f8:67f2:62dd])
+        by smtp.gmail.com with ESMTPSA id 9sm6085747pfk.121.2017.02.28.14.27.23
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Tue, 28 Feb 2017 14:27:23 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
+        git@vger.kernel.org
+Subject: Re: [PATCH 0/6] Use time_t
+References: <cover.1488231002.git.johannes.schindelin@gmx.de>
+        <20170228142802.hu5esthnqdsgc2po@sigill.intra.peff.net>
+        <xmqqvarukz0g.fsf@gitster.mtv.corp.google.com>
+        <20170228200145.ymbqmxwrbbrwagks@sigill.intra.peff.net>
+Date:   Tue, 28 Feb 2017 14:27:22 -0800
+In-Reply-To: <20170228200145.ymbqmxwrbbrwagks@sigill.intra.peff.net> (Jeff
+        King's message of "Tue, 28 Feb 2017 15:01:45 -0500")
+Message-ID: <xmqqh93ehrxx.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="cx33r5tlzlahx52v"
-Content-Disposition: inline
-In-Reply-To: <xmqqvarujdmv.fsf@gitster.mtv.corp.google.com>
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.9.0-2-amd64)
-User-Agent: NeoMutt/20170113 (1.7.2)
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Jeff King <peff@peff.net> writes:
 
---cx33r5tlzlahx52v
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> ... We can certainly stick with it for now (it's awkward if you
+> really do have an entry on Jan 1 1970, but other than that it's an OK
+> marker). I agree that the most negatively value is probably a saner
+> choice, but we can switch to it after the dust settles.
 
-On Tue, Feb 28, 2017 at 11:53:28AM -0800, Junio C Hamano wrote:
-> Linus Torvalds <torvalds@linux-foundation.org> writes:
->=20
-> > That
-> > actually can clean up some code, because right now we have duplicate
-> > interfaces for some things that take an oid pointer and others take a
-> > "const unsigned char *sha1", and that duplication essentially can go
-> > away.
->=20
-> ... I understand that this is an eventual goal of "struct object_id"
-> effort.
+I was trying to suggest that we should strive to switch to the most
+negative or whatever the most implausible value in the new range
+(and leave it as a possible bug to be fixed if we missed a place
+that still used "0 is impossible") while doing the ulong to time_t
+(or timestamp_t that is i64).  
 
-Yes, it is.
+"safer in the short term" wasn't meant to be "let's not spend time
+to do quality work".  As long as we are switching, we should follow
+it through.
 
-> > ..., and the lines are generally shorter, eg
-> >
-> > -               const unsigned char *mb =3D result->item->object.oid.ha=
-sh;
-> > -               if (!hashcmp(mb, current_bad_oid->hash)) {
-> >
-> > turns into
-> >
-> > +               const hash_t *mb =3D &result->item->object.oid;
-> > +               if (!hashcmp(mb, current_bad_oid)) {
->=20
-> Hmph.  I somehow thought the longer term directio for the above code
-> would be to turn it into
->=20
-> 		if (!oidcmp(&result->item->object.oid, &current_bad_oid))
->=20
-> instead.
-
-It is.  The duplication is temporary.  We've actually removed some of
-the original SHA-1 functions in favor of the object_id versions.
-
-> Having said all that, I do not offhand see a huge benefit of the
-> current layout that has one layer between the hash (i.e. oid.hash)
-> and the object name (i.e. oid) over "there is no need for oid.hash;
-> oid is just a hash", which you seem to be doing.
->=20
-> Except for cases where we need to be prepared to see two or more
-> kinds of object names (in which case struct object_id would have an
-> enum that tells you if oid.hash is SHA-1 or SHA-3-256), that is.  Of
-> course we can encode that in hash_t itself (e.g. multihash).
-
-Right, this is indeed a benefit.
-
-The bigger issue is the assumptions in the code base that assume a given
-hash size.  These assumptions are in a bunch of places, so pretty much
-any time you see a number, you end up having to question what it means.
-We have a 64 that means 40 (SHA-1 hex) plus 24 other values, for
-example.
-
-I've sent various series because I think that's the way that the Git
-development community has most welcomed my contributions.  I have
-another 69 patches in two series (which are as of yet untested).  I can
-probably have almost all of the transition actually complete in another
-couple weeks (because I have a day job which does not involve working on
-Git).
-
-I've hesitated to send additional patches to the list when my existing
-changes haven't even hit next yet, since they're received little actual
-testing.
-
-I'm unsure if sending one enormous patch is actually going to be
-welcome; I feel Junio and most of the regulars are probably not going to
-be very excited about the idea, mostly because the reviewing task is
-enormous, and the risk for breakage is also pretty high.  We want to
-move away from SHA-1 as quickly as possible, yes, but we don't want Git
-to become unusably buggy.
-
-I guess what I'm saying is that I'm fine if we want to have a more
-aggressive timeline, and I can probably make that happen, at least if we
-can wait a few weeks.  If Junio and the other regulars are comfortable
-merging one omnibus patch to get it moving even more quickly, I won't
-stand in the way.
---=20
-brian m. carlson / brian with sandals: Houston, Texas, US
-+1 832 623 2791 | https://www.crustytoothpaste.net/~bmc | My opinion only
-OpenPGP: https://keybase.io/bk2204
-
---cx33r5tlzlahx52v
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.1.18 (GNU/Linux)
-
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAli120YACgkQv1NdgR9S
-9ot1Xg//Z2cHUL5c852h/DIJZkh/BSX/mAbAcxRWIZPiU/m8dc9V/Bm5khIDmiIy
-MiwSC60g4iWZIfDapqynyo+y5r65q0Hepjbb3EAV3YuLd/xsQWUHK9qNOLnuffJ4
-G6stwryd6qAxeLrVAQ6VJ5gd2xF49Bq7ZxiHtrywQ4MtPOQs/59CavnIwyo6Gptk
-Yn1tYcX8Ls9lWybLvYoDZn+zLlxn3wnfne/YGOuNL9BGY/gvj0RDLjR2D/ZO6jBZ
-LwH+Tdl0qONBUSMyaHCdLTkKj36twsB4qWnkiuMh5kkCMceB0G6hBcLKHsbI2jQK
-jDOZQIuAC4UbD9hcjPAjdRWWb44O56VfoxNpfytzhsgUe/IDIklypLU+pNgQqaGW
-YUI3G8ftwWiCMplXeax41ukAt3DouNVYsopw6NxkzBP6J7Go1mEEn0uJLjY1178V
-VxAP5KR/pcQVZwqxBHHcLNLD8ZBflIuu4aG4pqZj2DJT//bqMYUE43v+/NXnxePR
-989QirEVmGx3gnfH5qoHYEH+ozJJ94Aqm6u3vid4Eg9MJiI9hhUkAHgcBjNT7qli
-1xoPUNwmjhEM7W6lpnoz3CU+T0Xfd8ZtDcZ0wwSqKQAYX0ww+EEhm5k6/CiaRKuW
-KZyMyNvt3NpR1WAPeaBdmwj/IKbq5Xfj345It2WpWNWwgEh0dKA=
-=DcGG
------END PGP SIGNATURE-----
-
---cx33r5tlzlahx52v--
+>> But we need to cross the bridge to signed timestamp sometime, and I
+>> do not see any reason why that somtime should not be now.
+>
+> Yep.
+>
+> -Peff
