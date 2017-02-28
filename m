@@ -2,102 +2,282 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B0C23202CA
-	for <e@80x24.org>; Tue, 28 Feb 2017 21:28:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E7B1B202C9
+	for <e@80x24.org>; Tue, 28 Feb 2017 21:31:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751883AbdB1V2O (ORCPT <rfc822;e@80x24.org>);
-        Tue, 28 Feb 2017 16:28:14 -0500
-Received: from mout.gmx.net ([212.227.15.18]:62392 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751531AbdB1V2O (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Feb 2017 16:28:14 -0500
-Received: from virtualbox ([37.201.192.48]) by mail.gmx.com (mrgmx001
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0LhOO8-1bwGYu0H1k-00medp; Tue, 28
- Feb 2017 21:55:00 +0100
-Date:   Tue, 28 Feb 2017 21:54:58 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
-        Jeff King <peff@peff.net>, git@vger.kernel.org
-Subject: Re: [PATCH 0/6] Use time_t
-In-Reply-To: <xmqqa896kuve.fsf@gitster.mtv.corp.google.com>
-Message-ID: <alpine.DEB.2.20.1702282149160.3767@virtualbox>
-References: <cover.1488231002.git.johannes.schindelin@gmx.de>        <20170228142802.hu5esthnqdsgc2po@sigill.intra.peff.net>        <f6b57868-0173-48d9-86cb-79780f7e301b@web.de> <xmqqa896kuve.fsf@gitster.mtv.corp.google.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+        id S1751989AbdB1VbG (ORCPT <rfc822;e@80x24.org>);
+        Tue, 28 Feb 2017 16:31:06 -0500
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:33450 "EHLO
+        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751673AbdB1Vay (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Feb 2017 16:30:54 -0500
+Received: by mail-wm0-f67.google.com with SMTP id v77so4360393wmv.0
+        for <git@vger.kernel.org>; Tue, 28 Feb 2017 13:30:52 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:references:cc:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding;
+        bh=jSqX0uaPnny0iUDUU4NgEPme6k8TtrG1buS3IuUwY5c=;
+        b=HUtzkJefXLRjltFgrKB4/a5lsc9b3pu/Z4pE9eGpDrGmjSHgQ7ObOLGbPjt2PKjlVn
+         oAQUU5TMZLnCxFLH+hZA97CBRqOqvU80BnWTmwcH2vGQxAGDA7iU/c0iFa8mupoYhx4y
+         Qghg/028Xuj72vSHklnTPVEBxYmicF8iJMbEZMaAVxNajfGT09TLvV0YLQtnHaxlbjLW
+         tC5V9tnOaC19Ou6lyLdg9tSELvP/OPrbqEH8vEoAqCadeaRRLgyOCvA9RkMt8BHHm67y
+         0tqDWp4kFdZZ4hJCXNg0iTeBoSo1S+ZLe2o/XD/FpMkX0fO1cAAlAs3SG4/vu/Xf6yN5
+         YzwQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
+        bh=jSqX0uaPnny0iUDUU4NgEPme6k8TtrG1buS3IuUwY5c=;
+        b=TuuZEm4KPRZPRa7ecan9czKRo/SynKkNLtRJBJ+QuqAQPfqtPTin0O4Ll0bctj4dOc
+         mOetupLtWlICmzaC+JPYKFb4J//dESNH3K5iHtiAVO28Os4uNOFMBQW7inJkp0M5UWCF
+         ScUO//LmDhqGFzoiMzcXvtJKkaH2/0DXCuz0PQUcDsmjRgNDtfBvFfj6Br6SIzxjvYg2
+         x25ySPEOdQGTlDZpGAxmXLI5NPv6C58CDm4wyvU+ZK3eyUJQxMP1oBSmX2ZKy3HTY4Ug
+         MZNvPWVhX+ax3SG68+P0mg1K+BzDz+u0+2gM4PMR6hSkCCipJujpS+b2ROqGliTA/YUU
+         oelA==
+X-Gm-Message-State: AMke39k/uZsls4RJT7KMHEnX2FgPzTMefpP0LNBTkzijlfxkPnaecUZirgypTUa9lcb6DQ==
+X-Received: by 10.28.48.78 with SMTP id w75mr540984wmw.55.1488317451902;
+        Tue, 28 Feb 2017 13:30:51 -0800 (PST)
+Received: from ?IPv6:2001:a61:1052:4001:ede7:c9d0:a549:517a? ([2001:a61:1052:4001:ede7:c9d0:a549:517a])
+        by smtp.googlemail.com with ESMTPSA id u41sm3881476wrc.24.2017.02.28.13.30.50
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 28 Feb 2017 13:30:51 -0800 (PST)
+Subject: Re: [PATCH v2 2/2] Documentation: Link descriptions of -z to
+ core.quotePath
+To:     =?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+References: <3c801e54-28c7-52d0-6915-ee7aaf1d89c9@gmail.com>
+ <1487968676-6126-1-git-send-email-asheiduk@gmail.com>
+ <1487968676-6126-3-git-send-email-asheiduk@gmail.com>
+ <f534b9c7-c8a8-1a05-5fcb-020122dccaac@gmail.com>
+Cc:     git@vger.kernel.org
+From:   Andreas Heiduk <asheiduk@gmail.com>
+Message-ID: <de5d3e7c-527f-eb6b-30ac-b0672e52ff29@gmail.com>
+Date:   Tue, 28 Feb 2017 22:30:50 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.7.0
 MIME-Version: 1.0
-Content-Type: multipart/mixed; BOUNDARY="8323329-910223319-1488315300=:3767"
-X-Provags-ID: V03:K0:tMDJ2pM0idyFw8NdnYAZtHNbEe0VnYUZsQ9D0AWa1srZZCTX0a/
- 2WmmMawM9Yvpr3us503uFmqyB7pYbiAjFPwv5+fjGZZY4NdcidzhpTDQdQwdiQ8+Hqv9ck4
- CeaZeugmTmlhEWb5gsg0Y6q2ark6xVhZB3mYFZ/qND+szK69yS04kTnWkDj2taM8WgZpLvS
- jYq13pNNhVLjQqoWyhKBg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:kNBMZgvWpaM=:loBfFnfXkAPRpcI+Ps0wgK
- tw7IRxk9IQ2St2yOuxSHQqK4ar3ygQeF4MXC12bfo8yi7U+W9ujsW246ry3I3eQNYHcFks+AS
- DnQz82OQnydlnObrVcZxrJsmuDE+zVf5auqbYUjtStbYBZ3RWmURcMPY+C1kWy5I56rz74itD
- gMfz8VcehxCIvRukBEDWKgSoIw3jXONBHOLmgSynHiwIEzTW5eKNuZMSEVedRAZMoIFKBuAPg
- /UBs74tr88acOK6BuDPFGeD5ei9Es1G7xw7DSP1SydIzg71Rn2PCk8QHR5MgyvJgcsrRKTxkS
- OQ+j2BM0pyCUaxfPXeXn2Kg39+2ZAO4Q4EJ01gASw4LUZnu7XqiQLHYkCPp+HCvfU2hRxwmRf
- Gcpa5wHoz66jljeZJOH8d114dUYpdNxDp3wzCPYm0tSWHZ+b8kewd95G2l9MDhawniiKLnqBH
- UknR8waJ6tKJZSzV0ITVvenqpX6YMaKNJY9xhoIi1Z2cdSXmb1C0jE9fO/JczsTS+PSMfKDy0
- zkrxcJcp1gqPqKNyI5s0sZLmjzLds/5QfoaJCgnqqmut/yo3j9QsT3mNozk505wVCcWLv5Qk9
- k1FNAvxyaNO8SoPF3WQdTUbTsgYmZcwtciZx4EqMBXP39pniprq4jvN2m9pqwgMtZOm7scxpy
- HSpSq860FquOa+bAt8rjScC5uentI4pdlR52UxHh0olYdN+Yl7ojwk1izwsqoxTdlhau64cU4
- xr+wRgCqI0dtAHoKb41Q1/G9deIXe6Kd2uNzlLI//x7eqvigl26CIDOgz26LQVa8VgirfGSmC
- p19c8eFkllN5RPF2hxHXVB0KnnAmA==
+In-Reply-To: <f534b9c7-c8a8-1a05-5fcb-020122dccaac@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Am 24.02.2017 um 22:54 schrieb Jakub Narębski:
+> W dniu 24.02.2017 o 21:37, Andreas Heiduk pisze:
+>> Linking the description for pathname quoting to the configuration
+>> variable "core.quotePath" removes inconstistent and incomplete
+>> sections while also giving two hints how to deal with it: Either with
+>> "-c core.quotePath=false" or with "-z".
+> 
+> This patch I am not sure about.  On one hand it improves consistency
+> (and makes information more complete), on the other hand it removes
+> information at hand and instead refers to other manpage.
 
---8323329-910223319-1488315300=:3767
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Indeed this is a trade-off. My intention was to establish some kind of
+well-known term by citing "core.quotePath" everywhere. So after a while
+"quoting" and "core.quotePath" should be known by everyone interested.
 
-Hi Junio,
+> Perhaps a better solution would be to craft a short description that
+> is both sufficiently complete, and refers to "core.quotePath" for
+> more details, and then transclude it with "include::quotepath.txt[]".
 
-On Tue, 28 Feb 2017, Junio C Hamano wrote:
+On the other hand this makes every section quite long. Personally, I
+find long and repetitive documentation harder to comprehend.
 
-> Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
->=20
-> > Am 28.02.2017 um 15:28 schrieb Jeff King:
-> >
-> >> It looks from the discussion like the sanest path forward is our own
-> >> signed-64bit timestamp_t. That's unfortunate compared to using the
-> >> standard time_t, but hopefully it would reduce the number of knobs
-> >> (like TIME_T_IS_INT64) in the long run.
-> >
-> > Glibc will get a way to enable 64-bit time_t on 32-bit platforms
-> > eventually (https://sourceware.org/glibc/wiki/Y2038ProofnessDesign).
-> > Can platforms that won't provide a 64-bit time_t by 2038 be actually
-> > used at that point?  How would we get time information on them?  How
-> > would a custom timestamp_t help us?
->=20
-> That's a sensible "wait, let's step back a bit".  I take it that you are
-> saying "time_t is just fine", and I am inclined to agree.
->=20
-> Right now, they may be able to have future timestamps ranging to
-> year 2100 and switching to time_t would limit their ability to
-> express future time to 2038 but they would be able to express
-> timestamp in the past to cover most of 20th century.  Given that
-> these 32-bit time_t software platforms will die off before year 2038
-> (either by underlying hardware getting obsolete, or software updated
-> to handle 64-bit time_t), the (temporary) loss of 2038-2100 range
-> would not be too big a deal to warrant additional complexity.
+>>
+>> Signed-off-by: Andreas Heiduk <asheiduk@gmail.com>
+>> ---
+>>  Documentation/diff-format.txt         |  7 ++++---
+>>  Documentation/diff-generate-patch.txt |  7 +++----
+>>  Documentation/diff-options.txt        |  7 +++----
+>>  Documentation/git-apply.txt           |  7 +++----
+>>  Documentation/git-commit.txt          |  9 ++++++---
+>>  Documentation/git-ls-files.txt        | 10 ++++++----
+>>  Documentation/git-ls-tree.txt         | 10 +++++++---
+>>  Documentation/git-status.txt          |  7 +++----
+>>  8 files changed, 35 insertions(+), 29 deletions(-)
+>>
+>> diff --git a/Documentation/diff-format.txt b/Documentation/diff-format.txt
+>> index cf52626..706916c 100644
+>> --- a/Documentation/diff-format.txt
+>> +++ b/Documentation/diff-format.txt
+>> @@ -78,9 +78,10 @@ Example:
+>>  :100644 100644 5be4a4...... 000000...... M file.c
+>>  ------------------------------------------------
+>>  
+>> -When `-z` option is not used, TAB, LF, and backslash characters
+>> -in pathnames are represented as `\t`, `\n`, and `\\`,
+>> -respectively.
+>> +Without the `-z` option, pathnames with "unusual" characters are
+>> +quoted as explained for the configuration variable `core.quotePath`
+>> +(see linkgit:git-config[1]).  Using `-z` the filename is output
+>> +verbatim and the line is terminated by a NUL byte.
+>>  
+>>  diff format for merges
+>>  ----------------------
+>> diff --git a/Documentation/diff-generate-patch.txt b/Documentation/diff-generate-patch.txt
+>> index d2a7ff5..231105c 100644
+>> --- a/Documentation/diff-generate-patch.txt
+>> +++ b/Documentation/diff-generate-patch.txt
+>> @@ -53,10 +53,9 @@ The index line includes the SHA-1 checksum before and after the change.
+>>  The <mode> is included if the file mode does not change; otherwise,
+>>  separate lines indicate the old and the new mode.
+>>  
+>> -3.  TAB, LF, double quote and backslash characters in pathnames
+>> -    are represented as `\t`, `\n`, `\"` and `\\`, respectively.
+>> -    If there is need for such substitution then the whole
+>> -    pathname is put in double quotes.
+>> +3.  Pathnames with "unusual" characters are quoted as explained for
+>> +    the configuration variable `core.quotePath` (see
+>> +    linkgit:git-config[1]).
+>>  
+>>  4.  All the `file1` files in the output refer to files before the
+>>      commit, and all the `file2` files refer to files after the commit.
+>> diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
+>> index e6215c3..7c28e73 100644
+>> --- a/Documentation/diff-options.txt
+>> +++ b/Documentation/diff-options.txt
+>> @@ -192,10 +192,9 @@ ifndef::git-log[]
+>>  	given, do not munge pathnames and use NULs as output field terminators.
+>>  endif::git-log[]
+>>  +
+>> -Without this option, each pathname output will have TAB, LF, double quotes,
+>> -and backslash characters replaced with `\t`, `\n`, `\"`, and `\\`,
+>> -respectively, and the pathname will be enclosed in double quotes if
+>> -any of those replacements occurred.
+>> +Without this option, pathnames with "unusual" characters are munged as
+>> +explained for the configuration variable `core.quotePath` (see
+>> +linkgit:git-config[1]).
+>>  
+>>  --name-only::
+>>  	Show only names of changed files.
+>> diff --git a/Documentation/git-apply.txt b/Documentation/git-apply.txt
+>> index 8ddb207..a7a001b 100644
+>> --- a/Documentation/git-apply.txt
+>> +++ b/Documentation/git-apply.txt
+>> @@ -108,10 +108,9 @@ the information is read from the current index instead.
+>>  	When `--numstat` has been given, do not munge pathnames,
+>>  	but use a NUL-terminated machine-readable format.
+>>  +
+>> -Without this option, each pathname output will have TAB, LF, double quotes,
+>> -and backslash characters replaced with `\t`, `\n`, `\"`, and `\\`,
+>> -respectively, and the pathname will be enclosed in double quotes if
+>> -any of those replacements occurred.
+>> +Without this option, pathnames with "unusual" characters are munged as
+>> +explained for the configuration variable `core.quotePath` (see
+>> +linkgit:git-config[1]).
+>>  
+>>  -p<n>::
+>>  	Remove <n> leading slashes from traditional diff paths. The
+>> diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
+>> index 4f8f20a..25dcdcc 100644
+>> --- a/Documentation/git-commit.txt
+>> +++ b/Documentation/git-commit.txt
+>> @@ -117,9 +117,12 @@ OPTIONS
+>>  
+>>  -z::
+>>  --null::
+>> -	When showing `short` or `porcelain` status output, terminate
+>> -	entries in the status output with NUL, instead of LF. If no
+>> -	format is given, implies the `--porcelain` output format.
+>> +	When showing `short` or `porcelain` status output, print the
+>> +	filename verbatim and terminate the entries with NUL, instead of LF.
+>> +	If no format is given, implies the `--porcelain` output format.
+>> +	Without the `-z` option, filenames with "unusual" characters are
+>> +	quoted as explained for the configuration variable `core.quotePath`
+>> +	(see linkgit:git-config[1]).
+>>  
+>>  -F <file>::
+>>  --file=<file>::
+>> diff --git a/Documentation/git-ls-files.txt b/Documentation/git-ls-files.txt
+>> index 446209e..1cab703 100644
+>> --- a/Documentation/git-ls-files.txt
+>> +++ b/Documentation/git-ls-files.txt
+>> @@ -77,7 +77,8 @@ OPTIONS
+>>  	succeed.
+>>  
+>>  -z::
+>> -	\0 line termination on output.
+>> +	\0 line termination on output and do not quote filenames.
+>> +	See OUTPUT below for more information.
+>>  
+>>  -x <pattern>::
+>>  --exclude=<pattern>::
+>> @@ -196,9 +197,10 @@ the index records up to three such pairs; one from tree O in stage
+>>  the user (or the porcelain) to see what should eventually be recorded at the
+>>  path. (see linkgit:git-read-tree[1] for more information on state)
+>>  
+>> -When `-z` option is not used, TAB, LF, and backslash characters
+>> -in pathnames are represented as `\t`, `\n`, and `\\`,
+>> -respectively.
+>> +Without the `-z` option, pathnames with "unusual" characters are
+>> +quoted as explained for the configuration variable `core.quotePath`
+>> +(see linkgit:git-config[1]).  Using `-z` the filename is output
+>> +verbatim and the line is terminated by a NUL byte.
+>>  
+>>  
+>>  Exclude Patterns
+>> diff --git a/Documentation/git-ls-tree.txt b/Documentation/git-ls-tree.txt
+>> index dbc91f9..9dee7be 100644
+>> --- a/Documentation/git-ls-tree.txt
+>> +++ b/Documentation/git-ls-tree.txt
+>> @@ -53,7 +53,8 @@ OPTIONS
+>>  	Show object size of blob (file) entries.
+>>  
+>>  -z::
+>> -	\0 line termination on output.
+>> +	\0 line termination on output and do not quote filenames.
+>> +	See OUTPUT FORMAT below for more information.
+>>  
+>>  --name-only::
+>>  --name-status::
+>> @@ -82,8 +83,6 @@ Output Format
+>>  -------------
+>>          <mode> SP <type> SP <object> TAB <file>
+>>  
+>> -Unless the `-z` option is used, TAB, LF, and backslash characters
+>> -in pathnames are represented as `\t`, `\n`, and `\\`, respectively.
+>>  This output format is compatible with what `--index-info --stdin` of
+>>  'git update-index' expects.
+>>  
+>> @@ -95,6 +94,11 @@ Object size identified by <object> is given in bytes, and right-justified
+>>  with minimum width of 7 characters.  Object size is given only for blobs
+>>  (file) entries; for other entries `-` character is used in place of size.
+>>  
+>> +Without the `-z` option, pathnames with "unusual" characters are
+>> +quoted as explained for the configuration variable `core.quotePath`
+>> +(see linkgit:git-config[1]).  Using `-z` the filename is output
+>> +verbatim and the line is terminated by a NUL byte.
+>> +
+>>  GIT
+>>  ---
+>>  Part of the linkgit:git[1] suite
+>> diff --git a/Documentation/git-status.txt b/Documentation/git-status.txt
+>> index 725065e..ba87365 100644
+>> --- a/Documentation/git-status.txt
+>> +++ b/Documentation/git-status.txt
+>> @@ -322,10 +322,9 @@ When the `-z` option is given, pathnames are printed as is and
+>>  without any quoting and lines are terminated with a NUL (ASCII 0x00)
+>>  byte.
+>>  
+>> -Otherwise, all pathnames will be "C-quoted" if they contain any tab,
+>> -linefeed, double quote, or backslash characters. In C-quoting, these
+>> -characters will be replaced with the corresponding C-style escape
+>> -sequences and the resulting pathname will be double quoted.
+>> +Without the `-z` option, pathnames with "unusual" characters are
+>> +quoted as explained for the configuration variable `core.quotePath`
+>> +(see linkgit:git-config[1]).
+>>  
+>>  
+>>  CONFIGURATION
+>>
+> 
 
-You seem to assume that time_t is required to be signed. But from my
-understanding that is only guaranteed by POSIX, not by ISO C.
-
-We may very well buy ourselves a ton of trouble if we decide to switch to
-`time_t` rather than to `int64_t`.
-
-Ciao,
-Johannes
---8323329-910223319-1488315300=:3767--
