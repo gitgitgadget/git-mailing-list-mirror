@@ -6,71 +6,112 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D8E7B201B0
-	for <e@80x24.org>; Tue, 28 Feb 2017 12:37:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3D07D201B0
+	for <e@80x24.org>; Tue, 28 Feb 2017 12:43:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752326AbdB1Mh5 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 28 Feb 2017 07:37:57 -0500
-Received: from cloud.peff.net ([104.130.231.41]:35587 "EHLO cloud.peff.net"
+        id S1752029AbdB1MnY (ORCPT <rfc822;e@80x24.org>);
+        Tue, 28 Feb 2017 07:43:24 -0500
+Received: from cloud.peff.net ([104.130.231.41]:35593 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751737AbdB1Mh5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Feb 2017 07:37:57 -0500
-Received: (qmail 24091 invoked by uid 109); 28 Feb 2017 12:37:56 -0000
+        id S1751637AbdB1MnX (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Feb 2017 07:43:23 -0500
+Received: (qmail 22637 invoked by uid 109); 28 Feb 2017 12:15:50 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 28 Feb 2017 12:37:56 +0000
-Received: (qmail 25619 invoked by uid 111); 28 Feb 2017 12:38:02 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 28 Feb 2017 12:15:50 +0000
+Received: (qmail 25395 invoked by uid 111); 28 Feb 2017 12:15:56 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 28 Feb 2017 07:38:02 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 28 Feb 2017 07:37:54 -0500
-Date:   Tue, 28 Feb 2017 07:37:54 -0500
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 28 Feb 2017 07:15:56 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 28 Feb 2017 07:15:48 -0500
+Date:   Tue, 28 Feb 2017 07:15:48 -0500
 From:   Jeff King <peff@peff.net>
-To:     Patrick Steinhardt <patrick.steinhardt@elego.de>
-Cc:     git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH 2/2] docs/diffcore: unquote "Complete Rewrites" in headers
-Message-ID: <20170228123753.6k646m7jnyc5uoav@sigill.intra.peff.net>
-References: <2882e77a58e4219d60a39827c3ea8d4537d5178a.1488272203.git.patrick.steinhardt@elego.de>
- <576fa5be072ebd503aa553ef24290c77ed34eeb1.1488272203.git.patrick.steinhardt@elego.de>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jacob Keller <jacob.keller@gmail.com>,
+        Karthik Nayak <karthik.188@gmail.com>,
+        Luc Van Oostenryck <luc.vanoostenryck@gmail.com>,
+        Git List <git@vger.kernel.org>
+Subject: [PATCH 6/8] branch: restrict @-expansions when deleting
+Message-ID: <20170228121548.qbcdh7rzxyressry@sigill.intra.peff.net>
+References: <20170228120633.zkwfqms57fk7dkl5@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <576fa5be072ebd503aa553ef24290c77ed34eeb1.1488272203.git.patrick.steinhardt@elego.de>
+In-Reply-To: <20170228120633.zkwfqms57fk7dkl5@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Feb 28, 2017 at 09:59:05AM +0100, Patrick Steinhardt wrote:
+We use strbuf_branchname() to expand the branch name from
+the command line, so you can delete the branch given by
+@{-1}, for example.  However, we allow other nonsense like
+"@", and we do not respect our "-r" flag (so we may end up
+deleting an oddly-named local ref instead of a remote one).
 
-> The gitdiffcore documentation quotes the term "Complete Rewrites" in
-> headers for no real gain. This would make sense if the term could be
-> easily confused if not properly grouped together. But actually, the term
-> is quite obvious and thus does not really need any quoting, especially
-> regarding that it is not used anywhere else.
-> 
-> But more importanly, this brings up a bug when rendering man pages: when
-> trying to render quotes inside of a section header, we end up with
-> quotes which have been misaligned to the end of line. E.g.
-> 
->     diffcore-break: For Splitting Up Complete Rewrites
->     --------------------------------------------------
-> 
-> renders as
-> 
->     DIFFCORE-BREAK: FOR SPLITTING UP  COMPLETE REWRITES""
-> 
-> , which is obviously wrong. While this is fixable for the man pages by
-> using double-quotes (e.g. ""COMPLETE REWRITES""), this again breaks it
-> for our generated HTML pages.
-> 
-> So fix the issue by simply dropping quotes inside of section headers,
-> which is currently only done for the term "Complete Rewrites".
+We can fix this by passing the appropriate "allowed" flag to
+strbuf_branchname().
 
-Thanks for a nice explanation of the issue. I was curious whether
-asciidoctor gets this right. It does, though I suppose that's because we
-only look at the HTML output. It sounds like the issue is in the
-docbook->roff path.
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ builtin/branch.c                      | 5 ++++-
+ t/t3204-branch-name-interpretation.sh | 4 ++--
+ 2 files changed, 6 insertions(+), 3 deletions(-)
 
-At any rate, I agree with your analysis. It's not worth futzing with the
-formatting when it reads just as well without the quotes.
+diff --git a/builtin/branch.c b/builtin/branch.c
+index cf0ece55d..291fe90de 100644
+--- a/builtin/branch.c
++++ b/builtin/branch.c
+@@ -191,17 +191,20 @@ static int delete_branches(int argc, const char **argv, int force, int kinds,
+ 	int ret = 0;
+ 	int remote_branch = 0;
+ 	struct strbuf bname = STRBUF_INIT;
++	unsigned allowed_interpret;
+ 
+ 	switch (kinds) {
+ 	case FILTER_REFS_REMOTES:
+ 		fmt = "refs/remotes/%s";
+ 		/* For subsequent UI messages */
+ 		remote_branch = 1;
++		allowed_interpret = INTERPRET_BRANCH_REMOTE;
+ 
+ 		force = 1;
+ 		break;
+ 	case FILTER_REFS_BRANCHES:
+ 		fmt = "refs/heads/%s";
++		allowed_interpret = INTERPRET_BRANCH_LOCAL;
+ 		break;
+ 	default:
+ 		die(_("cannot use -a with -d"));
+@@ -216,7 +219,7 @@ static int delete_branches(int argc, const char **argv, int force, int kinds,
+ 		char *target = NULL;
+ 		int flags = 0;
+ 
+-		strbuf_branchname(&bname, argv[i], 0);
++		strbuf_branchname(&bname, argv[i], allowed_interpret);
+ 		free(name);
+ 		name = mkpathdup(fmt, bname.buf);
+ 
+diff --git a/t/t3204-branch-name-interpretation.sh b/t/t3204-branch-name-interpretation.sh
+index 2fe696ba6..c8fec5b8c 100755
+--- a/t/t3204-branch-name-interpretation.sh
++++ b/t/t3204-branch-name-interpretation.sh
+@@ -83,7 +83,7 @@ test_expect_success 'delete branch via remote @{upstream}' '
+ # Note that we create two oddly named local branches here. We want to make
+ # sure that we do not accidentally delete either of them, even if
+ # shorten_unambiguous_ref() tweaks the name to avoid ambiguity.
+-test_expect_failure 'delete @{upstream} expansion matches -r option' '
++test_expect_success 'delete @{upstream} expansion matches -r option' '
+ 	git update-ref refs/remotes/origin/remote-del two &&
+ 	git branch --set-upstream-to=origin/remote-del &&
+ 	git update-ref refs/heads/origin/remote-del two &&
+@@ -103,7 +103,7 @@ test_expect_failure 'create branch named "@"' '
+ 	expect_branch refs/heads/@ one
+ '
+ 
+-test_expect_failure 'delete branch named "@"' '
++test_expect_success 'delete branch named "@"' '
+ 	git update-ref refs/heads/@ two &&
+ 	git branch -D @ &&
+ 	expect_deleted refs/heads/@
+-- 
+2.12.0.359.gd4c8c42e9
 
--Peff
