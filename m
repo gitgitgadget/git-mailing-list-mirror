@@ -2,106 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B1CF5202C9
-	for <e@80x24.org>; Tue, 28 Feb 2017 21:35:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6FA19202C9
+	for <e@80x24.org>; Tue, 28 Feb 2017 21:38:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751975AbdB1Vez (ORCPT <rfc822;e@80x24.org>);
-        Tue, 28 Feb 2017 16:34:55 -0500
-Received: from mail-pg0-f65.google.com ([74.125.83.65]:33384 "EHLO
-        mail-pg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751623AbdB1Vex (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Feb 2017 16:34:53 -0500
-Received: by mail-pg0-f65.google.com with SMTP id x17so3052542pgi.0
-        for <git@vger.kernel.org>; Tue, 28 Feb 2017 13:33:35 -0800 (PST)
+        id S1752256AbdB1Viz (ORCPT <rfc822;e@80x24.org>);
+        Tue, 28 Feb 2017 16:38:55 -0500
+Received: from mail-pg0-f48.google.com ([74.125.83.48]:36384 "EHLO
+        mail-pg0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751828AbdB1Vix (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Feb 2017 16:38:53 -0500
+Received: by mail-pg0-f48.google.com with SMTP id s67so10733899pgb.3
+        for <git@vger.kernel.org>; Tue, 28 Feb 2017 13:37:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=PmcTMHFpZjJSVDUuF/AP5VZ60kSGXLFFlbvH/gA6bDo=;
-        b=OYIMKKzhiBEBm0ap+xUZMzorLLfhFzsbcv++KO4KNLs5yAzgadG/EITzLz6G3+BfVA
-         nOL4/MbXivD7CFXwzAChgKBw1TiPKnNkQ5eU+REax76zkmU64kDsxbVwhATyqw3INx29
-         sRlAfLPDPgi4tUdZITdyOfeMc6CVnpWmLzHdN+8z95tLgch2dRsV8rhgAUJj2rgUZ/P0
-         C0q9nPAlf7m2KxuI1NUBJublkDsWAmyyD2n8IRjdftJ5uVKCjOjauZ5QfybctziI2m5X
-         XVTfjAijiADy14Di7eCbt1o5tOf2BDcYUz5ZuqnNR6ZvKQPCXPHOT4ImgserOArCsDGy
-         sgAw==
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=1d6GdrNgHkORQlU/Z4J2G+K0KraX/flDuUON36h1Nsg=;
+        b=rJCx/C2LhIoFYPHKNFxHndhtV1pf5ZmyA+LjzS9ssiCnN3sMxWR9WdXmfsdnAzBGLg
+         +6gPTrwidqB4aW8uECK/HkwaWysn4sOAkxRMirmtS+mQrtK5Jz0fVmowPZBMO3EH05Gl
+         /dUgFUlCjz/sKOFUmYStheBUqHnBrARiTeXwbNfFMJwmp/rkkV+fNKFBLfPIRcvtxcQs
+         cIL4j88ld5sc4WtJ9vN9phn6qCzEjYocJoujIGigbtUlzdRn78o1UXd0KVWn/V6G1Y3d
+         fnU/wzNVw4HI3ifi1jTCahWvz2ZE9bLamIXwz2kux/C2Z9yJQpFu3oL4WJYAn9dO+nUu
+         4ffA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=PmcTMHFpZjJSVDUuF/AP5VZ60kSGXLFFlbvH/gA6bDo=;
-        b=INAhwkLb021LM7+H+SlAPe3hT3Cf9K2o2sq+cFtW1pyS5U6UVi0F5TiMFAGkNpDcfm
-         IQkZstxrg2lfz5fosH2mEnwZ+ojn55TIFhfwVuWKup2PiPka0QOawthU0AQbB1bJh6Rs
-         2ZZ0SYhpRiZ4aIcekv1vt7ZWrreny1dCCG8GEGyqL01DczxU2kDz715DcaMdut0Ol24D
-         b9ZCECh94fR8iEuAuU4SDE2yd49Ap09Cji1pFmIomSLjODi/lPyOU/le0RLCTBlT83/b
-         POanKcc0ROlR54XQ4C5F+wntfhEGsKqqOsH6/aKGDNtkUIR1i4wAm75dMjd4MmbxpOD6
-         yfkA==
-X-Gm-Message-State: AMke39l/cjSwQCaNkaY0wuBleKZu1Vbw0N19FgqNzitYUQZBV1t8+E9l0tRB/r48I6RnwA==
-X-Received: by 10.84.218.1 with SMTP id q1mr5613592pli.104.1488315870189;
-        Tue, 28 Feb 2017 13:04:30 -0800 (PST)
-Received: from localhost ([2620:0:1000:8622:e0d7:55f8:67f2:62dd])
-        by smtp.gmail.com with ESMTPSA id s5sm5975685pgc.57.2017.02.28.13.04.29
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=1d6GdrNgHkORQlU/Z4J2G+K0KraX/flDuUON36h1Nsg=;
+        b=NK48pSeMkQ33SrquNESgdzj3PYXXVjRKzVs2GnYrZNvl2TQJon+4C6pnKp5IbjnHDq
+         BTOMPeCMytjT2HyFiNLzj5REbsODryF+DF75znqyXefxAAzd8rY5SqlNSFmzgyxtdamv
+         9I7aud9yhj/2qbfY/+zDtZ9y0pP1czAO0j01tgiAvXKPlLegEVbW2j2KdudKozMEuEBg
+         Vxq1/43CkXaMW0fZE+cgmPZNy6qAUQ+pihiv6ZDhlunh/WSr2vNiOR1fOn84d0xvgl01
+         Qvd+xcU5w566iFlb1R+XOT4ouzVxioti2BdHzd2IADv045FaIjqQIBZWgYgcqjCdVAhU
+         hKQw==
+X-Gm-Message-State: AMke39k1fnbK1SSGxI43Kd6+nIzoS3p3amw3Luvc/tDRdRHj0/npdjDf4+ac+xMlbnNNSVFZ
+X-Received: by 10.98.30.4 with SMTP id e4mr4636403pfe.19.1488314532225;
+        Tue, 28 Feb 2017 12:42:12 -0800 (PST)
+Received: from google.com ([2620:0:1000:5b10:a439:8863:7534:1ae1])
+        by smtp.gmail.com with ESMTPSA id 15sm5949988pgh.21.2017.02.28.12.42.10
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 28 Feb 2017 13:04:29 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Brandon Williams <bmwill@google.com>
-Cc:     git@vger.kernel.org, sbeller@google.com, pclouds@gmail.com
-Subject: Re: [PATCH 3/5] grep: fix bug when recuring with relative pathspec
-References: <20170224235100.52627-1-bmwill@google.com>
-        <20170224235100.52627-4-bmwill@google.com>
-Date:   Tue, 28 Feb 2017 13:04:28 -0800
-In-Reply-To: <20170224235100.52627-4-bmwill@google.com> (Brandon Williams's
-        message of "Fri, 24 Feb 2017 15:50:58 -0800")
-Message-ID: <xmqqefyijacj.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+        Tue, 28 Feb 2017 12:42:10 -0800 (PST)
+Date:   Tue, 28 Feb 2017 12:42:09 -0800
+From:   Brandon Williams <bmwill@google.com>
+To:     =?iso-8859-1?Q?Ren=E9?= Scharfe <l.s.r@web.de>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>
+Subject: Re: [PATCH] strbuf: add strbuf_add_real_path()
+Message-ID: <20170228204209.GA110257@google.com>
+References: <4d191b86-d36c-e3ec-99c6-d15baa6b659a@web.de>
+ <20170227182217.GC153455@google.com>
+ <3063b6fb-02aa-703c-0b56-300109cf054d@web.de>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <3063b6fb-02aa-703c-0b56-300109cf054d@web.de>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Brandon Williams <bmwill@google.com> writes:
+On 02/27, René Scharfe wrote:
+> Am 27.02.2017 um 19:22 schrieb Brandon Williams:
+> >On 02/25, René Scharfe wrote:
+> >>+void strbuf_add_real_path(struct strbuf *sb, const char *path)
+> >>+{
+> >>+	if (sb->len) {
+> >>+		struct strbuf resolved = STRBUF_INIT;
+> >>+		strbuf_realpath(&resolved, path, 1);
+> >>+		strbuf_addbuf(sb, &resolved);
+> >>+		strbuf_release(&resolved);
+> >>+	} else
+> >>+		strbuf_realpath(sb, path, 1);
+> >
+> >I know its not required but I would have braces on the 'else' branch
+> >since they were needed on the 'if' branch.  But that's up to you and
+> >your style :)
+> 
+> Personally I'd actually prefer them as well, but the project's style
+> has traditionally been to avoid braces on such trailing single-line
+> branches to save lines.  The CodingGuidelines for this topic have
+> been clarified recently, though, and seem to require them now.
+> Interesting.
+> 
+> René
 
->  	/* Add super prefix */
-> +	quote_path_relative(name, opt->prefix, &buf);
+Having the project's guidelines align with your own preference makes
+things a bit easier!
 
-Hmph, do you want a quoted version here, not just relative_path()?
-
-Perhaps add a test with an "unusual" byte (e.g. a double-quote) in
-the path?
-
->  	argv_array_pushf(&cp.args, "--super-prefix=%s%s/",
->  			 super_prefix ? super_prefix : "",
-> -			 name);
-> +			 buf.buf);
-> +	strbuf_release(&buf);
->  	argv_array_push(&cp.args, "grep");
->  
->  	/*
-> @@ -1199,7 +1202,8 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
->  
->  	parse_pathspec(&pathspec, 0,
->  		       PATHSPEC_PREFER_CWD |
-> -		       (opt.max_depth != -1 ? PATHSPEC_MAXDEPTH_VALID : 0),
-> +		       (opt.max_depth != -1 ? PATHSPEC_MAXDEPTH_VALID : 0) |
-> +		       (super_prefix ? PATHSPEC_FROMROOT : 0),
->  		       prefix, argv + i);
->  	pathspec.max_depth = opt.max_depth;
->  	pathspec.recursive = 1;
-> diff --git a/t/t7814-grep-recurse-submodules.sh b/t/t7814-grep-recurse-submodules.sh
-> index 418ba68fe..e0932b2b7 100755
-> --- a/t/t7814-grep-recurse-submodules.sh
-> +++ b/t/t7814-grep-recurse-submodules.sh
-> @@ -227,7 +227,7 @@ test_expect_success 'grep history with moved submoules' '
->  	test_cmp expect actual
->  '
->  
-> -test_expect_failure 'grep using relative path' '
-> +test_expect_success 'grep using relative path' '
->  	test_when_finished "rm -rf parent sub" &&
->  	git init sub &&
->  	echo "foobar" >sub/file &&
+-- 
+Brandon Williams
