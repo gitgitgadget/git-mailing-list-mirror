@@ -2,127 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 52E70201B0
-	for <e@80x24.org>; Tue, 28 Feb 2017 17:42:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5F98D201B0
+	for <e@80x24.org>; Tue, 28 Feb 2017 17:43:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751243AbdB1Rls (ORCPT <rfc822;e@80x24.org>);
-        Tue, 28 Feb 2017 12:41:48 -0500
-Received: from alum-mailsec-scanner-1.mit.edu ([18.7.68.12]:44811 "EHLO
-        alum-mailsec-scanner-1.mit.edu" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751334AbdB1Rl3 (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 28 Feb 2017 12:41:29 -0500
-X-AuditID: 1207440c-abdff70000002e8f-f2-58b5b63e76ce
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-        (using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
-        (Client did not present a certificate)
-        by alum-mailsec-scanner-1.mit.edu (Symantec Messaging Gateway) with SMTP id 9E.71.11919.E36B5B85; Tue, 28 Feb 2017 12:41:18 -0500 (EST)
-Received: from [192.168.69.190] (p5B10410E.dip0.t-ipconnect.de [91.16.65.14])
-        (authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v1SHfFHk016001
-        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-        Tue, 28 Feb 2017 12:41:16 -0500
-Subject: Re: [PATCH v5 07/24] files-backend: add and use files_refname_path()
-To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>, git@vger.kernel.org
-References: <20170218133303.3682-1-pclouds@gmail.com>
- <20170222140450.30886-1-pclouds@gmail.com>
- <20170222140450.30886-8-pclouds@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Stefan Beller <sbeller@google.com>, novalis@novalis.org
-From:   Michael Haggerty <mhagger@alum.mit.edu>
-Message-ID: <beef528b-66cd-e104-4c02-b07ddfa7e6d7@alum.mit.edu>
-Date:   Tue, 28 Feb 2017 18:41:14 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Icedove/45.6.0
+        id S1751589AbdB1RnP (ORCPT <rfc822;e@80x24.org>);
+        Tue, 28 Feb 2017 12:43:15 -0500
+Received: from mail-pg0-f65.google.com ([74.125.83.65]:34525 "EHLO
+        mail-pg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751574AbdB1RnO (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Feb 2017 12:43:14 -0500
+Received: by mail-pg0-f65.google.com with SMTP id s67so2359664pgb.1
+        for <git@vger.kernel.org>; Tue, 28 Feb 2017 09:41:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=vLGaDQPH86A+Hi662q5XjSL1Tnh6RecN0+jdzBWyjXA=;
+        b=d1yM5LopO/wOy5cVWHBZxsDHS0oo82CVFG3GHJhPU/Koze8GVfKjDdqhJtYWzmjOQE
+         ja65AHhOq/WHA4g3snAnzIXDJnaN+pVc3orbsnfiSQUvKu+ZVAmeobOTiN/f/1JjiC+w
+         XZF79gj1GQpRSEAuXr3Morhc9nobpSV/c06AxlhvlcLnx6IQFrXJ4P/9+xx/tvNeUF93
+         MC7yVcH6PxfLRdtqw//aU4eGxJVOBGGGDp4Nb5b4aI2XaUIH5L9FiSBpjgZ/HWg5UOBh
+         2ouJbbj9q5g8risz4XesuOP5ALaUnyFnC7tJtGBcb0QM1zUdnwasFiLraW0+kwkcONQA
+         Kxeg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=vLGaDQPH86A+Hi662q5XjSL1Tnh6RecN0+jdzBWyjXA=;
+        b=EQBQA2VumQtKdX+p9Ygku0ENDPnrsWK00O46d4su25cRQNXgJua8OvnXqd691ooMPk
+         v0AUz7KGlddd6LGv+PhK9BtWCSPUQ6hY97SzesVMtveqcXguNVobUbOSozKUIyinsoFD
+         NusiwOfL958OPtfkFtMW2yvQyxZ3gug8jTPOO/1/F/7YeCKVHb6pCr0lEThGov5K9yu4
+         5+1VhXc87PS4jkBj6b9s3DAYu+C2Ds2VIWrWPeg/dqnReA3p4pbmalqvpe1cFwSSF/iD
+         9e3mB36BVk1mCSKtTQ0qnx0y6wnhao3eFZV8zCXU8g1YRAb8i3CCDKJkX53irINLfczy
+         vRSA==
+X-Gm-Message-State: AMke39k5c+oFHZvb4ifDeAwI1gvFKQnvugYm+ix6YbNL0HLd5m/hBd/NFnQMDFcKLuQHAQ==
+X-Received: by 10.84.143.195 with SMTP id 61mr4539964plz.46.1488303134248;
+        Tue, 28 Feb 2017 09:32:14 -0800 (PST)
+Received: from localhost ([2620:0:1000:8622:e0d7:55f8:67f2:62dd])
+        by smtp.gmail.com with ESMTPSA id c2sm5461372pfl.61.2017.02.28.09.32.12
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Tue, 28 Feb 2017 09:32:12 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Patrick Steinhardt <patrick.steinhardt@elego.de>
+Cc:     git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>
+Subject: Re: [PATCH 1/2] docs/diffcore: fix grammar in diffcore-rename header
+References: <2882e77a58e4219d60a39827c3ea8d4537d5178a.1488272203.git.patrick.steinhardt@elego.de>
+Date:   Tue, 28 Feb 2017 09:32:12 -0800
+In-Reply-To: <2882e77a58e4219d60a39827c3ea8d4537d5178a.1488272203.git.patrick.steinhardt@elego.de>
+        (Patrick Steinhardt's message of "Tue, 28 Feb 2017 09:59:04 +0100")
+Message-ID: <xmqqr32ikyqr.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <20170222140450.30886-8-pclouds@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFupnleLIzCtJLcpLzFFi42IRYndR1LXbtjXC4MMrFYuuK91MFg29V5gt
-        +pd3sVksefia2aJ7yltGi5lXrS02b25ncWD32DnrLrvHh49xHgs2lXp0tR9h87h4Sdlj/9Jt
-        bB6fN8kFsEdx2aSk5mSWpRbp2yVwZbT1tTEWXBWomLXyA2sD41beLkZODgkBE4lPT2azdzFy
-        cQgJ7GCSOL9pISOEc5ZJ4su+BawgVcICvhJ3+o6xgNgiAmkSiye/ZwaxhQT6GSXOzkgEaWAW
-        uMEocWniRyaQBJuArsSinmYwm1fAXuLxhYdgzSwCqhInZ64Es0UFQiTmLHzACFEjCBR/Ahbn
-        FDCXuDKjFSzOLKAu8WfeJWYIW16ieets5gmM/LOQtMxCUjYLSdkCRuZVjHKJOaW5urmJmTnF
-        qcm6xcmJeXmpRbqGermZJXqpKaWbGCHhzrOD8ds6mUOMAhyMSjy8GZ1bI4RYE8uKK3MPMUpy
-        MCmJ8gbNAArxJeWnVGYkFmfEF5XmpBYfYpTgYFYS4d1RDJTjTUmsrEotyodJSXOwKInzqi5R
-        9xMSSE8sSc1OTS1ILYLJynBwKEnwVm0BahQsSk1PrUjLzClBSDNxcIIM5wEa/nczyPDigsTc
-        4sx0iPwpRkUpcd4JIAkBkERGaR5cLywdvWIUB3pFmFceZAUPMJXBdb8CGswENPiFCtjgkkSE
-        lFQDo4f3l8nxWYnyO7q9oy1fNl7oNy71YtF1yX91ruuOQu+jsJj6WeJs/7Rr9HMaUwtmS3kr
-        OTlErbvsxHD67LmTPX1dRhb51/Z7lOziKVJJ2v54Q2JS8/IWh/ez3W4dVGl3Mt3CLFIv23fy
-        eKyb8YRdK9JmXnmsniG+8/8Hk4IjzoWlJ8X2cG1QYinOSDTUYi4qTgQAQTk54CIDAAA=
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 02/22/2017 03:04 PM, Nguyễn Thái Ngọc Duy wrote:
-> Keep repo-related path handling in one place. This will make it easier
-> to add submodule/multiworktree support later.
-> 
-> This automatically adds the "if submodule then use the submodule version
-> of git_path" to other call sites too. But it does not mean those
-> operations are sumodule-ready. Not yet.
+Patrick Steinhardt <patrick.steinhardt@elego.de> writes:
 
-s/sumodule/submodule/
-
-> Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
 > ---
->  refs/files-backend.c | 45 +++++++++++++++++++++++++--------------------
->  1 file changed, 25 insertions(+), 20 deletions(-)
-> 
-> diff --git a/refs/files-backend.c b/refs/files-backend.c
-> index 7b4ea4c56..72f4e1746 100644
-> --- a/refs/files-backend.c
-> +++ b/refs/files-backend.c
-> @@ -1180,6 +1180,18 @@ static void files_reflog_path(struct files_ref_store *refs,
->  	strbuf_git_path(sb, "logs/%s", refname);
->  }
+>  Documentation/gitdiffcore.txt | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/Documentation/gitdiffcore.txt b/Documentation/gitdiffcore.txt
+> index 46bc6d077..cf009a187 100644
+> --- a/Documentation/gitdiffcore.txt
+> +++ b/Documentation/gitdiffcore.txt
+> @@ -119,7 +119,7 @@ the original is used), and can be customized by giving a number
+>  after "-B" option (e.g. "-B75" to tell it to use 75%).
 >  
-> +static void files_refname_path(struct files_ref_store *refs,
-> +			       struct strbuf *sb,
-> +			       const char *refname)
-> +{
-> +	if (refs->submodule) {
-> +		strbuf_git_path_submodule(sb, refs->submodule, "%s", refname);
-> +		return;
-> +	}
-> +
-> +	strbuf_git_path(sb, "%s", refname);
-> +}
-
-Maybe it's just me, but I find it odd to exit early here when the first
-exit isn't due to an error. For me, structuring this like `if ()
-call1(); else call2();` would make it clearer that the two code paths
-are equally-valid alternatives, and either one or the other will be
-executed.
-
-I had the same feeling when I read `files_reflog_path()`
-
->  /*
->   * Get the packed_ref_cache for the specified files_ref_store,
->   * creating it if necessary.
-> @@ -1251,10 +1263,7 @@ static void read_loose_refs(const char *dirname, struct ref_dir *dir)
->  	size_t path_baselen;
->  	int err = 0;
 >  
-> -	if (refs->submodule)
-> -		err = strbuf_git_path_submodule(&path, refs->submodule, "%s", dirname);
-> -	else
-> -		strbuf_git_path(&path, "%s", dirname);
-> +	files_refname_path(refs, &path, dirname);
+> -diffcore-rename: For Detection Renames and Copies
+> +diffcore-rename: For Detecting Renames and Copies
+>  -------------------------------------------------
+>  
+>  This transformation is used to detect renames and copies, and is
 
-It's so nice to see these ugly `if (refs->submodule)` code blocks
-disappearing!
-
-> [...]
-
-Michael
-
+Thanks for carefully reading.  Both looks reasonable.
