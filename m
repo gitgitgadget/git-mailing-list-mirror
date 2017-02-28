@@ -2,99 +2,150 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9F3772031F
+	by dcvr.yhbt.net (Postfix) with ESMTP id B4C23202CC
 	for <e@80x24.org>; Tue, 28 Feb 2017 21:59:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751522AbdB1V7f (ORCPT <rfc822;e@80x24.org>);
-        Tue, 28 Feb 2017 16:59:35 -0500
-Received: from mail-pg0-f44.google.com ([74.125.83.44]:35585 "EHLO
-        mail-pg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751460AbdB1V7e (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Feb 2017 16:59:34 -0500
-Received: by mail-pg0-f44.google.com with SMTP id b129so10987967pgc.2
-        for <git@vger.kernel.org>; Tue, 28 Feb 2017 13:59:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=TOcFiQvAwfOpgFlMtOEy9l9puVWEM5ctZ6ZzctPZH6I=;
-        b=UxH2qdE8SWrhawinsLQS8l1gGo7IyPOC5UJQn/PEt4OOuqe6QLYvf9PZ5FOYpj89Il
-         8V0heqINUFpS5bl+tDHdvCztXOnNX47XIDAGGE4N2F4KL0G51k9038oUap2cdKXc327z
-         nrtfBuJGWRN2JBJp4Nl+wTPNjYBWPHr1pKiJ1mWE0uB4uw0Dcoq5COqDdkkmfy4kVePv
-         a7EclhxNrEufZFPms58ZY4bFt0kkVjdcNSOFd73j4+ZxWVPqSXvKg2exQKpHE9FQ90y3
-         noxh+BDUr8A0137JIaFNYRSAlJ1HZHRp9zX1yq0gcVTYqzo/Cz0hLKgF5UEpD7gzfXcH
-         ZhrA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=TOcFiQvAwfOpgFlMtOEy9l9puVWEM5ctZ6ZzctPZH6I=;
-        b=iCYK3a1JYJUPORf044on9Xu9XM4qbufamYSlAueAFCII/inabNWUTviCGyyhYGOC7U
-         uY+sRM5ZyXUD+9KSXK1zTvFak87IvC2BoqRPeWXSPH8qP87RtMfAJi7p9xgrVFVeOeGg
-         9a/82M0AmjKJ1ZSUy7pLBhOgl+qrWBsHc/odqbe0RhC6KTb2bN8e8h3zaMEgXVMGWNJV
-         ozh2eukiUV7GeqEs7lz+WP0HpCRm4RNzooqsecPHR18PKETbP2ZZ7aChwgWnhUarXBxV
-         suniyiYWb3lw5TxQK2BbdbMfFL0rIfr3WbHNo3NmKEn2cD6P14/7yTnrcHZJgFq8bb1E
-         Kt3A==
-X-Gm-Message-State: AMke39kcMezZl1Me7Q0Me7ItkLSSHKTSjgML/qbgHjYXj+illiqVvl2eiF+JXIVd2wD2qQ==
-X-Received: by 10.84.208.227 with SMTP id c32mr5663444plj.71.1488318614604;
-        Tue, 28 Feb 2017 13:50:14 -0800 (PST)
-Received: from localhost ([2620:0:1000:8622:e0d7:55f8:67f2:62dd])
-        by smtp.gmail.com with ESMTPSA id w131sm4858896pfd.34.2017.02.28.13.50.13
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 28 Feb 2017 13:50:13 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
-Cc:     git@vger.kernel.org, Mike Crowe <mac@mcrowe.com>
-Subject: Re: git diff --quiet exits with 1 on clean tree with CRLF conversions
-References: <20170217212633.GA24937@mcrowe.com>
-        <xmqqr32wqxr6.fsf@gitster.mtv.corp.google.com>
-        <20170217221958.GA12163@mcrowe.com> <20170220153322.GA8352@mcrowe.com>
-        <xmqqlgt0imhe.fsf@gitster.mtv.corp.google.com>
-        <20170225153230.GA30565@mcrowe.com>
-        <xmqqefyjwfql.fsf@gitster.mtv.corp.google.com>
-        <d98aa589-3e08-249d-0c88-72dbcee1a568@web.de>
-Date:   Tue, 28 Feb 2017 13:50:13 -0800
-In-Reply-To: <d98aa589-3e08-249d-0c88-72dbcee1a568@web.de> ("Torsten
-        =?utf-8?Q?B=C3=B6gershausen=22's?= message of "Tue, 28 Feb 2017 19:06:44
- +0100")
-Message-ID: <xmqqshmyhtnu.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+        id S1751555AbdB1V7l (ORCPT <rfc822;e@80x24.org>);
+        Tue, 28 Feb 2017 16:59:41 -0500
+Received: from cloud.peff.net ([104.130.231.41]:36080 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751524AbdB1V7k (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Feb 2017 16:59:40 -0500
+Received: (qmail 26711 invoked by uid 109); 28 Feb 2017 21:59:39 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 28 Feb 2017 21:59:39 +0000
+Received: (qmail 31540 invoked by uid 111); 28 Feb 2017 21:59:45 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 28 Feb 2017 16:59:45 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 28 Feb 2017 16:59:37 -0500
+Date:   Tue, 28 Feb 2017 16:59:37 -0500
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org,
+        peartben@gmail.com, benpeart@microsoft.com
+Subject: Re: [PATCH 1/3] revision: unify {tree,blob}_objects in rev_info
+Message-ID: <20170228215937.yd4juycjf7y3vish@sigill.intra.peff.net>
+References: <cover.1487984670.git.jonathantanmy@google.com>
+ <cover.1487984670.git.jonathantanmy@google.com>
+ <06a84f8c77924b275606384ead8bb2fd7d75f7b6.1487984670.git.jonathantanmy@google.com>
+ <xmqq1suij8kr.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Disposition: inline
+In-Reply-To: <xmqq1suij8kr.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Torsten Bögershausen <tboegi@web.de> writes:
+On Tue, Feb 28, 2017 at 01:42:44PM -0800, Junio C Hamano wrote:
 
-> On 2017-02-27 21:17, Junio C Hamano wrote:
->
->> Torsten, you've been quite active in fixing various glitches around
->> the EOL conversion in the latter half of last year.  Have any
->> thoughts to share on this topic?
->> 
->> Thanks.
->
-> Sorry for the delay, being too busy with other things.
-> I followed the discussion, but didn't have good things to contribute.
-> I am not an expert in diff.c, but there seems to be a bug, thanks everybody
-> for digging.
->
-> Back to business:
->
-> My understanding is that git diff --quiet should be quiet, when
-> git add will not do anything.
+> Jonathan Tan <jonathantanmy@google.com> writes:
+> 
+> > It could be argued that in the future, Git might need to distinguish
+> > tree_objects from blob_objects - in particular, a user might want
+> > rev-list to print the trees but not the blobs. 
+> 
+> That was exactly why these bits were originally made to "appear
+> independent but in practice nobody sets only one and leaves others
+> off".  
+> 
+> And it didn't happen in the past 10 years, which tells us that we
+> should take this patch.
 
-Yes, I think that is a sensible criterion.  What I was interested to
-hear from you the most was to double check if Mike's expectation is
-reasonable.  Earlier we had a lengthy discussion on what to do when
-convert-to-git and convert-to-working-tree conversions do not round
-trip, and I was wondering if this was one of those cases.
+I actually have a patch which uses the distinction. It's for
+upload-archive doing reachability checks (which seems rather familiar to
+what's going on here).
+
+The whole series (from 2013!) is at:
+
+  git://github.com/peff/git jk/archive-reachability
+
+but the relevant commits are below.
+
+I don't think the same logic holds for this case, though, because
+somebody actually can ask for a single blob.
+
+-- >8 --
+From: Jeff King <peff@peff.net>
+Date: Wed, 5 Jun 2013 17:57:02 -0400
+Subject: [PATCH] list-objects: optimize "revs->blob_objects = 0" case
+
+If we are traversing trees during a "--objects"
+traversal, we may skip blobs if the "blob_objects" field of
+rev_info is not set. But we do so as the first thing in
+process_blob(), only after we have actually created the
+"struct blob" object, incurring a hash lookup. We can
+optimize out this no-op call completely.
+
+This does not actually affect any current code, as all of
+the current traversals always set blob_objects when looking
+at objects, anyway.
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ list-objects.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/list-objects.c b/list-objects.c
+index f3ca6aafb..58ad69557 100644
+--- a/list-objects.c
++++ b/list-objects.c
+@@ -117,7 +117,7 @@ static void process_tree(struct rev_info *revs,
+ 			process_gitlink(revs, entry.oid->hash,
+ 					show, base, entry.path,
+ 					cb_data);
+-		else
++		else if (revs->blob_objects)
+ 			process_blob(revs,
+ 				     lookup_blob(entry.oid->hash),
+ 				     show, base, entry.path,
+-- 
+2.12.0.359.gd4c8c42e9
+
+-- >8 --
+From: Jeff King <peff@peff.net>
+Date: Wed, 5 Jun 2013 18:02:42 -0400
+Subject: [PATCH] archive: ignore blob objects when checking reachability
+
+We cannot create an archive from a blob object, so we would
+not expect anyone to provide one to us. And if they do, we
+will fail anyway just after the reachability check.  We can
+therefore optimize our reachability check to ignore blobs
+completely, and not even create a "struct blob" for them.
+
+Depending on the repository size and the exact place we find
+the reachable object in the traversal, this can save 20-25%,
+a we can avoid many lookups in the object hash.
+
+The downside of this is that a blob provided to a remote
+archive process will fail with "no such object" rather than
+"object is not a tree" (we could organize the code to retain
+the old message, but since we no longer know whether the
+blob is reachable or not, we would potentially be leaking
+information about the existence of unreachable objects).
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ archive.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/archive.c b/archive.c
+index ef89b2556..489115f9f 100644
+--- a/archive.c
++++ b/archive.c
+@@ -383,6 +383,7 @@ static int object_is_reachable(const unsigned char *sha1)
+ 	save_commit_buffer = 0;
+ 	init_revisions(&data.revs, NULL);
+ 	setup_revisions(ARRAY_SIZE(argv) - 1, argv, &data.revs, NULL);
++	data.revs.blob_objects = 0;
+ 	if (prepare_revision_walk(&data.revs))
+ 		return 0;
+ 
+-- 
+2.12.0.359.gd4c8c42e9
 
