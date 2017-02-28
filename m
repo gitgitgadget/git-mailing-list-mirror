@@ -2,198 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 43B88201B0
-	for <e@80x24.org>; Tue, 28 Feb 2017 18:24:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 57BD6201B0
+	for <e@80x24.org>; Tue, 28 Feb 2017 18:38:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751676AbdB1SWd (ORCPT <rfc822;e@80x24.org>);
-        Tue, 28 Feb 2017 13:22:33 -0500
-Received: from alum-mailsec-scanner-8.mit.edu ([18.7.68.20]:62333 "EHLO
-        alum-mailsec-scanner-8.mit.edu" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751435AbdB1SUa (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 28 Feb 2017 13:20:30 -0500
-X-AuditID: 12074414-7efff70000002bfd-1e-58b5be1c12c7
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-        (using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
-        (Client did not present a certificate)
-        by alum-mailsec-scanner-8.mit.edu (Symantec Messaging Gateway) with SMTP id 13.1B.11261.C1EB5B85; Tue, 28 Feb 2017 13:14:52 -0500 (EST)
-Received: from [192.168.69.190] (p5B10410E.dip0.t-ipconnect.de [91.16.65.14])
-        (authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v1SIEm29017945
-        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-        Tue, 28 Feb 2017 13:14:50 -0500
-Subject: Re: [PATCH v5 14/24] path.c: move some code out of
- strbuf_git_path_submodule()
-To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>, git@vger.kernel.org
-References: <20170218133303.3682-1-pclouds@gmail.com>
- <20170222140450.30886-1-pclouds@gmail.com>
- <20170222140450.30886-15-pclouds@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Stefan Beller <sbeller@google.com>, novalis@novalis.org
-From:   Michael Haggerty <mhagger@alum.mit.edu>
-Message-ID: <72093fc6-806e-506e-5c75-206f864c365e@alum.mit.edu>
-Date:   Tue, 28 Feb 2017 19:14:48 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Icedove/45.6.0
+        id S1751420AbdB1SiZ (ORCPT <rfc822;e@80x24.org>);
+        Tue, 28 Feb 2017 13:38:25 -0500
+Received: from mail-io0-f179.google.com ([209.85.223.179]:36706 "EHLO
+        mail-io0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751243AbdB1SiY (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Feb 2017 13:38:24 -0500
+Received: by mail-io0-f179.google.com with SMTP id l7so15324756ioe.3
+        for <git@vger.kernel.org>; Tue, 28 Feb 2017 10:36:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=IZIufu2Tt0ShoMUsOku0HUxvcUXQ2B65QJ5ARqgfoXA=;
+        b=ITGxD4/FNQv212E94popJODZ0d25R8QNYzSyl4Gi/wSS1JdUGFh93rM6KQPa9l/XG0
+         FOBcQ/WGepcEvzOeM+mg/4uX8YIefNo/Qn+AL4HL6xQVCcmVfyjemeWzo2vWjkx3E7B7
+         A0aHBcwnYcWS1KAHHi2K4yworvQFTOS9wytoNEdbq++nHyBrNKglNU3D0AgN0gbiJKi1
+         BAHRr/CdZ0PxoAfxBAQ5EbPBLxjYOgxpFnKfYjgQe2aLH5Uh1O9Hwxi5sKQJ9rbj/+yz
+         hhnhLMGLfFJOwB+32DpoX9/x8KZMOQGDPLupNQi7ymKyBwDEsNEAH9txKVHMIT0/hycv
+         Hlag==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=IZIufu2Tt0ShoMUsOku0HUxvcUXQ2B65QJ5ARqgfoXA=;
+        b=dAG5Aqbl98AdQhokXVJLpkUu6l0lnnoiSFnRuThz9h/IZYDcLuC3AXBo/dftYdy+PL
+         M+opv7jQ2giGCNO9xa34l4vYBk8niNXzzIGZbEZBT58/1UFIu39rwTI+yBkITsFO5Jdz
+         sfF3XakttddCatzwiDOPs1QxxkdXa9oXHanqogQ7QcbY6XFFJm/suq5j8/x+YaksvqBz
+         OcYcb2SVb2aPqWts3wUsSHEcnu+tmxVzDnGJxkOeeC3AkAEVwwyf75nhdKBA+Zzu4UWZ
+         s3ZwYGQR38ZsXkuqp2XioUScm85KZjN3qmUCK7zfRSvhQGXvcib9wecRQqInQaxZCLZN
+         JmLA==
+X-Gm-Message-State: AMke39mvlcYNXcIumB2I1iYAPc/8sKYZ1bZQysY6oWAOGYoVMLtq3TIXdPHo+ZDhyZ1EtBcqpW5WUNxd0SxiDQJl
+X-Received: by 10.107.16.96 with SMTP id y93mr3870776ioi.164.1488305125051;
+ Tue, 28 Feb 2017 10:05:25 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <20170222140450.30886-15-pclouds@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFupnleLIzCtJLcpLzFFi42IRYndR1JXZtzXCoOegpEXXlW4mi4beK8wW
-        /cu72CyWPHzNbNE95S2jxcyr1habN7ezOLB77Jx1l93jw8c4jwWbSj262o+weVy8pOyxf+k2
-        No/Pm+QC2KO4bFJSczLLUov07RK4Mj48m8ZUcFe+Ysrt80wNjDsluxg5OSQETCTmTPrLAmIL
-        CexgkvjaXNDFyAVkn2WSWHT5EztIQlggUqJ3fhcriC0ikCaxePJ7ZoiiCYwS/49+YQRxmAVu
-        MEpcmviRCaSKTUBXYlFPM5jNK2AvMWXqZzYQm0VAVWLF6t/MILaoQIjEnIUPGCFqBCVOznwC
-        dgangIXEz6b7YHFmAXWJP/MuMUPY8hLNW2czT2Dkn4WkZRaSsllIyhYwMq9ilEvMKc3VzU3M
-        zClOTdYtTk7My0st0rXQy80s0UtNKd3ECAl3kR2MR07KHWIU4GBU4uHN6NwaIcSaWFZcmXuI
-        UZKDSUmUN2gGUIgvKT+lMiOxOCO+qDQntfgQowQHs5II745ioBxvSmJlVWpRPkxKmoNFSZz3
-        22J1PyGB9MSS1OzU1ILUIpisDAeHkgTv0z1AjYJFqempFWmZOSUIaSYOTpDhPEDDN4DU8BYX
-        JOYWZ6ZD5E8xKkqJ84aDJARAEhmleXC9sHT0ilEc6BVhXtG9QFU8wFQG1/0KaDAT0OAXKmCD
-        SxIRUlINjLETVp55fu7Sr40bNWwCZH/FP511Z9/T6G3b/otW8m26V3PA82HD4UAmHW/Gwz9v
-        GV3Zn1qzpttO9Vzgm6iHEfIXDk55XnHy70fzlytqamRYLgXdePXAbLcYT8XiDyoSYbK7gqd3
-        qLgWtfupx7YsnPzkPHs3yw+1vDL5r2LvEvUajkzZkPa2rF2JpTgj0VCLuag4EQDu/AvwIgMA
-        AA==
+Received: by 10.79.13.1 with HTTP; Tue, 28 Feb 2017 10:05:24 -0800 (PST)
+In-Reply-To: <20170228143710.smbzo6b7wefjc62r@sigill.intra.peff.net>
+References: <CAC+L6n0YeX_n_AysCLtBWkA+jPHwg7HmOWq2PLj75byxOZE=qQ@mail.gmail.com>
+ <CAGZ79ka8saQMKeutE415WxOQ71MnEw1A4uV3b0Pa4gcehx8pdw@mail.gmail.com> <20170228143710.smbzo6b7wefjc62r@sigill.intra.peff.net>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Tue, 28 Feb 2017 10:05:24 -0800
+Message-ID: <CAGZ79kb8F9_9fd9uhfPpHVPQj-zm99qt5Tr=3TUhpe=K6JknEg@mail.gmail.com>
+Subject: Re: 'git submodules update' ignores credential.helper config of the
+ parent repository
+To:     Jeff King <peff@peff.net>
+Cc:     Dmitry Neverov <dmitry.neverov@gmail.com>,
+        Duy Nguyen <pclouds@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 02/22/2017 03:04 PM, Nguyễn Thái Ngọc Duy wrote:
-> refs is learning to avoid path rewriting that is done by
-> strbuf_git_path_submodule(). Factor out this code so it could be reused
-> by refs*
-> 
-> Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
-> ---
->  path.c      | 34 +++++++---------------------------
->  submodule.c | 31 +++++++++++++++++++++++++++++++
->  submodule.h |  1 +
->  3 files changed, 39 insertions(+), 27 deletions(-)
-> 
-> diff --git a/path.c b/path.c
-> index efcedafba..3451d2916 100644
-> --- a/path.c
-> +++ b/path.c
-> @@ -475,35 +475,16 @@ const char *worktree_git_path(const struct worktree *wt, const char *fmt, ...)
->  static int do_submodule_path(struct strbuf *buf, const char *path,
->  			     const char *fmt, va_list args)
->  {
-> -	const char *git_dir;
->  	struct strbuf git_submodule_common_dir = STRBUF_INIT;
->  	struct strbuf git_submodule_dir = STRBUF_INIT;
-> -	const struct submodule *sub;
-> -	int err = 0;
-> +	int ret;
->  
-> -	strbuf_addstr(buf, path);
-> -	strbuf_complete(buf, '/');
-> -	strbuf_addstr(buf, ".git");
-> -
-> -	git_dir = read_gitfile(buf->buf);
-> -	if (git_dir) {
-> -		strbuf_reset(buf);
-> -		strbuf_addstr(buf, git_dir);
-> -	}
-> -	if (!is_git_directory(buf->buf)) {
-> -		gitmodules_config();
-> -		sub = submodule_from_path(null_sha1, path);
-> -		if (!sub) {
-> -			err = SUBMODULE_PATH_ERR_NOT_CONFIGURED;
+On Tue, Feb 28, 2017 at 6:37 AM, Jeff King <peff@peff.net> wrote:
+>>
+>> This would change the semantics of a config file as the attribute for
+>> each setting depends on the location (was attribute.FOO.read =
+>> {true, false} read before).
+>
+> I'm not enthused by this, just because there is a hidden dependency
+> between attribute.* sections and other ones. They _look_ like regular
+> config keys, but they really aren't.
 
-I didn't read this patch too carefully, but where the old code used the
-constant `SUBMODULE_PATH_ERR_NOT_CONFIGURED`, the new code returns -1.
-In fact, now the constant is totally unused. It looks like there's some
-more cleanup that could happen.
+True.
 
-> -			goto cleanup;
-> -		}
-> -		strbuf_reset(buf);
-> -		strbuf_git_path(buf, "%s/%s", "modules", sub->name);
-> -	}
-> -
-> -	strbuf_addch(buf, '/');
-> -	strbuf_addbuf(&git_submodule_dir, buf);
-> +	ret = submodule_to_gitdir(&git_submodule_dir, path);
-> +	if (ret)
-> +		goto cleanup;
->  
-> +	strbuf_complete(&git_submodule_dir, '/');
-> +	strbuf_addbuf(buf, &git_submodule_dir);
->  	strbuf_vaddf(buf, fmt, args);
->  
->  	if (get_common_dir_noenv(&git_submodule_common_dir, git_submodule_dir.buf))
-> @@ -514,8 +495,7 @@ static int do_submodule_path(struct strbuf *buf, const char *path,
->  cleanup:
->  	strbuf_release(&git_submodule_dir);
->  	strbuf_release(&git_submodule_common_dir);
-> -
-> -	return err;
-> +	return ret;
->  }
->  
->  char *git_pathdup_submodule(const char *path, const char *fmt, ...)
-> diff --git a/submodule.c b/submodule.c
-> index 3b98766a6..36b8d1d11 100644
-> --- a/submodule.c
-> +++ b/submodule.c
-> @@ -1514,3 +1514,34 @@ void absorb_git_dir_into_superproject(const char *prefix,
->  		strbuf_release(&sb);
->  	}
->  }
-> +
-> +int submodule_to_gitdir(struct strbuf *buf, const char *submodule)
-> +{
-> +	const struct submodule *sub;
-> +	const char *git_dir;
-> +	int ret = 0;
-> +
-> +	strbuf_reset(buf);
-> +	strbuf_addstr(buf, submodule);
-> +	strbuf_complete(buf, '/');
-> +	strbuf_addstr(buf, ".git");
-> +
-> +	git_dir = read_gitfile(buf->buf);
-> +	if (git_dir) {
-> +		strbuf_reset(buf);
-> +		strbuf_addstr(buf, git_dir);
-> +	}
-> +	if (!is_git_directory(buf->buf)) {
-> +		gitmodules_config();
-> +		sub = submodule_from_path(null_sha1, submodule);
-> +		if (!sub) {
-> +			ret = -1;
-> +			goto cleanup;
-> +		}
-> +		strbuf_reset(buf);
-> +		strbuf_git_path(buf, "%s/%s", "modules", sub->name);
-> +	}
-> +
-> +cleanup:
-> +	return ret;
-> +}
-> diff --git a/submodule.h b/submodule.h
-> index 05ab674f0..fc3d0303e 100644
-> --- a/submodule.h
-> +++ b/submodule.h
-> @@ -81,6 +81,7 @@ extern int push_unpushed_submodules(struct sha1_array *commits,
->  				    int dry_run);
->  extern void connect_work_tree_and_git_dir(const char *work_tree, const char *git_dir);
->  extern int parallel_submodules(void);
-> +int submodule_to_gitdir(struct strbuf *buf, const char *submodule);
+> I have a feeling that something like this would create unwelcome corner
+> cases in the config-writer, which is otherwise does not have to care
+> about which existing section of a file it adds a key to.
 
-A docstring is always nice :-)
+Yeah the writer would become a lot more involved, if we're not going
+the stupid way (add these sections for nearly all keys. that would be
+a mess but easy to implement)
 
->  
->  /*
->   * Prepare the "env_array" parameter of a "struct child_process" for executing
-> 
-
-Michael
-
+So I guess then we rather settle with multiple config files or a white/blacklist
+of config options to propagate from the superproject to its submodules.
