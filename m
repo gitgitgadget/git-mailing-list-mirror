@@ -2,141 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E200D201B0
-	for <e@80x24.org>; Tue, 28 Feb 2017 17:31:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 38AF7201B0
+	for <e@80x24.org>; Tue, 28 Feb 2017 17:35:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751446AbdB1Rbn (ORCPT <rfc822;e@80x24.org>);
-        Tue, 28 Feb 2017 12:31:43 -0500
-Received: from alum-mailsec-scanner-7.mit.edu ([18.7.68.19]:53345 "EHLO
-        alum-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751337AbdB1Rbm (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 28 Feb 2017 12:31:42 -0500
-X-AuditID: 12074413-f4fff700000077e1-d5-58b5b11a9920
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-        (using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
-        (Client did not present a certificate)
-        by alum-mailsec-scanner-7.mit.edu (Symantec Messaging Gateway) with SMTP id 59.17.30689.A11B5B85; Tue, 28 Feb 2017 12:19:23 -0500 (EST)
-Received: from [192.168.69.190] (p5B10410E.dip0.t-ipconnect.de [91.16.65.14])
-        (authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v1SHJJlR014770
-        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-        Tue, 28 Feb 2017 12:19:20 -0500
-Subject: Re: [PATCH v5 05/24] files-backend: move "logs/" out of
- TMP_RENAMED_LOG
-To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>, git@vger.kernel.org
-References: <20170218133303.3682-1-pclouds@gmail.com>
- <20170222140450.30886-1-pclouds@gmail.com>
- <20170222140450.30886-6-pclouds@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Stefan Beller <sbeller@google.com>, novalis@novalis.org
-From:   Michael Haggerty <mhagger@alum.mit.edu>
-Message-ID: <cb86192d-8644-bed3-1e73-821931589e79@alum.mit.edu>
-Date:   Tue, 28 Feb 2017 18:19:19 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Icedove/45.6.0
+        id S1751291AbdB1Rfv (ORCPT <rfc822;e@80x24.org>);
+        Tue, 28 Feb 2017 12:35:51 -0500
+Received: from mail-pg0-f68.google.com ([74.125.83.68]:33676 "EHLO
+        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751037AbdB1Rfu (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Feb 2017 12:35:50 -0500
+Received: by mail-pg0-f68.google.com with SMTP id x17so2334794pgi.0
+        for <git@vger.kernel.org>; Tue, 28 Feb 2017 09:34:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=xTeX4gWfP/Y9N2aJlUoEKZ5dyBYqt2CMHlKvQDclTxo=;
+        b=QYkuh+nVe7BT6b+fHSxzCEqGM4M1DkrnySmUhnW46OAi5Fysv0bgvPxT1XSYDmNkAa
+         vVSvM91vEZFEgcquu8cNBSOpkc5RsKdHv9okIZGCqNE4TnvV0eeNnItWN6d27ZBvYIub
+         WQDZdhHVPmrYGgtOSkU5okQIaauHTiHB4yndZz5wBw64lJoxhvAKUcWvzH4HX2eESIiD
+         mM9eYKqgfcdAyTGXTZ4DhYhP5Pm65T6TtLL2tf6JP8Zcb53jX+xyKQhbtdiOybFjS4Gb
+         ywsFRJbWcuSIACJpfug9PF7YbESxNZvyoVbH5nQVRMJo7ku2PMv56vzTbhEAXHrsJ+0I
+         MKlA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=xTeX4gWfP/Y9N2aJlUoEKZ5dyBYqt2CMHlKvQDclTxo=;
+        b=KLhLnr5jkt+NJLQf7COOf7coRRsyHKsFT6bZslCP8Sz9RoXrlTDjFGEXqPDn2kfTl2
+         7FHeON2Z3/vWJj8mSCQ6TYTReY8RFVoi4nOvb7g5NNCt4dA9Yb9aVYfihbVcCF36EsU4
+         BPsBoFfWSST/c7CWbKiKvDxHAdi1T7Uyt7UAQZ4OW8OFThDe6+K7K2OlIGoHa/5Kmy11
+         iEPVz/v7K7464mUSZ39jKZ57P5Yx21Y9Qcl6ueUOnob0gsXV/Tsh4f4K/iGfGXxAJGvm
+         9hvdptdjCwTJdOpygAE1SFxuF/rAk0gtHyxp/+UOttgOP3y3HKq+xjG8Oiwo0yyp/PfV
+         00cg==
+X-Gm-Message-State: AMke39lYiqAEMYoHch3hMjss1CK4kQlVcrE7rvTZ3fUu4iLSmCARHHD4kpqH7wtGxVYAlA==
+X-Received: by 10.98.99.196 with SMTP id x187mr3789168pfb.168.1488302809490;
+        Tue, 28 Feb 2017 09:26:49 -0800 (PST)
+Received: from localhost ([2620:0:1000:8622:e0d7:55f8:67f2:62dd])
+        by smtp.gmail.com with ESMTPSA id w123sm5445136pfb.44.2017.02.28.09.26.24
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Tue, 28 Feb 2017 09:26:40 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
+        git@vger.kernel.org
+Subject: Re: [PATCH 0/6] Use time_t
+References: <cover.1488231002.git.johannes.schindelin@gmx.de>
+        <20170228142802.hu5esthnqdsgc2po@sigill.intra.peff.net>
+Date:   Tue, 28 Feb 2017 09:26:23 -0800
+In-Reply-To: <20170228142802.hu5esthnqdsgc2po@sigill.intra.peff.net> (Jeff
+        King's message of "Tue, 28 Feb 2017 09:28:02 -0500")
+Message-ID: <xmqqvarukz0g.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <20170222140450.30886-6-pclouds@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFupjleLIzCtJLcpLzFFi42IRYndR1JXeuDXCYFITn0XXlW4mi4beK8wW
-        /cu72CyWPHzNbNE95S2jxcyr1habN7ezOLB77Jx1l93jw8c4jwWbSj262o+weVy8pOyxf+k2
-        No/Pm+QC2KO4bFJSczLLUov07RK4MtY3v2cpWC9R8WvKd/YGxm/CXYycHBICJhJPpixi6mLk
-        4hAS2MEksffbJjYI5yyTxIb1S5hAqoQFgiRWf29nBbFFBNIkFk9+zwxiCwn0M0ocuRgI0sAs
-        cINR4tLEj2ANbAK6Eot6msFsXgF7iW2L9wE1cHCwCKhKPP7DDRIWFQiRmLPwASNEiaDEyZlP
-        WEBsTgFzia93poLtYhZQl/gz7xIzhC0v0bx1NvMERv5ZSFpmISmbhaRsASPzKka5xJzSXN3c
-        xMyc4tRk3eLkxLy81CJdc73czBK91JTSTYyQYBfewbjrpNwhRgEORiUe3gPdWyOEWBPLiitz
-        DzFKcjApifIGzQAK8SXlp1RmJBZnxBeV5qQWH2KU4GBWEuHdUQyU401JrKxKLcqHSUlzsCiJ
-        86otUfcTEkhPLEnNTk0tSC2CycpwcChJ8JpuAGoULEpNT61Iy8wpQUgzcXCCDOcBGu62HmR4
-        cUFibnFmOkT+FKOilDivNUhCACSRUZoH1wtLRq8YxYFeEeZ9CFLFA0xkcN2vgAYzAQ1+oQI2
-        uCQRISXVwLj52w8e7hluJvyRX/+KPzV+ycJXP7tYzHGR2WulqnD/ewsb3lazvfbzcZBuWv32
-        dZbf9/vRP1TjLwb26hfOEL7+SMpkwr+ki++/3yh9aSG+ZUlW4I559mFf6rb0P3pi8Dr78KLc
-        5LpDUlHd1laf2W+kJci9l3jBOed2291THt8z9x45dHChfI8SS3FGoqEWc1FxIgAujysQIQMA
-        AA==
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 02/22/2017 03:04 PM, Nguyễn Thái Ngọc Duy wrote:
-> This makes reflog path building consistent, always in the form of
-> 
->     strbuf_git_path(sb, "logs/%s", refname);
-> 
-> It reduces the mental workload a bit in the next patch when that
-> function call is converted.
-> 
-> Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
-> ---
->  refs/files-backend.c | 12 ++++++------
->  1 file changed, 6 insertions(+), 6 deletions(-)
-> 
-> diff --git a/refs/files-backend.c b/refs/files-backend.c
-> index 435db1293..69946b0de 100644
-> --- a/refs/files-backend.c
-> +++ b/refs/files-backend.c
-> @@ -2513,7 +2513,7 @@ static int files_delete_refs(struct ref_store *ref_store,
->   * IOW, to avoid cross device rename errors, the temporary renamed log must
->   * live into logs/refs.
->   */
-> -#define TMP_RENAMED_LOG  "logs/refs/.tmp-renamed-log"
-> +#define TMP_RENAMED_LOG  "refs/.tmp-renamed-log"
+Jeff King <peff@peff.net> writes:
 
-The constant name feels a little bit misleading now that it is not the
-name of a logfile but rather a reference name. OTOH "tmp-renamed-log" is
-*in* the reference name so I guess it's not really wrong.
+> I do not just agree, but I think the move to a signed timestamp is a big
+> improvement. Git's object format is happy to represent times before
+> 1970, but the code is not. I know this has been a pain for people who
+> import ancient histories into Git.
+>
+> It looks from the discussion like the sanest path forward is our own
+> signed-64bit timestamp_t. That's unfortunate compared to using the
+> standard time_t, but hopefully it would reduce the number of knobs (like
+> TIME_T_IS_INT64) in the long run.
 
->  struct rename_cb {
->  	const char *tmp_renamed_log;
-> @@ -2549,7 +2549,7 @@ static int rename_tmp_log(const char *newrefname)
->  	int ret;
->  
->  	strbuf_git_path(&path, "logs/%s", newrefname);
-> -	strbuf_git_path(&tmp, TMP_RENAMED_LOG);
-> +	strbuf_git_path(&tmp, "logs/%s", TMP_RENAMED_LOG);
->  	cb.tmp_renamed_log = tmp.buf;
->  	ret = raceproof_create_file(path.buf, rename_tmp_log_callback, &cb);
->  	if (ret) {
-> @@ -2626,12 +2626,12 @@ static int files_rename_ref(struct ref_store *ref_store,
->  		return 1;
->  
->  	strbuf_git_path(&sb_oldref, "logs/%s", oldrefname);
-> -	strbuf_git_path(&tmp_renamed_log, TMP_RENAMED_LOG);
-> +	strbuf_git_path(&tmp_renamed_log, "logs/%s", TMP_RENAMED_LOG);
->  	ret = log && rename(sb_oldref.buf, tmp_renamed_log.buf);
->  	strbuf_release(&sb_oldref);
->  	strbuf_release(&tmp_renamed_log);
->  	if (ret)
-> -		return error("unable to move logfile logs/%s to "TMP_RENAMED_LOG": %s",
-> +		return error("unable to move logfile logs/%s to logs/"TMP_RENAMED_LOG": %s",
->  			oldrefname, strerror(errno));
+Keeping it unsigned is safer in the short-term.  There are some
+places that uses 0 as "impossible time" (e.g. somebody tried to
+parse a string as time and returns a failure) and these places need
+to be found and be replaced with probably the most negative value
+that timestamp_t cn represent.  Another possible special value we
+may use is for "expiring everything" but I think we tend to just use
+the timestamp of the present time for that purpose and not UONG_MAX,
+so we should be OK there.
 
-It seems like it would be preferable to use `sb_oldref.buf` and
-`tmp.buf` when building the error message. But I guess that `tmp.buf`
-might include some path preceding "logs/" that is unwanted in the error
-message? But it's a shame to hardcode the file naming scheme here again.
+But we need to cross the bridge to signed timestamp sometime, and I
+do not see any reason why that somtime should not be now.
 
-Maybe we *do* want the path in the error message?
-
-It just occurred to me: this temporary logfile lives in the main
-repository, right? What if a worktree reference is being renamed? Part
-of the advertised use of worktrees is that the worktree might live far
-from the main directory, or even on removable media. But it's not
-possible to rename files across partitions. Maybe this will come out in
-the wash once worktrees are ref_stores themselves.
-
-For that matter, what if a user tries to rename a worktree ref into a
-common ref or vice versa?
-
->  	if (delete_ref(oldrefname, orig_sha1, REF_NODEREF)) {
-> [...]
-
-Michael
 
