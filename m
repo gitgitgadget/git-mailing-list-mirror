@@ -2,94 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EBA49201B0
-	for <e@80x24.org>; Tue, 28 Feb 2017 14:54:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8763A201B0
+	for <e@80x24.org>; Tue, 28 Feb 2017 15:10:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751737AbdB1OyS (ORCPT <rfc822;e@80x24.org>);
-        Tue, 28 Feb 2017 09:54:18 -0500
-Received: from cloud.peff.net ([104.130.231.41]:35684 "EHLO cloud.peff.net"
+        id S1752230AbdB1PKc (ORCPT <rfc822;e@80x24.org>);
+        Tue, 28 Feb 2017 10:10:32 -0500
+Received: from mout.gmx.net ([212.227.15.18]:59395 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751060AbdB1OyS (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Feb 2017 09:54:18 -0500
-Received: (qmail 22041 invoked by uid 109); 28 Feb 2017 12:07:36 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 28 Feb 2017 12:07:36 +0000
-Received: (qmail 25329 invoked by uid 111); 28 Feb 2017 12:07:42 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 28 Feb 2017 07:07:42 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 28 Feb 2017 07:07:34 -0500
-Date:   Tue, 28 Feb 2017 07:07:34 -0500
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jacob Keller <jacob.keller@gmail.com>,
-        Karthik Nayak <karthik.188@gmail.com>,
-        Luc Van Oostenryck <luc.vanoostenryck@gmail.com>,
-        Git List <git@vger.kernel.org>
-Subject: [PATCH 2/8] strbuf_branchname: drop return value
-Message-ID: <20170228120734.3kbfs74yxbr2lj42@sigill.intra.peff.net>
-References: <20170228120633.zkwfqms57fk7dkl5@sigill.intra.peff.net>
+        id S1751666AbdB1PK3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Feb 2017 10:10:29 -0500
+Received: from virtualbox ([37.201.192.48]) by mail.gmx.com (mrgmx001
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0LvV1X-1cIZf81TEJ-010epG; Tue, 28
+ Feb 2017 16:01:37 +0100
+Date:   Tue, 28 Feb 2017 16:01:35 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Jeff King <peff@peff.net>
+cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 0/6] Use time_t
+In-Reply-To: <20170228142802.hu5esthnqdsgc2po@sigill.intra.peff.net>
+Message-ID: <alpine.DEB.2.20.1702281600330.3767@virtualbox>
+References: <cover.1488231002.git.johannes.schindelin@gmx.de> <20170228142802.hu5esthnqdsgc2po@sigill.intra.peff.net>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20170228120633.zkwfqms57fk7dkl5@sigill.intra.peff.net>
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:waGDAgaNaN/UHmsgktQ0aMCeqvq+yD4Be1ToOyk2eTnytOr/u04
+ oQBSDX36Q3pD3ybIVVB1WIQSNBGAnBMcDEAnMG+Xaga1KXDhRpM0IfTHHB1ABkoPLB/vlnM
+ LazfoXpMKNC+EMxzuYNcPRtlaH6HC8fQzJNNfxkOLYDSD5xU1JWahFx8hZfbXKGeDulbYIq
+ FHnkfn+67ZZd4rkXOTF1Q==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:Xjn7P0gsEKQ=:Ib4ivUXFO8sHnxMHL37QYa
+ E622q3QyK/rztURuvKP7QWOzJSkhd2REfu/ugUgeB7pwFJZ0Oo+BrwXP11VdgSDCgriV/L/we
+ ceMNeJhKoTmKbvWZOEinZo5ALafBM1zledK71tBuF6ldNXg+BQ+Js6zifo7eNEfhoXMNfH0SE
+ mQpwM2w25+BS2QE3fqbxNUxg584VCNeuAqgucb6sy8ZWxBa/bauYBxWZ4vCV99JVtxUtdutsN
+ XvCFUi7bNn4mxlWP/wwP0nuu4QeWnDf3wWG79fqOagN260Im5EJ8gGO5S5K0Coq719P+J+Qd/
+ JXjZZqs2P5iw/Yn8CihEgnUtbwePfgHR4tJkkR5eZmZ2t7GapMLlA18pPZjwE4oJLhp70MKVH
+ TlkHACyFZcwTNyg2r3wlOdk//P+8wLRKm1A/byL+PNt6Ht4WzkqYWeXvlco5sXsJ2TT6Kk45j
+ bJvxyR7x07AUk/fOh3+qJRo/2RTbQ/EK83i1EQpKXufsgUpF6lwUr47emqMShuvw4ZL7lpwMA
+ wYOi/Xl/mObR5sJL5QN4Doh8IGmIm3w6RFUzTRyC6PvXjDt8Rxhn+DhELA/pGZuIniORLPUKO
+ ZWBvL+nlUoHNS3eDKk5kVw9OjbHwMueP0SKD8pfdJyegbCIFoTnu9rTTQxjh6LI9ps4Zd2CY4
+ sBYM/ENppQ1aaivqpDBRYm3ic16qN1pKhR7pcJyjZ/Id/WUjYYi7XICwJwLoW3GoJumORriDb
+ ZON2PToVxV2fGzr/pRlmyS6zDoc77fS6X+t1ZbGZvbIPGkhlCVhlCt/e+6NMfGrWS5dMo027f
+ iiO2/Gw/0RS/5+MQ7e52hdnDsqMlQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The return value from strbuf_branchname() is confusing and
-useless: it's 0 if the whole name was consumed by an @-mark,
-but otherwise is the length of the original name we fed.
+Hi Peff,
 
-No callers actually look at the return value, so let's just
-get rid of it.
+On Tue, 28 Feb 2017, Jeff King wrote:
 
-Signed-off-by: Jeff King <peff@peff.net>
----
- sha1_name.c | 5 +----
- strbuf.h    | 2 +-
- 2 files changed, 2 insertions(+), 5 deletions(-)
+> On Mon, Feb 27, 2017 at 10:30:20PM +0100, Johannes Schindelin wrote:
+> 
+> > One notable fallout of this patch series is that on 64-bit Linux (and
+> > other platforms where `unsigned long` is 64-bit), we now limit the
+> > range of dates to LONG_MAX (i.e. the *signed* maximum value). This
+> > needs to be done as `time_t` can be signed (and indeed is at least on
+> > my Ubuntu setup).
+> > 
+> > Obviously, I think that we can live with that, and I hope that all
+> > interested parties agree.
+> 
+> I do not just agree, but I think the move to a signed timestamp is a big
+> improvement. Git's object format is happy to represent times before
+> 1970, but the code is not. I know this has been a pain for people who
+> import ancient histories into Git.
+> 
+> It looks from the discussion like the sanest path forward is our own
+> signed-64bit timestamp_t. That's unfortunate compared to using the
+> standard time_t, but hopefully it would reduce the number of knobs (like
+> TIME_T_IS_INT64) in the long run.
 
-diff --git a/sha1_name.c b/sha1_name.c
-index 28865b3a1..4c1e91184 100644
---- a/sha1_name.c
-+++ b/sha1_name.c
-@@ -1279,17 +1279,14 @@ int interpret_branch_name(const char *name, int namelen, struct strbuf *buf)
- 	return -1;
- }
- 
--int strbuf_branchname(struct strbuf *sb, const char *name)
-+void strbuf_branchname(struct strbuf *sb, const char *name)
- {
- 	int len = strlen(name);
- 	int used = interpret_branch_name(name, len, sb);
- 
--	if (used == len)
--		return 0;
- 	if (used < 0)
- 		used = 0;
- 	strbuf_add(sb, name + used, len - used);
--	return len;
- }
- 
- int strbuf_check_branch_ref(struct strbuf *sb, const char *name)
-diff --git a/strbuf.h b/strbuf.h
-index cf1b5409e..47df0500d 100644
---- a/strbuf.h
-+++ b/strbuf.h
-@@ -560,7 +560,7 @@ static inline void strbuf_complete_line(struct strbuf *sb)
- 	strbuf_complete(sb, '\n');
- }
- 
--extern int strbuf_branchname(struct strbuf *sb, const char *name);
-+extern void strbuf_branchname(struct strbuf *sb, const char *name);
- extern int strbuf_check_branch_ref(struct strbuf *sb, const char *name);
- 
- extern void strbuf_addstr_urlencode(struct strbuf *, const char *,
--- 
-2.12.0.359.gd4c8c42e9
+Boy am I happy that I did not go ahead and changed the code to use
+uint64_t yet...
 
+I'll let the dust settle a bit and then make further changes and send out
+v2.
+
+Ciao,
+Dscho
