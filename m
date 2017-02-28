@@ -2,200 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4B4411F5FB
-	for <e@80x24.org>; Tue, 28 Feb 2017 00:40:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3F1191F5FB
+	for <e@80x24.org>; Tue, 28 Feb 2017 00:42:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751387AbdB1Akp (ORCPT <rfc822;e@80x24.org>);
-        Mon, 27 Feb 2017 19:40:45 -0500
-Received: from mail-pg0-f66.google.com ([74.125.83.66]:33818 "EHLO
-        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751470AbdB1Ako (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 Feb 2017 19:40:44 -0500
-Received: by mail-pg0-f66.google.com with SMTP id s67so2693986pgb.1
-        for <git@vger.kernel.org>; Mon, 27 Feb 2017 16:40:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=VbpTpLlYpKE4/Nxruljq8fTDwK46vB3ta8978tEPP+A=;
-        b=vHd55dPblah1KXm8qoFPDA81Hm+PF4qTtlYhq+q3Zmr4mXq3NaRkFrmdImFNkZqgp6
-         ZsMMCshNW88vMfrY9wwJmVefp3Qh7BUacr/57pstXbwjgDUnxvwo6bXYPume1F3nPHDb
-         z9HilibBKPrOxXgyijBR73g71w3Rp9ju5vougNnF6Pu76B0ucQm4pQhIcfzl55hr4y15
-         +CzlfagbOzkpLARgMNtnY+iQ78g5k9hQXPoiR6m9sc9V9xeS2un9AqSZDw1ZWyFxUj17
-         5sNSW/F2dK2YKnQSnJZsbt/W1dobRnaHPJXjWvSOA+KcKZoNQYrbhDIMB9IWEq04Szlt
-         DkAQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=VbpTpLlYpKE4/Nxruljq8fTDwK46vB3ta8978tEPP+A=;
-        b=PFCs5eSYJGgIoBGArsIYk5daSfre9pDJLa5hEnJmAs/Gyc37XD070CUYKCiCRt/dti
-         Uxo+tY1+i/QWh5/L4UFF00ZaqUxUCMxBNhDt/KjMoUv8kkO/JL+axusF5I1GjPZhmGKK
-         oruDgysWwGzjYV4jzAX7cbUHd443Qo5+QTf7wnj/yOj9UuKat0cUy7oEJMn3feCn8cx/
-         CnS4Ar9oShglmNRVuTKj28m2xEOkKjmeV6dQcbO9Kjniiy7fbSPobD6475sLmTZ7VguK
-         y4PQikkaXlD9z+9ZLDGDK85X4OfvRenjUejYRd+tcpTETp4sC0G1h5+XR8bbN9mwE+D3
-         kqTw==
-X-Gm-Message-State: AMke39kI3LZI2AyHgyrZAAnmW2/FfgccqDbxA5O9kTfv16A6OBQJViYXl0nhfOYXDHfmaQ==
-X-Received: by 10.84.174.4 with SMTP id q4mr27017105plb.35.1488226644022;
-        Mon, 27 Feb 2017 12:17:24 -0800 (PST)
-Received: from localhost ([2620:0:1000:8622:c953:ec42:862e:1e81])
-        by smtp.gmail.com with ESMTPSA id s3sm32399898pgn.55.2017.02.27.12.17.22
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 27 Feb 2017 12:17:23 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
-Cc:     git@vger.kernel.org, Mike Crowe <mac@mcrowe.com>
-Subject: Re: git diff --quiet exits with 1 on clean tree with CRLF conversions
-References: <20170217212633.GA24937@mcrowe.com>
-        <xmqqr32wqxr6.fsf@gitster.mtv.corp.google.com>
-        <20170217221958.GA12163@mcrowe.com> <20170220153322.GA8352@mcrowe.com>
-        <xmqqlgt0imhe.fsf@gitster.mtv.corp.google.com>
-        <20170225153230.GA30565@mcrowe.com>
-Date:   Mon, 27 Feb 2017 12:17:22 -0800
-In-Reply-To: <20170225153230.GA30565@mcrowe.com> (Mike Crowe's message of
-        "Sat, 25 Feb 2017 15:32:30 +0000")
-Message-ID: <xmqqefyjwfql.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+        id S1751790AbdB1AmZ (ORCPT <rfc822;e@80x24.org>);
+        Mon, 27 Feb 2017 19:42:25 -0500
+Received: from cloud.peff.net ([104.130.231.41]:35296 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751783AbdB1AmY (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 Feb 2017 19:42:24 -0500
+Received: (qmail 10869 invoked by uid 109); 28 Feb 2017 00:42:23 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 28 Feb 2017 00:42:23 +0000
+Received: (qmail 21916 invoked by uid 111); 28 Feb 2017 00:42:28 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 27 Feb 2017 19:42:28 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 27 Feb 2017 19:42:21 -0500
+Date:   Mon, 27 Feb 2017 19:42:21 -0500
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Karthik Nayak <karthik.188@gmail.com>,
+        Luc Van Oostenryck <luc.vanoostenryck@gmail.com>,
+        Git List <git@vger.kernel.org>
+Subject: Re: [BUG] branch renamed to 'HEAD'
+Message-ID: <20170228004220.66fq567am7chjxfe@sigill.intra.peff.net>
+References: <20170227045257.yazqlrqlnggosi5t@macbook.local>
+ <CAOLa=ZSyQg9uoZWADOMYc90U-5AR9Lfii9mjLre0m0FQCSqfxg@mail.gmail.com>
+ <20170227074915.xljfe5jox756rlyv@sigill.intra.peff.net>
+ <20170227080158.de2xarctzscfdsp2@sigill.intra.peff.net>
+ <20170227090233.uk7dfruggytgmuw2@sigill.intra.peff.net>
+ <xmqq60jvnu9y.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqq60jvnu9y.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Torsten, you've been quite active in fixing various glitches around
-the EOL conversion in the latter half of last year.  Have any
-thoughts to share on this topic?
+On Mon, Feb 27, 2017 at 02:28:09PM -0800, Junio C Hamano wrote:
 
-Thanks.
+> Jeff King <peff@peff.net> writes:
+> 
+> > I guess something like the patch below works, but I wonder if there is a
+> > less-horrible way to accomplish the same thing.
+> 
+> I suspect that a less-horrible would be a lot more intrusive.  It
+> would go like "interpret-branch-name only gives local branch name,
+> and when it does not show it, the callers that know they do not
+> necessarily need local branch name would call other at-mark things".
+> As you pointed out with the @{upstream} that potentially point at a
+> local branch, it will quickly get more involved, I would think, and
+> I tend to think that this patch of yours is probably the least evil
+> one among possible solutions.  
+> 
+> Perhaps with s/not_in_refs_heads/not_a_branch_name/ (or swapping
+> polarity, "is_a_branch_name"), the resulting code may not be too
+> hard to read?
 
-Mike Crowe <mac@mcrowe.com> writes:
+I actually started with not_a_branch_name, but I wanted specifically to
+talk about refs_heads, because we sometimes refer to remote-tracking
+branches as "branches" (and the function is called interpret_branch_name(),
+after all).
 
-> On Monday 20 February 2017 at 13:25:01 -0800, Junio C Hamano wrote:
->> This almost makes me suspect that the place that checks lengths of
->> one and two in order to refrain from running more expensive content
->> comparison you found earlier need to ask would_convert_to_git()
->> before taking the short-cut, something along the lines of this (for
->> illustration purposes only, not even compile-tested).  The "almost"
->> comes to me because I do not offhand know the performance implications
->> of making calls to would_convert_to_git() here.
->> 
->>  diff.c | 18 ++++++++++++++----
->>  1 file changed, 14 insertions(+), 4 deletions(-)
->> 
->> diff --git a/diff.c b/diff.c
->> index 051761be40..094d5913da 100644
->> --- a/diff.c
->> +++ b/diff.c
->> @@ -4921,9 +4921,10 @@ static int diff_filespec_check_stat_unmatch(struct diff_filepair *p)
->>  	 *    differences.
->>  	 *
->>  	 * 2. At this point, the file is known to be modified,
->> -	 *    with the same mode and size, and the object
->> -	 *    name of one side is unknown.  Need to inspect
->> -	 *    the identical contents.
->> +	 *    with the same mode and size, the object
->> +	 *    name of one side is unknown, or size comparison
->> +	 *    cannot be depended upon.  Need to inspect the 
->> +	 *    contents.
->>  	 */
->>  	if (!DIFF_FILE_VALID(p->one) || /* (1) */
->>  	    !DIFF_FILE_VALID(p->two) ||
->> @@ -4931,7 +4932,16 @@ static int diff_filespec_check_stat_unmatch(struct diff_filepair *p)
->>  	    (p->one->mode != p->two->mode) ||
->>  	    diff_populate_filespec(p->one, CHECK_SIZE_ONLY) ||
->>  	    diff_populate_filespec(p->two, CHECK_SIZE_ONLY) ||
->> -	    (p->one->size != p->two->size) ||
->> +
->> +	    /* 
->> +	     * only if eol and other conversions are not involved,
->> +	     * we can say that two contents of different sizes
->> +	     * cannot be the same without checking their contents.
->> +	     */
->> +	    (!would_convert_to_git(p->one->path) &&
->> +	     !would_convert_to_git(p->two->path) &&
->> +	     (p->one->size != p->two->size)) ||
->> +
->>  	    !diff_filespec_is_identical(p->one, p->two)) /* (2) */
->>  		p->skip_stat_unmatch_result = 1;
->>  	return p->skip_stat_unmatch_result;
->> 
->> 
->
-> Thanks for investigating this. I think you are correct that I was misguided
-> in my previous "fix". However, your change above does fix the problem for
-> me.
->
-> It looks like the main cost of convert_to_git is in convert_attrs which
-> ends up doing various path operations in attr.c. After that, both
-> apply_filter and crlf_to_git return straight away if there's nothing to do.
->
-> I experimented several times with running "git diff -quiet" after touching
-> every file in Git's own worktree and any difference in total time was lost
-> in the noise.
->
-> I've further improved my test case. Tests 3 and 4 fail without the above
-> change but pass with it. Unfortunately I'm still unable to get those tests
-> to fail without the above fix unless the sleeps are present. I've tried
-> using the "touch -r .datetime" technique from racy-git.txt but it doesn't
-> help. It seems that I'm unable to stop Git from using its cache without
-> sleeping. :(
->
-> diff --git a/t/t4063-diff-converted.sh b/t/t4063-diff-converted.sh
-> new file mode 100755
-> index 0000000..31a730d
-> --- /dev/null
-> +++ b/t/t4063-diff-converted.sh
-> @@ -0,0 +1,44 @@
-> +#!/bin/sh
-> +#
-> +# Copyright (c) 2017 Mike Crowe
-> +#
-> +# These tests ensure that files changing line endings in the presence
-> +# of .gitattributes to indicate that line endings should be ignored
-> +# don't cause 'git diff' or 'git diff --quiet' to think that they have
-> +# been changed.
-> +#
-> +# The sleeps are necessary to reproduce the problem for reasons that I
-> +# don't understand.
-> +
-> +test_description='git diff with files that require CRLF conversion'
-> +
-> +. ./test-lib.sh
-> +
-> +test_expect_success setup '
-> +	echo "* text=auto" > .gitattributes &&
-> +	printf "Hello\r\nWorld\r\n" > crlf.txt &&
-> +	printf "Hello\nWorld\n" > lf.txt &&
-> +	git add .gitattributes crlf.txt lf.txt &&
-> +	git commit -m "initial" && echo three
-> +'
-> +test_expect_success 'noisy diff works on file that requires CRLF conversion' '
-> +	git status >/dev/null &&
-> +	git diff >/dev/null &&
-> +	sleep 1 &&
-> +	touch crlf.txt lf.txt &&
-> +	git diff >/dev/null
-> +'
-> +test_expect_success 'quiet diff works on file that requires CRLF conversion with no changes' '
-> +	git status &&
-> +	git diff --quiet &&
-> +	sleep 1 &&
-> +	touch crlf.txt lf.txt &&
-> +	git diff --quiet
-> +'
-> +
-> +test_expect_success 'quiet diff works on file with line-ending change that has no effect on repository' '
-> +	printf "Hello\nWorld\n" > crlf.txt &&
-> +	printf "Hello\r\nWorld\r\n" > lf.txt &&
-> +	git diff --quiet
-> +'
-> +test_done
->
->
-> Mike.
+I agree it would be easier to read if the logic were flipped, but I'm
+not sure that would be correct. The function knows when it has done a
+replacement that takes us outside of a normal branch name. But when it
+hasn't, it doesn't really know how the result should be interpreted.
+
+For our purposes in this caller it is enough to say that "foo" should be
+treated as "refs/heads/foo", but I don't think that is generally true of
+interpret_branch_name(), which might be called as part of get_sha1().
+
+So one alternative is to leave the logic the same way but try to give it
+a better name. E.g., call it something like "replaced_with_non_branch"
+or something. But there, another negation snuck in. The correct
+non-negated thing is really "replaced_with_HEAD_or_refs_remotes" but
+that is rather awkward.
+
+-Peff
