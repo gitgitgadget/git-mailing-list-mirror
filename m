@@ -2,142 +2,125 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0BEDF202C9
-	for <e@80x24.org>; Tue, 28 Feb 2017 22:49:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0C28A202C9
+	for <e@80x24.org>; Tue, 28 Feb 2017 22:57:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751799AbdB1Wtl (ORCPT <rfc822;e@80x24.org>);
-        Tue, 28 Feb 2017 17:49:41 -0500
-Received: from mail-lf0-f53.google.com ([209.85.215.53]:36134 "EHLO
-        mail-lf0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750957AbdB1WtX (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Feb 2017 17:49:23 -0500
-Received: by mail-lf0-f53.google.com with SMTP id y193so11881199lfd.3
-        for <git@vger.kernel.org>; Tue, 28 Feb 2017 14:48:31 -0800 (PST)
+        id S1751688AbdB1W5U (ORCPT <rfc822;e@80x24.org>);
+        Tue, 28 Feb 2017 17:57:20 -0500
+Received: from mail-it0-f44.google.com ([209.85.214.44]:34468 "EHLO
+        mail-it0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751562AbdB1W5Q (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Feb 2017 17:57:16 -0500
+Received: by mail-it0-f44.google.com with SMTP id y135so3524301itc.1
+        for <git@vger.kernel.org>; Tue, 28 Feb 2017 14:56:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=1vIFfjTOWTBnE7y+q2WeLPIGfuZ/J2uCpGwjPBstuSI=;
-        b=Dbby57isVlcPn2Df1IPHpEtrbEQVU/kEecFmN1UjD/ARJFwyB6a5JacnftC8FiCBif
-         b+Knj5rKyPZ/cAb0BTGFUIvGMUM55QRGXJ75HEdtCYy4w1HsNhRchCrEBlTdOjKpjEIe
-         fiqfVBEUxhYkNGVAP8dqTDnY4rQVPlX7GplDeez85eW4gQYC8zIkvfgS9SWOMPPOEou8
-         knUCsufY+fj56EmI0tTSTNmdPd1XpWNGjvJwocEIjgjDKPvVXxGh9P0Ii3CvaFlclbr+
-         jrizMQ9VVB9bTi8wwTjB6w+Cx1nY1iN+Rj7sR60WWe8l+bB5cv5PwdhjUwCxASqDoKKh
-         AH1Q==
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=zaw49uulSF0wwiB8Aw2IavW0vTSsPfkXl24iQ/FvPEQ=;
+        b=Nef4o5NHZ5+aCG70N4kmNOG1G1NV4pNmnjGP1vGDwo8B5VLhzofde6B+ZOA3xTMw4l
+         0C3Whfhb/uFv1rhPj2gBVo4ysWb4+EKgk0+Z4TAl6t5BzGeW0jrvpPlvCCcQPhbF31g8
+         IwHDPbzzvsR5tkmdndMbQVhMO/tm0k7MlAfORNSPRYfSaZHU0CJ9HVNIyKf5Ac/yzHEw
+         zIxbb/DUFQmylCFzG8EuCQOAP93KHua9FGdqTfAKRrhmC7u6G+n3ISGtWToGvNnFb2mL
+         tRbOX1hMz9s5+JDgW7X+V6L4nnV5+2EuQQcNIucJuz0fHHIlOdEtAOYQnWdDaWwrpFeF
+         nn5g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=1vIFfjTOWTBnE7y+q2WeLPIGfuZ/J2uCpGwjPBstuSI=;
-        b=O541UYKDbkMO4uY4k4XtAvNob2ogXJhDgex2yyCaxLF+IYwpSJhv30x6uHBIOFmTY7
-         hcYKLZopqWw8DTEf9ugj/dYtMqayT3cHIMbIedJMG4052Q52tkG19Q1okZ/b/UYrcipS
-         WToFu7zGTH1zcdhvy0+QecwuVd1pBc2NSreWs9if94ZOshKy7O9zLSM3SH4vYYtZo73d
-         rXyYjF9YdCtjzkjJPzqY2BGxuWU2aLFxXkM2L9mheh/Nqz5zZJMWm5lluUQIQzwS5EFU
-         3pEIabLva/EdKOZZdhf/PNWU0s2pYcyQ+0yesFOWfa1tqyA9O9F8TFFX2VQLXfbjdHfv
-         P4nA==
-X-Gm-Message-State: AMke39k6kTaGZzD4I/W6clfKPTdTJJypbhG1AkCv6Wk5O67zzIqko6rvUlV3JhmmhbQyvqG8NEj6KAw/rDpKgw==
-X-Received: by 10.25.24.193 with SMTP id 62mr1630821lfy.12.1488322110422; Tue,
- 28 Feb 2017 14:48:30 -0800 (PST)
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=zaw49uulSF0wwiB8Aw2IavW0vTSsPfkXl24iQ/FvPEQ=;
+        b=TyN80IxbZcNfYXO/juI8XMRv4/5VIbsPSTIYNr2sjascCbYn5EqeiveyNpqfMMj6/w
+         Vg8YjjTdMST/LBjnHYpGv5bBmOGFbfjnuBBxkIxOvx6kM7O0WUnh2j5jG6S+gzpm51d7
+         9TZjx5Z6Eg1k13bGmsJYBcjmo3B2tjMrn6c4hMzY+QqGZ/QvZ6kK3Q3Ztx0v93jVefBf
+         kM0GQYw8SMMvRjuOuMdZOwZsJQmU3WFvL0+rxo0tuZn6Bx9MvkyCCpy2Pm7YZbf2k+s6
+         393Hi6YHotpif++jJZD+2ruSF4RWFr58Et89VfOBd0zkeqZteO5DUDkm0/D9nkKqVTyn
+         Ua2Q==
+X-Gm-Message-State: AMke39mRcXcexmTlhC4qostozEPNgNGRjgRELHJ2dUFw/JMwC02sGQnqTTkzUgDp8oACXQwgOaUmnyvIiTwsbQ==
+X-Received: by 10.36.40.198 with SMTP id h189mr1231783ith.114.1488322600708;
+ Tue, 28 Feb 2017 14:56:40 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.25.145.30 with HTTP; Tue, 28 Feb 2017 14:48:09 -0800 (PST)
-In-Reply-To: <20170228120633.zkwfqms57fk7dkl5@sigill.intra.peff.net>
-References: <20170227045257.yazqlrqlnggosi5t@macbook.local>
- <CAOLa=ZSyQg9uoZWADOMYc90U-5AR9Lfii9mjLre0m0FQCSqfxg@mail.gmail.com>
- <20170227074915.xljfe5jox756rlyv@sigill.intra.peff.net> <20170227080158.de2xarctzscfdsp2@sigill.intra.peff.net>
- <20170227090233.uk7dfruggytgmuw2@sigill.intra.peff.net> <xmqq60jvnu9y.fsf@gitster.mtv.corp.google.com>
- <CA+P7+xpVt6NtSajqMX8OQ_SKdC9tfHH40JgK=9DgBxo9nMaWLA@mail.gmail.com>
- <xmqqzih7kvbz.fsf@gitster.mtv.corp.google.com> <20170228005302.k6fyfinaxyl3ti76@sigill.intra.peff.net>
- <20170228120633.zkwfqms57fk7dkl5@sigill.intra.peff.net>
-From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Tue, 28 Feb 2017 14:48:09 -0800
-Message-ID: <CA+P7+xpfRjr4BKkLLcbCS-yXXYoiHeWr9Y9ubHA-Xxqa9c7q8w@mail.gmail.com>
-Subject: Re: [BUG] branch renamed to 'HEAD'
-To:     Jeff King <peff@peff.net>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Karthik Nayak <karthik.188@gmail.com>,
-        Luc Van Oostenryck <luc.vanoostenryck@gmail.com>,
-        Git List <git@vger.kernel.org>
+Received: by 10.107.146.131 with HTTP; Tue, 28 Feb 2017 14:56:39 -0800 (PST)
+In-Reply-To: <CAJo=hJuB9JkTZSRbhN2DX0gBqpjddU=Sk8iRV9++TYRv4xKA6Q@mail.gmail.com>
+References: <CA+55aFzFEpi1crykZ33r9f7BsvLt_kiB-CHXOkuCAX=fd4BU-w@mail.gmail.com>
+ <20170223182147.hbsyxsmyijgkqu75@kitenet.net> <CA+55aFxckeEW1ePcebrgG4iN4Lp62A2vU6tA=xnSDC_BnKQiCQ@mail.gmail.com>
+ <20170223184637.xr74k42vc6y2pmse@sigill.intra.peff.net> <CA+55aFx=0EVfSG2iEKKa78g3hFN_yZ+L_FRm4R749nNAmTGO9w@mail.gmail.com>
+ <20170223193210.munuqcjltwbrdy22@sigill.intra.peff.net> <CA+55aFxmr6ntWGbJDa8tOyxXDX3H-yd4TQthgV_Tn1u91yyT8w@mail.gmail.com>
+ <20170223195753.ppsat2gwd3jq22by@sigill.intra.peff.net> <alpine.LFD.2.20.1702231428540.30435@i7.lan>
+ <20170223224302.joti4zqucme3vqr2@sigill.intra.peff.net> <20170223230507.kuxjqtg3ghcfskc6@sigill.intra.peff.net>
+ <xmqqefyikvin.fsf@gitster.mtv.corp.google.com> <xmqq60jukubq.fsf@gitster.mtv.corp.google.com>
+ <CA+55aFxTWqsTTiDKo4DBZT-8Z9t80bGMD3uijzKONa_bYEZABQ@mail.gmail.com> <CAJo=hJuB9JkTZSRbhN2DX0gBqpjddU=Sk8iRV9++TYRv4xKA6Q@mail.gmail.com>
+From:   Linus Torvalds <torvalds@linux-foundation.org>
+Date:   Tue, 28 Feb 2017 14:56:39 -0800
+X-Google-Sender-Auth: xO9coG_N-iUcb-gPUMGALIWtGQA
+Message-ID: <CA+55aFxG_5KU54KXZdTMC0p0EF5ixmv0C6ccjnYcPUeN_kDREA@mail.gmail.com>
+Subject: Re: SHA1 collisions found
+To:     Shawn Pearce <spearce@spearce.org>
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        Joey Hess <id@joeyh.name>,
+        Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Feb 28, 2017 at 4:06 AM, Jeff King <peff@peff.net> wrote:
-> On Mon, Feb 27, 2017 at 07:53:02PM -0500, Jeff King wrote:
+On Tue, Feb 28, 2017 at 11:52 AM, Shawn Pearce <spearce@spearce.org> wrote:
 >
->> On Mon, Feb 27, 2017 at 04:33:36PM -0800, Junio C Hamano wrote:
->>
->> > A flag to affect the behaviour (as opposed to &flag as a secondary
->> > return value, like Peff's patch does) can be made to work.  Perhaps
->> > a flag that says "keep the input as is if the result is not a local
->> > branch name" would pass an input "@" intact and that may be
->> > sufficient to allow "git branch -m @" to rename the current branch
->> > to "@" (I do not think it is a sensible rename, though ;-).  But
->> > probably some callers need to keep the original input and compare
->> > with the result to see if we expanded anything if we go that route.
->> > At that point, I am not sure if there are much differences in the
->> > ease of use between the two approaches.
->>
->> I just went into more detail in my reply to Jacob, but I do think this
->> is a workable approach (and fortunately we seem to have banned bare "@"
->> as a name, along with anything containing "@{}", so I think we would end
->> up rejecting these nonsense names).
->>
->> I'll see if I can work up a patch. We'll still need to pass the flag
->> around through the various functions, but at least it will be a flag and
->> not a confusing negated out-parameter.
+>> and from what I can tell, the 'maski' value is always 0, so the
+>> looping over 80 state masks is really just a loop over two.
 >
-> OK, I have a series which fixes this (diffstat below). When I audited
-> the other callers of interpret_branch_name() and strbuf_branchname(), it
-> turned out to be even more complicated. The callers basically fall into
-> a few buckets:
->
->   1. Callers like get_sha1() and merge_name() pass the result to
->      dwim_ref(), and are prepared to handle anything.
->
->   2. Some callers stick "refs/heads/" in front of the result, and
->      obviously only want local names. Most of git-branch and
->      git-checkout fall into this boat.
->
->   3. "git branch -d" can delete local _or_ remote branches, depending on
->      the "-r" flag. So the expansion it wants varies, and we need to
->      handle "just local" or "just remote".
->
-> So I converted the "only_branch" flag to an "allowed" bit-field. No
-> callers actually ask for more than a single type at once, but it was
-> easy to do it that way. It serves all of the callers, and will easily
-> adapt for the future (e.g., if "git branch -a -d" were ever allowed).
->
->   [1/8]: interpret_branch_name: move docstring to header file
->   [2/8]: strbuf_branchname: drop return value
->   [3/8]: strbuf_branchname: add docstring
->   [4/8]: interpret_branch_name: allow callers to restrict expansions
->   [5/8]: t3204: test git-branch @-expansion corner cases
->   [6/8]: branch: restrict @-expansions when deleting
->   [7/8]: strbuf_check_ref_format(): expand only local branches
->   [8/8]: checkout: restrict @-expansions when finding branch
->
->  builtin/branch.c                      |   5 +-
->  builtin/checkout.c                    |   2 +-
->  builtin/merge.c                       |   2 +-
->  cache.h                               |  32 ++++++++-
->  refs.c                                |   2 +-
->  revision.c                            |   2 +-
->  sha1_name.c                           |  76 ++++++++++-----------
->  strbuf.h                              |  21 +++++-
->  t/t3204-branch-name-interpretation.sh | 122 ++++++++++++++++++++++++++++++++++
->  9 files changed, 220 insertions(+), 44 deletions(-)
->  create mode 100755 t/t3204-branch-name-interpretation.sh
->
-> -Peff
+> Actually, look closer at that loop:
 
-I didn't find any problems besides what you had already outlined
-before I started reading the series. It looks pretty much like I
-thought it would. I like the idea of saying "I want X" rather than the
-command returning "This was a Y"
+No, sorry, I wasn't clear and took some shortcuts in writing that made
+that sentence not parse right.
+
+There's two issues going on. This loop:
+
+>   for (i = 0; sha1_dvs[i].dvType != 0; ++i)
+
+loops over all the dvs - and then inside it has that useless "maski"
+thing as part of the test that is always zero.
+
+But the "80 state masks" was not that "maski' value, but the
+"ctx->states[5][80]" thing.
+
+So we have 80 of those 5-word state values, but only two of them are
+actually used: iterations 58 and 65). You can see how the code
+actually optimizes away (by hand) the SHA1_STORE_STATE() thing by
+using DOSTORESTATE58 and DOSTORESTATE65, but it does actually generate
+the code for all of them.
+
+You can see the "only two steps" part in this:
+
+  (sha1_recompression_step[sha1_dvs[i].testt])(...)
+
+if you notice how there are only those two different cases for "testt".
+
+So there is code generated for 80 different recompression step
+functions in that array, but there are only two different functions
+that are actually ever used.
+
+Those are not small functions, either. When I check the build, they
+generate about 3.5kB of code each. So it's literally about 250kB of
+completely wasted space in the binary.
+
+See what I'm saying? Two different issues. One is that the code
+generates tons of (fairly big) functions, and only uses two of them,
+the rest are useless and lying around. The other is that it uses a
+variable that is only ever zero.
+
+So I think that loop would actually be better not as a loop at all,
+but as a "generated code expanded from the dv_data". It would have
+been more obvious. Right now it loads values from the array, and it's
+not obvious that some of the values it loads are very very limited (to
+the point of one of them just being the constant "0").
+
+Anyway, Dan Shumow already answered and addressed both issues (and the
+smaller stylistic ones).
+
+               Linus
