@@ -2,78 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 64114201B0
-	for <e@80x24.org>; Tue, 28 Feb 2017 17:47:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7EC62201B0
+	for <e@80x24.org>; Tue, 28 Feb 2017 17:52:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751332AbdB1RrI (ORCPT <rfc822;e@80x24.org>);
-        Tue, 28 Feb 2017 12:47:08 -0500
-Received: from mail-pf0-f196.google.com ([209.85.192.196]:35955 "EHLO
-        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751154AbdB1RrG (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Feb 2017 12:47:06 -0500
-Received: by mail-pf0-f196.google.com with SMTP id j5so1638648pfb.3
-        for <git@vger.kernel.org>; Tue, 28 Feb 2017 09:45:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=0P+74oYkGyVglI2Up6MkG/SffLgWiqcdLziWYUPfu6o=;
-        b=nGikPDBjzbeU4txAeLqHSZvI4/6x33p8rfaPsSLSWUuA58DUJdMj+qKER07HAPalJm
-         oxm8/5woMf6nUrGWGGI20bAqqAfWS/okxDaD+361rJ49gERYhEZNB/GDnkBLhfTwTnlu
-         Jq5zyyiumxcUzX/i1pDEuawNA5cxNwLh2GsYzVCCmh7FW2Oy1FiuoPoACY8LQ7xIZVXc
-         lFPi1fs/i8oXbYD2ZcxBfAVORV7zxlggdMM7McUMgs8mxSL4F5d/LVidsd+mklfCCWcW
-         AS3nmqkG6BwdT/8RC05KQZCZ66eCcR4i6DuLe7+3xFkmWrSQeBCxVeBoEGkkVzY7BIK4
-         3zng==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=0P+74oYkGyVglI2Up6MkG/SffLgWiqcdLziWYUPfu6o=;
-        b=GmIj7PweWWMqpy/aVYhHRX1dsZT5hZ3+sJYwIZYLid20gz1qtO9zFIKBgBLe/PFPGt
-         zEjd6RzvLgPODnyK6QFQQ7QwY8JEGLkt1+DHCAw19PlPRfN75vSH21CHrTMsDjmaL79l
-         0K3sYiji2owRfTEbRNZHMTecrvgrKJXq99f9MUV+tLVuZVclVsJ7PwZEnGYB+LT6wu+C
-         6+uhL5emsu6/9eaVpbEgWplw6u2adJtMVjFfzU6yBGTpyNuIbzEMyeCyThWBeATvtZmX
-         jGa9djvmjFD0/OLvo3cMV4aXxZQvwY0JBzOgMWlTcPknQbzVGeWLTAa2sfSMGhF7HzEo
-         Tc4Q==
-X-Gm-Message-State: AMke39nm1D7DVY0uT4r2Esx9SP67/rtwYPsEj3qNAMWNKpimWoYarBAL8KPmGEs5jDkUJw==
-X-Received: by 10.84.133.193 with SMTP id f59mr4484675plf.64.1488303364895;
-        Tue, 28 Feb 2017 09:36:04 -0800 (PST)
-Received: from localhost ([2620:0:1000:8622:e0d7:55f8:67f2:62dd])
-        by smtp.gmail.com with ESMTPSA id b70sm5456778pfc.100.2017.02.28.09.36.04
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 28 Feb 2017 09:36:04 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Patrick Schleizer <patrick-mailinglists@whonix.org>
-Cc:     git@vger.kernel.org, Whonix-devel <whonix-devel@whonix.org>
-Subject: Re: gpg verify git sub modules useful?
-References: <a9da4416-6437-a491-f461-c5e61d805b2d@riseup.net>
-Date:   Tue, 28 Feb 2017 09:36:03 -0800
-In-Reply-To: <a9da4416-6437-a491-f461-c5e61d805b2d@riseup.net> (Patrick
-        Schleizer's message of "Tue, 28 Feb 2017 15:50:00 +0000")
-Message-ID: <xmqqmvd6kykc.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+        id S1751508AbdB1Rwj (ORCPT <rfc822;e@80x24.org>);
+        Tue, 28 Feb 2017 12:52:39 -0500
+Received: from alum-mailsec-scanner-7.mit.edu ([18.7.68.19]:53529 "EHLO
+        alum-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1751248AbdB1Rwe (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 28 Feb 2017 12:52:34 -0500
+X-AuditID: 12074413-f67ff700000077e1-28-58b5b8bf5b8d
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+        (using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
+        (Client did not present a certificate)
+        by alum-mailsec-scanner-7.mit.edu (Symantec Messaging Gateway) with SMTP id D5.58.30689.FB8B5B85; Tue, 28 Feb 2017 12:51:59 -0500 (EST)
+Received: from [192.168.69.190] (p5B10410E.dip0.t-ipconnect.de [91.16.65.14])
+        (authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v1SHpuTu016667
+        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+        Tue, 28 Feb 2017 12:51:58 -0500
+Subject: Re: [PATCH v5 09/24] refs.c: introduce get_main_ref_store()
+To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>, git@vger.kernel.org
+References: <20170218133303.3682-1-pclouds@gmail.com>
+ <20170222140450.30886-1-pclouds@gmail.com>
+ <20170222140450.30886-10-pclouds@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        Stefan Beller <sbeller@google.com>, novalis@novalis.org
+From:   Michael Haggerty <mhagger@alum.mit.edu>
+Message-ID: <0bef1e49-e96b-1666-9b88-f4262c2aeeba@alum.mit.edu>
+Date:   Tue, 28 Feb 2017 18:51:56 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Icedove/45.6.0
 MIME-Version: 1.0
-Content-Type: text/plain
+In-Reply-To: <20170222140450.30886-10-pclouds@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprDKsWRmVeSWpSXmKPExsUixO6iqLt/x9YIg1urNSy6rnQzWTT0XmG2
+        6F/exWax5OFrZovuKW8ZLWZetbbYvLmdxYHdY+esu+weHz7GeSzYVOrR1X6EzePiJWWP/Uu3
+        sXl83iQXwB7FZZOSmpNZllqkb5fAlTHnyHzWgoOsFefO9jA1MK5l6WLk5JAQMJFY8/APkM3F
+        ISSwg0li9qa9UM5ZJonfW24wg1QJC7hIfH72E6xDRCBNYvHk98wQRRMYJX7+P8AG4jAL3GCU
+        uDTxIxNIFZuArsSinmYwm1fAXuL9j6OsIDaLgKrEhN/3wCaJCoRIzFn4gBGiRlDi5MwnYHFO
+        AQuJqVefgMWZBdQl/sy7xAxhy0s0b53NPIGRfxaSlllIymYhKVvAyLyKUS4xpzRXNzcxM6c4
+        NVm3ODkxLy+1SNdcLzezRC81pXQTIyTghXcw7jopd4hRgINRiYf3QPfWCCHWxLLiytxDjJIc
+        TEqivEEzgEJ8SfkplRmJxRnxRaU5qcWHGCU4mJVEeHcUA+V4UxIrq1KL8mFS0hwsSuK8akvU
+        /YQE0hNLUrNTUwtSi2CyMhwcShK8W7YDNQoWpaanVqRl5pQgpJk4OEGG8wAN3wNSw1tckJhb
+        nJkOkT/FqMtx4/iBN0xCLHn5ealS4rwbQYoEQIoySvPg5sAS1StGcaC3hHkVgGlLiAeY5OAm
+        vQJawgS05IUK2JKSRISUVAOj9nPZtsMHGS9/+ltdclbp7oopvRvmME242fXkzTXNraetrrde
+        zruRfiexSXGVQsQZxec2Gzy1RBZIcF+SVak/ImslOU/e8V6jR2CdkGgI477avw8OLI3hEJr7
+        X9rzZPDBdWYP6wqULzF8kzbZo+i67/TMGX8/NBYpzHJ+8v2y0TteThs+GYUvSizFGYmGWsxF
+        xYkAOo0NvC8DAAA=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Patrick Schleizer <patrick-mailinglists@whonix.org> writes:
+On 02/22/2017 03:04 PM, Nguyễn Thái Ngọc Duy wrote:
+> Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+> ---
+>  refs.c | 16 ++++++++++++----
+>  1 file changed, 12 insertions(+), 4 deletions(-)
+> 
+> diff --git a/refs.c b/refs.c
+> index 81b64b4ed..dab1a21ac 100644
+> --- a/refs.c
+> +++ b/refs.c
+> @@ -1456,15 +1456,23 @@ static struct ref_store *ref_store_init(const char *submodule)
+>  	return refs;
+>  }
+>  
+> +static struct ref_store *get_main_ref_store(void)
+> +{
+> +	struct ref_store *refs;
+> +
+> +	if (main_ref_store)
+> +		return main_ref_store;
+> +
+> +	refs = ref_store_init(NULL);
+> +	return refs;
 
-> When using git submodules, is there value in iterating about the git
-> submodules running "git verfiy-commit HEAD" or would that be already
-> covered by the git submodule verification?
+Unnecessary temporary variable?
 
-That depends on what you are referring to with the "git submodule
-verification" and more importantly what threat you are guarding
-against.  "git -C <submodule-dir> verify-commit HEAD" may make sure
-that the contents of that commit object is GPG signed by whoever you
-trust--is that what you want to make sure?  Or do you want all
-commits in the submodule history to be similarly signed because the
-tree of the superproject can switch to some other commit there?
+> [...]
+
+Michael
+
+
