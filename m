@@ -2,97 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 725FF2022D
-	for <e@80x24.org>; Tue, 28 Feb 2017 07:35:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EA33A2022D
+	for <e@80x24.org>; Tue, 28 Feb 2017 08:08:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751452AbdB1HfI (ORCPT <rfc822;e@80x24.org>);
-        Tue, 28 Feb 2017 02:35:08 -0500
-Received: from mail-io0-f169.google.com ([209.85.223.169]:34793 "EHLO
-        mail-io0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751660AbdB1HfH (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Feb 2017 02:35:07 -0500
-Received: by mail-io0-f169.google.com with SMTP id 90so4248376ios.1
-        for <git@vger.kernel.org>; Mon, 27 Feb 2017 23:34:57 -0800 (PST)
+        id S1751816AbdB1IIX (ORCPT <rfc822;e@80x24.org>);
+        Tue, 28 Feb 2017 03:08:23 -0500
+Received: from mail-lf0-f49.google.com ([209.85.215.49]:35303 "EHLO
+        mail-lf0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751803AbdB1IIW (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Feb 2017 03:08:22 -0500
+Received: by mail-lf0-f49.google.com with SMTP id z127so2040217lfa.2
+        for <git@vger.kernel.org>; Tue, 28 Feb 2017 00:08:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=atlassian-com.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:cc;
-        bh=g/EN10fDnRvE/e2U3djKf4vwCbTbKzZ0QdJG9S2XUws=;
-        b=mQ6mlVpIALM6xjwWwplB2WWT8Z0m/Opii9T2jVVNXLrV+GyoHJX5Qy+ECp2sL1v7i/
-         SUlEWyn4hTdu493UL8o0DsK+ApoIqiCojE+rsbXvzRyDcrrm9RfW4BjBzJSGp6XcukwI
-         nvwC6CVIsg15aZ4Hh3t4lt9IM28dwSYRN9Z6qAmGFFlry9nldSnu4Blpp2ZPmyJVTbFp
-         S5KcK5bCvpCbLJO6re+6eK5aXFhqHcKYf4lCWUk9qMapNpdbO/SXb2UJduUQe9+kmQhr
-         GQh6WNPsm9/lpPv/o5BDEU6L8aDVagdnCu5rjUHcCb3+bxCAiOLjnHGNM+s3NagriyDD
-         Cneg==
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=ZkGY6Om682gLHL21REjnl2NGf0yjzIk8YTXX016jlb0=;
+        b=iAd9IlEgbugH8CTpJX9ZUWYYXKTF3Vmioo+g3WbGG1XbsRRsFvT8Bog6UL3KDYaamE
+         Hs0FaQ/j67qpP7bmTBmmSg3tR/Rnpnw9reReWDGjIOrY6xCF8reO3BzdhBQwCDp9AB7v
+         OwqpatpJvDf6fGdsvSPxJqKq8wvmkumdD/XUU8aYDLKQTal19GjLThwOls71b27TNRV0
+         wlt1+0BkSLCOXfMaQ18+J2VLhX515zwKa8En5TK62ZmuY7fkPdKhzq+ZYqLP5RMzFnUj
+         Cx9GKbcTVCg5cizpJbHeRrpDdJOO3I8p4Qguf7Qe/mbYnh+4M66yn6gqtCrcbXmeomJe
+         hlyw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:cc;
-        bh=g/EN10fDnRvE/e2U3djKf4vwCbTbKzZ0QdJG9S2XUws=;
-        b=lvqTrCJX2k9+fyMfa8+1SJ1aHNkwdQUihMdZWfPWFwKEdhfYcJ0JPRAdfcJQhaI31N
-         kk+W5wY4Z5Eq4v9v8NuHw4/+/aAKMvbhqZHYA/1wnAEK0wfdbvumjirG3lmnAosKsAM9
-         x63TJGvEDywLckgnTaugVXfBXA0zdJWGZsdYMZrTq7jzcxyPK6GZaHWosFrtSWM+WAGw
-         9fXanHIm8BsEVjnU5ZE/FAULq1rC5tgoyXcefnuIj7sDmYje8gfU9/yue5r3pMZC/zTi
-         oZkJeTIWDMvzBaQB+Kx2d/AwUDZ0Pli1ZLN4fjSfKovL+brX1lcG6b/0G5RreLsEHWG9
-         ZQbQ==
-X-Gm-Message-State: AMke39lvxqFoiOhmr6uj+Z6PzStET1ZylA97/ST4XAbPd5TrW9YoH6WGCMtYPufuOQgQvWD8btKl3F2weHDjHhIg
-X-Received: by 10.107.181.2 with SMTP id e2mr1008513iof.20.1488263404834; Mon,
- 27 Feb 2017 22:30:04 -0800 (PST)
+         :message-id:subject:to:cc;
+        bh=ZkGY6Om682gLHL21REjnl2NGf0yjzIk8YTXX016jlb0=;
+        b=Ow6ck4geKCSszxLcDFiK09fcEbxvwHjCo/X1+8plN0/E/c0wPHMAEToxZTCnK4ldh6
+         lJpcwNPslK5tRpn5USEN2RspWPPsn8T9HszdPPmEUZ+BPVkp0SDjYDStntpnFcGvw6Td
+         WzHwI28a+P/8Ox5FLfSrGr7DM/KOOacEQDmaIXmoVOc8lgmm5X4oM2Asn0dV+k92jZJ1
+         bhhdiuOXxtUYebw2ex/wVnZJjYEKZC4PXy5/D/YpaZylHbxiFmKmoldgogMauChJMZmK
+         uSxQHLF1VMAAZB+WMiMlZU3GJIWk8nVXgTi8OnQXvTqqthv5oFMV9aqCUtpvWaxzuYlm
+         eqUQ==
+X-Gm-Message-State: AMke39k0bHc8ukEE+o9ReaIgOLI87MQdIZ1K9AKSeoSCPW8LjebZj2nK+CR/58oTh9ZJQ4DY6zu0q01OWBrrzw==
+X-Received: by 10.25.79.69 with SMTP id a5mr352974lfk.58.1488268741351; Mon,
+ 27 Feb 2017 23:59:01 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.64.101.129 with HTTP; Mon, 27 Feb 2017 22:30:04 -0800 (PST)
-In-Reply-To: <CAAj3zPzwWr4u1qSMp5CwVMzExW2eg9LQ7t7RX-5m6fRRGh9pcA@mail.gmail.com>
-References: <CAAj3zPzwWr4u1qSMp5CwVMzExW2eg9LQ7t7RX-5m6fRRGh9pcA@mail.gmail.com>
-From:   Bryan Turner <bturner@atlassian.com>
-Date:   Mon, 27 Feb 2017 22:30:04 -0800
-Message-ID: <CAGyf7-Hp5b5r-NROVehnpwS2cSdwMz_kSUgzaQJ03Ba+K8g9wA@mail.gmail.com>
-Subject: Re: [RFC] - url-safe base64 commit-id's
-Cc:     Git Users <git@vger.kernel.org>
+Received: by 10.25.145.30 with HTTP; Mon, 27 Feb 2017 23:58:40 -0800 (PST)
+In-Reply-To: <20170228005302.k6fyfinaxyl3ti76@sigill.intra.peff.net>
+References: <20170227045257.yazqlrqlnggosi5t@macbook.local>
+ <CAOLa=ZSyQg9uoZWADOMYc90U-5AR9Lfii9mjLre0m0FQCSqfxg@mail.gmail.com>
+ <20170227074915.xljfe5jox756rlyv@sigill.intra.peff.net> <20170227080158.de2xarctzscfdsp2@sigill.intra.peff.net>
+ <20170227090233.uk7dfruggytgmuw2@sigill.intra.peff.net> <xmqq60jvnu9y.fsf@gitster.mtv.corp.google.com>
+ <CA+P7+xpVt6NtSajqMX8OQ_SKdC9tfHH40JgK=9DgBxo9nMaWLA@mail.gmail.com>
+ <xmqqzih7kvbz.fsf@gitster.mtv.corp.google.com> <20170228005302.k6fyfinaxyl3ti76@sigill.intra.peff.net>
+From:   Jacob Keller <jacob.keller@gmail.com>
+Date:   Mon, 27 Feb 2017 23:58:40 -0800
+Message-ID: <CA+P7+xp_w_BmkbDA03vRCg8JEmLkgd1_WbmtsBskpV0EarXejQ@mail.gmail.com>
+Subject: Re: [BUG] branch renamed to 'HEAD'
+To:     Jeff King <peff@peff.net>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Karthik Nayak <karthik.188@gmail.com>,
+        Luc Van Oostenryck <luc.vanoostenryck@gmail.com>,
+        Git List <git@vger.kernel.org>
 Content-Type: text/plain; charset=UTF-8
-To:     unlisted-recipients:; (no To-header on input)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Feb 27, 2017 at 6:27 PM, G. Sylvie Davies
-<sylvie@bit-booster.com> wrote:
-> Is there any appetite for base64'd commit-id's, using the url-safe
-> variant (e.g. RFC 4648 [1] with padding removed)?
+On Mon, Feb 27, 2017 at 4:53 PM, Jeff King <peff@peff.net> wrote:
+> On Mon, Feb 27, 2017 at 04:33:36PM -0800, Junio C Hamano wrote:
 >
-> And so this:
-> 712bad335dfa9c410a83f9873614a19726acb3a8
+>> A flag to affect the behaviour (as opposed to &flag as a secondary
+>> return value, like Peff's patch does) can be made to work.  Perhaps
+>> a flag that says "keep the input as is if the result is not a local
+>> branch name" would pass an input "@" intact and that may be
+>> sufficient to allow "git branch -m @" to rename the current branch
+>> to "@" (I do not think it is a sensible rename, though ;-).  But
+>> probably some callers need to keep the original input and compare
+>> with the result to see if we expanded anything if we go that route.
+>> At that point, I am not sure if there are much differences in the
+>> ease of use between the two approaches.
 >
-> Becomes this:
-> cSutM136nEEKg_mHNhShlyass6g
+> I just went into more detail in my reply to Jacob, but I do think this
+> is a workable approach (and fortunately we seem to have banned bare "@"
+> as a name, along with anything containing "@{}", so I think we would end
+> up rejecting these nonsense names).
 >
+> I'll see if I can work up a patch. We'll still need to pass the flag
+> around through the various functions, but at least it will be a flag and
+> not a confusing negated out-parameter.
 >
-> Under the hood things cannot change (e.g., ".git/objects/71/") because
-> file systems are not always case sensitive.
->
-> But for "git log" and "git show" output it would be nice. And helps
-> with ambiguous commit id's too if you only want to specify a 7
-> character commit-id, since that encodes 42 bits instead of 28 bits.
-> I've run into problems with maximum command length on windows (32767
-> chars) because I was specifying so many commit-ids on the command-line
-> that I blew past that limit. This would help there, too.
+> -Peff
 
-Depending on the command, have you considered using stdin instead? git log,
-for example, is perfectly happy to read commit IDs from stdin instead of
-the command line.
+Yes, this is pretty much what I had imagined. I look forward to seeing
+the patch.
 
-In general, I think the pattern of getting away from command line arguments
-is better than trying to shoehorn more data into the same character limit.
-Base64 encoding might help get a few more arguments into the available
-limit, but in the end it's not going to solve the underlying problem.
-
->
-> Might be particularly helpful with the transition to a new hash.
-> e.g., a 43 character Base64 id instead of a 64 character hex id.
->
->
-> - Sylvie
->
-> [1] - https://tools.ietf.org/html/rfc4648#page-7
+Thanks,
+Jake
