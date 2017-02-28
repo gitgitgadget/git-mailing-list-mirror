@@ -2,99 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 58279202C9
-	for <e@80x24.org>; Tue, 28 Feb 2017 21:25:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B0C23202CA
+	for <e@80x24.org>; Tue, 28 Feb 2017 21:28:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752330AbdB1VZb (ORCPT <rfc822;e@80x24.org>);
-        Tue, 28 Feb 2017 16:25:31 -0500
-Received: from mail-pg0-f68.google.com ([74.125.83.68]:33640 "EHLO
-        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752319AbdB1VZ2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Feb 2017 16:25:28 -0500
-Received: by mail-pg0-f68.google.com with SMTP id x17so3029481pgi.0
-        for <git@vger.kernel.org>; Tue, 28 Feb 2017 13:25:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=6H5HIEc6VpL9ZYNCFENdLo5GlXZ6hGcqMhpSHR2IYe0=;
-        b=dicjq5VydpfshVjnia58M7/7OP4jJASZbAQwbC8+pQVjRMSg8u8G6t8gDEoq2KK+/a
-         kcuiL+TW7d51BJ9R4tRqtbrQDe0F+89dJEWkcI8kSKzuu6vUPMQip3ULv5u2SLb6FfhH
-         0Xt814F+Mi85/WlABLTEJKTVK5b+f9LrrDJgkYBiEyJV/HU9i49SXOFVga4I9ncNqsT8
-         n/7yW/ujWMj7H1M8Y6nA/4y/eDvAwiwNtT2y3OBwTAEdWWZZCIOEJJP8l48DZgdwn7o5
-         uvTEfKH8IgQC3nvlIt3lxs1vEMbs7X7blCdzL63Vo5JWM31mVoJu5vM2gav8bJx/aIii
-         d/Jw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=6H5HIEc6VpL9ZYNCFENdLo5GlXZ6hGcqMhpSHR2IYe0=;
-        b=XH2JWJdi9OIjUPZBRwrllb57RjlidRMUn00/yXkdERV4kcK/Tc5X096LvoO5T411P6
-         DUaui1RjGF6caoK0At6HPnNYb/GjmWHgUJWJdZTQVrHxmbbQIru/UGBcHjbFapVau/3E
-         m2Mz4t9zzQa+AepL/WAslK0LORP60yCAtHpEPUhaNBz9yl18AoNLnaduLVw2bYL6qR/i
-         CQ5aqXHCaZEhb4sK1jAMgK1th64cAjWFB0Pg5x9ZFHVRMPAJ3OfcBhV+B0jY78O9Bzmk
-         uH4cA9jawVZW8EONmS9dDHaOM+n+WwDQ2A4mBJkn4YrJI3BtnJtxje5F3wkIycvQXdmp
-         8EjQ==
-X-Gm-Message-State: AMke39m+YF2WBo5SUqucND0Yfx+LlFpUo8v5QM1mWggAt0rupNr2LitTiMAxWTrDJKzVpw==
-X-Received: by 10.98.65.148 with SMTP id g20mr4929348pfd.44.1488317117272;
-        Tue, 28 Feb 2017 13:25:17 -0800 (PST)
-Received: from localhost ([2620:0:1000:8622:e0d7:55f8:67f2:62dd])
-        by smtp.gmail.com with ESMTPSA id 71sm5999755pfx.40.2017.02.28.13.25.16
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 28 Feb 2017 13:25:16 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Andreas Heiduk <asheiduk@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v2 2/2] Documentation: Link descriptions of -z to core.quotePath
-References: <3c801e54-28c7-52d0-6915-ee7aaf1d89c9@gmail.com>
-        <1487968676-6126-1-git-send-email-asheiduk@gmail.com>
-        <1487968676-6126-3-git-send-email-asheiduk@gmail.com>
-        <xmqqmvd6jayn.fsf@gitster.mtv.corp.google.com>
-        <d59bda7b-2eb5-a6cc-8240-0ff4f50de540@gmail.com>
-Date:   Tue, 28 Feb 2017 13:25:15 -0800
-In-Reply-To: <d59bda7b-2eb5-a6cc-8240-0ff4f50de540@gmail.com> (Andreas
-        Heiduk's message of "Tue, 28 Feb 2017 22:13:35 +0100")
-Message-ID: <xmqq60juj9dw.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+        id S1751883AbdB1V2O (ORCPT <rfc822;e@80x24.org>);
+        Tue, 28 Feb 2017 16:28:14 -0500
+Received: from mout.gmx.net ([212.227.15.18]:62392 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751531AbdB1V2O (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Feb 2017 16:28:14 -0500
+Received: from virtualbox ([37.201.192.48]) by mail.gmx.com (mrgmx001
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0LhOO8-1bwGYu0H1k-00medp; Tue, 28
+ Feb 2017 21:55:00 +0100
+Date:   Tue, 28 Feb 2017 21:54:58 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
+        Jeff King <peff@peff.net>, git@vger.kernel.org
+Subject: Re: [PATCH 0/6] Use time_t
+In-Reply-To: <xmqqa896kuve.fsf@gitster.mtv.corp.google.com>
+Message-ID: <alpine.DEB.2.20.1702282149160.3767@virtualbox>
+References: <cover.1488231002.git.johannes.schindelin@gmx.de>        <20170228142802.hu5esthnqdsgc2po@sigill.intra.peff.net>        <f6b57868-0173-48d9-86cb-79780f7e301b@web.de> <xmqqa896kuve.fsf@gitster.mtv.corp.google.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: multipart/mixed; BOUNDARY="8323329-910223319-1488315300=:3767"
+X-Provags-ID: V03:K0:tMDJ2pM0idyFw8NdnYAZtHNbEe0VnYUZsQ9D0AWa1srZZCTX0a/
+ 2WmmMawM9Yvpr3us503uFmqyB7pYbiAjFPwv5+fjGZZY4NdcidzhpTDQdQwdiQ8+Hqv9ck4
+ CeaZeugmTmlhEWb5gsg0Y6q2ark6xVhZB3mYFZ/qND+szK69yS04kTnWkDj2taM8WgZpLvS
+ jYq13pNNhVLjQqoWyhKBg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:kNBMZgvWpaM=:loBfFnfXkAPRpcI+Ps0wgK
+ tw7IRxk9IQ2St2yOuxSHQqK4ar3ygQeF4MXC12bfo8yi7U+W9ujsW246ry3I3eQNYHcFks+AS
+ DnQz82OQnydlnObrVcZxrJsmuDE+zVf5auqbYUjtStbYBZ3RWmURcMPY+C1kWy5I56rz74itD
+ gMfz8VcehxCIvRukBEDWKgSoIw3jXONBHOLmgSynHiwIEzTW5eKNuZMSEVedRAZMoIFKBuAPg
+ /UBs74tr88acOK6BuDPFGeD5ei9Es1G7xw7DSP1SydIzg71Rn2PCk8QHR5MgyvJgcsrRKTxkS
+ OQ+j2BM0pyCUaxfPXeXn2Kg39+2ZAO4Q4EJ01gASw4LUZnu7XqiQLHYkCPp+HCvfU2hRxwmRf
+ Gcpa5wHoz66jljeZJOH8d114dUYpdNxDp3wzCPYm0tSWHZ+b8kewd95G2l9MDhawniiKLnqBH
+ UknR8waJ6tKJZSzV0ITVvenqpX6YMaKNJY9xhoIi1Z2cdSXmb1C0jE9fO/JczsTS+PSMfKDy0
+ zkrxcJcp1gqPqKNyI5s0sZLmjzLds/5QfoaJCgnqqmut/yo3j9QsT3mNozk505wVCcWLv5Qk9
+ k1FNAvxyaNO8SoPF3WQdTUbTsgYmZcwtciZx4EqMBXP39pniprq4jvN2m9pqwgMtZOm7scxpy
+ HSpSq860FquOa+bAt8rjScC5uentI4pdlR52UxHh0olYdN+Yl7ojwk1izwsqoxTdlhau64cU4
+ xr+wRgCqI0dtAHoKb41Q1/G9deIXe6Kd2uNzlLI//x7eqvigl26CIDOgz26LQVa8VgirfGSmC
+ p19c8eFkllN5RPF2hxHXVB0KnnAmA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Andreas Heiduk <asheiduk@gmail.com> writes:
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-> I'll fix the "munged" and, unless there are objections, I will also
-> replace the remaining ones in the vicinity. These are the last
-> occurrences of "munged".
+--8323329-910223319-1488315300=:3767
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 
-I'd rather see the "we do not munge" to stay the same.  "we do not
-quote" still allows us to do modifications that are different from
-quoting.
+Hi Junio,
 
-> You are OK with the references to another man page? My idea was to
-> establish a well-known term.
+On Tue, 28 Feb 2017, Junio C Hamano wrote:
 
-The "well-known term" cannot just be "quote", because it is too
-generic.  "git rev-parse --sq-quote" does a different kind of
-quoting from the quoting done here for paths with unusual
-characters, for example.
+> Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
+>=20
+> > Am 28.02.2017 um 15:28 schrieb Jeff King:
+> >
+> >> It looks from the discussion like the sanest path forward is our own
+> >> signed-64bit timestamp_t. That's unfortunate compared to using the
+> >> standard time_t, but hopefully it would reduce the number of knobs
+> >> (like TIME_T_IS_INT64) in the long run.
+> >
+> > Glibc will get a way to enable 64-bit time_t on 32-bit platforms
+> > eventually (https://sourceware.org/glibc/wiki/Y2038ProofnessDesign).
+> > Can platforms that won't provide a 64-bit time_t by 2038 be actually
+> > used at that point?  How would we get time information on them?  How
+> > would a custom timestamp_t help us?
+>=20
+> That's a sensible "wait, let's step back a bit".  I take it that you are
+> saying "time_t is just fine", and I am inclined to agree.
+>=20
+> Right now, they may be able to have future timestamps ranging to
+> year 2100 and switching to time_t would limit their ability to
+> express future time to 2038 but they would be able to express
+> timestamp in the past to cover most of 20th century.  Given that
+> these 32-bit time_t software platforms will die off before year 2038
+> (either by underlying hardware getting obsolete, or software updated
+> to handle 64-bit time_t), the (temporary) loss of 2038-2100 range
+> would not be too big a deal to warrant additional complexity.
 
-We certainly *could* (1) add to glossary-content.txt the definition
-of "c-quote" and describe it there, (2) change the "see the quoting
-explained for core.quotePath" to "unless -z is given, paths are
-c-quoted", and (3) change the core.quotePath description to refer to
-"c-quote" in the glossary.
+You seem to assume that time_t is required to be signed. But from my
+understanding that is only guaranteed by POSIX, not by ISO C.
 
-But I am not sure it that makes the resulting document easier to use
-by the end users.  I personally find the result of applying the
-patch you posted easier.
+We may very well buy ourselves a ton of trouble if we decide to switch to
+`time_t` rather than to `int64_t`.
 
-
-
+Ciao,
+Johannes
+--8323329-910223319-1488315300=:3767--
