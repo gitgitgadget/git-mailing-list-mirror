@@ -2,100 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F211E202C9
-	for <e@80x24.org>; Tue, 28 Feb 2017 21:08:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 76E3D202C9
+	for <e@80x24.org>; Tue, 28 Feb 2017 21:15:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751655AbdB1VIY (ORCPT <rfc822;e@80x24.org>);
-        Tue, 28 Feb 2017 16:08:24 -0500
-Received: from mail-pg0-f66.google.com ([74.125.83.66]:34133 "EHLO
-        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751485AbdB1VIV (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Feb 2017 16:08:21 -0500
-Received: by mail-pg0-f66.google.com with SMTP id s67so2980815pgb.1
-        for <git@vger.kernel.org>; Tue, 28 Feb 2017 13:07:14 -0800 (PST)
+        id S1751291AbdB1VPL (ORCPT <rfc822;e@80x24.org>);
+        Tue, 28 Feb 2017 16:15:11 -0500
+Received: from mail-wr0-f196.google.com ([209.85.128.196]:33692 "EHLO
+        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751387AbdB1VPJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Feb 2017 16:15:09 -0500
+Received: by mail-wr0-f196.google.com with SMTP id g10so3110432wrg.0
+        for <git@vger.kernel.org>; Tue, 28 Feb 2017 13:13:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=XzDXIlCGTCL1hLt0QXcsHeE9ZasggEkTT1ECRgnGsls=;
-        b=Hos0/pytmofn6mrO/3obWOZ/O+G6rTiVaai0viay8YcRTKyzCBH2HDJ6HVpIpirhn+
-         Kjs8plUtxw4PpW96f6iiXczZAjssks1V5NEZ8JG216m8RwDp9niJgby1dtUdxOCcS1B7
-         aFuwu2JW+1xQyRAtM3dimGhlSei6RE5ihbddHj7f8hPRzC1CNHXJb4UpXa9dELPpoxua
-         WLE1HFD7af224jVBlBww1EMgcbynJWJoSIHxeSt0my4plssDycCHJtXJ39+0elFRmmvY
-         TdOsxVKpzSUztyRoAZGfUwsFDZmh3CXJkj0D7L/DdhWfzKqDQqQJA2v3G/W2ABjvBNIj
-         T7ZA==
+        h=subject:to:references:cc:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding;
+        bh=ed/AnqFkDaXUnEgRZFbTae+EfGcDx6U+id0zW7ed6kc=;
+        b=kwB8gp/1duHcVrG77GxWUfTcgovOVlWh6f7qENqET2fIGzBSAKRgmxXRMxOmvzLX0/
+         eAawjql5vkHdaDCzMQu6eI+dFLULrgSgNjnX4IUKgoxYbDlKghnbb2prVvHDtYgxW0yB
+         Y5gIEJfM/qOkcNXn6oCud7Y5XNCUQ7LoNrMwPyxTRfND4gQmzEWNJlIFnBTYcZjowQvz
+         Hkp/X9PLP7kLnHacNkleaZjybmI93aLOi4IYcYeUNZuqSSebglMQ1OnLjM1wFBOfb462
+         kH/C5O3jdRmceKTwVy6bC3F0F5sKSqlPMVNvz/5IG7fY0zwwNx3URzL+iIy3ZN/i/hom
+         9ZNQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=XzDXIlCGTCL1hLt0QXcsHeE9ZasggEkTT1ECRgnGsls=;
-        b=URlvzwNQKPnYdDlnR/MYDeqSSMM3GJ3uEwl1r1shRBf7r0m8C6eUIkUpI18Xd203hm
-         YHi3CNOsoMHgQ8h2zihDaN7qcL4VvcEKjo2MjCib6O9CD/4Yrplmm9hzRQ+tpoHxhToT
-         oe68V1622r4H0wgqy0SriZ7xAeS1U/0hK+OoFXpEf9nFXvJ69BuuaHNrXHgQpf4Il1XQ
-         P4ya9U20UCYQFT0oThGdERYtDbkXM/9JE75KfL/8nj0zRAIvtqQftYq5zBd2A6JjGZ1E
-         8pkivXy5+YNTT3JaaZmHuozn4Z5uogoRmEJx791ldLacGHf8n63UceSAfWhupgkajuH/
-         GfkQ==
-X-Gm-Message-State: AMke39mkOeGbz4kfFdq5OBd80NV+DdW/Ktme/t9NBw/Rvuf9DkMKpC8vQamEeYdDYE3CmQ==
-X-Received: by 10.84.248.11 with SMTP id p11mr5570894pll.72.1488316033829;
-        Tue, 28 Feb 2017 13:07:13 -0800 (PST)
-Received: from localhost ([2620:0:1000:8622:e0d7:55f8:67f2:62dd])
-        by smtp.gmail.com with ESMTPSA id o24sm5957551pfj.78.2017.02.28.13.07.12
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 28 Feb 2017 13:07:13 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Brandon Williams <bmwill@google.com>
-Cc:     git@vger.kernel.org, sbeller@google.com, pclouds@gmail.com
-Subject: Re: [PATCH 5/5] ls-files: fix bug when recuring with relative pathspec
-References: <20170224235100.52627-1-bmwill@google.com>
-        <20170224235100.52627-6-bmwill@google.com>
-Date:   Tue, 28 Feb 2017 13:07:12 -0800
-In-Reply-To: <20170224235100.52627-6-bmwill@google.com> (Brandon Williams's
-        message of "Fri, 24 Feb 2017 15:51:00 -0800")
-Message-ID: <xmqqa896ja7z.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
+        bh=ed/AnqFkDaXUnEgRZFbTae+EfGcDx6U+id0zW7ed6kc=;
+        b=BAU6sWnJAGrU7HwbSBJiXBdyMV/pcRE2tQfF5nSxGi2jeXyhdJB/UZ3/uSwfWKDf9o
+         5bZ4Gv5JIdUPThufiHgVQPfo1B3W7UG53EuG2lXJ//TEHwxrEnCSLzVtPgSb2JD6EMs2
+         cSfMXhVWacUrrw+SReVX+YVDQKuOAGX4uNsJp/XUTlakTf1YX2R39vMmrgfMxYUQDxV3
+         XjA/CUn6qSwlfBBr+sIVni7g+H3cGabWqjy4r5Zks2vCek8vFOs3wZZjm7NBnjeiM44P
+         kyBvIKDsFKHk3bXQ4O1YpnQkDsUYz2UQWqgPbALWYdKXEl4pcqG/5BcAsdMVheya3PdQ
+         0i3A==
+X-Gm-Message-State: AMke39lH+BTiTOloaTIIbB/dwueAnGdaIPyHPYHzE9hNLwI8DXu36wzL9l5XaP9Fvz09Yw==
+X-Received: by 10.223.134.69 with SMTP id 5mr4312620wrw.22.1488316416971;
+        Tue, 28 Feb 2017 13:13:36 -0800 (PST)
+Received: from ?IPv6:2001:a61:1052:4001:ede7:c9d0:a549:517a? ([2001:a61:1052:4001:ede7:c9d0:a549:517a])
+        by smtp.googlemail.com with ESMTPSA id w97sm2502499wrc.20.2017.02.28.13.13.36
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 28 Feb 2017 13:13:36 -0800 (PST)
+Subject: Re: [PATCH v2 2/2] Documentation: Link descriptions of -z to
+ core.quotePath
+To:     Junio C Hamano <gitster@pobox.com>
+References: <3c801e54-28c7-52d0-6915-ee7aaf1d89c9@gmail.com>
+ <1487968676-6126-1-git-send-email-asheiduk@gmail.com>
+ <1487968676-6126-3-git-send-email-asheiduk@gmail.com>
+ <xmqqmvd6jayn.fsf@gitster.mtv.corp.google.com>
+Cc:     git@vger.kernel.org
+From:   Andreas Heiduk <asheiduk@gmail.com>
+Message-ID: <d59bda7b-2eb5-a6cc-8240-0ff4f50de540@gmail.com>
+Date:   Tue, 28 Feb 2017 22:13:35 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.7.0
 MIME-Version: 1.0
-Content-Type: text/plain
+In-Reply-To: <xmqqmvd6jayn.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset=iso-8859-15
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Brandon Williams <bmwill@google.com> writes:
+Am 28.02.2017 um 21:51 schrieb Junio C Hamano:
+> Andreas Heiduk <asheiduk@gmail.com> writes:
+> 
+>> diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
+>> index e6215c3..7c28e73 100644
+>> --- a/Documentation/diff-options.txt
+>> +++ b/Documentation/diff-options.txt
+>> @@ -192,10 +192,9 @@ ifndef::git-log[]
+>>  	given, do not munge pathnames and use NULs as output field terminators.
+>>  endif::git-log[]
+>>  +
+>> -Without this option, each pathname output will have TAB, LF, double quotes,
+>> -and backslash characters replaced with `\t`, `\n`, `\"`, and `\\`,
+>> -respectively, and the pathname will be enclosed in double quotes if
+>> -any of those replacements occurred.
+>> +Without this option, pathnames with "unusual" characters are munged as
+>> +explained for the configuration variable `core.quotePath` (see
+>> +linkgit:git-config[1]).
+> 
+> Seeing that many other instances call this "quoted", we may want to
+> be consistent.  I can see "munge" in the pre-context, but that one
+> can stay as is. Under -z, no modification/munging happens.  With -z,
+> a specific kind of modification (called "quote" described in the
+> documentation for core.quotepath variable) happens.  The same
+> comment applies to the change to Documentation/git-apply.txt
+> 
+> Otherwise the patch looks good.
+> 
+> Thanks.
+>
 
-> Fix a bug which causes a child process for a submodule to error out when a
-> relative pathspec with a ".." is provided in the superproject.
->
-> While at it, correctly construct the super-prefix to be used in a submodule
-> when not at the root of the repository.
->
-> Signed-off-by: Brandon Williams <bmwill@google.com>
-> ---
->  builtin/ls-files.c                     | 8 ++++++--
->  t/t3007-ls-files-recurse-submodules.sh | 2 +-
->  2 files changed, 7 insertions(+), 3 deletions(-)
->
-> diff --git a/builtin/ls-files.c b/builtin/ls-files.c
-> index 159229081..89533ab8e 100644
-> --- a/builtin/ls-files.c
-> +++ b/builtin/ls-files.c
-> @@ -194,12 +194,15 @@ static void compile_submodule_options(const struct dir_struct *dir, int show_tag
->  static void show_gitlink(const struct cache_entry *ce)
->  {
->  	struct child_process cp = CHILD_PROCESS_INIT;
-> +	struct strbuf name = STRBUF_INIT;
->  	int status;
->  	int i;
->  
-> +	quote_path_relative(ce->name, prefix, &name);
->  	argv_array_pushf(&cp.args, "--super-prefix=%s%s/",
+I'll fix the "munged" and, unless there are objections, I will also
+replace the remaining ones in the vicinity. These are the last
+occurrences of "munged".
 
-Same comment as 3/5.  quote_path is to produce c-quote and is not
-even meant for shell script quoting.  run_command() interface would
-do its own shell quoting when needed, so  I think you just want the
-exact string you want to pass here.
+You are OK with the references to another man page? My idea was to
+establish a well-known term.
 
