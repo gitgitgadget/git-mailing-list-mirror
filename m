@@ -2,192 +2,140 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 138DD202C9
-	for <e@80x24.org>; Tue, 28 Feb 2017 23:14:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7B101202C9
+	for <e@80x24.org>; Tue, 28 Feb 2017 23:18:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752042AbdB1XOr convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Tue, 28 Feb 2017 18:14:47 -0500
-Received: from fester.cwi.nl ([192.16.191.27]:33018 "EHLO fester.cwi.nl"
+        id S1751645AbdB1XSG (ORCPT <rfc822;e@80x24.org>);
+        Tue, 28 Feb 2017 18:18:06 -0500
+Received: from mout.gmx.net ([212.227.15.15]:51997 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751992AbdB1XOp (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Feb 2017 18:14:45 -0500
-X-Greylist: delayed 1329 seconds by postgrey-1.27 at vger.kernel.org; Tue, 28 Feb 2017 18:14:45 EST
-Received: from fester.cwi.nl (fester.cwi.nl [192.16.191.27])
-        by fester.cwi.nl (8.14.4/8.12.3) with ESMTP id v1SMp0ao018646;
-        Tue, 28 Feb 2017 23:51:00 +0100
-Received: from [192.168.4.56] (541FB48C.cm-5-8c.dynamic.ziggo.nl [84.31.180.140])
-        (authenticated bits=0)
-        by fester.cwi.nl (8.14.4/8.12.3) with ESMTP id v1SMox9N018631
-        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
-        Tue, 28 Feb 2017 23:51:00 +0100
-Subject: Re: SHA1 collisions found
-To:     Dan Shumow <danshu@microsoft.com>,
-        Linus Torvalds <torvalds@linux-foundation.org>,
-        Junio C Hamano <gitster@pobox.com>
-References: <CA+55aFzFEpi1crykZ33r9f7BsvLt_kiB-CHXOkuCAX=fd4BU-w@mail.gmail.com>
- <20170223182147.hbsyxsmyijgkqu75@kitenet.net>
- <CA+55aFxckeEW1ePcebrgG4iN4Lp62A2vU6tA=xnSDC_BnKQiCQ@mail.gmail.com>
- <20170223184637.xr74k42vc6y2pmse@sigill.intra.peff.net>
- <CA+55aFx=0EVfSG2iEKKa78g3hFN_yZ+L_FRm4R749nNAmTGO9w@mail.gmail.com>
- <20170223193210.munuqcjltwbrdy22@sigill.intra.peff.net>
- <CA+55aFxmr6ntWGbJDa8tOyxXDX3H-yd4TQthgV_Tn1u91yyT8w@mail.gmail.com>
- <20170223195753.ppsat2gwd3jq22by@sigill.intra.peff.net>
- <alpine.LFD.2.20.1702231428540.30435@i7.lan>
- <20170223224302.joti4zqucme3vqr2@sigill.intra.peff.net>
- <20170223230507.kuxjqtg3ghcfskc6@sigill.intra.peff.net>
- <xmqqefyikvin.fsf@gitster.mtv.corp.google.com>
- <xmqq60jukubq.fsf@gitster.mtv.corp.google.com>
- <CA+55aFxTWqsTTiDKo4DBZT-8Z9t80bGMD3uijzKONa_bYEZABQ@mail.gmail.com>
- <CY1PR0301MB21078DDCA8C679983D22821FC4560@CY1PR0301MB2107.namprd03.prod.outlook.com>
-Cc:     Jeff King <peff@peff.net>, Joey Hess <id@joeyh.name>,
-        Git Mailing List <git@vger.kernel.org>
-From:   Marc Stevens <marc.stevens@cwi.nl>
-Message-ID: <259cc328-13f7-2d2d-c86f-8b4fc7da8e34@cwi.nl>
-Date:   Tue, 28 Feb 2017 23:50:53 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
- Thunderbird/45.7.1
+        id S1751667AbdB1XSE (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Feb 2017 18:18:04 -0500
+Received: from virtualbox ([37.201.192.48]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0Mb7lL-1d2Ry326kV-00KjmA; Wed, 01
+ Mar 2017 00:10:53 +0100
+Date:   Wed, 1 Mar 2017 00:10:44 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        git@vger.kernel.org
+Subject: Re: [PATCH 0/6] Use time_t
+In-Reply-To: <6bd6ef64-2749-f17a-aea8-d25b147892c5@web.de>
+Message-ID: <alpine.DEB.2.20.1703010000260.3767@virtualbox>
+References: <cover.1488231002.git.johannes.schindelin@gmx.de> <20170228142802.hu5esthnqdsgc2po@sigill.intra.peff.net> <f6b57868-0173-48d9-86cb-79780f7e301b@web.de> <xmqqa896kuve.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1702282149160.3767@virtualbox>
+ <6bd6ef64-2749-f17a-aea8-d25b147892c5@web.de>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-In-Reply-To: <CY1PR0301MB21078DDCA8C679983D22821FC4560@CY1PR0301MB2107.namprd03.prod.outlook.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8BIT
+Content-Type: multipart/mixed; BOUNDARY="8323329-960784029-1488323452=:3767"
+X-Provags-ID: V03:K0:w8Q/mLtD/peYQaA6IauggL0HV3GBGKH1Q+tI7zYq6A+ZGTQ1NeU
+ I/AUtOyq3VBZ6g4vc6tNeQWULgSl0yQOqnjB7J9v5zPMezyy0XkpRtbtOJKDz9YT8DtkYVJ
+ N3uQ5U54R9zy3LGLHNrSBMIprzb7HKJFZUsWikGD7UIotH4rUkSM3J4F1BGFtN6q5kRuLDp
+ acF8pYXda2P8F+Zkf7QSw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:VwGKiLEA2K8=:PZ6AM5edP9/Ouq3oYB8CdD
+ um8FqXjmy0nqAm1JpYojAvQyOaPV7tRXAVQ8h4e0iMOoPF1W1t5M758xt2gxWg/SuHhWTeivL
+ R2mCzVaS+GwDeNZO1XOvkxijPdZZeHhF4EkeZ2rz3kf7d0YtThmKaqkTgoa4OeDyOhGZfx5f7
+ cMwjj1Am5PJ5S4v9Efdjtk8Cul4waHzDPBl0GB0I8fshnxkPvSa5jyTXJk4nea+sPgowV0537
+ zf2CDkQKjY9fCDLYzLXOCfu6ah76N8W4oJUZGDMhoN0lRWecIbuNqjXiXeGK6fRoJXlwPYUXn
+ ZeeHPq68vhbruENHMVgdK8uQfD7l2PF32ctgLPUR/Ywrf7nUiIayYYT6x/BZqTE2KBrHkBx2S
+ sj97DbqOAEPY0qhX+MZ5O7VRObFsFJBLJ6InoNqmZJ7Km5EQcovBsQ6bY6pA1uvmGOOi83JH0
+ DUxltN+H4OZMBfLv8r9LQuhZo/iHjpf/VV1DOA9vRhx1kjq6xkyhylmqICoQH6H9jdJxi50yU
+ 6dB4m9BenNGnU7+kmBuqiqcZKjPnFwDWlEMXQ5+0jXYhZ07w+NpmO1oWC88EFlqSONsfrgX7I
+ e4oerPDyFvhCYlFDvOzFk/razK/idHGOGvt6P+MfWfXePjMVdN4+HDD392TIXUQiXlFpt4oaD
+ ji9ckEF/I9C93e8Hn3zEkX4yLkPf0pMAcRusXv3uFrX/JLu2Pis5JNRH2B89gXDgUXYQF+zz+
+ etTN/CDY58e3agL0yszPBc0isLBrRSOLjglw+RQuMBxJNzvziHV1G6Tysjb79HQ9grle/h7rc
+ hv7tK64WvciT2x2wUN1IksKOdbosg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-You can also keep me in this thread, so we can help or answer any
-further questions,
-but I also appreciate the feedback on our project.
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Like Dan Shumow said, our main focus on the library has been correctness
-and then performance.
-The entire files ubc_check.c and ubc_check.h are generated based on
-cryptanalytic data,
-in particular a list of 32 disturbance vectors and their unavoidable
-attack conditions,
-see https://github.com/cr-marcstevens/sha1collisiondetection-tools.
+--8323329-960784029-1488323452=:3767
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 
-sha1.c and sha1.h were coded to work for any such generated ubc_check.c
-and ubc_check.h.
-That means that indeed we might have some superfluous code, once used
-for testing, or for generality,
-but nothing that should noticeably impact runtime performance.
+Hi Ren=C3=A9,
 
-Because we only have 32 disturbance vectors to check, we have DVMASKSIZE
-equal to 1 and maski always 0.
-In the more general case when we add disturbance vectors this will not
-remain the case.
+On Tue, 28 Feb 2017, Ren=C3=A9 Scharfe wrote:
 
-Of course for dedicated code this can be simplified, and some parts
-could be further optimized.
+> Am 28.02.2017 um 21:54 schrieb Johannes Schindelin:
+> >
+> > On Tue, 28 Feb 2017, Junio C Hamano wrote:
+> >
+> > > Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
+> > >
+> > > > Am 28.02.2017 um 15:28 schrieb Jeff King:
+> > > >
+> > > > > It looks from the discussion like the sanest path forward is our
+> > > > > own signed-64bit timestamp_t. That's unfortunate compared to
+> > > > > using the standard time_t, but hopefully it would reduce the
+> > > > > number of knobs (like TIME_T_IS_INT64) in the long run.
+> > > >
+> > > > Glibc will get a way to enable 64-bit time_t on 32-bit platforms
+> > > > eventually
+> > > > (https://sourceware.org/glibc/wiki/Y2038ProofnessDesign).  Can
+> > > > platforms that won't provide a 64-bit time_t by 2038 be actually
+> > > > used at that point?  How would we get time information on them?
+> > > > How would a custom timestamp_t help us?
+> > >
+> > > That's a sensible "wait, let's step back a bit".  I take it that you
+> > > are saying "time_t is just fine", and I am inclined to agree.
+> > >
+> > > Right now, they may be able to have future timestamps ranging to
+> > > year 2100 and switching to time_t would limit their ability to
+> > > express future time to 2038 but they would be able to express
+> > > timestamp in the past to cover most of 20th century.  Given that
+> > > these 32-bit time_t software platforms will die off before year 2038
+> > > (either by underlying hardware getting obsolete, or software updated
+> > > to handle 64-bit time_t), the (temporary) loss of 2038-2100 range
+> > > would not be too big a deal to warrant additional complexity.
+> >
+> > You seem to assume that time_t is required to be signed. But from my
+> > understanding that is only guaranteed by POSIX, not by ISO C.
+> >
+> > We may very well buy ourselves a ton of trouble if we decide to switch
+> > to `time_t` rather than to `int64_t`.
+>=20
+> True, and time_t doesn't even have to be an integer type.  But which
+> platforms capable of running git use something else than int32_t or
+> int64_t?
 
-Regarding the recompression functions, the ones needed are given in the
-sha1_dvs table,
-but also via preprocessor defines that are used to actually only store
-needed internal states:
-#define DOSTORESTATE58
-#define DOSTORESTATE65
-For each disturbance vector there is a window of which states you can
-start the recompression from,
-we've optimized it so there are only 2 unique starting points (58,65)
-instead of 32.
-These defines should be easy to use to remove superfluous compiled
-recompression functions.
+That kind of thinking is dangerous. We don't know what platforms are
+running Git, and we have a very clear example how we got it very wrong
+recently, when we broke building with musl by requiring REG_STARTEND
+support [*1*].
 
-Note that as each disturbance vector has its own unique message differences
-(leading to different values for ctx->m2), our code does not loop over
-just 2 items.
-It loops over 32 distinct computations which have either of the 2
-starting points.
+So why gamble? If we switch to uint64_t, it would definitely provide the
+smoothest upgrade path. It is what the code assumed implicitly when we
+broke 32-bit in v2.9.1.
 
-Finally, thanks for taking a close look at our code,
-this helps bringing the library in better shape also for other software
-projects.
+If anybody really wants to support negative timestamps, it should be done
+on top of my work. My current patch series does not even start to try to
+address the ramifications of negative timestamps (see e.g. the use of
+strtoull() for parsing). It is quite unreasonable to ask for such a
+fundamental design change when it could very easily be done incrementally
+instead, when needed, by someone who needs it.
 
-Best regards,
-Marc Stevens
+My work would pave the way for that effort, of course. But this is really
+as far as I can go with this patch series, given that I have bigger fish
+to fry than to support negative timestamps.
 
-On 2/28/2017 10:22 PM, Dan Shumow wrote:
-> [Responses inline]
->
-> No need to keep me "bcc'd" (though thanks for the consideration) -- I'm happy to ignore anything I don't want to be pulled into ;-)
->
-> Here's a rollup of what needs to be done based on the discussion below:
->
-> 1) Remove extraneous exports from sha1.h
-> 2) Remove "safe mode" support.
-> 3) Remove sha1_compression_W if it is not needed by the performance improvements.
-> 4) Evaluate logic around storing states and generating recompression states.  Remove defines that bloat code footprint.
->
-> Thanks,
-> Dan
->
->
-> -----Original Message-----
-> From: linus971@gmail.com [mailto:linus971@gmail.com] On Behalf Of Linus Torvalds
-> Sent: Tuesday, February 28, 2017 11:34 AM
-> To: Junio C Hamano <gitster@pobox.com>
-> Cc: Jeff King <peff@peff.net>; Joey Hess <id@joeyh.name>; Git Mailing List <git@vger.kernel.org>
-> Subject: Re: SHA1 collisions found
->
-> On Tue, Feb 28, 2017 at 11:07 AM, Junio C Hamano <gitster@pobox.com> wrote:
->> In a way similar to 8415558f55 ("sha1dc: avoid c99 
->> declaration-after-statement", 2017-02-24), we would want this on top.
-> There's a few other simplifications that could be done:
->
->  (1) make the symbols static that aren't used.
->
->      The sha1.h header ends up declaring several things that shouldn't have been exported.
->
->      I suspect the code may have had some debug mode that got stripped out from it before making it public (or that was never there, and was just something the generating code could add).
->
-> [danshu] Yes, this is reasonable.  The emphasis of the code, heretofore, had been the illustration of our unavoidable bit condition performance improvement to counter cryptanalysis.  I'm happy to remove the unused stuff from the public header.
->
->  (2) get rid of the "safe mode" support.
->
->      That one is meant for non-checking replacements where it generates a *different* hash for input with the collision fingerpring, but that's pointless for the git use when we abort on a collision fingerprint.
->
-> [danshu] Yes, I agree that if you aren't using this it can be taken out.  I believe Marc has some use cases / potentially consumers of this algorithm in mind.  We can move it into separate header/source files for anyone who wants to use it.
->
-> I think the first one will show that the sha1_compression() function isn't actually used, and with the removal of safe-mode I think
-> sha1_compression_W() also is unused.
->
-> [danshu]  Some of the performance experiments that I've looked at involve putting the sha1_compression_W(...) back in.  Though, that doesn't look like it's helping.  If it is unused after the performance improvements, we'll take it out, or move it into its own file.
->
-> Finally, only states 58 and 65 (out of all 80 states) are actually used, and from what I can tell, the 'maski' value is always 0, so the looping over 80 state masks is really just a loop over two.
->
-> [danshu]  So, while looking at performance optimizations, I specifically looked at how much removing storing the intermediate states helps -- And I found that it doesn't seem to make a difference for performance.  My cursory hypothesis is because nothing is waiting on those writes to memory, the code moves on quickly.  That said, it is a bunch of code that is essentially doing nothing and removing that is worthwhile.  Though, partially what we're seeing here is that, as you point out below, we're working with generated code that we want to be general.  Specifically, right now, we're checking only disturbance vectors that we know can be used to efficiently attack the compression function.  It may be the case that further cryptanalysis uncovers more.  We want to have a general enough approach that we can add scanning for new disturbance vectors if they're found later.  Over specializing the code makes that more difficult, as currently the algorithm is data driven, and we don't need to write new code, but rather just add more data to check.  One other note -- the "maski" field of the  dv_info_t struct is not an index to check the state, but rather an index into the mask generated by the ubc check code, so that doesn't pertain to looping over the states.  More on this below.  
->
-> The file has code top *generate* all the 80 sha1_recompression_step() functions, and I don't think the compiler is smart enough to notice that only two of them matter.
->
-> [danshu] That's a good observation -- We should clean up the unused recompression steps, especially because that will generate a ton of object code.  We should add some logic to only compile the functions that are used.
->
-> And because 'maski' is always zero, thisL
->
->    ubc_dv_mask[sha1_dvs[i].maski]
->
-> code looks like it might as well just use ubc_dv_mask[0] - in fact the ubc_dv_mask[] "array" really is just a single-entry array anyway:
->
->    #define DVMASKSIZE 1
->
-> [danshu]  The idea here is that we are currently checking 32 disturbance vectors with our bit mask.  We're checking 32 DVs, because we have 32 bits of mask that we can use.  The DVs are ordered by their probability of leading to an attack (which is directly correlated to the complexity of finding a collision.)  Several of those DVs correspond to very low probability / high cost attacks, which we wouldn't expect to see in practice.  We just have the space to check, so why not?  However, improvements in cryptanalysis may make those attacks cheaper, in which case, we would potentially want to add more DVs to check, in which case we would expand the number of DVs and the mask.
->
-> so that code has a few oddities in it. It's generated code, which is probably why.
->
-> [danshu]  Accurate, we're also just trying to be general enough that we can easily add more DVs later if need be.  I don't know how likely that is, certainly the DVs that we're checking now are based on solid conjectures and rigorous analysis of the problem.  Though we don't want to rule out that there will be subsequent cryptanalytic developments later.  Marc can comment more here.
->
-> Basically, some of it could be improved. In particular, the "generate code for 80 different recompression cases, but only ever use two of them" really looks like it would blow up the code generation footprint a lot.
->
-> I'm adding Marc Stevens and Dan Shumow to this email (bcc'd, so that they don't get dragged into any unrelated email threads) in case they want to comment.
->
-> I'm wondering if they perhaps have a cleaned-up version somewhere, or maybe they can tell me that I'm just full of sh*t and missed something.
->
-> [danshu]  Naw man, it looks pretty good, modulo a little bit of understandable confusion over 'maski' -- No fake news or alternative facts here ;-)
->
->                     Linus
+Ciao,
+Dscho
 
+Footnote *1*: I still deeply regret deviating from my v1 that did *not*
+require REG_STARTEND, but would have kept things working for platforms
+without REG_STARTEND by simulating it.
 
+But our thinking was: who would want to run Git in an environment so
+ridiculously old that it does not have that clearly useful REG_STARTEND
+support? Our answer was "nobody". And it was incorrect.
+--8323329-960784029-1488323452=:3767--
