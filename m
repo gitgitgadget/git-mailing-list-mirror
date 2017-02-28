@@ -2,90 +2,111 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD,WEIRD_PORT shortcircuit=no autolearn=no
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B4200201B0
-	for <e@80x24.org>; Tue, 28 Feb 2017 18:50:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 392E3201B0
+	for <e@80x24.org>; Tue, 28 Feb 2017 18:50:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751154AbdB1Stv (ORCPT <rfc822;e@80x24.org>);
-        Tue, 28 Feb 2017 13:49:51 -0500
-Received: from mail-pg0-f54.google.com ([74.125.83.54]:34719 "EHLO
-        mail-pg0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751511AbdB1Stq (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1751475AbdB1Stu (ORCPT <rfc822;e@80x24.org>);
+        Tue, 28 Feb 2017 13:49:50 -0500
+Received: from mail-pg0-f43.google.com ([74.125.83.43]:34759 "EHLO
+        mail-pg0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751537AbdB1Stq (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 28 Feb 2017 13:49:46 -0500
-Received: by mail-pg0-f54.google.com with SMTP id p5so8806215pga.1
-        for <git@vger.kernel.org>; Tue, 28 Feb 2017 10:48:55 -0800 (PST)
+Received: by mail-pg0-f43.google.com with SMTP id p5so8808270pga.1
+        for <git@vger.kernel.org>; Tue, 28 Feb 2017 10:49:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=subject:to:references:cc:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding;
-        bh=+tsmqxppvA44rxpFu4btG320l5YRQbiUmECRTQaGPe8=;
-        b=EJcasv/14gdC0TXXm5QMflCPpD9XCpsGJQpRkM/EEmMGTwL2lws0EzKOcSpy9Qe+I+
-         Eja3AWf7t19tRkDuXSZEDAWQgMHzccUHAAmmgfGwykfL32f3jd8QW2dpPR5OgWcWrOwg
-         //w7I06SgJOrk5FS9nlOa4ASkjyYCMwUIxkrDf2Bxjy9mdlpJI0oQbgf5VdOWfq1mKhQ
-         SrjihVke7VJeTlV/mEJyvL7lDfacZgWRZr/uaodNaPs0AX3Osr2ASjkBUWyzKGhoNSJh
-         QaKecOcK69Om9YFQsDtfhvIIBpx5+Wvomik4u0NkVZ6JuPjbv4MpH44eeH56+731vIGj
-         jeuQ==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=Ff31Gnx1yrM35gTSxTJYpOa1tfVp60QrGuIjE3CwSLA=;
+        b=WlNL0aMrmZFZw+fuqfGWGbtasjg5awbnjAWrCtaRN4IVrUl/0USNKEydQ8vG0CrpDM
+         wjbJ1sy2jP6cM65yndIFbu7S6jVki1W5Rk7G0CcCSUvgsiIw8A1qP1vHTQVxdhi9G+e6
+         M1ifhz+Cfk3GGPbyq+PaBrist7Cr5LvGnYFiBzPV0/VVeQvp3w2jixOPKQAu0gseXacH
+         J9LufxD4qIP7bjOSZ8Hw0xLJTsTqReMwjbUwjA/V+RILEiseL9WNHwl801Rwl8G8t+u2
+         b8tm76QP5HZ6R/On1m51WrKYaRmgdCoF4xA+V2BxAAPNWz2u5meDiysRiTR4Cgq812vY
+         P/xA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
-        bh=+tsmqxppvA44rxpFu4btG320l5YRQbiUmECRTQaGPe8=;
-        b=DndYDXVt7mJDfaYi/8/culzvSQK0OIlpXNvswNn798YXhIUDB3w5F18/0QRU4orHj2
-         BKZgH5074XrH3cZtQ0Qczc3Jmf86YAEP11YYPaS6OO/NngdJsYpDehjZHp0SQmx0GGxD
-         xQsK3wGDw9wbLDzLXviKHWjRzr7AMLZhpRO0hO1APEnMiFwrdOoTMWGhDvPJ+/QldstY
-         dBd1Fr3CGV8kI03t/lw1kG5lnrfyqXCzt0lM4i9bDYAlYdCoafc+qm10+Hno9HIPdbzG
-         odvcUwlpioPxLD3/WKSoOzsaeukZ1DsX1T7zrexw8JhXa5ph5AyShzU5QB/6DGcuZL3G
-         u9Dw==
-X-Gm-Message-State: AMke39moljmRifqgAqnd92nWiGx6Ak1haGEyhYAeT03AlBOAdw3fbajeXDO8gueEjCc02JUU
-X-Received: by 10.98.10.69 with SMTP id s66mr4131156pfi.146.1488307734356;
-        Tue, 28 Feb 2017 10:48:54 -0800 (PST)
-Received: from twelve2.mtv.corp.google.com ([2620:0:1000:5b10:d5df:502e:cc15:2daf])
-        by smtp.gmail.com with ESMTPSA id i70sm5668716pfi.67.2017.02.28.10.48.53
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 28 Feb 2017 10:48:53 -0800 (PST)
-Subject: Re: [PATCH] http: attempt updating base URL only if no error
-To:     Jeff King <peff@peff.net>
-References: <20170228025311.6347-1-jonathantanmy@google.com>
- <20170228132814.wp3cq4ilp7syinqy@sigill.intra.peff.net>
-Cc:     git@vger.kernel.org
-From:   Jonathan Tan <jonathantanmy@google.com>
-Message-ID: <6127c0a7-800d-fcf3-c6e2-17533347f07e@google.com>
-Date:   Tue, 28 Feb 2017 10:48:52 -0800
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.7.0
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=Ff31Gnx1yrM35gTSxTJYpOa1tfVp60QrGuIjE3CwSLA=;
+        b=Xq+17XIX8tAk9A0wcebE5dsqNd+lRQVSBLKV8b87yD++WksG/7JUhhA3ueobfPvIhs
+         YkosWziBgLytVV/PqQWaxZHF4V9ZBuTwhpsEgftBhadVdqVOFRn3Y7A7F3P/I3PMlHtX
+         gh3xYQQTfbhwMgyNaiL3EEdVY8cs+Jw3poxFDX/zsdl6/noolGQ7x4IndeULeB6hUsyS
+         jWw2W2m/YaJ2emWWB/Va9oVByA0zeasSq8RI+Agtcq0O+lLFRdMRQHzGsxwVVrm1qauT
+         zwBd2WVoSEeH/dswuVMMyl9J/7ZLxH5HMq2xVxWT002KCiiBRiyl+d+U5345N+zdWyp9
+         Wjng==
+X-Gm-Message-State: AMke39n0vtZRQslXfvGwEw6Whcfd42diLUjsq+kKZW5PkkscV+iql7rjfcCPrfFzeZy+eQ==
+X-Received: by 10.99.113.11 with SMTP id m11mr3837238pgc.142.1488303758617;
+        Tue, 28 Feb 2017 09:42:38 -0800 (PST)
+Received: from localhost ([2620:0:1000:8622:e0d7:55f8:67f2:62dd])
+        by smtp.gmail.com with ESMTPSA id y67sm5476815pfa.96.2017.02.28.09.42.37
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Tue, 28 Feb 2017 09:42:37 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Adrian Dudau <Adrian.Dudau@enea.com>
+Cc:     "git\@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: format-patch subject-prefix gets truncated when using the --numbered flag
+References: <1488297556.2955.11.camel@enea.com>
+Date:   Tue, 28 Feb 2017 09:42:37 -0800
+In-Reply-To: <1488297556.2955.11.camel@enea.com> (Adrian Dudau's message of
+        "Tue, 28 Feb 2017 15:59:16 +0000")
+Message-ID: <xmqqinnuky9e.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <20170228132814.wp3cq4ilp7syinqy@sigill.intra.peff.net>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 02/28/2017 05:28 AM, Jeff King wrote:
-> Right, your patch makes sense. A real HTTP error should take precedence
-> over the url-update trickery.
->
-> Acked-by: Jeff King <peff@peff.net>
+Adrian Dudau <Adrian.Dudau@enea.com> writes:
 
-Thanks!
-
-> Running your included test, we get:
+> I noticed that the --subject-prefix string gets truncated sometimes,
+> but only when using the --numbered flat. Here's an example:
 >
->   fatal: unable to access 'http://127.0.0.1:5550/redir-to/502/': The
->   requested URL returned error: 502
->
-> but the error really happened in the intermediate step. I wonder if we
-> should show the effective_url in that case, as it's more likely to
-> pinpoint the problem. OTOH, we do not mention the intermediate redirect
-> at all, so they might be confused about where that URL came from. If you
-> really want to debug HTTP confusion, you should use GIT_TRACE_CURL.
+> addu@sestofb11:/data/fb/addu/git$ export longm="very very very very
+> very very very very very very very very very very long prefix"
 
-Yeah, if we mention the effective_url, I think that there would need to 
-be a lot more explaining to be done (e.g. why does my URL have 
-"info/refs?service=git-upload-pack" tacked on at the end). It might be 
-better to just recommend GIT_TRACE_CURL.
+This looks like "dr, my arm hurts when I twist it this way---don't
+do that then" ;-).  Truncation is designed and intended to preserve
+space for the real title of commit.
+
+Having said that...
+
+> This is happening on the latest master branch, so I dug through the
+> code and tracked the issue to this piece of code in log-tree.c:
+>
+>         if (opt->total > 0) {
+>                 static char buffer[64];
+>                 snprintf(buffer, sizeof(buffer),
+>                          "Subject: [%s%s%0*d/%d] ",
+>                          opt->subject_prefix,
+>                          *opt->subject_prefix ? " " : "",
+>                          digits_in_number(opt->total),
+>                          opt->nr, opt->total);
+>                 subject = buffer;
+>         } else if (opt->total == 0 && opt->subject_prefix && *opt-
+>>subject_prefix) {
+>                 static char buffer[256];
+>                 snprintf(buffer, sizeof(buffer),
+>                          "Subject: [%s] ",
+>                          opt->subject_prefix);
+>                 subject = buffer;
+>         } else {
+>                 subject = "Subject: ";
+>         }
+>
+> Apparently the size of the "buffer" var is different in the two
+> situations. Anybody knows if this is by design or just an old
+> oversight?
+
+I think this is just an old oversight.  The latter should have been
+even shorter than the former one (or the former should be longer
+than the latter) to account for the width of the counter e.g. 01/27.
