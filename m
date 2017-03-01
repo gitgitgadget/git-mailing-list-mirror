@@ -2,89 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,
+	UNPARSEABLE_RELAY shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 19BE32027B
-	for <e@80x24.org>; Wed,  1 Mar 2017 18:23:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B88D32023D
+	for <e@80x24.org>; Wed,  1 Mar 2017 18:40:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752882AbdCASXU (ORCPT <rfc822;e@80x24.org>);
-        Wed, 1 Mar 2017 13:23:20 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:62776 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752761AbdCASXF (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Mar 2017 13:23:05 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 10EA075D77;
-        Wed,  1 Mar 2017 13:20:16 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=F09VzyqCy70EhZ0JQ/eC+geKmic=; b=rcC4pk
-        vh7yCpeWpXyEkJHnkWfl0Oxk1NQ0NNinVOLs8XAdWqaaUvVfG55DWA8H4tKl8ZKN
-        RIfAv8/5E/v9WeUkL+8u9eS7u530tg3338fP/yvCoPqz9QB82/s10rKUq2UqTMKN
-        Ejh0dd/JyROBckszLc5mZiujQmzY4l+W2gFOw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=v727VfL7HFOB+XZQR7mBEiyRSVqapROh
-        ZF+D9H+oRPDjwR6WoeTDADYKDIhKdQbdnROr+wkAwjv+Ux6e+WbIT9ohX2ulQM4d
-        fEtZWG69c749CmoBHIR+4WE+eIMCDDpbbfvW8tUp3n/ckCictAVuAABKMjzWpQCz
-        b/u1F0bppY8=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 07EAB75D76;
-        Wed,  1 Mar 2017 13:20:16 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 5FF1575D75;
-        Wed,  1 Mar 2017 13:20:15 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <johannes.schindelin@gmx.de>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 3/6] Introduce a new "printf format" for timestamps
-References: <cover.1488231002.git.johannes.schindelin@gmx.de>
-        <f4ff525dda1964dd0e7cef1d0507e1f2403469e1.1488231002.git.johannes.schindelin@gmx.de>
-Date:   Wed, 01 Mar 2017 10:20:14 -0800
-In-Reply-To: <f4ff525dda1964dd0e7cef1d0507e1f2403469e1.1488231002.git.johannes.schindelin@gmx.de>
-        (Johannes Schindelin's message of "Mon, 27 Feb 2017 22:31:31 +0100
-        (CET)")
-Message-ID: <xmqqbmtkhna9.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+        id S1752719AbdCASkC (ORCPT <rfc822;e@80x24.org>);
+        Wed, 1 Mar 2017 13:40:02 -0500
+Received: from mx1.riseup.net ([198.252.153.129]:39594 "EHLO mx1.riseup.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751995AbdCASkB (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Mar 2017 13:40:01 -0500
+Received: from cotinga.riseup.net (unknown [10.0.1.164])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (Client CN "*.riseup.net", Issuer "COMODO RSA Domain Validation Secure Server CA" (verified OK))
+        by mx1.riseup.net (Postfix) with ESMTPS id E2A7C1A197D;
+        Wed,  1 Mar 2017 18:28:44 +0000 (UTC)
+Received: from [127.0.0.1] (localhost [127.0.0.1])
+        (Authenticated sender: adrelanos)
+        with ESMTPSA id 895A4403C4
+Subject: Re: gpg verify git sub modules useful?
+To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+References: <a9da4416-6437-a491-f461-c5e61d805b2d@riseup.net>
+ <xmqqmvd6kykc.fsf@gitster.mtv.corp.google.com>
+Cc:     Whonix-devel <whonix-devel@whonix.org>
+From:   Patrick Schleizer <patrick-mailinglists@whonix.org>
+X-Enigmail-Draft-Status: N1110
+Message-ID: <8cdd9f2d-415c-1b60-0017-bf973e8cf914@riseup.net>
+Date:   Wed, 01 Mar 2017 18:28:00 +0000
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: B79238FE-FEAB-11E6-B1F7-97B1B46B9B0B-77302942!pb-smtp1.pobox.com
+In-Reply-To: <xmqqmvd6kykc.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+Good questions, thank you for trying to figure out what I am asking. :)
 
-> So let's introduce the pseudo format "PRItime" (currently simply being
-> "lu") so that it is easy later on to change the data type to time_t.
+Junio C Hamano:
+> Patrick Schleizer <patrick-mailinglists@whonix.org> writes:
+> 
+>> When using git submodules, is there value in iterating about the git
+>> submodules running "git verfiy-commit HEAD" or would that be already
+>> covered by the git submodule verification?
+> 
+> That depends on what you are referring to with the "git submodule
+> verification"
 
-The problem being solved is a good thing to solve, and 
+cd submodule
+if ! git verfiy-commit HEAD ; then
+   error
+fi
 
-> -	printf("author-time %lu\n", ci.author_time);
-> +	printf("author-time %"PRItime"\n", ci.author_time);
+> and more importantly what threat you are guarding
+> against. 
 
-is one of the two ingredients to the solution for this line.  But
-the final form would require casting ci.author_time to the type
-expected by %PRItime format specifier.  With this change alone, you
-could define PRItime to expect an winder type in the next step but
-that would be a bad conversion.  IOW, changing only the format
-without introducing an explicit cast appears to invite future
-mistakes.
+All main (non-submodule) (merge) commits and submodule (merge) commits
+are signed by me.
 
-It would be better to introduce the timestamp_t we discussed earlier
-before (or at) this step, and typedef it to ulong first, and then in
-this step, change the above to
+1) git --recursive clone main (non-submodule) git repository
+2) cd git main repository
+3) git verify-commit HEAD or git verify-tag tag-name
+4) git submodule update
 
-	printf("author-time %"PRItime"\n", (timestamp_t)ci.author_time);
+What if the main (non-submodule) git repository gpg signature was okay
+but then after git fetched the submodules these compromised (MITM'ed) ones?
 
-to keep them in sync.  And at a later step in the series, you can
-update definition of PRItime and timestamp_t to make them wider at
-the same time, and the changes in this patch like the above line
-would not need to be touched again.
+Does the having gpg verified the root (main git repository) ensure that
+submodule commits are also quasi verified?
 
+> "git -C <submodule-dir> verify-commit HEAD" may make sure
+> that the contents of that commit object is GPG signed by whoever you
+> trust--is that what you want to make sure?
+
+> Or do you want all
+> commits in the submodule history to be similarly signed because the
+> tree of the superproject can switch to some other commit there?
+
+I guess so.
 
