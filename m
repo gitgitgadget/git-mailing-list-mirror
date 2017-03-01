@@ -2,166 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 47D542023D
-	for <e@80x24.org>; Wed,  1 Mar 2017 22:00:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E3B522023D
+	for <e@80x24.org>; Wed,  1 Mar 2017 22:06:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753270AbdCAV7x (ORCPT <rfc822;e@80x24.org>);
-        Wed, 1 Mar 2017 16:59:53 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:58016 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751495AbdCAV7u (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Mar 2017 16:59:50 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 3CE3076924;
-        Wed,  1 Mar 2017 16:54:28 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=h0+uGTa1AmzT
-        uKeU3nRL2CpmpmY=; b=vsRPaARJOqI4fuycZFZOsrpjDYuKPEh8pzCO5PK4z+wk
-        5yqJSp9KoxvJrLgVpYNWbLGE3V49Kvj+4sjERBXm1QeDxjXnaR+IpxPRXz2jVec6
-        hr39kEEt3J7SW+ifBbzxZSwT+p0LozNoF7GYYe2Cc1J/jm1hXb/EOBomNWb89vY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=Nkq/Jf
-        zgH+mpZppWUaOxVIfJ1j25gGCDyVfy5yEDf8k5MQMlUCtK6oAtQT0F00uPANFLib
-        WIQpypZfxbdUcnznjicKRBFqBrX7MRSm2SuXetx2jsim6UWJUdUthtysiTpepjEa
-        fAAcuxGUd314Kl2pvwkvhOIc1HO9XdYArJRXY=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 36F9C76923;
-        Wed,  1 Mar 2017 16:54:28 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 963B376922;
-        Wed,  1 Mar 2017 16:54:27 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     tboegi@web.de
-Cc:     git@vger.kernel.org, mac@mcrowe.com
-Subject: Re: [PATCH v1 1/1] git diff --quiet exits with 1 on clean tree with CRLF conversions
-References: <xmqqshmyhtnu.fsf@gitster.mtv.corp.google.com>
-        <20170301170444.14274-1-tboegi@web.de>
-        <xmqqr32gg0o6.fsf@gitster.mtv.corp.google.com>
-Date:   Wed, 01 Mar 2017 13:54:26 -0800
-In-Reply-To: <xmqqr32gg0o6.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-        message of "Wed, 01 Mar 2017 13:14:01 -0800")
-Message-ID: <xmqqa894fyst.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+        id S1753418AbdCAWFq (ORCPT <rfc822;e@80x24.org>);
+        Wed, 1 Mar 2017 17:05:46 -0500
+Received: from mail-qk0-f196.google.com ([209.85.220.196]:33837 "EHLO
+        mail-qk0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751499AbdCAWFm (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Mar 2017 17:05:42 -0500
+Received: by mail-qk0-f196.google.com with SMTP id s186so14396339qkb.1
+        for <git@vger.kernel.org>; Wed, 01 Mar 2017 14:05:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=bF7ZdPmBBEbIYcTksXXzzOdFPtRXFwJ3cHS4DAk6DpY=;
+        b=b2d6gmchekG0M4LXFYkLfLuzi2u1zOb7tefqf+H65CYsOQ8zKXLGQ6pGh2MPaeCFXl
+         PfuJUsJQU191sYAhhjXlL9ajyzkGF0ugkFUIpXMYib1ALabfCg6tLg49S/dU2gYHejRb
+         ZcIisBKRlkQywSsFajbyuecWi1G3VCdNZBNFrws3FmKV/hQGxUKKwvg9REMhrO+6mNdf
+         JZU2taiarBLVfPtzQGv3aa4cQ9RuwkDQE9n1FBACIW1zx65mRBzaisW6sUzB4gZjBFp8
+         DsH50PUJ1vwc9oCDoe8d0GQv+BJPmeB5x/bHNzNJLfKlS2GFtATAmRCxUcUpag4vEhvB
+         E/lQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=bF7ZdPmBBEbIYcTksXXzzOdFPtRXFwJ3cHS4DAk6DpY=;
+        b=t14cIzRqQeEObHQjRjoLo+hLWgafj0NKsmle/QYGmODGIM598KzDEaHnARpxqP0yFr
+         PgY6DLXPClXcZUl4OhdekJDAPNLaMZZzxZQJF4bsaElqjMtBjoQTH5g4z+bTMR3XFpO8
+         IVcF9dZ3flMQCF5GQhsyVwHCnEdCoOe+zaiyk8XiT/HxafFem90+yYCjeKXgdWA9ON4u
+         fZ/SXq3AVaf/CMbK/hywSLVgyXR6mW+cEjVRGXRYXnBMWAhjX6J3tnTq/tnSExx/w/+T
+         gzKP37rThXtMNepOegIGB9jKeeO365ug+0QxE0Akzlzo5R+lxDXrt671JQ6zXNmIk4uN
+         nIXg==
+X-Gm-Message-State: AMke39l0R4QDsGrQPTwHydrIIWoIw2TpjY3J1NoRg2SUohtRGqvnWfWy43FPm1BTt5MVcihDGU6EW10tfwhC9w==
+X-Received: by 10.200.1.14 with SMTP id e14mr14061670qtg.244.1488405940659;
+ Wed, 01 Mar 2017 14:05:40 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: A4182B6C-FEC9-11E6-96D2-FC50AE2156B6-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Received: by 10.12.178.20 with HTTP; Wed, 1 Mar 2017 14:05:20 -0800 (PST)
+In-Reply-To: <alpine.DEB.2.20.1703012227010.3767@virtualbox>
+References: <alpine.LFD.2.20.1702281621050.22202@i7.lan> <xmqq7f48hm8g.fsf@gitster.mtv.corp.google.com>
+ <CA+55aFx1wAS-nHS2awuW2waX=cvig4UoZqmN5H3v93yDE7ukyQ@mail.gmail.com>
+ <xmqq37ewhji1.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1703012227010.3767@virtualbox>
+From:   Junio C Hamano <gitster@pobox.com>
+Date:   Wed, 1 Mar 2017 14:05:20 -0800
+X-Google-Sender-Auth: FS9IK32wSn9MzuI73-WKC7WuB1g
+Message-ID: <CAPc5daU2GVpc5Nhx13apFMs3XkL+O8_+3uA842vGQouwb4kEAg@mail.gmail.com>
+Subject: Re: [PATCH] Put sha1dc on a diet
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Linus Torvalds <torvalds@linux-foundation.org>,
+        Jeff King <peff@peff.net>, Marc Stevens <marc.stevens@cwi.nl>,
+        Dan Shumow <danshu@microsoft.com>,
+        Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Now I thought about it through a bit more thoroughly, I think this
-is the right approach, so here is my (tenative) final version.
+On Wed, Mar 1, 2017 at 1:56 PM, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+> Hi,
+>
+> On Wed, 1 Mar 2017, Junio C Hamano wrote:
+>
+>> Linus Torvalds <torvalds@linux-foundation.org> writes:
+>>
+>> > That said, I think that it would be lovely to just default to
+>> > USE_SHA1DC and just put the whole attack behind us. Yes, it's slower.
+>> > No, it doesn't really seem to matter that much in practice.
+>>
+>> Yes.  It would be a very good goal.
+>
+> So let me get this straight: not only do we now implicitly want to bump
+> the required C compiler to C99 without any grace period worth mentioning
+> [*1*], we are also all of a sudden no longer worried about a double digit
+> percentage drop of speed [*2*]?
 
-I seem to be getty really rusty---after all the codepaths involved
-are practically all my code and I should have noticed the real
-culprit during my first attempt X-<.
+Before we get the code into shape suitable for 'next', it is more important to
+make sure it operates correctly, adding necessary features if any (e.g. "hash
+with or without check" knob) while it is in 'pu', and *1* is to allow
+it to progress
+faster without having to worry about something we could do mechanically
+before making it ready for 'next'.
 
-Thanks for helping.
+The performance thing is really "let's see how well it goes". With effort to
+optimize still "just has began", I think it is too early to tell if
+Linus's "doesn't
+really seem to matter" is the case or not.
 
--- >8 --
-Subject: [PATCH] diff: do not short-cut CHECK_SIZE_ONLY check in diff_pop=
-ulate_filespec()
-
-Callers of diff_populate_filespec() can choose to ask only for the
-size of the blob without grabbing the blob data, and the function,
-after running lstat() when the filespec points at a working tree
-file, returns by copying the value in size field of the stat
-structure into the size field of the filespec when this is the case.
-
-However, this short-cut cannot be taken if the contents from the
-path needs to go through convert_to_git(), whose resulting real blob
-data may be different from what is in the working tree file.
-
-As "git diff --quiet" compares the .size fields of filespec
-structures to skip content comparison, this bug manifests as a
-false "there are differences" for a file that needs eol conversion,
-for example.
-
-Reported-by: Mike Crowe <mac@mcrowe.com>
-Helped-by: Torsten B=C3=B6gershausen <tboegi@web.de>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- diff.c                    | 19 ++++++++++++++++++-
- t/t0028-diff-converted.sh | 27 +++++++++++++++++++++++++++
- 2 files changed, 45 insertions(+), 1 deletion(-)
- create mode 100755 t/t0028-diff-converted.sh
-
-diff --git a/diff.c b/diff.c
-index 8c78fce49d..dc51dceb44 100644
---- a/diff.c
-+++ b/diff.c
-@@ -2792,8 +2792,25 @@ int diff_populate_filespec(struct diff_filespec *s=
-, unsigned int flags)
- 			s->should_free =3D 1;
- 			return 0;
- 		}
--		if (size_only)
-+
-+		/*
-+		 * Even if the caller would be happy with getting
-+		 * only the size, we cannot return early at this
-+		 * point if the path requires us to run the content
-+		 * conversion.
-+		 */
-+		if (!would_convert_to_git(s->path) && size_only)
- 			return 0;
-+
-+		/*
-+		 * Note: this check uses xsize_t(st.st_size) that may
-+		 * not be the true size of the blob after it goes
-+		 * through convert_to_git().  This may not strictly be
-+		 * correct, but the whole point of big_file_threashold
-+		 * and is_binary check being that we want to avoid
-+		 * opening the file and inspecting the contents, this
-+		 * is probably fine.
-+		 */
- 		if ((flags & CHECK_BINARY) &&
- 		    s->size > big_file_threshold && s->is_binary =3D=3D -1) {
- 			s->is_binary =3D 1;
-diff --git a/t/t0028-diff-converted.sh b/t/t0028-diff-converted.sh
-new file mode 100755
-index 0000000000..3d5ab9565b
---- /dev/null
-+++ b/t/t0028-diff-converted.sh
-@@ -0,0 +1,27 @@
-+#!/bin/sh
-+#
-+# Copyright (c) 2017 Mike Crowe
-+#
-+# These tests ensure that files changing line endings in the presence
-+# of .gitattributes to indicate that line endings should be ignored
-+# don't cause 'git diff' or 'git diff --quiet' to think that they have
-+# been changed.
-+
-+test_description=3D'git diff with files that require CRLF conversion'
-+
-+. ./test-lib.sh
-+
-+test_expect_success setup '
-+	echo "* text=3Dauto" >.gitattributes &&
-+	printf "Hello\r\nWorld\r\n" >crlf.txt &&
-+	git add .gitattributes crlf.txt &&
-+	git commit -m "initial"
-+'
-+
-+test_expect_success 'quiet diff works on file with line-ending change th=
-at has no effect on repository' '
-+	printf "Hello\r\nWorld\n" >crlf.txt &&
-+	git status &&
-+	git diff --quiet
-+'
-+
-+test_done
---=20
-2.12.0-319-gc5f21175ee
-
+Queuing such a topic on 'pu' is one effective way to make sure people are
+working off of the same codebase.
