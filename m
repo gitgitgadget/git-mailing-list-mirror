@@ -2,105 +2,128 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 50912202CA
-	for <e@80x24.org>; Wed,  1 Mar 2017 12:35:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B254C2023D
+	for <e@80x24.org>; Wed,  1 Mar 2017 13:59:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752796AbdCAMf0 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 1 Mar 2017 07:35:26 -0500
-Received: from mail-oi0-f67.google.com ([209.85.218.67]:35603 "EHLO
-        mail-oi0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752342AbdCAMfV (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Mar 2017 07:35:21 -0500
-Received: by mail-oi0-f67.google.com with SMTP id a134so1247456oii.2
-        for <git@vger.kernel.org>; Wed, 01 Mar 2017 04:35:21 -0800 (PST)
+        id S1751841AbdCAN7Z (ORCPT <rfc822;e@80x24.org>);
+        Wed, 1 Mar 2017 08:59:25 -0500
+Received: from mail-it0-f68.google.com ([209.85.214.68]:35989 "EHLO
+        mail-it0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751799AbdCAN7Y (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Mar 2017 08:59:24 -0500
+Received: by mail-it0-f68.google.com with SMTP id w185so4993568ita.3
+        for <git@vger.kernel.org>; Wed, 01 Mar 2017 05:59:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=IiRxacUYsUvLAH85ioKSalfJLjA4QrGYDIO8RXzM09s=;
-        b=EOEJM4nGyZopFx2n72PReBFhYgwy0J98JQuf3VoWHr+qi8N1u2OChLHGsQO0PtwG+G
-         D3Vp/EnH1Czz9/MtZaPnCl6qGkgAsJp9DnnQf6CCNLaPTE3uzN5zFbeLbu3/GwP5I4xo
-         EJu//ATEc4wQSdNAOEbWoNEbP4Kn0OfOUukYhXP5uMBUG3F9xxvvsagFrmASHEKyedlu
-         wNUHCnabrAU31Y8yjta/AQXjshmFumtglEVJ4rN/PxTn7qvZYDhfTvtR9e1QbXPoQcCp
-         iAZQkFdGqndCniqwkDjkUJZuwGfh0qddHjaR/k4PBPL9Yk9mQGXpX2gKwFiixXVgv27C
-         mHkg==
+        h=from:subject:to:message-id:date:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=Av4qirOSWFaltErHH6acT1X4EeGB4pRt3BFyccdToH8=;
+        b=lEqqdKI2UkK97h+mPAIt2diKUMV48hDt26n5nsTYQykwCceNy/WK7iq8jhORAfgXVk
+         X5ULA4xWmSppR0DT1lKZCfCMR8y+fmQbuOC9Ijh/mPso6yccu60/dbJhCQcV5PxcBW1V
+         fJj/gisqu8GQvDBvTP9XpS4qT+fDk8Rb32/f1nupUqT7Pzk1M7mvXuVOV3KhH0+T9iJE
+         5pSPLGZL+loD4Hjy4akIlx2wRW9YD6skfY4VFOuaqNbp/jWFjobSFYbgPHJQPjMAph4m
+         ZYI18V8tz5iXzEFLyF1SrDTEIegHZI2RKQlLyE18ORdvctBrA7RVTq6saM9Z3d0AY3Us
+         3q1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=IiRxacUYsUvLAH85ioKSalfJLjA4QrGYDIO8RXzM09s=;
-        b=U40VyJlDWgv3kT+8H+ZRKzfcWN+ntQdj92o7mZaHnQ9qVXhbURY/YVuuwKnjKDugez
-         nlMHmhnjwZfZjrBxmahLQR/7MtP8mukpDYdq0eJn1GPsi3Kk11GBh7ZWM4SZFftanDjy
-         1mYXZdNB4nGndD5JsERt3VRYiyWY2NPmYB0ZX4eyJbupALGytTJqozIdOlI4yxblP/tk
-         QQqdB3Uu+xFWbmcFWZs2QiX6smk45kD/RkqsSz+XOKvUfjbFCpIxjKTmpgMHJOCifaKD
-         56aJFpa98Ncro0Yny7Yus0eOP3yPQWDJxqlWwMSUqYInWJDjQnQ3wQU8aiapIC/qr5+L
-         ZXpQ==
-X-Gm-Message-State: AMke39lGGb7Tt+esDmSNHUltKeeFpZrFrajRYx52Fsbyg6KY/W7P405o7Nb3NMwsAmvX3I/uGlIkAOOQI52Qaw==
-X-Received: by 10.202.181.135 with SMTP id e129mr3542766oif.124.1488371720533;
- Wed, 01 Mar 2017 04:35:20 -0800 (PST)
+        h=x-gm-message-state:from:subject:to:message-id:date:user-agent
+         :mime-version:content-transfer-encoding;
+        bh=Av4qirOSWFaltErHH6acT1X4EeGB4pRt3BFyccdToH8=;
+        b=NXODjWC6NdT/poWjgfLv6GQuCGOUn/gPjGn/CK+aUnhOohykDjDH6VGFE64snMB3+r
+         m9h0QEl0PG7TwpNotHIZZFMvOIuKYQkOuH0bhcOZOKOdkr5THTRVaKVHi4i8PRO05p4l
+         tsA3nPjlnt6JH60xfC3gj2G5fGtcwKKP+XZZMJzIjCOBaznxH9EPe2dcI5J43sW6d8VX
+         FTbP0m+8gFAreJEpdmNh2ZpLY2dMM8f0Z8HIn9f6G6NF3DzMn/q1aL/m0AEz+xouZQLe
+         kPJzKeNbYrnT/SO95FjFyJAaL29CdMp3eN3QWabkfkWLsaZvStwTe7MuiaM5GJUMhcq3
+         vXwQ==
+X-Gm-Message-State: AMke39nwRjxV0lrOu8AQDATGcEjhvMrCrcRR38BefBRxWW22H/cc2c7yDB3P1CfUScgR3Q==
+X-Received: by 10.36.201.131 with SMTP id h125mr4359059itg.82.1488376276896;
+        Wed, 01 Mar 2017 05:51:16 -0800 (PST)
+Received: from [10.3.3.214] ([199.227.34.94])
+        by smtp.gmail.com with ESMTPSA id r203sm6973546itc.5.2017.03.01.05.51.16
+        for <git@vger.kernel.org>
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 01 Mar 2017 05:51:16 -0800 (PST)
+From:   Marius Storm-Olsen <mstormo@gmail.com>
+Subject: Delta compression not so effective
+To:     git@vger.kernel.org
+Message-ID: <4d2a1852-8c84-2869-78ad-3c863f6dcaf7@gmail.com>
+Date:   Wed, 1 Mar 2017 07:51:18 -0600
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.7.1
 MIME-Version: 1.0
-Received: by 10.74.158.84 with HTTP; Wed, 1 Mar 2017 04:34:50 -0800 (PST)
-In-Reply-To: <7e5ef9e7-bd90-1917-d8eb-c6310c2744ab@alum.mit.edu>
-References: <20170218133303.3682-1-pclouds@gmail.com> <20170222140450.30886-1-pclouds@gmail.com>
- <20170222140450.30886-25-pclouds@gmail.com> <7e5ef9e7-bd90-1917-d8eb-c6310c2744ab@alum.mit.edu>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Wed, 1 Mar 2017 19:34:50 +0700
-Message-ID: <CACsJy8BOY8jsCrDYESJ6Gwy_p=J=c8m1qe64w18HX1Cv2AaYnA@mail.gmail.com>
-Subject: Re: [PATCH v5 24/24] t1406: new tests for submodule ref store
-To:     Michael Haggerty <mhagger@alum.mit.edu>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Stefan Beller <sbeller@google.com>,
-        David Turner <novalis@novalis.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Mar 1, 2017 at 12:34 AM, Michael Haggerty <mhagger@alum.mit.edu> wr=
-ote:
-> On 02/22/2017 03:04 PM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
->> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.=
-com>
->> ---
->>  t/t1406-submodule-ref-store.sh (new +x) | 95 ++++++++++++++++++++++++++=
-+++++++
->>  1 file changed, 95 insertions(+)
->>  create mode 100755 t/t1406-submodule-ref-store.sh
->>
->> diff --git a/t/t1406-submodule-ref-store.sh b/t/t1406-submodule-ref-stor=
-e.sh
->> new file mode 100755
->> index 000000000..3b30ba62f
->> --- /dev/null
->> +++ b/t/t1406-submodule-ref-store.sh
->> [...]
->
-> I haven't actually read this far in the patch series, but I noticed that
-> a test in this file fails:
->
->
-> t1406-submodule-ref-store.sh                     (Wstat: 256 Tests: 15
-> Failed: 1)
->   Failed test:  10
->   Non-zero exit status: 1
->
-> I didn't have time to look into it more; let me know if you can't
-> reproduce it.
+I have just converted an SVN repo to Git (using SubGit), where I feel 
+delta compression has let me down :)
 
-Fantastic. No I couldn't reproduce it, even --valgrind did not
-complain. First step maybe just pushing your branch somewhere so I can
-try out if you're applying the patches via mail (maybe there's some
-changes in the base that affect this). .Otherwise /t1406-* -v -i might
-be enough clue for me to dig in, I hope.
---=20
-Duy
+Suffice it to say, this is a "traditional" SVN repo, with an extern/ 
+blown out of proportion with many binary check-ins. BUT, even still, I 
+would expect Git's delta compression to be quite effective, compared to 
+the compression present in SVN. In this case however, the Git repo ends 
+up being 46% larger than the SVN DB.
+
+Details - SVN:
+     Commits: 32988
+     DB (server) size: 139GB
+     Branches: 103
+     Tags: 1088
+
+Details - Git:
+     $ git count-objects -v
+       count: 0
+       size: 0
+       in-pack: 666515
+       packs: 1
+       size-pack: 211933109
+       prune-packable: 0
+       garbage: 0
+       size-garbage: 0
+     $ du -sh .
+       203G    .
+
+     $ java -jar ~/sources/bfg/bfg.jar --delete-folders extern 
+--no-blob-protection && \
+       git reflog expire --expire=now --all && \
+       git gc --prune=now --aggressive
+     $ git count-objects -v
+       count: 0
+       size: 0
+       in-pack: 495070
+       packs: 1
+       size-pack: 5765365
+       prune-packable: 0
+       garbage: 0
+       size-garbage: 0
+     $ du -sh .
+       5.6G    .
+
+When first importing, I disabled gc to avoid any repacking until 
+completed. When done importing, there was 209GB of all loose objects 
+(~670k files). With the hopes of quick consolidation, I did a
+     git -c gc.autoDetach=0 -c gc.reflogExpire=0 \
+           -c gc.reflogExpireUnreachable=0 -c gc.rerereresolved=0 \
+           -c gc.rerereunresolved=0 -c gc.pruneExpire=now \
+           gc --prune
+which brought it down to 206GB in a single pack. I then ran
+     git repack -a -d -F --window=350 --depth=250
+which took it down to 203GB, where I'm at right now.
+
+However, this is still miles away from the 139GB in SVN's DB.
+
+Any ideas what's going on, and why my results are so terrible, compared 
+to SVN?
+
+Thanks!
+
+-- 
+.marius
