@@ -2,90 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F35941F5FB
-	for <e@80x24.org>; Wed,  1 Mar 2017 10:04:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 114C51F5FB
+	for <e@80x24.org>; Wed,  1 Mar 2017 11:27:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751973AbdCAKEA (ORCPT <rfc822;e@80x24.org>);
-        Wed, 1 Mar 2017 05:04:00 -0500
-Received: from mout.web.de ([212.227.15.14]:64598 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750736AbdCAKDr (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Mar 2017 05:03:47 -0500
-Received: from [192.168.178.36] ([79.213.126.222]) by smtp.web.de (mrweb002
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0MNL6f-1ch4Dv2z97-006woV; Wed, 01
- Mar 2017 11:02:54 +0100
-Subject: Re: git status --> Out of memory, realloc failed
-To:     Carsten Fuchs <carsten.fuchs@cafu.de>, git@vger.kernel.org
-References: <84c02ca1-269e-2f26-c625-476d7f087f5c@cafu.de>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <ea0722e2-c2bd-bd80-a233-50676efcafda@web.de>
-Date:   Wed, 1 Mar 2017 11:02:51 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
- Thunderbird/45.7.1
+        id S1751970AbdCAL1S (ORCPT <rfc822;e@80x24.org>);
+        Wed, 1 Mar 2017 06:27:18 -0500
+Received: from mail-pf0-f194.google.com ([209.85.192.194]:35335 "EHLO
+        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751527AbdCAL1R (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Mar 2017 06:27:17 -0500
+Received: by mail-pf0-f194.google.com with SMTP id y23so3385253pfk.2
+        for <git@vger.kernel.org>; Wed, 01 Mar 2017 03:26:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=qz1aYMwdBv7OPrJrTCAl6921luIiLeXbr0DZrEOlL/w=;
+        b=LaRPnE6KQiwFwjL8in3PTJLdO0Alou2opRAU6MA4J6ZnOOHqD6kd421r4+eO5LV4s7
+         xKXh4/lK79y15JV3DEkuXYYFJ5E3jzUeZW8eTiv90e5jwLTJ82ntd1SucLL34wunX7zW
+         S9eTLlYWEnV2Udz5p54od6R46Mi4KvkvAzUdAraBFfmLTO+S8xiD1Qr8v6qFTR2IgCfy
+         tB/DbDvZaT+AG/NVYQBMJbhjx3d+K6ukgcP1lxmM4y/KpC3tCRxjH1Ib2bXADaMdiLA/
+         40uLuEnDUUVUd0EpNK/dtuCqPcylrVAYgfDGTtqVKCst1TDgVFnI2CWS99PacPbTqle2
+         6OGA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=qz1aYMwdBv7OPrJrTCAl6921luIiLeXbr0DZrEOlL/w=;
+        b=aHkzSG4K8zpW01vwEfqGzelW4LQpjH3ByD0RTjUR4vriCLbb3celH88vwSLVPGxAWi
+         OF6PDdtcjLcWfcdqMYimZHvIJxfdDKzUPG3CPzhI8Yv7pF15qw/zFAfW6YapFiWGzH3T
+         6gGjmPZ2XdvLv4XQ/RpQk4PExWdIHv2BjQOwDBUqDcHmmcchgtFN9hFjMXD5VOJjPy2L
+         dCbD5B6m2o55DRPpGPzFEz/bVUJAA67qfDDXEYinKDljCb8z7PeVvq8pZCRqk1p71je4
+         JHYSlmnjcyy8iIhF2kOnh5a7kSHtNlMnTqIiszUmDYnJC1/XwDswk2HZ+jBDtKBTSB5r
+         /R0A==
+X-Gm-Message-State: AMke39mpkUra10tWUkqNU7/momxU2mRORMVk/X11a8E5t61IDFTZuMy6mQ4q9QwFtnDIFg==
+X-Received: by 10.99.127.71 with SMTP id p7mr8158045pgn.125.1488367610810;
+        Wed, 01 Mar 2017 03:26:50 -0800 (PST)
+Received: from ash ([115.73.169.226])
+        by smtp.gmail.com with ESMTPSA id a2sm10006295pfc.72.2017.03.01.03.26.47
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 01 Mar 2017 03:26:50 -0800 (PST)
+Received: by ash (sSMTP sendmail emulation); Wed, 01 Mar 2017 18:26:44 +0700
+From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        sschuberth@gmail.com, Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+        Philip Oakley <philipoakley@iee.org>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>
+Subject: [PATCH v7 1/3] config.txt: clarify multiple key values in include.path
+Date:   Wed,  1 Mar 2017 18:26:29 +0700
+Message-Id: <20170301112631.16497-2-pclouds@gmail.com>
+X-Mailer: git-send-email 2.11.0.157.gd943d85
+In-Reply-To: <20170301112631.16497-1-pclouds@gmail.com>
+References: <20170224131425.32409-1-pclouds@gmail.com>
+ <20170301112631.16497-1-pclouds@gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <84c02ca1-269e-2f26-c625-476d7f087f5c@cafu.de>
-Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K0:9EghMv8vrfYoQxFZHeNxiQM8NAN6FwgUSwywCRyJczUSvyjSkbj
- +Im55CYtmnDdWjXwJqNPrjh1cVpG4aB9M1y7ScGNaVJgVK0FXN2amCBcCt0wMQROwduIU+w
- smbOJfPvD7flYNPU4MtPjJJq+c+SJ8ix4E0lnUpkRZ7DpdBrEZKLT/Psyssripe+QfzIpXV
- AllOBX/qBhbL6Y9XwkfkQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:pImy1CyPAzk=:2Iko9JQeMQw/s6sjHCPmb8
- geHSoxIzTye8LNgqitEz/C476s0TsIH6jhobQWBoNeoEkvo3y4AG1lNUTDrfybTY13055hZSN
- Nl3DsHM4eeCxdwVnjHuKLKntbh9xQF472dpy2bMcmIjat6tpOKknp0iOYm1W5/UgGNJTjPTqk
- 4HWhvIeTGADn4TSVF55RAHPnQiMXKR1E8a4k6L7KWuaD3e4EhgZ8AXVz1ES408aGn/lPjo3qM
- u5XwsDWKfPhJPZ93fxOxhf3wBZHX248hdhytbJ1DY038/p6MuLTV0obhoYO9fw4Zt+47B7pSn
- /Ui/VM2rXHS2R/kx/6F4vmXhLGZNnQ8aXT0VPgkrZMl4+z/ZLS8MYiIXQDLKlQoznT4rRmTxy
- tBywF9AokfuVGcedsoWJEycFZYPW3KQn0/wzXe45FYGrfahQg2JaaCYa88cJwCL0l5f5dTbxr
- i22qzCNsT6gWACEhHQBfVg9aUOZ3dDwzmIONy7iUozQc8/xISxBdHi8dPrRw8GQropVLJaSlI
- NwhPOuzklpG1Jou1eenUExb3KqRbu2K5sX02cjMq6npom8qAdFwP6y6L8RzmTTMLLNl8AplEp
- cG6BJ9ZhBqigUS71o5jBS5kIDnuDW82frgR50fWlrFGTgIOhLhG/1kWi/mlRaFINq+Gamig9I
- dp91dgiw6x9KVUl4b87sFwgbGbMKpf/A4LePIvKmjmQY0F6+paHAqi4s4lPGqkyOjJNQWdp2f
- 3NXYBsR5QAy+lMZBPZovXpKIkSxj4Ehlj/Ks6yQoiLZ731wMsa0Sj8D+3XoUuA/772VZkxib2
- Tu0R5Tu
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 25.02.2017 um 11:13 schrieb Carsten Fuchs:
-> Dear Git group,
->
-> I use Git at a web hosting service, where my user account has a memory
-> limit of 768 MB:
->
-> (uiserver):p7715773:~$ uname -a
-> Linux infongp-de15 3.14.0-ui16322-uiabi1-infong-amd64 #1 SMP Debian
-> 3.14.79-2~ui80+4 (2016-11-17) x86_64 GNU/Linux
+The phrasing in this paragraph may give an impression that you can only
+use it once. Rephrase it a bit.
 
-What's the output of "ulimit -a"?
+Helped-by: Philip Oakley <philipoakley@iee.org>
+Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+---
+ Documentation/config.txt | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-> (uiserver):p7715773:~$ git --version
-> git version 2.1.4
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 015346c417..4748efbf36 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -79,10 +79,10 @@ escape sequences) are invalid.
+ Includes
+ ~~~~~~~~
+ 
+-You can include one config file from another by setting the special
++You can include a config file from another by setting the special
+ `include.path` variable to the name of the file to be included. The
+ variable takes a pathname as its value, and is subject to tilde
+-expansion.
++expansion. `include.path` supports multiple key values.
+ 
+ The
+ included file is expanded immediately, as if its contents had been
+-- 
+2.11.0.157.gd943d85
 
-That's quite old.  Can you try a more recent version easily (2.12.0 just 
-came out)?  I don't remember a specific fix, and memory usage perhaps 
-even increased with newer versions, but ruling out already fixed issues 
-would be nice.
-
-> (uiserver):p7715773:~/cafu$ git gc
-> Zähle Objekte: 44293, Fertig.
-> Komprimiere Objekte: 100% (24534/24534), Fertig.
-> Schreibe Objekte: 100% (44293/44293), Fertig.
-> Total 44293 (delta 17560), reused 41828 (delta 16708)
->
-> (uiserver):p7715773:~/cafu$ git status
-> fatal: Out of memory, realloc failed
-> fatal: recursion detected in die handler
->
-> The repository is tracking about 19000 files which together take 260 MB.
-> The git server version is 2.7.4.1.g5468f9e (Bitbucket)
-
-Is your repository publicly accessible?
-
-René
