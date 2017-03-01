@@ -2,129 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5DDA32027B
-	for <e@80x24.org>; Wed,  1 Mar 2017 22:53:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9BD152027B
+	for <e@80x24.org>; Wed,  1 Mar 2017 22:57:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753477AbdCAWxQ (ORCPT <rfc822;e@80x24.org>);
-        Wed, 1 Mar 2017 17:53:16 -0500
-Received: from mail-it0-f43.google.com ([209.85.214.43]:34829 "EHLO
-        mail-it0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753464AbdCAWxM (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Mar 2017 17:53:12 -0500
-Received: by mail-it0-f43.google.com with SMTP id 203so108300259ith.0
-        for <git@vger.kernel.org>; Wed, 01 Mar 2017 14:52:52 -0800 (PST)
+        id S1753529AbdCAW4w (ORCPT <rfc822;e@80x24.org>);
+        Wed, 1 Mar 2017 17:56:52 -0500
+Received: from mail-wr0-f195.google.com ([209.85.128.195]:35343 "EHLO
+        mail-wr0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751055AbdCAW4S (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Mar 2017 17:56:18 -0500
+Received: by mail-wr0-f195.google.com with SMTP id u108so3386392wrb.2
+        for <git@vger.kernel.org>; Wed, 01 Mar 2017 14:54:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=xNf94alWc9ZyrjVF0DWXm6G+b3xkOfWIQfc9VLkssMk=;
-        b=u69a8OKy2h1wmsjclfTbosD4r6/lmkSzhfwa9NWdmlZbw2Ua2AxTJVisrefpbRVtfF
-         vuvNMdxZY0UIiCdqejx7x8cqlKyPIjbHuty7cb38wlInm2KVfNmgvbqzS9JWYYq0k33A
-         4PAk+dProywdtlHS1sfaSGrbP1oSSvvkXX6YaGQAwWHiS4niP14WoHOam1Lt+tGxJ4jm
-         VZYgqGAMspNvrCCbg4ylP8S6qBVqbaCPJac/sWGOGiLzjE31lbvL+kylfGjTrFEZ/oKd
-         J1DxsaNnIanNQWXDAFohmHFQuSkd2EoOmm6OoB5DcR4SiRIU+eQ1PQ5BVRvrLrbuoqj8
-         mHYQ==
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :in-reply-to:references:mime-version:content-transfer-encoding;
+        bh=MlKtixBCFgchx7F9Dzn6mvgzv7aSFP/MayaE8/s780A=;
+        b=cFG8vUMv2UihGw+ZVKU5d9UHCC8/IPu/8+xEQGaeRYS9J4dG99kPbNXMVZld0I8Afu
+         jFvEhVQRJ/PxPgXsFHwIf6Gqu68knGxjYXShG3wfs2sr8lboka+/HCjGGtywHKTIlGhc
+         6pwsDXLPwa5pNDGzQ+zqT/6KRTOSKIhisiopKxH0xrcEnFIQjpjMG9e0xS5vR0zqZnZU
+         PYjdE+wqkLuIXRIuTSMpC+BwkluhFsDFHmhJCxt65jAKc31CZwiOFADZlLktuPPfZPV3
+         pdDzRtWuC0GEd9PuEIggRGYCj9uHHfpD+3b7XbenfdQqS5zBMv85TiUucMcT+SQGxoxB
+         CpBA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=xNf94alWc9ZyrjVF0DWXm6G+b3xkOfWIQfc9VLkssMk=;
-        b=DqCTWgQ+m6L0Fd5UomJXkTCKy/WMsq0ahvxBwXmtBrWNHKksoEdc3Hvk30s0WQOEhm
-         jliPYDIenJqz8+inipH0TANeAN1UT7cSeQDoWkOAfTadueGq6d27BEYene2wdglquyC5
-         4JQLfzARM7/tgDj16niAUgMwFHbfyf6VhnE0ROlNt93sE+2X7REE7rUZ7zUE8Q3nEEVw
-         E2S0EE5HSFHP1ExJxIuxjk9axouH/H6Y0Foal2bhEbr4PvakWh5TNI27tbQQk80h3szr
-         sx0u/aMMeIfIYdtGl1HtOWc0lcPQ7rlwLr2rMRxPw064+ufdzB29kxHx4yWm1j+Kzchn
-         aciQ==
-X-Gm-Message-State: AMke39n5cJ92TPCE/jlF0ZaasG4S52jGcnaZmGa1j/4w56HhvZjVpWbML9jy7hyrA7O6Smw7mjeOdqVkz6umEu4G
-X-Received: by 10.36.164.7 with SMTP id z7mr6440268ite.116.1488405198926; Wed,
- 01 Mar 2017 13:53:18 -0800 (PST)
-MIME-Version: 1.0
-Received: by 10.79.13.1 with HTTP; Wed, 1 Mar 2017 13:53:18 -0800 (PST)
-In-Reply-To: <20170301200230.GA30622@google.com>
-References: <20170223234728.164111-1-bmwill@google.com> <20170223234728.164111-2-bmwill@google.com>
- <xmqq8tov1ev7.fsf@gitster.mtv.corp.google.com> <20170301200230.GA30622@google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Wed, 1 Mar 2017 13:53:18 -0800
-Message-ID: <CAGZ79kb9Fhb0z5AbygBx9wNyLr-ovb-74xeaD8p+C5Xz9Dekcw@mail.gmail.com>
-Subject: Re: [PATCH 01/10] submodule: decouple url and submodule existence
-To:     Brandon Williams <bmwill@google.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:in-reply-to:references:mime-version
+         :content-transfer-encoding;
+        bh=MlKtixBCFgchx7F9Dzn6mvgzv7aSFP/MayaE8/s780A=;
+        b=rlShzvJv8GkvLOq1B40sokzESQPypoPa21plSQt8QIRu0P7pKKqwAdZBwprcQtl8H4
+         XkB+yZA+Orlk1kXsxH8vKlvC+Po5PsZ3iHjm+9LdmIL2Cd5AS7iyTpCVJJTAmccpVjAp
+         oIOpUivrKZ/UOyFMPXuzLdAC6ZDtchfh4fV58hKyoz4p1WjowSJBROmA6doREz/HBv3s
+         ImcHQZY+D6G1i071dTF+rTUEDIOdW4F+5ng8OK9MTucYPH+K7n+818Joq6ewL7yFBUu+
+         4FZFCSPQrZcf7qE9uzDMlaWUuW2UpJVzvMe5kKi13sAZ2idEejb8JjcIcL+txU5F4UCU
+         kW4A==
+X-Gm-Message-State: AMke39ktwd92qLbWEyOsNrE07JdSQA0DpgVOctlYyDSIZ0etGjqZEhnHEe7yTpogMvJeXg==
+X-Received: by 10.223.132.37 with SMTP id 34mr8611034wrf.45.1488402953560;
+        Wed, 01 Mar 2017 13:15:53 -0800 (PST)
+Received: from u.nix.is ([2a01:4f8:190:5095::2])
+        by smtp.gmail.com with ESMTPSA id v18sm8136233wrc.41.2017.03.01.13.15.52
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Wed, 01 Mar 2017 13:15:52 -0800 (PST)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
+        =?UTF-8?q?Jakub=20Nar=C4=99bski?= <jnareb@gmail.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH v2 1/2] gitweb tests: Change confusing "skip_all" phrasing
+Date:   Wed,  1 Mar 2017 21:15:39 +0000
+Message-Id: <20170301211540.4382-2-avarab@gmail.com>
+X-Mailer: git-send-email 2.11.0
+In-Reply-To: <20170301211540.4382-1-avarab@gmail.com>
+References: <20170301211540.4382-1-avarab@gmail.com>
+In-Reply-To: <4b34e3a0-3da7-d821-2a7f-9a420ac1d3f6@gmail.com>
+References: <4b34e3a0-3da7-d821-2a7f-9a420ac1d3f6@gmail.com>
+MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-IIRC most of the series is actually refactoring, i.e.
-providing a central function that answers
-"is this submodule active/initialized?" and then making use of this
-function.
+Change the phrasing so that instead of saying that the CGI module is
+unusable, we say that it's not available.
 
-Maybe it would be easier to reroll these refactorings first without adding
-in the change of behavior.
+This came up on the git mailing list in
+<4b34e3a0-3da7-d821-2a7f-9a420ac1d3f6@gmail.com> from Jakub Narębski.
 
-Off the list we talked about different models how to indicate that
-a submodule is active.
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
+ t/gitweb-lib.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Current situation:
-submodule.<name>.URL is used as a boolean flag
+diff --git a/t/gitweb-lib.sh b/t/gitweb-lib.sh
+index d5dab5a94f..59ef15efbd 100644
+--- a/t/gitweb-lib.sh
++++ b/t/gitweb-lib.sh
+@@ -110,7 +110,7 @@ perl -MEncode -e '$e="";decode_utf8($e, Encode::FB_CROAK)' >/dev/null 2>&1 || {
+ }
+ 
+ perl -MCGI -MCGI::Util -MCGI::Carp -e 0 >/dev/null 2>&1 || {
+-	skip_all='skipping gitweb tests, CGI module unusable'
++	skip_all='skipping gitweb tests, CGI & CGI::Util & CGI::Carp modules not available'
+ 	test_done
+ }
+ 
+-- 
+2.11.0
 
-Possible future A:
-1) If submodule.active exists use that
-2) otherwise go be individual .URL configs
-
-submodule.active is a config that contains a pathspec,
-i.e. specifies the group of submodules instead of marking
-each submodule individually.
-
-How to get to future A:
-* apply this patch series
-
-Possible future B:
-1) the boolean submodule.<name>.exists is used
-    if existent
-2) If that boolean is missing we'd respect a grouping
-   feature such as submodule.active
-3) fallback to the .URL as a boolean indicator.
-
-How to get to future B:
-1) possibly take the refactoring part from this series
-2) implement the .exists flag (that can solve the worktree
-  problem, as then we don't have to abuse the .URL
-  as a boolean indicator any more.)
-3) implement the grouping feature that takes precedence
-  over .URL, but yields precedence to the .exists flag.
-  (This would solve the grouping problem)
-
-By having two different series (2) and (3) we'd solve
-just one thing at a time with each series, such that
-this seems easier to understand and review.
-
-The question is if this future B is also easier to use for
-users and I think it would be, despite being technically more
-complex.
-
-Most users only have a few submodules. Also the assumption
-is to have either interest in very few specific submodules
-or all of them. For both of these cases the .exists is a good idea
-as it is very explicit, but verbose.
-
-The grouping feature would help in the case of lots of
-submodules, e.g. to select all of them you would just give
-an easy pathspec "." and that would help going forward
-as by such a submodule spec all new submodules would
-be "auto-on".
-
-Possible future C:
-Similar to B, but with branch specific configuration.
-submodule.<branchname>.active would work as a
-grouping feature. I wonder how it would work with
-the .exists flag.
-
-Stefan
