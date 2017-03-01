@@ -2,89 +2,123 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E6B372027B
-	for <e@80x24.org>; Wed,  1 Mar 2017 22:59:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CF1912027B
+	for <e@80x24.org>; Wed,  1 Mar 2017 23:07:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753446AbdCAW7G (ORCPT <rfc822;e@80x24.org>);
-        Wed, 1 Mar 2017 17:59:06 -0500
-Received: from mout.web.de ([212.227.15.3]:62833 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752979AbdCAW6w (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Mar 2017 17:58:52 -0500
-Received: from [192.168.178.36] ([79.213.126.222]) by smtp.web.de (mrweb003
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0Lrrva-1cJTrj0HmA-013cPj; Wed, 01
- Mar 2017 23:57:53 +0100
-Subject: Re: What's cooking in git.git (Mar 2017, #01; Wed, 1)
-To:     Junio C Hamano <gitster@pobox.com>
-References: <xmqq60jsfww5.fsf@gitster.mtv.corp.google.com>
-Cc:     git@vger.kernel.org
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <52f043cc-7b39-5ab7-bcdc-894aeb402c12@web.de>
-Date:   Wed, 1 Mar 2017 23:57:52 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
- Thunderbird/45.7.1
+        id S1753361AbdCAXHC (ORCPT <rfc822;e@80x24.org>);
+        Wed, 1 Mar 2017 18:07:02 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:64262 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1752994AbdCAXHC (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Mar 2017 18:07:02 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id B38F1775D8;
+        Wed,  1 Mar 2017 18:05:54 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=s5E3trCDDJgPlRJBK1wWRBQ/y6A=; b=LjDIoN
+        XEPO9TIlhaZk7sJPBzmD4ywSIq2srDuUFDtoQ2IemewzTX2EmAAchSw/DzOKzQm2
+        3mKoF1PV2HtU9kz7Svr2rze/Az70qA2zShuBe8IOckMiTmUWNhWMyQgGBZtsya1S
+        lrr/JkhXxueBM9QVcuS1gkcqXB6EqBHuxPmMw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=NlvFmRmKTZ+Gch1LYBktex808On6HtMT
+        TLHWtEAFuLeD2PWh1NrY+CnT9IiryyjAybahg08VUIwEFbDsa8cVVVLC49vtxISL
+        qrwgrjGYukUT19OskZMmRUv64c/WCq1kMTpZSHytTDMbpNOT3sszwp42IIKNTerw
+        4ka0fu8dMSc=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id AC26A775D7;
+        Wed,  1 Mar 2017 18:05:54 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 1D7DF775D6;
+        Wed,  1 Mar 2017 18:05:54 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Siddharth Kannan <kannan.siddharth12@gmail.com>
+Cc:     git@vger.kernel.org, Matthieu.Moy@imag.fr, pranit.bauva@gmail.com,
+        peff@peff.net, pclouds@gmail.com, sandals@crustytoothpaste.ath.cx
+Subject: Re: [PATCH 5/6 v5] merge.c: delegate handling of "-" shorthand to revision.c:get_sha1
+References: <1488007487-12965-1-git-send-email-kannan.siddharth12@gmail.com>
+        <1488007487-12965-6-git-send-email-kannan.siddharth12@gmail.com>
+        <xmqqpoi0eho8.fsf@gitster.mtv.corp.google.com>
+Date:   Wed, 01 Mar 2017 15:05:52 -0800
+In-Reply-To: <xmqqpoi0eho8.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
+        message of "Wed, 01 Mar 2017 14:49:43 -0800")
+Message-ID: <xmqqinnsegxb.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <xmqq60jsfww5.fsf@gitster.mtv.corp.google.com>
-Content-Type: text/plain; charset=iso-8859-15
-Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K0:JQ/MinkXinIhKmqMxRhkLWMw8vEjY3NLQvAHgQ2TWMUyI2GV+73
- IkfhNl1Jx/SnSzgfZF4K0u6Rm0DWtXDnIBzbSKVSUwG1PB7wNRBIkuxXOWwtna4FMMi38ga
- I2Y/2cRFbUGmzj9Dw3ouHxbCRtXhIYNwIlCuH5gpNbY214sW+ns84IuZbaltBVx6yiTbjtu
- TLeT1ZN9vkTntz8LHnTyQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:sc+RSK2pcjM=:p87ZZiTwglI6xIPzOvqMj7
- QmFTUtss7y7RJRj0E/MvxztnXd0oDmgnC9xjK0BsFUmBC1X8YEzJnbGuSMCnCjaKucasXp5/g
- U0KD4JBdKC4fOKMxBDdruRdEv/OzpqiUtAEpEoFCQW35vUqvtBxIpf9OAo6DVAHccS5jCEmRw
- jL1/7gG+UlZdyS3Wpi8SDLJ+SSGKNcpVuvBWjxSJAKg+PSlxb1GJEBekpYm5VF72QG31H09Jj
- 2VimCw1iCuRGGJz/X1ZyB+kyKPNIV6dyR9vqvcUMW9vDGH07jqqcph9DWKhrv0umuTDSUlyhA
- SSPxZ6rFSPof2t8T8YksNLQsWeIxXxAqgGGoMoDwkMiBQTA2/rKiWKQrSHJU7ARF0ZbbEI8XZ
- A0oLIts+aUnbgHW2XiG7z+W+Jv1YrXiJWubB3O8U/kwKI/XNB1yeRmFsdpxLxM18/TmRGTLKB
- 6ZeKFAme0PbbgdoRjaXT4U/GRS1mWWZ0UWIIMQqPhtOz5LO34gCigymjWbNumKpuv1rjuY5+C
- htjAqDmt/pC/N4hd9PBlFRg4GHIZpRoJDiap2GYFqxMOb5Yylh6KGbnbTnLAxg8POipSoNVow
- byJhtpgMd2rVyW/4BvcxJl80fvUJujlEi2RGlqvLlW373y7EkAllCJANPzrWWrtqLrVsF94oY
- Xz7LSlSkbGpG0FXGZDaHdSy+0nZ5VgA31SCdspcemVx1mFzaxuzeEIA23psSXcj+JP43B8VQD
- 8zNqICU4JzJ3SxmFphwRXRKJR4RwWIpeHlicwPK8qLhxfZ5up6r7CRrt4cr9E6hQVJm9+NnKc
- OH2S0Js
+Content-Type: text/plain
+X-Pobox-Relay-ID: 9F0C7DD0-FED3-11E6-9947-FC50AE2156B6-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 01.03.2017 um 23:35 schrieb Junio C Hamano:
-> * rs/log-email-subject (2017-03-01) 2 commits
->  - pretty: use fmt_output_email_subject()
->  - log-tree: factor out fmt_output_email_subject()
-> 
->  Code clean-up.
-> 
->  Will merge to 'next'.
+Junio C Hamano <gitster@pobox.com> writes:
 
-Could you please squash this in?  We only use a single context (as
-opposed to an array), so it doesn't have to be especially compact,
-and using a bitfield slows down half of the tests in p4000 by 3%
-for me.
+> Siddharth Kannan <kannan.siddharth12@gmail.com> writes:
+>
+>> The callchain for handling each argument contains the function
+>> revision.c:get_sha1 where the shorthand for "-" ~ "@{-1}" has already been
+>> implemented in a previous patch; the complete callchain leading to that
+>> function is:
+>>
+>> 1. merge.c:collect_parents
+>> 2. commit.c:get_merge_parent : this function calls revision.c:get_sha1
+>>
+>> This patch also adds a test for checking that the shorthand works properly
+>
+> This breaks "git merge".
+>
+>> +test_expect_success 'merge - should work' '
+>> +        git checkout testing-2 &&
+>> +        git merge - &&
+>> +        git rev-parse HEAD HEAD^^ | sort >actual &&
+>> +        git rev-parse master testing-1 | sort >expect &&
+>> +        test_cmp expect actual
+>
+> This test is not sufficient to catch a regression I seem to be
+> seeing.
+>
+> 	$ git checkout side
+> 	$ git checkout pu
+> 	$ git merge -
+>
+> used to say "Merge branch 'side' into pu".  With this series merged,
+> I seem to be getting "Merge commit '-' into pu".
 
----
- commit.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+You stopped at get_sha1_1() in your 3817cebabc ("sha1_name.c: teach
+get_sha1_1 "-" shorthand for "@{-1}"", 2017-02-25), instead of going
+down to get_sha1_basic() and teaching it that "-" means the same
+thing as "@{-1}", which would in turn require you to teach
+dwim_ref() that "-" is the same thing as "@{-1}".  As dwim_ref()
+does not know about "-" and does not expand it to the refname like
+it expands "@{-1}", it would break and that is why 3817cebabc punts
+at a bit higher in the callchain.
 
-diff --git a/commit.h b/commit.h
-index 459daef94a..528272ac9b 100644
---- a/commit.h
-+++ b/commit.h
-@@ -154,7 +154,7 @@ struct pretty_print_context {
- 	int preserve_subject;
- 	struct date_mode date_mode;
- 	unsigned date_mode_explicit:1;
--	unsigned print_email_subject:1;
-+	int print_email_subject;
- 	int expand_tabs_in_log;
- 	int need_8bit_cte;
- 	char *notes_message;
--- 
-2.12.0
+The breakage by this patch to "git merge" happens for the same
+reason.  cmd_merge() calls collect_parents() which annotates the
+commits that are merged with their textual name, which used to be
+"@{-1}" without this patch but now "-" is passed as-is.  This
+annotation will be given to merge_name(), and the first thing it
+does is dwim_ref().  The function knows what to do with "@{-1}",
+but it does not know what to do with "-", and that is why you end up
+producing "Merge commit '-' into ...".
+
+Dropping this patch from the series would make things consistent
+with what was done in 3817cebabc and I think that is a sensible
+place to stop.  After the dust settles, We _can_ later dig further
+by teaching dwim_ref() and friends what "-" means, and when it is
+done, this patch would become useful.
+
+Thanks.
+
+
+
+
 
