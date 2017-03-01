@@ -2,86 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 51C762023D
-	for <e@80x24.org>; Wed,  1 Mar 2017 21:09:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 965BC2023D
+	for <e@80x24.org>; Wed,  1 Mar 2017 21:18:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751816AbdCAVJM (ORCPT <rfc822;e@80x24.org>);
-        Wed, 1 Mar 2017 16:09:12 -0500
-Received: from mail-yw0-f176.google.com ([209.85.161.176]:35403 "EHLO
-        mail-yw0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751154AbdCAVJK (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Mar 2017 16:09:10 -0500
-Received: by mail-yw0-f176.google.com with SMTP id d1so43011866ywd.2
-        for <git@vger.kernel.org>; Wed, 01 Mar 2017 13:08:25 -0800 (PST)
+        id S1753300AbdCAVRx (ORCPT <rfc822;e@80x24.org>);
+        Wed, 1 Mar 2017 16:17:53 -0500
+Received: from mail-yw0-f170.google.com ([209.85.161.170]:34624 "EHLO
+        mail-yw0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753271AbdCAVRm (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Mar 2017 16:17:42 -0500
+Received: by mail-yw0-f170.google.com with SMTP id p77so43108533ywg.1
+        for <git@vger.kernel.org>; Wed, 01 Mar 2017 13:17:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=ViELpjSvZ6wX2jz9Pt5/5iRgH7XbfvWE1Lw1gy2uFs0=;
-        b=j3rJHb9wyZgahRtBtCMTOOZEiTEFIHf0LdcqmB79ZiAm/Gz+9KTzFRKAsH+dfy78B6
-         p17xKk86uYf0/XYHgnDPJ0K0sS19oH3Yfy1+T4qiCWL/Azd2QVknCZL1gI1NdGDmjasJ
-         EEZT/wX7F8TT0l8WaYN1Bz7jAM4G2vuYYJMdgLVv+igcQGO2wl36+zUZzTh1SXkmjYMM
-         E+Zdv5GBr6lmEcl3WNZaB+bDvPbSLfbN8QAo72oaEl1++W6bO8/4HSx7Tr31lmx69iEL
-         VnhzBqAeYmMIusDLssnGbc9mXxwd4kS5UK0r7kaPFohzmBQF/n5NOolj1g7HTZT0o85L
-         xoMQ==
+        bh=kmmXMAx+L2B2eZXbkG4YoHr10xhCkBuTD/lfZLcxOrY=;
+        b=QEuW8xMVGEqJ3NlJVdUyxNMdyJrKUmJZ5m++0gyQN0gtiWvmtA7vwDRC3xHqopvHCE
+         yDdBRUViQEI9kiiP0upRiHYI6QVkvTAtVX2Sx4UPeeQIJKwLHjyPha7WEYgzYTzvON2K
+         21kjI/8gMawynVtuNAWlAQ+UDLh8MLXdtDcY0WVTYNwx6KGJWfjxGD+eEHF+b5UQkeik
+         9F4RtwqAOVIMNOLl8tB6dSza33898WjU8AExfNuTGqIZpYJpa/CDIPXiBnIOU2jdi7mu
+         mYwOWHsOxuEQsDEn6JLz4QsAYDaCUkt+fHnIa+3MR5lItgQjbk1aoM2sCdtPr1Z9T2hJ
+         rH1w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=ViELpjSvZ6wX2jz9Pt5/5iRgH7XbfvWE1Lw1gy2uFs0=;
-        b=rJcSc29imITD+G6ZOJK4FIulK6cm/+rq6OE0OmSS+kJnEPBNPrw3QlOGnY154H1sEN
-         gLMb0YcW/mcr636Db16M+LOmvb7N0G7XxDq6ZRH4r6hPWuvc63/fom130O80Ahm0OSfr
-         zOEjMd3DtQ9+JEhoucYFB8TZ38qBDZkc0uSeeltht7Qwttz+RPcJxoGmcl2IEe/UtPsu
-         VB82D3EbvwYS9y4drI2e7TF+t5a85MN1Qw9xVPb5yVz6jyDT3ea2r8cgnhKiN0bfWUHd
-         DjC+IXGmtwD9jH1Hugu5NCCy7liDDgaYHINeUaw5owajNQPBfAUupeXHoiwkLvDCKA8K
-         e+1w==
-X-Gm-Message-State: AMke39mwdpZFZMkR8+9pT+nTdU0p7nwD2uXgaKpWYSlcLHotC3d/K4MYbKxty17f62xHKBh+84Cqm8JhOnZ/Vw==
-X-Received: by 10.37.73.194 with SMTP id w185mr3828893yba.5.1488402504543;
- Wed, 01 Mar 2017 13:08:24 -0800 (PST)
+        bh=kmmXMAx+L2B2eZXbkG4YoHr10xhCkBuTD/lfZLcxOrY=;
+        b=chmnd3Lv8AM/okpdB5E/D58gM3EZT4lp3zXCbwlsEdntQW/3BARfBm6iJep495fLQb
+         w+0VXkseCEm47Kk6BK6/LXMMRXfJNgpOn2QTFtkCrGn9kl+xx+evpr+WbgHmTYntYTZ0
+         72GftkAAuSGNxPlo95o20lAUZXVWAEnue6WBfTl5bNy1hc9tgw4ZjGq9Y2JNSNDbvl7N
+         1t4ZI/GXZbpVQnQ5pbX8qPxZg3ih2cabDnIodoHKu0OR3H4V/AFEMJuGDp4CkJ3GUCQp
+         5lkaet9wDiQylK7hq26GghHONbtBIZOwwrMJ7BaVGnkMw2sxX1i/PGtJ/yE2F+OmVnVF
+         G1Aw==
+X-Gm-Message-State: AMke39nIPF/OzXuLtAx1jFx6WQcW76DTopkJ8cD5BArQDdcIKwnssscxjCC8jMbpIhz372V2IaXws4S1jD2Wfg==
+X-Received: by 10.129.182.20 with SMTP id u20mr4413424ywh.286.1488399590265;
+ Wed, 01 Mar 2017 12:19:50 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.129.67.40 with HTTP; Wed, 1 Mar 2017 13:08:04 -0800 (PST)
-In-Reply-To: <CA+55aFx7QFqrHw4e72vOdM5z0rw1CCkL2-UX8ej5CLSBWjLNLA@mail.gmail.com>
+Received: by 10.129.67.40 with HTTP; Wed, 1 Mar 2017 12:19:29 -0800 (PST)
+In-Reply-To: <4d2a1852-8c84-2869-78ad-3c863f6dcaf7@gmail.com>
 References: <4d2a1852-8c84-2869-78ad-3c863f6dcaf7@gmail.com>
- <CA+55aFzQ0o2R2kShS=AuKu0TLnfPV-0JCkViqx5J_afCK0Yt5g@mail.gmail.com>
- <eba83461-34cf-6d64-4013-873b04af9b82@gmail.com> <CA+55aFx7QFqrHw4e72vOdM5z0rw1CCkL2-UX8ej5CLSBWjLNLA@mail.gmail.com>
 From:   Martin Langhoff <martin.langhoff@gmail.com>
-Date:   Wed, 1 Mar 2017 16:08:04 -0500
-Message-ID: <CACPiFCKG7K4jGLHRBA5VrdhLwjqj6KPWS2NYtHjmSdfcRhm+2A@mail.gmail.com>
+Date:   Wed, 1 Mar 2017 15:19:29 -0500
+Message-ID: <CACPiFC+=ZpHT=xh7Y8f68BcXxNYx8EFJfzqqG2ub4NL=uREu7g@mail.gmail.com>
 Subject: Re: Delta compression not so effective
-To:     Linus Torvalds <torvalds@linux-foundation.org>
-Cc:     Marius Storm-Olsen <mstormo@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
+To:     Marius Storm-Olsen <mstormo@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Mar 1, 2017 at 1:30 PM, Linus Torvalds
-<torvalds@linux-foundation.org> wrote:
-> For example, the sorting code thinks that objects with the same name
-> across the history are good sources of deltas.
+On Wed, Mar 1, 2017 at 8:51 AM, Marius Storm-Olsen <mstormo@gmail.com> wrote:
+> BUT, even still, I would expect Git's delta compression to be quite effective, compared to the compression present in SVN.
 
-Marius has indicated he is working with jar files. IME jar and war
-files, which are zipfiles containing Java bytecode, range from not
-delta-ing in a useful fashion, to pretty good deltas.
+jar files are zipfiles. They don't delta in any useful form, and in
+fact they differ even if they contain identical binary files inside.
 
-Depending on the build process (hi Maven!) there can be enough
-variance in the build metadata to throw all the compression machinery
-off.
+>     Commits: 32988
+>     DB (server) size: 139GB
 
-On a simple Maven-driven project I have at hand, two .war files
-compiled from the same codebase compressed really well in git. I've
-also seen projects where storage space is ~101% of the "uncompressed"
-size.
+Are you certain of the on-disk storage at the SVN server? Ideally,
+you've taken the size with a low-level tool like `du -sh
+/path/to/SVNRoot`.
 
-my 2c,
+Even with no delta compression (as per Junio and Linus' discussion),
+based on past experience importing jar/wars/binaries from SVN into
+git... I'd expect git's worst case to be on-par with SVN, perhaps ~5%
+larger due to compression headers on uncompressible data.
 
+cheers,
 
 
 m
