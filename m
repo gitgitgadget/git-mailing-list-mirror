@@ -2,96 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1E9132023D
-	for <e@80x24.org>; Wed,  1 Mar 2017 23:20:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3BDA520282
+	for <e@80x24.org>; Wed,  1 Mar 2017 23:25:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752999AbdCAXU5 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 1 Mar 2017 18:20:57 -0500
-Received: from cloud.peff.net ([104.130.231.41]:36809 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751387AbdCAXU4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Mar 2017 18:20:56 -0500
-Received: (qmail 21427 invoked by uid 109); 1 Mar 2017 23:19:23 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 01 Mar 2017 23:19:23 +0000
-Received: (qmail 11292 invoked by uid 111); 1 Mar 2017 23:19:29 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 01 Mar 2017 18:19:29 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 01 Mar 2017 18:19:21 -0500
-Date:   Wed, 1 Mar 2017 18:19:21 -0500
-From:   Jeff King <peff@peff.net>
-To:     Linus Torvalds <torvalds@linux-foundation.org>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>,
-        Marc Stevens <marc.stevens@cwi.nl>,
-        Dan Shumow <danshu@microsoft.com>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH] Put sha1dc on a diet
-Message-ID: <20170301231921.2puf7o7jkrujscwn@sigill.intra.peff.net>
-References: <alpine.LFD.2.20.1702281621050.22202@i7.lan>
- <xmqq7f48hm8g.fsf@gitster.mtv.corp.google.com>
- <CA+55aFx1wAS-nHS2awuW2waX=cvig4UoZqmN5H3v93yDE7ukyQ@mail.gmail.com>
- <xmqq37ewhji1.fsf@gitster.mtv.corp.google.com>
- <alpine.DEB.2.20.1703012227010.3767@virtualbox>
- <CA+55aFys5oQ0RySQ+Xv0ZDussr-xZNh4_b3+Upx_d9VPWmpM8Q@mail.gmail.com>
- <alpine.DEB.2.20.1703012334400.3767@virtualbox>
- <CA+55aFy9=jBJT36FC2HiAeabJBssY=jE=zLxwrXWzhpiFkMUXg@mail.gmail.com>
+        id S1753380AbdCAXZE (ORCPT <rfc822;e@80x24.org>);
+        Wed, 1 Mar 2017 18:25:04 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:52261 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1753099AbdCAXZC (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Mar 2017 18:25:02 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 08A027775C;
+        Wed,  1 Mar 2017 18:18:58 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=FSYUp90prmp6TVSomwv0GtmwCuI=; b=iAMk1O
+        8qXfU+aA5x4R67v3HelKpGDE6TkI49SVVRL4HpOGK5i596SxhxlUvuG3EXA6YBLb
+        k+yLHUllNWghYi+ZMmB0/fFKmTdGmDUgzDnpSK2YR0XOvEsaqQ8cp6Xf/vel0vyz
+        VP2ZlCXnraML4VEQUe4+4mp8JZbsJSeq03oSo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=i1MHUM+EzznkSee+EVrezP6EqfG41tej
+        x6oCA5FkHWmHtgNmntDoPj3TcayQAMG4NXbbzbeoxfzqyIzN1KCEf3wzmbotr50y
+        h6hPPC9356wXSmATgkBd4D54ceE8qs+CND+/kgYUy+LHnrur0VkxkvP/P8vqBjdc
+        zt8fp+z08xQ=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 01BE77775B;
+        Wed,  1 Mar 2017 18:18:58 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 5BB8A7775A;
+        Wed,  1 Mar 2017 18:18:57 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Siddharth Kannan <kannan.siddharth12@gmail.com>
+Cc:     git@vger.kernel.org, Matthieu.Moy@imag.fr, pranit.bauva@gmail.com,
+        peff@peff.net, pclouds@gmail.com, sandals@crustytoothpaste.ath.cx
+Subject: Re: [PATCH 6/6 v5] revert.c: delegate handling of "-" shorthand to setup_revisions
+References: <1488007487-12965-1-git-send-email-kannan.siddharth12@gmail.com>
+        <1488007487-12965-7-git-send-email-kannan.siddharth12@gmail.com>
+Date:   Wed, 01 Mar 2017 15:18:56 -0800
+In-Reply-To: <1488007487-12965-7-git-send-email-kannan.siddharth12@gmail.com>
+        (Siddharth Kannan's message of "Sat, 25 Feb 2017 07:24:47 +0000")
+Message-ID: <xmqqa894egbj.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CA+55aFy9=jBJT36FC2HiAeabJBssY=jE=zLxwrXWzhpiFkMUXg@mail.gmail.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 71F15A08-FED5-11E6-BD31-FC50AE2156B6-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Mar 01, 2017 at 03:05:25PM -0800, Linus Torvalds wrote:
+Siddharth Kannan <kannan.siddharth12@gmail.com> writes:
 
-> On Wed, Mar 1, 2017 at 2:51 PM, Johannes Schindelin
-> <Johannes.Schindelin@gmx.de> wrote:
-> >
-> > But I think bigger than just developers on Windows OS. There are many
-> > developers out there working on large repositories (yes, much larger than
-> > Linux). Also using Macs and Linux. I am not at all sure that we want to
-> > give them an updated Git they cannot fail to notice to be much slower than
-> > before.
-> 
-> Johannes, have you *tried* the patches?
-> 
-> I really don't think you have. It is completely unnoticeable in any
-> normal situation. The two cases that it's noticeable is:
-> 
->  - a full fsck is noticeable slower
-> 
->  - a full non-local clone is slower (but not really noticeably so
-> since the network traffic dominates).
-> 
-> In other words, I think you're making shit up. I don't think you
-> understand how little the SHA1 performance actually matters. It's
-> noticeable in benchmarks. It's not noticeable in any normal operation.
-> 
-> .. and yes, I've actually been running the patches locally since I
-> posted my first version (which apparently didn't go out to the list
-> because of list size limits) and now running the version in 'pu'.
+> revert.c:run_sequencer calls setup_revisions right after replacing "-" with
+> "@{-1}" for this shorthand. A previous patch taught setup_revisions to handle
+> this shorthand by doing the required replacement inside revision.c:get_sha1_1.
+>
+> Hence, the code here is redundant and has been removed.
+>
+> This patch also adds a test to check that revert recognizes the "-" shorthand.
 
-You have to remember that some of the Git for Windows users are doing
-horrific things like using repositories with 450MB .git/index files, and
-the speed to compute the sha1 during an update is noticeable there.
+Unlike "merge" [*1*], I think this one is OK because "git revert
+$commit" does not try to say _how_ the commit was given, and most
+importantly, it does not say what branch the reverted thing was.
 
-IMHO that is a good sign that the right approach is to switch to an
-index format that doesn't require rewriting all 450MB to update one
-entry. But obviously that is a much harder problem than just using an
-optimized sha1 implementation.
+Thanks.
 
-I do think that could argue for turning on the collision detection only
-during object-write operations, which is where it matters. It would be
-really trivial to flip the "check collisions" bit on sha1dc. But I
-suspect you could go faster still by compiling against two separate
-implementations: the fast-as-possible one (which could be openssl or
-blk-sha1), and the slower-but-careful sha1dc.
+[Footnote]
 
--Peff
+*1* Probably "checkout" would exhibit the same issue as we saw in
+    5/6 for "git merge" if you remove the "- to @{-1}" conversion
+    from it.
+
+
