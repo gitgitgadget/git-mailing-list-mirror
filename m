@@ -2,87 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 40E8D2023D
-	for <e@80x24.org>; Wed,  1 Mar 2017 21:35:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C80DB2023D
+	for <e@80x24.org>; Wed,  1 Mar 2017 21:35:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753327AbdCAVes (ORCPT <rfc822;e@80x24.org>);
-        Wed, 1 Mar 2017 16:34:48 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:62982 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751055AbdCAVeq (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1753416AbdCAVfW (ORCPT <rfc822;e@80x24.org>);
+        Wed, 1 Mar 2017 16:35:22 -0500
+Received: from cloud.peff.net ([104.130.231.41]:36695 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1753279AbdCAVeq (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 1 Mar 2017 16:34:46 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 1D7EB77F6E;
-        Wed,  1 Mar 2017 16:29:54 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=ZVKc7SPcdmf/ew2CgWnt47SpGn4=; b=cez2HK
-        ANK8U4pLURoTlqYGzFPkBhaNGWE6iIW+oT2YLbEiHWWbfS8iWB/WDl8q7jNqoNr5
-        evSTGhk8/ugNGF99SvKHGWhQE+5poCju4LHI9zQyZ9BkmD38zaUY66zO5laCUQWp
-        hOb9fQ+cjRpvLxT4twm44Q4rIrbX4ItnUouNU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=WOlSbxEBlINQVDd6+PW1aJc+w8X7tuzX
-        ZfKtclr7qPqgoovjBDls+IbhTNkwXnnh+DXa6rFguvPP2FD9xtHROnVZoHvmdrin
-        eM0BSJEy7BKjaZ/Ipaw0mJS2HbL6w4b8b4x7PjLZXXJNLD+JaunCj72YzaprVjUO
-        9sC5uK8f2v0=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 1569277F6D;
-        Wed,  1 Mar 2017 16:29:54 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 6D48A77F6C;
-        Wed,  1 Mar 2017 16:29:53 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     git@vger.kernel.org, Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Jeff King <peff@peff.net>,
-        Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH v4 00/22] Add configuration options for split-index
-References: <20170227180019.18666-1-chriscool@tuxfamily.org>
-Date:   Wed, 01 Mar 2017 13:29:52 -0800
-In-Reply-To: <20170227180019.18666-1-chriscool@tuxfamily.org> (Christian
-        Couder's message of "Mon, 27 Feb 2017 18:59:57 +0100")
-Message-ID: <xmqqmvd4fzxr.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+Received: (qmail 11121 invoked by uid 109); 1 Mar 2017 20:34:29 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 01 Mar 2017 20:34:29 +0000
+Received: (qmail 9286 invoked by uid 111); 1 Mar 2017 20:34:35 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 01 Mar 2017 15:34:35 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 01 Mar 2017 15:34:27 -0500
+Date:   Wed, 1 Mar 2017 15:34:27 -0500
+From:   Jeff King <peff@peff.net>
+To:     Linus Torvalds <torvalds@linux-foundation.org>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Dan Shumow <danshu@microsoft.com>,
+        Marc Stevens <marc.stevens@cwi.nl>
+Subject: Re: [PATCH] Put sha1dc on a diet
+Message-ID: <20170301203427.e5xa5ej3czli7c3o@sigill.intra.peff.net>
+References: <alpine.LFD.2.20.1702281621050.22202@i7.lan>
+ <xmqq7f48hm8g.fsf@gitster.mtv.corp.google.com>
+ <CA+55aFx1wAS-nHS2awuW2waX=cvig4UoZqmN5H3v93yDE7ukyQ@mail.gmail.com>
+ <20170301195302.3pybakmjqztosohj@sigill.intra.peff.net>
+ <CA+55aFwf3sxKW+dGTMjNAeHMOf=rvctEQohm+rbhEb=e3KLpHw@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 3574F95E-FEC6-11E6-96FE-97B1B46B9B0B-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CA+55aFwf3sxKW+dGTMjNAeHMOf=rvctEQohm+rbhEb=e3KLpHw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Christian Couder <christian.couder@gmail.com> writes:
+On Wed, Mar 01, 2017 at 12:14:34PM -0800, Linus Torvalds wrote:
 
-> Highlevel view of the patches in the series
-> ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+> > My biggest concern is the index-pack operation. Try this:
+> 
+> I'm mobile right now, so I can't test, but I'd this perhaps at least partly
+> due to the full checksum over the pack-file?
 >
-> Except for patch 1/22 and 1/22, there are 3 big steps, one for each
-> new configuration variable introduced.
+> We have two very different uses of SHA1: the actual object name hash, but
+> also the sha1file checksums that we do on the index file and the pack files.
 >
-> There only small differences between this patch series and the v3
-> patch series sent a few months ago.
->
->     - Patch 1/22 marks a message for translation. It is not new and
->       can be applied separately.
->
->     - Patch 2/22 improves the existing indentation style of t1700 by
->       using different here document style. It is a new preparatory
->       patch suggested by Junio.
+> And the checksum code really doesn't need the collision checking at all.
 
-OK.  I read interdiff against the previous round carefully, and
-skimmed all patches less carefully.  
+I don't think that helps. The sha1 over the pack-file takes about 1.3s
+with openssl, and 5s with sha1dc. So we already know the increase there
+is only a few seconds, not a few minutes.
 
-I may have comments on individual patches later, but this round
-looked mostly sensible.
+And it makes sense if you think about the index-pack operation. It has
+to inflate each object, resolving deltas, and checksum the result. And
+the number of inflated bytes is _much_ larger than the on-disk bytes.
+You can see the difference with:
 
-Thanks for following it through.
+  git cat-file --batch-all-objects \
+    --batch-check='%(objectsize:disk) %(objectsize)' |
+  perl -alne '
+    $disk += $F[0]; $raw += $F[1];
+    END { print "$disk $raw" }
+  '
 
+On linux.git that yields:
+
+  1210521959 63279680406
+
+That's over a 50x increase in the bytes we have to sha1 for objects
+versus pack-checksums.
+
+-Peff
