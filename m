@@ -2,104 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 060E22023D
-	for <e@80x24.org>; Wed,  1 Mar 2017 12:07:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CB1DB2023D
+	for <e@80x24.org>; Wed,  1 Mar 2017 12:33:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752285AbdCAMHt (ORCPT <rfc822;e@80x24.org>);
-        Wed, 1 Mar 2017 07:07:49 -0500
-Received: from mail-ot0-f196.google.com ([74.125.82.196]:36015 "EHLO
-        mail-ot0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750709AbdCAMHs (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Mar 2017 07:07:48 -0500
-Received: by mail-ot0-f196.google.com with SMTP id i1so3990263ota.3
-        for <git@vger.kernel.org>; Wed, 01 Mar 2017 04:06:35 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=ibhSJPvQk8wKIN2HEX23VfDN28Ro+0JBQWqHjuIrNvg=;
-        b=Y5WyeOrrl33vZd5dP1pdq/314Wc+c5Os1a8++R+/aSZu+P5izf1Z+82xNBGo3bfBjT
-         Rh6MZvwyINAY8FauzSBHSQRqHgyaJ3Ncp5uZcuPTh+KqJlR2WUlzW2zD+J4dk5VTqlQt
-         h2AcY9XtBNMtfzjUH5962L5UZiMEwPDl0gbBnRHsNS1boBAZR2y/J0jEHFE3O8Jm/Ksg
-         l+jQM4wJHQrY4br7qbyyuuUa81S5lz6OUI/uL4rAaQ/qlgFvjUqJS8yX7VMlBqFdBViO
-         RxMGUxx8i1lMca2R4Plh+XTwp3/vf2eN0I6T7r6g3TPLKbhI/c+9l7eoVTev1IqM/zcy
-         71DA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=ibhSJPvQk8wKIN2HEX23VfDN28Ro+0JBQWqHjuIrNvg=;
-        b=bUim8x1+Nga49PzAvY2UmElhgH1GdHTb0xXWQMHWaqWgELRzV4oP/YM30ptcY0k6Kl
-         GMIHR4nKBKs/XMYRug2UTqe3KjnQXVpPWxAFsXFz4VVwPwhMU9FDjHpb33eGQJGrAxOh
-         5d1EG67PqkXLfoNDCeARAErjvmC1ZfjrZa2+ErLzDPC9zhy0ajJedT+NhdD7aymbKF5c
-         9Uf3ZQGNtEbG+uCmE8lgI6tybo7j0I2DD0l7N07RoYOWefZNNB3z4GdnziCIV00hidD2
-         oF0y+gIJVS7zroCkMORTMxX4FXnpxdMWhIbb5PzkhwS5oNdfASZiK2J2QHWLNFKHF+N4
-         s1qw==
-X-Gm-Message-State: AMke39nTY9oOV/125oDuOVRZ6ypZMSA1nMymCyJeM9akbE2EqcfBbhIa/IGQffMGNmX5OuMsLvE/UfjZQ1/uSQ==
-X-Received: by 10.157.18.132 with SMTP id g4mr4339373otg.10.1488369994754;
- Wed, 01 Mar 2017 04:06:34 -0800 (PST)
-MIME-Version: 1.0
-Received: by 10.74.158.84 with HTTP; Wed, 1 Mar 2017 04:06:04 -0800 (PST)
-In-Reply-To: <0bef1e49-e96b-1666-9b88-f4262c2aeeba@alum.mit.edu>
-References: <20170218133303.3682-1-pclouds@gmail.com> <20170222140450.30886-1-pclouds@gmail.com>
- <20170222140450.30886-10-pclouds@gmail.com> <0bef1e49-e96b-1666-9b88-f4262c2aeeba@alum.mit.edu>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Wed, 1 Mar 2017 19:06:04 +0700
-Message-ID: <CACsJy8ArGqrRCsVgpumu1u4+1_2chWARgLG_2Kmpq5p-nmcWfg@mail.gmail.com>
-Subject: Re: [PATCH v5 09/24] refs.c: introduce get_main_ref_store()
-To:     Michael Haggerty <mhagger@alum.mit.edu>
+        id S1751845AbdCAMdV (ORCPT <rfc822;e@80x24.org>);
+        Wed, 1 Mar 2017 07:33:21 -0500
+Received: from alum-mailsec-scanner-5.mit.edu ([18.7.68.17]:42315 "EHLO
+        alum-mailsec-scanner-5.mit.edu" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1751527AbdCAMdU (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 1 Mar 2017 07:33:20 -0500
+X-AuditID: 12074411-4bfff700000005a9-2a-58b6bf255273
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+        (using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
+        (Client did not present a certificate)
+        by alum-mailsec-scanner-5.mit.edu (Symantec Messaging Gateway) with SMTP id 98.18.01449.52FB6B85; Wed,  1 Mar 2017 07:31:34 -0500 (EST)
+Received: from [192.168.69.190] (p57907E3C.dip0.t-ipconnect.de [87.144.126.60])
+        (authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v21CVTme008793
+        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+        Wed, 1 Mar 2017 07:31:30 -0500
+Subject: Re: [PATCH v5 12/24] refs.c: kill register_ref_store(), add
+ register_submodule_ref_store()
+To:     Duy Nguyen <pclouds@gmail.com>
+References: <20170218133303.3682-1-pclouds@gmail.com>
+ <20170222140450.30886-1-pclouds@gmail.com>
+ <20170222140450.30886-13-pclouds@gmail.com>
+ <92ff53b6-8a85-9be8-e14f-18eb1fcaf732@alum.mit.edu>
+ <CACsJy8BvKvo8_bRHH++dp53DaPbDVkKU0EUQC7ofYvBo+Tec0Q@mail.gmail.com>
 Cc:     Git Mailing List <git@vger.kernel.org>,
         Junio C Hamano <gitster@pobox.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Ramsay Jones <ramsay@ramsayjones.plus.com>,
         Stefan Beller <sbeller@google.com>,
         David Turner <novalis@novalis.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+From:   Michael Haggerty <mhagger@alum.mit.edu>
+Message-ID: <f0821bd8-dda5-1b11-e66f-8fa4ab169778@alum.mit.edu>
+Date:   Wed, 1 Mar 2017 13:31:29 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Icedove/45.6.0
+MIME-Version: 1.0
+In-Reply-To: <CACsJy8BvKvo8_bRHH++dp53DaPbDVkKU0EUQC7ofYvBo+Tec0Q@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprAKsWRmVeSWpSXmKPExsUixO6iqKu2f1uEwbvbrBZdV7qZLBp6rzBb
+        9C/vYrNY8vA1s0X3lLeMFjOvWlts3tzO4sDusXPWXXaPDx/jPBZsKvXoaj/C5nHxkrLH/qXb
+        2Dw+b5ILYI/isklJzcksSy3St0vgyvh+bClbwVOuirdNm5kaGE9zdDFyckgImEg8md7D1MXI
+        xSEksINJYkrjEkYI5xyTRNf+L+wgVcICqRJnXn9mArFFBJQk3nRsY4Yo6mWSeLD6IjuIwyww
+        i0ni4t5FbCBVbAK6Eot6msE6eAXsJU6ensMIYrMIqEj8e/2ZFcQWFQiRmLPwASNEjaDEyZlP
+        WEBsToFAialts8DmMAuoS/yZd4kZwpaX2P52DvMERv5ZSFpmISmbhaRsASPzKka5xJzSXN3c
+        xMyc4tRk3eLkxLy81CJdU73czBK91JTSTYyQgBfcwTjjpNwhRgEORiUe3ozOrRFCrIllxZW5
+        hxglOZiURHl3r9oWIcSXlJ9SmZFYnBFfVJqTWnyIUYKDWUmEN6AFKMebklhZlVqUD5OS5mBR
+        EuflW6LuJySQnliSmp2aWpBaBJOV4eBQkuB9uReoUbAoNT21Ii0zpwQhzcTBCTKcB2i40j6Q
+        4cUFibnFmekQ+VOMilLivF9BmgVAEhmleXC9sIT0ilEc6BVh3lsgVTzAZAbX/QpoMBPQ4Bcq
+        W0EGlyQipKQaGLX8BJ1tLiz+ZVgf6ZYjcFHoTPTqy/uXiVsf0VV1nuc8T4Pt4mQmzgi90xzb
+        zVU8/rPF13jdXKJfl8CuyvVk+6G4At6m5TMeMz54xdaR4VW5on79r5ZD2heFSrb/XKV2kGXK
+        XL0i7pq1tf6Cq4M3mv79Krqtn1v4alniMh2XF5ztF07XaPJZKbEUZyQaajEXFScCAD5QH4Aj
+        AwAA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Mar 1, 2017 at 12:51 AM, Michael Haggerty <mhagger@alum.mit.edu> wr=
-ote:
-> On 02/22/2017 03:04 PM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
->> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.=
-com>
->> ---
->>  refs.c | 16 ++++++++++++----
->>  1 file changed, 12 insertions(+), 4 deletions(-)
+On 03/01/2017 01:00 PM, Duy Nguyen wrote:
+> On Wed, Mar 1, 2017 at 1:03 AM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
+>>>  struct ref_store *get_ref_store(const char *submodule)
+>>>  {
+>>>       struct strbuf submodule_sb = STRBUF_INIT;
+>>> @@ -1480,6 +1479,9 @@ struct ref_store *get_ref_store(const char *submodule)
+>>>       if (is_nonbare_repository_dir(&submodule_sb))
+>>>               refs = ref_store_init(submodule);
+>>>       strbuf_release(&submodule_sb);
+>>> +
+>>> +     if (refs)
 >>
->> diff --git a/refs.c b/refs.c
->> index 81b64b4ed..dab1a21ac 100644
->> --- a/refs.c
->> +++ b/refs.c
->> @@ -1456,15 +1456,23 @@ static struct ref_store *ref_store_init(const ch=
-ar *submodule)
->>       return refs;
->>  }
->>
->> +static struct ref_store *get_main_ref_store(void)
->> +{
->> +     struct ref_store *refs;
->> +
->> +     if (main_ref_store)
->> +             return main_ref_store;
->> +
->> +     refs =3D ref_store_init(NULL);
->> +     return refs;
->
-> Unnecessary temporary variable?
+>> I think `refs` should always be non-NULL here for the same reason.
+> 
+> That's true if is_nonbar_repo... returns true. If it's false (e.g.
+> uninitialized submodule) then refs remains NULL from before (I didn't
+> know about this until I hit a segfault in rev-list in another series)
 
-That's the price for doing too much mechanical conversion :-P On
-second read, I think I did that on purpose (or by luck) because the
-"kill register_ref_store" patch needs this intermediate "refs" so we
-can save it to main_ref_store. Cleaner future patch for the minor
-uncleanliness in the current one.
---=20
-Duy
+Oh, yes, true.
+
+But given that, I think the code would be clearer if the two calls were
+in the same if; i.e.,
+
+ 	refs = lookup_submodule_ref_store(submodule);
+ 	if (refs)
+ 		return refs;
+
+ 	strbuf_addstr(&submodule_sb, submodule);
+ 	if (is_nonbare_repository_dir(&submodule_sb)) {
+ 		refs = ref_store_init(submodule);
+		register_submodule_ref_store(refs, submodule);
+	}
+ 	strbuf_release(&submodule_sb);
+
+ 	return refs;
+
+or even the `if (!is_nonbare_repository_dir(...)) goto cleanup;` pattern
+to make it clearer that this is an error return.
+
+Michael
+
