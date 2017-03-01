@@ -2,84 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 063992023D
-	for <e@80x24.org>; Wed,  1 Mar 2017 22:06:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EC1762023D
+	for <e@80x24.org>; Wed,  1 Mar 2017 22:14:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753456AbdCAWGI (ORCPT <rfc822;e@80x24.org>);
-        Wed, 1 Mar 2017 17:06:08 -0500
-Received: from mout.gmx.net ([212.227.17.21]:64256 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751810AbdCAWF2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Mar 2017 17:05:28 -0500
-Received: from virtualbox ([37.201.192.48]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0McluX-1d0S052Vij-00HwLr; Wed, 01
- Mar 2017 22:56:20 +0100
-Date:   Wed, 1 Mar 2017 22:56:18 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Linus Torvalds <torvalds@linux-foundation.org>,
-        Jeff King <peff@peff.net>, Marc Stevens <marc.stevens@cwi.nl>,
-        Dan Shumow <danshu@microsoft.com>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH] Put sha1dc on a diet
-In-Reply-To: <xmqq37ewhji1.fsf@gitster.mtv.corp.google.com>
-Message-ID: <alpine.DEB.2.20.1703012227010.3767@virtualbox>
-References: <alpine.LFD.2.20.1702281621050.22202@i7.lan>        <xmqq7f48hm8g.fsf@gitster.mtv.corp.google.com>        <CA+55aFx1wAS-nHS2awuW2waX=cvig4UoZqmN5H3v93yDE7ukyQ@mail.gmail.com> <xmqq37ewhji1.fsf@gitster.mtv.corp.google.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+        id S1751570AbdCAWOX (ORCPT <rfc822;e@80x24.org>);
+        Wed, 1 Mar 2017 17:14:23 -0500
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:36001 "EHLO
+        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750734AbdCAWOW (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Mar 2017 17:14:22 -0500
+Received: by mail-wm0-f68.google.com with SMTP id v190so3562649wme.3
+        for <git@vger.kernel.org>; Wed, 01 Mar 2017 14:12:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :in-reply-to:references:mime-version:content-transfer-encoding;
+        bh=giDK0U1LDEbgeSLlLpwf2+C4POXkifJYfaZCLac9Ig4=;
+        b=Zo17Qr+uHm+jHbh/KHDE4Cc2Wueu5Jco2FmddeCxifmG6W+hySxtjAnFSsEn08AOvx
+         UcD9+LpnbTJnHmarY2JNqMUlXCzQHmWFGgbCsKmQRnp0blac6wF8hglaroYNo/mfcejq
+         BUqenYP4vmNolr1iWJ6fyX3KXH6ut0XYTalpZdHZOpRzGdR4P8c5xfWDQqmxUeoLB5rO
+         DMVB/0K2puF5AK6N6gFYVROA1vaBUsH57xFJsjw2jFtg9+Q5EwUg6+acffDcMSl7CrmN
+         306NAr0p3nZV0YgSlBhDaEspGYQKWoXbgR6+JsuyHKrqmII2FAESgaZ7MGwbvQt9/hw5
+         IaHA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:in-reply-to:references:mime-version
+         :content-transfer-encoding;
+        bh=giDK0U1LDEbgeSLlLpwf2+C4POXkifJYfaZCLac9Ig4=;
+        b=eLE0hm0HBIHqc6k2ly7Hhz0FFEssPwwUE4KnV3XqPFB0aKc4UmsB8Apr6Vzn2WCxwF
+         f0A+fHnzMqGN4Pk0vu7V35wVrO/7iY1fj0IsOihjXaQ3t5TAmIMCbWe2ufAu/lTGtNI+
+         GNnwRzkqFhd0zP6bs70uv6GiDvHgvim5VQ9QF10a/I3lxi5xpWMZsrp+K5jhMy5Rc0I9
+         hHu0RHH/IMYv2zg5UvnXE0pLbkEkjwQfcvEVokjt9BLtbvZr7GenPNIfW7Y4XsmDicIg
+         es9WxyK9k8EmRn41BIHcmAvj9AmgYwdfIiofrYeLI1kYEgANuHEThD6n4o7f3IF3wwDi
+         L6kw==
+X-Gm-Message-State: AMke39kILM3C05yyX7JvyVKoGNB+LJL2Q7Kq8yc9JddKpULmdcYy4Z/AOZobK+IICeY4jg==
+X-Received: by 10.28.111.75 with SMTP id k72mr5168025wmc.39.1488402955710;
+        Wed, 01 Mar 2017 13:15:55 -0800 (PST)
+Received: from u.nix.is ([2a01:4f8:190:5095::2])
+        by smtp.gmail.com with ESMTPSA id v18sm8136233wrc.41.2017.03.01.13.15.54
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Wed, 01 Mar 2017 13:15:54 -0800 (PST)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?q?Jakub=20Nar=C4=99bski?= <jnareb@gmail.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH v2 2/2] gitweb tests: Skip tests when we don't have Time::HiRes
+Date:   Wed,  1 Mar 2017 21:15:40 +0000
+Message-Id: <20170301211540.4382-3-avarab@gmail.com>
+X-Mailer: git-send-email 2.11.0
+In-Reply-To: <20170301211540.4382-1-avarab@gmail.com>
+References: <20170301211540.4382-1-avarab@gmail.com>
+In-Reply-To: <4b34e3a0-3da7-d821-2a7f-9a420ac1d3f6@gmail.com>
+References: <4b34e3a0-3da7-d821-2a7f-9a420ac1d3f6@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:pexzc+5PwC/VRz7f1J85ja3heOwXpNd0qBHDwFo8aUkTAFI23wY
- 4JQqIk7aSPAHPi7aO8vuONGEFixlQyvHuKtYd96S6dnSDC3kTrnZ0CJ0AHFPjSFeFar25V9
- 0qr2PiT5HVcVdljETY19od8XqhS2ONHZ2wAFylPgOxt7Ooj50h4zRI6/fZbp/eQ/eN4jqOH
- 8SWUlo2qX8No56S3OrQMA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:uxog4OasyDE=:30aOPYieE22zVS7RugQFSG
- MGtlpzJCqlfKbf/rTgpfxInfV0fZFkYN78qnUnLErRGd9PIRDesDJlDFhT9cF4htkcK8YEe8N
- dMnpjKjxsf7p43UivFBdyPdx2k1k4jWh7ZRQoQ3zLSBt/PcdXRXWr+IAmM9G8vR+js475lvEC
- 1WF7fvm6NvTpDTjjZwEaMaQ74ddPwdnPXqK/nxTzFo6v30x0BQS0+5qGpBXIUNaz9p2n89NqT
- hPfa0niCVRk1l+uNKJPQcnxcvUboo7Ufo/C0ZJnpM7G2Vb0MpEFJ1dNkU3Ieo/ttTbHM+wD8O
- GEoLOvNwkXA5gGlStEiRQ1WIRo9O+7AufgSha5E+JS8jnzJXb0pZuWwUan84cd5irziZaTY+P
- 9B6jFAAn8nE7LhuTYVRr5NPcAXsP5jTyGblBNfArgTZcUOwXCwOA4jMpKHiBPrmr66rIoSzIF
- 4nsePPvqVFIoq/ORgZypeTYFne8z1dCYTK27n+XydJ9xBq0QCadRfxdwnNUYVTFah2ys3a9Gp
- JavZcEta4lSHyTJZdRS/fvCcyNFde+2JVUJlcAu4lbVkCwPNC8g2Xt7J6Og7KF01oAPIxNCmy
- KQAs9nlytDlNLDXN7f9jD/8ru/1KOwOhk5k7GAQjcaKmoiUM5SrRlA2S15Ar5SbLigzCky0lG
- A6VHRw7KdEil4xrQFlLLK0OYQdsuHV/Dre68ODuChG7Gsy+AlaTmWPq8OVBzz+C8IOeK7Jkau
- xI/dhdqW//8HsAlmkfQHMwVbXxmsd7QAPC9XeQ0vnKi3KFW3CAxim6U864045CYHMEeSZZ1fD
- T6ROYHWL+pfevGvdoqdTHF3fM/cnA==
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Change the gitweb tests to skip when we can't load the Time::HiRes
+module.
 
-On Wed, 1 Mar 2017, Junio C Hamano wrote:
+Gitweb needs this module to work. It has been in perl core since v5.8,
+which is the oldest version we support. However CentOS (and perhaps
+some other distributions) carve it into its own non-core-perl package
+that's not installed along with /usr/bin/perl by default. Without this
+we'll hard fail the gitweb tests when trying to load the module.
 
-> Linus Torvalds <torvalds@linux-foundation.org> writes:
-> 
-> > That said, I think that it would be lovely to just default to
-> > USE_SHA1DC and just put the whole attack behind us. Yes, it's slower.
-> > No, it doesn't really seem to matter that much in practice.
-> 
-> Yes.  It would be a very good goal.
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
+ t/gitweb-lib.sh | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-So let me get this straight: not only do we now implicitly want to bump
-the required C compiler to C99 without any grace period worth mentioning
-[*1*], we are also all of a sudden no longer worried about a double digit
-percentage drop of speed [*2*]?
+diff --git a/t/gitweb-lib.sh b/t/gitweb-lib.sh
+index 59ef15efbd..b7a73874e7 100644
+--- a/t/gitweb-lib.sh
++++ b/t/gitweb-lib.sh
+@@ -114,4 +114,9 @@ perl -MCGI -MCGI::Util -MCGI::Carp -e 0 >/dev/null 2>&1 || {
+ 	test_done
+ }
+ 
++perl -mTime::HiRes -e 0  >/dev/null 2>&1 || {
++	skip_all='skipping gitweb tests, Time::HiRes module not available'
++	test_done
++}
++
+ gitweb_init
+-- 
+2.11.0
 
-Puzzled,
-Johannes
-
-Footnote *1*: I know, it is easy to forget that some developers cannot
-choose their tools, or even their hardware. In the past, we seemed to take
-appropriate care, though.
-
-Footnote *2*: With real-world repositories of notable size, that
-performance regression hurts. A lot. We just spent time to get the speed
-of SHA-1 down by a couple percent and it was a noticeable improvement here.
