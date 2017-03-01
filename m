@@ -2,87 +2,132 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 965BC2023D
-	for <e@80x24.org>; Wed,  1 Mar 2017 21:18:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 44F6D2023D
+	for <e@80x24.org>; Wed,  1 Mar 2017 21:18:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753300AbdCAVRx (ORCPT <rfc822;e@80x24.org>);
-        Wed, 1 Mar 2017 16:17:53 -0500
-Received: from mail-yw0-f170.google.com ([209.85.161.170]:34624 "EHLO
-        mail-yw0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753271AbdCAVRm (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Mar 2017 16:17:42 -0500
-Received: by mail-yw0-f170.google.com with SMTP id p77so43108533ywg.1
-        for <git@vger.kernel.org>; Wed, 01 Mar 2017 13:17:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=kmmXMAx+L2B2eZXbkG4YoHr10xhCkBuTD/lfZLcxOrY=;
-        b=QEuW8xMVGEqJ3NlJVdUyxNMdyJrKUmJZ5m++0gyQN0gtiWvmtA7vwDRC3xHqopvHCE
-         yDdBRUViQEI9kiiP0upRiHYI6QVkvTAtVX2Sx4UPeeQIJKwLHjyPha7WEYgzYTzvON2K
-         21kjI/8gMawynVtuNAWlAQ+UDLh8MLXdtDcY0WVTYNwx6KGJWfjxGD+eEHF+b5UQkeik
-         9F4RtwqAOVIMNOLl8tB6dSza33898WjU8AExfNuTGqIZpYJpa/CDIPXiBnIOU2jdi7mu
-         mYwOWHsOxuEQsDEn6JLz4QsAYDaCUkt+fHnIa+3MR5lItgQjbk1aoM2sCdtPr1Z9T2hJ
-         rH1w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=kmmXMAx+L2B2eZXbkG4YoHr10xhCkBuTD/lfZLcxOrY=;
-        b=chmnd3Lv8AM/okpdB5E/D58gM3EZT4lp3zXCbwlsEdntQW/3BARfBm6iJep495fLQb
-         w+0VXkseCEm47Kk6BK6/LXMMRXfJNgpOn2QTFtkCrGn9kl+xx+evpr+WbgHmTYntYTZ0
-         72GftkAAuSGNxPlo95o20lAUZXVWAEnue6WBfTl5bNy1hc9tgw4ZjGq9Y2JNSNDbvl7N
-         1t4ZI/GXZbpVQnQ5pbX8qPxZg3ih2cabDnIodoHKu0OR3H4V/AFEMJuGDp4CkJ3GUCQp
-         5lkaet9wDiQylK7hq26GghHONbtBIZOwwrMJ7BaVGnkMw2sxX1i/PGtJ/yE2F+OmVnVF
-         G1Aw==
-X-Gm-Message-State: AMke39nIPF/OzXuLtAx1jFx6WQcW76DTopkJ8cD5BArQDdcIKwnssscxjCC8jMbpIhz372V2IaXws4S1jD2Wfg==
-X-Received: by 10.129.182.20 with SMTP id u20mr4413424ywh.286.1488399590265;
- Wed, 01 Mar 2017 12:19:50 -0800 (PST)
+        id S1753316AbdCAVSI (ORCPT <rfc822;e@80x24.org>);
+        Wed, 1 Mar 2017 16:18:08 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:60480 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1753304AbdCAVSF (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Mar 2017 16:18:05 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id C4C3E77CBD;
+        Wed,  1 Mar 2017 16:14:03 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=pRefPztMNRTzqdKUIcChZZu3E6w=; b=IcK117
+        Vt0Ub3H4Xj/elPXMQF1GPjJOL1Fe7DgGMsgaNK/wohPK7ma7CHP6pg+/ljGrmGW2
+        eftjQuBHD5xUpe2iypLClq/QS9LQ6fyBSHznZBbLGndrx9FYMEI7xROy25ZvIOoP
+        Yu2pgp9R0F86RcYA9q4oQEs8//PI+s2sGEBwU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=f+mvgnfyuNP4Dsy5Eoru/A/pVQ0iDI8Z
+        yM5bA1LdVgjOPyqJsS2gO2iZgnWutNb6c5ZZhYc4rJWu1jFzDxAkAF40GXqBauaZ
+        zEYV8RZvEeVlo0yhHPOFEN5AC0Jvx9MYigQu87yl4jztCKYyU+oPCcHG1tt6eZDn
+        zqu9Viix/0c=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id BCBCC77CBB;
+        Wed,  1 Mar 2017 16:14:03 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 2D2EB77CBA;
+        Wed,  1 Mar 2017 16:14:03 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     tboegi@web.de
+Cc:     git@vger.kernel.org, mac@mcrowe.com
+Subject: Re: [PATCH v1 1/1] git diff --quiet exits with 1 on clean tree with CRLF conversions
+References: <xmqqshmyhtnu.fsf@gitster.mtv.corp.google.com>
+        <20170301170444.14274-1-tboegi@web.de>
+Date:   Wed, 01 Mar 2017 13:14:01 -0800
+In-Reply-To: <20170301170444.14274-1-tboegi@web.de> (tboegi@web.de's message
+        of "Wed, 1 Mar 2017 18:04:44 +0100")
+Message-ID: <xmqqr32gg0o6.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.129.67.40 with HTTP; Wed, 1 Mar 2017 12:19:29 -0800 (PST)
-In-Reply-To: <4d2a1852-8c84-2869-78ad-3c863f6dcaf7@gmail.com>
-References: <4d2a1852-8c84-2869-78ad-3c863f6dcaf7@gmail.com>
-From:   Martin Langhoff <martin.langhoff@gmail.com>
-Date:   Wed, 1 Mar 2017 15:19:29 -0500
-Message-ID: <CACPiFC+=ZpHT=xh7Y8f68BcXxNYx8EFJfzqqG2ub4NL=uREu7g@mail.gmail.com>
-Subject: Re: Delta compression not so effective
-To:     Marius Storm-Olsen <mstormo@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
+X-Pobox-Relay-ID: FF04E1B0-FEC3-11E6-8684-97B1B46B9B0B-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Mar 1, 2017 at 8:51 AM, Marius Storm-Olsen <mstormo@gmail.com> wrote:
-> BUT, even still, I would expect Git's delta compression to be quite effective, compared to the compression present in SVN.
+tboegi@web.de writes:
 
-jar files are zipfiles. They don't delta in any useful form, and in
-fact they differ even if they contain identical binary files inside.
+> From: Junio C Hamano <gitster@pobox.com>
+>
+> git diff --quiet may take a short-cut to see if a file is changed
+> in the working tree:
+> Whenever the file size differs from what is recorded in the index,
+> the file is assumed to be changed and git diff --quiet returns
+> exit with code 1
+>
+> This shortcut must be suppressed whenever the line endings are converted
+> or a filter is in use.
+> The attributes say "* text=auto" and a file has
+> "Hello\nWorld\n" in the index with a length of 12.
+> The file in the working tree has "Hello\r\nWorld\r\n" with a length of 14.
+> (Or even "Hello\r\nWorld\n").
+> In this case "git add" will not do any changes to the index, and
+> "git diff -quiet" should exit 0.
 
->     Commits: 32988
->     DB (server) size: 139GB
+The thing I find the most disturbing is that at this point in the
+flow, p->one->size and p->two->size are supposed to be the sizes of
+the blob object, not the contents of the file on the working tree.
+IOW, p->two->size being 14 in the above example sounds like pointing
+at a different bug, if it is 14.  
 
-Are you certain of the on-disk storage at the SVN server? Ideally,
-you've taken the size with a low-level tool like `du -sh
-/path/to/SVNRoot`.
+The early return in diff_populate_filespec(), where it does
 
-Even with no delta compression (as per Junio and Linus' discussion),
-based on past experience importing jar/wars/binaries from SVN into
-git... I'd expect git's worst case to be on-par with SVN, perhaps ~5%
-larger due to compression headers on uncompressible data.
+	s->size = xsize_t(st.st_size);
+	...
+	if (size_only)
+		return 0;
 
-cheers,
+way before it runs convert_to_git(), may be the real culprit.
 
+I am wondering if the real fix would be to do this, instead of the
+two extra would_convert_to_git() call there in the patch you sent.
+The result seems to still pass the new test in your patch.
 
-m
--- 
- martin.langhoff@gmail.com
- - ask interesting questions  ~  http://linkedin.com/in/martinlanghoff
- - don't be distracted        ~  http://github.com/martin-langhoff
-   by shiny stuff
+Thanks for helping.
+
+ diff.c | 19 ++++++++++++++++++-
+ 1 file changed, 18 insertions(+), 1 deletion(-)
+
+diff --git a/diff.c b/diff.c
+index 8c78fce49d..dc51dceb44 100644
+--- a/diff.c
++++ b/diff.c
+@@ -2792,8 +2792,25 @@ int diff_populate_filespec(struct diff_filespec *s, unsigned int flags)
+ 			s->should_free = 1;
+ 			return 0;
+ 		}
+-		if (size_only)
++
++		/*
++		 * Even if the caller would be happy with getting
++		 * only the size, we cannot return early at this
++		 * point if the path requires us to run the content
++		 * conversion.
++		 */
++		if (!would_convert_to_git(s->path) && size_only)
+ 			return 0;
++
++		/*
++		 * Note: this check uses xsize_t(st.st_size) that may
++		 * not be the true size of the blob after it goes
++		 * through convert_to_git().  This may not strictly be
++		 * correct, but the whole point of big_file_threashold
++		 * and is_binary check is that we want to avoid
++		 * opening the file and inspecting the contents, so
++		 * this is probably fine.
++		 */
+ 		if ((flags & CHECK_BINARY) &&
+ 		    s->size > big_file_threshold && s->is_binary == -1) {
+ 			s->is_binary = 1;
