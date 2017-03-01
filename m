@@ -2,102 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0934720133
-	for <e@80x24.org>; Wed,  1 Mar 2017 06:08:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2E3211F5FB
+	for <e@80x24.org>; Wed,  1 Mar 2017 08:57:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751936AbdCAGIN (ORCPT <rfc822;e@80x24.org>);
-        Wed, 1 Mar 2017 01:08:13 -0500
-Received: from mout.web.de ([212.227.17.11]:60288 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751928AbdCAGIM (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Mar 2017 01:08:12 -0500
-Received: from [192.168.178.36] ([79.213.126.222]) by smtp.web.de (mrweb103
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0LhNs4-1bwHDl0pG4-00mbfO; Tue, 28
- Feb 2017 22:31:53 +0100
-Subject: Re: [PATCH 0/6] Use time_t
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>
-References: <cover.1488231002.git.johannes.schindelin@gmx.de>
- <20170228142802.hu5esthnqdsgc2po@sigill.intra.peff.net>
- <f6b57868-0173-48d9-86cb-79780f7e301b@web.de>
- <xmqqa896kuve.fsf@gitster.mtv.corp.google.com>
- <alpine.DEB.2.20.1702282149160.3767@virtualbox>
-Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <6bd6ef64-2749-f17a-aea8-d25b147892c5@web.de>
-Date:   Tue, 28 Feb 2017 22:31:49 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
- Thunderbird/45.7.1
+        id S1751835AbdCAI50 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 1 Mar 2017 03:57:26 -0500
+Received: from mail-sn1nam01on0120.outbound.protection.outlook.com ([104.47.32.120]:3680
+        "EHLO NAM01-SN1-obe.outbound.protection.outlook.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1751560AbdCAI5Y (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Mar 2017 03:57:24 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=selector1; h=From:Date:Subject:Message-ID:Content-Type:MIME-Version;
+ bh=GWeJpW1zwK0zIx3EOUh1w7XrH2kn5gclgB/d1xXo574=;
+ b=QXOkvpQm/Q7V2YRyLLuX1nZLaxd8OYKCsByfcpTpK7WjDtH1GXjXUkSsBR8u9zseH40hbSuMikZkfCCUaE6ALdNokC0ossPkq+8X3ipCrKj00WI+IZiuWahCv4dW8fQOm+X+gOY7fq6MzoNqt+sHiVU/6mA3FIwa8eEJcAXtsQA=
+Received: from CY1PR0301MB2107.namprd03.prod.outlook.com (10.164.2.153) by
+ CY1PR0301MB2107.namprd03.prod.outlook.com (10.164.2.153) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P384) id
+ 15.1.933.12; Wed, 1 Mar 2017 08:57:21 +0000
+Received: from CY1PR0301MB2107.namprd03.prod.outlook.com ([10.164.2.153]) by
+ CY1PR0301MB2107.namprd03.prod.outlook.com ([10.164.2.153]) with mapi id
+ 15.01.0933.020; Wed, 1 Mar 2017 08:57:21 +0000
+From:   Dan Shumow <danshu@microsoft.com>
+To:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
+CC:     Linus Torvalds <torvalds@linux-foundation.org>,
+        Joey Hess <id@joeyh.name>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: RE: SHA1 collisions found
+Thread-Topic: SHA1 collisions found
+Thread-Index: AQHSkffFO/OFlfJrmU2TJcJuGQpvwaF/rZlg
+Date:   Wed, 1 Mar 2017 08:57:21 +0000
+Message-ID: <CY1PR0301MB210787306B549D00238FD37FC4290@CY1PR0301MB2107.namprd03.prod.outlook.com>
+References: <20170223184637.xr74k42vc6y2pmse@sigill.intra.peff.net>
+ <CA+55aFx=0EVfSG2iEKKa78g3hFN_yZ+L_FRm4R749nNAmTGO9w@mail.gmail.com>
+ <20170223193210.munuqcjltwbrdy22@sigill.intra.peff.net>
+ <CA+55aFxmr6ntWGbJDa8tOyxXDX3H-yd4TQthgV_Tn1u91yyT8w@mail.gmail.com>
+ <20170223195753.ppsat2gwd3jq22by@sigill.intra.peff.net>
+ <alpine.LFD.2.20.1702231428540.30435@i7.lan>
+ <20170223224302.joti4zqucme3vqr2@sigill.intra.peff.net>
+ <20170223230507.kuxjqtg3ghcfskc6@sigill.intra.peff.net>
+ <xmqqefyikvin.fsf@gitster.mtv.corp.google.com>
+ <xmqq60jukubq.fsf@gitster.mtv.corp.google.com>
+ <20170228192044.cn56puazsa3wtlkd@sigill.intra.peff.net>
+In-Reply-To: <20170228192044.cn56puazsa3wtlkd@sigill.intra.peff.net>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: peff.net; dkim=none (message not signed)
+ header.d=none;peff.net; dmarc=none action=none header.from=microsoft.com;
+x-originating-ip: [76.121.229.23]
+x-ms-office365-filtering-correlation-id: 4afda082-e8b8-436c-1c82-08d46080f8db
+x-ms-office365-filtering-ht: Tenant
+x-microsoft-antispam: UriScan:;BCL:0;PCL:0;RULEID:(22001)(48565401081);SRVR:CY1PR0301MB2107;
+x-microsoft-exchange-diagnostics: 1;CY1PR0301MB2107;7:WNydiYpHpaSXja1Ixl9XyTs+48H/2Sj3FlwGJF99p2v4yobun7IAlEE5pyI8TjgAw45B/zXn+fYpzU0KvFuyNp3kshKIMZWkOosI2vde68T03gbVOzKgxppoMHVH2ZLKwNIfxj+0VTbUJCEGi4TEkfdq9VVyXML+ccdELBaKfWUbUZN8T+ELgJxy///yvFEoImVTSAIVdF9Ao2C4Ub28JiXgFtrDVgK/oetCC+ilo9gBtZkMEY3h8Fdc5B2I6cKeTh0eJjwuPAvph0NMR5m/JWZ38INyo40H3GxMTPVGenr491NiyeEoo1d5DLYRotJQeCbO7FQDPCxhU42d1/XlWME2mthTjm+ru5XwJ0bKA5c=
+x-microsoft-antispam-prvs: <CY1PR0301MB2107985265B84CD7299AD359C4290@CY1PR0301MB2107.namprd03.prod.outlook.com>
+x-exchange-antispam-report-test: UriScan:;
+x-exchange-antispam-report-cfa-test: BCL:0;PCL:0;RULEID:(61425038)(6040375)(601004)(2401047)(8121501046)(5005006)(3002001)(10201501046)(6055026)(61426038)(61427038)(6041248)(20161123562025)(20161123558025)(20161123555025)(20161123564025)(20161123560025)(6072148)(6042181);SRVR:CY1PR0301MB2107;BCL:0;PCL:0;RULEID:;SRVR:CY1PR0301MB2107;
+x-forefront-prvs: 0233768B38
+x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(6009001)(7916002)(106116001)(81166006)(8676002)(7116003)(54906002)(5660300001)(5005710100001)(77096006)(55016002)(99286003)(2950100002)(74316002)(10290500002)(8656002)(25786008)(92566002)(6506006)(10090500001)(4326008)(6436002)(3660700001)(8990500004)(3280700002)(8936002)(38730400002)(53936002)(6246003)(33656002)(9686003)(229853002)(2906002)(7736002)(189998001)(93886004)(305945005)(122556002)(2900100001)(102836003)(66066001)(3846002)(50986999)(6116002)(7696004)(86362001)(54356999)(76176999)(473944003);DIR:OUT;SFP:1102;SCL:1;SRVR:CY1PR0301MB2107;H:CY1PR0301MB2107.namprd03.prod.outlook.com;FPR:;SPF:None;MLV:sfv;LANG:en;
+spamdiagnosticoutput: 1:99
+spamdiagnosticmetadata: NSPM
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-In-Reply-To: <alpine.DEB.2.20.1702282149160.3767@virtualbox>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K0:MazNTTQA1B8nvy3cDmFPWryZrTbO2IID27rFwBvhwUDqiP5helP
- Kmt1tFUWo8mbxbV6n26coHwS6nvSXqX0iIbs6q/ogekEwE/FGsbb13SEN3Cj9EyNWku7zY/
- tZLmCG8hzOD4vvCgSE3oUdXMlbKpIpNyKGgu4pmLWfLtoTXccFS0PtuOTdsmchwyrLlEGCl
- YIrtZT5PkpPjzphSEmhHQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:CSG9cvjzm90=:7xpB7o+zIlBK5pczW6J3KK
- 27pMLSf4dbB0uWbCAVaiFAxM4kshyQXyX+GDxT2X2nRhuZDpY1apTHC8PkD1GVrgCdPYvW4V2
- +xmz142Yp7AdgPAqPUSZRQBJ8zBfNOXE22L1fg37tUiL8NCoDTZqcSvCqUEKWN7+qY56Tvpap
- yom53eKl5V4AefFp8MA9Feh84QhiKZDWPwV+Xvc/ubWjeZL1nJFRu1ywtB7P5wx9bbsQUMP7k
- hzllaS6ht4mIjreRNYsU6LtXKdKBPta6umA59LZ/wMKHeCdcmKimZPJz7lm07ESZG7Vq/9NM6
- uRVS9SLI0NS2MMDDjnvTr5avY7FrZlNYJugPyo9k9AYQ6m9zbRxr8iyccj42oqZz1J0GjW/vM
- kN6KIiHbsKgJgCc91omHtn3X7S2zbYxJ0rPRMjDpNdHISp1gpK741FgedQV13KnssjgJ7n2WP
- ztgHYAvj35W7yzR/eOLSYGNC2nj0kCv4XGAbvpxGEXcpcFSFZs7K+z+PYphVx5rmfZjFjOOOn
- JX4aPeAEPvwMjNST7jUnJoytrVPR0skaSJdKojqgrlsEYB0AFiBnqHUFTgEt9dKZ0LY+uj2Ay
- aIEWH/e8O0BguvPJYPAqRw/LR2F1tVMBi61fH8sLyZxPvXaohh/sASqqG2dOvYKs85fj+Uqbu
- MRcPQPMcm4+6ThFlmYc79azi0mb/qV69Hbvmo9F85As3iwKEnCAd00QlWz8UCafGzUb0pjIQY
- er3Z0LQAjm6VCfWLEfbZDAS0LX45HLJMpqKgj1ABoMWpsCwDWnBRNwJIEBMXMNPhc/jFMOU3C
- MsUBA03
+X-OriginatorOrg: microsoft.com
+X-MS-Exchange-CrossTenant-originalarrivaltime: 01 Mar 2017 08:57:21.1553
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 72f988bf-86f1-41af-91ab-2d7cd011db47
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY1PR0301MB2107
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 28.02.2017 um 21:54 schrieb Johannes Schindelin:
-> Hi Junio,
->
-> On Tue, 28 Feb 2017, Junio C Hamano wrote:
->
->> René Scharfe <l.s.r@web.de> writes:
->>
->>> Am 28.02.2017 um 15:28 schrieb Jeff King:
->>>
->>>> It looks from the discussion like the sanest path forward is our own
->>>> signed-64bit timestamp_t. That's unfortunate compared to using the
->>>> standard time_t, but hopefully it would reduce the number of knobs
->>>> (like TIME_T_IS_INT64) in the long run.
->>>
->>> Glibc will get a way to enable 64-bit time_t on 32-bit platforms
->>> eventually (https://sourceware.org/glibc/wiki/Y2038ProofnessDesign).
->>> Can platforms that won't provide a 64-bit time_t by 2038 be actually
->>> used at that point?  How would we get time information on them?  How
->>> would a custom timestamp_t help us?
->>
->> That's a sensible "wait, let's step back a bit".  I take it that you are
->> saying "time_t is just fine", and I am inclined to agree.
->>
->> Right now, they may be able to have future timestamps ranging to
->> year 2100 and switching to time_t would limit their ability to
->> express future time to 2038 but they would be able to express
->> timestamp in the past to cover most of 20th century.  Given that
->> these 32-bit time_t software platforms will die off before year 2038
->> (either by underlying hardware getting obsolete, or software updated
->> to handle 64-bit time_t), the (temporary) loss of 2038-2100 range
->> would not be too big a deal to warrant additional complexity.
->
-> You seem to assume that time_t is required to be signed. But from my
-> understanding that is only guaranteed by POSIX, not by ISO C.
->
-> We may very well buy ourselves a ton of trouble if we decide to switch to
-> `time_t` rather than to `int64_t`.
-
-True, and time_t doesn't even have to be an integer type.  But which 
-platforms capable of running git use something else than int32_t or int64_t?
-
-René
+PiAgIC0gRGFuIHRpbWVkIHRoZSBzaGExZGMgaW1wbGVtZW50YXRpb24gd2l0aCBhbmQgd2l0aG91
+dCB0aGUgY29sbGlzaW9uDQo+ICAgICBkZXRlY3Rpb24gZW5hYmxlZC4gVGhlIHNoYTEgaW1wbGVt
+ZW50YXRpb24gaXMgb25seSAxLjMzeCBzbG93ZXIgdGhhbg0KPiAgICBibG9jay1zaGExIChmb3Ig
+cmF3IHNoYTEgdGltZSkuIEFkZGluZyBpbiB0aGUgZGV0ZWN0aW9uIG1ha2VzIGl0DQo+ICAgIDIu
+Nnggc2xvd2VyLg0KDQogPiAgICBTbyB0aGVyZSdzIHNvbWUgcG90ZW50aWFsIGdhaW4gZnJvbSBv
+cHRpbWl6aW5nIHRoZSBzaGExDQogPiAgICBpbXBsZW1lbnRhdGlvbiwgYnV0IHVsdGltYXRlbHkg
+d2UgbWF5IGJlIGxvb2tpbmcgYXQgYSAyeCBzbG93ZG93biB0bw0KID4gICAgIGFkZCBpbiB0aGUg
+Y29sbGlzaW9uIGRldGVjdGlvbi4NCg0KSSByZWFycmFuZ2VkIG91ciBjb2RlIGEgbGl0dGxlIGJp
+dCBhbmQgaW50ZXJsZWF2ZWQgdGhlIG1lc3NhZ2UgZXhwYW5zaW9uIGFuZCByb3VuZHMuICBUaGlz
+IGJyaW5nIG91ciByYXcgU0hBLTEgaW1wbGVtZW50YXRpb24gKHdpdGhvdXQgY29sbGlzaW9uIGRl
+dGVjdGlvbikgZG93biB0byAxLjExeCBzbG93ZXIgdGhhbiB0aGUgYmxvY2stc2hhMSBpbXBsZW1l
+bnRhdGlvbiBpbiBHaXQuICBBZGRpbmcgdGhlIGNvbGxpc2lvbiBkZXRlY3Rpb24gYnJpbmdzIHVz
+IHRvIDIuMTJ4IHNsb3dlciB0aGFuIHRoZSBibG9jay1zaGExIGltcGxlbWVudGF0aW9uLiAgVGhp
+cyB3YXMgYmFzaWNhbGx5IGF0dGFja2luZyB0aGUgbG93IGhhbmdpbmcgZnJ1aXQgaW4gb3B0aW1p
+emluZyBvdXIgaW1wbGVtZW50YXRpb24uICBUaGVyZSBhcmUgc29tZSB0aGluZ3MgdGhhdCBJIGhh
+dmVuJ3QgbG9va2VkIGludG8geWV0LCBidXQgSSdtIGJhc2ljYWxseSBhdCB0aGUgcG9pbnQgb2Yg
+c3RhcnRpbmcgdG8gY29tcGFyZSB0aGUgZ2VuZXJhdGVkIGFzc2VtYmxlciB0byBzZWUgd2hhdCdz
+IGRpZmZlcmVudCBiZXR3ZWVuIG91ciBpbXBsZW1lbnRhdGlvbnMuDQoNCk9wZW5TU0wncyBTSEEx
+IGltcGxlbWVudGF0aW9uIGlzIGltcGxlbWVudGVkIGluIGFzc2VtYmxlciwgc28gdGhlcmUncyBu
+byB3YXkgd2UncmUgZ29pbmcgdG8gZ2V0IGNsb3NlIHRvIHRoYXQgd2l0aCBqdXN0IEMgbGV2ZWwg
+Y29kaW5nLg0KDQpUaGFua3MsDQpEYW4NCg==
