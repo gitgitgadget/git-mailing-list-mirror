@@ -2,56 +2,56 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C656B2023D
-	for <e@80x24.org>; Wed,  1 Mar 2017 12:03:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 060E22023D
+	for <e@80x24.org>; Wed,  1 Mar 2017 12:07:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752599AbdCAMCt (ORCPT <rfc822;e@80x24.org>);
-        Wed, 1 Mar 2017 07:02:49 -0500
-Received: from mail-oi0-f52.google.com ([209.85.218.52]:36157 "EHLO
-        mail-oi0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752543AbdCAMBW (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Mar 2017 07:01:22 -0500
-Received: by mail-oi0-f52.google.com with SMTP id f192so21018206oic.3
-        for <git@vger.kernel.org>; Wed, 01 Mar 2017 04:01:21 -0800 (PST)
+        id S1752285AbdCAMHt (ORCPT <rfc822;e@80x24.org>);
+        Wed, 1 Mar 2017 07:07:49 -0500
+Received: from mail-ot0-f196.google.com ([74.125.82.196]:36015 "EHLO
+        mail-ot0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750709AbdCAMHs (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Mar 2017 07:07:48 -0500
+Received: by mail-ot0-f196.google.com with SMTP id i1so3990263ota.3
+        for <git@vger.kernel.org>; Wed, 01 Mar 2017 04:06:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=XvpBl0q+hNRyW1iYBXiaDcitz3O8/8x6cGzHzcJX4+A=;
-        b=SdePGvtoydVUd/TmGib9NrhaG1Q/e0dPtphOj79S2hh3mYbUwVCCGe5CtCR17oOygG
-         oRhwBpkN1GCzpzGjpG9qW8km/XUC9s7lWiB0HuCzbHwClbSd2SSfHrghySrkb1PF/DZr
-         rkQoVcCtDEJckEId6NK7rfu8zCVKtI1giB8+yAJ2zjBIX51/RYiIVQWMjfwlyZVdIQzk
-         UuNc7QB9GmLWYppk9dLP+wJCh/lSBMjKaQKjRkRwulufZ2MCjkWxbGUPpTUanSPAmTYx
-         gh3L//fXoDuzu+bzSQhDy+OElhXdoxUu6UJ7/KaSdHpYs9+qTqCJ8nwoVQJVN4a5kwxJ
-         6iaQ==
+         :cc:content-transfer-encoding;
+        bh=ibhSJPvQk8wKIN2HEX23VfDN28Ro+0JBQWqHjuIrNvg=;
+        b=Y5WyeOrrl33vZd5dP1pdq/314Wc+c5Os1a8++R+/aSZu+P5izf1Z+82xNBGo3bfBjT
+         Rh6MZvwyINAY8FauzSBHSQRqHgyaJ3Ncp5uZcuPTh+KqJlR2WUlzW2zD+J4dk5VTqlQt
+         h2AcY9XtBNMtfzjUH5962L5UZiMEwPDl0gbBnRHsNS1boBAZR2y/J0jEHFE3O8Jm/Ksg
+         l+jQM4wJHQrY4br7qbyyuuUa81S5lz6OUI/uL4rAaQ/qlgFvjUqJS8yX7VMlBqFdBViO
+         RxMGUxx8i1lMca2R4Plh+XTwp3/vf2eN0I6T7r6g3TPLKbhI/c+9l7eoVTev1IqM/zcy
+         71DA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=XvpBl0q+hNRyW1iYBXiaDcitz3O8/8x6cGzHzcJX4+A=;
-        b=mwW12JG6re8e3UQKFSQknBrBiewUe993wOqJ0+hgFGs3KtU0Fdt7Vj49fFOxZgwOeS
-         S5c/hDtnWjYidIX5aXZ1FsDE23zlJC3b334W0UhdutROjvRbT1SdvFfOoS2KDRumXzp6
-         HaOu1tGBgPw/gegKW09V9c3GV+hU2qjAoTzMB/mKHZKLzEekuWJKAvHA/97npQzC5eoE
-         n0am/jGsNUK0lO9QA/+fHXONyeeTYXUXxyv1HpZpHU5ODWfJWMwWRta8JX61Ef05h6+y
-         7zVFwYYc+rQwiF84wGqYXqzJGKWChwvJWaCX+9pqArNSMHFAiOn8lsI1NNESULe2ELRo
-         aFnQ==
-X-Gm-Message-State: AMke39lNBgY9Mte0tD8VZb28OomnsgPpvZ4sFHA5Kx/GCOkwjlh2JUXJr/LSM96nit2707m/FeFA0oCvA7QlUA==
-X-Received: by 10.202.207.134 with SMTP id f128mr4127489oig.55.1488369681052;
- Wed, 01 Mar 2017 04:01:21 -0800 (PST)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=ibhSJPvQk8wKIN2HEX23VfDN28Ro+0JBQWqHjuIrNvg=;
+        b=bUim8x1+Nga49PzAvY2UmElhgH1GdHTb0xXWQMHWaqWgELRzV4oP/YM30ptcY0k6Kl
+         GMIHR4nKBKs/XMYRug2UTqe3KjnQXVpPWxAFsXFz4VVwPwhMU9FDjHpb33eGQJGrAxOh
+         5d1EG67PqkXLfoNDCeARAErjvmC1ZfjrZa2+ErLzDPC9zhy0ajJedT+NhdD7aymbKF5c
+         9Uf3ZQGNtEbG+uCmE8lgI6tybo7j0I2DD0l7N07RoYOWefZNNB3z4GdnziCIV00hidD2
+         oF0y+gIJVS7zroCkMORTMxX4FXnpxdMWhIbb5PzkhwS5oNdfASZiK2J2QHWLNFKHF+N4
+         s1qw==
+X-Gm-Message-State: AMke39nTY9oOV/125oDuOVRZ6ypZMSA1nMymCyJeM9akbE2EqcfBbhIa/IGQffMGNmX5OuMsLvE/UfjZQ1/uSQ==
+X-Received: by 10.157.18.132 with SMTP id g4mr4339373otg.10.1488369994754;
+ Wed, 01 Mar 2017 04:06:34 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.74.158.84 with HTTP; Wed, 1 Mar 2017 04:00:50 -0800 (PST)
-In-Reply-To: <92ff53b6-8a85-9be8-e14f-18eb1fcaf732@alum.mit.edu>
+Received: by 10.74.158.84 with HTTP; Wed, 1 Mar 2017 04:06:04 -0800 (PST)
+In-Reply-To: <0bef1e49-e96b-1666-9b88-f4262c2aeeba@alum.mit.edu>
 References: <20170218133303.3682-1-pclouds@gmail.com> <20170222140450.30886-1-pclouds@gmail.com>
- <20170222140450.30886-13-pclouds@gmail.com> <92ff53b6-8a85-9be8-e14f-18eb1fcaf732@alum.mit.edu>
+ <20170222140450.30886-10-pclouds@gmail.com> <0bef1e49-e96b-1666-9b88-f4262c2aeeba@alum.mit.edu>
 From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Wed, 1 Mar 2017 19:00:50 +0700
-Message-ID: <CACsJy8BvKvo8_bRHH++dp53DaPbDVkKU0EUQC7ofYvBo+Tec0Q@mail.gmail.com>
-Subject: Re: [PATCH v5 12/24] refs.c: kill register_ref_store(), add register_submodule_ref_store()
+Date:   Wed, 1 Mar 2017 19:06:04 +0700
+Message-ID: <CACsJy8ArGqrRCsVgpumu1u4+1_2chWARgLG_2Kmpq5p-nmcWfg@mail.gmail.com>
+Subject: Re: [PATCH v5 09/24] refs.c: introduce get_main_ref_store()
 To:     Michael Haggerty <mhagger@alum.mit.edu>
 Cc:     Git Mailing List <git@vger.kernel.org>,
         Junio C Hamano <gitster@pobox.com>,
@@ -60,26 +60,46 @@ Cc:     Git Mailing List <git@vger.kernel.org>,
         Stefan Beller <sbeller@google.com>,
         David Turner <novalis@novalis.org>
 Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Mar 1, 2017 at 1:03 AM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
->>  struct ref_store *get_ref_store(const char *submodule)
->>  {
->>       struct strbuf submodule_sb = STRBUF_INIT;
->> @@ -1480,6 +1479,9 @@ struct ref_store *get_ref_store(const char *submodule)
->>       if (is_nonbare_repository_dir(&submodule_sb))
->>               refs = ref_store_init(submodule);
->>       strbuf_release(&submodule_sb);
+On Wed, Mar 1, 2017 at 12:51 AM, Michael Haggerty <mhagger@alum.mit.edu> wr=
+ote:
+> On 02/22/2017 03:04 PM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
+>> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.=
+com>
+>> ---
+>>  refs.c | 16 ++++++++++++----
+>>  1 file changed, 12 insertions(+), 4 deletions(-)
+>>
+>> diff --git a/refs.c b/refs.c
+>> index 81b64b4ed..dab1a21ac 100644
+>> --- a/refs.c
+>> +++ b/refs.c
+>> @@ -1456,15 +1456,23 @@ static struct ref_store *ref_store_init(const ch=
+ar *submodule)
+>>       return refs;
+>>  }
+>>
+>> +static struct ref_store *get_main_ref_store(void)
+>> +{
+>> +     struct ref_store *refs;
 >> +
->> +     if (refs)
+>> +     if (main_ref_store)
+>> +             return main_ref_store;
+>> +
+>> +     refs =3D ref_store_init(NULL);
+>> +     return refs;
 >
-> I think `refs` should always be non-NULL here for the same reason.
+> Unnecessary temporary variable?
 
-That's true if is_nonbar_repo... returns true. If it's false (e.g.
-uninitialized submodule) then refs remains NULL from before (I didn't
-know about this until I hit a segfault in rev-list in another series)
--- 
+That's the price for doing too much mechanical conversion :-P On
+second read, I think I did that on purpose (or by luck) because the
+"kill register_ref_store" patch needs this intermediate "refs" so we
+can save it to main_ref_store. Cleaner future patch for the minor
+uncleanliness in the current one.
+--=20
 Duy
