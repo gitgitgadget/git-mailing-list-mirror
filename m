@@ -2,110 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1D86A2023D
-	for <e@80x24.org>; Wed,  1 Mar 2017 23:46:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7CDE12023D
+	for <e@80x24.org>; Thu,  2 Mar 2017 00:06:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753794AbdCAXqa (ORCPT <rfc822;e@80x24.org>);
-        Wed, 1 Mar 2017 18:46:30 -0500
-Received: from mail-it0-f42.google.com ([209.85.214.42]:33122 "EHLO
-        mail-it0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753787AbdCAXq1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Mar 2017 18:46:27 -0500
-Received: by mail-it0-f42.google.com with SMTP id 68so9318729itg.0
-        for <git@vger.kernel.org>; Wed, 01 Mar 2017 15:46:26 -0800 (PST)
+        id S1753488AbdCBAFw (ORCPT <rfc822;e@80x24.org>);
+        Wed, 1 Mar 2017 19:05:52 -0500
+Received: from mail-ot0-f182.google.com ([74.125.82.182]:33543 "EHLO
+        mail-ot0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753279AbdCBAFs (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Mar 2017 19:05:48 -0500
+Received: by mail-ot0-f182.google.com with SMTP id k4so41601428otc.0
+        for <git@vger.kernel.org>; Wed, 01 Mar 2017 16:05:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=ok5Da7/nTGxQszFuHPDRsgw4gRcTqQckLrzQzU5nFlI=;
-        b=KEbltmwh3XPhzAy5l0NgqFPAfGUmq/CYE9JZyTHc3tmeoxWLjXBS7ofIXQdEva0oyL
-         zXt8D3g8j/mxM6jFBasK9YBJnmuZjLoL2/A9OknGpWhgJQeO+NnLkDeR5VSljP9J+Rdj
-         2Bo/62/IqAkWexncdpmEe4E3cx/1MagzIDPEgi/0FnRkRGPAoZiLpIrigERjMMPnkbnP
-         Bu0Hxn/xDoqc6XkxyMPPlI0R4UfB6ubgp1+6Fu2sNyEzrp9VSpf7yordPvSxWKjLrWVH
-         aO+V3b3PZns7ZlaKDRN2E50UJMfiMqlO1M8eOnDfSLS2nc7beT0tbTAxNEd1IbqGq2Rc
-         3ClQ==
+        h=subject:to:references:cc:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding;
+        bh=MLIfZzUDhgBIw712w8tWTEAvQX63sxuoSq1z103SL8M=;
+        b=Vn857tv1djd8qYPIp/1PIreMWhlrOC3OahUs2cj2pTWq3xvDbt6wcgE0ZmfFUODcS4
+         cAocRDS2Rl4+t85mLgHpeVkLeuCzTSSoHMvYIhOiey9yqU3iC9tP0Qip6mq6AfUD7Mef
+         20nzLddTi4gMvkjLUscGU0GArnfCy+HJL8fWsrNjz7zIUGJ1eV2Axys6U6O9nf4Cj7aI
+         fanXnlvsNoGGqEn7IOXorJLfc/dPtCmkj4XHdUe1zTd5Ww3xQkFBRkaPKr1LiDz6AUyB
+         SyX3hXAg5tpQU/0yabDR+BDwz23mdHs2E0xUmHT+fUL5fBhg2XRUefxJx0gYFpVbLgm/
+         ECFg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=ok5Da7/nTGxQszFuHPDRsgw4gRcTqQckLrzQzU5nFlI=;
-        b=anajxbeQj4tlktCRAQp1QWDrLVlRCtjC6+hjZ0LzfMleDJjxTta+nAi7xVrgKB1QPZ
-         SdHCuIpaiFsG2I6jcdvy7pR1ZqWb451piW6U/6ExNTlb3EyfX1ORvBzeV7aLnNKOjNv4
-         xBt1gIyb6FU/wk04oeoogOJ2YCsAoT4u8k8z0ONHH9ZSx6w6EMTCcp3wEdiuVOggb8aG
-         y1UrN6SRgCjUZ8p4zRLqpleJj7+0CpC1+uR1fOmdaGNzNjgHVtfTqZaeKWUm+0RKxtd5
-         3pC4xAowvPS7ePyYcDEHPUEEv1uyX0YQbbCw9nSfctiECTuz4ukilo7sCpNvuwCeun4k
-         AUqQ==
-X-Gm-Message-State: AMke39kKHUI/Y/5nJNX5ejKJnVEWrmfraDMRUYz0bfXNnaOGqriYg8bsawvA2TtGq6BVpuaHwg0G1NtaV6KsgA==
-X-Received: by 10.36.65.135 with SMTP id b7mr7444100itd.86.1488411521086; Wed,
- 01 Mar 2017 15:38:41 -0800 (PST)
+        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
+        bh=MLIfZzUDhgBIw712w8tWTEAvQX63sxuoSq1z103SL8M=;
+        b=st5SstQHkuVr0b5+3uHkJeorBbtBmgizaVibvOrmK5tLvWpeEkiBMcFV/lKZJ0Y7PM
+         aUgkQNuvLXTLKDRFq3eGcBiXR93LFRc32auUec+Cm5mkfaS7/aWrOcPVPd/CxIjpCmai
+         osLzTVQdvaVby08Asv9sMGSk2p5gMaqfyToHFN9sScGSEbdfoh3WvWfD/YyrkwNw8WgO
+         Yd52RoIn7+Gr9AxVkPSdfUzNdT/o/mDCWY8b28fEU03Nprda5vjUPnDuPojWCWfU135o
+         PAmq4E5m1ahfRCvsHxHp/zDuLWi2E5uETUIvewwS6TwBX/89LFr0825sA2rnXP2i6BXj
+         /I6w==
+X-Gm-Message-State: AMke39nFAiwcweiPsL5zFTjZ75j8avVD0daA+II0uyzB/911Qn7QrUl9mW48R09zBwM06Q==
+X-Received: by 10.157.80.30 with SMTP id a30mr6565743oth.219.1488412767497;
+        Wed, 01 Mar 2017 15:59:27 -0800 (PST)
+Received: from [172.31.98.12] (96-83-49-155-static.hfc.comcastbusiness.net. [96.83.49.155])
+        by smtp.gmail.com with ESMTPSA id 88sm2667341ott.19.2017.03.01.15.59.26
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 01 Mar 2017 15:59:26 -0800 (PST)
+Subject: Re: Delta compression not so effective
+To:     Martin Langhoff <martin.langhoff@gmail.com>
+References: <4d2a1852-8c84-2869-78ad-3c863f6dcaf7@gmail.com>
+ <CACPiFC+=ZpHT=xh7Y8f68BcXxNYx8EFJfzqqG2ub4NL=uREu7g@mail.gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+From:   Marius Storm-Olsen <mstormo@gmail.com>
+Message-ID: <6a72bfd4-5032-5e40-5c6d-8b77ca5ae775@gmail.com>
+Date:   Wed, 1 Mar 2017 17:59:30 -0600
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.7.1
 MIME-Version: 1.0
-Received: by 10.107.146.131 with HTTP; Wed, 1 Mar 2017 15:38:40 -0800 (PST)
-In-Reply-To: <20170301203427.e5xa5ej3czli7c3o@sigill.intra.peff.net>
-References: <alpine.LFD.2.20.1702281621050.22202@i7.lan> <xmqq7f48hm8g.fsf@gitster.mtv.corp.google.com>
- <CA+55aFx1wAS-nHS2awuW2waX=cvig4UoZqmN5H3v93yDE7ukyQ@mail.gmail.com>
- <20170301195302.3pybakmjqztosohj@sigill.intra.peff.net> <CA+55aFwf3sxKW+dGTMjNAeHMOf=rvctEQohm+rbhEb=e3KLpHw@mail.gmail.com>
- <20170301203427.e5xa5ej3czli7c3o@sigill.intra.peff.net>
-From:   Linus Torvalds <torvalds@linux-foundation.org>
-Date:   Wed, 1 Mar 2017 15:38:40 -0800
-X-Google-Sender-Auth: Le2bw-5UmgE6DCGtOKQs3jk3m1o
-Message-ID: <CA+55aFz4ixVKVURki8FeXjL5H51A_cQXsZpzKJ-N9n574Yy1rg@mail.gmail.com>
-Subject: Re: [PATCH] Put sha1dc on a diet
-To:     Jeff King <peff@peff.net>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Dan Shumow <danshu@microsoft.com>,
-        Marc Stevens <marc.stevens@cwi.nl>
-Content-Type: text/plain; charset=UTF-8
+In-Reply-To: <CACPiFC+=ZpHT=xh7Y8f68BcXxNYx8EFJfzqqG2ub4NL=uREu7g@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Mar 1, 2017 at 12:34 PM, Jeff King <peff@peff.net> wrote:
+On 3/1/2017 14:19, Martin Langhoff wrote:
+> On Wed, Mar 1, 2017 at 8:51 AM, Marius Storm-Olsen <mstormo@gmail.com> wrote:
+>> BUT, even still, I would expect Git's delta compression to be quite effective, compared to the compression present in SVN.
 >
-> I don't think that helps. The sha1 over the pack-file takes about 1.3s
-> with openssl, and 5s with sha1dc. So we already know the increase there
-> is only a few seconds, not a few minutes.
+> jar files are zipfiles. They don't delta in any useful form, and in
+> fact they differ even if they contain identical binary files inside.
 
-Yeah, I did a few statistics by adding just logging of "SHA1_Init()"
-calls. For that network clone situation, the call distribution is
+If you look through the initial post, you'll see that the jar in 
+question is in fact a tool (BFG) by Roberto Tyley, which is basically 
+git filter-branch on steroids. I used it to quickly filter out the 
+extern/ folder, just to prove most of the original size stems from that 
+particular folder. That's all.
 
-      1        SHA1: Init at builtin/index-pack.c:326
- 841228        SHA1: Init at builtin/index-pack.c:450
-      2        SHA1: Init at csum-file.c:152
-4415756        SHA1: Init at sha1_file.c:3218
+The repo does not contain zip or jar files. A few images and other 
+compressed formats (except a few 100MBs of proprietary files, which 
+never change), but nothing unusual.
 
-(the line numbers are a bit off from 'pu', because I obviously have
-the logging code).
 
-The big number (one for every object) is from
-write_sha1_file_prepare(), which we'd want to be the strong collision
-checking version because those are things we're about to create git
-objects out of. It's called from
+>>     Commits: 32988
+>>     DB (server) size: 139GB
+>
+> Are you certain of the on-disk storage at the SVN server? Ideally,
+> you've taken the size with a low-level tool like `du -sh
+> /path/to/SVNRoot`.
 
- - hash_sha1_file() - doesn't actually write the object, but is used
-to calculate the sha for incoming data after applying the delta, for
-example.
+139GB is from 'du -sh' on the SVN server. I imported (via SubGit) 
+directly from the (hotcopied) SVN folder on the server. So true SVN size.
 
- - write_sha1_file() - many uses, actually writes the object
 
- - hash_sha1_file_literally() - git hash-object
+> Even with no delta compression (as per Junio and Linus' discussion),
+> based on past experience importing jar/wars/binaries from SVN into
+> git... I'd expect git's worst case to be on-par with SVN, perhaps ~5%
+> larger due to compression headers on uncompressible data.
 
-and that index-pack.c:450 is from unpack_entry_data() for the base
-non-delta objects (which should also be the strong kind).
+Yes, I was expecting a Git repo <139GB, but like Linus mentioned, 
+something must be knocking the delta search off its feet, so it bails 
+out. Loose object -> 'hard' repack didn't show that much difference.
 
-So all of them should check against collision attacks, so none of them
-seem to be things you'd want to optimize away..
 
-So I was wrong in thinking that there were a lot of unnecessary SHA1
-calculations in that load. They all look like they should be done with
-the slower checking code.
+Thanks!
 
-Oh well.
-
-                      Linus
+-- 
+.marius
