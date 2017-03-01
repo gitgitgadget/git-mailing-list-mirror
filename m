@@ -2,72 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2179E2023D
-	for <e@80x24.org>; Wed,  1 Mar 2017 18:44:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C9C782023D
+	for <e@80x24.org>; Wed,  1 Mar 2017 18:57:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752109AbdCASn6 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 1 Mar 2017 13:43:58 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:59845 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752143AbdCASn5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Mar 2017 13:43:57 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 72EA1761E0;
-        Wed,  1 Mar 2017 13:42:57 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=OT6cTXiL+uw1G0rxldGonkB+0EA=; b=O9WHpz
-        BJqGIdl4Sl0hcocXpMysKc4U+bptvdM4Z01o+7j+ZvPaooDytytHaVLrsS/oxhP9
-        e+IH2Xy8mQivL1/VhSYMuv7rRheETZfIRfTW8RH8oBIoQ2XIWXWgyrJIcXI6vfUc
-        fkgOViHl5FxQDnmn3o7WrpzuT4CiSEFH3mJ64=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=M8P6VqxubUdrqnmvNqeKInfjfUsEyAL1
-        ODesPkwWZ3oUPOVqU4wiXs76eSUWc+UbBn036XgBZQsLrd8YbPLfqCZ1bDCrzJ3A
-        zNVdFPWcfa1SgY3Ob7gqCvRZTmWQQvJhFhpk2lFkT1zJxchI8ERuDtNCEk+6rahB
-        iOZ+LWpiks8=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 691AA761DF;
-        Wed,  1 Mar 2017 13:42:57 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id CD25F761DE;
-        Wed,  1 Mar 2017 13:42:56 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Linus Torvalds <torvalds@linux-foundation.org>
+        id S1752773AbdCAS46 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 1 Mar 2017 13:56:58 -0500
+Received: from mail-it0-f42.google.com ([209.85.214.42]:35601 "EHLO
+        mail-it0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752152AbdCAS4s (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Mar 2017 13:56:48 -0500
+Received: by mail-it0-f42.google.com with SMTP id 203so104361480ith.0
+        for <git@vger.kernel.org>; Wed, 01 Mar 2017 10:56:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=SnA/YDljbUBAlp13L51n0jADb1AIotEbTb2+vofkn2E=;
+        b=Bad1QhV7d8+4qs67paIU2x7mjMbh0zCxHCsBYFYUFwGk1nIWimyn15Y4vQ0ege1oG1
+         G+NNH9GX0bIGo+qtd37ksk4cSP3p9pHLpDep/1zCyl/XP3vpDHQtyQdWTvECSdL0lMTo
+         kq3fjkiCj9i11Wyu5uodisv7eiT9Co7nv6kOJhJgPiwL7NhxxTyVbbwfom6qgj8vdaww
+         g5Y3XrDiDiqhziQH/oV+/ijOOnTUk8Uz/vDiiUiNtsRKAbIvfkf2Oel/ZzaZ3ZwL5IsB
+         9WQUs6VLR6lpK5ew2hCV54eGHu5exSVoITT/RB2oZKckA43Hj2XOajwSO7KkUGMW2lyR
+         jBdA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=SnA/YDljbUBAlp13L51n0jADb1AIotEbTb2+vofkn2E=;
+        b=aAV9bdzftDBKb6pSbzBm3yeYvOdqXcbbIlt1JbhIYbRgSv0ImLQlRYv9DTEgB0QGXi
+         RoUGmX0q3Cac00QYvtJjlH5irDPXxr9wgKgctpKog4Y20kxtenPO3saiWNNd/WurNXKF
+         QjuusD5afR2VdiK/WfKptRXE/ncbfhT9W6dLJ2GAsz5vEWzhDufM7MHbPTgXj/k3MPjN
+         70LE6C5aM5X+JBQ1Y0bp+dioPgmfxFoGUw7G74APgQDnQsdxKRnkAtqOVJSSGEhASZu9
+         jVYdVvIjRpmTX5WQpJhFLpuGey0I16KfPBJ6Q0VG7peQuoCqm7blo23ZTwYF3oorwcFj
+         LEkQ==
+X-Gm-Message-State: AMke39lfZj94GDgYyKpT6ey0an3kFsUyHZg/UTeYa2g/IEMtWgWx6CY5wtoHhBmyo3f6bccQhcvz8LztYuLa3g==
+X-Received: by 10.36.65.135 with SMTP id b7mr6162377itd.86.1488394195476; Wed,
+ 01 Mar 2017 10:49:55 -0800 (PST)
+MIME-Version: 1.0
+Received: by 10.107.146.131 with HTTP; Wed, 1 Mar 2017 10:49:55 -0800 (PST)
+In-Reply-To: <xmqq7f48hm8g.fsf@gitster.mtv.corp.google.com>
+References: <alpine.LFD.2.20.1702281621050.22202@i7.lan> <xmqq7f48hm8g.fsf@gitster.mtv.corp.google.com>
+From:   Linus Torvalds <torvalds@linux-foundation.org>
+Date:   Wed, 1 Mar 2017 10:49:55 -0800
+X-Google-Sender-Auth: c5VVv4hhpPrM59K5kEekDwlcg_I
+Message-ID: <CA+55aFx1wAS-nHS2awuW2waX=cvig4UoZqmN5H3v93yDE7ukyQ@mail.gmail.com>
+Subject: Re: [PATCH] Put sha1dc on a diet
+To:     Junio C Hamano <gitster@pobox.com>
 Cc:     Jeff King <peff@peff.net>, Marc Stevens <marc.stevens@cwi.nl>,
         Dan Shumow <danshu@microsoft.com>,
         Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH] Put sha1dc on a diet
-References: <alpine.LFD.2.20.1702281621050.22202@i7.lan>
-Date:   Wed, 01 Mar 2017 10:42:55 -0800
-In-Reply-To: <alpine.LFD.2.20.1702281621050.22202@i7.lan> (Linus Torvalds's
-        message of "Tue, 28 Feb 2017 16:30:26 -0800 (PST)")
-Message-ID: <xmqq7f48hm8g.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: E30E573A-FEAE-11E6-8CDC-97B1B46B9B0B-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Linus Torvalds <torvalds@linux-foundation.org> writes:
+On Wed, Mar 1, 2017 at 10:42 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> I see //c99 comments
 
-> I notice that sha1dc is in the 'pu' branch now, so let's put my money 
-> where my mouth is, and send in the sha1dc diet patch.
+sha1dc is already full of // style comments. I just followed the
+existing practice.
 
-I see //c99 comments and also T array[] = { [58] = val } both of
-which I think we stay away from (and the former is from the initial
-import), so some people on other platforms MAY have trouble with
-this topic.
+> and also T array[] = { [58] = val } both of
+> which I think we stay away from (and the former is from the initial
+> import), so some people on other platforms MAY have trouble with
+> this topic.
 
-Let's see what happens by queuing it on 'pu' ;-)
+Hmm. The "{ [58] = val; }" kind of initialization would be easy to
+work around by just filling in everything else with NULL, but it would
+make for a pretty nasty readability issue.
 
-Thanks.
+That said, if you mis-count the NULL's, the end result will pretty
+immediately SIGSEGV, so I guess it wouldn't be much of a maintenance
+problem.
+
+But if you're just willing to take the "let's see" approach, I think
+the explicitly numbered initializer is much better.
+
+The main people who I assume would really want to use the sha1dc
+library are hosting places. And they won't be using crazy compilers
+from the last century.
+
+That said, I think that it would be lovely to just default to
+USE_SHA1DC and just put the whole attack behind us. Yes, it's slower.
+No, it doesn't really seem to matter that much in practice.
+
+              Linus
