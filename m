@@ -2,126 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BB4B32023D
-	for <e@80x24.org>; Wed,  1 Mar 2017 20:22:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CCC8E2023D
+	for <e@80x24.org>; Wed,  1 Mar 2017 20:31:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751902AbdCAUWH (ORCPT <rfc822;e@80x24.org>);
-        Wed, 1 Mar 2017 15:22:07 -0500
-Received: from mail-io0-f169.google.com ([209.85.223.169]:34992 "EHLO
-        mail-io0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751038AbdCAUWG (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Mar 2017 15:22:06 -0500
-Received: by mail-io0-f169.google.com with SMTP id j18so39319751ioe.2
-        for <git@vger.kernel.org>; Wed, 01 Mar 2017 12:20:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=WrIiafcWbP7CunbiRcVw4PiYoVeXe7n3Gn7EVOqYcho=;
-        b=S9nw26yWAonLvZIqDbSpLBvYhN45d+Vw7cRQS+ofxKmaLqi1ByBIGhjkcuAafIVSLy
-         VRa5x/VrjxfBstdURkzLujBphVYCtmKR34W2xrGCpndOlypWUZEyEXmk+yr1H/nxwVOf
-         29CxyiQCS3j6YBJBWMbpnjF2/ieS+nm4DteLp7dASlKLpT8SgfOu8XEbRvuWoQHETQ0q
-         l6qNSGBBaNJdmuDv1TKBhqoquajFdcW8zjIUFDz/SeroRBA4OIOIkJvN4Pa1oAZhpBBh
-         Zb3S1G81fPOnRaTDeutrqDS/3Ul0FzdjtQHGJD9vs0NqCLOsHZyiqGgHyuxAKpfslxYP
-         4+lw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=WrIiafcWbP7CunbiRcVw4PiYoVeXe7n3Gn7EVOqYcho=;
-        b=Hr1oqFHh9WXSl16w908ttqu2qaVnJCpmiiQHnHaFX0fAJ3DflNpIEM19o79xA8Flhx
-         uXG276tp/CUGHKPZYDLGgc6e0uxs3CBmEZkcPBm/rQd2zorJeT/HjHKiH6RDD9isDASO
-         T7MFSEJX6uCMH6V80FsoeN5IlH+LshAg84yuobnKQ0s5LED9gfoiVLR7LLriaPd9qBbA
-         tBFCU9csTqltjml4ehQEKtlNqfyumh3WDmh8Iu59p+HNbADw4gCpKxkghWjZXvHndnjF
-         cDxs7Vqjtnlj3pSapJ3UxfyAmPU9ZsnwVvPr1fIAfncYVwGxSawdSiFI6gHfLpK5C+vk
-         8Wfw==
-X-Gm-Message-State: AMke39l6s6HxAm4WxxTqqIJhQ+0NOHHe2fScgfkZRKiw+gzA+0nW3R44VpWhH2G60KhKhsOXKLu8tSbvZe4mMA==
-X-Received: by 10.107.178.3 with SMTP id b3mr9603962iof.50.1488393058231; Wed,
- 01 Mar 2017 10:30:58 -0800 (PST)
+        id S1752480AbdCAUb3 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 1 Mar 2017 15:31:29 -0500
+Received: from mout.kundenserver.de ([212.227.126.130]:52291 "EHLO
+        mout.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751154AbdCAUb0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Mar 2017 15:31:26 -0500
+Received: from [192.168.1.50] ([94.219.230.230]) by mrelayeu.kundenserver.de
+ (mreue002 [212.227.15.167]) with ESMTPSA (Nemesis) id
+ 0LlMaV-1c8Bdb3kWd-00bLja; Wed, 01 Mar 2017 21:12:52 +0100
+Subject: Re: git status --> Out of memory, realloc failed
+To:     =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>, git@vger.kernel.org
+References: <84c02ca1-269e-2f26-c625-476d7f087f5c@cafu.de>
+ <ea0722e2-c2bd-bd80-a233-50676efcafda@web.de>
+From:   Carsten Fuchs <carsten.fuchs@cafu.de>
+Message-ID: <cbd281fc-3a4b-b4dc-5dff-145c97cd68d6@cafu.de>
+Date:   Wed, 1 Mar 2017 21:12:52 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.7.0
 MIME-Version: 1.0
-Received: by 10.107.146.131 with HTTP; Wed, 1 Mar 2017 10:30:57 -0800 (PST)
-In-Reply-To: <eba83461-34cf-6d64-4013-873b04af9b82@gmail.com>
-References: <4d2a1852-8c84-2869-78ad-3c863f6dcaf7@gmail.com>
- <CA+55aFzQ0o2R2kShS=AuKu0TLnfPV-0JCkViqx5J_afCK0Yt5g@mail.gmail.com> <eba83461-34cf-6d64-4013-873b04af9b82@gmail.com>
-From:   Linus Torvalds <torvalds@linux-foundation.org>
-Date:   Wed, 1 Mar 2017 10:30:57 -0800
-X-Google-Sender-Auth: rxhFhlzW92IgZ5mV0i_OxJT7gIc
-Message-ID: <CA+55aFx7QFqrHw4e72vOdM5z0rw1CCkL2-UX8ej5CLSBWjLNLA@mail.gmail.com>
-Subject: Re: Delta compression not so effective
-To:     Marius Storm-Olsen <mstormo@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+In-Reply-To: <ea0722e2-c2bd-bd80-a233-50676efcafda@web.de>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K0:quYzU8/jKwjYraiHxtZDVcSXoFWqJbDeMgF8Xhc5H3OzGFi4Spf
+ bU3D2lilGPW9MuBoHNhv8zXi1YKK69HeUo/h5BJMftQq9tfHvPVzM/cFenxk8D2kUMrgozM
+ K0F2b2ocboaCAVEnnnMdm8qMEVN7fsKO+LQcSTolIiFYrujyYSg/h6mtdFoJSGPxmAuFeB4
+ Aoo2C6h/RBi0Klw5qKFgQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:xa7GNNUZgdI=:HSSzMY8gyXqyD1VMWGZTyH
+ giaufRhsSZXZ2IITDMPJTK0g9ILohDzT6G1AaxzTbIo0lb+12vzZ8ThBLf9jxIiWiKPjGlmv/
+ oxYWPQ12ZMTmWXJvmu+IjJ74ML682sX/jaSLkWEbDlnAd3trDQEKGwVnL/bkVwKEpvLiHPFvD
+ QR9Vxv1XSlCsIwyhiqxwTIo0V9Bl7uOmGliojQvDtfpEdFb4LurpLDQ9oBIoSyj3nLO8wSBS2
+ sKJy4VuShAGJLMH1Wf1Yf3MC20t79+BWDkZWpCvnPhiT8c5++m1p3rSlUNbdEAOw3/blqlHOY
+ hRFs4z2IYdpFihY8JOq2OVN2a1viRnioszsaN0erOIZRlLMS9sZ2k2x1WrLAEb17ApyZkk5Ks
+ dmlTzX9jp3BmuNq8or/tCJHji4jhbhRkLNZoZDyKFHpGjGP9Q2WfPi10ol5zB2vdH72YU/gvP
+ FHmQTb66ZJfPn18ISeyBSBYIGGCvytfJBUELoNLG2LHttzIrm6gbG6vn37UI7XwppWp1fU8o4
+ cXknsgqSxlLfZQsODbW3mx/FKY03GKcc9CWtIwiJG5zIdDGC7bi71oMczJU33yXxYG8MDpdGD
+ JCTnQIyaZ3cnXRh0G9wplAIdcM7ZclPdXeYzzStC+MGcSCATkP0OSi1rwEpIzQdY0mjg0Es1v
+ rBbo1O2wb4KBhAaJ8Ksc/q73lUKxLVicjJJtAJQwFiInpQVScYzbgjrTLDxEWcF7wyH3xoZ8J
+ wIuSK285hHwf/kZ9
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Mar 1, 2017 at 9:57 AM, Marius Storm-Olsen <mstormo@gmail.com> wrote:
+Hi René,
+
+Am 01.03.2017 um 11:02 schrieb René Scharfe:
+>> I use Git at a web hosting service, where my user account has a memory
+>> limit of 768 MB:
+>>
+>> (uiserver):p7715773:~$ uname -a
+>> Linux infongp-de15 3.14.0-ui16322-uiabi1-infong-amd64 #1 SMP Debian
+>> 3.14.79-2~ui80+4 (2016-11-17) x86_64 GNU/Linux
 >
-> Indeed, I did do a
->     -c pack.threads=20 --window-memory=6g
-> to 'git repack', since the machine is a 20-core (40 threads) machine with
-> 126GB of RAM.
+> What's the output of "ulimit -a"?
+
+(uiserver):p7715773:~$ ulimit -a
+core file size          (blocks, -c) 0
+data seg size           (kbytes, -d) unlimited
+scheduling priority             (-e) 1
+file size               (blocks, -f) unlimited
+pending signals                 (-i) 16382
+max locked memory       (kbytes, -l) 64
+max memory size         (kbytes, -m) unlimited
+open files                      (-n) 512
+pipe size            (512 bytes, -p) 8
+POSIX message queues     (bytes, -q) 819200
+real-time priority              (-r) 0
+stack size              (kbytes, -s) 8192
+cpu time               (seconds, -t) 1800
+max user processes              (-u) 42
+virtual memory          (kbytes, -v) 786432
+file locks                      (-x) unlimited
+
+>> (uiserver):p7715773:~$ git --version
+>> git version 2.1.4
 >
-> So I guess with these sized objects, even at 6GB per thread, it's not enough
-> to get a big enough Window for proper delta-packing?
+> That's quite old.  Can you try a more recent version easily (2.12.0 just came out)?
 
-Hmm. The 6GB window should be plenty good enough, unless your blobs
-are in the gigabyte range too.
+I don't think that they have any newer version available, having just upgraded from Git 
+1.7 a couple of weeks ago... (1und1)
 
-> This repo took >14hr to repack on 20 threads though ("compression" step was
-> very fast, but stuck 95% of the time in "writing objects"), so I can only
-> imagine how long a pack.threads=1 will take :)
+Git 1.7 used to work for me in the same environment, but iirc they also said they 
+switched from 32-bit to 64-bit edition and blame the increased memory consumption on 
+that change.
 
-Actually, it's usually the compression phase that should be slow - but
-if something is limiting finding deltas (so that we abort early), then
-that would certainly tend to speed up compression.
+I'll ask for a newer version, but I'd be surprised if this happened.
 
-The "writing objects" phase should be mainly about the actual IO.
-Which should be much faster *if* you actually find deltas.
+>> The repository is tracking about 19000 files which together take 260 MB.
+>> The git server version is 2.7.4.1.g5468f9e (Bitbucket)
+>
+> Is your repository publicly accessible?
 
-> But arent't the blobs sorted by some metric for reasonable delta-pack
-> locality, so even with a 6GB window it should have seen ~25 similar objects
-> to deltify against?
+Unfortunately, no. There are no big secrets in there, but just a couple of database 
+details so that I cannot make it universally available. I can gladly give you access 
+though. (E.g. by adding your public SSH key?)
 
-Yes they are. The sorting for delta packing tries to make sure that
-the window is effective. However, the sorting is also just a
-heuristic, and it may well be that your repository layout ends up
-screwing up the sorting, so that the windows just work very badly.
-
-For example, the sorting code thinks that objects with the same name
-across the history are good sources of deltas. But it may be that for
-your case, the binary blobs that you have don't tend to actually
-change in the history, so that heuristic doesn't end up doing
-anything.
-
-The sorting does use the size and the type too, but the "filename
-hash" (which isn't really a hash, it's something nasty to give
-reasonable results for the case where files get renamed) is the main
-sort key.
-
-So you might well want to look at the sorting code too. If filenames
-(particularly the end of filenames) for the blobs aren't good hints
-for the sorting code, that sort might end up spreading all the blobs
-out rather than sort them by size.
-
-And again, if that happens, the "can I delta these two objects" code
-will notice that the size of the objects are wildly different and
-won't even bother trying. Which speeds up the "compressing" phase, of
-course, but then because you don't get any good deltas, the "writing
-out" phase sucks donkey balls because it does zlib compression on big
-objects and writes them out to disk.
-
-So there are certainly multiple possible reasons for the deltification
-to not work well for you.
-
-Hos sensitive is your material? Could you make a smaller repo with
-some of the blobs that still show the symptoms? I don't think I want
-to download 206GB of data even if my internet access is good.
-
-                    Linus
+Best regards,
+Carsten
