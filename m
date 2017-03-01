@@ -2,90 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F1C792027B
-	for <e@80x24.org>; Wed,  1 Mar 2017 22:16:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3AA292027B
+	for <e@80x24.org>; Wed,  1 Mar 2017 22:43:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752805AbdCAWQf (ORCPT <rfc822;e@80x24.org>);
-        Wed, 1 Mar 2017 17:16:35 -0500
-Received: from mail-it0-f52.google.com ([209.85.214.52]:35467 "EHLO
-        mail-it0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753049AbdCAWQe (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Mar 2017 17:16:34 -0500
-Received: by mail-it0-f52.google.com with SMTP id 203so107799186ith.0
-        for <git@vger.kernel.org>; Wed, 01 Mar 2017 14:16:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=mPLBDYyo8EmbW7DuPVT2U8V3vCO5eVJLUSdUN2fM4U0=;
-        b=GGl65lsZGtqnyTTlzz/FxjPptWO0UqRB1LaXOVTbYlsfLH713Vs7IoZcfklwxi2kFE
-         fR0NC0o2HSittREFUDC4BPVp11j6XwexuME2eovYMnX+WLVi7bGRIjwTV9LpCa4lVX1V
-         tpBaXYf7zzO186009vkeWSBqHM+WP+Thh2I8e2FiWVIa8q2wqaYZzRedAA8nWeBcXPOH
-         fNumk7WvjZhgOK1LOahjS0QcWFi94EGEE/AJZq+BiXH1ilIk4FXPOh2xgjsigVYOEgx4
-         75qIkOpVsIqzQX2dCBM9xIKyq2xnbrMOq+wyTQ9p/vCedW6GDha7XVcS7wePGRaszey2
-         oWZg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=mPLBDYyo8EmbW7DuPVT2U8V3vCO5eVJLUSdUN2fM4U0=;
-        b=tVJgzlurRskQDKSY5k2Ld3KZ99iwD71gn4PIhrVC/ZetXLbNEXHVSjBSFr+NOB6fRT
-         uDgzmT0vH4dxOt8yz/VZydU8SQh3OgQuutuOO+A/oxGt3I/GgQ3cMMC6WBH0oMLbe/XE
-         I0f2gddwTpVwCHkbuuNM1s7U+LV/0zcRamq6BURYJWFoNE11sSAn276CDeDn0i1b9RaD
-         U1NVGul30KRSp3k09Lm9ubBjPG0ZKcIBVsMXsF0ksuycTQOeHUBo97Rcs94kvjvCZs3t
-         LJyk1DUWr+uVxvyZsqsGa3LQw4wbiPxjy/mZFCqieF/GWotciWjh6ZgKpipbCOLZ+sM5
-         5YaQ==
-X-Gm-Message-State: AMke39l4ZH1Tx8lYjAl0pJQecDR5Rjq+CDVJSiSXheiOSiOmgJoin+Mxc281/pgO4hmhHh8QUjopAaZG2mWBOw==
-X-Received: by 10.36.204.137 with SMTP id x131mr6829414itf.35.1488406565881;
- Wed, 01 Mar 2017 14:16:05 -0800 (PST)
+        id S1753340AbdCAWnM (ORCPT <rfc822;e@80x24.org>);
+        Wed, 1 Mar 2017 17:43:12 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:51055 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751055AbdCAWnI (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Mar 2017 17:43:08 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 7D7DB771A2;
+        Wed,  1 Mar 2017 17:43:06 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=rn68Pi79HTlEb0diRx7WNO6nFD4=; b=Nc51Ww
+        qpsG8YU+iuHWTxgkfd6GtXQWzibidmr4kLpS7a2dfVZdpc6cALl8tqI8gJudkOZo
+        UkAIf3aXY86kfPiLJEp4IoCPMtgko5Yh/pzdgNHZKHwdQYxaU2QGHOhgsx0p5UWq
+        lQGZvv9zL3yJJG1ePDtrn1ywbt95y2+Pj+D8M=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=nLfLl0Tn/K3hqucznoTALRhx0kWBdUhi
+        M+/CQ8gaIOrrR0F0EukFJypfJjVOumMPu8SerGP2qbjwUAIvLx1AQPhK1UPVF7VZ
+        pZVgpDXmGocpVfJ5FnwW4ir5DJNRYSfMDlSTmjM6MLmH2eZHE1sjpqruE1Z9ykIi
+        uVqj/gr4GEc=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 77247771A1;
+        Wed,  1 Mar 2017 17:43:06 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id DBD2E7719F;
+        Wed,  1 Mar 2017 17:43:05 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Thomas Gummerer <t.gummerer@gmail.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        sunny@sunbase.org,
+        Jakub =?utf-8?Q?Nar?= =?utf-8?Q?=C4=99bski?= <jnareb@gmail.com>,
+        Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH v8 4/6] stash: teach 'push' (and 'create_stash') to honor pathspec
+References: <20170225213306.2410-1-t.gummerer@gmail.com>
+        <20170228203340.18723-1-t.gummerer@gmail.com>
+        <20170228203340.18723-5-t.gummerer@gmail.com>
+        <xmqqo9xmhshd.fsf@gitster.mtv.corp.google.com>
+        <20170301215759.GA11067@hank>
+Date:   Wed, 01 Mar 2017 14:43:04 -0800
+In-Reply-To: <20170301215759.GA11067@hank> (Thomas Gummerer's message of "Wed,
+        1 Mar 2017 21:57:59 +0000")
+Message-ID: <xmqqtw7cehzb.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.107.146.131 with HTTP; Wed, 1 Mar 2017 14:16:05 -0800 (PST)
-In-Reply-To: <alpine.DEB.2.20.1703012227010.3767@virtualbox>
-References: <alpine.LFD.2.20.1702281621050.22202@i7.lan> <xmqq7f48hm8g.fsf@gitster.mtv.corp.google.com>
- <CA+55aFx1wAS-nHS2awuW2waX=cvig4UoZqmN5H3v93yDE7ukyQ@mail.gmail.com>
- <xmqq37ewhji1.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1703012227010.3767@virtualbox>
-From:   Linus Torvalds <torvalds@linux-foundation.org>
-Date:   Wed, 1 Mar 2017 14:16:05 -0800
-X-Google-Sender-Auth: q2-t66aQ6KfT2lg3K_pMRbL2SXg
-Message-ID: <CA+55aFys5oQ0RySQ+Xv0ZDussr-xZNh4_b3+Upx_d9VPWmpM8Q@mail.gmail.com>
-Subject: Re: [PATCH] Put sha1dc on a diet
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        Marc Stevens <marc.stevens@cwi.nl>,
-        Dan Shumow <danshu@microsoft.com>,
-        Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
+X-Pobox-Relay-ID: 6F903158-FED0-11E6-8540-FC50AE2156B6-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Mar 1, 2017 at 1:56 PM, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
-> Footnote *1*: I know, it is easy to forget that some developers cannot
-> choose their tools, or even their hardware. In the past, we seemed to take
-> appropriate care, though.
+Thomas Gummerer <t.gummerer@gmail.com> writes:
 
-I don't think you need to worry about the Windows side. That can
-continue to do something else.
+> On 02/28, Junio C Hamano wrote:
+>> Thomas Gummerer <t.gummerer@gmail.com> writes:
+>> 
+>> > +			git reset ${GIT_QUIET:+-q} -- "$@"
+>> > +			git ls-files -z --modified -- "$@" |
+>> > +			git checkout-index -z --force --stdin
+>> > +			git checkout ${GIT_QUIET:+-q} HEAD -- $(git ls-files -z --modified "$@")
+>> 
+>> I think you forgot to remove this line, whose correction was added
+>> as two lines immediately before it.  I'll remove it while queuing.
+>
+> Yes, sorry.  What you queued looks good to me, thanks!
 
-When I advocated perhaps using  USE_SHA1DC by default, I definitely
-did not mean it in a "everywhere, regardless of issues" manner.
-
-For example, the conmfig.mak.uname script already explicitly asks for
-"BLK_SHA1 = YesPlease" for Windows. Don't bother changing that, it's
-an explicit choice.
-
-But the Linux rules don't actually specify which SHA1 version to use,
-so the main Makefile currently defaults to just using openssl.
-
-So that's the "default" choice I think we might want to change. Not
-the "we're windows, and explicitly want BLK_SHA1 because of
-environment and build infrastructure".
-
-             Linus
+Thanks for double-checking, and thanks for working on the topic.  I
+think this is ready for 'next'.
