@@ -2,103 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2E3211F5FB
-	for <e@80x24.org>; Wed,  1 Mar 2017 08:57:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F35941F5FB
+	for <e@80x24.org>; Wed,  1 Mar 2017 10:04:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751835AbdCAI50 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 1 Mar 2017 03:57:26 -0500
-Received: from mail-sn1nam01on0120.outbound.protection.outlook.com ([104.47.32.120]:3680
-        "EHLO NAM01-SN1-obe.outbound.protection.outlook.com"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1751560AbdCAI5Y (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Mar 2017 03:57:24 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=selector1; h=From:Date:Subject:Message-ID:Content-Type:MIME-Version;
- bh=GWeJpW1zwK0zIx3EOUh1w7XrH2kn5gclgB/d1xXo574=;
- b=QXOkvpQm/Q7V2YRyLLuX1nZLaxd8OYKCsByfcpTpK7WjDtH1GXjXUkSsBR8u9zseH40hbSuMikZkfCCUaE6ALdNokC0ossPkq+8X3ipCrKj00WI+IZiuWahCv4dW8fQOm+X+gOY7fq6MzoNqt+sHiVU/6mA3FIwa8eEJcAXtsQA=
-Received: from CY1PR0301MB2107.namprd03.prod.outlook.com (10.164.2.153) by
- CY1PR0301MB2107.namprd03.prod.outlook.com (10.164.2.153) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P384) id
- 15.1.933.12; Wed, 1 Mar 2017 08:57:21 +0000
-Received: from CY1PR0301MB2107.namprd03.prod.outlook.com ([10.164.2.153]) by
- CY1PR0301MB2107.namprd03.prod.outlook.com ([10.164.2.153]) with mapi id
- 15.01.0933.020; Wed, 1 Mar 2017 08:57:21 +0000
-From:   Dan Shumow <danshu@microsoft.com>
-To:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-CC:     Linus Torvalds <torvalds@linux-foundation.org>,
-        Joey Hess <id@joeyh.name>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: RE: SHA1 collisions found
-Thread-Topic: SHA1 collisions found
-Thread-Index: AQHSkffFO/OFlfJrmU2TJcJuGQpvwaF/rZlg
-Date:   Wed, 1 Mar 2017 08:57:21 +0000
-Message-ID: <CY1PR0301MB210787306B549D00238FD37FC4290@CY1PR0301MB2107.namprd03.prod.outlook.com>
-References: <20170223184637.xr74k42vc6y2pmse@sigill.intra.peff.net>
- <CA+55aFx=0EVfSG2iEKKa78g3hFN_yZ+L_FRm4R749nNAmTGO9w@mail.gmail.com>
- <20170223193210.munuqcjltwbrdy22@sigill.intra.peff.net>
- <CA+55aFxmr6ntWGbJDa8tOyxXDX3H-yd4TQthgV_Tn1u91yyT8w@mail.gmail.com>
- <20170223195753.ppsat2gwd3jq22by@sigill.intra.peff.net>
- <alpine.LFD.2.20.1702231428540.30435@i7.lan>
- <20170223224302.joti4zqucme3vqr2@sigill.intra.peff.net>
- <20170223230507.kuxjqtg3ghcfskc6@sigill.intra.peff.net>
- <xmqqefyikvin.fsf@gitster.mtv.corp.google.com>
- <xmqq60jukubq.fsf@gitster.mtv.corp.google.com>
- <20170228192044.cn56puazsa3wtlkd@sigill.intra.peff.net>
-In-Reply-To: <20170228192044.cn56puazsa3wtlkd@sigill.intra.peff.net>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: peff.net; dkim=none (message not signed)
- header.d=none;peff.net; dmarc=none action=none header.from=microsoft.com;
-x-originating-ip: [76.121.229.23]
-x-ms-office365-filtering-correlation-id: 4afda082-e8b8-436c-1c82-08d46080f8db
-x-ms-office365-filtering-ht: Tenant
-x-microsoft-antispam: UriScan:;BCL:0;PCL:0;RULEID:(22001)(48565401081);SRVR:CY1PR0301MB2107;
-x-microsoft-exchange-diagnostics: 1;CY1PR0301MB2107;7:WNydiYpHpaSXja1Ixl9XyTs+48H/2Sj3FlwGJF99p2v4yobun7IAlEE5pyI8TjgAw45B/zXn+fYpzU0KvFuyNp3kshKIMZWkOosI2vde68T03gbVOzKgxppoMHVH2ZLKwNIfxj+0VTbUJCEGi4TEkfdq9VVyXML+ccdELBaKfWUbUZN8T+ELgJxy///yvFEoImVTSAIVdF9Ao2C4Ub28JiXgFtrDVgK/oetCC+ilo9gBtZkMEY3h8Fdc5B2I6cKeTh0eJjwuPAvph0NMR5m/JWZ38INyo40H3GxMTPVGenr491NiyeEoo1d5DLYRotJQeCbO7FQDPCxhU42d1/XlWME2mthTjm+ru5XwJ0bKA5c=
-x-microsoft-antispam-prvs: <CY1PR0301MB2107985265B84CD7299AD359C4290@CY1PR0301MB2107.namprd03.prod.outlook.com>
-x-exchange-antispam-report-test: UriScan:;
-x-exchange-antispam-report-cfa-test: BCL:0;PCL:0;RULEID:(61425038)(6040375)(601004)(2401047)(8121501046)(5005006)(3002001)(10201501046)(6055026)(61426038)(61427038)(6041248)(20161123562025)(20161123558025)(20161123555025)(20161123564025)(20161123560025)(6072148)(6042181);SRVR:CY1PR0301MB2107;BCL:0;PCL:0;RULEID:;SRVR:CY1PR0301MB2107;
-x-forefront-prvs: 0233768B38
-x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(6009001)(7916002)(106116001)(81166006)(8676002)(7116003)(54906002)(5660300001)(5005710100001)(77096006)(55016002)(99286003)(2950100002)(74316002)(10290500002)(8656002)(25786008)(92566002)(6506006)(10090500001)(4326008)(6436002)(3660700001)(8990500004)(3280700002)(8936002)(38730400002)(53936002)(6246003)(33656002)(9686003)(229853002)(2906002)(7736002)(189998001)(93886004)(305945005)(122556002)(2900100001)(102836003)(66066001)(3846002)(50986999)(6116002)(7696004)(86362001)(54356999)(76176999)(473944003);DIR:OUT;SFP:1102;SCL:1;SRVR:CY1PR0301MB2107;H:CY1PR0301MB2107.namprd03.prod.outlook.com;FPR:;SPF:None;MLV:sfv;LANG:en;
-spamdiagnosticoutput: 1:99
-spamdiagnosticmetadata: NSPM
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+        id S1751973AbdCAKEA (ORCPT <rfc822;e@80x24.org>);
+        Wed, 1 Mar 2017 05:04:00 -0500
+Received: from mout.web.de ([212.227.15.14]:64598 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1750736AbdCAKDr (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Mar 2017 05:03:47 -0500
+Received: from [192.168.178.36] ([79.213.126.222]) by smtp.web.de (mrweb002
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0MNL6f-1ch4Dv2z97-006woV; Wed, 01
+ Mar 2017 11:02:54 +0100
+Subject: Re: git status --> Out of memory, realloc failed
+To:     Carsten Fuchs <carsten.fuchs@cafu.de>, git@vger.kernel.org
+References: <84c02ca1-269e-2f26-c625-476d7f087f5c@cafu.de>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <ea0722e2-c2bd-bd80-a233-50676efcafda@web.de>
+Date:   Wed, 1 Mar 2017 11:02:51 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.7.1
 MIME-Version: 1.0
-X-OriginatorOrg: microsoft.com
-X-MS-Exchange-CrossTenant-originalarrivaltime: 01 Mar 2017 08:57:21.1553
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 72f988bf-86f1-41af-91ab-2d7cd011db47
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY1PR0301MB2107
+In-Reply-To: <84c02ca1-269e-2f26-c625-476d7f087f5c@cafu.de>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K0:9EghMv8vrfYoQxFZHeNxiQM8NAN6FwgUSwywCRyJczUSvyjSkbj
+ +Im55CYtmnDdWjXwJqNPrjh1cVpG4aB9M1y7ScGNaVJgVK0FXN2amCBcCt0wMQROwduIU+w
+ smbOJfPvD7flYNPU4MtPjJJq+c+SJ8ix4E0lnUpkRZ7DpdBrEZKLT/Psyssripe+QfzIpXV
+ AllOBX/qBhbL6Y9XwkfkQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:pImy1CyPAzk=:2Iko9JQeMQw/s6sjHCPmb8
+ geHSoxIzTye8LNgqitEz/C476s0TsIH6jhobQWBoNeoEkvo3y4AG1lNUTDrfybTY13055hZSN
+ Nl3DsHM4eeCxdwVnjHuKLKntbh9xQF472dpy2bMcmIjat6tpOKknp0iOYm1W5/UgGNJTjPTqk
+ 4HWhvIeTGADn4TSVF55RAHPnQiMXKR1E8a4k6L7KWuaD3e4EhgZ8AXVz1ES408aGn/lPjo3qM
+ u5XwsDWKfPhJPZ93fxOxhf3wBZHX248hdhytbJ1DY038/p6MuLTV0obhoYO9fw4Zt+47B7pSn
+ /Ui/VM2rXHS2R/kx/6F4vmXhLGZNnQ8aXT0VPgkrZMl4+z/ZLS8MYiIXQDLKlQoznT4rRmTxy
+ tBywF9AokfuVGcedsoWJEycFZYPW3KQn0/wzXe45FYGrfahQg2JaaCYa88cJwCL0l5f5dTbxr
+ i22qzCNsT6gWACEhHQBfVg9aUOZ3dDwzmIONy7iUozQc8/xISxBdHi8dPrRw8GQropVLJaSlI
+ NwhPOuzklpG1Jou1eenUExb3KqRbu2K5sX02cjMq6npom8qAdFwP6y6L8RzmTTMLLNl8AplEp
+ cG6BJ9ZhBqigUS71o5jBS5kIDnuDW82frgR50fWlrFGTgIOhLhG/1kWi/mlRaFINq+Gamig9I
+ dp91dgiw6x9KVUl4b87sFwgbGbMKpf/A4LePIvKmjmQY0F6+paHAqi4s4lPGqkyOjJNQWdp2f
+ 3NXYBsR5QAy+lMZBPZovXpKIkSxj4Ehlj/Ks6yQoiLZ731wMsa0Sj8D+3XoUuA/772VZkxib2
+ Tu0R5Tu
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-PiAgIC0gRGFuIHRpbWVkIHRoZSBzaGExZGMgaW1wbGVtZW50YXRpb24gd2l0aCBhbmQgd2l0aG91
-dCB0aGUgY29sbGlzaW9uDQo+ICAgICBkZXRlY3Rpb24gZW5hYmxlZC4gVGhlIHNoYTEgaW1wbGVt
-ZW50YXRpb24gaXMgb25seSAxLjMzeCBzbG93ZXIgdGhhbg0KPiAgICBibG9jay1zaGExIChmb3Ig
-cmF3IHNoYTEgdGltZSkuIEFkZGluZyBpbiB0aGUgZGV0ZWN0aW9uIG1ha2VzIGl0DQo+ICAgIDIu
-Nnggc2xvd2VyLg0KDQogPiAgICBTbyB0aGVyZSdzIHNvbWUgcG90ZW50aWFsIGdhaW4gZnJvbSBv
-cHRpbWl6aW5nIHRoZSBzaGExDQogPiAgICBpbXBsZW1lbnRhdGlvbiwgYnV0IHVsdGltYXRlbHkg
-d2UgbWF5IGJlIGxvb2tpbmcgYXQgYSAyeCBzbG93ZG93biB0bw0KID4gICAgIGFkZCBpbiB0aGUg
-Y29sbGlzaW9uIGRldGVjdGlvbi4NCg0KSSByZWFycmFuZ2VkIG91ciBjb2RlIGEgbGl0dGxlIGJp
-dCBhbmQgaW50ZXJsZWF2ZWQgdGhlIG1lc3NhZ2UgZXhwYW5zaW9uIGFuZCByb3VuZHMuICBUaGlz
-IGJyaW5nIG91ciByYXcgU0hBLTEgaW1wbGVtZW50YXRpb24gKHdpdGhvdXQgY29sbGlzaW9uIGRl
-dGVjdGlvbikgZG93biB0byAxLjExeCBzbG93ZXIgdGhhbiB0aGUgYmxvY2stc2hhMSBpbXBsZW1l
-bnRhdGlvbiBpbiBHaXQuICBBZGRpbmcgdGhlIGNvbGxpc2lvbiBkZXRlY3Rpb24gYnJpbmdzIHVz
-IHRvIDIuMTJ4IHNsb3dlciB0aGFuIHRoZSBibG9jay1zaGExIGltcGxlbWVudGF0aW9uLiAgVGhp
-cyB3YXMgYmFzaWNhbGx5IGF0dGFja2luZyB0aGUgbG93IGhhbmdpbmcgZnJ1aXQgaW4gb3B0aW1p
-emluZyBvdXIgaW1wbGVtZW50YXRpb24uICBUaGVyZSBhcmUgc29tZSB0aGluZ3MgdGhhdCBJIGhh
-dmVuJ3QgbG9va2VkIGludG8geWV0LCBidXQgSSdtIGJhc2ljYWxseSBhdCB0aGUgcG9pbnQgb2Yg
-c3RhcnRpbmcgdG8gY29tcGFyZSB0aGUgZ2VuZXJhdGVkIGFzc2VtYmxlciB0byBzZWUgd2hhdCdz
-IGRpZmZlcmVudCBiZXR3ZWVuIG91ciBpbXBsZW1lbnRhdGlvbnMuDQoNCk9wZW5TU0wncyBTSEEx
-IGltcGxlbWVudGF0aW9uIGlzIGltcGxlbWVudGVkIGluIGFzc2VtYmxlciwgc28gdGhlcmUncyBu
-byB3YXkgd2UncmUgZ29pbmcgdG8gZ2V0IGNsb3NlIHRvIHRoYXQgd2l0aCBqdXN0IEMgbGV2ZWwg
-Y29kaW5nLg0KDQpUaGFua3MsDQpEYW4NCg==
+Am 25.02.2017 um 11:13 schrieb Carsten Fuchs:
+> Dear Git group,
+>
+> I use Git at a web hosting service, where my user account has a memory
+> limit of 768 MB:
+>
+> (uiserver):p7715773:~$ uname -a
+> Linux infongp-de15 3.14.0-ui16322-uiabi1-infong-amd64 #1 SMP Debian
+> 3.14.79-2~ui80+4 (2016-11-17) x86_64 GNU/Linux
+
+What's the output of "ulimit -a"?
+
+> (uiserver):p7715773:~$ git --version
+> git version 2.1.4
+
+That's quite old.  Can you try a more recent version easily (2.12.0 just 
+came out)?  I don't remember a specific fix, and memory usage perhaps 
+even increased with newer versions, but ruling out already fixed issues 
+would be nice.
+
+> (uiserver):p7715773:~/cafu$ git gc
+> Zähle Objekte: 44293, Fertig.
+> Komprimiere Objekte: 100% (24534/24534), Fertig.
+> Schreibe Objekte: 100% (44293/44293), Fertig.
+> Total 44293 (delta 17560), reused 41828 (delta 16708)
+>
+> (uiserver):p7715773:~/cafu$ git status
+> fatal: Out of memory, realloc failed
+> fatal: recursion detected in die handler
+>
+> The repository is tracking about 19000 files which together take 260 MB.
+> The git server version is 2.7.4.1.g5468f9e (Bitbucket)
+
+Is your repository publicly accessible?
+
+René
