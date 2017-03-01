@@ -2,94 +2,115 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C9C782023D
-	for <e@80x24.org>; Wed,  1 Mar 2017 18:57:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7F9302023D
+	for <e@80x24.org>; Wed,  1 Mar 2017 19:10:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752773AbdCAS46 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 1 Mar 2017 13:56:58 -0500
-Received: from mail-it0-f42.google.com ([209.85.214.42]:35601 "EHLO
-        mail-it0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752152AbdCAS4s (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Mar 2017 13:56:48 -0500
-Received: by mail-it0-f42.google.com with SMTP id 203so104361480ith.0
-        for <git@vger.kernel.org>; Wed, 01 Mar 2017 10:56:21 -0800 (PST)
+        id S1753016AbdCATKe (ORCPT <rfc822;e@80x24.org>);
+        Wed, 1 Mar 2017 14:10:34 -0500
+Received: from mail-io0-f172.google.com ([209.85.223.172]:35833 "EHLO
+        mail-io0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751088AbdCATKd (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Mar 2017 14:10:33 -0500
+Received: by mail-io0-f172.google.com with SMTP id j18so37915248ioe.2
+        for <git@vger.kernel.org>; Wed, 01 Mar 2017 11:08:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=SnA/YDljbUBAlp13L51n0jADb1AIotEbTb2+vofkn2E=;
-        b=Bad1QhV7d8+4qs67paIU2x7mjMbh0zCxHCsBYFYUFwGk1nIWimyn15Y4vQ0ege1oG1
-         G+NNH9GX0bIGo+qtd37ksk4cSP3p9pHLpDep/1zCyl/XP3vpDHQtyQdWTvECSdL0lMTo
-         kq3fjkiCj9i11Wyu5uodisv7eiT9Co7nv6kOJhJgPiwL7NhxxTyVbbwfom6qgj8vdaww
-         g5Y3XrDiDiqhziQH/oV+/ijOOnTUk8Uz/vDiiUiNtsRKAbIvfkf2Oel/ZzaZ3ZwL5IsB
-         9WQUs6VLR6lpK5ew2hCV54eGHu5exSVoITT/RB2oZKckA43Hj2XOajwSO7KkUGMW2lyR
-         jBdA==
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=P/Qb5sHXzEqyLx0yQ62ZFtQawuYmxoz9aSm2FwbPSUw=;
+        b=rxRgSKcv3lc1lMfRtVRWNACdPn3jFb0Y4EQIpq/Ujpel6bMTcdb56jsZsXzeoH3vcQ
+         YaiBrgHXZD4EtvcThwMGe55BEXvkxjnp62tXwH0xfo8C/L06N4mkektTSkJmGbWpvIvS
+         cnJ2unao6B6C72pUhWyoawCckn1WTUY/dA9W6jcARM03HlRHX1nP88qFGh72liEwm9mz
+         aoSY1RSnMz+X0gtgvajd8NUwKPTSt7cpYz5CD/WabLkSk28HEtXr4KOieBUXyGjsg9fH
+         EDkDVQYVq7hp/CLgbPDUgd0yQaeugODNgHpeAiGw0WUVI4hck8IHiEyFB8TQ5i1BbOSo
+         r5fA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=SnA/YDljbUBAlp13L51n0jADb1AIotEbTb2+vofkn2E=;
-        b=aAV9bdzftDBKb6pSbzBm3yeYvOdqXcbbIlt1JbhIYbRgSv0ImLQlRYv9DTEgB0QGXi
-         RoUGmX0q3Cac00QYvtJjlH5irDPXxr9wgKgctpKog4Y20kxtenPO3saiWNNd/WurNXKF
-         QjuusD5afR2VdiK/WfKptRXE/ncbfhT9W6dLJ2GAsz5vEWzhDufM7MHbPTgXj/k3MPjN
-         70LE6C5aM5X+JBQ1Y0bp+dioPgmfxFoGUw7G74APgQDnQsdxKRnkAtqOVJSSGEhASZu9
-         jVYdVvIjRpmTX5WQpJhFLpuGey0I16KfPBJ6Q0VG7peQuoCqm7blo23ZTwYF3oorwcFj
-         LEkQ==
-X-Gm-Message-State: AMke39lfZj94GDgYyKpT6ey0an3kFsUyHZg/UTeYa2g/IEMtWgWx6CY5wtoHhBmyo3f6bccQhcvz8LztYuLa3g==
-X-Received: by 10.36.65.135 with SMTP id b7mr6162377itd.86.1488394195476; Wed,
- 01 Mar 2017 10:49:55 -0800 (PST)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=P/Qb5sHXzEqyLx0yQ62ZFtQawuYmxoz9aSm2FwbPSUw=;
+        b=DIhFabI4yYlsJFsqWmiBFdcXZ/rrwJSLVvh9NyOLi/vDt7xKk3Scxh72Uy0yWNJWqB
+         V8Oe1YvAabq9cZ0EL51nzABdeNlPDN3DvOT04YWv9UC+6Nhihl9gu3RHvfPyL8adhC5E
+         nS+glwi/BO5KxQsVhLFrEgIt6isClqR6puXwwnRZ2n9e2WXZBYb/4Ii50hJ6qSu5VXyC
+         rpOlPW/BXQPqKNguu+6LRlFYiXR7r8CVtqJBrunq4nQFOE66HlnQgxAI0T9RedJgy31+
+         78f1x8rxz1ZEKJgkc5TyVyJk46XabBclNXIM12F6kJmk72oBNNmyJqzeguNmIczhcZW0
+         snuw==
+X-Gm-Message-State: AMke39nd3D54QQARpknzvSO4SN8IXdeLNZPpGOhVdsVS1v2ros4h0jEB5KNux/Rx2WBJyRKbKGhY7UbY8RI5PruC
+X-Received: by 10.107.37.148 with SMTP id l142mr9517449iol.159.1488395328595;
+ Wed, 01 Mar 2017 11:08:48 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.107.146.131 with HTTP; Wed, 1 Mar 2017 10:49:55 -0800 (PST)
-In-Reply-To: <xmqq7f48hm8g.fsf@gitster.mtv.corp.google.com>
-References: <alpine.LFD.2.20.1702281621050.22202@i7.lan> <xmqq7f48hm8g.fsf@gitster.mtv.corp.google.com>
-From:   Linus Torvalds <torvalds@linux-foundation.org>
-Date:   Wed, 1 Mar 2017 10:49:55 -0800
-X-Google-Sender-Auth: c5VVv4hhpPrM59K5kEekDwlcg_I
-Message-ID: <CA+55aFx1wAS-nHS2awuW2waX=cvig4UoZqmN5H3v93yDE7ukyQ@mail.gmail.com>
-Subject: Re: [PATCH] Put sha1dc on a diet
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jeff King <peff@peff.net>, Marc Stevens <marc.stevens@cwi.nl>,
-        Dan Shumow <danshu@microsoft.com>,
-        Git Mailing List <git@vger.kernel.org>
+Received: by 10.79.13.1 with HTTP; Wed, 1 Mar 2017 11:08:48 -0800 (PST)
+In-Reply-To: <8cdd9f2d-415c-1b60-0017-bf973e8cf914@riseup.net>
+References: <a9da4416-6437-a491-f461-c5e61d805b2d@riseup.net>
+ <xmqqmvd6kykc.fsf@gitster.mtv.corp.google.com> <8cdd9f2d-415c-1b60-0017-bf973e8cf914@riseup.net>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Wed, 1 Mar 2017 11:08:48 -0800
+Message-ID: <CAGZ79kav0yB=g5kwB68oHRxbd0mDJ5-gGTJSidSKkZ75gmT44Q@mail.gmail.com>
+Subject: Re: gpg verify git sub modules useful?
+To:     Patrick Schleizer <patrick-mailinglists@whonix.org>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>,
+        Whonix-devel <whonix-devel@whonix.org>
 Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Mar 1, 2017 at 10:42 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> I see //c99 comments
+On Wed, Mar 1, 2017 at 10:28 AM, Patrick Schleizer
+<patrick-mailinglists@whonix.org> wrote:
+> Good questions, thank you for trying to figure out what I am asking. :)
+>
+> Junio C Hamano:
+>> Patrick Schleizer <patrick-mailinglists@whonix.org> writes:
+>>
+>>> When using git submodules, is there value in iterating about the git
+>>> submodules running "git verfiy-commit HEAD" or would that be already
+>>> covered by the git submodule verification?
+>>
+>> That depends on what you are referring to with the "git submodule
+>> verification"
+>
+> cd submodule
+> if ! git verfiy-commit HEAD ; then
+>    error
+> fi
+>
+>> and more importantly what threat you are guarding
+>> against.
+>
+> All main (non-submodule) (merge) commits and submodule (merge) commits
+> are signed by me.
+>
+> 1) git --recursive clone main (non-submodule) git repository
+> 2) cd git main repository
+> 3) git verify-commit HEAD or git verify-tag tag-name
+> 4) git submodule update
+>
+> What if the main (non-submodule) git repository gpg signature was okay
+> but then after git fetched the submodules these compromised (MITM'ed) ones?
 
-sha1dc is already full of // style comments. I just followed the
-existing practice.
+The signing in Git is just signing the commit hash essentially.
 
-> and also T array[] = { [58] = val } both of
-> which I think we stay away from (and the former is from the initial
-> import), so some people on other platforms MAY have trouble with
-> this topic.
+> Does the having gpg verified the root (main git repository) ensure that
+> submodule commits are also quasi verified?
 
-Hmm. The "{ [58] = val; }" kind of initialization would be easy to
-work around by just filling in everything else with NULL, but it would
-make for a pretty nasty readability issue.
+That is my understanding. There is no difference between the security of
+a file or a submodule, just the way of obtaining and its reporting is different.
+Both a file and a submodule are referred to via a hash (currently sha1).
+Obtaining a file is implicit whereas obtaining the submodule is explicit.
+The reporting (in e.g. git-status) ... depends on a lot of options to be set.
 
-That said, if you mis-count the NULL's, the end result will pretty
-immediately SIGSEGV, so I guess it wouldn't be much of a maintenance
-problem.
+When signing the superproject, you acknowledge the submodules
+being in the state as recorded. (Same with s/submodules/files/)
 
-But if you're just willing to take the "let's see" approach, I think
-the explicitly numbered initializer is much better.
+So I am not sure what kind of additional signing you're looking
+for in the submodules.
 
-The main people who I assume would really want to use the sha1dc
-library are hosting places. And they won't be using crazy compilers
-from the last century.
-
-That said, I think that it would be lovely to just default to
-USE_SHA1DC and just put the whole attack behind us. Yes, it's slower.
-No, it doesn't really seem to matter that much in practice.
-
-              Linus
+Thanks,
+Stefan
