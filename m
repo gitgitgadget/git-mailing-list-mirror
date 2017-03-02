@@ -2,70 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D62531F5FB
-	for <e@80x24.org>; Thu,  2 Mar 2017 19:19:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D97B41F5FB
+	for <e@80x24.org>; Thu,  2 Mar 2017 19:36:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752834AbdCBTTv (ORCPT <rfc822;e@80x24.org>);
-        Thu, 2 Mar 2017 14:19:51 -0500
-Received: from mout.web.de ([212.227.17.11]:54143 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752161AbdCBTTa (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Mar 2017 14:19:30 -0500
-Received: from macce.lan ([213.64.64.87]) by smtp.web.de (mrweb101
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0M3Bhz-1cTu1d0DZP-00srpG; Thu, 02
- Mar 2017 19:20:10 +0100
-Subject: Re: [PATCH v1 1/1] git diff --quiet exits with 1 on clean tree with
- CRLF conversions
-To:     Mike Crowe <mac@mcrowe.com>, Junio C Hamano <gitster@pobox.com>
-References: <xmqqshmyhtnu.fsf@gitster.mtv.corp.google.com>
- <20170301170444.14274-1-tboegi@web.de>
- <xmqqr32gg0o6.fsf@gitster.mtv.corp.google.com>
- <xmqqa894fyst.fsf@gitster.mtv.corp.google.com>
- <20170302142056.GB7821@mcrowe.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>
-From:   =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
-Message-ID: <4e53ca81-3328-349b-3612-a672ddc6a949@web.de>
-Date:   Thu, 2 Mar 2017 19:20:08 +0100
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:45.0)
- Gecko/20100101 Thunderbird/45.6.0
+        id S1753244AbdCBTgc (ORCPT <rfc822;e@80x24.org>);
+        Thu, 2 Mar 2017 14:36:32 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:51064 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1752090AbdCBTg1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Mar 2017 14:36:27 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 4060F84896;
+        Thu,  2 Mar 2017 14:36:20 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=goDbw3TNGzDupihSY2yl/wPrekM=; b=Nfbo7F
+        m2pKfogTKxzoqPjRt27/vSZioq1t+GRc2R1GGWsROF/AoL8vGXGj7c8EEwMHbLN6
+        OW2O1BCra22XC4TauxIYqBPp02cDygWNf6jga+08z+13FTJr1bwdLNxLmxXuXj6G
+        OSrdQVpyjWvT5F0WnT7PXSJdZfpwJ92poT/ZY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=DrVm1oJ8mwpnYBynH29s7lYwlucLpn5p
+        zMI2/fzAsseE/CnTmxzikBN1dK/ZiHffXFX+u1WnaJ+OLC46TuGsMbQhQ/MOTWpR
+        zqwzRk2ws9yAvw5JN1lCeeoRo23+kuGEluKRygO7qzZ51XZnKas05r2Xv/yt2TXy
+        3/FvYNYsNB0=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 3173084895;
+        Thu,  2 Mar 2017 14:36:20 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 82B8C84892;
+        Thu,  2 Mar 2017 14:36:19 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Devin J. Pohly" <djpohly@gmail.com>
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Charles Bailey <cbailey32@bloomberg.net>,
+        Jeff King <peff@peff.net>, git@vger.kernel.org
+Subject: Re: [PATCH 3/4] filter-branch: fix --prune-empty on parentless commits
+References: <20170223082736.31283-1-djpohly@gmail.com>
+        <20170223082736.31283-3-djpohly@gmail.com>
+        <xmqqbmts7gjm.fsf@gitster.mtv.corp.google.com>
+        <20170223213333.GA3490@prospect.localdomain>
+Date:   Thu, 02 Mar 2017 11:36:18 -0800
+In-Reply-To: <20170223213333.GA3490@prospect.localdomain> (Devin J. Pohly's
+        message of "Thu, 23 Feb 2017 15:33:33 -0600")
+Message-ID: <xmqqshmvbhe5.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <20170302142056.GB7821@mcrowe.com>
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K0:SizSm/23418x4P9sz3oMMObroBBUWmVsYT2EOEsjrWCg2FV962b
- dylgBdvg7PvyqavHp/b7Tf6y+uGXWya/UKgAx6AdflVGrx2FvzquBi1ESsBn3RT1tMrTeUS
- FZfTNnIlkLQtnF4GR4KvEP2Of1DkAnti1vTJT4bQWWUIZZ06RjxNTIQtILQ/QuUYBxONCxC
- y2rAsJTpjEi+5yCapfAUQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:vLC0F1Oc1no=:5caJfJk1dL0bwKThNbB11a
- UqvmgcKQQ2aZo8cO03pqrHw2WrBHZNV5KkFdIo1QRuYPc4M9Hdam60f3S21m8HlYEzicQLe2Z
- nyhYn55sLT/QbsW1qDVYosd/vgQv4sAuegYgE4t2kUkB31UEjOAyBCL+XzXm9TLIt/BhmWeqh
- dfoq4yGUHbgMb4XcwWMjMm2gIhU02l17k8MTZbk2BZQ/65cYZUQrURtAXMv1/35sJTnsNf9Wy
- 69aoQR1JXFjHSdUgsjVUOls57pJFaYx3QXycqRrlkMBaTGTHf8sk9TIWvZTMtejsKStIQMmOr
- HMjkOQ6YEcuWTnZTSzpoXz0kdDr8yyP8c+zdEgvLB2WvKYMqNE4ZS0S8RKMBBQmISX8642JIJ
- Xmf1vzORmDG4aFD6WVyJ1dldy4Nyy64vsyCoAdw3XKd/eBIxb5sWVY4jaG4qmBoDebYsv2b3W
- QzPUWnKOkEoW59LHzDvI/UanwSlwXsQXmWLAScBgUD7QYkqeBKxToxVkCGfXZJ9P8fJZUysSz
- TJ4NPBzgc8cZbLYE35HJQs+tIDAVifXSCxCj8PHfDjbTsOl1Ke9/SuFt0ODFf4g03y06Gh1LS
- /NyGHXTwy+1Dd3A6TYWLJa+S8bSZpCEHh4ZPwpW/fPRctsVU7z6Pr/CAFWkwVoslqkZnmUDAD
- qROSKH4dzWnfKEtBGtMQjC6qeCrNzNYrx2PS4xLUIHtSPYTMWxHagEfAgHmnjBADhuOD+M5Ri
- EU7NpIWPYwz+3jVb+xiu2lXa2CbsRY27gtQTrZKkzJXlB64ImpVdAY2AcVvp849FJLsYCZqaY
- V3yuLo3
+Content-Type: text/plain
+X-Pobox-Relay-ID: 827283AC-FF7F-11E6-AD8B-97B1B46B9B0B-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2017-03-02 15:20, Mike Crowe wrote:
-> ll the solutions presented so far do cause a small change in behaviour
-> when using git diff --quiet: they may now cause warning messages like:
-> 
->  warning: CRLF will be replaced by LF in crlf.txt.
->  The file will have its original line endings in your working directory.
-Ah,
-that is not ideal.
-I can have a look at it later (or due to the weekend)
+"Devin J. Pohly" <djpohly@gmail.com> writes:
 
+> I think your point is interesting too, though.  If a commit is also
+> TREESAME to its parent(s?) in the _pre-filtered_ branch, it seems
+> reasonable that someone might want to leave it in the filtered branch as
+> an empty commit while pruning empt*ied* commits.  I would imagine that
+> as another option (--prune-newly-empty?).
+
+I was hoping to hear from others who may care about filter-branch to
+comment on this topic to help me decide, but I haven't heard
+anything, so here is my tentative thinking.
+
+I am leaning to:
+
+ * Take your series as-is, which would mean --prune-empty will
+   change the behaviour to unconditionally lose the empty root.
+
+ * Then, people who care deeply about it can add a new option that
+   prunes commits that become empty while keeping the originally
+   empty ones.
+
+Thoughts?
