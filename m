@@ -2,96 +2,80 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 573B320279
-	for <e@80x24.org>; Thu,  2 Mar 2017 22:34:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 81A142013E
+	for <e@80x24.org>; Thu,  2 Mar 2017 22:35:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751595AbdCBWet (ORCPT <rfc822;e@80x24.org>);
-        Thu, 2 Mar 2017 17:34:49 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:65443 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1750915AbdCBWes (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Mar 2017 17:34:48 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 2949D85D1C;
-        Thu,  2 Mar 2017 16:39:21 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=g0e/0wYrcjUyZ3C1p7xWof9j57M=; b=ATDa/V
-        Cq7sMf0IsqVdc5v9WDvqKA3EehLlXrYBA1VWLOczzqs64ulZjwH6nc2wgplRiwzn
-        cGIAujycB53B+CQe/k3FbVac+a0pxDzN6rL9o4wPX+nn7O46Ms+8J+VpMpUdfyyu
-        uJuuieHTc7u/MH2O/9E0KHF3RDPoqVc7axTWM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=qJlQM+7FX1L4yL9q4LO/jn69y7KlJexm
-        26zQ8PWWk67pglLrrVYOvjC9UtdGR830+CblVWanAMJyjkH0u32oQ0Gcdfm3LWgv
-        10/M7msGnsIrrrgLHvVmaXrMFSugXwv36iYjX87Xwah/Fr4AWUv7xj6G+iNfw5xM
-        JvTR7/kOnFI=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 1FFC785D1B;
-        Thu,  2 Mar 2017 16:39:21 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 40A6485D19;
-        Thu,  2 Mar 2017 16:39:20 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Devin J. Pohly" <djpohly@gmail.com>
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Charles Bailey <cbailey32@bloomberg.net>,
-        Jeff King <peff@peff.net>, git@vger.kernel.org
-Subject: Re: [PATCH 3/4] filter-branch: fix --prune-empty on parentless commits
-References: <20170223082736.31283-1-djpohly@gmail.com>
-        <20170223082736.31283-3-djpohly@gmail.com>
-        <xmqqbmts7gjm.fsf@gitster.mtv.corp.google.com>
-        <20170223213333.GA3490@prospect.localdomain>
-        <xmqqshmvbhe5.fsf@gitster.mtv.corp.google.com>
-        <20170302211804.GB3490@prospect.localdomain>
-Date:   Thu, 02 Mar 2017 13:39:19 -0800
-In-Reply-To: <20170302211804.GB3490@prospect.localdomain> (Devin J. Pohly's
-        message of "Thu, 2 Mar 2017 15:18:04 -0600")
-Message-ID: <xmqqbmtjbbp4.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+        id S1751657AbdCBWfi (ORCPT <rfc822;e@80x24.org>);
+        Thu, 2 Mar 2017 17:35:38 -0500
+Received: from mail-it0-f47.google.com ([209.85.214.47]:36483 "EHLO
+        mail-it0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751553AbdCBWfg (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Mar 2017 17:35:36 -0500
+Received: by mail-it0-f47.google.com with SMTP id h10so2676179ith.1
+        for <git@vger.kernel.org>; Thu, 02 Mar 2017 14:34:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=ogUiU8tCCUZfecPGS7+oBCR3UC5VWumtUkp+k7emlRY=;
+        b=RT2THmr2Qxz055w4jaq18TrpZrrQyCIMVWtW+PLC6KbygU86jV6w9lwvGizZeyFbrd
+         7Ac6bzBeKb4hnUBH75jBAGaHACLbgs/24M+0tAoEtWmnUbPk0uWW0Da1ZHWVT/7mV3cs
+         9WzoPQtQQcmpCGpd1GcXKZfhWn5W1vel26KFmH9cBvqquwTLeCzyRJB8fMZMU9WZj5sY
+         d3OSXctGoLKT9b9f94m7tCEYwmyjQlCNanKtxfwmQLmVNaQoUyrbxnKR163Dnw2qJ8af
+         6aK7GvCAfHufz0VFilvevHwjs+pKWh5JMgop5PI4IXn3HerG7LuQhGEjXTDv7j47YErZ
+         QWxg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=ogUiU8tCCUZfecPGS7+oBCR3UC5VWumtUkp+k7emlRY=;
+        b=Zb8ndepGKoufm/W4nXPSbZOkIxToUdpK9H0bWvToJb79oVg21gyhL+IaQ8Xm6mL/rJ
+         bO3sdp9b+cZV0q0c4S9dcZVIS92dfeuufHnCPqpjOOxcOkyxwz4WGPA/sa1jeiWYmi4g
+         b3X2RBQ2osukwVjRVU8yjMzByG2q8raVbZ/uvm0T8efCZNvYTmf1TSKqDvwjkPToQ3zC
+         EUCDw/DKrsL+CdngsMeYVYVrmEiSsNDdyTwbVKldv044Hzrntykueq68IxWONYXEkjc6
+         c1FgyzyCmHeiwXdSMIqH7ZfL6utYwQPPjObpY5AqIYsIs0c6fin1pKnpl/F3KsvZh62U
+         9XYw==
+X-Gm-Message-State: AMke39llv/eAmCkzVtdomzpq0zFRBoOBKu9MiYtqHDE/Lu3tcA7iM8lGkJLOhNdd9QB3Fl1/d8Vll7kt8+R7+w==
+X-Received: by 10.36.66.141 with SMTP id i135mr120232itb.86.1488493635906;
+ Thu, 02 Mar 2017 14:27:15 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: B1B891E0-FF90-11E6-B2D9-97B1B46B9B0B-77302942!pb-smtp1.pobox.com
+Received: by 10.107.146.131 with HTTP; Thu, 2 Mar 2017 14:27:15 -0800 (PST)
+In-Reply-To: <20170302215457.l2zhxgnvhulw2hl5@kitenet.net>
+References: <20170223164306.spg2avxzukkggrpb@kitenet.net> <22704.19873.860148.22472@chiark.greenend.org.uk>
+ <xmqq60jz5wbm.fsf@gitster.mtv.corp.google.com> <20170224233929.p2yckbc6ksyox5nu@sigill.intra.peff.net>
+ <CA+55aFw6BLjPK-F0RGd9LT7X5xosKOXOxuhmKX65ZHn09r1xow@mail.gmail.com>
+ <CA+55aFwXaSAMF41Dz3u3nS+2S24umdUFv0+k+s18UyPoj+v31g@mail.gmail.com>
+ <xmqqk287be9l.fsf@gitster.mtv.corp.google.com> <CA+55aFziZRA29foAMbM-HS5fiup7T0TuYf4XQ1kNT_SR7FfSgw@mail.gmail.com>
+ <20170302215457.l2zhxgnvhulw2hl5@kitenet.net>
+From:   Linus Torvalds <torvalds@linux-foundation.org>
+Date:   Thu, 2 Mar 2017 14:27:15 -0800
+X-Google-Sender-Auth: za0g_Szn8UTfHFe8bzLO3UMquYY
+Message-ID: <CA+55aFzdJcFZQdJ78rvZ92nNZRsKfcUKMCiXwTVYR34JAuznrA@mail.gmail.com>
+Subject: Re: SHA1 collisions found
+To:     Joey Hess <id@joeyh.name>
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        Ian Jackson <ijackson@chiark.greenend.org.uk>,
+        Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Devin J. Pohly" <djpohly@gmail.com> writes:
-
-> On Thu, Mar 02, 2017 at 11:36:18AM -0800, Junio C Hamano wrote:
->> "Devin J. Pohly" <djpohly@gmail.com> writes:
->> 
->> > I think your point is interesting too, though.  If a commit is also
->> > TREESAME to its parent(s?) in the _pre-filtered_ branch, it seems
->> > reasonable that someone might want to leave it in the filtered branch as
->> > an empty commit while pruning empt*ied* commits.  I would imagine that
->> > as another option (--prune-newly-empty?).
->> 
->> I was hoping to hear from others who may care about filter-branch to
->> comment on this topic to help me decide, but I haven't heard
->> anything, so here is my tentative thinking.
->> 
->> I am leaning to:
->> 
->>  * Take your series as-is, which would mean --prune-empty will
->>    change the behaviour to unconditionally lose the empty root.
->> 
->>  * Then, people who care deeply about it can add a new option that
->>    prunes commits that become empty while keeping the originally
->>    empty ones.
->> 
->> Thoughts?
+On Thu, Mar 2, 2017 at 1:54 PM, Joey Hess <id@joeyh.name> wrote:
 >
-> Sounds good to me.  I would be willing to work on a new option if needed
-> (to "atone" for changing existing behavior), so you can loop me in if
-> there are any complaints.
+> There's a surprising result of combining iterated hash functions, that
+> the combination is no more difficult to attack than the strongest hash
+> function used.
 
-Thanks.  I'll wait for others who know filter-branch better than me
-to say something for a few days before doing anything, though.
+Duh. I should actually have known that. I started reading the paper
+and went "this seems very familiar". I'm pretty sure I've been pointed
+at that paper before (or maybe just a similar one), and I just didn't
+react enough for it to leave a lasting impact.
+
+              Linus
