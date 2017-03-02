@@ -2,86 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0CF862023D
-	for <e@80x24.org>; Fri,  3 Mar 2017 06:57:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E74982023D
+	for <e@80x24.org>; Fri,  3 Mar 2017 06:58:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751384AbdCCG5k (ORCPT <rfc822;e@80x24.org>);
-        Fri, 3 Mar 2017 01:57:40 -0500
-Received: from cloud.peff.net ([104.130.231.41]:37726 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751333AbdCCG5i (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 3 Mar 2017 01:57:38 -0500
-Received: (qmail 9056 invoked by uid 109); 3 Mar 2017 06:30:54 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 03 Mar 2017 06:30:54 +0000
-Received: (qmail 25249 invoked by uid 111); 3 Mar 2017 06:31:01 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 03 Mar 2017 01:31:01 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 03 Mar 2017 01:30:52 -0500
-Date:   Fri, 3 Mar 2017 01:30:52 -0500
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-        git@vger.kernel.org, sschuberth@gmail.com,
-        Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-        Philip Oakley <philipoakley@iee.org>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: Re: [PATCH v7 3/3] config: add conditional include
-Message-ID: <20170303063052.xkjoipuaohcwdl4n@sigill.intra.peff.net>
-References: <20170224131425.32409-1-pclouds@gmail.com>
- <20170301112631.16497-1-pclouds@gmail.com>
- <20170301112631.16497-4-pclouds@gmail.com>
- <xmqqo9xkhosj.fsf@gitster.mtv.corp.google.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqo9xkhosj.fsf@gitster.mtv.corp.google.com>
+        id S1751772AbdCCG6B (ORCPT <rfc822;e@80x24.org>);
+        Fri, 3 Mar 2017 01:58:01 -0500
+Received: from mail-pg0-f46.google.com ([74.125.83.46]:35317 "EHLO
+        mail-pg0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751765AbdCCG6A (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 3 Mar 2017 01:58:00 -0500
+Received: by mail-pg0-f46.google.com with SMTP id b129so40934762pgc.2
+        for <git@vger.kernel.org>; Thu, 02 Mar 2017 22:57:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=OigmWKAocfoC/k17ilr73h2WmcCIYXfq8JhXVJFf7ho=;
+        b=Lg8jFwlhjBW7e5pYy9gz3I3v+UnUHNQEfZbJzsSsBoYuHpBFtckLbmEQOqQgjZPyVX
+         RW8BaAKcP80oGaCmdb5NfEcjb3gqU6VCFjI0iFaq+OjY2sivCC3VvUA26Nfk2oxd7RNL
+         8JvaVb4zBXnu3G9ae26o+g+khT7XgWgp1KgBGIoIHTpJsUCHfE5+dbi3ZDzs93DawNlw
+         h2nNYMQiPvQtVS/n91CNoc0/wmkhIAGdw5/kGPX257aNPeKDZUoJPCNbYZ6tHtv0zxEB
+         uLgXT6MpNW+lT7j8OFJbsBC5zBxZ/vTLiZdTEndpR9VrQLGGVfTsGbEgpmiYaPOHDasu
+         HJ7g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=OigmWKAocfoC/k17ilr73h2WmcCIYXfq8JhXVJFf7ho=;
+        b=SrPjZjPxTedlXQpsTZTHbRuMybz4nAGkwnr26UMsTi9k8ysye0EzXamtb2GwnamMYw
+         WT2bbnFV7McVhNolHpjRyVjDufAkIGQXMSmKEGeH3cMUBM+86pM1foNLYOELF6YwF5/Z
+         ecXt/6Gsy4cx1IMyJ4MzJRmANZT6mWZgqYhBcA86tThnKbp1OnSDbVYHbXuQmwjYAIEG
+         KUrcxbFJekB+vQ1DGO/JYV/esFnBvY8+j7XD09oTpP1YUvu2OD+v0Oz6MesrmNUlqG6j
+         MykswdQsqpEQ8gIkIkQU02shnXr2A4tF4yqEPiKADiFWKmDHfG3ZgIMncBIwVfmrEfxL
+         Ttow==
+X-Gm-Message-State: AMke39lnlxa7yYg9yV7gPlqi/iqcFbtLxbKT+YFLCiUjA9q6/Jus3/NS2tLYoRiR/qnMOy+8
+X-Received: by 10.99.117.85 with SMTP id f21mr17509880pgn.62.1488484251734;
+        Thu, 02 Mar 2017 11:50:51 -0800 (PST)
+Received: from twelve2.mtv.corp.google.com ([100.96.238.13])
+        by smtp.gmail.com with ESMTPSA id l188sm18667575pfl.28.2017.03.02.11.50.50
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Thu, 02 Mar 2017 11:50:51 -0800 (PST)
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     git@vger.kernel.org
+Cc:     Jonathan Tan <jonathantanmy@google.com>, peff@peff.net,
+        gitster@pobox.com
+Subject: [PATCH] t/perf: export variable used in other blocks
+Date:   Thu,  2 Mar 2017 11:50:41 -0800
+Message-Id: <20170302195041.1699-1-jonathantanmy@google.com>
+X-Mailer: git-send-email 2.12.0.rc1.440.g5b76565f74-goog
+In-Reply-To: <20170228221236.selqkf5wme3fvued@sigill.intra.peff.net>
+References: <20170228221236.selqkf5wme3fvued@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Mar 01, 2017 at 09:47:40AM -0800, Junio C Hamano wrote:
+In p0001, a variable was created in a test_expect_success block to be
+used in later test_perf blocks, but was not exported. This caused the
+variable to not appear in those blocks (this can be verified by writing
+'test -n "$commit"' in those blocks), resulting in a slightly different
+invocation than what was intended. Export that variable.
 
-> > @@ -185,6 +271,12 @@ int git_config_include(const char *var, const char *value, void *data)
-> >  
-> >  	if (!strcmp(var, "include.path"))
-> >  		ret = handle_path_include(value, inc);
-> > +
-> > +	if (!parse_config_key(var, "includeif", &cond, &cond_len, &key) &&
-> > +	    (cond && include_condition_is_true(cond, cond_len)) &&
-> > +	    !strcmp(key, "path"))
-> > +		ret = handle_path_include(value, inc);
-> > +
-> >  	return ret;
-> >  }
-> 
-> So "includeif.path" (misspelled one without any condition) falls
-> through to "return ret" and gives the value we got from inc->fn().
-> I am OK with that (i.e. "missing condition is false").
+Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+---
 
-Yeah, I think that is sensible, just as not-understood nonsense like
-"include.foobar" would be ignored, as well.
+Performance indeed does drop significantly with this patch. And I cannot
+say "at least this is more correct", because it isn't - as Peff thinks,
+it is indeed still not 100% accurate because of the resurfacing-object
+issue he mentions (I've verified this by constructing a test that fails
+even after this patch set).
 
-> Or we can make it go to handle_path_include(), effectively making
-> the "include.path" a short-hand for "includeIf.path".  I am also OK
-> with that (i.e. "missing condition is true").
+Also, since we don't want to unify tree_ and blob_ (for the reason Peff
+mentioned in another e-mail), feel free to drop this patch set.
 
-I think we want "missing condition is false". Certainly an empty
-condition like "includeIf..path" is false, as are conditions we don't
-understand.
+Having said that, while looking at the perf test, I noticed an issue
+with a non-exported variable, which is corrected in this patch.
 
-> Or we could even have "include.[<condition>.]path" without
-> "includeIf"?  I am not sure if it is a bad idea that paints
-> ourselves in a corner, but somehow I find it tempting.
+ t/perf/p0001-rev-list.sh | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-That was how I had originally envisioned the namespace working when I
-introduced include.path long ago. And I think Duy's v1 used that, but
-the feedback was that it was not sufficiently obvious that the
-subsection was a conditional.
+diff --git a/t/perf/p0001-rev-list.sh b/t/perf/p0001-rev-list.sh
+index 16359d51a..ebf172401 100755
+--- a/t/perf/p0001-rev-list.sh
++++ b/t/perf/p0001-rev-list.sh
+@@ -15,7 +15,8 @@ test_perf 'rev-list --all --objects' '
+ '
+ 
+ test_expect_success 'create new unreferenced commit' '
+-	commit=$(git commit-tree HEAD^{tree} -p HEAD)
++	commit=$(git commit-tree HEAD^{tree} -p HEAD) &&
++	test_export commit
+ '
+ 
+ test_perf 'rev-list $commit --not --all' '
+-- 
+2.12.0.rc1.440.g5b76565f74-goog
 
--Peff
