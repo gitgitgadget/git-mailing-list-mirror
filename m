@@ -2,161 +2,175 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2FCC01F5FB
-	for <e@80x24.org>; Thu,  2 Mar 2017 14:56:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 885EB1F5FB
+	for <e@80x24.org>; Thu,  2 Mar 2017 14:59:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753653AbdCBOXa (ORCPT <rfc822;e@80x24.org>);
-        Thu, 2 Mar 2017 09:23:30 -0500
-Received: from mout.gmx.net ([212.227.15.15]:62868 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751035AbdCBOWw (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Mar 2017 09:22:52 -0500
-Received: from virtualbox ([37.201.192.48]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MVui8-1clggm1j3I-00X6l2; Thu, 02
- Mar 2017 15:22:44 +0100
-Date:   Thu, 2 Mar 2017 15:22:42 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     Lars Schneider <larsxschneider@gmail.com>
-cc:     git@vger.kernel.org, gitster@pobox.com
-Subject: Re: [PATCH v1] Travis: also test on 32-bit Linux
-In-Reply-To: <CFA1C4B4-0FDA-424D-87A4-EEE1F9BB3712@gmail.com>
-Message-ID: <alpine.DEB.2.20.1703021519330.3767@virtualbox>
-References: <c76a133a57514a332828099d342c9763fd946bfa.1488309430.git.johannes.schindelin@gmx.de> <20170302105157.59791-1-larsxschneider@gmail.com> <alpine.DEB.2.20.1703021210170.3767@virtualbox> <CFA1C4B4-0FDA-424D-87A4-EEE1F9BB3712@gmail.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+        id S1753616AbdCBOX3 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 2 Mar 2017 09:23:29 -0500
+Received: from avasout05.plus.net ([84.93.230.250]:55645 "EHLO
+        avasout05.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753027AbdCBOWi (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Mar 2017 09:22:38 -0500
+Received: from deneb ([80.229.24.9])
+        by avasout05 with smtp
+        id r2Lx1u0010BmcFC012Lyr8; Thu, 02 Mar 2017 14:20:58 +0000
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.2 cv=Hr8GIwbS c=1 sm=1 tr=0
+ a=E/9URZZQ5L3bK/voZ0g0HQ==:117 a=E/9URZZQ5L3bK/voZ0g0HQ==:17
+ a=8nJEP1OIZ-IA:10 a=6Iz7jQTuP9IA:10 a=-An2I_7KAAAA:8 a=ybZZDoGAAAAA:8
+ a=iRSbcqModfqNRAH3IDwA:9 a=wPNLvfGTeEIA:10 a=Sq34B_EcNBM9_nrAYB9S:22
+ a=0RhZnL1DYvcuLYC8JZ5M:22
+Received: from mac by deneb with local (Exim 4.84_2)
+        (envelope-from <mac@mcrowe.com>)
+        id 1cjRbE-00041c-Oa; Thu, 02 Mar 2017 14:20:56 +0000
+Date:   Thu, 2 Mar 2017 14:20:56 +0000
+From:   Mike Crowe <mac@mcrowe.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     tboegi@web.de, git@vger.kernel.org, Jeff King <peff@peff.net>
+Subject: Re: [PATCH v1 1/1] git diff --quiet exits with 1 on clean tree with
+ CRLF conversions
+Message-ID: <20170302142056.GB7821@mcrowe.com>
+References: <xmqqshmyhtnu.fsf@gitster.mtv.corp.google.com>
+ <20170301170444.14274-1-tboegi@web.de>
+ <xmqqr32gg0o6.fsf@gitster.mtv.corp.google.com>
+ <xmqqa894fyst.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:+WibMEWv0jascHIWotzdY8nh3KaaVp4vvVsfZ6FTIgnq+PIylFW
- 1wIk5oXvBOuMYRaiqE0e7qccX1LK/9bRJ/65fYeHsLKIbVZ1rcr/pE2V9NgJLRKYswM8Kjv
- 3yptNelIStnk6yrFXzVKfq5jIzEVKITcfVYAmZuQ4L69lEscObtO5ZmzZFpK33V2NeczBm9
- RfkP/ND/npVDC55bUolyw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:+2dcXzyoByA=:ESxnf0ZKHyNw1v9R3/tych
- HBkU7bOpQ8JLJjjghQdg91BGL4a7Hrh9XJq96DGhmY+gd5X8j17xQFWyJtoZHry2qnvGc0We+
- mCyqrU5SRXiziPQ+ufbv0FEjRk0G4h88GAD3ZhfPDzBB47Xkdbihi4K1GLS5sGiMQBP3Boes5
- ny/xvmal/4pL21bwU/m/AC4kG9GkOmWpzpQCKuTUZB0W+1xHrkULyff0j/lad/vlqDnNagex+
- QhEzLR8kyoeTxhGbe2lmS6cXEO8NjDdPm13w0A44X/Hsa4aCN4fkyhmIFF+B2b74SNLP770AO
- kmB6mtDCL2m8xWHThlCA77apWEg+5NpNbeyotQxebRrCW7rnod+jR/VdRjxjn2vnrYXwKm2RS
- 5TkXqLisLkD6cctspO9P3vLXK1VIPtFRo/nXGw1GpFK2GyhIuJzRl6E+695infpzj2Mva/YwR
- nJ26+w1zZxT5+08BnNMrkRuqTmVXDYqN31OOLjWDpx0uk7qUrfyexpRj8BTPC0ppi+qhQk5Ma
- ktxfdvCeTB36NhMPE7ntJnf479r2l75DfUOsE+GgPTFv+Um8A7umWmT8Hqe8FjGXvOJ9ajrk3
- 6CJ1QIFZqy/xysUCc/UjnwHliJmZxlh0H0/fDClq1DM8PCVKpM71ESAFbapbv/wyasgJT5HeK
- ikxqrwkPWH4WPWkFP04WOoJgoCn2TVA2Kj8Ttgxeotg/v9pvOkiV/ACtek1f6261L32YO8dVs
- YR3I8hq7J0HD6seoYN11b/uF9pkZaDE5g9RA7LVrOZOkCLEErfpla2ijNId6ah0VyvAP/61tY
- ubRibgKmt1QJNCV9+tZbU+auFIHVQ==
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <xmqqa894fyst.fsf@gitster.mtv.corp.google.com>
+User-Agent: Mutt/1.5.23 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Lars,
-
-
-On Thu, 2 Mar 2017, Lars Schneider wrote:
-
-> > On 02 Mar 2017, at 12:24, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> > 
-> > On Thu, 2 Mar 2017, Lars Schneider wrote:
-> > 
-> >> The patch looks good to me in general but I want to propose the
-> >> following changes:
-> > 
-> > I know you are using your script to generate this mail, but I would
-> > have liked to see v2 in the subject ;-)
+On Wednesday 01 March 2017 at 13:54:26 -0800, Junio C Hamano wrote:
+> Now I thought about it through a bit more thoroughly, I think this
+> is the right approach, so here is my (tenative) final version.
 > 
-> Yeah, sorry. I already had a "D'oh" moment *after* I saw the email in my
-> email client. Now I am wondering... is the next version v2 or v3 :D
-
-Since there was no v2, the next one should *definitely* be v2... ;-)
-
-> >> (1) Move all the docker magic into a dedicated file
-> >> "ci/run-linux-32-build.sh" This way people should be able to run this
-> >> build on their local machines without TravisCI. However, I haven't
-> >> tested this.
-> > 
-> > I considered this, but there is serious overlap: the `docker pull`
-> > call and the `docker run` call *have* to refer to the same image. It's
-> > very easy for them to get out of sync if you have that information in
-> > two files. Maybe make that an option of the script, defaulting to
-> > daald/ubuntu32:xenial?
+> I seem to be getty really rusty---after all the codepaths involved
+> are practically all my code and I should have noticed the real
+> culprit during my first attempt X-<.
 > 
-> Right. I missed that. How about something like that?
+> Thanks for helping.
 > 
->       before_install:
->         - ci/run-linux32-build.sh --pull-container
->       before_script:
->       script: ci/run-linux32-build.sh
-
-I'd prefer
-
-	before_install:
-	  - docker pull daald/ubuntu32:xenial
-	before_script:
-	script: ci/run-linux32-build.sh daald/ubuntu32:xenial
-
-> > BTW speaking of Docker: it would be nicer if there was a Docker image
-> > that already had the build-essentials installed, to save on startup
-> > time. But I did not find any that was reasonably up-to-date.
+> -- >8 --
+> Subject: [PATCH] diff: do not short-cut CHECK_SIZE_ONLY check in diff_populate_filespec()
 > 
-> True. But installing everything just takes a minute and we don't need to
-> maintain anything...
-
-And when there are network problems (like there were on Tuesday, right
-when I developed the first v1 of this patch) then we have another set of
-problems that make Travis fail. Even if the code in the PR or branch is
-actually good. I'd like to avoid false positives, if possible.
-
-> >> +set -e
-> > 
-> > Is this really necessary? I really like to avoid `set -e`, in
-> > particular when we do pretty much everything in && chains anyway.
+> Callers of diff_populate_filespec() can choose to ask only for the
+> size of the blob without grabbing the blob data, and the function,
+> after running lstat() when the filespec points at a working tree
+> file, returns by copying the value in size field of the stat
+> structure into the size field of the filespec when this is the case.
 > 
-> Agreed, not really necessary here as we just invoke one command.  Out of
-> curiosity: Why do you try to avoid it? I set it by default in all my
-> scripts.
-
-I try to avoid it because it encourages a style that omits helpful error
-messages.
-
-> >> +APT_INSTALL="apt update >/dev/null && apt install -y build-essential "\
-> >> +"libcurl4-openssl-dev libssl-dev libexpat-dev gettext python >/dev/null"
-> >> +
-> >> +TEST_GIT_ENV="DEFAULT_TEST_TARGET=$DEFAULT_TEST_TARGET "\
-> >> +"GIT_PROVE_OPTS=\"$GIT_PROVE_OPTS\" "\
-> >> +"GIT_TEST_OPTS=\"$GIT_TEST_OPTS\" "\
-> >> +"GIT_TEST_CLONE_2GB=$GIT_TEST_CLONE_2GB"
-> >> +
-> >> +TEST_GIT_CMD="linux32 --32bit i386 sh -c '"\
-> >> +"'$APT_INSTALL && cd /usr/src/git && $TEST_GIT_ENV make -j2 test'"
-> >> +
-> >> +sudo docker run \
-> >> +    --interactive --volume "${PWD}:/usr/src/git" \
-> >> +    daald/ubuntu32:xenial /bin/bash -c "$TEST_GIT_CMD"
-> > 
-> > Hmm. Since it is a script now, it would be more readable this way, I
-> > think:
-> > 
-> > sudo docker run --volume "${PWD}:/usr/src/git" "${1:-daald/ubuntu32:xenial}" \
-> > linux32 --32bit i386 sh -c '
-> > 	: update packages first &&
-> > 	apt update >/dev/null &&
-> > 	apt install -y build-essential libcurl4-openssl-dev libssl-dev \
-> > 		libexpat-dev gettext python >/dev/null &&
-> > 
-> > 	: now build and test &&
-> > 	cd /usr/src/git &&
-> > 	DEFAULT_TEST_TARGET='"$DEFAULT_TEST_TARGET"' \
-> > 	GIT_PROVE_OPTS='"$GIT_PROVE_OPTS"' \
-> > 	GIT_TEST_OPTS='"$GIT_TEST_OPTS"' \
-> > 	GIT_TEST_CLONE_2GB='"$GIT_TEST_CLONE_2GB"' \
-> > 	make -j2 test
-> > '
+> However, this short-cut cannot be taken if the contents from the
+> path needs to go through convert_to_git(), whose resulting real blob
+> data may be different from what is in the working tree file.
 > 
-> That looks better! I'll try it!
+> As "git diff --quiet" compares the .size fields of filespec
+> structures to skip content comparison, this bug manifests as a
+> false "there are differences" for a file that needs eol conversion,
+> for example.
+> 
+> Reported-by: Mike Crowe <mac@mcrowe.com>
+> Helped-by: Torsten Bögershausen <tboegi@web.de>
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+>  diff.c                    | 19 ++++++++++++++++++-
+>  t/t0028-diff-converted.sh | 27 +++++++++++++++++++++++++++
+>  2 files changed, 45 insertions(+), 1 deletion(-)
+>  create mode 100755 t/t0028-diff-converted.sh
+> 
+> diff --git a/diff.c b/diff.c
+> index 8c78fce49d..dc51dceb44 100644
+> --- a/diff.c
+> +++ b/diff.c
+> @@ -2792,8 +2792,25 @@ int diff_populate_filespec(struct diff_filespec *s, unsigned int flags)
+>  			s->should_free = 1;
+>  			return 0;
+>  		}
+> -		if (size_only)
+> +
+> +		/*
+> +		 * Even if the caller would be happy with getting
+> +		 * only the size, we cannot return early at this
+> +		 * point if the path requires us to run the content
+> +		 * conversion.
+> +		 */
+> +		if (!would_convert_to_git(s->path) && size_only)
+>  			return 0;
+> +
+> +		/*
+> +		 * Note: this check uses xsize_t(st.st_size) that may
+> +		 * not be the true size of the blob after it goes
+> +		 * through convert_to_git().  This may not strictly be
+> +		 * correct, but the whole point of big_file_threashold
+> +		 * and is_binary check being that we want to avoid
+> +		 * opening the file and inspecting the contents, this
+> +		 * is probably fine.
+> +		 */
+>  		if ((flags & CHECK_BINARY) &&
+>  		    s->size > big_file_threshold && s->is_binary == -1) {
+>  			s->is_binary = 1;
 
-Thanks!
-Dscho
+This patch solves the problem for me. Including my tests where the file
+size doesn't change but the file has been touched. It also doesn't have the
+side effect of failing to report the extra trailing newline that the
+original fix suffered from.
+
+All the solutions presented so far do cause a small change in behaviour
+when using git diff --quiet: they may now cause warning messages like:
+
+ warning: CRLF will be replaced by LF in crlf.txt.
+ The file will have its original line endings in your working directory.
+
+to be emitted (unless of course core.safecrlf=false.) I think this is an
+unavoidable side-effect of doing the job properly but it might be worth
+mentioning.
+
+> diff --git a/t/t0028-diff-converted.sh b/t/t0028-diff-converted.sh
+> new file mode 100755
+> index 0000000000..3d5ab9565b
+> --- /dev/null
+> +++ b/t/t0028-diff-converted.sh
+> @@ -0,0 +1,27 @@
+> +#!/bin/sh
+> +#
+> +# Copyright (c) 2017 Mike Crowe
+> +#
+> +# These tests ensure that files changing line endings in the presence
+> +# of .gitattributes to indicate that line endings should be ignored
+> +# don't cause 'git diff' or 'git diff --quiet' to think that they have
+> +# been changed.
+> +
+> +test_description='git diff with files that require CRLF conversion'
+> +
+> +. ./test-lib.sh
+> +
+> +test_expect_success setup '
+> +	echo "* text=auto" >.gitattributes &&
+> +	printf "Hello\r\nWorld\r\n" >crlf.txt &&
+> +	git add .gitattributes crlf.txt &&
+> +	git commit -m "initial"
+> +'
+> +
+> +test_expect_success 'quiet diff works on file with line-ending change that has no effect on repository' '
+> +	printf "Hello\r\nWorld\n" >crlf.txt &&
+> +	git status &&
+> +	git diff --quiet
+> +'
+> +
+> +test_done
+
+As I said before, this doesn't actually test the case when the file sizes
+match. However, given the way that the code has changed the actual file
+sizes are not compared, so perhaps this doesn't matter.
+
+Thanks for all your help investigating this.
+
+Mike.
