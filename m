@@ -2,164 +2,114 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B0B252023D
-	for <e@80x24.org>; Thu,  2 Mar 2017 00:19:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B9B0E2023D
+	for <e@80x24.org>; Thu,  2 Mar 2017 00:54:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753839AbdCBASx (ORCPT <rfc822;e@80x24.org>);
-        Wed, 1 Mar 2017 19:18:53 -0500
-Received: from mail-oi0-f52.google.com ([209.85.218.52]:33740 "EHLO
-        mail-oi0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753424AbdCBASw (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Mar 2017 19:18:52 -0500
-Received: by mail-oi0-f52.google.com with SMTP id 2so31343975oif.0
-        for <git@vger.kernel.org>; Wed, 01 Mar 2017 16:18:51 -0800 (PST)
+        id S1753553AbdCBAyk (ORCPT <rfc822;e@80x24.org>);
+        Wed, 1 Mar 2017 19:54:40 -0500
+Received: from mail-pg0-f53.google.com ([74.125.83.53]:33467 "EHLO
+        mail-pg0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751944AbdCBAyj (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Mar 2017 19:54:39 -0500
+Received: by mail-pg0-f53.google.com with SMTP id 25so25846304pgy.0
+        for <git@vger.kernel.org>; Wed, 01 Mar 2017 16:54:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:references:cc:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding;
-        bh=A8K9In8b/U1pgZGi5EbEDA2xLmTnq1LFDq0ERYoCL0U=;
-        b=KdmgDWi/Odac6huwY8QTunuNK2oxLaCejVS6sn4UtCJJu7VB1MujqHTfuFkFttJkq1
-         JfzZOsV7taXW9LKiHYl4AHVwLrBba6aptLnfAvXPxjJG1Qi5MAkejwvbI0Ke5u+3nbHO
-         rIIU41OxqiweBIcCs7SC2+CaO3T5qbTCObe+XDZTX6S7JpU1L8vGkgjpTDM+aAIsis5t
-         4w0JWzz24V4gYeUrhIHaG1BglQFZR/fRf43MUAFcjksRC8dQj41dP4Z6j7e5IXRKSzQH
-         w6CzWpKc0jj6s9TshdvImG499TTebGyeO9Wb2tulgyKDLXEZrTNNXxDKo+XL6rvuxI7z
-         HQ0w==
+        d=google.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=vmtEzzwUJhB8IaIzHUBIaneBclOWZcruGGKqiRrLPIc=;
+        b=tlGP2BxXrCCdAQ+oqmcIQjY/ukKBPStV7O9/Rrjovgdu+wriLADEasemqlne+8qxAg
+         H9rgZqIeVTK9tuphkvqrzopInS+RpR/dtE7a+gQz/S6ZG40zqcyNoApACuxOfwf/PP1k
+         jP5TJZqzWgCPkLW+TuJUaZsF/BIF8iVCp/9GtenSxBcHc7eagW7FW5eo71Cy8Tv9TiVe
+         kTYJDuCW7a5HMNgknY91RzM59KNQF141qHoPetQdCQpu3hLJD+dq7Nl5QgQ8egIfbXl6
+         FYsSEle9/++voBUqRAXS32VB9El19zpko1WDlxSjVlpqowRGuewDrrXDA+L5ZL3GqUao
+         TDFA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
-        bh=A8K9In8b/U1pgZGi5EbEDA2xLmTnq1LFDq0ERYoCL0U=;
-        b=ZJ3JWjhSLuCsb62axU/ORgLaGSIgkXrzCw67Yn8L7Z1FpCyUinVnxCiB8QtCTl80GD
-         ZCKNRX3K+PUsAoX80MTopqTfqH664f2HbbZIxVliNUPrzQuiRJ114YfBLTSAZHoZr09Z
-         hbifMnxsU0lzL7OcOj+B2KcOH5c0R2mviYO2KIcrnrZQHuLwmDbhk0Ruc2629OY7E1MW
-         BpaJGlDN6MzohFQxz9Wjabu4HojhdIOt+Vg5RpVtfp+ZILs7PO4MkRUoJGDrHjAIkJHX
-         5DyzeUxoKt2Uahgo/5usEwP4ABQ6nqs7+cWDiM9sNX25hUQslZVzqQFmsSzqXFKHnvkw
-         tlGA==
-X-Gm-Message-State: AMke39kGgpbtAa6lrRSpJAoduU2mdCoFHK0KxQZ4HHspOqpBL2fjqJzt5E5L1ysIy2sTEA==
-X-Received: by 10.202.5.5 with SMTP id 5mr6103720oif.141.1488413527479;
-        Wed, 01 Mar 2017 16:12:07 -0800 (PST)
-Received: from [172.31.98.12] (96-83-49-155-static.hfc.comcastbusiness.net. [96.83.49.155])
-        by smtp.gmail.com with ESMTPSA id g21sm1591523otd.7.2017.03.01.16.12.06
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 01 Mar 2017 16:12:06 -0800 (PST)
-Subject: Re: Delta compression not so effective
-To:     Linus Torvalds <torvalds@linux-foundation.org>
-References: <4d2a1852-8c84-2869-78ad-3c863f6dcaf7@gmail.com>
- <CA+55aFzQ0o2R2kShS=AuKu0TLnfPV-0JCkViqx5J_afCK0Yt5g@mail.gmail.com>
- <eba83461-34cf-6d64-4013-873b04af9b82@gmail.com>
- <CA+55aFx7QFqrHw4e72vOdM5z0rw1CCkL2-UX8ej5CLSBWjLNLA@mail.gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-From:   Marius Storm-Olsen <mstormo@gmail.com>
-Message-ID: <603afdf2-159c-6bed-0e85-2824391185d1@gmail.com>
-Date:   Wed, 1 Mar 2017 18:12:10 -0600
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
- Thunderbird/45.7.1
-MIME-Version: 1.0
-In-Reply-To: <CA+55aFx7QFqrHw4e72vOdM5z0rw1CCkL2-UX8ej5CLSBWjLNLA@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=vmtEzzwUJhB8IaIzHUBIaneBclOWZcruGGKqiRrLPIc=;
+        b=jqGtDEBTP3qIWnutOHnBjVsIH6/Odc42O2GnVQg9I++AGzJ78mtqgVNWP4NO+iCxsh
+         QUe9+aHbTFTl/tvEsF4cwRwH0cfP+wxDQE6j+MwynZSMsh8V3PowKq+lVq0D+fQGsr/M
+         scW4U9O1YTgWfvTnD1Tev9ziLRsyJfgPUxip1bekU/BkYrIdgfX1iJxyw5aRXIZmmZ6p
+         LJNKyiTCasUPuPJsR2KwLTjUfAG/lHzQEUCkpzW32pGw5okadfI8P4xWaTVOVVKHOpWw
+         fHYKiaMy0BGzfrVf9ZnRd2mhHYmvDlgwyQhT6lmeNoalZS3FYR6OY2Kid4QJuWyYjNvL
+         rLnQ==
+X-Gm-Message-State: AMke39mOf42S5vrnOp15POrze5gfnVu9HoAm6sX9V3ROmaNuedhumxdUUvwpRI71Mt60OFg+
+X-Received: by 10.84.229.151 with SMTP id c23mr14564097plk.27.1488415695541;
+        Wed, 01 Mar 2017 16:48:15 -0800 (PST)
+Received: from localhost ([2620:0:1000:5b10:695f:c2a1:ec60:5665])
+        by smtp.gmail.com with ESMTPSA id 73sm5182744pfj.31.2017.03.01.16.48.14
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Wed, 01 Mar 2017 16:48:14 -0800 (PST)
+From:   Stefan Beller <sbeller@google.com>
+To:     sbeller@google.com
+Cc:     git@vger.kernel.org, bmwill@google.com, novalis@novalis.org,
+        sandals@crustytoothpaste.net, hvoigt@hvoigt.net, gitster@pobox.com,
+        jrnieder@gmail.com, ramsay@ramsayjones.plus.com
+Subject: [PATCH 09/18] update submodules: add a config option to determine if submodules are updated
+Date:   Wed,  1 Mar 2017 16:47:50 -0800
+Message-Id: <20170302004759.27852-10-sbeller@google.com>
+X-Mailer: git-send-email 2.12.0.rc1.52.ge239d7e709.dirty
+In-Reply-To: <20170302004759.27852-1-sbeller@google.com>
+References: <20170223225735.10994-1-sbeller@google.com/>
+ <20170302004759.27852-1-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 3/1/2017 12:30, Linus Torvalds wrote:
-> On Wed, Mar 1, 2017 at 9:57 AM, Marius Storm-Olsen <mstormo@gmail.com> wrote:
->>
->> Indeed, I did do a
->>     -c pack.threads=20 --window-memory=6g
->> to 'git repack', since the machine is a 20-core (40 threads) machine with
->> 126GB of RAM.
->>
->> So I guess with these sized objects, even at 6GB per thread, it's not enough
->> to get a big enough Window for proper delta-packing?
->
-> Hmm. The 6GB window should be plenty good enough, unless your blobs
-> are in the gigabyte range too.
+In later patches we introduce the options and flag for commands
+that modify the working directory, e.g. git-checkout.
 
-No, the list of git verify-objects in the previous post was from the 
-bottom of the sorted list, so those are the largest blobs, ~249MB..
+Have a central place to store such settings whether we want to update
+a submodule.
 
+Signed-off-by: Stefan Beller <sbeller@google.com>
+---
+ submodule.c | 6 ++++++
+ submodule.h | 1 +
+ 2 files changed, 7 insertions(+)
 
->> This repo took >14hr to repack on 20 threads though ("compression" step was
->> very fast, but stuck 95% of the time in "writing objects"), so I can only
->> imagine how long a pack.threads=1 will take :)
->
-> Actually, it's usually the compression phase that should be slow - but
-> if something is limiting finding deltas (so that we abort early), then
-> that would certainly tend to speed up compression.
->
-> The "writing objects" phase should be mainly about the actual IO.
-> Which should be much faster *if* you actually find deltas.
-
-So, this repo must be knocking several parts of Git's insides. I was 
-curious about why it was so slow on the writing objects part, since the 
-whole repo is on a 4x RAID 5, 7k spindels. Now, they are not SSDs sure, 
-but the thing has ~400MB/s continuous throughput available.
-
-iostat -m 5 showed trickle read/write to the process, and 80-100% CPU 
-single thread (since the "write objects" stage is single threaded, 
-obviously).
-
-The failing delta must be triggering other negative behavior.
-
-
-> For example, the sorting code thinks that objects with the same name
-> across the history are good sources of deltas. But it may be that for
-> your case, the binary blobs that you have don't tend to actually
-> change in the history, so that heuristic doesn't end up doing
-> anything.
-
-These are generally just DLLs (debug & release), which content is 
-updated due to upstream project updates. So, filenames/paths tend to 
-stay identical, while content changes throughout history.
-
-
-> The sorting does use the size and the type too, but the "filename
-> hash" (which isn't really a hash, it's something nasty to give
-> reasonable results for the case where files get renamed) is the main
-> sort key.
->
-> So you might well want to look at the sorting code too. If filenames
-> (particularly the end of filenames) for the blobs aren't good hints
-> for the sorting code, that sort might end up spreading all the blobs
-> out rather than sort them by size.
-
-Filenames are fairly static, and the bulk of the 6000 biggest 
-non-delta'ed blobs are the same DLLs (multiple of them)
-
-
-> And again, if that happens, the "can I delta these two objects" code
-> will notice that the size of the objects are wildly different and
-> won't even bother trying. Which speeds up the "compressing" phase, of
-> course, but then because you don't get any good deltas, the "writing
-> out" phase sucks donkey balls because it does zlib compression on big
-> objects and writes them out to disk.
-
-Right, now on this machine, I really didn't notice much difference 
-between standard zlib level and doing -9. The 203GB version was actually 
-with zlib=9.
-
-
-> So there are certainly multiple possible reasons for the deltification
-> to not work well for you.
->
-> Hos sensitive is your material? Could you make a smaller repo with
-> some of the blobs that still show the symptoms? I don't think I want
-> to download 206GB of data even if my internet access is good.
-
-Pretty sensitive, and not sure how I can reproduce this reasonable well. 
-However, I can easily recompile git with any recommended 
-instrumentation/printfs, if you have any suggestions of good places to 
-start? If anyone have good file/line numbers, I'll give that a go, and 
-report back?
-
-Thanks!
-
+diff --git a/submodule.c b/submodule.c
+index 04d185738f..591f4a694e 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -17,6 +17,7 @@
+ #include "worktree.h"
+ 
+ static int config_fetch_recurse_submodules = RECURSE_SUBMODULES_ON_DEMAND;
++static int config_update_recurse_submodules = RECURSE_SUBMODULES_DEFAULT;
+ static int parallel_jobs = 1;
+ static struct string_list changed_submodule_paths = STRING_LIST_INIT_NODUP;
+ static int initialized_fetch_ref_tips;
+@@ -542,6 +543,11 @@ void set_config_fetch_recurse_submodules(int value)
+ 	config_fetch_recurse_submodules = value;
+ }
+ 
++void set_config_update_recurse_submodules(int value)
++{
++	config_update_recurse_submodules = value;
++}
++
+ static int has_remote(const char *refname, const struct object_id *oid,
+ 		      int flags, void *cb_data)
+ {
+diff --git a/submodule.h b/submodule.h
+index 0b915bd3ac..b4e60c08d2 100644
+--- a/submodule.h
++++ b/submodule.h
+@@ -64,6 +64,7 @@ extern void show_submodule_inline_diff(FILE *f, const char *path,
+ 		const char *del, const char *add, const char *reset,
+ 		const struct diff_options *opt);
+ extern void set_config_fetch_recurse_submodules(int value);
++extern void set_config_update_recurse_submodules(int value);
+ extern void check_for_new_submodule_commits(unsigned char new_sha1[20]);
+ extern int fetch_populated_submodules(const struct argv_array *options,
+ 			       const char *prefix, int command_line_option,
 -- 
-.marius
+2.12.0.rc1.52.ge239d7e709.dirty
+
