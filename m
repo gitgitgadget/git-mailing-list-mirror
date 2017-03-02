@@ -2,102 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DE1E31F5FB
-	for <e@80x24.org>; Thu,  2 Mar 2017 20:38:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DBAF41F5FB
+	for <e@80x24.org>; Thu,  2 Mar 2017 20:45:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752028AbdCBUib (ORCPT <rfc822;e@80x24.org>);
-        Thu, 2 Mar 2017 15:38:31 -0500
-Received: from chiark.greenend.org.uk ([212.13.197.229]:54069 "EHLO
-        chiark.greenend.org.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750892AbdCBUi2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Mar 2017 15:38:28 -0500
-Received: by chiark.greenend.org.uk (Debian Exim 4.84_2 #1) with local
-        (return-path ijackson@chiark.greenend.org.uk)
-        id 1cjVEG-00034h-6u; Thu, 02 Mar 2017 18:13:28 +0000
-From:   Ian Jackson <ijackson@chiark.greenend.org.uk>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Message-ID: <22712.24775.714535.313432@chiark.greenend.org.uk>
-Date:   Thu, 2 Mar 2017 18:13:27 +0000
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+        id S1751557AbdCBUo7 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 2 Mar 2017 15:44:59 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:55748 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1750892AbdCBUo6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Mar 2017 15:44:58 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 03E4083369;
+        Thu,  2 Mar 2017 15:43:52 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=TZo5pAnBnSchNswdVnk2XsOfmDk=; b=Z0LhcR
+        RxstM5w1dxrcHhQ3nl1+pbTNmTXq1ABT0ipBWleg3F6C/SY/PTQ2cGha7rtA6V+y
+        rIpgxP4LvkrnUxyXmZ+WB0TnNexlfrbjxRlQDARSOoYSuBFXahjWykoinbqqCZ3O
+        R89NU9EZLfJx7lkl7WYqh4mOyBpAzg5NN2DvQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=Eo0zp/ZeSy2BUyexOIVaiRYvN0kB1pBD
+        wIHltNoWjqpjmEkEokMs4R+ASHk2aEbsyEs+qc0sScXqjptV8M7ivdS/FdgKyi+h
+        0Va5hnj+gddsQJI3azXSvPd72oVfdqHvIaDWr+P+qT/HRKP/xKOU5WDCf8DpZDoe
+        tSyseJ56CRU=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id D234083368;
+        Thu,  2 Mar 2017 15:43:51 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 45F3A83367;
+        Thu,  2 Mar 2017 15:43:51 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Linus Torvalds <torvalds@linux-foundation.org>
 Cc:     Jeff King <peff@peff.net>,
-        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
-        Linus Torvalds <torvalds@linux-foundation.org>,
-        Jason Cooper <git@lakedaemon.net>,
-        ankostis <ankostis@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Stefan Beller <sbeller@google.com>, David Lang <david@lang.hm>,
-        Joey Hess <id@joeyh.name>
-Subject: Re: Transition plan for git to move to a new hash function
-In-Reply-To: <20170228214724.w7w5f6n4u6ehanzd@genre.crustytoothpaste.net>
-References: <xmqq7f4f4cqg.fsf@gitster.mtv.corp.google.com>
-        <CA+dhYEVOyACM9ARP2deKVLm1hHOVsTah1WfGoNzGGKO6CGrQpw@mail.gmail.com>
-        <xmqqh93j1g9n.fsf@gitster.mtv.corp.google.com>
-        <CA+dhYEVwLGNZh-hbcJm+kMR4W45VbwvSVY+7YKt0V9jg_b_M4g@mail.gmail.com>
-        <20170226001607.GH11350@io.lakedaemon.net>
-        <20170226173810.fp2tqikrm4nzu4uk@genre.crustytoothpaste.net>
-        <CA+55aFzJtejiCjV0e43+9oR3QuJK2PiFiLQemytoLpyJWe6P9w@mail.gmail.com>
-        <CACBZZX6fP_JpL+K3XUnke=4m4gZBLu-Afyz5yJkrRnGXHuhR8A@mail.gmail.com>
-        <20170226215220.jckz6yzgben4zbyz@sigill.intra.peff.net>
-        <22708.8913.864049.452252@chiark.greenend.org.uk>
-        <20170228214724.w7w5f6n4u6ehanzd@genre.crustytoothpaste.net>
-X-Mailer: VM 8.2.0b under 24.4.1 (i586-pc-linux-gnu)
+        Ian Jackson <ijackson@chiark.greenend.org.uk>,
+        Joey Hess <id@joeyh.name>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: SHA1 collisions found
+References: <20170223164306.spg2avxzukkggrpb@kitenet.net>
+        <22704.19873.860148.22472@chiark.greenend.org.uk>
+        <xmqq60jz5wbm.fsf@gitster.mtv.corp.google.com>
+        <20170224233929.p2yckbc6ksyox5nu@sigill.intra.peff.net>
+        <CA+55aFw6BLjPK-F0RGd9LT7X5xosKOXOxuhmKX65ZHn09r1xow@mail.gmail.com>
+        <CA+55aFwXaSAMF41Dz3u3nS+2S24umdUFv0+k+s18UyPoj+v31g@mail.gmail.com>
+Date:   Thu, 02 Mar 2017 12:43:50 -0800
+In-Reply-To: <CA+55aFwXaSAMF41Dz3u3nS+2S24umdUFv0+k+s18UyPoj+v31g@mail.gmail.com>
+        (Linus Torvalds's message of "Thu, 2 Mar 2017 11:55:45 -0800")
+Message-ID: <xmqqk287be9l.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: F174F1BE-FF88-11E6-A70D-FC50AE2156B6-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-brian m. carlson writes ("Re: Transition plan for git to move to a new hash function"):
-> On Mon, Feb 27, 2017 at 01:00:01PM +0000, Ian Jackson wrote:
-> > Objects of one hash may refer to objects named by a different hash
-> > function to their own.  Preference rules arrange that normally, new
-> > hash objects refer to other new hash objects.
-> 
-> The existing codebase isn't really intended with that in mind.
+Linus Torvalds <torvalds@linux-foundation.org> writes:
 
-Yes.  I've seen the attempts to start to replace char* with a hash
-struct.
+> Anyway, I do have a suggestion for what the "object version" would be,
+> but I'm not even going to mention it, because I want people to first
+> think about the _concept_ and not the implementation.
+>
+> So: What do you think about the concept?
 
-> I like Peff's suggested approach in which we essentially rewrite history
-> under the hood, but have a lookup table which looks up the old hash
-> based on the new hash.  That allows us to refer to old objects, but not
-> have to share serialized data that mentions both hashes.
+My reaction heavily depends on how that "object version" thing
+works.  When I think I have "variant #1" of an object and say
 
-I think this means that the when a project converts, every copy of the
-history must be rewritten (separately).  Also, this leaves the whole
-system lacking in algorithm agililty.  Meaning we may have to do all
-of this again some time.
+  have 860cd699c285f02937a2edbdb78e8231292339a5#1
 
-I also think that we need to distinguish old hashes from new hashes in
-the command line interface etc.  Otherwise there is a possible
-ambiguity.
+is there any guarantee that the other end has a (small) set of
+different objects all sharing the same SHA-1 and it thinks it has
+"variant #1" only when it has the same thing as I have (otherwise,
+it may have "variant #2" that is an unrelated object but happens to
+share the same hash)?  If so, I think I understand how things would
+work within your "concept".  But otherwise, I am not really sure.
 
-> > The object name textual syntax is extended.  The new syntax may be
-> > used in all textual git objects and protocols (commits, tags, command
-> > lines, etc.).
-> > 
-> > We declare that the object name syntax is henceforth
-> >   [A-Z]+[0-9a-z]+ | [0-9a-f]+
-> > and that names [A-Z].* are deprecated as ref name components.
-> 
-> I'd simply say that we have data always be in the new format if it's
-> available, and tag the old SHA-1 versions instead.  Otherwise, as Peff
-> pointed out, we're going to be stuck typing a bunch of identical stuff
-> every time.  Again, this encourages migration.
+Would "object version" be like a truncated SHA-1 over the same data
+but with different IV or something, i.e. something that guarantees
+anybody would get the same result given the data to be hashed?
 
-The hash identifier is only one character.  Object names are not
-normally typed very much anyway.
 
-If you say we must decorate old hashes, then all existing data
-everywhere in the world which refers to any git objects by object name
-will become invalid.  I don't mean just data in git here.  I mean CI
-systems, mailing list archives, commit messages (perhaps in other
-version control systems), test cases, and so on.
-
-Ian.
