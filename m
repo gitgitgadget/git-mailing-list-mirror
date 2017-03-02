@@ -2,116 +2,449 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C2E762023D
-	for <e@80x24.org>; Thu,  2 Mar 2017 03:09:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 10C992023D
+	for <e@80x24.org>; Thu,  2 Mar 2017 03:34:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753579AbdCBDJr (ORCPT <rfc822;e@80x24.org>);
-        Wed, 1 Mar 2017 22:09:47 -0500
-Received: from mail-bl2nam02on0110.outbound.protection.outlook.com ([104.47.38.110]:62080
-        "EHLO NAM02-BL2-obe.outbound.protection.outlook.com"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1753152AbdCBDJp (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Mar 2017 22:09:45 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=selector1; h=From:Date:Subject:Message-ID:Content-Type:MIME-Version;
- bh=O96+M/Ta7WBQgrjlMih2STxNqHDk+E+UL0JaEHMOvOo=;
- b=BHCS8MWpBGQmoCnGAtFvHSvKlwSZe2LSOZHx9EVpJlDhGdFqljt83qkDLiMHK0HMbx+wDSt//4Eku4KwYQCdX7cyoq+GjkA5xKuFcU5Gas4aeCqVvsUxmBCW1beu99eRpunKuEq5MBTbr883VQvqHZaV4X+n3cm2Rmuo+PD7BgY=
-Received: from CY1PR0301MB2107.namprd03.prod.outlook.com (10.164.2.153) by
- CY1PR0301MB2107.namprd03.prod.outlook.com (10.164.2.153) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P384) id
- 15.1.933.12; Thu, 2 Mar 2017 01:31:17 +0000
-Received: from CY1PR0301MB2107.namprd03.prod.outlook.com ([10.164.2.153]) by
- CY1PR0301MB2107.namprd03.prod.outlook.com ([10.164.2.153]) with mapi id
- 15.01.0933.020; Thu, 2 Mar 2017 01:31:17 +0000
-From:   Dan Shumow <danshu@microsoft.com>
-To:     Linus Torvalds <torvalds@linux-foundation.org>,
-        Jeff King <peff@peff.net>
-CC:     Junio C Hamano <gitster@pobox.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Marc Stevens <marc.stevens@cwi.nl>
-Subject: RE: [PATCH] Put sha1dc on a diet
-Thread-Topic: [PATCH] Put sha1dc on a diet
-Thread-Index: AQHSkiMIUGTsYtffFU+WRTsYHJQFFqGAUwj9gAAB7oCAABGiAIAABgQAgAAFjoCAADN5AIAAEf1g
-Date:   Thu, 2 Mar 2017 01:31:17 +0000
-Message-ID: <CY1PR0301MB21073D82F4A6AB0DAD8BF1FCC4280@CY1PR0301MB2107.namprd03.prod.outlook.com>
-References: <alpine.LFD.2.20.1702281621050.22202@i7.lan>
- <xmqq7f48hm8g.fsf@gitster.mtv.corp.google.com>
- <CA+55aFx1wAS-nHS2awuW2waX=cvig4UoZqmN5H3v93yDE7ukyQ@mail.gmail.com>
- <20170301195302.3pybakmjqztosohj@sigill.intra.peff.net>
- <CA+55aFwf3sxKW+dGTMjNAeHMOf=rvctEQohm+rbhEb=e3KLpHw@mail.gmail.com>
- <20170301203427.e5xa5ej3czli7c3o@sigill.intra.peff.net>
- <CA+55aFz4ixVKVURki8FeXjL5H51A_cQXsZpzKJ-N9n574Yy1rg@mail.gmail.com>
-In-Reply-To: <CA+55aFz4ixVKVURki8FeXjL5H51A_cQXsZpzKJ-N9n574Yy1rg@mail.gmail.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: linux-foundation.org; dkim=none (message not signed)
- header.d=none;linux-foundation.org; dmarc=none action=none
- header.from=microsoft.com;
-x-originating-ip: [2001:4898:80e8:e::7c1]
-x-ms-office365-filtering-correlation-id: 0cc20cc6-412b-41d6-d78b-08d4610bd297
-x-ms-office365-filtering-ht: Tenant
-x-microsoft-antispam: UriScan:;BCL:0;PCL:0;RULEID:(22001)(48565401081);SRVR:CY1PR0301MB2107;
-x-microsoft-exchange-diagnostics: 1;CY1PR0301MB2107;7:God9s1a38Q/5R5YGjfrn9TOo+sRje16ddgb/wkGtxxghz+K17qijXaXNYm258W9pb/Zvf6u5b6c/RZOVp+8rCCxLzWLsMX5kAzyP2NTVGnQbFAhkvg94yvALBHPKhnofTtr2xZT46+8xtT+bC9xUykLtwSrLUnS4cffOfl3EUK4W8zCXOHtKjQ97FZw/9Wd7ELFNjcuUVArAkqtxWqexIxxutKu/9hhRUz/q6NA4KLCxF7jbe9Xb6nBCwxygFZBv8WEe2r/dJHwB3IZ2tsEE1jYRtWnQMwrWI6oB1ncqc8UJzVhpisdWHfQnssZFZtEjptbDRVe1xFVKeRLw4Ab7nzKvpftSwa3clXEHnZQkCeA=
-x-microsoft-antispam-prvs: <CY1PR0301MB2107B797F614DF04D30D4366C4280@CY1PR0301MB2107.namprd03.prod.outlook.com>
-x-exchange-antispam-report-test: UriScan:;
-x-exchange-antispam-report-cfa-test: BCL:0;PCL:0;RULEID:(61425038)(6040375)(601004)(2401047)(8121501046)(5005006)(10201501046)(3002001)(6055026)(61426038)(61427038)(6041248)(20161123562025)(20161123564025)(20161123560025)(20161123558025)(20161123555025)(6072148)(6042181);SRVR:CY1PR0301MB2107;BCL:0;PCL:0;RULEID:;SRVR:CY1PR0301MB2107;
-x-forefront-prvs: 023495660C
-x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(6009001)(7916002)(33656002)(6246003)(102836003)(53936002)(6116002)(38730400002)(4326008)(25786008)(2950100002)(50986999)(54356999)(76176999)(93886004)(74316002)(305945005)(7736002)(9686003)(8656002)(55016002)(54906002)(99286003)(5660300001)(7696004)(77096006)(6436002)(122556002)(106116001)(6506006)(2900100001)(229853002)(10290500002)(5005710100001)(3660700001)(189998001)(2906002)(3280700002)(86362001)(92566002)(10090500001)(8936002)(8676002)(81166006)(32563001);DIR:OUT;SFP:1102;SCL:1;SRVR:CY1PR0301MB2107;H:CY1PR0301MB2107.namprd03.prod.outlook.com;FPR:;SPF:None;MLV:sfv;LANG:en;
-spamdiagnosticoutput: 1:99
-spamdiagnosticmetadata: NSPM
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
-MIME-Version: 1.0
-X-OriginatorOrg: microsoft.com
-X-MS-Exchange-CrossTenant-originalarrivaltime: 02 Mar 2017 01:31:17.0533
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 72f988bf-86f1-41af-91ab-2d7cd011db47
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY1PR0301MB2107
+        id S1753524AbdCBDdl (ORCPT <rfc822;e@80x24.org>);
+        Wed, 1 Mar 2017 22:33:41 -0500
+Received: from mail-pg0-f51.google.com ([74.125.83.51]:33880 "EHLO
+        mail-pg0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753378AbdCBDdj (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Mar 2017 22:33:39 -0500
+Received: by mail-pg0-f51.google.com with SMTP id p5so27164356pga.1
+        for <git@vger.kernel.org>; Wed, 01 Mar 2017 19:32:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=I96eJLoZPWi/WcyJaL5LJ6+hRS2eztVD2HNMgUZkziU=;
+        b=LYb0oaBjMDVOKCuweJnipfeKwQrDMaIDTT31Y8TMWzVJXGpJPHkOWtKQnreCvbXh4q
+         DzQ9lvJTNj34kBuRY5skcOForyYO4bGJ0lWbDbP3nXg+rt1rsCWJW4tfshPECFTQhI41
+         QBa+PtWUBcLR8v3wyXchVgo6XgBq64KU8Zqif9zurtIfMoaR31rop+B+6s/HSP3p1Gg6
+         g88pNGjHYyDsX+sB32q3qiAUKkVDsgd/nWwdYmxxXlIciHasBoXEKfNO5DuMWxL07aBV
+         z9FdX+CP7guNpiS4uxfilQ+XspwqvHaVu1/dIeOGafXTGixSSqgJrS7RN59jVH91gNjQ
+         FPbQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=I96eJLoZPWi/WcyJaL5LJ6+hRS2eztVD2HNMgUZkziU=;
+        b=iPZ6FY+V2O6gAigz4fwJVxsc3n7zd/96eZYRFoyvMobz1NLrIciMwnspu3vaKCTtyr
+         LqVa2fZKzUjaEW24ix+SzuvuiOZWx28nVdGRhzadLCUpGYy/F6hYOS2Y+NVV19cJGFwB
+         suJWBamuDkESV4X4csNFj56dFnLZCQBPWdcPKQz1XMkSxpZQYXSYk5ezci6qamKWuxr1
+         Efb4hOU0q5KLk0v3by+/N2Mzk94dkr4qC6XdOPYStajNu70VfzYBnCqu+pabfLKbVZkz
+         TwP4FtptshE17o0eItKYByTMh5mXUmGKFroF6L7xnl3U0yYgoVoU5d73/bBCeVpSVBxq
+         YKSg==
+X-Gm-Message-State: AMke39lQJ2rKQPY+KwQqWrH6KKUEPIbfK46AcrNVRGpyO+Adevh1pTdR/kccn+4iyxSGtkBk
+X-Received: by 10.84.216.15 with SMTP id m15mr14490023pli.22.1488415684309;
+        Wed, 01 Mar 2017 16:48:04 -0800 (PST)
+Received: from localhost ([2620:0:1000:5b10:695f:c2a1:ec60:5665])
+        by smtp.gmail.com with ESMTPSA id d3sm12770434pfc.51.2017.03.01.16.48.03
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Wed, 01 Mar 2017 16:48:03 -0800 (PST)
+From:   Stefan Beller <sbeller@google.com>
+To:     sbeller@google.com
+Cc:     git@vger.kernel.org, bmwill@google.com, novalis@novalis.org,
+        sandals@crustytoothpaste.net, hvoigt@hvoigt.net, gitster@pobox.com,
+        jrnieder@gmail.com, ramsay@ramsayjones.plus.com
+Subject: [RFCv6 PATCH 00/18] Checkout aware of Submodules!
+Date:   Wed,  1 Mar 2017 16:47:41 -0800
+Message-Id: <20170302004759.27852-1-sbeller@google.com>
+X-Mailer: git-send-email 2.12.0.rc1.52.ge239d7e709.dirty
+In-Reply-To: <20170223225735.10994-1-sbeller@google.com/>
+References: <20170223225735.10994-1-sbeller@google.com/>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-SSBwbGF5ZWQgYXJvdW5kIHR3ZWFraW5nIHRoZSBjb2RlIGEgYml0IG1vcmUgYW5kIEkgZ290IG91
-ciBwZXJmb3JtYW5jZSBkb3duIHRvIGEgMi4wNzcxODJ4IHNsb3dkb3duIHdpdGggY2hlY2sgYW5k
-IGEgMS4wNTU5NjF4IHNsb3dkb3duIHdpdGhvdXQgY2hlY2tpbmcuICBIb3dldmVyLCB0aGF0IHNs
-b3dkb3duIGlzIGJhc2ljYWxseSB3aXRoIHRoZSBjaGVjayB0dXJuZWQgb2ZmIHRocm91Z2ggb3Vy
-IEFQSS4gIElmIEkgcmlwIGV4dHJhbmVvdXMgY29kZSBmb3Igc3RvcmluZyBzdGF0ZXMgYW5kIGNo
-ZWNraW5nIGlmIHdlIGFyZSBkb2luZyBjb2xsaXNpb24gZGV0ZWN0aW9uIG91dCwgSSBjYW4gcmVh
-Y2ggcGVyZm9ybWFuY2UgcGFyaXR5IHdpdGggdGhlIGJsb2NrLXNoYTEgaW1wbGVtZW50YXRpb24g
-aW4gdGhlIEdpdCBjb2RlYmFzZSwgd2hpY2ggYmFzaWNhbGx5IHRlbGxzIG1lIHRoYXQgaXMgYWJv
-dXQgYXMgZ29vZCBhcyBJIGNhbiBkbyBmb3Igb3B0aW1pemluZyB0aGUgQyBjb2RlLg0KDQpTSEEx
-IGlzIG1vcmUgYW1lbmFibGUgdG8gYXNzZW1ibGVyIGltcGxlbWVudGF0aW9uIGJlY2F1c2UgaXRz
-IHVzZSBvZiByb3RhdGlvbnMsIHdoaWNoIGFyZSBub3RvcmlvdXNseSBkaWZmaWN1bHQgdG8gYWNj
-ZXNzIHRocm91Z2ggQyBjb2RlLiAgQW5kIGFzIHRoaXMgaGFwcGVucyBpbiB0aGUgaW5uZXIgbG9v
-cCBvZiB0aGUgZnVuY3Rpb24sIHRoZSBpbmxpbmUgYXNtIHRlbmRzIHRvIG5vdCBjdXQgaXQuICBU
-aGlzIGlzIG9uZSBvZiB0aGUgcmVhc29ucyB0aGF0IHRoZSBPcGVuU1NMIFNIQS0xIHJ1bnMgbGlr
-ZSBhIHNjYWxkZWQgbW9ua2V5LCBjb21wYXJlZCB0byB0aGUgQyBpbXBsZW1lbmF0aW9ucy4gIE1h
-cmMgYW5kIEkgaGF2ZSBhbHNvIGRpc2N1c3NlZCB1c2luZyBTSU1EIG9wZXJhdGlvbnMgdG8gc3Bl
-ZWQgdXAgdGhlIFVCQyBjaGVja3MsIHdoaWNoIGNvdWxkIGRlZmluaXRlbHkgaGVscCBhY2hpZXZl
-IGJldHRlciBwZXJmb3JtYW5jZSwgYnV0IGlzIGhpZ2hseSBkZXBlbmRlbnQgb24gcHJvY2Vzc29y
-IHN1cHBvcnQuICBJdCB3aWxsIHRha2Ugc29tZSB0aW1lIHRvIGRvIGVpdGhlciBhIFNJTUQgaW1w
-bGVtZW50YXRpb24gb2YgdGhlIFVCQyBjaGVja3Mgb3IgYW4gYXNzZW1ibGVyIGltcGxlbWVudGF0
-aW9uLg0KDQpBdCB0aGlzIHBvaW50LCBJIHdvdWxkIHN1Z2dlc3QgdGhhdCBJIHRha2UgdGhlIEMg
-b3B0aW1pemF0aW9ucywgY2xlYW4gdGhlbSB1cCBhbmQgZm9sZCB0aGVtIGluIHdpdGggdGhlIGRp
-ZXQgY2hhbmdlcyBMaW51cyBoYXMgc3VnZ2VzdGVkLiAgVGhlIHNsb3dkb3duIGlzIHN0aWxsIDJ4
-IG92ZXIgYmxvY2stc2hhMSBhbmQgbW9yZSBvdmVyIE9wZW5TU0wuICBCdXQgaXQgaXMgYmV0dGVy
-IHRoYW4gbm90aGluZy4gIEFuZCB0aGVuIGlmIHRoZXJlIGlzIGludGVyZXN0IE1hcmMgYW5kIEkg
-Y2FuIGludmVzdGlnYXRlIG90aGVyIHByb2Nlc3NvciBzcGVjaWZpYyBvcHRpbWl6YXRpb25zIGxp
-a2UgQVNNIG9yIFNJTUQgYW5kIGNpcmNsZSBiYWNrIHdpdGggdGhvc2UgcGVyZm9ybWFuY2Ugb3B0
-aW1pemF0aW9ucyBhdCBhIGxhdGVyIGRhdGUuDQoNCkFsc28sIHRvIEpvaGFubmVzIFNjaGluZGVs
-aW4ncyBwb2ludDoNCj4gTXkgY29uY2VybiBpcyBhYm91dCB0aGF0IHVuZXhwZWN0ZWQgdHVybiAi
-b2gsIGxldCdzIGp1c3Qgc3dpdGNoIHRvIEM5OSBiZWNhdXNlLCB3ZWxsLCBiZWNhdXNlIG15IGNv
-bXBpbGVyIGNhbmVoYW5kbGUgaXQsIGFuZCBldmVyeWJvZHkgZWxzZSBzaG91bGQganVzdCBzd2l0
-Y2ggdG4gYSBtb2Rlcm4gY29tcGlsZXIiLiBUaGF0IHJlYWxseSBzb3VuZGVkIGNhcmVsZXNzLg0K
-DQpXaGlsZSBpdCB3aWxsIHByb2JhYmx5IGJlIGEgcGFpbiwgaWYgaXQgaXMgYSByZXF1aXJlbWVu
-dCwgd2UgY2FuIG1vZGlmeSB0aGUgY29kZSB0byBtb3ZlIGF3YXkgZnJvbSBhbnkgYzk5IHNwZWNp
-ZmljIHN0dWZmIHdlIGhhdmUgaW4gaGVyZSwgaWYgaXQgbWFrZXMgYWRvcHRpbmcgdGhlIGNvZGUg
-bW9yZSBwYWxhdGFibGUgZm9yIEdpdC4NCg0KVGhhbmtzLA0KRGFuDQoNCg0K
+previous work:
+https://public-inbox.org/git/20170223225735.10994-1-sbeller@google.com/
+https://public-inbox.org/git/20161203003022.29797-1-sbeller@google.com/
+
+v6:
+ * added support for read-tree (see last patch) to see how generic the
+   code of the previous patches is. I am pretty pleased with that patch.
+ * marked two functions static. Thanks Ramsay!
+ * fixed the recursive test; it still fails but it is the code that fails,
+   not the test. For this I had to change the setup code slightly.
+ * 2 new patches adding tiny refactoring to the submodule test lib.  
+ * interdiff (to origin/sb/checkout-recurse-submodules, which is v5) below.
+
+v5:
+ * as v4 was the first version queued by Junio, we do have an interdiff below!
+ * renamed functions
+ * changed the API, now the caller has to take care of the submodule strategy
+   themselves. (Note this can be different for different situations, e.g.
+   when a submodule is deleted, we can do that for any strategy except none and
+   !command. But for moving to a new state of the submodule we currently
+   only implement "checkout" [unspecified defaults to checkout]. warning about
+   the others, doing nothing there.)
+
+v4:
+ * addressed all comments of Brian, Junio and Brandon.
+ Thanks!
+ * one major point of change is the introduction of another patch
+   "lib-submodule-update.sh: do not use ./. as submodule remote",
+   as that took some time to track down the existing bug.
+ 
+v3:
+ * moved tests from t2013 to the generic submodule library.
+ * factored out the refactoring patches to be up front
+ * As I redid the complete implementation, I have the impression this time
+   it is cleaner than previous versions.
+ 
+ I think we still have to fix the corner cases of directory/file/submodule 
+ conflicts before merging, but this serves as a status update on my current
+ way of thinking how to implement the worktree commands being aware of
+ submodules.
+ 
+Thanks,
+Stefan
+
+v2:
+* based on top of the series sent out an hour ago
+  "[PATCHv4 0/5] submodule embedgitdirs"
+* Try to embed a submodule if we need to remove it.
+* Strictly do not change behavior if not giving the new flag.
+* I think I missed some review comments from v1, but I'd like to get
+  the current state out over the weekend, as a lot has changed so far.
+  On Monday I'll go through the previous discussion with a comb to see
+  if I missed something.
+  
+v1:
+When working with submodules, nearly anytime after checking out
+a different state of the projects, that has submodules changed
+you'd run "git submodule update" with a current version of Git.
+
+There are two problems with this approach:
+
+* The "submodule update" command is dangerous as it
+  doesn't check for work that may be lost in the submodule
+  (e.g. a dangling commit).
+* you may forget to run the command as checkout is supposed
+  to do all the work for you.
+
+Integrate updating the submodules into git checkout, with the same
+safety promises that git-checkout has, i.e. not throw away data unless
+asked to. This is done by first checking if the submodule is at the same
+sha1 as it is recorded in the superproject. If there are changes we stop
+proceeding the checkout just like it is when checking out a file that
+has local changes.
+
+The integration happens in the code that is also used in other commands
+such that it will be easier in the future to make other commands aware
+of submodule.
+
+This also solves d/f conflicts in case you replace a file/directory
+with a submodule or vice versa.
+
+The patches are still a bit rough, but the overall series seems
+promising enough to me that I want to put it out here.
+
+Any review, specifically on the design level welcome!
+
+Thanks,
+Stefan
+
+
+Stefan Beller (14):
+  lib-submodule-update.sh: reorder create_lib_submodule_repo
+  lib-submodule-update.sh: define tests for recursing into submodules
+  make is_submodule_populated gently
+  connect_work_tree_and_git_dir: safely create leading directories
+  update submodules: add submodule config parsing
+  update submodules: add a config option to determine if submodules are
+    updated
+  update submodules: introduce is_interesting_submodule
+  update submodules: move up prepare_submodule_repo_env
+  update submodules: add submodule_go_from_to
+  unpack-trees: pass old oid to verify_clean_submodule
+  unpack-trees: check if we can perform the operation for submodules
+  read-cache: remove_marked_cache_entries to wipe selected submodules.
+  entry.c: update submodules when interesting
+  builtin/checkout: add --recurse-submodules switch
+diff --git a/Documentation/git-read-tree.txt b/Documentation/git-read-tree.txt
+index fa1d557e5b..ed9d63ef4a 100644
+--- a/Documentation/git-read-tree.txt
++++ b/Documentation/git-read-tree.txt
+@@ -115,6 +115,12 @@ OPTIONS
+ 	directories the index file and index output file are
+ 	located in.
+ 
++--[no-]recurse-submodules::
++	Using --recurse-submodules will update the content of all initialized
++	submodules according to the commit recorded in the superproject by
++	calling read-tree recursively, also setting the submodules HEAD to be
++	detached at that commit.
++
+ --no-sparse-checkout::
+ 	Disable sparse checkout support even if `core.sparseCheckout`
+ 	is true.
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index 207ce09771..e9c5fcfaf8 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -29,8 +29,8 @@ static const char * const checkout_usage[] = {
+ 	NULL,
+ };
+ 
+-int option_parse_recurse_submodules(const struct option *opt,
+-				    const char *arg, int unset)
++static int option_parse_recurse_submodules(const struct option *opt,
++					   const char *arg, int unset)
+ {
+ 	if (unset) {
+ 		recurse_submodules = RECURSE_SUBMODULES_OFF;
+diff --git a/builtin/read-tree.c b/builtin/read-tree.c
+index 8ba64bc785..2dc5cc06da 100644
+--- a/builtin/read-tree.c
++++ b/builtin/read-tree.c
+@@ -15,10 +15,13 @@
+ #include "builtin.h"
+ #include "parse-options.h"
+ #include "resolve-undo.h"
++#include "submodule.h"
++#include "submodule-config.h"
+ 
+ static int nr_trees;
+ static int read_empty;
+ static struct tree *trees[MAX_UNPACK_TREES];
++int recurse_submodules = RECURSE_SUBMODULES_DEFAULT;
+ 
+ static int list_tree(unsigned char *sha1)
+ {
+@@ -96,6 +99,23 @@ static int debug_merge(const struct cache_entry * const *stages,
+ 	return 0;
+ }
+ 
++static int option_parse_recurse_submodules(const struct option *opt,
++					   const char *arg, int unset)
++{
++	if (unset) {
++		recurse_submodules = RECURSE_SUBMODULES_OFF;
++		return 0;
++	}
++	if (arg)
++		recurse_submodules =
++			parse_update_recurse_submodules_arg(opt->long_name,
++							    arg);
++	else
++		recurse_submodules = RECURSE_SUBMODULES_ON;
++
++	return 0;
++}
++
+ static struct lock_file lock_file;
+ 
+ int cmd_read_tree(int argc, const char **argv, const char *unused_prefix)
+@@ -137,6 +157,9 @@ int cmd_read_tree(int argc, const char **argv, const char *unused_prefix)
+ 			 N_("skip applying sparse checkout filter")),
+ 		OPT_BOOL(0, "debug-unpack", &opts.debug_unpack,
+ 			 N_("debug unpack-trees")),
++		{ OPTION_CALLBACK, 0, "recurse-submodules", &recurse_submodules,
++			    "checkout", "control recursive updating of submodules",
++			    PARSE_OPT_OPTARG, option_parse_recurse_submodules },
+ 		OPT_END()
+ 	};
+ 
+@@ -152,6 +175,12 @@ int cmd_read_tree(int argc, const char **argv, const char *unused_prefix)
+ 
+ 	hold_locked_index(&lock_file, LOCK_DIE_ON_ERROR);
+ 
++	if (recurse_submodules != RECURSE_SUBMODULES_DEFAULT) {
++		gitmodules_config();
++		git_config(submodule_config, NULL);
++		set_config_update_recurse_submodules(RECURSE_SUBMODULES_ON);
++	}
++
+ 	prefix_set = opts.prefix ? 1 : 0;
+ 	if (1 < opts.merge + opts.reset + prefix_set)
+ 		die("Which one? -m, --reset, or --prefix?");
+diff --git a/submodule.c b/submodule.c
+index a2cf8c9376..bc5fecf8c5 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -1257,7 +1257,7 @@ static int submodule_has_dirty_index(const struct submodule *sub)
+ 	return finish_command(&cp);
+ }
+ 
+-void submodule_reset_index(const char *path)
++static void submodule_reset_index(const char *path)
+ {
+ 	struct child_process cp = CHILD_PROCESS_INIT;
+ 	prepare_submodule_repo_env_no_git_dir(&cp.env_array);
+diff --git a/t/lib-submodule-update.sh b/t/lib-submodule-update.sh
+index 54cd8a6366..429cd1041d 100755
+--- a/t/lib-submodule-update.sh
++++ b/t/lib-submodule-update.sh
+@@ -4,7 +4,7 @@
+ # - New submodule (no_submodule => add_sub1)
+ # - Removed submodule (add_sub1 => remove_sub1)
+ # - Updated submodule (add_sub1 => modify_sub1)
+-# - Updated submodule recursively (modify_sub1 => modify_sub1_recursively)
++# - Updated submodule recursively (add_nested_sub => modify_sub1_recursively)
+ # - Submodule updated to invalid commit (add_sub1 => invalid_sub1)
+ # - Submodule updated from invalid commit (invalid_sub1 => valid_sub1)
+ # - Submodule replaced by tracked files in directory (add_sub1 =>
+@@ -20,8 +20,8 @@
+ #                    /    ^
+ #                   /     remove_sub1
+ #                  /
+-#       add_sub1  /-------O---------O
+-#             |  /        ^         modify_sub1_recursive
++#       add_sub1  /-------O---------O--------O  modify_sub1_recursively
++#             |  /        ^         add_nested_sub
+ #             | /         modify_sub1
+ #             v/
+ #      O------O-----------O---------O
+@@ -96,12 +96,24 @@ create_lib_submodule_repo () {
+ 		git add sub1 &&
+ 		git commit -m "Modify sub1" &&
+ 
+-		git checkout -b modify_sub1_recursively modify_sub1 &&
++		git checkout -b add_nested_sub modify_sub1 &&
+ 		git -C sub1 checkout -b "add_nested_sub" &&
+ 		git -C sub1 submodule add --branch no_submodule ../submodule_update_sub2 sub2 &&
+ 		git -C sub1 commit -a -m "add a nested submodule" &&
+ 		git add sub1 &&
+ 		git commit -a -m "update submodule, that updates a nested submodule" &&
++		git checkout -b modify_sub1_recursively &&
++		git -C sub1 checkout -b modify_sub1_recursively &&
++		git -C sub1/sub2 checkout -b modify_sub1_recursively &&
++		echo change >sub1/sub2/file3 &&
++		git -C sub1/sub2 add file3 &&
++		git -C sub1/sub2 commit -m "make a change in nested sub" &&
++		git -C sub1 add sub2 &&
++		git -C sub1 commit -m "update nested sub" &&
++		git add sub1 &&
++		git commit -m "update sub1, that updates nested sub" &&
++		git -C sub1 push origin modify_sub1_recursively &&
++		git -C sub1/sub2 push origin modify_sub1_recursively &&
+ 		git -C sub1 submodule deinit -f --all &&
+ 
+ 		git checkout -b replace_sub1_with_directory add_sub1 &&
+@@ -200,9 +212,9 @@ reset_work_tree_to () {
+ 		git checkout -f "$1" &&
+ 		git status -u -s >actual &&
+ 		test_must_be_empty actual &&
+-		sha1=$(git rev-parse --revs-only HEAD:sub1) &&
+-		if test -n "$sha1" &&
+-		   test $(cd "../submodule_update_sub1" && git rev-parse --verify "$sha1^{commit}")
++		hash=$(git rev-parse --revs-only HEAD:sub1) &&
++		if test -n "$hash" &&
++		   test $(cd "../submodule_update_sub1" && git rev-parse --verify "$hash^{commit}")
+ 		then
+ 			git submodule update --init --recursive "sub1"
+ 		fi
+@@ -211,14 +223,23 @@ reset_work_tree_to () {
+ 
+ reset_work_tree_to_interested () {
+ 	reset_work_tree_to $1 &&
+-	# indicate we are interested in the submodule:
+-	git -C submodule_update config submodule.sub1.url "bogus" &&
+-	# also have it available:
++	# make the submodule git dirs available
+ 	if ! test -d submodule_update/.git/modules/sub1
+ 	then
+ 		mkdir -p submodule_update/.git/modules &&
+ 		cp -r submodule_update_repo/.git/modules/sub1 submodule_update/.git/modules/sub1
+-	fi
++		GIT_WORK_TREE=. git -C submodule_update/.git/modules/sub1 config --unset core.worktree
++	fi &&
++	if ! test -d submodule_update/.git/modules/sub1/modules/sub2
++	then
++		mkdir -p submodule_update/.git/modules/sub1/modules &&
++		cp -r submodule_update_repo/.git/modules/sub1/modules/sub2 submodule_update/.git/modules/sub1/modules/sub2
++		GIT_WORK_TREE=. git -C submodule_update/.git/modules/sub1/modules/sub2 config --unset core.worktree
++	fi &&
++	# indicate we are interested in the submodule:
++	git -C submodule_update config submodule.sub1.url "bogus" &&
++	# sub1 might not be checked out, so use the git dir
++	git -C submodule_update/.git/modules/sub1 config submodule.sub2.url "bogus"
+ }
+ 
+ # Test that the superproject contains the content according to commit "$1"
+@@ -234,6 +255,11 @@ test_superproject_content () {
+ # Test that the given submodule at path "$1" contains the content according
+ # to the submodule commit recorded in the superproject's commit "$2"
+ test_submodule_content () {
++	if test "$1" == "-C"
++	then
++		cd "$2"
++		shift; shift;
++	fi
+ 	if test $# != 2
+ 	then
+ 		echo "test_submodule_content needs two arguments"
+@@ -761,6 +787,11 @@ test_submodule_switch_recursing () {
+ 	then
+ 		RESULT=failure
+ 	fi
++
++	if test "$KNOWN_FAILURE_SUBMODULE_OVERWRITE_IGNORED_UNTRACKED" = 1
++	then
++		RESULT1=failure
++	fi
+ 	######################### Appearing submodule #########################
+ 	# Switching to a commit letting a submodule appear checks it out ...
+ 	test_expect_success "$command: added submodule is checked out" '
+@@ -801,7 +832,7 @@ test_submodule_switch_recursing () {
+ 		)
+ 	'
+ 	# ... but an ignored file is fine.
+-	test_expect_success "$command: added submodule removes an untracked ignored file" '
++	test_expect_$RESULT1 "$command: added submodule removes an untracked ignored file" '
+ 		test_when_finished "rm submodule_update/.git/info/exclude" &&
+ 		prolog &&
+ 		reset_work_tree_to_interested no_submodule &&
+@@ -966,21 +997,17 @@ test_submodule_switch_recursing () {
+ 		)
+ 	'
+ 
+-	# This test fails, due to missing setup, we do not clone sub2 into
+-	# submodule_update, because it doesn't exist in the 'add_sub1' version
+-	#
+-	test_expect_success "$command: modified submodule updates submodule recursively" '
++	# recursing deeper than one level doesn't work yet.
++	test_expect_failure "$command: modified submodule updates submodule recursively" '
+ 		prolog &&
+-		reset_work_tree_to_interested add_sub1 &&
++		reset_work_tree_to_interested add_nested_sub &&
+ 		(
+ 			cd submodule_update &&
+ 			git branch -t modify_sub1_recursively origin/modify_sub1_recursively &&
+-			test_must_fail $command modify_sub1_recursively &&
+-			test_superproject_content origin/add_sub1 &&
+-			test_submodule_content sub1 origin/add_sub1
+-			# test_superproject_content origin/modify_sub1_recursively &&
+-			# test_submodule_content sub1 origin/modify_sub1_recursively &&
+-			# test_submodule_content sub1/sub2 no_submodule
++			$command modify_sub1_recursively &&
++			test_superproject_content origin/modify_sub1_recursively &&
++			test_submodule_content sub1 origin/modify_sub1_recursively &&
++			test_submodule_content -C sub1 sub2 origin/modify_sub1_recursively
+ 		)
+ 	'
+ }
+diff --git a/t/t1013-read-tree-submodule.sh b/t/t1013-read-tree-submodule.sh
+index 20526aed34..7019d0a04f 100755
+--- a/t/t1013-read-tree-submodule.sh
++++ b/t/t1013-read-tree-submodule.sh
+@@ -5,6 +5,13 @@ test_description='read-tree can handle submodules'
+ . ./test-lib.sh
+ . "$TEST_DIRECTORY"/lib-submodule-update.sh
+ 
++KNOWN_FAILURE_DIRECTORY_SUBMODULE_CONFLICTS=1
++KNOWN_FAILURE_SUBMODULE_OVERWRITE_IGNORED_UNTRACKED=1
++
++test_submodule_switch_recursing "git read-tree --recurse-submodules -u -m"
++
++test_submodule_forced_switch_recursing "git read-tree --recurse-submodules -u --reset"
++
+ test_submodule_switch "git read-tree -u -m"
+ 
+ test_submodule_forced_switch "git read-tree -u --reset"
