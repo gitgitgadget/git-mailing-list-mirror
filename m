@@ -2,59 +2,56 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0CD7E1F5FB
-	for <e@80x24.org>; Thu,  2 Mar 2017 13:15:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E92141F5FB
+	for <e@80x24.org>; Thu,  2 Mar 2017 13:15:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752743AbdCBNO7 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 2 Mar 2017 08:14:59 -0500
-Received: from mail-ot0-f180.google.com ([74.125.82.180]:34490 "EHLO
-        mail-ot0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752110AbdCBNO5 (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1752773AbdCBNPA (ORCPT <rfc822;e@80x24.org>);
+        Thu, 2 Mar 2017 08:15:00 -0500
+Received: from mail-oi0-f46.google.com ([209.85.218.46]:36597 "EHLO
+        mail-oi0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750915AbdCBNO5 (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 2 Mar 2017 08:14:57 -0500
-Received: by mail-ot0-f180.google.com with SMTP id x10so51533003otb.1
-        for <git@vger.kernel.org>; Thu, 02 Mar 2017 05:13:34 -0800 (PST)
+Received: by mail-oi0-f46.google.com with SMTP id f192so38750013oic.3
+        for <git@vger.kernel.org>; Thu, 02 Mar 2017 05:13:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=Vi5loKoZpbCM11nzSNs5jK+wZz9YO/D/nHkmGADT1ZE=;
-        b=Nygh+TDHLtcmB/jJF9RkLWjJTm/gSc9zpqkpdULSE4CJjefHV934Nef/HNr/ACwla0
-         9dU0A1j+8lTM9UlNrhqAwEZ1vyMoWBTqjCnDsLC060zh+eJEKf5hWdFmPa1X2HcwJDNI
-         OTYC8pJm9Fh9MnaL9Y9uDzRG/Cw0fikf7ScfTMAFPTxzwqHTbf5mNAFtuxHbvXsvSTN2
-         mZMQRslLtlxRR0wnBc1pZi6sRtuxfCgKPpL/US6bIpKw76WdqhDZwOTYr/ugGscHIZaI
-         re+IMYeNaqi3O4gObS/ELkVkUqqLVu+Hw+aKD26Z2HVu5dDs14ay7aO8iVJ9hPISQD4B
-         UzCA==
+        bh=CA2kp5b3rcGJkBNP/lYMy6nolMVXUF6dBMMfD3PlLs0=;
+        b=uGwraFwv03HWBOv8uBQae/XmIUwoRAxD4fY0nIfG2KWUw0ocAj1mWYVRpD8MfoQVP6
+         3jPe9oNMg3Z/kvxSfUmPwOuhxjhCJYZA9WtnnfEi9BaC9SW9rbPXL0mpgz4UOYJSlBWI
+         70EE7RP/1nG++Kskbj9oMEVywjeGd0GumKbqAabcB0uZ6EUW7f2dXmTxxVUMpAxkJmj9
+         u4GA8HhKs7kWS6FMZtLBbb1BXDNIcNxQJaJ26KdEIuDNO34p7NP0VsEhGhsTgI6HWzRk
+         pPfl1XjC2UErwAssVZTDAWmQRclkyDNl+Haure3lXDt+qvupBkryS6P/NoIHawUVUnWH
+         H9Jw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=Vi5loKoZpbCM11nzSNs5jK+wZz9YO/D/nHkmGADT1ZE=;
-        b=dgbH+eS2NyFbO6MHuv1G8MUI42IBGaYJi7mmrLSe+xuIO1aF7BKa4Cv+vpwYFweWZE
-         bwk7NVjHSTfxQFwVjL8A4Yt9N6mlwG8VZn4VcYD4BnjLmkw3+qxlt5eLZ8sHNmDdUA/J
-         HvIuZInWc0IFh4xHQW+nG7SatoWv0g3QEwXZB0yuAxzcHmlrwEcMxw3eXm2tr8qUuWPR
-         L1inLl0DQd6RP4r7Q5C8ELC0TwwPCpDRYpfaGNYEu7fHSAGA3IlXsVWcvamObr2/RAj1
-         cpDo/7SVmc0h0AlVOKMFPTuJWh5ngkg6ug6pQlA5U6/ChKg45nF7UdBhafzoWDMKZOLE
-         o1nA==
-X-Gm-Message-State: AMke39lRcxvQKsA1EdScBN6elOERRxbn+ZVu8oc4nTbsoAowb6G6aCC6vv1insUAdTNEO+vCPm9EFlr2zQf9tw==
-X-Received: by 10.157.18.132 with SMTP id g4mr7718076otg.10.1488458360627;
- Thu, 02 Mar 2017 04:39:20 -0800 (PST)
+        bh=CA2kp5b3rcGJkBNP/lYMy6nolMVXUF6dBMMfD3PlLs0=;
+        b=Bu+xxfj2KvYy/6RNRupvGanvpyNwaa/ECzPwJbIMr4aIqtDlOhLKxE6eiUrsUotBtu
+         k0hO89+6yQkwmAiAaanWzrqxRgApmI3xXuDgB3OhL7QU3CAYxpG7IBY0p2R/ZaPLo0jI
+         Q3t/WOlq7Fq5zQgsgnyyAL3jm8xGBdmx91MlVFUraILynb+KOuJ0GAezH+GjQO5u5u20
+         C22wuR83RaLU/rQ4g6ns4s4UnZmvp1Yih5CSofkxlGtWe+nW0qtNBBCicq8YjwseghnG
+         gPFvyDRxIpbFWJ0tI0EWODTkkMPNDmcVYA140Q6CbT7wUytRzFSv0sYuEHlh2qmNXDIF
+         4g6A==
+X-Gm-Message-State: AMke39lr98cslWcOmc1B6P/4RyVUhpDygNRNdEQX8blmPVjZb08DIX/gM5UZhoLeg8EOCq2TuDTqx9We7xYQ1Q==
+X-Received: by 10.202.181.135 with SMTP id e129mr6720344oif.124.1488458621987;
+ Thu, 02 Mar 2017 04:43:41 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.74.158.84 with HTTP; Thu, 2 Mar 2017 04:38:49 -0800 (PST)
-In-Reply-To: <51f2ba5a-38c9-17eb-e845-3a84b65c7029@alum.mit.edu>
+Received: by 10.74.158.84 with HTTP; Thu, 2 Mar 2017 04:43:11 -0800 (PST)
+In-Reply-To: <5c4a292e-ab86-ffe0-ba8d-c0fe1b527ec1@alum.mit.edu>
 References: <20170218133303.3682-1-pclouds@gmail.com> <20170222140450.30886-1-pclouds@gmail.com>
- <20170222140450.30886-25-pclouds@gmail.com> <7e5ef9e7-bd90-1917-d8eb-c6310c2744ab@alum.mit.edu>
- <CACsJy8BOY8jsCrDYESJ6Gwy_p=J=c8m1qe64w18HX1Cv2AaYnA@mail.gmail.com>
- <8f4ec174-9060-0896-5135-bb50229fe149@alum.mit.edu> <CACsJy8DyjWC5WUE7=dWK-mi_piGZJf7L1B0t5RUROvqDS+aP5g@mail.gmail.com>
- <51f2ba5a-38c9-17eb-e845-3a84b65c7029@alum.mit.edu>
+ <20170222140450.30886-9-pclouds@gmail.com> <5c4a292e-ab86-ffe0-ba8d-c0fe1b527ec1@alum.mit.edu>
 From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Thu, 2 Mar 2017 19:38:49 +0700
-Message-ID: <CACsJy8DkZFMtBST9pmBO=r71FUaZeMKweJDQ2xuMAV-APFVWFw@mail.gmail.com>
-Subject: Re: [PATCH v5 24/24] t1406: new tests for submodule ref store
+Date:   Thu, 2 Mar 2017 19:43:11 +0700
+Message-ID: <CACsJy8DhMdtzmK6-1MmTKf_SpyeR23CJ0kU=LGHOsMXw+90yBw@mail.gmail.com>
+Subject: Re: [PATCH v5 08/24] files-backend: remove the use of git_path()
 To:     Michael Haggerty <mhagger@alum.mit.edu>
 Cc:     Git Mailing List <git@vger.kernel.org>,
         Junio C Hamano <gitster@pobox.com>,
@@ -68,12 +65,25 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Mar 2, 2017 at 3:16 PM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
-> The for-each-ref iteration is defined to be sorted by refname, but it's
-> true that the for-each-reflog order is undefined.
+On Wed, Mar 1, 2017 at 12:50 AM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
+>> @@ -995,7 +998,11 @@ static struct ref_store *files_ref_store_create(const char *submodule)
+>>               return ref_store;
+>>       }
+>>
+>> -     refs->packed_refs_path = git_pathdup("packed-refs");
+>> +     refs->gitdir = xstrdup(gitdir);
+>> +     get_common_dir_noenv(&sb, gitdir);
+>> +     refs->gitcommondir = strbuf_detach(&sb, NULL);
+>> +     strbuf_addf(&sb, "%s/packed-refs", refs->gitcommondir);
+>> +     refs->packed_refs_path = strbuf_detach(&sb, NULL);
+>
+> `git_path()` and friends avoid adding an extra `/` if `git_dir()`
+> already ends in a slash or if it is the empty string. Here you don't
+> have that functionality. Is that intentional?
 
-Thanks. I'm going to add a few lines about this near for_each_ref and
-for_each_reflog() then, assuming that this is the desired behavior,
-not a bug. (Another patch, because I'm not happy until it gets 30+)
+Kind of. I noticed that behavior but the thinking was, this $GIT_DIR
+thing is going to get replaced soon anyway, and because the the uses
+of these paths are very clear (in three groups) that avoiding
+redundant slashes does not buy us anything extra, it's just more code.
 -- 
 Duy
