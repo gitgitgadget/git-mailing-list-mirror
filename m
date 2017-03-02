@@ -6,53 +6,53 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6829D2027B
-	for <e@80x24.org>; Thu,  2 Mar 2017 03:58:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D22232023D
+	for <e@80x24.org>; Thu,  2 Mar 2017 03:58:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753925AbdCBD6e (ORCPT <rfc822;e@80x24.org>);
-        Wed, 1 Mar 2017 22:58:34 -0500
-Received: from mail-pf0-f178.google.com ([209.85.192.178]:33266 "EHLO
-        mail-pf0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752979AbdCBD6d (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Mar 2017 22:58:33 -0500
-Received: by mail-pf0-f178.google.com with SMTP id w189so17535168pfb.0
-        for <git@vger.kernel.org>; Wed, 01 Mar 2017 19:58:32 -0800 (PST)
+        id S1753942AbdCBD6o (ORCPT <rfc822;e@80x24.org>);
+        Wed, 1 Mar 2017 22:58:44 -0500
+Received: from mail-pf0-f169.google.com ([209.85.192.169]:36812 "EHLO
+        mail-pf0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752979AbdCBD6m (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Mar 2017 22:58:42 -0500
+Received: by mail-pf0-f169.google.com with SMTP id x66so17685627pfb.3
+        for <git@vger.kernel.org>; Wed, 01 Mar 2017 19:58:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=k6h0Eu2dsO38BeYB/Jkr4Ert5SW41g0cZHa/aUZrpek=;
-        b=knCRH5s7zjZsdinqgj2hEBY2FI8EnHl2L+rwJv7o6pmUZSPOZt2XN74VzKXQyYX1NB
-         nmscAU+iLBCTBZKJ8l97mELeVOpIkAnJ8ovXfFWhd1Er64v+DZZ1EGPtjcFyLFpw8xY0
-         CG3sQN/EAl9dqZyVihdXBK77YQ3rVc+VImgeueSbsnAO/XT58Wh4ihAQo9ZkM7iXmsNR
-         E4gE+dbBAkZ1fh6QOYVCM8BcR/Sz8SHLM19/pG0Y3LsH0JHZGZZBtq9XDtDFI+Drni7a
-         zS8DH1OuaaOdnGDZ7QT2hWA44Y97BTN4LwLlAZKNgxOMVzyygj04d4OnVmRPhUnUiVAY
-         0tDQ==
+        bh=0AXGFFSScq5JoVYWhK5OpMxYN+J30Qsfdsv2+PPns/4=;
+        b=RHySUHPK/nxqkawNdlJ96PuPJmejVAZ3eINOGlOC9QVzGXG2Itix+Z46Z4Go8u1OaR
+         Gkc/rZcp9eHfhsU70aF+RVeDFSfcpJ0MKuy/z0XQkW2nmeCIWRcrIgQjejpQrIsReJbT
+         TZyjSWb9VPwB1zwWJYqI0MbdyHmaVlmiSFL0BijWbzC1ZpJDxuE6WNiwLDwu87ckvyXb
+         ixg96rNrmXT9Ac34ZBRKD9AefdrfGcaA3PBy2/Hlqh/9usVeIy8ISPsZcWrrqkbIAjVH
+         ijKURizJFCnJ/yhSKaJJgjqo9S76pgpk3y6AYOuXJiDh3burtdA2zP9Ur+5fNDd1wDgm
+         O1zg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=k6h0Eu2dsO38BeYB/Jkr4Ert5SW41g0cZHa/aUZrpek=;
-        b=arHcC39TpUezef8+K+MH9GEFzw4EGrbO2lKbOxmtbWnDxCPgNt7Em2YzJWgxpjC0yn
-         GPNextF/wOMnzjH9pg3m9+onAU++GuBqGNei3KE5BL958JIJQeaD0PGh1TBcOpH1WwfZ
-         J5kI0aQgBmJVnPhEv04nLFgAxj8dsSWVfrNiyrNvYks7SGx6coZx2bDwxxhypPpMw9jA
-         hkl0j7OFOfe+NrDrsOfp9QAAnSFh6aJlDXom5IweqitqxfN1d3vTSAj8EEvpqF3pYEPU
-         4kdeSzzal9zWSi8MVMudsAQVHP37Le+bgxS0Uy62KUkYM7bUDZvooZR+W8dkyr7YEpKK
-         Xj1A==
-X-Gm-Message-State: AMke39m1W1eFaCYamEZmYogK0UkJLugzrEyd3JcZJpePV501iXi+LLaNvqoZa6a9Yte0Vrlp
-X-Received: by 10.98.214.156 with SMTP id a28mr12113694pfl.40.1488415701750;
-        Wed, 01 Mar 2017 16:48:21 -0800 (PST)
+        bh=0AXGFFSScq5JoVYWhK5OpMxYN+J30Qsfdsv2+PPns/4=;
+        b=bbt6fdSOZaLUfb2xzrtZ1EwlpzuQwdVpL4S4ysCQI3+s3645dnQtV8yOKQgOECi0ZT
+         tmI3B8Lr6p5rFa8J50bIV52ZkQnaB5AeNzlEjsPDCXFZCnnAlVmx/qDabjuySjdQ732X
+         B3p4nNo+NBXNDlix7/vA5YSN+M9uKzuV3NFEH7YmuCLYZ6gcKxT+fPOE03ENMNuG94Hm
+         VnIIGjWgXcx2f9MaX93e5/R3epYC/2Mv4BeOYfbhOHwzwB9BuKy/Gp+8DuGdRm9+joQA
+         +b+RkPT+K3GTS+M1yb8cwtA+OB518Pl7qeAacVQTimiINVpDiA+Cu6QTdA3UKoycmIj+
+         LqPA==
+X-Gm-Message-State: AMke39lxgM8EpSpB1weWtAseUODLGOuWM/LRAosJWWfNgx25RTPbP4vS9HanqxBZ0SzBgP+Y
+X-Received: by 10.99.116.9 with SMTP id p9mr12097524pgc.74.1488415685461;
+        Wed, 01 Mar 2017 16:48:05 -0800 (PST)
 Received: from localhost ([2620:0:1000:5b10:695f:c2a1:ec60:5665])
-        by smtp.gmail.com with ESMTPSA id c22sm12877869pgn.43.2017.03.01.16.48.20
+        by smtp.gmail.com with ESMTPSA id o24sm12780143pfj.78.2017.03.01.16.48.04
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 01 Mar 2017 16:48:21 -0800 (PST)
+        Wed, 01 Mar 2017 16:48:04 -0800 (PST)
 From:   Stefan Beller <sbeller@google.com>
 To:     sbeller@google.com
 Cc:     git@vger.kernel.org, bmwill@google.com, novalis@novalis.org,
         sandals@crustytoothpaste.net, hvoigt@hvoigt.net, gitster@pobox.com,
         jrnieder@gmail.com, ramsay@ramsayjones.plus.com
-Subject: [PATCH 14/18] unpack-trees: check if we can perform the operation for submodules
-Date:   Wed,  1 Mar 2017 16:47:55 -0800
-Message-Id: <20170302004759.27852-15-sbeller@google.com>
+Subject: [PATCH 01/18] lib-submodule-update.sh: reorder create_lib_submodule_repo
+Date:   Wed,  1 Mar 2017 16:47:42 -0800
+Message-Id: <20170302004759.27852-2-sbeller@google.com>
 X-Mailer: git-send-email 2.12.0.rc1.52.ge239d7e709.dirty
 In-Reply-To: <20170302004759.27852-1-sbeller@google.com>
 References: <20170223225735.10994-1-sbeller@google.com/>
@@ -62,248 +62,116 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Redraw the ASCII art describing the setup using more space, such that
+it is easier to understand.  The leaf commits are now ordered the same
+way the actual code is ordered.
+
+Add empty lines to the setup code separating each of the leaf commits,
+each starting with a "checkout -b".
+
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- unpack-trees.c | 131 +++++++++++++++++++++++++++++++++++++++++++++++++++++----
- unpack-trees.h |   1 +
- 2 files changed, 123 insertions(+), 9 deletions(-)
+ t/lib-submodule-update.sh | 49 ++++++++++++++++++++++++++++-------------------
+ 1 file changed, 29 insertions(+), 20 deletions(-)
 
-diff --git a/unpack-trees.c b/unpack-trees.c
-index 616a0ae4b2..8333da2cc9 100644
---- a/unpack-trees.c
-+++ b/unpack-trees.c
-@@ -10,6 +10,8 @@
- #include "attr.h"
- #include "split-index.h"
- #include "dir.h"
-+#include "submodule.h"
-+#include "submodule-config.h"
- 
- /*
-  * Error messages expected by scripts out of plumbing commands such as
-@@ -45,6 +47,9 @@ static const char *unpack_plumbing_errors[NB_UNPACK_TREES_ERROR_TYPES] = {
- 
- 	/* ERROR_WOULD_LOSE_ORPHANED_REMOVED */
- 	"Working tree file '%s' would be removed by sparse checkout update.",
+diff --git a/t/lib-submodule-update.sh b/t/lib-submodule-update.sh
+index 915eb4a7c6..5df528ea81 100755
+--- a/t/lib-submodule-update.sh
++++ b/t/lib-submodule-update.sh
+@@ -15,22 +15,27 @@
+ # - Tracked file replaced by submodule (replace_sub1_with_file =>
+ #   replace_file_with_sub1)
+ #
+-#                   --O-----O
+-#                  /  ^     replace_directory_with_sub1
+-#                 /   replace_sub1_with_directory
+-#                /----O
+-#               /     ^
+-#              /      modify_sub1
+-#      O------O-------O
+-#      ^      ^\      ^
+-#      |      | \     remove_sub1
+-#      |      |  -----O-----O
+-#      |      |   \   ^     replace_file_with_sub1
+-#      |      |    \  replace_sub1_with_file
+-#      |   add_sub1 --O-----O
+-# no_submodule        ^     valid_sub1
+-#                     invalid_sub1
++#                     ----O
++#                    /    ^
++#                   /     remove_sub1
++#                  /
++#       add_sub1  /-------O
++#             |  /        ^
++#             | /         modify_sub1
++#             v/
++#      O------O-----------O---------O
++#      ^       \          ^         replace_directory_with_sub1
++#      |        \         replace_sub1_with_directory
++# no_submodule   \
++#                 --------O---------O
++#                  \      ^         replace_file_with_sub1
++#                   \     replace_sub1_with_file
++#                    \
++#                     ----O---------O
++#                         ^         valid_sub1
++#                         invalid_sub1
+ #
 +
-+	/* ERROR_WOULD_LOSE_SUBMODULE */
-+	"Submodule '%s' cannot checkout new HEAD.",
- };
+ create_lib_submodule_repo () {
+ 	git init submodule_update_repo &&
+ 	(
+@@ -49,10 +54,11 @@ create_lib_submodule_repo () {
+ 		git config submodule.sub1.ignore all &&
+ 		git add .gitmodules &&
+ 		git commit -m "Add sub1" &&
+-		git checkout -b remove_sub1 &&
++
++		git checkout -b remove_sub1 add_sub1 &&
+ 		git revert HEAD &&
  
- #define ERRORMSG(o,type) \
-@@ -161,6 +166,8 @@ void setup_unpack_trees_porcelain(struct unpack_trees_options *opts,
- 		_("The following working tree files would be overwritten by sparse checkout update:\n%s");
- 	msgs[ERROR_WOULD_LOSE_ORPHANED_REMOVED] =
- 		_("The following working tree files would be removed by sparse checkout update:\n%s");
-+	msgs[ERROR_WOULD_LOSE_SUBMODULE] =
-+		_("Submodule '%s' cannot checkout new HEAD");
+-		git checkout -b "modify_sub1" "add_sub1" &&
++		git checkout -b modify_sub1 add_sub1 &&
+ 		git submodule update &&
+ 		(
+ 			cd sub1 &&
+@@ -67,7 +73,7 @@ create_lib_submodule_repo () {
+ 		git add sub1 &&
+ 		git commit -m "Modify sub1" &&
  
- 	opts->show_all_errors = 1;
- 	/* rejected paths may not have a static buffer */
-@@ -240,12 +247,75 @@ static void display_error_msgs(struct unpack_trees_options *o)
- 		fprintf(stderr, _("Aborting\n"));
+-		git checkout -b "replace_sub1_with_directory" "add_sub1" &&
++		git checkout -b replace_sub1_with_directory add_sub1 &&
+ 		git submodule update &&
+ 		git -C sub1 checkout modifications &&
+ 		git rm --cached sub1 &&
+@@ -75,22 +81,25 @@ create_lib_submodule_repo () {
+ 		git config -f .gitmodules --remove-section "submodule.sub1" &&
+ 		git add .gitmodules sub1/* &&
+ 		git commit -m "Replace sub1 with directory" &&
++
+ 		git checkout -b replace_directory_with_sub1 &&
+ 		git revert HEAD &&
+ 
+-		git checkout -b "replace_sub1_with_file" "add_sub1" &&
++		git checkout -b replace_sub1_with_file add_sub1 &&
+ 		git rm sub1 &&
+ 		echo "content" >sub1 &&
+ 		git add sub1 &&
+ 		git commit -m "Replace sub1 with file" &&
++
+ 		git checkout -b replace_file_with_sub1 &&
+ 		git revert HEAD &&
+ 
+-		git checkout -b "invalid_sub1" "add_sub1" &&
++		git checkout -b invalid_sub1 add_sub1 &&
+ 		git update-index --cacheinfo 160000 0123456789012345678901234567890123456789 sub1 &&
+ 		git commit -m "Invalid sub1 commit" &&
+ 		git checkout -b valid_sub1 &&
+ 		git revert HEAD &&
++
+ 		git checkout master
+ 	)
  }
- 
-+static int check_submodule_move_head(const struct cache_entry *ce,
-+				     const char *old_id,
-+				     const char *new_id,
-+				     struct unpack_trees_options *o)
-+{
-+	const struct submodule *sub = submodule_from_ce(ce);
-+	if (!sub)
-+		return 0;
-+
-+	switch (sub->update_strategy.type) {
-+	case SM_UPDATE_UNSPECIFIED:
-+	case SM_UPDATE_CHECKOUT:
-+		if (submodule_move_head(ce->name, old_id, new_id, SUBMODULE_MOVE_HEAD_DRY_RUN))
-+			return o->gently ? -1 :
-+				add_rejected_path(o, ERROR_WOULD_LOSE_SUBMODULE, ce->name);
-+		return 0;
-+	case SM_UPDATE_NONE:
-+		return 0;
-+	case SM_UPDATE_REBASE:
-+	case SM_UPDATE_MERGE:
-+	case SM_UPDATE_COMMAND:
-+	default:
-+		warning(_("submodule update strategy not supported for submodule '%s'"), ce->name);
-+		return -1;
-+	}
-+}
-+
-+static void reload_gitmodules_file(struct index_state *index,
-+				   struct checkout *state)
-+{
-+	int i;
-+	for (i = 0; i < index->cache_nr; i++) {
-+		struct cache_entry *ce = index->cache[i];
-+		if (ce->ce_flags & CE_UPDATE) {
-+			int r = strcmp(ce->name, ".gitmodules");
-+			if (r < 0)
-+				continue;
-+			else if (r == 0) {
-+				submodule_free();
-+				checkout_entry(ce, state, NULL);
-+				gitmodules_config();
-+				git_config(submodule_config, NULL);
-+			} else
-+				break;
-+		}
-+	}
-+}
-+
- /*
-  * Unlink the last component and schedule the leading directories for
-  * removal, such that empty directories get removed.
-  */
- static void unlink_entry(const struct cache_entry *ce)
- {
-+	const struct submodule *sub = submodule_from_ce(ce);
-+	if (sub) {
-+		switch (sub->update_strategy.type) {
-+		case SM_UPDATE_UNSPECIFIED:
-+		case SM_UPDATE_CHECKOUT:
-+		case SM_UPDATE_REBASE:
-+		case SM_UPDATE_MERGE:
-+			submodule_move_head(ce->name, "HEAD", NULL,
-+					    SUBMODULE_MOVE_HEAD_FORCE);
-+			break;
-+		case SM_UPDATE_NONE:
-+		case SM_UPDATE_COMMAND:
-+			return; /* Do not touch the submodule. */
-+		}
-+	}
- 	if (!check_leading_path(ce->name, ce_namelen(ce)))
- 		return;
- 	if (remove_or_warn(ce->ce_mode, ce->name))
-@@ -301,6 +371,9 @@ static int check_updates(struct unpack_trees_options *o)
- 	remove_marked_cache_entries(index);
- 	remove_scheduled_dirs();
- 
-+	if (should_update_submodules() && o->update && !o->dry_run)
-+		reload_gitmodules_file(index, &state);
-+
- 	for (i = 0; i < index->cache_nr; i++) {
- 		struct cache_entry *ce = index->cache[i];
- 
-@@ -1358,17 +1431,26 @@ static int verify_uptodate_1(const struct cache_entry *ce,
- 	if (!lstat(ce->name, &st)) {
- 		int flags = CE_MATCH_IGNORE_VALID|CE_MATCH_IGNORE_SKIP_WORKTREE;
- 		unsigned changed = ie_match_stat(o->src_index, ce, &st, flags);
-+
-+		if (submodule_from_ce(ce)) {
-+			int r = check_submodule_move_head(ce,
-+				"HEAD", oid_to_hex(&ce->oid), o);
-+			if (r)
-+				return o->gently ? -1 :
-+					add_rejected_path(o, error_type, ce->name);
-+			return 0;
-+		}
-+
- 		if (!changed)
- 			return 0;
- 		/*
--		 * NEEDSWORK: the current default policy is to allow
--		 * submodule to be out of sync wrt the superproject
--		 * index.  This needs to be tightened later for
--		 * submodules that are marked to be automatically
--		 * checked out.
-+		 * Historic default policy was to allow submodule to be out
-+		 * of sync wrt the superproject index. If the submodule was
-+		 * not considered interesting above, we don't care here.
- 		 */
- 		if (S_ISGITLINK(ce->ce_mode))
- 			return 0;
-+
- 		errno = 0;
- 	}
- 	if (errno == ENOENT)
-@@ -1412,7 +1494,11 @@ static int verify_clean_submodule(const char *old_sha1,
- 				  enum unpack_trees_error_types error_type,
- 				  struct unpack_trees_options *o)
- {
--	return 0;
-+	if (!submodule_from_ce(ce))
-+		return 0;
-+
-+	return check_submodule_move_head(ce, old_sha1,
-+					 oid_to_hex(&ce->oid), o);
- }
- 
- static int verify_clean_subdirectory(const struct cache_entry *ce,
-@@ -1578,9 +1664,15 @@ static int verify_absent_1(const struct cache_entry *ce,
- 		path = xmemdupz(ce->name, len);
- 		if (lstat(path, &st))
- 			ret = error_errno("cannot stat '%s'", path);
--		else
--			ret = check_ok_to_remove(path, len, DT_UNKNOWN, NULL,
--						 &st, error_type, o);
-+		else {
-+			if (submodule_from_ce(ce))
-+				ret = check_submodule_move_head(ce,
-+								oid_to_hex(&ce->oid),
-+								NULL, o);
-+			else
-+				ret = check_ok_to_remove(path, len, DT_UNKNOWN, NULL,
-+							 &st, error_type, o);
-+		}
- 		free(path);
- 		return ret;
- 	} else if (lstat(ce->name, &st)) {
-@@ -1588,6 +1680,10 @@ static int verify_absent_1(const struct cache_entry *ce,
- 			return error_errno("cannot stat '%s'", ce->name);
- 		return 0;
- 	} else {
-+		if (submodule_from_ce(ce))
-+			return check_submodule_move_head(ce, oid_to_hex(&ce->oid),
-+							 NULL, o);
-+
- 		return check_ok_to_remove(ce->name, ce_namelen(ce),
- 					  ce_to_dtype(ce), ce, &st,
- 					  error_type, o);
-@@ -1643,6 +1739,15 @@ static int merged_entry(const struct cache_entry *ce,
- 			return -1;
- 		}
- 		invalidate_ce_path(merge, o);
-+
-+		if (submodule_from_ce(ce)) {
-+			int ret = check_submodule_move_head(ce, NULL,
-+							    oid_to_hex(&ce->oid),
-+							    o);
-+			if (ret)
-+				return ret;
-+		}
-+
- 	} else if (!(old->ce_flags & CE_CONFLICTED)) {
- 		/*
- 		 * See if we can re-use the old CE directly?
-@@ -1663,6 +1768,14 @@ static int merged_entry(const struct cache_entry *ce,
- 			update |= old->ce_flags & (CE_SKIP_WORKTREE | CE_NEW_SKIP_WORKTREE);
- 			invalidate_ce_path(old, o);
- 		}
-+
-+		if (submodule_from_ce(ce)) {
-+			int ret = check_submodule_move_head(ce, oid_to_hex(&old->oid),
-+							    oid_to_hex(&ce->oid),
-+							    o);
-+			if (ret)
-+				return ret;
-+		}
- 	} else {
- 		/*
- 		 * Previously unmerged entry left as an existence
-diff --git a/unpack-trees.h b/unpack-trees.h
-index 36a73a6d00..6c48117b84 100644
---- a/unpack-trees.h
-+++ b/unpack-trees.h
-@@ -21,6 +21,7 @@ enum unpack_trees_error_types {
- 	ERROR_SPARSE_NOT_UPTODATE_FILE,
- 	ERROR_WOULD_LOSE_ORPHANED_OVERWRITTEN,
- 	ERROR_WOULD_LOSE_ORPHANED_REMOVED,
-+	ERROR_WOULD_LOSE_SUBMODULE,
- 	NB_UNPACK_TREES_ERROR_TYPES
- };
- 
 -- 
 2.12.0.rc1.52.ge239d7e709.dirty
 
