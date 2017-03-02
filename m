@@ -2,85 +2,123 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 487EA1F5FB
-	for <e@80x24.org>; Thu,  2 Mar 2017 18:34:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1E7531F5FB
+	for <e@80x24.org>; Thu,  2 Mar 2017 18:46:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752220AbdCBSeL (ORCPT <rfc822;e@80x24.org>);
-        Thu, 2 Mar 2017 13:34:11 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:56308 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752011AbdCBSeK (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Mar 2017 13:34:10 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 7C4CF83DAC;
-        Thu,  2 Mar 2017 13:34:02 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=tAxzQkcHv1XGu9BQaO8wPZaphrw=; b=wL5HRc
-        LhdfxaTqnkgY3QdvErY5WnzQRGULxByTRRhPeL38UqaQ5XU9DuGpa1qMT+GseeIE
-        1v9qbI9iNAAj+y9h0pFkZp4Svwq96cVYBBZMPULvweL0KgMlh6edBuQaNWLZYEJg
-        D+4KAdEEzdASysI+rG9zqlDf5SqVrZk+Ae/Vw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=hGjYoqOT02eL5ykLqeLI5smOcx9pRqpj
-        A1tmoc/1mHi0g5PdsK13chDWnA2adizF1vml438NSilRhu1XB+55DeRbOJigI1cY
-        PtQzMBw+cTrSeUNW8xlN1uNTLnq8JumPTwSQ+qCUthU/80C4OsO4fPPnceao1+YB
-        5y+YhC/oLXo=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 6FCC783DAB;
-        Thu,  2 Mar 2017 13:34:02 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        id S1752209AbdCBSqX (ORCPT <rfc822;e@80x24.org>);
+        Thu, 2 Mar 2017 13:46:23 -0500
+Received: from siwi.pair.com ([209.68.5.199]:50126 "EHLO siwi.pair.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752009AbdCBSqS (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Mar 2017 13:46:18 -0500
+Received: from [10.160.98.126] (unknown [167.220.148.155])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 3C6DF83DA8;
-        Thu,  2 Mar 2017 13:34:01 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Mike Crowe <mac@mcrowe.com>
-Cc:     tboegi@web.de, git@vger.kernel.org, Jeff King <peff@peff.net>
-Subject: Re: [PATCH v1 1/1] git diff --quiet exits with 1 on clean tree with CRLF conversions
-References: <xmqqshmyhtnu.fsf@gitster.mtv.corp.google.com>
-        <20170301170444.14274-1-tboegi@web.de>
-        <xmqqr32gg0o6.fsf@gitster.mtv.corp.google.com>
-        <xmqqa894fyst.fsf@gitster.mtv.corp.google.com>
-        <20170302142056.GB7821@mcrowe.com>
-Date:   Thu, 02 Mar 2017 10:33:59 -0800
-In-Reply-To: <20170302142056.GB7821@mcrowe.com> (Mike Crowe's message of "Thu,
-        2 Mar 2017 14:20:56 +0000")
-Message-ID: <xmqqbmtjcyug.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+        by siwi.pair.com (Postfix) with ESMTPSA id 3702F845D4;
+        Thu,  2 Mar 2017 13:37:28 -0500 (EST)
+Subject: Re: [PATCH] Put sha1dc on a diet
+To:     Linus Torvalds <torvalds@linux-foundation.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+References: <alpine.LFD.2.20.1702281621050.22202@i7.lan>
+ <xmqq7f48hm8g.fsf@gitster.mtv.corp.google.com>
+ <CA+55aFx1wAS-nHS2awuW2waX=cvig4UoZqmN5H3v93yDE7ukyQ@mail.gmail.com>
+ <xmqq37ewhji1.fsf@gitster.mtv.corp.google.com>
+ <alpine.DEB.2.20.1703012227010.3767@virtualbox>
+ <CA+55aFys5oQ0RySQ+Xv0ZDussr-xZNh4_b3+Upx_d9VPWmpM8Q@mail.gmail.com>
+ <alpine.DEB.2.20.1703012334400.3767@virtualbox>
+ <CA+55aFy9=jBJT36FC2HiAeabJBssY=jE=zLxwrXWzhpiFkMUXg@mail.gmail.com>
+ <20170301231921.2puf7o7jkrujscwn@sigill.intra.peff.net>
+ <CACsJy8D3h1KAaKi_Esc98za3LqXaB=YeW0Yu+VAV9UnX5vmttg@mail.gmail.com>
+ <alpine.DEB.2.20.1703021539330.3767@virtualbox>
+ <CA+55aFzscLaviJac-SB65WFYViY=wyAF3EWOnhHSuzSuFLdPTA@mail.gmail.com>
+Cc:     Duy Nguyen <pclouds@gmail.com>, Jeff King <peff@peff.net>,
+        Junio C Hamano <gitster@pobox.com>,
+        Marc Stevens <marc.stevens@cwi.nl>,
+        Dan Shumow <danshu@microsoft.com>,
+        Git Mailing List <git@vger.kernel.org>
+From:   Jeff Hostetler <git@jeffhostetler.com>
+Message-ID: <85221b97-759f-b7a9-1256-21515d163cbf@jeffhostetler.com>
+Date:   Thu, 2 Mar 2017 13:37:27 -0500
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.7.1
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: CE49D414-FF76-11E6-9FAF-97B1B46B9B0B-77302942!pb-smtp1.pobox.com
+In-Reply-To: <CA+55aFzscLaviJac-SB65WFYViY=wyAF3EWOnhHSuzSuFLdPTA@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Mike Crowe <mac@mcrowe.com> writes:
 
-> All the solutions presented so far do cause a small change in behaviour
-> when using git diff --quiet: they may now cause warning messages like:
+
+On 3/2/2017 11:35 AM, Linus Torvalds wrote:
+> On Thu, Mar 2, 2017 at 6:45 AM, Johannes Schindelin
+> <Johannes.Schindelin@gmx.de> wrote:
+>> It would probably make sense to switch the index integrity check away from
+>> SHA-1 because we really only care about detecting bit flips there, and we
+>> have no need for the computational overhead of using a full-blown
+>> cryptographic hash for that purpose.
+> Which index do you actually see as being a problem, btw? The main file
+> index (.git/index) or the pack-file indexes?
 >
->  warning: CRLF will be replaced by LF in crlf.txt.
->  The file will have its original line endings in your working directory.
+> We definitely don't need the checking version of sha1 for either of
+> those, but as Jeff already did the math, at least the pack-file index
+> is almost negligible, because the pack-file operations that update it
+> end up doing SHA1 over the objects - and the object SHA1 calculations
+> are much bigger.
+>
+> And I don't think we even check the pack-file index hashes except on fsck.
+>
+> Now, if your _file_ index is 300-400MB (and I do think we check the
+> SHA fingerprint on that even on just reading it - verify_hdr() in
+> do_read_index()), then that's going to be a somewhat noticeable hit on
+> every normal "git diff" etc.
 
-That is actually a good thing, I think.  As the test modifies a file
-that originally has "Hello\r\nWorld\r\n" in it to this:
+Yes, the .git/index is 450MB with ~3.1M entries.  verify_hdr() is called 
+each time
+we read it into memory.
 
->> +test_expect_success 'quiet diff works on file with line-ending change that has no effect on repository' '
->> +	printf "Hello\r\nWorld\n" >crlf.txt &&
+We have been testing a patch in GfW to run the verification in a 
+separate thread
+while the main thread parses (and mallocs) the cache_entries.  This does 
+help
+offset the time.
+         https://github.com/git-for-windows/git/pull/978/files
 
-If you did "git add" at this point, you would get the same warning,
-because the lack of CR on the second line could well be a mistake
-you may want to notice and fix before going forward.  Otherwise
-you'd be losing information that _might_ matter to you (i.e. the
-fact that the first line had CRLF while the second had LF) and it is
-the whole point of safe_crlf setting.
+> But I'd have expected the stat() calls of all the files listed by that
+> index to be the _much_ bigger problem in that case. Or do you just
+> turn those off with assume-unchanged?
+>
+> Yeah, those stat calls are threaded when preloading, but even so..
 
-I also think it is a good thing if "git status" reported this path
-as modified for the same reason (I didn't actually check if that is
-the case).
+Yes, the stat() calls are more significant percentage of the time (and 
+having
+core.fscache and core.preloadindex help that greatly), but the total 
+time for a command
+is just that -- the total -- so using the philosophy of "every little 
+bit helps", the faster
+routines help us here.
+
+> Anyway, the file index SHA1 checking could probably just be disabled
+> entirely (with a config flag). It's a corruption check that simply
+> isn't that important. So if that's your main SHA1 issue, that would be
+> easy to fix.
+
+Yes, in the GVFS effort, we disabled the verification with a config 
+setting and haven't
+had any incidents.
+
+
+> Everything else - like pack-file generation etc for a big clone() may
+> end up using a ton of SHA1 too, but the SHA1 costs all scale with the
+> other costs that drown them out (ie zlib, network, etc).
+>
+> I'd love to see a profile if you have one.
+>
+>                        Linus
+
