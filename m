@@ -2,168 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
-	DATE_IN_PAST_03_06,DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
 	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F09341F5FB
-	for <e@80x24.org>; Thu,  2 Mar 2017 14:52:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7ECD91F5FB
+	for <e@80x24.org>; Thu,  2 Mar 2017 14:54:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932113AbdCBOvr (ORCPT <rfc822;e@80x24.org>);
-        Thu, 2 Mar 2017 09:51:47 -0500
-Received: from mail-wr0-f195.google.com ([209.85.128.195]:34143 "EHLO
-        mail-wr0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754163AbdCBOvM (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Mar 2017 09:51:12 -0500
-Received: by mail-wr0-f195.google.com with SMTP id u48so9819435wrc.1
-        for <git@vger.kernel.org>; Thu, 02 Mar 2017 06:49:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=L57tXdPItJcrc0uG07w6eR49GSNNmThT3NEJBgxNczE=;
-        b=Vo1VhNrV9FCn5zsG8Ye6uGcXnRPAiV1Cq+8CPmcdYsW93VXfFfOW+KD0VnLQE9PLE3
-         TPGTvodUR/SwNfyo1Dukq96AaImETCO3wtY7/4hxyhJtux/Ehs2Jxh04I0IVN5tWunOx
-         TUtVHvR2cQPqzXEIa5RuI78KU0as+OWls7H6bggq6vuBweUHZikJWEMbmodhiTlCZIwh
-         iac55sAA4As375QU22YpjnVw78n7EojkFWmwktemmiA6hvQCxbw9xHnWSQMJTBaj03kK
-         CJpXeZpqd9cV72PNkCqnPzSssbyWjkQMQBqK7elYdZFtmRCklhiUfa/FMmB6gOi9CT0L
-         2SEg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=L57tXdPItJcrc0uG07w6eR49GSNNmThT3NEJBgxNczE=;
-        b=s6Cewvadp5QfJD4Oc4CPTQGRqTEpTgs2aXhyJaHnTVzEh8jEXBxdGxiDH/QhWGpELY
-         8baijYG0kslLvUPGKzZvKA1KBF8bPZ24yIoXN1DBKYZWudxX5j0ZPIITzJALmTu3NCNy
-         +WYTCSTrbQttvzGJ8aztAU9q/DRltsJh/FV7cB6rFjUgT8o9oG8WcTKM5wxvrlJ6O665
-         /icgOgkQzQoT6phZt348wupoc1RmkCkzZ2QkmVQJFUVmcjJTelY+JIdHkyQszSvgubrn
-         MK+IdtmYuqRDNRTb2Gy0aqFzE31oZGuMxayVDuNnq269hBu8bfXHMZrWNPv8DbMH2BYu
-         mPdg==
-X-Gm-Message-State: AMke39m5HCx/+HsIFclcOytoKtBfcC08UXz15MC9rDjKeccWtpbCwpRezvnGU6fB2R720w==
-X-Received: by 10.223.165.17 with SMTP id i17mr13225355wrb.62.1488454728365;
-        Thu, 02 Mar 2017 03:38:48 -0800 (PST)
-Received: from birc4gyqf2.ads.autodesk.com (adsknateur.autodesk.com. [132.188.32.100])
-        by smtp.gmail.com with ESMTPSA id j80sm10895751wmd.14.2017.03.02.03.38.47
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 02 Mar 2017 03:38:47 -0800 (PST)
-Content-Type: text/plain; charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-Subject: Re: [PATCH v1] Travis: also test on 32-bit Linux
-From:   Lars Schneider <larsxschneider@gmail.com>
-In-Reply-To: <alpine.DEB.2.20.1703021210170.3767@virtualbox>
-Date:   Thu, 2 Mar 2017 12:38:47 +0100
-Cc:     git@vger.kernel.org, gitster@pobox.com
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <CFA1C4B4-0FDA-424D-87A4-EEE1F9BB3712@gmail.com>
-References: <c76a133a57514a332828099d342c9763fd946bfa.1488309430.git.johannes.schindelin@gmx.de> <20170302105157.59791-1-larsxschneider@gmail.com> <alpine.DEB.2.20.1703021210170.3767@virtualbox>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-Mailer: Apple Mail (2.3124)
+        id S1753828AbdCBOib (ORCPT <rfc822;e@80x24.org>);
+        Thu, 2 Mar 2017 09:38:31 -0500
+Received: from mout.gmx.net ([212.227.15.19]:59499 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1753910AbdCBOht (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Mar 2017 09:37:49 -0500
+Received: from virtualbox ([37.201.192.48]) by mail.gmx.com (mrgmx001
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MV6EP-1cn3yd3vZt-00YRZp; Thu, 02
+ Mar 2017 15:37:03 +0100
+Date:   Thu, 2 Mar 2017 15:37:00 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Linus Torvalds <torvalds@linux-foundation.org>
+cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        Marc Stevens <marc.stevens@cwi.nl>,
+        Dan Shumow <danshu@microsoft.com>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH] Put sha1dc on a diet
+In-Reply-To: <CA+55aFy9=jBJT36FC2HiAeabJBssY=jE=zLxwrXWzhpiFkMUXg@mail.gmail.com>
+Message-ID: <alpine.DEB.2.20.1703021530380.3767@virtualbox>
+References: <alpine.LFD.2.20.1702281621050.22202@i7.lan> <xmqq7f48hm8g.fsf@gitster.mtv.corp.google.com> <CA+55aFx1wAS-nHS2awuW2waX=cvig4UoZqmN5H3v93yDE7ukyQ@mail.gmail.com> <xmqq37ewhji1.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1703012227010.3767@virtualbox>
+ <CA+55aFys5oQ0RySQ+Xv0ZDussr-xZNh4_b3+Upx_d9VPWmpM8Q@mail.gmail.com> <alpine.DEB.2.20.1703012334400.3767@virtualbox> <CA+55aFy9=jBJT36FC2HiAeabJBssY=jE=zLxwrXWzhpiFkMUXg@mail.gmail.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:ROzXT/Qs11ZrEJS8vFHeY3A9U9y4VhseGV0Ecsy2uyW+Iy4G0NF
+ AD4gNrLI6elNZlttqx/LR8/FlihST4Bnos4njL4MPsstRA07MjT1MKVjwUMLef7ZQ9pGl5b
+ eblicXAMM/FaRcxxppl3aZCff3mJCRZ8TVikvAGnImDJdti1gdbE1LvEKI6iLwU4L0u/dvW
+ A/mfQTjVg0gLA8XxAftrw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:D4PN7qck9fo=:WwYUCQ6pW4miaOfu5l66lm
+ 2X/iRoSvbqWvIwY3j2rufvM9fT5fZbEwvDZnLU03rkmLeaCKT08txAxv5lwhMwCtS459TkL1L
+ oQfMuf0l5i6KVijUpk2MGxv0ssmQwqfqKzV2lGqZMzOX2mEGdATloE1uZgFRf/+gzCncd9wVx
+ 6GPFI5VomdWS267E5Ron5gG8HwT6/aML0NCXgP1IwLK0TBbjNu/gaNusHYskVoyBXt2yMCkkj
+ a+MtqsqOZZFkhz8ogRjksARUuYu2/RSrYK16ImxWg4HKXLoczgeLwpp7Dt5I9OQLJ0ug0dRwQ
+ WbCz9fgNW+U5/t98PyUdg6n7X5ZiC4YcfTh8Krm6J3+64TGQ6zaQxWNkMiUdgMZVPjqWhkDAo
+ cUI0kJWJ0AmusRAhjX1tMB0B01/BNZ0DbgiJgjro5IZ8NfPVgEBvvq5cAKaUkhmEmncxZmntx
+ rEu6C0DmHVGSeOBCLjv8FmpeLI2Z2Qh4FrPh9JFskTVryj5uoDfYzUlD2FzPSOH3Kw6RpKGoX
+ IfN1jgjiXAlak7u8n052086e5sjYZ44SEkCl380NRGEI9EVVXuYydBWORYEFeGnqnR6mr80Tv
+ bayWczx0Hb1Q9DrfFBs3FRyTbkItarmr/wIBjQqWuUHRsDtS10Ey1azZ2qm6fOAGVhrNsAtfg
+ g5Kh5JNAZbaVqfYN2LbEnINAJ1+IrwK9NKlCYOoS0WPC1ihxxvvNZCOXjPtQ+yXYQ4fQ+bk5F
+ JpsVlNDYyGJjHM2zGt7zi5QPydWcrKu7zcQPIsBXLq4kMzn1RbujpP/zpnoVMgjkJdMZvq8/w
+ xHOSc81GSdH2ggI+MAPoKncquO8VQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Linus,
 
-> On 02 Mar 2017, at 12:24, Johannes Schindelin =
-<Johannes.Schindelin@gmx.de> wrote:
->=20
-> Hi Lars,
->=20
-> On Thu, 2 Mar 2017, Lars Schneider wrote:
->=20
->> The patch looks good to me in general but I want to propose the =
-following
->> changes:
->=20
-> I know you are using your script to generate this mail, but I would =
-have
-> liked to see v2 in the subject ;-)
+On Wed, 1 Mar 2017, Linus Torvalds wrote:
 
-Yeah, sorry. I already had a "D'oh" moment *after* I saw the email in=20
-my email client. Now I am wondering... is the next version v2 or v3 :D
+> On Wed, Mar 1, 2017 at 2:51 PM, Johannes Schindelin
+> <Johannes.Schindelin@gmx.de> wrote:
+> >
+> > But I think bigger than just developers on Windows OS. There are many
+> > developers out there working on large repositories (yes, much larger
+> > than Linux). Also using Macs and Linux. I am not at all sure that we
+> > want to give them an updated Git they cannot fail to notice to be much
+> > slower than before.
+> 
+> Johannes, have you *tried* the patches?
+> 
+> I really don't think you have. It is completely unnoticeable in any
+> normal situation. The two cases that it's noticeable is:
+> 
+>  - a full fsck is noticeable slower
+> 
+>  - a full non-local clone is slower (but not really noticeably so
+> since the network traffic dominates).
+> 
+> In other words, I think you're making shit up. I don't think you
+> understand how little the SHA1 performance actually matters. It's
+> noticeable in benchmarks. It's not noticeable in any normal operation.
+> 
+> .. and yes, I've actually been running the patches locally since I
+> posted my first version (which apparently didn't go out to the list
+> because of list size limits) and now running the version in 'pu'.
 
+If you think that the Linux repository is a big one, then your reaction is
+understandable.
 
->> (1) Move all the docker magic into a dedicated file
->> "ci/run-linux-32-build.sh" This way people should be able to run this
->> build on their local machines without TravisCI. However, I haven't
->> tested this.
->=20
-> I considered this, but there is serious overlap: the `docker pull` =
-call
-> and the `docker run` call *have* to refer to the same image. It's very
-> easy for them to get out of sync if you have that information in two
-> files. Maybe make that an option of the script, defaulting to
-> daald/ubuntu32:xenial?
+I have zero interest in potty language, therefore my reply is very terse:
+yes, I have been looking ad SHA-1 performance, and yes, it matters. Think
+an index file of 300-400MB.
 
-Right. I missed that. How about something like that?
-
-      before_install:
-        - ci/run-linux32-build.sh --pull-container
-      before_script:
-      script: ci/run-linux32-build.sh
-
-
-> BTW speaking of Docker: it would be nicer if there was a Docker image =
-that
-> already had the build-essentials installed, to save on startup time. =
-But I
-> did not find any that was reasonably up-to-date.
-
-True. But installing everything just takes a minute and we don't need to
-maintain anything...
-
-
->> +set -e
->=20
-> Is this really necessary? I really like to avoid `set -e`, in =
-particular
-> when we do pretty much everything in && chains anyway.
-
-Agreed, not really necessary here as we just invoke one command.
-Out of curiosity: Why do you try to avoid it? I set it by default in all=20=
-
-my scripts.
-
-
->> +APT_INSTALL=3D"apt update >/dev/null && apt install -y =
-build-essential "\
->> +"libcurl4-openssl-dev libssl-dev libexpat-dev gettext python =
->/dev/null"
->> +
->> +TEST_GIT_ENV=3D"DEFAULT_TEST_TARGET=3D$DEFAULT_TEST_TARGET "\
->> +"GIT_PROVE_OPTS=3D\"$GIT_PROVE_OPTS\" "\
->> +"GIT_TEST_OPTS=3D\"$GIT_TEST_OPTS\" "\
->> +"GIT_TEST_CLONE_2GB=3D$GIT_TEST_CLONE_2GB"
->> +
->> +TEST_GIT_CMD=3D"linux32 --32bit i386 sh -c '"\
->> +"'$APT_INSTALL && cd /usr/src/git && $TEST_GIT_ENV make -j2 test'"
->> +
->> +sudo docker run \
->> +    --interactive --volume "${PWD}:/usr/src/git" \
->> +    daald/ubuntu32:xenial /bin/bash -c "$TEST_GIT_CMD"
->=20
-> Hmm. Since it is a script now, it would be more readable this way, I
-> think:
->=20
-> sudo docker run --volume "${PWD}:/usr/src/git" =
-"${1:-daald/ubuntu32:xenial}" \
-> linux32 --32bit i386 sh -c '
-> 	: update packages first &&
-> 	apt update >/dev/null &&
-> 	apt install -y build-essential libcurl4-openssl-dev libssl-dev \
-> 		libexpat-dev gettext python >/dev/null &&
->=20
-> 	: now build and test &&
-> 	cd /usr/src/git &&
-> 	DEFAULT_TEST_TARGET=3D'"$DEFAULT_TEST_TARGET"' \
-> 	GIT_PROVE_OPTS=3D'"$GIT_PROVE_OPTS"' \
-> 	GIT_TEST_OPTS=3D'"$GIT_TEST_OPTS"' \
-> 	GIT_TEST_CLONE_2GB=3D'"$GIT_TEST_CLONE_2GB"' \
-> 	make -j2 test
-> '
-
-That looks better! I'll try it!
-
-- Lars=
+Ciao,
+Johannes
