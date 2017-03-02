@@ -2,80 +2,161 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 35B3120133
-	for <e@80x24.org>; Thu,  2 Mar 2017 11:16:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EE9101F5FB
+	for <e@80x24.org>; Thu,  2 Mar 2017 12:19:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752429AbdCBLQb (ORCPT <rfc822;e@80x24.org>);
-        Thu, 2 Mar 2017 06:16:31 -0500
-Received: from mail-ot0-f179.google.com ([74.125.82.179]:36197 "EHLO
-        mail-ot0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752226AbdCBLQ1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Mar 2017 06:16:27 -0500
-Received: by mail-ot0-f179.google.com with SMTP id i1so49748203ota.3
-        for <git@vger.kernel.org>; Thu, 02 Mar 2017 03:16:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=Obm1KE+pZ20hMlsWNZZaL/imjLLi4YoFGEQDrh1UQXg=;
-        b=KhHVxGymKS7CJvETdEIgobNlcAN/LFusydNXA69xB48p4FezGgElODwQuXFK4J+Wli
-         8D61bKPFxrx6C98NVhrd/7UO4zKo3JA3chGEb88hzParQqmeYBLcGfwFfstpX3fws/i6
-         8UqxbRPdieA1jEwsh99EeFeTT69gL9rsjXtM7UEeaEYy4kCtKveeK5VVIxt/sFDZkvJd
-         DOlubnF6Aeysoab5xz5VkW9EVVYAi0PHgnDOlriwrLt0za21Q32wG1vxIZ5A1OTkAxfu
-         cs5AOZ1mgtEsAySiG6WrHl12jwub6IVqvY4UZlHYi+c3a4lUdgFZl4PBPd7UG0RO4zwI
-         5cfw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=Obm1KE+pZ20hMlsWNZZaL/imjLLi4YoFGEQDrh1UQXg=;
-        b=afOq1dYuoKFeaeplD8YPmOPyNAd1TIOjnlpfhBhVOVYTUMProVuaaSPVDiuST3SpUR
-         BAowGT40cwshPXgajGEaMXKxDpyzmNcBAiURuHUF/oGxj+TXT0ire5u3dWZKrEF8BahU
-         OURWZtrEncn2NiCWNoSAPmeOV8QZEsngocHu9976xeIqaZ+MO77BLV91moUL0s1iiI+/
-         iRQVGLgLUYHAW0bJENlBut1oQR+nsPx4U+qBnlAWgfNgY5y6Gc9fpP9X1dli+95cQM6W
-         ENxWiC0KNw+Tm6VGQmjmQP2TUi83Iupof0kh1jmoe/Df6AMsZIXw3IjY9D6YHcpAbP+w
-         w1aQ==
-X-Gm-Message-State: AMke39l6J9ffna/RkMCmXWl+QSIUsL+097vStG7R2zmEu3gIRjl9N8WSR2B7Od4u9ocQtfahGLaROjPN5KvCpQ==
-X-Received: by 10.157.27.12 with SMTP id l12mr5949924otl.199.1488447108574;
- Thu, 02 Mar 2017 01:31:48 -0800 (PST)
+        id S1752110AbdCBMTf (ORCPT <rfc822;e@80x24.org>);
+        Thu, 2 Mar 2017 07:19:35 -0500
+Received: from mout.gmx.net ([212.227.15.15]:55090 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751839AbdCBMTb (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Mar 2017 07:19:31 -0500
+Received: from virtualbox ([37.201.192.48]) by mail.gmx.com (mrgmx001
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0Lee2I-1bwekj1vag-00qNtP; Thu, 02
+ Mar 2017 12:24:31 +0100
+Date:   Thu, 2 Mar 2017 12:24:30 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Lars Schneider <larsxschneider@gmail.com>
+cc:     git@vger.kernel.org, gitster@pobox.com
+Subject: Re: [PATCH v1] Travis: also test on 32-bit Linux
+In-Reply-To: <20170302105157.59791-1-larsxschneider@gmail.com>
+Message-ID: <alpine.DEB.2.20.1703021210170.3767@virtualbox>
+References: <c76a133a57514a332828099d342c9763fd946bfa.1488309430.git.johannes.schindelin@gmx.de> <20170302105157.59791-1-larsxschneider@gmail.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Received: by 10.74.158.84 with HTTP; Thu, 2 Mar 2017 01:31:18 -0800 (PST)
-In-Reply-To: <cbd281fc-3a4b-b4dc-5dff-145c97cd68d6@cafu.de>
-References: <84c02ca1-269e-2f26-c625-476d7f087f5c@cafu.de> <ea0722e2-c2bd-bd80-a233-50676efcafda@web.de>
- <cbd281fc-3a4b-b4dc-5dff-145c97cd68d6@cafu.de>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Thu, 2 Mar 2017 16:31:18 +0700
-Message-ID: <CACsJy8B3Qy1mra_GwhbYdk5LFrgYx=6NRqq=wvw2_wcWCO_yNw@mail.gmail.com>
-Subject: Re: git status --> Out of memory, realloc failed
-To:     Carsten Fuchs <carsten.fuchs@cafu.de>
-Cc:     =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
-        Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:kT8woxBax09lt6G073Djsx7pUe07xLwAD/sXaFCu4DUGT6MrmCy
+ 1rvclJCMmOewmSJ0qpCEnH6t6lpnQ7tRhANXiBS5zw+mb8TI3cMnL2dv1ZXwz2Kf+Uo5XWF
+ PU4wAyaCPE6+fTZGvkAPLYLPOKbknVrnwowwwLLOLyylH3kc4u99Ln9RyPgR/O97hbTAyHZ
+ PXDESOwqhiXPpyiHYYIZA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:RBiau4g4eFU=:fHpzLckUIeomlNG2DtnOf1
+ MoLUcELQeOzIXW2u0x4OhedcY/wpcUcBSD1HHUBPMnujLReHmsxEJ03mpARdF3/7eTh8FtP1H
+ kQvdd4eLuNDykEMxDRVgnpSg19ACu0XhDk6wvQo4pqEocZigWgBwFgqLu/7iYVGbYXP3nqGrB
+ 0E2YVI1FPmI0SySIJQy2XMOZA5FkVMavzIIHhtuw7oVKfp72+kLpaAJctUK3PbRp5eKOMjE+g
+ jDuFvvut3OF1SHcFCwax0NiTlxYSgAs0NqbbFk8WlPrBD/vvIGPjtXQBdP2AlLcgwtepaHt+s
+ SrX+RXAY8BxG6RouXyivCAT/SIz8JGQe0fgUlZjQawFlVQ7X1PVQ+KQt8H9PYLYmZhtc8QjzD
+ JUSvA9pJJ4eJpuJ+CvI0tDGplOgKkmur6GywStvunWBJ6FiCS70SEctwzVxWsNBBVPKWaGODQ
+ Av/7YLcD2wyCNbYc8rvYccDBvqRtPViUwM8D4Bq9N2oiCavFK0qC2Z2xBfK1cpxbrz392TEw/
+ 9tEyXF8sYVU7Hv1zT8r3p1UIvcJuxIL+iB3U9r2P1lP1iCV16xs8ESDWgxQCRg/vwa2WyI8NI
+ rNw5K+6wIRmQRcvh0exGkYILlJ3V2QOklAdkgPMofGH0TknKhkhsqhs7Bmu62PU6M2QGYFyM+
+ rrIdUyJLRQcmzODB/1q/FBjNWAByNAUU0Fr6IWPue0XTrjYyWbKlRrJhJ7M195BySXnrnIMF+
+ pEYqVQy4RDFTWBN3juUq9aRnwYIjLfYaB8uepiO+wlUJPbRPuHym4RRpVn4oo9jzK2T4dBgm8
+ 8hxpK8Ds1wFlIQE9k6EU1wBMgu/xA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Mar 2, 2017 at 3:12 AM, Carsten Fuchs <carsten.fuchs@cafu.de> wrote:
->>> The repository is tracking about 19000 files which together take 260 MB.
->>> The git server version is 2.7.4.1.g5468f9e (Bitbucket)
->>
->>
->> Is your repository publicly accessible?
->
->
-> Unfortunately, no. There are no big secrets in there, but just a couple of
-> database details so that I cannot make it universally available. I can
-> gladly give you access though. (E.g. by adding your public SSH key?)
+Hi Lars,
 
-You could also try "git fast-export --anonymize" (read the doc first).
-I'm not sure if it keeps blob size though, and delta chain might also
-matter so an anonymized repo may or may not share the same problem,
-I'm not sure.
--- 
-Duy
+On Thu, 2 Mar 2017, Lars Schneider wrote:
+
+> The patch looks good to me in general but I want to propose the following
+> changes:
+
+I know you are using your script to generate this mail, but I would have
+liked to see v2 in the subject ;-)
+
+> (1) Move all the docker magic into a dedicated file
+> "ci/run-linux-32-build.sh" This way people should be able to run this
+> build on their local machines without TravisCI. However, I haven't
+> tested this.
+
+I considered this, but there is serious overlap: the `docker pull` call
+and the `docker run` call *have* to refer to the same image. It's very
+easy for them to get out of sync if you have that information in two
+files. Maybe make that an option of the script, defaulting to
+daald/ubuntu32:xenial?
+
+BTW speaking of Docker: it would be nicer if there was a Docker image that
+already had the build-essentials installed, to save on startup time. But I
+did not find any that was reasonably up-to-date.
+
+> (2) The docker build command inherits the Git test environment
+> variables.  This way we use the same environment variables as in all
+> other TravisCI builds (plus it would use *your* variables if you run it
+> locally).
+
+Good!
+
+> (3) Silence the apt update/git output as is it clutters the log.  I did
+> not silence stderr output!
+
+Also good!
+
+> (4) Remove (to my knowledge) superfluous "compiler: clang" in the
+> Linux32 job.
+
+I copied that from one of your experimental .travis.yml patches ;-)
+
+> I added my sign-off. I hope this is the right thing to do in this "I
+> took your patch and changed it to suggest an improvement" situation.
+
+Absolutely. Thank you for taking it from here.
+
+> One thing that still bugs me: In the Linux32 environment prove adds the
+> CPU times to every test run: ( 0.02 usr  0.00 sys +  0.00 cusr  0.00
+> csys ...  Has anyone an idea why that happens and how we can disable it?
+
+I have no idea.
+
+> diff --git a/ci/run-linux32-build.sh b/ci/run-linux32-build.sh
+> new file mode 100755
+> index 0000000000..b892fbdc9e
+> --- /dev/null
+> +++ b/ci/run-linux32-build.sh
+> @@ -0,0 +1,21 @@
+> +#!/bin/sh
+> +#
+> +# Build and test Git in a docker container running a 32-bit Ubuntu Linux
+> +#
+> +
+> +set -e
+
+Is this really necessary? I really like to avoid `set -e`, in particular
+when we do pretty much everything in && chains anyway.
+
+> +APT_INSTALL="apt update >/dev/null && apt install -y build-essential "\
+> +"libcurl4-openssl-dev libssl-dev libexpat-dev gettext python >/dev/null"
+> +
+> +TEST_GIT_ENV="DEFAULT_TEST_TARGET=$DEFAULT_TEST_TARGET "\
+> +"GIT_PROVE_OPTS=\"$GIT_PROVE_OPTS\" "\
+> +"GIT_TEST_OPTS=\"$GIT_TEST_OPTS\" "\
+> +"GIT_TEST_CLONE_2GB=$GIT_TEST_CLONE_2GB"
+> +
+> +TEST_GIT_CMD="linux32 --32bit i386 sh -c '"\
+> +"'$APT_INSTALL && cd /usr/src/git && $TEST_GIT_ENV make -j2 test'"
+> +
+> +sudo docker run \
+> +    --interactive --volume "${PWD}:/usr/src/git" \
+> +    daald/ubuntu32:xenial /bin/bash -c "$TEST_GIT_CMD"
+
+Hmm. Since it is a script now, it would be more readable this way, I
+think:
+
+sudo docker run --volume "${PWD}:/usr/src/git" "${1:-daald/ubuntu32:xenial}" \
+linux32 --32bit i386 sh -c '
+	: update packages first &&
+	apt update >/dev/null &&
+	apt install -y build-essential libcurl4-openssl-dev libssl-dev \
+		libexpat-dev gettext python >/dev/null &&
+
+	: now build and test &&
+	cd /usr/src/git &&
+	DEFAULT_TEST_TARGET='"$DEFAULT_TEST_TARGET"' \
+	GIT_PROVE_OPTS='"$GIT_PROVE_OPTS"' \
+	GIT_TEST_OPTS='"$GIT_TEST_OPTS"' \
+	GIT_TEST_CLONE_2GB='"$GIT_TEST_CLONE_2GB"' \
+	make -j2 test
+'
+
+This is completely untested (pun intended ;-))...
+
+Ciao,
+Dscho
