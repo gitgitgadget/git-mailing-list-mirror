@@ -2,89 +2,66 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D23662023D
-	for <e@80x24.org>; Thu,  2 Mar 2017 05:45:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 69C002023D
+	for <e@80x24.org>; Thu,  2 Mar 2017 06:10:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751302AbdCBFpT (ORCPT <rfc822;e@80x24.org>);
-        Thu, 2 Mar 2017 00:45:19 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:58641 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751128AbdCBFpR (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Mar 2017 00:45:17 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 5E5B87AD4D;
-        Thu,  2 Mar 2017 00:43:54 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=D4UwlK9BHdos4+4ErwGvuzU5+V4=; b=TeIBzQ
-        K4B8V1Yk/qorTW9/7dSYI8l9Ab0Mxh1iiY/3sWx6K/WRVFIsYtcOJDajTu1vQ+08
-        irOPJdgU0RMIGWMOwnbAH8Mbyv2ApkGQ1CxhWCAdiyw7o028FVsTiRMNH87dHfap
-        9jUC36Xg6kObDRbrSuI8g9tYrjLMvZBNeR0VI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=hlgFwJAekmNX2bMzDMK6K+VHSuaSK+kt
-        Y4Qv1nN2CTNYIjnCoYdtB7UUMl33thlmAXlHywqPFkqGYsGqAc0S2y/rk7rFG9B4
-        TM6+81lyYfoXQWrMJzCcZ/zxS4yoQTJh2hA4Gd9iggqF0bGk944LQBXLNxZEGEW6
-        rIo0mN57OT0=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 5803E7AD4C;
-        Thu,  2 Mar 2017 00:43:54 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id C98D87AD4B;
-        Thu,  2 Mar 2017 00:43:53 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Brandon Williams <bmwill@google.com>
-Cc:     git@vger.kernel.org, sbeller@google.com
-Subject: Re: [PATCH 01/10] submodule: decouple url and submodule existence
-References: <20170223234728.164111-1-bmwill@google.com>
-        <20170223234728.164111-2-bmwill@google.com>
-        <xmqq8tov1ev7.fsf@gitster.mtv.corp.google.com>
-        <20170301200230.GA30622@google.com>
-Date:   Wed, 01 Mar 2017 21:43:52 -0800
-In-Reply-To: <20170301200230.GA30622@google.com> (Brandon Williams's message
-        of "Wed, 1 Mar 2017 12:02:30 -0800")
-Message-ID: <xmqqwpc8cjxj.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+        id S1750989AbdCBGKS (ORCPT <rfc822;e@80x24.org>);
+        Thu, 2 Mar 2017 01:10:18 -0500
+Received: from bsmtp2.bon.at ([213.33.87.16]:53465 "EHLO bsmtp2.bon.at"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1750714AbdCBGKR (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Mar 2017 01:10:17 -0500
+Received: from bsmtp.bon.at (unknown [192.168.181.108])
+        by bsmtp2.bon.at (Postfix) with ESMTPS id 3vYhhB3klZz5txH
+        for <git@vger.kernel.org>; Thu,  2 Mar 2017 07:08:26 +0100 (CET)
+Received: from dx.site (unknown [93.83.142.38])
+        by bsmtp.bon.at (Postfix) with ESMTPSA id 3vYhfz5fRlz5tlC;
+        Thu,  2 Mar 2017 07:07:23 +0100 (CET)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+        by dx.site (Postfix) with ESMTP id 29B07F0;
+        Thu,  2 Mar 2017 07:07:23 +0100 (CET)
+Subject: Re: [PATCH] mingw: use OpenSSL's SHA-1 routines
+To:     Junio C Hamano <gitster@pobox.com>
+References: <6a29f8c60d315a24292c1fa9f5e84df4dfdbf813.1486679254.git.johannes.schindelin@gmx.de>
+ <20170210050237.gajicliueuvk6s5d@sigill.intra.peff.net>
+ <alpine.DEB.2.20.1702101647340.3496@virtualbox>
+ <20170210160458.pcp7mupdz24m6cms@sigill.intra.peff.net>
+ <9913e513-553e-eba6-e81a-9c21030dd767@kdbg.org>
+ <xmqqmvdbz23d.fsf@gitster.mtv.corp.google.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jeff King <peff@peff.net>, git@vger.kernel.org,
+        Jeff Hostetler <jeffhost@microsoft.com>
+From:   Johannes Sixt <j6t@kdbg.org>
+Message-ID: <fa38e22e-3114-fab8-38ed-5f52125e81bb@kdbg.org>
+Date:   Thu, 2 Mar 2017 07:07:22 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.7.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 38762DC2-FF0B-11E6-88A0-FC50AE2156B6-77302942!pb-smtp2.pobox.com
+In-Reply-To: <xmqqmvdbz23d.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset=iso-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Brandon Williams <bmwill@google.com> writes:
-
-> On 02/24, Junio C Hamano wrote:
+Am 24.02.2017 um 22:54 schrieb Junio C Hamano:
+> Johannes Sixt <j6t@kdbg.org> writes:
+>> I'll use the patch for daily work for a while to see whether it hurts.
 >
->> Also as a grouping measure, submodule.active that lists submodule
->> paths feels hard to use.  When switching between two branches in the
->> superproject that have the same submodule bound at two different
->> paths, who is responsible for updating submodule.active in
->> superproject's config?  If it were a list of submodule names, this
->> objection does not apply, though.
->
-> I agree that if you are listing every submodule path by hand then this
-> may not be the best approach and would be difficult to use.  The idea is
-> that this would allow a user to set a general pathspec to identify a
-> group of modules they are interested in.  Perhaps once attributes can be
-> used in pathspecs a user could group submodules by setting a particular
-> attribute and then submodule.active would have a value like
-> ":(attr:foo)" to indicate I'm interested in all submodules with the
-> "foo" attribute.
+> Please ping this thread again when you have something to add.  For
+> now, I'll demote this patch from 'next' to 'pu' when we rewind and
+> rebuild 'next' post 2.12 release.
 
-OK.  As .gitattributes is tracked just like .gitmodules in tree, the
-project can adjust the path pattern that matches a renamed submodule
-and gives it an attribute in .gitattributes in the same commit in
-the superproject that moves the directory to which the submodule is
-bound, just like it updates .gitmodules to adjust the name<->path
-mapping.  So that plan solves my specific worry about using "path"
-for grouping and not "name".
+As I already said in [1], I have no objection. I've used the patch in 
+production for some time now and did not notice any slowdowns.
 
-Thanks.
+[1] 
+https://public-inbox.org/git/0080edd6-a515-2fe9-6266-b6f6bbedfdde@kdbg.org/
+
+-- Hannes
+
