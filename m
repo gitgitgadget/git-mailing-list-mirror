@@ -2,161 +2,138 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EE9101F5FB
-	for <e@80x24.org>; Thu,  2 Mar 2017 12:19:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 176161F5FB
+	for <e@80x24.org>; Thu,  2 Mar 2017 13:00:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752110AbdCBMTf (ORCPT <rfc822;e@80x24.org>);
-        Thu, 2 Mar 2017 07:19:35 -0500
-Received: from mout.gmx.net ([212.227.15.15]:55090 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751839AbdCBMTb (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Mar 2017 07:19:31 -0500
-Received: from virtualbox ([37.201.192.48]) by mail.gmx.com (mrgmx001
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0Lee2I-1bwekj1vag-00qNtP; Thu, 02
- Mar 2017 12:24:31 +0100
-Date:   Thu, 2 Mar 2017 12:24:30 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     Lars Schneider <larsxschneider@gmail.com>
-cc:     git@vger.kernel.org, gitster@pobox.com
-Subject: Re: [PATCH v1] Travis: also test on 32-bit Linux
-In-Reply-To: <20170302105157.59791-1-larsxschneider@gmail.com>
-Message-ID: <alpine.DEB.2.20.1703021210170.3767@virtualbox>
-References: <c76a133a57514a332828099d342c9763fd946bfa.1488309430.git.johannes.schindelin@gmx.de> <20170302105157.59791-1-larsxschneider@gmail.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+        id S1751985AbdCBM75 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 2 Mar 2017 07:59:57 -0500
+Received: from mail-oi0-f52.google.com ([209.85.218.52]:35800 "EHLO
+        mail-oi0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751888AbdCBM7v (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Mar 2017 07:59:51 -0500
+Received: by mail-oi0-f52.google.com with SMTP id 62so38636809oih.2
+        for <git@vger.kernel.org>; Thu, 02 Mar 2017 04:59:38 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=M9APiqpl5/VioOUVZoigFP+PzuakipWJJkCjllBqx2U=;
+        b=mCIvSNVKepoXu2uRG+hPpk0zl4I9He3g5lgXCuHYTHZSPlv/KhWD9Zc2u4EjxAMZRf
+         1hLKqsLsl5VNCjK/SXGz9i40KhPT8eZ0O/uDDObV0ECK+thcLqSMq7Iwd28QnYBR3Ztv
+         QSNmtLZw9KZXYqS408CRNtIht9NmDEOTKshqeNh6yRnYgDn6CcWgEjjp6uTc/8dCHbpF
+         qB6oQ7xyq2R06Vr3AGpKxe1oCSBA0vyTAzwPIQCrI8VABWXBHhNAS1S4SP6qDl7R+NHP
+         nqhE2aCpdDXBNWTAv3FMttOAm2WuoPywEh5OIfeyozjIuSVK3etE4ZrK3KJqJSwWVCL/
+         4A4Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=M9APiqpl5/VioOUVZoigFP+PzuakipWJJkCjllBqx2U=;
+        b=jYcTt5NcLYQ3Cn43L4FN8SBhmt8lSLJz6Qay3sWR8brgdiOdWPaXshNLDYeilVRnV/
+         8d+TR7Au4Bq8/6Uniod1BeZTIhb5TijCmZkxVEBS1X2bg8+hrATLzCXXND3cr+DQ8EWR
+         U6umJryPmDvLudRwYapjZY/dDIe+8JCpl3FapEOHTFCYtPq/gLa2zLiu+rLBtn46fXBz
+         4Mx8qmP0UY/epcSpDeylv8tV0vlZbt0h4f8fF+QTbQq5yE9MiEZ+lpZO299mog7RbKdt
+         /voOdpquanA6OZMeh6m9U7SChADzMHQW2Uc2/kxozAAz/yecv4CrqgbT2+KpcWwArvzI
+         gp/Q==
+X-Gm-Message-State: AMke39neju9mw+tKDRo/UiUuWeAGyQdRtHD+/JrAD0I02zYVd7JyQjsvApYAkqmZj/rR+uHAGhKIaQaoHpBwYA==
+X-Received: by 10.202.80.212 with SMTP id e203mr7440558oib.146.1488459185396;
+ Thu, 02 Mar 2017 04:53:05 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:kT8woxBax09lt6G073Djsx7pUe07xLwAD/sXaFCu4DUGT6MrmCy
- 1rvclJCMmOewmSJ0qpCEnH6t6lpnQ7tRhANXiBS5zw+mb8TI3cMnL2dv1ZXwz2Kf+Uo5XWF
- PU4wAyaCPE6+fTZGvkAPLYLPOKbknVrnwowwwLLOLyylH3kc4u99Ln9RyPgR/O97hbTAyHZ
- PXDESOwqhiXPpyiHYYIZA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:RBiau4g4eFU=:fHpzLckUIeomlNG2DtnOf1
- MoLUcELQeOzIXW2u0x4OhedcY/wpcUcBSD1HHUBPMnujLReHmsxEJ03mpARdF3/7eTh8FtP1H
- kQvdd4eLuNDykEMxDRVgnpSg19ACu0XhDk6wvQo4pqEocZigWgBwFgqLu/7iYVGbYXP3nqGrB
- 0E2YVI1FPmI0SySIJQy2XMOZA5FkVMavzIIHhtuw7oVKfp72+kLpaAJctUK3PbRp5eKOMjE+g
- jDuFvvut3OF1SHcFCwax0NiTlxYSgAs0NqbbFk8WlPrBD/vvIGPjtXQBdP2AlLcgwtepaHt+s
- SrX+RXAY8BxG6RouXyivCAT/SIz8JGQe0fgUlZjQawFlVQ7X1PVQ+KQt8H9PYLYmZhtc8QjzD
- JUSvA9pJJ4eJpuJ+CvI0tDGplOgKkmur6GywStvunWBJ6FiCS70SEctwzVxWsNBBVPKWaGODQ
- Av/7YLcD2wyCNbYc8rvYccDBvqRtPViUwM8D4Bq9N2oiCavFK0qC2Z2xBfK1cpxbrz392TEw/
- 9tEyXF8sYVU7Hv1zT8r3p1UIvcJuxIL+iB3U9r2P1lP1iCV16xs8ESDWgxQCRg/vwa2WyI8NI
- rNw5K+6wIRmQRcvh0exGkYILlJ3V2QOklAdkgPMofGH0TknKhkhsqhs7Bmu62PU6M2QGYFyM+
- rrIdUyJLRQcmzODB/1q/FBjNWAByNAUU0Fr6IWPue0XTrjYyWbKlRrJhJ7M195BySXnrnIMF+
- pEYqVQy4RDFTWBN3juUq9aRnwYIjLfYaB8uepiO+wlUJPbRPuHym4RRpVn4oo9jzK2T4dBgm8
- 8hxpK8Ds1wFlIQE9k6EU1wBMgu/xA==
+Received: by 10.74.158.84 with HTTP; Thu, 2 Mar 2017 04:52:34 -0800 (PST)
+In-Reply-To: <9074fcd9-2b80-8927-19d2-1659eb0e327c@alum.mit.edu>
+References: <20170218133303.3682-1-pclouds@gmail.com> <20170222140450.30886-1-pclouds@gmail.com>
+ <20170222140450.30886-5-pclouds@gmail.com> <9074fcd9-2b80-8927-19d2-1659eb0e327c@alum.mit.edu>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Thu, 2 Mar 2017 19:52:34 +0700
+Message-ID: <CACsJy8B-xi0Dob=KkHv2zMZ=ffca5qSo39VLGC1wPN6uXK6SGQ@mail.gmail.com>
+Subject: Re: [PATCH v5 04/24] files-backend: convert git_path() to strbuf_git_path()
+To:     Michael Haggerty <mhagger@alum.mit.edu>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        Stefan Beller <sbeller@google.com>,
+        David Turner <novalis@novalis.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Lars,
+On Wed, Mar 1, 2017 at 12:06 AM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
+>> @@ -2681,13 +2709,19 @@ static int files_rename_ref(struct ref_store *ref_store,
+>>       log_all_ref_updates = flag;
+>>
+>>   rollbacklog:
+>> -     if (logmoved && rename(git_path("logs/%s", newrefname), git_path("logs/%s", oldrefname)))
+>> +     strbuf_git_path(&sb_newref, "logs/%s", newrefname);
+>> +     strbuf_git_path(&sb_oldref, "logs/%s", oldrefname);
+>> +     if (logmoved && rename(sb_newref.buf, sb_oldref.buf))
+>>               error("unable to restore logfile %s from %s: %s",
+>>                       oldrefname, newrefname, strerror(errno));
+>> +     strbuf_git_path(&tmp_renamed_log, TMP_RENAMED_LOG);
+>>       if (!logmoved && log &&
+>> -         rename(git_path(TMP_RENAMED_LOG), git_path("logs/%s", oldrefname)))
+>> +         rename(tmp_renamed_log.buf, sb_oldref.buf))
+>>               error("unable to restore logfile %s from "TMP_RENAMED_LOG": %s",
+>>                       oldrefname, strerror(errno));
+>
+> It feels like you're writing, releasing, re-writing these strbufs more
+> than necessary. Maybe it would be clearer to set them once, and on
+> errors set `ret = error()` then jump to a label here...
+>
+>> +     strbuf_release(&sb_newref);
+>> +     strbuf_release(&sb_oldref);
+>> +     strbuf_release(&tmp_renamed_log);
+>>
+>
+> ...and change this to `return ret`?
 
-On Thu, 2 Mar 2017, Lars Schneider wrote:
+If that's ok with you, will do. I kept the patch dumb so the reader
+does not have to keep track of many things when they check if there
+are any behavior changes.
 
-> The patch looks good to me in general but I want to propose the following
-> changes:
+>>  static int files_init_db(struct ref_store *ref_store, struct strbuf *err)
+>>  {
+>> +     struct strbuf sb = STRBUF_INIT;
+>> +
+>>       /* Check validity (but we don't need the result): */
+>>       files_downcast(ref_store, 0, "init_db");
+>>
+>>       /*
+>>        * Create .git/refs/{heads,tags}
+>>        */
+>> -     safe_create_dir(git_path("refs/heads"), 1);
+>> -     safe_create_dir(git_path("refs/tags"), 1);
+>> +     strbuf_git_path(&sb, "refs/heads");
+>> +     safe_create_dir(sb.buf, 1);
+>> +     strbuf_reset(&sb);
+>> +     strbuf_git_path(&sb, "refs/tags");
+>> +     safe_create_dir(sb.buf, 1);
+>> +     strbuf_reset(&sb);
+>>       if (get_shared_repository()) {
+>> -             adjust_shared_perm(git_path("refs/heads"));
+>> -             adjust_shared_perm(git_path("refs/tags"));
+>> +             strbuf_git_path(&sb, "refs/heads");
+>> +             adjust_shared_perm(sb.buf);
+>> +             strbuf_reset(&sb);
+>> +             strbuf_git_path(&sb, "refs/tags");
+>> +             adjust_shared_perm(sb.buf);
+>>       }
+>> +     strbuf_release(&sb);
+>>       return 0;
+>>  }
+>
+> It looks to me like `safe_create_dir()` already has the ability to
+> `adjust_shared_perm()`, or am I missing something? (I realize that this
+> is preexisting code.)
 
-I know you are using your script to generate this mail, but I would have
-liked to see v2 in the subject ;-)
-
-> (1) Move all the docker magic into a dedicated file
-> "ci/run-linux-32-build.sh" This way people should be able to run this
-> build on their local machines without TravisCI. However, I haven't
-> tested this.
-
-I considered this, but there is serious overlap: the `docker pull` call
-and the `docker run` call *have* to refer to the same image. It's very
-easy for them to get out of sync if you have that information in two
-files. Maybe make that an option of the script, defaulting to
-daald/ubuntu32:xenial?
-
-BTW speaking of Docker: it would be nicer if there was a Docker image that
-already had the build-essentials installed, to save on startup time. But I
-did not find any that was reasonably up-to-date.
-
-> (2) The docker build command inherits the Git test environment
-> variables.  This way we use the same environment variables as in all
-> other TravisCI builds (plus it would use *your* variables if you run it
-> locally).
-
-Good!
-
-> (3) Silence the apt update/git output as is it clutters the log.  I did
-> not silence stderr output!
-
-Also good!
-
-> (4) Remove (to my knowledge) superfluous "compiler: clang" in the
-> Linux32 job.
-
-I copied that from one of your experimental .travis.yml patches ;-)
-
-> I added my sign-off. I hope this is the right thing to do in this "I
-> took your patch and changed it to suggest an improvement" situation.
-
-Absolutely. Thank you for taking it from here.
-
-> One thing that still bugs me: In the Linux32 environment prove adds the
-> CPU times to every test run: ( 0.02 usr  0.00 sys +  0.00 cusr  0.00
-> csys ...  Has anyone an idea why that happens and how we can disable it?
-
-I have no idea.
-
-> diff --git a/ci/run-linux32-build.sh b/ci/run-linux32-build.sh
-> new file mode 100755
-> index 0000000000..b892fbdc9e
-> --- /dev/null
-> +++ b/ci/run-linux32-build.sh
-> @@ -0,0 +1,21 @@
-> +#!/bin/sh
-> +#
-> +# Build and test Git in a docker container running a 32-bit Ubuntu Linux
-> +#
-> +
-> +set -e
-
-Is this really necessary? I really like to avoid `set -e`, in particular
-when we do pretty much everything in && chains anyway.
-
-> +APT_INSTALL="apt update >/dev/null && apt install -y build-essential "\
-> +"libcurl4-openssl-dev libssl-dev libexpat-dev gettext python >/dev/null"
-> +
-> +TEST_GIT_ENV="DEFAULT_TEST_TARGET=$DEFAULT_TEST_TARGET "\
-> +"GIT_PROVE_OPTS=\"$GIT_PROVE_OPTS\" "\
-> +"GIT_TEST_OPTS=\"$GIT_TEST_OPTS\" "\
-> +"GIT_TEST_CLONE_2GB=$GIT_TEST_CLONE_2GB"
-> +
-> +TEST_GIT_CMD="linux32 --32bit i386 sh -c '"\
-> +"'$APT_INSTALL && cd /usr/src/git && $TEST_GIT_ENV make -j2 test'"
-> +
-> +sudo docker run \
-> +    --interactive --volume "${PWD}:/usr/src/git" \
-> +    daald/ubuntu32:xenial /bin/bash -c "$TEST_GIT_CMD"
-
-Hmm. Since it is a script now, it would be more readable this way, I
-think:
-
-sudo docker run --volume "${PWD}:/usr/src/git" "${1:-daald/ubuntu32:xenial}" \
-linux32 --32bit i386 sh -c '
-	: update packages first &&
-	apt update >/dev/null &&
-	apt install -y build-essential libcurl4-openssl-dev libssl-dev \
-		libexpat-dev gettext python >/dev/null &&
-
-	: now build and test &&
-	cd /usr/src/git &&
-	DEFAULT_TEST_TARGET='"$DEFAULT_TEST_TARGET"' \
-	GIT_PROVE_OPTS='"$GIT_PROVE_OPTS"' \
-	GIT_TEST_OPTS='"$GIT_TEST_OPTS"' \
-	GIT_TEST_CLONE_2GB='"$GIT_TEST_CLONE_2GB"' \
-	make -j2 test
-'
-
-This is completely untested (pun intended ;-))...
-
-Ciao,
-Dscho
+Yeah you're right. I guess this code was written when
+safe_create_dir() didn't do that. That certainly shortens this patch.
+-- 
+Duy
