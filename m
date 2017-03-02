@@ -2,98 +2,164 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 67E082023D
-	for <e@80x24.org>; Thu,  2 Mar 2017 00:08:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B0B252023D
+	for <e@80x24.org>; Thu,  2 Mar 2017 00:19:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753677AbdCBAID (ORCPT <rfc822;e@80x24.org>);
-        Wed, 1 Mar 2017 19:08:03 -0500
-Received: from mout.web.de ([212.227.15.4]:59591 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753375AbdCBAHz (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Mar 2017 19:07:55 -0500
-Received: from [192.168.178.36] ([79.213.126.222]) by smtp.web.de (mrweb004
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0LdrkJ-1c0ebx1AQt-00j0L9; Wed, 01
- Mar 2017 16:41:38 +0100
-Subject: Re: [PATCH 2/2] pretty: use fmt_output_email_subject()
-To:     Jeff King <peff@peff.net>, Adrian Dudau <Adrian.Dudau@enea.com>
-References: <1488297556.2955.11.camel@enea.com>
- <20170228181719.t67abnnnsdcx2xfd@sigill.intra.peff.net>
- <58e05599-5dc4-9881-d8c0-89ad1f2e3838@web.de>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <373c7cca-3fd8-bf25-f45b-16249f160ee5@web.de>
-Date:   Wed, 1 Mar 2017 16:41:36 +0100
+        id S1753839AbdCBASx (ORCPT <rfc822;e@80x24.org>);
+        Wed, 1 Mar 2017 19:18:53 -0500
+Received: from mail-oi0-f52.google.com ([209.85.218.52]:33740 "EHLO
+        mail-oi0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753424AbdCBASw (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Mar 2017 19:18:52 -0500
+Received: by mail-oi0-f52.google.com with SMTP id 2so31343975oif.0
+        for <git@vger.kernel.org>; Wed, 01 Mar 2017 16:18:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:references:cc:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding;
+        bh=A8K9In8b/U1pgZGi5EbEDA2xLmTnq1LFDq0ERYoCL0U=;
+        b=KdmgDWi/Odac6huwY8QTunuNK2oxLaCejVS6sn4UtCJJu7VB1MujqHTfuFkFttJkq1
+         JfzZOsV7taXW9LKiHYl4AHVwLrBba6aptLnfAvXPxjJG1Qi5MAkejwvbI0Ke5u+3nbHO
+         rIIU41OxqiweBIcCs7SC2+CaO3T5qbTCObe+XDZTX6S7JpU1L8vGkgjpTDM+aAIsis5t
+         4w0JWzz24V4gYeUrhIHaG1BglQFZR/fRf43MUAFcjksRC8dQj41dP4Z6j7e5IXRKSzQH
+         w6CzWpKc0jj6s9TshdvImG499TTebGyeO9Wb2tulgyKDLXEZrTNNXxDKo+XL6rvuxI7z
+         HQ0w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
+        bh=A8K9In8b/U1pgZGi5EbEDA2xLmTnq1LFDq0ERYoCL0U=;
+        b=ZJ3JWjhSLuCsb62axU/ORgLaGSIgkXrzCw67Yn8L7Z1FpCyUinVnxCiB8QtCTl80GD
+         ZCKNRX3K+PUsAoX80MTopqTfqH664f2HbbZIxVliNUPrzQuiRJ114YfBLTSAZHoZr09Z
+         hbifMnxsU0lzL7OcOj+B2KcOH5c0R2mviYO2KIcrnrZQHuLwmDbhk0Ruc2629OY7E1MW
+         BpaJGlDN6MzohFQxz9Wjabu4HojhdIOt+Vg5RpVtfp+ZILs7PO4MkRUoJGDrHjAIkJHX
+         5DyzeUxoKt2Uahgo/5usEwP4ABQ6nqs7+cWDiM9sNX25hUQslZVzqQFmsSzqXFKHnvkw
+         tlGA==
+X-Gm-Message-State: AMke39kGgpbtAa6lrRSpJAoduU2mdCoFHK0KxQZ4HHspOqpBL2fjqJzt5E5L1ysIy2sTEA==
+X-Received: by 10.202.5.5 with SMTP id 5mr6103720oif.141.1488413527479;
+        Wed, 01 Mar 2017 16:12:07 -0800 (PST)
+Received: from [172.31.98.12] (96-83-49-155-static.hfc.comcastbusiness.net. [96.83.49.155])
+        by smtp.gmail.com with ESMTPSA id g21sm1591523otd.7.2017.03.01.16.12.06
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 01 Mar 2017 16:12:06 -0800 (PST)
+Subject: Re: Delta compression not so effective
+To:     Linus Torvalds <torvalds@linux-foundation.org>
+References: <4d2a1852-8c84-2869-78ad-3c863f6dcaf7@gmail.com>
+ <CA+55aFzQ0o2R2kShS=AuKu0TLnfPV-0JCkViqx5J_afCK0Yt5g@mail.gmail.com>
+ <eba83461-34cf-6d64-4013-873b04af9b82@gmail.com>
+ <CA+55aFx7QFqrHw4e72vOdM5z0rw1CCkL2-UX8ej5CLSBWjLNLA@mail.gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+From:   Marius Storm-Olsen <mstormo@gmail.com>
+Message-ID: <603afdf2-159c-6bed-0e85-2824391185d1@gmail.com>
+Date:   Wed, 1 Mar 2017 18:12:10 -0600
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
  Thunderbird/45.7.1
 MIME-Version: 1.0
-In-Reply-To: <58e05599-5dc4-9881-d8c0-89ad1f2e3838@web.de>
+In-Reply-To: <CA+55aFx7QFqrHw4e72vOdM5z0rw1CCkL2-UX8ej5CLSBWjLNLA@mail.gmail.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K0:4+LheJCzd0mxd4wcJz+jSP9j2pKGLVwLuG3Ci+Gw4b9lxo9Oj0v
- 3qlwNEJLoa3Ti8yY1RAmd2bBDf/Khz/VXW0KxnTCQ38+Mjn4lC1idT8vTOtGYhTxNGC68n8
- NkCsQ9ASJxraUu29MM8GFGKHplC1Bc/XGkeN2lHA99cP/UKSG8bust1eJDrlyBAUa0S5HuE
- by/K3NXk74JCvi/4tVHxQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:kLvdsIw4ui0=:RMLnGs/07ZbgjbQLGmya5f
- Qn+ya92HbWunu1p5m1B9pQ8vhYQbW9e7eZkMlplx7cMgnhU6U3eIHB5Rh2hPROxZiooaOY+nv
- 4pSVonbXM7JBcoGwz+R41IAadZJXRClqMBNX54DWxehyw/3tWTrp1gB3SX5SDvD4U0s6ZWADM
- QuOXOOoxF6JQjtLETJIzadj8BW8AAytaBlxkYtZzXvYh8EwCmrI6U49krPKCBALAJujncGWgt
- Kj0DKck2byY+NPRMpX9JydrNSFiGr7idw+m4hbJdz1GgSUejw/c8tnGhN5wsKoPhkRS5BPTAf
- wkzG9aJxLR+ITNOTugwnE/RzWwFpHGsAhQ29hn//hq6QkfU82dq99m2+LCQnTfXK31i2BANx+
- J6RdsRs1A9jgOXoAohs2msoxb4ncX7WFhGzKMANclLnb4S114GHAGfXDixLHAh53DnrRRNyJL
- 56xX5gmYgLPgLJBRTXEd3Isfug/Aq08y09uQHHTnv82a3YYnH48nFNFgB3jYG44rP7gENWNxn
- 4eS13YF8JEIB75q3OasXgI0D9KQTLDWwa4JSmevS9hlvEG4p/9yDTueRw+jn3Q5xw2Wm3Wid/
- ryeHmbnY+ri73QOpeNOZwp+Umd7kw+7bTZ5O30mXaOlWmaXehetUNZYW7OW7rUjX0ztZO/lr7
- VA1leaxqoAGj65Kiozptajz3VCr+d6ggIIOdvH1T/ndgmqvHBNLGoC0p8prpjfMvoNomKNWzO
- MVH2pLKE2f5fVj9cu1UG3dWwin6c4q0/VGSFe/HpdJUO7PHmqOr+B86NeOpyMtSEB97WPQcLt
- gXdtd3Z
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 01.03.2017 um 12:37 schrieb René Scharfe:
-> Add the email-style subject prefix (e.g. "Subject: [PATCH] ") directly
-> when it's needed instead of letting log_write_email_headers() prepare
-> it in a static buffer in advance.  This simplifies storage ownership and
-> code flow.
+On 3/1/2017 12:30, Linus Torvalds wrote:
+> On Wed, Mar 1, 2017 at 9:57 AM, Marius Storm-Olsen <mstormo@gmail.com> wrote:
+>>
+>> Indeed, I did do a
+>>     -c pack.threads=20 --window-memory=6g
+>> to 'git repack', since the machine is a 20-core (40 threads) machine with
+>> 126GB of RAM.
+>>
+>> So I guess with these sized objects, even at 6GB per thread, it's not enough
+>> to get a big enough Window for proper delta-packing?
 >
-> Signed-off-by: Rene Scharfe <l.s.r@web.de>
-> ---
-> This slows down the last three tests in p4000 by ca. 3% for some reason,
-> so we may want to only do the first part for now, which is performance
-> neutral on my machine.
+> Hmm. The 6GB window should be plenty good enough, unless your blobs
+> are in the gigabyte range too.
 
-Update below.
+No, the list of git verify-objects in the previous post was from the 
+bottom of the sorted list, so those are the largest blobs, ~249MB..
 
-> diff --git a/commit.h b/commit.h
-> index 9c12abb911..459daef94a 100644
-> --- a/commit.h
-> +++ b/commit.h
-> @@ -142,21 +142,24 @@ static inline int cmit_fmt_is_mail(enum cmit_fmt fmt)
->  	return (fmt == CMIT_FMT_EMAIL || fmt == CMIT_FMT_MBOXRD);
->  }
+
+>> This repo took >14hr to repack on 20 threads though ("compression" step was
+>> very fast, but stuck 95% of the time in "writing objects"), so I can only
+>> imagine how long a pack.threads=1 will take :)
 >
-> +struct rev_info; /* in revision.h, it circularly uses enum cmit_fmt */
-> +
->  struct pretty_print_context {
->  	/*
->  	 * Callers should tweak these to change the behavior of pp_* functions.
->  	 */
->  	enum cmit_fmt fmt;
->  	int abbrev;
-> -	const char *subject;
->  	const char *after_subject;
->  	int preserve_subject;
->  	struct date_mode date_mode;
->  	unsigned date_mode_explicit:1;
-> +	unsigned print_email_subject:1;
+> Actually, it's usually the compression phase that should be slow - but
+> if something is limiting finding deltas (so that we abort early), then
+> that would certainly tend to speed up compression.
+>
+> The "writing objects" phase should be mainly about the actual IO.
+> Which should be much faster *if* you actually find deltas.
 
-Turning this into an int restores performance according to p4000. 
-Didn't know that bitfields can be *that* expensive.
+So, this repo must be knocking several parts of Git's insides. I was 
+curious about why it was so slow on the writing objects part, since the 
+whole repo is on a 4x RAID 5, 7k spindels. Now, they are not SSDs sure, 
+but the thing has ~400MB/s continuous throughput available.
 
-René
+iostat -m 5 showed trickle read/write to the process, and 80-100% CPU 
+single thread (since the "write objects" stage is single threaded, 
+obviously).
+
+The failing delta must be triggering other negative behavior.
+
+
+> For example, the sorting code thinks that objects with the same name
+> across the history are good sources of deltas. But it may be that for
+> your case, the binary blobs that you have don't tend to actually
+> change in the history, so that heuristic doesn't end up doing
+> anything.
+
+These are generally just DLLs (debug & release), which content is 
+updated due to upstream project updates. So, filenames/paths tend to 
+stay identical, while content changes throughout history.
+
+
+> The sorting does use the size and the type too, but the "filename
+> hash" (which isn't really a hash, it's something nasty to give
+> reasonable results for the case where files get renamed) is the main
+> sort key.
+>
+> So you might well want to look at the sorting code too. If filenames
+> (particularly the end of filenames) for the blobs aren't good hints
+> for the sorting code, that sort might end up spreading all the blobs
+> out rather than sort them by size.
+
+Filenames are fairly static, and the bulk of the 6000 biggest 
+non-delta'ed blobs are the same DLLs (multiple of them)
+
+
+> And again, if that happens, the "can I delta these two objects" code
+> will notice that the size of the objects are wildly different and
+> won't even bother trying. Which speeds up the "compressing" phase, of
+> course, but then because you don't get any good deltas, the "writing
+> out" phase sucks donkey balls because it does zlib compression on big
+> objects and writes them out to disk.
+
+Right, now on this machine, I really didn't notice much difference 
+between standard zlib level and doing -9. The 203GB version was actually 
+with zlib=9.
+
+
+> So there are certainly multiple possible reasons for the deltification
+> to not work well for you.
+>
+> Hos sensitive is your material? Could you make a smaller repo with
+> some of the blobs that still show the symptoms? I don't think I want
+> to download 206GB of data even if my internet access is good.
+
+Pretty sensitive, and not sure how I can reproduce this reasonable well. 
+However, I can easily recompile git with any recommended 
+instrumentation/printfs, if you have any suggestions of good places to 
+start? If anyone have good file/line numbers, I'll give that a go, and 
+report back?
+
+Thanks!
+
+-- 
+.marius
