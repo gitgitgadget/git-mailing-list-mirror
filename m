@@ -2,174 +2,142 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7CAB120133
-	for <e@80x24.org>; Thu,  2 Mar 2017 10:59:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 86DDF20133
+	for <e@80x24.org>; Thu,  2 Mar 2017 11:06:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751262AbdCBK7t (ORCPT <rfc822;e@80x24.org>);
-        Thu, 2 Mar 2017 05:59:49 -0500
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:32920 "EHLO
-        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751093AbdCBK7l (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Mar 2017 05:59:41 -0500
-Received: by mail-wm0-f68.google.com with SMTP id n11so4272561wma.0
-        for <git@vger.kernel.org>; Thu, 02 Mar 2017 02:59:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=dFA0n9utnTEoK6i0RPbVt47UKtXQ0s9cuxOPV/ebVqQ=;
-        b=YyupeHa1+xM/LuL9cshfyQBWwz4tGpVDrS0xEh+hQgwkJTyFmBGlaf6j9XJob8xNsH
-         965kOra+GIwx0QBJlr9ugvM6VTk5U6GceCCiCfPAVUlKfkj4qCdkHjvVEutHAUgSrDYT
-         E0scuJyosZYodIsdHsyXSOdrIeNrJDeEraLdvr5G8JYqnEFKqhzNgW48MYU/vdfBnHyu
-         m3+CmVkNqdtb9ZCczuT4wKsFrEvQXfaComdZYJdP2PT1YPddT0h6mVVorLh4NnfZjRoF
-         Zvz8CI2NWUZaCJYOkoaBW246mtXCXEPTAdBcydyLKPdBn8QvP+odKoW60s11oGDX60/b
-         gudA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=dFA0n9utnTEoK6i0RPbVt47UKtXQ0s9cuxOPV/ebVqQ=;
-        b=Ulcl0/tW76/npORQhEeJcZuv+LbmEnND5a+qabO7p/aq0o9GtpIHL7QFyxq+JsYLlK
-         4yNQQC3KrNgeCafMcrPF28xdXvJpR8Qxb9W+zQfMAwvJ7FDecRtORyHa6dJJZHI4a0ar
-         kZ+4jYZu2hP3zZICF+oiDCZQJ+q6DMnIp/RAeMPm4qXYvbis2MzzXn1Jj2TGMkSnjeYf
-         lojepK5Y8NlatglACK/aNajnmhmtgwlseTUeRsM0srJpFAMePBzdSkZnJ+mGD4Twg+on
-         rm6+mWTLcLfamj7LbWAS9YndZiavCCVk0FNejp2oYiCacHWlwq0HI5QalDo7GSNpiVUr
-         L2ZQ==
-X-Gm-Message-State: AMke39nUkMsMRwe7ufpoyMTpdXACt6BaNLqAnflc+KtwyPUTP+UBbIA7WXZiaWnvCPHNDQ==
-X-Received: by 10.28.15.142 with SMTP id 136mr7861362wmp.66.1488451918429;
-        Thu, 02 Mar 2017 02:51:58 -0800 (PST)
-Received: from slxBook4.fritz.box (p5DDB5AF2.dip0.t-ipconnect.de. [93.219.90.242])
-        by smtp.gmail.com with ESMTPSA id 10sm26641048wmk.26.2017.03.02.02.51.57
-        (version=TLS1 cipher=AES128-SHA bits=128/128);
-        Thu, 02 Mar 2017 02:51:57 -0800 (PST)
-From:   Lars Schneider <larsxschneider@gmail.com>
-To:     johannes.schindelin@gmx.de
-Cc:     git@vger.kernel.org, gitster@pobox.com
-Subject: [PATCH v1] Travis: also test on 32-bit Linux
-Date:   Thu,  2 Mar 2017 11:51:57 +0100
-Message-Id: <20170302105157.59791-1-larsxschneider@gmail.com>
-X-Mailer: git-send-email 2.11.1
-In-Reply-To: <c76a133a57514a332828099d342c9763fd946bfa.1488309430.git.johannes.schindelin@gmx.de>
-References: <c76a133a57514a332828099d342c9763fd946bfa.1488309430.git.johannes.schindelin@gmx.de>
+        id S1750986AbdCBLGT convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Thu, 2 Mar 2017 06:06:19 -0500
+Received: from mailout4.w1.samsung.com ([210.118.77.14]:35523 "EHLO
+        mailout4.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750867AbdCBLGS (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Mar 2017 06:06:18 -0500
+Received: from eucas1p2.samsung.com (unknown [182.198.249.207])
+ by mailout4.w1.samsung.com
+ (Oracle Communications Messaging Server 7.0.5.31.0 64bit (built May  5 2014))
+ with ESMTP id <0OM60093KP00SP00@mailout4.w1.samsung.com> for
+ git@vger.kernel.org; Thu, 02 Mar 2017 10:55:12 +0000 (GMT)
+Received: from eusmges5.samsung.com (unknown [203.254.199.245])
+ by     eucas1p2.samsung.com (KnoxPortal)
+ with ESMTP id  20170302105511eucas1p2362a875492b7f0d4f7a19967b98d314c~oC09IjFLt0586005860eucas1p2_
+        for <git@vger.kernel.org>; Thu,  2 Mar 2017 10:55:11 +0000 (GMT)
+Received: from eucas1p2.samsung.com ( [182.198.249.207])
+ by     eusmges5.samsung.com (EUCPMTA) with SMTP id 7E.5F.17477.F0AF7B85; Thu,
+ 2      Mar 2017 10:55:11 +0000 (GMT)
+Received: from eusmgms1.samsung.com (unknown [182.198.249.179])
+ by     eucas1p2.samsung.com (KnoxPortal)
+ with ESMTP id  20170302105511eucas1p2c40bbbb719c8fb15cc7a6cb9424a92e4~oC08f_6s30937909379eucas1p2j
+        for <git@vger.kernel.org>; Thu,  2 Mar 2017 10:55:11 +0000 (GMT)
+X-AuditID: cbfec7f5-f79d06d000004445-ba-58b7fa0facaf
+Received: from eusync1.samsung.com ( [203.254.199.211])
+ by     eusmgms1.samsung.com (EUCPMTA) with SMTP id 95.6F.06687.B6AF7B85; Thu,
+ 2      Mar 2017 10:56:43 +0000 (GMT)
+Received: from CAMSVWEXC01.scsc.local ([106.1.227.71])
+ by     eusync1.samsung.com (Oracle Communications Messaging Server 7.0.5.31.0
+ 64bit  (built May  5 2014))
+ with ESMTPA id <0OM600J2WOZZQIA0@eusync1.samsung.com>  for git@vger.kernel.org;
+ Thu, 02 Mar 2017 10:55:11 +0000 (GMT)
+Received: from CAMSVWEXC02.scsc.local (2002:6a01:e348::6a01:e348)
+ by     CAMSVWEXC01.scsc.local (2002:6a01:e347::6a01:e347)
+ with Microsoft SMTP    Server (TLS) id 15.0.1130.7; Thu, 2 Mar 2017 10:55:10 +0000
+Received: from CAMSVWEXC02.scsc.local ([fe80::3c08:6c51:fa0a:6384])
+ by     CAMSVWEXC02.scsc.local ([fe80::3c08:6c51:fa0a:6384%14])
+ with mapi id   15.00.1130.005; Thu, 2 Mar 2017 10:55:09 +0000
+From:   Mark Phillips <mark.phil@samsung.com>
+To:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: BUG Report: v12.0.0 "git difftool -d" fails with
+ "fatal: cannot create directory at '': No such file or directory"
+Thread-topic: BUG Report: v12.0.0 "git difftool -d" fails with
+ "fatal: cannot create directory at '': No such file or directory"
+Thread-index: AdKTQ09lfB6GHbT3TlSbuBQTDXvGdw==
+Date:   Thu, 02 Mar 2017 10:55:09 +0000
+Message-id: <f2a8495f22854a749e615fb642d5655d@CAMSVWEXC02.scsc.local>
+Accept-Language: en-GB, en-US
+Content-language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-ms-exchange-transport-fromentityheader: Hosted
+X-Originating-IP: [106.1.223.195]
+Content-type: text/plain; charset=us-ascii
+Content-transfer-encoding: 8BIT
+MIME-version: 1.0
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrBIsWRmVeSWpSXmKPExsWy7djP87r8v7ZHGPzarWvRdaWbyYHR4/Mm
+        uQDGKC6blNSczLLUIn27BK6MRc82sxUc4ajYtXYnawPjA7YuRk4OCQETiXtvzjJC2GISF+6t
+        B4pzcQgJLGWUmHnxHFiRkEAvk0TzI02Yhq0f9jFDFC1jlHi1AsQBKZrGJLHslj5E4jSjxLyH
+        L1kgnH2MEjufzQNyODjYBLQl3jYZgJgiAvoSfRdEQXqFBWolWn6+YgUpFxFoYpS4vWgCO0hC
+        REBPYlVHJxOIzSKgKnG18TPYqbwCrhKtT06AxRkFZCW+NK4GO4JZQFyiufUmC8SlghKLZu9h
+        hnnt366HUC8bSGxdug+qRlHic8tdNoheHYmzx9YxQtjaEk/eXWCF2CUo8WPyPbBfJAQWsUts
+        e3uGEeQBCaDFmw5AzXeRWHj+I9R8YYlXx7ewQ9gyEp0dB5kgeqczSux92MsK4axnlPjxvptp
+        AqPaLCSHz0JyyCwkh8xCcsgCRpZVjCKppcW56anFpnrFibnFpXnpesn5uZsYgenh9L/jX3cw
+        Lj1mdYhRgINRiYf3ANP2CCHWxLLiytxDjBIczEoivAafgUK8KYmVValF+fFFpTmpxYcYpTlY
+        lMR59yy4Ei4kkJ5YkpqdmlqQWgSTZeLglGpglNnSXzDzDP92S21PcSH/9T0tU0oKI1SSg/dl
+        PD5b4JbNqzpfMvT4m7DMi3/eLL8j0Hsr4/nGX1wpJ2y02P7+i3lVXsfc9rbzpHJl8mYhy2UH
+        /2Xr+DC/d0g6N3XGxgKBvyeX32Zd93z++5+6l18J9zpv2tHSeNTvxHeDZxbVl4u2yZ7cZ7mc
+        U4mlOCPRUIu5qDgRABCOi2cLAwAA
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrCIsWRmVeSWpSXmKPExsVy+t/xy7rZv7ZHGHQdY7HoutLN5MDo8XmT
+        XABjlJtNRmpiSmqRQmpecn5KZl66rVJoiJuuhZJCXmJuqq1ShK5vSJCSQlliTimQZ2SABhyc
+        A9yDlfTtEtwyFj3bzFZwhKNi19qdrA2MD9i6GDk5JARMJLZ+2McMYYtJXLi3HijOxSEksIRR
+        YldjPxOEM4NJYumE6awQzmlGid9LbrJDOPsYJdo29gM5HBxsAtoSb5sMQEwRAX2JvguiIFOF
+        BWolWn6+AusVEWhilJhwdRsTSEJEQE9iVUcnmM0ioCpxtfEzI4jNK+Aq0frkBFicUUBW4kvj
+        arDzmAXEJZpbb7JAnCogsWTPeaizRSVePv7HCmEbSGxdug+qRlHic8tdNoheLYn1O48zQdja
+        Ek/eXWCF2CUo8WPyPZYJjGKzkKyYhaRlFpKWWUhaFjCyrGIUSS0tzk3PLTbUK07MLS7NS9dL
+        zs/dxAiM0W3Hfm7ewXhpY/AhRgEORiUe3gNM2yOEWBPLiitzDzFKcDArifAafAYK8aYkVlal
+        FuXHF5XmpBYfYjQFBsZEZinR5Hxg+sgriTc0MTS3NDQytrAwNzJSEuct+XAlXEggPbEkNTs1
+        tSC1CKaPiYNTqoHRLHeq7jaW6DwlgWNqMoIrhHf5pRu0zZintr2rZfW3YxEJtyMqjmjdmHRr
+        ht4SbaOmU0pepkrdPy/zXONffJ6jMTJk6v5uW/503k08pQZs/X1B0p+qDuX3zf7Eb8h0KEfk
+        5VKHue/WJtYcOF/4g//wB7d4l3mrqpSD4hdOPWC82Ey8Tt/S6ZMSS3FGoqEWc1FxIgAoxBCF
+        5wIAAA==
+X-MTR:  20000000000000000@CPGS
+X-CMS-MailID: 20170302105511eucas1p2c40bbbb719c8fb15cc7a6cb9424a92e4
+X-Msg-Generator: CA
+X-Sender-IP: 182.198.249.179
+X-Local-Sender: =?UTF-8?B?TWFyayBQaGlsbGlwcxtTQ1NDLVJhZGlvIEZpcm13YXJlGw==?=
+        =?UTF-8?B?7IK87ISx7KCE7J6QG1NlbmlvciBTdGFmZiBFbmdpbmVlciwgU29mdHdhcmU=?=
+X-Global-Sender: =?UTF-8?B?TWFyayBQaGlsbGlwcxtTQ1NDLVJhZGlvIEZpcm13YXJlG1Nh?=
+        =?UTF-8?B?bXN1bmcgRWxlY3Ryb25pY3MbU2VuaW9yIFN0YWZmIEVuZ2luZWVyLCBTb2Z0?=
+        =?UTF-8?B?d2FyZQ==?=
+X-Sender-Code: =?UTF-8?B?QzEwG0VIURtDMTBDRDA1Q0QwNTAwNTA=?=
+CMS-TYPE: 201P
+X-HopCount: 7
+X-CMS-RootMailID: 20170302105511eucas1p2c40bbbb719c8fb15cc7a6cb9424a92e4
+X-RootMTR: 20170302105511eucas1p2c40bbbb719c8fb15cc7a6cb9424a92e4
+References: <CGME20170302105511eucas1p2c40bbbb719c8fb15cc7a6cb9424a92e4@eucas1p2.samsung.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+I am building git from source using gcc 4.8.5 on 64 bit linux.
 
-When Git v2.9.1 was released, it had a bug that showed only on Windows
-and on 32-bit systems: our assumption that `unsigned long` can hold
-64-bit values turned out to be wrong.
-
-This could have been caught earlier if we had a Continuous Testing
-set up that includes a build and test run on 32-bit Linux.
-
-Let's do this (and take care of the Windows build later). This patch
-asks Travis CI to install a Docker image with 32-bit libraries and then
-goes on to build and test Git using this 32-bit setup.
-
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
----
-
-Thanks for the patch Dscho!
-
-The patch looks good to me in general but I want to propose the following
-changes:
-
-(1) Move all the docker magic into a dedicated file "ci/run-linux-32-build.sh"
-    This way people should be able to run this build on their local machines
-    without TravisCI. However, I haven't tested this.
-
-(2) The docker build command inherits the Git test environment variables.
-    This way we use the same environment variables as in all other TravisCI
-    builds (plus it would use *your* variables if you run it locally).
-
-(3) Silence the apt update/git output as is it clutters the log.
-    I did not silence stderr output!
-
-(4) Remove (to my knowledge) superfluous "compiler: clang" in the Linux32 job.
-
-I added my sign-off. I hope this is the right thing to do in this "I took your
-patch and changed it to suggest an improvement" situation.
-
-You can see a successful run here:
-https://travis-ci.org/larsxschneider/git/jobs/206945950
+I am sorry the log info is not very helpful, please tell me how to get more information about what is going wrong and I will collect the info for you!
 
 
-One thing that still bugs me: In the Linux32 environment prove adds the
-CPU times to every test run: ( 0.02 usr  0.00 sys +  0.00 cusr  0.00 csys ...
-Has anyone an idea why that happens and how we can disable it?
+V2.12.0 Broken log
+==============
+
+Export GIT_TRACE=1
+git difftool -d HEAD~ 
+09:11:27.797674 git.c:371               trace: built-in: git 'difftool' '-d' 'HEAD~'
+09:11:27.798255 run-command.c:369       trace: run_command: 'diff' '--raw' '--no-abbrev' '-z' 'HEAD~'
+09:11:27.798484 exec_cmd.c:118          trace: exec: 'git' 'diff' '--raw' '--no-abbrev' '-z' 'HEAD~'
+09:11:27.800156 git.c:371               trace: built-in: git 'diff' '--raw' '--no-abbrev' '-z' 'HEAD~'
+fatal: cannot create directory at '': No such file or directory
+	
+
+Running make check gives
+fixed   0
+success 14475
+failed  0
+broken  184
+total   14804
 
 
-Cheers,
-Lars
+Also broken in v2.12.0-rc0, v2.12.0-rc1 and v2.12.0-rc2
+-----------------------------------------------------------------
 
-
-Notes:
-    Base Ref:
-    Web-Diff: https://github.com/larsxschneider/git/commit/82995ed59c
-    Checkout: git fetch https://github.com/larsxschneider/git travisci/linux32-v1 && git checkout 82995ed59c
-
- .travis.yml             |  9 +++++++++
- ci/run-linux32-build.sh | 21 +++++++++++++++++++++
- 2 files changed, 30 insertions(+)
- create mode 100755 ci/run-linux32-build.sh
-
-diff --git a/.travis.yml b/.travis.yml
-index 9c63c8c3f6..c8c789c437 100644
---- a/.travis.yml
-+++ b/.travis.yml
-@@ -39,6 +39,15 @@ env:
-
- matrix:
-   include:
-+    - env: Linux32
-+      os: linux
-+      sudo: required
-+      services:
-+        - docker
-+      before_install:
-+        - docker pull daald/ubuntu32:xenial
-+      before_script:
-+      script: ci/run-linux32-build.sh
-     - env: Documentation
-       os: linux
-       compiler: clang
-diff --git a/ci/run-linux32-build.sh b/ci/run-linux32-build.sh
-new file mode 100755
-index 0000000000..b892fbdc9e
---- /dev/null
-+++ b/ci/run-linux32-build.sh
-@@ -0,0 +1,21 @@
-+#!/bin/sh
-+#
-+# Build and test Git in a docker container running a 32-bit Ubuntu Linux
-+#
-+
-+set -e
-+
-+APT_INSTALL="apt update >/dev/null && apt install -y build-essential "\
-+"libcurl4-openssl-dev libssl-dev libexpat-dev gettext python >/dev/null"
-+
-+TEST_GIT_ENV="DEFAULT_TEST_TARGET=$DEFAULT_TEST_TARGET "\
-+"GIT_PROVE_OPTS=\"$GIT_PROVE_OPTS\" "\
-+"GIT_TEST_OPTS=\"$GIT_TEST_OPTS\" "\
-+"GIT_TEST_CLONE_2GB=$GIT_TEST_CLONE_2GB"
-+
-+TEST_GIT_CMD="linux32 --32bit i386 sh -c "\
-+"'$APT_INSTALL && cd /usr/src/git && $TEST_GIT_ENV make -j2 test'"
-+
-+sudo docker run \
-+    --interactive --volume "${PWD}:/usr/src/git" \
-+    daald/ubuntu32:xenial /bin/bash -c "$TEST_GIT_CMD"
-
-base-commit: 3bc53220cb2dcf709f7a027a3f526befd021d858
---
-2.11.1
+V 2.11.1 works
+===========
 
