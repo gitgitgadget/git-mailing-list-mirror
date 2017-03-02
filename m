@@ -6,30 +6,29 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E6B2520133
-	for <e@80x24.org>; Thu,  2 Mar 2017 08:29:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C19BE20133
+	for <e@80x24.org>; Thu,  2 Mar 2017 08:29:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754058AbdCBI3q (ORCPT <rfc822;e@80x24.org>);
-        Thu, 2 Mar 2017 03:29:46 -0500
-Received: from cloud.peff.net ([104.130.231.41]:37053 "EHLO cloud.peff.net"
+        id S1754173AbdCBI3v (ORCPT <rfc822;e@80x24.org>);
+        Thu, 2 Mar 2017 03:29:51 -0500
+Received: from cloud.peff.net ([104.130.231.41]:37054 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750733AbdCBI3p (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Mar 2017 03:29:45 -0500
-Received: (qmail 22690 invoked by uid 109); 2 Mar 2017 08:23:03 -0000
+        id S1750733AbdCBI3u (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Mar 2017 03:29:50 -0500
+Received: (qmail 22698 invoked by uid 109); 2 Mar 2017 08:23:08 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 02 Mar 2017 08:23:03 +0000
-Received: (qmail 15216 invoked by uid 111); 2 Mar 2017 08:23:09 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 02 Mar 2017 08:23:08 +0000
+Received: (qmail 15222 invoked by uid 111); 2 Mar 2017 08:23:14 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 02 Mar 2017 03:23:09 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 02 Mar 2017 03:23:01 -0500
-Date:   Thu, 2 Mar 2017 03:23:01 -0500
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 02 Mar 2017 03:23:14 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 02 Mar 2017 03:23:06 -0500
+Date:   Thu, 2 Mar 2017 03:23:06 -0500
 From:   Jeff King <peff@peff.net>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
         Jacob Keller <jacob.keller@gmail.com>
-Subject: [PATCH v2 4/8] interpret_branch_name: allow callers to restrict
- expansions
-Message-ID: <20170302082300.j2eclnifvlh3pbq3@sigill.intra.peff.net>
+Subject: [PATCH v2 5/8] t3204: test git-branch @-expansion corner cases
+Message-ID: <20170302082306.n6kfc5uqz2kdxtpm@sigill.intra.peff.net>
 References: <20170302082100.edaretznmlralswa@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -40,318 +39,156 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The interpret_branch_name() function converts names like
-@{-1} and @{upstream} into branch names. The expanded ref
-names are not fully qualified, and may be outside of the
-refs/heads/ namespace (e.g., "@" expands to "HEAD", and
-"@{upstream}" is likely to be in "refs/remotes/").
+git-branch feeds the branch names from the command line to
+strbuf_branchname(), but we do not yet tell that function
+which kinds of expansions should be allowed. Let's create a
+set of tests that cover both the allowed and disallowed
+cases.
 
-This is OK for callers like dwim_ref() which are primarily
-interested in resolving the resulting name, no matter where
-it is. But callers like "git branch" treat the result as a
-branch name in refs/heads/.  When we expand to a ref outside
-that namespace, the results are very confusing (e.g., "git
-branch @" tries to create refs/heads/HEAD, which is
-nonsense).
+That shows off some breakages where we currently create or
+delete the wrong ref (and will make sure that we do not
+break any cases that _should_ be working when we do add more
+restrictions).
 
-Callers can't know from the returned string how the
-expansion happened (e.g., did the user really ask for a
-branch named "HEAD", or did we do a bogus expansion?). One
-fix would be to return some out-parameters describing the
-types of expansion that occurred. This has the benefit that
-the caller can generate precise error messages ("I
-understood @{upstream} to mean origin/master, but that is a
-remote tracking branch, so you cannot create it as a local
-name").
-
-However, out-parameters make the function interface somewhat
-cumbersome. Instead, let's do the opposite: let the caller
-tell us which elements to expand. That's easier to pass in,
-and none of the callers give more precise error messages
-than "@{upstream} isn't a valid branch name" anyway (which
-should be sufficient).
-
-The strbuf_branchname() function needs a similar parameter,
-as most of the callers access interpret_branch_name()
-through it.
-
-We can break the callers down into two groups:
-
-  1. Callers that are happy with any kind of ref in the
-     result. We pass "0" here, so they continue to work
-     without restrictions. This includes merge_name(),
-     the reflog handling in add_pending_object_with_path(),
-     and substitute_branch_name(). This last is what powers
-     dwim_ref().
-
-  2. Callers that have funny corner cases (mostly in
-     git-branch and git-checkout). These need to make use of
-     the new parameter, but I've left them as "0" in this
-     patch, and will address them individually in follow-on
-     patches.
+Note that we check branch creation and deletion, but do not
+bother with renames. Those follow the same code path as
+creation.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- builtin/branch.c   |  2 +-
- builtin/checkout.c |  2 +-
- builtin/merge.c    |  2 +-
- cache.h            | 13 +++++++++--
- refs.c             |  2 +-
- revision.c         |  2 +-
- sha1_name.c        | 68 ++++++++++++++++++++++++++++++++++++++----------------
- strbuf.h           |  6 ++++-
- 8 files changed, 69 insertions(+), 28 deletions(-)
+ t/t3204-branch-name-interpretation.sh | 123 ++++++++++++++++++++++++++++++++++
+ 1 file changed, 123 insertions(+)
+ create mode 100755 t/t3204-branch-name-interpretation.sh
 
-diff --git a/builtin/branch.c b/builtin/branch.c
-index 94f7de7fa..cf0ece55d 100644
---- a/builtin/branch.c
-+++ b/builtin/branch.c
-@@ -216,7 +216,7 @@ static int delete_branches(int argc, const char **argv, int force, int kinds,
- 		char *target = NULL;
- 		int flags = 0;
- 
--		strbuf_branchname(&bname, argv[i]);
-+		strbuf_branchname(&bname, argv[i], 0);
- 		free(name);
- 		name = mkpathdup(fmt, bname.buf);
- 
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index f174f5030..05eefd994 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -452,7 +452,7 @@ static void setup_branch_path(struct branch_info *branch)
- {
- 	struct strbuf buf = STRBUF_INIT;
- 
--	strbuf_branchname(&buf, branch->name);
-+	strbuf_branchname(&buf, branch->name, 0);
- 	if (strcmp(buf.buf, branch->name))
- 		branch->name = xstrdup(buf.buf);
- 	strbuf_splice(&buf, 0, 0, "refs/heads/", 11);
-diff --git a/builtin/merge.c b/builtin/merge.c
-index a96d4fb50..848a29855 100644
---- a/builtin/merge.c
-+++ b/builtin/merge.c
-@@ -438,7 +438,7 @@ static void merge_name(const char *remote, struct strbuf *msg)
- 	char *found_ref;
- 	int len, early;
- 
--	strbuf_branchname(&bname, remote);
-+	strbuf_branchname(&bname, remote, 0);
- 	remote = bname.buf;
- 
- 	memset(branch_head, 0, sizeof(branch_head));
-diff --git a/cache.h b/cache.h
-index c67995caa..a8816c914 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1383,8 +1383,17 @@ extern char *oid_to_hex(const struct object_id *oid);	/* same static buffer as s
-  *
-  * If the input was ok but there are not N branch switches in the
-  * reflog, it returns 0.
-- */
--extern int interpret_branch_name(const char *str, int len, struct strbuf *);
-+ *
-+ * If "allowed" is non-zero, it is a treated as a bitfield of allowable
-+ * expansions: local branches ("refs/heads/"), remote branches
-+ * ("refs/remotes/"), or "HEAD". If no "allowed" bits are set, any expansion is
-+ * allowed, even ones to refs outside of those namespaces.
-+ */
-+#define INTERPRET_BRANCH_LOCAL (1<<0)
-+#define INTERPRET_BRANCH_REMOTE (1<<1)
-+#define INTERPRET_BRANCH_HEAD (1<<2)
-+extern int interpret_branch_name(const char *str, int len, struct strbuf *,
-+				 unsigned allowed);
- extern int get_oid_mb(const char *str, struct object_id *oid);
- 
- extern int validate_headref(const char *ref);
-diff --git a/refs.c b/refs.c
-index 6d0961921..da62119c2 100644
---- a/refs.c
-+++ b/refs.c
-@@ -405,7 +405,7 @@ int refname_match(const char *abbrev_name, const char *full_name)
- static char *substitute_branch_name(const char **string, int *len)
- {
- 	struct strbuf buf = STRBUF_INIT;
--	int ret = interpret_branch_name(*string, *len, &buf);
-+	int ret = interpret_branch_name(*string, *len, &buf, 0);
- 
- 	if (ret == *len) {
- 		size_t size;
-diff --git a/revision.c b/revision.c
-index b37dbec37..771d079f6 100644
---- a/revision.c
-+++ b/revision.c
-@@ -147,7 +147,7 @@ static void add_pending_object_with_path(struct rev_info *revs,
- 		revs->no_walk = 0;
- 	if (revs->reflog_info && obj->type == OBJ_COMMIT) {
- 		struct strbuf buf = STRBUF_INIT;
--		int len = interpret_branch_name(name, 0, &buf);
-+		int len = interpret_branch_name(name, 0, &buf, 0);
- 		int st;
- 
- 		if (0 < len && name[len] && buf.len)
-diff --git a/sha1_name.c b/sha1_name.c
-index 4c1e91184..7f754b60c 100644
---- a/sha1_name.c
-+++ b/sha1_name.c
-@@ -1176,7 +1176,8 @@ static int interpret_empty_at(const char *name, int namelen, int len, struct str
- 	return 1;
- }
- 
--static int reinterpret(const char *name, int namelen, int len, struct strbuf *buf)
-+static int reinterpret(const char *name, int namelen, int len,
-+		       struct strbuf *buf, unsigned allowed)
- {
- 	/* we have extra data, which might need further processing */
- 	struct strbuf tmp = STRBUF_INIT;
-@@ -1184,7 +1185,7 @@ static int reinterpret(const char *name, int namelen, int len, struct strbuf *bu
- 	int ret;
- 
- 	strbuf_add(buf, name + len, namelen - len);
--	ret = interpret_branch_name(buf->buf, buf->len, &tmp);
-+	ret = interpret_branch_name(buf->buf, buf->len, &tmp, allowed);
- 	/* that data was not interpreted, remove our cruft */
- 	if (ret < 0) {
- 		strbuf_setlen(buf, used);
-@@ -1205,11 +1206,27 @@ static void set_shortened_ref(struct strbuf *buf, const char *ref)
- 	free(s);
- }
- 
-+static int branch_interpret_allowed(const char *refname, unsigned allowed)
-+{
-+	if (!allowed)
-+		return 1;
+diff --git a/t/t3204-branch-name-interpretation.sh b/t/t3204-branch-name-interpretation.sh
+new file mode 100755
+index 000000000..e671a7a64
+--- /dev/null
++++ b/t/t3204-branch-name-interpretation.sh
+@@ -0,0 +1,123 @@
++#!/bin/sh
 +
-+	if ((allowed & INTERPRET_BRANCH_LOCAL) &&
-+	    starts_with(refname, "refs/heads/"))
-+		return 1;
-+	if ((allowed & INTERPRET_BRANCH_REMOTE) &&
-+	    starts_with(refname, "refs/remotes/"))
-+		return 1;
++test_description='interpreting exotic branch name arguments
 +
-+	return 0;
++Branch name arguments are usually names which are taken to be inside of
++refs/heads/, but we interpret some magic syntax like @{-1}, @{upstream}, etc.
++This script aims to check the behavior of those corner cases.
++'
++. ./test-lib.sh
++
++expect_branch() {
++	git log -1 --format=%s "$1" >actual &&
++	echo "$2" >expect &&
++	test_cmp expect actual
 +}
 +
- static int interpret_branch_mark(const char *name, int namelen,
- 				 int at, struct strbuf *buf,
- 				 int (*get_mark)(const char *, int),
- 				 const char *(*get_data)(struct branch *,
--							 struct strbuf *))
-+							 struct strbuf *),
-+				 unsigned allowed)
- {
- 	int len;
- 	struct branch *branch;
-@@ -1234,11 +1251,15 @@ static int interpret_branch_mark(const char *name, int namelen,
- 	if (!value)
- 		die("%s", err.buf);
- 
-+	if (!branch_interpret_allowed(value, allowed))
-+		return -1;
++expect_deleted() {
++	test_must_fail git rev-parse --verify "$1"
++}
 +
- 	set_shortened_ref(buf, value);
- 	return len + at;
- }
- 
--int interpret_branch_name(const char *name, int namelen, struct strbuf *buf)
-+int interpret_branch_name(const char *name, int namelen, struct strbuf *buf,
-+			  unsigned allowed)
- {
- 	char *at;
- 	const char *start;
-@@ -1247,31 +1268,38 @@ int interpret_branch_name(const char *name, int namelen, struct strbuf *buf)
- 	if (!namelen)
- 		namelen = strlen(name);
- 
--	len = interpret_nth_prior_checkout(name, namelen, buf);
--	if (!len) {
--		return len; /* syntax Ok, not enough switches */
--	} else if (len > 0) {
--		if (len == namelen)
--			return len; /* consumed all */
--		else
--			return reinterpret(name, namelen, len, buf);
-+	if (!allowed || (allowed & INTERPRET_BRANCH_LOCAL)) {
-+		len = interpret_nth_prior_checkout(name, namelen, buf);
-+		if (!len) {
-+			return len; /* syntax Ok, not enough switches */
-+		} else if (len > 0) {
-+			if (len == namelen)
-+				return len; /* consumed all */
-+			else
-+				return reinterpret(name, namelen, len, buf, allowed);
-+		}
- 	}
- 
- 	for (start = name;
- 	     (at = memchr(start, '@', namelen - (start - name)));
- 	     start = at + 1) {
- 
--		len = interpret_empty_at(name, namelen, at - name, buf);
--		if (len > 0)
--			return reinterpret(name, namelen, len, buf);
-+		if (!allowed || (allowed & INTERPRET_BRANCH_HEAD)) {
-+			len = interpret_empty_at(name, namelen, at - name, buf);
-+			if (len > 0)
-+				return reinterpret(name, namelen, len, buf,
-+						   allowed);
-+		}
- 
- 		len = interpret_branch_mark(name, namelen, at - name, buf,
--					    upstream_mark, branch_get_upstream);
-+					    upstream_mark, branch_get_upstream,
-+					    allowed);
- 		if (len > 0)
- 			return len;
- 
- 		len = interpret_branch_mark(name, namelen, at - name, buf,
--					    push_mark, branch_get_push);
-+					    push_mark, branch_get_push,
-+					    allowed);
- 		if (len > 0)
- 			return len;
- 	}
-@@ -1279,10 +1307,10 @@ int interpret_branch_name(const char *name, int namelen, struct strbuf *buf)
- 	return -1;
- }
- 
--void strbuf_branchname(struct strbuf *sb, const char *name)
-+void strbuf_branchname(struct strbuf *sb, const char *name, unsigned allowed)
- {
- 	int len = strlen(name);
--	int used = interpret_branch_name(name, len, sb);
-+	int used = interpret_branch_name(name, len, sb, allowed);
- 
- 	if (used < 0)
- 		used = 0;
-@@ -1291,7 +1319,7 @@ void strbuf_branchname(struct strbuf *sb, const char *name)
- 
- int strbuf_check_branch_ref(struct strbuf *sb, const char *name)
- {
--	strbuf_branchname(sb, name);
-+	strbuf_branchname(sb, name, 0);
- 	if (name[0] == '-')
- 		return -1;
- 	strbuf_splice(sb, 0, 0, "refs/heads/", 11);
-diff --git a/strbuf.h b/strbuf.h
-index 6b51b2604..17e5f29a5 100644
---- a/strbuf.h
-+++ b/strbuf.h
-@@ -567,8 +567,12 @@ static inline void strbuf_complete_line(struct strbuf *sb)
-  * "refs/remotes/origin/master").
-  *
-  * Note that the resulting name may not be a syntactically valid refname.
-+ *
-+ * If "allowed" is non-zero, restrict the set of allowed expansions. See
-+ * interpret_branch_name() for details.
-  */
--extern void strbuf_branchname(struct strbuf *sb, const char *name);
-+extern void strbuf_branchname(struct strbuf *sb, const char *name,
-+			      unsigned allowed);
- 
- /*
-  * Like strbuf_branchname() above, but confirm that the result is
++test_expect_success 'set up repo' '
++	test_commit one &&
++	test_commit two &&
++	git remote add origin foo.git
++'
++
++test_expect_success 'update branch via @{-1}' '
++	git branch previous one &&
++
++	git checkout previous &&
++	git checkout master &&
++
++	git branch -f @{-1} two &&
++	expect_branch previous two
++'
++
++test_expect_success 'update branch via local @{upstream}' '
++	git branch local one &&
++	git branch --set-upstream-to=local &&
++
++	git branch -f @{upstream} two &&
++	expect_branch local two
++'
++
++test_expect_failure 'disallow updating branch via remote @{upstream}' '
++	git update-ref refs/remotes/origin/remote one &&
++	git branch --set-upstream-to=origin/remote &&
++
++	test_must_fail git branch -f @{upstream} two
++'
++
++test_expect_success 'create branch with pseudo-qualified name' '
++	git branch refs/heads/qualified two &&
++	expect_branch refs/heads/refs/heads/qualified two
++'
++
++test_expect_success 'delete branch via @{-1}' '
++	git branch previous-del &&
++
++	git checkout previous-del &&
++	git checkout master &&
++
++	git branch -D @{-1} &&
++	expect_deleted previous-del
++'
++
++test_expect_success 'delete branch via local @{upstream}' '
++	git branch local-del &&
++	git branch --set-upstream-to=local-del &&
++
++	git branch -D @{upstream} &&
++	expect_deleted local-del
++'
++
++test_expect_success 'delete branch via remote @{upstream}' '
++	git update-ref refs/remotes/origin/remote-del two &&
++	git branch --set-upstream-to=origin/remote-del &&
++
++	git branch -r -D @{upstream} &&
++	expect_deleted origin/remote-del
++'
++
++# Note that we create two oddly named local branches here. We want to make
++# sure that we do not accidentally delete either of them, even if
++# shorten_unambiguous_ref() tweaks the name to avoid ambiguity.
++test_expect_failure 'delete @{upstream} expansion matches -r option' '
++	git update-ref refs/remotes/origin/remote-del two &&
++	git branch --set-upstream-to=origin/remote-del &&
++	git update-ref refs/heads/origin/remote-del two &&
++	git update-ref refs/heads/remotes/origin/remote-del two &&
++
++	test_must_fail git branch -D @{upstream} &&
++	expect_branch refs/heads/origin/remote-del two &&
++	expect_branch refs/heads/remotes/origin/remote-del two
++'
++
++test_expect_failure 'disallow deleting remote branch via @{-1}' '
++	git update-ref refs/remotes/origin/previous one &&
++
++	git checkout -b origin/previous two &&
++	git checkout master &&
++
++	test_must_fail git branch -r -D @{-1} &&
++	expect_branch refs/remotes/origin/previous one &&
++	expect_branch refs/heads/origin/previous two
++'
++
++# The thing we are testing here is that "@" is the real branch refs/heads/@,
++# and not refs/heads/HEAD. These tests should not imply that refs/heads/@ is a
++# sane thing, but it _is_ technically allowed for now. If we disallow it, these
++# can be switched to test_must_fail.
++test_expect_failure 'create branch named "@"' '
++	git branch -f @ one &&
++	expect_branch refs/heads/@ one
++'
++
++test_expect_failure 'delete branch named "@"' '
++	git update-ref refs/heads/@ two &&
++	git branch -D @ &&
++	expect_deleted refs/heads/@
++'
++
++test_done
 -- 
 2.12.0.367.gb23790f66
 
