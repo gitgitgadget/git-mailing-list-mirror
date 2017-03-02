@@ -2,57 +2,58 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CD6DB2023D
-	for <e@80x24.org>; Thu,  2 Mar 2017 00:56:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EAEAB2023D
+	for <e@80x24.org>; Thu,  2 Mar 2017 00:57:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753826AbdCBA4z (ORCPT <rfc822;e@80x24.org>);
-        Wed, 1 Mar 2017 19:56:55 -0500
-Received: from mail-pg0-f54.google.com ([74.125.83.54]:32777 "EHLO
-        mail-pg0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753799AbdCBA4u (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1753901AbdCBA5C (ORCPT <rfc822;e@80x24.org>);
+        Wed, 1 Mar 2017 19:57:02 -0500
+Received: from mail-pg0-f45.google.com ([74.125.83.45]:33996 "EHLO
+        mail-pg0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753802AbdCBA4u (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 1 Mar 2017 19:56:50 -0500
-Received: by mail-pg0-f54.google.com with SMTP id 25so25863051pgy.0
-        for <git@vger.kernel.org>; Wed, 01 Mar 2017 16:56:42 -0800 (PST)
+Received: by mail-pg0-f45.google.com with SMTP id p5so25808527pga.1
+        for <git@vger.kernel.org>; Wed, 01 Mar 2017 16:56:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=lITrand8zpEeDnZmIEIDLdKwy2lAuYQ5IvJ8E6kjfeY=;
-        b=wN+trQvcMO5FlUQ34wWjsxHUZin8HSwhpUlL+PVawQjQYLcnWbf5nTMSr34K5rjIsM
-         gXjz9DqTEGeQrdSMHWDkalznIPga/Zln331t12u0ThB6clJyJ3S5oQFGk04X36C40SG8
-         C4nfSUGyIwbnXsiATxzPh38gjMUH2+4nfAHR8y+rb4hqu6YfGsUSSOeHQnf/2HrIWq8f
-         Zr5+CFey3Knpfm+kYkrR6BPu79kuKmE7RnvHkCqzwuJ6+IslSVsXKbwE3hmLa4h90fS0
-         bvr+etQxmYViakeSSsnReMVT3ELTn2YF3hVNQ4udYOMkxP3G9LduSZxz1M5J4/KrBCon
-         bLNg==
+        bh=+4vzjgVOtb+QzAW4YWU4DYYFUpyRUgOrmBo6VEaH4pc=;
+        b=tyFF232WWHDjHAcEZh+LI6rYrEuXaU7TsUZ6qqH/lbCimbmkPH0V/esJu5n/5kvVIh
+         lo/VSzZ5aG3l8jL9heaiYMevxQVZFsdH6r4k1XQnfXosQ3xl+hBr2P5e784hvUYicKIS
+         mYcgX+jIUOpsnJgvsTcdDzt2ofkjkugWSnDciIC/Jgmhsj580/BnN383qWAhXqY3JJXj
+         mvfndDL71K6YnXrjXvzVzUqY0gh5f4gvtY3lrcf4yLG+ghMH50II2bzWO1vR63HVSNNa
+         q2xCPrquCOd5DH7vxMEGDjUYsjZfyRusH/yz5ar74yha7BVDBoRUSN4ugMFKZkXVCYHe
+         ngLQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=lITrand8zpEeDnZmIEIDLdKwy2lAuYQ5IvJ8E6kjfeY=;
-        b=GnEyXEUWTTAc1e4qlE6EwGu1SrXA0hFiHsVC8eNh647Jw2f20qHeV0hroCv+rl8ePC
-         i0A+/QqjBne5MfVqs/7o4jdTIfLoRRxpc2BwD8JUsK+2/NTI3Kl0RztZQh/liKvVOahg
-         dEPMOLLpqqhKju5QMkBu13NWUEJD/RKpu2qBLxpB5kvu2IIG+AUsdHM8u/E+oy3TqKCW
-         pEgFKJR3+b/wMxLYpAxTckQfX5zaTLQjJZl2nDIp1K1TrCAUZDqHBTQUMwaM7JgKmFhM
-         FfLQeGu1A2NXBLcphETsjiGlgBa1hEKZtstXO0Vsq7VuPcszZ57nce0l6N3aeSWYyQNQ
-         EUfg==
-X-Gm-Message-State: AMke39kwJiQ/Y9or7W3q09Rykj5ICq1SMsHZQCukTSv1CiEHFIiboXgGwMMYFrxbQxO95Qi4
-X-Received: by 10.84.232.9 with SMTP id h9mr14458446plk.102.1488415704317;
-        Wed, 01 Mar 2017 16:48:24 -0800 (PST)
+        bh=+4vzjgVOtb+QzAW4YWU4DYYFUpyRUgOrmBo6VEaH4pc=;
+        b=V4sOXspzVTjGKr27UtGgI1xE4ak4w6IqEeQe+wek0CtdiGptAjQgAOw4RlQSRAtE7R
+         xfJ1jLLFiz6ppKa2OAnEhqT5E9vdK4sD47bij5FQxoq9UcmPFIvJzpoaDhWeeEb0ork8
+         z2vBGPvUqu59l6BanDl2Pyl98Yco8BnIIrxIuNwQRGFFJPM3GMKLivN5ka1JufYmfK18
+         Jbk1+6EWoKKfEW3cH9Zc6nF7UEHOn3zWvw9wVN9g3iUdJ/9NJV0hBRAMBE2eFe0uMjhq
+         ypFOpFanTGQKh7/IaXK86C5ohndXAZGT7nhohWAHXm1zrvWcfFYsxzAWC3AQBOFz61dU
+         fO2Q==
+X-Gm-Message-State: AMke39lR/ljymc9+qoKzLAHVrKU3/k2zMTy0lzSerS4vQXnMgUh4qRI8X2ReenVZ4iuOwYkw
+X-Received: by 10.98.101.71 with SMTP id z68mr12337636pfb.25.1488415691308;
+        Wed, 01 Mar 2017 16:48:11 -0800 (PST)
 Received: from localhost ([2620:0:1000:5b10:695f:c2a1:ec60:5665])
-        by smtp.gmail.com with ESMTPSA id 10sm12751797pfs.113.2017.03.01.16.48.23
+        by smtp.gmail.com with ESMTPSA id b70sm12763591pfc.100.2017.03.01.16.48.10
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 01 Mar 2017 16:48:23 -0800 (PST)
+        Wed, 01 Mar 2017 16:48:10 -0800 (PST)
 From:   Stefan Beller <sbeller@google.com>
 To:     sbeller@google.com
 Cc:     git@vger.kernel.org, bmwill@google.com, novalis@novalis.org,
         sandals@crustytoothpaste.net, hvoigt@hvoigt.net, gitster@pobox.com,
         jrnieder@gmail.com, ramsay@ramsayjones.plus.com
-Subject: [PATCH 16/18] entry.c: update submodules when interesting
-Date:   Wed,  1 Mar 2017 16:47:57 -0800
-Message-Id: <20170302004759.27852-17-sbeller@google.com>
+Subject: [PATCH 06/18] make is_submodule_populated gently
+Date:   Wed,  1 Mar 2017 16:47:47 -0800
+Message-Id: <20170302004759.27852-7-sbeller@google.com>
 X-Mailer: git-send-email 2.12.0.rc1.52.ge239d7e709.dirty
 In-Reply-To: <20170302004759.27852-1-sbeller@google.com>
 References: <20170223225735.10994-1-sbeller@google.com/>
@@ -62,74 +63,70 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+We need the gentle version in a later patch. As we have just one caller,
+migrate the caller.
+
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- entry.c | 30 ++++++++++++++++++++++++++++++
- 1 file changed, 30 insertions(+)
+ builtin/grep.c | 2 +-
+ submodule.c    | 7 ++-----
+ submodule.h    | 8 +++++++-
+ 3 files changed, 10 insertions(+), 7 deletions(-)
 
-diff --git a/entry.c b/entry.c
-index c6eea240b6..d2b512da90 100644
---- a/entry.c
-+++ b/entry.c
-@@ -2,6 +2,7 @@
- #include "blob.h"
- #include "dir.h"
- #include "streaming.h"
-+#include "submodule.h"
+diff --git a/builtin/grep.c b/builtin/grep.c
+index 2c727ef499..b17835aed6 100644
+--- a/builtin/grep.c
++++ b/builtin/grep.c
+@@ -616,7 +616,7 @@ static int grep_submodule(struct grep_opt *opt, const unsigned char *sha1,
+ {
+ 	if (!is_submodule_initialized(path))
+ 		return 0;
+-	if (!is_submodule_populated(path)) {
++	if (!is_submodule_populated_gently(path, NULL)) {
+ 		/*
+ 		 * If searching history, check for the presense of the
+ 		 * submodule's gitdir before skipping the submodule.
+diff --git a/submodule.c b/submodule.c
+index 3b98766a6b..0e55372f37 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -234,15 +234,12 @@ int is_submodule_initialized(const char *path)
+ 	return ret;
+ }
  
- static void create_directories(const char *path, int path_len,
- 			       const struct checkout *state)
-@@ -146,6 +147,7 @@ static int write_entry(struct cache_entry *ce,
- 	unsigned long size;
- 	size_t wrote, newsize = 0;
- 	struct stat st;
-+	const struct submodule *sub;
+-/*
+- * Determine if a submodule has been populated at a given 'path'
+- */
+-int is_submodule_populated(const char *path)
++int is_submodule_populated_gently(const char *path, int *return_error_code)
+ {
+ 	int ret = 0;
+ 	char *gitdir = xstrfmt("%s/.git", path);
  
- 	if (ce_mode_s_ifmt == S_IFREG) {
- 		struct stream_filter *filter = get_stream_filter(ce->name,
-@@ -203,6 +205,10 @@ static int write_entry(struct cache_entry *ce,
- 			return error("cannot create temporary submodule %s", path);
- 		if (mkdir(path, 0777) < 0)
- 			return error("cannot create submodule directory %s", path);
-+		sub = submodule_from_ce(ce);
-+		if (sub)
-+			return submodule_move_head(ce->name,
-+				NULL, oid_to_hex(&ce->oid), SUBMODULE_MOVE_HEAD_FORCE);
- 		break;
- 	default:
- 		return error("unknown file mode for %s in index", path);
-@@ -259,7 +265,31 @@ int checkout_entry(struct cache_entry *ce,
- 	strbuf_add(&path, ce->name, ce_namelen(ce));
+-	if (resolve_gitdir(gitdir))
++	if (resolve_gitdir_gently(gitdir, return_error_code))
+ 		ret = 1;
  
- 	if (!check_path(path.buf, path.len, &st, state->base_dir_len)) {
-+		const struct submodule *sub;
- 		unsigned changed = ce_match_stat(ce, &st, CE_MATCH_IGNORE_VALID|CE_MATCH_IGNORE_SKIP_WORKTREE);
-+		/*
-+		 * Needs to be checked before !changed returns early,
-+		 * as the possibly empty directory was not changed
-+		 */
-+		sub = submodule_from_ce(ce);
-+		if (sub) {
-+			int err;
-+			if (!is_submodule_populated_gently(ce->name, &err)) {
-+				struct stat sb;
-+				if (lstat(ce->name, &sb))
-+					die(_("could not stat file '%s'"), ce->name);
-+				if (!(st.st_mode & S_IFDIR))
-+					unlink_or_warn(ce->name);
-+
-+				return submodule_move_head(ce->name,
-+					NULL, oid_to_hex(&ce->oid),
-+					SUBMODULE_MOVE_HEAD_FORCE);
-+			} else
-+				return submodule_move_head(ce->name,
-+					"HEAD", oid_to_hex(&ce->oid),
-+					SUBMODULE_MOVE_HEAD_FORCE);
-+		}
-+
- 		if (!changed)
- 			return 0;
- 		if (!state->force) {
+ 	free(gitdir);
+diff --git a/submodule.h b/submodule.h
+index 05ab674f06..0b915bd3ac 100644
+--- a/submodule.h
++++ b/submodule.h
+@@ -41,7 +41,13 @@ extern int submodule_config(const char *var, const char *value, void *cb);
+ extern void gitmodules_config(void);
+ extern void gitmodules_config_sha1(const unsigned char *commit_sha1);
+ extern int is_submodule_initialized(const char *path);
+-extern int is_submodule_populated(const char *path);
++/*
++ * Determine if a submodule has been populated at a given 'path' by checking if
++ * the <path>/.git resolves to a valid git repository.
++ * If return_error_code is NULL, die on error.
++ * Otherwise the return error code is the same as of resolve_gitdir_gently.
++ */
++extern int is_submodule_populated_gently(const char *path, int *return_error_code);
+ extern int parse_submodule_update_strategy(const char *value,
+ 		struct submodule_update_strategy *dst);
+ extern const char *submodule_strategy_to_string(const struct submodule_update_strategy *s);
 -- 
 2.12.0.rc1.52.ge239d7e709.dirty
 
