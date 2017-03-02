@@ -2,114 +2,78 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1C9FA2023D
-	for <e@80x24.org>; Thu,  2 Mar 2017 04:54:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A041D2023D
+	for <e@80x24.org>; Thu,  2 Mar 2017 05:06:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753339AbdCBEy4 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 1 Mar 2017 23:54:56 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:56890 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752238AbdCBEy4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Mar 2017 23:54:56 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 07EA37A4EB;
-        Wed,  1 Mar 2017 23:38:06 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=SjhX4vCmDZBtXVL13EJSNcQqTQk=; b=i9ujuo
-        RyFbhKEYd+aDU3pcZLC8YY6TT7tcA8rreSQs7gyESBtkpY/dZF4UADAswooOZT3n
-        N0OOnDltyCxWrEYpvXNRas/pECuDqZOTjWpb6Iz8TV1bpvOhjJ30d56bRBu06CCi
-        OCvgSvGse1RD04wqNZ0g4iqblph7fH7XhMkeY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=BIAt0l0JRlhITn2VKfFIuuY8+65/Rws4
-        nSQbMqPPpPcFnSfcZPSSyPsq5OMiEAuo1Tiws5q8E6BvsVfk6TNA1GvOzItygTH9
-        z969M35o08TXUfuLaVwnTS61x5PzMiQ8+D0qjAi0930fydpB6toO11+/Mwa74toE
-        GXhJRRM+tsI=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id F40027A4EA;
-        Wed,  1 Mar 2017 23:38:05 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 6A5B77A4E9;
-        Wed,  1 Mar 2017 23:38:05 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Dan Shumow <danshu@microsoft.com>
-Cc:     Linus Torvalds <torvalds@linux-foundation.org>,
-        Jeff King <peff@peff.net>,
-        Git Mailing List <git@vger.kernel.org>,
-        Marc Stevens <marc.stevens@cwi.nl>
-Subject: Re: [PATCH] Put sha1dc on a diet
-References: <alpine.LFD.2.20.1702281621050.22202@i7.lan>
-        <xmqq7f48hm8g.fsf@gitster.mtv.corp.google.com>
-        <CA+55aFx1wAS-nHS2awuW2waX=cvig4UoZqmN5H3v93yDE7ukyQ@mail.gmail.com>
-        <20170301195302.3pybakmjqztosohj@sigill.intra.peff.net>
-        <CA+55aFwf3sxKW+dGTMjNAeHMOf=rvctEQohm+rbhEb=e3KLpHw@mail.gmail.com>
-        <20170301203427.e5xa5ej3czli7c3o@sigill.intra.peff.net>
-        <CA+55aFz4ixVKVURki8FeXjL5H51A_cQXsZpzKJ-N9n574Yy1rg@mail.gmail.com>
-        <CY1PR0301MB21073D82F4A6AB0DAD8BF1FCC4280@CY1PR0301MB2107.namprd03.prod.outlook.com>
-Date:   Wed, 01 Mar 2017 20:38:04 -0800
-In-Reply-To: <CY1PR0301MB21073D82F4A6AB0DAD8BF1FCC4280@CY1PR0301MB2107.namprd03.prod.outlook.com>
-        (Dan Shumow's message of "Thu, 2 Mar 2017 01:31:17 +0000")
-Message-ID: <xmqq1suge1jn.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+        id S1751174AbdCBFGs (ORCPT <rfc822;e@80x24.org>);
+        Thu, 2 Mar 2017 00:06:48 -0500
+Received: from mail-qk0-f194.google.com ([209.85.220.194]:34133 "EHLO
+        mail-qk0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751155AbdCBFGs (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Mar 2017 00:06:48 -0500
+Received: by mail-qk0-f194.google.com with SMTP id s186so16331031qkb.1
+        for <git@vger.kernel.org>; Wed, 01 Mar 2017 21:06:47 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=iFDFxXYZOv4wrHdInZWBd5qbu/jKz7S/nr5ENatY9SQ=;
+        b=mgosPPZS6jlN2RZYB89CfiaiGsHt5ycHcMFFacMSlhAHURLim82BQC3fFOXG/Rg6a9
+         5PKs7dMnjL2p8aCekYQDhYVztp6LqRdYeqVdvUritSZGPkILvZv+hf0w0YcgvGSakc6Q
+         hkYXDrGi6y0jO44O4MFRI05nwYTVYWyNe4F5foy8wJUy4oNXTozXLs+UX92fsPD2j5nB
+         Uaah91eWMv2IRoQQgaTw36Ujas7j6K3MpMtae/pxXu+JpDCvpQH85no6cfP3JO3D2WnH
+         WJLBqlDF3vY1YZ4vwDvHFwCTFVWK9NModsH8VAhO5iyPaKs+ViUe+QqvmGk3vYDBSMVE
+         39Dw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=iFDFxXYZOv4wrHdInZWBd5qbu/jKz7S/nr5ENatY9SQ=;
+        b=Ci+aX+utp6oeApbcGJgctQvIi5BVUaDk5CDMizSHP/TBxNbSn6LU7/AE/YzK0MJVb+
+         u3aYbITuu/kkKVZ2qIjkkWEZhrF1RQl4GojTppgVUoEdTJWfanjzsg+LK1yPd+1OyHDY
+         V714Buqg++R8XO8IJBRPD8q8gsK2/vqvQqnv4g7fkRH5WxUlw4+5Dd2wW8DWUZ+mteio
+         B6Uo5T8dU2npFv4jRL/6lyvHKf4Pvb+4KXCMiqbZChtxacxLympN4loYd07ThadZaAI2
+         L1yHQM0MEmbCOuFnHHqvUqFBbVqA1bc/LQvYFfF7EZWGHMcUkHXAYR0VAm5p6D0/X4vC
+         LWYw==
+X-Gm-Message-State: AMke39nrH9G+vF03dDRxCIgQ3reK1AO8XXwCeD9udmPr1QggPx0WXCUbE/HWvEhUMIPOfmqZKN0fu5FmRPC9ug==
+X-Received: by 10.200.55.152 with SMTP id d24mr14766575qtc.1.1488431206809;
+ Wed, 01 Mar 2017 21:06:46 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 070A4A06-FF02-11E6-B012-FC50AE2156B6-77302942!pb-smtp2.pobox.com
+Received: by 10.12.178.20 with HTTP; Wed, 1 Mar 2017 21:06:26 -0800 (PST)
+In-Reply-To: <c76a133a57514a332828099d342c9763fd946bfa.1488309430.git.johannes.schindelin@gmx.de>
+References: <c76a133a57514a332828099d342c9763fd946bfa.1488309430.git.johannes.schindelin@gmx.de>
+From:   Junio C Hamano <gitster@pobox.com>
+Date:   Wed, 1 Mar 2017 21:06:26 -0800
+X-Google-Sender-Auth: 9t7H1lqsyNJr0alrEOrJairojig
+Message-ID: <CAPc5daXQ72dmRv4zdqaOXs3eScgDgJ=P4PiQ00L7pnEa1d8=UA@mail.gmail.com>
+Subject: Re: [PATCH] Travis: also test on 32-bit Linux
+To:     Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Lars Schneider <larsxschneider@gmail.com>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Dan Shumow <danshu@microsoft.com> writes:
-
-> At this point, I would suggest that I take the C optimizations,
-> clean them up and fold them in with the diet changes Linus has
-> suggested.  The slowdown is still 2x over block-sha1 and more over
-> OpenSSL.  But it is better than nothing.  And then if there is
-> interest Marc and I can investigate other processor specific
-> optimizations like ASM or SIMD and circle back with those
-> performance optimizations at a later date.
+On Tue, Feb 28, 2017 at 11:17 AM, Johannes Schindelin
+<johannes.schindelin@gmx.de> wrote:
+> .... This patch
+> asks Travis CI to install a Docker image with 32-bit libraries and then
+> goes on to build and test Git using this 32-bit setup.
 >
-> Also, to Johannes Schindelin's point:
->> My concern is about that unexpected turn "oh, let's just switch
->> to C99 because, well, because my compiler canehandle it, and
->> everybody else should just switch tn a modern compiler". That
->> really sounded careless.
->
-> While it will probably be a pain, if it is a requirement, we can
-> modify the code to move away from any c99 specific stuff we have
-> in here, if it makes adopting the code more palatable for Git.
+> A big thank you to Lars Schneider without whose help this patch would
+> not have happened.
 
-I was assuming that we would treat your code just like how we treat
-any other "borrowed code from elsewhere".  The usual way for us to
-do so is to take code that was released by the "upstream" (under a
-license that allows us to use it---yours is MIT, which does) in the
-style and language of upstream's choice, and then we in the Git
-development community takes responsiblity for massaging the code to
-match our style, for trimming what we won't use and for doing any
-other customization to fit our needs.
+This has been in 'pu' for a few days, and
+https://travis-ci.org/git/git/builds shows that we have
+a new build job running successfully.
 
-As you and Marc seemed to be still working on speeding up, such a
-customization work to fully adjust your code to our codebase was
-premature, so I tentatively queued what we saw on the list as-is on
-our 'pu' branch so that people can have a reference point.  Which
-unfortunately solicited a premature reaction by Johannes.  Please do
-not worry too much about the comment.
+Good job ;-)
 
-But if you are willing to help us by getting involved in the
-"customization" part, too, that would be a very welcome news to us.
-In that case, "welcome to the Git development community" ;-)
-
-So,... from my point of view, we are OK either way.  It is OK if you
-are a third-party upstream that is not particularly interested in
-Git project's specific requirement.  We surely would be happier if
-you and Marc, the upstream authors of the code in question, also act
-as participants in the Git development community.
-
-Either way, thanks for your great help.
+Thanks.
