@@ -2,57 +2,58 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 30B1E2023D
-	for <e@80x24.org>; Thu,  2 Mar 2017 01:58:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4E7E12023D
+	for <e@80x24.org>; Thu,  2 Mar 2017 02:00:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754047AbdCBB6w (ORCPT <rfc822;e@80x24.org>);
-        Wed, 1 Mar 2017 20:58:52 -0500
-Received: from mail-pf0-f181.google.com ([209.85.192.181]:35910 "EHLO
-        mail-pf0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753743AbdCBB6u (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Mar 2017 20:58:50 -0500
-Received: by mail-pf0-f181.google.com with SMTP id x66so16682197pfb.3
-        for <git@vger.kernel.org>; Wed, 01 Mar 2017 17:58:49 -0800 (PST)
+        id S1754091AbdCBCAZ (ORCPT <rfc822;e@80x24.org>);
+        Wed, 1 Mar 2017 21:00:25 -0500
+Received: from mail-pg0-f45.google.com ([74.125.83.45]:34647 "EHLO
+        mail-pg0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753973AbdCBCAY (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Mar 2017 21:00:24 -0500
+Received: by mail-pg0-f45.google.com with SMTP id p5so26352423pga.1
+        for <git@vger.kernel.org>; Wed, 01 Mar 2017 18:00:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=+stxkB16UR0WhZMnDeVOrviOq/1N4LpAnz4kQUUDuKM=;
-        b=vn4mqqhE5tS3j8nT+AYaYUHEIz7jejiN7bXyuX6xhyQWAS68Zn96jn0nPhdeMK/wLz
-         f6rAmAPUQfgTDzON/7cGZgh1mvF8PmmdhRvQzvjmiWxZH0ZyV7S931S/unxy1j6Ov/bh
-         aHKuDny4YlNI2YQEOninAS6pH4SCJb404ZMY+GKaFMn2mKE/NQF09yWn6Bmgh04j9tEg
-         JXkWQ2KU2L5QLEBW2c1JxMvn5f0dUIdXVbS9fumZsmFy5UzBmUtHfl+K+uncMtX2ai/+
-         bGhQ+Wt0IK3T5gAemyX+YsxroXjOwGXV1Arem9LzIFVzijohtuWK9bsADt8bc7AqvDSX
-         5ggA==
+        bh=sE2Ytny25Ww5RLrnAZ7AImdW2h7Ptk4bNO/xIgvl6r8=;
+        b=F3vCt85+pTi4xQ07WObq6GVXh+I7ij/nz+dA1sQSnuWbbsmaNaK0YiIOl7NhvwULyH
+         8VNZN6Zm4a1UC/4ObRRzeNjNkCrN3ETK1XblybEP6g0DEkwlL7K/W4SyBUXiKbtYzhUx
+         BVqUShQgt658ZNrjwCrEYbCPCw7pqtoTlBPcCQDxswbO9ADnNo6q52VJSrI8YCChs/JR
+         lrAi3NwtO5DKYniurnF6S/mhgXo2AzrmRxmWVnuhMvqBqYG24lKxXDnT5qUdzoXePRo9
+         Rz2+lY9Ilaw+hOCFuUZuQS2xrP0ufVulmQMbMFimjCuLGrDy3iqz91BxhcGBIRSbJb4v
+         hJKg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=+stxkB16UR0WhZMnDeVOrviOq/1N4LpAnz4kQUUDuKM=;
-        b=E/1dDakP3zI02wNuN+nBuG5DUqyHkaXq6s6zUGefWTuhQuAPGdoq/xEkHRExlFHakq
-         PqCmLqBviQLqpzspAikXz9IbNQXfKvpDriaTf+94AwvRnzkLNY1P6n1X2GePpSW6pyml
-         eNeai/XMEtYxUJFBzBFtTuhZfqKRg1jh87qOg19gzci6BySlC+4SHNOcOHLCEdq2SOoz
-         BddKmgrlzWp6yHrpPHZSLP9NdVHeTe5oS5jg1h5RNYovW3aPColLwoXfxqyUoxTphOv6
-         GrDZUQbI4HHP0TECYy8Ck33BsEeUunsKip0FktaWwjjfQM0nsZ8L9O7/9+qQCIUb2zlG
-         u6Aw==
-X-Gm-Message-State: AMke39mGH60rs4ECJrg4JcLBwIgOJ5pkx42xy9VJYpYobVYgPsCA+oQB6vkgszk+P6oFzTZO
-X-Received: by 10.99.24.88 with SMTP id 24mr12338300pgy.54.1488415697983;
-        Wed, 01 Mar 2017 16:48:17 -0800 (PST)
+        bh=sE2Ytny25Ww5RLrnAZ7AImdW2h7Ptk4bNO/xIgvl6r8=;
+        b=IJhTvmBYeR+66FZhc4qwnUn9n2VkUxWJXSdE+mQ922arGHyhMq3r5fBsS/woMwntOJ
+         EFZLCvqes/Ht62UgaMfNoS/lEQAyYVR0UVNCJUAlgX/QnfuIXaSZttTPLHpPntZRchQj
+         WEoxYD0k5hKOSQbTikDQHZ+IgsPuHqwF3eBtuvDlEpAsPINj/A81wGLUHAhtI+q1F2ZC
+         fzVpeVIkh9fUe1p5tffFyO6qZnQnCuwHMNInjcoI34ne06BUzIETv4ADKcaX3c44ZR+8
+         hCG0Rrn3KhUOIRY4xI2kx+FRKg9BIVaG66afkuB6VQ9daRaxvoJddNNUbBfON4Ld91by
+         WdZQ==
+X-Gm-Message-State: AMke39k79tVnfNrHyLNIg1fFqqfHexagrcBpmdzAkLn79ohUeo6NBFwT6UDmiFrrSzoX/Hg6
+X-Received: by 10.84.218.204 with SMTP id g12mr14216927plm.78.1488415687749;
+        Wed, 01 Mar 2017 16:48:07 -0800 (PST)
 Received: from localhost ([2620:0:1000:5b10:695f:c2a1:ec60:5665])
-        by smtp.gmail.com with ESMTPSA id w123sm12777250pfb.44.2017.03.01.16.48.17
+        by smtp.gmail.com with ESMTPSA id e129sm12781834pfe.8.2017.03.01.16.48.07
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 01 Mar 2017 16:48:17 -0800 (PST)
+        Wed, 01 Mar 2017 16:48:07 -0800 (PST)
 From:   Stefan Beller <sbeller@google.com>
 To:     sbeller@google.com
 Cc:     git@vger.kernel.org, bmwill@google.com, novalis@novalis.org,
         sandals@crustytoothpaste.net, hvoigt@hvoigt.net, gitster@pobox.com,
         jrnieder@gmail.com, ramsay@ramsayjones.plus.com
-Subject: [PATCH 11/18] update submodules: move up prepare_submodule_repo_env
-Date:   Wed,  1 Mar 2017 16:47:52 -0800
-Message-Id: <20170302004759.27852-12-sbeller@google.com>
+Subject: [PATCH 03/18] lib-submodule-update: teach test_submodule_content the -C <dir> flag
+Date:   Wed,  1 Mar 2017 16:47:44 -0800
+Message-Id: <20170302004759.27852-4-sbeller@google.com>
 X-Mailer: git-send-email 2.12.0.rc1.52.ge239d7e709.dirty
 In-Reply-To: <20170302004759.27852-1-sbeller@google.com>
 References: <20170223225735.10994-1-sbeller@google.com/>
@@ -62,64 +63,27 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In a later patch we need to prepare the submodule environment with
-another git directory, so split up the function.
-
-Also move it up in the file such that we do not need to declare the
-function later before using it.
-
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- submodule.c | 29 +++++++++++++++++------------
- 1 file changed, 17 insertions(+), 12 deletions(-)
+ t/lib-submodule-update.sh | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/submodule.c b/submodule.c
-index 8b2c0212be..0b2596e88a 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -356,6 +356,23 @@ static void print_submodule_summary(struct rev_info *rev, FILE *f,
- 	strbuf_release(&sb);
- }
- 
-+static void prepare_submodule_repo_env_no_git_dir(struct argv_array *out)
-+{
-+	const char * const *var;
-+
-+	for (var = local_repo_env; *var; var++) {
-+		if (strcmp(*var, CONFIG_DATA_ENVIRONMENT))
-+			argv_array_push(out, *var);
-+	}
-+}
-+
-+void prepare_submodule_repo_env(struct argv_array *out)
-+{
-+	prepare_submodule_repo_env_no_git_dir(out);
-+	argv_array_pushf(out, "%s=%s", GIT_DIR_ENVIRONMENT,
-+			 DEFAULT_GIT_DIR_ENVIRONMENT);
-+}
-+
- /* Helper function to display the submodule header line prior to the full
-  * summary output. If it can locate the submodule objects directory it will
-  * attempt to lookup both the left and right commits and put them into the
-@@ -1390,18 +1407,6 @@ int parallel_submodules(void)
- 	return parallel_jobs;
- }
- 
--void prepare_submodule_repo_env(struct argv_array *out)
--{
--	const char * const *var;
--
--	for (var = local_repo_env; *var; var++) {
--		if (strcmp(*var, CONFIG_DATA_ENVIRONMENT))
--			argv_array_push(out, *var);
--	}
--	argv_array_pushf(out, "%s=%s", GIT_DIR_ENVIRONMENT,
--			 DEFAULT_GIT_DIR_ENVIRONMENT);
--}
--
- /*
-  * Embeds a single submodules git directory into the superprojects git dir,
-  * non recursively.
+diff --git a/t/lib-submodule-update.sh b/t/lib-submodule-update.sh
+index c0d6325133..a906c92cfb 100755
+--- a/t/lib-submodule-update.sh
++++ b/t/lib-submodule-update.sh
+@@ -193,6 +193,11 @@ test_superproject_content () {
+ # Test that the given submodule at path "$1" contains the content according
+ # to the submodule commit recorded in the superproject's commit "$2"
+ test_submodule_content () {
++	if test "$1" == "-C"
++	then
++		cd "$2"
++		shift; shift;
++	fi
+ 	if test $# != 2
+ 	then
+ 		echo "test_submodule_content needs two arguments"
 -- 
 2.12.0.rc1.52.ge239d7e709.dirty
 
