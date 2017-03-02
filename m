@@ -2,56 +2,59 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 176161F5FB
-	for <e@80x24.org>; Thu,  2 Mar 2017 13:00:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0CD7E1F5FB
+	for <e@80x24.org>; Thu,  2 Mar 2017 13:15:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751985AbdCBM75 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 2 Mar 2017 07:59:57 -0500
-Received: from mail-oi0-f52.google.com ([209.85.218.52]:35800 "EHLO
-        mail-oi0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751888AbdCBM7v (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Mar 2017 07:59:51 -0500
-Received: by mail-oi0-f52.google.com with SMTP id 62so38636809oih.2
-        for <git@vger.kernel.org>; Thu, 02 Mar 2017 04:59:38 -0800 (PST)
+        id S1752743AbdCBNO7 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 2 Mar 2017 08:14:59 -0500
+Received: from mail-ot0-f180.google.com ([74.125.82.180]:34490 "EHLO
+        mail-ot0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752110AbdCBNO5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Mar 2017 08:14:57 -0500
+Received: by mail-ot0-f180.google.com with SMTP id x10so51533003otb.1
+        for <git@vger.kernel.org>; Thu, 02 Mar 2017 05:13:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=M9APiqpl5/VioOUVZoigFP+PzuakipWJJkCjllBqx2U=;
-        b=mCIvSNVKepoXu2uRG+hPpk0zl4I9He3g5lgXCuHYTHZSPlv/KhWD9Zc2u4EjxAMZRf
-         1hLKqsLsl5VNCjK/SXGz9i40KhPT8eZ0O/uDDObV0ECK+thcLqSMq7Iwd28QnYBR3Ztv
-         QSNmtLZw9KZXYqS408CRNtIht9NmDEOTKshqeNh6yRnYgDn6CcWgEjjp6uTc/8dCHbpF
-         qB6oQ7xyq2R06Vr3AGpKxe1oCSBA0vyTAzwPIQCrI8VABWXBHhNAS1S4SP6qDl7R+NHP
-         nqhE2aCpdDXBNWTAv3FMttOAm2WuoPywEh5OIfeyozjIuSVK3etE4ZrK3KJqJSwWVCL/
-         4A4Q==
+        bh=Vi5loKoZpbCM11nzSNs5jK+wZz9YO/D/nHkmGADT1ZE=;
+        b=Nygh+TDHLtcmB/jJF9RkLWjJTm/gSc9zpqkpdULSE4CJjefHV934Nef/HNr/ACwla0
+         9dU0A1j+8lTM9UlNrhqAwEZ1vyMoWBTqjCnDsLC060zh+eJEKf5hWdFmPa1X2HcwJDNI
+         OTYC8pJm9Fh9MnaL9Y9uDzRG/Cw0fikf7ScfTMAFPTxzwqHTbf5mNAFtuxHbvXsvSTN2
+         mZMQRslLtlxRR0wnBc1pZi6sRtuxfCgKPpL/US6bIpKw76WdqhDZwOTYr/ugGscHIZaI
+         re+IMYeNaqi3O4gObS/ELkVkUqqLVu+Hw+aKD26Z2HVu5dDs14ay7aO8iVJ9hPISQD4B
+         UzCA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=M9APiqpl5/VioOUVZoigFP+PzuakipWJJkCjllBqx2U=;
-        b=jYcTt5NcLYQ3Cn43L4FN8SBhmt8lSLJz6Qay3sWR8brgdiOdWPaXshNLDYeilVRnV/
-         8d+TR7Au4Bq8/6Uniod1BeZTIhb5TijCmZkxVEBS1X2bg8+hrATLzCXXND3cr+DQ8EWR
-         U6umJryPmDvLudRwYapjZY/dDIe+8JCpl3FapEOHTFCYtPq/gLa2zLiu+rLBtn46fXBz
-         4Mx8qmP0UY/epcSpDeylv8tV0vlZbt0h4f8fF+QTbQq5yE9MiEZ+lpZO299mog7RbKdt
-         /voOdpquanA6OZMeh6m9U7SChADzMHQW2Uc2/kxozAAz/yecv4CrqgbT2+KpcWwArvzI
-         gp/Q==
-X-Gm-Message-State: AMke39neju9mw+tKDRo/UiUuWeAGyQdRtHD+/JrAD0I02zYVd7JyQjsvApYAkqmZj/rR+uHAGhKIaQaoHpBwYA==
-X-Received: by 10.202.80.212 with SMTP id e203mr7440558oib.146.1488459185396;
- Thu, 02 Mar 2017 04:53:05 -0800 (PST)
+        bh=Vi5loKoZpbCM11nzSNs5jK+wZz9YO/D/nHkmGADT1ZE=;
+        b=dgbH+eS2NyFbO6MHuv1G8MUI42IBGaYJi7mmrLSe+xuIO1aF7BKa4Cv+vpwYFweWZE
+         bwk7NVjHSTfxQFwVjL8A4Yt9N6mlwG8VZn4VcYD4BnjLmkw3+qxlt5eLZ8sHNmDdUA/J
+         HvIuZInWc0IFh4xHQW+nG7SatoWv0g3QEwXZB0yuAxzcHmlrwEcMxw3eXm2tr8qUuWPR
+         L1inLl0DQd6RP4r7Q5C8ELC0TwwPCpDRYpfaGNYEu7fHSAGA3IlXsVWcvamObr2/RAj1
+         cpDo/7SVmc0h0AlVOKMFPTuJWh5ngkg6ug6pQlA5U6/ChKg45nF7UdBhafzoWDMKZOLE
+         o1nA==
+X-Gm-Message-State: AMke39lRcxvQKsA1EdScBN6elOERRxbn+ZVu8oc4nTbsoAowb6G6aCC6vv1insUAdTNEO+vCPm9EFlr2zQf9tw==
+X-Received: by 10.157.18.132 with SMTP id g4mr7718076otg.10.1488458360627;
+ Thu, 02 Mar 2017 04:39:20 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.74.158.84 with HTTP; Thu, 2 Mar 2017 04:52:34 -0800 (PST)
-In-Reply-To: <9074fcd9-2b80-8927-19d2-1659eb0e327c@alum.mit.edu>
+Received: by 10.74.158.84 with HTTP; Thu, 2 Mar 2017 04:38:49 -0800 (PST)
+In-Reply-To: <51f2ba5a-38c9-17eb-e845-3a84b65c7029@alum.mit.edu>
 References: <20170218133303.3682-1-pclouds@gmail.com> <20170222140450.30886-1-pclouds@gmail.com>
- <20170222140450.30886-5-pclouds@gmail.com> <9074fcd9-2b80-8927-19d2-1659eb0e327c@alum.mit.edu>
+ <20170222140450.30886-25-pclouds@gmail.com> <7e5ef9e7-bd90-1917-d8eb-c6310c2744ab@alum.mit.edu>
+ <CACsJy8BOY8jsCrDYESJ6Gwy_p=J=c8m1qe64w18HX1Cv2AaYnA@mail.gmail.com>
+ <8f4ec174-9060-0896-5135-bb50229fe149@alum.mit.edu> <CACsJy8DyjWC5WUE7=dWK-mi_piGZJf7L1B0t5RUROvqDS+aP5g@mail.gmail.com>
+ <51f2ba5a-38c9-17eb-e845-3a84b65c7029@alum.mit.edu>
 From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Thu, 2 Mar 2017 19:52:34 +0700
-Message-ID: <CACsJy8B-xi0Dob=KkHv2zMZ=ffca5qSo39VLGC1wPN6uXK6SGQ@mail.gmail.com>
-Subject: Re: [PATCH v5 04/24] files-backend: convert git_path() to strbuf_git_path()
+Date:   Thu, 2 Mar 2017 19:38:49 +0700
+Message-ID: <CACsJy8DkZFMtBST9pmBO=r71FUaZeMKweJDQ2xuMAV-APFVWFw@mail.gmail.com>
+Subject: Re: [PATCH v5 24/24] t1406: new tests for submodule ref store
 To:     Michael Haggerty <mhagger@alum.mit.edu>
 Cc:     Git Mailing List <git@vger.kernel.org>,
         Junio C Hamano <gitster@pobox.com>,
@@ -65,75 +68,12 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Mar 1, 2017 at 12:06 AM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
->> @@ -2681,13 +2709,19 @@ static int files_rename_ref(struct ref_store *ref_store,
->>       log_all_ref_updates = flag;
->>
->>   rollbacklog:
->> -     if (logmoved && rename(git_path("logs/%s", newrefname), git_path("logs/%s", oldrefname)))
->> +     strbuf_git_path(&sb_newref, "logs/%s", newrefname);
->> +     strbuf_git_path(&sb_oldref, "logs/%s", oldrefname);
->> +     if (logmoved && rename(sb_newref.buf, sb_oldref.buf))
->>               error("unable to restore logfile %s from %s: %s",
->>                       oldrefname, newrefname, strerror(errno));
->> +     strbuf_git_path(&tmp_renamed_log, TMP_RENAMED_LOG);
->>       if (!logmoved && log &&
->> -         rename(git_path(TMP_RENAMED_LOG), git_path("logs/%s", oldrefname)))
->> +         rename(tmp_renamed_log.buf, sb_oldref.buf))
->>               error("unable to restore logfile %s from "TMP_RENAMED_LOG": %s",
->>                       oldrefname, strerror(errno));
->
-> It feels like you're writing, releasing, re-writing these strbufs more
-> than necessary. Maybe it would be clearer to set them once, and on
-> errors set `ret = error()` then jump to a label here...
->
->> +     strbuf_release(&sb_newref);
->> +     strbuf_release(&sb_oldref);
->> +     strbuf_release(&tmp_renamed_log);
->>
->
-> ...and change this to `return ret`?
+On Thu, Mar 2, 2017 at 3:16 PM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
+> The for-each-ref iteration is defined to be sorted by refname, but it's
+> true that the for-each-reflog order is undefined.
 
-If that's ok with you, will do. I kept the patch dumb so the reader
-does not have to keep track of many things when they check if there
-are any behavior changes.
-
->>  static int files_init_db(struct ref_store *ref_store, struct strbuf *err)
->>  {
->> +     struct strbuf sb = STRBUF_INIT;
->> +
->>       /* Check validity (but we don't need the result): */
->>       files_downcast(ref_store, 0, "init_db");
->>
->>       /*
->>        * Create .git/refs/{heads,tags}
->>        */
->> -     safe_create_dir(git_path("refs/heads"), 1);
->> -     safe_create_dir(git_path("refs/tags"), 1);
->> +     strbuf_git_path(&sb, "refs/heads");
->> +     safe_create_dir(sb.buf, 1);
->> +     strbuf_reset(&sb);
->> +     strbuf_git_path(&sb, "refs/tags");
->> +     safe_create_dir(sb.buf, 1);
->> +     strbuf_reset(&sb);
->>       if (get_shared_repository()) {
->> -             adjust_shared_perm(git_path("refs/heads"));
->> -             adjust_shared_perm(git_path("refs/tags"));
->> +             strbuf_git_path(&sb, "refs/heads");
->> +             adjust_shared_perm(sb.buf);
->> +             strbuf_reset(&sb);
->> +             strbuf_git_path(&sb, "refs/tags");
->> +             adjust_shared_perm(sb.buf);
->>       }
->> +     strbuf_release(&sb);
->>       return 0;
->>  }
->
-> It looks to me like `safe_create_dir()` already has the ability to
-> `adjust_shared_perm()`, or am I missing something? (I realize that this
-> is preexisting code.)
-
-Yeah you're right. I guess this code was written when
-safe_create_dir() didn't do that. That certainly shortens this patch.
+Thanks. I'm going to add a few lines about this near for_each_ref and
+for_each_reflog() then, assuming that this is the desired behavior,
+not a bug. (Another patch, because I'm not happy until it gets 30+)
 -- 
 Duy
