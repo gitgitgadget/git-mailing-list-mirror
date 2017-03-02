@@ -2,58 +2,57 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 793AB2023D
-	for <e@80x24.org>; Thu,  2 Mar 2017 00:57:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 35C5E2023D
+	for <e@80x24.org>; Thu,  2 Mar 2017 00:57:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753907AbdCBA5F (ORCPT <rfc822;e@80x24.org>);
-        Wed, 1 Mar 2017 19:57:05 -0500
-Received: from mail-pg0-f49.google.com ([74.125.83.49]:33707 "EHLO
-        mail-pg0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753545AbdCBA4u (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1753894AbdCBA5B (ORCPT <rfc822;e@80x24.org>);
+        Wed, 1 Mar 2017 19:57:01 -0500
+Received: from mail-pf0-f169.google.com ([209.85.192.169]:34257 "EHLO
+        mail-pf0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753791AbdCBA4u (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 1 Mar 2017 19:56:50 -0500
-Received: by mail-pg0-f49.google.com with SMTP id 25so25858445pgy.0
-        for <git@vger.kernel.org>; Wed, 01 Mar 2017 16:56:08 -0800 (PST)
+Received: by mail-pf0-f169.google.com with SMTP id b5so9013140pfa.1
+        for <git@vger.kernel.org>; Wed, 01 Mar 2017 16:56:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=V0JhAcnpxiM2VlG5w6+xKaTGafiEhdH/XQ0qDFL/cdE=;
-        b=s0hhSp07Ggb41jfhwjKFT0p88Vg3BdvcKAOgytqP26rayVCFy78HdjGj59LZm0g6S+
-         cHjifjLHDg72sw/Ykr7Ul12bTgpUBvby8Ialn8duNOkxILVNIttofVDC0IDo40yAxs3G
-         UaGz/Rw73muwNXYjXCcGrl95H2WplJavFbKhQw0OQBl7EldL7XDk1QDIgq0FKebOdfvH
-         XUSrflhiCUykI977pF56/7ujsYTEnk+WPQKpj+/myc0wd6+Rcf0cV2OMf+sbORUHda6Q
-         lCQrLuZPbTTfaNIqMwIXWhzR8F+grZQPSa1Hu/MGwLrP95Wew1hlRlREJpf0PlBefAkE
-         nutw==
+        bh=Bq7I9fgyiQTvAkK1eKg8Vwe/FeJX194Fobk2WDLqx04=;
+        b=PuLjuzOA3BQJwnMUJmDZ0ew8TmDLoICZlzlejZDzyQXrEW/ft9s/tKGeM86ZQTedeb
+         WPfc8CVEH3IOcRxoOlkR0iMUjU2+6dhrjOHvOZOPnam8Lr4i92NC+F3sm8qPPXIxi9dg
+         1q9JDHr8jA5BpuaVZX1pUDOhKQgpkWCMJkeIJiQ6v+CHFZcP7g5Z6MwG4eAP+Ux4Pqmc
+         wc9BKGcr5N4Ecu+wKTBjQFjAiaEIFEIJQj7ZoCs1UDoxkSi773ZNxcO9pnzRPi4TSR20
+         izYflPKhIqIYwBAzpULj6k0y2DrTSy1TWskIXJYmw+Id3DYK/85a3M0eR3hAHZdMrdlc
+         mQWg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=V0JhAcnpxiM2VlG5w6+xKaTGafiEhdH/XQ0qDFL/cdE=;
-        b=DSQmI4T44JpN8NwZXh9ohLZBgfduO0t5k1s+SwvlgozWndTRAds11KN96duRdeCec5
-         xHM1ksuUU8etFUI7Un5ZCWrGJ/4rb95V21q/njzx9owH+TDo4lWG3PZ9oLiYBEtNdQwg
-         nfhqnWFP68gvh5Qku8dRS0jkl9k9TwvVmbI7EUL1AGG0rmyH1WVTAIbQhv6+lt4fCdPV
-         VxERzuEDWOw4AQOI7xTXGkNNL9FUGW1h1LyMqHWg1hmT2bKhdqUXHsUY4JuiOjjDdAIa
-         6cFwLdZb2ghykXBrnQkZi/f87vgFEL3/ulPVkWoFyPztuiuZVN/zr5hDSyhtxBtvG/9F
-         ZGJg==
-X-Gm-Message-State: AMke39lGMag8wpPRJxQk2s2uXuK57k0+K+c6BYOiLCu8OE3s4BBMOg1q8Abi9E7LrValSZFL
-X-Received: by 10.99.142.193 with SMTP id k184mr12250332pge.176.1488415692619;
-        Wed, 01 Mar 2017 16:48:12 -0800 (PST)
+        bh=Bq7I9fgyiQTvAkK1eKg8Vwe/FeJX194Fobk2WDLqx04=;
+        b=KYSmRnNPUNvFobhO7hiGJmWuNrDa+8dvYwM3WNRVnuCOQmPKHHK8SDjVunppheLl1Y
+         /CDKTJVTsZ0FoEVU5/2uV9AOnkY5mp8cnQOhCZg83jw4T3e1yWrMGJdZKxDceVALaXEU
+         39AQLPM81zLzR7GRWSCvZpsa84jsi8dc+POwL/1MvP6GSbZntL30LPu8jw+wfwx0ddle
+         M1DKtjGPWLnXBvmKjpUWbQFF2sZFoJIm1grvbuh7cUu5q/Ebb1SKLNMmHU1bb06hKc/n
+         dpUcmCkFciTIB1jEZQTRA8Qsssc5vB3G2fOFvplSya+JhvbXkGT1QiUXPuop69rwtjpH
+         H42w==
+X-Gm-Message-State: AMke39mgqEqvCUYFuuLaJirWd15hTnSqQ7bO7xEVPgaNGEn8qZvUCi5knjUXLQIwR6A1/Q5w
+X-Received: by 10.99.146.70 with SMTP id s6mr11935548pgn.109.1488415705464;
+        Wed, 01 Mar 2017 16:48:25 -0800 (PST)
 Received: from localhost ([2620:0:1000:5b10:695f:c2a1:ec60:5665])
-        by smtp.gmail.com with ESMTPSA id o26sm12843074pgd.25.2017.03.01.16.48.11
+        by smtp.gmail.com with ESMTPSA id y21sm12831328pgh.52.2017.03.01.16.48.24
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 01 Mar 2017 16:48:11 -0800 (PST)
+        Wed, 01 Mar 2017 16:48:24 -0800 (PST)
 From:   Stefan Beller <sbeller@google.com>
 To:     sbeller@google.com
 Cc:     git@vger.kernel.org, bmwill@google.com, novalis@novalis.org,
         sandals@crustytoothpaste.net, hvoigt@hvoigt.net, gitster@pobox.com,
         jrnieder@gmail.com, ramsay@ramsayjones.plus.com
-Subject: [PATCH 07/18] connect_work_tree_and_git_dir: safely create leading directories
-Date:   Wed,  1 Mar 2017 16:47:48 -0800
-Message-Id: <20170302004759.27852-8-sbeller@google.com>
+Subject: [PATCH 17/18] builtin/checkout: add --recurse-submodules switch
+Date:   Wed,  1 Mar 2017 16:47:58 -0800
+Message-Id: <20170302004759.27852-18-sbeller@google.com>
 X-Mailer: git-send-email 2.12.0.rc1.52.ge239d7e709.dirty
 In-Reply-To: <20170302004759.27852-1-sbeller@google.com>
 References: <20170223225735.10994-1-sbeller@google.com/>
@@ -63,116 +62,190 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In a later patch we'll use connect_work_tree_and_git_dir when the
-directory for the gitlink file doesn't exist yet. This patch makes
-connect_work_tree_and_git_dir safe to use for both cases of
-either the git dir or the working dir missing.
-
-To do so, we need to call safe_create_leading_directories[_const]
-on both directories. However this has to happen before we construct
-the absolute paths as real_pathdup assumes the directories to
-be there already.
-
-So for both the config file in the git dir as well as the .git link
-file we need to
-a) construct the name
-b) call SCLD
-c) get the absolute path
-d) once a-c is done for both we can consume the absolute path
-   to compute the relative path to each other and store those
-   relative paths.
-
-The implementation provided here puts a) and b) for both cases first,
-and then performs c and d after.
-
-One of the two users of 'connect_work_tree_and_git_dir' already checked
-for the directory being there, so we can loose that check as
-connect_work_tree_and_git_dir handles this functionality now.
-
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- dir.c       | 32 +++++++++++++++++++++-----------
- submodule.c | 11 ++---------
- 2 files changed, 23 insertions(+), 20 deletions(-)
+ Documentation/git-checkout.txt |  7 +++++++
+ builtin/checkout.c             | 28 ++++++++++++++++++++++++++++
+ t/lib-submodule-update.sh      | 23 +++++++++++++++++------
+ t/t2013-checkout-submodule.sh  |  5 +++++
+ 4 files changed, 57 insertions(+), 6 deletions(-)
 
-diff --git a/dir.c b/dir.c
-index 4541f9e146..6f52af7abb 100644
---- a/dir.c
-+++ b/dir.c
-@@ -2728,23 +2728,33 @@ void untracked_cache_add_to_index(struct index_state *istate,
- /* Update gitfile and core.worktree setting to connect work tree and git dir */
- void connect_work_tree_and_git_dir(const char *work_tree_, const char *git_dir_)
- {
--	struct strbuf file_name = STRBUF_INIT;
-+	struct strbuf gitfile_sb = STRBUF_INIT;
-+	struct strbuf cfg_sb = STRBUF_INIT;
- 	struct strbuf rel_path = STRBUF_INIT;
--	char *git_dir = real_pathdup(git_dir_);
--	char *work_tree = real_pathdup(work_tree_);
-+	char *git_dir, *work_tree;
+diff --git a/Documentation/git-checkout.txt b/Documentation/git-checkout.txt
+index 8e2c0662dd..d6399c0af8 100644
+--- a/Documentation/git-checkout.txt
++++ b/Documentation/git-checkout.txt
+@@ -256,6 +256,13 @@ section of linkgit:git-add[1] to learn how to operate the `--patch` mode.
+ 	out anyway. In other words, the ref can be held by more than one
+ 	worktree.
  
--	/* Update gitfile */
--	strbuf_addf(&file_name, "%s/.git", work_tree);
--	write_file(file_name.buf, "gitdir: %s",
--		   relative_path(git_dir, work_tree, &rel_path));
-+	/* Prepare .git file */
-+	strbuf_addf(&gitfile_sb, "%s/.git", work_tree_);
-+	if (safe_create_leading_directories_const(gitfile_sb.buf))
-+		die(_("could not create directories for %s"), gitfile_sb.buf);
++--[no-]recurse-submodules::
++	Using --recurse-submodules will update the content of all initialized
++	submodules according to the commit recorded in the superproject. If
++	local modifications in a submodule would be overwritten the checkout
++	will fail unless `-f` is used. If nothing (or --no-recurse-submodules)
++	is used, the work trees of submodules will not be updated.
 +
-+	/* Prepare config file */
-+	strbuf_addf(&cfg_sb, "%s/config", git_dir_);
-+	if (safe_create_leading_directories_const(cfg_sb.buf))
-+		die(_("could not create directories for %s"), cfg_sb.buf);
+ <branch>::
+ 	Branch to checkout; if it refers to a branch (i.e., a name that,
+ 	when prepended with "refs/heads/", is a valid ref), then that
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index f174f50303..e9c5fcfaf8 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -21,12 +21,31 @@
+ #include "submodule-config.h"
+ #include "submodule.h"
  
-+	git_dir = real_pathdup(git_dir_);
-+	work_tree = real_pathdup(work_tree_);
++static int recurse_submodules = RECURSE_SUBMODULES_DEFAULT;
 +
-+	/* Write .git file */
-+	write_file(gitfile_sb.buf, "gitdir: %s",
-+		   relative_path(git_dir, work_tree, &rel_path));
- 	/* Update core.worktree setting */
--	strbuf_reset(&file_name);
--	strbuf_addf(&file_name, "%s/config", git_dir);
--	git_config_set_in_file(file_name.buf, "core.worktree",
-+	git_config_set_in_file(cfg_sb.buf, "core.worktree",
- 			       relative_path(work_tree, git_dir, &rel_path));
+ static const char * const checkout_usage[] = {
+ 	N_("git checkout [<options>] <branch>"),
+ 	N_("git checkout [<options>] [<branch>] -- <file>..."),
+ 	NULL,
+ };
  
--	strbuf_release(&file_name);
-+	strbuf_release(&gitfile_sb);
-+	strbuf_release(&cfg_sb);
- 	strbuf_release(&rel_path);
- 	free(work_tree);
- 	free(git_dir);
-diff --git a/submodule.c b/submodule.c
-index 0e55372f37..04d185738f 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -1442,8 +1442,6 @@ void absorb_git_dir_into_superproject(const char *prefix,
++static int option_parse_recurse_submodules(const struct option *opt,
++					   const char *arg, int unset)
++{
++	if (unset) {
++		recurse_submodules = RECURSE_SUBMODULES_OFF;
++		return 0;
++	}
++	if (arg)
++		recurse_submodules =
++			parse_update_recurse_submodules_arg(opt->long_name,
++							    arg);
++	else
++		recurse_submodules = RECURSE_SUBMODULES_ON;
++
++	return 0;
++}
++
+ struct checkout_opts {
+ 	int patch_mode;
+ 	int quiet;
+@@ -1163,6 +1182,9 @@ int cmd_checkout(int argc, const char **argv, const char *prefix)
+ 				N_("second guess 'git checkout <no-such-branch>'")),
+ 		OPT_BOOL(0, "ignore-other-worktrees", &opts.ignore_other_worktrees,
+ 			 N_("do not check if another worktree is holding the given ref")),
++		{ OPTION_CALLBACK, 0, "recurse-submodules", &recurse_submodules,
++			    "checkout", "control recursive updating of submodules",
++			    PARSE_OPT_OPTARG, option_parse_recurse_submodules },
+ 		OPT_BOOL(0, "progress", &opts.show_progress, N_("force progress reporting")),
+ 		OPT_END(),
+ 	};
+@@ -1193,6 +1215,12 @@ int cmd_checkout(int argc, const char **argv, const char *prefix)
+ 		git_xmerge_config("merge.conflictstyle", conflict_style, NULL);
+ 	}
  
- 	/* Not populated? */
- 	if (!sub_git_dir) {
--		char *real_new_git_dir;
--		const char *new_git_dir;
- 		const struct submodule *sub;
++	if (recurse_submodules != RECURSE_SUBMODULES_OFF) {
++		git_config(submodule_config, NULL);
++		if (recurse_submodules != RECURSE_SUBMODULES_DEFAULT)
++			set_config_update_recurse_submodules(recurse_submodules);
++	}
++
+ 	if ((!!opts.new_branch + !!opts.new_branch_force + !!opts.new_orphan_branch) > 1)
+ 		die(_("-b, -B and --orphan are mutually exclusive"));
  
- 		if (err_code == READ_GITFILE_ERR_STAT_FAILED) {
-@@ -1466,13 +1464,8 @@ void absorb_git_dir_into_superproject(const char *prefix,
- 		sub = submodule_from_path(null_sha1, path);
- 		if (!sub)
- 			die(_("could not lookup name for submodule '%s'"), path);
--		new_git_dir = git_path("modules/%s", sub->name);
--		if (safe_create_leading_directories_const(new_git_dir) < 0)
--			die(_("could not create directory '%s'"), new_git_dir);
--		real_new_git_dir = real_pathdup(new_git_dir);
--		connect_work_tree_and_git_dir(path, real_new_git_dir);
--
--		free(real_new_git_dir);
-+		connect_work_tree_and_git_dir(path,
-+			git_path("modules/%s", sub->name));
- 	} else {
- 		/* Is it already absorbed into the superprojects git dir? */
- 		char *real_sub_git_dir = real_pathdup(sub_git_dir);
+diff --git a/t/lib-submodule-update.sh b/t/lib-submodule-update.sh
+index aa196d4d42..d71972c3db 100755
+--- a/t/lib-submodule-update.sh
++++ b/t/lib-submodule-update.sh
+@@ -782,6 +782,11 @@ test_submodule_forced_switch () {
+ 
+ test_submodule_switch_recursing () {
+ 	command="$1"
++	RESULT=success
++	if test "$KNOWN_FAILURE_DIRECTORY_SUBMODULE_CONFLICTS" = 1
++	then
++		RESULT=failure
++	fi
+ 	######################### Appearing submodule #########################
+ 	# Switching to a commit letting a submodule appear checks it out ...
+ 	test_expect_success "$command: added submodule is checked out" '
+@@ -891,7 +896,7 @@ test_submodule_switch_recursing () {
+ 	'
+ 	# Replacing a submodule with files in a directory must succeeds
+ 	# when the submodule is clean
+-	test_expect_success "$command: replace submodule with a directory" '
++	test_expect_$RESULT "$command: replace submodule with a directory" '
+ 		prolog &&
+ 		reset_work_tree_to_interested add_sub1 &&
+ 		(
+@@ -903,7 +908,7 @@ test_submodule_switch_recursing () {
+ 		)
+ 	'
+ 	# ... absorbing a .git directory.
+-	test_expect_success "$command: replace submodule containing a .git directory with a directory must absorb the git dir" '
++	test_expect_$RESULT "$command: replace submodule containing a .git directory with a directory must absorb the git dir" '
+ 		prolog &&
+ 		reset_work_tree_to_interested add_sub1 &&
+ 		(
+@@ -931,7 +936,7 @@ test_submodule_switch_recursing () {
+ 	'
+ 
+ 	# ... must check its local work tree for untracked files
+-	test_expect_success "$command: replace submodule with a file must fail with untracked files" '
++	test_expect_$RESULT "$command: replace submodule with a file must fail with untracked files" '
+ 		prolog &&
+ 		reset_work_tree_to_interested add_sub1 &&
+ 		(
+@@ -987,7 +992,8 @@ test_submodule_switch_recursing () {
+ 		)
+ 	'
+ 
+-	test_expect_success "$command: modified submodule updates submodule recursively" '
++	# recursing deeper than one level doesn't work yet.
++	test_expect_failure "$command: modified submodule updates submodule recursively" '
+ 		prolog &&
+ 		reset_work_tree_to_interested add_nested_sub &&
+ 		(
+@@ -1006,6 +1012,11 @@ test_submodule_switch_recursing () {
+ # the superproject as well as the submodule is allowed.
+ test_submodule_forced_switch_recursing () {
+ 	command="$1"
++	RESULT=success
++	if test "$KNOWN_FAILURE_DIRECTORY_SUBMODULE_CONFLICTS" = 1
++	then
++		RESULT=failure
++	fi
+ 	######################### Appearing submodule #########################
+ 	# Switching to a commit letting a submodule appear creates empty dir ...
+ 	test_expect_success "$command: added submodule is checked out" '
+@@ -1100,7 +1111,7 @@ test_submodule_forced_switch_recursing () {
+ 		)
+ 	'
+ 	# Replacing a submodule with files in a directory ...
+-	test_expect_success "$command: replace submodule with a directory" '
++	test_expect_$RESULT "$command: replace submodule with a directory" '
+ 		prolog &&
+ 		reset_work_tree_to_interested add_sub1 &&
+ 		(
+@@ -1151,7 +1162,7 @@ test_submodule_forced_switch_recursing () {
+ 	'
+ 
+ 	# ... but stops for untracked files that would be lost
+-	test_expect_success "$command: replace submodule with a file" '
++	test_expect_$RESULT "$command: replace submodule with a file stops for untracked files" '
+ 		prolog &&
+ 		reset_work_tree_to_interested add_sub1 &&
+ 		(
+diff --git a/t/t2013-checkout-submodule.sh b/t/t2013-checkout-submodule.sh
+index 6847f75822..aa35223369 100755
+--- a/t/t2013-checkout-submodule.sh
++++ b/t/t2013-checkout-submodule.sh
+@@ -63,6 +63,11 @@ test_expect_success '"checkout <submodule>" honors submodule.*.ignore from .git/
+ 	! test -s actual
+ '
+ 
++KNOWN_FAILURE_DIRECTORY_SUBMODULE_CONFLICTS=1
++test_submodule_switch_recursing "git checkout --recurse-submodules"
++
++test_submodule_forced_switch_recursing "git checkout -f --recurse-submodules"
++
+ test_submodule_switch "git checkout"
+ 
+ test_submodule_forced_switch "git checkout -f"
 -- 
 2.12.0.rc1.52.ge239d7e709.dirty
 
