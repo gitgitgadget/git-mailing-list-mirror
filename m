@@ -2,66 +2,114 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2970E2023D
-	for <e@80x24.org>; Thu,  2 Mar 2017 01:10:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A5C922023D
+	for <e@80x24.org>; Thu,  2 Mar 2017 01:18:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754003AbdCBBKa (ORCPT <rfc822;e@80x24.org>);
-        Wed, 1 Mar 2017 20:10:30 -0500
-Received: from cloud.peff.net ([104.130.231.41]:36870 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753929AbdCBBK2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Mar 2017 20:10:28 -0500
-Received: (qmail 7875 invoked by uid 109); 1 Mar 2017 19:43:42 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 01 Mar 2017 19:43:42 +0000
-Received: (qmail 7352 invoked by uid 111); 1 Mar 2017 19:43:48 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 01 Mar 2017 14:43:48 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 01 Mar 2017 14:43:40 -0500
-Date:   Wed, 1 Mar 2017 14:43:40 -0500
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
-        Adrian Dudau <Adrian.Dudau@enea.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: [PATCH 2/2] pretty: use fmt_output_email_subject()
-Message-ID: <20170301194340.5phhr7lqdqiji277@sigill.intra.peff.net>
-References: <1488297556.2955.11.camel@enea.com>
- <20170228181719.t67abnnnsdcx2xfd@sigill.intra.peff.net>
- <58e05599-5dc4-9881-d8c0-89ad1f2e3838@web.de>
- <xmqqfuiwhnud.fsf@gitster.mtv.corp.google.com>
- <20170301193210.tgvnjgc2hfaeebqf@sigill.intra.peff.net>
- <CAPc5daUyu_=5GeGqBAG_KvkZFE_0oD6Wa_HhoRQwZ2ANUwOF+Q@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAPc5daUyu_=5GeGqBAG_KvkZFE_0oD6Wa_HhoRQwZ2ANUwOF+Q@mail.gmail.com>
+        id S1753709AbdCBBSY (ORCPT <rfc822;e@80x24.org>);
+        Wed, 1 Mar 2017 20:18:24 -0500
+Received: from mail-pg0-f41.google.com ([74.125.83.41]:34483 "EHLO
+        mail-pg0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753767AbdCBBSQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Mar 2017 20:18:16 -0500
+Received: by mail-pg0-f41.google.com with SMTP id p5so25985586pga.1
+        for <git@vger.kernel.org>; Wed, 01 Mar 2017 17:17:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=17o2biyEwuX5S72bVx8uByIiXmuJSuWYZrscy51qXNQ=;
+        b=qwy8BVaGXaA8R0hBiLiWjGIw6z758f4R6cK5KwonOOuqNPvRdKr2aEZAhUNkDzPbEl
+         2LgIPtgjIxfpRyN1/dVrt/SigzN5ixGVYSiE5n7e7NjL1NhRYWaCQIPTMnNcKPwhY9KD
+         3j0gLi9fo4cy9V/tVZ0ln6JWvjP9144yku0YdVV2IrNTPtTGTnwZMjiLsSILqUXYY1Rv
+         +0JjhCEddbzZr4D5t4hSUlsRKLV0RwzthQci4kFOroMdoQ3Vk+tc4c8odz03pONGH8Dr
+         oDt2jjuIL7N7Qi0XCsWHk8vbzFW/RdswVjNNbe7V1+nYpulGhGWs5WyWYYfT4LGgLQFe
+         Eg5A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=17o2biyEwuX5S72bVx8uByIiXmuJSuWYZrscy51qXNQ=;
+        b=cU3FFo+r4lAhpkmhaRswDKp1XzAf/F9RzznshcrVH70dKnbiHIUnHmIEXEor69VqPf
+         Ce6XCB6uhapHR2WRY5mKrxtyRMKGtUklMraNtYs/hQeEYXZQ3FSQKga/pkzEOe9L+kh3
+         kzuiPWC0HPNvKM5i6+4lQu0xDYN1Q2fdpoTW/tqgEWgeL3BqwxJjq3NOJPbItNizICm+
+         86lHRg46pSZAKHcjhot9ZOE7+Wx1IS1GGxk2jaaswir2QgZTkcrxQAs7xJdvYeRlpBMX
+         367Q2JQK4TltA8LIBMqmFyjB44ls/r2krtctPl617hEx7XawG+UP8h2cecJ/EK1+mSSb
+         t0FA==
+X-Gm-Message-State: AMke39kVlrFUrhDY8xulH0C2MB/VGiBEEhvZ6hsB7tosjbPu/55fbpV9XESPCD5Yaj/ouYuj
+X-Received: by 10.99.67.130 with SMTP id q124mr12229847pga.221.1488415700403;
+        Wed, 01 Mar 2017 16:48:20 -0800 (PST)
+Received: from localhost ([2620:0:1000:5b10:695f:c2a1:ec60:5665])
+        by smtp.gmail.com with ESMTPSA id b70sm12763905pfc.100.2017.03.01.16.48.19
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Wed, 01 Mar 2017 16:48:19 -0800 (PST)
+From:   Stefan Beller <sbeller@google.com>
+To:     sbeller@google.com
+Cc:     git@vger.kernel.org, bmwill@google.com, novalis@novalis.org,
+        sandals@crustytoothpaste.net, hvoigt@hvoigt.net, gitster@pobox.com,
+        jrnieder@gmail.com, ramsay@ramsayjones.plus.com
+Subject: [PATCH 13/18] unpack-trees: pass old oid to verify_clean_submodule
+Date:   Wed,  1 Mar 2017 16:47:54 -0800
+Message-Id: <20170302004759.27852-14-sbeller@google.com>
+X-Mailer: git-send-email 2.12.0.rc1.52.ge239d7e709.dirty
+In-Reply-To: <20170302004759.27852-1-sbeller@google.com>
+References: <20170223225735.10994-1-sbeller@google.com/>
+ <20170302004759.27852-1-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Mar 01, 2017 at 11:38:57AM -0800, Junio C Hamano wrote:
+The check (which uses the old oid) is yet to be implemented, but this part
+is just a refactor, so it can go separately first.
 
-> On Wed, Mar 1, 2017 at 11:32 AM, Jeff King <peff@peff.net> wrote:
-> > I would think that future callers would just need to provide a dummy
-> > pp->rev. I guess that logic could be pushed down into
-> > fmt_output_email_subject(), so that it skips looking at
-> > opt->subject_prefix, etc, when "opt" is NULL, and just hits the
-> > "Subject:" case arm.
-> 
-> The "flexibility" I was wondering about is that the current .subject can
-> point at any caller-supplied string, not "Subject:".
+Signed-off-by: Stefan Beller <sbeller@google.com>
+---
+ unpack-trees.c | 17 ++++++++++-------
+ 1 file changed, 10 insertions(+), 7 deletions(-)
 
-Ah, I see. I don't think that is a huge loss, as nobody was using it.
-And "Subject:" is already hard-coded in the nr/total counting bits,
-which are what you'd want to reuse. I think it is fine to punt to the
-future. If somebody really wants it later, the right fix is for them to
-provide a string that fmt_output_email_subject() would use in place of
-"Subject:" when it adds to the strbuf.
+diff --git a/unpack-trees.c b/unpack-trees.c
+index 3a8ee19fe8..616a0ae4b2 100644
+--- a/unpack-trees.c
++++ b/unpack-trees.c
+@@ -1407,7 +1407,8 @@ static void invalidate_ce_path(const struct cache_entry *ce,
+  * Currently, git does not checkout subprojects during a superproject
+  * checkout, so it is not going to overwrite anything.
+  */
+-static int verify_clean_submodule(const struct cache_entry *ce,
++static int verify_clean_submodule(const char *old_sha1,
++				  const struct cache_entry *ce,
+ 				  enum unpack_trees_error_types error_type,
+ 				  struct unpack_trees_options *o)
+ {
+@@ -1427,16 +1428,18 @@ static int verify_clean_subdirectory(const struct cache_entry *ce,
+ 	struct dir_struct d;
+ 	char *pathbuf;
+ 	int cnt = 0;
+-	unsigned char sha1[20];
+ 
+-	if (S_ISGITLINK(ce->ce_mode) &&
+-	    resolve_gitlink_ref(ce->name, "HEAD", sha1) == 0) {
+-		/* If we are not going to update the submodule, then
++	if (S_ISGITLINK(ce->ce_mode)) {
++		unsigned char sha1[20];
++		int sub_head = resolve_gitlink_ref(ce->name, "HEAD", sha1);
++		/*
++		 * If we are not going to update the submodule, then
+ 		 * we don't care.
+ 		 */
+-		if (!hashcmp(sha1, ce->oid.hash))
++		if (!sub_head && !hashcmp(sha1, ce->oid.hash))
+ 			return 0;
+-		return verify_clean_submodule(ce, error_type, o);
++		return verify_clean_submodule(sub_head ? NULL : sha1_to_hex(sha1),
++					      ce, error_type, o);
+ 	}
+ 
+ 	/*
+-- 
+2.12.0.rc1.52.ge239d7e709.dirty
 
--Peff
