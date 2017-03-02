@@ -6,86 +6,93 @@ X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DBAF41F5FB
-	for <e@80x24.org>; Thu,  2 Mar 2017 20:45:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A98971F5FB
+	for <e@80x24.org>; Thu,  2 Mar 2017 21:11:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751557AbdCBUo7 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 2 Mar 2017 15:44:59 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:55748 "EHLO
+        id S1751460AbdCBVL5 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 2 Mar 2017 16:11:57 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:62750 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1750892AbdCBUo6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Mar 2017 15:44:58 -0500
+        with ESMTP id S1751101AbdCBVL4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Mar 2017 16:11:56 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 03E4083369;
-        Thu,  2 Mar 2017 15:43:52 -0500 (EST)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id AAD038592B;
+        Thu,  2 Mar 2017 16:11:49 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=TZo5pAnBnSchNswdVnk2XsOfmDk=; b=Z0LhcR
-        RxstM5w1dxrcHhQ3nl1+pbTNmTXq1ABT0ipBWleg3F6C/SY/PTQ2cGha7rtA6V+y
-        rIpgxP4LvkrnUxyXmZ+WB0TnNexlfrbjxRlQDARSOoYSuBFXahjWykoinbqqCZ3O
-        R89NU9EZLfJx7lkl7WYqh4mOyBpAzg5NN2DvQ=
+        :content-type; s=sasl; bh=t6GuxGZkIX1lvcTfrqoF+jeCs7Y=; b=tcKbXf
+        hww0MbEnrme7DZWoNMz7jxeVem9hLhedrnrXTnNkXbZNi6uU0uG7IFgwZTxgyVbh
+        PaoIaIqDvU/ZvOW5FqehIREKL+0O9BadnCpf39EpfMtC6HxMEkDM4SMjcW+dNBOe
+        sU42JxPgpn0O1EvQSFxMtalf+t8kBFm+QTXss=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=Eo0zp/ZeSy2BUyexOIVaiRYvN0kB1pBD
-        wIHltNoWjqpjmEkEokMs4R+ASHk2aEbsyEs+qc0sScXqjptV8M7ivdS/FdgKyi+h
-        0Va5hnj+gddsQJI3azXSvPd72oVfdqHvIaDWr+P+qT/HRKP/xKOU5WDCf8DpZDoe
-        tSyseJ56CRU=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id D234083368;
-        Thu,  2 Mar 2017 15:43:51 -0500 (EST)
+        :content-type; q=dns; s=sasl; b=tF5taJRIeUYFhOUbNe9GJPww5qfid782
+        uDbXGA5NbUseKwPQlJIoTYNcDAnw/s73awNQSrgu+cEPtPk15yk0szEvPGvRVZJZ
+        NX21eZ8AWQAaeyh9rpptkVTGttF2s6CLdXleAXQumD1E+CwBCh+mkZaNSAj/0L0M
+        nsPgy4rnyQs=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id A3F608592A;
+        Thu,  2 Mar 2017 16:11:49 -0500 (EST)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 45F3A83367;
-        Thu,  2 Mar 2017 15:43:51 -0500 (EST)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id F32E985929;
+        Thu,  2 Mar 2017 16:11:48 -0500 (EST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Linus Torvalds <torvalds@linux-foundation.org>
+To:     Jeff Hostetler <git@jeffhostetler.com>
 Cc:     Jeff King <peff@peff.net>,
-        Ian Jackson <ijackson@chiark.greenend.org.uk>,
-        Joey Hess <id@joeyh.name>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: SHA1 collisions found
-References: <20170223164306.spg2avxzukkggrpb@kitenet.net>
-        <22704.19873.860148.22472@chiark.greenend.org.uk>
-        <xmqq60jz5wbm.fsf@gitster.mtv.corp.google.com>
-        <20170224233929.p2yckbc6ksyox5nu@sigill.intra.peff.net>
-        <CA+55aFw6BLjPK-F0RGd9LT7X5xosKOXOxuhmKX65ZHn09r1xow@mail.gmail.com>
-        <CA+55aFwXaSAMF41Dz3u3nS+2S24umdUFv0+k+s18UyPoj+v31g@mail.gmail.com>
-Date:   Thu, 02 Mar 2017 12:43:50 -0800
-In-Reply-To: <CA+55aFwXaSAMF41Dz3u3nS+2S24umdUFv0+k+s18UyPoj+v31g@mail.gmail.com>
-        (Linus Torvalds's message of "Thu, 2 Mar 2017 11:55:45 -0800")
-Message-ID: <xmqqk287be9l.fsf@gitster.mtv.corp.google.com>
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        git@vger.kernel.org, Jeff Hostetler <jeffhost@microsoft.com>
+Subject: Re: [PATCH 0/5] A series of performance enhancements in the memihash and name-cache area
+References: <cover.1487071883.git.johannes.schindelin@gmx.de>
+        <20170214220332.753i4tgclm62er4f@sigill.intra.peff.net>
+        <16b1259c-4cdc-8f4d-db47-d724386a3d2b@jeffhostetler.com>
+Date:   Thu, 02 Mar 2017 13:11:47 -0800
+In-Reply-To: <16b1259c-4cdc-8f4d-db47-d724386a3d2b@jeffhostetler.com> (Jeff
+        Hostetler's message of "Wed, 15 Feb 2017 09:27:53 -0500")
+Message-ID: <xmqqfuivbcz0.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: F174F1BE-FF88-11E6-A70D-FC50AE2156B6-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: D9738D24-FF8C-11E6-BE98-97B1B46B9B0B-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Linus Torvalds <torvalds@linux-foundation.org> writes:
+Jeff Hostetler <git@jeffhostetler.com> writes:
 
-> Anyway, I do have a suggestion for what the "object version" would be,
-> but I'm not even going to mention it, because I want people to first
-> think about the _concept_ and not the implementation.
+> On 2/14/2017 5:03 PM, Jeff King wrote:
+>> On Tue, Feb 14, 2017 at 12:31:46PM +0100, Johannes Schindelin wrote:
+>>
+>>> On Windows, calls to memihash() and maintaining the istate.name_hash and
+>>> istate.dir_hash HashMaps take significant time on very large
+>>> repositories. This series of changes reduces the overall time taken for
+>>> various operations by reducing the number calls to memihash(), moving
+>>> some of them into multi-threaded code, and etc.
+>>>
+>>> Note: one commenter in https://github.com/git-for-windows/git/pull/964
+>>> pointed out that memihash() only handles ASCII correctly. That is true.
+>>> And fixing this is outside the purview of this patch series.
+>> Out of curiosity, do you have numbers? Bonus points if the speedup can
+>> be shown via a t/perf script.
+>>
+>> We have a read-cache perf-test already, but I suspect you'd want
+>> something more like "git status" or "ls-files -o" that calls into
+>> read_directory().
 >
-> So: What do you think about the concept?
+> I have some informal numbers in a spreadsheet.  I was seeing
+> a 8-9% speed up on a status on my gigantic repo.
+>
+> I'll try to put together a before/after perf-test to better
+> demonstrate this.
 
-My reaction heavily depends on how that "object version" thing
-works.  When I think I have "variant #1" of an object and say
+Ping?  I do not think there is anything wrong with the changes from
+correctness point of view, but as the series is about performance,
+it somewhat feels pointless to merge to 'next' without mentioning
+the actual numbers.  
 
-  have 860cd699c285f02937a2edbdb78e8231292339a5#1
-
-is there any guarantee that the other end has a (small) set of
-different objects all sharing the same SHA-1 and it thinks it has
-"variant #1" only when it has the same thing as I have (otherwise,
-it may have "variant #2" that is an unrelated object but happens to
-share the same hash)?  If so, I think I understand how things would
-work within your "concept".  But otherwise, I am not really sure.
-
-Would "object version" be like a truncated SHA-1 over the same data
-but with different IV or something, i.e. something that guarantees
-anybody would get the same result given the data to be hashed?
+It might be sufficient to mention the rough numbers in the log
+messages, if additions to t/perf/ are too cumbersome to arrange.
 
 
