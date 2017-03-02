@@ -2,129 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7B3A71F5FB
-	for <e@80x24.org>; Thu,  2 Mar 2017 19:37:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4D86B1F5FB
+	for <e@80x24.org>; Thu,  2 Mar 2017 19:54:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753851AbdCBTg6 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 2 Mar 2017 14:36:58 -0500
-Received: from mail-io0-f176.google.com ([209.85.223.176]:36403 "EHLO
-        mail-io0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753658AbdCBTg4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Mar 2017 14:36:56 -0500
-Received: by mail-io0-f176.google.com with SMTP id l7so60701042ioe.3
-        for <git@vger.kernel.org>; Thu, 02 Mar 2017 11:36:56 -0800 (PST)
+        id S1751598AbdCBTxS (ORCPT <rfc822;e@80x24.org>);
+        Thu, 2 Mar 2017 14:53:18 -0500
+Received: from mail-pg0-f43.google.com ([74.125.83.43]:32908 "EHLO
+        mail-pg0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751420AbdCBTxQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Mar 2017 14:53:16 -0500
+Received: by mail-pg0-f43.google.com with SMTP id 25so35509487pgy.0
+        for <git@vger.kernel.org>; Thu, 02 Mar 2017 11:53:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=glKlHP+3XIqcdbjDxrdLvxULg2QeErotI8aqdfiYiTc=;
-        b=CmIVQiH/RpgljZcjP4ZNCac39uN6Sxn48wKO6QZ7MlNKXsEyXQGf1J6hRUVOM4IgZ3
-         rsXTz6B8l5G2YlT9XSMNceYoLATGJg6AJX0fv77VjS8OGid2i3qZ9LCmgBN58f/xEZBv
-         sfZXKIqP8OP08Lsp1iemnlcbWhnnkYuaGjZFAvxvL993qJnNHqDPYcvVhQH65XZMfWXF
-         fhuv842rh9JMedG9pIhgdXqusOvR+cDUl7yfEf1oY60p2Gm54p+b/eK4e794NEl2rhei
-         zPOK++4o9scDgHDrD5xbXt8sZot2tYXnpNn9Tx0YA1kKCYW6Y87GVlAf9SvPT3cDbI+3
-         91FQ==
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=zWBSZ83G1GMOAAkiiYTIMe7bsCh5UuvjQ9+waBWCyBA=;
+        b=A6VzUgW9wpXjbGUQsoqGpRdTIZAFDzZO8uVWhQXUze/PUd3PjqM0OXAgh0274p9qcj
+         pVUkhh32C4fDP0Ghz1qlt1vh3gL2tRFChCuUPOJWK9LGe1xk7Zb15cx3L4KAzkGMHpTa
+         /NRcm21xP+FpfuNaWiuOmkf5Kh32+p2jI9v6FphtN8CMZF5KcGUD03uHp5hfU1P+yelp
+         H0Vzj7GBEfGrsk00Bbdap519PrPsZm5Cylc3p++iBDQhS7V8WahpUa6rWgimYNinTViP
+         2aoxNieXTZWEqXu/6rhocaKGxNCSRKt21BiFmo2seZ51+cFSwyvFQIngcyBssstlmYUr
+         cLkQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=glKlHP+3XIqcdbjDxrdLvxULg2QeErotI8aqdfiYiTc=;
-        b=Yr30z2mvmgxrWyTD+9zYgDgEWhg5qzD7HvZXNtO4feVg+d1KI2Hp/K9WD66QLsRW57
-         ozSsLWFJtCcGXbEzbXnBuvt3arphnNo6waEXqdOg5Y+q0KWWRBzJZsuwH9VJ/BCckamf
-         MZIpADz7kMZ/riRXQx9fAYNEEXjD4l/87hD0GCaRu21obftUbnN8p4LtWtUaFEZ/W/n1
-         y2PRGQN5bdFCpCYACRWLglC2XD8w6jlO3b0v/VHFM/kvdnwS11zyRle0CFAvuTM+E9vR
-         IsoJmJd9p09S20pH497abLkCjsvTuzb7EKz9ye4LONB1PAB8J+/cy3RPJW+6G3IqSU4i
-         hx2Q==
-X-Gm-Message-State: AMke39lAk7FOvC5+cgZwHWYD6o8KgMunuYjK7pzKGs4ZC3brKVX438iclBmhM0ZP/vfSk/P6/jHfKhNkbg7vFQ==
-X-Received: by 10.107.5.213 with SMTP id 204mr14748567iof.189.1488481476952;
- Thu, 02 Mar 2017 11:04:36 -0800 (PST)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=zWBSZ83G1GMOAAkiiYTIMe7bsCh5UuvjQ9+waBWCyBA=;
+        b=anCzsggJmHlPtchtfOkdtR0kSoRoWTjVVEe6kGv+kqWTKm9poghHsIs4lWaJkW7AAb
+         Bi9ivevXETXWBa57YnMNLTKqHQr9N7h8zPWfVWjP+1H2r2XcXIpuoQnidIfhedQ9Wutr
+         pEhmXxsQGZe/n1lycYD7mEePPf7hLOt2kWLIVwWWR1Ou/16w4ihQw7Hacnnq00qLnNpm
+         POvm1mX2LqQQWEYxs/cF5N96Z5hPnf2o9xjqh2/pDTt/UQGPbYUWIHiunOVlWHbYqIqS
+         SsFeo7Wlw5ZV/IKXMmv9Jy886w2hOFM+rqbl2nEX5pEv908kNZ5Yzeft/7Q8Rb/UQpgy
+         IjYQ==
+X-Gm-Message-State: AMke39n6OmZWMTzRqc1zzw3S7VCOMi1hkd/rX/d/WUgKQhjH9CqeiKBGuV0vzmT/Y4vPDBYb
+X-Received: by 10.99.202.73 with SMTP id o9mr17270392pgi.173.1488477705742;
+        Thu, 02 Mar 2017 10:01:45 -0800 (PST)
+Received: from google.com ([2620:0:1000:5b10:d033:6603:834d:8912])
+        by smtp.gmail.com with ESMTPSA id t6sm18543752pgt.8.2017.03.02.10.01.44
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Thu, 02 Mar 2017 10:01:44 -0800 (PST)
+Date:   Thu, 2 Mar 2017 10:01:43 -0800
+From:   Brandon Williams <bmwill@google.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, sbeller@google.com, pclouds@gmail.com
+Subject: Re: [PATCH 5/5] ls-files: fix bug when recuring with relative
+ pathspec
+Message-ID: <20170302180143.GC30622@google.com>
+References: <20170224235100.52627-1-bmwill@google.com>
+ <20170224235100.52627-6-bmwill@google.com>
+ <xmqqa896ja7z.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-Received: by 10.107.146.131 with HTTP; Thu, 2 Mar 2017 11:04:36 -0800 (PST)
-In-Reply-To: <85221b97-759f-b7a9-1256-21515d163cbf@jeffhostetler.com>
-References: <alpine.LFD.2.20.1702281621050.22202@i7.lan> <xmqq7f48hm8g.fsf@gitster.mtv.corp.google.com>
- <CA+55aFx1wAS-nHS2awuW2waX=cvig4UoZqmN5H3v93yDE7ukyQ@mail.gmail.com>
- <xmqq37ewhji1.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1703012227010.3767@virtualbox>
- <CA+55aFys5oQ0RySQ+Xv0ZDussr-xZNh4_b3+Upx_d9VPWmpM8Q@mail.gmail.com>
- <alpine.DEB.2.20.1703012334400.3767@virtualbox> <CA+55aFy9=jBJT36FC2HiAeabJBssY=jE=zLxwrXWzhpiFkMUXg@mail.gmail.com>
- <20170301231921.2puf7o7jkrujscwn@sigill.intra.peff.net> <CACsJy8D3h1KAaKi_Esc98za3LqXaB=YeW0Yu+VAV9UnX5vmttg@mail.gmail.com>
- <alpine.DEB.2.20.1703021539330.3767@virtualbox> <CA+55aFzscLaviJac-SB65WFYViY=wyAF3EWOnhHSuzSuFLdPTA@mail.gmail.com>
- <85221b97-759f-b7a9-1256-21515d163cbf@jeffhostetler.com>
-From:   Linus Torvalds <torvalds@linux-foundation.org>
-Date:   Thu, 2 Mar 2017 11:04:36 -0800
-X-Google-Sender-Auth: JS70kVGyzVXDl6AfH3Sp5ezdO8s
-Message-ID: <CA+55aFxbfmW6UL8cd=s43=bbDkTaqUmah0+snhzR3j_Fyv=-gw@mail.gmail.com>
-Subject: Re: [PATCH] Put sha1dc on a diet
-To:     Jeff Hostetler <git@jeffhostetler.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Duy Nguyen <pclouds@gmail.com>, Jeff King <peff@peff.net>,
-        Junio C Hamano <gitster@pobox.com>,
-        Marc Stevens <marc.stevens@cwi.nl>,
-        Dan Shumow <danshu@microsoft.com>,
-        Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqa896ja7z.fsf@gitster.mtv.corp.google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Mar 2, 2017 at 10:37 AM, Jeff Hostetler <git@jeffhostetler.com> wrote:
->>
->> Now, if your _file_ index is 300-400MB (and I do think we check the
->> SHA fingerprint on that even on just reading it - verify_hdr() in
->> do_read_index()), then that's going to be a somewhat noticeable hit on
->> every normal "git diff" etc.
->
-> Yes, the .git/index is 450MB with ~3.1M entries.  verify_hdr() is called
-> each time we read it into memory.
+On 02/28, Junio C Hamano wrote:
+> Brandon Williams <bmwill@google.com> writes:
+> 
+> > Fix a bug which causes a child process for a submodule to error out when a
+> > relative pathspec with a ".." is provided in the superproject.
+> >
+> > While at it, correctly construct the super-prefix to be used in a submodule
+> > when not at the root of the repository.
+> >
+> > Signed-off-by: Brandon Williams <bmwill@google.com>
+> > ---
+> >  builtin/ls-files.c                     | 8 ++++++--
+> >  t/t3007-ls-files-recurse-submodules.sh | 2 +-
+> >  2 files changed, 7 insertions(+), 3 deletions(-)
+> >
+> > diff --git a/builtin/ls-files.c b/builtin/ls-files.c
+> > index 159229081..89533ab8e 100644
+> > --- a/builtin/ls-files.c
+> > +++ b/builtin/ls-files.c
+> > @@ -194,12 +194,15 @@ static void compile_submodule_options(const struct dir_struct *dir, int show_tag
+> >  static void show_gitlink(const struct cache_entry *ce)
+> >  {
+> >  	struct child_process cp = CHILD_PROCESS_INIT;
+> > +	struct strbuf name = STRBUF_INIT;
+> >  	int status;
+> >  	int i;
+> >  
+> > +	quote_path_relative(ce->name, prefix, &name);
+> >  	argv_array_pushf(&cp.args, "--super-prefix=%s%s/",
+> 
+> Same comment as 3/5.  quote_path is to produce c-quote and is not
+> even meant for shell script quoting.  run_command() interface would
+> do its own shell quoting when needed, so  I think you just want the
+> exact string you want to pass here.
+> 
 
-Ok. So that's really just a purely historical artifact.
+Yeah I don't know what I was thinking when using that instead of
+'relative_path()'.  Will change for this and 3/5.
 
-The file index is actually the first part of git to have ever been
-written. You can't even see it in the history, because the initial
-revision from Apr 7, 2005, obviously depended on the actual object
-hashing.
-
-But the file index actually came first. You can _kind_ of see that in
-the layout of the original git tree, and how the main header file is
-still called "cache.h", and how the original ".git" directory was
-actually called ".dircache".
-
-And the two biggest files (by a fairly big margin) are "read-cache.c"
-and "update-cache.c".
-
-So that file index cache was in many ways _the_ central part of the
-original git model. The sha1 file indexing and object database was
-just the backing store for the file index.
-
-But part of that history is then how much I worried about corruption
-of that index (and, let's face it, general corruption resistance _was_
-one of the primary design goals - performance was high up there too,
-but safety in the face of filesystem corruption was and is a primary
-issue).
-
-But realistically, I don't think we've *ever* hit anything serious on
-the index file, and it's obviously not a security issue. It also isn't
-even a compatibility issue, so it would be trivial to just bump the
-version header and saying that the signature changes the meaning of
-the checksum.
-
-That said:
-
-> We have been testing a patch in GfW to run the verification in a separate thread
-> while the main thread parses (and mallocs) the cache_entries.  This does help
-> offset the time.
-
-Yeah, that seems an even better solution, honestly.
-
-The patch would be cleaner without the NO_PTHREADS things.
-
-I wonder how meaningful that thing even is today. Looking at what
-seems to select NO_PTHREADS, I suspect that's all entirely historical.
-For example, you'll see it for QNX etc, which seems wrong - QNX
-definitely has pthreads according to their docs, for example.
-
-                     Linus
+-- 
+Brandon Williams
