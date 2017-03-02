@@ -6,312 +6,136 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 10C992023D
-	for <e@80x24.org>; Thu,  2 Mar 2017 03:34:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A73152023D
+	for <e@80x24.org>; Thu,  2 Mar 2017 03:50:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753524AbdCBDdl (ORCPT <rfc822;e@80x24.org>);
-        Wed, 1 Mar 2017 22:33:41 -0500
-Received: from mail-pg0-f51.google.com ([74.125.83.51]:33880 "EHLO
-        mail-pg0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753378AbdCBDdj (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Mar 2017 22:33:39 -0500
-Received: by mail-pg0-f51.google.com with SMTP id p5so27164356pga.1
-        for <git@vger.kernel.org>; Wed, 01 Mar 2017 19:32:41 -0800 (PST)
+        id S1753590AbdCBDuu (ORCPT <rfc822;e@80x24.org>);
+        Wed, 1 Mar 2017 22:50:50 -0500
+Received: from mail-pf0-f170.google.com ([209.85.192.170]:33925 "EHLO
+        mail-pf0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753194AbdCBDus (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Mar 2017 22:50:48 -0500
+Received: by mail-pf0-f170.google.com with SMTP id b5so10465734pfa.1
+        for <git@vger.kernel.org>; Wed, 01 Mar 2017 19:50:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=I96eJLoZPWi/WcyJaL5LJ6+hRS2eztVD2HNMgUZkziU=;
-        b=LYb0oaBjMDVOKCuweJnipfeKwQrDMaIDTT31Y8TMWzVJXGpJPHkOWtKQnreCvbXh4q
-         DzQ9lvJTNj34kBuRY5skcOForyYO4bGJ0lWbDbP3nXg+rt1rsCWJW4tfshPECFTQhI41
-         QBa+PtWUBcLR8v3wyXchVgo6XgBq64KU8Zqif9zurtIfMoaR31rop+B+6s/HSP3p1Gg6
-         g88pNGjHYyDsX+sB32q3qiAUKkVDsgd/nWwdYmxxXlIciHasBoXEKfNO5DuMWxL07aBV
-         z9FdX+CP7guNpiS4uxfilQ+XspwqvHaVu1/dIeOGafXTGixSSqgJrS7RN59jVH91gNjQ
-         FPbQ==
+        bh=LnTJMi50tV1safYLOFw2o4ONUmKTWtRifjDhqYSnotk=;
+        b=fQb+Rby71K8dttCGLu+tAdhmoNm2sr6Tvv59ETo3MIB85r+Ee6alzBxHY634L2/LAw
+         hkS2uso4XLW/J5pRSS4ZK7n8kCs4/A98LGU7dBOJlZLYhcAeEFPbZqUOc8CMRFOcismZ
+         QKpG/ryuz218CiW2U0jO1ZYOo6DAYabGeXz4GCf4TkChGIGcY3nljAw4MpAErwYlHBdZ
+         k6YkdKBwiv2v+l4VvCaV0dXXGlwMHRmyD2Pk13GqCMnqbX3ji6xYHUKrB0j/CD8nV+Nr
+         ZnbEIyGKXo08GPIhFgG1H1Y202eCUPRRnA9ayxcmXthOn0DVL5k0fnb3IrqJrGDlXHSa
+         o3Kw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=I96eJLoZPWi/WcyJaL5LJ6+hRS2eztVD2HNMgUZkziU=;
-        b=iPZ6FY+V2O6gAigz4fwJVxsc3n7zd/96eZYRFoyvMobz1NLrIciMwnspu3vaKCTtyr
-         LqVa2fZKzUjaEW24ix+SzuvuiOZWx28nVdGRhzadLCUpGYy/F6hYOS2Y+NVV19cJGFwB
-         suJWBamuDkESV4X4csNFj56dFnLZCQBPWdcPKQz1XMkSxpZQYXSYk5ezci6qamKWuxr1
-         Efb4hOU0q5KLk0v3by+/N2Mzk94dkr4qC6XdOPYStajNu70VfzYBnCqu+pabfLKbVZkz
-         TwP4FtptshE17o0eItKYByTMh5mXUmGKFroF6L7xnl3U0yYgoVoU5d73/bBCeVpSVBxq
-         YKSg==
-X-Gm-Message-State: AMke39lQJ2rKQPY+KwQqWrH6KKUEPIbfK46AcrNVRGpyO+Adevh1pTdR/kccn+4iyxSGtkBk
-X-Received: by 10.84.216.15 with SMTP id m15mr14490023pli.22.1488415684309;
-        Wed, 01 Mar 2017 16:48:04 -0800 (PST)
+        bh=LnTJMi50tV1safYLOFw2o4ONUmKTWtRifjDhqYSnotk=;
+        b=jipYo/wysI2rnLcaEYfIlef2q8ex+UvlJBMOFbxyunl1pAn2lqWxt3eJseYvY4xZOe
+         +sAft5whSTFCWEFQheTWzMekqFYOizkqiLNuJ99C+BwtvkH437VjtzjjzvyVmFmNsBLT
+         L6lEbwe5lkpRXFq9qokaCO7Ek3IEW26OXN+B3ACZEaGKcd/lAgRtxZF9dYUV+XxRORPL
+         luLVxi2FfVtRJEBf+B4ycIlW60FlZGgI0xNEUES4YHIHe9HuRS8BoFTbmbZnzLrJEz7x
+         yFPQqdDEmdGGzIx1y7MVXSzqdVcE9bTXdyKMXT7oHkSLhmtbaROpUkLeDphLRRChAOES
+         7E1A==
+X-Gm-Message-State: AMke39mLpqgGh94GNGVxAjDXcxADyTc4Dc3+x12gDj5k2OxeGo5dHJibPmdiGo+dj5iPxFAO
+X-Received: by 10.99.193.17 with SMTP id w17mr12302208pgf.124.1488415690140;
+        Wed, 01 Mar 2017 16:48:10 -0800 (PST)
 Received: from localhost ([2620:0:1000:5b10:695f:c2a1:ec60:5665])
-        by smtp.gmail.com with ESMTPSA id d3sm12770434pfc.51.2017.03.01.16.48.03
+        by smtp.gmail.com with ESMTPSA id n63sm12768250pfk.64.2017.03.01.16.48.09
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 01 Mar 2017 16:48:03 -0800 (PST)
+        Wed, 01 Mar 2017 16:48:09 -0800 (PST)
 From:   Stefan Beller <sbeller@google.com>
 To:     sbeller@google.com
 Cc:     git@vger.kernel.org, bmwill@google.com, novalis@novalis.org,
         sandals@crustytoothpaste.net, hvoigt@hvoigt.net, gitster@pobox.com,
         jrnieder@gmail.com, ramsay@ramsayjones.plus.com
-Subject: [RFCv6 PATCH 00/18] Checkout aware of Submodules!
-Date:   Wed,  1 Mar 2017 16:47:41 -0800
-Message-Id: <20170302004759.27852-1-sbeller@google.com>
+Subject: [PATCH 05/18] lib-submodule-update.sh: define tests for recursing into submodules
+Date:   Wed,  1 Mar 2017 16:47:46 -0800
+Message-Id: <20170302004759.27852-6-sbeller@google.com>
 X-Mailer: git-send-email 2.12.0.rc1.52.ge239d7e709.dirty
-In-Reply-To: <20170223225735.10994-1-sbeller@google.com/>
+In-Reply-To: <20170302004759.27852-1-sbeller@google.com>
 References: <20170223225735.10994-1-sbeller@google.com/>
+ <20170302004759.27852-1-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-previous work:
-https://public-inbox.org/git/20170223225735.10994-1-sbeller@google.com/
-https://public-inbox.org/git/20161203003022.29797-1-sbeller@google.com/
+Currently lib-submodule-update.sh provides 2 functions
+test_submodule_switch and test_submodule_forced_switch that are used by a
+variety of tests to ensure that submodules behave as expected. The current
+expected behavior is that submodules are not touched at all (see
+42639d2317a for the exact setup).
 
-v6:
- * added support for read-tree (see last patch) to see how generic the
-   code of the previous patches is. I am pretty pleased with that patch.
- * marked two functions static. Thanks Ramsay!
- * fixed the recursive test; it still fails but it is the code that fails,
-   not the test. For this I had to change the setup code slightly.
- * 2 new patches adding tiny refactoring to the submodule test lib.  
- * interdiff (to origin/sb/checkout-recurse-submodules, which is v5) below.
+In the future we want to teach all these commands to recurse
+into submodules. To do that, we'll add two testing functions to
+submodule-update-lib.sh: test_submodule_switch_recursing and
+test_submodule_forced_switch_recursing.
 
-v5:
- * as v4 was the first version queued by Junio, we do have an interdiff below!
- * renamed functions
- * changed the API, now the caller has to take care of the submodule strategy
-   themselves. (Note this can be different for different situations, e.g.
-   when a submodule is deleted, we can do that for any strategy except none and
-   !command. But for moving to a new state of the submodule we currently
-   only implement "checkout" [unspecified defaults to checkout]. warning about
-   the others, doing nothing there.)
+These two functions behave in analogy to the already existing functions
+just with a different expectation on submodule behavior. The submodule
+in the working tree is expected to be updated to the recorded submodule
+version. The behavior is analogous to e.g. the behavior of files in a
+nested directory in the working tree, where a change to the working tree
+handles any arising directory/file conflicts just fine.
 
-v4:
- * addressed all comments of Brian, Junio and Brandon.
- Thanks!
- * one major point of change is the introduction of another patch
-   "lib-submodule-update.sh: do not use ./. as submodule remote",
-   as that took some time to track down the existing bug.
- 
-v3:
- * moved tests from t2013 to the generic submodule library.
- * factored out the refactoring patches to be up front
- * As I redid the complete implementation, I have the impression this time
-   it is cleaner than previous versions.
- 
- I think we still have to fix the corner cases of directory/file/submodule 
- conflicts before merging, but this serves as a status update on my current
- way of thinking how to implement the worktree commands being aware of
- submodules.
- 
-Thanks,
-Stefan
+Signed-off-by: Stefan Beller <sbeller@google.com>
+---
+ t/lib-submodule-update.sh | 506 +++++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 504 insertions(+), 2 deletions(-)
 
-v2:
-* based on top of the series sent out an hour ago
-  "[PATCHv4 0/5] submodule embedgitdirs"
-* Try to embed a submodule if we need to remove it.
-* Strictly do not change behavior if not giving the new flag.
-* I think I missed some review comments from v1, but I'd like to get
-  the current state out over the weekend, as a lot has changed so far.
-  On Monday I'll go through the previous discussion with a comb to see
-  if I missed something.
-  
-v1:
-When working with submodules, nearly anytime after checking out
-a different state of the projects, that has submodules changed
-you'd run "git submodule update" with a current version of Git.
-
-There are two problems with this approach:
-
-* The "submodule update" command is dangerous as it
-  doesn't check for work that may be lost in the submodule
-  (e.g. a dangling commit).
-* you may forget to run the command as checkout is supposed
-  to do all the work for you.
-
-Integrate updating the submodules into git checkout, with the same
-safety promises that git-checkout has, i.e. not throw away data unless
-asked to. This is done by first checking if the submodule is at the same
-sha1 as it is recorded in the superproject. If there are changes we stop
-proceeding the checkout just like it is when checking out a file that
-has local changes.
-
-The integration happens in the code that is also used in other commands
-such that it will be easier in the future to make other commands aware
-of submodule.
-
-This also solves d/f conflicts in case you replace a file/directory
-with a submodule or vice versa.
-
-The patches are still a bit rough, but the overall series seems
-promising enough to me that I want to put it out here.
-
-Any review, specifically on the design level welcome!
-
-Thanks,
-Stefan
-
-
-Stefan Beller (14):
-  lib-submodule-update.sh: reorder create_lib_submodule_repo
-  lib-submodule-update.sh: define tests for recursing into submodules
-  make is_submodule_populated gently
-  connect_work_tree_and_git_dir: safely create leading directories
-  update submodules: add submodule config parsing
-  update submodules: add a config option to determine if submodules are
-    updated
-  update submodules: introduce is_interesting_submodule
-  update submodules: move up prepare_submodule_repo_env
-  update submodules: add submodule_go_from_to
-  unpack-trees: pass old oid to verify_clean_submodule
-  unpack-trees: check if we can perform the operation for submodules
-  read-cache: remove_marked_cache_entries to wipe selected submodules.
-  entry.c: update submodules when interesting
-  builtin/checkout: add --recurse-submodules switch
-diff --git a/Documentation/git-read-tree.txt b/Documentation/git-read-tree.txt
-index fa1d557e5b..ed9d63ef4a 100644
---- a/Documentation/git-read-tree.txt
-+++ b/Documentation/git-read-tree.txt
-@@ -115,6 +115,12 @@ OPTIONS
- 	directories the index file and index output file are
- 	located in.
- 
-+--[no-]recurse-submodules::
-+	Using --recurse-submodules will update the content of all initialized
-+	submodules according to the commit recorded in the superproject by
-+	calling read-tree recursively, also setting the submodules HEAD to be
-+	detached at that commit.
-+
- --no-sparse-checkout::
- 	Disable sparse checkout support even if `core.sparseCheckout`
- 	is true.
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index 207ce09771..e9c5fcfaf8 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -29,8 +29,8 @@ static const char * const checkout_usage[] = {
- 	NULL,
- };
- 
--int option_parse_recurse_submodules(const struct option *opt,
--				    const char *arg, int unset)
-+static int option_parse_recurse_submodules(const struct option *opt,
-+					   const char *arg, int unset)
- {
- 	if (unset) {
- 		recurse_submodules = RECURSE_SUBMODULES_OFF;
-diff --git a/builtin/read-tree.c b/builtin/read-tree.c
-index 8ba64bc785..2dc5cc06da 100644
---- a/builtin/read-tree.c
-+++ b/builtin/read-tree.c
-@@ -15,10 +15,13 @@
- #include "builtin.h"
- #include "parse-options.h"
- #include "resolve-undo.h"
-+#include "submodule.h"
-+#include "submodule-config.h"
- 
- static int nr_trees;
- static int read_empty;
- static struct tree *trees[MAX_UNPACK_TREES];
-+int recurse_submodules = RECURSE_SUBMODULES_DEFAULT;
- 
- static int list_tree(unsigned char *sha1)
- {
-@@ -96,6 +99,23 @@ static int debug_merge(const struct cache_entry * const *stages,
- 	return 0;
- }
- 
-+static int option_parse_recurse_submodules(const struct option *opt,
-+					   const char *arg, int unset)
-+{
-+	if (unset) {
-+		recurse_submodules = RECURSE_SUBMODULES_OFF;
-+		return 0;
-+	}
-+	if (arg)
-+		recurse_submodules =
-+			parse_update_recurse_submodules_arg(opt->long_name,
-+							    arg);
-+	else
-+		recurse_submodules = RECURSE_SUBMODULES_ON;
-+
-+	return 0;
-+}
-+
- static struct lock_file lock_file;
- 
- int cmd_read_tree(int argc, const char **argv, const char *unused_prefix)
-@@ -137,6 +157,9 @@ int cmd_read_tree(int argc, const char **argv, const char *unused_prefix)
- 			 N_("skip applying sparse checkout filter")),
- 		OPT_BOOL(0, "debug-unpack", &opts.debug_unpack,
- 			 N_("debug unpack-trees")),
-+		{ OPTION_CALLBACK, 0, "recurse-submodules", &recurse_submodules,
-+			    "checkout", "control recursive updating of submodules",
-+			    PARSE_OPT_OPTARG, option_parse_recurse_submodules },
- 		OPT_END()
- 	};
- 
-@@ -152,6 +175,12 @@ int cmd_read_tree(int argc, const char **argv, const char *unused_prefix)
- 
- 	hold_locked_index(&lock_file, LOCK_DIE_ON_ERROR);
- 
-+	if (recurse_submodules != RECURSE_SUBMODULES_DEFAULT) {
-+		gitmodules_config();
-+		git_config(submodule_config, NULL);
-+		set_config_update_recurse_submodules(RECURSE_SUBMODULES_ON);
-+	}
-+
- 	prefix_set = opts.prefix ? 1 : 0;
- 	if (1 < opts.merge + opts.reset + prefix_set)
- 		die("Which one? -m, --reset, or --prefix?");
-diff --git a/submodule.c b/submodule.c
-index a2cf8c9376..bc5fecf8c5 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -1257,7 +1257,7 @@ static int submodule_has_dirty_index(const struct submodule *sub)
- 	return finish_command(&cp);
- }
- 
--void submodule_reset_index(const char *path)
-+static void submodule_reset_index(const char *path)
- {
- 	struct child_process cp = CHILD_PROCESS_INIT;
- 	prepare_submodule_repo_env_no_git_dir(&cp.env_array);
 diff --git a/t/lib-submodule-update.sh b/t/lib-submodule-update.sh
-index 54cd8a6366..429cd1041d 100755
+index 83202c54fc..aa196d4d42 100755
 --- a/t/lib-submodule-update.sh
 +++ b/t/lib-submodule-update.sh
-@@ -4,7 +4,7 @@
+@@ -4,6 +4,7 @@
  # - New submodule (no_submodule => add_sub1)
  # - Removed submodule (add_sub1 => remove_sub1)
  # - Updated submodule (add_sub1 => modify_sub1)
--# - Updated submodule recursively (modify_sub1 => modify_sub1_recursively)
 +# - Updated submodule recursively (add_nested_sub => modify_sub1_recursively)
  # - Submodule updated to invalid commit (add_sub1 => invalid_sub1)
  # - Submodule updated from invalid commit (invalid_sub1 => valid_sub1)
  # - Submodule replaced by tracked files in directory (add_sub1 =>
-@@ -20,8 +20,8 @@
+@@ -19,8 +20,8 @@
  #                    /    ^
  #                   /     remove_sub1
  #                  /
--#       add_sub1  /-------O---------O
--#             |  /        ^         modify_sub1_recursive
+-#       add_sub1  /-------O
+-#             |  /        ^
 +#       add_sub1  /-------O---------O--------O  modify_sub1_recursively
 +#             |  /        ^         add_nested_sub
  #             | /         modify_sub1
  #             v/
  #      O------O-----------O---------O
-@@ -96,12 +96,24 @@ create_lib_submodule_repo () {
+@@ -48,6 +49,17 @@ create_lib_submodule_repo () {
+ 		git commit -m "Base inside first submodule" &&
+ 		git branch "no_submodule"
+ 	) &&
++	git init submodule_update_sub2 &&
++	(
++		cd submodule_update_sub2
++		echo "expect" >>.gitignore &&
++		echo "actual" >>.gitignore &&
++		echo "x" >file1 &&
++		echo "y" >file2 &&
++		git add .gitignore file1 file2 &&
++		git commit -m "nested submodule base" &&
++		git branch "no_submodule"
++	) &&
+ 	git init submodule_update_repo &&
+ 	(
+ 		cd submodule_update_repo &&
+@@ -84,6 +96,26 @@ create_lib_submodule_repo () {
  		git add sub1 &&
  		git commit -m "Modify sub1" &&
  
--		git checkout -b modify_sub1_recursively modify_sub1 &&
 +		git checkout -b add_nested_sub modify_sub1 &&
- 		git -C sub1 checkout -b "add_nested_sub" &&
- 		git -C sub1 submodule add --branch no_submodule ../submodule_update_sub2 sub2 &&
- 		git -C sub1 commit -a -m "add a nested submodule" &&
- 		git add sub1 &&
- 		git commit -a -m "update submodule, that updates a nested submodule" &&
++		git -C sub1 checkout -b "add_nested_sub" &&
++		git -C sub1 submodule add --branch no_submodule ../submodule_update_sub2 sub2 &&
++		git -C sub1 commit -a -m "add a nested submodule" &&
++		git add sub1 &&
++		git commit -a -m "update submodule, that updates a nested submodule" &&
 +		git checkout -b modify_sub1_recursively &&
 +		git -C sub1 checkout -b modify_sub1_recursively &&
 +		git -C sub1/sub2 checkout -b modify_sub1_recursively &&
@@ -324,35 +148,38 @@ index 54cd8a6366..429cd1041d 100755
 +		git commit -m "update sub1, that updates nested sub" &&
 +		git -C sub1 push origin modify_sub1_recursively &&
 +		git -C sub1/sub2 push origin modify_sub1_recursively &&
- 		git -C sub1 submodule deinit -f --all &&
- 
++		git -C sub1 submodule deinit -f --all &&
++
  		git checkout -b replace_sub1_with_directory add_sub1 &&
-@@ -200,9 +212,9 @@ reset_work_tree_to () {
- 		git checkout -f "$1" &&
- 		git status -u -s >actual &&
- 		test_must_be_empty actual &&
--		sha1=$(git rev-parse --revs-only HEAD:sub1) &&
--		if test -n "$sha1" &&
--		   test $(cd "../submodule_update_sub1" && git rev-parse --verify "$sha1^{commit}")
-+		hash=$(git rev-parse --revs-only HEAD:sub1) &&
-+		if test -n "$hash" &&
-+		   test $(cd "../submodule_update_sub1" && git rev-parse --verify "$hash^{commit}")
- 		then
- 			git submodule update --init --recursive "sub1"
- 		fi
-@@ -211,14 +223,23 @@ reset_work_tree_to () {
+ 		git submodule update &&
+ 		git -C sub1 checkout modifications &&
+@@ -150,6 +182,15 @@ test_git_directory_is_unchanged () {
+ 	)
+ }
  
- reset_work_tree_to_interested () {
- 	reset_work_tree_to $1 &&
--	# indicate we are interested in the submodule:
--	git -C submodule_update config submodule.sub1.url "bogus" &&
--	# also have it available:
++test_git_directory_exists() {
++	test -e ".git/modules/$1" &&
++	if test -f sub1/.git
++	then
++		# does core.worktree point at the right place?
++		test "$(git -C .git/modules/$1 config core.worktree)" = "../../../$1"
++	fi
++}
++
+ # Helper function to be executed at the start of every test below, it sets up
+ # the submodule repo if it doesn't exist and configures the most problematic
+ # settings for diff.ignoreSubmodules.
+@@ -180,6 +221,27 @@ reset_work_tree_to () {
+ 	)
+ }
+ 
++reset_work_tree_to_interested () {
++	reset_work_tree_to $1 &&
 +	# make the submodule git dirs available
- 	if ! test -d submodule_update/.git/modules/sub1
- 	then
- 		mkdir -p submodule_update/.git/modules &&
- 		cp -r submodule_update_repo/.git/modules/sub1 submodule_update/.git/modules/sub1
--	fi
++	if ! test -d submodule_update/.git/modules/sub1
++	then
++		mkdir -p submodule_update/.git/modules &&
++		cp -r submodule_update_repo/.git/modules/sub1 submodule_update/.git/modules/sub1
 +		GIT_WORK_TREE=. git -C submodule_update/.git/modules/sub1 config --unset core.worktree
 +	fi &&
 +	if ! test -d submodule_update/.git/modules/sub1/modules/sub2
@@ -365,86 +192,455 @@ index 54cd8a6366..429cd1041d 100755
 +	git -C submodule_update config submodule.sub1.url "bogus" &&
 +	# sub1 might not be checked out, so use the git dir
 +	git -C submodule_update/.git/modules/sub1 config submodule.sub2.url "bogus"
- }
- 
- # Test that the superproject contains the content according to commit "$1"
-@@ -234,6 +255,11 @@ test_superproject_content () {
- # Test that the given submodule at path "$1" contains the content according
- # to the submodule commit recorded in the superproject's commit "$2"
- test_submodule_content () {
-+	if test "$1" == "-C"
-+	then
-+		cd "$2"
-+		shift; shift;
-+	fi
- 	if test $# != 2
- 	then
- 		echo "test_submodule_content needs two arguments"
-@@ -761,6 +787,11 @@ test_submodule_switch_recursing () {
- 	then
- 		RESULT=failure
- 	fi
++}
 +
-+	if test "$KNOWN_FAILURE_SUBMODULE_OVERWRITE_IGNORED_UNTRACKED" = 1
-+	then
-+		RESULT1=failure
-+	fi
- 	######################### Appearing submodule #########################
- 	# Switching to a commit letting a submodule appear checks it out ...
- 	test_expect_success "$command: added submodule is checked out" '
-@@ -801,7 +832,7 @@ test_submodule_switch_recursing () {
+ # Test that the superproject contains the content according to commit "$1"
+ # (the work tree must match the index for everything but submodules but the
+ # index must exactly match the given commit including any submodule SHA-1s).
+@@ -700,3 +762,443 @@ test_submodule_forced_switch () {
  		)
  	'
- 	# ... but an ignored file is fine.
--	test_expect_success "$command: added submodule removes an untracked ignored file" '
-+	test_expect_$RESULT1 "$command: added submodule removes an untracked ignored file" '
- 		test_when_finished "rm submodule_update/.git/info/exclude" &&
- 		prolog &&
- 		reset_work_tree_to_interested no_submodule &&
-@@ -966,21 +997,17 @@ test_submodule_switch_recursing () {
- 		)
- 	'
- 
--	# This test fails, due to missing setup, we do not clone sub2 into
--	# submodule_update, because it doesn't exist in the 'add_sub1' version
--	#
--	test_expect_success "$command: modified submodule updates submodule recursively" '
-+	# recursing deeper than one level doesn't work yet.
-+	test_expect_failure "$command: modified submodule updates submodule recursively" '
- 		prolog &&
--		reset_work_tree_to_interested add_sub1 &&
+ }
++
++# Test that submodule contents are correctly updated when switching
++# between commits that change a submodule.
++# Test that the following transitions are correctly handled:
++# (These tests are also above in the case where we expect no change
++#  in the submodule)
++# - Updated submodule
++# - New submodule
++# - Removed submodule
++# - Directory containing tracked files replaced by submodule
++# - Submodule replaced by tracked files in directory
++# - Submodule replaced by tracked file with the same name
++# - tracked file replaced by submodule
++#
++# New test cases
++# - Removing a submodule with a git directory absorbs the submodules
++#   git directory first into the superproject.
++
++test_submodule_switch_recursing () {
++	command="$1"
++	######################### Appearing submodule #########################
++	# Switching to a commit letting a submodule appear checks it out ...
++	test_expect_success "$command: added submodule is checked out" '
++		prolog &&
++		reset_work_tree_to_interested no_submodule &&
++		(
++			cd submodule_update &&
++			git branch -t add_sub1 origin/add_sub1 &&
++			$command add_sub1 &&
++			test_superproject_content origin/add_sub1 &&
++			test_submodule_content sub1 origin/add_sub1
++		)
++	'
++	# ... ignoring an empty existing directory ...
++	test_expect_success "$command: added submodule is checked out in empty dir" '
++		prolog &&
++		reset_work_tree_to_interested no_submodule &&
++		(
++			cd submodule_update &&
++			mkdir sub1 &&
++			git branch -t add_sub1 origin/add_sub1 &&
++			$command add_sub1 &&
++			test_superproject_content origin/add_sub1 &&
++			test_submodule_content sub1 origin/add_sub1
++		)
++	'
++	# ... unless there is an untracked file in its place.
++	test_expect_success "$command: added submodule doesn't remove untracked file with same name" '
++		prolog &&
++		reset_work_tree_to_interested no_submodule &&
++		(
++			cd submodule_update &&
++			git branch -t add_sub1 origin/add_sub1 &&
++			: >sub1 &&
++			test_must_fail $command add_sub1 &&
++			test_superproject_content origin/no_submodule &&
++			test_must_be_empty sub1
++		)
++	'
++	# ... but an ignored file is fine.
++	test_expect_success "$command: added submodule removes an untracked ignored file" '
++		test_when_finished "rm submodule_update/.git/info/exclude" &&
++		prolog &&
++		reset_work_tree_to_interested no_submodule &&
++		(
++			cd submodule_update &&
++			git branch -t add_sub1 origin/add_sub1 &&
++			: >sub1 &&
++			echo sub1 >.git/info/exclude
++			$command add_sub1 &&
++			test_superproject_content origin/add_sub1 &&
++			test_submodule_content sub1 origin/add_sub1
++		)
++	'
++	# Replacing a tracked file with a submodule produces a checked out submodule
++	test_expect_success "$command: replace tracked file with submodule checks out submodule" '
++		prolog &&
++		reset_work_tree_to_interested replace_sub1_with_file &&
++		(
++			cd submodule_update &&
++			git branch -t replace_file_with_sub1 origin/replace_file_with_sub1 &&
++			$command replace_file_with_sub1 &&
++			test_superproject_content origin/replace_file_with_sub1 &&
++			test_submodule_content sub1 origin/replace_file_with_sub1
++		)
++	'
++	# ... as does removing a directory with tracked files with a submodule.
++	test_expect_success "$command: replace directory with submodule" '
++		prolog &&
++		reset_work_tree_to_interested replace_sub1_with_directory &&
++		(
++			cd submodule_update &&
++			git branch -t replace_directory_with_sub1 origin/replace_directory_with_sub1 &&
++			$command replace_directory_with_sub1 &&
++			test_superproject_content origin/replace_directory_with_sub1 &&
++			test_submodule_content sub1 origin/replace_directory_with_sub1
++		)
++	'
++
++	######################## Disappearing submodule #######################
++	# Removing a submodule removes its work tree ...
++	test_expect_success "$command: removed submodule removes submodules working tree" '
++		prolog &&
++		reset_work_tree_to_interested add_sub1 &&
++		(
++			cd submodule_update &&
++			git branch -t remove_sub1 origin/remove_sub1 &&
++			$command remove_sub1 &&
++			test_superproject_content origin/remove_sub1 &&
++			! test -e sub1
++		)
++	'
++	# ... absorbing a .git directory along the way.
++	test_expect_success "$command: removed submodule absorbs submodules .git directory" '
++		prolog &&
++		reset_work_tree_to_interested add_sub1 &&
++		(
++			cd submodule_update &&
++			git branch -t remove_sub1 origin/remove_sub1 &&
++			replace_gitfile_with_git_dir sub1 &&
++			rm -rf .git/modules &&
++			$command remove_sub1 &&
++			test_superproject_content origin/remove_sub1 &&
++			! test -e sub1 &&
++			test_git_directory_exists sub1
++		)
++	'
++	# Replacing a submodule with files in a directory must succeeds
++	# when the submodule is clean
++	test_expect_success "$command: replace submodule with a directory" '
++		prolog &&
++		reset_work_tree_to_interested add_sub1 &&
++		(
++			cd submodule_update &&
++			git branch -t replace_sub1_with_directory origin/replace_sub1_with_directory &&
++			$command replace_sub1_with_directory &&
++			test_superproject_content origin/replace_sub1_with_directory &&
++			test_submodule_content sub1 origin/replace_sub1_with_directory
++		)
++	'
++	# ... absorbing a .git directory.
++	test_expect_success "$command: replace submodule containing a .git directory with a directory must absorb the git dir" '
++		prolog &&
++		reset_work_tree_to_interested add_sub1 &&
++		(
++			cd submodule_update &&
++			git branch -t replace_sub1_with_directory origin/replace_sub1_with_directory &&
++			replace_gitfile_with_git_dir sub1 &&
++			rm -rf .git/modules &&
++			$command replace_sub1_with_directory &&
++			test_superproject_content origin/replace_sub1_with_directory &&
++			test_git_directory_exists sub1
++		)
++	'
++
++	# Replacing it with a file ...
++	test_expect_success "$command: replace submodule with a file" '
++		prolog &&
++		reset_work_tree_to_interested add_sub1 &&
++		(
++			cd submodule_update &&
++			git branch -t replace_sub1_with_file origin/replace_sub1_with_file &&
++			$command replace_sub1_with_file &&
++			test_superproject_content origin/replace_sub1_with_file &&
++			test -f sub1
++		)
++	'
++
++	# ... must check its local work tree for untracked files
++	test_expect_success "$command: replace submodule with a file must fail with untracked files" '
++		prolog &&
++		reset_work_tree_to_interested add_sub1 &&
++		(
++			cd submodule_update &&
++			git branch -t replace_sub1_with_file origin/replace_sub1_with_file &&
++			: >sub1/untrackedfile &&
++			test_must_fail $command replace_sub1_with_file &&
++			test_superproject_content origin/add_sub1 &&
++			test_submodule_content sub1 origin/add_sub1
++		)
++	'
++
++	# ... and ignored files are ignroed
++	test_expect_success "$command: replace submodule with a file works ignores ignored files in submodule" '
++		test_when_finished "rm submodule_update/.git/modules/sub1/info/exclude" &&
++		prolog &&
++		reset_work_tree_to_interested add_sub1 &&
++		(
++			cd submodule_update &&
++			git branch -t replace_sub1_with_file origin/replace_sub1_with_file &&
++			: >sub1/ignored &&
++			$command replace_sub1_with_file &&
++			test_superproject_content origin/replace_sub1_with_file &&
++			test -f sub1
++		)
++	'
++
++	########################## Modified submodule #########################
++	# Updating a submodule sha1 updates the submodule's work tree
++	test_expect_success "$command: modified submodule updates submodule work tree" '
++		prolog &&
++		reset_work_tree_to_interested add_sub1 &&
++		(
++			cd submodule_update &&
++			git branch -t modify_sub1 origin/modify_sub1 &&
++			$command modify_sub1 &&
++			test_superproject_content origin/modify_sub1 &&
++			test_submodule_content sub1 origin/modify_sub1
++		)
++	'
++
++	# Updating a submodule to an invalid sha1 doesn't update the
++	# superproject nor the submodule's work tree.
++	test_expect_success "$command: updating to a missing submodule commit fails" '
++		prolog &&
++		reset_work_tree_to_interested add_sub1 &&
++		(
++			cd submodule_update &&
++			git branch -t invalid_sub1 origin/invalid_sub1 &&
++			test_must_fail $command invalid_sub1 &&
++			test_superproject_content origin/add_sub1 &&
++			test_submodule_content sub1 origin/add_sub1
++		)
++	'
++
++	test_expect_success "$command: modified submodule updates submodule recursively" '
++		prolog &&
 +		reset_work_tree_to_interested add_nested_sub &&
- 		(
- 			cd submodule_update &&
- 			git branch -t modify_sub1_recursively origin/modify_sub1_recursively &&
--			test_must_fail $command modify_sub1_recursively &&
--			test_superproject_content origin/add_sub1 &&
--			test_submodule_content sub1 origin/add_sub1
--			# test_superproject_content origin/modify_sub1_recursively &&
--			# test_submodule_content sub1 origin/modify_sub1_recursively &&
--			# test_submodule_content sub1/sub2 no_submodule
++		(
++			cd submodule_update &&
++			git branch -t modify_sub1_recursively origin/modify_sub1_recursively &&
 +			$command modify_sub1_recursively &&
 +			test_superproject_content origin/modify_sub1_recursively &&
 +			test_submodule_content sub1 origin/modify_sub1_recursively &&
 +			test_submodule_content -C sub1 sub2 origin/modify_sub1_recursively
- 		)
- 	'
- }
-diff --git a/t/t1013-read-tree-submodule.sh b/t/t1013-read-tree-submodule.sh
-index 20526aed34..7019d0a04f 100755
---- a/t/t1013-read-tree-submodule.sh
-+++ b/t/t1013-read-tree-submodule.sh
-@@ -5,6 +5,13 @@ test_description='read-tree can handle submodules'
- . ./test-lib.sh
- . "$TEST_DIRECTORY"/lib-submodule-update.sh
- 
-+KNOWN_FAILURE_DIRECTORY_SUBMODULE_CONFLICTS=1
-+KNOWN_FAILURE_SUBMODULE_OVERWRITE_IGNORED_UNTRACKED=1
++		)
++	'
++}
 +
-+test_submodule_switch_recursing "git read-tree --recurse-submodules -u -m"
++# Test that submodule contents are updated when switching between commits
++# that change a submodule, but throwing away local changes in
++# the superproject as well as the submodule is allowed.
++test_submodule_forced_switch_recursing () {
++	command="$1"
++	######################### Appearing submodule #########################
++	# Switching to a commit letting a submodule appear creates empty dir ...
++	test_expect_success "$command: added submodule is checked out" '
++		prolog &&
++		reset_work_tree_to_interested no_submodule &&
++		(
++			cd submodule_update &&
++			git branch -t add_sub1 origin/add_sub1 &&
++			$command add_sub1 &&
++			test_superproject_content origin/add_sub1 &&
++			test_submodule_content sub1 origin/add_sub1
++		)
++	'
++	# ... and doesn't care if it already exists ...
++	test_expect_success "$command: added submodule ignores empty directory" '
++		prolog &&
++		reset_work_tree_to_interested no_submodule &&
++		(
++			cd submodule_update &&
++			git branch -t add_sub1 origin/add_sub1 &&
++			mkdir sub1 &&
++			$command add_sub1 &&
++			test_superproject_content origin/add_sub1 &&
++			test_submodule_content sub1 origin/add_sub1
++		)
++	'
++	# ... not caring about an untracked file either
++	test_expect_success "$command: added submodule does remove untracked unignored file with same name when forced" '
++		prolog &&
++		reset_work_tree_to_interested no_submodule &&
++		(
++			cd submodule_update &&
++			git branch -t add_sub1 origin/add_sub1 &&
++			>sub1 &&
++			$command add_sub1 &&
++			test_superproject_content origin/add_sub1 &&
++			test_submodule_content sub1 origin/add_sub1
++		)
++	'
++	# Replacing a tracked file with a submodule checks out the submodule
++	test_expect_success "$command: replace tracked file with submodule populates the submodule" '
++		prolog &&
++		reset_work_tree_to_interested replace_sub1_with_file &&
++		(
++			cd submodule_update &&
++			git branch -t replace_file_with_sub1 origin/replace_file_with_sub1 &&
++			$command replace_file_with_sub1 &&
++			test_superproject_content origin/replace_file_with_sub1 &&
++			test_submodule_content sub1 origin/replace_file_with_sub1
++		)
++	'
++	# ... as does removing a directory with tracked files with a
++	# submodule.
++	test_expect_success "$command: replace directory with submodule" '
++		prolog &&
++		reset_work_tree_to_interested replace_sub1_with_directory &&
++		(
++			cd submodule_update &&
++			git branch -t replace_directory_with_sub1 origin/replace_directory_with_sub1 &&
++			$command replace_directory_with_sub1 &&
++			test_superproject_content origin/replace_directory_with_sub1 &&
++			test_submodule_content sub1 origin/replace_directory_with_sub1
++		)
++	'
 +
-+test_submodule_forced_switch_recursing "git read-tree --recurse-submodules -u --reset"
++	######################## Disappearing submodule #######################
++	# Removing a submodule doesn't remove its work tree ...
++	test_expect_success "$command: removed submodule leaves submodule directory and its contents in place" '
++		prolog &&
++		reset_work_tree_to_interested add_sub1 &&
++		(
++			cd submodule_update &&
++			git branch -t remove_sub1 origin/remove_sub1 &&
++			$command remove_sub1 &&
++			test_superproject_content origin/remove_sub1 &&
++			! test -e sub1
++		)
++	'
++	# ... especially when it contains a .git directory.
++	test_expect_success "$command: removed submodule leaves submodule containing a .git directory alone" '
++		prolog &&
++		reset_work_tree_to_interested add_sub1 &&
++		(
++			cd submodule_update &&
++			git branch -t remove_sub1 origin/remove_sub1 &&
++			replace_gitfile_with_git_dir sub1 &&
++			rm -rf .git/modules/sub1 &&
++			$command remove_sub1 &&
++			test_superproject_content origin/remove_sub1 &&
++			test_git_directory_exists sub1 &&
++			! test -e sub1
++		)
++	'
++	# Replacing a submodule with files in a directory ...
++	test_expect_success "$command: replace submodule with a directory" '
++		prolog &&
++		reset_work_tree_to_interested add_sub1 &&
++		(
++			cd submodule_update &&
++			git branch -t replace_sub1_with_directory origin/replace_sub1_with_directory &&
++			test_must_fail $command replace_sub1_with_directory &&
++			test_superproject_content origin/replace_sub1_with_directory
++		)
++	'
++	# ... absorbing a .git directory.
++	test_expect_success "$command: replace submodule containing a .git directory with a directory must fail" '
++		prolog &&
++		reset_work_tree_to_interested add_sub1 &&
++		(
++			cd submodule_update &&
++			git branch -t replace_sub1_with_directory origin/replace_sub1_with_directory &&
++			replace_gitfile_with_git_dir sub1 &&
++			rm -rf .git/modules/sub1 &&
++			$command replace_sub1_with_directory &&
++			test_superproject_content origin/replace_sub1_with_directory &&
++			test_submodule_content sub1 origin/modify_sub1
++			test_git_directory_exists sub1
++		)
++	'
++	# Replacing it with a file
++	test_expect_success "$command: replace submodule with a file" '
++		prolog &&
++		reset_work_tree_to_interested add_sub1 &&
++		(
++			cd submodule_update &&
++			git branch -t replace_sub1_with_file origin/replace_sub1_with_file &&
++			$command replace_sub1_with_file &&
++			test_superproject_content origin/replace_sub1_with_file
++		)
++	'
 +
- test_submodule_switch "git read-tree -u -m"
- 
- test_submodule_forced_switch "git read-tree -u --reset"
++	# ... even if the submodule contains ignored files
++	test_expect_success "$command: replace submodule with a file ignoring ignored files" '
++		prolog &&
++		reset_work_tree_to_interested add_sub1 &&
++		(
++			cd submodule_update &&
++			git branch -t replace_sub1_with_file origin/replace_sub1_with_file &&
++			: >sub1/expect &&
++			$command replace_sub1_with_file &&
++			test_superproject_content origin/replace_sub1_with_file
++		)
++	'
++
++	# ... but stops for untracked files that would be lost
++	test_expect_success "$command: replace submodule with a file" '
++		prolog &&
++		reset_work_tree_to_interested add_sub1 &&
++		(
++			cd submodule_update &&
++			git branch -t replace_sub1_with_file origin/replace_sub1_with_file &&
++			: >sub1/untracked_file &&
++			test_must_fail $command replace_sub1_with_file &&
++			test_superproject_content origin/add_sub1 &&
++			test -f sub1/untracked_file
++		)
++	'
++
++	########################## Modified submodule #########################
++	# Updating a submodule sha1 updates the submodule's work tree
++	test_expect_success "$command: modified submodule updates submodule work tree" '
++		prolog &&
++		reset_work_tree_to_interested add_sub1 &&
++		(
++			cd submodule_update &&
++			git branch -t modify_sub1 origin/modify_sub1 &&
++			$command modify_sub1 &&
++			test_superproject_content origin/modify_sub1 &&
++			test_submodule_content sub1 origin/modify_sub1
++		)
++	'
++	# Updating a submodule to an invalid sha1 doesn't update the
++	# submodule's work tree, subsequent update will fail
++	test_expect_success "$command: modified submodule does not update submodule work tree to invalid commit" '
++		prolog &&
++		reset_work_tree_to_interested add_sub1 &&
++		(
++			cd submodule_update &&
++			git branch -t invalid_sub1 origin/invalid_sub1 &&
++			test_must_fail $command invalid_sub1 &&
++			test_superproject_content origin/add_sub1 &&
++			test_submodule_content sub1 origin/add_sub1
++		)
++	'
++	# Updating a submodule from an invalid sha1 updates
++	test_expect_success "$command: modified submodule does not update submodule work tree from invalid commit" '
++		prolog &&
++		reset_work_tree_to_interested invalid_sub1 &&
++		(
++			cd submodule_update &&
++			git branch -t valid_sub1 origin/valid_sub1 &&
++			test_must_fail $command valid_sub1 &&
++			test_superproject_content origin/invalid_sub1
++		)
++	'
++}
+-- 
+2.12.0.rc1.52.ge239d7e709.dirty
+
