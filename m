@@ -7,51 +7,51 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E410D1F5FB
-	for <e@80x24.org>; Thu,  2 Mar 2017 13:15:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E314F1F5FB
+	for <e@80x24.org>; Thu,  2 Mar 2017 13:16:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753008AbdCBNPq (ORCPT <rfc822;e@80x24.org>);
-        Thu, 2 Mar 2017 08:15:46 -0500
-Received: from mail-ot0-f172.google.com ([74.125.82.172]:32927 "EHLO
-        mail-ot0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752883AbdCBNPd (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Mar 2017 08:15:33 -0500
-Received: by mail-ot0-f172.google.com with SMTP id k4so51495775otc.0
-        for <git@vger.kernel.org>; Thu, 02 Mar 2017 05:15:33 -0800 (PST)
+        id S1753175AbdCBNQz (ORCPT <rfc822;e@80x24.org>);
+        Thu, 2 Mar 2017 08:16:55 -0500
+Received: from mail-ot0-f195.google.com ([74.125.82.195]:34207 "EHLO
+        mail-ot0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752439AbdCBNQx (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Mar 2017 08:16:53 -0500
+Received: by mail-ot0-f195.google.com with SMTP id x37so997532ota.1
+        for <git@vger.kernel.org>; Thu, 02 Mar 2017 05:16:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=TXtuAPeMbtOiDMS0Bcx/iXhVDJYQgUh0/Sq0VLYBn2w=;
-        b=m4hCYpE6eG8UCyYtyKI0oGqfcUErND0yKjkNWpt2nsqKeD14ew7baNE1926LA16L3U
-         yu8/MgSpcPS2JFp1mKphkBqHKstp+mToCRM8hH48CmGVM1ViZuhuzqv14b+yV3lbFmUQ
-         1D9mXY/wYPTmgXRK7OhKVmWjwqoFgd+l3YqM7229R2mWHw1D5E+Z4VXj/0sUk1e2L3/v
-         YHxvYAPBSqFZLOOIutZXtWQ2J6rwGdJ39NqhhYPbcE4AHAhsBytq1uanNEWPbwm203tQ
-         +vZW+LFDFc82Itbj1NDITcyQFtsmp2t3e54GQXvWNji5zQl8g9eqqfy7MWL4aFMoFdVq
-         glaw==
+         :cc:content-transfer-encoding;
+        bh=5nZr7pb3zYdOzOlKlH71gsvErRsRCaJb849ofANU4JQ=;
+        b=VbRzlX/bXhTqjAXLmeJ+jjZJLL0RYB9V+t1tbzY9CrBrlJnlIAxVDMizrqzVflBC6d
+         SuL5CmVTPhuVbqEMbFFy5CS0G6gn36kcGAsvWy+VTDLgwwmH8Kkm2u2qFvEKGO+tBeae
+         quVgHupwiKrYbYUccplI63qkfoUleR4ijn3hZYK/O2XFEVubi7nE3Nt6kiJ5XayOGsaf
+         AYRrdjHErSadc+KmzXfYlqfEknJG17kckZ9yURmyfRNlO27ETEdcJxZ7V+8tJk2cFZt2
+         F9NbyKYCS6c4UiFeoeGXWGDlBnblhfn9nuteKpZXQEPkEdEd3T6hNpZrj+wj+TU71R/X
+         ycdQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=TXtuAPeMbtOiDMS0Bcx/iXhVDJYQgUh0/Sq0VLYBn2w=;
-        b=EGXWmT3NxnoGLjx9kAzoUrM87a6CZ4YrwqBaKUe9AoATEhiPzIwmVv50rHrD1KTQ6Z
-         x1ARYrf8VFUHmYfhdO29Y4CBy/a43Sbwn4s6ntjq5Ssr0qiwLUfAD4r6Frtb3kA0kWEQ
-         X7t3iS4Op8C00t0RF2LvcXWknx8UhTNfHCdEZ5KZ5k5rF7c+RyeTZJUFt3rHZmUgg1yz
-         40NWjWuypWoXlc+OEMee8ZO0rp9LTL1xpL+gjlg0kZR1Vs8VR8O/LFJVeKZPoyVe7M9D
-         jyzvNPGU/I54e1OwsGYIA6yLmJDVT+JVLGpyIsiIPtEBfrh5LuLvxM6PtgHA4tFwLNc2
-         2Wfg==
-X-Gm-Message-State: AMke39nv8GrzZcA5KTCV1NPBNa5qHWoFDlBhhnN9u9+uYi8rXVyXI8mngYBcRlnXHsmYuW+2eer/RciSTVRXJA==
-X-Received: by 10.157.36.225 with SMTP id z88mr6416589ota.271.1488460063695;
- Thu, 02 Mar 2017 05:07:43 -0800 (PST)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=5nZr7pb3zYdOzOlKlH71gsvErRsRCaJb849ofANU4JQ=;
+        b=H8IDUnA/h8QSUuxCUvvKfWrID0B9nWl/GgfeETHKh+ZxU1SI6gUKVtAWpWFolfiC5c
+         6HezvWKWbp6iO9uK7LAxsl/VMgazT/CJ1cJUzdYBtBKF9iuQn6y/ZLiN+2AMwahpnnFv
+         X8KDxeWIYYy+x8Ptb3PGJqTpdLKLl3NlBly3MFdrQa0EeKqwdZsTc4YEy4iQcexa7pHH
+         MaEMs5bE9WnFT80Aul8zq6EVwrM0+41P0fCBdajym2dKH7CnNS9wGBQIjxbO0taPv3TY
+         LmSpW31QUgMMM4DSGXiAndY6XhayFHAJnPjyX+uBOX/O68eY/wFut5ZGLZqFhiPVKfRb
+         YY4Q==
+X-Gm-Message-State: AMke39lG4M+/Egrd1bg0ak+xIRytcFKGaQxlZLRYIKiSSixz7Dq2GEsavfUW8ASkMq2o2j3lD2xny5VwPXBjyg==
+X-Received: by 10.157.46.137 with SMTP id w9mr7651424ota.225.1488458847907;
+ Thu, 02 Mar 2017 04:47:27 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.74.158.84 with HTTP; Thu, 2 Mar 2017 05:07:13 -0800 (PST)
-In-Reply-To: <cb86192d-8644-bed3-1e73-821931589e79@alum.mit.edu>
+Received: by 10.74.158.84 with HTTP; Thu, 2 Mar 2017 04:46:57 -0800 (PST)
+In-Reply-To: <beef528b-66cd-e104-4c02-b07ddfa7e6d7@alum.mit.edu>
 References: <20170218133303.3682-1-pclouds@gmail.com> <20170222140450.30886-1-pclouds@gmail.com>
- <20170222140450.30886-6-pclouds@gmail.com> <cb86192d-8644-bed3-1e73-821931589e79@alum.mit.edu>
+ <20170222140450.30886-8-pclouds@gmail.com> <beef528b-66cd-e104-4c02-b07ddfa7e6d7@alum.mit.edu>
 From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Thu, 2 Mar 2017 20:07:13 +0700
-Message-ID: <CACsJy8AoZt-po5R7+1qPBqTzJ6aiVkKif9Lyp9y0ZwRM09Tj-Q@mail.gmail.com>
-Subject: Re: [PATCH v5 05/24] files-backend: move "logs/" out of TMP_RENAMED_LOG
+Date:   Thu, 2 Mar 2017 19:46:57 +0700
+Message-ID: <CACsJy8CC=DSHyOk2qpdprUTt_3HGK7Wi0VSs4N-0wTUQ-xR8Lw@mail.gmail.com>
+Subject: Re: [PATCH v5 07/24] files-backend: add and use files_refname_path()
 To:     Michael Haggerty <mhagger@alum.mit.edu>
 Cc:     Git Mailing List <git@vger.kernel.org>,
         Junio C Hamano <gitster@pobox.com>,
@@ -60,82 +60,62 @@ Cc:     Git Mailing List <git@vger.kernel.org>,
         Stefan Beller <sbeller@google.com>,
         David Turner <novalis@novalis.org>
 Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Mar 1, 2017 at 12:19 AM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
->> @@ -2513,7 +2513,7 @@ static int files_delete_refs(struct ref_store *ref_store,
->>   * IOW, to avoid cross device rename errors, the temporary renamed log must
->>   * live into logs/refs.
->>   */
->> -#define TMP_RENAMED_LOG  "logs/refs/.tmp-renamed-log"
->> +#define TMP_RENAMED_LOG  "refs/.tmp-renamed-log"
->
-> The constant name feels a little bit misleading now that it is not the
-> name of a logfile but rather a reference name. OTOH "tmp-renamed-log" is
-> *in* the reference name so I guess it's not really wrong.
-
-Heh.. I had a similar internal debate and almost renamed it to
-tmp_renamed_refname. But then it's technically not a valid ref name
-either (starting with a leading dot). My lazy side came in and
-declared that doing nothing was always the right way.
-
->>  struct rename_cb {
->>       const char *tmp_renamed_log;
->> @@ -2549,7 +2549,7 @@ static int rename_tmp_log(const char *newrefname)
->>       int ret;
+On Wed, Mar 1, 2017 at 12:41 AM, Michael Haggerty <mhagger@alum.mit.edu> wr=
+ote:
+> On 02/22/2017 03:04 PM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
+>> Keep repo-related path handling in one place. This will make it easier
+>> to add submodule/multiworktree support later.
 >>
->>       strbuf_git_path(&path, "logs/%s", newrefname);
->> -     strbuf_git_path(&tmp, TMP_RENAMED_LOG);
->> +     strbuf_git_path(&tmp, "logs/%s", TMP_RENAMED_LOG);
->>       cb.tmp_renamed_log = tmp.buf;
->>       ret = raceproof_create_file(path.buf, rename_tmp_log_callback, &cb);
->>       if (ret) {
->> @@ -2626,12 +2626,12 @@ static int files_rename_ref(struct ref_store *ref_store,
->>               return 1;
+>> This automatically adds the "if submodule then use the submodule version
+>> of git_path" to other call sites too. But it does not mean those
+>> operations are sumodule-ready. Not yet.
+>
+> s/sumodule/submodule/
+>
+>> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.=
+com>
+>> ---
+>>  refs/files-backend.c | 45 +++++++++++++++++++++++++--------------------
+>>  1 file changed, 25 insertions(+), 20 deletions(-)
 >>
->>       strbuf_git_path(&sb_oldref, "logs/%s", oldrefname);
->> -     strbuf_git_path(&tmp_renamed_log, TMP_RENAMED_LOG);
->> +     strbuf_git_path(&tmp_renamed_log, "logs/%s", TMP_RENAMED_LOG);
->>       ret = log && rename(sb_oldref.buf, tmp_renamed_log.buf);
->>       strbuf_release(&sb_oldref);
->>       strbuf_release(&tmp_renamed_log);
->>       if (ret)
->> -             return error("unable to move logfile logs/%s to "TMP_RENAMED_LOG": %s",
->> +             return error("unable to move logfile logs/%s to logs/"TMP_RENAMED_LOG": %s",
->>                       oldrefname, strerror(errno));
+>> diff --git a/refs/files-backend.c b/refs/files-backend.c
+>> index 7b4ea4c56..72f4e1746 100644
+>> --- a/refs/files-backend.c
+>> +++ b/refs/files-backend.c
+>> @@ -1180,6 +1180,18 @@ static void files_reflog_path(struct files_ref_st=
+ore *refs,
+>>       strbuf_git_path(sb, "logs/%s", refname);
+>>  }
+>>
+>> +static void files_refname_path(struct files_ref_store *refs,
+>> +                            struct strbuf *sb,
+>> +                            const char *refname)
+>> +{
+>> +     if (refs->submodule) {
+>> +             strbuf_git_path_submodule(sb, refs->submodule, "%s", refna=
+me);
+>> +             return;
+>> +     }
+>> +
+>> +     strbuf_git_path(sb, "%s", refname);
+>> +}
 >
-> It seems like it would be preferable to use `sb_oldref.buf` and
-> `tmp.buf` when building the error message. But I guess that `tmp.buf`
-> might include some path preceding "logs/" that is unwanted in the error
-> message? But it's a shame to hardcode the file naming scheme here again.
->
-> Maybe we *do* want the path in the error message?
+> Maybe it's just me, but I find it odd to exit early here when the first
+> exit isn't due to an error. For me, structuring this like `if ()
+> call1(); else call2();` would make it clearer that the two code paths
+> are equally-valid alternatives, and either one or the other will be
+> executed.
 
-It's an error, every piece of details matters. So yeah I'm inclined we
-should print full path.
-
-> It just occurred to me: this temporary logfile lives in the main
-> repository, right? What if a worktree reference is being renamed? Part
-> of the advertised use of worktrees is that the worktree might live far
-> from the main directory, or even on removable media. But it's not
-> possible to rename files across partitions. Maybe this will come out in
-> the wash once worktrees are ref_stores themselves.
-
-The actual working directory may be separated, but all the things that
-belong to .git (even of a linked worktree) stay in the main worktree's
-.git directory. And I don't think we ever support having a .git
-directory on multiple partitions. You can rename refs freely even when
-the worktree is on a detached removable drive.
-
-> For that matter, what if a user tries to rename a worktree ref into a
-> common ref or vice versa?
-
-Interesting. It should work, it's just a
-rename(".git/worktrees/blah/refs/bisect/good",
-".git/refs/heads/saved") after the path translation done by
-git_path().
--- 
+Its original version probably looked better. This is another case of
+future patches influencing back the past ones: I structure the patch
+so that in future we mostly add lines, or delete whole (in this case,
+I believe), not modify a lot of lines. I think the readability does
+not degrade too much though, so it's probably ok.
+--=20
 Duy
