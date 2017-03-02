@@ -6,53 +6,53 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EEECB2023D
-	for <e@80x24.org>; Thu,  2 Mar 2017 00:54:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A18872023D
+	for <e@80x24.org>; Thu,  2 Mar 2017 00:55:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753737AbdCBAy6 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 1 Mar 2017 19:54:58 -0500
-Received: from mail-pg0-f42.google.com ([74.125.83.42]:34732 "EHLO
-        mail-pg0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753506AbdCBAy5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Mar 2017 19:54:57 -0500
-Received: by mail-pg0-f42.google.com with SMTP id p5so25794022pga.1
-        for <git@vger.kernel.org>; Wed, 01 Mar 2017 16:54:56 -0800 (PST)
+        id S1753765AbdCBAzJ (ORCPT <rfc822;e@80x24.org>);
+        Wed, 1 Mar 2017 19:55:09 -0500
+Received: from mail-pf0-f181.google.com ([209.85.192.181]:34036 "EHLO
+        mail-pf0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752865AbdCBAzI (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Mar 2017 19:55:08 -0500
+Received: by mail-pf0-f181.google.com with SMTP id b5so9002550pfa.1
+        for <git@vger.kernel.org>; Wed, 01 Mar 2017 16:55:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=I49cdIY692cNxXXg6mMOhCCWvMr23IYel2AVRIh9eJQ=;
-        b=Jo8/InAJQHHcgzfmXptSWyUhxYvb0FOLpdlL5Qd4LSH3pFIPEZjnNKds0I7CW+c4u6
-         OZddAlQT+NLiY+8Ta/NXKhkOzHOug0xl/WeBk8otSytZRcLN2oZX58fI8gcg2slvuAAB
-         qOD+rPDWfIyuyeOev46brhQXYGhQxSMLx7vz06BLRqlg8aiPe9jTr/7w9hOg4zkRgAO8
-         9jguMLoWPYpr6Wm6ppS+xXFHWQ/8/77AyoDXVPVPdXyxU9M7ASh/Ze/2y8VHD7eGSJ48
-         5AJc5TnNN/17yxMaQ1Xw7DB2AKPZCazBJUeBN8fvsOvS7aJdN0V+fk3fD43lWj2FisRt
-         5HAg==
+        bh=FtDn0V7Sfsv5oCR0qQZPCiqF41A3KnWc9E8IwKGlx9Q=;
+        b=LRS6UioW/yYYPV14xxkS5Jio0nl5k96eIjMSBXtlnJ/ETAqjVepix60KxcAZUUupvn
+         9wy0uXt93EYHDR0x01tjeMzly4dlhLHSvZrX6tnzZv8JaIey7RhmNZLej6VOF+VGNPcO
+         6FWNINbMmf84pvepjfagqXvG76DBbj2UnTTMJIV8gQQ2dBwIKUlHwoD2jGdHFS+dnfzS
+         ouZ363WkATnC/8fN7dLOoxuRpgD4EeYMZ8VLNQmKwvhsbxlm4miNF/kor2I5fiXnidt+
+         BTFLoRcC5CcJcJtur8mXLyZm4dYfijIJR4QZHFI9LuVwSLrFIkDe7VRUx8ZdSsvCWRzD
+         sdEQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=I49cdIY692cNxXXg6mMOhCCWvMr23IYel2AVRIh9eJQ=;
-        b=doBAh27rbU6aklCNiRmn0A7wC9+I3+khf7xHPB50Mb6M3UV6ro2tCkcFd9eLFg8L/i
-         cT9x6cr1swMzbufjKneb3l3fb0lGCx03ihC975JWGCI3iUZJFqN3blF1Q0oA1Pa/ZNOz
-         w6gtokfka5+9zFIUoiKYEvNxeJcbZfDToIa/JHjAWW+Fh4LatbafyPxjnFMKOH4iS2Yn
-         1jGVgDEI/eJY8eJakQkIf6WLFleDX4Vd0R5arAX5ke8T0Be7IWf11e8Z6ixmVvYV7Nb0
-         rzKAO6ilHFxW1F01Trv5feeQT6Xd4XXGB1vQmWyEOnYSFJQ/v5dR6V5SLjpB6Cutbybp
-         7XQA==
-X-Gm-Message-State: AMke39lbLcNI1NKwJlHUeMd6xzwCbX9m9ZprQPCjrSKE4SHODkcBWnuTBHo6eDxU7EF5hsOH
-X-Received: by 10.98.16.14 with SMTP id y14mr12177107pfi.63.1488415696753;
-        Wed, 01 Mar 2017 16:48:16 -0800 (PST)
+        bh=FtDn0V7Sfsv5oCR0qQZPCiqF41A3KnWc9E8IwKGlx9Q=;
+        b=TK2NRbatFXZZniGDtBffM1pVpwMUQWHGP1i4Pe0y8kmlRlkulSahRAE/kqzl9BliRL
+         /CbfKSJt2byNvCGjgQFRDeCOv2e6J09mRVWH1hbx7PmFEJXm5/SzAJTMpNXjmSwedJs8
+         JtvrDjWJ7RfgfHM+v51X3raVIlkicmSdDC2li/ooKmLqiwG9c6LdsGOUxWPWFyb/OdeJ
+         a6W4Rf20kgifsYqkMJDWcpG4mIDMtv86PRhy5q3WLTkaGgp/6GCSy5/PJ2yw6xM+E8gn
+         id4YiAP00+9fdvyAIVSyFgrRegESSn+71HCuoEgWDPBpmKDulYzMeFBQ1bbmvEcYJN8j
+         zAgw==
+X-Gm-Message-State: AMke39nidNZuV6JBQEg5UuMDNBEQA+cQ1aP+kbTkNbCvdX3sAO3cZEvAZ3fm1Zr9l9qn/fOi
+X-Received: by 10.99.245.21 with SMTP id w21mr12114244pgh.117.1488415699184;
+        Wed, 01 Mar 2017 16:48:19 -0800 (PST)
 Received: from localhost ([2620:0:1000:5b10:695f:c2a1:ec60:5665])
-        by smtp.gmail.com with ESMTPSA id d68sm12750256pfj.92.2017.03.01.16.48.15
+        by smtp.gmail.com with ESMTPSA id y187sm12725497pfy.123.2017.03.01.16.48.18
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 01 Mar 2017 16:48:16 -0800 (PST)
+        Wed, 01 Mar 2017 16:48:18 -0800 (PST)
 From:   Stefan Beller <sbeller@google.com>
 To:     sbeller@google.com
 Cc:     git@vger.kernel.org, bmwill@google.com, novalis@novalis.org,
         sandals@crustytoothpaste.net, hvoigt@hvoigt.net, gitster@pobox.com,
         jrnieder@gmail.com, ramsay@ramsayjones.plus.com
-Subject: [PATCH 10/18] submodules: introduce check to see whether to touch a submodule
-Date:   Wed,  1 Mar 2017 16:47:51 -0800
-Message-Id: <20170302004759.27852-11-sbeller@google.com>
+Subject: [PATCH 12/18] update submodules: add submodule_move_head
+Date:   Wed,  1 Mar 2017 16:47:53 -0800
+Message-Id: <20170302004759.27852-13-sbeller@google.com>
 X-Mailer: git-send-email 2.12.0.rc1.52.ge239d7e709.dirty
 In-Reply-To: <20170302004759.27852-1-sbeller@google.com>
 References: <20170223225735.10994-1-sbeller@google.com/>
@@ -62,67 +62,188 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In later patches we introduce the --recurse-submodule flag for commands
+In later patches we introduce the options and flag for commands
 that modify the working directory, e.g. git-checkout.
 
-It is potentially expensive to check if a submodule needs an update,
-because a common theme to interact with submodules is to spawn a child
-process for each interaction.
-
-So let's introduce a function that checks if a submodule needs
-to be checked for an update before attempting the update.
+This piece of code will be used universally for
+all these working tree modifications as it
+* supports dry run to answer the question:
+  "Is it safe to change the submodule to this new state?"
+  e.g. is it overwriting untracked files or are there local
+  changes that would be overwritten?
+* supports a force flag that can be used for resetting
+  the tree.
 
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- submodule.c | 16 ++++++++++++++++
- submodule.h |  7 +++++++
- 2 files changed, 23 insertions(+)
+ submodule.c | 135 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ submodule.h |   7 ++++
+ 2 files changed, 142 insertions(+)
 
 diff --git a/submodule.c b/submodule.c
-index 591f4a694e..8b2c0212be 100644
+index 0b2596e88a..bc5fecf8c5 100644
 --- a/submodule.c
 +++ b/submodule.c
-@@ -548,6 +548,22 @@ void set_config_update_recurse_submodules(int value)
- 	config_update_recurse_submodules = value;
+@@ -1239,6 +1239,141 @@ int bad_to_remove_submodule(const char *path, unsigned flags)
+ 	return ret;
  }
  
-+int should_update_submodules(void)
++static int submodule_has_dirty_index(const struct submodule *sub)
 +{
-+	return config_update_recurse_submodules == RECURSE_SUBMODULES_ON;
++	struct child_process cp = CHILD_PROCESS_INIT;
++
++	prepare_submodule_repo_env_no_git_dir(&cp.env_array);
++
++	cp.git_cmd = 1;
++	argv_array_pushl(&cp.args, "diff-index", "--quiet", \
++					"--cached", "HEAD", NULL);
++	cp.no_stdin = 1;
++	cp.no_stdout = 1;
++	cp.dir = sub->path;
++	if (start_command(&cp))
++		die("could not recurse into submodule '%s'", sub->path);
++
++	return finish_command(&cp);
 +}
 +
-+const struct submodule *submodule_from_ce(const struct cache_entry *ce)
++static void submodule_reset_index(const char *path)
 +{
-+	if (!S_ISGITLINK(ce->ce_mode))
-+		return NULL;
++	struct child_process cp = CHILD_PROCESS_INIT;
++	prepare_submodule_repo_env_no_git_dir(&cp.env_array);
 +
-+	if (!should_update_submodules())
-+		return NULL;
++	cp.git_cmd = 1;
++	cp.no_stdin = 1;
++	cp.dir = path;
 +
-+	return submodule_from_path(null_sha1, ce->name);
++	argv_array_pushf(&cp.args, "--super-prefix=%s/", path);
++	argv_array_pushl(&cp.args, "read-tree", "-u", "--reset", NULL);
++
++	argv_array_push(&cp.args, EMPTY_TREE_SHA1_HEX);
++
++	if (run_command(&cp))
++		die("could not reset submodule index");
 +}
 +
- static int has_remote(const char *refname, const struct object_id *oid,
- 		      int flags, void *cb_data)
++/**
++ * Moves a submodule at a given path from a given head to another new head.
++ * For edge cases (a submodule coming into existence or removing a submodule)
++ * pass NULL for old or new respectively.
++ */
++int submodule_move_head(const char *path,
++			 const char *old,
++			 const char *new,
++			 unsigned flags)
++{
++	int ret = 0;
++	struct child_process cp = CHILD_PROCESS_INIT;
++	const struct submodule *sub;
++
++	sub = submodule_from_path(null_sha1, path);
++
++	if (!sub)
++		die("BUG: could not get submodule information for '%s'", path);
++
++	if (old && !(flags & SUBMODULE_MOVE_HEAD_FORCE)) {
++		/* Check if the submodule has a dirty index. */
++		if (submodule_has_dirty_index(sub))
++			return error(_("submodule '%s' has dirty index"), path);
++	}
++
++	if (!(flags & SUBMODULE_MOVE_HEAD_DRY_RUN)) {
++		if (old) {
++			if (!submodule_uses_gitfile(path))
++				absorb_git_dir_into_superproject("", path,
++					ABSORB_GITDIR_RECURSE_SUBMODULES);
++		} else {
++			struct strbuf sb = STRBUF_INIT;
++			strbuf_addf(&sb, "%s/modules/%s",
++				    get_git_common_dir(), sub->name);
++			connect_work_tree_and_git_dir(path, sb.buf);
++			strbuf_release(&sb);
++
++			/* make sure the index is clean as well */
++			submodule_reset_index(path);
++		}
++	}
++
++	prepare_submodule_repo_env_no_git_dir(&cp.env_array);
++
++	cp.git_cmd = 1;
++	cp.no_stdin = 1;
++	cp.dir = path;
++
++	argv_array_pushf(&cp.args, "--super-prefix=%s/", path);
++	argv_array_pushl(&cp.args, "read-tree", NULL);
++
++	if (flags & SUBMODULE_MOVE_HEAD_DRY_RUN)
++		argv_array_push(&cp.args, "-n");
++	else
++		argv_array_push(&cp.args, "-u");
++
++	if (flags & SUBMODULE_MOVE_HEAD_FORCE)
++		argv_array_push(&cp.args, "--reset");
++	else
++		argv_array_push(&cp.args, "-m");
++
++	argv_array_push(&cp.args, old ? old : EMPTY_TREE_SHA1_HEX);
++	argv_array_push(&cp.args, new ? new : EMPTY_TREE_SHA1_HEX);
++
++	if (run_command(&cp)) {
++		ret = -1;
++		goto out;
++	}
++
++	if (!(flags & SUBMODULE_MOVE_HEAD_DRY_RUN)) {
++		if (new) {
++			struct child_process cp1 = CHILD_PROCESS_INIT;
++			/* also set the HEAD accordingly */
++			cp1.git_cmd = 1;
++			cp1.no_stdin = 1;
++			cp1.dir = path;
++
++			argv_array_pushl(&cp1.args, "update-ref", "HEAD",
++					 new ? new : EMPTY_TREE_SHA1_HEX, NULL);
++
++			if (run_command(&cp1)) {
++				ret = -1;
++				goto out;
++			}
++		} else {
++			struct strbuf sb = STRBUF_INIT;
++
++			strbuf_addf(&sb, "%s/.git", path);
++			unlink_or_warn(sb.buf);
++			strbuf_release(&sb);
++
++			if (is_empty_dir(path))
++				rmdir_or_warn(path);
++		}
++	}
++out:
++	return ret;
++}
++
+ static int find_first_merges(struct object_array *result, const char *path,
+ 		struct commit *a, struct commit *b)
  {
 diff --git a/submodule.h b/submodule.h
-index b4e60c08d2..6f3fe85c7c 100644
+index 6f3fe85c7c..4cdf6445f7 100644
 --- a/submodule.h
 +++ b/submodule.h
-@@ -65,6 +65,13 @@ extern void show_submodule_inline_diff(FILE *f, const char *path,
- 		const struct diff_options *opt);
- extern void set_config_fetch_recurse_submodules(int value);
- extern void set_config_update_recurse_submodules(int value);
-+/* Check if we want to update any submodule.*/
-+extern int should_update_submodules(void);
-+/*
-+ * Returns the submodule struct if the given ce entry is a submodule
-+ * and it should be updated. Returns NULL otherwise.
-+ */
-+extern const struct submodule *submodule_from_ce(const struct cache_entry *ce);
- extern void check_for_new_submodule_commits(unsigned char new_sha1[20]);
- extern int fetch_populated_submodules(const struct argv_array *options,
- 			       const char *prefix, int command_line_option,
+@@ -96,6 +96,13 @@ extern int push_unpushed_submodules(struct sha1_array *commits,
+ extern void connect_work_tree_and_git_dir(const char *work_tree, const char *git_dir);
+ extern int parallel_submodules(void);
+ 
++#define SUBMODULE_MOVE_HEAD_DRY_RUN (1<<0)
++#define SUBMODULE_MOVE_HEAD_FORCE   (1<<1)
++extern int submodule_move_head(const char *path,
++			       const char *old,
++			       const char *new,
++			       unsigned flags);
++
+ /*
+  * Prepare the "env_array" parameter of a "struct child_process" for executing
+  * a submodule by clearing any repo-specific envirionment variables, but
 -- 
 2.12.0.rc1.52.ge239d7e709.dirty
 
