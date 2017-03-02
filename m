@@ -2,66 +2,81 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 69C002023D
-	for <e@80x24.org>; Thu,  2 Mar 2017 06:10:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id ECEF42023D
+	for <e@80x24.org>; Thu,  2 Mar 2017 06:12:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750989AbdCBGKS (ORCPT <rfc822;e@80x24.org>);
-        Thu, 2 Mar 2017 01:10:18 -0500
-Received: from bsmtp2.bon.at ([213.33.87.16]:53465 "EHLO bsmtp2.bon.at"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750714AbdCBGKR (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Mar 2017 01:10:17 -0500
-Received: from bsmtp.bon.at (unknown [192.168.181.108])
-        by bsmtp2.bon.at (Postfix) with ESMTPS id 3vYhhB3klZz5txH
-        for <git@vger.kernel.org>; Thu,  2 Mar 2017 07:08:26 +0100 (CET)
-Received: from dx.site (unknown [93.83.142.38])
-        by bsmtp.bon.at (Postfix) with ESMTPSA id 3vYhfz5fRlz5tlC;
-        Thu,  2 Mar 2017 07:07:23 +0100 (CET)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-        by dx.site (Postfix) with ESMTP id 29B07F0;
-        Thu,  2 Mar 2017 07:07:23 +0100 (CET)
-Subject: Re: [PATCH] mingw: use OpenSSL's SHA-1 routines
-To:     Junio C Hamano <gitster@pobox.com>
-References: <6a29f8c60d315a24292c1fa9f5e84df4dfdbf813.1486679254.git.johannes.schindelin@gmx.de>
- <20170210050237.gajicliueuvk6s5d@sigill.intra.peff.net>
- <alpine.DEB.2.20.1702101647340.3496@virtualbox>
- <20170210160458.pcp7mupdz24m6cms@sigill.intra.peff.net>
- <9913e513-553e-eba6-e81a-9c21030dd767@kdbg.org>
- <xmqqmvdbz23d.fsf@gitster.mtv.corp.google.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jeff King <peff@peff.net>, git@vger.kernel.org,
-        Jeff Hostetler <jeffhost@microsoft.com>
-From:   Johannes Sixt <j6t@kdbg.org>
-Message-ID: <fa38e22e-3114-fab8-38ed-5f52125e81bb@kdbg.org>
-Date:   Thu, 2 Mar 2017 07:07:22 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.7.0
+        id S1750915AbdCBGMl (ORCPT <rfc822;e@80x24.org>);
+        Thu, 2 Mar 2017 01:12:41 -0500
+Received: from mail-ot0-f173.google.com ([74.125.82.173]:35857 "EHLO
+        mail-ot0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751114AbdCBGMk (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Mar 2017 01:12:40 -0500
+Received: by mail-ot0-f173.google.com with SMTP id i1so45677279ota.3
+        for <git@vger.kernel.org>; Wed, 01 Mar 2017 22:10:55 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=FwT4gqNH26Z22fcQ6QPc5aTun5lTnF9JdXa+6fKDbEM=;
+        b=VuEKhj9K0Oe9TRrHn9uspksT7RZWYuIfMsKyNaHQZlse1lxC13lWRaYj2JOo4VCaV+
+         GuvrSHNjTeFtRK/5zwvDARNnOHyRiwBQTMslTeULz6bay3CP9kkdtTVcuXo6FGujdom/
+         MzZwKvd8+kDAPQzKU3sEJ/ergcSTu1xb053J4pP6FtdMJ8JWCxAieahbjPFAnb+4Twrd
+         kjRcEGIzq6B/50d6ksPgfjuxdsEfPC91I2XCWBsHQSIp9m/hBjtyVWQd+DLG0qEuMZMb
+         3JiVMQlwBZE7MUmvt4EOH3/WOXm++9HH012NfX2FaloZFNIZWKxB1XNaBVs85RXNjHJi
+         Mf6Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=FwT4gqNH26Z22fcQ6QPc5aTun5lTnF9JdXa+6fKDbEM=;
+        b=cFNz1aEduPeN7Kfm2UA7NNY9ym1ou8vzo6el/PiT1c6b/UaxIBbJqpVWoqI2ClcVOh
+         R0t96rXUTepkJ65DY8l4PbObEMKK7llJdGhKMc5a0elorJ+x7Z2S2GD0dAJuBN4cPdY1
+         b8InFEPbVMieDa6p5DCFB3BRQXo5ybfIZSfmsY3slAMBdVvmyoEut1e1b7Oo/OFBKZRw
+         W1iogQ7Nwxv9oKHZymJQQ5Z1BX2kYIpnQUkyx4ktcKLVARYEWA5rkgqUmXtqENje5pit
+         Nh1yQUMVRLgmrmZOFiIUIxYNB16lnfcOQzFJV1vVwlLwVIDpmqaUmpV0iQhsdyVJ+GH1
+         c0Bw==
+X-Gm-Message-State: AMke39k36ucGJc9unmoupZWGMnKeOiihC+hWpYJ43B78iNspcfjlwEgNpSaWQnvtHmYFEcyJ2F48/dWh+0OLVQ==
+X-Received: by 10.157.20.151 with SMTP id d23mr2601733ote.37.1488435054578;
+ Wed, 01 Mar 2017 22:10:54 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <xmqqmvdbz23d.fsf@gitster.mtv.corp.google.com>
-Content-Type: text/plain; charset=iso-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
+Received: by 10.74.158.84 with HTTP; Wed, 1 Mar 2017 22:10:23 -0800 (PST)
+In-Reply-To: <20170301231921.2puf7o7jkrujscwn@sigill.intra.peff.net>
+References: <alpine.LFD.2.20.1702281621050.22202@i7.lan> <xmqq7f48hm8g.fsf@gitster.mtv.corp.google.com>
+ <CA+55aFx1wAS-nHS2awuW2waX=cvig4UoZqmN5H3v93yDE7ukyQ@mail.gmail.com>
+ <xmqq37ewhji1.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1703012227010.3767@virtualbox>
+ <CA+55aFys5oQ0RySQ+Xv0ZDussr-xZNh4_b3+Upx_d9VPWmpM8Q@mail.gmail.com>
+ <alpine.DEB.2.20.1703012334400.3767@virtualbox> <CA+55aFy9=jBJT36FC2HiAeabJBssY=jE=zLxwrXWzhpiFkMUXg@mail.gmail.com>
+ <20170301231921.2puf7o7jkrujscwn@sigill.intra.peff.net>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Thu, 2 Mar 2017 13:10:23 +0700
+Message-ID: <CACsJy8D3h1KAaKi_Esc98za3LqXaB=YeW0Yu+VAV9UnX5vmttg@mail.gmail.com>
+Subject: Re: [PATCH] Put sha1dc on a diet
+To:     Jeff King <peff@peff.net>
+Cc:     Linus Torvalds <torvalds@linux-foundation.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>,
+        Marc Stevens <marc.stevens@cwi.nl>,
+        Dan Shumow <danshu@microsoft.com>,
+        Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 24.02.2017 um 22:54 schrieb Junio C Hamano:
-> Johannes Sixt <j6t@kdbg.org> writes:
->> I'll use the patch for daily work for a while to see whether it hurts.
->
-> Please ping this thread again when you have something to add.  For
-> now, I'll demote this patch from 'next' to 'pu' when we rewind and
-> rebuild 'next' post 2.12 release.
+On Thu, Mar 2, 2017 at 6:19 AM, Jeff King <peff@peff.net> wrote:
+> You have to remember that some of the Git for Windows users are doing
+> horrific things like using repositories with 450MB .git/index files, and
+> the speed to compute the sha1 during an update is noticeable there.
 
-As I already said in [1], I have no objection. I've used the patch in 
-production for some time now and did not notice any slowdowns.
-
-[1] 
-https://public-inbox.org/git/0080edd6-a515-2fe9-6266-b6f6bbedfdde@kdbg.org/
-
--- Hannes
-
+We probably should separate this use case from the object hashing
+anyway. Here we need a better, more reliable crc32 basically, to
+detect bit flips. Even if we move to SHA-something, we can keep
+staying with SHA-1 here (and with the fastest implementation)
+-- 
+Duy
