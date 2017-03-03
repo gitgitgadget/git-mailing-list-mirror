@@ -2,106 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0E44B20133
-	for <e@80x24.org>; Fri,  3 Mar 2017 19:40:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9594320133
+	for <e@80x24.org>; Fri,  3 Mar 2017 20:05:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752057AbdCCTkD (ORCPT <rfc822;e@80x24.org>);
-        Fri, 3 Mar 2017 14:40:03 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:60707 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751677AbdCCTkA (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 3 Mar 2017 14:40:00 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 413CB6509F;
-        Fri,  3 Mar 2017 14:39:32 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=qjTC1DzxZjAZLDJRlXZ3RFi/i2c=; b=Bt3CY7
-        /hr0SzUnVz3ObW8ZWvppoXSFPTlWxqFipNAUQZH/9Epcu5+hkXPnc1DH6xQ2iOBd
-        loaj312m4Qt2XbP9PbeDuXsy9JKnPHQgq0FJtFLtqtTNr5lbVN9H3f0nF2F7Xvvp
-        QsgYsdh8uK2xTvlkZXSESWDw3JFfHlPRALxes=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=cZ4jPAZLvRLueN/Xab+bMyVWqG3dqJak
-        KzWD5uTNSf+f+T/ePDfwoCLx+SfD65peZAfDp053D+sNrCOulK5KQ6y68OsPrTyN
-        ZxHFiYGvNYRw44CVIW0awNNZf3m4lK/GCt/LU9duPUZoeTqwYqkFin4qEONYdmnq
-        /kQBWri1+Gk=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 3A3346509E;
-        Fri,  3 Mar 2017 14:39:32 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id A4F3F6509B;
-        Fri,  3 Mar 2017 14:39:31 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Denton Liu <liu.denton@gmail.com>
-Cc:     git@vger.kernel.org, davvid@gmail.com, Johannes.Schindelin@gmx.de
-Subject: Re: [PATCH v2 2/5] Use -y where possible in test t7610-mergetool
-References: <20170303134022.GA6258@arch-attack.localdomain>
-Date:   Fri, 03 Mar 2017 11:39:30 -0800
-In-Reply-To: <20170303134022.GA6258@arch-attack.localdomain> (Denton Liu's
-        message of "Fri, 3 Mar 2017 05:40:22 -0800")
-Message-ID: <xmqqd1dy880d.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+        id S1751970AbdCCUFx (ORCPT <rfc822;e@80x24.org>);
+        Fri, 3 Mar 2017 15:05:53 -0500
+Received: from cloud.peff.net ([104.130.231.41]:38267 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751593AbdCCUFw (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 3 Mar 2017 15:05:52 -0500
+Received: (qmail 31693 invoked by uid 109); 3 Mar 2017 11:04:50 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 03 Mar 2017 11:04:50 +0000
+Received: (qmail 27086 invoked by uid 111); 3 Mar 2017 11:04:57 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 03 Mar 2017 06:04:57 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 03 Mar 2017 06:04:48 -0500
+Date:   Fri, 3 Mar 2017 06:04:48 -0500
+From:   Jeff King <peff@peff.net>
+To:     Linus Torvalds <torvalds@linux-foundation.org>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Ian Jackson <ijackson@chiark.greenend.org.uk>,
+        Joey Hess <id@joeyh.name>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: SHA1 collisions found
+Message-ID: <20170303110448.se3bstlk5hr4hqv3@sigill.intra.peff.net>
+References: <20170223164306.spg2avxzukkggrpb@kitenet.net>
+ <22704.19873.860148.22472@chiark.greenend.org.uk>
+ <xmqq60jz5wbm.fsf@gitster.mtv.corp.google.com>
+ <20170224233929.p2yckbc6ksyox5nu@sigill.intra.peff.net>
+ <CA+55aFw6BLjPK-F0RGd9LT7X5xosKOXOxuhmKX65ZHn09r1xow@mail.gmail.com>
+ <CA+55aFwXaSAMF41Dz3u3nS+2S24umdUFv0+k+s18UyPoj+v31g@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 1F5C953A-0049-11E7-89ED-FC50AE2156B6-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CA+55aFwXaSAMF41Dz3u3nS+2S24umdUFv0+k+s18UyPoj+v31g@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Denton Liu <liu.denton@gmail.com> writes:
+On Thu, Mar 02, 2017 at 11:55:45AM -0800, Linus Torvalds wrote:
 
-> In these tests, there are many situations where
-> 'echo "" | git mergetool' is used. This replaces all of those
-> occurrences with 'git mergetool -y' for simplicity and readability.
+> Anyway, I do have a suggestion for what the "object version" would be,
+> but I'm not even going to mention it, because I want people to first
+> think about the _concept_ and not the implementation.
+> 
+> So: What do you think about the concept?
 
-"-y where _possible_" is not necessarily a good thing to do in
-tests.  We do want to make sure that both "yes" from the input and
-"-y" from the command line work.  Changes to "-y" done only for the
-tests that are not about accepting the interactive input from the
-end-user is a very good idea, but "replaces all of those" makes me
-worried.
+I think it very much depends on what's in the "object version". :)
 
-> -	( yes "" | git mergetool both >/dev/null 2>&1 ) &&
-> -	( yes "" | git mergetool file1 file1 ) &&
-> -	( yes "" | git mergetool file2 "spaced name" >/dev/null 2>&1 ) &&
-> -	( yes "" | git mergetool subdir/file3 >/dev/null 2>&1 ) &&
-> +	git mergetool -y both >/dev/null 2>&1 &&
-> +	git mergetool -y file1 file1 &&
-> +	git mergetool -y file2 "spaced name" >/dev/null 2>&1 &&
-> +	git mergetool -y subdir/file3 >/dev/null 2>&1 &&
+IMHO, we are best to consider sha1 "broken" and not count on any of its
+bytes for cryptographic integrity. I know that's not really the case,
+but it just makes reasoning about the whole thing simpler. So at that
+point, it's pretty obvious that the "object version" is really just "an
+integrity hash".
 
-So these replace "the user interactively keeps typing <ENTER>" with
-"-y", which sounds good.  These are obviously more about what the
-code actually does.
+And that takes us full circle to earlier proposals over the years to do
+something like this in the commit header:
 
-> -	( yes "" | git mergetool file1 >/dev/null 2>&1 ) &&
-> -	( yes "" | git mergetool file2 >/dev/null 2>&1 ) &&
-> -	( yes "" | git mergetool "spaced name" >/dev/null 2>&1 ) &&
-> -	( yes "" | git mergetool both >/dev/null 2>&1 ) &&
-> -	( yes "" | git mergetool subdir/file3 >/dev/null 2>&1 ) &&
-> +	git mergetool file1 >/dev/null 2>&1 &&
-> +	git mergetool file2 >/dev/null 2>&1 &&
-> +	git mergetool "spaced name" >/dev/null 2>&1 &&
-> +	git mergetool both >/dev/null 2>&1 &&
-> +	git mergetool subdir/file3 >/dev/null 2>&1 &&
+  parent ...some sha1...
+  parent-sha256 ...some sha256...
 
-The reason for the lack of "-y" in the rewrite, in contrast to what
-was done in the previous hunk we saw, is not quite obvious.
+and ditto in tag headers, and trees obviously need to be hackily
+extended as you described to carry the extra hash. And then internally
+we continue to happily use sha1s, except you can check the
+sha256-validity of any reference if you feel like it.
 
-> @@ -177,7 +177,7 @@ test_expect_success 'mergetool in subdir' '
->  	(
->  		cd subdir &&
->  		test_expect_code 1 git merge master >/dev/null 2>&1 &&
-> -		( yes "" | git mergetool file3 >/dev/null 2>&1 ) &&
-> +		git mergetool file3 >/dev/null 2>&1 &&
+This is functionally equivalent to "just start using sha-256, but keep a
+mapping of old sha1s to sha-256s to handle old references". The
+advantage is that it makes the code part of the transition simpler. The
+disadvantage is that you're effectively carrying a piece of that
+sha1->sha256 mapping around in _every_ object.
 
-Likewise, and likewise for the remainder of the patch where the
-updated command line does not say "-y".
+And that means the same bits of mapping data are repeated over and over.
+Git's pretty good at de-duplicating on the surface. So yeah, every tree
+entry is now 256 bits larger, but deltas mean that we usually only end
+up storing each entry a handful of times. But we still pay the price to
+walk over the bytes every time we apply a delta, zlib inflate, parse the
+tree, etc. The runtime cost of the transition is carried forward
+forever, even for repositories that are willing to rewrite history, or
+are created after the flag day.
+
+So I dunno. Maybe I am missing something really clever about your
+proposal. Reading the rest of the thread, it sounds like you had a
+thought that we could get by with a very tiny object version, but the
+hash-adding thing nixed that. If I'm still missing the point, please try
+to sketch it out a bit more concretely, and I'll come back with my
+thinking cap on.
+
+-Peff
