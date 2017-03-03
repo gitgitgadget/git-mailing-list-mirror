@@ -2,95 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F03DF20133
-	for <e@80x24.org>; Fri,  3 Mar 2017 17:49:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F0FD420133
+	for <e@80x24.org>; Fri,  3 Mar 2017 18:07:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751686AbdCCRtL (ORCPT <rfc822;e@80x24.org>);
-        Fri, 3 Mar 2017 12:49:11 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:56446 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751083AbdCCRtK (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 3 Mar 2017 12:49:10 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 081816266F;
-        Fri,  3 Mar 2017 12:47:21 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=w9dIwunX4pfX
-        AkNuJBVh4Dr5lTo=; b=TOjElsIBUJqTs6QWIqN9LHOXN4iQVaKkcxFEo8fDObOR
-        epO5h0Uev680rref6A10q/w21E8i6aM+IBp9LcdZLliLYXnaRTxUmGu8IgfibIG4
-        q04dcxmvk3adJUoIlPCU0zqatR0tvGUVObeh9XEGjFsKEYX7F+REtMwPx1D5ttw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=HcQ2Ws
-        l1BkK3HcRPKqATaekyN9m0DUNZDP+Ym9f8o9dlxx1grQVNJ/NEynQTtOisg9USEy
-        iW0RkKiqh0VQua2EhZ89E71EvKfbprLOeMtQ9wLu6etOzqK25KGoV/XMuQ6Epand
-        CilhRoRA/bDKUHYBYctuZDyZ2Yyk0bvck1tiQ=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id F3E2D6266E;
-        Fri,  3 Mar 2017 12:47:20 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.84])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 58DAB6266D;
-        Fri,  3 Mar 2017 12:47:20 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
-Cc:     Mike Crowe <mac@mcrowe.com>, git@vger.kernel.org,
-        Jeff King <peff@peff.net>
-Subject: Re: [PATCH v1 1/1] git diff --quiet exits with 1 on clean tree with CRLF conversions
-References: <xmqqshmyhtnu.fsf@gitster.mtv.corp.google.com>
-        <20170301170444.14274-1-tboegi@web.de>
-        <xmqqr32gg0o6.fsf@gitster.mtv.corp.google.com>
-        <xmqqa894fyst.fsf@gitster.mtv.corp.google.com>
-        <20170302142056.GB7821@mcrowe.com>
-        <xmqqbmtjcyug.fsf@gitster.mtv.corp.google.com>
-        <20170302200356.GA31318@mcrowe.com>
-        <ae2b144a-5e39-8178-5161-1d8eb673b6f0@web.de>
-Date:   Fri, 03 Mar 2017 09:47:18 -0800
-In-Reply-To: <ae2b144a-5e39-8178-5161-1d8eb673b6f0@web.de> ("Torsten
-        =?utf-8?Q?B=C3=B6gershausen=22's?= message of "Fri, 3 Mar 2017 18:02:56
- +0100")
-Message-ID: <xmqq37eu2qxl.fsf@junio-linux.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+        id S1751991AbdCCSHj (ORCPT <rfc822;e@80x24.org>);
+        Fri, 3 Mar 2017 13:07:39 -0500
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:35981 "EHLO
+        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751744AbdCCSHa (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 3 Mar 2017 13:07:30 -0500
+Received: by mail-wm0-f65.google.com with SMTP id v190so4312389wme.3
+        for <git@vger.kernel.org>; Fri, 03 Mar 2017 10:06:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:references:cc:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding;
+        bh=cchrrIXm7ifocBw9zPiB7R3B8eYWpvZEUS9PErllU74=;
+        b=YK+UNVNJg6jqsw65+Ihztv3nFQtvM87vZwWxH10PdrwzTLGWpmIahH0BFWQjZuEq55
+         Z8nQOgMDTNklvCgyPj/BzGSipRXmGotOBsV4crNJrrVnkOk/5EXmfUla670tYcE/hqYN
+         syc356rUXaYrngrTD4pXtsxNYLjeDyZpmrb1iYqnPujQD6Xv6T/YojqUbMS/KpgZ57xW
+         kQrNVDEugZmp/EpWEguG7raanR3sqrmAv36AvlSlL0T/YZHgPt93EiKcqVC39yVz0G8O
+         tW6PPvMs4PDE4PvDlr98nqLSKh+Rr43WpUYlsOkph84FkqSbHyKSe0DusZkzWrkMa6M2
+         6Uiw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
+        bh=cchrrIXm7ifocBw9zPiB7R3B8eYWpvZEUS9PErllU74=;
+        b=Kzq3WffEQ9lvaZ2kR+EphzmPAZTYFcTZs4ehF062iDHxAc4ihyRYyZjaVZoMkJnnEI
+         fIog6vO6eA5K/bYzuI9Qy3wKrH8xePUbv42xgWK9o1rUyD3eJKlgWtsHxJCDep8RitbG
+         Z1QDjb6HkGvt0TAHNOSkst1EDEzprGW2Mb+Vl1mSQIdeyuuHeIZlbYSaOwdJ0IS6JLdR
+         igyNoOYLNehdWUqiDAUDTxziNO4jftnG9P/mYGO4hD89vDqqrselGrMyrQOcg+5H34ql
+         2zeHkFiOXw4Tz0mgX4uA2+m7Ui9ZJy+G67ib2gXXeh5uNrBrx0S2uGPSUrtYL71HkUiU
+         HBsg==
+X-Gm-Message-State: AMke39k1sJntL7woNZu3Hxof41bWM2KAQ8rghtzornenA6Y6Kg0h6VeVxK28D5x770l0tA==
+X-Received: by 10.28.191.24 with SMTP id p24mr4108242wmf.118.1488564393151;
+        Fri, 03 Mar 2017 10:06:33 -0800 (PST)
+Received: from [192.168.1.25] (AClermont-Ferrand-651-1-328-211.w90-9.abo.wanadoo.fr. [90.9.71.211])
+        by smtp.gmail.com with ESMTPSA id z198sm3930616wmz.24.2017.03.03.10.06.31
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 03 Mar 2017 10:06:31 -0800 (PST)
+Subject: Re: [PATCH 1/3] Add --gui option to mergetool
+To:     Denton Liu <liu.denton@gmail.com>, git@vger.kernel.org
+References: <20170303115738.GA13211@arch-attack.localdomain>
+Cc:     davvid@gmail.com, Johannes.Schindelin@gmx.de
+From:   =?UTF-8?Q?R=c3=a9mi_Galan_Alfonso?= <remi.galanalfonso@gmail.com>
+Message-ID: <cc53dc5b-4f3a-bb7f-4f4f-876ba6adb31f@gmail.com>
+Date:   Fri, 3 Mar 2017 19:06:30 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.7.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 73300EF4-0039-11E7-B4AC-FC50AE2156B6-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20170303115738.GA13211@arch-attack.localdomain>
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Torsten B=C3=B6gershausen <tboegi@web.de> writes:
+Hi,
 
-> Understood, thanks for the explanation.
->
-> quiet is not quite any more..
->
-> Does the following fix help ?
->
-> --- a/diff.c
-> +++ b/diff.c
-> @@ -2826,6 +2826,8 @@ int diff_populate_filespec(struct diff_filespec *=
-s,
-> unsigned int flags)
->         enum safe_crlf crlf_warn =3D (safe_crlf =3D=3D SAFE_CRLF_FAIL
->                                     ? SAFE_CRLF_WARN
->                                     : safe_crlf);
-> +       if (size_only)
-> +               crlf_warn =3D SAFE_CRLF_FALSE;
+Denton Liu <liu.denton@gmail.com> writes:
+ > [...]
+ >
+ > +test_expect_success 'gui mergetool' '
+ > +	test_when_finished "git reset --hard" &&
+ > +	test_when_finished "git config merge.tool mytool" &&
+ > +	test_when_finished "git config --unset merge.guitool" &&
+ > +	git config merge.tool badtool &&
+ > +	git config merge.guitool mytool &&
 
-If you were to go this route, it may be sufficient to change its
-initialization from WARN to FALSE _unconditionally_, because this
-function uses the convert_to_git() only to _show_ the differences by
-computing canonical form out of working tree contents, and the
-conversion is not done to _write_ into object database to create a
-new object.
+You should be able to squash the lines
+   `test_when_finished "git config --unset merge.guitool" &&`
+and
+   `git config merge.guitool mytool &&`
+into
+   `test_config merge.guitool mytool`
 
-Having size_only here is not a sign of getting --quiet passed from
-the command line, by the way.
+(It is however not possible with merge.tool since you set it to a
+specific value 'when_finished')
+
+Thanks,
+Rémi
+
