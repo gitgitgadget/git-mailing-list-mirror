@@ -7,128 +7,162 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 83AC120133
-	for <e@80x24.org>; Fri,  3 Mar 2017 17:33:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 62D1720133
+	for <e@80x24.org>; Fri,  3 Mar 2017 17:33:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752261AbdCCRdv (ORCPT <rfc822;e@80x24.org>);
-        Fri, 3 Mar 2017 12:33:51 -0500
-Received: from mout.gmx.net ([212.227.17.21]:63814 "EHLO mout.gmx.net"
+        id S1752267AbdCCRdz (ORCPT <rfc822;e@80x24.org>);
+        Fri, 3 Mar 2017 12:33:55 -0500
+Received: from mout.gmx.net ([212.227.15.15]:54728 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752243AbdCCRdu (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 3 Mar 2017 12:33:50 -0500
-Received: from virtualbox ([89.204.154.17]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0LaaVn-1c0rMA1Ush-00mMc7; Fri, 03
- Mar 2017 18:33:17 +0100
-Date:   Fri, 3 Mar 2017 18:33:16 +0100 (CET)
+        id S1752232AbdCCRdw (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 3 Mar 2017 12:33:52 -0500
+Received: from virtualbox ([89.204.154.17]) by mail.gmx.com (mrgmx001
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MWCgz-1clp8K0zEX-00XLhr; Fri, 03
+ Mar 2017 18:33:21 +0100
+Date:   Fri, 3 Mar 2017 18:33:20 +0100 (CET)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     git@vger.kernel.org
 cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Duy Nguyen <pclouds@gmail.com>
-Subject: [PATCH v3 5/9] Export the discover_git_directory() function
+Subject: [PATCH v3 6/9] Make read_early_config() reusable
 In-Reply-To: <cover.1488562287.git.johannes.schindelin@gmx.de>
-Message-ID: <f84bac1f6c3138347360ec9a8045cec2e979a48e.1488562287.git.johannes.schindelin@gmx.de>
+Message-ID: <e3819700196bba4916fd39c5354eb5135874b8c0.1488562287.git.johannes.schindelin@gmx.de>
 References: <cover.1488506615.git.johannes.schindelin@gmx.de> <cover.1488562287.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:EbVNDadW8l+WJ99Gts0NFUGtgMxtdKKe/+QD10fkk9ythfDJXXL
- KAJV5uuNAqxR66905AtLYD7CG3OHnbOi5SjTxJiwpa1csdiooN+VkCGrlEkDxlnMfREj2HL
- jsVT536MmZr6erzfCdRvRSyBBXByUQv5mK9OenmNVKeaHwgmC4VWHRXclulDzqH8dPqcvVR
- p+TV7SLuXzxyPl1IImIYw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:JvGPl71IhzI=:CU//IwYQp4B+75KvGu7kvy
- /LQPMBdOQtNgJYSHK9P/WLY4AKWhmz97oSgjlSPI4p0chVYxhNw8ipL12DSZexRZJjVDBniHV
- beA3FyZiTXIq2CFy47k6zrq/MfuAzcqi3+oiyp8qy0VjEQ7Yvx0TCT831rF27m7Ba8G+xLb6r
- hF5lVeg5Znn8PGhO+rt3xU3CAWyicuR52JDA5fKwzIqh4lIgWDRvKMLjvWmojKEtnOq1XzA37
- OH9SdkB0sPBlg7DJwRLjDYoWS5bg/a1pFOnHfXXT4c00lwhASsC8ljkhn2P49JT7vR6IzEXb4
- afzHs0lcFjEa5d/+5RwTfFBvih94HYTHvdjsaLr+Q4GsCs66lSsU4cSFQUHEEYGW5Z7XKPnp4
- koYjJngMdcxSZ1Nfs961CQgl3Iuvh+Us12So+VEddm/uDRj8zzo8vAT5jWWfnSyMa7HTvZIvc
- XrQhY8IBk4CwEQyxml+k2fFGf2LslTiZCQMjJIKpNfLOZwYJVSnaEnNiAAJtTbNMrlGOiYN+c
- VhlgC/08RuNCF8OqzYNVj67yrHgSs8bFUlF1yjnrSfKAWi86n6ENk4+/51YF/89NxZlHyR/Rw
- 9Yr5aeb7evSAtMEvCfvhGwhaW+wiXZz8F13wp/JMStfvHmbbOomKDz+iE3e/mwv7KHiasxY+M
- rF9N9Ik1MP7XaExiUZsnPon4jRPdCEUKeAWz8aCc76kuvvYL2oTd/MRO9eFZ6eiFhb9YfnhC2
- /64FiCr0Q/ysCsW2SHB6z6rVx1WX7KKGh/HNMVJL3ot1YdqtxQIXwQmNS/5VXTicA340a6zJk
- 1w7uWix
+X-Provags-ID: V03:K0:w/xaQlyZEVXH0opnslNBD8KF8vSuCGf1ZmDdioO8LsG4qJChV4G
+ lho9Y6KNpg68tBCr/RavfnjTWwfYqp3z+bx0zeSAdIOhinhckWNc/hoWNDjvzEFInGmiAF8
+ cVy3CRKFJ7jnqf7e73ljvyQjs1uVxJue0Ov48k6X/Dic6ZVhWwgc3fdWKqKrH6K00HV6owQ
+ lghiRy1hJxID1PeRg+AzQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:g7l3yvmWzs4=:1/T2wcPHfcmS2kMpDJo+6S
+ 1PO1Hy+A/7DJEQf4P2RuxcT7zSirCZvC8nU++vCRRG4seE55KLSQfXgmd1Y1yx5teu1wjRv6X
+ Tna8i/oHL2Cq1IGpAsMt11xHrdEA5b9oMUQeD3L/JiKHnYZNp8V7qLn8/naEtQus+dHwTHkoT
+ R/Y01M2Ty3of3KSJanKhOCfBWCoaHnKF3O4HsONWP0ou1hB0fcOvAi7xMozkKseDI1++gP3eM
+ 6UkRmO3evhvaRFWQtALsWF5jFwK/aQw28Bt1Ze0vFt7QxfY+KqQpWmrU6U1XSp6NcuXzy4gIS
+ SP0yop6ykGopUMQseJe3Vk4B29D6xIUf6fUe7WdoYK88wUrv1pCw42JrHP4p29uUJVw80YrCM
+ L2WJKZKh8la0OiXzFdcgBRK9i1HKOmh9fCJa2zc2zunK2HlUIZ4q8q2rktt+iY/mNxa9HFKaq
+ qScV3FoG0KdpD/lvcNPCsk9Ey9RjlaoqH7Yrom2SkeYsh2bixd77HaOlg/Jpq0aoTNojh5kD/
+ uyf7wH39PKRfhNyw22IzYxs6s2UXdJG5EdJ9fbP52xX7/sFHS25v6F+LDnPjOdbZDzhXbUEb5
+ 9gtErHsw3R9AE+Q6TO3sW+1Mzt7RpSSXzE+ze/wdpEvLKJh9vlyCjG2WvJr0adyhU0iOvUM+N
+ 9RxS71+/163rUxIBZwD8VqGTfQvTidL0adXk7WymREMAxFeU03hlCWf3z/DB8BLNoLi1k6pz2
+ s7dFfSoOtU4VQRxO/AAtbIS07Af290HKUm4OGMTxKXvEs6VRpBdz8BFzad1Rg5zojTawxaSLR
+ /9xG7S2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The setup_git_directory_gently_1() function we modified earlier still
-needs to return both the path to the .git/ directory as well as the
-"cd-up" path to allow setup_git_directory() to retain its previous
-behavior as if it changed the current working directory on its quest for
-the .git/ directory.
+The pager configuration needs to be read early, possibly before
+discovering any .git/ directory.
 
-This is a bit cumbersome to use if you only need to figure out the
-(possibly absolute) path of the .git/ directory. Let's just provide
-a convenient wrapper function with an easier signature that *just*
-discovers the .git/ directory.
-
-We will use it in a subsequent patch to support early config reading
-better.
+Let's not hide this function in pager.c, but make it available to other
+callers.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- cache.h |  2 ++
- setup.c | 31 +++++++++++++++++++++++++++++++
- 2 files changed, 33 insertions(+)
+ cache.h  |  1 +
+ config.c | 31 +++++++++++++++++++++++++++++++
+ pager.c  | 31 -------------------------------
+ 3 files changed, 32 insertions(+), 31 deletions(-)
 
 diff --git a/cache.h b/cache.h
-index 80b6372cf76..4d8eb38de74 100644
+index 4d8eb38de74..8a4580f921d 100644
 --- a/cache.h
 +++ b/cache.h
-@@ -518,6 +518,8 @@ extern void set_git_work_tree(const char *tree);
- #define ALTERNATE_DB_ENVIRONMENT "GIT_ALTERNATE_OBJECT_DIRECTORIES"
- 
- extern void setup_work_tree(void);
-+/* Find GIT_DIR without changing the working directory or other global state */
-+extern const char *discover_git_directory(struct strbuf *gitdir);
- extern const char *setup_git_directory_gently(int *);
- extern const char *setup_git_directory(void);
- extern char *prefix_path(const char *prefix, int len, const char *path);
-diff --git a/setup.c b/setup.c
-index 9a09bb41ab5..32ce023638a 100644
---- a/setup.c
-+++ b/setup.c
-@@ -923,6 +923,37 @@ static enum discovery_result setup_git_directory_gently_1(struct strbuf *dir,
+@@ -1799,6 +1799,7 @@ extern int git_config_from_blob_sha1(config_fn_t fn, const char *name,
+ 				     const unsigned char *sha1, void *data);
+ extern void git_config_push_parameter(const char *text);
+ extern int git_config_from_parameters(config_fn_t fn, void *data);
++extern void read_early_config(config_fn_t cb, void *data);
+ extern void git_config(config_fn_t fn, void *);
+ extern int git_config_with_options(config_fn_t fn, void *,
+ 				   struct git_config_source *config_source,
+diff --git a/config.c b/config.c
+index c6b874a7bf7..9cfbeafd04c 100644
+--- a/config.c
++++ b/config.c
+@@ -1412,6 +1412,37 @@ static void configset_iter(struct config_set *cs, config_fn_t fn, void *data)
  	}
  }
  
-+const char *discover_git_directory(struct strbuf *gitdir)
++void read_early_config(config_fn_t cb, void *data)
 +{
-+	struct strbuf dir = STRBUF_INIT;
-+	size_t gitdir_offset = gitdir->len, cwd_len;
-+
-+	if (strbuf_getcwd(&dir))
-+		return NULL;
-+
-+	cwd_len = dir.len;
-+	if (setup_git_directory_gently_1(&dir, gitdir) < 0) {
-+		strbuf_release(&dir);
-+		return NULL;
-+	}
++	git_config_with_options(cb, data, NULL, 1);
 +
 +	/*
-+	 * The returned gitdir is relative to dir, and if dir does not reflect
-+	 * the current working directory, we simply make the gitdir absolute.
++	 * Note that this is a really dirty hack that does the wrong thing in
++	 * many cases. The crux of the problem is that we cannot run
++	 * setup_git_directory() early on in git's setup, so we have no idea if
++	 * we are in a repository or not, and therefore are not sure whether
++	 * and how to read repository-local config.
++	 *
++	 * So if we _aren't_ in a repository (or we are but we would reject its
++	 * core.repositoryformatversion), we'll read whatever is in .git/config
++	 * blindly. Similarly, if we _are_ in a repository, but not at the
++	 * root, we'll fail to find .git/config (because it's really
++	 * ../.git/config, etc). See t7006 for a complete set of failures.
++	 *
++	 * However, we have historically provided this hack because it does
++	 * work some of the time (namely when you are at the top-level of a
++	 * valid repository), and would rarely make things worse (i.e., you do
++	 * not generally have a .git/config file sitting around).
 +	 */
-+	if (dir.len < cwd_len && !is_absolute_path(gitdir->buf + gitdir_offset)) {
-+		/* Avoid a trailing "/." */
-+		if (!strcmp(".", gitdir->buf + gitdir_offset))
-+			strbuf_setlen(gitdir, gitdir_offset);
-+		else
-+			strbuf_addch(&dir, '/');
-+		strbuf_insert(gitdir, gitdir_offset, dir.buf, dir.len);
-+	}
-+	strbuf_release(&dir);
++	if (!startup_info->have_repository) {
++		struct git_config_source repo_config;
 +
-+	return gitdir->buf;
++		memset(&repo_config, 0, sizeof(repo_config));
++		repo_config.file = ".git/config";
++		git_config_with_options(cb, data, &repo_config, 1);
++	}
 +}
 +
- const char *setup_git_directory_gently(int *nongit_ok)
+ static void git_config_check_init(void);
+ 
+ void git_config(config_fn_t fn, void *data)
+diff --git a/pager.c b/pager.c
+index ae796433630..73ca8bc3b17 100644
+--- a/pager.c
++++ b/pager.c
+@@ -43,37 +43,6 @@ static int core_pager_config(const char *var, const char *value, void *data)
+ 	return 0;
+ }
+ 
+-static void read_early_config(config_fn_t cb, void *data)
+-{
+-	git_config_with_options(cb, data, NULL, 1);
+-
+-	/*
+-	 * Note that this is a really dirty hack that does the wrong thing in
+-	 * many cases. The crux of the problem is that we cannot run
+-	 * setup_git_directory() early on in git's setup, so we have no idea if
+-	 * we are in a repository or not, and therefore are not sure whether
+-	 * and how to read repository-local config.
+-	 *
+-	 * So if we _aren't_ in a repository (or we are but we would reject its
+-	 * core.repositoryformatversion), we'll read whatever is in .git/config
+-	 * blindly. Similarly, if we _are_ in a repository, but not at the
+-	 * root, we'll fail to find .git/config (because it's really
+-	 * ../.git/config, etc). See t7006 for a complete set of failures.
+-	 *
+-	 * However, we have historically provided this hack because it does
+-	 * work some of the time (namely when you are at the top-level of a
+-	 * valid repository), and would rarely make things worse (i.e., you do
+-	 * not generally have a .git/config file sitting around).
+-	 */
+-	if (!startup_info->have_repository) {
+-		struct git_config_source repo_config;
+-
+-		memset(&repo_config, 0, sizeof(repo_config));
+-		repo_config.file = ".git/config";
+-		git_config_with_options(cb, data, &repo_config, 1);
+-	}
+-}
+-
+ const char *git_pager(int stdout_is_tty)
  {
- 	struct strbuf cwd = STRBUF_INIT, dir = STRBUF_INIT, gitdir = STRBUF_INIT;
+ 	const char *pager;
 -- 
 2.12.0.windows.1.7.g94dafc3b124
 
