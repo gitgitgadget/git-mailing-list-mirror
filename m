@@ -2,157 +2,238 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6226220133
-	for <e@80x24.org>; Fri,  3 Mar 2017 16:37:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 35F5720133
+	for <e@80x24.org>; Fri,  3 Mar 2017 16:43:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751772AbdCCQhx (ORCPT <rfc822;e@80x24.org>);
-        Fri, 3 Mar 2017 11:37:53 -0500
-Received: from mail-yw0-f196.google.com ([209.85.161.196]:34249 "EHLO
-        mail-yw0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751677AbdCCQht (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 3 Mar 2017 11:37:49 -0500
-Received: by mail-yw0-f196.google.com with SMTP id 203so10413653ywz.1
-        for <git@vger.kernel.org>; Fri, 03 Mar 2017 08:37:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to:cc;
-        bh=77Qyf17Gk5zBinSsRIrxGw4YLMGJNdF53ZCt6JQNQRE=;
-        b=qkWWc1JBFco47MNX8rbCZhNI28Hqq40bW1CsZ9mJfAVElCf/lxAa74JxLUWeY98JwJ
-         44O37Gm7+vePnUyBWB2BmduWpX8SzHkSvOgSGZMPe2vO2lYhDMfzC9uTIOJN4/2Hr6Ff
-         3tlXEBB4iqMwTkkDT8H+JnApfOTk90JshfD4GRIkyF0Dm4MpXNis/Xzn4IkhrbtGqS0d
-         8q3pgWG07qIWwrmIQvaRykQS2v1BYEA6kwDTksFTXfk/YBrd+SK1lmXu1mTvSYpZp/oI
-         L/jcTQEFyRN6XYc8ux4LL6KP36aJ2/0oqrYqoRAodDbbulAdDUIsTL1G/E6Xx9TQHjHK
-         C/DQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=77Qyf17Gk5zBinSsRIrxGw4YLMGJNdF53ZCt6JQNQRE=;
-        b=a3rVJNymQod4QF2cYVLPqVcyzacqnG6hjoIfqmyHIzofuslBybjoY502cyI+0FCU/d
-         4zi61au9u9aFOnCFHa8odLuhYM+u8H/uM21INZVbQJaoTyRHsmOf6cxd8H0kbomz13Oa
-         iqQ5SDrzIEaLqYRrk0sCNiea8H54uCb8Qej61B5HV3V2b8xKpxrs3YOkJM37BEd0m9OK
-         ddtenZQL0amQsmaEYrHZhGFiyqUzCgHDyGQ2aa7ErgqIeDhmXTMTGKmr/tOYIvZDqG+S
-         ovqZeuYDVHZ3xDUE+9GdmZFIyeo8lGGEuZHC95nttWE9ctKqXf+gaBWgQJj7c0j5tzW4
-         +qng==
-X-Gm-Message-State: AMke39lwtkr7tMUzgstEtFwPB0hc+eWM3j30ysr7j3i+EP8JYuvRDL7ux82o86PTLSATNBZU/tF1kfcGZ3RiFQ==
-X-Received: by 10.37.170.49 with SMTP id s46mr2408330ybi.21.1488559049006;
- Fri, 03 Mar 2017 08:37:29 -0800 (PST)
+        id S1751765AbdCCQnR (ORCPT <rfc822;e@80x24.org>);
+        Fri, 3 Mar 2017 11:43:17 -0500
+Received: from alum-mailsec-scanner-7.mit.edu ([18.7.68.19]:59236 "EHLO
+        alum-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1751571AbdCCQnQ (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 3 Mar 2017 11:43:16 -0500
+X-AuditID: 12074413-f67ff700000077e1-c0-58b99d1f5140
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+        (using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
+        (Client did not present a certificate)
+        by alum-mailsec-scanner-7.mit.edu (Symantec Messaging Gateway) with SMTP id F6.60.30689.F1D99B85; Fri,  3 Mar 2017 11:43:11 -0500 (EST)
+Received: from [192.168.69.190] (p5B105007.dip0.t-ipconnect.de [91.16.80.7])
+        (authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v23Gh8kD005358
+        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+        Fri, 3 Mar 2017 11:43:09 -0500
+Subject: Re: [PATCH v5 23/24] t1405: some basic tests on main ref store
+To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>, git@vger.kernel.org
+References: <20170218133303.3682-1-pclouds@gmail.com>
+ <20170222140450.30886-1-pclouds@gmail.com>
+ <20170222140450.30886-24-pclouds@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        Stefan Beller <sbeller@google.com>, novalis@novalis.org
+From:   Michael Haggerty <mhagger@alum.mit.edu>
+Message-ID: <7769af97-3dc7-f23b-c7c1-1d6b227a2f83@alum.mit.edu>
+Date:   Fri, 3 Mar 2017 17:43:08 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Icedove/45.6.0
 MIME-Version: 1.0
-Received: by 10.37.195.2 with HTTP; Fri, 3 Mar 2017 08:37:28 -0800 (PST)
-From:   Laszlo Kiss <kisslas.git@gmail.com>
-Date:   Fri, 3 Mar 2017 16:37:28 +0000
-Message-ID: <CAO0LFki4PN8zz2xpoSpjTHJGS=NG_suQYR27EcmzEMiaCw9kuA@mail.gmail.com>
-Subject: rebase: confusing behaviour since --fork-point
-To:     git@vger.kernel.org
-Cc:     ldubox-coding101@yahoo.co.uk
-Content-Type: text/plain; charset=UTF-8
+In-Reply-To: <20170222140450.30886-24-pclouds@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprAKsWRmVeSWpSXmKPExsUixO6iqCs/d2eEwd5V1hZdV7qZLBp6rzBb
+        9C/vYrNY8vA1s0X3lLeMFjOvWlts3tzO4sDusXPWXXaPDx/jPBZsKvXoaj/C5nHxkrLH/qXb
+        2Dw+b5ILYI/isklJzcksSy3St0vgyujZfYGtoE+r4tOX0ywNjJ8Uuxg5OSQETCRe7T3H3sXI
+        xSEksINJ4vjiz2wQzmkmidYdDWwgVcIC7hI35+9gBbFFBNIkFk9+zwxRNIFR4tOVaywgDrPA
+        DUaJSxM/MoFUsQnoSizqaQazeQXsJY68mgzWzSKgIrHqbQcjiC0qECIxZ+EDRogaQYmTM5+w
+        gNicAhYS63+8BdvMLKAu8WfeJWYIW16ieets5gmM/LOQtMxCUjYLSdkCRuZVjHKJOaW5urmJ
+        mTnFqcm6xcmJeXmpRbrmermZJXqpKaWbGCEBL7yDcddJuUOMAhyMSjy8DJN3RgixJpYVV+Ye
+        YpTkYFIS5V0wDSjEl5SfUpmRWJwRX1Sak1p8iFGCg1lJhFd7IlCONyWxsiq1KB8mJc3BoiTO
+        q7ZE3U9IID2xJDU7NbUgtQgmK8PBoSTB+3w2UKNgUWp6akVaZk4JQpqJgxNkOA/Q8LsgNbzF
+        BYm5xZnpEPlTjIpS4ryOc4ASAiCJjNI8uF5YQnrFKA70ijCvMkgVDzCZwXW/AhrMBDTYTwZs
+        cEkiQkqqgbFYZWXyySWtKv9S4veKnxSZ0b5lNlOM2N2Oo48yV6i3fjJmcOM9YPBeYrdG5/kc
+        sWUXJOVmcd1w/HQxsu5eUuj5ewH8hxx2BJw8Im+uccmk7LlN5+szk9/56j+c9PGGeVKT55/d
+        G+8yyi9cxdHvdOibmp7G9v4KkcI4rR08x/ifftzi3ftZ9IsSS3FGoqEWc1FxIgBB4JApIwMA
+        AA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi all,
+On 02/22/2017 03:04 PM, Nguyễn Thái Ngọc Duy wrote:
+> Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+> ---
+>  t/t1405-main-ref-store.sh (new +x) | 123 +++++++++++++++++++++++++++++++++++++
+>  1 file changed, 123 insertions(+)
+>  create mode 100755 t/t1405-main-ref-store.sh
+> 
+> diff --git a/t/t1405-main-ref-store.sh b/t/t1405-main-ref-store.sh
+> new file mode 100755
+> index 000000000..0999829f1
+> --- /dev/null
+> +++ b/t/t1405-main-ref-store.sh
+> @@ -0,0 +1,123 @@
+> +#!/bin/sh
+> +
+> +test_description='test main ref store api'
+> +
+> +. ./test-lib.sh
+> +
+> +RUN="test-ref-store main"
+> +
+> +test_expect_success 'pack_refs(PACK_REFS_ALL | PACK_REFS_PRUNE)' '
+> +	test_commit one &&
+> +	N=`find .git/refs -type f | wc -l` &&
 
-This will be a bit long, sorry in advance.
+I think we prefer $() to ``. (Same throughout this file and also t1406
+in the next commit.)
 
-I've hit a problem with how rebase works since the introduction of the
---fork-point option. I initially thought it was a bug until the kind
-folks over at git-for-windows patiently told me otherwise.
+It's notable that these tests grep around the filesystem, so they won't
+be applicable to future refs backends. Of course, "pack-refs" is
+intrinsically only applicable to the files backend, so for this test
+it's not surprising. But some tests could conceivably be written in a
+generic way, so that they should pass for any refs backend.
 
-Consider the following:
+Just food for thought; no need to change anything now.
 
--------8<-------
-# On branch master which is at origin/master
-# hack hack hack
+> +	test "$N" != 0 &&
+> +	$RUN pack-refs 3 &&
+> +	N=`find .git/refs -type f | wc -l`
 
-git commit -am'First topic commit'
-# optionally followed by more commits
+Didn't you mean to test the final `$N`?
 
-# realize I want all this on a different branch instead
-# (maybe I just forgot to create one; would be typical)
+> +'
+> +
+> +test_expect_success 'peel_ref(new-tag)' '
+> +	git rev-parse HEAD >expected &&
+> +	git tag -a -m new-tag new-tag HEAD &&
+> +	$RUN peel-ref refs/tags/new-tag >actual &&
+> +	test_cmp expected actual
+> +'
+> +
+> +test_expect_success 'create_symref(FOO, refs/heads/master)' '
+> +	$RUN create-symref FOO refs/heads/master nothing &&
+> +	echo refs/heads/master >expected &&
+> +	git symbolic-ref FOO >actual &&
+> +	test_cmp expected actual
+> +'
+> +
+> +test_expect_success 'delete_refs(FOO, refs/tags/new-tag)' '
+> +	git rev-parse FOO -- &&
+> +	git rev-parse refs/tags/new-tag -- &&
+> +	$RUN delete-refs 0 FOO refs/tags/new-tag &&
+> +	test_must_fail git rev-parse FOO -- &&
+> +	test_must_fail git rev-parse refs/tags/new-tag --
+> +'
+> +
+> +test_expect_success 'rename_refs(master, new-master)' '
+> +	git rev-parse master >expected &&
+> +	$RUN rename-ref refs/heads/master refs/heads/new-master &&
+> +	git rev-parse new-master >actual &&
+> +	test_cmp expected actual &&
+> +	test_commit recreate-master
+> +'
 
-git checkout -b topic --track
-git branch -f master origin/master
+Isn't HEAD set to `refs/heads/master` prior to this test? If so, then I
+think it should become detached when you rename `refs/heads/master`. Or
+maybe it should be changed to point at `refs/heads/new-master`, I can't
+remember. In either case, it might be useful for the test to check that
+the behavior matches the status quo, so we notice if the behavior ever
+changes inadvertently.
 
-# optionally add more commits to 'topic' and/or update 'master'
-# with changes to 'origin/master', then finally:
+> +
+> +test_expect_success 'for_each_ref(refs/heads/)' '
+> +	$RUN for-each-ref refs/heads/ | cut -c 42- >actual &&
+> +	cat >expected <<-\EOF &&
+> +	master 0x0
+> +	new-master 0x0
+> +	EOF
+> +	test_cmp expected actual
+> +'
+> +
+> +test_expect_success 'resolve_ref(new-master)' '
+> +	SHA1=`git rev-parse new-master` &&
+> +	echo "$SHA1 refs/heads/new-master 0x0" >expected &&
+> +	$RUN resolve-ref refs/heads/new-master 0 >actual &&
+> +	test_cmp expected actual
+> +'
+> +
+> +test_expect_success 'verify_ref(new-master)' '
+> +	$RUN verify-ref refs/heads/new-master
+> +'
+> +
+> +test_expect_success 'for_each_reflog()' '
+> +	$RUN for-each-reflog | cut -c 42- >actual &&
+> +	cat >expected <<-\EOF &&
+> +	refs/heads/master 0x0
+> +	refs/heads/new-master 0x0
+> +	HEAD 0x1
+> +	EOF
+> +	test_cmp expected actual
+> +'
+> +
+> +test_expect_success 'for_each_reflog_ent()' '
+> +	$RUN for-each-reflog-ent HEAD >actual &&
+> +	head -n1 actual | grep one &&
+> +	tail -n2 actual | head -n1 | grep recreate-master
+> +'
+> +
+> +test_expect_success 'for_each_reflog_ent_reverse()' '
+> +	$RUN for-each-reflog-ent-reverse HEAD >actual &&
+> +	head -n1 actual | grep recreate-master &&
+> +	tail -n2 actual | head -n1 | grep one
+> +'
+> +
+> +test_expect_success 'reflog_exists(HEAD)' '
+> +	$RUN reflog-exists HEAD
+> +'
+> +
+> +test_expect_success 'delete_reflog(HEAD)' '
+> +	$RUN delete-reflog HEAD &&
+> +	! test -f .git/logs/HEAD
 
-git rebase    # or git pull --rebase
-------->8-------
+Maybe also test the final state using `reflog-exists` to make sure that
+function can also return false?
 
-What happens is that 'First topic commit' is discarded because rebase,
-with this syntax, defaults to --fork-point, which then works out from
-master's reflog that the commit in question was previously part of the
-upstream branch. The rebase is then carried out under the assumption
-that, even though that specific commit is no longer in master,
-something equivalent to it or superseding it is, or else it is meant to
-be dropped - which would likely be the case if a complicated history
-rewrite happened, but is not the case here.
+> +'
+> +
+> +test_expect_success 'create-reflog(HEAD)' '
+> +	$RUN create-reflog HEAD 1 &&
+> +	test -f .git/logs/HEAD
+> +'
+> +
+> +test_expect_success 'delete_ref(refs/heads/foo)' '
+> +	git checkout -b foo &&
+> +	FOO_SHA1=`git rev-parse foo` &&
+> +	git checkout --detach &&
+> +	test_commit bar-commit &&
+> +	git checkout -b bar &&
+> +	BAR_SHA1=`git rev-parse bar` &&
+> +	$RUN update-ref updating refs/heads/foo $BAR_SHA1 $FOO_SHA1 0 &&
+> +	echo $BAR_SHA1 >expected &&
+> +	git rev-parse refs/heads/foo >actual &&
+> +	test_cmp expected actual
+> +'
+> +
+> +test_expect_success 'delete_ref(refs/heads/foo)' '
+> +	SHA1=`git rev-parse foo` &&
+> +	git checkout --detach &&
+> +	$RUN delete-ref refs/heads/foo $SHA1 0 &&
+> +	test_must_fail git rev-parse refs/heads/foo --
+> +'
 
-There are two reasons why I think this is confusing and should be
-changed:
+The last two tests have the same name.
 
-(1) My mental model of git after some 5 years of using it is such that
-    I view the reflog as auxiliary information for purposes of mining
-    history or recovering from mistakes, and I rely only on the
-    contents and parent-child relationships of commits to work out what
-    a command I'm about to run will do. I would expect the vast
-    majority of users to have a similar mental model, in which case the
-    fact that the same commits can be rebased differently depending on
-    the data in the reflog will be equally confusing to those users.
+You might also want to test these functions when the old oid is
+incorrect or when the reference is missing.
 
-(2) Most people don't like to rebase too often, consequently the time
-    elapsed from a user creating the topic branch and resetting its
-    upstream until actually rebasing it can be days or weeks, by the
-    end of which they are unlikely to remember the circumstances of
-    creating the branch. Even more alarmingly, they may have committed
-    dozens of further changes, and therefore may not even notice that
-    the first few of those silently disappeared. (I'm not making this
-    up: see discussion links below in PS.)
+> +test_done
 
-I believe the correct design would be to always make --no-fork-point
-the default for rebase, and only use --fork-point when explicitly
-specified. This would potentially be inconvenient for those who rebase
-on top of complicated history rewrites, but said inconvenience would be
-mitigated by several factors:
-- Anyone doing rebases like that will already know that they can go
-  wrong in a million ways.
-- Perhaps more crucially, they will have a way of noticing if it went
-  wrong, with all relevant information in short-term memory, so would
-  recover easily.
-- If the rebase turns out to be really complex, they are likely to
-  resort to rebase -i, which shows full details of what is about to
-  happen, moreover it seems relatively simple to enhance the contents
-  of the rebase-todo file so that full information about the merge-base
-  and fork-point is readily available.
+Thanks for all the new tests!
 
-If changing the default is not an option, e.g. because of backwards
-compatibility concerns, then some configurability could still be
-helpful, e.g. rebase.useForkPoint = never / auto / always (default
-auto, to keep the current behaviour). Although I suspect this would
-just lead to everyone suggesting setting this to 'never'. In any case
-this would provide a way to ensure that any git newbies in my
-organization don't spend days trying to figure this out like I've just
-done.
+Michael
 
-Assuming there is agreement to do one of the above (I don't even know
-whose agreement is required), what's the process for getting it
-implemented? Sorry, that probably counts as a dumb question, but I've
-never been around open-source projects much & need someone to show me
-the ropes.
-
-Many thanks
-Laszlo
-
-PS. Further reading about the same topic if anyone is interested:
-- http://marc.info/?l=git&m=140991293402880&w=2 (from this same mailing
-  list 2+ years ago, but I can see no clear conclusion)
-- https://github.com/git-for-windows/git/issues/1076 (my bug report
-  where contacting this list was suggested)
-- http://stackoverflow.com/questions/22790765 and
-  http://stackoverflow.com/questions/35320740 (various SO users being
-  confused and asking about / discussing the same thing)
