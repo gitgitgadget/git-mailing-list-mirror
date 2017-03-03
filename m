@@ -7,104 +7,162 @@ X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2A07D2013E
-	for <e@80x24.org>; Fri,  3 Mar 2017 02:04:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 178012013E
+	for <e@80x24.org>; Fri,  3 Mar 2017 02:04:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751468AbdCCCET (ORCPT <rfc822;e@80x24.org>);
-        Thu, 2 Mar 2017 21:04:19 -0500
-Received: from mout.gmx.net ([212.227.15.19]:49665 "EHLO mout.gmx.net"
+        id S1751618AbdCCCEd (ORCPT <rfc822;e@80x24.org>);
+        Thu, 2 Mar 2017 21:04:33 -0500
+Received: from mout.gmx.net ([212.227.15.18]:55629 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751323AbdCCCER (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Mar 2017 21:04:17 -0500
+        id S1751610AbdCCCEc (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Mar 2017 21:04:32 -0500
 Received: from virtualbox ([89.204.153.4]) by mail.gmx.com (mrgmx001
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MLvGW-1ce7rM2YuK-007nW2; Fri, 03
- Mar 2017 03:04:04 +0100
-Date:   Fri, 3 Mar 2017 03:04:02 +0100 (CET)
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0LbuCq-1c2cJV1Noq-00jGPA; Fri, 03
+ Mar 2017 03:04:21 +0100
+Date:   Fri, 3 Mar 2017 03:04:20 +0100 (CET)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     git@vger.kernel.org
 cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Duy Nguyen <pclouds@gmail.com>
-Subject: [PATCH v2 1/9] t7006: replace dubious test
+Subject: [PATCH v2 5/9] Make read_early_config() reusable
 In-Reply-To: <cover.1488506615.git.johannes.schindelin@gmx.de>
-Message-ID: <8f79df34e63a37c052437dd022269b4a6c495108.1488506615.git.johannes.schindelin@gmx.de>
+Message-ID: <64135c6df520c1ca6a6e667855ac03c14d2dd153.1488506615.git.johannes.schindelin@gmx.de>
 References: <cover.1481211338.git.johannes.schindelin@gmx.de> <cover.1488506615.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:l3hZYu7ZKD6U0akTeeS322vVVLMDSu27MwZA8c0AUuFb2Lt148A
- CUl9xuarL/BauHEJlAYdYzJ3dqLQoDcvaKwqs+PiqIYyp7KBJdv3UaFHFA7GsjEnL18Cz0m
- b3A2dpnsv3qnV89iBPjU3X8AaKObvhV0qCj8FMy8uxomnFRSUR1KZEpMf2o4oLxIbu0744C
- yRp5fWbkYsP8rbZdFb0fA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:EJ/BKNUBgP4=:Op1BzNpxWmJozL84GfQ2qN
- JnZ8YYRYxgMky255PYEzlOd4kKT3tKf0InZqiTZamIL8cem5NBKIs/iAnL9Bq8b5PShviPJtk
- sMz71fiW8h/a9yZXUFSToknmf4Nb884UwagEW9GPdWVzZIPy3ksAxWc92174hRH8YxHGg31+q
- 4RdnETj5MR/WSZVR1nHWAq7HvPoaPjexX+SLVPywRcNGHDScFl4xsxjBLRrowtg1DZWYnJ1t1
- jlr+UaW9yu98+BqoZWAozQEQxUuuvn6pLoXzTXEnP8RczBzKuZueGlWcqV2pcuXgbY8DsY2F+
- SUek8dQQGPSBlusykbTJkrM0kNpdVb4Sdxvjh4O1oMf4wgP0f0sljFAUJccaCZlefV0iervHG
- 5OE+R3dsrmW6DvVPBv3pC/5p+JqALFK+7Kxntq30Etz+Qaia89MDnY2Z/ztzoqPsG1x228aJ0
- NqvTdAWLC9OsAH4wVY1WLyVoaKKjfsyPDy8BXS6AKsmFfLSaifll/nzFqx/P/4MCKFHv9NFOu
- y8tSzKWSVaH9+gp3gzmdn7dKKzF6vOdxcMj5keCWdwdZDcz9cxbxW1SV2VdBU1c2yHOl5OvmF
- mRbg5iZKgfDf/lMLFYHYTeL1BJDAuCtkcR9bOCyX7QmBPvBhxpbYR95ORpuUE4XbZYlkqcVcd
- DsK4vHtYkzahIXuHfQU102ERRpiPLEMFF6hLRcw5eRVjOw8EHGYJOO80HXoKoyPJbPo8s2fLe
- M2qo3SYnKqSVZSXqfhFz/hyEKqPRselP8Duzq0A7cnEevt/pmzZiSUCjdwVpAZIG+jpBjCWiV
- zLCK6+B
+X-Provags-ID: V03:K0:+sYbaDyOitur2MoWl2jkgkTOOyubkN/2UM98OzzOkHM52dCGXGl
+ 3SfE73XM2rTEXh4Kc9pvm5a3yFRZZEua4WQjXIHuBKzZ06xvBybs+TCZszZau6IWmHKJkCL
+ BhWDuPHoaATo8kja7rfO0cXzdg/AzylTj6LqFypjEEeRzrsQI7KjeaCPN0mdCcZvy/SyOen
+ RLfqH8F/BoBFRVu8ykI8A==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:bFiySBtOiYw=:oOvBlXzCNWsSx3IJ/CwSYR
+ 0BK1F+0FZWG3uTz+Q0X1XFuxwL4l1Q6/xAtHB63pslP0Btpq82tJJ7F+JY6Rym8xqER3Kf82p
+ OlY9OflBvbyN2nMu9NZKXeUsMWHtmIyUz/L8+BW8oDn9amzVd1eG5AD7i1HNTyh0A8D3gjKrt
+ jLflzRNu/c6f8BExZCNfV5tYN4JrpceI+TJqfyo5eJKQByssg3etBFy/9oF+yjwJGfRTZmgz8
+ spil8gMK5XS3/99Ec1I6U76OUXgoli6SBts6jUDBR5c2Q5MuYZsjECjeRNcGerxD/Q30alkBb
+ RxK0cVCC+h+P/sY4Jov2SOqytmmleIqfHVNwrzU1aE8Wgl5Q0jLLdza/PCj4TwMtgTOjIM3NK
+ LtHj4uEiZ8Wz6ju2984BFvSe3LtkX1MDJV3IO0JMrYKSVOA/QrnXGYXYuhMaf8lY822QEkPnL
+ 2AS8E4gUWS6fNnBFtppJbJiML7SuwdQ3mNCn3woMZIkumAD7bGGk2bzONQ0q6WnKxZjJXhnDX
+ cEYbDQepVBdkiTIsFGjqBWxPs8XcS7SgjCJRnuGEfhhTS/QDRF2O2LbhR4I96LLMD0d2V5dsu
+ t8L8GNLHBpGBqsk5VqXvimcUFORjrNwGB8F5GupIdViYodxSQNbQhY2bXv0mgkyyv/gNNTfdF
+ 5SN2j8cFw9s6TGdq4SXRhZLs2+zjPrdwgvhTEsJGnxOdbzWeqqOzbJp/+3bhG0HXyO3ab54lu
+ 9VD/ey6eHA4/Uf+BnhZ3NkTP1PpKcZxg0nH05qh9vfmDWrI5K+hNaTLuvbtSdVtExDnUH2A9A
+ XUEWFdZ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The idea of the test case "git -p - core.pager is not used from
-subdirectory" was to verify that the setup_git_directory() function had
-not been called just to obtain the core.pager setting.
+The pager configuration needs to be read early, possibly before
+discovering any .git/ directory.
 
-However, we are about to fix the early config machinery so that it
-*does* work, without messing up the global state.
-
-Once that is done, the core.pager setting *will* be used, even when
-running from a subdirectory, and that is a Good Thing.
-
-The intention of that test case, however, was to verify that the
-setup_git_directory() function has not run, because it changes global
-state such as the current working directory.
-
-To keep that spirit, but fix the incorrect assumption, this patch
-replaces that test case by a new one that verifies that the pager is
-run in the subdirectory, i.e. that the current working directory has
-not been changed at the time the pager is configured and launched, even
-if the `rev-parse` command requires a .git/ directory and *will* change
-the working directory.
+Let's not hide this function in pager.c, but make it available to other
+callers.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- t/t7006-pager.sh | 12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ cache.h  |  1 +
+ config.c | 31 +++++++++++++++++++++++++++++++
+ pager.c  | 31 -------------------------------
+ 3 files changed, 32 insertions(+), 31 deletions(-)
 
-diff --git a/t/t7006-pager.sh b/t/t7006-pager.sh
-index c8dc665f2fd..427bfc605ad 100755
---- a/t/t7006-pager.sh
-+++ b/t/t7006-pager.sh
-@@ -378,9 +378,19 @@ test_GIT_PAGER_overrides  expect_success test_must_fail 'git -p request-pull'
- test_default_pager        expect_success test_must_fail 'git -p'
- test_PAGER_overrides      expect_success test_must_fail 'git -p'
- test_local_config_ignored expect_failure test_must_fail 'git -p'
--test_no_local_config_subdir expect_success test_must_fail 'git -p'
- test_GIT_PAGER_overrides  expect_success test_must_fail 'git -p'
+diff --git a/cache.h b/cache.h
+index a104b76c02e..6b6780064f0 100644
+--- a/cache.h
++++ b/cache.h
+@@ -1798,6 +1798,7 @@ extern int git_config_from_blob_sha1(config_fn_t fn, const char *name,
+ 				     const unsigned char *sha1, void *data);
+ extern void git_config_push_parameter(const char *text);
+ extern int git_config_from_parameters(config_fn_t fn, void *data);
++extern void read_early_config(config_fn_t cb, void *data);
+ extern void git_config(config_fn_t fn, void *);
+ extern int git_config_with_options(config_fn_t fn, void *,
+ 				   struct git_config_source *config_source,
+diff --git a/config.c b/config.c
+index c6b874a7bf7..9cfbeafd04c 100644
+--- a/config.c
++++ b/config.c
+@@ -1412,6 +1412,37 @@ static void configset_iter(struct config_set *cs, config_fn_t fn, void *data)
+ 	}
+ }
  
-+test_expect_failure TTY 'core.pager in repo config works and retains cwd' '
-+	sane_unset GIT_PAGER &&
-+	test_config core.pager "cat >cwd-retained" &&
-+	(
-+		cd sub &&
-+		rm -f cwd-retained &&
-+		test_terminal git -p rev-parse HEAD &&
-+		test -e cwd-retained
-+	)
-+'
++void read_early_config(config_fn_t cb, void *data)
++{
++	git_config_with_options(cb, data, NULL, 1);
 +
- test_doesnt_paginate      expect_failure test_must_fail 'git -p nonsense'
++	/*
++	 * Note that this is a really dirty hack that does the wrong thing in
++	 * many cases. The crux of the problem is that we cannot run
++	 * setup_git_directory() early on in git's setup, so we have no idea if
++	 * we are in a repository or not, and therefore are not sure whether
++	 * and how to read repository-local config.
++	 *
++	 * So if we _aren't_ in a repository (or we are but we would reject its
++	 * core.repositoryformatversion), we'll read whatever is in .git/config
++	 * blindly. Similarly, if we _are_ in a repository, but not at the
++	 * root, we'll fail to find .git/config (because it's really
++	 * ../.git/config, etc). See t7006 for a complete set of failures.
++	 *
++	 * However, we have historically provided this hack because it does
++	 * work some of the time (namely when you are at the top-level of a
++	 * valid repository), and would rarely make things worse (i.e., you do
++	 * not generally have a .git/config file sitting around).
++	 */
++	if (!startup_info->have_repository) {
++		struct git_config_source repo_config;
++
++		memset(&repo_config, 0, sizeof(repo_config));
++		repo_config.file = ".git/config";
++		git_config_with_options(cb, data, &repo_config, 1);
++	}
++}
++
+ static void git_config_check_init(void);
  
- test_pager_choices                       'git shortlog'
+ void git_config(config_fn_t fn, void *data)
+diff --git a/pager.c b/pager.c
+index ae796433630..73ca8bc3b17 100644
+--- a/pager.c
++++ b/pager.c
+@@ -43,37 +43,6 @@ static int core_pager_config(const char *var, const char *value, void *data)
+ 	return 0;
+ }
+ 
+-static void read_early_config(config_fn_t cb, void *data)
+-{
+-	git_config_with_options(cb, data, NULL, 1);
+-
+-	/*
+-	 * Note that this is a really dirty hack that does the wrong thing in
+-	 * many cases. The crux of the problem is that we cannot run
+-	 * setup_git_directory() early on in git's setup, so we have no idea if
+-	 * we are in a repository or not, and therefore are not sure whether
+-	 * and how to read repository-local config.
+-	 *
+-	 * So if we _aren't_ in a repository (or we are but we would reject its
+-	 * core.repositoryformatversion), we'll read whatever is in .git/config
+-	 * blindly. Similarly, if we _are_ in a repository, but not at the
+-	 * root, we'll fail to find .git/config (because it's really
+-	 * ../.git/config, etc). See t7006 for a complete set of failures.
+-	 *
+-	 * However, we have historically provided this hack because it does
+-	 * work some of the time (namely when you are at the top-level of a
+-	 * valid repository), and would rarely make things worse (i.e., you do
+-	 * not generally have a .git/config file sitting around).
+-	 */
+-	if (!startup_info->have_repository) {
+-		struct git_config_source repo_config;
+-
+-		memset(&repo_config, 0, sizeof(repo_config));
+-		repo_config.file = ".git/config";
+-		git_config_with_options(cb, data, &repo_config, 1);
+-	}
+-}
+-
+ const char *git_pager(int stdout_is_tty)
+ {
+ 	const char *pager;
 -- 
 2.12.0.windows.1.3.g8a117c48243
 
