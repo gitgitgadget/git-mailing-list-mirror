@@ -7,80 +7,104 @@ X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A469C2013E
-	for <e@80x24.org>; Fri,  3 Mar 2017 02:04:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2A07D2013E
+	for <e@80x24.org>; Fri,  3 Mar 2017 02:04:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751595AbdCCCE0 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 2 Mar 2017 21:04:26 -0500
-Received: from mout.gmx.net ([212.227.15.15]:52121 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751203AbdCCCET (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1751468AbdCCCET (ORCPT <rfc822;e@80x24.org>);
         Thu, 2 Mar 2017 21:04:19 -0500
-Received: from virtualbox ([89.204.153.4]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0M1F72-1cPbmb1DNA-00tGoo; Fri, 03
- Mar 2017 03:04:09 +0100
-Date:   Fri, 3 Mar 2017 03:04:07 +0100 (CET)
+Received: from mout.gmx.net ([212.227.15.19]:49665 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751323AbdCCCER (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Mar 2017 21:04:17 -0500
+Received: from virtualbox ([89.204.153.4]) by mail.gmx.com (mrgmx001
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MLvGW-1ce7rM2YuK-007nW2; Fri, 03
+ Mar 2017 03:04:04 +0100
+Date:   Fri, 3 Mar 2017 03:04:02 +0100 (CET)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     git@vger.kernel.org
 cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Duy Nguyen <pclouds@gmail.com>
-Subject: [PATCH v2 2/9] setup_git_directory(): use is_dir_sep() helper
+Subject: [PATCH v2 1/9] t7006: replace dubious test
 In-Reply-To: <cover.1488506615.git.johannes.schindelin@gmx.de>
-Message-ID: <d1342d28fd402615f1f94d9190559070ed04b0d7.1488506615.git.johannes.schindelin@gmx.de>
+Message-ID: <8f79df34e63a37c052437dd022269b4a6c495108.1488506615.git.johannes.schindelin@gmx.de>
 References: <cover.1481211338.git.johannes.schindelin@gmx.de> <cover.1488506615.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:mqJh3aqMzhZ7Avl+/nU42x9efStKrPl6Sa1ewc+1ag9TQ2lZFpT
- +kfj/gkkzoApUMzepQIibGyrucKrTmaGYtwqv62vVAHFOc5lNgyW+jQvac9zHJyVYOXhOJk
- Lv0HCM/OrlmNshgQeNoePJeXQ96znezeFNPVSnEE7JDs2lDnHPlq+4sREeguGGBzzf9VX5f
- xyPbEcCUTNemQIrslwU0g==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:PndfibvDOcc=:efitTQApLSesHbWUh3JGdi
- grOr9LEGkAKk4101ghmMqAz/2EHQxehvAbqemDZAp6ReTNflJ1thQqHHX81+VweO46LEbeCSL
- 1IRyjkHJ3x87O0Es/hTWY2krb05BO6Aasix08AOXp5oSBQmJoh8VZ8KuNUbL/naIi28NwCoUF
- BSbejh/dd7sqqpp+H0f5dtY/Lo2fL6fNAf+nnfH9ZUHb91UDxMb7ZR0xsMto225kwI9yGe0Hk
- 74sw5wtiFlRX6koOnsTfPzNIW/+8y/qJ7mRTaKRGah7moEwoomnjjEBSu9YPWdrSlMDhSq4EA
- IdnwD1NcFR+ADlmxd7LFp/IXA5COXA4H6cO31qjWNow9yL28ffjdCRfc66puFZnFPvsrkVREv
- 3YcvctZntTqYTMj22hgb1H05bNdC6SKff1wKe4O2RSW6Ub1AhgL2pA+2aERhZwEdRUPHGIzYb
- ec3cplrzFyg7frvQCZk7/B/id9qfSBOFQ/Zcpx7GIYQxjwz3oBtQzxpAnvdCETtDCnG+t3cTW
- CaM9sOttjyhDmWmsQt4ZF+IprBNCCON8nWF2U60TGpUH0r9CKqDqpKFxm3St+fnGRx/nS9/Ej
- eganWmdPbD2OZMzgtOSHu2yjH+fjzSFhVBH/caPejpWc3c5JuYbCqP2RQHxKxC5l20UTYBWWX
- Cxse/2FuWFAGUQBAo6Z62G1prZy4XxRvVTmdSxcH2G7nI2NDMMdgDXCcpLALqmRoT4wRCNVDl
- 2QDUYhtVYGYnOgAEkJvpDibvPRzTCWYDAQW35pl9+7fEFDXMY1dl7gk2bYXALUcf6hXtsRXOJ
- s8vXZVG
+X-Provags-ID: V03:K0:l3hZYu7ZKD6U0akTeeS322vVVLMDSu27MwZA8c0AUuFb2Lt148A
+ CUl9xuarL/BauHEJlAYdYzJ3dqLQoDcvaKwqs+PiqIYyp7KBJdv3UaFHFA7GsjEnL18Cz0m
+ b3A2dpnsv3qnV89iBPjU3X8AaKObvhV0qCj8FMy8uxomnFRSUR1KZEpMf2o4oLxIbu0744C
+ yRp5fWbkYsP8rbZdFb0fA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:EJ/BKNUBgP4=:Op1BzNpxWmJozL84GfQ2qN
+ JnZ8YYRYxgMky255PYEzlOd4kKT3tKf0InZqiTZamIL8cem5NBKIs/iAnL9Bq8b5PShviPJtk
+ sMz71fiW8h/a9yZXUFSToknmf4Nb884UwagEW9GPdWVzZIPy3ksAxWc92174hRH8YxHGg31+q
+ 4RdnETj5MR/WSZVR1nHWAq7HvPoaPjexX+SLVPywRcNGHDScFl4xsxjBLRrowtg1DZWYnJ1t1
+ jlr+UaW9yu98+BqoZWAozQEQxUuuvn6pLoXzTXEnP8RczBzKuZueGlWcqV2pcuXgbY8DsY2F+
+ SUek8dQQGPSBlusykbTJkrM0kNpdVb4Sdxvjh4O1oMf4wgP0f0sljFAUJccaCZlefV0iervHG
+ 5OE+R3dsrmW6DvVPBv3pC/5p+JqALFK+7Kxntq30Etz+Qaia89MDnY2Z/ztzoqPsG1x228aJ0
+ NqvTdAWLC9OsAH4wVY1WLyVoaKKjfsyPDy8BXS6AKsmFfLSaifll/nzFqx/P/4MCKFHv9NFOu
+ y8tSzKWSVaH9+gp3gzmdn7dKKzF6vOdxcMj5keCWdwdZDcz9cxbxW1SV2VdBU1c2yHOl5OvmF
+ mRbg5iZKgfDf/lMLFYHYTeL1BJDAuCtkcR9bOCyX7QmBPvBhxpbYR95ORpuUE4XbZYlkqcVcd
+ DsK4vHtYkzahIXuHfQU102ERRpiPLEMFF6hLRcw5eRVjOw8EHGYJOO80HXoKoyPJbPo8s2fLe
+ M2qo3SYnKqSVZSXqfhFz/hyEKqPRselP8Duzq0A7cnEevt/pmzZiSUCjdwVpAZIG+jpBjCWiV
+ zLCK6+B
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-It is okay in practice to test for forward slashes in the output of
-getcwd(), because we go out of our way to convert backslashes to forward
-slashes in getcwd()'s output on Windows.
+The idea of the test case "git -p - core.pager is not used from
+subdirectory" was to verify that the setup_git_directory() function had
+not been called just to obtain the core.pager setting.
 
-Still, the correct way to test for a dir separator is by using the
-helper function we introduced for that very purpose. It also serves as a
-good documentation what the code tries to do (not "how").
+However, we are about to fix the early config machinery so that it
+*does* work, without messing up the global state.
+
+Once that is done, the core.pager setting *will* be used, even when
+running from a subdirectory, and that is a Good Thing.
+
+The intention of that test case, however, was to verify that the
+setup_git_directory() function has not run, because it changes global
+state such as the current working directory.
+
+To keep that spirit, but fix the incorrect assumption, this patch
+replaces that test case by a new one that verifies that the pager is
+run in the subdirectory, i.e. that the current working directory has
+not been changed at the time the pager is configured and launched, even
+if the `rev-parse` command requires a .git/ directory and *will* change
+the working directory.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- setup.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ t/t7006-pager.sh | 12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
-diff --git a/setup.c b/setup.c
-index 967f289f1ef..89a0cef9231 100644
---- a/setup.c
-+++ b/setup.c
-@@ -910,7 +910,8 @@ static const char *setup_git_directory_gently_1(int *nongit_ok)
- 			return setup_bare_git_dir(&cwd, offset, nongit_ok);
+diff --git a/t/t7006-pager.sh b/t/t7006-pager.sh
+index c8dc665f2fd..427bfc605ad 100755
+--- a/t/t7006-pager.sh
++++ b/t/t7006-pager.sh
+@@ -378,9 +378,19 @@ test_GIT_PAGER_overrides  expect_success test_must_fail 'git -p request-pull'
+ test_default_pager        expect_success test_must_fail 'git -p'
+ test_PAGER_overrides      expect_success test_must_fail 'git -p'
+ test_local_config_ignored expect_failure test_must_fail 'git -p'
+-test_no_local_config_subdir expect_success test_must_fail 'git -p'
+ test_GIT_PAGER_overrides  expect_success test_must_fail 'git -p'
  
- 		offset_parent = offset;
--		while (--offset_parent > ceil_offset && cwd.buf[offset_parent] != '/');
-+		while (--offset_parent > ceil_offset &&
-+		       !is_dir_sep(dir->buf[offset_parent]));
- 		if (offset_parent <= ceil_offset)
- 			return setup_nongit(cwd.buf, nongit_ok);
- 		if (one_filesystem) {
++test_expect_failure TTY 'core.pager in repo config works and retains cwd' '
++	sane_unset GIT_PAGER &&
++	test_config core.pager "cat >cwd-retained" &&
++	(
++		cd sub &&
++		rm -f cwd-retained &&
++		test_terminal git -p rev-parse HEAD &&
++		test -e cwd-retained
++	)
++'
++
+ test_doesnt_paginate      expect_failure test_must_fail 'git -p nonsense'
+ 
+ test_pager_choices                       'git shortlog'
 -- 
 2.12.0.windows.1.3.g8a117c48243
 
