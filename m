@@ -2,160 +2,126 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D537B20133
-	for <e@80x24.org>; Fri,  3 Mar 2017 15:10:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C699120133
+	for <e@80x24.org>; Fri,  3 Mar 2017 15:10:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751618AbdCCPIr (ORCPT <rfc822;e@80x24.org>);
-        Fri, 3 Mar 2017 10:08:47 -0500
-Received: from mout.gmx.net ([212.227.15.19]:54372 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751641AbdCCPIY (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 3 Mar 2017 10:08:24 -0500
-Received: from virtualbox ([37.201.194.68]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MRXSK-1cqWb83SfY-00ShFX; Fri, 03
- Mar 2017 15:49:26 +0100
-Date:   Fri, 3 Mar 2017 15:49:24 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     Jeff King <peff@peff.net>
-cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH v2 4/9] Export the discover_git_directory() function
-In-Reply-To: <20170303044518.rdtyvgs7kqe7fkpf@sigill.intra.peff.net>
-Message-ID: <alpine.DEB.2.20.1703031511490.3767@virtualbox>
-References: <cover.1481211338.git.johannes.schindelin@gmx.de> <cover.1488506615.git.johannes.schindelin@gmx.de> <0ca4cce042cc0b0f13f87363b70a3689057ae9b0.1488506615.git.johannes.schindelin@gmx.de> <20170303044518.rdtyvgs7kqe7fkpf@sigill.intra.peff.net>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+        id S1751722AbdCCOwN (ORCPT <rfc822;e@80x24.org>);
+        Fri, 3 Mar 2017 09:52:13 -0500
+Received: from alum-mailsec-scanner-3.mit.edu ([18.7.68.14]:59067 "EHLO
+        alum-mailsec-scanner-3.mit.edu" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1751415AbdCCOwL (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 3 Mar 2017 09:52:11 -0500
+X-AuditID: 1207440e-cb3ff7000000340b-0c-58b9826c486a
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+        (using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
+        (Client did not present a certificate)
+        by alum-mailsec-scanner-3.mit.edu (Symantec Messaging Gateway) with SMTP id AB.55.13323.C6289B85; Fri,  3 Mar 2017 09:49:16 -0500 (EST)
+Received: from [192.168.69.190] (p5B105007.dip0.t-ipconnect.de [91.16.80.7])
+        (authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v23EnDtg031303
+        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+        Fri, 3 Mar 2017 09:49:14 -0500
+Subject: Re: [PATCH v5 16/24] files-backend: replace submodule_allowed check
+ in files_downcast()
+To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>, git@vger.kernel.org
+References: <20170218133303.3682-1-pclouds@gmail.com>
+ <20170222140450.30886-1-pclouds@gmail.com>
+ <20170222140450.30886-17-pclouds@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        Stefan Beller <sbeller@google.com>, novalis@novalis.org
+From:   Michael Haggerty <mhagger@alum.mit.edu>
+Message-ID: <8fafd49f-71a6-ee97-6a69-c23e23c5d515@alum.mit.edu>
+Date:   Fri, 3 Mar 2017 15:49:13 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Icedove/45.6.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:Fqabjks3g9ctxOmeR+qtdVO1dl4AOrnW80gGBISJwnkvsN+YjFH
- SkWkDmOpBuapI1PwTcfrzQbjbbDgZBQhkB6HkTl9K3cA73UCzod/J7KuAzemadSbdGUHR+1
- QNlI21YInS2Z8ex9MUhx5fVitKXbFZBOwmd6NMEuTqt8Z+8xbpcFdSc7I/jPsPE9TDmzejO
- oJDPFAIbHrd4+wM0/otTQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:CJ3TczdZVXk=:AO5P47cof09Y6UirwOI5bM
- 9M4NjSIt9wpocNgEnuVI2PjBdtVMYNd7qDxJduVdBW7ZLDmSJ55ejwqHokb2AclHdkU4xf+Bm
- h0NwOqCwffPFritm9i7Oq1hiHp55OKHXGFtiOm8VxevGEKWQMwBXpkLbaagyZlVHHJ2jS6pYr
- ybVdGArdFvCYUKbEjXGzdeTNnjRkeN6mX8Cs7auoU630BGxPLUwXEhNvm1xKXJaVKuq/gR+nr
- 0YBu9BjlYWNiYF0XCWMk456FyGAW/nneLmBrk4y6bS3CkBKT4Z8ekCQM9MxlDUP2gaHQ+Vwh/
- NGjzqqy8OrRb8AM14Hwaa8ss++haf4NQPrv1Z3eYgB3Xh2qdIqTRSHXV4ZxELmew2XGydyYjd
- EoIOqZHaoz9SidiMtygVuhMLt9q1glWftiq6Op0WXY42K3GvVTsyt1J0vsiJT77uYBHrAQa5P
- M5jYkDZh4zMU9DCSRgT0dZBajzBa6OcejB7QdlAW0mRadqGGMMtPjZvqnao4F3E4HAs+lgDht
- vfhcDMRL3guDff8YQxMHx/RFE9BfGdY6Nq2ASZ/v/zoIosBgOXXO3YaKuLbpag877rLGD+W3D
- EnIlltXzTCt2IvOMgRCK91VHuzMkJd4jD0//GQRusS8J4F3cNhUOFSvJDvWHwDYeD6gal3Tz9
- sRp5IYc49qWmUlu6kBqJ93alyKTbEKKxrPVIqafw+VLC4DQ/1UtpmAWrAOsWRqXCMPZMN8EWy
- CVl65/9ChRFx5Vq2GiMpQ/Ee9spSJrCWLdYk3snDqNT0Ugreg+CZc+xutqWNtylYKBaA+tyhS
- YCDYzKN
+In-Reply-To: <20170222140450.30886-17-pclouds@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFupnleLIzCtJLcpLzFFi42IRYndR1M1p2hlhsHallkXXlW4mi4beK8wW
+        /cu72CyWPHzNbNE95S2jxcyr1habN7ezOLB77Jx1l93jw8c4jwWbSj262o+weVy8pOyxf+k2
+        No/Pm+QC2KO4bFJSczLLUov07RK4Mu5enM5esE6o4tmibqYGxmt8XYycHBICJhL/t/SwdjFy
+        cQgJ7GCSWHrhKBOEc5pJ4mNbG0sXIweHsECSxKs3sSANIgJpEosnv2eGqJnAKPHt2F12EIdZ
+        4AajxKWJH5lAqtgEdCUW9TSD2bwC9hKnWy6xgNgsAioSJx8uZgSxRQVCJOYsfMAIUSMocXLm
+        E7AaTgELifUP7oH1MguoS/yZd4kZwpaXaN46m3kCI/8sJC2zkJTNQlK2gJF5FaNcYk5prm5u
+        YmZOcWqybnFyYl5eapGusV5uZoleakrpJkZIuPPtYGxfL3OIUYCDUYmHV9N+R4QQa2JZcWXu
+        IUZJDiYlUd5DBTsjhPiS8lMqMxKLM+KLSnNSiw8xSnAwK4nwtlYC5XhTEiurUovyYVLSHCxK
+        4rxqS9T9hATSE0tSs1NTC1KLYLIyHBxKEryqjUCNgkWp6akVaZk5JQhpJg5OkOE8QMMvNoAM
+        Ly5IzC3OTIfIn2JUlBLnVQdJCIAkMkrz4Hph6egVozjQK8K8W0BW8ABTGVz3K6DBTECD/WTA
+        BpckIqSkGhj1KveZ/1Iysz+1YLFNle5r2UMzl/lP+dXu+nOCdHiU8FTrezMk65oc3uzut3dP
+        edM29cif4/+tXdbN/r6+SvKbyrQZ9aazdGtj+4JLl2mwXwrcretqlN+3pO9EQO/mf4vOL/n9
+        ZemqfUvf5gYotalKPCtuW9c0TfhuywGvz5kZ05a/WTdtsYe5EktxRqKhFnNRcSIAElN9aCID
+        AAA=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Peff,
-
-On Thu, 2 Mar 2017, Jeff King wrote:
-
-> On Fri, Mar 03, 2017 at 03:04:15AM +0100, Johannes Schindelin wrote:
+On 02/22/2017 03:04 PM, Nguyễn Thái Ngọc Duy wrote:
+> files-backend.c is unlearning submodules. Instead of having a specific
+> check for submodules to see what operation is allowed, files backend
+> now takes a set of flags at init. Each operation will check if the
+> required flags is present before performing.
 > 
-> > diff --git a/cache.h b/cache.h
-> > index 80b6372cf76..a104b76c02e 100644
-> > --- a/cache.h
-> > +++ b/cache.h
-> > @@ -518,6 +518,7 @@ extern void set_git_work_tree(const char *tree);
-> >  #define ALTERNATE_DB_ENVIRONMENT "GIT_ALTERNATE_OBJECT_DIRECTORIES"
-> >  
-> >  extern void setup_work_tree(void);
-> > +extern const char *discover_git_directory(struct strbuf *gitdir);
+> For now we have four flags: read, write and odb access. Main ref store
+> has all flags, obviously, while submodule stores are read-only and have
+> access to odb (*).
+
+I'm surprised that you have implemented a "read" flag. Do you expect
+ever to support ref-stores that are unreadable? In other words, couldn't
+"read" just be assumed for any ref store?
+
+> The "main" flag stays because many functions in the backend calls
+> frontend ones without a ref store, so these functions always target the
+> main ref store. Ideally the flag should be gone after ref-store-aware
+> api is in place and used by backends.
 > 
-> Perhaps it's worth adding a short docstring describing the function.
-
-Okay.
-
-> > +const char *discover_git_directory(struct strbuf *gitdir)
-> > +{
-> > +	struct strbuf dir = STRBUF_INIT;
-> > +	int len;
+> (*) Submodule code needs for_each_ref. Try take REF_STORE_ODB flag
+> out. At least t3404 would fail. The "have access to odb" in submodule is
+> a bit hacky since we don't know from he whether add_submodule_odb() has
+> been called.
 > 
-> Nit: please use size_t for storing strbuf lengths.
-
-Okay.
-
-> > +	if (strbuf_getcwd(&dir))
-> > +		return NULL;
-> > +
-> > +	len = dir.len;
-> > +	if (discover_git_directory_1(&dir, gitdir) < 0) {
-> > +		strbuf_release(&dir);
-> > +		return NULL;
-> > +	}
-> > +
-> > +	if (dir.len < len && !is_absolute_path(gitdir->buf)) {
-> > +		strbuf_addch(&dir, '/');
-> > +		strbuf_insert(gitdir, 0, dir.buf, dir.len);
-> > +	}
-> > +	strbuf_release(&dir);
+> Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+> ---
+>  refs.c               | 15 ++++++---
+>  refs/files-backend.c | 86 +++++++++++++++++++++++++++++++++-------------------
+>  refs/refs-internal.h |  9 +++++-
+>  3 files changed, 73 insertions(+), 37 deletions(-)
 > 
-> I was confused by two things here.
-> 
-> One is that because I was wondering whether "gitdir" was supposed to be
-> passed empty or not, it wasn't clear that this insert is doing the right
-> thing.  If there _is_ something in it, then discover_git_directory_1()
-> would just append to it, which makes sense. But then this insert blindly
-> sticks the absolute-path bit at the front of the string, leaving
-> whatever was originally there spliced into the middle of the path.
-> Doing:
-> 
->   size_t base = gitdir->len;
->   ...
->   strbuf_insert(gitdir, base, dir.buf, dir.len);
-> 
-> would solve that.
+> diff --git a/refs.c b/refs.c
+> index 67acae60c..2dc97891a 100644
+> --- a/refs.c
+> +++ b/refs.c
+> [...]
+> @@ -1821,10 +1829,14 @@ static enum peel_status peel_entry(struct ref_entry *entry, int repeel)
+>  static int files_peel_ref(struct ref_store *ref_store,
+>  			  const char *refname, unsigned char *sha1)
+>  {
+> -	struct files_ref_store *refs = files_downcast(ref_store, 0, "peel_ref");
+> +	struct files_ref_store *refs =
+> +		files_downcast(ref_store, REF_STORE_READ | REF_STORE_ODB,
+> +			       "peel_ref");
+>  	int flag;
+>  	unsigned char base[20];
+>  
+> +	files_assert_main_repository(refs, "peel_ref");
 
-And of course the is_absolute_path() call also needs to offset `gitdir->buf
-+ base`.
+Instead of this call, couldn't you add `REF_STORE_MAIN` to the flags
+passed to `files_downcase()`?
 
-> It's probably not that likely for somebody to do:
-> 
->   strbuf_addstr(&buf, "my git dir is ");
->   discover_git_directory(&buf);
-> 
-> but since it's not much effort, it might be worth making it work.
+> +
+>  	if (current_ref_iter && current_ref_iter->refname == refname) {
+>  		struct object_id peeled;
+>  
+> [...]
 
-Plus, I have no assert()s in place to ensure any expectation to the
-contrary. So I fixed it as you suggested.
+Michael
 
-> The second is that I don't quite understand why we only make the result
-> absolute when we walked upwards. In git.git, the result of the function
-> in various directories is:
-> 
->   - ".git", when we're at the root of the worktree
->   - "/home/peff/git/.git, when we're in "t/"
->   - "." when we're already in ".git"
->   - "/home/peff/git/.git/." when we're in ".git/objects"
-> > I'm not sure if some of those cases are not behaving as intended, or
-> there's some reason for the differences that I don't quite understand.
-
-Yes, some of those cases do not behave as intended: it is true that
-setup_git_directory() sets git_dir to "/home/peff/git/.git" when we
-(actually, you, given that my home directory is different) are in "t/",
-but setup_git_directory_gently_1() would set gitdir to ".git" and dir to
-"/home/peff/git". But the current directory is still what cwd says it is:
-"/home/peff/git/t".
-
-I added a comment:
-
-        /*
-         * The returned gitdir is relative to dir, and if dir does not reflect
-         * the current working directory, we simply make the gitdir
-         * absolute.
-         */
-
-And thanks: you reminded me of another issue I wanted to address but
-forgot: if gitdir is ".", I do not want the resulting absolute path to
-have a trailing "/.". I fixed that, too.
-
-Ciao,
-Dscho
