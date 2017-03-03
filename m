@@ -2,76 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D73602023D
-	for <e@80x24.org>; Fri,  3 Mar 2017 10:58:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 099742023D
+	for <e@80x24.org>; Fri,  3 Mar 2017 10:59:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751143AbdCCK6q (ORCPT <rfc822;e@80x24.org>);
-        Fri, 3 Mar 2017 05:58:46 -0500
-Received: from mail-ot0-f179.google.com ([74.125.82.179]:35783 "EHLO
-        mail-ot0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751332AbdCCK6p (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 3 Mar 2017 05:58:45 -0500
-Received: by mail-ot0-f179.google.com with SMTP id x37so26600080ota.2
-        for <git@vger.kernel.org>; Fri, 03 Mar 2017 02:58:35 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=DTiCjNWsEFoCvUyY+EaVvpOC151KSXVIwiaPwLvKftk=;
-        b=cvcWES1wZnJw8WDhPQyYoB7n/Jiz7Z4ZfHaWHPOrXmg2RRK2T0j8vGyukwLdS6GEri
-         iCP+r6Xj81iCo+9jqJvZ6i2yDzB2blahtRo5v91WIVu2N/wzQkPLgrnFZAymKzdm2uRV
-         +GkwbN/IXYo11eunjPAE0D9M7xR1aLlUb8W3RPmvzhZfHuhNlAPAPITQtjeRJmL079/m
-         +mmPtqSiQ5ZZ6lFtPCsvqKPgVWVCtpTrG01B0LPKlOfBByq1EfspSceP6GqCwhQcoQpo
-         hUxJa91Z2KnFoGDw+De67IttJc4Yx0kgOFFHGXOUH0qM7gUseuvpLjkckdcj9Yf+mu4k
-         XeUA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=DTiCjNWsEFoCvUyY+EaVvpOC151KSXVIwiaPwLvKftk=;
-        b=Cwqivj6EvwNAaES+aJk5AIcKvJx7tKtKZIVwz5XIfMvneXwqzmwM6cYzb3froAUKuv
-         GYv+3bXeTTHR3U+2z87mXnGJd+YrjoR3SUcRXsZoSaTeneoKIyoADZMYHpn14wP9+i5s
-         cpwH0XiDbhWUvkQOeANLVT28Ywxp6XAehpsN1P7IQc6y43TMxWYKrkOHnX2xc9loytIc
-         GLMcB0sh5zTxnARxPYEN6Hullsod1bbfAEVrkvfe6BYtRJK/5LT9oU8u99j+qxPOM36i
-         rXKqvcjKVew3efVXaT/uAtrhHXGbSOlvCs9ydJmUD9JtsDkX/xGKS7uqyaH1WVcq4pJB
-         gLHw==
-X-Gm-Message-State: AMke39ksaHu4kyMuO2WmbVvbKovfGHK+kUh3XaGXGnDVbvYAs4kVVNCgUbDLdrgQUL1Tt3WmpH7cweF/UUBG0w==
-X-Received: by 10.157.46.26 with SMTP id q26mr1148829otb.28.1488537017749;
- Fri, 03 Mar 2017 02:30:17 -0800 (PST)
+        id S1751474AbdCCK6s (ORCPT <rfc822;e@80x24.org>);
+        Fri, 3 Mar 2017 05:58:48 -0500
+Received: from a7-11.smtp-out.eu-west-1.amazonses.com ([54.240.7.11]:39318
+        "EHLO a7-11.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1751050AbdCCK6p (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 3 Mar 2017 05:58:45 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+        s=ihchhvubuqgjsxyuhssfvqohv7z3u4hn; d=amazonses.com; t=1488538666;
+        h=From:To:Message-ID:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
+        bh=QUETeCcdMcq+xRfJueY/vCNeDxoyPNqH2TTH9es7iZY=;
+        b=SVicDMGvZJDm3tzhAKDELKf58PlAupAX1DAH3ewiVhPYjdwg9gwZCrntn3A8zhMw
+        Y029IfOAG0Q2o8qfwuapsMGHgxfeepGc0uoKbVWG85Q+pPhFgqpsI4dRC/7I1X1f6BE
+        Hb+/K8Aiy3gpD0GCzbu6sKRuLM0fhudFiY8kbvp4=
+From:   Sebastian Schuberth <sschuberth@gmail.com>
+To:     git@vger.kernel.org
+Message-ID: <0102015a93d18443-c574aaf8-5656-49e8-8848-810e1fadc87a-000000@eu-west-1.amazonses.com>
+Subject: [PATCH] Do not require Python for the git-remote-{bzr,hg}
+ placeholder scripts
 MIME-Version: 1.0
-Received: by 10.74.158.84 with HTTP; Fri, 3 Mar 2017 02:29:47 -0800 (PST)
-In-Reply-To: <20170303101503.lf2ub2c7i6w7kg3t@sigill.intra.peff.net>
-References: <20170303094252.11706-1-pclouds@gmail.com> <20170303094252.11706-2-pclouds@gmail.com>
- <20170303095351.rgifjpfuvafx33jy@sigill.intra.peff.net> <CACsJy8DU7-o06mfuw1L02CFFR2wmoNa0MQJ8KqsV79ULzjRaRQ@mail.gmail.com>
- <20170303101503.lf2ub2c7i6w7kg3t@sigill.intra.peff.net>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Fri, 3 Mar 2017 17:29:47 +0700
-Message-ID: <CACsJy8CDOBUe7S3sYz=_tAJy2ajM5h2v+ZypD6Cr1uJo7XAnGQ@mail.gmail.com>
-Subject: Re: [PATCH 1/2] config: check if config path is a file before parsing it
-To:     Jeff King <peff@peff.net>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Date:   Fri, 3 Mar 2017 10:57:46 +0000
+X-SES-Outgoing: 2017.03.03-54.240.7.11
+Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Mar 3, 2017 at 5:15 PM, Jeff King <peff@peff.net> wrote:
-> But I do think option (a) is cleaner. The only trick is that for errno
-> to be valid, we need to make sure we check ferror() soon after seeing
-> the EOF return value. I suspect it would work OK in practice for the
-> git_config_from_file() case.
+It does not make sense for these placeholder scripts to depend on Python
+just because the real scripts do. At the example of Git for Windows, we
+would not even be able to see those warnings as it does not ship with
+Python. So just use plain shell scripts instead.
 
-stdio error handling is a pain. Maybe we're better of with open() and
-mmap() (or even read_in_full)? I/O error handling would be at the
-beginning, not buried deep in the parser. Hmm.. since we already have
-"fgetc' version for config blobs, this could kill some code...
--- 
-Duy
+Signed-off-by: Sebastian Schuberth <sschuberth@gmail.com>
+---
+ contrib/remote-helpers/git-remote-bzr | 16 +++++++---------
+ contrib/remote-helpers/git-remote-hg  | 16 +++++++---------
+ 2 files changed, 14 insertions(+), 18 deletions(-)
+
+diff --git a/contrib/remote-helpers/git-remote-bzr b/contrib/remote-helpers/git-remote-bzr
+index 712a137..ccc4aea 100755
+--- a/contrib/remote-helpers/git-remote-bzr
++++ b/contrib/remote-helpers/git-remote-bzr
+@@ -1,13 +1,11 @@
+-#!/usr/bin/env python
++#!/bin/sh
+ 
+-import sys
+-
+-sys.stderr.write('WARNING: git-remote-bzr is now maintained independently.\n')
+-sys.stderr.write('WARNING: For more information visit https://github.com/felipec/git-remote-bzr\n')
+-
+-sys.stderr.write('''WARNING:
++cat <<'EOT'
++WARNING: git-remote-bzr is now maintained independently.
++WARNING: For more information visit https://github.com/felipec/git-remote-bzr
++WARNING:
+ WARNING: You can pick a directory on your $PATH and download it, e.g.:
+-WARNING:   $ wget -O $HOME/bin/git-remote-bzr \\
++WARNING:   $ wget -O $HOME/bin/git-remote-bzr \
+ WARNING:     https://raw.github.com/felipec/git-remote-bzr/master/git-remote-bzr
+ WARNING:   $ chmod +x $HOME/bin/git-remote-bzr
+-''')
++EOT
+diff --git a/contrib/remote-helpers/git-remote-hg b/contrib/remote-helpers/git-remote-hg
+index 4255ad6..dfda44f 100755
+--- a/contrib/remote-helpers/git-remote-hg
++++ b/contrib/remote-helpers/git-remote-hg
+@@ -1,13 +1,11 @@
+-#!/usr/bin/env python
++#!/bin/sh
+ 
+-import sys
+-
+-sys.stderr.write('WARNING: git-remote-hg is now maintained independently.\n')
+-sys.stderr.write('WARNING: For more information visit https://github.com/felipec/git-remote-hg\n')
+-
+-sys.stderr.write('''WARNING:
++cat <<'EOT'
++WARNING: git-remote-hg is now maintained independently.
++WARNING: For more information visit https://github.com/felipec/git-remote-hg
++WARNING:
+ WARNING: You can pick a directory on your $PATH and download it, e.g.:
+-WARNING:   $ wget -O $HOME/bin/git-remote-hg \\
++WARNING:   $ wget -O $HOME/bin/git-remote-hg \
+ WARNING:     https://raw.github.com/felipec/git-remote-hg/master/git-remote-hg
+ WARNING:   $ chmod +x $HOME/bin/git-remote-hg
+-''')
++EOT
+
+--
+https://github.com/git/git/pull/333
