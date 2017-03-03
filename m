@@ -7,136 +7,80 @@ X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8E0492013E
+	by dcvr.yhbt.net (Postfix) with ESMTP id A469C2013E
 	for <e@80x24.org>; Fri,  3 Mar 2017 02:04:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751578AbdCCCEZ (ORCPT <rfc822;e@80x24.org>);
-        Thu, 2 Mar 2017 21:04:25 -0500
-Received: from mout.gmx.net ([212.227.15.15]:54749 "EHLO mout.gmx.net"
+        id S1751595AbdCCCE0 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 2 Mar 2017 21:04:26 -0500
+Received: from mout.gmx.net ([212.227.15.15]:52121 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751529AbdCCCEX (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Mar 2017 21:04:23 -0500
-Received: from virtualbox ([89.204.153.4]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MPUlV-1cfVqa3OiX-004j7V; Fri, 03
- Mar 2017 03:04:17 +0100
-Date:   Fri, 3 Mar 2017 03:04:15 +0100 (CET)
+        id S1751203AbdCCCET (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Mar 2017 21:04:19 -0500
+Received: from virtualbox ([89.204.153.4]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0M1F72-1cPbmb1DNA-00tGoo; Fri, 03
+ Mar 2017 03:04:09 +0100
+Date:   Fri, 3 Mar 2017 03:04:07 +0100 (CET)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     git@vger.kernel.org
 cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Duy Nguyen <pclouds@gmail.com>
-Subject: [PATCH v2 4/9] Export the discover_git_directory() function
+Subject: [PATCH v2 2/9] setup_git_directory(): use is_dir_sep() helper
 In-Reply-To: <cover.1488506615.git.johannes.schindelin@gmx.de>
-Message-ID: <0ca4cce042cc0b0f13f87363b70a3689057ae9b0.1488506615.git.johannes.schindelin@gmx.de>
+Message-ID: <d1342d28fd402615f1f94d9190559070ed04b0d7.1488506615.git.johannes.schindelin@gmx.de>
 References: <cover.1481211338.git.johannes.schindelin@gmx.de> <cover.1488506615.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:Wjt99r/oicevpk4YVE9Sftwgdu9YlbQfQrug6yvhfJ94CoZmovM
- bRsAABXDMiMn8RJrYydmDCPGpSktRJNyv+Vb9XPaMe2CGl8dR9v6k9UPeERyHmekyZYvt+/
- XWK7IlAYay+hjwvnziW4O8H3hNN/epfeCZpIxVcIowqUqTu/Rv9oa8x28Che3QPpfDH7Ftm
- AyRrgJhDuka+ukNmYLJiw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:8GyVMnRAzkQ=:NYZxzsyKwqK3lGnOyJYZli
- E51lOzWjBVB44/LVw/FcQY/PMQwDC8rZutUGD42DJ3wZfm3T+hj0xTaNcA2Go/ib9g/Dce+9f
- a3U3Fq5yBn2+lHG1dYb9O99sQn0bB2C6k5uKLXX/KZ1wMjVa+sJ+6mCYLmJNysh2gFNP6B9NJ
- GpQMSBDkLQejb3tlCDz8O/jySoxga735bw4bgbVCcGxHyiqXR35mzPxvqLe92Pp6r03+sYlu0
- hhOWIbalJ5cJ21G1xv1UbKpNNdoCFTjRYascv/wth+3JONSsUkcdPMrywtHk9KKF5Xhhz1hR2
- Y16DbMBnVGpPYBXuxGdXurK6IuHwmKJz0P0IGyQe4/Zvr3zc1KzguWW2KYA38nvV9OX+bkBh4
- uqlESh2Stm3hvFnYMItJJJVOW17Q6rng7797hxBEeG8HGycURN0gHMIKbJi+XFfuPyo9kNr5o
- qKm8XiVVf/AJ4KzK8VQ+blolgZSqwuahhqlj8kG/4kSlnFo23dSh4dBThxUhqiCe1syReRtk/
- vD18eGNiI/NR5Mc1UdSmWL6rpQMoRgqa66T6cgVEJfwDn4U6LRjT4S2lIF3ItFgM0MJcyywKW
- gtzVYUsyxSgi1VWxkl1A7Ip9SduO/liz2tfSYjGJ4xiTEfSsGIFXkOdeoY+L+F86Hh3jMthsk
- /YZsyAUBUOqB2ycbhhuw3Ghz4AG2vwDCjdRCx95KDKdrq5LiND+SCXUZY25OPzZxhRLvCa3G/
- cHxrEav68SoZ9k/T/Lv1wMtTwes5BmSTcztZj7QMt+o/vBdj5f+N/MTh989/72EWm7NSI2csr
- fksaxnz
+X-Provags-ID: V03:K0:mqJh3aqMzhZ7Avl+/nU42x9efStKrPl6Sa1ewc+1ag9TQ2lZFpT
+ +kfj/gkkzoApUMzepQIibGyrucKrTmaGYtwqv62vVAHFOc5lNgyW+jQvac9zHJyVYOXhOJk
+ Lv0HCM/OrlmNshgQeNoePJeXQ96znezeFNPVSnEE7JDs2lDnHPlq+4sREeguGGBzzf9VX5f
+ xyPbEcCUTNemQIrslwU0g==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:PndfibvDOcc=:efitTQApLSesHbWUh3JGdi
+ grOr9LEGkAKk4101ghmMqAz/2EHQxehvAbqemDZAp6ReTNflJ1thQqHHX81+VweO46LEbeCSL
+ 1IRyjkHJ3x87O0Es/hTWY2krb05BO6Aasix08AOXp5oSBQmJoh8VZ8KuNUbL/naIi28NwCoUF
+ BSbejh/dd7sqqpp+H0f5dtY/Lo2fL6fNAf+nnfH9ZUHb91UDxMb7ZR0xsMto225kwI9yGe0Hk
+ 74sw5wtiFlRX6koOnsTfPzNIW/+8y/qJ7mRTaKRGah7moEwoomnjjEBSu9YPWdrSlMDhSq4EA
+ IdnwD1NcFR+ADlmxd7LFp/IXA5COXA4H6cO31qjWNow9yL28ffjdCRfc66puFZnFPvsrkVREv
+ 3YcvctZntTqYTMj22hgb1H05bNdC6SKff1wKe4O2RSW6Ub1AhgL2pA+2aERhZwEdRUPHGIzYb
+ ec3cplrzFyg7frvQCZk7/B/id9qfSBOFQ/Zcpx7GIYQxjwz3oBtQzxpAnvdCETtDCnG+t3cTW
+ CaM9sOttjyhDmWmsQt4ZF+IprBNCCON8nWF2U60TGpUH0r9CKqDqpKFxm3St+fnGRx/nS9/Ej
+ eganWmdPbD2OZMzgtOSHu2yjH+fjzSFhVBH/caPejpWc3c5JuYbCqP2RQHxKxC5l20UTYBWWX
+ Cxse/2FuWFAGUQBAo6Z62G1prZy4XxRvVTmdSxcH2G7nI2NDMMdgDXCcpLALqmRoT4wRCNVDl
+ 2QDUYhtVYGYnOgAEkJvpDibvPRzTCWYDAQW35pl9+7fEFDXMY1dl7gk2bYXALUcf6hXtsRXOJ
+ s8vXZVG
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The function we introduced earlier needs to return both the path to the
-.git/ directory as well as the "cd-up" path to allow
-setup_git_directory() to retain its previous behavior as if it changed
-the current working directory on its quest for the .git/ directory.
+It is okay in practice to test for forward slashes in the output of
+getcwd(), because we go out of our way to convert backslashes to forward
+slashes in getcwd()'s output on Windows.
 
-Let's rename it and export a function with an easier signature that
-*just* discovers the .git/ directory.
-
-We will use it in a subsequent patch to support early config reading
-better.
+Still, the correct way to test for a dir separator is by using the
+helper function we introduced for that very purpose. It also serves as a
+good documentation what the code tries to do (not "how").
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- cache.h |  1 +
- setup.c | 29 ++++++++++++++++++++++++++---
- 2 files changed, 27 insertions(+), 3 deletions(-)
+ setup.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/cache.h b/cache.h
-index 80b6372cf76..a104b76c02e 100644
---- a/cache.h
-+++ b/cache.h
-@@ -518,6 +518,7 @@ extern void set_git_work_tree(const char *tree);
- #define ALTERNATE_DB_ENVIRONMENT "GIT_ALTERNATE_OBJECT_DIRECTORIES"
- 
- extern void setup_work_tree(void);
-+extern const char *discover_git_directory(struct strbuf *gitdir);
- extern const char *setup_git_directory_gently(int *);
- extern const char *setup_git_directory(void);
- extern char *prefix_path(const char *prefix, int len, const char *path);
 diff --git a/setup.c b/setup.c
-index edac3c27dc1..7ceca6cc6ef 100644
+index 967f289f1ef..89a0cef9231 100644
 --- a/setup.c
 +++ b/setup.c
-@@ -839,8 +839,8 @@ enum discovery_result {
-  * the discovered .git/ directory, if any. This path may be relative against
-  * `dir` (i.e. *not* necessarily the cwd).
-  */
--static enum discovery_result discover_git_directory(struct strbuf *dir,
--						    struct strbuf *gitdir)
-+static enum discovery_result discover_git_directory_1(struct strbuf *dir,
-+						      struct strbuf *gitdir)
- {
- 	const char *env_ceiling_dirs = getenv(CEILING_DIRECTORIES_ENVIRONMENT);
- 	struct string_list ceiling_dirs = STRING_LIST_INIT_DUP;
-@@ -921,6 +921,29 @@ static enum discovery_result discover_git_directory(struct strbuf *dir,
- 	}
- }
+@@ -910,7 +910,8 @@ static const char *setup_git_directory_gently_1(int *nongit_ok)
+ 			return setup_bare_git_dir(&cwd, offset, nongit_ok);
  
-+const char *discover_git_directory(struct strbuf *gitdir)
-+{
-+	struct strbuf dir = STRBUF_INIT;
-+	int len;
-+
-+	if (strbuf_getcwd(&dir))
-+		return NULL;
-+
-+	len = dir.len;
-+	if (discover_git_directory_1(&dir, gitdir) < 0) {
-+		strbuf_release(&dir);
-+		return NULL;
-+	}
-+
-+	if (dir.len < len && !is_absolute_path(gitdir->buf)) {
-+		strbuf_addch(&dir, '/');
-+		strbuf_insert(gitdir, 0, dir.buf, dir.len);
-+	}
-+	strbuf_release(&dir);
-+
-+	return gitdir->buf;
-+}
-+
- const char *setup_git_directory_gently(int *nongit_ok)
- {
- 	struct strbuf cwd = STRBUF_INIT, dir = STRBUF_INIT, gitdir = STRBUF_INIT;
-@@ -947,7 +970,7 @@ const char *setup_git_directory_gently(int *nongit_ok)
- 		die_errno(_("Unable to read current working directory"));
- 	strbuf_addbuf(&dir, &cwd);
- 
--	switch (discover_git_directory(&dir, &gitdir)) {
-+	switch (discover_git_directory_1(&dir, &gitdir)) {
- 	case GIT_DIR_NONE:
- 		prefix = NULL;
- 		break;
+ 		offset_parent = offset;
+-		while (--offset_parent > ceil_offset && cwd.buf[offset_parent] != '/');
++		while (--offset_parent > ceil_offset &&
++		       !is_dir_sep(dir->buf[offset_parent]));
+ 		if (offset_parent <= ceil_offset)
+ 			return setup_nongit(cwd.buf, nongit_ok);
+ 		if (one_filesystem) {
 -- 
 2.12.0.windows.1.3.g8a117c48243
 
