@@ -7,150 +7,145 @@ X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 51A7E2013E
-	for <e@80x24.org>; Fri,  3 Mar 2017 02:07:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F10B12013E
+	for <e@80x24.org>; Fri,  3 Mar 2017 02:07:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751984AbdCCCHL (ORCPT <rfc822;e@80x24.org>);
-        Thu, 2 Mar 2017 21:07:11 -0500
-Received: from mout.gmx.net ([212.227.15.19]:51973 "EHLO mout.gmx.net"
+        id S1751980AbdCCCHK (ORCPT <rfc822;e@80x24.org>);
+        Thu, 2 Mar 2017 21:07:10 -0500
+Received: from mout.gmx.net ([212.227.15.18]:55724 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751685AbdCCCFu (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1751083AbdCCCFu (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 2 Mar 2017 21:05:50 -0500
-Received: from virtualbox ([89.204.153.4]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0M2LZc-1cSue11iTM-00s9oa; Fri, 03
- Mar 2017 03:04:37 +0100
-Date:   Fri, 3 Mar 2017 03:04:36 +0100 (CET)
+Received: from virtualbox ([89.204.153.4]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0Lz3rc-1cEfYH2oHQ-014Dmn; Fri, 03
+ Mar 2017 03:04:33 +0100
+Date:   Fri, 3 Mar 2017 03:04:32 +0100 (CET)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     git@vger.kernel.org
 cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Duy Nguyen <pclouds@gmail.com>
-Subject: [PATCH v2 9/9] Test read_early_config()
+Subject: [PATCH v2 8/9] read_early_config(): really discover .git/
 In-Reply-To: <cover.1488506615.git.johannes.schindelin@gmx.de>
-Message-ID: <f27a753830b8fb61a5276ce1d8eeba04ae4dbbfd.1488506615.git.johannes.schindelin@gmx.de>
+Message-ID: <921faef822901715fa877d6969255ce00d80b925.1488506615.git.johannes.schindelin@gmx.de>
 References: <cover.1481211338.git.johannes.schindelin@gmx.de> <cover.1488506615.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:UZ1xV11yRWb+0fqGejJS7JbzD8iXwoPib2UzZ4HJSCO73FY0qlp
- WyXc4VLQtPQIYtdzPBEUsxlB8aR9EG9HkGFAqqsbGqwShUthsJAdyiS/JjpB1jQc58tkLQs
- i9yi8lfDdRb+Jj/+D1i2+h6Mm0Qu1QyJimdQYhuuUpXOH23eqpb1zrxOeKrSbSeiK0hNrQf
- +tEzO3OZfq4HEs81M2D+A==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:ArXRRWvziS0=:CMhQ/6EQDOWgWiTvEdeUF5
- aqafAYtQiR8ddDFMg63dFrAAHwBUOHyFFR/ZpYyvRi/B5TjgxHlWyA4HNLc3cdL1XcgfaviRt
- rR8Ga/DVHf0mpWmSrUmbQbz58gYa6FkMlObDprJ4J/7w2rKdwpNVT+ANK57hNlrzobouEHbl5
- NhaiRVq3xbjWzMb0RoWjZ5RmAuLTMmx4+PWUnpkUqpjyYSjH28RuQrd4oZLZnqZuRl0ISwWtA
- RJ09WYD4x/Hr2js5zjmFFRfeaW3sbIeb5cVI8T6CHB940uFLxlE+RKlJsR0CH4LCHSeBwFIyi
- CVqHOFC6BAVslejVKnJtgEeu2foRFkzOcc+cwP72G69GRwr+I4u7LKQOrlLuUs/qAO0/vcXOE
- yXvKXlaYAICuCPhz0TkM/IxC973tRoO/6plLeD0erlDxwSkANsS9ORh5xE3bh0D8d6w7j+JkO
- Gvwz87qSE6swanScfWr+9z9MGThj+VKZ06aRaFQesl8p7XulcWknjI2TqAatb9mKxy/v29rp9
- wiXZDlcc0YC2wzSpmTLv5AzdzCNyiUhM8c8jZqB66kWNkKPtLmtT54y96imRQpQHFAP3PlNvZ
- WlUrfbp4kxJ/hn6UJcp4K8wWtWBNfVYQbWkR9+FM2LyfVUCdXmKPYhaHm5bYTSSOTn9m8f96C
- dI98hOWB8I9mX2MeCkeUqMMIdbB5mMz78Y59C+FVehcOD6GGUCdi4n1e3FOZhjYid5r4KZM0v
- vII2pRo13VMlBCRnHK2plDRg5W6aS6UQ2Vxpgk8Mv0fmwjohN3sfRGzIAFJ1+Eaydgc0AREXo
- JAftuIJ
+X-Provags-ID: V03:K0:L9Bw9Kl5KLEsT2oQOwsUJhM3CPfQ/L07MaArGquUQhAuxOrbPa1
+ CF7BBWvT0/52C0DqBJzyCVC+z08VjLBGfs9pHFJdL4k8eE0NiowF5WGHLfE1wsQwMwbpiAR
+ /4pkwh7nLRzln3cE3pJ53Wy1Gogarm4drUV1F0mXRLfmfHa1ujcSY+phkX5ep4uNTFY5OpF
+ 0JxTwgSkJOk2WMfZAWAEw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:4jDdl8XHHoo=:yF6QY1j8n6KrS1SKEqneaQ
+ e9vbU999+OrAMbjBmkU2MVMbUtGD4WjWS34l1EGnuLeNMaY/Up7QOiiLFJ+zt6U+IFQAKb1Di
+ uk5QXm4VOp2ZmGTOM82j5DGLWJzeV+MW+7V4sKmkc761DZLd5VMD9UxTxmNqyxUOzgC1dIL6o
+ fZ1kpsawIb38MqfSMmzVxfENKm5dILDEWvx69uucexzf92h/oba3XEVdDmv2XbjT3P4JggARA
+ eGlOeW9CEMuBpahRIGM/nlHE0O+owj9mI38uDlg6nTKyFP0E5oOVWmz1ibRFK9j5fk5C378zQ
+ ozFdqFZ6GkQGPKaztswUUrjTWOAENo5gTT2kCgu/HUYcqss24JzKxpLl5Jz8QuyPK0FeY5KOq
+ 9qthsDakRMPrOa1Q1KVfXb9ATJ52GKJs1ikA/R88Uq08AGHDQwcO2j2V5ihvYaEj88dFoplz0
+ SYWp/k6jI+flt6kup/CuNHYevZF9Vl3XF4i3qzAyGgPfDpA6J7XPRyuwqTaK0f5y9GphXtbnm
+ 2Qwa5t1KaJNDwcXtsqb19puO2oVKtxcUMTv75qdPaUsk1jQh0UQiMH9C0F3jHzJ5L/rS7YrUq
+ mimTdPNSUshhLdpS1mrryNrEuZxv0X/EarTDdUd7o3v3cFcaUkhX73qx/3eZGRCZIiH2VgROF
+ Q2te4ULfu0OVYWfenOiItnz7ZqUnqd5oR4QZ30Mutk7TtwMQwQXN6YfAHJM7aXF8m73g/Anqg
+ szJTi9tQnU3DD4BD2B/GSo676iqfUFK/g7HzfNLAR4PdjtPUBg1oPK4ORHuSd+KiMMiSvLPsv
+ FVG74rg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-So far, we had no explicit tests of that function.
+Earlier, we punted and simply assumed that we are in the top-level
+directory of the project, and that there is no .git file but a .git/
+directory so that we can read directly from .git/config.
+
+However, that is not necessarily true. We may be in a subdirectory. Or
+.git may be a gitfile. Or the environment variable GIT_DIR may be set.
+
+To remedy this situation, we just refactored the way
+setup_git_directory() discovers the .git/ directory, to make it
+reusable, and more importantly, to leave all global variables and the
+current working directory alone.
+
+Let's discover the .git/ directory correctly in read_early_config() by
+using that new function.
+
+This fixes 4 known breakages in t7006.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- t/helper/test-config.c  | 15 +++++++++++++++
- t/t1309-early-config.sh | 50 +++++++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 65 insertions(+)
- create mode 100755 t/t1309-early-config.sh
+ config.c         | 9 +++++++--
+ t/t7006-pager.sh | 8 ++++----
+ 2 files changed, 11 insertions(+), 6 deletions(-)
 
-diff --git a/t/helper/test-config.c b/t/helper/test-config.c
-index 83a4f2ab869..8e3ed6a76cb 100644
---- a/t/helper/test-config.c
-+++ b/t/helper/test-config.c
-@@ -66,6 +66,16 @@ static int iterate_cb(const char *var, const char *value, void *data)
- 	return 0;
+diff --git a/config.c b/config.c
+index 3ee5e5a15d6..bcda397d42e 100644
+--- a/config.c
++++ b/config.c
+@@ -1414,6 +1414,8 @@ static void configset_iter(struct config_set *cs, config_fn_t fn, void *data)
+ 
+ void read_early_config(config_fn_t cb, void *data)
+ {
++	struct strbuf buf = STRBUF_INIT;
++
+ 	git_config_with_options(cb, data, NULL, 1);
+ 
+ 	/*
+@@ -1434,13 +1436,16 @@ void read_early_config(config_fn_t cb, void *data)
+ 	 * valid repository), and would rarely make things worse (i.e., you do
+ 	 * not generally have a .git/config file sitting around).
+ 	 */
+-	if (!startup_info->creating_repository && !have_git_dir()) {
++	if (!startup_info->creating_repository && !have_git_dir() &&
++	    discover_git_directory(&buf)) {
+ 		struct git_config_source repo_config;
+ 
+ 		memset(&repo_config, 0, sizeof(repo_config));
+-		repo_config.file = ".git/config";
++		strbuf_addstr(&buf, "/config");
++		repo_config.file = buf.buf;
+ 		git_config_with_options(cb, data, &repo_config, 1);
+ 	}
++	strbuf_release(&buf);
  }
  
-+static int early_config_cb(const char *var, const char *value, void *vdata)
-+{
-+	const char *key = vdata;
-+
-+	if (!strcmp(key, var))
-+		printf("%s\n", value);
-+
-+	return 0;
-+}
-+
- int cmd_main(int argc, const char **argv)
- {
- 	int i, val;
-@@ -73,6 +83,11 @@ int cmd_main(int argc, const char **argv)
- 	const struct string_list *strptr;
- 	struct config_set cs;
+ static void git_config_check_init(void);
+diff --git a/t/t7006-pager.sh b/t/t7006-pager.sh
+index 427bfc605ad..bf89340988b 100755
+--- a/t/t7006-pager.sh
++++ b/t/t7006-pager.sh
+@@ -360,19 +360,19 @@ test_pager_choices                       'git aliasedlog'
+ test_default_pager        expect_success 'git -p aliasedlog'
+ test_PAGER_overrides      expect_success 'git -p aliasedlog'
+ test_core_pager_overrides expect_success 'git -p aliasedlog'
+-test_core_pager_subdir    expect_failure 'git -p aliasedlog'
++test_core_pager_subdir    expect_success 'git -p aliasedlog'
+ test_GIT_PAGER_overrides  expect_success 'git -p aliasedlog'
  
-+	if (argc == 3 && !strcmp(argv[1], "read_early_config")) {
-+		read_early_config(early_config_cb, (void *)argv[2]);
-+		return 0;
-+	}
-+
- 	setup_git_directory();
+ test_default_pager        expect_success 'git -p true'
+ test_PAGER_overrides      expect_success 'git -p true'
+ test_core_pager_overrides expect_success 'git -p true'
+-test_core_pager_subdir    expect_failure 'git -p true'
++test_core_pager_subdir    expect_success 'git -p true'
+ test_GIT_PAGER_overrides  expect_success 'git -p true'
  
- 	git_configset_init(&cs);
-diff --git a/t/t1309-early-config.sh b/t/t1309-early-config.sh
-new file mode 100755
-index 00000000000..0c55dee514c
---- /dev/null
-+++ b/t/t1309-early-config.sh
-@@ -0,0 +1,50 @@
-+#!/bin/sh
-+
-+test_description='Test read_early_config()'
-+
-+. ./test-lib.sh
-+
-+test_expect_success 'read early config' '
-+	test_config early.config correct &&
-+	test-config read_early_config early.config >output &&
-+	test correct = "$(cat output)"
-+'
-+
-+test_expect_success 'in a sub-directory' '
-+	test_config early.config sub &&
-+	mkdir -p sub &&
-+	(
-+		cd sub &&
-+		test-config read_early_config early.config
-+	) >output &&
-+	test sub = "$(cat output)"
-+'
-+
-+test_expect_success 'ceiling' '
-+	test_config early.config ceiling &&
-+	mkdir -p sub &&
-+	(
-+		GIT_CEILING_DIRECTORIES="$PWD" &&
-+		export GIT_CEILING_DIRECTORIES &&
-+		cd sub &&
-+		test-config read_early_config early.config
-+	) >output &&
-+	test -z "$(cat output)"
-+'
-+
-+test_expect_success 'ceiling #2' '
-+	mkdir -p xdg/git &&
-+	git config -f xdg/git/config early.config xdg &&
-+	test_config early.config ceiling &&
-+	mkdir -p sub &&
-+	(
-+		XDG_CONFIG_HOME="$PWD"/xdg &&
-+		GIT_CEILING_DIRECTORIES="$PWD" &&
-+		export GIT_CEILING_DIRECTORIES XDG_CONFIG_HOME &&
-+		cd sub &&
-+		test-config read_early_config early.config
-+	) >output &&
-+	test xdg = "$(cat output)"
-+'
-+
-+test_done
+ test_default_pager        expect_success test_must_fail 'git -p request-pull'
+ test_PAGER_overrides      expect_success test_must_fail 'git -p request-pull'
+ test_core_pager_overrides expect_success test_must_fail 'git -p request-pull'
+-test_core_pager_subdir    expect_failure test_must_fail 'git -p request-pull'
++test_core_pager_subdir    expect_success test_must_fail 'git -p request-pull'
+ test_GIT_PAGER_overrides  expect_success test_must_fail 'git -p request-pull'
+ 
+ test_default_pager        expect_success test_must_fail 'git -p'
+@@ -380,7 +380,7 @@ test_PAGER_overrides      expect_success test_must_fail 'git -p'
+ test_local_config_ignored expect_failure test_must_fail 'git -p'
+ test_GIT_PAGER_overrides  expect_success test_must_fail 'git -p'
+ 
+-test_expect_failure TTY 'core.pager in repo config works and retains cwd' '
++test_expect_success TTY 'core.pager in repo config works and retains cwd' '
+ 	sane_unset GIT_PAGER &&
+ 	test_config core.pager "cat >cwd-retained" &&
+ 	(
 -- 
 2.12.0.windows.1.3.g8a117c48243
+
+
