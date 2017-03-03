@@ -2,114 +2,228 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9BF7320133
-	for <e@80x24.org>; Fri,  3 Mar 2017 16:59:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D8FDC20133
+	for <e@80x24.org>; Fri,  3 Mar 2017 17:01:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751637AbdCCQ7P (ORCPT <rfc822;e@80x24.org>);
-        Fri, 3 Mar 2017 11:59:15 -0500
-Received: from mout.gmx.net ([212.227.15.19]:63012 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751476AbdCCQ6i (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 3 Mar 2017 11:58:38 -0500
-Received: from virtualbox ([37.201.194.68]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MNZ9u-1cdmPp0k5i-007CQd; Fri, 03
- Mar 2017 16:26:11 +0100
-Date:   Fri, 3 Mar 2017 16:26:09 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     Jeff King <peff@peff.net>
-cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH v2 8/9] read_early_config(): really discover .git/
-In-Reply-To: <20170303050630.mw6asla65prku3vq@sigill.intra.peff.net>
-Message-ID: <alpine.DEB.2.20.1703031620190.3767@virtualbox>
-References: <cover.1481211338.git.johannes.schindelin@gmx.de> <cover.1488506615.git.johannes.schindelin@gmx.de> <921faef822901715fa877d6969255ce00d80b925.1488506615.git.johannes.schindelin@gmx.de> <20170303050630.mw6asla65prku3vq@sigill.intra.peff.net>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+        id S1751734AbdCCRBu (ORCPT <rfc822;e@80x24.org>);
+        Fri, 3 Mar 2017 12:01:50 -0500
+Received: from avasout06.plus.net ([212.159.14.18]:40407 "EHLO
+        avasout06.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751754AbdCCRBp (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 3 Mar 2017 12:01:45 -0500
+Received: from deneb ([80.229.24.9])
+        by avasout06 with smtp
+        id rV1i1u0040BmcFC01V1j1h; Fri, 03 Mar 2017 17:01:43 +0000
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.2 cv=QoEu5R6d c=1 sm=1 tr=0
+ a=E/9URZZQ5L3bK/voZ0g0HQ==:117 a=E/9URZZQ5L3bK/voZ0g0HQ==:17
+ a=8nJEP1OIZ-IA:10 a=6Iz7jQTuP9IA:10 a=ybZZDoGAAAAA:8 a=-An2I_7KAAAA:8
+ a=YtztpdHs-eMnB8EqWicA:9 a=_zN_YUlkvOLGN9i-:21 a=rKTFkQOd2Ub_rn0C:21
+ a=wPNLvfGTeEIA:10 a=0RhZnL1DYvcuLYC8JZ5M:22 a=Sq34B_EcNBM9_nrAYB9S:22
+Received: from mac by deneb with local (Exim 4.84_2)
+        (envelope-from <mac@mcrowe.com>)
+        id 1cjqaM-0003jx-5l; Fri, 03 Mar 2017 17:01:42 +0000
+Date:   Fri, 3 Mar 2017 17:01:42 +0000
+From:   Mike Crowe <mac@mcrowe.com>
+To:     Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v1 1/1] git diff --quiet exits with 1 on clean tree with
+ CRLF conversions
+Message-ID: <20170303170142.GA14150@mcrowe.com>
+References: <xmqqshmyhtnu.fsf@gitster.mtv.corp.google.com>
+ <20170301170444.14274-1-tboegi@web.de>
+ <20170301212535.GA6878@mcrowe.com>
+ <5d92d3b8-f438-9be5-9742-22f8cd8fe03d@web.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:kRvEvNp6PUSKVCRzM5DyVny31V13kobvmtaX6sdLGuf5ZsSXjE7
- eMFzIcDA0xy4NlpNySUHqpN2bxOIw8z5vMpIU0NUbrco7GIvAKt0kiOT0qwgL4pEgphdx9O
- ne0QBoGkIH4lBtuoao3oMtiiBFQVSpn7zeJZPU1BzWJT2LdebGHdR2ucPclbokEdOKOUtXE
- Q3PTRYZkUwVepDSSKrl+A==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:yRxd86KMmC4=:LPIJI270CYcitrKm+VYHDU
- DlYSjC/6qHLdHEGQC4vTSe5LSmU40xSHBo+E73npAtnLraot/XvX4w3m4/r46d9/vz/P1veRb
- vUOmJ1bGPuDcGxvR7/UKDAJJDBF8trZGYGJQrj+3ONOE887B2xV7P3KwHouTNhUO34mQP7ll+
- MfrXjAHFfGAPhT4Bax0Z9a0iT8OhGKQY55SOqFg8GGhIK8xFTtdAcwy/E4W2Kk6+srW98itY4
- cMsPouXeS2SrGEMOV5qrKANGUxfMOwXEBJOHo5/K9v9H0e865Fr1gB01DsoQv/s0pgTytp6Ko
- 1FqbpEv3I3h6Eq2e7JPJQnkh/lAHUgYOtdaqrrK2u7NVgZGOQrs5/EbuiAub6wDsrqbFcScQP
- TOWMUaTK+3HBVmhtx29Xdasmg1+e9AYPgo9KR3Yq3hVh79mfeKkeTZfdIMg+0Eu8LgPlAcF0u
- sJqI/g8V4d9uzKgrzZ/BXeQnluJISBOf2eUFJly8ioRlTlNW/yl4iL92MejeD8JQlK8vzE+Y9
- 52ci1g38moEDFtxu+FnW1E/fRkev0lX8holRXlhxw03j456BcpYH8+Hsb0yl1QKzy+bwEl5e5
- Ems6NzF6WnEtJOX6/Rpaywlglq5KsYWrXMuSa+2GDIOMzHqSU48c3KFLjP002+zfF0uupIm6E
- zka9O+ZKJJQ5EC2klD3qFR6SF+Sd99Bo4KyW+HgoUmKqv9kacANzci4XbUVKYrCTatpD2YYok
- oVz55Fd/Vkw3Vtust2hCVmjfsJ9qUglqAfzI7ZUoVoVSTO/Wqg0NNWLYuKOfE5q4LUG1mu9iw
- uSlxFv6
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <5d92d3b8-f438-9be5-9742-22f8cd8fe03d@web.de>
+User-Agent: Mutt/1.5.23 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Peff,
+Hi Torsten,
 
-On Fri, 3 Mar 2017, Jeff King wrote:
+Your patch has been superseded, but I thought I ought to answer your
+questions rather than leave them hanging.
 
-> I think the "dirty hack..." comment in read_early_config() can be
-> condensed (or go away) now.
+On Thursday 02 March 2017 at 19:17:00 +0100, Torsten Bögershausen wrote:
+> On 2017-03-01 22:25, Mike Crowe wrote:
+> > On Wednesday 01 March 2017 at 18:04:44 +0100, tboegi@web.de wrote:
+> >> From: Junio C Hamano <gitster@pobox.com>
+> >>
+> >> git diff --quiet may take a short-cut to see if a file is changed
+> >> in the working tree:
+> >> Whenever the file size differs from what is recorded in the index,
+> >> the file is assumed to be changed and git diff --quiet returns
+> >> exit with code 1
+> >>
+> >> This shortcut must be suppressed whenever the line endings are converted
+> >> or a filter is in use.
+> >> The attributes say "* text=auto" and a file has
+> >> "Hello\nWorld\n" in the index with a length of 12.
+> >> The file in the working tree has "Hello\r\nWorld\r\n" with a length of 14.
+> >> (Or even "Hello\r\nWorld\n").
+> >> In this case "git add" will not do any changes to the index, and
+> >> "git diff -quiet" should exit 0.
+> >>
+> >> Add calls to would_convert_to_git() before blindly saying that a different
+> >> size means different content.
+> >>
+> >> Reported-By: Mike Crowe <mac@mcrowe.com>
+> >> Signed-off-by: Torsten Bögershausen <tboegi@web.de>
+> >> ---
+> >> This is what I can come up with, collecting all the loose ends.
+> >> I'm not sure if Mike wan't to have the Reported-By with a
+> >> Signed-off-by ?
+> >> The other question is, if the commit message summarizes the discussion
+> >> well enough ?
+> >>
+> >> diff.c                    | 18 ++++++++++++++----
+> >>  t/t0028-diff-converted.sh | 27 +++++++++++++++++++++++++++
+> >>  2 files changed, 41 insertions(+), 4 deletions(-)
+> >>  create mode 100755 t/t0028-diff-converted.sh
+> >>
+> >> diff --git a/diff.c b/diff.c
+> >> index 051761b..c264758 100644
+> >> --- a/diff.c
+> >> +++ b/diff.c
+> >> @@ -4921,9 +4921,10 @@ static int diff_filespec_check_stat_unmatch(struct diff_filepair *p)
+> >>  	 *    differences.
+> >>  	 *
+> >>  	 * 2. At this point, the file is known to be modified,
+> >> -	 *    with the same mode and size, and the object
+> >> -	 *    name of one side is unknown.  Need to inspect
+> >> -	 *    the identical contents.
+> >> +	 *    with the same mode and size, the object
+> >> +	 *    name of one side is unknown, or size comparison
+> >> +	 *    cannot be depended upon.  Need to inspect the
+> >> +	 *    contents.
+> >>  	 */
+> >>  	if (!DIFF_FILE_VALID(p->one) || /* (1) */
+> >>  	    !DIFF_FILE_VALID(p->two) ||
+> >> @@ -4931,7 +4932,16 @@ static int diff_filespec_check_stat_unmatch(struct diff_filepair *p)
+> >>  	    (p->one->mode != p->two->mode) ||
+> >>  	    diff_populate_filespec(p->one, CHECK_SIZE_ONLY) ||
+> >>  	    diff_populate_filespec(p->two, CHECK_SIZE_ONLY) ||
+> >> -	    (p->one->size != p->two->size) ||
+> >> +
+> >> +	    /*
+> >> +	     * only if eol and other conversions are not involved,
+> >> +	     * we can say that two contents of different sizes
+> >> +	     * cannot be the same without checking their contents.
+> >> +	     */
+> >> +	    (!would_convert_to_git(p->one->path) &&
+> >> +	     !would_convert_to_git(p->two->path) &&
+> >> +	     (p->one->size != p->two->size)) ||
+> >> +
+> >>  	    !diff_filespec_is_identical(p->one, p->two)) /* (2) */
+> >>  		p->skip_stat_unmatch_result = 1;
+> >>  	return p->skip_stat_unmatch_result;
+> >> diff --git a/t/t0028-diff-converted.sh b/t/t0028-diff-converted.sh
+> >> new file mode 100755
+> >> index 0000000..3d5ab95
+> >> --- /dev/null
+> >> +++ b/t/t0028-diff-converted.sh
+> >> @@ -0,0 +1,27 @@
+> >> +#!/bin/sh
+> >> +#
+> >> +# Copyright (c) 2017 Mike Crowe
+> >> +#
+> >> +# These tests ensure that files changing line endings in the presence
+> >> +# of .gitattributes to indicate that line endings should be ignored
+> >> +# don't cause 'git diff' or 'git diff --quiet' to think that they have
+> >> +# been changed.
+> >> +
+> >> +test_description='git diff with files that require CRLF conversion'
+> >> +
+> >> +. ./test-lib.sh
+> >> +
+> >> +test_expect_success setup '
+> >> +	echo "* text=auto" >.gitattributes &&
+> >> +	printf "Hello\r\nWorld\r\n" >crlf.txt &&
+> >> +	git add .gitattributes crlf.txt &&
+> >> +	git commit -m "initial"
+> >> +'
+> >> +
+> >> +test_expect_success 'quiet diff works on file with line-ending change that has no effect on repository' '
+> >> +	printf "Hello\r\nWorld\n" >crlf.txt &&
+> >> +	git status &&
+> >> +	git diff --quiet
+> >> +'
+> >> +
+> >> +test_done
+> >
 
-Yes, I made that change in response to a comment you made about an earlier
-patch in this series.
+[snip]
 
-> I think we _could_ do away with read_early_config() entirely, and just
-> have the regular config code do this lookup when we're not already in a
-> repo. But then we'd really need to depend on the "creating_repository"
-> flag being managed correctly.
-
-Well, that would be a major design change. I'm not really all that
-comfortable with that...
-
-> I think I prefer the idea that a few "early" spots like pager and alias
-> config need to use this special function to access the config. That's
-> less likely to cause surprises when some config option is picked up
-> before we have run setup_git_directory().
-
-Exactly. There is semantic meaning in calling read_early_config() vs
-git_config().
-
-> There is one surprising case that I think we need to deal with even now,
-> though. If I do:
+> > Also, I think I've found a behaviour change with this fix. Consider:
+> > 
+> >  echo "* text=auto" >.gitattributes
+> >  printf "Hello\r\nWorld\r\n" >crlf.txt
+> That should give
+> "Hello\nWorld\n" in the index:
 > 
->   git init repo
->   git -C repo config pager.upload-pack 'echo whoops'
->   git upload-pack repo
->   cd repo && git upload-pack .
+> git add .gitattributes crlf.txt
+> warning: CRLF will be replaced by LF in ttt/crlf.txt.
+> The file will have its original line endings in your working directory.
+> tb@mac:/tmp/ttt> git commit -m "initial"
+> [master (root-commit) 354f657] initial
+>  2 files changed, 3 insertions(+)
+>  create mode 100644 ttt/.gitattributes
+>  create mode 100644 ttt/crlf.txt
+> tb@mac:/tmp/ttt> git ls-files --eol
+> i/lf    w/lf    attr/text=auto          .gitattributes
+> i/lf    w/crlf  attr/text=auto          crlf.txt
+> tb@mac:/tmp/ttt>
 > 
-> the first one is OK, but the second reads and executes the pager config
-> from the repo, even though we usually consider upload-pack to be OK to
-> run in an untrusted repo. This _isn't_ a new thing in your patch, but
-> just something I noticed while we are here.
+> >  git add .gitattributes crlf.txt
+> >  git commit -m "initial"
+> > 
+> >  printf "\r\n" >>crlf.txt
+> > 
+> > With the above patch, both "git diff" and "git diff --quiet" report that
+> > there are no changes. Previously Git would report the extra newline
+> > correctly.
+> Wait a second.
+> Which extra newline "correctly" ?
+
+The extra newline I appended with the printf "\r\n" >> crlf.txt
+
+> The "git diff" command is about the changes which will be done to the index.
+> Regardless if you have any of these in the working tree on disk:
 > 
-> And maybe it is a non-issue. The early-config bits all happen via the
-> git wrapper, and normally we use the direct dashed "git-upload-pack" to
-> access the other repositories. Certainly I have been known to use "git
-> -c ... upload-pack" while debugging various things.
+> "Hello\nWorld\n"
+> "Hello\nWorld\r\n"
+> "Hello\r\nWorld\n"
+> "Hello\r\nWorld\r\n"
 > 
-> So I dunno. You really have to jump through some hoops for it to matter,
-> but I just wonder if the git wrapper should be special-casing
-> upload-pack, too.
+> "git status" and "git diff --quiet"
+> should not report any changes.
 
-While I agree that it may sound surprising, I would like to point out that
-there *is* a semantic difference between `git upload-pack repo` and `git
--C repo upload-pack .`: the working directory is different. And given that
-so much in Git's operations depend on the working directory, it makes
-sense that those two invocations have slightly different semantics, too.
+But I didn't have any of those. I ended up with:
 
-I also agree, obviously, that this is something that would need a separate
-patch series to tackle ;-)
+ "Hello\nWorld\n"
 
-Ciao,
-Dscho
+in the index, and
+
+ "Hello\r\nWorld\r\n\r\n"
+
+in the working tree, but the extra newline was not reported by git diff.
+
+> So I don't know if there is a mis-understanding about "git diff" on your side,
+> or if I miss something.
+
+I don't think it matters any more since Junio's patch didn't suffer from
+this problem.
+
+Thanks.
+
+Mike.
