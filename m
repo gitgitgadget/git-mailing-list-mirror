@@ -6,63 +6,64 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8C7522013E
-	for <e@80x24.org>; Fri,  3 Mar 2017 05:51:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 036792023D
+	for <e@80x24.org>; Fri,  3 Mar 2017 06:40:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751666AbdCCFvL (ORCPT <rfc822;e@80x24.org>);
-        Fri, 3 Mar 2017 00:51:11 -0500
-Received: from cloud.peff.net ([104.130.231.41]:37684 "EHLO cloud.peff.net"
+        id S1751143AbdCCGku (ORCPT <rfc822;e@80x24.org>);
+        Fri, 3 Mar 2017 01:40:50 -0500
+Received: from cloud.peff.net ([104.130.231.41]:37715 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751662AbdCCFvL (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 3 Mar 2017 00:51:11 -0500
-Received: (qmail 1590 invoked by uid 109); 3 Mar 2017 04:51:04 -0000
+        id S1751050AbdCCGku (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 3 Mar 2017 01:40:50 -0500
+Received: (qmail 9329 invoked by uid 109); 3 Mar 2017 06:33:31 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 03 Mar 2017 04:51:04 +0000
-Received: (qmail 24701 invoked by uid 111); 3 Mar 2017 04:51:10 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 03 Mar 2017 06:33:31 +0000
+Received: (qmail 25263 invoked by uid 111); 3 Mar 2017 06:33:38 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 02 Mar 2017 23:51:10 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 02 Mar 2017 23:51:01 -0500
-Date:   Thu, 2 Mar 2017 23:51:01 -0500
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 03 Mar 2017 01:33:38 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 03 Mar 2017 01:33:29 -0500
+Date:   Fri, 3 Mar 2017 01:33:29 -0500
 From:   Jeff King <peff@peff.net>
-To:     Johannes Schindelin <johannes.schindelin@gmx.de>
+To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
 Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH v2 6/9] read_early_config(): special-case builtins that
- create a repository
-Message-ID: <20170303045101.om7qtbcmtuw6kzvr@sigill.intra.peff.net>
-References: <cover.1481211338.git.johannes.schindelin@gmx.de>
- <cover.1488506615.git.johannes.schindelin@gmx.de>
- <33e692918c8d41507de5ec2b2e2d55982678408e.1488506615.git.johannes.schindelin@gmx.de>
+        sschuberth@gmail.com, Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+        Philip Oakley <philipoakley@iee.org>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>
+Subject: Re: [PATCH v7 0/3] Conditional config include
+Message-ID: <20170303063329.ji6do6eqjbpuwmxz@sigill.intra.peff.net>
+References: <20170224131425.32409-1-pclouds@gmail.com>
+ <20170301112631.16497-1-pclouds@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <33e692918c8d41507de5ec2b2e2d55982678408e.1488506615.git.johannes.schindelin@gmx.de>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20170301112631.16497-1-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Mar 03, 2017 at 03:04:24AM +0100, Johannes Schindelin wrote:
+On Wed, Mar 01, 2017 at 06:26:28PM +0700, Nguyễn Thái Ngọc Duy wrote:
 
-> When the command we are about to execute wants to create a repository
-> (i.e. the command is `init` or `clone`), we *must not* look for a
-> repository config.
+> I don't have a good answer for Jeff's PS about includeIf ugliness. I
+> agree that includeif is ugly but includeIf looks a bit better. I don't
+> see a better option (if only "include" does not start or end with a
+> vowel...). Maybe includewith? Suggestions are welcome.
 
-Hmm. I'm not sure if this one is worth the hackery here.
+I actually think "include-if" _looks_ better, although maybe the
+inconsistency with "-" is something we don't want to encourage (though I
+also think the implicit include.<cond>.path was OK, too). Feel free to
+just ignore me. I will live with it either way.
 
-Yes, it would be wrong for init or clone to read something like
-core.sharedrepository from a repo it happens to be in. But I wonder if
-it would be cleaner to consider calls to read_early_config their own
-"pre-command" stage that may respect global config, or config in a repo
-directory you happen to be sitting in.
+For those following on the mailing list, there is some discussion at:
 
-Because I think for aliases, we're going to end up having to do that
-anyway (you won't know that your alias is "clone" until you've resolved
-it!). And I think the pager fits into this "pre-command" concept, too
-(we already have "-p" as a pre-command option on the command-line).
+  https://github.com/git/git/commit/484f78e46d00c6d35f20058671a8c76bb924fb33
 
-I dunno. It probably doesn't matter _too much_ either way. But it's one
-less hack to maintain going forward, and it also makes your "git-init
-respects the pager" into the normal, consistent thing.
+I think that is mostly focused around another failing in the
+error-handling of the config code, and that does not need to be
+addressed by this series (though of course I'd welcome any fixes).
+
+But there's a test failure that probably does need to be dealt with
+before this graduates to 'next'.
 
 -Peff
