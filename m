@@ -6,53 +6,47 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BDD5A2023D
-	for <e@80x24.org>; Fri,  3 Mar 2017 09:18:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2AF412023D
+	for <e@80x24.org>; Fri,  3 Mar 2017 09:19:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751408AbdCCJRa (ORCPT <rfc822;e@80x24.org>);
-        Fri, 3 Mar 2017 04:17:30 -0500
-Received: from cloud.peff.net ([104.130.231.41]:37817 "EHLO cloud.peff.net"
+        id S1751590AbdCCJTd (ORCPT <rfc822;e@80x24.org>);
+        Fri, 3 Mar 2017 04:19:33 -0500
+Received: from cloud.peff.net ([104.130.231.41]:37815 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751083AbdCCJR3 (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1751143AbdCCJR3 (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 3 Mar 2017 04:17:29 -0500
-Received: (qmail 1153 invoked by uid 109); 3 Mar 2017 04:46:33 -0000
+Received: (qmail 15452 invoked by uid 109); 3 Mar 2017 07:56:07 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 03 Mar 2017 04:46:33 +0000
-Received: (qmail 24684 invoked by uid 111); 3 Mar 2017 04:46:39 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 03 Mar 2017 07:56:07 +0000
+Received: (qmail 25624 invoked by uid 111); 3 Mar 2017 07:56:14 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 02 Mar 2017 23:46:39 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 02 Mar 2017 23:46:30 -0500
-Date:   Thu, 2 Mar 2017 23:46:30 -0500
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 03 Mar 2017 02:56:14 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 03 Mar 2017 02:56:05 -0500
+Date:   Fri, 3 Mar 2017 02:56:05 -0500
 From:   Jeff King <peff@peff.net>
-To:     Johannes Schindelin <johannes.schindelin@gmx.de>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH v2 5/9] Make read_early_config() reusable
-Message-ID: <20170303044630.tfogzhzbokuoiwh6@sigill.intra.peff.net>
-References: <cover.1481211338.git.johannes.schindelin@gmx.de>
- <cover.1488506615.git.johannes.schindelin@gmx.de>
- <64135c6df520c1ca6a6e667855ac03c14d2dd153.1488506615.git.johannes.schindelin@gmx.de>
+To:     "Devin J. Pohly" <djpohly@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 4/4] p7000: add test for filter-branch with --prune-empty
+Message-ID: <20170303075605.3pqqzmjcqdtv2bjd@sigill.intra.peff.net>
+References: <20170223082736.31283-1-djpohly@gmail.com>
+ <20170223082736.31283-4-djpohly@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <64135c6df520c1ca6a6e667855ac03c14d2dd153.1488506615.git.johannes.schindelin@gmx.de>
+In-Reply-To: <20170223082736.31283-4-djpohly@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Mar 03, 2017 at 03:04:20AM +0100, Johannes Schindelin wrote:
+On Thu, Feb 23, 2017 at 02:27:36AM -0600, Devin J. Pohly wrote:
 
-> The pager configuration needs to be read early, possibly before
-> discovering any .git/ directory.
-> 
-> Let's not hide this function in pager.c, but make it available to other
-> callers.
-> [...]
-> +	 * Note that this is a really dirty hack that does the wrong thing in
-> +	 * many cases. The crux of the problem is that we cannot run
+> +test_perf 'noop prune-empty' '
+> +	git checkout --detach tip &&
+> +	git filter-branch -f --prune-empty base..HEAD
+> +'
 
-Makes sense. I'll assume the words "dirty hack" disappear from this
-now-public function as you fix it up in a future patch. :)
+I don't mind adding this, but of curiosity, does it show anything
+interesting?
 
 -Peff
