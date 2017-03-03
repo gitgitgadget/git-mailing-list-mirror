@@ -2,97 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 714F920133
-	for <e@80x24.org>; Fri,  3 Mar 2017 18:24:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B5FB720133
+	for <e@80x24.org>; Fri,  3 Mar 2017 18:35:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752118AbdCCSYL (ORCPT <rfc822;e@80x24.org>);
-        Fri, 3 Mar 2017 13:24:11 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:50807 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751584AbdCCSYJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 3 Mar 2017 13:24:09 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id E75E862E7E;
-        Fri,  3 Mar 2017 13:24:07 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=aWdVKEf+PmJotXehbhx7s+OSpj0=; b=ni6T2n
-        Pn0usOtrWroJ+E5jOz4KiWrTVpv5O+0I+0sWbVLPqpRer0PzwO44h//jaOX7R0J6
-        HIjWZO3CINWlI2z+zv9ZwUG2CD33UbZgDaSiQIcJ/YZDWvxAEAWkcrivRENkdCCD
-        PQ/cKpre6r6H/5lcDsa39ssMcXYYoy9EQDsgc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=u1e7l+i1fDxwtJI6ahueO2pHHFGgtUVO
-        miG3pzBjSKF6rhI6xwFp0PtAbhcZ5ExSnanFf5yPu5n6oObFAnTc5y+0D906cFrj
-        eDdEm3TzFxUexqUVsQGc+F+/+yZ5Kya3JpPLBZOc9mIkexTjk1w6wxdrftIbqykY
-        Vkp1DFdNkMI=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id DFA1862E7D;
-        Fri,  3 Mar 2017 13:24:07 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 318B762E7B;
-        Fri,  3 Mar 2017 13:24:07 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-        git@vger.kernel.org, sschuberth@gmail.com,
-        Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-        Philip Oakley <philipoakley@iee.org>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: Re: [PATCH v7 0/3] Conditional config include
-References: <20170224131425.32409-1-pclouds@gmail.com>
-        <20170301112631.16497-1-pclouds@gmail.com>
-        <20170303063329.ji6do6eqjbpuwmxz@sigill.intra.peff.net>
-Date:   Fri, 03 Mar 2017 10:24:05 -0800
-In-Reply-To: <20170303063329.ji6do6eqjbpuwmxz@sigill.intra.peff.net> (Jeff
-        King's message of "Fri, 3 Mar 2017 01:33:29 -0500")
-Message-ID: <xmqqlgsm9q2i.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+        id S1752045AbdCCSfW (ORCPT <rfc822;e@80x24.org>);
+        Fri, 3 Mar 2017 13:35:22 -0500
+Received: from wp156.webpack.hosteurope.de ([80.237.132.163]:50850 "EHLO
+        wp156.webpack.hosteurope.de" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1751945AbdCCSfT (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 3 Mar 2017 13:35:19 -0500
+Received: from p5099125b.dip0.t-ipconnect.de ([80.153.18.91] helo=[192.168.100.43]); authenticated
+        by wp156.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+        id 1cjrZj-0001OK-KX; Fri, 03 Mar 2017 19:05:07 +0100
+Subject: Re: log -S/-G (aka pickaxe) searches binary files by default
+To:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+References: <7a0992eb-adb9-a7a1-cfaa-3384bc4d3e5c@virtuell-zuhause.de>
+ <CAPc5daVSY5Z_+cpT1dHY-cM-TzNeu+Vzv+zouoOHW08PTFRQ7A@mail.gmail.com>
+ <20170303051721.r6pahs4vjtqqoevc@sigill.intra.peff.net>
+ <xmqqzih29wdu.fsf@gitster.mtv.corp.google.com>
+Cc:     GIT Mailing-list <git@vger.kernel.org>
+From:   Thomas Braun <thomas.braun@virtuell-zuhause.de>
+Message-ID: <dcce9a68-a54d-b798-e301-bc92b7fd2cd7@virtuell-zuhause.de>
+Date:   Fri, 3 Mar 2017 19:05:07 +0100
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.7.1
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 96919D68-003E-11E7-8952-FC50AE2156B6-77302942!pb-smtp2.pobox.com
+In-Reply-To: <xmqqzih29wdu.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+X-bounce-key: webpack.hosteurope.de;thomas.braun@virtuell-zuhause.de;1488566119;1f977e26;
+X-HE-SMSGID: 1cjrZj-0001OK-KX
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Am 03.03.2017 um 17:07 schrieb Junio C Hamano:
+> Jeff King <peff@peff.net> writes:
+> 
+>> On Thu, Mar 02, 2017 at 05:36:17PM -0800, Junio C Hamano wrote:
+>> ...
+>>>> Is that on purpose?
+>>>
+>>> No, it's a mere oversight (as I do not think I never even thought
+>>> about special casing binary
+>>> files from day one, it is unlikely that you would find _any_ old
+>>> version of Git that behaves
+>>> differently).
+>>
+>> The email focuses on "-G", and I think it is wrong to look in binary
+>> files there, as "grep in diff" does not make sense for a binary file
+>> that we would refuse to diff.
+> 
+> Yeah, I agree.
+> 
+>> But the subject also mentions "-S". I always assumed it was intentional
+>> to look in binary files there, as it is searching for a pure byte
+>> sequence. I would not mind an option to disable that, but I think the
+>> default should remain on.
+> 
+> As the feature was built to be one of the core ingredients necessary
+> towards the 'ideal SCM' envisioned in
+> 
+>   <http://public-inbox.org/git/Pine.LNX.4.58.0504150753440.7211@ppc970.osdl.org>
+> 
+> "-S" is about finding "a block of text". It was merely an oversight
+> that we didn't add explicit code to ignore binary when we introduced
+> the concept of "is this text?  is it worth finding things in and
+> diffing binary files?".
+> 
+> I do agree that it may be too late and/or disruptive to change its
+> behaviour now, as people may grew expectations different from the
+> original motivation and design, though.
 
-> For those following on the mailing list, there is some discussion at:
->
->   https://github.com/git/git/commit/484f78e46d00c6d35f20058671a8c76bb924fb33
->
-> I think that is mostly focused around another failing in the
-> error-handling of the config code, and that does not need to be
-> addressed by this series (though of course I'd welcome any fixes).
+Thanks both for the encouraging answers.
 
-Thanks.  Without a message like this, the list may have never known
-about the discussion taken elsewhere.  I'd appreciate such a report
-to appear on list the next time much earlier ;-)
+I'll try to come up with patches in the next couple of weeks for the
+following changes:
+"log -G": disable looking in binaries
+"log -S": add option to switch looking into binaries, defaults to true
 
-When built with FREAD_READS_DIRECTORIES=Yes on Linux, the error in
-the test can easily reproduce.
-
-In early days of UNIX it was sometimes handy to be able to read the
-bytes off of directory to "investigate", but we are not a filesystem
-application, and I do not offhand see any reason why we should be
-relying on being able to successfully fopen() a directory for
-reading.  A FILE * successfully opened that just returns EOF when
-read is totally useless for any purpose anyway.  
-
-When the path to be opened from the end user (either from the
-command line or in a configuration file) is a directory, it is
-better to diagnose it as a user error, and if the path was computed
-by our code, it may be a bug.
-
-I am wondering if we should enable this on Linux, at least in
-DEVELOPER builds but possibly even on the release builds, to catch
-these problems more easily.
-
+Thomas
 
