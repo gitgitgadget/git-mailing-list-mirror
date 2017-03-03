@@ -2,71 +2,77 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B24D72013E
-	for <e@80x24.org>; Fri,  3 Mar 2017 02:25:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9D1FE2013E
+	for <e@80x24.org>; Fri,  3 Mar 2017 02:42:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751686AbdCCCZN (ORCPT <rfc822;e@80x24.org>);
-        Thu, 2 Mar 2017 21:25:13 -0500
-Received: from mout.gmx.net ([212.227.17.20]:50457 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751409AbdCCCZL (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Mar 2017 21:25:11 -0500
-Received: from virtualbox ([89.204.153.4]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0M4kfR-1cMamX2RQr-00yvF6; Fri, 03
- Mar 2017 03:17:32 +0100
-Date:   Fri, 3 Mar 2017 03:17:30 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Lars Schneider <larsxschneider@gmail.com>, git@vger.kernel.org
-Subject: Re: [PATCH v1] Travis: also test on 32-bit Linux
-In-Reply-To: <xmqqinnrd098.fsf@gitster.mtv.corp.google.com>
-Message-ID: <alpine.DEB.2.20.1703030315580.3767@virtualbox>
-References: <c76a133a57514a332828099d342c9763fd946bfa.1488309430.git.johannes.schindelin@gmx.de> <20170302105157.59791-1-larsxschneider@gmail.com> <alpine.DEB.2.20.1703021210170.3767@virtualbox> <CFA1C4B4-0FDA-424D-87A4-EEE1F9BB3712@gmail.com>
- <xmqqinnrd098.fsf@gitster.mtv.corp.google.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+        id S1751506AbdCCCmQ (ORCPT <rfc822;e@80x24.org>);
+        Thu, 2 Mar 2017 21:42:16 -0500
+Received: from mail-qk0-f176.google.com ([209.85.220.176]:35831 "EHLO
+        mail-qk0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751465AbdCCCmP (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Mar 2017 21:42:15 -0500
+Received: by mail-qk0-f176.google.com with SMTP id h9so1612658qke.2
+        for <git@vger.kernel.org>; Thu, 02 Mar 2017 18:41:52 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=Mzpr41K7l6U/qpIMoQaRCLzfucM+SOKPKB5kvaN3chg=;
+        b=M3NqhAPD3Ryp3wrNCekf8nvBXdCD+7E6djnZ3BDWc7wACNOgFYiv2ENWCFfWf/JMrJ
+         iEJWjf4Qqg4kIuQcWX2F20Qv+vQ9mn/P2gjvkT8vJ32XX6TH1vyFa64MLGC23C1sv+py
+         5QaqYph35st+uNkQcf6PKqAPC2FVGQ4fqrHCKA861fzbIpCON77IWNDhG5MbxhKsHGyw
+         Zke4kcfr7GvJbA5jEzSyOJymGBTCT7+SoYfGYVSa4j7iDNde8vTgUSwh/XtsI51c4dmj
+         IizeKDbwSiiRo5L9oN3nDUJ0dis9OUKbRKCg9a75ukOtMkBs3aJ4j8Vla+YWhiS3La1H
+         5nhw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=Mzpr41K7l6U/qpIMoQaRCLzfucM+SOKPKB5kvaN3chg=;
+        b=dB9j6DKA9ucJQfA2czG3j00ThV9sRfkwneznvRR+eCsHCw5fJy6v0nAvRshD/L+dZI
+         DvXACXwcow+9imPbWbf4PVjl7ylbEH32FhexncKBTMCzIZdzRAQruOBWbEryufr8KKF7
+         tUD6INHFKR/ntNJrzSLbyOHzcv2UQVCLZ1LPjZznsOR9zlLLFcitAhYXFYIdJc/s5tbB
+         VIhDXsdpjoslfRD3s/TflPnUWagFtZiloTloZcBKWivLi8d/oPuG2jzv/bOjJsh5SNsm
+         x+7TFirRS6XrjBeiD3NXE5g0cn+vGINkblEvClyDdg6isZf2ngAV1KtWYCCQLHJI/990
+         bZaA==
+X-Gm-Message-State: AMke39l4B8zLoujW75wyuMOPH9FwzMJk5V7+X4NBZ73MHP2RqHGWLJTq/t74uFgEVrgnac2vzy9oFXyJ+XnesQ==
+X-Received: by 10.55.69.68 with SMTP id s65mr223357qka.43.1488504998109; Thu,
+ 02 Mar 2017 17:36:38 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:84imlS2pom/ZyTESj76WWPcAurPtKdzopUArhGu9fOlpsFk3uiw
- 7WNsjLBp5iOwacdHn0vRRcYR4hkjBRBhULpEqaK6PgtkiAKzAx9E9L8g2JbtQZELhNqIClO
- pg4Ql3fd4RuYC7Q8xQo99M9YaTT+2a7SiJTZUVizV9x8vbgNKFBV0x1wjYJ1Jpqu6p004hl
- vGfJLUVEipbFkphxtBXvA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:9YSK10k0LdI=:2VTmfnv/1O4eztSq+fz17C
- 9M1QivZRfwLDNar7Tm9IXNxF/sHoYWR/rdB+BEFTY50drtrxWk33FpCZ8US3QehdWh86POOuI
- s/at3Ow47wNw0U+VoFFTdgyH4snsH0N9wVwklfyZa1ARQZfSri+wY1JJZQCt724eYSEQq1hkd
- whb1Ww2/Zh4b2vmj4O+rSd5ctHPJUBW2Xpl48UZaofUbrrQURor2/VVgIOoklumT0b7Y5qe8D
- 35j94xiXA4bV3H0HH8PTpripwk2F1kn8bUh6snmYavdWAnb62LMLjUXD9psK5qcNmJQyRE4CO
- maadi084Q3+YCwp0aGkPN1O/QoS72wFTbhSY77VXsOtGNXmPqcN8LiHkauTIgokDwgVNruce8
- rWUVl4CTHaQNmrrk7gfHfe40UdIncUrT1J4C/oMlSIPo8N+/sKcSeBmvmVVqC8APsC1L7YPx9
- aQAV5UfcJmIRseNun3xisVjpqEeVdSycyNs1gdqh1dL3Nu0915f4VEkrLwyTZudlxHyaBqM8n
- wGZFxTjJ968KEs1NkQzYx4ARQShmYclyw0Gky4VDAkM1VTp1QFloCXqJMG6vHNIQRnmQXAuCX
- 5zBs/ZdP+Jy/yy91oX5CrOqf2RpHhyMI8qMYbD5ELOIdYWcpkJ0s+WyrwrNzFv8b/pvUvKhmC
- wENvbsUzf071Y36I9Hqs4SyYrb6VQ81LnG4fFNM76ye2pQeUs9PWuMvgXuTu2yB7Ib7n96FK7
- z3LIhtET8W/pMHh1uj+In4leg8PGfn8SoFCLcPKOgqnAPkqZv06DtvweK9LOMmFbakugCdwzW
- 7ofUF52
+Received: by 10.12.178.20 with HTTP; Thu, 2 Mar 2017 17:36:17 -0800 (PST)
+In-Reply-To: <7a0992eb-adb9-a7a1-cfaa-3384bc4d3e5c@virtuell-zuhause.de>
+References: <7a0992eb-adb9-a7a1-cfaa-3384bc4d3e5c@virtuell-zuhause.de>
+From:   Junio C Hamano <gitster@pobox.com>
+Date:   Thu, 2 Mar 2017 17:36:17 -0800
+X-Google-Sender-Auth: stO_bEd-YI7QD0f3Y1cUExJBwbI
+Message-ID: <CAPc5daVSY5Z_+cpT1dHY-cM-TzNeu+Vzv+zouoOHW08PTFRQ7A@mail.gmail.com>
+Subject: Re: log -S/-G (aka pickaxe) searches binary files by default
+To:     Thomas Braun <thomas.braun@virtuell-zuhause.de>
+Cc:     GIT Mailing-list <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+On Thu, Mar 2, 2017 at 4:52 PM, Thomas Braun
+<thomas.braun@virtuell-zuhause.de> wrote:
+>
+> I happen to have quite large binary files in my repos.
+>
+> Today I realized that a line like
+> git log -G a
+> searches also files found to be binary (or explicitly marked as binary).
+>
+> Is that on purpose?
 
-On Thu, 2 Mar 2017, Junio C Hamano wrote:
-
-> Another question is which v3 people mean in the discussion, when you
-> and Dscho work on improvements at the same time and each post the
-> "next" version marked as "v3", and they comment on one of them?
-
-But then, Lars & I communicate in a more direct way than the mailing list
-when discussing teeny tiny details such as: "could you have a look at my
-mail" or "how would you change .travis.yml to do XYZ".
-
-With that level of communication, there is almost no danger of two v3s.
-
-Ciao,
-Johannes
+No, it's a mere oversight (as I do not think I never even thought
+about special casing binary
+files from day one, it is unlikely that you would find _any_ old
+version of Git that behaves
+differently).
