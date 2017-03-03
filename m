@@ -2,92 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6EC3420133
-	for <e@80x24.org>; Fri,  3 Mar 2017 15:39:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8C50D20133
+	for <e@80x24.org>; Fri,  3 Mar 2017 15:41:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751733AbdCCPjI (ORCPT <rfc822;e@80x24.org>);
-        Fri, 3 Mar 2017 10:39:08 -0500
-Received: from mout.gmx.net ([212.227.15.15]:62897 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751734AbdCCPgt (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 3 Mar 2017 10:36:49 -0500
-Received: from virtualbox ([37.201.194.68]) by mail.gmx.com (mrgmx001
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0Lrviw-1cIpg61DmY-013fUy; Fri, 03
- Mar 2017 16:35:28 +0100
-Date:   Fri, 3 Mar 2017 16:35:26 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     Jeff King <peff@peff.net>
-cc:     Michael Haggerty <mhagger@alum.mit.edu>, git@vger.kernel.org,
-        Junio C Hamano <gitster@pobox.com>,
-        Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH v2 2/9] setup_git_directory(): use is_dir_sep() helper
-In-Reply-To: <20170303112610.x6mdh42nd4hmxz2h@sigill.intra.peff.net>
-Message-ID: <alpine.DEB.2.20.1703031632370.3767@virtualbox>
-References: <cover.1481211338.git.johannes.schindelin@gmx.de> <cover.1488506615.git.johannes.schindelin@gmx.de> <d1342d28fd402615f1f94d9190559070ed04b0d7.1488506615.git.johannes.schindelin@gmx.de> <20170303033714.5h7qrq57hdqwoi3y@sigill.intra.peff.net>
- <alpine.DEB.2.20.1703031212280.3767@virtualbox> <20170303112610.x6mdh42nd4hmxz2h@sigill.intra.peff.net>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+        id S1752129AbdCCPlE (ORCPT <rfc822;e@80x24.org>);
+        Fri, 3 Mar 2017 10:41:04 -0500
+Received: from mail-ua0-f175.google.com ([209.85.217.175]:36585 "EHLO
+        mail-ua0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752427AbdCCPkS (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 3 Mar 2017 10:40:18 -0500
+Received: by mail-ua0-f175.google.com with SMTP id 72so118947074uaf.3
+        for <git@vger.kernel.org>; Fri, 03 Mar 2017 07:40:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:sender:from:date:message-id:subject:to;
+        bh=Aw4HEPO1M3CMWfSYG88mnX8CojshsZZ8EebTy2K1T/4=;
+        b=fbFkxmyy6og2LuPzjK/25ktAO2uJzzi2aerLjq0N73JsZ6LSbSVDr8HRlYeKHsIuaj
+         mTtGu2ASnq60vdu/9ryVKxc1RxEJm5QmOtf26Q9jzunHY2/kBl246u06C7tP1bnhEMzd
+         UfbWmda89pllqn5IY9MXc1nCt1ZUG2+8fbBo4WazcCOve+svIzz9m3KVDVRB3fWGxFFT
+         rcBWtrwVszT2fB740AoQr2ykyd1osU0YS2ipgvtEtI2Xgk1aP3ZosKeE3aYHsHKvbh6X
+         mzpD+yE63VEzGqIapFk3Bt7Le54b5+3HSCRz+tU7J+bE4FDUr9eZDYs304W6YmZsRXpM
+         NdbA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:sender:from:date:message-id:subject
+         :to;
+        bh=Aw4HEPO1M3CMWfSYG88mnX8CojshsZZ8EebTy2K1T/4=;
+        b=hode/yJ7nPjPjUIHjfaeLcBPJ14KmQ2fMCMgf8CpI4PFQ+iWiUmvo/S2rMu7oe50IV
+         UPQ+3TYQYj2BMzzJ23j0QbbJi2RiVoHH5IP29hLY2a1NnTeQolv/HZ2xUlREyXv8cs4s
+         LsDaRYcqU1XYuBk8CJCPKtgsclxMSefb8A5UErIOHNDVVZRN7aYkgpiRdNEgJCFGO/cU
+         8Qn/g+V998+i72h9gIa6Vf+EnRFForsc+apUCBifnlUk3hYJ80QJeDglpU+5+18G+UhA
+         6W4UW/DPqjL7sTfzQ/lhcfqq1rHefY8mNvZVj/fJjMEQkLP8E6Fg609kpZwKEsluqL1U
+         DzGA==
+X-Gm-Message-State: AMke39mfgqSqzRA/Wp7eO8qjg/aZAp1mQsOMPlYWNKl8+FtB/Jk78giy3PLegm8LJdcUG/NgrI3YSP0QS4dBkw==
+X-Received: by 10.159.53.105 with SMTP id o96mr1080801uao.113.1488555604478;
+ Fri, 03 Mar 2017 07:40:04 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:l5V/gzu5xXVvIRaGC6vwDnYh+nfIFcnZihazjV4I6ZkHzhMIkWw
- JhXesvAGosLjbAHZQ+eh/xU7C7HGpDhR6eBvffAtXjKeG8XzkIl+Hml8ocgqE0x846Mv1uX
- yJ0UNpVEpX7lKiEYgV5tuv8iAfFdPLKZPnj3oWlprlWqJxbhhzSZdl63unQPffDKCrWZ+SN
- 1tHyCfDdtJ5O2vg4mku0Q==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:IxC2qvJaobs=:HJroZZv2vW691a20qbCa9t
- rkNurzzlrL2ZIgztt9gkPR9hffZqonlj5QOX9I0bk8wpUR3+V70MCG6oV1UecOkf4jkU3EVbj
- Ub9VTkj0ZN3R5lKJA7QYZ7mjtlZGdfNSNCbH66fl7xNXQueWOgyY8VosUez4RCr6gZkK34Hqv
- MhkfRnPeOboEa2EGO7sxWPnCTFdTwVUegjUdYXJR7uiwGY6jTltFIR67wCGwcz1RCVKaWHYXP
- qnJ9YoOVDL/zmHXpypvXSa/DtWpdcOaqATnMX3OQuJrjhRN1PNoV9Zbm7RQTwZwoDr+lj5eFr
- vJX06OjEam/1B2FG0PAt7HnQ3m9Uiz6Ik+RNB5+KLs9SJOF87fLeQmSyy9+96AN4/YyhPc4a2
- YdZPeY3NSkeG8YjutL0s0EyhhQeuvG/NDPT0eZwhO3kNNexheqxkY2G7XLdfotAuOeomjxYIn
- A/dBISb/RJzGGd8DOQczCR5G7L0aJf3GuEz88tSvCahdL3d60VjxKbJOrQKCiJuRzeMFRSTQz
- eZBxlhxegMowuRpG1qgpKRacKtzicfqoEh49RcxcM6TEzpviqKH/TRf4hBiaUr/0W8HDb3wGB
- yxaEWJ2iTJtDscHxhsnpRX8ujhHo80kQhYJyQo0PfWHnY/nTU3Lt6X9JCfx44TH3L/dOeaWOz
- hg6ShQe7dBD8Cr861WGVVgFbaDvj70RTvflyIqTovbyQ9sfUDn1K14NF+jZmj5ts6aahYTFha
- gWuxsvNzCpAeujyU7eN7uOlLpZfs6eK4+S8ahsXJsOr4wabmcQfCH+PZ22rGkzy0YT6UeKm4Z
- R83xmyO
+X-Google-Sender-Delegation: rcdailey@gmail.com
+Received: by 10.176.82.136 with HTTP; Fri, 3 Mar 2017 07:40:04 -0800 (PST)
+From:   Robert Dailey <rcdailey.lists@gmail.com>
+Date:   Fri, 3 Mar 2017 09:40:04 -0600
+X-Google-Sender-Auth: Dm1YdkVU-4EXgHwh-UAJkaq7fjQ
+Message-ID: <CAHd499CfJnPtLmi8qzr=_jrfCgMw85MOUv-wPKmAHFUyDFXhRA@mail.gmail.com>
+Subject: Finding a tag that introduced a submodule change
+To:     Git <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Peff,
+I have a repository with a single submodule in it. Since the parent
+repository represents the code base for an actual product, I tag
+release versions in the parent repository. I do not put tags in the
+submodule since multiple other products may be using it there and I
+wanted to avoid ambiguous tags.
 
-On Fri, 3 Mar 2017, Jeff King wrote:
+Sometimes I run into a situation where I need to find out which
+release of the product a submodule change was introduced in. This is
+nontrivial, since there are no tags in the submodule itself. This is
+one thing I tried:
 
-> On Fri, Mar 03, 2017 at 12:16:31PM +0100, Johannes Schindelin wrote:
-> 
-> > > What is "dir"? I'm guessing this patch got reordered and it should
-> > > stay as cwd.buf?
-> > 
-> > Oh drats. Usually I do a final `git rebase -x "make test"
-> > upstream/master` run before submitting, but I was really, really tired
-> > by the end of that stretch.
-> 
-> I usually do the same, and have done the "too tired" thing, too, only to
-> have it bite me. That's why I so readily recognized the problem. :)
+1. Do a `git log` in the submodule to find the SHA1 representing the
+change I want to check for
+2. In the parent repository, do a git log with pickaxe to determine
+when the submodule itself changed to the value of that SHA1.
+3. Based on the result of #2, do a `git tag --contains` to see the
+lowest-version tag that contains the SHA1, which will identify the
+first release that introduced that change
 
-:-)
+However, I was not able to get past #2 because apparently there are
+cases where when we move the submodule "forward", we skip over
+commits, so the value of the submodule itself never was set to that
+SHA1.
 
-> I've recently switched to using Michael's "git test" program[1], which
-> caches the test results for each tree in a git-note. That makes the
-> final "rebase -x" a lot less painful if you've left the early commits
-> alone.
+I'm at a loss here on how to easily do this. Can someone recommend a
+way to do this? Obviously the easier the better, as I have to somehow
+train my team how to do this on their own.
 
-Good point. I meant to have a look, but got really overwhelmed with other
-things.
-
-> The python dependency might be a blocker for you, but I suspect the
-> caching parts would be easy to hack together with shell.
-
-No, personally I have no problem with Python. If you asked me to include
-it in Git for Windows' installer, increasing the size noticably, that
-would be a totally different matter, of course.
-
-Ciao,
-Dscho
+Thanks in advance.
