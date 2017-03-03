@@ -2,88 +2,79 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8C50D20133
-	for <e@80x24.org>; Fri,  3 Mar 2017 15:41:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AC99B20133
+	for <e@80x24.org>; Fri,  3 Mar 2017 15:42:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752129AbdCCPlE (ORCPT <rfc822;e@80x24.org>);
-        Fri, 3 Mar 2017 10:41:04 -0500
-Received: from mail-ua0-f175.google.com ([209.85.217.175]:36585 "EHLO
-        mail-ua0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752427AbdCCPkS (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 3 Mar 2017 10:40:18 -0500
-Received: by mail-ua0-f175.google.com with SMTP id 72so118947074uaf.3
-        for <git@vger.kernel.org>; Fri, 03 Mar 2017 07:40:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:sender:from:date:message-id:subject:to;
-        bh=Aw4HEPO1M3CMWfSYG88mnX8CojshsZZ8EebTy2K1T/4=;
-        b=fbFkxmyy6og2LuPzjK/25ktAO2uJzzi2aerLjq0N73JsZ6LSbSVDr8HRlYeKHsIuaj
-         mTtGu2ASnq60vdu/9ryVKxc1RxEJm5QmOtf26Q9jzunHY2/kBl246u06C7tP1bnhEMzd
-         UfbWmda89pllqn5IY9MXc1nCt1ZUG2+8fbBo4WazcCOve+svIzz9m3KVDVRB3fWGxFFT
-         rcBWtrwVszT2fB740AoQr2ykyd1osU0YS2ipgvtEtI2Xgk1aP3ZosKeE3aYHsHKvbh6X
-         mzpD+yE63VEzGqIapFk3Bt7Le54b5+3HSCRz+tU7J+bE4FDUr9eZDYs304W6YmZsRXpM
-         NdbA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:from:date:message-id:subject
-         :to;
-        bh=Aw4HEPO1M3CMWfSYG88mnX8CojshsZZ8EebTy2K1T/4=;
-        b=hode/yJ7nPjPjUIHjfaeLcBPJ14KmQ2fMCMgf8CpI4PFQ+iWiUmvo/S2rMu7oe50IV
-         UPQ+3TYQYj2BMzzJ23j0QbbJi2RiVoHH5IP29hLY2a1NnTeQolv/HZ2xUlREyXv8cs4s
-         LsDaRYcqU1XYuBk8CJCPKtgsclxMSefb8A5UErIOHNDVVZRN7aYkgpiRdNEgJCFGO/cU
-         8Qn/g+V998+i72h9gIa6Vf+EnRFForsc+apUCBifnlUk3hYJ80QJeDglpU+5+18G+UhA
-         6W4UW/DPqjL7sTfzQ/lhcfqq1rHefY8mNvZVj/fJjMEQkLP8E6Fg609kpZwKEsluqL1U
-         DzGA==
-X-Gm-Message-State: AMke39mfgqSqzRA/Wp7eO8qjg/aZAp1mQsOMPlYWNKl8+FtB/Jk78giy3PLegm8LJdcUG/NgrI3YSP0QS4dBkw==
-X-Received: by 10.159.53.105 with SMTP id o96mr1080801uao.113.1488555604478;
- Fri, 03 Mar 2017 07:40:04 -0800 (PST)
+        id S1752315AbdCCPma (ORCPT <rfc822;e@80x24.org>);
+        Fri, 3 Mar 2017 10:42:30 -0500
+Received: from mout.gmx.net ([212.227.15.18]:55627 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751920AbdCCPm2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 3 Mar 2017 10:42:28 -0500
+Received: from virtualbox ([37.201.194.68]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MRXSK-1cqWN20cFk-00ShRa; Fri, 03
+ Mar 2017 16:42:20 +0100
+Date:   Fri, 3 Mar 2017 16:42:04 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Lars Schneider <larsxschneider@gmail.com>
+cc:     git@vger.kernel.org, gitster@pobox.com,
+        ramsay@ramsayjones.plus.com, christian.couder@gmail.com
+Subject: Re: [PATCH v2] Travis: also test on 32-bit Linux
+In-Reply-To: <20170303110125.43332-1-larsxschneider@gmail.com>
+Message-ID: <alpine.DEB.2.20.1703031641290.3767@virtualbox>
+References: <20170303110125.43332-1-larsxschneider@gmail.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-X-Google-Sender-Delegation: rcdailey@gmail.com
-Received: by 10.176.82.136 with HTTP; Fri, 3 Mar 2017 07:40:04 -0800 (PST)
-From:   Robert Dailey <rcdailey.lists@gmail.com>
-Date:   Fri, 3 Mar 2017 09:40:04 -0600
-X-Google-Sender-Auth: Dm1YdkVU-4EXgHwh-UAJkaq7fjQ
-Message-ID: <CAHd499CfJnPtLmi8qzr=_jrfCgMw85MOUv-wPKmAHFUyDFXhRA@mail.gmail.com>
-Subject: Finding a tag that introduced a submodule change
-To:     Git <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:v9/2a4FIsDR8A/6gBVpr8HOMJ6LMbdQSvDvtrDSjr5kTaPIFCBf
+ KE/0v+4/DALl6q0hnjyO5VlOWCplkjeFREmYBIJ9lpE2g5cy0f2LxP+B7AVslnta5ioIkFU
+ iNMGi3AOpLpmo+Ogum3CXx1gSPLLTgKopv2AADaiVvobfLBl066XvMw27jn5pDhuZd7dfY0
+ Ri3XR3PxAoj755YfXPYHA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:iXME4GWXQO4=:5jS4IFqdn0bw8bu7ScQfPD
+ VaggA+7jLwG8VX1FmYBWfayvZPB8cCZlz0t1Nuy7A8oK7LUS2/Y5EZ4XkbWx3HeKjLbhVVGQ5
+ ArGufyTeBxqKbCJnlaU++BcdhLY8Gatm3PqmfxI6fkuv2jB9puXfabP61efpY9JUtXJAwjrne
+ LyJYGKORotLydE7k/pg+oLxant1EB0MwUTJ5+v44ttp1TZVwhkCtZ4DvqNu8zqSp1V7aj3QG5
+ R8Zp0QL2puI5uPCIMFxlMcAmi57ZIse23LlVq7gkbZ4zDVCjZwC4xypojB/2CseGBduN8LzsC
+ 4v5qxg1Z6vJBEPoDE2YHMbGR4stXH3DiVYOkjnHGu8LXTEKJT6H80Cg/BoeFSqq3TST2hLnCW
+ y/p6/AGYqJR/hmY2oo/on+6SlRPYroHZq0gvQxBXrQmaHhggNmjGE3KaIyXGQxIYnMdmy/POK
+ LoA8YtADQKngdyA61wJltOV5/8J48i7SyaKlGHAFUqMHZOvIuEqg7Ijr6gAmFUw6i3d3HfWPY
+ EP/JFGtJTMX04r6vxS3E9OhCEmiLu3Wrgj3Xu0XI6n5splKw/Hanjvnq1VVgg8rtHEcaNrSM+
+ wW1emnaZ5z3a5uD021zKL5HIeRLZbWfULl6RzSbKYz8FxuVUoaNgqOUPKPJNmKA+o+9RsT9xe
+ IHU9XOxYGo+0sBeNM/wc/71GAehEkThRAasSAZYT716XPgrJY6p1z+0FauCX+pEljgo08AoAw
+ 7G7IJ7buisw9H9ON91xyuEQDquKaK67Ozkv4X6EpiuSmrGcaY7jfI3BtQjRP2bgmEl6Vg3PMq
+ viiaji5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I have a repository with a single submodule in it. Since the parent
-repository represents the code base for an actual product, I tag
-release versions in the parent repository. I do not put tags in the
-submodule since multiple other products may be using it there and I
-wanted to avoid ambiguous tags.
+Hi Lars,
 
-Sometimes I run into a situation where I need to find out which
-release of the product a submodule change was introduced in. This is
-nontrivial, since there are no tags in the submodule itself. This is
-one thing I tried:
+On Fri, 3 Mar 2017, Lars Schneider wrote:
 
-1. Do a `git log` in the submodule to find the SHA1 representing the
-change I want to check for
-2. In the parent repository, do a git log with pickaxe to determine
-when the submodule itself changed to the value of that SHA1.
-3. Based on the result of #2, do a `git tag --contains` to see the
-lowest-version tag that contains the SHA1, which will identify the
-first release that introduced that change
+> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+> 
+> When Git v2.9.1 was released, it had a bug that showed only on Windows
+> and on 32-bit systems: our assumption that `unsigned long` can hold
+> 64-bit values turned out to be wrong.
+> 
+> This could have been caught earlier if we had a Continuous Testing
+> set up that includes a build and test run on 32-bit Linux.
+> 
+> Let's do this (and take care of the Windows build later). This patch
+> asks Travis CI to install a Docker image with 32-bit libraries and then
+> goes on to build and test Git using this 32-bit setup.
+> 
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
 
-However, I was not able to get past #2 because apparently there are
-cases where when we move the submodule "forward", we skip over
-commits, so the value of the submodule itself never was set to that
-SHA1.
+Thanks for keeping the ball rolling! I am totally fine with v2.
 
-I'm at a loss here on how to easily do this. Can someone recommend a
-way to do this? Obviously the easier the better, as I have to somehow
-train my team how to do this on their own.
-
-Thanks in advance.
+Ciao,
+Dscho
