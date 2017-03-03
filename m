@@ -2,97 +2,73 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9594320133
-	for <e@80x24.org>; Fri,  3 Mar 2017 20:05:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EF2CB20133
+	for <e@80x24.org>; Fri,  3 Mar 2017 20:14:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751970AbdCCUFx (ORCPT <rfc822;e@80x24.org>);
-        Fri, 3 Mar 2017 15:05:53 -0500
-Received: from cloud.peff.net ([104.130.231.41]:38267 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751593AbdCCUFw (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 3 Mar 2017 15:05:52 -0500
-Received: (qmail 31693 invoked by uid 109); 3 Mar 2017 11:04:50 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 03 Mar 2017 11:04:50 +0000
-Received: (qmail 27086 invoked by uid 111); 3 Mar 2017 11:04:57 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 03 Mar 2017 06:04:57 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 03 Mar 2017 06:04:48 -0500
-Date:   Fri, 3 Mar 2017 06:04:48 -0500
-From:   Jeff King <peff@peff.net>
-To:     Linus Torvalds <torvalds@linux-foundation.org>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Ian Jackson <ijackson@chiark.greenend.org.uk>,
-        Joey Hess <id@joeyh.name>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: SHA1 collisions found
-Message-ID: <20170303110448.se3bstlk5hr4hqv3@sigill.intra.peff.net>
-References: <20170223164306.spg2avxzukkggrpb@kitenet.net>
- <22704.19873.860148.22472@chiark.greenend.org.uk>
- <xmqq60jz5wbm.fsf@gitster.mtv.corp.google.com>
- <20170224233929.p2yckbc6ksyox5nu@sigill.intra.peff.net>
- <CA+55aFw6BLjPK-F0RGd9LT7X5xosKOXOxuhmKX65ZHn09r1xow@mail.gmail.com>
- <CA+55aFwXaSAMF41Dz3u3nS+2S24umdUFv0+k+s18UyPoj+v31g@mail.gmail.com>
+        id S1752020AbdCCUOb (ORCPT <rfc822;e@80x24.org>);
+        Fri, 3 Mar 2017 15:14:31 -0500
+Received: from mail-wm0-f43.google.com ([74.125.82.43]:36346 "EHLO
+        mail-wm0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751415AbdCCUO3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 3 Mar 2017 15:14:29 -0500
+Received: by mail-wm0-f43.google.com with SMTP id n11so23649571wma.1
+        for <git@vger.kernel.org>; Fri, 03 Mar 2017 12:13:10 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=XuFydx7OD0/JDAO1gav++4QQIoj35zuMHGhG85et998=;
+        b=kbVR4Rhg6csSyUaMwUGk/7g9OejuH4WI/xi01mAzXqiGuJ6tDCM56Xbvgfy3hX/xWm
+         eVAtJe+TrRppofO0O84k/xuXsUHkef+dD+oVG7G78nQ46PA2voZWseJh6Fl561I8Zx/4
+         qwc4sia3n+c7Zg7qZK6D2e0AjpVUU2SVc1KBr3lRcZtBKq5iE9HJzWdMgJX2EG7YhAJ/
+         R9PZyFJDD+jPajiTqLTEDwzQ26TDwMdVBDohoitrVppSvjF9SoVkRrsTgptA9nUw58hn
+         IXg1400dONRB1/mj5uUtPVQyJlteyAWL/7RE2bM1KpJerwKhfvYmP3UYtCrRWuoTE/bL
+         elCg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=XuFydx7OD0/JDAO1gav++4QQIoj35zuMHGhG85et998=;
+        b=EOERbwWR9moQGEc0+j9cyWBLqrvvt19n79zKywRepL1SW+bd1uS5ERgyZFAGjVSkVO
+         86fTpTIbga87VHxnTvZzK6zG02By8RlZ0ZyGeOn26v67HqhNPRT4vr4/mg86iTv1F83k
+         OxyRKCkM9ZIJJv1JRCgj2GSMrOIr4+MD+thNFuE+dl8O+ULCN8U+kkEZblDhqd0kI8rB
+         ye0aNSMW2PmgjYJ94PW3APNS9y0ZbK7YK071Gn79M4soft9GuPGfD4YnzIbH6TNzJHCO
+         M66ulPG9hggX1eCncvUhEpT4njXLa8WA7BYT2rHmhJqu/hhJjtOAv8CPSAKIrm0bj41h
+         ItSg==
+X-Gm-Message-State: AMke39kiFfqMsMcUmGK/NtwIW+5WBGw9kp/gqBMUtJTRuQ/kI+ggwzlYgHL92sPQ0S5TQb3SMvtjROOpRPiNYA==
+X-Received: by 10.28.203.204 with SMTP id b195mr4669548wmg.51.1488571989218;
+ Fri, 03 Mar 2017 12:13:09 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CA+55aFwXaSAMF41Dz3u3nS+2S24umdUFv0+k+s18UyPoj+v31g@mail.gmail.com>
+Received: by 10.28.126.201 with HTTP; Fri, 3 Mar 2017 12:13:08 -0800 (PST)
+In-Reply-To: <xmqqtw7a89dg.fsf@gitster.mtv.corp.google.com>
+References: <0102015a93d18443-c574aaf8-5656-49e8-8848-810e1fadc87a-000000@eu-west-1.amazonses.com>
+ <a9273d37-388a-8c27-1cf1-51e9cb28ef55@xiplink.com> <xmqqtw7a89dg.fsf@gitster.mtv.corp.google.com>
+From:   Sebastian Schuberth <sschuberth@gmail.com>
+Date:   Fri, 3 Mar 2017 21:13:08 +0100
+Message-ID: <CAHGBnuP8X3xOOwfkUrbnF8E9zPwkSGq2y0oQpdLZt-NTpGMuLg@mail.gmail.com>
+Subject: Re: [PATCH] Do not require Python for the git-remote-{bzr,hg}
+ placeholder scripts
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Marc Branchaud <marcnarc@xiplink.com>,
+        Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Mar 02, 2017 at 11:55:45AM -0800, Linus Torvalds wrote:
+On Fri, Mar 3, 2017 at 8:10 PM, Junio C Hamano <gitster@pobox.com> wrote:
 
-> Anyway, I do have a suggestion for what the "object version" would be,
-> but I'm not even going to mention it, because I want people to first
-> think about the _concept_ and not the implementation.
-> 
-> So: What do you think about the concept?
+>> Just a niggle:  This change moves the warning message from stderr to stdout.
+>
+> Right.  Here is what I'll queue.
 
-I think it very much depends on what's in the "object version". :)
+Indeed, thanks for the note, and also Junio for fixing while queuing.
 
-IMHO, we are best to consider sha1 "broken" and not count on any of its
-bytes for cryptographic integrity. I know that's not really the case,
-but it just makes reasoning about the whole thing simpler. So at that
-point, it's pretty obvious that the "object version" is really just "an
-integrity hash".
-
-And that takes us full circle to earlier proposals over the years to do
-something like this in the commit header:
-
-  parent ...some sha1...
-  parent-sha256 ...some sha256...
-
-and ditto in tag headers, and trees obviously need to be hackily
-extended as you described to carry the extra hash. And then internally
-we continue to happily use sha1s, except you can check the
-sha256-validity of any reference if you feel like it.
-
-This is functionally equivalent to "just start using sha-256, but keep a
-mapping of old sha1s to sha-256s to handle old references". The
-advantage is that it makes the code part of the transition simpler. The
-disadvantage is that you're effectively carrying a piece of that
-sha1->sha256 mapping around in _every_ object.
-
-And that means the same bits of mapping data are repeated over and over.
-Git's pretty good at de-duplicating on the surface. So yeah, every tree
-entry is now 256 bits larger, but deltas mean that we usually only end
-up storing each entry a handful of times. But we still pay the price to
-walk over the bytes every time we apply a delta, zlib inflate, parse the
-tree, etc. The runtime cost of the transition is carried forward
-forever, even for repositories that are willing to rewrite history, or
-are created after the flag day.
-
-So I dunno. Maybe I am missing something really clever about your
-proposal. Reading the rest of the thread, it sounds like you had a
-thought that we could get by with a very tiny object version, but the
-hash-adding thing nixed that. If I'm still missing the point, please try
-to sketch it out a bit more concretely, and I'll come back with my
-thinking cap on.
-
--Peff
+-- 
+Sebastian Schuberth
