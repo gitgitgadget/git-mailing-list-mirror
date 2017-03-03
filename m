@@ -7,97 +7,115 @@ X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 252E620133
-	for <e@80x24.org>; Fri,  3 Mar 2017 13:04:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8532620133
+	for <e@80x24.org>; Fri,  3 Mar 2017 13:04:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751647AbdCCNER (ORCPT <rfc822;e@80x24.org>);
-        Fri, 3 Mar 2017 08:04:17 -0500
-Received: from mail-pf0-f193.google.com ([209.85.192.193]:33995 "EHLO
-        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751476AbdCCNEP (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 3 Mar 2017 08:04:15 -0500
-Received: by mail-pf0-f193.google.com with SMTP id x66so9855425pfb.1
-        for <git@vger.kernel.org>; Fri, 03 Mar 2017 05:03:33 -0800 (PST)
+        id S1751877AbdCCNEg (ORCPT <rfc822;e@80x24.org>);
+        Fri, 3 Mar 2017 08:04:36 -0500
+Received: from mail-pg0-f67.google.com ([74.125.83.67]:32874 "EHLO
+        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751667AbdCCNEf (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 3 Mar 2017 08:04:35 -0500
+Received: by mail-pg0-f67.google.com with SMTP id 16so4164654pga.0
+        for <git@vger.kernel.org>; Fri, 03 Mar 2017 05:04:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:subject:message-id:mime-version:content-disposition
-         :user-agent;
-        bh=Dhgr6f/A/IZMX4syU3v/TTJyuxqYQkmvLluXNA4mnfg=;
-        b=bHUs7P0I71tN94sIjqGBLv+LPLY/jVnlXHimloT0Ljqm7G+AvQRQlOXE5KjTUd4t8L
-         KC6gFQffQCioPI2RgaILYNyDh2BWotNgxefn9UNIIvH0LXb/ShDWk9a7v/oZU0HYCFIV
-         a4uESpV0kKNZkqxaQM1cvUBMuccmWvMkaPo4FFPmvo+2lvtJ65OQOs+9gqQwE2nxwK6p
-         /RTRIO1br6L3JjirS04xBNq2RmW3QUP485ri/WfmKt2hWutU3b8ncOVzCYRBuslPUAVr
-         th3ujkvXF1bjOBVz2zIAQoytMDZwL8b5/qpcXZgZ7Oagz273QZcp89tfei39mOxxLn4G
-         rd+A==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=ljkXtOzr9cbFaAoTqiyySskhpfui+7lCvXRZiHwT2io=;
+        b=QxSrf4Do7Yt9x0yynL6gykf7SUOI3dC5nmbgew0rJxIh229+owWqTWg9srMw9iqGFw
+         Ge87e5e6nG+qZY9vPJ9IPIezVYGFiW6z9TH2Y1LH5FM7OHFmhZD05xjAIsp1yHyRPuj4
+         OIMuyN5js8OZCQ91HJaDbdBxv4Y/QpUbcRFfmiVr6exCcs7RqIXOtIwhUTch7mazU71U
+         9cGt9u3tiivlfMAdJMD5W8fnFsA66hwBqNicREXfL4t6tdZjjmInfzj6pYaU64LivjlV
+         XIu3fo2TFLkEZPpgrOkLlMoTj5h3wJoWrk/m1DFqIi6oPxcC9dZ9ilBLEQKhgCJqEKaY
+         wyNQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:subject:message-id:mime-version
-         :content-disposition:user-agent;
-        bh=Dhgr6f/A/IZMX4syU3v/TTJyuxqYQkmvLluXNA4mnfg=;
-        b=sczpCiuU6tXn2pt0/HFf89m+0vkXkXxXAi4iSglmY+Q16fxugc0Mn592bDzp3k716g
-         ar6Er2mSz8F6nFvfKIQTuX3c+tlssw1c4zTNfd57pDAtFy3rQbRotBZjRGeC9QsUSwCu
-         qGkCBcuKtNodNHu9CvTRyK+8VCabR7GfNFtLo1gxQp3dXjThmy1XlfkuUSKyG0OTxtz+
-         9xQ0j4d1CTym3AxaBae038ZTIbDjg3mqipsGEYSAnva+o4T9U+tOwGcRTO5Dg55NCa/8
-         23XbWedUEt0dkDKMgSdneU4v1eb1I5AjMATfZSo1hRWziPn+EuGAnsi/JHEZdIg5e69/
-         sRbQ==
-X-Gm-Message-State: AMke39kXshXhMZUkrtsAQTrFf7hlh01PsNet4a1jqTontrjIgCUSpIzkdBJjkSnkc11D+w==
-X-Received: by 10.98.28.72 with SMTP id c69mr3251183pfc.8.1488544535380;
-        Fri, 03 Mar 2017 04:35:35 -0800 (PST)
-Received: from arch-attack.localdomain (c-50-152-192-15.hsd1.ca.comcast.net. [50.152.192.15])
-        by smtp.gmail.com with ESMTPSA id b83sm23339776pfe.12.2017.03.03.04.35.34
-        for <git@vger.kernel.org>
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 03 Mar 2017 04:35:34 -0800 (PST)
-Date:   Fri, 3 Mar 2017 04:35:33 -0800
-From:   Denton Liu <liu.denton@gmail.com>
-To:     git@vger.kernel.org
-Subject: [RFC PATCH 2/2] completion: add bash completion for 'filter-branch'
-Message-ID: <20170303123533.GA19539@arch-attack.localdomain>
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=ljkXtOzr9cbFaAoTqiyySskhpfui+7lCvXRZiHwT2io=;
+        b=Cf1A2VLwk43jCexuuKFX8fYqCuQTx9qoHym5x4EfuRsBn63Vjfqjyfg4HWxsZXJE13
+         /Vk97qf9Qoy/7o2QEP56vcs6lp7lbNC1NGLVa8KxkqhOLcVT5JcF/1DILzNJmSJWFnHI
+         qEAB4ni1XzlEdQ4fGdancqp41vS0E1DlhflgHvlgVlsscG+fHT1V5WXtzQn16/tsnPDK
+         sP00QxhvskahtRXEwa3Tgw23lVlZYxrrzIFHdd+G/XBBMNybJtMPlILU8l8b+7JtAGnE
+         aBkPB3K65YvrOmdnVy8jmzdvFvYEGPzCyRV2zNwMOKFQEyd6p6ccjY0XZpAbqkoIJqt3
+         IKLw==
+X-Gm-Message-State: AMke39nvkcXfaUajnqlxFywhAc3BaecidzTK9rOMsGcuoMJNRNfB/oUe2ugisMpY6CPSdQ==
+X-Received: by 10.99.174.4 with SMTP id q4mr3240092pgf.186.1488544778376;
+        Fri, 03 Mar 2017 04:39:38 -0800 (PST)
+Received: from gmail.com (50-1-201-252.dsl.static.fusionbroadband.com. [50.1.201.252])
+        by smtp.gmail.com with ESMTPSA id c195sm23321636pfb.60.2017.03.03.04.39.36
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 03 Mar 2017 04:39:36 -0800 (PST)
+Date:   Fri, 3 Mar 2017 04:39:34 -0800
+From:   David Aguilar <davvid@gmail.com>
+To:     Denton Liu <liu.denton@gmail.com>
+Cc:     git@vger.kernel.org, Johannes.Schindelin@gmx.de
+Subject: Re: [PATCH 1/3] Add --gui option to mergetool
+Message-ID: <20170303123934.4cau7ansprx2xpc7@gmail.com>
+References: <20170303115738.GA13211@arch-attack.localdomain>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-User-Agent: Mutt/1.8.0 (2017-02-23)
+In-Reply-To: <20170303115738.GA13211@arch-attack.localdomain>
+User-Agent: NeoMutt/20161126 (1.7.1)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Signed-off-by: Denton Liu <liu.denton@gmail.com>
----
-If the last patch (PATCH 1/2) is not included, we can remove the call to
-__git_complete_rev_list_command.
----
- contrib/completion/git-completion.bash | 17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
+On Fri, Mar 03, 2017 at 03:57:38AM -0800, Denton Liu wrote:
+> This fixes the discrepancy between difftool and mergetool where the
+> former has the --gui flag and the latter does not by adding the
+> functionality to mergetool.
+> 
+> Signed-off-by: Denton Liu <liu.denton@gmail.com>
+> ---
+>  Documentation/git-mergetool.txt        |  8 +++++++-
+>  contrib/completion/git-completion.bash |  3 ++-
+>  git-mergetool.sh                       |  5 ++++-
+>  t/t7610-mergetool.sh                   | 28 +++++++++++++++++++++++++++-
+>  4 files changed, 40 insertions(+), 4 deletions(-)
 
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 412485369..933dac78b 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -1307,6 +1307,23 @@ _git_fetch ()
- 	__git_complete_remote_or_refspec
- }
- 
-+__git_filter_branch_options="
-+	--env-filter --tree-filter --index-filter --parent-filter --msg-filter
-+	--commit-filter --tag-name-filter --subdirectory-filter --prune-empty
-+	--original --force
-+"
-+_git_filter_branch ()
-+{
-+	__git_has_doubledash && __git_complete_rev_list_command && return
-+
-+	case "$cur" in
-+	--*)
-+		__gitcomp "$__git_filter_branch_options"
-+		return
-+		;;
-+	esac
-+}
-+
- __git_format_patch_options="
- 	--stdout --attach --no-attach --thread --thread= --no-thread
- 	--numbered --start-number --numbered-files --keep-subject --signoff
+Would you mind splitting up this patch so that the
+completion part is done separately?
+
+
+> diff --git a/t/t7610-mergetool.sh b/t/t7610-mergetool.sh
+> index 381b7df45..5683907ab 100755
+> --- a/t/t7610-mergetool.sh
+> +++ b/t/t7610-mergetool.sh
+> @@ -145,6 +147,30 @@ test_expect_success 'custom mergetool' '
+>  	git commit -m "branch1 resolved with mergetool"
+>  '
+>  
+> +test_expect_success 'gui mergetool' '
+> +	test_when_finished "git reset --hard" &&
+> +	test_when_finished "git config merge.tool mytool" &&
+> +	test_when_finished "git config --unset merge.guitool" &&
+> +	git config merge.tool badtool &&
+> +	git config merge.guitool mytool &&
+> +	git checkout -b test$test_count branch1 &&
+> +	git submodule update -N &&
+> +	test_must_fail git merge master >/dev/null 2>&1 &&
+
+It'd probably be better to use test_expect_code instead of
+test_must_fail here:
+
+	test_expect_code 1 git merge master ...
+
+
+> +	( yes "" | git mergetool -g both >/dev/null 2>&1 ) &&
+> +	( yes "" | git mergetool -g file1 file1 ) &&
+> +	( yes "" | git mergetool --gui file2 "spaced name" >/dev/null 2>&1 ) &&
+> +	( yes "" | git mergetool --gui subdir/file3 >/dev/null 2>&1 ) &&
+
+I realize that this test is based on an existing one, but I'm curious..
+is "yes" used above because it's prompting, and using -y or --no-prompt
+here would eliminate the need for the 'yes ""' parts?
+
+Looks good otherwise.
+
+Thanks,
 -- 
-2.12.0.1.g5415fdfc5.dirty
-
+David
