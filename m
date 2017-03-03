@@ -2,111 +2,115 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B08592023D
-	for <e@80x24.org>; Fri,  3 Mar 2017 09:53:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BE95E2023D
+	for <e@80x24.org>; Fri,  3 Mar 2017 10:07:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751476AbdCCJxE (ORCPT <rfc822;e@80x24.org>);
-        Fri, 3 Mar 2017 04:53:04 -0500
-Received: from mail-pf0-f193.google.com ([209.85.192.193]:34970 "EHLO
-        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751757AbdCCJxC (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 3 Mar 2017 04:53:02 -0500
-Received: by mail-pf0-f193.google.com with SMTP id 67so5083049pfg.2
-        for <git@vger.kernel.org>; Fri, 03 Mar 2017 01:53:01 -0800 (PST)
+        id S1751530AbdCCKHs (ORCPT <rfc822;e@80x24.org>);
+        Fri, 3 Mar 2017 05:07:48 -0500
+Received: from mail-oi0-f53.google.com ([209.85.218.53]:36142 "EHLO
+        mail-oi0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751474AbdCCKHq (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 3 Mar 2017 05:07:46 -0500
+Received: by mail-oi0-f53.google.com with SMTP id 126so1604798oig.3
+        for <git@vger.kernel.org>; Fri, 03 Mar 2017 02:07:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=D/WGBu++WvPMk2uLrxlvMY5xJLRt2m87eYWFzGdMO60=;
-        b=l3vjdgySLEqvkjyO7yZBxHTGmw6++9rNgSeidugROBvqhkYYGf901RcStaEoAoBn/f
-         TMu9AaB8xoBVa1/udq7PWp5yrmEiuBxO/xcaEogWoBkHdJt9Rev5F91nogtbiCJDnH6j
-         xgn5KyFAx7+Q5Nt1YYf6KtAB0eW6qmJRomvwi9Ve95kH8lsmW5d6vVZ1NqjV/keDoun8
-         YP4QCxDpVymVTnt+UnwemjSj5mSFU89x/OHtDb+O+zuCfS3EtWF9yOMUtvUVcm0Qjp9L
-         Nu8JkP//6wpJfDBhINbDlAgA9TXSmdBzvXrL8tv30Rp+JoRpgWZuqHxIll/WdxoHsHkt
-         VoMw==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=V3h5r9Qi61x3cohkRPrFTPhiGBYNJbL6Fxm+b+E3CMw=;
+        b=gQkYwJ3y3/Jy/AQ6XVLgUJOMv+bGyuJfh1Bp0y91kS3UXI7PK99YjnP+dL6CTEJOFn
+         sjQUuLx5kl3MflEG8m4Wzaw/d32leHjGEKCbFLllzndVMtpVLW1aDMJXEN8S0tLepsRO
+         X+bABXCglBYHIcR4qwTB3HCXkkBBuP/K4fzHsAxcCWi7xIAEqsAJy/WIPiyxYWF2P7l+
+         G7z1ptRbMGt8ImlyMR64oP+9w11dHv+4W24cvwqRuLlXny+dlq1o2zrZu9EKqT5STAdu
+         W4WSoI685UgmehSUvRqOLInmbSTaYBe8er4lomoFXRcfKCGlodyyXwTrZB5+a2DJaUtB
+         Ssmw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=D/WGBu++WvPMk2uLrxlvMY5xJLRt2m87eYWFzGdMO60=;
-        b=gjUlChXQG0+k2D5pxUy9xMXM/Fks4PT+w9TYy9/GsMQnGNq5b84Ls2B6Y0wGTgl7CR
-         11b9x7lQidhQ/KiqWeJLGAfgSb3TRF3sUJc5Dckbb96Z2IJwZJmw0ycocd3EMSNg2QtG
-         jw4jVcd9AK0TjVIITuC3SeKgOFUvXIC14IuOJKI8CuN3WICuoiuS5GrVJG64IUlrL9xF
-         V6QiiIkXXrHSSTglsYI7iAg5QZvzIwhvFrmOZE0OW7Oy2KMNNwM80RSv1A/D2RfIOSRP
-         t2qijKXuIrqfkEZ66BCcayKx4VC3vTNtRB8GlgGqmxWG9jXUSkrelQAapBvnEa0pXfmV
-         vpmw==
-X-Gm-Message-State: AMke39nUuuwH/XnPjB8CXkujOJ3/rNMgCa9CiR8XzaUNXhExVT1SUq5Rt3LkSniHjpF9yw==
-X-Received: by 10.84.248.79 with SMTP id e15mr2950731pln.133.1488534780949;
-        Fri, 03 Mar 2017 01:53:00 -0800 (PST)
-Received: from ash ([115.73.169.226])
-        by smtp.gmail.com with ESMTPSA id h3sm22191388pfc.82.2017.03.03.01.52.57
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 03 Mar 2017 01:53:00 -0800 (PST)
-Received: by ash (sSMTP sendmail emulation); Fri, 03 Mar 2017 16:52:52 +0700
-Date:   Fri, 3 Mar 2017 16:52:52 +0700
-From:   Duy Nguyen <pclouds@gmail.com>
-To:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, sschuberth@gmail.com,
-        Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-        Philip Oakley <philipoakley@iee.org>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: Re: [PATCH v7 0/3] Conditional config include
-Message-ID: <20170303095252.GA12072@ash>
-References: <20170224131425.32409-1-pclouds@gmail.com>
- <20170301112631.16497-1-pclouds@gmail.com>
- <20170303063329.ji6do6eqjbpuwmxz@sigill.intra.peff.net>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=V3h5r9Qi61x3cohkRPrFTPhiGBYNJbL6Fxm+b+E3CMw=;
+        b=SAFr+4BMWE8Ged/gUJ0wyHi0mLDzCWXi+I6tw5PuADDw2DIbYkF9ZvOzcOLDRs0Z9f
+         VVmGp9iLiQRNtUfNivkfXHFUwlrZIi95gPGczBpxgbyi/4Tq89laxAopZN/kkC4SRhma
+         Z0P9Qlp8I+zbWpo8AQtZ81KG5O3vTYcrH9b5pl0GI5HW3GBRIw0ewbk2U7s8baKrWT8s
+         IgrOWx+xilo0gNB/ix2Czjqm+FnD/OzVG9CgKUDZvvAcX0TDLV8aOv4r222wUNBvMDxq
+         N1xqnwd6QQ6duWW/YQUMTdDYy0i4RF6QYoBlFevOrIWw4Z/8CLgtjqO4xaaPBJ249JZP
+         H+3w==
+X-Gm-Message-State: AMke39lAafz6/87EY/6zVJHL58Zdv6LkI2sm0jGlPwsCBUPAgUar29xJ+YsMc5MJ+6xFRMFRQSfB+iVcsP/4bQ==
+X-Received: by 10.202.72.10 with SMTP id v10mr811055oia.169.1488535647910;
+ Fri, 03 Mar 2017 02:07:27 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20170303063329.ji6do6eqjbpuwmxz@sigill.intra.peff.net>
-X-Clacks-Overhead: GNU Terry Pratchett
-User-Agent: Mutt/1.5.24 (2015-08-30)
+Received: by 10.74.158.84 with HTTP; Fri, 3 Mar 2017 02:06:57 -0800 (PST)
+In-Reply-To: <20170303095351.rgifjpfuvafx33jy@sigill.intra.peff.net>
+References: <20170303094252.11706-1-pclouds@gmail.com> <20170303094252.11706-2-pclouds@gmail.com>
+ <20170303095351.rgifjpfuvafx33jy@sigill.intra.peff.net>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Fri, 3 Mar 2017 17:06:57 +0700
+Message-ID: <CACsJy8DU7-o06mfuw1L02CFFR2wmoNa0MQJ8KqsV79ULzjRaRQ@mail.gmail.com>
+Subject: Re: [PATCH 1/2] config: check if config path is a file before parsing it
+To:     Jeff King <peff@peff.net>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Mar 03, 2017 at 01:33:29AM -0500, Jeff King wrote:
-> For those following on the mailing list, there is some discussion at:
-> 
->   https://github.com/git/git/commit/484f78e46d00c6d35f20058671a8c76bb924fb33
-> 
-> I think that is mostly focused around another failing in the
-> error-handling of the config code, and that does not need to be
-> addressed by this series (though of course I'd welcome any fixes).
-> 
-> But there's a test failure that probably does need to be dealt with
-> before this graduates to 'next'.
+On Fri, Mar 3, 2017 at 4:53 PM, Jeff King <peff@peff.net> wrote:
+> I'm mildly negative on this approach for two reasons:
+>
+>   1. It requires doing an _extra_ check anywhere we want to care about
+>      this. So if we care about file/directory confusion, we're going to
+>      sprinkle these is_not_file() checks all over the code base.
+>
+>      I think we're much better to just do the thing we want to do (like
+>      open the file), and deal with the error results. I'm on the fence
+>      on whether we want to care about the fopen behavior on Linux here
+>      (where reading a directory essentially behaves like an empty file,
+>      because the first read() gives an error and we don't distinguish
+>      between error and EOF).
 
-The patch to fix it is this
+I can't fix problems of my series on Windows because I don't use
+Windows (because I will not be able to verify it). So I'm definitely
+on the side that makes behavior consistent across platforms. Then I
+can at least verify some (assuming that the consistent behavior is the
+right one).
 
-diff --git a/t/t1305-config-include.sh b/t/t1305-config-include.sh
-index f0cd2056ba..e833939320 100755
---- a/t/t1305-config-include.sh
-+++ b/t/t1305-config-include.sh
-@@ -102,7 +102,7 @@ test_expect_success 'config modification does not affect includes' '
- 
- test_expect_success 'missing include files are ignored' '
- 	cat >.gitconfig <<-\EOF &&
--	[include]path = foo
-+	[include]path = non-existent
- 	[test]value = yes
- 	EOF
- 	echo yes >expect &&
+I didn't go with yours because I would have to handle two separate
+code paths (fopen returns NULL and read returns EISDIR). But yeah it
+should be that way even if it takes more time and effort. At least
+we're now back on the mailing list and I didn't have to hurry to get
+something out, to get off github.
 
-Junio could you squash this in?
+> But if we do, I think we'd either want to:
+>
+>        a. actually check ferror() after getting EOF and report the read
+>           error. That catches EISDIR, along with any other unexpected
+>           errors.
+>
+>        b. use an fopen wrapper that checks fstat(fileno(fh)) after the
+>           open, and turns fopen(some_dir) into an error.
 
-A lot more explanation is in another series [1] I just sent. Not sure
-if we want to repeat the same in this commit's message.
+If you don't like extra check, I guess you're negative on b as well
+since it is an extra check on Windows. That leaves us with option a.
 
-And this series without that squash, when combined with [1], will fail
-this test even on Linux. Good thing imo.
-
-[1] http://public-inbox.org/git/20170303094252.11706-1-pclouds@gmail.com/
---
+>   2. It doesn't address the root problem for git_config_from_file(),
+>      which is that it is quiet when fopen fails, even if the reason is
+>      something interesting besides ENOENT. The caller can't check errno
+>      because it doesn't know if fopen() failed, or if the config
+>      callback returned an error.
+>
+>      There's an attempt to protect the call to git_config_from_file() by
+>      checking access(), but that breaks down when access() and fopen()
+>      have two different results (which is exactly what happens on
+>      Windows in this case).
+>
+> -Peff
+-- 
 Duy
