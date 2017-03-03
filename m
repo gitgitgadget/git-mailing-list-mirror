@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E48B920133
-	for <e@80x24.org>; Fri,  3 Mar 2017 15:38:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7C2BB20133
+	for <e@80x24.org>; Fri,  3 Mar 2017 15:38:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752145AbdCCPiM (ORCPT <rfc822;e@80x24.org>);
-        Fri, 3 Mar 2017 10:38:12 -0500
-Received: from mout.gmx.net ([212.227.15.18]:52228 "EHLO mout.gmx.net"
+        id S1752280AbdCCPif (ORCPT <rfc822;e@80x24.org>);
+        Fri, 3 Mar 2017 10:38:35 -0500
+Received: from mout.gmx.net ([212.227.17.21]:54094 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751772AbdCCPgv (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 3 Mar 2017 10:36:51 -0500
-Received: from virtualbox ([37.201.194.68]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MXZw6-1cpz7v0GoQ-00WXZS; Fri, 03
- Mar 2017 16:04:17 +0100
-Date:   Fri, 3 Mar 2017 16:04:15 +0100 (CET)
+        id S1751722AbdCCPic (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 3 Mar 2017 10:38:32 -0500
+Received: from virtualbox ([37.201.194.68]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0McPvw-1d1UYW0gq0-00HcCs; Fri, 03
+ Mar 2017 16:31:40 +0100
+Date:   Fri, 3 Mar 2017 16:31:37 +0100 (CET)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     Jeff King <peff@peff.net>
 cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
         Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH v2 9/9] Test read_early_config()
-In-Reply-To: <20170303050745.wv4zsb24ykr34xr7@sigill.intra.peff.net>
-Message-ID: <alpine.DEB.2.20.1703031553070.3767@virtualbox>
-References: <cover.1481211338.git.johannes.schindelin@gmx.de> <cover.1488506615.git.johannes.schindelin@gmx.de> <f27a753830b8fb61a5276ce1d8eeba04ae4dbbfd.1488506615.git.johannes.schindelin@gmx.de> <20170303050745.wv4zsb24ykr34xr7@sigill.intra.peff.net>
+Subject: Re: [PATCH v2 0/9] Fix the early config
+In-Reply-To: <20170303051451.elzz2kzumft2iugg@sigill.intra.peff.net>
+Message-ID: <alpine.DEB.2.20.1703031612210.3767@virtualbox>
+References: <cover.1481211338.git.johannes.schindelin@gmx.de> <cover.1488506615.git.johannes.schindelin@gmx.de> <20170303051451.elzz2kzumft2iugg@sigill.intra.peff.net>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:VgPbZx/TFAWYBvIy011D+/U1SkwfAe2KXTqQs2YgJoWrIWVVWqN
- Un+OuMFXMg3/Gy8UkILFjc7/ZZnidxDQEzCjJI7lXUNKKmruc550/3lPd8aisKPPX45Y8kC
- StQa8IzVRqsAPUlw/7Gi0/Yhm9VYhoIwBQcHFLRKnmqFDRnNbBCMQL7ar/LUFSOYvC1epeI
- AoIdGfUtH1LBgwZek0ekw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:1wqEyWAFIhQ=:MYFys2TJ2rpGzHNtRM95KC
- Y75AAvk7G8biBMRgDqJZPAXzTlBmyQaS3Kby70DXdefORDTx3TCJuHHUkI7VEBvSufOP2/yaA
- dA66tajyTh0WOSNLhA3ojXHp/P9SrcVOuoSxGOg7co8m6emO6GE/HllwhbcGU9UYSLSsbf2o8
- cezbiaDiOLAjRcwWQ/1t7lAHFYDJr1jaSGU51v+op7oYjcJRMfrkfc5FbGMGLEgfQQlOX+n3E
- m/jUIvwIvq7MXRgetRMkG05ZD2+gFjWeCU9GnTA3kS5WCu+RTiuV76vt3MX9CalLksdwW2eIR
- 3Lgtw/sRFnkVV3voPg57MSJHeCfoLmF062FNpsEgEI/NWQE4MUWJk+5wtxRD4PEoAPhAUQzGw
- oHqE9FgeeLtrZoMi8g18jRlyf9ZkkU0RoQV5u7gxZz8cgFHehoc8KgffDUVhYLEPXMWdam9Pa
- SMK6aX654L1CEfRXpJgm/IuGECjgxNoff6ZbJaH8dJmf0VkITlygiDyS0Jz4bCiLP4ng4RPWh
- dd+/m7ip8sVhP3z5KcA/3myUKjs8ZTdwWMmcBlHua6YJxaWhshCJsZ013WbkK/YkenJQI69DL
- LwKngbd16xZHZlL/510EyRXoTZZORN6W+5e7sn5cGOAXoxiq0pXHS8ysj+5RIQSEkGIGaCVVR
- LsVaz3CnR8jBXf17ZHQve3Mr5tikd8gQSwwcRkA1cfKFYVtwgZyaMWftzVVYI+BTIl5BkbtSu
- HdBmXJ+dP1bIJ17Vievcqy5tc69Td77YKuyMIgnZLr/zAozoz1NX6XEE1e8nW6ZRCCcb1cXjP
- kKMUnIe
+X-Provags-ID: V03:K0:ITIIC/FEKTQnqGE1C9LP9Wh27DQUkvoV35bNPmydxAHR4IBlUEy
+ 4eAoCmraVW7MKmX4L6wHIHYdqQm5329amPNHhjqHfUIr+mZ9+dDL6BO0Ols38O6lVF0KZbk
+ as4PW+ynOOvfmQf++KaGLfGacVhP81wweUil4m1lqlf4R7NTICG4GicO4TO0zJtSowExRVh
+ i++QI0v53hDYaS7TeILBg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:HyR9uokJing=:Hxtwi+e8Dr1rl27B6C2/Eo
+ iXwVqlefqQi1KXegWXTvTvCcHHwiFHeMdF/Jcqen6LH5eCm/vf3bSF0upfPUbUkZvoKZ3FoQu
+ hEXnvGUs+iMUH03ooHiv7leMLqC+dsSI7f/x0Kwo10uS5fsT0SIrJ8C1MemqPj8QpoDBjJBqi
+ TS+80Qzo6AdjZOgEmcOG24SpU1fXEFgIDom52b6HiFWv2aZeL0IQfhvN7eATKI2cfKIXjRK5y
+ HlMs7nAEoGL6KQMbJ82FYFIsmsBfrlHgUT5FxdWb3GKNpQHxjcfuMKvBZLkmBCNsIdN3JA85c
+ /t7G/aew762tb2AqNcoWq+60mTGDxVZwL631pP0J/9sVgqL1q/eW5aNou99fhY9dKwBogm2pC
+ uaVvK/fSIcb05Ms+CppeLMbvfV0E8IyhVxxqKblp4vF5F+0srOgp/4RHgmoLm2GJA0HlX0uv6
+ pmszq3gJIGRbfMahk04Yh/M6iUne25AYXRkFFksnsB1Z7xcJLuV03sQcJ6cJOI008/eBcJuGs
+ FTeKAChqYugdgZQpAC4f67iAD34yxcguSiV20FzvoyVrD9k1iEdnWTLT+qDxLUtJjMssBPE49
+ IBQcPXqtCEzS8jcXNcqVYdnkq4zarvlJTL6V8QwQTZPZsC4PrxvirSbFi0YPYbvkWzzsSr9Zf
+ yt2m5js3kaLdurADx6eOP0ff7tJkisrpXxPi+cnAnutQlURUmw+xL6UFgJkEiTUrupxG4nvgt
+ GRj9OShyCHWxItJhQsW6sxG5/XQfpHkk+tDjhf2sfOTIyYnu/UpBYoLEmdDin7vqLAzFeS/d9
+ eKcwl2K
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -58,35 +58,61 @@ Hi Peff,
 
 On Fri, 3 Mar 2017, Jeff King wrote:
 
-> On Fri, Mar 03, 2017 at 03:04:36AM +0100, Johannes Schindelin wrote:
+> On Fri, Mar 03, 2017 at 03:03:56AM +0100, Johannes Schindelin wrote:
 > 
-> > So far, we had no explicit tests of that function.
+> > These patches are an attempt to make Git's startup sequence a bit less
+> > surprising.
+> > 
+> > The idea here is to discover the .git/ directory gently (i.e. without
+> > changing the current working directory, or global variables), and to
+> > use it to read the .git/config file early, before we actually called
+> > setup_git_directory() (if we ever do that).
 > 
-> Makes sense. The pager tests fixed in an earlier commit were effectively
-> checking those, but I don't mind making it explicit.
+> Thanks for working on this. I think it's a huge improvement over the
+> status quo, and over the earlier attempt. I don't see anything hugely
+> wrong with this series, though I did note one bug, along with some minor
+> refinements.
 
-Well, TBH I am a bit uncomfortable with t7006 doing those tests. Just
-imagine that something breaks in that script, say, when working on
-exporting the read_early_config() function. You probably see this coming:
-debugging those breakages is half a nightmare. There are multiple levels
-of shell script functions, a Perl script, and an isatty() call between the
-bug hunter and the bug.
+Thank you very much for your review. You did point out a couple of things
+I overlooked, and while it was a pain in the back to go from v1 to v2
+(i.e. avoiding code duplication, which immediately put the changed code to
+a huge test by having the very central setup_git_directory() use it), I
+really believe that we are better off because the patch series pays off
+more technical debt now than it introduces.
 
-With the new tests, it all becomes much more straight-forward to debug.
-And also less surprising (think about the fun you can have with test cases
-that fail when running `make t7006-pager.sh` but not when running `bash
-t7006-pager.sh -i -v -x`, just because of a forgotten `test_terminal`...).
+> > My dirty little secret is that I actually need this for something else
+> > entirely. I need to patch an internal version of Git to gather
+> > statistics, and to that end I need to read the config before and after
+> > running every Git command. Hence the need for a gentle, and correct
+> > early config.
+> 
+> We do something similar at GitHub, but it falls into two categories:
+> 
+>   - stat-gathering that's on all the time, so doesn't need to look at
+>     config (I'm not sure in your case if you want to trigger the
+>     gathering with config, or if config is just one of the things you
+>     are gathering).
+> 
+>   - logging that is turned on selectively for some repos, but which
+>     doesn't have to be looked up until we know we are in a repo
 
-And yes, you can debug t7006 with the good old "insert debug print
-statements here and there, then compile and run, rinse & repeat" method.
-But you know, getting to use a real IDE with real debugger/intellisense
-integration after years of working on C code in the terminal with vim and
-gdb [*1*], I kinda feel a bit pampered and ask myself how I could possibly
-have put up with the awkwardness. ;-)
+You probably guessed what I need to do, anyway: for our GVFS usage, we
+need some telemetry (i.e. usage statistics), and I basically want to run a
+hook whenever any Git command is called, but only on GVFS-enabled
+repositories.
+
+So it is somewhat related, but slightly different from your usage.
+
+> I looked into making something upstream-able, and my approach was to
+> allow GIT_TRACE_* variables to be specified in the config. But of course
+> that ran into the early-config problem (and I really wanted repo-level
+> config there, because I'd like to be able to turn on tracing for just a
+> single problematic repo).
+> 
+> So not really something you need to work on, but maybe food for thought
+> as you work on your internal project.
+
+Right, GIT_TRACE_* settings in the config should be doable now.
 
 Ciao,
 Dscho
-
-Footnote *1*: for some years I developed Java code in Eclipse and already
-then did I notice just how much faster development becomes when you have
-powerful tools to help you...
