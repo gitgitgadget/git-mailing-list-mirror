@@ -2,102 +2,80 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,
-	STOX_REPLY_TYPE shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 81BEF20133
-	for <e@80x24.org>; Fri,  3 Mar 2017 23:28:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5C65B20133
+	for <e@80x24.org>; Fri,  3 Mar 2017 23:28:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752139AbdCCX2d (ORCPT <rfc822;e@80x24.org>);
-        Fri, 3 Mar 2017 18:28:33 -0500
-Received: from smtp-out-3.talktalk.net ([62.24.135.67]:28586 "EHLO
-        smtp-out-3.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751989AbdCCX2c (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 3 Mar 2017 18:28:32 -0500
-Received: from PhilipOakley ([92.31.218.76])
-        by smtp.talktalk.net with SMTP
-        id jwbwcVDOUxR4bjwbwcINJ2; Fri, 03 Mar 2017 23:27:45 +0000
-X-Originating-IP: [92.31.218.76]
-X-Spam: 0
-X-OAuthority: v=2.2 cv=JNN5iICb c=1 sm=1 tr=0 a=e6L6E7eW+5Nb7SO+DvSdIg==:117
- a=e6L6E7eW+5Nb7SO+DvSdIg==:17 a=8nJEP1OIZ-IA:10 a=ybZZDoGAAAAA:8
- a=lIb7LMJwnlYBHqQ_TQoA:9 a=wPNLvfGTeEIA:10 a=0RhZnL1DYvcuLYC8JZ5M:22
-Message-ID: <D9E30A61FAC84D3B90981B388C9699D0@PhilipOakley>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
-From:   "Philip Oakley" <philipoakley@iee.org>
-To:     "Junio C Hamano" <gitster@pobox.com>, <git@vger.kernel.org>,
-        "Christian Couder" <christian.couder@gmail.com>
-References: <xmqqvarq9vzo.fsf@gitster.mtv.corp.google.com>
-Subject: Re: bisect-helper: we do not bisect --objects
-Date:   Fri, 3 Mar 2017 23:27:45 -0000
-Organization: OPDS
+        id S1752355AbdCCX2w (ORCPT <rfc822;e@80x24.org>);
+        Fri, 3 Mar 2017 18:28:52 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:58088 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1752345AbdCCX2v (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 3 Mar 2017 18:28:51 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id B98D66815C;
+        Fri,  3 Mar 2017 18:22:21 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=tGa/TM8kGMG9vXorl5y6tpBVF/Y=; b=Ym8+L/
+        puTKRNPfb9JaAV5fyY7SELkpx5vdIe7xbHdtz3UKPfI80EYoaYEogY70crMbs4lO
+        Oz5zRwqr3GHPJ5EPX/s6y1ZoX0YYxdmrUm/0rEkwskSteF4hsMHHL2Dx7I17vYg9
+        9JKcZF+LBZ7a32oBx/Ztp8aFDHosuVVGiBr0o=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=sg+Tj6kI/2DYuyzoCdGby2lyXfPi2QrO
+        /8U6xyFuZf621Ok1Cf/YS3BeBQLlYmWE2vhg4D8fNlHPvMZtTlYE2ibwnwtXPUKj
+        nG39lt0Tq/H+e9WmBbH0h5xuq6ia5ref/vStc01nuvaF9ON0XT21eToHBzAlmqIa
+        UTNkbyK9EFc=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id B1B0B6815B;
+        Fri,  3 Mar 2017 18:22:21 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 114CD68159;
+        Fri,  3 Mar 2017 18:22:21 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        git@vger.kernel.org, sschuberth@gmail.com,
+        Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+        Philip Oakley <philipoakley@iee.org>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>
+Subject: Re: [PATCH v7 0/3] Conditional config include
+References: <20170224131425.32409-1-pclouds@gmail.com>
+        <20170301112631.16497-1-pclouds@gmail.com>
+        <20170303063329.ji6do6eqjbpuwmxz@sigill.intra.peff.net>
+        <xmqqlgsm9q2i.fsf@gitster.mtv.corp.google.com>
+        <20170303222215.vwulypicszoh2hds@sigill.intra.peff.net>
+Date:   Fri, 03 Mar 2017 15:22:19 -0800
+In-Reply-To: <20170303222215.vwulypicszoh2hds@sigill.intra.peff.net> (Jeff
+        King's message of "Fri, 3 Mar 2017 17:22:15 -0500")
+Message-ID: <xmqqlgsm6j4k.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain;
-        format=flowed;
-        charset="iso-8859-1";
-        reply-type=original
-Content-Transfer-Encoding: 7bit
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
-X-CMAE-Envelope: MS4wfAqonaCBijBwgg3QgCAF8iLImltsblTbHrcpUSXthktN0bZ+M5DJfeZ9WHNSv5vygpp8QUGHG76qtg605X9bI9wBEhGsNipYkakGYRMDJuQVP3R5sCLh
- xSQFz4PyF9O6uraHatPG+YQAK3fk2Luvss02yjexWgyzHIquVifJcvGIeybbJYE8l8Ze+NEfQprAK+GYAH1cJ+d1SrUbAoPZ3eFtsEFuqhBO/Xv/X647MQ0M
+Content-Type: text/plain
+X-Pobox-Relay-ID: 402EE640-0068-11E7-9E77-FC50AE2156B6-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: "Junio C Hamano" <gitster@pobox.com>
-> Ever since "bisect--helper" was introduced in 1bf072e366
-> ("bisect--helper: implement "git bisect--helper"", 2009-03-26),
-> after setting up the "rev-list $bad --not $good_ones" machinery, the
-> code somehow prepared to mark the trees and blobs at the good boundary
-> as uninteresting, only when --objects option was given.  This was kept
-> across a bit of refactoring done by 2ace9727be ("bisect: move common
-> bisect functionality to "bisect_common"", 2009-04-19) and survives
-> to this day.
->
-> However, "git bisect" does not care about tree/blob object
-> reachability at all---it purely works at the commit DAG level and
-> nobody passes (and nobody should pass) "--objects" option to the
-> underlying rev-list machinery.  Remove the dead code.
->
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
->
-> * Christian, do you recall what we were thinking when we added this
->   mark_edges_uninteresting() call in this program?  If you don't,
->   don't worry--this was done more than 8 years ago.  I am just
->   being curious and also a bit being cautious in case I am missing
->   something.
->
+Jeff King <peff@peff.net> writes:
 
-Bikeshedding: If the given boundary is a tag, it could be tagging a blob or 
-tree rather than a commit. Would that be a scenario that reaches this part 
-of the code? I thought I read previous comments that there is a case in the 
-Linux tree.
---
-Philip
+> Heh. I had no idea we had FREAD_READS_DIRECTORIES. I think Duy and I
+> reinvented it in another thread. ;)
 
->   Thanks.
->
-> bisect.c | 2 --
-> 1 file changed, 2 deletions(-)
->
-> diff --git a/bisect.c b/bisect.c
-> index 30808cadf7..86c5929a23 100644
-> --- a/bisect.c
-> +++ b/bisect.c
-> @@ -634,8 +634,6 @@ static void bisect_common(struct rev_info *revs)
-> {
->  if (prepare_revision_walk(revs))
->  die("revision walk setup failed");
-> - if (revs->tree_objects)
-> - mark_edges_uninteresting(revs, NULL);
-> }
->
-> static void exit_if_skipped_commits(struct commit_list *tried,
-> 
+You two were not alone.  I was planning to reinvent it before I went
+to bed last night and then found it already was there this morning ;-)
+
+> I agree that may be worth setting on Linux (though note that we _do_
+> ignore other stdio read errors in the rest of the code path, which may
+> be something we want to address).
+
+Yes, we need an error check on fopen() in git_config_from_file()
+regardless.
 
