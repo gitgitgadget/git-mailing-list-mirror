@@ -6,125 +6,97 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 911D02023D
-	for <e@80x24.org>; Fri,  3 Mar 2017 09:13:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 570A02023D
+	for <e@80x24.org>; Fri,  3 Mar 2017 09:17:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751578AbdCCJNX (ORCPT <rfc822;e@80x24.org>);
-        Fri, 3 Mar 2017 04:13:23 -0500
-Received: from cloud.peff.net ([104.130.231.41]:37811 "EHLO cloud.peff.net"
+        id S1751474AbdCCJRc (ORCPT <rfc822;e@80x24.org>);
+        Fri, 3 Mar 2017 04:17:32 -0500
+Received: from cloud.peff.net ([104.130.231.41]:37816 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751369AbdCCJCY (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 3 Mar 2017 04:02:24 -0500
-Received: (qmail 1051 invoked by uid 109); 3 Mar 2017 04:45:21 -0000
+        id S1751074AbdCCJR3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 3 Mar 2017 04:17:29 -0500
+Received: (qmail 14066 invoked by uid 109); 3 Mar 2017 07:36:35 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 03 Mar 2017 04:45:21 +0000
-Received: (qmail 24676 invoked by uid 111); 3 Mar 2017 04:45:27 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 03 Mar 2017 07:36:35 +0000
+Received: (qmail 25500 invoked by uid 111); 3 Mar 2017 07:36:42 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 02 Mar 2017 23:45:27 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 02 Mar 2017 23:45:19 -0500
-Date:   Thu, 2 Mar 2017 23:45:19 -0500
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 03 Mar 2017 02:36:42 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 03 Mar 2017 02:36:33 -0500
+Date:   Fri, 3 Mar 2017 02:36:33 -0500
 From:   Jeff King <peff@peff.net>
-To:     Johannes Schindelin <johannes.schindelin@gmx.de>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH v2 4/9] Export the discover_git_directory() function
-Message-ID: <20170303044518.rdtyvgs7kqe7fkpf@sigill.intra.peff.net>
-References: <cover.1481211338.git.johannes.schindelin@gmx.de>
- <cover.1488506615.git.johannes.schindelin@gmx.de>
- <0ca4cce042cc0b0f13f87363b70a3689057ae9b0.1488506615.git.johannes.schindelin@gmx.de>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org, gitster@pobox.com
+Subject: [PATCH] t/perf: add fallback for pre-bin-wrappers versions of git
+Message-ID: <20170303073633.maoaovchkz32h467@sigill.intra.peff.net>
+References: <20170228221236.selqkf5wme3fvued@sigill.intra.peff.net>
+ <20170302195041.1699-1-jonathantanmy@google.com>
+ <20170303064512.khs2seru5onl54mh@sigill.intra.peff.net>
+ <20170303071403.2k3vbcdstllq2j3y@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <0ca4cce042cc0b0f13f87363b70a3689057ae9b0.1488506615.git.johannes.schindelin@gmx.de>
+In-Reply-To: <20170303071403.2k3vbcdstllq2j3y@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Mar 03, 2017 at 03:04:15AM +0100, Johannes Schindelin wrote:
+On Fri, Mar 03, 2017 at 02:14:03AM -0500, Jeff King wrote:
 
-> The function we introduced earlier needs to return both the path to the
-> .git/ directory as well as the "cd-up" path to allow
-> setup_git_directory() to retain its previous behavior as if it changed
-> the current working directory on its quest for the .git/ directory.
-> 
-> Let's rename it and export a function with an easier signature that
-> *just* discovers the .git/ directory.
-> 
-> We will use it in a subsequent patch to support early config reading
-> better.
-> 
+> With this patch I was able to run p0001 against v1.7.0. I don't think we
+> can go further back than that because the perf library depends on the
+> presence of bin-wrappers. That's probably enough. Unlike the t/interop
+> library I proposed recently it's not that interesting to go really far
+> back in time (and I did hack around the bin-wrappers thing in t/interop;
+> you really can test against v1.0.0 there).
 
-Seems like an obviously good next step.
+This is easy to fix (see below). I doubt anybody cares, but it's
+probably worth fixing just because the failure mode (quietly running
+whatever git is in your PATH) is so confusing. It would also be an
+improvement to just detect the situation and die(), but this is
+literally not any more effort.
 
-> diff --git a/cache.h b/cache.h
-> index 80b6372cf76..a104b76c02e 100644
-> --- a/cache.h
-> +++ b/cache.h
-> @@ -518,6 +518,7 @@ extern void set_git_work_tree(const char *tree);
->  #define ALTERNATE_DB_ENVIRONMENT "GIT_ALTERNATE_OBJECT_DIRECTORIES"
->  
->  extern void setup_work_tree(void);
-> +extern const char *discover_git_directory(struct strbuf *gitdir);
+-- >8 --
+Subject: [PATCH] t/perf: add fallback for pre-bin-wrappers versions of git
 
-Perhaps it's worth adding a short docstring describing the function. I
-know that would make it unlike all of its neighbors, but it is not
-immediately obvious to me what the return value is (or whether gitdir is
-an input or output parameter).
+It's tempting to say:
 
-> +const char *discover_git_directory(struct strbuf *gitdir)
-> +{
-> +	struct strbuf dir = STRBUF_INIT;
-> +	int len;
+  ./run v1.0.0 HEAD
 
-Nit: please use size_t for storing strbuf lengths.
+to see how we've sped up Git over the years. Unfortunately,
+this doesn't quite work because versions of Git prior to
+v1.7.0 lack bin-wrappers, so our "run" script doesn't
+correctly put them in the PATH.
 
-> +	if (strbuf_getcwd(&dir))
-> +		return NULL;
-> +
-> +	len = dir.len;
-> +	if (discover_git_directory_1(&dir, gitdir) < 0) {
-> +		strbuf_release(&dir);
-> +		return NULL;
-> +	}
-> +
-> +	if (dir.len < len && !is_absolute_path(gitdir->buf)) {
-> +		strbuf_addch(&dir, '/');
-> +		strbuf_insert(gitdir, 0, dir.buf, dir.len);
-> +	}
-> +	strbuf_release(&dir);
+Worse, it means we silently find whatever other "git" is in
+the PATH, and produce test results that have no bearing on
+what we asked for.
 
-I was confused by two things here.
+Let's fallback to the main git directory when bin-wrappers
+isn't present. Many modern perf scripts won't run with such
+an antique version of Git, of course, but at least those
+failures are detected and reported (and you're free to write
+a limited perf script that works across many versions).
 
-One is that because I was wondering whether "gitdir" was supposed to be
-passed empty or not, it wasn't clear that this insert is doing the right
-thing.  If there _is_ something in it, then discover_git_directory_1()
-would just append to it, which makes sense. But then this insert blindly
-sticks the absolute-path bit at the front of the string, leaving
-whatever was originally there spliced into the middle of the path.
-Doing:
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ t/perf/run | 3 +++
+ 1 file changed, 3 insertions(+)
 
-  size_t base = gitdir->len;
-  ...
-  strbuf_insert(gitdir, base, dir.buf, dir.len);
+diff --git a/t/perf/run b/t/perf/run
+index e8adedadf..c788d713a 100755
+--- a/t/perf/run
++++ b/t/perf/run
+@@ -63,6 +63,9 @@ run_dirs_helper () {
+ 		unset GIT_TEST_INSTALLED
+ 	else
+ 		GIT_TEST_INSTALLED="$mydir/bin-wrappers"
++		# Older versions of git lacked bin-wrappers; fallback to the
++		# files in the root.
++		test -d "$GIT_TEST_INSTALLED" || GIT_TEST_INSTALLED=$mydir
+ 		export GIT_TEST_INSTALLED
+ 	fi
+ 	run_one_dir "$@"
+-- 
+2.12.0.385.gdf4947bc7
 
-would solve that. It's probably not that likely for somebody to do:
-
-  strbuf_addstr(&buf, "my git dir is ");
-  discover_git_directory(&buf);
-
-but since it's not much effort, it might be worth making it work.
-
-The second is that I don't quite understand why we only make the result
-absolute when we walked upwards. In git.git, the result of the function
-in various directories is:
-
-  - ".git", when we're at the root of the worktree
-  - "/home/peff/git/.git, when we're in "t/"
-  - "." when we're already in ".git"
-  - "/home/peff/git/.git/." when we're in ".git/objects"
-
-I'm not sure if some of those cases are not behaving as intended, or
-there's some reason for the differences that I don't quite understand.
-
--Peff
