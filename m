@@ -2,68 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0837820133
-	for <e@80x24.org>; Fri,  3 Mar 2017 19:20:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F2E2B20133
+	for <e@80x24.org>; Fri,  3 Mar 2017 19:20:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752045AbdCCTTy (ORCPT <rfc822;e@80x24.org>);
-        Fri, 3 Mar 2017 14:19:54 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:53619 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751809AbdCCTTv (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1751415AbdCCTTw (ORCPT <rfc822;e@80x24.org>);
+        Fri, 3 Mar 2017 14:19:52 -0500
+Received: from mail-pg0-f66.google.com ([74.125.83.66]:36749 "EHLO
+        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751593AbdCCTTv (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 3 Mar 2017 14:19:51 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 6648764B43;
-        Fri,  3 Mar 2017 14:19:04 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=KQN/aKuKoTLZtGVXqguNWI5ovmU=; b=SK4O5V
-        ce1kWx8AUkdacEpwhwMHrKYkRfEakMNGbwefqEtR21AZ3SMDaDdXEW1J0Su+1IAJ
-        hNFQW3ttisCuqTgzt4V30HEyU7GZuPzYKVPHb47HQdKG2wL+JLFIDiJ50TOjjYbj
-        h8tnplgAjR7tK2whPKKDEOxGT3jwkQEFCV354=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=WbGgn+m4mSnlyADS0aJWrI+tZ/SeME/2
-        dsTC1EjZ4Bg5XrbmA5l13Bs1MQbloHzYwyTk4neazO7geWX07xFE5PDL9i4rnz3U
-        z9boRRb7rfe7bksTN8DOtC14BMIMUu9tEPdU7u2YUdvQhYkLOmIqIrlK7EsfR4EZ
-        RWjiA957ztg=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 5DBFE64B42;
-        Fri,  3 Mar 2017 14:19:04 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id BFD8C64B3C;
-        Fri,  3 Mar 2017 14:19:03 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Allan Xavier <allan.x.xavier@oracle.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] line-log.c: prevent crash during union of too many ranges
-References: <20170302172902.16850-1-allan.x.xavier@oracle.com>
-Date:   Fri, 03 Mar 2017 11:19:02 -0800
-In-Reply-To: <20170302172902.16850-1-allan.x.xavier@oracle.com> (Allan
-        Xavier's message of "Thu, 2 Mar 2017 17:29:02 +0000")
-Message-ID: <xmqqlgsm88yh.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+Received: by mail-pg0-f66.google.com with SMTP id 25so13495293pgy.3
+        for <git@vger.kernel.org>; Fri, 03 Mar 2017 11:18:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:mime-version:content-disposition
+         :user-agent;
+        bh=SngOUycBXJscwmFYz4grqDhJbYvxvXYJ2Mi4tSJTHhw=;
+        b=O9Pf5KWxSdMEnozTjEJC1uKInE2O97dyrnBQ5+uy3fb5hpoBIxOZNe3ibjOImETd4g
+         /z4i+TZOLnX8Cx+8vAHj79cqXs5GuosWJKXdxk9Y0Ut+s/dnCCESk23wrNVB+qSPzWZh
+         76e1MMFj8hKxBGvpQPZC3ovGc083qeVcE92arBjr043PwDG+sNuOu3K7FVigte0xeZ80
+         dJGmN5rJk0ByMZCX0gMZ/nZaxnPHooRB4c+lDpy7/pzHlr3/5vUOjH7HS+/SIpsbeo2z
+         j/eAeRKWZsHMkJ8G65CW32MBdPxoH9ZjaskxSz7/ncmOuGwhjOqNU9YhcYgBkeI/eHUl
+         QpZg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
+         :content-disposition:user-agent;
+        bh=SngOUycBXJscwmFYz4grqDhJbYvxvXYJ2Mi4tSJTHhw=;
+        b=J0pTLE+rNdepNWJ2EhcqrANQ6bbORuc7tU4RO0EcIMQPhKTqjOuvQci0tN6Gl+gEQ5
+         eH/4YMRhcxdq7X3Bt5zcfqK9NmnYXTZp/VLmnv5C2bT4Iplo7t0X6td6H8NxgdzrLKV1
+         FoKo1UKsT6VQgdZV1Gz/XS8PSrrhYbK21d2WPwrMMuixyl725q8TyDtKEqOjT3Gl2FHn
+         EEv7bRpHCXSslgi8kjEjgXQE657wLOuaPARg/Occh2Nh25xFICMUiZj7beNspXUxBJ5J
+         zu9VdEid6vUtg4lAFwfV1u/neK+jbeDnQsnyP7yA83irjeojFv012gHe7Ozi49M8eVJb
+         4RDw==
+X-Gm-Message-State: AMke39lB3F2BOpwmiyFUHya8mzLskBOKejitB05wleKi6QORJ+lZrGnUc1G/FcVpJKeHJQ==
+X-Received: by 10.98.79.150 with SMTP id f22mr3546091pfj.55.1488548445757;
+        Fri, 03 Mar 2017 05:40:45 -0800 (PST)
+Received: from arch-attack.localdomain (c-50-152-192-15.hsd1.ca.comcast.net. [50.152.192.15])
+        by smtp.gmail.com with ESMTPSA id r7sm23667037pfl.25.2017.03.03.05.40.44
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 03 Mar 2017 05:40:45 -0800 (PST)
+Date:   Fri, 3 Mar 2017 05:40:43 -0800
+From:   Denton Liu <liu.denton@gmail.com>
+To:     git@vger.kernel.org
+Cc:     davvid@gmail.com, Johannes.Schindelin@gmx.de
+Subject: [PATCH v2 5/5] Remove outdated info in difftool manpage
+Message-ID: <20170303134043.GA6281@arch-attack.localdomain>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 437BAB34-0046-11E7-8202-FC50AE2156B6-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: Mutt/1.8.0 (2017-02-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Allan Xavier <allan.x.xavier@oracle.com> writes:
+When difftool was rewritten in C, it removed the capability to read
+fallback configs from mergetool. This changes the documentation to
+reflect this.
 
-> The existing implementation of range_set_union does not correctly
-> reallocate memory, leading to a heap overflow when it attempts to union
-> more than 24 separate line ranges.
-> ...
+Signed-off-by: Denton Liu <liu.denton@gmail.com>
+---
+ Documentation/git-difftool.txt | 3 ---
+ 1 file changed, 3 deletions(-)
 
-I'll add "Reviewed-by: Jeff King <peff@peff.net>" and queue, as I
-know we already reviewed the change.
+diff --git a/Documentation/git-difftool.txt b/Documentation/git-difftool.txt
+index 96c26e6aa..a00cb033e 100644
+--- a/Documentation/git-difftool.txt
++++ b/Documentation/git-difftool.txt
+@@ -105,9 +105,6 @@ See linkgit:git-diff[1] for the full list of supported options.
+ 
+ CONFIG VARIABLES
+ ----------------
+-'git difftool' falls back to 'git mergetool' config variables when the
+-difftool equivalents have not been defined.
+-
+ diff.tool::
+ 	The default diff tool to use.
+ 
+-- 
+2.12.0.5.gfbc750a84
 
-Thanks.
