@@ -2,289 +2,129 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 686ED2023D
-	for <e@80x24.org>; Sat,  4 Mar 2017 19:36:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A67092023D
+	for <e@80x24.org>; Sat,  4 Mar 2017 19:49:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752354AbdCDTgJ (ORCPT <rfc822;e@80x24.org>);
-        Sat, 4 Mar 2017 14:36:09 -0500
-Received: from dalaran.tastycake.net ([212.13.201.165]:55237 "EHLO
-        dalaran.tastycake.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752103AbdCDTgF (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 4 Mar 2017 14:36:05 -0500
-Received: from [176.27.107.90] (helo=localhost.localdomain)
-        by dalaran.tastycake.net with esmtpsa (TLS1.2:ECDHE_RSA_AES_128_CBC_SHA256:128)
-        (Exim 4.86_2)
-        (envelope-from <markbt@efaref.net>)
-        id 1ckFCv-0001xc-Ue; Sat, 04 Mar 2017 19:19:09 +0000
-From:   Mark Thomas <markbt@efaref.net>
-To:     git@vger.kernel.org
-Cc:     Mark Thomas <markbt@efaref.net>
-Subject: [RFC 2/4] on-demand: Fetch missing files from remote
-Date:   Sat,  4 Mar 2017 19:18:59 +0000
-Message-Id: <20170304191901.9622-3-markbt@efaref.net>
-X-Mailer: git-send-email 2.12.0.193.g9dc7f06
-In-Reply-To: <20170304191901.9622-1-markbt@efaref.net>
-References: <20170304191901.9622-1-markbt@efaref.net>
+        id S1752234AbdCDTto (ORCPT <rfc822;e@80x24.org>);
+        Sat, 4 Mar 2017 14:49:44 -0500
+Received: from aserp1040.oracle.com ([141.146.126.69]:50808 "EHLO
+        aserp1040.oracle.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752133AbdCDTto (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 4 Mar 2017 14:49:44 -0500
+Received: from userv0022.oracle.com (userv0022.oracle.com [156.151.31.74])
+        by aserp1040.oracle.com (Sentrion-MTA-4.3.2/Sentrion-MTA-4.3.2) with ESMTP id v24JnT96024241
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+        Sat, 4 Mar 2017 19:49:30 GMT
+Received: from aserv0121.oracle.com (aserv0121.oracle.com [141.146.126.235])
+        by userv0022.oracle.com (8.14.4/8.14.4) with ESMTP id v24JnSIo031310
+        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
+        Sat, 4 Mar 2017 19:49:29 GMT
+Received: from abhmp0005.oracle.com (abhmp0005.oracle.com [141.146.116.11])
+        by aserv0121.oracle.com (8.13.8/8.13.8) with ESMTP id v24JnQ4f022672;
+        Sat, 4 Mar 2017 19:49:27 GMT
+Received: from [10.175.200.62] (/10.175.200.62)
+        by default (Oracle Beehive Gateway v4.0)
+        with ESMTP ; Sat, 04 Mar 2017 11:49:26 -0800
+Subject: Re: [PATCH v1] Travis: also test on 32-bit Linux
+To:     Lars Schneider <larsxschneider@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        allan.x.xavier@oracle.com, Jeff King <peff@peff.net>
+References: <c76a133a57514a332828099d342c9763fd946bfa.1488309430.git.johannes.schindelin@gmx.de>
+ <20170302105157.59791-1-larsxschneider@gmail.com>
+ <alpine.DEB.2.20.1703021210170.3767@virtualbox>
+ <CFA1C4B4-0FDA-424D-87A4-EEE1F9BB3712@gmail.com>
+ <xmqqinnrd098.fsf@gitster.mtv.corp.google.com>
+ <alpine.DEB.2.20.1703030315580.3767@virtualbox>
+ <xmqqh93a9p5r.fsf@gitster.mtv.corp.google.com>
+ <xmqq8tol7vs1.fsf@gitster.mtv.corp.google.com>
+ <CAPc5daW=gtN18JZTQMqUje5fxL4oNdTucB0dXFbybPRJggPBUw@mail.gmail.com>
+ <2205F1A7-A694-4F40-B994-D68C3947F2BB@gmail.com>
+ <f5f5886a-aaec-7426-ea33-f5d65516348b@oracle.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Git Mailing List <git@vger.kernel.org>
+From:   Vegard Nossum <vegard.nossum@oracle.com>
+Message-ID: <af31ef46-bd0c-c3f2-5a1e-7d97da6ec9a0@oracle.com>
+Date:   Sat, 4 Mar 2017 20:49:23 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.7.0
+MIME-Version: 1.0
+In-Reply-To: <f5f5886a-aaec-7426-ea33-f5d65516348b@oracle.com>
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Source-IP: userv0022.oracle.com [156.151.31.74]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-If an object (tree, blob, ...) is not found either in the
-packs or loose, check if it is available on-demand from
-the remote.
+On 04/03/2017 19:08, Vegard Nossum wrote:
+> On 04/03/2017 18:23, Lars Schneider wrote:
+>> Did Travis find our first 32bit bug? I briefly looked into it
+>> and the following new topic on pu seems to cause the issue:
+>>
+>> http://public-inbox.org/git/20170302172902.16850-1-allan.x.xavier@oracle.com/
+>>
+>> https://github.com/git/git/commit/aaae0bf787f09ba102f69c3cf85d37e6554ab9fd
+>>
+>>
+>> The "git log" call in the new 4211 test fails with:
+>> *** Error in `/usr/src/git/git': malloc: top chunk is corrupt:
+>> 0x09ff4a78 ***
+>>
+>> More output here:
+>> https://travis-ci.org/larsxschneider/git/builds/207715343
+>
+> It looks like it's hitting the bug the patch is supposed to fix.
+>
+> Are you quite sure it's running the "git" binary that was just built (as
+> opposed to e.g. the system binary installed inside the container)?
 
-Signed-off-by: Mark Thomas <markbt@efaref.net>
----
- Makefile    |   1 +
- cache.h     |   3 +-
- on_demand.c | 157 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- on_demand.h |   8 ++++
- sha1_file.c |   8 +++-
- 5 files changed, 174 insertions(+), 3 deletions(-)
- create mode 100644 on_demand.c
- create mode 100644 on_demand.h
+Nevermind, I can reproduce it locally.
 
-diff --git a/Makefile b/Makefile
-index 1b84322..fb8ca6c 100644
---- a/Makefile
-+++ b/Makefile
-@@ -784,6 +784,7 @@ LIB_OBJS += notes-merge.o
- LIB_OBJS += notes-utils.o
- LIB_OBJS += object.o
- LIB_OBJS += oidset.o
-+LIB_OBJS += on_demand.o
- LIB_OBJS += pack-bitmap.o
- LIB_OBJS += pack-bitmap-write.o
- LIB_OBJS += pack-check.o
-diff --git a/cache.h b/cache.h
-index 80b6372..d34af06 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1730,7 +1730,8 @@ struct object_info {
- 		OI_CACHED,
- 		OI_LOOSE,
- 		OI_PACKED,
--		OI_DBCACHED
-+		OI_DBCACHED,
-+		OI_ONDEMAND
- 	} whence;
- 	union {
- 		/*
-diff --git a/on_demand.c b/on_demand.c
-new file mode 100644
-index 0000000..a0aaf18
---- /dev/null
-+++ b/on_demand.c
-@@ -0,0 +1,157 @@
-+#include "transport.h"
-+#include "pkt-line.h"
-+#include "remote.h"
-+#include "commit.h"
-+
-+static struct remote *remote = NULL;
-+static struct transport *transport = NULL;
-+static int fd[2];
-+static int connected;
-+
-+struct trace_key trace_on_demand = TRACE_KEY_INIT(ON_DEMAND);
-+
-+static void on_demand_cleanup(void)
-+{
-+	if (connected) {
-+		packet_write_fmt(fd[1], "end\n");
-+		transport_disconnect(transport);
-+		connected = 0;
-+	}
-+}
-+
-+static int on_demand_connect(void)
-+{
-+	if (!connected) {
-+		if (!remote)
-+			remote = remote_get(NULL);
-+		if (remote && !transport)
-+			transport = transport_get(remote, NULL);
-+		if (!remote || !transport)
-+			return 0;
-+		if (transport_connect(transport, transport->url, "git-upload-file", fd))
-+			return 0;
-+		connected = 1;
-+		atexit(on_demand_cleanup);
-+	}
-+	return 1;
-+}
-+
-+void *read_remote_on_demand(const unsigned char *sha1, enum object_type *type,
-+			    unsigned long *size)
-+{
-+	const char *line;
-+	const char *arg;
-+	int line_size;
-+
-+	if (!on_demand_connect())
-+		return NULL;
-+
-+	packet_write_fmt(fd[1], "get %s\n", sha1_to_hex(sha1));
-+
-+	line = packet_read_line(fd[0], &line_size);
-+
-+	if (line_size == 0)
-+		return NULL;
-+
-+	if (skip_prefix(line, "missing ", &arg))
-+		return NULL;
-+
-+	if (skip_prefix(line, "found ", &arg)) {
-+		char *end = NULL;
-+		void *buffer;
-+		unsigned char file_sha1[GIT_SHA1_RAWSZ];
-+		enum object_type file_type;
-+		unsigned long file_size;
-+		ssize_t size_read;
-+
-+		if (get_sha1_hex(arg, file_sha1))
-+			die("git on-demand: protocol error, "
-+			    "expected to get sha in '%s'", line);
-+		arg += GIT_SHA1_HEXSZ;
-+
-+		file_type = strtol(arg, &end, 0);
-+		if (!end || file_type < 0 || file_type >= OBJ_MAX)
-+			die("git on-demand: protocol error, "
-+			    "invalid object type in '%s'", line);
-+		arg = end;
-+
-+		file_size = strtoul(arg, &end, 0);
-+		if (!end || *end || file_size > LONG_MAX)
-+			die("git on-demand: protocol error, "
-+			    "invalid file size in '%s'", line);
-+
-+		buffer = xmalloc(file_size);
-+		if (!buffer)
-+			die("git on-demand: failed to allocate "
-+			    "buffer for %ld bytes", file_size);
-+
-+		size_read = read_in_full(fd[0], buffer, file_size);
-+		if (size_read != (ssize_t)file_size)
-+			die("git on-demand: protocol error, "
-+			    "failed to read file data");
-+
-+		trace_printf_key(&trace_on_demand, "on-demand: fetched %s\n",
-+				 sha1_to_hex(sha1));
-+		*type = file_type;
-+		*size = file_size;
-+		return buffer;
-+	}
-+
-+	die("git on-demand: protocol error, "
-+	    "unexpected response: '%s'", line);
-+}
-+
-+int object_info_on_demand(const unsigned char *sha1, struct object_info *oi)
-+{
-+	const char *line;
-+	const char *arg;
-+	int line_size;
-+
-+	if (!on_demand_connect())
-+		return -1;
-+
-+	packet_write_fmt(fd[1], "info %s\n", sha1_to_hex(sha1));
-+
-+	line = packet_read_line(fd[0], &line_size);
-+
-+	if (line_size == 0)
-+		return -1;
-+
-+	if (skip_prefix(line, "missing ", &arg))
-+		return -1;
-+
-+	if (skip_prefix(line, "found ", &arg)) {
-+		char *end = NULL;
-+		unsigned char sha1[GIT_SHA1_RAWSZ];
-+		enum object_type file_type;
-+		unsigned long file_size;
-+
-+		if (get_sha1_hex(arg, sha1))
-+			die("git on-demand: protocol error, "
-+			    "expected to get sha in '%s'", line);
-+		arg += GIT_SHA1_HEXSZ;
-+
-+		file_type = strtol(arg, &end, 0);
-+		if (!end || file_type < 0 || file_type >= OBJ_MAX)
-+			die("git on-demand: protocol error, "
-+			    "invalid object type in '%s'", line);
-+		arg = end;
-+
-+		file_size = strtoul(arg, &end, 0);
-+		if (!end || *end || file_size > LONG_MAX)
-+			die("git on-demand: protocol error, "
-+			    "invalid file size in '%s'", line);
-+
-+		if (oi->typep)
-+			*oi->typep = file_type;
-+		if (oi->sizep)
-+			*oi->typep = file_size;
-+		if (oi->disk_sizep)
-+			*oi->disk_sizep = 0;
-+		oi->whence = OI_ONDEMAND;
-+		return 0;
-+	}
-+
-+	die("git on-demand: protocol error, "
-+	    "unexpected response: '%s'", line);
-+}
-diff --git a/on_demand.h b/on_demand.h
-new file mode 100644
-index 0000000..09a8072
---- /dev/null
-+++ b/on_demand.h
-@@ -0,0 +1,8 @@
-+#ifndef ON_DEMAND_H
-+#define ON_DEMAND_H
-+
-+void *read_remote_on_demand(const unsigned char *sha1, enum object_type *type,
-+			    unsigned long *size);
-+int object_info_on_demand(const unsigned char *sha1, struct object_info *oi);
-+
-+#endif
-diff --git a/sha1_file.c b/sha1_file.c
-index 6628f06..510da41 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -27,6 +27,7 @@
- #include "list.h"
- #include "mergesort.h"
- #include "quote.h"
-+#include "on_demand.h"
- 
- #define SZ_FMT PRIuMAX
- static inline uintmax_t sz_fmt(size_t s) { return s; }
-@@ -2979,7 +2980,7 @@ int sha1_object_info_extended(const unsigned char *sha1, struct object_info *oi,
- 		/* Not a loose object; someone else may have just packed it. */
- 		reprepare_packed_git();
- 		if (!find_pack_entry(real, &e))
--			return -1;
-+			return object_info_on_demand(real, oi);
- 	}
- 
- 	/*
-@@ -3091,7 +3092,10 @@ static void *read_object(const unsigned char *sha1, enum object_type *type,
- 		return buf;
- 	}
- 	reprepare_packed_git();
--	return read_packed_sha1(sha1, type, size);
-+	buf = read_packed_sha1(sha1, type, size);
-+	if (buf)
-+		return buf;
-+	return read_remote_on_demand(sha1, type, size);
- }
- 
- /*
--- 
-2.7.4
+==10205== Invalid write of size 4
+==10205==    at 0x4031ED2: memcpy (in 
+/usr/lib/valgrind/vgpreload_memcheck-x86-linux.so)
+==10205==    by 0x811C4B0: memcpy (string3.h:53)
+==10205==    by 0x811C4B0: range_set_copy.isra.7 (line-log.c:46)
+==10205==    by 0x811C51B: line_log_data_copy_one (line-log.c:628)
+==10205==    by 0x811C55D: line_log_data_copy (line-log.c:642)
+==10205==    by 0x811C5E3: add_line_range (line-log.c:708)
+==10205==    by 0x811D767: line_log_init (line-log.c:745)
+==10205==    by 0x808B1CD: cmd_log_init_finish (log.c:204)
+==10205==    by 0x808C9C8: cmd_log_init (log.c:213)
+==10205==    by 0x808C9C8: cmd_log (log.c:681)
+==10205==    by 0x804CF14: run_builtin (git.c:373)
+==10205==    by 0x804CF14: handle_builtin (git.c:574)
+==10205==    by 0x804D264: run_argv (git.c:626)
+==10205==    by 0x804D264: cmd_main (git.c:703)
+==10205==    by 0x804C448: main (common-main.c:43)
+==10205==  Address 0x4cde9c8 is 0 bytes after a block of size 1,600 alloc'd
+==10205==    at 0x402D17C: malloc (in 
+/usr/lib/valgrind/vgpreload_memcheck-x86-linux.so)
+==10205==    by 0x402F370: realloc (in 
+/usr/lib/valgrind/vgpreload_memcheck-x86-linux.so)
+==10205==    by 0x819CC0F: xrealloc (wrapper.c:137)
+==10205==    by 0x811C1C8: range_set_grow (line-log.c:21)
+==10205==    by 0x811C499: range_set_init (line-log.c:32)
+==10205==    by 0x811C499: range_set_copy.isra.7 (line-log.c:45)
+==10205==    by 0x811C51B: line_log_data_copy_one (line-log.c:628)
+==10205==    by 0x811C55D: line_log_data_copy (line-log.c:642)
+==10205==    by 0x811C5E3: add_line_range (line-log.c:708)
+==10205==    by 0x811D767: line_log_init (line-log.c:745)
+==10205==    by 0x808B1CD: cmd_log_init_finish (log.c:204)
+==10205==    by 0x808C9C8: cmd_log_init (log.c:213)
+==10205==    by 0x808C9C8: cmd_log (log.c:681)
+==10205==    by 0x804CF14: run_builtin (git.c:373)
+==10205==    by 0x804CF14: handle_builtin (git.c:574)
 
+At a glance, looks like range_set_copy() is using
+sizeof(struct range_set) == 12, but
+range_set_init/range_set_grow/ALLOC_GROW/REALLOC_ARRAY is using
+sizeof(rs->range) == 8.
+
+
+Vegard
