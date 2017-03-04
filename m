@@ -2,95 +2,127 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C18002013E
-	for <e@80x24.org>; Sat,  4 Mar 2017 07:46:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 87A552013E
+	for <e@80x24.org>; Sat,  4 Mar 2017 08:37:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751209AbdCDHqo (ORCPT <rfc822;e@80x24.org>);
-        Sat, 4 Mar 2017 02:46:44 -0500
-Received: from cloud.peff.net ([104.130.231.41]:38544 "EHLO cloud.peff.net"
+        id S1750930AbdCDIhP (ORCPT <rfc822;e@80x24.org>);
+        Sat, 4 Mar 2017 03:37:15 -0500
+Received: from dcvr.yhbt.net ([64.71.152.64]:51030 "EHLO dcvr.yhbt.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750818AbdCDHqn (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 4 Mar 2017 02:46:43 -0500
-Received: (qmail 21492 invoked by uid 109); 4 Mar 2017 07:39:54 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sat, 04 Mar 2017 07:39:54 +0000
-Received: (qmail 4573 invoked by uid 111); 4 Mar 2017 07:40:02 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Sat, 04 Mar 2017 02:40:02 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 04 Mar 2017 02:39:53 -0500
-Date:   Sat, 4 Mar 2017 02:39:53 -0500
-From:   Jeff King <peff@peff.net>
-To:     Johannes Schindelin <johannes.schindelin@gmx.de>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH v3 0/9] Fix the early config
-Message-ID: <20170304073952.drfgy7jacnlm6tum@sigill.intra.peff.net>
-References: <cover.1488506615.git.johannes.schindelin@gmx.de>
- <cover.1488562287.git.johannes.schindelin@gmx.de>
+        id S1750853AbdCDIhO (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 4 Mar 2017 03:37:14 -0500
+Received: from localhost (dcvr.yhbt.net [127.0.0.1])
+        by dcvr.yhbt.net (Postfix) with ESMTP id 397BA2013E;
+        Sat,  4 Mar 2017 08:36:46 +0000 (UTC)
+Date:   Sat, 4 Mar 2017 08:36:45 +0000
+From:   Eric Wong <e@80x24.org>
+To:     Jeff King <peff@peff.net>
+Cc:     Junio C Hamano <gitster@pobox.com>, Jann Horn <jannh@google.com>,
+        Brandon Williams <bmwill@google.com>, git@vger.kernel.org,
+        sbeller@google.com, bburky@bburky.com, jrnieder@gmail.com
+Subject: [PATCH v2] http: inform about alternates-as-redirects behavior
+Message-ID: <20170304083645.GA24694@whir>
+References: <20170304013504.GA27183@untitled>
+ <20170304031314.32bta4prahf7pfp7@sigill.intra.peff.net>
+ <20170304065548.GA20734@whir>
+ <20170304074140.mzgs27jp2jer4mlv@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <cover.1488562287.git.johannes.schindelin@gmx.de>
+In-Reply-To: <20170304074140.mzgs27jp2jer4mlv@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Mar 03, 2017 at 06:31:55PM +0100, Johannes Schindelin wrote:
+Jeff King <peff@peff.net> wrote:
+> On Sat, Mar 04, 2017 at 06:55:48AM +0000, Eric Wong wrote:
+> > Jeff King <peff@peff.net> wrote:
+> > > The warning itself:
+> > > 
+> > > > +		warning("alternate disabled by http.followRedirects!=true: %s",
+> > > 
+> > > feels like it could use some whitespace around the "!=", but maybe
+> > > that's just me.
+> > 
+> > Yeah, I kinda wanted to emulate the command-line syntax.
+> > 
+> > Maybe rewording it a bit and showing how to enable it will
+> > make more sense:
+> > 
+> > 		warning("alternate: %s", url);
+> > 		warning(" may be enabled by -c http.followRedirects=true");
+> 
+> I kind of hoped people would look at the documentation for
+> followRedirects before blindly enabling it. Though I guess the
+> documentation doesn't really explain the possible security implications,
+> so maybe it doesn't matter (and they're pretty subtle anyway).
 
-> Interdiff vs v2:
-> [...]
->  +	 * When we are not about to create a repository ourselves (init or
->  +	 * clone) and when no .git/ directory was set up yet (in which case
->  +	 * git_config_with_options() would already have picked up the
->  +	 * repository config), we ask discover_git_directory() to figure out
->  +	 * whether there is any repository config we should use (but unlike
->  +	 * setup_git_directory_gently(), no global state is changed, most
->  +	 * notably, the current working directory is still the same after
->  +	 * the call).
->   	 */
->  -	if (!startup_info->creating_repository && !have_git_dir() &&
->  -	    discover_git_directory(&buf)) {
->  +	if (!have_git_dir() && discover_git_directory(&buf)) {
+You bring up a good point, perhaps just mentioning the config
+key is enough to convince somebody to (v2 below).
 
-I think this "when we are not about to..." part of the comment is no
-longer true, given the second part of the hunk.
 
->  @@ -721,8 +721,10 @@ static const char *setup_discovered_git_dir(const char *gitdir,
->   	if (offset == cwd->len)
->   		return NULL;
->   
->  -	/* Make "offset" point to past the '/', and add a '/' at the end */
->  -	offset++;
->  +	/* Make "offset" point past the '/' (already the case for root dirs) */
->  +	if (offset != offset_1st_component(cwd->buf))
->  +		offset++;
+I also think the security implications for relative alternates
+on the same host would not matter, since the smart HTTP will
+take them into account on the server side.
 
-Nice. I was worried we would have to have a hacky "well, sometimes we
-don't add one here..." code, but using offset_1st_component says
-exactly what we mean.
+Perhaps we give http_follow_config ORable flags:
 
-> +/* Find GIT_DIR without changing the working directory or other global state */
->  extern const char *discover_git_directory(struct strbuf *gitdir);
+	HTTP_FOLLOW_NONE = 0,
+	HTTP_FOLLOW_INITIAL = 0x1,
+	HTTP_FOLLOW_RELATIVE = 0x2,
+	HTTP_FOLLOW_ABSOLUTE = 0x4,
+	HTTP_FOLLOW_ALWAYS = 0x7,
 
-The parts that actually confused me were the parameters (mostly whether
-gitdir was a directory to start looking in, or an output parameter). So
-maybe:
+With the default would being: HTTP_FOLLOW_INITIAL|HTTP_FOLLOW_RELATIVE
+(but I suppose that's a patch for another time)
 
-  /*
-   * Find GIT_DIR of the repository that contains the current working
-   * directory, without changing the working directory or other global
-   * state. The result is appended to gitdir. The return value is NULL
-   * if no repository was found, or gitdir->buf otherwise.
-   */
+----------8<-----------
+From: Eric Wong <e@80x24.org>
+Subject: [PATCH] http: inform about alternates-as-redirects behavior
 
-This looks good to me aside from those few comment nits. I'm still not
-sure I understand how ceil_offset works in setup_git_directory_gently_1(),
-but I don't think your patch actually changed it. I can live with my
-confusion.
+It is disconcerting for users to not notice the behavior
+change in handling alternates from commit cb4d2d35c4622ec2
+("http: treat http-alternates like redirects")
 
--Peff
+Give the user a hint about the config option so they can
+see the URL and decide whether or not they want to enable
+http.followRedirects in their config.
+
+Signed-off-by: Eric Wong <e@80x24.org>
+---
+ http-walker.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
+
+diff --git a/http-walker.c b/http-walker.c
+index b34b6ace7..6396cebe5 100644
+--- a/http-walker.c
++++ b/http-walker.c
+@@ -168,6 +168,11 @@ static int is_alternate_allowed(const char *url)
+ 	};
+ 	int i;
+ 
++	if (http_follow_config != HTTP_FOLLOW_ALWAYS) {
++		warning("alternate disabled by http.followRedirects: %s", url);
++		return 0;
++	}
++
+ 	for (i = 0; i < ARRAY_SIZE(protocols); i++) {
+ 		const char *end;
+ 		if (skip_prefix(url, protocols[i], &end) &&
+@@ -331,9 +336,6 @@ static void fetch_alternates(struct walker *walker, const char *base)
+ 	struct alternates_request alt_req;
+ 	struct walker_data *cdata = walker->data;
+ 
+-	if (http_follow_config != HTTP_FOLLOW_ALWAYS)
+-		return;
+-
+ 	/*
+ 	 * If another request has already started fetching alternates,
+ 	 * wait for them to arrive and return to processing this request's
+-- 
+EW
