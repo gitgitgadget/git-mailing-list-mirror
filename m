@@ -2,99 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B64C220133
-	for <e@80x24.org>; Sat,  4 Mar 2017 00:11:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 72BBF20133
+	for <e@80x24.org>; Sat,  4 Mar 2017 00:18:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752183AbdCDALK (ORCPT <rfc822;e@80x24.org>);
-        Fri, 3 Mar 2017 19:11:10 -0500
-Received: from out4-smtp.messagingengine.com ([66.111.4.28]:55212 "EHLO
-        out4-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751963AbdCDALI (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 3 Mar 2017 19:11:08 -0500
-Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
-        by mailout.nyi.internal (Postfix) with ESMTP id 0FEEF20BB0
-        for <git@vger.kernel.org>; Fri,  3 Mar 2017 19:10:07 -0500 (EST)
-Received: from frontend2 ([10.202.2.161])
-  by compute5.internal (MEProxy); Fri, 03 Mar 2017 19:10:07 -0500
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=mplew.is; h=
-        content-transfer-encoding:content-type:date:from:message-id
-        :mime-version:subject:to:x-me-sender:x-me-sender:x-sasl-enc
-        :x-sasl-enc; s=mesmtp; bh=RHFVDAOCBuL5iHYiQXEvOeWKtys=; b=gsR/M6
-        os39LKeSiQi4W21ek/kJX5ThBPYI1U0mhToPrCbpAHiQ9EiOvdD+dPlGitHsuw/s
-        R1HVzEougB1NT6GUES0eNH8DdbSNWXP7SSE3AlEMglMIWSM1hj3emOq3nGI2ItDs
-        OC2Fn4s3jZQxc1ca8mYp/IbVPP97b5jW/Uqj4=
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-        messagingengine.com; h=content-transfer-encoding:content-type
-        :date:from:message-id:mime-version:subject:to:x-me-sender
-        :x-me-sender:x-sasl-enc:x-sasl-enc; s=smtpout; bh=RHFVDAOCBuL5iH
-        YiQXEvOeWKtys=; b=fsx5xnmxChbH5+RnT584HMpxeehlQmhhbWaTm0WCkWL1df
-        Q5tCcEvifOO1VYnr5SmCmCwnFLh4rlGRGA/FTdAs2MJwbkba8qjyWMDUus3u1NQp
-        6GkS/xA/ixWlEzZ1gAIgHGgjvKwUDvRplUJoh5mmLIjWolxj3Uo1jdr6dV06o=
-X-ME-Sender: <xms:3wW6WIuNio7LPuP8YPCG1r8BNvuLMAWe6qsjhjkcXch8YNUlNEEiiw>
-X-Sasl-enc: Be5CHc5JMjWh7Jf/aO0XQSLdSrprvdChqwnklVQrp80H 1488586206
-Received: from [10.0.17.241] (unknown [64.238.189.53])
-        by mail.messagingengine.com (Postfix) with ESMTPA id B4D4F24462
-        for <git@vger.kernel.org>; Fri,  3 Mar 2017 19:10:06 -0500 (EST)
-From:   Mike Lewis <mike@mplew.is>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Mime-Version: 1.0 (Mac OS X Mail 10.2 \(3259\))
-Subject: Server-side hooks on non-bare repository
-Message-Id: <719CE082-14AB-4E18-AE7D-7D2A818CF499@mplew.is>
-Date:   Fri, 3 Mar 2017 19:10:05 -0500
-To:     git@vger.kernel.org
-X-Mailer: Apple Mail (2.3259)
+        id S1752064AbdCDASw (ORCPT <rfc822;e@80x24.org>);
+        Fri, 3 Mar 2017 19:18:52 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:65111 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751742AbdCDASv (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 3 Mar 2017 19:18:51 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 1A73D689A9;
+        Fri,  3 Mar 2017 19:03:44 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=4X3SKD4uBd5TL8xF0DpfLJ/vRLc=; b=Qk2NqI
+        hekwc2b97vwEvCLK+0npJgB5uySehoz6JcJBQkmwrfLjfQuKwgrrQezf03f37gAt
+        RBxmlN2zf8iUxHAJd0hR2EzZZYcN8kgvz8teGWG3OAZZLJeope4NA44/K5zhn/QD
+        NabTZtlQymTvW9rpUTpxJ5xO2PI/2zp1uvSaU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=I8OeZA4EFuaTOqWyymDh5+UFeZH078fo
+        ZDgCWCgOAJ3Ch31ff5b/hJZkRwVBXu+PPluqtAeqs7iz+W/h/ceGgkuOLHdYn097
+        FJZs1Da4yA2xjiKdrDAJBEeH9+HVsFKGBw0UnyCwepZkLb8WTgwtgeEuqnp5dcPr
+        UCEnbtivujk=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 133F4689A7;
+        Fri,  3 Mar 2017 19:03:44 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 770D3689A6;
+        Fri,  3 Mar 2017 19:03:43 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Lars Schneider <larsxschneider@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v1] Travis: also test on 32-bit Linux
+References: <c76a133a57514a332828099d342c9763fd946bfa.1488309430.git.johannes.schindelin@gmx.de>
+        <20170302105157.59791-1-larsxschneider@gmail.com>
+        <alpine.DEB.2.20.1703021210170.3767@virtualbox>
+        <CFA1C4B4-0FDA-424D-87A4-EEE1F9BB3712@gmail.com>
+        <xmqqinnrd098.fsf@gitster.mtv.corp.google.com>
+        <alpine.DEB.2.20.1703030315580.3767@virtualbox>
+        <xmqqh93a9p5r.fsf@gitster.mtv.corp.google.com>
+Date:   Fri, 03 Mar 2017 16:03:42 -0800
+In-Reply-To: <xmqqh93a9p5r.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
+        message of "Fri, 03 Mar 2017 10:43:44 -0800")
+Message-ID: <xmqq8tol7vs1.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 07C7251E-006E-11E7-AD8F-FC50AE2156B6-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello,
+Junio C Hamano <gitster@pobox.com> writes:
 
-I=E2=80=99m having some issues with using server-side hooks when pushing =
-to a non-bare repository. In my git config, I have =
-`receive.denyCurrentBranch` set to `updateInstead`, which behaves as =
-expected, and updates the current working tree when the current branch =
-is pushed to. However, attempting to process those changes with =
-pre-receive and post-receive hooks results in some unexpected behavior =
-regarding the current working directory of the scripts and using git =
-commands. I=E2=80=99ve tested these issues using both git 2.11 and 2.12 =
-on various systems (macOS and CentOS), and get the same behavior each =
-time.
+> I see he did v2 which you Acked in a different thread.  Will replace
+> what's been on 'pu' and running with Travis the past few days with
+> it.  Let's wait for one or more Travis cycles and then merge it to
+> 'next'.
 
-Essentially, my problem boils down to two things:
+https://travis-ci.org/git/git/jobs/207517043 is an output from 'pu'
+with the v2 patch; it seems to have fell into a funny state.  The
+output ends like so:
 
-1. When using a non-bare repository, I would expect the the working =
-directory of the hook to be the root directory of the working tree, as =
-this mirrors the behavior of =E2=80=9Cclient=E2=80=9D-side hooks like =
-pre-commit. Instead, the working directory is set to the .git directory. =
-That in and of itself is not a huge deal, but it leads into #2:
+    No output has been received in the last 10m0s, this potentially
+    indicates a stalled build or something wrong with the build itself.
 
-2. While running the hooks, git treats the repository as being bare, =
-regardless of whether it actually is. For instance, changing the working =
-directory of the scripts to the actual root of the working tree and =
-attempting to run any git commands (for instance, `git rev-parse =
---abbrev-ref HEAD` to get the current branch name) results in "fatal: =
-Not a git repository: =E2=80=98.=E2=80=99=E2=80=9D being returned to the =
-client-side `git push` command. I=E2=80=99ve found a workaround to this, =
-which is to explicitly set the =E2=80=9CGIT_DIR=E2=80=9D to the .git =
-directory, and make sure that is passed to any external scripts as well. =
-However, this is very unintuitive behavior, as the working tree is still =
-there and either unmodified or done being updated, depending on which =
-hook is being called. At the very least, this behavior should be in the =
-documentation somewhere so that users can write their hooks accordingly.
+I only recently started looking at Travis logs, so I cannot tell if
+it is just a usual flake (e.g. some builds a few days ago seems to
+have failed due to not being able to check out the tree being
+tested, which I do not think is our fault) that we shouldn't worry
+about, or if it is a sign of a real problem.
 
-TL;DR: it seems that server-side hooks don=E2=80=99t account for the =
-repository being non-bare, which is no longer a valid assumption with =
-the `receive.denyCurrentBranch=3DupdateInstead` configuration value =
-introduced in 2.3.0.
-
-Thanks, and I=E2=80=99d be happy to provide any other information that =
-anyone needs to take a look at this.
-
-Mike Lewis
+Unrelated to linux-32, the same build has hard failure with Apple
+clang in t0021 with the rot13-filter.pl thing, by the way.
 
