@@ -2,154 +2,174 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0E82E202D7
-	for <e@80x24.org>; Sun,  5 Mar 2017 23:42:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CACE9202D7
+	for <e@80x24.org>; Sun,  5 Mar 2017 23:45:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752454AbdCEXmq (ORCPT <rfc822;e@80x24.org>);
-        Sun, 5 Mar 2017 18:42:46 -0500
-Received: from mail-lf0-f68.google.com ([209.85.215.68]:34787 "EHLO
-        mail-lf0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752414AbdCEXmp (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 5 Mar 2017 18:42:45 -0500
-Received: by mail-lf0-f68.google.com with SMTP id y193so10417919lfd.1
-        for <git@vger.kernel.org>; Sun, 05 Mar 2017 15:42:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=laszlo.nu; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=a+Gu3IYM+3WjTVLZ8xb1fALJXR3gk2C2RJY2BrMMCtQ=;
-        b=X3LlAJdL/U8QQz4dJrXR1Oxw8O4TMQmJUhP0xhQFaGcCm85otO1JTY6jSz8gqYknjC
-         etmSlQ5/PVWaN/Iir1JGYyMvwxX7CK3OGGUV6UQNGGugP8bblCUJBQVxyF1f/NOY7uHe
-         RzW5UJNXK3qyzJihyctoiIxlPqXcV4kESXKO4=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=a+Gu3IYM+3WjTVLZ8xb1fALJXR3gk2C2RJY2BrMMCtQ=;
-        b=XcJI6PATgbhnxHQNfHAEJMt0eobYXJt9qUr5jIduk9x/jK7fysoLEbuT1E8zKk6QCM
-         If9Cay6jhw8Xc+brPXrnf81ULJDQfqC0kDs6mEku4lgGowmvvpa2X7LNSwtn7NazZ0cl
-         BITyPtknUD4cQfoJXd/dbYRWCV4sPduYjuzCmcBKg7X1vkjRUt1HROSM7xHS4IEPehW2
-         HBLnG/nbJXmuPylTZE3XZAdHHII4CMYiwgLhB8uhhHkwpScVA4MyAvlWTtzmI/vJnTvH
-         5PTLhZKVy6WirrmFU2PxD1uR+BYypDxjicVryGgAXv+tdtJby5JG9iZ2hpnriMXVy3/g
-         G1Iw==
-X-Gm-Message-State: AMke39mj2rMXa5nM7BHKGJpIqUgYrzK9It2E+mHbQDLaxNkKv2FQXYY5uWCQW0CZBYKDPQ==
-X-Received: by 10.46.22.14 with SMTP id w14mr4527773ljd.18.1488757345545;
-        Sun, 05 Mar 2017 15:42:25 -0800 (PST)
-Received: from ion.zyxel.com (ua-85-228-69-197.cust.bredbandsbolaget.se. [85.228.69.197])
-        by smtp.gmail.com with ESMTPSA id f188sm3751933lfe.12.2017.03.05.15.42.24
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 05 Mar 2017 15:42:24 -0800 (PST)
-From:   =?UTF-8?q?Andr=C3=A9=20Laszlo?= <andre@laszlo.nu>
-To:     git@vger.kernel.org
-Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>,
-        "brian m . carlson" <sandals@crustytoothpaste.net>,
-        =?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        id S1752500AbdCEXph (ORCPT <rfc822;e@80x24.org>);
+        Sun, 5 Mar 2017 18:45:37 -0500
+Received: from castro.crustytoothpaste.net ([75.10.60.170]:42944 "EHLO
+        castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1752425AbdCEXpg (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 5 Mar 2017 18:45:36 -0500
+Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 57F5C280AD;
+        Sun,  5 Mar 2017 23:45:33 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
+        s=default; t=1488757533;
+        bh=5ZmQaja67Jz0kBdLSYhQv6OSw8fZ/X9wT9kuZsArODc=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=EdiwdkJThPn2Hj9ZlCtAp0rFrMvCn+b2br9FrdGDY+fXVddPm2CORiFy6AQEmrvIi
+         Q/qSQzSy53oFyqLjDEjFr7y33bBD/cDwKwzeBoVpS5BamNjHQ4WQ6JYpwKjciFWlbJ
+         2rczC/m3c6LI45yQy+sYFf1folrWTKVzbKrKjGV1ZrnkF5thzhKBQhm0juAFZuoGww
+         i7MwtomtbE2kPSNVvCdOWO1zqaliL7UacFAU2V75qhNEQoQfZwmM23soyBAoHuMUod
+         e4kQeJtdcLjB9vaivDqC/7qkY4mEV5ULMtsCgyNB3iiXN32lKMLhU0hZKPlrnxcL50
+         ya0OInMBQQjP9uDHCHboqxZ/VaRKuvce+NlPVXB5hhYOgEV1ZUmoc3w5t7AhXjmmFz
+         7j0ZHcT7VQy/Qf5AtB5b/iClbvuuJV7LmvmfYIOT/4LuCZ1wjlpLhQb02yH80nls4E
+         kVqxfsYxuXC89BCpSWDyFmPCpRVpJnA8W3OCZIpvkxbNYwc0efx
+Date:   Sun, 5 Mar 2017 23:45:27 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Ian Jackson <ijackson@chiark.greenend.org.uk>
+Cc:     Jeff King <peff@peff.net>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Linus Torvalds <torvalds@linux-foundation.org>,
+        Jason Cooper <git@lakedaemon.net>,
+        ankostis <ankostis@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Stefan Beller <sbeller@google.com>, David Lang <david@lang.hm>,
+        Joey Hess <id@joeyh.name>
+Subject: Re: Transition plan for git to move to a new hash function
+Message-ID: <20170305234527.qfsiopua6ygva46p@genre.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Ian Jackson <ijackson@chiark.greenend.org.uk>,
         Jeff King <peff@peff.net>,
-        =?UTF-8?q?Andr=C3=A9=20Laszlo?= <andre@laszlo.nu>
-Subject: [PATCH] pull: do not segfault when HEAD refers to missing object file
-Date:   Mon,  6 Mar 2017 00:42:22 +0100
-Message-Id: <20170305234222.4590-1-andre@laszlo.nu>
-X-Mailer: git-send-email 2.12.0
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Linus Torvalds <torvalds@linux-foundation.org>,
+        Jason Cooper <git@lakedaemon.net>, ankostis <ankostis@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Stefan Beller <sbeller@google.com>, David Lang <david@lang.hm>,
+        Joey Hess <id@joeyh.name>
+References: <20170226001607.GH11350@io.lakedaemon.net>
+ <20170226173810.fp2tqikrm4nzu4uk@genre.crustytoothpaste.net>
+ <CA+55aFzJtejiCjV0e43+9oR3QuJK2PiFiLQemytoLpyJWe6P9w@mail.gmail.com>
+ <CACBZZX6fP_JpL+K3XUnke=4m4gZBLu-Afyz5yJkrRnGXHuhR8A@mail.gmail.com>
+ <20170226215220.jckz6yzgben4zbyz@sigill.intra.peff.net>
+ <22708.8913.864049.452252@chiark.greenend.org.uk>
+ <20170228214724.w7w5f6n4u6ehanzd@genre.crustytoothpaste.net>
+ <22712.24775.714535.313432@chiark.greenend.org.uk>
+ <20170304224936.rqqtkdvfjgyezsht@genre.crustytoothpaste.net>
+ <22716.5770.95842.704242@chiark.greenend.org.uk>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="bdf3yccppd7k7fmf"
+Content-Disposition: inline
+In-Reply-To: <22716.5770.95842.704242@chiark.greenend.org.uk>
+X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
+ 4.9.0-2-amd64)
+User-Agent: NeoMutt/20170113 (1.7.2)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-git pull --rebase on a corrupted HEAD used to segfault; it has been
-corrected to error out with a message. A test has also been added to
-verify this fix.
 
-Signed-off-by: André Laszlo <andre@laszlo.nu>
----
+--bdf3yccppd7k7fmf
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Notes:
-    When add_head_to_pending fails to add a pending object, git pull
-    --rebase segfaults. This can happen if HEAD is referring to a corrupt
-    or missing object.
-    
-    I discovered this segfault on my machine after pulling a repo from
-    GitHub, but I have been unable to reproduce the sequence of events
-    that lead to the corrupted HEAD (I think it may have been caused by a
-    lost network connection in my case).
-    
-    The following commands use add_head_to_pending:
-    
-    format-patch  setup_revisions before add_head_to_pending
-    diff          checks rev.pending.nr
-    shortlog      checks rev.pending.nr
-    log           uses resolve_ref_unsafe
-    
-    All of the above return an error code of 128 and print "fatal: bad
-    object HEAD" instead of segfaulting, which I think is correct
-    behavior. The check and error message have been added to
-    has_uncommitted_changes, where they were missing, as well as to
-    diff-lib.c (without the error message).
+On Sun, Mar 05, 2017 at 01:45:46PM +0000, Ian Jackson wrote:
+> brian m. carlson writes ("Re: Transition plan for git to move to a new ha=
+sh function"):
+> > Instead, I was referring to areas like the notes code.  It has extensive
+> > use of the last byte as a type of lookup table key.  It's very dependent
+> > on having exactly one hash, since it will always want to use the last
+> > byte.
+>=20
+> You mean note_tree_search ?  (My tree here may be a bit out of date.)
+> This doesn't seem difficult to fix.  The nontrivial changes would be
+> mostly confined to SUBTREE_SHA1_PREFIXCMP and GET_NIBBLE.
+>=20
+> It's true that like most of git there's a lot of hardcoded `sha1'.
 
- diff-lib.c      |  2 +-
- t/t5520-pull.sh | 12 ++++++++++++
- wt-status.c     |  5 +++++
- 3 files changed, 18 insertions(+), 1 deletion(-)
+I'm talking about the entire notes.c file.  There are several different
+uses of "19" in there, and they compose at least two separate concepts.
+My object-id-part9 series tries to split those out into logical
+constants.
 
-diff --git a/diff-lib.c b/diff-lib.c
-index 52447466b..9d26b18c3 100644
---- a/diff-lib.c
-+++ b/diff-lib.c
-@@ -512,7 +512,7 @@ int run_diff_index(struct rev_info *revs, int cached)
- 	struct object_array_entry *ent;
- 
- 	ent = revs->pending.objects;
--	if (diff_cache(revs, ent->item->oid.hash, ent->name, cached))
-+	if (!ent || diff_cache(revs, ent->item->oid.hash, ent->name, cached))
- 		exit(128);
- 
- 	diff_set_mnemonic_prefix(&revs->diffopt, "c/", cached ? "i/" : "w/");
-diff --git a/t/t5520-pull.sh b/t/t5520-pull.sh
-index 17f4d0fe4..1edb6a97a 100755
---- a/t/t5520-pull.sh
-+++ b/t/t5520-pull.sh
-@@ -664,4 +664,16 @@ test_expect_success 'git pull --rebase against local branch' '
- 	test file = "$(cat file2)"
- '
- 
-+test_expect_success 'git pull --rebase with corrupt HEAD does not segfault' '
-+	mkdir corrupted &&
-+	(cd corrupted &&
-+	git init &&
-+	echo one >file && git add file &&
-+	git commit -m one &&
-+	REV=$(git rev-parse HEAD) &&
-+	rm -f .git/objects/${REV:0:2}/${REV:2} &&
-+	test_expect_code 128 git pull --rebase > /dev/null
-+	)
-+'
-+
- test_done
-diff --git a/wt-status.c b/wt-status.c
-index d47012048..3d60eaff5 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -2252,6 +2252,11 @@ int has_uncommitted_changes(int ignore_submodules)
- 		DIFF_OPT_SET(&rev_info.diffopt, IGNORE_SUBMODULES);
- 	DIFF_OPT_SET(&rev_info.diffopt, QUICK);
- 	add_head_to_pending(&rev_info);
-+
-+	/* The add_head_to_pending call might not have added anything. */
-+	if (!rev_info.pending.nr)
-+		die("bad object %s", "HEAD");
-+
- 	diff_setup_done(&rev_info.diffopt);
- 	result = run_diff_index(&rev_info, 1);
- 	return diff_result_code(&rev_info.diffopt, result);
--- 
-2.12.0
+This code is not going to handle repositories with different-length
+objects well, which I believe was your initial proposal.  I originally
+thought that mixed-hash repositories would be viable as well, but I no
+longer do.
 
+> Are you arguing in favour of "replace git with git2 by simply
+> s/20/64/g; s/sha1/blake/g" ?  This seems to me to be a poor idea.
+> Takeup of the new `git2' would be very slow because of the pain
+> involved.
+
+I'm arguing that the same binary ought to be able to handle both SHA-1
+and the new hash.  I'm also arguing that a given object have exactly one
+hash and that we not mix hashes in the same object.  A repository will
+be composed of one type of object, and if that's the new hash, a lookup
+table will be used to translate SHA-1.  We can synthesize the old
+objects, should we need them.
+
+That allows people to use the SHA-1 hashes (in my view, with a prefix,
+such as "sha1:") in repositories using the new hash.  It also allows
+verifying old tags and commits if need be.
+
+What I *would* like to see is an extension to the tag and commit objects
+which names the hash that was used to make them.  That makes it easy to
+determine which object the signature should be verified over, as it will
+verify over only one of them.
+
+> [1] I've heard suggestions here that instead we should expect users to
+> "git1 fast-export", which you would presumably feed into "git2
+> fast-import".  But what is `git1' here ?  Is it the current git
+> codebase frozen in time ?  I don't think it can be.  With this
+> conversion strategy, we will need to maintain git1 for decades.  It
+> will need portability fixes, security fixes, fixes for new hostile
+> compiler optimisations, and so on.  The difficulty of conversion means
+> there will be pressure to backport new features from `git2' to `git1'.
+> (Also this approach means that all signatures are definitively lost
+> during the conversion process.)
+
+I'm proposing we have a git hash-convert (the name doesn't matter that
+much) that converts in place.  It rebuilds the objects and builds a
+lookup table.  Since the contents of git objects are deterministic, this
+makes it possible for each individual user to make the transition in
+place.
+--=20
+brian m. carlson / brian with sandals: Houston, Texas, US
++1 832 623 2791 | https://www.crustytoothpaste.net/~bmc | My opinion only
+OpenPGP: https://keybase.io/bk2204
+
+--bdf3yccppd7k7fmf
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.1.18 (GNU/Linux)
+
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAli8oxcACgkQv1NdgR9S
+9ouRPg//Xve8sFcJzx0UZIgYLIYZSC+CjsnCM9wE6NmakrbZLpbqbZh8QfWQwSPf
+J9OaXBAmM63ETohfPyQr90bdzLBI/bwP9V55WMwXO5Qhl3X4AcrBLXMkKjkG4WJu
+Zcshq8BV+jS7HevEPdG9AbG6dK8e+uEt5rqNgl4TBSDuFfagkZ4eJ5Z7ml2B+nGt
+o0070JV2EJmGr39ngQsp/ICN+eflLm/04UIN/stcnX1PCtXTtBfwkVRJCbMuwnmy
+0rRSYAIJkBE+02Cxni6f1lI2LCc8zASyKxPwYGiokg211vaHQM5CItKRjxN+1Qi6
+4lRs7tYE9V2eeTqZnIkWhWK+yfzX6nPAhsJfz8VKDn/GtNVLU10tisoCCTY+tYLF
+6m3f2DadGl1KVww0s6mrvLlLjXM4hAwGw4Lw0Uus7S9c8FBS/5AQL0B/DswwlU6w
+ke85pjztyMsbzLaP2eNAd/iLa3Q8rMjl7TnGtzVhtkqwrrsVZEVOyhRrIg1yAqh/
+dlnj3Ai82Ho2rLbv7HXfNoS52uX1n/ghaehSJJdcRQBjmkcbvuf6+ROiTp/v5+z8
+QyIeAMWv7NYIHhrIMYsXnZMufVvsNK9C9AKwrqrtkTFqK7mD5utfdjK+SVWL2myn
+qY1HpMx13r0zN1HIFuD6QSelhbj/a+UIc/F/COZoU2wYQaqHQYQ=
+=DlHo
+-----END PGP SIGNATURE-----
+
+--bdf3yccppd7k7fmf--
