@@ -7,45 +7,45 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0CFE11FBEC
-	for <e@80x24.org>; Mon,  6 Mar 2017 09:48:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DCAAD1FBEC
+	for <e@80x24.org>; Mon,  6 Mar 2017 09:49:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752926AbdCFJsz (ORCPT <rfc822;e@80x24.org>);
-        Mon, 6 Mar 2017 04:48:55 -0500
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:34476 "EHLO
-        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752550AbdCFJsx (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Mar 2017 04:48:53 -0500
-Received: by mail-wm0-f68.google.com with SMTP id u132so4725326wmg.1
-        for <git@vger.kernel.org>; Mon, 06 Mar 2017 01:48:52 -0800 (PST)
+        id S1753165AbdCFJtR (ORCPT <rfc822;e@80x24.org>);
+        Mon, 6 Mar 2017 04:49:17 -0500
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:33443 "EHLO
+        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752991AbdCFJtP (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 Mar 2017 04:49:15 -0500
+Received: by mail-wm0-f65.google.com with SMTP id n11so12761033wma.0
+        for <git@vger.kernel.org>; Mon, 06 Mar 2017 01:49:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=9lHB01ap4RGkf69NA5HV6oBp3X3DuLakpLoQUs3LBEE=;
-        b=A+MqbxWiQmrskfbEjIsaRnOjkUYBshQUDvwsie3POBUoB01aBAtjIKxhgvB9fe3n3C
-         cbF479KGPInmsg/i2QkRnEl14fXxuxyc98AotfiP+OH7S1zmRlO9JV7F4eLycLX8QH3M
-         gXU2l+eWc/b/4vcWhA+EW1m/6BHqg0LHsb0YhbfIFLx+4X4dMWCmFRCozoP3YONYSNyh
-         VBplUsFy0ZOtl70rs56w0VxYEoAOLxYMfvA1NivX4a8lE+GoZnOu5zYwJkrcDNjkk+gw
-         1fLnUgbPLIQc/oSDOK8WEY593Ceepp9A9FxqASxFk+qmm3q7B8IiKGD+nQ7FfpXJObsD
-         wsYw==
+        bh=XGtI1jUqimZeSG6hakqb7NFAfI6RJV0tEMpjJRQaPkM=;
+        b=u/BC+9x5+L720Tafiyw0pJK0UYlsx1zDMV/aNEkQ67j+B5cwbQECCxW1OuBpHnW9Au
+         M1vUq8bI0YjvQIAVXUS0ERWfqtty19+LV0JmPl7MLiOV5fXrEVVcaH7l67To7503XHuV
+         MCZQRY1utrGxZD73xEqvqebyFG0eWpqUkJyuoexg+GKpc+Yout1ByEMTYYf4rm2Lo5wp
+         ol1twmmLR4aP6JaEsy7HqpzjzW0/5qUPFfExJZqxgs3hS2brmSicqgAQkMNOe4kiO7TI
+         aBVipDc0YDWUoeJc9iTcZYSc9jkETSgSbbVwsBlAOOydp1KbROKAQjlKNoXYCm54FRwv
+         KIAw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=9lHB01ap4RGkf69NA5HV6oBp3X3DuLakpLoQUs3LBEE=;
-        b=TXqq8NKzSGUklmOjR+27llm5ybbhij18Ub0CVLJg++sUe1NiuUqOqXwsq2SX7MN9NI
-         MBXOMOvfNGoJYdNTuVLSSK6QHzja0Oc4u7L8mZ3vsPBI78SkKQSlkGzaF9RjzZVsAtso
-         dQ+y7fwAdFi072UrXxgGoOCrELaa0eikkZGpqzfW3ZPEA3uAGGIP4e0gsXRYGQ0GTNR9
-         QwWikU/kJEhBbaeHc7hFA60ItkUe3yNYR8QaeTyFv0YR3HnMQvihhsmODAJlGGrb4y2c
-         jgPQ/aRUmZmRoxjsITKwv28rS5BFzw4DreUDGF3JzPaOERsJ78F8dLLJzf+jD3wZ9qxb
-         wpDQ==
-X-Gm-Message-State: AMke39mkSLH0DdVt3/yX/ZGHHS8elmyrRaA8c5HJ60YGGsnX6SjNKbc4Zncdv6LICfta3Q==
-X-Received: by 10.28.133.84 with SMTP id h81mr1732755wmd.23.1488793353031;
-        Mon, 06 Mar 2017 01:42:33 -0800 (PST)
+        bh=XGtI1jUqimZeSG6hakqb7NFAfI6RJV0tEMpjJRQaPkM=;
+        b=OhCc0W1kgHOkkq71FRJXlmcs3AKr6i3KFyIrI3bTT4w3RB35/pn9PUiZGIXMHwFrGk
+         rRPc8Py0wm1n/U2Q1ix+2M5Y44wEGOr6eNSrlPme5gfb2ekF0i8oFxv15UeGLVikd3SO
+         Rtrtrm5v3/Zu9cyoz0eX3GAcRB7WjhtZbQ83eMPaTijhguiugR+8htsOtOf7jiMnabh1
+         eQCXFUBd76uBdMJP4ejx7YzEK/cjnGhSflyJmsZ3+V66+tl3h5M1t8EK+Bqsng37E7Ux
+         e0YnlMQzqrvHSEhbtZV2buPCFyLYbKJdP+Zi//zZcaWLamKXyT2RG9KAtm8LpFWUFcsJ
+         /8EQ==
+X-Gm-Message-State: AMke39kKxCw2IvNvIrxJlWFZ7bjVyQV+JuJ0Yi505alVnzYamqVdmkCfXzBNU4NC88JK6g==
+X-Received: by 10.28.5.72 with SMTP id 69mr12161882wmf.6.1488793361122;
+        Mon, 06 Mar 2017 01:42:41 -0800 (PST)
 Received: from localhost.localdomain (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr. [128.78.31.246])
-        by smtp.gmail.com with ESMTPSA id 191sm14144086wmo.21.2017.03.06.01.42.31
+        by smtp.gmail.com with ESMTPSA id 191sm14144086wmo.21.2017.03.06.01.42.39
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 06 Mar 2017 01:42:32 -0800 (PST)
+        Mon, 06 Mar 2017 01:42:40 -0800 (PST)
 From:   Christian Couder <christian.couder@gmail.com>
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 To:     git@vger.kernel.org
@@ -55,9 +55,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         <avarab@gmail.com>, Ramsay Jones <ramsay@ramsayjones.plus.com>,
         Jeff King <peff@peff.net>,
         Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v5 11/22] read-cache: regenerate shared index if necessary
-Date:   Mon,  6 Mar 2017 10:41:52 +0100
-Message-Id: <20170306094203.28250-12-chriscool@tuxfamily.org>
+Subject: [PATCH v5 17/22] read-cache: unlink old sharedindex files
+Date:   Mon,  6 Mar 2017 10:41:58 +0100
+Message-Id: <20170306094203.28250-18-chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.12.0.206.g74921e51d6.dirty
 In-Reply-To: <20170306094203.28250-1-chriscool@tuxfamily.org>
 References: <20170306094203.28250-1-chriscool@tuxfamily.org>
@@ -66,90 +66,108 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When writing a new split-index and there is a big number of cache
-entries in the split-index compared to the shared index, it is a
-good idea to regenerate the shared index.
+Everytime split index is turned on, it creates a "sharedindex.XXXX"
+file in the git directory. This change makes sure that shared index
+files that haven't been used for a long time are removed when a new
+shared index file is created.
 
-By default when the ratio reaches 20%, we will push back all
-the entries from the split-index into a new shared index file
-instead of just creating a new split-index file.
+The new "splitIndex.sharedIndexExpire" config variable is created
+to tell the delay after which an unused shared index file can be
+deleted. It defaults to "2.weeks.ago".
 
-The threshold can be configured using the
-"splitIndex.maxPercentChange" config variable.
-
-We need to adjust the existing tests in t1700 by setting
-"splitIndex.maxPercentChange" to 100 at the beginning of t1700,
-as the existing tests are assuming that the shared index is
-regenerated only when `git update-index --split-index` is used.
+A previous commit made sure that each time a split index file is
+created the mtime of the shared index file it references is updated.
+This makes sure that recently used shared index file will not be
+deleted.
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- read-cache.c           | 32 ++++++++++++++++++++++++++++++++
- t/t1700-split-index.sh |  1 +
- 2 files changed, 33 insertions(+)
+ read-cache.c | 64 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 63 insertions(+), 1 deletion(-)
 
 diff --git a/read-cache.c b/read-cache.c
-index 99bc274b8d..aeb413a508 100644
+index 13375fa0ff..16c05f359b 100644
 --- a/read-cache.c
 +++ b/read-cache.c
-@@ -2212,6 +2212,36 @@ static int write_shared_index(struct index_state *istate,
+@@ -2199,6 +2199,65 @@ static int write_split_index(struct index_state *istate,
  	return ret;
  }
  
-+static const int default_max_percent_split_change = 20;
++static const char *shared_index_expire = "2.weeks.ago";
 +
-+static int too_many_not_shared_entries(struct index_state *istate)
++static unsigned long get_shared_index_expire_date(void)
 +{
-+	int i, not_shared = 0;
-+	int max_split = git_config_get_max_percent_split_change();
++	static unsigned long shared_index_expire_date;
++	static int shared_index_expire_date_prepared;
 +
-+	switch (max_split) {
-+	case -1:
-+		/* not or badly configured: use the default value */
-+		max_split = default_max_percent_split_change;
-+		break;
-+	case 0:
-+		return 1; /* 0% means always write a new shared index */
-+	case 100:
-+		return 0; /* 100% means never write a new shared index */
-+	default:
-+		break; /* just use the configured value */
++	if (!shared_index_expire_date_prepared) {
++		git_config_get_expiry("splitindex.sharedindexexpire",
++				      &shared_index_expire);
++		shared_index_expire_date = approxidate(shared_index_expire);
++		shared_index_expire_date_prepared = 1;
 +	}
 +
-+	/* Count not shared entries */
-+	for (i = 0; i < istate->cache_nr; i++) {
-+		struct cache_entry *ce = istate->cache[i];
-+		if (!ce->index)
-+			not_shared++;
-+	}
-+
-+	return (int64_t)istate->cache_nr * max_split < (int64_t)not_shared * 100;
++	return shared_index_expire_date;
 +}
 +
- int write_locked_index(struct index_state *istate, struct lock_file *lock,
- 		       unsigned flags)
- {
-@@ -2229,6 +2259,8 @@ int write_locked_index(struct index_state *istate, struct lock_file *lock,
- 		if ((v & 15) < 6)
- 			istate->cache_changed |= SPLIT_INDEX_ORDERED;
- 	}
-+	if (too_many_not_shared_entries(istate))
-+		istate->cache_changed |= SPLIT_INDEX_ORDERED;
- 	if (istate->cache_changed & SPLIT_INDEX_ORDERED) {
- 		int ret = write_shared_index(istate, lock, flags);
- 		if (ret)
-diff --git a/t/t1700-split-index.sh b/t/t1700-split-index.sh
-index aa2aff1778..9d7c01c3e1 100755
---- a/t/t1700-split-index.sh
-+++ b/t/t1700-split-index.sh
-@@ -8,6 +8,7 @@ test_description='split index mode tests'
- sane_unset GIT_TEST_SPLIT_INDEX
++static int should_delete_shared_index(const char *shared_index_path)
++{
++	struct stat st;
++	unsigned long expiration;
++
++	/* Check timestamp */
++	expiration = get_shared_index_expire_date();
++	if (!expiration)
++		return 0;
++	if (stat(shared_index_path, &st))
++		return error_errno(_("could not stat '%s"), shared_index_path);
++	if (st.st_mtime > expiration)
++		return 0;
++
++	return 1;
++}
++
++static int clean_shared_index_files(const char *current_hex)
++{
++	struct dirent *de;
++	DIR *dir = opendir(get_git_dir());
++
++	if (!dir)
++		return error_errno(_("unable to open git dir: %s"), get_git_dir());
++
++	while ((de = readdir(dir)) != NULL) {
++		const char *sha1_hex;
++		const char *shared_index_path;
++		if (!skip_prefix(de->d_name, "sharedindex.", &sha1_hex))
++			continue;
++		if (!strcmp(sha1_hex, current_hex))
++			continue;
++		shared_index_path = git_path("%s", de->d_name);
++		if (should_delete_shared_index(shared_index_path) > 0 &&
++		    unlink(shared_index_path))
++			warning_errno(_("unable to unlink: %s"), shared_index_path);
++	}
++	closedir(dir);
++
++	return 0;
++}
++
+ static struct tempfile temporary_sharedindex;
  
- test_expect_success 'enable split index' '
-+	git config splitIndex.maxPercentChange 100 &&
- 	git update-index --split-index &&
- 	test-dump-split-index .git/index >actual &&
- 	indexversion=$(test-index-version <.git/index) &&
+ static int write_shared_index(struct index_state *istate,
+@@ -2220,8 +2279,11 @@ static int write_shared_index(struct index_state *istate,
+ 	}
+ 	ret = rename_tempfile(&temporary_sharedindex,
+ 			      git_path("sharedindex.%s", sha1_to_hex(si->base->sha1)));
+-	if (!ret)
++	if (!ret) {
+ 		hashcpy(si->base_sha1, si->base->sha1);
++		clean_shared_index_files(sha1_to_hex(si->base->sha1));
++	}
++
+ 	return ret;
+ }
+ 
 -- 
 2.12.0.206.g74921e51d6.dirty
 
