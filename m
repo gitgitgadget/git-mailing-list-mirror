@@ -2,92 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 42AA420133
-	for <e@80x24.org>; Mon,  6 Mar 2017 23:50:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E821320133
+	for <e@80x24.org>; Tue,  7 Mar 2017 00:00:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753682AbdCFXtt (ORCPT <rfc822;e@80x24.org>);
-        Mon, 6 Mar 2017 18:49:49 -0500
-Received: from mail-pg0-f67.google.com ([74.125.83.67]:36569 "EHLO
-        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751974AbdCFXtp (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Mar 2017 18:49:45 -0500
-Received: by mail-pg0-f67.google.com with SMTP id 25so21093042pgy.3
-        for <git@vger.kernel.org>; Mon, 06 Mar 2017 15:49:32 -0800 (PST)
+        id S1753750AbdCGAAW (ORCPT <rfc822;e@80x24.org>);
+        Mon, 6 Mar 2017 19:00:22 -0500
+Received: from mail-lf0-f48.google.com ([209.85.215.48]:33762 "EHLO
+        mail-lf0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752712AbdCGAAT (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 Mar 2017 19:00:19 -0500
+Received: by mail-lf0-f48.google.com with SMTP id a6so79829000lfa.0
+        for <git@vger.kernel.org>; Mon, 06 Mar 2017 15:59:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=Ba37HayA8B10WH85PUB/V6aLG2V2wJfOx7gp7QLaDVg=;
-        b=DlBjUMXW0mVRiWRjajvB/iZ9yIUrPfkQkR9jE/AkfmY8k4G7qhu1s+buPTn1MHhZns
-         0U55ApVWJrCawUeG/17T/J17hUE/5zPSj35jDGH7hZj7Nr7NZ2BGy9+FCuNoW+mmnX9A
-         gfKDEIJm49RgCnVyVuGN5z4nL1DqX1rZDAiGqRcaAUfkhcaU12EOJPGm6VxWKUYQ96mC
-         zJT1TzivMRTx2NFSa5q/y2hRl4Xs2tx8fBPxUY5msysbSZoPdwduY0UY1pePsVHQGZ9C
-         Fa3avZimgUO74J64y+T5b6qI/geS8Mk6n0yzJYGQFRuUEwjQ2ho3OY3PQQ1eplVtZT2l
-         OfsA==
+        h=subject:to:references:cc:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding;
+        bh=62Z7agQe/ZgwfFXzWXrgZmLYjUp0CTOqYX7HWrvmVXQ=;
+        b=nUvfeg084HyNiI0Gcy8gHFIZGFJC+qHaX1yHNZwiB/bcEZyd0YPrWSTbCP7l17EXq3
+         zg2L/Vcf5jD+rqK8ZUHjybClNyMhfYjwOHhgNASvy+QgECdbo8S7XeSTx+uP69i9JMb5
+         Y9+4Rj33vvut3seWDkxGye9WxXDaH55beyG6CF9TxE7ZsQslCgT0aL0OqssxNRsfIgI7
+         F/fgEV8w3Bq7pF3c6d0e33Q97sBdHR7degspXWiJl1DNkCt06abCo6NW8KyCotVGNJxS
+         MJ0Rsj2+iUlmvOUYiq4/BlLArAj8pcgjzDxHiQwE1MouzIZM1ebcsSMrocibMqrcnz5w
+         qqqQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=Ba37HayA8B10WH85PUB/V6aLG2V2wJfOx7gp7QLaDVg=;
-        b=qZZp3sjtwZ7fmtIYkomTO8atnralmr7RUL2W0JTK9noUnBZ2/fQXzkNBFx+d12YHt4
-         lgCXvSwOyfPSDaidyCpM2L8O/Q+VwZA+Pv+cdYqErO+k2k2prbqn7ECk+Js2fLN0jHJg
-         O7yNqlvNpbk1E1YCu7aKhvaOjZb2/yV328UAjnPNv33LtVvkPQH1DMOnB2LIhdGCIHem
-         MgZWV/FYBWitHA6UA83Y1zA4ETnX2F17IJfpB8TDxsiC/AGV6EsU/EKgRZUKGRXigD1J
-         QDPK7lMLFWyzGSK4XIFO8HIztgIKqaT5vjZWHcC6IhnMeijyfH8jCYs+HEIo3OXywmB9
-         wqHw==
-X-Gm-Message-State: AMke39n6zuw9g7MnryqcUb8qnp8Yjc+zrPZUwHim9mp7FyBaYpNz1CqDdWnvcRmf7Pc+rw==
-X-Received: by 10.99.238.5 with SMTP id e5mr23481836pgi.49.1488843633616;
-        Mon, 06 Mar 2017 15:40:33 -0800 (PST)
-Received: from aiede.mtv.corp.google.com ([2620:0:1000:5b10:39da:9b0c:a72:8776])
-        by smtp.gmail.com with ESMTPSA id 15sm41834357pgh.21.2017.03.06.15.40.32
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 06 Mar 2017 15:40:32 -0800 (PST)
-Date:   Mon, 6 Mar 2017 15:40:30 -0800
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     David Lang <david@lang.hm>
-Cc:     git@vger.kernel.org, sbeller@google.com, bmwill@google.com,
-        jonathantanmy@google.com, peff@peff.net,
-        Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: RFC: Another proposed hash function transition plan
-Message-ID: <20170306234030.GB26789@aiede.mtv.corp.google.com>
-References: <20170304011251.GA26789@aiede.mtv.corp.google.com>
- <nycvar.QRO.7.75.62.1703050258200.6590@qynat-yncgbc>
+        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
+        bh=62Z7agQe/ZgwfFXzWXrgZmLYjUp0CTOqYX7HWrvmVXQ=;
+        b=oeJVNPTp9WWH+2BkeQnO/jb+tZb1/Vv+fHc78ixnoRnQVEwNzM0fQhoDu5881GQuiI
+         6QwM6dTlJRcLoUBUmiUV7bbMmag7Q8uQGR61JpWGGMIvu6EG48I33BNnoGsV/c3J8Xgg
+         MEyNdXDhdExuEA18g2iSVwpSmlC7xCWm8YCROg+ks4saVakWVtcoC9YuNsLpCOLEqOuI
+         a9sQUkI+B8uDH/nCOtk4feZ6ISNnQ48mC6WrNED6cGUdNQS4Th95Gy1sG7dUL69I/91z
+         19t5nAi0lYYteRs+DTNxSZvkqu51ikAMEy1BIFyD71fJpFK1dqFLd3a2MFmwUZBoAKmV
+         7TOw==
+X-Gm-Message-State: AMke39msJ+e1vyIiGX2x8E7NBJETCAib+E6+Y8Aw9OU4r2QWYf2c00tdyP/KCuZi/TWf7Q==
+X-Received: by 10.46.1.209 with SMTP id f78mr4961110lji.121.1488844770704;
+        Mon, 06 Mar 2017 15:59:30 -0800 (PST)
+Received: from [192.168.1.26] (afb78.neoplus.adsl.tpnet.pl. [83.25.131.78])
+        by smtp.googlemail.com with ESMTPSA id h140sm4368405lfg.39.2017.03.06.15.59.28
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 06 Mar 2017 15:59:29 -0800 (PST)
+Subject: Re: [Request for Documentation] Differentiate signed
+ (commits/tags/pushes)
+To:     Junio C Hamano <gitster@pobox.com>,
+        Stefan Beller <sbeller@google.com>
+References: <CAGZ79kYxD9B_+3vBgO+Z-wh2GMg_REazA-xpTSAqe3_64VMV3w@mail.gmail.com>
+ <xmqqshmqm4ur.fsf@junio-linux.mtv.corp.google.com>
+Cc:     tom@oxix.org, Matthieu Moy <Matthieu.Moy@imag.fr>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+From:   =?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
+Message-ID: <47ad8b6d-0a65-2f8c-dcc5-49a8a8d5ab2a@gmail.com>
+Date:   Tue, 7 Mar 2017 00:59:10 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.7.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <nycvar.QRO.7.75.62.1703050258200.6590@qynat-yncgbc>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <xmqqshmqm4ur.fsf@junio-linux.mtv.corp.google.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-David Lang wrote:
+W dniu 06.03.2017 o 23:13, Junio C Hamano pisze:
+> Stefan Beller <sbeller@google.com> writes:
+> 
+>> What is the difference between signed commits and tags?
+>> (Not from a technical perspective, but for the end user)
+[...]
+>> Off list I was told gpg-signed commits are a "checkbox feature",
+>> i.e. no real world workflow would actually use it. (That's a bold
+>> statement, someone has to use it as there was enough interest
+>> to implement it, no?)
+> 
+> I'd agree with that "checkbox" description, except that you need to
+> remember that a project can enforce _any_ workflow to its developer,
+> even if it does not make much sense, and at that point, the workflow
+> would become a real-world workflow.  The word "real world workflow"
+> does not make any assurance if that workflow is sensible.
+> 
+> Historically, "tag -s" came a lot earlier.  When a project for
+> whatever reason wants signature for each and every commit so that
+> they somehow can feel good, without "commit -s", it would have made
+> us unnecessary work to scale tag namespace only because there will
+> be tons of pointless tags.  "commit -s" was a remedy for that.
 
->> Translation table
->> ~~~~~~~~~~~~~~~~~
->> A fast bidirectional mapping between sha1-names and sha256-names of
->> all local objects in the repository is kept on disk. The exact format
->> of that mapping is to be determined.
->>
->> All operations that make new objects (e.g., "git commit") add the new
->> objects to the translation table.
->
-> This seems like a rather nontrival thing to design. It will need to
-> hold millions of mappings, and be quickly searchable from either
-> direction (sha1->new and new->sha1) while still be fairly fast to
-> insert new records into.
+Also from what I remember signed commits came before mergetags, that
+is the result of merging a signed tag (storing the signature of
+one of parents of the merge commit to not pollute tag namespace).
 
-I am currently thinking of using LevelDB, since it has the advantages of
-being simple, already existing, and having already been ported to Java
-(allowing JGit can read and write the same format).
+And this workflow, from what I know, is quite useful.
 
-If that doesn't work, we'd try some other key-value store like Samba's
-tdb or Kyoto Cabinet.
+-- 
+Jakub Narębski
+ 
 
-Jonathan
