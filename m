@@ -7,45 +7,45 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0C51B1FBEC
-	for <e@80x24.org>; Mon,  6 Mar 2017 09:51:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 75DB21FBEC
+	for <e@80x24.org>; Mon,  6 Mar 2017 09:51:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753779AbdCFJvh (ORCPT <rfc822;e@80x24.org>);
-        Mon, 6 Mar 2017 04:51:37 -0500
-Received: from mail-wr0-f193.google.com ([209.85.128.193]:36061 "EHLO
-        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752986AbdCFJvO (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1753918AbdCFJvk (ORCPT <rfc822;e@80x24.org>);
+        Mon, 6 Mar 2017 04:51:40 -0500
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:33087 "EHLO
+        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752983AbdCFJvO (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 6 Mar 2017 04:51:14 -0500
-Received: by mail-wr0-f193.google.com with SMTP id l37so20946102wrc.3
-        for <git@vger.kernel.org>; Mon, 06 Mar 2017 01:50:46 -0800 (PST)
+Received: by mail-wm0-f66.google.com with SMTP id n11so12767402wma.0
+        for <git@vger.kernel.org>; Mon, 06 Mar 2017 01:50:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=l3YjOsO0guzaestW33zEwKXUgB52tYrcJYUhMiNK4lk=;
-        b=XWPyS+REHLSWa+AblHlPCqW1kDo1n1G8RzY5ptzA31vLVwKYv+PSywx3mRyJ15Rfdf
-         5s5CAwBKJI3UQrpidsdrf2uSvxcZoj83njEIYZjz4f6H/aEIcKriNC3qSrndbVBzrntQ
-         hLvV0cQyPcS1O/dCn62eiNh7RJH5K4hND0/hcZFCcmQFumiB7SEeDYbjTZ2tneeSdTid
-         zSZ2TLz8gwTzBfm2UTLhzjdzwIRxMrWkjQktJCE3VU/OdYMmp+NIr6cxPTc+n/gPlLns
-         hwEE4soT/bQuyp9i4yrNKXKsjoP8p2f0fZ50/wBDq5aqZD6LVpuaMZrsgB8yUIfjkCLi
-         NH9g==
+        bh=gpVuXkuePUhWAFA1GvyZGppPAJDrZVqgna6iHxdIkwU=;
+        b=I5IyhbfXhWlN25YmOykDg9hUwXbU2itMLPWOizXjB/HYBRPEXksw9h3FcrFKIFKB5m
+         Cg8DwC8vM24InGlwknj5i5An5k5DErzXLyT9h6Ow63XmMQynlj9P9OBGPYsqTu0bm0+f
+         aBmBMLhRLZL//n/bd2/UFLX2ACqS/XAO0gwi7qhr4E85A7yYW0MJdepKlgJTkOZO5Sx4
+         iq/pT3QXrydCN5q9hnFp7Cj8Y02DsZbMVOg8ErE7Cf0Fq81+JJo2BfUbbe6/yLt8q6Ts
+         Mtad72d6uCScTfGRc9RGtAg6hgEPD/W+xDwlEulqRoY78uqj913PIvbYXq4tvDbgQK/4
+         bwJw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=l3YjOsO0guzaestW33zEwKXUgB52tYrcJYUhMiNK4lk=;
-        b=K3uuel3G4ZCuQLa49meXH0RTaqgqME6NSyYJN74ZnVQ6dIIs1tgs0iFkuLQKYZE4Fm
-         E7orRa6OZ06anIJ6pfCuD6hdYLinBgSsHB2urJwl1SCH0cAaS9Xp5tpnUkh+0Db4Hmc3
-         aR9th84Sq9sleQ+0953exIniIKaRiEDPgrd3R+9+D/2Vq1fDFWHU06M1ZeFN0xhKbl6p
-         B6ztYmFUAHBbbuEPDuLn8ePmykrk/MPwMUjKIaWtxg1eUy5rSZnUfXENrTV+0jijZQ0j
-         DZ7wseCSPPcQJGnajW09fla6rmGEtrw9Jb7no/uZHfXCxcZ/AF6OgJcztJzpnVx7pbee
-         tWcg==
-X-Gm-Message-State: AMke39mldKFK1LTM58k8VnJK9Fy2+FpiFuAeTYpu+b43NcOZzvMKD09O4UaGrZRHMdWABQ==
-X-Received: by 10.223.154.50 with SMTP id z47mr13283392wrb.76.1488793351585;
-        Mon, 06 Mar 2017 01:42:31 -0800 (PST)
+        bh=gpVuXkuePUhWAFA1GvyZGppPAJDrZVqgna6iHxdIkwU=;
+        b=eiATYYAxscMiLCjo15f+ulv5/rd0Dyh53I73IPsrBQGLcvMB8/XbDdkFm3aaoA7hqU
+         M3QtuiuhKh6i/4/BklsuWqhusUHwuIA1lmkYvu1K0Qjy1gCMI8YkYHO0Mjxg9AalHBVm
+         iNeDugZtOdTq1OuWjM1J7xtm02U4CggGQX0By6NVhEORuJEzyK+AYsYSNaDOFG/7ZGsR
+         Wxnm7nnFMo+v/eRv4y3SMKaCSbdAMttsiYKkRzUTM8Ff2nHUZxL7ILwQiU/lKinSjN1k
+         JcXGn6KzyqhcMwFKPjo+eLWaFjZ/OBKJgSP0Sj84Dq3m2KN2LyQXADwE5RMvJHWgYaJP
+         DwAQ==
+X-Gm-Message-State: AMke39mblJ9CxrAr/Nnzew75oH59xW3u0chVx4U81dq8Y8ELmMv6MUcs+M1EumfUP3M6xA==
+X-Received: by 10.28.226.4 with SMTP id z4mr12698854wmg.135.1488793345346;
+        Mon, 06 Mar 2017 01:42:25 -0800 (PST)
 Received: from localhost.localdomain (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr. [128.78.31.246])
-        by smtp.gmail.com with ESMTPSA id 191sm14144086wmo.21.2017.03.06.01.42.30
+        by smtp.gmail.com with ESMTPSA id 191sm14144086wmo.21.2017.03.06.01.42.23
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 06 Mar 2017 01:42:30 -0800 (PST)
+        Mon, 06 Mar 2017 01:42:24 -0800 (PST)
 From:   Christian Couder <christian.couder@gmail.com>
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 To:     git@vger.kernel.org
@@ -55,9 +55,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         <avarab@gmail.com>, Ramsay Jones <ramsay@ramsayjones.plus.com>,
         Jeff King <peff@peff.net>,
         Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v5 10/22] config: add git_config_get_max_percent_split_change()
-Date:   Mon,  6 Mar 2017 10:41:51 +0100
-Message-Id: <20170306094203.28250-11-chriscool@tuxfamily.org>
+Subject: [PATCH v5 06/22] update-index: warn in case of split-index incoherency
+Date:   Mon,  6 Mar 2017 10:41:47 +0100
+Message-Id: <20170306094203.28250-7-chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.12.0.206.g74921e51d6.dirty
 In-Reply-To: <20170306094203.28250-1-chriscool@tuxfamily.org>
 References: <20170306094203.28250-1-chriscool@tuxfamily.org>
@@ -66,53 +66,44 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This new function will be used in a following commit to get the
-value of the "splitIndex.maxPercentChange" config variable.
+When users are using `git update-index --(no-)split-index`, they
+may expect the split-index feature to be used or not according to
+the option they just used, but this might not be the case if the
+new "core.splitIndex" config variable has been set. In this case
+let's warn about what will happen and why.
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- cache.h  |  1 +
- config.c | 15 +++++++++++++++
- 2 files changed, 16 insertions(+)
+ builtin/update-index.c | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
-diff --git a/cache.h b/cache.h
-index 03de80daae..0bb9adcd31 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1927,6 +1927,7 @@ extern int git_config_get_maybe_bool(const char *key, int *dest);
- extern int git_config_get_pathname(const char *key, const char **dest);
- extern int git_config_get_untracked_cache(void);
- extern int git_config_get_split_index(void);
-+extern int git_config_get_max_percent_split_change(void);
+diff --git a/builtin/update-index.c b/builtin/update-index.c
+index 24fdadfa4b..d74d72cc7f 100644
+--- a/builtin/update-index.c
++++ b/builtin/update-index.c
+@@ -1099,12 +1099,21 @@ int cmd_update_index(int argc, const char **argv, const char *prefix)
+ 	}
  
- /*
-  * This is a hack for test programs like test-dump-untracked-cache to
-diff --git a/config.c b/config.c
-index 2a97696be7..35b6f02960 100644
---- a/config.c
-+++ b/config.c
-@@ -1746,6 +1746,21 @@ int git_config_get_split_index(void)
- 	return -1; /* default value */
- }
- 
-+int git_config_get_max_percent_split_change(void)
-+{
-+	int val = -1;
-+
-+	if (!git_config_get_int("splitindex.maxpercentchange", &val)) {
-+		if (0 <= val && val <= 100)
-+			return val;
-+
-+		return error(_("splitIndex.maxPercentChange value '%d' "
-+			       "should be between 0 and 100"), val);
+ 	if (split_index > 0) {
++		if (git_config_get_split_index() == 0)
++			warning(_("core.splitIndex is set to false; "
++				  "remove or change it, if you really want to "
++				  "enable split index"));
+ 		if (the_index.split_index)
+ 			the_index.cache_changed |= SPLIT_INDEX_ORDERED;
+ 		else
+ 			add_split_index(&the_index);
+-	} else if (!split_index)
++	} else if (!split_index) {
++		if (git_config_get_split_index() == 1)
++			warning(_("core.splitIndex is set to true; "
++				  "remove or change it, if you really want to "
++				  "disable split index"));
+ 		remove_split_index(&the_index);
 +	}
-+
-+	return -1; /* default value */
-+}
-+
- NORETURN
- void git_die_config_linenr(const char *key, const char *filename, int linenr)
- {
+ 
+ 	switch (untracked_cache) {
+ 	case UC_UNSPECIFIED:
 -- 
 2.12.0.206.g74921e51d6.dirty
 
