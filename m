@@ -2,90 +2,144 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9DCE720133
-	for <e@80x24.org>; Mon,  6 Mar 2017 21:53:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6A11220133
+	for <e@80x24.org>; Mon,  6 Mar 2017 22:00:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932473AbdCFVxp (ORCPT <rfc822;e@80x24.org>);
-        Mon, 6 Mar 2017 16:53:45 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:55730 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S932466AbdCFVxn (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Mar 2017 16:53:43 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id ADEA7708F3;
-        Mon,  6 Mar 2017 16:53:41 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=q1tjvFS1CjrGOm5Y275pKKzTSb4=; b=J+umJt
-        VjlV9zm3pC6I2tzghEwPFIPj6NNedcr3ytFW2bpA/CuP2UZ4yAgZjiNpA+6En6aL
-        +Enfg0CXsTBQ6WsFkzlMhK9Iy0lhXvVeCn4hSNiYlCdrWsFNzCi4WYQtrp/JPib5
-        o6O9UlI7O3l3Cbx0/Ik+EHqvr2mrRa94y07UE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=Q+MIpnED+0Q+UJUU4t0YOMxAUgchlMaM
-        eBj0UVtQGLoCjmn0XWttCQjMsH8PRrZkJ6v9Zu4uYA5YgZGloN9BF5pU4iTHQG2O
-        rmm0aeWeZ5p6eDTWUmjGMVZ10XoQoloH0nCL5gR+vFZe42IHFQeu/Pxq1qSOjd8l
-        f4M7Lpj9Ivg=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id A69AC708F2;
-        Mon,  6 Mar 2017 16:53:41 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.84])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 13619708F1;
-        Mon,  6 Mar 2017 16:53:41 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Linus Torvalds <torvalds@linux-foundation.org>
-Cc:     Jonathan Tan <jonathantanmy@google.com>, Jeff King <peff@peff.net>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Stefan Beller <sbeller@google.com>, bmwill@google.com
-Subject: Re: RFC: Another proposed hash function transition plan
-References: <20170304011251.GA26789@aiede.mtv.corp.google.com>
-        <20170306084353.nrns455dvkdsfgo5@sigill.intra.peff.net>
-        <cdd7779a-acdb-99fd-a685-89b36df65393@google.com>
-        <CA+55aFxj7Vtwac64RfAz_u=U4tob4Xg+2pDBDFNpJdmgaTCmxA@mail.gmail.com>
-Date:   Mon, 06 Mar 2017 13:53:39 -0800
-In-Reply-To: <CA+55aFxj7Vtwac64RfAz_u=U4tob4Xg+2pDBDFNpJdmgaTCmxA@mail.gmail.com>
-        (Linus Torvalds's message of "Mon, 6 Mar 2017 11:22:17 -0800")
-Message-ID: <xmqqwpc2m5r0.fsf@junio-linux.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 5C6BE42E-02B7-11E7-9C06-97B1B46B9B0B-77302942!pb-smtp1.pobox.com
+        id S1753930AbdCFV67 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 6 Mar 2017 16:58:59 -0500
+Received: from mail-pg0-f48.google.com ([74.125.83.48]:33012 "EHLO
+        mail-pg0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753658AbdCFV64 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 Mar 2017 16:58:56 -0500
+Received: by mail-pg0-f48.google.com with SMTP id 25so70873439pgy.0
+        for <git@vger.kernel.org>; Mon, 06 Mar 2017 13:58:55 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=+elW3utxHEE0hR3cQUEQqGvEgDb9w4+GTIiQ/iM6PYs=;
+        b=QE64LoyPqpoTTJ/qPGTACzkC1lIB9UU6DRmnydRifxXRUtE0G4rZOO7PIN9oq5TDng
+         S1EgJoFac5toQtfqukq1Dw4HJOhwSVymyZB1LY4Cu16w+8YqK0Zldc2BnB7M91R4j9HA
+         OwbvTaiw4vk++SHInYjr5Fowv8r+h4wuJhVd27uzx0moh/YzOVQSKjb7IBrEXUMmoMf0
+         egIw4uxeKWnjru2oborgHVSWhMTwTEHwQhzRBLiIzQhyCESpeoRf/ByfT70kSngKde98
+         V1i40gxVFM9ciACk0JpsRWIVrkNXuv2qtIEA13MDi87nGkpOQ01dUJ/hn6JWmULBO8lT
+         PVPw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=+elW3utxHEE0hR3cQUEQqGvEgDb9w4+GTIiQ/iM6PYs=;
+        b=TFFVbAa81qiLyzNOw+qSxQPyjshzxZmI+HXvv1VFBLbmNL1zyL4FbN4+UujX7DEcr+
+         a1Pkvqw1MVeYPRDsdbIbx54AbuulsvTCJcRWRS1Emume97iUNlCvfIepCdP2JnTe9p39
+         bVo6DGi0HEZNQjU+CXOfsUZ/iwk/rIbMoBoE8rxQaqJjQKh1sMSGW8BcK4wQEpL1OFrU
+         ZbO852mKCJPED8Y2r8Y9rN05JHA0G9MTwZCsAwo29B0MSllq2yAZapbjiYbGOu/EdGxc
+         XXMoaK6ikRuIebjkY9xjkoQ9gpEteUrSqv+qWRl2PnVbD2QSlKlin0yQdKFyGen5Zxhp
+         kkzQ==
+X-Gm-Message-State: AMke39lI434kmmLwfZ6gGVZjprghfj3DXQN14Ys5e8ngsZwbWPyPPi+wzRbbJf6qfbJm3LkI
+X-Received: by 10.84.176.100 with SMTP id u91mr29792959plb.112.1488833973658;
+        Mon, 06 Mar 2017 12:59:33 -0800 (PST)
+Received: from localhost ([2620:0:1000:5b10:44ae:633a:9d1d:6402])
+        by smtp.gmail.com with ESMTPSA id e13sm41545306pgf.48.2017.03.06.12.59.32
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Mon, 06 Mar 2017 12:59:32 -0800 (PST)
+From:   Stefan Beller <sbeller@google.com>
+To:     sbeller@google.com, gitster@pobox.com
+Cc:     git@vger.kernel.org, bmwill@google.com, novalis@novalis.org,
+        sandals@crustytoothpaste.net, hvoigt@hvoigt.net,
+        jrnieder@gmail.com, ramsay@ramsayjones.plus.com
+Subject: [PATCH 08/18] update submodules: add submodule config parsing
+Date:   Mon,  6 Mar 2017 12:59:09 -0800
+Message-Id: <20170306205919.9713-9-sbeller@google.com>
+X-Mailer: git-send-email 2.12.0.rc1.52.ge239d7e709.dirty
+In-Reply-To: <20170306205919.9713-1-sbeller@google.com>
+References: <20170302004759.27852-1-sbeller@google.com>
+ <20170306205919.9713-1-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Linus Torvalds <torvalds@linux-foundation.org> writes:
+Similar to b33a15b08 (push: add recurseSubmodules config option,
+2015-11-17) and 027771fcb1 (submodule: allow erroneous values for the
+fetchRecurseSubmodules option, 2015-08-17), we add submodule-config code
+that is later used to parse whether we are interested in updating
+submodules.
 
-> So *if* the new object format uses a git header line like
->
->     "blob <size> <sha1>\0"
->
-> then it would inherently contain that mapping from 256-bit hash to the
-> SHA1, but it would actually also protect against attacks on the new
-> hash.
+We need the `die_on_error` parameter to be able to call this parsing
+function for the config file as well, which if incorrect lets Git die.
 
-This is easy for blobs as you only need to hash twice.  I am not
-sure if you can do the same for trees, though.  For that <sha1> to
-be useful, the hash needs to be over the tree contents whose
-references are expressed in <sha1>, which in turn would mean...
+As we're just touching the header file, also mark all functions extern.
 
-... ah, you would read these <sha1> off of the object header in the
-new world and you do not need to expand the whole thing.  OK, I see
-how it could work.
+Signed-off-by: Stefan Beller <sbeller@google.com>
+---
+ submodule-config.c | 20 ++++++++++++++++++++
+ submodule-config.h | 17 +++++++++--------
+ 2 files changed, 29 insertions(+), 8 deletions(-)
 
-> In fact, in particular for objects with internal format that
-> differs between the two hashing models (ie trees and commits which to
-> some degree are higher-value targets), it would make attacks really
-> quite complicated, I suspect.
->
-> And you wouldn't need those "hash" or "nohash" things at all. The old
-> SHA1 would simply always be there, and cheap to look up (ie you
-> wouldn't have to unpack the whole object).
+diff --git a/submodule-config.c b/submodule-config.c
+index 93453909cf..3e8e380d98 100644
+--- a/submodule-config.c
++++ b/submodule-config.c
+@@ -234,6 +234,26 @@ int parse_fetch_recurse_submodules_arg(const char *opt, const char *arg)
+ 	return parse_fetch_recurse(opt, arg, 1);
+ }
+ 
++static int parse_update_recurse(const char *opt, const char *arg,
++				int die_on_error)
++{
++	switch (git_config_maybe_bool(opt, arg)) {
++	case 1:
++		return RECURSE_SUBMODULES_ON;
++	case 0:
++		return RECURSE_SUBMODULES_OFF;
++	default:
++		if (die_on_error)
++			die("bad %s argument: %s", opt, arg);
++		return RECURSE_SUBMODULES_ERROR;
++	}
++}
++
++int parse_update_recurse_submodules_arg(const char *opt, const char *arg)
++{
++	return parse_update_recurse(opt, arg, 1);
++}
++
+ static int parse_push_recurse(const char *opt, const char *arg,
+ 			       int die_on_error)
+ {
+diff --git a/submodule-config.h b/submodule-config.h
+index 70f19363fd..d434ecdb45 100644
+--- a/submodule-config.h
++++ b/submodule-config.h
+@@ -22,16 +22,17 @@ struct submodule {
+ 	int recommend_shallow;
+ };
+ 
+-int parse_fetch_recurse_submodules_arg(const char *opt, const char *arg);
+-int parse_push_recurse_submodules_arg(const char *opt, const char *arg);
+-int parse_submodule_config_option(const char *var, const char *value);
+-const struct submodule *submodule_from_name(const unsigned char *commit_or_tree,
+-		const char *name);
+-const struct submodule *submodule_from_path(const unsigned char *commit_or_tree,
+-		const char *path);
++extern int parse_fetch_recurse_submodules_arg(const char *opt, const char *arg);
++extern int parse_update_recurse_submodules_arg(const char *opt, const char *arg);
++extern int parse_push_recurse_submodules_arg(const char *opt, const char *arg);
++extern int parse_submodule_config_option(const char *var, const char *value);
++extern const struct submodule *submodule_from_name(
++		const unsigned char *commit_or_tree, const char *name);
++extern const struct submodule *submodule_from_path(
++		const unsigned char *commit_or_tree, const char *path);
+ extern int gitmodule_sha1_from_commit(const unsigned char *commit_sha1,
+ 				      unsigned char *gitmodules_sha1,
+ 				      struct strbuf *rev);
+-void submodule_free(void);
++extern void submodule_free(void);
+ 
+ #endif /* SUBMODULE_CONFIG_H */
+-- 
+2.12.0.rc1.52.ge239d7e709.dirty
+
