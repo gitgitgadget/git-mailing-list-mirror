@@ -2,90 +2,114 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5D6B820133
-	for <e@80x24.org>; Tue,  7 Mar 2017 01:14:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8D33820133
+	for <e@80x24.org>; Tue,  7 Mar 2017 03:19:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754631AbdCGBOb (ORCPT <rfc822;e@80x24.org>);
-        Mon, 6 Mar 2017 20:14:31 -0500
-Received: from mail-qk0-f172.google.com ([209.85.220.172]:33082 "EHLO
-        mail-qk0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754246AbdCGBO0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Mar 2017 20:14:26 -0500
-Received: by mail-qk0-f172.google.com with SMTP id y76so53253275qkb.0
-        for <git@vger.kernel.org>; Mon, 06 Mar 2017 17:13:53 -0800 (PST)
+        id S1754339AbdCGDTI (ORCPT <rfc822;e@80x24.org>);
+        Mon, 6 Mar 2017 22:19:08 -0500
+Received: from mail-pg0-f46.google.com ([74.125.83.46]:32909 "EHLO
+        mail-pg0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754299AbdCGDQD (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 Mar 2017 22:16:03 -0500
+Received: by mail-pg0-f46.google.com with SMTP id 25so73524092pgy.0
+        for <git@vger.kernel.org>; Mon, 06 Mar 2017 19:15:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=OA0rhhSQPp65oVuPYQ8HLuXqywbA98m2+MCAPsKvQII=;
-        b=UOloCU9O0bWR0LwHZa9CnWMeHl71n3h6V5wLjxbriqSzh9nAw7ZgSCNbyVhogfYKKi
-         ILCuxH/yxifVsWVii4N3zATWwpL4ozF0pmL5KlWWFo5MOub96KYiSHCn7G2A0dY4Sj5p
-         QFbRyio8rAjVtPD510sIH249kH8lTcHWKau/E4FZgX4GLwN22KWtauGism94C2OSB48H
-         mWVa9Rg1smsW9ckT7nDOqvSPIsILb4lEZy6q5DFrmu3CCk2OyVFp94j6ZvvpTbbmkqfW
-         JSiQOwXFxCNet+vRbxtn+UDF0LI71tE5/d3baCAlLghtANECV+8tVzEt2af1P7jtzFnV
-         ePUQ==
+        d=google.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=vmtEzzwUJhB8IaIzHUBIaneBclOWZcruGGKqiRrLPIc=;
+        b=JmxCszpyFWJzuDpgUDcH2UjdgiWQQScoDRbZnIL8/1Pv+LBgjzFWW7k0/RTv4eddjj
+         VettHY7p6I0bzceMx76c3rcg/B2YollJ2H/G5WAIAXUqzxHMT3E3x2RJ/Ns2HxrBvvIS
+         B6yqdcQKAiFQvOUV/g5Ylu0c6oaJwgsA9YCXXAQUMcUbLKtWtCoSNX1w4Atu9owW4J/n
+         PaoVfSEIq1jzSkzcqaC8kZessBzj2YD78B3m5t3CBP7zEuIGMMRAcakvbwBdy2yT1Cck
+         ddka5iVosBmjqf5JYff4ofUCbvPSHUSv+ehm5vz6QjaqfLmwlr+bhhvZqbt4j/exOMpZ
+         rnRg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=OA0rhhSQPp65oVuPYQ8HLuXqywbA98m2+MCAPsKvQII=;
-        b=gOZSx2gdeaO4VDDm4Pnd9qG2ghWSYo3tXOG30zq97WAP6ZNOCv3MpzRFmdUoBTI9vY
-         8un17pglymNkl8KS27g1h7BPlkk3Fcd2r/p1X54rREWErI1NqO5PpqySPt1j7KfD0Mvi
-         DXXQlNapnhXnRfnaTKu1VucmjrjEO+22fmdN+2I9P1Ncn2n9XJ3OhqjHPYX/mXrksE7k
-         P3u1gnSlPUc2U3YfLxTkV9yVOIXs0EFIrpKIZ6K6n5KhxQR/bAppFZ4xw7UrKkdHgac2
-         QI23NDkgIV7BPJ0TAVCgZrfe9/x1my3Beb/uDj6ERvA3nGKaOSg+3jvMzLvSbm36J0w0
-         SUEg==
-X-Gm-Message-State: AMke39kbpuKsJ03cl98kC4r1gZSyfC9G4LPB6hJaZzQapt57lqsziFhPx2Ueo4uwyOCgkGB/3T6XeKmR2E/vTw==
-X-Received: by 10.55.54.143 with SMTP id d137mr17722977qka.258.1488842996837;
- Mon, 06 Mar 2017 15:29:56 -0800 (PST)
-MIME-Version: 1.0
-Received: by 10.237.52.6 with HTTP; Mon, 6 Mar 2017 15:29:56 -0800 (PST)
-In-Reply-To: <20170131194138.fbcbdnkfjgizxnoa@sigill.intra.peff.net>
-References: <20170131022830.8538-1-eantoranz@gmail.com> <20170131194138.fbcbdnkfjgizxnoa@sigill.intra.peff.net>
-From:   Edmundo Carmona Antoranz <eantoranz@gmail.com>
-Date:   Mon, 6 Mar 2017 17:29:56 -0600
-Message-ID: <CAOc6etZjvpiQ65JHWzVeEqUzO0uJv8UjuWw7mbvCL5Om9weZLg@mail.gmail.com>
-Subject: Re: [PATCH] blame: draft of line format
-To:     Jeff King <peff@peff.net>
-Cc:     Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=vmtEzzwUJhB8IaIzHUBIaneBclOWZcruGGKqiRrLPIc=;
+        b=GrfkCkX78/Tm2G/uyK8NilPJqjLDG/KBemTt6Ggb0eYPaNOBdTVTrB/Io3MD1hU3Xw
+         c3ZQlnSIJEh39rY8zOo36ugM8TKSOnr2ye5bz2cxtL/3ycdZ8qvVJeTEMn8MAakUaKcu
+         xs2Ege3a1DqMTDlBCXzPr8CP6nlC/Nwqm0jhMIYAzRPZ7Vt1ihyiTiPjwhEHIeJyHnV8
+         krozVpoINc/L870eXX6YxBKEAQQCrmQ498ORGEvUXePirP6ZBjWxy0jwyT/On02wX5v6
+         UtGHqQVMpakrUlOFnNF4OlwQUwZE1sA1DvAQpTOUN/ZL52b2vfl+R2lOA3AbiqEDiQEp
+         qQmA==
+X-Gm-Message-State: AMke39nRM/jqyF933BbB/vnqd8wv4FMwQqWlb1Qj7cBp0eO8lAcKzvr0ma5Y2cyZEDoY4MVH
+X-Received: by 10.99.157.143 with SMTP id i137mr22901396pgd.132.1488833974890;
+        Mon, 06 Mar 2017 12:59:34 -0800 (PST)
+Received: from localhost ([2620:0:1000:5b10:44ae:633a:9d1d:6402])
+        by smtp.gmail.com with ESMTPSA id d1sm41282957pfk.20.2017.03.06.12.59.34
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Mon, 06 Mar 2017 12:59:34 -0800 (PST)
+From:   Stefan Beller <sbeller@google.com>
+To:     sbeller@google.com, gitster@pobox.com
+Cc:     git@vger.kernel.org, bmwill@google.com, novalis@novalis.org,
+        sandals@crustytoothpaste.net, hvoigt@hvoigt.net,
+        jrnieder@gmail.com, ramsay@ramsayjones.plus.com
+Subject: [PATCH 09/18] update submodules: add a config option to determine if submodules are updated
+Date:   Mon,  6 Mar 2017 12:59:10 -0800
+Message-Id: <20170306205919.9713-10-sbeller@google.com>
+X-Mailer: git-send-email 2.12.0.rc1.52.ge239d7e709.dirty
+In-Reply-To: <20170306205919.9713-1-sbeller@google.com>
+References: <20170302004759.27852-1-sbeller@google.com>
+ <20170306205919.9713-1-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jan 31, 2017 at 1:41 PM, Jeff King <peff@peff.net> wrote:
-> On Mon, Jan 30, 2017 at 08:28:30PM -0600, Edmundo Carmona Antoranz wrote:
->
->> +static void pretty_info(char* revid, struct blame_entry *ent, struct strbuf *rev_buffer)
->> +{
->> +     struct pretty_print_context ctx = {0};
->> +     struct rev_info rev;
->> +
->> +     struct strbuf format = STRBUF_INIT;
->> +     strbuf_addstr(&format, format_line);
->> +     ctx.fmt = CMIT_FMT_USERFORMAT;
->> +     get_commit_format(format.buf, &rev);
->> +     pretty_print_commit(&ctx, ent->suspect->commit, rev_buffer);
->> +     strbuf_release(&format);
->> +}
->
-> I think this may be less awkward if you use format_commit_message() as
-> the entry point. Then you do not need a rev_info struct at all, it
-> touches fewer global variables, etc.
->
-> I don't know if that would cause the other difficulties you mentioned,
-> though.
->
-> -Peff
+In later patches we introduce the options and flag for commands
+that modify the working directory, e.g. git-checkout.
 
-Thanks for the tip, Peff. It made the code to get rev info much
-shorter. I'll work on some other improvements and then I'll send
-another patch.
+Have a central place to store such settings whether we want to update
+a submodule.
 
-Best regards!
+Signed-off-by: Stefan Beller <sbeller@google.com>
+---
+ submodule.c | 6 ++++++
+ submodule.h | 1 +
+ 2 files changed, 7 insertions(+)
+
+diff --git a/submodule.c b/submodule.c
+index 04d185738f..591f4a694e 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -17,6 +17,7 @@
+ #include "worktree.h"
+ 
+ static int config_fetch_recurse_submodules = RECURSE_SUBMODULES_ON_DEMAND;
++static int config_update_recurse_submodules = RECURSE_SUBMODULES_DEFAULT;
+ static int parallel_jobs = 1;
+ static struct string_list changed_submodule_paths = STRING_LIST_INIT_NODUP;
+ static int initialized_fetch_ref_tips;
+@@ -542,6 +543,11 @@ void set_config_fetch_recurse_submodules(int value)
+ 	config_fetch_recurse_submodules = value;
+ }
+ 
++void set_config_update_recurse_submodules(int value)
++{
++	config_update_recurse_submodules = value;
++}
++
+ static int has_remote(const char *refname, const struct object_id *oid,
+ 		      int flags, void *cb_data)
+ {
+diff --git a/submodule.h b/submodule.h
+index 0b915bd3ac..b4e60c08d2 100644
+--- a/submodule.h
++++ b/submodule.h
+@@ -64,6 +64,7 @@ extern void show_submodule_inline_diff(FILE *f, const char *path,
+ 		const char *del, const char *add, const char *reset,
+ 		const struct diff_options *opt);
+ extern void set_config_fetch_recurse_submodules(int value);
++extern void set_config_update_recurse_submodules(int value);
+ extern void check_for_new_submodule_commits(unsigned char new_sha1[20]);
+ extern int fetch_populated_submodules(const struct argv_array *options,
+ 			       const char *prefix, int command_line_option,
+-- 
+2.12.0.rc1.52.ge239d7e709.dirty
+
