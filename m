@@ -7,45 +7,45 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 497021FBEC
-	for <e@80x24.org>; Mon,  6 Mar 2017 09:49:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 670111FBEC
+	for <e@80x24.org>; Mon,  6 Mar 2017 09:51:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754119AbdCFJtm (ORCPT <rfc822;e@80x24.org>);
-        Mon, 6 Mar 2017 04:49:42 -0500
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:33857 "EHLO
-        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752773AbdCFJtk (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Mar 2017 04:49:40 -0500
-Received: by mail-wm0-f65.google.com with SMTP id u132so4729287wmg.1
-        for <git@vger.kernel.org>; Mon, 06 Mar 2017 01:49:39 -0800 (PST)
+        id S1753629AbdCFJvb (ORCPT <rfc822;e@80x24.org>);
+        Mon, 6 Mar 2017 04:51:31 -0500
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:34816 "EHLO
+        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752953AbdCFJvO (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 Mar 2017 04:51:14 -0500
+Received: by mail-wm0-f67.google.com with SMTP id z63so10565045wmg.2
+        for <git@vger.kernel.org>; Mon, 06 Mar 2017 01:50:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=JRgmv708W8ovIwaaIttawQK3bnm12kxhnjwWkpKloTU=;
-        b=ifD/pMaX42pIj6jOEb/86t1bORedN7SA9fGQONoCRLOs9uv4vicZYkbLcT0A4LCfxs
-         4P7DBiqjcrnfKDpi5RdyEeOA6Byl/qOw8/FuNc7N45W1SL/JxOERFmaVQIrsqNbi/nZ+
-         ly/buq4rsonEY6j/PGG7+la89T5FXbYnYzSlY/wTg/F3Z5XRc1HNgJX6CqQOQxP+Pa84
-         t2MI7EzyNefWjCnvTxCdPbljMogzAuTMFZfp5RAOSmQOIGdqgBXvCjbbzcBVuLdummuN
-         XFKZ5gDCAun/qdm4QBYuJ4mCS6Ci1lUqb6+sp9SZvmWAq54Scc2GGbi0O+a1W5VgLhop
-         hU/Q==
+        bh=2cLKu/E6yzDdaiaUWU820r/4/0T45RQq1Va4L/j7ttQ=;
+        b=PXnBnjYNTo2F1Q+dsq1/9RxIQPJv5a/RtPid+Tnt/dveBN8ii7qhKnasovAuwLpb49
+         toWx9zh0Yi5u8/W7KIoQT3Aw9vp8hEG+135XzdpVEEccWcE8uwqwVs5in8np3b8ENkme
+         vdjRXmBkkx21trxNyAHpcdtyvPeJ0hJkpqmAuzA9W8f2n+UKUSq2mXM1/aG4kra1puVZ
+         BsidFGUrZmcIB1cTN7vAZj05iSCtsEOcqX5Axgbd/NrY5smZKa9wgfBLIqcDylIcZUcQ
+         ZHiu0QbyaNA8S2q9szyA/0UkfTQ59hVJIl8BF0LVg7Mv+sH+2FVhIi/xhXdReNFvXy0+
+         USEQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=JRgmv708W8ovIwaaIttawQK3bnm12kxhnjwWkpKloTU=;
-        b=juP8IwHRMpc+0xUKfzpB7t92Y176xR6iZh6Zn1hfxIE/bfHI6LwJ7uPt2Ut4Ge84k5
-         7lC6mqSatYBTol9A893VlOaoyTlfVbAttEACKKMV7STTMSNryRyj4N4kT4c7qF1mn0cr
-         Lqn1RVil68y4/sn1jfyfWs5bt+w8oc1JJ/Oyf3W9G6E6c1KrHP7y5bFoBz/3KlpqxVwz
-         QR9t6RcGU51qzaMRhwILAtwMaDp1Me6TzCYzqPOczxF+P4Pf0GI33jzDKsSGdObnoLsv
-         +Q4c0z5tAkSYiQgzjYgBlW61KYa4ePqGaIY0vda7Tv1nBu6JOWjC4H0lMsSyIceZeZbd
-         eHZg==
-X-Gm-Message-State: AMke39k6smDXgapj0gv/+LNfMdNgJVhajxCLI4xtbXKFnxTq4WNyeW1H/GFUJ/4Wh2829g==
-X-Received: by 10.28.95.87 with SMTP id t84mr12682957wmb.35.1488793357141;
-        Mon, 06 Mar 2017 01:42:37 -0800 (PST)
+        bh=2cLKu/E6yzDdaiaUWU820r/4/0T45RQq1Va4L/j7ttQ=;
+        b=ercpfCIklsbFIPRDhPoG6XJmpxGfg/1ggaAKBSal9Tl0JmmzV5AHdlUC3lv8u0ljH0
+         +iXqVqyrYGocBjVgbGwT59fkSe3I53hbB5BQ9zS/DdddH7d9rBNX3mXsWIA+lWCQwIh2
+         juDPGl35cdFi9F6JBl6SabjhLK8J6M99tIfEDAXAP8NeEYtQlA5QvkDZ8lxqv7O0ZAIe
+         XLGp778hmqpgut3xKmclLKhR1wR0upcsS4Rz6UWSNko0H4Rc82iIy98ST6b6ZvFN6kHe
+         pBDN2NqQ7fouY6/m+WgE+QJMVjdySolnQlylIxpKAcEh3Kr9crwG6lE+WC9GWApW7oTd
+         1Rtw==
+X-Gm-Message-State: AMke39kFjY4NTIsAElX8PfxBpP7yjm5lmyevwJ+hS5dPqb0eiHoduyleoX6LN5u1v9Pirw==
+X-Received: by 10.28.209.75 with SMTP id i72mr11927364wmg.31.1488793364934;
+        Mon, 06 Mar 2017 01:42:44 -0800 (PST)
 Received: from localhost.localdomain (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr. [128.78.31.246])
-        by smtp.gmail.com with ESMTPSA id 191sm14144086wmo.21.2017.03.06.01.42.36
+        by smtp.gmail.com with ESMTPSA id 191sm14144086wmo.21.2017.03.06.01.42.43
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 06 Mar 2017 01:42:36 -0800 (PST)
+        Mon, 06 Mar 2017 01:42:44 -0800 (PST)
 From:   Christian Couder <christian.couder@gmail.com>
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 To:     git@vger.kernel.org
@@ -55,9 +55,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         <avarab@gmail.com>, Ramsay Jones <ramsay@ramsayjones.plus.com>,
         Jeff King <peff@peff.net>,
         Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v5 14/22] sha1_file: make check_and_freshen_file() non static
-Date:   Mon,  6 Mar 2017 10:41:55 +0100
-Message-Id: <20170306094203.28250-15-chriscool@tuxfamily.org>
+Subject: [PATCH v5 20/22] read-cache: use freshen_shared_index() in read_index_from()
+Date:   Mon,  6 Mar 2017 10:42:01 +0100
+Message-Id: <20170306094203.28250-21-chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.12.0.206.g74921e51d6.dirty
 In-Reply-To: <20170306094203.28250-1-chriscool@tuxfamily.org>
 References: <20170306094203.28250-1-chriscool@tuxfamily.org>
@@ -66,42 +66,88 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This function will be used in a commit soon, so let's make
-it available globally.
+This way a share index file will not be garbage collected if
+we still read from an index it is based from.
+
+As we need to read the current index before creating a new
+one, the tests have to be adjusted, so that we don't expect
+an old shared index file to be deleted right away when we
+create a new one.
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- cache.h     | 3 +++
- sha1_file.c | 2 +-
- 2 files changed, 4 insertions(+), 1 deletion(-)
+ read-cache.c           |  1 +
+ t/t1700-split-index.sh | 14 +++++++-------
+ 2 files changed, 8 insertions(+), 7 deletions(-)
 
-diff --git a/cache.h b/cache.h
-index 0bb9adcd31..a35e9d5187 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1273,6 +1273,9 @@ extern int has_pack_index(const unsigned char *sha1);
+diff --git a/read-cache.c b/read-cache.c
+index 89c95d59b3..e447751823 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -1719,6 +1719,7 @@ int read_index_from(struct index_state *istate, const char *path)
+ 		    base_sha1_hex, base_path,
+ 		    sha1_to_hex(split_index->base->sha1));
  
- extern void assert_sha1_type(const unsigned char *sha1, enum object_type expect);
++	freshen_shared_index(base_sha1_hex, 0);
+ 	merge_base_index(istate);
+ 	post_read_index_from(istate);
+ 	return ret;
+diff --git a/t/t1700-split-index.sh b/t/t1700-split-index.sh
+index f5a95a6c28..af3ec0da5a 100755
+--- a/t/t1700-split-index.sh
++++ b/t/t1700-split-index.sh
+@@ -329,17 +329,17 @@ test_expect_success 'check splitIndex.maxPercentChange set to 0' '
+ test_expect_success 'shared index files expire after 2 weeks by default' '
+ 	: >ten &&
+ 	git update-index --add ten &&
+-	test $(ls .git/sharedindex.* | wc -l) -gt 1 &&
++	test $(ls .git/sharedindex.* | wc -l) -gt 2 &&
+ 	just_under_2_weeks_ago=$((5-14*86400)) &&
+ 	test-chmtime =$just_under_2_weeks_ago .git/sharedindex.* &&
+ 	: >eleven &&
+ 	git update-index --add eleven &&
+-	test $(ls .git/sharedindex.* | wc -l) -gt 1 &&
++	test $(ls .git/sharedindex.* | wc -l) -gt 2 &&
+ 	just_over_2_weeks_ago=$((-1-14*86400)) &&
+ 	test-chmtime =$just_over_2_weeks_ago .git/sharedindex.* &&
+ 	: >twelve &&
+ 	git update-index --add twelve &&
+-	test $(ls .git/sharedindex.* | wc -l) = 1
++	test $(ls .git/sharedindex.* | wc -l) -le 2
+ '
  
-+/* Helper to check and "touch" a file */
-+extern int check_and_freshen_file(const char *fn, int freshen);
-+
- extern const signed char hexval_table[256];
- static inline unsigned int hexval(unsigned char c)
- {
-diff --git a/sha1_file.c b/sha1_file.c
-index 6628f06da3..f02f10189f 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -667,7 +667,7 @@ static int freshen_file(const char *fn)
-  * either does not exist on disk, or has a stale mtime and may be subject to
-  * pruning).
-  */
--static int check_and_freshen_file(const char *fn, int freshen)
-+int check_and_freshen_file(const char *fn, int freshen)
- {
- 	if (access(fn, F_OK))
- 		return 0;
+ test_expect_success 'check splitIndex.sharedIndexExpire set to 16 days' '
+@@ -347,12 +347,12 @@ test_expect_success 'check splitIndex.sharedIndexExpire set to 16 days' '
+ 	test-chmtime =$just_over_2_weeks_ago .git/sharedindex.* &&
+ 	: >thirteen &&
+ 	git update-index --add thirteen &&
+-	test $(ls .git/sharedindex.* | wc -l) -gt 1 &&
++	test $(ls .git/sharedindex.* | wc -l) -gt 2 &&
+ 	just_over_16_days_ago=$((-1-16*86400)) &&
+ 	test-chmtime =$just_over_16_days_ago .git/sharedindex.* &&
+ 	: >fourteen &&
+ 	git update-index --add fourteen &&
+-	test $(ls .git/sharedindex.* | wc -l) = 1
++	test $(ls .git/sharedindex.* | wc -l) -le 2
+ '
+ 
+ test_expect_success 'check splitIndex.sharedIndexExpire set to "never" and "now"' '
+@@ -361,13 +361,13 @@ test_expect_success 'check splitIndex.sharedIndexExpire set to "never" and "now"
+ 	test-chmtime =$just_10_years_ago .git/sharedindex.* &&
+ 	: >fifteen &&
+ 	git update-index --add fifteen &&
+-	test $(ls .git/sharedindex.* | wc -l) -gt 1 &&
++	test $(ls .git/sharedindex.* | wc -l) -gt 2 &&
+ 	git config splitIndex.sharedIndexExpire now &&
+ 	just_1_second_ago=-1 &&
+ 	test-chmtime =$just_1_second_ago .git/sharedindex.* &&
+ 	: >sixteen &&
+ 	git update-index --add sixteen &&
+-	test $(ls .git/sharedindex.* | wc -l) = 1
++	test $(ls .git/sharedindex.* | wc -l) -le 2
+ '
+ 
+ test_done
 -- 
 2.12.0.206.g74921e51d6.dirty
 
