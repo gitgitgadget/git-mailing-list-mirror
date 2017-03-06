@@ -6,53 +6,53 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E661520133
-	for <e@80x24.org>; Mon,  6 Mar 2017 21:06:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 76CA920133
+	for <e@80x24.org>; Mon,  6 Mar 2017 21:07:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754304AbdCFVG4 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 6 Mar 2017 16:06:56 -0500
-Received: from mail-pg0-f44.google.com ([74.125.83.44]:33505 "EHLO
-        mail-pg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754130AbdCFVGx (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1754348AbdCFVHB (ORCPT <rfc822;e@80x24.org>);
+        Mon, 6 Mar 2017 16:07:01 -0500
+Received: from mail-pf0-f181.google.com ([209.85.192.181]:33468 "EHLO
+        mail-pf0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754023AbdCFVGx (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 6 Mar 2017 16:06:53 -0500
-Received: by mail-pg0-f44.google.com with SMTP id 25so70455805pgy.0
-        for <git@vger.kernel.org>; Mon, 06 Mar 2017 13:06:44 -0800 (PST)
+Received: by mail-pf0-f181.google.com with SMTP id w189so65058991pfb.0
+        for <git@vger.kernel.org>; Mon, 06 Mar 2017 13:06:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=I49cdIY692cNxXXg6mMOhCCWvMr23IYel2AVRIh9eJQ=;
-        b=ZO48zjCSE67vBUZqfeV+nc8p1CfWSQ0fHl8N5+pxKMTEsPwS68q+DoV+GwTNUl7EnR
-         /ubZiotLYsWv4L5meylpzyQgjTH6dOtFTr5lmOIaiOw2jFjDulr8A8dO0rUIAHmuUKvK
-         p70I1SH2EgOOskz6egQlybCXFXGu36gxBWCqrlC7B1z18B781VptOZmBUQeum9IVqlkr
-         oQsD+Sceonbt+mUuoiqnLOYh1XW3uHXgJAa4Y6YWjToKKR3NbNK7tWEDIWLhzkkUCiG6
-         qNwj1aK0nS4iYCgbRLNdkC0gY4IeoL+u1QobAnFMXuhazI4/c3n+eSj3qCFq/nGd6+Si
-         cKHw==
+        bh=V0JhAcnpxiM2VlG5w6+xKaTGafiEhdH/XQ0qDFL/cdE=;
+        b=Cy8lMQ401uRp5kBZoIfzzhQzRT8gHMxxAsUmRyGHMjdI9eAbix10voRTSPIX+gLvWP
+         LeIUsi0igFjOaTFtdaPusaiBPQ/243SR1LXLj4rYZJ2fURsr3F964cwozaFbgwLBhfJc
+         ZFLFhjkBaIlIoV9gdw40q17qAswvaJGifb60BWL3sdaiP3m5OF0hHqpDEKtu0q3tEjKJ
+         SzOGVLMLT6iYxD/d67AMf3G/nEOamE0F6zYShbwI+BoPMOSee+pCzojbhKTpCRn9HR+e
+         6I2oHY7XOv/6H5vjT9uB13YjbM8UQKgiz/gvM/r/6/jCpKeM7HTEGcTip/dIxj4l8Gzc
+         RUew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=I49cdIY692cNxXXg6mMOhCCWvMr23IYel2AVRIh9eJQ=;
-        b=MPYDiwXfsywQKowID0BhVYsj7ikFy+KGStz/o4HRlKG3gzwkB6SOjisagw6P5AgI6S
-         IUO/ye1iYeMAAyfdFMPNrEEw38sWHLCrdshEqCgvyfLEcRSUnThWsaAHlCAse4IQaZo9
-         EdOxz+oaeieXAFFMoDH82FKJNpc85CvIJ9FvwWqSkg0vRf7F4MK1RWYgRjpSQLpvdHhe
-         Wcw9UFOPloIYLdhdDed0eB9NZuu7wO9gWiJlecJZ4LHWfb6gEzRGLq9Rh4HYDbA2c/Sm
-         TGTLWw+/8lwYwj9bdcu1N7S9K56zyuF0KCA2Wt3YdWu4oK+DyrmrD+YsLsT63KzNmIux
-         ewFg==
-X-Gm-Message-State: AMke39kfPPJW34v/PuWyT+aipwAoQIHlxekKV/s0i7IM1mb/f7uyj3ZdEl+tJxzt6RTJ+XMY
-X-Received: by 10.98.216.202 with SMTP id e193mr23797302pfg.80.1488833976140;
-        Mon, 06 Mar 2017 12:59:36 -0800 (PST)
+        bh=V0JhAcnpxiM2VlG5w6+xKaTGafiEhdH/XQ0qDFL/cdE=;
+        b=uO3DQTso4bY8E0XsHOTacC2etLy4KLJACl5ehKExmZCzMGPFpwmQddxQoY582apFCz
+         QEQ2Ym2wRyB9hPuyWV39QwHNKFyvDvvK+Lmcik93MAOMBZORwePOj3SyVclIrnEj35rc
+         STxSOypPmi1/rKEoywUte/OfSrbRQP+QgAlTyvJethYujVVGxQWhj/OQpr7WDJ7KQtJR
+         ri7iz0p9N3oVVehJExNF71d7QaQSTc860ggJTOOWxOrQYkAAWrEz3ZconlH8MWoDzpXm
+         JA6ahUegzDjQX4aHzcPHvC0TPmHz3eLY/oDVIa+inua08Y92IgEHyULZB4h5LAjJe6zV
+         PVIA==
+X-Gm-Message-State: AMke39l7jtu5hRQ+d9t5vFz9uG2Ty+zVx+G/iSolZgeOvPeJCIjsFsiZw3ij0LOv4WHXO97q
+X-Received: by 10.99.131.198 with SMTP id h189mr23233639pge.161.1488833972419;
+        Mon, 06 Mar 2017 12:59:32 -0800 (PST)
 Received: from localhost ([2620:0:1000:5b10:44ae:633a:9d1d:6402])
-        by smtp.gmail.com with ESMTPSA id 23sm17152712pfz.127.2017.03.06.12.59.35
+        by smtp.gmail.com with ESMTPSA id y184sm41528804pgd.45.2017.03.06.12.59.31
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 06 Mar 2017 12:59:35 -0800 (PST)
+        Mon, 06 Mar 2017 12:59:31 -0800 (PST)
 From:   Stefan Beller <sbeller@google.com>
 To:     sbeller@google.com, gitster@pobox.com
 Cc:     git@vger.kernel.org, bmwill@google.com, novalis@novalis.org,
         sandals@crustytoothpaste.net, hvoigt@hvoigt.net,
         jrnieder@gmail.com, ramsay@ramsayjones.plus.com
-Subject: [PATCH 10/18] submodules: introduce check to see whether to touch a submodule
-Date:   Mon,  6 Mar 2017 12:59:11 -0800
-Message-Id: <20170306205919.9713-11-sbeller@google.com>
+Subject: [PATCH 07/18] connect_work_tree_and_git_dir: safely create leading directories
+Date:   Mon,  6 Mar 2017 12:59:08 -0800
+Message-Id: <20170306205919.9713-8-sbeller@google.com>
 X-Mailer: git-send-email 2.12.0.rc1.52.ge239d7e709.dirty
 In-Reply-To: <20170306205919.9713-1-sbeller@google.com>
 References: <20170302004759.27852-1-sbeller@google.com>
@@ -62,67 +62,116 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In later patches we introduce the --recurse-submodule flag for commands
-that modify the working directory, e.g. git-checkout.
+In a later patch we'll use connect_work_tree_and_git_dir when the
+directory for the gitlink file doesn't exist yet. This patch makes
+connect_work_tree_and_git_dir safe to use for both cases of
+either the git dir or the working dir missing.
 
-It is potentially expensive to check if a submodule needs an update,
-because a common theme to interact with submodules is to spawn a child
-process for each interaction.
+To do so, we need to call safe_create_leading_directories[_const]
+on both directories. However this has to happen before we construct
+the absolute paths as real_pathdup assumes the directories to
+be there already.
 
-So let's introduce a function that checks if a submodule needs
-to be checked for an update before attempting the update.
+So for both the config file in the git dir as well as the .git link
+file we need to
+a) construct the name
+b) call SCLD
+c) get the absolute path
+d) once a-c is done for both we can consume the absolute path
+   to compute the relative path to each other and store those
+   relative paths.
+
+The implementation provided here puts a) and b) for both cases first,
+and then performs c and d after.
+
+One of the two users of 'connect_work_tree_and_git_dir' already checked
+for the directory being there, so we can loose that check as
+connect_work_tree_and_git_dir handles this functionality now.
 
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- submodule.c | 16 ++++++++++++++++
- submodule.h |  7 +++++++
- 2 files changed, 23 insertions(+)
+ dir.c       | 32 +++++++++++++++++++++-----------
+ submodule.c | 11 ++---------
+ 2 files changed, 23 insertions(+), 20 deletions(-)
 
+diff --git a/dir.c b/dir.c
+index 4541f9e146..6f52af7abb 100644
+--- a/dir.c
++++ b/dir.c
+@@ -2728,23 +2728,33 @@ void untracked_cache_add_to_index(struct index_state *istate,
+ /* Update gitfile and core.worktree setting to connect work tree and git dir */
+ void connect_work_tree_and_git_dir(const char *work_tree_, const char *git_dir_)
+ {
+-	struct strbuf file_name = STRBUF_INIT;
++	struct strbuf gitfile_sb = STRBUF_INIT;
++	struct strbuf cfg_sb = STRBUF_INIT;
+ 	struct strbuf rel_path = STRBUF_INIT;
+-	char *git_dir = real_pathdup(git_dir_);
+-	char *work_tree = real_pathdup(work_tree_);
++	char *git_dir, *work_tree;
+ 
+-	/* Update gitfile */
+-	strbuf_addf(&file_name, "%s/.git", work_tree);
+-	write_file(file_name.buf, "gitdir: %s",
+-		   relative_path(git_dir, work_tree, &rel_path));
++	/* Prepare .git file */
++	strbuf_addf(&gitfile_sb, "%s/.git", work_tree_);
++	if (safe_create_leading_directories_const(gitfile_sb.buf))
++		die(_("could not create directories for %s"), gitfile_sb.buf);
++
++	/* Prepare config file */
++	strbuf_addf(&cfg_sb, "%s/config", git_dir_);
++	if (safe_create_leading_directories_const(cfg_sb.buf))
++		die(_("could not create directories for %s"), cfg_sb.buf);
+ 
++	git_dir = real_pathdup(git_dir_);
++	work_tree = real_pathdup(work_tree_);
++
++	/* Write .git file */
++	write_file(gitfile_sb.buf, "gitdir: %s",
++		   relative_path(git_dir, work_tree, &rel_path));
+ 	/* Update core.worktree setting */
+-	strbuf_reset(&file_name);
+-	strbuf_addf(&file_name, "%s/config", git_dir);
+-	git_config_set_in_file(file_name.buf, "core.worktree",
++	git_config_set_in_file(cfg_sb.buf, "core.worktree",
+ 			       relative_path(work_tree, git_dir, &rel_path));
+ 
+-	strbuf_release(&file_name);
++	strbuf_release(&gitfile_sb);
++	strbuf_release(&cfg_sb);
+ 	strbuf_release(&rel_path);
+ 	free(work_tree);
+ 	free(git_dir);
 diff --git a/submodule.c b/submodule.c
-index 591f4a694e..8b2c0212be 100644
+index 0e55372f37..04d185738f 100644
 --- a/submodule.c
 +++ b/submodule.c
-@@ -548,6 +548,22 @@ void set_config_update_recurse_submodules(int value)
- 	config_update_recurse_submodules = value;
- }
+@@ -1442,8 +1442,6 @@ void absorb_git_dir_into_superproject(const char *prefix,
  
-+int should_update_submodules(void)
-+{
-+	return config_update_recurse_submodules == RECURSE_SUBMODULES_ON;
-+}
-+
-+const struct submodule *submodule_from_ce(const struct cache_entry *ce)
-+{
-+	if (!S_ISGITLINK(ce->ce_mode))
-+		return NULL;
-+
-+	if (!should_update_submodules())
-+		return NULL;
-+
-+	return submodule_from_path(null_sha1, ce->name);
-+}
-+
- static int has_remote(const char *refname, const struct object_id *oid,
- 		      int flags, void *cb_data)
- {
-diff --git a/submodule.h b/submodule.h
-index b4e60c08d2..6f3fe85c7c 100644
---- a/submodule.h
-+++ b/submodule.h
-@@ -65,6 +65,13 @@ extern void show_submodule_inline_diff(FILE *f, const char *path,
- 		const struct diff_options *opt);
- extern void set_config_fetch_recurse_submodules(int value);
- extern void set_config_update_recurse_submodules(int value);
-+/* Check if we want to update any submodule.*/
-+extern int should_update_submodules(void);
-+/*
-+ * Returns the submodule struct if the given ce entry is a submodule
-+ * and it should be updated. Returns NULL otherwise.
-+ */
-+extern const struct submodule *submodule_from_ce(const struct cache_entry *ce);
- extern void check_for_new_submodule_commits(unsigned char new_sha1[20]);
- extern int fetch_populated_submodules(const struct argv_array *options,
- 			       const char *prefix, int command_line_option,
+ 	/* Not populated? */
+ 	if (!sub_git_dir) {
+-		char *real_new_git_dir;
+-		const char *new_git_dir;
+ 		const struct submodule *sub;
+ 
+ 		if (err_code == READ_GITFILE_ERR_STAT_FAILED) {
+@@ -1466,13 +1464,8 @@ void absorb_git_dir_into_superproject(const char *prefix,
+ 		sub = submodule_from_path(null_sha1, path);
+ 		if (!sub)
+ 			die(_("could not lookup name for submodule '%s'"), path);
+-		new_git_dir = git_path("modules/%s", sub->name);
+-		if (safe_create_leading_directories_const(new_git_dir) < 0)
+-			die(_("could not create directory '%s'"), new_git_dir);
+-		real_new_git_dir = real_pathdup(new_git_dir);
+-		connect_work_tree_and_git_dir(path, real_new_git_dir);
+-
+-		free(real_new_git_dir);
++		connect_work_tree_and_git_dir(path,
++			git_path("modules/%s", sub->name));
+ 	} else {
+ 		/* Is it already absorbed into the superprojects git dir? */
+ 		char *real_sub_git_dir = real_pathdup(sub_git_dir);
 -- 
 2.12.0.rc1.52.ge239d7e709.dirty
 
