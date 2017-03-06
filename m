@@ -2,85 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 17EC820133
-	for <e@80x24.org>; Mon,  6 Mar 2017 19:25:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E7D4B20133
+	for <e@80x24.org>; Mon,  6 Mar 2017 19:25:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753658AbdCFTZe (ORCPT <rfc822;e@80x24.org>);
-        Mon, 6 Mar 2017 14:25:34 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:61047 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1753330AbdCFTZc (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1754003AbdCFTZg (ORCPT <rfc822;e@80x24.org>);
+        Mon, 6 Mar 2017 14:25:36 -0500
+Received: from mail-pf0-f176.google.com ([209.85.192.176]:36373 "EHLO
+        mail-pf0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752935AbdCFTZc (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 6 Mar 2017 14:25:32 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id C75C96C8FE;
-        Mon,  6 Mar 2017 14:18:32 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=AeXPDsxDArRt+FsLD3Gmb3UYAHs=; b=LMB5J/
-        0zx8Xz2bxiArW118ceyAeEa86tmuZXFH1mt0cJ2nctuPsOgzHbyvfSUYNvZ9heS+
-        ydJAzeQ+ozph/89Rat2b4NViwVovt+phDBmlo6/4L6v4UHp0nTZs9h//kQJ+UMwU
-        e13IRRZg2pRCz0B8Xu2Nd5sLavdXzVs71R36s=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=hHK8HbGXDswTmu7kkA6/gorHDV9sorav
-        BKM0QiOEEiB0BA2ydjwI0ASbzxYUYgBZhxegkxlC2ZRXrESnB2+MSB0gwpQUgDN3
-        lrWVDGSpo5YjLw5WOdZnyulsKAbiHI+n4brRpvrQ9fs5Fbv7M1VodUaBSXr8ORKL
-        qc4AmncDCE4=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id C0CB96C8FD;
-        Mon,  6 Mar 2017 14:18:32 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.84])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 3558A6C8FC;
-        Mon,  6 Mar 2017 14:18:32 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Mark Thomas <markbt@efaref.net>
-Cc:     git@vger.kernel.org
+Received: by mail-pf0-f176.google.com with SMTP id o126so16956298pfb.3
+        for <git@vger.kernel.org>; Mon, 06 Mar 2017 11:24:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=subject:to:references:cc:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding;
+        bh=B3Yq4plyqZvnbd4+ApPw3ZkL1gcasmrsShu8udYuWGI=;
+        b=eh6vmBLf7uES2P/Sq5S0XiyVvI19O63TrkVK37nzmvwq7sXRn6nBuVZyeuZ4Qcni3j
+         ODsZx431ycam21jjc6O16dFrbDP/CKrqblKOEaWr1P6QYZV3mGTGmFqvDaOIDOaLTs5s
+         HnVzOV9dcaTyeEIo2MwdKZI178Pbb1m8Z7dWoulrC/3psdJOR/aMaInTQAtH6RMHMVNA
+         4PkJLLsdPjXDl0HUFe8KsFAHSh03HSTyKszUH6GykXzgPoDzoDkMKof2Ai1JSMpuB+HK
+         vdX1FVRLb4H1U6rnE7qnB/J3wUtI6iC3aa+2xSX0Zy8Umzcm7NcN703NbZqprd6XzTUt
+         ykTg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
+        bh=B3Yq4plyqZvnbd4+ApPw3ZkL1gcasmrsShu8udYuWGI=;
+        b=E0hF1W4BvyGGoQeDGZ7YXhEeLFQXKakY4DUNqkmTvOuoKu74nIAgTOSHNSQ/1Orfpo
+         ocrVQp3VaJ9Qr4swgw1Eml0kPY6vS84LkJWCIlwEMC/Q13YpiFoPsIN/mUwLoa5Q/b/e
+         bkErjfEX/VVs6OgSrY08zTuq9K7qXd/PCni4nRi/uEgHmrPy8hNyZ+w56u0m//b7vYFk
+         rhECTVKxNkeoxr8ldEcn2m4tkfQz/0yPvs7ytfcKyghA75nJLqg+HctKi0qITcLMy58D
+         zHs5o4y2V7g3jmnI3ZlxFaTC2IUw9tNdYfVoZDXDB3KrOWB7LzfTi6IegYQPXBjUQT+o
+         S1MQ==
+X-Gm-Message-State: AMke39leDAI0xWkhrtuQwWt8uXWqTP3vAoRyZnaEviBdPFvUhU3QKsl5FxIKyY6ah6b10Ib/
+X-Received: by 10.84.172.1 with SMTP id m1mr28314489plb.5.1488827785212;
+        Mon, 06 Mar 2017 11:16:25 -0800 (PST)
+Received: from twelve2.mtv.corp.google.com ([2620:0:1000:5b10:1458:35b5:154a:3344])
+        by smtp.gmail.com with ESMTPSA id 132sm24331051pgf.27.2017.03.06.11.16.24
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 06 Mar 2017 11:16:24 -0800 (PST)
 Subject: Re: [RFC 0/4] Shallow clones with on-demand fetch
+To:     Mark Thomas <markbt@efaref.net>, git@vger.kernel.org
 References: <20170304191901.9622-1-markbt@efaref.net>
-Date:   Mon, 06 Mar 2017 11:18:30 -0800
-In-Reply-To: <20170304191901.9622-1-markbt@efaref.net> (Mark Thomas's message
-        of "Sat, 4 Mar 2017 19:18:57 +0000")
-Message-ID: <xmqqr32anri1.fsf@junio-linux.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+Cc:     peartben@gmail.com
+From:   Jonathan Tan <jonathantanmy@google.com>
+Message-ID: <c8788f30-263b-c96a-239d-940743b96b53@google.com>
+Date:   Mon, 6 Mar 2017 11:16:23 -0800
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.7.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: AFE7EDC0-02A1-11E7-9F79-FC50AE2156B6-77302942!pb-smtp2.pobox.com
+In-Reply-To: <20170304191901.9622-1-markbt@efaref.net>
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Mark Thomas <markbt@efaref.net> writes:
+On 03/04/2017 11:18 AM, Mark Thomas wrote:
+> I was inspired a bit by Microsoft's announcement of their Git VFS.  I
+> saw that people have talked in the past about making git fetch objects
+> from remotes as they are needed, and decided to give it a try.
 
-> This is a proof-of-concept, so it is in no way complete.  It contains a
-> few hacks to make it work, but these can be ironed out with a bit more
-> work.  What I have so far is sufficient to try out the idea.
+For reference, one such conversation is [1]. (cc-ing Ben Peart also)
 
-Two things that immediately come to mind (which may or may not be
-real issues) are 
+> The patch series adds a "--on-demand" option to git clone, which, when
+> used in conjunction with the existing shallow clone operations, clones
+> the full history of the repository's commits, but only the files that
+> would be included in the shallow clone.
+>
+> When a file that is missing is required, git requests the file on-demand
+> from the remote, via a new 'upload-file' service.
 
- (1) What (if any) security model you have in mind.
+A reachability check (of the blob) might be a good idea. The current Git 
+implementation already supports fetching a blob (perhaps a bug) but has 
+problems with reachability calculations that I tried to fix in [2], but 
+found some bugs that weren't easily fixable.
 
-     From object-confidentiality's point of view, this needs to be
-     enabled only on a host that allows
-     uploadpack.allowAnySHA1InWant but even riskier.
+As I said in [2], I think that proper fetching of blobs on demand is a 
+prerequisite to any sort of missing object tolerance (like your 
+on-demand clones), so I haven't thought much about the topics in the 
+rest of your patch set.
 
-     From DoS point of view, you can make a short 40-byte request to
-     cause the other side emit megabytes of stuff.  I do not think
-     it is a new problem (anybody can repeatedly request a clone of
-     large stuff), but there may be new ramifications.
-
- (2) If the interface to ask just one object kills the whole idea
-     due to roundtrip latency.
-
-     You may want to be able to say "I want all objects reachable
-     from this tree; please give me a packfile of needed objects
-     assuming that I have all objects reachable from this other tree
-     (or these other trees)".
-
+[1] <20170113155253.1644-1-benpeart@microsoft.com> (you can search for 
+emails by Message ID in online archives like 
+https://public-inbox.org/git if you don't already have them)
+[2] <cover.1487984670.git.jonathantanmy@google.com>
