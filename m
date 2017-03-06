@@ -7,45 +7,45 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C82B61FBEC
-	for <e@80x24.org>; Mon,  6 Mar 2017 09:52:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A60F71FBEC
+	for <e@80x24.org>; Mon,  6 Mar 2017 09:52:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753395AbdCFJw1 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 6 Mar 2017 04:52:27 -0500
-Received: from mail-wr0-f195.google.com ([209.85.128.195]:34997 "EHLO
-        mail-wr0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754034AbdCFJvq (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Mar 2017 04:51:46 -0500
-Received: by mail-wr0-f195.google.com with SMTP id u108so17018140wrb.2
-        for <git@vger.kernel.org>; Mon, 06 Mar 2017 01:51:44 -0800 (PST)
+        id S1754248AbdCFJwd (ORCPT <rfc822;e@80x24.org>);
+        Mon, 6 Mar 2017 04:52:33 -0500
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:35302 "EHLO
+        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753873AbdCFJvk (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 Mar 2017 04:51:40 -0500
+Received: by mail-wm0-f68.google.com with SMTP id z63so10569680wmg.2
+        for <git@vger.kernel.org>; Mon, 06 Mar 2017 01:51:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=JpUqoNye+/AAcYaRLrThXx80XYbH7wQ9trmMBDekjs0=;
-        b=ZqaRKh8YJQAPIBDXILebLkpYZMmDxQ0bDENGJ1W5D0nSz+CLlJ3AP87/hawHqzAVyL
-         hIuVUcOoW0UVfN43dbqOZ6SadxCOQ3GGhSwxCQ1Z6cH4MpoLQPam9xk1zBrjJrX0cdek
-         +rGE3lOth71dT69LsGQ/5MjxGVgaORJY4FKTO/roGD8aWW+I1CBNceGkmPXc1lm1aW+o
-         SkXHS0br8k39oHX1dCOxQP/jDrwBHp/Shmmg5ygni/1o2Za9DqLDgblNLewprRXVkWvt
-         S32x4z5r4O6Cd2iF5cnmZ2enluZTSmbNBf+FD0KTOO/NN806Zj+QOtv4YPTly0U78vL4
-         u2rQ==
+        bh=UEax+7GbaUAr2wiGbVh1Gxrws8D44BsRCu/e+R9eEw4=;
+        b=jrCY7zWev9uCdL9eANdkcZbE6MdoCRV8uirFa21kKEYksbNGh6MnRRZN9qEnqljt53
+         QSPFwDSEavhUhGvSyhP+8aFNRsqhrDOMfZEXiw39853G825gTN93SVjahrTHLNRaQq4F
+         SjMM638UBEpNUz9Rx4T1hFM9VQofjD85koyUc0cENxB3OAdFepVs4G+FEyNHRTTaPoNi
+         yXR7lcUHMljJBvKHa7vpNXdI4X/gplmEiK3L06Ym5GTCFp2VgXocQFyUM1bx2ivNK9sN
+         uVrXQHgiw7t4+avOV2GyN/2g7mFUnImo/VbEoz5VSD9bncIoyFIiUKRfH2P8xvQRV+1B
+         E4/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=JpUqoNye+/AAcYaRLrThXx80XYbH7wQ9trmMBDekjs0=;
-        b=BGzaJvbSABPlNdG+EDH/BuTaaNn9n+ViyZyv8MJhnW6GmJmsHPC6q1bKm9jeCsHYV7
-         kHFrnsp05ioYqknyU7EjkGSshuQaTwnvwrQzOVxE2ad0EI+xwUX+ou0ckqscT6wwnkpM
-         gxfaeK6kKj9vGS5CnuAoEmWSptHYs4Tv+MxteOIAPKB0om3muPqqO9h3KdxRqkmR+EnO
-         pKuUEy+mCCuP44JVJrwVPZ4YUt+qWfjVyXi5q80sQuFlAD3d/ASm+8vhsnchsH1nuPzB
-         idLdOCBNUj2u6lhzC7hkkheE248FnFPCGmvG4GKe8ZVd1/PkTV6eOX83EpK9J1SqK+hu
-         M9rA==
-X-Gm-Message-State: AMke39k95PH9spaSlLBCPrFvTQFK0My+ebKS5v+E5vCtkLBzUztAp6kApgZyx3h15PmsuQ==
-X-Received: by 10.223.170.70 with SMTP id q6mr5494378wrd.162.1488793339995;
-        Mon, 06 Mar 2017 01:42:19 -0800 (PST)
+        bh=UEax+7GbaUAr2wiGbVh1Gxrws8D44BsRCu/e+R9eEw4=;
+        b=N6PPbj4oONxel3SwIYcNAGzwqywvLE5znSPamxCf3MJP2FDMxxln4Ui0ptwIHIcsGI
+         ocsnmSyQEWY2tkEPbQYZwG/cMBr+v1Nv/FIw0WjDpiZLdniiMI/wpkz2G9oINv6xbBCZ
+         QGidekzFip2rRdN8ExTHAv+ov8zZjh4Bb8ASyZqCXEpMaBIpP56Bf6GQP/0n95Q1SlUy
+         HolslDlDC1E+3BJBZZC6pOYkAkDm2MEz/tt4GNlv+hi2OObT2Y1rx+gpFzsVk0/nfnKE
+         ANxDmVmLMQPcEtfnWYfHT3BCRxzpEG0qB1G2rsJ8E98kVqXqBmtYMl0F/gHU1jRUA6yr
+         L7yA==
+X-Gm-Message-State: AMke39kMXfPeADp5LZEi6FwTtU6dhwi9NOYLzPY12BTu75kxYJvS7JAXevuC0QHGPPsDCQ==
+X-Received: by 10.28.198.132 with SMTP id w126mr12855111wmf.69.1488793348429;
+        Mon, 06 Mar 2017 01:42:28 -0800 (PST)
 Received: from localhost.localdomain (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr. [128.78.31.246])
-        by smtp.gmail.com with ESMTPSA id 191sm14144086wmo.21.2017.03.06.01.42.18
+        by smtp.gmail.com with ESMTPSA id 191sm14144086wmo.21.2017.03.06.01.42.27
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 06 Mar 2017 01:42:19 -0800 (PST)
+        Mon, 06 Mar 2017 01:42:27 -0800 (PST)
 From:   Christian Couder <christian.couder@gmail.com>
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 To:     git@vger.kernel.org
@@ -55,9 +55,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         <avarab@gmail.com>, Ramsay Jones <ramsay@ramsayjones.plus.com>,
         Jeff King <peff@peff.net>,
         Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v5 02/22] t1700: change here document style
-Date:   Mon,  6 Mar 2017 10:41:43 +0100
-Message-Id: <20170306094203.28250-3-chriscool@tuxfamily.org>
+Subject: [PATCH v5 08/22] Documentation/config: add information for core.splitIndex
+Date:   Mon,  6 Mar 2017 10:41:49 +0100
+Message-Id: <20170306094203.28250-9-chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.12.0.206.g74921e51d6.dirty
 In-Reply-To: <20170306094203.28250-1-chriscool@tuxfamily.org>
 References: <20170306094203.28250-1-chriscool@tuxfamily.org>
@@ -66,288 +66,26 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This improves test indentation by getting rid of the outdated
-here document style.
-
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- t/t1700-split-index.sh | 170 ++++++++++++++++++++++++-------------------------
- 1 file changed, 85 insertions(+), 85 deletions(-)
+ Documentation/config.txt | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/t/t1700-split-index.sh b/t/t1700-split-index.sh
-index 6096f2c630..5ea227e6a1 100755
---- a/t/t1700-split-index.sh
-+++ b/t/t1700-split-index.sh
-@@ -19,12 +19,12 @@ test_expect_success 'enable split index' '
- 		own=8299b0bcd1ac364e5f1d7768efb62fa2da79a339
- 		base=39d890139ee5356c7ef572216cebcd27aa41f9df
- 	fi &&
--	cat >expect <<EOF &&
--own $own
--base $base
--replacements:
--deletions:
--EOF
-+	cat >expect <<-EOF &&
-+	own $own
-+	base $base
-+	replacements:
-+	deletions:
-+	EOF
- 	test_cmp expect actual
- '
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 47603f5484..f102879261 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -334,6 +334,10 @@ core.trustctime::
+ 	crawlers and some backup systems).
+ 	See linkgit:git-update-index[1]. True by default.
  
-@@ -32,51 +32,51 @@ test_expect_success 'add one file' '
- 	: >one &&
- 	git update-index --add one &&
- 	git ls-files --stage >ls-files.actual &&
--	cat >ls-files.expect <<EOF &&
--100644 $EMPTY_BLOB 0	one
--EOF
-+	cat >ls-files.expect <<-EOF &&
-+	100644 $EMPTY_BLOB 0	one
-+	EOF
- 	test_cmp ls-files.expect ls-files.actual &&
- 
- 	test-dump-split-index .git/index | sed "/^own/d" >actual &&
--	cat >expect <<EOF &&
--base $base
--100644 $EMPTY_BLOB 0	one
--replacements:
--deletions:
--EOF
-+	cat >expect <<-EOF &&
-+	base $base
-+	100644 $EMPTY_BLOB 0	one
-+	replacements:
-+	deletions:
-+	EOF
- 	test_cmp expect actual
- '
- 
- test_expect_success 'disable split index' '
- 	git update-index --no-split-index &&
- 	git ls-files --stage >ls-files.actual &&
--	cat >ls-files.expect <<EOF &&
--100644 $EMPTY_BLOB 0	one
--EOF
-+	cat >ls-files.expect <<-EOF &&
-+	100644 $EMPTY_BLOB 0	one
-+	EOF
- 	test_cmp ls-files.expect ls-files.actual &&
- 
- 	BASE=$(test-dump-split-index .git/index | grep "^own" | sed "s/own/base/") &&
- 	test-dump-split-index .git/index | sed "/^own/d" >actual &&
--	cat >expect <<EOF &&
--not a split index
--EOF
-+	cat >expect <<-EOF &&
-+	not a split index
-+	EOF
- 	test_cmp expect actual
- '
- 
- test_expect_success 'enable split index again, "one" now belongs to base index"' '
- 	git update-index --split-index &&
- 	git ls-files --stage >ls-files.actual &&
--	cat >ls-files.expect <<EOF &&
--100644 $EMPTY_BLOB 0	one
--EOF
-+	cat >ls-files.expect <<-EOF &&
-+	100644 $EMPTY_BLOB 0	one
-+	EOF
- 	test_cmp ls-files.expect ls-files.actual &&
- 
- 	test-dump-split-index .git/index | sed "/^own/d" >actual &&
--	cat >expect <<EOF &&
--$BASE
--replacements:
--deletions:
--EOF
-+	cat >expect <<-EOF &&
-+	$BASE
-+	replacements:
-+	deletions:
-+	EOF
- 	test_cmp expect actual
- '
- 
-@@ -84,18 +84,18 @@ test_expect_success 'modify original file, base index untouched' '
- 	echo modified >one &&
- 	git update-index one &&
- 	git ls-files --stage >ls-files.actual &&
--	cat >ls-files.expect <<EOF &&
--100644 2e0996000b7e9019eabcad29391bf0f5c7702f0b 0	one
--EOF
-+	cat >ls-files.expect <<-EOF &&
-+	100644 2e0996000b7e9019eabcad29391bf0f5c7702f0b 0	one
-+	EOF
- 	test_cmp ls-files.expect ls-files.actual &&
- 
- 	test-dump-split-index .git/index | sed "/^own/d" >actual &&
--	q_to_tab >expect <<EOF &&
--$BASE
--100644 2e0996000b7e9019eabcad29391bf0f5c7702f0b 0Q
--replacements: 0
--deletions:
--EOF
-+	q_to_tab >expect <<-EOF &&
-+	$BASE
-+	100644 2e0996000b7e9019eabcad29391bf0f5c7702f0b 0Q
-+	replacements: 0
-+	deletions:
-+	EOF
- 	test_cmp expect actual
- '
- 
-@@ -103,54 +103,54 @@ test_expect_success 'add another file, which stays index' '
- 	: >two &&
- 	git update-index --add two &&
- 	git ls-files --stage >ls-files.actual &&
--	cat >ls-files.expect <<EOF &&
--100644 2e0996000b7e9019eabcad29391bf0f5c7702f0b 0	one
--100644 $EMPTY_BLOB 0	two
--EOF
-+	cat >ls-files.expect <<-EOF &&
-+	100644 2e0996000b7e9019eabcad29391bf0f5c7702f0b 0	one
-+	100644 $EMPTY_BLOB 0	two
-+	EOF
- 	test_cmp ls-files.expect ls-files.actual &&
- 
- 	test-dump-split-index .git/index | sed "/^own/d" >actual &&
--	q_to_tab >expect <<EOF &&
--$BASE
--100644 2e0996000b7e9019eabcad29391bf0f5c7702f0b 0Q
--100644 $EMPTY_BLOB 0	two
--replacements: 0
--deletions:
--EOF
-+	q_to_tab >expect <<-EOF &&
-+	$BASE
-+	100644 2e0996000b7e9019eabcad29391bf0f5c7702f0b 0Q
-+	100644 $EMPTY_BLOB 0	two
-+	replacements: 0
-+	deletions:
-+	EOF
- 	test_cmp expect actual
- '
- 
- test_expect_success 'remove file not in base index' '
- 	git update-index --force-remove two &&
- 	git ls-files --stage >ls-files.actual &&
--	cat >ls-files.expect <<EOF &&
--100644 2e0996000b7e9019eabcad29391bf0f5c7702f0b 0	one
--EOF
-+	cat >ls-files.expect <<-EOF &&
-+	100644 2e0996000b7e9019eabcad29391bf0f5c7702f0b 0	one
-+	EOF
- 	test_cmp ls-files.expect ls-files.actual &&
- 
- 	test-dump-split-index .git/index | sed "/^own/d" >actual &&
--	q_to_tab >expect <<EOF &&
--$BASE
--100644 2e0996000b7e9019eabcad29391bf0f5c7702f0b 0Q
--replacements: 0
--deletions:
--EOF
-+	q_to_tab >expect <<-EOF &&
-+	$BASE
-+	100644 2e0996000b7e9019eabcad29391bf0f5c7702f0b 0Q
-+	replacements: 0
-+	deletions:
-+	EOF
- 	test_cmp expect actual
- '
- 
- test_expect_success 'remove file in base index' '
- 	git update-index --force-remove one &&
- 	git ls-files --stage >ls-files.actual &&
--	cat >ls-files.expect <<EOF &&
--EOF
-+	cat >ls-files.expect <<-EOF &&
-+	EOF
- 	test_cmp ls-files.expect ls-files.actual &&
- 
- 	test-dump-split-index .git/index | sed "/^own/d" >actual &&
--	cat >expect <<EOF &&
--$BASE
--replacements:
--deletions: 0
--EOF
-+	cat >expect <<-EOF &&
-+	$BASE
-+	replacements:
-+	deletions: 0
-+	EOF
- 	test_cmp expect actual
- '
- 
-@@ -158,18 +158,18 @@ test_expect_success 'add original file back' '
- 	: >one &&
- 	git update-index --add one &&
- 	git ls-files --stage >ls-files.actual &&
--	cat >ls-files.expect <<EOF &&
--100644 $EMPTY_BLOB 0	one
--EOF
-+	cat >ls-files.expect <<-EOF &&
-+	100644 $EMPTY_BLOB 0	one
-+	EOF
- 	test_cmp ls-files.expect ls-files.actual &&
- 
- 	test-dump-split-index .git/index | sed "/^own/d" >actual &&
--	cat >expect <<EOF &&
--$BASE
--100644 $EMPTY_BLOB 0	one
--replacements:
--deletions: 0
--EOF
-+	cat >expect <<-EOF &&
-+	$BASE
-+	100644 $EMPTY_BLOB 0	one
-+	replacements:
-+	deletions: 0
-+	EOF
- 	test_cmp expect actual
- '
- 
-@@ -177,26 +177,26 @@ test_expect_success 'add new file' '
- 	: >two &&
- 	git update-index --add two &&
- 	git ls-files --stage >actual &&
--	cat >expect <<EOF &&
--100644 $EMPTY_BLOB 0	one
--100644 $EMPTY_BLOB 0	two
--EOF
-+	cat >expect <<-EOF &&
-+	100644 $EMPTY_BLOB 0	one
-+	100644 $EMPTY_BLOB 0	two
-+	EOF
- 	test_cmp expect actual
- '
- 
- test_expect_success 'unify index, two files remain' '
- 	git update-index --no-split-index &&
- 	git ls-files --stage >ls-files.actual &&
--	cat >ls-files.expect <<EOF &&
--100644 $EMPTY_BLOB 0	one
--100644 $EMPTY_BLOB 0	two
--EOF
-+	cat >ls-files.expect <<-EOF &&
-+	100644 $EMPTY_BLOB 0	one
-+	100644 $EMPTY_BLOB 0	two
-+	EOF
- 	test_cmp ls-files.expect ls-files.actual &&
- 
- 	test-dump-split-index .git/index | sed "/^own/d" >actual &&
--	cat >expect <<EOF &&
--not a split index
--EOF
-+	cat >expect <<-EOF &&
-+	not a split index
-+	EOF
- 	test_cmp expect actual
- '
- 
++core.splitIndex::
++	If true, the split-index feature of the index will be used.
++	See linkgit:git-update-index[1]. False by default.
++
+ core.untrackedCache::
+ 	Determines what to do about the untracked cache feature of the
+ 	index. It will be kept, if this variable is unset or set to
 -- 
 2.12.0.206.g74921e51d6.dirty
 
