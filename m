@@ -2,111 +2,131 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2883320133
-	for <e@80x24.org>; Tue,  7 Mar 2017 00:37:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3DF9F20133
+	for <e@80x24.org>; Tue,  7 Mar 2017 00:59:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754562AbdCGAhe (ORCPT <rfc822;e@80x24.org>);
-        Mon, 6 Mar 2017 19:37:34 -0500
-Received: from mail-pf0-f174.google.com ([209.85.192.174]:33346 "EHLO
-        mail-pf0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754151AbdCGAhM (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Mar 2017 19:37:12 -0500
-Received: by mail-pf0-f174.google.com with SMTP id w189so66944948pfb.0
-        for <git@vger.kernel.org>; Mon, 06 Mar 2017 16:36:46 -0800 (PST)
+        id S1754198AbdCGA7E (ORCPT <rfc822;e@80x24.org>);
+        Mon, 6 Mar 2017 19:59:04 -0500
+Received: from mail-pf0-f169.google.com ([209.85.192.169]:34098 "EHLO
+        mail-pf0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754083AbdCGA7D (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 Mar 2017 19:59:03 -0500
+Received: by mail-pf0-f169.google.com with SMTP id v190so30394812pfb.1
+        for <git@vger.kernel.org>; Mon, 06 Mar 2017 16:57:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=DEg9DprlsJrrPhoaDfFv2bu7bF07t9VztKucWfPZDJQ=;
-        b=VLSKJwL+6NGFENg/+f5o7fuy8f/uUpp41opTx6ohPbPP0YgzjwLMT7FmnUxD8zuQsC
-         e40JHzhik7o6ye0obt8cmHNXUYTn+pXEE8gQLzZ5JtOkLYPFg4ZXttdyYCCycccZV/x7
-         gY6joMv4flNZcjBo7vYbjrHp3aiK/WWnUVjjUEWXBj5Muc13UJQ+F3hEl4V8F9lH32ey
-         ZzHbCUg+djLMI53WhhjigrvjAhvRXycrGNMjr2nq1fluoi2OZ/hBCBmlSOycNI4+IPtO
-         +BRvp/ZgxyXSpTQL6sI11/I0razdjMLVsAsBhR7I3rBmNG01gFR10B/LUngPc1hca1d+
-         NMKA==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=+4vzjgVOtb+QzAW4YWU4DYYFUpyRUgOrmBo6VEaH4pc=;
+        b=l6Dw9v9RZeRlNsE0BKBBcqS4zlE4k8VgMyTuu/0261fROFmPYO76aQ1W3d7RslKvAF
+         12FEz6/BSHVClVsaAwjWPaoYUlvKstFcJJZnKGkqLbKF2UlpvJoNNdxN9/VP2o1C5lfi
+         IYrxHtAwthkfCLvkWp113ynz9aU2HH4yTXNYX1ZzWzrFZPneS8fpoH0+I47bRvrS1rax
+         pEzIuGGziNGTnpyWGafHjPQVEeRixLXgu0O+YsJLoXpR/uyrhrAZ0ySO7V7S6Uh5zLLq
+         pWcByQL9DXzL0XIc/KMcQwaIXTyKOGkDyeOZ5PbNaKNsliVvcTkt1p42axO0fom7gFWs
+         kMtw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=DEg9DprlsJrrPhoaDfFv2bu7bF07t9VztKucWfPZDJQ=;
-        b=mlM/mES751Q95U4mjOmzIYFKj5/CaA426SncqscXd9pb+eKX1Xrfk+syU7voCFVv5H
-         djCAuKyvsz3+fPdskRgp+aRFZWfYPkUDEqeiyrWSwlU+REarBeB/t9Zt/Mncew+uLx+E
-         TXrXYRwOWwa+uxpRi1k/xV9dQvYl0OQUaFEoF7Fz6b5PeTKzujsseR4aOO8l97z6S5Lz
-         oKVqURsZtGfFob3dMYcMTNpYikkkBFvQ3vE2+byoEJotFytWTPbrvOIDW9dUH9XhsK/X
-         mEVesVs9a/enpt/y1m1AKZzJzDaipirJakOyNvP6KbaQATlCMC7MiX6mc9ZqIBIYsgms
-         CbDg==
-X-Gm-Message-State: AMke39nNafkobw3mjAhqX45TueEGm6WBfVb5dZxmJKsYgLQuIAg0CzJTQGiPl6vb7+NRN7qrsn1ozdkDAVWQ8PIU
-X-Received: by 10.98.112.134 with SMTP id l128mr24128670pfc.81.1488840267689;
- Mon, 06 Mar 2017 14:44:27 -0800 (PST)
-MIME-Version: 1.0
-Received: by 10.100.187.5 with HTTP; Mon, 6 Mar 2017 14:44:27 -0800 (PST)
-In-Reply-To: <20170223122346.12222-2-pclouds@gmail.com>
-References: <20170223122346.12222-1-pclouds@gmail.com> <20170223122346.12222-2-pclouds@gmail.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=+4vzjgVOtb+QzAW4YWU4DYYFUpyRUgOrmBo6VEaH4pc=;
+        b=jKl0yuvEW/pUFQ7i8KCBtNUBHH473h8NmBaejgm5juLfjMvEMl94IHe2LvuVsGRWNN
+         O9pN5Fi8rChWW0J5KVDbukMVlm8CTl3cneq50uabNQ3nzr8lNH+h0HeX0VZPdtHdeGc0
+         KLJwJnSAPqPyh/dVovssEYeCsb6WUG8ZEApWLMH5VhvUK2SFv3AcD2QDcaUSAQBwtH5P
+         p1/89KHIX3jg9nGJJJtPJFuqJPMzIjrcVEtH7gFOKa7Qr7LD4m4KAwrJEk48Clh8AGtq
+         n0grHARKLjod/XbX5785/XzWeBd+vrBtQqcpUQ4pGmYVvOk50hzIuOZe2HX7asZ7Yv1D
+         +4nQ==
+X-Gm-Message-State: AMke39mErgj+AWCxI3FTvv+fnmSHOuKDtxVncO21CB24W2wC9xj0yexTPmo8gSWbdC5KPSnV
+X-Received: by 10.99.105.66 with SMTP id e63mr22778444pgc.104.1488833971097;
+        Mon, 06 Mar 2017 12:59:31 -0800 (PST)
+Received: from localhost ([2620:0:1000:5b10:44ae:633a:9d1d:6402])
+        by smtp.gmail.com with ESMTPSA id o189sm41542990pga.12.2017.03.06.12.59.30
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Mon, 06 Mar 2017 12:59:30 -0800 (PST)
 From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 6 Mar 2017 14:44:27 -0800
-Message-ID: <CAGZ79kboaKfzMEyDjg-m2oK8CX6B56i52ZcWhCaq87ECE9x2Dw@mail.gmail.com>
-Subject: Re: [PATCH v5 1/1] config: add conditional include
-To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        Sebastian Schuberth <sschuberth@gmail.com>,
-        Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Content-Type: text/plain; charset=UTF-8
+To:     sbeller@google.com, gitster@pobox.com
+Cc:     git@vger.kernel.org, bmwill@google.com, novalis@novalis.org,
+        sandals@crustytoothpaste.net, hvoigt@hvoigt.net,
+        jrnieder@gmail.com, ramsay@ramsayjones.plus.com
+Subject: [PATCH 06/18] make is_submodule_populated gently
+Date:   Mon,  6 Mar 2017 12:59:07 -0800
+Message-Id: <20170306205919.9713-7-sbeller@google.com>
+X-Mailer: git-send-email 2.12.0.rc1.52.ge239d7e709.dirty
+In-Reply-To: <20170306205919.9713-1-sbeller@google.com>
+References: <20170302004759.27852-1-sbeller@google.com>
+ <20170306205919.9713-1-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Being late to the review party here.
+We need the gentle version in a later patch. As we have just one caller,
+migrate the caller.
 
-> +static int include_condition_is_true(const char *cond, size_t cond_len)
-> +{
-...
-> +
-> +       error(_("unrecognized include condition: %.*s"), (int)cond_len, cond);
-> +       /* unknown conditionals are always false */
-> +       return 0;
-> +}
-
-Thanks for putting an error message here. I was looking at what
-is currently queued as origin/nd/conditional-config-include,
-which doesn't have this error()  (yet / not any more?)
-
-I'd strongly suggest to keep the error message here as that way
-a user can diagnose e.g. a typo in the condition easily.
-
-If we plan to extend this list of conditions in the future, and a user
-switches between versions of git, then they may see this message
-on a regular basis (whenever they use the 'old' version).
-
-In that case it may be only a warning() instead of an error(),
-but I have no strong opinion on that.
-
+Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
-Reason why I am reviewing this series now:
+ builtin/grep.c | 2 +-
+ submodule.c    | 7 ++-----
+ submodule.h    | 8 +++++++-
+ 3 files changed, 10 insertions(+), 7 deletions(-)
 
-I thought about extending the config system for submodule
-usage (see debate at [1]).
+diff --git a/builtin/grep.c b/builtin/grep.c
+index 2c727ef499..b17835aed6 100644
+--- a/builtin/grep.c
++++ b/builtin/grep.c
+@@ -616,7 +616,7 @@ static int grep_submodule(struct grep_opt *opt, const unsigned char *sha1,
+ {
+ 	if (!is_submodule_initialized(path))
+ 		return 0;
+-	if (!is_submodule_populated(path)) {
++	if (!is_submodule_populated_gently(path, NULL)) {
+ 		/*
+ 		 * If searching history, check for the presense of the
+ 		 * submodule's gitdir before skipping the submodule.
+diff --git a/submodule.c b/submodule.c
+index 3b98766a6b..0e55372f37 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -234,15 +234,12 @@ int is_submodule_initialized(const char *path)
+ 	return ret;
+ }
+ 
+-/*
+- * Determine if a submodule has been populated at a given 'path'
+- */
+-int is_submodule_populated(const char *path)
++int is_submodule_populated_gently(const char *path, int *return_error_code)
+ {
+ 	int ret = 0;
+ 	char *gitdir = xstrfmt("%s/.git", path);
+ 
+-	if (resolve_gitdir(gitdir))
++	if (resolve_gitdir_gently(gitdir, return_error_code))
+ 		ret = 1;
+ 
+ 	free(gitdir);
+diff --git a/submodule.h b/submodule.h
+index 05ab674f06..0b915bd3ac 100644
+--- a/submodule.h
++++ b/submodule.h
+@@ -41,7 +41,13 @@ extern int submodule_config(const char *var, const char *value, void *cb);
+ extern void gitmodules_config(void);
+ extern void gitmodules_config_sha1(const unsigned char *commit_sha1);
+ extern int is_submodule_initialized(const char *path);
+-extern int is_submodule_populated(const char *path);
++/*
++ * Determine if a submodule has been populated at a given 'path' by checking if
++ * the <path>/.git resolves to a valid git repository.
++ * If return_error_code is NULL, die on error.
++ * Otherwise the return error code is the same as of resolve_gitdir_gently.
++ */
++extern int is_submodule_populated_gently(const char *path, int *return_error_code);
+ extern int parse_submodule_update_strategy(const char *value,
+ 		struct submodule_update_strategy *dst);
+ extern const char *submodule_strategy_to_string(const struct submodule_update_strategy *s);
+-- 
+2.12.0.rc1.52.ge239d7e709.dirty
 
-My gut reaction was to have a condition for "if a superproject
-exists" and then include a special config (e.g. "config.super"
-in the superprojects $GIT_DIR).
-
-However while reviewing these patches I realized
-I am not interested in conditional includes, but when setting
-up the submodules we know for a fact that we have a superproject,
-so no conditional needed. Instead we need a special markup
-of paths, i.e. we want to have an easy way to say
-"$GIT_DIR of superproject". Ideas how to do that?
-
-Thanks,
-Stefan
-
-[1] https://public-inbox.org/git/84fcb0bd-85dc-0142-dd58-47a04eaa7c2b@durchholz.org/
