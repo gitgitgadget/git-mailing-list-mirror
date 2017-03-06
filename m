@@ -2,73 +2,75 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CFF86202D7
-	for <e@80x24.org>; Mon,  6 Mar 2017 05:34:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C1F95202D7
+	for <e@80x24.org>; Mon,  6 Mar 2017 06:09:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752780AbdCFFeE (ORCPT <rfc822;e@80x24.org>);
-        Mon, 6 Mar 2017 00:34:04 -0500
-Received: from mout.web.de ([212.227.15.3]:54393 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752789AbdCFFd0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Mar 2017 00:33:26 -0500
-Received: from [192.168.88.199] ([194.47.243.242]) by smtp.web.de (mrweb002
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0LsyBm-1cIU0W0VlC-012Xdv; Mon, 06
- Mar 2017 06:33:22 +0100
-Subject: Re: Git download
-To:     Cory Kilpatrick <haeltotoe@gmail.com>, git@vger.kernel.org
-References: <6BB71432-FB8F-458B-A1FF-EBF93565E6D8@gmail.com>
-From:   =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
-Message-ID: <f59daa22-311e-403a-a5f8-7a2a4ed92dcd@web.de>
-Date:   Mon, 6 Mar 2017 06:33:14 +0100
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:45.0) Gecko/20100101
- Icedove/45.5.1
-MIME-Version: 1.0
-In-Reply-To: <6BB71432-FB8F-458B-A1FF-EBF93565E6D8@gmail.com>
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K0:OjnyVjISPzHkRcWr8BHB0l9qOx4nIyhPomVimYdvYRsExjB63oc
- 8LwFS/Gm0rjkTP8GUyb4lslnkbUzPs/f5EvpEJ3bScaYXJW2nJ899UfJ5qgjFJguTRo7KQy
- Jqs6YtTUS9x1N2Na8JvtApfsEVF5EBOtSAlXb/wfEwhrQIvMt6TXBSp4RWU4KLuituD2aQ/
- s6rRGaaVr6vlze+tDk6uQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:1H18+PemPKM=:f+d2y2KPh1sGrfP3tQkZ/N
- evSqK+2WSFvouLWg/oxJaCZgTuz1OPXnmu54J4qOhmRD4xlpgwHjasisb50Y81oKMsd1DemTR
- MAXMshIyW/V3++S1ZGnlWnON0DEG+Vae6IVT0y/5shkrYqeJnsiwVLBAEB/7YV/ipdgjLE3wG
- JiIw6AMf8hLRRNuzIlZs20GxuW+tD64Eutuu7G2V9qb0BV4Y0UJ6fHzriQvgQv4ThDyRdMJ0X
- kLtjTTir8Owc7W0FhV5WoCw4WaQTVBO2BC+vJi1kOTq90fJfPkJpbcGetZ2iYAA7Ki4K2mrFt
- 97LaZmouHkD9OZtRgVGwGPUEFTqA0kiGybPv5ioH3rYvmeDIWPvuz/pCsBqhsN9n0rLB3mnjE
- KDfRqTrzvCv7P0Iy12oZ1TvFtUWQNVbecunVYhgaDKkpLq+Oki5BVBBvYW+9XoEQW6h8sPhSX
- 4+HvSeLGTUXxvm9y9pk37ExqWCFt8SZlrxu0GLBI+ydnUlCD8It/arnl+PjS7o8dTkRNaSjKr
- 2rJuNsrPuQELenJMqyY8VXzYnCFYXnvv63i1iuMdoIbPzp730XP8lwSlgheRyCKwPq9ydF9c5
- XdgjNfZ97fYYWj0eLgt8o4aR8BsDx1N8Cv1Iz055qmtmlalfy9+sKK+yP9DW4/+qvAilBf0Zh
- CcXKntY5O6/bP1Ot8Zom2/2o2uKIu7rUPZHB5077YQUClYpPLblryg1KbKpMLXMfphggDU+nb
- UJgeTsF+WPAFSaRCmM9PRF48aIp3S//co6r1TjEZbo+IhyghDeTeqXtf93mcUBj0x/FbLzSQF
- TqH6vZb
+        id S1752820AbdCFGJl (ORCPT <rfc822;e@80x24.org>);
+        Mon, 6 Mar 2017 01:09:41 -0500
+Received: from ns2.cosmo.co.jp ([122.212.38.242]:60806 "EHLO nmx3.cosmo.co.jp"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1752738AbdCFGJk (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 Mar 2017 01:09:40 -0500
+Received: from vm_mars.gtd.cosmo.co.jp (mars.gtd.cosmo.co.jp [192.168.201.58])
+        by nmx3.cosmo.co.jp (Postfix/COSMO-R1.3) with ESMTP id 2C65B13F812;
+        Mon,  6 Mar 2017 14:59:41 +0900 (JST)
+Received: from localhost.localdomain (unknown [192.168.206.51])
+        by vm_mars.gtd.cosmo.co.jp (Postfix/COSMO-R1.2) with ESMTP id 218FA619E6;
+        Mon,  6 Mar 2017 14:59:41 +0900 (JST)
+From:   Hiroshi Shirosaki <h.shirosaki@gmail.com>
+To:     e@80x24.org
+Cc:     git@vger.kernel.org, Hiroshi Shirosaki <h.shirosaki@gmail.com>
+Subject: [PATCH v2] git svn: fix authenticaton with 'branch'
+Date:   Mon,  6 Mar 2017 14:59:07 +0900
+Message-Id: <1488779947-25264-1-git-send-email-h.shirosaki@gmail.com>
+X-Mailer: git-send-email 2.7.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 03/05/2017 09:26 PM, Cory Kilpatrick wrote:
-> I have downloaded Git and cannot find the application on my Mac. Should I try to download it again?
+Authentication fails with svn branch while svn rebase and
+svn dcommit work fine without authentication failures.
 
-I don't think so.
+$ git svn branch v7_3
+Copying https://xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx at r27519
+to https://xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx/v7_3...
+Can't create session: Unable to connect to a repository at URL
+'https://xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx': No more
+credentials or we tried too many times.
+Authentication failed at
+C:\Program Files\Git\mingw64/libexec/git-core\git-svn line 1200.
 
-It could be helpful if we can get some more information:
+We add auth configuration to SVN::Client->new() to fix the issue.
 
-- Could you open the terminal application and type
+Signed-off-by: Hiroshi Shirosaki <h.shirosaki@gmail.com>
+---
+ git-svn.perl | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-  which git
-
-git --version
-
-and post the results here ?
-It may be worth to mention that Git is a command line tool, so that you 
-may not
-
-see anything in the "Applications" folder.
+diff --git a/git-svn.perl b/git-svn.perl
+index fa42364..d240418 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -1175,10 +1175,10 @@ sub cmd_branch {
+ 	::_req_svn();
+ 	require SVN::Client;
+ 
++	my ($config, $baton, undef) = Git::SVN::Ra::prepare_config_once();
+ 	my $ctx = SVN::Client->new(
+-		config => SVN::Core::config_get_config(
+-			$Git::SVN::Ra::config_dir
+-		),
++		auth => $baton,
++		config => $config,
+ 		log_msg => sub {
+ 			${ $_[0] } = defined $_message
+ 				? $_message
+-- 
+2.7.4
 
