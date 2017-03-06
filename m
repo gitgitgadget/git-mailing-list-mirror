@@ -7,45 +7,45 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 711481FBEC
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5C2E91FBEC
 	for <e@80x24.org>; Mon,  6 Mar 2017 09:52:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753726AbdCFJwD (ORCPT <rfc822;e@80x24.org>);
-        Mon, 6 Mar 2017 04:52:03 -0500
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:34810 "EHLO
-        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754190AbdCFJvz (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Mar 2017 04:51:55 -0500
-Received: by mail-wm0-f65.google.com with SMTP id u132so4738743wmg.1
-        for <git@vger.kernel.org>; Mon, 06 Mar 2017 01:51:54 -0800 (PST)
+        id S1753742AbdCFJv5 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 6 Mar 2017 04:51:57 -0500
+Received: from mail-wr0-f194.google.com ([209.85.128.194]:36309 "EHLO
+        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753744AbdCFJvh (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 Mar 2017 04:51:37 -0500
+Received: by mail-wr0-f194.google.com with SMTP id l37so20948649wrc.3
+        for <git@vger.kernel.org>; Mon, 06 Mar 2017 01:51:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=fDSdjrPG6hZFSG+qnCorLvBP6CWSS1xleqqIsUzmE2s=;
-        b=AjW87TpsxsoChrxKFAi6YPbjVfWBd2yPxtcKwfHeqN85hETc0jM27j22k/Djuln3X8
-         mdSW+YZm3PKsWYlVe8q7SFwk4GddL/mPX9uBlbctVecUoYFSqrdVl3s616Fp353I6DVi
-         XylDJ3jv8yFWLfLbvSqLfhpzNDcNB9yIlr0oK+3XA4fvIy1z/dwC3+cmM3lwhDj33tsu
-         5pgjG2sXcnj2epPvJ9pIOOI0o1VnwJXTL9yPfTfJr/pRjJi65uxUq9vYz1sLeEFLTKZJ
-         r0Ege0DQDyAbQoxitVKWo9j8cfhYPmnewLwIbI56OJFto2ybqJ/q+HSVGFZVSiCE93OO
-         X6BA==
+        bh=tfLOpdbmM4s4Hes0s+Xmn8aSmHQlwRaoaYGkBSiX6Pc=;
+        b=vKYePI+JYhhldrGwQmFU0LTu3tNzoiJDjMkdz7TARO/6orm66WgqzcvBPxDD8YHgEm
+         LtwipYF9jErHvXTk01A3AD4nyuwobpokRKR74ztFJgfogaAoeU26yVkIuORp7gdk4oGD
+         RUhFVGheBY55+pCG0lsmsAx9TSfmIzyaaypVEXaRpUIhqYIQ9GnvpU5Maje3D+hbmwvG
+         NEn5mMLRLYHa/nQM2/InqTvbrWDiBsspLlB+nareS7KA3eVZHcZv3hAFGWNk09l5xsfJ
+         cX5ThqPEz5PiTo4sT+OiQjG1EeMxN7nvUg2oYnn5DI25urnFDmmD0Ond7Xul98OEU1y9
+         UoyQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=fDSdjrPG6hZFSG+qnCorLvBP6CWSS1xleqqIsUzmE2s=;
-        b=jADfdMs+YoAx4qnoPvlnU0BYCxv/9+Ypfu8+9orWA6XjBRpu7eoEx5RB95wAc/CwWV
-         kIW2taHLN5765Ze4lPGp05g5I13F2GnKeZ659sJ22gFUuOlUG40YK+uvjrgeedhwRLfM
-         AbCfkE0FPtDx4wevk6WN3YHHBpAnHOSDGr+2HqmrG3ILnhxYau4Hqfqy30hhANZKlxET
-         9GkktsIq+n/z6Fa00PELdiTsT4Oqizz/tZHa31eUvRyENcsIRF7qyGYJhbduQDcmAoJ0
-         QpGmN7NR5JQAuDaUypRnjIIRspBc5jzQqwJc5z5HRYfBdzvsjtEDf89vceBwTW9LA/KD
-         CLMQ==
-X-Gm-Message-State: AMke39n97N+Cy4uiW5KPUuolocDibsy4wuZ4Gua2zgYiu6I3F4GKc/+aYDF6Z8L+PGdK3Q==
-X-Received: by 10.28.141.16 with SMTP id p16mr11765408wmd.42.1488793359744;
-        Mon, 06 Mar 2017 01:42:39 -0800 (PST)
+        bh=tfLOpdbmM4s4Hes0s+Xmn8aSmHQlwRaoaYGkBSiX6Pc=;
+        b=LP9cUpehnw8ym6bD0yi5doAKVMxoX6REyiGJRoSDytSREXkT9EGBMwyOJxILt4Biw8
+         ECMmfHLXrB4041S5OrsNzKCi25eCUsg6gKK5mt1Bcnh13NzIL5KaKOUzeLBxNjIA2dzd
+         FgBGqzII3kRJmL8xWbc9n0t8/rJmFVNPqG2+cWG5wT6sFPpFzaK3t8jBMLEMaRMbzl8y
+         g4bmtzEDj739+TCpg5hl5+JyYrg7I+E2rjtrLheYjdClYYOyxc5/R35XhIOrAcXC0fcv
+         UijBBf6tLaotFqLxIsmopPmloF0EtVOZOC6EjLKTamaHfcdm0kmKfPXxeIDBxsMTgYmG
+         jXVw==
+X-Gm-Message-State: AMke39mZngAG4JNamMi+pwV4sSCLd7mrnQ0b6Rmf1rlOrOKe+PlBhB1XEy23ebDjSE5Jhw==
+X-Received: by 10.223.139.12 with SMTP id n12mr13155940wra.176.1488793354646;
+        Mon, 06 Mar 2017 01:42:34 -0800 (PST)
 Received: from localhost.localdomain (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr. [128.78.31.246])
-        by smtp.gmail.com with ESMTPSA id 191sm14144086wmo.21.2017.03.06.01.42.38
+        by smtp.gmail.com with ESMTPSA id 191sm14144086wmo.21.2017.03.06.01.42.33
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 06 Mar 2017 01:42:38 -0800 (PST)
+        Mon, 06 Mar 2017 01:42:33 -0800 (PST)
 From:   Christian Couder <christian.couder@gmail.com>
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 To:     git@vger.kernel.org
@@ -55,9 +55,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         <avarab@gmail.com>, Ramsay Jones <ramsay@ramsayjones.plus.com>,
         Jeff King <peff@peff.net>,
         Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v5 16/22] config: add git_config_get_expiry() from gc.c
-Date:   Mon,  6 Mar 2017 10:41:57 +0100
-Message-Id: <20170306094203.28250-17-chriscool@tuxfamily.org>
+Subject: [PATCH v5 12/22] t1700: add tests for splitIndex.maxPercentChange
+Date:   Mon,  6 Mar 2017 10:41:53 +0100
+Message-Id: <20170306094203.28250-13-chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.12.0.206.g74921e51d6.dirty
 In-Reply-To: <20170306094203.28250-1-chriscool@tuxfamily.org>
 References: <20170306094203.28250-1-chriscool@tuxfamily.org>
@@ -66,91 +66,92 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This function will be used in a following commit to get the expiration
-time of the shared index files from the config, and it is generic
-enough to be put in "config.c".
-
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- builtin/gc.c | 18 +++---------------
- cache.h      |  3 +++
- config.c     | 13 +++++++++++++
- 3 files changed, 19 insertions(+), 15 deletions(-)
+ t/t1700-split-index.sh | 72 ++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 72 insertions(+)
 
-diff --git a/builtin/gc.c b/builtin/gc.c
-index a2b9e8924e..56ab74f6ba 100644
---- a/builtin/gc.c
-+++ b/builtin/gc.c
-@@ -64,17 +64,6 @@ static void report_pack_garbage(unsigned seen_bits, const char *path)
- 		string_list_append(&pack_garbage, path);
- }
+diff --git a/t/t1700-split-index.sh b/t/t1700-split-index.sh
+index 9d7c01c3e1..00a64bed97 100755
+--- a/t/t1700-split-index.sh
++++ b/t/t1700-split-index.sh
+@@ -254,4 +254,76 @@ test_expect_success 'set core.splitIndex config variable to false' '
+ 	test_cmp expect actual
+ '
  
--static void git_config_date_string(const char *key, const char **output)
--{
--	if (git_config_get_string_const(key, output))
--		return;
--	if (strcmp(*output, "now")) {
--		unsigned long now = approxidate("now");
--		if (approxidate(*output) >= now)
--			git_die_config(key, _("Invalid %s: '%s'"), key, *output);
--	}
--}
--
- static void process_log_file(void)
- {
- 	struct stat st;
-@@ -131,10 +120,9 @@ static void gc_config(void)
- 	git_config_get_int("gc.auto", &gc_auto_threshold);
- 	git_config_get_int("gc.autopacklimit", &gc_auto_pack_limit);
- 	git_config_get_bool("gc.autodetach", &detach_auto);
--	git_config_date_string("gc.pruneexpire", &prune_expire);
--	git_config_date_string("gc.worktreepruneexpire", &prune_worktrees_expire);
--	git_config_date_string("gc.logexpiry", &gc_log_expire);
--
-+	git_config_get_expiry("gc.pruneexpire", &prune_expire);
-+	git_config_get_expiry("gc.worktreepruneexpire", &prune_worktrees_expire);
-+	git_config_get_expiry("gc.logexpiry", &gc_log_expire);
- 	git_config(git_default_config, NULL);
- }
- 
-diff --git a/cache.h b/cache.h
-index a35e9d5187..65ab507a76 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1932,6 +1932,9 @@ extern int git_config_get_untracked_cache(void);
- extern int git_config_get_split_index(void);
- extern int git_config_get_max_percent_split_change(void);
- 
-+/* This dies if the configured or default date is in the future */
-+extern int git_config_get_expiry(const char *key, const char **output);
++test_expect_success 'set core.splitIndex config variable to true' '
++	git config core.splitIndex true &&
++	: >three &&
++	git update-index --add three &&
++	BASE=$(test-dump-split-index .git/index | grep "^base") &&
++	test-dump-split-index .git/index | sed "/^own/d" >actual &&
++	cat >expect <<-EOF &&
++	$BASE
++	replacements:
++	deletions:
++	EOF
++	test_cmp expect actual &&
++	: >four &&
++	git update-index --add four &&
++	test-dump-split-index .git/index | sed "/^own/d" >actual &&
++	cat >expect <<-EOF &&
++	$BASE
++	100644 e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 0	four
++	replacements:
++	deletions:
++	EOF
++	test_cmp expect actual
++'
 +
- /*
-  * This is a hack for test programs like test-dump-untracked-cache to
-  * ensure that they do not modify the untracked cache when reading it.
-diff --git a/config.c b/config.c
-index 35b6f02960..f20d7d88f7 100644
---- a/config.c
-+++ b/config.c
-@@ -1712,6 +1712,19 @@ int git_config_get_pathname(const char *key, const char **dest)
- 	return ret;
- }
- 
-+int git_config_get_expiry(const char *key, const char **output)
-+{
-+	int ret = git_config_get_string_const(key, output);
-+	if (ret)
-+		return ret;
-+	if (strcmp(*output, "now")) {
-+		unsigned long now = approxidate("now");
-+		if (approxidate(*output) >= now)
-+			git_die_config(key, _("Invalid %s: '%s'"), key, *output);
-+	}
-+	return ret;
-+}
++test_expect_success 'check behavior with splitIndex.maxPercentChange unset' '
++	git config --unset splitIndex.maxPercentChange &&
++	: >five &&
++	git update-index --add five &&
++	BASE=$(test-dump-split-index .git/index | grep "^base") &&
++	test-dump-split-index .git/index | sed "/^own/d" >actual &&
++	cat >expect <<-EOF &&
++	$BASE
++	replacements:
++	deletions:
++	EOF
++	test_cmp expect actual &&
++	: >six &&
++	git update-index --add six &&
++	test-dump-split-index .git/index | sed "/^own/d" >actual &&
++	cat >expect <<-EOF &&
++	$BASE
++	100644 e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 0	six
++	replacements:
++	deletions:
++	EOF
++	test_cmp expect actual
++'
 +
- int git_config_get_untracked_cache(void)
- {
- 	int val = -1;
++test_expect_success 'check splitIndex.maxPercentChange set to 0' '
++	git config splitIndex.maxPercentChange 0 &&
++	: >seven &&
++	git update-index --add seven &&
++	BASE=$(test-dump-split-index .git/index | grep "^base") &&
++	test-dump-split-index .git/index | sed "/^own/d" >actual &&
++	cat >expect <<-EOF &&
++	$BASE
++	replacements:
++	deletions:
++	EOF
++	test_cmp expect actual &&
++	: >eight &&
++	git update-index --add eight &&
++	BASE=$(test-dump-split-index .git/index | grep "^base") &&
++	test-dump-split-index .git/index | sed "/^own/d" >actual &&
++	cat >expect <<-EOF &&
++	$BASE
++	replacements:
++	deletions:
++	EOF
++	test_cmp expect actual
++'
++
+ test_done
 -- 
 2.12.0.206.g74921e51d6.dirty
 
