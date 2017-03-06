@@ -7,45 +7,45 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 634941FBEC
+	by dcvr.yhbt.net (Postfix) with ESMTP id 79F961FBEC
 	for <e@80x24.org>; Mon,  6 Mar 2017 09:49:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754004AbdCFJtf (ORCPT <rfc822;e@80x24.org>);
-        Mon, 6 Mar 2017 04:49:35 -0500
-Received: from mail-wr0-f193.google.com ([209.85.128.193]:35271 "EHLO
-        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753926AbdCFJtc (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1753784AbdCFJti (ORCPT <rfc822;e@80x24.org>);
+        Mon, 6 Mar 2017 04:49:38 -0500
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:33594 "EHLO
+        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752920AbdCFJtc (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 6 Mar 2017 04:49:32 -0500
-Received: by mail-wr0-f193.google.com with SMTP id u108so17010930wrb.2
+Received: by mail-wm0-f68.google.com with SMTP id n11so12762311wma.0
         for <git@vger.kernel.org>; Mon, 06 Mar 2017 01:49:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=5s0oWsjM2ZBrJ0oO61uN7NLu3RSRGmPtljG0m6awkuQ=;
-        b=U/bkc+8KsyOvlt8AKYZZ1ZUSubwyj7vASJmf75ogklG3iOgIkYvD2ZY+hotQ0UmhX0
-         V/tV7Kq+wMP7U1sRwDkg+QDU+tR3NXKUTlb0E7TMRXwvxtoCKeezLueINGqjhNJ0FqjU
-         zn4TaKdL/FaTF4j1zjjVlKTDWawNwhKLoh04ggI2HEwzWRiZ6ZL5Hht4aQMkhciZVkwh
-         gRWKNFMA2ZB7mSxExuJ+MGJiREiqrIU3C46PVLIhM4L3Ava5fLEGRBd0L7w4ep+MNVX+
-         g72TyPK90eD+w5AQLoxvYIh/+KVoXdgkmvr4ecqTNA08kShmpYx6oycBoPAZ6x4vauXt
-         oAJQ==
+        bh=GW01GWqYhi+ewc+xySxnvW4H0jrjdPuwpuWtXHnyNgI=;
+        b=jINCs20YfuP8BZRYJ/9s5JU1z5EQppO15HNlREeciCIl3VAy617KobMwmWef1Px7vN
+         gvoEaVQfFuCpQFQ3/oP4e9X1TKTR63OCgpMXG/1gnv8gmhZd6VnS1V3zirJSXCYTIkeu
+         K5+EhNduOvj6RPiuFPhPcKMi3RtIF1e4djsJHd/gVzCEK0sgT4fWXygANcAjjRdF+hH7
+         jXKw9cAQmGVV969w7tF5Ptg4EWd0hKQoAt2btjrRFneCNo8RDXI7LkK4RQNA3qRpZ7FS
+         1fQ0jz9ucjphzDaA0XdXrtqBE3Dsah+TrYQzbiBgPSRLBKLFA/9TwrKbmtlM8D+I3Ib1
+         MCFw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=5s0oWsjM2ZBrJ0oO61uN7NLu3RSRGmPtljG0m6awkuQ=;
-        b=VPRMaAtmCweb37gpDlOUVqMzRzOzcwqGeoEQO3k5oB+bw44VGuLp6/mDiaNkxsPuIK
-         44yiuvluRpgqQhsl/VjJOzpTUZs4oE/+v1pUs4ujjQGJ6leqCqfuFhaR8qlOY/nuswfE
-         f/DR7gLbyFsrUb3199S23zJchwzbV3bozLy65INdz5cOj3Rz0GKuNwNK+zmWerttrBD0
-         Oue8gUfC/ySIkBqjVnp8UwHldUKJjNXgrcm3ekjE88b7GOQoOUKPtbmDNbQRXj+dyCyb
-         PZQigx2/TrwiamUh6y3fRFt+rrYyzywcYBETR7Dut4UJYMWhhZ61fhvRUUFNbXwCTMA+
-         buyg==
-X-Gm-Message-State: AMke39nY2GuocwIwbfvThDTC0RMOYINYKzlB+OESlzOhFd4D6/h4cQiZtLe625HFqXV9nw==
-X-Received: by 10.223.136.4 with SMTP id d4mr13714468wrd.44.1488793350005;
-        Mon, 06 Mar 2017 01:42:30 -0800 (PST)
+        bh=GW01GWqYhi+ewc+xySxnvW4H0jrjdPuwpuWtXHnyNgI=;
+        b=o3CPgmSSLy1t0dzWvZTTRDWdzdJK59CftfYFXBCzomlZJgn9bsrdEq+IqJt6cvNPtd
+         AioqQazEeegd8H1wcR8kFmjCw3SfUzUJwsfw3oA4AYfa8i3DgTvTJcwocQy0ohVckng/
+         3opnzAy0uihs4SHohNrFgTpA+oHuwDlwbcnvYO2Bj+Y9pTWpGhv84OdWOdBlqdHPSNIJ
+         22sdjqm05gXt23SEWgBtNH7aCCF9eL4o4gcTOO6FNCJdq4zPqKhBYistfOsVMla1TWRI
+         XV/ZXiAF/8GjfEm3n27ghMjBWlMvLzeY1OfAdZ1jNClE5EKVoirQSkpYulVWG1pYOQYV
+         g29Q==
+X-Gm-Message-State: AMke39moYpNzos+WLBiqBp6nmoPq2V9m8A+rHd7x1sdYw7uhFSP5DUTlkQHmbL/D26xfVA==
+X-Received: by 10.28.165.70 with SMTP id o67mr12297603wme.11.1488793367925;
+        Mon, 06 Mar 2017 01:42:47 -0800 (PST)
 Received: from localhost.localdomain (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr. [128.78.31.246])
-        by smtp.gmail.com with ESMTPSA id 191sm14144086wmo.21.2017.03.06.01.42.28
+        by smtp.gmail.com with ESMTPSA id 191sm14144086wmo.21.2017.03.06.01.42.46
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 06 Mar 2017 01:42:28 -0800 (PST)
+        Mon, 06 Mar 2017 01:42:46 -0800 (PST)
 From:   Christian Couder <christian.couder@gmail.com>
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 To:     git@vger.kernel.org
@@ -55,9 +55,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         <avarab@gmail.com>, Ramsay Jones <ramsay@ramsayjones.plus.com>,
         Jeff King <peff@peff.net>,
         Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v5 09/22] Documentation/git-update-index: talk about core.splitIndex config var
-Date:   Mon,  6 Mar 2017 10:41:50 +0100
-Message-Id: <20170306094203.28250-10-chriscool@tuxfamily.org>
+Subject: [PATCH v5 22/22] Documentation/git-update-index: explain splitIndex.*
+Date:   Mon,  6 Mar 2017 10:42:03 +0100
+Message-Id: <20170306094203.28250-23-chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.12.0.206.g74921e51d6.dirty
 In-Reply-To: <20170306094203.28250-1-chriscool@tuxfamily.org>
 References: <20170306094203.28250-1-chriscool@tuxfamily.org>
@@ -68,26 +68,78 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- Documentation/git-update-index.txt | 6 ++++++
- 1 file changed, 6 insertions(+)
+ Documentation/config.txt           |  2 +-
+ Documentation/git-update-index.txt | 37 +++++++++++++++++++++++++++++--------
+ 2 files changed, 30 insertions(+), 9 deletions(-)
 
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 2afd5d982b..24ed9c476d 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -2873,7 +2873,7 @@ splitIndex.sharedIndexExpire::
+ 	The default value is "2.weeks.ago".
+ 	Note that a shared index file is considered modified (for the
+ 	purpose of expiration) each time a new split-index file is
+-	created based on it.
++	either created based on it or read from it.
+ 	See linkgit:git-update-index[1].
+ 
+ status.relativePaths::
 diff --git a/Documentation/git-update-index.txt b/Documentation/git-update-index.txt
-index 7386c93162..e091b2a409 100644
+index e091b2a409..1579abf3c3 100644
 --- a/Documentation/git-update-index.txt
 +++ b/Documentation/git-update-index.txt
-@@ -171,6 +171,12 @@ may not support it yet.
- 	given again, all changes in $GIT_DIR/index are pushed back to
- 	the shared index file. This mode is designed for very large
- 	indexes that take a significant amount of time to read or write.
-++
-+These options take effect whatever the value of the `core.splitIndex`
-+configuration variable (see linkgit:git-config[1]). But a warning is
-+emitted when the change goes against the configured value, as the
-+configured value will take effect next time the index is read and this
-+will remove the intended effect of the option.
+@@ -163,14 +163,10 @@ may not support it yet.
  
- --untracked-cache::
- --no-untracked-cache::
+ --split-index::
+ --no-split-index::
+-	Enable or disable split index mode. If enabled, the index is
+-	split into two files, $GIT_DIR/index and $GIT_DIR/sharedindex.<SHA-1>.
+-	Changes are accumulated in $GIT_DIR/index while the shared
+-	index file contains all index entries stays unchanged. If
+-	split-index mode is already enabled and `--split-index` is
+-	given again, all changes in $GIT_DIR/index are pushed back to
+-	the shared index file. This mode is designed for very large
+-	indexes that take a significant amount of time to read or write.
++	Enable or disable split index mode. If split-index mode is
++	already enabled and `--split-index` is given again, all
++	changes in $GIT_DIR/index are pushed back to the shared index
++	file.
+ +
+ These options take effect whatever the value of the `core.splitIndex`
+ configuration variable (see linkgit:git-config[1]). But a warning is
+@@ -394,6 +390,31 @@ Although this bit looks similar to assume-unchanged bit, its goal is
+ different from assume-unchanged bit's. Skip-worktree also takes
+ precedence over assume-unchanged bit when both are set.
+ 
++Split index
++-----------
++
++This mode is designed for repositories with very large indexes, and
++aims at reducing the time it takes to repeatedly write these indexes.
++
++In this mode, the index is split into two files, $GIT_DIR/index and
++$GIT_DIR/sharedindex.<SHA-1>. Changes are accumulated in
++$GIT_DIR/index, the split index, while the shared index file contains
++all index entries and stays unchanged.
++
++All changes in the split index are pushed back to the shared index
++file when the number of entries in the split index reaches a level
++specified by the splitIndex.maxPercentChange config variable (see
++linkgit:git-config[1]).
++
++Each time a new shared index file is created, the old shared index
++files are deleted if their modification time is older than what is
++specified by the splitIndex.sharedIndexExpire config variable (see
++linkgit:git-config[1]).
++
++To avoid deleting a shared index file that is still used, its
++modification time is updated to the current time everytime a new split
++index based on the shared index file is either created or read from.
++
+ Untracked cache
+ ---------------
+ 
 -- 
 2.12.0.206.g74921e51d6.dirty
 
