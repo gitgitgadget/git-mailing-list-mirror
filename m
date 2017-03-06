@@ -6,53 +6,53 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A447920133
-	for <e@80x24.org>; Mon,  6 Mar 2017 21:07:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1EBC520133
+	for <e@80x24.org>; Mon,  6 Mar 2017 21:07:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754545AbdCFVHa (ORCPT <rfc822;e@80x24.org>);
-        Mon, 6 Mar 2017 16:07:30 -0500
-Received: from mail-pf0-f173.google.com ([209.85.192.173]:34376 "EHLO
-        mail-pf0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754540AbdCFVH1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Mar 2017 16:07:27 -0500
-Received: by mail-pf0-f173.google.com with SMTP id v190so28310728pfb.1
-        for <git@vger.kernel.org>; Mon, 06 Mar 2017 13:07:16 -0800 (PST)
+        id S1754601AbdCFVHk (ORCPT <rfc822;e@80x24.org>);
+        Mon, 6 Mar 2017 16:07:40 -0500
+Received: from mail-pg0-f51.google.com ([74.125.83.51]:33625 "EHLO
+        mail-pg0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754593AbdCFVHg (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 Mar 2017 16:07:36 -0500
+Received: by mail-pg0-f51.google.com with SMTP id 25so70461820pgy.0
+        for <git@vger.kernel.org>; Mon, 06 Mar 2017 13:07:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=WxV2QqHuHO8Zz19GGl3rfdjw5ZS09oW0s9B8Gyt20U8=;
-        b=A+SRhFTw2W+ycfgrSKTpelWQc5Su5HdGUyIyTTB9hZGiF/s00Z/sjDo/DNDFlNpWAF
-         FHMPjv+FJaGTwoE4TZnqupxk5v5bWA8sWGjckbAJ1Ad5EIcBegXTa4HW0JG1WMqFzraj
-         YJs8K7YmMXwjk2VzeqjyC9Lprnzp5gdHGvIC1mApwRbHlLsvx20IgYZNH9PSE0pUljPB
-         19r3EMaf1dogIqyIdzo2wkZtmNwJqU57+1IJi+NfNUjAto+FHfJAn+Cq76MdrJ8HsamS
-         3scbEWkuQICxGmxGhSqzg1zTfaDxinPbPOgKrjd/VRfPwF7KezjioLtAhUeNuhfJYQhB
-         RIbQ==
+        bh=0AXGFFSScq5JoVYWhK5OpMxYN+J30Qsfdsv2+PPns/4=;
+        b=HcEKqcG57EDl3XIZnZdK+ngfpxGEl02nP1hfWaWhOxZ5OmjaRJAgCaPWzwtY+WH9GK
+         cUcZ4OcbJTsrb81+fe5f0MUvU96GFLvKqEhWBETpZyj2PLmWYQQXE2DsVgaQy7CItTt8
+         hCErlTaw1Yh0ls5xM7QSMxFxSVp8tKH5BECXW935Op7BX/z17A2VtMNFjf10tANZCb3x
+         86ewskN+WZ1Hw7aEpr40HIqS8mLB2MIU9TMfTCyQ2LppMVMGU8qqcAPuVMOC+mHvTj10
+         PK+LQ27dFqSasHVOOitzB1VNCoG8++aFvoEbqjE4AZlLxnvZndGG+rESBnGQmg5Yl1lT
+         Y8aQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=WxV2QqHuHO8Zz19GGl3rfdjw5ZS09oW0s9B8Gyt20U8=;
-        b=r1fTPr1Ic/QLdaTnqb53U+x1/fbWzshErYajOCiAdzgVQQ3ArmcPZAPQ8rMGeooGM6
-         pctP1qbX5v4zz1IJlwER4cc+rrsLXbuSz1j2t1wOtwo4kLJcVsZPf2FkmBNe8Y4iB19m
-         H0/ndp0Vc8HODIjQNGWaWoEH84G+ZsF6h9JDFEic4Xg2qc5tS+AmTcB80uAoeePGrL0c
-         qi/Ni7sT04oat1GNM2OyufUGDEyH5OlO62GwlCO2yMrzTfhCPpCUTNHypwku1dun0wPU
-         v2phwS2pgRhCjRfDsDK37S9uMfud4Lt/29g7meahfaHeYTd/ekBabnX106vhmAHSsG9S
-         MnyA==
-X-Gm-Message-State: AMke39nvlsinmwEhWfZLvHLMzUqd3tSaPwb/JtR3rHYCofjEaOZCXb1Pe97M/HTgjaN2EVlG
-X-Received: by 10.99.64.4 with SMTP id n4mr22775641pga.71.1488833984381;
-        Mon, 06 Mar 2017 12:59:44 -0800 (PST)
+        bh=0AXGFFSScq5JoVYWhK5OpMxYN+J30Qsfdsv2+PPns/4=;
+        b=OtyYChZCejystjKUk8r5bq3jJQJkNuutvthrOdvOTMSzOxVhmAm2BdFBqbeR6gbpki
+         lfmalXjWSG43JQxs00zrRLIvbW+bsfD/MMyPfyLQk8Nmo6B43qUSFwHEDrp6zwyll0Rm
+         GshS2D9MEGEmDrWnh8SJjkknfow2BbI3icC4+eVBFsZNuF+QTt6GIWsCy9ENDxNnqrzv
+         BY6buj9W9NDKXmtcfohjibxVEEN5vArQT5nbqbgEopBwnGj0ZQybHp58WRyYU1EQFRFG
+         ZY2AFzV17eMh98Layv5CITY/Wvh1v1zlZFTiL1BluUqBzVEf6HJyBR8aCelPemRJGY8G
+         DXew==
+X-Gm-Message-State: AMke39ngGBDXbJhBVddiJnwpJtANWF485V6GOnUjiXq4CaVPQz4gV23a6x/VL/5Iwi4NbcSF
+X-Received: by 10.99.9.65 with SMTP id 62mr23203290pgj.22.1488833965179;
+        Mon, 06 Mar 2017 12:59:25 -0800 (PST)
 Received: from localhost ([2620:0:1000:5b10:44ae:633a:9d1d:6402])
-        by smtp.gmail.com with ESMTPSA id f78sm41295548pfe.116.2017.03.06.12.59.43
+        by smtp.gmail.com with ESMTPSA id d72sm34803119pfb.21.2017.03.06.12.59.23
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 06 Mar 2017 12:59:43 -0800 (PST)
+        Mon, 06 Mar 2017 12:59:24 -0800 (PST)
 From:   Stefan Beller <sbeller@google.com>
 To:     sbeller@google.com, gitster@pobox.com
 Cc:     git@vger.kernel.org, bmwill@google.com, novalis@novalis.org,
         sandals@crustytoothpaste.net, hvoigt@hvoigt.net,
         jrnieder@gmail.com, ramsay@ramsayjones.plus.com
-Subject: [PATCH 17/18] builtin/checkout: add --recurse-submodules switch
-Date:   Mon,  6 Mar 2017 12:59:18 -0800
-Message-Id: <20170306205919.9713-18-sbeller@google.com>
+Subject: [PATCH 01/18] lib-submodule-update.sh: reorder create_lib_submodule_repo
+Date:   Mon,  6 Mar 2017 12:59:02 -0800
+Message-Id: <20170306205919.9713-2-sbeller@google.com>
 X-Mailer: git-send-email 2.12.0.rc1.52.ge239d7e709.dirty
 In-Reply-To: <20170306205919.9713-1-sbeller@google.com>
 References: <20170302004759.27852-1-sbeller@google.com>
@@ -62,198 +62,116 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This exposes a flag to recurse into submodules
-in builtin/checkout making use of the code implemented
-in prior patches.
+Redraw the ASCII art describing the setup using more space, such that
+it is easier to understand.  The leaf commits are now ordered the same
+way the actual code is ordered.
 
-A new failure mode is introduced in the submodule
-update library, as the directory/submodule conflict
-is not solved in prior patches.
+Add empty lines to the setup code separating each of the leaf commits,
+each starting with a "checkout -b".
 
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- Documentation/git-checkout.txt |  7 +++++++
- builtin/checkout.c             | 28 ++++++++++++++++++++++++++++
- t/lib-submodule-update.sh      | 23 +++++++++++++++++------
- t/t2013-checkout-submodule.sh  |  5 +++++
- 4 files changed, 57 insertions(+), 6 deletions(-)
+ t/lib-submodule-update.sh | 49 ++++++++++++++++++++++++++++-------------------
+ 1 file changed, 29 insertions(+), 20 deletions(-)
 
-diff --git a/Documentation/git-checkout.txt b/Documentation/git-checkout.txt
-index 8e2c0662dd..d6399c0af8 100644
---- a/Documentation/git-checkout.txt
-+++ b/Documentation/git-checkout.txt
-@@ -256,6 +256,13 @@ section of linkgit:git-add[1] to learn how to operate the `--patch` mode.
- 	out anyway. In other words, the ref can be held by more than one
- 	worktree.
- 
-+--[no-]recurse-submodules::
-+	Using --recurse-submodules will update the content of all initialized
-+	submodules according to the commit recorded in the superproject. If
-+	local modifications in a submodule would be overwritten the checkout
-+	will fail unless `-f` is used. If nothing (or --no-recurse-submodules)
-+	is used, the work trees of submodules will not be updated.
-+
- <branch>::
- 	Branch to checkout; if it refers to a branch (i.e., a name that,
- 	when prepended with "refs/heads/", is a valid ref), then that
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index f174f50303..e9c5fcfaf8 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -21,12 +21,31 @@
- #include "submodule-config.h"
- #include "submodule.h"
- 
-+static int recurse_submodules = RECURSE_SUBMODULES_DEFAULT;
-+
- static const char * const checkout_usage[] = {
- 	N_("git checkout [<options>] <branch>"),
- 	N_("git checkout [<options>] [<branch>] -- <file>..."),
- 	NULL,
- };
- 
-+static int option_parse_recurse_submodules(const struct option *opt,
-+					   const char *arg, int unset)
-+{
-+	if (unset) {
-+		recurse_submodules = RECURSE_SUBMODULES_OFF;
-+		return 0;
-+	}
-+	if (arg)
-+		recurse_submodules =
-+			parse_update_recurse_submodules_arg(opt->long_name,
-+							    arg);
-+	else
-+		recurse_submodules = RECURSE_SUBMODULES_ON;
-+
-+	return 0;
-+}
-+
- struct checkout_opts {
- 	int patch_mode;
- 	int quiet;
-@@ -1163,6 +1182,9 @@ int cmd_checkout(int argc, const char **argv, const char *prefix)
- 				N_("second guess 'git checkout <no-such-branch>'")),
- 		OPT_BOOL(0, "ignore-other-worktrees", &opts.ignore_other_worktrees,
- 			 N_("do not check if another worktree is holding the given ref")),
-+		{ OPTION_CALLBACK, 0, "recurse-submodules", &recurse_submodules,
-+			    "checkout", "control recursive updating of submodules",
-+			    PARSE_OPT_OPTARG, option_parse_recurse_submodules },
- 		OPT_BOOL(0, "progress", &opts.show_progress, N_("force progress reporting")),
- 		OPT_END(),
- 	};
-@@ -1193,6 +1215,12 @@ int cmd_checkout(int argc, const char **argv, const char *prefix)
- 		git_xmerge_config("merge.conflictstyle", conflict_style, NULL);
- 	}
- 
-+	if (recurse_submodules != RECURSE_SUBMODULES_OFF) {
-+		git_config(submodule_config, NULL);
-+		if (recurse_submodules != RECURSE_SUBMODULES_DEFAULT)
-+			set_config_update_recurse_submodules(recurse_submodules);
-+	}
-+
- 	if ((!!opts.new_branch + !!opts.new_branch_force + !!opts.new_orphan_branch) > 1)
- 		die(_("-b, -B and --orphan are mutually exclusive"));
- 
 diff --git a/t/lib-submodule-update.sh b/t/lib-submodule-update.sh
-index 5b885cfbf8..6a78139f90 100755
+index 915eb4a7c6..5df528ea81 100755
 --- a/t/lib-submodule-update.sh
 +++ b/t/lib-submodule-update.sh
-@@ -782,6 +782,11 @@ test_submodule_forced_switch () {
- 
- test_submodule_switch_recursing () {
- 	command="$1"
-+	RESULT=success
-+	if test "$KNOWN_FAILURE_DIRECTORY_SUBMODULE_CONFLICTS" = 1
-+	then
-+		RESULT=failure
-+	fi
- 	######################### Appearing submodule #########################
- 	# Switching to a commit letting a submodule appear checks it out ...
- 	test_expect_success "$command: added submodule is checked out" '
-@@ -891,7 +896,7 @@ test_submodule_switch_recursing () {
- 	'
- 	# Replacing a submodule with files in a directory must succeeds
- 	# when the submodule is clean
--	test_expect_success "$command: replace submodule with a directory" '
-+	test_expect_$RESULT "$command: replace submodule with a directory" '
- 		prolog &&
- 		reset_work_tree_to_interested add_sub1 &&
- 		(
-@@ -903,7 +908,7 @@ test_submodule_switch_recursing () {
- 		)
- 	'
- 	# ... absorbing a .git directory.
--	test_expect_success "$command: replace submodule containing a .git directory with a directory must absorb the git dir" '
-+	test_expect_$RESULT "$command: replace submodule containing a .git directory with a directory must absorb the git dir" '
- 		prolog &&
- 		reset_work_tree_to_interested add_sub1 &&
- 		(
-@@ -931,7 +936,7 @@ test_submodule_switch_recursing () {
- 	'
- 
- 	# ... must check its local work tree for untracked files
--	test_expect_success "$command: replace submodule with a file must fail with untracked files" '
-+	test_expect_$RESULT "$command: replace submodule with a file must fail with untracked files" '
- 		prolog &&
- 		reset_work_tree_to_interested add_sub1 &&
- 		(
-@@ -987,7 +992,8 @@ test_submodule_switch_recursing () {
- 		)
- 	'
- 
--	test_expect_success "$command: modified submodule updates submodule recursively" '
-+	# recursing deeper than one level doesn't work yet.
-+	test_expect_failure "$command: modified submodule updates submodule recursively" '
- 		prolog &&
- 		reset_work_tree_to_interested add_nested_sub &&
- 		(
-@@ -1006,6 +1012,11 @@ test_submodule_switch_recursing () {
- # the superproject as well as the submodule is allowed.
- test_submodule_forced_switch_recursing () {
- 	command="$1"
-+	RESULT=success
-+	if test "$KNOWN_FAILURE_DIRECTORY_SUBMODULE_CONFLICTS" = 1
-+	then
-+		RESULT=failure
-+	fi
- 	######################### Appearing submodule #########################
- 	# Switching to a commit letting a submodule appear creates empty dir ...
- 	test_expect_success "$command: added submodule is checked out" '
-@@ -1100,7 +1111,7 @@ test_submodule_forced_switch_recursing () {
- 		)
- 	'
- 	# Replacing a submodule with files in a directory ...
--	test_expect_success "$command: replace submodule with a directory" '
-+	test_expect_$RESULT "$command: replace submodule with a directory" '
- 		prolog &&
- 		reset_work_tree_to_interested add_sub1 &&
- 		(
-@@ -1151,7 +1162,7 @@ test_submodule_forced_switch_recursing () {
- 	'
- 
- 	# ... but stops for untracked files that would be lost
--	test_expect_success "$command: replace submodule with a file" '
-+	test_expect_$RESULT "$command: replace submodule with a file stops for untracked files" '
- 		prolog &&
- 		reset_work_tree_to_interested add_sub1 &&
- 		(
-diff --git a/t/t2013-checkout-submodule.sh b/t/t2013-checkout-submodule.sh
-index 6847f75822..aa35223369 100755
---- a/t/t2013-checkout-submodule.sh
-+++ b/t/t2013-checkout-submodule.sh
-@@ -63,6 +63,11 @@ test_expect_success '"checkout <submodule>" honors submodule.*.ignore from .git/
- 	! test -s actual
- '
- 
-+KNOWN_FAILURE_DIRECTORY_SUBMODULE_CONFLICTS=1
-+test_submodule_switch_recursing "git checkout --recurse-submodules"
+@@ -15,22 +15,27 @@
+ # - Tracked file replaced by submodule (replace_sub1_with_file =>
+ #   replace_file_with_sub1)
+ #
+-#                   --O-----O
+-#                  /  ^     replace_directory_with_sub1
+-#                 /   replace_sub1_with_directory
+-#                /----O
+-#               /     ^
+-#              /      modify_sub1
+-#      O------O-------O
+-#      ^      ^\      ^
+-#      |      | \     remove_sub1
+-#      |      |  -----O-----O
+-#      |      |   \   ^     replace_file_with_sub1
+-#      |      |    \  replace_sub1_with_file
+-#      |   add_sub1 --O-----O
+-# no_submodule        ^     valid_sub1
+-#                     invalid_sub1
++#                     ----O
++#                    /    ^
++#                   /     remove_sub1
++#                  /
++#       add_sub1  /-------O
++#             |  /        ^
++#             | /         modify_sub1
++#             v/
++#      O------O-----------O---------O
++#      ^       \          ^         replace_directory_with_sub1
++#      |        \         replace_sub1_with_directory
++# no_submodule   \
++#                 --------O---------O
++#                  \      ^         replace_file_with_sub1
++#                   \     replace_sub1_with_file
++#                    \
++#                     ----O---------O
++#                         ^         valid_sub1
++#                         invalid_sub1
+ #
 +
-+test_submodule_forced_switch_recursing "git checkout -f --recurse-submodules"
+ create_lib_submodule_repo () {
+ 	git init submodule_update_repo &&
+ 	(
+@@ -49,10 +54,11 @@ create_lib_submodule_repo () {
+ 		git config submodule.sub1.ignore all &&
+ 		git add .gitmodules &&
+ 		git commit -m "Add sub1" &&
+-		git checkout -b remove_sub1 &&
 +
- test_submodule_switch "git checkout"
++		git checkout -b remove_sub1 add_sub1 &&
+ 		git revert HEAD &&
  
- test_submodule_forced_switch "git checkout -f"
+-		git checkout -b "modify_sub1" "add_sub1" &&
++		git checkout -b modify_sub1 add_sub1 &&
+ 		git submodule update &&
+ 		(
+ 			cd sub1 &&
+@@ -67,7 +73,7 @@ create_lib_submodule_repo () {
+ 		git add sub1 &&
+ 		git commit -m "Modify sub1" &&
+ 
+-		git checkout -b "replace_sub1_with_directory" "add_sub1" &&
++		git checkout -b replace_sub1_with_directory add_sub1 &&
+ 		git submodule update &&
+ 		git -C sub1 checkout modifications &&
+ 		git rm --cached sub1 &&
+@@ -75,22 +81,25 @@ create_lib_submodule_repo () {
+ 		git config -f .gitmodules --remove-section "submodule.sub1" &&
+ 		git add .gitmodules sub1/* &&
+ 		git commit -m "Replace sub1 with directory" &&
++
+ 		git checkout -b replace_directory_with_sub1 &&
+ 		git revert HEAD &&
+ 
+-		git checkout -b "replace_sub1_with_file" "add_sub1" &&
++		git checkout -b replace_sub1_with_file add_sub1 &&
+ 		git rm sub1 &&
+ 		echo "content" >sub1 &&
+ 		git add sub1 &&
+ 		git commit -m "Replace sub1 with file" &&
++
+ 		git checkout -b replace_file_with_sub1 &&
+ 		git revert HEAD &&
+ 
+-		git checkout -b "invalid_sub1" "add_sub1" &&
++		git checkout -b invalid_sub1 add_sub1 &&
+ 		git update-index --cacheinfo 160000 0123456789012345678901234567890123456789 sub1 &&
+ 		git commit -m "Invalid sub1 commit" &&
+ 		git checkout -b valid_sub1 &&
+ 		git revert HEAD &&
++
+ 		git checkout master
+ 	)
+ }
 -- 
 2.12.0.rc1.52.ge239d7e709.dirty
 
