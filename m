@@ -7,45 +7,45 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 79F961FBEC
-	for <e@80x24.org>; Mon,  6 Mar 2017 09:49:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 497021FBEC
+	for <e@80x24.org>; Mon,  6 Mar 2017 09:49:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753784AbdCFJti (ORCPT <rfc822;e@80x24.org>);
-        Mon, 6 Mar 2017 04:49:38 -0500
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:33594 "EHLO
-        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752920AbdCFJtc (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Mar 2017 04:49:32 -0500
-Received: by mail-wm0-f68.google.com with SMTP id n11so12762311wma.0
-        for <git@vger.kernel.org>; Mon, 06 Mar 2017 01:49:31 -0800 (PST)
+        id S1754119AbdCFJtm (ORCPT <rfc822;e@80x24.org>);
+        Mon, 6 Mar 2017 04:49:42 -0500
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:33857 "EHLO
+        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752773AbdCFJtk (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 Mar 2017 04:49:40 -0500
+Received: by mail-wm0-f65.google.com with SMTP id u132so4729287wmg.1
+        for <git@vger.kernel.org>; Mon, 06 Mar 2017 01:49:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=GW01GWqYhi+ewc+xySxnvW4H0jrjdPuwpuWtXHnyNgI=;
-        b=jINCs20YfuP8BZRYJ/9s5JU1z5EQppO15HNlREeciCIl3VAy617KobMwmWef1Px7vN
-         gvoEaVQfFuCpQFQ3/oP4e9X1TKTR63OCgpMXG/1gnv8gmhZd6VnS1V3zirJSXCYTIkeu
-         K5+EhNduOvj6RPiuFPhPcKMi3RtIF1e4djsJHd/gVzCEK0sgT4fWXygANcAjjRdF+hH7
-         jXKw9cAQmGVV969w7tF5Ptg4EWd0hKQoAt2btjrRFneCNo8RDXI7LkK4RQNA3qRpZ7FS
-         1fQ0jz9ucjphzDaA0XdXrtqBE3Dsah+TrYQzbiBgPSRLBKLFA/9TwrKbmtlM8D+I3Ib1
-         MCFw==
+        bh=JRgmv708W8ovIwaaIttawQK3bnm12kxhnjwWkpKloTU=;
+        b=ifD/pMaX42pIj6jOEb/86t1bORedN7SA9fGQONoCRLOs9uv4vicZYkbLcT0A4LCfxs
+         4P7DBiqjcrnfKDpi5RdyEeOA6Byl/qOw8/FuNc7N45W1SL/JxOERFmaVQIrsqNbi/nZ+
+         ly/buq4rsonEY6j/PGG7+la89T5FXbYnYzSlY/wTg/F3Z5XRc1HNgJX6CqQOQxP+Pa84
+         t2MI7EzyNefWjCnvTxCdPbljMogzAuTMFZfp5RAOSmQOIGdqgBXvCjbbzcBVuLdummuN
+         XFKZ5gDCAun/qdm4QBYuJ4mCS6Ci1lUqb6+sp9SZvmWAq54Scc2GGbi0O+a1W5VgLhop
+         hU/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=GW01GWqYhi+ewc+xySxnvW4H0jrjdPuwpuWtXHnyNgI=;
-        b=o3CPgmSSLy1t0dzWvZTTRDWdzdJK59CftfYFXBCzomlZJgn9bsrdEq+IqJt6cvNPtd
-         AioqQazEeegd8H1wcR8kFmjCw3SfUzUJwsfw3oA4AYfa8i3DgTvTJcwocQy0ohVckng/
-         3opnzAy0uihs4SHohNrFgTpA+oHuwDlwbcnvYO2Bj+Y9pTWpGhv84OdWOdBlqdHPSNIJ
-         22sdjqm05gXt23SEWgBtNH7aCCF9eL4o4gcTOO6FNCJdq4zPqKhBYistfOsVMla1TWRI
-         XV/ZXiAF/8GjfEm3n27ghMjBWlMvLzeY1OfAdZ1jNClE5EKVoirQSkpYulVWG1pYOQYV
-         g29Q==
-X-Gm-Message-State: AMke39moYpNzos+WLBiqBp6nmoPq2V9m8A+rHd7x1sdYw7uhFSP5DUTlkQHmbL/D26xfVA==
-X-Received: by 10.28.165.70 with SMTP id o67mr12297603wme.11.1488793367925;
-        Mon, 06 Mar 2017 01:42:47 -0800 (PST)
+        bh=JRgmv708W8ovIwaaIttawQK3bnm12kxhnjwWkpKloTU=;
+        b=juP8IwHRMpc+0xUKfzpB7t92Y176xR6iZh6Zn1hfxIE/bfHI6LwJ7uPt2Ut4Ge84k5
+         7lC6mqSatYBTol9A893VlOaoyTlfVbAttEACKKMV7STTMSNryRyj4N4kT4c7qF1mn0cr
+         Lqn1RVil68y4/sn1jfyfWs5bt+w8oc1JJ/Oyf3W9G6E6c1KrHP7y5bFoBz/3KlpqxVwz
+         QR9t6RcGU51qzaMRhwILAtwMaDp1Me6TzCYzqPOczxF+P4Pf0GI33jzDKsSGdObnoLsv
+         +Q4c0z5tAkSYiQgzjYgBlW61KYa4ePqGaIY0vda7Tv1nBu6JOWjC4H0lMsSyIceZeZbd
+         eHZg==
+X-Gm-Message-State: AMke39k6smDXgapj0gv/+LNfMdNgJVhajxCLI4xtbXKFnxTq4WNyeW1H/GFUJ/4Wh2829g==
+X-Received: by 10.28.95.87 with SMTP id t84mr12682957wmb.35.1488793357141;
+        Mon, 06 Mar 2017 01:42:37 -0800 (PST)
 Received: from localhost.localdomain (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr. [128.78.31.246])
-        by smtp.gmail.com with ESMTPSA id 191sm14144086wmo.21.2017.03.06.01.42.46
+        by smtp.gmail.com with ESMTPSA id 191sm14144086wmo.21.2017.03.06.01.42.36
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 06 Mar 2017 01:42:46 -0800 (PST)
+        Mon, 06 Mar 2017 01:42:36 -0800 (PST)
 From:   Christian Couder <christian.couder@gmail.com>
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 To:     git@vger.kernel.org
@@ -55,9 +55,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         <avarab@gmail.com>, Ramsay Jones <ramsay@ramsayjones.plus.com>,
         Jeff King <peff@peff.net>,
         Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v5 22/22] Documentation/git-update-index: explain splitIndex.*
-Date:   Mon,  6 Mar 2017 10:42:03 +0100
-Message-Id: <20170306094203.28250-23-chriscool@tuxfamily.org>
+Subject: [PATCH v5 14/22] sha1_file: make check_and_freshen_file() non static
+Date:   Mon,  6 Mar 2017 10:41:55 +0100
+Message-Id: <20170306094203.28250-15-chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.12.0.206.g74921e51d6.dirty
 In-Reply-To: <20170306094203.28250-1-chriscool@tuxfamily.org>
 References: <20170306094203.28250-1-chriscool@tuxfamily.org>
@@ -66,80 +66,42 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+This function will be used in a commit soon, so let's make
+it available globally.
+
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- Documentation/config.txt           |  2 +-
- Documentation/git-update-index.txt | 37 +++++++++++++++++++++++++++++--------
- 2 files changed, 30 insertions(+), 9 deletions(-)
+ cache.h     | 3 +++
+ sha1_file.c | 2 +-
+ 2 files changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 2afd5d982b..24ed9c476d 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -2873,7 +2873,7 @@ splitIndex.sharedIndexExpire::
- 	The default value is "2.weeks.ago".
- 	Note that a shared index file is considered modified (for the
- 	purpose of expiration) each time a new split-index file is
--	created based on it.
-+	either created based on it or read from it.
- 	See linkgit:git-update-index[1].
+diff --git a/cache.h b/cache.h
+index 0bb9adcd31..a35e9d5187 100644
+--- a/cache.h
++++ b/cache.h
+@@ -1273,6 +1273,9 @@ extern int has_pack_index(const unsigned char *sha1);
  
- status.relativePaths::
-diff --git a/Documentation/git-update-index.txt b/Documentation/git-update-index.txt
-index e091b2a409..1579abf3c3 100644
---- a/Documentation/git-update-index.txt
-+++ b/Documentation/git-update-index.txt
-@@ -163,14 +163,10 @@ may not support it yet.
+ extern void assert_sha1_type(const unsigned char *sha1, enum object_type expect);
  
- --split-index::
- --no-split-index::
--	Enable or disable split index mode. If enabled, the index is
--	split into two files, $GIT_DIR/index and $GIT_DIR/sharedindex.<SHA-1>.
--	Changes are accumulated in $GIT_DIR/index while the shared
--	index file contains all index entries stays unchanged. If
--	split-index mode is already enabled and `--split-index` is
--	given again, all changes in $GIT_DIR/index are pushed back to
--	the shared index file. This mode is designed for very large
--	indexes that take a significant amount of time to read or write.
-+	Enable or disable split index mode. If split-index mode is
-+	already enabled and `--split-index` is given again, all
-+	changes in $GIT_DIR/index are pushed back to the shared index
-+	file.
- +
- These options take effect whatever the value of the `core.splitIndex`
- configuration variable (see linkgit:git-config[1]). But a warning is
-@@ -394,6 +390,31 @@ Although this bit looks similar to assume-unchanged bit, its goal is
- different from assume-unchanged bit's. Skip-worktree also takes
- precedence over assume-unchanged bit when both are set.
- 
-+Split index
-+-----------
++/* Helper to check and "touch" a file */
++extern int check_and_freshen_file(const char *fn, int freshen);
 +
-+This mode is designed for repositories with very large indexes, and
-+aims at reducing the time it takes to repeatedly write these indexes.
-+
-+In this mode, the index is split into two files, $GIT_DIR/index and
-+$GIT_DIR/sharedindex.<SHA-1>. Changes are accumulated in
-+$GIT_DIR/index, the split index, while the shared index file contains
-+all index entries and stays unchanged.
-+
-+All changes in the split index are pushed back to the shared index
-+file when the number of entries in the split index reaches a level
-+specified by the splitIndex.maxPercentChange config variable (see
-+linkgit:git-config[1]).
-+
-+Each time a new shared index file is created, the old shared index
-+files are deleted if their modification time is older than what is
-+specified by the splitIndex.sharedIndexExpire config variable (see
-+linkgit:git-config[1]).
-+
-+To avoid deleting a shared index file that is still used, its
-+modification time is updated to the current time everytime a new split
-+index based on the shared index file is either created or read from.
-+
- Untracked cache
- ---------------
- 
+ extern const signed char hexval_table[256];
+ static inline unsigned int hexval(unsigned char c)
+ {
+diff --git a/sha1_file.c b/sha1_file.c
+index 6628f06da3..f02f10189f 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -667,7 +667,7 @@ static int freshen_file(const char *fn)
+  * either does not exist on disk, or has a stale mtime and may be subject to
+  * pruning).
+  */
+-static int check_and_freshen_file(const char *fn, int freshen)
++int check_and_freshen_file(const char *fn, int freshen)
+ {
+ 	if (access(fn, F_OK))
+ 		return 0;
 -- 
 2.12.0.206.g74921e51d6.dirty
 
