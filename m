@@ -2,144 +2,116 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6A11220133
-	for <e@80x24.org>; Mon,  6 Mar 2017 22:00:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 389ED20133
+	for <e@80x24.org>; Mon,  6 Mar 2017 22:13:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753930AbdCFV67 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 6 Mar 2017 16:58:59 -0500
-Received: from mail-pg0-f48.google.com ([74.125.83.48]:33012 "EHLO
-        mail-pg0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753658AbdCFV64 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Mar 2017 16:58:56 -0500
-Received: by mail-pg0-f48.google.com with SMTP id 25so70873439pgy.0
-        for <git@vger.kernel.org>; Mon, 06 Mar 2017 13:58:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=+elW3utxHEE0hR3cQUEQqGvEgDb9w4+GTIiQ/iM6PYs=;
-        b=QE64LoyPqpoTTJ/qPGTACzkC1lIB9UU6DRmnydRifxXRUtE0G4rZOO7PIN9oq5TDng
-         S1EgJoFac5toQtfqukq1Dw4HJOhwSVymyZB1LY4Cu16w+8YqK0Zldc2BnB7M91R4j9HA
-         OwbvTaiw4vk++SHInYjr5Fowv8r+h4wuJhVd27uzx0moh/YzOVQSKjb7IBrEXUMmoMf0
-         egIw4uxeKWnjru2oborgHVSWhMTwTEHwQhzRBLiIzQhyCESpeoRf/ByfT70kSngKde98
-         V1i40gxVFM9ciACk0JpsRWIVrkNXuv2qtIEA13MDi87nGkpOQ01dUJ/hn6JWmULBO8lT
-         PVPw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=+elW3utxHEE0hR3cQUEQqGvEgDb9w4+GTIiQ/iM6PYs=;
-        b=TFFVbAa81qiLyzNOw+qSxQPyjshzxZmI+HXvv1VFBLbmNL1zyL4FbN4+UujX7DEcr+
-         a1Pkvqw1MVeYPRDsdbIbx54AbuulsvTCJcRWRS1Emume97iUNlCvfIepCdP2JnTe9p39
-         bVo6DGi0HEZNQjU+CXOfsUZ/iwk/rIbMoBoE8rxQaqJjQKh1sMSGW8BcK4wQEpL1OFrU
-         ZbO852mKCJPED8Y2r8Y9rN05JHA0G9MTwZCsAwo29B0MSllq2yAZapbjiYbGOu/EdGxc
-         XXMoaK6ikRuIebjkY9xjkoQ9gpEteUrSqv+qWRl2PnVbD2QSlKlin0yQdKFyGen5Zxhp
-         kkzQ==
-X-Gm-Message-State: AMke39lI434kmmLwfZ6gGVZjprghfj3DXQN14Ys5e8ngsZwbWPyPPi+wzRbbJf6qfbJm3LkI
-X-Received: by 10.84.176.100 with SMTP id u91mr29792959plb.112.1488833973658;
-        Mon, 06 Mar 2017 12:59:33 -0800 (PST)
-Received: from localhost ([2620:0:1000:5b10:44ae:633a:9d1d:6402])
-        by smtp.gmail.com with ESMTPSA id e13sm41545306pgf.48.2017.03.06.12.59.32
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 06 Mar 2017 12:59:32 -0800 (PST)
-From:   Stefan Beller <sbeller@google.com>
-To:     sbeller@google.com, gitster@pobox.com
-Cc:     git@vger.kernel.org, bmwill@google.com, novalis@novalis.org,
-        sandals@crustytoothpaste.net, hvoigt@hvoigt.net,
-        jrnieder@gmail.com, ramsay@ramsayjones.plus.com
-Subject: [PATCH 08/18] update submodules: add submodule config parsing
-Date:   Mon,  6 Mar 2017 12:59:09 -0800
-Message-Id: <20170306205919.9713-9-sbeller@google.com>
-X-Mailer: git-send-email 2.12.0.rc1.52.ge239d7e709.dirty
-In-Reply-To: <20170306205919.9713-1-sbeller@google.com>
-References: <20170302004759.27852-1-sbeller@google.com>
- <20170306205919.9713-1-sbeller@google.com>
+        id S932134AbdCFWNo (ORCPT <rfc822;e@80x24.org>);
+        Mon, 6 Mar 2017 17:13:44 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:55585 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S932076AbdCFWNj (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 Mar 2017 17:13:39 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id B69406EFC6;
+        Mon,  6 Mar 2017 17:13:02 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=DHXOmfmoQT78Sd6+ZtBTmponqtI=; b=hKbOhG
+        +3u7XNiJmtolIiylgUhV/zRjZLykxhVCLJ16U7z1MUGGvJpPTeEa/HOXXkCb2FIE
+        hXTZd/XnshXSBBras/c8Qqo56W8tiyhC2FdeIzhRpa5xg+jbi/jnRyfaV0fPAzfe
+        9HoPGEg0U0DrXEHeMqjvv9c5VAIVvTYCZUkOE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=ZgEYSLiU7EOlxGRGRwj211NHg8Z2z4qC
+        qpV6xaIrJ5K/MbcX9B4XfBCdFyH0ZNykU/CwwQwuzsKfy93vMjNrxnYrerTx6bY8
+        4PxsZvwp0TUaVgDoH50e2imFhd8BAf0m327+12//hvp+au4pR6RmpzTnGP5sFRo7
+        zHNTjCK2WDw=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id B01D36EFC5;
+        Mon,  6 Mar 2017 17:13:02 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.84])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 152866EFC4;
+        Mon,  6 Mar 2017 17:13:02 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     tom@oxix.org, Matthieu Moy <Matthieu.Moy@imag.fr>,
+        "git\@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: [Request for Documentation] Differentiate signed (commits/tags/pushes)
+References: <CAGZ79kYxD9B_+3vBgO+Z-wh2GMg_REazA-xpTSAqe3_64VMV3w@mail.gmail.com>
+Date:   Mon, 06 Mar 2017 14:13:00 -0800
+In-Reply-To: <CAGZ79kYxD9B_+3vBgO+Z-wh2GMg_REazA-xpTSAqe3_64VMV3w@mail.gmail.com>
+        (Stefan Beller's message of "Mon, 6 Mar 2017 11:59:24 -0800")
+Message-ID: <xmqqshmqm4ur.fsf@junio-linux.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 106F105C-02BA-11E7-B753-FC50AE2156B6-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Similar to b33a15b08 (push: add recurseSubmodules config option,
-2015-11-17) and 027771fcb1 (submodule: allow erroneous values for the
-fetchRecurseSubmodules option, 2015-08-17), we add submodule-config code
-that is later used to parse whether we are interested in updating
-submodules.
+Stefan Beller <sbeller@google.com> writes:
 
-We need the `die_on_error` parameter to be able to call this parsing
-function for the config file as well, which if incorrect lets Git die.
+> What is the difference between signed commits and tags?
+> (Not from a technical perspective, but for the end user)
 
-As we're just touching the header file, also mark all functions extern.
+When you "commit -s", you are signing the bytes in the commit
+object, which means that you are attesting the fact that the tree
+you wanted to record is one of the 47 other colliding tree objects
+that happen to share that 40-hex hash value, and also the fact that
+the commits you wanted to record as its parents have certain SHA-1
+hash values.  As you are relying on the resistance to preimage
+attack against SHA-1 at least locally around that signed commit,
+there wouldn't be meaningful difference between a 50-commit series
+each of which is individually signed with "commit -s", such a
+50-commit series, only the top of which is signed with "commit -s",
+and the same 50-commit series, on the top of which is signed with
+"tag -s".
 
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
- submodule-config.c | 20 ++++++++++++++++++++
- submodule-config.h | 17 +++++++++--------
- 2 files changed, 29 insertions(+), 8 deletions(-)
+"tag -s" also has the benefit of being retroactive.  You can create
+commit, think about it for a week and then later tag it.  And ask
+others to also tag the same one.  You cannot do so with "commit -s".
 
-diff --git a/submodule-config.c b/submodule-config.c
-index 93453909cf..3e8e380d98 100644
---- a/submodule-config.c
-+++ b/submodule-config.c
-@@ -234,6 +234,26 @@ int parse_fetch_recurse_submodules_arg(const char *opt, const char *arg)
- 	return parse_fetch_recurse(opt, arg, 1);
- }
- 
-+static int parse_update_recurse(const char *opt, const char *arg,
-+				int die_on_error)
-+{
-+	switch (git_config_maybe_bool(opt, arg)) {
-+	case 1:
-+		return RECURSE_SUBMODULES_ON;
-+	case 0:
-+		return RECURSE_SUBMODULES_OFF;
-+	default:
-+		if (die_on_error)
-+			die("bad %s argument: %s", opt, arg);
-+		return RECURSE_SUBMODULES_ERROR;
-+	}
-+}
-+
-+int parse_update_recurse_submodules_arg(const char *opt, const char *arg)
-+{
-+	return parse_update_recurse(opt, arg, 1);
-+}
-+
- static int parse_push_recurse(const char *opt, const char *arg,
- 			       int die_on_error)
- {
-diff --git a/submodule-config.h b/submodule-config.h
-index 70f19363fd..d434ecdb45 100644
---- a/submodule-config.h
-+++ b/submodule-config.h
-@@ -22,16 +22,17 @@ struct submodule {
- 	int recommend_shallow;
- };
- 
--int parse_fetch_recurse_submodules_arg(const char *opt, const char *arg);
--int parse_push_recurse_submodules_arg(const char *opt, const char *arg);
--int parse_submodule_config_option(const char *var, const char *value);
--const struct submodule *submodule_from_name(const unsigned char *commit_or_tree,
--		const char *name);
--const struct submodule *submodule_from_path(const unsigned char *commit_or_tree,
--		const char *path);
-+extern int parse_fetch_recurse_submodules_arg(const char *opt, const char *arg);
-+extern int parse_update_recurse_submodules_arg(const char *opt, const char *arg);
-+extern int parse_push_recurse_submodules_arg(const char *opt, const char *arg);
-+extern int parse_submodule_config_option(const char *var, const char *value);
-+extern const struct submodule *submodule_from_name(
-+		const unsigned char *commit_or_tree, const char *name);
-+extern const struct submodule *submodule_from_path(
-+		const unsigned char *commit_or_tree, const char *path);
- extern int gitmodule_sha1_from_commit(const unsigned char *commit_sha1,
- 				      unsigned char *gitmodules_sha1,
- 				      struct strbuf *rev);
--void submodule_free(void);
-+extern void submodule_free(void);
- 
- #endif /* SUBMODULE_CONFIG_H */
--- 
-2.12.0.rc1.52.ge239d7e709.dirty
+> A signed push can certify that a given payload (consisting
+> of multiple commits on possibly multiple branches) was transmitted
+> to a remote, which can be recorded by the remote as e.g. a proof
+> of work.
 
+A signed push is _NOT_ about certifying the objects in the history
+DAG.  It is about certifying the _intent_ of pointing _REFS_ into
+points in the object graph.  "This is a commit I made to add feature
+frotz" is something you might say with "commit -s" and "these
+commits behind this point are for upcoming 2.13 release" is
+something you might say with "tag -s v2.13-rc0".  But "I made it"
+and "I made it for this purpose" are different things.  I may not
+want the "feature frotz" commit included in the maintenance track,
+so it would be a mistake for push a history that contains it to
+update refs/heads/maint ref.  A push certificate can protect hosting
+sites like GitHub, when I complain to them saying "you guys are
+pointing at a wrong commit with refs/heads/maint", by allowing them
+to respond with "well, you made the push to perform that update and
+here is what you GPG signed".
+
+> Off list I was told gpg-signed commits are a "checkbox feature",
+> i.e. no real world workflow would actually use it. (That's a bold
+> statement, someone has to use it as there was enough interest
+> to implement it, no?)
+
+I'd agree with that "checkbox" description, except that you need to
+remember that a project can enforce _any_ workflow to its developer,
+even if it does not make much sense, and at that point, the workflow
+would become a real-world workflow.  The word "real world workflow"
+does not make any assurance if that workflow is sensible.
+
+Historically, "tag -s" came a lot earlier.  When a project for
+whatever reason wants signature for each and every commit so that
+they somehow can feel good, without "commit -s", it would have made
+us unnecessary work to scale tag namespace only because there will
+be tons of pointless tags.  "commit -s" was a remedy for that.
