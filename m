@@ -2,120 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 062F520133
-	for <e@80x24.org>; Tue,  7 Mar 2017 01:08:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5D6B820133
+	for <e@80x24.org>; Tue,  7 Mar 2017 01:14:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754614AbdCGBHm (ORCPT <rfc822;e@80x24.org>);
-        Mon, 6 Mar 2017 20:07:42 -0500
-Received: from mail-pf0-f176.google.com ([209.85.192.176]:34973 "EHLO
-        mail-pf0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753106AbdCGBHj (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Mar 2017 20:07:39 -0500
-Received: by mail-pf0-f176.google.com with SMTP id j5so67437650pfb.2
-        for <git@vger.kernel.org>; Mon, 06 Mar 2017 17:06:07 -0800 (PST)
+        id S1754631AbdCGBOb (ORCPT <rfc822;e@80x24.org>);
+        Mon, 6 Mar 2017 20:14:31 -0500
+Received: from mail-qk0-f172.google.com ([209.85.220.172]:33082 "EHLO
+        mail-qk0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754246AbdCGBO0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 Mar 2017 20:14:26 -0500
+Received: by mail-qk0-f172.google.com with SMTP id y76so53253275qkb.0
+        for <git@vger.kernel.org>; Mon, 06 Mar 2017 17:13:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
+        d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=8bZrVa6vBclni06ggRL3K09RCfkQ7vzUgMbFnCmbpe8=;
-        b=ufGEiItS5sUiH0CGG3eZzyeg7mx+zfjBnw9Sfz2wST9pcQzWy4hKpLUne0HsYlcuVM
-         3BXN5p9gGcbsvcP1yEJ/BuICBOyUg73nlmbuzjl7jFL/CQmqsYC/U1sJBOdqlzhkwpmE
-         75nWEIYGFUutC2/vHICI2BepTigOi8II+XIs7UF4dCKk7Zf1dDOu7Iz9J7GvRjQHRACR
-         nlIe8iWYIieFqs+PnbGefDrffU4BBVXKYbzQ4bTKW7ocwq4wYGYESDeaYcT/g26had3b
-         9U/mJRtaRlA+XUaGJGe2O+MkIBRCideZX4EEO7ZRzbom1WtYK+Z0d3IjP+aYDgfJc72c
-         Xb/A==
+        bh=OA0rhhSQPp65oVuPYQ8HLuXqywbA98m2+MCAPsKvQII=;
+        b=UOloCU9O0bWR0LwHZa9CnWMeHl71n3h6V5wLjxbriqSzh9nAw7ZgSCNbyVhogfYKKi
+         ILCuxH/yxifVsWVii4N3zATWwpL4ozF0pmL5KlWWFo5MOub96KYiSHCn7G2A0dY4Sj5p
+         QFbRyio8rAjVtPD510sIH249kH8lTcHWKau/E4FZgX4GLwN22KWtauGism94C2OSB48H
+         mWVa9Rg1smsW9ckT7nDOqvSPIsILb4lEZy6q5DFrmu3CCk2OyVFp94j6ZvvpTbbmkqfW
+         JSiQOwXFxCNet+vRbxtn+UDF0LI71tE5/d3baCAlLghtANECV+8tVzEt2af1P7jtzFnV
+         ePUQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=8bZrVa6vBclni06ggRL3K09RCfkQ7vzUgMbFnCmbpe8=;
-        b=KGpkv6vqGw1bXdtvq1keZVwxLMR4sW3IXOHiKhK7+92xzELrALKuT9ZhzR5NEF0UkM
-         EFcEtqcjI6elb1bigcgI9dRi7nYDOuMRHYZdIJdv3TT17OeX0kg20Ug5rSgkgZx80duQ
-         oHCf4C9SRArYBmuSscxXdL8bmuY1YUZUqqhAeDV9Nsg/zCoxR3d40A0LuCf3HdwY0fna
-         pZGJWNLT3pPoq/PHvNs2SQ48XVH1svezfL3TIG0c7jRqWfphOwbRxSvC0NOpuan+2LZq
-         q+X5ykjcKNoAs6Y92owwd0KySsJaTjf4BuC/e39CHmsxfL7t90YhIEjunwIpEbMzvZDQ
-         FLzg==
-X-Gm-Message-State: AMke39n6yvzrHIteYCqX36VlTh0dCU/wk1Gyp6u9asioA2wMyS2RKP0OvP5tvHE4/PdmcqvBwOdoEPwALtBuVBx9
-X-Received: by 10.99.134.199 with SMTP id x190mr23516041pgd.194.1488848297137;
- Mon, 06 Mar 2017 16:58:17 -0800 (PST)
+        bh=OA0rhhSQPp65oVuPYQ8HLuXqywbA98m2+MCAPsKvQII=;
+        b=gOZSx2gdeaO4VDDm4Pnd9qG2ghWSYo3tXOG30zq97WAP6ZNOCv3MpzRFmdUoBTI9vY
+         8un17pglymNkl8KS27g1h7BPlkk3Fcd2r/p1X54rREWErI1NqO5PpqySPt1j7KfD0Mvi
+         DXXQlNapnhXnRfnaTKu1VucmjrjEO+22fmdN+2I9P1Ncn2n9XJ3OhqjHPYX/mXrksE7k
+         P3u1gnSlPUc2U3YfLxTkV9yVOIXs0EFIrpKIZ6K6n5KhxQR/bAppFZ4xw7UrKkdHgac2
+         QI23NDkgIV7BPJ0TAVCgZrfe9/x1my3Beb/uDj6ERvA3nGKaOSg+3jvMzLvSbm36J0w0
+         SUEg==
+X-Gm-Message-State: AMke39kbpuKsJ03cl98kC4r1gZSyfC9G4LPB6hJaZzQapt57lqsziFhPx2Ueo4uwyOCgkGB/3T6XeKmR2E/vTw==
+X-Received: by 10.55.54.143 with SMTP id d137mr17722977qka.258.1488842996837;
+ Mon, 06 Mar 2017 15:29:56 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.100.187.5 with HTTP; Mon, 6 Mar 2017 16:58:16 -0800 (PST)
-In-Reply-To: <xmqq4lz6ymlt.fsf@junio-linux.mtv.corp.google.com>
-References: <CAGZ79kYxD9B_+3vBgO+Z-wh2GMg_REazA-xpTSAqe3_64VMV3w@mail.gmail.com>
- <xmqqshmqm4ur.fsf@junio-linux.mtv.corp.google.com> <CAGZ79kZU+-5D0bHSA1duRLnvjb+P67AzGhESS6J1z5qtO8SXsQ@mail.gmail.com>
- <xmqq4lz6ymlt.fsf@junio-linux.mtv.corp.google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 6 Mar 2017 16:58:16 -0800
-Message-ID: <CAGZ79kYaUsyU9toKjiCahtUC2Ze7KnZ+iMByu6woyZEnH_10kA@mail.gmail.com>
-Subject: Re: [Request for Documentation] Differentiate signed (commits/tags/pushes)
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     tom@oxix.org, Matthieu Moy <Matthieu.Moy@imag.fr>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
+Received: by 10.237.52.6 with HTTP; Mon, 6 Mar 2017 15:29:56 -0800 (PST)
+In-Reply-To: <20170131194138.fbcbdnkfjgizxnoa@sigill.intra.peff.net>
+References: <20170131022830.8538-1-eantoranz@gmail.com> <20170131194138.fbcbdnkfjgizxnoa@sigill.intra.peff.net>
+From:   Edmundo Carmona Antoranz <eantoranz@gmail.com>
+Date:   Mon, 6 Mar 2017 17:29:56 -0600
+Message-ID: <CAOc6etZjvpiQ65JHWzVeEqUzO0uJv8UjuWw7mbvCL5Om9weZLg@mail.gmail.com>
+Subject: Re: [PATCH] blame: draft of line format
+To:     Jeff King <peff@peff.net>
+Cc:     Git List <git@vger.kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Mar 6, 2017 at 4:08 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Stefan Beller <sbeller@google.com> writes:
+On Tue, Jan 31, 2017 at 1:41 PM, Jeff King <peff@peff.net> wrote:
+> On Mon, Jan 30, 2017 at 08:28:30PM -0600, Edmundo Carmona Antoranz wrote:
 >
->>> "tag -s" also has the benefit of being retroactive.  You can create
->>> commit, think about it for a week and then later tag it.  And ask
->>> others to also tag the same one.  You cannot do so with "commit -s".
->>
->> ok, so there is *no* advantage of signing a commit over tags?
+>> +static void pretty_info(char* revid, struct blame_entry *ent, struct strbuf *rev_buffer)
+>> +{
+>> +     struct pretty_print_context ctx = {0};
+>> +     struct rev_info rev;
+>> +
+>> +     struct strbuf format = STRBUF_INIT;
+>> +     strbuf_addstr(&format, format_line);
+>> +     ctx.fmt = CMIT_FMT_USERFORMAT;
+>> +     get_commit_format(format.buf, &rev);
+>> +     pretty_print_commit(&ctx, ent->suspect->commit, rev_buffer);
+>> +     strbuf_release(&format);
+>> +}
 >
-> Did I say anything that remotely resembles that?  Puzzled.
-
-Well that was brain having a short circuit.
-
+> I think this may be less awkward if you use format_commit_message() as
+> the entry point. Then you do not need a rev_info struct at all, it
+> touches fewer global variables, etc.
 >
-> If the reason you want to have GPG signature on a commit is not
-> because you want to mark some meaningful place in the history, but
-> you are signing each and every ones out of some random reason,
+> I don't know if that would cause the other difficulties you mentioned,
+> though.
+>
+> -Peff
 
-and I am looking for these "some random reason"s.
-If it is e.g. a ISO9001 requirement, I'll happily accept that as such.
+Thanks for the tip, Peff. It made the code to get rev info much
+shorter. I'll work on some other improvements and then I'll send
+another patch.
 
-By signing things, you certify your intent, i.e. by signing a commit,
-you certify that you intent to create the commit as-is in some repository
-on some branch (unlike the push certificate that specifies the repo and
-branch).
-
-> there
-> is no reason why you would want "tag -s" them, so you can see it as
-> an advantage of "commit -s" over "tag -s", because to such a
-> project, all commits that are not tagged look the same and there is
-> no "landmark" value to use "tag -s" for each and every one of them.
-
-Okay. They are two different things, but to me they seem to archive
-the same thing, with a tag having more niceties provided.
-e.g. when you make a new release, you could just bump the version
-in the versions file and sign the commit. As the commit is part of the
-master branch it would not get lost.
-
-The formerly mentioned "not polluting the refs/tags namespace"
-is applicable to mergetags, that are a side tangent to signing
-the commit vs creating a tag?
-
-Now as Jakub mentions that signed commits came before the
-mergetags were introduced, the existence of signed commits
-sort of makes sense, as they were there first, but now are
-superseded by more powerful tools.
-
-> It is entirely reasonable to sign a merge commit that merges a
-> signed tag.  They serve two different and unrelated purposes.
-
-The signed tag that gets merged certifies the intent of the lieutenant
-to ask for this specific content to be pulled and integrated, whereas
-the signing of the commit certifies that the integrator intends to create
-the merge commit as-is and e.g. resolve the merge conflicts as recorded.
-
-Thanks,
-Stefan
+Best regards!
