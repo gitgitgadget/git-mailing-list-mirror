@@ -7,45 +7,45 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A60F71FBEC
-	for <e@80x24.org>; Mon,  6 Mar 2017 09:52:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AF9BE1FBEC
+	for <e@80x24.org>; Mon,  6 Mar 2017 10:08:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754248AbdCFJwd (ORCPT <rfc822;e@80x24.org>);
-        Mon, 6 Mar 2017 04:52:33 -0500
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:35302 "EHLO
+        id S1753638AbdCFKIS (ORCPT <rfc822;e@80x24.org>);
+        Mon, 6 Mar 2017 05:08:18 -0500
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:34111 "EHLO
         mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753873AbdCFJvk (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Mar 2017 04:51:40 -0500
-Received: by mail-wm0-f68.google.com with SMTP id z63so10569680wmg.2
-        for <git@vger.kernel.org>; Mon, 06 Mar 2017 01:51:39 -0800 (PST)
+        with ESMTP id S1753280AbdCFKHy (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 Mar 2017 05:07:54 -0500
+Received: by mail-wm0-f68.google.com with SMTP id u132so4807476wmg.1
+        for <git@vger.kernel.org>; Mon, 06 Mar 2017 02:06:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=UEax+7GbaUAr2wiGbVh1Gxrws8D44BsRCu/e+R9eEw4=;
-        b=jrCY7zWev9uCdL9eANdkcZbE6MdoCRV8uirFa21kKEYksbNGh6MnRRZN9qEnqljt53
-         QSPFwDSEavhUhGvSyhP+8aFNRsqhrDOMfZEXiw39853G825gTN93SVjahrTHLNRaQq4F
-         SjMM638UBEpNUz9Rx4T1hFM9VQofjD85koyUc0cENxB3OAdFepVs4G+FEyNHRTTaPoNi
-         yXR7lcUHMljJBvKHa7vpNXdI4X/gplmEiK3L06Ym5GTCFp2VgXocQFyUM1bx2ivNK9sN
-         uVrXQHgiw7t4+avOV2GyN/2g7mFUnImo/VbEoz5VSD9bncIoyFIiUKRfH2P8xvQRV+1B
-         E4/Q==
+        bh=hEcZKUnfj0sYMJXvw9GlJFbxi94hNTxSIM1j1tcd1TY=;
+        b=GNRAio+g8XFc7e8mo3L6Cs3DpHvRCxhnKJ5grxl82t3SeqGhacy4NkNWIM1oShR7Ow
+         r8p5lKN+udMHq2LgsMVoZcw3goRpB/j3jROf4+HSKud6qEJL/OgrIokwPOZp1F1sP8VF
+         PxdGzjiqMQvaWl3nXQ9tESUoGgOXGVP/wHE3wnEe0A0TCDNjoDKWTtxzBJ+dgLOl0Jfa
+         XEWv1SzOFB8ku6Yc1S/FPnLYP+DVW1AwZU+4bufk0UVQiKAFO0A9pY08yXy9gDvS/pSi
+         dwPMX7c3pcxSCB0K5+xq/u6uNr7QXMOdORTckx8CUxRx5lDdMDslc+EtXMpEGBthdf4Y
+         k0jg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=UEax+7GbaUAr2wiGbVh1Gxrws8D44BsRCu/e+R9eEw4=;
-        b=N6PPbj4oONxel3SwIYcNAGzwqywvLE5znSPamxCf3MJP2FDMxxln4Ui0ptwIHIcsGI
-         ocsnmSyQEWY2tkEPbQYZwG/cMBr+v1Nv/FIw0WjDpiZLdniiMI/wpkz2G9oINv6xbBCZ
-         QGidekzFip2rRdN8ExTHAv+ov8zZjh4Bb8ASyZqCXEpMaBIpP56Bf6GQP/0n95Q1SlUy
-         HolslDlDC1E+3BJBZZC6pOYkAkDm2MEz/tt4GNlv+hi2OObT2Y1rx+gpFzsVk0/nfnKE
-         ANxDmVmLMQPcEtfnWYfHT3BCRxzpEG0qB1G2rsJ8E98kVqXqBmtYMl0F/gHU1jRUA6yr
-         L7yA==
-X-Gm-Message-State: AMke39kMXfPeADp5LZEi6FwTtU6dhwi9NOYLzPY12BTu75kxYJvS7JAXevuC0QHGPPsDCQ==
-X-Received: by 10.28.198.132 with SMTP id w126mr12855111wmf.69.1488793348429;
-        Mon, 06 Mar 2017 01:42:28 -0800 (PST)
+        bh=hEcZKUnfj0sYMJXvw9GlJFbxi94hNTxSIM1j1tcd1TY=;
+        b=aylcqBZM6Lt5KdaZAo3McLUgwbsbj3nGqSypNZ88BA/1RH5QdZRm/eWydyT1kdvXDh
+         LZ/8aCOGlXSM0w/mqV6Kzbke8Npn6wiG44Y25oMG0WzLV99mdj+m4l0GdC99Sc+2hbJT
+         N2QOjVCy8G4zslgYWo8Lrju6TZ7O4dkv1fxC6RJ0doZMZHUNXa0j0Fe1oJ1up4MNDpD3
+         4w6y2M28IlaHXmp3kpm7KJZtRoEaJhhbHqmr2DNevTNR1dDIfnOEDsKhOU2WBuyZjEN6
+         3ptfRt3CrTraeLTDmRoewYZ4Ulh5V2WxLJ7++7eNeoVOBLcf7ofuCO1qU+VQyj4UfAnH
+         5MYg==
+X-Gm-Message-State: AMke39mixcrApsD1IXOSlDv0suLJN5YBf4ij0WosgKhZNN6GYsZjoV/XYM0N3Q5KSf0aiA==
+X-Received: by 10.28.35.66 with SMTP id j63mr3455396wmj.84.1488793343938;
+        Mon, 06 Mar 2017 01:42:23 -0800 (PST)
 Received: from localhost.localdomain (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr. [128.78.31.246])
-        by smtp.gmail.com with ESMTPSA id 191sm14144086wmo.21.2017.03.06.01.42.27
+        by smtp.gmail.com with ESMTPSA id 191sm14144086wmo.21.2017.03.06.01.42.22
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 06 Mar 2017 01:42:27 -0800 (PST)
+        Mon, 06 Mar 2017 01:42:23 -0800 (PST)
 From:   Christian Couder <christian.couder@gmail.com>
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 To:     git@vger.kernel.org
@@ -55,9 +55,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         <avarab@gmail.com>, Ramsay Jones <ramsay@ramsayjones.plus.com>,
         Jeff King <peff@peff.net>,
         Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v5 08/22] Documentation/config: add information for core.splitIndex
-Date:   Mon,  6 Mar 2017 10:41:49 +0100
-Message-Id: <20170306094203.28250-9-chriscool@tuxfamily.org>
+Subject: [PATCH v5 05/22] read-cache: add and then use tweak_split_index()
+Date:   Mon,  6 Mar 2017 10:41:46 +0100
+Message-Id: <20170306094203.28250-6-chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.12.0.206.g74921e51d6.dirty
 In-Reply-To: <20170306094203.28250-1-chriscool@tuxfamily.org>
 References: <20170306094203.28250-1-chriscool@tuxfamily.org>
@@ -66,26 +66,46 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+This will make us use the split-index feature or not depending
+on the value of the "core.splitIndex" config variable.
+
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- Documentation/config.txt | 4 ++++
- 1 file changed, 4 insertions(+)
+ read-cache.c | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 47603f5484..f102879261 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -334,6 +334,10 @@ core.trustctime::
- 	crawlers and some backup systems).
- 	See linkgit:git-update-index[1]. True by default.
+diff --git a/read-cache.c b/read-cache.c
+index 9054369dd0..99bc274b8d 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -1558,10 +1558,27 @@ static void tweak_untracked_cache(struct index_state *istate)
+ 	}
+ }
  
-+core.splitIndex::
-+	If true, the split-index feature of the index will be used.
-+	See linkgit:git-update-index[1]. False by default.
++static void tweak_split_index(struct index_state *istate)
++{
++	switch (git_config_get_split_index()) {
++	case -1: /* unset: do nothing */
++		break;
++	case 0: /* false */
++		remove_split_index(istate);
++		break;
++	case 1: /* true */
++		add_split_index(istate);
++		break;
++	default: /* unknown value: do nothing */
++		break;
++	}
++}
 +
- core.untrackedCache::
- 	Determines what to do about the untracked cache feature of the
- 	index. It will be kept, if this variable is unset or set to
+ static void post_read_index_from(struct index_state *istate)
+ {
+ 	check_ce_order(istate);
+ 	tweak_untracked_cache(istate);
++	tweak_split_index(istate);
+ }
+ 
+ /* remember to discard_cache() before reading a different cache! */
 -- 
 2.12.0.206.g74921e51d6.dirty
 
