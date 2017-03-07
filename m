@@ -7,166 +7,105 @@ X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8894F202DA
-	for <e@80x24.org>; Tue,  7 Mar 2017 14:32:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 99928202DA
+	for <e@80x24.org>; Tue,  7 Mar 2017 14:33:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932555AbdCGOcb (ORCPT <rfc822;e@80x24.org>);
-        Tue, 7 Mar 2017 09:32:31 -0500
-Received: from mout.gmx.net ([212.227.15.15]:52888 "EHLO mout.gmx.net"
+        id S1755633AbdCGOdL (ORCPT <rfc822;e@80x24.org>);
+        Tue, 7 Mar 2017 09:33:11 -0500
+Received: from mout.gmx.net ([212.227.15.18]:58629 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1755577AbdCGOcS (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Mar 2017 09:32:18 -0500
-Received: from virtualbox ([37.201.194.72]) by mail.gmx.com (mrgmx001
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0LzblK-1cFl8l3r98-014jhr; Tue, 07
- Mar 2017 15:31:46 +0100
-Date:   Tue, 7 Mar 2017 15:31:43 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+        id S1755611AbdCGOdE (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Mar 2017 09:33:04 -0500
+Received: from virtualbox ([37.201.194.72]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MYP57-1cpuxu0B9N-00V95D; Tue, 07
+ Mar 2017 15:32:27 +0100
+Date:   Tue, 7 Mar 2017 15:32:26 +0100 (CET)
+From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
-To:     Jeff King <peff@peff.net>
-cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+To:     git@vger.kernel.org
+cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH v3 0/9] Fix the early config
-In-Reply-To: <20170304073952.drfgy7jacnlm6tum@sigill.intra.peff.net>
-Message-ID: <alpine.DEB.2.20.1703071314180.3767@virtualbox>
-References: <cover.1488506615.git.johannes.schindelin@gmx.de> <cover.1488562287.git.johannes.schindelin@gmx.de> <20170304073952.drfgy7jacnlm6tum@sigill.intra.peff.net>
+Subject: [PATCH v4 01/10] t7006: replace dubious test
+In-Reply-To: <cover.1488897111.git.johannes.schindelin@gmx.de>
+Message-ID: <96c2b0be087ee212cbe0aa18cefd2965c09e48fd.1488897111.git.johannes.schindelin@gmx.de>
+References: <cover.1488562287.git.johannes.schindelin@gmx.de> <cover.1488897111.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:JbzeKwv0jX3e7Zh3SQm0cu+f1xw9jLmYtsGruaIb7cZC3AHopZC
- gduHyOMkJYrO89qVhL9R/+ieabuqds6+SocRSfV40ptkCykg2laTcdwk+TLf0KOAELOKjC2
- YoNl65ZbBKNyTj2iN3pQaZvRJr1rR93/8SSkziqF3pF4wEaIOoDkmd1pzgf96QrPmyKTt3f
- lr0B3W0Rb7fXnVhQvbMcA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:LbEhlj4hjUY=:laZDMsf+L2VmBA62gBCdvn
- wXlzPBgY6H5h9Ehj3VhlGCfhiVN1u1d85S0lX1qGPyVMzIStPOYP/E3vgTH/FQA1rlaJsutEV
- ma2RbRVu89NdbFilOnJY/gSvLxxictxC9VDd1B6hfvs1w9cFLWI2/heV59hEljeIEe0zI4TY0
- JQKF+OQ0jdoy1w5Z8ihg2Wg3amsDOQ7JrCLM8WykD4Ea639Kvy/XVvVcvW3uJPHMISEa7+Dgj
- pTZvDI3hLFFcEbO3B1i/xtrZdHfZ78Lqow9IEWoBPS3axfpNbxcHQ2Z3+CUKyguoMSjX9z2Xx
- Uhgl/eYgbT634INq3nPUUo5nJ86ORQN2zZW5sjjT95M5hVMpimyuD7HMt9i37PmSevGdm55Qj
- KWQFJ+orVXbDAcHhzvOng3rQlI3G65vsB5T2hPRPah89r1HCZor/Rv7gooFn/q1VJenu+1Uj/
- ySDr4SyTaVMvhbb7nvNGi2ZkfcyEZwv2kso8e5pURNVCSnKKBFfYKrKpuSvvv81H1jkYCDUVn
- Bewb1zpu2XcZrecIkDVQVjDeGU9Iic6WRaBbU6sBoBxO4EcX8QV3BN82erPzPdGCBoAPbCcW9
- 9LojpMyKAb1j6MF7tkfIGSiJntX+Ia3gfqNAdqkamqmdJaSRTT+eIEEFX/QKgyKlFHfIm6eM7
- NfvJd0Bp/Et4Bw0V7V0T+uiNzTqB8gj9/Rvf4UfUHXIUHYCOZAQNlvilrVIiML2+zwobrRc/y
- CW4pan3fLDPOPbBYCJl7PVlY7JeLo6hB2jWBNcjjAx0jFQYMUPzAjlAFD2bcSBvjzE3xR5TBJ
- P0JEYl8
+X-Provags-ID: V03:K0:31DhMwvFP50mEIoGfZxLi7V+RpGwpLvdz7Mz+Cc6O1zCo52YiF9
+ ZMaPiOJ3flQMtQjG45qURz++dTs5/N3C7hAoVBaf2tNQ1elGEbuwQRDMjW2RpL0e2RPOGFR
+ 2FGVeodM4sCFOf5z9jhb0wAwXc/FXPBmTbY4+DwJJLfBQR5qUgQW3t+GJviFKLXt4LXUJY/
+ 2Fp9h4Qj5FosVKLrmyhEg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:2UA/rhWiKrQ=:mxOg49+JewG3a5+GYRNDHt
+ A6PYOsiCuwkQU3McCvrp/6KuRLfs1v6S1bJnSeQZxAhXCBgfSW4eFYtuqwjs1OqLu+ikGDiMG
+ gPBG7IpxzenOvOFSfxim8yt0ICkjwF/8zrPKtml7pujiVWKLfvuCyyFIn6Ou3G1BP4+k6WvER
+ 1V7v1/AsLzUVfTv6vrfd7h2PY9zIJa+MI+cpIE3obaSKugbPKFTAYVaiF6iyit37AinLSAj4Q
+ szh33rp9NL05YNtI19bAeHKpC3N3g0Twxmjt/ZuwQkOePuJGZh6raBW7N32+VFG374CdWr0Gd
+ paCBohFNx0WQPMUYIcLHe7hMJfCUV7fsY6qKeSMSaFp/UKhT8aTTf/7yQ6W60t5o+rjA+tMhv
+ Yd4KLVMfjcw5H2qj4y1SO6FMNNx/6zD8AhjR5nzmmlFnEJhBVsRQ2VL/bYU1FwmfFQs6hR56U
+ XrxI8QbaAsygFa0m/5HXurzj2zTD9qf2m/GDYffZiovCXl4QtxTDrPNDKlFMs7p5aqyO77oX5
+ fJswniZ7sm/eXzFtTTmC27mxO3AjcEX2YYKmYCpiOAYcBhyMYQCcP6enbWqYTpE5ZUOKiq5at
+ WKcWVwhJhW4F1VB3KPoEMwvE+uSMP/UD7LM/A7/awMdm8LyHa6XQ01nhsyOyTa0l04ZzX70KA
+ OXdjDu9rXU8tD4LNIPHFA94rroFBF8IWgd9gaJvMQMixj4CyDnV3FSayoVzh+m+cAJQ+aY16G
+ JkrwtX9AwilvI/8dhszOfNoozyMQM0ucdKLN7MMn3lXnKZ0R7bWjSWIJPBFuKX2v5P9kaILUb
+ T2AnTWn
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Peff,
+The idea of the test case "git -p - core.pager is not used from
+subdirectory" was to verify that the setup_git_directory() function had
+not been called just to obtain the core.pager setting.
 
-On Sat, 4 Mar 2017, Jeff King wrote:
+However, we are about to fix the early config machinery so that it
+*does* work, without messing up the global state.
 
-> On Fri, Mar 03, 2017 at 06:31:55PM +0100, Johannes Schindelin wrote:
-> 
-> > Interdiff vs v2:
-> > [...]
-> >  +	 * When we are not about to create a repository ourselves (init or
-> >  +	 * clone) and when no .git/ directory was set up yet (in which case
-> >  +	 * git_config_with_options() would already have picked up the
-> >  +	 * repository config), we ask discover_git_directory() to figure out
-> >  +	 * whether there is any repository config we should use (but unlike
-> >  +	 * setup_git_directory_gently(), no global state is changed, most
-> >  +	 * notably, the current working directory is still the same after
-> >  +	 * the call).
-> >   	 */
-> >  -	if (!startup_info->creating_repository && !have_git_dir() &&
-> >  -	    discover_git_directory(&buf)) {
-> >  +	if (!have_git_dir() && discover_git_directory(&buf)) {
-> 
-> I think this "when we are not about to..." part of the comment is no
-> longer true, given the second part of the hunk.
+Once that is done, the core.pager setting *will* be used, even when
+running from a subdirectory, and that is a Good Thing.
 
-Yep, that was a stale part of that patch. Thanks for noticing!
+The intention of that test case, however, was to verify that the
+setup_git_directory() function has not run, because it changes global
+state such as the current working directory.
 
-> >  @@ -721,8 +721,10 @@ static const char *setup_discovered_git_dir(const char *gitdir,
-> >   	if (offset == cwd->len)
-> >   		return NULL;
-> >   
-> >  -	/* Make "offset" point to past the '/', and add a '/' at the end */
-> >  -	offset++;
-> >  +	/* Make "offset" point past the '/' (already the case for root dirs) */
-> >  +	if (offset != offset_1st_component(cwd->buf))
-> >  +		offset++;
-> 
-> Nice. I was worried we would have to have a hacky "well, sometimes we
-> don't add one here..." code, but using offset_1st_component says
-> exactly what we mean.
+To keep that spirit, but fix the incorrect assumption, this patch
+replaces that test case by a new one that verifies that the pager is
+run in the subdirectory, i.e. that the current working directory has
+not been changed at the time the pager is configured and launched, even
+if the `rev-parse` command requires a .git/ directory and *will* change
+the working directory.
 
-Right. I also wanted to avoid that very, very much. My initial version
-actually tried to detect whether cwd already has a trailing slash, but
-then I figured that we can be much, much more precise here (and I am
-really pleased how offset_1st_component() is *semantically* precise, i.e.
-it describes very well what the code is supposed to do here).
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ t/t7006-pager.sh | 12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
-> > +/* Find GIT_DIR without changing the working directory or other global state */
-> >  extern const char *discover_git_directory(struct strbuf *gitdir);
-> 
-> The parts that actually confused me were the parameters (mostly whether
-> gitdir was a directory to start looking in, or an output parameter). So
-> maybe:
-> 
->   /*
->    * Find GIT_DIR of the repository that contains the current working
->    * directory, without changing the working directory or other global
->    * state. The result is appended to gitdir. The return value is NULL
->    * if no repository was found, or gitdir->buf otherwise.
->    */
+diff --git a/t/t7006-pager.sh b/t/t7006-pager.sh
+index c8dc665f2fd..304ae06c600 100755
+--- a/t/t7006-pager.sh
++++ b/t/t7006-pager.sh
+@@ -378,9 +378,19 @@ test_GIT_PAGER_overrides  expect_success test_must_fail 'git -p request-pull'
+ test_default_pager        expect_success test_must_fail 'git -p'
+ test_PAGER_overrides      expect_success test_must_fail 'git -p'
+ test_local_config_ignored expect_failure test_must_fail 'git -p'
+-test_no_local_config_subdir expect_success test_must_fail 'git -p'
+ test_GIT_PAGER_overrides  expect_success test_must_fail 'git -p'
+ 
++test_expect_failure TTY 'core.pager in repo config works and retains cwd' '
++	sane_unset GIT_PAGER &&
++	test_config core.pager "cat >cwd-retained" &&
++	(
++		cd sub &&
++		rm -f cwd-retained &&
++		test_terminal git -p rev-parse HEAD &&
++		test_path_is_file cwd-retained
++	)
++'
++
+ test_doesnt_paginate      expect_failure test_must_fail 'git -p nonsense'
+ 
+ test_pager_choices                       'git shortlog'
+-- 
+2.12.0.windows.1.7.g94dafc3b124
 
-I changed it a little bit more. In particular, I changed the
-discover_git_directory() function to return the pointer to the path
-itself: it provides additional value, and if that is not what the caller
-wants, they can use git_dir->buf just as well.
 
-> This looks good to me aside from those few comment nits.
-
-Thanks.
-
-It is not obvious from the interdiff, but I had an incorrect fixup to 8/9
-that actually wanted to go to 5/9: the code in
-discover_git_repository() tests the repository version should be part of
-the initial version of this function, of course.
-
-There is one more thing I included in v4: when I (re-)implemented that
-pre-command/post-command hook I was hinting at earlier, the test suite
-identified a problem where an invalid .git file would prevent even `git
-init` from working (it was actually much more complicated than that, but
-the gist is that `git -p init` would fail, no matter how much sense it
-may make to you to paginate an `init` run, it should still not fail,
-right?). So I added a patch on top to fix that.
-
-And another change: the GIT_DIR_NONE value was handled incorrectly in
-discover_git_directory().
-
-I am slightly disappointed that the these additional problems were not
-spotted in any review but my own. And I had not even included a Duck.
-
-> I'm still not sure I understand how ceil_offset works in
-> setup_git_directory_gently_1(), but I don't think your patch actually
-> changed it. I can live with my confusion.
-
-Yes, that code is very confusing. It also does not help that the naming is
-inconsistent in that it abbreviates "ceiling" but not "offset". What makes
-it even worse is that the function name `longest_ancestor_length()` is
-highly misleading: in Git's context, "ancestor" of sth pretty much always
-refers to a commit reachable from sth, but in this context it refers to
-the path of a directory containing sth.
-
-So basically, we set ceil_offset to the offset of the last directory
-separator in our path that corresponds to the most precise match in
-GIT_CEILING_DIRECTORIES.
-
-Example: given GIT_CEILING_DIRECTORIES /foo:/:/bar and a path of /foo/bar,
-ceil_offset would be 4, pointing to the slash at the end of /foo/ because
-that is the most precise match in GIT_CEILING_DIRECTORIES ("/" would also
-match, but is less precise).
-
-Later, setup_git_directory_gently_1() ensures that it does not go beyond
-ceil_offset when looking for the parent directory as the next candidate to
-test for .git/.
-
-Hopefully that clears up the picture?
-
-Ciao,
-Dscho
