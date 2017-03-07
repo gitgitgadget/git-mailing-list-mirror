@@ -2,182 +2,134 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 311C61FBEC
-	for <e@80x24.org>; Tue,  7 Mar 2017 16:42:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 856FC1FBEC
+	for <e@80x24.org>; Tue,  7 Mar 2017 17:30:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755757AbdCGQmf (ORCPT <rfc822;e@80x24.org>);
-        Tue, 7 Mar 2017 11:42:35 -0500
-Received: from smtp.codeaurora.org ([198.145.29.96]:54878 "EHLO
-        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755781AbdCGQmS (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Mar 2017 11:42:18 -0500
-Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id 11769607C6; Tue,  7 Mar 2017 16:40:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1488904858;
-        bh=B9pv5y1lDCXPvvEr7NAMCxe5xS0HdwpzQz7jVp+hWMo=;
-        h=From:To:Cc:Subject:Date:From;
-        b=UUPgulFKM0km1/a50F5zR/NXuej6EzN+d5VLTTIrDipHI7nS/BwNGacuJcVSySDmg
-         eVWzcdnxF1eYrF8V7/4ivXoX1Wmr0igvvsiJLyAZvUwR2ot4Y0TLRw5blI7J0l57d1
-         aWL/irxAQW0bBnkHRcU1klw5ROTuFEfEqsUh1m+A=
-Received: from jmelvin1-mac.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: jmelvin@smtp.codeaurora.org)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id A1A4F60729;
-        Tue,  7 Mar 2017 16:40:55 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1488904856;
-        bh=B9pv5y1lDCXPvvEr7NAMCxe5xS0HdwpzQz7jVp+hWMo=;
-        h=From:To:Cc:Subject:Date:From;
-        b=T+yVD5miC7Bvbh6qOdRI4w24k43I/wbbeJ4wXkGmalVQoBehl+v+X9i8slxFvvrmx
-         vNyM5cqJFC10SP2y4E16hNGErqMPn1akqYHZmXCTuSROY7k0B5FlBBL1gZ9md7emD3
-         nD+k8z00piP3Flma+XxO9OuKocjyePSY17xYOYSU=
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org A1A4F60729
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=jmelvin@codeaurora.org
-From:   James Melvin <jmelvin@codeaurora.org>
-To:     git@vger.kernel.org
-Cc:     nasserg@codeaurora.org, mfick@codeaurora.org, peff@peff.net,
-        sbeller@google.com, James Melvin <jmelvin@codeaurora.org>
-Subject: [PATCH] repack: Add options to preserve and prune old pack files
-Date:   Tue,  7 Mar 2017 09:40:35 -0700
-Message-Id: <20170307164035.27866-1-jmelvin@codeaurora.org>
-X-Mailer: git-send-email 2.12.0.190.gab6997d48.dirty
+        id S932936AbdCGRaO (ORCPT <rfc822;e@80x24.org>);
+        Tue, 7 Mar 2017 12:30:14 -0500
+Received: from mail-pf0-f171.google.com ([209.85.192.171]:36283 "EHLO
+        mail-pf0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932896AbdCGRaK (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Mar 2017 12:30:10 -0500
+Received: by mail-pf0-f171.google.com with SMTP id o126so3074929pfb.3
+        for <git@vger.kernel.org>; Tue, 07 Mar 2017 09:30:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=P14npgjDZmVcFHC3rDfQiTnu7O6yyQG02YeJt3sa1eU=;
+        b=cTQgjm3zBP+8shd62cPWiSlYKcbkHOZHXfnXSEpNfxXCQu3GTczjOgLJ3Vkfamt3yD
+         hLN++HGtLeWMIRM1eR9lSolTdHmIZGEboX4beJsGKp/7MlVjDYrqt6lR/Dk8/qojPPW6
+         jf64rrepu7JkKIOHxqQkdeVDtna0o6KprKx5AlxE8mmcqLAjH3llY6gaJtB4YP38OiwI
+         gPZ97P4oXqnScAh1vj+7H80k9BNuQWeu5LVumz391OESeuS1dr3lO1Da5IiYGte+U9F3
+         FeHkUMM7qZuVl6GqIRS5Ntd0JH2tNZRTd4qrdBdjCX0Ng4wX6sUHUunL8UKRmm0lQte6
+         jrMQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=P14npgjDZmVcFHC3rDfQiTnu7O6yyQG02YeJt3sa1eU=;
+        b=LhT1ScJBF/uBXGVGo6J1n/wxwFL4bxrsoeFmYeB+HRnmri31RJ7bq3ZwgFeokD4YR1
+         mwXw7JW9XbIg9zFV4PwQwu3lWVZSkUALpJ35iJiTsB9v7kQX6/L7vWWj/Xl89du2Mglm
+         xXCZFqRR4lVF4JCXp/1E8R6MCG1FjY6Vv52ZWPI5FnalN1iaNQZTKqz9+avLpScqKo6s
+         PrK2yMf9+/b0wXr8sFYVX+r34xU5lEmCJZ8+d9naU3OwBZjgoA+AoYGd8u1qzoCrtAU4
+         2YjW+3zPrc6bIu8fUsQzo3iGSAJEoup+RnAXNJir/tbA3ZDUOGMpRFR/riqn4Ai5g2WR
+         Nccw==
+X-Gm-Message-State: AMke39n6snN82bTzDlkDc51atudfZ+jjJN1FuFR9EtBJcMWQp2+sN/sXFKxbFY4o/oH1TpT/j4An8ZYGiBjyHh1V
+X-Received: by 10.98.198.78 with SMTP id m75mr1591519pfg.160.1488907269233;
+ Tue, 07 Mar 2017 09:21:09 -0800 (PST)
+MIME-Version: 1.0
+Received: by 10.100.187.5 with HTTP; Tue, 7 Mar 2017 09:21:08 -0800 (PST)
+In-Reply-To: <CAME+mvUe7itzg7JLu9_131smzHHE0JsN-z7q8_dTY1qEdugYWw@mail.gmail.com>
+References: <CAME+mvUe7itzg7JLu9_131smzHHE0JsN-z7q8_dTY1qEdugYWw@mail.gmail.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Tue, 7 Mar 2017 09:21:08 -0800
+Message-ID: <CAGZ79kaYi1OLuOKvbCmDrMCq0fZnO2Ry7JML=Puwmx6TTtEYog@mail.gmail.com>
+Subject: Re: [PATCH] t*: avoid using pipes
+To:     Prathamesh Chavan <pc44800@gmail.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        Pranit Bauva <pranit.bauva@gmail.com>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The new --preserve-oldpacks option moves old pack files into the
-preserved subdirectory instead of deleting them after repacking.
+On Tue, Mar 7, 2017 at 8:10 AM, Prathamesh Chavan <pc44800@gmail.com> wrote:
+> Hi,
+> I'm Prathamesh Chavan. As a part of my micropraoject I have been working on
+> "Avoid pipes for git related commands in test suites".
 
-The new --prune-preserved option prunes old pack files from the
-preserved subdirectory after repacking, but before potentially
-moving the latest old packfiles to this subdirectory.
+Thanks for working on that microproject!
 
-These options are designed to prevent stale file handle exceptions
-during git operations which can happen on users of NFS repos when
-repacking is done on them. The strategy is to preserve old pack files
-around until the next repack with the hopes that they will become
-unreferenced by then and not cause any exceptions to running processes
-when they are finally deleted (pruned).
+> I tried sending the
+> patch, but it got blocked since the mail contained more than 100 000
+> characters.
 
-Signed-off-by: James Melvin <jmelvin@codeaurora.org>
----
- Documentation/git-repack.txt |  9 +++++++++
- builtin/repack.c             | 38 ++++++++++++++++++++++++++++++++++++--
- 2 files changed, 45 insertions(+), 2 deletions(-)
+Yeah, even the github UI seems to have trouble with that commit.
+(A bit slow, not showing the full content, but rather I needed to click
+on "load diff" for tests files 7000+)
 
-diff --git a/Documentation/git-repack.txt b/Documentation/git-repack.txt
-index 26afe6ed5..0b19b761f 100644
---- a/Documentation/git-repack.txt
-+++ b/Documentation/git-repack.txt
-@@ -143,6 +143,15 @@ other objects in that pack they already have locally.
- 	being removed. In addition, any unreachable loose objects will
- 	be packed (and their loose counterparts removed).
- 
-+--preserve-oldpacks::
-+	 Move old pack files into the preserved subdirectory instead
-+	 of deleting them after repacking.
-+
-+--prune-preserved::
-+	 Prune old pack files from the preserved subdirectory after
-+	 repacking, but before potentially moving the latest old
-+	 packfiles to this subdirectory
-+
- Configuration
- -------------
- 
-diff --git a/builtin/repack.c b/builtin/repack.c
-index 677bc7c81..f1a0c97f3 100644
---- a/builtin/repack.c
-+++ b/builtin/repack.c
-@@ -10,8 +10,10 @@
- 
- static int delta_base_offset = 1;
- static int pack_kept_objects = -1;
-+static int preserve_oldpacks = 0;
-+static int prune_preserved = 0;
- static int write_bitmaps;
--static char *packdir, *packtmp;
-+static char *packdir, *packtmp, *preservedir;
- 
- static const char *const git_repack_usage[] = {
- 	N_("git repack [<options>]"),
-@@ -108,6 +110,27 @@ static void get_non_kept_pack_filenames(struct string_list *fname_list)
- 	closedir(dir);
- }
- 
-+static void preserve_pack(const char *file_path, const char *file_name,  const char *file_ext)
-+{
-+	char *fname_old;
-+
-+	if (mkdir(preservedir, 0700) && errno != EEXIST)
-+		error(_("failed to create preserve directory"));
-+
-+	fname_old = mkpathdup("%s/%s.old-%s", preservedir, file_name, ++file_ext);
-+	rename(file_path, fname_old);
-+
-+	free(fname_old);
-+}
-+
-+static void remove_preserved_dir(void) {
-+	struct strbuf buf = STRBUF_INIT;
-+
-+	strbuf_addstr(&buf, preservedir);
-+	remove_dir_recursively(&buf, 0);
-+	strbuf_release(&buf);
-+}
-+
- static void remove_redundant_pack(const char *dir_name, const char *base_name)
- {
- 	const char *exts[] = {".pack", ".idx", ".keep", ".bitmap"};
-@@ -121,7 +144,10 @@ static void remove_redundant_pack(const char *dir_name, const char *base_name)
- 	for (i = 0; i < ARRAY_SIZE(exts); i++) {
- 		strbuf_setlen(&buf, plen);
- 		strbuf_addstr(&buf, exts[i]);
--		unlink(buf.buf);
-+		if (preserve_oldpacks)
-+			preserve_pack(buf.buf, base_name, exts[i]);
-+		else
-+			unlink(buf.buf);
- 	}
- 	strbuf_release(&buf);
- }
-@@ -194,6 +220,10 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
- 				N_("maximum size of each packfile")),
- 		OPT_BOOL(0, "pack-kept-objects", &pack_kept_objects,
- 				N_("repack objects in packs marked with .keep")),
-+		OPT_BOOL(0, "preserve-oldpacks", &preserve_oldpacks,
-+				N_("move old pack files into the preserved subdirectory")),
-+		OPT_BOOL(0, "prune-preserved", &prune_preserved,
-+				N_("prune old pack files from the preserved subdirectory after repacking")),
- 		OPT_END()
- 	};
- 
-@@ -217,6 +247,7 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
- 
- 	packdir = mkpathdup("%s/pack", get_object_directory());
- 	packtmp = mkpathdup("%s/.tmp-%d-pack", packdir, (int)getpid());
-+	preservedir = mkpathdup("%s/preserved", packdir);
- 
- 	sigchain_push_common(remove_pack_on_signal);
- 
-@@ -404,6 +435,9 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
- 
- 	/* End of pack replacement. */
- 
-+	if (prune_preserved)
-+		remove_preserved_dir();
-+
- 	if (delete_redundant) {
- 		int opts = 0;
- 		string_list_sort(&names);
--- 
-2.12.0.190.gab6997d48.dirty
+This is a lot of change (in terms of lines) for a micro project. :)
+I'd have two competing advices:
+* keep it micro first, e.g. just convert one file,
+  send to list, wait for reviewers feedback and incorporate that
+  (optional step after having done the full development cycle:
+  convert all the other files; each as its own patch)
+* split up this one patch into multiple patches, e.g. one
+  file per patch, then send a patch series.
 
+The outcome will be the same, but in the first you get feedback
+quicker, such that hopefully you only need to touch the rest of
+files after the first file just once.
+
+
+> Hence I'll like to attach the link to my branch 'micro-proj', where I did the
+> required changes.
+>
+> https://github.com/pratham-pc/git/tree/micro-proj
+
+While I did look at that, not everyone here in the git community
+does so. (Also for getting your change in, Junio seems to strongly prefer
+patches on list instead of e.g. fetching and cherry-picking from your
+github)
+
+When looking at the content, the conversion seems a bit mechanical
+(which is fine for a micro project), such as:
+...
+- test "$(git show --pretty=format:%s | head -n 1)" = "one"
++ test "$(git show --pretty=format:%s >out && head -n 1 <out)" = "one"
+...
+
+specifically for the "head" command I don't think it makes a
+difference in correctness whether you pipe the file into the tool
+or give the filename, i.e.  "head -n 1 out" would work just as fine.
+
+There is a difference in readability, though. For consistency I'd
+suggest to drop the "<", as the numbers might support:
+
+$ cd t
+$ git grep head |wc -l
+# This also counts other occurrences of the string,
+# not just the invocation of the head tool
+2871
+$ git grep head |grep "<" |wc -l
+# same here
+58
+
+Another aspect might be performance at scale as the "<" will
+let the shell open the file and pipe the content via stdin to the
+head tool, whereas when giving a filename the head tool needs
+to open the file. Both times the file doesn't need to be read completely,
+but "head -n 1" can close the file handle early in the game.
+I dunno.
+
+Thanks,
+Stefan
+
+>
+> Thanks.
