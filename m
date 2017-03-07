@@ -2,117 +2,118 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4AD991FBEC
-	for <e@80x24.org>; Wed,  8 Mar 2017 02:18:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3F7201FBEC
+	for <e@80x24.org>; Wed,  8 Mar 2017 02:25:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933348AbdCHCRV (ORCPT <rfc822;e@80x24.org>);
-        Tue, 7 Mar 2017 21:17:21 -0500
-Received: from mail-pg0-f50.google.com ([74.125.83.50]:33373 "EHLO
-        mail-pg0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1756546AbdCHCRS (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Mar 2017 21:17:18 -0500
-Received: by mail-pg0-f50.google.com with SMTP id 25so7354938pgy.0
-        for <git@vger.kernel.org>; Tue, 07 Mar 2017 18:16:51 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=ttHAXl5ufCyJ5NsA5DOztFopHDnm/Nne7+ScHOsg3mQ=;
-        b=UghPKrK0HMa0e7X8pio+/9SRcbmfKUklkpK/FvE7bHmDXaSYp+9GP8TKOVrzpEFFSF
-         1lpQN88vATNt10QMbHZ8Nj1D1GtC0wEvKzIa6dYMBH1g4WChxy+HynAr0P2o1IJNmpRZ
-         iWHHnsd5x/w0iccJFHRUdDjEMEHC2USKB2IHPbTDSS/5uK8ebIm0y9L6YSIQGy6cOWIa
-         R8CWRLVNMMq4WnQN4xr+hiU1XNwJAfBbq9Y4rz2j8fsfLOfme3nJQmGrq79yvKWgZtwW
-         QDjZnbnTCXN/QdB78z9aiBIQwYqkVbjVg34bJd8pDz94q4r0r/F0mDPu1Z/phTe2792+
-         HqZQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=ttHAXl5ufCyJ5NsA5DOztFopHDnm/Nne7+ScHOsg3mQ=;
-        b=PUPWMXzZ9aZX1SEEZdlsTQgxbCFVSMnE+b2qUvUYet8s6rAGMRJh4q/vuBxTHQO4Mg
-         NLZdnJruB+F/z3Vhci7jM2/tJj4QkIS8PIi0a0IttGqerleNmyrlExT/CL66/VEHc302
-         icExmZHfRvYD6kXMSlVKApGJiTp4UOn0/5faMLCOuy8LDvw4HexKnyMHQho2V5CmUtuf
-         dKeU36UPgyVx6g9KoH5gyEsmhpZQpLG1dnZ774oznO/jWMPSDF6zhKsHirg0eLNWOY3h
-         hLLD+PsOEYcM0WrM/2j9LtQaD6OFR+2mdmSx7ezTZSIK/oA0VtrY19FwIcur6L4n/qc6
-         Z+Iw==
-X-Gm-Message-State: AMke39l2+LXpCHsdYbgkjdst/1hO6tWQ4YJ2esRpasIhZNeUn5zRzk7uQKSrJWjb4FddHpuw
-X-Received: by 10.99.23.102 with SMTP id 38mr4083993pgx.188.1488939046762;
-        Tue, 07 Mar 2017 18:10:46 -0800 (PST)
-Received: from google.com ([2620:0:1000:5b10:2547:c8c9:5d3e:d641])
-        by smtp.gmail.com with ESMTPSA id l3sm2176097pgn.10.2017.03.07.18.10.45
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 07 Mar 2017 18:10:45 -0800 (PST)
-Date:   Tue, 7 Mar 2017 18:10:44 -0800
-From:   Brandon Williams <bmwill@google.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>, Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH v4 04/10] setup_git_directory_1(): avoid changing global
- state
-Message-ID: <20170308021044.GB1650@google.com>
-References: <cover.1488562287.git.johannes.schindelin@gmx.de>
- <cover.1488897111.git.johannes.schindelin@gmx.de>
- <2c8ab22700fb40c9e4e9b46f4981b45db7f2dcf2.1488897111.git.johannes.schindelin@gmx.de>
- <20170307233549.GA128647@google.com>
- <alpine.DEB.2.20.1703080156040.3767@virtualbox>
+        id S1756643AbdCHCZl (ORCPT <rfc822;e@80x24.org>);
+        Tue, 7 Mar 2017 21:25:41 -0500
+Received: from cloud.peff.net ([104.130.231.41]:40193 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1756546AbdCHCZi (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Mar 2017 21:25:38 -0500
+Received: (qmail 19674 invoked by uid 109); 7 Mar 2017 13:34:40 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 07 Mar 2017 13:34:40 +0000
+Received: (qmail 25590 invoked by uid 111); 7 Mar 2017 13:34:49 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 07 Mar 2017 08:34:49 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 07 Mar 2017 08:34:38 -0500
+Date:   Tue, 7 Mar 2017 08:34:38 -0500
+From:   Jeff King <peff@peff.net>
+To:     Horst Schirmeier <horst@schirmeier.com>
+Cc:     git@vger.kernel.org
+Subject: [PATCH 0/6] deadlock regression in v2.11.0 with failed mkdtemp
+Message-ID: <20170307133437.qee2jtynbiwf6uzr@sigill.intra.peff.net>
+References: <20170307110328.GE7566@quickstop.soohrt.org>
+ <20170307111406.GB1955@quickstop.soohrt.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <alpine.DEB.2.20.1703080156040.3767@virtualbox>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <20170307111406.GB1955@quickstop.soohrt.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 03/08, Johannes Schindelin wrote:
-> Hi Brandon,
-> 
-> On Tue, 7 Mar 2017, Brandon Williams wrote:
-> 
-> > On 03/07, Johannes Schindelin wrote:
-> > >  const char *setup_git_directory_gently(int *nongit_ok)
-> > >  {
-> > > +	struct strbuf cwd = STRBUF_INIT, dir = STRBUF_INIT, gitdir = STRBUF_INIT;
-> > 
-> > I couldn't see any strbuf_release() calls for these strbufs so there may
-> > be some memory leaking here.
-> 
-> You are correct, of course. Something like this may work:
+On Tue, Mar 07, 2017 at 12:14:06PM +0100, Horst Schirmeier wrote:
 
-Yep that should fix it!
-
+> On Tue, 07 Mar 2017, Horst Schirmeier wrote:
+> > I observe a regression that seems to have been introduced between
+> > v2.10.0 and v2.11.0.  When I try to push into a repository on the local
+> > filesystem that belongs to another user and has not explicitly been
+> > prepared for shared use, v2.11.0 shows some of the usual diagnostic
+> > output and then freezes instead of announcing why it failed to push.
 > 
-> -- snipsnap --
-> diff --git a/setup.c b/setup.c
-> index 9118b48590a..c822582b96e 100644
-> --- a/setup.c
-> +++ b/setup.c
-> @@ -1027,6 +1027,8 @@ const char *setup_git_directory_gently(int *nongit_ok)
->  	case GIT_DIR_HIT_MOUNT_POINT:
->  		if (nongit_ok) {
->  			*nongit_ok = 1;
-> +			strbuf_release(&cwd);
-> +			strbuf_release(&dir);
->  			return NULL;
->  		}
->  		die(_("Not a git repository (or any parent up to mount point %s)\n"
-> @@ -1044,6 +1046,10 @@ const char *setup_git_directory_gently(int *nongit_ok)
->  	startup_info->have_repository = !nongit_ok || !*nongit_ok;
->  	startup_info->prefix = prefix;
->  
-> +	strbuf_release(&cwd);
-> +	strbuf_release(&dir);
-> +	strbuf_release(&gitdir);
-> +
->  	return prefix;
->  }
->  
+> Bisecting points to v2.10.1-373-g722ff7f:
+> 
+> 722ff7f876c8a2ad99c42434f58af098e61b96e8 is the first bad commit
+> commit 722ff7f876c8a2ad99c42434f58af098e61b96e8
+> Author: Jeff King <peff@peff.net>
+> Date:   Mon Oct 3 16:49:14 2016 -0400
+> 
+>     receive-pack: quarantine objects until pre-receive accepts
 
--- 
-Brandon Williams
+Thanks, I was able to reproduce easily with:
+
+  git init --bare foo.git
+  chown -R nobody foo.git
+  git push foo.git HEAD
+
+Here's a series to fix it. The first patch addresses the deadlock. The
+rest try to improve the output on the client side. With v2.10.0, this
+case looks like:
+
+  $ git push ~/tmp/foo.git HEAD
+  Counting objects: 209837, done.
+  Delta compression using up to 8 threads.
+  Compressing objects: 100% (52180/52180), done.
+  remote: fatal: Unable to create temporary file '/home/peff/tmp/foo.git/./objects/pack/tmp_pack_XXXXXX': Permission denied
+  error: failed to push some refs to '/home/peff/tmp/foo.git'
+
+With just the first patch applied, you get just:
+
+  $ git push ~/tmp/foo.git HEAD
+  Counting objects: 210973, done.
+  Delta compression using up to 8 threads.
+  Compressing objects: 100% (52799/52799), done.
+  error: failed to push some refs to '/home/peff/tmp/foo.git'
+
+Yuck. In the original, the error was generated by the child index-pack,
+and we relayed it over the sideband. But we don't even get as far as
+running index-pack in the newer version; we fail trying to make the
+tmpdir. The error ends up in the "unpack" protocol field, but the client
+side does a bad job of showing that. With the rest of the patches, it
+looks like:
+
+  $ git push ~/tmp/foo.git HEAD
+  Counting objects: 210973, done.
+  Delta compression using up to 8 threads.
+  Compressing objects: 100% (52799/52799), done.
+  error: remote unpack failed: unable to create temporary object directory
+  error: failed to push some refs to '/home/peff/tmp/foo.git'
+
+Compared to v2.10.0, that omits the name of the directory and the errno
+value (because receive-pack does not send them). That potentially makes
+debugging harder, but arguably it's the right thing to do. On a remote
+site, those details aren't really the client's business. But if people
+feel strongly, we could add them back into this error code path.
+
+So the first patch is a no-brainer and should go to maint. The rest can
+be applied separately if need be.
+
+  [1/6]: receive-pack: fix deadlock when we cannot create tmpdir
+  [2/6]: send-pack: extract parsing of "unpack" response
+  [3/6]: send-pack: use skip_prefix for parsing unpack status
+  [4/6]: send-pack: improve unpack-status error messages
+  [5/6]: send-pack: read "unpack" status even on pack-objects failure
+  [6/6]: send-pack: report signal death of pack-objects
+
+ builtin/receive-pack.c |  5 ++++-
+ send-pack.c            | 46 ++++++++++++++++++++++++++++++++++++----------
+ 2 files changed, 40 insertions(+), 11 deletions(-)
+
+-Peff
