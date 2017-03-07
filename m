@@ -2,160 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 51C551FBEC
-	for <e@80x24.org>; Wed,  8 Mar 2017 00:14:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AF6961FBEC
+	for <e@80x24.org>; Wed,  8 Mar 2017 00:44:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751646AbdCHAOm (ORCPT <rfc822;e@80x24.org>);
-        Tue, 7 Mar 2017 19:14:42 -0500
-Received: from mail-pf0-f180.google.com ([209.85.192.180]:34960 "EHLO
-        mail-pf0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1756506AbdCHAOj (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Mar 2017 19:14:39 -0500
-Received: by mail-pf0-f180.google.com with SMTP id j5so6894173pfb.2
-        for <git@vger.kernel.org>; Tue, 07 Mar 2017 16:13:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=za1ewV8u+qjbKeE/14reC4Gj46JJ09Yf1BZXzjwi1LA=;
-        b=n1Fsp1a0p9Ba218R8n3dLsxlJa7PI8iRp/BLQ9HUapKl3qHZY7n7U+Bh6WtW2EkyMq
-         oSurz+XmnY7rjoJ3V1O6x7SzhUr/fpyMpo8pD/pWN92RFNG2hgnr3h7l50fpv/btrkjU
-         SVYiIob8DMMnDXHlYPJQoqm4nDRuSzV/OnWj3DYP7RIdMEazJKN5P/XhUUWRcIecpzGB
-         ejOFIWHM5V7nH8cBf20nWgc/2USxladH5Uc55i/jqOeyxQhuHt5BobfsgwDQjjNylxaT
-         DOhqnqERAGifrU5iwI4o4Ngi/K00vcsus+wwOy5ML5J9XxFzcnKYNJBfsMEjlPICxwrP
-         uaUQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=za1ewV8u+qjbKeE/14reC4Gj46JJ09Yf1BZXzjwi1LA=;
-        b=hxFrNFnpG+sHCMMmNMRE2otc2klUoZzQ635+Y6ePnroDqOrMZFqijQriDUiw0WHCHX
-         8Suuf+IuXQtKszeAmTaqMmWW3gt8pXiEWpnMV3QVSMHn+BP+El/XUFxDK9ABCHDApS/O
-         6fhDYa6L5cFqdthseDVOi+h71FreAR9fc7uaiiqkl1HkO3CCRgsdHKNbRiC2Us4WWwDP
-         GMpbUQsXFx8/NyrKv+lMIxXlcNFU1uzme3pvq69TIvLkFfEGJDcvkeKB54OcwEq/aSuT
-         cWVio92qH/CSQDpivo4znYXgmR7K3VxpafqdjRw4IIt8rZTAL65HrtCT6VcMBF9EbhXf
-         tO1g==
-X-Gm-Message-State: AMke39ksomL0ItXkdVzzutYaBIq+E+CsCNaADsYdpBlcsq8+R7gW3ONAs7ARtlGtgc2X8nFxeZCXVTh2ed6cU5cd
-X-Received: by 10.98.91.131 with SMTP id p125mr2960599pfb.165.1488925159971;
- Tue, 07 Mar 2017 14:19:19 -0800 (PST)
+        id S933360AbdCHAos (ORCPT <rfc822;e@80x24.org>);
+        Tue, 7 Mar 2017 19:44:48 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:55206 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751217AbdCHAop (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Mar 2017 19:44:45 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 078667F1F0;
+        Tue,  7 Mar 2017 17:49:40 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=AUYfpz7Qpp+0y+zbeAszI8ENwlo=; b=tH488a
+        VK3Swcb9AeBN4qMOChsgl1N6mIx8iVecmxKQy2HkD9jdTxUd+4ZMgHazSZk7KYsC
+        81PjHeaNJTlagaujRib+pRVSQxjop4AmDzJhNvXjpJj5YMckpQqRzqeyGz5H8z8O
+        jFp2dQSRUByAWK5zpLhhN+c43t7dj3PKmPElE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=oM6DEADO+r23UlfyD9NBFc96yHpVEBSj
+        CG5FJoTAoD2ftBDvtKvVbhy61CdT9dZ0AednMyIv+mGKwxPCuXSJL3lLry6ORT/6
+        En3Iv3XF3HkjBku1RAQ8CkNX3m7kBZkChJrnhIBtXAwI/LqppUHMbgmOpM+9l+2S
+        5MkS5/2xD8M=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 00F197F1EF;
+        Tue,  7 Mar 2017 17:49:40 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 645CE7F1EE;
+        Tue,  7 Mar 2017 17:49:39 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Benjamin Fuchs <email@benjaminfuchs.de>,
+        "git\@vger.kernel.org" <git@vger.kernel.org>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        ville.skytta@iki.fi
+Subject: Re: [RFC PATCH] rev-parse: add --show-superproject-working-tree
+References: <CAGZ79kZv=LoP+nG0GVtU_Zi+_SX8_98AXFqzXNh=xM6ASy+=Gw@mail.gmail.com>
+        <20170307034553.10770-1-sbeller@google.com>
+        <xmqq8toh7wqu.fsf@gitster.mtv.corp.google.com>
+        <CAGZ79kYMZk3sNNjWgp9acQG6z5Q5CnsJi+n7Bvr3EkfbSHasMA@mail.gmail.com>
+Date:   Tue, 07 Mar 2017 14:49:38 -0800
+In-Reply-To: <CAGZ79kYMZk3sNNjWgp9acQG6z5Q5CnsJi+n7Bvr3EkfbSHasMA@mail.gmail.com>
+        (Stefan Beller's message of "Tue, 7 Mar 2017 12:40:54 -0800")
+Message-ID: <xmqq7f4066t9.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.100.187.5 with HTTP; Tue, 7 Mar 2017 14:19:19 -0800 (PST)
-In-Reply-To: <20170307092353.ibirvitsxhzn3apz@sigill.intra.peff.net>
-References: <CAGZ79kYxD9B_+3vBgO+Z-wh2GMg_REazA-xpTSAqe3_64VMV3w@mail.gmail.com>
- <20170307092353.ibirvitsxhzn3apz@sigill.intra.peff.net>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Tue, 7 Mar 2017 14:19:19 -0800
-Message-ID: <CAGZ79kb=ZwaMeGAu_R1Bjt4KyxKHYnP4U-RgA1of7F05E5CCQg@mail.gmail.com>
-Subject: Re: [Request for Documentation] Differentiate signed (commits/tags/pushes)
-To:     Jeff King <peff@peff.net>
-Cc:     tom@oxix.org, Matthieu Moy <Matthieu.Moy@imag.fr>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
+X-Pobox-Relay-ID: 58985B58-0388-11E7-8A3E-FC50AE2156B6-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Mar 7, 2017 at 1:23 AM, Jeff King <peff@peff.net> wrote:
-> On Mon, Mar 06, 2017 at 11:59:24AM -0800, Stefan Beller wrote:
+Stefan Beller <sbeller@google.com> writes:
+
+> On Tue, Mar 7, 2017 at 10:44 AM, Junio C Hamano <gitster@pobox.com> wrote:
 >
->> What is the difference between signed commits and tags?
->> (Not from a technical perspective, but for the end user)
+>> So perhaps your superproject_exists() helper can be eliminated
 >
-> I think git has never really tried to assign any _meaning_ to the
-> signatures. It implements the technical bits and leaves it up to the
-> user and their workflows to decide what a given signature means.
-
-That is a nihilistic approach? ;)
-
-As a user I would like to know what I can do with such a signed commit.
-And I happen to be an experienced user in the sense that I know
-about git tag --sign as well as git verify-tag; further reading of
-these two man pages tells me I can even use git-tag to verify a
-tag. So looking for the verify option in git-commit for signed commits...
-well, no.  Ah! git-verify-commit it is.
-
-I assumed to have most discussion in git-tag or at least a pointer
-from there to further reading.
-
-In an ideal world we might have a manpage git-trust-model(7),
-that explains different workflows and when certain signing
-mechanisms make sense and what they protect us from.
-I might write such a man page (after I get the gitmodules
-page done).
-
-Off list I was told
-"just look at Documentation/technical/signature-format.txt;
-it explains all different things that you can sign or have signed
-stuff". But as an end user I refuse to look at that. ;)
-
+> That is what I had originally, but I assumed a strict helper function
+> for "existence of the superproject" would be interesting in the future,
+> e.g. for get_superproject_git_dir, or on its own. There was an attempt
+> to have the shell prompt indicate if you are in a submodule,
+> which would not need to know the worktree or git dir of the
+> superproject, but only its existence.
 >
-> People generally seem to take tag signatures to mean one (or both) of:
+>> instead coded in get_superproject_working_tree() in place to do:
+>>
+>>         - xgetcwd() to get "/local/repo/super/sub/dir".
 >
->   1. Certifying that the tree contents at that tag are the official,
->      signed release contents (i.e., this is version 1.0, and I'm the
->      maintainer, so believe me).
+> Did you mean .../super/dir/sub ?
+
+I meant "/local/repo/super/sub/dir".  I am using this case to
+illustrate: the root of the superproject is at /local/repo/super,
+its submodule we are interested in is at sub/dir, and the function
+is working inside the submodule--after the repository discovery
+moves the cwd, xgetcwd() would give the root of the working tree of
+the submodule, which is at "/local/repo/super/sub/dir".
+
+And that would give us "dir" by taking that as relative to its "../"
+
+>>         - relative_path() to get "dir".
 >
->   2. Certifying that all the history leading up to that tag is
->      "official" in some sense (i.e., I'm the maintainer, and this was
->      the tip of my git tree at the time I tagged the release).
+> ok.
+
+indeed.
+
+>>         - ask "ls-{tree,files} --full-name HEAD dir" to get "160000"
+>>           and "sub/dir".
 >
-> Signing individual commits _could_ convey meaning (2), but "all history
-> leading up" part is unlikely to be something that the signer needs to
-> enforce on every commit.
+> "ls-files --stage --full-name" to get
+> 160000 ... dir/sub
 
-I was told signed commits could act as a poor mans
-push certificate (again off list :/).
-
-> In my opinion, the most useful meaning for commit-signing is simply to
-> cryptographically certify the identity of the committer. We don't
-> compare the GPG key ident to the "committer" field, but IMHO that would
-> be a reasonable optional feature for verify-commit (I say optional
-> because we're starting to assign semantics now).
-
-So the signed commit focuses on the committer instead of the content
-(which is what tags are rather used for) ?
-
-> I think one of the reasons kernel (and git) developers aren't that
-> interested in signed commits is that they're not really that interesting
-> in a patch workflow. You're verifying the committer, who in this project
-> is invariably Junio, and we just take his word that whatever is in the
-> "author" field is reasonable.
-
-Well in such a workflow Junio could also sign the tip-commits of
-pu/next before pushing, such that we can trust it was really him doing
-the maintenance work and not his evil twin.
-
-> But for a project whose workflow is based around pushing and pulling
-> commits, I think it does make sense. The author field may not always
-> match the committer (e.g., in a cherry-pick), but it still lets you
-> trace that attestation of the author back to the committer. And it's up
-> to UI to make that distinction clear (e.g., if you push a signed
-> cherry-pick to GitHub, the commit is labeled with something like "A U
-> Thor committed with C O Mitter", and then you get a little "Verified"
-> tag for C O Mitter that gives you more information about the signature).
->
-> So I don't think it's just a checkbox feature. It's a useful thing for
-> certain workflows that really want to be able to attribute individual
-> commits with cryptographic strength.
-
-"certain workflows". :(
-
-See, I really like reading e.g. the "On Re-tagging" section of git-tag
-as it doesn't hand wave around the decisions to make.
-
-Now as a user I may already have a workflow that I like. And I might
-want to "bring in more security". Then I have to figure out possible
-attack scenarios and which sort of signing can prevent such an attack.
-
-And each organisation has to do that themselves, but we as the provider
-of the tool might have this knowledge because we implemented all
-these shiny "sign here, please" parts.
-
-Thanks for the lively discussion,
-Stefan
+Yeah, also when usihng ls-files you obviously do not give HEAD but
+you do give "dir" as the pathspec.  And you get "sub/dir" as the
+result.
