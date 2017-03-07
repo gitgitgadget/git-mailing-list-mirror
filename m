@@ -2,77 +2,65 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5CB75202D7
-	for <e@80x24.org>; Tue,  7 Mar 2017 10:31:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 89783202D7
+	for <e@80x24.org>; Tue,  7 Mar 2017 10:52:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755102AbdCGKa5 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 7 Mar 2017 05:30:57 -0500
-Received: from mail-ot0-f174.google.com ([74.125.82.174]:35061 "EHLO
-        mail-ot0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754956AbdCGKaa (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Mar 2017 05:30:30 -0500
-Received: by mail-ot0-f174.google.com with SMTP id x37so87916500ota.2
-        for <git@vger.kernel.org>; Tue, 07 Mar 2017 02:30:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=s4egXPKqR6szfDO00vVWHRrihT3vxTBKmorPAM41zII=;
-        b=KvcKx2BnHBV5SzRohoqeUmAFQW2pIsVAFKeaz+QLGAcCUVLcljrIj5PBKjC6Qt2xN+
-         R1BUs/13RDaPrwE0thoJbxv4OMLmSSy3izYXaPphTh0dCUNWG2rNsUX7uMijhMIa697g
-         veAOF7T4P4F0zQyv2h60oUpOUcCmNqWtTrLqH9MT+p0ihKJ2Zf7ndGyHOJjWLund2S/o
-         hJbTrZh+kTpET4s6xZTcV5J1yZyyUFihPT88yvVi9lnGnqxHJMMznhZeyC2ok52HPeZQ
-         JnWz8X+qjp6j1pf/VvON7mAbY42KVr0CfOvrKfWvkByVE7hjmV4lBCKilny8+fdfTg54
-         5BVw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=s4egXPKqR6szfDO00vVWHRrihT3vxTBKmorPAM41zII=;
-        b=Ks5nNM2Mr+Qg/R9lhmnzSvzMbTJ8A23DROXkWCAf8udV7XJPZb19v3BU1vQcTn8SB5
-         31fn3fUy922XL6fCNoZIxAFrzmZj5WPy12oQBYNYQu7qAlLKyGyTKGDMa9UhJ41v2Rqv
-         dtjwAn0mmiAhfVneVxBFJ6Je3OrjwvnOjHwEuMbesBBOboXDS0LTEDV3M8q70jvYxfkK
-         wRURzQVwr+KLdInvZXvVkfuZkQLdFxVPvTHy70bXUyZpxAWPhV9+aH6dUcyn2wRkHHq0
-         LAveshhDAtoGWe2rw85irbOzO+zrNDP9XgD9O6hGMIcamuGnOoWXnaRtG9+RtYHlATRP
-         yQyQ==
-X-Gm-Message-State: AMke39kTP9ePvbQewpNJwHCN0r4FzJkt29/6/FID+ESRHjRyA/oSE9CEsOxLGKz2FeZT9xPD4WhnMAeTI5y51w==
-X-Received: by 10.157.82.77 with SMTP id q13mr11840129otg.161.1488882149144;
- Tue, 07 Mar 2017 02:22:29 -0800 (PST)
+        id S1755295AbdCGKwy (ORCPT <rfc822;e@80x24.org>);
+        Tue, 7 Mar 2017 05:52:54 -0500
+Received: from zm23-mta-out-2.grenet.fr ([130.190.191.53]:50224 "EHLO
+        zm23-mta-out-2.grenet.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754861AbdCGKwk (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Mar 2017 05:52:40 -0500
+Received: from zm23-mta-out.grenet.fr (zm23-mta-out.grenet.fr [130.190.191.35])
+        by zm23-mta-out-2.grenet.fr (Postfix) with ESMTP id 1D5CEC547;
+        Tue,  7 Mar 2017 08:16:11 +0100 (CET)
+Received: from smtps.univ-grenoble-alpes.fr (mailhost.u-ga.fr [152.77.1.30])
+        by zm23-mta-out.grenet.fr (Postfix) with ESMTP id 1757C1003FF;
+        Tue,  7 Mar 2017 08:16:11 +0100 (CET)
+Received: from anie (anie.imag.fr [129.88.42.32])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: moym@univ-grenoble-alpes.fr)
+        by smtps.univ-grenoble-alpes.fr (Postfix) with ESMTPSA id ED5D4125EAE;
+        Tue,  7 Mar 2017 08:16:10 +0100 (CET)
+From:   Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     tom@oxix.org, "git\@vger.kernel.org" <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [Request for Documentation] Differentiate signed (commits/tags/pushes)
+References: <CAGZ79kYxD9B_+3vBgO+Z-wh2GMg_REazA-xpTSAqe3_64VMV3w@mail.gmail.com>
+Date:   Tue, 07 Mar 2017 08:16:10 +0100
+In-Reply-To: <CAGZ79kYxD9B_+3vBgO+Z-wh2GMg_REazA-xpTSAqe3_64VMV3w@mail.gmail.com>
+        (Stefan Beller's message of "Mon, 6 Mar 2017 11:59:24 -0800")
+Message-ID: <vpqpohtpnet.fsf@anie.imag.fr>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.157.25.235 with HTTP; Tue, 7 Mar 2017 02:22:28 -0800 (PST)
-From:   Vedant Bassi <sharababy.dev@gmail.com>
-Date:   Tue, 7 Mar 2017 15:52:28 +0530
-Message-ID: <CACczA6WCdu0sdd31R2Z6xbr=meo5PTtcOVYCdVHdgZXAfK-3rg@mail.gmail.com>
-Subject: Reg : GSoC 2017 Microproject
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
+X-Greylist: Whitelist-UJF SMTP Authentifie (moym@univ-grenoble-alpes.fr) via submission-587 ACL (112)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Stefan Beller <sbeller@google.com> writes:
 
-I would like to participate in GSoC 2017 and I have chosen the Use
-unsigned integral type for collection of bits , idea from the Micro
-projects list.
+> What is the difference between signed commits and tags?
+> (Not from a technical perspective, but for the end user)
 
-I request the help of the community for clarifying a few questions that I have.
+In addition to what the others already said:
 
-1. Is this Microproject already taken ?
+If you use GitHub, then in the web interface you get a "Verified" stamp
+for each signed commits:
+https://help.github.com/articles/signing-commits-using-gpg/
 
-2. If it is free , I would like to point out one place where a signed
-int is used .
+It's not a Git feature but a GitHub one, but given the popularity of
+GitHub, this probably led some users to believe that signed commits are
+more convenient than signed tags.
 
-      In bisect.h , the structure struct rev_list_info uses flags of
-type signed int but , the value of MSB is not checked as a test case
-for any error checking. Hence it can be of type unsigned int.
-It is only used in rev-list.c for checking cases (BISECT_SHOW_ALL and
-REV_LIST_QUIET ).
-
- Is this a valid case.
-
-Thanks.
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
