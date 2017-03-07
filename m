@@ -2,89 +2,61 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 484DF1FBEC
-	for <e@80x24.org>; Tue,  7 Mar 2017 13:48:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8727A1FBEC
+	for <e@80x24.org>; Tue,  7 Mar 2017 14:01:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754182AbdCGNsP (ORCPT <rfc822;e@80x24.org>);
-        Tue, 7 Mar 2017 08:48:15 -0500
-Received: from cloud.peff.net ([104.130.231.41]:39724 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752898AbdCGNsO (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Mar 2017 08:48:14 -0500
-Received: (qmail 20026 invoked by uid 109); 7 Mar 2017 13:39:51 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 07 Mar 2017 13:39:51 +0000
-Received: (qmail 25636 invoked by uid 111); 7 Mar 2017 13:39:59 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 07 Mar 2017 08:39:59 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 07 Mar 2017 08:39:48 -0500
-Date:   Tue, 7 Mar 2017 08:39:48 -0500
-From:   Jeff King <peff@peff.net>
-To:     Horst Schirmeier <horst@schirmeier.com>
-Cc:     git@vger.kernel.org
-Subject: [PATCH 6/6] send-pack: report signal death of pack-objects
-Message-ID: <20170307133948.x3w6nufae7tbgeka@sigill.intra.peff.net>
-References: <20170307133437.qee2jtynbiwf6uzr@sigill.intra.peff.net>
+        id S1755328AbdCGOAP (ORCPT <rfc822;e@80x24.org>);
+        Tue, 7 Mar 2017 09:00:15 -0500
+Received: from squ.vm.bytemark.co.uk ([212.110.189.216]:53359 "EHLO
+        squ.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755113AbdCGN77 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Mar 2017 08:59:59 -0500
+X-Greylist: delayed 8372 seconds by postgrey-1.27 at vger.kernel.org; Tue, 07 Mar 2017 08:59:58 EST
+Received: by squ.vm.bytemark.co.uk (Postfix) with ESMTPSA id AD40888AC7;
+        Tue,  7 Mar 2017 09:45:52 +0000 (GMT)
+Date:   Tue, 7 Mar 2017 10:45:50 +0100
+From:   Tom Jones <tom@oxix.org>
+To:     Jeff King <peff@peff.net>
+Cc:     Stefan Beller <sbeller@google.com>,
+        Matthieu Moy <Matthieu.Moy@imag.fr>,
+        "git@vger.kernel.org" <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [Request for Documentation] Differentiate signed
+ (commits/tags/pushes)
+Message-ID: <20170307094549.GB23052@dufour.oxix.org>
+References: <CAGZ79kYxD9B_+3vBgO+Z-wh2GMg_REazA-xpTSAqe3_64VMV3w@mail.gmail.com>
+ <20170307092353.ibirvitsxhzn3apz@sigill.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20170307133437.qee2jtynbiwf6uzr@sigill.intra.peff.net>
+In-Reply-To: <20170307092353.ibirvitsxhzn3apz@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.23 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-If our pack-objects sub-process dies of a signal, then it
-likely didn't have a chance to write anything useful to
-stderr. The user may be left scratching their head why the
-push failed. Let's detect this situation and write something
-to stderr.
+We use git to manage a config management repository for some
+servers.  We have tens of signed commits a day; all get deployed.
+The logic on each host is roughly "is signed by sysadmin key and
+is more recent than currently-deployed version".
 
-Signed-off-by: Jeff King <peff@peff.net>
----
-We could drop the SIGPIPE special-case, but I think it's just noise
-after the unpack-status fix in the previous commit.
+Also, what is all this about "GPG"?  The protocol is OpenPGP.  A 
+particular implementation is GnuPG / gpg.  It is completely mad
+that this implementation detail is in the interface specs for git,
+such as --gpg-sign for git-commit(1).
 
- send-pack.c | 15 ++++++++++++++-
- 1 file changed, 14 insertions(+), 1 deletion(-)
+It is an indictment of a lack of appreciation of the relationship
+between interfaces and implementations, and the importance of
+proper treatment thereof.
 
-diff --git a/send-pack.c b/send-pack.c
-index e15232739..d2d2a49a0 100644
---- a/send-pack.c
-+++ b/send-pack.c
-@@ -72,6 +72,7 @@ static int pack_objects(int fd, struct ref *refs, struct sha1_array *extra, stru
- 	struct child_process po = CHILD_PROCESS_INIT;
- 	FILE *po_in;
- 	int i;
-+	int rc;
- 
- 	i = 4;
- 	if (args->use_thin_pack)
-@@ -125,8 +126,20 @@ static int pack_objects(int fd, struct ref *refs, struct sha1_array *extra, stru
- 		po.out = -1;
- 	}
- 
--	if (finish_command(&po))
-+	rc = finish_command(&po);
-+	if (rc) {
-+		/*
-+		 * For a normal non-zero exit, we assume pack-objects wrote
-+		 * something useful to stderr. For death by signal, though,
-+		 * we should mention it to the user. The exception is SIGPIPE
-+		 * (141), because that's a normal occurence if the remote end
-+		 * hangs up (and we'll report that by trying to read the unpack
-+		 * status).
-+		 */
-+		if (rc > 128 && rc != 141)
-+			error("pack-objects died of signal %d", rc - 128);
- 		return -1;
-+	}
- 	return 0;
- }
- 
--- 
-2.12.0.429.gde83c8049
+If Bob creates Bob's git compatible program, and he happens to use
+Bob's OpenPGP implementation, his compatible option for git-commit(1)
+still has to be called "--gpg-sign".  Madness.
+
+  Tom.
+
