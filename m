@@ -2,204 +2,117 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E1E151FBEC
-	for <e@80x24.org>; Tue,  7 Mar 2017 20:34:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4474B202DA
+	for <e@80x24.org>; Tue,  7 Mar 2017 20:41:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756217AbdCGUeD (ORCPT <rfc822;e@80x24.org>);
-        Tue, 7 Mar 2017 15:34:03 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:64966 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1756115AbdCGUeB (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Mar 2017 15:34:01 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id A61B97F2C1;
-        Tue,  7 Mar 2017 15:33:44 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=UQRjHbZbkwb617WXDge0IWIbtaE=; b=F1Jrgh
-        /4q50Sbhex+QKaRmrUGfYnPv7XmUBGA9DY0cMFqJbEeo/0HobGxuCjk3l7ScMZ0V
-        DhOYenNPc1uMmoGB4KWw9SN0tPe7vyBq4z0Pd2KX9fD/+gEcJK0+QV7aN4K3/+j+
-        FPrft5dx/H/E4vI6Yt+xSBqs5qk/l1mNfFwvE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=mQsiZBqCAh17YaFPsQClJfoXL9cA6iXA
-        3pZf6itL9e8wu/WKrLNyze4xhF9Utpj8KdCFZZLJT8Yivf7GPOkXWKZ0CIi3WLLP
-        iX5xu0sgc+sdNLHmVJaK9+sX4exKyfmcFTPouT34sRUAjOstQy4sX5R+QFRjlMts
-        3lZxT/68G3A=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 9F8037F2C0;
-        Tue,  7 Mar 2017 15:33:44 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 0A3287F2BF;
-        Tue,  7 Mar 2017 15:33:43 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     James Melvin <jmelvin@codeaurora.org>
-Cc:     git@vger.kernel.org, nasserg@codeaurora.org, mfick@codeaurora.org,
-        peff@peff.net, sbeller@google.com
-Subject: Re: [PATCH] repack: Add options to preserve and prune old pack files
-References: <20170307164035.27866-1-jmelvin@codeaurora.org>
-Date:   Tue, 07 Mar 2017 12:33:42 -0800
-In-Reply-To: <20170307164035.27866-1-jmelvin@codeaurora.org> (James Melvin's
-        message of "Tue, 7 Mar 2017 09:40:35 -0700")
-Message-ID: <xmqq4lz4968p.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+        id S1756011AbdCGUlX (ORCPT <rfc822;e@80x24.org>);
+        Tue, 7 Mar 2017 15:41:23 -0500
+Received: from mail-pg0-f45.google.com ([74.125.83.45]:33474 "EHLO
+        mail-pg0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S933263AbdCGUlB (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Mar 2017 15:41:01 -0500
+Received: by mail-pg0-f45.google.com with SMTP id 25so4545828pgy.0
+        for <git@vger.kernel.org>; Tue, 07 Mar 2017 12:41:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=ScMsP6SXQEJ17fZrxu29d5+qJcN0MR8OTZz34oK4J9U=;
+        b=HTas+5dKzWIgF2cREx/wqa3Q4iBtSi2yAnNc1lgq7gsZuYY+8YOwfp9OD3GqMteqTs
+         wiotaSMYlJPRz2hhCkE0HpVgzRCA/HAfRaq9M17Bl4mY9pmO4FZL4bP0+SWovnS0aiEp
+         P48rgHj93/xfSe8p3n5sAG9NLoyZqnptE7mucPyAGwCcqP12wtTEAKFBtv0mH1tIcO0w
+         ygD0vjIBcM1HPq4c50Kk7tDUY+qRJ+aOWC7Zldn78qo2/U3ffQeLGWjokmJjmZFXpWJZ
+         5sAFfWE6TnKRpTeiz/BCUZUlU7VzWgOg99N3KOaAHsEeWrDLLT8k802vuEE1zGgJItpM
+         I1UA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=ScMsP6SXQEJ17fZrxu29d5+qJcN0MR8OTZz34oK4J9U=;
+        b=sDWZOqxQn3NjonKrcPtqlccS4e+7jl8fb/mXniwPoipJkg3//OpbW94hRDXmODtBHs
+         bjnoNr6+wOY2zzl3sCIJzBmge8xl/kDGhMJ8BzZCKLaBOeKQN8lVbOsAzQ3JFS3qoTy8
+         fWq9w6oX0fcmjvQEAH4G7yy9hPd5skMYSc8XpWfBy4oZNnrCABAj+WXEmyt7t4pSxWR4
+         pOGEFU5tAaKJ6k1oNQGV9E7XKtQk6LEI3MgcHw03U02II+84J9PRAhIbmw90A4g9QsTM
+         qAGqKhLWLaYvNwO9eBbE+fwJZ9q7wuB4en/gAeeE+xc0WHsyfJEZvDKhOVJfb/q03I2i
+         tr0g==
+X-Gm-Message-State: AMke39ndsX16CeYQtXs4ISltd8HrgJENtN5HDuwhP5T4DJ+eHhki60963LBI6P2fI3/DxG6cwCM7TMkDPnDT0ugd
+X-Received: by 10.98.198.78 with SMTP id m75mr2563125pfg.160.1488919254929;
+ Tue, 07 Mar 2017 12:40:54 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 5B939718-0375-11E7-9160-97B1B46B9B0B-77302942!pb-smtp1.pobox.com
+Received: by 10.100.187.5 with HTTP; Tue, 7 Mar 2017 12:40:54 -0800 (PST)
+In-Reply-To: <xmqq8toh7wqu.fsf@gitster.mtv.corp.google.com>
+References: <CAGZ79kZv=LoP+nG0GVtU_Zi+_SX8_98AXFqzXNh=xM6ASy+=Gw@mail.gmail.com>
+ <20170307034553.10770-1-sbeller@google.com> <xmqq8toh7wqu.fsf@gitster.mtv.corp.google.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Tue, 7 Mar 2017 12:40:54 -0800
+Message-ID: <CAGZ79kYMZk3sNNjWgp9acQG6z5Q5CnsJi+n7Bvr3EkfbSHasMA@mail.gmail.com>
+Subject: Re: [RFC PATCH] rev-parse: add --show-superproject-working-tree
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Benjamin Fuchs <email@benjaminfuchs.de>,
+        "git@vger.kernel.org" <git@vger.kernel.org>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        ville.skytta@iki.fi
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-James Melvin <jmelvin@codeaurora.org> writes:
+On Tue, Mar 7, 2017 at 10:44 AM, Junio C Hamano <gitster@pobox.com> wrote:
 
-> These options are designed to prevent stale file handle exceptions
-> during git operations which can happen on users of NFS repos when
-> repacking is done on them. The strategy is to preserve old pack files
-> around until the next repack with the hopes that they will become
-> unreferenced by then and not cause any exceptions to running processes
-> when they are finally deleted (pruned).
+> So perhaps your superproject_exists() helper can be eliminated
 
-I find it a very sensible strategy to work around NFS, but it does
-not explain why the directory the old ones are moved to need to be
-configurable.  It feels to me that a boolean that causes the old
-ones renamed s/^pack-/^old-&/ in the same directory (instead of
-pruning them right away) would risk less chances of mistakes (e.g.
-making "preserved" subdirectory on a separate device mounted there
-in a hope to reduce disk usage of the primary repository, which
-may defeat the whole point of moving the still-active file around
-instead of removing them).
+That is what I had originally, but I assumed a strict helper function
+for "existence of the superproject" would be interesting in the future,
+e.g. for get_superproject_git_dir, or on its own. There was an attempt
+to have the shell prompt indicate if you are in a submodule,
+which would not need to know the worktree or git dir of the
+superproject, but only its existence.
 
-And if we make "preserve-old" a boolean, perhaps the presence of
-"prune-preserved" would serve as a substitute for it, iow, perhaps
-we may only need --prune-preserved option (and repack.prunePreserved
-configuration variable)?
+> instead coded in get_superproject_working_tree() in place to do:
+>
+>         - xgetcwd() to get "/local/repo/super/sub/dir".
 
-> diff --git a/builtin/repack.c b/builtin/repack.c
-> index 677bc7c81..f1a0c97f3 100644
-> --- a/builtin/repack.c
-> +++ b/builtin/repack.c
-> @@ -10,8 +10,10 @@
->  
->  static int delta_base_offset = 1;
->  static int pack_kept_objects = -1;
-> +static int preserve_oldpacks = 0;
-> +static int prune_preserved = 0;
+Did you mean .../super/dir/sub ?
 
-We avoid initializing statics to 0 or NULL and instead let BSS take
-care of them...
+If not and we run this command from a directory inside the
+submodule, the usual prefix mechanics should go to the
+root of the submodule, such that the ".." will be just enough
+to break out of that submodule repo.
 
->  static int write_bitmaps;
-> -static char *packdir, *packtmp;
-> +static char *packdir, *packtmp, *preservedir;
+The interesting part is in the superproject, to see if we are
+in a directory (and where the root of the superproject is).
 
-... just like what you did here.
+>         - relative_path() to get "dir".
 
-> @@ -108,6 +110,27 @@ static void get_non_kept_pack_filenames(struct s
-> ...
-> +static void preserve_pack(const char *file_path, const char *file_name,  const char *file_ext)
-> +{
-> +	char *fname_old;
-> +
-> +	if (mkdir(preservedir, 0700) && errno != EEXIST)
-> +		error(_("failed to create preserve directory"));
+ok.
 
-You do not want to do the rest of this function after issuing this
-error, no?  Because ...
+>         - ask "ls-{tree,files} --full-name HEAD dir" to get "160000"
+>           and "sub/dir".
 
-> +
-> +	fname_old = mkpathdup("%s/%s.old-%s", preservedir, file_name, ++file_ext);
-> +	rename(file_path, fname_old);
+"ls-files --stage --full-name" to get
+160000 ... dir/sub
 
-... this rename(2) would fail, whose error return you would catch
-and act on.
+>
+>         - subtract "sub/dir" from the tail of the "/local/repo/super/sub/dir"
+>           you got from xgetcwd() earlier.
 
-> +	free(fname_old);
-> +}
-> +
-> +static void remove_preserved_dir(void) {
-> +	struct strbuf buf = STRBUF_INIT;
-> +
-> +	strbuf_addstr(&buf, preservedir);
-> +	remove_dir_recursively(&buf, 0);
+makes sense.
 
-This is a wrong helper function to use on files and directories
-inside .git/; the function is about removing paths in the working
-tree.
+>
+>         - return the result.
+>
+> with a failure/unmet expectations (like not finding 160000) from any
+> step returning an error, or something like that.
 
-> @@ -121,7 +144,10 @@ static void remove_redundant_pack(const char *dir_name, const char *base_name)
->  	for (i = 0; i < ARRAY_SIZE(exts); i++) {
->  		strbuf_setlen(&buf, plen);
->  		strbuf_addstr(&buf, exts[i]);
-> -		unlink(buf.buf);
-> +		if (preserve_oldpacks)
-> +			preserve_pack(buf.buf, base_name, exts[i]);
-> +		else
-> +			unlink(buf.buf);
+That seems better as we only need to spawn one process.
 
-OK.
+(This could also mean I am bad at reading our own man pages)
 
-> @@ -194,6 +220,10 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
->  				N_("maximum size of each packfile")),
->  		OPT_BOOL(0, "pack-kept-objects", &pack_kept_objects,
->  				N_("repack objects in packs marked with .keep")),
-> +		OPT_BOOL(0, "preserve-oldpacks", &preserve_oldpacks,
-> +				N_("move old pack files into the preserved subdirectory")),
-> +		OPT_BOOL(0, "prune-preserved", &prune_preserved,
-> +				N_("prune old pack files from the preserved subdirectory after repacking")),
->  		OPT_END()
->  	};
->  
-> @@ -217,6 +247,7 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
->  
->  	packdir = mkpathdup("%s/pack", get_object_directory());
->  	packtmp = mkpathdup("%s/.tmp-%d-pack", packdir, (int)getpid());
-> +	preservedir = mkpathdup("%s/preserved", packdir);
->  
->  	sigchain_push_common(remove_pack_on_signal);
->  
-> @@ -404,6 +435,9 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
->  
->  	/* End of pack replacement. */
->  
-> +	if (prune_preserved)
-> +		remove_preserved_dir();
-
-I am not sure if I understand your design.  Your model looks to me
-like there are two modes of operation.  #1 uses "--preserve-old" and
-sends old ones to purgatory instead of removing them and #2 uses
-"--prune-preserved" to remove all the ones in the purgatory
-immediately.  A few things that come to my mind immediately:
-
- * When "--prune-preseved" is used, it removes both ancient ones and
-   more recent ones indiscriminately.  Would it make more sense to
-   "expire" only the older ones while keeping the more recent ones?
-
- * It appears that the main reason you would want --prune-preserved
-   in this design is after running with "--preserve-old" number of
-   times, you want to remove really old ones that have accumulated,
-   and I would imagine that at that point of time, you are only
-   interested in repack, but the code structure tells me that this
-   will force the users to first run a repack before pruning.
-
-I suspect that a design that is simpler to explain to the users may
-be to add a command line option "--preserve-pruned=<expiration>" and
-a matching configuration variable repack.preservePruned, which
-defaults to "immediate" (i.e. no preserving), and
-
- - When the value of preserve_pruned is not "immediate", use
-   preserve_pack() instead of unlink();
-
- - At the end, find preserved packs that are older than the value in
-   preserve_pruned and unlink() them.
-
-It also may make sense to add another command line option
-"--prune-preserved-packs-only" (without matching configuration
-variable) that _ONLY_ does the "find older preserved packs and
-unlink them" part, without doing any repack.
+Thanks,
+Stefan
