@@ -2,90 +2,77 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 72F94202D7
-	for <e@80x24.org>; Tue,  7 Mar 2017 11:34:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2A67F202D7
+	for <e@80x24.org>; Tue,  7 Mar 2017 11:57:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754599AbdCGLeT (ORCPT <rfc822;e@80x24.org>);
-        Tue, 7 Mar 2017 06:34:19 -0500
-Received: from cloud.peff.net ([104.130.231.41]:39650 "EHLO cloud.peff.net"
+        id S1755284AbdCGL5D (ORCPT <rfc822;e@80x24.org>);
+        Tue, 7 Mar 2017 06:57:03 -0500
+Received: from mout.gmx.net ([212.227.17.20]:59597 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751230AbdCGLeR (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Mar 2017 06:34:17 -0500
-Received: (qmail 544 invoked by uid 109); 7 Mar 2017 08:47:20 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 07 Mar 2017 08:47:20 +0000
-Received: (qmail 24057 invoked by uid 111); 7 Mar 2017 08:47:29 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 07 Mar 2017 03:47:29 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 07 Mar 2017 03:47:18 -0500
-Date:   Tue, 7 Mar 2017 03:47:18 -0500
-From:   Jeff King <peff@peff.net>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Sebastian Schuberth <sschuberth@gmail.com>,
-        Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH v5 1/1] config: add conditional include
-Message-ID: <20170307084717.i2jru77v3rhd443e@sigill.intra.peff.net>
-References: <20170223122346.12222-1-pclouds@gmail.com>
- <20170223122346.12222-2-pclouds@gmail.com>
- <CAGZ79kboaKfzMEyDjg-m2oK8CX6B56i52ZcWhCaq87ECE9x2Dw@mail.gmail.com>
+        id S1755270AbdCGL4i (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Mar 2017 06:56:38 -0500
+Received: from virtualbox ([37.201.194.72]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MbrR4-1d1EQm15c6-00JGtB; Tue, 07
+ Mar 2017 12:55:38 +0100
+Date:   Tue, 7 Mar 2017 12:55:35 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH v3 0/9] Fix the early config
+In-Reply-To: <xmqqpohy6o2a.fsf@gitster.mtv.corp.google.com>
+Message-ID: <alpine.DEB.2.20.1703071249220.3767@virtualbox>
+References: <cover.1488506615.git.johannes.schindelin@gmx.de> <cover.1488562287.git.johannes.schindelin@gmx.de> <xmqqpohy6o2a.fsf@gitster.mtv.corp.google.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAGZ79kboaKfzMEyDjg-m2oK8CX6B56i52ZcWhCaq87ECE9x2Dw@mail.gmail.com>
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:L8MmdEQrKBHqXa/o9HONN9h2SRieF9YPrqqVXJcMZOPAMB1wHDr
+ S3+tSvLLZZAsMsPj/HxRS6dqbrjR/ReOUPt0PgNntg4QP7n60L2WZa/XqoeHXHQ2duaGMA5
+ rS8e/OO6yB71aLiSf6fkc2idjWjfd3Q27OnRLedMdigT5upDrCGfZGBs09/xhrsRjOR1w73
+ QVOETq7hBiDuXuyFYR5xg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:xCjKbAU58Ig=:zgD3keQRs42YdnN5JP6Oe1
+ oVTH4udsjZ5CafQ96gdD7sm3BfUPLW2Lvs8ziOb3gjgBx9BzmLpSvI55Fmg3++QFskENRdUCi
+ BkpYB7QaWDL6aOqLaYwyAnkBXikaBglrxVNmBuzw+v7q/so/HSCe2KhptisykCF5awOXjI0vW
+ Mil/UkEjhfC389b0xhZuhkuDVyJH9+f8aCdLXRNdAbO7H403EEe+Q5hesouwQphY+j73XskB3
+ iRiVTgbs7/EUhsBrMmsB8/uN9jlwSw/VguujxXTYcH0I4yCP4/nfQErsH4QiwnlFfwMKN6dy5
+ 1QMuMV+FNXQjUD4fu11ozHMgj/48rmUQ7666jtm6yxhHxfZCmyQdq8sh85L7nOfbTAbMvUZV9
+ d0p5wk8LUR0Dx2tGsNW8dROSImd8N0dwcSmtVJobDG4WtG79RUGHRPFV/3GQh1bmHS19bMFJw
+ NSoJzKmV63xPmLM+IrIeKj/InW0m0d7N7IiqBnR8c43qErhPGNlUJIWYUkPRvJSHNbmTNd7ez
+ MQ3NuS/biqXhS+XGm+5CD8qED6dLJxl4JU/qgZZfK6YutqKh5wtJ4gSDkg9zvvBXX/+EgzMZm
+ /O0CMZKi3zS1ed9+CqsER7UmrqlJYD8Ln4+t7cMFwZhMCX5ehUUTjD0kqy5xTEs8HuoT7FIzc
+ aog4wHg4JFburJszvICw7ubNn/CI4eSotnnpB2bvKBioVJYcXVyt+74iR4s9KgWs6u8th+zOC
+ dUo0L9vrzkwIx7H3w8v3aEXQ6xbQc862rDKOqcd4+sjkSprO3gwCFrL2BfdzOEiKeWUSEolRN
+ DUCwBLo
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Mar 06, 2017 at 02:44:27PM -0800, Stefan Beller wrote:
+Hi Junio,
 
-> > +static int include_condition_is_true(const char *cond, size_t cond_len)
-> > +{
-> ...
-> > +
-> > +       error(_("unrecognized include condition: %.*s"), (int)cond_len, cond);
-> > +       /* unknown conditionals are always false */
-> > +       return 0;
-> > +}
-> 
-> Thanks for putting an error message here. I was looking at what
-> is currently queued as origin/nd/conditional-config-include,
-> which doesn't have this error()  (yet / not any more?)
+On Fri, 3 Mar 2017, Junio C Hamano wrote:
 
-It's "not any more". It was in the original and I asked for it to be
-removed during the last review.
+> 2/9 and corresponding 4/9 triggers "ERROR: trailing statements
+> should be on next line" from ../linux/scripts/checkpatch.pl because
+> of a line inherited from the original; I'll queue them with an
+> obvious style fix to work it around.
 
-> I'd strongly suggest to keep the error message here as that way
-> a user can diagnose e.g. a typo in the condition easily.
-> 
-> If we plan to extend this list of conditions in the future, and a user
-> switches between versions of git, then they may see this message
-> on a regular basis (whenever they use the 'old' version).
+Wow, it seems that script requires the entire Linux kernel repository to
+be cloned, you cannot simply download just the script and run it.
 
-That would make it unlike the rest of the config-include mechanism
-(which quietly ignores things it doesn't understand, like include.foo,
-or include.foo.path), as well as the config code in general (which
-ignores misspelt keys).
+In any case, as you pointed out, this style was inherited from the
+original.
 
-Some of that "quiet when you don't understand it" is historical
-necessity. Older versions _can't_ complain about not knowing
-include.path, because they don't yet know it's worth complaining about.
-Likewise here, if this ships in v2.13 and a new condition "foo:" ships
-in v2.14, you get:
+I squashed that style fix in, as you probably would have (your
+js/early-config does not have anything beyond v2.12.0). But I have to
+point out that it is conflating the purpose of this patch series (its goal
+is *not* to fix any style). I am absolutely not a fan of that.
 
-  v2.12 - no complaint; we don't even understand includeIf at all
-  v2.13 - complain; we know includeIf, but not "foo:"
-  v2.14 - works as expected
-
-Which is kind of weird and inconsistent. But maybe the typo-detection
-case is more important to get right than consistency across historical
-versions.
-
--Peff
+Ciao,
+Johannes
