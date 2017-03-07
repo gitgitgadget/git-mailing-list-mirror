@@ -2,126 +2,69 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7AEA51FBEC
-	for <e@80x24.org>; Tue,  7 Mar 2017 23:46:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2C9FE1FBEC
+	for <e@80x24.org>; Tue,  7 Mar 2017 23:53:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752149AbdCGXqq (ORCPT <rfc822;e@80x24.org>);
-        Tue, 7 Mar 2017 18:46:46 -0500
-Received: from mail-pf0-f182.google.com ([209.85.192.182]:33285 "EHLO
-        mail-pf0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933223AbdCGXqo (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Mar 2017 18:46:44 -0500
-Received: by mail-pf0-f182.google.com with SMTP id w189so6660985pfb.0
-        for <git@vger.kernel.org>; Tue, 07 Mar 2017 15:45:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=C3CE2oEAbn1BfAIUJJmW/EwCYvU7wIfEHkG40XHk0nU=;
-        b=Nm3MM+nE0p0zp41YXnYUOW3xRAI8LMJ7j2Wam48F61NhtZi0TCs9jnyOGRom1YzY3/
-         qMMSksubSo9ZxbW4eV97wTiS+VL7Fixi+CdcmbH7gQe5/ZeQWIKgPn3iJFUlFNMCIaXs
-         hP6mrB2UOXd+4jnFaW16/CdDsvUzV3P4GT4lwBobblH8QVYGjHLYZxI3muMlPPEK3snO
-         djeGkU6kFGJObgA8LQfli88Crl+PEsyf7ysbSct/uYXxf57RROgr8vT4748ucSu4Ipy3
-         QQTgqNED5rm432HoQ4edVCSzBSFNRy4ZbvN2EdAu5zPKE0bsWjVvBou2csd4b8vlhcWM
-         Vqdg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=C3CE2oEAbn1BfAIUJJmW/EwCYvU7wIfEHkG40XHk0nU=;
-        b=ldRlF+WC5iBfF7O0cfOzXdUwH3fEgeRjF37upTlloclyPzJkRcsq0zH7AKLCCWLzt7
-         IpM6Y44naBedUwkBHSGgoibk9rM7rok4MS8Oj+jEjKhClymzEEoC76J0rCoiFRK92WWx
-         HEn9UsdoOgXxtuJQnM0gLkzCFw7NAYttBnRsDW1O8KjamHXY7zdqS+RRZ0n0Yc+sBwas
-         NEh9n8BlU5NfvQSvBiHyjOiiVBM6jS86y0iAPllkhqwxuNqMl5FL6OHTVZHlZe0vSYbe
-         iQw2X69En2lR8TLzVRZWDe60T8gnLTDXdLfTBR7jSG11WyAtPQqQWwscEnjJfvMF1ytD
-         7yJA==
-X-Gm-Message-State: AMke39nxpOMlAvCrLTzBbiGnV7Gy6aySWlr2tvQF7wsqcFDajRHFJ0p7w8lmAL8rQlxPC4RmBRrNznlSY00TzAgt
-X-Received: by 10.84.128.74 with SMTP id 68mr4118398pla.111.1488929849436;
- Tue, 07 Mar 2017 15:37:29 -0800 (PST)
+        id S1756255AbdCGXx5 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 7 Mar 2017 18:53:57 -0500
+Received: from forward3m.cmail.yandex.net ([5.255.216.21]:53495 "EHLO
+        forward3m.cmail.yandex.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1756438AbdCGXxn (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 7 Mar 2017 18:53:43 -0500
+X-Greylist: delayed 1728 seconds by postgrey-1.27 at vger.kernel.org; Tue, 07 Mar 2017 18:53:42 EST
+Received: from smtp1j.mail.yandex.net (smtp1j.mail.yandex.net [95.108.130.59])
+        by forward3m.cmail.yandex.net (Yandex) with ESMTP id 3BD072149C;
+        Wed,  8 Mar 2017 02:22:04 +0300 (MSK)
+Received: from smtp1j.mail.yandex.net (localhost.localdomain [127.0.0.1])
+        by smtp1j.mail.yandex.net (Yandex) with ESMTP id EFCBD3C80D2B;
+        Wed,  8 Mar 2017 02:22:02 +0300 (MSK)
+Received: by smtp1j.mail.yandex.net (nwsmtp/Yandex) with ESMTPSA id Mg9YKJBWLl-M1QaoZ7r;
+        Wed, 08 Mar 2017 02:22:01 +0300
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (Client certificate not present)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=vtolstov.org; s=mail; t=1488928922;
+        bh=zj80eRyjM1N3JxxW+Ret0jc5w1hVp+AWB/fT/VC75A8=;
+        h=Date:From:Reply-To:Subject:To:Cc:Message-Id;
+        b=U1aBiR50qFIuIIXQVpGbqtQOqrSbgUBoT0F02lFcHaMwxaTmi99/1UtyTSiIX15x8
+         r27PSNc51OhMchXFeodR1w3miYjkp04ZEvrZ4k5R+WHf/lxcA1tnPCaeks+qitEIT3
+         uOaos/E9AckzD+ALmA0r8aXDN9wqkuggrgfAAhHU=
+Authentication-Results: smtp1j.mail.yandex.net; dkim=pass header.i=@vtolstov.org
+X-Yandex-Suid-Status: 1 0,1 0,1 0
+Date:   Wed, 08 Mar 2017 02:22:00 +0300
+From:   Valery Tolstov <me@vtolstov.org>
+Reply-To: 20170304172648.GB27158@hank
+Subject: Re: GSoC 2017
+To:     t.gummerer@gmail.com
+Cc:     git@vger.kernel.org, sbeller@google.com
+Message-Id: <1488928920.8812.2@smtp.yandex.ru>
+X-Mailer: geary/0.11.2
 MIME-Version: 1.0
-Received: by 10.100.187.5 with HTTP; Tue, 7 Mar 2017 15:37:28 -0800 (PST)
-In-Reply-To: <xmqqfuio674n.fsf@gitster.mtv.corp.google.com>
-References: <20170302004759.27852-1-sbeller@google.com> <20170306205919.9713-1-sbeller@google.com>
- <20170306205919.9713-16-sbeller@google.com> <xmqqfuio674n.fsf@gitster.mtv.corp.google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Tue, 7 Mar 2017 15:37:28 -0800
-Message-ID: <CAGZ79kbdJa54YyKPHR9ycuJBVtyNY_2yaD7_5RPPu++Awiz5cA@mail.gmail.com>
-Subject: Re: [PATCH 15/18] read-cache, remove_marked_cache_entries: wipe
- selected submodules.
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        Brandon Williams <bmwill@google.com>,
-        David Turner <novalis@novalis.org>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Heiko Voigt <hvoigt@hvoigt.net>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8; format=flowed
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Mar 7, 2017 at 2:42 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Stefan Beller <sbeller@google.com> writes:
->
->> Signed-off-by: Stefan Beller <sbeller@google.com>
+Decided to rewrite module_clone to use connect_work_tree_and_git_dir
+as my microproject by suggestion of Stefan Bellar.
+https://public-inbox.org/git/CAGZ79kY+1E-wg0-uzGJmE+haOE+1WCmg0Eux7rWGtkU_aBDQ9g@mail.gmail.com/
 
->> +             submodule_move_head(sub->path, "HEAD", NULL, \
->
-> What is this backslash doing here?
+It seems that connect_work_tree_and_git_dir needs to be slightly changed
+to deal with submodules. Because path to config file for submodules lies
+not directly in .git directory we need to know whether the path is
+submodule or not. Can I use submodule_from_path to determine this?
+I mean what if NULL result also indicates error sometimes?
 
-I am still bad at following coding conventions, apparently.
-will remove.
+Another possible solution is to pass the flag indicating
+that path is submodule or not. But I think this solution is bad.
 
->> @@ -532,8 +550,13 @@ void remove_marked_cache_entries(struct index_state *istate)
->>
->>       for (i = j = 0; i < istate->cache_nr; i++) {
->>               if (ce_array[i]->ce_flags & CE_REMOVE) {
->> -                     remove_name_hash(istate, ce_array[i]);
->> -                     save_or_free_index_entry(istate, ce_array[i]);
->> +                     const struct submodule *sub = submodule_from_ce(ce_array[i]);
->> +                     if (sub) {
->> +                             remove_submodule_according_to_strategy(sub);
->> +                     } else {
->> +                             remove_name_hash(istate, ce_array[i]);
->> +                             save_or_free_index_entry(istate, ce_array[i]);
->> +                     }
->
-> I cannot readily tell as the proposed log message is on the sketchy
-> side to explain the reasoning behind this, but this behaviour change
-> is done unconditionally (in other words, without introducing a flag
-> that is set by --recurse-submodules command line flag and switches
-> behaviour based on the flag) here.  What is the end-user visible
-> effect with this change?
 
-submodule_from_ce returns always NULL, when such flag is not given.
-From 10/18:
+Regards,
+  Valery Tolstov
 
-+const struct submodule *submodule_from_ce(const struct cache_entry *ce)
-+{
-+       if (!S_ISGITLINK(ce->ce_mode))
-+               return NULL;
-+
-+       if (!should_update_submodules())
-+               return NULL;
-+
-+       return submodule_from_path(null_sha1, ce->name);
-+}
 
-should_update_submodules is always false if such a flag is not set,
-such that we end up in the else case which is literally the same as
-the removed lines (they are just indented).
 
->  Can we have a new test in this same patch
-> to demonstrate the desired behaviour introduced by this change (or
-> the bug this change fixes)?
-
-This doesn't fix a bug, but in case the flag is given (in patches 17,18)
-this new code removes submodules that are no longer recorded in
-the tree.
