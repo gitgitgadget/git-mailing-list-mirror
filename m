@@ -2,75 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8730F202DA
-	for <e@80x24.org>; Tue,  7 Mar 2017 13:47:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 484DF1FBEC
+	for <e@80x24.org>; Tue,  7 Mar 2017 13:48:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753103AbdCGNr0 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 7 Mar 2017 08:47:26 -0500
-Received: from quickstop.soohrt.org ([85.131.246.152]:48845 "EHLO
-        quickstop.soohrt.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751193AbdCGNrZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Mar 2017 08:47:25 -0500
-Received: (qmail 7426 invoked by uid 1014); 7 Mar 2017 13:45:43 -0000
-Date:   Tue, 7 Mar 2017 12:03:28 +0100
-From:   Horst Schirmeier <horst@schirmeier.com>
-To:     git@vger.kernel.org
-Subject: regression: git push in non-shared repo stalls (v2.11.0+)
-Message-ID: <20170307110328.GE7566@quickstop.soohrt.org>
+        id S1754182AbdCGNsP (ORCPT <rfc822;e@80x24.org>);
+        Tue, 7 Mar 2017 08:48:15 -0500
+Received: from cloud.peff.net ([104.130.231.41]:39724 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752898AbdCGNsO (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Mar 2017 08:48:14 -0500
+Received: (qmail 20026 invoked by uid 109); 7 Mar 2017 13:39:51 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 07 Mar 2017 13:39:51 +0000
+Received: (qmail 25636 invoked by uid 111); 7 Mar 2017 13:39:59 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 07 Mar 2017 08:39:59 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 07 Mar 2017 08:39:48 -0500
+Date:   Tue, 7 Mar 2017 08:39:48 -0500
+From:   Jeff King <peff@peff.net>
+To:     Horst Schirmeier <horst@schirmeier.com>
+Cc:     git@vger.kernel.org
+Subject: [PATCH 6/6] send-pack: report signal death of pack-objects
+Message-ID: <20170307133948.x3w6nufae7tbgeka@sigill.intra.peff.net>
+References: <20170307133437.qee2jtynbiwf6uzr@sigill.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <20170307133437.qee2jtynbiwf6uzr@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+If our pack-objects sub-process dies of a signal, then it
+likely didn't have a chance to write anything useful to
+stderr. The user may be left scratching their head why the
+push failed. Let's detect this situation and write something
+to stderr.
 
-I observe a regression that seems to have been introduced between
-v2.10.0 and v2.11.0.  When I try to push into a repository on the local
-filesystem that belongs to another user and has not explicitly been
-prepared for shared use, v2.11.0 shows some of the usual diagnostic
-output and then freezes instead of announcing why it failed to push.
+Signed-off-by: Jeff King <peff@peff.net>
+---
+We could drop the SIGPIPE special-case, but I think it's just noise
+after the unpack-status fix in the previous commit.
 
-Horst
+ send-pack.c | 15 ++++++++++++++-
+ 1 file changed, 14 insertions(+), 1 deletion(-)
 
-Steps to reproduce (tested on Debian 8 "Jessie" amd64):
- -  User A creates a bare repository:
-    mkdir /tmp/gittest
-    git init --bare /tmp/gittest
- -  User B clones it, adds and commits a file:
-    git clone /tmp/gittest
-    cd gittest
-    echo 42 > x
-    git add x
-    git commit -m test
- -  User B tries to push to user A's bare repo:
-    git push
-
-Expected result (git v2.10.0 and earlier):
-test@ios:~/gittest$ git push
-Counting objects: 3, done.
-Writing objects: 100% (3/3), 230 bytes | 0 bytes/s, done.
-Total 3 (delta 0), reused 0 (delta 0)
-remote: error: insufficient permission for adding an object to repository database objects
-remote: fatal: failed to write object
-error: unpack failed: unpack-objects abnormal exit
-To /tmp/gittest
- ! [remote rejected] master -> master (unpacker error)
-error: failed to push some refs to '/tmp/gittest'
-
-Actual result (git v2.11.0, v2.12.0, and 2.12.0.189.g3bc53220c):
-test@ios:~/gittest$ git push
-Counting objects: 3, done.
-Writing objects: 100% (3/3), 230 bytes | 0 bytes/s, done.
-Total 3 (delta 0), reused 0 (delta 0)
-[... git freezes here ...]
-
+diff --git a/send-pack.c b/send-pack.c
+index e15232739..d2d2a49a0 100644
+--- a/send-pack.c
++++ b/send-pack.c
+@@ -72,6 +72,7 @@ static int pack_objects(int fd, struct ref *refs, struct sha1_array *extra, stru
+ 	struct child_process po = CHILD_PROCESS_INIT;
+ 	FILE *po_in;
+ 	int i;
++	int rc;
+ 
+ 	i = 4;
+ 	if (args->use_thin_pack)
+@@ -125,8 +126,20 @@ static int pack_objects(int fd, struct ref *refs, struct sha1_array *extra, stru
+ 		po.out = -1;
+ 	}
+ 
+-	if (finish_command(&po))
++	rc = finish_command(&po);
++	if (rc) {
++		/*
++		 * For a normal non-zero exit, we assume pack-objects wrote
++		 * something useful to stderr. For death by signal, though,
++		 * we should mention it to the user. The exception is SIGPIPE
++		 * (141), because that's a normal occurence if the remote end
++		 * hangs up (and we'll report that by trying to read the unpack
++		 * status).
++		 */
++		if (rc > 128 && rc != 141)
++			error("pack-objects died of signal %d", rc - 128);
+ 		return -1;
++	}
+ 	return 0;
+ }
+ 
 -- 
-PGP-Key 0xD40E0E7A
+2.12.0.429.gde83c8049
