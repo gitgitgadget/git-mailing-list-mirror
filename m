@@ -2,86 +2,111 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 15F571FBEC
-	for <e@80x24.org>; Wed,  8 Mar 2017 01:09:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BA56D1FBEC
+	for <e@80x24.org>; Wed,  8 Mar 2017 01:12:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756534AbdCHBJV (ORCPT <rfc822;e@80x24.org>);
-        Tue, 7 Mar 2017 20:09:21 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:63190 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1756614AbdCHBJS (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Mar 2017 20:09:18 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 78D8D8255B;
-        Tue,  7 Mar 2017 20:08:33 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=fqVFj27F6ZXzLGBtvUa5A5TgY04=; b=hjcYfH
-        qw7m9ey2wPemm6hrObSNhvazrYgrwDQEnsebRPVUqPrwq8O/bNcP/3sMv0eqdHr+
-        UDN3KC1FZnGiQnhQBaYonYHoK6Ea/0ZNBpYZQqptL2FYVgDdHZJsGIDHTKRMoECW
-        PCE5zODkcmvyZ0clcJ6hgPfhIkcpI9nWtszUE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=ltMLEROFmKHy34utX3FO1BNJyVpfinxO
-        eooVDt3zfW6CNXGkcieDNqhqsaqJ4P/MdIvKIi58TRdm4/tSeNglLizSLwqF6m4N
-        k0mQCeXyhY0gPM7Dr4TmOGOr1ilntk0eydrwyUE5hMH9lOzN1ZKGejmN8dLbSukd
-        8xJ6rwQNBrw=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 7178F8255A;
-        Tue,  7 Mar 2017 20:08:33 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id D57BF82557;
-        Tue,  7 Mar 2017 20:08:32 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     "git\@vger.kernel.org" <git@vger.kernel.org>,
-        Brandon Williams <bmwill@google.com>,
-        David Turner <novalis@novalis.org>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Heiko Voigt <hvoigt@hvoigt.net>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: Re: [PATCH 16/18] entry.c: update submodules when interesting
-References: <20170302004759.27852-1-sbeller@google.com>
-        <20170306205919.9713-1-sbeller@google.com>
-        <20170306205919.9713-17-sbeller@google.com>
-        <xmqqtw746758.fsf@gitster.mtv.corp.google.com>
-        <xmqqy3wg4rko.fsf@gitster.mtv.corp.google.com>
-        <CAGZ79kYmaAY-ASa672eXmQapxJns+a3dEC_BiEmH7ti==arLtw@mail.gmail.com>
-Date:   Tue, 07 Mar 2017 17:08:31 -0800
-In-Reply-To: <CAGZ79kYmaAY-ASa672eXmQapxJns+a3dEC_BiEmH7ti==arLtw@mail.gmail.com>
-        (Stefan Beller's message of "Tue, 7 Mar 2017 15:08:21 -0800")
-Message-ID: <xmqqpohs4ltc.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+        id S933440AbdCHBMa (ORCPT <rfc822;e@80x24.org>);
+        Tue, 7 Mar 2017 20:12:30 -0500
+Received: from mout.gmx.net ([212.227.15.19]:53359 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S933407AbdCHBM3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Mar 2017 20:12:29 -0500
+Received: from virtualbox ([95.208.58.158]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0M86PB-1cPCIw48mn-00vgwT; Wed, 08
+ Mar 2017 02:05:52 +0100
+Date:   Wed, 8 Mar 2017 02:05:51 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     valtron <valtron2000@gmail.com>
+cc:     git@vger.kernel.org
+Subject: Re: Crash on MSYS2 with GIT_WORK_TREE
+In-Reply-To: <alpine.DEB.2.20.1703072345530.3767@virtualbox>
+Message-ID: <alpine.DEB.2.20.1703080159420.3767@virtualbox>
+References: <CAFKRc7y_kpCGNORENUZ2qw_4qBwjjyaaDFxAEQa52fTryj+w7A@mail.gmail.com> <alpine.DEB.2.20.1703072345530.3767@virtualbox>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: BFB933D0-039B-11E7-9678-97B1B46B9B0B-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:SvhCR2/xt9AM8Kz5NM2nu4Bll5j6H8pm8g/XACVmtGu/IRZlanx
+ OGMWaKMaw1Nvcpwazxd844b+oPkXZv4dmWOrnXBqYVg9kM85t8V11ExxTWC4Iky+2XX5IO7
+ T4v6ahtqDcJDClEQbRQ6oRVnMGv6YdmJNz2iJujjExbZVm9wJUxUWt+70alkmCzXq7KkA0V
+ r1aRLe6/WbJLEGtf0A3Bg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:4ZtowW+QonA=:D7bGj0TY1SZnU0m6xA+BTy
+ wJblz+4ArzZQrckQj0UroCpwNWTjGonnB4nAZ8XEX0yB4qRGG88DHQvkv3oz1nQbV34b0z+b9
+ ocn08y6xu1ybRPdi82ZjkCAmiOYpW0yIMhZC3+H49+oY5ew7N42ZZPCKvg7e3QVcW9iVStUY1
+ Hc7bWkb1Kme0LbBmd4LqgoYsfU4Q6/DUhbTHGF7oJLw5MaPAjVyAZTrpB/dketYjdbrgEKbTP
+ gV+kcAmp0oYYIKCu3HV0mLVTAW1g0jWn2QfTvB2kXv0K+wAwPslgUiZ0xMSTq4sOedRABbtwx
+ d+fPVkJxtXm4iZOyPW12D3t9esRrH08xo0YuzxsHtpNXfxfIh48GnsEPv1eczVADi2Bj+JB25
+ MAGI3iaxGsOdIuyr0IQBpw9aSHmkrCKOItWaT5ldRFz6ykNyGfz8c82uaO7Z6uaTh8es6G7H9
+ uvyt7TxK3JJYMGSvdogXSMo/kXyjgqjg8P9F/HPefbN6R2glmOQ2nWiCfqXqLS9PGvWTpQbm3
+ nf+Tq2vYs6rymEZkwrSYYZSGbVkFfTB8aAp/mxYHa+rffr39Y6dRy8MSmf9buZ/xBa04qXnwB
+ shDAxOScr+aydTeCZ/3RH+tW666oz6PCH0s+KHpio8bTe7Ovw3iyqlW0QY9H5olW9wKdGOqce
+ 4eAv5dBKrg2wRrspubql0zrsy9h+NvY2uk8OF9ahLN8Wq8ZThCvjLOP18FP/DBUmf3sgcVQYJ
+ a0z2HHow/w6LNe869ihQZnvCJDrfOujtLTD49taoS+8yz1/xEWmRqf30xAMwzVazN1ZDqDFma
+ Khbauro
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
+Hi valtron,
 
->> In addition to mkdir(), would we also need the .git file that point
->> into superproject's .git/modules/ too?
->
-> The move_head function takes care of it
-> Both creation as well as deletion are handled in the move_head function,
-> when either new or old is NULL.
+just to set the record straight on a few of my suggestions that turned out
+to be incorrect:
 
-Oh, if it does the creation of directory and adjusting of .git
-gitfile, and handles other anomalies, I have no problem with it.
+On Wed, 8 Mar 2017, Johannes Schindelin wrote:
 
-It was just that this codepath tried to handle some kind of anomaly
-(namely, the user originally thought the submodule needs to be
-changed to a regular file and then changed mind and wants to restore
-it from the index) and yet not doing the full anomaly handling (like
-"not even an empty directory exists" case) that confused me.
+> On Tue, 7 Mar 2017, valtron wrote:
+> 
+> > Stacktrace from GDB (on git-rev-parse) is:
+> > 
+> > #0  0x000000018019634d in strcmp (s1=0x600062080 "/c/repo", s2=0x0)
+> >    at /msys_scripts/msys2-runtime/src/msys2-runtime/newlib/libc/string/strcmp.c:83
+> > #1  0x00000001005239f1 in ?? ()
+> > #2  0x0000000100523f36 in ?? ()
+> > #3  0x000000010046c6fa in ?? ()
+> > #4  0x0000000100401b6d in ?? ()
+> > #5  0x0000000100401e4b in ?? ()
+> > #6  0x0000000100563593 in ?? ()
+> > #7  0x0000000180047c37 in _cygwin_exit_return ()
+> >    at /msys_scripts/msys2-runtime/src/msys2-runtime/winsup/cygwin/dcrt0.cc:1031
+> > #8  0x0000000180045873 in _cygtls::call2 (this=0xffffce00,
+> > func=0x180046bd0 <dll_crt0_1(void*)>, arg=0x0,
+> >    buf=buf@entry=0xffffcdf0) at
+> > /msys_scripts/msys2-runtime/src/msys2-runtime/winsup/cygwin/cygtls.cc:40
+> > #9  0x0000000180045924 in _cygtls::call (func=<optimized out>,
+> > arg=<optimized out>)
+> >    at /msys_scripts/msys2-runtime/src/msys2-runtime/winsup/cygwin/cygtls.cc:27
+> > #10 0x0000000000000000 in ?? ()
+> > Backtrace stopped: previous frame inner to this frame (corrupt stack?)
+> 
+> This may be the wrong thread, though. You can find out what other threads
+> there are with `info threads` and switch by `thread <id>`, the
+> backtrace(s) of the other thread(s) may be informative.
 
+It was actually the correct thread.
+
+> Please also note that installing the `msys2-runtime-devel` package via
+> Pacman may be able to get you nicer symbols.
+
+I was wrong. The problem here is git.exe: you would have to uncomment the
+'#options("debug","!strip")' line in the git/PKGBUILD file in
+https://github.com/Alexpux/MSYS2-packages before rebuilding the package
+[*1*], and then reinstalling it (which increases the installed size by
+94.82MB to 119.63MB due to the unstripped symbols). But then gdb would
+find the symbols alright and you'd see that the crash happens in
+
+#1  0x000000010051aecb in setup_explicit_git_dir
+    (gitdirenv=gitdirenv@entry=0x1005a00cc <sign_off_header+556> ".git",
+     cwd=cwd@entry=0x10055e970 <cwd>, nongit_ok=nongit_ok@entry=0x0) at
+    setup.c:669
+669             if (!strcmp(cwd->buf, worktree)) { /* cwd == worktree */
+
+and worktree indeed was NULL.
+
+Ciao,
+Johannes
