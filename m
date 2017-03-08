@@ -6,28 +6,28 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0D064202D7
-	for <e@80x24.org>; Wed,  8 Mar 2017 20:48:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6ED4E202D7
+	for <e@80x24.org>; Wed,  8 Mar 2017 20:48:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754494AbdCHUro (ORCPT <rfc822;e@80x24.org>);
-        Wed, 8 Mar 2017 15:47:44 -0500
-Received: from siwi.pair.com ([209.68.5.199]:33649 "EHLO siwi.pair.com"
+        id S1754412AbdCHUsG (ORCPT <rfc822;e@80x24.org>);
+        Wed, 8 Mar 2017 15:48:06 -0500
+Received: from siwi.pair.com ([209.68.5.199]:64155 "EHLO siwi.pair.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1754203AbdCHUra (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Mar 2017 15:47:30 -0500
+        id S1754284AbdCHUr3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Mar 2017 15:47:29 -0500
 Received: from jeffhostetler.2jll4ugiwlvuzhh55dqabi0nia.bx.internal.cloudapp.net (unknown [40.76.14.28])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id 4073584614;
+        by siwi.pair.com (Postfix) with ESMTPSA id 1871684613;
         Wed,  8 Mar 2017 13:51:02 -0500 (EST)
 From:   git@jeffhostetler.com
 To:     git@vger.kernel.org
 Cc:     jeffhost@microsoft.com, peff@peff.net, gitster@pobox.com,
         markbt@efaref.net, benpeart@microsoft.com,
         jonathantanmy@google.com, Jeff Hostetler <git@jeffhostetler.com>
-Subject: [PATCH 06/10] rev-list: add --allow-partial option to relax connectivity checks
-Date:   Wed,  8 Mar 2017 18:50:35 +0000
-Message-Id: <1488999039-37631-7-git-send-email-git@jeffhostetler.com>
+Subject: [PATCH 05/10] fetch-pack: add partial-by-size and partial-special
+Date:   Wed,  8 Mar 2017 18:50:34 +0000
+Message-Id: <1488999039-37631-6-git-send-email-git@jeffhostetler.com>
 X-Mailer: git-send-email 2.7.4
 In-Reply-To: <1488999039-37631-1-git-send-email-git@jeffhostetler.com>
 References: <1488999039-37631-1-git-send-email-git@jeffhostetler.com>
@@ -38,70 +38,173 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff Hostetler <git@jeffhostetler.com>
 
-Teach rev-list to optionally not complain when there are missing
-blobs.  This is for use following a partial clone or fetch when
-the server omitted certain blobs.
+Teach fetch-pack to take --partial-by-size and --partial-special
+arguments and pass them via the transport to upload-pack to
+request that certain blobs be omitted from the resulting packfile.
 
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 ---
- builtin/rev-list.c | 22 +++++++++++++++++++++-
- 1 file changed, 21 insertions(+), 1 deletion(-)
+ builtin/fetch-pack.c |  9 +++++++++
+ fetch-pack.c         | 17 +++++++++++++++++
+ fetch-pack.h         |  2 ++
+ transport.c          |  8 ++++++++
+ transport.h          |  8 ++++++++
+ 5 files changed, 44 insertions(+)
 
-diff --git a/builtin/rev-list.c b/builtin/rev-list.c
-index 0aa93d5..50c49ba 100644
---- a/builtin/rev-list.c
-+++ b/builtin/rev-list.c
-@@ -45,6 +45,7 @@ static const char rev_list_usage[] =
- "    --left-right\n"
- "    --count\n"
- "  special purpose:\n"
-+"    --allow-partial\n"
- "    --bisect\n"
- "    --bisect-vars\n"
- "    --bisect-all"
-@@ -53,6 +54,9 @@ static const char rev_list_usage[] =
- static struct progress *progress;
- static unsigned progress_counter;
+diff --git a/builtin/fetch-pack.c b/builtin/fetch-pack.c
+index cfe9e44..324d7b2 100644
+--- a/builtin/fetch-pack.c
++++ b/builtin/fetch-pack.c
+@@ -8,6 +8,7 @@
+ static const char fetch_pack_usage[] =
+ "git fetch-pack [--all] [--stdin] [--quiet | -q] [--keep | -k] [--thin] "
+ "[--include-tag] [--upload-pack=<git-upload-pack>] [--depth=<n>] "
++"[--partial-by-size=<n>] [--partial-special] "
+ "[--no-progress] [--diag-url] [-v] [<host>:]<directory> [<refs>...]";
  
-+static int allow_partial;
-+static struct trace_key trace_partial = TRACE_KEY_INIT(PARTIAL);
-+
- static void finish_commit(struct commit *commit, void *data);
- static void show_commit(struct commit *commit, void *data)
- {
-@@ -178,8 +182,16 @@ static void finish_commit(struct commit *commit, void *data)
- static void finish_object(struct object *obj, const char *name, void *cb_data)
- {
- 	struct rev_list_info *info = cb_data;
--	if (obj->type == OBJ_BLOB && !has_object_file(&obj->oid))
-+	if (obj->type == OBJ_BLOB && !has_object_file(&obj->oid)) {
-+		if (allow_partial) {
-+			/* Assume a previous partial clone/fetch omitted it. */
-+			trace_printf_key(
-+				&trace_partial, "omitted blob '%s' '%s'\n",
-+				oid_to_hex(&obj->oid), name);
-+			return;
-+		}
- 		die("missing blob object '%s'", oid_to_hex(&obj->oid));
-+	}
- 	if (info->revs->verify_objects && !obj->parsed && obj->type != OBJ_COMMIT)
- 		parse_object(obj->oid.hash);
- }
-@@ -329,6 +341,14 @@ int cmd_rev_list(int argc, const char **argv, const char *prefix)
- 			show_progress = arg;
+ static void add_sought_entry(struct ref ***sought, int *nr, int *alloc,
+@@ -143,6 +144,14 @@ int cmd_fetch_pack(int argc, const char **argv, const char *prefix)
+ 			args.update_shallow = 1;
  			continue;
  		}
-+		if (!strcmp(arg, "--allow-partial")) {
-+			allow_partial = 1;
++		if (skip_prefix(arg, "--partial-by-size=", &arg)) {
++			args.partial_by_size = xstrdup(arg);
 +			continue;
 +		}
-+		if (!strcmp(arg, "--no-allow-partial")) {
-+			allow_partial = 0;
++		if (!strcmp("--partial-special", arg)) {
++			args.partial_special = 1;
 +			continue;
 +		}
- 		usage(rev_list_usage);
- 
+ 		usage(fetch_pack_usage);
  	}
+ 	if (deepen_not.nr)
+diff --git a/fetch-pack.c b/fetch-pack.c
+index e0f5d5c..e355c38 100644
+--- a/fetch-pack.c
++++ b/fetch-pack.c
+@@ -372,6 +372,8 @@ static int find_common(struct fetch_pack_args *args,
+ 			if (prefer_ofs_delta)   strbuf_addstr(&c, " ofs-delta");
+ 			if (deepen_since_ok)    strbuf_addstr(&c, " deepen-since");
+ 			if (deepen_not_ok)      strbuf_addstr(&c, " deepen-not");
++			if (args->partial_by_size || args->partial_special)
++				strbuf_addstr(&c, " partial");
+ 			if (agent_supported)    strbuf_addf(&c, " agent=%s",
+ 							    git_user_agent_sanitized());
+ 			packet_buf_write(&req_buf, "want %s%s\n", remote_hex, c.buf);
+@@ -402,6 +404,12 @@ static int find_common(struct fetch_pack_args *args,
+ 			packet_buf_write(&req_buf, "deepen-not %s", s->string);
+ 		}
+ 	}
++
++	if (args->partial_by_size)
++		packet_buf_write(&req_buf, "partial-by-size %s", args->partial_by_size);
++	if (args->partial_special)
++		packet_buf_write(&req_buf, "partial-special");
++
+ 	packet_buf_flush(&req_buf);
+ 	state_len = req_buf.len;
+ 
+@@ -807,6 +815,10 @@ static int get_pack(struct fetch_pack_args *args,
+ 					"--keep=fetch-pack %"PRIuMAX " on %s",
+ 					(uintmax_t)getpid(), hostname);
+ 		}
++
++		if (args->partial_by_size || args->partial_special)
++			argv_array_push(&cmd.args, "--allow-partial");
++
+ 		if (args->check_self_contained_and_connected)
+ 			argv_array_push(&cmd.args, "--check-self-contained-and-connected");
+ 	}
+@@ -920,6 +932,11 @@ static struct ref *do_fetch_pack(struct fetch_pack_args *args,
+ 	else
+ 		prefer_ofs_delta = 0;
+ 
++	if (server_supports("partial"))
++		print_verbose(args, _("Server supports partial"));
++	else if (args->partial_by_size || args->partial_special)
++		die(_("Server does not support 'partial'"));
++
+ 	if ((agent_feature = server_feature_value("agent", &agent_len))) {
+ 		agent_supported = 1;
+ 		if (agent_len)
+diff --git a/fetch-pack.h b/fetch-pack.h
+index c912e3d..b8a26e0 100644
+--- a/fetch-pack.h
++++ b/fetch-pack.h
+@@ -12,6 +12,7 @@ struct fetch_pack_args {
+ 	int depth;
+ 	const char *deepen_since;
+ 	const struct string_list *deepen_not;
++	const char *partial_by_size;
+ 	unsigned deepen_relative:1;
+ 	unsigned quiet:1;
+ 	unsigned keep_pack:1;
+@@ -29,6 +30,7 @@ struct fetch_pack_args {
+ 	unsigned cloning:1;
+ 	unsigned update_shallow:1;
+ 	unsigned deepen:1;
++	unsigned partial_special:1;
+ };
+ 
+ /*
+diff --git a/transport.c b/transport.c
+index 5828e06..45f35a4 100644
+--- a/transport.c
++++ b/transport.c
+@@ -160,6 +160,12 @@ static int set_git_option(struct git_transport_options *opts,
+ 	} else if (!strcmp(name, TRANS_OPT_DEEPEN_RELATIVE)) {
+ 		opts->deepen_relative = !!value;
+ 		return 0;
++	} else if (!strcmp(name, TRANS_OPT_PARTIAL_BY_SIZE)) {
++		opts->partial_by_size = xstrdup(value);
++		return 0;
++	} else if (!strcmp(name, TRANS_OPT_PARTIAL_SPECIAL)) {
++		opts->partial_special = !!value;
++		return 0;
+ 	}
+ 	return 1;
+ }
+@@ -227,6 +233,8 @@ static int fetch_refs_via_pack(struct transport *transport,
+ 		data->options.check_self_contained_and_connected;
+ 	args.cloning = transport->cloning;
+ 	args.update_shallow = data->options.update_shallow;
++	args.partial_by_size = data->options.partial_by_size;
++	args.partial_special = data->options.partial_special;
+ 
+ 	if (!data->got_remote_heads) {
+ 		connect_setup(transport, 0);
+diff --git a/transport.h b/transport.h
+index bc55715..c3f2d52 100644
+--- a/transport.h
++++ b/transport.h
+@@ -15,12 +15,14 @@ struct git_transport_options {
+ 	unsigned self_contained_and_connected : 1;
+ 	unsigned update_shallow : 1;
+ 	unsigned deepen_relative : 1;
++	unsigned partial_special : 1;
+ 	int depth;
+ 	const char *deepen_since;
+ 	const struct string_list *deepen_not;
+ 	const char *uploadpack;
+ 	const char *receivepack;
+ 	struct push_cas_option *cas;
++	const char *partial_by_size;
+ };
+ 
+ enum transport_family {
+@@ -210,6 +212,12 @@ void transport_check_allowed(const char *type);
+ /* Send push certificates */
+ #define TRANS_OPT_PUSH_CERT "pushcert"
+ 
++/* Partial fetch to only include small files */
++#define TRANS_OPT_PARTIAL_BY_SIZE "partial-by-size"
++
++/* Partial fetch to only include special files, like ".gitignore" */
++#define TRANS_OPT_PARTIAL_SPECIAL "partial-special"
++
+ /**
+  * Returns 0 if the option was used, non-zero otherwise. Prints a
+  * message to stderr if the option is not used.
 -- 
 2.7.4
 
