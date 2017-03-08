@@ -6,129 +6,87 @@ X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 875A420135
-	for <e@80x24.org>; Wed,  8 Mar 2017 22:05:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2910620135
+	for <e@80x24.org>; Wed,  8 Mar 2017 22:08:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754516AbdCHWFa (ORCPT <rfc822;e@80x24.org>);
-        Wed, 8 Mar 2017 17:05:30 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:51137 "EHLO
+        id S932126AbdCHWIx (ORCPT <rfc822;e@80x24.org>);
+        Wed, 8 Mar 2017 17:08:53 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:57305 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752985AbdCHWF3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Mar 2017 17:05:29 -0500
+        with ESMTP id S932123AbdCHWIw (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Mar 2017 17:08:52 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 9E2C26E90F;
-        Wed,  8 Mar 2017 16:59:26 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id E6FE16DB1F;
+        Wed,  8 Mar 2017 15:54:11 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=kEMNkgZ4BkX8f56gZHKDHXyP9yc=; b=capTza
-        6OEK2hcms9BtGpbeY2AZYq5I27V/7DW1RQpg6e2AWBsaCUjvK8Zwcv2cW09PFrVH
-        7Gazricr7LS+uNy4k7sEz7bwLKqGEAoXXn8a8H4qd4pvVCH16OYVlxbnOw5VgVw4
-        iQVmCvktOwgX+V3n+MMjmLp7eo3sVduOBrdJw=
+        :content-type; s=sasl; bh=Hhp+B2u+mJOnmFxqiQCtqfGH8aI=; b=rDrKh7
+        aeYbekwJ+g1Emqizuf6yYXDoQ16UkJdJXbFPw5vniEJnfSR+XNhMs6y05wbX3xop
+        foMB5Yy8MPqYoJnq/2LZg5+MaS/GnBVe5oNY5v4QIlr0h4OifpYdGd0AMob9aUJB
+        qULnNdFDi49nUjbB4W5FKXzFoGeU8pQChwS5A=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=sAjA+Ti85JX14JvxD5g53CLc54mBvn9y
-        +R9usfMDJkWh00Veti8asz+KYx9NxO7bj3PDprhxzpYlY7M8o50K6c0Eg0CfuzqF
-        fSVQoWidvIviOSs6tAAXI6/Gc23zLBh2HShAk98lkgX4yC+nKkQjUzKQ0JGlxTZq
-        C4Y1b2O6dQs=
+        :content-type; q=dns; s=sasl; b=KMMumK+LHVOGm1ZLpA0vZhJGikUvolcC
+        OhxtLb/c9YP7dmXeDYoGM8t49Smvj8hIFTDrkx/dBzG/YA5k5msvd6f2iU1QSbtv
+        mLSwY/bBiFTaQPJYktyLOHuKYvA/6vbqL5wGRjn/dnKWlQ24HN40BQJ7pkOP89ZU
+        65fFw9btUFA=
 Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 95A586E90E;
-        Wed,  8 Mar 2017 16:59:26 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id DE82A6DB1E;
+        Wed,  8 Mar 2017 15:54:11 -0500 (EST)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 0B0836E90D;
-        Wed,  8 Mar 2017 16:59:25 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 39EC46DB1D;
+        Wed,  8 Mar 2017 15:54:11 -0500 (EST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Karthik Nayak <karthik.188@gmail.com>
-Cc:     git@vger.kernel.org, Guillaume Wenzek <guillaume.wenzek@gmail.com>
-Subject: Re: BUG Report: git branch ignore --no-abbrev flag
-References: <CAAvNd=ir1qNQVaKphdg51AfGnsNgTrfvW2L6cca3SHiZrWNgHA@mail.gmail.com>
-        <xmqqlgsf39fg.fsf@gitster.mtv.corp.google.com>
-Date:   Wed, 08 Mar 2017 13:59:24 -0800
-In-Reply-To: <xmqqlgsf39fg.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-        message of "Wed, 08 Mar 2017 10:33:39 -0800")
-Message-ID: <xmqqzigv1lc3.fsf@gitster.mtv.corp.google.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Sebastian Schuberth <sschuberth@gmail.com>,
+        Jacob Keller <jacob.keller@gmail.com>,
+        Jeff King <peff@peff.net>,
+        Git Mailing List <git@vger.kernel.org>,
+        Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: diff.ignoreSubmoudles config setting broken?
+References: <5e5b1b92-f7c6-2987-356e-1aab2bff557e@gmail.com>
+        <20170308133348.2ovfsi44vq2rpgom@sigill.intra.peff.net>
+        <CAHGBnuM3iM-kHdxdox_1i56uLbv7gQ5ZUY9Xqf4BG7G_kTf+jQ@mail.gmail.com>
+        <20170308140110.wgdedquqwm75zws2@sigill.intra.peff.net>
+        <CAHGBnuPGPcWwbrZX_92XDJu47bpH=kj2PZ7yWHK=MRfZ_RHXrQ@mail.gmail.com>
+        <CAGZ79kbwMhL-ZnL-iYwPH=tWa8cNQbEGOYYQBw6OzFCMhOWE-w@mail.gmail.com>
+Date:   Wed, 08 Mar 2017 12:54:10 -0800
+In-Reply-To: <CAGZ79kbwMhL-ZnL-iYwPH=tWa8cNQbEGOYYQBw6OzFCMhOWE-w@mail.gmail.com>
+        (Stefan Beller's message of "Wed, 8 Mar 2017 11:04:07 -0800")
+Message-ID: <xmqq8tof32x9.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 7EDD0F80-044A-11E7-9982-FC50AE2156B6-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: 617E09C0-0441-11E7-AC02-FC50AE2156B6-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+Stefan Beller <sbeller@google.com> writes:
 
-> Guillaume Wenzek <guillaume.wenzek@gmail.com> writes:
+> On Wed, Mar 8, 2017 at 7:07 AM, Sebastian Schuberth
+> <sschuberth@gmail.com> wrote:
+>>
+>> + Jens
+>>
 >
->> After updating to git 2.12.0 on Monday I noticed that the "git branch"
->> wasn't behaving as usual.
->
-> Are you sure you are trying 2.12?  v2.12.0 and before should behave
-> the same way and honor --no-abbrev as far as I know.
->
-> On the other hand, 'master' has 93e8cd8b ("Merge branch
-> 'kn/ref-filter-branch-list'", 2017-02-27), which seems to introduce
-> the regression.
->
-> Karthik?
+> + Jacob Keller, who touched submodule diff display code last.
+> (I am thinking of fd47ae6a, diff: teach diff to display submodule
+> difference with an inline diff, 2016-08-31), which is first release as
+> part of v2.11.0 (that would fit your observance)
 
-I haven't fully checked if filter.abbrev is set correctly, but I
-noticed the output format is formulated without taking the value of
-filter.abbrev into account at all, so this is an attempt to fix
-that omission.
+Between these two:
 
-I also notice that filter.abbrev is _ONLY_ used by builtin/branch.c and
-the actual ref-filter code does not have to know anything about it.
+	git -c diff.ignoresubmodules=all diff
+	git diff --ignore-submodules=all
 
-We probably should eliminate filter.abbrev field from the structure
-and use a regular variable in builtin/branch.c and use it to pass
-the result of command line parsing from cmd_branch() down to
-build_format() as an argument.  
+one difference is that the latter disables reading extra config from
+.gitmodules (!) while the former makes the command honor it.
 
-But that is outside the scope of regression fix.
-
-
- builtin/branch.c | 19 +++++++++++++++----
- 1 file changed, 15 insertions(+), 4 deletions(-)
-
-diff --git a/builtin/branch.c b/builtin/branch.c
-index cbaa6d03c0..537c47811a 100644
---- a/builtin/branch.c
-+++ b/builtin/branch.c
-@@ -335,9 +335,18 @@ static char *build_format(struct ref_filter *filter, int maxwidth, const char *r
- 		    branch_get_color(BRANCH_COLOR_CURRENT));
- 
- 	if (filter->verbose) {
-+		struct strbuf obname = STRBUF_INIT;
-+
-+		if (filter->abbrev < 0)
-+			strbuf_addf(&obname, "%%(objectname:short)");
-+		else if (!filter->abbrev)
-+			strbuf_addf(&obname, "%%(objectname)");
-+		else
-+			strbuf_addf(&obname, " %%(objectname:short=%d) ", filter->abbrev);
-+
- 		strbuf_addf(&local, "%%(align:%d,left)%%(refname:lstrip=2)%%(end)", maxwidth);
- 		strbuf_addf(&local, "%s", branch_get_color(BRANCH_COLOR_RESET));
--		strbuf_addf(&local, " %%(objectname:short=7) ");
-+		strbuf_addf(&local, " %s ", obname.buf);
- 
- 		if (filter->verbose > 1)
- 			strbuf_addf(&local, "%%(if)%%(upstream)%%(then)[%s%%(upstream:short)%s%%(if)%%(upstream:track)"
-@@ -346,10 +355,12 @@ static char *build_format(struct ref_filter *filter, int maxwidth, const char *r
- 		else
- 			strbuf_addf(&local, "%%(if)%%(upstream:track)%%(then)%%(upstream:track) %%(end)%%(contents:subject)");
- 
--		strbuf_addf(&remote, "%s%%(align:%d,left)%s%%(refname:lstrip=2)%%(end)%s%%(if)%%(symref)%%(then) -> %%(symref:short)"
--			    "%%(else) %%(objectname:short=7) %%(contents:subject)%%(end)",
-+		strbuf_addf(&remote, "%s%%(align:%d,left)%s%%(refname:lstrip=2)%%(end)%s"
-+			    "%%(if)%%(symref)%%(then) -> %%(symref:short)"
-+			    "%%(else) %s %%(contents:subject)%%(end)",
- 			    branch_get_color(BRANCH_COLOR_REMOTE), maxwidth, quote_literal_for_format(remote_prefix),
--			    branch_get_color(BRANCH_COLOR_RESET));
-+			    branch_get_color(BRANCH_COLOR_RESET), obname.buf);
-+		strbuf_release(&obname);
- 	} else {
- 		strbuf_addf(&local, "%%(refname:lstrip=2)%s%%(if)%%(symref)%%(then) -> %%(symref:short)%%(end)",
- 			    branch_get_color(BRANCH_COLOR_RESET));
+This comes from aee9c7d6 ("Submodules: Add the new "ignore" config
+option for diff and status", 2010-08-06), which is ancient and
+predates even v2.0, so if you see problems with v2.12 or v2.11 but
+not with older ones, that would rule out this theory.
