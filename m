@@ -2,86 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C7E08202D7
-	for <e@80x24.org>; Wed,  8 Mar 2017 15:44:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 047A9202D7
+	for <e@80x24.org>; Wed,  8 Mar 2017 15:45:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752370AbdCHPoK (ORCPT <rfc822;e@80x24.org>);
-        Wed, 8 Mar 2017 10:44:10 -0500
-Received: from mout.gmx.net ([212.227.15.19]:52597 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751826AbdCHPn4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Mar 2017 10:43:56 -0500
-Received: from virtualbox ([37.201.192.247]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MO7im-1cr9X239T2-005YZs; Wed, 08
- Mar 2017 16:43:36 +0100
-Date:   Wed, 8 Mar 2017 16:43:34 +0100 (CET)
-From:   Johannes Schindelin <johannes.schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     git@vger.kernel.org
-cc:     Junio C Hamano <gitster@pobox.com>,
-        Brandon Williams <bmwill@google.com>,
-        Stefan Beller <sbeller@google.com>
-Subject: [PATCH 1/2] Demonstrate NULL pointer access with invalid
- GIT_WORK_TREE
-In-Reply-To: <cover.1488987786.git.johannes.schindelin@gmx.de>
-Message-ID: <c107001ff39e41314e86af3612922f687eb73dd4.1488987786.git.johannes.schindelin@gmx.de>
-References: <cover.1488987786.git.johannes.schindelin@gmx.de>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+        id S1753501AbdCHPpE (ORCPT <rfc822;e@80x24.org>);
+        Wed, 8 Mar 2017 10:45:04 -0500
+Received: from mail-wr0-f182.google.com ([209.85.128.182]:33173 "EHLO
+        mail-wr0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751229AbdCHPpD (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Mar 2017 10:45:03 -0500
+Received: by mail-wr0-f182.google.com with SMTP id u48so26206414wrc.0
+        for <git@vger.kernel.org>; Wed, 08 Mar 2017 07:44:57 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=i6LRYFa8YrNAUwMeUp6672mwWdxmeEfNO/pC4n4GguA=;
+        b=p3EhkqODWftUkhkOLeSlo0JXNSPjzZ4XvZofmlPNYlT18VzR8z2Y8kXe3ki8A1zqVE
+         MfRkqSVN7/TkblXEBpt74c7cM5O0Rgz7fysnH9iVVBTumJf0RrpGhTFNGTD0J3M91dmY
+         CDlOQvHJU2KXFVjZyPumUyii6aFTJTwqKrII4lgmqJPO0rIxNtZgrbwMr1msAcy4CKFP
+         OrPv4Kar5JOdxkKYdztsykLRqsc5ru/ZjoWeQ1066RzGuEYaaboyYUlT3I/GcMIHRIUr
+         o3PQBHpwG+tjWTSPgaWRojIBlfAbm0GGItRzVJOH7G4vftiF0B9LDnK+f5HgDZbjuW8M
+         Jr1w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=i6LRYFa8YrNAUwMeUp6672mwWdxmeEfNO/pC4n4GguA=;
+        b=RWNbwfxIxyAXXyhg1JZCnT7JKX5uk+DpGbVm7P30l7kAR9cpE16lJ6JAHxPqpNtqAv
+         1haakmwTW337PCm3H2cPYa6oPCCSLsEl52qA21py4mEKAH8RKCauMmEaEesNZtEARUbr
+         Gji2sgDdBPb2qvLUi57lQHdAamLFjAIrq+taikp+uNyPW/hpiQAHcyf8TIw9TMEv//5P
+         JCFdUeS+dYttUMYimIDNbNqVEysnqaBrnXQihVQtNMR7myAk+/zDXqIg0bJJvwEZz1ls
+         ojbssZofciszzC//1WMNgxP1spjghRfcSLcYL1RSoQHLLVTTzjobm4snDZu75RtFWZFP
+         9Tfw==
+X-Gm-Message-State: AMke39lJl4w2wy7yXUHT+7do6fSEBqWcP/WuZTU1mZd3L+H8G2XV6fJsPAN+ZsJkp53U0EHXJMEass5z5yZdcQ==
+X-Received: by 10.223.177.148 with SMTP id q20mr5572717wra.154.1488980580502;
+ Wed, 08 Mar 2017 05:43:00 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:gbAN4HKdU1HKYPcsTCLUJcYufd3OOto85vMx7lrihWFXlxDjD8W
- Yo6dO/3se/BpthhwY+hRmXCmefP0WOf1I81/EAHVmz7TKzBObGIYgSB8cVyabl/tBqMRJtU
- PXkrvAWnqFe75LVlAkHzZv6iHN1X6X/mQ3rOXVwRZMN8bzj9fgMdNn9lLoquAOoHgV/UFL1
- 7nK8b47hpY6H3gmPTTVMA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:cbtfUoEiW9s=:eDLNzNNvXLiN1pvvwPCOY+
- FVvCRE1q72Hod8Ec5DgVZna+CaJ/5i7DYrfFeKEbu6tcH6O0OM+GnVzBpI0oXP/S101puqO9P
- Y/X9zWjjWjOjBY9o0QtygBnIXBAVi0M/BdTfkN+6yYBHYB8nMQSu+xOH3nymDWzoL1xFg9arL
- 3dNEpRO1eprsLBM+DPXm0reD1nPcfKN3LKETrKV2DswsLJJXhLTFjdklklY+1kCP1ZDLpzifx
- 6cvLXnQ6iOExqUfq7hw8nawbMzoIVXn2aUSOIelntaWgzUJnHzmctuHT1momfU7KA+bbQIrrN
- 8UF8AqX9Gh0zg2Y04vzT5jE9sX6eAfdxVizpI0lFXmCIFl+0q/P/VcANuwesey+CIJnLmPQF7
- +uV7Samk4HKAJuRE2hX4nC7DfVaschqCSwUZThHY2E57GhwMfUjxoCo79DlHbxusIqoOIF+28
- i/6UZCvZ7hMn4fWXJdbyACyZXVcbWKU5wzHfrtFHSY8jGnFW+SGyFFE6ob3E4uOOOKKWzGpV1
- +2T6dtfWeg9bNcu8p1Kati6NemyK3dUOcdW45ZK5xyYdMQFqO/UsqeVA55joYd8kHgXCU2H+X
- 3l5vNWyBDFwf1Fd6GkW371xnbGhTCtfevgxBo0VG4zBz6RnrPra+PWdBxndGsbcHkUt+dmA75
- P5NA+wstuvqZoduDdXPCAxhQidSvKRsiTol6D3Uqtyg0YkV2EQbSnRj1Hx07IFP9xKvvb2WCp
- pQInCrlLiH+HXQ+8ZyV6dyo14UMOvZsCpAD+eafHMHl8xoBOMgFuft6BChhFJrV63XUV+3VXK
- 8UmNp30
+Received: by 10.28.126.201 with HTTP; Wed, 8 Mar 2017 05:43:00 -0800 (PST)
+In-Reply-To: <20170308133348.2ovfsi44vq2rpgom@sigill.intra.peff.net>
+References: <5e5b1b92-f7c6-2987-356e-1aab2bff557e@gmail.com> <20170308133348.2ovfsi44vq2rpgom@sigill.intra.peff.net>
+From:   Sebastian Schuberth <sschuberth@gmail.com>
+Date:   Wed, 8 Mar 2017 14:43:00 +0100
+Message-ID: <CAHGBnuM3iM-kHdxdox_1i56uLbv7gQ5ZUY9Xqf4BG7G_kTf+jQ@mail.gmail.com>
+Subject: Re: diff.ignoreSubmoudles config setting broken?
+To:     Jeff King <peff@peff.net>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Stefan Beller <sbeller@google.com>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When GIT_WORK_TREE does not specify a valid path, we should error out.
-Not crash.
+On Wed, Mar 8, 2017 at 2:33 PM, Jeff King <peff@peff.net> wrote:
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- t/t1501-work-tree.sh | 8 ++++++++
- 1 file changed, 8 insertions(+)
+>> I'm getting
+>>
+>> $ git config --global diff.ignoreSubmodules all
+>> $ git diff
+>> diff --git a/scanners/scancode-toolkit b/scanners/scancode-toolkit
+>> index 65e5c9c..6b021a8 160000
+>> --- a/scanners/scancode-toolkit
+>> +++ b/scanners/scancode-toolkit
+>> @@ -1 +1 @@
+>> -Subproject commit 65e5c9c9508441c5f62beff4749cf455c6eadc30
+>> +Subproject commit 6b021a8addf6d3c5f2a6ef1af6245e095c21d8ec
+>>
+>> but with
+>>
+>> $ git diff --ignore-submodules=all
+>
+> Hrm. Isn't "all" the default? That's what git-diff(1) says (but I've
+> never used the feature myself).
+>
+> That would imply to me that there's another config option set somewhere
+> (perhaps in the repo-level config). What does:
+>
+>   git config --show-origin --get-all diff.ignoresubmodules
+>
+> say?
 
-diff --git a/t/t1501-work-tree.sh b/t/t1501-work-tree.sh
-index cc5b870e587..046d9b7909f 100755
---- a/t/t1501-work-tree.sh
-+++ b/t/t1501-work-tree.sh
-@@ -423,4 +423,12 @@ test_expect_success '$GIT_WORK_TREE overrides $GIT_DIR/common' '
- 	)
- '
- 
-+test_expect_failure 'error out gracefully on invalid $GIT_WORK_TREE' '
-+	(
-+		GIT_WORK_TREE=/.invalid/work/tree &&
-+		export GIT_WORK_TREE &&
-+		test_expect_code 128 git rev-parse
-+	)
-+'
-+
- test_done
+It says:
+
+file:/home/seschube/.gitconfig  all
+
 -- 
-2.12.0.windows.1.7.g94dafc3b124
-
-
+Sebastian Schuberth
