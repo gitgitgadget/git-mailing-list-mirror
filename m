@@ -2,212 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A424F202F8
-	for <e@80x24.org>; Wed,  8 Mar 2017 11:34:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 28FC8202D7
+	for <e@80x24.org>; Wed,  8 Mar 2017 12:08:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752761AbdCHLeM (ORCPT <rfc822;e@80x24.org>);
-        Wed, 8 Mar 2017 06:34:12 -0500
-Received: from crossperf.com ([5.39.84.17]:56382 "EHLO crossperf.com"
+        id S1752742AbdCHMHt (ORCPT <rfc822;e@80x24.org>);
+        Wed, 8 Mar 2017 07:07:49 -0500
+Received: from mout.gmx.net ([212.227.15.19]:61232 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752062AbdCHLdo (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Mar 2017 06:33:44 -0500
-X-Greylist: delayed 443 seconds by postgrey-1.27 at vger.kernel.org; Wed, 08 Mar 2017 06:33:43 EST
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=crossperf.com; s=rsa2048; h=Message-ID:Sender:Content-Transfer-Encoding:
-        Content-Type:Mime-Version:Subject:Cc:To:From:Date:Reply-To:Content-ID:
-        Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
-        :Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
-        List-Subscribe:List-Post:List-Owner:List-Archive;
-        bh=X/zNPooQqDxTYkY1DYe57enHm20MnIn1iXXR3bxJK+g=; b=g5qIUm1drq3hn1SvtV/i9+Dcu/
-        6EQpHmUTzf1TsoLsIGTzbmDkgUFh4QvIFxLl6cW06/3pxCkv8lsclh31tE+pUr04fZk8tRoSQk1Iq
-        MYgNcMOj429ubtlFl8aiPjYzPTr9Nsgi0mCZe110Qh/ASxTisW+LLq249JDupUEeKpHbyTIUe+OvY
-        YQDfreef+LeYQ2NH1MuKxyjFKubRivbE5lnsEPv1Xs1im06B6NPd/EiPe0BJoKYrTlapsrQpvhATW
-        u0Cba8ZpcoPCGhPaC+X612d8uM7IpWI//1BDAVhK6cQH43q2zCetrZiaVD6DoIGR4I5OKrIdlPf7X
-        KuPehRvw==;
-Date:   Wed, 08 Mar 2017 09:50:53 +0000
-From:   mash <mash+git@crossperf.com>
-To:     Git Mailing List <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Vegard Nossum <vegard.nossum@oracle.com>,
-        =?UTF-8?B?xaB0xJtww6Fu?= =?UTF-8?B?IE7Em21lYw==?= 
-        <stepnem@gmail.com>
-Subject: [PATCH] diff: allow "-" as a short-hand for "last branch"
-Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: 7bit
-Message-ID: <1clZj4-0006vN-9q@crossperf.com>
+        id S1751720AbdCHMHa (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Mar 2017 07:07:30 -0500
+Received: from virtualbox ([37.201.194.15]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0LnfuZ-1c3ieC0LHj-00hu25; Wed, 08
+ Mar 2017 12:59:07 +0100
+Date:   Wed, 8 Mar 2017 12:59:00 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Brandon Williams <bmwill@google.com>
+cc:     valtron <valtron2000@gmail.com>, git@vger.kernel.org
+Subject: Re: Crash on MSYS2 with GIT_WORK_TREE
+In-Reply-To: <20170308020918.GA1650@google.com>
+Message-ID: <alpine.DEB.2.20.1703081254480.3767@virtualbox>
+References: <CAFKRc7y_kpCGNORENUZ2qw_4qBwjjyaaDFxAEQa52fTryj+w7A@mail.gmail.com> <alpine.DEB.2.20.1703072345530.3767@virtualbox> <alpine.DEB.2.20.1703080104580.3767@virtualbox> <20170308020918.GA1650@google.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:jr615Ilp6B7Ps5rw4VLdJC5hYLki+aikmfc/tohMb4YyHDSCPwj
+ rWzBCfOzdl2nvo0wvSDNsRgaTE4b69YQWVVaPREy3p3rlPX89mnOcQtqjRp4x0sO//81Rzp
+ t1ZtRFek1pNcGN4ug1xmE4zucpBQSKMNt8O7hAfZn29DzqIegSd3143JGhdYwHjNejh9IUL
+ qcAbBA5lgFwChf88A7X2Q==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:PG2CExv5EJU=:tC5NWg762lke9PTYMPSbET
+ 8u/ua3IbW8RoXN9lG+c0Hf3aNUISt/5V6KEu3CQIJ8N8+B0FgedA2OPgWH+VW0LIaWs7+emd3
+ s1niO8pA73fi3hOPA0nr77uJcBmVTwd5cnErReMonX91J+vzW43QgaAqUPVzRlxmLIT7gYYDJ
+ mUmC+aQDawutWotgZhJ++O+3gzRwUsBkkc20WjJi8OKGlqwk93739j11zZHL/8RADd/VExqFJ
+ epfW5yX/aCTh8p++4uEcbYENJcKl/JlQG+eAU9Vsp+zojCKg4GjvV8XPPJpZvJjP4GhtT1SkL
+ xHRFpB/kwitzCyH6VRuJNTIsk+TpOVxn/ttObUAz3b0mumOfzNqggbxAdINkV0T1fsqFoLfAF
+ BIXk6r/c7wRPEB6oPP7GoESwjkjxOtyHOGA9nz5UBsJTvEqFL1Sg5t/mXoHY+IM5YZBSLNQEj
+ BdN8ytuxfYNp0q+O4VOog5byzf5Pg/uhftT9DfYcSNQ12ZNYVprc8MK3CJN7vLC+R7PKVbxdT
+ eyY6fexzji/y1cqFg/+8SShrL2KIRQO4eagIR8mbi14DXYEzcpbHPRc+1qQV17a9KeYDBCDL/
+ n+Labz5WMW9Xx90Lpped8dMLdKGvbcGLEIhZls3XLfiZ7L+hBb/wRFY4P3YclWuYt4EGIpnnk
+ KOk8q0CAvHBVeNhvYT2ybFYcgdXsC9jyqltGP2DJm8oo+ADiTe5+2Hg/nw7bJjIkzM0S2/kS2
+ MPzCwsHIY2hhoKF/7mxgDbOIt4cAQYqW/4C+bM8AJqAV2E8YKY8sipw5yYgKMkFhHRq9pmsXz
+ BDpWpGQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Just like "git merge -" is a short-hand for "git merge @{-1}" to
-conveniently merge the previous branch, "git diff -" is a short-hand for
-"git diff @{-1}" to conveniently diff against the previous branch.
+Hi Brandon,
 
-Allow the usage of "-" in the dot dot notation to allow the use of
-"git diff -..HEAD^" as a short-hand for "git diff @{-1}..HEAD^".
+On Tue, 7 Mar 2017, Brandon Williams wrote:
 
-Signed-off-by: mash <mash+git@crossperf.com>
----
-This is a GSoC microproject. I'm not sure how useful this change is.
-Please review it and take it apart.
+> On 03/08, Johannes Schindelin wrote:
+> > 
+> > [...] On *Linux*, this happens:
+> > 
+> > 	$ GIT_WORK_TREE=c:/invalid git rev-parse HEAD
+> > 	Segmentation fault (core dumped)
+> > 
+> > The reason is this: when set_git_work_tree() was converted from using
+> > xstrdup(real_path()) to real_pathdup(), we completely missed the fact
+> > that the former passed die_on_error = 1 to strbuf_realpath(), while
+> > the latter passed die_on_error = 0. As a consequence, work_tree can be
+> > NULL now, and the current code does not expect set_git_work_tree() to
+> > return successfully after setting work_tree to NULL.
+> > 
+> > I Cc:ed Brandon, the author of 4ac9006f832 (real_path: have callers
+> > use real_pathdup and strbuf_realpath, 2016-12-12).
+> > 
+> > Brandon, I have a hunch that pretty much all of the
+> > xstrdup(real_path()) -> real_pathdup() sites have a problem now. The
+> > previous contract was that real_path() would die() if the passed path
+> > is invalid. The new contract is that real_pathdup() returns NULL in
+> > such a case. I believe that the following call sites are problematic
+> > in particular:
+> 
+> Welp, looks like I missed that when I made the conversion.  You're
+> right, the semantics of getting the real_path were changed which would
+> cause a NULL to be returned instead of the program exiting with a call
+> to die().  
+> 
+> After a cursory look at your patch, I think all of your changes look
+> sane.  I would have to take a closer look at the call sites to see if
+> each caller would need to die or not.  I'm assuming you took a quick
+> glace to make your decision about each call site?
 
-I'm not very happy with the change of handle_revision_arg.
-Maybe I should teach sha1_name.c:get_sha1_basic how to handle a dash
-instead.
+I did take a quick glance, but did you have a look at the time of day I
+sent this patch? You do not want to trust my judgement after that.
 
-Documentation was not updated. I could only think of updating revisions.txt but
-that might be misleading since the use of dash does not work everywhere.
+Another thing: may I ask you to delete the quoted parts of the mail that
+you are actually not responding to? Junio also often simply keeps the rest
+of the mail quoted, and I always have to scroll all the way to the end
+just to verify that nothing more has been said, which can be slightly
+annoying when you are tired. I do plan to read your mails in the future,
+so culling the quoted-yet-unanswered part would save me trouble.
 
- revision.c           | 22 ++++++++++++++++++--
- t/t4063-diff-last.sh | 58 ++++++++++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 78 insertions(+), 2 deletions(-)
- create mode 100755 t/t4063-diff-last.sh
-
-diff --git a/revision.c b/revision.c
-index b37dbec..c331bd5 100644
---- a/revision.c
-+++ b/revision.c
-@@ -1439,6 +1439,7 @@ int handle_revision_arg(const char *arg_, struct rev_info *revs, int flags, unsi
- 	const char *arg = arg_;
- 	int cant_be_filename = revarg_opt & REVARG_CANNOT_BE_FILENAME;
- 	unsigned get_sha1_flags = 0;
-+	static const char previous_branch[] = "@{-1}";
- 
- 	flags = flags & UNINTERESTING ? flags | BOTTOM : flags & ~BOTTOM;
- 
-@@ -1457,6 +1458,8 @@ int handle_revision_arg(const char *arg_, struct rev_info *revs, int flags, unsi
- 
- 		if (!*next)
- 			next = head_by_default;
-+		else if (!strcmp(next, "-"))
-+			next = previous_branch;
- 		if (dotdot == arg)
- 			this = head_by_default;
- 		if (this == head_by_default && next == head_by_default &&
-@@ -1469,6 +1472,8 @@ int handle_revision_arg(const char *arg_, struct rev_info *revs, int flags, unsi
- 				*dotdot = '.';
- 				return -1;
- 			}
-+		} else if (!strcmp(this, "-")) {
-+			this = previous_branch;
- 		}
- 		if (!get_sha1_committish(this, from_sha1) &&
- 		    !get_sha1_committish(next, sha1)) {
-@@ -1568,6 +1573,8 @@ int handle_revision_arg(const char *arg_, struct rev_info *revs, int flags, unsi
- 	if (revarg_opt & REVARG_COMMITTISH)
- 		get_sha1_flags = GET_SHA1_COMMITTISH;
- 
-+	if (!strcmp(arg, "-"))
-+		arg = previous_branch;
- 	if (get_sha1_with_context(arg, get_sha1_flags, sha1, &oc))
- 		return revs->ignore_missing ? 0 : -1;
- 	if (!cant_be_filename)
-@@ -1578,6 +1585,15 @@ int handle_revision_arg(const char *arg_, struct rev_info *revs, int flags, unsi
- 	return 0;
- }
- 
-+/*
-+ * Check if the argument is supposed to be a revision argument instead of an
-+ * option even though it starts with a dash.
-+ */
-+static int is_revision_arg(const char *arg)
-+{
-+	return *arg == '\0' || starts_with(arg, "..");
-+}
-+
- struct cmdline_pathspec {
- 	int alloc;
- 	int nr;
-@@ -1621,7 +1637,9 @@ static void read_revisions_from_stdin(struct rev_info *revs,
- 				seen_dashdash = 1;
- 				break;
- 			}
--			die("options not supported in --stdin mode");
-+			if (!is_revision_arg(sb.buf + 1)) {
-+				die("options not supported in --stdin mode");
-+			}
- 		}
- 		if (handle_revision_arg(sb.buf, revs, 0,
- 					REVARG_CANNOT_BE_FILENAME))
-@@ -2205,7 +2223,7 @@ int setup_revisions(int argc, const char **argv, struct rev_info *revs, struct s
- 	read_from_stdin = 0;
- 	for (left = i = 1; i < argc; i++) {
- 		const char *arg = argv[i];
--		if (*arg == '-') {
-+		if (*arg == '-' && !is_revision_arg(arg + 1)) {
- 			int opts;
- 
- 			opts = handle_revision_pseudo_opt(submodule,
-diff --git a/t/t4063-diff-last.sh b/t/t4063-diff-last.sh
-new file mode 100755
-index 0000000..1f635cb
---- /dev/null
-+++ b/t/t4063-diff-last.sh
-@@ -0,0 +1,58 @@
-+#!/bin/sh
-+
-+test_description='diff against last branch'
-+
-+. ./test-lib.sh
-+
-+test_expect_success 'setup' '
-+	echo hello >world &&
-+	git add world &&
-+	git commit -m initial &&
-+	git branch other &&
-+	echo "hello again" >>world &&
-+	git add world &&
-+	git commit -m second
-+'
-+
-+test_expect_success '"diff -" does not work initially' '
-+	test_must_fail git diff -
-+'
-+
-+test_expect_success '"diff -" diffs against previous branch' '
-+	git checkout other &&
-+
-+	cat <<-\EOF >expect &&
-+	diff --git a/world b/world
-+	index c66f159..ce01362 100644
-+	--- a/world
-+	+++ b/world
-+	@@ -1,2 +1 @@
-+	 hello
-+	-hello again
-+	EOF
-+
-+	git diff - >out &&
-+	test_cmp expect out
-+'
-+
-+test_expect_success '"diff -.." diffs against previous branch' '
-+	git diff -.. >out &&
-+	test_cmp expect out
-+'
-+
-+test_expect_success '"diff ..-" diffs inverted' '
-+	cat <<-\EOF >expect &&
-+	diff --git a/world b/world
-+	index ce01362..c66f159 100644
-+	--- a/world
-+	+++ b/world
-+	@@ -1 +1,2 @@
-+	 hello
-+	+hello again
-+	EOF
-+
-+	git diff ..- >out &&
-+	test_cmp expect out
-+'
-+
-+test_done
--- 
-2.9.3
+Thanks,
+Dscho
