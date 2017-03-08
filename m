@@ -2,74 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6DE622023C
-	for <e@80x24.org>; Wed,  8 Mar 2017 22:19:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4FE3420135
+	for <e@80x24.org>; Wed,  8 Mar 2017 22:28:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752370AbdCHWTs (ORCPT <rfc822;e@80x24.org>);
-        Wed, 8 Mar 2017 17:19:48 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:51993 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751262AbdCHWTq (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Mar 2017 17:19:46 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id E65E56ED3A;
-        Wed,  8 Mar 2017 17:19:26 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=Tu1GH760fQNPvNBqlo90SNtlhws=; b=YekC2u
-        0Nen2xhxThJ+5yZhPFrCFMwPzN+84OWu1xAUDVneuzrfRwcOi7ZpHS+TIXAgVH6p
-        xog6vnjjdDes3AEwX4neLJGHhGMyJyqeOynwhsFtrUxKI97Ds/+M1wfDxBieadGt
-        pS9ZpMTt9uii4XDsR6AvptNQNvzfD1XF3KJa4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=rSLaF3PiQVvMgSQ6m9/XDKqFdU8oPbjy
-        kbMccnkSUfq9a7f7nW9z+L+WwnBT0RMhGTDAhz9po4TDb69Qwze5KcRmdDo5tC+n
-        wHwF6EvV3K6YDmejt4j0fl/k8eFgrd6bT6+SMh+zwmdyiskw8eqLBxgF5hDPkTqS
-        fxJZHM0HOEI=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id DF1DA6ED39;
-        Wed,  8 Mar 2017 17:19:26 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 54DD66ED38;
-        Wed,  8 Mar 2017 17:19:26 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Brandon Williams <bmwill@google.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        valtron <valtron2000@gmail.com>, git@vger.kernel.org
-Subject: Re: Crash on MSYS2 with GIT_WORK_TREE
-References: <CAFKRc7y_kpCGNORENUZ2qw_4qBwjjyaaDFxAEQa52fTryj+w7A@mail.gmail.com>
-        <alpine.DEB.2.20.1703072345530.3767@virtualbox>
-        <alpine.DEB.2.20.1703080104580.3767@virtualbox>
-        <20170308020918.GA1650@google.com>
-        <alpine.DEB.2.20.1703081254480.3767@virtualbox>
-        <20170308184606.GB130604@google.com>
-Date:   Wed, 08 Mar 2017 14:19:25 -0800
-In-Reply-To: <20170308184606.GB130604@google.com> (Brandon Williams's message
-        of "Wed, 8 Mar 2017 10:46:06 -0800")
-Message-ID: <xmqqr3271keq.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+        id S1754509AbdCHW2Y (ORCPT <rfc822;e@80x24.org>);
+        Wed, 8 Mar 2017 17:28:24 -0500
+Received: from mail-ua0-f196.google.com ([209.85.217.196]:33866 "EHLO
+        mail-ua0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752378AbdCHW2W (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Mar 2017 17:28:22 -0500
+Received: by mail-ua0-f196.google.com with SMTP id 72so7059815uaf.1
+        for <git@vger.kernel.org>; Wed, 08 Mar 2017 14:27:57 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=IMm4/QlDuc0uwIfIZYk8mI4gpx3w7/s5uZyw7YwO1TM=;
+        b=GbMZn9M+vXyR3I5//HstqBnwGhvgHMYjs1C2N9lAj0a7RarvWucYuCChidX7r/3MBA
+         JnzRPXpYBcKj7K9LbPCWOt0aOrCTpdKCN+C9NgDjiy6oemj/5FB8QoP/739BjT4iHJoN
+         Va5gSEaeHnVpmcyikRqwGQzs8zN5/zNrIQpz8ES2rv1yYWZkV/Nf9iKP4ViMqvwjCIYr
+         nDn38m5T4at+VlbPdePOTY+LjiRgEVa6iZmgvlv0ykfEBTAj2/hnKdKRq3/JnLGX2jGM
+         CvEAQq1w8+pg76I6N3oinpo5li95xr2sCrveFRNkrXiNpnKFMI0Gp8OCoJCntJPm3pWA
+         lVpA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=IMm4/QlDuc0uwIfIZYk8mI4gpx3w7/s5uZyw7YwO1TM=;
+        b=c49kBlyjFDLcVVPiPG2XJF32vk8mCqws4AgxkX3gkdqDDHfSWvz/oHdzst4MY8PK3B
+         gCxwCkATInN4H7Cfifk7CbFg/baPjt8WhfCf0pJh9Maq4Ow9xNSCcm5uJz+OunQ+2W+1
+         eEsLrHrVbG2k/IlPviGzeLEOc/uDf0YILI+9pFzID2fNNSafYZdQ0iRotnkkybgtkSo6
+         zU08oVf5Sh34MzJWtQGIQqor5ERnEnaB6rFBHdj5Od6c6uzU8W5OZ7fxJO7dlrAQQmJz
+         gTarfZMzgd8ZrtVPWG0X4iczOoLh2SvAgUG6iPQNT3vOcioxoR9TNxMr0rK+glO6s2xQ
+         u/MQ==
+X-Gm-Message-State: AMke39mTAHrPBWeyUQ53fHDBc+52U2LrUiiR+nhPOVAn+x2bRaH4jNcI4f/bdi2XgsX8LgrtajWXQTolhy0iJA==
+X-Received: by 10.31.182.216 with SMTP id g207mr5253390vkf.85.1489009119861;
+ Wed, 08 Mar 2017 13:38:39 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 4A4C1506-044D-11E7-956D-FC50AE2156B6-77302942!pb-smtp2.pobox.com
+Received: by 10.176.87.218 with HTTP; Wed, 8 Mar 2017 13:38:39 -0800 (PST)
+In-Reply-To: <E1cldl4-0006L6-CU@mylo.jdl.com>
+References: <0102015aae7b8536-00c57d0a-1d48-4153-a202-87c4ea9e0e19-000000@eu-west-1.amazonses.com>
+ <E1cldl4-0006L6-CU@mylo.jdl.com>
+From:   Prathamesh Chavan <pc44800@gmail.com>
+Date:   Thu, 9 Mar 2017 03:08:39 +0530
+Message-ID: <CAME+mvWVDPT+-F7Z-O=XR_EN4qeNEoQ5ksLpLVkVBb0O9LKROg@mail.gmail.com>
+Subject: Re: [PATCH] t2027: avoid using pipes
+To:     Jon Loeliger <jdl@jdl.com>
+Cc:     git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Brandon Williams <bmwill@google.com> writes:
+Whenever a test suite is executed, after finishing every test, after running
+all tests, the function test_done is called. You may find this function in
+test-lib.sh . This function displays the result of the test and also removes
+the trash created by running the test.
 
-> Of course, I usually try to clear the parts of the mail I'm not
-> responding to...though there are times where I forget or am a bit lazy.
-> I'll definitely work on remembering to do that for the future!
-
-This cuts both ways.  Sometimes it is very useful to be able to see
-other parts that the responder is not _directly_ responding to when
-you come as a third person to the discussion, which forces you to
-find messages upthread, so do not overdo it.
-
+On Wed, Mar 8, 2017 at 9:14 PM, Jon Loeliger <jdl@jdl.com> wrote:
+> So, like, Prathamesh Chavan said:
+>> The exit code of the upstream of a pipe is ignored thus we should avoid
+>> using it. By writing out the output of the git command to a file, we
+>> can test the exit codes of both the commands.
+>>
+>> Signed-off-by: Prathamesh <pc44800@gmail.com>
+>> ---
+>>  t/t2027-worktree-list.sh | 14 +++++++-------
+>>  1 file changed, 7 insertions(+), 7 deletions(-)
+>>
+>> diff --git a/t/t2027-worktree-list.sh b/t/t2027-worktree-list.sh
+>> index 848da5f..daa7a04 100755
+>> --- a/t/t2027-worktree-list.sh
+>> +++ b/t/t2027-worktree-list.sh
+>> @@ -31,7 +31,7 @@ test_expect_success '"list" all worktrees from main' '
+>>       test_when_finished "rm -rf here && git worktree prune" &&
+>>       git worktree add --detach here master &&
+>>       echo "$(git -C here rev-parse --show-toplevel) $(git rev-parse --short
+>> HEAD) (detached HEAD)" >>expect &&
+>> -     git worktree list | sed "s/  */ /g" >actual &&
+>> +     git worktree list >out && sed "s/  */ /g" <out >actual &&
+>>       test_cmp expect actual
+>>  '
+>
+> I confess I am not familiar with the test set up.
+> However, I'd ask the question do we care about the
+> lingering "out" and "actual" files here?  Or will
+> they silently be cleaned up along the way later?
+>
+> Thanks,
+> jdl
