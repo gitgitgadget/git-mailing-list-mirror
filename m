@@ -2,76 +2,70 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 40F99202D7
-	for <e@80x24.org>; Wed,  8 Mar 2017 12:52:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C92BD202D7
+	for <e@80x24.org>; Wed,  8 Mar 2017 12:56:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753205AbdCHMwQ (ORCPT <rfc822;e@80x24.org>);
-        Wed, 8 Mar 2017 07:52:16 -0500
-Received: from chiark.greenend.org.uk ([212.13.197.229]:55986 "EHLO
-        chiark.greenend.org.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753175AbdCHMwK (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Mar 2017 07:52:10 -0500
-Received: by chiark.greenend.org.uk (Debian Exim 4.84_2 #1) with local
-        (return-path ijackson@chiark.greenend.org.uk)
-        id 1clZdh-0002Ye-BM; Wed, 08 Mar 2017 11:20:17 +0000
-From:   Ian Jackson <ijackson@chiark.greenend.org.uk>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+        id S1752818AbdCHMzm (ORCPT <rfc822;e@80x24.org>);
+        Wed, 8 Mar 2017 07:55:42 -0500
+Received: from [195.159.176.226] ([195.159.176.226]:52252 "EHLO
+        blaine.gmane.org" rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org
+        with ESMTP id S1751720AbdCHMzl (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Mar 2017 07:55:41 -0500
+Received: from list by blaine.gmane.org with local (Exim 4.84_2)
+        (envelope-from <gcvg-git-2@m.gmane.org>)
+        id 1clb6T-0006F2-Mx
+        for git@vger.kernel.org; Wed, 08 Mar 2017 13:54:05 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+To:     git@vger.kernel.org
+From:   Sebastian Schuberth <sschuberth@gmail.com>
+Subject: diff.ignoreSubmoudles config setting broken?
+Date:   Wed, 8 Mar 2017 13:54:02 +0100
+Message-ID: <5e5b1b92-f7c6-2987-356e-1aab2bff557e@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 7bit
-Message-ID: <22719.59633.269164.986923@chiark.greenend.org.uk>
-Date:   Wed, 8 Mar 2017 11:20:17 +0000
-To:     Linus Torvalds <torvalds@linux-foundation.org>
-Cc:     Jonathan Nieder <jrnieder@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Stefan Beller <sbeller@google.com>, bmwill@google.com,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Jeff King <peff@peff.net>
-Subject: Re: RFC: Another proposed hash function transition plan
-In-Reply-To: <CA+55aFyyi0vBBApf9grYQzF2PRZMjtCzkB4LzYvLpqQ-Z7QfJQ@mail.gmail.com>
-References: <20170304011251.GA26789@aiede.mtv.corp.google.com>
-        <22719.680.730866.781688@chiark.greenend.org.uk>
-        <CA+55aFyyi0vBBApf9grYQzF2PRZMjtCzkB4LzYvLpqQ-Z7QfJQ@mail.gmail.com>
-X-Mailer: VM 8.2.0b under 24.4.1 (i586-pc-linux-gnu)
+X-Complaints-To: usenet@blaine.gmane.org
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.7.1
+Cc:     Stefan Beller <sbeller@google.com>
+X-Mozilla-News-Host: news://news.gmane.org:119
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Linus Torvalds writes ("Re: RFC: Another proposed hash function transition plan"):
-> Also, since 256 isn't evenly divisible by 6, and because you'd want
-> some way to explictly disambiguate the new hashes, the rule *could* be
-> that the ASCII representation of a new hash is the base64 encoding of
-> the 258-bit value that has "10" prepended to it as padding.
-> 
-> That way the first character of the hash would be guaranteed to not be
-> a hex digit, because it would be in the range [g-v] (indexes 32..47).
+Hi,
 
-We should arrange for this to be an uppercase, not a lowercase,
-letter, for the reasons I explained in my own proposal.  To summarise:
-It would be undesirable to further increase the overlap between object
-names and ref names.  Few people use uppercase in ref names because of
-the case-insensitive filesystem problem; so object names starting with
-uppercase ascii are distinct from most object names.
+with
 
-> Of course, having written that, I now realize how it would cause
-> problems for the usual shit-for-brains case-insensitive filesystems.
-> So I guess base64 encoding doesn't work well for that reason.
+$ git --version
+git version 2.12.0.windows.1
 
-AFAIAA object names occur in publicly-visible filenames only in notes
-tree objects, which are manipulated by git internally and do not
-necessarily need to appear in the filesystem.
+I'm getting
 
-The filenames in .git/objects/ can be in whatever encoding we like, so
-are not an obstacle.
+$ git config --global diff.ignoreSubmodules all
+$ git diff
+diff --git a/scanners/scancode-toolkit b/scanners/scancode-toolkit
+index 65e5c9c..6b021a8 160000
+--- a/scanners/scancode-toolkit
++++ b/scanners/scancode-toolkit
+@@ -1 +1 @@
+-Subproject commit 65e5c9c9508441c5f62beff4749cf455c6eadc30
++Subproject commit 6b021a8addf6d3c5f2a6ef1af6245e095c21d8ec
 
-Ian.
+but with
 
--- 
-Ian Jackson <ijackson@chiark.greenend.org.uk>   These opinions are my own.
+$ git diff --ignore-submodules=all
 
-If I emailed you from an address @fyvzl.net or @evade.org.uk, that is
-a private address which bypasses my fierce spamfilter.
+I'm getting the expected empty output.
+
+I can reproduce the same on Linux with "git version 2.11.0". Am I missing something, or is this a bug?
+
+Regards,
+Sebastian
+
