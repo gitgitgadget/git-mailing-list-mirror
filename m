@@ -2,111 +2,113 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 18337202D7
-	for <e@80x24.org>; Wed,  8 Mar 2017 17:46:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F27C9202D7
+	for <e@80x24.org>; Wed,  8 Mar 2017 17:46:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754075AbdCHRqx (ORCPT <rfc822;e@80x24.org>);
+        id S1754091AbdCHRqx (ORCPT <rfc822;e@80x24.org>);
         Wed, 8 Mar 2017 12:46:53 -0500
-Received: from mout.web.de ([217.72.192.78]:51433 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751616AbdCHRpX (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Mar 2017 12:45:23 -0500
-Received: from [192.168.178.36] ([79.213.126.222]) by smtp.web.de (mrweb103
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0MCZlG-1cv3R72Avy-009RS4; Wed, 08
- Mar 2017 18:36:55 +0100
-Subject: Re: fatal: Could not get current working directory: Permission denied
- | affected 2.10,2.11,2.12, but not 1.9.5 |
-To:     Zenobiusz Kunegunda <zenobiusz.kunegunda@interia.pl>
-References: <elvahoiwfqayelbskykd@qjih>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Cc:     git@vger.kernel.org
-Message-ID: <7d947891-ce40-23e7-2bc7-0f76dee53665@web.de>
-Date:   Wed, 8 Mar 2017 18:36:45 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
- Thunderbird/45.7.1
-MIME-Version: 1.0
-In-Reply-To: <elvahoiwfqayelbskykd@qjih>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K0:xb4gkBgil6hMxijdNtC39YMvviuWgamL1jEizerzsDlDD5b3BW4
- 8xg+WNMwsSOMvVTOxFjEah9da1rSD4BlfZeEbbpIPfJKay+2gO4MwO4sxdjBuv8f2PbaIiJ
- eWqsvbDBEq9fVry8acrZTfJXRM/w5QEL7yPv4nykxcQc0T9QKDeeHYZ2FBdfex1IQazklXC
- KF/G9JugmIbzi7z3SkT2Q==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:HKgdHmnTEN0=:hJRnA9N2OdsuTnNgoPsDg4
- BbUtjof1J7+QElvfdXcptGRxY5dhIQYtrRXGGgEWDnMdsDLth6nZ6mOJ9mLVf2j4vscgMa/M8
- qtWAmEXpMTrDuNSHvxj9PdNTfh5lxFSaZTe/mXtvCCneAG4/jCphzWmn0dfTlQP22CjZFYQLA
- RIbZTe7bEQ6GQQOKDxhMn2FZ19a2qeUYovj1aGvxAZiwU3vh4CVWGq85kTWvY1eoV8we3K+W9
- rL/UB+GWCVDoVqEU5iXvNtZiU1A2aWWt2iKGD9cNXGNi9Qk4dcFjhH985FR4fOBHswMv0fwLi
- Ka3gP5XKQ2UT7Zv1cRnrUAAHE3GlU0iVULdHEolAbE32rT/5DyMOh3YvybXjeyVGzcDXBayc4
- 9OobUGYJkb6eUx8Viw791ZpoXwhnrlXJbMC/7czM7oLeVya80tnKv4jr064yZw9aElL9XE4BE
- Kydsf/SrlbcqxuQQjCppw7c21QA1CKC3xRAFCwQ6Cj0g2lIZ1gCj4+nlBml/chQDDwIU52fba
- FYNPP4DXb938RhITyCFt+FDnkGR1Vcrm5X51CF/DLwv7zpgCQBz9Q1ZOnXcFz9HOf5SM6QSW3
- TXu20dxvORFDPcPIS8Dwot0YEjdez/Vm8bcJM73qtd9+5v0praEpSMrRJToFPBkTZp6LCDQKR
- Xj72f5tTI+g3wrt/wowXkCtlOOhiz2+pOabYds1Js5QeDSia/br0VYmn4z0yw3cfgdtnCPvDZ
- d9eVAVmHs79pjfE6ZIyTqYmfl7hBVmNw4Hcf+knOI91ztWR66UwZX4lGDkcWHXfkpRBd1AmF4
- CoOawvd
+Received: from forward11j.cmail.yandex.net ([5.255.227.175]:38920 "EHLO
+        forward11j.cmail.yandex.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1751720AbdCHRpX (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 8 Mar 2017 12:45:23 -0500
+Received: from smtp3m.mail.yandex.net (smtp3m.mail.yandex.net [77.88.61.130])
+        by forward11j.cmail.yandex.net (Yandex) with ESMTP id 155D820432
+        for <git@vger.kernel.org>; Wed,  8 Mar 2017 20:44:55 +0300 (MSK)
+Received: from smtp3m.mail.yandex.net (localhost.localdomain [127.0.0.1])
+        by smtp3m.mail.yandex.net (Yandex) with ESMTP id 39DCD28409CA;
+        Wed,  8 Mar 2017 20:44:53 +0300 (MSK)
+Received: by smtp3m.mail.yandex.net (nwsmtp/Yandex) with ESMTPSA id vgM9CTNvCg-irsOAZtd;
+        Wed, 08 Mar 2017 20:44:53 +0300
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (Client certificate not present)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=vtolstov.org; s=mail; t=1488995093;
+        bh=q538OuMk4XgoDcSOzZGhSWE32q18b1Br2wE+C2YxU/s=;
+        h=From:To:Cc:Subject:Date:Message-Id;
+        b=q0ws/pUN9vgEexlqgUE0QtElNfURe5vAt3+ztkWK9x6fuPx702pdLBh4HQPQVOmTP
+         aywgwf59RTph4TH8y9IC/SmWzoeXU/xw40DdEPAB0OjMz23VZTWgfRtSRm3MzneRyW
+         n4EeAOpyqjWD0aOgazwCjmVgAFTaqwhPwzwTlKKU=
+Authentication-Results: smtp3m.mail.yandex.net; dkim=pass header.i=@vtolstov.org
+X-Yandex-ForeignMX:  US
+X-Yandex-Suid-Status: 1 0,1 1130000030716801
+From:   me@vtolstov.org
+To:     git@vger.kernel.org
+Cc:     Valery Tolstov <me@vtolstov.org>
+Subject: [PATCH] submodule--helper.c: remove duplicate code
+Date:   Wed,  8 Mar 2017 20:44:49 +0300
+Message-Id: <20170308174449.24266-1-me@vtolstov.org>
+X-Mailer: git-send-email 2.12.0.190.g250ed7eaf
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 06.03.2017 um 17:10 schrieb Zenobiusz Kunegunda:
-> OS: FreeBSD 10.3-STABLE
+From: Valery Tolstov <me@vtolstov.org>
+
+Remove code fragment from module_clone that duplicates functionality
+of connect_work_tree_and_git_dir in dir.c
+
+Signed-off-by: Valery Tolstov <me@vtolstov.org>
+---
+>> I think we can reuse code from module_clone that writes .git link.
+>> Possibly this code fragment needs to be factored out from module_clone
 >
-> Story: I was trying to install openproject using this manual
-> https://www.openproject.org/open-source/download/manual-installation-guide/
->
->  Everything was fine till command $ bundle install --deployment
-> --without postgres sqlite development test therubyracer docker
->
-> works witg git version: 1.9.5 ( branch from repo ) does not work with
-> git version: 2.10 ( branch from from repo ) 2.11 ( both from FreeBSD
-> and from git repository) 2.12 ( branch from repo )
->
-> On another server that passed but there was npm problem.
->
-> This is error for $ bundle install --deployment --without postgres
-> sqlite development test therubyracer docker
+> That fragment already exists, see dir.h:
+> connect_work_tree_and_git_dir(work_tree, git_dir);
+> Maybe another good microproject is to use that in module_clone.
 
-I suspect you might get better responses from the makers of bundler 
-(http://bundler.io/, http://groups.google.com/group/ruby-bundler).
+By suggestion of Stefan Beller I would like to make this micro
+improvement as my microproject for GSoc.
 
-> Fetching dependency metadata from https://rubygems.org/. fatal: Could
-> not get current working directory: Permission denied
->
-> Retrying `git fetch --force --quiet --tags
-> "/usr/home/USER/openproject/vendor/bundle/ruby/2.2.0/cache/bundler/git/awesome_nested_set-209215f38dc7f6765d32201897f8688e973f4de7"`
-> due to error (2/4): Bundler::Source::Git::GitCommandError Git error:
-> command `git fetch --force --quiet --tags
-> "/usr/home/USER/openproject/vendor/bundle/ruby/2.2.0/cache/bundler/git/awesome_nested_set-209215f38dc7f6765d32201897f8688e973f4de7"`
-> in directory
-> /usr/home/USER/openproject/vendor/bundle/ruby/2.2.0/bundler/gems/awesome_nested_set-7bd473e845e2
-> has failed. If this error persists you could try removing the cache
-> directory
-> '/usr/home/USER/openproject/vendor/bundle/ruby/2.2.0/cache/bundler/git/awesome_nested_set-209215f38dc7f6765d32201897f8688e973f4de7'fatal:
-> Could not get current working directory: Permission denied
+ builtin/submodule--helper.c | 22 +++-------------------
+ 1 file changed, 3 insertions(+), 19 deletions(-)
 
-These long and repetitive messages make me feel dizzy.  So git fetch was 
-executed in 
-"/usr/home/USER/openproject/vendor/bundle/ruby/2.2.0/bundler/gems/awesome_nested_set-7bd473e845e2" 
-and reported that it was not allowed to get the current working 
-directory, right?  That's odd.
+diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+index 899dc334e..cda8a3bc1 100644
+--- a/builtin/submodule--helper.c
++++ b/builtin/submodule--helper.c
+@@ -579,7 +579,6 @@ static int module_clone(int argc, const char **argv, const char *prefix)
+ 	const char *name = NULL, *url = NULL, *depth = NULL;
+ 	int quiet = 0;
+ 	int progress = 0;
+-	FILE *submodule_dot_git;
+ 	char *p, *path = NULL, *sm_gitdir;
+ 	struct strbuf rel_path = STRBUF_INIT;
+ 	struct strbuf sb = STRBUF_INIT;
+@@ -653,27 +652,12 @@ static int module_clone(int argc, const char **argv, const char *prefix)
+ 		strbuf_reset(&sb);
+ 	}
+ 
+-	/* Write a .git file in the submodule to redirect to the superproject. */
+-	strbuf_addf(&sb, "%s/.git", path);
+-	if (safe_create_leading_directories_const(sb.buf) < 0)
+-		die(_("could not create leading directories of '%s'"), sb.buf);
+-	submodule_dot_git = fopen(sb.buf, "w");
+-	if (!submodule_dot_git)
+-		die_errno(_("cannot open file '%s'"), sb.buf);
+-
+-	fprintf_or_die(submodule_dot_git, "gitdir: %s\n",
+-		       relative_path(sm_gitdir, path, &rel_path));
+-	if (fclose(submodule_dot_git))
+-		die(_("could not close file %s"), sb.buf);
+-	strbuf_reset(&sb);
+-	strbuf_reset(&rel_path);
+-
+-	/* Redirect the worktree of the submodule in the superproject's config */
+ 	p = git_pathdup_submodule(path, "config");
+ 	if (!p)
+ 		die(_("could not get submodule directory for '%s'"), path);
+-	git_config_set_in_file(p, "core.worktree",
+-			       relative_path(path, sm_gitdir, &rel_path));
++
++	/* Connect module worktree and git dir */
++	connect_work_tree_and_git_dir(path, sm_gitdir);
+ 
+ 	/* setup alternateLocation and alternateErrorStrategy in the cloned submodule if needed */
+ 	git_config_get_string("submodule.alternateLocation", &sm_alternate);
+-- 
+2.12.0.190.g250ed7eaf
 
-I suspect that older versions of git ignored the error, used an empty 
-string and went with that instead of an absolute path, but that's just a 
-guess.
-
-Was git perhaps started by bundler under a different user ID?  You could 
-check that e.g. by printing the return value of geteuid(2).
-
-"/bin/pwd -P" executed in the same directory under the same user ID as 
-git should error out and report "Permission denied" as well.  Are the 
-permissions bits and ACLs for that directory and its parents OK?
-
-Thanks,
-René
