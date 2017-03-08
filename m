@@ -2,57 +2,57 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-1.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,LONGWORDS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B4803202D7
-	for <e@80x24.org>; Wed,  8 Mar 2017 21:01:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CC014202D7
+	for <e@80x24.org>; Wed,  8 Mar 2017 21:01:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754513AbdCHVBM (ORCPT <rfc822;e@80x24.org>);
-        Wed, 8 Mar 2017 16:01:12 -0500
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:33654 "EHLO
-        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754284AbdCHVBL (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Mar 2017 16:01:11 -0500
-Received: by mail-wm0-f65.google.com with SMTP id n11so8026496wma.0
-        for <git@vger.kernel.org>; Wed, 08 Mar 2017 13:01:09 -0800 (PST)
+        id S932070AbdCHVBv (ORCPT <rfc822;e@80x24.org>);
+        Wed, 8 Mar 2017 16:01:51 -0500
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:34832 "EHLO
+        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754203AbdCHVBt (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Mar 2017 16:01:49 -0500
+Received: by mail-wm0-f66.google.com with SMTP id z63so8025350wmg.2
+        for <git@vger.kernel.org>; Wed, 08 Mar 2017 13:01:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=wii7PFltH8PwqTO3VWap/SJIjbUWzsVhpvm8+x4LFjY=;
-        b=c+4jhaZpl0wvIF0KqVztIJw2n8xhWlDje/d6Myta2aDuX53S7iazCOEnjGtANWX6J+
-         7v/rg0bcE0jOP4ls1mqywClBY/JDgKh1cJE2bMQZ8sNg5rl5wg8K9X7QsrYCqjC/NDqH
-         nU7CSWj0Qjv+efHIgA/AsRJVyNTTF9B7xCCDz+P7hA5aC+4k2KtA3VwOv8841w5ZgZp6
-         DYyxyxoX60mNk+/mbTwFfx283J8FhVQuzMDIafThlo+lR9gPnGBkAU5g0CYcmKNm5XqK
-         uCZrCGaWTnu8DIDVK2AmO5AAkZ3Reg4wXVKnOIe3FnEGlo95NEReRN5U/st9+zfo+E7N
-         nHMw==
+        bh=REy+/DzwpDzFrHSQVQB0ZOPxC9UewiOtIVZ2lrNo0ec=;
+        b=Q2RL/lGn3rfdqQjB0R/7S7dRLDrhGAbGsxKOl5VLpUzG/hXlT7up7Hi6GBxxd9wnCC
+         Q7+qVc/J0fY4emsbEU6klMZTP10b75K+7zaq900nGisxx3cveJ2Up4P+Nh5xkhQXCUTh
+         +4nfK+qEktjJl0YmUChcg9HjxFFaw91rIDtIxC2M0WkRkDJnsKh1xBJ06JcPqxC+MViu
+         RUmDD7Ksy481rlGJA+gDbuImfOx/vtjjSs+HCCG4bDRvm6jgLdZ7QFWwrYm/bpnGJ3An
+         nq2BIcXbxvKhejtPb1yz7dbgKyHPYG2ci+A83WnN15fLIiw5M5I3wknGm6D1Bc9CnNX4
+         rqSg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=wii7PFltH8PwqTO3VWap/SJIjbUWzsVhpvm8+x4LFjY=;
-        b=RXqloORHmXfuezV8wWvHGXhGu9GNYqkmRV21mph0D6zQ8xXjbSDWg/6euYn02l+7FQ
-         dwCgXSbblxdsX3iQtvWjzhz6iXML8N2/kEm+USPlSCV45U39W83NqFHvCTQQEIrx5R0Q
-         n/SnwN7zKi3OYhjYRAAAg/NVRJByeR7jNwWkBmM6pCRZqbimLEjtKBrvqp6dw0MrJqrS
-         5bgSqBgI2SnshADJbgCrozYLRTKQ28ycWDW/p1GwRhtDcqCKf5xCap0EyxQs16PI0kPD
-         bqeYEyI6+XC4gSqsXm0E5mmQclocAHDnQ1CWRoGrQCnQBAv6xmrIKSt36P+REJhVoCi4
-         mAVw==
-X-Gm-Message-State: AMke39kIoCgyDVH1RW98c4HJ3v+UDIbHzX7oMxlaU3rKeso2kXeAYzazCDcKm0wSbVJu2g==
-X-Received: by 10.28.96.194 with SMTP id u185mr7032010wmb.82.1489006401987;
-        Wed, 08 Mar 2017 12:53:21 -0800 (PST)
+        bh=REy+/DzwpDzFrHSQVQB0ZOPxC9UewiOtIVZ2lrNo0ec=;
+        b=Y/lhUCc21G919uLa7BzlESktK/gj0VhaQTF4Q9AMwrJ3Ns8hwveDExiu2uOeqG0VYc
+         bsoz2hNp5g9SO6/sFzAdnJbjWpnG44C2PyBXlgWYQvH48G/o/Wvtax1rWzB2DyfXBHVQ
+         3HtGFzFM2OGW36SrivzxMJlXrUlS0oplImmjoBrEqjtWPMxBM7/Bss63Ug/dieKPuT5i
+         CXdHUnQBZF60vPGNCyZmuk/g2jP1jrOnNVzU+2TDFC1aYnFrMRJbKnUCJrmmfRkujRhQ
+         zTBJJvaRanqeBQQiwL4cR41IzIKuTWBdQVTB0BPRt3o8bLNUaxABikoiqTV83wjkImeE
+         dxKA==
+X-Gm-Message-State: AMke39m5uFAc0ksDx7EbCe6GTI6WJS2nyoBbSCeniydgd8hVfBAkOFywEaxWmp7IUBba1A==
+X-Received: by 10.28.88.2 with SMTP id m2mr26452458wmb.12.1489006396698;
+        Wed, 08 Mar 2017 12:53:16 -0800 (PST)
 Received: from localhost.localdomain (2a02-8388-0b40-0580-f50d-465b-b746-dc93.cable.dynamic.v6.surfer.at. [2a02:8388:b40:580:f50d:465b:b746:dc93])
-        by smtp.gmail.com with ESMTPSA id 40sm5604065wry.22.2017.03.08.12.53.20
+        by smtp.gmail.com with ESMTPSA id 40sm5604065wry.22.2017.03.08.12.53.15
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 08 Mar 2017 12:53:21 -0800 (PST)
+        Wed, 08 Mar 2017 12:53:16 -0800 (PST)
 From:   =?UTF-8?q?Florian=20Sch=C3=BCller?= <florian.schueller@gmail.com>
 To:     paulus@ozlabs.org, git@vger.kernel.org
 Cc:     =?UTF-8?q?Florian=20Sch=C3=BCller?= <florian.schueller@gmail.com>
-Subject: [PATCH 3/4] Updated de-Translator
-Date:   Wed,  8 Mar 2017 21:52:54 +0100
-Message-Id: <20170308205255.18976-4-florian.schueller@gmail.com>
+Subject: [PATCH 1/4] Inotify Support
+Date:   Wed,  8 Mar 2017 21:52:52 +0100
+Message-Id: <20170308205255.18976-2-florian.schueller@gmail.com>
 X-Mailer: git-send-email 2.9.3
 In-Reply-To: <20170308205255.18976-1-florian.schueller@gmail.com>
 References: <20170308205255.18976-1-florian.schueller@gmail.com>
@@ -64,30 +64,268 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
----
- po/de.po | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+Just automatically update gitk when working in a terminal on the same repo
 
-diff --git a/po/de.po b/po/de.po
-index ab90c34..193059b 100644
---- a/po/de.po
-+++ b/po/de.po
-@@ -4,13 +4,14 @@
- #
- # Christian Stimming <stimming@tuhh.de>, 2007.
- # Frederik Schwarzer <schwarzerf@gmail.com>, 2008.
-+# Florian Schüller <florian.schueller@gmail.com>, 2017.
- msgid ""
- msgstr ""
- "Project-Id-Version: git-gui\n"
- "Report-Msgid-Bugs-To: \n"
- "POT-Creation-Date: 2017-01-02 10:08+0100\n"
- "PO-Revision-Date: 2015-10-20 14:20+0200\n"
--"Last-Translator: Christian Stimming <stimming@tuhh.de>\n"
-+"Last-Translator: Florian Schüller <florian.schueller@gmail.com>\n"
- "Language-Team: German\n"
- "Language: \n"
- "MIME-Version: 1.0\n"
+Features:
+* Detects inotify support
+  if inotify is not detected the options is not available
+  in the preferences
+* Enable/Disable auto update in the preferences
+* Select "debounce" time for redraw
+  i.e. the redraw will be postponed for the given time.
+  if a new change is detected in this time the redraw is postponed
+  even more
+* Automatically scroll to the new HEAD after redrawing
+* Depending on the type of change the UI is "Updated" or "Reloaded"
+
+Open points for now:
+* release watches for deleted directories seems to
+  cause problems in tcl-inotify (so I don't)
+  I'm not sure how often that happens in ".git/"
+
+Signed-off-by: Florian Schüller <florian.schueller@gmail.com>
+---
+ gitk | 171 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 170 insertions(+), 1 deletion(-)
+
+diff --git a/gitk b/gitk
+index a14d7a1..a2850d7 100755
+--- a/gitk
++++ b/gitk
+@@ -8,6 +8,12 @@ exec wish "$0" -- "$@"
+ # either version 2, or (at your option) any later version.
+ 
+ package require Tk
++try {
++    package require inotify
++    set have_inotify true
++} on error {em} {
++    set have_inotify false
++}
+ 
+ proc hasworktree {} {
+     return [expr {[exec git rev-parse --is-bare-repository] == "false" &&
+@@ -11489,6 +11495,7 @@ proc prefspage_general {notebook} {
+     global NS maxwidth maxgraphpct showneartags showlocalchanges
+     global tabstop limitdiffs autoselect autosellen extdifftool perfile_attrs
+     global hideremotes want_ttk have_ttk maxrefs
++    global autoupdate have_inotify autoupdatedebounce
+ 
+     set page [create_prefs_page $notebook.general]
+ 
+@@ -11505,13 +11512,21 @@ proc prefspage_general {notebook} {
+     ${NS}::checkbutton $page.showlocal -text [mc "Show local changes"] \
+ 	-variable showlocalchanges
+     grid x $page.showlocal -sticky w
++
+     ${NS}::checkbutton $page.autoselect -text [mc "Auto-select SHA1 (length)"] \
+ 	-variable autoselect
+     spinbox $page.autosellen -from 1 -to 40 -width 4 -textvariable autosellen
+     grid x $page.autoselect $page.autosellen -sticky w
++
+     ${NS}::checkbutton $page.hideremotes -text [mc "Hide remote refs"] \
+ 	-variable hideremotes
+     grid x $page.hideremotes -sticky w
++    if { $have_inotify } {
++        ${NS}::checkbutton $page.autoupdate -text [mc "Auto-update upon change (ms)"] \
++            -variable autoupdate
++        spinbox $page.autoupdatedebounce -from 10 -to 60000 -width 7 -textvariable autoupdatedebounce
++        grid x $page.autoupdate $page.autoupdatedebounce -sticky w
++    }
+ 
+     ${NS}::label $page.ddisp -text [mc "Diff display options"]
+     grid $page.ddisp - -sticky w -pady 10
+@@ -11765,7 +11780,8 @@ proc prefsok {} {
+     global oldprefs prefstop showneartags showlocalchanges
+     global fontpref mainfont textfont uifont
+     global limitdiffs treediffs perfile_attrs
+-    global hideremotes
++    global hideremotes autoupdate
++    global gitdir
+ 
+     catch {destroy $prefstop}
+     unset prefstop
+@@ -11814,6 +11830,8 @@ proc prefsok {} {
+     if {$hideremotes != $oldprefs(hideremotes)} {
+ 	rereadrefs
+     }
++
++    handle_inotify $gitdir true
+ }
+ 
+ proc formatdate {d} {
+@@ -12295,6 +12313,13 @@ set autoselect 1
+ set autosellen 40
+ set perfile_attrs 0
+ set want_ttk 1
++set autoupdate 1
++set autoupdatedebounce 100
++#timer id for inotify reloading
++set reload_id -1
++#timer id for inotify updating (less than reload)
++set update_id -1
++set inotify_instance -1
+ 
+ if {[tk windowingsystem] eq "aqua"} {
+     set extdifftool "opendiff"
+@@ -12390,6 +12415,7 @@ set config_variables {
+     filesepbgcolor filesepfgcolor linehoverbgcolor linehoverfgcolor
+     linehoveroutlinecolor mainheadcirclecolor workingfilescirclecolor
+     indexcirclecolor circlecolors linkfgcolor circleoutlinecolor
++    autoupdate autoupdatedebounce
+ }
+ foreach var $config_variables {
+     config_init_trace $var
+@@ -12477,6 +12503,149 @@ if {$i >= [llength $argv] && $revtreeargs ne {}} {
+     }
+ }
+ 
++#function to be called after inotify reload-timeout
++proc reload_helper {} {
++    #puts "RELOAD"
++    global reload_id
++    set reload_id -1
++    reloadcommits
++    set head [exec git rev-parse HEAD]
++    selbyid $head
++}
++
++#function to be called after inotify update-timeout
++proc update_helper {} {
++    #puts "UPDATE"
++    global update_id
++    set update_id -1
++    updatecommits
++    set head [exec git rev-parse HEAD]
++    selbyid $head
++}
++
++proc inotify_handler { fd } {
++    global autoupdate reload_id update_id autoupdatedebounce
++    set events [inotify_watch read]
++    set watch_info [inotify_watch info]
++    set update_view false
++    set reloadcommits false
++
++    #cancel pending timer
++    if { $reload_id ne -1 } {
++        #puts "cancel a reload"
++        after cancel $reload_id
++        set reload_id -1
++        set update_view true
++        set reloadcommits true
++    }
++
++    if { $update_id ne -1 } {
++        #puts "cancel an update"
++        after cancel $update_id
++        set update_id -1
++        set update_view true
++    }
++
++    foreach {event} $events {
++        set current_watchid [dict get $event watchid]
++        set flags [dict get $event flags]
++        set event_filename [dict get $event filename]
++
++        foreach {path watchid watch_flags} $watch_info {
++            if {$watchid eq $current_watchid} {
++                set watch_path $path
++            }
++        }
++
++        set full_filename [file join $watch_path $event_filename]
++        #check wether we should do update or reload below
++        #puts "Got: $full_filename / $event_filename ($flags)"
++
++        if {$flags eq "nD"} {
++            inotify_watch add $full_filename "nwds"
++        }
++        if {![string match *.lock $event_filename]} {
++            if { $flags eq "d" } {
++                #stuff like deleting branches should result in reloading
++                set reloadcommits true
++            }
++            set update_view true
++        }
++
++        #simple commit just needs updating right?
++        #if { $event_filename eq "COMMIT_EDITMSG" } {
++        #    set reloadcommits true
++        #}
++    }
++
++    #reloadcommits or updatecommits - depending on file and operation?
++    if { $update_view } {
++        if { $reloadcommits } {
++            #puts "schedule reload"
++            set reload_id [after $autoupdatedebounce reload_helper]
++        } else {
++            #puts "schedule update"
++            set update_id [after $autoupdatedebounce update_helper]
++        }
++    }
++}
++
++proc watch_recursive { dir } {
++    inotify_watch add $dir "nwaCmMds"
++
++    foreach i [glob -nocomplain -dir $dir *] {
++        if {[file type $i] eq {directory}} {
++            watch_recursive $i
++        }
++    }
++}
++
++proc enable_inotify { dir redraw} {
++    global inotify_instance autoupdatedebounce reload_id
++
++    if { $inotify_instance ne -1 } {
++        updatecommits
++    } else {
++        set inotify_instance [inotify create "inotify_watch" "::inotify_handler"]
++        watch_recursive $dir
++        if { $redraw } {
++            set reload_id [after $autoupdatedebounce reload_helper]
++        }
++    }
++}
++
++proc disable_inotify {} {
++    global inotify_instance reload_id update_id
++
++    if { $inotify_instance ne -1 } {
++        rename inotify_watch {}
++        set inotify_instance -1
++    }
++
++    if { $reload_id ne -1 } {
++        after cancel $reload_id
++        set reload_id -1
++    }
++
++    if { $update_id ne -1 } {
++        after cancel $update_id
++        set update_id -1
++    }
++}
++
++proc handle_inotify { dir redraw } {
++    global have_inotify autoupdate
++    if { $have_inotify } {
++        if { $autoupdate } {
++            enable_inotify $dir $redraw
++        } else {
++            disable_inotify
++        }
++    }
++}
++
++handle_inotify $gitdir false
++
+ set nullid "0000000000000000000000000000000000000000"
+ set nullid2 "0000000000000000000000000000000000000001"
+ set nullfile "/dev/null"
 -- 
 2.9.3
 
