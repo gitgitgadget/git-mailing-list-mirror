@@ -2,104 +2,123 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AA13C20135
-	for <e@80x24.org>; Wed,  8 Mar 2017 22:43:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7E86520135
+	for <e@80x24.org>; Wed,  8 Mar 2017 22:45:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754619AbdCHWnO (ORCPT <rfc822;e@80x24.org>);
-        Wed, 8 Mar 2017 17:43:14 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:61990 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1750869AbdCHWnM (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Mar 2017 17:43:12 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id D9DFA6F1E7;
-        Wed,  8 Mar 2017 17:43:10 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=uI+rKHloBYZXc1hyHZeqd9+qP6o=; b=EeVIzs
-        JEEpPrfM4HcViSnqcWShNO5i1apIHyJrNvCgexzlwqx0QF2MEFEKXYgOUi/clP2e
-        dc2RQKTW/wh8XkB6HujTJvk/qkAPqDxQDhl2b4RA27FwISf+GskpY0hU20i4KSlm
-        w0kfNLuSMmmBI6MHwKi4DQNN0rO2AyzjV9RIw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=u0WAuFA8lggIFCjogly8Z2EnlAV+EOUM
-        UgtyVoy9yGTXun8akxp+VZs6OPhy4qkJcvKyeb2cBXHkrGl/TeULQNGmsZ19DLxt
-        4gUrLxVhmzHCS/6LMdCjNLoGE93HBo8XpwQ+WnFSzcGecgNwEEDH8cDKVnd8Mm9U
-        P/djlaq65WM=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id D33D26F1E6;
-        Wed,  8 Mar 2017 17:43:10 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 546E76F1E5;
-        Wed,  8 Mar 2017 17:43:10 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        git@vger.kernel.org, Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH v3 0/9] Fix the early config
-References: <cover.1488506615.git.johannes.schindelin@gmx.de>
-        <cover.1488562287.git.johannes.schindelin@gmx.de>
-        <20170304073952.drfgy7jacnlm6tum@sigill.intra.peff.net>
-        <alpine.DEB.2.20.1703071314180.3767@virtualbox>
-        <20170308073035.pt5ysp6bzpozoqps@sigill.intra.peff.net>
-        <xmqqy3wf3dbo.fsf@gitster.mtv.corp.google.com>
-        <20170308174237.cm6e5uvve6hu7lpf@sigill.intra.peff.net>
-Date:   Wed, 08 Mar 2017 14:43:09 -0800
-In-Reply-To: <20170308174237.cm6e5uvve6hu7lpf@sigill.intra.peff.net> (Jeff
-        King's message of "Wed, 8 Mar 2017 12:42:37 -0500")
-Message-ID: <xmqqinnj1jb6.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+        id S1752324AbdCHWpY (ORCPT <rfc822;e@80x24.org>);
+        Wed, 8 Mar 2017 17:45:24 -0500
+Received: from mail-pf0-f178.google.com ([209.85.192.178]:33446 "EHLO
+        mail-pf0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751657AbdCHWpW (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Mar 2017 17:45:22 -0500
+Received: by mail-pf0-f178.google.com with SMTP id w189so20314114pfb.0
+        for <git@vger.kernel.org>; Wed, 08 Mar 2017 14:43:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=XyTNvszvcEgAsyYej8qZ6ayQb1O5HaPTZSymmqR0wXs=;
+        b=ifXQ0qvvham32T+cMUYr8oQn/p8uM5iEGzWVSzvokA6LVFQiJhByi9lGSn0gdosPiU
+         T8TLegob2KB0/6Ye+Yl5GmEhO73thluA8AGnGBWN5/W8lUzubXDwYrJXBCp1pS03zHRB
+         LCqt2CSS+AcO0nENB+VoqRhJi1EwD2rn9jfzHnYpY8iGYmgziQKmXEVLe1yw2lO4arh/
+         AfPPWapk3W2GeLG4QumAKsImmSawKodc6Ts0zyvvndeiiWUwx0dAnLVYFZn/SrsIvZZh
+         3H8zGnR865Xp8YE4zc8Z3H96U2U2HFVntM/tHdOcAI2sxZV4FYBOiUfPIXs5RIswcHL2
+         A97A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=XyTNvszvcEgAsyYej8qZ6ayQb1O5HaPTZSymmqR0wXs=;
+        b=o0lVJ6Su8QcQRQTQKfyz9u9ZALi8Xy2wnFrbRlP1ecz9dC4MJDrqXAhFpeF7190WCt
+         UWmKNZGkQTOQTtXq/a7WGSn6+kcxiNhDJ91H4PIRve9nOhtO+ZegTiqXg6VHes6Ri1ys
+         RfOsMowAI22rsCPD4doAQrfdKH3RXxLjYoVinsdGpByqHC/B7ssOjb17kOvIPR+CXN2K
+         SK56Pej66EkePEc4VkOYqRbjZ/s9J1M0KnYcuEspB2W0GJfe5zaQrZ/nwFIyG2/JvP9C
+         zjwLvXExtxvTFo9hYpGVbM8mgmrx9Mrqv/qTsbIEoS0v5+sk2uymtf3Vo4Lp3V6yi2C6
+         dEBQ==
+X-Gm-Message-State: AMke39mcNNtL+/M0amgbiJSFW8f3yQ/zTepd9lHulS8Y8mLZyBraRog7rCgtbIc7u+43bQCWpuY5yhwW3wYd8SM/
+X-Received: by 10.99.140.77 with SMTP id q13mr9622708pgn.179.1489011066058;
+ Wed, 08 Mar 2017 14:11:06 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 9B10F026-0450-11E7-9110-FC50AE2156B6-77302942!pb-smtp2.pobox.com
+Received: by 10.100.187.5 with HTTP; Wed, 8 Mar 2017 14:11:05 -0800 (PST)
+In-Reply-To: <xmqq8tof32x9.fsf@gitster.mtv.corp.google.com>
+References: <5e5b1b92-f7c6-2987-356e-1aab2bff557e@gmail.com>
+ <20170308133348.2ovfsi44vq2rpgom@sigill.intra.peff.net> <CAHGBnuM3iM-kHdxdox_1i56uLbv7gQ5ZUY9Xqf4BG7G_kTf+jQ@mail.gmail.com>
+ <20170308140110.wgdedquqwm75zws2@sigill.intra.peff.net> <CAHGBnuPGPcWwbrZX_92XDJu47bpH=kj2PZ7yWHK=MRfZ_RHXrQ@mail.gmail.com>
+ <CAGZ79kbwMhL-ZnL-iYwPH=tWa8cNQbEGOYYQBw6OzFCMhOWE-w@mail.gmail.com> <xmqq8tof32x9.fsf@gitster.mtv.corp.google.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Wed, 8 Mar 2017 14:11:05 -0800
+Message-ID: <CAGZ79kZFGP0zMP5CtOH3poU9vx8FoT25UVr8ridQo0_VdH2cmA@mail.gmail.com>
+Subject: Re: diff.ignoreSubmoudles config setting broken?
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Sebastian Schuberth <sschuberth@gmail.com>,
+        Jacob Keller <jacob.keller@gmail.com>,
+        Jeff King <peff@peff.net>,
+        Git Mailing List <git@vger.kernel.org>,
+        Jens Lehmann <Jens.Lehmann@web.de>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+On Wed, Mar 8, 2017 at 12:54 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Stefan Beller <sbeller@google.com> writes:
+>
+>> On Wed, Mar 8, 2017 at 7:07 AM, Sebastian Schuberth
+>> <sschuberth@gmail.com> wrote:
+>>>
+>>> + Jens
+>>>
+>>
+>> + Jacob Keller, who touched submodule diff display code last.
+>> (I am thinking of fd47ae6a, diff: teach diff to display submodule
+>> difference with an inline diff, 2016-08-31), which is first release as
+>> part of v2.11.0 (that would fit your observance)
+>
+> Between these two:
+>
+>         git -c diff.ignoresubmodules=all diff
+>         git diff --ignore-submodules=all
+>
+> one difference is that the latter disables reading extra config from
+> .gitmodules (!) while the former makes the command honor it.
+>
 
->> Or are you discussing a more general issue, iow, anything that can
->> work without repository (i.e. those who do _gently version of the
->> setup and act on *nongit_ok) should pretend as if there were no
->> (broken) repository and take the "no we are not in a repository"
->> codepath?
->
-> Yes, exactly.  It would have been less confusing if I picked something
-> that passed nongit_ok. Like hash-object:
->
->   $ git init
->   $ echo content >file
->   $ git hash-object file
->   d95f3ad14dee633a758d2e331151e950dd13e4ed
->
->   $ echo '[core]repositoryformatversion = 10' >.git/config
->   $ git hash-object file
->   warning: Expected git repo version <= 1, found 10
->   d95f3ad14dee633a758d2e331151e950dd13e4ed
->
-> The warning is fine and reasonable here. But then:
->
->   $ echo '[core]repositoryformatversion = foobar' >.git/config
->   $ git hash-object file
->   fatal: bad numeric config value 'foobar' for 'core.repositoryformatversion' in file .git/config: invalid unit
->
-> That's wrong. We're supposed to be gentle. And ditto:
->
->   $ echo '[co' >.git/config
->   $ git hash-object file
->   fatal: bad config line 1 in file .git/config
->
-> Those last two should issue a warning at most, and then let the command
-> continue.
+Yeah the .gitmodules file is a good hint.
 
-Yeah, I agree with that as one of the worthy goals.  IIUC, we
-decided to leave that outside of this series and later fix on top,
-which is fine by me, too.
+Here is my understanding of the precedence:
 
+  command line options > .git/config (in various forms) > .gitmodules
+
+where in the .git config we have precedence levels for different files
+
+  .git/config > ~/.gitconfig
+
+as well as different settings:
+
+  submodule.<name>.ignore > diff.ignoreSubmodules
+
+It is not clear to me how a specific setting in .gitmodules
+would interact with a submodule-global setting in the config,
+e.g.
+
+  git config -f .gitmodules submodule. \
+      "$(git submodule--helper name scanners/scancode-toolkit)". \
+      ignore none
+  git config diff.ignoreSubmodules all
+  git diff  scanners/scancode-toolkit
+
+From reading the code, I assume "diff.ignoreSubmodules all"
+takes precedence here nevertheless because the diff.ignoreSubmodules
+setting is treated on a higher level than the submodule specific setting,
+despite the submodule specific setting being more specific.
+
+This is a bad example, because it may be intuitive that the
+value in the .git/config file takes precedence over .gitmodules,
+but we cannot set diff.ignoreSubmodules in .gitmodules.
+
+Stefan
