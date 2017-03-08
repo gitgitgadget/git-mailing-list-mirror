@@ -2,77 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4B8FE202D7
-	for <e@80x24.org>; Wed,  8 Mar 2017 21:03:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4D96D20135
+	for <e@80x24.org>; Wed,  8 Mar 2017 21:17:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932106AbdCHVCz (ORCPT <rfc822;e@80x24.org>);
-        Wed, 8 Mar 2017 16:02:55 -0500
-Received: from mail-wr0-f194.google.com ([209.85.128.194]:36342 "EHLO
-        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754209AbdCHVBE (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Mar 2017 16:01:04 -0500
-Received: by mail-wr0-f194.google.com with SMTP id l37so5618057wrc.3
-        for <git@vger.kernel.org>; Wed, 08 Mar 2017 13:00:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=qih3TfxlRmrmDv1nkFpREFyZw6ZOp1TzDj6L89pVhtk=;
-        b=FLi3yUc+poTLjir25Xn7ZeCRx81rzs9xrhjPOW4HfaVd5LHOoj7p1psoGWnewdcIBD
-         M5IVg2oEbrsT12MxkNPIfIeI8HQ0kmNgAJ0sGE/fCRgwh6L18hD5za2x6Q8E2f5+BgMd
-         YECkbdTW2Ej8VFWDIhY3qIn0QeIXghhuhIAGeex23ERxaSwdq2crG4NnywggmjM97vuA
-         evSNFTPgNls9PpvYNeai9wtVug8ncDjA+SusI8TzcIopwTS6byVGIG6k5mdCbjl5uwTq
-         vMikphjlRXDy4pxmCock7qXIzsg7Kh3t+jsFNnj5WKsB1/blZL14Gd95OkQyh8UvF2zD
-         1lMA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=qih3TfxlRmrmDv1nkFpREFyZw6ZOp1TzDj6L89pVhtk=;
-        b=N6KqS1C9V0J4VijbnnF5K8fPrjGXsxYi0Z4WD/ZdAW9rSoVbTCzr98lLAgxDEeOt6y
-         sQgFCgbySjIpXtFLGXMR5S9hRAYAOKbtrXnhQhYME/xbbgnNW2BfWnNbckdrjzHGDf7E
-         WZTxq1wPMokqvefp4DIFhU0MQAe0GaCv5gRuin6JWNUPnDt1TQ+9Glgauuc1XK+YXF1T
-         G3/P/mnsoVM9iGQb85Pj2T5DRTZmk7blMGl3WyFnwSnkyzjKTimZVPTZ9r+R/M7Vwz28
-         zq1ffVWxIBtKXlqXaB7pDJHqWrau29eavfQ8VIULrAJa8iz96u3qNg8TYp5kw1GluYoN
-         Hf+w==
-X-Gm-Message-State: AMke39kRql1X9c87df77me5TvKrJYUsY9OP90lMMgvcoTPjvybp9tzikeFrPwnYt8JC0nQ==
-X-Received: by 10.223.175.238 with SMTP id y46mr6884672wrd.63.1489006404137;
-        Wed, 08 Mar 2017 12:53:24 -0800 (PST)
-Received: from localhost.localdomain (2a02-8388-0b40-0580-f50d-465b-b746-dc93.cable.dynamic.v6.surfer.at. [2a02:8388:b40:580:f50d:465b:b746:dc93])
-        by smtp.gmail.com with ESMTPSA id 40sm5604065wry.22.2017.03.08.12.53.22
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 08 Mar 2017 12:53:23 -0800 (PST)
-From:   =?UTF-8?q?Florian=20Sch=C3=BCller?= <florian.schueller@gmail.com>
-To:     paulus@ozlabs.org, git@vger.kernel.org
-Cc:     =?UTF-8?q?Florian=20Sch=C3=BCller?= <florian.schueller@gmail.com>
-Subject: [PATCH 4/4] ignore backup files
-Date:   Wed,  8 Mar 2017 21:52:55 +0100
-Message-Id: <20170308205255.18976-5-florian.schueller@gmail.com>
-X-Mailer: git-send-email 2.9.3
-In-Reply-To: <20170308205255.18976-1-florian.schueller@gmail.com>
-References: <20170308205255.18976-1-florian.schueller@gmail.com>
+        id S1754329AbdCHVRh (ORCPT <rfc822;e@80x24.org>);
+        Wed, 8 Mar 2017 16:17:37 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:61328 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1753773AbdCHVRf (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Mar 2017 16:17:35 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 466A76F2BD;
+        Wed,  8 Mar 2017 16:16:22 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=nbpLMeDyjngvSFJqD0SsoH6JT5I=; b=DOJOmm
+        Ns9RHAZIpPWQMy4WOoyLOC8v7oVdSlzl/oSLOur9qfcWkzpslQ90DrkYEF3kkVqN
+        I/dgXao8Pmo5FR4MazyZQLLB/N3xG2zq8tpMqaedf54v/xOQek8Fjv4igNrNrrHw
+        VOD5/cY8ZUTsX5cuWHwWq089rZNCajOhGk9Nc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=LY2BPx1aU8q0VtxRs6XeMYAgunpKIymV
+        pWPXK2yVU6xA1nIzRb21ZM6rmJc1cmiBA4xF2fGT+JXWFU7fgqI3KwwBVZOb9LCv
+        GBkHDEcintJR42ZTW5DnehIJXl7vqi7eyZv32KeQyYysdso5PF4dUWgeq3C7umOL
+        gK5lixNuunA=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 3F4FD6F2BC;
+        Wed,  8 Mar 2017 16:16:22 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A2C326F2B7;
+        Wed,  8 Mar 2017 16:16:21 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Brandon Williams <bmwill@google.com>
+Cc:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        git@vger.kernel.org, Stefan Beller <sbeller@google.com>,
+        Jeff King <peff@peff.net>
+Subject: Re: [PATCH 2/2] Fix callsites of real_pathdup() that wanted it to die on error
+References: <cover.1488987786.git.johannes.schindelin@gmx.de>
+        <0c0abc667d9b8dff299aa61aeb29a7e9e7316b66.1488987786.git.johannes.schindelin@gmx.de>
+        <81f1e30b-e0e1-d587-4a4b-4848beffd38c@web.de>
+        <20170308183840.GA130604@google.com>
+Date:   Wed, 08 Mar 2017 13:16:20 -0800
+In-Reply-To: <20170308183840.GA130604@google.com> (Brandon Williams's message
+        of "Wed, 8 Mar 2017 10:38:40 -0800")
+Message-ID: <xmqq4lz331wb.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 7A7D935C-0444-11E7-BD0C-97B1B46B9B0B-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
----
- .gitignore | 2 ++
- 1 file changed, 2 insertions(+)
+Brandon Williams <bmwill@google.com> writes:
 
-diff --git a/.gitignore b/.gitignore
-index d7ebcaf..a353270 100644
---- a/.gitignore
-+++ b/.gitignore
-@@ -1,2 +1,4 @@
- /GIT-TCLTK-VARS
- /gitk-wish
-+*~
-+po/gitk.pot
--- 
-2.9.3
+>> > diff --git a/abspath.c b/abspath.c
+>> > index 2f0c26e0e2c..b02e068aa34 100644
+>> > --- a/abspath.c
+>> > +++ b/abspath.c
+>> > @@ -214,12 +214,12 @@ const char *real_path_if_valid(const char *path)
+>> >  	return strbuf_realpath(&realpath, path, 0);
+>> >  }
+>> >  
+>> > -char *real_pathdup(const char *path)
+>> > +char *real_pathdup(const char *path, int die_on_error)
+>> 
+>> Adding a gentle variant (with the current implementation) and making
+>> real_pathdup() die on error would be nicer, as it doesn't require
+>> callers to pass magic flag values.  Most cases use the dying variant,
+>> so such a patch would have to touch less places:
+>
+> I agree with Junio and Rene that a gentle version would make the api
+> slightly nicer (and more consistant with some of the other api's we have
+> in git).
+>
+> This is exactly what I should have done back when I originally made the
+> change.  Sorry for missing this!
+
+While I agree that the shape of the code Rene gave us here is what
+we would have liked to have in the original, it is a bit too late
+for that.
+
+As I already mentioned, as a regression fix patch, I find what Dscho
+posted more sensible, because it makes it obvious that all existing
+callsites were looked at while constructing the patch and more
+importantly, it forces somebody to look at all the new callers of
+the function that were added by the topics in flight, by changing
+the func-signature and forcing compilation failure.
+
+It may be somewhat unfortunate that that somebody needs to be me,
+but that is what maintainers are for, so ... ;-)
+
+Once the dust settles, let's do the clean-up along the lines of
+Rene's patch.
+
+Thanks.
 
