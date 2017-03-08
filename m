@@ -2,119 +2,83 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EBFE720135
-	for <e@80x24.org>; Wed,  8 Mar 2017 23:36:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1977220135
+	for <e@80x24.org>; Wed,  8 Mar 2017 23:37:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751975AbdCHXgd (ORCPT <rfc822;e@80x24.org>);
-        Wed, 8 Mar 2017 18:36:33 -0500
-Received: from mail-pf0-f178.google.com ([209.85.192.178]:36235 "EHLO
-        mail-pf0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750869AbdCHXgc (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Mar 2017 18:36:32 -0500
-Received: by mail-pf0-f178.google.com with SMTP id o126so20805859pfb.3
-        for <git@vger.kernel.org>; Wed, 08 Mar 2017 15:36:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=FigIdr1MChHpngsXlnbeQOb4D8N0kgy7QJTTfFJaMbo=;
-        b=OCunTVNRuCoc/YqwQkal9/GLr/pfxRyS6MnEIaPUqJFUIL0xvnMBY7qZcIcG43FeU8
-         CS4FE++IK3WN2ZKGYlEKqYmf7pxv9jeTQTC5k/OGVB9RddN8i6REB7qT+w4oHfRG3jKB
-         xR4WcMX0vA142ojSDndJKBOT4c0WAUjPj25WzhYzFogkWzPTAuUygzCWdZSKYH3waU+y
-         QLLaudsvHonIUufiJmT24NUsQFwX3cmyjwt7BK1w+yK4lZ36RSxMjLHuhle6Q41PKGLy
-         AJRkB1tL26jZBtJniw5tj2IjE3IwQKqcvgqLngAzut7YXnXYrEhEOBHG2JtZ0iwMJCaC
-         vtGA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=FigIdr1MChHpngsXlnbeQOb4D8N0kgy7QJTTfFJaMbo=;
-        b=OXT5l/kzpmWvC62j+xrh+kDHp4sZ0A3EYZayXixwLHn3a4DAGhACHfwNlSY82VR/ki
-         h6Sd/jM2tlK0I/yJ7p00ypJrVhtyN6DoYk2xPQePX88Koz6tSSFOH3DTRKuEZ24QS9M6
-         sjnWnr2+bOFQFdrRApSs4HFunQMF+8ivlOLhq8DgfmKXFqJlm0NJxK2cuf6Yk6fpuZYG
-         ZrwG+qRiCcrNKDMuqWYR8BM8Xq/P7dUMPfogxoypMUfIYWyqUZYoydYoFyBJ6fT+uQxZ
-         mUinNgKWZQbJzvgUJ7g/TS2obK+wxQ1Jgd9ow363fKeb9pEI3k80JXZGrGD8bjY5LkUt
-         3OIA==
-X-Gm-Message-State: AMke39nynY1ym5nGGz74d7JV1+vdfkt77ldxZE/qtv38mjF3qlMvPxHup/JN2eHsdwcYf3+iP1ZmZBTAWENNiRsU
-X-Received: by 10.99.247.83 with SMTP id f19mr9880356pgk.158.1489012762185;
- Wed, 08 Mar 2017 14:39:22 -0800 (PST)
-MIME-Version: 1.0
-Received: by 10.100.187.5 with HTTP; Wed, 8 Mar 2017 14:39:21 -0800 (PST)
-In-Reply-To: <xmqqlgsg4lj4.fsf@gitster.mtv.corp.google.com>
-References: <20170302004759.27852-1-sbeller@google.com> <20170306205919.9713-1-sbeller@google.com>
- <20170306205919.9713-16-sbeller@google.com> <xmqqfuio674n.fsf@gitster.mtv.corp.google.com>
- <CAGZ79kbdJa54YyKPHR9ycuJBVtyNY_2yaD7_5RPPu++Awiz5cA@mail.gmail.com> <xmqqlgsg4lj4.fsf@gitster.mtv.corp.google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Wed, 8 Mar 2017 14:39:21 -0800
-Message-ID: <CAGZ79kYF63E17SNa9wt3X_28kbvjNujUBPoMct=RvDcyOeJm-w@mail.gmail.com>
-Subject: Re: [PATCH 15/18] read-cache, remove_marked_cache_entries: wipe
- selected submodules.
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        id S1754204AbdCHXhM (ORCPT <rfc822;e@80x24.org>);
+        Wed, 8 Mar 2017 18:37:12 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:50524 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1750869AbdCHXhL (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Mar 2017 18:37:11 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id ADDA66FC61;
+        Wed,  8 Mar 2017 18:37:09 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=KxOMlrKq9bei2KT9xLMUNb96sLY=; b=t97wdt
+        yZU9HMsaAAgsQVUb5NAECFyQ+VdtU39AChuzIrnVxhTcHP5zwbgP+MCHIu+dILEW
+        TqQrT/jDDAbTdt4YRMPi3anoxb4D4Irid+USSavqDx2iYzAGQIx2ysa3vFcw+XhN
+        tmr9ckaSOmYIcBQYHYjHKZBovLOBJnJztMlcA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=xhyfVFp0ZQTiZIraQG60KlKPTszLD4g/
+        56K5uacDGtMHZV/WRrGGf0H+yudb1Q4auYIEqx9iB/QMU4rZUY7NAgd3Mm/iVrJs
+        wROwtMkvFEqei64Sq9rD9rm0TLbaw8ZzwyMX2909+dh9O64OsKwW0O+41p1teUZX
+        bXe5+txjeYA=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id A57176FC60;
+        Wed,  8 Mar 2017 18:37:09 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 0F2556FC5F;
+        Wed,  8 Mar 2017 18:37:09 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     "git\@vger.kernel.org" <git@vger.kernel.org>,
         Brandon Williams <bmwill@google.com>,
         David Turner <novalis@novalis.org>,
         "brian m. carlson" <sandals@crustytoothpaste.net>,
         Heiko Voigt <hvoigt@hvoigt.net>,
         Jonathan Nieder <jrnieder@gmail.com>,
         Ramsay Jones <ramsay@ramsayjones.plus.com>
-Content-Type: text/plain; charset=UTF-8
+Subject: Re: [PATCH 15/18] read-cache, remove_marked_cache_entries: wipe selected submodules.
+References: <20170302004759.27852-1-sbeller@google.com>
+        <20170306205919.9713-1-sbeller@google.com>
+        <20170306205919.9713-16-sbeller@google.com>
+        <xmqqfuio674n.fsf@gitster.mtv.corp.google.com>
+        <CAGZ79kbdJa54YyKPHR9ycuJBVtyNY_2yaD7_5RPPu++Awiz5cA@mail.gmail.com>
+        <xmqqlgsg4lj4.fsf@gitster.mtv.corp.google.com>
+        <CAGZ79kYF63E17SNa9wt3X_28kbvjNujUBPoMct=RvDcyOeJm-w@mail.gmail.com>
+Date:   Wed, 08 Mar 2017 15:37:07 -0800
+In-Reply-To: <CAGZ79kYF63E17SNa9wt3X_28kbvjNujUBPoMct=RvDcyOeJm-w@mail.gmail.com>
+        (Stefan Beller's message of "Wed, 8 Mar 2017 14:39:21 -0800")
+Message-ID: <xmqq1su71gt8.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 25885BE8-0458-11E7-85E0-FC50AE2156B6-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Mar 7, 2017 at 5:14 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Stefan Beller <sbeller@google.com> writes:
->
->> submodule_from_ce returns always NULL, when such flag is not given.
->> From 10/18:
->>
->> +const struct submodule *submodule_from_ce(const struct cache_entry *ce)
->> +{
->> +       if (!S_ISGITLINK(ce->ce_mode))
->> +               return NULL;
->> +
->> +       if (!should_update_submodules())
->> +               return NULL;
->> +
->> +       return submodule_from_path(null_sha1, ce->name);
->> +}
->>
->> should_update_submodules is always false if such a flag is not set,
->> such that we end up in the else case which is literally the same as
->> the removed lines (they are just indented).
->
-> I see.
->
-> I didn't think a function this deep in the callchain that does not
-> take any parameter could possibly change the behaviour based on the
-> end-user input.  I was expecting that such a state (i.e. are we
-> recursive?  are we allowed to forcibly update the working tree
-> files?) would be kept part of something like "struct checkout" and
-> passed around the callchain.
->
-> That was why I didn't look at how that function answers "should
-> update?" question, and got puzzled.  Because it would imply there is
-> some hidden state that is accessible by everybody--a global variable
-> or something--which would point at a deeper design issue.
+Stefan Beller <sbeller@google.com> writes:
 
-Well it is just as deep as e.g. reacting on some bits of
-struct unpack_trees_options in unpack-trees.c ?
+> Side-question:
+> Is there some doc (commit message), that explains the difference
+> between CE_REMOVE and CE_WT_REMOVE ?
 
-But I can see how this is an issue with design.
-I also think my previous answer was a straw man.
+That's something you need to ask Duy, I think, as it was introduced
+at e663db2f ("unpack-trees(): add CE_WT_REMOVE to remove on worktree
+alone", 2009-08-20) and was added for the sparse checkout stuff.
 
-We only need to differentiate between 'ce' being a submodule
-or not, because it should not be marked CE_REMOVE in
-the non-recursive state.
-
-Side-question:
-Is there some doc (commit message), that explains the difference
-between CE_REMOVE and CE_WT_REMOVE ?
-
-Thanks,
-Stefan
+During my review of the series that added the feature, I only had
+time to make sure that the patches do not change the behaviour when
+it is not in use, ignoring the other side of "if" statement that
+checked ce_skip_worktree(ce) ;-)
