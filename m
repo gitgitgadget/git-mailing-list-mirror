@@ -2,106 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3A275202D7
-	for <e@80x24.org>; Wed,  8 Mar 2017 14:39:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AC38B202D7
+	for <e@80x24.org>; Wed,  8 Mar 2017 15:07:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751332AbdCHOjf (ORCPT <rfc822;e@80x24.org>);
-        Wed, 8 Mar 2017 09:39:35 -0500
-Received: from mail-vk0-f67.google.com ([209.85.213.67]:34416 "EHLO
-        mail-vk0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750794AbdCHOjU (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Mar 2017 09:39:20 -0500
-Received: by mail-vk0-f67.google.com with SMTP id r136so1395375vke.1
-        for <git@vger.kernel.org>; Wed, 08 Mar 2017 06:39:01 -0800 (PST)
+        id S1751906AbdCHPHk (ORCPT <rfc822;e@80x24.org>);
+        Wed, 8 Mar 2017 10:07:40 -0500
+Received: from mail-wr0-f182.google.com ([209.85.128.182]:33442 "EHLO
+        mail-wr0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751900AbdCHPHi (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Mar 2017 10:07:38 -0500
+Received: by mail-wr0-f182.google.com with SMTP id u48so25417198wrc.0
+        for <git@vger.kernel.org>; Wed, 08 Mar 2017 07:07:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=wLN/RnrQ4TlzY/gT4PH1wszui25SjNGQ7j7ARL7F1bk=;
-        b=HdSetLkHyGC1COqlzgiKIXdrM0DmpK7aHfuEktrFcODhePiPzDxLfaFcZTXspU4OKH
-         ZhzSDij4mpgm0c+OINjiXbw0wyARX3gKPpO82aXX0Zi6DMjA+y/1rtaO1svpnlXsxdg4
-         y/kEkOEz+3G2qSehfh3E+gEKX73s8O+KgPxQHgV05JvzNSrFseaefGJv8sGRvdghE0ut
-         g8v4RT6OgWLn9PndLPEJ7MGCTYTcJzO9nF3xeLmV29ClvThMd159jDY/ETaZ9IAKGO9d
-         ElMiwgEPDsV4SYN+NANhW8pJBy6m3yRVN0xUN49ol5LIaDzixtT7bqYMRGVpCggy+cUe
-         2PAQ==
+        bh=9fXvHgTUpLLkZFKWuFEbCcDOpwFrh33Z2Gu2FRGajDE=;
+        b=HslVGObLhfTTiS80SOe3ZP0Cfm3kZKjC+oh3LQM0ZPBn2eG3IQEJJH+9VDg0YTg0Vn
+         6+ntuRL2kEv7qu/MjqC37am5UEyZT44qtw/yyT9AShUFEeA/eeuBZnO+T9P2tzvQEDmx
+         2CBSC1LA+6S/d6uIhbxGYk6gD2rqDJ21N1I7p23tkBVhEJpTq+6WDmugj1lNY3us6Vl6
+         9bJxyJDkKNwcjzGF5iICMhIi5piRkHvNxgPtlW7t190X4C++upzFt5xVG9h0MEyZtj44
+         Qo8c01iokoS8FeGymDg8deszz8B6NJIevOx51+zxjPZHprdUE8MFzyXXhZz1a13oAtlT
+         XPAA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=wLN/RnrQ4TlzY/gT4PH1wszui25SjNGQ7j7ARL7F1bk=;
-        b=NwVoWh/E4iMjRuCAz/G4imx9Yw4yhFmi4hcxwBEzLv3bYfryxI6LLdQkv8UX10XeHu
-         fteTP86A/0TsqyWtjTtT9iThmjEpVGb1Xhjqk0xr/kpa00K9gkr8Q6RuWThhHNkB5r9F
-         68Tazfrv6EBhqx9fBf54ZzsyUkya9TMeZG590/7YzrzdVzMZLXEVRePv4Sz1Mc/8tlbS
-         2a2qgj8HrbRFo1wbuzIGDL2bZOUVZvj20oro8HE2Aqc8Y7PEp+/rbf6y2iwSvq5qcc/5
-         p2wr8aVvD5HN2LcwfE9S4Sz2VnlJ5X2Q7Nio/M5M6RrjWyFhFl8G/PhH9FysY5Mk+v89
-         5wyA==
-X-Gm-Message-State: AMke39nQGGvCj8AVDElXyWSCAmjPZOw33cqchNWRspp3mNt5QQohm14BfqN0BiG0ocez9rT0ljEGrMIezx3bHg==
-X-Received: by 10.31.72.67 with SMTP id v64mr3143929vka.37.1488979947620; Wed,
- 08 Mar 2017 05:32:27 -0800 (PST)
+        bh=9fXvHgTUpLLkZFKWuFEbCcDOpwFrh33Z2Gu2FRGajDE=;
+        b=R21PvkH+KzY+ylRBmEO2gZ9GvLxuRKSU0I6ub3ZDbW2Hg8XSgII/FOok18Cu8QOOrm
+         bveir3prGvLIVcCs9YMs79OkDf7XVZHsbvdQsmrTfvvUdH6dTE00H7IM6FgqhoWxjhTX
+         QTw5+MOFbukE7lMxjy7txE/WCwGW8GjUlW/ALDMFp6WbZyOWMaMPbixTwTNQcf848+Cb
+         7GfJjIsmNVsxpsiocMs7++zOeuqC4dqGqRIKObm0yUctcTF4aqI0WH68cq0/RAr3PSfQ
+         TP04mHxdGR6o0ylv+B1IEslMzBBThX5NOPjf03JYNPqncmGXA1sWJ/lhNj+9Gx4MEa5t
+         813A==
+X-Gm-Message-State: AMke39ldhBtTCw4BwfRoRlSuNs+KVZVEA/iBDS6KPa+5CR0VUPuY0xN1B085XSCg4QIbBcbeys4cEqgIWOfinA==
+X-Received: by 10.223.177.148 with SMTP id q20mr5967071wra.154.1488985652121;
+ Wed, 08 Mar 2017 07:07:32 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.176.87.218 with HTTP; Wed, 8 Mar 2017 05:32:27 -0800 (PST)
-In-Reply-To: <20170308060334.6ilcjgaxgycuhpxu@sigill.intra.peff.net>
-References: <CAME+mvUe7itzg7JLu9_131smzHHE0JsN-z7q8_dTY1qEdugYWw@mail.gmail.com>
- <CAGZ79kaYi1OLuOKvbCmDrMCq0fZnO2Ry7JML=Puwmx6TTtEYog@mail.gmail.com>
- <3026648b-a26c-bc67-62dc-170217d6c2ca@kdbg.org> <CAGZ79kZhfRiUQndEGB=b34WMCPv0KDjpDix0Ly85aFeyOQAwWA@mail.gmail.com>
- <20170308060334.6ilcjgaxgycuhpxu@sigill.intra.peff.net>
-From:   Prathamesh Chavan <pc44800@gmail.com>
-Date:   Wed, 8 Mar 2017 19:02:27 +0530
-Message-ID: <CAME+mvUzR6--AeUff6yGZ69GN-hE6AyDP-CkdFxnFAwccpn2yg@mail.gmail.com>
-Subject: Re: [PATCH] t*: avoid using pipes
+Received: by 10.28.126.201 with HTTP; Wed, 8 Mar 2017 07:07:31 -0800 (PST)
+In-Reply-To: <20170308140110.wgdedquqwm75zws2@sigill.intra.peff.net>
+References: <5e5b1b92-f7c6-2987-356e-1aab2bff557e@gmail.com>
+ <20170308133348.2ovfsi44vq2rpgom@sigill.intra.peff.net> <CAHGBnuM3iM-kHdxdox_1i56uLbv7gQ5ZUY9Xqf4BG7G_kTf+jQ@mail.gmail.com>
+ <20170308140110.wgdedquqwm75zws2@sigill.intra.peff.net>
+From:   Sebastian Schuberth <sschuberth@gmail.com>
+Date:   Wed, 8 Mar 2017 16:07:31 +0100
+Message-ID: <CAHGBnuPGPcWwbrZX_92XDJu47bpH=kj2PZ7yWHK=MRfZ_RHXrQ@mail.gmail.com>
+Subject: Re: diff.ignoreSubmoudles config setting broken?
 To:     Jeff King <peff@peff.net>
-Cc:     Stefan Beller <sbeller@google.com>, Johannes Sixt <j6t@kdbg.org>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        Pranit Bauva <pranit.bauva@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Stefan Beller <sbeller@google.com>, Jens.Lehmann@web.de
 Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Mar 8, 2017 at 11:33 AM, Jeff King <peff@peff.net> wrote:
-> On Tue, Mar 07, 2017 at 12:52:49PM -0800, Stefan Beller wrote:
->
->> On Tue, Mar 7, 2017 at 12:39 PM, Johannes Sixt <j6t@kdbg.org> wrote:
->>
->> > Welcome to the Git community!
->>
->> >
->> > Actually, being a *micro* project, it should stay so. Not doing all of the
->> > changes would leave some tasks for other apprentices to get warm with our
->> > review process.
->>
->> right, so just pick one file.
->
-> I also wonder if we really want all invocations of git to be marked up
-> in this way. If the primary goal of the test is checking that a certain
-> git command runs successfully and generates the expected output, then I
-> think it is a good candidate for conversion.
->
-> So in a hunk like this:
->
->    test_expect_success 'git commit-tree records the correct tree in a commit' '
->         commit0=$(echo NO | git commit-tree $P) &&
->   -     tree=$(git show --pretty=raw $commit0 |
->   -              sed -n -e "s/^tree //p" -e "/^author /q") &&
->   +     tree=$(git show --pretty=raw $commit0 >out &&
->   +     sed -n -e "s/^tree //p" -e "/^author /q" <out) &&
->         test "z$tree" = "z$P"
->
-> we are interested in testing commit-tree, not "git show". Is it worth
-> avoiding pipes there? I admit the cost to using the intermediate file is
-> not huge there, but it feels more awkward and un-shell-like to me as a
-> reader.
->
-> -Peff
+On Wed, Mar 8, 2017 at 3:01 PM, Jeff King <peff@peff.net> wrote:
 
-Thank you everyone, for reviewing my changes. And as said in the
-reviews, I'll send a single patch file as my microproject, leaving the other
-files as low hanging fruit for the others to look at. Also, I try to include as
-many suggested improvements as possible and will also remember them for
-my future patches.
+>> > Hrm. Isn't "all" the default? That's what git-diff(1) says (but I've
+>> > never used the feature myself).
+>> >
+>> > That would imply to me that there's another config option set somewhere
+>> > (perhaps in the repo-level config). What does:
+>> >
+>> >   git config --show-origin --get-all diff.ignoresubmodules
+>> >
+>> > say?
+>>
+>> It says:
+>>
+>> file:/home/seschube/.gitconfig  all
+>
+> OK, that looks right, so my guess is probably the wrong direction.
+> Peeking at the code, it looks like there may be some per-submodule
+> magic, but I don't know how it all works. So I'll stop looking and wait
+> for somebody more clueful to respond.
+
++ Jens
+
+-- 
+Sebastian Schuberth
