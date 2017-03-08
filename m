@@ -2,262 +2,328 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 804C01FBEC
-	for <e@80x24.org>; Wed,  8 Mar 2017 01:05:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3CC8C1FBEC
+	for <e@80x24.org>; Wed,  8 Mar 2017 01:09:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756621AbdCHBFj (ORCPT <rfc822;e@80x24.org>);
-        Tue, 7 Mar 2017 20:05:39 -0500
-Received: from mail-pg0-f41.google.com ([74.125.83.41]:32938 "EHLO
-        mail-pg0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1756438AbdCHBFi (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Mar 2017 20:05:38 -0500
-Received: by mail-pg0-f41.google.com with SMTP id 25so6710375pgy.0
-        for <git@vger.kernel.org>; Tue, 07 Mar 2017 17:03:39 -0800 (PST)
+        id S1756670AbdCHBJW (ORCPT <rfc822;e@80x24.org>);
+        Tue, 7 Mar 2017 20:09:22 -0500
+Received: from mail-vk0-f50.google.com ([209.85.213.50]:34658 "EHLO
+        mail-vk0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1756623AbdCHBJS (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Mar 2017 20:09:18 -0500
+Received: by mail-vk0-f50.google.com with SMTP id r136so1728741vke.1
+        for <git@vger.kernel.org>; Tue, 07 Mar 2017 17:08:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=/QNZScfpUlyUlv8Y35Rwcqw/pcFpoLZLahqCD3vdLoI=;
-        b=vuK3aJLHaXrM43+IthEPR9BCAk9td3ofMZ1KdS0X0WqtmHaTdVYTaLeRWKLsUwF01r
-         cbZehjOYFIO8C4ineJgiG6mxVfellSKknW9+Z4E7HZuDQn4uG/eZdJVG7veMo9Xv21jL
-         WJ8JG0SyJXn2ukhltPsL+xMXWeYXsXJ/YVx4yityPwW4UDPH8Nx+S7+frmGYz6iw7M+n
-         QV8JBEGymz6KWujqKHBWiRlub39zuCz9flqhtd/gP2blFl8/8vZNAdhZ+bVipvg3Jwek
-         n4l3K4pJpspudm3YTH0XCwhcvsMl5ofPb8nqgLiE+WOjs04We/V5Rnvj8Bv/b7Q/lnxp
-         tiSQ==
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=7cRmPBhMQ3fxmISVL5/7xgKS+FiFdqhEZjuFlvXooeI=;
+        b=A2yaF4hUGyhGvudB9c/i75YHfeWvjvwSv7ov4h5sKCjiFFI0Eovke5GB1KiasaXeFr
+         tPI+B9GBR52oX0krf7dX/mK8a529WyK5ONmB50sea2IqLGcvL0qPJbIH2F341Opu1vPq
+         7go/HrQ1xR21Q+qjvtThgx6kN7HcUAEfjdGvcULcOlL2Y/nrzNpOGYqMBdC4TMNhoGH5
+         HciyJO7NWCb2usRXFmAfKwzBKOdNxdN90q39orCRJLLQxDkGXwZC1ucanniF8MeJH2ue
+         J5+hO8CBh3RCauaMlIJ32Fq7/SP75xWJxFAh1G5dqvzjjuKF1rH9Y5zIV6T9qblyvB1O
+         PzIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=/QNZScfpUlyUlv8Y35Rwcqw/pcFpoLZLahqCD3vdLoI=;
-        b=CQOxEc6XQBETYbqrFEkBwlPoaUuPr46fXWJspswGTQcovrCcgIUex4cNyy2oCiaiXx
-         wPANr5XdoStx6FC+dYOa/rBsA1AcdwNvZVhOT9m8vzOsRJk3G5foZUN1jF8j5X3jleNz
-         f1ROVmHuPme9CquuhgeQjjrpKxOhgIkr8LegsdLrO1QHEIsiu8OvTRgwifDtz2Tp+WFN
-         Bf/ot9VqOH0hl5nULajCh8t+NM148+ZJZRE1Lt3Xq4f5T/R9XDr8b4GU+qXJpBXUTjYr
-         gTrdhlLZ9+aYDIEA/Sk/KVTBqOkBnG5kVor2x+c5B9I/JvHIUJN33Dxgj7K8BebazgVp
-         y7/Q==
-X-Gm-Message-State: AMke39kqr62zcw9D7z278fldMz1iV2LDQbpXpV5M5LI9MnXQfsCFCcT+y//QW+ymqtxB9Nzu
-X-Received: by 10.99.7.206 with SMTP id 197mr3625431pgh.95.1488934585999;
-        Tue, 07 Mar 2017 16:56:25 -0800 (PST)
-Received: from localhost ([2620:0:1000:5b10:5c89:fa68:bdb9:83f0])
-        by smtp.gmail.com with ESMTPSA id 194sm1916149pfx.134.2017.03.07.16.56.25
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 07 Mar 2017 16:56:25 -0800 (PST)
-From:   Stefan Beller <sbeller@google.com>
-To:     szeder.dev@gmail.com, email@benjaminfuchs.de, git@vger.kernel.org,
-        sandals@crustytoothpaste.net, ville.skytta@iki.fi
-Cc:     Stefan Beller <sbeller@google.com>
-Subject: [PATCHv2] rev-parse: add --show-superproject-working-tree
-Date:   Tue,  7 Mar 2017 16:56:15 -0800
-Message-Id: <20170308005615.20321-1-sbeller@google.com>
-X-Mailer: git-send-email 2.12.0.190.g6a12a61b77.dirty
-In-Reply-To: <xmqq7f4066t9.fsf@gitster.mtv.corp.google.com>
-References: <xmqq7f4066t9.fsf@gitster.mtv.corp.google.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=7cRmPBhMQ3fxmISVL5/7xgKS+FiFdqhEZjuFlvXooeI=;
+        b=LAb+BIKmhanEbP2ISAUj1eJSUMtTsqiNulq4Ids9fFPesmKA/e2SUevgrDBka4qgxX
+         NHPLAF6par9ei2rHOO0I4TdMnKVMBf4PflIqhP4Ywc0FoUiq7z1BLLW1ZKfUtEEL3laN
+         WNzHm9iCLS93Ou0NHeqD8zI40aEMkr8Av+0kdEpHMDfjxZdl9hZNJjpcMf319UL/e5pc
+         GMBv3XymgSJAAymk6xPceT2UmhAs/bd0HaiIXFZbcAvhfnnr24Zx9HOThaydQVODRTYP
+         U6mgEv7sFnZ+RR3reWGlyGJCJ5pYESdEDX8Ge6nnosok8sBYVDkFV45VU8YCrClD6Hti
+         hI/A==
+X-Gm-Message-State: AMke39kY7tltkhHnADuKI4eNF8zmjZF9J4pS/BLPMFw2z+T5X2qgX6IzQOWT5Vdo0FnI+a4jTW1DvEENzF5U0A==
+X-Received: by 10.31.77.196 with SMTP id a187mr1785698vkb.99.1488935329497;
+ Tue, 07 Mar 2017 17:08:49 -0800 (PST)
+MIME-Version: 1.0
+Received: by 10.176.74.199 with HTTP; Tue, 7 Mar 2017 17:08:29 -0800 (PST)
+In-Reply-To: <alpine.DEB.2.20.1703080104580.3767@virtualbox>
+References: <CAFKRc7y_kpCGNORENUZ2qw_4qBwjjyaaDFxAEQa52fTryj+w7A@mail.gmail.com>
+ <alpine.DEB.2.20.1703072345530.3767@virtualbox> <alpine.DEB.2.20.1703080104580.3767@virtualbox>
+From:   valtron <valtron2000@gmail.com>
+Date:   Tue, 7 Mar 2017 18:08:29 -0700
+Message-ID: <CAFKRc7ysOAOVx-7ww7MLF1qKpuKdJQqAtAhLJcYh3yMD3G2ncA@mail.gmail.com>
+Subject: Re: Crash on MSYS2 with GIT_WORK_TREE
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     git@vger.kernel.org, Brandon Williams <bmwill@google.com>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In some situations it is useful to know if the given repository
-is a submodule of another repository.
+Hi Johannes,
 
-Add the flag --show-superproject-working-tree to git-rev-parse
-to make it easy to find out if there is a superproject.
+Thanks for looking at this! Yes, it's 2.12.0, sorry for the typo.
 
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
+I only ran into this because of git-gui, where I eventually tracked it
+down to line 1330:
 
-* not RFC anymore, but for real this time; including a test and docs :)
+    set env(GIT_WORK_TREE) $_gitworktree
 
-* Following Junios advice: there is only one function
-  (superproject_exists was dropped) using ls-files.
-  (the test actually tests for a staged submodule) 
-  
-Thanks,
-Stefan
+With that line commented out, it works. I'll look into why git-gui
+sets it to a windows-path-with-forward-slashes, but that's a separate
+issue from the crash. Also, from the stack trace, I think git is still
+able to understand the path, since it appears to correctly convert it
+to /c/repo, but I might be wrong since I haven't look at the code.
 
-
- Documentation/git-rev-parse.txt |  5 +++
- builtin/rev-parse.c             |  7 ++++
- submodule.c                     | 83 +++++++++++++++++++++++++++++++++++++++++
- submodule.h                     |  8 ++++
- t/t1500-rev-parse.sh            | 14 +++++++
- 5 files changed, 117 insertions(+)
-
-diff --git a/Documentation/git-rev-parse.txt b/Documentation/git-rev-parse.txt
-index 91c02b8c85..b841bad7c7 100644
---- a/Documentation/git-rev-parse.txt
-+++ b/Documentation/git-rev-parse.txt
-@@ -261,6 +261,11 @@ print a message to stderr and exit with nonzero status.
- --show-toplevel::
- 	Show the absolute path of the top-level directory.
- 
-+--show-superproject-working-tree
-+	Show the absolute path of the top-level directory of
-+	the superproject. A superproject is a repository that records
-+	this repository as a submodule.
-+
- --shared-index-path::
- 	Show the path to the shared index file in split index mode, or
- 	empty if not in split-index mode.
-diff --git a/builtin/rev-parse.c b/builtin/rev-parse.c
-index e08677e559..2549643267 100644
---- a/builtin/rev-parse.c
-+++ b/builtin/rev-parse.c
-@@ -12,6 +12,7 @@
- #include "diff.h"
- #include "revision.h"
- #include "split-index.h"
-+#include "submodule.h"
- 
- #define DO_REVS		1
- #define DO_NOREV	2
-@@ -779,6 +780,12 @@ int cmd_rev_parse(int argc, const char **argv, const char *prefix)
- 					puts(work_tree);
- 				continue;
- 			}
-+			if (!strcmp(arg, "--show-superproject-working-tree")) {
-+				const char *superproject = get_superproject_working_tree();
-+				if (superproject)
-+					puts(superproject);
-+				continue;
-+			}
- 			if (!strcmp(arg, "--show-prefix")) {
- 				if (prefix)
- 					puts(prefix);
-diff --git a/submodule.c b/submodule.c
-index 3b98766a6b..06473d3646 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -1514,3 +1514,86 @@ void absorb_git_dir_into_superproject(const char *prefix,
- 		strbuf_release(&sb);
- 	}
- }
-+
-+const char *get_superproject_working_tree(void)
-+{
-+	struct child_process cp = CHILD_PROCESS_INIT;
-+	struct strbuf sb = STRBUF_INIT;
-+	const char *one_up = real_path_if_valid("../");
-+	const char *cwd = xgetcwd();
-+	const char *ret = NULL;
-+	const char *subpath;
-+	int code;
-+	ssize_t len;
-+
-+	if (!is_inside_work_tree())
-+		/*
-+		 * FIXME:
-+		 * We might have a superproject, but it is harder
-+		 * to determine.
-+		 */
-+		return NULL;
-+
-+	if (!one_up)
-+		return NULL;
-+
-+	subpath = relative_path(cwd, one_up, &sb);
-+
-+	prepare_submodule_repo_env(&cp.env_array);
-+	argv_array_pop(&cp.env_array);
-+
-+	argv_array_pushl(&cp.args, "--literal-pathspecs", "-C", "..",
-+			"ls-files", "--stage", "--full-name", "--", subpath, NULL);
-+	strbuf_reset(&sb);
-+
-+	cp.no_stdin = 1;
-+	cp.no_stderr = 1;
-+	cp.out = -1;
-+	cp.git_cmd = 1;
-+
-+	if (start_command(&cp))
-+		die(_("could not start ls-files in .."));
-+
-+	len = strbuf_read(&sb, cp.out, PATH_MAX);
-+	close(cp.out);
-+
-+	if (starts_with(sb.buf, "160000")) {
-+		int super_sub_len;
-+		int cwd_len = strlen(cwd);
-+		char *super_sub, *super_wt;
-+
-+		/*
-+		 * There is a superproject having this repo as a submodule.
-+		 * The format is <mode> SP <hash> SP <stage> TAB <full name> LF,
-+		 * First remove LF, then skip up to \t.
-+		 */
-+		strbuf_rtrim(&sb);
-+		super_sub = strchr(sb.buf, '\t') + 1;
-+
-+		super_sub_len = sb.buf + sb.len - super_sub;
-+		if (super_sub_len > cwd_len ||
-+		    strcmp(&cwd[cwd_len - super_sub_len], super_sub))
-+			die (_("BUG: returned path string doesn't match cwd?"));
-+
-+		super_wt = xstrdup(cwd);
-+		super_wt[cwd_len - super_sub_len] = '\0';
-+
-+		ret = real_path(super_wt);
-+
-+		free(super_wt);
-+	}
-+	strbuf_release(&sb);
-+
-+	code = finish_command(&cp);
-+
-+	if (code == 128)
-+		/* '../' is not a git repository */
-+		return NULL;
-+	if (code == 0 && len == 0)
-+		/* There is an unrelated git repository at '../' */
-+		return NULL;
-+	if (code)
-+		die(_("ls-tree returned unexpected return code %d"), code);
-+
-+	return ret;
-+}
-diff --git a/submodule.h b/submodule.h
-index 05ab674f06..c8a0c9cb29 100644
---- a/submodule.h
-+++ b/submodule.h
-@@ -93,4 +93,12 @@ extern void prepare_submodule_repo_env(struct argv_array *out);
- extern void absorb_git_dir_into_superproject(const char *prefix,
- 					     const char *path,
- 					     unsigned flags);
-+
-+/*
-+ * Return the absolute path of the working tree of the superproject, which this
-+ * project is a submodule of. If this repository is not a submodule of
-+ * another repository, return NULL.
-+ */
-+extern const char *get_superproject_working_tree(void);
-+
- #endif
-diff --git a/t/t1500-rev-parse.sh b/t/t1500-rev-parse.sh
-index 9ed8b8ccba..03d3c7f6d6 100755
---- a/t/t1500-rev-parse.sh
-+++ b/t/t1500-rev-parse.sh
-@@ -116,4 +116,18 @@ test_expect_success 'git-path inside sub-dir' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'showing the superproject correctly' '
-+	git rev-parse --show-superproject-working-tree >out &&
-+	test_must_be_empty out &&
-+
-+	test_create_repo super &&
-+	test_commit -C super test_commit &&
-+	test_create_repo sub &&
-+	test_commit -C sub test_commit &&
-+	git -C super submodule add ../sub dir/sub &&
-+	echo $(pwd)/super >expect  &&
-+	git -C super/dir/sub rev-parse --show-superproject-working-tree >out &&
-+	test_cmp expect out
-+'
-+
- test_done
--- 
-2.12.0.190.g6a12a61b77.dirty
-
+On Tue, Mar 7, 2017 at 5:51 PM, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+> Hi valtron,
+>
+> On Wed, 8 Mar 2017, Johannes Schindelin wrote:
+>
+>> On Tue, 7 Mar 2017, valtron wrote:
+>>
+>> > When GIT_WORK_TREE contains a drive-letter and forward-slashes, some git
+>> > commands crash:
+>> >
+>> > C:\repo>set GIT_WORK_TREE=C:/repo
+>> > C:\repo>git rev-parse HEAD
+>> >      1 [main] git 2332 cygwin_exception::open_stackdumpfile: Dumping
+>> > stack trace to git.exe.stackdump
+>>
+>> [...]
+>>
+>> In any case, this problem is squarely within the MSYS2 runtime. It has
+>> nothing to do with Git except for the motivation to set an environment
+>> variable to an absolute path as you outlined.
+>
+> Oh boy was I *wrong*! I take that back and apologize for my premature
+> verdict.
+>
+> It is true that you should not set GIT_WORKTREE=c:/repo if you want to
+> work with MSYS2 Git because MSYS2 expects pseudo Unix paths, i.e. /c/repo,
+> and it will simply try to guess correctly and convert Windows paths with
+> drive letters and backslashes to that form.
+>
+> But that does not excuse a crash.
+>
+> The problem is actually even worse: On *Linux*, this happens:
+>
+>         $ GIT_WORK_TREE=c:/invalid git rev-parse HEAD
+>         Segmentation fault (core dumped)
+>
+> The reason is this: when set_git_work_tree() was converted from using
+> xstrdup(real_path()) to real_pathdup(), we completely missed the fact that
+> the former passed die_on_error = 1 to strbuf_realpath(), while the latter
+> passed die_on_error = 0. As a consequence, work_tree can be NULL now, and
+> the current code does not expect set_git_work_tree() to return
+> successfully after setting work_tree to NULL.
+>
+> I Cc:ed Brandon, the author of 4ac9006f832 (real_path: have callers use
+> real_pathdup and strbuf_realpath, 2016-12-12).
+>
+> Brandon, I have a hunch that pretty much all of the xstrdup(real_path())
+> -> real_pathdup() sites have a problem now. The previous contract was that
+> real_path() would die() if the passed path is invalid. The new contract is
+> that real_pathdup() returns NULL in such a case. I believe that the
+> following call sites are problematic in particular:
+>
+> builtin/init-db.c: init_db():
+>         char *original_git_dir = real_pathdup(git_dir);
+>
+> builtin/init-db.c: cmd_init_db():
+>         real_git_dir = real_pathdup(real_git_dir);
+>         ...
+>         git_work_tree_cfg = real_pathdup(rel);
+>
+> environment.c: set_git_work_tree():
+>         work_tree = real_pathdup(new_work_tree);
+>
+> setup.c: setup_discovered_git_dir():
+>         gitdir = real_pathdup(gitdir);
+>
+> submodule.c: connect_work_tree_and_git_dir():
+>         const char *real_work_tree = real_pathdup(work_tree);
+>
+> transport.c: refs_from_alternate_cb():
+>         other = real_pathdup(e->path);
+>
+> worktree.c: find_worktree():
+>         path = real_pathdup(arg);
+>
+> I verified that all calls are still there, except for the submodule.c one
+> which simply moved to dir.c and the transport.c one which apparently now
+> no longer die()s but simply ignores non-existing paths now.
+>
+> That leaves six places to patch, methinks... This diff may serve as an
+> initial version, but I have not really had a deep look at all call sites
+> (and it is an unwise idea to trust me at this hour anyway, look at the
+> time when I sent this mail):
+>
+> -- snipsnap --
+> diff --git a/abspath.c b/abspath.c
+> index 2f0c26e0e2c..b02e068aa34 100644
+> --- a/abspath.c
+> +++ b/abspath.c
+> @@ -214,12 +214,12 @@ const char *real_path_if_valid(const char *path)
+>         return strbuf_realpath(&realpath, path, 0);
+>  }
+>
+> -char *real_pathdup(const char *path)
+> +char *real_pathdup(const char *path, int die_on_error)
+>  {
+>         struct strbuf realpath = STRBUF_INIT;
+>         char *retval = NULL;
+>
+> -       if (strbuf_realpath(&realpath, path, 0))
+> +       if (strbuf_realpath(&realpath, path, die_on_error))
+>                 retval = strbuf_detach(&realpath, NULL);
+>
+>         strbuf_release(&realpath);
+> diff --git a/builtin/init-db.c b/builtin/init-db.c
+> index 1d4d6a00789..8a6acb0ec69 100644
+> --- a/builtin/init-db.c
+> +++ b/builtin/init-db.c
+> @@ -338,7 +338,7 @@ int init_db(const char *git_dir, const char *real_git_dir,
+>  {
+>         int reinit;
+>         int exist_ok = flags & INIT_DB_EXIST_OK;
+> -       char *original_git_dir = real_pathdup(git_dir);
+> +       char *original_git_dir = real_pathdup(git_dir, 1);
+>
+>         if (real_git_dir) {
+>                 struct stat st;
+> @@ -489,7 +489,7 @@ int cmd_init_db(int argc, const char **argv, const char *prefix)
+>         argc = parse_options(argc, argv, prefix, init_db_options, init_db_usage, 0);
+>
+>         if (real_git_dir && !is_absolute_path(real_git_dir))
+> -               real_git_dir = real_pathdup(real_git_dir);
+> +               real_git_dir = real_pathdup(real_git_dir, 1);
+>
+>         if (argc == 1) {
+>                 int mkdir_tried = 0;
+> @@ -560,7 +560,7 @@ int cmd_init_db(int argc, const char **argv, const char *prefix)
+>                 const char *git_dir_parent = strrchr(git_dir, '/');
+>                 if (git_dir_parent) {
+>                         char *rel = xstrndup(git_dir, git_dir_parent - git_dir);
+> -                       git_work_tree_cfg = real_pathdup(rel);
+> +                       git_work_tree_cfg = real_pathdup(rel, 1);
+>                         free(rel);
+>                 }
+>                 if (!git_work_tree_cfg)
+> diff --git a/cache.h b/cache.h
+> index e7b57457e73..7168c1e5ff0 100644
+> --- a/cache.h
+> +++ b/cache.h
+> @@ -1160,7 +1160,7 @@ char *strbuf_realpath(struct strbuf *resolved, const char *path,
+>                       int die_on_error);
+>  const char *real_path(const char *path);
+>  const char *real_path_if_valid(const char *path);
+> -char *real_pathdup(const char *path);
+> +char *real_pathdup(const char *path, int die_on_error);
+>  const char *absolute_path(const char *path);
+>  char *absolute_pathdup(const char *path);
+>  const char *remove_leading_path(const char *in, const char *prefix);
+> diff --git a/dir.c b/dir.c
+> index 4541f9e1460..aeeb5ce1049 100644
+> --- a/dir.c
+> +++ b/dir.c
+> @@ -2730,8 +2730,8 @@ void connect_work_tree_and_git_dir(const char *work_tree_, const char *git_dir_)
+>  {
+>         struct strbuf file_name = STRBUF_INIT;
+>         struct strbuf rel_path = STRBUF_INIT;
+> -       char *git_dir = real_pathdup(git_dir_);
+> -       char *work_tree = real_pathdup(work_tree_);
+> +       char *git_dir = real_pathdup(git_dir_, 1);
+> +       char *work_tree = real_pathdup(work_tree_, 1);
+>
+>         /* Update gitfile */
+>         strbuf_addf(&file_name, "%s/.git", work_tree);
+> diff --git a/environment.c b/environment.c
+> index c07fb17fb70..42dc3106d2f 100644
+> --- a/environment.c
+> +++ b/environment.c
+> @@ -259,7 +259,7 @@ void set_git_work_tree(const char *new_work_tree)
+>                 return;
+>         }
+>         git_work_tree_initialized = 1;
+> -       work_tree = real_pathdup(new_work_tree);
+> +       work_tree = real_pathdup(new_work_tree, 1);
+>  }
+>
+>  const char *get_git_work_tree(void)
+> diff --git a/setup.c b/setup.c
+> index 9118b48590a..d51549a6de3 100644
+> --- a/setup.c
+> +++ b/setup.c
+> @@ -698,7 +698,7 @@ static const char *setup_discovered_git_dir(const char *gitdir,
+>         /* --work-tree is set without --git-dir; use discovered one */
+>         if (getenv(GIT_WORK_TREE_ENVIRONMENT) || git_work_tree_cfg) {
+>                 if (offset != cwd->len && !is_absolute_path(gitdir))
+> -                       gitdir = real_pathdup(gitdir);
+> +                       gitdir = real_pathdup(gitdir, 1);
+>                 if (chdir(cwd->buf))
+>                         die_errno("Could not come back to cwd");
+>                 return setup_explicit_git_dir(gitdir, cwd, nongit_ok);
+> @@ -808,7 +808,7 @@ static int canonicalize_ceiling_entry(struct string_list_item *item,
+>                 /* Keep entry but do not canonicalize it */
+>                 return 1;
+>         } else {
+> -               char *real_path = real_pathdup(ceil);
+> +               char *real_path = real_pathdup(ceil, 0);
+>                 if (!real_path) {
+>                         return 0;
+>                 }
+> diff --git a/submodule.c b/submodule.c
+> index 3b98766a6bc..1d4c0ce86ee 100644
+> --- a/submodule.c
+> +++ b/submodule.c
+> @@ -1403,7 +1403,7 @@ static void relocate_single_git_dir_into_superproject(const char *prefix,
+>                 /* If it is an actual gitfile, it doesn't need migration. */
+>                 return;
+>
+> -       real_old_git_dir = real_pathdup(old_git_dir);
+> +       real_old_git_dir = real_pathdup(old_git_dir, 0);
+>
+>         sub = submodule_from_path(null_sha1, path);
+>         if (!sub)
+> @@ -1412,7 +1412,7 @@ static void relocate_single_git_dir_into_superproject(const char *prefix,
+>         new_git_dir = git_path("modules/%s", sub->name);
+>         if (safe_create_leading_directories_const(new_git_dir) < 0)
+>                 die(_("could not create directory '%s'"), new_git_dir);
+> -       real_new_git_dir = real_pathdup(new_git_dir);
+> +       real_new_git_dir = real_pathdup(new_git_dir, 0);
+>
+>         if (!prefix)
+>                 prefix = get_super_prefix();
+> @@ -1472,14 +1472,14 @@ void absorb_git_dir_into_superproject(const char *prefix,
+>                 new_git_dir = git_path("modules/%s", sub->name);
+>                 if (safe_create_leading_directories_const(new_git_dir) < 0)
+>                         die(_("could not create directory '%s'"), new_git_dir);
+> -               real_new_git_dir = real_pathdup(new_git_dir);
+> +               real_new_git_dir = real_pathdup(new_git_dir, 0);
+>                 connect_work_tree_and_git_dir(path, real_new_git_dir);
+>
+>                 free(real_new_git_dir);
+>         } else {
+>                 /* Is it already absorbed into the superprojects git dir? */
+> -               char *real_sub_git_dir = real_pathdup(sub_git_dir);
+> -               char *real_common_git_dir = real_pathdup(get_git_common_dir());
+> +               char *real_sub_git_dir = real_pathdup(sub_git_dir, 0);
+> +               char *real_common_git_dir = real_pathdup(get_git_common_dir(), 0);
+>
+>                 if (!starts_with(real_sub_git_dir, real_common_git_dir))
+>                         relocate_single_git_dir_into_superproject(prefix, path);
+> diff --git a/worktree.c b/worktree.c
+> index d633761575b..0486e31ad4a 100644
+> --- a/worktree.c
+> +++ b/worktree.c
+> @@ -255,7 +255,7 @@ struct worktree *find_worktree(struct worktree **list,
+>                 return wt;
+>
+>         arg = prefix_filename(prefix, strlen(prefix), arg);
+> -       path = real_pathdup(arg);
+> +       path = real_pathdup(arg, 1);
+>         for (; *list; list++)
+>                 if (!fspathcmp(path, real_path((*list)->path)))
+>                         break;
