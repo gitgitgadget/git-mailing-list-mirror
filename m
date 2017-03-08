@@ -2,280 +2,223 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0E46D202D7
-	for <e@80x24.org>; Wed,  8 Mar 2017 18:51:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6FAF1202D7
+	for <e@80x24.org>; Wed,  8 Mar 2017 19:02:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754153AbdCHSu5 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 8 Mar 2017 13:50:57 -0500
-Received: from siwi.pair.com ([209.68.5.199]:42568 "EHLO siwi.pair.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1754115AbdCHSu4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Mar 2017 13:50:56 -0500
-Received: from jeffhostetler.2jll4ugiwlvuzhh55dqabi0nia.bx.internal.cloudapp.net (unknown [40.76.14.28])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id 5059E845F8;
-        Wed,  8 Mar 2017 13:50:54 -0500 (EST)
-From:   git@jeffhostetler.com
-To:     git@vger.kernel.org
-Cc:     jeffhost@microsoft.com, peff@peff.net, gitster@pobox.com,
-        markbt@efaref.net, benpeart@microsoft.com, jonathantanmy@google.com
-Subject: [PATCH 00/10] RFC Partial Clone and Fetch
-Date:   Wed,  8 Mar 2017 18:50:29 +0000
-Message-Id: <1488999039-37631-1-git-send-email-git@jeffhostetler.com>
-X-Mailer: git-send-email 2.7.4
+        id S1753963AbdCHTCZ (ORCPT <rfc822;e@80x24.org>);
+        Wed, 8 Mar 2017 14:02:25 -0500
+Received: from mail-pg0-f43.google.com ([74.125.83.43]:33575 "EHLO
+        mail-pg0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752620AbdCHTCY (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Mar 2017 14:02:24 -0500
+Received: by mail-pg0-f43.google.com with SMTP id 25so16402506pgy.0
+        for <git@vger.kernel.org>; Wed, 08 Mar 2017 11:01:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=t2pL9qcKVTlPtgleaj2D+UN0YA8ukvLc+zoC+kjTMBo=;
+        b=rxIcP8q28Siv/FpsV/cP15rtJ/J7dVJhbgIRkBnWYLbieMnnJhYuzqnWxsfQt6jSeU
+         IVrNtyoItTYku4E7IULmKQVp0slyjKUOIN1KsgjJdjsqel2wKIzTG6MyOPv2AfGjxaiv
+         IHX9fpGcpkd9w5W2kgVyNF1LxVbw3J9f+hWrTKmqnhZGcEPuobNS7/dzFeaaFpDoOfKk
+         UHZSl7mQMlO1PxBt2IsIHExnYSH/xoQUbVgr0wipkXaNrAwaldIGGIF4QDIlV66udwC/
+         XSTjgrqrbf4nAP0dtX1Hia2frKOshzdCvSIYWy8nqnKRmdPD+du3dFg44GUzK81v7Jar
+         1HiQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=t2pL9qcKVTlPtgleaj2D+UN0YA8ukvLc+zoC+kjTMBo=;
+        b=QXUskhkrF5QPJY3U6ruC9DgZLZpnGTLutBKFcoGOKweya3gP7D9fHynccNKVF0OOnQ
+         D3WwcZofM1Tgxz2KfKl3Whe5+9JEAtguvi7Lck7xJWCiA9qhptSCcaUSuUOCNlv+hwgk
+         YEz+NmlSa9eTrNqUVL+ZPBD6qg5w+sxF191q0rguU5daz9baomayfHV4VJ+LY5Vv10gf
+         h745mgX03BbTWIhYIiJn7LFQAfLATkm+av0FcW/pd9tUxgmQof8kfJxaxoEt0yGTO+v0
+         1B4uCZq3jagLPKhQA2NlvjgcU2Ab2Xi+aR1CpRmF4ema5U9idiK7hNaF5uxiNZMVtyNm
+         be4Q==
+X-Gm-Message-State: AMke39k2nAJ72xrhYeATWb1DouQBSNjutvnd8g4AHMZZ0tOvWaH142kevRKNg/JfmhXTrhHVGaeece/P28/dUo9K
+X-Received: by 10.84.195.129 with SMTP id j1mr10657883pld.88.1488999237409;
+ Wed, 08 Mar 2017 10:53:57 -0800 (PST)
+MIME-Version: 1.0
+Received: by 10.100.187.5 with HTTP; Wed, 8 Mar 2017 10:53:56 -0800 (PST)
+In-Reply-To: <20170308174449.24266-1-me@vtolstov.org>
+References: <20170308174449.24266-1-me@vtolstov.org>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Wed, 8 Mar 2017 10:53:56 -0800
+Message-ID: <CAGZ79kYJ9he-jhnA35m6az-T5Z58efmKsUaBw--_KzdGJPZb-Q@mail.gmail.com>
+Subject: Re: [PATCH] submodule--helper.c: remove duplicate code
+To:     Valery Tolstov <me@vtolstov.org>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Jeff Hostetler <jeffhost@microsoft.com>
-
-
-[RFC] Partial Clone and Fetch
-=============================
-
-
-This is a WIP RFC for a partial clone and fetch feature wherein the client
-can request that the server omit various blobs from the packfile during
-clone and fetch.  Clients can later request omitted blobs (either from a
-modified upload-pack-like request to the server or via a completely
-independent mechanism).
-
-The purpose here is to reduce the size of packfile downloads and help
-git scale to extremely large repos.
-
-I use the term "partial" here to refer to a portion of one or more commits
-and to avoid use of loaded terms like "sparse", "lazy", "narrow", and "skeleton".
-
-The concept of a partial clone/fetch is independent of and can complement
-the existing shallow-clone, refspec, and limited-ref filtering mechanisms
-since these all filter at the DAG level whereas the work described here
-works *within* the set of commits already chosen for download.
-
-
-A. Requesting a Partial Clone/Fetch
-===================================
-
-Clone, fetch, and fetch-pack will accept one or more new "partial"
-command line arguments as described below.  The fetch-pack/upload-pack
-protocol will be extended to include these new arguments.  Upload-pack
-and pack-objects will be updated accordingly.  Pack-objects will filter
-out the unwanted blobs as it is building the packfile.  Rev-list and
-index-pack will be updated to not complain when missing blobs are
-detected in the received packfile.
-
-[1] "--partial-by-size=<n>[kmg]"
-Where <n> is a non-negative integer with an optional unit.
-
-Request that only blobs smaller than this be included in the packfile.
-The client might use this to implement an alternate LFS or ODB mechanism
-for large blobs, such as suggested in:
-    https://public-inbox.org/git/20161130210420.15982-1-chriscool@tuxfamily.org/
-
-A special case of size zero would omit all blobs and is similar to the
-commits-and-trees-only feature described in:
-    https://public-inbox.org/git/20170113155253.1644-1-benpeart@microsoft.com/
-
-[2] "--partial-special"
-Request that special files, such as ".gitignore" and .gitattributes",
-be included.
-
-[3] *TODO* "--partial-by-profile=<sparse-checkout-path>"
-Where <sparse-checkout-path> is verson-controlled file in the repository
-(either present in the requested commit or the default HEAD on the server).
-
-    [I envision a ".gitsparse/<path>" hierarchy where teams can store
-     common sparse-checkout profiles.  And then they can reference
-     them from their private ".git/info/sparse-checkout" files.]
-
-Pack-objects will use this file and the sparse-checkout rules to only
-include blobs in the packfile that would be needed to do the corresponding
-sparse-checkout (and let the client avoid having to demand-load their
-entire enlistment).
-
-
-When multiple "partial" options are given, they are treated as a simple OR
-giving the union of the blobs selected.
-
-The patch series describes the changes to the fetch-pack/upload-pack
-protocol:
-    Documentation/technical/pack-protocol.txt
-    Documentation/technical/protocol-capabilities.txt
-
-
-B. Issues Backfilling Omitted Blobs
-===================================
-
-Ideally, if the client only does "--partial-by-profile" fetches, it
-should not need to fetch individual missing blobs, but we have to allow
-for it to handle the other commands and other unexpected issues.
-
-There are 3 orthogonal concepts here:  when, how and where?
-
-
-[1] When:
-(1a) a pre-command or hook to identify needed blobs and pre-fetch them
-before allowing the actual command to start;
-(1b) a dry-run mode for the command to likewise pre-fetch them; or
-(1c) "fault" them in as necessary in read_object() while the command is
-running and without any pre-fetch (either synchronously or asynchronously
-and with/without a helper process).
-
-Ideas for (1c) are being addressed in the following threads:
-    https://public-inbox.org/git/20170113155253.1644-1-benpeart@microsoft.com/
-    https://public-inbox.org/git/20170117184258.sd7h2hkv27w52gzt@sigill.intra.peff.net/
-    https://public-inbox.org/git/20161130210420.15982-1-chriscool@tuxfamily.org/
-so I won't consider them here.
-
-Ideas (1a) and (1b) have the advantage that they try to obtain all
-required blobs before allowing an operation to start, so there is
-less opportunity to leave the user in a weird state.
-
-The best solution may be a combination of (1a) and (1b) and may depend
-on the individual command.  However, (1b) will further complicate the
-source in the existing commands, so in some cases it may be simpler to
-just take the ideas and implement stand-alone pre-commands.
-
-For now, I'm going to limit this RFC to (1a).
-
-
-[2] How:
-(2a) augment the existing git protocols to include blob requests;
-(2b) local external process (such as a database client or a local bulk
-fetch daemon);
-
-Ideas for (2b) are being addressed in the above threads, so I won't
-consider them here.
-
-So I'm going to limit this RFC to (2a).
-
-
-[3] Where:
-(3a) the same remote server used for the partial clone/fetch;
-(3b) anywhere else, such as a proxy server or Azure or S3 blob store.
-
-There's no reason that the client should be limited to going back to
-the same server, but I'm not going to consider it here, so I'm going
-to limit this RFC to (3a).
-
-
-
-C. New Blob-Fetch Protocol (2a)
-===============================
-
-*TODO* A new pair of commands, such as fetch-blob-pack and upload-blob-pack,
-will be created to let the client request a batch of blobs and receive a
-packfile.  A protocol similar to the fetch-pack/upload-pack will be spoken
-between them.  (This avoids complicating the existing protocol and the work
-of enumerating the refs.)  Upload-blob-pack will use pack-objects to build
-the packfile.
-
-It is also more efficient than requesting a single blob at a time using
-the existing fetch-pack/upload-pack mechanism (with the various allow
-unreachable options).
-
-*TODO* The new request protocol will be defined in the patch series.
-It will include: a list of the desired blob SHAs.  Possibly also the commit
-SHA, branch name, and pathname of each blob (or whatever is necessary to let
-the server address the reachability concerns).  Possibly also the last
-known SHA for each blob to allow for deltafication in the packfile.
-
-
-D. Pre-fetching Blobs (1a)
-==========================
-
-On the client side, one or more special commands will be created to assemble
-the list of blobs needed for an operation and passed to fetch-blob-pack.
-
-
-Checkout Example:  After running a command like:
-    'clone --partial-by-size=1m --no-checkout'
-
-and before doing an actual checkout, we need a command to essentially do:
-    (1) "ls-tree -r <tree-ish>",
-    (2) filter that by the sparse-checkout currently in effect,
-    (3) filter that for missing blobs,
-    (4) and pass the resulting list to fetch-blob-pack.
-
-Afterwards, checkout should complete without faulting.
-
-A new "git ls-partial <treeish>" command has been created to do
-steps 1 thru 3 and print the resulting list of SHAs on stdout.
-
-
-E. Unresolved Thoughts
-======================
-
-*TODO* The server should optionally return (in a side-band?) a list 
-of the blobs that it omitted from the packfile (and possibly the sizes
-or sha1_object_info() data for them) during the fetch-pack/upload-pack
-operation.  This would allow the client to distinguish from invalid
-SHAs and missing ones.  Size information would allow the client to
-maybe choose between various servers.
-
-*TODO* The partial clone arguments should be recorded in ".git/info/"
-so that subsequent fetch commands can inherit them and rev-list/index-pack
-know to not complain by default.
-
-*TODO* Update GC like rev-list to not complain when there are missing blobs.
-
-*TODO* Extend ls-partial to include the "-m" and 3 tree-ish arguments
-like read-tree, so we can pre-fetch for merges that may require file
-merges (that may or may not be within our sparse-checkout).
-
-*TODO* I also need to review the RFC that Mark Thomas submitted over
-the weekend:
-    https://public-inbox.org/git/20170304191901.9622-1-markbt%40efaref.net/t
-
-
-
-
-
-Jeff Hostetler (10):
-  pack-objects: eat CR in addition to LF after fgets.
-  pack-objects: add --partial-by-size=n --partial-special
-  pack-objects: test for --partial-by-size --partial-special
-  upload-pack: add partial (sparse) fetch
-  fetch-pack: add partial-by-size and partial-special
-  rev-list: add --allow-partial option to relax connectivity checks
-  index-pack: add --allow-partial option to relax blob existence checks
-  fetch: add partial-by-size and partial-special arguments
-  clone: add partial-by-size and partial-special arguments
-  ls-partial: created command to list missing blobs
-
- Documentation/technical/pack-protocol.txt         |  14 ++
- Documentation/technical/protocol-capabilities.txt |   7 +
- Makefile                                          |   2 +
- builtin.h                                         |   1 +
- builtin/clone.c                                   |  26 ++
- builtin/fetch-pack.c                              |   9 +
- builtin/fetch.c                                   |  26 +-
- builtin/index-pack.c                              |  20 +-
- builtin/ls-partial.c                              | 110 +++++++++
- builtin/pack-objects.c                            |  64 ++++-
- builtin/rev-list.c                                |  22 +-
- connected.c                                       |   3 +
- connected.h                                       |   3 +
- fetch-pack.c                                      |  17 ++
- fetch-pack.h                                      |   2 +
- git.c                                             |   1 +
- partial-utils.c                                   | 279 ++++++++++++++++++++++
- partial-utils.h                                   |  93 ++++++++
- t/5316-pack-objects-partial.sh                    |  72 ++++++
- transport.c                                       |   8 +
- transport.h                                       |   8 +
- upload-pack.c                                     |  32 ++-
- 22 files changed, 813 insertions(+), 6 deletions(-)
- create mode 100644 builtin/ls-partial.c
- create mode 100644 partial-utils.c
- create mode 100644 partial-utils.h
- create mode 100644 t/5316-pack-objects-partial.sh
-
--- 
-2.7.4
-
+On Wed, Mar 8, 2017 at 9:44 AM,  <me@vtolstov.org> wrote:
+> From: Valery Tolstov <me@vtolstov.org>
+>
+> Remove code fragment from module_clone that duplicates functionality
+> of connect_work_tree_and_git_dir in dir.c
+>
+> Signed-off-by: Valery Tolstov <me@vtolstov.org>
+> ---
+>>> I think we can reuse code from module_clone that writes .git link.
+>>> Possibly this code fragment needs to be factored out from module_clone
+>>
+>> That fragment already exists, see dir.h:
+>> connect_work_tree_and_git_dir(work_tree, git_dir);
+>> Maybe another good microproject is to use that in module_clone.
+>
+> By suggestion of Stefan Beller I would like to make this micro
+> improvement as my microproject for GSoc.
+
+Thanks for looking into this code deduplication!
+
+Well these two parts of the code are subtly different, though.
+When applying this patch to origin/master (3bc53220cb2 is the
+last time I fetched from Junio), then
+
+    $ make
+    $ cd t
+    $ prove --timer --jobs 25 ./t[0-8][0-9]*.sh
+... lots of output...
+ Test Summary Report
+-------------------
+./t3600-rm.sh                               (Wstat: 256 Tests: 79 Failed: 24)
+  Failed tests:  39-40, 43-59, 61-65
+  Non-zero exit status: 1
+./t4059-diff-submodule-not-initialized.sh   (Wstat: 256 Tests: 8 Failed: 5)
+  Failed tests:  4-8
+  Non-zero exit status: 1
+./t7001-mv.sh                               (Wstat: 256 Tests: 47 Failed: 7)
+  Failed tests:  39-45
+  Non-zero exit status: 1
+./t7412-submodule-absorbgitdirs.sh          (Wstat: 256 Tests: 11 Failed: 6)
+  Failed tests:  3-7, 9
+  Non-zero exit status: 1
+./t7400-submodule-basic.sh                  (Wstat: 256 Tests: 90 Failed: 13)
+  Failed tests:  46-47, 49, 75, 79-87
+  Non-zero exit status: 1
+./t7406-submodule-update.sh                 (Wstat: 256 Tests: 52 Failed: 14)
+  Failed tests:  5, 28-31, 33-34, 36-39, 43, 45-46
+  Non-zero exit status: 1
+
+When then running one of them with debug output
+(See t/README for the debug flags, I remember divx,
+the video format as a sufficient set of flags to get enough debug output)
+
+    $ ./t7406-submodule-update.sh -d -i -v -x
+...
+++ cd foo
+++ git submodule deinit -f sub
+Cleared directory 'sub'
+Submodule 'foo/sub' (/usr/local/google/home/sbeller/OSS/git/t/trash
+directory.t7406-submodule-update/withsubs/../rebasing) unregistered
+for path 'sub'
+++ git submodule update --init sub
++ test_eval_ret_=1
++ want_trace
++ test t = t
++ test t = t
++ set +x
+error: last command exited with $?=1
+not ok 5 - submodule update --init from and of subdirectory
+#
+# git init withsubs &&
+# (cd withsubs &&
+# mkdir foo &&
+# git submodule add "$(pwd)/../rebasing" foo/sub &&
+# (cd foo &&
+#  git submodule deinit -f sub &&
+#  git submodule update --init sub 2>../../actual2
+# )
+# ) &&
+# test_i18ncmp expect2 actual2
+#
+
+$ cd trash\ directory.t7406-submodule-update/withsubs/foo/
+$  git submodule deinit -f sub
+Cleared directory 'sub'
+Submodule 'foo/sub' (/usr/local/google/home/sbeller/OSS/git/t/trash
+directory.t7406-submodule-update/withsubs/../rebasing) unregistered
+for path 'sub'
+
+$ git submodule update --init sub
+Submodule 'foo/sub' (/usr/local/google/home/sbeller/OSS/git/t/trash
+directory.t7406-submodule-update/withsubs/../rebasing) registered for
+path 'sub'
+fatal: could not get submodule directory for
+'/usr/local/google/home/sbeller/OSS/git/t/trash
+directory.t7406-submodule-update/withsubs/foo/sub'
+Failed to clone 'foo/sub'. Retry scheduled
+fatal: could not get submodule directory for
+'/usr/local/google/home/sbeller/OSS/git/t/trash
+directory.t7406-submodule-update/withsubs/foo/sub'
+Failed to clone 'foo/sub' a second time, aborting
+
+
+So I think we're missing to create the directory? (Just guessing)
+
+Maybe we need to have 2293f77a081
+(connect_work_tree_and_git_dir: safely create leading directories,
+part of origin/sb/checkout-recurse-submodules, also found at
+https://public-inbox.org/git/20170306205919.9713-8-sbeller@google.com/ )
+first before we can apply this patch.
+
+Thanks,
+Stefan
+
+>
+>  builtin/submodule--helper.c | 22 +++-------------------
+>  1 file changed, 3 insertions(+), 19 deletions(-)
+>
+> diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+> index 899dc334e..cda8a3bc1 100644
+> --- a/builtin/submodule--helper.c
+> +++ b/builtin/submodule--helper.c
+> @@ -579,7 +579,6 @@ static int module_clone(int argc, const char **argv, const char *prefix)
+>         const char *name = NULL, *url = NULL, *depth = NULL;
+>         int quiet = 0;
+>         int progress = 0;
+> -       FILE *submodule_dot_git;
+>         char *p, *path = NULL, *sm_gitdir;
+>         struct strbuf rel_path = STRBUF_INIT;
+>         struct strbuf sb = STRBUF_INIT;
+> @@ -653,27 +652,12 @@ static int module_clone(int argc, const char **argv, const char *prefix)
+>                 strbuf_reset(&sb);
+>         }
+>
+> -       /* Write a .git file in the submodule to redirect to the superproject. */
+> -       strbuf_addf(&sb, "%s/.git", path);
+> -       if (safe_create_leading_directories_const(sb.buf) < 0)
+> -               die(_("could not create leading directories of '%s'"), sb.buf);
+> -       submodule_dot_git = fopen(sb.buf, "w");
+> -       if (!submodule_dot_git)
+> -               die_errno(_("cannot open file '%s'"), sb.buf);
+> -
+> -       fprintf_or_die(submodule_dot_git, "gitdir: %s\n",
+> -                      relative_path(sm_gitdir, path, &rel_path));
+> -       if (fclose(submodule_dot_git))
+> -               die(_("could not close file %s"), sb.buf);
+> -       strbuf_reset(&sb);
+> -       strbuf_reset(&rel_path);
+> -
+> -       /* Redirect the worktree of the submodule in the superproject's config */
+>         p = git_pathdup_submodule(path, "config");
+>         if (!p)
+>                 die(_("could not get submodule directory for '%s'"), path);
+> -       git_config_set_in_file(p, "core.worktree",
+> -                              relative_path(path, sm_gitdir, &rel_path));
+> +
+> +       /* Connect module worktree and git dir */
+> +       connect_work_tree_and_git_dir(path, sm_gitdir);
+>
+>         /* setup alternateLocation and alternateErrorStrategy in the cloned submodule if needed */
+>         git_config_get_string("submodule.alternateLocation", &sm_alternate);
+> --
+> 2.12.0.190.g250ed7eaf
+>
