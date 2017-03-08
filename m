@@ -2,91 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2910620135
-	for <e@80x24.org>; Wed,  8 Mar 2017 22:08:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 89B2420135
+	for <e@80x24.org>; Wed,  8 Mar 2017 22:13:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932126AbdCHWIx (ORCPT <rfc822;e@80x24.org>);
-        Wed, 8 Mar 2017 17:08:53 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:57305 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S932123AbdCHWIw (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Mar 2017 17:08:52 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id E6FE16DB1F;
-        Wed,  8 Mar 2017 15:54:11 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=Hhp+B2u+mJOnmFxqiQCtqfGH8aI=; b=rDrKh7
-        aeYbekwJ+g1Emqizuf6yYXDoQ16UkJdJXbFPw5vniEJnfSR+XNhMs6y05wbX3xop
-        foMB5Yy8MPqYoJnq/2LZg5+MaS/GnBVe5oNY5v4QIlr0h4OifpYdGd0AMob9aUJB
-        qULnNdFDi49nUjbB4W5FKXzFoGeU8pQChwS5A=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=KMMumK+LHVOGm1ZLpA0vZhJGikUvolcC
-        OhxtLb/c9YP7dmXeDYoGM8t49Smvj8hIFTDrkx/dBzG/YA5k5msvd6f2iU1QSbtv
-        mLSwY/bBiFTaQPJYktyLOHuKYvA/6vbqL5wGRjn/dnKWlQ24HN40BQJ7pkOP89ZU
-        65fFw9btUFA=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id DE82A6DB1E;
-        Wed,  8 Mar 2017 15:54:11 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 39EC46DB1D;
-        Wed,  8 Mar 2017 15:54:11 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Sebastian Schuberth <sschuberth@gmail.com>,
-        Jacob Keller <jacob.keller@gmail.com>,
-        Jeff King <peff@peff.net>,
-        Git Mailing List <git@vger.kernel.org>,
-        Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: diff.ignoreSubmoudles config setting broken?
-References: <5e5b1b92-f7c6-2987-356e-1aab2bff557e@gmail.com>
-        <20170308133348.2ovfsi44vq2rpgom@sigill.intra.peff.net>
-        <CAHGBnuM3iM-kHdxdox_1i56uLbv7gQ5ZUY9Xqf4BG7G_kTf+jQ@mail.gmail.com>
-        <20170308140110.wgdedquqwm75zws2@sigill.intra.peff.net>
-        <CAHGBnuPGPcWwbrZX_92XDJu47bpH=kj2PZ7yWHK=MRfZ_RHXrQ@mail.gmail.com>
-        <CAGZ79kbwMhL-ZnL-iYwPH=tWa8cNQbEGOYYQBw6OzFCMhOWE-w@mail.gmail.com>
-Date:   Wed, 08 Mar 2017 12:54:10 -0800
-In-Reply-To: <CAGZ79kbwMhL-ZnL-iYwPH=tWa8cNQbEGOYYQBw6OzFCMhOWE-w@mail.gmail.com>
-        (Stefan Beller's message of "Wed, 8 Mar 2017 11:04:07 -0800")
-Message-ID: <xmqq8tof32x9.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+        id S1754203AbdCHWNU (ORCPT <rfc822;e@80x24.org>);
+        Wed, 8 Mar 2017 17:13:20 -0500
+Received: from mail-ua0-f193.google.com ([209.85.217.193]:35971 "EHLO
+        mail-ua0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751775AbdCHWNU (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Mar 2017 17:13:20 -0500
+Received: by mail-ua0-f193.google.com with SMTP id y16so7042057uay.3
+        for <git@vger.kernel.org>; Wed, 08 Mar 2017 14:13:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=TpFd0+5bmtxD30l4Sn7GrdzQvX1IjppUCnhQAKsNjq8=;
+        b=FQFUfEQQefxdEaDqIB76bm+kNNmKKESgDdEfmyNvlQWOfzciU/CIZ4s+I6HfJKgYnR
+         W1iBv3arz506pjZUB9DXmCfCwAkgW2VvmESwNqDuOeOSFRZ264mS/6g1inKwQRoWe6k1
+         wgwvHxfUNa1OEUNfpBWn/5tHBMkI7EYpWkcywdPSn4Sd0M+aKqd9qCn4jLFRXt332XJC
+         +vaIFIBWvFO3U8khQHrnyiaqfojC1K6q5c464fmZLUzEpH+lMJFVgaDQC9be7oXff90H
+         ozg+IyzSLNX12en8sIEv/LMx9CU6EKmDe2MgpDeAqNayFwV8QkkGKlusG4HtON8jskL7
+         fiSQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=TpFd0+5bmtxD30l4Sn7GrdzQvX1IjppUCnhQAKsNjq8=;
+        b=umija2X0Id7WAbMg7xsA0dS3VU3fTe0AOMMKO9VshuYbfJZ4zOKfzNuMOPxCfqTbeG
+         2/3DI8K34UE28May9KdkqKPO9UnPALnJUlj4BXjizWHC3zuI8DWtSfEgAUon1tDK2itd
+         u465mwC1GliCscRf3JLcgdASBxEJZpUrs5xOt7xlFqky3fAotpgdc9QBqThP1O+tqYaO
+         bIXgYnY6//Yn/7IczVLIf7w3X58cgh7CniJF5OSgVxKqAosyhPkkPR6+Hp18QrZyz96V
+         M8HVSyt6cxsV3WUs31z8I23XNi9CDIRHwgwQo8u/JitBe/l4uHTXrayAlpGp7OpDaRwn
+         Po7A==
+X-Gm-Message-State: AMke39mMYYSgTazSV4bfJNAdKqsBzRYByx1dhZjCJiURyEi/nk6Ca4CSVhPViyqrF6JAzK8UkrWad1RJEMhzJA==
+X-Received: by 10.31.47.85 with SMTP id v82mr5302795vkv.2.1489011198547; Wed,
+ 08 Mar 2017 14:13:18 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 617E09C0-0441-11E7-AC02-FC50AE2156B6-77302942!pb-smtp2.pobox.com
+Received: by 10.176.87.218 with HTTP; Wed, 8 Mar 2017 14:13:18 -0800 (PST)
+In-Reply-To: <CAME+mvWVDPT+-F7Z-O=XR_EN4qeNEoQ5ksLpLVkVBb0O9LKROg@mail.gmail.com>
+References: <0102015aae7b8536-00c57d0a-1d48-4153-a202-87c4ea9e0e19-000000@eu-west-1.amazonses.com>
+ <E1cldl4-0006L6-CU@mylo.jdl.com> <CAME+mvWVDPT+-F7Z-O=XR_EN4qeNEoQ5ksLpLVkVBb0O9LKROg@mail.gmail.com>
+From:   Prathamesh Chavan <pc44800@gmail.com>
+Date:   Thu, 9 Mar 2017 03:43:18 +0530
+Message-ID: <CAME+mvV__RT5fbSBRU_SwP69xC-JuBE5bmfRbw91VN36-ToxZA@mail.gmail.com>
+Subject: Re: [PATCH] t2027: avoid using pipes
+To:     Jon Loeliger <jdl@jdl.com>
+Cc:     git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
+But when I read the function carefully, it only removes the trash files created
+when test_failure is equal to zero. But as far as I know, I can see the files
+being removed even when a test_failure is non-zero for some test script.
 
-> On Wed, Mar 8, 2017 at 7:07 AM, Sebastian Schuberth
-> <sschuberth@gmail.com> wrote:
->>
->> + Jens
->>
+On Thu, Mar 9, 2017 at 3:08 AM, Prathamesh Chavan <pc44800@gmail.com> wrote:
+> Whenever a test suite is executed, after finishing every test, after running
+> all tests, the function test_done is called. You may find this function in
+> test-lib.sh . This function displays the result of the test and also removes
+> the trash created by running the test.
 >
-> + Jacob Keller, who touched submodule diff display code last.
-> (I am thinking of fd47ae6a, diff: teach diff to display submodule
-> difference with an inline diff, 2016-08-31), which is first release as
-> part of v2.11.0 (that would fit your observance)
-
-Between these two:
-
-	git -c diff.ignoresubmodules=all diff
-	git diff --ignore-submodules=all
-
-one difference is that the latter disables reading extra config from
-.gitmodules (!) while the former makes the command honor it.
-
-This comes from aee9c7d6 ("Submodules: Add the new "ignore" config
-option for diff and status", 2010-08-06), which is ancient and
-predates even v2.0, so if you see problems with v2.12 or v2.11 but
-not with older ones, that would rule out this theory.
+> On Wed, Mar 8, 2017 at 9:14 PM, Jon Loeliger <jdl@jdl.com> wrote:
+>> So, like, Prathamesh Chavan said:
+>>> The exit code of the upstream of a pipe is ignored thus we should avoid
+>>> using it. By writing out the output of the git command to a file, we
+>>> can test the exit codes of both the commands.
+>>>
+>>> Signed-off-by: Prathamesh <pc44800@gmail.com>
+>>> ---
+>>>  t/t2027-worktree-list.sh | 14 +++++++-------
+>>>  1 file changed, 7 insertions(+), 7 deletions(-)
+>>>
+>>> diff --git a/t/t2027-worktree-list.sh b/t/t2027-worktree-list.sh
+>>> index 848da5f..daa7a04 100755
+>>> --- a/t/t2027-worktree-list.sh
+>>> +++ b/t/t2027-worktree-list.sh
+>>> @@ -31,7 +31,7 @@ test_expect_success '"list" all worktrees from main' '
+>>>       test_when_finished "rm -rf here && git worktree prune" &&
+>>>       git worktree add --detach here master &&
+>>>       echo "$(git -C here rev-parse --show-toplevel) $(git rev-parse --short
+>>> HEAD) (detached HEAD)" >>expect &&
+>>> -     git worktree list | sed "s/  */ /g" >actual &&
+>>> +     git worktree list >out && sed "s/  */ /g" <out >actual &&
+>>>       test_cmp expect actual
+>>>  '
+>>
+>> I confess I am not familiar with the test set up.
+>> However, I'd ask the question do we care about the
+>> lingering "out" and "actual" files here?  Or will
+>> they silently be cleaned up along the way later?
+>>
+>> Thanks,
+>> jdl
