@@ -2,81 +2,80 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3A490202D7
-	for <e@80x24.org>; Wed,  8 Mar 2017 18:14:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2C26D202D7
+	for <e@80x24.org>; Wed,  8 Mar 2017 18:16:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754080AbdCHSOr (ORCPT <rfc822;e@80x24.org>);
-        Wed, 8 Mar 2017 13:14:47 -0500
-Received: from mail-qk0-f179.google.com ([209.85.220.179]:36437 "EHLO
-        mail-qk0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754026AbdCHSOq (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Mar 2017 13:14:46 -0500
-Received: by mail-qk0-f179.google.com with SMTP id 1so79083608qkl.3
-        for <git@vger.kernel.org>; Wed, 08 Mar 2017 10:14:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=vmNtpxJrW6BwiDJjhKBOic2Z6YmFxyWBvIsU57ndDFc=;
-        b=QHzQ/Z0WEX4oVQef6EfhS4vlqCHnkue4xktf/vk72+Uo6TS2OER9Q+uLtY2vMWkiGS
-         4ooao3NqiUMy4pRtdlqKSiN1YTuobUj1BvYIFO0K2JdE8PYjTgAmnOy9SHQPG3MqdOK0
-         TZHoV98BTeceWYkEzSI7tVI8MnMRQJRd+AVeR4QuAeUii5ruOjD/KvrCBK/GsH7e+BgF
-         cdV6Y63FphJifgux8MYGYvlYmVsySUZ0puwz9+2ut7qjP80FnQl4Ku/XlimxxVoZw8As
-         iikBxYrVBV/elI9DdojK1HEliC6dbS1ky43cEfGc9yczxCatm98hzwOsLTV1BZNgpN5o
-         Dzzg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=vmNtpxJrW6BwiDJjhKBOic2Z6YmFxyWBvIsU57ndDFc=;
-        b=etJjopTrNiQvK9Yv4Ssz8GJQXQBx+JxijYhEBzq/S1czBTQ5pkT7ek899V7vNTXStb
-         rRaY5DZQqwgHzrju/hcm5zWHiP2aYN/kOhbQk7MhRgOzY6tD6XtrvnXOrTVLEHNo+B4q
-         8L73zlvUaCQUPM2pLeo2kK/XTG/Ab+jdWFXu40/JC/6zBCikOEQjilKh4/ykGAYxaaY7
-         u4r8KHLP/geEiK1CMU3VHOyYvWANwzMcWeJPkcKHBfCXTN50j0rWCTXFnRVxoHgxmZ92
-         RsaAD3T0X0wXUWhiivhgtkN51O1N0RYnrn4ys9nHkiluupKWYESKLAE4Se3tIYx1G8+1
-         t3wg==
-X-Gm-Message-State: AFeK/H2IRYvM8hxJKmytACPnrWpmny38VAJ3Lyx6iirrP/Sm3dLvkJGCfi7ijKD8fuIXEKjgPPU1OXtRC7LKdg==
-X-Received: by 10.55.209.28 with SMTP id s28mr8721210qki.178.1488996884408;
- Wed, 08 Mar 2017 10:14:44 -0800 (PST)
+        id S1753913AbdCHSQn (ORCPT <rfc822;e@80x24.org>);
+        Wed, 8 Mar 2017 13:16:43 -0500
+Received: from cloud.peff.net ([104.130.231.41]:40640 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751600AbdCHSQm (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Mar 2017 13:16:42 -0500
+Received: (qmail 32208 invoked by uid 109); 8 Mar 2017 16:29:28 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 08 Mar 2017 16:29:28 +0000
+Received: (qmail 13825 invoked by uid 111); 8 Mar 2017 16:29:37 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 08 Mar 2017 11:29:37 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 08 Mar 2017 11:29:26 -0500
+Date:   Wed, 8 Mar 2017 11:29:26 -0500
+From:   Jeff King <peff@peff.net>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH v3 0/9] Fix the early config
+Message-ID: <20170308162926.mcjuterphnctfmrp@sigill.intra.peff.net>
+References: <cover.1488506615.git.johannes.schindelin@gmx.de>
+ <cover.1488562287.git.johannes.schindelin@gmx.de>
+ <20170304073952.drfgy7jacnlm6tum@sigill.intra.peff.net>
+ <alpine.DEB.2.20.1703071314180.3767@virtualbox>
+ <20170308073035.pt5ysp6bzpozoqps@sigill.intra.peff.net>
+ <alpine.DEB.2.20.1703081701100.3767@virtualbox>
 MIME-Version: 1.0
-Received: by 10.12.165.66 with HTTP; Wed, 8 Mar 2017 10:14:24 -0800 (PST)
-From:   Guillaume Wenzek <guillaume.wenzek@gmail.com>
-Date:   Wed, 8 Mar 2017 19:14:24 +0100
-Message-ID: <CAAvNd=ir1qNQVaKphdg51AfGnsNgTrfvW2L6cca3SHiZrWNgHA@mail.gmail.com>
-Subject: BUG Report: git branch ignore --no-abbrev flag
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <alpine.DEB.2.20.1703081701100.3767@virtualbox>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
-After updating to git 2.12.0 on Monday I noticed that the "git branch"
-wasn't behaving as usual.
-As of today `git branch -vv --no-abbrev` outputs short hashes instead
-of long one (as requested by --no-abbrev)[1]
+On Wed, Mar 08, 2017 at 05:18:46PM +0100, Johannes Schindelin wrote:
 
-git branch -vv --no-abbrev
-* (HEAD detached at 2.12.1)                        1c69bf2 Add
-recap-release since previous release messages didn't go out.
-  master                                           eb70249
-[origin/master] Fix: support parsing "git://" remote URI to Github URL
+> On Wed, 8 Mar 2017, Jeff King wrote:
+> 
+> > Another "non-gentle" thing I noticed here while looking at
+> > another thread: the repository-format version check uses the config
+> > parser, which will die() in certain circumstances. [...]
+> 
+> Yes, that is part of the reason why I was not eager to add that check to
+> discover_git_directory(). The config code is die()-happy.
+> 
+> This is a much bigger problem, of course, and related to a constant gripe
+> of mine: I *always* get the quoting wrong in my aliases. Always. And when
+> I want to fix it, `git config -e` simply errors out because of an invalid
+> config. Yes, Git, I know, that is the exact reason why I want to edit the
+> config in the first place.
+> 
+> I am certain you will agree that this is a different topic, therefore
+> subject to a separate patch series.
 
+I agree that in general it is a separate issue. Technically it could
+cause a regression because with your series we are more eager to call
+discover_git_directory() even when the command would not otherwise need
+to even look at the current git directory.
 
-Expected output:
+But I don't think that is the case in practice. Your new function is
+only called when we would try to read the config anyway. So it would
+only affect cases which were previously so broken they did not properly
+read the config (like running a command without RUN_SETUP from a
+subdirectory of the working tree, which was _supposed_ to respect the
+config but failed to do so).
 
-git branch --vv --no-abbrev
-* (HEAD detached at 2.12.1)
-1c69bf24be6de096d801435378be85a936ab0f29 Add recap-release since
-previous release messages didn't go out.
-  master
-eb70249e724f933255b4d8c7096092f2764942b4 [origin/master] Fix: support
-parsing "git://" remote URI to Github URL
+So yeah, I'm happy to leave it for now.
 
-[1] https://git-scm.com/docs/git-branch#git-branch---no-abbrev
-
-I don't have any relevant configuration set.
+-Peff
