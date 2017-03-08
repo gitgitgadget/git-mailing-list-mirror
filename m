@@ -2,103 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D729520135
+	by dcvr.yhbt.net (Postfix) with ESMTP id EE05A20135
 	for <e@80x24.org>; Thu,  9 Mar 2017 00:09:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932128AbdCIAJc (ORCPT <rfc822;e@80x24.org>);
+        id S932144AbdCIAJc (ORCPT <rfc822;e@80x24.org>);
         Wed, 8 Mar 2017 19:09:32 -0500
-Received: from forward16o.cmail.yandex.net ([37.9.109.213]:41639 "EHLO
-        forward16o.cmail.yandex.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1754711AbdCIAIs (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 8 Mar 2017 19:08:48 -0500
-Received: from smtp3p.mail.yandex.net (smtp3p.mail.yandex.net [77.88.29.86])
-        by forward16o.cmail.yandex.net (Yandex) with ESMTP id E620B21F00;
-        Thu,  9 Mar 2017 03:05:46 +0300 (MSK)
-Received: from smtp3p.mail.yandex.net (localhost.localdomain [127.0.0.1])
-        by smtp3p.mail.yandex.net (Yandex) with ESMTP id 3A47D1320062;
-        Thu,  9 Mar 2017 03:05:44 +0300 (MSK)
-Received: by smtp3p.mail.yandex.net (nwsmtp/Yandex) with ESMTPSA id w4bRePZkSb-5iTKwxaH;
-        Thu, 09 Mar 2017 03:05:44 +0300
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (Client certificate not present)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=vtolstov.org; s=mail; t=1489017944;
-        bh=POtoJIJxByVkNmp8GP/xUbsKdNSOZLbV9TJEfLnP4DU=;
-        h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References;
-        b=AIO1PLvjnlzZX/s5peSXoKV4WzvO00EiUjfL/ggjmm9ac1KSB8PN/R8qL5YlxMKfA
-         ul3zYfbWJ7MBgv+1DhQNBJ90Ml8IxgPENtbwVhWWCHS4LvLUXAuq8g304PleACWDoz
-         CfLWetnVWvv5AMrzo1AhHnbPsi70/f831NPeOdmA=
-Authentication-Results: smtp3p.mail.yandex.net; dkim=pass header.i=@vtolstov.org
-X-Yandex-ForeignMX:  US
-X-Yandex-Suid-Status: 1 0,1 0,1 1130000030716801,1 0
-From:   Valery Tolstov <me@vtolstov.org>
-To:     git@vger.kernel.org
-Cc:     sbeller@google.com, me@vtolstov.org, gitster@pobox.com
-Subject: [PATCH v2 2/2] submodule--helper.c: remove duplicate code
-Date:   Thu,  9 Mar 2017 03:03:52 +0300
-Message-Id: <20170309000352.18330-3-me@vtolstov.org>
-X-Mailer: git-send-email 2.12.0.192.gbdb9d28a5
-In-Reply-To: <20170309000352.18330-1-me@vtolstov.org>
+Received: from mail-pf0-f179.google.com ([209.85.192.179]:33127 "EHLO
+        mail-pf0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752378AbdCIAIr (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Mar 2017 19:08:47 -0500
+Received: by mail-pf0-f179.google.com with SMTP id w189so21062001pfb.0
+        for <git@vger.kernel.org>; Wed, 08 Mar 2017 16:07:17 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=lswR2mIS5au+AiJ/kBYreQS+rO7KmLDf+Oxn8B3raL4=;
+        b=HrB/5w1IaaL4/FWpWzUDFlL5/CwpZqjZRY7t4cysjPoTD2EiIj7ga+iygUGEO2zBvi
+         Qj2V5BJ4x5qPWYnvAy2brlVQiQpChLJBNjT8vFl+qyhArn2+bQGPC++UM3gbsb+xm8GC
+         tZQMrtf3MTd+Bvyockka1PRj1/NVF+kBsId3Khq4JsPMx7kpN//jmlsUAv89KE1mojFk
+         JzprYiW7LthtGzoPfjGVBcvoR+JNOA5Swd0eHxTpYYfqis3BEwkE5TbexThZFh0p8SvK
+         BTUhoBCZwBMnpLNxwwbs5vrdt7GvObxeVPMoSD8MNrhEfFtlXsF3mlgBVPtF5fmDsBvl
+         TSmg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=lswR2mIS5au+AiJ/kBYreQS+rO7KmLDf+Oxn8B3raL4=;
+        b=Fp1eDsxYkIouyxk7h6en5lJQhF2g1jwZnjjFYa2Q4/pf1UN2vop1b82uEy85rW/Y6I
+         Mqcr7WFxsMXCO2kT9QQArf4TrqB4aYsDxRs1iJoVmOZXWPKBXBjt2ppT41vE3C6SDHhk
+         x2qV1B+poHTUZfmIpSdahX+rod9JZVrXOpEE0BhB3fA3xBEP78WmXPETncza6rmALBt9
+         6gTQJsUEZKyW8LtjjL4ZUPnF6xmZkRshf39KMgr1sHdkmb3iC5gL5WvGcoAx9S30a3Kh
+         QdefNfiAOCmD4VfvDVXCP1TVsz4uSJ11hW2I2p0h3oWa0bTMBK60zep+66CjjIXMmpYF
+         zCsw==
+X-Gm-Message-State: AMke39m2xpSlK0VeqN8CqG7pCAxKDw/eUZwn6dws4wP2NUacuDs8mHsvIHsrW5mEDfZG1ieUgQCBT60ZalSX8nY5
+X-Received: by 10.98.63.24 with SMTP id m24mr10406991pfa.143.1489016067856;
+ Wed, 08 Mar 2017 15:34:27 -0800 (PST)
+MIME-Version: 1.0
+Received: by 10.100.187.5 with HTTP; Wed, 8 Mar 2017 15:34:27 -0800 (PST)
+In-Reply-To: <xmqq60jj1heh.fsf@gitster.mtv.corp.google.com>
 References: <CAGZ79kbnpUtrKdjQdQ-r6rRuVvnawooLFk1bO8jOSgxNkx2Dbg@mail.gmail.com>
- <20170309000352.18330-1-me@vtolstov.org>
+ <20170308230512.30572-1-me@vtolstov.org> <CAGZ79ka7PNKq5JWLPujvVHJWf6eEUadaJXd5AmKEvKT_y1ghOA@mail.gmail.com>
+ <xmqq60jj1heh.fsf@gitster.mtv.corp.google.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Wed, 8 Mar 2017 15:34:27 -0800
+Message-ID: <CAGZ79kZY+cyPBGDmhYfJNtaS4UgUp-2nsOKLBgNzwfRpuCn7PA@mail.gmail.com>
+Subject: Re: [PATCH] submodule--helper.c: remove duplicate code
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Valery Tolstov <me@vtolstov.org>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Remove code fragment from module_clone that duplicates functionality
-of connect_work_tree_and_git_dir in dir.c
+On Wed, Mar 8, 2017 at 3:24 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Stefan Beller <sbeller@google.com> writes:
+>
+>>> Also,
+>>> should I start new thread for new patch series?
+>>
+>> As you like.
+>> As far as I understand, it is very easy for Junio to take a whole
+>> (sub-)thread of patches and apply that and make a branch with
+>> multiple commits out of it as he has tooling for that.
+>
+> Note that the world does not revolve around _me_.  I was once asked
+> for my preference and I responded and that is what you are recalling
+> here.
+>
+> Others on the list do review and keeping it easy for them to is also
+> important.  What's _your_ preference?
+>
 
-Signed-off-by: Valery Tolstov <me@vtolstov.org>
----
- builtin/submodule--helper.c | 20 ++------------------
- 1 file changed, 2 insertions(+), 18 deletions(-)
+I use gmail, that has a broken threading model
+(it groups emails by subject lines; apparently not using any "in-reply-to"
+relationship to build up a thread), so I do not care. At all.
 
-diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index 899dc334e..405cbea07 100644
---- a/builtin/submodule--helper.c
-+++ b/builtin/submodule--helper.c
-@@ -579,7 +579,6 @@ static int module_clone(int argc, const char **argv, const char *prefix)
- 	const char *name = NULL, *url = NULL, *depth = NULL;
- 	int quiet = 0;
- 	int progress = 0;
--	FILE *submodule_dot_git;
- 	char *p, *path = NULL, *sm_gitdir;
- 	struct strbuf rel_path = STRBUF_INIT;
- 	struct strbuf sb = STRBUF_INIT;
-@@ -653,27 +652,12 @@ static int module_clone(int argc, const char **argv, const char *prefix)
- 		strbuf_reset(&sb);
- 	}
- 
--	/* Write a .git file in the submodule to redirect to the superproject. */
--	strbuf_addf(&sb, "%s/.git", path);
--	if (safe_create_leading_directories_const(sb.buf) < 0)
--		die(_("could not create leading directories of '%s'"), sb.buf);
--	submodule_dot_git = fopen(sb.buf, "w");
--	if (!submodule_dot_git)
--		die_errno(_("cannot open file '%s'"), sb.buf);
--
--	fprintf_or_die(submodule_dot_git, "gitdir: %s\n",
--		       relative_path(sm_gitdir, path, &rel_path));
--	if (fclose(submodule_dot_git))
--		die(_("could not close file %s"), sb.buf);
--	strbuf_reset(&sb);
--	strbuf_reset(&rel_path);
-+	/* Connect module worktree and git dir */
-+	connect_work_tree_and_git_dir(path, sm_gitdir);
- 
--	/* Redirect the worktree of the submodule in the superproject's config */
- 	p = git_pathdup_submodule(path, "config");
- 	if (!p)
- 		die(_("could not get submodule directory for '%s'"), path);
--	git_config_set_in_file(p, "core.worktree",
--			       relative_path(path, sm_gitdir, &rel_path));
- 
- 	/* setup alternateLocation and alternateErrorStrategy in the cloned submodule if needed */
- 	git_config_get_string("submodule.alternateLocation", &sm_alternate);
--- 
-2.12.0.192.gbdb9d28a5
+I do not know about the preference of the next most likely
+people to review submodule code, so I refrained from giving advice
+depending on reviewer preference, but instead gave advice that would
+ease your work as I recall.
 
+After thinking about it further, you may want to make sure that the
+topic is coherent and it is easy to discover all related emails in an
+archive of the mailing list. https://public-inbox.org/git/
+
+So in the cover letter you could link to the previous thread,
+https://public-inbox.org/git/20170308174449.24266-1-me@vtolstov.org/
+or just continue that thread by replying to an email that is appropriate for
+the series.
+
+Thanks,
+Stefan
