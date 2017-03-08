@@ -2,74 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6C07A202D7
-	for <e@80x24.org>; Wed,  8 Mar 2017 19:04:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B488B202D7
+	for <e@80x24.org>; Wed,  8 Mar 2017 19:09:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754204AbdCHTEo (ORCPT <rfc822;e@80x24.org>);
-        Wed, 8 Mar 2017 14:04:44 -0500
-Received: from mail-pf0-f179.google.com ([209.85.192.179]:36232 "EHLO
-        mail-pf0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752998AbdCHTEJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Mar 2017 14:04:09 -0500
-Received: by mail-pf0-f179.google.com with SMTP id o126so18275158pfb.3
-        for <git@vger.kernel.org>; Wed, 08 Mar 2017 11:04:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=jp7uSZjNBAv6qFI6zHq8c/9Zhty5Xvl2I8QdQtDmRcA=;
-        b=SIgEENCWgHuxjaw19TwR4lS1LBTqVeVORqy2LdwqNs+blW88dnp8BWgYPTMfaq/ndz
-         bIrIH38Wlv3p0wt8vW4iGVvL2awlzobz9tt8a1IEKLrEbMGJKLBv8AqHild7lEqjcjUS
-         GdPRC5g2FZqW1KXtrRUB+v57yOwRV9RA76EM5JdmpdsuxSRS+NaLww0MggQiSkn+TW4v
-         bUV5/Gz5xVftvzJFaLybQcmZxnsf4roh5zoHpp5412UqTeFX1m5yp6qofcnUMRynqEd7
-         Amx3cuorLOhsjMAM4wNvlb9Vnt+8PQ6DT3ro1xPDvEtAgL939x+kpX7iqqVILEAkjIua
-         o5rA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=jp7uSZjNBAv6qFI6zHq8c/9Zhty5Xvl2I8QdQtDmRcA=;
-        b=lB9oI3bdVnUssni1dGIBm3aDrjdMlcVVtuz/OOw+rB7TUe4hew2991oC2ON9IjMZZ9
-         bCC6egH3E3xdw6qMP0+Uv7eRMh61aDstp0cYcTxjPbgya8lHjPsYGDOws6GwZE0iDEZl
-         4Z/AkJUn6jV1AFyldbbKG2qtVKXgyzHuZXFjOkHoP33FHBvUjnKrETsvy6B2JqQlVn71
-         obGj7KXI94FAe+HEPjKpajrxuEk/hVYxkuTbx5Y34y4UkPYIB5VKlV035NUF7O1nY2lV
-         /xUGx3I6pNZtlk9N2bhYIO2VUvrDAJnU0MJvC6tvDY5INNuLydzbYeFYTHFW1/2ZEQHO
-         omDQ==
-X-Gm-Message-State: AMke39mpZi+MrtVLMfsXbDwe3XYujKiQKN0Bp4aJsRLU5DJlRN5MpUh+bozMzttNlRTK7wjk7iJp5exmuxtvGwOw
-X-Received: by 10.98.198.78 with SMTP id m75mr9075351pfg.160.1488999847903;
- Wed, 08 Mar 2017 11:04:07 -0800 (PST)
+        id S1753886AbdCHTJb (ORCPT <rfc822;e@80x24.org>);
+        Wed, 8 Mar 2017 14:09:31 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:52111 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1752986AbdCHTJa (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Mar 2017 14:09:30 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id CA7F96C2B7;
+        Wed,  8 Mar 2017 13:55:32 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=pHfAm5jcl4E7WrvKH+w0HPJx8KA=; b=a5NIxV
+        wslT+Qc/iQXVbjYRLYM3gpJzGtTouA9o13mRSQQRiTGxGdv7Mo8jPuru4qTavYxh
+        vEHGMD7IVewE7UuvgNa3zYc3YgX9rIPHZ7SXgra1UpQcqoLW3vfoenWcPdLOQNNm
+        DowtRq4uN6AkAfRTkqApkGv3AkMbCExLfC9Gk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=YJRpTNskSLx7w5cbRTOcwpQwPGVyYNM/
+        Zo2HuBOvnjUlMKvLB188j7VY64zOQemtO+uH3j0ICFqTfa2Mmu2V/5NCsGEgBz03
+        Lkz6EFUdy1x2hIAe914gsBzsZue++fyAoXqK61H8H1h+zfig57dAFY35wgiJIuul
+        pZquoqKEyAk=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id C1EF06C2B6;
+        Wed,  8 Mar 2017 13:55:32 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 29B826C2B5;
+        Wed,  8 Mar 2017 13:55:32 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff Hostetler <jeffhost@microsoft.com>
+Cc:     git@vger.kernel.org, peff@peff.net, markbt@efaref.net,
+        benpeart@microsoft.com, jonathantanmy@google.com,
+        Jeff Hostetler <git@jeffhostetler.com>
+Subject: Re: [PATCH 06/10] rev-list: add --allow-partial option to relax connectivity checks
+References: <1488994685-37403-1-git-send-email-jeffhost@microsoft.com>
+        <1488994685-37403-7-git-send-email-jeffhost@microsoft.com>
+Date:   Wed, 08 Mar 2017 10:55:31 -0800
+In-Reply-To: <1488994685-37403-7-git-send-email-jeffhost@microsoft.com> (Jeff
+        Hostetler's message of "Wed, 8 Mar 2017 17:38:01 +0000")
+Message-ID: <xmqqd1dr38f0.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.100.187.5 with HTTP; Wed, 8 Mar 2017 11:04:07 -0800 (PST)
-In-Reply-To: <CAHGBnuPGPcWwbrZX_92XDJu47bpH=kj2PZ7yWHK=MRfZ_RHXrQ@mail.gmail.com>
-References: <5e5b1b92-f7c6-2987-356e-1aab2bff557e@gmail.com>
- <20170308133348.2ovfsi44vq2rpgom@sigill.intra.peff.net> <CAHGBnuM3iM-kHdxdox_1i56uLbv7gQ5ZUY9Xqf4BG7G_kTf+jQ@mail.gmail.com>
- <20170308140110.wgdedquqwm75zws2@sigill.intra.peff.net> <CAHGBnuPGPcWwbrZX_92XDJu47bpH=kj2PZ7yWHK=MRfZ_RHXrQ@mail.gmail.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Wed, 8 Mar 2017 11:04:07 -0800
-Message-ID: <CAGZ79kbwMhL-ZnL-iYwPH=tWa8cNQbEGOYYQBw6OzFCMhOWE-w@mail.gmail.com>
-Subject: Re: diff.ignoreSubmoudles config setting broken?
-To:     Sebastian Schuberth <sschuberth@gmail.com>,
-        Jacob Keller <jacob.keller@gmail.com>
-Cc:     Jeff King <peff@peff.net>, Git Mailing List <git@vger.kernel.org>,
-        Jens Lehmann <Jens.Lehmann@web.de>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
+X-Pobox-Relay-ID: CE32A4A6-0430-11E7-BD55-FC50AE2156B6-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Mar 8, 2017 at 7:07 AM, Sebastian Schuberth
-<sschuberth@gmail.com> wrote:
->
-> + Jens
->
+Jeff Hostetler <jeffhost@microsoft.com> writes:
 
-+ Jacob Keller, who touched submodule diff display code last.
-(I am thinking of fd47ae6a, diff: teach diff to display submodule
-difference with an inline diff, 2016-08-31), which is first release as
-part of v2.11.0 (that would fit your observance)
+> From: Jeff Hostetler <git@jeffhostetler.com>
+>
+> Teach rev-list to optionally not complain when there are missing
+> blobs.  This is for use following a partial clone or fetch when
+> the server omitted certain blobs.
+
+This makes it impossible to tell from objects missing by design
+(because we did an --partial-by-size clone earlier, expecting we can
+later fetch from elsewhere when necessary) and objects inaccessible
+by accident (because you have a repository corruption), no?
+
+Even though I do very much like the basic "high level" premise to
+omit often useless large blobs that are buried deep in the history
+we would not necessarily need from the initial cloning and
+subsequent fetches, I find it somewhat disturbing that the code
+"Assume"s that any missing blob is due to an previous partial clone.
+Adding this option smells like telling the users that they are not
+supposed to run "git fsck" because a partially cloned repository is
+inherently a corrupt repository.
+
+Can't we do a bit better?  If we want to make the world safer again,
+what additional complexity is required to allow us to tell the
+"missing by design" and "corrupt repository" apart?
+
+Thanks.
