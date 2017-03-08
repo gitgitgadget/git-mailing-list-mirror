@@ -2,32 +2,32 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3905F202D7
-	for <e@80x24.org>; Wed,  8 Mar 2017 20:47:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E34E1202D7
+	for <e@80x24.org>; Wed,  8 Mar 2017 20:47:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754486AbdCHUrc (ORCPT <rfc822;e@80x24.org>);
+        id S1754485AbdCHUrc (ORCPT <rfc822;e@80x24.org>);
         Wed, 8 Mar 2017 15:47:32 -0500
-Received: from siwi.pair.com ([209.68.5.199]:28169 "EHLO siwi.pair.com"
+Received: from siwi.pair.com ([209.68.5.199]:23766 "EHLO siwi.pair.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1754335AbdCHUr3 (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1754332AbdCHUr3 (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 8 Mar 2017 15:47:29 -0500
 Received: from jeffhostetler.2jll4ugiwlvuzhh55dqabi0nia.bx.internal.cloudapp.net (unknown [40.76.14.28])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id B8A438460D;
-        Wed,  8 Mar 2017 13:51:01 -0500 (EST)
+        by siwi.pair.com (Postfix) with ESMTPSA id BCAC08461F;
+        Wed,  8 Mar 2017 13:51:02 -0500 (EST)
 From:   git@jeffhostetler.com
 To:     git@vger.kernel.org
 Cc:     jeffhost@microsoft.com, peff@peff.net, gitster@pobox.com,
         markbt@efaref.net, benpeart@microsoft.com,
         jonathantanmy@google.com, Jeff Hostetler <git@jeffhostetler.com>
-Subject: [PATCH 03/10] pack-objects: test for --partial-by-size --partial-special
-Date:   Wed,  8 Mar 2017 18:50:32 +0000
-Message-Id: <1488999039-37631-4-git-send-email-git@jeffhostetler.com>
+Subject: [PATCH 09/10] clone: add partial-by-size and partial-special arguments
+Date:   Wed,  8 Mar 2017 18:50:38 +0000
+Message-Id: <1488999039-37631-10-git-send-email-git@jeffhostetler.com>
 X-Mailer: git-send-email 2.7.4
 In-Reply-To: <1488999039-37631-1-git-send-email-git@jeffhostetler.com>
 References: <1488999039-37631-1-git-send-email-git@jeffhostetler.com>
@@ -38,93 +38,80 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff Hostetler <git@jeffhostetler.com>
 
-Some simple tests for pack-objects with the new --partial-by-size
-and --partial-special options.
+Teach clone to accept --partial-by-size=n and --partial-special
+arguments to request that the server omit certain blobs from
+the generated packfile.
 
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 ---
- t/5316-pack-objects-partial.sh | 72 ++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 72 insertions(+)
- create mode 100644 t/5316-pack-objects-partial.sh
+ builtin/clone.c | 26 ++++++++++++++++++++++++++
+ 1 file changed, 26 insertions(+)
 
-diff --git a/t/5316-pack-objects-partial.sh b/t/5316-pack-objects-partial.sh
-new file mode 100644
-index 0000000..352de34
---- /dev/null
-+++ b/t/5316-pack-objects-partial.sh
-@@ -0,0 +1,72 @@
-+#!/bin/sh
+diff --git a/builtin/clone.c b/builtin/clone.c
+index 3f63edb..e5a5904 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -56,6 +56,8 @@ static struct string_list option_required_reference = STRING_LIST_INIT_NODUP;
+ static struct string_list option_optional_reference = STRING_LIST_INIT_NODUP;
+ static int option_dissociate;
+ static int max_jobs = -1;
++static const char *partial_by_size;
++static int partial_special;
+ 
+ static struct option builtin_clone_options[] = {
+ 	OPT__VERBOSITY(&option_verbosity),
+@@ -112,6 +114,11 @@ static struct option builtin_clone_options[] = {
+ 			TRANSPORT_FAMILY_IPV4),
+ 	OPT_SET_INT('6', "ipv6", &family, N_("use IPv6 addresses only"),
+ 			TRANSPORT_FAMILY_IPV6),
++	OPT_STRING(0, "partial-by-size", &partial_by_size,
++			   N_("size"),
++			   N_("only include blobs smaller than this")),
++	OPT_BOOL(0, "partial-special", &partial_special,
++			 N_("only include blobs for git special files")),
+ 	OPT_END()
+ };
+ 
+@@ -625,6 +632,9 @@ static void update_remote_refs(const struct ref *refs,
+ 	if (check_connectivity) {
+ 		struct check_connected_options opt = CHECK_CONNECTED_INIT;
+ 
++		if (partial_by_size || partial_special)
++			opt.allow_partial = 1;
 +
-+test_description='pack-object partial'
+ 		opt.transport = transport;
+ 		opt.progress = transport->progress;
+ 
+@@ -1021,6 +1031,10 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+ 			warning(_("--shallow-since is ignored in local clones; use file:// instead."));
+ 		if (option_not.nr)
+ 			warning(_("--shallow-exclude is ignored in local clones; use file:// instead."));
++		if (partial_by_size)
++			warning(_("--partial-by-size is ignored in local clones; use file:// instead."));
++		if (partial_special)
++			warning(_("--partial-special is ignored in local clones; use file:// instead."));
+ 		if (!access(mkpath("%s/shallow", path), F_OK)) {
+ 			if (option_local > 0)
+ 				warning(_("source repository is shallow, ignoring --local"));
+@@ -1052,6 +1066,18 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+ 		transport_set_option(transport, TRANS_OPT_UPLOADPACK,
+ 				     option_upload_pack);
+ 
++	if (partial_by_size) {
++		transport_set_option(transport, TRANS_OPT_PARTIAL_BY_SIZE,
++				     partial_by_size);
++		if (transport->smart_options)
++			transport->smart_options->partial_by_size = partial_by_size;
++	}
++	if (partial_special) {
++		transport_set_option(transport, TRANS_OPT_PARTIAL_SPECIAL, "yes");
++		if (transport->smart_options)
++			transport->smart_options->partial_special = 1;
++	}
 +
-+. ./test-lib.sh
-+
-+test_expect_success 'setup' '
-+	perl -e "print \"a\" x 11;"      > a &&
-+	perl -e "print \"a\" x 1100;"    > b &&
-+	perl -e "print \"a\" x 1100000;" > c &&
-+	echo "ignored"                   > .gitignore &&
-+	git add a b c .gitignore &&
-+	git commit -m test
-+	'
-+
-+test_expect_success 'all blobs' '
-+	git pack-objects --revs --thin --stdout >all.pack <<-EOF &&
-+	master
-+	
-+	EOF
-+	git index-pack all.pack &&
-+	test 4 = $(git verify-pack -v all.pack | grep blob | wc -l)
-+	'
-+
-+test_expect_success 'no blobs' '
-+	git pack-objects --revs --thin --stdout --partial-by-size=0 >none.pack <<-EOF &&
-+	master
-+	
-+	EOF
-+	git index-pack none.pack &&
-+	test 0 = $(git verify-pack -v none.pack | grep blob | wc -l)
-+	'
-+
-+test_expect_success 'small blobs' '
-+	git pack-objects --revs --thin --stdout --partial-by-size=1M >small.pack <<-EOF &&
-+	master
-+	
-+	EOF
-+	git index-pack small.pack &&
-+	test 3 = $(git verify-pack -v small.pack | grep blob | wc -l)
-+	'
-+
-+test_expect_success 'tiny blobs' '
-+	git pack-objects --revs --thin --stdout --partial-by-size=100 >tiny.pack <<-EOF &&
-+	master
-+	
-+	EOF
-+	git index-pack tiny.pack &&
-+	test 2 = $(git verify-pack -v tiny.pack | grep blob | wc -l)
-+	'
-+
-+test_expect_success 'special' '
-+	git pack-objects --revs --thin --stdout --partial-special >spec.pack <<-EOF &&
-+	master
-+	
-+	EOF
-+	git index-pack spec.pack &&
-+	test 1 = $(git verify-pack -v spec.pack | grep blob | wc -l)
-+	'
-+
-+test_expect_success 'union' '
-+	git pack-objects --revs --thin --stdout --partial-by-size=0 --partial-special >union.pack <<-EOF &&
-+	master
-+	
-+	EOF
-+	git index-pack union.pack &&
-+	test 1 = $(git verify-pack -v union.pack | grep blob | wc -l)
-+	'
-+
-+test_done
-+
-+
+ 	if (transport->smart_options && !deepen)
+ 		transport->smart_options->check_self_contained_and_connected = 1;
+ 
 -- 
 2.7.4
 
