@@ -2,169 +2,123 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 63E17202F8
-	for <e@80x24.org>; Thu,  9 Mar 2017 17:50:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EB9D9202F8
+	for <e@80x24.org>; Thu,  9 Mar 2017 17:57:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932849AbdCIRuY (ORCPT <rfc822;e@80x24.org>);
-        Thu, 9 Mar 2017 12:50:24 -0500
-Received: from smtp.codeaurora.org ([198.145.29.96]:33628 "EHLO
-        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932569AbdCIRuX (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Mar 2017 12:50:23 -0500
-Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id 5601E607B5; Thu,  9 Mar 2017 17:50:22 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1489081822;
-        bh=g+EyCESKMIKlkSpPJjTP9cQ0Y/JgF61bumV6vV0KvqE=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=S6AuOd/zV9cVwKko6GKtsA8XXsv+evFjaMQeExOTNcUvROjK2a4WhH5oTWqwwrWXU
-         ny3/ybGFFTcNFopwwrZhgSLjwlTBw0Jl4HZ9ORqCgOknInEZcAz2ywSYl0PQBuYRph
-         Te/NkLWs2tTwp6xBHwWvz6yfFhIeQMNzgk8FEgaU=
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by smtp.codeaurora.org (Postfix) with ESMTP id E8EA760713;
-        Thu,  9 Mar 2017 17:50:21 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1489081822;
-        bh=g+EyCESKMIKlkSpPJjTP9cQ0Y/JgF61bumV6vV0KvqE=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=S6AuOd/zV9cVwKko6GKtsA8XXsv+evFjaMQeExOTNcUvROjK2a4WhH5oTWqwwrWXU
-         ny3/ybGFFTcNFopwwrZhgSLjwlTBw0Jl4HZ9ORqCgOknInEZcAz2ywSYl0PQBuYRph
-         Te/NkLWs2tTwp6xBHwWvz6yfFhIeQMNzgk8FEgaU=
+        id S932387AbdCIR5J (ORCPT <rfc822;e@80x24.org>);
+        Thu, 9 Mar 2017 12:57:09 -0500
+Received: from mail-pg0-f52.google.com ([74.125.83.52]:32958 "EHLO
+        mail-pg0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754853AbdCIR5H (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Mar 2017 12:57:07 -0500
+Received: by mail-pg0-f52.google.com with SMTP id 25so28983708pgy.0
+        for <git@vger.kernel.org>; Thu, 09 Mar 2017 09:56:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=pE7LHVNlWDcH157rDtoaHZhTPAD2+dkrpKj1EC1Dt7M=;
+        b=PCV1BhGOJiqo048hBW+oX37S1vwG2+dphnY7hyVRNw3gVNTsJ72zYegyL4PU9W4kXD
+         rQEG/tYE3goGU7c4owj4BD4czyJlUJAwb4LHrA6nUo4KyL9NdIatE/8hRKqinni2S9H/
+         R3ZFKkAwaPrgaW++iOpDDxAQIrGtMnIT6cx3AKYeGk9GjRLjvSC501PQx+lLAbLrMDT0
+         51Sd3F9mjf62fDs0YRJ4DjjREke/eh7DnhkGefIlXNpvZxC5d7VlLNymEYgUrvIZ9+eD
+         tqhcTFNK5VJxbT/LOK0M5GtrEhrmiApaOdbehGon5XdYFiRYNShxkyAOT/Yy/f2bKA6Z
+         Bbbg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=pE7LHVNlWDcH157rDtoaHZhTPAD2+dkrpKj1EC1Dt7M=;
+        b=EjBjGirwiP9SZuQizOIMZ4XpJtqCPjmkYuAbHSV4eRX7sHaQdN0FkQBXkgoivOtZXl
+         f6xYlL8C7lAPmYyyy2Jgm8yM95JBj70RUP3W2DVCe7L2iBNHV6sofrssfyqTu4C9FW1V
+         Cw4bgOpZzhqrjg42aH/2n+pK+sRHOZE+mtChKkwuqfx1w7u6h8vwW5b2k/DWL3U3N6AL
+         TGW+kM9If3oqC8CufqPairm5KKs5DpaCXxQhHkdD28TAztjEBGHcsiDisL6XJO/ImlHq
+         yrwId34X/pL/LSllbjzCZ+tBfceigxLjeWdracReUQMbqne8aVwvQEwBnRNyQe92sCft
+         MYlw==
+X-Gm-Message-State: AMke39lOdzbAPIWMVb3NoX2gxbviIujPkT6VYrLZlzAXDwraExzBtggZ7eYHtSnIzlXxkIVt
+X-Received: by 10.99.53.1 with SMTP id c1mr15523645pga.42.1489082183841;
+        Thu, 09 Mar 2017 09:56:23 -0800 (PST)
+Received: from google.com ([2620:0:1000:5b10:24ad:64a3:afd2:c7bd])
+        by smtp.gmail.com with ESMTPSA id r13sm13778314pfg.55.2017.03.09.09.56.22
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Thu, 09 Mar 2017 09:56:22 -0800 (PST)
+Date:   Thu, 9 Mar 2017 09:56:21 -0800
+From:   Brandon Williams <bmwill@google.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 10/11] submodule--helper init: set
+ submodule.<name>.active
+Message-ID: <20170309175621.GC153031@google.com>
+References: <20170223234728.164111-1-bmwill@google.com>
+ <20170309012345.180702-1-bmwill@google.com>
+ <20170309012345.180702-11-bmwill@google.com>
+ <CAGZ79kYspNw4=dSnDtyWp7bEhggAM-gRo3g9GJ78jZ8HW7pUFQ@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Thu, 09 Mar 2017 10:50:21 -0700
-From:   jmelvin@codeaurora.org
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, nasserg@codeaurora.org, mfick@codeaurora.org,
-        peff@peff.net, sbeller@google.com
-Subject: Re: [PATCH] repack: Add options to preserve and prune old pack files
-In-Reply-To: <xmqq4lz4968p.fsf@gitster.mtv.corp.google.com>
-References: <20170307164035.27866-1-jmelvin@codeaurora.org>
- <xmqq4lz4968p.fsf@gitster.mtv.corp.google.com>
-Message-ID: <1d816bbb08b228ece9a74ffcdfb7a5b1@codeaurora.org>
-X-Sender: jmelvin@codeaurora.org
-User-Agent: Roundcube Webmail/1.2.1
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAGZ79kYspNw4=dSnDtyWp7bEhggAM-gRo3g9GJ78jZ8HW7pUFQ@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2017-03-07 13:33, Junio C Hamano wrote:
-> James Melvin <jmelvin@codeaurora.org> writes:
+On 03/08, Stefan Beller wrote:
+> On Wed, Mar 8, 2017 at 5:23 PM, Brandon Williams <bmwill@google.com> wrote:
+> > When initializing a submodule set the submodule.<name>.active config to
+> > true to indicate that the submodule is active.
 > 
->> These options are designed to prevent stale file handle exceptions
->> during git operations which can happen on users of NFS repos when
->> repacking is done on them. The strategy is to preserve old pack files
->> around until the next repack with the hopes that they will become
->> unreferenced by then and not cause any exceptions to running processes
->> when they are finally deleted (pruned).
+> So by this patch an init of a submodule performs both
+> a "regular init" (copy URL and the update setting)
+> as well as setting the new submodule.<name>.active.
 > 
-> I find it a very sensible strategy to work around NFS, but it does
-> not explain why the directory the old ones are moved to need to be
-> configurable.  It feels to me that a boolean that causes the old
-> ones renamed s/^pack-/^old-&/ in the same directory (instead of
-> pruning them right away) would risk less chances of mistakes (e.g.
-> making "preserved" subdirectory on a separate device mounted there
-> in a hope to reduce disk usage of the primary repository, which
-> may defeat the whole point of moving the still-active file around
-> instead of removing them).
+> And both happens in the same config file (i.e. no worktree
+> support here)
 
-Moving the preserved pack files to a separate directory only helped make 
-the pack directory cleaner, but I agree that having the old* pack files 
-in the same directory is a better approach as it would ensure that it's 
-still on the same mounted device. I'll update the logic to reflect that.
+Well there isn't any per-worktree config yet (unless that series managed
+to land and I didn't notice that).  So once their are per-worktree
+configs we would need to push this to there.
 
-As for the naming convention of the preserved pack files, there is 
-already some logic to remove "old-" files in repack. Currently this is 
-the naming convention I have for them:
-
-pack-<sha1>.old-<ext>
-pack-7412ee739b8a20941aa1c2fd03abcc7336b330ba.old-pack
-
-One advantage of that is the extension is no longer an expected one, 
-differentiating it from current pack files.
-
-That said, if that is not a concern, I could prefix them with 
-"preserved" instead of "old" to differentiate them from the other logic 
-that cleans up "old-*". What are your thoughts on that?
-
-preserved-<sha1>.<ext>
-preserved-7412ee739b8a20941aa1c2fd03abcc7336b330ba.pack
-
-
-> And if we make "preserve-old" a boolean, perhaps the presence of
-> "prune-preserved" would serve as a substitute for it, iow, perhaps
-> we may only need --prune-preserved option (and repack.prunePreserved
-> configuration variable)?
 > 
->> diff --git a/builtin/repack.c b/builtin/repack.c
->> index 677bc7c81..f1a0c97f3 100644
->> --- a/builtin/repack.c
->> +++ b/builtin/repack.c
->> @@ -10,8 +10,10 @@
->> 
->>  static int delta_base_offset = 1;
->>  static int pack_kept_objects = -1;
->> +static int preserve_oldpacks = 0;
->> +static int prune_preserved = 0;
+> Later on we *could* remove the URL as the .active is the new
+> flag of existence.
 > 
-> We avoid initializing statics to 0 or NULL and instead let BSS take
-> care of them...
-
-Will do
-
->>  static int write_bitmaps;
->> -static char *packdir, *packtmp;
->> +static char *packdir, *packtmp, *preservedir;
+> But enough of my speculation, I am left wondering what this
+> patch accomplishes, as this states no agenda as why it is useful
+> on its own.
 > 
-> ... just like what you did here.
-> 
->> @@ -108,6 +110,27 @@ static void get_non_kept_pack_filenames(struct s
->> ...
->> +static void preserve_pack(const char *file_path, const char 
->> *file_name,  const char *file_ext)
->> +{
->> +	char *fname_old;
->> +
->> +	if (mkdir(preservedir, 0700) && errno != EEXIST)
->> +		error(_("failed to create preserve directory"));
-> 
-> You do not want to do the rest of this function after issuing this
-> error, no?  Because ...
-
-Agreed, I'll update.
-
->> +
->> +	fname_old = mkpathdup("%s/%s.old-%s", preservedir, file_name, 
->> ++file_ext);
->> +	rename(file_path, fname_old);
-> 
-> ... this rename(2) would fail, whose error return you would catch
-> and act on.
-> 
->> +	free(fname_old);
->> +}
->> +
->> +static void remove_preserved_dir(void) {
->> +	struct strbuf buf = STRBUF_INIT;
->> +
->> +	strbuf_addstr(&buf, preservedir);
->> +	remove_dir_recursively(&buf, 0);
-> 
-> This is a wrong helper function to use on files and directories
-> inside .git/; the function is about removing paths in the working
-> tree.
-
-Will update.
+> >
+> > Signed-off-by: Brandon Williams <bmwill@google.com>
+> > ---
+> >  builtin/submodule--helper.c | 7 +++++++
+> >  1 file changed, 7 insertions(+)
+> >
+> > diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+> > index bceb62a20..44f2c02ba 100644
+> > --- a/builtin/submodule--helper.c
+> > +++ b/builtin/submodule--helper.c
+> > @@ -329,6 +329,13 @@ static void init_submodule(const char *path, const char *prefix, int quiet)
+> >                 die(_("No url found for submodule path '%s' in .gitmodules"),
+> >                         displaypath);
+> >
+> > +       /* Set active flag for the submodule being initialized */
+> > +       if (!is_submodule_initialized(path)) {
+> > +               strbuf_reset(&sb);
+> > +               strbuf_addf(&sb, "submodule.%s.active", sub->name);
+> > +               git_config_set_gently(sb.buf, "true");
+> > +       }
+> > +
+> >         /*
+> >          * Copy url setting when it is not set yet.
+> >          * To look up the url in .git/config, we must not fall back to
+> > --
+> > 2.12.0.246.ga2ecc84866-goog
+> >
 
 -- 
-Qualcomm Innovation Center, Inc.
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora 
-Forum,
-a Linux Foundation Collaborative Project
+Brandon Williams
