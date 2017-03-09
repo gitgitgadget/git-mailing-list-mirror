@@ -2,57 +2,57 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CF85B20135
-	for <e@80x24.org>; Thu,  9 Mar 2017 01:33:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0F0F120135
+	for <e@80x24.org>; Thu,  9 Mar 2017 01:33:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932113AbdCIBdJ (ORCPT <rfc822;e@80x24.org>);
-        Wed, 8 Mar 2017 20:33:09 -0500
-Received: from mail-pg0-f53.google.com ([74.125.83.53]:33575 "EHLO
-        mail-pg0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932081AbdCIBdI (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Mar 2017 20:33:08 -0500
-Received: by mail-pg0-f53.google.com with SMTP id 25so19822441pgy.0
-        for <git@vger.kernel.org>; Wed, 08 Mar 2017 17:33:07 -0800 (PST)
+        id S1754776AbdCIBdQ (ORCPT <rfc822;e@80x24.org>);
+        Wed, 8 Mar 2017 20:33:16 -0500
+Received: from mail-pf0-f182.google.com ([209.85.192.182]:33016 "EHLO
+        mail-pf0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754769AbdCIBdP (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Mar 2017 20:33:15 -0500
+Received: by mail-pf0-f182.google.com with SMTP id w189so21853001pfb.0
+        for <git@vger.kernel.org>; Wed, 08 Mar 2017 17:33:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=A2vzXom5wkEUPWbTQPZwLcYxHELtlOq8jIrXA+iwOjA=;
-        b=Hohz+IWETF75VTUsK6xcjroxpSriBBuhDMfEqxF31A3XwAQ1Uq6/fNCNgFk6RV95iz
-         1B4Tp0/pmd8w8Rg+WeKjKdFrioUw8tX3LeQ1eRifdM3XaM4wyrc/N+taCY8Br4ZmLIeK
-         k/f4MU8a5PK7tgMKSAqCTSXL01nbM2X8UWQ4EIDqwfkQXTt0IVxGeE+J5cCK248aajUI
-         AcNHflA8cW3IcA84kDVYwW0TBPMPpGAYEZvHYTaoX3psl/xxFggn9zVWpf6k7ustm8c6
-         +xApwgfe6GHLia0+IsZgaV0RtvQkuLICpqz0nx3kxp4ClC/9jAji4AlQJnLVsX3uPizT
-         AFQw==
+        bh=LtLZAO28P08w6G6sV7Ym2IKU82V+27AdAtXDvfu1xmA=;
+        b=nGFieKwUF2A58w9xCWGUbXEyiUQ0ErwwtVHuSONNE5RblviiuteE02hpILJ4HVBkNs
+         x/mr+8rByKONQUvs+M8GryEYhp5eQYIM/amHC0gXcXvraT3kAKl9e5U30vQgnfIlYhn8
+         ykij8eCHWE+gfBNiRieE6cBzImyrrlM39Oo9Ug1dwjDfPfkRZfWysfRa4eAib5yGbHLm
+         /oZvV20U6xb5A1RwbHRxA1GAQsD4lXc2WlDqmfxdqIFryKFJCUtAzmi5PqqSGLZu6YPV
+         vDRn6gU5S47XiF8aIoxo+7WKiCZOo+N5BYvhAR/ViYtFsr5vy0DCcHo/U4pej/aRWq8P
+         IeAw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=A2vzXom5wkEUPWbTQPZwLcYxHELtlOq8jIrXA+iwOjA=;
-        b=GRbwrtaL5W0hiGala9tq8U6vLCjGEGfzF4UHz9wUwqRhY6l+kugiKlQ6GIZI8sQfkN
-         sVelkS+4xhxgkHwWeBcYDXTFWi8wDD3Wn7gLGv7QHKp2xezpu6yD/33Jgp1WSCvcTWDz
-         qCtD8fecUGiRUUrfVuqYqqnra03E94+FZSHFloY/t9lYgu98cMnYO1vxMInzyNFHbl7d
-         bN/TR3Mqc4kv8vHR4IwPjpcjhYAUbVHih4VFs9dXcCqkozGJZ5hhoX1fn58sMz1jj3EY
-         u5DILFVGCgw8Bl3kgiV6z0afmEuYL2HLUisrv3x2euJwyWBvgJ0VIa8N9U6EjA8sjl8a
-         0gNw==
-X-Gm-Message-State: AMke39kWs0bSBOsSR1Cd/vGSPl8Y91B7k4z/7u2JiT+ECZkZz8/oy+KOvQKFACsEs/PtP+Xn
-X-Received: by 10.98.131.75 with SMTP id h72mr11062015pfe.4.1489022635036;
-        Wed, 08 Mar 2017 17:23:55 -0800 (PST)
+        bh=LtLZAO28P08w6G6sV7Ym2IKU82V+27AdAtXDvfu1xmA=;
+        b=S//ZAEALyaed069tJo4FkE9P+Lc1cCAmuo90Muoe4M6gBUnqnM/INMnUjrFPDhk1VN
+         4q3sguxKRVt/Oyiow19m7aU44S6zOIrUtSTpKxaEPx7ShVDmi/mCZsUg2y7++34Tw7sn
+         0HO7DOf3vTzaocooeDrO3S6CPi2VPOue+oMUjSk7g5lZerxIBC7Q4spFEi16DZ3zzxq9
+         XPJ6T1uO8ajoqmo2jiGwCIqsdzCac5Gf78xb730WW9PxTHtevRLvVh+bxnluSBBldzbZ
+         SYfjy8hDPPzk5zPfq99o/qoaDK0zWL1imt4a9mehm4tGlEXdw/dSZMkeyo+Al8tj3YVA
+         gQUQ==
+X-Gm-Message-State: AMke39n/O3C9sOvOvqA65kl8qonfXRpcQ3ecVTYWmrtZk5JyFUU9tiqae/VsKsGSGP/XleIg
+X-Received: by 10.99.48.68 with SMTP id w65mr10514809pgw.203.1489022650474;
+        Wed, 08 Mar 2017 17:24:10 -0800 (PST)
 Received: from roshar.mtv.corp.google.com ([100.96.238.26])
-        by smtp.gmail.com with ESMTPSA id l71sm8479948pga.7.2017.03.08.17.23.53
+        by smtp.gmail.com with ESMTPSA id l71sm8479948pga.7.2017.03.08.17.24.08
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 08 Mar 2017 17:23:54 -0800 (PST)
+        Wed, 08 Mar 2017 17:24:09 -0800 (PST)
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org
 Cc:     Brandon Williams <bmwill@google.com>, sbeller@google.com,
         gitster@pobox.com
-Subject: [PATCH v2 01/11] submodule--helper: add is_active command
-Date:   Wed,  8 Mar 2017 17:23:35 -0800
-Message-Id: <20170309012345.180702-2-bmwill@google.com>
+Subject: [PATCH v2 11/11] submodule add: respect submodule.active and submodule.<name>.active
+Date:   Wed,  8 Mar 2017 17:23:45 -0800
+Message-Id: <20170309012345.180702-12-bmwill@google.com>
 X-Mailer: git-send-email 2.12.0.246.ga2ecc84866-goog
 In-Reply-To: <20170309012345.180702-1-bmwill@google.com>
 References: <20170223234728.164111-1-bmwill@google.com>
@@ -62,84 +62,76 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-There are a lot of places where an explicit check for
-submodule."<name>".url is done to see if a submodule exists.  In order
-to centralize this check introduce a helper which can be used to query
-if a submodule is active or not.
+In addition to adding submodule.<name>.url to the config, set
+submodule.<name>.active to true unless submodule.active is configured
+and the submodule's path matches the configured pathspec.
 
 Signed-off-by: Brandon Williams <bmwill@google.com>
 ---
- builtin/submodule--helper.c    | 11 +++++++++++
- t/t7413-submodule-is-active.sh | 31 +++++++++++++++++++++++++++++++
- 2 files changed, 42 insertions(+)
- create mode 100755 t/t7413-submodule-is-active.sh
+ git-submodule.sh               | 12 ++++++++++++
+ t/t7413-submodule-is-active.sh | 21 +++++++++++++++++++++
+ 2 files changed, 33 insertions(+)
 
-diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index df0d9c166..dac02604d 100644
---- a/builtin/submodule--helper.c
-+++ b/builtin/submodule--helper.c
-@@ -1128,6 +1128,16 @@ static int absorb_git_dirs(int argc, const char **argv, const char *prefix)
- 	return 0;
+diff --git a/git-submodule.sh b/git-submodule.sh
+index 43a393d7e..d90fde655 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -271,6 +271,18 @@ or you are unsure what this means choose another name with the '--name' option."
+ 	fi &&
+ 	git add --force .gitmodules ||
+ 	die "$(eval_gettext "Failed to register submodule '\$sm_path'")"
++
++	if git config --get submodule.active >/dev/null
++	then
++		# If the submodule being adding isn't already covered by the
++		# current configured pathspec, set the submodule's active flag
++		if ! git submodule--helper is-active "$sm_path"
++		then
++			git config --add submodule."$sm_name".active "true"
++		fi
++	else
++		git config --add submodule."$sm_name".active "true"
++	fi
  }
  
-+static int is_active(int argc, const char **argv, const char *prefix)
-+{
-+	if (argc != 2)
-+		die("submodule--helper is-active takes exactly 1 arguments");
-+
-+	gitmodules_config();
-+
-+	return !is_submodule_initialized(argv[1]);
-+}
-+
- #define SUPPORT_SUPER_PREFIX (1<<0)
- 
- struct cmd_struct {
-@@ -1147,6 +1157,7 @@ static struct cmd_struct commands[] = {
- 	{"init", module_init, 0},
- 	{"remote-branch", resolve_remote_submodule_branch, 0},
- 	{"absorb-git-dirs", absorb_git_dirs, SUPPORT_SUPER_PREFIX},
-+	{"is-active", is_active, 0},
- };
- 
- int cmd_submodule__helper(int argc, const char **argv, const char *prefix)
+ #
 diff --git a/t/t7413-submodule-is-active.sh b/t/t7413-submodule-is-active.sh
-new file mode 100755
-index 000000000..f18e0c925
---- /dev/null
+index c41b899ab..865931978 100755
+--- a/t/t7413-submodule-is-active.sh
 +++ b/t/t7413-submodule-is-active.sh
-@@ -0,0 +1,31 @@
-+#!/bin/sh
+@@ -15,6 +15,12 @@ test_expect_success 'setup' '
+ 	test_commit -C super initial &&
+ 	git -C super submodule add ../sub sub1 &&
+ 	git -C super submodule add ../sub sub2 &&
 +
-+test_description='Test submodule--helper is-active
++	# Remove submodule.<name>.active entries in order to test in an
++	# environment where only URLs are present in the conifg
++	git -C super config --unset submodule.sub1.active &&
++	git -C super config --unset submodule.sub2.active &&
 +
-+This test verifies that `git submodue--helper is-active` correclty identifies
-+submodules which are "active" and interesting to the user.
+ 	git -C super commit -a -m "add 2 submodules at sub{1,2}"
+ '
+ 
+@@ -83,4 +89,19 @@ test_expect_success 'is-active with submodule.active and submodule.<name>.active
+ 	git -C super config --unset submodule.sub2.active
+ '
+ 
++test_expect_success 'is-active, submodule.active and submodule add' '
++	test_when_finished "rm -rf super2" &&
++	git init super2 &&
++	test_commit -C super2 initial &&
++	git -C super2 config --add submodule.active "sub*" &&
++
++	# submodule add should only add submodule.<name>.active
++	# to the config if not matched by the pathspec
++	git -C super2 submodule add ../sub sub1 &&
++	test_must_fail git -C super2 config --get submodule.sub1.active &&
++
++	git -C super2 submodule add ../sub mod &&
++	git -C super2 config --get submodule.mod.active
 +'
 +
-+. ./test-lib.sh
-+
-+test_expect_success 'setup' '
-+	git init sub &&
-+	test_commit -C sub initial &&
-+	git init super &&
-+	test_commit -C super initial &&
-+	git -C super submodule add ../sub sub1 &&
-+	git -C super submodule add ../sub sub2 &&
-+	git -C super commit -a -m "add 2 submodules at sub{1,2}"
-+'
-+
-+test_expect_success 'is-active works with urls' '
-+	git -C super submodule--helper is-active sub1 &&
-+	git -C super submodule--helper is-active sub2 &&
-+
-+	git -C super config --unset submodule.sub1.URL &&
-+	test_must_fail git -C super submodule--helper is-active sub1 &&
-+	git -C super config submodule.sub1.URL ../sub &&
-+	git -C super submodule--helper is-active sub1
-+'
-+
-+test_done
+ test_done
 -- 
 2.12.0.246.ga2ecc84866-goog
 
