@@ -2,44 +2,44 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BCCC520135
+	by dcvr.yhbt.net (Postfix) with ESMTP id D729520135
 	for <e@80x24.org>; Thu,  9 Mar 2017 00:09:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754437AbdCIAJa (ORCPT <rfc822;e@80x24.org>);
-        Wed, 8 Mar 2017 19:09:30 -0500
-Received: from forward15h.cmail.yandex.net ([87.250.230.157]:48546 "EHLO
-        forward15h.cmail.yandex.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1754258AbdCIAIs (ORCPT
+        id S932128AbdCIAJc (ORCPT <rfc822;e@80x24.org>);
+        Wed, 8 Mar 2017 19:09:32 -0500
+Received: from forward16o.cmail.yandex.net ([37.9.109.213]:41639 "EHLO
+        forward16o.cmail.yandex.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1754711AbdCIAIs (ORCPT
         <rfc822;git@vger.kernel.org>); Wed, 8 Mar 2017 19:08:48 -0500
 Received: from smtp3p.mail.yandex.net (smtp3p.mail.yandex.net [77.88.29.86])
-        by forward15h.cmail.yandex.net (Yandex) with ESMTP id 42FE0223FB;
-        Thu,  9 Mar 2017 03:05:43 +0300 (MSK)
+        by forward16o.cmail.yandex.net (Yandex) with ESMTP id E620B21F00;
+        Thu,  9 Mar 2017 03:05:46 +0300 (MSK)
 Received: from smtp3p.mail.yandex.net (localhost.localdomain [127.0.0.1])
-        by smtp3p.mail.yandex.net (Yandex) with ESMTP id 2D2451320062;
-        Thu,  9 Mar 2017 03:05:40 +0300 (MSK)
-Received: by smtp3p.mail.yandex.net (nwsmtp/Yandex) with ESMTPSA id w4bRePZkSb-5dT8YEB7;
-        Thu, 09 Mar 2017 03:05:39 +0300
+        by smtp3p.mail.yandex.net (Yandex) with ESMTP id 3A47D1320062;
+        Thu,  9 Mar 2017 03:05:44 +0300 (MSK)
+Received: by smtp3p.mail.yandex.net (nwsmtp/Yandex) with ESMTPSA id w4bRePZkSb-5iTKwxaH;
+        Thu, 09 Mar 2017 03:05:44 +0300
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (Client certificate not present)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=vtolstov.org; s=mail; t=1489017939;
-        bh=qiYuF2A+xRSHiV79b2UBkppqWCDiuiO9d/pmscHXk4E=;
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=vtolstov.org; s=mail; t=1489017944;
+        bh=POtoJIJxByVkNmp8GP/xUbsKdNSOZLbV9TJEfLnP4DU=;
         h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References;
-        b=aTn0QNlgk7zprljXBBgRttEnPXHo6FweVViFo5lqvIaBPLlbks/C54sHZ2uUbkVLU
-         +qdc98qV4JO2xDUrxYthFNhBYHZYApz2XNvPpXERZg0+98ouB8vnpvyzHvDuAWGNjL
-         aCvcyt4DVs0Z0EzMDFS3U6kWB8me36ttSoP0gc7E=
+        b=AIO1PLvjnlzZX/s5peSXoKV4WzvO00EiUjfL/ggjmm9ac1KSB8PN/R8qL5YlxMKfA
+         ul3zYfbWJ7MBgv+1DhQNBJ90Ml8IxgPENtbwVhWWCHS4LvLUXAuq8g304PleACWDoz
+         CfLWetnVWvv5AMrzo1AhHnbPsi70/f831NPeOdmA=
 Authentication-Results: smtp3p.mail.yandex.net; dkim=pass header.i=@vtolstov.org
 X-Yandex-ForeignMX:  US
 X-Yandex-Suid-Status: 1 0,1 0,1 1130000030716801,1 0
 From:   Valery Tolstov <me@vtolstov.org>
 To:     git@vger.kernel.org
 Cc:     sbeller@google.com, me@vtolstov.org, gitster@pobox.com
-Subject: [PATCH v2 1/2] connect_work_tree_and_git_dir: safely create leading directories
-Date:   Thu,  9 Mar 2017 03:03:51 +0300
-Message-Id: <20170309000352.18330-2-me@vtolstov.org>
+Subject: [PATCH v2 2/2] submodule--helper.c: remove duplicate code
+Date:   Thu,  9 Mar 2017 03:03:52 +0300
+Message-Id: <20170309000352.18330-3-me@vtolstov.org>
 X-Mailer: git-send-email 2.12.0.192.gbdb9d28a5
 In-Reply-To: <20170309000352.18330-1-me@vtolstov.org>
 References: <CAGZ79kbnpUtrKdjQdQ-r6rRuVvnawooLFk1bO8jOSgxNkx2Dbg@mail.gmail.com>
@@ -49,118 +49,56 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Stefan Beller <sbeller@google.com>
+Remove code fragment from module_clone that duplicates functionality
+of connect_work_tree_and_git_dir in dir.c
 
-In a later patch we'll use connect_work_tree_and_git_dir when the
-directory for the gitlink file doesn't exist yet. This patch makes
-connect_work_tree_and_git_dir safe to use for both cases of
-either the git dir or the working dir missing.
-
-To do so, we need to call safe_create_leading_directories[_const]
-on both directories. However this has to happen before we construct
-the absolute paths as real_pathdup assumes the directories to
-be there already.
-
-So for both the config file in the git dir as well as the .git link
-file we need to
-a) construct the name
-b) call SCLD
-c) get the absolute path
-d) once a-c is done for both we can consume the absolute path
-   to compute the relative path to each other and store those
-   relative paths.
-
-The implementation provided here puts a) and b) for both cases first,
-and then performs c and d after.
-
-One of the two users of 'connect_work_tree_and_git_dir' already checked
-for the directory being there, so we can loose that check as
-connect_work_tree_and_git_dir handles this functionality now.
-
-Signed-off-by: Stefan Beller <sbeller@google.com>
+Signed-off-by: Valery Tolstov <me@vtolstov.org>
 ---
- dir.c       | 32 +++++++++++++++++++++-----------
- submodule.c | 11 ++---------
- 2 files changed, 23 insertions(+), 20 deletions(-)
+ builtin/submodule--helper.c | 20 ++------------------
+ 1 file changed, 2 insertions(+), 18 deletions(-)
 
-diff --git a/dir.c b/dir.c
-index 4541f9e14..6f52af7ab 100644
---- a/dir.c
-+++ b/dir.c
-@@ -2728,23 +2728,33 @@ void untracked_cache_add_to_index(struct index_state *istate,
- /* Update gitfile and core.worktree setting to connect work tree and git dir */
- void connect_work_tree_and_git_dir(const char *work_tree_, const char *git_dir_)
- {
--	struct strbuf file_name = STRBUF_INIT;
-+	struct strbuf gitfile_sb = STRBUF_INIT;
-+	struct strbuf cfg_sb = STRBUF_INIT;
+diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+index 899dc334e..405cbea07 100644
+--- a/builtin/submodule--helper.c
++++ b/builtin/submodule--helper.c
+@@ -579,7 +579,6 @@ static int module_clone(int argc, const char **argv, const char *prefix)
+ 	const char *name = NULL, *url = NULL, *depth = NULL;
+ 	int quiet = 0;
+ 	int progress = 0;
+-	FILE *submodule_dot_git;
+ 	char *p, *path = NULL, *sm_gitdir;
  	struct strbuf rel_path = STRBUF_INIT;
--	char *git_dir = real_pathdup(git_dir_);
--	char *work_tree = real_pathdup(work_tree_);
-+	char *git_dir, *work_tree;
+ 	struct strbuf sb = STRBUF_INIT;
+@@ -653,27 +652,12 @@ static int module_clone(int argc, const char **argv, const char *prefix)
+ 		strbuf_reset(&sb);
+ 	}
  
--	/* Update gitfile */
--	strbuf_addf(&file_name, "%s/.git", work_tree);
--	write_file(file_name.buf, "gitdir: %s",
--		   relative_path(git_dir, work_tree, &rel_path));
-+	/* Prepare .git file */
-+	strbuf_addf(&gitfile_sb, "%s/.git", work_tree_);
-+	if (safe_create_leading_directories_const(gitfile_sb.buf))
-+		die(_("could not create directories for %s"), gitfile_sb.buf);
-+
-+	/* Prepare config file */
-+	strbuf_addf(&cfg_sb, "%s/config", git_dir_);
-+	if (safe_create_leading_directories_const(cfg_sb.buf))
-+		die(_("could not create directories for %s"), cfg_sb.buf);
- 
-+	git_dir = real_pathdup(git_dir_);
-+	work_tree = real_pathdup(work_tree_);
-+
-+	/* Write .git file */
-+	write_file(gitfile_sb.buf, "gitdir: %s",
-+		   relative_path(git_dir, work_tree, &rel_path));
- 	/* Update core.worktree setting */
--	strbuf_reset(&file_name);
--	strbuf_addf(&file_name, "%s/config", git_dir);
--	git_config_set_in_file(file_name.buf, "core.worktree",
-+	git_config_set_in_file(cfg_sb.buf, "core.worktree",
- 			       relative_path(work_tree, git_dir, &rel_path));
- 
--	strbuf_release(&file_name);
-+	strbuf_release(&gitfile_sb);
-+	strbuf_release(&cfg_sb);
- 	strbuf_release(&rel_path);
- 	free(work_tree);
- 	free(git_dir);
-diff --git a/submodule.c b/submodule.c
-index 3b98766a6..45e93a1d5 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -1445,8 +1445,6 @@ void absorb_git_dir_into_superproject(const char *prefix,
- 
- 	/* Not populated? */
- 	if (!sub_git_dir) {
--		char *real_new_git_dir;
--		const char *new_git_dir;
- 		const struct submodule *sub;
- 
- 		if (err_code == READ_GITFILE_ERR_STAT_FAILED) {
-@@ -1469,13 +1467,8 @@ void absorb_git_dir_into_superproject(const char *prefix,
- 		sub = submodule_from_path(null_sha1, path);
- 		if (!sub)
- 			die(_("could not lookup name for submodule '%s'"), path);
--		new_git_dir = git_path("modules/%s", sub->name);
--		if (safe_create_leading_directories_const(new_git_dir) < 0)
--			die(_("could not create directory '%s'"), new_git_dir);
--		real_new_git_dir = real_pathdup(new_git_dir);
--		connect_work_tree_and_git_dir(path, real_new_git_dir);
+-	/* Write a .git file in the submodule to redirect to the superproject. */
+-	strbuf_addf(&sb, "%s/.git", path);
+-	if (safe_create_leading_directories_const(sb.buf) < 0)
+-		die(_("could not create leading directories of '%s'"), sb.buf);
+-	submodule_dot_git = fopen(sb.buf, "w");
+-	if (!submodule_dot_git)
+-		die_errno(_("cannot open file '%s'"), sb.buf);
 -
--		free(real_new_git_dir);
-+		connect_work_tree_and_git_dir(path,
-+			git_path("modules/%s", sub->name));
- 	} else {
- 		/* Is it already absorbed into the superprojects git dir? */
- 		char *real_sub_git_dir = real_pathdup(sub_git_dir);
+-	fprintf_or_die(submodule_dot_git, "gitdir: %s\n",
+-		       relative_path(sm_gitdir, path, &rel_path));
+-	if (fclose(submodule_dot_git))
+-		die(_("could not close file %s"), sb.buf);
+-	strbuf_reset(&sb);
+-	strbuf_reset(&rel_path);
++	/* Connect module worktree and git dir */
++	connect_work_tree_and_git_dir(path, sm_gitdir);
+ 
+-	/* Redirect the worktree of the submodule in the superproject's config */
+ 	p = git_pathdup_submodule(path, "config");
+ 	if (!p)
+ 		die(_("could not get submodule directory for '%s'"), path);
+-	git_config_set_in_file(p, "core.worktree",
+-			       relative_path(path, sm_gitdir, &rel_path));
+ 
+ 	/* setup alternateLocation and alternateErrorStrategy in the cloned submodule if needed */
+ 	git_config_get_string("submodule.alternateLocation", &sm_alternate);
 -- 
 2.12.0.192.gbdb9d28a5
 
