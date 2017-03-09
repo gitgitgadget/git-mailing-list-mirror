@@ -2,158 +2,142 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A46371FBEC
-	for <e@80x24.org>; Thu,  9 Mar 2017 11:52:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 89E52202F8
+	for <e@80x24.org>; Thu,  9 Mar 2017 12:14:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932195AbdCILwW (ORCPT <rfc822;e@80x24.org>);
-        Thu, 9 Mar 2017 06:52:22 -0500
-Received: from mout.gmx.net ([212.227.15.15]:50412 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1754289AbdCILvx (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Mar 2017 06:51:53 -0500
-Received: from virtualbox ([95.208.58.21]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MGSDw-1czC8Z2WmW-00DDUh; Thu, 09
- Mar 2017 12:51:07 +0100
-Date:   Thu, 9 Mar 2017 12:51:06 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Jeff King <peff@peff.net>, git@vger.kernel.org,
-        Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH v3 0/9] Fix the early config
-In-Reply-To: <xmqqinnj1jb6.fsf@gitster.mtv.corp.google.com>
-Message-ID: <alpine.DEB.2.20.1703091243260.3767@virtualbox>
-References: <cover.1488506615.git.johannes.schindelin@gmx.de> <cover.1488562287.git.johannes.schindelin@gmx.de> <20170304073952.drfgy7jacnlm6tum@sigill.intra.peff.net> <alpine.DEB.2.20.1703071314180.3767@virtualbox> <20170308073035.pt5ysp6bzpozoqps@sigill.intra.peff.net>
- <xmqqy3wf3dbo.fsf@gitster.mtv.corp.google.com> <20170308174237.cm6e5uvve6hu7lpf@sigill.intra.peff.net> <xmqqinnj1jb6.fsf@gitster.mtv.corp.google.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+        id S1754806AbdCIMMh (ORCPT <rfc822;e@80x24.org>);
+        Thu, 9 Mar 2017 07:12:37 -0500
+Received: from mail-it0-f54.google.com ([209.85.214.54]:38117 "EHLO
+        mail-it0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754771AbdCIMMa (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Mar 2017 07:12:30 -0500
+Received: by mail-it0-f54.google.com with SMTP id m27so64959250iti.1
+        for <git@vger.kernel.org>; Thu, 09 Mar 2017 04:12:29 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=GIw6NTLXVkAROVPXbs2jLjvsr6tzN+P9tJ3Mu0maj44=;
+        b=rSRZEgz7lymLSTdpmHlqXPEGJ/oyxp6BIaoV6J+V8J8Fem2x45/dNsRXXSz/Tr3evb
+         nY47fswcZKxOizsydqpuRaaaltzlTqk3EJDjzf89H4zAXA+HwZ4vgA/ynnTGT7EfBRmU
+         U6EOA6N6ZDL4ttDNArzfTf3abwBqaoUAC5DbbPeb/EPoZmKsz12i67Waea6bRvg/JgSh
+         xfYGekAlhftSgRD0GSW3yfL/w3SMEixA5lnBagdzHkoqNnWAXp/CmvZNMGrjbl9H5Qbj
+         zlcOT1Of/RQfSdCe8iEwKujnV4QYNwMn0Mz8DYbfxiko32nan9OSrF8tHIt9pLVj4VMO
+         dV9w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=GIw6NTLXVkAROVPXbs2jLjvsr6tzN+P9tJ3Mu0maj44=;
+        b=MxS3Wo6uPIwvVvi24KYehrtfRs6AZEpa7/3nY+toEbKx3f6XKSvRf5wp2Mhac1NoSs
+         pQXFXwSyXulApOHnaEbb8y9qOZA0PJj8ltN5bBomqHGLCR2O4m7hUiK4RuDXvnqryvT1
+         JSzuFjoEeybOV2KSTTuIayaxyt2k5IPQwraeaA7YA3GDllK+SRQgHUTQSgWW2A3VvzyZ
+         EoOHoCwCZxIJZXpfJdj+8MS66RpmEndvVtHAplDcnolNbxz8EeiGqryOuBU4QpgA7j5A
+         bx21aNvzIftnUg3VdF0IINTNCEBvg67p7oNfXiQdlV/MTUQo5rUf3I3diznDH+FlUUMT
+         8OhQ==
+X-Gm-Message-State: AMke39kkvZukZycfqwtxcVak+B0RbaGHsFbxQR+R4dKY/cznSgz++Qd7ruYqIerXz7mkPPZI6V5NrqwptF1v/Q==
+X-Received: by 10.36.103.9 with SMTP id u9mr28897296itc.91.1489061548705; Thu,
+ 09 Mar 2017 04:12:28 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:rKHdJU7s+b2JlpJMHsvzbCodDJSqZImyCPBt2sxdun00e5qDwpp
- pIJleDfodl90dgc/O/Cb8aVWPPuVhXNSDfDhZgL7Xkn93Fl7Vo1L+Sr9wIrbpB22r6PoEmU
- XkD+0ekdi8Qy5vHsBx1YVkj/7KUNiNWIFLBqPS23n1yFTykR+1hIXh+X4Qku6SqH3zRGhC7
- 0H6KY+7Sjzzbp3UJ0lLRg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:7GlOyJjtczQ=:QAvz9MruX1hicy4ajpPt1Z
- tg49qhIraOvMEzTrgdZcLOltKjf/jwVHfjVhU6Xb31jgv8F9L1j0Y+b4N7uGQjyl9bwDJUp/3
- 04AgZ102Xzow4UHD7DudlxmsyR/zcmZjcNbKUe4uzRn6D6LKQx24KdU5ZTyOyxTW756qC5d0H
- LZWWZgAJiJPliC6T0LOrY7+VZfMji4lF0Wjiq3iYi3s7iyMrE9kl71m7PoCGhW+0j+ZQiqYk3
- ekrJa46eso+ohpsjIHtKKb59/8lTheYPFGh0bvEQ+3iOSoHmgbT1c2t6UjUSmykgwAixKpBcg
- BZX1uGbIAENJobJ1k55e9qLEO0HefiWYWSiPEzfruKOL04BFq8EQtwP67GbcyCRCRaPE/xfHq
- xVeJGcHRIE9XMwpSa8vgdBzsca86yOHpvIcibhO3i964SuyA9emuhoFWsXUp6LWoJUGEbagtl
- 7fbWOdMYG1iBSaw1fWborSBSP7zptqD/4s39UQc8k18N91AUxE/TmTZe0ndkwxNIBcZYsepgP
- gmolXffav2j11MYkc5/Y/B2uUd+l+VZYyN5Xdc98NHeBFKkJILaOnALnWKxORCKaHBITnemTw
- a5PvjjdpHZ0Nv5a3JFBs5OLgcO3M5tf+GOg9JEL2Ga2T6nmz7v/itcoUwjJDjefzA7ts9GREV
- Qo0pY7W4ff+uONMJtFgLGASL7+P52Y8SH4snSblVLJZb7gD25wYja3tCkHUwa1rQM6dC6tDCY
- Rjggg+YfChqGfWkpBAM2G6M+GLYVCkV6Z9ABSK5DEIereBPuS/lcoL1UyNyO6SoKQ4Icvg5/K
- j16OPZ7
+Received: by 10.107.130.208 with HTTP; Thu, 9 Mar 2017 04:12:08 -0800 (PST)
+In-Reply-To: <20170309104657.7pwreyozxo2tdhk4@sigill.intra.peff.net>
+References: <20170308202025.17900-1-avarab@gmail.com> <20170309100910.z4h7bwqzxw2xynyu@sigill.intra.peff.net>
+ <CACBZZX53rMiB5-cA_7-SeU2Dt7d_Cr7_GgyC0rjQQPPf4qyCqw@mail.gmail.com> <20170309104657.7pwreyozxo2tdhk4@sigill.intra.peff.net>
+From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Date:   Thu, 9 Mar 2017 13:12:08 +0100
+Message-ID: <CACBZZX5i+8bQLhLB4DnUAaUw1vA_KQjhtNBvm7drLepPAFFbAQ@mail.gmail.com>
+Subject: Re: [PATCH] branch & tag: Add a --no-contains option
+To:     Jeff King <peff@peff.net>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Lars Hjemli <hjemli@gmail.com>,
+        Christian Couder <christian.couder@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+On Thu, Mar 9, 2017 at 11:46 AM, Jeff King <peff@peff.net> wrote:
+> On Thu, Mar 09, 2017 at 11:41:59AM +0100, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
+armason wrote:
+>
+>> > I almost suggested that there simply be an option to invert the match
+>> > (like --invert-contains or something).  But what you have here is more
+>> > flexible, if somebody ever wanted to do:
+>> >
+>> >   git tag --contains X --no-contains Y
+>>
+>> Yeah that's really useful. E.g. this shows the branches I branched off
+>> (or have locally) from 2.6..2.8:
+>>
+>>     $ ./git branch --contains v2.6.0 --no-contains v2.8.0
+>>       avar/monkeypatch-untracked-cache-disabled
+>>       avar/uc-notifs21
+>>       dturner/pclouds-watchman-noshm
+>
+> Oh, that's a clever application.
+>
+>> But I'd expect this to show all the tags between the two:
+>>
+>>     $ ./git tag --contains v2.6.0 --no-contains v2.8.0
+>>     $
+>>
+>> But it just returns an empty list. Manually disabling the
+>> contains_tag_algo() path (i.e. effectively locally reverting your
+>> ffc4b8012d) makes it "work", but of course it's much slower now. I
+>> haven't dug into why it's not working yet.
+>
+> I'm almost certain this is because the contains_tag_algo one doesn't
+> clean up the flag bits it sets on the commit objects. So running it
+> twice in the same process is going to give you nonsense results.
 
-On Wed, 8 Mar 2017, Junio C Hamano wrote:
+Yeah indeed.
 
-> Jeff King <peff@peff.net> writes:
-> 
-> >> Or are you discussing a more general issue, iow, anything that can
-> >> work without repository (i.e. those who do _gently version of the
-> >> setup and act on *nongit_ok) should pretend as if there were no
-> >> (broken) repository and take the "no we are not in a repository"
-> >> codepath?
-> >
-> > Yes, exactly.  It would have been less confusing if I picked something
-> > that passed nongit_ok. Like hash-object:
+I tried to hack something up to avoid this, but the
+lookup_commit_reference_gently() we call will return the same
+object.parent pointer for two invocations, i.e. the underlying
+{commit,object}.c API has a cache of objects it returns, couldn't find
+some way to quickly make it burst that cache.
 
-... or like testing the early config directly?
+The other approach of making contains_tag_algo() itself detect that
+it's been called before (or us passing a flag) and going around
+setting commit.object.flags on everything to 0 seemed even more
+brittle, particularly since I think between filter->with_commit &
+filter->no_commit we might end up visiting different commits, so it's
+not easy to just clear it.
 
-> >   $ git init
-> >   $ echo content >file
-> >   $ git hash-object file
-> >   d95f3ad14dee633a758d2e331151e950dd13e4ed
-> >
-> >   $ echo '[core]repositoryformatversion = 10' >.git/config
-> >   $ git hash-object file
-> >   warning: Expected git repo version <= 1, found 10
-> >   d95f3ad14dee633a758d2e331151e950dd13e4ed
-> >
-> > The warning is fine and reasonable here. But then:
-> >
-> >   $ echo '[core]repositoryformatversion = foobar' >.git/config
-> >   $ git hash-object file
-> >   fatal: bad numeric config value 'foobar' for 'core.repositoryformatversion' in file .git/config: invalid unit
-> >
-> > That's wrong. We're supposed to be gentle. And ditto:
-> >
-> >   $ echo '[co' >.git/config
-> >   $ git hash-object file
-> >   fatal: bad config line 1 in file .git/config
-> >
-> > Those last two should issue a warning at most, and then let the command
-> > continue.
-> 
-> Yeah, I agree with that as one of the worthy goals.  IIUC, we
-> decided to leave that outside of this series and later fix on top,
-> which is fine by me, too.
+I'm happy to hack on it given some pointers, will visit it again, but
+for now unless I'm missing something obvious / you can point out some
+way to hack this up I'll just submit v2 with the combination of
+--contains & --no-contains dying with a TODO message.
 
-How about this on top, then:
+The patch without that functionality is still really useful, and we
+can implement that later.
 
--- snipsnap --
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [PATCH] t1309: document cases where we would want early config not to
- die()
+> Coincidentally, I've been looking into resurrecting the cleaner approach
+> that I sent long ago:
+>
+>   http://public-inbox.org/git/20140625233429.GA20457@sigill.intra.peff.ne=
+t/
+>
+> But it's sufficiently complex that it's probably worth fixing the
+> existing algorithm to clean up its bits in the meantime.
+>
+>> Also I wonder if this should be an error:
+>>
+>>     $ ./git [tag|branch|for-each-ref] --contains A --no-contains A
+>>
+>> I.e. when you give the same argument to both, this can never return
+>> anything for obvious reasons.
+>
+> It's clearly nonsense, but I don't think there's any need for it to be
+> an error. GIGO.
 
-Jeff King came up with a couple examples that demonstrate how the new
-read_early_config() that looks harder for the current .git/ directory
-could die() in an undesirable way.
-
-Let's add those cases to the test script, to document what we would like
-to happen when early config encounters problems.
-
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- t/t1309-early-config.sh | 25 +++++++++++++++++++++++++
- 1 file changed, 25 insertions(+)
-
-diff --git a/t/t1309-early-config.sh b/t/t1309-early-config.sh
-index 0c55dee514c..027eca63a3c 100755
---- a/t/t1309-early-config.sh
-+++ b/t/t1309-early-config.sh
-@@ -47,4 +47,29 @@ test_expect_success 'ceiling #2' '
- 	test xdg = "$(cat output)"
- '
- 
-+test_with_config ()
-+{
-+	rm -rf throwaway &&
-+	git init throwaway &&
-+	(
-+		cd throwaway &&
-+		echo "$*" >.git/config &&
-+		test-config read_early_config early.config
-+	)
-+}
-+
-+test_expect_success 'ignore .git/ with incompatible repository version' '
-+	test_with_config "[core]repositoryformatversion = 999999" 2>err &&
-+	grep "warning:.* Expected git repo version <= [1-9]" err
-+'
-+
-+test_expect_failure 'ignore .git/ with invalid repository version' '
-+	test_with_config "[core]repositoryformatversion = invalid"
-+'
-+
-+
-+test_expect_failure 'ignore .git/ with invalid config' '
-+	test_with_config "["
-+'
-+
- test_done
--- 
-2.12.0.windows.1.7.g94dafc3b124
-
+Yeah, make sense.
