@@ -6,105 +6,68 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 222031FBEC
-	for <e@80x24.org>; Thu,  9 Mar 2017 07:08:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AB12F1FBEC
+	for <e@80x24.org>; Thu,  9 Mar 2017 07:11:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750789AbdCIHIO (ORCPT <rfc822;e@80x24.org>);
-        Thu, 9 Mar 2017 02:08:14 -0500
-Received: from cloud.peff.net ([104.130.231.41]:41070 "EHLO cloud.peff.net"
+        id S1752660AbdCIHLa (ORCPT <rfc822;e@80x24.org>);
+        Thu, 9 Mar 2017 02:11:30 -0500
+Received: from cloud.peff.net ([104.130.231.41]:41073 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750724AbdCIHIN (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Mar 2017 02:08:13 -0500
-Received: (qmail 27034 invoked by uid 109); 9 Mar 2017 07:01:30 -0000
+        id S1752657AbdCIHL2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Mar 2017 02:11:28 -0500
+Received: (qmail 27251 invoked by uid 109); 9 Mar 2017 07:04:40 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 09 Mar 2017 07:01:30 +0000
-Received: (qmail 16126 invoked by uid 111); 9 Mar 2017 07:01:39 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 09 Mar 2017 07:04:40 +0000
+Received: (qmail 22016 invoked by uid 111); 9 Mar 2017 07:04:50 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 09 Mar 2017 02:01:39 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 09 Mar 2017 02:01:28 -0500
-Date:   Thu, 9 Mar 2017 02:01:28 -0500
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 09 Mar 2017 02:04:50 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 09 Mar 2017 02:04:39 -0500
+Date:   Thu, 9 Mar 2017 02:04:39 -0500
 From:   Jeff King <peff@peff.net>
-To:     Jeff Hostetler <jeffhost@microsoft.com>
-Cc:     git@vger.kernel.org, gitster@pobox.com, markbt@efaref.net,
-        benpeart@microsoft.com, jonathantanmy@google.com,
-        Jeff Hostetler <git@jeffhostetler.com>
-Subject: Re: [PATCH 01/10] pack-objects: eat CR in addition to LF after fgets.
-Message-ID: <20170309070128.we6hbraea5am3ado@sigill.intra.peff.net>
+To:     Jeff Hostetler <git@jeffhostetler.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Jeff Hostetler <jeffhost@microsoft.com>, git@vger.kernel.org,
+        markbt@efaref.net, benpeart@microsoft.com, jonathantanmy@google.com
+Subject: Re: [PATCH 02/10] pack-objects: add --partial-by-size=n
+ --partial-special
+Message-ID: <20170309070438.r5g2h5vlmgzds4kp@sigill.intra.peff.net>
 References: <1488994685-37403-1-git-send-email-jeffhost@microsoft.com>
- <1488994685-37403-2-git-send-email-jeffhost@microsoft.com>
+ <1488994685-37403-3-git-send-email-jeffhost@microsoft.com>
+ <xmqqh93338s2.fsf@gitster.mtv.corp.google.com>
+ <1c38ffbc-e4a2-32e5-d324-506c2111043e@jeffhostetler.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <1488994685-37403-2-git-send-email-jeffhost@microsoft.com>
+In-Reply-To: <1c38ffbc-e4a2-32e5-d324-506c2111043e@jeffhostetler.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Mar 08, 2017 at 05:37:56PM +0000, Jeff Hostetler wrote:
+On Wed, Mar 08, 2017 at 03:21:11PM -0500, Jeff Hostetler wrote:
 
-> From: Jeff Hostetler <git@jeffhostetler.com>
+> > And not ."gitmodules"?
+> > 
+> > What happens when we later add ".gitsomethingelse"?
+> > 
+> > Do we have to worry about the case where the set of git "special
+> > files" (can we have a better name for them please, by the way?)
+> > understood by the sending side and the receiving end is different?
+> > 
+> > I have a feeling that a mode that makes anything whose name begins
+> > with ".git" excempt from the size based cutoff may generally be
+> > easier to handle.
 > 
-> Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
-> ---
->  builtin/pack-objects.c | 2 ++
->  1 file changed, 2 insertions(+)
-> 
-> diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-> index f294dcf..7e052bb 100644
-> --- a/builtin/pack-objects.c
-> +++ b/builtin/pack-objects.c
-> @@ -2764,6 +2764,8 @@ static void get_object_list(int ac, const char **av)
->  		int len = strlen(line);
->  		if (len && line[len - 1] == '\n')
->  			line[--len] = 0;
-> +		if (len && line[len - 1] == '\r')
-> +			line[--len] = 0;
+> I forgot about ".gitmodules".  The more I think about it, maybe
+> we should always include them (or anything starting with ".git*")
+> and ignore the size, since they are important for correct behavior.
 
-Rather than add features to this bespoke line-reader, can we switch this
-to use strbuf_getline()? That handles line endings, and avoids the
-awkward corner case where fgets "breaks" a long line across two calls.
+I'm also in favor of staking out ".git*" as "this is special and belongs
+to Git".
 
-Something like the patch below. I suspect read_object_list_from_stdin()
-should get the same treatment.
+A while back when we discussed whether to allow symlinks for
+.gitattributes, etc, I think the consensus was to treat the whole
+".git*" namespace consistently. I haven't followed up with patches yet,
+but my plan was to go that route.
 
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index 76b1919ca..6b9fffe9c 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -2765,7 +2765,7 @@ static void record_recent_commit(struct commit *commit, void *data)
- static void get_object_list(int ac, const char **av)
- {
- 	struct rev_info revs;
--	char line[1000];
-+	struct strbuf buf = STRBUF_INIT;
- 	int flags = 0;
- 
- 	init_revisions(&revs, NULL);
-@@ -2775,12 +2775,12 @@ static void get_object_list(int ac, const char **av)
- 	/* make sure shallows are read */
- 	is_repository_shallow();
- 
--	while (fgets(line, sizeof(line), stdin) != NULL) {
--		int len = strlen(line);
--		if (len && line[len - 1] == '\n')
--			line[--len] = 0;
--		if (!len)
-+	while (strbuf_getline(&buf, stdin) != EOF) {
-+		const char *line = buf.buf;
-+
-+		if (!buf.len)
- 			break;
-+
- 		if (*line == '-') {
- 			if (!strcmp(line, "--not")) {
- 				flags ^= UNINTERESTING;
-@@ -2800,6 +2800,7 @@ static void get_object_list(int ac, const char **av)
- 		if (handle_revision_arg(line, &revs, flags, REVARG_CANNOT_BE_FILENAME))
- 			die("bad revision '%s'", line);
- 	}
-+	strbuf_release(&buf);
- 
- 	if (use_bitmap_index && !get_object_list_from_bitmap(&revs))
- 		return;
-
+-Peff
