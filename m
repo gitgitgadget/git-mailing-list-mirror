@@ -7,57 +7,52 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B6D8A1FBEC
-	for <e@80x24.org>; Thu,  9 Mar 2017 11:13:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AA0041FBEC
+	for <e@80x24.org>; Thu,  9 Mar 2017 11:13:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754251AbdCILLm (ORCPT <rfc822;e@80x24.org>);
-        Thu, 9 Mar 2017 06:11:42 -0500
-Received: from smtpo.poczta.interia.pl ([217.74.65.205]:58758 "EHLO
+        id S1753753AbdCILLl (ORCPT <rfc822;e@80x24.org>);
+        Thu, 9 Mar 2017 06:11:41 -0500
+Received: from smtpo.poczta.interia.pl ([217.74.65.205]:58764 "EHLO
         smtpo.poczta.interia.pl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753583AbdCILL2 (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S1753688AbdCILL2 (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 9 Mar 2017 06:11:28 -0500
-Date:   Thu, 09 Mar 2017 12:01:39 +0100
+Date:   Thu, 09 Mar 2017 12:11:23 +0100
 From:   Zenobiusz Kunegunda <zenobiusz.kunegunda@interia.pl>
 Subject: Re: fatal: Could not get current working directory: Permission
  denied | affected 2.10,2.11,2.12, but not 1.9.5 |
-To:     =?iso-8859-1?b?UmVu6Q==?= Scharfe <l.s.r@web.de>
+To:     =?iso-8859-1?b?UmVu6Q==?= Scharfe <l.s.r@web.de>,
+        git@vger.kernel.org
 Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
 X-Mailer: interia.pl/pf09
 In-Reply-To: <7d947891-ce40-23e7-2bc7-0f76dee53665@web.de>
 References: <elvahoiwfqayelbskykd@qjih>
         <7d947891-ce40-23e7-2bc7-0f76dee53665@web.de>
 X-Originating-IP: 89.64.255.37
-Message-Id: <hpulcgxossrwvfbbcvcl@zndn>
+Message-Id: <bvosrihfdmckqvzwqmtp@wiee>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=interia.pl;
-        s=biztos; t=1489057300;
-        bh=a/IahyxvsmyOyT8tZV9WUrwT+NkFGPiOh8wOgHSokxE=;
+        s=biztos; t=1489057884;
+        bh=PKrZvs2mpGaFAqe6OQ5643CPvgjAadP6GLhE8BnA7gI=;
         h=Date:From:Subject:To:Cc:X-Mailer:In-Reply-To:References:
          X-Originating-IP:Message-Id:MIME-Version:Content-Type:
          Content-Transfer-Encoding;
-        b=aqHEE+DE6FS9IFrHlWFhGYXAFQEB+PXoPLCSG9KvWowNXR2ycg8AgXMTRpIPt6+kJ
-         IwOTP2YDojyc/gZJJqr2PMQ3u9L/kSC+rfIdKY6p0qTJ1k+LFvf4pZnknIRH/DFTLm
-         uqKDBoDLdwQrgahJcGTvxhb8UpqdmbwQTO1pDbjM=
+        b=g9CqDQk4ZjzPZaPt9GlIBexOro3KKl9xY6xfxYk2Wf1wAwglSY5EKw2r9KopKT7UJ
+         rhsvVIsbqVy0WC3fS2VXnMyW7Dazuxlt+c51sU77Nbnejf0tJkDwKRXFv1b4yMthyR
+         LYxBpvD9RAbtf1bo9fAbZ6VGxbtMkcvmwnKAm1c4=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 OK, I printed euids inside function calling getcwd().=20
-Every single EUID is the same and have expected value. The same as any othe=
-r local application run by this user. Permissions of every directory in the=
- path are OK.=20
+Every single EUID is the same and have expected value. The same as any
+other local application run by this user. Permissions of every directory in
+the path are OK.=20
 
-/bin/pwd -P inside directory returned exact path and exited with exit statu=
-s 0.
-
-
-
-
-
-Od: "Ren=C3=A9 Scharfe" &lt;l.s.r@web.de>
+/bin/pwd -P inside directory returned exact path and exited with exit
+status 0.Od: "Ren=C3=A9 Scharfe" &lt;l.s.r@web.de>
 Do: "Zenobiusz Kunegunda" &lt;zenobiusz.kunegunda@interia.pl>;=20
 Wys=C5=82ane: 18:38 =C5=9Aroda 2017-03-08
 Temat: Re: fatal: Could not get current working directory: Permission denie=
