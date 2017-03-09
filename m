@@ -2,116 +2,147 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B43BD1FBEC
-	for <e@80x24.org>; Thu,  9 Mar 2017 09:54:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EECE11FBEC
+	for <e@80x24.org>; Thu,  9 Mar 2017 10:14:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753516AbdCIJyW (ORCPT <rfc822;e@80x24.org>);
-        Thu, 9 Mar 2017 04:54:22 -0500
-Received: from a7-19.smtp-out.eu-west-1.amazonses.com ([54.240.7.19]:40988
-        "EHLO a7-19.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1752657AbdCIJyN (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 9 Mar 2017 04:54:13 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
-        s=ihchhvubuqgjsxyuhssfvqohv7z3u4hn; d=amazonses.com; t=1489053181;
-        h=From:To:Message-ID:In-Reply-To:References:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
-        bh=kGyLpAeqrQxuaJhJVq6b68DKD5/mlryYEFQtMmYK8eY=;
-        b=ZgCbrIXC7l68tYHCL148Z7v6+gAJ4ahUGXspAex3LIVsMD5ATKWFVO44cefgaiGr
-        k5yitGVqb1evX+8fmNWKIX3gT0Whhb7+Evg4rePZ80IkZj4CPtszZYEXaQ99OlI1fpj
-        vKm3lKAxyer3kKZEly76wh5+Iy19UZEboWVQzGPw=
-From:   Prathamesh Chavan <pc44800@gmail.com>
-To:     git@vger.kernel.org
-Message-ID: <0102015ab27c6633-c61f56f2-0504-4af3-badc-34246cf635aa-000000@eu-west-1.amazonses.com>
-In-Reply-To: <0102015ab26fcf13-1659be12-a85c-47be-9a77-8f1b0b8a3897-000000@eu-west-1.amazonses.com>
-References: <0102015ab26fcf13-1659be12-a85c-47be-9a77-8f1b0b8a3897-000000@eu-west-1.amazonses.com>
-Subject: [PATCH v2] t2027: avoid using pipes
+        id S1754049AbdCIKOm (ORCPT <rfc822;e@80x24.org>);
+        Thu, 9 Mar 2017 05:14:42 -0500
+Received: from mail-qk0-f182.google.com ([209.85.220.182]:33334 "EHLO
+        mail-qk0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753411AbdCIKOl (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Mar 2017 05:14:41 -0500
+Received: by mail-qk0-f182.google.com with SMTP id y76so111436213qkb.0
+        for <git@vger.kernel.org>; Thu, 09 Mar 2017 02:13:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=cQfvITQ70Ifh7odZ5vbi9yMe15SJWKIKzaG7Go7GAnU=;
+        b=fJ18IrReOVBaXnTV5hERzpdCA83V4GviGNnGyKckEYo8DfJQuz6TUSpVGugvIXArwo
+         lbSKvYaJy5RXWF+zkeRlYg/0bOULfoKDjvb04LKPnbXJCJzs2k32IF2NcgHn743kriHH
+         +2GsxPkvrkWmQAJmsAg//LZYCLNgX/yv6DEvHckIAZxRKcdcPfrJFl+L/phdX3SHsw7L
+         qqSna3GxygNpdQ/dN5DANigaiOvWBx/Y34nJBCOCeloDzXb2VgKellqWRckr33ObiX3y
+         7EPNa+nY0rRLncESM67mQzwRtSeAZPZylGK7kAVnhIARXEbWjK2iUrq9oRgdRl2bdFrQ
+         Ksxg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=cQfvITQ70Ifh7odZ5vbi9yMe15SJWKIKzaG7Go7GAnU=;
+        b=owNPBaOkx1JoVWoih4IDNnuwpRLqJLW1iSZUmYeeRPThaD1611/lu9nc4YM4J9P86u
+         9/AXUbxyeanxkTiCcvYCPSypLOXTgRjGP/fmI3eQ4lDfkUGvStus4hJjIZ4BCu3yoJ0R
+         +AsiXeC6Bp8gcbC/QIIOKaEOP9cV2XiUbdacq0CcvACQyaAMQMcmBiYjknUoPPAyksr7
+         qh/9B4AB4cMzqo6IOLzpwesprHma8xOab2986waYVtJdaY1xwaebqGiwWueL7rtDT+JS
+         zp1u+32ap47K0H1fEauRFSGkthN7B9G/ZY4QnYy0AISruhipdsnhaueceJoiVlRSDw+L
+         DYbg==
+X-Gm-Message-State: AMke39m6KghBbaBEdduQ2zEZ/JwhP2GPIUbQ+T7d87NFlOhCuPKpNd43G7FMFFkEe0S3hreCVkQIGv8GteYJoQ==
+X-Received: by 10.237.57.164 with SMTP id m33mr13840904qte.293.1489052702884;
+ Thu, 09 Mar 2017 01:45:02 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Date:   Thu, 9 Mar 2017 09:53:01 +0000
-X-SES-Outgoing: 2017.03.09-54.240.7.19
-Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
+Received: by 10.12.165.66 with HTTP; Thu, 9 Mar 2017 01:44:42 -0800 (PST)
+In-Reply-To: <xmqqzigv1lc3.fsf@gitster.mtv.corp.google.com>
+References: <CAAvNd=ir1qNQVaKphdg51AfGnsNgTrfvW2L6cca3SHiZrWNgHA@mail.gmail.com>
+ <xmqqlgsf39fg.fsf@gitster.mtv.corp.google.com> <xmqqzigv1lc3.fsf@gitster.mtv.corp.google.com>
+From:   Guillaume Wenzek <guillaume.wenzek@gmail.com>
+Date:   Thu, 9 Mar 2017 10:44:42 +0100
+Message-ID: <CAAvNd=gAvONS-XP2vOLExdWiwDXTPbB5beiXikwdig7xC5OKow@mail.gmail.com>
+Subject: Re: BUG Report: git branch ignore --no-abbrev flag
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Karthik Nayak <karthik.188@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Whenever a git command is present in the upstream of a pipe, its failure
-gets masked by piping and hence it should be avoided for testing the
-upstream git command. By writing out the output of the git command to
-a file, we can test the exit codes of both the commands as a failure exit
-code in any command is able to stop the && chain.
+Thanks for looking into it,
 
-Signed-off-by: Prathamesh <pc44800@gmail.com>
----
- t/t2027-worktree-list.sh | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+The full version number is "2.12.0.246.ga2ecc84866" but I don't think
+that's an official number, I'm using my company (Google) apt
+repository.
 
-diff --git a/t/t2027-worktree-list.sh b/t/t2027-worktree-list.sh
-index 848da5f..daa7a04 100755
---- a/t/t2027-worktree-list.sh
-+++ b/t/t2027-worktree-list.sh
-@@ -31,7 +31,7 @@ test_expect_success '"list" all worktrees from main' '
- 	test_when_finished "rm -rf here && git worktree prune" &&
- 	git worktree add --detach here master &&
- 	echo "$(git -C here rev-parse --show-toplevel) $(git rev-parse --short HEAD) (detached HEAD)" >>expect &&
--	git worktree list | sed "s/  */ /g" >actual &&
-+	git worktree list >out && sed "s/  */ /g" <out >actual &&
- 	test_cmp expect actual
- '
- 
-@@ -40,7 +40,7 @@ test_expect_success '"list" all worktrees from linked' '
- 	test_when_finished "rm -rf here && git worktree prune" &&
- 	git worktree add --detach here master &&
- 	echo "$(git -C here rev-parse --show-toplevel) $(git rev-parse --short HEAD) (detached HEAD)" >>expect &&
--	git -C here worktree list | sed "s/  */ /g" >actual &&
-+	git -C here worktree list >out && sed "s/  */ /g" <out >actual &&
- 	test_cmp expect actual
- '
- 
-@@ -73,7 +73,7 @@ test_expect_success '"list" all worktrees from bare main' '
- 	git -C bare1 worktree add --detach ../there master &&
- 	echo "$(pwd)/bare1 (bare)" >expect &&
- 	echo "$(git -C there rev-parse --show-toplevel) $(git -C there rev-parse --short HEAD) (detached HEAD)" >>expect &&
--	git -C bare1 worktree list | sed "s/  */ /g" >actual &&
-+	git -C bare1 worktree list >out && sed "s/  */ /g" <out >actual &&
- 	test_cmp expect actual
- '
- 
-@@ -96,7 +96,7 @@ test_expect_success '"list" all worktrees from linked with a bare main' '
- 	git -C bare1 worktree add --detach ../there master &&
- 	echo "$(pwd)/bare1 (bare)" >expect &&
- 	echo "$(git -C there rev-parse --show-toplevel) $(git -C there rev-parse --short HEAD) (detached HEAD)" >>expect &&
--	git -C there worktree list | sed "s/  */ /g" >actual &&
-+	git -C there worktree list >out && sed "s/  */ /g" <out >actual &&
- 	test_cmp expect actual
- '
- 
-@@ -118,9 +118,9 @@ test_expect_success 'broken main worktree still at the top' '
- 		cd linked &&
- 		echo "worktree $(pwd)" >expected &&
- 		echo "ref: .broken" >../.git/HEAD &&
--		git worktree list --porcelain | head -n 3 >actual &&
-+		git worktree list --porcelain >out && head -n 3 out >actual &&
- 		test_cmp ../expected actual &&
--		git worktree list | head -n 1 >actual.2 &&
-+		git worktree list >out && head -n 1 out >actual.2 &&
- 		grep -F "(error)" actual.2
- 	)
- '
-@@ -134,7 +134,7 @@ test_expect_success 'linked worktrees are sorted' '
- 		test_commit new &&
- 		git worktree add ../first &&
- 		git worktree add ../second &&
--		git worktree list --porcelain | grep ^worktree >actual
-+		git worktree list --porcelain >out && grep ^worktree out >actual
- 	) &&
- 	cat >expected <<-EOF &&
- 	worktree $(pwd)/sorted/main
+The git package date is 2017/03/03 while previous version was from
+2017/02/16, the commit you identified is actually between the two, so
+that may be it.
 
---
-https://github.com/git/git/pull/336
+On 8 March 2017 at 22:59, Junio C Hamano <gitster@pobox.com> wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+>> Guillaume Wenzek <guillaume.wenzek@gmail.com> writes:
+>>
+>>> After updating to git 2.12.0 on Monday I noticed that the "git branch"
+>>> wasn't behaving as usual.
+>>
+>> Are you sure you are trying 2.12?  v2.12.0 and before should behave
+>> the same way and honor --no-abbrev as far as I know.
+>>
+>> On the other hand, 'master' has 93e8cd8b ("Merge branch
+>> 'kn/ref-filter-branch-list'", 2017-02-27), which seems to introduce
+>> the regression.
+>>
+>> Karthik?
+>
+> I haven't fully checked if filter.abbrev is set correctly, but I
+> noticed the output format is formulated without taking the value of
+> filter.abbrev into account at all, so this is an attempt to fix
+> that omission.
+>
+> I also notice that filter.abbrev is _ONLY_ used by builtin/branch.c and
+> the actual ref-filter code does not have to know anything about it.
+>
+> We probably should eliminate filter.abbrev field from the structure
+> and use a regular variable in builtin/branch.c and use it to pass
+> the result of command line parsing from cmd_branch() down to
+> build_format() as an argument.
+>
+> But that is outside the scope of regression fix.
+>
+>
+>  builtin/branch.c | 19 +++++++++++++++----
+>  1 file changed, 15 insertions(+), 4 deletions(-)
+>
+> diff --git a/builtin/branch.c b/builtin/branch.c
+> index cbaa6d03c0..537c47811a 100644
+> --- a/builtin/branch.c
+> +++ b/builtin/branch.c
+> @@ -335,9 +335,18 @@ static char *build_format(struct ref_filter *filter, int maxwidth, const char *r
+>                     branch_get_color(BRANCH_COLOR_CURRENT));
+>
+>         if (filter->verbose) {
+> +               struct strbuf obname = STRBUF_INIT;
+> +
+> +               if (filter->abbrev < 0)
+> +                       strbuf_addf(&obname, "%%(objectname:short)");
+> +               else if (!filter->abbrev)
+> +                       strbuf_addf(&obname, "%%(objectname)");
+> +               else
+> +                       strbuf_addf(&obname, " %%(objectname:short=%d) ", filter->abbrev);
+> +
+>                 strbuf_addf(&local, "%%(align:%d,left)%%(refname:lstrip=2)%%(end)", maxwidth);
+>                 strbuf_addf(&local, "%s", branch_get_color(BRANCH_COLOR_RESET));
+> -               strbuf_addf(&local, " %%(objectname:short=7) ");
+> +               strbuf_addf(&local, " %s ", obname.buf);
+>
+>                 if (filter->verbose > 1)
+>                         strbuf_addf(&local, "%%(if)%%(upstream)%%(then)[%s%%(upstream:short)%s%%(if)%%(upstream:track)"
+> @@ -346,10 +355,12 @@ static char *build_format(struct ref_filter *filter, int maxwidth, const char *r
+>                 else
+>                         strbuf_addf(&local, "%%(if)%%(upstream:track)%%(then)%%(upstream:track) %%(end)%%(contents:subject)");
+>
+> -               strbuf_addf(&remote, "%s%%(align:%d,left)%s%%(refname:lstrip=2)%%(end)%s%%(if)%%(symref)%%(then) -> %%(symref:short)"
+> -                           "%%(else) %%(objectname:short=7) %%(contents:subject)%%(end)",
+> +               strbuf_addf(&remote, "%s%%(align:%d,left)%s%%(refname:lstrip=2)%%(end)%s"
+> +                           "%%(if)%%(symref)%%(then) -> %%(symref:short)"
+> +                           "%%(else) %s %%(contents:subject)%%(end)",
+>                             branch_get_color(BRANCH_COLOR_REMOTE), maxwidth, quote_literal_for_format(remote_prefix),
+> -                           branch_get_color(BRANCH_COLOR_RESET));
+> +                           branch_get_color(BRANCH_COLOR_RESET), obname.buf);
+> +               strbuf_release(&obname);
+>         } else {
+>                 strbuf_addf(&local, "%%(refname:lstrip=2)%s%%(if)%%(symref)%%(then) -> %%(symref:short)%%(end)",
+>                             branch_get_color(BRANCH_COLOR_RESET));
