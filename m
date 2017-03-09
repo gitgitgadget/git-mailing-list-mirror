@@ -2,204 +2,209 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6216D202F8
-	for <e@80x24.org>; Thu,  9 Mar 2017 22:19:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 466B8202F8
+	for <e@80x24.org>; Thu,  9 Mar 2017 22:24:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753925AbdCIWT3 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 9 Mar 2017 17:19:29 -0500
-Received: from mail-pf0-f172.google.com ([209.85.192.172]:35543 "EHLO
-        mail-pf0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753033AbdCIWT2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Mar 2017 17:19:28 -0500
-Received: by mail-pf0-f172.google.com with SMTP id j5so33737749pfb.2
-        for <git@vger.kernel.org>; Thu, 09 Mar 2017 14:19:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=subject:to:references:cc:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding;
-        bh=cSv/txb4Vyy76qMw34vTuURKv30pwIrMlN3xFbhvpnE=;
-        b=gokMMiViY35IPNeNXnoN51JCMYH4OOjLv6uHeNTj2bO7dYQ3O8TU3xBteopHOkVYQn
-         ueHwdkEWmaGM+j/UnWGLZvTkRiTt6LKEpSEBALSie7so2Pw/c6j15yQOlvxAC8+D5oZ5
-         TTeWCoWmZwVkjs1SUGIX2Z5LRyQhfoIoBoBM8wj8qFIB8VPvilYfYBsyx8E4biH0QhHR
-         hfCMaoStxnCz5mVQOblkYtiEsCVxn48RoFYtxOiyko6vFdFUktCzO1IZo6qkOgaZc5PF
-         s/dqSaIznL5P7M9MhV5QP3YO5wMzMLRegveJvtjg/SslPs7wiFte9oZXc8pAcdRTFS5l
-         /zQA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
-        bh=cSv/txb4Vyy76qMw34vTuURKv30pwIrMlN3xFbhvpnE=;
-        b=DUl+yYgO3D9CgysrTWeXz+dbz/nJoMaU1XCDzTs9EHJMIE9FjKu3KOfa33r/Ia0Aio
-         GU1RKP7Qud0sGLlVid4soUqPZXSweDTSRXCpBgIUehnSG0GojSCPfYWyeEiFwvkilWSD
-         E8KlFX3yYIXtjxVxcDdBbVx3Kv3TgsOullLX9SuwsgbBVn/hxzNSJujh7+HsaGalK578
-         /MTk/7nFfCKWxPa0/ctStBCM1790qUK13uGkilR6F2K28HEg2vJhLgTRPk6bwNklLn8o
-         Sjj+upjJgRgZFpy6J+63Z07D7QlnyNb0vQv/v9TuIu5g5l8imUb+vPVTDGcWvG1KmD6u
-         2LvQ==
-X-Gm-Message-State: AMke39mkOHL79GuM33fCiuvnni2P1/LDnSN5iEQMUq2fEDHMm5n9ywFcM8kcl9Y8hdnHxhvm
-X-Received: by 10.99.43.216 with SMTP id r207mr16322414pgr.214.1489097967011;
-        Thu, 09 Mar 2017 14:19:27 -0800 (PST)
-Received: from twelve2.mtv.corp.google.com ([2620:0:1000:5b10:bdfe:9271:5e21:646a])
-        by smtp.gmail.com with ESMTPSA id x15sm14472504pgc.16.2017.03.09.14.19.25
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 09 Mar 2017 14:19:26 -0800 (PST)
-Subject: Re: [PATCH 1/2] pathspec: allow querying for attributes
-To:     Brandon Williams <bmwill@google.com>, git@vger.kernel.org
-References: <20170309210756.105566-1-bmwill@google.com>
- <20170309210756.105566-2-bmwill@google.com>
-Cc:     sbeller@google.com, pclouds@gmail.com
-From:   Jonathan Tan <jonathantanmy@google.com>
-Message-ID: <e8ef511f-563b-8b22-d8c6-daec2291f2aa@google.com>
-Date:   Thu, 9 Mar 2017 14:19:25 -0800
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.7.0
+        id S1753417AbdCIWYD (ORCPT <rfc822;e@80x24.org>);
+        Thu, 9 Mar 2017 17:24:03 -0500
+Received: from mout.gmx.net ([212.227.15.15]:58935 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1753015AbdCIWYC (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Mar 2017 17:24:02 -0500
+Received: from virtualbox ([37.201.193.18]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MgLMU-1caSw82hmQ-00Nm5h; Thu, 09
+ Mar 2017 23:23:46 +0100
+Date:   Thu, 9 Mar 2017 23:23:44 +0100 (CET)
+From:   Johannes Schindelin <johannes.schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     git@vger.kernel.org
+cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        Duy Nguyen <pclouds@gmail.com>,
+        Brandon Williams <bmwill@google.com>
+Subject: [PATCH v5 00/11] Fix the early config
+In-Reply-To: <cover.1488897111.git.johannes.schindelin@gmx.de>
+Message-ID: <cover.1489098170.git.johannes.schindelin@gmx.de>
+References: <cover.1488897111.git.johannes.schindelin@gmx.de>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-In-Reply-To: <20170309210756.105566-2-bmwill@google.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:jcJNnqPLBJc6sXdIS4I+taYxO+wgg6QrCtKxpbC/scY/qMfE2fX
+ E/zSZLEUQ5Yq8JO1Dhe4bES1IEoqMBOaYWSph98pCPEulfsUp9fZqybWZLlYvI0QdrONnPu
+ 7JK6aPU+pQSONFV2Mrq/20fNQL5QphEz8MOSYLxm39lHnAGQaq8OM/Ta7n7Qu7vF5swSga/
+ tH+fINrKm95TG4/1zkVCg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:2cTyqN8XC38=:DCNY1+e52nIPoMiyi01IDL
+ Nw1kZ0WKqmZA84jbptMH5ql7uB9wRPRzG0f5mZMPprZ99sZaba23Nvcf43nNUY4zVU1KiUUCU
+ pNbjz4bebQKoMq8Tqfcrgzt02LKHf2Y/DIWdo8G6XYPy2UpiX6X5gIBjpR0iyUsov4NabmI5k
+ Xr35FskRVBIiCSWZpn76B3wPuc9frEXbaAlIdih1vrUSWVcWxdfx2r3rOnqPi3hrJQVTV2Zcz
+ ZGebT2mlkjNmA9G3Cdr04JIK4PDgrxkcRRjyqk8zuDd/ahGzUFetk9s1s/PY5h/F/hLVix/PU
+ AiM57yaiVxjkRnUfg/3r4mER43znSeVpN1AVbfXyMWUPTGRkaYHp21TexrKPXfUlDKIosXIL9
+ uM2C+aLI9gcrjM5njbEt6h5rIDN5IdSAvnqsbm3LfGOReapAuBiTxpD+wWze7q2KhQXNMF+1L
+ Ag7eVA8z3mal5SlYDuICD0CReSTXpg3619xxAyMp01erbhUwAIVKIdrcwMm7zvpKeN1fO4lkF
+ Ko1a273q+YFOi70yZexONMSn0/zecUNk+7O408eJWKWJsauzKMQTGF4CSCwNu9VJisZZXQV6s
+ qs7j8GdsJHNLpCTec9HNB14KY0VzTrE1NRoiw2ZmVe/DCW3q295y334mHL+5hXmTxp3zjg9Pe
+ OwuYMLSfrN422PthVy8ngE8EK6qcdHJ8T4t8TlXiC1eVVgKyRgFaTMyvmSDBl8cZSpfzIMCfe
+ D/QM916H2ltRLtkW39fmYAkAHrO3eV9SE+vLRRLCc2cPZr/5csrCoAPs309/xd2bDBTCvCE9M
+ WWU4hiC
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 03/09/2017 01:07 PM, Brandon Williams wrote:
-> diff --git a/Documentation/glossary-content.txt b/Documentation/glossary-content.txt
-> index fc9320e59..5c32d1905 100644
-> --- a/Documentation/glossary-content.txt
-> +++ b/Documentation/glossary-content.txt
-> @@ -384,6 +384,26 @@ full pathname may have special meaning:
->  +
->  Glob magic is incompatible with literal magic.
->
-> +attr;;
-> +After `attr:` comes a space separated list of "attribute
-> +requirements", all of which must be met in order for the
-> +path to be considered a match; this is in addition to the
-> +usual non-magic pathspec pattern matching.
-> ++
-> +Each of the attribute requirements for the path takes one of
-> +these forms:
-> +
-> +- "`ATTR`" requires that the attribute `ATTR` must be set.
+These patches are an attempt to make Git's startup sequence a bit less
+surprising.
 
-As a relative newcomer to attributes, I was confused by the fact that 
-"set" and "set to a value" is different (and likewise "unset" and 
-"unspecified"). Maybe it's worthwhile including a link to 
-"gitattributes" to explain the different (exclusive) states that an 
-attribute can be in.
+The idea here is to discover the .git/ directory gently (i.e. without
+changing the current working directory, nor any global variables), and
+to use it to read the .git/config file early, before we actually called
+setup_git_directory() (if we ever do that).
 
-> +
-> +- "`-ATTR`" requires that the attribute `ATTR` must be unset.
-> +
-> +- "`ATTR=VALUE`" requires that the attribute `ATTR` must be
-> +  set to the string `VALUE`.
-> +
-> +- "`!ATTR`" requires that the attribute `ATTR` must be
-> +  unspecified.
+This also allows us to fix the early config e.g. to determine the pager
+or to resolve aliases in a non-surprising manner.
 
-It would read better to me if you omitted "must" in all 4 bullet points 
-(and it is redundant anyway with "requires"), but I don't feel too 
-strongly about this.
+My own use case: in the GVFS Git fork, we need to execute pre-command
+and post-command hooks before and after *every* Git command. A previous
+version of the pre-command/post-command hook support was broken, as it
+used run_hook() which implicitly called setup_git_directory() too early.
+The discover_git_directory() function (and due to core.hooksPath also
+the read_early_config() function) helped me fix this.
 
-> diff --git a/pathspec.c b/pathspec.c
-> index b961f00c8..583ed5208 100644
-> --- a/pathspec.c
-> +++ b/pathspec.c
-> @@ -87,6 +89,72 @@ static void prefix_magic(struct strbuf *sb, int prefixlen, unsigned magic)
->  	strbuf_addf(sb, ",prefix:%d)", prefixlen);
->  }
->
-> +static void parse_pathspec_attr_match(struct pathspec_item *item, const char *value)
-> +{
-> +	struct string_list_item *si;
-> +	struct string_list list = STRING_LIST_INIT_DUP;
-> +
-> +	if (item->attr_check)
-> +		die(_("Only one 'attr:' specification is allowed."));
-> +
-> +	if (!value || !strlen(value))
+Notable notes:
 
-You can write `!*value` instead of `!strlen(value)`.
+- Even if it can cause surprising problems, `init` and `clone` are not
+  special-cased. Rationale: it would introduce technical debt and
+  violate the Principle Of Least Astonishment.
 
-> +		die(_("attr spec must not be empty"));
-> +
-> +	string_list_split(&list, value, ' ', -1);
+- The read_early_config() function does not cache Git directory
+  discovery nor read values. This is left for another patch series, if
+  it ever becomes necessary.
 
-You could avoid some allocations by using the in-place variant (since 
-value is a newly allocated string not used elsewhere) but it is probably 
-not that important in this argument parsing case.
+- The alias handling in git.c could possibly benefit from this work, but
+  again, this is a separate topic from the current patch series.
 
-> +	string_list_remove_empty_items(&list, 0);
-> +
-> +	item->attr_check = attr_check_alloc();
-> +	ALLOC_GROW(item->attr_match,
-> +		   item->attr_match_nr + list.nr,
-> +		   item->attr_match_alloc);
+Changes since v4:
 
-Is there a time when this function is called while item->attr_match_nr 
-is not zero?
+- plugged memory leaks in setup_git_directory() (thanks, Brandon)
 
-> +
-> +	for_each_string_list_item(si, &list) {
-> +		size_t attr_len;
-> +		char *attr_name;
-> +		const struct git_attr *a;
-> +
-> +		int j = item->attr_match_nr++;
-> +		const char *attr = si->string;
-> +		struct attr_match *am = &item->attr_match[j];
-> +
-> +		switch (*attr) {
-> +		case '!':
-> +			am->match_mode = MATCH_UNSPECIFIED;
-> +			attr++;
-> +			attr_len = strlen(attr);
-> +			break;
-> +		case '-':
-> +			am->match_mode = MATCH_UNSET;
-> +			attr++;
-> +			attr_len = strlen(attr);
-> +			break;
-> +		default:
-> +			attr_len = strcspn(attr, "=");
-> +			if (attr[attr_len] != '=')
-> +				am->match_mode = MATCH_SET;
-> +			else {
-> +				am->match_mode = MATCH_VALUE;
-> +				am->value = xstrdup(&attr[attr_len + 1]);
-> +				if (strchr(am->value, '\\'))
-> +					die(_("attr spec values must not contain backslashes"));
-> +			}
-> +			break;
-> +		}
-> +
-> +		attr_name = xmemdupz(attr, attr_len);
-> +		a = git_attr(attr_name);
-> +		if (!a)
-> +			die(_("invalid attribute name %s"), attr_name);
-> +
-> +		attr_check_append(item->attr_check, a);
-> +
-> +		free(attr_name);
-> +	}
-> +
-> +	string_list_clear(&list, 0);
-> +	return;
+- added some tests that demonstrate how early config currently can fail
+  in undesired ways
 
-Redundant return?
+- fixed indentation (this change was snuck into gitster/git's
+  js/early-config branch, and I happened to notice the difference by
+  pure random chance)
 
-> @@ -544,6 +628,10 @@ void parse_pathspec(struct pathspec *pathspec,
->  		if (item[i].nowildcard_len < item[i].len)
->  			pathspec->has_wildcard = 1;
->  		pathspec->magic |= item[i].magic;
-> +
-> +		if (item[i].attr_check &&
-> +		    item[i].attr_check->nr != item[i].attr_match_nr)
-> +			die("BUG: should have same number of entries");
 
-I'm not sure if this check is giving us any benefit - I would expect 
-this type of code before some other code that assumed that the numbers 
-matched, and that will potentially segfault if not.
+Johannes Schindelin (11):
+  t7006: replace dubious test
+  setup_git_directory(): use is_dir_sep() helper
+  Prepare setup_discovered_git_directory() the root directory
+  setup_git_directory_1(): avoid changing global state
+  Introduce the discover_git_directory() function
+  Make read_early_config() reusable
+  read_early_config(): avoid .git/config hack when unneeded
+  read_early_config(): really discover .git/
+  Test read_early_config()
+  setup_git_directory_gently_1(): avoid die()ing
+  t1309: document cases where we would want early config not to die()
+
+ cache.h                 |   8 ++
+ config.c                |  25 +++++
+ pager.c                 |  31 ------
+ setup.c                 | 252 +++++++++++++++++++++++++++++++++---------------
+ t/helper/test-config.c  |  15 +++
+ t/t1309-early-config.sh |  75 ++++++++++++++
+ t/t7006-pager.sh        |  18 +++-
+ 7 files changed, 313 insertions(+), 111 deletions(-)
+ create mode 100755 t/t1309-early-config.sh
+
+
+base-commit: e0688e9b28f2c5ff711460ee8b62077be5df2360
+Published-As: https://github.com/dscho/git/releases/tag/early-config-v5
+Fetch-It-Via: git fetch https://github.com/dscho/git early-config-v5
+
+Interdiff vs v4:
+
+ diff --git a/setup.c b/setup.c
+ index 9118b48590a..b0a28f609e2 100644
+ --- a/setup.c
+ +++ b/setup.c
+ @@ -903,7 +903,7 @@ static enum discovery_result setup_git_directory_gently_1(struct strbuf *dir,
+  			if (die_on_error ||
+  			    error_code == READ_GITFILE_ERR_NOT_A_FILE) {
+  				if (is_git_directory(dir->buf))
+ -				    gitdirenv = DEFAULT_GIT_DIR_ENVIRONMENT;
+ +					gitdirenv = DEFAULT_GIT_DIR_ENVIRONMENT;
+  			} else if (error_code &&
+  				   error_code != READ_GITFILE_ERR_STAT_FAILED)
+  				return GIT_DIR_INVALID_GITFILE;
+ @@ -979,7 +979,8 @@ const char *discover_git_directory(struct strbuf *gitdir)
+  
+  const char *setup_git_directory_gently(int *nongit_ok)
+  {
+ -	struct strbuf cwd = STRBUF_INIT, dir = STRBUF_INIT, gitdir = STRBUF_INIT;
+ +	static struct strbuf cwd = STRBUF_INIT;
+ +	struct strbuf dir = STRBUF_INIT, gitdir = STRBUF_INIT;
+  	const char *prefix;
+  
+  	/*
+ @@ -1027,6 +1028,8 @@ const char *setup_git_directory_gently(int *nongit_ok)
+  	case GIT_DIR_HIT_MOUNT_POINT:
+  		if (nongit_ok) {
+  			*nongit_ok = 1;
+ +			strbuf_release(&cwd);
+ +			strbuf_release(&dir);
+  			return NULL;
+  		}
+  		die(_("Not a git repository (or any parent up to mount point %s)\n"
+ @@ -1044,6 +1047,9 @@ const char *setup_git_directory_gently(int *nongit_ok)
+  	startup_info->have_repository = !nongit_ok || !*nongit_ok;
+  	startup_info->prefix = prefix;
+  
+ +	strbuf_release(&dir);
+ +	strbuf_release(&gitdir);
+ +
+  	return prefix;
+  }
+  
+ diff --git a/t/t1309-early-config.sh b/t/t1309-early-config.sh
+ index 0c55dee514c..027eca63a3c 100755
+ --- a/t/t1309-early-config.sh
+ +++ b/t/t1309-early-config.sh
+ @@ -47,4 +47,29 @@ test_expect_success 'ceiling #2' '
+  	test xdg = "$(cat output)"
+  '
+  
+ +test_with_config ()
+ +{
+ +	rm -rf throwaway &&
+ +	git init throwaway &&
+ +	(
+ +		cd throwaway &&
+ +		echo "$*" >.git/config &&
+ +		test-config read_early_config early.config
+ +	)
+ +}
+ +
+ +test_expect_success 'ignore .git/ with incompatible repository version' '
+ +	test_with_config "[core]repositoryformatversion = 999999" 2>err &&
+ +	grep "warning:.* Expected git repo version <= [1-9]" err
+ +'
+ +
+ +test_expect_failure 'ignore .git/ with invalid repository version' '
+ +	test_with_config "[core]repositoryformatversion = invalid"
+ +'
+ +
+ +
+ +test_expect_failure 'ignore .git/ with invalid config' '
+ +	test_with_config "["
+ +'
+ +
+  test_done
+
+-- 
+2.12.0.windows.1.7.g94dafc3b124
+
