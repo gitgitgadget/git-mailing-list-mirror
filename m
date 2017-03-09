@@ -2,84 +2,140 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4E30B20135
-	for <e@80x24.org>; Thu,  9 Mar 2017 01:17:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6974D20135
+	for <e@80x24.org>; Thu,  9 Mar 2017 01:30:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754236AbdCIBRG (ORCPT <rfc822;e@80x24.org>);
-        Wed, 8 Mar 2017 20:17:06 -0500
-Received: from mail-pf0-f176.google.com ([209.85.192.176]:35053 "EHLO
-        mail-pf0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752315AbdCIBRF (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Mar 2017 20:17:05 -0500
-Received: by mail-pf0-f176.google.com with SMTP id j5so21692426pfb.2
-        for <git@vger.kernel.org>; Wed, 08 Mar 2017 17:17:05 -0800 (PST)
+        id S932165AbdCIBac (ORCPT <rfc822;e@80x24.org>);
+        Wed, 8 Mar 2017 20:30:32 -0500
+Received: from mail-pg0-f44.google.com ([74.125.83.44]:36486 "EHLO
+        mail-pg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754742AbdCIBaa (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Mar 2017 20:30:30 -0500
+Received: by mail-pg0-f44.google.com with SMTP id g2so2384925pge.3
+        for <git@vger.kernel.org>; Wed, 08 Mar 2017 17:30:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=subject:to:references:from:message-id:date:user-agent:mime-version
-         :in-reply-to:content-transfer-encoding;
-        bh=WrQGIDJaqWez4w4YWcdZHX7GrPuqgdT4rP7Dc+KNxPA=;
-        b=dVdE1uGejRX/fHPppJ+jl170ARABivcQ+lBCfkPiApqLhHSMbEoz+yiwzz/ClbtAGX
-         1fjxqtn9VrQAF73dAbUWfIqxoXqHXbVw53tw4RD9TcsS9bqjcDpQTHDJ+nOdNWm8/cjg
-         qs8qdCB27FYHFux+S4MZp19p92xvOMC6jlp+iB3teiJtPveDC6QMUZZ7ar+bnjvreGmQ
-         JBJJ2qlHXXE+LsY2vdLVEkaMM790fP8E9qn20IPcuSeGwuMJbGTi/FNgidyNT8CSukID
-         HMaHYpmHBzQyAaBZHnGkNMMrk1gR3maofKnnyjUDYyvWX+32jRctfZ/bqsFSppaN+X/P
-         +oaQ==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=yaxspo/PEgkbPABk/VyHyZeczzfPkjMUAL3YxwdJqrM=;
+        b=b0N+mdBYymGxcrlwcXlhd5uFRmrl8fkxw3CKHCEvkZ4lAyquKr3L4SfL9pX/nxMo+u
+         ub7Vjf0FwnXeAW3rWgCndDU9SlPFjhxNmQqMQ9w8RsdZS0Hn7P1mZ9CtsKJg1eec0Rf/
+         NGpAwix3FhCgswYJ7lWl6rXn5/hL2RRVUBvJwZIwLDNXxddP2+0JLBP9g0/j12QZFHtp
+         Jt6aSNa1NMAwAYdugTYXQXzsiM1L3agZFRKHxhLF65ucBIaZYN2DhDbA4HJG1M4Tmqsj
+         +9jgs8uQ4XyryfDblKUYHw+eZpknPYKOPPUfxFth9rrm7NWk2NZ0NqQKXosfMTmHRCGg
+         nULA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
-        bh=WrQGIDJaqWez4w4YWcdZHX7GrPuqgdT4rP7Dc+KNxPA=;
-        b=LEX0sBSibyFwVgXJb+eQ4bu5RsOIV5sCWlboIS1PxFom7hE3rvnS8ZVlV54KRL3jp6
-         /yciF2/KY8DoP/y7xhuDNmsbZXsclJgthKH/73jckhR7Rbryllt++uTffjOSi2JJrVC1
-         CWVXGJIgjbBVGuV1iBKTYDdjbvSAid9CFHf4FqKDEVAEfkBm9eQoyLOe1sJgnf43kpBo
-         kvIq/cITXdsxM2mPK49KpTpP+JitJFUY4N/l3TNOA+AGOOtznjTZNlyc/jFiFnaMxfVg
-         /yKkgBERjX3t/QNZnnVnkJvLXa/wWtbffI9ExjuZ8/Ap97j9KpVD+Nqf7zHRO+tKiYiT
-         btfQ==
-X-Gm-Message-State: AMke39lri+taPobEt+3Y3DL8vfRu9YqYBLleoWzms4Epm+wD+xxD+qiCs7J0jGHISxKBRQyc
-X-Received: by 10.98.5.2 with SMTP id 2mr10823701pff.77.1489020369471;
-        Wed, 08 Mar 2017 16:46:09 -0800 (PST)
-Received: from twelve2.mtv.corp.google.com ([2620:0:1000:5b10:85af:fb30:90cc:bb73])
-        by smtp.gmail.com with ESMTPSA id s13sm8329719pfk.26.2017.03.08.16.46.08
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 08 Mar 2017 16:46:08 -0800 (PST)
-Subject: Re: What's cooking in git.git (Mar 2017, #03; Wed, 8)
-To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-References: <xmqqvarjz5yv.fsf@gitster.mtv.corp.google.com>
-From:   Jonathan Tan <jonathantanmy@google.com>
-Message-ID: <c8f3c838-136c-2ace-509d-8600dc743ade@google.com>
-Date:   Wed, 8 Mar 2017 16:46:08 -0800
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.7.0
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=yaxspo/PEgkbPABk/VyHyZeczzfPkjMUAL3YxwdJqrM=;
+        b=ZulHPJMGxOsjUgdLz4Oou7jUQrt5icorPbWoonkayfYSNu5zhXUKmyuy7u3sxVolox
+         521mB1GsNi0ajBSMZ9/RrhjmnG6S3mncsqG1xJk5b6nVY41AVipgB3nfIVs+PmAhAW/b
+         Ywg3xD26WKpUGTImWZ7X8WwAVTIT+OuXiPMzD0rch/7sW9yx0XoVT9x0kTMLV5a7JEnG
+         DcIWpS9Xfz8dEGpTvIA9Wn+lvl8NsFmpISMSfpA4wVxW8aC2cp6ThUFHJXltlHPsVJNc
+         t62tn37dtSocEij35w1x45N8blw8lL+/RI8rFDnRlTSOXG37j/nGAE8RPt96pilorcHL
+         e6qg==
+X-Gm-Message-State: AMke39k1tYic8DeFxT5y1FRPSlZ3BJFXvKEsryCXPow75SVrDGLgrG/jXbDPgYIjEFraFN38ScomjCDHAX8GgBlH
+X-Received: by 10.84.128.74 with SMTP id 68mr13252353pla.111.1489023029274;
+ Wed, 08 Mar 2017 17:30:29 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <xmqqvarjz5yv.fsf@gitster.mtv.corp.google.com>
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Transfer-Encoding: 7bit
+Received: by 10.100.187.5 with HTTP; Wed, 8 Mar 2017 17:30:28 -0800 (PST)
+In-Reply-To: <xmqqa88v1i5f.fsf@gitster.mtv.corp.google.com>
+References: <5e5b1b92-f7c6-2987-356e-1aab2bff557e@gmail.com>
+ <20170308133348.2ovfsi44vq2rpgom@sigill.intra.peff.net> <CAHGBnuM3iM-kHdxdox_1i56uLbv7gQ5ZUY9Xqf4BG7G_kTf+jQ@mail.gmail.com>
+ <20170308140110.wgdedquqwm75zws2@sigill.intra.peff.net> <CAHGBnuPGPcWwbrZX_92XDJu47bpH=kj2PZ7yWHK=MRfZ_RHXrQ@mail.gmail.com>
+ <CAGZ79kbwMhL-ZnL-iYwPH=tWa8cNQbEGOYYQBw6OzFCMhOWE-w@mail.gmail.com>
+ <xmqq8tof32x9.fsf@gitster.mtv.corp.google.com> <CAGZ79kZFGP0zMP5CtOH3poU9vx8FoT25UVr8ridQo0_VdH2cmA@mail.gmail.com>
+ <xmqqa88v1i5f.fsf@gitster.mtv.corp.google.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Wed, 8 Mar 2017 17:30:28 -0800
+Message-ID: <CAGZ79kZwiwhP-skEd6K+osXkX47fF-eN=psP88DBzjca7n85DQ@mail.gmail.com>
+Subject: Re: diff.ignoreSubmoudles config setting broken?
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Sebastian Schuberth <sschuberth@gmail.com>,
+        Jacob Keller <jacob.keller@gmail.com>,
+        Jeff King <peff@peff.net>,
+        Git Mailing List <git@vger.kernel.org>,
+        Jens Lehmann <Jens.Lehmann@web.de>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 03/08/2017 03:47 PM, Junio C Hamano wrote:
-> * jt/mark-tree-uninteresting-for-uninteresting-commit (2017-02-28) 3 commits
->  - upload-pack: compute blob reachability correctly
->  - revision: exclude trees/blobs given commit
->  - revision: unify {tree,blob}_objects in rev_info
+On Wed, Mar 8, 2017 at 3:08 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Stefan Beller <sbeller@google.com> writes:
 >
->  The revision/object traversal machinery did not mark all tree and
->  blob objects that are contained in an uninteresting commit as
->  uninteresting, because that is quite costly.  Instead, it only
->  marked those that are contained in an uninteresting boundary commit
->  as uninteresting.
+>> Yeah the .gitmodules file is a good hint.
+
+And by that I meant that I am not sure if we're going
+down the right rabbit hole here. So before we take action
+maybe Sebastian can tell us more about his project (and all
+configurations and settings involved)
+
+>>
+>> Here is my understanding of the precedence:
+>>
+>>   command line options > .git/config (in various forms) > .gitmodules
+>>
+>> where in the .git config we have precedence levels for different files
+>>
+>>   .git/config > ~/.gitconfig
+>>
+>> as well as different settings:
+>>
+>>   submodule.<name>.ignore > diff.ignoreSubmodules
 >
->  cf. <20170228215937.yd4juycjf7y3vish@sigill.intra.peff.net>
+> I've never understood why people thought it a good idea to let
+> .gitmodules supplied by the upstream override the configuration
+> setting the end user has like this.  This is quite bad.
 
-This is superseded by [1] which I just sent out. I currently have no 
-idea how to fix the "revision" commits to be correct and still 
-performant (and this might not be possible), so I wrote [1] which just 
-contains a partial "upload-pack" fix.
+Apart from from the name <-> path mapping, the .gitmodules
+file is a collection of suggestions, some more severe than
+others.
 
-[1] <20170309003547.6930-1-jonathantanmy@google.com>
+I think the issue here is to define the correct
+and clear order of precedence, specifically between along these
+2 different dimensions (different configuration settings vs different
+files with configuration), such that the .gitmodules file is only ever
+consulted when the user has obviously nothing configured that
+would contradict the .gitmodules file.
+
+>
+> Perhaps this is a good starting point?
+>
+>  diff.c | 5 ++++-
+>  1 file changed, 4 insertions(+), 1 deletion(-)
+>
+> diff --git a/diff.c b/diff.c
+> index a628ac3a95..75b7140c63 100644
+> --- a/diff.c
+> +++ b/diff.c
+> @@ -273,8 +273,11 @@ int git_diff_ui_config(const char *var, const char *value, void *cb)
+>         if (!strcmp(var, "diff.orderfile"))
+>                 return git_config_pathname(&diff_order_file_cfg, var, value);
+>
+> -       if (!strcmp(var, "diff.ignoresubmodules"))
+> +       if (!strcmp(var, "diff.ignoresubmodules")) {
+>                 handle_ignore_submodules_arg(&default_diff_options, value);
+> +               DIFF_OPT_SET(options, OVERRIDE_SUBMODULE_CONFIG);
+
+s/options/&default_diff_options/ makes it compile. (I did not think
+whether that is
+correct though.)
+
+In other occurrences of handle_ignore_submodules_arg, the DIFF_OPT_SET
+is set before the handle_ignore_submodules_arg, though.
+
+When trying these suggestions, ./t4027-diff-submodule.sh breaks.
+log on that file yields e.g. 302ad7a9930 (Submodules: Use "ignore" settings
+from .gitmodules too for diff and status), which tells us that in 2010 people
+were not as concerned by this, but the user had to use the exact option to
+override the upstream default-suggestion.
+
+Thanks,
+Stefan
