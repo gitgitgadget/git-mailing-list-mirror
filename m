@@ -2,103 +2,124 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7EAE5202F8
-	for <e@80x24.org>; Thu,  9 Mar 2017 16:34:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4B358202F8
+	for <e@80x24.org>; Thu,  9 Mar 2017 17:49:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932275AbdCIQdv (ORCPT <rfc822;e@80x24.org>);
-        Thu, 9 Mar 2017 11:33:51 -0500
-Received: from mout.web.de ([212.227.15.3]:64316 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S932164AbdCIQdu (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Mar 2017 11:33:50 -0500
-Received: from [192.168.178.36] ([79.213.126.222]) by smtp.web.de (mrweb002
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0MWRoI-1ckUYU2JHW-00XaV3; Thu, 09
- Mar 2017 17:33:28 +0100
-Subject: Re: [PATCH 2/2] Fix callsites of real_pathdup() that wanted it to die
- on error
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>
-References: <cover.1488987786.git.johannes.schindelin@gmx.de>
- <0c0abc667d9b8dff299aa61aeb29a7e9e7316b66.1488987786.git.johannes.schindelin@gmx.de>
- <81f1e30b-e0e1-d587-4a4b-4848beffd38c@web.de>
- <20170308183840.GA130604@google.com>
- <xmqq4lz331wb.fsf@gitster.mtv.corp.google.com>
- <alpine.DEB.2.20.1703091221440.3767@virtualbox>
-Cc:     Brandon Williams <bmwill@google.com>, git@vger.kernel.org,
-        Stefan Beller <sbeller@google.com>, Jeff King <peff@peff.net>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <40b64644-f01c-d748-1cc3-8b3046be8a83@web.de>
-Date:   Thu, 9 Mar 2017 17:33:15 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
- Thunderbird/45.8.0
+        id S932497AbdCIRss (ORCPT <rfc822;e@80x24.org>);
+        Thu, 9 Mar 2017 12:48:48 -0500
+Received: from mail-pf0-f172.google.com ([209.85.192.172]:35813 "EHLO
+        mail-pf0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932542AbdCIRsq (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Mar 2017 12:48:46 -0500
+Received: by mail-pf0-f172.google.com with SMTP id j5so31335311pfb.2
+        for <git@vger.kernel.org>; Thu, 09 Mar 2017 09:47:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=BQ65YmXrbFz1tIZPZq+pFpeAxxSnn6qpbl862QzFncs=;
+        b=SAnpSuAJfCS9JFvan3CLfalk4P8dsqGaXnlcG7q8irueIHa7rk4rFmWRPDPoNPYx5o
+         8arxanRaFMX9xWf2MPOMoHCyUG9ob7n3wFUiH8Qj2iMF2DhXugn0JKWJ6DSbrAIPCj7W
+         U2SQKyr+NX9QayPAO/L8mdwzR07ii3Q9wEhmzfNCYu3ehOFnvGuYVGjRjdyfSigmJsX6
+         KMsdLPhizGIb7BdLuw2PVqXlLfskBtSFC+pp5Ay0e/LAAVsrb8Kn3nKs12lXwLgATGKj
+         tXWOFstPJ0rHwXEvF5OWb22SAgveAdYXYzcyK1n0pnaiPsVD4sHwVuH0D97HWbltRGDt
+         BQKg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=BQ65YmXrbFz1tIZPZq+pFpeAxxSnn6qpbl862QzFncs=;
+        b=Ct3ftWIV6nXFxgoeJsSnnb5Q9wkCuj8JRrrs024T+grB9cfTIoU4RWH6BLDPz1PQei
+         gltqp1mFo8DyPA4tXlgsQHHtgJpXEF37Xw9D4M5PemQIfE3SQrK9Sx+O9gTuX2gfseek
+         gQmTTESgD64yLQ5710F9OEMFspEetqCzB38hNkl28ONkHD9sOXXzj+VtGJHNtsJK6GfH
+         UMu54MJE1D5cG6yvh3nBg/vmpyKqiklr+8K1MyNyU4hvoeSvnMBq4TIaKqcEaBZa4DSX
+         7yxVcOwT2bV2KBvCS0ijRPEtJwPOm47l+N1Hl+ArmlAY7kPC3KcbS60O97HfgM/6o4WR
+         z4Cg==
+X-Gm-Message-State: AMke39mDwA8iAVQ2e5SotaoqHNXlY4dBr1MKLAEZNhEk1dgERbz7dUHEJaucHgFlME1u2TQCyLlR6bd0gPTXMX0r
+X-Received: by 10.99.178.9 with SMTP id x9mr14844584pge.48.1489081632861; Thu,
+ 09 Mar 2017 09:47:12 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <alpine.DEB.2.20.1703091221440.3767@virtualbox>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K0:+qGMrYfISBp9ft1b/XlLxlJNhUXt8H59k8fjTro7aw7cND9GpwX
- 37Us1NggO0kMU7L7iG2sKxRGTvRy4Ocjg5v59LytbDw6gSA4Osc6Gtfk1CaTBNNEuRDHnmb
- iIYzz1CyY4z+2ktaZ9vJX6P0VyciTFix05Og8i2lIwYwhS+9wQazAMcF9wh7TrwSaBQtdS2
- xcVT+7gomOStrgy0V4nOA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:KGc2S4GSJtQ=:+gzkMXEv9fHdcVZ+hRf7vg
- ut5NZnhEakMDc70bvTd5ye67mxu27JpG8I27suknD39tN3ItiB2QcaOiruqtuiVMzX7IL2J4N
- Tp8HA0Bde+wN2DpRcrArkTJsIau3AaNM0pDYblinuDAJvqzAX9sMAU7dNNBNHgZcHBiQ7HjU3
- 1R87NkbmonKi+0BE+LFYMtPayuGXITHGNnZ8sisVNgWpt55U8cIqPsRAvbVKC8qFFclnj5+BQ
- cDqVWfnXs6lYAOYw5E2922AhH0V8t6IRTR/ddL8YKTpjVoAlSg0kVqeb8I+HllKKh7XpZSqi+
- QLo0iIM7YKNcgU1Eca8HzSHbcY/7cI0Hb+dL2husjzcrQuot6XawVQ1VIolff5aWA+5jhpT02
- wDjg19UIVmFmvWntZs3EadRgUNBQXVBVo2Yr8ySs63644SJGNJmO/ciN37eyaxnVWUAQEyWpi
- CtH2xGkQ4AHsMamVTAZuH/6yyhn74ABy3r5PeSUgefmz/8trUUbFbg2h0CLw3oKlmLh/g2JpU
- Qc0aAtovqXliAdmDfKjEOhAOmQmeB3ZcLIKJBkl9g9K/55HYJ/SZBxxVHGS9WXDkSd18F14bL
- e/tHCvIFtXGDZqrq6K6vT4pXVg8XT/5y6ztN3n4IZzs0eNM+qZ1M4PVpX5cxxYsIoIcygWJ3x
- bO/DstpRX1X9iXXCsIEAY3zkkoHfz4WYtoLsvML4LJE7B5QBpvY41K6i/iw4IDonOMTCTrQgJ
- wZVONDzNIDvFd+dIFPoYodeNXQSqsA5S837MwXEDDXYmuxp0PPU8MEXWh8r1zjg3uW9GMSIZb
- mQcHxDB
+Received: by 10.100.187.5 with HTTP; Thu, 9 Mar 2017 09:47:12 -0800 (PST)
+In-Reply-To: <0102015ab11ee091-f9f11bb5-559a-4c92-b5f6-9f7755e8f4b9-000000@eu-west-1.amazonses.com>
+References: <0102015ab11e8237-01e52ffe-882f-4589-8886-2c0b231ac3c6-000000@eu-west-1.amazonses.com>
+ <0102015ab11ee091-f9f11bb5-559a-4c92-b5f6-9f7755e8f4b9-000000@eu-west-1.amazonses.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Thu, 9 Mar 2017 09:47:12 -0800
+Message-ID: <CAGZ79kYUkQ4u9zX=qXL_+ip74mi3DgbzGiJNxybrVYbr3m1U=A@mail.gmail.com>
+Subject: Re: [PATCH GSoC] Allow "-" as a short-hand for "@{-1}" in branch deletions
+To:     Shuyang Shi <shuyang790@gmail.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 09.03.2017 um 12:24 schrieb Johannes Schindelin:
-> While I would have agreed earlier that René's patch looks less intrusive,
-> I have to point out that there would not have been any possible regression
-> if the original patch had introduced the die_on_error parameter. It would
-> have made the contract *obvious*.
+Welcome to the Git community!
+
+On Wed, Mar 8, 2017 at 7:31 PM, Shuyang Shi <shuyang790@gmail.com> wrote:
+> The "-" shorthand that stands for "the branch we were previously on",
+> like we did for "git merge -" sometime after we introduced "git checkout -".
+> Now I am introducing this shorthand to branch delete, i.e.
+> "git branch -d -".
 >
-> The nicer API made the contract unobvious, and that was the reason that
-> the bug could hide.
+> More reference:
+>   https://public-inbox.org/git/7vppuewl6h.fsf@alter.siamese.dyndns.org/
 
-You mean nicer in the sense of more forgiving, right?
+Following that link:
 
-The meaning of calls of a function with a die_on_error parameter are 
-only obvious if at least the name of that parameter is known.  A 
-declaration without it would not suffice:
+> But there is a very commonly accepted long tradition for "-" to mean
+> "read from the standard input", so we cannot reuse it to mean "the
+> branch I was previously on" for every command without first making
+> sure the command will never want to use "-" for the other common
+> purpose.
 
-	char *real_pathdup(const char *, int);
+This contradicts the introduction of "git branch -d -" to mean to delete
+the last branch, but rather could mean "read from stdin which branches
+to delete"? It would be nice if you could clarify in your commit message
+which of both this is and how this fits into the big picture of "design
+cleanliness".
 
-There are two possibilities that can't be distinguished by looking at 
-callers alone:
+>
+> And this has been tested:
+>
+>         Ivan:git Ivan$ (cd t; prove --timer --jobs 1 ./t3200-branch.sh)
+>         [00:21:26] ./t3200-branch.sh .. ok    12293 ms ( 0.04 usr  0.01 sys +
+>         5.97 cusr  2.52 csys =  8.54 CPU)
+>         [00:21:39]
+>         All tests successful.
+>         Files=1, Tests=113, 13 wallclock secs ( 0.07 usr  0.02 sys +
+>         5.97 cusr  2.52 csys =  8.58 CPU)
+>         Result: PASS
 
-	char *real_pathdup(const char *path, int die_on_error);
-	char *real_pathdup(const char *path, int gentle);
+Thanks for being cautious when developing on Git. However this part
+of the email would end up as part of the commit message. And as we expect
+all commits that land eventually to not break tests, this information is better
+put at a more non-permanent place, such as below the '---' line (where there is
+also the built stat. For example see [1] how to have different message parts
+(one permanent section and some chatter that is relevant for the process
+at the moment)
 
-An enum can help, so that calls look something like this:
+Also for testing, the tests only ensure that the old behavior does not break;
+but we'd want to make sure the new functionality doesn't break in the
+future either,
+which can be done best by writing a test as well for this functionality.
 
-	copy_or_death = real_pathdup(path, DIE_ON_ERROR);
-	copy = real_pathdup(path, IGNORE_ERRORS); if (copy) ...
+[1] https://public-inbox.org/git/xmqqvarj1kix.fsf_-_@gitster.mtv.corp.google.com/
+and as a commit:
+https://github.com/gitster/git/commit/83218867fbf6d27c78efe3cfba01790b2f1d15d4
 
-For binary flags we can easily encode that information into the function 
-names and thus simplify the API:
+> https://github.com/git/git/pull/337
 
-	copy_or_death = real_pathdup_or_die(path);
-	copy = real_pathdup_gently(path); if (copy) ...
+Oh I see, you're using submitgit to communicate the patch to the mailing list.
+I am not sure if it supports splitting up the message as I eluded to above.
+IIRC some people use submitgit for the patch and then use a webmailer
+(e.g. gmail) to send followup messages such as successful tests or what changed
+to prior versions.
 
-And we can drop the suffix of the variant used overwhelmingly often, but 
-as you pointed out that relies on readers knowing that convention.
-
-I'm sure Brandon will balance these concerns nicely in follow-up patches. ;)
-
-René
+Thanks,
+Stefan
