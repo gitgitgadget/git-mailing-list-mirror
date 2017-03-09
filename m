@@ -6,62 +6,61 @@ X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EB9D9202F8
-	for <e@80x24.org>; Thu,  9 Mar 2017 17:57:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5CF7C202F8
+	for <e@80x24.org>; Thu,  9 Mar 2017 18:08:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932387AbdCIR5J (ORCPT <rfc822;e@80x24.org>);
-        Thu, 9 Mar 2017 12:57:09 -0500
-Received: from mail-pg0-f52.google.com ([74.125.83.52]:32958 "EHLO
-        mail-pg0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754853AbdCIR5H (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Mar 2017 12:57:07 -0500
-Received: by mail-pg0-f52.google.com with SMTP id 25so28983708pgy.0
-        for <git@vger.kernel.org>; Thu, 09 Mar 2017 09:56:24 -0800 (PST)
+        id S932892AbdCISIg (ORCPT <rfc822;e@80x24.org>);
+        Thu, 9 Mar 2017 13:08:36 -0500
+Received: from mail-pg0-f46.google.com ([74.125.83.46]:35927 "EHLO
+        mail-pg0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754884AbdCISIV (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Mar 2017 13:08:21 -0500
+Received: by mail-pg0-f46.google.com with SMTP id g2so11686322pge.3
+        for <git@vger.kernel.org>; Thu, 09 Mar 2017 10:08:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=pE7LHVNlWDcH157rDtoaHZhTPAD2+dkrpKj1EC1Dt7M=;
-        b=PCV1BhGOJiqo048hBW+oX37S1vwG2+dphnY7hyVRNw3gVNTsJ72zYegyL4PU9W4kXD
-         rQEG/tYE3goGU7c4owj4BD4czyJlUJAwb4LHrA6nUo4KyL9NdIatE/8hRKqinni2S9H/
-         R3ZFKkAwaPrgaW++iOpDDxAQIrGtMnIT6cx3AKYeGk9GjRLjvSC501PQx+lLAbLrMDT0
-         51Sd3F9mjf62fDs0YRJ4DjjREke/eh7DnhkGefIlXNpvZxC5d7VlLNymEYgUrvIZ9+eD
-         tqhcTFNK5VJxbT/LOK0M5GtrEhrmiApaOdbehGon5XdYFiRYNShxkyAOT/Yy/f2bKA6Z
-         Bbbg==
+        bh=MlhIKavtn4F3YlECLdPBu1nIlONtpaSBVsvY4ElL0Gs=;
+        b=LkZP9f6rjJI2Ii6Vbnh4E/urceU1LamJPGYXL915T7WQVNDGJGTF0jPHYSL48nHSGP
+         KEe2zeF3Z4MFlAzE0UX+ZpPGTYO6A2xDgObYRP9+tZb2VQNmkJuCkvr4HipMvt5N6c8x
+         T5Yzo6FYiXyFo/djreJ8rrYFRF6XWTuP2/NPi0H0eFS9RbSKPGMErCE3jbZzdDAvZTfs
+         9IHX721XIAGtt5UczgUrQnSIofsjqII/XQ5xq+Kudyb5QrfJhl4wTbSy+FJOJWyuVoil
+         fkJLkRxP7LemZuKbf+nNVqgNgCnW95sOKIfb4+ZLaHsG1IU1KB7AqHiDGojpqwOfa1z7
+         blow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=pE7LHVNlWDcH157rDtoaHZhTPAD2+dkrpKj1EC1Dt7M=;
-        b=EjBjGirwiP9SZuQizOIMZ4XpJtqCPjmkYuAbHSV4eRX7sHaQdN0FkQBXkgoivOtZXl
-         f6xYlL8C7lAPmYyyy2Jgm8yM95JBj70RUP3W2DVCe7L2iBNHV6sofrssfyqTu4C9FW1V
-         Cw4bgOpZzhqrjg42aH/2n+pK+sRHOZE+mtChKkwuqfx1w7u6h8vwW5b2k/DWL3U3N6AL
-         TGW+kM9If3oqC8CufqPairm5KKs5DpaCXxQhHkdD28TAztjEBGHcsiDisL6XJO/ImlHq
-         yrwId34X/pL/LSllbjzCZ+tBfceigxLjeWdracReUQMbqne8aVwvQEwBnRNyQe92sCft
-         MYlw==
-X-Gm-Message-State: AMke39lOdzbAPIWMVb3NoX2gxbviIujPkT6VYrLZlzAXDwraExzBtggZ7eYHtSnIzlXxkIVt
-X-Received: by 10.99.53.1 with SMTP id c1mr15523645pga.42.1489082183841;
-        Thu, 09 Mar 2017 09:56:23 -0800 (PST)
+        bh=MlhIKavtn4F3YlECLdPBu1nIlONtpaSBVsvY4ElL0Gs=;
+        b=CVIFM7OYaN8xQPqhXHYVBbo0I7TkybWBB/MKD2EDlXxTTanJ+7Qt9K2GseZVRfb01Q
+         CSAbRyxZtmK8LJmtpfHGG+u4WkNN+r1Zy6BdJDzxMbCU0HC045T10JBnZpRktSfXemge
+         0RRgb/EHFWAl/0Znf6ShJZjit+GoWrZ+Y7j2kuYWCJpIE4FomRxI5YPFTo2DdSXskUjR
+         cik7CqrVWEF46vovBYMhkp2IRQhZA1Gl+GaVR353CRbZhmvT5Met5jjRWkPkfNUgZMHH
+         aGm1k+2PleFHAwypSRYRSW1G3X+Z8b/bltwMEM28V3PJqjyVWbfGg+SPPO5juTlZIJqp
+         Verw==
+X-Gm-Message-State: AMke39mCC6i0CHB6pYENvJHpIUXauDrBkfRLf3HJvxphYxKsmqFPP8THTx4MlFW5vJLNeDbA
+X-Received: by 10.84.215.155 with SMTP id l27mr19142489pli.31.1489082894861;
+        Thu, 09 Mar 2017 10:08:14 -0800 (PST)
 Received: from google.com ([2620:0:1000:5b10:24ad:64a3:afd2:c7bd])
-        by smtp.gmail.com with ESMTPSA id r13sm13778314pfg.55.2017.03.09.09.56.22
+        by smtp.gmail.com with ESMTPSA id e68sm13770138pfa.85.2017.03.09.10.08.13
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 09 Mar 2017 09:56:22 -0800 (PST)
-Date:   Thu, 9 Mar 2017 09:56:21 -0800
+        Thu, 09 Mar 2017 10:08:13 -0800 (PST)
+Date:   Thu, 9 Mar 2017 10:08:12 -0800
 From:   Brandon Williams <bmwill@google.com>
 To:     Stefan Beller <sbeller@google.com>
 Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
         Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 10/11] submodule--helper init: set
- submodule.<name>.active
-Message-ID: <20170309175621.GC153031@google.com>
+Subject: Re: [PATCH v2 07/11] submodule update: add `--init-active` switch
+Message-ID: <20170309180812.GD153031@google.com>
 References: <20170223234728.164111-1-bmwill@google.com>
  <20170309012345.180702-1-bmwill@google.com>
- <20170309012345.180702-11-bmwill@google.com>
- <CAGZ79kYspNw4=dSnDtyWp7bEhggAM-gRo3g9GJ78jZ8HW7pUFQ@mail.gmail.com>
+ <20170309012345.180702-8-bmwill@google.com>
+ <CAGZ79kbyyJCZ7iP6c7RBgrv8NNSMjb9fov3eFazpOb2QL5aAcg@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAGZ79kYspNw4=dSnDtyWp7bEhggAM-gRo3g9GJ78jZ8HW7pUFQ@mail.gmail.com>
+In-Reply-To: <CAGZ79kbyyJCZ7iP6c7RBgrv8NNSMjb9fov3eFazpOb2QL5aAcg@mail.gmail.com>
 User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
@@ -70,55 +69,45 @@ X-Mailing-List: git@vger.kernel.org
 
 On 03/08, Stefan Beller wrote:
 > On Wed, Mar 8, 2017 at 5:23 PM, Brandon Williams <bmwill@google.com> wrote:
-> > When initializing a submodule set the submodule.<name>.active config to
-> > true to indicate that the submodule is active.
-> 
-> So by this patch an init of a submodule performs both
-> a "regular init" (copy URL and the update setting)
-> as well as setting the new submodule.<name>.active.
-> 
-> And both happens in the same config file (i.e. no worktree
-> support here)
-
-Well there isn't any per-worktree config yet (unless that series managed
-to land and I didn't notice that).  So once their are per-worktree
-configs we would need to push this to there.
-
-> 
-> Later on we *could* remove the URL as the .active is the new
-> flag of existence.
-> 
-> But enough of my speculation, I am left wondering what this
-> patch accomplishes, as this states no agenda as why it is useful
-> on its own.
-> 
+> > The new switch `--init-active` initializes the submodules which are
+> > configured in `submodule.active` instead of those given as
+> > command line arguments before updating. In the first implementation this
+> > is made incompatible with further command line arguments as it is
+> > unclear what the user means by
+> >
+> >     git submodule update --init --init-active <paths>
+> >
+> > This new switch allows users to record more complex patterns as it saves
+> > retyping them whenever you invoke update.
+> >
+> > Based on a patch by Stefan Beller <sbeller@google.com>
 > >
 > > Signed-off-by: Brandon Williams <bmwill@google.com>
-> > ---
-> >  builtin/submodule--helper.c | 7 +++++++
-> >  1 file changed, 7 insertions(+)
+> 
+> 
+> 
+> > @@ -568,7 +573,17 @@ cmd_update()
 > >
-> > diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-> > index bceb62a20..44f2c02ba 100644
-> > --- a/builtin/submodule--helper.c
-> > +++ b/builtin/submodule--helper.c
-> > @@ -329,6 +329,13 @@ static void init_submodule(const char *path, const char *prefix, int quiet)
-> >                 die(_("No url found for submodule path '%s' in .gitmodules"),
-> >                         displaypath);
-> >
-> > +       /* Set active flag for the submodule being initialized */
-> > +       if (!is_submodule_initialized(path)) {
-> > +               strbuf_reset(&sb);
-> > +               strbuf_addf(&sb, "submodule.%s.active", sub->name);
-> > +               git_config_set_gently(sb.buf, "true");
-> > +       }
-> > +
-> >         /*
-> >          * Copy url setting when it is not set yet.
-> >          * To look up the url in .git/config, we must not fall back to
-> > --
-> > 2.12.0.246.ga2ecc84866-goog
-> >
+> >         if test -n "$init"
+> >         then
+> > -               cmd_init "--" "$@" || return
+> > +               if test "$init" = "by_config"
+> > +               then
+> > +                       if test $# -gt 0
+> > +                       then
+> > +                               die "$(gettext "path arguments are incompatible with --init-active")"
+> > +                       fi
+> > +                       cmd_init "--" $(git config --get-all submodule.active) || return
+> 
+> What happens with submodule.<name>.actives here?
+
+Nothing?  I am still not 100% certain that we really need the
+submodule.<name>.active config but it seemed like what we decided upon
+last we discussed this.
+
+Maybe we don't even need this as an option?  Maybe update should be able
+to just 'update' all active submodules without having to make an
+explicit call to cmd_init?
 
 -- 
 Brandon Williams
