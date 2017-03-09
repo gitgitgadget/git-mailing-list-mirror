@@ -2,106 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4731020135
-	for <e@80x24.org>; Thu,  9 Mar 2017 02:29:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1760720311
+	for <e@80x24.org>; Thu,  9 Mar 2017 03:31:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750940AbdCIC3P (ORCPT <rfc822;e@80x24.org>);
-        Wed, 8 Mar 2017 21:29:15 -0500
-Received: from mail-pf0-f180.google.com ([209.85.192.180]:35755 "EHLO
-        mail-pf0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750787AbdCIC3O (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Mar 2017 21:29:14 -0500
-Received: by mail-pf0-f180.google.com with SMTP id j5so22386343pfb.2
-        for <git@vger.kernel.org>; Wed, 08 Mar 2017 18:28:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=DN4f94rk3qFMUZ6NGJ5ziMgedo61hAT/yi3SJjuVe44=;
-        b=Ewnhg/L0taEgfVN8dItEk8kJVIi3u/5P9luAcidQN0ej+ysSjF0qBQjcCQPewfBdEx
-         93e0WGL0NZLkI1LOmcVZdC5L8OjQRwiYcUhQdZJcRsiBmnoCWooxrDQfjoJxyAwPdyIa
-         9rgx10Uj7vjWCrP2+1X9RK59ayPkyReLa91oY0KhlCSNy0DMu/E8O8vXOpJ19+5YYqig
-         +cSg+WA5dJ8h9at1PaAu+djwTTR5MspZfk45KgVXra1yQ02tE2ez/sl6eHsTkXqjwJwb
-         nV5m04962IKg2qRUv7sPs7l5uZaBriRvn3Oqt8vpUN4q9QhuNRgFh3vJ18BFX9B6GhTu
-         hASQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=DN4f94rk3qFMUZ6NGJ5ziMgedo61hAT/yi3SJjuVe44=;
-        b=bhA45OdGryVJx5QwJWml9qy0zKrlGnibRUnZipbRhbqhRc31U7hrLlgoUx0VY5H2zK
-         2D989yfrifIgTzJvA5izZCzWr59hilVmaQMXXkP7W+eTZHOfVraVI0kmTc06sYLm28Bk
-         odGQCdbPEbby9/uS34+JaWKh02GeeB37s9lgMgEiP2WLMrbrZ2fo3wn1ctxRjMzssfFc
-         oIvzQ9l5exD+kkEx/sUTJ7PHH6FDHtyf/zavi9kdwN23nn0YoBdQe3hCdbPD5xcsb7Ef
-         r0vjQEqFWQpuvuODGsz4GSgkUbtF5fYBqH4z7+HeSEo3PhTBKupSG1D0y4EEz9aJpwQp
-         NDwA==
-X-Gm-Message-State: AMke39nA8r6BnD7S0Ct5/Q0iqc33cQKhZl8SiUVjlwt8gKe88d/mrIUtOYI23nx0cEMgP1mEbNIJxThIkOf9uNlf
-X-Received: by 10.98.112.134 with SMTP id l128mr11001513pfc.81.1489026515445;
- Wed, 08 Mar 2017 18:28:35 -0800 (PST)
+        id S1750805AbdCIDbE (ORCPT <rfc822;e@80x24.org>);
+        Wed, 8 Mar 2017 22:31:04 -0500
+Received: from a7-11.smtp-out.eu-west-1.amazonses.com ([54.240.7.11]:35610
+        "EHLO a7-11.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1750781AbdCIDbD (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 8 Mar 2017 22:31:03 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+        s=ihchhvubuqgjsxyuhssfvqohv7z3u4hn; d=amazonses.com; t=1489030251;
+        h=From:To:Message-ID:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
+        bh=c5ulDRXJqpYvlEukTxxABMn19Hd8QZxAMVcBMrzYgTA=;
+        b=LKr+S0DGz0J/HLdWFEMwzwFyoETmDpEwKH4LM+wmkJEUZzdMWQgTuRhcka+GJzHS
+        dIJE9acx8cJ6ym9m+oMGfUzXRX3q0reFvL3m4DFawQvbX6mj+R4AW1nTVsOqpNkAqO6
+        llWfRPbPkqwclwAjBaK1VYZal33Kjah3RdK6oeU0=
+From:   Shuyang Shi <shuyang790@gmail.com>
+To:     git@vger.kernel.org
+Message-ID: <0102015ab11e8237-01e52ffe-882f-4589-8886-2c0b231ac3c6-000000@eu-west-1.amazonses.com>
+Subject: [PATCH] Allow "-" as a short-hand for "@{-1}" in branch deletions
 MIME-Version: 1.0
-Received: by 10.100.187.5 with HTTP; Wed, 8 Mar 2017 18:28:35 -0800 (PST)
-In-Reply-To: <20170309012345.180702-11-bmwill@google.com>
-References: <20170223234728.164111-1-bmwill@google.com> <20170309012345.180702-1-bmwill@google.com>
- <20170309012345.180702-11-bmwill@google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Wed, 8 Mar 2017 18:28:35 -0800
-Message-ID: <CAGZ79kYspNw4=dSnDtyWp7bEhggAM-gRo3g9GJ78jZ8HW7pUFQ@mail.gmail.com>
-Subject: Re: [PATCH v2 10/11] submodule--helper init: set submodule.<name>.active
-To:     Brandon Williams <bmwill@google.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Date:   Thu, 9 Mar 2017 03:30:51 +0000
+X-SES-Outgoing: 2017.03.09-54.240.7.11
+Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Mar 8, 2017 at 5:23 PM, Brandon Williams <bmwill@google.com> wrote:
-> When initializing a submodule set the submodule.<name>.active config to
-> true to indicate that the submodule is active.
+The "-" shorthand that stands for "the branch we were previously on",
+like we did for "git merge -" sometime after we introduced "git checkout -".
+Now I am introducing this shorthand to branch delete, i.e.
+"git branch -d -".
 
-So by this patch an init of a submodule performs both
-a "regular init" (copy URL and the update setting)
-as well as setting the new submodule.<name>.active.
+More reference:
+  https://public-inbox.org/git/7vppuewl6h.fsf@alter.siamese.dyndns.org/
 
-And both happens in the same config file (i.e. no worktree
-support here)
+And this has been tested:
 
-Later on we *could* remove the URL as the .active is the new
-flag of existence.
+	Ivan:git Ivan$ (cd t; prove --timer --jobs 1 ./t3200-branch.sh)
+	[00:21:26] ./t3200-branch.sh .. ok    12293 ms ( 0.04 usr  0.01 sys +
+	5.97 cusr  2.52 csys =  8.54 CPU)
+	[00:21:39]
+	All tests successful.
+	Files=1, Tests=113, 13 wallclock secs ( 0.07 usr  0.02 sys +
+	5.97 cusr  2.52 csys =  8.58 CPU)
+	Result: PASS
 
-But enough of my speculation, I am left wondering what this
-patch accomplishes, as this states no agenda as why it is useful
-on its own.
+Signed-off-by: Shuyang Shi <shuyang790@gmail.com>
+---
+ builtin/branch.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
->
-> Signed-off-by: Brandon Williams <bmwill@google.com>
-> ---
->  builtin/submodule--helper.c | 7 +++++++
->  1 file changed, 7 insertions(+)
->
-> diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-> index bceb62a20..44f2c02ba 100644
-> --- a/builtin/submodule--helper.c
-> +++ b/builtin/submodule--helper.c
-> @@ -329,6 +329,13 @@ static void init_submodule(const char *path, const char *prefix, int quiet)
->                 die(_("No url found for submodule path '%s' in .gitmodules"),
->                         displaypath);
->
-> +       /* Set active flag for the submodule being initialized */
-> +       if (!is_submodule_initialized(path)) {
-> +               strbuf_reset(&sb);
-> +               strbuf_addf(&sb, "submodule.%s.active", sub->name);
-> +               git_config_set_gently(sb.buf, "true");
-> +       }
-> +
->         /*
->          * Copy url setting when it is not set yet.
->          * To look up the url in .git/config, we must not fall back to
-> --
-> 2.12.0.246.ga2ecc84866-goog
->
+diff --git a/builtin/branch.c b/builtin/branch.c
+index 94f7de7f..1b72d80 100644
+--- a/builtin/branch.c
++++ b/builtin/branch.c
+@@ -215,8 +215,12 @@ static int delete_branches(int argc, const char **argv, int force, int kinds,
+ 	for (i = 0; i < argc; i++, strbuf_release(&bname)) {
+ 		char *target = NULL;
+ 		int flags = 0;
++		const char *arg = argv[i];
+ 
+-		strbuf_branchname(&bname, argv[i]);
++		if (!strcmp(arg, "-"))
++			arg = "@{-1}";
++
++		strbuf_branchname(&bname, arg);
+ 		free(name);
+ 		name = mkpathdup(fmt, bname.buf);
+ 
+
+--
+https://github.com/git/git/pull/337
