@@ -2,78 +2,116 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4CDDE202F8
-	for <e@80x24.org>; Thu,  9 Mar 2017 21:23:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6E741202F8
+	for <e@80x24.org>; Thu,  9 Mar 2017 21:27:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752717AbdCIVX1 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 9 Mar 2017 16:23:27 -0500
-Received: from mail-pf0-f176.google.com ([209.85.192.176]:36631 "EHLO
-        mail-pf0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750781AbdCIVX0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Mar 2017 16:23:26 -0500
-Received: by mail-pf0-f176.google.com with SMTP id o126so33281516pfb.3
-        for <git@vger.kernel.org>; Thu, 09 Mar 2017 13:22:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=wl3fJuPqPFGdMIIDTxdSNmvOqSmnW3sZmkSW6jjOHoQ=;
-        b=fKGVXqxxdjh6QnjGKtwSdEmU9nTw1EqhjGrJrH26Hll5e+NT+Avtg4R6n60zOozi/h
-         A4gBu/DWdn9/9X1IU4akcNDaMExmWciAH4yMMszdAK7+GlMcyJQFMgUgAYs6iYjWCihg
-         GqKLSi/LAh4d88+n8n+kZXjQSURfsupSKSfdAvgSZb8zn5PTR74vWwhuP5a7ALYk0IYy
-         e8re/xcqNjzXupoMEwuQH/wJlDqmSdnaHyPbo/cH5y+cuOVz6+jaD97RhRBoUqKwjRqu
-         Mpt+ApJYsAtjJNrur/x7Lywc0W/ep/b/2Y5NU9rMzjfD2z0481rEsJ/nr5IlahlBBB4S
-         8dPQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=wl3fJuPqPFGdMIIDTxdSNmvOqSmnW3sZmkSW6jjOHoQ=;
-        b=a/9rjNowwHugNKcbSE4ToNWR8tdnZVt18eT3xOPwYOYGAHp+QPMsa9UwgxsPAGuZZh
-         YgWtW+EVdI4D0GRnwidP5+yFVi3TkUmhNfIlLsgA2jqRpiQXzRWBX/9FNvESniHv0oyh
-         yM0TRGXry3X/hS5u39qxIR1zcdwJMN/VhWldzbD22JMlCPrtfLTCQ+88Y1fIyUlOPB8s
-         XX3hVJ1F53txxSokxCU9AqF9+E3S/mqMsx/pfuQSUXzPHx8RoEUdC7TlA1ez3KO8QiIy
-         55P2jw2v5BbkW1zvbRzdOxY+zo4NAEDc9SbvubFhHqnCHfb60zCAFWL/mz1t4wWm4nHt
-         PpbA==
-X-Gm-Message-State: AMke39mUv/zhU54aylK0NrjH5VaP29IAF2AFItIVBI7IKunYpGhbACAjnPdhjwsQ8Ing/ZuGlHBtJivRu5WqSm1v
-X-Received: by 10.98.91.131 with SMTP id p125mr16502821pfb.165.1489094549237;
- Thu, 09 Mar 2017 13:22:29 -0800 (PST)
-MIME-Version: 1.0
-Received: by 10.100.187.5 with HTTP; Thu, 9 Mar 2017 13:22:28 -0800 (PST)
-In-Reply-To: <20170309210756.105566-1-bmwill@google.com>
-References: <20170309210756.105566-1-bmwill@google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Thu, 9 Mar 2017 13:22:28 -0800
-Message-ID: <CAGZ79ka=kV_QQo3ExHmieNUajCvzZejFfmDsKeHr9XR0QvEVmA@mail.gmail.com>
-Subject: Re: [PATCH 0/2] bringing attributes to pathspecs
-To:     Brandon Williams <bmwill@google.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        Duy Nguyen <pclouds@gmail.com>
-Content-Type: text/plain; charset=UTF-8
+        id S1752867AbdCIV06 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 9 Mar 2017 16:26:58 -0500
+Received: from p3plsmtpa12-04.prod.phx3.secureserver.net ([68.178.252.233]:53912
+        "EHLO p3plsmtpa12-04.prod.phx3.secureserver.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1751619AbdCIV06 (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 9 Mar 2017 16:26:58 -0500
+X-Greylist: delayed 454 seconds by postgrey-1.27 at vger.kernel.org; Thu, 09 Mar 2017 16:26:58 EST
+Received: from jessie.local ([82.181.81.240])
+        by :SMTPAUTH: with SMTP
+        id m5SQcU5f22uVem5SVcpQzF; Thu, 09 Mar 2017 14:18:52 -0700
+From:   Max Kirillov <max@max630.net>
+To:     Paul Mackerras <paulus@ozlabs.org>
+Cc:     Max Kirillov <max@max630.net>, git@vger.kernel.org
+Subject: [PATCH] gitk: blame older file in case of copied and renamed files
+Date:   Thu,  9 Mar 2017 23:18:31 +0200
+Message-Id: <20170309211831.11295-1-max@max630.net>
+X-Mailer: git-send-email 2.11.0.1122.gc3fec58.dirty
+X-CMAE-Envelope: MS4wfB6HQMmBWZNwyIIXjIyiseq9bxzmdcLNHOtZJkKHaLqltVy2sLjUkLrvI2sjVKrqNRo51veVpEyZsnbzER6+6ImFDM6ka6i2l/s4pQ5TO5RgCBm38++F
+ 0SVmC3d51O2rNENIai+3UuaNIMZCQqwCiSTqBdTSI71Lz5r65e5nuH0hKxf0g0G0Gm84SbJ9nhiea6ClWqgdomtOQToLSTL46LI=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Mar 9, 2017 at 1:07 PM, Brandon Williams <bmwill@google.com> wrote:
-> This small series extends the pathspec magic to allow users to specify
-> attributes that files must have in order for a pathspec to 'match' a file.
->
-> One potential use for this is to allow a repository to specify attributes for a
-> set of files.  The user can then specify that attribute as a pathspec to
-> perform various operations only on that set of files. One simple example:
->
->         git ls-files -- ":(attr:text)"
->
-> can be used to list all of the files with the 'text' attribute.
+If file was renamed or copied, and in the same time edited, attempt to run
+"Show origin of this line" or "Run gui blame on this line" would result in
+error "fatal: no such path FILE in HASH". Reason is that it tried to use
+the newer filename, while it should use the older one.
 
-Thanks for reviving these patches.
+Since ctext_file_names in diff mode only used for parent commit
+filenames, there is no need to split it to 2 lists, just change its
+so that for diff mode it means older filename always.
 
-I have read through both of them and they look good to me.
+Signed-off-by: Max Kirillov <max@max630.net>
+---
+ gitk | 19 +++++++++++++++++--
+ 1 file changed, 17 insertions(+), 2 deletions(-)
 
-Thanks,
-Stefan
+diff --git a/gitk b/gitk
+index d3e9e459c3..0b8b1a4e9f 100755
+--- a/gitk
++++ b/gitk
+@@ -8349,9 +8349,16 @@ proc setinlist {var i val} {
+     }
+ }
+ 
++proc add_ctext_file {fname} {
++    global ctext_file_names
++
++    set fname [encoding convertfrom $fname]
++    lset ctext_file_names end $fname
++}
++
+ proc makediffhdr {fname ids} {
+     global ctext curdiffstart treediffs diffencoding
+-    global ctext_file_names jump_to_here targetline diffline
++    global jump_to_here targetline diffline
+ 
+     set fname [encoding convertfrom $fname]
+     set diffencoding [get_path_encoding $fname]
+@@ -8359,7 +8366,6 @@ proc makediffhdr {fname ids} {
+     if {$i >= 0} {
+ 	setinlist difffilestart $i $curdiffstart
+     }
+-    lset ctext_file_names end $fname
+     set l [expr {(78 - [string length $fname]) / 2}]
+     set pad [string range "----------------------------------------" 1 $l]
+     $ctext insert $curdiffstart "$pad $fname $pad" filesep
+@@ -8454,6 +8460,7 @@ proc parseblobdiffline {ids line} {
+ 		set fname [string range $line 2 [expr {$i - 1}]]
+ 	    }
+ 	}
++	add_ctext_file $fname
+ 	makediffhdr $fname $ids
+ 
+     } elseif {![string compare -length 16 "* Unmerged path " $line]} {
+@@ -8492,6 +8499,7 @@ proc parseblobdiffline {ids line} {
+ 	lappend ctext_file_names ""
+ 	if {$currdiffsubmod != $fname} {
+ 	    lappend ctext_file_lines $fname
++	    add_ctext_file $fname
+ 	    makediffhdr $fname $ids
+ 	    set currdiffsubmod $fname
+ 	    $ctext insert end "\n$line\n" filesep
+@@ -8512,11 +8520,18 @@ proc parseblobdiffline {ids line} {
+ 	    if {[string index $fname 0] eq "\""} {
+ 		set fname [lindex $fname 0]
+ 	    }
++	    add_ctext_file $fname
+ 	    set fname [encoding convertfrom $fname]
+ 	    set i [lsearch -exact $treediffs($ids) $fname]
+ 	    if {$i >= 0} {
+ 		setinlist difffilestart $i $curdiffstart
+ 	    }
++	} elseif {![string compare -length 10 $line "copy from "]} {
++	    set fname [string range $line [expr 6 + [string first " from " $line] ] end]
++	    if {[string index $fname 0] eq "\""} {
++		set fname [lindex $fname 0]
++	    }
++	    add_ctext_file $fname
+ 	} elseif {![string compare -length 10 $line "rename to "] ||
+ 		  ![string compare -length 8 $line "copy to "]} {
+ 	    set fname [string range $line [expr 4 + [string first " to " $line] ] end]
+-- 
+2.11.0.1122.gc3fec58.dirty
+
