@@ -2,140 +2,114 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6974D20135
+	by dcvr.yhbt.net (Postfix) with ESMTP id 808BB20135
 	for <e@80x24.org>; Thu,  9 Mar 2017 01:30:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932165AbdCIBac (ORCPT <rfc822;e@80x24.org>);
+        id S932154AbdCIBac (ORCPT <rfc822;e@80x24.org>);
         Wed, 8 Mar 2017 20:30:32 -0500
-Received: from mail-pg0-f44.google.com ([74.125.83.44]:36486 "EHLO
-        mail-pg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754742AbdCIBaa (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Mar 2017 20:30:30 -0500
-Received: by mail-pg0-f44.google.com with SMTP id g2so2384925pge.3
-        for <git@vger.kernel.org>; Wed, 08 Mar 2017 17:30:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=yaxspo/PEgkbPABk/VyHyZeczzfPkjMUAL3YxwdJqrM=;
-        b=b0N+mdBYymGxcrlwcXlhd5uFRmrl8fkxw3CKHCEvkZ4lAyquKr3L4SfL9pX/nxMo+u
-         ub7Vjf0FwnXeAW3rWgCndDU9SlPFjhxNmQqMQ9w8RsdZS0Hn7P1mZ9CtsKJg1eec0Rf/
-         NGpAwix3FhCgswYJ7lWl6rXn5/hL2RRVUBvJwZIwLDNXxddP2+0JLBP9g0/j12QZFHtp
-         Jt6aSNa1NMAwAYdugTYXQXzsiM1L3agZFRKHxhLF65ucBIaZYN2DhDbA4HJG1M4Tmqsj
-         +9jgs8uQ4XyryfDblKUYHw+eZpknPYKOPPUfxFth9rrm7NWk2NZ0NqQKXosfMTmHRCGg
-         nULA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=yaxspo/PEgkbPABk/VyHyZeczzfPkjMUAL3YxwdJqrM=;
-        b=ZulHPJMGxOsjUgdLz4Oou7jUQrt5icorPbWoonkayfYSNu5zhXUKmyuy7u3sxVolox
-         521mB1GsNi0ajBSMZ9/RrhjmnG6S3mncsqG1xJk5b6nVY41AVipgB3nfIVs+PmAhAW/b
-         Ywg3xD26WKpUGTImWZ7X8WwAVTIT+OuXiPMzD0rch/7sW9yx0XoVT9x0kTMLV5a7JEnG
-         DcIWpS9Xfz8dEGpTvIA9Wn+lvl8NsFmpISMSfpA4wVxW8aC2cp6ThUFHJXltlHPsVJNc
-         t62tn37dtSocEij35w1x45N8blw8lL+/RI8rFDnRlTSOXG37j/nGAE8RPt96pilorcHL
-         e6qg==
-X-Gm-Message-State: AMke39k1tYic8DeFxT5y1FRPSlZ3BJFXvKEsryCXPow75SVrDGLgrG/jXbDPgYIjEFraFN38ScomjCDHAX8GgBlH
-X-Received: by 10.84.128.74 with SMTP id 68mr13252353pla.111.1489023029274;
- Wed, 08 Mar 2017 17:30:29 -0800 (PST)
-MIME-Version: 1.0
-Received: by 10.100.187.5 with HTTP; Wed, 8 Mar 2017 17:30:28 -0800 (PST)
-In-Reply-To: <xmqqa88v1i5f.fsf@gitster.mtv.corp.google.com>
-References: <5e5b1b92-f7c6-2987-356e-1aab2bff557e@gmail.com>
- <20170308133348.2ovfsi44vq2rpgom@sigill.intra.peff.net> <CAHGBnuM3iM-kHdxdox_1i56uLbv7gQ5ZUY9Xqf4BG7G_kTf+jQ@mail.gmail.com>
- <20170308140110.wgdedquqwm75zws2@sigill.intra.peff.net> <CAHGBnuPGPcWwbrZX_92XDJu47bpH=kj2PZ7yWHK=MRfZ_RHXrQ@mail.gmail.com>
- <CAGZ79kbwMhL-ZnL-iYwPH=tWa8cNQbEGOYYQBw6OzFCMhOWE-w@mail.gmail.com>
- <xmqq8tof32x9.fsf@gitster.mtv.corp.google.com> <CAGZ79kZFGP0zMP5CtOH3poU9vx8FoT25UVr8ridQo0_VdH2cmA@mail.gmail.com>
- <xmqqa88v1i5f.fsf@gitster.mtv.corp.google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Wed, 8 Mar 2017 17:30:28 -0800
-Message-ID: <CAGZ79kZwiwhP-skEd6K+osXkX47fF-eN=psP88DBzjca7n85DQ@mail.gmail.com>
-Subject: Re: diff.ignoreSubmoudles config setting broken?
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Sebastian Schuberth <sschuberth@gmail.com>,
-        Jacob Keller <jacob.keller@gmail.com>,
-        Jeff King <peff@peff.net>,
-        Git Mailing List <git@vger.kernel.org>,
-        Jens Lehmann <Jens.Lehmann@web.de>
-Content-Type: text/plain; charset=UTF-8
+Received: from forward7j.cmail.yandex.net ([5.255.227.108]:46832 "EHLO
+        forward7j.cmail.yandex.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1754731AbdCIBaa (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 8 Mar 2017 20:30:30 -0500
+Received: from smtp1j.mail.yandex.net (smtp1j.mail.yandex.net [IPv6:2a02:6b8:0:801::ab])
+        by forward7j.cmail.yandex.net (Yandex) with ESMTP id 4D25A229FD;
+        Thu,  9 Mar 2017 04:27:53 +0300 (MSK)
+Received: from smtp1j.mail.yandex.net (localhost.localdomain [127.0.0.1])
+        by smtp1j.mail.yandex.net (Yandex) with ESMTP id ED86C3C807F1;
+        Thu,  9 Mar 2017 04:27:49 +0300 (MSK)
+Received: by smtp1j.mail.yandex.net (nwsmtp/Yandex) with ESMTPSA id OBpXAf9TTu-RmmGFo7Y;
+        Thu, 09 Mar 2017 04:27:49 +0300
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (Client certificate not present)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=vtolstov.org; s=mail; t=1489022869;
+        bh=Y7hrJWjZANRxarYT0gmIw9BcxvWBxC38yDKakrH44wU=;
+        h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References;
+        b=UkglWTyYfANgqXNq3ehkLFzOYy4/iJS7S+PpQEzn1vKeCLzHajK+hOMopiSyg/yYj
+         0Is4/YutJZIjqugrFx+2dgYpqKI12nZ+RyIdR3DeDVcm4mQC3DrtrcpnZS1gu4BiTF
+         3Q1wFUotdhN6ieAW+09FWjIP8bo2fUhXCG8rIP64=
+Authentication-Results: smtp1j.mail.yandex.net; dkim=pass header.i=@vtolstov.org
+X-Yandex-ForeignMX:  US
+X-Yandex-Suid-Status: 1 0,1 0,1 0,1 1130000030716801,1 0
+From:   Valery Tolstov <me@vtolstov.org>
+To:     git@vger.kernel.org
+Cc:     bmwill@google.com, sbeller@google.com, me@vtolstov.org,
+        gitster@pobox.com
+Subject: [PATCH v3 2/2] submodule--helper.c: remove duplicate code
+Date:   Thu,  9 Mar 2017 04:27:34 +0300
+Message-Id: <20170309012734.21541-3-me@vtolstov.org>
+X-Mailer: git-send-email 2.12.0.192.gbdb9d28a5
+In-Reply-To: <20170309012734.21541-1-me@vtolstov.org>
+References: <20170309003858.GB153031@google.com>
+ <20170309012734.21541-1-me@vtolstov.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Mar 8, 2017 at 3:08 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Stefan Beller <sbeller@google.com> writes:
->
->> Yeah the .gitmodules file is a good hint.
+Remove code fragment from module_clone that duplicates functionality
+of connect_work_tree_and_git_dir in dir.c
 
-And by that I meant that I am not sure if we're going
-down the right rabbit hole here. So before we take action
-maybe Sebastian can tell us more about his project (and all
-configurations and settings involved)
+Signed-off-by: Valery Tolstov <me@vtolstov.org>
+---
+ builtin/submodule--helper.c | 22 ++--------------------
+ 1 file changed, 2 insertions(+), 20 deletions(-)
 
->>
->> Here is my understanding of the precedence:
->>
->>   command line options > .git/config (in various forms) > .gitmodules
->>
->> where in the .git config we have precedence levels for different files
->>
->>   .git/config > ~/.gitconfig
->>
->> as well as different settings:
->>
->>   submodule.<name>.ignore > diff.ignoreSubmodules
->
-> I've never understood why people thought it a good idea to let
-> .gitmodules supplied by the upstream override the configuration
-> setting the end user has like this.  This is quite bad.
+diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+index 899dc334e..86bafe166 100644
+--- a/builtin/submodule--helper.c
++++ b/builtin/submodule--helper.c
+@@ -579,9 +579,7 @@ static int module_clone(int argc, const char **argv, const char *prefix)
+ 	const char *name = NULL, *url = NULL, *depth = NULL;
+ 	int quiet = 0;
+ 	int progress = 0;
+-	FILE *submodule_dot_git;
+ 	char *p, *path = NULL, *sm_gitdir;
+-	struct strbuf rel_path = STRBUF_INIT;
+ 	struct strbuf sb = STRBUF_INIT;
+ 	struct string_list reference = STRING_LIST_INIT_NODUP;
+ 	char *sm_alternate = NULL, *error_strategy = NULL;
+@@ -653,27 +651,12 @@ static int module_clone(int argc, const char **argv, const char *prefix)
+ 		strbuf_reset(&sb);
+ 	}
+ 
+-	/* Write a .git file in the submodule to redirect to the superproject. */
+-	strbuf_addf(&sb, "%s/.git", path);
+-	if (safe_create_leading_directories_const(sb.buf) < 0)
+-		die(_("could not create leading directories of '%s'"), sb.buf);
+-	submodule_dot_git = fopen(sb.buf, "w");
+-	if (!submodule_dot_git)
+-		die_errno(_("cannot open file '%s'"), sb.buf);
+-
+-	fprintf_or_die(submodule_dot_git, "gitdir: %s\n",
+-		       relative_path(sm_gitdir, path, &rel_path));
+-	if (fclose(submodule_dot_git))
+-		die(_("could not close file %s"), sb.buf);
+-	strbuf_reset(&sb);
+-	strbuf_reset(&rel_path);
++	/* Connect module worktree and git dir */
++	connect_work_tree_and_git_dir(path, sm_gitdir);
+ 
+-	/* Redirect the worktree of the submodule in the superproject's config */
+ 	p = git_pathdup_submodule(path, "config");
+ 	if (!p)
+ 		die(_("could not get submodule directory for '%s'"), path);
+-	git_config_set_in_file(p, "core.worktree",
+-			       relative_path(path, sm_gitdir, &rel_path));
+ 
+ 	/* setup alternateLocation and alternateErrorStrategy in the cloned submodule if needed */
+ 	git_config_get_string("submodule.alternateLocation", &sm_alternate);
+@@ -689,7 +672,6 @@ static int module_clone(int argc, const char **argv, const char *prefix)
+ 	free(error_strategy);
+ 
+ 	strbuf_release(&sb);
+-	strbuf_release(&rel_path);
+ 	free(sm_gitdir);
+ 	free(path);
+ 	free(p);
+-- 
+2.12.0.192.gbdb9d28a5
 
-Apart from from the name <-> path mapping, the .gitmodules
-file is a collection of suggestions, some more severe than
-others.
-
-I think the issue here is to define the correct
-and clear order of precedence, specifically between along these
-2 different dimensions (different configuration settings vs different
-files with configuration), such that the .gitmodules file is only ever
-consulted when the user has obviously nothing configured that
-would contradict the .gitmodules file.
-
->
-> Perhaps this is a good starting point?
->
->  diff.c | 5 ++++-
->  1 file changed, 4 insertions(+), 1 deletion(-)
->
-> diff --git a/diff.c b/diff.c
-> index a628ac3a95..75b7140c63 100644
-> --- a/diff.c
-> +++ b/diff.c
-> @@ -273,8 +273,11 @@ int git_diff_ui_config(const char *var, const char *value, void *cb)
->         if (!strcmp(var, "diff.orderfile"))
->                 return git_config_pathname(&diff_order_file_cfg, var, value);
->
-> -       if (!strcmp(var, "diff.ignoresubmodules"))
-> +       if (!strcmp(var, "diff.ignoresubmodules")) {
->                 handle_ignore_submodules_arg(&default_diff_options, value);
-> +               DIFF_OPT_SET(options, OVERRIDE_SUBMODULE_CONFIG);
-
-s/options/&default_diff_options/ makes it compile. (I did not think
-whether that is
-correct though.)
-
-In other occurrences of handle_ignore_submodules_arg, the DIFF_OPT_SET
-is set before the handle_ignore_submodules_arg, though.
-
-When trying these suggestions, ./t4027-diff-submodule.sh breaks.
-log on that file yields e.g. 302ad7a9930 (Submodules: Use "ignore" settings
-from .gitmodules too for diff and status), which tells us that in 2010 people
-were not as concerned by this, but the user had to use the exact option to
-override the upstream default-suggestion.
-
-Thanks,
-Stefan
