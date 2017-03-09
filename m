@@ -2,59 +2,54 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4B9FF202F8
-	for <e@80x24.org>; Thu,  9 Mar 2017 18:11:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C7A2B202F8
+	for <e@80x24.org>; Thu,  9 Mar 2017 18:13:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932923AbdCISL4 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 9 Mar 2017 13:11:56 -0500
-Received: from bsmtp.bon.at ([213.33.87.14]:37771 "EHLO bsmtp.bon.at"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S932290AbdCISL4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Mar 2017 13:11:56 -0500
-Received: from dx.site (unknown [93.83.142.38])
-        by bsmtp.bon.at (Postfix) with ESMTPSA id 3vfJPh5TQqz5tlR;
-        Thu,  9 Mar 2017 19:11:52 +0100 (CET)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-        by dx.site (Postfix) with ESMTP id 0188F3A6;
-        Thu,  9 Mar 2017 19:11:51 +0100 (CET)
-Subject: Re: [PATCH 03/10] pack-objects: test for --partial-by-size
- --partial-special
-To:     Jeff Hostetler <jeffhost@microsoft.com>
-References: <1488994685-37403-1-git-send-email-jeffhost@microsoft.com>
- <1488994685-37403-4-git-send-email-jeffhost@microsoft.com>
-Cc:     git@vger.kernel.org, peff@peff.net, gitster@pobox.com,
-        markbt@efaref.net, benpeart@microsoft.com,
-        jonathantanmy@google.com, Jeff Hostetler <git@jeffhostetler.com>
-From:   Johannes Sixt <j6t@kdbg.org>
-Message-ID: <afd40132-ef85-1713-e3ab-f6bef6b30646@kdbg.org>
-Date:   Thu, 9 Mar 2017 19:11:51 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.7.0
-MIME-Version: 1.0
-In-Reply-To: <1488994685-37403-4-git-send-email-jeffhost@microsoft.com>
-Content-Type: text/plain; charset=iso-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
+        id S932614AbdCISN3 convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Thu, 9 Mar 2017 13:13:29 -0500
+Received: from smtprelay04.ispgateway.de ([80.67.31.31]:49006 "EHLO
+        smtprelay04.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754853AbdCISN0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Mar 2017 13:13:26 -0500
+X-Greylist: delayed 455 seconds by postgrey-1.27 at vger.kernel.org; Thu, 09 Mar 2017 13:13:26 EST
+Received: from [131.246.194.95] (helo=wpa-8376.kl.dfki.de)
+        by smtprelay04.ispgateway.de with esmtpsa (TLSv1:DHE-RSA-AES256-SHA:256)
+        (Exim 4.84)
+        (envelope-from <dev@joernhees.de>)
+        id 1cm2BD-0005mU-CD
+        for git@vger.kernel.org; Thu, 09 Mar 2017 18:48:47 +0100
+From:   =?utf-8?Q?J=C3=B6rn_Hees?= <dev@joernhees.de>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8BIT
+Subject: git commit --interactive patch-mode no longer allows selecting files
+Message-Id: <8C99B562-9194-4227-B40D-F64BBECEEE38@joernhees.de>
+Date:   Thu, 9 Mar 2017 18:48:58 +0100
+To:     git@vger.kernel.org
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+X-Mailer: Apple Mail (2.3124)
+X-Df-Sender: bWFpbEBqb2VybmhlZXMuZGU=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 08.03.2017 um 18:37 schrieb Jeff Hostetler:
-> +test_expect_success 'setup' '
-> +	perl -e "print \"a\" x 11;"      > a &&
-> +	perl -e "print \"a\" x 1100;"    > b &&
-> +	perl -e "print \"a\" x 1100000;" > c &&
+Hi,
 
-If the file contents do not matter, you can have the same without perl 
-like this:
+i'm not entirely sure if this is a bug or intended (couldn't find it in the changelogs though)...
 
-	printf "%011d" 0      >a &&
-	printf "%01100d" 0    >b &&
-	printf "%01100000d" 0 >c &&
+Before 2.12.0 a `git commit --int` / `git add --int` followed by [p] for patch-mode, would allow a numeric selection of the files to patch hunks for (this behavior is well documented all over the internet).
 
--- Hannes
+Since 2.12.0 the numeric selection is skipped and automatically drops me directly into hunk mode (Mac OS X homebrew).
+
+I would see this as a feature if only one file is changed. As soon as multiple files are changed, i often have the use-case that i'm in some bigger change, but want to quickly fix something in other files. In those cases, the new behavior forces me to `d` out of potentially many files, just to quickly commit some small change :-/
+
+I already tried in several repos and without ~/.gitconfig .
+Are there any config options i'm missing?
+
+Best,
+Jörn
 
