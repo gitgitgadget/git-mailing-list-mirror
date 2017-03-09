@@ -2,134 +2,140 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E5A54202F8
-	for <e@80x24.org>; Thu,  9 Mar 2017 18:45:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A3214202F8
+	for <e@80x24.org>; Thu,  9 Mar 2017 19:00:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932302AbdCISpK (ORCPT <rfc822;e@80x24.org>);
-        Thu, 9 Mar 2017 13:45:10 -0500
-Received: from smtp.codeaurora.org ([198.145.29.96]:39072 "EHLO
-        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932075AbdCISpJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Mar 2017 13:45:09 -0500
-Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id 3B0EF607DF; Thu,  9 Mar 2017 18:45:08 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1489085108;
-        bh=vgfuuKV6MkiFp1rpQFpJHJsppw1qAdXfCs4bYZY46d8=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=hPGeHp+boOLLPq7xtLbA2RHX0sRxNIk02kyK8hOkGH0k+6CEybliWOxYP6CIi+6+4
-         ODSqv2xZxIUwgkFqky4uSH4tPL0a7lBK2NmdiY5zQDgZOMGmJGXdCJmZrjqHWnhUXk
-         7NAcwzF+USuhp6EQLWi1GQ2sX+jwIPgBXF20MdAg=
-Received: from mfick1-lnx.localnet (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: mfick@smtp.codeaurora.org)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 6574660341;
-        Thu,  9 Mar 2017 18:45:07 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1489085107;
-        bh=vgfuuKV6MkiFp1rpQFpJHJsppw1qAdXfCs4bYZY46d8=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=NctA65nhT2rYfIS/ql0SHEAAc/gIaYRrqLOO8icx4II8VvTFI0RcN9W/W3yMBCWWC
-         pZb5aZyiS+xD94k5XaOt4XR0OPOKjJkb/IUq7gL5EWgDSzUuAYJtQCLq0c773UfqH6
-         O6uiVw3wcKW7/j4TUsi3C03e2sDylfwqbOd2gyHE=
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 6574660341
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=mfick@codeaurora.org
-From:   Martin Fick <mfick@codeaurora.org>
-To:     jmelvin@codeaurora.org
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        nasserg@codeaurora.org, peff@peff.net, sbeller@google.com
-Subject: Re: [PATCH] repack: Add options to preserve and prune old pack files
-Date:   Thu, 09 Mar 2017 11:45:06 -0700
-Message-ID: <4065744.f4TKuYAukl@mfick1-lnx>
-User-Agent: KMail/4.8.5 (Linux/3.2.0-106-generic; KDE/4.8.5; x86_64; ; )
-In-Reply-To: <1d816bbb08b228ece9a74ffcdfb7a5b1@codeaurora.org>
-References: <20170307164035.27866-1-jmelvin@codeaurora.org> <xmqq4lz4968p.fsf@gitster.mtv.corp.google.com> <1d816bbb08b228ece9a74ffcdfb7a5b1@codeaurora.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="us-ascii"
+        id S933164AbdCIS6A (ORCPT <rfc822;e@80x24.org>);
+        Thu, 9 Mar 2017 13:58:00 -0500
+Received: from mail-pg0-f65.google.com ([74.125.83.65]:34107 "EHLO
+        mail-pg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S933158AbdCIS54 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Mar 2017 13:57:56 -0500
+Received: by mail-pg0-f65.google.com with SMTP id b5so7704668pgg.1
+        for <git@vger.kernel.org>; Thu, 09 Mar 2017 10:57:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id;
+        bh=zS6uJCknMwf/Qtr7QzXrPVIX/d35aK12WMzzASq5KBk=;
+        b=o79HW3dIsRdy/D1zk2wx+mJ8A4xvPp7xRWjb90QuxNRuCaKu9za254r7Q/2Y5NbmTl
+         zkJW83pn4B52fH9L60jkvnHuAf1FeseQ7rQ9uPDLjCTK6QbygxMxrWijjW5xirnGL+n4
+         0vozg33FSi9I1VaVNL9AX+TVG20LDF2T/PquBVJqErxXQ41/c6QuuOjUMGF4LJo2phl9
+         G03UipoW76JWhAPmBwMQeSm8DpZ3vEhMT5bnU9tYrjv5PVzqFExQnG7TyRNHHyFiQbIi
+         Dhp8POXBnPdPfOBirlKY0THa35lpG6RTQ9gA5R8WMiA2zEfzwcUKHCOnCrJ7SUQ4VIfx
+         Iw2g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=zS6uJCknMwf/Qtr7QzXrPVIX/d35aK12WMzzASq5KBk=;
+        b=lKkf2kluDJxwFkGLl5b7CA10LaglYKhnWDHY8X9MBhcHOSr060jinZ0f8ltv022EPw
+         CviOiYHzHMzGQysoq1pMW+aGasz8SW8LXrRwwgkVzBYP7KFkpgV3oqSbZr8QXsoyXGCX
+         QpTL/SJaHKAefLDLU4CKZ5ADituW0AOBcedgoI3XG3bM37sGDdhyVzYw1jorA+S2LV/D
+         jAJBKGWiFaKvOPDsDQ/QaN5QCl9OYx91H+BpDASVFpiBm6Hg7c86YAPFibYZ8ut4PgxL
+         54CDiNbg0+iGHP6nK6t/jYzNcMaP9g2Q9ZICfc5EnNpu/JoC8R1FDpdnlR84p68shnCI
+         6hrw==
+X-Gm-Message-State: AMke39m4EshPHsAWOBehmwCOmwQ6CnvVgILMo18Eorf2JuoadknKvpYssLBA6n852+PAEw==
+X-Received: by 10.99.156.2 with SMTP id f2mr15731388pge.189.1489085865203;
+        Thu, 09 Mar 2017 10:57:45 -0800 (PST)
+Received: from localhost.localdomain ([47.11.13.12])
+        by smtp.gmail.com with ESMTPSA id 80sm13915944pfy.67.2017.03.09.10.57.41
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Thu, 09 Mar 2017 10:57:44 -0800 (PST)
+From:   Prathamesh Chavan <pc44800@gmail.com>
+To:     git@vger.kernel.org
+Cc:     christian.couder@gmail.com, jdl@jdl.com,
+        Prathamesh <pc44800@gmail.com>
+Subject: [PATCH] t2027: avoid using pipes
+Date:   Fri, 10 Mar 2017 00:33:10 +0530
+Message-Id: <20170309190310.30589-1-pc44800@gmail.com>
+X-Mailer: git-send-email 2.11.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thursday, March 09, 2017 10:50:21 AM 
-jmelvin@codeaurora.org wrote:
-> On 2017-03-07 13:33, Junio C Hamano wrote:
-> > James Melvin <jmelvin@codeaurora.org> writes:
-> >> These options are designed to prevent stale file handle
-> >> exceptions during git operations which can happen on
-> >> users of NFS repos when repacking is done on them. The
-> >> strategy is to preserve old pack files around until
-> >> the next repack with the hopes that they will become
-> >> unreferenced by then and not cause any exceptions to
-> >> running processes when they are finally deleted
-> >> (pruned).
-> > 
-> > I find it a very sensible strategy to work around NFS,
-> > but it does not explain why the directory the old ones
-> > are moved to need to be configurable.  It feels to me
-> > that a boolean that causes the old ones renamed
-> > s/^pack-/^old-&/ in the same directory (instead of
-> > pruning them right away) would risk less chances of
-> > mistakes (e.g. making "preserved" subdirectory on a
-> > separate device mounted there in a hope to reduce disk
-> > usage of the primary repository, which may defeat the
-> > whole point of moving the still-active file around
-> > instead of removing them).
-> 
-> Moving the preserved pack files to a separate directory
-> only helped make the pack directory cleaner, but I agree
-> that having the old* pack files in the same directory is
-> a better approach as it would ensure that it's still on
-> the same mounted device. I'll update the logic to reflect
-> that.
-> 
-> As for the naming convention of the preserved pack files,
-> there is already some logic to remove "old-" files in
-> repack. Currently this is the naming convention I have
-> for them:
-> 
-> pack-<sha1>.old-<ext>
-> pack-7412ee739b8a20941aa1c2fd03abcc7336b330ba.old-pack
-> 
-> One advantage of that is the extension is no longer an
-> expected one, differentiating it from current pack files.
-> 
-> That said, if that is not a concern, I could prefix them
-> with "preserved" instead of "old" to differentiate them
-> from the other logic that cleans up "old-*". What are
-> your thoughts on that?
-> 
-> preserved-<sha1>.<ext>
-> preserved-7412ee739b8a20941aa1c2fd03abcc7336b330ba.pack
+From: Prathamesh <pc44800@gmail.com>
 
-Some other proposals so that the preserved files do not get 
-returned by naive finds based on their extensions,
+Whenever a git command is present in the upstream of a pipe, its failure
+gets masked by piping and hence it should be avoided for testing the
+upstream git command. By writing out the output of the git command to
+a file, we can test the exit codes of both the commands as a failure exit
+code in any command is able to stop the && chain.
 
- preserved-<sha1>.<ext>-preserved
- preserved-7412ee739b8a20941aa1c2fd03abcc7336b330ba.pack-
-preserved
+Signed-off-by: Prathamesh <pc44800@gmail.com>
+---
+ t/t2027-worktree-list.sh | 18 +++++++++++-------
+ 1 file changed, 11 insertions(+), 7 deletions(-)
 
-or:
-
- preserved-<sha1>.preserved-<ext>
- preserved-7412ee739b8a20941aa1c2fd03abcc7336b330ba.preserved-
-pack
-
-or maybe even just:
-
- preserved-<ext>-<sha1>
- preserved-pack-7412ee739b8a20941aa1c2fd03abcc7336b330ba
-
-
--Martin
+diff --git a/t/t2027-worktree-list.sh b/t/t2027-worktree-list.sh
+index 848da5f36..d8b3907e0 100755
+--- a/t/t2027-worktree-list.sh
++++ b/t/t2027-worktree-list.sh
+@@ -31,7 +31,8 @@ test_expect_success '"list" all worktrees from main' '
+ 	test_when_finished "rm -rf here && git worktree prune" &&
+ 	git worktree add --detach here master &&
+ 	echo "$(git -C here rev-parse --show-toplevel) $(git rev-parse --short HEAD) (detached HEAD)" >>expect &&
+-	git worktree list | sed "s/  */ /g" >actual &&
++	git worktree list >out &&
++	sed "s/  */ /g" <out >actual &&
+ 	test_cmp expect actual
+ '
+ 
+@@ -40,7 +41,8 @@ test_expect_success '"list" all worktrees from linked' '
+ 	test_when_finished "rm -rf here && git worktree prune" &&
+ 	git worktree add --detach here master &&
+ 	echo "$(git -C here rev-parse --show-toplevel) $(git rev-parse --short HEAD) (detached HEAD)" >>expect &&
+-	git -C here worktree list | sed "s/  */ /g" >actual &&
++	git -C here worktree list >out &&
++	sed "s/  */ /g" <out >actual &&
+ 	test_cmp expect actual
+ '
+ 
+@@ -73,7 +75,8 @@ test_expect_success '"list" all worktrees from bare main' '
+ 	git -C bare1 worktree add --detach ../there master &&
+ 	echo "$(pwd)/bare1 (bare)" >expect &&
+ 	echo "$(git -C there rev-parse --show-toplevel) $(git -C there rev-parse --short HEAD) (detached HEAD)" >>expect &&
+-	git -C bare1 worktree list | sed "s/  */ /g" >actual &&
++	git -C bare1 worktree list >out &&
++	sed "s/  */ /g" <out >actual &&
+ 	test_cmp expect actual
+ '
+ 
+@@ -96,7 +99,8 @@ test_expect_success '"list" all worktrees from linked with a bare main' '
+ 	git -C bare1 worktree add --detach ../there master &&
+ 	echo "$(pwd)/bare1 (bare)" >expect &&
+ 	echo "$(git -C there rev-parse --show-toplevel) $(git -C there rev-parse --short HEAD) (detached HEAD)" >>expect &&
+-	git -C there worktree list | sed "s/  */ /g" >actual &&
++	git -C there worktree list >out &&
++	sed "s/  */ /g" <out >actual &&
+ 	test_cmp expect actual
+ '
+ 
+@@ -118,9 +122,9 @@ test_expect_success 'broken main worktree still at the top' '
+ 		cd linked &&
+ 		echo "worktree $(pwd)" >expected &&
+ 		echo "ref: .broken" >../.git/HEAD &&
+-		git worktree list --porcelain | head -n 3 >actual &&
++		git worktree list --porcelain >out && head -n 3 out >actual &&
+ 		test_cmp ../expected actual &&
+-		git worktree list | head -n 1 >actual.2 &&
++		git worktree list >out && head -n 1 out >actual.2 &&
+ 		grep -F "(error)" actual.2
+ 	)
+ '
+@@ -134,7 +138,7 @@ test_expect_success 'linked worktrees are sorted' '
+ 		test_commit new &&
+ 		git worktree add ../first &&
+ 		git worktree add ../second &&
+-		git worktree list --porcelain | grep ^worktree >actual
++		git worktree list --porcelain >out && grep ^worktree out >actual
+ 	) &&
+ 	cat >expected <<-EOF &&
+ 	worktree $(pwd)/sorted/main
 -- 
-The Qualcomm Innovation Center, Inc. is a member of Code 
-Aurora Forum, hosted by The Linux Foundation
+2.11.0
 
