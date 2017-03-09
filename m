@@ -2,130 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3F0421FBEC
-	for <e@80x24.org>; Thu,  9 Mar 2017 07:49:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A782A1FBEC
+	for <e@80x24.org>; Thu,  9 Mar 2017 07:49:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751954AbdCIHtp (ORCPT <rfc822;e@80x24.org>);
+        id S1751355AbdCIHtp (ORCPT <rfc822;e@80x24.org>);
         Thu, 9 Mar 2017 02:49:45 -0500
-Received: from mail-lf0-f42.google.com ([209.85.215.42]:33417 "EHLO
-        mail-lf0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750784AbdCIHto (ORCPT <rfc822;git@vger.kernel.org>);
+Received: from cloud.peff.net ([104.130.231.41]:41098 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1750770AbdCIHto (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 9 Mar 2017 02:49:44 -0500
-Received: by mail-lf0-f42.google.com with SMTP id a6so24620513lfa.0
-        for <git@vger.kernel.org>; Wed, 08 Mar 2017 23:49:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=qzMwCuYW5Po9SKK2JTD1/6IWix5U+dCIFPm5vdWepdI=;
-        b=XMJf/NIgIhYd9FE6LCgAdtcIiC1zSM9aWFtzM7TGSB6kcDS3zGF9Mk2FfARgont0hi
-         kilggVTbZXQOuS2CjYwpsy9xAH+82LISrqkld4Gw/Z/QqQxB+46j819R5JC8Us9sNT+P
-         seejCdxEy01qznI55FoMpTMS5h2O/Q5igcjTJ3OWVwpQftQPi9mNJ+srY3PsiYxyMbqo
-         hNLI+zmUCDOtjo38QC4HQto24uNodcIVxKRUzdjZv9hU6oihho3PViARbAaYwdTkbwHP
-         1lPtFtUEFfhnj6wKkOWrmvBnXnFaTz9CYPTw94PcoelwblnaFWr6FjFkfNnf3QTKKCzq
-         q98Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=qzMwCuYW5Po9SKK2JTD1/6IWix5U+dCIFPm5vdWepdI=;
-        b=ZEoaYHaoAYqUpeS1+qKEilh2AnjR75b1dvWN+4mRl/yTPjcjNjorFmD7TgKXZWjWsc
-         RoNVgnSxFBl7wQ7oSNNZacvsjcAwOZM6Zrw+ZVeLcN8bSV9bAG7Dp5feIyfWdvnMt/oR
-         5O5sxiJWSqlA7EE4xsd0aJYrBIGK9jZk2dhvtGHLgncSVstcaqYi46nGRBLFhGw3SBbL
-         seATVPFU7n4bHfJL384ooJxYefZxhrDsX6aphUQ7RIzFZ6W76wlt/wkJbOVjKPNUtn1d
-         8nUtoGi0S0WG40/x4q9jK1eKL9zOa9J8ka0p9sQlKVFuqrXA6zCkVQMPkTdmIrHGMFjn
-         kADA==
-X-Gm-Message-State: AMke39loNR1m+C8D9TnVMoin/VIpkgh++bRnGWjwaeZZOkKEWg07QlDEfM8XHDqSwTzFvO3NHZByoyzTXWzGpw==
-X-Received: by 10.46.71.81 with SMTP id u78mr3491546lja.16.1489045766477; Wed,
- 08 Mar 2017 23:49:26 -0800 (PST)
+Received: (qmail 30053 invoked by uid 109); 9 Mar 2017 07:48:51 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 09 Mar 2017 07:48:51 +0000
+Received: (qmail 6457 invoked by uid 111); 9 Mar 2017 07:49:00 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 09 Mar 2017 02:49:00 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 09 Mar 2017 02:48:49 -0500
+Date:   Thu, 9 Mar 2017 02:48:49 -0500
+From:   Jeff King <peff@peff.net>
+To:     Jeff Hostetler <jeffhost@microsoft.com>
+Cc:     git@vger.kernel.org, gitster@pobox.com, markbt@efaref.net,
+        benpeart@microsoft.com, jonathantanmy@google.com,
+        Jeff Hostetler <git@jeffhostetler.com>
+Subject: Re: [PATCH 04/10] upload-pack: add partial (sparse) fetch
+Message-ID: <20170309074849.ktl5vqbzkiwwwbob@sigill.intra.peff.net>
+References: <1488994685-37403-1-git-send-email-jeffhost@microsoft.com>
+ <1488994685-37403-5-git-send-email-jeffhost@microsoft.com>
 MIME-Version: 1.0
-Received: by 10.25.150.19 with HTTP; Wed, 8 Mar 2017 23:49:25 -0800 (PST)
-In-Reply-To: <CACczA6V6t4f6TTT=CJfqsuCtbYuM1QNh8AgtOwqRt7pz4VMeRA@mail.gmail.com>
-References: <CACczA6V6t4f6TTT=CJfqsuCtbYuM1QNh8AgtOwqRt7pz4VMeRA@mail.gmail.com>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Thu, 9 Mar 2017 08:49:25 +0100
-Message-ID: <CAP8UFD1k=uDRnrGJRw=NG9NmRVd8yMXcE_jyB=dpeKOf75HbCw@mail.gmail.com>
-Subject: Re: [PATCH][GSoc] Changed signed flags to unsigned type
-To:     Vedant Bassi <sharababy.dev@gmail.com>
-Cc:     git <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <1488994685-37403-5-git-send-email-jeffhost@microsoft.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Mar 9, 2017 at 5:24 AM, Vedant Bassi <sharababy.dev@gmail.com> wrote:
-> As part of my microproject :
->
-> Use unsigned integral type for collection of bits:
-> Pick one field of a structure that (1) is of signed integral type and
-> (2) is used as a collection of multiple bits. Discuss if there is a
-> good reason why it has to be a signed integral field and change it to
-> an unsigned type otherwise.
->
-> More ref: https://public-inbox.org/git/xmqqsiebrlez.fsf@gitster.dls.corp.google.com
-> http://stackoverflow.com/questions/29795170/usage-of-signed-vs-unsigned-variables-for-flags-in-c
->
-> I have found several structures where a signed int was used on flags
-> for bitwise & to check various cases.
+On Wed, Mar 08, 2017 at 05:37:59PM +0000, Jeff Hostetler wrote:
 
-This email has a title that starts with "[PATCH]" but it doesn't
-contain a real patch that can be applied using `git am` for example.
-Please look at https://git.github.io/SoC-2017-Microprojects/ and at
-Documentation/SubmittingPatches about how patches should be created.
-
-> diff --git a/bisect.h b/bisect.h
->
-> index a979a7f..4b562a8 100644
->
-> --- a/bisect.h
->
-> +++ b/bisect.h
->
-> @@ -16,6 +16,8 @@ extern struct commit_list *filter_skipped(struct
-> commit_list *list,
->
->
->
->  struct rev_list_info {
->
->         struct rev_info *revs;
->
+> diff --git a/Documentation/technical/pack-protocol.txt b/Documentation/technical/pack-protocol.txt
+> index c59ac99..0032729 100644
+> --- a/Documentation/technical/pack-protocol.txt
+> +++ b/Documentation/technical/pack-protocol.txt
+> @@ -212,6 +212,7 @@ out of what the server said it could do with the first 'want' line.
+>    upload-request    =  want-list
+>  		       *shallow-line
+>  		       *1depth-request
+> +		       *partial
+>  		       flush-pkt
+>  
+>    want-list         =  first-want
+> @@ -223,10 +224,15 @@ out of what the server said it could do with the first 'want' line.
+>  		       PKT-LINE("deepen-since" SP timestamp) /
+>  		       PKT-LINE("deepen-not" SP ref)
+>  
+> +  partial           =  PKT-LINE("partial-by-size" SP magnitude) /
+> +		       PKT-LINE("partial-special)  
 > +
->
-> + // int flags changed to unsigned int
 
-You don't need to add such comments as "what has been done" will be
-obvious when looking at the commit. It could be interesting to explain
-"why the change is made" in the commit message though.
+I probably would have added this as a capability coming back from the
+client, since it only makes sense to send once (the same way we ask for
+other features like include-tag or ofs-delta). I guess it's six of one,
+half a dozen of the other, though.
 
-If there is something subtle in the code or something that could save
-a reader some time if it was documented, then a comment might be
-useful, but anyway comments should use "/* ... */" markers, not "//".
+I notice that you require the client to request the "partial" capability
+_and_ to send these commands. I'm not sure what the client capability
+response is helping. The server has said "I can do this" and the client
+either asks for it or not.
 
->         unsigned int flags;
->
->         int show_timestamp;
->
->         int hdr_termination;
+> +		if (skip_prefix(line, "partial-by-size ", &arg)) {
+> +			unsigned long s;
+> +			if (!client_requested_partial_capability)
+> +				die("git upload-pack: 'partial-by-size' option requires 'partial' capability");
+> +			if (!git_parse_ulong(arg, &s))
+> +				die("git upload-pack: invalid partial-by-size value: %s", line);
+> +			strbuf_addstr(&partial_by_size, "--partial-by-size=");
+> +			strbuf_addstr(&partial_by_size, arg);
+> +			have_partial_by_size = 1;
+> +			continue;
 
-[...]
+So we parse it here for validation, but then pass the original string on
+to be parsed again by pack-objects. I think I'd rather see us use the
+result of our parse here, just to avoid any bugs where the parsing isn't
+identical (and there is such a bug currently due to the signed/unsigned
+thing I mentioned).
 
-> result : the changes were made in bisect.h , parse-options.h and  builtin/add.c
->
-> I have not yet  tested these changes.
+I also wonder whether the magnitude suffixes are worth exposing across
+the wire. Anybody touching the list of units in git_parse_ulong() would
+probably be surprised that the protocol is dependent on them (not that I
+expect us to really take any away, but it just seems like an unnecessary
+protocol complication).
 
-I think sending just one patch for bisect.h is ok. If you really want
-you could send another patch for parse-options.h and yet another one
-for builtin/add.c, all in the same patch series.
-
-Anyway please test that the patches can be applied (using git am) and
-that they look good (compared with other commits) when applied before
-sending them to the list. And yeah it is also a good idea to also
-check that the test suite still passes after each patch before sending
-them.
+-Peff
