@@ -2,97 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D25DB20135
-	for <e@80x24.org>; Thu,  9 Mar 2017 01:09:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4E30B20135
+	for <e@80x24.org>; Thu,  9 Mar 2017 01:17:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754721AbdCIBJm (ORCPT <rfc822;e@80x24.org>);
-        Wed, 8 Mar 2017 20:09:42 -0500
-Received: from mail-pf0-f180.google.com ([209.85.192.180]:34192 "EHLO
-        mail-pf0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754641AbdCIBJm (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Mar 2017 20:09:42 -0500
-Received: by mail-pf0-f180.google.com with SMTP id v190so21634489pfb.1
-        for <git@vger.kernel.org>; Wed, 08 Mar 2017 17:09:41 -0800 (PST)
+        id S1754236AbdCIBRG (ORCPT <rfc822;e@80x24.org>);
+        Wed, 8 Mar 2017 20:17:06 -0500
+Received: from mail-pf0-f176.google.com ([209.85.192.176]:35053 "EHLO
+        mail-pf0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752315AbdCIBRF (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Mar 2017 20:17:05 -0500
+Received: by mail-pf0-f176.google.com with SMTP id j5so21692426pfb.2
+        for <git@vger.kernel.org>; Wed, 08 Mar 2017 17:17:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=BuSdc2ewe/NMzqq2tXTJEKgKWEecBfirA4C3lMb1GoE=;
-        b=bTAsfNNxF0KRjdu1sXofQ9a+BtKY6wwSjrO34L8k+kr1b9EPChmTDcdTQ0sAWTM37d
-         QkbKildBgUvWN6mY94fNcMM72TyIQ6XOFuYTLkzdg0hKluRyETuhy01LC6UEN+bpQHrg
-         21aekQi1teC9vtaEu0tFdazF0FY6K0/e3tDoWNr0qPtLYQlacA0kt4yQKcIf/ZFaM/hU
-         TTjtGMkuvJT0vrjytucPkdKkE0dr2naDYdYOZAMa/CZRDuy/JRsLFHiAagPuW58596vU
-         zT1W6mV+SXdY8U5L0WENg2FNPTgIfeVpKjV9cTBokhQSLDS5kZKfzmCHv3C/LgSsTAz5
-         svSA==
+        h=subject:to:references:from:message-id:date:user-agent:mime-version
+         :in-reply-to:content-transfer-encoding;
+        bh=WrQGIDJaqWez4w4YWcdZHX7GrPuqgdT4rP7Dc+KNxPA=;
+        b=dVdE1uGejRX/fHPppJ+jl170ARABivcQ+lBCfkPiApqLhHSMbEoz+yiwzz/ClbtAGX
+         1fjxqtn9VrQAF73dAbUWfIqxoXqHXbVw53tw4RD9TcsS9bqjcDpQTHDJ+nOdNWm8/cjg
+         qs8qdCB27FYHFux+S4MZp19p92xvOMC6jlp+iB3teiJtPveDC6QMUZZ7ar+bnjvreGmQ
+         JBJJ2qlHXXE+LsY2vdLVEkaMM790fP8E9qn20IPcuSeGwuMJbGTi/FNgidyNT8CSukID
+         HMaHYpmHBzQyAaBZHnGkNMMrk1gR3maofKnnyjUDYyvWX+32jRctfZ/bqsFSppaN+X/P
+         +oaQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=BuSdc2ewe/NMzqq2tXTJEKgKWEecBfirA4C3lMb1GoE=;
-        b=miDo135N/OaZnXV7zoEU1eU7djeypflrRYVJt4hO0/uUVgmVkZm7dXuokBKuOLK8/j
-         7i1Q8K39gdhbu24xT9EHlTMM0BJFRRC50qVuv2Z6ZJ/jR4CeOYDIQ+OaoQH5vwLlmS8f
-         OG0Dx1kNEabQNCZHMNLhav9sAwv0ssAPZgKmbLIldB5rskKd1fprrQIBj0MbLsy0hA7c
-         /sfxeLq4ARzpQQ2tNO7nKSLvwSJqK8jvoFiVaW/iiBAsxsHmA+5zDiBcUeCD4Nag8OFk
-         k1G77bgYGWl/vKLSGkiq5CbbfrXNcxkljoVhpZzkfzJWKxLTBCFUfL927QbvpHpH1pGO
-         YAVQ==
-X-Gm-Message-State: AMke39m5SvuQ+xS276WO9ijqRYsDkPB4CzP8osxSaAzE03m2sTYPEsjqpywfSwBedwSbfFgy
-X-Received: by 10.98.27.204 with SMTP id b195mr10417065pfb.154.1489019941058;
-        Wed, 08 Mar 2017 16:39:01 -0800 (PST)
-Received: from google.com ([2620:0:1000:5b10:cdd8:47c3:cffc:85d3])
-        by smtp.gmail.com with ESMTPSA id q194sm8292658pfq.43.2017.03.08.16.38.59
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 08 Mar 2017 16:38:59 -0800 (PST)
-Date:   Wed, 8 Mar 2017 16:38:58 -0800
-From:   Brandon Williams <bmwill@google.com>
-To:     Valery Tolstov <me@vtolstov.org>
-Cc:     git@vger.kernel.org, sbeller@google.com, gitster@pobox.com
-Subject: Re: [PATCH v2 2/2] submodule--helper.c: remove duplicate code
-Message-ID: <20170309003858.GB153031@google.com>
-References: <CAGZ79kbnpUtrKdjQdQ-r6rRuVvnawooLFk1bO8jOSgxNkx2Dbg@mail.gmail.com>
- <20170309000352.18330-1-me@vtolstov.org>
- <20170309000352.18330-3-me@vtolstov.org>
+        h=x-gm-message-state:subject:to:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
+        bh=WrQGIDJaqWez4w4YWcdZHX7GrPuqgdT4rP7Dc+KNxPA=;
+        b=LEX0sBSibyFwVgXJb+eQ4bu5RsOIV5sCWlboIS1PxFom7hE3rvnS8ZVlV54KRL3jp6
+         /yciF2/KY8DoP/y7xhuDNmsbZXsclJgthKH/73jckhR7Rbryllt++uTffjOSi2JJrVC1
+         CWVXGJIgjbBVGuV1iBKTYDdjbvSAid9CFHf4FqKDEVAEfkBm9eQoyLOe1sJgnf43kpBo
+         kvIq/cITXdsxM2mPK49KpTpP+JitJFUY4N/l3TNOA+AGOOtznjTZNlyc/jFiFnaMxfVg
+         /yKkgBERjX3t/QNZnnVnkJvLXa/wWtbffI9ExjuZ8/Ap97j9KpVD+Nqf7zHRO+tKiYiT
+         btfQ==
+X-Gm-Message-State: AMke39lri+taPobEt+3Y3DL8vfRu9YqYBLleoWzms4Epm+wD+xxD+qiCs7J0jGHISxKBRQyc
+X-Received: by 10.98.5.2 with SMTP id 2mr10823701pff.77.1489020369471;
+        Wed, 08 Mar 2017 16:46:09 -0800 (PST)
+Received: from twelve2.mtv.corp.google.com ([2620:0:1000:5b10:85af:fb30:90cc:bb73])
+        by smtp.gmail.com with ESMTPSA id s13sm8329719pfk.26.2017.03.08.16.46.08
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 08 Mar 2017 16:46:08 -0800 (PST)
+Subject: Re: What's cooking in git.git (Mar 2017, #03; Wed, 8)
+To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+References: <xmqqvarjz5yv.fsf@gitster.mtv.corp.google.com>
+From:   Jonathan Tan <jonathantanmy@google.com>
+Message-ID: <c8f3c838-136c-2ace-509d-8600dc743ade@google.com>
+Date:   Wed, 8 Mar 2017 16:46:08 -0800
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.7.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20170309000352.18330-3-me@vtolstov.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <xmqqvarjz5yv.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 03/09, Valery Tolstov wrote:
-> Remove code fragment from module_clone that duplicates functionality
-> of connect_work_tree_and_git_dir in dir.c
-> 
-> Signed-off-by: Valery Tolstov <me@vtolstov.org>
+On 03/08/2017 03:47 PM, Junio C Hamano wrote:
+> * jt/mark-tree-uninteresting-for-uninteresting-commit (2017-02-28) 3 commits
+>  - upload-pack: compute blob reachability correctly
+>  - revision: exclude trees/blobs given commit
+>  - revision: unify {tree,blob}_objects in rev_info
+>
+>  The revision/object traversal machinery did not mark all tree and
+>  blob objects that are contained in an uninteresting commit as
+>  uninteresting, because that is quite costly.  Instead, it only
+>  marked those that are contained in an uninteresting boundary commit
+>  as uninteresting.
+>
+>  cf. <20170228215937.yd4juycjf7y3vish@sigill.intra.peff.net>
 
-Patch looks good all the tests pass when running this on top of
-Stefan's checkout series 'origin/sb/checkout-recurse-submodules'.
-There is still one more bit of cleanup that you can do.
+This is superseded by [1] which I just sent out. I currently have no 
+idea how to fix the "revision" commits to be correct and still 
+performant (and this might not be possible), so I wrote [1] which just 
+contains a partial "upload-pack" fix.
 
-> ---
->  builtin/submodule--helper.c | 20 ++------------------
->  1 file changed, 2 insertions(+), 18 deletions(-)
-> 
-> diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-> index 899dc334e..405cbea07 100644
-> --- a/builtin/submodule--helper.c
-> +++ b/builtin/submodule--helper.c
-> @@ -579,7 +579,6 @@ static int module_clone(int argc, const char **argv, const char *prefix)
->  	const char *name = NULL, *url = NULL, *depth = NULL;
->  	int quiet = 0;
->  	int progress = 0;
-> -	FILE *submodule_dot_git;
->  	char *p, *path = NULL, *sm_gitdir;
->  	struct strbuf rel_path = STRBUF_INIT;
-
-rel_path is no longer used so it and the call to strbuf_release() to
-free its memory can be removed.
-
--- 
-Brandon Williams
+[1] <20170309003547.6930-1-jonathantanmy@google.com>
