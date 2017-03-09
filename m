@@ -2,103 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 57C79202F8
-	for <e@80x24.org>; Thu,  9 Mar 2017 12:25:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B8A77202F8
+	for <e@80x24.org>; Thu,  9 Mar 2017 12:31:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754092AbdCIMZS (ORCPT <rfc822;e@80x24.org>);
-        Thu, 9 Mar 2017 07:25:18 -0500
-Received: from alum-mailsec-scanner-2.mit.edu ([18.7.68.13]:64173 "EHLO
-        alum-mailsec-scanner-2.mit.edu" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1753196AbdCIMZQ (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 9 Mar 2017 07:25:16 -0500
-X-AuditID: 1207440d-041ff70000003721-6f-58c149899e18
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-        (using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
-        (Client did not present a certificate)
-        by alum-mailsec-scanner-2.mit.edu (Symantec Messaging Gateway) with SMTP id 73.B0.14113.98941C85; Thu,  9 Mar 2017 07:24:41 -0500 (EST)
-Received: from [192.168.69.190] (p4FEDFB9E.dip0.t-ipconnect.de [79.237.251.158])
-        (authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v29COb22027288
-        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-        Thu, 9 Mar 2017 07:24:38 -0500
-Subject: Re: [PATCH v5 07/24] files-backend: add and use files_refname_path()
-To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>, git@vger.kernel.org
-References: <20170218133303.3682-1-pclouds@gmail.com>
- <20170222140450.30886-1-pclouds@gmail.com>
- <20170222140450.30886-8-pclouds@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Stefan Beller <sbeller@google.com>, novalis@novalis.org
-From:   Michael Haggerty <mhagger@alum.mit.edu>
-Message-ID: <984307d7-8e1f-fa7c-3d6d-6440954334c3@alum.mit.edu>
-Date:   Thu, 9 Mar 2017 13:24:36 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Icedove/45.6.0
+        id S1753160AbdCIMbZ (ORCPT <rfc822;e@80x24.org>);
+        Thu, 9 Mar 2017 07:31:25 -0500
+Received: from mail-lf0-f67.google.com ([209.85.215.67]:33387 "EHLO
+        mail-lf0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752926AbdCIMbX (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Mar 2017 07:31:23 -0500
+Received: by mail-lf0-f67.google.com with SMTP id r36so4525372lfi.0
+        for <git@vger.kernel.org>; Thu, 09 Mar 2017 04:30:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=HdPZyIXdpKp2qNKDCmhp+kHJcsSWLiBiFqy6xrA9vA4=;
+        b=jZ5Ls3IvSW1w6kAwXTuCnOJ/BHg16NULGvQ//VsPwqByULO8waTLuYeN+rFaNWJfQ5
+         0qqSR/wcgNqbZ3DUiLqWnMe3uxPdmhuto1QxoOOx7OQaWuWEOQzyp6IvIooNJfnRgUOU
+         XVF073hlCmeGg4TKnn7PgcOg0oo3k0ipUO5Wy6eZgRSzSLkWcMcbIE2jgcTshKQGsYOJ
+         2w7IMERgK9PZNEtt7yaQG996yEd3/8KNAC2hzlnoDtnb0fzWkcnfsnTbNlJY3pSfdMrG
+         +9ESJdVITPea9Cu3MEE5JHKA1K2T2eTDSIU70y7lOzBPPg6yyAYJvCaXcVdnJbN1NCp8
+         YiCg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=HdPZyIXdpKp2qNKDCmhp+kHJcsSWLiBiFqy6xrA9vA4=;
+        b=lUPdDWScaTwDjeQiJpN5fE2czKZ4BbVgtLlVfTXlNPpLIiph0GuCLmueUwsIezc9yg
+         fz38J/jujeeJU+zv9nqdQYNSqD37KDZBg28kZfVwUh5lOIugJy47tjeCheOKto8flEK6
+         HmJ3Xz6JJls1J3fc+MZM2JvJ5zECJYbxTxS66SuWAMmvzmRMoGJk9amUKHp9qEsgZNz/
+         bFVZdQoQ4FiywdNbqsysjg3uzV94lSlv5C28h/fG9WISz1uJ0D479oMxCJ9ZiMQYzVrm
+         4xKsXWSj3Ke7owpPuEghy8SwAJ2Ag5n1ZUQn0RDfE1sol1HfBJqRdh8TrfECppS5qbwO
+         48Tw==
+X-Gm-Message-State: AMke39mBlgYC+3tP7QlsuMwXz0suZNj6+vuEzbxZqd5E9NpZY/j27P3FxvNhjowbyod50k5yjd6nkC19+r84/Q==
+X-Received: by 10.46.20.80 with SMTP id 16mr1830285lju.81.1489062645953; Thu,
+ 09 Mar 2017 04:30:45 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <20170222140450.30886-8-pclouds@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFupjleLIzCtJLcpLzFFi42IRYndR1O30PBhh8OeMtEXXlW4mi4beK8wW
-        /cu72CyWPHzNbNE95S2jxcyr1habN7ezOLB77Jx1l93jw8c4jwWbSj262o+weVy8pOyxf+k2
-        No/Pm+QC2KO4bFJSczLLUov07RK4Mo4uvcVeMJOr4lLbNbYGxiUcXYycHBICJhK7r7xk7mLk
-        4hAS2MEkse/nekYI5zyTxIVXT1hAqoQFfCXu9B0Ds0UE0iQWT37PDGILCfQzSpydkQjSwCxw
-        g1Hi0sSPTCAJNgFdiUU9zUA2BwevgL3EsjOSIGEWARWJxa/egc0RFQiRmLPwASOIzSsgKHFy
-        JsQuTgFziSszWsHizALqEn/mXWKGsOUlmrfOZp7AyD8LScssJGWzkJQtYGRexSiXmFOaq5ub
-        mJlTnJqsW5ycmJeXWqRrpJebWaKXmlK6iRES7Lw7GP+vkznEKMDBqMTDKyB8IEKINbGsuDL3
-        EKMkB5OSKK+E0sEIIb6k/JTKjMTijPii0pzU4kOMEhzMSiK8Oc5AOd6UxMqq1KJ8mJQ0B4uS
-        OK/aEnU/IYH0xJLU7NTUgtQimKwMB4eSBG+EB1CjYFFqempFWmZOCUKaiYMTZDgP0HBLkBre
-        4oLE3OLMdIj8KUZFKXFeVZCEAEgiozQPrheWjF4xigO9Isx7BaSKB5jI4LpfAQ1mAho8jQ9s
-        cEkiQkqqgVFx8pKowPLzvw5um2L7K0dfyNTs358jbPuKNHfnTWS+OyuoaVetZpNn02WFScVr
-        qyX5Lnbs2xdZqdd8Mm2K/BbzSekTu9oVfW8zhUoXMLwLY1rscFPnQ2/8Oc21MjG5cn07yv/r
-        zs7+sW+OjMIezYZDnLX/7ZYw/mA5MLnCbn7ivs5DO3+XayqxFGckGmoxFxUnAgDwxm0vIQMA
-        AA==
+Received: by 10.25.150.19 with HTTP; Thu, 9 Mar 2017 04:30:45 -0800 (PST)
+In-Reply-To: <0102015ab27c6633-c61f56f2-0504-4af3-badc-34246cf635aa-000000@eu-west-1.amazonses.com>
+References: <0102015ab26fcf13-1659be12-a85c-47be-9a77-8f1b0b8a3897-000000@eu-west-1.amazonses.com>
+ <0102015ab27c6633-c61f56f2-0504-4af3-badc-34246cf635aa-000000@eu-west-1.amazonses.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Thu, 9 Mar 2017 13:30:45 +0100
+Message-ID: <CAP8UFD19njU30HODYvp1pddpZaVSVGgn7whcTa2rdjMPe-vzYQ@mail.gmail.com>
+Subject: Re: [PATCH v2] t2027: avoid using pipes
+To:     Prathamesh Chavan <pc44800@gmail.com>
+Cc:     git <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 02/22/2017 03:04 PM, Nguyễn Thái Ngọc Duy wrote:
-> Keep repo-related path handling in one place. This will make it easier
-> to add submodule/multiworktree support later.
-> 
-> This automatically adds the "if submodule then use the submodule version
-> of git_path" to other call sites too. But it does not mean those
-> operations are sumodule-ready. Not yet.
-> 
-> Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+On Thu, Mar 9, 2017 at 10:53 AM, Prathamesh Chavan <pc44800@gmail.com> wrote:
+> Whenever a git command is present in the upstream of a pipe, its failure
+> gets masked by piping and hence it should be avoided for testing the
+> upstream git command. By writing out the output of the git command to
+> a file, we can test the exit codes of both the commands as a failure exit
+> code in any command is able to stop the && chain.
+>
+> Signed-off-by: Prathamesh <pc44800@gmail.com>
 > ---
->  refs/files-backend.c | 45 +++++++++++++++++++++++++--------------------
->  1 file changed, 25 insertions(+), 20 deletions(-)
-> 
-> diff --git a/refs/files-backend.c b/refs/files-backend.c
-> index 7b4ea4c56..72f4e1746 100644
-> --- a/refs/files-backend.c
-> +++ b/refs/files-backend.c
-> [...]
-> @@ -1251,10 +1263,7 @@ static void read_loose_refs(const char *dirname, struct ref_dir *dir)
->  	size_t path_baselen;
->  	int err = 0;
->  
-> -	if (refs->submodule)
-> -		err = strbuf_git_path_submodule(&path, refs->submodule, "%s", dirname);
-> -	else
-> -		strbuf_git_path(&path, "%s", dirname);
-> +	files_refname_path(refs, &path, dirname);
->  	path_baselen = path.len;
->  
->  	if (err) {
 
-I just noticed another thing. After this change, `err` is never set, so
-the `if (err)` block (and `err` itself) can be deleted.
+Please add in Cc those who previously commented on the patch.
 
-> [...]
+>  t/t2027-worktree-list.sh | 14 +++++++-------
+>  1 file changed, 7 insertions(+), 7 deletions(-)
+>
+> diff --git a/t/t2027-worktree-list.sh b/t/t2027-worktree-list.sh
+> index 848da5f..daa7a04 100755
+> --- a/t/t2027-worktree-list.sh
+> +++ b/t/t2027-worktree-list.sh
+> @@ -31,7 +31,7 @@ test_expect_success '"list" all worktrees from main' '
+>         test_when_finished "rm -rf here && git worktree prune" &&
+>         git worktree add --detach here master &&
+>         echo "$(git -C here rev-parse --show-toplevel) $(git rev-parse --short HEAD) (detached HEAD)" >>expect &&
+> -       git worktree list | sed "s/  */ /g" >actual &&
+> +       git worktree list >out && sed "s/  */ /g" <out >actual &&
 
-Michael
+I still think that it would be better if the 'sed' commend was on its
+own line like this:
 
++       git worktree list >out &&
++       sed "s/  */ /g" <out >actual &&
+
+>         test_cmp expect actual
+>  '
