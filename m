@@ -6,251 +6,200 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7E12E20376
-	for <e@80x24.org>; Thu,  9 Mar 2017 22:16:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6216D202F8
+	for <e@80x24.org>; Thu,  9 Mar 2017 22:19:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753528AbdCIWQE (ORCPT <rfc822;e@80x24.org>);
-        Thu, 9 Mar 2017 17:16:04 -0500
-Received: from mail-pf0-f179.google.com ([209.85.192.179]:34882 "EHLO
-        mail-pf0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753324AbdCIWQD (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Mar 2017 17:16:03 -0500
-Received: by mail-pf0-f179.google.com with SMTP id j5so33707908pfb.2
-        for <git@vger.kernel.org>; Thu, 09 Mar 2017 14:16:02 -0800 (PST)
+        id S1753925AbdCIWT3 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 9 Mar 2017 17:19:29 -0500
+Received: from mail-pf0-f172.google.com ([209.85.192.172]:35543 "EHLO
+        mail-pf0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753033AbdCIWT2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Mar 2017 17:19:28 -0500
+Received: by mail-pf0-f172.google.com with SMTP id j5so33737749pfb.2
+        for <git@vger.kernel.org>; Thu, 09 Mar 2017 14:19:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=SzTm4eJdRWZWcsX/obkNX2KYdcUaJ+l1G5Y0r1WAHTg=;
-        b=SRcAG3eTwSTmJN1I5GXGsF/jMvg2SrQEQ3NsrWuz3Dd3bJf90bMNE3e7IvLKdK1UDq
-         aXOa46yXT7Pe76FGnzW4qCUyHLbKqNwkKc1GYBweqR746OacFdkEWbgIb+6GQEt0MCS0
-         ZTQJvg7HYwmWfyxH8By5BavPknlQ8dDRr3cSMZ08e6HhSS9ho+82HB+oomRJ1y9V2Ads
-         cfsiaqz1mdky1toyOsALqeDnJMOWGq2ZbH8IuZFQ4D+MypxKeefPZcXdNW5qPlzyWj+I
-         6W0aQ6yEWMIMwR50j1N22wQm1jJu+vjGiylExcSPNKZXiqSWoI1ntkphcCI1tkHgDGmw
-         5LnQ==
+        h=subject:to:references:cc:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding;
+        bh=cSv/txb4Vyy76qMw34vTuURKv30pwIrMlN3xFbhvpnE=;
+        b=gokMMiViY35IPNeNXnoN51JCMYH4OOjLv6uHeNTj2bO7dYQ3O8TU3xBteopHOkVYQn
+         ueHwdkEWmaGM+j/UnWGLZvTkRiTt6LKEpSEBALSie7so2Pw/c6j15yQOlvxAC8+D5oZ5
+         TTeWCoWmZwVkjs1SUGIX2Z5LRyQhfoIoBoBM8wj8qFIB8VPvilYfYBsyx8E4biH0QhHR
+         hfCMaoStxnCz5mVQOblkYtiEsCVxn48RoFYtxOiyko6vFdFUktCzO1IZo6qkOgaZc5PF
+         s/dqSaIznL5P7M9MhV5QP3YO5wMzMLRegveJvtjg/SslPs7wiFte9oZXc8pAcdRTFS5l
+         /zQA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=SzTm4eJdRWZWcsX/obkNX2KYdcUaJ+l1G5Y0r1WAHTg=;
-        b=lQyxokYEnTcccmkBx+ycohmX9fDi0Gbr3lqyVAVrxMkLIXDRxupsmLZJQ317ZWShNq
-         56Q4Rw2s5nR3BH5x1i6ix2F3pOdtVn/pEpkxz5HQWCWqGWM0Nz10L75AKoBjpA77UJ43
-         hjYChwu3qrH42Z6w4z8NZvXXf66fk8+MxtHl1b5CWrP88n+16Dw0b1Gs9xYNmDAXr8DV
-         m6Anh1YUJjOTVW1NngJZlfd25YE2mHjOoX+6gv5Wi9tl9G0DbQd91V6dMha9gtyVv5wm
-         s6eV4KdyT1pESuz3dj+Izn882mzp5LzdcuDYigODUYyTsqMFuyebDMm44L3nhJO6JSQA
-         jEqw==
-X-Gm-Message-State: AMke39n+OJljaeILCQMdt5DiRu8qHMoNc2fhDcI+XyUz77rSdr6MkjU22XCHyO3gwju0c1Yt
-X-Received: by 10.84.128.65 with SMTP id 59mr20532040pla.167.1489097756527;
-        Thu, 09 Mar 2017 14:15:56 -0800 (PST)
-Received: from localhost ([2620:0:1000:5b10:7494:19e8:830b:a2d7])
-        by smtp.gmail.com with ESMTPSA id 15sm14438124pgh.21.2017.03.09.14.15.55
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 09 Mar 2017 14:15:55 -0800 (PST)
-From:   Stefan Beller <sbeller@google.com>
-To:     sbeller@google.com, gitster@pobox.com
-Cc:     git@vger.kernel.org, bmwill@google.com, novalis@novalis.org,
-        sandals@crustytoothpaste.net, hvoigt@hvoigt.net,
-        jrnieder@gmail.com, ramsay@ramsayjones.plus.com
-Subject: [RFCv8 PATCH 00/17] Checkout aware of Submodules!
-Date:   Thu,  9 Mar 2017 14:15:26 -0800
-Message-Id: <20170309221543.15897-1-sbeller@google.com>
-X-Mailer: git-send-email 2.12.0.rc1.45.gf291f29c2e
-In-Reply-To: <20170306205919.9713-1-sbeller@google.com>
-References: <20170306205919.9713-1-sbeller@google.com>
+        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
+        bh=cSv/txb4Vyy76qMw34vTuURKv30pwIrMlN3xFbhvpnE=;
+        b=DUl+yYgO3D9CgysrTWeXz+dbz/nJoMaU1XCDzTs9EHJMIE9FjKu3KOfa33r/Ia0Aio
+         GU1RKP7Qud0sGLlVid4soUqPZXSweDTSRXCpBgIUehnSG0GojSCPfYWyeEiFwvkilWSD
+         E8KlFX3yYIXtjxVxcDdBbVx3Kv3TgsOullLX9SuwsgbBVn/hxzNSJujh7+HsaGalK578
+         /MTk/7nFfCKWxPa0/ctStBCM1790qUK13uGkilR6F2K28HEg2vJhLgTRPk6bwNklLn8o
+         Sjj+upjJgRgZFpy6J+63Z07D7QlnyNb0vQv/v9TuIu5g5l8imUb+vPVTDGcWvG1KmD6u
+         2LvQ==
+X-Gm-Message-State: AMke39mkOHL79GuM33fCiuvnni2P1/LDnSN5iEQMUq2fEDHMm5n9ywFcM8kcl9Y8hdnHxhvm
+X-Received: by 10.99.43.216 with SMTP id r207mr16322414pgr.214.1489097967011;
+        Thu, 09 Mar 2017 14:19:27 -0800 (PST)
+Received: from twelve2.mtv.corp.google.com ([2620:0:1000:5b10:bdfe:9271:5e21:646a])
+        by smtp.gmail.com with ESMTPSA id x15sm14472504pgc.16.2017.03.09.14.19.25
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 09 Mar 2017 14:19:26 -0800 (PST)
+Subject: Re: [PATCH 1/2] pathspec: allow querying for attributes
+To:     Brandon Williams <bmwill@google.com>, git@vger.kernel.org
+References: <20170309210756.105566-1-bmwill@google.com>
+ <20170309210756.105566-2-bmwill@google.com>
+Cc:     sbeller@google.com, pclouds@gmail.com
+From:   Jonathan Tan <jonathantanmy@google.com>
+Message-ID: <e8ef511f-563b-8b22-d8c6-daec2291f2aa@google.com>
+Date:   Thu, 9 Mar 2017 14:19:25 -0800
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.7.0
+MIME-Version: 1.0
+In-Reply-To: <20170309210756.105566-2-bmwill@google.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-previous work:
-https://public-inbox.org/git/20170306205919.9713-1-sbeller@google.com/
+On 03/09/2017 01:07 PM, Brandon Williams wrote:
+> diff --git a/Documentation/glossary-content.txt b/Documentation/glossary-content.txt
+> index fc9320e59..5c32d1905 100644
+> --- a/Documentation/glossary-content.txt
+> +++ b/Documentation/glossary-content.txt
+> @@ -384,6 +384,26 @@ full pathname may have special meaning:
+>  +
+>  Glob magic is incompatible with literal magic.
+>
+> +attr;;
+> +After `attr:` comes a space separated list of "attribute
+> +requirements", all of which must be met in order for the
+> +path to be considered a match; this is in addition to the
+> +usual non-magic pathspec pattern matching.
+> ++
+> +Each of the attribute requirements for the path takes one of
+> +these forms:
+> +
+> +- "`ATTR`" requires that the attribute `ATTR` must be set.
 
-v8:
- * Thanks Ramsay; another variable is static now!
- * Thanks Junio; fixed typos (in comments and commit messages)!
- * dropped the patch touching read-cache.c; I realized it is bogus after
-   inspecting it and trying to write a commit message.
- * All commits have commit messages now.
- * diff to Junios version below.
- 
-v7:
- * addressed Erics comment by fixing the bashism in t/lib-submodule-update.sh
-diff to v6:
-  diff --git a/t/lib-submodule-update.sh b/t/lib-submodule-update.sh
-  index 5caae06bc5..949ebd546c 100755
-  --- a/t/lib-submodule-update.sh
-  +++ b/t/lib-submodule-update.sh
-  @@ -255,7 +255,7 @@ test_superproject_content () {
-   # Test that the given submodule at path "$1" contains the content according
-   # to the submodule commit recorded in the superproject's commit "$2"
-   test_submodule_content () {
-  -       if test "$1" == "-C"
-  +       if test x"$1" = "x-C"
-          then
-                  cd "$2"
-                  shift; shift;
- * interdiff to v5 below
-                  
+As a relative newcomer to attributes, I was confused by the fact that 
+"set" and "set to a value" is different (and likewise "unset" and 
+"unspecified"). Maybe it's worthwhile including a link to 
+"gitattributes" to explain the different (exclusive) states that an 
+attribute can be in.
 
-v6:
- * added support for read-tree (see last patch) to see how generic the
-   code of the previous patches is. I am pretty pleased with that patch.
- * marked two functions static. Thanks Ramsay!
- * fixed the recursive test; it still fails but it is the code that fails,
-   not the test. For this I had to change the setup code slightly.
- * 2 new patches adding tiny refactoring to the submodule test lib.  
- * interdiff (to origin/sb/checkout-recurse-submodules, which is v5) below.
+> +
+> +- "`-ATTR`" requires that the attribute `ATTR` must be unset.
+> +
+> +- "`ATTR=VALUE`" requires that the attribute `ATTR` must be
+> +  set to the string `VALUE`.
+> +
+> +- "`!ATTR`" requires that the attribute `ATTR` must be
+> +  unspecified.
 
-v5:
- * as v4 was the first version queued by Junio, we do have an interdiff below!
- * renamed functions
- * changed the API, now the caller has to take care of the submodule strategy
-   themselves. (Note this can be different for different situations, e.g.
-   when a submodule is deleted, we can do that for any strategy except none and
-   !command. But for moving to a new state of the submodule we currently
-   only implement "checkout" [unspecified defaults to checkout]. warning about
-   the others, doing nothing there.)
+It would read better to me if you omitted "must" in all 4 bullet points 
+(and it is redundant anyway with "requires"), but I don't feel too 
+strongly about this.
 
-v4:
- * addressed all comments of Brian, Junio and Brandon.
- Thanks!
- * one major point of change is the introduction of another patch
-   "lib-submodule-update.sh: do not use ./. as submodule remote",
-   as that took some time to track down the existing bug.
- 
-v3:
- * moved tests from t2013 to the generic submodule library.
- * factored out the refactoring patches to be up front
- * As I redid the complete implementation, I have the impression this time
-   it is cleaner than previous versions.
- 
- I think we still have to fix the corner cases of directory/file/submodule 
- conflicts before merging, but this serves as a status update on my current
- way of thinking how to implement the worktree commands being aware of
- submodules.
- 
-Thanks,
-Stefan
+> diff --git a/pathspec.c b/pathspec.c
+> index b961f00c8..583ed5208 100644
+> --- a/pathspec.c
+> +++ b/pathspec.c
+> @@ -87,6 +89,72 @@ static void prefix_magic(struct strbuf *sb, int prefixlen, unsigned magic)
+>  	strbuf_addf(sb, ",prefix:%d)", prefixlen);
+>  }
+>
+> +static void parse_pathspec_attr_match(struct pathspec_item *item, const char *value)
+> +{
+> +	struct string_list_item *si;
+> +	struct string_list list = STRING_LIST_INIT_DUP;
+> +
+> +	if (item->attr_check)
+> +		die(_("Only one 'attr:' specification is allowed."));
+> +
+> +	if (!value || !strlen(value))
 
-v2:
-* based on top of the series sent out an hour ago
-  "[PATCHv4 0/5] submodule embedgitdirs"
-* Try to embed a submodule if we need to remove it.
-* Strictly do not change behavior if not giving the new flag.
-* I think I missed some review comments from v1, but I'd like to get
-  the current state out over the weekend, as a lot has changed so far.
-  On Monday I'll go through the previous discussion with a comb to see
-  if I missed something.
-  
-v1:
-When working with submodules, nearly anytime after checking out
-a different state of the projects, that has submodules changed
-you'd run "git submodule update" with a current version of Git.
+You can write `!*value` instead of `!strlen(value)`.
 
-There are two problems with this approach:
+> +		die(_("attr spec must not be empty"));
+> +
+> +	string_list_split(&list, value, ' ', -1);
 
-* The "submodule update" command is dangerous as it
-  doesn't check for work that may be lost in the submodule
-  (e.g. a dangling commit).
-* you may forget to run the command as checkout is supposed
-  to do all the work for you.
+You could avoid some allocations by using the in-place variant (since 
+value is a newly allocated string not used elsewhere) but it is probably 
+not that important in this argument parsing case.
 
-Integrate updating the submodules into git checkout, with the same
-safety promises that git-checkout has, i.e. not throw away data unless
-asked to. This is done by first checking if the submodule is at the same
-sha1 as it is recorded in the superproject. If there are changes we stop
-proceeding the checkout just like it is when checking out a file that
-has local changes.
+> +	string_list_remove_empty_items(&list, 0);
+> +
+> +	item->attr_check = attr_check_alloc();
+> +	ALLOC_GROW(item->attr_match,
+> +		   item->attr_match_nr + list.nr,
+> +		   item->attr_match_alloc);
 
-The integration happens in the code that is also used in other commands
-such that it will be easier in the future to make other commands aware
-of submodule.
+Is there a time when this function is called while item->attr_match_nr 
+is not zero?
 
-This also solves d/f conflicts in case you replace a file/directory
-with a submodule or vice versa.
+> +
+> +	for_each_string_list_item(si, &list) {
+> +		size_t attr_len;
+> +		char *attr_name;
+> +		const struct git_attr *a;
+> +
+> +		int j = item->attr_match_nr++;
+> +		const char *attr = si->string;
+> +		struct attr_match *am = &item->attr_match[j];
+> +
+> +		switch (*attr) {
+> +		case '!':
+> +			am->match_mode = MATCH_UNSPECIFIED;
+> +			attr++;
+> +			attr_len = strlen(attr);
+> +			break;
+> +		case '-':
+> +			am->match_mode = MATCH_UNSET;
+> +			attr++;
+> +			attr_len = strlen(attr);
+> +			break;
+> +		default:
+> +			attr_len = strcspn(attr, "=");
+> +			if (attr[attr_len] != '=')
+> +				am->match_mode = MATCH_SET;
+> +			else {
+> +				am->match_mode = MATCH_VALUE;
+> +				am->value = xstrdup(&attr[attr_len + 1]);
+> +				if (strchr(am->value, '\\'))
+> +					die(_("attr spec values must not contain backslashes"));
+> +			}
+> +			break;
+> +		}
+> +
+> +		attr_name = xmemdupz(attr, attr_len);
+> +		a = git_attr(attr_name);
+> +		if (!a)
+> +			die(_("invalid attribute name %s"), attr_name);
+> +
+> +		attr_check_append(item->attr_check, a);
+> +
+> +		free(attr_name);
+> +	}
+> +
+> +	string_list_clear(&list, 0);
+> +	return;
 
-The patches are still a bit rough, but the overall series seems
-promising enough to me that I want to put it out here.
+Redundant return?
 
-Any review, specifically on the design level welcome!
+> @@ -544,6 +628,10 @@ void parse_pathspec(struct pathspec *pathspec,
+>  		if (item[i].nowildcard_len < item[i].len)
+>  			pathspec->has_wildcard = 1;
+>  		pathspec->magic |= item[i].magic;
+> +
+> +		if (item[i].attr_check &&
+> +		    item[i].attr_check->nr != item[i].attr_match_nr)
+> +			die("BUG: should have same number of entries");
 
-Thanks,
-Stefan
-  
-diff --git a/builtin/read-tree.c b/builtin/read-tree.c
-index 2dc5cc06da..23e212ee8c 100644
---- a/builtin/read-tree.c
-+++ b/builtin/read-tree.c
-@@ -21,7 +21,7 @@
- static int nr_trees;
- static int read_empty;
- static struct tree *trees[MAX_UNPACK_TREES];
--int recurse_submodules = RECURSE_SUBMODULES_DEFAULT;
-+static int recurse_submodules = RECURSE_SUBMODULES_DEFAULT;
- 
- static int list_tree(unsigned char *sha1)
- {
-diff --git a/read-cache.c b/read-cache.c
-index 9a2abacf7a..9054369dd0 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -18,8 +18,6 @@
- #include "varint.h"
- #include "split-index.h"
- #include "utf8.h"
--#include "submodule.h"
--#include "submodule-config.h"
- 
- /* Mask for the name length in ce_flags in the on-disk index */
- 
-@@ -522,22 +520,6 @@ int remove_index_entry_at(struct index_state *istate, int pos)
- 	return 1;
- }
- 
--static void remove_submodule_according_to_strategy(const struct submodule *sub)
--{
--	switch (sub->update_strategy.type) {
--	case SM_UPDATE_UNSPECIFIED:
--	case SM_UPDATE_CHECKOUT:
--	case SM_UPDATE_REBASE:
--	case SM_UPDATE_MERGE:
--		submodule_move_head(sub->path, "HEAD", NULL, \
--				    SUBMODULE_MOVE_HEAD_FORCE);
--		break;
--	case SM_UPDATE_NONE:
--	case SM_UPDATE_COMMAND:
--		; /* Do not touch the submodule. */
--	}
--}
--
- /*
-  * Remove all cache entries marked for removal, that is where
-  * CE_REMOVE is set in ce_flags.  This is much more effective than
-@@ -550,13 +532,8 @@ void remove_marked_cache_entries(struct index_state *istate)
- 
- 	for (i = j = 0; i < istate->cache_nr; i++) {
- 		if (ce_array[i]->ce_flags & CE_REMOVE) {
--			const struct submodule *sub = submodule_from_ce(ce_array[i]);
--			if (sub) {
--				remove_submodule_according_to_strategy(sub);
--			} else {
--				remove_name_hash(istate, ce_array[i]);
--				save_or_free_index_entry(istate, ce_array[i]);
--			}
-+			remove_name_hash(istate, ce_array[i]);
-+			save_or_free_index_entry(istate, ce_array[i]);
- 		}
- 		else
- 			ce_array[j++] = ce_array[i];
-diff --git a/t/lib-submodule-update.sh b/t/lib-submodule-update.sh
-index 949ebd546c..e195b590a1 100755
---- a/t/lib-submodule-update.sh
-+++ b/t/lib-submodule-update.sh
-@@ -954,7 +954,7 @@ test_submodule_switch_recursing () {
- 		)
- 	'
- 
--	# ... and ignored files are ignroed
-+	# ... and ignored files are ignored
- 	test_expect_success "$command: replace submodule with a file works ignores ignored files in submodule" '
- 		test_when_finished "rm submodule_update/.git/modules/sub1/info/exclude" &&
- 		prolog &&
+I'm not sure if this check is giving us any benefit - I would expect 
+this type of code before some other code that assumed that the numbers 
+matched, and that will potentially segfault if not.
