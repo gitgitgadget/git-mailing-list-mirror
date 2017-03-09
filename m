@@ -2,131 +2,164 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1E788202F8
-	for <e@80x24.org>; Thu,  9 Mar 2017 20:16:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 22984202F8
+	for <e@80x24.org>; Thu,  9 Mar 2017 20:18:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752357AbdCIUQI (ORCPT <rfc822;e@80x24.org>);
-        Thu, 9 Mar 2017 15:16:08 -0500
-Received: from mail-lf0-f65.google.com ([209.85.215.65]:35412 "EHLO
-        mail-lf0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751067AbdCIUQH (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Mar 2017 15:16:07 -0500
-Received: by mail-lf0-f65.google.com with SMTP id v2so5438708lfi.2
-        for <git@vger.kernel.org>; Thu, 09 Mar 2017 12:16:05 -0800 (PST)
+        id S1751820AbdCIUSi (ORCPT <rfc822;e@80x24.org>);
+        Thu, 9 Mar 2017 15:18:38 -0500
+Received: from mail-pg0-f44.google.com ([74.125.83.44]:36628 "EHLO
+        mail-pg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751737AbdCIUSh (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Mar 2017 15:18:37 -0500
+Received: by mail-pg0-f44.google.com with SMTP id g2so12809399pge.3
+        for <git@vger.kernel.org>; Thu, 09 Mar 2017 12:18:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=bFB95qU0eW0ZlKi2cO3ezRZ+DE4iy9/kveaCLOmiORk=;
-        b=qkzGS/ufb9dTATXNgwBTABTdl5egarUcMcuWJaPD5eRtA/PEDh4SjI3b/uvquMj7ul
-         2U8C1UHoTDXYSHUAu4rTK5Cc8lRDS9/4BymgE+4xULGxGFNc1Dslf8b9r+WmXLPkLpNn
-         +pIGaqSQUhEcmBKBFCLopUksRjUtUQCcGzhh88BWE2A2bCyiWRyNoLFUFMpY6zP1a1bE
-         Cwgd3hC6Dkiva/M/FEEy8hpXu3VpEAo1SVJoJ3xQGOjZaBpVVCUFwo7YDqEuIPaIjs47
-         egnOsUHa4nWCWbicXeZ6E9LInMrncI+aaGEi4fGN8LH627NfgKK08S+zud/Yo7yVrLUi
-         hGPw==
+        d=google.com; s=20161025;
+        h=subject:to:references:cc:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding;
+        bh=XguIW4rHJNt/TImQ6cvBiMAUzdPq8NqreQcGI3yGJBU=;
+        b=nMKTpoyJc1rUE+kJ0WbXe0qIW86UG1GnRz1ytBWuyCm2Dy/g5Qqn7dbbQ/VMbEDnCe
+         BsYxllOu5J3rZW/leGglixjSGaSO8SsOVbSNcuGti+DHUzsX6LGHRFBWcJPtlik4/0kO
+         u68LzyzWGFBUaL2YoqrVDkWJ+hABX8v6Q7N/NnZ/lZSuLlznUtQIjKaYoM18RHO4h2ID
+         Bj+OjmlMFSmKKxD677walC7fQU4jKnrnZpj1DbiKPN1Kgjt/9NtnDE3Ixjo7iUE3yzTR
+         t22iRloNSnZYVUuGuXA3OHPAHOBmuijvYuk9Q7bmRPqCFj+KRfWAgXl3ggbq2CyPNV35
+         1QCQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=bFB95qU0eW0ZlKi2cO3ezRZ+DE4iy9/kveaCLOmiORk=;
-        b=O3szfidfCBYpglhXib5yCJjSztVNY6z5P+fckQGfkYiaQWEuAqZEQF+kZqSBNw5uFv
-         Qz/KO0ZX8p0GgfWpFOcM+QGhe3mYxctfI2M0TzSNGaD5FsXgDyjdL/Jiy6nRFALVubXs
-         B/jPYzv5x5B9kuvztATp3gqQr9WbvlZab4vkzVm6tPe9oGqJHLKZ4TOyGk5n3Rdwu3td
-         hgl+SoDk/22EBP5eCIkNksmI15sWV4kWw6qztG4hUohQD3nEJGOOE6dHKOnHDg5arq7i
-         lSBFzs1kZUTtEoH26RwDISYoJZhonrKjLGQyCH376NYPMmTLlu2w061vT1WH2bbWQfpZ
-         UQQA==
-X-Gm-Message-State: AMke39mYMo56FoVNBhidJwhBrHMcPGpsryeaaVqXbHnn17PIGRGEaT/60ylTrkvmU0I/SJod59qZuc2SOYs76A==
-X-Received: by 10.25.196.21 with SMTP id u21mr3753117lff.81.1489090559730;
- Thu, 09 Mar 2017 12:15:59 -0800 (PST)
+        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
+        bh=XguIW4rHJNt/TImQ6cvBiMAUzdPq8NqreQcGI3yGJBU=;
+        b=Hja76k7JuCPcZ1/pRkXfBY9MDU1VybXnJgw2Na02zV12LZR2Hkaz21jGHLnUN9EOQ+
+         SvADfkcblbJZKTbdVYchP+6q7HfeZMZRlaEJO9hyztnC3sPObRIYqC1UgQpBn3D8QTjs
+         WrI6MsBWqSt6UbRlHmdZ40aiZf9GjsHM1ggM75Dtw/bCSA1VoewrGHl+FL0j4MzQ7Ntr
+         /ntix9vwolj1n3MDI+UAlQsIbxaUffjQxHLuFL6I+LU1rLuslSuW/t1mhTrHssCXQqP4
+         6FVS+thDuWLnPeZg2gEifdPCNwSl7XyF6dVqYm2XMyG56CW4nXRlZqG1tTlxRqCwc/+B
+         ZARg==
+X-Gm-Message-State: AMke39mP4CIvfwiLCjFe0nE9vLLPkYx100X+mLhIWiytp69QrdGITQD4JdX3u+BthxSLbpYS
+X-Received: by 10.99.123.75 with SMTP id k11mr15797590pgn.17.1489090715672;
+        Thu, 09 Mar 2017 12:18:35 -0800 (PST)
+Received: from twelve2.mtv.corp.google.com ([2620:0:1000:5b10:bdfe:9271:5e21:646a])
+        by smtp.gmail.com with ESMTPSA id u75sm14158527pfk.3.2017.03.09.12.18.34
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 09 Mar 2017 12:18:34 -0800 (PST)
+Subject: Re: [PATCH 00/10] RFC Partial Clone and Fetch
+To:     git@jeffhostetler.com, git@vger.kernel.org
+References: <1488999039-37631-1-git-send-email-git@jeffhostetler.com>
+Cc:     jeffhost@microsoft.com, peff@peff.net, gitster@pobox.com,
+        markbt@efaref.net, benpeart@microsoft.com
+From:   Jonathan Tan <jonathantanmy@google.com>
+Message-ID: <9ef37430-17be-dfc2-bca5-e4e33bc68df8@google.com>
+Date:   Thu, 9 Mar 2017 12:18:34 -0800
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.7.0
 MIME-Version: 1.0
-Received: by 10.25.150.19 with HTTP; Thu, 9 Mar 2017 12:15:59 -0800 (PST)
-In-Reply-To: <20170309190310.30589-1-pc44800@gmail.com>
-References: <20170309190310.30589-1-pc44800@gmail.com>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Thu, 9 Mar 2017 21:15:59 +0100
-Message-ID: <CAP8UFD1xQnR8aWVRqu1_k2qhEcR2fOdyHT51aUyq9EdFg7f7Xw@mail.gmail.com>
-Subject: Re: [PATCH] t2027: avoid using pipes
-To:     Prathamesh Chavan <pc44800@gmail.com>
-Cc:     git <git@vger.kernel.org>, Jon Loeliger <jdl@jdl.com>
-Content-Type: text/plain; charset=UTF-8
+In-Reply-To: <1488999039-37631-1-git-send-email-git@jeffhostetler.com>
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Mar 9, 2017 at 8:03 PM, Prathamesh Chavan <pc44800@gmail.com> wrote:
-> From: Prathamesh <pc44800@gmail.com>
+Overall, this fetch/clone approach seems reasonable to me, except 
+perhaps some unanswered questions (some of which are also being 
+discussed elsewhere):
+  - does the server need to tell us of missing blobs?
+  - if yes, does the server need to tell us their file sizes?
+  - do we need to store the list of missing blobs somewhere (whether the
+    server told it to us or whether we inferred it from the fetched
+    trees)
+
+The answers to this probably depend on the answers in "B. Issues 
+Backfilling Omitted Blobs" (especially the additional concepts I listed 
+below).
+
+Also, do you have any plans to implement other functionality, e.g. "git 
+checkout" (which will allow fetches and clones to repositories with a 
+working directory)? (I don't know what the mailing list consensus would 
+be for the "acceptance criteria" for this patch set, but I would at 
+least include "checkout".)
+
+On 03/08/2017 10:50 AM, git@jeffhostetler.com wrote:
+> B. Issues Backfilling Omitted Blobs
+> ===================================
 >
-> Whenever a git command is present in the upstream of a pipe, its failure
-> gets masked by piping and hence it should be avoided for testing the
-> upstream git command. By writing out the output of the git command to
-> a file, we can test the exit codes of both the commands as a failure exit
-> code in any command is able to stop the && chain.
+> Ideally, if the client only does "--partial-by-profile" fetches, it
+> should not need to fetch individual missing blobs, but we have to allow
+> for it to handle the other commands and other unexpected issues.
 >
-> Signed-off-by: Prathamesh <pc44800@gmail.com>
-> ---
+> There are 3 orthogonal concepts here:  when, how and where?
 
-When you post a new version of a patch or a patch series, could you do
-the following:
+Another concept is "how to determine if a blob is really omitted" - do 
+we store a list somewhere or do we assume that all missing blobs are 
+purposely omitted (like in this patch set)?
 
-- add v2 or v3, or ... after "PATCH" in the subject, so that we know
-which version it is (see the mailing list archive and the format-patch
-documentation to see how it should appear and how to do it)
-- tell what you changed since the previous version, and maybe also why
-you made those changes, if it has not already been explained or
-discussed (you can do it after the "---" above and before the file
-stats below, or in a separate email replying to the patch, or in the
-cover letter of the patch series if you are sending a patch series)
+Yet another concept is "whether to fetch" - for example, a checkout 
+should almost certainly fetch, but a rev-list used by a connectivity 
+check (like in patch 6 of this set) should not.
 
->  t/t2027-worktree-list.sh | 18 +++++++++++-------
->  1 file changed, 11 insertions(+), 7 deletions(-)
+For example, for historical-blob-searching commands like "git log -S", 
+should we:
+  a) fetch everything missing (so users should use date-limiting
+     arguments)
+  b) fetch nothing missing
+  c) use the file size to automatically exclude big files, but fetch
+     everything else
+
+For a) and b), we wouldn't need file size information for missing blobs, 
+but for c), we do. This might determine if we need file size information 
+in the fetch-pack/upload-pack protocol.
+
+> C. New Blob-Fetch Protocol (2a)
+> ===============================
 >
-> diff --git a/t/t2027-worktree-list.sh b/t/t2027-worktree-list.sh
-> index 848da5f36..d8b3907e0 100755
-> --- a/t/t2027-worktree-list.sh
-> +++ b/t/t2027-worktree-list.sh
-> @@ -31,7 +31,8 @@ test_expect_success '"list" all worktrees from main' '
->         test_when_finished "rm -rf here && git worktree prune" &&
->         git worktree add --detach here master &&
->         echo "$(git -C here rev-parse --show-toplevel) $(git rev-parse --short HEAD) (detached HEAD)" >>expect &&
-> -       git worktree list | sed "s/  */ /g" >actual &&
-> +       git worktree list >out &&
-> +       sed "s/  */ /g" <out >actual &&
->         test_cmp expect actual
->  '
-
-[...]
-
-> @@ -118,9 +122,9 @@ test_expect_success 'broken main worktree still at the top' '
->                 cd linked &&
->                 echo "worktree $(pwd)" >expected &&
->                 echo "ref: .broken" >../.git/HEAD &&
-> -               git worktree list --porcelain | head -n 3 >actual &&
-> +               git worktree list --porcelain >out && head -n 3 out >actual &&
->                 test_cmp ../expected actual &&
-> -               git worktree list | head -n 1 >actual.2 &&
-> +               git worktree list >out && head -n 1 out >actual.2 &&
-
-I think it would be better if the 'head' commands above and the 'grep'
-command below were also on their own line.
-
->                 grep -F "(error)" actual.2
->         )
->  '
-> @@ -134,7 +138,7 @@ test_expect_success 'linked worktrees are sorted' '
->                 test_commit new &&
->                 git worktree add ../first &&
->                 git worktree add ../second &&
-> -               git worktree list --porcelain | grep ^worktree >actual
-> +               git worktree list --porcelain >out && grep ^worktree out >actual
->         ) &&
->         cat >expected <<-EOF &&
->         worktree $(pwd)/sorted/main
-> --
-> 2.11.0
+> *TODO* A new pair of commands, such as fetch-blob-pack and upload-blob-pack,
+> will be created to let the client request a batch of blobs and receive a
+> packfile.  A protocol similar to the fetch-pack/upload-pack will be spoken
+> between them.  (This avoids complicating the existing protocol and the work
+> of enumerating the refs.)  Upload-blob-pack will use pack-objects to build
+> the packfile.
 >
+> It is also more efficient than requesting a single blob at a time using
+> the existing fetch-pack/upload-pack mechanism (with the various allow
+> unreachable options).
+>
+> *TODO* The new request protocol will be defined in the patch series.
+> It will include: a list of the desired blob SHAs.  Possibly also the commit
+> SHA, branch name, and pathname of each blob (or whatever is necessary to let
+> the server address the reachability concerns).  Possibly also the last
+> known SHA for each blob to allow for deltafication in the packfile.
+
+Context (like the commit SHA-1) would help in reachability checks, but 
+I'm not sure if we can rely on that. It is true that I can't think of a 
+way that the client would dissociate a blob that is missing from its 
+tree or commit (because it would first need to "fault-in" that blob to 
+do its operation). But clients operating on non-contextual SHA-1s (e.g. 
+"git cat-file") and servers manipulating commits (so that the commit 
+SHA-1 that the client had in its context is no longer reachable) are not 
+uncommon, I think.
+
+Having said that, it might be useful to include the context in the 
+protocol anyway as an optional "hint".
+
+I'm not sure what you mean by "last known SHA for each blob".
+
+(If we do store the file size of a blob somewhere, we could also store 
+some context there. I'm not sure how useful this is, though.)
+
+> E. Unresolved Thoughts
+> ======================
+
+<snip>
+
+> *TODO* The partial clone arguments should be recorded in ".git/info/"
+> so that subsequent fetch commands can inherit them and rev-list/index-pack
+> know to not complain by default.
+>
+> *TODO* Update GC like rev-list to not complain when there are missing blobs.
+
+These 2 points would be part of "whether to fetch" above.
