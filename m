@@ -2,88 +2,73 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 27C7C202F8
-	for <e@80x24.org>; Thu,  9 Mar 2017 13:26:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0092F2031F
+	for <e@80x24.org>; Thu,  9 Mar 2017 13:27:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932358AbdCIN0E (ORCPT <rfc822;e@80x24.org>);
-        Thu, 9 Mar 2017 08:26:04 -0500
-Received: from mail-lf0-f44.google.com ([209.85.215.44]:33726 "EHLO
-        mail-lf0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932359AbdCINZx (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Mar 2017 08:25:53 -0500
-Received: by mail-lf0-f44.google.com with SMTP id a6so28172859lfa.0
-        for <git@vger.kernel.org>; Thu, 09 Mar 2017 05:25:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=Np3EFChFC7HF3qNztpu2SJ1p3/B6BGM5UfypIaqpiJE=;
-        b=RUOBqN50NxGUi/jrr7XboAH9bDp2QczOT6ZJAqHdiOb74nojEwxhW44/RApQ1HCKE5
-         7fsv62XhXQs7AJOo5ilj+vDSmZTcgqNzn9CAxZoo0SJ25aghHu8+ovBDx492+W0Ey6Pc
-         U0cNdJFRvtCgziyYwCVmUd/z0sR0fJzWAZNX9drCXHomSm+DvIy0kM/32G7oq9blDAxT
-         pYPz1jfxsBMt7ALCFD5XEpU7DVm2fXlWp2FmeJkWgqaydB47Yq8t3wxpkjlDHtE4RGU0
-         zrorgCNM8PifleybXTiASSrxZu3Gr0eOHGiMtAJzJgbPik7itU3EqNTuuauucIdh3jJH
-         M5/w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=Np3EFChFC7HF3qNztpu2SJ1p3/B6BGM5UfypIaqpiJE=;
-        b=lr8dBIMzjgHbyL6OMyOtCp7FJj4Thd+kPPsTDu8TRmWS3hVTKjmH3waX7xIqP++lii
-         ltYpy19+jahf7JCdxxkvM9VqsbbW8DuoqeZh8/h1XGpeZYjmtIvX3orJX4bu1j1gxrEi
-         7rWvK63MS31tfV6RNhAVjux5mGPty2sDnQopN1Iu8wLBPq6+w8Fe63YZhCrYiI3Xbv9w
-         njrYWzY7MbUxCQsQ+05Pkv+e1UxRl93TuN6VJ0P8Eqas2meslNrMFkzEs/K1pV/pr7Iz
-         zIKaWgAgF6co1msQSxQA30ZXortvWP342UoxMYo0sn4dR1jgAyHVkHzHvYtLf8Ht/Io2
-         24fA==
-X-Gm-Message-State: AMke39kpQBPcQtwqzWA54LEWgJka5sZmpIlCJ7Yrhs+ZQgn+AFbDyi8aW90000qvWAzXQ843VemtMKXVdL02RQ==
-X-Received: by 10.25.216.28 with SMTP id p28mr3368215lfg.164.1489065951400;
- Thu, 09 Mar 2017 05:25:51 -0800 (PST)
+        id S1754816AbdCIN1e (ORCPT <rfc822;e@80x24.org>);
+        Thu, 9 Mar 2017 08:27:34 -0500
+Received: from cloud.peff.net ([104.130.231.41]:41248 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1754811AbdCIN1b (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Mar 2017 08:27:31 -0500
+Received: (qmail 19428 invoked by uid 109); 9 Mar 2017 13:27:30 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 09 Mar 2017 13:27:30 +0000
+Received: (qmail 1131 invoked by uid 111); 9 Mar 2017 13:27:39 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 09 Mar 2017 08:27:39 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 09 Mar 2017 08:27:28 -0500
+Date:   Thu, 9 Mar 2017 08:27:28 -0500
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Lars Hjemli <hjemli@gmail.com>,
+        Christian Couder <christian.couder@gmail.com>
+Subject: [PATCH 0/4] fix object flag pollution in "tag --contains"
+Message-ID: <20170309132728.c57ltzel746l366a@sigill.intra.peff.net>
+References: <20170308202025.17900-1-avarab@gmail.com>
+ <20170309100910.z4h7bwqzxw2xynyu@sigill.intra.peff.net>
+ <CACBZZX53rMiB5-cA_7-SeU2Dt7d_Cr7_GgyC0rjQQPPf4qyCqw@mail.gmail.com>
+ <20170309104657.7pwreyozxo2tdhk4@sigill.intra.peff.net>
+ <CACBZZX5i+8bQLhLB4DnUAaUw1vA_KQjhtNBvm7drLepPAFFbAQ@mail.gmail.com>
+ <20170309125132.tubwxtneffok4nrc@sigill.intra.peff.net>
 MIME-Version: 1.0
-Received: by 10.25.150.19 with HTTP; Thu, 9 Mar 2017 05:25:50 -0800 (PST)
-In-Reply-To: <CAAdPw+d1GR3xZcoQ6jtd8EXhQKM2GRSmeb07iSExDiugXoX0Pg@mail.gmail.com>
-References: <CAAdPw+d1GR3xZcoQ6jtd8EXhQKM2GRSmeb07iSExDiugXoX0Pg@mail.gmail.com>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Thu, 9 Mar 2017 14:25:50 +0100
-Message-ID: <CAP8UFD1rMLbH4jkZKg0sdS6z-PWafAXzsXaitwEB=x2k2Oy4qQ@mail.gmail.com>
-Subject: Re: [GSOC] Regarding microprojects for gsoc 2017
-To:     Avinash Tiwary <tiwarysriavi@gmail.com>
-Cc:     git <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20170309125132.tubwxtneffok4nrc@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Mar 9, 2017 at 2:14 PM, Avinash Tiwary <tiwarysriavi@gmail.com> wrote:
-> [GSOC]
-> Sir, i am interested in git projects and i want to complete one of the git
-> microprojects. But i am unable to figure out which git repo they are talking
-> about. Since , there is no link provided. Please help
+On Thu, Mar 09, 2017 at 07:51:32AM -0500, Jeff King wrote:
 
-On the microproject page there is:
+> Looking at this, I'm pretty sure that using "--contains" with "--merged"
+> has similar problems, as they both use the UNINTERESTING bit. So even
+> without your patch, there is a lurking bug.
 
-"Download the source code: clone the repository using the Git via Git
-instructions and read the README file."
+I wasn't able to come up with a simple case that actually demonstrates
+the bug. But I feel like it has to be triggerable with the right
+sequence of history.
 
-where "Git via Git" is a link to https://git-scm.com/downloads where there is:
+Even without that, though, I feel like moving away from this flag usage
+is a good cleanup. Here's a cleaned-up series. What do you think of
+building your patch on top?
 
-================
+We can do it the other way around if you prefer.
 
-Git via Git
+  [1/4]: ref-filter: move ref_cbdata definition into ref-filter.c
+  [2/4]: ref-filter: use contains_result enum consistently
+  [3/4]: ref-filter: die on parse_commit errors
+  [4/4]: ref-filter: use separate cache for contains_tag_algo
 
-If you already have Git installed, you can get the latest development
-version via Git itself:
+ ref-filter.c | 70 ++++++++++++++++++++++++++++++++++++++----------------------
+ ref-filter.h |  5 -----
+ 2 files changed, 44 insertions(+), 31 deletions(-)
 
-git clone https://github.com/git/git
-
-You can also always browse the current contents of the git repository
-using the web interface.
-
-================
-
-and where "web interface" is a link to https://github.com/git/git
+-Peff
