@@ -7,42 +7,44 @@ X-Spam-Status: No, score=-2.9 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7196F1FBEC
-	for <e@80x24.org>; Thu,  9 Mar 2017 09:40:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B43BD1FBEC
+	for <e@80x24.org>; Thu,  9 Mar 2017 09:54:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753734AbdCIJki (ORCPT <rfc822;e@80x24.org>);
-        Thu, 9 Mar 2017 04:40:38 -0500
-Received: from a7-18.smtp-out.eu-west-1.amazonses.com ([54.240.7.18]:57166
-        "EHLO a7-18.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1753516AbdCIJke (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 9 Mar 2017 04:40:34 -0500
+        id S1753516AbdCIJyW (ORCPT <rfc822;e@80x24.org>);
+        Thu, 9 Mar 2017 04:54:22 -0500
+Received: from a7-19.smtp-out.eu-west-1.amazonses.com ([54.240.7.19]:40988
+        "EHLO a7-19.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1752657AbdCIJyN (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 9 Mar 2017 04:54:13 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
-        s=ihchhvubuqgjsxyuhssfvqohv7z3u4hn; d=amazonses.com; t=1489052356;
+        s=ihchhvubuqgjsxyuhssfvqohv7z3u4hn; d=amazonses.com; t=1489053181;
         h=From:To:Message-ID:In-Reply-To:References:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
-        bh=ATnxaCNZyKv2hy8HR77S4LPjXTT5WD8YEPMHJeTMbT0=;
-        b=KB3V1sZYc9S1NAYR8DNodFZXIwahPrdAP+B84IEklSqEwl80INZ1mkWkY0BbCwpl
-        GdHzxzGvLNf7/C9Vu06q9TbWZPa9sxp4hHAYi26rvuJM4a7nH27GNPNNEY3rhFUptq9
-        VYwyMRE8TQKmdxlZ6M22PBeMbYetr2tqf3CfFUy0=
+        bh=kGyLpAeqrQxuaJhJVq6b68DKD5/mlryYEFQtMmYK8eY=;
+        b=ZgCbrIXC7l68tYHCL148Z7v6+gAJ4ahUGXspAex3LIVsMD5ATKWFVO44cefgaiGr
+        k5yitGVqb1evX+8fmNWKIX3gT0Whhb7+Evg4rePZ80IkZj4CPtszZYEXaQ99OlI1fpj
+        vKm3lKAxyer3kKZEly76wh5+Iy19UZEboWVQzGPw=
 From:   Prathamesh Chavan <pc44800@gmail.com>
 To:     git@vger.kernel.org
-Message-ID: <0102015ab26fcf13-1659be12-a85c-47be-9a77-8f1b0b8a3897-000000@eu-west-1.amazonses.com>
-In-Reply-To: <0102015aae7b8536-00c57d0a-1d48-4153-a202-87c4ea9e0e19-000000@eu-west-1.amazonses.com>
-References: <0102015aae7b8536-00c57d0a-1d48-4153-a202-87c4ea9e0e19-000000@eu-west-1.amazonses.com>
+Message-ID: <0102015ab27c6633-c61f56f2-0504-4af3-badc-34246cf635aa-000000@eu-west-1.amazonses.com>
+In-Reply-To: <0102015ab26fcf13-1659be12-a85c-47be-9a77-8f1b0b8a3897-000000@eu-west-1.amazonses.com>
+References: <0102015ab26fcf13-1659be12-a85c-47be-9a77-8f1b0b8a3897-000000@eu-west-1.amazonses.com>
 Subject: [PATCH v2] t2027: avoid using pipes
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-Date:   Thu, 9 Mar 2017 09:39:16 +0000
-X-SES-Outgoing: 2017.03.09-54.240.7.18
+Date:   Thu, 9 Mar 2017 09:53:01 +0000
+X-SES-Outgoing: 2017.03.09-54.240.7.19
 Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The exit code of the upstream of a pipe is ignored thus we should avoid
-using it. By writing out the output of the git command to a file, we
-can test the exit codes of both the commands.
+Whenever a git command is present in the upstream of a pipe, its failure
+gets masked by piping and hence it should be avoided for testing the
+upstream git command. By writing out the output of the git command to
+a file, we can test the exit codes of both the commands as a failure exit
+code in any command is able to stop the && chain.
 
 Signed-off-by: Prathamesh <pc44800@gmail.com>
 ---
