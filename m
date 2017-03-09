@@ -7,152 +7,142 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E0AD2202F8
-	for <e@80x24.org>; Thu,  9 Mar 2017 22:25:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C0A64202F8
+	for <e@80x24.org>; Thu,  9 Mar 2017 22:25:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753038AbdCIWZb (ORCPT <rfc822;e@80x24.org>);
-        Thu, 9 Mar 2017 17:25:31 -0500
-Received: from mout.gmx.net ([212.227.17.21]:64746 "EHLO mout.gmx.net"
+        id S1753965AbdCIWZj (ORCPT <rfc822;e@80x24.org>);
+        Thu, 9 Mar 2017 17:25:39 -0500
+Received: from mout.gmx.net ([212.227.17.20]:50599 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752799AbdCIWZa (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Mar 2017 17:25:30 -0500
-Received: from virtualbox ([37.201.193.18]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0M4GND-1bvNJo1OpH-00rp9S; Thu, 09
- Mar 2017 23:25:23 +0100
-Date:   Thu, 9 Mar 2017 23:25:06 +0100 (CET)
+        id S1753551AbdCIWZi (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Mar 2017 17:25:38 -0500
+Received: from virtualbox ([37.201.193.18]) by mail.gmx.com (mrgmx101
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0Ll0tl-1cDahA31Aj-00aiGS; Thu, 09
+ Mar 2017 23:25:29 +0100
+Date:   Thu, 9 Mar 2017 23:25:28 +0100 (CET)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     git@vger.kernel.org
 cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Duy Nguyen <pclouds@gmail.com>,
         Brandon Williams <bmwill@google.com>
-Subject: [PATCH v5 09/11] Test read_early_config()
+Subject: [PATCH v5 10/11] setup_git_directory_gently_1(): avoid die()ing
 In-Reply-To: <cover.1489098170.git.johannes.schindelin@gmx.de>
-Message-ID: <72b36d27cefc0060f170b33f19cf504bb0338c1c.1489098170.git.johannes.schindelin@gmx.de>
+Message-ID: <a1e24f1b31773f4d2f7f06ab7d5870e920211d51.1489098170.git.johannes.schindelin@gmx.de>
 References: <cover.1488897111.git.johannes.schindelin@gmx.de> <cover.1489098170.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:8c/YkPkufWJWb2xtoZf6R/cMrrJO1CKb/1UMNwmwiqF/QWM+H+Z
- gygwL4nEg7OCmQZ3WN0srFYGgLvh+k3msIeE7PUSFe+2hn6nj5072TJyZuUefB3VDe39QC+
- 6s1oAPt3dKIyNhGoa6b82pfzOdIAudoI8n+9zgiISLjoelKk4g5KtSjgbvz/KAOSF1wwxGR
- riodqZEEHIDDzrRR44mMQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:PEtjjhXmdT8=:xYPsMc21QDPDIuREIN2UDv
- KTmlzBoleyN2a4C5QWJ0WCD+Uq0PNelpcsnox2eqAyXRkNi3SyKVlyi/yGPxwjJX7uBF0pzUv
- ep7FfXNFCSDGEl3BZ0TTAn/W6KAM2kNW+sROB6S0yghbHuy6uB29hglgckVE82YSt1HgGC5wk
- SbCxaMyNooutQZZ7WUfoJbR8y1rh6LfQhAL2tFwgK/0meym00Z+gLzdYHaDTXn9YOT92FcQlC
- x71wCotzhQXQ1Tc6FnTyJBwl5wcKm9mjnLImHjgWIdj9ka9oLnFxluV8GMz+RkNK8QQHa0R9s
- K8mX/blTFxeBL0ZRXT9mdr8cKN/9WwNn5DyqLuhjZVBgeTaoSaS2TY4Vyonw0IFnczWFBJ7we
- f4ouGyh+pJWaENZaaB95H9k6QHZZv2/o6ri3FZ3jj+Vp7LmmnD2sUdzQidV0PR7J4oxXpY5p8
- VNVtUP3arXxBhN2iWBGcN1MNbmcZ9YLH01Xbarv+amuqshonSX6Si9oo8Y/TzYz830zxy1n8d
- R+8TbxtBp5FxcjSVHI+bXBGe4YalhPFvO3dnzoOcyt25Jqq8Bm2JDrQM/2dTOdiCIVVN2m2mU
- J6T3as+6OgznGLbWXB7H52aX8f6vkG9En34dl3slneRSau61f96tS6A+J8c+lFluPfaFJ1Y1P
- VaBxchCGL4auwtaZFls7i+aL12eDgN6jQX/BhWWo6ijw73q8bQA6CIkZP0p4qYHpJj3+NCjJa
- 6tHdfZfHRewuOWBhvMaMuanBOhCwpSG9AarZLKtrXfO8B0iDucvWkzHzL6939B+u6tjlAV32G
- QG1Eqho
+X-Provags-ID: V03:K0:ha0WomudtDSKE4M4aIH7xDpeIH6q0sZqWL0QUGY7u1KHp6SC7xs
+ PfsMVWp76PJYbgDtYPrMsg1rZ85pAriRIDcb0NyzM9bXMYBXnZqM8fbM768AeYMPIVhpUQk
+ FQQ2fnbNFgmzzUAHUwCr7YfGFkJyMIGsTm9jjD4V/VtZkkCg3qQyjGA+qwcGfeKEkipvA9O
+ 33Ri0GBBXJEUVM8eCtCyQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:a4D2zBvBbLU=:znkA1GJmiPVXzQOJ9vWiDR
+ ZkuWHTj5VN4Zv9befixputspB1+nC0SUo0ZFje7ppuC17xhCu7CgGma88RWXYWCxE35AQIXRg
+ a686ZxTYVncMZ5UhYNd/kIuV5xfvD+IyCHcibzc3c9nd4MKxiZ5vjzsLC9zaelIv49oFgOFrU
+ K4gnMCKQM+Db5ortjRNzLGntWlCig17Qv0fNMYNrJUMSYIq1hDHiSiwZzwW86kaBgw1p5HYG/
+ hJGJF7QURck2vBFHaOQrO2dPh0oQrHPNui7YGQzDu6FIaVjJRgrgPJ6B9ZCFVqmposQVvNM3x
+ LYJ8wd+GL/5HlPB95d5x9q1PGFgXE8tu5Dkt4kHQ2hIcP7drXrHno4V+KKgtSAIqx7JWziaOd
+ bpRmwyGgvTw48vg0VfRy1OUZHSRMLwkg93ljKaOH+NBa6WvrDHTZufTJZv5sGunBdPcNtGgyC
+ AM5Vkxfx9y9tY9WVl1Ger39R+OcfsWsQBMpjPB9uMuad9tCeE0Zt5lv76ThggVIxuId/b/GBk
+ lIBDqPz0O7YLCxRDSgMiNZ7UoZ5vb5w6XNWRz1SBJ4z58XBBeTzPef7sr0+F4olUB6E+Dibkj
+ 45Jgj98thMaVcyFofqiQ/gqu9mPcHANV1TOA5v83VCdcouSgKETW43AYWFYPLBWhTdpEWoD8E
+ 62H8ZOiB1fdH4LflX/bCqKFpaxmJCawEX2RK2D4W388Fj0BPK3J+TprWRdr+zYao4zyYge7PZ
+ SyxeB902gJ7RGs2w9qbNdMIqL5HrXk6NdUIzeUvFakkd4BsF9uC98BNwv6dpAcHWB/bmP+3jM
+ oNw7G3g
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-So far, we had no explicit tests of that function.
+This function now has a new caller in addition to setup_git_directory():
+the newly introduced discover_git_directory(). That function wants to
+discover the current .git/ directory, and in case of a corrupted one
+simply pretend that there is none to be found.
+
+Example: if a stale .git file exists in the parent directory, and the
+user calls `git -p init`, we want Git to simply *not* read any
+repository config for the pager (instead of aborting with a message that
+the .git file is corrupt).
+
+Let's actually pretend that there was no GIT_DIR to be found in that case
+when being called from discover_git_directory(), but keep the previous
+behavior (i.e. to die()) for the setup_git_directory() case.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- t/helper/test-config.c  | 15 +++++++++++++++
- t/t1309-early-config.sh | 50 +++++++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 65 insertions(+)
- create mode 100755 t/t1309-early-config.sh
+ setup.c | 26 ++++++++++++++++++--------
+ 1 file changed, 18 insertions(+), 8 deletions(-)
 
-diff --git a/t/helper/test-config.c b/t/helper/test-config.c
-index 83a4f2ab869..8e3ed6a76cb 100644
---- a/t/helper/test-config.c
-+++ b/t/helper/test-config.c
-@@ -66,6 +66,16 @@ static int iterate_cb(const char *var, const char *value, void *data)
- 	return 0;
- }
+diff --git a/setup.c b/setup.c
+index 43f522fa996..b0a28f609e2 100644
+--- a/setup.c
++++ b/setup.c
+@@ -825,7 +825,8 @@ enum discovery_result {
+ 	GIT_DIR_BARE,
+ 	/* these are errors */
+ 	GIT_DIR_HIT_CEILING = -1,
+-	GIT_DIR_HIT_MOUNT_POINT = -2
++	GIT_DIR_HIT_MOUNT_POINT = -2,
++	GIT_DIR_INVALID_GITFILE = -3
+ };
  
-+static int early_config_cb(const char *var, const char *value, void *vdata)
-+{
-+	const char *key = vdata;
-+
-+	if (!strcmp(key, var))
-+		printf("%s\n", value);
-+
-+	return 0;
-+}
-+
- int cmd_main(int argc, const char **argv)
+ /*
+@@ -842,7 +843,8 @@ enum discovery_result {
+  * `dir` (i.e. *not* necessarily the cwd).
+  */
+ static enum discovery_result setup_git_directory_gently_1(struct strbuf *dir,
+-							  struct strbuf *gitdir)
++							  struct strbuf *gitdir,
++							  int die_on_error)
  {
- 	int i, val;
-@@ -73,6 +83,11 @@ int cmd_main(int argc, const char **argv)
- 	const struct string_list *strptr;
- 	struct config_set cs;
+ 	const char *env_ceiling_dirs = getenv(CEILING_DIRECTORIES_ENVIRONMENT);
+ 	struct string_list ceiling_dirs = STRING_LIST_INIT_DUP;
+@@ -890,14 +892,22 @@ static enum discovery_result setup_git_directory_gently_1(struct strbuf *dir,
+ 	if (one_filesystem)
+ 		current_device = get_device_or_die(dir->buf, NULL, 0);
+ 	for (;;) {
+-		int offset = dir->len;
++		int offset = dir->len, error_code = 0;
  
-+	if (argc == 3 && !strcmp(argv[1], "read_early_config")) {
-+		read_early_config(early_config_cb, (void *)argv[2]);
-+		return 0;
-+	}
-+
- 	setup_git_directory();
+ 		if (offset > min_offset)
+ 			strbuf_addch(dir, '/');
+ 		strbuf_addstr(dir, DEFAULT_GIT_DIR_ENVIRONMENT);
+-		gitdirenv = read_gitfile(dir->buf);
+-		if (!gitdirenv && is_git_directory(dir->buf))
+-			gitdirenv = DEFAULT_GIT_DIR_ENVIRONMENT;
++		gitdirenv = read_gitfile_gently(dir->buf, die_on_error ?
++						NULL : &error_code);
++		if (!gitdirenv) {
++			if (die_on_error ||
++			    error_code == READ_GITFILE_ERR_NOT_A_FILE) {
++				if (is_git_directory(dir->buf))
++					gitdirenv = DEFAULT_GIT_DIR_ENVIRONMENT;
++			} else if (error_code &&
++				   error_code != READ_GITFILE_ERR_STAT_FAILED)
++				return GIT_DIR_INVALID_GITFILE;
++		}
+ 		strbuf_setlen(dir, offset);
+ 		if (gitdirenv) {
+ 			strbuf_addstr(gitdir, gitdirenv);
+@@ -934,7 +944,7 @@ const char *discover_git_directory(struct strbuf *gitdir)
+ 		return NULL;
  
- 	git_configset_init(&cs);
-diff --git a/t/t1309-early-config.sh b/t/t1309-early-config.sh
-new file mode 100755
-index 00000000000..0c55dee514c
---- /dev/null
-+++ b/t/t1309-early-config.sh
-@@ -0,0 +1,50 @@
-+#!/bin/sh
-+
-+test_description='Test read_early_config()'
-+
-+. ./test-lib.sh
-+
-+test_expect_success 'read early config' '
-+	test_config early.config correct &&
-+	test-config read_early_config early.config >output &&
-+	test correct = "$(cat output)"
-+'
-+
-+test_expect_success 'in a sub-directory' '
-+	test_config early.config sub &&
-+	mkdir -p sub &&
-+	(
-+		cd sub &&
-+		test-config read_early_config early.config
-+	) >output &&
-+	test sub = "$(cat output)"
-+'
-+
-+test_expect_success 'ceiling' '
-+	test_config early.config ceiling &&
-+	mkdir -p sub &&
-+	(
-+		GIT_CEILING_DIRECTORIES="$PWD" &&
-+		export GIT_CEILING_DIRECTORIES &&
-+		cd sub &&
-+		test-config read_early_config early.config
-+	) >output &&
-+	test -z "$(cat output)"
-+'
-+
-+test_expect_success 'ceiling #2' '
-+	mkdir -p xdg/git &&
-+	git config -f xdg/git/config early.config xdg &&
-+	test_config early.config ceiling &&
-+	mkdir -p sub &&
-+	(
-+		XDG_CONFIG_HOME="$PWD"/xdg &&
-+		GIT_CEILING_DIRECTORIES="$PWD" &&
-+		export GIT_CEILING_DIRECTORIES XDG_CONFIG_HOME &&
-+		cd sub &&
-+		test-config read_early_config early.config
-+	) >output &&
-+	test xdg = "$(cat output)"
-+'
-+
-+test_done
+ 	cwd_len = dir.len;
+-	if (setup_git_directory_gently_1(&dir, gitdir) <= 0) {
++	if (setup_git_directory_gently_1(&dir, gitdir, 0) <= 0) {
+ 		strbuf_release(&dir);
+ 		return NULL;
+ 	}
+@@ -994,7 +1004,7 @@ const char *setup_git_directory_gently(int *nongit_ok)
+ 		die_errno(_("Unable to read current working directory"));
+ 	strbuf_addbuf(&dir, &cwd);
+ 
+-	switch (setup_git_directory_gently_1(&dir, &gitdir)) {
++	switch (setup_git_directory_gently_1(&dir, &gitdir, 1)) {
+ 	case GIT_DIR_NONE:
+ 		prefix = NULL;
+ 		break;
 -- 
 2.12.0.windows.1.7.g94dafc3b124
 
