@@ -2,195 +2,145 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B1B641FC43
-	for <e@80x24.org>; Fri, 10 Mar 2017 22:00:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1305D1FC43
+	for <e@80x24.org>; Fri, 10 Mar 2017 22:05:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932697AbdCJWAj (ORCPT <rfc822;e@80x24.org>);
-        Fri, 10 Mar 2017 17:00:39 -0500
-Received: from smtp.codeaurora.org ([198.145.29.96]:34490 "EHLO
-        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932482AbdCJWAi (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Mar 2017 17:00:38 -0500
-Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id AD31E60A06; Fri, 10 Mar 2017 22:00:36 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1489183236;
-        bh=NaMO7vuuBajodmyG8fFttbRbazWQF9tAGCM0momd/AU=;
-        h=From:To:Cc:Subject:Date:From;
-        b=Qn/kqqYsYN3B7kUUR4sZcRMIbGGS8tE+q3DYOq5Vlp+g1ZUD+bdMju89rznCdVfYm
-         ZGbD8F/LN++iXvRmNcou0V4NuMg93ezdknXJ9sj1FnQJNaBfd+YUi9Oz2BVV8YOFav
-         Mj8AZd6Txvnp595bnTQBF4ilvDIqKLTRI4LRY8p4=
-Received: from jmelvin1-mac.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: jmelvin@smtp.codeaurora.org)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 3F03060884;
-        Fri, 10 Mar 2017 22:00:35 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1489183235;
-        bh=NaMO7vuuBajodmyG8fFttbRbazWQF9tAGCM0momd/AU=;
-        h=From:To:Cc:Subject:Date:From;
-        b=LEuW4aOLtYz64QJt1zgrd5FrrpNqoTTTdo7EWTdm5hR1uIwRO59CkNiBZaJEQp0Mh
-         wW6RjnZA49kXLZjaA5uxMrps0wDtePbFzUziWEvMIQnQWSnYjmLqdX2q3qI0TjkfUR
-         /Vxhw/Pu2X5HSgIA2Mxnz8lXtWImhypNw7+lVNgk=
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 3F03060884
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=jmelvin@codeaurora.org
-From:   James Melvin <jmelvin@codeaurora.org>
-To:     gitster@pobox.com
-Cc:     git@vger.kernel.org, nasserg@codeaurora.org, mfick@codeaurora.org,
-        peff@peff.net, sbeller@google.com,
-        James Melvin <jmelvin@codeaurora.org>
-Subject: [PATCH v2] repack: Add option to preserve and prune old pack files
-Date:   Fri, 10 Mar 2017 15:00:20 -0700
-Message-Id: <20170310220020.2666-1-jmelvin@codeaurora.org>
-X-Mailer: git-send-email 2.12.0.191.ga15447d9f
+        id S934213AbdCJWFG (ORCPT <rfc822;e@80x24.org>);
+        Fri, 10 Mar 2017 17:05:06 -0500
+Received: from mout.web.de ([212.227.15.14]:50520 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S932724AbdCJWFF (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Mar 2017 17:05:05 -0500
+Received: from [192.168.178.36] ([79.213.126.222]) by smtp.web.de (mrweb001
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0MVLoc-1cksBk3lWQ-00YhUi; Fri, 10
+ Mar 2017 23:04:47 +0100
+Subject: Re: [PATCH v1] Travis: also test on 32-bit Linux
+To:     Junio C Hamano <gitster@pobox.com>
+References: <alpine.DEB.2.20.1703030315580.3767@virtualbox>
+ <xmqqh93a9p5r.fsf@gitster.mtv.corp.google.com>
+ <xmqq8tol7vs1.fsf@gitster.mtv.corp.google.com>
+ <CAPc5daW=gtN18JZTQMqUje5fxL4oNdTucB0dXFbybPRJggPBUw@mail.gmail.com>
+ <2205F1A7-A694-4F40-B994-D68C3947F2BB@gmail.com>
+ <f5f5886a-aaec-7426-ea33-f5d65516348b@oracle.com>
+ <af31ef46-bd0c-c3f2-5a1e-7d97da6ec9a0@oracle.com>
+ <282895e1-d9eb-2368-a8e7-8085ad9b17ed@oracle.com>
+ <20170305113618.ko2jymle4n5f2b5l@sigill.intra.peff.net>
+ <c553da50-e5ca-d064-e75c-46e5a5042935@web.de>
+ <20170310081759.yka476hnw4w3mghs@sigill.intra.peff.net>
+ <04f4849c-e1e0-f0ac-5b1e-10a343391db4@web.de>
+ <xmqqfuikyjoo.fsf@gitster.mtv.corp.google.com>
+Cc:     Jeff King <peff@peff.net>,
+        Vegard Nossum <vegard.nossum@oracle.com>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        allan.x.xavier@oracle.com,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Git List <git@vger.kernel.org>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <c93a61a4-05d9-8e49-9734-12c81289517b@web.de>
+Date:   Fri, 10 Mar 2017 23:04:32 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.8.0
+MIME-Version: 1.0
+In-Reply-To: <xmqqfuikyjoo.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K0:x6+kag5tcqNiTuGodbOgJL8gDLE/uhRk2yVw5azhYEIgXctjLNm
+ 7LOJsyGYz4+ARg2uYsOkxAIpZQMCr+Yc0ql3rWHuqY9BXt0YQ41wgIoA10MCPJMf0fuvdRm
+ OsnK94Tx6/hUNlfBanp4/xfGDvHgkYHOhNC+PtoQ1vhlac8Cps415PZ5ob7P1t6oNiwroHq
+ WfK2ahgReSHmSYhHI2Zjw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:auOcH4XTD28=:PkdCR45kS0vLDOeuqlTlUk
+ k6JWSQgwS0AZ41uA4bLL8jO0VyzIMGJRxQw8aFw715izIuY8IQ+QmeQ1kGjHVMoP+gcOKEoo6
+ GjgqvuP9B4PNP4yAfg0rzMz3qE9CSKeF3DZQ4RggJFQ2fFTkJLYdmlXH5lxC7lmbnEx0BVI/D
+ DzyAVh31iye+BIMD7qH5Gghjgfazj37d+AZlm6WxKGbVOQeOuhtSnOB5P5i/n8BsOn1bIlzMe
+ my6VqlHozP2zFbNKziY6F3I3pvNUIS3QolaZ9zbIWU8iwgTuvYMyGzArFNk2kx8xkq1uobQhN
+ ApTSgZZ7wHRIHxhdBrsMLZjCl3GhNafy8D7QPQ98AzgS3AwYbqM7XI2LMHMF9WdtUtCfObhUf
+ +Vt7bwZr8zl5BYWuSatTeiOHyQ92ovgFLPjAO6zwCOVic+nOZTGo5V05fQLH5zX//ulOnI8Fv
+ e8hJIeLUkSH5SQvMpNpajTAR57W6yLW/syueef/Dkwfn47Fo7PWuA3huJjI8/3JtClPIG0Jg/
+ SlrO155derInGQvT30GNRTJxDAqSpHVTQZTXzGW0JYamS94+tEwGRJEe12GQDDUP2VqHVE2Hg
+ a/7qAjxfRNi8rgK5WyPtkLp5olr/lyy6guLU8KJKiLNpjpQYV6k6L/luUoqS8EPLnjTyVL2C1
+ 05j6xOqGYmpyalLor/UYrDEpj0MZJu/FApIntrm5vcsS9KYcx1bl8+X8uWXNaK6Q6kwcf+uU6
+ 7DBSTLs0cIoaqCR8TT5c0Iqvy96YXAtLjt/lmugyaflN4D+MREYmRGfpGgDpAH9LRsdQy8pcl
+ gj1yRr+
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The new --preserve-and-prune option renames old pack files
-instead of deleting them after repacking and prunes previously
-preserved pack files.
+Am 10.03.2017 um 21:13 schrieb Junio C Hamano:
+> René Scharfe <l.s.r@web.de> writes:
+>
+>>> I think this misses the other two cases: (*dst, src) and (*dst, *src).
+>>
+>> ... and that's why I left them out.  You can't get dst vs. *dst wrong
+>> with structs (at least not without the compiler complaining); only
+>> safe transformations are included in this round.
+>
+> I haven't followed this discussion to the end, but the omission of 2
+> out of obvious 4 did pique my curiosity when I saw it, too, and made
+> me wonder if the omission was deliberate.  If so, it would be nice
+> to state why in the log message (or in copy.cocci file itself as a
+> comment).
+>
+> It also made me wonder if we would be helped with a further
+> combinatorial explosion from "T **dstp, **srcp" and somesuch (in
+> other words, I am wondering why a rule for 'T *src' that uses '*src'
+> need to be spelled out separately when there already is a good rule
+> for 'T src' that uses 'src'---is that an inherent restriction of the
+> tool?).
 
-This option is designed to prevent stale file handle exceptions
-during git operations which can happen on users of NFS repos when
-repacking is done on them. The strategy is to preserve old pack files
-around until the next repack with the hopes that they will become
-unreferenced by then and not cause any exceptions to running processes
-when they are finally deleted (pruned).
+There are redundancies. This semantic patch here:
 
-Signed-off-by: James Melvin <jmelvin@codeaurora.org>
----
- Documentation/git-repack.txt |  4 +++
- builtin/repack.c             | 66 +++++++++++++++++++++++++++++++++++++++++++-
- 2 files changed, 69 insertions(+), 1 deletion(-)
+	@@
+	type T;
+	T dst;
+	T *src;
+	@@
+	- memcpy(&dst, src, sizeof(dst));
+	+ dst = *src;
 
-diff --git a/Documentation/git-repack.txt b/Documentation/git-repack.txt
-index 26afe6ed5..effd98a43 100644
---- a/Documentation/git-repack.txt
-+++ b/Documentation/git-repack.txt
-@@ -143,6 +143,10 @@ other objects in that pack they already have locally.
- 	being removed. In addition, any unreachable loose objects will
- 	be packed (and their loose counterparts removed).
- 
-+--preserve-and-prune::
-+	 Preserve old pack files by renaming them instead of deleting. Prune any
-+	 previously preserved pack files before preserving new ones.
-+
- Configuration
- -------------
- 
-diff --git a/builtin/repack.c b/builtin/repack.c
-index 677bc7c81..78fad8f1a 100644
---- a/builtin/repack.c
-+++ b/builtin/repack.c
-@@ -10,6 +10,7 @@
- 
- static int delta_base_offset = 1;
- static int pack_kept_objects = -1;
-+static int preserve_and_prune;
- static int write_bitmaps;
- static char *packdir, *packtmp;
- 
-@@ -108,6 +109,60 @@ static void get_non_kept_pack_filenames(struct string_list *fname_list)
- 	closedir(dir);
- }
- 
-+/*
-+ * Adds all preserved packs hex strings to the fname list
-+ */
-+static void get_preserved_pack_filenames(struct string_list *fname_list)
-+{
-+	DIR *dir;
-+	struct dirent *e;
-+	char *fname;
-+
-+	if (!(dir = opendir(packdir)))
-+		return;
-+
-+	while ((e = readdir(dir)) != NULL) {
-+		size_t len;
-+		if (!strip_suffix(e->d_name, ".old-pack", &len))
-+			continue;
-+
-+		fname = xmemdupz(e->d_name, len);
-+		string_list_append_nodup(fname_list, fname);
-+	}
-+	closedir(dir);
-+}
-+
-+static void remove_preserved_packs(void) {
-+	const char *exts[] = {"pack", "idx", "keep", "bitmap"};
-+	int i;
-+	struct string_list names = STRING_LIST_INIT_DUP;
-+	struct string_list_item *item;
-+
-+	get_preserved_pack_filenames(&names);
-+
-+	for_each_string_list_item(item, &names) {
-+		for (i = 0; i < ARRAY_SIZE(exts); i++) {
-+			char *fname;
-+			fname = mkpathdup("%s/%s.old-%s",
-+					  packdir,
-+					  item->string,
-+					  exts[i]);
-+			if (remove_path(fname))
-+				warning(_("failed to remove '%s'"), fname);
-+			free(fname);
-+		}
-+	}
-+}
-+
-+static void preserve_pack(const char *file_path, const char *file_name,  const char *file_ext)
-+{
-+	char *fname_old;
-+
-+	fname_old = mkpathdup("%s/%s.old-%s", packdir, file_name, ++file_ext);
-+	rename(file_path, fname_old);
-+	free(fname_old);
-+}
-+
- static void remove_redundant_pack(const char *dir_name, const char *base_name)
- {
- 	const char *exts[] = {".pack", ".idx", ".keep", ".bitmap"};
-@@ -121,7 +176,10 @@ static void remove_redundant_pack(const char *dir_name, const char *base_name)
- 	for (i = 0; i < ARRAY_SIZE(exts); i++) {
- 		strbuf_setlen(&buf, plen);
- 		strbuf_addstr(&buf, exts[i]);
--		unlink(buf.buf);
-+		if (preserve_and_prune)
-+			preserve_pack(buf.buf, base_name, exts[i]);
-+		else
-+			unlink(buf.buf);
- 	}
- 	strbuf_release(&buf);
- }
-@@ -194,6 +252,9 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
- 				N_("maximum size of each packfile")),
- 		OPT_BOOL(0, "pack-kept-objects", &pack_kept_objects,
- 				N_("repack objects in packs marked with .keep")),
-+		OPT_BOOL(0, "preserve-and-prune", &preserve_and_prune,
-+				N_("preserve old pack files by renaming them instead of deleting, prune any "
-+						"previously preserved pack files before preserving new ones")),
- 		OPT_END()
- 	};
- 
-@@ -404,6 +465,9 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
- 
- 	/* End of pack replacement. */
- 
-+	if (preserve_and_prune)
-+		remove_preserved_packs();
-+
- 	if (delete_redundant) {
- 		int opts = 0;
- 		string_list_sort(&names);
--- 
-2.12.0.191.ga15447d9f
+would match e.g. this (from convert.c):
 
+	memcpy(&new_stats, &stats, sizeof(new_stats));
+
+and transform it to:
+
+	new_stats = *&stats;
+
+We'd need just one more rule to remove the "*&" part and could then get 
+rid of two of the "T src" variants, to arrive at something like this:
+
+	@@
+	type T;
+	T dst, src;
+	@@
+	- memcpy(&dst, &src, sizeof(src));
+	+ dst = src;
+
+	@ r @
+	type T;
+	T dst;
+	T *src;
+	@@
+	(
+	- memcpy(&dst, src, sizeof(dst));
+	+ dst = *src;
+	|
+	- memcpy(&dst, src, sizeof(*src));
+	+ dst = *src;
+	|
+	- memcpy(&dst, src, sizeof(T));
+	+ dst = *src;
+	)
+
+	@ depends on r @
+	expression E;
+	@@
+	- *&
+	  E
+
+René
