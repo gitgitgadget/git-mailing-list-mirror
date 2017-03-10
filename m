@@ -2,88 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C14671FBEC
-	for <e@80x24.org>; Fri, 10 Mar 2017 19:49:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A977E1FBEC
+	for <e@80x24.org>; Fri, 10 Mar 2017 19:53:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933179AbdCJTto (ORCPT <rfc822;e@80x24.org>);
-        Fri, 10 Mar 2017 14:49:44 -0500
-Received: from mail-pg0-f48.google.com ([74.125.83.48]:32984 "EHLO
-        mail-pg0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932697AbdCJTtm (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Mar 2017 14:49:42 -0500
-Received: by mail-pg0-f48.google.com with SMTP id 25so42385576pgy.0
-        for <git@vger.kernel.org>; Fri, 10 Mar 2017 11:49:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=nLwKfZdXrAEs36VQrgsV1s2kd15F1jOcKCl2bmvHq34=;
-        b=HQZZRgrtzEVGKrb1CIqHXXd9fSNA0Udx0KZl6YzQNMpHPsNy58LqhXlM2wpkBbXHQj
-         kWcRzjqFfOXh30hsXMhbpSUO7iJuXoghr1DyzvqkDbeAxdAUJQLgCwLeVZWqCRylMc7/
-         CrfkaqWLyPmBigMd4k8UTe4nvx1lLsiUGVg0jWu6qVK4bHnbqrw8SOraFMi2xCRCOAp4
-         3zCLBqwUHFbT2eXy+mvSwluw2cn2TRd1Ke6ZFq40ge0AVI8egdBNrlaCv4zo6rBQomBf
-         RnKM2YcVhhrvB3ytPTI1jejhM71QtqkTlpGjv30v5tHuWrLpqvpDb45BnlQKAmESWZtP
-         z4og==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=nLwKfZdXrAEs36VQrgsV1s2kd15F1jOcKCl2bmvHq34=;
-        b=Sj+CBA4XrFkzx4rKJ7DOxMYrYf6O7/ib741nxAS8l6VJbUrajfU58umOkBzPETeXmb
-         yQ8++D22Ht4se+X1qZKCv0YWjxm+UMEMdH3se4xoIVPznpKq52r223ITDlVrlkHuxxXs
-         cgYyduaoSI5q8wCUAQHHyZGT1y5XTwddS6zQGV1pwh/vQGaxtijWdygv92L3VpknzHwi
-         NIS3B9LA8t/us9WSo5TCVgvHJSk3ASeavtp9anqtKubSNvR8CsO30dtNd/qk+E3o//5j
-         r01Q9eTj6zW7GHa411uWKGE9jO1KJVmpq+6iY2D/HuODigM6V8zaIdnpivvrZx+mR6kj
-         WvUg==
-X-Gm-Message-State: AMke39m3j3u1+xF2/1otjELAqO+ECxcRu+28lt+hNK69w0F9qhVn8RSKRi0YjLM73bAM7AXGZCIrNbkWolkyXzcr
-X-Received: by 10.84.128.74 with SMTP id 68mr28267625pla.111.1489175381266;
- Fri, 10 Mar 2017 11:49:41 -0800 (PST)
+        id S932789AbdCJTxo (ORCPT <rfc822;e@80x24.org>);
+        Fri, 10 Mar 2017 14:53:44 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:63140 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1755485AbdCJTxn (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Mar 2017 14:53:43 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 7AB66674C7;
+        Fri, 10 Mar 2017 14:53:41 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=BhQLRVzjJE2si0Ox1/OIc9M4mVQ=; b=YzfhB0
+        5dfdM4pd/saa4su1s0vTSkJs5pMWC1uRYXp6Ju4tefjx9NXGScFUS8Eo/JvkaRWu
+        FMRiYGiQXgGTYs2fRdehSwUaUrBz8RNSY/BZqCX8ol/1d9nvZ6sfpI3ntSWxjYUq
+        0jX36pb6fbWZVzirQOOGeDVoM1+QwQbw5/lho=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=oqyLsWVl98xrHdeS6EjgosVc8sJ+HekV
+        TPPCj+cfthzhJWR85Ib2MZB84D5NyF4Jbzdgd8fkFCr0eNNW5APgfPcpeEMRNI1+
+        vS7RVaBIhcoBVFAusIAI+jKRdd8vMSx6Cjcq8IqlKND0sV1Fc7AP/G6gioeCygp/
+        jUH+FX8KyKc=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 74DA9674C6;
+        Fri, 10 Mar 2017 14:53:41 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id E022B674C5;
+        Fri, 10 Mar 2017 14:53:40 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Mar 2017, #03; Wed, 8)
+References: <xmqqvarjz5yv.fsf@gitster.mtv.corp.google.com>
+        <20170309010152.klyhhth3ekm2iia2@genre.crustytoothpaste.net>
+Date:   Fri, 10 Mar 2017 11:53:39 -0800
+In-Reply-To: <20170309010152.klyhhth3ekm2iia2@genre.crustytoothpaste.net>
+        (brian m. carlson's message of "Thu, 9 Mar 2017 01:01:52 +0000")
+Message-ID: <xmqqo9x8ykl8.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.100.187.5 with HTTP; Fri, 10 Mar 2017 11:49:40 -0800 (PST)
-In-Reply-To: <xmqqvargyl39.fsf@gitster.mtv.corp.google.com>
-References: <20170309003858.GB153031@google.com> <20170309012734.21541-1-me@vtolstov.org>
- <20170309012734.21541-3-me@vtolstov.org> <20170309181837.GF153031@google.com> <xmqqvargyl39.fsf@gitster.mtv.corp.google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Fri, 10 Mar 2017 11:49:40 -0800
-Message-ID: <CAGZ79kbhG9XhRccqA555Zp-FENJ5Q6Nd+LnNTZno1J_=cGQctQ@mail.gmail.com>
-Subject: Re: [PATCH v3 2/2] submodule--helper.c: remove duplicate code
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Brandon Williams <bmwill@google.com>,
-        Valery Tolstov <me@vtolstov.org>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
+X-Pobox-Relay-ID: 42718CEC-05CB-11E7-8635-FC50AE2156B6-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Mar 10, 2017 at 11:42 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Brandon Williams <bmwill@google.com> writes:
->
->> On 03/09, Valery Tolstov wrote:
->>> Remove code fragment from module_clone that duplicates functionality
->>> of connect_work_tree_and_git_dir in dir.c
->>>
->>> Signed-off-by: Valery Tolstov <me@vtolstov.org>
->>
->> Looks good.
->
-> I'll queue with your Reviewed-by: added.
->
-> If sb/checkout-recurse-submodules is going to be rerolled, I'd
-> appreciate if it includes this patch inserted at an appropriate
-> place in the series, instead of me having to remember re-applying
-> this patch every time it happens.
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
-Instead of mixing these two series, can you just take Valerys series as is,
-and sb/checkout-recurse-submodules builds on top of that when rerolled?
-
-Thanks,
-Stefan
-
+> On Wed, Mar 08, 2017 at 03:47:20PM -0800, Junio C Hamano wrote:
+>> * bc/object-id (2017-02-22) 19 commits
+>>  - wt-status: convert to struct object_id
+>>  - builtin/merge-base: convert to struct object_id
+>>  - Convert object iteration callbacks to struct object_id
+>>  - sha1_file: introduce an nth_packed_object_oid function
+>>  - refs: simplify parsing of reflog entries
+>>  - refs: convert each_reflog_ent_fn to struct object_id
+>>  - reflog-walk: convert struct reflog_info to struct object_id
+>>  - builtin/replace: convert to struct object_id
+>>  - Convert remaining callers of resolve_refdup to object_id
+>>  - builtin/merge: convert to struct object_id
+>>  - builtin/clone: convert to struct object_id
+>>  - builtin/branch: convert to struct object_id
+>>  - builtin/grep: convert to struct object_id
+>>  - builtin/fmt-merge-message: convert to struct object_id
+>>  - builtin/fast-export: convert to struct object_id
+>>  - builtin/describe: convert to struct object_id
+>>  - builtin/diff-tree: convert to struct object_id
+>>  - builtin/commit: convert to struct object_id
+>>  - hex: introduce parse_oid_hex
+>> 
+>>  "uchar [40]" to "struct object_id" conversion continues.
+>> 
+>>  Now at v5.
+>>  cf. <20170221234737.894681-1-sandals@crustytoothpaste.net>
 >
-> Thanks.
+> Were you expecting more work on this series?  I believe I've addressed
+> all the review comments that were outstanding, but if I've missed
+> something, please let me know.
+
+I myself am not aware but I wasn't the one with most comments to
+this series, so we need help from others to reconfirm "Yeah, this
+one is now good to go".
+
+Thanks.
+
+
