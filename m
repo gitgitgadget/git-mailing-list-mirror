@@ -2,80 +2,114 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7CE2420311
-	for <e@80x24.org>; Fri, 10 Mar 2017 18:59:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 98CFB1FBEC
+	for <e@80x24.org>; Fri, 10 Mar 2017 19:02:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933741AbdCJS7s (ORCPT <rfc822;e@80x24.org>);
-        Fri, 10 Mar 2017 13:59:48 -0500
-Received: from mail-pf0-f179.google.com ([209.85.192.179]:35793 "EHLO
-        mail-pf0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932778AbdCJS7P (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Mar 2017 13:59:15 -0500
-Received: by mail-pf0-f179.google.com with SMTP id j5so45016754pfb.2
-        for <git@vger.kernel.org>; Fri, 10 Mar 2017 10:59:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=DOobrFpiuApCjV8LgM6qxJJen7avFDbENCZWXXBHYvs=;
-        b=lMscm0qMcpM29m/tbZv9zN4lA9G6wgmsctTG5xcswwbaREpoKeEh3/og4/PpTHu27q
-         cvCu7d/A6gmwAlkmkigNsaUkANmrQoC8cxeWuQVA0IwBWL9xNVgDq+nhgMS3oN6xKrTa
-         iEV6a6ORo8RmtBsOK7vtiz7gvWBDhVGhMHsQwBU4sbC8wzAEq5E1e+sGOsIw6fL3xiIY
-         VHvhgR8hVPhRy4FEityvFG6KEGcimpvTFIIhelsta7Wwr/cWgVx26pc9xDFKtaza8dmb
-         I2SEjkQqm9VuOvKKlQtJq/6oKGRvh7HIfZxi3K1FqYhmMCjAs8FPpwgn3csEDe5+GWcP
-         XMrw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=DOobrFpiuApCjV8LgM6qxJJen7avFDbENCZWXXBHYvs=;
-        b=bcXfQ1XsiEro3TsCXNHydqE/XSTf0fgsgrj/a2jU2KhuRcsb2AnEQ+MBuZrpQQt74Y
-         02ksymeSNjgNwGbJJKCTCz8pc7NaXAYTkkZxB3Xl9rYhnmAAWf+a5Z0tQLpBcngAJIxD
-         PvxGRd0zuQFq4TRMcjC43tK1oSiUs6MYBv95weVUIRQLdj+li57/5bBxb1WtXPsxAa9P
-         bMqkWK/22XokHJzKEsqdJ4wV8Cg0QEEZegp6lxLLmZBYOGyEgt8sPloeI8/LYPUJnPSa
-         qesOVt8GZBrnkmm5zCh0XQjHczIA2G1oMRQDrfLnkDHYfz9Ebbxi+o9ro0bOC1IkpV3/
-         7MFw==
-X-Gm-Message-State: AMke39k3VEU3kym4gjlsKPIMQ7Jj5voLN7iCDZNsHeHusO4luRYPr8TWBWWdVNJeNk85k2ZL
-X-Received: by 10.99.223.5 with SMTP id u5mr22163553pgg.58.1489172354487;
-        Fri, 10 Mar 2017 10:59:14 -0800 (PST)
-Received: from roshar.mtv.corp.google.com ([100.96.238.26])
-        by smtp.gmail.com with ESMTPSA id h3sm20023941pfc.82.2017.03.10.10.59.12
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 10 Mar 2017 10:59:13 -0800 (PST)
-From:   Brandon Williams <bmwill@google.com>
-To:     git@vger.kernel.org
-Cc:     Brandon Williams <bmwill@google.com>, sbeller@google.com,
-        pclouds@gmail.com, jonathantanmy@google.com
-Subject: [PATCH v2 0/2] bringing attributes to pathspecs
-Date:   Fri, 10 Mar 2017 10:59:06 -0800
-Message-Id: <20170310185908.171589-1-bmwill@google.com>
-X-Mailer: git-send-email 2.12.0.246.ga2ecc84866-goog
-In-Reply-To: <20170309210756.105566-1-bmwill@google.com>
-References: <20170309210756.105566-1-bmwill@google.com>
+        id S933056AbdCJTCY (ORCPT <rfc822;e@80x24.org>);
+        Fri, 10 Mar 2017 14:02:24 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:64011 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S932705AbdCJTCX (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Mar 2017 14:02:23 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 2F1546586B;
+        Fri, 10 Mar 2017 14:02:21 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=Weygzy7sX0x1ug1iml2JCJi6jZE=; b=no1Vs6
+        3cQrdHhEXKMhw5JkPpgr1k2fxtNiV0uBcAEaVESrBD8Id/kdcR154b3xbMnVHrqp
+        gpTz6M4uSzTlB8yi964byDErXbc+jEiJ/ERARLUK9KlmY4n3fyjLKHxsHVoP8xpn
+        SYEOh+sQvCk1ZnY6Tqei1QoMQYvwDyftbPVa0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=IbAyJ/s2eJGt4dGe/71/K3e8GaZ37UEL
+        +csChBZOPPfqerLsFPRrNzs5aOS32WiPgxOhly0ILeK0RPtro3bJQcCgNkub9CvP
+        n09ehNEDilTr3PMjYlB3etO1gtDZBPe7k2gQZFNorjWrbWO4CEbGQrVRFEGqCnqz
+        9ZlgQDavg3c=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 290286586A;
+        Fri, 10 Mar 2017 14:02:21 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 7E8E765869;
+        Fri, 10 Mar 2017 14:02:20 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Duy Nguyen <pclouds@gmail.com>,
+        Brandon Williams <bmwill@google.com>
+Subject: Re: [PATCH v5 09/11] Test read_early_config()
+References: <cover.1488897111.git.johannes.schindelin@gmx.de>
+        <cover.1489098170.git.johannes.schindelin@gmx.de>
+        <72b36d27cefc0060f170b33f19cf504bb0338c1c.1489098170.git.johannes.schindelin@gmx.de>
+Date:   Fri, 10 Mar 2017 11:02:19 -0800
+In-Reply-To: <72b36d27cefc0060f170b33f19cf504bb0338c1c.1489098170.git.johannes.schindelin@gmx.de>
+        (Johannes Schindelin's message of "Thu, 9 Mar 2017 23:25:06 +0100
+        (CET)")
+Message-ID: <xmqqa88tymys.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 1661FD50-05C4-11E7-813D-FC50AE2156B6-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-v2 addresses the comments made by Jonathan.
+Johannes Schindelin <johannes.schindelin@gmx.de> writes:
 
-Brandon Williams (2):
-  pathspec: allow querying for attributes
-  pathspec: allow escaped query values
+> Subject: Re: [PATCH v5 09/11] Test read_early_config()
 
- Documentation/glossary-content.txt |  21 ++++
- attr.c                             |  17 ++++
- attr.h                             |   1 +
- dir.c                              |  43 +++++++-
- pathspec.c                         | 163 ++++++++++++++++++++++++++++--
- pathspec.h                         |  16 ++-
- t/t6135-pathspec-with-attrs.sh     | 200 +++++++++++++++++++++++++++++++++++++
- 7 files changed, 451 insertions(+), 10 deletions(-)
- create mode 100755 t/t6135-pathspec-with-attrs.sh
+Let's retitle it to
 
--- 
-2.12.0.246.ga2ecc84866-goog
+	t1309: test read_early_config()
+
+> So far, we had no explicit tests of that function.
+>
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
+>  t/helper/test-config.c  | 15 +++++++++++++++
+>  t/t1309-early-config.sh | 50 +++++++++++++++++++++++++++++++++++++++++++++++++
+>  2 files changed, 65 insertions(+)
+>  create mode 100755 t/t1309-early-config.sh
+>
+> diff --git a/t/helper/test-config.c b/t/helper/test-config.c
+> index 83a4f2ab869..8e3ed6a76cb 100644
+> --- a/t/helper/test-config.c
+> +++ b/t/helper/test-config.c
+> @@ -66,6 +66,16 @@ static int iterate_cb(const char *var, const char *value, void *data)
+>  	return 0;
+>  }
+>  
+> +static int early_config_cb(const char *var, const char *value, void *vdata)
+> +{
+> +	const char *key = vdata;
+> +
+> +	if (!strcmp(key, var))
+> +		printf("%s\n", value);
+> +
+> +	return 0;
+> +}
+> +
+>  int cmd_main(int argc, const char **argv)
+>  {
+>  	int i, val;
+> @@ -73,6 +83,11 @@ int cmd_main(int argc, const char **argv)
+>  	const struct string_list *strptr;
+>  	struct config_set cs;
+>  
+> +	if (argc == 3 && !strcmp(argv[1], "read_early_config")) {
+> +		read_early_config(early_config_cb, (void *)argv[2]);
+> +		return 0;
+> +	}
+> +
+>  	setup_git_directory();
+
+Makes perfect sense to have this as the very beginning, before we
+even do the usual setup ;-)
 
