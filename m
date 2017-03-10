@@ -2,79 +2,59 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 51E111FBEC
-	for <e@80x24.org>; Fri, 10 Mar 2017 19:06:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A494F1FBEC
+	for <e@80x24.org>; Fri, 10 Mar 2017 19:30:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932789AbdCJTGr (ORCPT <rfc822;e@80x24.org>);
-        Fri, 10 Mar 2017 14:06:47 -0500
-Received: from cloud.peff.net ([104.130.231.41]:42164 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1755402AbdCJTGp (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Mar 2017 14:06:45 -0500
-Received: (qmail 26838 invoked by uid 109); 10 Mar 2017 19:06:44 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 10 Mar 2017 19:06:44 +0000
-Received: (qmail 22352 invoked by uid 111); 10 Mar 2017 19:06:53 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 10 Mar 2017 14:06:53 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 10 Mar 2017 14:06:42 -0500
-Date:   Fri, 10 Mar 2017 14:06:42 -0500
-From:   Jeff King <peff@peff.net>
-To:     Vegard Nossum <vegard.nossum@oracle.com>
-Cc:     gitster@pobox.com, git@vger.kernel.org
-Subject: Re: [RFC][PATCH] index-pack: add testcases found using AFL
-Message-ID: <20170310190641.i7geazhrlmzzfna6@sigill.intra.peff.net>
-References: <20170310151556.18490-1-vegard.nossum@oracle.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20170310151556.18490-1-vegard.nossum@oracle.com>
+        id S932769AbdCJTau (ORCPT <rfc822;e@80x24.org>);
+        Fri, 10 Mar 2017 14:30:50 -0500
+Received: from forward5h.cmail.yandex.net ([87.250.230.20]:37348 "EHLO
+        forward5h.cmail.yandex.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1755351AbdCJTat (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 10 Mar 2017 14:30:49 -0500
+Received: from smtp2h.mail.yandex.net (smtp2h.mail.yandex.net [84.201.187.145])
+        by forward5h.cmail.yandex.net (Yandex) with ESMTP id B89E120F31;
+        Fri, 10 Mar 2017 22:30:45 +0300 (MSK)
+Received: from smtp2h.mail.yandex.net (localhost.localdomain [127.0.0.1])
+        by smtp2h.mail.yandex.net (Yandex) with ESMTP id C825F781226;
+        Fri, 10 Mar 2017 22:30:43 +0300 (MSK)
+Received: by smtp2h.mail.yandex.net (nwsmtp/Yandex) with ESMTPSA id ibwgMe9J2p-UgHesmjT;
+        Fri, 10 Mar 2017 22:30:42 +0300
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (Client certificate not present)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=vtolstov.org; s=mail; t=1489174242;
+        bh=lMVjtLjp3iiQevkKPzmawMmHPZwnDW0Wp7j1V4l0Jog=;
+        h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References;
+        b=sOB4VCoPG5NsjIgMoq7ym3V8G4ScDsfsdIUZs9Km1jxRlXppAJ338yK1kVnuiU8CR
+         N0YmpQcCvjWnMGhSKrR8Ix34YatUqR1C1uKEK6615ukiMHNgDr39ngrX1IEmSwTV0S
+         7PhuYSV6KlpRej3CFR2TTftgtZQGYEr8Dsti0+tI=
+Authentication-Results: smtp2h.mail.yandex.net; dkim=pass header.i=@vtolstov.org
+X-Yandex-Suid-Status: 1 0,1 0,1 0,1 0
+From:   Valery Tolstov <me@vtolstov.org>
+To:     sbeller@google.com
+Cc:     git@vger.kernel.org, christian.couder@gmail.com, bmwill@google.com
+Subject: Re: [GSoC] Discussion of "Submodule related work" project
+Date:   Fri, 10 Mar 2017 22:30:40 +0300
+Message-Id: <20170310193040.16816-1-me@vtolstov.org>
+X-Mailer: git-send-email 2.12.0.192.gbdb9d28a5
+In-Reply-To: <CAGZ79kZHjpptQAF4NM5y47PF+YXHRADAhzFUYG_+CSwRozo+qQ@mail.gmail.com>
+References: <CAGZ79kZHjpptQAF4NM5y47PF+YXHRADAhzFUYG_+CSwRozo+qQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-[Note: your original email didn't make it to the list because it's over
-100K; I'll quote liberally].
+So... I thought those items listed in "Submodule related work" are
+considered too small to be complete projects separately, and they
+are just "subprojects" of bigger project (maybe I have this thought
+because I can't estimate complexity before truly digging in).
+In your response you talk about them as independent projects...
+This means I can take only any one of them as starting point for
+my proposal? Or maybe I misunderstood you?
 
-On Fri, Mar 10, 2017 at 04:15:56PM +0100, Vegard Nossum wrote:
 
-> I've used AFL to generate a corpus of pack files that maximises the edge
-> coverage for 'git index-pack'.
-> 
-> This is a supplement to (and not a replacement for) the regular test cases
-> where we know exactly what each test is checking for. These testcases are
-> more useful for avoiding regressions in edge cases or as a starting point
-> for future fuzzing efforts.
-> 
-> To see the output of running 'git index-pack' on each file, you can do
-> something like this:
-> 
->   make -C t GIT_TEST_OPTS="--run=34 --verbose" t5300-pack-object.sh
-> 
-> I observe the following coverage changes (for t5300 only):
-> 
->   path                  old%  new%    pp
->   ----------------------------------------
->   builtin/index-pack.c  74.3  76.6   2.3
->   pack-write.c          79.8  80.4    .6
->   patch-delta.c         67.4  81.4  14.0
->   usage.c               26.6  35.5   8.9
->   wrapper.c             42.0  46.1   4.1
->   zlib.c                58.7  64.1   5.4
-
-I'm not sure how I feel about this. More coverage is good, I guess, but
-we don't have any idea what these packfiles are doing, or whether
-index-pack is behaving sanely in the new lines. The most we can say is
-that we tested more lines of code and that nothing segfaulted or
-triggered something like ASAN.
-
-That's something I guess, but I'm not enthused by the idea of just
-dumping a bunch of binary test cases that nobody, not even the author,
-understands.
-
--Peff
+Thanks,
+  Valery Tolstov
