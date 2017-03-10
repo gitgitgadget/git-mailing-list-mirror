@@ -2,153 +2,161 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.1 required=3.0 tests=BAYES_00,BODY_8BITS,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 35406202C1
-	for <e@80x24.org>; Fri, 10 Mar 2017 06:08:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 172B2202F8
+	for <e@80x24.org>; Fri, 10 Mar 2017 07:46:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751054AbdCJGIf (ORCPT <rfc822;e@80x24.org>);
-        Fri, 10 Mar 2017 01:08:35 -0500
-Received: from mail-qk0-f180.google.com ([209.85.220.180]:35796 "EHLO
-        mail-qk0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750893AbdCJGIe (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Mar 2017 01:08:34 -0500
-Received: by mail-qk0-f180.google.com with SMTP id v125so150655588qkh.2
-        for <git@vger.kernel.org>; Thu, 09 Mar 2017 22:08:33 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=G1MKbBjU3l0TUkC3chvc+cFQQp4fbKQWxLIXW2fMpUM=;
-        b=EYBscXA3VrvAnCw/XwE9Wacu/NaJ9RnoCF1CZq69AeXHrrwsKdMYpb7YbIf2c9UwZK
-         6l7HrkM7yugIfbXhm/lIMzLKMF/moSfb5y6lbpAVR1RHi7mHmIRioSuetGl/FcFxOrgj
-         9Cax79HpEhsX3fe+1NruWBDY0jYn9iQGolfBko7I+MYGj439o4RgD5SdZyaLlPn7KJNM
-         OaqxtRJy8iHKTqS/d3XvYyNqL+pHHpICvhzaFocR2QeV0hab0oKs6b0CBcmq/8DDmGc9
-         poScmGPlD5q/ZApu8tNuUsaJuzHApO6N8+cyQ0+kYRmBh6YQPivn3iG3RfKKfZV5XNIX
-         l9Hg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=G1MKbBjU3l0TUkC3chvc+cFQQp4fbKQWxLIXW2fMpUM=;
-        b=D79vO6iibvd2Whw7oJ5OLLTapBCCRUrlo2suciOKkd2D3HK+Vdbbjmsl3WzE4cM4RH
-         vLzy+BTt3vHQuh/Ja5LPjEXCt5suWJ7eWFZisFuuFNp67jF5UY4vwBeiUEqbyOTPmN9L
-         Uo08QvVYZZy6Ngj8U5Uzkghjb2af6wlOYdHGD638OEchVaOg5I6pSCfXv1w3vZVfIWLw
-         KPeEn2ItB+JNNb87uDb1n6GQhFlovZDf6lWqbIG6b1C+mN/Kyj+JtTY2qQ1cuwo5c8oQ
-         X/t/b3qrNUcjrZXl1WvdaWFHVe7oU1/6uH3JBNSllxIqEmsqnQBoyzG8cSJQ1ySywHKE
-         UFmQ==
-X-Gm-Message-State: AMke39n4t5o/DGwXxFCpMSzm81c7sty2XHQAR7VR6xq9y/NvsqObLU56um9qDZS5ADduR1iAtaBg2umbYAPx0Q==
-X-Received: by 10.55.167.198 with SMTP id q189mr16687947qke.274.1489126112628;
- Thu, 09 Mar 2017 22:08:32 -0800 (PST)
+        id S1752598AbdCJHqD (ORCPT <rfc822;e@80x24.org>);
+        Fri, 10 Mar 2017 02:46:03 -0500
+Received: from cloud.peff.net ([104.130.231.41]:41816 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1750844AbdCJHqC (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Mar 2017 02:46:02 -0500
+Received: (qmail 10721 invoked by uid 109); 10 Mar 2017 07:46:00 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 10 Mar 2017 07:46:00 +0000
+Received: (qmail 7951 invoked by uid 111); 10 Mar 2017 07:46:10 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 10 Mar 2017 02:46:10 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 10 Mar 2017 02:45:58 -0500
+Date:   Fri, 10 Mar 2017 02:45:58 -0500
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
+Cc:     Vegard Nossum <vegard.nossum@oracle.com>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        allan.x.xavier@oracle.com,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH v1] Travis: also test on 32-bit Linux
+Message-ID: <20170310074558.ifse3omthmtih73l@sigill.intra.peff.net>
+References: <alpine.DEB.2.20.1703030315580.3767@virtualbox>
+ <xmqqh93a9p5r.fsf@gitster.mtv.corp.google.com>
+ <xmqq8tol7vs1.fsf@gitster.mtv.corp.google.com>
+ <CAPc5daW=gtN18JZTQMqUje5fxL4oNdTucB0dXFbybPRJggPBUw@mail.gmail.com>
+ <2205F1A7-A694-4F40-B994-D68C3947F2BB@gmail.com>
+ <f5f5886a-aaec-7426-ea33-f5d65516348b@oracle.com>
+ <af31ef46-bd0c-c3f2-5a1e-7d97da6ec9a0@oracle.com>
+ <282895e1-d9eb-2368-a8e7-8085ad9b17ed@oracle.com>
+ <20170305113618.ko2jymle4n5f2b5l@sigill.intra.peff.net>
+ <63a6ec61-653d-6307-4739-2ebaa8dbde35@web.de>
 MIME-Version: 1.0
-Received: by 10.140.86.164 with HTTP; Thu, 9 Mar 2017 22:08:32 -0800 (PST)
-In-Reply-To: <CAGZ79kYUkQ4u9zX=qXL_+ip74mi3DgbzGiJNxybrVYbr3m1U=A@mail.gmail.com>
-References: <0102015ab11e8237-01e52ffe-882f-4589-8886-2c0b231ac3c6-000000@eu-west-1.amazonses.com>
- <0102015ab11ee091-f9f11bb5-559a-4c92-b5f6-9f7755e8f4b9-000000@eu-west-1.amazonses.com>
- <CAGZ79kYUkQ4u9zX=qXL_+ip74mi3DgbzGiJNxybrVYbr3m1U=A@mail.gmail.com>
-From:   Shuyang Shi <shuyang790@gmail.com>
-Date:   Fri, 10 Mar 2017 14:08:32 +0800
-Message-ID: <CAE9=6briC+CW+yqpn-r_QbQmZq-oy-hQJ9DNhBkxd_A1FSquyw@mail.gmail.com>
-Subject: Re: [PATCH GSoC] Allow "-" as a short-hand for "@{-1}" in branch deletions
-To:     Stefan Beller <sbeller@google.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <63a6ec61-653d-6307-4739-2ebaa8dbde35@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Stefan,
+On Fri, Mar 10, 2017 at 01:14:45AM +0100, René Scharfe wrote:
 
-Really appreciate your help on this, but I guess I am cancelling this
-patch for Siddharth's.
+> >   3. There were a number of alloc-and-copy instances. The copy part is
+> >      the same as (2) above, but you have to repeat the size, which is
+> >      potentially error-prone. I wonder if we would want something like:
+> > 
+> >        #define ALLOC_COPY(dst, src) do { \
+> >          (dst) = xmalloc(sizeof(*(dst))); \
+> > 	 COPY_ARRAY(dst, src, 1); \
+> >        while(0)
+> > 
+> >      That avoids having to specify the size at all, and triggers a
+> >      compile-time error if "src" and "dst" point to objects of different
+> >      sizes.
+> 
+> Or you could call it DUP or similar.  And you could use ALLOC_ARRAY in
+> its definition and let it infer the size implicitly (don't worry too
+> much about the multiplication with one):
+> 
+> 	#define DUPLICATE_ARRAY(dst, src, n) do {	\
+> 		ALLOC_ARRAY((dst), (n));		\
+> 		COPY_ARRAY((dst), (src), (n));		\
+> 	} while (0)
+> 	#define DUPLICATE(dst, src) DUPLICATE_ARRAY((dst), (src), 1)
+> 
+> But do we even want such a thing?  Duplicating objects should be rare, and
+> keeping allocation and assignment/copying separate makes for more flexible
+> building blocks.  Adding ALLOC (and CALLOC) for single objects could be more
+> widely useful, I think.
 
-Thanks,
-Shuyang
-=E5=8F=B2=E8=88=92=E6=89=AC Shuyang Shi
-Undergraduate
-Department of CS, School of EECS, Peking University
-Email: shuyang790@gmail.com
-Mobile: +86-18301336991
+There's no reason you can't have both the building blocks and the thing
+that is built for them. I think there are 5 spots that would use
+DUPLICATE(), but I agree that there are more which could use ALLOC().
 
+I'd be more worried that we're slowly drifting away from idiomatic C.
+If it's safer, that's good. But if it makes it hard for people new to
+the project to figure out what the hell is going on, that may be not so
+good.
 
-On Fri, Mar 10, 2017 at 1:47 AM, Stefan Beller <sbeller@google.com> wrote:
-> Welcome to the Git community!
->
-> On Wed, Mar 8, 2017 at 7:31 PM, Shuyang Shi <shuyang790@gmail.com> wrote:
->> The "-" shorthand that stands for "the branch we were previously on",
->> like we did for "git merge -" sometime after we introduced "git checkout=
- -".
->> Now I am introducing this shorthand to branch delete, i.e.
->> "git branch -d -".
->>
->> More reference:
->>   https://public-inbox.org/git/7vppuewl6h.fsf@alter.siamese.dyndns.org/
->
-> Following that link:
->
->> But there is a very commonly accepted long tradition for "-" to mean
->> "read from the standard input", so we cannot reuse it to mean "the
->> branch I was previously on" for every command without first making
->> sure the command will never want to use "-" for the other common
->> purpose.
->
-> This contradicts the introduction of "git branch -d -" to mean to delete
-> the last branch, but rather could mean "read from stdin which branches
-> to delete"? It would be nice if you could clarify in your commit message
-> which of both this is and how this fits into the big picture of "design
-> cleanliness".
->
->>
->> And this has been tested:
->>
->>         Ivan:git Ivan$ (cd t; prove --timer --jobs 1 ./t3200-branch.sh)
->>         [00:21:26] ./t3200-branch.sh .. ok    12293 ms ( 0.04 usr  0.01 =
-sys +
->>         5.97 cusr  2.52 csys =3D  8.54 CPU)
->>         [00:21:39]
->>         All tests successful.
->>         Files=3D1, Tests=3D113, 13 wallclock secs ( 0.07 usr  0.02 sys +
->>         5.97 cusr  2.52 csys =3D  8.58 CPU)
->>         Result: PASS
->
-> Thanks for being cautious when developing on Git. However this part
-> of the email would end up as part of the commit message. And as we expect
-> all commits that land eventually to not break tests, this information is =
-better
-> put at a more non-permanent place, such as below the '---' line (where th=
-ere is
-> also the built stat. For example see [1] how to have different message pa=
-rts
-> (one permanent section and some chatter that is relevant for the process
-> at the moment)
->
-> Also for testing, the tests only ensure that the old behavior does not br=
-eak;
-> but we'd want to make sure the new functionality doesn't break in the
-> future either,
-> which can be done best by writing a test as well for this functionality.
->
-> [1] https://public-inbox.org/git/xmqqvarj1kix.fsf_-_@gitster.mtv.corp.goo=
-gle.com/
-> and as a commit:
-> https://github.com/gitster/git/commit/83218867fbf6d27c78efe3cfba01790b2f1=
-d15d4
->
->> https://github.com/git/git/pull/337
->
-> Oh I see, you're using submitgit to communicate the patch to the mailing =
-list.
-> I am not sure if it supports splitting up the message as I eluded to abov=
-e.
-> IIRC some people use submitgit for the patch and then use a webmailer
-> (e.g. gmail) to send followup messages such as successful tests or what c=
-hanged
-> to prior versions.
->
-> Thanks,
-> Stefan
+Here's the list of DUPLICATE spots, for reference.
+
+---
+diff --git a/builtin/blame.c b/builtin/blame.c
+index f7aa95f4b..f0ac1c511 100644
+--- a/builtin/blame.c
++++ b/builtin/blame.c
+@@ -661,8 +661,8 @@ static struct origin *find_rename(struct scoreboard *sb,
+ static void add_blame_entry(struct blame_entry ***queue,
+ 			    const struct blame_entry *src)
+ {
+-	struct blame_entry *e = xmalloc(sizeof(*e));
+-	memcpy(e, src, sizeof(*e));
++	struct blame_entry *e;
++	DUPLICATE(e, src);
+ 	origin_incref(e->suspect);
+ 
+ 	e->next = **queue;
+diff --git a/builtin/pack-redundant.c b/builtin/pack-redundant.c
+index 72c815844..d6cb893cf 100644
+--- a/builtin/pack-redundant.c
++++ b/builtin/pack-redundant.c
+@@ -206,8 +206,8 @@ static void llist_sorted_difference_inplace(struct llist *A,
+ static inline struct pack_list * pack_list_insert(struct pack_list **pl,
+ 					   struct pack_list *entry)
+ {
+-	struct pack_list *p = xmalloc(sizeof(struct pack_list));
+-	memcpy(p, entry, sizeof(struct pack_list));
++	struct pack_list *p;
++	DUPLICATE(p, entry);
+ 	p->next = *pl;
+ 	*pl = p;
+ 	return p;
+@@ -238,8 +238,7 @@ static struct pack_list * pack_list_difference(const struct pack_list *A,
+ 			return pack_list_difference(A->next, B);
+ 		pl = pl->next;
+ 	}
+-	ret = xmalloc(sizeof(struct pack_list));
+-	memcpy(ret, A, sizeof(struct pack_list));
++	DUPLICATE(ret, A);
+ 	ret->next = pack_list_difference(A->next, B);
+ 	return ret;
+ }
+@@ -450,8 +449,7 @@ static void minimize(struct pack_list **min)
+ 		perm_all = perm = get_permutations(non_unique, n);
+ 		while (perm) {
+ 			if (is_superset(perm->pl, missing)) {
+-				new_perm = xmalloc(sizeof(struct pll));
+-				memcpy(new_perm, perm, sizeof(struct pll));
++				DUPLICATE(new_perm, perm);
+ 				new_perm->next = perm_ok;
+ 				perm_ok = new_perm;
+ 			}
+diff --git a/diff.c b/diff.c
+index 051761be4..dfe02f403 100644
+--- a/diff.c
++++ b/diff.c
+@@ -1168,8 +1168,8 @@ static void init_diff_words_data(struct emit_callback *ecbdata,
+ 				 struct diff_filespec *two)
+ {
+ 	int i;
+-	struct diff_options *o = xmalloc(sizeof(struct diff_options));
+-	memcpy(o, orig_opts, sizeof(struct diff_options));
++	struct diff_options *o;
++	DUPLICATE(o, orig_opts);
+ 
+ 	ecbdata->diff_words =
+ 		xcalloc(1, sizeof(struct diff_words_data));
