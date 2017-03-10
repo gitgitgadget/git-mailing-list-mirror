@@ -2,100 +2,156 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3C2BA1FBEC
-	for <e@80x24.org>; Fri, 10 Mar 2017 18:53:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E0E7B1FBEC
+	for <e@80x24.org>; Fri, 10 Mar 2017 18:54:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932485AbdCJSxh (ORCPT <rfc822;e@80x24.org>);
-        Fri, 10 Mar 2017 13:53:37 -0500
-Received: from mail-pg0-f50.google.com ([74.125.83.50]:35100 "EHLO
-        mail-pg0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755427AbdCJSxf (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Mar 2017 13:53:35 -0500
-Received: by mail-pg0-f50.google.com with SMTP id b129so41911936pgc.2
-        for <git@vger.kernel.org>; Fri, 10 Mar 2017 10:53:35 -0800 (PST)
+        id S932778AbdCJSyX (ORCPT <rfc822;e@80x24.org>);
+        Fri, 10 Mar 2017 13:54:23 -0500
+Received: from mail-io0-f180.google.com ([209.85.223.180]:34738 "EHLO
+        mail-io0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932461AbdCJSyV (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Mar 2017 13:54:21 -0500
+Received: by mail-io0-f180.google.com with SMTP id g6so54078250ioj.1
+        for <git@vger.kernel.org>; Fri, 10 Mar 2017 10:54:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=xBNemHo0mkGB7/9zaw27tHHv+2W7DaXqBQXCD2iUxo8=;
-        b=rQ9pPJWaXVVblmPPM4hsDXuqsz/sD075y8y+pg3HQPMCVVA6xzaIKuippcLhXhJkRJ
-         8R7ljFuOtgA5oUNRrBisvhqc2F3dhJ/dwrdUht0AnAh0fUGsGbaSSCTagAXRjmdPNTM2
-         N+qrR6ZCLwoCFUTgUmbfm96NjYC85QEWPgioC3YzuKFeWf9iyVULavBBm5aKTsAP2Dtc
-         tyV5E/AuFgj/ia8plX0/BhhuI/l5MLgOOoe6GLJtOoup0Gw1OTdObqWa7M+bO1Cs/LTK
-         Y7iHHTyTefO18oU+vh1HodjBuUCEPlZKd8MPNOdrjbf8U4KLkNdPhefXTadad6++CHZH
-         o6Jg==
+        d=gmail.com; s=20161025;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=h9sGb9pfk6/HezaEXjz53IWvz6n3t7ONFRJ1d7Hd1iY=;
+        b=kfpRnR+XomDYNv7Gc2kOKL6m3FWZHGorPkbL2/p7hMIaBY77GE4E++9sv7/KUbYFYe
+         hkG2igt5UdBggP9jhx/bIXIm6QBcaB/YtiisB+fsHwnJDba8rSODRbg56iFM9phRxyh0
+         eOMzGSIA6lJBd4ue8DzPV3h3a2mS6x7ulivKOsbffdYuqxP4DQfJzW1NRdzhA1VgHtpE
+         lDEgOQk+FZAD9+vl3u3VLtuQ6Yr4Hc792toFdMQarPaRb3mgQb8tyqtWNbBlfW73hRFn
+         Vn64SgZqU1gRKQB9PE7EOhUhb9aqnUaCemjEHT6s1yEPSGDdL5ZKY+POyoPWCeyEwkW9
+         6prQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=xBNemHo0mkGB7/9zaw27tHHv+2W7DaXqBQXCD2iUxo8=;
-        b=NuJFuUq0caP0QnTPjDDwt9RUMxuZGjXsxFFZIs8OUPKnNHBbXt8vC0wyE+QWSQveJl
-         5N01XVsAfsSkBp6iScZwo3GY6jtlGGcU5pYNhOQTlJCyTfwTOlSHLgYmubT8x60yj4/y
-         uYC2XRIkx51AqplQ9edqgLaZ8R5NONBh+WrmibkNsn+PoEawY8ETVCRvLVfUy8ljGv6O
-         i0wIlcSQsEAuX/ntPiaNBfrfudIE+iw8ymiSbk1BdVuS6WPgEOpwxPKxVbbqlF+GgbBm
-         YB4kivDxmIuh31CVFrQwpUhW5gv/KCC7Q65eapcLveTDuMWDMgtWPmTD6mXIfS+ciKhp
-         rztA==
-X-Gm-Message-State: AMke39mKGmfbT/UwFhuM+qK3J/LFg2+6FZ3JiGxDknNwOCsxElIaY2DlldH7E94cFQBdDRNJ
-X-Received: by 10.99.101.199 with SMTP id z190mr21417252pgb.219.1489172014473;
-        Fri, 10 Mar 2017 10:53:34 -0800 (PST)
-Received: from google.com ([2620:0:1000:5b10:c69:ce9:a41e:fd0])
-        by smtp.gmail.com with ESMTPSA id r71sm19982733pfa.104.2017.03.10.10.53.33
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Fri, 10 Mar 2017 10:53:33 -0800 (PST)
-Date:   Fri, 10 Mar 2017 10:53:32 -0800
-From:   Brandon Williams <bmwill@google.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org, sbeller@google.com, pclouds@gmail.com
-Subject: Re: [PATCH 2/2] pathspec: allow escaped query values
-Message-ID: <20170310185332.GC53198@google.com>
-References: <20170309210756.105566-1-bmwill@google.com>
- <20170309210756.105566-3-bmwill@google.com>
- <a81ad8b5-3b49-8232-1656-66b2e9d78569@google.com>
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=h9sGb9pfk6/HezaEXjz53IWvz6n3t7ONFRJ1d7Hd1iY=;
+        b=Vs0gwSUGqb2e/tKgCGdikdcVOplfKe4lZuvdWRkXABqvN0MCkqaTCQBX6kvI7HkzTT
+         uNO7BQuvwWfa2sEF1BLikBAwJAKkH4IYUIhg0uvX+/ZdxTFe6V1TberxQIDdswvfOW5n
+         4rnc0wQoPb8zia6wnZt6Io9sIoBmtEdbRAAJccVA3KwQnC2QCTt7PWc6e7wmSDGiwh8h
+         /hX8Sz/yBCDp0EmeFNJcrTSAuDtafnf7PZG6a6evxnZtY9gQiXi7LYSE8uWo68tmBVGn
+         zv2s8wx0NRVb1NHctBMKJkDjttqRmT5+SBVc2rSZ3gTyT9/UzpRDkpqaD8pNPpFjxKtf
+         DgWw==
+X-Gm-Message-State: AMke39nH3GaoMsWrl6xdagtYzwB5gpP91B+gVhw/fLJVsOc1UMJ/VrF/gntoF/aOXffZjNSj/+1xxgC1xjuoRA==
+X-Received: by 10.107.136.93 with SMTP id k90mr17462494iod.224.1489172059950;
+ Fri, 10 Mar 2017 10:54:19 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <a81ad8b5-3b49-8232-1656-66b2e9d78569@google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+Received: by 10.107.136.102 with HTTP; Fri, 10 Mar 2017 10:54:19 -0800 (PST)
+In-Reply-To: <201703101100.15214.bernhard.reiter@intevation.de>
+References: <201703101100.15214.bernhard.reiter@intevation.de>
+From:   Linus Torvalds <torvalds@linux-foundation.org>
+Date:   Fri, 10 Mar 2017 10:54:19 -0800
+X-Google-Sender-Auth: xKuxzFaUoj28328JuJT-AvJqC84
+Message-ID: <CA+55aFxk7F103LADnmwc8wFySYQNiK6TcCQ0WSj+UTP-GihgcQ@mail.gmail.com>
+Subject: Re: Stable GnuPG interface, git should use GPGME
+To:     "Bernhard E. Reiter" <bernhard.reiter@intevation.de>
+Cc:     Git Mailing List <git@vger.kernel.org>, gnupg-devel@gnupg.org
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 03/09, Jonathan Tan wrote:
-> On 03/09/2017 01:07 PM, Brandon Williams wrote:
-> >diff --git a/t/t6135-pathspec-with-attrs.sh b/t/t6135-pathspec-with-attrs.sh
-> >index b5e5a0607..585d17bad 100755
-> >--- a/t/t6135-pathspec-with-attrs.sh
-> >+++ b/t/t6135-pathspec-with-attrs.sh
-> >@@ -178,4 +178,13 @@ test_expect_success 'abort on asking for wrong magic' '
-> > 	test_must_fail git ls-files . ":(attr:!label=foo)"
-> > '
-> >
-> >+test_expect_success 'check attribute list' '
-> >+	cat <<-EOF >>.gitattributes &&
-> >+	* whitespace=indent,trail,space
-> >+	EOF
-> >+	git ls-files ":(attr:whitespace=indent\,trail\,space)" >actual &&
-> >+	git ls-files >expect &&
-> >+	test_cmp expect actual
-> >+'
-> >+
-> > test_done
-> 
-> Is there a way to verify that `\,` is not escaped by the shell into `,`?
+On Fri, Mar 10, 2017 at 2:00 AM, Bernhard E. Reiter
+<bernhard.reiter@intevation.de> wrote:
+>
+> git uses an pipe-and-exec approach to running a GnuPG binary
+> as writen in the documentation [1]:
+>
+>     gpg.program
+>            Use this custom program instead of "gpg" found on $PATH when making
+>            or verifying a PGP signature. The program must support the same
+>            command-line interface as GPG
+>
+> please consider using libgpgme interfacing to GnuPG, because the gpg
+> command-line interface is not considered an official API to GnuPG by the
+> GnuPG-devs and thus potentially unstable.
 
-You can run with GIT_TRACE=1 to see the actual string passed to git.
-'\,' is indeed passed to git with no problems. 
+Quite frankly, I will NAK this just based on previous bad experiences
+with using "helpful" libraries.
 
-> 
-> Maybe also add tests that show \ as the last character and \
-> escaping another \.
+Maybe you can lay my worries to rest, but the problems with libraries
+in this context tend to be
 
-Done
+ - hard to personalize.
 
--- 
-Brandon Williams
+   At least right now, we just allow people to set their gpg binary.
+I'm betting that the library would pick whatever random preferred
+version, and in the process possibly screwed us.
+
+   Example: what if somebody is actually using another pgp
+implementation entirely for some reason, and is just scripting around
+it?
+
+   Or maybe he's using the regular gnupg, but using different keys for
+different projects (using "--homedir"). That's trivial with the
+current model. How trivial is that with a library?
+
+ - existing configuration
+
+   This is the main problem I've seen in the past. Using the "ssh"
+_program_ is easy. You add your keys, your config files, whatever, and
+it "just works" (or rather, you fight it once and it definitely
+doesn't "just" work, but then you copy your .ssh directory around for
+the rest of your and forget how it ever worked, but it does).
+
+   Using "libssh2" is an exercise in futility, and you have to do a
+crazy amount of stupid "look up keys" and simple configuration in your
+.ssh/config (like per-host keys, hostname swizzling etc) just don't
+pick up the configurations you already did for the program.
+
+ - UI
+
+   For things like gpg, the UI is traditionally horrible. But there
+tends to be various things like password agents that help with caching
+passwords and/or add a graphical UI to get the password when
+necessary.
+
+ - library versioning.
+
+   I don't know why, but I've never *ever* met a library developer who
+realized that libraries were all about stable API's, and the library
+users don't want to fight different versions.
+
+   And to make matters worse, the different versions (particularly if
+you end up having to use a development version due to bugs or required
+features etc) are always made horribly bad to even detect at
+built-time automatically with simple #ifdef etc, so now you have to do
+autoconf crap etc.
+
+Now, it may be that the pgpme library "just works" across
+architectures and handles all of the above situations as gracefully as
+the external program does. In that case - but _ONLY_ in that case -
+would a switch-over to the library possibly be a good thing.
+
+I'd be pleasantly surprised. But I *would* be surprised, because every
+time I've seen that "library vs program" model, I've seen the above
+issues.
+
+In fact, we have those exact issues very much in git itself too. Yes,
+I've used libgit2 (for subsurface). It's a pain in the arse to do
+*exactly* the above kinds of things, and the thing is, that isn't
+git-specific.
+
+So I'm very down on using external libraries unless they are stable
+and have no need for configuration etc. Things like zlib is fine -
+there just isn't much to configure outside of the "just how hard do
+you want me to try to compress". Nobody has a ".zlib/config" file that
+you need to worry about accessing etc.
+
+Of course, maybe pgpme is a world first, and actually does read your
+.gnupg/config file trivially, and has all the gpg agent integration
+that it picks up automatically, and allows various per-user
+configurations, and all my worries are bogus.
+
+But that would literally be the first time I've ever seen that.
+
+                   Linus
