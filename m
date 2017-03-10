@@ -2,72 +2,113 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 316371FC43
-	for <e@80x24.org>; Fri, 10 Mar 2017 21:19:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6EE331FC43
+	for <e@80x24.org>; Fri, 10 Mar 2017 21:45:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933829AbdCJVS4 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 10 Mar 2017 16:18:56 -0500
-Received: from aserp1040.oracle.com ([141.146.126.69]:48321 "EHLO
-        aserp1040.oracle.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932908AbdCJVSz (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Mar 2017 16:18:55 -0500
-Received: from userv0022.oracle.com (userv0022.oracle.com [156.151.31.74])
-        by aserp1040.oracle.com (Sentrion-MTA-4.3.2/Sentrion-MTA-4.3.2) with ESMTP id v2ALIQFc031126
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-        Fri, 10 Mar 2017 21:18:27 GMT
-Received: from aserv0122.oracle.com (aserv0122.oracle.com [141.146.126.236])
-        by userv0022.oracle.com (8.14.4/8.14.4) with ESMTP id v2ALIQh2031129
-        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-        Fri, 10 Mar 2017 21:18:26 GMT
-Received: from abhmp0015.oracle.com (abhmp0015.oracle.com [141.146.116.21])
-        by aserv0122.oracle.com (8.14.4/8.14.4) with ESMTP id v2ALIP6q008591;
-        Fri, 10 Mar 2017 21:18:25 GMT
-Received: from [10.175.181.186] (/10.175.181.186)
-        by default (Oracle Beehive Gateway v4.0)
-        with ESMTP ; Fri, 10 Mar 2017 13:18:25 -0800
-Subject: Re: [RFC][PATCH] index-pack: add testcases found using AFL
-To:     Jeff King <peff@peff.net>
-References: <20170310151556.18490-1-vegard.nossum@oracle.com>
- <20170310190641.i7geazhrlmzzfna6@sigill.intra.peff.net>
- <eec5ab2a-7fe7-b47f-8073-a8212a9634f1@oracle.com>
- <20170310194245.p37w6mew4que6oya@sigill.intra.peff.net>
-Cc:     gitster@pobox.com, git@vger.kernel.org
-From:   Vegard Nossum <vegard.nossum@oracle.com>
-Message-ID: <3a09226f-6749-6956-6fb9-265383cd4d66@oracle.com>
-Date:   Fri, 10 Mar 2017 22:18:23 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.7.0
+        id S934111AbdCJVpC (ORCPT <rfc822;e@80x24.org>);
+        Fri, 10 Mar 2017 16:45:02 -0500
+Received: from mail-qk0-f170.google.com ([209.85.220.170]:36657 "EHLO
+        mail-qk0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S934083AbdCJVow (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Mar 2017 16:44:52 -0500
+Received: by mail-qk0-f170.google.com with SMTP id 1so187671614qkl.3
+        for <git@vger.kernel.org>; Fri, 10 Mar 2017 13:44:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=WbJbMNgeZGZGE4nF6adV51DwW9+ndml9CkEOVcoIuPU=;
+        b=VEF6c6yu3OiUAfGWgrY+Atp9GbkpB32olNjjsFQRHMu08vIFk9p1vo3jwJnkNpObRy
+         /d9br6QpJy5AW3ok3RbmWWqU6s37OOCSJ1Mvc40Ookyvkr0lL0EcWvzzP9IOwO0WHJ9V
+         zXf/ExtkGHyrm9GRyBbhJnED9eoRmSozkSEVeDvisbvm065X7wSZ3wZufsez//eLr0xO
+         8L02ckN7E1HBoWYPgc9obWEyMwvyN+oGWcAp/cQQySrwvItpNER8+kBsKc2ADyCKIVjX
+         cNGto/+9wyp8FfABjPmp0fcYHOaBI2XQ+6K1dPcZrro/p54r5ohyLmXrXbLb3mdfd/up
+         xR+g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=WbJbMNgeZGZGE4nF6adV51DwW9+ndml9CkEOVcoIuPU=;
+        b=DrDlgWcIonpXtBwyeolOr+I1+nMYxWlNuSPcVK6//eWtN/E447Tckc/lZ29AshNkw/
+         D9cfraj/jRHEES47gBMMIHtKuOjlUhT/2kzgHdP6Vfy0r8Z9mx80yA7gT1sS1qZVPhUT
+         MwOqkjlfYnMNwPqEkyxCM/wrZfuzpzSkPCHgOnVmGy378+FQp4ab73XroZJRW8lOPL/9
+         g58nMb9JSKwgwzYKSZ/WBdYXyosBkE1p/rlTwrKHcF02lj2RQSK9hLjt0J0hCsnxU7rq
+         uxJnAPXNxOpL1BAoxkjTMWnVxYcjXvU3rpBhDc4zMVmYdGhLL1oSTRIlZZaZvGFtINAY
+         hw6A==
+X-Gm-Message-State: AMke39kPbaaf4Fxf6s0p0OURE9HZUae8Lk62ARnnlBbITPSaFF1rGVx+Rs2RVeqs3vv7Yl3a77YZlvJYAOLs7Q==
+X-Received: by 10.237.41.229 with SMTP id o92mr21299672qtd.223.1489182290753;
+ Fri, 10 Mar 2017 13:44:50 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <20170310194245.p37w6mew4que6oya@sigill.intra.peff.net>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Source-IP: userv0022.oracle.com [156.151.31.74]
+Received: by 10.12.177.137 with HTTP; Fri, 10 Mar 2017 13:44:30 -0800 (PST)
+From:   Phil Hord <phil.hord@gmail.com>
+Date:   Fri, 10 Mar 2017 13:44:30 -0800
+Message-ID: <CABURp0pf=4BE=E7qeOmYAcqJb=qDeGJ1EFyfCf+hDtKjjMD=ng@mail.gmail.com>
+Subject: git-push branch confusion caused by user mistake
+To:     Git <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 10/03/2017 20:42, Jeff King wrote:
->>> That's something I guess, but I'm not enthused by the idea of just
->>> dumping a bunch of binary test cases that nobody, not even the author,
->>> understands.
-[...]
+This week a user accidentally did this:
 
-> My real concern is that this is the tip of the ice berg. So we increased
-> coverage in one program by a few percent. But wouldn't this procedure be
-> applicable to lots of _other_ parts of Git, too?
+    $ git push origin origin/master
+    Total 0 (delta 0), reused 0 (delta 0)
+    To parent.git
+     * [new branch]      origin/master -> origin/master
 
-I think that index-pack is in a special position given its role as the
-verifier for packs received over the network, which you also wrote here:
-https://www.spinics.net/lists/git/msg265118.html
+He saw his mistake when the "new branch" message appeared, but he was
+confused about how to fix it and worried he broke something.
 
-I also think increased coverage for other parts of git which are not
-considered security-sensitive is less valuable without testing for an
-actual expected result.
+It seems reasonable that git expanded the original args into this one:
 
+    git push origin refs/remotes/origin/master
 
-Vegard
+However, since the dest ref was not provided, it was assumed to be the
+same as the source ref, so it worked as if he typed this:
+
+    git push origin refs/remotes/origin/master:refs/remotes/origin/master
+
+Indeed, git ls-remote origin shows the result:
+
+    $ git ls-remote origin
+    d1ff1c9224ae5e58a7656fb9ecc95865d42ed71e HEAD
+    d1ff1c9224ae5e58a7656fb9ecc95865d42ed71e refs/heads/master
+    d1ff1c9224ae5e58a7656fb9ecc95865d42ed71e refs/remotes/origin/master
+
+Also, I verified that this (otherwise valid) command has similar
+unexpected results:
+    $ git remote add other foo.git && git fetch other && git push
+origin other/topic
+    $ git ls-remote origin
+    d1ff1c9224ae5e58a7656fb9ecc95865d42ed71e HEAD
+    d1ff1c9224ae5e58a7656fb9ecc95865d42ed71e refs/heads/master
+    d1ff1c9224ae5e58a7656fb9ecc95865d42ed71e refs/remotes/origin/master
+    d1ff1c9224ae5e58a7656fb9ecc95865d42ed71e refs/remotes/other/topic
+
+I think git should be smarter about deducing the dest ref from the
+source ref if the source ref is in refs/remotes, but I'm not sure how
+far to take it.  It feels like we should translate refspecs something
+like this for push:
+
+    origin/master
+        => refs/remotes/origin/master:refs/heads/master
+
+    refs/remotes/origin/master
+         => refs/remotes/origin/master:refs/heads/master
+
+    origin/master:origin/master
+         => refs/remotes/origin/master:refs/heads/origin/master
+
+    master:refs/remotes/origin/master
+         => refs/heads/master:refs/remotes/origin/master
+
+That is, we should not infer a remote refspec of "refs/remotes/*"; we
+should only get there if "refs/remotes" was given explicitly by the
+user.
+
+Does this seem reasonable?  I can try to work up a patch if so.
