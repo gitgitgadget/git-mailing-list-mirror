@@ -2,87 +2,78 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F11361FC43
-	for <e@80x24.org>; Fri, 10 Mar 2017 23:43:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9ED0C1FC43
+	for <e@80x24.org>; Fri, 10 Mar 2017 23:46:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932475AbdCJXns (ORCPT <rfc822;e@80x24.org>);
-        Fri, 10 Mar 2017 18:43:48 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:62501 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1755108AbdCJXnr (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Mar 2017 18:43:47 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 4414E6A51B;
-        Fri, 10 Mar 2017 18:43:45 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=MVOyjK4voxfkJpbBzlONrrP3Zz8=; b=r/oyRr
-        9KWs1h16j2LtR5nB1GC0IqLX56Np2DCpqgvdRje9og/j0DcmTNPDPSAFezdlZLWK
-        bUhdpOjI9LYUDmGnQeq+VUgMt/FQpYRLT6d7U58u70ocOYfijZCkUL0SAWc18kdi
-        0RRT188PaSY4v4USLjJep+Iokhh6S0fFmpD5Y=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=rYNgRefNKSOP5eOnbaxiuMXNHiqV2WV3
-        DoTWUicr87t6P4CljMmsi9WOLpkZAHSLvoxRyFu57q/hUUK1f40413d3U77JwnWL
-        pwpOsjce2Y11/ONKWcn0nPmPOdUYetBAg2KvAhOBXd3+PBjZQJ6pKaL7WK4IO8nu
-        fR8EjTPEwEo=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 3D9D76A51A;
-        Fri, 10 Mar 2017 18:43:45 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id A54306A519;
-        Fri, 10 Mar 2017 18:43:44 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     James Melvin <jmelvin@codeaurora.org>
-Cc:     git@vger.kernel.org, nasserg@codeaurora.org, mfick@codeaurora.org,
-        peff@peff.net, sbeller@google.com
-Subject: Re: [PATCH v2] repack: Add option to preserve and prune old pack files
-References: <20170310220020.2666-1-jmelvin@codeaurora.org>
-Date:   Fri, 10 Mar 2017 15:43:43 -0800
-In-Reply-To: <20170310220020.2666-1-jmelvin@codeaurora.org> (James Melvin's
-        message of "Fri, 10 Mar 2017 15:00:20 -0700")
-Message-ID: <xmqqmvcswvdc.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 661F9A6A-05EB-11E7-B36B-FC50AE2156B6-77302942!pb-smtp2.pobox.com
+        id S932675AbdCJXqI convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Fri, 10 Mar 2017 18:46:08 -0500
+Received: from limerock04.mail.cornell.edu ([128.84.13.244]:50560 "EHLO
+        limerock04.mail.cornell.edu" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S932179AbdCJXqG (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 10 Mar 2017 18:46:06 -0500
+X-Greylist: delayed 905 seconds by postgrey-1.27 at vger.kernel.org; Fri, 10 Mar 2017 18:46:06 EST
+X-CornellRouted: This message has been Routed already.
+Received: from exchange.cornell.edu (sf-e2013-03.exchange.cornell.edu [10.22.40.50])
+        by limerock04.mail.cornell.edu (8.14.4/8.14.4_cu) with ESMTP id v2ANUvcH010365
+        for <git@vger.kernel.org>; Fri, 10 Mar 2017 18:30:59 -0500
+Received: from sf-e2013-09.exchange.cornell.edu (10.22.40.56) by
+ sf-e2013-03.exchange.cornell.edu (10.22.40.50) with Microsoft SMTP Server
+ (TLS) id 15.0.1210.3; Fri, 10 Mar 2017 18:30:57 -0500
+Received: from mail-qt0-f198.google.com (209.85.216.198) by
+ exchange.cornell.edu (10.22.40.56) with Microsoft SMTP Server (TLS) id
+ 15.0.1210.3 via Frontend Transport; Fri, 10 Mar 2017 18:30:57 -0500
+Received: by mail-qt0-f198.google.com with SMTP id b51so965883qta.4
+        for <git@vger.kernel.org>; Fri, 10 Mar 2017 15:30:57 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:content-transfer-encoding:mime-version
+         :subject:message-id:date:to;
+        bh=Dq3pXeiZSMlG11xGhalB/a2VjFijUYDshDaJATYWPqs=;
+        b=mIR2qfd86q5P4VQWZQ44KlQjy4R9ZbcukytcziYvmh0WfrH5zQ0wnJH913xtA4eAy+
+         ipjGpaxhIe+KLsS39ZOIgUXmyyLo8+LIgeYf7wTBccQMITfrMQsS/NjrL4HcfW/4WEDR
+         ipvO0WKjGKWbnSWJOZOwGdYjjXoSxDVYH9lFRjvm/pra6X4xAbkuAzpXC2G8OJiNnnUS
+         2hSv0WXFfAxs8SttT6IXKcYFM7kiUT9gfd31AK6tU7y0sOOAfWPlPQZ5o0R0YDN9UCBO
+         544CyWakHJXPyfreJuF4pyNBt5tozKgpqMl0W4ks89pyBedtsosspElUV4IDqusKtBxr
+         DyLw==
+X-Gm-Message-State: AFeK/H1GDv35UQat2QYmijKp/DYTxa74YEtalK0O3TPk7LprEr8KFWkrlgI9+k7ZUu237QHOK/M9YioJpimmZ41w4bRZwtYXi8BPOeqWO/zIcTK9Rty2MYzwH1LLRSTs8u0B//6BqT+VSSgIvWs=
+X-Received: by 10.233.220.6 with SMTP id q6mr23029908qkf.105.1489188656943;
+        Fri, 10 Mar 2017 15:30:56 -0800 (PST)
+X-Received: by 10.233.220.6 with SMTP id q6mr23029898qkf.105.1489188656778;
+        Fri, 10 Mar 2017 15:30:56 -0800 (PST)
+Received: from dhcp-hol-1198.eduroam.cornell.edu (nat-128-84-124-0-174.cit.cornell.edu. [128.84.124.174])
+        by smtp.gmail.com with ESMTPSA id h27sm7359911qtf.24.2017.03.10.15.30.56
+        for <git@vger.kernel.org>
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 10 Mar 2017 15:30:56 -0800 (PST)
+From:   Devin Lehmacher <djl329@cornell.edu>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8BIT
+MIME-Version: 1.0 (Mac OS X Mail 10.2 \(3259\))
+Subject: [GSoC] Move ~/.git-credential-cache to ~/.cache/git
+Message-ID: <8BE1A361-32BB-4164-AD54-949555855C52@cornell.edu>
+Date:   Fri, 10 Mar 2017 18:30:55 -0500
+To:     <git@vger.kernel.org>
+X-Mailer: Apple Mail (2.3259)
+Received-SPF: Neutral (sf-e2013-03.exchange.cornell.edu: 209.85.216.198 is
+ neither permitted nor denied by domain of djl329@cornell.edu)
+X-ORG-HybridRouting: 9e0c991bb9bc9f90ae52f3794ca7ea5b
+X-ORG-RouteOnPrem: False
+X-ORG-MsgSource: cmail
+X-PMX-CORNELL-AUTH-RESULTS: dkim-out=none;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-James Melvin <jmelvin@codeaurora.org> writes:
+I started working on this microproject and am not quite sure what is necessary for backwards compatibility. Since the socket is recreated whenever the credential daemon exits backwards compatibility shouldn’t really be a concern with regard to where the socket is located in the filesystem.
 
-> The new --preserve-and-prune option renames old pack files
-> instead of deleting them after repacking and prunes previously
-> preserved pack files.
->
-> This option is designed to prevent stale file handle exceptions
-> during git operations which can happen on users of NFS repos when
-> repacking is done on them. The strategy is to preserve old pack files
-> around until the next repack with the hopes that they will become
-> unreferenced by then and not cause any exceptions to running processes
-> when they are finally deleted (pruned).
+However, contrib/persistent-https depends on the socket being at ~/.git-credential-cache/socket, so changing the default location would break this. However, if we need to keep the socket at that location for cases like this I don’t understand how this change would be helpful in any way.
 
-This certainly is simpler than the previous one, but if you run
+Is it safe to change the default location for this socket and removing the original location?
 
-	git repack --preserve-and-prune 
-	sleep for N minutes
-	git repack --preserve-and-prune 
-
-the second "repack" will drop the obsoleted packs that were
-preserved by the first one no matter how short the value of N is,
-no?
-
-I suspect that users would be more comfortable with something based
-on expiration timestamp that gives them a guaranteed grace period,
-e.g. "--preserve-expire=8.hours", like how we expire reflog entries
-and loose objects.
-
-Perhaps builtin/prune.c can be a source of inspiration?
+Thanks in advanced,
+Devin Lehmacher
