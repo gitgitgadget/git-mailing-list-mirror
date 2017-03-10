@@ -2,231 +2,143 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5E159202C1
-	for <e@80x24.org>; Fri, 10 Mar 2017 00:15:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DB37D202C1
+	for <e@80x24.org>; Fri, 10 Mar 2017 00:23:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753892AbdCJAPN (ORCPT <rfc822;e@80x24.org>);
-        Thu, 9 Mar 2017 19:15:13 -0500
-Received: from mout.web.de ([212.227.17.12]:64719 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753488AbdCJAPM (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Mar 2017 19:15:12 -0500
-Received: from [192.168.178.36] ([79.213.126.222]) by smtp.web.de (mrweb101
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0MfYrH-1cbLLy1BTn-00P2qA; Fri, 10
- Mar 2017 01:14:29 +0100
-Subject: Re: [PATCH v1] Travis: also test on 32-bit Linux
-To:     Jeff King <peff@peff.net>, Vegard Nossum <vegard.nossum@oracle.com>
-References: <CFA1C4B4-0FDA-424D-87A4-EEE1F9BB3712@gmail.com>
- <xmqqinnrd098.fsf@gitster.mtv.corp.google.com>
- <alpine.DEB.2.20.1703030315580.3767@virtualbox>
- <xmqqh93a9p5r.fsf@gitster.mtv.corp.google.com>
- <xmqq8tol7vs1.fsf@gitster.mtv.corp.google.com>
- <CAPc5daW=gtN18JZTQMqUje5fxL4oNdTucB0dXFbybPRJggPBUw@mail.gmail.com>
- <2205F1A7-A694-4F40-B994-D68C3947F2BB@gmail.com>
- <f5f5886a-aaec-7426-ea33-f5d65516348b@oracle.com>
- <af31ef46-bd0c-c3f2-5a1e-7d97da6ec9a0@oracle.com>
- <282895e1-d9eb-2368-a8e7-8085ad9b17ed@oracle.com>
- <20170305113618.ko2jymle4n5f2b5l@sigill.intra.peff.net>
-Cc:     Lars Schneider <larsxschneider@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        allan.x.xavier@oracle.com,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Git List <git@vger.kernel.org>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <c553da50-e5ca-d064-e75c-46e5a5042935@web.de>
-Date:   Fri, 10 Mar 2017 01:14:16 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
- Thunderbird/45.8.0
+        id S1754694AbdCJAX3 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 9 Mar 2017 19:23:29 -0500
+Received: from mail-wr0-f193.google.com ([209.85.128.193]:35795 "EHLO
+        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754118AbdCJAX2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Mar 2017 19:23:28 -0500
+Received: by mail-wr0-f193.google.com with SMTP id u108so9785012wrb.2
+        for <git@vger.kernel.org>; Thu, 09 Mar 2017 16:23:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:references:cc:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding;
+        bh=8xjC8G18TtmBwJJRsVGxg5awpTtVTCRkLQ2WNBZ1nvE=;
+        b=aQmzA/fhMlpPvfnLC3ViVH9uXRT7AyQyn9fmp5RFDfbQkOf/WT9f/PvPFklYRW7vWE
+         0b1Viu9AxX8efHVC2NnW70JBtDWfz4FgMNudY9IuSSbg19mHNFWt7GLw3Dp/vPOM1blQ
+         kE2GitjKJYnB6PSd7z0wiC3HPPTGwUrb9oR2bw0Sx6mdkxJWoL9zMe4CGVjoXXAKVLle
+         /WNj2Avl3ICqoISGbG3rYMzq+ohXxvBqM4my8rd2srhDzp9KEUrpds0qi7ZcVYOWzTj4
+         q0MsSLxjvkbpBib06G3pMAr/GLMvtaKmQaYuQqq7AC7YRsBDRM51j21R4cadbxiSRKgp
+         kVUA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
+        bh=8xjC8G18TtmBwJJRsVGxg5awpTtVTCRkLQ2WNBZ1nvE=;
+        b=JXmY1AvwCFRBkpyiO/jeoiFY7Ys6MKuxQ2JF4O5ChYIo6zMQZOsnoRyZZcR3I0uNzr
+         5w+Cg8ww+KoDBJmerxOxYF5nI/3Cf712io6lJ9RjqaPfgLWqvbw1rjsPOw8yn+UFJ9Dg
+         85HAV0DVtDSEg7KjKaefzdMqDmp1WUXFwo6AuE0k7zN5NacIxpGYr9Ey5z+ubOmll+yR
+         sFtlboy6cVyvOT32JZeA8pA0XgkvajPnNkejL1cq1wiCzwY9oj/cRJE8qnBWzKyYVaJo
+         7ROmTO479fy7foevXviJvrWn60jAJmi1s3AJi0esVRu9AdO0Dn9m3Wx62UMWV2YTW0rN
+         0xJw==
+X-Gm-Message-State: AMke39n/sVIsAojNOeZYVlqQ3Otq26gU+ns3PCKEQ+AJ9WdaLbyNtODY9oceLfHK3TucgQ==
+X-Received: by 10.223.150.10 with SMTP id b10mr12732598wra.98.1489105401004;
+        Thu, 09 Mar 2017 16:23:21 -0800 (PST)
+Received: from [192.168.5.102] ([87.116.180.47])
+        by smtp.gmail.com with ESMTPSA id 63sm10232888wrh.68.2017.03.09.16.23.19
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 09 Mar 2017 16:23:20 -0800 (PST)
+Subject: Re: Possible bug: git pull --rebase discards local commits
+To:     Junio C Hamano <gitster@pobox.com>,
+        Joshua Phillips <jphillips@imap.cc>
+References: <1471969497.3553135.703756633.0F6CCC4C@webmail.messagingengine.com>
+ <xmqqvayruvwk.fsf@gitster.mtv.corp.google.com>
+Cc:     git@vger.kernel.org, Laszlo Kiss <kisslas.git@gmail.com>
+From:   Igor Djordjevic <igor.d.djordjevic@gmail.com>
+Message-ID: <85fefe0a-fe0e-cf1b-78c3-a8e2e85f53c2@gmail.com>
+Date:   Fri, 10 Mar 2017 01:23:13 +0100
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.7.1
 MIME-Version: 1.0
-In-Reply-To: <20170305113618.ko2jymle4n5f2b5l@sigill.intra.peff.net>
-Content-Type: text/plain; charset=utf-8
+In-Reply-To: <xmqqvayruvwk.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset=windows-1252
 Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K0:ftrroQNu46/TubcIb1kRn1gXH5okLxOeYPjkEz8HbPXo9pfEbqN
- A+JynodErm0doH45Q7ZGzf/ruzxBkXQR52cRtSdypYCYuVouUso4NNVKksXxGvn8DjVgDjM
- xKoZJbHLyx9iuFs1mv8+sHrHsIVLtA1izt1Q/TN0vC6osWzU/AdNHzfRVpqH0+NRJc56MN4
- 5awwaZOw0yguNyp329T6A==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:IVxUfNL03vE=:wDeYhJw8YGxn0PMBv6ODzO
- PeeKDEyCp/OeMiPK0lm11oqNua99ZdJ+LFTZ68ea8F3XQ+9yU/wxvhhc8bRmtdR7cJuyvihqf
- 6E3C3kHaEgDQV4uqUAuMl/1aKsy01MdHlwxP6CoS2KqadRdHqu2L8X7W1vSFY6hKNWADFFP8P
- 8NUpYrxXDCk3jvXYAgxiqnefMMNTOXJUg619y8yy3TdG7XMNIoBJDDNa2hm9DJdk/LWkXjoZk
- j8b0zS6zjIs9Rnalzxsbl7EpjBvakcPbxUSMeod0+6cAWWdfMd5MvXg8fkF+zfyJj1XfnQhUS
- 28zaioXpzrqiSXFP/G1/UUDSDeAb+hrOyWuauI5NDvnXBuMmygxQObXLJL376GnN02ojJc3sy
- 2vVr5iWr4QkwjDvrE/yM/yzYO4yR3WnnglGzt2A21f3ZD7kQ+Ttd6C9s1dYi+BMSBopW3U1sj
- Xarhwj8S9SiJjg9chb3tgCqkrBKn5Ujcd2QzQ4RaZ34//xEYDOqFrTEloiDS4BMl9iuvOld+Y
- BoWllbQ5T5ctOXUyIJb0/+UgJLgeU449prTMEB2YqkT8TbXtyji9e9Uce6j8e3h1tTg9PiMsx
- MMF8UmEvnvmWZbOMThv7G13qzOn3HDvgfa71cxumqQrR/o82zpwVsqgKWX36xLePF45byL6Aj
- OQ5XnG2XPc4Cgg+8uslW/53XkPnF+B6AKyPm5vPcPlnXDB6E0jTzlj+aRF2ypbeaz0TFDptDU
- /YslUvnH3zzAcPW/NsARxxXrFAoLxJ7q7C5Q2qJqg23xV2J5kC/t72I1/golTbQkr7uQuaEeA
- wUSN3Xr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 05.03.2017 um 12:36 schrieb Jeff King:
-> I grepped for 'memcpy.*sizeof' and found one other case that's not a
-> bug, but is questionable.
+Hi Junio,
+
+On 23/08/2016 21:28, Junio C Hamano wrote:
+> Joshua Phillips <jphillips@imap.cc> writes:
+> > I've found a case where git pull --rebase discards commits in my branch
+> > if the remote-tracking branch was rewound (and the remote tracking
+> > branch's reflog contains my branch's latest commit). This is due to
+> > git-pull's usage of git merge-base --fork-point.
+> >
+> > On one hand, this behaviour might be correct since the remote repository
+> > essentially removed that commit from master by 'reset --hard'. On the
+> > other hand, I was surprised that git pull --rebase discarded a commit in
+> > my branch.
 > 
-> Of the "good" cases, I think most of them could be converted into
-> something more obviously-correct, which would make auditing easier. The
-> three main cases I saw were:
-
->   2. Ones which just copy a single object, like:
+> Yup, that sounds like a bad way to handle the situation.  After all,
+> the upstream may have first accepted your first attempt, and then
+> decided that it was premature and rewound it, expecting you to give
+> an improved reroll.  But I also agree with you that it may be
+> correct to drop it because the upstream already rejected it.
 > 
->        memcpy(&dst, &src, sizeof(dst));
-> 
->      Perhaps we should be using struct assignment like:
-> 
->        dst = src;
-> 
->      here. It's safer and it should give the compiler more room to
->      optimize. The only downside is that if you have pointers, it is
->      easy to write "dst = src" when you meant "*dst = *src".
+> Since Git cannot tell between these two cases, we should play safer
+> than what the current code does, I would think.
 
-Compilers can usually inline memcpy(3) calls, but assignments are
-shorter and more pleasing to the eye, and we get a type check for
-free.  How about this?
+Were there any news in this regards so far? Would it be (more) 
+sensible/safe to report the dropped commits, too? Something like:
 
--- >8 --
-Subject: [PATCH] cocci: use assignment operator to copy structs
+  Dropping: Commit B
+  Applying: Commit X
+  Applying: Commit Y
 
-Add a semantic patch for converting memcpy(3) calls targeting
-addresses of variables (i.e., variables preceded by &) -- which are
-basically always structs -- to simple assignments, and apply it to
-the current tree.  The resulting code is shorter, simpler and its
-type safety is checked by the compiler.
+... where "Applying: *" are standard "git rebase" output lines, and 
+"Dropping: *" a newly proposed one (example graphs (1.1) to (1.3) 
+shown below[1]).
 
-Signed-off-by: Rene Scharfe <l.s.r@web.de>
----
- builtin/log.c                 |  2 +-
- contrib/coccinelle/copy.cocci | 31 +++++++++++++++++++++++++++++++
- convert.c                     |  2 +-
- credential-cache--daemon.c    |  2 +-
- daemon.c                      |  2 +-
- line-log.c                    |  2 +-
- revision.c                    |  2 +-
- 7 files changed, 37 insertions(+), 6 deletions(-)
- create mode 100644 contrib/coccinelle/copy.cocci
+That said, applied commits might even be considered pretty 
+uninteresting here (as they`re kept/transferred over anyway), a noise 
+drowning what otherwise might be really important - the dropped/lost 
+ones...?
 
-diff --git a/builtin/log.c b/builtin/log.c
-index 55d20cc2d8..23bb9a9e76 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -1030,7 +1030,7 @@ static void make_cover_letter(struct rev_info *rev, int use_stdout,
- 	if (!origin)
- 		return;
- 
--	memcpy(&opts, &rev->diffopt, sizeof(opts));
-+	opts = rev->diffopt;
- 	opts.output_format = DIFF_FORMAT_SUMMARY | DIFF_FORMAT_DIFFSTAT;
- 
- 	diff_setup_done(&opts);
-diff --git a/contrib/coccinelle/copy.cocci b/contrib/coccinelle/copy.cocci
-new file mode 100644
-index 0000000000..f0d883932a
---- /dev/null
-+++ b/contrib/coccinelle/copy.cocci
-@@ -0,0 +1,31 @@
-+@@
-+type T;
-+T dst;
-+T src;
-+@@
-+(
-+- memcpy(&dst, &src, sizeof(dst));
-++ dst = src;
-+|
-+- memcpy(&dst, &src, sizeof(src));
-++ dst = src;
-+|
-+- memcpy(&dst, &src, sizeof(T));
-++ dst = src;
-+)
-+
-+@@
-+type T;
-+T dst;
-+T *src;
-+@@
-+(
-+- memcpy(&dst, src, sizeof(dst));
-++ dst = *src;
-+|
-+- memcpy(&dst, src, sizeof(*src));
-++ dst = *src;
-+|
-+- memcpy(&dst, src, sizeof(T));
-++ dst = *src;
-+)
-diff --git a/convert.c b/convert.c
-index 8d652bf27c..4bae12be6b 100644
---- a/convert.c
-+++ b/convert.c
-@@ -290,7 +290,7 @@ static int crlf_to_git(const char *path, const char *src, size_t len,
- 	if ((checksafe == SAFE_CRLF_WARN ||
- 	    (checksafe == SAFE_CRLF_FAIL)) && len) {
- 		struct text_stat new_stats;
--		memcpy(&new_stats, &stats, sizeof(new_stats));
-+		new_stats = stats;
- 		/* simulate "git add" */
- 		if (convert_crlf_into_lf) {
- 			new_stats.lonelf += new_stats.crlf;
-diff --git a/credential-cache--daemon.c b/credential-cache--daemon.c
-index 46c5937526..798cf33c3a 100644
---- a/credential-cache--daemon.c
-+++ b/credential-cache--daemon.c
-@@ -22,7 +22,7 @@ static void cache_credential(struct credential *c, int timeout)
- 	e = &entries[entries_nr++];
- 
- 	/* take ownership of pointers */
--	memcpy(&e->item, c, sizeof(*c));
-+	e->item = *c;
- 	memset(c, 0, sizeof(*c));
- 	e->expiration = time(NULL) + timeout;
- }
-diff --git a/daemon.c b/daemon.c
-index 473e6b6b63..f891398aad 100644
---- a/daemon.c
-+++ b/daemon.c
-@@ -785,7 +785,7 @@ static void add_child(struct child_process *cld, struct sockaddr *addr, socklen_
- 
- 	newborn = xcalloc(1, sizeof(*newborn));
- 	live_children++;
--	memcpy(&newborn->cld, cld, sizeof(*cld));
-+	newborn->cld = *cld;
- 	memcpy(&newborn->address, addr, addrlen);
- 	for (cradle = &firstborn; *cradle; cradle = &(*cradle)->next)
- 		if (!addrcmp(&(*cradle)->address, &newborn->address))
-diff --git a/line-log.c b/line-log.c
-index 65f3558b3b..64f141e200 100644
---- a/line-log.c
-+++ b/line-log.c
-@@ -1093,7 +1093,7 @@ static int process_all_files(struct line_log_data **range_out,
- 				rg = rg->next;
- 			assert(rg);
- 			rg->pair = diff_filepair_dup(queue->queue[i]);
--			memcpy(&rg->diff, pairdiff, sizeof(struct diff_ranges));
-+			rg->diff = *pairdiff;
- 		}
- 		free(pairdiff);
- 	}
-diff --git a/revision.c b/revision.c
-index b37dbec378..289977c796 100644
---- a/revision.c
-+++ b/revision.c
-@@ -2738,7 +2738,7 @@ int prepare_revision_walk(struct rev_info *revs)
- 	struct object_array old_pending;
- 	struct commit_list **next = &revs->commits;
- 
--	memcpy(&old_pending, &revs->pending, sizeof(old_pending));
-+	old_pending = revs->pending;
- 	revs->pending.nr = 0;
- 	revs->pending.alloc = 0;
- 	revs->pending.objects = NULL;
--- 
-2.12.0
+It does feel a bit scary learning that you may _silently_ lose 
+commits, especially as --fork-point is used by default for both 
+vanilla `git rebase` and `git pull --rebase`.
+
+P.S. As a relatively new user, I actually just got aware of this 
+behavior from another, recently posted e-mail[2], having me 
+investigate further, yet thought replying here might be better as it 
+got some attention already (adding author of that other e-mail, 
+Laszlo Kiss, to Cc).
+
+Regards,
+Buga
+
+[1] Example graphs:
+
+  (1.1) ---A---B (master)
+                \
+                 X---Y (topic)
+
+  (1.2)      C---D (master)
+            /
+        ---A---B
+                \
+                 X---Y (topic)
+
+  (1.3)            X'---Y' (topic)
+                  /
+             C---D (master)
+            /
+        ---A
+
+  Note that I didn`t use "origin/master" but just "master" on purpose, 
+  as the branch being tracked doesn`t have to be a remote one, making 
+  the lost local commits confusion even greater.
+
+[2] https://public-inbox.org/git/CAO0LFki4PN8zz2xpoSpjTHJGS=NG_suQYR27EcmzEMiaCw9kuA@mail.gmail.com/
