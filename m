@@ -2,119 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8E905202C1
-	for <e@80x24.org>; Fri, 10 Mar 2017 04:59:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5F71C202C1
+	for <e@80x24.org>; Fri, 10 Mar 2017 05:02:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932538AbdCJE7I (ORCPT <rfc822;e@80x24.org>);
-        Thu, 9 Mar 2017 23:59:08 -0500
-Received: from mail-pg0-f67.google.com ([74.125.83.67]:34195 "EHLO
-        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932097AbdCJE7G (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Mar 2017 23:59:06 -0500
-Received: by mail-pg0-f67.google.com with SMTP id b5so9014439pgg.1
-        for <git@vger.kernel.org>; Thu, 09 Mar 2017 20:59:05 -0800 (PST)
+        id S932505AbdCJFBr (ORCPT <rfc822;e@80x24.org>);
+        Fri, 10 Mar 2017 00:01:47 -0500
+Received: from mail-pf0-f195.google.com ([209.85.192.195]:35683 "EHLO
+        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932332AbdCJFBn (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Mar 2017 00:01:43 -0500
+Received: by mail-pf0-f195.google.com with SMTP id 67so9493847pfg.2
+        for <git@vger.kernel.org>; Thu, 09 Mar 2017 21:00:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:reply-to:mime-version
-         :content-disposition:user-agent;
-        bh=YTKMFa+Wj0LhUtPh39Iy3wjqrf009LEeDZ/X4xLFVHc=;
-        b=lwHvg6oDLNBIqVJxtVyPK56ODX8AgnJVgv7O05EI6OR1DiQNGlEEutOFfx1eRyOCYI
-         CjKyZgUQTR1ybT3Fy20d/LGwfb4TKqcwwwUFCaKhw1N8xaMrJC8wXjt0tIwuL0tLZ2Ez
-         ufmXB1eskyom4EEOXvmUYSQniTFMLvQHjvOhuTk+kRf1jpi09vytKNxH8aM42TrklcR/
-         ybzqeVM0klQm89xt3u9Z3sDMrWEbRsCTgMH44m1nwCQVX4JUEUkuZN/fizy2G2jcQg4R
-         Df/nfAFa5JCDYwjjClt7HYFGysO50hDcIWUjn5HG1G6CZifdfPlNYiccq1n9+ejkHle+
-         +z/w==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=lrp4Y3aff/T86EdnY0GrPJsWWMFsuBQMOssJK9y+tvY=;
+        b=GjMkOHOU0/c8a69yZqwoZeJlO9VcK6od1p53LQ/pXpM22BcqPZofJ5mv3rJgBR3Nnx
+         +LsTUXtwIsEzlX1Vq7h5fZ+zq+TKx0cpzqMvBtV64Xe8+znWKUpuVkAvLJkRJ00OiPre
+         dkQHrZNe5+XEaaC8H48HRgR/NkglLPX+2abNtPJdfO7P/igVfgarXPtkP3Pjj6RWHWpN
+         nt1pFbbgEaQYIXmHeM4/SC5VAdONRLgSpVR3vb6trtQDn9euoKMYHQGaih9WD8ai2L6i
+         jpsxkC/zT71LflnMWCa+AGjqVY1Dd1rePJedVky9p3WsaDTQ8MLL5MyKKV5uIgin/WnM
+         Xo/w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:reply-to
-         :mime-version:content-disposition:user-agent;
-        bh=YTKMFa+Wj0LhUtPh39Iy3wjqrf009LEeDZ/X4xLFVHc=;
-        b=KzqI1rtFNJBe9MgwNA54DKqFN5ov+GRfQyXs0D87SZaiuMe0JCdv1FT4dXbk8KDcnt
-         qCYbwZh/ZBynYf8DYS4+NvvY9C6cjCrSaWzQEQ2oZSNg3rihY19/IYsRu3pIrxGQKjM9
-         yoRDyz2XDMWSwhOolz+vQW+ocy0Ye5Wr11nR9RXqj2o72IH9ATooiW0Tz5XQhWkAKP6W
-         zZ4DuudUgfb0TcNxTdb/va8zrDV2D6CVdxs4TpJCJ4XrHhC1feEgYKRQbZXXIldzFOLB
-         Zl2Wh1aJj5/no88BO8VndS2UTCG+OsekowDnxjVSbomYind+DpY1b0aYfITsST7r81kF
-         Q2fA==
-X-Gm-Message-State: AMke39kbJBeueY0dObO2DtN9bAfyRYdIcTbLWgvOKbIwUQdsY+Q4L0wT2xNQ1tX87WRPKw==
-X-Received: by 10.84.216.17 with SMTP id m17mr22715611pli.158.1489121944879;
-        Thu, 09 Mar 2017 20:59:04 -0800 (PST)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=lrp4Y3aff/T86EdnY0GrPJsWWMFsuBQMOssJK9y+tvY=;
+        b=qRjgUAd3R4oAj60IW6hVGesorLbho57H01pzr6G0XxsT42mp43afW+GNKQflYLQnvf
+         AUIRfan/Hu4hoMVAKVc4ZfHdoMuwNPrGThYN6xcYz0tRKv23ILVbn9Z2kIx0WO/rdY3D
+         xPSZAEYazBAxtewxEW834jzDttQhD2x3BzQGqme/wM5OFCDa8wyWUfdNt1QcNO534xQs
+         B5Z9lbhIMdGOvlUu42zIHfuys2U/DizfmFiDzYnK7w3vBwXuwWoiC5mqL8Nfxy9qyhhA
+         vbcHAT7N8KETN6Gt/+ePo/mqlcYxolTCqcgQSCaDOxwDEhfj8/Pe/2ZpgQW7ofa20H2B
+         b1zQ==
+X-Gm-Message-State: AMke39lZwh9/9FMg0R3T50JyzeCJrbzIJtSHtTzESLx3rvZXXtkQtmvP5pUWnX5gDRXDGA==
+X-Received: by 10.84.138.1 with SMTP id 1mr22624598plo.29.1489122048294;
+        Thu, 09 Mar 2017 21:00:48 -0800 (PST)
 Received: from localhost (37.147.199.104.bc.googleusercontent.com. [104.199.147.37])
-        by smtp.gmail.com with ESMTPSA id 23sm15392375pfz.127.2017.03.09.20.59.04
+        by smtp.gmail.com with ESMTPSA id x15sm15536779pgo.56.2017.03.09.21.00.47
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 09 Mar 2017 20:59:04 -0800 (PST)
-Date:   Fri, 10 Mar 2017 04:59:03 +0000
+        Thu, 09 Mar 2017 21:00:47 -0800 (PST)
+Date:   Fri, 10 Mar 2017 05:00:46 +0000
 From:   Siddharth Kannan <kannan.siddharth12@gmail.com>
 To:     mash <mash+git@crossperf.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
+Cc:     Junio C Hamano <gitster@pobox.com>,
         Vegard Nossum <vegard.nossum@oracle.com>, stepnem@gmail.com,
         Stefan Beller <sbeller@google.com>,
         Vedant Bassi <sharababy.dev@gmail.com>,
         Prathamesh Chavan <pc44800@gmail.com>,
-        Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: [PATCH v2 GSoC RFC] diff: allow "-" as a short-hand for "last branch"
-Message-ID: <20170310045903.GA2417@instance-1.c.mfqp-source.internal>
-Reply-To: 1cm4dm-0007OE-MZ@crossperf.com
+        Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH v2 GSoC RFC] diff: allow "-" as a short-hand for "last
+ branch"
+Message-ID: <20170310050046.GB2417@instance-1.c.mfqp-source.internal>
+References: <1cm4dm-0007OE-MZ@crossperf.com>
+ <20170310034106.GB1984@instance-1.c.mfqp-source.internal>
+ <1cmCXH-0000ND-9K@crossperf.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
+In-Reply-To: <1cmCXH-0000ND-9K@crossperf.com>
 User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hey, I have already worked on this, and I made the change inside
-sha1_name.c.
+On Fri, Mar 10, 2017 at 04:52:07AM +0000, mash wrote:
+> Maybe you can reuse the diff tests. I'll do another microproject then.
 
-The final version of my patch is here[1].
+Yeah, definitely. If there are more tests required, then I will reuse
+your ones!
+> 
+> mash
+> 
+> The original message doesn't seem to cc the mailing list:
 
-> Handling the dash in sha1_name:get_sha1_basic is not an issue but
-> git
-> was designed with the dash in mind for options not for this weird
-> short-hand so as long as there's no decision made that git should
-> actually have this short-hand everywhere it does not seem like a
-> good
-> idea to change anything in there because it would probably have
-> unwanted side-effects.
+Thanks! It was rather daft of me to not realise this. I was waiting
+for it to appear on public-inbox.
 
-Actually, this was discussed even when I was working on this patch.
-
-I said [2]
-
-> Making a change in sha1_name.c will touch a lot of commands
-> (setup_revisions is called from everywhere in the codebase), so, I
-> am
-> still trying to figure out how to do this such that the rest of the
-> codepath remains unchanged.
-
-Matthieu replied to this [3]
-
-> I don't have strong opinion on this: I tend to favor consistency and
-> supporting "-" everywhere goes in this direction, but I think the
-> downsides should be considered too. A large part of the exercice
-> here
-> is to write a good commit message!
-
-From the discussion over the different versions of my patch, I get
-the feeling that enabling this shorthand for all the commands is the
-direction that git wants to move in.
-
-Sorry about the time you spent on this patch.
-
-[1]: http://public-inbox.org/git/1488007487-12965-1-git-send-email-kannan.siddharth12@gmail.com/
-[2]: https://public-inbox.org/git/20170207191450.GA5569@ubuntu-512mb-blr1-01.localdomain/
-[3]: https://public-inbox.org/git/vpqh944eof7.fsf@anie.imag.fr/
+I re-sent it with the CC. The timestamp is a little bit
+skewed, but I think it should make sense.
 
 Thanks,
 Siddharth.
-
-P.S. This message was sent _before_ 1cmCXH-0000ND-9K@crossperf.com but
-I didn't CC The mailing list in that message. I am sending it with the
-mailing list cc-ed to ensure that the conversation makes sense.
-
