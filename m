@@ -2,96 +2,126 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EE26B20311
-	for <e@80x24.org>; Thu,  9 Mar 2017 23:48:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2B1AA202C1
+	for <e@80x24.org>; Fri, 10 Mar 2017 00:13:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753793AbdCIXsP (ORCPT <rfc822;e@80x24.org>);
-        Thu, 9 Mar 2017 18:48:15 -0500
-Received: from mail-pg0-f46.google.com ([74.125.83.46]:33588 "EHLO
-        mail-pg0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752332AbdCIXsO (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Mar 2017 18:48:14 -0500
-Received: by mail-pg0-f46.google.com with SMTP id 25so31902192pgy.0
-        for <git@vger.kernel.org>; Thu, 09 Mar 2017 15:48:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=EFbhscWM1CUE8JRdQZdsm/XEObuGrzTs+54+G7QdN+k=;
-        b=OvrPQbab/bQdb5Spqjm7M8iPMZoPQn42ghbAnec3dEIRhdjckJjj9PHYnHVrb9T0zX
-         +iCyvXBylMk+jxlujpPsclClomllj/MwoNj0COM28oViAmJrcMmghOKsqcMN23AGaTHm
-         AcQfRcZnfm8e8Z6DY4DH3pcawBXSMlHsovW48p3d5msepPwm3GGW1r6DNfGR/vYPMCnU
-         g7/kcvNQHExWtuY+d8TQAUJ8E5U1GyHOmKVnqXZxz0gC38m1R8r+34k5H2GUWhHWMt0e
-         3ET4dq5IY97/u4tezyQGHGq0r9pEcT0UxLrz4FmB2ZzY2tgWylSW6WnuJKqIoB1OR0J3
-         Xk6A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=EFbhscWM1CUE8JRdQZdsm/XEObuGrzTs+54+G7QdN+k=;
-        b=ZLtvGop1E7wDvwO38qiTclb1Y8JJKSoz//b0r/Jbh+QBPoOa8gBfGvNjmx5PctwUBA
-         kHOsOEe68wCJOSTSN184kVtMXD+qBsDfB0kOU/ZIPyeUyanMVXeHalYgLkeu3AbPyfck
-         Y2raKE/DMAc9DOZgY9Xe3istOIEN+Mj6z/a2hZ8xWXfF+mJAfwdWuqVH5q1gL1IR4WlF
-         npB7zESPCLy9PQfwh2ZFwZ3z2dviwwp9+bJ3bi1hT47VMr4ckWjD933TunYXdKT8gk06
-         IYG7taCNJU/t41X/V2Iflj1bw638BwUuwQ9icpKAjzxp+KQLo3Fakm9arhNkP8h1zM4t
-         TZ8g==
-X-Gm-Message-State: AMke39mfLaIgYlkyuKedApEhBJ7aRY10pKFaTMJQZSvFcgokgwN4CG4/wVyfIwVGIy35tlZr
-X-Received: by 10.99.24.88 with SMTP id 24mr17003201pgy.54.1489102842881;
-        Thu, 09 Mar 2017 15:40:42 -0800 (PST)
-Received: from google.com ([2620:0:1000:5b10:24ad:64a3:afd2:c7bd])
-        by smtp.gmail.com with ESMTPSA id l72sm14463572pfi.93.2017.03.09.15.40.41
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 09 Mar 2017 15:40:41 -0800 (PST)
-Date:   Thu, 9 Mar 2017 15:40:40 -0800
-From:   Brandon Williams <bmwill@google.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     gitster@pobox.com, git@vger.kernel.org, novalis@novalis.org,
-        sandals@crustytoothpaste.net, hvoigt@hvoigt.net,
-        jrnieder@gmail.com, ramsay@ramsayjones.plus.com
-Subject: Re: [PATCH 12/17] update submodules: add submodule_move_head
-Message-ID: <20170309234040.GE52558@google.com>
-References: <20170306205919.9713-1-sbeller@google.com>
- <20170309221543.15897-1-sbeller@google.com>
- <20170309221543.15897-13-sbeller@google.com>
+        id S1752943AbdCJANg (ORCPT <rfc822;e@80x24.org>);
+        Thu, 9 Mar 2017 19:13:36 -0500
+Received: from mout.web.de ([212.227.17.12]:63342 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752459AbdCJANf (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Mar 2017 19:13:35 -0500
+Received: from [192.168.178.36] ([79.213.126.222]) by smtp.web.de (mrweb101
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0LtWo4-1c4zML0QpY-010t8x; Fri, 10
+ Mar 2017 01:13:13 +0100
+To:     Git List <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Subject: [PATCH] blame: move blame_entry duplication to add_blame_entry()
+Message-ID: <11b8ad3a-cd3d-2fd6-4b06-b442099c2709@web.de>
+Date:   Fri, 10 Mar 2017 01:12:59 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.8.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20170309221543.15897-13-sbeller@google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+X-Provags-ID: V03:K0:iwV3veki3D18EYoiRQT3yd+a5OKDOwFhA+Qx1cglI6pwTqzI0CS
+ DNaiwUqwD0OKQKAtN/I25uHDGE4yY8ZduJ1JlLMIUw8uwY9mdtd6xSxEJ3aoFFMAi6ActMa
+ 6g5H7myzhVvMA1UA2t9UEDA7e4O4LSxgz+mrlsSABmJjBinY6SJH75rShklHZamVbY/xS8E
+ +9DewaAK8GmWSZnAooznA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:RGAJ+gACSGQ=:BBf0008q0/bBBpk83GnHVS
+ wkaCbaNVT50sgqwJZ5IGgWDSkxUgciLLLUh7XImxx0m1ihJkQTB6Xp9aWXQkfKcLZEKazycik
+ /G4d84E4pJEv1QMpuHeToYXGeKD3BzHYdpUZbWG++Ng3JJw2auNPUzjerV+4Fna6K1V5i+EC5
+ NwcBqh1iPj2SqtFJTlh3Wz/kbtKjklyT7g/lyp6N5/6/kk64ZW8y6AgAmT+LLQ77OMPz4xb6a
+ cwT6N3kSlM11LmmLHgOTrq01GHtb8jzwDCMMKVIvtC0CPjrTI/rmFZtS0YC+dLSswKLAYlX2l
+ PJudNrmr2TX1WJbYQqSm1rb274LOKOn3/8aik2aeGvLWD9Ksbw3dSGh4BRR5Fr+HHAsmEEZiR
+ xYZHxv4mWkCq5G7fmRGZRcJeBjGM8dJ+3I0bSvA8lNg6VeOf5tHNedECftqDQmP7TDd51A6fh
+ fVnTAWbcF1eXV/7BJCs3K1mHh1odDbAL1ojFrJYQ4mUomygD+32u3nGqhLEJfX4VcqZyyO1b3
+ U/2rviXlsEH4iZ/C3LCgEOFkapgUjLPq655ZhbypaKnAifzegIAWomssz4Rd4deulRTnozSGa
+ lX9x/nIg2SlGMWdhFt2VuYZUALtYSau+/TSZ143Lrxy8GEPrMxpb5A/h1MFlkyzQjAg7lxEYn
+ YeQ2qshWtjxnAxIscjkPzjl4RXbyuanYwvEw5+He+/Xj0gJQmkw8gRZ56R/wijP7tqMCYFCjY
+ bUzDGjXlEXKMSzBG3Pai66dasza1f4AiT4OQp3P4AxrqefC/vDYZwHu/vvkB8U8hiytEmK/un
+ aNyho8D
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 03/09, Stefan Beller wrote:
-> +static void submodule_reset_index(const char *path)
-> +{
-> +	struct child_process cp = CHILD_PROCESS_INIT;
-> +	prepare_submodule_repo_env_no_git_dir(&cp.env_array);
-> +
-> +	cp.git_cmd = 1;
-> +	cp.no_stdin = 1;
-> +	cp.dir = path;
-> +
-> +	argv_array_pushf(&cp.args, "--super-prefix=%s/", path);
+All callers of add_blame_entry() allocate and copy the second argument.
+Let the function do it for them, reducing code duplication.
 
-What happens with nested submodules? As in can we reach this code path
-with super_prefix already being set?  If so we would need to include
-that as part of the super_prefix being passed to the child.  Just
-looking for some clarification.
+Signed-off-by: Rene Scharfe <l.s.r@web.de>
+---
+ builtin/blame.c | 25 ++++++++-----------------
+ 1 file changed, 8 insertions(+), 17 deletions(-)
 
-> +	argv_array_pushl(&cp.args, "read-tree", "-u", "--reset", NULL);
-> +
-> +	argv_array_push(&cp.args, EMPTY_TREE_SHA1_HEX);
-> +
-> +	if (run_command(&cp))
-> +		die("could not reset submodule index");
-> +}
-> +
-
+diff --git a/builtin/blame.c b/builtin/blame.c
+index cffc626540..f7aa95f4ba 100644
+--- a/builtin/blame.c
++++ b/builtin/blame.c
+@@ -658,8 +658,11 @@ static struct origin *find_rename(struct scoreboard *sb,
+ /*
+  * Append a new blame entry to a given output queue.
+  */
+-static void add_blame_entry(struct blame_entry ***queue, struct blame_entry *e)
++static void add_blame_entry(struct blame_entry ***queue,
++			    const struct blame_entry *src)
+ {
++	struct blame_entry *e = xmalloc(sizeof(*e));
++	memcpy(e, src, sizeof(*e));
+ 	origin_incref(e->suspect);
+ 
+ 	e->next = **queue;
+@@ -760,21 +763,15 @@ static void split_blame(struct blame_entry ***blamed,
+ 			struct blame_entry *split,
+ 			struct blame_entry *e)
+ {
+-	struct blame_entry *new_entry;
+-
+ 	if (split[0].suspect && split[2].suspect) {
+ 		/* The first part (reuse storage for the existing entry e) */
+ 		dup_entry(unblamed, e, &split[0]);
+ 
+ 		/* The last part -- me */
+-		new_entry = xmalloc(sizeof(*new_entry));
+-		memcpy(new_entry, &(split[2]), sizeof(struct blame_entry));
+-		add_blame_entry(unblamed, new_entry);
++		add_blame_entry(unblamed, &split[2]);
+ 
+ 		/* ... and the middle part -- parent */
+-		new_entry = xmalloc(sizeof(*new_entry));
+-		memcpy(new_entry, &(split[1]), sizeof(struct blame_entry));
+-		add_blame_entry(blamed, new_entry);
++		add_blame_entry(blamed, &split[1]);
+ 	}
+ 	else if (!split[0].suspect && !split[2].suspect)
+ 		/*
+@@ -785,18 +782,12 @@ static void split_blame(struct blame_entry ***blamed,
+ 	else if (split[0].suspect) {
+ 		/* me and then parent */
+ 		dup_entry(unblamed, e, &split[0]);
+-
+-		new_entry = xmalloc(sizeof(*new_entry));
+-		memcpy(new_entry, &(split[1]), sizeof(struct blame_entry));
+-		add_blame_entry(blamed, new_entry);
++		add_blame_entry(blamed, &split[1]);
+ 	}
+ 	else {
+ 		/* parent and then me */
+ 		dup_entry(blamed, e, &split[1]);
+-
+-		new_entry = xmalloc(sizeof(*new_entry));
+-		memcpy(new_entry, &(split[2]), sizeof(struct blame_entry));
+-		add_blame_entry(unblamed, new_entry);
++		add_blame_entry(unblamed, &split[2]);
+ 	}
+ }
+ 
 -- 
-Brandon Williams
+2.12.0
+
