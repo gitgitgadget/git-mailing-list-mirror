@@ -2,113 +2,79 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A60271FBEC
-	for <e@80x24.org>; Fri, 10 Mar 2017 19:38:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E06321FBEC
+	for <e@80x24.org>; Fri, 10 Mar 2017 19:43:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933432AbdCJTij (ORCPT <rfc822;e@80x24.org>);
-        Fri, 10 Mar 2017 14:38:39 -0500
-Received: from cloud.peff.net ([104.130.231.41]:42210 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1755276AbdCJTii (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Mar 2017 14:38:38 -0500
-Received: (qmail 29038 invoked by uid 109); 10 Mar 2017 19:38:37 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 10 Mar 2017 19:38:37 +0000
-Received: (qmail 15797 invoked by uid 111); 10 Mar 2017 19:38:46 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 10 Mar 2017 14:38:46 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 10 Mar 2017 14:38:35 -0500
-Date:   Fri, 10 Mar 2017 14:38:35 -0500
-From:   Jeff King <peff@peff.net>
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     Shawn Pearce <spearce@spearce.org>,
-        Linus Torvalds <torvalds@linux-foundation.org>,
-        Git Mailing List <git@vger.kernel.org>,
-        Stefan Beller <sbeller@google.com>, bmwill@google.com,
-        Jonathan Tan <jonathantanmy@google.com>,
-        David Lang <david@lang.hm>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: RFC v3: Another proposed hash function transition plan
-Message-ID: <20170310193835.t7syswueuu7nmkjz@sigill.intra.peff.net>
-References: <20170304011251.GA26789@aiede.mtv.corp.google.com>
- <CA+55aFz+gkAsDZ24zmePQuEs1XPS9BP_s8O7Q4wQ7LV7X5-oDA@mail.gmail.com>
- <20170307001709.GC26789@aiede.mtv.corp.google.com>
- <CAJo=hJtoX9=AyLHHpUJS7fueV9ciZ_MNpnEPHUz8Whui6g9F0A@mail.gmail.com>
- <20170309202408.GA17847@aiede.mtv.corp.google.com>
+        id S1755377AbdCJTnd (ORCPT <rfc822;e@80x24.org>);
+        Fri, 10 Mar 2017 14:43:33 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:56177 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1755490AbdCJTn3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Mar 2017 14:43:29 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 11CF16905D;
+        Fri, 10 Mar 2017 14:42:52 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=EJJTJ5WPrGEVJ127XVrnmHxGUFM=; b=jIIDUl
+        t6ifZipmbF+zt7NDysLb2cxSg6ZWewNDHYsgjSUkk/7ykH6AHzCf4782uXrcUV+v
+        aTwH0vfw/jTLrQqFun5SY3ck5G87CUxoTBNhByqDMOBjCQQZTG9e0hB/uWQH0K7c
+        rHTXR1B4OQXqv2C7o4JXOPm3/5HOt36rT/hBA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=xg7VzGn2bHLau3g6VIesmC+kk0ZxSK5S
+        kk1i1gISgt/rFIlsp7q1Y9msbx5/0/CtdpYgcuD3rriqmt2a4l4lKpAkSyXLAJhM
+        suZfoQTHshPoJ1RNvas62LpsW/p/gvXHXjdBZY3Xpkl/ohdPnUqgEZIMgvXsHr2l
+        uWTYw1IxBSM=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 0B1636905C;
+        Fri, 10 Mar 2017 14:42:52 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 7CF816905B;
+        Fri, 10 Mar 2017 14:42:51 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Brandon Williams <bmwill@google.com>
+Cc:     Valery Tolstov <me@vtolstov.org>, git@vger.kernel.org,
+        sbeller@google.com
+Subject: Re: [PATCH v3 2/2] submodule--helper.c: remove duplicate code
+References: <20170309003858.GB153031@google.com>
+        <20170309012734.21541-1-me@vtolstov.org>
+        <20170309012734.21541-3-me@vtolstov.org>
+        <20170309181837.GF153031@google.com>
+Date:   Fri, 10 Mar 2017 11:42:50 -0800
+In-Reply-To: <20170309181837.GF153031@google.com> (Brandon Williams's message
+        of "Thu, 9 Mar 2017 10:18:37 -0800")
+Message-ID: <xmqqvargyl39.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20170309202408.GA17847@aiede.mtv.corp.google.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: BF5D9644-05C9-11E7-B79B-97B1B46B9B0B-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Mar 09, 2017 at 12:24:08PM -0800, Jonathan Nieder wrote:
+Brandon Williams <bmwill@google.com> writes:
 
-> > SHA-1 to SHA-3: lookup SHA-1 in .msha1, reverse .idx, find offset to
-> > read the SHA-3.
-> > SHA-3 to SHA-1: lookup SHA-3 in .idx, and reverse the .msha1 file to
-> > translate offset to SHA-1.
-> 
-> Thanks for this suggestion.  I was initially vaguely nervous about
-> lookup times in an idx-style file, but as you say, object reads from a
-> packfile already have to deal with this kind of lookup and work fine.
+> On 03/09, Valery Tolstov wrote:
+>> Remove code fragment from module_clone that duplicates functionality
+>> of connect_work_tree_and_git_dir in dir.c
+>> 
+>> Signed-off-by: Valery Tolstov <me@vtolstov.org>
+>
+> Looks good.
 
-Not exactly. The "reverse .idx" step has to build the reverse mapping on
-the fly, and it's non-trivial. For instance, try:
+I'll queue with your Reviewed-by: added.
 
-  sha1=$(git rev-parse HEAD)
-  time echo $sha1 | git cat-file --batch-check='%(objectsize)'
-  time echo $sha1 | git cat-file --batch-check='%(objectsize:disk)'
+If sb/checkout-recurse-submodules is going to be rerolled, I'd
+appreciate if it includes this patch inserted at an appropriate
+place in the series, instead of me having to remember re-applying
+this patch every time it happens.
 
-on a large repo (where HEAD is in a big pack). The on-disk size is
-conceptually simpler, as we only need to look at the offset of the
-object versus the offset of the object after it. But in practice it
-takes much longer, because it has to build the revindex on the fly (I
-get 7ms versus 179ms on linux.git).
-
-The effort is linear in the number of objects (we create the revindex
-with a radix sort).
-
-The reachability bitmaps suffer from this, too, as they need the
-revindex to know which object is at which bit position. At GitHub we
-added an extension to the .bitmap files that stores this "bit cache".
-Here are timings before and after on linux.git:
-
-  $ time git rev-list --use-bitmap-index --count master
-  659371
-
-  real	0m0.182s
-  user	0m0.136s
-  sys	0m0.044s
-
-  $ time git.gh rev-list --use-bitmap-index --count master
-  659371
-
-  real	0m0.016s
-  user	0m0.008s
-  sys	0m0.004s
-
-It's not a full revindex, but it's enough for bitmap use. You can also
-use it to generate the revindex slightly more quickly, because you can
-skip the sorting step (you just insert the entries in the correct order
-by walking the bit cache and dereferencing the offsets from the .idx
-portion). So it's still linear, but with a smaller constant factor.
-
-I think for the purposes here, though, we don't actually care about the
-offsets. For the cost of one uint32_t per object, you can keep a list
-mapping positions in the sha1 index into the sha3 index. So then you do
-the log-n binary search to find the sha1, a constant-time lookup in the
-mapping array, and that gives you the position in the sha3 index, from
-which you can then access the sha3 (or the actual pack offset, for that
-matter).
-
-So I think it's solvable, but I suspect we would want an extension to
-the .idx format to store the mapping array, in order to keep it log-n.
-
--Peff
+Thanks.
