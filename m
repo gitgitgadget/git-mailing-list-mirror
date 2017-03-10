@@ -2,112 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-1.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FAKE_REPLY_C,FREEMAIL_FORGED_FROMDOMAIN,
+	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0C85C202C1
-	for <e@80x24.org>; Fri, 10 Mar 2017 02:49:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1CC25202C1
+	for <e@80x24.org>; Fri, 10 Mar 2017 03:31:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753768AbdCJCtg (ORCPT <rfc822;e@80x24.org>);
-        Thu, 9 Mar 2017 21:49:36 -0500
-Received: from mga06.intel.com ([134.134.136.31]:10745 "EHLO mga06.intel.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751067AbdCJCtf (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Mar 2017 21:49:35 -0500
-Received: from orsmga003.jf.intel.com ([10.7.209.27])
-  by orsmga104.jf.intel.com with ESMTP; 09 Mar 2017 18:49:34 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.36,138,1486454400"; 
-   d="scan'208";a="942692575"
-Received: from yanlian1-mobl2.ccr.corp.intel.com (HELO wfg-t540p.sh.intel.com) ([10.255.24.145])
-  by orsmga003.jf.intel.com with ESMTP; 09 Mar 2017 18:49:30 -0800
-Received: from wfg by wfg-t540p.sh.intel.com with local (Exim 4.89)
-        (envelope-from <lkp@intel.com>)
-        id 1cmAcT-0005oD-QF; Fri, 10 Mar 2017 10:49:29 +0800
-Date:   Fri, 10 Mar 2017 10:49:29 +0800
-From:   Fengguang Wu <lkp@intel.com>
-To:     Pavel Machek <pavel@ucw.cz>
-Cc:     kbuild-all@01.org,
-        Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-        Sakari Ailus <sakari.ailus@iki.fi>, mchehab@kernel.org,
-        kernel list <linux-kernel@vger.kernel.org>,
-        ivo.g.dimitrov.75@gmail.com, sre@kernel.org, pali.rohar@gmail.com,
-        linux-media@vger.kernel.org, git@vger.kernel.org,
-        Ye Xiaolong <xiaolong.ye@intel.com>
-Subject: Re: [media] omap3isp: Correctly set IO_OUT_SEL and VP_CLK_POL for
- CCP2 mode
-Message-ID: <20170310024929.la3uuzhtckdn5tm2@wfg-t540p.sh.intel.com>
-References: <20170301114545.GA19201@amd>
- <201703031931.OeUvSOwD%fengguang.wu@intel.com>
- <20170303214838.GA26826@amd>
+        id S1751619AbdCJDbD (ORCPT <rfc822;e@80x24.org>);
+        Thu, 9 Mar 2017 22:31:03 -0500
+Received: from mail-pg0-f66.google.com ([74.125.83.66]:36480 "EHLO
+        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750816AbdCJDbC (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Mar 2017 22:31:02 -0500
+Received: by mail-pg0-f66.google.com with SMTP id 25so8775667pgy.3
+        for <git@vger.kernel.org>; Thu, 09 Mar 2017 19:31:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:mime-version:content-disposition
+         :in-reply-to:user-agent;
+        bh=rJ3dCnKc9BVE82Yut/605OeUa5KNdFu5v869MpLOX1w=;
+        b=eoZpEBWz5mD1qmDqikSdwv7HYl+LGm9xpXxATS38iKS06AQIEVcN8YMqb03TWbISKC
+         WmwIZbWToOMMqRjjSM1w4Z/xia8EgwdfiA6xX/jcDXM3yrj++deTXjHFhnJR7/sgZdBz
+         a16ZJVSx8JZtSn0PeyEpG1DiNsCanb3D6BWDdZaxtjQeZmc82vo1Nu1s4IsUV3oFEvvX
+         fnzU1INNrnHnCVOHSW9JGvoQnULsOHi8zA9vIOiMMhX40dlQbJ2nCK0dbhGvGuzTTzoW
+         VqykB6o2QshX62LXWhFUTrjaLooVKlXtCWLqunHTqqNKjWFMeYS2IztYI7TQ+x8pTBtl
+         P61g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=rJ3dCnKc9BVE82Yut/605OeUa5KNdFu5v869MpLOX1w=;
+        b=FMKQn95yVMFWTXxACHm/0TahHeWVRQg9oOQECGc/fXV42SOd+vpqn0xfgR8ugSHk/W
+         Y+FTeGv0gGiXne8RjyXcPtEqI0wTCtEJMbJ4PCpZbxQQgAMzc/Q3VMgik/+8kCVqbSPo
+         mk4sMJPHQ1IVMt23fvNkDLjkkRcCR9OWmpWj9mOQDq5p2S1wnNfUWDaYf/TX9WrbY7ck
+         WWDKPZTFhKmR5Jszdm83fH/NzMV6JUXrmnHTE3xdoOolVF7GeAiYIGIshABvJelAN6S1
+         wdFxsLNA4iWg1a0mr76eUiu0NK2qBfvapNKw/XCySE72QEwmQZ21np5IpMeLeQQMlvej
+         bIRQ==
+X-Gm-Message-State: AMke39kcN14kMZapPeqU8Ec6ss3rcoB3aFpjfeSjydnqWyUaT7uyjzHqYuNZ+iSTT6GA1g==
+X-Received: by 10.84.216.81 with SMTP id f17mr22096014plj.170.1489116661281;
+        Thu, 09 Mar 2017 19:31:01 -0800 (PST)
+Received: from localhost (37.147.199.104.bc.googleusercontent.com. [104.199.147.37])
+        by smtp.gmail.com with ESMTPSA id r12sm15160500pgn.26.2017.03.09.19.30.59
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 09 Mar 2017 19:31:00 -0800 (PST)
+Date:   Fri, 10 Mar 2017 03:30:58 +0000
+From:   Siddharth Kannan <kannan.siddharth12@gmail.com>
+To:     Shuyang Shi <shuyang790@gmail.com>
+Cc:     Stefan Beller <sbeller@google.com>,
+        Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: [PATCH GSoC] Allow "-" as a short-hand for "@{-1}" in branch
+ deletions
+Message-ID: <20170310033058.GA1984@instance-1.c.mfqp-source.internal>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20170303214838.GA26826@amd>
-User-Agent: NeoMutt/20161104 (1.7.1)
+In-Reply-To: <0102015ab11ee091-f9f11bb5-559a-4c92-b5f6-9f7755e8f4b9-000000@eu-west-1.amazonses.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Mar 03, 2017 at 10:48:38PM +0100, Pavel Machek wrote:
->Hi!
->
->> [auto build test ERROR on linuxtv-media/master]
->> [also build test ERROR on v4.10 next-20170303]
->> [if your patch is applied to the wrong git tree, please drop us a note to help improve the system]
->>
->
->Yes, the patch is against Sakari's ccp2 branch. It should work ok there.
->
->I don't think you can do much to fix the automated system....
+Hey Shuyang,
+On Thu, Mar 09, 2017 at 09:47:12AM -0800, Stefan Beller wrote:
+> > The "-" shorthand that stands for "the branch we were previously on",
+> > like we did for "git merge -" sometime after we introduced "git checkout -".
+> > Now I am introducing this shorthand to branch delete, i.e.
+> > "git branch -d -".
+> >
+> > More reference:
+> >   https://public-inbox.org/git/7vppuewl6h.fsf@alter.siamese.dyndns.org/
+> 
 
-We could, if "git format-patch" can be setup to auto append lines
+1. I have already worked on this project, and my patch is in the
+"Needs review" section in "What's cooking". It implements this change
+inside sha1_name.c and doesn't touch git branch. So, your patch is
+mutually exclusive to my previous patch.
 
-        parent-commit: X
-        parent-patch-id: Y
+2. Matthieu made an argument against enabling commands like "git
+branch -D -" even by mistake [1]. The way that I have implemented
+ensured that not a lot of "rm"-like commands were enabled.
 
-With that information, as long as the parent commit/patch is public --
-either by "git push" or posting patch to mailing lists -- we'll have
-good chance to find and use it as the base for "git am".
+My patch that would enable this shorthand for other projects is
+here[2].
 
-Currently "git format-patch" already has the option "--base=auto" to
-auto append the more accurate lines
-
-        base-commit: P
-        prerequisite-patch-id: X
-        prerequisite-patch-id: Y
-        prerequisite-patch-id: Z
-
-That's the best information git can offer. Unfortunately it cannot
-ALWAYS work without human aid. What's worse, when it cannot figure out
-the base-commit, the whole "git format-patch" command will abort like
-this
-
-        $ git format-patch -1
-        fatal: base commit shouldn't be in revision list
-
-That fatal error makes it not a viable option to always turn on
-"--base=auto" in .gitconfig.
-
-Without a fully-automated solution, I don't think many people will
-bother or remember to manually specify base-commit before sending
-patches out.
-
-To effectively save the robot from "base commit" guessing works, what
-we can do is to
-
-1) append "parent-commit"/"parent-patch-id" lines when git cannot
-   figure out and append the "base-commit"/"prerequisite-patch-id"
-   lines. So that the test robot always get the information to do
-   its job.
-
-2) advise kernel developers to run this once
-
-        git config format.useAutoBase yes
-
-   to configure "--base=auto" as the default behavior.
+[1]: http://public-inbox.org/git/vpqh944eof7.fsf@anie.imag.fr/
+[2]: http://public-inbox.org/git/1488007487-12965-5-git-send-email-kannan.siddharth12@gmail.com/
 
 Thanks,
-Fengguang
+Siddharth.
