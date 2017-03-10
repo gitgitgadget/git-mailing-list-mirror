@@ -2,118 +2,161 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B14091FBEC
-	for <e@80x24.org>; Fri, 10 Mar 2017 19:55:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1CB801FBEC
+	for <e@80x24.org>; Fri, 10 Mar 2017 19:56:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932482AbdCJTz3 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 10 Mar 2017 14:55:29 -0500
-Received: from mail-pf0-f195.google.com ([209.85.192.195]:33752 "EHLO
-        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933269AbdCJTz1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Mar 2017 14:55:27 -0500
-Received: by mail-pf0-f195.google.com with SMTP id v190so11840726pfb.0
-        for <git@vger.kernel.org>; Fri, 10 Mar 2017 11:55:27 -0800 (PST)
+        id S933893AbdCJT4J (ORCPT <rfc822;e@80x24.org>);
+        Fri, 10 Mar 2017 14:56:09 -0500
+Received: from mail-pg0-f53.google.com ([74.125.83.53]:36273 "EHLO
+        mail-pg0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S933269AbdCJT4H (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Mar 2017 14:56:07 -0500
+Received: by mail-pg0-f53.google.com with SMTP id g2so25052065pge.3
+        for <git@vger.kernel.org>; Fri, 10 Mar 2017 11:56:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=VMn5FlDZhBCuJrnLDYuK1OQsrwCJzz1FOCI5JoUpqlU=;
-        b=HTc7GHda8CR/3ExIJsYsi9hM/GojLV74pfnUsDZH7v/NYIYly9oiaBkPxWAho00pOS
-         SeEE5TSKESWxuKLaIEb/3hDMBSMCpiMBsPcS3TjDw+0U8LgmNQE6JTyPRxCDqUQhEFJQ
-         mYfw3iRMg7ALA0cdFFjTlU4Uj3DExniuCRBEfuDbdcJ2tqwfSugB8hym1oUs2B1PMBEK
-         aHqmT3YXWuQ7XOpWkIdMGo22xlydfMCqSPhrtL8Co4/Tp6BFb/VSMnjChN5cRMreTLHS
-         14dfvyuUy+KVXPTqxnZeBvXMyQC5WBqYQFLASkWdjQi85RkZcb5sVehsCyzXIfUtnG5y
-         1VXQ==
+        d=google.com; s=20161025;
+        h=subject:to:references:cc:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding;
+        bh=1AHdfC7S39ADB4C5NP1bJvVqtrPP+ym0JiIU5+VDhKw=;
+        b=ZPqLZC/q+UVti8YyXqD/8vEsecxZa5lMQEDurMVVU0VqfJlAm9ODz5HBaYWobrYZym
+         MnGz66/vjzhdvowdONTYLMXAMoYJHmZfWc3zGpHVIqKgDujr/CBNncGKD+dNcYddO1qF
+         l3DAJYePrLKJHk2SsbMpOMXah5W2xocyi3+LoZlVfewkySK5rLMsj/oeBAy3Cc169Plr
+         Y7ofL2tic1WRyq2wmQWs6FAo7rxeA4E8dhNY4iwHeK2Bj0Mvq9rHzVuR7ZqdO4JvT16k
+         2pBmuo/Smq+psOrXFKqOzGUJtey7vYVmRuOkyGFMvIU9NiEG0no+DSuUFAFcce7io1P6
+         aq6g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=VMn5FlDZhBCuJrnLDYuK1OQsrwCJzz1FOCI5JoUpqlU=;
-        b=O9VitzJNU2TS9xoWkuqaWOIwlkKLHYl196HMZoEwLEJIThaJbRi6KuZxVe5MhT7dk0
-         DQKp9A0OuDQ0WmOsiKLmUHszwcJ4mB5ENML2l5aEQl1y+KJFynvJ4cgVLCsGzyzXz7q9
-         c1xyOrvJRUN0/qTHQdt9Ob7sK9LF260WpLdaHFeSBYSsdiVyYSI9Xb6FaOCiFIAcdLrU
-         4OsxIWXCPj8dcC9xq4LGMuSLshVJcJ6RX7ppex+RQ7UDfM0b8gT50katIbIN9bOMI/q1
-         UViP5k4gjGRyT1nbNMQm0XJvrKXeoJ2j8hGt+huyOW32WVgVJbARt8z9UJDlALgIzAQG
-         RsOg==
-X-Gm-Message-State: AMke39mxbxgCeJwG1vXMFuUwQD/sJEUtnOMBx1ex9jGznz9pN2I67qv5hMu2SmBphfVXsQ==
-X-Received: by 10.98.153.11 with SMTP id d11mr23428843pfe.15.1489175726499;
-        Fri, 10 Mar 2017 11:55:26 -0800 (PST)
-Received: from aiede.mtv.corp.google.com ([2620:0:1000:5b10:9cce:1925:a4e:f6c5])
-        by smtp.gmail.com with ESMTPSA id k76sm20178684pfg.42.2017.03.10.11.55.25
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Fri, 10 Mar 2017 11:55:25 -0800 (PST)
-Date:   Fri, 10 Mar 2017 11:55:24 -0800
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Shawn Pearce <spearce@spearce.org>,
-        Linus Torvalds <torvalds@linux-foundation.org>,
-        Git Mailing List <git@vger.kernel.org>,
-        Stefan Beller <sbeller@google.com>, bmwill@google.com,
-        Jonathan Tan <jonathantanmy@google.com>,
-        David Lang <david@lang.hm>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: RFC v3: Another proposed hash function transition plan
-Message-ID: <20170310195523.GF26789@aiede.mtv.corp.google.com>
-References: <20170304011251.GA26789@aiede.mtv.corp.google.com>
- <CA+55aFz+gkAsDZ24zmePQuEs1XPS9BP_s8O7Q4wQ7LV7X5-oDA@mail.gmail.com>
- <20170307001709.GC26789@aiede.mtv.corp.google.com>
- <CAJo=hJtoX9=AyLHHpUJS7fueV9ciZ_MNpnEPHUz8Whui6g9F0A@mail.gmail.com>
- <20170309202408.GA17847@aiede.mtv.corp.google.com>
- <20170310193835.t7syswueuu7nmkjz@sigill.intra.peff.net>
+        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
+        bh=1AHdfC7S39ADB4C5NP1bJvVqtrPP+ym0JiIU5+VDhKw=;
+        b=cOvZNBThiuLk9PVs8JihvyseCrpm2gRUOLJBxqyPKUGSUwZbtRChJU1Eh/D3vCUMMG
+         KDU1H5kXYRkx+/GsS1isWZy9mEWjFqhK5HQcj2Bi5H/lKtjN+/hOp3ReUvHRaWMfEHyg
+         0GLvWKZqqUFiG/jUbRMcw9M46+kvqrzNid16Jv1K3T5IVUHkCMORlxqnHNhYlWlWTEXp
+         hdu7sDI6LowsnRJWXumMQpxXVcRTNV2fQAFvL8Sb7uJlyqWPkVZ3Rhx1Uq/l47HATN6N
+         rEb4VxH++SfhplYh9DbGEkDdpGNv4F+Pa2RZxhNnL6qko/zip4E7JFvie0eGOmd1laPi
+         Gphg==
+X-Gm-Message-State: AMke39mAaQl3NJc6fD6qJUxNVux9Citqy9r0/5yMqF0v5tkX6HvRBNqk7HuRN7n4UXc4WDhh
+X-Received: by 10.84.210.167 with SMTP id a36mr28258303pli.40.1489175766228;
+        Fri, 10 Mar 2017 11:56:06 -0800 (PST)
+Received: from twelve2.mtv.corp.google.com ([2620:0:1000:5b10:8950:f724:684f:dbd])
+        by smtp.gmail.com with ESMTPSA id s81sm8008155pgs.18.2017.03.10.11.56.05
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 10 Mar 2017 11:56:05 -0800 (PST)
+Subject: Re: [PATCH v2 1/2] pathspec: allow querying for attributes
+To:     Brandon Williams <bmwill@google.com>, git@vger.kernel.org
+References: <20170309210756.105566-1-bmwill@google.com>
+ <20170310185908.171589-1-bmwill@google.com>
+ <20170310185908.171589-2-bmwill@google.com>
+Cc:     sbeller@google.com, pclouds@gmail.com
+From:   Jonathan Tan <jonathantanmy@google.com>
+Message-ID: <80fdf152-a4a1-7078-bb86-22f11763a4bb@google.com>
+Date:   Fri, 10 Mar 2017 11:56:05 -0800
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.7.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20170310193835.t7syswueuu7nmkjz@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <20170310185908.171589-2-bmwill@google.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King wrote:
-> On Thu, Mar 09, 2017 at 12:24:08PM -0800, Jonathan Nieder wrote:
+Thanks - I don't think I have any more comments on this patch set after 
+these.
 
->>> SHA-1 to SHA-3: lookup SHA-1 in .msha1, reverse .idx, find offset to
->>> read the SHA-3.
->>> SHA-3 to SHA-1: lookup SHA-3 in .idx, and reverse the .msha1 file to
->>> translate offset to SHA-1.
->>
->> Thanks for this suggestion.  I was initially vaguely nervous about
->> lookup times in an idx-style file, but as you say, object reads from a
->> packfile already have to deal with this kind of lookup and work fine.
+On 03/10/2017 10:59 AM, Brandon Williams wrote:
+> diff --git a/pathspec.c b/pathspec.c
+> index b961f00c8..7cd5f6e3d 100644
+> --- a/pathspec.c
+> +++ b/pathspec.c
+> @@ -87,6 +89,74 @@ static void prefix_magic(struct strbuf *sb, int prefixlen, unsigned magic)
+>  	strbuf_addf(sb, ",prefix:%d)", prefixlen);
+>  }
 >
-> Not exactly. The "reverse .idx" step has to build the reverse mapping on
-> the fly, and it's non-trivial.
+> +static void parse_pathspec_attr_match(struct pathspec_item *item, const char *value)
+> +{
+> +	struct string_list_item *si;
+> +	struct string_list list = STRING_LIST_INIT_DUP;
+> +
+> +	if (item->attr_check)
+> +		die(_("Only one 'attr:' specification is allowed."));
+> +
+> +	if (!value || !*value)
+> +		die(_("attr spec must not be empty"));
+> +
+> +	string_list_split(&list, value, ' ', -1);
+> +	string_list_remove_empty_items(&list, 0);
+> +
+> +	item->attr_check = attr_check_alloc();
+> +	ALLOC_GROW(item->attr_match,
+> +		   list.nr,
+> +		   item->attr_match_alloc);
 
-Sure.  To be clear, I was handwaving over that since adding an on-disk
-reverse .idx is a relatively small change.
+If item->attr_match always starts empty, then I think an xmalloc or 
+xcalloc suffices (and we don't need item->attr_match_alloc anymore).
 
-[...]
-> So I think it's solvable, but I suspect we would want an extension to
-> the .idx format to store the mapping array, in order to keep it log-n.
+We should probably also check item->attr_match above - that is, `if 
+(item->attr_check || item->attr_match)`.
 
-i.e., this.
+> +
+> +	for_each_string_list_item(si, &list) {
+> +		size_t attr_len;
+> +		char *attr_name;
+> +		const struct git_attr *a;
+> +
+> +		int j = item->attr_match_nr++;
+> +		const char *attr = si->string;
+> +		struct attr_match *am = &item->attr_match[j];
+> +
+> +		switch (*attr) {
+> +		case '!':
+> +			am->match_mode = MATCH_UNSPECIFIED;
+> +			attr++;
+> +			attr_len = strlen(attr);
+> +			break;
+> +		case '-':
+> +			am->match_mode = MATCH_UNSET;
+> +			attr++;
+> +			attr_len = strlen(attr);
+> +			break;
+> +		default:
+> +			attr_len = strcspn(attr, "=");
+> +			if (attr[attr_len] != '=')
+> +				am->match_mode = MATCH_SET;
+> +			else {
+> +				am->match_mode = MATCH_VALUE;
+> +				am->value = xstrdup(&attr[attr_len + 1]);
+> +				if (strchr(am->value, '\\'))
+> +					die(_("attr spec values must not contain backslashes"));
+> +			}
+> +			break;
+> +		}
+> +
+> +		attr_name = xmemdupz(attr, attr_len);
+> +		a = git_attr(attr_name);
+> +		if (!a)
+> +			die(_("invalid attribute name %s"), attr_name);
+> +
+> +		attr_check_append(item->attr_check, a);
+> +
+> +		free(attr_name);
+> +	}
+> +
+> +	if (item->attr_check->nr != item->attr_match_nr)
+> +		die("BUG: should have same number of entries");
 
-The loose object side is the more worrying bit, since we currently don't
-have any practical bound on the number of loose objects.
+I think such postcondition checks are usually not worth it, but others 
+might differ.
 
-One way to deal with that is to disallow loose objects completely.
-Use packfiles for new objects, batching the objects produced by a
-single process into a single packfile.  Teach "git gc --auto" a
-behavior similar to Martin Fick's "git exproll" to combine packfiles
-between full gcs to maintain reasonable performance.  For unreachable
-objects, instead of using loose objects, use "unreachable garbage"
-packs explicitly labeled as such, with similar semantics to what
-JGit's DfsRepository backend uses (described in the discussion at
-https://git.eclipse.org/r/89455).
-
-That's a direction that I want in the long term anyway.  I was hoping
-not to couple such changes with the hash transition but it might be
-one of the simpler ways to go.
-
-Jonathan
+> +
+> +	string_list_clear(&list, 0);
+> +}
+> +
+>  static inline int get_literal_global(void)
+>  {
+>  	static int literal = -1;
