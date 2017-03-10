@@ -2,115 +2,223 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 291C21FBEC
-	for <e@80x24.org>; Fri, 10 Mar 2017 18:31:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2248C1FBEC
+	for <e@80x24.org>; Fri, 10 Mar 2017 18:47:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933331AbdCJSby (ORCPT <rfc822;e@80x24.org>);
-        Fri, 10 Mar 2017 13:31:54 -0500
-Received: from mout.web.de ([212.227.15.4]:61503 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1755050AbdCJSbw (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Mar 2017 13:31:52 -0500
-Received: from [192.168.178.36] ([79.213.126.222]) by smtp.web.de (mrweb003
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0M3BeZ-1bwEgB2Hhf-00sroM; Fri, 10
- Mar 2017 19:31:36 +0100
-Subject: Re: [PATCH v1] Travis: also test on 32-bit Linux
-To:     Jeff King <peff@peff.net>
-References: <xmqq8tol7vs1.fsf@gitster.mtv.corp.google.com>
- <CAPc5daW=gtN18JZTQMqUje5fxL4oNdTucB0dXFbybPRJggPBUw@mail.gmail.com>
- <2205F1A7-A694-4F40-B994-D68C3947F2BB@gmail.com>
- <f5f5886a-aaec-7426-ea33-f5d65516348b@oracle.com>
- <af31ef46-bd0c-c3f2-5a1e-7d97da6ec9a0@oracle.com>
- <282895e1-d9eb-2368-a8e7-8085ad9b17ed@oracle.com>
- <20170305113618.ko2jymle4n5f2b5l@sigill.intra.peff.net>
- <c553da50-e5ca-d064-e75c-46e5a5042935@web.de>
- <20170310081759.yka476hnw4w3mghs@sigill.intra.peff.net>
- <04f4849c-e1e0-f0ac-5b1e-10a343391db4@web.de>
- <20170310175719.cxol7d262n2rlcb2@sigill.intra.peff.net>
-Cc:     Vegard Nossum <vegard.nossum@oracle.com>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        allan.x.xavier@oracle.com,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Git List <git@vger.kernel.org>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <3a1cd5cf-cf13-7ef1-7b47-d4b083b64d11@web.de>
-Date:   Fri, 10 Mar 2017 19:31:22 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
- Thunderbird/45.8.0
+        id S1755526AbdCJSrr (ORCPT <rfc822;e@80x24.org>);
+        Fri, 10 Mar 2017 13:47:47 -0500
+Received: from mail-pf0-f178.google.com ([209.85.192.178]:34444 "EHLO
+        mail-pf0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755402AbdCJSrp (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Mar 2017 13:47:45 -0500
+Received: by mail-pf0-f178.google.com with SMTP id v190so44903050pfb.1
+        for <git@vger.kernel.org>; Fri, 10 Mar 2017 10:47:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=BG3wPRj5bEyB1/3GaSKV2FK9T6kzOctyQD/B2LmQXeQ=;
+        b=QtnrvC4WPTu63THa8rp+KXK9+uGOOxC6QtxVbK8HAatgdMjmdUYKyqTlpV4Auwg278
+         iSEXVo0XcU1YDEDPqLLk3UhJH3dDhxo8fv0dL/oYDBA6Ilgg3n3+reFEKObN9RYVAIEa
+         r7/YmP8E6uFdBRz3EbSvUHbQE7RB0r07fy6xtz2Wl4NhBOWfaLsIGqqki7arbxLn3pN/
+         hgjCBtSRmYOo6Zo6q2XJ4X97IVWypLs47nPjC7VopjUsr5zja4D52ss8Vcgj2bLamqoQ
+         LAZgWoGiFQ8ZbnZPjQ854V3wLjoi6cJfz3vAOdfBX5KdWSZFKeEcWsigSDhGM0XV5qi0
+         XPCg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=BG3wPRj5bEyB1/3GaSKV2FK9T6kzOctyQD/B2LmQXeQ=;
+        b=uXzMQLPwCbSiGkGCHdL4KNzDk07rUhcc35rEtLI3CkxeYzoopae+REAw3Vr5sljD3o
+         3bbl6akht+t9js67YWp8pg3rkDxTaLT1AyIXZQi+FLyw6/8zclUuYGW55O50Nx9k5RCc
+         RQJxp6kQiZnO/KQ9yWJU3cIXEEWP/1wa7t51saWktPN8HIl72KkkgM4bi3oZrG2GjwPt
+         gWYeccMpADSco4xriBjYmuFCrUhLIDNiNBc8Z89GtN6Y14gPkII0FwRKu7QAxKjwTQry
+         f1HAsEJPZ+7VwDRWRKb5kRkdHJj8XcloXJm5D3UxD7cGJio9jmcG8JsKY3J6qpMhkVCc
+         nqbA==
+X-Gm-Message-State: AMke39kiOKt3jqs38yNmCJbc43kGcyMueirhCIKI7TK+KXVieGZzsoUOC/1e0+2AHL+LHPC03hCEXomYn6EOGuQs
+X-Received: by 10.84.239.8 with SMTP id w8mr27461809plk.73.1489171664251; Fri,
+ 10 Mar 2017 10:47:44 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <20170310175719.cxol7d262n2rlcb2@sigill.intra.peff.net>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K0:qk6EHdB4obAGLkGldGHbZJMDFJTq6tyDJV3r8e+oEoJN+10+NF7
- 8cAq1cwTU1sgFQhsfAfoSe0OsHcRIzNx20dbP87zvaTjpPpwP1Ekp0guIdq84F3l3fICEFL
- vUzd4XNoKI9n6Gile6NBjfryk8ERzjuEVZUJmitM58qxAIZ/uVAE+/MJBpyMSLA/BmlK4I+
- AxvfM1MIH8PSj5XdO94wA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:fUk4j0NWiKI=:gWyXW6bw2NIdlUghwUYyXJ
- xdOaxcXAmMjGfJlqlwSo01+5nlLjVN+jlqzOPpRwXJBBeye0dF+ZVObxuPG59x56PS+SmWfqQ
- NSAMZUlrTpsAdjDbsKDW/PqUmYcLKXUyYk8DVPWjXTrzdvnz3UGqLXBVOi5lVh4iZpAWCQkSP
- gi2vkrRt2MrUo3w/rO52qCCzchOX69/lolBg6qF0lLIBh9hgwQZ0Q0tXReTHAbEFX9+syy9I4
- tqSHSq3GdQvUcSOz0JbVeJbPb1fyBwtYI1qaW4jxcsnlLmpzu7v2mvPd3Rd4cCNgDrs484HkO
- ixUGO5ukALwccpjcLqk2GFuY7hJ9dgtvczXcTrMY/Tgkt/McyIOTM5PduHJEIsU/QPk/pHpKS
- yLt8afchSRcHft29/Q5s9WmXtipJXz04DAYObGTHUhCUBOIvy2JJkL27gJq2rmoM1FCos/jfc
- sLW4o+JG4T6AkaOdFvQvOz3ph/VRhedZ5TB3x9mNUFfnCbd1PlIPgox5lcxFZMpHeSwcY7nGJ
- Nuii0EtapyCMKKq9Uo/3nDS5wBU2fefSpI8UCSyRYF5FhAbeoq0dZg/DhuwArUkl3c4U5GO7a
- ep88wzCaMAgyHLkBefzrbLS+HsoiG57RyfM5Rn4Np7ZQ9U5J/9r6aBWYMClYNScXSzjqJgUC4
- vITSuPY+RGFlYpJeuIbCLqbnP9c7lNZyB+/QsLDJHM/M8slYxfH4YeJUNwKJV8Wo6WxuS0Tqr
- AEO1D5BB7N4xs8h1p+7aCnBlq11je8IJYuyHuPSbN0oheN6WsGWU/CndZlBPqeWJeXVyU+P6s
- bXiXiQc
+Received: by 10.100.187.5 with HTTP; Fri, 10 Mar 2017 10:47:43 -0800 (PST)
+In-Reply-To: <1489145258.10535.0@smtp.yandex.ru>
+References: <1489145258.10535.0@smtp.yandex.ru>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Fri, 10 Mar 2017 10:47:43 -0800
+Message-ID: <CAGZ79kZHjpptQAF4NM5y47PF+YXHRADAhzFUYG_+CSwRozo+qQ@mail.gmail.com>
+Subject: Re: [GSoC] Discussion of "Submodule related work" project
+To:     Valery Tolstov <me@vtolstov.org>
+Cc:     Christian Couder <christian.couder@gmail.com>,
+        Brandon Williams <bmwill@google.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 10.03.2017 um 18:57 schrieb Jeff King:
-> On Fri, Mar 10, 2017 at 05:20:13PM +0100, René Scharfe wrote:
+On Fri, Mar 10, 2017 at 3:27 AM, Valery Tolstov <me@vtolstov.org> wrote:
+> Have some questions about "Submodule related work" project
 >
->>> I think this misses the other two cases: (*dst, src) and (*dst, *src).
->>
->> ... and that's why I left them out.  You can't get dst vs. *dst wrong with
->> structs (at least not without the compiler complaining); only safe
->> transformations are included in this round.
+> First of all, I would like to add this task to the project, if I'll take it:
+> https://public-inbox.org/git/1488913150.8812.0@smtp.yandex.ru/T/
+> What do you think about this task?
+
+That is a nice project, though my gut feeling is that it is too small
+for a GSoC project on itself.
+
+>> Cleanup our test suite. Do not use a repo itself as a submodule for itself
 >
-> I don't think the transformation could be wrong without the original
-> code being wrong.
+> Not quite familiar with submodules yet, why this is considered to be
+> ineligible (i.e. using repo as a submodule for itself)?
 
-Avoiding to introduce bugs with automatic transformations is essential, 
-indeed -- if we're not careful here we'd be better off keeping the 
-original code.
+(a bit of background on submodules)
 
-> I'm also not sure why mine would be unsafe and yours would be safe. It
-> seems like the other way around, because mine will do:
+man gitglossary (then searching for submodule):
+       submodule
+           A repository that holds the history of a separate project inside
+           another repository (the latter of which is called superproject).
+
+       superproject
+           A repository that references repositories of other projects in its
+           working tree as submodules. The superproject knows about the names
+           of (but does not hold copies of) commit objects of the contained
+           submodules.
+
+An example that I just found on Github[1]. It is a game
+(so it includes graphics, game code etc). But it makes use of a library[2],
+which could be used by different projects.
+
+[1] https://github.com/stephank/orona
+[2] https://github.com/stephank/villain
+
+Now why would a repo be ineligible to use itself as a submodule?
+There is nothing wrong with it *technically* (which is why we do such things
+in the test suite.)
+
+But what are the use cases for it? Why would a project bind itself
+as a submodule (you can get the same effect of having the source code
+by just checking out that other version.) ? Well now that I think about it,
+it may be useful if you want to test old versions of yourself for e.g.
+networking compatibility. But for that you'd probably still not use submodules.
+
+So the use case of using submodules for another copy of itself is
+*very rare* if it exists at all out there. And the Git test suite
+should rather test
+use cases that are not these weird corner cases, but rather pay attention to
+the common case first.
+
+I thought this project would have been solved parially already, but I was wrong.
+($ git grep "submodule add \./\."). This also doesn't seem large enough for
+a summer project, after thinking about it further.
+
+>> (Advanced datastructure knowledge required?) Protect submodule from gc-ing
+>> interesting HEADS.
 >
->   *dst = ...
+> Can you provide a small example that shows the problem, please?
+
+Let's use this example from above:
+
+$ git clone --recursive https://github.com/stephank/orona
+    # now we have 2 repositories, the orona repo as well as its submodule
+    # at node_modules/villain
+    #
+    # "Let's inspect the Readmes/license files, if they are ok to use
+    # Oh! the submodule is MIT licensed but doesn't have the full
+    # license text, I can contribute and make a patch for it."
+$ cd node_modules/villain
+$ $EDIT LICENSE
+$ git add LICENSE
+$ git commit -a -m "add license full text"
+$
+$ cd ../.. # go back to the superproject
+$ git add  node_modules/villain
+$ git commit -a -m "update game to include latest lib"
+$ git checkout -b "fix_license"
+    # note how I forget to actually push it / pull request it!
+    # All we need for the demonstration is a local commit
+    # in the submodule that is referenced by the superproject...
+    #
+    # ... "Let's test the pristine copy of the game!" ...
+$ git checkout origin/master
+$ git submodule update
+    # ... which gets lost here. The submodule commit
+    # is only referenced by a superproject commit.
+
+.. time passes ..
+
+    # "My disk is so full, maybe I can clean up all these random
+    # accumulated projects, to have more disk space again."
+    # my cleanup script may do this:
+
+$ cd node_modules/villain
+$ git reflog expire --all --expire=all
+$ git gc --prune=all
+$ cd ../..
+
+$ git branch
+    # "Oh what about this 'fix_license branch' ?
+    #  Did I actually send that upstream?"
+$ git checkout fix_license
+$ git submodule update
+error: no such remote ref 96016818b2ed9eb0ca72552b18f8339fc20850b4
+Fetched in submodule path 'villain', but it did not contain
+96016818b2ed9eb0ca72552b18f8339fc20850b4. Direct fetching of that
+commit failed.
+
+> And why advanced datastructure knowledge is expected?
+
+I am not quite sure how to approach this problem, so I put
+a "warning; it may be complicated" sticker on it. ;)
+
+The problem is that a submodule until now was considered
+its own repository, in full control what to keep and delete,
+how to name its branches and so on.
+
+git-gc only pays attention to commits (and its history) of all
+branches and commits mentioned in the reflog.
+(which is why we had to delete the reflog, and as we
+were making the license commit on a "detached HEAD",
+there was no need to delete its branch).
+
+However it should also consider all commits referenced
+by the superproject valuable.
+
+In this case the superproject has a branch "fix_license",
+so that commit is considered too valuable for gc in the
+superproject, but it breaks with the submodule pointer
+as the pointer changes in the superproject, but the
+gc operation in the submodule doesn't care.
+
+One way to fix it is to figure out if there is a superproject
+at gc time and then collect all valuable hashes (submodule
+pointers) before actually performing the gc.
+
+But that may be expensive, so we would rather record
+it on the fly, e.g. when making the commit in the superproject
+we'd record in the submodule that the given hash by the
+submodule pointer is valuable.
+
+This could be done by having a ref (=branch) in the submodule
+that points at all the interesting submodule commits.
+
+So despite being prominent on the ideas page (because of a lot
+of text), this may be controversial how to actually solve it.
+
 >
-> which would fail unless "dst" is a pointer. Whereas in yours, we end up
-> with:
->
->   dst = ...
->
-> and somebody mistaking pointer assignment for a struct copy would not
-> notice.
+> Maybe you have something else about this project to say.
 
-If dst is a struct then having *dst on the left-hand side results in a 
-compiler error -- you can't get that one wrong.  If it's a pointer then 
-both dst and *dst can be valid (pointer assignment vs. content copy), so 
-there is the possibility of making a mistake without the compiler noticing.
+If I remember correctly, shell -> C conversion projects are
+easy (both for writing the code as well as for mentoring)
 
-> But either way, I don't think we can have a rule like "you can use
-> struct assignment only if you don't have a pointer for the destination".
-> That's too arcane to expect developers and reviewers to follow. We
-> should either allow struct assignment or not.
+> git archive(/bundle) to have a --recurse-submodules flag
+> to include the submodule contents.
 
-With an automatic transformation in place it's more like "you can't use 
-memcpy() in this case any more as it gets turned into an assignment with 
-the next cocci patch".  I think we shouldn't be that restrictive for 
-pointers as destinations (yet?).
+is an actual interesting project as well despite its short description.
 
-René
+Thanks,
+Stefan
