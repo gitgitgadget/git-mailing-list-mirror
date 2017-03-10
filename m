@@ -2,153 +2,142 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1E0E7202F8
-	for <e@80x24.org>; Fri, 10 Mar 2017 08:38:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 88C3D202F8
+	for <e@80x24.org>; Fri, 10 Mar 2017 10:07:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755276AbdCJIiE (ORCPT <rfc822;e@80x24.org>);
-        Fri, 10 Mar 2017 03:38:04 -0500
-Received: from mail-pf0-f196.google.com ([209.85.192.196]:35324 "EHLO
-        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755240AbdCJIiD (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Mar 2017 03:38:03 -0500
-Received: by mail-pf0-f196.google.com with SMTP id 67so10072534pfg.2
-        for <git@vger.kernel.org>; Fri, 10 Mar 2017 00:38:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=E8yT9XavRDX4Hn9Bx0t3B82XF01DP1ZoWCrQqC7lxcM=;
-        b=S0oFDqzBuaTNp2szZQvZV5P2Sx9rqJ6bxvHLnk5PX1vs14NQLlIrzpWcj9C7Fd4DmP
-         QP3pN0POt2blB2BYOBcOiVim6JVjKQQ9rYKnz5PVTO5kRs39JaeEI0F4X5AA2HWw71S0
-         nbnCdsb+Xebfw3CFxajkb/JwK4QJCMxom6qL5tR68Esj5Vp4j2xRoE4jZ5+8RP9GWKeb
-         8Ht3zNhx+XThMWmGsu0a+pcVgD9yzLopX9c0sZIVs/RPTJhOdz5cwmwN1Rn4M/kEYQqA
-         /+CPfbVwGVo0KBjtRV6r4X9MS+AP6UOeNpxqRq41URT/kHzjOlHKP/mNiP4JeLyV2UEK
-         7NjQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=E8yT9XavRDX4Hn9Bx0t3B82XF01DP1ZoWCrQqC7lxcM=;
-        b=oWxxQU8Zu09eyA2fJkGbtlZaHgQqbplGOXC1pMpcU2AuLmYvP54cnYs/1dIQ7vHOjy
-         F/TC5h6G95ve75AsuO33EK/IB4ZuWSsBR6ghc2PclehDYHaCWJmBGMb4kc+vB7b/F8+X
-         NOtcFwV/8xGZzlr37ssTn8SHZtTyVfz7VYUMutQwBjclLrQVwidfs+JgERiunxO5AB//
-         aOvijfC9u2wIxSlPvoaktx6P/5NiDgixBP4VMVItbY+NQ5ZPBVhUhUV4XDq3Opc7A6ux
-         fUCrBW31DIqiQ56ZEarXd9vaGAaEAJaxl3idYwOt0nmaPhfXmGzJruOzqPCZlxM8JrVz
-         JEag==
-X-Gm-Message-State: AMke39k0kYjpY5cw0Iv3Xz/iYoMgdrjxUC28Grkrx2phkB+Q001XUPvtG6L/+cD6AHBpQg==
-X-Received: by 10.84.197.3 with SMTP id m3mr23432067pld.89.1489135082561;
-        Fri, 10 Mar 2017 00:38:02 -0800 (PST)
-Received: from localhost.localdomain ([47.11.9.211])
-        by smtp.gmail.com with ESMTPSA id a16sm17106317pgd.62.2017.03.10.00.37.59
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 10 Mar 2017 00:38:01 -0800 (PST)
-From:   Prathamesh Chavan <pc44800@gmail.com>
-To:     christian.couder@gmail.com
-Cc:     git@vger.kernel.org, jdl@jdl.com, pc44800@gmail.com
-Subject: [Patch v2] t2027: avoid using pipes
-Date:   Fri, 10 Mar 2017 14:06:11 +0530
-Message-Id: <20170310083611.7374-1-pc44800@gmail.com>
-X-Mailer: git-send-email 2.11.0
-In-Reply-To: <CAP8UFD1xQnR8aWVRqu1_k2qhEcR2fOdyHT51aUyq9EdFg7f7Xw@mail.gmail.com>
-References: <CAP8UFD1xQnR8aWVRqu1_k2qhEcR2fOdyHT51aUyq9EdFg7f7Xw@mail.gmail.com>
+        id S934898AbdCJKHZ (ORCPT <rfc822;e@80x24.org>);
+        Fri, 10 Mar 2017 05:07:25 -0500
+Received: from kolab.intevation.de ([212.95.107.133]:54580 "EHLO
+        kolab.intevation.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S934489AbdCJKHX (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Mar 2017 05:07:23 -0500
+X-Greylist: delayed 421 seconds by postgrey-1.27 at vger.kernel.org; Fri, 10 Mar 2017 05:07:22 EST
+Received: from localhost (localhost [127.0.0.1])
+        by kolab.intevation.de (Postfix) with ESMTP id CDD64628F1
+        for <git@vger.kernel.org>; Fri, 10 Mar 2017 11:00:16 +0100 (CET)
+X-Virus-Scanned: by amavisd-new at intevation.de
+Received: from kolab.intevation.de ([127.0.0.1])
+        by localhost (kolab.intevation.de [127.0.0.1]) (amavisd-new, port 10024)
+        with ESMTP id wiRh2EYszPNP for <git@vger.kernel.org>;
+        Fri, 10 Mar 2017 11:00:15 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+        by kolab.intevation.de (Postfix) with ESMTP id C3E4B6294D
+        for <git@vger.kernel.org>; Fri, 10 Mar 2017 11:00:15 +0100 (CET)
+Received: from ploto.hq.intevation.de (ploto.hq.intevation.de [192.168.11.18])
+        (Authenticated sender: bernhard.reiter@intevation.de)
+        by kolab.intevation.de (Postfix) with ESMTPSA id 9C520628F1;
+        Fri, 10 Mar 2017 11:00:15 +0100 (CET)
+From:   "Bernhard E. Reiter" <bernhard.reiter@intevation.de>
+To:     git@vger.kernel.org
+Subject: Stable GnuPG interface, git should use GPGME
+Date:   Fri, 10 Mar 2017 11:00:07 +0100
+User-Agent: KMail/1.9.10 (enterprise35 20150610.75555ff)
+Cc:     gnupg-devel@gnupg.org
+MIME-Version: 1.0
+Content-Type: multipart/signed;
+  boundary="nextPart2944136.yvmxf56zql";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
+Content-Transfer-Encoding: 7bit
+Message-Id: <201703101100.15214.bernhard.reiter@intevation.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Prathamesh <pc44800@gmail.com>
+--nextPart2944136.yvmxf56zql
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
-Whenever a git command is present in the upstream of a pipe, its failure
-gets masked by piping and hence it should be avoided for testing the
-upstream git command. By writing out the output of the git command to
-a file, we can test the exit codes of both the commands as a failure exit
-code in any command is able to stop the && chain.
+Dear Git-Devs,
 
-Signed-off-by: Prathamesh <pc44800@gmail.com>
----
-New version of patch updated to include suggested change of add the git
-command which was above the grep command on a new line. Also some more
-changes similar to the above change were made.
-Another reason for a newer version in to improvise the previous mistake
-of not including the patch version, as well as getting more familiar with
-the submitting patch process.
+git uses an pipe-and-exec approach to running a GnuPG binary=20
+as writen in the documentation [1]:
+
+    gpg.program
+           Use this custom program instead of "gpg" found on $PATH when mak=
+ing
+           or verifying a PGP signature. The program must support the same
+           command-line interface as GPG
+
+please consider using libgpgme interfacing to GnuPG, because the gpg=20
+command-line interface is not considered an official API to GnuPG by the=20
+GnuPG-devs and thus potentially unstable.=20
+
+=3D=3D Details
+
+I'm involved in GnuPG development. For most applications using libgpgme is =
+the=20
+way what GnuPG-devs would recommend, also see=20
+
+  https://wiki.gnupg.org/APIs .
+
+GnuPG devs are making a good effort of trying to keep the command-line=20
+interface stable, though it is not for sure. Git is only using a small part=
+=20
+of the interface, so the risk when keeping the current way is small.=20
+Still I believe git's stability and usability would profit when moving to=20
+libgpgme, especially with the coming move to GnuPG 2.2, better diagnosing=20
+messages and for cross-plattform usage.
+
+=3D=3D Usability problem with `gpg2` vs `gpg`
+
+My use case today was signing and git by default found the `gpg` binary by=
+=20
+default and the command failed. The reason is that I have `gpg2` installed=
+=20
+and most applications use it right away. So git failed signing because=20
+the .gnupg configuration of the user was not ready for the old `gpg` which =
+is=20
+still installed on Debian GNU/Linux for purposes of the operating system. I=
+f=20
+git would have used libgpgme, gpgme would have choosen the most uptodate=20
+version of `gpg` available (or configured) without me intervening via=20
+gpg.program. Now because of this problem you could adding a check for `gpg2=
+`=20
+and fallback to `gpg`, but even better would be to move to libgpgme. >:)
+
+Best Regards and thanks for maintaining Git as Free Software,
+Bernhard
+
+=3D=3D how to respond
+
+ps: Please copy me on replies as I am not on git@vger.kernel.org.=20
+pps: I've copied gnupg-devel@ so they can see I've send this report, you do=
+n't=20
+have to.
 
 
- t/t2027-worktree-list.sh | 21 ++++++++++++++-------
- 1 file changed, 14 insertions(+), 7 deletions(-)
+[1]=20
+https://github.com/git/git/blob/3bc53220cb2dcf709f7a027a3f526befd021d858/Do=
+cumentation/config.txt
+search for 'gpg.program'.
 
-diff --git a/t/t2027-worktree-list.sh b/t/t2027-worktree-list.sh
-index 848da5f36..a3e77fee5 100755
---- a/t/t2027-worktree-list.sh
-+++ b/t/t2027-worktree-list.sh
-@@ -31,7 +31,8 @@ test_expect_success '"list" all worktrees from main' '
- 	test_when_finished "rm -rf here && git worktree prune" &&
- 	git worktree add --detach here master &&
- 	echo "$(git -C here rev-parse --show-toplevel) $(git rev-parse --short HEAD) (detached HEAD)" >>expect &&
--	git worktree list | sed "s/  */ /g" >actual &&
-+	git worktree list >out &&
-+	sed "s/  */ /g" <out >actual &&
- 	test_cmp expect actual
- '
- 
-@@ -40,7 +41,8 @@ test_expect_success '"list" all worktrees from linked' '
- 	test_when_finished "rm -rf here && git worktree prune" &&
- 	git worktree add --detach here master &&
- 	echo "$(git -C here rev-parse --show-toplevel) $(git rev-parse --short HEAD) (detached HEAD)" >>expect &&
--	git -C here worktree list | sed "s/  */ /g" >actual &&
-+	git -C here worktree list >out &&
-+	sed "s/  */ /g" <out >actual &&
- 	test_cmp expect actual
- '
- 
-@@ -73,7 +75,8 @@ test_expect_success '"list" all worktrees from bare main' '
- 	git -C bare1 worktree add --detach ../there master &&
- 	echo "$(pwd)/bare1 (bare)" >expect &&
- 	echo "$(git -C there rev-parse --show-toplevel) $(git -C there rev-parse --short HEAD) (detached HEAD)" >>expect &&
--	git -C bare1 worktree list | sed "s/  */ /g" >actual &&
-+	git -C bare1 worktree list >out &&
-+	sed "s/  */ /g" <out >actual &&
- 	test_cmp expect actual
- '
- 
-@@ -96,7 +99,8 @@ test_expect_success '"list" all worktrees from linked with a bare main' '
- 	git -C bare1 worktree add --detach ../there master &&
- 	echo "$(pwd)/bare1 (bare)" >expect &&
- 	echo "$(git -C there rev-parse --show-toplevel) $(git -C there rev-parse --short HEAD) (detached HEAD)" >>expect &&
--	git -C there worktree list | sed "s/  */ /g" >actual &&
-+	git -C there worktree list >out &&
-+	sed "s/  */ /g" <out >actual &&
- 	test_cmp expect actual
- '
- 
-@@ -118,9 +122,11 @@ test_expect_success 'broken main worktree still at the top' '
- 		cd linked &&
- 		echo "worktree $(pwd)" >expected &&
- 		echo "ref: .broken" >../.git/HEAD &&
--		git worktree list --porcelain | head -n 3 >actual &&
-+		git worktree list --porcelain >out &&
-+		head -n 3 out >actual &&
- 		test_cmp ../expected actual &&
--		git worktree list | head -n 1 >actual.2 &&
-+		git worktree list >out &&
-+		head -n 1 out >actual.2 &&
- 		grep -F "(error)" actual.2
- 	)
- '
-@@ -134,7 +140,8 @@ test_expect_success 'linked worktrees are sorted' '
- 		test_commit new &&
- 		git worktree add ../first &&
- 		git worktree add ../second &&
--		git worktree list --porcelain | grep ^worktree >actual
-+		git worktree list --porcelain >out &&
-+		grep ^worktree out >actual
- 	) &&
- 	cat >expected <<-EOF &&
- 	worktree $(pwd)/sorted/main
--- 
-2.11.0
+=2D-=20
+www.intevation.de/~bernhard (CEO)     +49 541 33 508 3-3
+Intevation GmbH, Osnabr=FCck, Germany; Amtsgericht Osnabr=FCck, HRB 18998
+Owned and run by Frank Koormann, Bernhard Reiter, Dr. Jan-Oliver Wagner
 
+--nextPart2944136.yvmxf56zql
+Content-Type: application/pgp-signature; name=signature.asc 
+Content-Description: This is a digitally signed message part.
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
+
+iQEcBAABCAAGBQJYwnknAAoJEDxD9Mjv9dQqkn8IAJ81Ttzm4bgwI98Brf/jgUNr
+0kTlCCH0QsM195f11AUAahRG6FvShYGqKeFVwALbRp9TffTbUDgKXZiqk4eFVZdR
+F4ACSahfwZHfzk0saCzfrm9poVP/Abt19frPpgu4+cHOSsaREgfWrIibqFg+gOgj
+JCFF2mLU6OzNtRWb+BaDokmQpKyRJZB17Sjohc/EChPDTlFer0ZXV9O2QKChZbrj
+mFRqQ8E/illqcki8DoUxEbr243TkU2WMfOnQNGtxhiofGzYpm3Lt8Kdu4O5xVZK5
+ezRpNMBfGvYnmevYiYWX0JoNvW1Qxh7jjJ2yD1f1EsvokE2mjS/Elh7k0LbeFTY=
+=x/su
+-----END PGP SIGNATURE-----
+
+--nextPart2944136.yvmxf56zql--
