@@ -2,77 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 594891FBEC
-	for <e@80x24.org>; Fri, 10 Mar 2017 19:47:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C14671FBEC
+	for <e@80x24.org>; Fri, 10 Mar 2017 19:49:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755514AbdCJTrm (ORCPT <rfc822;e@80x24.org>);
-        Fri, 10 Mar 2017 14:47:42 -0500
-Received: from cloud.peff.net ([104.130.231.41]:42231 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1755377AbdCJTrl (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Mar 2017 14:47:41 -0500
-Received: (qmail 29671 invoked by uid 109); 10 Mar 2017 19:47:28 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 10 Mar 2017 19:47:28 +0000
-Received: (qmail 7612 invoked by uid 111); 10 Mar 2017 19:47:37 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 10 Mar 2017 14:47:37 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 10 Mar 2017 14:47:26 -0500
-Date:   Fri, 10 Mar 2017 14:47:26 -0500
-From:   Jeff King <peff@peff.net>
+        id S933179AbdCJTto (ORCPT <rfc822;e@80x24.org>);
+        Fri, 10 Mar 2017 14:49:44 -0500
+Received: from mail-pg0-f48.google.com ([74.125.83.48]:32984 "EHLO
+        mail-pg0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932697AbdCJTtm (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Mar 2017 14:49:42 -0500
+Received: by mail-pg0-f48.google.com with SMTP id 25so42385576pgy.0
+        for <git@vger.kernel.org>; Fri, 10 Mar 2017 11:49:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=nLwKfZdXrAEs36VQrgsV1s2kd15F1jOcKCl2bmvHq34=;
+        b=HQZZRgrtzEVGKrb1CIqHXXd9fSNA0Udx0KZl6YzQNMpHPsNy58LqhXlM2wpkBbXHQj
+         kWcRzjqFfOXh30hsXMhbpSUO7iJuXoghr1DyzvqkDbeAxdAUJQLgCwLeVZWqCRylMc7/
+         CrfkaqWLyPmBigMd4k8UTe4nvx1lLsiUGVg0jWu6qVK4bHnbqrw8SOraFMi2xCRCOAp4
+         3zCLBqwUHFbT2eXy+mvSwluw2cn2TRd1Ke6ZFq40ge0AVI8egdBNrlaCv4zo6rBQomBf
+         RnKM2YcVhhrvB3ytPTI1jejhM71QtqkTlpGjv30v5tHuWrLpqvpDb45BnlQKAmESWZtP
+         z4og==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=nLwKfZdXrAEs36VQrgsV1s2kd15F1jOcKCl2bmvHq34=;
+        b=Sj+CBA4XrFkzx4rKJ7DOxMYrYf6O7/ib741nxAS8l6VJbUrajfU58umOkBzPETeXmb
+         yQ8++D22Ht4se+X1qZKCv0YWjxm+UMEMdH3se4xoIVPznpKq52r223ITDlVrlkHuxxXs
+         cgYyduaoSI5q8wCUAQHHyZGT1y5XTwddS6zQGV1pwh/vQGaxtijWdygv92L3VpknzHwi
+         NIS3B9LA8t/us9WSo5TCVgvHJSk3ASeavtp9anqtKubSNvR8CsO30dtNd/qk+E3o//5j
+         r01Q9eTj6zW7GHa411uWKGE9jO1KJVmpq+6iY2D/HuODigM6V8zaIdnpivvrZx+mR6kj
+         WvUg==
+X-Gm-Message-State: AMke39m3j3u1+xF2/1otjELAqO+ECxcRu+28lt+hNK69w0F9qhVn8RSKRi0YjLM73bAM7AXGZCIrNbkWolkyXzcr
+X-Received: by 10.84.128.74 with SMTP id 68mr28267625pla.111.1489175381266;
+ Fri, 10 Mar 2017 11:49:41 -0800 (PST)
+MIME-Version: 1.0
+Received: by 10.100.187.5 with HTTP; Fri, 10 Mar 2017 11:49:40 -0800 (PST)
+In-Reply-To: <xmqqvargyl39.fsf@gitster.mtv.corp.google.com>
+References: <20170309003858.GB153031@google.com> <20170309012734.21541-1-me@vtolstov.org>
+ <20170309012734.21541-3-me@vtolstov.org> <20170309181837.GF153031@google.com> <xmqqvargyl39.fsf@gitster.mtv.corp.google.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Fri, 10 Mar 2017 11:49:40 -0800
+Message-ID: <CAGZ79kbhG9XhRccqA555Zp-FENJ5Q6Nd+LnNTZno1J_=cGQctQ@mail.gmail.com>
+Subject: Re: [PATCH v3 2/2] submodule--helper.c: remove duplicate code
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     Brandon Williams <bmwill@google.com>,
-        Jeff Hostetler <git@jeffhostetler.com>,
-        Jeff Hostetler <jeffhost@microsoft.com>, git@vger.kernel.org,
-        markbt@efaref.net, benpeart@microsoft.com, jonathantanmy@google.com
-Subject: Re: [PATCH 02/10] pack-objects: add --partial-by-size=n
- --partial-special
-Message-ID: <20170310194725.36acsc2bdfhl4aih@sigill.intra.peff.net>
-References: <1488994685-37403-1-git-send-email-jeffhost@microsoft.com>
- <1488994685-37403-3-git-send-email-jeffhost@microsoft.com>
- <xmqqh93338s2.fsf@gitster.mtv.corp.google.com>
- <1c38ffbc-e4a2-32e5-d324-506c2111043e@jeffhostetler.com>
- <20170309070438.r5g2h5vlmgzds4kp@sigill.intra.peff.net>
- <20170310175823.GA53198@google.com>
- <20170310180341.bbzukqrj2zlkje2b@sigill.intra.peff.net>
- <xmqqzigsylb1.fsf@gitster.mtv.corp.google.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqzigsylb1.fsf@gitster.mtv.corp.google.com>
+        Valery Tolstov <me@vtolstov.org>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Mar 10, 2017 at 11:38:10AM -0800, Junio C Hamano wrote:
+On Fri, Mar 10, 2017 at 11:42 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Brandon Williams <bmwill@google.com> writes:
+>
+>> On 03/09, Valery Tolstov wrote:
+>>> Remove code fragment from module_clone that duplicates functionality
+>>> of connect_work_tree_and_git_dir in dir.c
+>>>
+>>> Signed-off-by: Valery Tolstov <me@vtolstov.org>
+>>
+>> Looks good.
+>
+> I'll queue with your Reviewed-by: added.
+>
+> If sb/checkout-recurse-submodules is going to be rerolled, I'd
+> appreciate if it includes this patch inserted at an appropriate
+> place in the series, instead of me having to remember re-applying
+> this patch every time it happens.
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > I think we ended up deciding that it would be better to just disallow
-> > symlink .gitattributes (and .git*) from entering the index, the way we
-> > disallow ".git".
-> 
-> Hmph, I thought we would need both, though.  Or do we specifically
-> want to honor untracked .gitattributes that is left as a symlink
-> pointing to elsewhere in the filesystem or something like that?
+Instead of mixing these two series, can you just take Valerys series as is,
+and sb/checkout-recurse-submodules builds on top of that when rerolled?
 
-I wasn't going to worry about an untracked .gitattributes. The reasons
-for disallowing symlinked .gitattributes are:
+Thanks,
+Stefan
 
-  - it doesn't behave the same when accessed internally via the tree
-    objects
-
-  - malicious symlinks that try to leave the repository
-
-Neither of those issues is at play if your symlink .gitattributes file
-isn't tracked. So there's some inconsistency in the sense that it
-"works" until you try to "git add" it. But either you aren't going to
-add it (in which case it's a feature that it works), or you are going to
-add it, and you'll get notified then that it's disallowed.
-
--Peff
+>
+> Thanks.
