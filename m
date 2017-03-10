@@ -2,96 +2,69 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5C9AD1FC43
-	for <e@80x24.org>; Fri, 10 Mar 2017 20:18:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 42D9B1FC43
+	for <e@80x24.org>; Fri, 10 Mar 2017 20:26:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932482AbdCJUSo (ORCPT <rfc822;e@80x24.org>);
-        Fri, 10 Mar 2017 15:18:44 -0500
-Received: from cloud.peff.net ([104.130.231.41]:42289 "EHLO cloud.peff.net"
+        id S932839AbdCJU0V (ORCPT <rfc822;e@80x24.org>);
+        Fri, 10 Mar 2017 15:26:21 -0500
+Received: from imap.thunk.org ([74.207.234.97]:45852 "EHLO imap.thunk.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1754943AbdCJUSn (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Mar 2017 15:18:43 -0500
-Received: (qmail 31837 invoked by uid 109); 10 Mar 2017 20:18:42 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 10 Mar 2017 20:18:42 +0000
-Received: (qmail 8800 invoked by uid 111); 10 Mar 2017 20:18:51 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 10 Mar 2017 15:18:51 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 10 Mar 2017 15:18:40 -0500
-Date:   Fri, 10 Mar 2017 15:18:40 -0500
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
-        Vegard Nossum <vegard.nossum@oracle.com>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        allan.x.xavier@oracle.com,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Git List <git@vger.kernel.org>
-Subject: Re: [PATCH v1] Travis: also test on 32-bit Linux
-Message-ID: <20170310201840.fubshjp2bjg4bjxq@sigill.intra.peff.net>
-References: <CAPc5daW=gtN18JZTQMqUje5fxL4oNdTucB0dXFbybPRJggPBUw@mail.gmail.com>
- <2205F1A7-A694-4F40-B994-D68C3947F2BB@gmail.com>
- <f5f5886a-aaec-7426-ea33-f5d65516348b@oracle.com>
- <af31ef46-bd0c-c3f2-5a1e-7d97da6ec9a0@oracle.com>
- <282895e1-d9eb-2368-a8e7-8085ad9b17ed@oracle.com>
- <20170305113618.ko2jymle4n5f2b5l@sigill.intra.peff.net>
- <c553da50-e5ca-d064-e75c-46e5a5042935@web.de>
- <20170310081759.yka476hnw4w3mghs@sigill.intra.peff.net>
- <04f4849c-e1e0-f0ac-5b1e-10a343391db4@web.de>
- <xmqqfuikyjoo.fsf@gitster.mtv.corp.google.com>
+        id S1753292AbdCJU0U (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Mar 2017 15:26:20 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=thunk.org; s=ef5046eb;
+        h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:Subject:Cc:To:From:Date; bh=C3mMRpAiQiiaSKZex58G6E2au/ksyc631UPecnx919E=;
+        b=RMgFPnNRA2sLH7srliyJ2pV0ps85WMfZYCFp4nTf5KoUKFrsJoZP3hrD73e+FCCQvLMn39dMGGyhjofDnBEShyu0qBPYGFWQ2qcutzTRoua6Zk/sjcOCmm3TrjqcNafIfStvc3/zJcJ3QCZrdVtoELcTyPO+2kMhR162kurnj0U=;
+Received: from root (helo=callcc.thunk.org)
+        by imap.thunk.org with local-esmtp (Exim 4.84_2)
+        (envelope-from <tytso@thunk.org>)
+        id 1cmR78-0004Xm-QL; Fri, 10 Mar 2017 20:26:14 +0000
+Received: by callcc.thunk.org (Postfix, from userid 15806)
+        id 2C727C00495; Fri, 10 Mar 2017 15:26:09 -0500 (EST)
+Date:   Fri, 10 Mar 2017 15:26:09 -0500
+From:   Theodore Ts'o <tytso@mit.edu>
+To:     Linus Torvalds <torvalds@linux-foundation.org>
+Cc:     "Bernhard E. Reiter" <bernhard.reiter@intevation.de>,
+        Git Mailing List <git@vger.kernel.org>, gnupg-devel@gnupg.org
+Subject: Re: Stable GnuPG interface, git should use GPGME
+Message-ID: <20170310202609.cegd6jak6cklq6my@thunk.org>
+References: <201703101100.15214.bernhard.reiter@intevation.de>
+ <CA+55aFxk7F103LADnmwc8wFySYQNiK6TcCQ0WSj+UTP-GihgcQ@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <xmqqfuikyjoo.fsf@gitster.mtv.corp.google.com>
+In-Reply-To: <CA+55aFxk7F103LADnmwc8wFySYQNiK6TcCQ0WSj+UTP-GihgcQ@mail.gmail.com>
+User-Agent: NeoMutt/20170113 (1.7.2)
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: tytso@thunk.org
+X-SA-Exim-Scanned: No (on imap.thunk.org); SAEximRunCond expanded to false
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Mar 10, 2017 at 12:13:11PM -0800, Junio C Hamano wrote:
-
-> René Scharfe <l.s.r@web.de> writes:
+On Fri, Mar 10, 2017 at 10:54:19AM -0800, Linus Torvalds wrote:
+>  - library versioning.
 > 
-> >> I think this misses the other two cases: (*dst, src) and (*dst, *src).
-> >
-> > ... and that's why I left them out.  You can't get dst vs. *dst wrong
-> > with structs (at least not without the compiler complaining); only
-> > safe transformations are included in this round.
-> 
-> I haven't followed this discussion to the end, but the omission of 2
-> out of obvious 4 did pique my curiosity when I saw it, too, and made
-> me wonder if the omission was deliberate.  If so, it would be nice
-> to state why in the log message (or in copy.cocci file itself as a
-> comment).
+>    I don't know why, but I've never *ever* met a library developer who
+> realized that libraries were all about stable API's, and the library
+> users don't want to fight different versions.
 
-Yeah, it definitely would be worth mentioning. I'm still undecided on
-whether we want to be endorsing struct assignment more fully.
+Actually, you have.  (Raises hand :-)
 
-> It also made me wonder if we would be helped with a further
-> combinatorial explosion from "T **dstp, **srcp" and somesuch (in
-> other words, I am wondering why a rule for 'T *src' that uses '*src'
-> need to be spelled out separately when there already is a good rule
-> for 'T src' that uses 'src'---is that an inherent restriction of the
-> tool?).
+libext2fs has a stable API *and* ABI.  We add new functions instead of
+changing function parameters (so ext2fs_block_iterate2() is
+implemented in terms of ext2fs_block_iterate3(), and so on).  And
+structures have magic numbers that have served as versioning signal.
+This is actually not rocket science.  If you've met anyone who's
+programmed for Multics, they did something similar.  And of course,
+that's why we have the wait3(2) and wait(4) system calls.
 
-I had that thought, too, but I think the 4-way rules are necessary,
-because the transformations aren't the same in each case. E.g., for the
-four cases, the resulting assignments are:
+I do have to agree with your general point, that most developers tend
+to be *incredibly* sloppy with their interfaces.  That being said, not
+all library developers are as bad as GNOME.  :-)
 
-    (dst, src): dst = src;
-   (dst, *src): dst = *src;
-   (*dst, src): *dst = src;
-  (*dst, *src): *dst = *src;
-
-For pointer-to-pointer, I assumed the tool would handle that
-automatically by matching "T" as "T*". Though if that is the case, I
-think "(dst, src)" and "(*dst, *src)" would be equivalent (though of
-course our rule matches are different, as you do not memcpy the raw
-structs).
-
--Peff
+    	    	       	      	     - Ted
