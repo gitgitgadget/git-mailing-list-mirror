@@ -2,79 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9EEC41FC43
-	for <e@80x24.org>; Sat, 11 Mar 2017 02:27:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 825ED201C2
+	for <e@80x24.org>; Sat, 11 Mar 2017 03:17:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932599AbdCKC13 convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Fri, 10 Mar 2017 21:27:29 -0500
-Received: from limerock02.mail.cornell.edu ([128.84.13.242]:34585 "EHLO
-        limerock02.mail.cornell.edu" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1755488AbdCKC11 (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 10 Mar 2017 21:27:27 -0500
-X-CornellRouted: This message has been Routed already.
-Received: from exchange.cornell.edu (sf-e2013-05.exchange.cornell.edu [10.22.40.52])
-        by limerock02.mail.cornell.edu (8.14.4/8.14.4_cu) with ESMTP id v2B2RPLb032332
-        for <git@vger.kernel.org>; Fri, 10 Mar 2017 21:27:25 -0500
-Received: from sf-e2013-02.exchange.cornell.edu (10.22.40.49) by
- sf-e2013-05.exchange.cornell.edu (10.22.40.52) with Microsoft SMTP Server
- (TLS) id 15.0.1210.3; Fri, 10 Mar 2017 21:27:25 -0500
-Received: from mail-qk0-f197.google.com (209.85.220.197) by
- exchange.cornell.edu (10.22.40.49) with Microsoft SMTP Server (TLS) id
- 15.0.1210.3 via Frontend Transport; Fri, 10 Mar 2017 21:27:25 -0500
-Received: by mail-qk0-f197.google.com with SMTP id c85so205842381qkg.0
-        for <git@vger.kernel.org>; Fri, 10 Mar 2017 18:27:25 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=esEb4UtClf6TivzlgXmorv1TK1Kw8I49TmqW6PIOsj4=;
-        b=S3x5rCvNUZw0AzexU02n7RG1p+ULSnuW+zg57jmZ5Wo4RLWKwDN8dn24FdBN2Trl9I
-         T3VlE+Jccd0YnT/IH+YIRUAwbhKdAUHKa8to0t4EJP4Sqg+kumdRRue2GaP+Be5Qwa8t
-         ZRw/bTLj42KnmJ6dByUnyzLN4iMqMS5p+TxxdEtz/N5DC+IdFIUjdrUESFDkLMNs2i2o
-         Gd0QI6P3FqxZlzNKlr5F2AmhrglaKz3CyYOgyh5bODnY8aUI0JSWaYNqhqNfQIvvbfjG
-         aeEMU9SqgWNt2zPzdPBV9jNaM2po6sbnGJcdE1En5QVbgHNMWpOvYEKJc+DgduPsq4Hl
-         nRpg==
-X-Gm-Message-State: AMke39l10dfvJs9ommCeLNazwRwYZy/SBoaDUw2JPc/KHsT3/Rr64us8K8StBz8v8e7SBi8HFzSV3tYPqTgg/21BT5GwKwTJR84np6I3RDexfBAb6CSNzme2GdIK1982xlwegHDyhN0O3x3+XUc=
-X-Received: by 10.200.35.195 with SMTP id r3mr23430628qtr.282.1489199244985;
-        Fri, 10 Mar 2017 18:27:24 -0800 (PST)
-X-Received: by 10.200.35.195 with SMTP id r3mr23430620qtr.282.1489199244858;
-        Fri, 10 Mar 2017 18:27:24 -0800 (PST)
-Received: from dhcp-mcfad-10356.eduroam.cornell.edu (nat-128-84-124-0-116.cit.cornell.edu. [128.84.124.116])
-        by smtp.gmail.com with ESMTPSA id q15sm7628000qtc.1.2017.03.10.18.27.24
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 10 Mar 2017 18:27:24 -0800 (PST)
-Content-Type: text/plain; charset="utf-8"
-MIME-Version: 1.0 (Mac OS X Mail 10.2 \(3259\))
+        id S1755512AbdCKDR1 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 10 Mar 2017 22:17:27 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:58132 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1755375AbdCKDR0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Mar 2017 22:17:26 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 95D096CBCE;
+        Fri, 10 Mar 2017 22:17:24 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=sQLM2BXbwMyu
+        tn8MRkP2edOo38M=; b=ncNAoIukgWs42sJqirNsaFmcvtdK51RJBMKcxyALQ3mI
+        qVpBK1O072ROvlS4WBZiI/LPvseUlPGecNVEjLk1LQGhPDmUbLtoti9RYk1DBZGt
+        NyiI2kP3DjOSWa4BFOLzOZxKvw6bsB/c/jMR0SW3zZu+ZbR8stONZkrmU4AtLaE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=yXYN2r
+        g2nEt2dw+95qsj7whaGYc1IDu/4w3esvZFI80Rjp/wm1DSHAR8RXo71igmPhMUlp
+        +LHbnbcxtQwJ+oJSYBQkuwktRarlsrCf5yox1wU8kU7RKvuyhAXjpEScUUnwhjt4
+        p52SdKiLZZBytyeg4oK/EmpbHBYi1P3GF8Ghk=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 8F5286CBCD;
+        Fri, 10 Mar 2017 22:17:24 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id EAA5B6CBCC;
+        Fri, 10 Mar 2017 22:17:23 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Devin Lehmacher <djl329@cornell.edu>
+Cc:     Noam Postavsky <npostavs@users.sourceforge.net>,
+        Jonathan Nieder <jrnieder@gmail.com>, <git@vger.kernel.org>
 Subject: Re: [GSoC] Move ~/.git-credential-cache to ~/.cache/git
-From:   Devin Lehmacher <djl329@cornell.edu>
-In-Reply-To: <CAM-tV-9DV=XOVSehEfd2LiWYdubhwV7fC8uRnKqmFT_aTQ1OKg@mail.gmail.com>
-Date:   Fri, 10 Mar 2017 21:27:23 -0500
-CC:     Jonathan Nieder <jrnieder@gmail.com>, <git@vger.kernel.org>
-Content-Transfer-Encoding: 8BIT
-Message-ID: <3B988055-D8A3-43B7-BF5F-C43479EF7BEB@cornell.edu>
 References: <8BE1A361-32BB-4164-AD54-949555855C52@cornell.edu>
- <20170311002615.GG26789@aiede.mtv.corp.google.com>
- <CAM-tV-9DV=XOVSehEfd2LiWYdubhwV7fC8uRnKqmFT_aTQ1OKg@mail.gmail.com>
-To:     Noam Postavsky <npostavs@users.sourceforge.net>
-X-Mailer: Apple Mail (2.3259)
-Received-SPF: Neutral (sf-e2013-05.exchange.cornell.edu: 209.85.220.197 is
- neither permitted nor denied by domain of djl329@cornell.edu)
-X-ORG-HybridRouting: 4a0e73779ab9e0348b3feb80fef7a7c5
-X-ORG-RouteOnPrem: False
-X-ORG-MsgSource: cmail
-X-PMX-CORNELL-AUTH-RESULTS: dkim-out=none;
+        <20170311002615.GG26789@aiede.mtv.corp.google.com>
+        <CAM-tV-9DV=XOVSehEfd2LiWYdubhwV7fC8uRnKqmFT_aTQ1OKg@mail.gmail.com>
+        <3B988055-D8A3-43B7-BF5F-C43479EF7BEB@cornell.edu>
+Date:   Fri, 10 Mar 2017 19:17:04 -0800
+In-Reply-To: <3B988055-D8A3-43B7-BF5F-C43479EF7BEB@cornell.edu> (Devin
+        Lehmacher's message of "Fri, 10 Mar 2017 21:27:23 -0500")
+Message-ID: <xmqqinngwlhr.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 3F03BF74-0609-11E7-ADF2-FC50AE2156B6-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-If I’m not mistaken magit won’t stop working with the changed location since it will just spawn an new instance of the daemon. The only downside would be it wouldn’t get credentials that were cached in the default socket.
+Devin Lehmacher <djl329@cornell.edu> writes:
 
-I am going to move forward with git-credential-cache just using the new location at
-`~/.cache/git/credential/socket` and submit a patch and then get more feedback on the patch.
+> If I=E2=80=99m not mistaken magit won=E2=80=99t stop working with the c=
+hanged
+> location since it will just spawn an new instance of the
+> daemon. The only downside would be it wouldn=E2=80=99t get credentials
+> that were cached in the default socket.
 
-Devin Lehmacher
+I am not quite sure how you can say "only" in that sentence.  Isn't
+the whole point of socket based daemon interface to allow starting
+the daemon so that it can keep using it?
+
+Somebody upthread mentioned checking the current location (and use
+it if there is) and then use the new location, which I found a more
+reasonable approach.
+
+Assuming that it is sensible to move it from ~/.git-credential-cache
+to ~/.cache/git/ in the first place, that is.  If both are equally
+acceptable places, then perhaps a configuration that allows those
+who want to have things in ~/.config/git/ to specify where to have
+the thing (and those without such a custom configuration will keep
+using the current location) may be more appropriate.
