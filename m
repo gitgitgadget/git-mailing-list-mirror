@@ -7,78 +7,79 @@ X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 15FEA201C2
-	for <e@80x24.org>; Sat, 11 Mar 2017 19:30:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9D5F9201C2
+	for <e@80x24.org>; Sat, 11 Mar 2017 20:02:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754391AbdCKTaY (ORCPT <rfc822;e@80x24.org>);
-        Sat, 11 Mar 2017 14:30:24 -0500
-Received: from mail-it0-f44.google.com ([209.85.214.44]:36946 "EHLO
-        mail-it0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750960AbdCKTaW (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 11 Mar 2017 14:30:22 -0500
-Received: by mail-it0-f44.google.com with SMTP id g138so13242086itb.0
-        for <git@vger.kernel.org>; Sat, 11 Mar 2017 11:30:21 -0800 (PST)
+        id S934077AbdCKUCC (ORCPT <rfc822;e@80x24.org>);
+        Sat, 11 Mar 2017 15:02:02 -0500
+Received: from mail-it0-f48.google.com ([209.85.214.48]:34997 "EHLO
+        mail-it0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S934018AbdCKUBw (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 11 Mar 2017 15:01:52 -0500
+Received: by mail-it0-f48.google.com with SMTP id m27so12483912iti.0
+        for <git@vger.kernel.org>; Sat, 11 Mar 2017 12:01:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=EjqLT56jax9bZXhevyA17H6DtSSGV9zMaE/qTCEhmVE=;
-        b=pDwL7IPOmpz9NZKSa9vRMH+31I7wVQBnjcFgQukigpqfe5+tIszGy/7aOt0nupTdOr
-         GqsP2BqvhEMkJe4jrSUhcssKN1BYRgnEkTu0RtZ4tV5UZ4atnxH0gyOMahxbIqXkBGHR
-         dINKD8k3c5AxD1OBRQjGhtdsnpXRmD/fuTvojytcd1L+jbQcLgmQ4kO6j1QdDMjM34mO
-         FgB7qDD62kHOwm/I4EZMy5EQxJcHFlzva13ISOLV3pSxyVY5d87esBFqYmP8OXHUvTyd
-         xr32ZC0vw6A4sqHlmW+gxBYcLytMgHTtVk3PTxEW3ranXlWQKWlTCdezV5ZVVUYiKJ4g
-         0jGA==
+        bh=ytYyERK3Ki9MLagrdI0MGEwNpXIOss6GlIcxRNrGwLM=;
+        b=MptCBGvZgSxRQNKhf7mj4S9mIEN8kekutOVetOfbsMl7DDw1Qn+jhAWmymcoqIL+I4
+         F7V6EnuxS/GriJDqLV5ULnEaO4EdoicIOr6fLzrNkOPaiPiGyBLxVM4xskgKiDkuBZkD
+         0I1TmF1gb+uxpv5StE11t/7LFWcM1e0g5n6nHxWT7/CICIK+LFhpuzdnVSKSAIjZwsMP
+         eivNnmZobz8lUnenc2xINbzJs9Lc7D2CUHhuc2DNKsqsKifMvvgy4seKC+RePy4BOaSz
+         WPYXP3KglsUhUVv3aKxIj2Rul/zuLtrb8o9iaUvjyauOnCVpgk507UR6mVLFo1ip0lhk
+         ixPQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=EjqLT56jax9bZXhevyA17H6DtSSGV9zMaE/qTCEhmVE=;
-        b=sHGAhk1xC1awo8TnU19pQo6U/vZd+pLiZrLhoNks8iatjLCNVaSfa119+FRcQoGjKJ
-         9A5ISdjlyz3hEjmJahrlfguh5/M7xGYjoOYmZlHSlYOefIKaOrQUKe2qUtCo1SmwQsik
-         BlnDGU6SYRbG9pSXcoDD9b1/G5zZ2dpjabYk3RnkOlWBG4FYcXSuay51rkW/R+OELxul
-         VLcOyddSn+9mlmHjgP6malywh6Oi/JTh5ZQNQ3MGnfrY3ph8+zWfC9RVD7GWT4YTEG8h
-         LyF689DImlrGZrzTOopsOSFawY8PlHfCoSirCrCk/F5ahwCGNHbyHNM/HT+6B8ga7a0g
-         SveQ==
-X-Gm-Message-State: AFeK/H38bKoxpvZEKagqP2mNK9eFbS3eQjKTVM2iu7b3ShVvvxWuXP80e4h9fSzpfYCAcF1AIPFuXnoeSt+9VQ==
-X-Received: by 10.36.37.145 with SMTP id g139mr4764321itg.24.1489260621159;
- Sat, 11 Mar 2017 11:30:21 -0800 (PST)
+        bh=ytYyERK3Ki9MLagrdI0MGEwNpXIOss6GlIcxRNrGwLM=;
+        b=fR0EPI9iQYQ2sgg747qwpfrWhw/aDpq+KU1TEqu/F/r5rmPH+UMx2d4uI1lOr7+Vfw
+         fr1le0Kt8HG8KYajoJ+XC2xzOC2Dk+d4N8FVxVgYW5l5dXrZpKQD1vs9R1ik5WG0bJb7
+         dc59bkQCtTqIW8pZcnBIw3KougzVnP8fsZnEN0+GkkSKAuAimT9GrcLmoSe2qouHhstO
+         H7nuzAnxfBaSCzBXMZYJtI4k/BatccichnqO+0sVkqoZthFYegWnwgFHjoeTMeIEhlJx
+         6BgobEzM2IY3T5TdH/D/QnzXzgs4MW7Tb49C4SaYSyhkaaneYrMS2i+w73yTL1k5iRbf
+         mMVw==
+X-Gm-Message-State: AFeK/H30QKuZqOuRuQ6to98aqbmez6pbCtW+g/D1wz4wwX4Zw2XERXCp0GRz77njTpyggiLXSO261Csvuqkfrw==
+X-Received: by 10.36.93.213 with SMTP id w204mr5038093ita.60.1489262505798;
+ Sat, 11 Mar 2017 12:01:45 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.107.130.208 with HTTP; Sat, 11 Mar 2017 11:30:00 -0800 (PST)
-In-Reply-To: <6962041489243945@web20g.yandex.ru>
-References: <6962041489243945@web20g.yandex.ru>
+Received: by 10.107.130.208 with HTTP; Sat, 11 Mar 2017 12:01:25 -0800 (PST)
+In-Reply-To: <20170309132949.shyc4gmdrhazykev@sigill.intra.peff.net>
+References: <20170309132728.c57ltzel746l366a@sigill.intra.peff.net> <20170309132949.shyc4gmdrhazykev@sigill.intra.peff.net>
 From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Date:   Sat, 11 Mar 2017 20:30:00 +0100
-Message-ID: <CACBZZX5g95nTtA5--g8K29FjQ=dU3JLEfVXZjUs8J2Y-QCzYHg@mail.gmail.com>
-Subject: Re: How to view diff when doing `git push --force`
-To:     KES <kes-kes@yandex.ru>
-Cc:     git <git@vger.kernel.org>
+Date:   Sat, 11 Mar 2017 21:01:25 +0100
+Message-ID: <CACBZZX5A46-ua9y_HxqrqycQviR0uGnStnaPwH9jukzPVak6ug@mail.gmail.com>
+Subject: Re: [PATCH 4/4] ref-filter: use separate cache for contains_tag_algo
+To:     Jeff King <peff@peff.net>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Lars Hjemli <hjemli@gmail.com>,
+        Christian Couder <christian.couder@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Mar 11, 2017 at 3:52 PM, KES <kes-kes@yandex.ru> wrote:
-> Hi. I have done `git push --force` but I forget to `pull`,
+On Thu, Mar 9, 2017 at 2:29 PM, Jeff King <peff@peff.net> wrote:
+> [...]
+> @@ -1874,6 +1886,8 @@ int filter_refs(struct ref_array *array, struct ref_filter *filter, unsigned int
+>                 broken = 1;
+>         filter->kind = type & FILTER_REFS_KIND_MASK;
 >
-> Counting objects: 7, done.
-> Delta compression using up to 4 threads.
-> Compressing objects: 100% (7/7), done.
-> Writing objects: 100% (7/7), 765 bytes | 0 bytes/s, done.
-> Total 7 (delta 6), reused 0 (delta 0)
-> To xxxgit:cry/cry.git
->  + 48e9058...117ee39 staging -> staging (forced update)
+> +       init_contains_cache(&ref_cbdata.contains_cache);
+> +
+>         /*  Simple per-ref filtering */
+> [...]
 >
-> But I can not view diff:
+> +       clear_contains_cache(&ref_cbdata.contains_cache);
 >
-> git show 48e9058...117ee39
-> fatal: ambiguous argument '48e9058...117ee39': unknown revision or path not in the working tree.
-> Use '--' to separate paths from revisions, like this:
-> 'git <command> [<revision>...] -- [<file>...]'
->
-> May I pull info about changes that was deleted?
+>         /*  Filters that need revision walking */
+>         if (filter->merge_commit)
 
-At this point, no, but in the future instead of --force use
---force-with-lease=<refname>:<expect> where <expect> is e.g. $(git
-rev-parse HEAD).
+Shouldn't both of those be guarded by a "if (filter->with_commit)" test?
+
+That init/clear codepath is rather light, but it seems to me that we
+can avoid it entirely if filter->with_commit isn't defined. I've
+tested this locally and it still passes all tests.
