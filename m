@@ -2,144 +2,111 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0BE811FC43
-	for <e@80x24.org>; Sat, 11 Mar 2017 00:10:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 20BAD201C2
+	for <e@80x24.org>; Sat, 11 Mar 2017 00:26:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755414AbdCKAKn (ORCPT <rfc822;e@80x24.org>);
-        Fri, 10 Mar 2017 19:10:43 -0500
-Received: from castro.crustytoothpaste.net ([75.10.60.170]:44152 "EHLO
-        castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1755129AbdCKAKm (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 10 Mar 2017 19:10:42 -0500
-Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 91C15280AD;
-        Sat, 11 Mar 2017 00:10:39 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
-        s=default; t=1489191039;
-        bh=aKa241GnJBs2x9h2UuC2/NqOFCSnc7tYKoG6eFIK9C4=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=m7QV5MIA1x+XRDQNFmfLXfEPbziNdPqlE2XgWsMoEK8mZtvUeS0YmbuYEyjbrVHWQ
-         ImH6qTU1iAy7bzoVk+dhkI8BK7Q5TR38Rgch6/oiDrTLVj2Uix+yYYoY5TAlkzmpou
-         2SoMEyNLbgoJd1Arkhn0hhOkoIZPvrSSQoe/R71YpbWD+9yzYlhiabRYlLcrAAYcML
-         upgi9ItVvJIpx0AE1g0kZEAd5e7JLotmYA7KRKoQNUCE2MyzRwjxIwx5JSh52psCH6
-         HjWJr2ImrPkS8rX5mM5RgqXObGGQFgGKwLtwpB0Yu9AGYPseegd8VR1suFMi4MRuDV
-         67OPyJXcMEZYKpDs4/8GeWvaGu1rjch7nT7skU358yq1/vPNjFOgRD5gbsS4/d321Z
-         99ITWblP9LuTDaQHXGZCmlGmeDwpwyKVQ8kr1H1lJfeY8WyT5sfoJRC8ESNWkEDkdv
-         aCobYU2xbizMCOIZxkE7bPpwC464w4NhWKsgKtNvbgOY84hdq9S
-Date:   Sat, 11 Mar 2017 00:10:31 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     "Bernhard E. Reiter" <bernhard.reiter@intevation.de>
-Cc:     git@vger.kernel.org, gnupg-devel@gnupg.org
-Subject: Re: Stable GnuPG interface, git should use GPGME
-Message-ID: <20170311001031.f5534omsrzkrzfzb@genre.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        "Bernhard E. Reiter" <bernhard.reiter@intevation.de>,
-        git@vger.kernel.org, gnupg-devel@gnupg.org
-References: <201703101100.15214.bernhard.reiter@intevation.de>
+        id S932694AbdCKA0V (ORCPT <rfc822;e@80x24.org>);
+        Fri, 10 Mar 2017 19:26:21 -0500
+Received: from mail-pg0-f67.google.com ([74.125.83.67]:33245 "EHLO
+        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750922AbdCKA0T (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Mar 2017 19:26:19 -0500
+Received: by mail-pg0-f67.google.com with SMTP id 77so11793068pgc.0
+        for <git@vger.kernel.org>; Fri, 10 Mar 2017 16:26:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=wf9VEvlGN3G3hQqql4rCG6WUWu/1TBWSRscF3/DzJng=;
+        b=tvf/U43CJOgvPO0BdhlN3tGNRvLJjlAkv83+Q+MgqKTGRvj8CeajApEfY+YwtdsMoB
+         NUB35M5kjiz+AGNKaM1bxC7QOyPiJKWTK2wPIj7tuk+dIMREEk6+mnnFIlGFgHz48iWw
+         BcVxg7i65msbwNzfl/E9pv3ny1eSCvL2uQTNVEj4K5RC5Opjxu3DJApZuRuiY18FHBTP
+         8NQGqZGewIxhmHt0DSHQdlTiqii2qtOnmBWdMAC9fkQGOK5lDKtQiVaMSpzLFIjAujio
+         BUL8oPSAihC1qdtvYJkIYJi7/7xXrdAhseOGTKxGGEUfQLk6qhSKQHCo/9aO+hixJ/ZF
+         bgTg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=wf9VEvlGN3G3hQqql4rCG6WUWu/1TBWSRscF3/DzJng=;
+        b=hqEaC8m3Hgk5YARMQrwCDRE/TutFm8a3Qbqmb4mu7YkowE1bOhTcSvIFYt/M1jmpWa
+         pHrScZKyk39aXP2FSp71HNqhWS+/nX9WCz82j69BL4RrL4Wg+EwWVfmXl8ceQkvgKfa/
+         FFd8nOHYFdTCsKcIGvYrusABW/eWJpHWu8Nxkw3Yyf+i/YoxsSOQZMjhrMEksEy4Scgi
+         iPhjrYPSrgdV9QifV/fGkmwTZFmxExS2UkW55Q70qaLMQXCouzqUi9SHDfFQOCqLrQIL
+         Ju530LcoDZxdTOma3NcQvjgnLEIOxLAjKRfY0K552pxKmVunAc9uJdV2Pv6G5eo43juM
+         gppA==
+X-Gm-Message-State: AMke39lOJYds+rlQ8S0jh75MetwxO7q1tWYlozIVe2Ttl+BfsdJXl4ZttOrdrBn0Di1ILQ==
+X-Received: by 10.98.16.11 with SMTP id y11mr24499599pfi.84.1489191977699;
+        Fri, 10 Mar 2017 16:26:17 -0800 (PST)
+Received: from aiede.mtv.corp.google.com ([2620:0:1000:5b10:9cce:1925:a4e:f6c5])
+        by smtp.gmail.com with ESMTPSA id 80sm20647784pfy.67.2017.03.10.16.26.16
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Fri, 10 Mar 2017 16:26:17 -0800 (PST)
+Date:   Fri, 10 Mar 2017 16:26:15 -0800
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Devin Lehmacher <djl329@cornell.edu>
+Cc:     git@vger.kernel.org,
+        Noam Postavsky <npostavs@users.sourceforge.net>
+Subject: Re: [GSoC] Move ~/.git-credential-cache to ~/.cache/git
+Message-ID: <20170311002615.GG26789@aiede.mtv.corp.google.com>
+References: <8BE1A361-32BB-4164-AD54-949555855C52@cornell.edu>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="saxsujudr2czbudl"
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <201703101100.15214.bernhard.reiter@intevation.de>
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.9.0-2-amd64)
-User-Agent: NeoMutt/20170113 (1.7.2)
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <8BE1A361-32BB-4164-AD54-949555855C52@cornell.edu>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+(+cc: npostavs)
+Hi Devin,
 
---saxsujudr2czbudl
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Devin Lehmacher wrote:
 
-On Fri, Mar 10, 2017 at 11:00:07AM +0100, Bernhard E. Reiter wrote:
-> My use case today was signing and git by default found the `gpg` binary by
-> default and the command failed. The reason is that I have `gpg2` installed
-> and most applications use it right away. So git failed signing because
-> the .gnupg configuration of the user was not ready for the old `gpg` whic=
-h is
-> still installed on Debian GNU/Linux for purposes of the operating system.=
- If
-> git would have used libgpgme, gpgme would have choosen the most uptodate
-> version of `gpg` available (or configured) without me intervening via
-> gpg.program. Now because of this problem you could adding a check for `gp=
-g2`
-> and fallback to `gpg`, but even better would be to move to libgpgme. >:)
+> I started working on this microproject and am not quite sure what is
+> necessary for backwards compatibility. Since the socket is recreated
+> whenever the credential daemon exits backwards compatibility
+> shouldn’t really be a concern with regard to where the socket is
+> located in the filesystem.
+>
+> However, contrib/persistent-https depends on the socket being at
+> ~/.git-credential-cache/socket, so changing the default location
+> would break this. However, if we need to keep the socket at that
+> location for cases like this I don’t understand how this change
+> would be helpful in any way.
 
-There are a couple potential problems I see with this approach.  First,
-I'd want to know whether gpgme supports gpgsm, which I know some people
-use to sign commits and tags.
+That's a good question.  If I'm reading contrib/persistent-https/
+correctly, it uses the same directory but doesn't rely on the socket
+there, so it should not be a problem.
 
-Another issue is what happens to the git verify-* --raw output.  Some
-people want the ability to script signature verification.  This can be
-really important when you have automated systems verifying tags and
-commits.
+However, that reminded me to search for other tools that might rely on
+the socket.  Using
+https://codesearch.debian.net/search?q=%5C.git-credential-cache, I
+find that magit does rely on the socket path.
 
-For example, running the following commands, we can determine that Junio
-signs his tags with SHA-1 (algorithm 2), while I sign my commits with
-SHA-512 (algorithm 10).
+ $ git clone https://github.com/magit/magit
+ $ git log -S.git-credential-cache
+ commit 0f30dfbb0075ac2e99b65a2c7fac360197a989c1
+ Author: Noam Postavsky <npostavs@users.sourceforge.net>
+ Date:   Sat Oct 24 15:57:54 2015 -0400
 
-genre ok % git verify-tag --raw v2.12.0 2>&1 | grep VALIDSIG
-[GNUPG:] VALIDSIG E1F036B1FEE7221FC778ECEFB0B5E88696AFE6CB 2017-02-24 14879=
-62205 0 4 0 1 2 00 96E07AF25771955980DAD10020D04E5A713660A7
-genre ok % git verify-commit --raw object-id-part10 2>&1 | grep VALIDSIG
-[GNUPG:] VALIDSIG 5FC3A781776B26DF87F70C37BF535D811F52F68B 2017-03-06 14887=
-60639 0 4 0 1 10 00 88ACE9B29196305BA9947552F1BA225C0223B187
+    Start credential daemon on magit-credential-hook
 
-There's literally no other way to get this information at the moment
-(which is why I added the --raw option).  A gpgme implementation would
-need to expose this same information, at which point, we might as well
-have used gpg directly.
+    If we let git start the daemon, Emacs will send a SIGHUP when git
+    finishes and closes the pty, killing the daemon.  Hence the need to have
+    our own daemon running first.
 
-This is not an idle consideration; we have automated systems at work
-that update software automatically and submit it for human review,
-including verifying signatures and hashes.  This saves hundreds of hours
-of staff time and results in better security.
+Cc-ing Noam to figure out what a safe transition will look like.
 
-Because the amount of the gpg API we actually use is very small, a user
-who wants to use a custom signature program (say, OpenBSD's signify),
-can actually write a simple wrapper that mimics it and use that instead.
-
-Finally, I work on a development system where work is done both as an
-unprivileged user and as root.  Because I use the same socket for both,
-GnuPG screams bloody murder that the permissions are wrong.  I know this
-is secure in my scenario, but without a custom wrapper, I have to deal
-with GnuPG polluting my terminal every time I sign a commit or a tag.  A
-gpgme implementation would need to honor the same wrapper script or
-otherwise not scream to the terminal.
---=20
-brian m. carlson / brian with sandals: Houston, Texas, US
-+1 832 623 2791 | https://www.crustytoothpaste.net/~bmc | My opinion only
-OpenPGP: https://keybase.io/bk2204
-
---saxsujudr2czbudl
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.1.18 (GNU/Linux)
-
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAljDQHcACgkQv1NdgR9S
-9ouA1hAAm9jxfmBC6nwWc5BCnbTZiLfGn9cZwnvSmcNct50T5WZjuhd3NA7MZEYS
-W5UjL7zRHP9nZQjVTRtzOPTdkbuDFLPKbfv9amFxTk4GFQp6shRU6nFzPyFwftMf
-u+QeVdZCGQo+W6aNar/LfwOQlHygjJVOQGSEkTnpSIUtyTtyd+0QYOE5jUtGYkSs
-njWBgIcw1hL/wZmmf1u1sbfZwVC/3Gr0WgiJ8xdR/fSuNAf8IFVBKhSd4ortqZD8
-btvt274PMELhy6O+OmmX2AUkIPlGtOqEZqY03ozoM7uyhTZjYfEijyR9M4dCfZy9
-CQSdge+FDcNn8epYR0udY1AmM9B3kXQSbDMGPQTfmtJD+QM2YjpJGgKhrbdC3LoU
-homLb69Z8pyrUs5GsPr6iVJ5Vjir9AU9z0+mOhOc+8zUKp9TvuxJ4MLT4XG7MkNd
-lmZTp1K8j2ZMXu2qR1gqXFXE13JtrPyXOXom03gF12v5UzA2cupZrLLwo/H3zbaU
-lpLeV7bhaqaHIZIAize8gD5ogOEPSNAFqDLfuW8v+i3+XhrxZ4UYQbOrE0cebHxY
-9dhioXPKDudzr6pme+5T+zNqCpGOGpm7dgMJcGTzCgk3876GlXbNe6EGIh5G34Sk
-jXSYFA1vSr+Y4i3zLe84mmZZYPsD4N55z+ALLhW5U49TgORsbSQ=
-=9oCw
------END PGP SIGNATURE-----
-
---saxsujudr2czbudl--
+Thanks for noticing,
+Jonathan
