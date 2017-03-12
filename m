@@ -2,108 +2,65 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1463F202C1
-	for <e@80x24.org>; Sun, 12 Mar 2017 20:12:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1D5F3202C1
+	for <e@80x24.org>; Sun, 12 Mar 2017 20:36:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S935316AbdCLUMm (ORCPT <rfc822;e@80x24.org>);
-        Sun, 12 Mar 2017 16:12:42 -0400
-Received: from cloud.peff.net ([104.130.231.41]:42929 "EHLO cloud.peff.net"
+        id S935320AbdCLUgf (ORCPT <rfc822;e@80x24.org>);
+        Sun, 12 Mar 2017 16:36:35 -0400
+Received: from smtp2-g21.free.fr ([212.27.42.2]:6280 "EHLO smtp2-g21.free.fr"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S934858AbdCLUMl (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 12 Mar 2017 16:12:41 -0400
-Received: (qmail 25827 invoked by uid 109); 12 Mar 2017 20:12:39 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sun, 12 Mar 2017 20:12:39 +0000
-Received: (qmail 14248 invoked by uid 111); 12 Mar 2017 20:12:50 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Sun, 12 Mar 2017 16:12:50 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 12 Mar 2017 16:12:37 -0400
-Date:   Sun, 12 Mar 2017 16:12:37 -0400
-From:   Jeff King <peff@peff.net>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        git@vger.kernel.org
-Subject: Re: [RFC PATCH] Move SHA-1 implementation selection into a header
- file
-Message-ID: <20170312201237.wrstmhk5saiy52m4@sigill.intra.peff.net>
-References: <20170311222818.518541-1-sandals@crustytoothpaste.net>
- <20170312130149.czir5hcbosqlmkhb@sigill.intra.peff.net>
- <20170312165119.3eokqse4uxdet6yd@genre.crustytoothpaste.net>
+        id S934692AbdCLUge (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 12 Mar 2017 16:36:34 -0400
+Received: from cayenne.localnet (unknown [IPv6:2a01:e35:2ef1:f910:5006:1621:c385:7777])
+        by smtp2-g21.free.fr (Postfix) with ESMTPS id 992D2200382
+        for <git@vger.kernel.org>; Sun, 12 Mar 2017 21:36:32 +0100 (CET)
+From:   =?ISO-8859-1?Q?Jean=2DNo=EBl?= AVILA <jn.avila@free.fr>
+To:     git@vger.kernel.org
+Subject: Re: [PATCH] l10n: add framework for localizing the manpages
+Date:   Sun, 12 Mar 2017 21:36:32 +0100
+Message-ID: <12214955.EmB7ja1MbS@cayenne>
+User-Agent: KMail/5.2.3 (Linux/4.9.0-2-amd64; KDE/5.28.0; x86_64; ; )
+In-Reply-To: <20170312200248.3610-2-jn.avila@free.fr>
+References: <20170312200248.3610-1-jn.avila@free.fr> <20170312200248.3610-2-jn.avila@free.fr>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20170312165119.3eokqse4uxdet6yd@genre.crustytoothpaste.net>
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="us-ascii"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Mar 12, 2017 at 04:51:19PM +0000, brian m. carlson wrote:
+This patch is only a preview and a request for comment. The tool used to 
+perform the localization of manpages is po4a (po for anything). This tool 
+digests the asciidoc source files and writes a pot file, and then merges back 
+the po files into translated asciidoc files, for further processing.
 
-> Yeah, my goal was basically to pass -fsyntax-only, not to produce useful
-> object files.  My patch does basically require that the user have
-> OpenSSL installed, but I do, so it doesn't matter.
-> 
-> I considered after the fact that I might just do something like:
-> 
->   #ifdef SHA1_HEADER
->   #include SHA1_HEADER
->   #else
->   #include "block-sha1/sha1.h"
->   #endif
-> 
-> That would be the smallest change, but probably not the best.
+The choice of this workflow is driven by two concerns: manage the tracking of 
+the changes in the original files and provide the translators with a format of 
+file that they already use. Moreover, I plan to upload the po files to web 
+translation platforms such as transifex or weblate to take advantage of crowd 
+translation.
 
-Yeah, if there is going to be a fallback it probably ought to be
-the internal one.
+In this patch, only one manpage is generated for the git-add command in 
+french. po4a already supports extending to other languages, and merges all the 
+strings from multiple source manpages into one big pot file. In the next 
+version, two files will be included so that the sharing of common strings is 
+shown. There are some enhancement needed for better support of other output 
+formats.
 
-> > Of course the sha1 header is just one of many such defines. It's the one
-> > that is most visible because the result is syntactically valid without
-> > it, but anything you compile without the Makefile's CFLAGS may be subtly
-> > different than what the Makefile would produce. So arguably the Makefile
-> > should be writing out a build-options.h with all of the values, and that
-> > should get pulled in by git-compat-util.h.
-> > 
-> > I don't know if we want to go down that rabbit hole or not. I offer it
-> > merely as an alternative. I'm OK with your patch as-is if you don't want
-> > to dump any more time into it.
-> 
-> I'll take this patch for now and fix it up with the comment I mentioned
-> below.  If someone wants to improve the situation down the line, then
-> they can pick that up.
-> 
-> I assume I can apply your sign-off to the resulting patch?
+One problem with this setup is that we don't know before hand which files will 
+be generated from the po files and the source files. This depends on the level 
+of completion of translation for each language and each target file. To 
+circumvent this, the makefile calls itself recursively after running po4a, so 
+that the generated files can be enumerated in the downstream targets.
 
-Yes, it is OK to add my sign-off. The two things I was concerned about
-with my patch were:
+It would be understandable that the git devel list would not like to be 
+spammed by the traffic generated by this new activity.If the present proposition 
+is accepted,  I'm open to any modus operandi for submitting the changes.
 
-  1. It does introduce an extra shell invocation on every "make", even
-     if the file does not need to be rebuilt (though it is just one of
-     many; GIT-BUILD-OPTIONS, etc).
-
-  2. I wasn't sure if the dependencies were quite right. I _thought_ we
-     should pick it up as an auto-dependency, but I don't think that
-     works because we do our header dependencies as a side effect of the
-     compile.
-
-     So "make" didn't actually know to build hash.h until I made it a
-     dependency of help.o. Which feels weird and hacky. It's really a
-     dependency of _anything_ that includes cache.h.
-
-So you may want to dig into that second one to make sure the result is
-sane, not racy, etc.
-
-> > +hash.h:
-> > +	$(QUIET_GEN)echo '#include $(SHA1_HEADER)' >$@+ && \
-> > +	{ cmp $@+ $@ >/dev/null 2>/dev/null || mv $@+ $@; }
-> 
-> I think here we'd want to also "rm -f $@+", so that we don't leave an
-> extra file behind if we're up-to-date (which is the common case), much
-> like we do for GIT-BUILD-OPTIONS.
-
-Yeah, I agree that would be an improvement.
-
--Peff
+Thanks for reading.
