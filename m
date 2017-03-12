@@ -1,134 +1,211 @@
 Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
-X-Spam-Level: *
+X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=1.6 required=3.0 tests=BAYES_50,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,ZIPFILE
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5372C202C1
-	for <e@80x24.org>; Sun, 12 Mar 2017 15:13:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 287AE202C1
+	for <e@80x24.org>; Sun, 12 Mar 2017 16:51:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755775AbdCLPNw (ORCPT <rfc822;e@80x24.org>);
-        Sun, 12 Mar 2017 11:13:52 -0400
-Received: from 118-170-232-208.dynamic.hinet.net ([118.170.232.208]:57734 "HELO
-        hinet.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with SMTP
-        id S1755750AbdCLPNu (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 12 Mar 2017 11:13:50 -0400
-X-Greylist: delayed 300 seconds by postgrey-1.27 at vger.kernel.org; Sun, 12 Mar 2017 11:13:49 EDT
-Reply-To: <krogers6@wisc.edu>
-Subject: 57144 git
-From:   <krogers6@wisc.edu>
-Content-Type: application/zip; name="82454798713.zip"
+        id S934241AbdCLQv2 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 12 Mar 2017 12:51:28 -0400
+Received: from castro.crustytoothpaste.net ([75.10.60.170]:44556 "EHLO
+        castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S933837AbdCLQv0 (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 12 Mar 2017 12:51:26 -0400
+Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 47C15280AD;
+        Sun, 12 Mar 2017 16:51:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
+        s=default; t=1489337484;
+        bh=H9Sq8kVQfhXeqlgs3Iki+t7lWGDpGyPUdXyrhz9IwZs=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=zbxh2kGM2vieke+gVlMhFRTLytLYA2j2pwH+z1sZndmINCj8PWSiqBdOvs9QZz/TD
+         xf9HjLa7djtMOKP+8oOw3Bdqn7ZsKW2CZtg1wa8bBHoOuory03RXmKdnbkwQ8fs6E5
+         VKsKJmz7xiLp1KYQEqzanLxiYEQJW4Fjyn8OFXsDsG7ruvO80Etk3Mf4peor/Al38e
+         t6iVPRTkHHXtyUH55dY1c+GqG25o7kP9APyHtI3RNv29ppHm1CDLbFyS6QqkBAvucT
+         EHd3YTAk2Q8uwc2qopT5c5JJNbv8EHAwLBQPoiCkVQE5GS02jDcbPTlbDwMDakvX8g
+         i1oTDeabjGZDHNO51MMmyS7D+szOfpe1hyVJSmCP+cgaOA85PBzahAspt8wBBbvnOf
+         ysMA8al1sZ5ciCeWQfYrCGpiKTYXaoB5S4BshRIs8sbKpaKj61ryQxvpzhyvVW4Uig
+         nqavVa5h7+2599bYOWdpHrZsdKJgQE9EnsC5o9JAsJ+ZPE/LQhz
+Date:   Sun, 12 Mar 2017 16:51:19 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org
+Subject: Re: [RFC PATCH] Move SHA-1 implementation selection into a header
+ file
+Message-ID: <20170312165119.3eokqse4uxdet6yd@genre.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Jeff King <peff@peff.net>, git@vger.kernel.org
+References: <20170311222818.518541-1-sandals@crustytoothpaste.net>
+ <20170312130149.czir5hcbosqlmkhb@sigill.intra.peff.net>
 MIME-Version: 1.0
-Importance: High
-Content-Transfer-Encoding: base64
-Date:   Sun, 12 Mar 2017 15:13:43 -0000
-Message-ID: <148933162324.30292.9088933319724574798@hinet.net>
-To:     "git" <git@vger.kernel.org>
-Content-Disposition: attachment
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="jsvwfqplgdlxcumn"
+Content-Disposition: inline
+In-Reply-To: <20170312130149.czir5hcbosqlmkhb@sigill.intra.peff.net>
+X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
+ 4.9.0-2-amd64)
+User-Agent: NeoMutt/20170113 (1.7.2)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-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
-AAAAAQABAFIAAAC0FQAAAAA=
+
+--jsvwfqplgdlxcumn
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On Sun, Mar 12, 2017 at 09:01:49AM -0400, Jeff King wrote:
+> On Sat, Mar 11, 2017 at 10:28:18PM +0000, brian m. carlson wrote:
+>=20
+> > Many developers use functionality in their editors that allows for quick
+> > syntax checks, including warning about questionable constructs.  This
+> > functionality allows rapid development with fewer errors.  However, such
+> > functionality generally does not allow the specification of
+> > project-specific defines or command-line options.
+> >=20
+> > Since the SHA1_HEADER include is not defined in such a case, developers
+> > see spurious errors when using these tools.  Furthermore, while using a
+> > macro as the argument to #include is permitted by C11, it isn't
+> > permitted by C89 and C99, and there are known implementations which
+> > reject it.
+> >=20
+> > Instead of using SHA1_HEADER, create a hash.h header and use #if
+> > and #elif to select the desired header.  Have the Makefile pass an
+> > appropriate option to help the header select the right implementation to
+> > use.
+>=20
+> This has bit me once or twice in the past[1], too, so I'm happy to see
+> somebody tackling it.
+>=20
+> Your solution does mean that your tool, whatever it is, that runs
+> without the same CFLAGS as the Makefile may get a _different_ sha1
+> implementation, though. That's probably good enough for some purposes
+> but perhaps not for others.
+
+Yeah, my goal was basically to pass -fsyntax-only, not to produce useful
+object files.  My patch does basically require that the user have
+OpenSSL installed, but I do, so it doesn't matter.
+
+I considered after the fact that I might just do something like:
+
+  #ifdef SHA1_HEADER
+  #include SHA1_HEADER
+  #else
+  #include "block-sha1/sha1.h"
+  #endif
+
+That would be the smallest change, but probably not the best.
+
+> The "most correct" solution, I think, would be to stop using "-D" flags
+> in favor of actually generating hash.h. Something like the patch
+> below[2] (though I think it there are some rough edges with the
+> dependencies).
+
+I agree that's a better solution.  I was concerned about avoiding ending
+up rebuilding everything when we regenerated the file, but it looks like
+you've avoided that with cmp.
+
+> Of course the sha1 header is just one of many such defines. It's the one
+> that is most visible because the result is syntactically valid without
+> it, but anything you compile without the Makefile's CFLAGS may be subtly
+> different than what the Makefile would produce. So arguably the Makefile
+> should be writing out a build-options.h with all of the values, and that
+> should get pulled in by git-compat-util.h.
+>=20
+> I don't know if we want to go down that rabbit hole or not. I offer it
+> merely as an alternative. I'm OK with your patch as-is if you don't want
+> to dump any more time into it.
+
+I'll take this patch for now and fix it up with the comment I mentioned
+below.  If someone wants to improve the situation down the line, then
+they can pick that up.
+
+I assume I can apply your sign-off to the resulting patch?
+
+> -Peff
+>=20
+> [1] I think I hit the problem when trying to debug some internal part of
+>     git and writing a one-off "foo.c" that calls the code I want. You
+>     can't compile it with "gcc foo.c".
+>=20
+> [2] Here's what a patch for the generated-header might look like:
+>=20
+> diff --git a/Makefile b/Makefile
+> index 9f0eae428..0d65d50e9 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -690,6 +690,7 @@ XDIFF_LIB =3D xdiff/lib.a
+>  VCSSVN_LIB =3D vcs-svn/lib.a
+> =20
+>  GENERATED_H +=3D common-cmds.h
+> +GENERATED_H +=3D hash.h
+> =20
+>  LIB_H =3D $(shell $(FIND) . \
+>  	-name .git -prune -o \
+> @@ -1639,8 +1640,7 @@ PERLLIB_EXTRA_SQ =3D $(subst ','\'',$(PERLLIB_EXTRA=
+))
+>  # from the dependency list, that would make each entry appear twice.
+>  LIBS =3D $(filter-out %.o, $(GITLIBS)) $(EXTLIBS)
+> =20
+> -BASIC_CFLAGS +=3D -DSHA1_HEADER=3D'$(SHA1_HEADER_SQ)' \
+> -	$(COMPAT_CFLAGS)
+> +BASIC_CFLAGS +=3D $(COMPAT_CFLAGS)
+>  LIB_OBJS +=3D $(COMPAT_OBJS)
+> =20
+>  # Quote for C
+> @@ -1781,7 +1781,7 @@ git$X: git.o GIT-LDFLAGS $(BUILTIN_OBJS) $(GITLIBS)
+>  	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) \
+>  		$(filter %.o,$^) $(LIBS)
+> =20
+> -help.sp help.s help.o: common-cmds.h
+> +help.sp help.s help.o: common-cmds.h hash.h
+> =20
+>  builtin/help.sp builtin/help.s builtin/help.o: common-cmds.h GIT-PREFIX
+>  builtin/help.sp builtin/help.s builtin/help.o: EXTRA_CPPFLAGS =3D \
+> @@ -1805,6 +1805,10 @@ common-cmds.h: generate-cmdlist.sh command-list.txt
+>  common-cmds.h: $(wildcard Documentation/git-*.txt)
+>  	$(QUIET_GEN)$(SHELL_PATH) ./generate-cmdlist.sh command-list.txt >$@+ &=
+& mv $@+ $@
+> =20
+> +hash.h:
+> +	$(QUIET_GEN)echo '#include $(SHA1_HEADER)' >$@+ && \
+> +	{ cmp $@+ $@ >/dev/null 2>/dev/null || mv $@+ $@; }
+
+I think here we'd want to also "rm -f $@+", so that we don't leave an
+extra file behind if we're up-to-date (which is the common case), much
+like we do for GIT-BUILD-OPTIONS.
+--=20
+brian m. carlson / brian with sandals: Houston, Texas, US
++1 832 623 2791 | https://www.crustytoothpaste.net/~bmc | My opinion only
+OpenPGP: https://keybase.io/bk2204
+
+--jsvwfqplgdlxcumn
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.1.18 (GNU/Linux)
+
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAljFfIcACgkQv1NdgR9S
+9otuQw/7BIBhRXNRUs0GR5z37BuBkLhax8nwJoePOF+u6mYGaPebGoir2BiFWl7j
+pp1csFg1T+eNOB/F98HD+JWarNbNBpfy+kuEEebIArQkrgXdVHgzSVBLrD8AcsS1
+F2mtKhevQ+kpvb0Rct0XId5Ib83WrendcgTl5E6s7F/L+IcCxUcUI5jPoikbeXJw
+eqWC+wDCx86gQEQHYOtWwKeEY4K/JyxCpY387B46f5tJYqP5sf8/FL/zRNRoQQHR
+2OT96e9Q0xd4iUDNOc1TpCj6nkK/TdaQ5i9l5rxnj3vs8ZmYMHVx5IVdEwPd0Uqj
+ilPRut2L5to0EXYJR+iAsvT86N8S5OQ1rAoeIZhmdq9ICiqQqKsfs1umfFqZlo3p
+Dkit2wFvlFT7g68HiNucMRMfgQEHNS75hk9FzmGGrHrBSS7x4FQ/Y1pA8Cc6Z4rz
+tjO+rO4GKX/LrGJ0WfG/j4E20Nw4UntDs4UMaGSzYfm1gUnC8MHd+Jd2EbiiD0s0
+/ncbYzN9/z3SdeA/YT31U6px4NkmYwgWMp/ZfHOCPIyqSpK8GLQ/spIQtCtRVJSB
+pEUfhJSRehGH1I5S53dC1bceaWS7GS7QlFnSlWZ7lrT2sVRlfaMGqJWXOJArupUc
+X7w0/rLeHlEnfKslHF+2+pIUlrtSB0FSgGEPmYJy0ckXUMrT4jU=
+=nuYn
+-----END PGP SIGNATURE-----
+
+--jsvwfqplgdlxcumn--
