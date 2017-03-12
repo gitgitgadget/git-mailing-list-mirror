@@ -2,330 +2,358 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4F8C01FC43
-	for <e@80x24.org>; Sun, 12 Mar 2017 07:54:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2A1101FC43
+	for <e@80x24.org>; Sun, 12 Mar 2017 09:10:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933261AbdCLHyr (ORCPT <rfc822;e@80x24.org>);
-        Sun, 12 Mar 2017 03:54:47 -0400
-Received: from mail-qt0-f196.google.com ([209.85.216.196]:33765 "EHLO
-        mail-qt0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933178AbdCLHyp (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 12 Mar 2017 03:54:45 -0400
-Received: by mail-qt0-f196.google.com with SMTP id r45so3062878qte.0
-        for <git@vger.kernel.org>; Sat, 11 Mar 2017 23:54:44 -0800 (PST)
+        id S933592AbdCLJKx (ORCPT <rfc822;e@80x24.org>);
+        Sun, 12 Mar 2017 05:10:53 -0400
+Received: from mail-it0-f45.google.com ([209.85.214.45]:35886 "EHLO
+        mail-it0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S933310AbdCLJKs (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 12 Mar 2017 05:10:48 -0400
+Received: by mail-it0-f45.google.com with SMTP id h10so15708129ith.1
+        for <git@vger.kernel.org>; Sun, 12 Mar 2017 01:10:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=C89ul9f7yC0qah8cUDu13PpAbaJMlmczSy4vOaKLWms=;
-        b=UKeg+JUNEI7L4Ykji1ePt12BDetqGSKgSLg/rjJmlVO1XST0C+loOqq7UJsfyVT1r9
-         PNi2hRDfSDTekfjqnzG+QUHrGQOU4KGZ5sh1L1XIJ4rTSF4ZlvS6jcXQtfuG2nicw744
-         fzms7i4haKlm0j8KSAnEborxvgkNjKQuN4V/sYh+651X/FqHZRvtUVyGCt+5TCxoR6IW
-         Y+qlHjYzfu6H5dMdv28F2JqF7/0Oo4Yb/7L9k3TauHfEkjMfM5LrvIIm0Gxu4nrnA+X0
-         z2l9RKZjv/uF8Xl+5jbxUEcFNr8YCCx5ih5zEDcmfyvJmgUsQKH4QT0agg7vYgkCfZGJ
-         BEqQ==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=Amf8WCDwdOf6/GXIkGrt4MKPMJLoO3kop2oJtFBu4S0=;
+        b=OWktbh9Noti/1BERy4b3FCthhICVFtKdKSpz/ypc0P3qal7lrhlZxEbveMEYfhwuK7
+         chgASLGi8KmExzvmTIy8Rjdjd3tm5kdgfkYD/qG4Tork3Qf9LWGCO1tzQO4OZgByDVW6
+         85O60WYzcYJou2rLk5hxXHt0FtpxRHpP+sKZgo9kB8R7U+vunYdpQuYe2N8Cs69ODAK6
+         l6uekym0wdgAPKEZJuTFV39IfY1Ig6zG/ShtuKNYLplzraLJkLtyV4bBDuvQgATwiwtp
+         sfrAdLvKk8no+YTSYwTKa7upqgC41tk7Ra96+0lQf89gPj6QbetO4Tj4v9MN3Ron1ukL
+         Dmvw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=C89ul9f7yC0qah8cUDu13PpAbaJMlmczSy4vOaKLWms=;
-        b=XyZV+cCNHH5zYWqpurbPLAax/x12Rj963Vuja8i9kJTNGeG3IgMfiuSujjFsMPJkbH
-         sA0SfveJckJTEwhhrYb7Y04zsWSPjIZDNAi2L1PJrlkTIZ+jGcmWoS2/0L3CbbuKX0rv
-         eY5RQ4xT9B0/piHfhDS79AU5VrklliNe61LA2kTcFh2s0UhKtX4InIcYviUGmHIg8QZ6
-         TvjuYLShp302YjzFMmTsSfOcNmZwLu0xJMFEL/OSHKTl5sO1285TuQxznD+SU/NYHQPp
-         IETmDPH3ZshiX39W9cGldPQuvoPQ8Mr5c7W77LHnmhsSz5l2Q9FxEg69TsJqaOroGLce
-         vohg==
-X-Gm-Message-State: AMke39kZllXIO5gk7FOv4zU9xphMA6Djt/lc6pCU+6dKSB6WgmxRd2LjjM4TLbYli+Cx1w==
-X-Received: by 10.237.35.231 with SMTP id k36mr28024542qtc.192.1489305283809;
-        Sat, 11 Mar 2017 23:54:43 -0800 (PST)
-Received: from bonobo.com (cpe-184-152-21-78.nyc.res.rr.com. [184.152.21.78])
-        by smtp.gmail.com with ESMTPSA id 143sm9824171qki.59.2017.03.11.23.54.42
-        (version=TLS1 cipher=AES128-SHA bits=128/128);
-        Sat, 11 Mar 2017 23:54:43 -0800 (PST)
-From:   Nikhil Benesch <nikhil.benesch@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Lars Hjemli <hjemli@gmail.com>,
-        Nikhil Benesch <nikhil.benesch@gmail.com>
-Subject: [PATCH 1/1] archive: learn to include submodules in output archive
-Date:   Sun, 12 Mar 2017 03:54:04 -0400
-Message-Id: <20170312075404.23951-2-nikhil.benesch@gmail.com>
-X-Mailer: git-send-email 2.12.0.244.g625568cd8.dirty
-In-Reply-To: <20170312075404.23951-1-nikhil.benesch@gmail.com>
-References: <20170312075404.23951-1-nikhil.benesch@gmail.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=Amf8WCDwdOf6/GXIkGrt4MKPMJLoO3kop2oJtFBu4S0=;
+        b=lsk7sRd5rEm+IKdCBPYhMfEcyja8YcWGSullfVFVL5Z3VdwJ32+XBVTT9qCPqDihHi
+         d5oyfRk2+UnSlbk6lLQMCOTxAodApdm/0hx6Mq5yOrpB/HN5nI4Lqm3oNhN7r46v4rOt
+         /MuBDyn3InPcwJQgEmygMw9xJPuI+U/Xm0P8mGUYBXs4t1dlxrDJS1weK76gDI/fr5lM
+         /Wl5nxLzE++qgdTG1zIT3M8dHXfrYq9HcH3C+HKfFVMsftOr5+qXfQGQmavmRILthsOg
+         M9SoK5o76grLvsHHEvlTpmcd9BABlM7CdDLZm9vFLKe0hFVgla+ZB2ImpYHoPqBw+v6T
+         Qp3A==
+X-Gm-Message-State: AFeK/H02bnaPcVqHjkqFPlFFH9fTtUEKxB9tiZ21OtOhBFHyXB68pkxwAjYYg0zOoSPMBFoAwHS0+S53WMEN1A==
+X-Received: by 10.36.116.71 with SMTP id o68mr6440107itc.60.1489309846788;
+ Sun, 12 Mar 2017 01:10:46 -0800 (PST)
+MIME-Version: 1.0
+Received: by 10.107.130.208 with HTTP; Sun, 12 Mar 2017 01:10:25 -0800 (PST)
+In-Reply-To: <xmqqwpbvumrk.fsf@gitster.mtv.corp.google.com>
+References: <20170309132728.c57ltzel746l366a@sigill.intra.peff.net>
+ <20170311201858.27555-1-avarab@gmail.com> <xmqqwpbvumrk.fsf@gitster.mtv.corp.google.com>
+From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Date:   Sun, 12 Mar 2017 10:10:25 +0100
+Message-ID: <CACBZZX4v49zfyGVpcxGSKsxbMfVaUcGHtitpfaZMUtG82YzW-g@mail.gmail.com>
+Subject: Re: [PATCH v4] ref-filter: Add --no-contains option to tag/branch/for-each-ref
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Lars Hjemli <hjemli@gmail.com>, Jeff King <peff@peff.net>,
+        Christian Couder <christian.couder@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This commit is a revival of Lars Hjemli's 2009 patch to provide an
-option to include submodules in the output of `git archive`.
+On Sun, Mar 12, 2017 at 5:44 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
+>
+>> Change the tag, branch & for-each-ref commands to have a --no-contains
+>> option in addition to their longstanding --contains options.
+>>
+>> The use-case I have for this is to find the last-good rollout tag
+>> given a known-bad <commit>. Right now, given a hypothetically bad
+>> commit v2.10.1-3-gcf5c7253e0, you can find which git version to revert
+>> to with this hacky two-liner:
+>>
+>>     (./git tag -l 'v[0-9]*'; ./git tag -l 'v[0-9]*' --contains v2.10.1-3=
+-gcf5c7253e0) \
+>>         |sort|uniq -c|grep -E '^ *1 '|awk '{print $2}' | tail -n 10
+>>
+>> But with the --no-contains option you can now get the exact same
+>> output with:
+>>
+>>     ./git tag -l 'v[0-9]*' --no-contains v2.10.1-3-gcf5c7253e0|sort|tail=
+ -n 10
+>
+> This command line, while it may happen to work, logically does not
+> make much sense.  Move the pattern to the end, i.e.
+>
+>         git tag -l --no-contains v2.10.1-3-gcf5c7253e0 'v[0-9]*'
 
-The `--recurse-submodules` option (named consistently with fetch, clone,
-and ls-files) will recursively traverse submodules in the repository and
-consider their contents for inclusion in the output archive, subject to
-any pathspec filters. Like other commands that have learned
-`--recurse-submodules`, submodules that have not been checked out will
-not be traversed.
+Sure, if you'd like it like that I can change it.
 
-Signed-off-by: Nikhil Benesch <nikhil.benesch@gmail.com>
----
- Documentation/git-archive.txt |   8 ++-
- archive.c                     |  22 +++++----
- archive.h                     |   1 +
- submodule.c                   |   2 +-
- submodule.h                   |   1 +
- t/t5005-archive-submodules.sh | 112 ++++++++++++++++++++++++++++++++++++++++++
- 6 files changed, 133 insertions(+), 13 deletions(-)
- create mode 100755 t/t5005-archive-submodules.sh
+But as an aside, I don't understand why you think it happens to work
+and doesn't make much sense. To someone reading "git help tag" this
+would be *exactly* how you'd expect to have to write this, since the
+example given in the synopsis is:
 
-diff --git a/Documentation/git-archive.txt b/Documentation/git-archive.txt
-index cfa1e4ebe..f223f9e05 100644
---- a/Documentation/git-archive.txt
-+++ b/Documentation/git-archive.txt
-@@ -11,8 +11,8 @@ SYNOPSIS
- [verse]
- 'git archive' [--format=<fmt>] [--list] [--prefix=<prefix>/] [<extra>]
- 	      [-o <file> | --output=<file>] [--worktree-attributes]
--	      [--remote=<repo> [--exec=<git-upload-archive>]] <tree-ish>
--	      [<path>...]
-+	      [--recurse-submodules] [--remote=<repo> [--exec=<git-upload-archive>]]
-+	      <tree-ish> [<path>...]
- 
- DESCRIPTION
- -----------
-@@ -59,6 +59,10 @@ OPTIONS
- 	Look for attributes in .gitattributes files in the working tree
- 	as well (see <<ATTRIBUTES>>).
- 
-+--recurse-submodules::
-+	Recursively include the contents of any checked-out submodules in
-+	the archive.
-+
- <extra>::
- 	This can be any options that the archiver backend understands.
- 	See next section.
-diff --git a/archive.c b/archive.c
-index 60b889198..8d060bad3 100644
---- a/archive.c
-+++ b/archive.c
-@@ -7,6 +7,7 @@
- #include "parse-options.h"
- #include "unpack-trees.h"
- #include "dir.h"
-+#include "submodule.h"
- 
- static char const * const archive_usage[] = {
- 	N_("git archive [<options>] <tree-ish> [<path>...]"),
-@@ -132,18 +133,15 @@ static int write_archive_entry(const unsigned char *sha1, const char *base,
- 		args->convert = ATTR_TRUE(check->items[1].value);
- 	}
- 
--	if (S_ISDIR(mode) || S_ISGITLINK(mode)) {
--		if (args->verbose)
--			fprintf(stderr, "%.*s\n", (int)path.len, path.buf);
--		err = write_entry(args, sha1, path.buf, path.len, mode);
--		if (err)
--			return err;
--		return (S_ISDIR(mode) ? READ_TREE_RECURSIVE : 0);
--	}
--
- 	if (args->verbose)
- 		fprintf(stderr, "%.*s\n", (int)path.len, path.buf);
--	return write_entry(args, sha1, path.buf, path.len, mode);
-+	err = write_entry(args, sha1, path.buf, path.len, mode);
-+	if (err)
-+		return err;
-+	if (S_ISDIR(mode) || (S_ISGITLINK(mode) && args->recurse_submodules &&
-+			      !add_submodule_odb(path_without_prefix)))
-+		return READ_TREE_RECURSIVE;
-+	return 0;
- }
- 
- static int write_archive_entry_buf(const unsigned char *sha1, struct strbuf *base,
-@@ -411,6 +409,7 @@ static int parse_archive_args(int argc, const char **argv,
- 	int verbose = 0;
- 	int i;
- 	int list = 0;
-+	int recurse_submodules = 0;
- 	int worktree_attributes = 0;
- 	struct option opts[] = {
- 		OPT_GROUP(""),
-@@ -419,6 +418,8 @@ static int parse_archive_args(int argc, const char **argv,
- 			N_("prepend prefix to each pathname in the archive")),
- 		OPT_STRING('o', "output", &output, N_("file"),
- 			N_("write the archive to this file")),
-+		OPT_BOOL(0, "recurse-submodules", &recurse_submodules,
-+			N_("recurse through submodules")),
- 		OPT_BOOL(0, "worktree-attributes", &worktree_attributes,
- 			N_("read .gitattributes in working directory")),
- 		OPT__VERBOSE(&verbose, N_("report archived files on stderr")),
-@@ -484,6 +485,7 @@ static int parse_archive_args(int argc, const char **argv,
- 		}
- 	}
- 	args->verbose = verbose;
-+	args->recurse_submodules = recurse_submodules;
- 	args->base = base;
- 	args->baselen = strlen(base);
- 	args->worktree_attributes = worktree_attributes;
-diff --git a/archive.h b/archive.h
-index 415e0152e..96e217ac5 100644
---- a/archive.h
-+++ b/archive.h
-@@ -12,6 +12,7 @@ struct archiver_args {
- 	time_t time;
- 	struct pathspec pathspec;
- 	unsigned int verbose : 1;
-+	unsigned int recurse_submodules : 1;
- 	unsigned int worktree_attributes : 1;
- 	unsigned int convert : 1;
- 	int compression_level;
-diff --git a/submodule.c b/submodule.c
-index 3b98766a6..5fe5a3a8e 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -121,7 +121,7 @@ void stage_updated_gitmodules(void)
- 		die(_("staging updated .gitmodules failed"));
- }
- 
--static int add_submodule_odb(const char *path)
-+int add_submodule_odb(const char *path)
- {
- 	struct strbuf objects_directory = STRBUF_INIT;
- 	int ret = 0;
-diff --git a/submodule.h b/submodule.h
-index 05ab674f0..d59fd2537 100644
---- a/submodule.h
-+++ b/submodule.h
-@@ -35,6 +35,7 @@ extern int is_staging_gitmodules_ok(void);
- extern int update_path_in_gitmodules(const char *oldpath, const char *newpath);
- extern int remove_path_from_gitmodules(const char *path);
- extern void stage_updated_gitmodules(void);
-+extern int add_submodule_odb(const char *path);
- extern void set_diffopt_flags_from_submodule_config(struct diff_options *,
- 		const char *path);
- extern int submodule_config(const char *var, const char *value, void *cb);
-diff --git a/t/t5005-archive-submodules.sh b/t/t5005-archive-submodules.sh
-new file mode 100755
-index 000000000..747e38627
---- /dev/null
-+++ b/t/t5005-archive-submodules.sh
-@@ -0,0 +1,112 @@
-+#!/bin/sh
-+
-+test_description='git archive can include submodule content'
-+
-+. ./test-lib.sh
-+
-+add_file()
-+{
-+	git add $1 &&
-+	git commit -m "added $1"
-+}
-+
-+add_submodule()
-+{
-+	mkdir $1 && (
-+		cd $1 &&
-+		git init &&
-+		echo "File $2" >$2 &&
-+		add_file $2
-+	) &&
-+	add_file $1
-+}
-+
-+test_expect_success 'by default, submodules are not included' '
-+	echo "File 1" >1 &&
-+	add_file 1 &&
-+	add_submodule 2 3 &&
-+	add_submodule 4 5 &&
-+	cat <<EOF >expected &&
-+1
-+2/
-+4/
-+EOF
-+	git archive HEAD >normal.tar &&
-+	tar -tf normal.tar >actual &&
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'with --recurse-submodules, checked out submodules are included' '
-+	cat <<EOF >expected &&
-+1
-+2/
-+2/3
-+4/
-+4/5
-+EOF
-+	git archive --recurse-submodules HEAD >full.tar &&
-+	tar -tf full.tar >actual &&
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'submodules in submodules are supported' '
-+	(cd 4 && add_submodule 6 7) &&
-+	add_file 4 &&
-+	cat <<EOF >expected &&
-+1
-+2/
-+2/3
-+4/
-+4/5
-+4/6/
-+4/6/7
-+EOF
-+	git archive --recurse-submodules HEAD >recursive.tar &&
-+	tar -tf recursive.tar >actual &&
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'packed submodules are supported' '
-+	msg=$(cd 2 && git repack -ad && git count-objects) &&
-+	test "$msg" = "0 objects, 0 kilobytes" &&
-+	git archive --recurse-submodules HEAD >packed.tar &&
-+	tar -tf packed.tar >actual &&
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'pathspecs supported' '
-+	cat <<EOF >expected &&
-+2/3
-+4/6/7
-+EOF
-+	git archive --recurse-submodules HEAD >recursive.tar &&
-+	tar -tf recursive.tar 4/6/7 2/3 >actual &&
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'missing submodule packs triggers an error' '
-+	mv 2/.git/objects/pack .git/packdir2 &&
-+	test_must_fail git archive --recurse-submodules HEAD
-+'
-+
-+test_expect_success '--recurse-submodules skips non-checked out submodules' '
-+	cat <<EOF >expected &&
-+1
-+2/
-+4/
-+4/5
-+4/6/
-+4/6/7
-+EOF
-+	rm -rf 2/.git &&
-+	git archive --recurse-submodules HEAD >partial.tar &&
-+	tar -tf partial.tar >actual &&
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'missing objects in a submodule triggers an error' '
-+	find 4/.git/objects -type f | xargs rm &&
-+	test_must_fail git archive --recurse-submodules HEAD
-+'
-+
-+test_done
--- 
-2.12.0.244.g625568cd8.dirty
+    git tag [-n[<num>]] -l [--contains <commit>] [....]
 
+And then later in the documentation:
+
+    -l <pattern>, --list <pattern>
+
+I.e. for git-branch this type of invocation wouldn't make sense and
+would just happen to work, but for git-tag the --list option is
+explicitly documented to immediately take a <pattern> argument.
+
+But of course the whole branch v.s. tag difference is just more fodder
+for my "tag: Implicitly supply --list given another list-like option"
+patch.
+
+> Also if an overlong line in an example disturbs you, do not solve it
+> by omitting SP around pipe.  If you are trying to make the result
+> readable, pick a readable solution, e.g.
+
+FWIW I just write one-liners like this, i.e. I don't add the
+semantically meaningless spaces around all pipes to save myself some
+typing, and wasn't trying to squeeze this all on one line, but sure
+I'll change it.
+
+>     git tag -l --no-contains v2.10.1-3-gcf5c7253e0 'v[0-9]*' |
+>     sort | tail -n 10
+
+Although I'll add a \ to that so you can still paste it to a terminal.
+
+> Oh, drop ./ from ./git while at it ;-)
+
+Sure.
+
+>> The filtering machinery is generic between the tag, branch &
+>> for-each-ref commands, so once I'd implemented it for tag it was
+>> trivial to add support for this to the other two.
+>
+> Also, we tend not to say "I did this, I do that".
+>
+>         Because the filtering machinery is generic ..., support it
+>         for all three consistently.
+>
+>> I'm adding a --without option to "tag" as an alias for --no-contains
+>> for consistency with --with and --contains. Since we don't even
+>> document --with anymore (or test it). The --with option is
+>> undocumented, and possibly the only user of it is Junio[1]. But it's
+>> trivial to support, so let's do that.
+>
+> The sentence that begins "Since we don't" is unfinished.  I think
+> it can safely removed without losing any information (the next
+> sentence says the same thing).
+>
+>> Where I'm changing existing documentation lines I'm mainly word
+>> wrapping at 75 columns to be consistent with the existing style.
+
+Ack.
+
+> Reviewers would appreciate you refrain from doing that in the same
+> patch.  Do a minimum patch so that the review can concentrate on
+> what got changed (i.e. contents), followed by a mechanical reflow as
+> a follow-up, or something like that, would be much nicer to handle.
+
+Okey, so two patches, one where I potentially produce very long lines
+& then re-flow them in a subsequent commit.
+
+>> Most of the test changes I've made are just doing the inverse of the
+>> existing --contains tests, with this change --no-contains for tag,
+>> branch & for-each-ref is just as well tested as the existing
+>> --contains option.
+>
+> Again, we tend to try our commits not about "I, my, me".
+>
+>         Add --no-contains tests for tag, branch and for-each-ref
+>         that mostly do the inverse of the existing tests we have for
+>         --contains.
+
+*Nod*
+
+>> This is now based on top of pu, which has Jeff King's "fix object flag
+>> pollution in "tag --contains" series.
+>
+> Thanks for this note.  I obviously cannot queue on top of 'pu' ;-)
+> but will fork this topic off of the jk/ref-filter-flags-cleanup
+> topic.
+
+If I'd like to base on top of that to make things easier for you do
+you publish  jk/ref-filter-flags-cleanup sowhere? I.e. as a git ref
+rather than me also following that topic, applying it on top of
+master, and then applying my topic on top of that.
+
+>>  'git for-each-ref' [--count=3D<count>] [--shell|--perl|--python|--tcl]
+>>                  [(--sort=3D<key>)...] [--format=3D<format>] [<pattern>.=
+..]
+>>                  [--points-at <object>] [(--merged | --no-merged) [<obje=
+ct>]]
+>> -                [--contains [<object>]]
+>> +                [(--contains | --no-contains) [<object>]]
+>
+> THis notation makes sense.  We have to have one of these but
+> <object> at the end could be omitted (to default to HEAD).  I guess
+> the same notation can be used in the log for the other "filtering
+> implies --list mode for 'git tag'" topic.
+
+I don't know what makes to list in the synopsis given the default
+arguments to --contains and --no-contains, maybe "[<object>]?", but in
+any case, I'm not changing how that part is documented in
+for-each-ref, just adding an alternative to the existing --contains
+option.
+
+>> +--no-contains [<commit>]::
+>> +     Only list tags which don't contain the specified commit (HEAD if
+>> +     not specified).
+>
+> Just being curious.  Can we do
+>
+>         for-each-ref --contains --no-contains
+>
+> and have both default to HEAD?  I know that would not make sense as
+> a set operation, but I am curious what our command line parser
+> (which is oblivious to what the command is doing) does.  I am guessing
+> that it would barf saying "--contains" needs a commit but "--no-contains"
+> is not a commit (which is very sensible)?
+
+It'll spew out "error: malformed object name --no-contains".
+
+You can do "--contains HEAD --no-contains HEAD" to get nothing.
+
+In an earlier thread I was discussing with Jeff whether it would be
+worthwhile to error out in that case, but his opinion was
+(paraphrasing) "Nah, GIGO", which I think makes sense in this case.
+
+>> +
+>>  --points-at <object>::
+>>       Only list tags of the given object.
+>
+> This is not a new issue (and certainly not a problem caused by your
+> patch), but unlike "--contains", this does not default to HEAD when
+> <object> is not explicitly given?  It seems a bit inconsistent to me.
+
+Yeah, it doesn't default to HEAD. It's inconsistent, due to a
+historical wart in parse-options.[ch]
+
+>> @@ -618,7 +620,7 @@ int cmd_branch(int argc, const char **argv, const ch=
+ar *prefix)
+>>       if (!delete && !rename && !edit_description && !new_upstream && !u=
+nset_upstream && argc =3D=3D 0)
+>>               list =3D 1;
+>>
+>> -     if (filter.with_commit || filter.merge !=3D REF_FILTER_MERGED_NONE=
+ || filter.points_at.nr)
+>> +     if (filter.with_commit || filter.no_commit || filter.merge !=3D RE=
+F_FILTER_MERGED_NONE || filter.points_at.nr)
+>>               list =3D 1;
+>
+> OK.
+>
+>> diff --git a/parse-options.h b/parse-options.h
+>> index dcd8a0926c..0eac90b510 100644
+>> --- a/parse-options.h
+>> +++ b/parse-options.h
+>> @@ -258,7 +258,9 @@ extern int parse_opt_passthru_argv(const struct opti=
+on *, const char *, int);
+>>         PARSE_OPT_LASTARG_DEFAULT | flag, \
+>>         parse_opt_commits, (intptr_t) "HEAD" \
+>>       }
+>> -#define OPT_CONTAINS(v, h) _OPT_CONTAINS_OR_WITH("contains", v, h, 0)
+>> +#define OPT_CONTAINS(v, h) _OPT_CONTAINS_OR_WITH("contains", v, h, PARS=
+E_OPT_NONEG)
+>> +#define OPT_NO_CONTAINS(v, h) _OPT_CONTAINS_OR_WITH("no-contains", v, h=
+, PARSE_OPT_NONEG)
+>>  #define OPT_WITH(v, h) _OPT_CONTAINS_OR_WITH("with", v, h, PARSE_OPT_HI=
+DDEN)
+>> +#define OPT_WITHOUT(v, h) _OPT_CONTAINS_OR_WITH("without", v, h, PARSE_=
+OPT_HIDDEN)
+>
+> Hmph, perhaps WITH/WITHOUT also do not take "--no-" form hence need OPT_N=
+ONEG?
+
+I may be missing some subtlety here, but I think you've misread this
+(admittedly dense) chunk. the /WITH/ options don't supply NONEG, just
+HIDDEN.
+
+>> @@ -1586,11 +1587,11 @@ static enum contains_result contains_tag_algo(st=
+ruct commit *candidate,
+>>  }
+>>
+>>  static int commit_contains(struct ref_filter *filter, struct commit *co=
+mmit,
+>> -                        struct contains_cache *cache)
+>> +                        struct commit_list *list, struct contains_cache=
+ *cache)
+>>  {
+>>       if (filter->with_commit_tag_algo)
+>> -             return contains_tag_algo(commit, filter->with_commit, cach=
+e) =3D=3D CONTAINS_YES;
+>> -     return is_descendant_of(commit, filter->with_commit);
+>> +             return contains_tag_algo(commit, list, cache) =3D=3D CONTA=
+INS_YES;
+>> +     return is_descendant_of(commit, list);
+>>  }
+>>
+>>  /*
+>> @@ -1780,13 +1781,17 @@ static int ref_filter_handler(const char *refnam=
+e, const struct object_id *oid,
+>>        * obtain the commit using the 'oid' available and discard all
+>>        * non-commits early. The actual filtering is done later.
+>>        */
+>> -     if (filter->merge_commit || filter->with_commit || filter->verbose=
+) {
+>> +     if (filter->merge_commit || filter->with_commit || filter->no_comm=
+it || filter->verbose) {
+>>               commit =3D lookup_commit_reference_gently(oid->hash, 1);
+>>               if (!commit)
+>>                       return 0;
+>> -             /* We perform the filtering for the '--contains' option */
+>> +             /* We perform the filtering for the '--contains' option...=
+ */
+>>               if (filter->with_commit &&
+>> -                 !commit_contains(filter, commit, &ref_cbdata->contains=
+_cache))
+>> +                 !commit_contains(filter, commit, filter->with_commit, =
+&ref_cbdata->contains_cache))
+>> +                     return 0;
+>> +             /* ...or for the `--no-contains' option */
+>> +             if (filter->no_commit &&
+>> +                 commit_contains(filter, commit, filter->no_commit, &re=
+f_cbdata->no_contains_cache))
+>>                       return 0;
+>>       }
+>
+> When asking "--contains A --contains B", we show refs that contain
+> _EITHER_ A or B.  Two predicates are ORed together, and I think it
+> makes sense.
+>
+> When asking "--contains A --no-contains B", we show refs that
+> contain A but exclude refs that contains B.  Two predicates are
+> ANDed together, and I think this also makes sense.
+>
+> When asking "--no-contains A --no-contains B", what should we show?
+> This implementation makes the two predicates ANDed together [*1*].
+>
+> The behaviour is sensible, but is it consistent with the way now
+> existing --no-merged works?
+>
+> I think the rule is something like:
+>
+>     A match with any positive selection criterion (like --contains
+>     A) makes a ref eligible for output, but then a match with any
+>     negatigve selection criterion (like --no-merged) filters it out.
+>
+> Is it easy to explain to the users?  Do we need doc updates to
+> clarify, or does the description for existing --no-merged already
+> cover this?
+
+I'm not sure, and wanting to get the rest of this e-mail out the door,
+I didn't have time to fully investigate this. I.e. is it consistent
+with how --merged works? It uses a slightly different codepath, maybe,
+but it's definitely consistent with how everything in the ref-filter
+machinery works in general, and that's used by multiple options.
+
+So to the extent that this needs docs we should do that in some
+general place that covers existing options that use it.
